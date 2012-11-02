@@ -4,9 +4,12 @@ var WikiaBar = {
 	WIKIA_BAR_STATE_ANON_NML_KEY: 'AnonNotMainLangWikiaBar_0.0001',
 	WIKIA_BAR_HIDDEN_ANON_ML_TTL: 24 * 60 * 1000, //millieseconds
 	WIKIA_BAR_HIDDEN_ANON_NML_TTL: 180 * 24 * 60 * 1000, //millieseconds
-	WIKIA_BAR_STATE_USER_KEY_SUFFIX: 'UserWikiaBar_1.0002',
+	WIKIA_BAR_STATE_USER_KEY_SUFFIX: 'UserWikiaBar_1.0004',
 	WIKIA_BAR_MAX_MESSAGE_PARTS: 5,
 	WIKIA_BAR_SAMPLING_RATIO: 10, // integer (0-100): 0 - no tracking, 100 - track everything */
+	WIKIA_BAR_SHOWN_STATE_VALUE: 'shown',
+	WIKIA_BAR_HIDDEN_STATE_VALUE: 'hidden',
+	cutMessagePrecision: 20, // integer: 1 - best precision but low performance, 20 - low precision but high performance
 	messageConfig: {
 		index: 0,
 		container: null,
@@ -62,7 +65,7 @@ var WikiaBar = {
 			WikiaBarBoxAd.addClass('wikia-ad');
 		}
 	},
-	cutMessageIntoSmallPieces: function (messageArray, container) {
+	cutMessageIntoSmallPieces: function (messageArray, container, cutMessagePrecision) {
 		var returnArray = [],
 			currentMessageArray,
 			originalMessageArray,
@@ -75,7 +78,7 @@ var WikiaBar = {
 			if (typeof messageArrayText == 'string') {
 				originalMessageArray = messageArrayText.split('');
 				do {
-					currentMessageArray = this.checkMessageWidth(originalMessageArray, container);
+					currentMessageArray = this.checkMessageWidth(originalMessageArray, container, cutMessagePrecision);
 					originalCurrentDiffArray = originalMessageArray.slice(
 						currentMessageArray.length,
 						originalMessageArray.length
@@ -89,40 +92,41 @@ var WikiaBar = {
 		container.text('');
 		return returnArray;
 	},
-	checkMessageWidth: function (messageArray, container) {
+	checkMessageWidth: function (messageArray, container, cutMessagePrecision) {
 		var tempMessage = '',
 			tempMessageObject,
-			lastSpaceIndex = -1,
+			tempMessageArray,
 			cutIndex = -1;
 
-		for (var j = 0, length = messageArray.length ; j < length ; j++) {
-			if (messageArray[j] == ' ') {
-				lastSpaceIndex = j;
-			}
-			tempMessage = tempMessage + messageArray[j];
+		for (var j = 0, length = messageArray.length ; j < length ; j+=cutMessagePrecision) {
+			tempMessage = tempMessage + messageArray.join("").substr(
+				j,
+				cutMessagePrecision
+			);
 			tempMessageObject = $('<span></span>').text(tempMessage);
 			container.html(tempMessageObject);
 			if (tempMessageObject.width() >= this.messageConfig.container.width()) {
-				if (lastSpaceIndex == -1) {
-					cutIndex = j;
-				} else {
-					cutIndex = ((lastSpaceIndex + 1) < length) ? (lastSpaceIndex + 1) : lastSpaceIndex;
-				}
+				cutIndex = j - cutMessagePrecision;
 				break;
 			}
 		}
 
-		return ((cutIndex == -1) ? messageArray : messageArray.slice(0, cutIndex));
+		if (cutIndex == -1) {
+			tempMessageArray = messageArray;
+		}
+		else {
+			tempMessageArray = messageArray.slice(0, cutIndex);
+			var lastIndexOfSpace = tempMessageArray.lastIndexOf(" ");
+			if ( (lastIndexOfSpace > -1) && (lastIndexOfSpace < cutIndex) ) {
+				tempMessageArray = messageArray.slice(0, lastIndexOfSpace);
+			}
+		}
+
+		return tempMessageArray;
 	},
 	messageFadeIn: function () {
 		var currentMsgIndex = this.messageConfig.index,
 			messageConfig = this.messageConfig;
-
-		//tracking impressions of the message (not chunk of a long message)
-		if (messageConfig.doTrackImpression && !this.isWikiaBarHidden()) {
-			var GALabel = 'message-' + messageConfig.content[currentMsgIndex].messageNumber + '-appears';
-			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.IMPRESSION, GALabel, null, {});
-		}
 
 		if (currentMsgIndex == (messageConfig.content.length - 1)) { //indexes are counted starting with 0 and length() counts items starting with 1
 			this.messageConfig.index = 0;
@@ -162,7 +166,8 @@ var WikiaBar = {
 	startSlideShow: function () {
 		this.messageConfig.content = this.cutMessageIntoSmallPieces(
 			this.messageConfig.container.data(this.messageConfig.attributeName),
-			this.messageConfig.container
+			this.messageConfig.container,
+			this.cutMessagePrecision
 		);
 
 		if (typeof this.messageConfig.content == 'object') {
@@ -239,7 +244,6 @@ var WikiaBar = {
 		var cachedState = this.getLocalStorageData();
 
 		if (cachedState === null) {
-			this.changeLoggedInUserStateBar();
 			this.getLoggedInUserStateBarAndChangeLocalStorage();
 		} else {
 			this.doWikiaBarAnimationDependingOnState(cachedState);
@@ -248,34 +252,37 @@ var WikiaBar = {
 	getLoggedInUserStateBarAndChangeLocalStorage: function () {
 		$.nirvana.sendRequest({
 			controller: 'WikiaBarController',
-			method: 'changeUserStateBar',
-			type: 'post',
+			method: 'getUserStateBar',
+			type: 'get',
 			format: 'json',
 			callback: $.proxy(this.onGetLoggedInUserStateBarAndChangeLocalStorage, this),
 			onErrorCallback: $.proxy(this.onGetLoggedInUserStateBarAndChangeLocalStorageError, this)
 		});
 	},
 	changeLoggedInUserStateBar: function () {
-		var changeState = this.isWikiaBarHidden() ? 'shown' : 'hidden';
-
+		var changeState = this.isWikiaBarHidden() ? this.WIKIA_BAR_SHOWN_STATE_VALUE : this.WIKIA_BAR_HIDDEN_STATE_VALUE;
 		this.doWikiaBarAnimationDependingOnState(changeState);
 		this.setLocalStorageData(changeState);
 
 		$.nirvana.sendRequest({
 			controller: 'WikiaBarController',
 			method: 'changeUserStateBar',
+			data: {
+				changeTo: changeState
+			},
 			type: 'post',
 			format: 'json'
 		});
 	},
 	onGetLoggedInUserStateBarAndChangeLocalStorage: function (response) {
-		var state = response.results.wikiaBarState || 'shown';
+		var state = response.results.wikiaBarState || this.WIKIA_BAR_SHOWN_STATE_VALUE;
 		this.setLocalStorageData(state);
+		this.doWikiaBarAnimationDependingOnState(state);
 	},
 	onGetLoggedInUserStateBarAndChangeLocalStorageError: function () {
 	},
 	doWikiaBarAnimationDependingOnState: function (state) {
-		if (state === 'shown') {
+		if (state === this.WIKIA_BAR_SHOWN_STATE_VALUE) {
 			this.show();
 		} else {
 			this.hide();
@@ -360,9 +367,9 @@ var WikiaBar = {
 
 		return (result >= 0);
 	},
-	getWikiaBarOffset: function () {
-		//this method is being used in our RTE plugin therefore we don't use here cached jQuery object this.WikiaBarWrapperObj
-		var wikiaBarHeight = $("#WikiaBarWrapper").outerHeight() || 0;
+	getWikiaBarOffset: function() {
+	//this method is being used in our RTE plugin therefore we don't use here cached jQuery object this.WikiaBarWrapperObj
+		var wikiaBarHeight = $("#WikiaBarWrapper").outerHeight(true) || 0;
 		return (this.wikiaBarHidden) ? 0 : wikiaBarHeight;
 	},
 	//todo: extract class
@@ -410,9 +417,9 @@ var WikiaBar = {
 	}
 };
 
-$(function () {
-	if (window.wgEnableWikiaBarExt) {
+if (window.wgEnableWikiaBarExt) {
+	$(function () {
 		WikiaBar.init();
-	}
-});
+	});
+}
 

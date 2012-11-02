@@ -365,7 +365,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @return boolean
 	 */
 	public function hasResults() {
-		return empty( $this->results );
+		return ! empty( $this->results );
 	}
 
 	/**
@@ -522,6 +522,14 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 */
 	public function getId() {
 		return $this->host;
+	}
+	
+	/**
+	 * Returns the array of results
+	 * @return array
+	 */
+	public function getResults() {
+		return $this->results;
 	}
 	
 	/*

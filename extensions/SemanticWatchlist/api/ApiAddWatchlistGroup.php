@@ -13,20 +13,20 @@
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class ApiAddWatchlistGroup extends ApiBase {
-	
+
 	public function __construct( $main, $action ) {
 		parent::__construct( $main, $action );
 	}
-	
+
 	public function execute() {
 		global $wgUser;
-		
+
 		if ( !$wgUser->isAllowed( 'semanticwatchgroups' ) || $wgUser->isBlocked() ) {
 			$this->dieUsageMsg( array( 'badaccess-groups' ) );
-		}			
-		
+		}
+
 		$params = $this->extractRequestParams();
-		
+
 		$group = new SWLGroup(
 			null,
 			$params['name'],
@@ -35,19 +35,19 @@ class ApiAddWatchlistGroup extends ApiBase {
 			$params['properties'],
 			$params['concepts']
 		);
-		
+
 		$this->getResult()->addValue(
 			null,
 			'success',
 			$group->writeToDB()
 		);
-		
+
 		$this->getResult()->addValue(
 			'group',
 			'id',
 			$group->getId()
 		);
-		
+
 		$this->getResult()->addValue(
 			'group',
 			'name',
@@ -83,7 +83,7 @@ class ApiAddWatchlistGroup extends ApiBase {
 			),
 		);
 	}
-	
+
 	public function getParamDescription() {
 		return array(
 			'name' => 'The name of the group, used for display in the user preferences',
@@ -93,26 +93,26 @@ class ApiAddWatchlistGroup extends ApiBase {
 			'concepts' => 'The concepts this watchlist group covers',
 		);
 	}
-	
+
 	public function getDescription() {
 		return array(
 			'API module to add semantic watchlist groups.'
 		);
 	}
-	
+
 	public function getPossibleErrors() {
 		return array_merge( parent::getPossibleErrors(), array(
 		) );
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=addswlgroup&name=My group of awesome&properties=Has awesomeness|Has epicness&categories=Awesome stuff',
 		);
-	}	
-	
+	}
+
 	public function getVersion() {
 		return __CLASS__ . ': $Id: ApiAddWatchlistGroup.php 88461 2011-05-20 16:25:39Z jeroendedauw $';
-	}		
-	
+	}
+
 }

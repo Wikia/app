@@ -222,7 +222,7 @@ class TempUser extends WikiaModel {
 	public function addToDatabase() {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		if ( !$this->wf->ReadOnly() ) {
+		if ( !$this->wf->ReadOnly() && !empty($this->user_id) ) {
 			$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
 			$db->insert(
 				'user_temp',

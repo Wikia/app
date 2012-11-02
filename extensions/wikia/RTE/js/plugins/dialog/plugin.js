@@ -10,11 +10,16 @@ CKEDITOR.plugins.add('rte-dialog',
 
 		// setup MW suggest on given dialog field
 		CKEDITOR.dialog.prototype.enableSuggesionsOn = function(field, namespaces) {
-			var fieldId = field._.inputId,
-				node = $('#' + fieldId);
+			var self = this,
+				fieldId = field._.inputId,
+				node = $('#' + fieldId),
+				promise = $.Deferred();
 
 			if (!node.exists() || node.data('suggestSetUp')) {
-				return;
+				if (node.exists()) {
+					promise.resolveWith(this, [node]);
+				}
+				return promise.promise();
 			}
 
 			RTE.log('enabling MW suggest on #' + fieldId);
@@ -47,7 +52,7 @@ CKEDITOR.plugins.add('rte-dialog',
 							}
 						);
 					},
-					// bugid: 43228 -- default jquery ui can't calculate the correct z-index in this context; 
+					// bugid: 43228 -- default jquery ui can't calculate the correct z-index in this context;
 					// this is the lowest order of magnitude decimal value we could get away with.
 					open: function(event, ui) { $(this).autocomplete('widget').css('z-index', 100000000);  }
 				});
@@ -66,7 +71,11 @@ CKEDITOR.plugins.add('rte-dialog',
 						}
 					});
 				}
+
+				promise.resolveWith(self, [node]);
 			});
+
+			return promise.promise();
 		};
 
 		// set loading state of current dialog

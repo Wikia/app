@@ -35,26 +35,12 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 }
 
-// Construct a tag for newrelic -- wgRequest is global in this scope
+// Construct a tag for newrelic
 if( function_exists( 'newrelic_name_transaction' ) ) {
 	if ( function_exists( 'newrelic_disable_autorum') ) {
 		newrelic_disable_autorum();
 	}
-	if (is_object($wgRequest)) {
-		$sharedWiki = (preg_match("/^slot[0-9]\$/",$wgDBname) || $wgDBname == 'devbox') ? "shared" : "local";
-		$only = $wgRequest->getVal( 'only', 'full' );
-		$modules = ResourceLoaderContext::expandModuleNames( $wgRequest->getVal( 'modules' ) );
-		if ( count( $modules ) > 2 ) {
-			$modules = count($modules) . '/' . $modules[0];
-		} else {
-			$modules = count($modules) . '/' . implode( ',', $modules );
-		}
-		newrelic_name_transaction( "/load/$sharedWiki/$only/$modules" );
-		if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
-			newrelic_add_custom_parameter( 'skin', $wgRequest->getVal( 'skin' ) );
-			newrelic_add_custom_parameter( 'lang', $wgRequest->getVal( 'lang' ) );
-		}
-        }
+	newrelic_name_transaction( "ResourceLoader" );
 }
 
 

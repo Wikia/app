@@ -9,7 +9,6 @@
 	}
 	@include border-radius(5px);
 	background-color: $share-background-color;
-	display: none;
 	padding: 3px;
 	position: absolute;
 	left: $width-outside + 8px;
@@ -31,5 +30,9 @@
 	}
 	>:first-child {
 		margin: 0 0 5px 0;
+	}
+	&.hidden {
+		visibility: hidden;
+		left: 0px;
 	}
 }

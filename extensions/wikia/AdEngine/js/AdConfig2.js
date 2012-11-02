@@ -3,10 +3,8 @@ var AdConfig2 = function (
 	log, window, document, Geo
 
 	// adProviders
-	, adProviderAdDriver
 	, adProviderAdDriver2
 	, adProviderEvolve
-	, adProviderEvolveRS
 	, adProviderGamePro
 	, adProviderLater
 	, adProviderNull
@@ -16,8 +14,7 @@ var AdConfig2 = function (
 	var log_group = 'AdConfig2'
 		, city_lang = window.wgContentLanguage
 		, country = Geo.getCountryCode()
-		, defaultHighValueCountries, defaultHighValueSlots
-		, highValueCountries, highValueSlots
+		, defaultHighValueSlots, highValueSlots
 		, slotsOnlyOnLongPages
 		, getProvider;
 
@@ -43,23 +40,6 @@ var AdConfig2 = function (
 		'WIKIA_BAR_BOXAD_1':true
 	};
 
-	// copy of CommonSettings wgHighValueCountries
-	defaultHighValueCountries = {
-		'CA':true,
-		'DE':true,
-		'DK':true,
-		'ES':true,
-		'FI':true,
-		'FR':true,
-		'GB':true,
-		'IT':true,
-		'NL':true,
-		'NO':true,
-		'SE':true,
-		'UK':true,
-		'US':true
-	};
-
 	// Map of slots present only on long pages
 	// key: slot name
 	// value: minimal height needed to show the ad (in pixels)
@@ -69,9 +49,6 @@ var AdConfig2 = function (
 		PREFOOTER_LEFT_BOXAD: 2400,
 		PREFOOTER_RIGHT_BOXAD: 2400
 	};
-
-	highValueCountries = window.wgHighValueCountries2 || window.wgHighValueCountries;
-	highValueCountries = highValueCountries || defaultHighValueCountries;
 
 	highValueSlots = defaultHighValueSlots;
 
@@ -101,7 +78,7 @@ var AdConfig2 = function (
 			return adProviderAdDriver2;
 		}
 		if (slot[2] === 'AdDriver') {
-			return adProviderAdDriver;
+			return adProviderAdDriver2;
 		}
 		if (slot[2] === 'Liftium2') {
 			return adProviderLater;
@@ -112,14 +89,12 @@ var AdConfig2 = function (
 
 		// TODO refactor highValueSlots check to the top of the whole config
 		if (highValueSlots[slotname]) {
-
-		// First ask GamePro (german lang wiki)
-		if (city_lang === 'de') {
-			if (adProviderGamePro.canHandleSlot(slot)) {
-				return adProviderGamePro;
+			// First ask GamePro (german lang wiki)
+			if (city_lang === 'de') {
+				if (adProviderGamePro.canHandleSlot(slot)) {
+					return adProviderGamePro;
+				}
 			}
-		}
-
 		}
 
 		// Next Evolve (AU, CA, and NZ traffic)
@@ -127,19 +102,11 @@ var AdConfig2 = function (
 			if (adProviderEvolve.canHandleSlot(slot)) {
 				return adProviderEvolve;
 			}
-			if (adProviderEvolveRS.canHandleSlot(slot)) {
-				return adProviderEvolveRS;
-			}
 		}
 
-		// TODO refactor highValueSlots check to the top of the whole config
-		if (highValueSlots[slotname]) {
-
-		// Then our dart (high value traffic)
-		if (highValueCountries[country]) {
+		// Non-high-value slots goes to ad provider Later, so GamePro can grab them later
+		if (highValueSlots[slotname] && adProviderAdDriver2.canHandleSlot(slot)) {
 			return adProviderAdDriver2;
-		}
-
 		}
 
 		return adProviderLater;

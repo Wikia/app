@@ -119,21 +119,23 @@ body.skin-oasis .ChatMonobookEntryPoint {
 		}
 
 		.carousel-container {
-			left: 16px;
+			left: 21px;
 			height: 34px;
 			overflow: hidden;
 			position: relative;
-			width: 224px;
+			width: 244px;
 			& > div {
 				position: relative;
 			}
 			ul {
 				@include clearfix;
+				list-style: none;
+				margin: 0;
 				position: absolute;
 			}
 			li {
 				float: left;
-				margin-right: 4px;
+				margin: 0 8px 0 0;
 			}
 		}
 
@@ -166,6 +168,12 @@ body.skin-oasis .ChatMonobookEntryPoint {
 	position: relative;
 	width: 284px;
 	word-wrap: break-word;
+}
+
+// use full width on main pages using grid (BugId:51408)
+.main-page-tag-lcs .ChatEntryPoint,
+.main-page-tag-rcs .ChatEntryPoint {
+	width: auto;
 }
 
 /* IE7 hackery */

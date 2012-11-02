@@ -3,6 +3,7 @@
 @import "../../../../skins/oasis/css/mixins/bodytext";
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/multiple-box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/opacity";
@@ -81,9 +82,11 @@ body {
 }
 
 #EditPageRail {
-	@include box-shadow(-2px, 2px, 2px, $color-epl-gradient-shadow, false, 0);
+	// Special variable with shadow details to be passed to multiple-box-shadow mixin -- check multiple-box-shadow.scss for details
+	$EditPageRailShadow: -2px 2px 2px $color-epl-gradient-shadow, -1px 0 0 $color-page-border;
+	@include multiple-box-shadow($EditPageRailShadow);
+
 	background-color: $color-epl-page-tertiary;
-	border-left: 1px solid $color-page-border;
 	float: right;
 	width: $width-rail-epl;
 

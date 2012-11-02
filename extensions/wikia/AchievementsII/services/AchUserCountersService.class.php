@@ -16,7 +16,15 @@ class AchUserCountersService {
 		$this->mUserId = $user_id;
 
 		if(empty($wgEnableAchievementsStoreLocalData)) {
+			global $wgCityId;
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
+			$ins = array(
+				'user_id' => $user_id,
+				'wiki_id' => $wgCityId
+			);
+			$dbw->insert( 'ach_user_counters_refs', $ins, __METHOD__, array("IGNORE") );
+
 		} else {
 			$dbr = wfGetDB(DB_SLAVE);
 		}

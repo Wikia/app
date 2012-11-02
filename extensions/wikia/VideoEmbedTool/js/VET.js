@@ -591,20 +591,6 @@ function VET_recentlyUploaded(param, pagination) {
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=recentlyUploaded&'+param, callback);
 }
 
-function VET_sendQuery(query, page, sourceId, pagination) {
-	var callback = {
-		success: function(o) {
-			$G('VET_results_' + o.argument[0]).innerHTML = o.responseText;
-			VET_indicator(1, false);
-		},
-		argument: [sourceId]
-	}
-	VET_lastQuery[sourceId] = query;
-	VET_indicator(1, true);
-	YAHOO.util.Connect.abort(VET_asyncTransaction);
-	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId, callback);
-}
-
 function VET_indicator(id, show) {
 	if(show) {
 		if(id == 1) {

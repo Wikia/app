@@ -7,7 +7,6 @@
  *
  * Object that allows auto pagination of array content
  */
-
 class Paginator extends Service{
 
 	// configuration settings
@@ -30,14 +29,14 @@ class Paginator extends Service{
 	/**
 	 * Creates a new Pagination object.
 	 *
-	 * @param   array  configuration
-	 * @return  Pagination
+	 * @param   array  $aData
+	 * @return  Paginator
 	 */
 	public static function newFromArray( $aData, $iItemsPerPage = 8, $iDisplayedNeighbour = 3, $bCach = false, $sCacheKey = '', $maxItemsPerPage = 48 ){
 		$aConfig = array(
-			'itemsPerPage'		=> $iItemsPerPage,
-			'displayedNeighbours'	=> $iDisplayedNeighbour,
-			'maxItemsPerPage'	=> $maxItemsPerPage,
+			'itemsPerPage' => $iItemsPerPage,
+			'displayedNeighbours' => $iDisplayedNeighbour,
+			'maxItemsPerPage' => $maxItemsPerPage,
 		);
 
 		return new Paginator( $aData, $aConfig, $bCach, $sCacheKey );
@@ -46,7 +45,7 @@ class Paginator extends Service{
 	/**
 	 * Creates a new Pagination object.
 	 *
-	 * @param   array  configuration
+	 * @param   array  $aData
 	 * @return  void
 	 */
 	public function __construct( $aData, $aConfig = false, $bCach = false, $sCacheKey = '' ){
@@ -55,10 +54,6 @@ class Paginator extends Service{
 		$this->cacheKey = $sCacheKey;
 		$this->setConfig( $aConfig );
 		$this->paginate( $aData );
-	}
-
-	private function setMaxItemsPerPage($iMaxItemsPerPage) {
-		$this->maxItemsPerPage = $iMaxItemsPerPage;
 	}
 
 	private function setConfig ( $aConfig ){
@@ -194,4 +189,3 @@ class Paginator extends Service{
 	}
 
 }
-

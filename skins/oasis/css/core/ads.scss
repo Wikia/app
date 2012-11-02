@@ -3,12 +3,27 @@
 @import "../mixins/clearfix";
 
 /** Leaderboards **/
-#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+
+.WikiaTopAds {
+	font-size: 0;
+	position: relative;
+	padding-top: 10px;
 	text-align: center;
-	&.jumbo-leaderboard {
-		margin-left: 0;
-		margin-right: 0;
+	z-index: 0;
+	.WikiaTopAdsInner {
+		@include clearfix;
+		display: inline-block;
+		>div {
+			float: right;
+		}
 	}
+}
+
+#TOP_BUTTON {
+  margin-right: 10px;
+}
+
+#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
 	>div {
 		margin-left: auto;
 		margin-right: auto;
@@ -16,35 +31,8 @@
 	>div[id^=Liftium_] {
 		text-align: center;
 	}
-}
-#CORP_TOP_LEADERBOARD.default-height, #HOME_TOP_LEADERBOARD.default-height, #HUB_TOP_LEADERBOARD.default-height, #TOP_LEADERBOARD.default-height {
-	height: 90px;
-}
-.WikiaTopAds {
-	@include clearfix;
-	padding-top: 10px;
-	position: relative;
-	&.WikiaTopButtonLeft {
-		#CORP_TOP_LEADERBOARD, #HOME_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD, #TOP_LEADERBOARD {
-			float: right;
-			margin: 0 10px 0 0;
-			padding: 0;
-		}
-		#TOP_BUTTON {
-			margin: 0 0 0 10px;
-			padding: 0;
-		}
-	}
-	&.WikiaTopButtonRight {
-		#CORP_TOP_LEADERBOARD, #HOME_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD, #TOP_LEADERBOARD {
-			float: left;
-			margin: 0 0 0 10px;
-			padding: 0;
-		}
-		#TOP_BUTTON {
-			margin: 0 10px 0 0;
-			padding: 0;
-		}
+	&.default-height {
+		height: 90px;
 	}
 }
 
@@ -165,27 +153,6 @@
 	position: absolute;
 }
 
-
-/** Mainpage styling **/
-/*
-On hold for now
-.WikiaMainPageBanner {
-	background: url(/skins/oasis/images/temp_main_page_banner.jpg) no-repeat; /* $wgCdnStylePath /
-	height: 200px;
-	margin-bottom: -10px;
-	*margin-bottom: 10px; //IE7
-	margin-bottom: 10px\9; //IE8
-}
-#HOME_TOP_LEADERBOARD {
-	@include linear-gradient(transparent, top, rgba($color-page, .0001), 90%, $color-page, 100%);
-	height: 200px;
-}
-//Appropriate margins around different size ads
-#HOME_TOP_LEADERBOARD div[id*="728x90"] {
-	padding-top: 40px;
-}
-*/
-
 /** DART calls for INVISIBLE slots return a pixel. Hide this pixel. **/
 body >a >img[src$="noad.gif"] {
 	position: absolute;
@@ -202,4 +169,34 @@ body >a >img[src$="noad.gif"] {
 .home-top-right-ads .SelfServeUrl {
 	position: relative;
 	z-index: 100;
+}
+
+/** Exitstitial ad */
+#ExitstitialInfobox {
+	p {
+		border-bottom: 1px solid #ccc;
+		padding-bottom: 5px;
+	}
+	.close-exitstitial-ad {
+		font-size: 120%;
+		text-align: center;
+	}
+	.ad-centered-wrapper {
+		height: 400px;
+		margin-bottom: 20px;
+		margin-top: 20;
+	}
+}
+
+.ad-centered-wrapper {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+	> div {
+		display: table-cell;
+		vertical-align: middle;
+		> div {
+			display: inline-block;
+		}
+	}
 }

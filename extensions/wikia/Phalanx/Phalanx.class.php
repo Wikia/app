@@ -257,6 +257,7 @@ class Phalanx {
 		$blockText = $blockData['text'];
 
 		if ($blockData['regex']) {
+			wfProfileIn( __METHOD__ . '-regex' );
 			//escape slashes uses as regex delimiter
 			$blockText = str_replace('/', '\/', preg_replace('|\\\*/|', '/', $blockText));
 			if ($blockData['exact']) {
@@ -287,7 +288,9 @@ class Phalanx {
 				$result['blocked'] = true;
 				$result['msg'] = $matches[0];
 			}
+			wfProfileOut( __METHOD__ . '-regex' );
 		} else { //plain text
+			wfProfileIn( __METHOD__ . '-plain' );
 			if (!$blockData['case']) {
 				$text = strtolower($text);
 				$blockText = strtolower($blockText);
@@ -309,6 +312,7 @@ class Phalanx {
 					$result['msg'] = $blockData['text'];    //original case
 				}
 			}
+			wfProfileOut( __METHOD__ . '-plain' );
 		}
 		wfProfileOut( __METHOD__ );
 		return $result;

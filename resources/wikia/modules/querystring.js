@@ -1,29 +1,25 @@
 /**
  * URL String handler
  *
- * @author Jakub "Student" Olek
+ * @author Jakub "Student" Olek <jakubolek@wikia-inc.com>
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 
-(function(){
+(function (context) {
 	'use strict';
 
-	if(window.define){
-		//AMD
-		define('querystring', querystring);//late binding
-	}else{
-		//namespace
-		if(!window.Wikia) {window.Wikia = {};}
+	function isEmpty (o) {
+		var k;
 
-		window.Wikia.Querystring = querystring();//late binding
-	}
+		for (k in o) {
+			return false;
+		}
 
-	function isEmpty(o) {
-		for(var k in o) {return false;}
 		return true;
 	}
 
 	function querystring(){
-		var l = window.location,
+		var l = context.location,
 			p = Querystring.prototype,
 			u;//late binding
 
@@ -37,7 +33,7 @@
 				pos,
 				cache = {};
 
-			if(url) {
+			if (url) {
 				tmp = url.split('//', 2);
 				protocol = tmp[1] ? tmp[0] : '';
 				tmp = (tmp[1] || tmp[0]).split('#');
@@ -61,7 +57,7 @@
 				hash = l.hash.substr(1);
 			}
 
-			if(srh){
+			if (srh) {
 				var tmpQuery = srh.split('&'),
 					i = tmpQuery.length;
 
@@ -80,23 +76,24 @@
 			this.hash = hash;
 		}
 
-		p.toString = function(){
-			var ret = (this.protocol ? this.protocol + '//' : '') + this.link + this.path + (isEmpty(this.cache) ? '' : '?'),
+		p.toString = function () {
+			var ret = ((this.protocol) ? this.protocol + '//' : '') + this.link + this.path + (isEmpty(this.cache) ? '' : '?'),
 				attr, val,
 				tmpArr = [];
 
-			for(attr in this.cache){
+			for (attr in this.cache) {
 				val = this.cache[attr];
 				tmpArr.push(attr + (val === u ? '' : '=' + val));
 			}
-			return ret + tmpArr.join('&') + (this.hash ? '#' + this.hash : '');
+
+			return ret + tmpArr.join('&') + ((this.hash) ? '#' + this.hash : '');
 		};
 
-		p.getVal = function(name, defVal){
+		p.getVal = function (name, defVal) {
 			return this.cache[name] || defVal;
 		};
 
-		p.setVal = function(name, val){
+		p.setVal = function (name, val) {
 			if(val === u){
 				delete this.cache[name];
 			}else{
@@ -104,29 +101,29 @@
 			}
 		};
 
-		p.getHash = function(){
+		p.getHash = function () {
 			return this.hash;
 		};
 
-		p.setHash = function(h){
+		p.setHash = function (h) {
 			this.hash = h;
 		};
 
-		p.getPath = function(){
+		p.getPath = function () {
 			return this.path;
 		};
 
-		p.setPath = function(p){
+		p.setPath = function (p) {
 			this.path = p;
 		};
 
-		p.addCb = function(){
+		p.addCb = function () {
 			this.setVal('cb', Math.ceil(Math.random() * 10001));
 		};
 
-		p.goTo = function(){
+		p.goTo = function () {
 			//TODO: We don't want these to be in url on load, this should be refactored as is valid only for WikiaMobile
-			if(this.hash === 'topbar' || this.hash === 'Modal'){
+			if (this.hash === 'topbar' || this.hash === 'Modal') {
 				this.hash = '';
 			}
 
@@ -135,4 +132,17 @@
 
 		return Querystring;
 	}
-})();
+
+	//UMD
+	if (context.define && context.define.amd) {
+		//AMD
+		define('querystring', querystring);//late binding
+	} else {
+		//namespace
+		if(!context.Wikia) {
+			context.Wikia = {};
+		}
+
+		context.Wikia.Querystring = querystring();//late binding
+	}
+}(this));

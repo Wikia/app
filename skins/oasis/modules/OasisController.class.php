@@ -366,6 +366,7 @@ class OasisController extends WikiaController {
 
 		// load WikiaScriptLoader, AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
 		$this->wikiaScriptLoader = '';
+		$jsReferences = array();
 
 		$jsAssetGroups = array( 'oasis_blocking' );
 		wfRunHooks('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
@@ -403,29 +404,6 @@ class OasisController extends WikiaController {
 			} else {
 				$this->jsFiles .= $s['tag'];
 			}
-		}
-
-		// add user JS (if User:XXX/wikia.js page exists)
-		// copied from Skin::getHeadScripts
-		if($wgUser->isLoggedIn()){
-			wfProfileIn(__METHOD__ . '::checkForEmptyUserJS');
-
-			$userJS = $wgUser->getUserPage()->getPrefixedText() . '/wikia.js';
-			$userJStitle = Title::newFromText( $userJS );
-
-			if ( $userJStitle->exists() ) {
-				global $wgSquidMaxage;
-
-				$siteargs = array(
-					'action' => 'raw',
-					'maxage' => $wgSquidMaxage,
-				);
-
-				$userJS = Skin::makeUrl( $userJS, wfArrayToCGI( $siteargs ) );
-				$jsReferences[] = ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) ? $this->rewriteJSlinks( $userJS ) : $userJS;
-			}
-
-			wfProfileOut(__METHOD__ . '::checkForEmptyUserJS');
 		}
 
 		// Load the combined JS

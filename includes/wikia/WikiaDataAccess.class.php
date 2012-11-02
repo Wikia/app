@@ -34,7 +34,7 @@ class WikiaDataAccess {
 
 	/**
 	 * returns cached data if possible (up to $cacheTime old)
-	 * otherwise gets the data and sets caches the result before returning it
+	 * otherwise gets the data and saves the result in cache before returning it
 	 * @author Piotr Bablok <pbablok@wikia-inc.com>
 	 */
 	static function cache( $key, $cacheTime, $getData ) {

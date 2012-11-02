@@ -21,6 +21,8 @@ class WikiaBarHooks {
 	}
 
 	public static function onWFAfterErrorDetection($cv_id, $city_id, $cv_name, $cv_value, &$return, &$error) {
+		wfProfileIn(__METHOD__);
+
 		if (self::isWikiaBarConfig($city_id, $cv_name)) {
 			/* @var $validator WikiaBarMessageDataValidator */
 			$validator = F::build('WikiaBarMessageDataValidator');
@@ -51,8 +53,9 @@ class WikiaBarHooks {
 				$error = $errorCount;
 				$return = trim(implode("<br/>", $errors));
 			}
-
 		}
+
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 

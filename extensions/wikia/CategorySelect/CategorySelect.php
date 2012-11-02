@@ -51,11 +51,6 @@ function CategorySelectInit($forceInit = false) {
 		return true;
 	}
 
-	if ( (!$forceInit) && (!$wgUser->isAllowed('edit')) ){
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
 	//don't use CategorySelect for undo edits
 	$undoafter = $wgRequest->getVal('undoafter');
 	$undo = $wgRequest->getVal('undo');
@@ -116,13 +111,13 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 	}
 
 	// Don't initialize when user will see the source instead of the editor, see RT#25246
-	if ( !$title->quickUserCan('edit') && ( NS_SPECIAL != $title->mNamespace ) ) {
+	if ( ( NS_SPECIAL != $title->mNamespace ) && !$title->quickUserCan('edit') ) {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	if ($action == 'view' || $action == 'purge') {
-		if ($title->mArticleID == 0) {
+		if ($title->getArticleID() == 0) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}

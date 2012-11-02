@@ -244,12 +244,15 @@ class RelatedVideosService {
 		}
 
 		$file = wfFindFile( $oTitle );
-		$thumb = $file->transform( array( 'width'=>$width, 'height'=>$height ) );
-
-		$arr['thumbnail'] = $thumb->toHtml( array( 'custom-title-link' => $oTitle,
+		if (! empty( $file ) ) {
+			$thumb = $file->transform( array( 'width'=>$width, 'height'=>$height ) );
+			if ( ! empty( $thumb ) ) {
+				$arr['thumbnail'] = $thumb->toHtml( array( 'custom-title-link' => $oTitle,
 		                                           'duration' => true,
 			                                   'linkAttribs' => array( 'class' => 'video-thumbnail' )
 							) );
+			}
+		}
 	}
 
 }

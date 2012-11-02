@@ -13,6 +13,8 @@ $messages['en'] = array(
 	'wikiabar-tooltip' => 'Collapse',
 	'wikiabar-tooltip-show' => 'Show',
 	'wikiabar-message-tooltip' => 'Click here for more information!',
+	'wikiabar-change-state-error' => 'Invalid request. Changing bar state aborted.',
+	'wikiabar-get-state-error' => 'An error occurred: invalid user.',
 );
 
 $messages['de'] = array(

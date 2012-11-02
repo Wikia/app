@@ -47,7 +47,7 @@ var WMU_panel = null,
 	WMU_slider = null,
 	WMU_thumbSize = null,
 	WMU_orgThumbSize = null,
-	WMU_width = null,
+	WMU_width = null, // real width of full sized image
 	WMU_height = null,
 	WMU_widthChanges = 1,
 	WMU_refid = null,
@@ -114,6 +114,7 @@ function WMU_loadDetails() {
 			$G('ImageUploadBack').style.display = 'none';
 
 			setTimeout(function() {
+				// FIXME: FCK is mocked here so this code would still work even though we're not using FCK anymore
 				if(!FCK.wysiwygData[WMU_refid].thumb) {
 					$G('ImageUploadFullOption').click();
 				}
@@ -122,15 +123,14 @@ function WMU_loadDetails() {
 				}
 				if(FCK.wysiwygData[WMU_refid].width) {
 					WMU_slider.setValue(FCK.wysiwygData[WMU_refid].width / (WMU_slider.getRealValue() / WMU_slider.getValue()), true);
-					WMU_width = FCK.wysiwygData[WMU_refid].width;
-					MWU_imageWidthChanged( WMU_width );
+					MWU_imageWidthChanged();
 					$G( 'ImageUploadSlider' ).style.visibility = 'visible';
 					$G( 'ImageUploadInputWidth' ).style.visibility = 'visible';
 					$G( 'ImageUploadWidthCheckbox' ).checked = true;
-					$G( 'ImageUploadManualWidth' ).value = WMU_width;
-					WMU_manualWidthInput( $G( 'ImageUploadManualWidth' ) );
+					$G( 'ImageUploadManualWidth' ).value = FCK.wysiwygData[WMU_refid].width;
+					WMU_manualWidthInput();
 				}
-			}, 200);
+			}, 100);
 
 			if(FCK.wysiwygData[WMU_refid].caption) {
 				$G('ImageUploadCaption').value = FCK.wysiwygData[WMU_refid].caption;
@@ -204,9 +204,9 @@ function WMU_licenseSelectorCheck() {
 	WMU_loadLicense( selection );
 }
 
-function WMU_manualWidthInput( elem ) {
+function WMU_manualWidthInput() {
 	var image = $G( 'ImageUploadThumb' ).firstChild;
-	var val = parseInt( elem.value );
+	var val = parseInt( $G( 'ImageUploadManualWidth' ).value );
 	if ( isNaN( val ) ) {
 		return false;
 	}
@@ -222,7 +222,6 @@ function WMU_manualWidthInput( elem ) {
 			$G( 'ImageUploadManualWidth' ).value = image.width;
 			WMU_readjustSlider( image.width );
 			WMU_shownMax = true;
-			//alert (wmu_max_thumb);
 		}
 	} else {
 		image.height = val / WMU_ratio;
@@ -249,6 +248,7 @@ function WMU_readjustSlider( value ) {
 		if ( 'hidden' == $G( 'ImageUploadSliderThumb' ).style.visibility ) {
 			$G( 'ImageUploadSliderThumb' ).style.visibility = 'visible';
 		}
+		// get slider's max value
 		var fixed_width = Math.min( 400, WMU_width );
 		value = Math.max(2, Math.round( ( value * 200 ) / fixed_width ) );
 		WMU_slider.setValue( value, true, true, true );
@@ -310,9 +310,11 @@ function WMU_getFirstFree( gallery, box ) {
 }
 
 function WMU_loadMainFromView() {
-	if (UserLogin.isForceLogIn()) {
+	if (wgUserName == null) {
+		UserLogin.rteForceLogin();
 		return;
 	}
+	
 	var callback = function(data) {
 		// first, check if this is a special case for anonymous disabled...
 		if( data.wmu_init_login ) {
@@ -880,7 +882,12 @@ function WMU_displayDetails(responseText) {
 	if( 0 < WMU_size ) {
 		$G( 'ImageUploadWidthCheckbox' ).click();
 		$G( 'ImageUploadManualWidth' ).value = WMU_size;
-		WMU_manualWidthInput( $G( 'ImageUploadManualWidth' ) );
+		WMU_manualWidthInput();
+	} else {
+		if ( $G( 'ImageUploadSlider' ) ) {
+			//$G( 'ImageUploadSlider' ).style.visibility = 'hidden';
+			//$G( 'ImageUploadInputWidth' ).style.visibility = 'hidden';
+		}
 	}
 	if( '' != WMU_caption ) {
 		$G( 'ImageUploadCaption' ).value = WMU_caption;
@@ -922,7 +929,14 @@ function WMU_insertImage(e, type) {
 	params.push('type='+type);
 	params.push('mwname='+$G('ImageUploadMWname').value);
 	params.push('tempid='+$G('ImageUploadTempid').value);
-	params.push('update_caption='+$G('ImageUploadReplaceDefault').value);
+
+	var captionUpdateInput = $('#ImageUploadReplaceDefault');
+	if (captionUpdateInput.is(':hidden')) {
+		params.push('update_caption=' + captionUpdateInput.val());
+	} else {
+		var isCaptionUpdate = (captionUpdateInput.is(':checked')) ? 'on' : '';
+		params.push('update_caption=' + isCaptionUpdate );
+	}
 
 	if(type == 'overwrite') {
 		params.push('name='+ encodeURIComponent( $G('ImageUploadExistingName').value ) );
@@ -1133,7 +1147,7 @@ function WMU_box_in_article() {
  This function is run if modifying an existing image in the article
  with a precise width set.
  */
-function MWU_imageWidthChanged(changes) {
+function MWU_imageWidthChanged() {
 
 	var image = $G('ImageUploadThumb').firstChild;
 	if( !$G( 'ImageUploadWidthCheckbox' ).checked ) {
@@ -1157,7 +1171,7 @@ function MWU_imageWidthChanged(changes) {
 }
 
 function MWU_imageSizeChanged(size) {
-	YAHOO.util.Dom.setStyle(['ImageWidthRow', 'ImageLayoutRow'], 'display', size == 'thumb' ? '' : 'none');
+	YAHOO.util.Dom.setStyle(['ImageWidthRow'], 'display', size == 'thumb' ? '' : 'none');
 
 	if($G('ImageUploadThumb')) {
 		var image = $G('ImageUploadThumb').firstChild;

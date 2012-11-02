@@ -417,6 +417,16 @@ class MWMemcached {
 	public function get( $key ) {
 		wfProfileIn( __METHOD__ );
 
+		# start wikia change
+		# Memoize duplicate memcache requests for the same key in the same request
+		if( isset( $this->_dupe_cache[ $key ] ) ) {
+			wfProfileIn ( __METHOD__ . "::$key !DUPE" );
+			wfProfileOut ( __METHOD__ . "::$key !DUPE" );
+			wfProfileOut( __METHOD__ );
+			return $this->_dupe_cache[ $key ];
+		}
+		# end wikia change
+
 		if ( $this->_debug ) {
 			$this->_debugprint( "get($key)\n" );
 		}
@@ -425,6 +435,16 @@ class MWMemcached {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
+
+		# start wikia change
+		# Wikia::memcachePurge hook on MediawikiPerformAction
+		# @author owen
+		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads;
+		if( $wgAllowMemcacheDisable && ( $wgAllowMemcacheReads == false ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		# end wikia change
 
 		$sock = $this->get_sock( $key );
 
@@ -439,24 +459,6 @@ class MWMemcached {
 		} else {
 			$this->stats['get'] = 1;
 		}
-
-		# start wikia change
-		# Wikia::memcachePurge hook on MediawikiPerformAction
-		# @author owen
-		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads;
-		if( $wgAllowMemcacheDisable && ( $wgAllowMemcacheReads == false ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		# Memoize duplicate memcache requests for the same key in the same request
-		if( isset( $this->_dupe_cache[ $key ] ) ) {
-			wfProfileIn ( __METHOD__ . "::$key !DUPE" );
-			wfProfileOut ( __METHOD__ . "::$key !DUPE" );
-			wfProfileOut( __METHOD__ );
-			return $this->_dupe_cache[ $key ];
-		}
-		# end wikia change
 
 		$cmd = "get $key\r\n";
 		if ( !$this->_safe_fwrite( $sock, $cmd, strlen( $cmd ) ) ) {
@@ -981,6 +983,10 @@ class MWMemcached {
 
 			} else {
 				$this->_debugprint( "Error parsing memcached response\n" );
+				// Wikia change - begin
+				// @author macbre (BugId:27916)
+				Wikia::logBacktrace(__METHOD__);
+				// Wikia change - end
 				return 0;
 			}
 		}

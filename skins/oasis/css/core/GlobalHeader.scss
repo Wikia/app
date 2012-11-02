@@ -12,6 +12,7 @@
 	position: relative;
 	width: $wikiaheader-width;
 	z-index: $zTop;
+	-webkit-font-smoothing: antialiased; // prevents text flickering when css transformations in progress
 	h1 {
 		display: none;
 	}

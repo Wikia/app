@@ -2,6 +2,27 @@
 
 class RTEReverseParser {
 
+	/**
+	 * data-rte-* constant's
+	 */
+	const DATA_RTE_ENTITY = 'data-rte-entity';
+	const DATA_RTE_LINE_START = 'data-rte-line-start';
+	const DATA_RTE_NEW_NODE = 'data-rte-new-node';
+	const DATA_RTE_NEW_MODE = 'data-rte-new-mode';
+	const DATA_RTE_FILTER = 'data-rte-filler';
+	const DATA_RTE_ATTRIBS = 'data-rte-attribs';
+	const DATA_RTE_STYLE = 'data-rte-style';
+	const DATA_RTE_SHIFT_ENTER = 'data-rte-shift-enter';
+	const DATA_RTE_SHORT_ROW_MARKUP = 'data-rte-short-row-markup';
+	const DATA_RTE_SPACES_AFTER_LAST_CELL = 'data-rte-spaces-after-last-cell';
+	const DATA_RTE_FROMPARSER = 'data-rte-fromparser';
+	const DATA_RTE_WASHTML = 'data-rte-washtml';
+	const DATA_RTE_EMPTY_LINES_BEFORE = 'data-rte-empty-lines-before';
+	const DATA_RTE_META = 'data-rte-meta';
+	const DATA_RTE_SPACES_AFTER = 'data-rte-spaces-after';
+	const DATA_RTE_SPACES_BEFORE = 'data-rte-spaces-before';
+
+
 	// DOMdocument used to process HTML
 	private $dom;
 
@@ -36,8 +57,10 @@ class RTEReverseParser {
 			// fix IE bug with &nbsp; being added add the end of HTML
 			$html = str_replace('<p><br data-rte-bogus="true" />&nbsp;</p>', '', $html);
 
-			// fix &nbsp; entity b0rken by CK
+			// fix html entities b0rken by CK
 			$html = str_replace("\xC2\xA0", '&nbsp;', $html);
+			$html = str_replace("\x26", '&amp;', $html);
+			$html = str_replace("\x27", '&apos;', $html);
 
 			wfProfileOut(__METHOD__.'::preFixes');
 
@@ -237,7 +260,7 @@ class RTEReverseParser {
 			$out = $this->handleHtml($node, $textContent);
 		}
 		// handle nodes wrapping HTML entities
-		else if ($node->hasAttribute('data-rte-entity')) {
+		else if ($node->hasAttribute(self::DATA_RTE_ENTITY)) {
 			$out = $this->handleEntity($node, $textContent);
 		}
 		// handle other elements
@@ -404,7 +427,7 @@ class RTEReverseParser {
 		$prefix = $suffix = $beforeText = $beforeClose = '';
 
 		// add line break
-		if ($node->hasAttribute('data-rte-line-start')) {
+		if ($node->hasAttribute(self::DATA_RTE_LINE_START)) {
 			$parentWasHtml = !empty($node->parentNode) && self::wasHtml($node->parentNode);
 
 			if ($parentWasHtml) {
@@ -426,7 +449,7 @@ class RTEReverseParser {
 				$child = ($node->nodeName == 'div') ? $node->lastChild /* BugId:4748 */ : $node->firstChild;
 
 				if ( !empty($child) && ($child->nodeType == XML_ELEMENT_NODE) ) {
-					if ($child->hasAttribute('data-rte-line-start')) {
+					if ($child->hasAttribute(self::DATA_RTE_LINE_START)) {
 						$beforeClose = "\n";
 					}
 				}
@@ -499,7 +522,7 @@ class RTEReverseParser {
 	private function handleEntity($node, $textContent) {
 		wfProfileIn(__METHOD__);
 
-		$entity = $node->getAttribute('data-rte-entity');
+		$entity = $node->getAttribute(self::DATA_RTE_ENTITY);
 
 		// convert text content back to HTML entity
 		$textEncoded = htmlentities($textContent, ENT_COMPAT, 'UTF-8');
@@ -634,7 +657,7 @@ class RTEReverseParser {
 		// empty paragraphs added in CK / already existing in wikitext
 		// RT #37897
 		if (($textContent == self::getEntityMarker('nbsp')) || ($textContent == '&nbsp;')) {
-			if ($node->hasAttribute('data-rte-new-node')) {
+			if ($node->hasAttribute(self::DATA_RTE_NEW_NODE)) {
 				$textContent = '';
 			}
 			else {
@@ -643,7 +666,7 @@ class RTEReverseParser {
 		}
 
 		// RT#40786: handle "filler" paragraphs added between headings
-		if ($node->hasAttribute('data-rte-filler') && $textContent == "\n") {
+		if ($node->hasAttribute(self::DATA_RTE_FILTER) && $textContent == "\n") {
 			RTE::log(__METHOD__.'::filler', 'empty filler paragraph found');
 
 			wfProfileOut(__METHOD__);
@@ -651,35 +674,40 @@ class RTEReverseParser {
 		}
 
 		// handle "raw" HTML paragraphs within wikitext (BugId:3359)
-		if (self::wasHtml($node) && !$node->hasAttribute('data-rte-attribs')) {
+		if (self::wasHtml($node) && !$node->hasAttribute(self::DATA_RTE_ATTRIBS)) {
 			wfProfileOut(__METHOD__);
 			return "<p>{$textContent}</p>";
 		}
 
-		// handle paragraphs alignment and indentation
-		// (ignore when paragraph is empty)
-		if ($node->hasAttribute('style') && (trim($textContent) != '')) {
-			$style = $node->getAttribute('data-rte-style');
+		if (self::hasCustomAttributes($node)) {
+			if ($node->hasAttribute('style') && self::countCustomAttributes($node) == 1 && trim($textContent) != '') {
+				$style = $node->getAttribute(self::DATA_RTE_STYLE);
 
-			if (empty($style)) {
-				$style = $node->getAttribute('style');
-			}
+				if (empty($style)) {
+					$style = $node->getAttribute('style');
+				}
 
-			// does paragraph has only style=""margin-left:80px;" ? - style added by CKeditor when doing indent/outdent
-			if (preg_match('#^margin\\-left:[\s\d]+px;$#', trim($style))) {
-				// parse "margin-left" style attribute
-				$indentLevel = self::getIndentationLevel($node);
-				if ($indentLevel) {
-					$textContent = str_repeat(':', $indentLevel) . " {$textContent}";
+				// does paragraph has only style=""margin-left:80px;" ? - style added by CKeditor when doing indent/outdent
+				if (preg_match('#^margin\\-left:[\s\d]+px;$#', trim($style))) {
+					// parse "margin-left" style attribute
+					$indentLevel = self::getIndentationLevel($node);
+					if ($indentLevel) {
+						$textContent = str_repeat(':', $indentLevel) . " {$textContent}";
+					}
+				}
+				else {
+					// wrap text content inside HTML
+					$textContent = "<p style=\"{$style}\">{$textContent}</p>";
 				}
 			}
+			// don't remove paragraph tag if there are some attributes (BugId: 47994)
 			else {
-				// wrap text content inside HTML
-				$textContent = "<p style=\"{$style}\">{$textContent}</p>";
+				$attrStr = self::getAttributesStr($node);
+				$textContent = "<p{$attrStr}>{$textContent}</p>";
 			}
 		}
 
-		if (self::nextSiblingIs($node,'p') && self::wasHtml($node->nextSibling) && !$node->nextSibling->hasAttribute('data-rte-line-start')) {
+		if (self::nextSiblingIs($node,'p') && self::wasHtml($node->nextSibling) && !$node->nextSibling->hasAttribute(self::DATA_RTE_LINE_START)) {
 			// support foo<p>bar</p> (BugId:3559)
 			$out = $textContent;
 		}
@@ -734,7 +762,7 @@ class RTEReverseParser {
 		$out = "\n";
 
 		// handle <br /> added by Shift+Enter
-		if ($node->hasAttribute('data-rte-shift-enter')) {
+		if ($node->hasAttribute(self::DATA_RTE_SHIFT_ENTER)) {
 			$out = "<br />";
 			if(!empty($node->parentNode->parentNode) && !self::isListNode($node->parentNode->parentNode)) { // (RT#37118)
 				$out .= "\n";
@@ -1380,8 +1408,8 @@ class RTEReverseParser {
 				$char = ($node->nodeName == 'td') ? '|' : '!';
 
 				// support cells separated using double pipe
-				$shortRowMarkup = $node->hasAttribute('data-rte-short-row-markup');
-				$spacesAfterLastCell = intval( $node->getAttribute('data-rte-spaces-after-last-cell') );
+				$shortRowMarkup = $node->hasAttribute(self::DATA_RTE_SHORT_ROW_MARKUP);
+				$spacesAfterLastCell = intval( $node->getAttribute(self::DATA_RTE_SPACES_AFTER_LAST_CELL) );
 
 				if($shortRowMarkup) {
 					// add trailing spaces from previous cell (RT #33879)
@@ -1690,14 +1718,14 @@ class RTEReverseParser {
 	 * Checks if given node (check is only performed for paragraphs) was pasted
 	 */
 	private static function isPasted($node) {
-		return !$node->hasAttribute('data-rte-fromparser') && !$node->hasAttribute('data-rte-new-mode');
+		return !$node->hasAttribute(self::DATA_RTE_FROMPARSER) && !$node->hasAttribute(self::DATA_RTE_NEW_MODE);
 	}
 
 	/**
 	 * Checks if given node was added into CK
 	 */
 	private static function isNewNode($node) {
-		return $node->hasAttribute('data-rte-new-node') && (self::getEmptyLinesBefore($node) == 0);
+		return $node->hasAttribute(self::DATA_RTE_NEW_NODE) && (self::getEmptyLinesBefore($node) == 0);
 	}
 
 	/**
@@ -1712,14 +1740,14 @@ class RTEReverseParser {
 	 * Check if given node was rendered from HTML node
 	 */
 	private static function wasHtml($node) {
-		return ($node instanceof DOMElement) && $node->hasAttribute('data-rte-washtml');
+		return ($node instanceof DOMElement) && $node->hasAttribute(self::DATA_RTE_WASHTML);
 	}
 
 	/**
 	 * Get value of data-rte-empty-lines-before attribute
 	 */
 	private static function getEmptyLinesBefore($node) {
-		return intval($node->getAttribute('data-rte-empty-lines-before'));
+		return intval($node->getAttribute(self::DATA_RTE_EMPTY_LINES_BEFORE));
 	}
 
 	/**
@@ -1733,12 +1761,12 @@ class RTEReverseParser {
 		wfProfileIn(__METHOD__);
 
 		// replace style attribute with data-rte-style
-		if ($node->hasAttribute('data-rte-style')) {
-			$node->setAttribute('style', $node->getAttribute('data-rte-style'));
+		if ($node->hasAttribute(self::DATA_RTE_STYLE)) {
+			$node->setAttribute('style', $node->getAttribute(self::DATA_RTE_STYLE));
 		}
 
 		// try to get attributes from previously stored attribute (RT #23998)
-		$attrStr = $node->getAttribute('data-rte-attribs');
+		$attrStr = $node->getAttribute(self::DATA_RTE_ATTRIBS);
 
 		if ( $attrStr != '' ) {
 			// decode entities
@@ -1748,7 +1776,7 @@ class RTEReverseParser {
 		else {
 			foreach ($node->attributes as $attrName => $attrNode) {
 				// ignore attributes used internally by RTE ("data-rte-" or "jquery" prefix)
-				if (substr($attrName, 0, 9) == 'data-rte-' || substr($attrName, 0, 6) == 'jquery') {
+				if (self::isDataRTEAttribute($attrName) || self::isJqueryAttribute($attrName)) {
 					continue;
 				}
 				$attrStr .= ' ' . $attrName . '="' . $attrNode->nodeValue  . '"';
@@ -1816,7 +1844,7 @@ class RTEReverseParser {
 			return $node->data;
 		}
 
-		$value = $node->getAttribute('data-rte-meta');
+		$value = $node->getAttribute(self::DATA_RTE_META);
 
 		if (!empty($value)) {
 			$value = htmlspecialchars_decode($value);
@@ -1931,12 +1959,12 @@ class RTEReverseParser {
 
 		// RT #40013
 		if ( ($textContent != '') && ($textContent != '&nbsp;') ) {
-			$spacesAfter = intval($node->getAttribute('data-rte-spaces-after'));
-			$spacesBefore = intval($node->getAttribute('data-rte-spaces-before'));
+			$spacesAfter = intval($node->getAttribute(self::DATA_RTE_SPACES_AFTER));
+			$spacesBefore = intval($node->getAttribute(self::DATA_RTE_SPACES_BEFORE));
 		}
 		else {
 			$textContent = '';
-			$spacesAfter = intval($node->getAttribute('data-rte-spaces-after'));
+			$spacesAfter = intval($node->getAttribute(self::DATA_RTE_SPACES_AFTER));
 			$spacesBefore = 0;
 		}
 
@@ -1991,5 +2019,66 @@ class RTEReverseParser {
 
 		wfProfileOut(__METHOD__);
 		return $ret;
+	}
+
+	/**
+	 * Has custom (non data-rte-* & non jquery*) attributes
+	 *
+	 * @param $node
+	 * @return bool
+	 */
+	public static function hasCustomAttributes($node){
+		if ($node->hasAttributes()) {
+			foreach ($node->attributes as $attrName => $attrNode) {
+				if (!self::isDataRTEAttribute($attrName) && !self::isJqueryAttribute($attrName)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+
+	public static function countCustomAttributes($node){
+		$count = 0;
+
+		if ($node->hasAttributes()) {
+			foreach ($node->attributes as $attrName => $attrNode) {
+				if (!self::isDataRTEAttribute($attrName) && !self::isJqueryAttribute($attrName)) {
+					$count++;
+				}
+			}
+		}
+
+		return $count;
+	}
+
+	/**
+	 * Is attribute data-rte*
+	 *
+	 * @param $attrName
+	 * @return bool
+	 */
+	public static function isDataRTEAttribute($attrName){
+		if (substr($attrName, 0, 9) == 'data-rte-') {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Is attribute jquery*
+	 *
+	 * @param $attrName
+	 * @return bool
+	 */
+	public static function isJqueryAttribute($attrName){
+		if (substr($attrName, 0, 6) == 'jquery') {
+			return true;
+		}
+
+		return false;
 	}
 }

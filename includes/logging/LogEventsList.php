@@ -345,6 +345,11 @@ class LogEventsList {
 
 		// Extract extra parameters
 		$paramArray = LogPage::extractParams( $row->log_params );
+
+		/* Wikia Change */
+		$paramArray = $this->fixParamArray( $row, $paramArray );
+		/* Wikia Change - End */
+
 		// Add review/revert links and such...
 		$revert = $this->logActionLinks( $row, $title, $paramArray, $comment );
 
@@ -767,5 +772,21 @@ class LogEventsList {
 			}
 		}
 		wfProfileOut( __METHOD__ );
+	}
+	/*
+	 * Wikia fix for paramArray
+	 */
+	public function fixParamArray( $row, $paramArray ) {
+
+		if ( !empty( $row->log_type ) && $row->log_type == "move" ) {
+			if ( !empty( $row->log_params ) ) {
+				$params = unserialize( $row->log_params );
+				if (is_array($params) ) {
+					$target = array_shift( $params );
+					$paramArray[0] = $target;
+				}
+			}
+		}
+		return $paramArray;
 	}
  }

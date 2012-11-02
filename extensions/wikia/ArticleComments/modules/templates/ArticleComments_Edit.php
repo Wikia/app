@@ -21,7 +21,7 @@
 					<?= $app->getView( 'MiniEditorController', 'Editor_Footer' )->render() ?>
 				<? endif ?>
 				<? if ( !$isReadOnly ): ?>
-					<div class="buttons">
+					<div class="buttons" data-space-type="buttons">
 						<input type="submit" name="wpArticleSubmit" id="article-comm-submit-<?= $articleId ?>" class="actionButton" value="<?= wfMsg('article-comments-post') ?>" />
 						<input type="submit" name="wpArticleCancel" id="article-comm-edit-cancel-<?= $articleId ?>" class="wikia-button secondary actionButton" value="<?= wfMsg('article-comments-cancel') ?>" />
 						<img src="<?= $stylePath ?>/common/images/ajax.gif" class="throbber" />

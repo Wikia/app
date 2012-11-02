@@ -25,6 +25,7 @@ $app->registerClass('WikiaSearchResult', 			$dir . 'WikiaSearchResult.class.php'
 $app->registerClass('WikiaSearchResultSet', 		$dir . 'WikiaSearchResultSet.class.php');
 $app->registerClass('WikiaSearchArticleMatch',		$dir . 'WikiaSearchArticleMatch.class.php');
 $app->registerClass('WikiaSearchAjaxController',	$dir . 'WikiaSearchAjaxController.class.php');
+$app->registerClass('WikiaVideoSearchController',	$dir . 'WikiaVideoSearchController.class.php');
 
 /**
  * special pages
@@ -32,7 +33,12 @@ $app->registerClass('WikiaSearchAjaxController',	$dir . 'WikiaSearchAjaxControll
 $app->registerSpecialPage('WikiaSearch',	'WikiaSearchController');
 $app->registerSpecialPage('Search',			'WikiaSearchController');
 
-global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB;
+global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB, $wgEnableRelatedVideoSearch;
+
+if (! empty( $wgEnableRelatedVideoSearch ) ) {
+	$app->registerSpecialPage('VideoSearch',	'WikiaVideoSearchController');
+}
+
 
 $wgSolrHost = isset($_GET['solrhost']) ? $_GET['solrhost'] : $wgSolrHost;
 

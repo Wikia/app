@@ -15,5 +15,12 @@
 		<?= $avatar ?>
 		<span class="post-author"><a href="<?= htmlspecialchars($userPage) ?>"><?= htmlspecialchars($userName) ?></a></span>
 		<span><?= $editTimestamp ?></span>
+		<? if ( $wg->EnableBlogArticles ): ?>
+		<span><a href="<?= htmlspecialchars($userBlogPage) ?>"><?= $userBlogPageMessage ?></a></span>
+		<? endif; ?>
+		
 	</div>
+	<? if (isset($navLinks)) : ?> 
+                <?= $navLinks ?>
+        <? endif; ?> 
 </header>

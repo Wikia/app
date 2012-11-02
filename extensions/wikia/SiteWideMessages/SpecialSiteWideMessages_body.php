@@ -529,20 +529,6 @@ class SiteWideMessages extends SpecialPage {
 						);
 						$dbInsertResult &= $dbResult;
 					}
-				} elseif ( $mSendModeWikis != 'WIKIS' && $mSendModeWikis != 'CREATED' && $mSendModeUsers == 'ANONS' ) {
-					if ( !is_null( $result['msgId'] ) ) {
-						$dbResult = (boolean)$DB->query(
-							'INSERT INTO ' . MSG_STATUS_DB .
-							' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)' .
-							' VALUES (' .
-							$DB->addQuotes( $mWikiId ). ', 0, ' .
-							$DB->addQuotes( $result['msgId'] ) . ', ' .
-							MSG_STATUS_UNSEEN .
-							');'
-							, __METHOD__
-						);
-						$dbInsertResult &= $dbResult;
-					}
 				} elseif ( $mSendModeUsers == 'USERS' ) {
 					$oTask = new SWMSendToGroupTask();
 					$oTask->createTask(
@@ -567,6 +553,22 @@ class SiteWideMessages extends SpecialPage {
 						case 'ALL':
 							switch ($mSendModeUsers) {
 								case 'ALL':
+									break;
+
+								case 'ANONS':
+									if ( !is_null( $result['msgId'] ) ) {
+										$dbResult = (boolean)$DB->query(
+											'INSERT INTO ' . MSG_STATUS_DB .
+											' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)' .
+											' VALUES (' .
+											$DB->addQuotes( $mWikiId ). ', 0, ' .
+											$DB->addQuotes( $result['msgId'] ) . ', ' .
+											MSG_STATUS_UNSEEN .
+											');'
+											, __METHOD__
+										);
+										$dbInsertResult &= $dbResult;
+									}
 									break;
 
 								case 'ACTIVE':
@@ -646,6 +648,7 @@ class SiteWideMessages extends SpecialPage {
 								case 'ALL':
 								case 'ACTIVE':
 								case 'GROUP':
+								case 'ANONS':
 									//add task to TaskManager
 									$oTask = new SWMSendToGroupTask();
 									$oTask->createTask(
@@ -730,6 +733,22 @@ class SiteWideMessages extends SpecialPage {
 											. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
 											. ' VALUES ' . implode(',', $sqlValues)
 											. ';'
+											, __METHOD__
+										);
+										$dbInsertResult &= $dbResult;
+									}
+									break;
+
+								case 'ANONS':
+									if ( !is_null( $result['msgId'] ) ) {
+										$dbResult = (boolean)$DB->query(
+											'INSERT INTO ' . MSG_STATUS_DB .
+											' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)' .
+											' VALUES (' .
+											$DB->addQuotes( $mWikiId ). ', 0, ' .
+											$DB->addQuotes( $result['msgId'] ) . ', ' .
+											MSG_STATUS_UNSEEN .
+											');'
 											, __METHOD__
 										);
 										$dbInsertResult &= $dbResult;
@@ -1060,7 +1079,7 @@ class SiteWideMessages extends SpecialPage {
 		$dbResult = $DB->Query (
 			  'SELECT msg_wiki_id, msg_id AS id, msg_lang as lang'
 			. ' FROM ' . MSG_TEXT_DB
-			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USE INDEX(PRIMARY) USING (msg_id)'
+			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
 			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
 			. ' AND msg_status IN (' . join(',', $status) . ')'
@@ -1159,7 +1178,7 @@ class SiteWideMessages extends SpecialPage {
 		$dbResult = $DB->Query (
 			  'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status'
 			. ' FROM ' . MSG_TEXT_DB . ' USE INDEX(removed_mode_expire_date)'
-			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USE INDEX(PRIMARY) USING (msg_id)'
+			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
 			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
 			. ' AND msg_status IN (' . MSG_STATUS_UNSEEN . ', ' . MSG_STATUS_SEEN . ')'
@@ -1275,7 +1294,7 @@ class SiteWideMessages extends SpecialPage {
 		$dbResult = $dbr->query(
 			'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status' .
 			' FROM ' . MSG_TEXT_DB . ' USE INDEX(removed_mode_expire_date)' .
-			' LEFT JOIN ' . MSG_STATUS_DB . ' USE INDEX(PRIMARY) USING (msg_id)' .
+			' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)' .
 			' WHERE msg_mode = ' . MSG_MODE_SELECTED .
 			' AND msg_recipient_id = 0' .
 			' AND msg_recipient_name = ' . $dbr->addQuotes( MSG_RECIPIENT_ANON ) .

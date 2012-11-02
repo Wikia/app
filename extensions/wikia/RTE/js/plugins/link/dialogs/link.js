@@ -9,25 +9,30 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		linkTextDirty = false,
 		existsTimeout;
 
-	var checkStatus = function() {
+	function checkStatus() {
 		var pageName = CKEDITOR.dialog.getCurrent().getContentElement('internal','name').getValue();
 		if( pageName ){
 			$(".link-type-note span").html(editor.lang.link.status.checking);
 			$(".link-type-note img")[0].className = 'sprite progress';
 
 			// check our page name for validity
-			RTE.ajax('checkInternalLink', {title: pageName}, function(data){
-				if( data.exists ){
-					$(".link-type-note span").html(editor.lang.link.status.exists);
-					$(".link-type-note img")[0].className = 'link-icon link-yes';
-				}else{
-					$(".link-type-note span").html(editor.lang.link.status.notexists);
-					$(".link-type-note img")[0].className = 'link-icon link-no';
-				}
+			RTE.ajax('checkInternalLink', {title: pageName}, function(data) {
+				setLinkExistance(data.exists);
 			});
 		}
 		existsTimeout = null;
-	};
+	}
+
+	function setLinkExistance(exists) {
+		if( exists ){
+			$(".link-type-note span").html(editor.lang.link.status.exists);
+			$(".link-type-note img")[0].className = 'link-icon link-yes';
+		}
+		else {
+			$(".link-type-note span").html(editor.lang.link.status.notexists);
+			$(".link-type-note img")[0].className = 'link-icon link-no';
+		}
+	}
 
 	var setMode = function( mode ) {
 		var linkDialog = CKEDITOR.dialog.getCurrent(),
@@ -44,7 +49,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			$(".link-type-note img")[0].className = 'sprite external';
 
 			// disable suggestions on the name box if external url
-		}else if( mode == 'internal' ){
+		}else if( mode == 'internal' ) {
 			radios = linkDialog.getContentElement('internal','linktype');
 			if( radios.getValue() != 'wiki' ){
 				radios.setValue('wiki');
@@ -52,7 +57,26 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			checkStatus();
 
 			// setup MW suggest
-			linkDialog.enableSuggesionsOn(linkDialog.getContentElement('internal', 'name'));
+			linkDialog.
+				enableSuggesionsOn(linkDialog.getContentElement('internal', 'name')).
+				then(function(node) {
+					var dialog = this;
+
+					// synchronize "label" field with values from autosuggest dropdown (BugId:51413)
+					node.autocomplete({
+						select: function(ev, ui) {
+							var value = ui.item && ui.item.label,
+								labelField = dialog.getContentElement('internal', 'label');
+
+							if (typeof value !== 'undefined') {
+								labelField.setValue(value);
+
+								// validate a link (BugId:51414)
+								setLinkExistance(true);
+							}
+						}
+					});
+				});
 		}
 	};
 
@@ -483,6 +507,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			if (typeof this._.suggestContainer != 'undefined') {
 				this._.suggestContainer.css('visibility', 'hidden');
 			}
+
+			RTE.getInstanceEditor().fire('editorAddLink');
 
 			RTE.track('link', 'dialog', 'type', type);
 		}

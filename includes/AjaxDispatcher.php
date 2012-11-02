@@ -74,6 +74,23 @@ class AjaxDispatcher {
 			return;
 		}
 
+		/*
+		 * Wikia Change - begin
+		 */
+		if( function_exists( 'newrelic_name_transaction' ) ) {
+			newrelic_name_transaction('Ajax');
+			if ( function_exists( 'newrelic_disable_autorum') ) {
+				newrelic_disable_autorum();
+			}
+			if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
+				newrelic_add_custom_parameter( 'function', $this->func_name );
+			}
+		}
+		/*
+		 * Wikia Change - end
+		 */
+
+
 		wfProfileIn( __METHOD__ );
 
 		if ( ! in_array( $this->func_name, $wgAjaxExportList ) ) {

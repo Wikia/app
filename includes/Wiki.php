@@ -616,6 +616,45 @@ class MediaWiki {
 		$action = $this->getAction();
 		$wgTitle = $title;
 
+		/*
+		 * Wikia Change - begin
+		 */
+		if( function_exists( 'newrelic_name_transaction' ) ) {
+			global $wgUser, $wgVersion;
+			global $wgContLang;
+
+			$loggedIn = $wgUser->isLoggedIn() ? 'user' : 'anon';
+			$ns = $title->getNamespace();
+			$nsKey = MWNamespace::getCanonicalName( $ns );
+			if ( $nsKey === false ) {
+				$nsKey = $ns;
+			} else {
+				$nsKey = $wgContLang->lc( $nsKey );
+			}
+			if ( $nsKey == '' ) {
+				$nsKey = 'main';
+			}
+
+			if( $title->isSpecialPage() ) {
+				list( $thisName, /* $subpage */ ) = SpecialPageFactory::resolveAlias( $title->getDBkey() );
+				if(is_string($thisName)) {
+					newrelic_name_transaction('mw/'.$loggedIn.'/'.$nsKey.'/'.$thisName);
+				} else {
+					newrelic_name_transaction('mw/'.$loggedIn.'/Namespace/'.$nsKey);
+				}
+			} else {
+				newrelic_name_transaction('mw/'.$loggedIn.'/Namespace/'.$nsKey);
+			}
+			if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
+				newrelic_add_custom_parameter( 'loggedIn', $loggedIn );
+				newrelic_add_custom_parameter( 'action', $action );
+				newrelic_add_custom_parameter( 'version', $wgVersion );
+			}
+		}
+		/*
+		 * Wikia Change - end
+		 */
+
 		if ( $wgUseFileCache && $title->getNamespace() >= 0 ) {
 			wfProfileIn( 'main-try-filecache' );
 			if ( HTMLFileCache::useFileCache( $this->context ) ) {

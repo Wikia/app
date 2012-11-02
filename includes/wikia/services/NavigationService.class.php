@@ -2,7 +2,7 @@
 
 class NavigationService {
 
-	const version = '0.05';
+	const version = '1';
 	const ORIGINAL = 'original';
 	const PARENT_INDEX = 'parentIndex';
 	const CHILDREN = 'children';
@@ -352,7 +352,10 @@ class NavigationService {
 				} else if($link{0} == '#') {
 					$href = '#';
 				} else {
-					$title = Title::newFromText($link);
+					//BugId:51034 - URL-encoded article titles break inter-wiki links
+					//in global Nav (but work correctly in the article body)
+					$title = Title::newFromText( urldecode( $link ) );
+
 					if(is_object($title)) {
 						$href = $title->fixSpecialName()->getLocalURL();
 						$pos = strpos($link, '#');

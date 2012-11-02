@@ -21,7 +21,6 @@ class ForumController extends WallBaseController {
 
 		$this->response->addAsset('forum_js');
 		$this->response->addAsset('extensions/wikia/Forum/css/ForumBoard.scss');
-		$this->response->addAsset('extensions/wikia/Forum/css/MessageTopic.scss');
 		$this->addMiniEditorAssets();
 
 		if($this->wall->getTitle()->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD) {

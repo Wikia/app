@@ -47,7 +47,7 @@ $wgMemCachedServers = array(
 	# You can take a server for the spare list
 
 	# SLOT	HOST
-	0 => "10.8.36.106:11000", # dev-memcached1
+	0 => "10.8.44.110:11000", # dev-memcached1
 	1 => "10.8.36.107:11000", # dev-memcached2
 
 /**** DOWN *****
@@ -63,7 +63,7 @@ $wgMemCachedServers = array(
 
 $wgSessionMemCachedServers = array(
 	# SLOT	HOST
-	0 => "10.8.36.106:11000", # dev-memcached1
+	0 => "10.8.44.110:11000", # dev-memcached1
 	1 => "10.8.36.107:11000", # dev-memcached2
 );
 

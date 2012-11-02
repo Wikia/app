@@ -2,6 +2,9 @@
 	<div style="float: right; text-align: left">
 <?php if ( $accessQuestionable ) { ?>
 		<div class="tally">
+			<em><?= $imageCount['unreviewed'] ?></em> <span>unreviewed<br>images</span>
+		</div>
+		<div class="tally">
 			<a href="<?= $fullUrl ?>/questionable"><em><?= $imageCount['questionable']?></em> <span>questionable<br>images</span></a>
 		</div>
 <?php } ?>

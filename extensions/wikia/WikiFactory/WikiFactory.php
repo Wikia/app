@@ -2899,34 +2899,69 @@ class WikiFactory {
 		return $aWikis;
 	}
 
-        /**
-         * fetching a number of wikis with select variable set to $val
-         * @param integer $varId
-         * @param string $type
-         * @param mixed $val
-         * @param string $likeVal
-         */
+	/**
+	* fetching a number of wikis with select variable set to $val
+	* @param integer $varId
+	* @param string $type
+	* @param mixed $val
+	* @param string $likeVal
+	*/
 
-        static public function getCountOfWikisWithVar( $varId, $type, $selectedCond ,$val, $likeVal = '' ) {
-            global $wgExternalSharedDB;
-            $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+	static public function getCountOfWikisWithVar( $varId, $type, $selectedCond ,$val, $likeVal = '' ) {
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-            $selectedVal = serialize( $val );
-            $aTables = array( 'city_variables', 'city_list' );
-            $varId = mysql_real_escape_string( $varId );
-            $aWhere = array(
-                'city_id = cv_city_id',
-                "cv_variable_id = '$varId'"
-            );
+		$selectedVal = serialize( $val );
+		$aTables = array( 'city_variables', 'city_list' );
+		$varId = mysql_real_escape_string( $varId );
+		$aWhere = array(
+			'city_id = cv_city_id',
+			"cv_variable_id = '$varId'"
+		);
 
-            if( 'full' == $type ) {
-                $aWhere[] = "cv_value " . $dbr->buildLike( $dbr->anyString(), $likeVal, $dbr->anyString() );
-            } else {
-                $aWhere[] = "cv_value $selectedCond '$selectedVal'";
-            }
+		if( 'full' == $type ) {
+			$aWhere[] = "cv_value " . $dbr->buildLike( $dbr->anyString(), $likeVal, $dbr->anyString() );
+		} else {
+			$aWhere[] = "cv_value $selectedCond '$selectedVal'";
+		}
 
-            $oRow = $dbr->selectRow( $aTables, 'COUNT(1) AS cnt', $aWhere, __METHOD__ );
+		$oRow = $dbr->selectRow( $aTables, 'COUNT(1) AS cnt', $aWhere, __METHOD__ );
+		return $oRow->cnt;
+	}
 
-            return $oRow->cnt;
-        }
+	/**
+	 * Checks if a wiki is "restricted", or "private" (i.e. users need to log in to read,
+	 * e.g. communitycouncil.wikia.com)
+	 *
+	 * @param integer $wikiId The ID of the wiki to check
+	 *
+	 * @return boolean true if it's restricted, false otherwise
+	 */
+	static public function isWikiPrivate( $wikiId ) {
+		wfProfileIn( __METHOD__ );
+
+		//restricting a wiki is done by setting the "read" permission
+		//to 0 (false) for the "*" group via a WF variable (source: Tor),
+		//if the above will change in the future then this will stop working (duh),
+		//we should probably introduce a WF flag to handle this case in a much more
+		//clean and portable way
+		$permissions =  self::getVarValueByName( 'wgGroupPermissionsLocal', $wikiId );
+		$ret = false;
+
+		if ( !empty( $permissions ) ) {
+			$permissions = WikiFactoryLoader::parsePermissionsSettings( $permissions );
+		}
+
+		if (
+			isset( $permissions['*'] ) &&
+			is_array( $permissions['*'] ) &&
+			isset( $permissions['*']['read'] ) &&
+			$permissions['*']['read'] === false
+		) {
+			$ret = true;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $ret;
+	}
 };

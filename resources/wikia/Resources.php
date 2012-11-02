@@ -53,6 +53,7 @@ return array(
 			'resources/wikia/libraries/yui/extra/tools-min.js',
 			'resources/wikia/libraries/yui/extra/carousel-min.js',
 		),
+		'group' => 'yui',
 	),
 
 	// Wikia-specific assets for monobook-based skins

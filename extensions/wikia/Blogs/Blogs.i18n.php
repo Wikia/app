@@ -131,6 +131,7 @@ Avatar6.jpg",
 	'blog-by' => '$1 by $2',
 	'blogs-searchprofile' => 'Blogs',
 	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings',
+	'user-blog-url-link' => 'User blog:$1',
 );
 
 /** Message documentation (Message documentation)

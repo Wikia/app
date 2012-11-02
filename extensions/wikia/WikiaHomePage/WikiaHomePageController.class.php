@@ -453,7 +453,7 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	protected function getTranscludedArticleForTodaysHub($hubname) {
-		$today = date('j_F_Y');
+		$today = wfMsgExt('wikiahome-hub-current-day',array('parseinline'));
 		$transcludedArticleName = $hubname . "/" . $today;
 		return $this->getRawArticleContent($transcludedArticleName);
 	}

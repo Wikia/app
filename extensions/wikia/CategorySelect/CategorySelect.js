@@ -373,6 +373,8 @@ function initializeCategories(cats) {
 	// Filter out duplicate categories on init
 	if(categories.length) {
 		categories = removeDuplicatecategories();
+		$('#csWikitext').val(generateWikitextForCategories());
+
 	}
 
 	//inform PHP what source should it use [this field exists only in 'edit page' mode]

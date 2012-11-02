@@ -39,7 +39,7 @@
 			this.buttonsWrapper = this.editor.getSpace('buttons');
 
 			if (this.buttonsWrapper.length) {
-				this.buttons = this.buttonsWrapper.find('button');
+				this.buttons = this.buttonsWrapper.find('button, input[submit]');
 			}
 		},
 
@@ -83,6 +83,10 @@
 			this.editor.element.addClass('active');
 		},
 
+		editorButtonsActivate: function() {
+			this.buttons.removeAttr('disabled');
+		},
+
 		editorAfterActivated: function() {
 			this.showButtons();
 			this.showToolbar();
@@ -92,6 +96,17 @@
 			if (!this.isReady) {
 				this.isReady = true;
 			}
+
+			this.editor.getEditbox().on(
+				'keyup',
+				$.proxy(this.editorButtonsActivate, this)
+			);
+			this.editor.on({
+				mode: $.proxy(this.editorButtonsActivate, this),
+				editorAddImage: $.proxy(this.editorButtonsActivate, this),
+				editorAddVideo: $.proxy(this.editorButtonsActivate, this),
+				editorAddLink: $.proxy(this.editorButtonsActivate, this)
+			});
 		},
 
 		editorBeforeReady: function() {
@@ -149,6 +164,12 @@
 
 			// Trigger editorActivated
 			this.editor.fire('editorActivated', event);
+
+			var replacedElement = this.editor.getEditorElement();
+			if(replacedElement.is('textarea') && typeof this.editor.ck != "undefined") {
+				replacedElement.val("");
+			}
+
 		},
 
 		editorReset: function() {
@@ -189,7 +210,7 @@
 		showButtons: function() {
 			if (this.buttonsWrapper.length) {
 				this.buttonsWrapper.slideDown();
-				this.buttons.show().removeAttr('disabled');
+				this.buttons.show();
 			}
 		},
 

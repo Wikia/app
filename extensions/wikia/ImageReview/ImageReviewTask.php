@@ -35,6 +35,8 @@ class ImageReviewTask extends BatchTask {
 			and from LocalSettings as worked on fps)
 		 */
 
+		$taskStatus = true;
+
 		$this->mTaskID = $params->task_id;
 		$oUser = User::newFromId( $params->task_user_id );
 
@@ -43,7 +45,7 @@ class ImageReviewTask extends BatchTask {
 			$this->mUser = $oUser->getName();
 		} else {
 			$this->log("Invalid user - id: " . $params->task_user_id );
-			return true;
+			return false;
 		}
 
 		$data = unserialize($params->task_arguments);
@@ -53,18 +55,25 @@ class ImageReviewTask extends BatchTask {
 
 			list( $wikiId, $imageId) = $imageData;
 
+			if ( !WikiFactory::isPublic( $wikiId ) ) {
+				$this->log( "Wiki ID $wikiId has been disabled" );
+				$taskStatus = false;
+				continue;
+			}
+
 			$dbname = WikiFactory::getWikiByID( $wikiId );
-			if ( !$dbname ) continue;
-
-			$title = GlobalTitle::newFromId( $imageId, $wikiId );
-
-			if ( !is_object( $title ) ) {
-				$this->log( 'Apparently the article does not exist anymore' );
+			if ( !$dbname ) {
+				$this->log( "Did not find database for wiki ID $wikiId" );
+				$taskStatus = false;
 				continue;
 			}
 
 			$city_url = WikiFactory::getVarValueByName( "wgServer", $wikiId );
-			if ( empty($city_url) ) continue;
+			if ( empty($city_url) ) {
+				$this->log( "Could not determine URL for wiki ID $wikiId" );
+				$taskStatus = false;
+				continue;
+			}
 
 			$city_path = WikiFactory::getVarValueByName( "wgScript", $wikiId );
 
@@ -74,15 +83,16 @@ class ImageReviewTask extends BatchTask {
 			$sCommand  = "perl /usr/wikia/backend/bin/run_maintenance --id={$wikiId} --script=wikia/deleteOn.php ";
 			$sCommand .= "-- ";
 			$sCommand .= "-u " . escapeshellarg( $this->mUser ) . " ";
-			$sCommand .= "-t " . escapeshellarg( $title->getPrefixedText() ) . " ";
+			$sCommand .= "--id " . $imageId . " ";
 			if ( $reason ) {
 				$sCommand .= "-r " . escapeshellarg( $reason ) . " ";
 			}
 
 			$actual_title = wfShellExec($sCommand, $retval);
 
-			if ($retval) {
+			if ( $retval !== 0 ) {
 				$this->addLog('Article deleting error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
+				$taskStatus = false;
 			} else {
 				$this->addLog('Removed: <a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($actual_title)  . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
 			}
@@ -91,7 +101,31 @@ class ImageReviewTask extends BatchTask {
 			$this->flagWiki( $wikiId );
 		}
 
-		return true;
+		if ( !$taskStatus ) $this->sendNotification();
+
+		return $taskStatus;
+	}
+
+	function sendNotification() {
+		$recipients = array(
+			'tor@wikia-inc.com',
+			'sannse@wikia-inc.com',
+		);
+
+		$subject = 'ImageReview deletion failed: #' . $this->mTaskID;
+		$body = Title::newFromText( 'TaskManager', NS_SPECIAL )->getFullUrl( array(
+			'action' => 'log',
+			'id' => $this->mTaskID,
+			'offset' => 0,
+		) );
+
+		foreach ( $recipients as $address ) {
+			$to[] = new MailAddress( $address );
+		}
+
+		$from = new MailAddress( $recipients[0] );
+
+		UserMailer::send( $to, $from, $subject, $body );
 	}
 
 	function flagUser( $imageId, $wikiId ) {

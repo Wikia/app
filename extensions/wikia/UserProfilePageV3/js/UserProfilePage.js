@@ -1,4 +1,5 @@
 var UserProfilePage = {
+	// TODO: use $.nirvana.getJSON instead
 	ajaxEntryPoint: '/wikia.php?controller=UserProfilePage&format=json',
 	questions: [],
 	currQuestionIndex: 0,
@@ -47,13 +48,18 @@ var UserProfilePage = {
 
 	renderLightbox: function(tabName) {
 		if( !UserProfilePage.isLightboxGenerating ) {
-		//if lightbox is generating we don't want to let user open second one
+			//if lightbox is generating we don't want to let user open second one
 			UserProfilePage.isLightboxGenerating = true;
 			UserProfilePage.newAvatar = false;
 
 			$.getResources([$.getSassCommonURL('/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss')]);
 
-			$.postJSON( this.ajaxEntryPoint, { method: 'getLightboxData', tab: tabName, userId: UserProfilePage.userId, rand: Math.floor(Math.random()*100001) }, function(data) {
+			$.getJSON(this.ajaxEntryPoint, {
+				method: 'getLightboxData',
+				tab: tabName,
+				userId: UserProfilePage.userId,
+				rand: Math.floor(Math.random()*100001) // is cache buster really needed here?
+			}, function(data) {
 				UserProfilePage.modal = $(data.body).makeModal({width : 750, onClose: UserProfilePage.closeModal, closeOnBlackoutClick: UserProfilePage.closeModal});
 				var modal = UserProfilePage.modal;
 

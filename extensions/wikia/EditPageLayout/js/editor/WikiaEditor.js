@@ -12,6 +12,8 @@
 	// instance tracking
 	WE.instanceId = '';
 	WE.instanceCount = 0;
+	
+	WE.debounce = false;
 
 	// Lazy loaded components manager
 	// Would be nice to use resource loader for this, but we can't load Sass files there :(
@@ -143,9 +145,14 @@
 	};
 
 	WE.callFunction = function( id ) {
+		// Bugid 17716 - Don't fire twice if button is double-clicked
+		if (WE.debounce) return;	
+		setTimeout(function() { WE.debounce = false; }, 500);
+		WE.debounce = true;
+		
 		var args = Array.prototype.slice.call(arguments,1);
 		var conf = WE.functions[id];
-		return conf.fn.apply(conf.scope,args);
+		return conf.fn.apply(conf.scope,args);	
 	};
 
 	WE.initAddons = (function(){

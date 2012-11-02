@@ -21,7 +21,10 @@ class LightboxController extends WikiaController {
 	 * get lightbox madal content
 	 */
 	public function lightboxModalContent() {
-		$this->showAds = false; //$this->wg->User->isAnon() || $this->wg->User->getOption('showAds'); /* TODO: Re-enable once ad ops fixes ads (BugId:32950) and (BugId:33370)
+		// TODO: refactor this to AdEngine2Controller.php
+		$showAds = $this->wg->ShowAds && !$this->wg->User->isLoggedIn() || $this->wg->User->getOption('showAds');
+		$this->showAdModalInterstitial = $showAds && $this->wg->ShowAdModalInterstitial;
+		$this->showAdModalRectangle = $showAds && $this->wg->ShowAdModalRectangle;
 
 		// set cache control to 1 day
 		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));

@@ -1,4 +1,5 @@
-<footer id="WikiaFooter" class="WikiaFooter <?= $showToolbar ? '' : 'notoolbar' ?>">
+<footer id="WikiaFooter" class="WikiaFooter <? echo $showToolbar ? '' : 'notoolbar'; echo (empty
+($wgEnableWikiaBarExt)) ? ' notifications-with-wikia-bar' : ''; ?>">
 	<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_3')) ?>
 
 	<div class="FooterAd"></div>

@@ -119,14 +119,11 @@ var SharingToolbar = {
 		this.toolbarNode.css('width', maxWidth);
 	},
 	toolbarToggle: function(ev) {
-		var button = $(this),
+		var	button = $(this),
 			self = SharingToolbar;
-
 		ev.preventDefault();
-
 		button.toggleClass('share-enabled');
-		self.toolbarNode.toggle();
-
+		self.toolbarNode.toggleClass('hidden');
 		// width checking
 		if (button.hasClass('share-enabled')) {
 			self.checkWidth();

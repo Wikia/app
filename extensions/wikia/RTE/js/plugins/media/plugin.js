@@ -415,6 +415,8 @@ RTE.mediaEditor = {
 			wikitext: wikitext
 		};
 
+		RTE.getInstanceEditor().fire('editorAddImage');
+
 		this._add(wikitext, data);
 	},
 
@@ -428,6 +430,8 @@ RTE.mediaEditor = {
 			params: params,
 			wikitext: wikitext
 		};
+
+		RTE.getInstanceEditor().fire('editorAddVideo');
 
 		this._add(wikitext, data);
 	},

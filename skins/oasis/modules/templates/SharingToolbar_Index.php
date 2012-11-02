@@ -1,4 +1,4 @@
-	<div id="SharingToolbar">
+	<div id="SharingToolbar" class="hidden">
 <?php
 	foreach($shareButtons as $shareButton) {
 		echo '<div>';

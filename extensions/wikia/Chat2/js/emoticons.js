@@ -43,6 +43,10 @@ WikiaEmoticons.doReplacements = function(text, emoticonMapping){
 		imgSrc = imgUrlsByRegexString[regexString];
 		imgSrc = imgSrc.replace(/"/g, "%22"); // prevent any HTML-injection
 
+		// Fix > and <
+		regexString = regexString.replace(/>/g, "&gt;");
+		regexString = regexString.replace(/</g, "&lt;");
+
 		// Build the regex for the character (make it ignore the match if there is a "/" immediately after the emoticon. That creates all kinds of problems with URLs).
 		var numIters = 0;
 		var origText = text;

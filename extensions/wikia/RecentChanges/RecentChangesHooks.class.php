@@ -13,7 +13,9 @@ class RecentChangesHooks {
 			return true;
 		}
 
-		$response = $app->sendRequest( 'RecentChangesController', 'dropdownNamespaces', array( 'all' => $all ) );
+		$selectedArray = empty( $selected ) ? array() : array($selected);
+		
+		$response = $app->sendRequest( 'RecentChangesController', 'dropdownNamespaces', array( 'all' => $all, 'selected' => $selectedArray ) );
 		$html = $response->getVal( 'html', '' );
 		return true;
 	}
@@ -33,28 +35,29 @@ class RecentChangesHooks {
 			return true;
 		}
 
-		$rcfs = new RecentChangesFiltersStorage($app->wg->User);
-		$selected = $rcfs->get();
-		
-		if ( empty($selected) ) {
-			return true;
-		}
-
-		$db = $app->wf->GetDB( DB_SLAVE );
-		$cond = 'rc_namespace IN ('.$db->makeList( $selected ).')';
-
-		
-		$flag = true;
-		foreach( $conds as $key => &$value ) {
-			if ( strpos($value, 'rc_namespace') !== false ) {
-				$value = $cond;
-				$flag = false;
-				break;
+		if ( (! isset( $opts['namespace'] ) ) || empty( $opts['namespace'] ) ) {
+			$rcfs = new RecentChangesFiltersStorage($app->wg->User);
+			$selected = $rcfs->get();
+			
+			if ( empty($selected) ) {
+			    return true;
 			}
-		}
-
-		if ( $flag ) {
-			$conds[] = $cond;
+			
+			$db = $app->wf->GetDB( DB_SLAVE );
+			$cond = 'rc_namespace IN ('.$db->makeList( $selected ).')';
+			
+			$flag = true;
+			foreach( $conds as $key => &$value ) {
+			    if ( strpos($value, 'rc_namespace') !== false ) {
+			        $value = $cond;
+			        $flag = false;
+			        break;
+			    }
+			}
+			
+			if ( $flag ) {
+			    $conds[] = $cond;
+			}
 		}
 
 		return true;

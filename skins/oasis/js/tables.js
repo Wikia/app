@@ -6,13 +6,16 @@ var WikiaWideTables = {
 	},
 
 	init: function() {
-		//Get tables
-		WikiaWideTables.getTables();
 
-		if (WikiaWideTables.settings.tables.length) {
+		var that = this;
+
+		//Get tables
+		this.getTables();
+
+		if (this.settings.tables.length) {
 
 			//Add styling
-			$.each(WikiaWideTables.settings.tables, function() {
+			$.each(this.settings.tables, function() {
 				var table = this,
 					wrapper;
 
@@ -20,7 +23,7 @@ var WikiaWideTables = {
 				wrapper = table.wrap('<div class="WikiaWideTablesWrapper"><div class="table"></div></div>').parent().parent();
 
 				//Add expand button
-				$('<img src="' + wgBlankImgUrl + '" class="sprite popout">').click(WikiaWideTables.makeModal).prependTo(wrapper);
+				$('<img src="' + wgBlankImgUrl + '" class="sprite popout">').click(that.makeModal).prependTo(wrapper);
 
 				//If table is too wide, add jagged edge styling
 				if (table.attr("data-overflow") == "true") {
@@ -74,26 +77,29 @@ var WikiaWideTables = {
 			});
 
 			//Add scroll magic to popout buttons
-			WikiaWideTables.settings.popouts = $(".WikiaWideTablesWrapper > .popout");
-			$(window).scroll(WikiaWideTables.popoutScrolling);
+			this.settings.popouts = $(".WikiaWideTablesWrapper > .popout");
+			$(window).scroll($.proxy(this.popoutScrolling, this));
 		}
 	},
 
 	getTables: function() {
-		WikiaWideTables.settings.article.find("table").each(function() {
+
+		var that = this;
+
+		this.settings.article.find("table").each(function() {
 			var table = $(this);
 
 			//If the table isn't very wide and doesn't have class="popout", ignore it
-			if (table.width() <= WikiaWideTables.settings.article.width() && !table.hasClass('popout')) {
+			if (table.width() <= that.settings.article.width() && !table.hasClass('popout')) {
 				return;
 			}
 
 			//Is table wider than article area?
-			if (table.width() > WikiaWideTables.settings.article.width()) {
+			if (table.width() > that.settings.article.width()) {
 				table.attr("data-overflow", "true");
 			}
 
-			WikiaWideTables.settings.tables.push(table);
+			that.settings.tables.push(table);
 		});
 	},
 
@@ -116,7 +122,7 @@ var WikiaWideTables = {
 	},
 
 	popoutScrolling: function() {
-		WikiaWideTables.settings.popouts.each(function() {
+		this.settings.popouts.each(function() {
 			var popout = $(this),
 				wrapper = popout.parent(),
 				tableTop = wrapper.offset().top,

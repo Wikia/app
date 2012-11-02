@@ -92,6 +92,10 @@ class ContactForm extends SpecialPage {
 
 			// handle custom forms
 			if ( !empty( $par ) && array_key_exists( $par, $this->customForms ) ) {
+				if ( $par === 'rename-account' ) {
+					$this->validateUserName( $wgRequest->getText( 'wpUserNameNew' ) );
+				}
+
 				foreach ( $this->customForms[$par]['vars'] as $var ) {
 					$args[] = $wgRequest->getVal( $var );
 				}
@@ -114,20 +118,20 @@ class ContactForm extends SpecialPage {
 
 			#malformed email?
 			if (!Sanitizer::validateEmail($this->mEmail)) {
-				$this->err[].= wfMsg('invalidemailaddress');
+				$this->err[] = wfMsg('invalidemailaddress');
 				$this->errInputs['wpEmail'] = true;
 			}
 
 			#empty message text?
 			if( empty($this->mProblemDesc) ) {
-				$this->err[].= wfMsg('specialcontact-nomessage');
+				$this->err[] = wfMsg('specialcontact-nomessage');
 				$this->errInputs['wpContactDesc'] = true;
 			}
 
 			#captcha
 			if(!$wgUser->isLoggedIn()){ // logged in users don't need the captcha (RT#139647)
 				if( class_exists( $wgCaptchaClass ) && !( !empty($info) &&  $captchaObj->keyMatch( $wgRequest->getVal('wpCaptchaWord'), $info )))  {
-					$this->err[].= wfMsg('specialcontact-captchafail');
+					$this->err[] = wfMsg('specialcontact-captchafail');
 					$this->errInputs['wpCaptchaWord'] = true;
 				}
 			}
@@ -357,9 +361,8 @@ class ContactForm extends SpecialPage {
 	 * @access private
 	 */
 	function ShowContactForm( $sub = null ) {
-		global $wgUser, $wgOut, $wgLang;
-		global $wgDBname;
-		global $wgServer, $wgSitename, $wgCaptchaClass;
+		global $wgUser, $wgOut;
+		global $wgServer, $wgCaptchaClass;
 
 		$wgOut->setPageTitle(
 			wfMsg('specialcontact-sectitle', wfMsg('specialcontact-sectitle-'.$sub))
@@ -485,7 +488,7 @@ class ContactForm extends SpecialPage {
 	 * @access private
 	 */
 	function ShowNonForm( $sub = null ) {
-		global $wgUser, $wgOut, $wgLang;
+		global $wgOut;
 
 		$wgOut->setPageTitle(
 			wfMsg('specialcontact-sectitle', wfMsg('specialcontact-sectitle-'.$sub))
@@ -567,5 +570,64 @@ class ContactForm extends SpecialPage {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Validates username user enters on rename account form
+	 *
+	 * @author grunny
+	 */
+	private function validateUserName( $userName ) {
+		global $wgWikiaMaxNameChars;
+		if ( $userName == '' ) {
+			$this->err[] = wfMsg( 'userlogin-error-noname' );
+			$this->errInputs['wpUserNameNew'] = true;
+			return false;
+		}
+
+		// check if exist in tempUser
+		if ( TempUser::getTempUserFromName( $userName ) ) {
+			$this->err[] = wfMsg( 'userlogin-error-userexists' );
+			$this->errInputs['wpUserNameNew'] = true;
+			return false;
+		}
+
+		// check username length
+		if ( !User::isNotMaxNameChars( $userName ) ) {
+			$this->err[] = wfMsg( 'usersignup-error-username-length', $wgWikiaMaxNameChars );
+			$this->errInputs['wpUserNameNew'] = true;
+			return false;
+		}
+
+		// check valid username
+		if ( !User::isCreatableName( $userName ) ) {
+			$this->err[] = wfMsg( 'usersignup-error-symbols-in-username' );
+			$this->errInputs['wpUserNameNew'] = true;
+			return false;
+		}
+
+		$result = wfValidateUserName( $userName );
+		if ( $result === true ) {
+			$msgKey = '';
+			if ( !wfRunHooks( 'cxValidateUserName', array( $userName, &$msgKey ) ) ) {
+				$result = $msgKey;
+			}
+		}
+
+		if ( $result !== true ) {
+			$msg = '';
+			if ( $result === 'userlogin-bad-username-taken' ) {
+				$msg = wfMsg( 'userlogin-error-userexists' );
+			} else if ( $result === 'userlogin-bad-username-character' ) {
+				$msg = wfMsg( 'usersignup-error-symbols-in-username' );
+			} else if ( $result === 'userlogin-bad-username-length' ) {
+				$msg = wfMsg( 'usersignup-error-username-length', $wgWikiaMaxNameChars );
+			}
+
+			$this->err[] = empty( $msg ) ? $result : $msg;
+			$this->errInputs['wpUserNameNew'] = true;
+			return false;
+		}
+		return true;
 	}
 }
