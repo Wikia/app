@@ -13,6 +13,8 @@
 		undef;
 
 	function cache() {
+		/** @private **/
+
 		var moduleStorage = {};
 
 		function uniGet(key) {
@@ -44,10 +46,10 @@
 		/**
 		 * Save a value under given key
 		 *
-		 * @param key       key to save the value at
-		 * @param value     any serializable object to store under the key
-		 * @param ttl       (optional) TTL in seconds. If falsy: live forever
-		 * @param customNow (optional) custom now (date object) for computing TTL
+		 * @param {String}  key       Key to save the value at
+		 * @param {Mixed}   value     Any serializable object to store under the key
+		 * @param {Integer} ttl       [OPTIONAL] TTL in seconds. If falsy: live forever
+		 * @param {Date}    customNow [OPTIONAL] Custom now (date object) for computing TTL
 		 */
 		function set(key, value, ttl, customNow) {
 			var now = customNow || new Date();
@@ -64,7 +66,7 @@
 		/**
 		 * Delete the value under given key
 		 *
-		 * @param key       key to delete the value at
+		 * @param {String} key Key to delete the value at
 		 */
 		function del(key) {
 			uniDel(CACHE_TTL_PREFIX + key);
@@ -74,8 +76,8 @@
 		/**
 		 * Get previously saved value. If value is not available or expired, return null
 		 *
-		 * @param key       key to get
-		 * @param customNow (optional) custom now (date object) for computing TTL
+		 * @param {String} key       Key to get
+		 * @param {Date}   customNow [OPTIONAL] Custom now (date object) for computing TTL
 		 */
 		function get(key, customNow) {
 			var ttl = uniGet(CACHE_TTL_PREFIX + key),
@@ -93,7 +95,7 @@
 			return null;
 		}
 
-		/** public **/
+		/** @public **/
 
 		return {
 			get: get,
@@ -102,7 +104,7 @@
 		};
 	}
 
-	// Register the module
+	// Register the module (UMD)
 	if (context.define && context.define.amd) {
 		context.define('cache', cache);
 	} else {
