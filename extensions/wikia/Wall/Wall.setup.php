@@ -215,8 +215,8 @@ $wgGroupPermissions['util']['walldelete'] = true;
 $wgGroupPermissions['*']['walladmindelete'] = false;
 $wgGroupPermissions['staff']['walladmindelete'] = false;
 $wgGroupPermissions['vstf']['walladmindelete'] = true;
-$wgGroupPermissions['helper']['walladmindelete'] = false;
-$wgGroupPermissions['sysop']['walladmindelete'] = false;
+$wgGroupPermissions['helper']['walladmindelete'] = true;
+$wgGroupPermissions['sysop']['walladmindelete'] = true;
 
 $wgGroupPermissions['*']['wallarchive'] = false;
 $wgGroupPermissions['staff']['wallarchive'] = true;
