@@ -4,9 +4,11 @@
  * various code-paths, some of which don't load the rest of the MediaWiki stack.
  */
 
-global $wgMedusaSlot;
+global $wgMedusaSlot, $wgDevelEnvironment;
 
 $slot_name = 'code' . ($wgMedusaSlot == 1 ? '' : $wgMedusaSlot);
 $cbFilePath = "/usr/wikia/deploy/$slot_name/src/wgCacheBuster.php";
 
-require_once($cbFilePath);
+if (!$wgDevelEnvironment) {
+	require_once($cbFilePath);
+}
