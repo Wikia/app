@@ -214,17 +214,19 @@ class WallHistory extends WikiaModel {
 		return $this->loadFromDB($where, $count, 0, 'desc');
 	}
 	
-	public function get($user, $sort, $parent_page_id = 0) {
+	public function get($user, $sort, $parent_page_id = 0, $show_replay = true) {
 		$sort = ($sort === 'nf') ? 'desc' : 'asc';
-		$where = $this->getWhere($user, $parent_page_id);
+		$where = $this->getWhere($user, $parent_page_id, $show_replay);
+
 		if($where === false) {
 			return array();
 		}
 		return $this->loadFromDB($where, $this->getLimit(), $this->getOffset(), $sort);
 	}
 	
-	public function getCount($user, $parent_page_id = 0) {
-		$where = $this->getWhere($user, $parent_page_id);
+	public function getCount($user, $parent_page_id = 0, $show_replay  = true) {
+		$where = $this->getWhere($user, $parent_page_id, $show_replay);
+		
 		if($where === false) {
 			return false;
 		}
@@ -240,8 +242,8 @@ class WallHistory extends WikiaModel {
 		return $row->cnt;
 	}
 	
-	protected function getWhere($user, $parent_page_id = 0) {
-		$query = array( 
+	protected function getWhere($user, $parent_page_id = 0, $show_replay = true) {	
+		$query = array(
 			'wiki_id' => $this->wikiId 
 		);
 		if( $parent_page_id === 0 ) {
@@ -267,6 +269,10 @@ class WallHistory extends WikiaModel {
 		} else {
 			return false;
 		}
+		
+		if(!$show_replay) {
+			$query['is_reply'] = 0;	
+		} 
 		
 		return $query;
 	}

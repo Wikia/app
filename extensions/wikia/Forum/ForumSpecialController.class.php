@@ -53,6 +53,9 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			$this->showOldForumLink = false;
 		}
 		
+		//TODO: keep the varnish cache and do purging on post 
+		$this->response->setCacheValidity(0, 0);
+		
 		$this->wf->profileOut( __METHOD__ );
 	}
 	

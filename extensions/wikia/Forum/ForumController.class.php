@@ -51,6 +51,9 @@ class ForumController extends WallBaseController {
 			$this->response->setVal( 'isTopicPage', false );			
 		}
 		
+		//TODO: keep the varnish cache and do purging on post 
+		$this->response->setCacheValidity(0, 0);
+		
 		$this->app->wg->SuppressPageHeader = true;
 		$this->app->wg->Out->setPageTitle( wfMsg('forum-board-title', $this->wg->title->getBaseText()) );
 	}

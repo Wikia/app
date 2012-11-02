@@ -94,8 +94,7 @@ class WallHooksHelper {
 		}
 		
 		
-		if( $title->getNamespace() === NS_USER_WALL
-				&& !$title->isSubpage()
+		if( $title->getNamespace() === NS_USER_WALL && !$title->isSubpage()
 		) {
 			//message wall index
 			$outputDone = true;
@@ -326,11 +325,10 @@ class WallHooksHelper {
 	 **/
 	function onBeforeToolbarMenu(&$items) {
 		$app = F::app();
-		
 		if( empty( $app->wg->EnableWallExt ) ){
 			return true;
-		}		
-		
+		}
+
 		$title = $app->wg->Title;
 		$action = $app->wg->Request->getText('action');
 
