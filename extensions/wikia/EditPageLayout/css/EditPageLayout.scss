@@ -1,14 +1,12 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/core/layout";
-@import "../../../../skins/oasis/css/mixins/bodytext";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/multiple-box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/opacity";
-@import "../../../../skins/oasis/css/mixins/wordmark";
-@import "../../../../skins/oasis/css/mixins/yui-suggest";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/mixins/bodytext";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/wordmark";
 
 // Colors
 @import "core/colors";
@@ -381,12 +379,6 @@ body {
 	textarea {
 		width: 100%;
 	}
-}
-
-/* RT #74340: add styling for LinkSuggest */
-.link-suggest-container {
-	@include yui-suggest;
-	position: absolute;
 }
 
 // TODO: try to "hide" stuff listed below in PHP
