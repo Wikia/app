@@ -6,17 +6,20 @@
  * @author macbre
  */
 
+@import "../mixins/border-radius";
+@import "../mixins/box-shadow";
 @import "../mixins/menus";
 
 .ui-autocomplete {
-  @include menu-regular;
-  @include border-radius-se(3px);
-  @include border-radius-sw(3px);
-  @include box-shadow(3px, 3px, 6px, darken($color-page, 9%));
-  & > li > a {
-    font-size: 12px;
-    &.ui-state-hover {
-      background: $color-menu-highlight;
-    }
-  }
+	@include menu-regular;
+	@include border-radius-se( 3px );
+	@include border-radius-sw( 3px );
+	@include box-shadow( 3px, 3px, 6px, darken( $color-page, 9% ) );
+
+	& > li > a {
+		font-size: 12px;
+		&.ui-state-hover {
+			background-color: $color-menu-highlight;
+		}
+	}
 }
