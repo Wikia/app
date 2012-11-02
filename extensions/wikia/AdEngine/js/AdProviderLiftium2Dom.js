@@ -1,3 +1,4 @@
+// TODO: remove WikiaTracker dependency
 var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, Liftium, scriptWriter) {
 	'use strict';
 

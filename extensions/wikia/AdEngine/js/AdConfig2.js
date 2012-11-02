@@ -5,7 +5,6 @@ var AdConfig2 = function (
 	// adProviders
 	, adProviderAdDriver2
 	, adProviderEvolve
-	, adProviderEvolveRS
 	, adProviderGamePro
 	, adProviderLater
 	, adProviderNull
@@ -102,9 +101,6 @@ var AdConfig2 = function (
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
 			if (adProviderEvolve.canHandleSlot(slot)) {
 				return adProviderEvolve;
-			}
-			if (adProviderEvolveRS.canHandleSlot(slot)) {
-				return adProviderEvolveRS;
 			}
 		}
 
