@@ -52,6 +52,14 @@
 	'use strict';
 
 	function lazyQueue() {
+		/** @private **/
+
+		/**
+		 * Turns an array in a LazyQueue
+		 *
+		 * @param {Array} queue An array of values
+		 * @param {Function} callback The callback to apply to each array item
+		 */
 		function makeQueue(queue, callback) {
 			if (typeof callback !== 'function') {
 				throw new Error('LazyQueue used with callback not being a function');
@@ -69,6 +77,8 @@
 			}
 		}
 
+		/** @public **/
+
 		return {
 			makeQueue: makeQueue
 		};
@@ -77,7 +87,10 @@
 	if (context.define && context.define.amd) {
 		context.define('lazyqueue', lazyQueue);
 	} else {
-		context.Wikia = context.Wikia || {};
+		if (!context.Wikia) {
+			context.Wikia = {};
+		}
+
 		context.Wikia.LazyQueue = lazyQueue();
 	}
 }(this));
