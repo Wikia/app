@@ -1,3 +1,5 @@
+@import "skins/oasis/css/mixins/border-radius";
+
 @mixin epl-textfield {
 	@include border-radius(4px);
 
