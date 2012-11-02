@@ -17,6 +17,13 @@
 
 		var moduleStorage = {};
 
+		/**
+		 * Gets a value from the storage
+		 *
+		 * @param {String} key Storage key
+		 *
+		 * @return {Mixed} Sored value or null
+		 */
 		function uniGet(key) {
 			if (moduleStorage[key] !== undef) {
 				return moduleStorage[key];
@@ -29,6 +36,12 @@
 			}
 		}
 
+		/**
+		 * Sets a value in the storage
+		 *
+		 * @param {String} key   Storage key
+		 * @param {Mixed}  value Value to store
+		 */
 		function uniSet(key, value) {
 			moduleStorage[key] = value;
 			try {
@@ -36,6 +49,11 @@
 			} catch (err) {}
 		}
 
+		/**
+		 * Removes a value from the storage
+		 *
+		 * @param {String} key Storage key
+		 */
 		function uniDel(key) {
 			delete moduleStorage[key];
 			try {
@@ -53,13 +71,14 @@
 		 */
 		function set(key, value, ttl, customNow) {
 			var now = customNow || new Date();
-
 			ttl = parseInt(ttl, 10);
+
 			if (ttl) {
 				uniSet(CACHE_TTL_PREFIX + key, now.getTime() + ttl * 1000);
 			} else {
 				uniDel(CACHE_TTL_PREFIX + key);
 			}
+
 			uniSet(CACHE_VALUE_PREFIX + key, JSON.stringify(value));
 		}
 
@@ -78,6 +97,8 @@
 		 *
 		 * @param {String} key       Key to get
 		 * @param {Date}   customNow [OPTIONAL] Custom now (date object) for computing TTL
+		 *
+		 * @return {Mixed} The value stored in the key or null
 		 */
 		function get(key, customNow) {
 			var ttl = uniGet(CACHE_TTL_PREFIX + key),
