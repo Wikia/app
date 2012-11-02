@@ -1,5 +1,8 @@
 @import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/arrow";
+@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/gradient";
 
 .ForumBoardEdit {
 	header {
@@ -18,6 +21,30 @@
 			display: inline;
 			position: relative;
 			top: -2px;
+			.moveup,
+			.movedown {
+				@include border-radius(4px);
+				@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 15%, $color-secondary-button, 85%);
+				border: 1px solid $color-page-border;
+				cursor: pointer;
+				display: inline-block;
+				height: 14px;
+				position: relative;
+				top: 6px;
+				width: 14px;
+				&:after {
+					content: "";
+					position: absolute;
+					left: 3px;
+					top: 5px;
+				}
+			}
+			.movedown:after {
+				@include arrow(4px, black, 'down');
+			}
+			.moveup:after {
+				@include arrow(4px, black, 'up');
+			}
 			.sprite {
 				cursor: pointer;
 			}

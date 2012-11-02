@@ -10,8 +10,8 @@
 						<!-- Admin editControls here -->
 						<img src="<?= $wf->BlankImgUrl() ?>" class="sprite edit-pencil">
 						<img src="<?= $wf->BlankImgUrl() ?>" class="sprite trash">
-						<img src="<?= $wf->BlankImgUrl() ?>" class="moveup">
-						<img src="<?= $wf->BlankImgUrl() ?>" class="movedown">
+						<span class="moveup"></span>
+						<span class="movedown"></span>
 					</div>
 				<? endif; ?>
 			</div>
