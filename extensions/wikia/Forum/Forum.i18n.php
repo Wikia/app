@@ -194,6 +194,10 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-board-title-validation-compare-error' => 'You need typing in the name of the board you are deleting',
 	
 	'forum-board-no-board-warning' => 'We couldn\'t find a board with that title.  Here\'s the list of forum boards.',
+	
+	/* old forum notification */
+	'forum-old-notification-message' => 'This Forum has been archived',
+	'forum-old-notification-navigation-button' => 'Visit the new Forums',
 );
 
 $messages['qqq'] = array(

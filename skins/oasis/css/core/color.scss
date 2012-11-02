@@ -40,6 +40,12 @@ $color-text: #3a3a3a;
 	$color-text: #D5D4D4;
 }
 
+// Generic Error text color
+$color-text-error: mix(#ff0000, #d4d4d4, 75%);
+@if $is-dark-wiki {
+	$color-text-error: mix(#ff0000, #2b2b2b, 60%);
+}
+
 // Opposite page color (use this as the mixing value to darken, lighten towards the opposite of page darkness)
 $color-page-opposite: #000;
 @if $is-dark-wiki {
