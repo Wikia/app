@@ -290,6 +290,7 @@ var WikiaPhotoGallery = {
 				} else if ( !this.isSlider() ) {
 					gallery.params.captionalign = $('#WikiaPhotoGalleryEditorGalleryCaptionAlignment').val();                   
 					gallery.params.widths = $('#WikiaPhotoGallerySliderGallery').find('.slider').slider('value');
+					gallery.params.position = $('#WikiaPhotoGalleryEditorGalleryPosition').val();
 					if (gallery.params.usefeed) {
 						delete gallery.params.usefeed;
 						gallery.params.rssfeed = $('#WikiaPhotoGalleryFeedUrl').val();
