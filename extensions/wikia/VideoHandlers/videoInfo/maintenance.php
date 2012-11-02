@@ -1,113 +1,133 @@
 <?php
 
-	/**
-	* Maintenance script to collect video data (local and premium videos) and insert into video_info table
-	* Note: video data come from embedded premium videos, local videos, and related videos (related videos list and global list)
-	* @author Liz Lee, Saipetch Kongkatong
-	*/
+/**
+* Maintenance script to collect video data (local and premium videos) and insert into video_info table
+* Note: video data come from embedded premium videos, local videos, and related videos (related videos list and global list)
+* Default setting: create video_info table, remove deleted videos (local) and add videos
+* @author Liz Lee, Saipetch Kongkatong
+*/
 
-	function addVideo( &$videoList, $titleName ) {
-		global $dryrun, $added, $invalid, $duplicate, $dupInDb;
+function addVideo( &$videoList, $titleName ) {
+	global $dryrun, $added, $invalid, $duplicate, $dupInDb;
 
-		$videoInfoHelper = new VideoInfoHelper();
-		$videoData = $videoInfoHelper->getVideoDataByTitle( $titleName );
-		if ( !empty($videoData) ) {
-			printText( $videoData['videoTitle'] );
-			$titleHash = md5( $videoData['videoTitle'] );
-			if ( !in_array($titleHash, $videoList) ) {
-				$status = true;
-				if ( !$dryrun ) {
-					$videoInfo = new VideoInfo( $videoData );
-					$status = $videoInfo->addVideo();
-				}
-
-				if ( $status ) {
-					$added++;
-					printText( "..... ADDED.\n" );
-				} else {
-					$dupInDb++;
-					printText( "..... ALREADY ADDED TO DB.\n" );
-				}
-
-				$videoList[] = $titleHash;
-			} else {
-				$duplicate++;
-				printText( "..... ALREADY ADDED.\n" );
+	$videoInfoHelper = new VideoInfoHelper();
+	$videoData = $videoInfoHelper->getVideoDataByTitle( $titleName );
+	if ( !empty($videoData) ) {
+		printText( $videoData['videoTitle'] );
+		$titleHash = md5( $videoData['videoTitle'] );
+		if ( !in_array($titleHash, $videoList) ) {
+			$status = true;
+			if ( !$dryrun ) {
+				$videoInfo = new VideoInfo( $videoData );
+				$status = $videoInfo->addVideo();
 			}
+
+			if ( $status ) {
+				$added++;
+				printText( "..... ADDED.\n" );
+			} else {
+				$dupInDb++;
+				printText( "..... ALREADY ADDED TO DB.\n" );
+			}
+
+			$videoList[] = $titleHash;
 		} else {
-			$invalid++;
-			printText( "$titleName..... INVALID.\n" );
+			$duplicate++;
+			printText( "..... ALREADY ADDED.\n" );
 		}
+	} else {
+		$invalid++;
+		printText( "$titleName..... INVALID.\n" );
 	}
+}
 
-	function printText( $text ) {
-		global $quiet;
+function printText( $text ) {
+	global $quiet;
 
-		if ( !$quiet ) {
-			echo $text;
-		}
+	if ( !$quiet ) {
+		echo $text;
 	}
+}
 
-	// ------------------------------------------- Main -------------------------------------------------
+// ------------------------------------------- Main -------------------------------------------------
 
-	ini_set( "include_path", dirname( __FILE__ )."/../../../../maintenance/" );
+ini_set( "include_path", dirname( __FILE__ )."/../../../../maintenance/" );
 
-	require_once( "commandLine.inc" );
+require_once( "commandLine.inc" );
 
-	if ( isset($options['help']) ) {
-		die( "Usage: php maintenance.php [--dry-run] [--help]
-		--dry-run			dry run
-		--quiet				show summary result only
-		--createtable		create video_info table
-		--altertablev1		alter video_info table v1
-		--help				you are reading it right now\n\n" );
+if ( isset($options['help']) ) {
+	die( "Usage: php maintenance.php [--dry-run] [--help]
+	--dry-run			dry run
+	--quiet				show summary result only
+	--createtable		create video_info table
+	--altertablev1		alter video_info table v1
+	--add				add videos
+	--remove			remove deleted videos (local)
+	--help				you are reading it right now\n\n" );
+}
+
+$app = F::app();
+if ( empty($app->wg->CityId) ) {
+	die( "Error: Invalid wiki id." );
+}
+
+if ( $app->wf->ReadOnly() ) {
+	die( "Error: In read only mode." );
+}
+
+$dryrun = ( isset($options['dry-run']) );
+$quiet = ( isset($options['quiet']) );
+$createTable = ( isset($options['createtable']) );
+$alterTableV1 = ( isset($options['altertablev1']) );
+$addVideos = ( isset($options['add']) );
+$removeVideos = ( isset($options['remove']) );
+
+// default setting
+if ( !$createTable && !$alterTableV1 && !$addVideos && !$removeVideos ) {
+	$createTable = true;
+	$addVideos = true;
+	$removeVideos = true;
+}
+
+echo "Wiki $wgCityId:\n";
+
+$db = $app->wf->GetDB( DB_MASTER );
+
+$tableExists = $db->tableExists( 'video_info' );
+
+// create table if not exists
+if ( ( $removeVideos || $addVideos ) && !$tableExists ) {
+	$createTable = true;
+}
+
+$total = 0;
+$added = 0;
+$invalid = 0;
+$duplicate = 0;
+$dupInDb = 0;
+$removed = 0;
+$videoList = array();
+
+$video = new VideoInfo();
+
+// create table or patch table schema
+if ( $createTable ) {
+	if ( !$dryrun ) {
+		$video->createTableVideoInfo();
 	}
+	echo "Create video_info table.\n";
+}
 
-	$app = F::app();
-	if ( empty($app->wg->CityId) ) {
-		die( "Error: Invalid wiki id." );
+// update schema v1
+if ( $alterTableV1 ) {
+	if ( !$dryrun ) {
+		$video->alterTableVideoInfoV1();
 	}
+	echo "Update video_info table schema (v1).\n";
+}
 
-	if ( $app->wf->ReadOnly() ) {
-		die( "Error: In read only mode." );
-	}
-
-	$dryrun = ( isset($options['dry-run']) );
-	$quiet = ( isset($options['quiet']) );
-	$createTable = ( isset($options['createtable']) );
-	$alterTableV1 = ( isset($options['altertablev1']) );
-
-	echo "Wiki $wgCityId:\n";
-
-	$db = $app->wf->GetDB( DB_MASTER );
-
-	$total = 0;
-	$added = 0;
-	$invalid = 0;
-	$duplicate = 0;
-	$dupInDb = 0;
-	$removed = 0;
-	$videoList = array();
-
-	$video = new VideoInfo();
-
-	// create table or patch table schema
-	if ( $createTable ) {
-		if ( !$dryrun ) {
-			$video->createTableVideoInfo();
-		}
-		echo "Create video_info table.\n";
-	}
-
-	// update schema v1
-	if ( $alterTableV1 ) {
-		if ( !$dryrun ) {
-			$video->alterTableVideoInfoV1();
-		}
-		echo "Update video_info table schema (v1).\n";
-	}
-
-	// remove deleted local videos
+// remove deleted local videos
+if ( $removeVideos && $tableExists ) {
 	$sql = <<<SQL
 		SELECT video_title
 		FROM video_info
@@ -126,7 +146,10 @@ SQL;
 		printText( "..... DELETED.\n" );
 		$removed++;
 	}
+}
 
+// add videos
+if ( $addVideos ) {
 	// get embedded videos (premium)
 	$excludeList = array( 'png', 'gif', 'bmp', 'jpg', 'jpeg', 'ogg', 'ico', 'svg', 'mp3', 'wav', 'midi' );
 	$sqlWhere = implode( "','", $excludeList );
@@ -199,4 +222,8 @@ SQL;
 	}
 
 	echo "Wiki $wgCityId: TOTAL: $total, ADDED: $added, DUPLICATE: $duplicate, DUPLICATE IN DB: $dupInDb, INVALID: $invalid\n";
+}
+
+if ( $removeVideos ) {
 	echo "Total removed deleted videos: $removed\n";
+}
