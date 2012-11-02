@@ -96,21 +96,20 @@ class VideoEmbedTool {
 	}
 
 	function insertVideo() {
-		global $wgRequest, $wgUser;
+		global $wgRequest, $wgUser, $wgContLang;
 
 		$url = $wgRequest->getVal( 'url' );
 
 		$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
 		$title = Title::makeTitle( NS_FILE, $tempname );
-		$isNonPremium = false;
+		$nonPremiumException = null;
 		try {
 			$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
 			$apiwrapper = $awf->getApiWrapper( $url );
 
 		}
 		catch (WikiaException $e) {
-
-			$isNonPremium = true;
+			$nonPremiumException = $e;
 		}
 
 
@@ -133,7 +132,9 @@ class VideoEmbedTool {
 		} else { // if not a partner video try to parse link for File:
 			$file = null;
 			// get the video name
-			$pattern = '/(File:|Video:)(.+)$/';
+			$nsFileTranslated = $wgContLang->getNsText(NS_FILE);
+			// added $nsFileTransladed to fix bugId:#48874
+			$pattern = '/(File:|Video:|'.$nsFileTranslated.':)(.+)$/';
 			if (preg_match($pattern, $url, $matches)) {
 				$file = wfFindFile( $matches[2] );
 				if ( !$file ) { // bugID: 26721
@@ -147,8 +148,13 @@ class VideoEmbedTool {
 				}
 			}
 			else {
-				if ( $isNonPremium ) {
+				if ( $nonPremiumException ) {
 					header('X-screen-type: error');
+
+					if ( !empty(F::app()->wg->allowNonPremiumVideos) ) {
+						return $nonPremiumException->getMessage();
+					}
+
 					return wfMessage('videohandler-non-premium')->parse();
 				}
 				header('X-screen-type: error');
@@ -202,6 +208,7 @@ class VideoEmbedTool {
 				header('X-screen-type: error');
 				return wfMsg ( 'vet-name-incorrect' );
 			}
+			wfRunHooks( 'AddPremiumVideo', array( $title ) );
 		} else { // needs to upload
 			// sanitize name and init title objects
 			$name = VideoFileUploader::sanitizeTitle($name);
@@ -211,14 +218,14 @@ class VideoEmbedTool {
 				return wfMsg('vet-warn3');
 			}
 
-			$nameFile = VideoFileUploader::sanitizeTitle($name);
-			$titleFile = Title::newFromText($nameFile, NS_FILE);
-			if (empty($titleFile)) {
+			$nameFile = VideoFileUploader::sanitizeTitle( $name );
+         	$titleFile = VideoFileUploader::getUniqueTitle( $nameFile );
+         	if (empty($titleFile)) {
 				header('X-screen-type: error');
 				return wfMsg ( 'vet-name-incorrect' );
 			}
 			// by definition, WikiaFileHelper::useVideoHandlersExtForEmbed() == true
-			$nameSanitized = $nameFile;
+			$nameSanitized = $titleFile->getBaseText();
 			$title = $titleFile;
 
 			$extra = 0;
@@ -228,17 +235,18 @@ class VideoEmbedTool {
 				$extra++;
 			}
 
-			$parts = explode('/',$provider);
-			$provider = $parts[1];
-			$oTitle = null;
-			$status = $this->uploadVideoAsFile($provider, $id, $nameSanitized, $oTitle);
-			if ( !$status->ok ) {
-				header('X-screen-type: error');
-				return wfMsg( 'wva-thumbnail-upload-failed' );
+			if (!empty($titleFile)) {
+				$parts = explode('/',$provider);
+				$provider = $parts[1];
+				$oTitle = null;
+				$status = $this->uploadVideoAsFile($provider, $id, $nameSanitized, $oTitle);
+				if ( !$status->ok ) {
+					header('X-screen-type: error');
+					return wfMsg( 'wva-thumbnail-upload-failed' );
+				}
+				$message = wfMsg( 'vet-single-success' );
 			}
 		}
-		$message = wfMsg( 'vet-single-success' );
-
 		$ns_vid = $wgContLang->getFormattedNsText( $title->getNamespace() );
 		$caption = $wgRequest->getVal('caption');
 
