@@ -20,8 +20,8 @@
 
 	function querystring(){
 		var l = context.location,
-			p = Querystring.prototype,
-			u;//late binding
+			p = Querystring.prototype,//late binding
+			u;
 
 		function Querystring(url){
 			var srh,
@@ -111,8 +111,8 @@
 			return this;
 		};
 
-		p.excludeHash = function(list){
-			if ((list instanceof Array && list.indexOf(this.hash) > -1) || list === this.hash) {
+		p.removeHash = function(list){
+			if (list === u || (list instanceof Array && list.indexOf(this.hash) > -1) || list === this.hash) {
 				this.hash = '';
 			}
 			return this;
