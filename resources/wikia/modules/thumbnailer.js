@@ -12,32 +12,30 @@
 	'use strict';
 
 	function thumbnailer() {
+		/** @private **/
+
 		//targets the image file extension
 		var extRegExp = new RegExp('\\.(jpg|jpeg|gif|bmp|png|svg)$', 'i'),
 			imagePath = '/images/',
 			thumbPath = '/images/thumb/';
 
 		/**
-		 * @public
-		 *
 		 * Checks if a URL points to a thumbnail
 		 *
 		 * @param {String} url The URL of an image or thumbnail
 		 *
-		 * @return {Boolean} true if it's a thumbnail or false if it's an image
+		 * @return {Boolean} True f it's a thumbnail or false if it's an image
 		 */
 		function isThumbUrl(url) {
 			return url && url.indexOf('/thumb/') > 0;
 		}
 
 		/**
-		 * @private
-		 *
 		 * Removes the thumbnail options part from a thumbnail URL
 		 *
 		 * @param {String} url The URL of a thumbnail
 		 *
-		 * @return {String} the URL without the thymbnail options
+		 * @return {String} The URL without the thymbnail options
 		 */
 		function clearThumbOptions(url) {
 			//The URL of a thumbnail is in the following format:
@@ -47,14 +45,12 @@
 		}
 
 		/**
-		 * @private
-		 *
 		 * Switches a thumb path into an image path and vice versa inside an URL
 		 *
 		 * @param {String} url The URL of an image or thumbnail
 		 * @param {String} type Either 'image' or 'thumb'
 		 *
-		 * @return {String} the URL with the switched path
+		 * @return {String} The URL with the switched path
 		 */
 		function switchPathTo(url, type) {
 			var from,
@@ -73,12 +69,12 @@
 			return url;
 		}
 
+		/** @public **/
+
 		return {
 			isThumbUrl: isThumbUrl,
 
 			/**
-			 * @public
-			 *
 			 * Converts the URL of a full size image or of a thumbnail into one of a thumbnail of
 			 * the specified size and returns it
 			 *
@@ -106,13 +102,11 @@
 				var tokens = url.split('/'),
 					last = tokens.slice(-1)[0].replace(extRegExp, '');
 
-				tokens.push(width + (height ? 'x' + height : '-') + ((type == 'video' || type == 'nocrop') ? '-' :  'x2-') + last + '.png');
+				tokens.push(width + (height ? 'x' + height : '-') + ((type === 'video' || type === 'nocrop') ? '-' :  'x2-') + last + '.png');
 				return tokens.join('/');
 			},
 
 			/**
-			 * @public
-			 *
 			 * Converts the URL of a thumbnail into one of a full size image
 			 *
 			 * @param {String} url The URL to a thumbnail
@@ -129,11 +123,10 @@
 		};
 	}
 
-	if (typeof define !== 'undefined' && define.amd) {
-		//AMD
-		define('thumbnailer', thumbnailer);
+	//UMD exclusive
+	if (context.define && context.define.amd) {
+		context.define('thumbnailer', thumbnailer);
 	} else {
-		//Namespace
 		if (!context.Wikia) {
 			context.Wikia = {};
 		}
