@@ -13,6 +13,10 @@
 				'label' => wfMsg('forum-admin-delete-board-title'),
 			),
 			array(
+				'type' => 'custom',
+				'output' => wfMsg('forum-admin-merge-board-warning'),
+			),
+			array(
 				'type' => 'select',
 				'name' => 'destinationBoardId',
 				'class' => 'destinationBoardId',

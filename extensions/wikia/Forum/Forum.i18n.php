@@ -20,7 +20,7 @@ $messages['en'] = array(
 	/* Forum:Special (Index) */
 	'forum-specialpage-heading' => '{{SITENAME}} Forum',
 	'forum-specialpage-blurb-heading' => 'Welcome to {{SITENAME}} Forum!',
-	'forum-specialpage-blurb' => 'This is an early demo of Wikia\'s new Forum feature. If you\'ve got ideas or questions about the feature, please start a thread on the [[Board:General Discussion|General Discussion board]]. Have fun!',
+	'forum-specialpage-blurb' => '',
 	'forum-specialpage-board-threads' => '{{formatnum:$1}} {{PLURAL:$1|thread|threads}}',
 	'forum-specialpage-board-posts' => '{{formatnum:$1}} {{PLURAL:$1|post|posts}}',
 	'forum-specialpage-board-lastpostby' => 'Last post by',
@@ -145,18 +145,20 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	
 	/* board admin page messages */
 	'forum-admin-page-heading' => '{{SITENAME}} Board Admin',
+	'forum-admin-page-breadcrumb' => 'Admin Board Management',
 	'forum-admin-create-new-board-label' => 'Create New Board',
 	'forum-admin-create-new-board-modal-heading' => 'Create a new board',
 	'forum-admin-create-new-board-title' => 'Board Title',
 	'forum-admin-create-new-board-description' => 'Board Description',
 	
-	'forum-admin-edit-board-modal-heading' => 'Edit $1 board',
+	'forum-admin-edit-board-modal-heading' => 'Edit Board: $1',
 	'forum-admin-edit-board-title' => 'Board Title',
 	'forum-admin-edit-board-description' => 'Board Description',
 	
 	'forum-admin-delete-and-merge-board-modal-heading' => 'Delete Board: $1',
-	'forum-admin-delete-board-title' => 'Confirm that you want to delete by typing in the name of the board you are deleting:',
-	'forum-admin-merge-board-destination' => 'The threads in $1 board will be merged into an existing board.  Choose a board to merge to:',
+	'forum-admin-delete-board-title' => 'Please confirm by typing the name of the board that you want to delete:',
+	'forum-admin-merge-board-warning' => 'The threads on this board will be merged into an existing board.',
+	'forum-admin-merge-board-destination' => 'Choose a board to merge to:',
 	'forum-admin-delete-and-merge-button-label' => 'Delete and Merge',
 
 	'forum-admin-link-label' => 'Manage Boards',
@@ -181,15 +183,17 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-board-destination-empty' => '(Please select board)',
 	
 	'forum-board-title-validation-invalid' => 'Board name contains invalid characters',
-	'forum-board-title-validation-length' => 'Board name length should be between 4 and 40',
+	'forum-board-title-validation-length' => 'Board name should be at least 4 characters long',
 	'forum-board-title-validation-exists' => 'A Board of the same name already exists',
 	'forum-board-validation-count' => 'The maximum number of boards is $1',
 	
-	'forum-board-description-validation-length' => 'Board description should be between 4 and 255',
+	'forum-board-description-validation-length' => 'Please write a description for this board',
 	'forum-board-id-validation-missing' => 'Board id is missing',
 
 	'forum-board-destination-validation-missing' => 'You need to choose a board to merge',
-	'forum-board-title-validation-compare-error' => 'You need typing in the name of the board you are deleting'
+	'forum-board-title-validation-compare-error' => 'You need typing in the name of the board you are deleting',
+	
+	'forum-board-no-board-warning' => 'We couldn\'t find a board with that title.  Here\'s the list of forum boards.',
 );
 
 $messages['qqq'] = array(
@@ -198,7 +202,7 @@ $messages['qqq'] = array(
 
 	'forum-specialpage-title' => 'Appears as the main title of the forum and also in the browser title bar.',
 	'forum-specialpage-blurb-heading' => 'Heading for the introduction text.',
-	'forum-specialpage-blurb' => 'A short description of the forum.',
+	'forum-specialpage-blurb' => 'A optional short description of the forum.  By default, this should be blank, and should not be translated.  It is for wikis to decide to change this message.',
 	'forum-specialpage-board-threads' => 'The count of threads on a board. Parameters: * $1 - the number of threads.  Use formatnum for local formatting.',
 	'forum-specialpage-board-posts' => 'The count of posts on a board. Parameters: * $1 - the number of posts.  Use formatnum for local formatting.',
 	'forum-specialpage-board-lastpostby' => '',
@@ -244,12 +248,17 @@ $messages['qqq'] = array(
 	'forum-autoboard-body-5' => 'Description for default board.The length of this message needs to be between 4 and 255.',
 
 	'forum-admin-page-heading' => 'Page label and heading for board admin page',
+	'forum-admin-page-breadcrumb' => 'Breadcrumb heading',
 	'forum-admin-create-new-board-label' => 'Call to action on creating new board',
 	'forum-admin-create-new-board-modal-heading' => 'Modal heading for create a new board dialog',
 	'forum-admin-create-new-board-title' => 'Form input label for board title',
 	'forum-admin-create-new-board-description' => 'Form input label board description',
 	
-	/* board creation validation messages */
+	'forum-admin-delete-and-merge-board-modal-heading' => 'Heading for delete and merge dialog. $1 is board name',
+	'forum-admin-delete-board-title' => 'Label for board name verification for deletion',
+	'forum-admin-merge-board-warning' => 'Help text letting users know that threads under a deleted board needs to be merged to existing board',
+	'forum-admin-merge-board-destination' => 'Label for board selection dropdown to merge to',
+	'forum-admin-delete-and-merge-button-label' => 'Delete and Merge button label',
 	
 	'forum-board-title-validation-invalid' => 'Display on board create in case of validation error ',
 	'forum-board-title-validation-length' => 'Display on board create in case of validation error ',

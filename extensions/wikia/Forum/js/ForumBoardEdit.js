@@ -40,6 +40,7 @@
 								if(json.status === 'ok') {
 									UserLoginAjaxForm.prototype.reloadPage(); // reload, waiting on pull request
 								} else if(json.status === 'error') {
+									dialog.form.clearAllInputErrors();
 									if(json.errorfield) {
 										dialog.form.showInputError(json.errorfield, json.errormsg);
 									} else {
