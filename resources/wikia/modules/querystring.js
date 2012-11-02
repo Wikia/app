@@ -109,6 +109,12 @@
 			this.hash = h;
 		};
 
+		p.excludeHash = function(list){
+			if ((list instanceof Array && list.indexOf(this.hash) > -1) || list === this.hash) {
+				this.hash = '';
+			}
+		};
+
 		p.getPath = function () {
 			return this.path;
 		};
@@ -122,11 +128,6 @@
 		};
 
 		p.goTo = function () {
-			//TODO: We don't want these to be in url on load, this should be refactored as is valid only for WikiaMobile
-			if (this.hash === 'topbar' || this.hash === 'Modal') {
-				this.hash = '';
-			}
-
 			l.href = this.toString();
 		};
 
