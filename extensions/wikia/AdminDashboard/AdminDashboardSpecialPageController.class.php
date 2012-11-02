@@ -106,6 +106,8 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 	}
 
 	public function chromedArticleHeader() {
+lizbug("CALLED");
+
 		if (!$this->wg->User->isAllowed( 'admindashboard' )) {
 			$this->displayRestrictionError();
 			return false; // skip rendering

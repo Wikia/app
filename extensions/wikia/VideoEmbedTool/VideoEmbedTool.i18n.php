@@ -92,7 +92,7 @@ $messages['en'] = array(
 	'vet-search-results-WVL' => 'We found $1 {{PLURAL:$1|result|results}} for "$2" on Wikia Video Library',
 	'vet-search-results-local' => 'We found $1 {{PLURAL:$1|result|results}} for "$2" on this Wiki',
 	'vet-search-filter-caption' => 'Search filter',
-
+	'vet-video-add-intro' => 'Looking for videos for your wiki? Trying searching at [http://video.wikia.com Wikia Video Library] for high quality videos licensed by Wikia.'
 );
 
 /** Message documentation (Message documentation)
