@@ -29,7 +29,7 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 			categories: JSON.parse( $categories.val() )
 
 		// Update categories metadata when categories change
-		}).on( 'update', function( event, data ) {
+		}).on( 'update.categorySelect', function( event, data ) {
 			$categories.val( JSON.stringify( data.categories ) );
 		});
 	}
