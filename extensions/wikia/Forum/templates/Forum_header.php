@@ -8,4 +8,9 @@
 			<?= $wf->MsgExt(('forum-header-active-threads'), array('parsemag'), $activeThreads) ?>
 		</div>
 	</div>
+	<? if(!empty($pageDescription)) { ?>
+		<div class="description">
+			<?= $pageDescription ?>
+		</div>
+	<? } ?>
 </header>

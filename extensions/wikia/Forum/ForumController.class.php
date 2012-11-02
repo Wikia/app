@@ -175,9 +175,12 @@ class ForumController extends WallBaseController {
 		
 		$title = $this->wg->Title;
 		$pageHeading = $this->wf->Msg('forum-specialpage-heading');
+		$pageDescription = '';
 		$nameSpace = $title->getNamespace();
 		if($nameSpace === NS_WIKIA_FORUM_BOARD) {
 			$pageHeading = wfMsg('forum-board-title', $title->getText());
+			$board = F::build( 'ForumBoard', array( $title ), 'newFromTitle' );
+			$pageDescription = $board->getDescription();
 		} else if($nameSpace === NS_USER_WALL_MESSAGE) {
 			$messageKey = $title->getText();
 			$message = WallMessage::newFromId($messageKey);
@@ -188,6 +191,7 @@ class ForumController extends WallBaseController {
 		}
 		
 		$this->pageHeading = $pageHeading;
+		$this->pageDescription = $pageDescription;
 	}
 
 	public function threadMessage() {
