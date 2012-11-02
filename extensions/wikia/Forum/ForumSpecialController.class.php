@@ -19,6 +19,10 @@ class ForumSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		$this->wf->profileIn( __METHOD__ );
 		
+		if( $this->request->getVal('showWarning', 0) == 1 ) {
+			NotificationsController::addConfirmation(wfMsg('forum-board-no-board-worning'), NotificationsController::CONFIRMATION_WARN);		
+		} 
+		
 		$action = $this->getVal('action', '');
 		
 		if('editmode' == $action) {

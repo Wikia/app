@@ -17,7 +17,7 @@ class ForumController extends WallBaseController {
 		$this->wg->IsForum = true;
 	}
 
-	public function board() {
+	public function board() {		
 		parent::index();
 		$this->setIsForum();
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
@@ -31,7 +31,7 @@ class ForumController extends WallBaseController {
 			$board = F::build( 'ForumBoard', array( 0 ), 'newFromId' );
 
 			if(empty($board)) {
-				$this->forward('Forum', 'boardError');
+				$this->redirectToIndex();
 				return true;
 			}
 		
@@ -43,7 +43,7 @@ class ForumController extends WallBaseController {
 			
 			
 			if(empty($board)) {
-				$this->forward('Forum', 'boardError');
+				$this->redirectToIndex();
 				return true;
 			}
 			
@@ -58,8 +58,9 @@ class ForumController extends WallBaseController {
 		$this->app->wg->Out->setPageTitle( wfMsg('forum-board-title', $this->wg->title->getBaseText()) );
 	}
 
-	public function boardError() {
-		
+	protected function redirectToIndex() {
+		$title = Title::newFromText( 'Forum', NS_SPECIAL );
+		$this->response->redirect( $title->getFullURL() . '?showWarning=1' );
 	}
 
 	public function getWallForIndexPage($title) {

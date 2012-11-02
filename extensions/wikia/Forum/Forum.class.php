@@ -262,7 +262,7 @@ class Forum extends WikiaModel {
 		if( !empty($board) ) {
 			$id = $board->getId();	
 		}
-		
+
 		if( strlen($titletext) < 4 || strlen($body) < 4 ) {
 			$this->wf->ProfileOut( __METHOD__ );
 			return false;
@@ -278,17 +278,10 @@ class Forum extends WikiaModel {
 		if($id == null) {
 			$title = Title::newFromText($titletext, NS_WIKIA_FORUM_BOARD);
 		} else {
-			$title = Title::newFromId($id);
-			
-			if($title->getText() != $titletext) {
-				$nt = Title::newFromText($titletext, NS_WIKIA_FORUM_BOARD);
-				if($nt->exists()) {
-					return false;
-				}	
-
-				$title->moveTo( $nt, true, '', false );
-				$title = $nt;
-			}
+			$title = Title::newFromId($id, Title::GAID_FOR_UPDATE);
+			$nt = Title::newFromText($titletext, NS_WIKIA_FORUM_BOARD);
+			$title->moveTo( $nt, true, '', false );
+			$title = $nt;
 		}	 
 		
 		$article  = new Article( $title );

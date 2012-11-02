@@ -34,6 +34,8 @@ $messages['en'] = array(
 	'forum-board-thread-replies' => '$1 Replies',
 	'forum-board-thread-unfollow' => 'Unfollow',
 	'forum-board-new-message-heading' => 'Start a Discussion',
+	
+	'forum-board-no-board-worning' => "The board you're looking for was not found",
 
 	/* Forum Thread */
 	'forum-thread-title' => '$1 board',

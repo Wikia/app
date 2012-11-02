@@ -62,6 +62,7 @@ class ForumExternalController extends WallExternalController {
 		}
 		
 		$newTitle = Title::newFromText($boardTitle, NS_WIKIA_FORUM_BOARD);
+	
 		if( $newTitle->exists() ) {
 			$this->status = 'error';
 			$this->errormsg = wfMsg('forum-board-title-validation-exists');
@@ -87,6 +88,7 @@ class ForumExternalController extends WallExternalController {
 	*/
 	public function editBoard() {
 		$this->status = self::checkAdminAccess();
+		
 		if(!empty($this->status)) {
 			return;
 		}
@@ -114,7 +116,9 @@ class ForumExternalController extends WallExternalController {
 		}
 		
 		$newTitle = Title::newFromText($boardTitle, NS_WIKIA_FORUM_BOARD);
-		if( $newTitle->exists() && $newTitle->getText() != $board->getTitle()->getText() ) {
+		if( $newTitle->getArticleId() > 0 
+			&& $newTitle->getText() != $board->getTitle()->getText() 
+			&& $newTitle->getArticleId() != $board->getTitle()->getArticleId()) {
 			$this->status = 'error';
 			$this->errormsg = wfMsg('forum-board-title-validation-exists');
 			return true;
