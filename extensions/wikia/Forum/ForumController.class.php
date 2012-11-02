@@ -172,6 +172,22 @@ class ForumController extends WallBaseController {
 		$forum = F::build( 'Forum' );
 		$this->response->setVal( 'threads', $forum->getTotalThreads() );
 		$this->response->setVal( 'activeThreads', $forum->getTotalActiveThreads() );
+		
+		$title = $this->wg->Title;
+		$pageHeading = $this->wf->Msg('forum-specialpage-heading');
+		$nameSpace = $title->getNamespace();
+		if($nameSpace === NS_WIKIA_FORUM_BOARD) {
+			$pageHeading = wfMsg('forum-board-title', $title->getText());
+		} else if($nameSpace === NS_USER_WALL_MESSAGE) {
+			$messageKey = $title->getText();
+			$message = WallMessage::newFromId($messageKey);
+			if(!empty($message)) {
+				$message->load();
+				$pageHeading = $message->getMetaTitle();
+			}
+		}
+		
+		$this->pageHeading = $pageHeading;
 	}
 
 	public function threadMessage() {

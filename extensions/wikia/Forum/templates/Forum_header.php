@@ -1,5 +1,5 @@
 <header id="WikiaPageHeader" class="WikiaPageHeader">
-	<h1><?= $wf->Msg('forum-specialpage-heading') ?></h1>
+	<h1><?= $pageHeading ?></h1>
 	<div class="header-right">
 		<div class="first tally">
 			<?= $wf->MsgExt(('forum-header-total-threads'), array('parsemag'), $threads) ?>
