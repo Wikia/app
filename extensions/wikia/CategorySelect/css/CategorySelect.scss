@@ -9,6 +9,8 @@
 @import "extensions/wikia/EditPageLayout/css/core/dimensions";
 @import "extensions/wikia/EditPageLayout/css/mixins/inputs";
 
+$categoryselect-width: $width-epl-module-input - 10;
+
 // Hide until moved to the right rail via JavaScript
 #EditPageMain .CategorySelect {
 	display: none;
@@ -19,7 +21,11 @@
 		.addCategory,
 		.categories {
 			@include epl-textfield;
-			width: $width-epl-module-input - 10;
+			width: $categoryselect-width;
+		}
+
+		.addCategory {
+			outline: none;
 		}
 
 		.categories {
@@ -41,6 +47,10 @@
 					background-color: $color-epl-hover;
 				}
 			}
+		}
+
+		.ui-autocomplete {
+			width: $categoryselect-width;
 		}
 	}
 }
