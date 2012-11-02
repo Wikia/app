@@ -1,13 +1,15 @@
 <header id="WikiaPageHeader" class="WikiaPageHeader">
 	<h1><?= $pageHeading ?></h1>
-	<div class="header-right">
-		<div class="first tally">
-			<?= $wf->MsgExt(('forum-header-total-threads'), array('parsemag'), $threads) ?>
+	<? if($showStats): ?>
+		<div class="header-right">
+			<div class="first tally">
+				<?= $wf->MsgExt(('forum-header-total-threads'), array('parsemag'), $threads) ?>
+			</div>
+			<div class="last tally">
+				<?= $wf->MsgExt(('forum-header-active-threads'), array('parsemag'), $activeThreads) ?>
+			</div>
 		</div>
-		<div class="last tally">
-			<?= $wf->MsgExt(('forum-header-active-threads'), array('parsemag'), $activeThreads) ?>
-		</div>
-	</div>
+	<? endif; ?>
 	<? if(!empty($pageDescription)) { ?>
 		<div class="description">
 			<?= $pageDescription ?>

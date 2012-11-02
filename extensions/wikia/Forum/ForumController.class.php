@@ -176,12 +176,15 @@ class ForumController extends WallBaseController {
 		$title = $this->wg->Title;
 		$pageHeading = $this->wf->Msg('forum-specialpage-heading');
 		$pageDescription = '';
+		$this->showStats = true;
 		$nameSpace = $title->getNamespace();
 		if($nameSpace === NS_WIKIA_FORUM_BOARD) {
+			$this->showStats = false;
 			$pageHeading = wfMsg('forum-board-title', $title->getText());
 			$board = F::build( 'ForumBoard', array( $title ), 'newFromTitle' );
 			$pageDescription = $board->getDescription();
 		} else if($nameSpace === NS_USER_WALL_MESSAGE) {
+			$this->showStats = false;
 			$messageKey = $title->getText();
 			$message = WallMessage::newFromId($messageKey);
 			if(!empty($message)) {
