@@ -9,6 +9,9 @@ global $wgMedusaSlot, $wgDevelEnvironment;
 $slot_name = 'code' . ($wgMedusaSlot == 1 ? '' : $wgMedusaSlot);
 $cbFilePath = "/usr/wikia/deploy/$slot_name/src/wgCacheBuster.php";
 
-if (!$wgDevelEnvironment) {
+if ($wgDevelEnvironment) {
+	global $wgCacheBuster;
+	$wgCacheBuster = 12345;
+} else {
 	require_once($cbFilePath);
 }
