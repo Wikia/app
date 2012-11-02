@@ -41,12 +41,12 @@ $messages['de'] = array(
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Videos auf<br /> diesem Wiki|Videos auf<br /> Diesem Wiki}}</span>',
 	'specialvideos-sort-by' => 'Sortieren nach',
 	'specialvideos-sort-latest' => 'Neueste',
-	'specialvideos-sort-most-popular' => 'Popul?rsten',
+	'specialvideos-sort-most-popular' => 'PopulŠrsten',
 	'specialvideos-sort-trending' => 'Trends',
 	'specialvideos-sort-featured' => 'Quelle: Wikia-Bibliothek',
 	'specialvideos-uploadby' => 'von $1',
-	'specialvideos-posted-in' => 'Ver?ffentlicht auf $1',
-	'special-videos-add-video' => 'Video hinzuf?gen',
+	'specialvideos-posted-in' => 'Veršffentlicht auf $1',
+	'special-videos-add-video' => 'Video hinzufŸgen',
 );
 
 $messages['es'] = array(
@@ -60,33 +60,47 @@ $messages['es'] = array(
 	'specialvideos-sort-featured' => 'Fuente: Biblioteca Wikia',
 	'specialvideos-uploadby' => 'por $1',
 	'specialvideos-posted-in' => 'Publicado en $1',
-	'special-videos-add-video' => 'A�ade un video',
+	'special-videos-add-video' => 'Añade un video',
 );
 
 $messages['fr'] = array(
-	'specialvideos-html-title' => 'Vid�os sur ce wiki ? {{SITENAME}}',
-	'specialvideos-page-title' => 'Vid�os',
-	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|vid�o|vid�os}} sur<br />ce wiki</span>',
+	'specialvideos-html-title' => 'Vidéos sur ce wiki ? {{SITENAME}}',
+	'specialvideos-page-title' => 'Vidéos',
+	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|vidéo|vidéos}} sur<br />ce wiki</span>',
 	'specialvideos-sort-by' => 'Trier par',
-	'specialvideos-sort-latest' => 'Derni�res',
+	'specialvideos-sort-latest' => 'Dernières',
 	'specialvideos-sort-most-popular' => 'Les plus populaires',
 	'specialvideos-sort-trending' => 'Tendances',
 	'specialvideos-sort-featured' => 'Source : Librairie Wikia',
 	'specialvideos-uploadby' => 'par $1',
-	'specialvideos-posted-in' => 'Post�e sur $1',
-	'special-videos-add-video' => 'Ajouter une vid�o',
+	'specialvideos-posted-in' => 'Postée sur $1',
+	'special-videos-add-video' => 'Ajouter une vidéo',
 );
 
 $messages['pl'] = array(
 	'specialvideos-html-title' => 'Filmy na {{SITENAME}}',
 	'specialvideos-page-title' => 'Filmy',
-	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span> {{PLURAL:$1|film na<br /> tej wiki|film�w na<br /> tej wiki}}</span>',
-	'specialvideos-sort-by' => 'Spos�b sortowania',
+	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span> {{PLURAL:$1|film na<br /> tej wiki|filmÛw na<br /> tej wiki}}</span>',
+	'specialvideos-sort-by' => 'SposÛb sortowania',
 	'specialvideos-sort-latest' => 'Najnowsze',
 	'specialvideos-sort-most-popular' => 'Najpopularniejsze',
 	'specialvideos-sort-trending' => 'Na fali',
-	'specialvideos-sort-featured' => '�r�d?o: Wikia Library',
-	'specialvideos-uploadby' => 'doda?(a) $1',
-	'specialvideos-posted-in' => 'U�yto w $1',
+	'specialvideos-sort-featured' => 'èrÛd≥o: Wikia Library',
+	'specialvideos-uploadby' => 'doda≥(a) $1',
+	'specialvideos-posted-in' => 'Uøyto w $1',
 	'special-videos-add-video' => 'Dodaj film',
+);
+
+$messages['ru'] = array(
+	'specialvideos-html-title' => 'Видео на этой вики - {{SITENAME}}',
+	'specialvideos-page-title' => 'Видео',
+	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|видео на<br /> этой вики}}</span>',
+	'specialvideos-sort-by' => 'Cортировать по',
+	'specialvideos-sort-latest' => 'Самому новому',
+	'specialvideos-sort-most-popular' => 'Самому просматриваемому',
+	'specialvideos-sort-trending' => 'Самому популярному',
+	'specialvideos-sort-featured' => 'Источник: Библиотека Викия',
+	'specialvideos-uploadby' => 'от $1',
+	'specialvideos-posted-in' => 'Опубликовано в $1',
+	'special-videos-add-video' => 'Добавить видео',
 );
