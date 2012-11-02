@@ -21,7 +21,7 @@ class CategorySelect {
 	private static $outerTag;
 	private static $tagsWhiteList;
 
-	public static function getData( $wikitext = '', $force = false ) {
+	public static function extractCategoriesFromWikitext( $wikitext, $force = false ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !$force && is_array( self::$data ) ) {
@@ -70,12 +70,16 @@ class CategorySelect {
 		$modifiedWikitext = $app->wg->Parser->mStripState->unstripBoth( $modifiedWikitext );
 
 		self::$data = array(
+			'categories' => $categories,
 			'wikitext' => rtrim( $modifiedWikitext ),
-			'categories' => $categories
 		);
 
 		wfProfileOut( __METHOD__ );
 
+		return self::$data;
+	}
+
+	public function getExtractedCategoryData() {
 		return self::$data;
 	}
 

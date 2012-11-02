@@ -37,10 +37,10 @@ class CategorySelectHooksHelper {
 	/**
 	 * Replace content of edited article [with cut out categories]
 	 */
-	function onEditPageGetContentEnd( $editPage, &$text ) {
+	function onEditPageGetContentEnd( $editPage, &$wikitext ) {
 		if ( !$editPage->isConflict ) {
-			$data = CategorySelect::getData( $text );
-			$text = $data[ 'wikitext' ];
+			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext );
+			$wikitext = $data[ 'wikitext' ];
 		}
 
 		return true;
@@ -77,7 +77,7 @@ class CategorySelectHooksHelper {
 			}
 
 			if ( $editPage->preview || $editPage->diff ) {
-				$data = CategorySelect::getData( $editPage->textbox1 . $categories );
+				$data = CategorySelect::extractCategoriesFromWikitext( $editPage->textbox1 . $categories );
 				$editPage->textbox1 = $data[ 'wikitext' ];
 				$categories = CategorySelect::changeFormat( $data[ 'categories' ], 'array', 'wikitext' );
 
@@ -117,7 +117,7 @@ class CategorySelectHooksHelper {
 	 * @param OutputPage $out
 	 */
 	function onEditPageShowEditFormFields( $editPage, $out ) {
-		$out->addHTML( F::app()->renderView( 'CategorySelect', 'editPageMetaData' ) );
+		$out->addHTML( F::app()->renderView( 'CategorySelect', 'editPageMetadata' ) );
 		return true;
 	}
 

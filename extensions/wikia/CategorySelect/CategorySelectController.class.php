@@ -165,11 +165,11 @@ class CategorySelectController extends WikiaController {
 	 * The hidden form fields that store a JSON representation of the categories
 	 * for an article.
 	 */
-	public function editPageMetaData() {
-		$data = CategorySelect::getData();
+	public function editPageMetadata() {
+		$data = CategorySelect::getExtractedCategoryData();
 		$categories = '';
 
-		if ( !empty( $data ) ) {
+		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
 			$categories = htmlspecialchars( CategorySelect::changeFormat( $data[ 'categories' ], 'array', 'json' ) );
 		}
 
