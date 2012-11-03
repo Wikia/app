@@ -10,9 +10,4 @@
 			</div>
 		</div>
 	<? endif; ?>
-	<? if(!empty($pageDescription)) { ?>
-		<div class="description">
-			<?= $pageDescription ?>
-		</div>
-	<? } ?>
 </header>

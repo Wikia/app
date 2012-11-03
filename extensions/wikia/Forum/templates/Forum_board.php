@@ -4,6 +4,9 @@
 <div id="Wall">
 	<section id="Forum" class="Forum Board .comments">
 		<?= $app->renderView('ForumController', 'breadCrumbs') ?>
+		<div class="board-description">
+			<?= $description ?>
+		</div>
 		<div class="greeting"><?= $greeting ?></div>
 		<? if( !$isTopicPage): ?>
 			<?= $app->renderView('ForumController', 'boardNewThread') ?>

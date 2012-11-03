@@ -51,6 +51,8 @@ class ForumController extends WallBaseController {
 			$this->response->setVal( 'isTopicPage', false );			
 		}
 		
+		$this->description = $board->getDescription();
+		
 		//TODO: keep the varnish cache and do purging on post 
 		$this->response->setCacheValidity(0, 0);
 		
@@ -181,8 +183,6 @@ class ForumController extends WallBaseController {
 		if($nameSpace === NS_WIKIA_FORUM_BOARD) {
 			$this->showStats = false;
 			$pageHeading = wfMsg('forum-board-title', $title->getText());
-			$board = F::build( 'ForumBoard', array( $title ), 'newFromTitle' );
-			$pageDescription = $board->getDescription();
 		} else if($nameSpace === NS_USER_WALL_MESSAGE) {
 			$this->showStats = false;
 			$messageKey = $title->getText();
