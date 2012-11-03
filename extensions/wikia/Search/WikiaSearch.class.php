@@ -152,7 +152,6 @@ class WikiaSearch extends WikiaObject {
 
 			$searchConfig	->setLength		( self::GROUP_RESULTS_GROUPINGS_LIMIT )
 							->setIsInterWiki( true )
-							->setStart		( ( (int) $searchConfig->getLength() ) * ( ( (int) $searchConfig->getPage() ) - 1 ) )
 			;
 
 		}
