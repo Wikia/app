@@ -29,7 +29,7 @@ var CategorySelect = function( categories ) {
  * Adds a category to the categories array.
  *
  * @param	{String|Object} category
- *			The category to add.
+ *			The name of a category or an object with category properties.
  * @returns	{Number}
  *			The index of the added category.
  */
@@ -41,49 +41,45 @@ CategorySelect.prototype.addCategory = function( category ) {
  * Edits a category from the categories array.
  *
  * @param	{Number|String} category
- *			The index of a category in the categories array or a string matching a
- *			category in the array.
- * @param	{String} value
- *			The new value of the category.
+ *			The index or name of a category.
+ * @param	{Object} value
+ *			The new category object or null if the category does not exist.
  */
 CategorySelect.prototype.editCategory = function( category, value ) {
 	var index = this.indexOf( category );
 
-	if ( index >= 0 ) {
-		this.categories[ index ] = this.makeCategory( value );
-	}
+	return index >= 0 ? ( this.categories[ index ] = this.makeCategory( value ) ) : null;
 };
 
 /**
  * Gets a category from the categories array.
  *
  * @param	{Number|String} category
- *			The index of a category in the categories array or a string matching a
- *			category in the array.
+ *			The index or name of a category.
  * @returns	{Object}
- *			The category object or undefined if the category could not be found.
+ *			The category object or null if the category does not exist.
  */
 CategorySelect.prototype.getCategory = function( category ) {
 	var index = this.indexOf( category );
 
-	if ( index >= 0 ) {
-		return this.categories[ index ];
-	}
+	return index >= 0 ? this.categories[ index ] : null;
 };
 
 /**
  * Gets the index of a category from the category array.
  *
- * @param	{String} category
- *			The name of a category.
+ * @param	{Number|String} category
+ *			The index or name of a category.
  * @returns	{Number}
- *			The index of the category, or -1 if the category was not be found.
+ *			The index of the category, or -1 if the category does not exist.
  */
 CategorySelect.prototype.indexOf = function( category ) {
 	var i, length, obj,
-		index = parseInt( category ) || -1;
+		index = parseInt( category );
 
-	if ( ( index < 0 || this.categories[ index ] == undefined ) ) {
+	if ( isNaN( index ) || this.categories[ index ] === undefined ) {
+		index = -1;
+
 		for ( i = 0, length = this.categories.length; i < length; i++ ) {
 			if ( ( obj = categories[ i ] ) && obj.name == category ) {
 				index = i;
@@ -138,16 +134,13 @@ CategorySelect.prototype.makeCategory = function( category ) {
  * @param	{Number|String} category
  *			The index of a category in the categories array or a string matching a
  *			category in the array.
- * @returns {String}
- *			The value of the category that was removed, or undefined if the category
- *			could not be found.
+ * @returns {Object}
+ *			The category object or null if the category does not exist.
  */
 CategorySelect.prototype.removeCategory = function( category ) {
 	var index = this.indexOf( category );
 
-	if ( index >= 0 ) {
-		return this.categories.splice( index, 1 );
-	}
+	return index >= 0 ? this.categories.splice( index, 1, null ) : null;
 };
 
 /**
@@ -189,8 +182,8 @@ $.fn.categorySelect = (function() {
 
 		return this.each(function() {
 			var $element = $( this ),
-				$list = $element.find( options.list ),
-				categorySelect = new CategorySelect( options.categories );
+				$categories = $element.find( options.categories ),
+				categorySelect = new CategorySelect( options.data );
 
 			function addCategory( event, ui ) {
 				var category, index,
@@ -210,7 +203,16 @@ $.fn.categorySelect = (function() {
 						category = categorySelect.makeCategory( value ),
 						index = categorySelect.addCategory( category );
 
-						addCategoryListItem( index, category );
+						// Add the category to the DOM
+						$.when( getListItemTemplate() ).done(function( template ) {
+							$categories.append( Mustache.render( template, {
+								blankImageUrl: blankImageUrl,
+								category: category,
+								edit: $.msg( 'categoryselect-edit-category' ),
+								index: index,
+								remove: $.msg( 'categoryselect-remove-category' )
+							}));
+						});
 
 						notifyListeners( 'update', {
 							index: index,
@@ -224,20 +226,8 @@ $.fn.categorySelect = (function() {
 				}
 			}
 
-			function addCategoryListItem( index, category ) {
-				$.when( getListItemTemplate() ).done(function( template ) {
-					$list.append( Mustache.render( template, {
-						blankImageUrl: blankImageUrl,
-						category: category,
-						edit: $.msg( 'categoryselect-edit-category' ),
-						index: index,
-						remove: $.msg( 'categoryselect-remove-category' )
-					}));
-				});
-			}
-
 			function editCategory( event ) {
-
+				
 			}
 
 			function notifyListeners( eventType, data ) {
@@ -245,7 +235,23 @@ $.fn.categorySelect = (function() {
 			}
 
 			function removeCategory( event ) {
+				var $category = $( this ).closest( options.category ),
+					index = $category.data( 'index' ),
+					category = categorySelect.removeCategory( index );
 
+				// Remove the category from the DOM
+				$category.animate({
+					opacity: 0,
+					height: 0
+				}, 400, function() {
+					$category.remove();
+				});
+
+				notifyListeners( 'update', {
+					index: index,
+					category: category,
+					categories: categorySelect.categories
+				});
 			}
 
 			function setupAutocomplete( event ) {
@@ -259,17 +265,13 @@ $.fn.categorySelect = (function() {
 				});
 			}
 
-			// Get rid of previous bindings
-			$element.off( '.' + namespace );
-
-			// Store an instance of CategorySelect in the element
-			$element.data( namespace, categorySelect );
-
-			// Set up jQuery.ui.autocomplete on first focus for the input field
-			$element.one( 'focus.' + namespace, options.input, setupAutocomplete );
-
-			// Listen for key presses on the input field
-			$element.on( 'keypress.' + namespace, options.input, addCategory );
+			$element
+				.data( namespace, categorySelect )
+				.off( '.' + namespace )
+				.on( 'click.' + namespace, options.editCategory, editCategory )
+				.on( 'click.' + namespace, options.removeCategory, removeCategory )
+				.on( 'keypress.' + namespace, options.addCategory, addCategory )
+				.one( 'focus.' + namespace, options.addCategory, setupAutocomplete );
 		});
 	}
 })();
@@ -279,9 +281,12 @@ $.fn.categorySelect.options = {
 		appendTo: '#CategorySelect',
 		minLength: 3
 	},
-	categories: [],
-	input: '.addCategory',
-	list: '.categories'
+	categories: '.categories',
+	category: '.category',
+	data: [],
+	addCategory: '.addCategory',
+	editCategory: '.editCategory',
+	removeCategory: '.removeCategory'
 };
 
 /**

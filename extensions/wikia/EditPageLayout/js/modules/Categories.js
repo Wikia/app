@@ -26,7 +26,7 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 
 		// Initialize categorySelect
 		$categorySelect.categorySelect({
-			categories: JSON.parse( $categories.val() )
+			data: JSON.parse( $categories.val() )
 
 		// Update categories metadata when categories change
 		}).on( 'update.categorySelect', function( event, data ) {
