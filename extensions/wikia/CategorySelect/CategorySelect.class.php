@@ -118,8 +118,8 @@ class CategorySelect {
 
 					$str = "\n[[" . $category[ 'namespace' ] . ':' . $category[ 'name' ];
 
-					if ( !empty( $category[ 'sortkey' ] ) ) {
-						$str .= '|' . $category[ 'sortkey' ];
+					if ( !empty( $category[ 'sortKey' ] ) ) {
+						$str .= '|' . $category[ 'sortKey' ];
 					}
 
 					$str .= ']]';
@@ -257,7 +257,7 @@ class CategorySelect {
 							}
 
 							$childOut['text'] = $newNode;
-							$childOut['categories'][] = array('namespace' => $catNamespace, 'name' => $catName, 'outerTag' => $outerTag, 'sortkey' => $sortKey);
+							$childOut['categories'][] = array('namespace' => $catNamespace, 'name' => $catName, 'outerTag' => $outerTag, 'sortKey' => $sortKey);
 						}
 						if (count($childOut['categories'])) {
 							$out = array_merge($out, $childOut['categories']);
@@ -314,7 +314,7 @@ class CategorySelect {
 			$catName = $match[2];
 			$sortKey = '';
 		}
-		self::$categories[] = array('namespace' => $match[1], 'name' => $catName, 'outerTag' => self::$outerTag, 'sortkey' => $sortKey);
+		self::$categories[] = array('namespace' => $match[1], 'name' => $catName, 'outerTag' => self::$outerTag, 'sortKey' => $sortKey);
 		return '';
 	}
 }

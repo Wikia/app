@@ -35,6 +35,11 @@ $app->registerExtensionFunction( 'CategorySelectHooksHelper::onInit' );
 $app->registerExtensionMessageFile( 'CategorySelect', $dir . 'CategorySelect.i18n.php' );
 
 F::build( 'JSMessages' )->registerPackage( 'CategorySelect', array(
-	'categoryselect-edit-category',
-	'categoryselect-remove-category',
+	'categoryselect-category-add',
+	'categoryselect-category-edit',
+	'categoryselect-category-remove',
+	'categoryselect-modal-category-name',
+	'categoryselect-modal-category-name-empty',
+	'categoryselect-modal-category-sortkey',
+	'categoryselect-modal-button-save',
 ));

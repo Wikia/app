@@ -103,9 +103,9 @@ class CategorySelectController extends WikiaController {
 	}
 
 	/**
-	 * Renders the a list item in the categories list.
+	 * The template for a category in the category list.
 	 */
-	public function listItem() {
+	public function category() {
 		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'category', $this->request->getVal( 'category', array() ) );
 		$this->response->setVal( 'edit', wfMsg( 'categoryselect-edit-category' ) );

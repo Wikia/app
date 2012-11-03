@@ -1,6 +1,7 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-sizing";
+@import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/ellipses";
 
 // FIXME: including styles from EditPageLayout is pretty janky.
@@ -37,7 +38,6 @@ $categoryselect-width: $width-epl-module-input - 10;
 
 		.category {
 			@include border-radius( 4px );
-			@include box-sizing( "border-box" );
 			color: $color-text;
 			display: block;
 			line-height: 25px;
@@ -79,6 +79,18 @@ $categoryselect-width: $width-epl-module-input - 10;
 
 		.ui-autocomplete {
 			width: $categoryselect-width;
+		}
+	}
+}
+
+#CategorySelectEditModal {
+	.WikiaForm {
+		@include clearfix;
+
+		input,
+		.input-group {
+			@include box-sizing( border-box );
+			width: 100%;
 		}
 	}
 }

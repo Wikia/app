@@ -21,28 +21,27 @@ $messages = array();
 
 $messages['en'] = array(
 	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article',
-	'categoryselect-addcategory-edit' => 'Add a category',
-	'categoryselect-edit-category' => 'Edit Category',
-	'categoryselect-remove-category' => 'Remove Category',
+	'categoryselect-category-add' => 'Add a category',
+	'categoryselect-category-edit' => 'Edit category',
+	'categoryselect-category-remove' => 'Remove category',
+	'categoryselect-modal-category-name' => 'Provide the name of the category:',
+	'categoryselect-modal-category-sortkey' => 'Alphabetize this article on the "$1" category page under the name:',
+	'categoryselect-modal-button-save' => 'Save',
+	'categoryselect-modal-category-name-empty' => 'Please provide a category name.',
 
-	'categoryselect-code-view' => 'Code view',
-	'categoryselect-code-view-placeholder' => 'Add categories here, e.g. [[Category:Name]]',
-	'categoryselect-visual-view' => 'Visual view',
-	'categoryselect-infobox-caption' => 'Category options',
-	'categoryselect-infobox-category' => 'Provide the name of the category:',
-	'categoryselect-infobox-sortkey' => 'Alphabetize this article on the "$1" category page under the name:',
+/*
 	'categoryselect-addcategory-button' => 'Add category',
 	'categoryselect-suggest-hint' => 'Press Enter when done',
 	'categoryselect-tooltip' => "'''New!''' Category tagging toolbar. Try it out or see [[Help:CategorySelect|help]] to learn more",
 	'categoryselect-unhandled-syntax' => 'Unhandled syntax detected - switching back to visual mode impossible.',
 	'categoryselect-edit-summary' => 'Adding categories',
 	'categoryselect-empty-name' => 'Provide category name (part before |)',
-	'categoryselect-button-save' => 'Save',
 	'categoryselect-button-cancel' => 'Cancel',
 	'categoryselect-error-not-exist' => 'Article [id=$1] does not exist.',
 	'categoryselect-error-user-rights' => 'User rights error.',
 	'categoryselect-error-db-locked' => 'Database is locked.',
 	'categoryselect-edit-abort' => 'The modification you tried to make was aborted by an extension hook',
+*/
 	'tog-disablecategoryselect' => 'Disable Category module (only applies if editing in visual mode has been disabled)',
 	'tog-disablecategoryselect-v2' => 'Disable Category module (only applies if visual mode editing is disabled)'
 );
@@ -54,7 +53,6 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'categoryselect-desc' => '{{desc}}',
-	'categoryselect-code-view-placeholder' => "This is the message shown in the category form in the source mode of the editor. The link doesn't exist, it's just an example text to show how to add the category.",
 	'categoryselect-button-save' => '{{Identical|Save}}',
 	'categoryselect-button-cancel' => '{{Identical|Cancel}}',
 );

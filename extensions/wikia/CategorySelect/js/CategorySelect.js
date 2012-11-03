@@ -151,9 +151,30 @@ CategorySelect.prototype.removeCategory = function( category ) {
  *			The settings to configure the instance with.
  */
 $.fn.categorySelect = (function() {
-	var cache = {};
+	var cache = {
+			messages: {
+				categoryEdit: $.msg( 'categoryselect-category-edit' ),
+				categoryNameLabel: $.msg( 'categoryselect-modal-category-name' ),
+				categoryRemove: $.msg( 'categoryselect-category-remove' ),
+				modalButtonSave: $.msg( 'categoryselect-modal-button-save' ),
+				modalEmptyCategoryName: $.msg( 'categoryselect-modal-category-name-empty' )
+			}
+		};
 
-	function getCategories() {
+	function getTemplate( name ) {
+		return cache[ name ] || $.Deferred(function( dfd ) {
+			Wikia.getMultiTypePackage({
+				mustache: 'extensions/wikia/CategorySelect/templates/CategorySelectController_' + name + '.mustache',
+				callback: function( pkg ) {
+					dfd.resolve( cache[ name ] = pkg.mustache[ 0 ] );
+				}
+			});
+
+			return dfd.promise();
+		});
+	}
+
+	function getWikiCategories() {
 		return cache.wikiCategories || $.nirvana.sendRequest({
 			controller: 'CategorySelectController',
 			method: 'getCategories',
@@ -161,19 +182,6 @@ $.fn.categorySelect = (function() {
 			callback: function( wikiCategories ) {
 				cache.wikiCategories = wikiCategories;
 			}
-		});
-	}
-
-	function getListItemTemplate() {
-		return cache.listItemTemplate || $.Deferred(function( dfd ) {
-			Wikia.getMultiTypePackage({
-				mustache: 'extensions/wikia/CategorySelect/templates/CategorySelectController_listItem.mustache',
-				callback: function( pkg ) {
-					dfd.resolve( cache.listItemTemplate = pkg.mustache[ 0 ] );
-				}
-			});
-
-			return dfd.promise();
 		});
 	}
 
@@ -204,13 +212,13 @@ $.fn.categorySelect = (function() {
 						index = categorySelect.addCategory( category );
 
 						// Add the category to the DOM
-						$.when( getListItemTemplate() ).done(function( template ) {
+						$.when( getTemplate( 'category' ) ).done(function( template ) {
 							$categories.append( Mustache.render( template, {
 								blankImageUrl: blankImageUrl,
 								category: category,
-								edit: $.msg( 'categoryselect-edit-category' ),
+								edit: cache.messages.categoryEdit,
 								index: index,
-								remove: $.msg( 'categoryselect-remove-category' )
+								remove: cache.messages.categoryRemove
 							}));
 						});
 
@@ -227,7 +235,58 @@ $.fn.categorySelect = (function() {
 			}
 
 			function editCategory( event ) {
-				
+				var $modal,
+					$category = $( this ).closest( options.category ),
+					index = $category.data( 'index' ),
+					category = categorySelect.getCategory( index );
+
+				$.when( getTemplate( 'categoryEdit' ) ).done(function( template ) {
+					$modal = $.showCustomModal( cache.messages.categoryEdit, Mustache.render( template, {
+						category: category,
+						label: {
+							name: cache.messages.categoryNameLabel,
+							sortKey: $.msg( 'categoryselect-modal-category-sortkey', category.name )
+						}
+
+					// Modal options
+					}), {
+						buttons: [
+							{
+								id: 'CategorySelectEditModalSave',
+								defaultButton: true,
+								message: cache.messages.modalButtonSave,
+								handler: function( event ) {
+									category.name = $modal.find( '[name="categoryName"]' ).val();
+									category.sortKey = $modal.find( '[name="categorySortKey"]' ).val();
+
+									// Don't allow saving with empty category name
+									if ( category.name == '' ) {
+										$modal
+											.find( '.categoryName' ).addClass( 'error' )
+											.find( '.error-msg' ).text( cache.messages.modalEmptyCategoryName );
+										return;
+									}
+
+									// Update data
+									category = categorySelect.editCategory( index, category );
+
+									// Update DOM
+									$category.find( '.name' ).text( category.name );
+
+									notifyListeners( 'update', {
+										index: index,
+										category: category,
+										categories: categorySelect.categories
+									});
+
+									$modal.closeModal();
+								}
+							}
+						],
+						id: 'CategorySelectEditModal',
+						width: 500
+					});
+				});
 			}
 
 			function notifyListeners( eventType, data ) {
@@ -257,7 +316,7 @@ $.fn.categorySelect = (function() {
 			function setupAutocomplete( event ) {
 				var $input = $( this );
 
-				$.when( getCategories() ).done(function( wikiCategories ) {
+				$.when( getWikiCategories() ).done(function( wikiCategories ) {
 					$input.autocomplete( $.extend( options.autocomplete, {
 						select: addCategory,
 						source: wikiCategories
