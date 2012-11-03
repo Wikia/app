@@ -228,20 +228,25 @@ class CategorySelectHooksHelper {
 		// Disable for anon "confirm purge" page
 		} else if ( $action == 'purge' && $app->wg->User->isAnon() && !$app->wg->Request->wasPosted() ) {
 
-		// Enabled, add hooks for view/purge pages
-		} else if ( $action == 'view' || $action == 'purge' ) {
-			$app->registerHook( 'Skin::getCategoryLinks::begin', 'CategorySelectHooksHelper', 'onSkinGetCategoryLinksBegin' );
-			$app->registerHook( 'Skin::getCategoryLinks::end', 'CategorySelectHooksHelper', 'onSkinGetCategoryLinksEnd' );
+		// Enabled
+		} else {
+			F::build( 'JSMessages' )->enqueuePackage( 'CategorySelect', JSMessages::INLINE );
 
-		// Enabled, add hooks for edit/submit pages
-		} else if ( $force || $action == 'edit' || $action == 'submit' ) {
-			$app->registerHook( 'EditForm::MultiEdit:Form', 'CategorySelectHooksHelper', 'onEditFormMultiEditForm' );
-			$app->registerHook( 'EditPage::CategoryBox', 'CategorySelectHooksHelper', 'onEditPageCategoryBox' );
-			$app->registerHook( 'EditPage::getContent::end', 'CategorySelectHooksHelper', 'onEditPageGetContentEnd' );
-			$app->registerHook( 'EditPage::importFormData', 'CategorySelectHooksHelper', 'onEditPageImportFormData' );
-			$app->registerHook( 'EditPage::showEditForm:fields', 'CategorySelectHooksHelper', 'onEditPageShowEditFormFields' );
-			$app->registerHook( 'EditPageGetDiffText', 'CategorySelectHooksHelper', 'onEditPageGetDiffText' );
-			$app->registerHook( 'MakeGlobalVariablesScript', 'CategorySelectHooksHelper', 'onMakeGlobalVariablesScript' );
+			// Add hooks for view/purge pages
+			if ( $action == 'view' || $action == 'purge' ) {
+				$app->registerHook( 'Skin::getCategoryLinks::begin', 'CategorySelectHooksHelper', 'onSkinGetCategoryLinksBegin' );
+				$app->registerHook( 'Skin::getCategoryLinks::end', 'CategorySelectHooksHelper', 'onSkinGetCategoryLinksEnd' );
+
+			// Add hooks for edit/submit pages
+			} else if ( $force || $action == 'edit' || $action == 'submit' ) {
+				$app->registerHook( 'EditForm::MultiEdit:Form', 'CategorySelectHooksHelper', 'onEditFormMultiEditForm' );
+				$app->registerHook( 'EditPage::CategoryBox', 'CategorySelectHooksHelper', 'onEditPageCategoryBox' );
+				$app->registerHook( 'EditPage::getContent::end', 'CategorySelectHooksHelper', 'onEditPageGetContentEnd' );
+				$app->registerHook( 'EditPage::importFormData', 'CategorySelectHooksHelper', 'onEditPageImportFormData' );
+				$app->registerHook( 'EditPage::showEditForm:fields', 'CategorySelectHooksHelper', 'onEditPageShowEditFormFields' );
+				$app->registerHook( 'EditPageGetDiffText', 'CategorySelectHooksHelper', 'onEditPageGetDiffText' );
+				$app->registerHook( 'MakeGlobalVariablesScript', 'CategorySelectHooksHelper', 'onMakeGlobalVariablesScript' );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
