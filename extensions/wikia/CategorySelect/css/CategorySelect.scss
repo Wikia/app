@@ -29,24 +29,52 @@ $categoryselect-width: $width-epl-module-input - 10;
 		}
 
 		.categories {
-			height: 100px; // 25px * 4 items
+			// 4 items at 25px high
+			height: 100px;
 			margin: 10px 0 0 0;
 			overflow: auto;
+		}
 
-			li {
-				@include border-radius( 4px );
-				@include box-sizing( "border-box" );
-				@include ellipses;
-				color: $color-text;
-				display: block;
-				line-height: 25px;
-				margin: 0;
-				padding: 0 5px;
+		.category {
+			@include border-radius( 4px );
+			@include box-sizing( "border-box" );
+			color: $color-text;
+			display: block;
+			line-height: 25px;
+			margin: 0;
+			padding: 0 5px;
+			position: relative;
 
-				&:hover {
-					background-color: $color-epl-hover;
+			&:hover {
+				background-color: $color-epl-hover;
+
+				.toolbar {
+					display: inline-block;
 				}
 			}
+		}
+
+		.name {
+			@include ellipses;
+			display: inline-block;
+			width: $categoryselect-width - 50;
+		}
+
+		.toolbar {
+			display: none;
+			position: absolute;
+			right: 5px;
+			top: 2px;
+		}
+
+		.tool {
+			display: inline-block;
+			margin: 0 0 0 5px;
+		}
+
+		.sprite-small {
+			border-style: none;
+			cursor: pointer;
 		}
 
 		.ui-autocomplete {

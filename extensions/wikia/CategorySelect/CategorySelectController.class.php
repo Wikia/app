@@ -14,6 +14,58 @@ class CategorySelectController extends WikiaController {
 	const VERSION = 2;
 
 	/**
+	 * The template used for article pages.
+	 */
+	public function articlePage() {
+		$vars = array();
+		CategorySelectHooksHelper::onMakeGlobalVariablesScript( $vars );
+
+		$data = array(
+			'html' => $this->app->renderView( 'CategorySelect', 'articlePage' ),
+			'vars' => $vars,
+		);
+
+		$this->response->setData( $data );
+		$this->response->setFormat( 'json' );
+		$this->response->setCacheValidity( self::CACHE_TTL_AJAX, self::CACHE_TTL_AJAX, array(
+			WikiaResponse::CACHE_TARGET_BROWSER,
+			WikiaResponse::CACHE_TARGET_VARNISH
+		));
+	}
+
+	/**
+	 * The template used for edit pages.
+	 */
+	public function editPage() {
+		$categories = array();
+		$data = CategorySelect::getExtractedCategoryData();
+
+		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
+			$categories = $data[ 'categories' ];
+		}
+
+		$this->response->setVal( 'categories', $categories );
+
+		$this->response->addAsset( 'extensions/wikia/CategorySelect/js/CategorySelect.js' );
+		$this->response->addAsset( 'extensions/wikia/CategorySelect/css/CategorySelect.scss' );
+	}
+
+	/**
+	 * The hidden form fields that store a JSON representation of the categories
+	 * for an article.
+	 */
+	public function editPageMetadata() {
+		$data = CategorySelect::getExtractedCategoryData();
+		$categories = '';
+
+		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
+			$categories = htmlspecialchars( CategorySelect::changeFormat( $data[ 'categories' ], 'array', 'json' ) );
+		}
+
+		$this->response->setVal( 'categories', $categories );
+	}
+
+	/**
 	 * Returns all of the categories on the current wiki.
 	 */
 	public function getCategories() {
@@ -48,6 +100,19 @@ class CategorySelectController extends WikiaController {
 		$this->response->setFormat( 'json' );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Renders the a list item in the categories list.
+	 */
+	public function listItem() {
+		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
+		$this->response->setVal( 'category', $this->request->getVal( 'category', array() ) );
+		$this->response->setVal( 'edit', wfMsg( 'categoryselect-edit-category' ) );
+		$this->response->setVal( 'index', $this->request->getVal( 'index', 0 ) );
+		$this->response->setVal( 'remove', wfMsg( 'categoryselect-remove-category' ) );
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
 	/**
@@ -131,48 +196,5 @@ class CategorySelectController extends WikiaController {
 
 		wfProfileOut(__METHOD__);
 		return json_encode($result);
-	}
-
-	/**
-	 * The template used for article pages.
-	 */
-	public function articlePage() {
-		$vars = array();
-		CategorySelectHooksHelper::onMakeGlobalVariablesScript( $vars );
-
-		$data = array(
-			'html' => $this->app->renderView( 'CategorySelect', 'articlePage' ),
-			'vars' => $vars,
-		);
-
-		$this->response->setData( $data );
-		$this->response->setFormat( 'json' );
-		$this->response->setCacheValidity( self::CACHE_TTL_AJAX, self::CACHE_TTL_AJAX, array(
-			WikiaResponse::CACHE_TARGET_BROWSER,
-			WikiaResponse::CACHE_TARGET_VARNISH
-		));
-	}
-
-	/**
-	 * The template used for edit pages.
-	 */
-	public function editPage() {
-		$this->response->addAsset( 'extensions/wikia/CategorySelect/js/CategorySelect.js' );
-		$this->response->addAsset( 'extensions/wikia/CategorySelect/css/CategorySelect.scss' );
-	}
-
-	/**
-	 * The hidden form fields that store a JSON representation of the categories
-	 * for an article.
-	 */
-	public function editPageMetadata() {
-		$data = CategorySelect::getExtractedCategoryData();
-		$categories = '';
-
-		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
-			$categories = htmlspecialchars( CategorySelect::changeFormat( $data[ 'categories' ], 'array', 'json' ) );
-		}
-
-		$this->response->setVal( 'categories', $categories );
 	}
 }

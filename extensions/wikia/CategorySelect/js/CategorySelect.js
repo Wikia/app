@@ -1,6 +1,7 @@
 (function( window, $, undefined ) {
 
-var defaultNamespace = window.wgCategorySelect.defaultNamespace,
+var blankImageUrl = window.wgBlankImgUrl,
+	defaultNamespace = window.wgCategorySelect.defaultNamespace,
 	defaultSortKey = window.wgCategorySelect.defaultSortKey || window.wgTitle,
 	namespace = 'categorySelect',
 	rCategory = new RegExp( '\\[\\[' +
@@ -170,11 +171,25 @@ $.fn.categorySelect = (function() {
 		});
 	}
 
+	function getListItemTemplate() {
+		return cache.listItemTemplate || $.Deferred(function( dfd ) {
+			Wikia.getMultiTypePackage({
+				mustache: 'extensions/wikia/CategorySelect/templates/CategorySelectController_listItem.mustache',
+				callback: function( pkg ) {
+					dfd.resolve( cache.listItemTemplate = pkg.mustache[ 0 ] );
+				}
+			});
+
+			return dfd.promise();
+		});
+	}
+
 	return function( options ) {
 		options = $.extend( {}, $.fn.categorySelect.options, options );
 
 		return this.each(function() {
 			var $element = $( this ),
+				$list = $element.find( options.list ),
 				categorySelect = new CategorySelect( options.categories );
 
 			function addCategory( event, ui ) {
@@ -210,8 +225,15 @@ $.fn.categorySelect = (function() {
 			}
 
 			function addCategoryListItem( index, category ) {
-				$( options.list ).append( $( '<li></li>' )
-					.data( 'categoryIndex', index ).text( category.name ) );
+				$.when( getListItemTemplate() ).done(function( template ) {
+					$list.append( Mustache.render( template, {
+						blankImageUrl: blankImageUrl,
+						category: category,
+						edit: $.msg( 'categoryselect-edit-category' ),
+						index: index,
+						remove: $.msg( 'categoryselect-remove-category' )
+					}));
+				});
 			}
 
 			function editCategory( event ) {
@@ -248,9 +270,6 @@ $.fn.categorySelect = (function() {
 
 			// Listen for key presses on the input field
 			$element.on( 'keypress.' + namespace, options.input, addCategory );
-
-			// Build the initial categories list
-			$.each( options.categories, addCategoryListItem );
 		});
 	}
 })();
