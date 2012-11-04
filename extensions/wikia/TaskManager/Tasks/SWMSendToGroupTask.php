@@ -33,7 +33,7 @@ class SWMSendToGroupTask extends BatchTask {
 	function  __construct() {
 		$this->mType = 'SWMSendToGroup';
 		$this->mVisible = false;
-		$this->mTTL = 3600; #--- one hour
+		$this->mTTL = 60 * 60 * 5; #--- 5 hours
 		parent::__construct();
 	}
 
