@@ -1317,22 +1317,21 @@ class SWMSendToGroupTask extends BatchTask {
 		$this->log('Step 2 of 3: get list of active users (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
 
 		$sqlValues = array();
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		foreach ( $wikisDB as $wikiId => $wikiDB ) {
+			$dbr = wfGetDB( DB_SLAVE, array(), $wikiDB );
 
 			$dbResult = $dbr->select(
-				array('`specials`.`events_local_users`'),
-				array('user_id', 'wiki_id'),
-				array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')'),
+				array( 'revision' ),
+				array( 'rev_user' ),
+				'',
 				__METHOD__,
-				array('GROUP BY' => 'wiki_id, user_id')
+				array( 'GROUP BY' => 'rev_user' )
 			);
 
-			//step 3 of 3: add records about new message to right users
-			while ($row = $dbr->FetchObject($dbResult)) {
-				$sqlValues[] = "({$row->wiki_id}, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+			while ( $row = $dbr->fetchObject( $dbResult ) ) {
+				$sqlValues[] = "({$wikiId}, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 			}
-			$dbr->FreeResult($dbResult);
+			$dbr->freeResult( $dbResult );
 		}
 
 		if (count($sqlValues)) {
