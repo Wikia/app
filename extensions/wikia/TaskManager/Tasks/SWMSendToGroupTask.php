@@ -1309,8 +1309,6 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of operation
 	 */
 	private function sendMessageHelperToActive(&$DB, &$wikisDB, &$params) {
-		global $wgStatsDB, $wgStatsDBEnabled;
-
 		$result = true;
 
 		//step 2 of 3: get list of active users (on specified wikis)
