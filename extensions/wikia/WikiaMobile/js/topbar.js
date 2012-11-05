@@ -310,12 +310,14 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 					wkPrf.className += ' loaded';
 
 					var wkLgn = document.getElementById('wkLgn'),
-						form = wkLgn.getElementsByTagName('form')[0],
-						query = (new qs(form.getAttribute('action')))
-							.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName))
-							.setHash(hash);
+						form = wkLgn.getElementsByTagName('form')[0];
 
-					form.setAttribute('action', query.toString());
+					form.setAttribute('action',
+						(new qs(form.getAttribute('action')))
+						.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName))
+						.setHash(hash)
+						.toString()
+					);
 				}
 			});
 		}
