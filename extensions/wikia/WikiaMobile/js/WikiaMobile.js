@@ -72,6 +72,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			if (fllSite) {
 				fllSite.addEventListener(clickEvent, function(event){
 					event.preventDefault();
+					event.stopPropagation();
 					cookies.set('mobilefullsite', 'true');
 
 					(new qs()).setVal('useskin', this.getAttribute('data-skin')).addCb().goTo();
