@@ -138,9 +138,11 @@ class AchBadge {
                 'badge_type_id' => $this->mBadgeTypeId,
                 'badge_lap' => $this->mBadgeLap
             );
+			$options = array();
             if(empty($wgEnableAchievementsStoreLocalData)) {
                 $dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
                 $where[ 'wiki_id' ] = $wgCityId;
+				$options[ 'USE INDEX' ] = 'user_wiki_badge';
             } else {
                 $dbr = wfGetDB(DB_SLAVE);
             }
@@ -149,9 +151,7 @@ class AchBadge {
 				'count(distinct(user_id))',
                 $where,
 				__METHOD__,
-				array(
-					'USE INDEX' => 'user_wiki_badge'
-				)
+				$options
 			);
 			$wgMemc->set($memkey, $value, 60*30);
 		}

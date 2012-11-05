@@ -55,20 +55,19 @@ $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// core
+		'//resources/wikia/modules/cache.js',
+		'//resources/wikia/modules/lazyqueue.js',
+
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
-		'//resources/wikia/modules/lazyqueue.js',
-		'//extensions/wikia/AdEngine/js/ExpiringStorage.js',
 		'//extensions/wikia/AdEngine/js/ScriptWriter.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 
 		// high prio
-		'//extensions/wikia/AdEngine/js/AdProviderAdDriver.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
-		'//extensions/wikia/AdEngine/js/AdProviderEvolveRS.js',
 		'//extensions/wikia/AdEngine/js/AdProviderGamePro.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',

@@ -8,29 +8,40 @@
 (function (context) {
 	'use strict';
 
-	function isEmpty (o) {
-		var k;
-
-		for (k in o) {
-			return false;
-		}
-
-		return true;
-	}
-
 	function querystring() {
 		var l = context.location,
-			p = Querystring.prototype,//late binding
+			p,
 			u;
 
 		/**
-		 * You can pass url to parse to it
-		 * if url will be undefined, it'll grab URL from window.location
+		 * Checks if an object is empty (no properties)
 		 *
-		 * @param url an URL to parse
-		 * @constructor
+		 * @private
+		 *
+		 * @param {Object} obj The object to check
+		 *
+		 * @return {Boolean} True if the object has no properties, false otherwise
 		 */
-		function Querystring(url){
+		function isEmpty(obj) {
+			var key;
+
+			for (key in obj) {
+				if (obj.hasOwnProperty(key)) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		/**
+		 * An object representation of the URL's querystring
+		 *
+		 * @public
+		 *
+		 * @param {String} url The URL to parse for parameters
+		 */
+		function Querystring(url) {
 			var srh,
 				link,
 				tmp,
@@ -38,7 +49,9 @@
 				path = '',
 				hash,
 				pos,
-				cache = {};
+				cache = {},
+				tmpQuery,
+				i;
 
 			if (url) {
 				tmp = url.split('//', 2);
@@ -50,13 +63,13 @@
 				link = tmp[0];
 
 				pos = link.indexOf('/');
-				if(pos > -1){
+				if (pos > -1) {
 					path = link.slice(pos);
 					link = link.slice(0, pos);
 				}
 
 				srh = tmp[1];
-			}else{
+			} else {
 				protocol = l.protocol;
 				link = l.host;
 				path = l.pathname;
@@ -65,11 +78,11 @@
 			}
 
 			if (srh) {
-				var tmpQuery = srh.split('&'),
-					i = tmpQuery.length;
+				tmpQuery = srh.split('&');
+				i = tmpQuery.length;
 
-				while(i--){
-					if(tmpQuery[i]) {
+				while (i--) {
+					if (tmpQuery[i]) {
 						tmp = tmpQuery[i].split('=');
 						cache[tmp[0]] = decodeURIComponent(tmp[1]) || '';
 					}
@@ -83,33 +96,43 @@
 			this.hash = hash;
 		}
 
+		p = Querystring.prototype;
+
 		/**
-		 * Function that takes all parameters gathered and cast it to string
+		 * Return a string representation of a QueryString instance
 		 *
+		 * @public
+		 * 
 		 * @example new Querystring().toString()
 		 * @example new Querystring() + 'some string'
 		 *
-		 * @return {String}
+		 * @return {String} The QueryString instance turned to a String
 		 */
 		p.toString = function () {
 			var ret = ((this.protocol) ? this.protocol + '//' : '') + this.link + this.path + (isEmpty(this.cache) ? '' : '?'),
-				attr, val,
+				attr,
+				val,
 				tmpArr = [];
 
 			for (attr in this.cache) {
-				val = this.cache[attr];
-				tmpArr.push(attr + (val === u ? '' : '=' + val));
+				if (this.cache.hasOwnProperty(attr)) {
+					val = this.cache[attr];
+					tmpArr.push(attr + (val === u ? '' : '=' + val));
+				}
 			}
 
 			return ret + tmpArr.join('&') + ((this.hash) ? '#' + this.hash : '');
 		};
 
 		/**
-		 * Function that returns value for given key from GET parameters
+		 * Gets a parameter by name
 		 *
-		 * @param name key to get value for
-		 * @param defVal default value to return if given key does not exist
-		 * @return {String}
+		 * @public
+		 *
+		 * @param {String} name The parameter's name
+		 * @param {Mixed} defVal The value to return in case the parameter is not found
+		 *
+		 * @return {String} The parameter's value
 		 */
 		p.getVal = function (name, defVal) {
 			return this.cache[name] || defVal;
@@ -117,13 +140,14 @@
 
 
 		/**
-		 * Function to set value for a given key
+		 * Sets a parameter by name
 		 *
+		 * @public
+		 * 
 		 * to remove key=value use removeVal(key)
 		 *
-		 * @param name key to set value for
-		 * @param val value to set
-		 * @return {Querystring}
+		 * @param {String} name The parameter's name
+		 * @param {Mixed} val The parameter's value
 		 */
 		p.setVal = function (name, val) {
 			if (name && val) {
@@ -158,6 +182,9 @@
 		};
 
 		/**
+		 * Sets the text after the hash (#)
+		 *
+		 * @public
 		 *
 		 * @param h String a hash to set
 		 * @return {Querystring}
@@ -165,7 +192,7 @@
 		p.setHash = function (h) {
 			this.hash = h;
 			return this;
-		};
+		}
 
 		/**
 		 *
@@ -184,7 +211,10 @@
 		};
 
 		/**
+		 * Gets the path of the URL
 		 *
+		 * @public
+		 * 
 		 * @return {String} a path part of URL
 		 */
 		p.getPath = function () {
@@ -192,8 +222,12 @@
 		};
 
 		/**
-		 *
+		 * Sets the path of the URL
+		 * 
+		 * @public
+		 * 
 		 * @param p String a path to set
+		 * 
 		 * @return {Querystring}
 		 */
 		p.setPath = function (p) {
@@ -202,8 +236,10 @@
 		};
 
 		/**
-		 * a helper function to add CB value to URL
+		 * Adds a cachebuster to the querystring
 		 *
+		 * @public
+		 * 
 		 * @return {Querystring}
 		 */
 		p.addCb = function () {
@@ -212,7 +248,9 @@
 		};
 
 		/**
-		 * This will create an URL and reload a page with it
+		 * Loads the URL represented by the QueryString instance in the browser
+		 *
+		 * @public
 		 */
 		p.goTo = function () {
 			l.href = this.toString();
@@ -221,16 +259,14 @@
 		return Querystring;
 	}
 
-	//UMD
+	//UMD exclusive
 	if (context.define && context.define.amd) {
-		//AMD
-		define('querystring', querystring);//late binding
+		context.define('querystring', querystring);
 	} else {
-		//namespace
-		if(!context.Wikia) {
+		if (!context.Wikia) {
 			context.Wikia = {};
 		}
 
-		context.Wikia.Querystring = querystring();//late binding
+		context.Wikia.Querystring = querystring();
 	}
 }(this));

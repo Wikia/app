@@ -9,6 +9,7 @@ class PhotoPopController extends WikiaController {
 	//const CACHE_MANIFEST_PATH = 'wikia.php?controller=PhotoPopAppCacheController&method=serveManifest&format=html';
 	const JS_MESSAGES_PACKAGE = 'PhotoPop';
 
+	/* @var PhotoPopModel */
 	private $model;
 	private $isJSON;
 

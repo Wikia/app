@@ -91,9 +91,14 @@ class SpecialAchievementsCustomize extends SpecialPage {
 						if($existingTrack !== false)
 							$errorMsg = wfMsg('achievements-edit-plus-category-track-exists', $existingTrack);
 						else {
+							$cond = array( 'type' => BADGE_TYPE_INTRACKEDITPLUSCATEGORY, 'cat' => $safeCatName);
+							if(empty($wgEnableAchievementsStoreLocalData)) {
+								$cond['wiki_id'] = $wgCityId;
+							}
+
 							$dbw->insert(
 								'ach_custom_badges',
-								array('wiki_id' => $wgCityId, 'type' => BADGE_TYPE_INTRACKEDITPLUSCATEGORY, 'cat' => $safeCatName)
+								$cond
 							);
 
 							$jsonObj->sectionId = $badge_type_id = $dbw->insertId();

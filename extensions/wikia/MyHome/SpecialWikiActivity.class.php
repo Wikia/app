@@ -14,7 +14,9 @@ class SpecialWikiActivity extends UnlistedSpecialPage {
 
 	function execute($par) {
 		wfProfileIn(__METHOD__);
-		global $wgOut, $wgUser, $wgBlankImgUrl;
+		global $wgOut, $wgUser, $wgBlankImgUrl, $wgEditPageFrameOptions;
+
+		$wgEditPageFrameOptions = "SAMEORIGIN";
 		$this->setHeaders();
 
 		// not available for skins different than Oasis
