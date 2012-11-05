@@ -9,9 +9,6 @@
 			<? if( !empty($user['name']) ): ?>
 				<h1 class=mstNm itemprop=name><?= $user['name']; ?></h1>
 			<? endif; ?>
-			<? if( !empty($user['group']) ): ?>
-				<span class=mstGr><?= $user['group']; ?></span>
-			<? endif; ?>
 			<? if( !empty($user['tags']) ): ?>
 				<?php foreach($user['tags'] as $tag): ?>
 					<span class=mstGr><?= $tag; ?></span>
