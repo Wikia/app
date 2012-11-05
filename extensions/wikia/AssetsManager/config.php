@@ -211,6 +211,7 @@ $config['oasis_wikia_js'] = array(
 		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/thumbnailer.js',
 		'//resources/wikia/modules/geo.js',
+		'//resources/wikia/modules/cachebuster.js',
 	)
 );
 

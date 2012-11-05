@@ -69,7 +69,7 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 			callback(json);
 		} else {
 			// reload page if no callback specified
-			this.reloadPage();
+			window.Wikia.CacheBuster.reloadPageWithCacheBuster();
 		}
 	} else if(result === 'resetpass') {
 		callback = this.options['resetpasscallback'] || '';
@@ -111,17 +111,6 @@ UserLoginAjaxForm.prototype.retrieveTemplateHandler = function(html) {
 		form.replaceWith(content);
 		content.slideDown(400);
 	});
-};
-
-/* TODO: Generalize this - hyun */
-/* It seems like we stuff all utility functions into jQuery namespace.  I'd rather wait until we come to a decision on placement of global utility functions than to further pollute jQuery - hyun */
-UserLoginAjaxForm.prototype.reloadPage = function() {
-	var location = window.location.href;
-	var delim = "?";
-	if(location.indexOf("?") > 0){
-		delim = "&";
-	}
-	window.location.href = location.split("#")[0] + delim + "cb=" + Math.floor(Math.random()*10000);
 };
 
 UserLoginAjaxForm.prototype.errorValidation = function(json) {
