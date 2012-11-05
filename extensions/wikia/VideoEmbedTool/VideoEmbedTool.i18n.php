@@ -23,6 +23,7 @@ $messages['en'] = array(
 	'vet-details-inf2' => 'Video display options',
 	'vet-size' => 'Size',
 	'vet-thumbnail' => 'Thumbnail',
+	'vet-no-thumbnail' => 'Non-thumbnail view',
 	'vet-fullsize' => 'Full-size ($1x$2px)',
 	'vet-width' => 'Width',
 	'vet-layout' => 'Position',
