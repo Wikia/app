@@ -26,13 +26,13 @@ class VideoEmbedTool {
                 $out .= '</script>';
 
 		global $wgBlankImgUrl;
-		$out = '<div class="reset" id="VideoEmbed">';
+				$out = '<div class="reset" id="VideoEmbed">';
+                $out .= '<div id="VideoEmbedError"></div>';
                 $out .= '<div id="VideoEmbedBorder"></div>';
                 $out .= '<div id="VideoEmbedProgress1" class="VideoEmbedProgress"></div>';
-		$out .= '<div id="VideoEmbedBack"><img src="'.$wgBlankImgUrl.'" id="fe_vetback_img" class="sprite back" alt="'.wfMsg('vet-back').'" /><a href="#">' . wfMsg( 'vet-back' ) . '</a></div>' ;
-		$out .= '<div id="VideoEmbedClose"><img src="'.$wgBlankImgUrl.'" id="fe_vetclose_img" class="sprite close" alt="'.wfMsg('vet-close').'" /><a href="#">' . wfMsg( 'vet-close' ) . '</a></div>';
+                $out .= '<div id="VideoEmbedBack"><img src="'.$wgBlankImgUrl.'" id="fe_vetback_img" class="sprite back" alt="'.wfMsg('vet-back').'" /><a href="#">' . wfMsg( 'vet-back' ) . '</a></div>' ;
                 $out .= '<div id="VideoEmbedBody">';
-                $out .= '<div id="VideoEmbedError"></div>';
+                $out .= '<div id="VideoEmbedClose"><img src="'.$wgBlankImgUrl.'" id="fe_vetclose_img" class="sprite close" alt="'.wfMsg('vet-close').'" /><a href="#">' . wfMsg( 'vet-close' ) . '</a></div>';
                 $out .= '<div id="VideoEmbedMain">' . $this->loadMain() . '</div>';
                 $out .= '<div id="VideoEmbedDetails" style="display: none;"></div>';
                 $out .= '<div id="VideoEmbedConflict" style="display: none;"></div>';
@@ -44,10 +44,13 @@ class VideoEmbedTool {
 	}
 
 	function loadMain( $error = false ) {
+		global $wgContLanguageCode, $wgVETNonEnglishPremiumSearch;
+
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array(
 				'result' => '',
-				'error'  => $error
+				'error'  => $error,
+				'vet_premium_videos_search_enabled' => ($wgContLanguageCode == 'en') || $wgVETNonEnglishPremiumSearch
 				)
 		);
 		return $tmpl->render("main");
@@ -99,15 +102,14 @@ class VideoEmbedTool {
 
 		$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
 		$title = Title::makeTitle( NS_FILE, $tempname );
-		$isNonPremium = false;
+		$nonPremiumException = null;
 		try {
 			$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
 			$apiwrapper = $awf->getApiWrapper( $url );
 
 		}
 		catch (WikiaException $e) {
-
-			$isNonPremium = true;
+			$nonPremiumException = $e;
 		}
 
 
@@ -146,15 +148,14 @@ class VideoEmbedTool {
 				}
 			}
 			else {
-				if ( $isNonPremium ) {
+				if ( $nonPremiumException ) {
 					header('X-screen-type: error');
 
 					if ( !empty(F::app()->wg->allowNonPremiumVideos) ) {
-						return $e->getMessage();
+						return $nonPremiumException->getMessage();
 					}
 
-					// return wfMessage("videohandler-non-premium")->parse(); //TODO: re-instate html links once VETUpgrade branch is merged into trunk (Liz)
-					return wfMsg( 'videohandler-non-premium' );
+					return wfMessage('videohandler-non-premium')->parse();
 				}
 				header('X-screen-type: error');
 				return wfMsg( 'vet-bad-url' );
@@ -207,7 +208,6 @@ class VideoEmbedTool {
 				header('X-screen-type: error');
 				return wfMsg ( 'vet-name-incorrect' );
 			}
-
 			wfRunHooks( 'AddPremiumVideo', array( $title ) );
 		} else { // needs to upload
 			// sanitize name and init title objects
@@ -235,18 +235,16 @@ class VideoEmbedTool {
 				$extra++;
 			}
 
-			if (!empty($titleFile)) {
-				$parts = explode('/',$provider);
-				$provider = $parts[1];
-				$oTitle = null;
-				$status = $this->uploadVideoAsFile($provider, $id, $nameSanitized, $oTitle);
-				if ( !$status->ok ) {
-					header('X-screen-type: error');
-					return wfMsg( 'wva-thumbnail-upload-failed' );
-				}
-				$message = wfMsg( 'vet-single-success' );
+			$parts = explode('/',$provider);
+			$provider = $parts[1];
+			$oTitle = null;
+			$status = $this->uploadVideoAsFile($provider, $id, $nameSanitized, $oTitle);
+			if ( !$status->ok ) {
+				header('X-screen-type: error');
+				return wfMsg( 'wva-thumbnail-upload-failed' );
 			}
 		}
+		$message = wfMsg( 'vet-single-success' );
 		$ns_vid = $wgContLang->getFormattedNsText( $title->getNamespace() );
 		$caption = $wgRequest->getVal('caption');
 

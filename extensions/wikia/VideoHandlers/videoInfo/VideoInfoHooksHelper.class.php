@@ -79,7 +79,7 @@ class VideoInfoHooksHelper {
 	 * @param $revision
 	 * @param $status
 	 * @param $baseRevId
-	 * @return true 
+	 * @return true
 	 */
 	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
@@ -146,7 +146,7 @@ class VideoInfoHooksHelper {
 	 * @param $versions
 	 * @param User $user
 	 * @param $comment
-	 * @return true 
+	 * @return true
 	 */
 	public static function onFileUndeleteComplete( $title, $versions, $user, $comment ) {
 		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {

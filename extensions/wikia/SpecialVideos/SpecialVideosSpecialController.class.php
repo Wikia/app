@@ -87,7 +87,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->addVideo = $addVideo;
 		$this->pagination = $pagination;
 		$this->sortMsg = $sortingOptions[$sort]; // selected sorting option to display in drop down
-		$this->sortingOptions = $sortingOptions; // populate the drop down 
+		$this->sortingOptions = $sortingOptions; // populate the drop down
 		$this->videos = $videos;
 	}
 

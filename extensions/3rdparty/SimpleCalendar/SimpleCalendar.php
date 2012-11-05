@@ -22,12 +22,21 @@ function wfCalendarLanguageGetMagic(&$magicWords,$langCode = 0) {
 	return true;
 }
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfSetupSimpleCalendar( $parser ) {
 	$parser->setFunctionHook('calendar','wfRenderCalendar');
 	return true;
 }
 
-# Renders a table of all the individual month tables
+/**
+ * Renders a table of all the individual month tables
+ *
+ * @param Parser $parser
+ * @return string
+ */
 function wfRenderCalendar(&$parser) {
 	$parser->disableCache();
 	$argv = array();

@@ -3,6 +3,7 @@
  * @author Bartek Łapiński
  */
 
+
 if(!defined('MEDIAWIKI')) {
 	exit(1);
 }
@@ -15,8 +16,10 @@ $wgExtensionCredits['other'][] = array(
         'author' => 'Bartek Łapiński, Inez Korczyński',
 	'version' => '0.99',
 );
-
+$app = F::app();
 $dir = dirname(__FILE__).'/';
+
+$app->registerController('VideoEmbedToolController',	$dir . '/VideoEmbedToolController.class.php' );
 
 define( 'VIDEO_PREVIEW', 350 );
 
@@ -86,7 +89,9 @@ function VETSetup($editform) {
 	if( get_class(RequestContext::getMain()->getSkin()) === 'SkinOasis' ) {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js"></script>');
+		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/WikiaStyleGuide/js/Dropdown.js"></script>');
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaStyleGuide/css/Dropdown.scss'));
 	}
 	return true;
 }

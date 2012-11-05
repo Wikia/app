@@ -288,8 +288,9 @@ var WikiaPhotoGallery = {
 						delete gallery.params.rssfeed;
 					}
 				} else if ( !this.isSlider() ) {
-					gallery.params.captionalign = $('#WikiaPhotoGalleryEditorGalleryCaptionAlignment').val();                   
+					gallery.params.captionalign = $('#WikiaPhotoGalleryEditorGalleryCaptionAlignment').val();
 					gallery.params.widths = $('#WikiaPhotoGallerySliderGallery').find('.slider').slider('value');
+					gallery.params.position = $('#WikiaPhotoGalleryEditorGalleryPosition').val();
 					if (gallery.params.usefeed) {
 						delete gallery.params.usefeed;
 						gallery.params.rssfeed = $('#WikiaPhotoGalleryFeedUrl').val();
@@ -2247,79 +2248,91 @@ var WikiaPhotoGallery = {
 		//done here since the dialog closes in many different ways and some of them use animation fx
 		$('#WikiaPhotoGalleryEditor').remove();
 
-		// load CSS for editor popup, wikia-tabs, AIM upload lib and jQuery UI library (if not loaded yet) via loader function
-		$.when(
-			$.getResources([
-				wgExtensionsPath + '/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.editor.css',
-				stylepath + '/common/wikia_ui/tabs.css'
-			]),
+		//BugId:51767 - WikiaPhotoGallery editor cannot be opened more than
+		//8 times in a single page load on IE 9
+		if (self.modalAjaxData) {
+			self.log('Using cached data for modal');
+			self.processModal(self.modalAjaxData, height, params);
+		} else {
+			self.log('Loading required data for modal');
+			// load CSS for editor popup, wikia-tabs, AIM upload lib and jQuery UI library (if not loaded yet) via loader function
+			$.when(
+				$.getResources([
+					wgExtensionsPath + '/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.editor.css',
+					stylepath + '/common/wikia_ui/tabs.css'
+				]),
 
-			// jQuery UI (autocomplete with CSS and slider plugin) and AIM plugin
-			mw.loader.use(['jquery.ui.autocomplete', 'jquery.ui.slider', 'jquery.aim']),
+				// jQuery UI (autocomplete with CSS and slider plugin) and AIM plugin
+				mw.loader.use(['jquery.ui.autocomplete', 'jquery.ui.slider', 'jquery.aim']),
 
-			// fetch dialog content
-			this.ajax('getEditorDialog', {title: wgPageName})
-		).then(function(getResourcesData, mwLoaderUseData, ajaxData) {
-			// "parse" data from promise of AJAX request
-			var data = ajaxData[0];
+				// fetch dialog content
+				this.ajax('getEditorDialog', {title: wgPageName})
+			).then(function(getResourcesData, mwLoaderUseData, ajaxData){
+				// "parse" data from promise of AJAX request
+				self.modalAjaxData = ajaxData[0];
+				self.processModal(self.modalAjaxData, height, params);
+			});
+		}
+	},
 
-			// store messages
-			// TODO: use JSMessages - $.getMessages
-			self.editor.msg = data.msg;
+	processModal: function(data, height, params) {
+		var self = WikiaPhotoGallery;
 
-			// store default values
-			self.editor.defaultParamValues = data.defaultParamValues;
+		// store messages
+		// TODO: use JSMessages - $.getMessages
+		self.editor.msg = data.msg;
 
-			// render editor popup
-			$.showModal('', data.html, {
-				callbackBefore: function() {
-					// change height of the editor popup before it's shown (RT #55203)
-					$('#WikiaPhotoGalleryEditorPagesWrapper').height(height);
-				},
-				callback: function() {
-					// remove loading indicator
-					$('#WikiaPhotoGalleryEditorLoader').remove();
+		// store default values
+		self.editor.defaultParamValues = data.defaultParamValues;
 
-					// mark editor dialog title node
-					if (skin == 'oasis') {
-						$('#WikiaPhotoGalleryEditor').children('h1').attr('id', 'WikiaPhotoGalleryEditorTitle');
+		// render editor popup
+		$.showModal('', data.html, {
+			callbackBefore: function() {
+				// change height of the editor popup before it's shown (RT #55203)
+				$('#WikiaPhotoGalleryEditorPagesWrapper').height(height);
+			},
+			callback: function() {
+				// remove loading indicator
+				$('#WikiaPhotoGalleryEditorLoader').remove();
+
+				// mark editor dialog title node
+				if (skin == 'oasis') {
+					$('#WikiaPhotoGalleryEditor').children('h1').attr('id', 'WikiaPhotoGalleryEditorTitle');
+				}
+				else {
+					$('#WikiaPhotoGalleryEditor').children('.modalTitle').
+						append('<span id="WikiaPhotoGalleryEditorTitle"></span>');
+				}
+
+				self.setupEditor(params);
+			},
+			onClose: function(type) {
+				// prevent close event triggered by ESCAPE key
+				if (type.keypress) {
+					return false;
+				}
+
+				// X has been clicked
+				var currentPage = self.editor.currentPage;
+				if (type.click) {
+					if (currentPage == self.EDIT_CONFLICT_PAGE) {
+						// just close the dialog when on edit conflict page
+						return;
+					}
+					else if (currentPage == self.CHOOSE_TYPE_PAGE) {
+						// just close the dialog when on choice page
+						return;
 					}
 					else {
-						$('#WikiaPhotoGalleryEditor').children('.modalTitle').
-							append('<span id="WikiaPhotoGalleryEditorTitle"></span>');
-					}
-
-					self.setupEditor(params);
-				},
-				onClose: function(type) {
-
-					// prevent close event triggered by ESCAPE key
-					if (type.keypress) {
+						// show "Save and quit" popup for the rest
+						self.showSaveAndQuitDialog();
 						return false;
 					}
-
-					// X has been clicked
-					var currentPage = self.editor.currentPage;
-					if (type.click) {
-						if (currentPage == self.EDIT_CONFLICT_PAGE) {
-							// just close the dialog when on edit conflict page
-							return;
-						}
-						else if (currentPage == self.CHOOSE_TYPE_PAGE) {
-							// just close the dialog when on choice page
-							return;
-						}
-						else {
-							// show "Save and quit" popup for the rest
-							self.showSaveAndQuitDialog();
-							return false;
-						}
-					}
-				},
-				id: 'WikiaPhotoGalleryEditor',
-				persistent: false, // don't remove popup when user clicks X
-				width: self.editor.width
-			});
+				}
+			},
+			id: 'WikiaPhotoGalleryEditor',
+			persistent: false, // don't remove popup when user clicks X
+			width: self.editor.width
 		});
 	},
 

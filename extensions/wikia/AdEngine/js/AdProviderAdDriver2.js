@@ -1,12 +1,11 @@
 // TODO: move WikiaTracker outside
 
-var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, expiringStorage) {
+var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, cacheStorage) {
 	'use strict';
 
 	var logGroup = 'AdProviderAdDriver2'
 		, slotMap
-		, storage = expiringStorage.makeStorage(window.localStorage)
-		, forgetAdsShownAfterTime = 3600 * 1000 // an hour
+		, forgetAdsShownAfterTime = 3600 // an hour
 		, incrementItemInStorage
 		, fillInSlot, canHandleSlot
 		, formatTrackTime
@@ -97,10 +96,10 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 	incrementItemInStorage = function(storageKey) {
 		log('incrementNumCall ' + storageKey, 5, logGroup);
 
-		var numCallForSlot = storage.getItem(storageKey, now) || 0;
+		var numCallForSlot = cacheStorage.get(storageKey, now) || 0;
 
 		numCallForSlot += 1;
-		storage.setItem(storageKey, numCallForSlot, forgetAdsShownAfterTime);
+		cacheStorage.set(storageKey, numCallForSlot, forgetAdsShownAfterTime, now);
 
 		return numCallForSlot;
 	};
@@ -135,11 +134,11 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 				slotTweaker.removeTopButtonIfNeeded(slotname);
 			}
 
-			, noAdStorageKey = 'adDriverLastDARTCallNoAd3_' + slotname
-			, numCallForSlotStorageKey = 'adDriverNumAllCall3_' + slotname
+			, noAdStorageKey = 'dart_noad_' + slotname
+			, numCallForSlotStorageKey = 'dart_calls_' + slotname
 
-			, noAdLastTime = storage.getItem(noAdStorageKey) || false
-			, numCallForSlot = storage.getItem(numCallForSlotStorageKey, now) || 0
+			, noAdLastTime = cacheStorage.get(noAdStorageKey, now) || false
+			, numCallForSlot = cacheStorage.get(numCallForSlotStorageKey, now) || 0
 			, url
 
 			, hopTimer, hopTime
@@ -176,7 +175,7 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 		log('hopTimer start for ' + slotname, 7, logGroup);
 
 		incrementItemInStorage(numCallForSlotStorageKey);
-		storage.removeItem(noAdStorageKey);
+		cacheStorage.del(noAdStorageKey);
 
 		url = wikiaDart.getUrl({
 			slotname: slotname,
@@ -195,7 +194,7 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 			 */
 			if (window.adDriverLastDARTCallNoAds && window.adDriverLastDARTCallNoAds[slotname]) {
 				log(slotname + ' was not filled by DART', 2, logGroup);
-				storage.setItem(noAdStorageKey, true, forgetAdsShownAfterTime);
+				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
 
 				// Track hop time
 				hopTime = new Date().getTime() - hopTimer;

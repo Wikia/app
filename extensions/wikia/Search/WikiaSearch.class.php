@@ -152,7 +152,6 @@ class WikiaSearch extends WikiaObject {
 
 			$searchConfig	->setLength		( self::GROUP_RESULTS_GROUPINGS_LIMIT )
 							->setIsInterWiki( true )
-							->setStart		( ( (int) $searchConfig->getLength() ) * ( ( (int) $searchConfig->getPage() ) - 1 ) )
 			;
 
 		}
@@ -524,7 +523,7 @@ class WikiaSearch extends WikiaObject {
 				->setQueryParser		( 'edismax' )
 		;
 		
-		if ( $this->wg->SharedExternalDB !== null ) {
+		if ( $this->wg->ExternalSharedDB !== null ) {
 			$dismax
 				->setPhraseFields		( $queryFieldsString )
 				->setBoostQuery			( $this->getBoostQueryString( $searchConfig ) )
