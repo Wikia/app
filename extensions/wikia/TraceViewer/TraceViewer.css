@@ -1,5 +1,9 @@
 .ui-traceviewer {
 	background: white;
+	color: black;
+}
+.ui-traceviewer a {
+	color: #2B54B5;
 }
 
 .php-trace-wrapper {
