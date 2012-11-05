@@ -31,8 +31,8 @@ if('' == $props['oname']) {
 					<input type="radio" id="VideoEmbedNoThumbOption" class="hidden" name="style" />
 					<label for="VideoEmbedNoThumbOption" class="vet-style-label VideoEmbedNoThumbOption" title="<?= wfMsg( 'vet-no-thumbnail' ) ?>"><?= wfMsg( 'vet-no-thumbnail' ) ?></label>
 				</span>
-				<input id="VideoEmbedCaption" type="text" placeholder="Caption" class="show" />
-				<p>No caption</p>
+				<input id="VideoEmbedCaption" type="text" placeholder="<?= wfMsg( 'vet-caption' ) ?>" class="show" />
+				<p><?= wfMsg( 'vet-no-caption' ) ?></p>
 			</div>
 		</div>
 		<div class="input-group" id="VideoEmbedWidthRow">
