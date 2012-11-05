@@ -57,6 +57,7 @@
 // Extensions (only include here if used on the majority of page views!)
 @import "modules/LatestPhotos";
 @import "extensions/wikia/Blogs/css/oasis";
+@import "extensions/wikia/CategorySelect/css/CategorySelect.view";
 @import "extensions/wikia/RelatedPages/RelatedPages";
 @import "extensions/wikia/ImageLazyLoad/css/ImageLazyLoad";
 @import "extensions/wikia/UserLogin/css/UserLoginGlobal";
@@ -66,10 +67,12 @@
 @import "extensions/wikia/WikiaBar/css/WikiaBar";
 @import "extensions/wikia/Chat2/css/ChatEntryPoint";
 @import "extensions/wikia/WikiaSeasons/css/WikiaSeasonsBar";
+@import "extensions/wikia/UserLogin/css/UserLoginDropdown";
+
+// CSS (needs leading slash and file extension)
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
 @import "/extensions/FBConnect/css/fbModal.css";
 @import "/extensions/wikia/AjaxLogin/AjaxLogin.css";
-@import "extensions/wikia/UserLogin/css/UserLoginDropdown";
 
 // Print
 @media print {
