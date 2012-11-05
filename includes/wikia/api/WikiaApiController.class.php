@@ -40,7 +40,10 @@ abstract class WikiaApiController extends WikiaController {
 	 * JSON data but in this case HTML is required.
 	 */
 	public function help() {
-		$this->response->setFormat( 'html' );
+		if ( $this->request->getVal( 'format' ) != 'json' ) {
+			$this->response->setFormat( 'html' );
+		}
+
 		parent::help();
 	}
 
