@@ -11,6 +11,8 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 			return false;  // skip rendering
 		}
 
+		$isStaff = in_array( 'staff', $this->wg->User->getEffectiveGroups() );
+
 		$title = $this->wf->Msg( 'wikiagameguides-content-title' );
 		$this->wg->Out->setPageTitle( $title );
 		$this->wg->Out->setHTMLTitle( $title );
@@ -19,13 +21,32 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		$assetManager = AssetsManager::getInstance();
 
-		$styles = $assetManager->getUrl( 'extensions/wikia/GameGuides/css/GameGuidesContentManagmentTool.scss' );
+		$styles = $assetManager->getURL(
+			array_merge(
+				array(
+					'extensions/wikia/GameGuides/css/GameGuidesContentManagmentTool.scss',
+				),
+				($isStaff ? array(
+					'extensions/wikia/WikiFeatures/css/WikiFeatures.scss'
+				) : array())
+			)
+		);
 
 		foreach( $styles as $s ) {
 			$this->wg->Out->addStyle( $s );
 		}
 
-		$scripts = $assetManager->getURL( 'extensions/wikia/GameGuides/js/GameGuidesContentManagmentTool.js' );
+		$scripts = $assetManager->getURL(
+			array_merge(
+				array(
+					'extensions/wikia/GameGuides/js/GameGuidesContentManagmentTool.js'
+				),
+				($isStaff ? array(
+					'extensions/wikia/WikiFeatures/js/modernizr.transform.js',
+					'extensions/wikia/WikiFeatures/js/WikiFeatures.js'
+				) : array())
+			)
+		);
 
 		foreach( $scripts as $s ) {
 			$this->wg->Out->addScriptFile( $s );
@@ -35,6 +56,11 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		$tags = WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId );
 
+		if ( $isStaff ) {
+			$this->response->setVal( 'enabled', $enabled = WikiFactory::getVarValueByName( 'wgGameGuidesContentForAdmins', $this->wg->CityId ) );
+		}
+
+		$this->response->setVal( 'staff', $isStaff );
 		$this->response->setVal( 'tags', $tags );
 		return true;
 	}
