@@ -1,5 +1,5 @@
 <?php
-
+// TODO: remove this.  It's no longer being used. 
 $title = Title::newFromText( $name, NS_VIDEO );
 $video_fake = new VideoPage( $title );
 $video_real = new VideoPage( $title );
