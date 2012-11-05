@@ -19,9 +19,9 @@ class Gatherer extends SpecialPage {
 		'Island');
 
 	public function __construct() {
-		SpecialPage::SpecialPage( 'Gatherer', 'upload' );
+		parent::__construct( 'Gatherer', 'upload' );
 	}
-	
+
 	public function execute( $par ) {
 		global $wgRequest, $wgUser, $wgOut;
 		// we need some settings to be true in order for this to work
@@ -32,7 +32,7 @@ class Gatherer extends SpecialPage {
 				return;
 			}
 		}
-		
+
 		if( !$wgUser->isAllowed( 'upload' ) ) {
 			$wgOut->permissionRequired( 'upload' );
 			return;
@@ -63,7 +63,7 @@ class Gatherer extends SpecialPage {
 			$wgOut->addHTML( $this->mainForm() );
 		}
 	}
-	
+
 	protected function mainForm() {
 		$html = '<form method="post"><fieldset><legend>' . wfMsgHtml( 'gatherer-create' ) . "</legend>\n";
 		$html .= '<label for="wpName">' . wfMsgHtml( 'gatherer-name' ) . '</label> <input name="wpName" id="wpName" type="text" />';
@@ -71,7 +71,7 @@ class Gatherer extends SpecialPage {
 		$html .= '</fieldset></form>';
 		return $html;
 	}
-	
+
 	protected function doQuery() {
 		global $wgOut;
 		$g = $this->gatherer = new GathererQuery( $this->name );
@@ -83,7 +83,7 @@ class Gatherer extends SpecialPage {
 		$this->createCardPage( $g );
 		return false; // false means no errors
 	}
-	
+
 	private function uploadPics( $gatherer ) {
 		// first check for the set symbols
 		foreach( $gatherer->sets as $set => $info ) {
@@ -121,7 +121,7 @@ class Gatherer extends SpecialPage {
 				}
 			}
 		}
-		
+
 		// now the card images
 		foreach( $gatherer->images as $set => $pic ) {
 			$name = wfStripIllegalFilenameChars( str_replace( ':', '', $this->name ) );
@@ -131,10 +131,11 @@ class Gatherer extends SpecialPage {
 			}
 		}
 	}
-	
+
 	private function doUpload( $title, $file, $msg, $comment ) {
 		global $wgTmpDirectory;
 
+		/* @var File $fileObj */
 		$fileObj = wfLocalFile( $title );
 		$dir = sys_get_temp_dir();
 		$path = tempnam( $wgTmpDirectory, 'MTG' );
@@ -144,7 +145,7 @@ class Gatherer extends SpecialPage {
 		$props = File::getPropsFromPath( $path );
 		$fileObj->upload( $path, $comment, $msg, File::DELETE_SOURCE, $props );
 	}
-	
+
 	private function createCardPage( $gatherer ) {
 		$title = Title::newFromText( $this->name );
 		$info = array();
@@ -181,8 +182,7 @@ class Gatherer extends SpecialPage {
 						break;
 					case 'L':
 						$rarity = 'Land';
-					default:
-						continue;
+						break;
 				}
 				$set = wfStripIllegalFilenameChars( str_replace( ':', '', $set ) );
 				$info['p/r' . $i] = "{{Rarity|{$set}|{$rarity}}}";
@@ -196,7 +196,7 @@ class Gatherer extends SpecialPage {
 				$info['p/r' . $i] = '';
 			}
 		}
-		$article = new Article( $title );
+		$article = new WikiPage( $title );
 		$article->doEdit(
 			wfMsgForContentNoTrans( 'gatherer-cardpage', array(
 				$gatherer->info['name'],
@@ -249,7 +249,7 @@ class Gatherer extends SpecialPage {
  */
 class GathererQuery {
 	public $name, $err, $sets, $info, $images, $rels, $borders;
-	
+
 	public function __construct( $name ) {
 		$this->name = $name;
 		$this->err = '';
@@ -257,7 +257,7 @@ class GathererQuery {
 		$this->info = array();
 		$this->images = array();
 		$this->borders = array();
-		
+
 		// parse relations
 		$rels = explode( "\n", wfMsgForContent( 'gatherer-sets' ) );
 		$this->rels = array();
@@ -269,7 +269,7 @@ class GathererQuery {
 			$this->rels[$r[0]] = array( 'abbr' => $r[1], 'border' => $r[2] );
 		}
 	}
-	
+
 	public function execute() {
 		$un = urlencode( $this->name );
 		$c1 = $this->fetchCardInfo( 'http://beta.gatherer.wizards.com/Pages/Card/Details.aspx?name=' . $un );
@@ -319,7 +319,7 @@ class GathererQuery {
 
 			return $text;
 	}
-	
+
 	public function cleanup() {
 		foreach( $this->images as $s => $p ) {
 			if( !$p ) {
@@ -337,16 +337,16 @@ class GathererQuery {
 			}
 		}
 	}
-	
+
 	// Regex-based parsing for data
 	private function detailStr( $str ) {
 		preg_match( '/<!-- Card Details Table -->(.*?)<!-- End Card Details Table -->/s', $str, $matches );
 		$str = str_replace( '</div><div class="cardtextbox">', '<br />', $matches[1] );
-		
+
 		// card name
 		preg_match( '/<div .*?_nameRow".*?<div class="value">(.*?)<\/div>/s', $str, $n );
 		$info['name'] = trim( $n[1] );
-		
+
 		// mana cost
 		if( preg_match( '/<div .*?_manaRow".*?<div class="value">(.*?)<\/div>/s', $str, $m ) ) {
 			$m = explode( '/>', $m[1] );
@@ -360,14 +360,14 @@ class GathererQuery {
 		} else {
 			$info['cost'] = ' ';
 		}
-		
+
 		// converted mana cost (unused in Cardpage, but here for future expansion)
 		if( preg_match( '/<div .*?_cmcRow".*?<div class="value">(.*?)<\/div>/s', $str, $c ) ) {
 			$info['cmc'] = trim( str_replace( '<br />', '', $c[1] ) );
 		} else {
 			$info['cmc'] = ' ';
 		}
-		
+
 		// type
 		preg_match( '/<div .*?_typeRow".*?<div class="value">(.*?)<\/div>/s', $str, $t );
 		$pw = ( strpos( $t[1], 'Planeswalker' ) !== false );
@@ -377,7 +377,7 @@ class GathererQuery {
 			$info['planeswalker'] = '';
 		}
 		$info['type'] = trim( $t[1] );
-		
+
 		// card text
 		if( preg_match( '/<div .*?_textRow".*?<div class="value">(.*?)<\/div>/s', $str, $x ) ) {
 			$x = trim( str_replace( '<br />', "\n\n", $x[1] ) );
@@ -390,7 +390,7 @@ class GathererQuery {
 		} else {
 			$info['rules'] = ' ';
 		}
-		
+
 		// flavor text
 		if( preg_match( '/<div .*?_flavorRow".*?<div class="cardtextbox">(.*?)<\/div>/s', $str, $f ) ) {
 			$f = trim( str_replace( '<br />', "\n\n", $f[1] ) );
@@ -400,21 +400,21 @@ class GathererQuery {
 		} else {
 			$info['flavor'] = '';
 		}
-		
+
 		// power/toughness
 		if( preg_match( '/<div .*?_ptRow".*?<div class="value">(.*?)<\/div>/s', $str, $p ) ) {
 			$info['p/t'] = trim( str_replace( ' ', '', $p[1] ) );
 		} else {
 			$info['p/t'] = '';
 		}
-		
+
 		$this->info = $info;
 	}
-	
+
 	private function printStr( $str ) {
 		preg_match( '/<table class="cardList"(.*?)<\/table>/s', $str, $matches );
 		$str = $matches[1];
-		
+
 		// get all sets
 		$rows = explode( '<tr', $str );
 		foreach( $rows as $row ) {
@@ -428,11 +428,11 @@ class GathererQuery {
 			preg_match( '/multiverseid=(.*?)"/', $cells[1], $i );
 			$ids[trim( $s[1] )] = trim( $i[1] );
 		}
-			
+
 		$this->sets = $this->getSets( $sets );
 		$this->images = $this->getPics( $ids );
 	}
-	
+
 	private function getSets( $sets ) {
 		$ret = array();
 		foreach( $sets as $s => $r ) {
@@ -450,7 +450,7 @@ class GathererQuery {
 		}
 		return $ret;
 	}
-	
+
 	private function getPics( $ids ) {
 		$ret = array();
 		foreach( $ids as $set => $id ) {
