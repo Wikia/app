@@ -169,6 +169,7 @@ $wgHooks          [ 'LoadExtensionSchemaUpdates'      ][] = 'WikiaUpdater::updat
 $wgAutoloadClasses[ 'phpFlickr'                       ] = "$IP/lib/phpFlickr/phpFlickr.php";
 $wgAutoloadClasses[ 'WikiaDataAccess'                 ] = "$IP/includes/wikia/WikiaDataAccess.class.php";
 $wgAutoloadClasses[ 'ImageReviewStatuses'             ] = "$IP/extensions/wikia/ImageReview/ImageReviewStatuses.class.php";
+$wgAutoloadClasses[ 'WikiaUserProperties'             ] = "$IP/includes/wikia/WikiaUserProperties.class.php";
 
 /**
  * Resource Loader enhancements
@@ -271,7 +272,6 @@ $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/Theme
 $wgAutoloadClasses['ThemeDesignerHelper'] = $IP."/extensions/wikia/ThemeDesigner/ThemeDesignerHelper.class.php";//FB#22659 - dependency for ThemeSettings
 $wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorController.class.php';
 $wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/WikiaMediaCarouselController.class.php';
-
 
 // TODO:move this inclusions to CommonExtensions?
 require_once( $IP.'/extensions/wikia/ImageTweaks/ImageTweaks.setup.php' );
