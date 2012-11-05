@@ -50,13 +50,13 @@ $messages['de'] = array(
 );
 
 $messages['es'] = array(
-	'specialvideos-html-title' => 'Videos en este wiki - {{SITENAME}}',
-	'specialvideos-page-title' => 'Videos',
-	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|videos en<br /> este wiki|videos en<br /> este wiki}}</span>',
-	'specialvideos-sort-by' => 'Organizar por',
-	'specialvideos-sort-latest' => 'Los mas recientes',
-	'specialvideos-sort-most-popular' => 'Los mas populares',
-	'specialvideos-sort-trending' => 'Creciendo ahora',
+	'specialvideos-html-title' => 'Vídeos en este wiki - {{SITENAME}}',
+	'specialvideos-page-title' => 'Vídeos',
+	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|vídeo en<br /> este wiki|vídeos en<br /> este wiki}}</span>',
+	'specialvideos-sort-by' => 'Organizar Por',
+	'specialvideos-sort-latest' => 'Más Recientes',
+	'specialvideos-sort-most-popular' => 'Más Populares',
+	'specialvideos-sort-trending' => 'Creciendo Ahora',
 	'specialvideos-sort-featured' => 'Fuente: Biblioteca Wikia',
 	'specialvideos-uploadby' => 'por $1',
 	'specialvideos-posted-in' => 'Publicado en $1',
