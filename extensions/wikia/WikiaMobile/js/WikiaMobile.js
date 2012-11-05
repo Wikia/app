@@ -1,4 +1,4 @@
-//image lazyloading
+//image Lazyloading
 //needs to run ASAP (before onload actually happens)
 //so it's processed separately from the rest
 //to avoid delays
