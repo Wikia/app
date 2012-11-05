@@ -160,7 +160,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 						center: true
 					});
 
-					Wikia.sendRequest({
+					Wikia.nirvana.sendRequest({
 						type: 'get',
 						format: 'json',
 						controller: 'VideoHandlerController',

@@ -65,7 +65,7 @@ var WikiaBar = {
 			WikiaBarBoxAd.addClass('wikia-ad');
 		}
 	},
-	cutMessageIntoSmallPieces: function (messageArray, container) {
+	cutMessageIntoSmallPieces: function (messageArray, container, cutMessagePrecision) {
 		var returnArray = [],
 			currentMessageArray,
 			originalMessageArray,
@@ -78,7 +78,7 @@ var WikiaBar = {
 			if (typeof messageArrayText == 'string') {
 				originalMessageArray = messageArrayText.split('');
 				do {
-					currentMessageArray = this.checkMessageWidth(originalMessageArray, container);
+					currentMessageArray = this.checkMessageWidth(originalMessageArray, container, cutMessagePrecision);
 					originalCurrentDiffArray = originalMessageArray.slice(
 						currentMessageArray.length,
 						originalMessageArray.length
@@ -92,36 +92,37 @@ var WikiaBar = {
 		container.text('');
 		return returnArray;
 	},
-	checkMessageWidth: function (messageArray, container) {
+	checkMessageWidth: function (messageArray, container, cutMessagePrecision) {
 		var tempMessage = '',
 			tempMessageObject,
-			lastSpaceIndex = -1,
+			tempMessageArray,
 			cutIndex = -1;
 
-		for (var j = 0, length = messageArray.length ; j < length ; j
-			+=this.cutMessagePrecision) {
-			tempMessage = tempMessage + messageArray.join("").substr(j,
-				this.cutMessagePrecision);
+		for (var j = 0, length = messageArray.length ; j < length ; j+=cutMessagePrecision) {
+			tempMessage = tempMessage + messageArray.join("").substr(
+				j,
+				cutMessagePrecision
+			);
 			tempMessageObject = $('<span></span>').text(tempMessage);
 			container.html(tempMessageObject);
 			if (tempMessageObject.width() >= this.messageConfig.container.width()) {
-				cutIndex = j - this.cutMessagePrecision;
+				cutIndex = j - cutMessagePrecision;
 				break;
 			}
 		}
 
 		if (cutIndex == -1) {
-			temp = messageArray;
+			tempMessageArray = messageArray;
 		}
 		else {
-			temp = messageArray.slice(0, cutIndex);
-			lastIndexOfSpace = temp.lastIndexOf(" ");
-			if (lastIndexOfSpace < cutIndex) {
-				temp = messageArray.slice(0, lastIndexOfSpace);
+			tempMessageArray = messageArray.slice(0, cutIndex);
+			var lastIndexOfSpace = tempMessageArray.lastIndexOf(" ");
+			if ( (lastIndexOfSpace > -1) && (lastIndexOfSpace < cutIndex) ) {
+				tempMessageArray = messageArray.slice(0, lastIndexOfSpace);
 			}
 		}
 
-		return temp;
+		return tempMessageArray;
 	},
 	messageFadeIn: function () {
 		var currentMsgIndex = this.messageConfig.index,
@@ -165,7 +166,8 @@ var WikiaBar = {
 	startSlideShow: function () {
 		this.messageConfig.content = this.cutMessageIntoSmallPieces(
 			this.messageConfig.container.data(this.messageConfig.attributeName),
-			this.messageConfig.container
+			this.messageConfig.container,
+			this.cutMessagePrecision
 		);
 
 		if (typeof this.messageConfig.content == 'object') {

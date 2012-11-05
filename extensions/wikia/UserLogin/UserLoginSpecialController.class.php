@@ -178,9 +178,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 *   on GET, template partial for an ajax element will render
 	 */
 	public function dropdown() {
-		$this->response->addAsset('extensions/wikia/UserLogin/css/UserLoginDropdown.scss');
-		$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginDropdown.js');
-
 		$query = $this->app->wg->Request->getValues();
 		if (isset($query['title'])) {
 			unset($query['title']);

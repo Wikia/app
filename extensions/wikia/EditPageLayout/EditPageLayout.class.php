@@ -614,6 +614,9 @@ class EditPageLayout extends EditPage {
 				'class' => 'mw-talkpagetext',
 			);
 		}
+		elseif ($this->mTitle->isMainPage()) {
+			$this->helper->addJsVariable('editMainPage', true);
+		}
 
 		// Edit notice (BugId:7616)
 		$editnotice_ns_key = 'editnotice-'.$this->mTitle->getNamespace();

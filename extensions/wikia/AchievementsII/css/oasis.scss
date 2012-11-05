@@ -177,9 +177,6 @@
 				margin-top: 13px;
 			}
 		}
-		.badges-more {
-			display: none;
-		}
 		.more {
 			font-weight: normal;
 		}
@@ -224,8 +221,17 @@
 			}
 		}
 
-		.more {
-			font-weight: bold;
+		.badges-prev {
+			cursor: pointer;
+			float: left;
+			@include clearfix;
+			display: none;
+		}
+
+		.badges-next {
+			cursor: pointer;
+			float: right;
+			@include clearfix;
 		}
 
 		ul {

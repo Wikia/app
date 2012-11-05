@@ -1,7 +1,11 @@
 <?php
   $wgHooks['ParserFirstCallInit'][] = "wfFieldset";
 
- function wfFieldset( $parser ) {
+/**
+ * @param Parser $parser
+ * @return bool
+ */
+function wfFieldset( $parser ) {
      $parser->setHook( "fieldset", "renderFieldset" );
      return true;
  }
@@ -20,4 +24,3 @@
      $output .= $outputObj->getText() . '</fieldset>';
      return $output;
  }
-?>

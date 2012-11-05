@@ -137,6 +137,8 @@ __NOEDITSECTION__',
 
 	'wikiahome-import-script-no-description' => 'No description given',
 
+	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
+
 	//fb#45624
 	'wikiahome-image-auto-uploaded-comment' => 'Auto-generated image to be used on http://wikia.com/ – stay tuned for more info on the Staff Blog: http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
 );

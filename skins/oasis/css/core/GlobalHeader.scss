@@ -12,8 +12,7 @@
 	position: relative;
 	width: $wikiaheader-width;
 	z-index: $zTop;
-	// BugId: 51287, prevents antialiased fonts from flickering when other elements are transfrmed via CSS
-	-webkit-transform: translateZ(0);
+	-webkit-font-smoothing: antialiased; // prevents text flickering when css transformations in progress
 	h1 {
 		display: none;
 	}

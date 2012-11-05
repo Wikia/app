@@ -24,13 +24,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionFunctions[] = 'wfSetupImageSizeInfoFunctions';
 $wgExtensionCredits['parserhook'][] = array(
-		'name' => 'ImageSizeInfoFunctions',
-		'version' => '1.0.1~wikia',
-		'url' => 'http://www.mediawiki.org/wiki/Extension:ImageSizeInfoFunctions',
-		'author' => 'Dario de Judicibus',
-		'description' => 'Enhance parser with image size info functions',
-		);
-
+	'name' => 'ImageSizeInfoFunctions',
+	'version' => '1.0.1~wikia',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:ImageSizeInfoFunctions',
+	'author' => 'Dario de Judicibus',
+	'description' => 'Enhance parser with image size info functions',
+);
 
 $wgExtensionMessagesFiles['ImageSizeInfoFunctions'] =  dirname( __FILE__ ) . '/ImageSizeInfoFunctions.i18n.php';
 
@@ -68,6 +67,7 @@ function wfSetupImageSizeInfoFunctions() {
 
 	$wgExtInfoFunctions = new ExtImageSizeInfoFunctions;
 
+	/* @var Parser $wgParser */
 	$wgParser->setFunctionHook( 'imgw', array( &$wgExtInfoFunctions, 'imageWidth' ) );
 	$wgParser->setFunctionHook( 'imgh', array( &$wgExtInfoFunctions, 'imageHeight' ) );
 

@@ -14,7 +14,7 @@ class AssetsManagerServer {
 			if ( function_exists( 'newrelic_disable_autorum') ) {
 				newrelic_disable_autorum();
 			}
-			newrelic_name_transaction( "AssetManager/" . $type );
+			newrelic_name_transaction( "am/AssetManager/" . $type );
 		}
 
 		try {

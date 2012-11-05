@@ -5,25 +5,21 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  **/
 
-/*global define*/
 (function (context) {
 	'use strict';
 
-	/**
-	 * @private
-	 */
 	function cookies() {
-		/** @private **/
-
 		var cookieReplaceRegEx1 = /^\s*/,
 			cookieReplaceRegEx2 = /\s*$/,
 			lastCookieContent,
 			data;
 
 		/**
+		 * Parses cookies string into an object
+		 *
 		 * @private
 		 *
-		 * @return {Object}
+		 * @return {Object} An object representation of the user's cookies
 		 */
 		function fetchCookies() {
 			var cookieString = context.document.cookie,
@@ -51,24 +47,34 @@
 		}
 
 		/**
+		 * Gets the value of a cookie by name
+		 *
 		 * @public
 		 *
-		 * @param {String} name
+		 * @param {String} name The name of the cookie
 		 *
-		 * @return {Mixed}
+		 * @return {Mixed} The value of the cookie or null
 		 */
 		function get(name) {
 			var val = fetchCookies()[name];
 
-			return (typeof val !== 'undefined') ? val : null;
+			return (typeof val != 'undefined') ? val : null;
 		}
 
 		/**
+		 * Sets the value of a cookie by name and also return its' string representation
+		 *
 		 * @public
 		 *
-		 * @param {String} name
-		 * @param {Mixed} value
-		 * @param {Object} options
+		 * @param {String} name The name of the cookie
+		 * @param {Mixed} value The value of the cookie
+		 * @param {Object} options Options that apply to the cookie:
+		 * - {Mixed} expires An integer (relative time from now) or a Date instance
+		 * - {String} path The cookie's path
+		 * - {String} domain The domain of validity
+		 * - {Boolean} secure
+		 *
+		 * @return {String} The string representation of the cookie
 		 */
 		function set(name, value, options) {
 			var expDate,
@@ -79,7 +85,7 @@
 
 			options = options || {};
 
-			if (typeof value === 'undefined' || value === null) {
+			if (typeof value == 'undefined' && value === null) {
 				value = '';
 				options.expires = -1;
 			}
@@ -124,7 +130,7 @@
 		};
 	}
 
-	// this module needs to be also available via a namespace for access early in the process
+	//UMD inclusive
 	if (!context.Wikia) {
 		context.Wikia = {};
 	}
@@ -132,9 +138,8 @@
 	//namespace
 	context.Wikia.Cookies = cookies();
 
-	if (typeof define != 'undefined' && define.amd) {
-		//AMD
-		define('cookies', function () {
+	if (context.define && context.define.amd) {
+		context.define('cookies', function () {
 			return context.Wikia.Cookies;
 		});
 	}

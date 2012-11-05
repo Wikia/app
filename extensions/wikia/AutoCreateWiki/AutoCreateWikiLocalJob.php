@@ -95,7 +95,7 @@ class AutoCreateWikiLocalJob extends Job {
 			: WikiFactory::getVarValueByName( "wgSitename", $this->mParams[ "city_id"], true );
 		$this->wikiaLang = isset( $this->mParams[ "language" ] )
 			? $this->mParams[ "language" ]
-			: WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams[ "city_id"] );
+			: WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams[ "city_id"], true );
 
 
 		$this->moveMainPage();

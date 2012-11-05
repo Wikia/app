@@ -78,6 +78,10 @@ function hrArticleViewHeaderHook( $article ) {
 /**
  * Hook for diff view, giving us a chance to insert a removal
  * tab on old version views.
+ *
+ * @param $diff
+ * @param $oldRev
+ * @param Revision $newRev
  */
 function hrDiffViewHeaderHook( $diff, $oldRev, $newRev ) {
 	if( !empty( $newRev ) && $newRev->getId() ) {
@@ -89,6 +93,9 @@ function hrDiffViewHeaderHook( $diff, $oldRev, $newRev ) {
 /**
  * Hook for deletion archive revision view, giving us a chance to
  * insert a removal tab for a deleted revision.
+ *
+ * @param $title
+ * @param Revision $rev
  */
 function hrUndeleteShowRevisionHook( $title, $rev ) {
 	hrInstallArchiveTab( $title, $rev->getTimestamp() );
@@ -127,6 +134,8 @@ function hrInstallTab( $id ) {
  * If the user is allowed, installs a tab hook on the skin
  * which links to a handy permanent removal thingy for
  * archived (deleted) pages.
+ *
+ * @param Title $target
  */
 function hrInstallArchiveTab( $target, $timestamp ) {
 	global $wgUser;

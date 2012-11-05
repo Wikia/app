@@ -2038,6 +2038,13 @@ class WallHooksHelper {
 		wfProfileOut(__METHOD__);	
 		return true;
 	}
+
+	public function onBeforeInitialize( $title, $unused, $output, $user, $request, $mediawiki ) {
+		if( !empty($title) && $title->isSpecial('Allpages') ) {
+			F::app()->registerHook('AfterLanguageGetNamespaces', 'WallHooksHelper', 'onAfterLanguageGetNamespaces');
+		}
+		return true;
+	}
 	
 	public function onAfterLanguageGetNamespaces( &$namespaces ) {
 		wfProfileIn(__METHOD__);

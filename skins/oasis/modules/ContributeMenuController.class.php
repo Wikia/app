@@ -17,6 +17,9 @@ class ContributeMenuController extends WikiaController {
 
 		// menu items linking to special pages
 		$specialPagesLinks = array(
+			/*'WikiaVideoAdd' => array(
+				'label' => 'oasis-navigation-v2-add-video'			
+			),*/
 			'Upload' => array(
 				'label' => 'oasis-navigation-v2-add-photo'
 			),

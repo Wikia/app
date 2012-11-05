@@ -71,7 +71,7 @@ class AchNotificationService {
 
 			$badge = $badges[$maxLevel][0];
 			if($markAsNotified && !wfReadOnly()){
-				$dbw->update('ach_user_badges', array('notified' => 1), array('wiki_id' => $wgCityId, 'user_id' => $userId, 'notified' => 0));
+				$dbw->update('ach_user_badges', array('notified' => 1), $where);
 			}
 		}
 

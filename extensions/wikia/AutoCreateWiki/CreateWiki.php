@@ -152,6 +152,7 @@ class CreateWiki {
 			"{$this->mIP}/maintenance/archives/wikia/patch-create-page_visited.sql",
 			//article comments list use by wall/forum
 			"{$this->mIP}/extensions/wikia/ArticleComments/patch-create-comments_index.sql",
+			"{$this->mIP}/extensions/wikia/VideoHandlers/sql/video_info.sql",
 		);
 
 		/**

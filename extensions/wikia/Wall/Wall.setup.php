@@ -143,7 +143,9 @@ $app->registerHook('SpecialWikiActivityExecute', 'WallHooksHelper', 'onSpecialWi
 $app->registerHook('WantedPages::getQueryInfo', 'WallHooksHelper', 'onWantedPagesGetQueryInfo');
 $app->registerHook('ListredirectsPage::getQueryInfo', 'WallHooksHelper', 'onListredirectsPageGetQueryInfo');
 
-$app->registerHook('AfterLanguageGetNamespaces', 'WallHooksHelper', 'onAfterLanguageGetNamespaces');
+$app->registerHook('BeforeInitialize', 'WallHooksHelper', 'onBeforeInitialize');
+// lazy loaded by the previous hook
+//$app->registerHook('AfterLanguageGetNamespaces', 'WallHooksHelper', 'onAfterLanguageGetNamespaces');
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',
@@ -213,8 +215,8 @@ $wgGroupPermissions['util']['walldelete'] = true;
 $wgGroupPermissions['*']['walladmindelete'] = false;
 $wgGroupPermissions['staff']['walladmindelete'] = false;
 $wgGroupPermissions['vstf']['walladmindelete'] = true;
-$wgGroupPermissions['helper']['walladmindelete'] = false;
-$wgGroupPermissions['sysop']['walladmindelete'] = false;
+$wgGroupPermissions['helper']['walladmindelete'] = true;
+$wgGroupPermissions['sysop']['walladmindelete'] = true;
 
 $wgGroupPermissions['*']['wallarchive'] = false;
 $wgGroupPermissions['staff']['wallarchive'] = true;
