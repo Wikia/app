@@ -48,6 +48,10 @@ $categoryselect-width: $width-epl-module-input - 10;
 			&:hover {
 				background-color: $color-epl-hover;
 
+				.name {
+					width: $categoryselect-width - 50;
+				}
+
 				.toolbar {
 					display: inline-block;
 				}
@@ -57,7 +61,7 @@ $categoryselect-width: $width-epl-module-input - 10;
 		.name {
 			@include ellipses;
 			display: inline-block;
-			width: $categoryselect-width - 50;
+			width: $categoryselect-width - 10;
 		}
 
 		.toolbar {
