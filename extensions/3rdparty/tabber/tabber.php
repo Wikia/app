@@ -12,6 +12,10 @@ $wgExtensionCredits['parserhook'][] = array(
 //Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
 $wgHooks['ParserFirstCallInit'][] = 'wfTabber';
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfTabber(&$parser) {
 	$parser->setHook( 'tabber', 'renderTabber' );
 	return true;
@@ -48,6 +52,11 @@ function renderTabber( $paramstring, $params, $parser ){
 	return $htmlHeader . $htmlTabs . $htmlFooter;
 }
 
+/**
+ * @param $tab
+ * @param Parser $parser
+ * @return string
+ */
 function buildTab($tab, $parser){
 	if( trim($tab) == '' ) return '';
 

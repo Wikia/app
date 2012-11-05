@@ -20,6 +20,10 @@ $wgExtensionCredits['parserhook'][] = array(
         'url' => 'http://wiki.edsimpson.co.uk/index.php/Flickr_Extension'
 );
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfFlickr( $parser ) {
         $parser->setHook('flickr', 'renderFlickr');
         return true;

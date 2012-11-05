@@ -8,7 +8,7 @@
  * @author Rob Church <robchur@gmail.com>
  * Please see the LICENCE file for terms of use and redistribution
  */
- 
+
 if( defined( 'MEDIAWIKI' ) ) {
 
 	$wgAutoloadClasses['SpecialVote'] = dirname( __FILE__ ) . '/Vote.page.php';
@@ -20,7 +20,7 @@ if( defined( 'MEDIAWIKI' ) ) {
 			'description' => 'Lottery added my gcardinal. Modified for pvxwiki.',
 	);
 	$wgExtensionMessagesFiles['SpecialVote'] = dirname(__FILE__) . '/Vote.i18n.php';
-	
+
 	/**
 	 * Users who can vote
 	 */
@@ -29,7 +29,7 @@ if( defined( 'MEDIAWIKI' ) ) {
 	 * Users who can view vote results
 	 */
 	$wgGroupPermissions['bureaucrat']['voteadmin'] = false;
-	
+
 	/**
 	 * Extension setup function
 	 */
@@ -37,7 +37,7 @@ if( defined( 'MEDIAWIKI' ) ) {
 		global $wgHooks;
 		$wgHooks['SkinTemplateSetupPageCss'][] = 'efVoteCss';
 	}
-	
+
 	/**
 	 * Add extra CSS to the skin
 	 */
@@ -55,5 +55,3 @@ if( defined( 'MEDIAWIKI' ) ) {
 	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
 	exit( 1 ) ;
 }
-
-?>
