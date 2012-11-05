@@ -108,9 +108,9 @@ class CategorySelectController extends WikiaController {
 	public function category() {
 		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'category', $this->request->getVal( 'category', array() ) );
-		$this->response->setVal( 'edit', wfMsg( 'categoryselect-edit-category' ) );
+		$this->response->setVal( 'edit', wfMsg( 'categoryselect-category-edit' ) );
 		$this->response->setVal( 'index', $this->request->getVal( 'index', 0 ) );
-		$this->response->setVal( 'remove', wfMsg( 'categoryselect-remove-category' ) );
+		$this->response->setVal( 'remove', wfMsg( 'categoryselect-category-remove' ) );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}

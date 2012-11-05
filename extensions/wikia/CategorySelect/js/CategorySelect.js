@@ -1,18 +1,6 @@
 (function( window, $, undefined ) {
 
-var blankImageUrl = window.wgBlankImgUrl,
-	defaultNamespace = window.wgCategorySelect.defaultNamespace,
-	defaultSortKey = window.wgCategorySelect.defaultSortKey || window.wgTitle,
-	namespace = 'categorySelect',
-	rCategory = new RegExp( '\\[\\[' +
-		// Category namespace
-		'(' + window.wgCategorySelect.validNamespaces + '):' +
-		// Category name
-		'([^\\]|]+)' +
-		// Category sortKey (optional)
-		'\\|?([^\\]]+)?' +
-	']]', 'i' ),
-	Wikia = window.Wikia || {};
+var Wikia = window.Wikia || {};
 
 /**
  * CategorySelect
@@ -99,34 +87,48 @@ CategorySelect.prototype.indexOf = function( category ) {
  * @returns {Object}
  *			The normalized category.
  */
-CategorySelect.prototype.makeCategory = function( category ) {
-	var pieces,
-		base = {
-			namespace: defaultNamespace,
-			sortKey: defaultSortKey
-		};
+CategorySelect.prototype.makeCategory = (function() {
+	var wgCategorySelect = window.wgCategorySelect,
+		defaultNamespace = wgCategorySelect.defaultNamespace,
+		defaultSortKey = wgCategorySelect.defaultSortKey || window.wgTitle,
+		rCategory = new RegExp( '\\[\\[' +
+			// Category namespace
+			'(' + wgCategorySelect.validNamespaces + '):' +
+			// Category name
+			'([^\\]|]+)' +
+			// Category sortKey (optional)
+			'\\|?([^\\]]+)?' +
+		']]', 'i' );
 
-	if ( typeof category == 'object' ) {
-		category = $.extend( base, category );
+	return function( category ) {
+		var pieces,
+			base = {
+				namespace: defaultNamespace,
+				sortKey: defaultSortKey
+			};
 
-	} else {
-		base.name = category;
-		category = base;
-	}
+		if ( typeof category == 'object' ) {
+			category = $.extend( base, category );
 
-	// Extract more information if name is a wikilink
-	if ( ( pieces = rCategory.exec( category.name ) ) ) {
-		category.namespace = pieces[ 1 ];
-		category.name = pieces[ 2 ];
-
-		// SortKey is optional
-		if ( pieces[ 3 ] != undefined ) {
-			category.sortKey = pieces[ 3 ];
+		} else {
+			base.name = category;
+			category = base;
 		}
-	}
 
-	return category;
-};
+		// Extract more information if name is a wikilink
+		if ( ( pieces = rCategory.exec( category.name ) ) ) {
+			category.namespace = pieces[ 1 ];
+			category.name = pieces[ 2 ];
+
+			// SortKey is optional
+			if ( pieces[ 3 ] != undefined ) {
+				category.sortKey = pieces[ 3 ];
+			}
+		}
+
+		return category;
+	}
+})();
 
 /**
  * Removes a category from the categories array.
@@ -151,7 +153,8 @@ CategorySelect.prototype.removeCategory = function( category ) {
  *			The settings to configure the instance with.
  */
 $.fn.categorySelect = (function() {
-	var cache = {
+	var blankImageUrl = window.wgBlankImgUrl,
+		cache = {
 			messages: {
 				categoryEdit: $.msg( 'categoryselect-category-edit' ),
 				categoryNameLabel: $.msg( 'categoryselect-modal-category-name' ),
@@ -159,7 +162,8 @@ $.fn.categorySelect = (function() {
 				modalButtonSave: $.msg( 'categoryselect-modal-button-save' ),
 				modalEmptyCategoryName: $.msg( 'categoryselect-modal-category-name-empty' )
 			}
-		};
+		},
+		namespace = 'categorySelect';
 
 	function getTemplate( name ) {
 		return cache[ name ] || $.Deferred(function( dfd ) {
@@ -200,6 +204,7 @@ $.fn.categorySelect = (function() {
 
 				// User selected a suggested item from the autocomplete list
 				if ( event.type == 'autocompleteselect'
+
 					// User pressed the enter key in the input field
 					|| ( event.type == 'keypress' && event.which == 13 ) ) {
 
@@ -213,7 +218,7 @@ $.fn.categorySelect = (function() {
 
 						// Add the category to the DOM
 						$.when( getTemplate( 'category' ) ).done(function( template ) {
-							$categories.append( Mustache.render( template, {
+							$categories.prepend( Mustache.render( template, {
 								blankImageUrl: blankImageUrl,
 								category: category,
 								edit: cache.messages.categoryEdit,
