@@ -7,13 +7,13 @@
  *
  */
 
-$wgExtensionCredits['specialpage'][] = array(
-	'name' => 'Forum',
-	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' )
+$wgExtensionCredits['specialpage'][] = array( '
+	name' => 'Forum', 
+	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ) 
 );
 
 $dir = dirname( __FILE__ ) . '/';
-$app = F::app();
+$app = F::app( );
 
 // classes
 $app->registerClass( 'ForumSpecialController', $dir . 'ForumSpecialController.class.php' );
@@ -46,20 +46,19 @@ $app->registerHook( 'WallNewMessage', 'ForumHooksHelper', 'onWallNewMessage' );
 $app->registerHook( 'EditCommentsIndex', 'ForumHooksHelper', 'onEditCommentsIndex' );
 $app->registerHook( 'ArticleInsertComplete', 'ForumHooksHelper', 'onArticleInsertComplete' );
 $app->registerHook( 'WallBeforeRenderThread', 'ForumHooksHelper', 'onWallBeforeRenderThread' );
-$app->registerHook( 'AfterBuildNewMessageAndPost', 'ForumHooksHelper', 'onAfterBuildNewMessageAndPost');
-$app->registerHook( 'WallMessageDeleted', 'ForumHooksHelper', 'onWallMessageDeleted');
+$app->registerHook( 'AfterBuildNewMessageAndPost', 'ForumHooksHelper', 'onAfterBuildNewMessageAndPost' );
+$app->registerHook( 'WallMessageDeleted', 'ForumHooksHelper', 'onWallMessageDeleted' );
 
 //notification hooks
 $app->registerHook( 'NotificationGetNotificationMessage', 'ForumNotificationPlugin', 'onGetNotificationMessage' );
 $app->registerHook( 'NotificationGetMailNotificationMessage', 'ForumNotificationPlugin', 'onGetMailNotificationMessage' );
 
-//old forum archive 
-$app->registerHook('getUserPermissionsErrors', 'ForumHooksHelper', 'onGetUserPermissionsErrors');
-$app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'ForumHooksHelper', 'onPageHeaderIndexAfterActionButtonPrepared');
-$app->registerHook('ArticleViewHeader', 'ForumHooksHelper', 'onArticleViewHeader');
+//old forum archive
+$app->registerHook( 'getUserPermissionsErrors', 'ForumHooksHelper', 'onGetUserPermissionsErrors' );
+$app->registerHook( 'PageHeaderIndexAfterActionButtonPrepared', 'ForumHooksHelper', 'onPageHeaderIndexAfterActionButtonPrepared' );
+$app->registerHook( 'ArticleViewHeader', 'ForumHooksHelper', 'onArticleViewHeader' );
 
-
-include( $dir . '/Forum.namespace.setup.php' );
+include ($dir . '/Forum.namespace.setup.php');
 
 // permissions
 $wgAvailableRights[] = 'forum';
