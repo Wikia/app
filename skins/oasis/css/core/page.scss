@@ -90,6 +90,7 @@
 	line-height: 1.8em;
 	padding: 10px;
 	margin: 10px;
+
 	h1 {
 		display: none;
 	}
@@ -447,9 +448,8 @@
 	z-index: 2;
 }
 
-
 .ContentWarning {
 	#WikiaMainContent, #WikiaRail {
-		display: none; 
+		display: none;
 	}
 }

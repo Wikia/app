@@ -99,10 +99,11 @@
 
 			</div>
 
-			<?php
-			if (empty($wg->SuppressArticleCategories)) {
-				echo $app->renderView('ArticleCategories', 'Index');
-			} ?>
+
+			<? if ( empty( $wg->SuppressArticleCategories ) ): ?>
+				<?= $app->renderView( 'ArticleCategories', 'Index' ) ?>
+			<? endif ?>
+
 			<?php
 			if (empty( $wg->InterlangOnTop ) ) {
 				 echo $app->renderView('ArticleInterlang', 'Index');

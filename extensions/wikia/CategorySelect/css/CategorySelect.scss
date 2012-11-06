@@ -1,0 +1,58 @@
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/ellipses";
+
+$categoryselect-color-category: mix( $color-page, $color-page-border, 50% );
+$categoryselect-color-category-text: mix( $color-page, $color-text, 25% );
+
+// These styles are shared across view and edit pages
+.CategorySelect {
+	.category {
+		@include border-radius( 4px );
+		color: $color-text;
+		display: block;
+		line-height: 25px;
+		margin: 0;
+		padding: 0 5px;
+	}
+
+	.name {
+		@include ellipses;
+		display: inline-block;
+	}
+
+	.tool {
+		display: inline-block;
+		margin: 0 0 0 5px;
+	}
+
+	.toolbar {
+		display: none;
+	}
+
+	.sprite-small {
+		cursor: pointer;
+	}
+}
+
+// These styles are for view pages only
+.WikiaArticleCategories {
+	position: relative;
+
+	.addCategory {
+		bottom: -11px;
+		position: absolute;
+	}
+
+	.categories {
+		@include clearfix;
+		margin-bottom: 5px;
+	}
+
+	.category {
+		background-color: $categoryselect-color-category;
+		color: $categoryselect-color-category-text;
+		float: left;
+		margin: 0 5px 5px 0;
+	}
+}

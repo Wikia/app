@@ -1,6 +1,7 @@
 (function( window, $, undefined ) {
 
-var Wikia = window.Wikia || {};
+var wgCategorySelect = window.wgCategorySelect,
+	Wikia = window.Wikia || {};
 
 /**
  * CategorySelect
@@ -79,6 +80,10 @@ CategorySelect.prototype.indexOf = function( category ) {
 	return index;
 };
 
+CategorySelect.prototype.isDuplicate = function( category ) {
+	// TODO
+};
+
 /**
  * Generates a normalized category object.
  *
@@ -88,23 +93,20 @@ CategorySelect.prototype.indexOf = function( category ) {
  *			The normalized category.
  */
 CategorySelect.prototype.makeCategory = (function() {
-	var wgCategorySelect = window.wgCategorySelect,
-		defaultNamespace = wgCategorySelect.defaultNamespace,
-		defaultSortKey = wgCategorySelect.defaultSortKey || window.wgTitle,
-		rCategory = new RegExp( '\\[\\[' +
-			// Category namespace
-			'(' + wgCategorySelect.validNamespaces + '):' +
-			// Category name
-			'([^\\]|]+)' +
-			// Category sortKey (optional)
-			'\\|?([^\\]]+)?' +
-		']]', 'i' );
+	var rCategory = new RegExp( '\\[\\[' +
+		// Category namespace
+		'(' + wgCategorySelect.defaultNamespaces + '):' +
+		// Category name
+		'([^\\]|]+)' +
+		// Category sortKey (optional)
+		'\\|?([^\\]]+)?' +
+	']]', 'i' );
 
 	return function( category ) {
 		var pieces,
 			base = {
-				namespace: defaultNamespace,
-				sortKey: defaultSortKey
+				namespace: wgCategorySelect.defaultNamespace,
+				sortKey: wgCategorySelect.defaultSortKey
 			};
 
 		if ( typeof category == 'object' ) {

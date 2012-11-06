@@ -17,20 +17,28 @@ class CategorySelectController extends WikiaController {
 	 * The template used for article pages.
 	 */
 	public function articlePage() {
-		$vars = array();
-		CategorySelectHooksHelper::onMakeGlobalVariablesScript( $vars );
+		$categories = array();
+		$wikitext = $this->wg->Article->fetchContent();
+		$data = CategorySelect::extractCategoriesFromWikitext( $wikitext );
 
-		$data = array(
-			'html' => $this->app->renderView( 'CategorySelect', 'articlePage' ),
-			'vars' => $vars,
-		);
+		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
+			$categories = $data[ 'categories' ];
+		}
 
-		$this->response->setData( $data );
-		$this->response->setFormat( 'json' );
-		$this->response->setCacheValidity( self::CACHE_TTL_AJAX, self::CACHE_TTL_AJAX, array(
-			WikiaResponse::CACHE_TARGET_BROWSER,
-			WikiaResponse::CACHE_TARGET_VARNISH
-		));
+		$this->response->setVal( 'categories', $categories );
+	}
+
+	/**
+	 * The template for a category in the category list.
+	 */
+	public function category() {
+		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
+		$this->response->setVal( 'category', $this->request->getVal( 'category', array() ) );
+		$this->response->setVal( 'edit', wfMsg( 'categoryselect-category-edit' ) );
+		$this->response->setVal( 'index', $this->request->getVal( 'index', 0 ) );
+		$this->response->setVal( 'remove', wfMsg( 'categoryselect-category-remove' ) );
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
 	/**
@@ -100,19 +108,6 @@ class CategorySelectController extends WikiaController {
 		$this->response->setFormat( 'json' );
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * The template for a category in the category list.
-	 */
-	public function category() {
-		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
-		$this->response->setVal( 'category', $this->request->getVal( 'category', array() ) );
-		$this->response->setVal( 'edit', wfMsg( 'categoryselect-category-edit' ) );
-		$this->response->setVal( 'index', $this->request->getVal( 'index', 0 ) );
-		$this->response->setVal( 'remove', wfMsg( 'categoryselect-category-remove' ) );
-
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
 	/**

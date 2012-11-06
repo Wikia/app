@@ -108,9 +108,9 @@ class EditPageService extends Service {
 		$categories = $wgOut->getCategories();
 
 		$catbox = '';
-		if(!empty($categories ) && ($skin instanceof SkinOasis)) {
-			$catlinks = $skin->getCategories();
-			$catbox = F::app()->sendRequest('ArticleCategories','Index',array('catlinks' => $catlinks))->toString();
+		if(!empty($categories) && ($skin instanceof SkinOasis)) {
+			$categoryLinks = $skin->getCategories();
+			$catbox = F::app()->sendRequest('ArticleCategories','Index',array('categoryLinks' => $categoryLinks))->toString();
 		}
 
 		wfProfileOut(__METHOD__);

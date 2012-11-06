@@ -19,11 +19,13 @@
 
 $messages = array();
 
-$messages['en'] = array(
+$messages[ 'en' ] = array(
 	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article',
 	'categoryselect-category-add' => 'Add a category',
 	'categoryselect-category-edit' => 'Edit category',
 	'categoryselect-category-remove' => 'Remove category',
+	'categoryselect-error-db-locked' => 'Database is locked.',
+	'categoryselect-error-not-exist' => 'Article [id=$1] does not exist.',
 	'categoryselect-modal-category-name' => 'Provide the name of the category:',
 	'categoryselect-modal-category-sortkey' => 'Alphabetize this article on the "$1" category page under the name:',
 	'categoryselect-modal-button-save' => 'Save',
@@ -37,9 +39,7 @@ $messages['en'] = array(
 	'categoryselect-edit-summary' => 'Adding categories',
 	'categoryselect-empty-name' => 'Provide category name (part before |)',
 	'categoryselect-button-cancel' => 'Cancel',
-	'categoryselect-error-not-exist' => 'Article [id=$1] does not exist.',
 	'categoryselect-error-user-rights' => 'User rights error.',
-	'categoryselect-error-db-locked' => 'Database is locked.',
 	'categoryselect-edit-abort' => 'The modification you tried to make was aborted by an extension hook',
 */
 	'tog-disablecategoryselect' => 'Disable Category module (only applies if editing in visual mode has been disabled)',
@@ -51,7 +51,7 @@ $messages['en'] = array(
  * @author Nemo bis
  * @author Umherirrender
  */
-$messages['qqq'] = array(
+$messages[ 'qqq' ] = array(
 	'categoryselect-desc' => '{{desc}}',
 	'categoryselect-button-save' => '{{Identical|Save}}',
 	'categoryselect-button-cancel' => '{{Identical|Cancel}}',

@@ -1,8 +1,6 @@
 @import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/ellipses";
 
 // FIXME: including styles from EditPageLayout is pretty janky.
 // When we refactor common colors/mixins into skins/oasis these should be removed.
@@ -13,6 +11,7 @@
 // Width of the content inside of the right rail module
 $categoryselect-width: $width-epl-module-input - 10;
 
+// These styles are for edit pages only
 .CategorySelect {
 	.addCategory,
 	.categories {
@@ -32,12 +31,6 @@ $categoryselect-width: $width-epl-module-input - 10;
 	}
 
 	.category {
-		@include border-radius( 4px );
-		color: $color-text;
-		display: block;
-		line-height: 25px;
-		margin: 0;
-		padding: 0 5px;
 		position: relative;
 
 		&:hover {
@@ -54,26 +47,13 @@ $categoryselect-width: $width-epl-module-input - 10;
 	}
 
 	.name {
-		@include ellipses;
-		display: inline-block;
 		width: $categoryselect-width - 10;
 	}
 
-	.tool {
-		display: inline-block;
-		margin: 0 0 0 5px;
-	}
-
 	.toolbar {
-		display: none;
 		position: absolute;
 		right: 5px;
 		top: 2px;
-	}
-
-	.sprite-small {
-		border-style: none;
-		cursor: pointer;
 	}
 
 	.ui-autocomplete {
