@@ -18,10 +18,11 @@ $messages['en'] = array(
 	'forum-header-active-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Active<br> Discussion|Active<br> Discussions}}</span>',
 
 	/* Forum:Special (Index) */
+	'forum-specialpage-heading' => '{{SITENAME}} Forum',
 	'forum-specialpage-blurb-heading' => 'Welcome to {{SITENAME}} Forum!',
-	'forum-specialpage-blurb' => 'This is an early demo of Wikia\'s new Forum feature. If you\'ve got ideas or questions about the feature, please start a thread on the [[Board:General Discussion|General Discussion board]]. Have fun!',
-	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|thread|threads}}',
-	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|post|posts}}',
+	'forum-specialpage-blurb' => '',
+	'forum-specialpage-board-threads' => '{{formatnum:$1}} {{PLURAL:$1|thread|threads}}',
+	'forum-specialpage-board-posts' => '{{formatnum:$1}} {{PLURAL:$1|post|posts}}',
 	'forum-specialpage-board-lastpostby' => 'Last post by',
 
 	/* Forum Board */
@@ -33,6 +34,8 @@ $messages['en'] = array(
 	'forum-board-thread-replies' => '$1 Replies',
 	'forum-board-thread-unfollow' => 'Unfollow',
 	'forum-board-new-message-heading' => 'Start a Discussion',
+	
+	'forum-board-no-board-worning' => "The board you're looking for was not found",
 
 	/* Forum Thread */
 	'forum-thread-title' => '$1 board',
@@ -134,10 +137,69 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-recentchanges-thread-history-link' => 'thread history',
 	'forum-recentchanges-closed-thread' => 'closed thread "[[$1|$2]]" from [[$3|$4]]',
 	'forum-recentchanges-reopened-thread' => 'reopened thread "[[$1|$2]]" from [[$3|$4]]',
-	
+
 	/* history */
+
+	'forum-board-history-title' => 'board history',
+
+	/* Old version of forum */
+	'forum-specialpage-oldforum-link' => 'Old forum Archives',
 	
-	'forum-board-history-title' => 'board history'
+	/* board admin page messages */
+	'forum-admin-page-heading' => '{{SITENAME}} Board Admin',
+	'forum-admin-page-breadcrumb' => 'Admin Board Management',
+	'forum-admin-create-new-board-label' => 'Create New Board',
+	'forum-admin-create-new-board-modal-heading' => 'Create a new board',
+	'forum-admin-create-new-board-title' => 'Board Title',
+	'forum-admin-create-new-board-description' => 'Board Description',
+	
+	'forum-admin-edit-board-modal-heading' => 'Edit Board: $1',
+	'forum-admin-edit-board-title' => 'Board Title',
+	'forum-admin-edit-board-description' => 'Board Description',
+	
+	'forum-admin-delete-and-merge-board-modal-heading' => 'Delete Board: $1',
+	'forum-admin-delete-board-title' => 'Please confirm by typing the name of the board that you want to delete:',
+	'forum-admin-merge-board-warning' => 'The threads on this board will be merged into an existing board.',
+	'forum-admin-merge-board-destination' => 'Choose a board to merge to:',
+	'forum-admin-delete-and-merge-button-label' => 'Delete and Merge',
+
+	'forum-admin-link-label' => 'Manage Boards',
+
+	'forum-autoboard-title-1' => 'General Discussion',
+	'forum-autoboard-body-1' => 'This board is for general conversations about the wiki.',
+
+	'forum-autoboard-title-2' => 'News and Announcements',
+ 	'forum-autoboard-body-2' => 'Breaking news and information!',
+
+ 	'forum-autoboard-title-3' => 'New on $WIKINAME',
+	'forum-autoboard-body-3' => "Want to share something that's just been posted on the wiki, or congratulate somebody for an outstanding contribution?",
+
+	'forum-autoboard-title-4' => 'Questions and Answers',
+	'forum-autoboard-body-4' => 'Got a question about the wiki, or the topic? Ask your questions here!',
+
+	'forum-autoboard-title-5' => 'Fun and Games',
+	'forum-autoboard-body-5' => 'This board is for off-topic conversation -- a place to hang out with your $WIKINAME friends.',
+	
+	/* board creation validation messages */
+
+	'forum-board-destination-empty' => '(Please select board)',
+	
+	'forum-board-title-validation-invalid' => 'Board name contains invalid characters',
+	'forum-board-title-validation-length' => 'Board name should be at least 4 characters long',
+	'forum-board-title-validation-exists' => 'A Board of the same name already exists',
+	'forum-board-validation-count' => 'The maximum number of boards is $1',
+	
+	'forum-board-description-validation-length' => 'Please write a description for this board',
+	'forum-board-id-validation-missing' => 'Board id is missing',
+
+	'forum-board-destination-validation-missing' => 'You need to choose a board to merge',
+	'forum-board-title-validation-compare-error' => 'You need typing in the name of the board you are deleting',
+	
+	'forum-board-no-board-warning' => 'We couldn\'t find a board with that title.  Here\'s the list of forum boards.',
+	
+	/* old forum notification */
+	'forum-old-notification-message' => 'This Forum has been archived',
+	'forum-old-notification-navigation-button' => 'Visit the new Forums',
 );
 
 $messages['qqq'] = array(
@@ -146,9 +208,9 @@ $messages['qqq'] = array(
 
 	'forum-specialpage-title' => 'Appears as the main title of the forum and also in the browser title bar.',
 	'forum-specialpage-blurb-heading' => 'Heading for the introduction text.',
-	'forum-specialpage-blurb' => 'A short description of the forum.',
-	'forum-specialpage-board-threads' => 'The count of threads on a board. Parameters: * $1 - the number of threads.',
-	'forum-specialpage-board-posts' => 'The count of posts on a board. Parameters: * $1 - the number of posts.',
+	'forum-specialpage-blurb' => 'A optional short description of the forum.  By default, this should be blank, and should not be translated.  It is for wikis to decide to change this message.',
+	'forum-specialpage-board-threads' => 'The count of threads on a board. Parameters: * $1 - the number of threads.  Use formatnum for local formatting.',
+	'forum-specialpage-board-posts' => 'The count of posts on a board. Parameters: * $1 - the number of posts.  Use formatnum for local formatting.',
 	'forum-specialpage-board-lastpostby' => '',
 
 	'forum-notification-user1-reply-to-your' => 'Notification when someone replies on your thread. Parameters:
@@ -173,4 +235,45 @@ $messages['qqq'] = array(
 * $2 is thread title
 * $4 is thread owner
 * $5 is optional username and you can use it with GENDER parameter',
+
+	'forum-admin-link-label' => 'a call-to-action label for link that will take wiki admins to forum board admin page',
+	'forum-admin-create-new-board-label' => 'Button label to create a new forum board',
+	'forum-autoboard-title-1' => 'Title for default board.The length of this message needs to be between 4 and 40.',
+	'forum-autoboard-body-1' => 'Description for default board.The length of this message needs to be between 4 and 255.',
+
+	'forum-autoboard-title-2' => 'Title for default board.The length of this message needs to be between 4 and 40.',
+	'forum-autoboard-body-2' => 'Description for default board.The length of this message needs to be between 4 and 255.',
+
+	'forum-autoboard-title-3' => 'Title for default board.The length of this message needs to be between 4 and 40.',
+	'forum-autoboard-body-3' => 'Description for default board.The length of this message needs to be between 4 and 255.',
+
+	'forum-autoboard-title-4' => 'Title for default board.The length of this message needs to be between 4 and 40.',
+	'forum-autoboard-body-4' => 'Description for default board.The length of this message needs to be between 4 and 255.',
+
+	'forum-autoboard-title-5' => 'Title for default board.The length of this message needs to be between 4 and 40.',
+	'forum-autoboard-body-5' => 'Description for default board.The length of this message needs to be between 4 and 255.',
+
+	'forum-admin-page-heading' => 'Page label and heading for board admin page',
+	'forum-admin-page-breadcrumb' => 'Breadcrumb heading',
+	'forum-admin-create-new-board-label' => 'Call to action on creating new board',
+	'forum-admin-create-new-board-modal-heading' => 'Modal heading for create a new board dialog',
+	'forum-admin-create-new-board-title' => 'Form input label for board title',
+	'forum-admin-create-new-board-description' => 'Form input label board description',
+	
+	'forum-admin-delete-and-merge-board-modal-heading' => 'Heading for delete and merge dialog. $1 is board name',
+	'forum-admin-delete-board-title' => 'Label for board name verification for deletion',
+	'forum-admin-merge-board-warning' => 'Help text letting users know that threads under a deleted board needs to be merged to existing board',
+	'forum-admin-merge-board-destination' => 'Label for board selection dropdown to merge to',
+	'forum-admin-delete-and-merge-button-label' => 'Delete and Merge button label',
+	
+	'forum-board-title-validation-invalid' => 'Display on board create in case of validation error ',
+	'forum-board-title-validation-length' => 'Display on board create in case of validation error ',
+	'forum-board-title-validation-exists' => 'Display on board create in case of validation error ',
+	'forum-board-title-validation-compare-error' => 'Display on board create in case of validation error ',
+	'forum-board-validation-count' => 'Display on board create in case of validation error ',
+	 
+	'forum-board-description-validation-length' => 'Display on board create in case of validation error ',
+	'forum-board-destination-validation-missing' => 'Display on board create in case of validation error ',
+	'forum-board-id-validation-missing' => 'User should not see this message unless they hack the wiki.  Nevertheless, it is a validation error when it is not provided.',
+	
 );

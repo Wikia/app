@@ -1,6 +1,6 @@
 <?php
 
-class Wall {
+class Wall extends WikiaModel {
 	protected $mTitle;
 	protected $mCityId;
 
@@ -8,10 +8,19 @@ class Wall {
 	protected $mSorting = false;
 	protected $mRelatedPageId = false;
 	protected $cacheable = true;
+	
+	static public function newFromId( $id ) {
+		$title = Title::newFromId($id);
+		if( empty($title) ) {
+			return null;
+		}
+		return self::newFromTitle( $title );
+	}
 
 	static public function newFromTitle( Title $title ) {
 		wfProfileIn(__METHOD__);
-		$wall = new Wall();
+
+		$wall = self::getEmpty();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
 		wfProfileOut(__METHOD__);
@@ -20,8 +29,7 @@ class Wall {
 
 	static public function newFromRelatedPages( Title $title, $relatedPageId ) {
 		wfProfileIn(__METHOD__);
-
-		$wall = new Wall();
+		$wall = self::getEmpty();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
 		$wall->mRelatedPageId = (int) $relatedPageId;
@@ -29,13 +37,12 @@ class Wall {
 		wfProfileOut(__METHOD__);
 		return $wall;
 	}
-
-	static function getParentTitleFromReplyTitle( $titleText ) {
-		wfProfileIn(__METHOD__);
-		$parts = explode('/@', $titleText);
-		if(count($parts) < 3) return null;
-		wfProfileOut(__METHOD__);
-		return $parts[0] . '/@' . $parts[1];
+	
+	static public function getEmpty() {
+		/* small work around for problem with static constructors and inheritance */
+		//TODO: Look in to Late Static Bindings
+		$className = get_called_class();
+		return new $className();
 	}
 
 	public function getId() {
@@ -45,6 +52,11 @@ class Wall {
 	public function getTitle() {
 		return $this->mTitle;
 	}
+	
+	public function getDescription() {
+		$article = new Article($this->getTitle());
+		return $article->getText();
+	}
 
 	public function getRelatedPageId() {
 		return $this->mRelatedPageId;
@@ -52,6 +64,14 @@ class Wall {
 
 	public function getUser() {
 		return User::newFromName($this->mTitle->getBaseText(), false);
+	}
+	
+	public function exists() {
+		$id = (int) $this->getId();
+		if($id != 0) {
+			return true;
+		}
+		return false;
 	}
 
 	public function getUrl() {
@@ -202,6 +222,13 @@ class Wall {
 		return $count;
 	}
 
+	public function moveAllThread(Wall $dest) {
+		CommentsIndex::changeParent( $this->getId(), $dest->getId() );
+		
+		$wallHistory = new WallHistory( $this->mCityId );
+		$wallHistory->moveThread( $this->getId(), $dest->getId() );
+	}
+	
 	public function setMaxPerPage( $val ) {
  		$this->mMaxPerPage = $val;
 	}

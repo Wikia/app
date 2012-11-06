@@ -11,8 +11,6 @@ class WallMessage {
 	protected $cityId = 0;
 	protected static $permissionsCache = array(); //permissions cache
 	protected static $wallURLCache = array();
-	protected static $topObjectCache;
-	protected $commentIndex;
 	/**
 	 * @var $commentsIndex CommentsIndex
 	 */
@@ -31,7 +29,6 @@ class WallMessage {
 		wfProfileIn(__METHOD__);
 		$this->title = $title;
 		$this->articleComment = $articleComment;
-		$this->commentsIndex = F::build( 'CommentsIndex' );
 		$app = F::App();
 		//TODO: inject this
 		$this->cityId = $app->wg->CityId;
@@ -59,6 +56,8 @@ class WallMessage {
 			// if you fail from slave try again from master
 			return self::newFromId( $id, true );
 		}
+		
+		wfProfileOut(__METHOD__);
 		return null;
 	}
 
@@ -119,7 +118,7 @@ class WallMessage {
 				return false;
 			}
 
-			$acStatus = F::build( 'ArticleComment', array( $body, $user, $userPageTitle, $parent->getTitle()->getArticleId() , null ), 'doPost' );
+			$acStatus = F::build( 'ArticleComment', array( $body, $user, $userPageTitle, $parent->getId() , null ), 'doPost' );
 		}
 
 		if( $acStatus === false ) {
@@ -191,11 +190,19 @@ class WallMessage {
 		return $val;
 	}
 
+	public function getCommentsIndex() {
+		if(empty($this->commentsIndex)) {
+			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() );
+		}
+		
+		return $this->commentsIndex;
+	}
+
 	public function getOrderId($for_update = false) {
 		wfProfileIn(__METHOD__);
 		if($for_update) {
 			wfProfileOut(__METHOD__);
-			return wfGetWikiaPageProp(WPP_WALL_COUNT, $this->getTitle()->getArticleId(), DB_MASTER);
+			return wfGetWikiaPageProp(WPP_WALL_COUNT, $this->getId(), DB_MASTER);
 		}
 
 		if($this->order != 0) {
@@ -369,7 +376,7 @@ class WallMessage {
 				$wne->addNotificationToQueue($notif);
 			} else {
 				$this->getArticleComment()->removeMetadata('notify_everyone');
-				$pageId = $this->getArticleComment()->getTitle()->getArticleId();
+				$pageId = $this->getId();
 				$wne->removeNotificationFromQueue($pageId);
 				$this->doSaveMetadata($app->wg->User, wfMsgForContent('wall-message-update-removed-highlight-summary') );
 			}
@@ -403,9 +410,7 @@ class WallMessage {
 		$wall_owner = User::newFromName(  $parts[0], false);
 
 		if( empty($wall_owner) ) {
-			error_log('EMPTY_WALL_OWNER: (id)'. $this->getArticleComment()->getArticleTitle()->getArticleID());
-			error_log('EMPTY_WALL_OWNER: (basetext)'. $this->getArticleComment()->getArticleTitle()->getBaseText());
-			error_log('EMPTY_WALL_OWNER: (fulltext)'. $this->getArticleComment()->getArticleTitle()->getFullText());
+			error_log('EMPTY_WALL_OWNER: (id)'. $this->getId());
 		}
 		return $wall_owner;
 	}
@@ -421,7 +426,24 @@ class WallMessage {
 	}
 
 	public function getArticleTitle(){
-		return $this->getArticleComment()->getArticleTitle();
+		$commentsIndex = $this->getCommentsIndex();
+		
+		if(empty($commentsIndex)) {
+			return Title::newFromText('empty');			
+		}
+		
+		$pageId = $commentsIndex->getParentPageId();
+		
+		static $cache = array();
+		if(empty($cache[$pageId])) {			
+			$cache[$pageId] = Title::newFromId($pageId);	
+		} 
+		
+		if( empty($cache[$pageId]) ){
+			return Title::newFromText('empty');
+		}
+	
+		return $cache[$pageId];
 	}
 
 	/**
@@ -452,7 +474,7 @@ class WallMessage {
 				return $order;
 			} else {
 				wfProfileOut(__METHOD__);
-				return $this->getArticleId();
+				return $this->getId();
 			}
 		}
 	}
@@ -466,10 +488,10 @@ class WallMessage {
 		}
 
 		if($this->isMain()){
-			$id = $this->getArticleId();
+			$id = $this->getId();
 		} else {
 			$topParent = $this->getTopParentObj();
-			$id = $topParent->getArticleId();
+			$id = $topParent->getId();
 		}
 
 
@@ -490,11 +512,6 @@ class WallMessage {
 		$title = $this->getArticleComment()->getTitle();
 		$articleId = $this->getArticleComment()->getTitle()->getArticleId();
 
-		if( $articleId === 0 && $title instanceof Title ) {
-		//message was deleted and never restored
-			$articleId = $this->helper->getArticleId_forDeleted($title->getText(), $articleData);
-		}
-
 		if( $articleId === false ) {
 			Wikia::log(__METHOD__, false, "WALL_NO_ARTILE_ID" . print_r(array('$title' => $title), true));
 			$articleId = 0;
@@ -507,7 +524,7 @@ class WallMessage {
 	 * @deprecated Probably we'll remove it it was supposed to return article timestamp but the article doesn't seem right one. more info in WallMessage::remove()
 	 */
 	public function getArticleTimestamp(&$articleData = null) {
-		$articleId = $this->getArticleComment()->getTitle()->getArticleId();
+		$articleId = $this->getId();
 
 		if( $articleId !== 0 ) {
 			$article = Article::newFromID($articleId);
@@ -518,7 +535,7 @@ class WallMessage {
 	}
 
 	public function getWallUrl() {
-		return $this->getArticleComment()->getArticleTitle()->getFullUrl();
+		return $this->getArticleTitle()->getFullUrl();
 	}
 
 	/**
@@ -527,27 +544,25 @@ class WallMessage {
 	public function getTopParentObj(){
 		wfProfileIn(__METHOD__);
 
-		$key = $this->getArticleComment()->getTopParent();
-		if( !empty(self::$topObjectCache[$key]) ) {
-			wfProfileOut(__METHOD__);
-			return self::$topObjectCache[$key];
-		}
-
-		$obj = $this->getArticleComment()->getTopParentObj();
-
-		if( empty($obj) ) {
+		static $topObjectCache = array();
+		
+		//TODO: some cache or pre setting of parentPageId during list fetching
+		
+		$index = $this->getCommentsIndex();
+		if(empty($index)) {
 			wfProfileOut(__METHOD__);
 			return null;
 		}
-
-		if($obj instanceof ArticleComment){
+		
+		$id = $index->getParentCommentId();
+		if( !empty($topObjectCache[$id]) ) {
 			wfProfileOut(__METHOD__);
-			self::$topObjectCache[$key] = WallMessage::newFromArticleComment($obj);
-			return self::$topObjectCache[$key];
-		} else {
-			wfProfileOut(__METHOD__);
-			return null;
+			return $topObjectCache[$id];
 		}
+
+		wfProfileOut(__METHOD__);
+		$topObjectCache[$id] = WallMessage::newFromId($id);
+		return $topObjectCache[$id];
 	}
 
 	public function isMain() {
@@ -556,10 +571,6 @@ class WallMessage {
 			return true;
 		}
 		return false;
-	}
-
-	public function getTopParentText($titleText) {
-		return $this->getArticleComment()->explodeParentTitleText($titleText);
 	}
 
 	public function isWallOwner(User $user) {
@@ -678,7 +689,7 @@ class WallMessage {
 			return $this->voteVoteHelper;
 		}
 		$app = F::App();
-		$this->voteVoteHelper = F::build('VoteHelper', array($app->wg->User, $this->title->getArticleId()));
+		$this->voteVoteHelper = F::build('VoteHelper', array( $app->wg->User, $this->getId() ) );
 		return $this->voteVoteHelper;
 	}
 
@@ -907,7 +918,7 @@ class WallMessage {
 	}
 
 	protected function customActionNotifyRC($user, $action, $reason) {
-		$articleId = $this->getArticleId();
+		$articleId = $this->getId();
 		$target =  $this->getTitle();
 
 		RecentChange::notifyLog(
@@ -1166,22 +1177,22 @@ class WallMessage {
 	protected function setInCommentsIndex( $prop, $value, $useMaster = false ) {
 		$commentId = $this->getId();
 		if ( !empty($commentId) ) {
-			$this->commentsIndex = F::build( 'CommentsIndex', array( $commentId ), 'newFromId' );
-			if ( $this->commentsIndex instanceof CommentsIndex ) {
+			$commentsIndex = $this->getCommentsIndex();
+			if ( $commentsIndex instanceof CommentsIndex ) {
 				switch( $prop ) {
-					case WPP_WALL_ARCHIVE : $this->commentsIndex->updateArchived( $value );
+					case WPP_WALL_ARCHIVE: $commentsIndex->updateArchived( $value );
 											break;
-					case WPP_WALL_ADMINDELETE : $this->commentsIndex->updateDeleted( $value );
-												$lastChildCommentId = $this->commentsIndex->getParentLastCommentId( $useMaster );
-												$this->commentsIndex->updateParentLastCommentId( $lastChildCommentId );
+					case WPP_WALL_ADMINDELETE: $commentsIndex->updateDeleted( $value );
+												$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
+												$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
 
-												wfRunHooks( 'EditCommentsIndex', array($this->getTitle(), $this->commentsIndex) );
+												wfRunHooks( 'EditCommentsIndex', array($this->getTitle(), $commentsIndex) );
 												break;
-					case WPP_WALL_REMOVE : $this->commentsIndex->updateRemoved( $value );
-											$lastChildCommentId = $this->commentsIndex->getParentLastCommentId( $useMaster );
-											$this->commentsIndex->updateParentLastCommentId( $lastChildCommentId );
+					case WPP_WALL_REMOVE: $commentsIndex->updateRemoved( $value );
+											$lastChildCommentId = $commentsIndex->getParentLastCommentId( $useMaster );
+											$commentsIndex->updateParentLastCommentId( $lastChildCommentId );
 
-											wfRunHooks( 'EditCommentsIndex', array($this->getTitle(), $this->commentsIndex) );
+											wfRunHooks( 'EditCommentsIndex', array($this->getTitle(), $commentsIndex) );
 											break;
 				}
 			}

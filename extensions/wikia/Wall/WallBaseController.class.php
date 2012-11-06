@@ -66,6 +66,9 @@ class WallBaseController extends WikiaController{
 			$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
 		}
 
+		//TODO: keep the varnish cache and do purging on post 
+		$this->response->setCacheValidity(0, 0);
+
 		wfProfileOut( __METHOD__ );	
 	}
 
@@ -110,6 +113,9 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('itemsPerPage', $wallMessagesPerPage);
 		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
 		$this->response->setVal('currentPage', $page );
+		
+		//TODO: keep the varnish cache and do purging on post 
+		$this->response->setCacheValidity(0, 0);
 		
 		wfProfileOut( __METHOD__ );
 	}

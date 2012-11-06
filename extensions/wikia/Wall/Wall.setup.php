@@ -23,16 +23,8 @@ include($dir . '/WallNamespaces.php');
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
-$wgUseWallIndex = WikiFactory::getVarValueByName('wgUseWallIndex', 177);
-
-if(!empty($app->wg->EnableForumExt) || !empty($wgUseWallIndex)) {
-	$app->registerClass('Wall', $dir . '/Wall.class.php');
-	$app->registerClass('WallThread', $dir . '/WallThread.class.php');
-} else {
-	$app->registerClass('Wall', $dir . '/backward_compatibility/Wall.class.php');
-	$app->registerClass('WallThread', $dir . '/backward_compatibility/WallThread.class.php');
-}
-
+$app->registerClass('Wall', $dir . '/Wall.class.php');
+$app->registerClass('WallThread', $dir . '/WallThread.class.php');
 
 $app->registerClass('WallMessage', $dir . '/WallMessage.class.php');
 $app->registerClass('WallController', $dir . '/WallController.class.php');

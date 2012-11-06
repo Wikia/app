@@ -40,7 +40,7 @@ class WallHooksHelper {
 
 			$mainTitle = Title::newFromId($title->getText());
 			if(empty($mainTitle)) {
-				$dbkey = $helper->getDbkeyFromArticleId_forDeleted($title->getText());
+				$dbkey = null;
 				$fromDeleted = true;
 			} else {
 				$dbkey = $mainTitle->getDBkey();
@@ -94,8 +94,7 @@ class WallHooksHelper {
 		}
 		
 		
-		if( $title->getNamespace() === NS_USER_WALL
-				&& !$title->isSubpage()
+		if( $title->getNamespace() === NS_USER_WALL && !$title->isSubpage()
 		) {
 			//message wall index
 			$outputDone = true;
@@ -326,11 +325,10 @@ class WallHooksHelper {
 	 **/
 	function onBeforeToolbarMenu(&$items) {
 		$app = F::app();
-		
 		if( empty( $app->wg->EnableWallExt ) ){
 			return true;
-		}		
-		
+		}
+
 		$title = $app->wg->Title;
 		$action = $app->wg->Request->getText('action');
 
@@ -1137,61 +1135,6 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * @brief Getting the title of a message
-	 *
-	 * @desc Callback method used in WallHooksHelper::onChangesListInsertLogEntry() hook if deleted message was a reply
-	 *
-	 * @param string $title
-	 *
-	 * @return string
-	 *
-	 * @author Andrzej 'nAndy' Lukaszewski
-	 */
-	private function getParentTitleTxt($title) {
-		wfProfileIn(__METHOD__);
-
-		$app = F::app();
-
-		if( $title instanceof Title ) {
-			$helper = F::build('WallHelper', array());
-
-			$wm = F::build('WallMessage', array($title));
-
-			$titleText = $title->getText();
-			$parentTitleTxt = $wm->getTopParentText($titleText);
-			if( is_null($parentTitleTxt) ) {
-				$parts = explode('/@', $titleText);
-				if( count($parts) > 1 ) {
-					$parentTitleTxt = $parts[0] . '/@' . $parts[1];
-				}
-			}
-
-			$articleData = array('text_id' => '');
-			$articleId = $helper->getArticleId_forDeleted($parentTitleTxt, $articleData);
-			if( !empty($articleId) ) {
-				//parent article was deleted as well
-				$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
-			} else {
-				$title = F::build('Title', array($parentTitleTxt, MWNamespace::getTalk($title->getNamespace())), 'newFromText');
-
-				if( $title instanceof Title ) {
-					$parentWallMsg = F::build('WallMessage', array($title));
-					$parentWallMsg->load(true);
-					$articleTitleTxt = $parentWallMsg->getMetaTitle();
-				} else {
-					$articleTitleTxt = null;
-				}
-			}
-
-			wfProfileOut(__METHOD__);
-			return $articleTitleTxt;
-		}
-
-		wfProfileOut(__METHOD__);
-		return null;
-	}
-
-	/**
 	 * @brief Adjusting recent changes for Wall
 	 *
 	 * @desc This method decides rather put a log information about deletion or not
@@ -1707,26 +1650,24 @@ class WallHooksHelper {
 			return true;
 		}
 
-		$parts = explode('/@', $objTitle->getText());
-		$isThread = ( count($parts) === 2 ) ? true : false;
-		$app = F::app();
-		$articleTitleTxt = $this->getParentTitleTxt($objTitle);
-		$wm = F::build('WallMessage', array($objTitle));
+		$wm = Wall::newFromId( $objTitle->getId() );
+		
+		if( empty($wm) ) {
+			//it can be media wiki deletion of an article -- we ignore them
+			Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r(array($rc, $row), true));
+			return true;
+		}
+		
 		$articleId = $wm->getId();
-		$wallMsgNamespace = $app->wg->Lang->getNsText(NS_USER_WALL_MESSAGE);
-		$articleUrl = !empty($articleId) ? $wallMsgNamespace.':'.$articleId : '#';
 		$wallOwnerName = $wm->getWallOwnerName();
-		$userText = empty($wallOwnerName) ? $userText : $wallOwnerName;
-		$wallNamespace = $app->wg->Lang->getNsText(MWNamespace::getSubject($objTitle->getNamespace()));
-		$wallUrl = $wallNamespace.':'.$userText;
+		//$userText = empty($wallOwnerName) ? $userText : $wallOwnerName;
 
-		if( $fullUrls === true ) {
 		//by default it's Thread:xxx and Message_wall:XXX for messages of recent changes
 		//i.e. 'wall-recentchanges-wall-removed-thread'
 		//but here we need the entire links
-			$articleUrl = $wm->getMessagePageUrl();
-			$wallUrl = $wm->getWallUrl();
-		}
+
+		$articleUrl = $wm->getMessagePageUrl(!$fullUrls);
+		$wallUrl = $wm->getWallUrl();
 
 		wfProfileOut(__METHOD__);
 		return array(

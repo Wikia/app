@@ -1,47 +1,43 @@
 <?php
 
-//TODO: move this to wall class php
+//TODO: move this to wall class php ??
 
 /**
  * Forum Board
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  */
-class ForumBoard extends WikiaModel {
+class ForumBoard extends Wall {
 
-	protected $boardId = 0;
-
-	static public function newFromId( $id ) {
-		$board = F::build( 'ForumBoard' );
-		$board->boardId = $id;
-
-		return $board;
+	static public function getEmpty() {
+		return new ForumBoard();
 	}
 
 	/**
 	 * get board info: the number of threads, the number of posts, the username and timestamp of the last post
 	 * @return array $info
 	 */
-	public function getBoardInfo() {
+	public function getBoardInfo($db = DB_SLAVE) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$memKey = $this->getMemKeyBoardInfo();
-		$info = $this->wg->Memc->get( $memKey );
-		if ( empty($info) ) {
-			$db = $this->wf->GetDB( DB_SLAVE );
+		$memKey = $this->wf->MemcKey( 'forum_board_info', $this->getId() );
 
-			$row = $db->selectRow(
-				array( 'comments_index' ),
-				array( 'count(if(parent_comment_id=0,1,null)) threads, count(*) posts, max(first_rev_id) rev_id' ),
-				array( 'parent_page_id' => $this->boardId ),
-				__METHOD__
+		if ( $db == DB_SLAVE ) {
+			$info = $this->wg->Memc->get( $memKey );
+		}
+
+		if ( empty( $info ) ) {
+			$db = $this->wf->GetDB( $db );
+
+			$row = $db->selectRow( 
+				array( 'comments_index' ), 
+				array( 'count(if(parent_comment_id=0,1,null)) threads, count(*) posts, max(first_rev_id) rev_id' ), 
+				array( 'parent_page_id' => $this->getId() ),
+				__METHOD__ 
 			);
 
 			$info = array( 'postCount' => 0, 'threadCount' => 0 );
 			if ( $row ) {
-				$info = array(
-					'postCount' => $row->posts,
-					'threadCount' => $row->threads,
-				);
+				$info = array( 'postCount' => $row->posts, 'threadCount' => $row->threads, );
 
 				// get last post info
 				$revision = F::build( 'Revision', array( $row->rev_id ), 'newFromId' );
@@ -54,14 +50,14 @@ class ForumBoard extends WikiaModel {
 
 					$userprofile = Title::makeTitle( $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK, $username )->getFullURL();
 
-					$info['lastPost'] = array(
+					$info['lastPost'] = array( 
 						'username' => $username,
 						'userprofile' => $userprofile,
-						'timestamp' => $revision->getTimestamp(),
+						'timestamp' => $revision->getTimestamp() 
 					);
 				}
 			}
-			$this->wg->Memc->set( $memKey, $info, 60*60*12 );
+			$this->wg->Memc->set( $memKey, $info, 60 * 60 * 12 );
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
@@ -73,25 +69,28 @@ class ForumBoard extends WikiaModel {
 	 * get number of active threads (exclude deleted and removed threads)
 	 * @return integer activeThreads
 	 */
-	public function getTotalActiveThreads($relatedPageId = 0) {
+	public function getTotalActiveThreads($relatedPageId = 0, $db = DB_SLAVE) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$memKey = $this->getMemKeyTotalActiveThreads();
-		$activeThreads = $this->wg->Memc->get( $memKey );
-		if ( !empty($relatedPageId) || $activeThreads === false ) {
-			$db = $this->wf->GetDB( DB_SLAVE );
+		$memKey = $this->wf->MemcKey( 'forum_board_active_threads', $this->getId() );
 
-			$filter = 'parent_page_id ='.((int) $this->boardId);
-			
-			if(!empty($relatedPageId)) {
-				$filter = "comment_id in (select comment_id from wall_related_pages where page_id = {$relatedPageId})";	
+		if ( $db == DB_SLAVE ) {
+			$activeThreads = $this->wg->Memc->get( $memKey );
+		}
+
+		if ( !empty( $relatedPageId ) || $activeThreads === false ) {
+			$db = $this->wf->GetDB( $db );
+
+			$filter = 'parent_page_id =' . ((int)$this->getId());
+
+			if ( !empty( $relatedPageId ) ) {
+				$filter = "comment_id in (select comment_id from wall_related_pages where page_id = {$relatedPageId})";
 			}
 
-			$activeThreads = $db->selectField(
+			$activeThreads = $db->selectField( 
 				array( 'comments_index' ),
 				array( 'count(*) cnt' ),
-				array(
-					$filter,
+				array( $filter,
 					'parent_comment_id' => 0,
 					'deleted' => 0,
 					'removed' => 0,
@@ -101,7 +100,7 @@ class ForumBoard extends WikiaModel {
 			);
 
 			$activeThreads = intval( $activeThreads );
-			$this->wg->Memc->set( $memKey, $activeThreads, 60*60*12 );
+			$this->wg->Memc->set( $memKey, $activeThreads, 60 * 60 * 12 );
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
@@ -110,35 +109,17 @@ class ForumBoard extends WikiaModel {
 	}
 
 	/**
-	 * get memcache key of board info
-	 * @return string 
-	 */
-	protected function getMemKeyBoardInfo() {
-		return $this->wf->MemcKey( 'forum_board_info_'.$this->boardId );
-	}
-
-	/**
-	 * get memcache key of active threads
-	 * @return string 
-	 */
-	protected function getMemKeyTotalActiveThreads() {
-		return $this->wf->MemcKey( 'forum_board_active_threads_'.$this->boardId );
-	}
-
-	/**
 	 * clear cache for board info
 	 * @param array $parentPageIds
 	 */
 	public function clearCacheBoardInfo() {
-		$memKey = $this->getMemKeyBoardInfo();
-		$this->wg->Memc->delete( $memKey );
+		$this->getBoardInfo( DB_MASTER );
+		$this->getTotalActiveThreads( DB_MASTER );
 
-		$memKey = $this->getMemKeyTotalActiveThreads();
-		$this->wg->Memc->delete( $memKey );
-
-		$title = F::build( 'Title', array( $this->boardId ), 'newFromID' );
+		$title = F::build( 'Title', array( $this->getId() ), 'newFromID' );
 		if ( $title instanceof Title ) {
 			$title->purgeSquid();
 		}
 	}
+
 }
