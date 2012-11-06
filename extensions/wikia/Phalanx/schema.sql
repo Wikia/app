@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `phalanx` (
 -- block content (plain text or regex)
   `p_text` blob NOT NULL,
 -- Hexadecimal representation of IP blocks
-  `p_ip_hex` VARCHAR(255) default NULL,
+  `p_ip_hex` VARCHAR(35) default NULL,
 -- block type (mask of 16 bits determining which module will use that block)
   `p_type` smallint(1) unsigned NOT NULL,
 -- date of creation or last edit of this block
