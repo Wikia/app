@@ -53,6 +53,8 @@ class StructuredDataController extends WikiaSpecialPageController {
 			if ( $pos !== false) {
 				$type = substr($par, 0, $pos);
 				$name = substr($par, $pos + 1);
+				$type = str_replace('+', ' ', $type);
+				$name = str_replace('+', ' ', $name);
 				$this->request->setVal( 'type', $type );
 				$this->request->setVal( 'name', $name );
 			} else {

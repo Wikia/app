@@ -238,7 +238,7 @@ class SDElement extends SDObject implements SplSubject {
 			$type = $o->getType();
 			$name = $o->getName();
 		}
-		$title = SpecialPage::getTitleFor( 'StructuredData', $type . '/' . $name );
+		$title = SpecialPage::getTitleFor( 'StructuredData', str_replace(' ', '+', $type) . '/' . str_replace(' ', '+', $name) );
 		return $title->getFullUrl();
 	}
 }
