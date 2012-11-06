@@ -55,9 +55,9 @@ class StructuredDataController extends WikiaSpecialPageController {
 				$name = str_replace( '_', ' ', substr($par, $pos + 1) );
 				$this->request->setVal( 'type', $type );
 				$this->request->setVal( 'name', $name );
-			} //else {
+			} else {
 				$this->request->setVal( 'url', $par );
-			//}
+			}
 
 
 			$this->forward( 'StructuredData', 'showObject' );
@@ -73,7 +73,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 		$id = $this->request->getVal( 'id', false );
 		$url = $this->request->getVal( 'url', false );
-		/*
+
 		$type = $this->request->getVal( 'type', false );
 		$name = $this->request->getVal( 'name', false );
 
@@ -84,7 +84,6 @@ class StructuredDataController extends WikiaSpecialPageController {
 				$this->app->wg->Out->setStatusCode ( 404 );
 			}
 		}
-		*/
 
 		if(!empty($id)) {
 			try {

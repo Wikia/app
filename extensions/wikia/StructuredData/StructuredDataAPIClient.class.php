@@ -61,10 +61,14 @@ class StructuredDataAPIClient {
 	}
 
 	public function getObjectByTypeAndName($type, $name) {
-		echo rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) . '&withProperty='.urlencode('schema:name').'&withValue=' .urlencode($name) ;
-		$response = json_decode( $this->call( rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) . '&withProperty='.urlencode('schema:name').'&withValue=' .urlencode($name) ) );
-		print_r($response);
-		die();
+		$url = rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) . '&withProperty='.urlencode('schema:name').'&withValue=' .urlencode($name);
+		$response = json_decode( $this->call( $url ) );
+		if(isset($response->{"@graph"})) {
+			return array_shift( $response->{"@graph"} );
+		}
+		else {
+			throw new WikiaException('SD API Error: ' . $url . ' object not found');
+		}
 	}
 
 	public function getCollection( $type ) {
