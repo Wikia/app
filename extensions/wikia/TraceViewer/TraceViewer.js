@@ -436,10 +436,10 @@
 			return ret;
 		},
 		getParents: function( list ) {
-			var d = {}, i, ret;
+			var d = {}, i, ret = [];
 			for (i=0;i<list.length;i++) {
 				if ( list[i].parent && list[i].parent.id ) {
-					d[list[i].seqIn] = d;
+					d[list[i].seqIn] = list[i];
 				}
 			}
 			for (i in d) {
@@ -849,6 +849,8 @@
 			this.methodIndexRenderer = new MethodIndexRenderer();
 			this.sortedChildren = new SortedIndex('totalTime');
 			this.childrenIndexRenderer = new MethodIndexRenderer();
+			this.sortedCallers = new SortedIndex('totalTime');
+			this.callersIndexRenderer = new MethodIndexRenderer();
 
 			this.data.on('baseChanged',proxy(this.onBaseChanged,this));
 			this.data.on('historyChanged',proxy(this.onHistoryChanged,this));
@@ -858,6 +860,7 @@
 				var current = data.getCurrent();
 				this.sortedIndex.setData(current && current.context.getMethodIndex());
 				this.sortedChildren.setData(current && current.context.getChildrenIndex());
+				this.sortedCallers.setData(current && current.context.getParentsIndex());
 			},this));
 			this.sortedIndex.on('changed',proxy(function(){
 				this.methodIndexRenderer.setIndex(this.sortedIndex.getSorted());
@@ -867,10 +870,16 @@
 					totalTime = current && current.context.getChildren().totalTime;
 				this.childrenIndexRenderer.setIndex(this.sortedChildren.getSorted(),totalTime);
 			},this));
+			this.sortedCallers.on('changed',proxy(function(){
+				var current = this.data.getCurrent(),
+					totalTime = current && current.context.getParents().totalTime;
+				this.callersIndexRenderer.setIndex(this.sortedCallers.getSorted(),totalTime);
+			},this));
 
 			var current = this.data.getCurrent();
 			this.sortedIndex.setData(current.context && current.context.getMethodIndex());
 			this.sortedChildren.setData(current.context && current.context.getChildrenIndex());
+			this.sortedCallers.setData(current.context && current.context.getParentsIndex());
 		},
 		proxy: function( fn ) {
 			return proxy(fn||noop,this);
@@ -898,7 +907,8 @@
 			var tabs = {
 				dashboard: 'Dashboard',
 				methods: 'Methods Summary',
-				calls: 'Direct calls',
+				callers: 'Direct callers',
+				callees: 'Direct callees',
 				details: 'Stack Traces'
 			};
 			var html = '';
@@ -928,7 +938,8 @@
 			}
 
 			this.methodIndexRenderer.setElement(this.methods);
-			this.childrenIndexRenderer.setElement(this.calls);
+			this.childrenIndexRenderer.setElement(this.callees);
+			this.callersIndexRenderer.setElement(this.callers);
 			this.el.on('click','a.context-link', this.proxy(this.contextLinkClicked));
 			this.el.on('click','a.method-call', this.proxy(this.methodClicked));
 			this.el.on('click','a.method-cut', this.proxy(this.methodCutClicked));
