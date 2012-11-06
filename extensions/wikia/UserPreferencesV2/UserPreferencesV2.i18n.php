@@ -31,8 +31,10 @@ $messages['en'] = array(
 	'tog-justify-v2' => 'Show justified paragraphs',
 	
 	'preferences-v2-myhomedisableredirect' => 'Landing page:',
-	'preferences-v2-redirect-enable' => 'Wiki Activity',
-	'preferences-v2-redirect-disable' => 'Main Page',
+	'preferences-v2-redirect-wiki-activity' => 'Wiki Activity',
+	'preferences-v2-redirect-main-page' => 'Main Page',
+	'preferences-v2-redirect-recent-changes' => 'Recent Changes',
+	'preferences-v2-redirect-explanation' => 'This changes the default page that you will see each time you log into the wiki.',
 	'prefs-monobookv2' => 'Monobook',
 	'prefs-under-the-hood' => 'Under the Hood',
 	'prefs-recent-changesv2' => 'Recent changes, histories, and logs',
