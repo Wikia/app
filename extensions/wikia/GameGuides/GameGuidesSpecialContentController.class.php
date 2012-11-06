@@ -99,9 +99,15 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 	}
 
 	//This should appear on WikiFeatures list only when GG extension is turned on and be visible only to staff
-	static public function onWikiFeaturesGetFeatureNormal( &$features ){
-		if ( in_array( 'staff', F::app()->wg->User->getEffectiveGroups() ) ) {
-			$features[] = 'wgGameGuidesContentForAdmins';
+	static public function onWikiFeatures(){
+		$wg = F::app()->wg;
+
+		if ( in_array( 'staff', $wg->User->getEffectiveGroups() ) ) {
+			$wg->append(
+				'wgWikiFeatures',
+				'wgGameGuidesContentForAdmins',
+				'normal'
+			);
 		}
 
 		return true;
