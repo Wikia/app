@@ -70,9 +70,11 @@ var AchievementsThing = {
 				AchievementsThing.showBadgesDescription();
 				AchievementsThing.trackSponsoredBadges();
 
-				if(Math.floor(AchievementsThing.page >= AchievementsThing.pageCount)){
+				if(AchievementsThing.page >= AchievementsThing.pageCount){
 					AchievementsThing.next.hide();
+					AchievementsThing.prev.show();
 				} else if (AchievementsThing.page <= 0){
+					AchievementsThing.next.show();
 					AchievementsThing.prev.hide();
 				} else {
 					AchievementsThing.next.show();
