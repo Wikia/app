@@ -56,6 +56,7 @@ F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', array(
 //hooks
 $app->registerHook( 'GameGuidesContentSave', 'GameGuidesController', 'onGameGuidesContentSave' );
 $app->registerHook( 'TitleGetSquidURLs', 'GameGuidesController', 'onTitleGetSquidURLs' );
+$app->registerHook( 'WikiFeatures-getFeatureNormal', 'GameGuidesSpecialContentController', 'onWikiFeaturesGetFeatureNormal' );
 
 //the only globals needed in Game Guides
 if ( empty( $app->wg->GameGuidesGlobalsWhiteList ) ) {
