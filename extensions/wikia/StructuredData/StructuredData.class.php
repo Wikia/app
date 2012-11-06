@@ -23,7 +23,12 @@ class StructuredData {
 	 * @return SDElement
 	 */
 	public function getSDElementById($id, $elementDepth = 0) {
-		$element = $this->APIClient->getObject( $id );
+		try {
+			$element = $this->APIClient->getObject( $id );
+		}
+		catch( WikiaException $exception ) {
+			return null;
+		}
 		return $this->getSDElement( $element, $elementDepth );
 	}
 
@@ -33,7 +38,12 @@ class StructuredData {
 	}
 
 	public function getSDElementByTypeAndName($type, $name, $elementDepth = 0) {
-		$element = $this->APIClient->getObjectByTypeAndName($type, $name);
+		try {
+			$element = $this->APIClient->getObjectByTypeAndName($type, $name);
+		}
+		catch( WikiaException $exception ) {
+			return null;
+		}
 		return $this->getSDElement( $element, $elementDepth );
 	}
 
@@ -120,6 +130,15 @@ class StructuredData {
 				$result = $currentElement->render();
 			}
 		}
+		else {
+			if(isset( $inputData['hash'] )) {
+				$result = "Unknown element:" . ( $inputData['hash'] );
+			}
+			else {
+				$result = "Unknown element: " . ( $inputData['type'] . '/' . $inputData['name'] );
+			}
+		}
+
 		return $result;
 	}
 
