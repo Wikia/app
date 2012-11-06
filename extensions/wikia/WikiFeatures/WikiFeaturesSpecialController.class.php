@@ -64,6 +64,8 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	public function toggleFeature() {
 		$enabled = $this->getVal('enabled', null);
 		$feature = $this->getVal('feature', null);
+
+		$this->wf->runHooks( 'WikiFeatures::onToggleFeature' );
 		
 		// check user permission
 		if(!$this->wg->User->isAllowed( 'wikifeatures' )) {
