@@ -578,9 +578,7 @@ class WikiaSearch extends WikiaObject {
 			}
 		}
 		else {
-			$filterQueries[] 	= $searchConfig->getVideoSearch() 
-								? sprintf('(%s OR %s)', self::valueForField( 'wid', $searchConfig->getCityId() ), self::valueForField( 'wid', self::VIDEO_WIKI_ID ) )
-								: self::valueForField( 'wid', $searchConfig->getCityId() );
+			$filterQueries[] = self::valueForField( 'wid', $searchConfig->getCityId() );
 		}
 		
 		if (! $searchConfig->getIncludeRedirects() ) {
