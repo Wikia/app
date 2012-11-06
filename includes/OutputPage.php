@@ -3634,6 +3634,8 @@ $templates
 
 	/**
 	 * @author Wikia
+	 *
+	 * @param ParserOutput $parserOutput
 	 */
 	private function addKeywords( &$parserOutput ) {
 		global $wgTitle, $wgSitename, $wgDBname;
