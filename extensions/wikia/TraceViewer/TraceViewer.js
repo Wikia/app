@@ -205,6 +205,16 @@
 			}
 			leaveCallback && leaveCallback.call(this,this);
 		},
+		getPath: function() {
+			var list;
+			if ( this.parent ) {
+				list = this.parent.getPath();
+				list.push(this);
+			} else {
+				list = [];
+			}
+			return list;
+		},
 		findBySeqIn: function( val ) {
 			if ( this.seqIn == val ) {
 				return this;
@@ -842,6 +852,7 @@
 
 			this.data.on('baseChanged',proxy(this.onBaseChanged,this));
 			this.data.on('historyChanged',proxy(this.onHistoryChanged,this));
+			this.data.on('currentChanged',proxy(this.onDataCurrentChanged,this));
 			this.data.on('currentChanged',proxy(function(data){
 //				this.sortedIndex.setData,this.sortedIndex,1,1
 				var current = data.getCurrent();
@@ -887,7 +898,8 @@
 			var tabs = {
 				dashboard: 'Dashboard',
 				methods: 'Methods Summary',
-				calls: 'Direct calls'
+				calls: 'Direct calls',
+				details: 'Stack Traces'
 			};
 			var html = '';
 			html += '<div id="trace-summary">';
@@ -964,7 +976,32 @@
 
 		},
 		onDataCurrentChanged: function() {
+			var current = this.data.getCurrent(),
+				base = this.data.getBase();
+			if ( !current ) {
+				this.details.html('');
+				return;
+			}
+			var list = current.context.getTree().children,
+				paths = [], i, j, seqIn, node;
+			for (i=0;i<list.length;i++) {
+				seqIn = list[i].seqIn;
+				node = base.findBySeqIn(seqIn);
+				if ( node ) {
+					paths.push(node.getPath());
+				}
+			}
 
+			var html = '',
+				path;
+			for (i=0;i<paths.length;i++) {
+				path = paths[i];
+				html += '<b>Stack #'+(i+1)+'</b><br />';
+				for (j=0;j<path.length;j++) {
+					html += path[j].id + '<br />';
+				}
+			}
+			this.details.html(html);
 		},
 		/* event handlers */
 		contextLinkClicked: function( ev ) {
