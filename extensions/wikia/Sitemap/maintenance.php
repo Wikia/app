@@ -22,6 +22,17 @@ foreach( $namespaces as $namespace ) {
 	$indexes[ $namespace ] = $sitemap->cachePages( $namespace );
 	echo " pages " . count( $indexes[ $namespace ] );
 	echo " done\n";
+
+	$includeVideo = (bool) F::app()->wg->EnableVideoSitemaps;
+	if( $includeVideo && !in_array( $namespace, $sitemap->getVideoNamespacesList() ) ) {
+		$includeVideo = false;
+	}
+
+	if($includeVideo) {
+		echo  "`-> Caching sitemaps for namespace: $namespace ...\n";
+		$sitemap->cacheSitemap( $namespace, $indexes );
+	}
+
 }
 
 /**
