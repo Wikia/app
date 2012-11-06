@@ -10,7 +10,6 @@
 ?>
 
 <div class="SDObject" id="SDObject">
-
 	<h1><strong><?php echo $sdsObject->getName(); ?></strong></h1>
 	<dl class="SDObjectDetails">
 		<dt>Type:</dt>
@@ -33,7 +32,7 @@
 					$propertyValue = $property->getValue();
 					$propertyLabel = $property->getLabel();
 					$propertyName = $property->getName();
-					$proprtyHTML = $property->render( SD_CONTEXT_SPECIAL );
+					$proprtyHTML = $property->render( $context );
 				?>
 				
 				

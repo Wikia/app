@@ -73,9 +73,15 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 		$id = $this->request->getVal( 'id', false );
 		$url = $this->request->getVal( 'url', false );
-
 		$type = $this->request->getVal( 'type', false );
 		$name = $this->request->getVal( 'name', false );
+		$action = $this->request->getVal( 'action', 'render' );
+
+		if( $action == 'edit' && !$this->wg->User->isAllowed( 'sdsediting' ) ) {
+			$this->displayRestrictionError($this->wg->User);
+			$this->skipRendering();
+			return false;
+		}
 
 		if ( !empty( $type ) && !empty( $name ) ) {
 			try {
@@ -107,6 +113,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 		$this->response->addAsset('extensions/wikia/StructuredData/css/StructuredData.scss');
 		$this->setVal('sdsObject', $sdsObject);
+		$this->setVal('context', ( $action == 'edit' ) ? SD_CONTEXT_EDITING : SD_CONTEXT_SPECIAL );
 	}
 
 	public function getObject() {

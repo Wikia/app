@@ -44,9 +44,21 @@ $wgStructuredDataConfig = array(
 	)
 );
 
+/**
+ * access rights
+ */
+$wgAvailableRights[] = 'sdsediting';
+$wgGroupPermissions['*']['sdsediting'] = false;
+$wgGroupPermissions['staff']['sdsediting'] = true;
+$wgGroupPermissions['admin']['sdsediting'] = true;
+
 define('SD_CONTEXT_DEFAULT', 0);
 define('SD_CONTEXT_SPECIAL', 1);
+define('SD_CONTEXT_EDITING', 2);
 
+/**
+ * DI setup
+ */
 F::addClassConstructor( 'StructuredDataAPIClient', array( 'baseUrl' => $wgStructuredDataConfig['baseUrl'], 'apiPath' => $wgStructuredDataConfig['apiPath'], 'schemaPath' => $wgStructuredDataConfig['schemaPath'] ) );
 F::addClassConstructor( 'StructuredData', array( 'apiClient' => F::build( 'StructuredDataAPIClient' )));
 F::addClassConstructor( 'SDElementRendererFactory', array( 'config' => $wgStructuredDataConfig ) );
