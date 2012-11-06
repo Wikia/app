@@ -222,9 +222,24 @@ class SDElement extends SDObject implements SplSubject {
 	}
 
 	public function render( $context = SD_CONTEXT_DEFAULT ) {
-		// @todo render link in a proper way here, or move to renderers factory
 		$result = parent::render( $context );
-		return ( $result !== false ) ? $result : '<a href="/wiki/Special:StructuredData?method=showObject&id='.$this->getId().'">'. htmlspecialchars( $this->getName() ) . '</a>';
+		return ( $result !== false ) ? $result : '<a href="'.$this->getSpecialPageUrl().'">'. htmlspecialchars( $this->getName() ) . '</a>';
 	}
 
+	public function getSpecialPageUrl() {
+		return self::createSpecialPageUrl($this);
+	}
+
+	public static function createSpecialPageUrl($o) {
+		if (is_array($o)) {
+			$type = $o['type'];
+			$name = $o['name'];
+		} else {
+			$type = $o->getType();
+			$name = $o->getName();
+		}
+		$name = str_replace(' ', '_', $name);
+		$title = SpecialPage::getTitleFor( 'StructuredData', urlencode($type) . '/' . urlencode($name) );
+		return $title->getFullUrl();
+	}
 }

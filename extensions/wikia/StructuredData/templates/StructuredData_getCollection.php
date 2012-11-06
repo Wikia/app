@@ -1,15 +1,8 @@
 <ul>
 <?php foreach ( $list as $obj ) { ?>
 	<li>
-		<?php if(!empty($obj['url'])): ?>
-			<?php if (is_array($obj['url'])) : ?>
-				<a href="/wiki/Special:StructuredData/<?=$obj['url'][0]?>">
-			<?php else : ?>
-				<a href="/wiki/Special:StructuredData/<?=$obj['url']?>">
-			<? endif; ?>
-		<?php else: ?>
-			<a href="?method=showObject&id=<?=$obj['id']?>">
-		<?php endif; ?>
+		<?php echo gettype($obj);?>
+		<a href="<?=SDElement::generateSpecialPageUrl($obj)?>">
 		<?=$obj['name']?>
 	    </a>
 	</li>
