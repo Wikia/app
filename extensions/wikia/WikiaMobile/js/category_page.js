@@ -119,7 +119,7 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 		});
 	}
 
-	categorySection.addEventListener(clickEvent, function(ev){
+	categorySection && categorySection.addEventListener(clickEvent, function(ev){
 		var t = ev.target;
 
 		if(t.className.indexOf('pag') > -1) {
