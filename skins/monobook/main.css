@@ -9,7 +9,7 @@
 ** All you guys rock :)
 */
 
-div#column-content {
+section#column-content {
 	width: 100%;
 	float: right;
 	margin: 0 0 .6em -12.2em;
@@ -21,7 +21,7 @@ div#content {
 	position: relative;
 	z-index: 2;
 }
-div#column-one {
+aside#column-one {
 	padding-top: 160px;
 }
 div#content {
@@ -672,7 +672,7 @@ li#ca-print {
 /*
 ** footer
 */
-div#footer {
+footer#footer {
 	background-color: white;
 	border-top: 1px solid #fabd23;
 	border-bottom: 1px solid #fabd23;
@@ -681,7 +681,7 @@ div#footer {
 	text-align: center;
 	font-size: 90%;
 }
-div#footer li {
+footer#footer li {
 	display: inline;
 	margin: 0 1.3em;
 }
