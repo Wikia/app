@@ -267,15 +267,24 @@ class WikiaMobileHooks extends WikiaObject{
 	public function onBeforeDisplayNoArticleText( $article ){
 		$this->wf->profileIn( __METHOD__ );
 
-		if( $this->app->checkSkin( 'wikiamobile' )  ) {
+		if ( $this->app->checkSkin( 'wikiamobile' )  ) {
 			$title = $article->getTitle();
+			$ns = $title->getNamespace();
 
-			if( $title->getNamespace() == NS_USER ) {
+			if ( $ns == NS_USER ) {
 				//if user exists and it is not subpage display masthead
 				//otherwise show 404 page
 				$user = User::newFromName( $title->getBaseText() );
 
-				if ( ( $user instanceof User && $user->getId() > 0) && !$title->isSubpage() ) {
+				if ( ( $user instanceof User && $user->getId() > 0 ) && !$title->isSubpage() ) {
+					$this->wf->profileOut( __METHOD__ );
+					return true;
+				}
+			} else if ( $ns == NS_CATEGORY ) {
+				//if it is a category that has some pages display it as well
+				$category = Category::newFromTitle( $title );
+
+				if ( $category instanceof Category && ( $category->getPageCount() + $category->getSubcatCount() + $category->getFileCount() ) > 0 ) {
 					$this->wf->profileOut( __METHOD__ );
 					return true;
 				}
