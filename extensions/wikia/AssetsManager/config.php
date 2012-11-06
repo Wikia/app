@@ -727,6 +727,7 @@ $config['mini_editor_js'] = array(
 		'//extensions/wikia/EditPageLayout/js/modules/InsertMiniEditor.js',
 		'//extensions/wikia/EditPageLayout/js/modules/ModeSwitch.js',
 		// Photo and Video tools
+		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET.js',
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
