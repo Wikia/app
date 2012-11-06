@@ -66,7 +66,11 @@ class WikiFeaturesHelper extends WikiaModel {
 	 */
 	public function getFeatureNormal() {
 		$list = array();
+
 		if (isset($this->wg->WikiFeatures['normal']) && is_array($this->wg->WikiFeatures['normal'])) {
+			//allow adding features in runtime
+			$this->wf->runHooks( 'WikiFeatures::onGetFeatureNormal' );
+
 			foreach ($this->wg->WikiFeatures['normal'] as $feature) {
 				$list[] = array(
 					'name' => $feature,

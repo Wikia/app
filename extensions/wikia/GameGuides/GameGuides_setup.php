@@ -45,6 +45,9 @@ if ( $app->wg->GameGuidesContentForAdmins ) {
 	$wgGroupPermissions['sysop']['gameguidescontent'] = true;
 }
 
+$wgGroupPermissions['*']['gameguidescontent-switchforadmins'] = false;
+$wgGroupPermissions['staff']['gameguidescontent-switchforadmins'] = true;
+
 F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', array(
 	'wikiagameguides-content-category',
 	'wikiagameguides-content-tag',
@@ -56,6 +59,9 @@ F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', array(
 //hooks
 $app->registerHook( 'GameGuidesContentSave', 'GameGuidesController', 'onGameGuidesContentSave' );
 $app->registerHook( 'TitleGetSquidURLs', 'GameGuidesController', 'onTitleGetSquidURLs' );
+//add Game Guides Content to WikiFeatures
+$app->registerHook( 'WikiFeatures::onGetFeatureNormal', 'GameGuidesSpecialContentController', 'onWikiFeatures' );
+$app->registerHook( 'WikiFeatures::onToggleFeature', 'GameGuidesSpecialContentController', 'onWikiFeatures' );
 
 //the only globals needed in Game Guides
 if ( empty( $app->wg->GameGuidesGlobalsWhiteList ) ) {

@@ -64,8 +64,8 @@ $messages['en'] = array(
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Expanded Wiki Navigation',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Get more links, a new preview tool, a consolidated set of contribution links, and a new "On the Wiki" menu that highlights important features of your content and community.',
 
-	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => 'Game Guides Content Managment Tool',
-	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Let admins edit this list so Game Guides can be even better!',
+	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => 'Game Guides Content',
+	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Use the Special:GameGuidesContent page of your wiki to manage which categories appear in the Game Guides mobile app. Expand your potential audience!',
 
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
 	'wikifeatures-feature-description-emptylabs' => 'Our tech scientists are hard at work bubbling up new features for you to try out. Look for more labs here soon!',
