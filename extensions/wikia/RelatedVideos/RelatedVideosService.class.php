@@ -86,6 +86,11 @@ class RelatedVideosService {
 		global $wgMemc;
 		wfProfileIn(__METHOD__);
 
+		if ( empty( $pages ) ) {
+			wfProfileOut(__METHOD__);
+			return;
+		}
+
 		if ( !is_callable( array( $wgMemc, 'getMulti' ) ) ) {
 			wfProfileOut(__METHOD__);
 			return;
@@ -97,6 +102,8 @@ class RelatedVideosService {
 			$source = isset( $params['source'] ) ? $params['source'] : '';
 			$keys[] = $this->getMemcKey( $titleText, $source, $videoWidth, $cityShort );
 		}
+
+		$keys = array_unique($keys);
 
 		$data = $wgMemc->getMulti( $keys );
 		wfProfileOut(__METHOD__);
@@ -228,22 +235,22 @@ class RelatedVideosService {
 
 		// experimental - begin - @author: wladek - prefetch data from memcached
 		// todo: verify results
-		$pages = array();
-		foreach( array( $oGlobalLists, $oEmbededVideosLists, $oLocalLists ) as $oLists ){
-			if ( !empty( $oLists ) && $oLists->exists() ){
-				$data = $oLists->getData();
-				if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {
-					foreach( $data['lists']['WHITELIST'] as $page ){
-						$pages[] = $page;
-					}
-					foreach( $data['lists']['BLACKLIST'] as $page ){
-						$pages[] = $page;
+		global $wgEnableMemcachedBulkMode;
+		if ( !empty( $wgEnableMemcachedBulkMode ) ) {
+			$pages = array();
+			foreach( array( $oGlobalLists, $oEmbededVideosLists, $oLocalLists ) as $oLists ){
+				if ( !empty( $oLists ) && $oLists->exists() ){
+					$data = $oLists->getData();
+					if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {
+						foreach( $data['lists']['WHITELIST'] as $page ){
+							$pages[] = $page;
+						}
+						foreach( $data['lists']['BLACKLIST'] as $page ){
+							$pages[] = $page;
+						}
 					}
 				}
 			}
-		}
-		if ( count( $pages ) ) {
-			$pages = array_unique($pages);
 			$this->preloadDataFromMemcached($pages);
 		}
 		// experimental - end

@@ -71,6 +71,11 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	 * @return Mixed
 	 */
 	public function getMulti( $keys ) {
+		global $wgEnableMemcachedBulkMode;
+		if ( empty( $wgEnableMemcachedBulkMode ) ) {
+			return parent::getMulti($keys);
+		}
+
 		$map = array();
 		foreach ($keys as $key) {
 			$map[$this->encodeKey($key)] = $key;

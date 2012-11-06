@@ -978,3 +978,10 @@ $wgWikiaIsCentralWiki = false;
  * default LB section for database connection
  */
 $wgLBDefaultSection = 'DEFAULT';
+
+/**
+ * Is bulk mode in Memcached routines enabled?
+ * (eg. get_multi())
+ * @var boolean
+ */
+$wgEnableMemcachedBulkMode = false;
