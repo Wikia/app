@@ -81,6 +81,7 @@ $messages['en'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Note:''' You are recreating a page that was previously deleted. [More info]",
 	'restore-edits-notice' => "Welcome back! We've restored some changes you had not published. <a class='notice-action restoreeditlink'>Delete my changes and start a new edit</a>",
 	'restore-edits-diff-notice' => "Welcome back! We've restored some changes you had not published. However, the page has been updated since then. Would you like to: <a class='notice-action restoreeditlink'>Delete my changes and start with the latest text</a> or <a class='notice-action difflink'>View a comparison of changes with the latest page</a>",
+	'mainpagewarning-notice' => "Learn more about [[w:c:community:Help:Main_page|editing your main page.]]",
 
 	// "editing" preferences sections
 	'prefs-general' => 'General',

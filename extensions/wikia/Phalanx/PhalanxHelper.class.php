@@ -27,6 +27,10 @@ class PhalanxHelper {
 		$result = false;
 		wfProfileIn( __METHOD__ );
 
+		if ( ( $data['type'] & Phalanx::TYPE_USER ) && User::isIP( $data['text'] ) ) {
+			$data['ip_hex'] = IP::toHex( $data['text'] );
+		}
+
 		//get data before update - we need it for cache update
 		$oldData = Phalanx::getFromId($data['id']);
 
@@ -62,6 +66,10 @@ class PhalanxHelper {
 		global $wgExternalSharedDB, $wgMemc;
 		$result = false;
 		wfProfileIn( __METHOD__ );
+
+		if ( ( $data['type'] & Phalanx::TYPE_USER ) && User::isIP( $data['text'] ) ) {
+			$data['ip_hex'] = IP::toHex( $data['text'] );
+		}
 
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$dbw->insert(

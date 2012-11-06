@@ -616,6 +616,7 @@ class EditPageLayout extends EditPage {
 		}
 		elseif ($this->mTitle->isMainPage()) {
 			$this->helper->addJsVariable('editMainPage', true);
+			$this->addEditNotice($this->app->wf->msgExt('mainpagewarning-notice', array('parse')));
 		}
 
 		// Edit notice (BugId:7616)
