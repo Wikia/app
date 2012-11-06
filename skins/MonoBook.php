@@ -90,14 +90,14 @@ class MonoBookTemplate extends WikiaMonoBookTemplate {
 		echo $afterBodyHtml;
 		/* Wikia change end */
 ?><div id="globalWrapper">
-<div id="column-content">
+<section id="column-content">
 <?php
 /* Wikia change begin - @author: Hyun */
 	method_exists($this->skin, "printTopHtml") && $this->skin->printTopHtml();
 /* Wikia change end */
 ?>
 <div id="content" <?php $this->html("specialpageattributes") ?>>
-	<a id="top"></a>
+	<header id="top">
 	<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 <?php
 /* Wikia change begin */
@@ -109,7 +109,8 @@ class MonoBookTemplate extends WikiaMonoBookTemplate {
 	}
 /* Wikia change end */
 ?>
-	<div id="bodyContent">
+	</header>
+	<article id="bodyContent">
 		<h3 id="siteSub"><?php $this->msg('tagline') ?></h3>
 		<div id="contentSub"<?php $this->html('userlangattributes') ?>><?php $this->html('subtitle') ?></div>
 <?php if($this->data['undelete']) { ?>
@@ -125,11 +126,11 @@ class MonoBookTemplate extends WikiaMonoBookTemplate {
 		<!-- end content -->
 		<?php if($this->data['dataAfterContent']) { $this->html ('dataAfterContent'); } ?>
 		<div class="visualClear"></div>
-	</div>
-</div></div>
-<div id="column-one"<?php $this->html('userlangattributes')  ?>>
+	</article>
+</div></section>
+<aside id="column-one"<?php $this->html('userlangattributes')  ?>>
 <?php $this->cactions(); ?>
-	<div class="portlet" id="p-personal">
+	<nav class="portlet" id="p-personal">
 		<h5><?php $this->msg('personaltools') ?></h5>
 		<div class="pBody">
 			<ul<?php $this->html('userlangattributes') ?>>
@@ -139,15 +140,15 @@ class MonoBookTemplate extends WikiaMonoBookTemplate {
 <?php		} ?>
 			</ul>
 		</div>
-	</div>
-	<div class="portlet" id="p-logo">
+	</nav>
+	<nav class="portlet" id="p-logo">
 <?php
 			echo Html::element( 'a', array(
 				'href' => $this->data['nav_urls']['mainpage']['href'],
 				'style' => "background-image: url({$this->data['logopath']});" )
 				+ Linker::tooltipAndAccesskeyAttribs('p-logo') ); ?>
 
-	</div>
+	</nav>
 <?php
 	$this->renderPortals( $this->data['sidebar'] );
 
@@ -158,7 +159,7 @@ class MonoBookTemplate extends WikiaMonoBookTemplate {
 		}
 		/* Wikia change end */
 ?>
-</div><!-- end of the left (by default at least) column -->
+</aside><!-- end of the left (by default at least) column -->
 <div class="visualClear"></div>
 <?php
 	/* Wikia change begin - @author: Macbre */
@@ -170,9 +171,9 @@ class MonoBookTemplate extends WikiaMonoBookTemplate {
 	$validFooterLinks = $this->getFooterLinks( "flat" ); // Additional footer links
 
 	if ( count( $validFooterIcons ) + count( $validFooterLinks ) > 0 ) { ?>
-<div id="footer"<?php $this->html('userlangattributes') ?>>
+<footer id="footer"<?php $this->html('userlangattributes') ?>>
 <?php
-		$footerEnd = '</div>';
+		$footerEnd = '</footer>';
 	} else {
 		$footerEnd = '';
 	}
@@ -247,7 +248,7 @@ echo $footerEnd;
 	function searchBox() {
 		global $wgUseTwoButtonsSearchForm;
 ?>
-	<div id="p-search" class="portlet">
+	<nav id="p-search" class="portlet">
 		<h5><label for="searchInput"><?php $this->msg('search') ?></label></h5>
 		<div id="searchBody" class="pBody">
 			<form action="<?php $this->text('wgScript') ?>" id="searchform">
@@ -264,7 +265,7 @@ echo $footerEnd;
 
 			</form>
 		</div>
-	</div>
+	</nav>
 <?php
 	}
 
@@ -274,7 +275,7 @@ echo $footerEnd;
 	 */
 	function cactions() {
 ?>
-	<div id="p-cactions" class="portlet">
+	<nav id="p-cactions" class="portlet">
 		<h5><?php $this->msg('views') ?></h5>
 		<div class="pBody">
 			<ul><?php
@@ -285,13 +286,13 @@ echo $footerEnd;
 
 			</ul>
 		</div>
-	</div>
+	</nav>
 <?php
 	}
 	/*************************************************************************************************/
 	function toolbox() {
 ?>
-	<div class="portlet" id="p-tb">
+	<nav class="portlet" id="p-tb">
 		<h5><?php $this->msg('toolbox') ?></h5>
 		<div class="pBody">
 			<ul>
@@ -306,7 +307,7 @@ echo $footerEnd;
 ?>
 			</ul>
 		</div>
-	</div>
+	</nav>
 <?php
 	}
 
@@ -314,7 +315,7 @@ echo $footerEnd;
 	function languageBox() {
 		if( $this->data['language_urls'] ) {
 ?>
-	<div id="p-lang" class="portlet">
+	<nav id="p-lang" class="portlet">
 		<h5<?php $this->html('userlangattributes') ?>><?php $this->msg('otherlanguages') ?></h5>
 		<div class="pBody">
 			<ul>
@@ -324,7 +325,7 @@ echo $footerEnd;
 <?php		} ?>
 			</ul>
 		</div>
-	</div>
+	</nav>
 <?php
 		}
 	}
@@ -336,7 +337,7 @@ echo $footerEnd;
 		if ( $tooltip !== false ) {
 			$portletAttribs['title'] = $tooltip;
 		}
-		echo '	' . Html::openElement( 'div', $portletAttribs );
+		echo '	' . Html::openElement( 'nav', $portletAttribs );
 ?>
 
 		<h5><?php $msg = wfMessage( $bar ); echo htmlspecialchars( $msg->exists() ? $msg->text() : $bar ); ?></h5>
@@ -354,7 +355,7 @@ echo $footerEnd;
 		}
 ?>
 		</div>
-	</div>
+	</nav>
 <?php
 	}
 } // end of class
