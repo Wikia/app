@@ -93,7 +93,7 @@
 		z-index: $highest-z-index+1;
 		background-color: white;
 
-		#wkTopBar {
+		#wkTopBar{
 			border-bottom: 1px solid white;
 		}
 
@@ -145,6 +145,8 @@
 		padding-left: 10px;
 
 		-webkit-animation: expand .6s ease-in-out;
+		-moz-animation: expand .6s ease-in-out;
+		animation: expand .6s ease-in-out;
 
 		&.up{
 			text-transform: uppercase;
@@ -157,13 +159,24 @@
 	}
 }
 
-@-webkit-keyframes expand{
+@-webkit-keyframes expand {
 	0%{
 		color: transparent;
 		padding-left: 0;
 	}
-	100%{
-		color: white;
+}
+
+@-moz-keyframes expand {
+	0%{
+		color: transparent;
+		padding-left: 0;
+	}
+}
+
+@keyframes expand {
+	0%{
+		color: transparent;
+		padding-left: 0;
 	}
 }
 
