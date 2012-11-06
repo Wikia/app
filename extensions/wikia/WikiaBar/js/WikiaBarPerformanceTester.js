@@ -19,9 +19,9 @@ function performanceTest(randomStringLength, cutMessagePrecision) {
 		{'text': randomString(randomStringLength)},
 		{'text': randomString(randomStringLength)}
 	];
-	var start = new Date().getMilliseconds();
+	var start = +(new Date());
 	WikiaBar.cutMessageIntoSmallPieces(messages, container, cutMessagePrecision);
-	var stop = new Date().getMilliseconds();
+	var stop = +(new Date());
 	var executionTime = stop - start;
 	$().log(
 		"StringLength: "+randomStringLength+" | " +
@@ -43,6 +43,7 @@ function runTestPackage(cutMessagePrecision) {
 	performanceTest(200, cutMessagePrecision);
 }
 
+runTestPackage(1);
 runTestPackage(10);
 runTestPackage(20);
 runTestPackage(30);
