@@ -6,6 +6,7 @@ CREATE TABLE /*$wgDBprefix*/ach_user_badges (
 	`date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`notified` tinyint(1) NOT NULL DEFAULT '0',
 	KEY `id` (`user_id`),
+	KEY `id_notified` (`user_id`, `notified`),
 	KEY `badge_count` (`badge_type_id`, `badge_lap`),
 	KEY `level_date2` (`badge_level`, `date`, `badge_lap`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

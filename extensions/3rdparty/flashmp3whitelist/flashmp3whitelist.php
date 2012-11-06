@@ -36,6 +36,10 @@ $wgExtensionCredits['parserhook'][] = array(
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['flashmp3whitelist'] = $dir . 'flashmp3whitelist.i18n.php';
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfflashmp3whitelist( $parser ) {
         $parser->setHook('mp3', 'renderflashmp3whitelist');
         return true;

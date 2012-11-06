@@ -19,8 +19,7 @@ class WikisApiController extends WikiaApiController {
 	/**
 	 * Get the top wikis by pageviews optionally filtering by vertical (hub) and/or language
 	 *
-	 * @requestParam string $hub [OPTIONAL] The name of the vertical (e.g. Gaming, Entertainment,
-	 * Lifestyle, etc.) to use as a filter
+	 * @requestParam string $hub [OPTIONAL] The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter
 	 * @requestParam string $lang [OPTIONAL] The language code (e.g. en, de, fr, es, it, etc.) to use as a filter
 	 * @requestParam integer $limit [OPTIONAL] The maximum number of results to fetch, defaults to 25
 	 *
@@ -59,8 +58,7 @@ class WikisApiController extends WikiaApiController {
 	 * the total amount of results is limited to 250 items
 	 *
 	 * @requestParam string $keyword search term
-	 * @requestParam string $hub [OPTIONAL] The name of the vertical (e.g. Gaming, Entertainment,
-	 * Lifestyle, etc.) to use as a filter
+	 * @requestParam string $hub [OPTIONAL] The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter
 	 * @requestParam string $lang [OPTIONAL] The language code (e.g. en, de, fr, es, it, etc.) to use as a filter
 	 * @requestParam integer $limit [OPTIONAL] The number of items per each batch/page, defaults to 25
 	 * @requestParam integer $batch [OPTIONAL] The batch/page index to retrieve, defaults to 1
@@ -93,7 +91,7 @@ class WikisApiController extends WikiaApiController {
 		//results
 		$this->response->setCacheValidity(
 			86400 /* 24h */,
-			85400 /* 24h */,
+			86400 /* 24h */,
 			array(
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH
@@ -106,11 +104,9 @@ class WikisApiController extends WikiaApiController {
 	/**
 	 * Get details about one or more wikis.
 	 *
-	 * @requestParam string $ids A string with a comma-separated list of
-	 * wiki ID's
+	 * @requestParam string $ids A string with a comma-separated list of wiki ID's
 	 *
-	 * @responseParam array A list of results with the wiki ID as the index,
-	 * each item has a headline, desc, image and flags property
+	 * @responseParam array A list of results with the wiki ID as the index, each item has a headline, desc, image and flags property
 	 *
 	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getDetails&ids=3125,490&format=json
 	 */

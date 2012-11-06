@@ -1,3 +1,8 @@
+<?
+	if ( $staff ) echo $app->getView( 'GameGuidesSpecialContent', 'switch', array(
+		'enabled' => $enabled
+	));
+?>
 <div id=contentManagmentForm>
 	<div class=header>
 		<div>

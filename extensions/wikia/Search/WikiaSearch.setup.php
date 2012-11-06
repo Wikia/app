@@ -33,6 +33,11 @@ $app->registerClass('WikiaVideoSearchController',	$dir . 'WikiaVideoSearchContro
 $app->registerSpecialPage('WikiaSearch',	'WikiaSearchController');
 $app->registerSpecialPage('Search',			'WikiaSearchController');
 
+/**
+ * Wikia API controllers
+ */
+$app->registerApiController( 'SearchApiController', "{$dir}SearchApiController.class.php" );
+
 global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB, $wgEnableRelatedVideoSearch;
 
 if (! empty( $wgEnableRelatedVideoSearch ) ) {

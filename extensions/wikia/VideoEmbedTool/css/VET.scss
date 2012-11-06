@@ -20,7 +20,7 @@ $color-related-videos-background: darken($color-page, 20%);
 }
 
 .skin-oasis #VideoEmbed {
-	padding: 25px 0 20px;
+	padding: 0px 0 20px;
 	position: relative;
 	width: 960px;
 	background-color: $color-page;
@@ -35,10 +35,6 @@ $color-related-videos-background: darken($color-page, 20%);
 	position: absolute;
 	top: 0;
 	width: 810px;
-}
-
-#VideoEmbedTitle {
-	padding-left: 20px;
 }
 
 #VideoEmbedSuccess {
@@ -79,13 +75,9 @@ $color-related-videos-background: darken($color-page, 20%);
 #VideoEmbed {
 	h1 {
 		color: #222;
-		font-weight: bold;
-		font-size: 15pt;
 		letter-spacing: -1px;
-	}
-	
-	.VideoEmbedSuccess h1 {
-		margin-bottom: 20px;
+		margin: 20px 60px 20px 20px;
+		padding: 0;
 	}
 	
 	#VideoEmbed h2 {
@@ -124,7 +116,7 @@ $color-related-videos-background: darken($color-page, 20%);
 #VideoEmbedClose {
 	z-index: 10000;
 	float: right;
-	margin: 0px 20px 0 0;
+	margin: 20px 20px 0 0;
 }
 #VideoEmbedClose a {
 	color: #FFF;
@@ -294,7 +286,6 @@ VideoEmbedOptionsTable img {
 
 #VideoEmbedError {
 	@include box-shadow( 0, 0, 0, #fff, false, 0);
-	margin: -25px 0 10px 0;
 	width: 960px;
 	display: none;
 	
@@ -368,11 +359,6 @@ VideoEmbedOptionsTable img {
 	padding-top: 20px;
 }
 
-#VideoEmbedConflict,
-#VideoEmbedSummary {
-	padding: 0 20px;
-}
-
 //*************************************
 // 
 // NEW VET STUFF - SUGGESTIONS + SEARCH
@@ -384,7 +370,8 @@ VideoEmbedOptionsTable img {
 	.WikiaForm {
 		border-bottom: 1px solid $color-page-border;
 		
-		padding: 20px 0;
+		margin: 20px 0 0 0;
+		padding: 0 0 20px 0;
 		@include clearfix;
 		.input-group {
 			padding: 0;
@@ -601,11 +588,17 @@ VideoEmbedOptionsTable img {
 	float: right;
 	margin-right: 20px;
 }
+
+#VideoEmbedConflict,
+#VideoEmbedSummary,
 #VideoEmbedDetails {
 	padding: 0 20px;
+	h1 {
+		margin-left: 0;
+	}
 	.WikiaForm {
 		border: none;
-		padding: 30px 0 0;
+		padding: 10px 0 0;
 		.VideoEmbedNoBorder {
 			clear: both;
 			float: right;

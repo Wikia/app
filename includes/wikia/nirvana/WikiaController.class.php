@@ -39,10 +39,7 @@ abstract class WikiaController extends WikiaDispatchableObject {
 		foreach ($methods as $index => $method) {
 			if ( !in_array( $method->name, $skipMethods ) ) {
 				$comment = $method->getDocComment();
-				if ($comment) {
-					$comment = substr($comment, 3, -2);
-					$comment = preg_replace('~^\s*\*\s*~m', '', $comment);
-				}
+
 				$data = array(
 					'method' => $method->name,
 					//TODO: we need a better way to detect available formats
@@ -50,14 +47,54 @@ abstract class WikiaController extends WikiaDispatchableObject {
 					//allow only for JSON and some normal controllers have to HTML
 					//'formats' => array( 'html', 'json' ),
 					//'formats' => $this->allowedRequests[$method->name],
-					'description' => $comment
+					'request' => array(),
+					'response' => array()
 				);
+
+				if ( !empty( $comment ) ) {
+					$results = array();
+
+					//grab documentation tokens
+					preg_match_all(
+						'/^\s*\*\s*@(response|request)param\s*(\S*)\s*\$?(\S*)\s*(\[optional\])?\s*([^\n]*)$/im',
+						$comment,
+						$results,
+						PREG_SET_ORDER
+					);
+
+					foreach ( $results as $res ) {
+						$kind = strtolower( $res[1] );
+
+						if ( array_key_exists( $kind, $data ) ) {
+							$data[$kind][] = array(
+								'name' => $res[3],
+								'type' => $res[2],
+								'optional' => !empty( $res[4] ),
+								'description' => $res[5]
+							);
+						}
+
+						$comment = str_replace( $res[0], '', $comment );
+					}
+
+					//remove /*\n and */
+					$comment = substr( $comment, 3, -2 );
+					//remove empty comment lines starting with *,
+					//non-desired @ metadata
+					//and trailing *'s
+					$data['description'] =  preg_replace( '/^@.*$/', '', preg_replace( '/^\s*\*\s*/m', '', $comment ) );
+				}
+
+
 				$help[] = $data;
 			}
 		}
 
 		$this->getResponse()->setVal('class', substr($reflection->name, 0, -10));
 		$this->getResponse()->setVal('methods', $help);
-		$this->getResponse()->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/Wikia_help.php' );
+
+		if ( $this->response->getFormat() == 'html' ) {
+			$this->getResponse()->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/Wikia_help.php' );
+		}
 	}
 }

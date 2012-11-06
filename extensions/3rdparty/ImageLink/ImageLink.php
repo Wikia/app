@@ -10,6 +10,10 @@
 
 $wgHooks['ParserFirstCallInit'][] = "wfImageLinkExtension";
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfImageLinkExtension( $parser ) {
   $parser->setHook( 'imagelink', 'imageLinkHandler' );
   return true;
@@ -40,7 +44,7 @@ function formatImageLink( $imageName, $linkTarget, $altText ) {
     $imageTitle = Title::makeTitleSafe( NS_IMAGE, $imageName );
     if(is_null($imageTitle)) return "(invalid image name)";
 
-    $image = Image::newFromTitle( $imageTitle );
+    $image = wfFindFile( $imageTitle );
     if(is_null($image)) return "(invalid image)";
 
     $imageUrl = $image->getViewURL();

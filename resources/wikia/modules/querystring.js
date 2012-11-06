@@ -102,6 +102,9 @@
 		 * Return a string representation of a QueryString instance
 		 *
 		 * @public
+		 * 
+		 * @example new Querystring().toString()
+		 * @example new Querystring() + 'some string'
 		 *
 		 * @return {String} The QueryString instance turned to a String
 		 */
@@ -135,28 +138,44 @@
 			return this.cache[name] || defVal;
 		};
 
+
 		/**
 		 * Sets a parameter by name
 		 *
 		 * @public
+		 * 
+		 * to remove key=value use removeVal(key)
 		 *
 		 * @param {String} name The parameter's name
 		 * @param {Mixed} val The parameter's value
 		 */
 		p.setVal = function (name, val) {
-			if (val === u) {
-				delete this.cache[name];
-			} else {
+			if (name && val) {
 				this.cache[name] = encodeURIComponent(val);
 			}
+			return this;
 		};
 
 		/**
-		 * Gets the text after the hash (#)
+		 * It can be called with a string as list then it'll remove one param
+		 * if array of keys will be passed it'll remove all of them
 		 *
-		 * @public
-		 *
-		 * @return {String} The text after the hash
+		 * @param list string or array of keys to be removed from URL GET parametes
+		 * @return {Querystring}
+		 */
+		p.removeVal = function(list){
+			if (list instanceof Array){
+				for(var i = 0, l = list.length; i < l; i++){
+					delete this.cache[list[i]];
+				}
+			} else {
+				delete this.cache[list];
+			}
+			return this;
+		};
+
+		/**
+		 * @return {String} a hash from URL
 		 */
 		p.getHash = function () {
 			return this.hash;
@@ -167,18 +186,36 @@
 		 *
 		 * @public
 		 *
-		 * @param {String} hash The text to put after the hash
+		 * @param h String a hash to set
+		 * @return {Querystring}
 		 */
-		p.setHash = function (hash) {
-			this.hash = hash;
+		p.setHash = function (h) {
+			this.hash = h;
+			return this;
+		}
+
+		/**
+		 *
+		 * Function that let's you remove hash from URL
+		 * without any parameters will remove any hash
+		 * or you can give a black list of hashes as array or a single black listed hash as string
+		 *
+		 * @param list a string or array
+		 * @return {Querystring}
+		 */
+		p.removeHash = function(list){
+			if (list === u || (list instanceof Array && list.indexOf(this.hash) > -1) || list === this.hash) {
+				this.hash = '';
+			}
+			return this;
 		};
 
 		/**
 		 * Gets the path of the URL
 		 *
 		 * @public
-		 *
-		 * @return {String} The path of the URL
+		 * 
+		 * @return {String} a path part of URL
 		 */
 		p.getPath = function () {
 			return this.path;
@@ -186,22 +223,28 @@
 
 		/**
 		 * Sets the path of the URL
-		 *
+		 * 
 		 * @public
-		 *
-		 * @param {String} path The path of the URL
+		 * 
+		 * @param p String a path to set
+		 * 
+		 * @return {Querystring}
 		 */
-		p.setPath = function (path) {
-			this.path = path;
+		p.setPath = function (p) {
+			this.path = p;
+			return this;
 		};
 
 		/**
 		 * Adds a cachebuster to the querystring
 		 *
 		 * @public
+		 * 
+		 * @return {Querystring}
 		 */
 		p.addCb = function () {
 			this.setVal('cb', Math.ceil(Math.random() * 10001));
+			return this;
 		};
 
 		/**
@@ -210,11 +253,6 @@
 		 * @public
 		 */
 		p.goTo = function () {
-			//TODO: We don't want these to be in url on load, this should be refactored as is valid only for WikiaMobile
-			if (this.hash === 'topbar' || this.hash === 'Modal') {
-				this.hash = '';
-			}
-
 			l.href = this.toString();
 		};
 

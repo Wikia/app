@@ -50,13 +50,13 @@ $messages['de'] = array(
 );
 
 $messages['es'] = array(
-	'specialvideos-html-title' => 'Videos en este wiki - {{SITENAME}}',
-	'specialvideos-page-title' => 'Videos',
-	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|videos en<br /> este wiki|videos en<br /> este wiki}}</span>',
-	'specialvideos-sort-by' => 'Organizar por',
-	'specialvideos-sort-latest' => 'Los mas recientes',
-	'specialvideos-sort-most-popular' => 'Los mas populares',
-	'specialvideos-sort-trending' => 'Creciendo ahora',
+	'specialvideos-html-title' => 'Vídeos en este wiki - {{SITENAME}}',
+	'specialvideos-page-title' => 'Vídeos',
+	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|vídeo en<br /> este wiki|vídeos en<br /> este wiki}}</span>',
+	'specialvideos-sort-by' => 'Organizar Por',
+	'specialvideos-sort-latest' => 'Más Recientes',
+	'specialvideos-sort-most-popular' => 'Más Populares',
+	'specialvideos-sort-trending' => 'Creciendo Ahora',
 	'specialvideos-sort-featured' => 'Fuente: Biblioteca Wikia',
 	'specialvideos-uploadby' => 'por $1',
 	'specialvideos-posted-in' => 'Publicado en $1',
@@ -103,4 +103,19 @@ $messages['ru'] = array(
 	'specialvideos-uploadby' => 'от $1',
 	'specialvideos-posted-in' => 'Опубликовано в $1',
 	'special-videos-add-video' => 'Добавить видео',
+);
+
+$messages['it'] = array(
+	'specialvideos-html-title' => 'Video in questa wiki - {{SITENAME}}',
+	'specialvideos-page-title' => 'Video',
+	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|video in<br /> questa wiki|video in<br /> questa wiki}}</span>',
+	'specialvideos-sort-by' => 'Ordina per',
+	'specialvideos-sort-latest' => 'Più recenti',
+	'specialvideos-sort-most-popular' => 'Più popolari',
+	'specialvideos-sort-trending' => 'Tendenza',
+	'specialvideos-sort-featured' => 'Fonte: Wikia Library',
+	'specialvideos-uploadby' => 'da $1',
+	'specialvideos-posted-in' => 'Pubblicato in $1',
+	'special-videos-add-video' => 'Carica un video',
+
 );
