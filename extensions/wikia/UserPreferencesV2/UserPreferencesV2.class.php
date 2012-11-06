@@ -75,12 +75,14 @@ class UserPreferencesV2 {
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'skin');
 		}
 		if (isset($defaultPreferences['myhomedisableredirect'])) {
-			$redirectOptions[wfMsg('preferences-v2-redirect-enable')] = 0;
-			$redirectOptions[wfMsg('preferences-v2-redirect-disable')] = 1;
+			$redirectOptions[wfMsg('preferences-v2-redirect-wiki-activity')] = 0;
+			$redirectOptions[wfMsg('preferences-v2-redirect-main-page')] = 1;
+			$redirectOptions[wfMsg('preferences-v2-redirect-recent-changes')] = 2;
 			$defaultPreferences['myhomedisableredirect']['type'] = 'select';
 			$defaultPreferences['myhomedisableredirect']['options'] = $redirectOptions;
 			$defaultPreferences['myhomedisableredirect']['label-message'] = 'preferences-v2-myhomedisableredirect';
 			$defaultPreferences['myhomedisableredirect']['section'] = 'personal/appearance';
+			$defaultPreferences['myhomedisableredirect']['help'] = wfMsg('preferences-v2-redirect-explanation');
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'myhomedisableredirect');
 		}
 		if (isset($defaultPreferences['showAds'])) {
