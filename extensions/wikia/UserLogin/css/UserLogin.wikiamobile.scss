@@ -12,26 +12,9 @@ $spacing: 5px;
 	}
 }
 
-@-webkit-keyframes slideIn {
-	0% {
-		max-height: 0;
-		padding: 0 10px;
-	}
-	100% {
-		max-height: 1000px;
-		padding: 10px;
-	}
-}
-
 #wkLgn{
 	text-align: center;
 	padding: 10px;
-
-	overflow: hidden;
-
-	.loaded & {
-		-webkit-animation: slideIn .6s ease-in-out;
-	}
 
 	input {
 		width: 100%;
