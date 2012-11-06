@@ -11,8 +11,6 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 			return false;  // skip rendering
 		}
 
-		$isStaff = in_array( 'staff', $this->wg->User->getEffectiveGroups() );
-
 		$title = $this->wf->Msg( 'wikiagameguides-content-title' );
 		$this->wg->Out->setPageTitle( $title );
 		$this->wg->Out->setHTMLTitle( $title );
@@ -22,14 +20,7 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 		$assetManager = AssetsManager::getInstance();
 
 		$styles = $assetManager->getURL(
-			array_merge(
-				array(
-					'extensions/wikia/GameGuides/css/GameGuidesContentManagmentTool.scss',
-				),
-				($isStaff ? array(
-					'extensions/wikia/WikiFeatures/css/WikiFeatures.scss'
-				) : array())
-			)
+			'extensions/wikia/GameGuides/css/GameGuidesContentManagmentTool.scss'
 		);
 
 		foreach( $styles as $s ) {
@@ -37,15 +28,7 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 		}
 
 		$scripts = $assetManager->getURL(
-			array_merge(
-				array(
-					'extensions/wikia/GameGuides/js/GameGuidesContentManagmentTool.js'
-				),
-				($isStaff ? array(
-					'extensions/wikia/WikiFeatures/js/modernizr.transform.js',
-					'extensions/wikia/WikiFeatures/js/WikiFeatures.js'
-				) : array())
-			)
+			'extensions/wikia/GameGuides/js/GameGuidesContentManagmentTool.js'
 		);
 
 		foreach( $scripts as $s ) {
@@ -56,11 +39,6 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		$tags = WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId );
 
-		if ( $isStaff ) {
-			$this->response->setVal( 'enabled', $enabled = WikiFactory::getVarValueByName( 'wgGameGuidesContentForAdmins', $this->wg->CityId ) );
-		}
-
-		$this->response->setVal( 'staff', $isStaff );
 		$this->response->setVal( 'tags', $tags );
 		return true;
 	}
@@ -115,6 +93,21 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		if ( $status ) {
 			$this->wf->RunHooks( 'GameGuidesContentSave' );
+		}
+
+		return true;
+	}
+
+	//This should appear on WikiFeatures list only when GG extension is turned on and be visible only to staff
+	static public function onWikiFeatures(){
+		$wg = F::app()->wg;
+
+		if ( $wg->User->isAllowed( 'gameguidescontent-switchforadmins' ) ) {
+			$wg->append(
+				'wgWikiFeatures',
+				'wgGameGuidesContentForAdmins',
+				'normal'
+			);
 		}
 
 		return true;
