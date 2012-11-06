@@ -80,8 +80,8 @@ window.WikiaTracker = (function(){
 		eventName = eventName || mainEventName,
 		data = data || {},
 		trackingMethod = trackingMethod || 'none',
-		isLink = (data && data.href) ? true : false,
-		isMiddleClick = (data.button && data.button === 1) ? true : false,
+		isLink = (data && data.href),
+		isMiddleClick = (data.button && data.button === 1),
 		gaqArgs = [];
 
 		// If clicking a link that will unload the page before tracking can happen,
