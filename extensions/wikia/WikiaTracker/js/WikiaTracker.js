@@ -139,7 +139,7 @@ window.WikiaTracker = (function(){
 		//delay at the end to make sure all of the above was at least invoked
 		if( isLink && !isMiddleClick ) {
 			setTimeout(function() {
-				document.location = location;
+				document.location = data.href;
 			}, 100);
 		}
 	}
