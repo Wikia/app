@@ -151,7 +151,6 @@ class CategorySelectHooksHelper {
 
 		$app = F::app();
 		$request = $app->wg->Request;
-		$enabled = false;
 
 		// Don't use CategorySelect for undo edits
 		$undoafter = $request->getVal( 'undoafter' );
