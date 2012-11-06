@@ -58,17 +58,7 @@ class StructuredData {
 			$SDElement = $this->getSDElementById($inputData['hash']);
 		}
 		else {
-			// @todo hack! :-) remove when API will be working again..
-			switch( $inputData['url'] ) {
-				case 'callofduty:Weapon/M16':
-					$SDElement = $this->getSDElementById('50258c6fac50ed470f00000c');
-					break;
-				case 'callofduty:Character/Dimitri_Petrenko':
-					$SDElement = $this->getSDElementById('50258490ac50ed479a000005');
-					break;
-				default:
-					$SDElement = $this->getSDElementByURL($inputData['url']);
-			}
+			$SDElement = $this->getSDElementByTypeAndName($inputData['type'], $inputData['name']);
 		}
 
 		if($SDElement instanceof SDElement) {
@@ -141,7 +131,8 @@ class StructuredData {
 				$object['propertyChain'] = array_slice( $inputParts, 1, count($inputParts) );
 			}
 			else {
-				$object['url'] = $inputParts[0] . '/' . $inputParts[1];
+				$object['type'] = $inputParts[0];
+				$object['name'] = $inputParts[1];
 				$object['propertyChain'] = array_slice( $inputParts, 2, count($inputParts) );
 			}
 		}
