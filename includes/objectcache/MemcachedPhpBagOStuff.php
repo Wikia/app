@@ -64,6 +64,28 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	}
 
 	/**
+	 * Allow efficient retrieval of multiple items from Memcached
+	 *
+	 * @author Władysław Bodzek
+	 * @param $keys array
+	 * @return Mixed
+	 */
+	public function getMulti( $keys ) {
+		$map = array();
+		foreach ($keys as $key) {
+			$map[$this->encodeKey($key)] = $key;
+		}
+		$mappedData = $this->client->get_multi( array_keys( $map ) );
+
+		$data = array();
+		foreach ($mappedData as $k => $v) {
+			$data[$map[$k]] = $v;
+		}
+
+		return $data;
+	}
+
+	/**
 	 * @param $key string
 	 * @param $value
 	 * @param $exptime int
