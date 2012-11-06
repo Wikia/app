@@ -5,9 +5,10 @@
 @import "../../../../skins/oasis/css/mixins/opacity";
 
 // Required outside assets
-@import "../../RTE/css/RTE";
-@import "../../VideoEmbedTool/css/VET";
+@import "../../RTE/css/RTE"; // RTE.scss
+@import "../../VideoEmbedTool/css/VET"; // VET.scss
 @import "/extensions/wikia/WikiaMiniUpload/css/WMU.css";
+@import "../../WikiaStyleGuide/css/Dropdown"; // Dropdown.scss
 
 @import "core/colors";
 @import "mixins/sprite-MiniEditor";

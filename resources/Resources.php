@@ -747,7 +747,7 @@ return array(
 		'dependencies' => array(
 			'jquery.checkboxShiftClick',
 			'jquery.makeCollapsible',
-			'jquery.placeholder',
+			//'jquery.placeholder', /* Wikia change - Using Wikia's version of placeholder plugin [Liz] bugid-52001 */
 			'jquery.mw-jump',
 			'mediawiki.util',
 		),
