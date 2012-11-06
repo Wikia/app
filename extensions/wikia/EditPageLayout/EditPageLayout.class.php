@@ -566,6 +566,7 @@ class EditPageLayout extends EditPage {
 	 * - new article intro
 	 * - custom intro (editintro=Foo in URL)
 	 * - talk page intro
+	 * - main page educational note (BugId:51755)
 	 *
 	 * Handle preloads (BugId:5652)
 	 */
@@ -613,10 +614,12 @@ class EditPageLayout extends EditPage {
 				'content' => $this->app->wf->msgExt('talkpagetext', array('parse')),
 				'class' => 'mw-talkpagetext',
 			);
-		}
-		elseif ($this->mTitle->isMainPage()) {
-			$this->helper->addJsVariable('editMainPage', true);
-			$this->addEditNotice($this->app->wf->msgExt('mainpagewarning-notice', array('parse')));
+		} elseif ( $this->mTitle->isMainPage() && !$this->hasUserSeenMainPageEduNote() ) {
+		//if this is a main page and user hasn't seen the main page educational notice -- show it :)
+			/** @var $notice EditPageNotice */
+			$notice = WF::build( 'EditPageNotice',array($this->app->wf->msgExt('mainpagewarning-notice', array('parse')), 'MainPageEduNote') );
+			$this->helper->addJsVariable('mainPageEduNoteHash', $notice->getHash());
+			$this->addEditNotice($notice);
 		}
 
 		// Edit notice (BugId:7616)
@@ -627,6 +630,24 @@ class EditPageLayout extends EditPage {
 				'content' => $editnotice_ns,
 				'class' => 'mw-editnotice',
 			);
+		}
+	}
+
+	/**
+	 * @desc Returns true if user is an anon or DB is in read-only mode and false if user hasn't seen the notification about Main Pages in RTE
+	 * @return bool
+	 */
+	protected function hasUserSeenMainPageEduNote() {
+		$wikiaUserPropertiesController = F::build('WikiaUserPropertiesController'); /** @var WikiaUserPropertiesController $wikiaUserPropertiesController */
+		$response = $this->app->sendRequest('WikiaUserPropertiesController', 'getUserPropertyValue', array(
+			'propertyName' => $wikiaUserPropertiesController->getRTEMainPageNoticePropertyName()
+		));
+		$results = $response->getVal('results', false);
+
+		if( isset($results->value) && $results->value == true ) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
