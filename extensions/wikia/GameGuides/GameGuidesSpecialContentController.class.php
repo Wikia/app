@@ -102,7 +102,7 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 	static public function onWikiFeatures(){
 		$wg = F::app()->wg;
 
-		if ( in_array( 'staff', $wg->User->getEffectiveGroups() ) ) {
+		if ( $wg->User->isAllowed( 'gameguidescontent-switchforadmins' ) ) {
 			$wg->append(
 				'wgWikiFeatures',
 				'wgGameGuidesContentForAdmins',

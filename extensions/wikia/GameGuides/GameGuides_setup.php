@@ -45,6 +45,9 @@ if ( $app->wg->GameGuidesContentForAdmins ) {
 	$wgGroupPermissions['sysop']['gameguidescontent'] = true;
 }
 
+$wgGroupPermissions['*']['gameguidescontent-switchforadmins'] = false;
+$wgGroupPermissions['staff']['gameguidescontent-switchforadmins'] = true;
+
 F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', array(
 	'wikiagameguides-content-category',
 	'wikiagameguides-content-tag',
