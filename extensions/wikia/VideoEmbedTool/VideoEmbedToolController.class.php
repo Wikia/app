@@ -89,10 +89,19 @@ class VideoEmbedToolController extends WikiaController {
 		}
 
 		if ( !empty( $phrase ) && strlen( $phrase ) > 0 ) {
-			$wikiaSearchConfig->setQuery( $phrase );
+			
+			$englishFields = $this->wg->Lang->mCode == 'en' 
+							? array() // get for free
+							: array( WikiaSearch::field( 'title', 'en' ), WikiaSearch::field( 'html', 'en' ) );
+							  
+			
+			$wikiaSearchConfig->setQuery( $phrase )
+							  ->setRequestedFields( array_merge( $wikiaSearchConfig->getRequestedFields(), $englishFields ) );
+			
 			$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
 
-			$response = $this->processSearchResponse( $search->doSearch( $wikiaSearchConfig ), $svStart, $svSize, $trimTitle );
+			$searchResults = $search->doSearch( $wikiaSearchConfig );
+			$response = $this->processSearchResponse( $searchResults, $svStart, $svSize, $trimTitle );
 		}
 
 		$result = array (
