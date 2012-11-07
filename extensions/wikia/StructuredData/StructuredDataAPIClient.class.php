@@ -19,8 +19,11 @@ class StructuredDataAPIClient {
 		$this->httpRequest = new HTTP_Request();
 	}
 
-	protected function call( $url ) {
+	protected function call( $url, $method = null, $body = null ) {
 		$this->httpRequest->setURL( $url );
+
+		if ( $method ) $this->httpRequest->setMethod( $method );
+		if ( $body ) $this->httpRequest->setBody( $body );
 
 		$this->httpRequest->addHeader( 'Accept', 'application/ld+json' );
 		$this->httpRequest->sendRequest();
@@ -42,6 +45,11 @@ class StructuredDataAPIClient {
 		else {
 			throw new WikiaException('SD API Error: ' . $response->error . ' - ' . $response->message);
 		}
+	}
+
+	public function saveObject( $id, $body ) {
+		$response = json_decode( $this->call( $this->getApiPath() . $id, HTTP_REQUEST_METHOD_PUT, $body ) );
+		return $this->isValidResponse($response);
 	}
 
 	public function getObject( $id ) {
