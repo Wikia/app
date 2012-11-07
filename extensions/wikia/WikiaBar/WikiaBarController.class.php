@@ -106,7 +106,7 @@ class WikiaBarController extends WikiaController {
 			$results->success = true;
 		}
 
-		$wikiaUserProperties = F::build('WikiaUserProperties');
+		$wikiaUserProperties = F::build('WikiaUserPropertiesController');
 		$wikiaUserProperties->saveWikiaBarState($changeTo);
 		$this->results = $results;
 	}
@@ -115,17 +115,24 @@ class WikiaBarController extends WikiaController {
 	 * @desc Gets Wikia Bar display state from user_properties table. If it's not set will return default value WIKIA_BAR_SHOWN_STATE_VALUE
 	 */
 	public function getUserStateBar() {
-		$wikiaUserProperties = F::build('WikiaUserProperties');
+		$this->results = new stdClass();
 
 		try {
-			$results = $wikiaUserProperties->getUserPropertyValue(self::WIKIA_BAR_STATE_OPTION_NAME, self::WIKIA_BAR_SHOWN_STATE_VALUE);
-			$results->wikiaBarState = $results->value;
-		} catch( Exception $e ) {
-			$results = new stdClass();
-			$results->error = wfMsg('wikiabar-get-state-error');
-			$results->success = false;
-		}
+			$response = $this->app->sendRequest('WikiaUserPropertiesController', 'getUserPropertyValue', array(
+				'propertyName' => self::WIKIA_BAR_STATE_OPTION_NAME,
+				'defaultOption' => self::WIKIA_BAR_SHOWN_STATE_VALUE
+			));
+			$results = $response->getVal('results', false);
 
-		$this->results = $results;
+			if( $results ) {
+				$this->results->wikiaBarState = $results->value;
+				$this->results->success = true;
+			} else {
+				$this->results->success = false;
+			}
+		} catch( Exception $e ) {
+			$this->results->error = wfMsg('wikiabar-get-state-error');
+			$this->results->success = false;
+		}
 	}
 }

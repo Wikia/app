@@ -136,9 +136,10 @@
 
 			var notice = this.getNotice(hashOrElement),
 				hash = (notice) ? notice.attr(this.dataAttr) : null,
+				isMainPageEduNote = this.isNoticeMainPageEduNote(notice),
 				result = false;
 
-			if(hash){
+			if( hash && !isMainPageEduNote ) {
 				var noticeKey = this.generateNoticeKey(hash),
 					noticeareaStatus = this.getNoticeAreaStatus();
 
@@ -154,22 +155,52 @@
 			return result;
 		},
 
-		markNoticeAsShown: function(hashOrElement){
-			var notice = this.getNotice(hashOrElement);
+		isNoticeMainPageEduNote: function(notice) {
+			var hash = notice.attr(this.dataAttr),
+				result = false;
 
-			if(notice){
+			if( hash && window.mainPageEduNoteHash && hash == window.mainPageEduNoteHash ) {
+				result = true;
+			}
+
+			return result;
+		},
+
+		markNoticeAsShown: function(hashOrElement) {
+			var notice = this.getNotice(hashOrElement),
+				isMainPageEduNote = this.isNoticeMainPageEduNote(notice);
+
+			if( notice ) {
 				var hash = notice.attr(this.dataAttr);
 
-				if(hash){
+				if( hash && !isMainPageEduNote ) {
 					var ts = (new Date()).getTime()/1000,
 						noticeKey = this.generateNoticeKey(hash),
 						noticeareaStatus = this.getNoticeAreaStatus() || {};
 
 					noticeareaStatus[noticeKey] = ts;
 					this.setNoticeAreaStatus(noticeareaStatus);
+				} else if( hash && isMainPageEduNote && window.wgUserName ) {
+					$.nirvana.sendRequest({
+						controller: 'WikiaUserProperties',
+						method: 'dismissRTEMainPageNotice',
+						type: 'post',
+						format: 'json',
+						callback: $.proxy(this.onDismissRTEMainPageNotice, this)
+					});
 				}
 
 				notice.remove();
+			}
+		},
+
+		onDismissRTEMainPageNotice: function(response) {
+			if( response.result && response.result.success != true ) {
+				$().log('Noticearea error: wrong during dissmissing main page edu note');
+
+				if( response.result.error ) {
+					$().log(response.result.error);
+				}
 			}
 		},
 
