@@ -134,11 +134,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 							'If we have redirects configured to be included, we should not be filter against them in the filter query.' );
 		
 		$searchConfig->setVideoSearch( true );
-		$searchConfig->setIncludeRedirects( false );
-		
-		$this->assertEquals( "((wid:{$mockCityId}) OR (wid:".WikiaSearch::VIDEO_WIKI_ID.")) AND (is_redirect:false)", $method->invoke( $wikiaSearch, $searchConfig ),
-		'If we have redirects configured to be included, we should not be filter against them in the filter query.' );
-		
+		$searchConfig->setIncludeRedirects( false );		
 		$searchConfig->setIsInterWiki( true );
 		
 		$this->assertEquals( '(iscontent:true) AND (is_redirect:false)', $method->invoke( $wikiaSearch, $searchConfig), 
