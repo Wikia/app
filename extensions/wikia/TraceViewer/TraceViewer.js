@@ -481,8 +481,8 @@
 			if ( node.id == 'Profiler::noop' ) {
 				node.selfTime = 0;
 			} else {
-				node.selfTime -= this.profileTime;
-				node.parent && (node.parent.selfTime -= this.profileTime);
+				node.selfTime -= this.profileTime * 0.8;
+				node.parent && (node.parent.selfTime -= this.profileTime * 0.2);
 			}
 		},
 		exec: function( node, inBulk ) {
@@ -698,7 +698,7 @@
 			var builder = new TraceTreeBuilder,
 				tree = builder.fromDom(),
 				profilerFix = new TreeFixProfilerTime();
-			tree = profilerFix.exec(tree);
+//			tree = profilerFix.exec(tree);
 			this.reset(tree);
 		}
 	});
