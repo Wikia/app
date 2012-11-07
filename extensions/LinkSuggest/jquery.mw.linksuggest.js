@@ -388,3 +388,4 @@ $( function() {
 	// Apply font-style for bug in IE. This should be done using a style sheet
 	$( '#wpTextbox1' ).css( 'font-family', 'monospace' ).linksuggest();
 });
+
