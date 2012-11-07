@@ -16,21 +16,33 @@
  * @copyright Copyright (c) 2008-2012, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
-
-if(!defined('MEDIAWIKI')) {
-	die(1);
+if( !defined( 'MEDIAWIKI' ) ) {
+	die( 'This is not a valid entry point to MediaWiki.' );
 }
 
 $wgExtensionCredits['other'][] = array(
-    'name' => 'LinkSuggest',
-    'author' => 'Inez Korczyński, Bartek Łapiński, Ciencia al Poder, Lucas Garczewski, Sean Colombo, Maciej Brencz, Robert Elwell',
-    'version' => '1.53',
+	'path' => __FILE__,
+	'name' => 'LinkSuggest',
+	'version' => '2.0',
+	'author' => array(
+		'Inez Korczyński', 'Bartek Łapiński', 'Łukasz Garczewski', 'Maciej Brencz',
+		'Jesús Martínez Novo', 'Jack Phoenix', 'Sean Colombo', 'Robert Elwell',
+	),
+	'descriptionmsg' => 'linksuggest-desc',
 );
 
 $wgLinkSuggestLimit = 6;
 
-$wgExtensionMessagesFiles['LinkSuggest'] = dirname(__FILE__).'/'.'LinkSuggest.i18n.php';
+$wgExtensionMessagesFiles['LinkSuggest'] = __DIR__ . '/LinkSuggest.i18n.php';
 F::build('JSMessages')->registerPackage('LinkSuggest', array('tog-*'));
+
+// ResourceLoader support (MW 1.17+)
+$wgResourceModules['ext.wikia.LinkSuggest'] = array(
+	'scripts' => 'js/jquery.wikia.linksuggest.js',
+	'dependencies' => array( 'jquery.ui.autocomplete' ),
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/LinkSuggest'
+);
 
 $wgHooks['GetPreferences'][] = 'wfLinkSuggestGetPreferences' ;
 function wfLinkSuggestGetPreferences($user, &$preferences) {
@@ -44,19 +56,12 @@ function wfLinkSuggestGetPreferences($user, &$preferences) {
 
 $wgHooks['EditForm::MultiEdit:Form'][] = 'AddLinkSuggest';
 function AddLinkSuggest($a, $b, $c, $d) {
-	global $wgOut, $wgExtensionsPath, $wgUser, $wgHooks;
+	global $wgOut, $wgUser, $wgHooks;
 	wfProfileIn(__METHOD__);
 
 	if($wgUser->getOption('disablelinksuggest') != true) {
-		$js = "{$wgExtensionsPath}/wikia/LinkSuggest/LinkSuggest.js";
-
-		// load YUI for Oasis - TODO: Refactor LinkSuggest.js to not use YUI.  Look in /trunk/skins/oasis/js/Search.js for an example of using LinkSuggest with jQuery.
-		if ( F::app()->checkSkin( 'oasis' ) ) {
-			$wgOut->addHTML('<script type="text/javascript">$(function() {$.loadYUI(function() {$.getScript('.Xml::encodeJsVar($js).')})})</script>');
-		}
-		else {
-			$wgOut->addScript('<script type="text/javascript" src="'.$js.'"></script>');
-		}
+		// Load CSS and JS by using ResourceLoader (only for MW 1.17+)
+		$wgOut->addModules( 'ext.wikia.LinkSuggest' );
 
 		// add global JS variables only when LinkSuggest is really loaded (BugId:20958)
 		$wgHooks['MakeGlobalVariablesScript'][] = 'wfLinkSuggestSetupVars';
