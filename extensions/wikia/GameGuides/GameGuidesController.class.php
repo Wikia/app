@@ -407,11 +407,11 @@ class GameGuidesController extends WikiaController {
 
 		foreach( $content as $tag ){
 			if ( $requestTag == $tag['name'] ) {
-				$ret = $tag;
+				$ret = $tag['categories'];
 			}
 		}
 
-		$this->response->setVal( 'tag', $ret );
+		$this->response->setVal( 'categories', $ret );
 	}
 
 	private function getTags( $content ) {
