@@ -11,9 +11,11 @@ if ( !is_object($value) ) {
 	/*
 	 * property is an array
 	 */
-	echo ($rendererName == '@list') ? '<ol>' : '<ul>';
+	$renderList = ( is_array( $values ) && count( $values ) > 1 ) ? true : false;
+
+	if ( $renderList ) echo ($rendererName == '@list') ? '<ol>' : '<ul>';
 	foreach($values as $reference) {
-		echo '<li>';
+		if ( $renderList ) echo '<li>';
 		$referenceHTML = false;
 		if (is_object($reference) && (!is_null($reference->object))) {
 			$referenceHTML = $reference->object->render( $context );
@@ -29,9 +31,9 @@ if ( !is_object($value) ) {
 				echo $reference;
 			}
 		}
-		echo '</li>';
+		if ( $renderList ) echo '</li>';
 	}
 
-	echo ($rendererName == '@list') ? '</ol>' : '</ul>';
+	if ( $renderList ) echo ($rendererName == '@list') ? '</ol>' : '</ul>';
 
 }
