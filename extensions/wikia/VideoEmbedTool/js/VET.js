@@ -1062,7 +1062,7 @@ function VET_switchScreen(to) {
 
 			switch(to) {
 				case 'Details':
-					VET_moveBackButton($('.VideoEmbedNoBorder').find('input'));
+					VET_moveBackButton($('.VideoEmbedNoBorder.addVideoDetailsFormControls').find('input'));
 					break;
 
 				case 'Conflict':
