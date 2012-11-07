@@ -436,10 +436,14 @@
 			return ret;
 		},
 		getParents: function( list ) {
-			var d = {}, i, ret = [];
+			var d = {}, i, ret = [], node;
 			for (i=0;i<list.length;i++) {
-				if ( list[i].parent && list[i].parent.id ) {
-					d[list[i].seqIn] = list[i];
+				if ( list[i].seqIn <= 0 ) {
+					continue;
+				}
+				node = this.base.findBySeqIn(list[i].seqIn);
+				if ( node.parent && node.parent.id ) {
+					d[node.seqIn] = node.parent;
 				}
 			}
 			for (i in d) {
