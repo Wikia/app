@@ -477,26 +477,7 @@ EOT;
 			$this->jsFiles = $jsFiles;
 		}
 
-		$this->adsABtesting = '';
-		if ($this->jsAtBottom) {
-			$jquery_ads = $this->assetsManager->getURL( 'oasis_jquery_ads_js' );
-			if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-				for( $j = 0; $j < count( $jquery_ads ); $j++ ) {
-					$jquery_ads[$j] = $this->rewriteJSlinks( $jquery_ads[$j] );
-				}
-			}
-
-			$jquery_ads = json_encode($jquery_ads);
-			$this->adsABtesting = <<<EOT
-				<script type="text/javascript">/*<![CDATA[*/
-					(function(){
-						if ( window.Wikia.AbTest && ( window.wgLoadAdDriverOnLiftiumInit || Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "AS_WRAPPERS_ARE_RENDERED" ) ) ) {
-							wsl.loadScript([].concat( window.getJqueryUrl() ).concat( $jquery_ads ));
-						}
-					})();
-				/*]]>*/</script>
-EOT;
-		}
+		$this->jsFiles = AdEngine::getLiftiumOptionsScript() . $this->jsFiles;
 
 		wfProfileOut(__METHOD__);
 	}
