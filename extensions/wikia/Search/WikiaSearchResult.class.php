@@ -54,6 +54,11 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 			return $this->_fields['title'];
 		}
 		
+		// for video wiki
+		if ( isset( $this->_fields[WikiaSearch::field('title', 'en')] )  ) {
+			return $this->_fields[WikiaSearch::field('title', 'en')];
+		}
+		
 		return '';
 	}
 
