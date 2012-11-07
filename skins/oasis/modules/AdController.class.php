@@ -103,6 +103,7 @@ class AdController extends WikiaController {
 					self::$config['TOP_BUTTON'] = true;
 				} else if($wgTitle->isSpecial('Videos')) {
 					self::$config['TOP_LEADERBOARD'] = true;
+					self::$config['TOP_BUTTON'] = true;
 				}
 			} else if($namespace == NS_CATEGORY) {
 				// category page

@@ -27,10 +27,9 @@ class AdEngine2Controller extends WikiaController {
 			|| WikiaPageType::isSearch()
 			|| WikiaPageType::isForum()
 			|| WikiaPageType::isWikiaHub()
-			|| (defined('NS_WIKIA_PLAYQUIZ') && $title->inNamespace(NS_WIKIA_PLAYQUIZ));
-
-			// Can be re-enabled after AdDriver2.js is implemented:
-			// || $wg->Title->isSpecial('Leaderboard');
+			|| (defined('NS_WIKIA_PLAYQUIZ') && $title->inNamespace(NS_WIKIA_PLAYQUIZ))
+			|| $title->isSpecial('Videos')
+			|| $title->isSpecial('Leaderboard');
 
 		return $runAds;
 	}
