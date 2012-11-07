@@ -891,30 +891,14 @@ class AdEngine {
 		if (!empty($wgDartCustomKeyValues)) {
 			$options['kv_dart'] = $wgDartCustomKeyValues;
 		}
+
 		$options['kv_domain'] = $_SERVER['HTTP_HOST'];
+		$options['hasMoreCalls'] = true;
+		$options['isCalledAfterOnload'] = true;
+		$options['maxLoadDelay'] = 6000;
 
 		$js = "LiftiumOptions = " . json_encode($options) . ";\n";
-		if (WikiaPageType::isSearch() || (!$wgTitle->getNamespace() == NS_SPECIAL && !BodyController::isEditPage())) {
-			$js .= <<<EOT
-				if ( !window.wgLoadAdDriverOnLiftiumInit && ( !window.Wikia.AbTest || !Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "ONLOAD" ) ) ) {
-					LiftiumOptions['hasMoreCalls'] = true;
-					LiftiumOptions['isCalledAfterOnload'] = true;
-					LiftiumOptions['maxLoadDelay'] = 6000;
-				}
-				else {
-					LiftiumOptions['autoInit'] = false;
-				}
-EOT;
-		}
-		else {
-			$js .= <<<EOT
-				LiftiumOptions['hasMoreCalls'] = true;
-				LiftiumOptions['isCalledAfterOnload'] = true;
-				LiftiumOptions['maxLoadDelay'] = 6000;
-EOT;
-		}
 
-		$js = AssetsManagerBaseBuilder::minifyJs( $js );
 		$out = "\n<!-- Liftium options -->\n";
 		$out .= Html::inlineScript( $js )."\n";
 
