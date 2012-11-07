@@ -1048,8 +1048,6 @@ class WallHooksHelper {
 				$wfMsgOptsBase['wallPageName'],
 				$wfMsgOptsBase['actionUser']);
 
-
-
 			$msgType = ($wfMsgOptsBase['isThread']) ? 'thread' : 'reply';
 
 			//created in WallHooksHelper::getMessageOptions()
@@ -1619,12 +1617,6 @@ class WallHooksHelper {
 	private function getMessageOptions($rc = null, $row = null, $fullUrls = false) {
 		wfProfileIn(__METHOD__);
 
-		if( !is_null($rc) ) {
-			$actionUser = $rc->getAttribute('rc_user_text');
-		} else {
-			$actionUser = '';
-		}
-
 		if( is_object($row) ) {
 			$objTitle = F::build('Title', array($row->page_title, $row->page_namespace), 'newFromText');
 			$userText = !empty($row->rev_user_text) ? $row->rev_user_text : '';
@@ -1641,8 +1633,6 @@ class WallHooksHelper {
 			$isNew = false; //it doesn't metter for rc -- we've got there rc_log_action
 		}
 
-		$wallTitleObj = F::build('Title', array($userText, NS_USER_WALL), 'newFromText');
-		$wallUrl = ($wallTitleObj instanceof Title) ? $wallTitleObj->getLocalUrl() : '#';
 
 		if( !($objTitle instanceof Title) ) {
 			//it can be media wiki deletion of an article -- we ignore them
@@ -1650,7 +1640,8 @@ class WallHooksHelper {
 			return true;
 		}
 
-		$wm = Wall::newFromId( $objTitle->getId() );
+		$wm = WallMessage::newFromId( $objTitle->getArticleId() );
+		$wm->load();
 		
 		if( empty($wm) ) {
 			//it can be media wiki deletion of an article -- we ignore them
@@ -1659,27 +1650,22 @@ class WallHooksHelper {
 		}
 		
 		$articleId = $wm->getId();
-		$wallOwnerName = $wm->getWallOwnerName();
-		//$userText = empty($wallOwnerName) ? $userText : $wallOwnerName;
-
-		//by default it's Thread:xxx and Message_wall:XXX for messages of recent changes
-		//i.e. 'wall-recentchanges-wall-removed-thread'
-		//but here we need the entire links
-
-		$articleUrl = $wm->getMessagePageUrl(!$fullUrls);
-		$wallUrl = $wm->getWallUrl();
+		$wallOwnerName = $wm->getArticleTitle()->getText();
+		$articleTitleTxt =  $wm->getMetaTitle();
 
 		wfProfileOut(__METHOD__);
-		return array(
-			'articleUrl' => $articleUrl,
+		$out = array(
+			'articleUrl' => $wm->getMessagePageUrl(),
 			'articleTitleVal' => $articleTitleTxt,
-			'articleTitleTxt' => empty($articleTitleTxt) ? $app->wf->Msg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
-			'wallPageUrl' => $wallUrl,
-			'wallPageName' => $userText,
-			'actionUser' => $actionUser,
-			'isThread' => $isThread,
+			'articleTitleTxt' => empty($articleTitleTxt) ? wfMsg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
+			'wallPageUrl' => $wm->getArticleTitle()->getFullUrl(),
+			'wallPageName' => $wm->getArticleTitle()->getText(),
+			'actionUser' => $userText,
+			'isThread' => $wm->isMain(),
 			'isNew' => $isNew,
 		);
+
+		return $out;
 	}
 
 	/**
