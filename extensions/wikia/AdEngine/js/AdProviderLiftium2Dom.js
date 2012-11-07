@@ -10,19 +10,24 @@ var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, 
 	;
 
 	slotMap = {
+		'CORP_TOP_LEADERBOARD': {'size': '728x90'},
+		'CORP_TOP_RIGHT_BOXAD': {'size': '300x250'},
+		'EXIT_STITIAL_BOXAD_1': {'size':'300x250'},
 		'HOME_TOP_LEADERBOARD':{'size':'728x90'},
 		'HOME_TOP_RIGHT_BOXAD':{'size':'300x250'},
+		'INCONTENT_BOXAD_1':{'size':'300x250'},
+		'INVISIBLE_1':{'size':'0x0', 'useGw': true},
+		'INVISIBLE_2':{'size':'0x0', 'useGw': true},
 		'LEFT_SKYSCRAPER_2':{'size':'160x600'},
+		'LEFT_SKYSCRAPER_3': {'size':'160x600'},
+		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250'},
+		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250'},
+		'TOP_BUTTON': {'size':'242x90'},
 		'TOP_LEADERBOARD':{'size':'728x90'},
 		'TOP_RIGHT_BOXAD':{'size':'300x250'},
 		'PREFOOTER_LEFT_BOXAD':{'size':'300x250'},
 		'PREFOOTER_RIGHT_BOXAD':{'size':'300x250'},
-		'INCONTENT_BOXAD_1':{'size':'300x250'},
-		'WIKIA_BAR_BOXAD_1':{'size':'300x250'},
-		'TOP_BUTTON': {'size':'242x90'},
-		'EXIT_STITIAL_BOXAD_1': {'size':'300x250'},
-		'INVISIBLE_1':{'size':'0x0', 'useGw': true},
-		'INVISIBLE_2':{'size':'0x0', 'useGw': true}
+		'WIKIA_BAR_BOXAD_1':{'size':'300x250'}
 	};
 
 	canHandleSlot = function(slot) {
