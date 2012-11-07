@@ -43,8 +43,9 @@ $.widget( 'wikia.linksuggest', {
 		this.options = $.extend( opt, this.options );
 		this.element.autocomplete( this.options );
 		// Overwrite the keydown event of autocomplete to fix some undesired key events
-		if ( typeof( this.element.data( 'events' ).keydown[0] ) !== undefined ) {
-			this._legacyKeydown = this.element.data( 'events' ).keydown[0].handler;
+		var eventsData = this.element.data( 'events' );
+		if ( typeof( eventsData && eventsData.keydown[0] ) !== "undefined" ) {
+			this._legacyKeydown = eventsData.keydown[0].handler;
 		}
 		this.element.unbind( 'keydown.autocomplete' )
 		.bind( eventType + '.linksuggest', function( thisInstance ) {
