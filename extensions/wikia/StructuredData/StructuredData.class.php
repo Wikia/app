@@ -60,8 +60,9 @@ class StructuredData {
 		return true;
 	}
 
-	public function dataParserHook( $input, $args, $parser ) {
+	public function dataParserHook( $input, $args, Parser $parser, PPFrame $frame ) {
 		$result = '';
+		$input = $parser->recursiveTagParse($input, $frame);
 		$inputData = $this->parseHookInput($input);
 
 		if( isset($inputData['hash']) ) {
