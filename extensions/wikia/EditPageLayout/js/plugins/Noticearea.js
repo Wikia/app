@@ -180,7 +180,7 @@
 
 					noticeareaStatus[noticeKey] = ts;
 					this.setNoticeAreaStatus(noticeareaStatus);
-				} else if( hash && isMainPageEduNote ) {
+				} else if( hash && isMainPageEduNote && window.wgUserName ) {
 					$.nirvana.sendRequest({
 						controller: 'WikiaUserProperties',
 						method: 'dismissRTEMainPageNotice',

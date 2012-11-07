@@ -1,24 +1,19 @@
 <?php
 class WikiaUserPropertiesController extends WikiaController {
-	const ERROR_USER_NOT_LOGGED_IN_CODE = 'User is logged-out';
-	const ERROR_INVALID_PROPERTY_NAME = 'Invalid property name';
+	const EXCEPTION_USER_NOT_LOGGED_IN_CODE = 1;
+	const EXCEPTION_INVALID_PROPERTY_NAME = 2;
 	const MAIN_PAGE_NOTIFICATIONS_HIDDEN_PROP_NAME = 'RteMainPageNotificationHidden';
 
 	public function getUserPropertyValue() {
 		$propertyName = $this->request->getVal('propertyName', false);
-		$defaultOption = $this->request->getVal('defaultOption');
+		$defaultOption = $this->request->getVal('defaultOption', '');
 
 		$this->results = new stdClass();
 		$this->results->success = false;
-
-		if( !$this->wg->User->isLoggedIn() ) {
-			$this->results->error = self::ERROR_USER_NOT_LOGGED_IN_CODE;
-			return;
-		}
+		$this->throwExceptionForAnons();
 
 		if( $propertyName === false ) {
-			$this->results->error = self::ERROR_INVALID_PROPERTY_NAME;
-			return;
+			throw new Exception('Invalid property name', self::EXCEPTION_INVALID_PROPERTY_NAME);
 		}
 
 		$this->results->success = true;
@@ -32,6 +27,8 @@ class WikiaUserPropertiesController extends WikiaController {
 		if( $this->wg->ReadOnly ) {
 			$this->results->error = $this->wf->Msg('db-read-only-mode');
 		} else {
+			$this->throwExceptionForAnons();
+
 			$this->wg->User->setOption($this->getRTEMainPageNoticePropertyName(), true);
 			$this->wg->User->saveSettings();
 			$this->results->success = true;
@@ -43,7 +40,15 @@ class WikiaUserPropertiesController extends WikiaController {
 	}
 
 	public function saveWikiaBarState($state) {
+		$this->throwExceptionForAnons();
+
 		$this->wg->User->setOption(WikiaBarController::WIKIA_BAR_STATE_OPTION_NAME, $state);
 		$this->wg->User->saveSettings();
+	}
+
+	protected function throwExceptionForAnons() {
+		if( !$this->wg->User->isLoggedIn() ) {
+			throw new Exception('User not logged-in', self::EXCEPTION_USER_NOT_LOGGED_IN_CODE);
+		}
 	}
 }
