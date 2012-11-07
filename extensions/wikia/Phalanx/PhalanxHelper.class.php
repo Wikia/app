@@ -367,11 +367,10 @@ class PhalanxHelper {
 				continue;
 			}
 
-			foreach( $filters as $filter ) {
-				$result = Phalanx::isBlocked( $text, $filter );
-				if ( $result['blocked'] == true ) {
-					$data[$module][] = $filter;
-				}
+			$filter = null;
+			$result = Phalanx::findBlocked( $text, $filters, true, $filter );
+			if ( $result['blocked'] == true ) {
+				$data[$module][] = $filter;
 			}
 
 			if ( !empty( $data[$module] ) ) {

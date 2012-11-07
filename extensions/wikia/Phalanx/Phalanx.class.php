@@ -318,6 +318,92 @@ class Phalanx {
 		return $result;
 	}
 
+	/**
+	 * test if provided text is blocked
+	 * @param string $text string to be tested against filter
+	 * @param array $blocksData blocks data (text, params, id)
+	 * @param boolean $writeStats should stats be recorded?
+	 * @param array $matchingBlockData (out) block data that matched
+	 *
+	 * @return Array with 'blocked' key containing boolean status
+	 *
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * @author Władysław Bodzek
+	 */
+	static function findBlocked($text, $blocksData, $writeStats = true, &$matchingBlockData = null) {
+		wfProfileIn( __METHOD__ );
+		$result = array('blocked' => false, 'msg' => '');
+		foreach ($blocksData as $blockData) {
+			$blockText = $blockData['text'];
+
+			if ($blockData['regex']) {
+				wfProfileIn( __METHOD__ . '-regex' );
+				//escape slashes uses as regex delimiter
+				$blockText = str_replace('/', '\/', preg_replace('|\\\*/|', '/', $blockText));
+				if ($blockData['exact']) {
+					//add begining and end anchor only once (user might added it already)
+					if (strpos($blockText, '^') !== 0) {
+						$blockText = '^' . $blockText;
+					}
+					if (substr($blockText, -1) != '$') {
+						$blockText .= '$';
+					}
+				}
+				$blockText = "/$blockText/";
+				if (!$blockData['case']) {
+					$blockText .= 'i';
+				}
+				//QuickFix™ for bad regexes
+				//TODO: validate regexes on save/edit
+				wfSuppressWarnings();
+				$matched = preg_match($blockText, $text, $matches);
+				if ($matched === false) {
+					Wikia::log(__METHOD__, __LINE__, "Bad regex found: $blockText");
+				}
+				wfRestoreWarnings();
+				if ($matched) {
+					if ($writeStats) {
+						self::addStats($blockData['id'], $blockData['type']);
+					}
+					$result['blocked'] = true;
+					$result['msg'] = $matches[0];
+				}
+				wfProfileOut( __METHOD__ . '-regex' );
+			} else { //plain text
+				wfProfileIn( __METHOD__ . '-plain' );
+				if (!$blockData['case']) {
+					$text = strtolower($text);
+					$blockText = strtolower($blockText);
+				}
+				if ($blockData['exact']) {
+					if ($text == $blockText) {
+						if ($writeStats) {
+							self::addStats($blockData['id'], $blockData['type']);
+						}
+						$result['blocked'] = true;
+						$result['msg'] = $blockData['text'];    //original case
+					}
+				} else {
+					if ( !empty($blockText) && strpos($text, $blockText) !== false) {
+						if ($writeStats) {
+							self::addStats($blockData['id'], $blockData['type']);
+						}
+						$result['blocked'] = true;
+						$result['msg'] = $blockData['text'];    //original case
+					}
+				}
+				wfProfileOut( __METHOD__ . '-plain' );
+			}
+			if ( $result['blocked'] ) {
+				$matchingBlockData = $blockData;
+				break;
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}
+
+
 	static public function clearCache( $moduleId, $lang ) {
 		$sLang = $lang ? $lang : 'all';
 		unset(self::$moduleData[$moduleId][$sLang]);

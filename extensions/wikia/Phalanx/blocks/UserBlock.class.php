@@ -69,23 +69,22 @@ class UserBlock {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		foreach ($blocksData as $blockData) {
-			$result = Phalanx::isBlocked( $text, $blockData, $writeStats );
+		$blockData = null;
+		$result = Phalanx::findBlocked( $text, $blocksData, $writeStats, $blockData );
 
-			if ( $result['blocked'] ) {
-				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
-				self::setUserData( $user, $blockData, $text, false );
+		if ( $result['blocked'] ) {
+			Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
+			self::setUserData( $user, $blockData, $text, false );
 
-				$cachedState = array(
-					'timestamp' => wfTimestampNow(),
-					'block' => $blockData,
-					'return' => false,
-				);
-				$wgMemc->set( self::getCacheKey( $user ), $cachedState );
+			$cachedState = array(
+				'timestamp' => wfTimestampNow(),
+				'block' => $blockData,
+				'return' => false,
+			);
+			$wgMemc->set( self::getCacheKey( $user ), $cachedState );
 
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
+			wfProfileOut( __METHOD__ );
+			return false;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -258,12 +257,10 @@ class UserBlock {
 		$emailBlocksData = Phalanx::getFromFilter( Phalanx::TYPE_EMAIL );
 		$userEmail = $user->getEmail();
 		if ( $userEmail !== '' ) {
-			foreach ( $emailBlocksData as $emailBlockData ) {
-				$result = Phalanx::isBlocked( $userEmail, $emailBlockData, true );
-				if ( $result['blocked'] ) {
-					$abortError = wfMsg( 'phalanx-user-block-new-account' );
-					return false;
-				}
+			$result = Phalanx::findBlocked( $userEmail, $emailBlocksData, true );
+			if ( $result['blocked'] ) {
+				$abortError = wfMsg( 'phalanx-user-block-new-account' );
+				return false;
 			}
 		}
 		return true;
