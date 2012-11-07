@@ -148,26 +148,41 @@ class GameGuidesController extends WikiaController {
 
 		$titleName = $this->getVal( 'title' );
 
-		$relatedPages = (
-			!empty( $this->wg->EnableRelatedPagesExt ) &&
-			empty( $this->wg->MakeWikiWebsite ) &&
-			empty( $this->wg->EnableAnswers ) ) ?
-			$this->app->sendRequest( 'RelatedPagesController', 'index', array(
-				'categories' => $this->wg->Title->getParentCategories()
-			)
-		) : null;
+		$title = Title::newFromText( $titleName );
+		$revId = $title->getLatestRevID();
 
-		if ( !is_null( $relatedPages ) ) {
-			$relatedPages = $relatedPages->getVal('pages');
+		if ( $revId > 0 ) {
+			$relatedPages = (
+				!empty( $this->wg->EnableRelatedPagesExt ) &&
+					empty( $this->wg->MakeWikiWebsite ) &&
+					empty( $this->wg->EnableAnswers ) ) ?
+				$this->app->sendRequest( 'RelatedPagesController', 'index', array(
+						'categories' => $this->wg->Title->getParentCategories()
+					)
+				) : null;
 
-			if ( !empty ( $relatedPages ) ) {
-				$this->response->setVal( 'relatedPages', $relatedPages );
+			if ( !is_null( $relatedPages ) ) {
+				$relatedPages = $relatedPages->getVal('pages');
+
+				if ( !empty ( $relatedPages ) ) {
+					$this->response->setVal( 'relatedPages', $relatedPages );
+				}
 			}
-		}
 
-		$this->response->setVal( 'html', $this->sendSelfRequest( 'renderPage', array(
-			'title' => $titleName
-		) )->toString() );
+			$this->response->setVal(
+				'html',
+				$this->sendSelfRequest( 'renderPage', array(
+						'title' => $titleName
+					)
+				)->toString() );
+
+			$this->response->setVal(
+				'revisionid',
+				$title->getLatestRevID()
+			);
+		} else {
+			$this->response->setVal( 'error', 'Revision ID = 0' );
+		}
 	}
 
 	/**
@@ -328,71 +343,97 @@ class GameGuidesController extends WikiaController {
 			)
 		);
 
-		$requestTag = $this->request->getVal( 'tag' );
-		$tags = WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId );
+		$content = WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId );
 
-		if ( !empty( $tags ) ) {
-			if ( empty( $requestTag ) ) {
-				$this->response->setVal(
-					'tags',
-					array_reduce(
-						$tags,
-						function( $ret, $item){
-							$ret[] = $item['name'];
-							return $ret;
-						}
-					)
-				);
-			} else {
-				$ret = false;
-
-				foreach( $tags as $tag ){
-					if ( $requestTag == $tag['name'] ) {
-						$ret = $tag;
-					}
-				}
-
-				$this->response->setVal( 'tag', $ret );
-			}
+		if ( empty( $content ) ) {
+			$this->getCategories();
 		} else {
+			$tag = $this->request->getVal( 'tag' );
 
-			$limit = $this->request->getVal( 'limit', 25 );
-			$continue = $this->request->getVal( 'offset' );
-
-			$params = array(
-				'action' => 'query',
-				'list' => 'allcategories',
-				'aclimit' => $limit
-			);
-
-			if( !is_null( $continue ) ) {
-				$params['acfrom'] = $continue;
-			}
-
-			$categories = ApiService::call( $params );
-			$allCategories = $categories['query']['allcategories'];
-
-			if ( !empty( $allCategories ) ) {
-
-				foreach( $allCategories as $key => $value ) {
-					$allCategories[$key] = $value['*'];
-				}
-
-				$this->response->setVal( 'categories', $allCategories );
-
-				if ( !empty( $categories['query-continue'] ) ) {
-					$this->response->setVal( 'offset', $categories['query-continue']['allcategories']['acfrom'] );
-				}
-
+			if ( empty( $tag ) ) {
+				$this->getTags( $content );
 			} else {
-				$this->response->setVal( 'error', true );
+				$this->getTagCategories( $content, $tag );
 			}
-
-
-
 		}
 	}
 
+	/**
+	 *
+	 * Returns list of categories on a wiki in batches by 25
+	 *
+	 * @requestParam Integer limit
+	 * @requestParam String offset
+	 *
+	 * @response categories
+	 * @response offset
+	 */
+	private function getCategories(){
+		$limit = $this->request->getVal( 'limit', 25 );
+		$continue = $this->request->getVal( 'offset' );
+
+		$params = array(
+			'action' => 'query',
+			'list' => 'allcategories',
+			'aclimit' => $limit
+		);
+
+		if( !is_null( $continue ) ) {
+			$params['acfrom'] = $continue;
+		}
+
+		$categories = ApiService::call( $params );
+		$allCategories = $categories['query']['allcategories'];
+
+		if ( !empty( $allCategories ) ) {
+
+			foreach( $allCategories as $key => $value ) {
+				$allCategories[$key] = array( 'name' => $value['*'] );
+			}
+
+			$this->response->setVal( 'categories', $allCategories );
+
+			if ( !empty( $categories['query-continue'] ) ) {
+				$this->response->setVal( 'offset', $categories['query-continue']['allcategories']['acfrom'] );
+			}
+
+		} else {
+			$this->response->setVal( 'error', true );
+		}
+	}
+
+	private function getTagCategories( $content, $requestTag ){
+		$ret = false;
+
+		foreach( $content as $tag ){
+			if ( $requestTag == $tag['name'] ) {
+				$ret = $tag;
+			}
+		}
+
+		$this->response->setVal( 'tag', $ret );
+	}
+
+	private function getTags( $content ) {
+		$this->response->setVal(
+			'tags',
+			array_reduce(
+				$content,
+				function( $ret, $item){
+					$ret[] = array( 'name' => $item['name'] );
+					return $ret;
+				}
+			)
+		);
+	}
+
+	/**
+	 * @requestParam String category
+	 * @requestParam Integer limit [optional]
+	 * @requestParam String offset [optional]
+	 *
+	 * @return Array of articles
+	 */
 	public function getArticles(){
 		$this->response->setFormat( 'json' );
 
@@ -402,25 +443,24 @@ class GameGuidesController extends WikiaController {
 
 		$params = array(
 			'action' => 'query',
-			'prop' => 'revisions',
-			'generator' => 'categorymembers',
-			'gcmtitle' => 'Category:' . $requestCategory,
-			'gcmlimit' => $limit,
-			'gcmtype' => 'page|subcat',
-			'rvprop' => 'ids'
+			'list' => 'categorymembers',
+			'cmtitle' => 'Category:' . $requestCategory,
+			'cmlimit' => $limit,
+			'cmtype' => 'page|subcat',
+			'cmprop' => 'ids|title'
 		);
 
 		if( !is_null( $continue ) ) {
-			$params['gcmcontinue'] = $continue;
+			$params['cmcontinue'] = $continue;
 		}
 
 		$articles = ApiService::call( $params );
 
-		if ( !empty( $articles['query']['pages'] ) ) {
-			$this->response->setVal( 'articles', $articles['query']['pages']);
+		if ( !empty( $articles['query']['categorymembers'] ) ) {
+			$this->response->setVal( 'articles', $articles['query']['categorymembers']);
 
 			if ( !empty( $articles['query-continue'] ) ) {
-				$this->response->setVal( 'offset', $articles['query-continue']['categorymembers']['gcmcontinue']);
+				$this->response->setVal( 'offset', $articles['query-continue']['categorymembers']['cmcontinue']);
 			}
 		} else {
 			$this->response->setVal( 'error', true );
@@ -443,7 +483,7 @@ class GameGuidesController extends WikiaController {
 					$app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' ),
 					array(
 						'controller' => __CLASS__,
-						'method' => 'getTags'
+						'method' => 'getList'
 					)
 				)
 			)
