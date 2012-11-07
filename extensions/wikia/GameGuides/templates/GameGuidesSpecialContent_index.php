@@ -18,7 +18,7 @@
 		if ( is_array( $tags ) ):
 			foreach( $tags as $tag ):
 				foreach( $tag['categories'] as $category ): ?>
-			<li><input class=category placeholder="<?= $wf->Msg('wikiagameguides-content-category');?>" value="<?= $category['category']; ?>"/><input class=tag placeholder="<?= $wf->Msg('wikiagameguides-content-tag');?>" value="<?= $tag['name']; ?>"/><input class=name placeholder="<?= $wf->Msg('wikiagameguides-content-name');?>" value="<?= $category['name']; ?>"/><button class="remove secondary">X</button></li>
+			<li><input class=category placeholder="<?= $wf->Msg('wikiagameguides-content-category');?>" value="<?= $category['name']; ?>"/><input class=tag placeholder="<?= $wf->Msg('wikiagameguides-content-tag');?>" value="<?= $tag['name']; ?>"/><input class=name placeholder="<?= $wf->Msg('wikiagameguides-content-name');?>" value="<?= $category['label']; ?>"/><button class="remove secondary">X</button></li>
 				<? endforeach;
 			endforeach;
 		else: ?>
