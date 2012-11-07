@@ -455,8 +455,12 @@ abstract class Skin extends ContextSource {
 			$msg = $this->msg( 'pagecategories', count( $allCats['normal'] ) )->escaped();
 			$linkPage = wfMessage( 'pagecategorieslink' )->inContentLanguage()->text();
 			$s .= '<div id="mw-normal-catlinks" class="mw-normal-catlinks">' .
-				Linker::link( Title::newFromText( $linkPage ), $msg, $attribs /* Wikia change */ )
-				. $colon . '<ul>' . $t . '</ul>' . '</div>';
+				// Wikia change begin - @author: kflorence
+				'<span class="mw-categories-link">' .
+					Linker::link( Title::newFromText( $linkPage ), $msg, $attribs ) . $colon .
+				'</span>' .
+				// Wikia change end
+				'<ul>' . $t . '</ul>' . '</div>';
 		}
 
 		# Hidden categories
@@ -470,8 +474,12 @@ abstract class Skin extends ContextSource {
 			}
 
 			$s .= "<div id=\"mw-hidden-catlinks\" class=\"mw-hidden-catlinks$class\">" .
-				$this->msg( 'hidden-categories', count( $allCats['hidden'] ) )->escaped() .
-				$colon . '<ul>' . $embed . implode( "{$pop}{$embed}" , $allCats['hidden'] ) . $pop . '</ul>' .
+				// Wikia change begin - @author: kflorence
+				'<span class="mw-categories-link">' .
+					$this->msg( 'hidden-categories', count( $allCats['hidden'] ) )->escaped() . $colon .
+				'</span>' .
+				// Wikia change end
+				'<ul>' . $embed . implode( "{$pop}{$embed}" , $allCats['hidden'] ) . $pop . '</ul>' .
 				'</div>';
 		}
 

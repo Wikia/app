@@ -183,8 +183,25 @@ class CategorySelectHooksHelper {
 	 */
 	function onMakeGlobalVariablesScript( Array &$vars ) {
 		$app = F::app();
+		$action = $app->wg->Request->getVal( 'action', 'view' );
+
+		// On article pages, we haven't parsed the article wikitext yet
+		if ( $action == 'view' ) {
+			// TODO: does this need to be cached?
+			$wikitext = $app->wg->Article->fetchContent();
+			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext );
+
+		} else {
+			$data = CategorySelect::getExtractedCategoryData();
+		}
+
+		$catgories = array();
+		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
+			$categories = $data[ 'categories' ];
+		}
 
 		$vars[ 'wgCategorySelect' ] = array(
+			'categories' => $categories,
 			'defaultSortKey' => $app->wg->Parser->getDefaultSort() ?: $app->wg->Title->getText(),
 			'defaultNamespace' => $app->wg->ContLang->getNsText( NS_CATEGORY ),
 			'defaultNamespaces' => CategorySelect::getDefaultNamespaces(),

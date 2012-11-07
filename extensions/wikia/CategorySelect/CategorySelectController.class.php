@@ -11,21 +11,13 @@
 class CategorySelectController extends WikiaController {
 	const CACHE_TTL_AJAX = 360; // 1 hour
 	const CACHE_TTL_MEMCACHE = 86400; // 1 day
-	const VERSION = 2;
+	const VERSION = 1;
 
 	/**
 	 * The template used for article pages.
 	 */
 	public function articlePage() {
-		$categories = array();
-		$wikitext = $this->wg->Article->fetchContent();
-		$data = CategorySelect::extractCategoriesFromWikitext( $wikitext );
-
-		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
-			$categories = $data[ 'categories' ];
-		}
-
-		$this->response->setVal( 'categories', $categories );
+		// TODO
 	}
 
 	/**
@@ -34,9 +26,9 @@ class CategorySelectController extends WikiaController {
 	public function category() {
 		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'category', $this->request->getVal( 'category', array() ) );
-		$this->response->setVal( 'edit', wfMsg( 'categoryselect-category-edit' ) );
+		$this->response->setVal( 'edit', $this->wf->Msg( 'categoryselect-category-edit' ) );
 		$this->response->setVal( 'index', $this->request->getVal( 'index', 0 ) );
-		$this->response->setVal( 'remove', wfMsg( 'categoryselect-category-remove' ) );
+		$this->response->setVal( 'remove', $this->wf->Msg( 'categoryselect-category-remove' ) );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
@@ -76,10 +68,10 @@ class CategorySelectController extends WikiaController {
 	/**
 	 * Returns all of the categories on the current wiki.
 	 */
-	public function getCategories() {
+	public function getWikiCategories() {
 		wfProfileIn( __METHOD__ );
 
-		$key = wfMemcKey( 'CategorySelectGetCategories', self::VERSION );
+		$key = wfMemcKey( 'CategorySelectGetWikiCategories', self::VERSION );
 		$data = $this->wg->Memc->get( $key );
 
 		if ( empty( $data ) ) {

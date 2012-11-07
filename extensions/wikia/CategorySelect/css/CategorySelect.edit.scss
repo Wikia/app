@@ -11,7 +11,6 @@
 // Width of the content inside of the right rail module
 $categoryselect-width: $width-epl-module-input - 10;
 
-// These styles are for edit pages only
 .CategorySelect {
 	.addCategory,
 	.categories {
@@ -31,6 +30,12 @@ $categoryselect-width: $width-epl-module-input - 10;
 	}
 
 	.category {
+		@include border-radius( 4px );
+		color: $color-text;
+		display: block;
+		line-height: 25px;
+		margin: 0;
+		padding: 0 5px;
 		position: relative;
 
 		&:hover {
@@ -47,10 +52,22 @@ $categoryselect-width: $width-epl-module-input - 10;
 	}
 
 	.name {
-		width: $categoryselect-width - 10;
+		@include ellipses;
+		display: inline-block;
+		width: 100%;
+	}
+
+	.sprite-small {
+		cursor: pointer;
+	}
+
+	.tool {
+		display: inline-block;
+		margin: 0 0 0 5px;
 	}
 
 	.toolbar {
+		display: none;
 		position: absolute;
 		right: 5px;
 		top: 2px;

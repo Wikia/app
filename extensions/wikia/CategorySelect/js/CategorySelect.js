@@ -11,7 +11,15 @@ var wgCategorySelect = window.wgCategorySelect,
  *			The initial list of categories.
  */
 var CategorySelect = function( categories ) {
-	this.categories = categories || [];
+	var i, length;
+
+	this.categories = [];
+
+	if ( $.isArray( categories ) ) {
+		for ( i = 0, length = categories.length; i < length; i++ ) {
+			this.categories.push( this.makeCategory( categories[ i ] ) );
+		}
+	}
 };
 
 /**
@@ -93,17 +101,18 @@ CategorySelect.prototype.isDuplicate = function( category ) {
  *			The normalized category.
  */
 CategorySelect.prototype.makeCategory = (function() {
-	var rCategory = new RegExp( '\\[\\[' +
-		// Category namespace
-		'(' + wgCategorySelect.defaultNamespaces + '):' +
-		// Category name
-		'([^\\]|]+)' +
-		// Category sortKey (optional)
-		'\\|?([^\\]]+)?' +
-	']]', 'i' );
+	var properties = [ 'name', 'namespace', 'sortKey' ],
+		rCategory = new RegExp( '\\[\\[' +
+			// Category namespace
+			'(' + wgCategorySelect.defaultNamespaces + '):' +
+			// Category name
+			'([^\\]|]+)' +
+			// Category sortKey (optional)
+			'\\|?([^\\]]+)?' +
+		']]', 'i' );
 
 	return function( category ) {
-		var pieces,
+		var pieces, prop,
 			base = {
 				namespace: wgCategorySelect.defaultNamespace,
 				sortKey: wgCategorySelect.defaultSortKey
@@ -115,6 +124,13 @@ CategorySelect.prototype.makeCategory = (function() {
 		} else {
 			base.name = category;
 			category = base;
+		}
+
+		// Get rid of unecessary properties
+		for ( prop in category ) {
+			if ( $.inArray( prop, properties ) < 0 ) {
+				delete category[ prop ];
+			}
 		}
 
 		// Extract more information if name is a wikilink
@@ -183,7 +199,7 @@ $.fn.categorySelect = (function() {
 	function getWikiCategories() {
 		return cache.wikiCategories || $.nirvana.sendRequest({
 			controller: 'CategorySelectController',
-			method: 'getCategories',
+			method: 'getWikiCategories',
 			type: 'GET',
 			callback: function( wikiCategories ) {
 				cache.wikiCategories = wikiCategories;
@@ -344,7 +360,7 @@ $.fn.categorySelect = (function() {
 
 $.fn.categorySelect.options = {
 	autocomplete: {
-		appendTo: '#CategorySelect',
+		appendTo: '.CategorySelect',
 		minLength: 3
 	},
 	categories: '.categories',

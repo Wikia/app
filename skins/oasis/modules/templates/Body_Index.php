@@ -99,7 +99,6 @@
 
 			</div>
 
-
 			<? if ( empty( $wg->SuppressArticleCategories ) ): ?>
 				<?= $app->renderView( 'ArticleCategories', 'Index' ) ?>
 			<? endif ?>
