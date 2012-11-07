@@ -317,7 +317,7 @@ class GameGuidesController extends WikiaController {
 	 * 		}
 	 * ]}
 	 */
-	public function getTags(){
+	public function getList(){
 		$this->response->setFormat( 'json' );
 
 		$this->response->setCacheValidity(
@@ -328,7 +328,104 @@ class GameGuidesController extends WikiaController {
 			)
 		);
 
-		$this->response->setVal( 'tags',  WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId ) );
+		$requestTag = $this->request->getVal( 'tag' );
+		$tags = WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId );
+
+		if ( !empty( $tags ) ) {
+			if ( empty( $requestTag ) ) {
+				$this->response->setVal(
+					'tags',
+					array_reduce(
+						$tags,
+						function( $ret, $item){
+							$ret[] = $item['name'];
+							return $ret;
+						}
+					)
+				);
+			} else {
+				$ret = false;
+
+				foreach( $tags as $tag ){
+					if ( $requestTag == $tag['name'] ) {
+						$ret = $tag;
+					}
+				}
+
+				$this->response->setVal( 'tag', $ret );
+			}
+		} else {
+
+			$limit = $this->request->getVal( 'limit', 25 );
+			$continue = $this->request->getVal( 'offset' );
+
+			$params = array(
+				'action' => 'query',
+				'list' => 'allcategories',
+				'aclimit' => $limit
+			);
+
+			if( !is_null( $continue ) ) {
+				$params['acfrom'] = $continue;
+			}
+
+			$categories = ApiService::call( $params );
+			$allCategories = $categories['query']['allcategories'];
+
+			if ( !empty( $allCategories ) ) {
+
+				foreach( $allCategories as $key => $value ) {
+					$allCategories[$key] = $value['*'];
+				}
+
+				$this->response->setVal( 'categories', $allCategories );
+
+				if ( !empty( $categories['query-continue'] ) ) {
+					$this->response->setVal( 'offset', $categories['query-continue']['allcategories']['acfrom'] );
+				}
+
+			} else {
+				$this->response->setVal( 'error', true );
+			}
+
+
+
+		}
+	}
+
+	public function getArticles(){
+		$this->response->setFormat( 'json' );
+
+		$requestCategory = $this->request->getVal( 'category' );
+		$limit = $this->request->getVal( 'limit', 25 );
+		$continue = $this->request->getVal( 'offset' );
+
+		$params = array(
+			'action' => 'query',
+			'prop' => 'revisions',
+			'generator' => 'categorymembers',
+			'gcmtitle' => 'Category:' . $requestCategory,
+			'gcmlimit' => $limit,
+			'gcmtype' => 'page|subcat',
+			'rvprop' => 'ids'
+		);
+
+		if( !is_null( $continue ) ) {
+			$params['gcmcontinue'] = $continue;
+		}
+
+		$articles = ApiService::call( $params );
+
+		if ( !empty( $articles['query']['pages'] ) ) {
+			$this->response->setVal( 'articles', $articles['query']['pages']);
+
+			if ( !empty( $articles['query-continue'] ) ) {
+				$this->response->setVal( 'offset', $articles['query-continue']['categorymembers']['gcmcontinue']);
+			}
+		} else {
+			$this->response->setVal( 'error', true );
+		}
+
 	}
 
 	/**
