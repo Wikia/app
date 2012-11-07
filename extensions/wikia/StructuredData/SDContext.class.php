@@ -25,9 +25,14 @@ class SDContext extends WikiaObject {
 		$resourceData = $this->wg->Memc->get( $resourceCacheKey );
 		if(empty($resourceData)) {
 			$resourceData = $this->APIClient->getContext( $resourceUrl, $relative );
-			$this->resources[$resourceUrl] = $resourceData->{"@context"};
-
-			$this->wg->Memc->set( $resourceCacheKey, $this->resources[$resourceUrl], self::RESOURCE_CACHE_TTL );
+			if(!empty($resourceData)) {
+				$this->resources[$resourceUrl] = $resourceData->{"@context"};
+				$this->wg->Memc->set( $resourceCacheKey, $this->resources[$resourceUrl], self::RESOURCE_CACHE_TTL );
+			}
+			else {
+				// @todo fetching context failed, possible error that need to be fixed on SDS side or escalated here.
+				return false;
+			}
 		}
 		else {
 			$this->resources[$resourceUrl] = $resourceData;
