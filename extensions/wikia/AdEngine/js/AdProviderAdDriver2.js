@@ -43,13 +43,13 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 
 	slotMap = {
 		'EXIT_STITIAL_BOXAD_1': {'size':'600x400,300x250', 'tile':2, 'loc': "exit"},
-		'HOME_TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,980x65', 'tile':2, 'loc':'top', 'dcopt':'ist'},
+		'HOME_TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130', 'tile':2, 'loc':'top', 'dcopt':'ist'},
 		'HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
 		'LEFT_SKYSCRAPER_2': {'size':'160x600,120x600', 'tile':3, 'loc':'middle'},
 		'LEFT_SKYSCRAPER_3': {'size': '160x600', 'tile': 6, 'loc': "footer"},
 		'MODAL_INTERSTITIAL': {'size':'600x400','tile':2,'loc':'modal'},
 		'MODAL_RECTANGLE': {'size':'300x100','tile':2,'loc':'modal'},
-		'TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,980x65', 'tile':2, 'loc':'top', 'dcopt':'ist'},
+		'TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130', 'tile':2, 'loc':'top', 'dcopt':'ist'},
 		'TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
 		'WIKIA_BAR_BOXAD_1': {'size':'320x50', 'tile': 4, 'loc': "bottom"}
 	};
