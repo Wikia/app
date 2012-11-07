@@ -52,6 +52,11 @@ class StructuredDataAPIClient {
 		return $this->isValidResponse($response);
 	}
 
+	public function createObject( $body ) {
+		$response = json_decode( $this->call( rtrim( $this->getApiPath(), '/' ), HTTP_REQUEST_METHOD_POST, $body ) );
+		return $this->isValidResponse($response);
+	}
+
 	public function getObject( $id ) {
 		$response = json_decode( $this->call( $this->getApiPath() . $id ) );
 		return $this->isValidResponse($response);
