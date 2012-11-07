@@ -1633,13 +1633,6 @@ class EditPage {
 			$wgOut->addModules( 'mediawiki.legacy.preview' );
 		}
 
-		/* Wikia change begin - @author: Marcin, #BugId: 7845 */
-		/* Move with MW 1.19 merge */
-		if ( !Wikia::isOasis() ) {
-			$wgOut->addScriptFile( 'edit.js' );
-		}
-		/* Wikia change end */
-
 		// Bug #19334: textarea jumps when editing articles in IE8
 		$wgOut->addStyle( 'common/IE80Fixes.css', 'screen', 'IE 8' );
 
