@@ -1,18 +1,18 @@
 <?php
+$value = $object->getValue();
 $values = $object->getValues();
-if (empty($values) || $values[0] == null) {
+if ( $object->hasNoValue() ) {
 	/*
 	 *  property is empty
 	 */
 	echo '<p class="empty">empty</p>';
 
-} elseif ( (is_array($values) && count($values) == 1) || !is_string($values) ) {
+} elseif ( !is_object($value) ) {
 	/*
 	 *  if we have single property (not array) or one-element array
 	 *  we should display it as pure string not as <li> element
 	 */
-	echo is_array($values) ? $values[0] : $values;
-
+	echo $value;
 } else {
 	/*
 	 * property is an array
@@ -36,4 +36,3 @@ if (empty($values) || $values[0] == null) {
 	echo ($rendererName == '@list') ? '</ol>' : '</ul>';
 
 }
-?>

@@ -54,6 +54,10 @@ class SDElementProperty extends SDObject implements SplObserver {
 		return ( in_array( $this->getTypeName(), array( '@set', '@list' ) ) && !is_array( $this->value ) ) ? array( $this->value ) : $this->value;
 	}
 
+	public function hasNoValue() {
+		$values = $this->getValues();
+		return ( empty($values) || $values[0] == null ) ? true : false;
+	}
 
 	public function expandValue(StructuredData $structuredData, $elementDepth) {
 		$value = $this->value;
