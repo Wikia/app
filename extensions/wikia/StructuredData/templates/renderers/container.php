@@ -28,7 +28,12 @@ if ( $object->hasNoValue() ) {
 			echo $referenceHTML;
 		}
 		else {
-			echo $reference;
+			if(is_object($reference) && !isset($reference->object)) {
+				echo '<p class="empty">' . $reference->id . '</p>';
+			}
+			else {
+				echo $reference;
+			}
 		}
 		echo '</li>';
 	}
