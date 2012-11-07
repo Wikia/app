@@ -1,17 +1,8 @@
-// Inter-wiki search - currently for the SearchV2 extension
-// Mixins
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/bodytext";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-
-// Oasis Page Modules //
-@import "../../../../skins/oasis/css/core/color";
-
-$use-dark-icons: false;
-@if lightness($color-buttons) > 50 {
-	$use-dark-icons: true;
-}
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/bodytext";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/gradient";
 
 $color-search-form-background: darken($color-page, 5%);
 @if $is-dark-wiki {
@@ -63,10 +54,10 @@ $form-negative-side-padding: $form-side-padding*-1;
 		}
 
 		.AdvancedSearch {
-			// temporary disablead - part of search redesign project 
-			// to be restyled when new mockup approved 
+			// temporary disablead - part of search redesign project
+			// to be restyled when new mockup approved
 			// (https://internal.wikia-inc.com/wiki/Search/Redesign/Story_3)
-			
+
 			//background: $color-page;
 			//border-bottom: 1px solid $color-page-border;
 			//margin: 0px $form-negative-side-padding 0;
@@ -247,7 +238,7 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 		border-top: 1px solid $color-search-grid-border;
 		border-bottom: 1px solid $color-search-grid-border;
 		margin: 0;
-		padding: 9px 10px;	
+		padding: 9px 10px;
 		p {
 			font-size: 15px;
 			font-weight: bold;
@@ -262,11 +253,11 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 			width: 64px;
 		}
 	}
-	.search-tabs, 
+	.search-tabs,
 	.SearchAdsTopWrapper {
 		border-top: 1px solid $color-search-grid-border;
 		margin-top: 35px;
-	} 
+	}
 	.search-tabs {
 		padding-right: 10px;
 		li {
@@ -292,7 +283,7 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 			background-color: $color-tabs-background;
 			color: $color-text;
 		}
-		
+
 	}
 	.results-wrapper > p {
 		border-bottom: 1px solid $color-search-grid-border;
@@ -300,11 +291,11 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 		line-height: 13px;
 		margin: 0;
 		margin-bottom: 10px;
-		overflow: hidden; 
+		overflow: hidden;
 		padding: 11px 0;
 		text-align: left;
 		text-overflow: ellipsis;
-		white-space: nowrap; 
+		white-space: nowrap;
 	}
 	.result {
 		margin-bottom: 13px;
@@ -318,9 +309,9 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 			float: none;
 			overflow: hidden;
 			text-overflow: ellipsis;
-			white-space: nowrap; 
+			white-space: nowrap;
 		}
-		.redirect-title .result-link, 
+		.redirect-title .result-link,
 		ul .result-link {
 			color: $color-alternate-text;
 		}
