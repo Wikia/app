@@ -177,8 +177,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		$query = html_entity_decode( Sanitizer::StripAllTags ( $query ), ENT_COMPAT, 'UTF-8');
 		
 		$this->params['originalQuery'] = $query;
-		$mwNamespace 	= F::build( 'MWNamespace' );
-		$queryNamespace	= $mwNamespace->getCanonicalIndex( preg_replace( '/^(.*):.*$/', '$1', strtolower( $query ) ) );
+		$queryNamespace	= $this->wg->ContLang->getNsIndex( preg_replace( '/^(.*):.*$/', '$1', strtolower( $query ) ) );
 		if ( $queryNamespace ) {
 			$namespaces = $this->getNamespaces();
 		    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
