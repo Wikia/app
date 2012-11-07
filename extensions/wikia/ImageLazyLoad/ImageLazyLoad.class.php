@@ -28,7 +28,7 @@ class ImageLazyLoad extends WikiaObject {
 
 			$isData = strrpos( $attribs[ 'src' ], "data:" );
 			// Don't lazy-load data elements
-			if ( $isData !== false  ) {
+			if ( $isData !== false && $isData < 2 ) {
 				return true;
 			}
 
@@ -78,7 +78,7 @@ class ImageLazyLoad extends WikiaObject {
 			
 			$isData = strrpos( $image[ 'thumbnail' ], "data:" );
 			// Don't lazy-load data elements
-			if ( $isData !== false ) {
+			if ( $isData !== false && $isData < 2 ) {
 				return true;
 			}
 
