@@ -123,7 +123,7 @@ function linkSuggestAjaxResponse($out) {
 
 
 function getLinkSuggest() {
-	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB, $wgContentNamespaces, $wgMemc, $wgLinkSuggestLimit;
+	global $wgRequest, $wgContLang, $wgContentNamespaces, $wgMemc, $wgLinkSuggestLimit;
 	wfProfileIn(__METHOD__);
 
 	$isMobile = F::app()->checkSkin( 'wikiamobile' );
@@ -230,17 +230,14 @@ function getLinkSuggest() {
 	$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'page_namespace IN (' . $commaJoinedNamespaces . ') AND ' : '';
 	if( count($results) < $wgLinkSuggestLimit ) {
 
+		// TODO: use $db->select helper method
 		$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, page_is_redirect
-
 				FROM page IGNORE INDEX (`name_title`)
-
 				LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
-
 				WHERE {$pageNamespaceClause} (page_title LIKE '{$query}%' or LOWER(page_title) LIKE '{$queryLower}%')
-
 				LIMIT ".($wgLinkSuggestLimit * 3);
 
-		$res = $db->query($sql);
+		$res = $db->query($sql, __METHOD__);
 
 		linkSuggestFormatResults($db, $res, $query, $redirects, $results, $exactMatchRow);
 	}
@@ -330,6 +327,14 @@ function getLinkSuggest() {
 	return linkSuggestAjaxResponse($out);
 }
 
+/**
+ * @param Database $db
+ * @param $res
+ * @param $query
+ * @param $redirects
+ * @param $results
+ * @param $exactMatchRow
+ */
 function linkSuggestFormatResults($db, $res, $query, &$redirects, &$results, &$exactMatchRow) {
 	global $wgLinkSuggestLimit;
 	while(($row = $db->fetchObject($res)) && count($results) < $wgLinkSuggestLimit ) {
