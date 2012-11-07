@@ -42,10 +42,10 @@
 
 	//Search button
 	&.search {
-		@if lightness($color-buttons) > 50 {
-			background-position: -1036px -48px;
-		} @else {
+		@if lightness( $color-button-text ) > 50 {
 			background-position: -1055px -80px;
+		} @else {
+			background-position: -1036px -48px;
 		}
 
 		height: 16px;
