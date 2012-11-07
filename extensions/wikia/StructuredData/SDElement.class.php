@@ -2,7 +2,7 @@
 /**
  * @author ADi
  */
-class SDElement extends SDObject implements SplSubject {
+class SDElement extends SDRenderableObject implements SDObject, SplSubject {
 	private $id = 0;
 	private $depth = 0;
 	private static $excludedNames = array(

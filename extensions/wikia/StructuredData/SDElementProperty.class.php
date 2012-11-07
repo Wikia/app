@@ -2,7 +2,7 @@
 /**
  * @author ADi
  */
-class SDElementProperty extends SDObject implements SplObserver {
+class SDElementProperty extends SDRenderableObject implements SDObject, SplObserver {
 	protected $type = array( 'name' => '@set', 'range' => null );
 	protected $name = null;
 	protected $label = '';
@@ -32,10 +32,6 @@ class SDElementProperty extends SDObject implements SplObserver {
 		$this->value = $value;
 	}
 
-	//public function getValue() {
-	//	return ( in_array( $this->getTypeName(), array( '@set', '@list' ) ) && !is_array( $this->value ) ) ? array( $this->value ) : $this->value;
-	//}
-
 	public function getValue( $index = 0 ) {
 		$value = null;
 		$values = $this->getValues();
@@ -48,6 +44,12 @@ class SDElementProperty extends SDObject implements SplObserver {
 		}
 
 		return $value;
+	}
+
+	public function getValueObject( $index = 0 ) {
+		$value = $this->getValue( $index );
+
+		return F::build('SDValueObject', array( 'object' => $this, 'value' => $value ) );
 	}
 
 	public function getValues() {

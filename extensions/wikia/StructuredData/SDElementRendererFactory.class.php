@@ -9,7 +9,7 @@ class SDElementRendererFactory {
 		$this->config = $config;
 	}
 
-	public function getRenderer(SDObject $object, $context = SD_CONTEXT_DEFAULT) {
+	public function getRenderer(SDRenderableObject $object, $context = SD_CONTEXT_DEFAULT) {
 		foreach($object->getRendererNames() as $rendererName) {
 			if(isset($this->config['renderers'][$rendererName])) {
 				$templateName = $this->config['renderers'][$rendererName];
