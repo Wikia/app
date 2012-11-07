@@ -748,9 +748,15 @@
 			return this.sorted;
 		},
 		sortBy: function( data, sortKey ) {
+			var cmpNumbers = function(a,b){return b[sortKey]-a[sortKey];}, // descending
+				cmpStrings = function(a,b){return b[sortKey]<a[sortKey]?1:(b[sortKey]==a[sortKey]?0:-1);}, //ascending
+				cmp = cmpNumbers;
 			var list = [], index = data, i;
 			for (i in index) list.push(index[i]);
-			list.sort(function(a,b){return b[sortKey]-a[sortKey];});
+			if (list.length && typeof list[0][sortKey] == 'string' ) {
+				cmp = cmpStrings;
+			}
+			list.sort(cmp);
 			index = {};
 			for (i=0;i<list.length;i++) {
 				index[list[i].id] = list[i];
