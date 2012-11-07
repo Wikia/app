@@ -53,6 +53,7 @@ class SDContext extends WikiaObject {
 		}
 
 		$this->processResource($resourceUrl, $elementType);
+		return true;
 	}
 
 	public function getType($name) {
