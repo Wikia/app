@@ -1,7 +1,7 @@
 <?php
 
 class CensusDataRetrieval {
-	var $name = '';
+	var $query = '';
 	var $data = array();
 
 	var $supportedTypes = array( 'vehicle' );
@@ -12,7 +12,7 @@ class CensusDataRetrieval {
 	 * @return true
 	 */
 	public static function retrieveFromName( &$text, &$title ) {
-		// @TODO check if namespace is correct
+		// @TODO check if namespace is correct, quit if not
 
 		$cdr = new self();
 
@@ -25,7 +25,7 @@ class CensusDataRetrieval {
 	 * main method, handles flow and sequence, decides when to give up
 	 */
 	public function execute( $title ) {
-		$this->name = $title->getText();
+		$this->query = $title->getText();
 
 		if ( !$this->fetchData() ) {
 			// no data in Census or something went wrong, quit
@@ -50,9 +50,13 @@ class CensusDataRetrieval {
 	 * @return boolean true on success, false on failed connection or empty result
 	 */
 	private function fetchData() {
-		/* fetch data from API based on $this->query */
+		// @TODO fetch data from API based on $this->query
+
+		// @TODO use data map to filter out unneeded data
 
 		$this->data = array( 'foo' => 'bar' );
+
+		$this->type = 'vehicle'; // @TODO use relevant data field to determine type
 
 		return true;
 	}
@@ -65,7 +69,7 @@ class CensusDataRetrieval {
 		$type = $this->getType();
 		$output = 'test text';
 
-		/* do stuff */
+		/* use data-to-template map to put together template call wikitext */
 
 		return $output;
 	}
@@ -77,11 +81,12 @@ class CensusDataRetrieval {
 	 * @return string
 	 */
 	private function getType() {
-		return 'vehicle';
+		return $this->type;
 	}
 
 	/**
 	 * isSupportedType
+	 *
 	 * @return Boolean
 	 */
 	private function isSupportedType() {
