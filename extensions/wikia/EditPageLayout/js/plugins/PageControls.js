@@ -430,7 +430,10 @@
 					}
 				],
 				width: width,
-				className: 'preview'
+				className: 'preview',
+				onClose: function() {
+					$(window).trigger('EditPagePreviewClosed');
+				}
 			};
 
 			// allow extension to modify the preview dialog
