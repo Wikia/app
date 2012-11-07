@@ -169,7 +169,47 @@ class SDElement extends SDObject implements SplSubject {
 	}
 
 	public function __toString() {
+		return $this->toSDSJson();
+	}
+
+	/**
+	 * get json representation of this object
+	 * @return string
+	 */
+	public function toJson() {
 		return json_encode( $this->toArray() );
+	}
+
+	/**
+	 * get SDS compatible json representation of this object
+	 * @return string
+	 */
+	public function toSDSJson() {
+		$data = new stdClass();
+
+		$data->id = $this->getId();
+		$data->type = $this->getType();
+
+		/** @var $property SDElementProperty */
+		foreach($this->properties as $property) {
+			$value = $property->getValue();
+			if( is_object( $value ) ) {
+				$values = array();
+				foreach($property->getValues() as $value) {
+					$valueObject = new stdClass();
+					if(isset($value->id)) {
+					$valueObject->id = $value->id;
+					$values[] = $valueObject;
+					}
+				}
+				$data->{$property->getName()} = $values;
+			}
+			else {
+				$data->{$property->getName()} = $value;
+			}
+		}
+
+		return json_encode( $data );
 	}
 
 	/**

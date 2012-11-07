@@ -5,8 +5,7 @@
 	}
 
 	// Array of SD object properties 
-	$properties = $sdsObject->getProperties(); 
-	
+	$properties = $sdsObject->getProperties();
 ?>
 
 <div class="SDObject" id="SDObject">
