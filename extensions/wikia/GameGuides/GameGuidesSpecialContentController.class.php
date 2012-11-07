@@ -63,19 +63,21 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 					$err[] = $categoryName;
 				} else if ( empty( $err ) ) {
 
+					$category = array(
+						'name' => $categoryName
+					);
+
+					if ( !empty( $values['name'] ) ) {
+						$category['label'] = $values['name'];
+					}
+
 					if ( array_key_exists( $values['tag'], $tags ) ) {
-						$tags[$values['tag']]['categories'][] = array(
-							'category' => $categoryName,
-							'name' => $values['name']
-						);
+						$tags[$values['tag']]['categories'][] = $category;
 					} else {
 						$tags[$values['tag']] = array(
 							'name' => $values['tag'],
 							'categories' => array(
-								array(
-									'category' => $categoryName,
-									'name' => $values['name']
-								)
+								$category
 							)
 						);
 					}
