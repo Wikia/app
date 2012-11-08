@@ -1095,6 +1095,7 @@ class ResourceLoader {
 	public static function makeLoaderURL( $modules, $lang, $skin, $user = null, $version = null, $debug = false, $only = null,
 			$printable = false, $handheld = false, $extraQuery = array() ) {
 		global $wgLoadScript;
+		wfProfileIn(__METHOD__);
 		$query = self::makeLoaderQuery( $modules, $lang, $skin, $user, $version, $debug,
 			$only, $printable, $handheld, $extraQuery
 		);
@@ -1103,13 +1104,16 @@ class ResourceLoader {
 		$loadScript = $wgLoadScript;
 		$url = false;
 		if ( !wfRunHooks('AlternateResourceLoaderURL',array(&$loadScript,&$query,&$url,$modules)) || $url !== false ) {
+			wfProfileOut(__METHOD__);
 			return $url;
 		}
 		/* Wikia - change end */
 
 		// Prevent the IE6 extension check from being triggered (bug 28840)
 		// by appending a character that's invalid in Windows extensions ('*')
-		return wfExpandUrl( wfAppendQuery( $loadScript, $query ) . '&*', PROTO_RELATIVE );
+		$url = wfExpandUrl( wfAppendQuery( $loadScript, $query ) . '&*', PROTO_RELATIVE );
+		wfProfileOut(__METHOD__);
+		return $url;
 	}
 
 	/**
@@ -1119,6 +1123,7 @@ class ResourceLoader {
 	 */
 	public static function makeLoaderQuery( $modules, $lang, $skin, $user = null, $version = null, $debug = false, $only = null,
 			$printable = false, $handheld = false, $extraQuery = array() ) {
+		wfProfileIn(__METHOD__);
 		$query = array(
 			'modules' => self::makePackedModulesString( $modules ),
 			'lang' => $lang,
@@ -1148,6 +1153,7 @@ class ResourceLoader {
 
 		// Make queries uniform in order
 		ksort( $query );
+		wfProfileOut(__METHOD__);
 		return $query;
 	}
 
