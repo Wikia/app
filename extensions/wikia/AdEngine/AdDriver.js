@@ -3,7 +3,7 @@
 /* requires Liftium.js */
 /* requires extensions/wikia/AdEngine/ghost */
 
-var abTest = { inTreatmentGroup: function(group) { return (group == 'ONLOAD') ? true : false; } }; // fake AB for AdDriver
+var abTest = window.Wikia.AbTest && new Wikia.AbTest( "AD_LOAD_TIMING" );
 
 ///// BEGIN AdDriver
 var AdDriver = {
