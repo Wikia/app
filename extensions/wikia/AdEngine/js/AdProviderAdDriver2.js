@@ -62,7 +62,6 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 
 // FORMER SLOTS {
 //		'DOCKED_LEADERBOARD': {'tile': 8, 'loc': "bottom"},
-//		'EXIT_STITIAL_INVISIBLE': {'tile':1, 'loc': "exit", 'dcopt': "ist"},
 //		'FOOTER_BOXAD': {'tile': 5, 'loc': "footer"},
 //		'HOME_LEFT_SKYSCRAPER_1': {'tile':3, 'loc': "top"},
 //		'HOME_LEFT_SKYSCRAPER_2': {'tile':3, 'loc': "middle"},
