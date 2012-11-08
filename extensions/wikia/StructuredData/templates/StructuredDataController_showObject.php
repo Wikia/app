@@ -78,4 +78,7 @@
 			<?php endforeach; ?>
 		</tbody>
 	</table>
+	<?php if($context == SD_CONTEXT_EDITING): ?>
+		<input type="submit" value="Save Changes" class="wikia-button SDObjectSave" />
+	<?php endif; ?>
 </form>
