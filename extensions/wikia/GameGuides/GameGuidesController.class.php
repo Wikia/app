@@ -124,6 +124,16 @@ class GameGuidesController extends WikiaController {
 		$this->wf->profileOut( __METHOD__ );
 	}
 
+	private function cacheMe(){
+		$this->response->setCacheValidity(
+			self::VARNISH_CACHE_TIME,
+			self::VARNISH_CACHE_TIME,
+			array(
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
+	}
+
 	/**
 	 * @brief Api entry point to get a page and globals and messages that are relevant to the page
 	 *
@@ -133,13 +143,7 @@ class GameGuidesController extends WikiaController {
 		//This will always return json
 		$this->response->setFormat( 'json' );
 
-		$this->response->setCacheValidity(
-			self::VARNISH_CACHE_TIME,
-			self::VARNISH_CACHE_TIME,
-			array(
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$this->cacheMe();
 
 		//set mobile skin as this is based on it
 		RequestContext::getMain()->setSkin(
@@ -335,13 +339,7 @@ class GameGuidesController extends WikiaController {
 	public function getList(){
 		$this->response->setFormat( 'json' );
 
-		$this->response->setCacheValidity(
-			self::VARNISH_CACHE_TIME,
-			self::VARNISH_CACHE_TIME,
-			array(
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$this->cacheMe();
 
 		$content = WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId );
 
@@ -393,7 +391,7 @@ class GameGuidesController extends WikiaController {
 			}
 
 		} else {
-			$this->response->setVal( 'error', true );
+			$this->response->setVal( 'error', 'No Categories' );
 		}
 	}
 
@@ -421,6 +419,7 @@ class GameGuidesController extends WikiaController {
 			)
 		);
 
+		//there also might be some categories without TAG, lets find them as well
 		$this->getTagCategories( $content, '' );
 	}
 
@@ -433,6 +432,8 @@ class GameGuidesController extends WikiaController {
 	 */
 	public function getArticles(){
 		$this->response->setFormat( 'json' );
+
+		$this->cacheMe();
 
 		$articles = ApiService::call(
 			array(
@@ -454,7 +455,7 @@ class GameGuidesController extends WikiaController {
 				$this->response->setVal( 'offset', $articles['query-continue']['categorymembers']['cmcontinue']);
 			}
 		} else {
-			$this->response->setVal( 'error', true );
+			$this->response->setVal( 'error', 'No members' );
 		}
 
 	}
