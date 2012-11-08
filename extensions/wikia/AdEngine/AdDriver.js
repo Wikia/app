@@ -3,6 +3,8 @@
 /* requires Liftium.js */
 /* requires extensions/wikia/AdEngine/ghost */
 
+var abTest = window.Wikia.AbTest && new Wikia.AbTest( "AD_LOAD_TIMING" );
+
 ///// BEGIN AdDriver
 var AdDriver = {
 	adProviderAdDriver: 'AdDriver',
@@ -748,6 +750,11 @@ AdDriverDelayedLoader.loadNext = function() {
 			AdDriverDelayedLoader.loadNext();
 		}
 	}
+	else if ( ( window.wgLoadAdDriverOnLiftiumInit || window.Wikia.AbTest && Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "AS_WRAPPERS_ARE_RENDERED" ) ) ) {
+		if (AdDriverDelayedLoader.runFinalize) {
+			AdDriverDelayedLoader.finalize();
+		}
+	}
 	else {
 		AdDriverDelayedLoader.finalize();
 	}
@@ -882,6 +889,60 @@ if (!window.adslots) {
 	window.adslots = [];
 }
 
-$(window).load(function() {
-	AdDriverDelayedLoader.load();
-});
+// Any page without abTest doesn't have ads
+if (abTest) {
+	if ( !window.wgLoadAdDriverOnLiftiumInit && !abTest.inTreatmentGroup( "AS_WRAPPERS_ARE_RENDERED" ) ) {
+Wikia.log('(launch, stage 1)', 3, 'AdDriver');
+		for (var i=0; i < window.adslots.length; i++) {
+			AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem(window.adslots[i][0], window.adslots[i][1], window.adslots[i][2]));
+		}
+	}
+
+	if ( !window.wgLoadAdDriverOnLiftiumInit && abTest.inTreatmentGroup( "ONLOAD" ) ) {
+Wikia.log('(launch, stage 2)', 3, 'AdDriver');
+		$(window).load(function() {
+Wikia.log('(launch, stage 3)', 3, 'AdDriver');
+			AdDriverDelayedLoader.load();
+		});
+	}
+	else {
+		var adDriverFuncsToExecute = [];
+
+		if ( window.wgLoadAdDriverOnLiftiumInit || abTest.inTreatmentGroup( "AS_WRAPPERS_ARE_RENDERED" ) ) {
+			adDriverFuncsToExecute.push( function () {
+				window.adDriverCanInit = true;
+				AdDriverDelayedLoader.prepareSlots(AdDriverDelayedLoader.highLoadPriorityFloor);
+			});
+
+			var prepareLowPrioritySlots = function() {
+				AdDriverDelayedLoader.prepareSlots(0);
+				if (!AdDriverDelayedLoader.isRunning()) {
+					AdDriverDelayedLoader.finalize();
+				}
+				else {
+					AdDriverDelayedLoader.runFinalize = true;
+				}
+			}
+
+			$(document).ready(function() {
+				if (window.adDriverCanInit == false) {
+					adDriverFuncsToExecute.push(prepareLowPrioritySlots);
+				}
+				else {
+					prepareLowPrioritySlots();
+				}
+			});
+		}
+		else {
+			adDriverFuncsToExecute.push(function() {
+				AdDriverDelayedLoader.load();
+			});
+		}
+
+		Liftium.init(function() {
+			for(var i=0; i<adDriverFuncsToExecute.length; i++) {
+				adDriverFuncsToExecute[i]();
+			}
+		});
+	}
+}

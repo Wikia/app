@@ -1357,6 +1357,8 @@ Liftium.init = function (callback) {
 
 	Liftium.pullGeo();
 	Liftium.pullConfig(callback2);
+	
+	Liftium.addEventListener(window, "load", Liftium.onLoadHandler);
 
 	// Tell the parent window to listen to hop messages 
 	if (LiftiumOptions.enableXDM !== false ){
@@ -1682,7 +1684,7 @@ Liftium.onLoadHandler = function () {
 	//Liftium.trackEvent(["onload", Liftium.formatTrackTime(Liftium.debugTime(), 30)], "UA-17475676-7");
 
 	Liftium.pageLoaded = true;
-	if (!Liftium.e(Liftium.config) && Liftium.iframesLoaded()) {
+	if ( Liftium.iframesLoaded()) {
 		Liftium.sendBeacon();
 	} else if (Liftium.loadDelay < Liftium.maxLoadDelay){
 		// Check again in a bit. Keep increasing the time
@@ -2625,8 +2627,11 @@ if (LiftiumOptions.error_beacon !== false ){
 
 
 // Gentlemen, Start your optimization!
-if (Liftium.empty(LiftiumOptions.offline)){
+if (Liftium.empty(LiftiumOptions.offline) && LiftiumOptions.autoInit !== false){
 	Liftium.init();
 }
 
-Liftium.addEventListener(window, 'load', Liftium.onLoadHandler);
+// If an ad was specified in LiftiumOptions, call the ad directly
+if (LiftiumOptions.callAd){
+	Liftium.callAd(LiftiumOptions.callAd);
+}
