@@ -41,13 +41,11 @@ class CensusDataRetrieval {
 			return true;
 		}
 
-		$infoboxText = $this->parseData();
+		$text = $this->parseData();
 
-		$typeLayout = $this->getLayout();
+		$text .= $this->getLayout();
 
-		$category = '[[' . Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY )->getPrefixedText() . ']]';
-
-		$text = $infoboxText . $typeLayout . $category;
+		$text .= "\n[[" . Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY )->getPrefixedText() . ']]';
 
 		return $text;
 	}
@@ -112,7 +110,13 @@ class CensusDataRetrieval {
 	 * @return string
 	 */
 	private function getLayout() {
-		return $this->data;
+		$key = 'census-data-retrieval-layout-' . $this->getType();
+
+		if ( !wfEmptyMsg( $key ) ) {
+			return "\n" . wfMsgForContent( $key ) . "\n";
+		} else {
+			return '';
+		}
 	}
         
 	/**
