@@ -6,6 +6,13 @@ class CensusDataRetrieval {
 
 	var $supportedTypes = array( 'vehicle' );
 
+	var $typeMap = array(
+		'vehicle' => array(
+			'name' => 'name.en',
+			'type' => 'type',
+		)
+	);
+
 	/**
 	 * entry point
 	 * called by hook 'onEditFormPreloadText'
@@ -120,7 +127,8 @@ class CensusDataRetrieval {
 		foreach ( $this->supportedTypes as $type ) {
 			$property = $type . '_list';
 			if ( isset( $map->$property ) ) {
-				$object = $map->vehicle_list[0];
+				$object = $map->$property[0];
+				$this->type = $type;
 				break;
 			}
 		}
@@ -129,7 +137,6 @@ class CensusDataRetrieval {
 			wfDebug( __METHOD__ . ': Unsupported object type' );
 			return false;
 		} else {
-			$this->type = $object->type;
 			wfDebug( __METHOD__ . ": Found object of type {$object->type}" );
 		}
 
