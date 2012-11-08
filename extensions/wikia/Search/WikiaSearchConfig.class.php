@@ -434,13 +434,14 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		$searchableNamespaces = array_keys( SearchEngine::searchableNamespaces() );
 		$nsVals = $this->getNamespaces();
 		
-		if(empty($nsVals)) {
-		    return $this->wg->User->getOption('searchAllNamespaces') ? 'all' :  'default';
+		if ( empty( $nsVals ) ) {
+			return $this->wg->User->getOption('searchAllNamespaces') ? 'all' :  $this->wg->DefaultSearchProfile;
 		}
 		
 		foreach( $this->getSearchProfiles() as $name => $profile ) {
-		    if ( !count( array_diff( $nsVals, $profile['namespaces'] ) ) && !count( array_diff($profile['namespaces'], $nsVals ) )) {
-		        return $name;
+		    if (   ( count( array_diff( $nsVals, $profile['namespaces'] ) ) == 0 ) 
+		    	&& ( count( array_diff($profile['namespaces'], $nsVals ) ) == 0 ) ) {
+	        	return $name;
 		    }
 		}
 		
