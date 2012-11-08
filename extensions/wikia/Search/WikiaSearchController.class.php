@@ -320,7 +320,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			    $namespaces = array_keys($searchableNamespaces);
 		    } else {
 		    	$profiles = $searchConfig->getSearchProfiles();
-		    	$namespaces = $profiles[$this->wg->DefaultSearchProfile]['namespaces'];
+		    	// this is mostly needed for unit testing
+		    	$defaultProfile = !empty( $this->wg->DefaultSearchProfile ) ? $this->wg->DefaultSearchProfile : 'default';
+		    	$namespaces = $profiles[$defaultProfile]['namespaces'];
 		    }
 		    
 		}
