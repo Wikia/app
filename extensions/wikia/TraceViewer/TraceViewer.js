@@ -182,6 +182,7 @@
 			this.children = [];
 			this.seqIn = 0;
 			this.seqOut = 0;
+			this.attrs = {};
 		},
 		add: function( id ) {
 			var child = new this.constructor(this,id);
@@ -231,6 +232,12 @@
 			}
 			return false;
 		},
+		getParentIndex: function() {
+			if ( !this.parent ) {
+				return 0;
+			}
+			return this.parent.children.indexOf(this);
+		},
 		clone: function( parent, shallow ) {
 			var copy = new this.constructor(parent,this.id),
 				i;
@@ -242,6 +249,7 @@
 			}
 			copy.seqIn = this.seqIn;
 			copy.seqOut = this.seqOut;
+			copy.attrs = this.attrs;
 			return copy;
 		}
 	});
@@ -327,7 +335,8 @@
 		fromText: function( text ) {
 			this.reset();
 			var lines = text.split("\n"), i,
-				REGEX = /^([0-9.]+)?\s*([-0-9.]+)\s*([><])\s*(.*)$/;
+				REGEX = /^([0-9.]+)?\s*([-0-9.]+)\s*([><])\s*(.*)$/,
+				REGEX_ATTR = /^\s*:\s*([^ ]+)\s*=\s*(.*)$/;
 			for (i=0;i<lines.length;i++) {
 				var line = lines[i],
 					m = REGEX.exec(line);
@@ -341,6 +350,14 @@
 					} else {
 						this.endNode(name,time,mem);
 					}
+				} else {
+					m = REGEX_ATTR.exec(line);
+					if ( m ) {
+						var attr = m[1],
+							value = m[2],
+							top = this.top();
+						top && (top.attrs[attr] = value);
+					}
 				}
 			}
 			this.endTree();
@@ -349,7 +366,7 @@
 		fromDom: function() {
 			var text = '';
 			var node = window.document.lastChild;
-			if ( node.nodeType == 8 /* comment */ && /Beginning trace/.test(node.textContent) ) {
+			if ( node.nodeType == 8 /* comment */ && /Beginning (extended )?trace/.test(node.textContent) ) {
 				text = node.textContent;
 			}
 			return this.fromText(text);
@@ -1014,13 +1031,21 @@
 			}
 
 			var html = '',
-				path;
+				path, stack;
 			for (i=0;i<paths.length;i++) {
 				path = paths[i];
 				html += '<b>Stack #'+(i+1)+'</b><br />';
 				for (j=0;j<path.length;j++) {
-					html += path[j].id + '<br />';
+					if ( path[j].attrs['stack'] ) {
+						stack = path[j].attrs['stack'].split('|');
+						for (k=0;k<stack.length;k++) {
+							stack[k] = '-- ' + stack[k];
+						}
+						html += stack.join('<br />') + '<br />';
+					}
+					html += '[' + path[j].getParentIndex() + ']' + path[j].id + '<br />';
 				}
+				html += '<br />';
 			}
 			this.details.html(html);
 		},
@@ -1037,6 +1062,8 @@
 				sortKey = target.data('sort-key');
 			if ( sortKey ) {
 				this.sortedIndex.setSort(sortKey);
+				this.sortedChildren.setSort(sortKey);
+				this.sortedCallers.setSort(sortKey);
 			}
 		},
 		methodClicked: function( ev ) {
