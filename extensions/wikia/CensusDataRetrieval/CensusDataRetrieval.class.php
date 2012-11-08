@@ -25,7 +25,7 @@ class CensusDataRetrieval {
 	 * main method, handles flow and sequence, decides when to give up
 	 */
 	public function execute( $title ) {
-		$this->query = $title->getText();
+		$this->query = strtolower(str_replace(' ', '_', $title->getText()));
 
 		if ( !$this->fetchData() ) {
 			// no data in Census or something went wrong, quit
@@ -51,12 +51,22 @@ class CensusDataRetrieval {
 	 */
 	private function fetchData() {
 		// @TODO fetch data from API based on $this->query
+                $http = new Http();
+                
+                $censusData = $http->get('http://data.soe.com/s:wikia/get/ps2/vehicle/?code='.$this->query);
+                $censusMap = $this->getMap($censusData);
+                
+                // @TODO use data map to filter out unneeded data
+                // 
+                //vehicle
+                $vehicle = $censusMap->vehicle_list[0];
+		$this->data = array( 'name' => $vehicle->name->en,
+                        'type' => $vehicle->type,
+                        'description' => $vehicle->description->en,
+                        'cost' => $vehicle->ingame_costs->cost,
+                        'cost_resource' => $vehicle->ingame_costs->resource->en );
 
-		// @TODO use data map to filter out unneeded data
-
-		$this->data = array( 'foo' => 'bar' );
-
-		$this->type = 'vehicle'; // @TODO use relevant data field to determine type
+                $this->type = 'vehicle'; // @TODO use relevant data field to determine type
 
 		return true;
 	}
@@ -67,9 +77,10 @@ class CensusDataRetrieval {
 	 */
 	private function parseData() {
 		$type = $this->getType();
-		$output = 'test text';
-
-		/* use data-to-template map to put together template call wikitext */
+                
+		$output = 'test text23';
+                $output = $this->query;
+                /* use data-to-template map to put together template call wikitext */
 
 		return $output;
 	}
@@ -99,6 +110,21 @@ class CensusDataRetrieval {
 	 * @return string
 	 */
 	private function getLayout() {
-		return '';
+		return $this->data;
+	}
+        
+	/**
+ 	 * getType
+	 * determines type based on fetched data
+	 *
+	 * @return string
+	 */
+	private function getMap($html) {
+                $arr= array();
+                preg_match('/<body>(.*)<\/body>/s', $html, $arr);
+                $json = $arr[1];
+                $json = strip_tags($json);
+                $map = json_decode($json);
+		return $map;
 	}
 }
