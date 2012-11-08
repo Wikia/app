@@ -614,8 +614,8 @@ class EditPageLayout extends EditPage {
 				'content' => $this->app->wf->msgExt('talkpagetext', array('parse')),
 				'class' => 'mw-talkpagetext',
 			);
-		} elseif ( $this->mTitle->isMainPage() && !$this->userDismissedEduNote() ) {
-		//if this is a main page and user hasn't seen the main page educational notice -- show it :)
+		} elseif ( $this->mTitle->isMainPage() && !$this->mTitle->isProtected() && !$this->userDismissedEduNote() ) {
+		//if this is an unprotected main page and user hasn't seen the main page educational notice -- show it :)
 			/** @var $notice EditPageNotice */
 			$notice = WF::build( 'EditPageNotice',array($this->app->wf->msgExt('mainpagewarning-notice', array('parse')), 'MainPageEduNote') );
 			$this->helper->addJsVariable('mainPageEduNoteHash', $notice->getHash());
