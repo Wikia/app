@@ -195,6 +195,7 @@ abstract class CodeLint {
 	 * @return mixed blame data
 	 */
 	protected function getBlameInfo($fileName, $line) {
+		global $IP;
 		wfProfileIn(__METHOD__);
 
 		static $cache = array(
@@ -203,7 +204,8 @@ abstract class CodeLint {
 		);
 
 		if ($cache['fileName'] !== $fileName) {
-			exec("git blame --root {$fileName}", $lines);
+			$cmd = sprintf("cd %s && git blame -c --root %s", $IP, $fileName);
+			exec($cmd, $lines);
 
 			$cache['fileName'] = $fileName;
 			$cache['lines'] = $lines;
@@ -212,13 +214,12 @@ abstract class CodeLint {
 		$blameLine = $cache['lines'][$line];
 
 		// parse blame line
-		// c860b634 (emil 2008-08-26 09:43:40 +0000   6)  * @file
 		if ($blameLine != '') {
-			list($rev, $author, ) = explode(' ', $blameLine);
+			list($rev, $author, ) = explode("\t", $blameLine);
 
 			$ret = array(
 				'rev' => trim($rev, '^ '),
-				'author' => trim($author, '( ')
+				'author' => ltrim($author, '( ')
 			);
 		}
 		else {
