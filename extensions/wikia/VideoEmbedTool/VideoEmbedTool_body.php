@@ -72,7 +72,6 @@ class VideoEmbedTool {
 	function editVideo() {
 		global $wgRequest;
 		$itemTitle = $wgRequest->getVal('itemTitle');
-
 		$title = Title::newFromText($itemTitle, NS_FILE);
 		$file = wfFindFile( $title );
 

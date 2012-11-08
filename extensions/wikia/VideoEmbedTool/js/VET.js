@@ -52,7 +52,6 @@ function VET_editVideo() {
 
 	var callback = {
 		success: function(o) {
-		
 			var data = FCK.wysiwygData[VET_refid];
 
 			VET_displayDetails(o.responseText, data);
@@ -113,9 +112,10 @@ function VET_editVideo() {
 	} else {
 		escTitle = FCK.wysiwygData[VET_refid].href;
 	}
-	escTitle = (escTitle).replace(/&/g, escape("&"));
+	escTitle = encodeURIComponent(escTitle);
 	params.push( 'itemTitle='+escTitle );
 
+	YAHOO.util.Connect.initHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
 	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=editVideo&' + params.join('&'), callback);
 }
 
