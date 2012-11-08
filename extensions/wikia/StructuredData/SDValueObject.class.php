@@ -8,10 +8,12 @@ class SDValueObject extends SDRenderableObject {
 	 */
 	protected $object = null;
 	protected $value = null;
+	protected $range = array();
 
-	public function __construct( SDObject $object, $value ) {
+	public function __construct( SDObject $object, $value, $range = array() ) {
 		$this->object = $object;
 		$this->value = $value;
+		$this->range = $range;
 	}
 
 	public function setValue($value) {
@@ -34,6 +36,14 @@ class SDValueObject extends SDRenderableObject {
 	 */
 	public function getObject() {
 		return $this->object;
+	}
+
+	public function setRange($range) {
+		$this->range = $range;
+	}
+
+	public function getRange() {
+		return $this->range;
 	}
 
 	public function getRendererNames() {

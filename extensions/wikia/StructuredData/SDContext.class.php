@@ -60,6 +60,10 @@ class SDContext extends WikiaObject {
 		return isset($this->types[$name]) ? $this->types[$name] : false;
 	}
 
+	public function getTypes() {
+		return $this->types;
+	}
+
 	private function processResource($resourceUrl, $elementType = null) {
 		foreach($this->resources[$resourceUrl] as $typeName => $data) {
 			if($data instanceof stdClass) {
@@ -81,9 +85,10 @@ class SDContext extends WikiaObject {
 		}
 	}
 
-	private function getPropertyDescription( $objectType, $propertyName ) {
+	public function getPropertyDescription( $objectType, $propertyName ) {
 		// @todo re-check after term definition will be fixed (?)
 		foreach($this->objectDescriptions[$objectType]->{"properties"} as $propertyDescription) {
+//echo $objectType . ": " . $propertyDescription->id . " = $propertyName ? \n";
 			if($propertyDescription->id == $propertyName) {
 				return $propertyDescription;
 			}

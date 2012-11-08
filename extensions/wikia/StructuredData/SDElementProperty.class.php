@@ -48,8 +48,9 @@ class SDElementProperty extends SDRenderableObject implements SDObject, SplObser
 
 	public function getValueObject( $index = 0 ) {
 		$value = $this->getValue( $index );
+		$type = $this->getType();
 
-		return F::build('SDValueObject', array( 'object' => $this, 'value' => $value ) );
+		return F::build('SDValueObject', array( 'object' => $this, 'value' => $value, 'range' => $type['range'] ) );
 	}
 
 	public function getValues() {
@@ -127,6 +128,13 @@ class SDElementProperty extends SDRenderableObject implements SDObject, SplObser
 		$type = $subject->getContext()->getType( $this->name );
 		if($type) {
 			$this->type = $type;
+		}
+
+		if(empty($this->type['range'])) {
+			$propertyDescription = $subject->getContext()->getPropertyDescription( $subject->getType(), $this->name );
+			if(is_object($propertyDescription) && isset($propertyDescription->range)) {
+				$this->type['range'] = $propertyDescription->range;
+			}
 		}
 	}
 
