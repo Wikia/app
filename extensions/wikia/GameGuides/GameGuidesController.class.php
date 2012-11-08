@@ -124,6 +124,11 @@ class GameGuidesController extends WikiaController {
 		$this->wf->profileOut( __METHOD__ );
 	}
 
+	/**
+	 *
+	 * Simple DRY function to set cache for 24 hours
+	 *
+	 */
 	private function cacheMe(){
 		$this->response->setCacheValidity(
 			self::VARNISH_CACHE_TIME,
@@ -323,18 +328,12 @@ class GameGuidesController extends WikiaController {
 	 * make sure that name of this function is aligned
 	 * with what is in onGameGuidesContentSave to purge varnish correctly
 	 *
-	 * $return response['tags'] List of tags in a format:
+	 * @return {}
 	 *
-	 * {tags:[
-	 * 		{
-	 * 			name: 'name',
-	 * 			categories:
-	 * 			{
-	 * 				category: 'Category',
-	 * 				name: 'Name'
-	 * 			}
-	 * 		}
-	 * ]}
+	 * getList - list of tags on a wiki or list of all categories if GGCMT was not used
+	 * getList&offset='' - next page of categories if no tages were given
+	 * getList&tag='' - list of all members of a given tag
+	 *
 	 */
 	public function getList(){
 		$this->response->setFormat( 'json' );
@@ -395,6 +394,15 @@ class GameGuidesController extends WikiaController {
 		}
 	}
 
+	/**
+	 *
+	 * Returns Categories under a given Tag
+	 *
+	 * @param $content
+	 * @param $requestTag
+	 *
+	 * @responseReturn Array|false Categories or false if tag was not found
+	 */
 	private function getTagCategories( $content, $requestTag ){
 		$ret = false;
 
@@ -407,6 +415,12 @@ class GameGuidesController extends WikiaController {
 		$this->response->setVal( 'categories', $ret );
 	}
 
+	/**
+	 * @param $content Array content of a wgWikiaGameGuidesContent
+	 *
+	 * @responseReturn Array tags List of tags on a wiki
+	 * @responseReturn See getTagCategories
+	 */
 	private function getTags( $content ) {
 		$this->response->setVal(
 			'tags',
@@ -429,6 +443,9 @@ class GameGuidesController extends WikiaController {
 	 * @requestParam String offset [optional]
 	 *
 	 * @return Array of articles
+	 *
+	 * @example method=getArticles&category=Category_Name
+	 * @example method=getArticles&category=Category_Name&offset=Offset
 	 */
 	public function getArticles(){
 		$this->response->setFormat( 'json' );
