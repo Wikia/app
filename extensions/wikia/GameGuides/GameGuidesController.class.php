@@ -124,9 +124,7 @@ class GameGuidesController extends WikiaController {
 	}
 
 	/**
-	 *
 	 * Simple DRY function to set cache for 24 hours
-	 *
 	 */
 	private function cacheMeFor( $days = 1 ){
 		$this->response->setCacheValidity(
@@ -147,7 +145,7 @@ class GameGuidesController extends WikiaController {
 		//This will always return json
 		$this->response->setFormat( 'json' );
 
-		$this->cacheMeFor( 1 );
+		$this->cacheMeFor( 7 );//a week
 
 		//set mobile skin as this is based on it
 		RequestContext::getMain()->setSkin(
