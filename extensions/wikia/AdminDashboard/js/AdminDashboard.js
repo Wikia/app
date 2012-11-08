@@ -27,6 +27,16 @@ var AdminDashboard = {
 		}, function() {
 			AdminDashboard.tooltip.text('');
 		}).click(AdminDashboard.handleControlClick);
+		
+		// init addVideo jQuery plugin
+		var addVideoButton = AdminDashboard.cc.find('.addVideoButton'),
+			addVideoButtonReturnUrl = addVideoButton.data('return-url');
+		
+		addVideoButton.addVideoButton({
+			callback: function() {
+				window.location = addVideoButtonReturnUrl;
+			}
+		});
 
 		AdminDashboard.allTabs.click(function(e) {
 			e.preventDefault();
