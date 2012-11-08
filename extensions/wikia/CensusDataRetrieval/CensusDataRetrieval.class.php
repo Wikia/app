@@ -131,7 +131,7 @@ class CensusDataRetrieval {
 		foreach ( $this->supportedTypes as $type ) {
 			$property = $type . '_list';
 			if ( isset( $map->$property ) ) {
-				$object = $map->$property[0];
+				$object = $map->{$property}[0];
 				$this->type = $type;
 				break;
 			}
