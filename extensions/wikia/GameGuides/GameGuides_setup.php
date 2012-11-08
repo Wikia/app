@@ -76,7 +76,8 @@ $app->wg->set( 'wgGameGuidesGlobalsWhiteList',
 		'wgServer',
 		'wgScriptPath',
 		'wgAssetsManagerQuery',
-		'wgStyleVersion'
+		'wgStyleVersion',
+		'wgRevisionId'
 	) );
 }
 
