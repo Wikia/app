@@ -466,7 +466,6 @@ AdDriver.canCallLiftium = function(slotname) {
 	switch (slotname) {
 		case 'HUB_TOP_LEADERBOARD':
 		case 'INVISIBLE_MODAL':
-		case 'INVISIBLE_TOP':
 		case 'MIDDLE_RIGHT_BOXAD':
 		case 'MODAL_VERTICAL_BANNER':
 			return false;

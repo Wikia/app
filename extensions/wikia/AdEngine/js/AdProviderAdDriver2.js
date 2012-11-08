@@ -82,7 +82,6 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 //		'INVISIBLE_1': {'tile':10, 'loc': "invisible"},
 //		'INVISIBLE_2': {'tile':11, 'loc': "invisible"},
 //		'INVISIBLE_MODAL': {'tile':14, 'loc': "invisible"},
-//		'INVISIBLE_TOP': {'tile':13, 'loc': "invisible"},
 //		'JWPLAYER': {'tile': 2, 'loc': "top"},
 //		'LEFT_SKYSCRAPER_1': {'tile': 3, 'loc': "top"},
 //		'MIDDLE_RIGHT_BOXAD': {'tile': 1, 'loc': "middle"},

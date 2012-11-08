@@ -26,7 +26,6 @@ var AdConfig2 = function (
 		'HOME_TOP_RIGHT_BOXAD':true,
 		'HUB_TOP_LEADERBOARD':true,
 		'INVISIBLE_MODAL':true,
-		'INVISIBLE_TOP':true,
 		'LEFT_SKYSCRAPER_2':true,
 		'MIDDLE_RIGHT_BOXAD':true,
 		'MODAL_RECTANGLE':true,

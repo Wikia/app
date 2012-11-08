@@ -1,6 +1,6 @@
 /* global Features */
 var AdConfig = {
-	adSlotsRequiringJSInvocation: { INVISIBLE_TOP:1, INVISIBLE_1:1, INVISIBLE_2:1 },
+	adSlotsRequiringJSInvocation: { INVISIBLE_1:1, INVISIBLE_2:1 },
 	geo: null,
 
 	isHighValueCountry: function(country) {
@@ -19,7 +19,6 @@ var AdConfig = {
 			case 'HOME_TOP_RIGHT_BOXAD':
 			case 'HUB_TOP_LEADERBOARD':
 			case 'INVISIBLE_MODAL':
-			case 'INVISIBLE_TOP':	// skin
 			case 'LEFT_SKYSCRAPER_2':
 			case 'MIDDLE_RIGHT_BOXAD':
 			case 'MODAL_RECTANGLE':
@@ -107,7 +106,6 @@ AdConfig.DART = {
 	   'INVISIBLE_1': {'tile':10, 'loc': "invisible"},
 	   'INVISIBLE_2': {'tile':11, 'loc': "invisible"},
 	   'INVISIBLE_MODAL': {'tile':14, 'loc': "invisible"},
-	   'INVISIBLE_TOP': {'tile':13, 'loc': "invisible"},
 	   'JWPLAYER': {'tile': 2, 'loc': "top"},
 	   'LEFT_SKYSCRAPER_1': {'tile': 3, 'loc': "top"},
 	   'LEFT_SKYSCRAPER_2': {'tile': 3, 'loc': "middle"},

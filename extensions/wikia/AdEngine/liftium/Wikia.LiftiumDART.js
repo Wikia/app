@@ -57,7 +57,6 @@ window.LiftiumDART = (function(window, $, WikiaTracker, Athena, AdEngine, AdConf
 		   'EXIT_STITIAL_BOXAD_2': {'tile':3, 'loc': "exit"},
 		   'INVISIBLE_1': {'tile':10, 'loc': "invisible"},
 		   'INVISIBLE_2': {'tile':11, 'loc': "invisible"},
-		   'INVISIBLE_TOP': {'tile':13, 'loc': "invisible"},
 		   'TEST_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
 		   'TEST_HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"}
 		}
