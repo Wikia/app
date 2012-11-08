@@ -759,12 +759,8 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	// This sucks to have a blocking call at the top of the page, but they promised
 	// to only do it if they needed. Only use DART or Google (fast Ad Providers with good infrastructure)
 	global $wgOut;
-	if (WikiaPageType::isMainPage()){
+	if (WikiaPageType::isMainPage() || ($wgOut->isArticle() && WikiaPageType::isContentPage())){
 		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
-		echo AdEngine::getInstance()->getAd('HOME_INVISIBLE_TOP');
-	} else if ($wgOut->isArticle() && WikiaPageType::isContentPage()){
-		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
-		echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
 	}
 ?>
 <?php

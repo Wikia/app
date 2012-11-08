@@ -41,29 +41,28 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 	maxCallsToDART = maxCallsToDART || 0;
 	isHighValueCountry = !!maxCallsToDART;
 
+	// TODO: tile is not used, keys without apostrophes
+
 	slotMap = {
+		'CORP_TOP_LEADERBOARD': {'size': '728x90,468x60,980x130,1030x130', 'tile':2, 'loc': 'top', 'dcopt': 'ist'},
+		'CORP_TOP_RIGHT_BOXAD': {'size': '300x250,300x600', 'tile':1, 'loc': 'top'},
 		'EXIT_STITIAL_BOXAD_1': {'size':'600x400,300x250', 'tile':2, 'loc': "exit"},
 		'HOME_TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130', 'tile':2, 'loc':'top', 'dcopt':'ist'},
 		'HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
 		'LEFT_SKYSCRAPER_2': {'size':'160x600,120x600', 'tile':3, 'loc':'middle'},
-		'LEFT_SKYSCRAPER_3': {'size': '160x600', 'tile': 6, 'loc': "footer"},
+		'LEFT_SKYSCRAPER_3': {'size': '160x600', 'tile':6, 'loc':'footer'},
 		'MODAL_INTERSTITIAL': {'size':'600x400','tile':2,'loc':'modal'},
 		'MODAL_RECTANGLE': {'size':'300x100','tile':2,'loc':'modal'},
+		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
+		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
 		'TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130', 'tile':2, 'loc':'top', 'dcopt':'ist'},
 		'TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
-		'WIKIA_BAR_BOXAD_1': {'size':'320x50', 'tile': 4, 'loc': "bottom"}
+		'WIKIA_BAR_BOXAD_1': {'size':'320x50', 'tile': 4, 'loc':'bottom'}
 	};
 
-// FORMES SLOTS {
-//		'CORP_TOP_LEADERBOARD': {'tile':2, 'loc': 'top', 'dcopt': 'ist'},
-//		'CORP_TOP_RIGHT_BOXAD': {'tile':1, 'loc': 'top'},
+// FORMER SLOTS {
 //		'DOCKED_LEADERBOARD': {'tile': 8, 'loc': "bottom"},
-//		'EXIT_STITIAL_BOXAD_2': {'tile':3, 'loc': "exit"},
-//		'EXIT_STITIAL_INVISIBLE': {'tile':1, 'loc': "exit", 'dcopt': "ist"},
 //		'FOOTER_BOXAD': {'tile': 5, 'loc': "footer"},
-//		'HOME_INVISIBLE_TOP': {'tile':12, 'loc': "invisible"},
-//		'HOME_LEFT_SKYSCRAPER_1': {'tile':3, 'loc': "top"},
-//		'HOME_LEFT_SKYSCRAPER_2': {'tile':3, 'loc': "middle"},
 //		'HOME_TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"},
 //		'HUB_TOP_LEADERBOARD': {'tile':2, 'loc': 'top', 'dcopt': 'ist'},
 //		'INCONTENT_BOXAD_1': {'tile':4, 'loc': "middle"},
@@ -79,15 +78,12 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 //		'INVISIBLE_1': {'tile':10, 'loc': "invisible"},
 //		'INVISIBLE_2': {'tile':11, 'loc': "invisible"},
 //		'INVISIBLE_MODAL': {'tile':14, 'loc': "invisible"},
-//		'INVISIBLE_TOP': {'tile':13, 'loc': "invisible"},
 //		'JWPLAYER': {'tile': 2, 'loc': "top"},
 //		'LEFT_SKYSCRAPER_1': {'tile': 3, 'loc': "top"},
 //		'MIDDLE_RIGHT_BOXAD': {'tile': 1, 'loc': "middle"},
-//		'MODAL_VERTICAL_BANNER': {'tile':2, 'loc': "modal"},
 //		'PREFOOTER_BIG': {'tile': 5, 'loc': "footer"},
 //		'PREFOOTER_LEFT_BOXAD': {'tile': 5, 'loc': "footer"},
 //		'PREFOOTER_RIGHT_BOXAD': {'tile': 5, 'loc': "footer"},
-//		'TEST_HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
 //		'TEST_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
 //		'TOP_BUTTON': {'tile': 3, 'loc': 'top'},
 //		'TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"}

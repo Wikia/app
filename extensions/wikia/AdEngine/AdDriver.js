@@ -464,10 +464,8 @@ AdDriver.canCallLiftium = function(slotname) {
 	Wikia.log('canCallLiftium ' + slotname, 5, 'AdDriver');
 
 	switch (slotname) {
-		case 'HOME_INVISIBLE_TOP':
 		case 'HUB_TOP_LEADERBOARD':
 		case 'INVISIBLE_MODAL':
-		case 'INVISIBLE_TOP':
 		case 'MIDDLE_RIGHT_BOXAD':
 		case 'MODAL_VERTICAL_BANNER':
 			return false;

@@ -28,11 +28,9 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
 
 		'CORP_TOP_RIGHT_BOXAD' => 5,
 		'EXIT_STITIAL_BOXAD_1' => 5,
-		'EXIT_STITIAL_BOXAD_2' => 5,
 		'HOME_TOP_RIGHT_BOXAD' => 5,
 		'PREFOOTER_LEFT_BOXAD' => 5,
 		'PREFOOTER_RIGHT_BOXAD' => 5,
-		'SPECIAL_INTERSTITIAL_BOXAD_1' => 5,
 		'TOP_RIGHT_BOXAD' => 5,
 
 		// will: moving init of spotlights to __construct(). temporary move.

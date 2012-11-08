@@ -40,8 +40,6 @@ window.LiftiumDART = (function(window, $, WikiaTracker, Athena, AdEngine, AdConf
 		   'PREFOOTER_BIG': {'tile': 5, 'loc': "footer"},
 		   'HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
 		   'HOME_TOP_LEADERBOARD': {'tile': 2, 'loc': "top", 'dcopt': "ist"},
-		   'HOME_LEFT_SKYSCRAPER_1': {'tile':3, 'loc': "top"},
-		   'HOME_LEFT_SKYSCRAPER_2': {'tile':3, 'loc': "middle"},
 		   'INCONTENT_BOXAD_1': {'tile':4, 'loc': "middle"},
 		   'INCONTENT_BOXAD_2': {'tile':5, 'loc': "middle"},
 		   'INCONTENT_BOXAD_3': {'tile':6, 'loc': "middle"},
@@ -52,13 +50,9 @@ window.LiftiumDART = (function(window, $, WikiaTracker, Athena, AdEngine, AdConf
 		   'INCONTENT_LEADERBOARD_3': {'tile':6, 'loc': "middle"},
 		   'INCONTENT_LEADERBOARD_4': {'tile':7, 'loc': "middle"},
 		   'INCONTENT_LEADERBOARD_5': {'tile':8, 'loc': "middle"},
-		   'EXIT_STITIAL_INVISIBLE': {'tile':1, 'loc': "exit", 'dcopt': "ist"},
 		   'EXIT_STITIAL_BOXAD_1': {'tile':2, 'loc': "exit"},
-		   'EXIT_STITIAL_BOXAD_2': {'tile':3, 'loc': "exit"},
 		   'INVISIBLE_1': {'tile':10, 'loc': "invisible"},
 		   'INVISIBLE_2': {'tile':11, 'loc': "invisible"},
-		   'HOME_INVISIBLE_TOP': {'tile':12, 'loc': "invisible"},
-		   'INVISIBLE_TOP': {'tile':13, 'loc': "invisible"},
 		   'TEST_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
 		   'TEST_HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"}
 		}
