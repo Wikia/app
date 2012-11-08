@@ -34,7 +34,6 @@ $wgExtensionCredits['other'][] = array(
 $wgLinkSuggestLimit = 6;
 
 $wgExtensionMessagesFiles['LinkSuggest'] = __DIR__ . '/LinkSuggest.i18n.php';
-F::build('JSMessages')->registerPackage('LinkSuggest', array('tog-*'));
 
 // ResourceLoader support (MW 1.17+)
 $wgResourceModules['ext.wikia.LinkSuggest'] = array(
@@ -62,19 +61,9 @@ function AddLinkSuggest($a, $b, $c, $d) {
 	if($wgUser->getOption('disablelinksuggest') != true) {
 		// Load CSS and JS by using ResourceLoader (only for MW 1.17+)
 		$wgOut->addModules( 'ext.wikia.LinkSuggest' );
-
-		// add global JS variables only when LinkSuggest is really loaded (BugId:20958)
-		$wgHooks['MakeGlobalVariablesScript'][] = 'wfLinkSuggestSetupVars';
 	}
 
 	wfProfileOut(__METHOD__);
-	return true;
-}
-
-function wfLinkSuggestSetupVars( Array &$vars ) {
-	global $wgContLang;
-	$vars['ls_template_ns'] = $wgContLang->getFormattedNsText( NS_TEMPLATE );
-	$vars['ls_file_ns'] = $wgContLang->getFormattedNsText( NS_FILE );
 	return true;
 }
 

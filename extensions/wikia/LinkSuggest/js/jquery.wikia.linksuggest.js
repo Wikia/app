@@ -46,7 +46,7 @@ $.widget( 'wikia.linksuggest', {
 		// macbre: $._data used to get jQuery's internal data
 		// @see http://blog.jquery.com/2012/08/09/jquery-1-8-released/
 		var eventsData = $._data(this.element.get(0), 'events');
-		if ( typeof( eventsData && eventsData.keydown && eventsData.keydown[0] ) !== "undefined" ) {
+		if ( typeof( eventsData && eventsData.keydown ) !== "undefined" ) {
 			this._jQueryUIKeydown = eventsData.keydown[0].handler;
 		}
 		this.element.unbind( 'keydown.autocomplete' )
