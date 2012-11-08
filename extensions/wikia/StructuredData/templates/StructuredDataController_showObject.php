@@ -9,13 +9,13 @@
 ?>
 
 <form class="WikiaForm SDObject" id="SDObject">
-	<h1><strong><?php echo $sdsObject->getName(); ?></strong></h1>
+	<h1><strong><?= $sdsObject->getName(); ?></strong></h1>
 	<?php if($context == SD_CONTEXT_SPECIAL): ?>
 		<a href="?action=edit" class="wikia-button" title="Edit SDS Object">Edit</a>
 	<?php endif; ?>
 	<dl class="SDObjectDetails">
 		<dt>Type:</dt>
-		<dd><?php echo $sdsObject->getType(); ?></dd>
+		<dd><?= $sdsObject->getType(); ?></dd>
 	</dl>
 	
 	<table class="article-table SDObjectProperties WikiaGrid">
@@ -46,10 +46,10 @@
 				
 				<?php if($proprtyHTML !== false) : ?>
 					<tr>
-						<th><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}',$propertyLabel)); ?>:</th>
-						<td><?php echo $proprtyHTML;?></td>
+						<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}',$propertyLabel)); ?>:</th>
+						<td><?= $proprtyHTML;?></td>
 						<?php if($context == SD_CONTEXT_SPECIAL): ?>
-							<td><pre><?php echo $propertyName; ?></pre></td>
+							<td><pre><?= $propertyName; ?></pre></td>
 						<?php endif; ?>
 					</tr>
 					<?php continue; ?>
@@ -58,21 +58,21 @@
 				
 				<?php // Render properties manually ?>
 				<tr>
-					<th><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</th>
+					<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</th>
 				
 					<?php // display 'empty' for empty object properties ?>
 					<?php if (empty($propertyValue)) : ?>
 						<td><p class="empty">empty</p></td>
 						<?php if($context == SD_CONTEXT_SPECIAL): ?>
-							<td><pre><?php echo $propertyName; ?></pre></td>
+							<td><pre><?= $propertyName; ?></pre></td>
 						<?php endif; ?>
 				</tr>
 						<?php continue; ?>
 					<? endif ?>
 		
-					<td><p><?php echo $propertyValue; ?></p></td>
+					<td><p><?= $propertyValue; ?></p></td>
 					<?php if($context == SD_CONTEXT_SPECIAL): ?>
-						<td><pre><?php echo $propertyName; ?></pre></td>
+						<td><pre><?= $propertyName; ?></pre></td>
 					<?php endif; ?>
 				</tr>
 			<?php endforeach; ?>
