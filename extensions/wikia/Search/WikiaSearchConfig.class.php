@@ -380,38 +380,38 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	    // Builds list of Search Types (profiles)
 	    $searchEngine = F::build( 'SearchEngine' );
 	    $nsAllSet = array_keys( $searchEngine->searchableNamespaces() );
+	    $defaultNamespaces = $searchEngine->defaultNamespaces();
+
 	    $profiles = array(
-	            'default' => array(
+	            SEARCH_PROFILE_DEFAULT => array(
 	                    'message' => 'wikiasearch2-tabs-articles',
 	                    'tooltip' => 'searchprofile-articles-tooltip',
-	                    'namespaces' => SearchEngine::defaultNamespaces(),
-	                    'namespace-messages' => SearchEngine::namespacesAsText(
-	                            SearchEngine::defaultNamespaces()
-	                    ),
+	                    'namespaces' => $defaultNamespaces,
+	                    'namespace-messages' => $searchEngine->namespacesAsText( $defaultNamespaces ),
 	            ),
-	            'images' => array(
+	            SEARCH_PROFILE_IMAGES => array(
 	                    'message' => 'wikiasearch2-tabs-photos-and-videos',
 	                    'tooltip' => 'searchprofile-images-tooltip',
 	                    'namespaces' => array( NS_FILE ),
 	            ),
-	            'users' => array(
+	            SEARCH_PROFILE_USERS => array(
 	                    'message' => 'wikiasearch2-users',
 	                    'tooltip' => 'wikiasearch2-users-tooltip',
 	                    'namespaces' => array( NS_USER )
 	            ),
-	            'all' => array(
+	            SEARCH_PROFILE_ALL => array(
 	                    'message' => 'searchprofile-everything',
 	                    'tooltip' => 'searchprofile-everything-tooltip',
 	                    'namespaces' => $nsAllSet,
 	            ),
-	            'advanced' => array(
+	            SEARCH_PROFILE_ADVANCED => array(
 	                    'message' => 'searchprofile-advanced',
 	                    'tooltip' => 'searchprofile-advanced-tooltip',
 	                    'namespaces' => $this->getNamespaces(),
 	                    'parameters' => array( 'advanced' => 1 ),
 	            )
 	    );
-	
+	    
 	    wfRunHooks( 'SpecialSearchProfiles', array( &$profiles ) );
 	
 	    foreach( $profiles as $key => &$data ) {
