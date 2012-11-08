@@ -5,6 +5,10 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 	protected static $PROVIDER = 'realgravity';
 	protected static $FEED_URL = 'http://api.realgravity.com/v1/market_content/search.json?content_source_level=marketplace&video_catalog_id=$1&published_since=$2&page=$3&per_page=$4&api_key=$5';
 	private static $API_MARKETPLACES = array(
+		423 => array(
+			'name' => 'LeGourmet TV',
+			'categories' => array( 'Lifestyle', 'Le Gourmet' )
+		),
 		141 => array(
 			'name' => 'HowCast',
 			'categories' => array( 'HowTo', 'Lifestyle' )
@@ -16,6 +20,14 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		503 => array(
 			'name' => 'Skee.TV',
 			'categories' => array( 'Lifestyle' )
+		),
+		503 => array(
+			'name' => 'Outside Lines Media',
+			'categories' => array()
+		),
+		196 => array(
+			'name' => 'VIDCAT Fashion TV',
+			'categories' => array()
 		),
 	);
 
@@ -91,6 +103,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 				$clipData['ageGate'] = 0;
 				$clipData['hd'] = 0;
 				$clipData['tags'] = $video['tag_list'];
+				$clipData['provider'] = 'RealGravity';
 
 				$clipData['marketplaceName'] = $video['video_catalog']['name'];
 				$clipData['marketplaceId'] = $video['video_catalog']['id'];
@@ -162,6 +175,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			'description' => $data['description'],
 			'keywords' => $data['keywords'],
 			'tags' => $data['tags'],
+			'provider' => $data['provider'],
 			'marketplaceId' => $data['marketplaceId'],
 			'marketplaceName' => $data['marketplaceName'],
 			'categoryId' => $data['categoryId'],
