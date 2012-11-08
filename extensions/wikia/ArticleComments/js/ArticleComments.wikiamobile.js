@@ -208,6 +208,7 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 			content: parent.parentElement.outerHTML + postComm.outerHTML,
 			toolbar: toolbar,
 			stopHiding: true,
+			scrollable: true,
 			onOpen: (function(){
 				return focus ?
 					/*
