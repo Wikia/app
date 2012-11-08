@@ -26,8 +26,9 @@ class ImageLazyLoad extends WikiaObject {
 
 		if ( self::$enabled && empty( $wgRTEParserEnabled ) ) {
 
+			$isData = strrpos( $attribs[ 'src' ], "data:" );
 			// Don't lazy-load data elements
-			if ( startsWith( $attribs[ 'src' ], 'data:' ) ) {
+			if ( $isData !== false && $isData < 2 ) {
 				return true;
 			}
 
@@ -74,9 +75,10 @@ class ImageLazyLoad extends WikiaObject {
 		global $wgRTEParserEnabled;
 
 		if ( self::$enabled && empty( $wgRTEParserEnabled ) ) {
-
+			
+			$isData = strrpos( $image[ 'thumbnail' ], "data:" );
 			// Don't lazy-load data elements
-			if ( startsWith( $image[ 'thumbnail' ], 'data:' ) ) {
+			if ( $isData !== false && $isData < 2 ) {
 				return true;
 			}
 
