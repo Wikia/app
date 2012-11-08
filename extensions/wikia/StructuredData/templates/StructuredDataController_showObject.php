@@ -10,6 +10,9 @@
 
 <div class="SDObject" id="SDObject">
 	<h1><strong><?php echo $sdsObject->getName(); ?></strong></h1>
+	<?php if($context == SD_CONTEXT_SPECIAL): ?>
+		<a href="?action=edit" class="wikia-button" title="Edit SDS Object">Edit</a>
+	<?php endif; ?>
 	<dl class="SDObjectDetails">
 		<dt>Type:</dt>
 		<dd><?php echo $sdsObject->getType(); ?></dd>

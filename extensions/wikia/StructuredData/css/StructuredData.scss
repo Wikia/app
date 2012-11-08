@@ -1,8 +1,13 @@
 .SDObject {
 	h1 {
-		padding-top: 10px;
+		float: left;
+	}
+	& > a {
+		float: left;
+		margin: 11px 0 0 20px;
 	}
 	dl {
+		clear: both;
 		margin: 0 0 1em 0;
 		
 	}
