@@ -70,4 +70,11 @@
 			padding-right: 10px;
 		}
 	}
+	.input-group {
+		padding-left: 0;
+	}
+	input[type="text"],
+	textarea {
+		width: 447px;
+	}
 }
