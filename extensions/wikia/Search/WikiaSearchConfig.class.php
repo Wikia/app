@@ -428,14 +428,14 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	public function getActiveTab() {
 		
 		if( $this->getAdvanced() ) {
-		    return 'advanced';
+		    return SEARCH_PROFILE_ADVANCED;
 		}
 		
 		$searchableNamespaces = array_keys( SearchEngine::searchableNamespaces() );
 		$nsVals = $this->getNamespaces();
 		
 		if ( empty( $nsVals ) ) {
-			return $this->wg->User->getOption('searchAllNamespaces') ? 'all' :  $this->wg->DefaultSearchProfile;
+			return $this->wg->User->getOption('searchAllNamespaces') ? SEARCH_PROFILE_ALL :  $this->wg->DefaultSearchProfile;
 		}
 		
 		foreach( $this->getSearchProfiles() as $name => $profile ) {
@@ -445,7 +445,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		    }
 		}
 		
-		return 'advanced';
+		return SEARCH_PROFILE_ADVANCED;
 	}
 	
 	/**
