@@ -20,6 +20,22 @@ $wide-table-border: 5px solid rgb(215,232,242);
 	}
 }
 
+//if native scroll is available:
+.overflow .bigTable {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+//if not
+.no-overflow .bigTable {
+	overflow: hidden;
+
+	table {
+		//this should be only applied when no overflow is available
+		pointer-events: none;
+	}
+}
+
 //handling wide Tables
 .bigTable{
 	position: relative;
@@ -36,10 +52,6 @@ $wide-table-border: 5px solid rgb(215,232,242);
 	-moz-transition: border .2s;
 	-o-transtion: border .2s;
 
-	table {
-		pointer-events: none;
-	}
-
 	&.active {
 		@include box-shadow(inset 0 0 15px $shadow-color);
 
@@ -47,15 +59,4 @@ $wide-table-border: 5px solid rgb(215,232,242);
 			pointer-events: auto;
 		}
 	}
-}
-
-//if native scroll is available:
-.overflow .bigTable {
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
-}
-
-//if not
-.no-overflow .bigTable {
-	overflow: hidden;
 }
