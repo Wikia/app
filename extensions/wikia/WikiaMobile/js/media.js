@@ -351,6 +351,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 	}
 
 	function addZoom(){
+		zoomed = false;
 		wrapper.addEventListener('touchstart', onStart);
 		wrapper.addEventListener('touchmove', onMove);
 		wrapper.addEventListener('touchend', onEnd);
