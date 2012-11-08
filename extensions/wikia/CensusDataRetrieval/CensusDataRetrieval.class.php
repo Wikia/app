@@ -13,6 +13,8 @@ class CensusDataRetrieval {
 		)
 	);
 
+	const FLAG_CATEGORY = 'census-data-retrieval-flag-category';
+
 	/**
 	 * entry point
 	 * called by hook 'onEditFormPreloadText'
@@ -43,7 +45,9 @@ class CensusDataRetrieval {
 
 		$typeLayout = $this->getLayout();
 
-		$text = $infoboxText . $typeLayout;
+		$category = '[[' . Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY )->getPrefixedText() . ']]';
+
+		$text = $infoboxText . $typeLayout . $category;
 
 		return $text;
 	}
