@@ -86,9 +86,7 @@ class SDContext extends WikiaObject {
 	}
 
 	public function getPropertyDescription( $objectType, $propertyName ) {
-		// @todo re-check after term definition will be fixed (?)
 		foreach($this->objectDescriptions[$objectType]->{"properties"} as $propertyDescription) {
-//echo $objectType . ": " . $propertyDescription->id . " = $propertyName ? \n";
 			if($propertyDescription->id == $propertyName) {
 				return $propertyDescription;
 			}
