@@ -1043,7 +1043,6 @@ class CreateWiki {
 				$this->mWFSettingVars['wgEnableMagicAnswer']             = false;
 				$this->mWFSettingVars['wgEnableCategoryHubsExt']         = false;
 				$this->mWFSettingVars['wgEnableEditingTipsExt']          = false;
-				$this->mWFSettingVars['wgAdslot_HOME_LEFT_SKYSCRAPER_1'] = "Null";
 
 				$mapArray = array( "ar" => true, "he" => true, "ja" => true, "th" => true, "zh" => true );
 				if ( Wikia::langToSomethingMap( $mapArray, $this->mNewWiki->language, false ) ) {
