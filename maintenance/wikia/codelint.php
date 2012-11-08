@@ -7,9 +7,7 @@
  * SERVER_ID=1 php codelint.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php --mode=php --file=/home/macbre/trunk/extensions/wikia/CodeLint/examples/anticode.php
  *
  */
-ini_set( "include_path", dirname(__FILE__)."/.." );
-require_once( 'commandLine.inc' );
-
+require_once __DIR__ . '/../commandLine.inc';
 require $IP . '/extensions/wikia/CodeLint/CodeLint.setup.php';
 
 function printHelp() {
