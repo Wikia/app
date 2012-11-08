@@ -64,10 +64,12 @@
 	height: 30px;
 	margin: 0;
 	padding: 0;
+
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 20;
+
 	background-color: rgba(0,0,0,.8);
 	@include transition(top .2s ease);
 

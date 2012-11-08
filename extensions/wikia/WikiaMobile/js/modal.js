@@ -20,7 +20,8 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 		position,
 		onClose,
 		stopHiding,
-		positionfixed = Features.positionfixed;
+		positionfixed = Features.positionfixed,
+		scrollable;
 
 	/* private */
 	function setup(){
@@ -60,7 +61,7 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 
 	function onOrientationChange(ev){
 		wrapper.style.minHeight = ev.height + 'px';
-		!w.pageYOffset && w.scrollTo(0, 1);
+		!w.pageYOffset && w.scrollTo(0, 0);
 	}
 
 	function hideUI(){
@@ -91,6 +92,7 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 		stopHiding = options.stopHiding || false;
 
 		onClose = options.onClose;
+		scrollable = options.scrollable;
 
 		if(!opened){
 			position = w.scrollY;
@@ -133,7 +135,7 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 		}
 
 		//move topbar along with scroll manually for browsers with no support for position fixed
-		!positionfixed && w.addEventListener('scroll', fixTopBar);
+		scrollable && !positionfixed && w.addEventListener('scroll', fixTopBar);
 
 		loader.show(content, {center: true});
 
@@ -186,14 +188,14 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 					closeButton.removeEventListener('click', onCloseClick);
 					content.removeEventListener('click', onContentClick);
 
-					if(typeof onClose === 'function'){
-						onClose();
-					}
-
 					//remove event listners since they are not needed outside modal
-					if(!positionfixed){
+					if(scrollable && !positionfixed){
 						w.removeEventListener('scroll', fixTopBar);
 						topBar.style.top = '';
+					}
+
+					if(typeof onClose === 'function'){
+						onClose();
 					}
 				},310);
 

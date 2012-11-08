@@ -270,7 +270,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 			l = touches.length,
 			computedStyle = getComputedStyle(currentImage);
 
-		window.scrollTo(0,1);
+		window.scrollTo(0,0);
 
 		//I need to split it as ios4 adds auto at the end of this property if you set only one % value
 		currentSize = ~~computedStyle.backgroundSize.split('%')[0] || 100;
