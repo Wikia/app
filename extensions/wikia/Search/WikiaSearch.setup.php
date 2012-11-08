@@ -15,6 +15,19 @@ require( 'Solarium/Autoloader.php' );
 Solarium_Autoloader::register();
 
 /**
+ * constants we want for search profiles
+ */
+
+$profiles = array( 'default', 'images', 'users', 'all', 'advanced' );
+
+foreach ( $profiles as $profile ) {
+	$profileConst = 'SEARCH_PROFILE_' . strtoupper( $profile ); 
+	if (! defined( $profileConst ) ) {
+		define( $profileConst, $profile );
+	}
+}
+
+/**
  * classes
  */
 $app->registerClass('WikiaSearch', 					$dir . 'WikiaSearch.class.php');
