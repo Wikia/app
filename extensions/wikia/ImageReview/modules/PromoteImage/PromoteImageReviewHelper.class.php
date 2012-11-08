@@ -68,7 +68,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 		foreach ($sqlWhere as $state => $where) {
 			if (!empty($where)) {
-				$db = $this->wf->GetDB(DB_MASTER, array(), $this->wg->SharedDB);
+				$db = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 				$db->update(
 					'city_visualization_images',
@@ -103,7 +103,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	}
 
 	protected function saveStats($statsInsert, $sqlWhere, $action) {
-		$db = $this->wf->GetDB(DB_MASTER, array(), $this->wg->SharedDB);
+		$db = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 		$db->insert(
 			'city_visualization_image_review_stats',
@@ -144,7 +144,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	 */
 	public function resetAbandonedWork() {
 		$this->wf->ProfileIn(__METHOD__);
-		$db = $this->wf->GetDB(DB_MASTER, array(), $this->wg->SharedDB);
+		$db = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 		$timeLimit = ($this->wg->DevelEnvironment) ? 1 : 3600; // 1 sec
 
@@ -201,7 +201,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	public function getImageList($timestamp, $state = ImageReviewStatuses::STATE_UNREVIEWED, $order = self::ORDER_LATEST) {
 		$this->wf->ProfileIn(__METHOD__);
 
-		$db = $this->wf->GetDB(DB_MASTER, array(), $this->wg->SharedDB);
+		$db = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 		// for testing
 		$this->resetAbandonedWork();
@@ -395,7 +395,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 			$this->wf->ProfileOut(__METHOD__);
 			return $total;
 		}
-		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->SharedDB);
+		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$where = array();
 
@@ -437,7 +437,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 		$data = array();
 		$userCount = 0;
 
-		$dbr = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->SharedDB);
+		$dbr = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 
 		$res = $dbr->query("
 				select review_state, reviewer_id, count( page_id ) as count
