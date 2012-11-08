@@ -762,9 +762,6 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	if (WikiaPageType::isMainPage() || ($wgOut->isArticle() && WikiaPageType::isContentPage())){
 		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
 	}
-	if (!WikiaPageType::isMainPage() && $wgOut->isArticle() && WikiaPageType::isContentPage()){
-		echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
-	}
 ?>
 <?php
 	// this hook allows adding extra HTML just after <body> opening tag

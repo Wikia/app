@@ -3,7 +3,7 @@
 class AdController extends WikiaController {
 
 	private static $config;
-	private static $slotsUseGetAd = array( 'INVISIBLE_TOP', 'INVISIBLE_1', 'INVISIBLE_2', 'HOME_TOP_RIGHT_BUTTON', 'TOP_RIGHT_BUTTON' );
+	private static $slotsUseGetAd = array( 'INVISIBLE_1', 'INVISIBLE_2', 'HOME_TOP_RIGHT_BUTTON', 'TOP_RIGHT_BUTTON' );
 	private static $slotsDisplayShinyAdSelfServe = array( 'CORP_TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'TEST_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD' );
 
 	private function configure() {
@@ -67,7 +67,6 @@ class AdController extends WikiaController {
 				self::$config['LEFT_SKYSCRAPER_3'] = true;
 				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
-				self::$config['INVISIBLE_TOP'] = false;	// skins used to be served from this slot, but are now served from TOP_LEADERBOARD with option dcopt=ist
 				self::$config['TOP_RIGHT_BUTTON'] = true;
 				self::$config['TOP_BUTTON'] = true;
 			} else if($namespace == NS_FILE) {
