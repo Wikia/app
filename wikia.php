@@ -8,6 +8,10 @@ if ( $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 // Initialise common MW code
 require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 
+if ($wgProfiler instanceof Profiler) {
+	$wgProfiler->setTemplated(true);
+}
+
 // Construct a tag for newrelic -- wgRequest is global in this scope
 if( function_exists( 'newrelic_name_transaction' ) ) {
 	if ( function_exists( 'newrelic_disable_autorum') ) {
@@ -22,15 +26,15 @@ if( function_exists( 'newrelic_name_transaction' ) ) {
 
 if ( !empty( $wgEnableNirvanaAPI ) ){
 	$app = F::app();
-	
+
 	// Ensure that we have a title stub, otherwise parser does not work BugId: 12901
 	$app->wg->title = Wikia::createTitleFromRequest( $app->wg->Request );
-	
+
 	// initialize skin if requested
 	$app->initSkin( (bool) $app->wg->Request->getVal( "skin", false ) );
-	
+
 	$response = $app->sendRequest( null, null, null, false );
-	
+
 	// commit any open transactions just in case the controller forgot to
 	$app->commit();
 
@@ -44,6 +48,9 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 
 	$response->sendHeaders();
 	$response->render();
+
+	wfLogProfilingData();
+
 } else {
 	header( "HTTP/1.1 503 Service Unavailable", true, 503 );
 }
