@@ -126,10 +126,14 @@ class CensusDataRetrieval {
 		}
 
 		if ( empty( $object ) ) {
-			wfDebug( __METHOD__ . 'Unsupported object type' );
+			wfDebug( __METHOD__ . ': Unsupported object type' );
 			return false;
+		} else {
+			$this->type = $object->type;
+			wfDebug( __METHOD__ . ": Found object of type {$object->type}" );
 		}
 
+		// @TODO this needs to be generalized ot be based on a per-type map array defined in a class variable
 		$this->data = array(
 			'name' => $object->name->en,
 			'type' => $object->type,
@@ -137,8 +141,6 @@ class CensusDataRetrieval {
 			'cost' => $object->ingame_costs->cost,
 			'cost_resource' => $object->ingame_costs->resource->en
 		);
-
-		$this->type = $object->type;
 
 		return true;
 	}
