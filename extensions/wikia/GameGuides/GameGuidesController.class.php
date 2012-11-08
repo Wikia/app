@@ -369,20 +369,15 @@ class GameGuidesController extends WikiaController {
 	 * @response offset
 	 */
 	private function getCategories(){
-		$limit = $this->request->getVal( 'limit', 25 );
-		$continue = $this->request->getVal( 'offset' );
-
-		$params = array(
-			'action' => 'query',
-			'list' => 'allcategories',
-			'aclimit' => $limit
+		$categories = ApiService::call(
+			array(
+				'action' => 'query',
+				'list' => 'allcategories',
+				'aclimit' => $this->request->getVal( 'limit', 25 ),
+				'acfrom' => $this->request->getVal( 'offset', '' )
+			)
 		);
 
-		if( !is_null( $continue ) ) {
-			$params['acfrom'] = $continue;
-		}
-
-		$categories = ApiService::call( $params );
 		$allCategories = $categories['query']['allcategories'];
 
 		if ( !empty( $allCategories ) ) {
@@ -419,12 +414,14 @@ class GameGuidesController extends WikiaController {
 			'tags',
 			array_reduce(
 				$content,
-				function( $ret, $item){
+				function( $ret, $item ) {
 					$ret[] = array( 'name' => $item['name'] );
 					return $ret;
 				}
 			)
 		);
+
+		$this->getTagCategories( $content, '' );
 	}
 
 	/**
@@ -437,24 +434,18 @@ class GameGuidesController extends WikiaController {
 	public function getArticles(){
 		$this->response->setFormat( 'json' );
 
-		$requestCategory = $this->request->getVal( 'category' );
-		$limit = $this->request->getVal( 'limit', 25 );
-		$continue = $this->request->getVal( 'offset' );
-
-		$params = array(
-			'action' => 'query',
-			'list' => 'categorymembers',
-			'cmtitle' => 'Category:' . $requestCategory,
-			'cmlimit' => $limit,
-			'cmtype' => 'page|subcat',
-			'cmprop' => 'ids|title'
+		$articles = ApiService::call(
+			array(
+				'action' => 'query',
+				'list' => 'categorymembers',
+				'cmtype' => 'page|subcat',
+				'cmprop' => 'ids|title',
+				//Category: is a call to API it does not have to be internationalized
+				'cmtitle' => 'Category:' . $this->request->getVal( 'category', '' ),
+				'cmlimit' => $this->request->getVal( 'limit', 25 ),
+				'cmcontinue' => $this->request->getVal( 'offset', '' )
+			)
 		);
-
-		if( !is_null( $continue ) ) {
-			$params['cmcontinue'] = $continue;
-		}
-
-		$articles = ApiService::call( $params );
 
 		if ( !empty( $articles['query']['categorymembers'] ) ) {
 			$this->response->setVal( 'articles', $articles['query']['categorymembers']);
