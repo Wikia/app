@@ -179,7 +179,7 @@ class Linker {
 		// Create a unique key from the arguments and cache the results of this
 		// method call for the rest of this request
 		static $linkCache = array();
-		$key = serialize( array( $target->getDBkey(), $html, $customAttribs, $query, $options ) );
+		$key = serialize( array( $target->getDBkey(), $target->getNamespace(), $html, $customAttribs, $query, $options ) );
 
 		if ( array_key_exists($key, $linkCache) ) {
 			wfProfileOut( __METHOD__ );
