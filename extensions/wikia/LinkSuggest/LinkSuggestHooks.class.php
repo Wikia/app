@@ -8,7 +8,7 @@
 class LinkSuggestHooks {
 
 	/**
-	 * @param User$user
+	 * @param User $user
 	 * @param Array $preferences
 	 * @return bool
 	 */
