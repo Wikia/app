@@ -386,22 +386,20 @@ class GameGuidesController extends WikiaController {
 		$limit = $this->request->getVal( 'limit', self::LIMIT );
 		$offset = $this->request->getVal( 'offset', '' );
 
-		$key = $this->wf->memcKey( __METHOD__, $offset, $limit );
-
-		$categories = $this->wg->memc->get( $key );
-
-		if ( empty( $categories ) ) {
-			$categories = ApiService::call(
-				array(
-					'action' => 'query',
-					'list' => 'allcategories',
-					'aclimit' => $limit,
-					'acfrom' => $offset
-				)
-			);
-
-			$this->wg->memc->set( $key, $categories, self::SIX_HOURS );
-		}
+		$categories = WikiaDataAccess::cache(
+			$this->wf->memcKey( __METHOD__, $offset, $limit ),
+			self::SIX_HOURS,
+			function() use ( $limit, $offset ) {
+				return ApiService::call(
+					array(
+						'action' => 'query',
+						'list' => 'allcategories',
+						'aclimit' => $limit,
+						'acfrom' => $offset
+					)
+				);
+			}
+		);
 
 		$allCategories = $categories['query']['allcategories'];
 
@@ -505,26 +503,23 @@ class GameGuidesController extends WikiaController {
 				$limit = $this->request->getVal( 'limit', self::LIMIT );
 				$offset = $this->request->getVal( 'offset', '' );
 
-				$key = $this->wf->memcKey( __METHOD__, $category, $offset, $limit );
-
-				$articles = $this->wg->memc->get( $key );
-
-				if ( empty( $articles ) ) {
-					$articles = ApiService::call(
-						array(
-							'action' => 'query',
-							'list' => 'categorymembers',
-							'cmtype' => 'page|subcat',
-							'cmprop' => 'ids|title',
-							//Category: is a call to API it does not have to be internationalized
-							'cmtitle' => $category,
-							'cmlimit' => $limit,
-							'cmcontinue' => $offset
-						)
-					);
-
-					$this->wg->memc->set( $key, $articles, self::SIX_HOURS );
-				}
+				$articles = WikiaDataAccess::cache(
+					$this->wf->memcKey( __METHOD__, $category, $offset, $limit ),
+					self::SIX_HOURS,
+					function() use ( $category, $limit, $offset ){
+						return ApiService::call(
+							array(
+								'action' => 'query',
+								'list' => 'categorymembers',
+								'cmtype' => 'page|subcat',
+								'cmprop' => 'ids|title',
+								'cmtitle' => $category,
+								'cmlimit' => $limit,
+								'cmcontinue' => $offset
+							)
+						);
+					}
+				);
 
 				if ( !empty( $articles['query']['categorymembers'] ) ) {
 					$this->response->setVal( 'articles', $articles['query']['categorymembers']);
