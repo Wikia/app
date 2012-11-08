@@ -11,7 +11,6 @@ class GameGuidesController extends WikiaController {
 	const API_MINOR_REVISION = 5;
 	const APP_NAME = 'GameGuides';
 	const SKIN_NAME = 'wikiaapp';
-	const VARNISH_CACHE_TIME = 86400; //24h
 
 	/**
 	 * @var $mModel GameGuidesModel
@@ -129,10 +128,10 @@ class GameGuidesController extends WikiaController {
 	 * Simple DRY function to set cache for 24 hours
 	 *
 	 */
-	private function cacheMe(){
+	private function cacheMeFor( $days = 1 ){
 		$this->response->setCacheValidity(
-			self::VARNISH_CACHE_TIME,
-			self::VARNISH_CACHE_TIME,
+			86400 * $days, //86400 = 24h
+			86400 * $days,
 			array(
 				WikiaResponse::CACHE_TARGET_VARNISH
 			)
@@ -148,7 +147,7 @@ class GameGuidesController extends WikiaController {
 		//This will always return json
 		$this->response->setFormat( 'json' );
 
-		$this->cacheMe();
+		$this->cacheMeFor( 1 );
 
 		//set mobile skin as this is based on it
 		RequestContext::getMain()->setSkin(
@@ -342,7 +341,7 @@ class GameGuidesController extends WikiaController {
 	 *
 	 * @return {}
 	 *
-	 * getList - list of tags on a wiki or list of all categories if GGCMT was not used
+	 * getList - list of tags on a wiki or list of all categories if GGCMT was not used (this will be cached)
 	 * getList&offset='' - next page of categories if no tages were given
 	 * getList&tag='' - list of all members of a given tag
 	 *
@@ -352,8 +351,6 @@ class GameGuidesController extends WikiaController {
 
 		$this->response->setFormat( 'json' );
 
-		$this->cacheMe();
-
 		$content = WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId );
 
 		if ( empty( $content ) ) {
@@ -362,6 +359,7 @@ class GameGuidesController extends WikiaController {
 			$tag = $this->request->getVal( 'tag' );
 
 			if ( empty( $tag ) ) {
+				$this->cacheMeFor( 14 ); //2 weeks
 				$this->getTags( $content );
 			} else {
 				$this->getTagCategories( $content, $tag );
@@ -474,36 +472,53 @@ class GameGuidesController extends WikiaController {
 	 *
 	 * @example method=getArticles&category=Category_Name
 	 * @example method=getArticles&category=Category_Name&offset=Offset
+	 * @example method=getArticles&category=Category:Category_Name&offset=Offset
 	 */
 	public function getArticles(){
 		$this->wf->profileIn( __METHOD__ );
 
 		$this->response->setFormat( 'json' );
 
-		$this->cacheMe();
+		$this->cacheMeFor( 1 );
 
-		$articles = ApiService::call(
-			array(
-				'action' => 'query',
-				'list' => 'categorymembers',
-				'cmtype' => 'page|subcat',
-				'cmprop' => 'ids|title',
-				//Category: is a call to API it does not have to be internationalized
-				'cmtitle' => 'Category:' . $this->request->getVal( 'category', '' ),
-				'cmlimit' => $this->request->getVal( 'limit', 25 ),
-				'cmcontinue' => $this->request->getVal( 'offset', '' )
-			)
-		);
+		$category = $this->request->getVal( 'category' );
 
-		if ( !empty( $articles['query']['categorymembers'] ) ) {
-			$this->response->setVal( 'articles', $articles['query']['categorymembers']);
+		if( !empty( $category ) ) {
+			//if $category does not have Category: in it, add it as API needs it
+			$category = Title::newFromText( $category, NS_CATEGORY );
 
-			if ( !empty( $articles['query-continue'] ) ) {
-				$this->response->setVal( 'offset', $articles['query-continue']['categorymembers']['cmcontinue']);
+			if( !is_null( $category ) ) {
+				$category = $category->getFullText();
+
+				$articles = ApiService::call(
+					array(
+						'action' => 'query',
+						'list' => 'categorymembers',
+						'cmtype' => 'page|subcat',
+						'cmprop' => 'ids|title',
+						//Category: is a call to API it does not have to be internationalized
+						'cmtitle' => $category,
+						'cmlimit' => $this->request->getVal( 'limit', 25 ),
+						'cmcontinue' => $this->request->getVal( 'offset', '' )
+					)
+				);
+
+				if ( !empty( $articles['query']['categorymembers'] ) ) {
+					$this->response->setVal( 'articles', $articles['query']['categorymembers']);
+
+					if ( !empty( $articles['query-continue'] ) ) {
+						$this->response->setVal( 'offset', $articles['query-continue']['categorymembers']['cmcontinue']);
+					}
+				} else {
+					$this->response->setVal( 'error', 'No members' );
+				}
+			} else {
+				$this->response->setVal( 'error', 'Title::newFromText returned null' );
 			}
 		} else {
-			$this->response->setVal( 'error', 'No members' );
+			$this->response->setVal( 'error', 'No category given' );
 		}
+
 
 		$this->wf->profileOut( __METHOD__ );
 	}
