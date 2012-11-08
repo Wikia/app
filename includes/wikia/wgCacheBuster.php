@@ -13,5 +13,5 @@ if ($wgDevelEnvironment) {
 	global $wgCacheBuster;
 	$wgCacheBuster = 12345;
 } else {
-	require_once($cbFilePath);
+	include_once($cbFilePath);
 }
