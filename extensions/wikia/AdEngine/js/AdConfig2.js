@@ -32,7 +32,6 @@ var AdConfig2 = function (
 		'MIDDLE_RIGHT_BOXAD':true,
 		'MODAL_RECTANGLE':true,
 		'MODAL_INTERSTITIAL':true,
-		'MODAL_VERTICAL_BANNER':true,
 		'TEST_HOME_TOP_RIGHT_BOXAD':true,
 		'TEST_TOP_RIGHT_BOXAD':true,
 		'TOP_LEADERBOARD':true,

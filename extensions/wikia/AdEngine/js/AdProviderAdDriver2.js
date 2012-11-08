@@ -87,7 +87,6 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 //		'JWPLAYER': {'tile': 2, 'loc': "top"},
 //		'LEFT_SKYSCRAPER_1': {'tile': 3, 'loc': "top"},
 //		'MIDDLE_RIGHT_BOXAD': {'tile': 1, 'loc': "middle"},
-//		'MODAL_VERTICAL_BANNER': {'tile':2, 'loc': "modal"},
 //		'PREFOOTER_BIG': {'tile': 5, 'loc': "footer"},
 //		'PREFOOTER_LEFT_BOXAD': {'tile': 5, 'loc': "footer"},
 //		'PREFOOTER_RIGHT_BOXAD': {'tile': 5, 'loc': "footer"},
