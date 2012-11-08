@@ -11,6 +11,7 @@ class GameGuidesController extends WikiaController {
 	const API_MINOR_REVISION = 5;
 	const APP_NAME = 'GameGuides';
 	const SKIN_NAME = 'wikiaapp';
+	const SECONDS_IN_A_DAY = 86400; //24h
 
 	/**
 	 * @var $mModel GameGuidesModel
@@ -128,8 +129,8 @@ class GameGuidesController extends WikiaController {
 	 */
 	private function cacheMeFor( $days = 1 ){
 		$this->response->setCacheValidity(
-			86400 * $days, //86400 = 24h
-			86400 * $days,
+			self::SECONDS_IN_A_DAY * $days, //86400 = 24h
+			self::SECONDS_IN_A_DAY * $days,
 			array(
 				WikiaResponse::CACHE_TARGET_VARNISH
 			)
