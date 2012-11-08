@@ -333,7 +333,6 @@ EOT;
 		  case 'INCONTENT_LEADERBOARD_3': return "loc=middle;";
 		  case 'INCONTENT_LEADERBOARD_4': return "loc=middle;";
 		  case 'INCONTENT_LEADERBOARD_5': return "loc=middle;";
-		  case 'EXIT_STITIAL_INVISIBLE': return "loc=exit;";
 		  case 'EXIT_STITIAL_BOXAD_1': return "loc=exit;";
 		  case 'SPECIAL_INTERSTITIAL': return "loc=top;";
 		  case 'MODAL_VERTICAL_BANNER': return "loc=modal;";
@@ -351,7 +350,6 @@ EOT;
 			case 'TOP_LEADERBOARD': return 'dcopt=ist;';
 			case 'HOME_TOP_LEADERBOARD': return 'dcopt=ist;';
 			case 'CORP_TOP_LEADERBOARD': return 'dcopt=ist;';
-			case 'EXIT_STITIAL_INVISIBLE': return 'dcopt=ist;';
 			default: return '';
 		}
 	}
