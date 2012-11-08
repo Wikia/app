@@ -17,14 +17,20 @@ Solarium_Autoloader::register();
 /**
  * constants we want for search profiles
  */
-
-$profiles = array( 'default', 'images', 'users', 'all', 'advanced' );
-
-foreach ( $profiles as $profile ) {
-	$profileConst = 'SEARCH_PROFILE_' . strtoupper( $profile ); 
-	if (! defined( $profileConst ) ) {
-		define( $profileConst, $profile );
-	}
+if (! defined( 'SEARCH_PROFILE_DEFAULT' ) ) {
+		define( 'SEARCH_PROFILE_DEFAULT', 'default' );
+}
+if (! defined( 'SEARCH_PROFILE_IMAGES' ) ) {
+		define( 'SEARCH_PROFILE_IMAGES', 'images' );
+}
+if (! defined( 'SEARCH_PROFILE_USERS' ) ) {
+		define( 'SEARCH_PROFILE_USERS', 'users' );
+}
+if (! defined( 'SEARCH_PROFILE_ALL' ) ) {
+		define( 'SEARCH_PROFILE_ALL', 'all' );
+}
+if (! defined( 'SEARCH_PROFILE_ADVANCED' ) ) {
+		define( 'SEARCH_PROFILE_ADVANCED', 'advanced' );
 }
 
 /**
