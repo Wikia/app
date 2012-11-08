@@ -1,3 +1,4 @@
+@import "../../../../skins/oasis/css/core/color";
 .SDObject {
 	h1 {
 		float: left;
@@ -29,12 +30,12 @@
 		display: table-cell !important;
 	}
 	.empty {
-		color: red;
+		color: $color-error;
 		font-style: italic;
 	}
 	figure {
-		border: 1px solid #ccc;
-		background-color: #eee;
+		border: 1px solid $color-page-border;
+		background-color: darken($color-page, 5%);
 		clear: both;
 		float: left;
 		margin-bottom: 10px;
