@@ -79,8 +79,14 @@ class CensusDataRetrieval {
 	 */
 	private function parseData() {
 		$type = $this->getType();
-                $output = implode( ',', $this->data );
-                /* use data-to-template map to put together template call wikitext */
+
+		$output = '{{' . $type . ' infobox';
+
+		foreach ( $this->data as $key => $value ) {
+			$output .= "\n|" . $key . ' = ' . $value;
+		}
+
+		$output .= "\n}}\n";
 
 		return $output;
 	}
