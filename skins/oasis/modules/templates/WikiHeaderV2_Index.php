@@ -1,26 +1,23 @@
 <header id="WikiHeader" class="WikiHeaderRestyle">
-	<?= F::app()->renderView('WikiHeader', 'Wordmark') ?>
+	<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
 	<nav class="WikiNav">
-		<h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ); ?></h1>
-		<?php
-			// render wiki navigation
-			echo F::app()->renderView('WikiNavigation', 'Index');
-		?>
+		<h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ) ?></h1>
+		<?= $app->renderView( 'WikiNavigation', 'Index' ) ?>
 	</nav>
 	<div class="buttons">
-		<?php
-			// render "Contribute" menu
-			echo F::app()->renderView('ContributeMenu', 'Index');
-			echo F::app()->renderView('SharingToolbar', 'ShareButton');
-		?>
+		<?= $app->renderView( 'ContributeMenu', 'Index' ) ?>
+		<?= $app->renderView( 'SharingToolbar', 'ShareButton' ) ?>
 	</div>
 
-	<div style="position: absolute; top: -1000px"><?php
-			echo Wikia::specialPageLink('Watchlist', 'watchlist', array('accesskey' => 'l'));
-			echo Wikia::specialPageLink('Random', 'randompage', array('accesskey' => 'x'));
-			echo Wikia::specialPageLink('RecentChanges', 'recentchanges', array('accesskey' => 'r'));
-	?></div>
-
-	<? echo F::app()->renderView('SharingToolbar', 'Index'); ?>
+	<div class="hiddenLinks">
+		<?= Wikia::specialPageLink( 'Watchlist', 'watchlist', array( 'accesskey' => 'l' ) ) ?>
+		<?= Wikia::specialPageLink( 'Random', 'randompage', array( 'accesskey' => 'x' ) ) ?>
+		<?= Wikia::specialPageLink( 'RecentChanges', 'recentchanges', array( 'accesskey' => 'r' ) ) ?>
+	</div>
 </header>
-<?= $displaySearch ? '<div class="adm-dash-search">'.F::app()->renderView('Search', 'Index').'</div>' : '' ?>
+
+<? if ( $displaySearch ): ?>
+	<div class="adm-dash-search">
+		<?= $app->renderView( 'Search', 'Index' ) ?>
+	</div>
+<? endif ?>

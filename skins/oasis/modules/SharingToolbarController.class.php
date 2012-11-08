@@ -45,12 +45,7 @@ class SharingToolbarController extends WikiaController {
 		return $ret;
 	}
 
-	public function executeIndex() {
-		if (!$this->canBeShown()) {
-			// don't render the toolbar
-			return false;
-		}
-
+	public function index() {
 		$shareNetworks = array(
 			'Twitter',
 			'Facebook',
@@ -66,17 +61,18 @@ class SharingToolbarController extends WikiaController {
 				$shareButtons[] = $instance;
 			}
 		}
+
 		$this->response->setVal('shareButtons', $shareButtons);
 	}
 
-	public function executeShareButton() {
+	public function shareButton() {
 		if (!$this->canBeShown()) {
 			// don't render the toolbar
 			return false;
 		}
 	}
 
-	public function executeSendMail() {
+	public function sendMail() {
 		global $wgRequest, $wgTitle, $wgUser, $wgNoReplyAddress;
 		wfProfileIn(__METHOD__);
 		$user = $wgUser->getId();

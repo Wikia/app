@@ -1,30 +1,35 @@
+(function( window, $ ) {
+
+var $window = $( window ),
+	scroll = 'scroll.SharingToolbar',
+	Wikia = Wikia || {};
+
 var SharingToolbar = {
 	pageWidth: 0,
-	toolbarNode: false,
-	contributeOffsetTop: 0,
+	offsetTop: 0,
 
-	init: function() {
-		this.toolbarNode = $('#SharingToolbar');
-
-		// sharing toolbar is not shown on this page
-		if (!this.toolbarNode.exists()) {
-			return;
-		}
-
+	init: function( options ) {
+		this.$button = options.$button;
+		this.offsetTop = this.$button.offset().top - 5;
 		this.pageWidth = $('#WikiaPage').width();
-		this.contributeOffsetTop = $('#WikiHeader > .buttons > .contribute').offset().top - 5 /* #SharingToolbar top */;
 
-		$(window).bind('scroll', $.proxy(this.onScroll, this));
-		this.toolbarNode.find('.email-link').bind('click', this.onEmailClick);
-		$('.WikiHeaderRestyle .share-button').bind('click', this.toolbarToggle);
+		// Attach to DOM
+		this.$button.parent('.buttons').after( options.template );
+		this.$toolbar = $( '#SharingToolbar' );
+
+		// Load dependencies
+		JSSnippets.init();
+
+		// Bind events
+		this.$button.bind('click', $.proxy(this.toggleToolbar, this));
+		this.$toolbar.find('.email-link').bind('click', this.onEmailClick);
+
+		// Toggle on
+		this.toggleToolbar( options.event );
 	},
 	onScroll: function() {
-		if ($(window).scrollTop() >= this.contributeOffsetTop) {
-			this.toolbarNode.addClass('fixed');
-		}
-		else {
-			this.toolbarNode.removeClass('fixed');
-		}
+		var fixed = $window.scrollTop() >= this.offsetTop;
+		this.$toolbar.toggleClass('fixed', fixed);
 	},
 	onEmailClick: function(ev) {
 		var node = $(this),
@@ -107,7 +112,7 @@ var SharingToolbar = {
 	},
 	checkWidth: function() {
 		var maxWidth = 0,
-			nodes = this.toolbarNode.children();
+			nodes = this.$toolbar.children();
 
 		$.each(nodes, function(key, value) {
 			var node = $(value),
@@ -116,21 +121,28 @@ var SharingToolbar = {
 			maxWidth = Math.max(elementWidth, maxWidth);
 		});
 
-		this.toolbarNode.css('width', maxWidth);
+		this.$toolbar.css('width', maxWidth);
 	},
-	toolbarToggle: function(ev) {
-		var	button = $(this),
-			self = SharingToolbar;
-		ev.preventDefault();
-		button.toggleClass('share-enabled');
-		self.toolbarNode.toggleClass('hidden');
-		// width checking
-		if (button.hasClass('share-enabled')) {
-			self.checkWidth();
+	toggleToolbar: function( event ) {
+		var visible = this.$button.hasClass('share-enabled');
+
+		event.preventDefault();
+
+		this.$button.toggleClass('share-enabled', !visible);
+		this.$toolbar.toggleClass('hidden', visible);
+
+		if (visible) {
+			this.checkWidth();
+			$window.off(scroll);
+
+		} else {
+			$window.on(scroll, $.proxy(this.onScroll, this));
 		}
 	}
-}
+};
 
-$(function() {
-	SharingToolbar.init();
-});
+// Exports
+Wikia.SharingToolbar = SharingToolbar;
+window.Wikia = Wikia;
+
+})( window, jQuery );

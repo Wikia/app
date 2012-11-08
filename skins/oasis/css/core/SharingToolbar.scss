@@ -2,11 +2,12 @@
 @import "layout";
 @import "../mixins/border-radius";
 
-#SharingToolbar {
-	$share-background-color: transparentize($color-page, 0.65);
-	@if lightness($color-page) < 50 {
-		$share-background-color: transparentize($color-page, 0.7);
-	}
+$share-background-color: transparentize($color-page, 0.65);
+@if lightness($color-page) < 50 {
+	$share-background-color: transparentize($color-page, 0.7);
+}
+
+.SharingToolbar {
 	@include border-radius(5px);
 	background-color: $share-background-color;
 	padding: 3px;
