@@ -6,8 +6,8 @@
 
 		init: function() {
 			$(window)
-				.scroll(this.analyze)
-				.mousedown(this.cancelTimer);
+				.scroll($.proxy(this.analyze, this))
+				.mousedown($.proxy(this.cancelTimer, this));
 		},
 
 		/**
