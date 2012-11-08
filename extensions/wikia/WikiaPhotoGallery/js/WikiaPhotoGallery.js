@@ -280,7 +280,7 @@ var WikiaPhotoGallery = {
 
 				// get widths / alignment from sliders
 				if (this.isSlideshow()) {
-					gallery.params.widths = $('#WikiaPhotoGallerySliderSlideshow').find('.slider').slider('value');
+					gallery.params.widths = this.sliderInput.val();
 					if (gallery.params.usefeed) {
 						delete gallery.params.usefeed;
 						gallery.params.rssfeed = $('#WikiaPhotoGallerySlideshowFeedUrl').val();
@@ -289,7 +289,7 @@ var WikiaPhotoGallery = {
 					}
 				} else if ( !this.isSlider() ) {
 					gallery.params.captionalign = $('#WikiaPhotoGalleryEditorGalleryCaptionAlignment').val();
-					gallery.params.widths = $('#WikiaPhotoGallerySliderGallery').find('.slider').slider('value');
+					gallery.params.widths = this.sliderInput.val();
 					gallery.params.position = $('#WikiaPhotoGalleryEditorGalleryPosition').val();
 					if (gallery.params.usefeed) {
 						delete gallery.params.usefeed;
@@ -1815,7 +1815,7 @@ var WikiaPhotoGallery = {
 	setupSlider: function(sliderWrapper, paramName, values, onChangeCallback) {
 		var params = this.editor.gallery.params;
 
-		var sliderInput = sliderWrapper.find('input');
+		var sliderInput = this.sliderInput = sliderWrapper.find('input');
 		var slider = sliderWrapper.find('.slider');
 
 		// set slider width
