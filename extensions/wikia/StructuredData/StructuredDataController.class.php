@@ -71,6 +71,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 	 * 'id' request parameter
 	 */
 	public function showObject() {
+		/** @var $sdsObject SDElement */
 		$sdsObject = null;
 
 		$id = $this->request->getVal( 'id', false );
@@ -111,6 +112,13 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 		if(empty($sdsObject)) {
 			$this->app->wg->Out->setStatusCode ( 400 );
+		}
+		else {
+			if($this->getRequest()->wasPosted()) {
+				$sdsObject->update($this->getRequest()->getParams());
+				$this->APIClient->saveObject($sdsObject->getId(), $sdsObject->toSDSJson());
+				$action = 'render';
+			}
 		}
 
 		$this->response->addAsset('extensions/wikia/StructuredData/css/StructuredData.scss');

@@ -212,6 +212,15 @@ class SDElement extends SDRenderableObject implements SDObject, SplSubject {
 		return json_encode( $data );
 	}
 
+	public function update(array $params) {
+		/** @var $property SDElementProperty */
+		foreach($this->properties as $property) {
+			if(isset($params[$property->getName()])) {
+				$property->setValue($params[$property->getName()]);
+			}
+		}
+	}
+
 	/**
 	 * (PHP 5 &gt;= 5.1.0)<br/>
 	 * Attach an SplObserver

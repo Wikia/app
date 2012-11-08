@@ -8,7 +8,7 @@
 	$properties = $sdsObject->getProperties();
 ?>
 
-<form class="WikiaForm SDObject" id="SDObject">
+<form class="WikiaForm SDObject" id="SDObject" method="POST">
 	<h1><strong><?= $sdsObject->getName(); ?></strong></h1>
 	<?php if($context == SD_CONTEXT_SPECIAL): ?>
 		<a href="?action=edit" class="wikia-button" title="Edit SDS Object">Edit</a>
