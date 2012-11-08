@@ -40,8 +40,6 @@ window.LiftiumDART = (function(window, $, WikiaTracker, Athena, AdEngine, AdConf
 		   'PREFOOTER_BIG': {'tile': 5, 'loc': "footer"},
 		   'HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
 		   'HOME_TOP_LEADERBOARD': {'tile': 2, 'loc': "top", 'dcopt': "ist"},
-		   'HOME_LEFT_SKYSCRAPER_1': {'tile':3, 'loc': "top"},
-		   'HOME_LEFT_SKYSCRAPER_2': {'tile':3, 'loc': "middle"},
 		   'INCONTENT_BOXAD_1': {'tile':4, 'loc': "middle"},
 		   'INCONTENT_BOXAD_2': {'tile':5, 'loc': "middle"},
 		   'INCONTENT_BOXAD_3': {'tile':6, 'loc': "middle"},
