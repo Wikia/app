@@ -63,8 +63,6 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 // FORMER SLOTS {
 //		'DOCKED_LEADERBOARD': {'tile': 8, 'loc': "bottom"},
 //		'FOOTER_BOXAD': {'tile': 5, 'loc': "footer"},
-//		'HOME_LEFT_SKYSCRAPER_1': {'tile':3, 'loc': "top"},
-//		'HOME_LEFT_SKYSCRAPER_2': {'tile':3, 'loc': "middle"},
 //		'HOME_TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"},
 //		'HUB_TOP_LEADERBOARD': {'tile':2, 'loc': 'top', 'dcopt': 'ist'},
 //		'INCONTENT_BOXAD_1': {'tile':4, 'loc': "middle"},
