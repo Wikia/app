@@ -2,8 +2,8 @@
 
 class RealgravityVideoHandler extends VideoHandler {
 
-	const REALGRAVITY_PLAYER_AUTOSTART_ID = 'ac330d90-cb46-012e-f91c-12313d18e962';
-	const REALGRAVITY_PLAYER_NO_AUTOSTART_ID = '63541030-a4fd-012e-7c44-1231391272da';
+	const REALGRAVITY_PLAYER_AUTOSTART_ID = 'c85a31a4-b327-4b28-b75a-903c4bfecc1c';
+	const REALGRAVITY_PLAYER_NO_AUTOSTART_ID = '0654181c-ee9b-4815-8d63-f3d435143fe6';
 
 	protected $apiName = 'RealgravityApiWrapper';
 	protected static $urlTemplate = 'http://anomaly.realgravity.com/flash/player.swf';
@@ -23,18 +23,21 @@ class RealgravityVideoHandler extends VideoHandler {
 		}
 
 		$embed = <<<EOT
-<object id="rg_player_$playerId" name="rg_player_$playerId" type="application/x-shockwave-flash"
-width="$width" height="$height" classid="clsid:$playerId" style="visibility: visible;" data="$url">
-	<param name="allowscriptaccess" value="always"></param>
+<object id="rg_player_{$playerId}" name="rg_player_{$playerId}" type="application/x-shockwave-flash"
+width="{$width}" height="{$height}" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" style="visibility: visible;">
+	<param name="movie" value="http://anomaly.realgravity.com/flash/player.swf"></param>
+	<param name="allowScriptAccess" value="always"></param>
 	<param name="allowNetworking" value="all"></param>
 	<param name="menu" value="false"></param>
 	<param name="wmode" value="transparent"></param>
 	<param name="allowFullScreen" value="true"></param>
-	<param name="flashvars" value="&config=http://mediacast.realgravity.com/vs/api/playerxml/$playerId"></param>
-	<embed id="$playerId" name="$playerId" width="$width" height="$height"
-	allowNetworking="all" allowscriptaccess="always" allowfullscreen="true" wmode="transparent"
-	flashvars="config=http://mediacast.realgravity.com/vs/2/players/single/$playerId/$videoId.xml"
-	src="$url"></embed>
+	<param name="flashvars" value="config=http://mediacast.realgravity.com/vs/2/players/single/{$playerId}/{$videoId}.xml"></param>
+	<!--[if !IE]>-->
+	<embed id="{$playerId}" name="{$playerId}" width="{$width}" height="{$height}"
+	allowNetworking="all" allowScriptAccess="always" allowFullScreen="true" wmode="transparent"
+	flashvars="config=http://mediacast.realgravity.com/vs/2/players/single/{$playerId}/{$videoId}.xml"
+	src="http://anomaly.realgravity.com/flash/player.swf"></embed>
+	<!--<![endif]-->
 </object>
 EOT;
 
