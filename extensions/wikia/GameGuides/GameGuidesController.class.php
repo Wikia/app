@@ -12,6 +12,8 @@ class GameGuidesController extends WikiaController {
 	const APP_NAME = 'GameGuides';
 	const SKIN_NAME = 'wikiaapp';
 	const SECONDS_IN_A_DAY = 86400; //24h
+	const SIX_HOURS = 21600; //6h
+	const LIMIT = 25;
 
 	/**
 	 * @var $mModel GameGuidesModel
@@ -370,7 +372,7 @@ class GameGuidesController extends WikiaController {
 
 	/**
 	 *
-	 * Returns list of categories on a wiki in batches by 25
+	 * Returns list of categories on a wiki in batches by self::LIMIT
 	 *
 	 * @requestParam Integer limit
 	 * @requestParam String offset
@@ -381,14 +383,25 @@ class GameGuidesController extends WikiaController {
 	private function getCategories(){
 		$this->wf->profileIn( __METHOD__ );
 
-		$categories = ApiService::call(
-			array(
-				'action' => 'query',
-				'list' => 'allcategories',
-				'aclimit' => $this->request->getVal( 'limit', 25 ),
-				'acfrom' => $this->request->getVal( 'offset', '' )
-			)
-		);
+		$limit = $this->request->getVal( 'limit', self::LIMIT );
+		$offset = $this->request->getVal( 'offset', '' );
+
+		$key = $this->wf->memcKey( __METHOD__, $offset, $limit );
+
+		$categories = $this->wg->memc->get( $key );
+
+		if ( empty( $categories ) ) {
+			$categories = ApiService::call(
+				array(
+					'action' => 'query',
+					'list' => 'allcategories',
+					'aclimit' => $limit,
+					'acfrom' => $offset
+				)
+			);
+
+			$this->wg->memc->set( $key, $categories, self::SIX_HOURS );
+		}
 
 		$allCategories = $categories['query']['allcategories'];
 
@@ -489,18 +502,29 @@ class GameGuidesController extends WikiaController {
 			if( !is_null( $category ) ) {
 				$category = $category->getFullText();
 
-				$articles = ApiService::call(
-					array(
-						'action' => 'query',
-						'list' => 'categorymembers',
-						'cmtype' => 'page|subcat',
-						'cmprop' => 'ids|title',
-						//Category: is a call to API it does not have to be internationalized
-						'cmtitle' => $category,
-						'cmlimit' => $this->request->getVal( 'limit', 25 ),
-						'cmcontinue' => $this->request->getVal( 'offset', '' )
-					)
-				);
+				$limit = $this->request->getVal( 'limit', self::LIMIT );
+				$offset = $this->request->getVal( 'offset', '' );
+
+				$key = $this->wf->memcKey( __METHOD__, $category, $offset, $limit );
+
+				$articles = $this->wg->memc->get( $key );
+
+				if ( empty( $articles ) ) {
+					$articles = ApiService::call(
+						array(
+							'action' => 'query',
+							'list' => 'categorymembers',
+							'cmtype' => 'page|subcat',
+							'cmprop' => 'ids|title',
+							//Category: is a call to API it does not have to be internationalized
+							'cmtitle' => $category,
+							'cmlimit' => $limit,
+							'cmcontinue' => $offset
+						)
+					);
+
+					$this->wg->memc->set( $key, $articles, self::SIX_HOURS );
+				}
 
 				if ( !empty( $articles['query']['categorymembers'] ) ) {
 					$this->response->setVal( 'articles', $articles['query']['categorymembers']);
