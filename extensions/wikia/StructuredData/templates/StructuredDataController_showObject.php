@@ -8,7 +8,7 @@
 	$properties = $sdsObject->getProperties();
 ?>
 
-<div class="SDObject" id="SDObject">
+<form class="WikiaForm SDObject" id="SDObject">
 	<h1><strong><?php echo $sdsObject->getName(); ?></strong></h1>
 	<?php if($context == SD_CONTEXT_SPECIAL): ?>
 		<a href="?action=edit" class="wikia-button" title="Edit SDS Object">Edit</a>
@@ -23,8 +23,12 @@
 		<thead>
 			<tr>
 				<th class="grid-1">Property label:</th>
-				<th class="grid-3">Property value:</th>
-				<th class="grid-2">Wiki text sample:</th>
+				<?php if($context == SD_CONTEXT_EDITING): ?>
+					<th class="grid-5">Property value:</th>
+				<?php else : ?>
+					<th class="grid-3">Property value:</th>
+					<th class="grid-2">Wiki text sample:</th>
+				<?php endif; ?>
 			</tr>
 		</thead>
 		<tbody>
@@ -44,7 +48,9 @@
 					<tr>
 						<th><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}',$propertyLabel)); ?>:</th>
 						<td><?php echo $proprtyHTML;?></td>
-						<td><pre><?php echo $propertyName; ?></pre></td>
+						<?php if($context == SD_CONTEXT_SPECIAL): ?>
+							<td><pre><?php echo $propertyName; ?></pre></td>
+						<?php endif; ?>
 					</tr>
 					<?php continue; ?>
 				<?php endif; ?>
@@ -57,16 +63,19 @@
 					<?php // display 'empty' for empty object properties ?>
 					<?php if (empty($propertyValue)) : ?>
 						<td><p class="empty">empty</p></td>
-				
-						<td><pre><?php echo $propertyName; ?></pre></td>
+						<?php if($context == SD_CONTEXT_SPECIAL): ?>
+							<td><pre><?php echo $propertyName; ?></pre></td>
+						<?php endif; ?>
 				</tr>
 						<?php continue; ?>
 					<? endif ?>
 		
 					<td><p><?php echo $propertyValue; ?></p></td>
-					<td><pre><?php echo $propertyName; ?></pre></td>
+					<?php if($context == SD_CONTEXT_SPECIAL): ?>
+						<td><pre><?php echo $propertyName; ?></pre></td>
+					<?php endif; ?>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-</div>
+</form>
