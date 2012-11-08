@@ -32,10 +32,6 @@ class CensusDataRetrieval {
 			return true;
 		}
 
-		if ( !$this->isSupportedType() ) {
-			return true;
-		}
-
 		$infoboxText = $this->parseData();
 
 		$typeLayout = $this->getLayout();
@@ -50,25 +46,22 @@ class CensusDataRetrieval {
 	 * @return boolean true on success, false on failed connection or empty result
 	 */
 	private function fetchData() {
-		// @TODO fetch data from API based on $this->query
+		// fetch data from API based on $this->query
                 $http = new Http();
-                
+
+		// @TODO find a way to query all object types, preferably in one query
                 $censusData = $http->get('http://data.soe.com/s:wikia/get/ps2/vehicle/?code='.$this->query);
-                $censusMap = $this->getMap($censusData);
-                
+
+		// error handling
+		if ( empty( $censusData ) ) {
+			wfDebug( __METHOD__ . 'Connection problem or no data' );
+			return false;
+		}
+ 
                 // @TODO use data map to filter out unneeded data
                 // 
-                //vehicle
-                $vehicle = $censusMap->vehicle_list[0];
-		$this->data = array( 'name' => $vehicle->name->en,
-                        'type' => $vehicle->type,
-                        'description' => $vehicle->description->en,
-                        'cost' => $vehicle->ingame_costs->cost,
-                        'cost_resource' => $vehicle->ingame_costs->resource->en );
-
-                $this->type = 'vehicle'; // @TODO use relevant data field to determine type
-
-		return true;
+                // @TODO assuming vehicle for now, but this needs to be generic
+		return $this->mapData($censusData);
 	}
 
 	/**
@@ -77,9 +70,7 @@ class CensusDataRetrieval {
 	 */
 	private function parseData() {
 		$type = $this->getType();
-                
-		$output = 'test text23';
-                $output = $this->query;
+                $output = implode( ',', $this->data );
                 /* use data-to-template map to put together template call wikitext */
 
 		return $output;
@@ -117,14 +108,38 @@ class CensusDataRetrieval {
  	 * getType
 	 * determines type based on fetched data
 	 *
-	 * @return string
+	 * @return array
 	 */
-	private function getMap($html) {
+	private function mapData( $html ) {
                 $arr= array();
                 preg_match('/<body>(.*)<\/body>/s', $html, $arr);
                 $json = $arr[1];
                 $json = strip_tags($json);
                 $map = json_decode($json);
-		return $map;
+
+		foreach ( $this->supportedTypes as $type ) {
+			$property = $type . '_list';
+			if ( isset( $map->$property ) ) {
+				$object = $map->vehicle_list[0];
+				break;
+			}
+		}
+
+		if ( empty( $object ) ) {
+			wfDebug( __METHOD__ . 'Unsupported object type' );
+			return false;
+		}
+
+		$this->data = array(
+			'name' => $object->name->en,
+			'type' => $object->type,
+			'description' => $object->description->en,
+			'cost' => $object->ingame_costs->cost,
+			'cost_resource' => $object->ingame_costs->resource->en
+		);
+
+		$this->type = $object->type;
+
+		return true;
 	}
 }
