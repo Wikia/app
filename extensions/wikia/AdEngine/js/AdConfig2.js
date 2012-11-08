@@ -22,7 +22,6 @@ var AdConfig2 = function (
 		'CORP_TOP_LEADERBOARD':true,
 		'CORP_TOP_RIGHT_BOXAD':true,
 		'EXIT_STITIAL_BOXAD_1':true,
-		'HOME_INVISIBLE_TOP':true,
 		'HOME_TOP_LEADERBOARD':true,
 		'HOME_TOP_RIGHT_BOXAD':true,
 		'HUB_TOP_LEADERBOARD':true,

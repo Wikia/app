@@ -1,6 +1,6 @@
 /* global Features */
 var AdConfig = {
-	adSlotsRequiringJSInvocation: { HOME_INVISIBLE_TOP:1, INVISIBLE_TOP:1, INVISIBLE_1:1, INVISIBLE_2:1 },
+	adSlotsRequiringJSInvocation: { INVISIBLE_TOP:1, INVISIBLE_1:1, INVISIBLE_2:1 },
 	geo: null,
 
 	isHighValueCountry: function(country) {
@@ -15,7 +15,6 @@ var AdConfig = {
 			case 'CORP_TOP_LEADERBOARD':
 			case 'CORP_TOP_RIGHT_BOXAD':
 			case 'EXIT_STITIAL_BOXAD_1':
-			case 'HOME_INVISIBLE_TOP':
 			case 'HOME_TOP_LEADERBOARD':
 			case 'HOME_TOP_RIGHT_BOXAD':
 			case 'HUB_TOP_LEADERBOARD':
@@ -89,7 +88,6 @@ AdConfig.DART = {
 	   'EXIT_STITIAL_BOXAD_2': {'tile':3, 'loc': "exit"},
 	   'EXIT_STITIAL_INVISIBLE': {'tile':1, 'loc': "exit", 'dcopt': "ist"},
 	   'FOOTER_BOXAD': {'tile': 5, 'loc': "footer"},
-	   'HOME_INVISIBLE_TOP': {'tile':12, 'loc': "invisible"},
 	   'HOME_LEFT_SKYSCRAPER_1': {'tile':3, 'loc': "top"},
 	   'HOME_LEFT_SKYSCRAPER_2': {'tile':3, 'loc': "middle"},
 	   'HOME_TOP_LEADERBOARD': {'tile': 2, 'loc': "top", 'dcopt': "ist"},
