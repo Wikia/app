@@ -8,7 +8,11 @@
 		margin: 11px 0 0 20px;
 	}
 	.article-table {
+		border-left: 1px solid $color-page-border;
 		margin: 0;
+	}
+	thead th {
+		border-top: 1px solid $color-page-border;
 	}
 	dl {
 		clear: both;
@@ -26,6 +30,7 @@
 		padding-bottom: 10px;
 	}
 	th, td {
+		border-right: 1px solid $color-page-border;
 		float: none !important;
 		display: table-cell !important;
 	}
