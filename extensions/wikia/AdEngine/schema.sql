@@ -1,3 +1,5 @@
+-- TODO: remove this
+
 -- Providers DROP TABLE IF EXISTS ad_provider;
 DROP TABLE IF EXISTS ad_provider;
 CREATE TABLE ad_provider (

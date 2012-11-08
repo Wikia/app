@@ -8,7 +8,6 @@
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 <?= F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_TOP')) ?>
-<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
 <?= F::app()->renderView('GlobalHeader', 'Index') ?>
 
 <?= empty($wg->GlobalHeaderFullWidth) ? '' : F::app()->renderView('Notifications', 'Confirmation') ?>

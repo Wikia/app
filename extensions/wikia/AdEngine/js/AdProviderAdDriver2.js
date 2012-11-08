@@ -65,7 +65,6 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 //		'EXIT_STITIAL_BOXAD_2': {'tile':3, 'loc': "exit"},
 //		'EXIT_STITIAL_INVISIBLE': {'tile':1, 'loc': "exit", 'dcopt': "ist"},
 //		'FOOTER_BOXAD': {'tile': 5, 'loc': "footer"},
-//		'HOME_INVISIBLE_TOP': {'tile':12, 'loc': "invisible"},
 //		'HOME_LEFT_SKYSCRAPER_1': {'tile':3, 'loc': "top"},
 //		'HOME_LEFT_SKYSCRAPER_2': {'tile':3, 'loc': "middle"},
 //		'HOME_TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"},
