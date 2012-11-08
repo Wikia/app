@@ -335,7 +335,6 @@ EOT;
 		  case 'INCONTENT_LEADERBOARD_5': return "loc=middle;";
 		  case 'EXIT_STITIAL_INVISIBLE': return "loc=exit;";
 		  case 'EXIT_STITIAL_BOXAD_1': return "loc=exit;";
-		  case 'EXIT_STITIAL_BOXAD_2': return "loc=exit;";
 		  case 'SPECIAL_INTERSTITIAL': return "loc=top;";
 		  case 'MODAL_VERTICAL_BANNER': return "loc=modal;";
 		  default: return "";

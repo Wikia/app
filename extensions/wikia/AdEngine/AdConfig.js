@@ -84,7 +84,6 @@ AdConfig.DART = {
        'CORP_TOP_RIGHT_BOXAD': {'tile':1, 'loc': 'top'},
 	   'DOCKED_LEADERBOARD': {'tile': 8, 'loc': "bottom"},
 	   'EXIT_STITIAL_BOXAD_1': {'tile':2, 'loc': "exit"},
-	   'EXIT_STITIAL_BOXAD_2': {'tile':3, 'loc': "exit"},
 	   'EXIT_STITIAL_INVISIBLE': {'tile':1, 'loc': "exit", 'dcopt': "ist"},
 	   'FOOTER_BOXAD': {'tile': 5, 'loc': "footer"},
 	   'HOME_LEFT_SKYSCRAPER_1': {'tile':3, 'loc': "top"},
