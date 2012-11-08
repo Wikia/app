@@ -310,15 +310,20 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$searchEngine = F::build( 'SearchEngine' );
 		$searchableNamespaces = $searchEngine->searchableNamespaces();
 		$namespaces = array();
-		foreach($searchableNamespaces as $i => $name) {
-		    if ( $this->getVal('ns'.$i, false) ) {
+		foreach( $searchableNamespaces as $i => $name ) {
+		    if ( $this->getVal( 'ns'.$i, false ) ) {
 		        $namespaces[] = $i;
 		    }
 		}
-		if ( empty($namespaces) && $user->getOption('searchAllNamespaces')) {
-		    $namespaces = array_keys($searchableNamespaces);
+		if ( empty($namespaces) ) {
+		    if ( $user->getOption( 'searchAllNamespaces' ) ) {
+			    $namespaces = array_keys($searchableNamespaces);
+		    } else {
+		    	$profiles = $searchConfig->getSearchProfiles();
+		    	$namespaces = $profiles[$this->wg->DefaultSearchProfile]['namespaces'];
+		    }
+		    
 		}
-		
 		$searchConfig->setNamespaces( $namespaces );
 		
 		return true;
