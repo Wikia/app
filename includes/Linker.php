@@ -178,13 +178,13 @@ class Linker {
 		/* Wikia change begin - @author: garth */
 		// Create a unique key from the arguments and cache the results of this
 		// method call for the rest of this request
-		static $linkCache = array();
-		$key = serialize( array( $target->getDBkey(), $html, $customAttribs, $query, $options ) );
+		//static $linkCache = array();
+		//$key = serialize( array( $target->getDBkey(), $html, $customAttribs, $query, $options ) );
 
-		if ( array_key_exists($key, $linkCache) ) {
-			wfProfileOut( __METHOD__ );
-			return $linkCache[$key];
-		}
+		//if ( array_key_exists($key, $linkCache) ) {
+		//	wfProfileOut( __METHOD__ );
+		//	return $linkCache[$key];
+		//}
 		/* Wikia change - end */
 
 		$dummy = new DummyLinker; // dummy linker instance for bc on the hooks
@@ -243,7 +243,7 @@ class Linker {
 		}
 
 		/* Wikia change begin - @author: garth */
-		$linkCache[$key] = $ret;	
+		//$linkCache[$key] = $ret;	
 		/* Wikia change - end */
 
 		wfProfileOut( __METHOD__ );
