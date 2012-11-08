@@ -177,12 +177,12 @@ class MyHome {
 		//user must be logged in and have redirect enabled;
 		//this is not used for Corporate Sites where Wikia Visualization is enabled
 		if( $wgUser->isLoggedIn() && empty($wgEnableWikiaHomePageExt) ) {
-			$value = $wgUser->getOption('myhomedisableredirect');
+			$value = $wgUser->getOption(UserPreferencesV2::LANDING_PAGE_PROP_NAME);
 			switch($value) {
-				case UserPreferencesV2::MYINFO_REDIRECT_WIKI_ACTIVITY:
+				case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
 					$title = Title::newFromText('WikiActivity', NS_SPECIAL);
 					break;
-				case UserPreferencesV2::MYINFO_REDIRECT_RECENT_CHANGES:
+				case UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
 					$title = Title::newFromText('RecentChanges', NS_SPECIAL);
 					break;
 			}
@@ -315,7 +315,8 @@ class MyHome {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
 	public static function onGetPreferences($user, &$preferences) {
-		$preferences['myhomedisableredirect'] = array(
+		//we've changed 'myhomedisableredirect' to 'userlendingpage' during work on fb#51756
+		$preferences[UserPreferencesV2::LANDING_PAGE_PROP_NAME] = array(
 			'type' => 'toggle',
 			'section' => 'misc/myhome',
 			'label-message' => 'tog-myhomedisableredirect',

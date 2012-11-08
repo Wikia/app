@@ -28,12 +28,12 @@
 class Preferences {
 	static $defaultPreferences = null;
 	static $saveFilters = array(
-			'timecorrection' => array( 'Preferences', 'filterTimezoneInput' ),
-			'cols' => array( 'Preferences', 'filterIntval' ),
-			'rows' => array( 'Preferences', 'filterIntval' ),
-			'rclimit' => array( 'Preferences', 'filterIntval' ),
-			'wllimit' => array( 'Preferences', 'filterIntval' ),
-			'searchlimit' => array( 'Preferences', 'filterIntval' ),
+		'timecorrection' => array( 'Preferences', 'filterTimezoneInput' ),
+		'cols' => array( 'Preferences', 'filterIntval' ),
+		'rows' => array( 'Preferences', 'filterIntval' ),
+		'rclimit' => array( 'Preferences', 'filterIntval' ),
+		'wllimit' => array( 'Preferences', 'filterIntval' ),
+		'searchlimit' => array( 'Preferences', 'filterIntval' ),
 	);
 
 	/**
@@ -84,7 +84,7 @@ class Preferences {
 				// Already set, no problem
 				continue;
 			} elseif ( !is_null( $prefFromUser ) && // Make sure we're not just pulling nothing
-					$field->validate( $prefFromUser, $user->mOptions ) === true ) {
+				$field->validate( $prefFromUser, $user->mOptions ) === true ) {
 				$info['default'] = $prefFromUser;
 			} elseif ( $field->validate( $globalDefault, $user->mOptions ) === true ) {
 				$info['default'] = $globalDefault;
@@ -112,7 +112,7 @@ class Preferences {
 
 		// Handling for array-type preferences
 		if ( ( isset( $info['type'] ) && $info['type'] == 'multiselect' ) ||
-				( isset( $info['class'] ) && $info['class'] == 'HTMLMultiSelectField' ) ) {
+			( isset( $info['class'] ) && $info['class'] == 'HTMLMultiSelectField' ) ) {
 			$options = HTMLFormField::flattenOptions( $info['options'] );
 			$prefix = isset( $info['prefix'] ) ? $info['prefix'] : $name;
 			$val = array();
@@ -135,9 +135,9 @@ class Preferences {
 	 */
 	static function profilePreferences( $user, IContextSource $context, &$defaultPreferences ) {
 		global $wgAuth, $wgContLang, $wgParser, $wgCookieExpiration, $wgLanguageCode,
-			$wgDisableTitleConversion, $wgDisableLangConversion, $wgMaxSigChars,
-			$wgEnableEmail, $wgEmailConfirmToEdit, $wgEnableUserEmail, $wgEmailAuthentication,
-			$wgEnotifWatchlist, $wgEnotifUserTalk, $wgEnotifRevealEditorAddress;
+			   $wgDisableTitleConversion, $wgDisableLangConversion, $wgMaxSigChars,
+			   $wgEnableEmail, $wgEmailConfirmToEdit, $wgEnableUserEmail, $wgEmailAuthentication,
+			   $wgEnotifWatchlist, $wgEnotifUserTalk, $wgEnotifRevealEditorAddress;
 
 		## User info #####################################
 		// Information panel
@@ -303,10 +303,10 @@ class Preferences {
 		if ( count( $variantArray ) > 1 && !$wgDisableLangConversion && !$wgDisableTitleConversion ) {
 			$defaultPreferences['noconvertlink'] =
 				array(
-				'type' => 'toggle',
-				'section' => 'personal/i18n',
-				'label-message' => 'tog-noconvertlink',
-			);
+					'type' => 'toggle',
+					'section' => 'personal/i18n',
+					'label-message' => 'tog-noconvertlink',
+				);
 		}
 
 		// show a preview of the old signature first
@@ -338,8 +338,8 @@ class Preferences {
 
 		if ( $wgEnableEmail ) {
 			$helpMessages[] = $wgEmailConfirmToEdit
-					? 'prefs-help-email-required'
-					: 'prefs-help-email' ;
+				? 'prefs-help-email-required'
+				: 'prefs-help-email' ;
 
 			if( $wgEnableUserEmail ) {
 				// additional messages when users can send email to each other
@@ -373,7 +373,7 @@ class Preferences {
 				$emailauthenticated = '';
 				wfRunHooks( 'PreferencesGetEmailAuthentication', array( &$user, $context, &$disableEmailPrefs, &$emailauthenticated ) );
 				if ( empty($emailauthenticated) ) {
-				/* Wikia change - end */
+					/* Wikia change - end */
 					if ( $user->getEmail() ) {
 						if ( $user->getEmailAuthenticationTimestamp() ) {
 							// date and time are separate parameters to facilitate localisation.
@@ -462,19 +462,19 @@ class Preferences {
 
 			/* Wikia change begin - @author: Inez */
 			$defaultPreferences['htmlemails'] =
-					array(
-						'type' => 'toggle',
-						'section' => 'personal/email',
-						'label-message' => 'tog-htmlemails',
-					);					
+				array(
+					'type' => 'toggle',
+					'section' => 'personal/email',
+					'label-message' => 'tog-htmlemails',
+				);
 
 			$defaultPreferences['marketingallowed'] =
-					array(
-						'type' => 'toggle',
-						'section' => 'personal/email',
-						'label-message' => 'tog-marketingallowed',
-					);
-			/* Wikia change end */					
+				array(
+					'type' => 'toggle',
+					'section' => 'personal/email',
+					'label-message' => 'tog-marketingallowed',
+				);
+			/* Wikia change end */
 		}
 	}
 
@@ -890,7 +890,7 @@ class Preferences {
 		}
 
 		$watchlistdaysMax = ceil( $wgRCMaxAge / ( 3600 * 24 ) );
-				
+
 		## Watchlist #####################################
 		$defaultPreferences['watchlistdays'] = array(
 			'type' => 'float',
@@ -898,7 +898,7 @@ class Preferences {
 			'max' => $watchlistdaysMax,
 			'section' => 'watchlist/displaywatchlist',
 			'help' => $context->msg( 'prefs-watchlist-days-max' )->numParams(
-				                 $watchlistdaysMax )->text(),
+				$watchlistdaysMax )->text(),
 			'label-message' => 'prefs-watchlist-days',
 		);
 		$defaultPreferences['wllimit'] = array(
@@ -1159,7 +1159,7 @@ class Preferences {
 		if ( $dateopts ) {
 			if ( !in_array( 'default', $dateopts ) ) {
 				$dateopts[] = 'default'; // Make sure default is always valid
-										// Bug 19237
+				// Bug 19237
 			}
 
 			// KLUGE: site default might not be valid for user language
@@ -1229,8 +1229,8 @@ class Preferences {
 			return Xml::element( 'span', array( 'class' => 'error' ),
 				$form->msg( 'badsiglength' )->numParams( $wgMaxSigChars )->text() );
 		} elseif ( isset( $alldata['fancysig'] ) &&
-				$alldata['fancysig'] &&
-				false === $wgParser->validateSig( $signature ) ) {
+			$alldata['fancysig'] &&
+			false === $wgParser->validateSig( $signature ) ) {
 			return Xml::element( 'span', array( 'class' => 'error' ), $form->msg( 'badsig' )->text() );
 		} else {
 			return true;
@@ -1400,7 +1400,7 @@ class Preferences {
 
 		$user = $form->getModifiedUser();
 		$result = true;
-		
+
 		// Filter input
 		foreach ( array_keys( $formData ) as $name ) {
 			if ( isset( self::$saveFilters[$name] ) ) {
@@ -1408,7 +1408,7 @@ class Preferences {
 					call_user_func( self::$saveFilters[$name], $formData[$name], $formData );
 			}
 		}
-		
+
 		// Stuff that shouldn't be saved as a preference.
 		$saveBlacklist = array(
 			'realname',
@@ -1427,7 +1427,7 @@ class Preferences {
 			$realName = $formData['realname'];
 			$user->setRealName( $realName );
 		}
-		
+
 		foreach ( $saveBlacklist as $b ) {
 			unset( $formData[$b] );
 		}
@@ -1451,9 +1451,9 @@ class Preferences {
 		foreach ( $formData as $key => $value ) {
 			$user->setOption( $key, $value );
 		}
-		
+
 		$user->saveSettings();
-		
+
 		return $result;
 	}
 
@@ -1463,11 +1463,11 @@ class Preferences {
 	 * @return Status
 	 */
 	public static function tryUISubmit( $formData, $form ) {
-		$error = null;		
+		$error = null;
 		if( !wfRunHooks('SavePreferences', array(&$formData, &$error)) ) {
 			return $error;
 		}
-		
+
 		$res = self::tryFormSubmit( $formData, $form, 'ui' );
 
 		if ( $res ) {
@@ -1504,7 +1504,7 @@ class Preferences {
 			$result = null;
 			wfRunHooks( 'Preferences::SetUserEmail', array( $user, $newaddr, &$result, &$info ) );
 			if ( empty($result) ) {
-			#</Wikia>
+				#</Wikia>
 				$oldaddr = $user->getEmail();
 				if ( ( $newaddr != '' ) && ( $newaddr != $oldaddr ) ) {
 					# The user has supplied a new email address on the login page
@@ -1526,7 +1526,7 @@ class Preferences {
 				} elseif ( $newaddr != $oldaddr ) { // if the address is the same, don't change it
 					$user->setEmail( $newaddr );
 				}
-			/* Wikia change - begin */
+				/* Wikia change - begin */
 			} else if ( !$result->isGood() ) {
 				return array( $result, 'mailerror' );
 			}
