@@ -772,16 +772,8 @@ class CityVisualization extends WikiaModel {
 	}
 
 	public function getTargetWikiId($langCode) {
-		switch ($langCode) {
-			case 'de':
-				$wikiId = self::GERMAN_CORPORATE_SITE_ID;
-				break;
-
-			case 'en':
-			default:
-				$wikiId = self::ENGLISH_CORPORATE_SITE_ID;
-		}
-		return $wikiId;
+		$corporateSites = $this->getVisualizationWikisData();
+		return ( isset($corporateSites[$langCode]['wikiId']) ) ? $corporateSites[$langCode]['wikiId'] : false;
 	}
 
 	/**
@@ -789,13 +781,28 @@ class CityVisualization extends WikiaModel {
 	 * @return array
 	 */
 	public function getVisualizationWikisData() {
-		$corporateSites = WikiaDataAccess::cache(
-			$this->getCorporatePagesListKey(),
-			24 * 60 * 60,
-			array($this, 'loadCorporateSitesList')
-		);
+		$corporateSites = $this->getCorporateSitesList();
 		$this->addLangToCorporateSites($corporateSites);
 		return $this->cleanVisualizationWikisArray($corporateSites);
+	}
+
+	/**
+	 * @desc Gets id of WF variable and then loads and returns list of corporate sites
+	 * @return array
+	 */
+	public function getCorporateSitesList() {
+		$wikiFactoryList = array();
+		$this->wikiFactoryVarId = WikiFactory::getVarIdByName(self::WIKIA_HOME_PAGE_WF_VAR_NAME);
+
+		if( is_int($this->wikiFactoryVarId) ) {
+			$wikiFactoryList = WikiaDataAccess::cache(
+				$this->getCorporatePagesListKey(),
+				24 * 60 * 60,
+				array($this, 'loadCorporateSitesList')
+			);
+		}
+
+		return $wikiFactoryList;
 	}
 
 	/**
@@ -803,14 +810,7 @@ class CityVisualization extends WikiaModel {
 	 * @return array
 	 */
 	public function loadCorporateSitesList() {
-		$wikiFactoryList = array();
-		$wikiFactoryVarId = WikiFactory::getVarIdByName(self::WIKIA_HOME_PAGE_WF_VAR_NAME);
-
-		if( is_int($wikiFactoryVarId) ) {
-			$wikiFactoryList = WikiFactory::getListOfWikisWithVar($wikiFactoryVarId, 'bool', '=', true);
-		}
-
-		return $wikiFactoryList;
+		return WikiFactory::getListOfWikisWithVar($this->wikiFactoryVarId, 'bool', '=', true);
 	}
 
 	/**
@@ -848,7 +848,7 @@ class CityVisualization extends WikiaModel {
 	}
 
 	public function getCorporatePagesListKey() {
-		return $this->wf->MemcKey('corporate_pages_list', 'v1.03', __METHOD__);
+		return $this->wf->MemcKey('corporate_pages_list', 'v1.04', __METHOD__);
 	}
 
 	public function getWikisCountForStaffTool($opt) {
