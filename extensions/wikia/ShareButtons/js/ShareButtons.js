@@ -24,22 +24,27 @@ var ShareButtons = {
 		}
 	},
 	process: function() {
-		var dfd = new $.Deferred();
+		var i, length,
+			dfd = new $.Deferred(),
+			head = new $.Deferred(),
+			tail = head.promise();
 
 		if ( dependencies.length ) {
 			$.getResources( dependencies ).done(function() {
 				dependencies = [];
 
-				while ( callbacks.length ) {
-					callbacks.shift()();
+				for ( i = 0, length = callbacks.length; i < length; i++ ) {
+					tail = tail.pipe( callbacks[ i ] );
 				}
 
-				dfd.resolve();
+				tail.done( dfd.resolve );
 			});
 
 		} else {
-			dfd.resolve();
+			tail.resolve();
 		}
+
+		head.resolve();
 
 		return dfd.promise();
 	}
