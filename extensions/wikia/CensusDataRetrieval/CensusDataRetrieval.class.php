@@ -12,9 +12,19 @@ class CensusDataRetrieval {
 		'vehicle' => array(
 			'name' => 'name.en',
 			'type' => 'type',
-		)
+			'description' => 'description.en',
+			'cost' => 'ingame_costs.cost',
+			'cost_resource' => 'ingame_costs.resource.en',
+		),
+                'zone' => array(
+                        'name' => 'name.en',
+                        'description' => 'description.en',
+                )
+                
+                
 	);
 
+	const QUERY_URL = 'http://data.soe.com/s:wikia/json/get/ps2/';
 	const FLAG_CATEGORY = 'census-data-retrieval-flag-category';
 
 	/**
@@ -61,9 +71,14 @@ class CensusDataRetrieval {
                 $http = new Http();
 
 		// @TODO find a way to query all object types, preferably in one query
-                $censusData = $http->get('http://data.soe.com/s:wikia/get/ps2/vehicle/?code='.$this->query);
-
-		// error handling
+                $censusData = null;
+                foreach ($this->typeMap as $key => $value) {
+                        $censusData = $http->get( self::QUERY_URL.$key.'/?code='.$this->query );
+                        if ( !empty( $censusData ) ) {
+                                break;
+                        }
+                }
+                // error handling
 		if ( empty( $censusData ) ) {
 			wfDebug( __METHOD__ . 'Connection problem or no data' );
 			return false;
@@ -132,18 +147,17 @@ class CensusDataRetrieval {
 	}
         
 	/**
- 	 * getType
-	 * determines type based on fetched data
+ 	 * mapData
+	 * maps required data retrieved from Census to array
 	 *
 	 * @return array
 	 */
-	private function mapData( $html ) {
-                $arr= array();
-                preg_match('/<body>(.*)<\/body>/s', $html, $arr);
-                $json = $arr[1];
-                $json = strip_tags($json);
-                $map = json_decode($json);
-
+	private function mapData( $censusData ) {
+//                $arr= array();
+//                preg_match('/<body>(.*)<\/body>/s', $html, $arr);
+//                $json = $arr[1];
+//                $json = strip_tags($json);
+                $map = json_decode($censusData);
 		foreach ( $this->supportedTypes as $type ) {
 			$property = $type . '_list';
 			if ( isset( $map->$property ) ) {
@@ -152,7 +166,6 @@ class CensusDataRetrieval {
 				break;
 			}
 		}
-
 		if ( empty( $object ) ) {
 			wfDebug( __METHOD__ . ': Unsupported object type' );
 			return false;
@@ -161,14 +174,24 @@ class CensusDataRetrieval {
 		}
 
 		// @TODO this needs to be generalized ot be based on a per-type map array defined in a class variable
-		$this->data = array(
-			'name' => $object->name->en,
-			'type' => $object->type,
-			'description' => $object->description->en,
-			'cost' => $object->ingame_costs->cost,
-			'cost_resource' => $object->ingame_costs->resource->en
-		);
-
+                foreach ( $this->typeMap[$this->type] as $name => $propertyStr ) {
+                        $this->data[$name] = $this->getPropValue($object, $propertyStr);
+                }
 		return true;
 	}
+        
+        private function getPropValue( $object, $propertyStr ) {
+                $fieldPath = explode('.', $propertyStr);
+                $i = sizeof($fieldPath) - 1;
+                return $this->doGetPropValue( $object, $fieldPath, $i );
+        }
+        
+        private function doGetPropValue( $object, $fieldPath, $i ) {
+                if ( $i > 0) {
+                        $object_temp = $this->doGetPropValue( $object, $fieldPath, $i-1 )->{$fieldPath[$i]};
+                        return $object_temp;
+                }
+                return $object->{$fieldPath[$i]};
+        }
+        
 }
