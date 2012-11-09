@@ -61,8 +61,8 @@
 					<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</th>
 				
 					<?php // display 'empty' for empty object properties ?>
-					<?php if (empty($propertyValue)) : ?>
-						<td><p class="empty">empty</p></td>
+					<?php if (($context != SD_CONTEXT_EDITING) && empty($propertyValue)) : ?>
+						<td><p class="empty">empty-0</p></td>
 						<?php if($context == SD_CONTEXT_SPECIAL): ?>
 							<td><pre><?= $propertyName; ?></pre></td>
 						<?php endif; ?>
@@ -70,7 +70,7 @@
 						<?php continue; ?>
 					<? endif ?>
 		
-					<td><p><?= $propertyValue; ?></p></td>
+					<td><p><?php echo $property->getValueObject()->render($context); ?></p></td>
 					<?php if($context == SD_CONTEXT_SPECIAL): ?>
 						<td><pre><?= $propertyName; ?></pre></td>
 					<?php endif; ?>

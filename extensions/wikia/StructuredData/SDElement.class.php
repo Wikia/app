@@ -193,12 +193,14 @@ class SDElement extends SDRenderableObject implements SDObject, SplSubject {
 		/** @var $property SDElementProperty */
 		foreach($this->properties as $property) {
 			$value = $property->getValue();
-			if( is_object( $value ) ) {
+
+			if ( $property->isCollection() ) {
+				// @todo - we assume that there can only be a collection of references, which is wrong :)
 				$values = array();
-				foreach($property->getValues() as $value) {
+				foreach($value as $v) {
 					$valueObject = new stdClass();
-					if(isset($value->id)) {
-					$valueObject->id = $value->id;
+					if(isset($v->id)) {
+						$valueObject->id = $v->id;
 					$values[] = $valueObject;
 					}
 				}

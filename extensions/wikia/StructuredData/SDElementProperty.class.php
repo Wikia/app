@@ -32,34 +32,42 @@ class SDElementProperty extends SDRenderableObject implements SDObject, SplObser
 		$this->value = $value;
 	}
 
-	public function getValue( $index = 0 ) {
-		$value = null;
-		$values = $this->getValues();
-
-		if(is_array( $values ) && isset($values[$index])) {
-			$value = $values[$index];
+	public function getValue() {
+		if ( $this->isCollection()) {
+			if (!is_array( $this->value )) {
+				if ( empty( $this->value ) ) return array();
+				return array( $this->value );
+			} else {
+				if ((count($this->value) == 1) && (empty($this->value[0]))) return array();
+			}
 		}
-		elseif(!is_array( $values )) {
-			$value = $values;
-		}
 
-		return $value;
+
+
+		return $this->value;
 	}
 
-	public function getValueObject( $index = 0 ) {
-		$value = $this->getValue( $index );
+	public function isCollection() {
+		return in_array( $this->getTypeName(), array( '@set', '@list' ) );
+	}
+
+	public function getValueObject() {
+		$value = $this->getValue();
 		$type = $this->getType();
+		if ( !$this->isCollection()) {
+			return F::build('SDValueObject', array( 'object' => $this, 'value' => $value, 'range' => $type['range'] ) );
+		}
+		$result = array();
+		foreach($value as $v) {
+			return F::build('SDValueObject', array( 'object' => $this, 'value' => $v, 'range' => $type['range'] ) );
+		}
+		return $result;
 
-		return F::build('SDValueObject', array( 'object' => $this, 'value' => $value, 'range' => $type['range'] ) );
-	}
-
-	public function getValues() {
-		return ( in_array( $this->getTypeName(), array( '@set', '@list' ) ) && !is_array( $this->value ) ) ? array( $this->value ) : $this->value;
 	}
 
 	public function hasNoValue() {
-		$values = $this->getValues();
-		return ( empty($values) || $values[0] == null ) ? true : false;
+		$value = $this->getValue();
+		return ( empty($value) ) ? true : false;
 	}
 
 	public function expandValue(StructuredData $structuredData, $elementDepth) {
@@ -126,13 +134,24 @@ class SDElementProperty extends SDRenderableObject implements SDObject, SplObser
 	 */
 	public function update(SplSubject $subject) {
 		$type = $subject->getContext()->getType( $this->name );
+		$guessType = true;
 		if($type) {
 			$this->type = $type;
+			//echo "Setting type ".$this->type['name']." for property ".$this->name."<br/>\n";
+			$guessType = false;
 		}
 
 		if(empty($this->type['range'])) {
 			$propertyDescription = $subject->getContext()->getPropertyDescription( $subject->getType(), $this->name );
 			if(is_object($propertyDescription) && isset($propertyDescription->range)) {
+				//echo "Setting range".json_encode($propertyDescription->range)." for property ".$this->name."<br/>\n";
+				if ( $guessType && (count($propertyDescription->range) == 1) ) {
+					if ($propertyDescription->range[0]->id == "rdfs:Literal") {
+						$this->type['name'] = $propertyDescription->range[0]->id;
+						//echo "FORCING type ".$this->type['name']." for property ".$this->name."<br/>\n";
+					}
+					//$this->type['name'] = isset($propertyDescription->range[0]->type) ? $propertyDescription->range[0]->type : $propertyDescription->range[0]->id;
+				}
 				$this->type['range'] = $propertyDescription->range;
 			}
 		}

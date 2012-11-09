@@ -103,7 +103,10 @@ class StructuredData {
 						}
 					}
 
-					$result = $property->getValue( !is_null($valueIndex) ? $valueIndex : 0 );
+					$result = $property->getValue();
+					if ($property->isCollection()) {
+						$result =  $result[!is_null($valueIndex) ? $valueIndex : 0];
+					}
 
 					if(is_object($result) && ($result->object instanceof SDElement)) {
 						$currentElement = $result->object;
