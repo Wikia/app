@@ -129,14 +129,13 @@ class WikiaVideoAddForm extends SpecialPage {
 					$video->save();
 				}
 
-				$sk = RequestContext::getMain()->getSkin();
-				$link_back = $sk->makeKnownLinkObj( $title );
-
 				if ($replaced) {
-					$wgOut->addHTML( wfMsg( 'wva-success-replaced', $link_back ) );
+					$successMsgKey = 'wva-success-replaced';
 				} else {
-					$wgOut->addHTML( wfMsg( 'wva-success', $link_back ) );
+					$successMsgKey = 'wva-success';
 				}
+				
+				$wgOut->redirect( SpecialPage::getTitleFor("Videos")->escapeLocalUrl( array( "sort"=>"recent", "msg"=>$successMsgKey, "msgTitle"=>urlencode($title) ) );
 			} else {
 				//bad title returned
 				$errors['name'] = wfMsg( 'wva-failure' );			

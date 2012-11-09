@@ -32,6 +32,13 @@
 		.close{
 			background-color: mix(#92CD8E , #000000, 15%);
 		}
+		// TODO: waiting for actual link colors from Mika [Liz]
+		a {
+			color: blue;
+			&.new {
+				color: #ba0000;
+			}
+		}
 	}
 	&.notify { // Blue
 		background: #7ABFDD;

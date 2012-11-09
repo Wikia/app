@@ -3,8 +3,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wva-success' => 'Video page $1 was successfully added.',
-	'wva-success-replaced' => 'Video page $1 was successfully replaced.',
+	'wva-success' => 'Video page [[:$1]] was successfully added.',
+	'wva-success-replaced' => 'Video page [[:$1]] was successfully replaced.',
 	'wva-failure' => 'Please supply valid parameters.',
 	'wva-name' => 'Video name:',
 	'wva-url' => 'Video URL:',
