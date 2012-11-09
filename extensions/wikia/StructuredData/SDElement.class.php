@@ -2,7 +2,7 @@
 /**
  * @author ADi
  */
-class SDElement extends SDRenderableObject implements SDObject, SplSubject {
+class SDElement extends SDRenderableObject implements SplSubject {
 	private $id = 0;
 	private $depth = 0;
 	private static $excludedNames = array(
@@ -125,15 +125,13 @@ class SDElement extends SDRenderableObject implements SDObject, SplSubject {
 		$structuredData = F::build( 'StructuredData' );
 
 		foreach($template as $propertyName => $propertyValue) {
-			$propertyType = false;
-
 			if(isset($data->{"$propertyName"})) {
 				$propertyValue = $data->{"$propertyName"};
 			}
 
 			if(!in_array( $propertyName, self::$excludedNames )) {
 				/** @var $property SDElementProperty */
-				$property = F::build( 'SDElementProperty', array( $propertyName, $propertyValue, $propertyType) );
+				$property = F::build( 'SDElementProperty', array( $propertyName, $propertyValue ) );
 				if($depth == 0) {
 					$property->expandValue( $structuredData, $element->getDepth() );
 				}
@@ -148,8 +146,6 @@ class SDElement extends SDRenderableObject implements SDObject, SplSubject {
 
 		return $element;
 	}
-
-	//public function
 
 	public function toArray() {
 		$properties = array();
@@ -264,12 +260,8 @@ class SDElement extends SDRenderableObject implements SDObject, SplSubject {
 		}
 	}
 
-	public function getTypeName() {
-		return $this->type;
-	}
-
 	public function getRendererNames() {
-		return array($this->getTypeName());
+		return array( $this->type );
 	}
 
 	public function render( $context = SD_CONTEXT_DEFAULT ) {

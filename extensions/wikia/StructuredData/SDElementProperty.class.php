@@ -2,28 +2,41 @@
 /**
  * @author ADi
  */
-class SDElementProperty extends SDRenderableObject implements SDObject, SplObserver {
-	protected $type = array( 'name' => '@set', 'range' => null );
+class SDElementProperty extends SDRenderableObject implements SplObserver {
+	/**
+	 * @var SDElementPropertyType
+	 */
+	protected $type = null;
 	protected $name = null;
-	protected $label = '';
 	protected $value = null;
+	protected $label = '';
 
-	function __construct($name, $value, $type = false) {
+	function __construct($name, $value, SDElementPropertyType $type = null) {
 		$this->name = $name;
-
 		$nameParts = explode( ':', $name );
 		$this->label = count($nameParts) > 1 ? $nameParts[1] : $name;
-
 		$this->value = $value;
-		if($type !== false) {
+
+		if($type instanceof SDElementPropertyType) {
 			$this->type = $type;
+		}
+		else {
+			$this->type = F::build( 'SDElementPropertyType' );
 		}
 	}
 
-	public function setType($type) {
+	/**
+	 * set property type
+	 * @param SDElementPropertyType $type
+	 */
+	public function setType( SDElementPropertyType $type ) {
 		$this->type = $type;
 	}
 
+	/**
+	 * get property type
+	 * @return SDElementPropertyType
+	 */
 	public function getType() {
 		return $this->type;
 	}
@@ -33,7 +46,7 @@ class SDElementProperty extends SDRenderableObject implements SDObject, SplObser
 	}
 
 	public function getValue() {
-		if ( $this->isCollection()) {
+		if ( $this->isCollection() ) {
 			if (!is_array( $this->value )) {
 				if ( empty( $this->value ) ) return array();
 				return array( $this->value );
@@ -42,24 +55,22 @@ class SDElementProperty extends SDRenderableObject implements SDObject, SplObser
 			}
 		}
 
-
-
 		return $this->value;
 	}
 
 	public function isCollection() {
-		return in_array( $this->getTypeName(), array( '@set', '@list' ) );
+		return $this->getType()->isCollection();
 	}
 
 	public function getValueObject() {
 		$value = $this->getValue();
 		$type = $this->getType();
 		if ( !$this->isCollection()) {
-			return F::build('SDValueObject', array( 'object' => $this, 'value' => $value, 'range' => $type['range'] ) );
+			return F::build( 'SDValueObject', array( 'type' => $this->getType(), 'value' => $value ) );
 		}
 		$result = array();
 		foreach($value as $v) {
-			return F::build('SDValueObject', array( 'object' => $this, 'value' => $v, 'range' => $type['range'] ) );
+			return F::build( 'SDValueObject', array( 'type' => $this->getType(), 'value' => $v ) );
 		}
 		return $result;
 
@@ -113,7 +124,7 @@ class SDElementProperty extends SDRenderableObject implements SDObject, SplObser
 		}
 		else {
 			$array = array(
-				'type' => $this->type,
+				'type' => $this->getTypeName(),
 				'name' => $this->name,
 				'label' => $this->label,
 				'value' => $this->value //$this->getValues()
@@ -136,38 +147,28 @@ class SDElementProperty extends SDRenderableObject implements SDObject, SplObser
 		$type = $subject->getContext()->getType( $this->name );
 		$guessType = true;
 		if($type) {
-			$this->type = $type;
-			//echo "Setting type ".$this->type['name']." for property ".$this->name."<br/>\n";
+			$this->type = F::build( 'SDElementPropertyType', array( 'name' => $type['name'], 'range' => $type['range'] ) );
 			$guessType = false;
 		}
 
-		if(empty($this->type['range'])) {
+		if(!$this->getType()->hasRange()) {
 			$propertyDescription = $subject->getContext()->getPropertyDescription( $subject->getType(), $this->name );
 			if(is_object($propertyDescription) && isset($propertyDescription->range)) {
-				//echo "Setting range".json_encode($propertyDescription->range)." for property ".$this->name."<br/>\n";
 				if ( $guessType && (count($propertyDescription->range) == 1) ) {
 					if ($propertyDescription->range[0]->id == "rdfs:Literal") {
-						$this->type['name'] = $propertyDescription->range[0]->id;
-						//echo "FORCING type ".$this->type['name']." for property ".$this->name."<br/>\n";
+						$this->getType()->setName( $propertyDescription->range[0]->id );
 					}
-					//$this->type['name'] = isset($propertyDescription->range[0]->type) ? $propertyDescription->range[0]->type : $propertyDescription->range[0]->id;
 				}
-				$this->type['range'] = $propertyDescription->range;
+				$this->getType()->setRange( $propertyDescription->range );
 			}
 		}
 	}
 
 	public function getTypeName() {
-		return $this->type['name'];
+		return $this->getType()->getName();
 	}
 
 	public function getRendererNames() {
-		return array($this->getName(), $this->getTypeName());
+		return array( $this->getName(), $this->getTypeName() );
 	}
-	/*
-	public function render( $context = SD_CONTEXT_DEFAULT ) {
-		$result = parent::render( $context );
-		return ( $result !== false ) ? $result : $this->getValue();
-	}
-	*/
 }

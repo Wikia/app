@@ -3,10 +3,10 @@
  * @author ADi
  */
 class SDElementPropertyType {
-	protected $name = null;
-	protected $range = null;
+	protected $name;
+	protected $range;
 
-	public function __construct($name, $range) {
+	public function __construct($name = '@set', $range = null) {
 		$this->name = $name;
 		$this->range = $range;
 	}
@@ -29,6 +29,10 @@ class SDElementPropertyType {
 
 	public function getRange() {
 		return $this->range;
+	}
+
+	public function hasRange() {
+		return ( !empty($this->range) ? true : false );
 	}
 
 }

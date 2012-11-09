@@ -34,20 +34,18 @@
 		<tbody>
 			<?php foreach ( $properties as $property ) : ?>
 				<?php 
-					$propertyType = $property->getType();
 					$propertyValue = $property->getValue();
 					$propertyLabel = $property->getLabel();
 					$propertyName = $property->getName();
-					$proprtyHTML = $property->render( $context );
+					$propertyHTML = $property->render( $context );
 				?>
-				
-				
+
 				<?php // Render HTML using renderers  ?>
 				
-				<?php if($proprtyHTML !== false) : ?>
+				<?php if($propertyHTML !== false) : ?>
 					<tr>
 						<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}',$propertyLabel)); ?>:</th>
-						<td><?= $proprtyHTML;?></td>
+						<td><?= $propertyHTML;?></td>
 						<?php if($context == SD_CONTEXT_SPECIAL): ?>
 							<td><pre><?= $propertyName; ?></pre></td>
 						<?php endif; ?>
@@ -62,7 +60,7 @@
 				
 					<?php // display 'empty' for empty object properties ?>
 					<?php if (($context != SD_CONTEXT_EDITING) && empty($propertyValue)) : ?>
-						<td><p class="empty">empty-0</p></td>
+						<td><p class="empty">empty (!container)</p></td>
 						<?php if($context == SD_CONTEXT_SPECIAL): ?>
 							<td><pre><?= $propertyName; ?></pre></td>
 						<?php endif; ?>

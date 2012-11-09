@@ -4,16 +4,14 @@
  */
 class SDValueObject extends SDRenderableObject {
 	/**
-	 * @var SDObject
+	 * @var SDElementPropertyType
 	 */
-	protected $object = null;
+	protected $type = null;
 	protected $value = null;
-	protected $range = array();
 
-	public function __construct( SDObject $object, $value, $range = array() ) {
-		$this->object = $object;
+	public function __construct( SDElementPropertyType $type, $value ) {
+		$this->type = $type;
 		$this->value = $value;
-		$this->range = $range;
 	}
 
 	public function setValue($value) {
@@ -25,25 +23,17 @@ class SDValueObject extends SDRenderableObject {
 	}
 
 	/**
-	 * @param SDObject $object
+	 * @param \SDElementPropertyType $type
 	 */
-	public function setObject($object) {
-		$this->object = $object;
+	public function setType($type) {
+		$this->type = $type;
 	}
 
 	/**
-	 * @return SDObject
+	 * @return \SDElementPropertyType
 	 */
-	public function getObject() {
-		return $this->object;
-	}
-
-	public function setRange($range) {
-		$this->range = $range;
-	}
-
-	public function getRange() {
-		return $this->range;
+	public function getType() {
+		return $this->type;
 	}
 
 	public function getRendererNames() {
