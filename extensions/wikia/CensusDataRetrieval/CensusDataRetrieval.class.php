@@ -6,6 +6,8 @@ class CensusDataRetrieval {
 
 	var $supportedTypes = array( 'vehicle' );
 
+	// mapping array translating census data into tempate call data
+	// note: a null value means a user-supplied parameter, not in Census
 	var $typeMap = array(
 		'vehicle' => array(
 			'name' => 'name.en',
@@ -80,10 +82,14 @@ class CensusDataRetrieval {
 	private function parseData() {
 		$type = $this->getType();
 
-		$output = '{{' . $type . ' infobox';
+		$output = '{{' . $type . " infobox";
 
 		foreach ( $this->data as $key => $value ) {
-			$output .= "\n|" . $key . ' = ' . $value;
+			$output .= "\n|$key = ";
+
+			if ( !is_null( $value ) ) {
+				$output .= $value;
+			}
 		}
 
 		$output .= "\n}}\n";
