@@ -200,6 +200,10 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	/* old forum notification */
 	'forum-old-notification-message' => 'This Forum has been archived',
 	'forum-old-notification-navigation-button' => 'Visit the new Forums',
+	
+	/* messages for Related Discussions Module on Article page */
+	'forum-related-discussion-heading' => 'Discussions about $1',
+	'forum-related-discussion-total-replies' => '$1 replies',
 );
 
 $messages['qqq'] = array(
@@ -276,4 +280,6 @@ $messages['qqq'] = array(
 	'forum-board-destination-validation-missing' => 'Display on board create in case of validation error ',
 	'forum-board-id-validation-missing' => 'User should not see this message unless they hack the wiki.  Nevertheless, it is a validation error when it is not provided.',
 	
+	'forum-related-discussion-heading' => 'Section heading for related discussion section.  $1 is article that this section will be on.',
+	'forum-related-discussion-total-replies' => 'Label showing total number of replies in a discussion.  $1 is number of replies',
 );

@@ -24,6 +24,7 @@ $app->registerClass( 'Forum', $dir . 'Forum.class.php' );
 $app->registerClass( 'ForumBoard', $dir . 'ForumBoard.class.php' );
 $app->registerClass( 'ForumHelper', $dir . 'ForumHelper.class.php' );
 $app->registerClass( 'ForumExternalController', $dir . 'ForumExternalController.class.php' );
+$app->registerClass( 'RelatedForumDiscussionController', $dir . 'RelatedForumDiscussionController.class.php' );
 
 // i18n mapping
 $app->registerExtensionMessageFile( 'Forum', $dir . 'Forum.i18n.php' );
@@ -57,6 +58,9 @@ $app->registerHook( 'NotificationGetMailNotificationMessage', 'ForumNotification
 $app->registerHook( 'getUserPermissionsErrors', 'ForumHooksHelper', 'onGetUserPermissionsErrors' );
 $app->registerHook( 'PageHeaderIndexAfterActionButtonPrepared', 'ForumHooksHelper', 'onPageHeaderIndexAfterActionButtonPrepared' );
 $app->registerHook( 'ArticleViewHeader', 'ForumHooksHelper', 'onArticleViewHeader' );
+
+// forum discussion on article
+$app->registerHook( 'OutputPageBeforeHTML', 'ForumHooksHelper', 'onOutputPageBeforeHTML');
 
 include ($dir . '/Forum.namespace.setup.php');
 
