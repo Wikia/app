@@ -203,7 +203,9 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	
 	/* messages for Related Discussions Module on Article page */
 	'forum-related-discussion-heading' => 'Discussions about $1',
+	'forum-related-discussion-new-post-button' => 'Start a Discussion',
 	'forum-related-discussion-total-replies' => '$1 replies',
+	'forum-related-discussion-zero-state-creative' => 'You can find discussions about every related to this wiki on [[Special:Forum|{{SITENAME}}]]',
 );
 
 $messages['qqq'] = array(
