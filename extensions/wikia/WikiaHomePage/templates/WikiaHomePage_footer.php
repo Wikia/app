@@ -19,11 +19,12 @@
 	<section class="grid-1">
 		<?= wfMsgExt('wikiahome-footer-advertise', array('parse','language' => $wg->lang->getCode())) ?>
 		<? if($interlang): ?>
-			<ul class="interlang">
-				<?php foreach($flagsLangs as $flag): ?>
-					<li><a class="<?= $flag['lang'] ?>" href="<?= $flag['url']; ?>" title="<?= wfMsgForContent('wikiahome-footer-interlang-flag-title') ?>"></a></li>
-				<?php endforeach; ?>
-			</ul>
+			<?= F::app()->renderView('MenuButton', 'Index', array(
+				'action' => array('text' => ''),
+				'class' => $selectedLang.' secondary',
+				'image' => '',
+				'dropdown' => $dropDownItems,
+			)); ?>
 		<? endif ?>
 	</section>
 </footer>

@@ -103,7 +103,8 @@ class WikiaHomePageController extends WikiaController {
 			if( $lang !== $selectedLang ) {
 				$results[] = array(
 					'class' => $lang,
-					'href' => $wiki['url']
+					'href' => $wiki['url'],
+					'text' => ''
 				);
 			}
 		}
