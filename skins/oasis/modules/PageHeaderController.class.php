@@ -450,9 +450,6 @@ class PageHeaderController extends WikiaController {
 		// force AjaxLogin popup for "Add a page" button (moved from the template)
 		$this->loginClass = !empty($this->wg->DisableAnonymousEditing) ? ' require-login' : '';
 
-		if ( $this->wg->OasisNavV2 && $response instanceof WikiaResponse ) {
-            $response->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/PageHeader_IndexV2.php' );
-        }
 		wfProfileOut(__METHOD__);
 	}
 

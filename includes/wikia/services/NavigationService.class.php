@@ -390,14 +390,13 @@ class NavigationService {
 	 * Return false when given submenu should not be added in a given place
 	 */
 	private function handleExtraWords(&$node, &$nodes, $depth) {
-		global $wgOasisNavV2;
 		wfProfileIn( __METHOD__ );
 
 		$originalLower = strtolower($node[ self::ORIGINAL ]);
 
 		if(substr($originalLower, 0, 9) == '#category') {
 			// ignore magic words in Level 1 (BugId:15240)
-			if (!empty($wgOasisNavV2) && $depth == 1) {
+			if ($depth == 1) {
 				wfProfileOut(__METHOD__);
 				return false;
 			}
@@ -439,7 +438,7 @@ class NavigationService {
 				//http://bugs.php.net/bug.php?id=46322 count(false) == 1
 				if (!empty($data)) {
 					// ignore magic words in Level 1 (BugId:15240)
-					if (!empty($wgOasisNavV2) && $depth == 1) {
+					if ($depth == 1) {
 						wfProfileOut(__METHOD__);
 						return false;
 					}
