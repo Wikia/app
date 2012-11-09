@@ -31,9 +31,15 @@ class ProfilerWikiaTrace extends ProfilerSimple {
 		$lastStackSize = isset($lastFrame) && isset($lastFrame[4]) ? $lastFrame[4] : 0;
 		$stackTrace = debug_backtrace();
 		$stackDiff = array();
+		$profileInFound = false;
 		while (count($stackTrace)>$lastStackSize) {
 			$frame = array_shift($stackTrace);
-			if ( $frame['function'] == 'wfProfileIn' && !isset($frame['class']) ) {
+			if ( $frame['function'] == 'wfProfileIn' && !isset($frame['class'])
+				|| $frame['function'] == 'profileIn' && $frame['class'] === 'WikiaFunctionWrapper'
+			) {
+				$profileInFound = true;
+			} else if ( $profileInFound ) {
+				array_unshift($stackTrace,$frame);
 				break;
 			}
 		}

@@ -334,6 +334,7 @@
 		},
 		fromText: function( text ) {
 			this.reset();
+			this.startNode('-TOTAL-',0,0);
 			var lines = text.split("\n"), i,
 				REGEX = /^([0-9.]+)?\s*([-0-9.]+)\s*([><])\s*(.*)$/,
 				REGEX_ATTR = /^\s*:\s*([^ ]+)\s*=\s*(.*)$/;
@@ -360,6 +361,9 @@
 					}
 				}
 			}
+			this.top().refreshTotalTime( /* recursive */ false );
+			this.endNode('-TOTAL-',0,0);
+
 			this.endTree();
 			return this.root;
 		},
@@ -641,9 +645,52 @@
 			}
 			return this.parentsIndex;
 		},
+		getMemcached: function() {
+			if ( !this.memcached ) {
+				var className = 'MWMemcached::',
+					classNameLength = className.length,
+					condition = function( node ) {
+						return node.id && node.id.substr(0,classNameLength) == className;
+					},
+					filter = new TreeSelect(condition),
+					memcached = filter.exec(this.getTree());
+				this.memcached = memcached;
+			}
+			return this.memcached;
+		},
+		getMemcachedIndex: function() {
+			if ( !this.memcachedIndex ) {
+				var builder = new MethodIndexBuilder(this.getMemcached());
+				this.memcachedIndex = builder.getIndex();
+			}
+			return this.memcachedIndex;
+		},
+		getDatabase: function() {
+			if ( !this.database ) {
+				var REGEX = /^Database[a-zA-Z]*::/,
+					condition = function( node ) {
+						return node.id && REGEX.test(node.id);
+					},
+					filter = new TreeSelect(condition),
+					database = filter.exec(this.getTree());
+				this.database = database;
+			}
+			return this.database;
+		},
+		getDatabaseIndex: function() {
+			if ( !this.databaseIndex ) {
+				var builder = new MethodIndexBuilder(this.getDatabase());
+				this.databaseIndex = builder.getIndex();
+			}
+			return this.databaseIndex;
+		},
 		squeeze: function() {
 			delete this.tree;
 			delete this.index;
+			delete this.children;
+			delete this.childrenIndex;
+			delete this.parents;
+			delete this.parentsIndex;
 		}
 	});
 
@@ -720,6 +767,18 @@
 				tree = builder.fromDom(),
 				profilerFix = new TreeFixProfilerTime();
 //			tree = profilerFix.exec(tree);
+			this.reset(tree);
+		},
+
+		initEmpty: function() {
+			var builder = new TraceTreeBuilder,
+				tree = builder.fromText('');
+			this.reset(tree);
+		},
+
+		initFromText: function( text ) {
+			var builder = new TraceTreeBuilder,
+				tree = builder.fromText(text);
 			this.reset(tree);
 		}
 	});
@@ -823,7 +882,7 @@
 
 			columns = "Self Time|Total Time|% Self|% Total|Calls|Method".split('|');
 			columnIds = "trace-self-time|trace-total-time|trace-self-pct|trace-total-pct|trace-calls|trace-method-name".split('|');
-			columnSortKeys = "||selfTime|totalTime|calls|id".split('|');
+			columnSortKeys = "selfTime|totalTime|selfTime|totalTime|calls|id".split('|');
 
 			html += 'Total: <b>' + total.toFixed(5) + '</b><br />';
 			html += '<table class="sortable php-trace-summary"><tr>';
@@ -847,9 +906,9 @@
 						(100.0*method.selfTime/total).toFixed(2),
 						(100.0*method.totalTime/total).toFixed(2),
 						method.calls,
-						'<a href="#" class="method-cut" data-method-id="'+method.id+'">[X]</a> '
-							+ '<a href="#" class="method-nullify" data-method-id="'+method.id+'">[N]</a> '
-							+ '<a href="#" class="method-call" data-method-id="'+method.id+'">'+method.id+'</a>',
+						'<a href="#" class="method-drilldown" data-drilldown-type="cut" data-method-id="'+method.id+'">[X]</a> '
+							+ '<a href="#" class="method-drilldown" data-drilldown-type="nullity" data-method-id="'+method.id+'">[N]</a> '
+							+ '<a href="#" class="method-drilldown" data-drilldown-type="select" data-method-id="'+method.id+'">'+method.id+'</a>',
 					];
 				html += '<tr>';
 				for (j=0;j<row.length;j++) {
@@ -868,156 +927,102 @@
 		}
 	});
 
-	TraceDialog = createClass(Object,{
-		constructor: function( data, ctrl ) {
+	var TraceDialogPanel, TraceDialogMethodIndexPanel, TraceDialogStackTracesPanel,
+		TraceDialogContextListPanel, TraceDialogSummaryPanel;
+
+	TraceDialogPanel = createClass(Observable,{
+		constructor: function( dialog, el ) {
+			TraceDialogPanel.superclass.constructor.apply(this,arguments);
+			this.dialog = dialog;
+			this.el = el;
+			this.active = false;
+			this.changed = true;
+			this.source = false;
+			this.init();
+		},
+		init: noop,
+		activate: function() {
+			this.active = true;
+			this.refresh();
+		},
+		deactivate: function() {
+			this.active = false;
+		},
+		refresh: function() {
+			if ( !this.active || !this.source ) {
+				return;
+			}
+			if ( !this.changed ) {
+				return;
+			}
+			this.render();
+			this.changed = false;
+		}
+	});
+
+	TraceDialogMethodIndexPanel = createClass(TraceDialogPanel,{
+		sortKey: 'totalTime',
+		init: function() {
+			this.el.unbind('.methodindexpanel');
+			this.el.on('click.methodindexpanel','a.method-drilldown', proxy(this.drilldownClicked,this));
+			this.el.on('click.methodindexpanel','a.sort-key', proxy(this.sortClicked,this));
+			this.sortedIndex = new SortedIndex(this.sortKey);
+			this.renderer = new MethodIndexRenderer();
+			this.renderer.setElement(this.el);
+		},
+		setSource: function( sourceFn, totalTimeFn ) {
+			this.source = true;
+			this.sourceFn = sourceFn;
+			this.totalTimeFn = totalTimeFn;
+			this.notifySourceChanged();
+		},
+		notifySourceChanged: function() {
+			this.changed = true;
+			this.refresh();
+		},
+		setSort: function( sortKey ) {
+			if ( this.sortKey != sortKey ) {
+				this.sortKey = sortKey;
+				this.changed = true;
+				this.refresh();
+			}
+		},
+		drilldownClicked: function( ev ) {
+			var target = $(ev.currentTarget),
+				drilldownType = target.data('drilldown-type'),
+				methodName = target.data('method-id');
+			if ( methodName ) {
+				this.dialog.fire('drilldown',drilldownType,methodName);
+			}
+		},
+		sortClicked: function( ev ) {
+			var target = $(ev.currentTarget),
+				sortKey = target.data('sort-key');
+			this.setSort(sortKey);
+		},
+		render: function() {
+			this.sortedIndex.setData(this.sourceFn());
+			this.sortedIndex.setSort(this.sortKey);
+			var totalTime = this.totalTimeFn ? this.totalTimeFn() : 0;
+			this.renderer.setIndex(this.sortedIndex.getSorted(),totalTime);
+		}
+	});
+
+	TraceDialogStackTracesPanel = createClass(TraceDialogPanel,{
+		setSource: function( data ) {
+			this.source = true;
 			this.data = data;
-			this.ctrl = ctrl;
-			this.sortedIndex = new SortedIndex('totalTime');
-			this.methodIndexRenderer = new MethodIndexRenderer();
-			this.sortedChildren = new SortedIndex('totalTime');
-			this.childrenIndexRenderer = new MethodIndexRenderer();
-			this.sortedCallers = new SortedIndex('totalTime');
-			this.callersIndexRenderer = new MethodIndexRenderer();
-
-			this.data.on('baseChanged',proxy(this.onBaseChanged,this));
-			this.data.on('historyChanged',proxy(this.onHistoryChanged,this));
-			this.data.on('currentChanged',proxy(this.onDataCurrentChanged,this));
-			this.data.on('currentChanged',proxy(function(data){
-//				this.sortedIndex.setData,this.sortedIndex,1,1
-				var current = data.getCurrent();
-				this.sortedIndex.setData(current && current.context.getMethodIndex());
-				this.sortedChildren.setData(current && current.context.getChildrenIndex());
-				this.sortedCallers.setData(current && current.context.getParentsIndex());
-			},this));
-			this.sortedIndex.on('changed',proxy(function(){
-				this.methodIndexRenderer.setIndex(this.sortedIndex.getSorted());
-			},this));
-			this.sortedChildren.on('changed',proxy(function(){
-				var current = this.data.getCurrent(),
-					totalTime = current && current.context.getChildren().totalTime;
-				this.childrenIndexRenderer.setIndex(this.sortedChildren.getSorted(),totalTime);
-			},this));
-			this.sortedCallers.on('changed',proxy(function(){
-				var current = this.data.getCurrent(),
-					totalTime = current && current.context.getParents().totalTime;
-				this.callersIndexRenderer.setIndex(this.sortedCallers.getSorted(),totalTime);
-			},this));
-
-			var current = this.data.getCurrent();
-			this.sortedIndex.setData(current.context && current.context.getMethodIndex());
-			this.sortedChildren.setData(current.context && current.context.getChildrenIndex());
-			this.sortedCallers.setData(current.context && current.context.getParentsIndex());
+			this.notifySourceChanged();
 		},
-		proxy: function( fn ) {
-			return proxy(fn||noop,this);
+		notifySourceChanged: function() {
+			this.changed = true;
+			this.refresh();
 		},
-		setup: function() {
-			if ( this.el ) return;
-			var el = this.el = $('<div id="PHPTrace"></div>'),
-				w = $(window);
-			$('body').append(el);
-			var opts = {
-				width: w.width() - 20,
-				height: w.height() - 20,
-				zIndex: 1900000000,
-				resizable: false,
-				title: 'PHP Trace Browser',
-				draggable: false,
-				closeOnEscape: false,
-				dialogClass: 'ui-traceviewer',
-				close: this.proxy(this.modalClosed)
-			};
-			el.dialog(opts);
-			el.closest('.ui-dialog').css({height:w.height()-20});
-
-			// populate tabs
-			var tabs = {
-				dashboard: 'Dashboard',
-				methods: 'Methods Summary',
-				callers: 'Direct callers',
-				callees: 'Direct callees',
-				details: 'Stack Traces'
-			};
-			var html = '';
-			html += '<div id="trace-summary">';
-			html += '</div>';
-			html += '<div id="trace-context-list">';
-			html += '</div>';
-			html += '<div id="trace-tabs-wrapper"><ul>';
-			for (i in tabs) {
-				html += '<li><a href="#trace-'+i+'">'+tabs[i]+'</a></li>';
-			}
-			html += '</ul>';
-			for (i in tabs) {
-				html += '<div id="trace-'+i+'"></div>';
-			}
-			html += '</div>';
-			el.html(html);
-			this.tabs = $('#trace-tabs-wrapper');
-			this.tabs.tabs({
-				selected: 1,
-				select: this.proxy(this.tabActivated)
-			});
-			this.summary = $('#trace-summary');
-			this.contextList = $('#trace-context-list');
-			for (i in tabs) {
-				this[i] = $('#trace-'+i);
-			}
-
-			this.methodIndexRenderer.setElement(this.methods);
-			this.childrenIndexRenderer.setElement(this.callees);
-			this.callersIndexRenderer.setElement(this.callers);
-			this.el.on('click','a.context-link', this.proxy(this.contextLinkClicked));
-			this.el.on('click','a.method-call', this.proxy(this.methodClicked));
-			this.el.on('click','a.method-cut', this.proxy(this.methodCutClicked));
-			this.el.on('click','a.method-nullify', this.proxy(this.methodNullifyClicked));
-			this.el.on('click','a.sort-key', this.proxy(this.sortClicked));
-		},
-		show: function() {
-			this.setup();
-			var data = this.data;
-			this.onBaseChanged(data);
-			this.onHistoryChanged(data);
-			this.onDataCurrentChanged(data);
-		},
-		onBaseChanged: function( data ) {
-			var base = data.getBase();
-
-			if ( !base ) {
-				this.summary.html('');
-				return;
-			}
-
-			var html = '';
-			html += 'Total: <b>' + base.totalTime.toFixed(5) + '</b><br />';
-			this.summary.html(html);
-		},
-		onHistoryChanged: function( data ) {
-			var contexts = data.getContextList();
-
-			if ( !contexts ) {
-				this.contextList.html('');
-				return;
-			}
-
-			var list = [], i, itemHtml;
-			for (i=0;i<contexts.length;i++) {
-				itemHtml = contexts[i].name;
-				if ( contexts[i] != data.getCurrent() ) {
-					itemHtml = '<a href="#" class="context-link" data-context-id="'+i+'">' + itemHtml + '</a>';
-				}
-				list.push(itemHtml);
-			}
-			this.contextList.html(list.join(' &raquo; '));
-		},
-		onSortedIndexChanged: function( sortedIndex ) {
-
-		},
-		onDataCurrentChanged: function() {
+		render: function() {
 			var current = this.data.getCurrent(),
 				base = this.data.getBase();
 			if ( !current ) {
-				this.details.html('');
+				this.el.html('');
 				return;
 			}
 			var list = current.context.getTree().children,
@@ -1039,52 +1044,215 @@
 					if ( path[j].attrs['stack'] ) {
 						stack = path[j].attrs['stack'].split('|');
 						for (k=0;k<stack.length;k++) {
-							stack[k] = '-- ' + stack[k];
+							stack[k] = '<span class="sw">-- </span> ' + stack[k];
 						}
 						html += stack.join('<br />') + '<br />';
 					}
-					html += '[' + path[j].getParentIndex() + ']' + path[j].id + '<br />';
+					html += '<span class="sw">[' + path[j].getParentIndex() + ']</span> ' + path[j].id + '<br />';
+				}
+				if ( path.length > 0 ) {
+					html += '<span class="sw">== </span>'
+						+ ' TotalTime: ' + path[path.length-1].totalTime.toFixed(5)
+						+ ' SelfTime: '  + path[path.length-1].selfTime.toFixed(5);
 				}
 				html += '<br />';
 			}
-			this.details.html(html);
+			this.el.html(html);
+		}
+	});
+
+	TraceDialogContextListPanel = createClass(TraceDialogPanel,{
+		init: function() {
+			this.el.unbind('.contextlistpanel');
+			this.el.on('click.contextlistpanel','a.context-item-link', proxy(this.contextLinkClicked,this));
 		},
-		/* event handlers */
+		setSource: function( data ) {
+			this.source = true;
+			this.data = data;
+			this.notifySourceChanged();
+		},
+		notifySourceChanged: function() {
+			this.changed = true;
+			this.refresh();
+		},
 		contextLinkClicked: function( ev ) {
 			var target = $(ev.currentTarget),
 				contextId = target.data('context-id');
 			if ( contextId || contextId === 0 || contextId === '0' ) {
-				this.ctrl.switchContext(contextId);
+				this.dialog.fire('switchContext',contextId);
 			}
 		},
-		sortClicked: function( ev ) {
-			var target = $(ev.currentTarget),
-				sortKey = target.data('sort-key');
-			if ( sortKey ) {
-				this.sortedIndex.setSort(sortKey);
-				this.sortedChildren.setSort(sortKey);
-				this.sortedCallers.setSort(sortKey);
+		render: function() {
+			var contexts = this.data.getContextList();
+
+			if ( !contexts ) {
+				this.el.html('');
+				return;
 			}
-		},
-		methodClicked: function( ev ) {
-			var target = $(ev.currentTarget),
-				methodName = target.data('method-id');
-			if ( methodName ) {
-				this.ctrl.selectDrilldown(methodName);
+
+			var list = [], i, itemHtml;
+			for (i=0;i<contexts.length;i++) {
+				itemHtml = contexts[i].name;
+				if ( contexts[i] != this.data.getCurrent() ) {
+					itemHtml = '<a href="#" class="context-item-link" data-context-id="'+i+'">' + itemHtml + '</a>';
+				}
+				list.push(itemHtml);
 			}
+			this.el.html(list.join(' &raquo; '));
+		}
+	});
+
+	TraceDialogSummaryPanel = createClass(TraceDialogPanel,{
+		setSource: function( data ) {
+			this.source = true;
+			this.data = data;
+			this.notifySourceChanged();
 		},
-		methodCutClicked: function( ev ) {
-			var target = $(ev.currentTarget),
-				methodName = target.data('method-id');
-			if ( methodName ) {
-				this.ctrl.cutDrilldown(methodName);
+		notifySourceChanged: function() {
+			this.changed = true;
+			this.refresh();
+		},
+		render: function() {
+			var base = this.data.getBase();
+			if ( !base ) {
+				this.el.html('');
+				return;
 			}
+
+			var html = '';
+			html += 'Total: <b>' + base.totalTime.toFixed(5) + '</b><br />';
+			this.el.html(html);
+		}
+	});
+
+	TraceDialog = createClass(Observable,{
+		constructor: function( data, ctrl ) {
+			TraceDialog.superclass.constructor.apply(this,arguments);
+			this.data = data;
+			this.ctrl = ctrl;
 		},
-		methodNullifyClicked: function( ev ) {
-			var target = $(ev.currentTarget),
-				methodName = target.data('method-id');
-			if ( methodName ) {
-				this.ctrl.nullifyDrilldown(methodName);
+		proxy: function( fn ) {
+			return proxy(fn||noop,this);
+		},
+		initMethodIndexPanel: function( el, treeFn, indexFn ) {
+			var self = this;
+			return this.initPanel(TraceDialogMethodIndexPanel,el,
+				[function(){
+					var current = self.data.getCurrent();
+					return current && current.context[indexFn]();
+				},function(){
+					var current = self.data.getCurrent();
+					return current && current.context[treeFn]().totalTime;
+				}],
+				['currentChanged']);
+		},
+		initPanel: function( cls, el, source, notifyEvents ) {
+			var self = this, i,
+				panel = new cls(this,el);
+			if ( source ) {
+				panel.setSource.apply(panel,source);
+			}
+			if ( notifyEvents ) {
+				for (i=0;i<notifyEvents.length;i++) {
+					self.data.on(notifyEvents[i],proxy(panel.notifySourceChanged,panel));
+				}
+			}
+			return panel;
+		},
+		initDialog: function() {
+			var el = this.el = $('<div id="PHPTrace"></div>'),
+				w = $(window);
+			$('body').append(el);
+			var opts = {
+				width: w.width() - 20,
+				height: w.height() - 20,
+				zIndex: 1900000000,
+				resizable: false,
+				title: 'PHP Trace Browser',
+				draggable: false,
+				closeOnEscape: false,
+				dialogClass: 'ui-traceviewer',
+				close: this.proxy(this.modalClosed)
+			};
+			el.dialog(opts);
+			el.closest('.ui-dialog').css({height:w.height()-20});
+		},
+		initChrome: function() {
+			var html = '',
+				tabs = {
+					dashboard: 'Dashboard',
+					methods: 'Methods Summary',
+					callers: 'Direct callers',
+					callees: 'Direct callees',
+					memcached: 'Memcached',
+					database: 'Database',
+					stackTraces: 'Stack Traces'
+				},
+				defaultTab = 1;
+
+			html += '<div id="trace-summary"></div>';
+			html += '<div id="trace-context-list"></div>';
+			html += '<div id="trace-tabs-wrapper"><ul>';
+			for (i in tabs) {
+				html += '<li><a href="#trace-'+i+'">'+tabs[i]+'</a></li>';
+			}
+			html += '</ul>';
+			for (i in tabs) {
+				html += '<div id="trace-'+i+'"></div>';
+			}
+			html += '</div>';
+			this.el.html(html);
+
+			// save references to subelements
+			this.tabs = $('#trace-tabs-wrapper',this.el);
+			this.summary = $('#trace-summary',this.el);
+			this.contextList = $('#trace-context-list',this.el);
+			for (i in tabs) {
+				this[i] = $('#trace-'+i,this.el);
+			}
+			this.tabs.tabs({
+				selected: defaultTab,
+				select: this.proxy(this.tabActivated)
+			});
+
+
+			this.summaryPanel = this.initPanel(TraceDialogSummaryPanel,this.summary,[this.data],
+				['baseChanged']);
+			this.contextListPanel = this.initPanel(TraceDialogContextListPanel,this.contextList,[this.data],
+				['historyChanged','currentChanged']);
+			this.methodsPanel = this.initMethodIndexPanel(this.methods,'getTree','getMethodIndex');
+			this.callersPanel = this.initMethodIndexPanel(this.callers,'getParents','getParentsIndex');
+			this.calleesPanel = this.initMethodIndexPanel(this.callees,'getChildren','getChildrenIndex');
+			this.memcachedPanel = this.initMethodIndexPanel(this.memcached,'getMemcached','getMemcachedIndex');
+			this.databasePanel = this.initMethodIndexPanel(this.database,'getDatabase','getDatabaseIndex');
+			this.stackTracesPanel = this.initPanel(TraceDialogStackTracesPanel,this.stackTraces,[this.data],
+				['currentChanged']);
+			this.tabsPanels = [];
+			for (i in tabs) {
+				this.tabsPanels.push(this[i+'Panel']);
+			}
+
+			this.summaryPanel.activate();
+			this.contextListPanel.activate();
+			this.tabsPanels[defaultTab] && this.tabsPanels[defaultTab].activate();
+		},
+		setup: function() {
+			if ( this.el ) return;
+
+			this.initDialog();
+			this.initChrome();
+		},
+		show: function() {
+			this.setup();
+			var data = this.data;
+		},
+		/* event handlers */
+		tabActivated: function( ev, ui ) {
+			var i;
+			for (i=0;i<this.tabsPanels.length;i++) {
+				if ( this.tabsPanels[i] ) {
+					this.tabsPanels[i][i==ui.index?'activate':'deactivate']();
+				}
 			}
 		},
 		modalClosed: function() {
@@ -1093,7 +1261,8 @@
 				el.dialog('destroy');
 				el.remove();
 			},0);
-		}	});
+		}
+	});
 
 	/* CONTROLLER */
 
@@ -1113,27 +1282,48 @@
 			this.data.initFromDom();
 			this.dialog = new TraceDialog(this.data,this);
 			this.dialog.show();
+			this.dialog.on('drilldown',proxy(this.drilldown,this));
+			this.dialog.on('switchContext',proxy(this.switchContext,this));
 		},
-		selectDrilldown: function( methodName ) {
-			this.drilldown(TreeSelect,'',methodName);
-		},
-		cutDrilldown: function( methodName ) {
-			this.drilldown(TreeCut,'[X] ',methodName);
-		},
-		nullifyDrilldown: function( methodName ) {
-			this.drilldown(TreeNullify,'[N] ',methodName);
-		},
-		drilldown: function( type, captionPrefix, methodName ) {
-			var data = this.data,
-				condition = function( node ) {
+		drilldown: function( type, methodName ) {
+			var drilldowns = {
+				select: [ TreeSelect, '' ],
+				cut: [ TreeCut, '[X] ' ],
+				nullify: [ TreeNullify, '[N] ' ]
+			};
+			if ( !drilldowns[type] ) {
+				return;
+			}
+			var condition = function( node ) {
 					return node.id == methodName;
 				},
-				transform = new type(condition);
-			data.transform(data.getCurrentId(),transform,captionPrefix+methodName);
+				transform = new (drilldowns[type][0])(condition),
+				caption = drilldowns[type][1] + methodName;
+			this.data.transform(this.data.getCurrentId(),transform,caption);
 		},
 		switchContext: function( contextId ) {
 			var data = this.data;
 			data.setCurrent(contextId);
+		},
+		loadFromUrl: function( url, data ) {
+			var self = this;
+			url += ( url.indexOf('?') >= 0 ? '&' : '?' ) + 'forcetrace=2';
+			$.ajax({
+				url: url,
+				data: data,
+				dataType: 'html',
+				success: function( text ) {
+					var i = text.lastIndexOf('<!'+'--');
+					if ( i >= 0 ) {
+						self.data.initFromText(text.substr(i));
+					} else {
+						err('Could not find trace data');
+					}
+				},
+				error: function() {
+					err('Could not load response text');
+				}
+			});
 		}
 	});
 
