@@ -269,5 +269,16 @@ class ForumHooksHelper {
 		}
 		return true;
 	}
+	
+	/**
+	 * Display Related Discussion (Forum posts) in bottom of article
+	 */
+	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
+		global $wgRequest;
+		if ( $out->isArticle() && $wgRequest->getVal( 'diff' ) === null && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
+			$text .= F::App()->renderView( 'RelatedForumDiscussionController', 'index');
+		}
+		return true;
+	}
 
 }
