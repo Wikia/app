@@ -90,7 +90,25 @@ class WikiaHomePageController extends WikiaController {
 	public function footer() {
 		$this->response->addAsset('extensions/wikia/WikiaHomePage/js/CorporateFooterTracker.js');
 		$this->interlang = HubService::isCorporatePage($this->wg->cityId);
-		$this->flagsLangs = $this->helper->getVisualizationWikisData();
+
+		$corporateWikis = $this->helper->getVisualizationWikisData();
+		$this->selectedLang = $this->wg->ContLang->getCode();
+		$this->dropDownItems = $this->prepareDropdownItems($corporateWikis, $this->selectedLang);
+	}
+
+	protected function prepareDropdownItems($corpWikis, $selectedLang) {
+		$results = array();
+
+		foreach($corpWikis as $lang => $wiki) {
+			if( $lang !== $selectedLang ) {
+				$results[] = array(
+					'class' => $lang,
+					'href' => $wiki['url']
+				);
+			}
+		}
+
+		return $results;
 	}
 
 	/**
