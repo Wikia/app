@@ -102,6 +102,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @see    WikiaSearchConfigTest::testMagicMethods 
 	 * @param  string $method
 	 * @param  array  $params
+	 * @throws  BadMethodCallException
 	 * @return Ambigous <NULL, multitype:>|WikiaSearchConfig
 	 */
 	public function __call($method, $params) {
@@ -111,6 +112,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 			$this->offsetSet( strtolower($method[3]).substr($method, 4), $params[0] );
 			return $this; // fluent
 		}
+		throw new BadMethodCallException( "Unknown method: {$method}" );
 	}
 	
 	/**

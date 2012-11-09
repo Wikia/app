@@ -44,6 +44,16 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				$config['valueThatDoesntExist'],
 				'Any value set in WikiaSearchConfig should be exposed via array access.'
 		);
+		
+		$exception = false;
+		try {
+			$config->thisIsAMethodIJustMadeUp();
+		} catch ( Exception $exception ) { }
+		
+		$this->assertInstanceOf(
+				'BadMethodCallException',
+				$exception
+		);
 	}
 	
 	/**
