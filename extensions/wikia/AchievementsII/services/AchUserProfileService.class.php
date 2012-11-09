@@ -120,7 +120,7 @@ class AchUserProfileService {
 				$dbr = wfGetDB(DB_SLAVE);
 				$sql = 'SELECT  a.user_id, a.badge_type_id, a.badge_lap FROM
 				(SELECT user_id, max(date) as max_date from ach_user_badges a2
-					where a2.user_id in (' . implode(','. $user_ids) . ') group by user_id ) sub
+					where a2.user_id in (' . implode(',', $user_ids) . ') group by user_id ) sub
 					join ach_user_badges a
 					on a.user_id = sub.user_id AND a.date = sub.max_date';
 			}
