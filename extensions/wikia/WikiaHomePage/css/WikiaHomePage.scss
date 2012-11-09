@@ -975,19 +975,24 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 	a.external:after {
 		display: none;
 	}
-	a.interlang {
-		background-image: url(/extensions/wikia/WikiaHomePage/images/community-sprite.png); /* $wgCdnStylePath */
+	.interlang {
 		display: block;
-		height: 18px;
+		height: 100%;
 		position: absolute;
 		right: 0;
 		top: 0;
-		width: 24px;
-		&.de {
-			background-position: 0 -150px;
-		}
-		&.en {
-			background-position: -24px -150px;
+		width: 32px;
+		a {
+			background-image: url(/extensions/wikia/WikiaHomePage/images/community-sprite.png); /* $wgCdnStylePath */
+			display: block;
+			height: 18px;
+			width: 24px;
+			&.de {
+				background-position: 0 -150px;
+			}
+			&.en {
+				background-position: -24px -150px;
+			}
 		}
 	}
 }

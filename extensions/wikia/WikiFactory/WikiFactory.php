@@ -2867,7 +2867,6 @@ class WikiFactory {
 	 * @param unknown_type $val
 	 * @param unknown_type $likeVal
 	 */
-
 	static public function getListOfWikisWithVar($varId, $type, $selectedCond ,$val, $likeVal = '', $offset = null, $limit = null) {
 		global $wgExternalSharedDB;
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);

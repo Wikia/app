@@ -19,7 +19,11 @@
 	<section class="grid-1">
 		<?= wfMsgExt('wikiahome-footer-advertise', array('parse','language' => $wg->lang->getCode())) ?>
 		<? if($interlang): ?>
-			<a class='interlang <?= $wg->contLang->getCode() ?>' href='<?= wfMsgForContent('wikiahome-footer-interlang-flag-href') ?>' title='<?= wfMsgForContent('wikiahome-footer-interlang-flag-title') ?>' ></a>
+			<ul class="interlang">
+				<?php foreach($flagsLangs as $flag): ?>
+					<li><a class="<?= $flag['lang'] ?>" href="<?= $flag['url']; ?>" title="<?= wfMsgForContent('wikiahome-footer-interlang-flag-title') ?>"></a></li>
+				<?php endforeach; ?>
+			</ul>
 		<? endif ?>
 	</section>
 </footer>

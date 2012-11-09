@@ -791,11 +791,13 @@ class CityVisualization extends WikiaModel {
 		return array(
 			'en' => array(
 				'wikiId' => self::ENGLISH_CORPORATE_SITE_ID,
-				'url' => WikiFactory::getVarValueByName('wgServer', self::ENGLISH_CORPORATE_SITE_ID)
+				'url' => WikiFactory::getVarValueByName('wgServer', self::ENGLISH_CORPORATE_SITE_ID),
+				'lang' => 'en'
 			),
 			'de' => array(
 				'wikiId' => self::GERMAN_CORPORATE_SITE_ID,
-				'url' => WikiFactory::getVarValueByName('wgServer', self::GERMAN_CORPORATE_SITE_ID)
+				'url' => WikiFactory::getVarValueByName('wgServer', self::GERMAN_CORPORATE_SITE_ID),
+				'lang' => 'de'
 			)
 		);
 	}
