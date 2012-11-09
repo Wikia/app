@@ -35,6 +35,11 @@ class WikiaDataAccess {
 	/**
 	 * returns cached data if possible (up to $cacheTime old)
 	 * otherwise gets the data and saves the result in cache before returning it
+	 *
+	 * @params String $key memcached key
+	 * @params Integer $cacheTime TTL of memcached data in seconds
+	 * @params Callback $getData function name (http://php.net/manual/en/language.types.callable.php)
+	 *
 	 * @author Piotr Bablok <pbablok@wikia-inc.com>
 	 */
 	static function cache( $key, $cacheTime, $getData ) {
@@ -43,7 +48,7 @@ class WikiaDataAccess {
 		$result = $app->wg->Memc->get( $key );
 
 		if( is_null($result) || $result === false ) {
-			$result = $getData();
+			$result = call_user_func($getData);
 			$app->wg->Memc->set( $key, $result, $cacheTime );
 		}
 
