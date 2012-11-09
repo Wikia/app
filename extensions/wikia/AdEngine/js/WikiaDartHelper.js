@@ -255,7 +255,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux) {
 			, adType = params.adType || 'adj'
 			, loc = decorateAsKv('loc', params.loc)
 			, dcopt = decorateAsKv('dcopt', params.dcopt)
-			, adProvider = 'AdDriver'
+			, src = params.src || 'driver'
 			, localTile
 			, kruxKV = ''
 			, url
@@ -318,7 +318,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux) {
 			dcopt +
 			(window.AdMeldAPIClient ? window.AdMeldAPIClient.getParamForDART(slotname) : '') + // TODO FIXME missing in adsinhead
 			'mtfIFPath=/extensions/wikia/AdEngine/;' +
-			'src=driver;' +
+			'src=' + src + ';' +
 			'sz=' + size + ';' +
 			'mtfInline=true;' +	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
 			'tile=' + localTile + ';' +

@@ -52,6 +52,18 @@
 	window.adslots2 = window.adslots2 || [];
 	adEngine.run(adConfig, window.adslots2);
 
+	// DART API for Liftium
+	window.LiftiumDART = {
+		getUrl: function(slotname, slotsize, a, b) {
+			return wikiaDart.getUrl({
+				slotname: slotname,
+				slotsize: slotsize,
+				adType: 'adi',
+				src: 'liftium'
+			});
+		}
+	};
+
 	// Register Evolve hop
 	window.evolve_hop = function(slotname) {
 		adProviderEvolve.hop(slotname);
