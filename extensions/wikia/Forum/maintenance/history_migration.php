@@ -128,6 +128,18 @@ while ($row = $dbw->fetchRow($res)) {
 			'event_date' => $row['event_date']
 		)
 	);
+	
+	$dbw->update(
+		'wall_history',
+		array( 'migrated' => 1 ),
+		array(
+			'page_id' => $commentId,
+			'migrated' => 0,
+			'wiki_id' => $wgCityId
+		),
+		__METHOD__
+	);
+		
 }
 
 echo "DONE";
