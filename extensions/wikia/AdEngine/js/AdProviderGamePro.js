@@ -1,12 +1,12 @@
 var AdProviderGamePro = function(ScriptWriter, WikiaTracker, log, window, document) {
 	var ord = Math.round(Math.random() * 23456787654);
 	var slotMap = {
-	   'HOME_TOP_LEADERBOARD': {'tile': 1, 'pos': "leadfull", 'dcopt': "ist"},
-	   'HOME_TOP_RIGHT_BOXAD': {'tile': 3, 'pos': "mpu"},
-	   'LEFT_SKYSCRAPER_2': {'tile': 2, 'pos': "sky"},
-	   'PREFOOTER_LEFT_BOXAD': {'tile': 4, 'pos': "mpu2"},
-	   'TOP_LEADERBOARD': {'tile': 1, 'pos': "leadfull", 'dcopt': "ist"},
-	   'TOP_RIGHT_BOXAD': {'tile': 3, 'pos': "mpu"}
+		'HOME_TOP_LEADERBOARD': {'size':'728x90', 'tile': 1, 'pos': 'leadfull', 'dcopt': 'ist'},
+		'HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile': 3, 'pos': 'mpu'},
+		'LEFT_SKYSCRAPER_2': {'size':'160x600', 'tile': 2, 'pos': 'sky'},
+		'PREFOOTER_LEFT_BOXAD': {'size': '300x250', 'tile': 4, 'pos': 'mpu2'},
+		'TOP_LEADERBOARD': {'size':'728x90', 'tile': 1, 'pos': 'leadfull', 'dcopt': 'ist'},
+		'TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile': 3, 'pos': 'mpu'}
 	};
 
 	function canHandleSlot(slot) {
@@ -27,13 +27,12 @@ var AdProviderGamePro = function(ScriptWriter, WikiaTracker, log, window, docume
 		log(slot, 5, 'AdProviderGamePro');
 
 		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slot[0], 'ga_label':'gamepro'}, 'ga');
-		ScriptWriter.injectScriptByUrl(slot[0], getUrl(slot[0], slot[1]));
+		ScriptWriter.injectScriptByUrl(slot[0], getUrl(slot[0]));
 	}
 
 	// adapted for GP + simplified copy of AdConfig.DART.getUrl
-	function getUrl(slotname, size) {
-		log('getUrl', 5, 'AdProviderGamePro');
-		log([slotname, size], 5, 'AdProviderGamePro');
+	function getUrl(slotname) {
+		log(['getUrl', slotname], 5, 'AdProviderGamePro');
 
 		var url = 'http://' +
 			'ad-emea' +
@@ -45,7 +44,7 @@ var AdProviderGamePro = function(ScriptWriter, WikiaTracker, log, window, docume
 			(window.wgDartCustomKeyValues ? rebuildKV(window.wgDartCustomKeyValues) + ';' : '' ) +
 			'tile=' + slotMap[slotname].tile + ';' +
 			(slotMap[slotname].dcopt ? 'dcopt=' + slotMap[slotname].dcopt + ';' : '') +
-			'sz=' + size + ';' +
+			'sz=' + slotMap[slotname].size + ';' +
 			'ord=' + ord + '?';
 
 		log(url, 7, 'AdProviderGamePro');
