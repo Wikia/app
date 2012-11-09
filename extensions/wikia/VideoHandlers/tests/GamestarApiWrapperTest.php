@@ -30,7 +30,7 @@
 		/**
 		 * get data with valid response - check html response
 		 * please contact video team if test is failed
-		 * 
+		 *
 		 * @group Infrastructure
 		 */
 		public function testgetDataFromValidHtmlResponse() {
@@ -86,7 +86,7 @@
 				'den Start macht die Einf&uuml;hrung in Camp Maxwell.';
 			$this->assertEquals( $exp_data, $response_data );
 			$this->assertEquals( $exp_data, $metaData['description'] );
-			
+
 			if ( preg_match('/<meta name=[\'\"]description[\'\"] content=(.*)\/\>/', $apiWrapper->response, $matches) ) {
 				$exp_data = trim( $matches[1], ' \'\"' );
 			} else {
