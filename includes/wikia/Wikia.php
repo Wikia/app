@@ -381,7 +381,11 @@ class Wikia {
 		/**
 		 * and use wfDebug as well
 		 */
-		wfDebug( $method . ": " . $message . "\n" );
+		if (function_exists("wfDebug")) {
+			wfDebug( $method . ": " . $message . "\n" );
+		} else {
+			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . "wfDebug is not defined");			
+		}
 	}
 
 	/**
