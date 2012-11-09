@@ -68,7 +68,9 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				'Array access value setting should result in future array access returning the assigned value.'
 		);
 		
-		unset($config['valueThatDoesntExist']);
+		if ( isset( $config['valueThatDoesntExist'] ) ) {
+			unset($config['valueThatDoesntExist']);
+		}
 		
 		$this->assertNull(
 		        $config['valueThatDoesntExist'],
@@ -333,6 +335,15 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		        htmlentities( '"аВатаР"', ENT_COMPAT, 'UTF-8' ),
 		        $config->setQuery( $utf8Query )->getQuery( WikiaSearchConfig::QUERY_ENCODED ),
 		        'WikiaSearch::getQuery() should properly HTML-encode UTF-8 characters when using the encoded query strategy.'
+		);
+		
+		$config->setQuery( 'foo bar wiki' );
+		$config->setIsInterWiki( true );
+		
+		$this->assertEquals(
+				'foo bar',
+				$config->getQuery(),
+				'WikiaSearch::getQuery() should strip the term "wiki" from the set query if the search is interwiki'
 		);
 		
 	}
