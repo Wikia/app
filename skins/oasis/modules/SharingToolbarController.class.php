@@ -1,6 +1,13 @@
 <?php
 
 class SharingToolbarController extends WikiaController {
+	private static $assets;
+	private static $shareButtons;
+	private static $shareNetworks = array(
+		'Twitter',
+		'Facebook',
+		'Mail',
+	);
 
 	/**
 	 * Check whether sharing toolbar can be shown on the current page
@@ -45,31 +52,46 @@ class SharingToolbarController extends WikiaController {
 		return $ret;
 	}
 
-	public function index() {
-		$shareNetworks = array(
-			'Twitter',
-			'Facebook',
-			'Mail',
-		);
+	public function getShareButtons() {
+		if ( !self::$shareButtons ) {
+			$app = F::app();
+			$shareButtons = array();
 
-		$shareButtons = array();
+			foreach( self::$shareNetworks as $network ) {
+				$shareButton = F::build( 'ShareButton', array( $app, $network ), 'factory' );
 
-		foreach($shareNetworks as $network) {
-			$instance = F::build('ShareButton', array($this->app, $network), 'factory');
-
-			if ($instance instanceof ShareButton) {
-				$shareButtons[] = $instance;
+				if ( $shareButton instanceof ShareButton ) {
+					$shareButtons[] = $shareButton;
+				}
 			}
+
+			self::$shareButtons = $shareButtons;
 		}
 
-		$this->response->setVal('shareButtons', $shareButtons);
+		return self::$shareButtons;
 	}
 
-	public function shareButton() {
-		if (!$this->canBeShown()) {
-			// don't render the toolbar
-			return false;
+	public static function getAssets() {
+		if ( !self::$assets ) {
+			$assets = array();
+
+			foreach( self::getShareButtons() as $shareButton ) {
+				$assets = array_merge( $assets, (array) $shareButton->getAssets() );
+			}
+
+			self::$assets = array_unique( $assets );
 		}
+
+		return self::$assets;
+	}
+
+	public function index() {
+		$this->response->setVal( 'shareButtons', self::getShareButtons() );
+	}
+
+	// Returning false will prevent the button from being shown
+	public function shareButton() {
+		return $this->canBeShown();
 	}
 
 	public function sendMail() {

@@ -5,20 +5,12 @@ var $window = $( window ),
 	Wikia = Wikia || {};
 
 var SharingToolbar = {
-	pageWidth: 0,
 	offsetTop: 0,
 
 	init: function( options ) {
-		this.$button = options.$button;
+		this.$button = options.button;
+		this.$toolbar = options.toolbar;
 		this.offsetTop = this.$button.offset().top - 5;
-		this.pageWidth = $('#WikiaPage').width();
-
-		// Attach to DOM
-		this.$button.parent('.buttons').after( options.template );
-		this.$toolbar = $( '#SharingToolbar' );
-
-		// Load dependencies
-		JSSnippets.init();
 
 		// Bind events
 		this.$button.bind('click', $.proxy(this.toggleToolbar, this));

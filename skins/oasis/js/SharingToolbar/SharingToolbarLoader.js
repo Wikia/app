@@ -1,23 +1,41 @@
 jQuery(function( $ ) {
+	var $toolbar,
+		$header = $( '#WikiHeader' ),
+		$button = $header.find( '.share-button' );
 
 	// Load all required assets for the SharingToolbar, then initialize it
-	var $button = $( '#WikiHeader .share-button' ).one( 'click', function( event ) {
+	$button.one( 'click', function( event ) {
 		$.when(
-			$.nirvana.sendRequest({
-				controller: 'SharingToolbarController',
-				method: 'Index',
-				format: 'html',
-				type: 'GET'
+			Wikia.getMultiTypePackage({
+				scripts: 'sharingtoolbar_js',
+				templates: [{
+					controllerName: 'SharingToolbarController',
+					methodName: 'Index'
+				}]
 			}),
-			$.getResources([
-				wgResourceBasePath + '/skins/oasis/js/SharingToolbar/SharingToolbar.js',
-				$.getSassCommonURL( '/skins/oasis/css/core/SharingToolbar.scss' )
-			])
+			// Can't load this with Wikia.getMultiTypePackage because it needs params :(
+			$.getResource(
+				$.getSassCommonURL( '/skins/oasis/css/core/SharingToolbar.scss', {
+					widthType: window.wgOasisGrid ? 3 : 0
+				})
+			)
 		).done(function( response ) {
-			Wikia.SharingToolbar.init({
-				$button: $button,
-				event: event,
-				template: response[ 0 ]
+			var pkg = response[ 0 ];
+
+			Wikia.processStyle( pkg.styles );
+			Wikia.processScript( pkg.scripts );
+
+			// Attach toolbar to DOM
+			$toolbar = $( pkg.templates.SharingToolbarController_Index );
+			$header.append( $toolbar );
+
+			// Process ShareButtons JavaScript dependencies
+			Wikia.ShareButtons.process().done(function() {
+				Wikia.SharingToolbar.init({
+					button: $button,
+					event: event,
+					toolbar: $toolbar
+				});
 			});
 		});
 	});
