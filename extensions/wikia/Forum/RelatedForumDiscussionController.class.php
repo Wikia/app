@@ -9,7 +9,6 @@ class RelatedForumDiscussionController extends WikiaController {
 		// mock data
 		$messages = array(
 			array(
-				'blankImgUrl' => $this->wf->BlankImgUrl(),
 				'metaTitle' => 'Placeholder main title',
 				'threadUrl' => '#',
 				'totalReplies' => $this->wf->Msg('forum-related-discussion-total-replies', 29),
@@ -31,7 +30,6 @@ class RelatedForumDiscussionController extends WikiaController {
 				),
 			),
 			array(
-				'blankImgUrl' => $this->wf->BlankImgUrl(),
 				'metaTitle' => 'Placeholder main title',
 				'threadUrl' => '#',
 				'totalReplies' => $this->wf->Msg('forum-related-discussion-total-replies', 14),
@@ -54,9 +52,11 @@ class RelatedForumDiscussionController extends WikiaController {
 			),
 		);
 		
+		$messages = array();
+		
 		// don't render anything if there are no discussions for this article
 		if(empty($messages)) {
-			return false;
+			$this->forward( 'RelatedForumDiscussion', 'zeroState' );
 		}
 		
 		// load assets related to this if there is a discussions section
@@ -67,9 +67,23 @@ class RelatedForumDiscussionController extends WikiaController {
 		
 		// set template data
 		$this->sectionHeading = $this->wf->Msg('forum-related-discussion-heading', $this->wg->Title->getText());
+		$this->newPostButton = $this->wf->Msg('forum-related-discussion-new-post-button');
+		$this->newPostUrl = '#';
+		$this->blankImgUrl = $this->wf->BlankImgUrl();
 		$this->messages = $messages;
 		$this->seeMoreUrl = "#";
 		$this->seeMoreText = "See more";
+	}
+	
+	public function zeroState() {
+		// set template rendering to mustache
+		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
+		
+		$this->sectionHeading = $this->wf->Msg('forum-related-discussion-heading', $this->wg->Title->getText());
+		$this->newPostButton = $this->wf->Msg('forum-related-discussion-new-post-button');
+		$this->newPostUrl = '#';
+		$this->blankImgUrl = $this->wf->BlankImgUrl();
+		$this->creative = $this->wf->MsgExt('forum-related-discussion-zero-state-creative', 'parseinline');
 	}
 	
 }

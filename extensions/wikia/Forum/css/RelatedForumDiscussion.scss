@@ -32,6 +32,10 @@
 		}
 	}
 	
+	.forum-new-post {
+		float: right;
+	}
+	
 	.forum-replies {
 		.forum-reply {
 			margin-top: 10px;
@@ -54,5 +58,11 @@
 	
 	.forum-see-more {
 		text-align: right;
+	}
+	
+	.forum-zero-state-creative {
+		.talk {
+			margin-right: 10px;
+		}
 	}
 }
