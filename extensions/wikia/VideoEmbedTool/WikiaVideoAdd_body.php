@@ -135,7 +135,7 @@ class WikiaVideoAddForm extends SpecialPage {
 					$successMsgKey = 'wva-success';
 				}
 				
-				$wgOut->redirect( SpecialPage::getTitleFor("Videos")->escapeLocalUrl( array( "sort"=>"recent", "msg"=>$successMsgKey, "msgTitle"=>urlencode($title) ) );
+				$wgOut->redirect( SpecialPage::getTitleFor("Videos")->escapeLocalUrl( array( "sort"=>"recent", "msg"=>$successMsgKey, "msgTitle"=>urlencode($title), ) ) );
 			} else {
 				//bad title returned
 				$errors['name'] = wfMsg( 'wva-failure' );			
