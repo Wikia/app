@@ -5,6 +5,8 @@ jQuery(function( $ ) {
 
 	// Load all required assets for the SharingToolbar, then initialize it
 	$button.one( 'click', function( event ) {
+		$button.addClass('share-enabled');
+
 		$.when(
 			Wikia.getMultiTypePackage({
 				scripts: 'sharingtoolbar_js',
@@ -27,15 +29,18 @@ jQuery(function( $ ) {
 
 			// Attach toolbar to DOM
 			$toolbar = $( pkg.templates.SharingToolbarController_Index );
-			$header.append( $toolbar );
+			$header.append( $toolbar.addClass('loading') );
 
-			// Process ShareButtons JavaScript dependencies
+			// Initialize the Sharing Toolbar
+			Wikia.SharingToolbar.init({
+				button: $button,
+				event: event,
+				toolbar: $toolbar
+			});
+
+			// Display the toolbar when the share buttons are done processing
 			Wikia.ShareButtons.process().done(function() {
-				Wikia.SharingToolbar.init({
-					button: $button,
-					event: event,
-					toolbar: $toolbar
-				});
+				Wikia.SharingToolbar.toggleToolbar( event );
 			});
 		});
 	});

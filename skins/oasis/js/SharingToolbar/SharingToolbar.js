@@ -15,9 +15,6 @@ var SharingToolbar = {
 		// Bind events
 		this.$button.bind('click', $.proxy(this.toggleToolbar, this));
 		this.$toolbar.find('.email-link').bind('click', this.onEmailClick);
-
-		// Toggle on
-		this.toggleToolbar( options.event );
 	},
 	onScroll: function() {
 		var fixed = $window.scrollTop() >= this.offsetTop;
@@ -115,20 +112,27 @@ var SharingToolbar = {
 
 		this.$toolbar.css('width', maxWidth);
 	},
-	toggleToolbar: function( event ) {
-		var visible = this.$button.hasClass('share-enabled');
+	toggleToolbar: function(event) {
+		var show = this.$toolbar.hasClass('loading');
 
 		event.preventDefault();
 
-		this.$button.toggleClass('share-enabled', !visible);
-		this.$toolbar.toggleClass('hidden', visible);
-
-		if (visible) {
-			this.checkWidth();
-			$window.off(scroll);
+		if (show) {
+			this.$toolbar.removeClass('loading');
 
 		} else {
+			show = this.$toolbar.hasClass('hidden');
+		}
+
+		this.$button.toggleClass('share-enabled', show);
+		this.$toolbar.toggleClass('hidden', !show);
+
+		if (show) {
 			$window.on(scroll, $.proxy(this.onScroll, this));
+
+		} else {
+			this.checkWidth();
+			$window.off(scroll);
 		}
 	}
 };
