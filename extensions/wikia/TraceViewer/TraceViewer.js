@@ -1203,6 +1203,7 @@
 				},
 				defaultTab = 1;
 
+			html += '<div class="trace-load-button"><a href="#">Load other URL...</a></div>';
 			html += '<div id="trace-summary"></div>';
 			html += '<div id="trace-context-list"></div>';
 			html += '<div id="trace-tabs-wrapper"><ul>';
@@ -1248,6 +1249,8 @@
 			this.summaryPanel.activate();
 			this.contextListPanel.activate();
 			this.tabsPanels[defaultTab] && this.tabsPanels[defaultTab].activate();
+
+			$('.trace-load-button a',this.el).click(this.proxy(this.loadButtonClicked));
 		},
 		setup: function() {
 			if ( this.el ) return;
@@ -1258,6 +1261,10 @@
 		show: function() {
 			this.setup();
 			var data = this.data;
+		},
+		setTitle: function( text ) {
+			this.el.dialog( 'option', 'title', 'PHP Trace Browser'
+				+ (text ? ' ('+text+')' : '' ));
 		},
 		/* event handlers */
 		tabActivated: function( ev, ui ) {
@@ -1274,6 +1281,9 @@
 				el.dialog('destroy');
 				el.remove();
 			},0);
+		},
+		loadButtonClicked: function() {
+			this.fire('loadClicked');
 		}
 	});
 
@@ -1292,11 +1302,13 @@
 		},
 		init2: function() {
 			this.data = new TraceContextCollection();
-			this.data.initFromDom();
 			this.dialog = new TraceDialog(this.data,this);
 			this.dialog.show();
 			this.dialog.on('drilldown',proxy(this.drilldown,this));
 			this.dialog.on('switchContext',proxy(this.switchContext,this));
+			this.dialog.on('loadClicked',proxy(this.loadUrlRequest,this));
+
+			this.loadFromDom();
 		},
 		drilldown: function( type, methodName ) {
 			var drilldowns = {
@@ -1318,8 +1330,19 @@
 			var data = this.data;
 			data.setCurrent(contextId);
 		},
+		loadFromDom: function() {
+			this.data.initFromDom();
+			this.dialog.setTitle(document.location.href);
+		},
+		loadUrlRequest: function() {
+			var url = prompt('Enter URL');
+			if ( typeof url == 'string' ) {
+				this.loadFromUrl( url );
+			}
+		},
 		loadFromUrl: function( url, data ) {
-			var self = this;
+			var self = this,
+				origUrl = url;;
 			url += ( url.indexOf('?') >= 0 ? '&' : '?' ) + 'forcetrace=2';
 			$.ajax({
 				url: url,
@@ -1328,7 +1351,12 @@
 				success: function( text ) {
 					var i = text.lastIndexOf('<!'+'--');
 					if ( i >= 0 ) {
-						self.data.initFromText(text.substr(i));
+						text = text.substr(i);
+						text = text.replace(/<!--|-->/g,'');
+						console.log(text.substr(0,250));
+						console.log(text.substr(-250));
+						self.data.initFromText(text);
+						self.dialog.setTitle(origUrl);
 					} else {
 						err('Could not find trace data');
 					}

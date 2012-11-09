@@ -9,6 +9,12 @@
 	color: #2B54B5;
 }
 
+.trace-load-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
 .php-trace-wrapper {
 	width: 99%;
 	height: 99%;
