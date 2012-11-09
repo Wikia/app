@@ -373,6 +373,19 @@
 			if ( node.nodeType == 8 /* comment */ && /Beginning (extended )?trace/.test(node.textContent) ) {
 				text = node.textContent;
 			}
+			if ( text == '' ) {
+				var children = window.document.body.childNodes,
+					i, l = children.length, node;
+				for (i=l-1;i>=0;i--) {
+					node = children[i];
+					if ( node.nodeType == 8 /* comment */ ) {
+						if ( /Beginning (extended )?trace/.test(node.textContent) ) {
+							text = node.textContent;
+						}
+						break;
+					}
+				}
+			}
 			return this.fromText(text);
 		}
 	});
