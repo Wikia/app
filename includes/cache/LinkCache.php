@@ -48,7 +48,7 @@ class LinkCache {
 		}
 		// start wikia change
 		elseif( $wgEnableFastLinkCache ) {
-			return (int) $wgMemc->get($this->getMemcKey($title, 'good'));
+			return (int) $wgMemc->get(self::getMemcKey($title, 'good'));
 		}
 		// end wikia change
 		else {
@@ -72,7 +72,7 @@ class LinkCache {
 		}
 		// start wikia change
 		elseif( $wgEnableFastLinkCache ) {
-			$fields = $wgMemc->get($this->getMemcKey($dbkey, 'fields'));
+			$fields = $wgMemc->get(self::getMemcKey($dbkey, 'fields'));
 			return isset($fields[$field]) ? $fields[$field] : null;
 		}
 		// end wikia change
@@ -109,8 +109,8 @@ class LinkCache {
 		// start wikia change
 		global $wgMemc, $wgEnableFastLinkCache;
 		if ( $wgEnableFastLinkCache ) {
-			$wgMemc->set($this->getMemcKey($dbkey, 'good'), intval( $id ), 3600);
-			$wgMemc->set($this->getMemcKey($dbkey, 'fields'), $this->mGoodLinkFields[$dbkey], 3600);
+			$wgMemc->set(self::getMemcKey($dbkey, 'good'), intval( $id ), 3600);
+			$wgMemc->set(self::getMemcKey($dbkey, 'fields'), $this->mGoodLinkFields[$dbkey], 3600);
 		}
 		// end wikia change
 	}
@@ -134,8 +134,8 @@ class LinkCache {
 		// start wikia change
 		global $wgMemc, $wgEnableFastLinkCache;
 		if ( $wgEnableFastLinkCache ) {
-			$wgMemc->set($this->getMemcKey($dbkey, 'good'), intval( $row->page_id ), 3600);
-			$wgMemc->set($this->getMemcKey($dbkey, 'fields'), $this->mGoodLinkFields[$dbkey], 3600);
+			$wgMemc->set(self::getMemcKey($dbkey, 'good'), intval( $row->page_id ), 3600);
+			$wgMemc->set(self::getMemcKey($dbkey, 'fields'), $this->mGoodLinkFields[$dbkey], 3600);
 		}
 		// end wikia change
 	}
@@ -166,8 +166,8 @@ class LinkCache {
 		// start wikia change
 		global $wgMemc, $wgEnableFastLinkCache;
 		if( $wgEnableFastLinkCache ) {
-			$wgMemc->delete($this->getMemcKey($dbkey, 'good'));
-			$wgMemc->delete($this->getMemcKey($dbkey, 'fields'));
+			$wgMemc->delete(self::getMemcKey($dbkey, 'good'));
+			$wgMemc->delete(self::getMemcKey($dbkey, 'fields'));
 		}
 		// end wikia change
 	}
@@ -264,7 +264,7 @@ class LinkCache {
 	 *
 	 * @aauthor macbre
 	 */
-	private function getMemcKey($dbkey, $type) {
+	static public function getMemcKey($dbkey, $type) {
 		// Mediawiki's title can be up to 255 characters long, memcache key can have a maximum of 250 characters
 		$hash = md5($dbkey);
 		return wfMemcKey("linkcache:{$type}:{$hash}");
