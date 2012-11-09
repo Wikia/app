@@ -201,7 +201,12 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$expectedDefaultNamespaces = array( NS_MAIN );
 		
 		$searchEngineMock
-			->staticExpects	( $this->any() )
+			->staticExpects	( $this->at( 0 ) )
+			->method		( 'DefaultNamespaces' )
+			->will			( $this->returnValue( null ) )
+		;
+		$searchEngineMock
+			->staticExpects	( $this->at( 1 ) )
 			->method		( 'DefaultNamespaces' )
 			->will			( $this->returnValue( $expectedDefaultNamespaces ) )
 		;
@@ -209,6 +214,10 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$this->mockClass( 'SearchEngine',	$searchEngineMock );
 		$this->mockApp();
 		F::setInstance( 'SearchEngine', $searchEngineMock );
+		
+		$emptyNamespaces = $config->getNamespaces();
+		
+		$this->assertEmpty( $emptyNamespaces );
 		
 		$originalNamespaces = $config->getNamespaces();
 		$this->assertEquals(

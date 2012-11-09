@@ -239,12 +239,8 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		if (! is_array( $namespaces ) ) { 
 			$namespaces = array();
 		}
-		$queryNamespaceArray = (isset($this->params['queryNamespace'])) ? array($this->params['queryNamespace']) : array(); 
-		$this->params['namespaces'] = array_unique( array_merge($namespaces, $queryNamespaceArray) );
-		
-		if (! is_array( $this->params['namespaces'] ) ) {
-			$this->params['namespaces'] = array();
-		}
+		$queryNamespaceArray = ( isset( $this->params['queryNamespace'] ) ) ? array( $this->params['queryNamespace'] ) : array(); 
+		$this->params['namespaces'] = array_unique( array_merge( $namespaces, $queryNamespaceArray ) );
 		
 		return $this->params['namespaces'];
 	}
