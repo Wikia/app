@@ -70,10 +70,12 @@ class LinkCache {
 		if ( array_key_exists( $dbkey, $this->mGoodLinkFields ) ) {
 			return $this->mGoodLinkFields[$dbkey][$field];
 		}
+		// start wikia change
 		elseif( $wgEnableFastLinkCache ) {
 			$fields = $wgMemc->get($this->getMemcKey($dbkey, 'fields'));
 			return isset($fields[$field]) ? $fields[$field] : null;
 		}
+		// end wikia change
 		else {
 			return null;
 		}
@@ -97,8 +99,6 @@ class LinkCache {
 	 * @param $revision Integer: latest revision's ID
 	 */
 	public function addGoodLinkObj( $id, $title, $len = -1, $redir = null, $revision = false ) {
-		global $wgMemc, $wgEnableFastLinkCache; // wikia change
-
 		$dbkey = $title->getPrefixedDbKey();
 		$this->mGoodLinks[$dbkey] = intval( $id );
 		$this->mGoodLinkFields[$dbkey] = array(
@@ -107,6 +107,7 @@ class LinkCache {
 			'revision' => intval( $revision ) );
 
 		// start wikia change
+		global $wgMemc, $wgEnableFastLinkCache;
 		if ( $wgEnableFastLinkCache ) {
 			$wgMemc->set($this->getMemcKey($dbkey, 'good'), intval( $id ), 3600);
 			$wgMemc->set($this->getMemcKey($dbkey, 'fields'), $this->mGoodLinkFields[$dbkey], 3600);
@@ -122,8 +123,6 @@ class LinkCache {
 	 *  page_latest
 	 */
 	public function addGoodLinkObjFromRow( $title, $row ) {
-		global $wgMemc, $wgEnableFastLinkCache; // wikia change
-
 		$dbkey = $title->getPrefixedDbKey();
 		$this->mGoodLinks[$dbkey] = intval( $row->page_id );
 		$this->mGoodLinkFields[$dbkey] = array(
@@ -131,7 +130,9 @@ class LinkCache {
 			'redirect' => intval( $row->page_is_redirect ),
 			'revision' => intval( $row->page_latest ),
 		);
+
 		// start wikia change
+		global $wgMemc, $wgEnableFastLinkCache;
 		if ( $wgEnableFastLinkCache ) {
 			$wgMemc->set($this->getMemcKey($dbkey, 'good'), intval( $row->page_id ), 3600);
 			$wgMemc->set($this->getMemcKey($dbkey, 'fields'), $this->mGoodLinkFields[$dbkey], 3600);
