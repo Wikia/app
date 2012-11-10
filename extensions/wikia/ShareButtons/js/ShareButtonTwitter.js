@@ -5,7 +5,15 @@ var Wikia = window.Wikia || {},
 
 if ( ShareButtons ) {
 	ShareButtons.add({
-		dependencies: [ $.loadTwitterAPI ]
+		dependencies: [ $.loadTwitterAPI ],
+		callback: function() {
+			var dfd = new $.Deferred();
+
+			// Resolve when contents have finished loading
+			$( '.twitter-share-button' ).load( dfd.resolve );
+
+			return dfd.promise();
+		}
 	});
 }
 
