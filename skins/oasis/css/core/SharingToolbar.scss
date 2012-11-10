@@ -2,11 +2,12 @@
 @import "layout";
 @import "../mixins/border-radius";
 
-#SharingToolbar {
-	$share-background-color: transparentize($color-page, 0.65);
-	@if lightness($color-page) < 50 {
-		$share-background-color: transparentize($color-page, 0.7);
-	}
+$share-background-color: transparentize($color-page, 0.65);
+@if lightness($color-page) < 50 {
+	$share-background-color: transparentize($color-page, 0.7);
+}
+
+.SharingToolbar {
 	@include border-radius(5px);
 	background-color: $share-background-color;
 	padding: 3px;
@@ -19,6 +20,24 @@
 		position: fixed;
 		margin-left: ($width-outside/2) + 7px;
 	}
+	&.hidden {
+		visibility: hidden;
+		left: 0px;
+	}
+	&.loading {
+		background: $share-background-color url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+
+		.shareButton {
+			visibility: hidden;
+		}
+	}
+	.fb-like {
+		height: 61px;
+	}
+	.twitter-share-button {
+		display: block;
+		height: 62px;
+	}
 	.wikia-button {
 		font-size: 11px;
 		margin-top: 10px;
@@ -30,9 +49,5 @@
 	}
 	>:first-child {
 		margin: 0 0 5px 0;
-	}
-	&.hidden {
-		visibility: hidden;
-		left: 0px;
 	}
 }
