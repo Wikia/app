@@ -169,7 +169,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['url']			= $page->getTitle()->getFullUrl();
 		$result['ns']			= $page->getTitle()->getNamespace();
 		$result['host']			= substr($this->wg->Server, 7);
-		$result['lang']			= $this->wg->Lang->mCode;
+		$result['lang']			= $this->wg->ContLang->mCode;
 	
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
 		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
