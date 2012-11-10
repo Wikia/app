@@ -559,4 +559,99 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		);
 	}
 	
+	/**
+	 * @covers WikiaSearchConfig::getSearchProfiles
+	 */
+	public function testGetSearchProfiles() {
+		$config 			= F::build( 'WikiaSearchConfig' );
+		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
+		
+		$searchEngineMock
+			->staticExpects	( $this->any() )
+			->method		( 'searchableNamespaces' )
+			->will			( $this->returnValue( array( NS_MAIN, NS_TALK, NS_CATEGORY, NS_FILE, NS_USER ) ) )
+		;
+		$searchEngineMock
+			->staticExpects	( $this->any() )
+			->method		( 'defaultNamespaces' )
+			->will			( $this->returnValue( array( NS_FILE, NS_CATEGORY ) ) )
+		;
+		$searchEngineMock
+			->staticExpects	( $this->any() )
+			->method		( 'namespacesAsText' )
+			->will			( $this->returnValue( 'Article', 'Category' ) )
+		;
+		
+		$this->mockClass( 'SearchEngine', $searchEngineMock );
+		$this->mockApp();
+		
+		$profiles = $config->getSearchProfiles();
+		$profileConstants = array( SEARCH_PROFILE_DEFAULT, SEARCH_PROFILE_IMAGES, SEARCH_PROFILE_USERS, SEARCH_PROFILE_ALL );
+		foreach ( $profileConstants as $profile ) {
+			$this->assertArrayHasKey(
+					$profile,
+					$profiles
+			);
+		}
+	}
+
+	/**
+	 * @covers WikiaSearchConfig::getActiveTab
+	 */
+	public function testGetActiveTab() {
+		
+		$config 			= F::build( 'WikiaSearchConfig' );
+		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
+		
+		$config->setAdvanced( true );
+		
+		$this->assertEquals(
+				SEARCH_PROFILE_ADVANCED,
+				$config->getActiveTab()
+		);
+		
+		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
+		
+		$this->mockClass( 'SearchEngine', $searchEngineMock );
+		$this->mockGlobalVariable( 'wgDefaultNamespaces', array() );
+		$this->mockApp();
+		
+		$config->setAdvanced( false );
+		$this->assertEquals(
+				SEARCH_PROFILE_DEFAULT,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array( NS_FILE ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_IMAGES,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array( NS_USER ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_USERS,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array( NS_FILE, NS_USER ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_ADVANCED,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array_keys( $searchEngineMock->searchableNamespaces() ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_ALL,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array( NS_FILE, NS_MAIN ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_ADVANCED,
+				$config->getActiveTab()
+		);
+		
+	}
+	
 }

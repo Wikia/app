@@ -235,7 +235,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		$searchEngine = F::build( 'SearchEngine' );
 		$namespaces = ( isset($this->params['namespaces']) && !empty($this->params['namespaces']) ) 
 					? $this->params['namespaces'] 
-					: $searchEngine->DefaultNamespaces();
+					: $searchEngine->defaultNamespaces();
 		if (! is_array( $namespaces ) ) { 
 			$namespaces = array();
 		}
@@ -410,10 +410,10 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	            )
 	    );
 	    
-	    wfRunHooks( 'SpecialSearchProfiles', array( &$profiles ) );
+	    $this->wf->RunHooks( 'SpecialSearchProfiles', array( &$profiles ) );
 	
 	    foreach( $profiles as $key => &$data ) {
-	        sort($data['namespaces']);
+	        sort( $data['namespaces'] );
 	    }
 	
 	    return $profiles;
@@ -428,22 +428,21 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		if( $this->getAdvanced() ) {
 		    return SEARCH_PROFILE_ADVANCED;
 		}
+		$searchEngine = F::build( 'SearchEngine' ); 
+		$searchableNamespaces = array_keys( $searchEngine->searchableNamespaces() );
 		
-		$searchableNamespaces = array_keys( SearchEngine::searchableNamespaces() );
+		// $nsVals should always have a value at this point
 		$nsVals = $this->getNamespaces();
 		
-		if ( empty( $nsVals ) ) {
-			return $this->wg->User->getOption('searchAllNamespaces') ? SEARCH_PROFILE_ALL :  $this->wg->DefaultSearchProfile;
-		}
-		
+		// we will always return at least SEARCH_PROFILE_ADVANCED, because it is identical to the return value of getNamespaces
+		$searchProfile = SEARCH_PROFILE_ADVANCED;
 		foreach( $this->getSearchProfiles() as $name => $profile ) {
 		    if (   ( count( array_diff( $nsVals, $profile['namespaces'] ) ) == 0 ) 
 		    	&& ( count( array_diff($profile['namespaces'], $nsVals ) ) == 0 ) ) {
-	        	return $name;
+	        	$searchProfile = $name !== SEARCH_PROFILE_ADVANCED ? $name : $searchProfile;
 		    }
 		}
-		
-		return SEARCH_PROFILE_ADVANCED;
+		return $searchProfile;
 	}
 	
 	/**
