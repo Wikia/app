@@ -44,6 +44,16 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				$config['valueThatDoesntExist'],
 				'Any value set in WikiaSearchConfig should be exposed via array access.'
 		);
+		
+		$exception = false;
+		try {
+			$config->thisIsAMethodIJustMadeUp();
+		} catch ( Exception $exception ) { }
+		
+		$this->assertInstanceOf(
+				'BadMethodCallException',
+				$exception
+		);
 	}
 	
 	/**
@@ -68,7 +78,9 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				'Array access value setting should result in future array access returning the assigned value.'
 		);
 		
-		unset($config['valueThatDoesntExist']);
+		if ( isset( $config['valueThatDoesntExist'] ) ) {
+			unset($config['valueThatDoesntExist']);
+		}
 		
 		$this->assertNull(
 		        $config['valueThatDoesntExist'],
@@ -189,7 +201,12 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$expectedDefaultNamespaces = array( NS_MAIN );
 		
 		$searchEngineMock
-			->staticExpects	( $this->any() )
+			->staticExpects	( $this->at( 0 ) )
+			->method		( 'DefaultNamespaces' )
+			->will			( $this->returnValue( null ) )
+		;
+		$searchEngineMock
+			->staticExpects	( $this->at( 1 ) )
 			->method		( 'DefaultNamespaces' )
 			->will			( $this->returnValue( $expectedDefaultNamespaces ) )
 		;
@@ -197,6 +214,10 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$this->mockClass( 'SearchEngine',	$searchEngineMock );
 		$this->mockApp();
 		F::setInstance( 'SearchEngine', $searchEngineMock );
+		
+		$emptyNamespaces = $config->getNamespaces();
+		
+		$this->assertEmpty( $emptyNamespaces );
 		
 		$originalNamespaces = $config->getNamespaces();
 		$this->assertEquals(
@@ -333,6 +354,15 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		        htmlentities( '"аВатаР"', ENT_COMPAT, 'UTF-8' ),
 		        $config->setQuery( $utf8Query )->getQuery( WikiaSearchConfig::QUERY_ENCODED ),
 		        'WikiaSearch::getQuery() should properly HTML-encode UTF-8 characters when using the encoded query strategy.'
+		);
+		
+		$config->setQuery( 'foo bar wiki' );
+		$config->setIsInterWiki( true );
+		
+		$this->assertEquals(
+				'foo bar',
+				$config->getQuery(),
+				'WikiaSearch::getQuery() should strip the term "wiki" from the set query if the search is interwiki'
 		);
 		
 	}
@@ -527,6 +557,101 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				$config->setCityID( 456 )->getCityId(),
 				'If we set a different city ID, we should get a different city ID.'
 		);
+	}
+	
+	/**
+	 * @covers WikiaSearchConfig::getSearchProfiles
+	 */
+	public function testGetSearchProfiles() {
+		$config 			= F::build( 'WikiaSearchConfig' );
+		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
+		
+		$searchEngineMock
+			->staticExpects	( $this->any() )
+			->method		( 'searchableNamespaces' )
+			->will			( $this->returnValue( array( NS_MAIN, NS_TALK, NS_CATEGORY, NS_FILE, NS_USER ) ) )
+		;
+		$searchEngineMock
+			->staticExpects	( $this->any() )
+			->method		( 'defaultNamespaces' )
+			->will			( $this->returnValue( array( NS_FILE, NS_CATEGORY ) ) )
+		;
+		$searchEngineMock
+			->staticExpects	( $this->any() )
+			->method		( 'namespacesAsText' )
+			->will			( $this->returnValue( 'Article', 'Category' ) )
+		;
+		
+		$this->mockClass( 'SearchEngine', $searchEngineMock );
+		$this->mockApp();
+		
+		$profiles = $config->getSearchProfiles();
+		$profileConstants = array( SEARCH_PROFILE_DEFAULT, SEARCH_PROFILE_IMAGES, SEARCH_PROFILE_USERS, SEARCH_PROFILE_ALL );
+		foreach ( $profileConstants as $profile ) {
+			$this->assertArrayHasKey(
+					$profile,
+					$profiles
+			);
+		}
+	}
+
+	/**
+	 * @covers WikiaSearchConfig::getActiveTab
+	 */
+	public function testGetActiveTab() {
+		
+		$config 			= F::build( 'WikiaSearchConfig' );
+		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
+		
+		$config->setAdvanced( true );
+		
+		$this->assertEquals(
+				SEARCH_PROFILE_ADVANCED,
+				$config->getActiveTab()
+		);
+		
+		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
+		
+		$this->mockClass( 'SearchEngine', $searchEngineMock );
+		$this->mockGlobalVariable( 'wgDefaultNamespaces', array() );
+		$this->mockApp();
+		
+		$config->setAdvanced( false );
+		$this->assertEquals(
+				SEARCH_PROFILE_DEFAULT,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array( NS_FILE ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_IMAGES,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array( NS_USER ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_USERS,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array( NS_FILE, NS_USER ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_ADVANCED,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array_keys( $searchEngineMock->searchableNamespaces() ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_ALL,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array( NS_FILE, NS_MAIN ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_ADVANCED,
+				$config->getActiveTab()
+		);
+		
 	}
 	
 }

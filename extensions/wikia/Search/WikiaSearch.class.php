@@ -703,7 +703,7 @@ class WikiaSearch extends WikiaObject {
 				'key'	=>	'mltfilterquery'
 			) );
 		}
-		if ( $query !== null ) { 
+		if (! empty( $query ) ) { 
 			$mlt->setQuery( $query );
 		} else if ( $streamBody ) {
 			$mlt->addParam( 'stream.body', $streamBody );

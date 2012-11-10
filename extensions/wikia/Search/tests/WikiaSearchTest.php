@@ -268,21 +268,37 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		
 		$searchConfig->setNamespaces( array(1, 2, 3) );
 		
-		$this->assertEquals( '((wid:123) AND ((ns:1) OR (ns:2) OR (ns:3)) AND (is_redirect:false))', $method->invoke( $wikiaSearch, $searchConfig ),
-							'WikiaSearch::getQueryClauses by default should query for namespaces and wiki ID.' );
-		
+		$this->assertEquals( 
+				'((wid:123) AND ((ns:1) OR (ns:2) OR (ns:3)) AND (is_redirect:false))', 
+				$method->invoke( $wikiaSearch, $searchConfig ),
+				'WikiaSearch::getQueryClauses by default should query for namespaces and wiki ID.' 
+		);
+
 		$searchConfig->setVideoSearch( true );
 		
 		$expectedWithVideo = '(((wid:123) OR (wid:'.WikiaSearch::VIDEO_WIKI_ID.')) AND (is_video:true) AND ((ns:'.NS_FILE.')) AND (is_redirect:false))';
-		$this->assertEquals( $expectedWithVideo, $method->invoke( $wikiaSearch, $searchConfig ),
-							'WikiaSearch::getQueryClauses should search only for video namespaces in video search, and should only search for videos' );
+		$this->assertEquals( 
+				$expectedWithVideo, 
+				$method->invoke( $wikiaSearch, $searchConfig ),
+				'WikiaSearch::getQueryClauses should search only for video namespaces in video search, and should only search for videos' 
+		);
 		
 		$searchConfig	->setVideoSearch	( false )
 						->setIsInterWiki	( true );
 		
-		$expectedInterWiki = '(-(wid:123) AND -(wid:234) AND (lang:en) AND (iscontent:true) AND (is_redirect:false))';
-		$this->assertEquals( $expectedInterWiki, $method->invoke( $wikiaSearch, $searchConfig ),
-		        			'WikiaSearch::getQueryClauses should exclude bad wikis, require the language of the wiki, and require content' );
+		$this->assertEquals( 
+				'(-(wid:123) AND -(wid:234) AND (lang:en) AND (iscontent:true) AND (is_redirect:false))', 
+				$method->invoke( $wikiaSearch, $searchConfig ),
+        		'WikiaSearch::getQueryClauses should exclude bad wikis, require the language of the wiki, and require content' 
+		);
+		
+		$searchConfig->setHub( 'Entertainment' );
+		
+		$this->assertEquals( 
+				'(-(wid:123) AND -(wid:234) AND (lang:en) AND (iscontent:true) AND (hub:Entertainment) AND (is_redirect:false))', 
+				$method->invoke( $wikiaSearch, $searchConfig ),
+				'WikiaSearch::getQueryClauses by default should query for namespaces and wiki ID.' 
+		);
 		
 	}
 	
@@ -846,6 +862,8 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		F::addClassConstructor( 'WikiaSearch', array( 'client' => $mockClient ) );
 		$wikiaSearch = F::build( 'WikiaSearch' );
 		
+		$searchConfig['query'] = false;
+		
 		$searchConfig
 			->setStreamBody			( 'foo' )
 			->setInterestingTerms	( 'list' )
@@ -873,6 +891,8 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->setStreamUrl			( 'http://foo.com' )
 			->setMltFilterQuery		( 'foo:bar' )
 		;
+		
+		$searchConfig['query'] = false;
 		
 		$this->assertInstanceOf(
 		        'WikiaSearchResultSet',
