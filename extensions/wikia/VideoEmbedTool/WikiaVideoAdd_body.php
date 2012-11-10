@@ -53,7 +53,7 @@ class WikiaVideoAddForm extends SpecialPage {
 	}
 
 	public function showForm( $errors = array() ) {
-		global $wgOut;
+		global $wgOut, $wgUser;
 
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'WikiaVideoAdd' );
 		$action = htmlspecialchars($titleObj->getLocalURL( "action=submit" ));
@@ -167,6 +167,6 @@ class WikiaVideoAddForm extends SpecialPage {
 			"msg" => $successMsgKey,
 			"msgTitle" => urlencode($title),
 		);
-		$wgOut->redirect( SpecialPage::getTitleFor("Videos")->escapeLocalUrl( $query ) );
+		$wgOut->redirect( SpecialPage::getTitleFor("Videos")->getLocalUrl( $query ) );
 	}
 }
