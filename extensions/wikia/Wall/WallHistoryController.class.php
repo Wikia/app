@@ -66,10 +66,9 @@ class WallHistoryController extends WallController {
 			$wallHistory = F::build( 'WallHistory' );
 			$wallHistory->setPage($page, $perPage);
 			$sort = $this->getSortingSelected();
-
 			if( $title->exists() ) {
 				$count = $wallHistory->getCount($title->getArticleId(), null, false);
-				$history = $wallHistory->get($title->getArticleId(), null, $sort, false);					
+				$history = $wallHistory->get($title->getArticleId(), $sort, null, false);					
 			} else {
 				$count = 0;
 				$history = array();

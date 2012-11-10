@@ -69,7 +69,8 @@ $dir = dirname(__FILE__);
 
 	
 if(!$db->tableExists('wall_history')) {
-	$db->sourceFile($dir."/../../Wall/sql/wall_history_local.sql");
+	echo "Try to create table\'n";
+	$db->sourceFile($IP."/extensions/wikia/Wall/sql/wall_history_local.sql");
 }
 		
 while ($row = $dbw->fetchRow($res)) {
@@ -143,3 +144,4 @@ while ($row = $dbw->fetchRow($res)) {
 }
 
 echo "DONE";
+
