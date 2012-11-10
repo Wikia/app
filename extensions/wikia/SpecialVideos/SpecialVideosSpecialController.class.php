@@ -38,6 +38,16 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$sort = $this->request->getVal( 'sort', 'trend' );
 		$page = $this->request->getVal( 'page', 1 );
 
+		// Add GlobalNotification message after adding a new video. We can abstract this later if we want to add more types of messages
+		$msg = $this->request->getVal( 'msg', '');
+
+		if( !empty( $msg ) ) {
+			$msgTitle = $this->request->getVal( 'msgTitle', '');
+			$msgTitle = urldecode($msgTitle);
+			
+			NotificationsController::addConfirmation( wfMessage( $msg, $msgTitle )->parse(), NotificationsController::CONFIRMATION_CONFIRM );
+		}
+
 		if ( !is_numeric($page) ) {
 			$page = 1;
 		}

@@ -1,6 +1,16 @@
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/forms";
 
+$error-color: mix(#ff0000, #d4d4d4, 75%);
+@if $is-dark-wiki {
+	$error-color: mix(#ff0000, #2b2b2b, 60%);
+}
+
+$success-color: #3d8d42;
+@if $is-dark-wiki {
+	$success-color: #b5e3b5
+}
+
 .WikiaForm {
 	> fieldset {
 		border: 0;
@@ -41,16 +51,12 @@
 				color: $color-text-error;
 				font-size: 11px;
 				margin-top: 5px;
+				color: $error-color;
 			}
 			.success-msg {
 				font-size: 11px;
 				margin-top: 5px;
-				@if $is-dark-wiki {
-					color: #b5e3b5;
-				} @else {
-					color: #3d8d42;
-				}
-
+				color: $success-color;
 			}
 			/* redesign work in progress, DO NOT REMOVE - hyun Jan 23, 2012
 			color: mix(#ff0000, #d4d4d4, 75%);
@@ -83,6 +89,11 @@
 				@include border-radius-sw(3px);
 			}
 			*/
+		}
+		&.error {
+			label {
+				color: $error-color;
+			}
 		}
 		&.general-errors {
 			.error-msg {
