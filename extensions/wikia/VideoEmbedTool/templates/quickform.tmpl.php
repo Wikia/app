@@ -27,28 +27,12 @@ $formSubmits = array(
     ),
 );
 
-if ( $name == '' ) {
-	$nameInput = array(
-		'label' => wfMsg( 'wva-name' ),
-		'type' => 'text',
-		'name' => 'wpWikiaVideoAddName',
-		'value' => $wpWikiaVideoAddName,
-		'isInvalid' => (!empty($errors) && array_key_exists('name', $errors) ),
-		'attributes' => array(
-			'id' => 'wpWikiaVideoAddName',
-			'size' => 50,
-		),
-	);
-	$nameInput['errorMsg'] = $nameInput['isInvalid'] ? $errors['name'] : '';
-	
-} else {
-	// User is replacing a video so the name is already set
-	$nameInput = array(
-		'type' => 'hidden',
-		'name' => 'name',
-		'value' => $name,
-	);
-}
+// Name will already be set if a user is re-uploading a video
+$nameInput = array(
+	'type' => 'hidden',
+	'name' => 'name',
+	'value' => $name,
+);
 
 $form = array(
 	'inputs' => array(
