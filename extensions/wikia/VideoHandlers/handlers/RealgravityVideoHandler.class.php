@@ -2,8 +2,10 @@
 
 class RealgravityVideoHandler extends VideoHandler {
 
-	const REALGRAVITY_PLAYER_AUTOSTART_ID = 'c85a31a4-b327-4b28-b75a-903c4bfecc1c';
-	const REALGRAVITY_PLAYER_NO_AUTOSTART_ID = '0654181c-ee9b-4815-8d63-f3d435143fe6';
+	const DEFAULT_VET_WIDTH = 350;  // defined in VideoEmbedTool_setup.php, but that extension may not be enabled!
+	const REALGRAVITY_PLAYER_AUTOSTART_ID = 'ac330d90-cb46-012e-f91c-12313d18e962';
+	const REALGRAVITY_PLAYER_NO_AUTOSTART_ID = '63541030-a4fd-012e-7c44-1231391272da';
+	const REALGRAVITY_PLAYER_VIDEOEMBEDTOOL_ID = '49321a60-d897-012e-f9bf-12313d18e962';
 
 	protected $apiName = 'RealgravityApiWrapper';
 	protected static $urlTemplate = 'http://anomaly.realgravity.com/flash/player.swf';
@@ -16,7 +18,9 @@ class RealgravityVideoHandler extends VideoHandler {
 		$url = $this->getEmbedUrl();
 		$videoId = $this->getEmbedVideoId();
 
-		if ( $autoplay ) {
+		if ( $width == self::DEFAULT_VET_WIDTH ) {
+			$playerId = self::REALGRAVITY_PLAYER_VIDEOEMBEDTOOL_ID;
+		} else if ( $autoplay ) {
 			$playerId = self::REALGRAVITY_PLAYER_AUTOSTART_ID;
 		} else {
 			$playerId = self::REALGRAVITY_PLAYER_NO_AUTOSTART_ID;
