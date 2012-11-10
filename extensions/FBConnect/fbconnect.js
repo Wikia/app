@@ -49,7 +49,10 @@ window.onFBloaded = function() {
 			window.location.host + window.wgScriptPath +
 			'/channel.php?lang=' + encodeURIComponent(window.fbScriptLangCode);
 
-	if (typeof fbAppId != 'string') {
+	if (window.fbAppInit) {
+		return;
+
+	} else if (typeof fbAppId != 'string') {
 		$().log('FB', 'appId is empty!');
 		return;
 	}
@@ -67,6 +70,8 @@ window.onFBloaded = function() {
 	if (typeof GlobalTriggers != 'undefined') {
 		GlobalTriggers.fire('fbinit');
 	}
+
+	window.fbAppInit = true;
 };
 
 /**

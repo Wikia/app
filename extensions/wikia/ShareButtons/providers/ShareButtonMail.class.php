@@ -6,6 +6,11 @@ class ShareButtonMail extends ShareButton {
 		parent::__construct($app);
 	}
 
+	// AssetsManager compliant path to assets
+	public function getAssets() {
+		return array();
+	}
+
 	/**
 	 * Return HTML rendering share box (with votes count)
 	 */

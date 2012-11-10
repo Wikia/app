@@ -35,6 +35,12 @@
 		margin-bottom: 10px;
         word-wrap: break-word;
 	}
+
+	.hiddenLinks {
+		position: absolute;
+		top: -1000px;
+	}
+
 	h1:before,
 	.shadow-mask {
 		bottom: 0;
@@ -71,7 +77,7 @@
 		>ul {
 			position: relative;
 			z-index: 1;
-			
+
 		}
 		// BugId: 44309
 		ul, li {
@@ -427,8 +433,8 @@
 		position: absolute;
 		top: 20px;
 	}
-	
+
 	.editpage-wikianavmode #EditPageToolbar:after {
 		height: 25px;
 	}
-} 
+}
