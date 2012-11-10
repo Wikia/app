@@ -126,6 +126,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/AdEngine/js/Krux.run.js', // Needs to load after Krux.js, jQuery and AdEngine2.run.js
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js', // WikiaBar is enabled sitewide
 		'//extensions/wikia/Chat2/js/ChatEntryPoint.js', // Chat is enabled sitewide
+		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js', // Related Forum Discussion is on all article pages
 	)
 );
 
