@@ -64,6 +64,7 @@
 			<input type="submit" value="<?= ( $isAdopter ) ? 'prevent auto adoption' : 'allow auto adoption' ?>" />
 			<input type="hidden" name="wpAction" value="toggleadopter" />
 		</td>
+		</form>
 	</tr>
 <?php if( $isUnsub ) { ?>
 	<tr>
