@@ -78,7 +78,8 @@ $messages['de'] = array(
 	'wikiarelatedpages-heading' => 'Lies mehr',
 );
 
-/** Greek (Ελληνικά) */
+/** Greek (Ελληνικά)
+ */
 $messages['el'] = array(
 	'wikiarelatedpages-desc' => 'Προσθέτει μια λίστα με σχετικές σελίδες σε σελίδες',
 	'wikiarelatedpages-heading' => 'Διαβάστε περισσότερα',
@@ -274,11 +275,12 @@ $messages['ru'] = array(
 );
 
 /** Slovenian (slovenščina)
+ * @author Eleassar
  * @author Lesko987
  */
 $messages['sl'] = array(
 	'wikiarelatedpages-desc' => 'Na strani doda seznam sorodnih strani',
-	'wikiarelatedpages-heading' => 'Preberite več',
+	'wikiarelatedpages-heading' => 'Preberite si več o tem',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -312,7 +314,8 @@ $messages['tt-cyrl'] = array(
 	'wikiarelatedpages-heading' => 'Күбрәк уку',
 );
 
-/** Ukrainian (українська) */
+/** Ukrainian (українська)
+ */
 $messages['uk'] = array(
 	'wikiarelatedpages-heading' => 'Читати далі',
 );
@@ -342,4 +345,3 @@ $messages['zh-hant'] = array(
 	'wikiarelatedpages-desc' => '增加一個相關頁面的清單。',
 	'wikiarelatedpages-heading' => '讀更多',
 );
-

@@ -349,7 +349,7 @@ $messages['fi'] = array(
 	'photopop-game-progress' => 'valokuvaa',
 	'photopop-game-finished' => 'valmis!',
 	'photopop-game-image-load-error' => 'Kuvan lataus epäonnistui. Yritä uudelleen.',
-	'photopop-game-loading-image' => 'Ladataan kuvaa...<br>Odota',
+	'photopop-game-loading-image' => 'Ladataan kuvaa...<br>Odota', # Fuzzy
 	'photopop-game-month-0' => 'Tammikuu',
 	'photopop-game-month-1' => 'Helmikuu',
 	'photopop-game-month-2' => 'Maaliskuu',
@@ -1066,7 +1066,7 @@ $messages['pt'] = array(
 	'photopop-game-outof' => 'de',
 	'photopop-game-progress' => 'imagens',
 	'photopop-game-finished' => 'finalizado!',
-	'photopop-game-loading-image' => 'A carregar imagem...<br>Aguarde',
+	'photopop-game-loading-image' => 'A carregar imagem...<br>Aguarde', # Fuzzy
 	'photopop-game-paused' => 'Jogo pausado',
 	'photopop-game-month-0' => 'Jan',
 	'photopop-game-month-1' => 'Fev',
@@ -1119,6 +1119,7 @@ $messages['pt-br'] = array(
 
 /** Russian (русский)
  * @author Kuzura
+ * @author Volkov
  */
 $messages['ru'] = array(
 	'photopop-setup-title' => 'Настройка Фото-паззл',
@@ -1156,7 +1157,7 @@ $messages['ru'] = array(
 	'photopop-game-finished' => 'готово!',
 	'photopop-game-image-load-error' => 'Не удалось загрузить изображения. Извините, пожалуйста, попробуйте еще раз.',
 	'photopop-game-tutorial-intro' => 'Коснитесь экрана, чтобы заглянуть под таинственное изображение.',
-	'photopop-game-tutorial-continue' => 'После того, как ответ раскроется, нажмите кнопку «Далее», чтобы продолжать с новым изображением.',
+	'photopop-game-tutorial-continue' => 'После того как ответ раскроется, нажмите кнопку «Далее», чтобы продолжать с новым изображением.',
 	'photopop-game-tutorial-drawer' => 'Чем меньше кусочков вы откроете, меньше догадок сделаете и меньше времени потратите, тем больше получите очков!',
 	'photopop-game-tutorial-tile' => 'Нажмите кнопку «ответить», чтобы сделать предположение.',
 	'photopop-game-new-highscore' => 'Новый рекорд',
@@ -1400,4 +1401,3 @@ $messages['zh-hans'] = array(
 	'photopop-game-month-11' => '12月',
 	'photopop-game-no-highscore' => '没有高比分',
 );
-

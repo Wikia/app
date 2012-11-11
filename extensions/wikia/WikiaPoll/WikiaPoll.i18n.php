@@ -27,7 +27,8 @@ $messages['en'] = array(
 	'wikiamobile-wikiapoll-user-voted' => 'You voted for $1'
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'wikiapoll-desc' => '{{desc}}',
 	'wikiapoll-people-voted' => 'Parameters:
@@ -241,8 +242,10 @@ $messages['diq'] = array(
 	'wikiapoll-createpoll-headline' => 'Anket Vırazê',
 	'wikiapoll-editpoll-headline' => 'Anketi bıvurnê',
 	'wikiapoll-question-label' => 'Pers',
+	'wikiapoll-addnewitem-label' => 'Çiyo newe de ke',
 	'wikiapoll-cancel-label' => 'Bıterkne',
 	'wikiapoll-publish-label' => 'Vıla ke',
+	'wikiamobile-wikiapoll-poll' => 'Anket',
 );
 
 /** Spanish (español)
@@ -889,4 +892,3 @@ $messages['zh-hant'] = array(
 	'wikiapoll-error-duplicate' => '已存在同名的民調',
 	'wikiapoll-error-invalid-title' => '問題文本無效。',
 );
-

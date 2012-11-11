@@ -228,7 +228,7 @@ $messages['nl'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'quickcreate-desc' => 'Apond un boton de creacion de pagina novèla amb la capacitat de connexion pels utilizaires anonims',
+	'quickcreate-desc' => 'Apond un boton de creacion de pagina novèla amb la capacitat de connexion pels utilizaires anonims', # Fuzzy
 	'quickcreate' => 'Prepausatz vòstra recèpta',
 );
 
@@ -260,8 +260,8 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
- * @author 555
  * @author Giro720
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'quickcreate-desc' => 'Adiciona um botão criar-nova-página com solicitação de autenticação para usuários anônimos',
@@ -291,7 +291,7 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'quickcreate-desc' => 'Додаје дугме „Направи нову страницу“ с могућношћу да се пријавите као анониман корисник',
+	'quickcreate-desc' => 'Додаје дугме „Направи нову страницу“ с могућношћу да се пријавите као анониман корисник', # Fuzzy
 	'quickcreate' => 'пошаљите свој рецепт',
 );
 
@@ -323,7 +323,7 @@ $messages['tl'] = array(
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
-	'quickcreate-desc' => 'Аноним булган кулланучыларга мәкалә ясау төймәсен куя',
+	'quickcreate-desc' => 'Аноним булган кулланучыларга мәкалә ясау төймәсен куя', # Fuzzy
 	'quickcreate' => 'үземнең рецептны җибәрү',
 );
 
@@ -331,12 +331,12 @@ $messages['tt-cyrl'] = array(
  * @author Тест
  */
 $messages['uk'] = array(
-	'quickcreate-desc' => 'Додає кнопку створення нової сторінки з можливістю увійти в систему для анонімних користувачів',
+	'quickcreate-desc' => 'Додає кнопку створення нової сторінки з можливістю увійти в систему для анонімних користувачів', # Fuzzy
 );
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(
-	'quickcreate-desc' => '添加“创建新页面”按钮，它具有使匿名用户登录的功能。',
+	'quickcreate-desc' => '添加“创建新页面”按钮，它具有使匿名用户登录的功能。', # Fuzzy
 );

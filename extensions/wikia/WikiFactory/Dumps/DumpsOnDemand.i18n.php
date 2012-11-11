@@ -688,7 +688,8 @@ $messages['ru'] = array(
 	'dump-database-info-more' => 'Пожалуйста, <a href="http://community.wikia.com/wiki/Help:Database_download">см. дополнительные сведения</a>',
 );
 
-/** Sinhala (සිංහල) */
+/** Sinhala (සිංහල)
+ */
 $messages['si'] = array(
 	'dump-database-curr-pages' => 'වත්මන් පිටු',
 	'dump-database-full-pages' => 'වත්මන් පිටු සහ ඉතිහාසය',
@@ -797,4 +798,3 @@ $messages['zh-hant'] = array(
 	'dump-database-request' => '請求更新',
 	'dump-database-request-submit' => '發送請求',
 );
-

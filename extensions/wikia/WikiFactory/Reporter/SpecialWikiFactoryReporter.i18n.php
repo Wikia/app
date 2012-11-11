@@ -180,7 +180,8 @@ $messages['gl'] = array(
 	'wikifactoryreporter' => 'Reporteiro da fábrica de wikis',
 );
 
-/** Hebrew (עברית) */
+/** Hebrew (עברית)
+ */
 $messages['he'] = array(
 	'wikifactoryreporter' => 'המדווח של WikiFactory',
 );
@@ -269,7 +270,8 @@ $messages['ksh'] = array(
 	'wikifactoryreporter' => 'WikiFactory-Reporter',
 );
 
-/** Kirghiz (Кыргызча) */
+/** Kirghiz (Кыргызча)
+ */
 $messages['ky'] = array(
 	'wikifactoryreporter' => 'УикиФабрика баяндамачысы',
 );
@@ -401,7 +403,8 @@ $messages['ru'] = array(
 	'wikifactoryreporter' => 'Репортёр WikiFactory',
 );
 
-/** Sinhala (සිංහල) */
+/** Sinhala (සිංහල)
+ */
 $messages['si'] = array(
 	'wikifactoryreporter' => 'WikiFactory වාර්තාකරු',
 );
@@ -490,4 +493,3 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'wikifactoryreporter' => 'WikiFactory 報告員',
 );
-

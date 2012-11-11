@@ -117,16 +117,16 @@ $messages['br'] = array(
  * @author BroOk
  */
 $messages['ca'] = array(
-	'contact' => 'Contacta amb Wikia',
-	'specialcontact-wikia' => 'Contacta amb Wikia',
-	'specialcontact-pagetitle' => 'Contacta amb Wikia',
-	'specialcontact-intro' => "Pots posar-te en contacte amb [[w:project:Staff|Wikia Staff]] mitjançant aquest formulari. Els administradors d'aquesta wiki ho poden trobar [[Special:ListAdmins|aquí]]
+	'contact' => 'Contactar amb Wikia',
+	'specialcontact-wikia' => 'Contactar amb Wikia',
+	'specialcontact-pagetitle' => 'Contactar amb Wikia',
+	'specialcontact-intro' => "Pots posar-te en contacte amb l'[[w:project:Staff|Staff de Wikia]] mitjançant aquest formulari. Pots trobar els administradors d'aquest wiki [[Special:ListAdmins|aquí]].
 
-Informació addicional sobre com informar sobre els problemes de Wikia que es poden trobar [[w:project:Report_a_problem|aquí]], o es pot enviar a [[w:Forum:Index|Comunitat de Fòrums de Wikia]]per cercar ajuda d'usuaris. 
+Pots trobar informació addicional sobre com reportar els problemes de Wikia [[w:project:Report_a_problem|aquí]] o pots obrir un [[w:Forum:Index|Fòrum]]per cercar ajuda dels usuaris. 
 
-Si es prefereix l'ús regular de correu electrònic o arxius adjunts, es pot contactar amb nosaltres a [mailto: community@wikia.com community@wikia.com].",
+Si prefereixes l'ús regular del correu electrònic amb dades adjuntes, pots contactar amb nosaltres a [mailto:community@wikia.com community@wikia.com].",
 	'specialcontact-username' => "Nom d'usuari",
-	'specialcontact-wikiname' => 'Quina wiki',
+	'specialcontact-wikiname' => 'Quin wiki?',
 	'specialcontact-realname' => 'El teu nom',
 	'specialcontact-yourmail' => 'Adreça de correu electrònic',
 	'specialcontact-problem' => 'Assumpte',
@@ -134,16 +134,16 @@ Si es prefereix l'ús regular de correu electrònic o arxius adjunts, es pot con
 	'specialcontact-mail' => 'Envia-ho a Wikia',
 	'specialcontact-filledin' => 'Aquesta informació ha estat omplerta segons les preferències del teu compte',
 	'specialcontact-ccme' => "Desitjo rebre una còpia d'aquest missatge",
-	'specialcontact-ccdisabled' => 'No vàlid: Si us plau, valideu la vostra adreça de correu electrònic per utilitzar aquest servei.',
+	'specialcontact-ccdisabled' => 'Deshabilitat: Si us plau, valideu la vostra adreça de correu electrònic per utilitzar aquest servei.',
 	'specialcontact-notyou' => 'No ets tu?',
-	'specialcontact-captchainfo' => 'Si us plau introdueix el text de la imatge.',
+	'specialcontact-captchainfo' => 'Si us plau, introdueix el text de la imatge.',
 	'specialcontact-captchatitle' => 'Paraula borrossa',
-	'specialcontact-formtitle' => 'Contactar amb Wikia Support Staff',
+	'specialcontact-formtitle' => "Contactar amb l'Staff de Wikia Support",
 	'specialcontact-nomessage' => 'Si us plau, ompli un missatge',
-	'specialcontact-captchafail' => 'Incorrecte o falta el codi de confirmació.',
-	'specialcontact-mailsub' => 'E-mail de contacte amb Wikia',
+	'specialcontact-captchafail' => 'Falta codi de confirmació o és incorrecte.',
+	'specialcontact-mailsub' => 'Correu de contacte amb Wikia',
 	'specialcontact-mailsubcc' => 'Còpia del correu de contacte amb Wikia',
-	'specialcontact-ccheader' => "Aquesta és una còpia del seu missatge que s'ha enviat al Suport de Wikia",
+	'specialcontact-ccheader' => "Aquesta és una còpia del teu missatge que s'ha enviat a l'Staff de Wikia",
 	'specialcontact-submitcomplete' => 'Gràcies per contactar amb Wikia.',
 );
 
@@ -1042,4 +1042,3 @@ $messages['zh-hant'] = array(
 	'specialcontact-ccheader' => '這是你送往 Wikia 支援人員的訊息的副本',
 	'specialcontact-submitcomplete' => '謝謝你聯繫 Wikia。',
 );
-

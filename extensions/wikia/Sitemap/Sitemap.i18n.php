@@ -62,6 +62,13 @@ $messages['de'] = array(
 	'sitemap-desc' => 'Generiert im Handumdrehen Sitemaps für das Wiki',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'sitemap-desc' => 'Wiki de perayışi re xeritanê sita vırazê',
+);
+
 /** Spanish (español)
  * @author Crazymadlover
  */
@@ -83,7 +90,8 @@ $messages['gl'] = array(
 	'sitemap-desc' => 'Xerar mapas do sitio para o wiki',
 );
 
-/** Hebrew (עברית) */
+/** Hebrew (עברית)
+ */
 $messages['he'] = array(
 	'sitemap-desc' => 'יצירת מפות אתרים לאתר הוויקי בו במקום',
 );
@@ -264,6 +272,13 @@ $messages['tt-cyrl'] = array(
 	'sitemap-desc' => 'Sitemap файлларын викида җитез генә ясау',
 );
 
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'sitemap-desc' => 'Generate Sitemaps for the wiki on the fly',
+);
+
 /** Ukrainian (українська)
  * @author Alex Khimich
  */
@@ -284,4 +299,3 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'sitemap-desc' => '联机生成站点地图',
 );
-
