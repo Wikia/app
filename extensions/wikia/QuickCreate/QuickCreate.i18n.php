@@ -27,7 +27,7 @@ $messages['qqq'] = array(
  * @author OsamaK
  */
 $messages['ar'] = array(
-	'quickcreate-desc' => 'يضيف زر "إنشاء صفحة جديدة" مع القدرة على تسجيل الدخول للمستخدمين المجهولين',
+	'quickcreate-desc' => 'يضيف زر "إنشاء صفحة جديدة" مع القدرة على تسجيل الدخول للمستخدمين المجهولين', # Fuzzy
 	'quickcreate' => 'أرسل وصفتك',
 );
 
@@ -35,7 +35,7 @@ $messages['ar'] = array(
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
-	'quickcreate-desc' => 'Дадае кнопку стварэньня новай старонкі з магчымасьцю ўваходу ў сыстэму для ананімных удзельнікаў',
+	'quickcreate-desc' => 'Дадае кнопку стварэньня новай старонкі з магчымасьцю ўваходу ў сыстэму для ананімных удзельнікаў', # Fuzzy
 	'quickcreate' => 'даслаць свой рэцэпт',
 );
 
@@ -43,7 +43,7 @@ $messages['be-tarask'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
-	'quickcreate-desc' => 'Ouzhpennañ ur bouton krouiñ pajennoù nevez gant ar barregezh kevreañ evit an implijerien dizanv',
+	'quickcreate-desc' => 'Ouzhpennañ ur bouton krouiñ pajennoù nevez gant ar barregezh kevreañ evit an implijerien dizanv', # Fuzzy
 	'quickcreate' => 'kinnigit ho rekipe',
 );
 
@@ -51,7 +51,7 @@ $messages['br'] = array(
  * @author Sasan700
  */
 $messages['ce'] = array(
-	'quickcreate-desc' => 'Чуйоккху тlетаlайо нуьйда агlо кхолла атту беш а гlирсан чу волуш къайлах болучу декъашхошна',
+	'quickcreate-desc' => 'Чуйоккху тlетаlайо нуьйда агlо кхолла атту беш а гlирсан чу волуш къайлах болучу декъашхошна', # Fuzzy
 	'quickcreate' => 'дlадахьийта хьай дарб',
 );
 
@@ -95,7 +95,7 @@ $messages['es'] = array(
  * @author Nike
  */
 $messages['fi'] = array(
-	'quickcreate-desc' => 'Lisää "luo uusi sivu" -painikkeen, jolla anonyymit käyttäjät voivat kirjautua sisään.',
+	'quickcreate-desc' => 'Lisää "luo uusi sivu" -painikkeen, jolla anonyymit käyttäjät voivat kirjautua sisään.', # Fuzzy
 	'quickcreate' => 'reseptin lähetys',
 );
 
@@ -117,9 +117,10 @@ $messages['gl'] = array(
 	'quickcreate' => 'enviar a súa receita',
 );
 
-/** Hebrew (עברית) */
+/** Hebrew (עברית)
+ */
 $messages['he'] = array(
-	'quickcreate-desc' => 'הוספת לחצן ליצירת דפים חדשים עם אפשרות כניסה למשתמשים אלמוניים',
+	'quickcreate-desc' => 'הוספת לחצן ליצירת דפים חדשים עם אפשרות כניסה למשתמשים אלמוניים', # Fuzzy
 	'quickcreate' => 'שליחת המתכון שלך',
 );
 
@@ -152,15 +153,16 @@ $messages['ia'] = array(
  * @author Kenrick95
  */
 $messages['id'] = array(
-	'quickcreate-desc' => 'Menambahkan tombol membuat halaman baru dengan kemampuan untuk masuk log untuk pengguna anonim',
+	'quickcreate-desc' => 'Menambahkan tombol membuat halaman baru dengan kemampuan untuk masuk log untuk pengguna anonim', # Fuzzy
 	'quickcreate' => 'kirimkan resep Anda',
 );
 
 /** Italian (italiano)
+ * @author Beta16
  * @author HalphaZ
  */
 $messages['it'] = array(
-	'quickcreate-desc' => 'Aggiunge un pulsante Crea nuova pagina con la possibilità di accedere per gli utenti anonimi',
+	'quickcreate-desc' => 'Aggiunge un pulsante "Crea nuova pagina" con la richiesta di effettuare l\'accesso per gli utenti anonimi',
 	'quickcreate' => 'invia la tua ricetta',
 );
 
@@ -338,4 +340,3 @@ $messages['uk'] = array(
 $messages['zh-hans'] = array(
 	'quickcreate-desc' => '添加“创建新页面”按钮，它具有使匿名用户登录的功能。',
 );
-

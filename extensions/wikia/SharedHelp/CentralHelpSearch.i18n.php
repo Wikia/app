@@ -20,6 +20,13 @@ $messages['ar'] = array(
 	'centralhelpsearch-placeholder' => 'مساعدة على البحث...',
 );
 
+/** Breton (brezhoneg)
+ * @author Gwenn-Ael
+ */
+$messages['br'] = array(
+	'centralhelpsearch-placeholder' => 'Klask er skoazell...',
+);
+
 /** Czech (česky)
  * @author Chmee2
  */
@@ -209,4 +216,3 @@ $messages['tt-cyrl'] = array(
 $messages['zh-hans'] = array(
 	'centralhelpsearch-placeholder' => '搜索帮助……',
 );
-

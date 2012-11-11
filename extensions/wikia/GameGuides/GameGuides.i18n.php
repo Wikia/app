@@ -22,7 +22,8 @@ $messages['en'] = array(
 	'wikiagameguides-content-duplicate-entry' => 'This value is duplicated'
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides is the name of a product, do not translate on a per-word basis',
 );
@@ -55,8 +56,8 @@ $messages['ca'] = array(
 $messages['cs'] = array(
 	'wikiagameguides-desc' => 'Moduly mobilní aplikace Wikia Herní manuály',
 	'wikiagameguides-content-category' => 'Kategorie',
-	'wikiagameguides-content-tag' => 'Tag',
-	'wikiagameguides-content-name' => 'Jméno',
+	'wikiagameguides-content-tag' => 'Tag', # Fuzzy
+	'wikiagameguides-content-name' => 'Jméno', # Fuzzy
 	'wikiagameguides-content-add' => 'Přidat',
 	'wikiagameguides-content-save' => 'Uložit',
 	'wikiagameguides-content-category-error' => 'Kategorie neexistuje.',
@@ -227,7 +228,14 @@ $messages['ms'] = array(
  */
 $messages['nb'] = array(
 	'wikiagameguides-desc' => 'Moduler for Wikias spillguide-app',
+	'wikiagameguides-preview-description' => 'Dette er bare en forhåndsvisning av hvordan sider ville sett ut i en Wikia Spillguider-applikasjon.',
+	'wikiagameguides-content-title' => 'Verktøy for innholdshåndtering av Wikia Spillguider',
 	'wikiagameguides-content-category' => 'Kategori',
+	'wikiagameguides-content-category-desc' => 'Oppgi kategoriene på wikien din som du vil inkludere i Spillguider.',
+	'wikiagameguides-content-tag' => 'Kategoritagg (valgfritt)',
+	'wikiagameguides-content-tag-desc' => 'Organiser spillkategoriene dine ved å gi dem tagger.',
+	'wikiagameguides-content-name' => 'Navn på Spillguide (valgfritt)',
+	'wikiagameguides-content-name-desc' => 'Omdøp wikikategoriene slik du vil at de skal vises på Spillguider',
 	'wikiagameguides-content-add' => 'Legg til',
 	'wikiagameguides-content-save' => 'Lagre',
 	'wikiagameguides-content-category-error' => 'Kategorien eksisterer ikke',
@@ -302,8 +310,11 @@ $messages['ru'] = array(
 	'wikiagameguides-preview-description' => 'Это только предварительный просмотр страницы. Так она будет выглядеть в приложении Wikia Game Guides.',
 	'wikiagameguides-content-title' => 'Инструмент управления содержимым Wikia Game Guides',
 	'wikiagameguides-content-category' => 'Категория:',
-	'wikiagameguides-content-tag' => 'Тег',
-	'wikiagameguides-content-name' => 'Название',
+	'wikiagameguides-content-category-desc' => 'Введите категории на вашу вики, если бы хотите подключиться к Game Guides.',
+	'wikiagameguides-content-tag' => 'Тег категории (необязательно)',
+	'wikiagameguides-content-tag-desc' => 'Организуйте свои игровые категории, присваивая им теги.',
+	'wikiagameguides-content-name' => 'Название для Game Guide (необязательно)',
+	'wikiagameguides-content-name-desc' => 'Переименуйте категории вики так, как вы хотите, чтобы они отображались в Game Guides',
 	'wikiagameguides-content-add' => 'Добавить',
 	'wikiagameguides-content-save' => 'Сохранить',
 	'wikiagameguides-content-category-error' => 'Категория не существует',
@@ -325,8 +336,11 @@ $messages['sv'] = array(
 	'wikiagameguides-preview-description' => 'Detta är bara en förhandsgranskning av hur sidor skulle se ut i appen Wikia Spelguider.',
 	'wikiagameguides-content-title' => 'Verktyg för innehållshantering i Wikia Spelguider',
 	'wikiagameguides-content-category' => 'Kategori',
-	'wikiagameguides-content-tag' => 'Tagg',
-	'wikiagameguides-content-name' => 'Namn',
+	'wikiagameguides-content-category-desc' => 'Ange kategorierna på din wiki som du vill inkludera i Spelguider.',
+	'wikiagameguides-content-tag' => 'Kategoritagg (valfri)',
+	'wikiagameguides-content-tag-desc' => 'Organisera dina spelkategorier genom att ge dem taggar.',
+	'wikiagameguides-content-name' => 'Namn på spelguiden (valfri)',
+	'wikiagameguides-content-name-desc' => 'Byt namn på wikins kategorier som du vill att de ska visas på Spelguider',
 	'wikiagameguides-content-add' => 'Lägg till',
 	'wikiagameguides-content-save' => 'Spara',
 	'wikiagameguides-content-category-error' => 'Kategorin finns inte',
@@ -346,4 +360,3 @@ $messages['tl'] = array(
 $messages['tt-cyrl'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides мобиль кушымтасы өчен модульләр',
 );
-

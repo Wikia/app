@@ -6,7 +6,9 @@
  * reside in extensions/wikia/Oasis/Oasis.i18n.php
  */
 
-$messages = array();$messages['en'] = array(
+$messages = array();
+
+$messages['en'] = array(
 	'article-comments-anonymous' => 'Anonymous user',
 	'article-comments-comments' => 'Comments ($1)',
 	'article-comments-post' => 'Post comment',
@@ -159,7 +161,7 @@ $PAGETITLE_URL
 
 الرجاء قم بزيارتنا والتعديل غالبا...
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>عزيزي $WATCHINGUSERNAME،
 <br /><br />
 $PAGEEDITOR قدم تعليقا على "$PAGETITLE".
@@ -173,7 +175,14 @@ Wikia
 <ul>
 <li>هل تريد التحكم في رسائل البريد المرسلة إليك؟ <a href="{{fullurl:Special:Preferences}}">قم بتحديث التفضيلات الخاصة بك<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'article-comments-history' => 'ܬܫܥܝܬܐ',
 );
 
 /** Assamese (অসমীয়া)
@@ -242,7 +251,7 @@ $PAGETITLE_URL
 
 Bittscheh kumm vorbei und dua vü midorweiden.
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>Servas $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR hod an Kómmentar zua "$PAGETITLE" obgeem.
@@ -256,7 +265,7 @@ Wikia
 <ul>
 <li>Wüst da åschauh, wöche E-Mails du dahoiden host? <a href="{{fullurl:Special:Preferences}}">Stö deine Eihstöungen eih<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Bulgarian (български)
@@ -276,6 +285,7 @@ $messages['bg'] = array(
 
 /** Breton (brezhoneg)
  * @author Fulup
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -297,6 +307,7 @@ $messages['br'] = array(
 	'article-comments-login' => '<a href="$1">Ret eo kevreañ</a> evit lezel ur gemennadenn war ar wiki-mañ.',
 	'article-comments-toc-item' => 'Evezhiadennoù',
 	'article-comments-comment-cannot-add' => "N'hallit ket lakaat un evezhiadenn war ar pennad-mañ.",
+	'article-comments-vote' => 'Votiñ a-du',
 	'article-comments-reply' => 'Respont',
 	'article-comments-show-all' => 'Diskouez an holl evezhiadennoù',
 	'article-comments-prev-page' => 'Kent',
@@ -304,6 +315,9 @@ $messages['br'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Diverket eo bet ar bajenn kar / an evezhiadenn kar.',
 	'article-comments-empty-comment' => "N'hallit ket degas un evezhiadenn c'houllo. <a href='$1'>Diverkañ anezhi ?</a>",
+	'wikiamobile-article-comments-header' => 'Displegadennoù(<span id=wkArtCnt>$1</span>)',
+	'wikiamobile-article-comments-more' => "Lenn muioc'h",
+	'wikiamobile-article-comments-prev' => 'Kargañ an hini kent',
 	'wikiamobile-article-comments-none' => 'Evezhiaden ebet',
 	'wikiamobile-article-comments-view' => 'Gwelet ar respontoù',
 	'wikiamobile-article-comments-replies' => 'respontoù',
@@ -311,6 +325,7 @@ $messages['br'] = array(
 	'wikiamobile-article-comments-post' => 'Kas',
 	'wikiamobile-article-comments-placeholder' => 'Ouzhpennañ un evezhiadenn',
 	'wikiamobile-article-comments-show' => 'Diskouez',
+	'wikiamobile-article-comments-login-post' => 'Kevreit evit postañ un displegadenn',
 	'enotif_subject_article_comment' => 'Un evezhiadenn zo bet graet gant $PAGEEDITOR diwar-benn "$PAGETITLE" war {{SITENAME}}',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME ker,
 
@@ -321,7 +336,7 @@ $PAGETITLE_URL
 
 Trugarez da vont d\'ober un tro ha da gemer perzh ingal...
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAME ker,
 <br /><br />
 Graet ez eus bet un evezhiadenn gant $PAGEEDITOR war "$PAGETITLE".
@@ -335,7 +350,7 @@ Wikia
 <ul>
 <li>Ha c\'hoant hoc\'h eus da chom mestr war ar posteloù a resevit ? <a href="{{fullurl:Special:Preferences}}">Cheñchit ho penndibaboù<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Czech (česky)
@@ -393,7 +408,7 @@ $PAGETITLE_URL
 
 Prosím navštěvujte a editujte často...
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>Váženýr $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR přidal komentář na "$PAGETITLE".
@@ -407,7 +422,7 @@ Wikia
 <ul>
 <li>Chcete nastavit, které e-maily budete dostávat? <a href="{{fullurl:Special:Preferences}}">Aktualizujte své předvolby<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Danish (dansk)
@@ -418,6 +433,9 @@ $messages['da'] = array(
 	'article-comments-comments' => 'Kommentarer ($1)',
 	'article-comments-cancel' => 'Fortryd',
 	'article-comments-delete' => 'slet',
+	'article-comments-edit' => 'redigér',
+	'article-comments-reply' => 'Svar',
+	'wikiamobile-article-comments-none' => 'Ingen kommentarer',
 );
 
 /** German (Deutsch)
@@ -506,7 +524,7 @@ $PAGETITLE_URL
 
 Bitte besuchen und bearbeiten Sie das Wiki bald wieder...
 
-Wikia',
+Wikia', # Fuzzy
 );
 
 /** Zazaki (Zazaki)
@@ -521,6 +539,7 @@ $messages['diq'] = array(
 	'article-comments-edit' => 'bıvurne',
 	'article-comments-history' => 'Ravêrden',
 	'article-comments-error' => 'Mışewre qeyd nêbı',
+	'article-comments-rc-comment' => 'Vatışê wesiqe (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Vatışê wesiqe da ([[$1]])',
 	'article-comments-rc-blog-comments' => 'Vatışê Blog da ([[$1]])',
 	'article-comments-toc-item' => 'Vatışi',
@@ -577,7 +596,7 @@ $messages['el'] = array(
 	'article-comments-prev-page' => 'Προηγ',
 	'article-comments-next-page' => 'Επόμενο',
 	'article-comments-page-spacer' => '&#160...&#160',
-	'article-comments-empty-comment' => "Δεν μπορείτε να δημοσιεύσετε ένα κενό σχόλιο. <a href='$1'>Θέλετε να το διαγράψτε αυτό αντ' αυτού;</a>",
+	'article-comments-empty-comment' => "Δεν μπορείτε να δημοσιεύσετε ένα κενό σχόλιο. <a href='$1'>Θέλετε να το διαγράψτε αυτό αντ' αυτού;</a>", # Fuzzy
 	'wikiamobile-article-comments-replies' => 'απαντήσεις',
 );
 
@@ -697,8 +716,10 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author BlueDevil
+ * @author Huji
  * @author Wayiran
  * @author جواد
+ * @author پاناروما
  */
 $messages['fa'] = array(
 	'article-comments-anonymous' => 'کاربر گمنام',
@@ -713,11 +734,13 @@ $messages['fa'] = array(
 	'article-comments-rc-comment' => 'نظر مقاله (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'نظرات مقاله ([[$1]])',
 	'article-comments-fblogin' => 'برای فرستادن نظر در این ویکی لطفاً <a href="$1">به فیس‌بوک وارد و متصل شوید</a>!',
+	'article-comments-fbconnect' => 'لطفا <a href="<span class=" notranslate"="">$1 ">این حساب را به فیس بوک متصل کنید</a> تا نظر بدهید!',
 	'article-comments-rc-blog-comment' => 'نظر وبلاگ (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'نظرات وبلاگ ([[$1]])',
 	'article-comments-login' => 'برای نظر دادن <a href="$1">وارد سامانه شوید</a>.',
 	'article-comments-toc-item' => 'نظرات',
 	'article-comments-comment-cannot-add' => 'شما نمی‌توانید به مقاله نظری را اضافه کنید.',
+	'article-comments-vote' => 'رای موافق',
 	'article-comments-reply' => 'پاسخ',
 	'article-comments-show-all' => 'نمایش همهٔ نظرات',
 	'article-comments-prev-page' => 'قبلی',
@@ -725,8 +748,16 @@ $messages['fa'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'مقالهٔ مادر / نظر مادر حذف شده است.',
 	'article-comments-empty-comment' => "شما نمی‌توانید یک نظر خالی بفرستید. <a href='$1'>به‌جایش حذف شود؟</a>",
+	'wikiamobile-article-comments-header' => 'نظرها<span class="cnt" id="wkArtCnt">$1</span>',
+	'wikiamobile-article-comments-more' => 'ادامه مطلب',
+	'wikiamobile-article-comments-none' => 'بدون نظر',
+	'wikiamobile-article-comments-view' => 'مشاهده پاسخ‌ها',
 	'wikiamobile-article-comments-replies' => 'پاسخ‌ها',
+	'wikiamobile-article-comments-post-reply' => 'ارسال پاسخ',
+	'wikiamobile-article-comments-post' => 'پست',
+	'wikiamobile-article-comments-placeholder' => 'ارسال نظر',
 	'wikiamobile-article-comments-show' => 'نمایش',
+	'wikiamobile-article-comments-login-post' => 'لطفا برای ارسال نظر به سامانه وارد شوید.',
 );
 
 /** Finnish (suomi)
@@ -785,7 +816,7 @@ $PAGETILE_URL
 
 Vieraile ja muokkaa usein...
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>Arvoisa $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR teki kommentin sivulle "$PAGETITLE".
@@ -799,7 +830,7 @@ Wikia
 <ul>
 <li>Haluatko valita, että mitkä sähköpostiviestit sinä vastaanotat? <a href="{{fullurl:Special:Preferences}}">Päivitä asetuksiasi<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Faroese (føroyskt)
@@ -1029,7 +1060,7 @@ $PAGETITLE_URL
 
 Kérünk, látogass és szerkessz gyakran...
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>Kedves $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR hozzászólt a(z) "$PAGETITLE" laphoz.
@@ -1043,7 +1074,7 @@ Wikia
 <ul>
 <li>Szeretnéd szabályozni az érkező e&ndash;maileket?  <a href="{{fullurl:Special:Preferences}}">Konfiguráld beállításaidban<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Interlingua (interlingua)
@@ -1097,7 +1128,7 @@ $PAGETITLE_URL
 
 Per favor visita e modifica sovente...
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>Car $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR lassava un commento in "$PAGETITLE".
@@ -1111,7 +1142,7 @@ Wikia
 <ul>
 <li>Vole determinar qual emails tu recipe? <a href="{{fullurl:Special:Preferences}}">Actualisa tu preferentias<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -1201,7 +1232,7 @@ $PAGETITLE_URL
 
 Per favore continua a visitare e contribuire spesso...
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>Caro $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR ha commentato su "$PAGETITLE".
@@ -1215,7 +1246,7 @@ Wikia
 <ul>
 <li>Vuoi scegliere quali e-mail ricevere? <a href="{{fullurl:Special:Preferences}}">Aggiorna le tue preferenze<a>...</a> </a></li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Japanese (日本語)
@@ -1263,7 +1294,7 @@ $PAGETITLE に $PAGEEDITOR がコメントをつけました。
 コメントを見るには次のURLにアクセスしてください:
 $PAGETITLE_URL
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAMEさん、
 <br /><br />
 $PAGETITLE に $PAGEEDITOR がコメントをつけました。
@@ -1272,7 +1303,7 @@ $PAGETITLE に $PAGEEDITOR がコメントをつけました。
 <a href="$PAGETITLE_URL">$PAGETITLE</a>
 <br /><br />
 Wikia
-</p>',
+</p>', # Fuzzy
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1399,7 +1430,7 @@ $PAGEEDITOR къейд ттуна "$PAGETITLE".
 <ul>
 <li>КЪвезвай email-ин низамарунар дегишиз кIанзава ниl? <a href="{{fullurl:Special:Preferences}}">Жуван низамарунар цIийи хъия<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Lithuanian (lietuvių)
@@ -1433,7 +1464,7 @@ $messages['lt'] = array(
 	'wikiamobile-article-comments-show' => 'Rodyti',
 );
 
-/** Lushai (Mizo ţawng)
+/** Mizo (Mizo ţawng)
  * @author RMizo
  */
 $messages['lus'] = array(
@@ -1445,7 +1476,7 @@ $messages['lus'] = array(
 	'article-comments-edit' => 'siamţhatna',
 	'article-comments-history' => 'chanchin',
 	'article-comments-error' => 'I tuihnihna a dahţhat theih loh tlat',
-	'article-comments-rc-comment' => 'Thuziak tuihnihna (<span class="plainlinks"> [$1 $2]</span>',
+	'article-comments-rc-comment' => 'Thuziak tuihnihna (<span class="plainlinks"> [$1 $2]</span>', # Fuzzy
 	'article-comments-rc-comments' => 'Thuziak tuihnihna ([[$1]])',
 );
 
@@ -1726,7 +1757,7 @@ $PAGETITLE_URL
 
 Kom alstublieft vaak langs en bewerk veelvuldig...
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>Beste $WATCHINGUSERNAME,
 <br /><br />
 $ PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE".
@@ -1740,7 +1771,7 @@ Wikia
 <ul>
 <li>Wilt u bepalen welke e-mails u ontvangt? <a href="{{fullurl:{{ns:special}}:Preferences}}">Pas dan uw Voorkeuren aan<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -1762,7 +1793,7 @@ Wikia
 <ul>
 <li>Wilt je bepalen welke e-mails je ontvangt? <a href="{{fullurl:{{ns:special}}:Preferences}}">Pas dan je Voorkeuren<a> aan.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Pälzisch (Pälzisch)
@@ -1948,7 +1979,7 @@ Wikia
 <ul>
 <li>Quer controlar os e-mails que recebe? <a href="{{fullurl:Special:Preferences}}">Actualize as suas preferências<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -1998,7 +2029,7 @@ $messages['pt-br'] = array(
 
  Visite e edite muitas vezes ...
 
- Wikia',
+ Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p> Caro $ WATCHINGUSERNAME,
 <br /><br />
  $ PAGEEDITOR fez um comentário sobre "$ PAGETITLE".
@@ -2012,7 +2043,7 @@ $messages['pt-br'] = array(
 <ul>
 <li> Quer controlar os emails que você recebe? <a href="{{fullurl:Special:Preferences}}">atualize suas preferências</a> <a>.</a> </li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Romanian (română)
@@ -2146,7 +2177,7 @@ $PAGETITLE_URL
 
 Dolazite i uređujte često...
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>Cijenjeni/a $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR je komentirao/la "$PAGETITLE".
@@ -2160,7 +2191,7 @@ Wikia
 <ul>
 <li>Želite kontrolirate koje e-mail poruke primate? <a href="{{fullurl:Special:Preferences}}">Ažurirajte svoje postavke<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Sinhala (සිංහල)
@@ -2334,7 +2365,7 @@ $PAGETITLE_URL
 
 Mangyaring dumalaw at mamatnugot ng madalas...
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>Minamahal na $WATCHINGUSERNAME,
 <br /><br />
 Nagbigay ng puna si $PAGEEDITOR sa "$PAGETITLE".
@@ -2348,7 +2379,7 @@ Wikia
 <ul>
 <li>Nais mo bang tabanan kung anong mga e-liham ang tatanggapin? <a href="{{fullurl:Special:Preferences}}">Isapanahon ang mga Nais mo<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** толышә зывон (толышә зывон)
@@ -2436,7 +2467,7 @@ $PAGEEDITOR "$PAGETITLE" мәкаләсендә шәрехләмә калдыр�
 Шәрехләмәне карар өчен, бу сылтама аша узыгыз:
 $PAGETITLE_URL
 
-Викия',
+Викия', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>Кадерле $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR made a comment on "$PAGETITLE".
@@ -2450,7 +2481,7 @@ Wikia
 <ul>
 <li>Want to control which emails you receive? <a href="{{fullurl:Special:Preferences}}">Update your Preferences<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Ukrainian (українська)
@@ -2529,7 +2560,7 @@ $PAGETITLE_URL
 
 Xin hãy truy cập và sửa đổi thường xuyên...
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>Xin chào $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR đã có một bình luận trên trang "$PAGETITLE".
@@ -2543,7 +2574,7 @@ Wikia
 <ul>
 <li>Muốn kiểm soát email mà bạn nhận được? <a href="{{fullurl:Special:Preferences}}">Nâng cấp Tùy chọn của bạn<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -2599,7 +2630,7 @@ $PAGETITLE_URL
 
 请常来访问和编辑……
 
-Wikia',
+Wikia', # Fuzzy
 	'enotif_body_article_comment-HTML' => '<p>亲爱的$WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR在"$PAGETITLE"上做出了评论。
@@ -2613,7 +2644,7 @@ Wikia
 <ul>
 <li>想管理你将收到何种邮件？ <a href="{{fullurl:Special:Preferences}}">更新偏好设置<a>.</li>
 </ul>
-</p>',
+</p>', # Fuzzy
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -2634,7 +2665,7 @@ $messages['zh-hant'] = array(
 	'article-comments-fblogin' => '請 <a href="$1" rel="nofollow">登入並連接Facebook</a> 來在這個wiki發表評論',
 	'article-comments-fbconnect' => '請 <a href="$1">把這個帳號與Facebook連結</a> 來評論',
 	'article-comments-rc-blog-comment' => '部落格評論 (<span class="plainlinks">[$1 $2]</span>)',
-	'article-comments-rc-blog-comments' => '部落格評論 （[[ $1 ]])',
+	'article-comments-rc-blog-comments' => '部落格評論 （[[ $1 ]])', # Fuzzy
 	'article-comments-login' => '請 <a href="$1">登入</a> 以在此wiki上張貼評論。',
 	'article-comments-toc-item' => '評論',
 	'article-comments-comment-cannot-add' => '您不能在這篇文章中增加評論。',
@@ -2651,4 +2682,3 @@ $messages['zh-hant'] = array(
 	'wikiamobile-article-comments-none' => '沒有評論',
 	'enotif_subject_article_comment' => '$PAGEEDITOR 在 {{SITENAME}}的文章 "$PAGETITLE"中發表評論',
 );
-

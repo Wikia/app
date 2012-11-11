@@ -141,6 +141,7 @@ $messages['de'] = array(
  */
 $messages['diq'] = array(
 	'cloakcheck-form-username' => 'Namey Karberi:',
+	'cloakcheck-process-username' => 'Namey karberi: $1',
 );
 
 /** Spanish (español)
@@ -717,4 +718,3 @@ $messages['zh-hans'] = array(
 	'cloakcheck-process-emailconf-yes' => '电子邮件地址已确认。',
 	'cloakcheck-process-edits-no' => '用户编辑数不足。',
 );
-

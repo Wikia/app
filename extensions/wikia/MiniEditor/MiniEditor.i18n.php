@@ -11,7 +11,8 @@ $messages['en'] = array(
 	'minieditor-placeholder-reply' => 'Reply to the message here',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'minieditor-specialpage-title' => 'Browser title for the page',
 	'minieditor-new-heading' => 'Heading of a form area',
@@ -255,4 +256,3 @@ $messages['tl'] = array(
 	'minieditor-reply' => 'Tumugon',
 	'minieditor-placeholder-reply' => 'Tumugon sa mensahe rito',
 );
-

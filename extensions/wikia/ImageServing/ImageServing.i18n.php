@@ -25,12 +25,14 @@ $messages['ast'] = array(
 	'imageserving-desc' => "Esbilla imaxes d'un conxuntu de páxines conseñáu basándose nos requisitos visuales",
 );
 
-/** Breton (brezhoneg) */
+/** Breton (brezhoneg)
+ */
 $messages['br'] = array(
 	'imageserving-desc' => 'Dibab a ra ar skeudennoù en un hollad termenet a bajennoù, hervez an ezhommoù gwelet',
 );
 
-/** Bosnian (bosanski) */
+/** Bosnian (bosanski)
+ */
 $messages['bs'] = array(
 	'imageserving-desc' => 'Odabira slike iz određenog niza stranica zasnovanog na vizuelnim zahtjevima',
 );
@@ -49,7 +51,8 @@ $messages['de'] = array(
 	'imageserving-desc' => 'Wählt Bilder von einer Auswahl von Seiten entsprechend der visuellen Anforderungen aus',
 );
 
-/** Spanish (español) */
+/** Spanish (español)
+ */
 $messages['es'] = array(
 	'imageserving-desc' => 'Selecciona las imágenes de un conjunto especificado de páginas basados en necesidades visuales',
 );
@@ -61,7 +64,8 @@ $messages['fi'] = array(
 	'imageserving-desc' => 'Valitsee kuvia määrätystä sivujoukosta visuaalisten vaatimusten perusteella',
 );
 
-/** French (français) */
+/** French (français)
+ */
 $messages['fr'] = array(
 	'imageserving-desc' => 'Sélectionne les images dans un ensemble défini de pages, en fonction des besoins visuels',
 );
@@ -73,7 +77,8 @@ $messages['gl'] = array(
 	'imageserving-desc' => 'Selecciona as imaxes a partir dun conxunto especificado de páxinas en base ás necesidades visuais',
 );
 
-/** Hebrew (עברית) */
+/** Hebrew (עברית)
+ */
 $messages['he'] = array(
 	'imageserving-desc' => 'בחירת תמונות ממערך מסוים של דפים בהתאם לדרישות החזותיות',
 );
@@ -85,7 +90,8 @@ $messages['hu'] = array(
 	'imageserving-desc' => 'Vizuális követelmények alapján képeket választ ki egy megadott lapokból álló tömbből',
 );
 
-/** Interlingua (interlingua) */
+/** Interlingua (interlingua)
+ */
 $messages['ia'] = array(
 	'imageserving-desc' => 'Selige imagines ex un collection specific de paginas a base de criterios visual',
 );
@@ -111,7 +117,8 @@ $messages['ksh'] = array(
 	'imageserving-desc' => 'Söhk Bellder us enem aanjajovve Saz vun Sigge uß, opjrond vun Aanforderunge aan et Ußsinn.',
 );
 
-/** Macedonian (македонски) */
+/** Macedonian (македонски)
+ */
 $messages['mk'] = array(
 	'imageserving-desc' => 'Одбира слики од назначена низа страници зависно од визуелните потреби',
 );
@@ -123,12 +130,14 @@ $messages['ms'] = array(
 	'imageserving-desc' => 'Memilih gambar daripada tatasusunan laman yang terpilih berasaskan keperluan visual',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎) */
+/** Norwegian Bokmål (norsk (bokmål)‎)
+ */
 $messages['nb'] = array(
 	'imageserving-desc' => 'Velger ut bilder fra en angitt rekke sider basert på visuelle krav',
 );
 
-/** Dutch (Nederlands) */
+/** Dutch (Nederlands)
+ */
 $messages['nl'] = array(
 	'imageserving-desc' => "Selecteert afbeeldingen uit een aangegeven verzameling pagina's gebaseerd op visuele eisen",
 );
@@ -147,22 +156,26 @@ $messages['pms'] = array(
 	'imageserving-desc' => "A selession-a le figure da n'ansem specificà ëd pàgine basandse ëdzora a jë bzògn visuaj",
 );
 
-/** Portuguese (português) */
+/** Portuguese (português)
+ */
 $messages['pt'] = array(
 	'imageserving-desc' => 'Escolhe imagens de um conjunto especificado de páginas com base em requisitos visuais',
 );
 
-/** Brazilian Portuguese (português do Brasil) */
+/** Brazilian Portuguese (português do Brasil)
+ */
 $messages['pt-br'] = array(
 	'imageserving-desc' => 'Escolhe imagens de um conjunto especificado de páginas com base em requisitos visuais',
 );
 
-/** tarandíne (tarandíne) */
+/** tarandíne (tarandíne)
+ */
 $messages['roa-tara'] = array(
 	'imageserving-desc' => "Scacchie le immaggine da 'na collezziona specifeche de pàggene ca se basabe sus a requisite visuale",
 );
 
-/** Russian (русский) */
+/** Russian (русский)
+ */
 $messages['ru'] = array(
 	'imageserving-desc' => 'Выбирает изображений из указанного массива страниц на основе визуальных требований',
 );
@@ -201,4 +214,3 @@ $messages['tt-cyrl'] = array(
 $messages['zh-hans'] = array(
 	'imageserving-desc' => '从指定的数组的视觉要求基于页面中选择图像',
 );
-

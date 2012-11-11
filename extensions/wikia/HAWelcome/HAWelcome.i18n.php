@@ -102,7 +102,7 @@ $messages['br'] = array(
 
 * Ouzhpennañ liammoù d'ar pajennoù plijetañ  war ar wiki amañ!
 * Pajennoù plijetañ #2
-* Pajennoù plijetañ #3",
+* Pajennoù plijetañ #3", # Fuzzy
 	'welcome-message-user' => "Demat, Degemer mat war {{SITENAME}} ! Trugarez da vezañ kemmet [[:$1]].
 
 Gallout a rit lezel ur gemennadenn war ma fajenn V [[$2|discussion]] ma c'hallan sikour ac'hanoc'h d'ober tra pe dra $3",
@@ -158,14 +158,14 @@ Si us plau, deixa un missatge a la [[$2|meva discussió]] si et puc ajudar en al
 
 Hola, benvingut a {{SITENAME}}! Gràcies per editar a la pàgina [[:$1]].
 
-Si necessites ajuda i no hi ha administradors locals aquí, pots visitar els [[wikia:Forum:Community Central Forum|fòrums de la Central de Wikia]] (en anglès) o els [[wikia:c:ca:Forum:Índex|fòrums de la Central de Wikia catalana]] . $3',
+Si necessites ajuda i no hi ha administradors locals aquí, pots visitar els [[wikia:Forum:Community Central Forum|fòrums de la Central de Wikia]] (en anglès) o els [[wikia:c:ca:Forum:Índex|fòrums de la Central de Wikia catalana]] . $3', # Fuzzy
 	'welcome-message-anon-staff' => "==Benvingut==
 
 Hola, benvingut a {{SITENAME}}. Gràcies per editar a la pàgina [[:$1]].
 
 Si us plau, '''[[Special:UserLogin|registra't i crea't un nom d'usuari]]'''. És una forma molt senzilla de mantenir un registre de les teves contribucions i t'ajudarà a comunicar-te amb la comunitat.
 
-Si necessites ajuda i no hi ha administradors locals aquí, pots visitar els [[wikia:Forum:Community Central Forum|fòrums de la Central de Wikia]] (en anglès) o els [[wikia:c:ca:Forum:Índex|fòrums de la Central de Wikia catalana]] . $3",
+Si necessites ajuda i no hi ha administradors locals aquí, pots visitar els [[wikia:Forum:Community Central Forum|fòrums de la Central de Wikia]] (en anglès) o els [[wikia:c:ca:Forum:Índex|fòrums de la Central de Wikia catalana]] . $3", # Fuzzy
 	'staffsig-text' => "$1<staff /> <small>([[w:forums|fòrums d'ajuda]] | [[w:sblog|blog]])</small>",
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Hola, benvingut/da a {{SITENAME}}! Moltes gràcies per la teva edició a [[:$1]].
@@ -175,7 +175,7 @@ Si us plau, si tens algun dubte deixa un missatge al meu mur i t'intentaré ajud
 
 Si necessites ajuda i no hi ha cap administrador local per aquí, pots visitar els [[w:c:es:Forum:Índex|fòrums de la Central de Wikia en català]] o els [[w:c:es:Foro:Índice|de la Central de Wikia en espanyol]. També et pot interessar revisar el nostre [[w:c:es:Blog:Noticias_de_Wikia|blog de l'staff]] per estar informat de les últimes notícies i novetats de Wikia.
 
-Diverteix-te editant!",
+Diverteix-te editant!", # Fuzzy
 	'welcome-message-wall-anon' => "Hola, benvingut/da a {{SITENAME}}! Moltes gràcies per la teva edició a [[:$1]].
 
 Per què no et '''[[Special:Userlogin|crees un compte i t'identifiques?]]''' D'aquesta manera serà molt més fàcil saber quines pàgines has editat i se t'atribuirà la teva feina; a més, et serà molt més fàcil comunicar-te amb la resta de comunitat.
@@ -204,7 +204,7 @@ $messages['cs'] = array(
 
 * Přidejte sem odkazy na své oblíbené stránky
 * Odkaz #2
-* Odkaz #3",
+* Odkaz #3", # Fuzzy
 	'welcome-message-user' => 'Vítejte na {{SITENAME}}! Děkujeme za Vaší úpravu stránky [[:$1]].
 
 Prosím nechejte vzkaz na [[$2|mé diskuzní stránce]], pokud potřebujete s čímkoliv pomoci! $3',
@@ -342,8 +342,11 @@ Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie 
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
+	'welcome-message-log' => 'Cıkerdoğê newey rê xeyrvatış',
+	'hawelcomeedit' => 'HAXeyrAmeyVurnayış',
 	'welcome-message-wall-anon' => "Merheba, Şıma xeyr ameyê {{SITENAME}}! pela [[:$1]] vurnayê deye şıma rê teşekur kemê.
 
 '''[[Special:Userlogin|Şıma ra recay ma dekewe sita yana xorê jew nameyê karberiyo newe  vırazê]]'''. Şıma eno hesaba şenê merdumana irtibat kewê u iştıraxin bıkerê deye tewr rehat ju raya.
@@ -448,7 +451,7 @@ $messages['fa'] = array(
 
 *پیوند صفحه‌های محبوب خود را در اینجا قرار دهید!
 * صفحۀ محبوب #۲
-* صفحۀ محبوب #۳",
+* صفحۀ محبوب #۳", # Fuzzy
 	'welcome-message-user' => '==خوش‌آمدید==
 سلام، به {{SITENAME}} خوش‌آمدید! متشکر از ویرایش شما در صفحۀ [[:$1]].
 
@@ -637,7 +640,7 @@ $messages['he'] = array(
 ==הדפים האהובים עליי==
 * הוסף כאן קישור לדפים האהובים עליך או דפים שיצרת.
 * [[דף אהוב שני]]
-* [[דף אהוב שלישי]]",
+* [[דף אהוב שלישי]]", # Fuzzy
 	'welcome-message-user' => 'שלום, ברוך הבא ל{{SITENAME}}. תודה על תרומתך בדף [[:$1]].
 
 אם אתה זקוק לעזרה כלשהי, אנא השאר הודעה ב[[$2|דף השיחה שלי]], $3',
@@ -778,13 +781,14 @@ $messages['id'] = array(
 
 * Tambahkan pranala ke halaman kesukaan anda pada wiki di sini! 
 * Halaman kesukaan # 2 
-* Halaman kesukaan # 3",
+* Halaman kesukaan # 3", # Fuzzy
 	'welcome-message-user' => 'Hi, selamat datang di {{SITENAME}}! Terima kasih untuk suntingan anda dihalaman [[:$1]]. 
 
 Silakan tinggalkan pesan di [[$2|Pembicaraan halaman saya]] jika saya dapat membantu! $3',
 );
 
 /** Italian (italiano)
+ * @author Beta16
  * @author Gianfranco
  */
 $messages['it'] = array(
@@ -792,7 +796,7 @@ $messages['it'] = array(
 
 ''Questa è la tua pagina utente. Modifica liberamente questa pagina per farti conoscere dalla comunità!''
 
-==I miei contribti==
+==I miei contributi==
 
 * [[Special:Contributions/$1|Contributi utente]]
 
@@ -827,6 +831,9 @@ E' un modo semplice per tenere traccia dei tuoi contributi e per aiutrti a comun
 
 Se hai bisogno di aiuto e non ci sono amministratori disponibili, visita i [[wikia:Forum:Community Central Forum|forum sul wiki centrale della Community]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum di supporto]] | [[w:sblog|blog]])</small>',
+	'welcome-message-wall-user' => 'Ciao, benvenuto su {{SITENAME}}! Grazie per la tua modifica alla pagina [[:$1]].
+
+Lascia pure un messaggio se posso esserti utile per qualsiasi cosa!',
 );
 
 /** Japanese (日本語)
@@ -1173,7 +1180,7 @@ $messages['oc'] = array(
 
 * Podètz plaçar aicí de ligams cap a vòstras paginas preferidas del wiki !
 * Ligam cap a la pagina #2
-* Ligam cap a la pagina #3",
+* Ligam cap a la pagina #3", # Fuzzy
 	'welcome-message-user' => "Bonjorn, benvenguda sus {{SITENAME}} ! Mercés d'aver modificada la pagina [[:$1]].
 
 Podètz daissar un messatge sus ma pagina de [[$2|discussion]] se vos pòdi ajudar per qué que siá ! $3",
@@ -1272,7 +1279,7 @@ $messages['pms'] = array(
 
 * Ch'a gionta ambelessì j'anliure a soe pàgine preferìe dzora a la wiki!
 * Pàgina preferìa #2
-* Pàgina preferìa #3",
+* Pàgina preferìa #3", # Fuzzy
 	'welcome-message-user' => "Cerea, bin ëvnù a {{SITENAME}}! Mersì për soe modìfiche a la pàgina [[:$1]].
 
 Për piasì ch'a lassa un mëssagi dzora a [[$2|mia pàgina ëd discussion]] se i peuss giuté con cheicòs! $3",
@@ -1315,7 +1322,7 @@ $messages['ps'] = array(
 
 * دلته په همدې ويکي کې د خپلو پزړه پورو مخونو تړنې ورګډې کړی!
 * پزړه پوری مخ #2
-* پزړه پوری مخ #3",
+* پزړه پوری مخ #3", # Fuzzy
 );
 
 /** Portuguese (português)
@@ -1383,7 +1390,7 @@ $messages['pt-br'] = array(
 
 * Adicione links para as suas páginas favoritas nessa wiki!
 * Página favorita #2
-* Página favorita #3",
+* Página favorita #3", # Fuzzy
 	'welcome-message-user' => 'Olá, bem-vindo a {{SITENAME}}! Obrigado pela sua edição na página [[:$1]].
 
 Por favor deixe uma mensagem na minha [[$2|página de discussão]] se eu puder ajudar com qualquer coisar! $3',
@@ -1493,7 +1500,7 @@ $messages['sr-ec'] = array(
 
 * Додаје везе до ваших омиљених страница на викији!
 * Омиљена страница #2
-* Омиљена страница #3",
+* Омиљена страница #3", # Fuzzy
 	'welcome-message-user' => 'Здраво и добро дошли на {{SITENAME}}! Хвала вам на измени на [[:$1]] страници.
 
 Оставите коментар на [[$2|страници за разговор]] ако вам икако могу помоћи! $3',
@@ -1602,7 +1609,7 @@ $messages['th'] = array(
 
 * เพิ่มการเชื่อมโยงไปยังหน้าโปรดบนวิกิ นี้!
 * หน้ารายการโปรด #2
-* หน้ารายการโปรด #3",
+* หน้ารายการโปรด #3", # Fuzzy
 	'welcome-message-user' => 'สวัสดี, ยินดีต้อนรับสู่ {{SITENAME}}! ขอบคุณสำหรับการแก้ไขหน้า [[:$1]]
 
 กรุณาฝากข้อความบน [[$2|หน้าพูดคุยของฉัน]] ถ้าฉันสามารถช่วยบางเรื่องได้! $3',
@@ -1731,7 +1738,7 @@ $messages['uk'] = array(
 
 * Додайте посилання на свої обрані сторінки у вікі тут!
 * Обрана сторінка #2
-* Обрана сторінка #3",
+* Обрана сторінка #3", # Fuzzy
 	'welcome-message-user' => 'Привіт, ласкаво просимо до {{SITENAME}}! Дякуємо за редагування сторінки [[:$1]].
 
 Будь ласка, залиште повідомлення на [[$2|моїй сторінці обговорення]], якщо я можу чим-небудь допомогти! $3',
@@ -1813,6 +1820,7 @@ Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'welcome-user-page' => "==关于我==
@@ -1833,4 +1841,3 @@ $messages['zh-hans'] = array(
 
 如果我能帮忙做些什么，请给我留言！',
 );
-

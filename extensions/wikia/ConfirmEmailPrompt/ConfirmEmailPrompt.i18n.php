@@ -193,4 +193,3 @@ $messages['vi'] = array(
 	'confirmemailprompt-desc' => 'Hiển thị một thông điệp cảnh báo nếu một người dùng có địa chỉ thư điện tử chưa được xác nhận',
 	'confirmemailprompt-error' => 'Đây có phải là địa chỉ e-mail của bạn: <strong>$1</strong>? [[$2|Xác nhận nó]] hoặc [[$3|thay đổi nó]].',
 );
-

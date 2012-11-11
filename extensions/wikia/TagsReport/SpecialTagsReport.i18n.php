@@ -61,8 +61,8 @@ $messages['be-tarask'] = array(
 	'tagsreportnoresults' => 'Нічога ня знойдзена',
 	'tagsreportmainnspace' => 'Галоўная',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|старонка|старонкі|старонак}})',
-	'tagsreportpagesfound' => '{{PLURAL:$1|Знойдзеная <strong>$1</strong> старонка, якая ўтрымлівае|Знойдзеныя <strong>$1</strong> старонкі, якія ўтрымліваюць|Знойдзеныя <strong>$1</strong> старонак, якія ўтрымліваюць}} спэцыяльныя тэгі (dpl, youtube, і г.д.)',
-	'tagsreportgenerated' => 'Створаная $1 $2',
+	'tagsreportpagesfound' => '{{PLURAL:$1|Знойдзеная <strong>$1</strong> старонка, якая ўтрымлівае|Знойдзеныя <strong>$1</strong> старонкі, якія ўтрымліваюць|Знойдзеныя <strong>$1</strong> старонак, якія ўтрымліваюць}} спэцыяльныя тэгі (dpl, youtube, і г.д.)', # Fuzzy
+	'tagsreportgenerated' => 'Створаная $1 $2', # Fuzzy
 );
 
 /** Bulgarian (български)
@@ -86,8 +86,8 @@ $messages['br'] = array(
 	'tagsreportnoresults' => "N'eus bet kavet disoc'h ebet",
 	'tagsreportmainnspace' => 'Pennañ',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pajenn|pajennoù}})',
-	'tagsreportpagesfound' => 'Kavet <strong>$1</strong> pajennoù, zo enno ur valizenn arbennik (dpl, youtube, ...)',
-	'tagsreportgenerated' => "Krouet d'an $1 $2",
+	'tagsreportpagesfound' => 'Kavet <strong>$1</strong> pajennoù, zo enno ur valizenn arbennik (dpl, youtube, ...)', # Fuzzy
+	'tagsreportgenerated' => "Krouet d'an $1 $2", # Fuzzy
 );
 
 /** Catalan (català)
@@ -96,7 +96,7 @@ $messages['br'] = array(
 $messages['ca'] = array(
 	'tagsreportgo' => 'Mostra',
 	'tagsreportmainnspace' => 'Principal',
-	'tagsreportgenerated' => 'Generat el $1 $2',
+	'tagsreportgenerated' => 'Generat el $1 $2', # Fuzzy
 );
 
 /** Czech (česky)
@@ -636,4 +636,3 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'tagsreport' => '問題報告',
 );
-

@@ -32,7 +32,8 @@ $messages['ast'] = array(
 	'paginator-back' => 'Anterior',
 );
 
-/** Azerbaijani (azərbaycanca) */
+/** Azerbaijani (azərbaycanca)
+ */
 $messages['az'] = array(
 	'paginator-next' => 'Sonrakı',
 	'paginator-back' => 'Əvvəlki',
@@ -62,19 +63,30 @@ $messages['cs'] = array(
 	'paginator-back' => 'Zpět',
 );
 
-/** Welsh (Cymraeg) */
+/** Welsh (Cymraeg)
+ */
 $messages['cy'] = array(
 	'paginator-next' => 'Nesaf',
 	'paginator-back' => 'Yn ôl',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ */
 $messages['de'] = array(
 	'paginator-next' => 'Vor',
 	'paginator-back' => 'Zurück',
 );
 
-/** Spanish (español) */
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'paginator-next' => 'Bahdoyên',
+	'paginator-back' => 'Peyser',
+);
+
+/** Spanish (español)
+ */
 $messages['es'] = array(
 	'paginator-next' => 'Siguiente',
 	'paginator-back' => 'Atrás',
@@ -104,7 +116,8 @@ $messages['gl'] = array(
 	'paginator-back' => 'Volver',
 );
 
-/** Hebrew (עברית) */
+/** Hebrew (עברית)
+ */
 $messages['he'] = array(
 	'paginator-next' => 'הבא',
 	'paginator-back' => 'הקודם',
@@ -321,4 +334,3 @@ $messages['zh-hant'] = array(
 	'paginator-next' => '下一頁',
 	'paginator-back' => '上一頁',
 );
-

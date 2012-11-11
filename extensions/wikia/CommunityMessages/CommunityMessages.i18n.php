@@ -23,7 +23,8 @@ $messages['en'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Community Messages has been updated]].'
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'communitymessages-desc' => 'A description of this extension',
 	'communitymessages-notice-msg' => 'A message about updating Community Messages',
@@ -50,7 +51,7 @@ $messages['ast'] = array(
  */
 $messages['bar'] = array(
 	'communitymessages-desc' => 'Hüfs-Daweiterrung fyr Gmoahschoftsnoochrichten',
-	'communitymessages-notice-msg' => 'De Gmoahschoftsnoochrichten san aktualisierd worn.',
+	'communitymessages-notice-msg' => 'De Gmoahschoftsnoochrichten san aktualisierd worn.', # Fuzzy
 );
 
 /** Breton (brezhoneg)
@@ -58,7 +59,7 @@ $messages['bar'] = array(
  */
 $messages['br'] = array(
 	'communitymessages-desc' => 'Astenn skoazell evit kemennadennoù ar gumuniezh',
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Hizivaet eo bet kemennadennoù ar gumuniezh]].',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Hizivaet eo bet kemennadennoù ar gumuniezh]].', # Fuzzy
 );
 
 /** Catalan (català)
@@ -137,10 +138,11 @@ $messages['gl'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Actualizáronse as mensaxes á comunidade]].',
 );
 
-/** Hebrew (עברית) */
+/** Hebrew (עברית)
+ */
 $messages['he'] = array(
 	'communitymessages-desc' => 'הרחבת סיוע ל־Community Messages (הודעות קהילה)',
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Community Messages עודכנה]].',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Community Messages עודכנה]].', # Fuzzy
 );
 
 /** Upper Sorbian (hornjoserbsce)
@@ -173,7 +175,7 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'communitymessages-desc' => 'Ekstensi pembantu untuk Pesan Komunitas',
-	'communitymessages-notice-msg' => '[[Special:WikiActivity|Community Messages has been updated]].',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Community Messages has been updated]].', # Fuzzy
 );
 
 /** Italian (italiano)
@@ -232,7 +234,7 @@ $messages['nl'] = array(
  */
 $messages['oc'] = array(
 	'communitymessages-desc' => "Extension d'ajuda pels messatges a la comunautat",
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Los messatges a la comunautat son estats meses a jorn]].',
+	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Los messatges a la comunautat son estats meses a jorn]].', # Fuzzy
 );
 
 /** Polish (polski)
@@ -269,8 +271,8 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
- * @author 555
  * @author Giro720
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'communitymessages-desc' => 'Extensão para auxiliar em Mensagens Comunitárias',
@@ -342,4 +344,3 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|社区信息已更新]]。',
 );
-

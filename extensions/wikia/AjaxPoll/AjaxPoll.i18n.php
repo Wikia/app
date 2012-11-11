@@ -124,6 +124,13 @@ $messages['cy'] = array(
 	'ajaxpoll-submitting' => "Arhoswch os gwelwch yn dda, yn cyflwyno'ch pleidlais...",
 );
 
+/** Danish (dansk)
+ * @author Sarrus
+ */
+$messages['da'] = array(
+	'ajaxpoll-submit' => 'Stem!',
+);
+
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
@@ -767,4 +774,3 @@ $messages['zh-hant'] = array(
 	'ajaxpoll-closed' => '投票現已封閉。享受結果。',
 	'ajaxpoll-submitting' => '請稍候，正提交您的投票...',
 );
-
