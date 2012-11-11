@@ -182,12 +182,6 @@ $messages['en'] = array(
 	'scavengerhunt-editor-tip-facebook-description' => 'Text that will be displayed in sharing message',
 	'scavengerhunt-facebook-image' => 'Facebook sharing image',
 	'scavengerhunt-facebook-description' => 'Facebook sharing text',
-	
-
-);
-/** Message documentation (Message documentation) */
-$messages['qqq'] = array(
-	'scavengerhunt-desc' => '{{desc}}',
 );
 
 /** Message documentation (Message documentation) */
