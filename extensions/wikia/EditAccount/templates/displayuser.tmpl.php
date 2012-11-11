@@ -61,6 +61,7 @@
 		<td>
 			<input type="submit" value="<?= ( $isAdopter ) ? 'prevent auto adoption' : 'allow auto adoption' ?>" />
 			<input type="hidden" name="wpAction" value="toggleadopter" />
+			<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
 		</td>
 		</form>
 	</tr>
