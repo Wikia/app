@@ -1,31 +1,54 @@
 <?php
-class ArticleService extends WikiaService {
+class ArticleService extends WikiaObject {
+	const MAX_LENGTH = 500;
+	const CACHE_VERSION = 6;
+	const SUFFIX = '...';
 
-	const MAX_CACHED_TEXT_LENGTH = 500;
-	const CACHE_KEY = 'article_service_cache';
-
-	/**
-	 * @var $mArticle Article
-	 */
-	private $mArticle = null;
-
-	private $mTagsToRemove = array(
-			'figure',
-			'h[1-6]',
-			'noscript',
+	private $article = null;
+	private $tags = array(
 			'script',
 			'style',
-			'th',
-			'html',
+			'noscript',
+			'table',
+			'figure',
+			'figcaption',
+			'aside',
+			'details',
+			'h1',
+			'h2',
+			'h3',
+			'h4',
+			'h5',
+			'h6'
 	);
+	private $patterns = array(
+		//strip decimal entities
+		'/&#\d{2,5};/ue' => '',
+		//strip hex entities
+		'/&#x[a-fA-F0-7]{2,8};/ue' => '',
+		//this should be always the last
+		'/\s+/' => ' '
+	);
+	private static $localCache = array();
 
-	public function __construct( $articleId = 0 ) {
+	public function __construct( $articleOrId = null ) {
 		parent::__construct();
-		$this->setArticleById( $articleId );
+
+		if ( !is_null( $articleOrId ) ) {
+			if ( is_numeric( $articleOrId ) ) {
+				$this->setArticleById( $articleOrId );
+			} elseif ( $articleOrId instanceof Article ) {
+				$this->setArticle( $articleOrId );
+			}
+		}
+	}
+
+	public function setArticle( Article $article ) {
+		$this->article = $article;
 	}
 
 	public function setArticleById( $articleId ) {
-		$this->mArticle = F::build('Article',array($articleId), 'newFromID');
+		$this->article = F::build('Article',array($articleId), 'newFromID');
 	}
 
 	/**
@@ -36,137 +59,104 @@ class ArticleService extends WikiaService {
 	 * @return string
 	 */
 	public function getTextSnippet( $length = 100 ) {
-		wfProfileIn(__METHOD__);
+		//don't allow more than the maximum to avoid flooding Memcached
+		if ( $length > self::MAX_LENGTH ) {
+			throw new WikiaException( 'Maximum allowed length is ' . self::MAX_LENGTH );
+		}
+
+		$suffixLen = strlen( self::SUFFIX );
 
 		// it may sometimes happen that the aricle is just not there
-		if ( is_null( $this->mArticle ) ) {
-			wfProfileOut(__METHOD__);
+		if ( is_null( $this->article ) || $length <= $suffixLen ) {
 			return '';
 		}
 
-		$sKey = $this->getMemcKey();
+		$this->wf->profileIn( __METHOD__ );
 
-		$cachedResult = (self::MAX_CACHED_TEXT_LENGTH >= $length) ? $this->wg->memc->get( $sKey ) : false;
-		if(!is_string($cachedResult)){
-			wfProfileIn(__METHOD__ . '::miss');
+		$id = $this->article->getID();
 
-			$content = $this->mArticle->getContent();
-
-			// Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
-			wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$this->mArticle, &$content, $length ) );
-
-			// Perl magic will happen! Beware! Perl 5.10 required!
-			$re_magic = '#SSX(?<R>([^SE]++|S(?!S)|E(?!E)|SS(?&R))*EE)#im';
-
-			// (RT #73141) saves {{PAGENAME}} and related tags from deletion; Not using parser because of options problems via ajax.
-			$content = str_replace("{{PAGENAME}}", wfEscapeWikiText( $this->mArticle->getTitle()->getText() ), $content);
-			$content = str_replace("{{FULLPAGENAME}}", wfEscapeWikiText( $this->mArticle->getTitle()->getPrefixedText() ), $content);
-			$content = str_replace("{{BASEPAGENAME}}", wfEscapeWikiText( $this->mArticle->getTitle()->getBaseText() ), $content);
-
-			// remove {{..}} tags
-			$re = strtr( $re_magic, array( 'S' => '\\{', 'E' => '\\}', 'X' => '' ));
-			$content = preg_replace($re, '', $content);
-
-			// remove [[Image:...]] and [[File:...]] tags
-			$nsFile = $this->wg->ContLang->getNsText( NS_FILE );
-			$nsFileAlias = $this->getNsAlias( NS_FILE ); // [[Image:...]]
-
-			if( empty( $nsFileAlias ) ) {
-				// hardcoded "Image" as fallback, just in case
-				$nsFileAlias = 'Image';
-			}
-
-			$re = strtr( $re_magic, array( 'S' => "\\[", 'E' => "\\]", 'X' => "($nsFileAlias|$nsFile):" ));
-			$content = preg_replace($re, '', $content);
-
-			// skip "edit" section and TOC
-			$content .= "\n__NOEDITSECTION__\n__NOTOC__";
-
-			// remove parser hooks from wikitext (RT #72703)
-			$hooks = F::App()->wg->Parser->getTags();
-
-			if (!empty( $hooks )) {
-				$hooksRegExp = implode('|', array_map('preg_quote', $hooks));
-				$content = preg_replace('#<(' . $hooksRegExp . ')[^>]*>(.*?)</[^>]+>#sm', '', $content); // <foo>content</foo>
-				$content = preg_replace('#<(' . $hooksRegExp . ')[^>]*/?>#m', '', $content); // <places foo="bar" />
-			}
-
-			$tmpParser = new Parser();
-			// BugID: 47803 - stripping twice on purpose
-			$content = self::stripContentOfTags($content,$this->mTagsToRemove);
-			$content = $tmpParser->parse( $content,  $this->mArticle->getTitle(), new ParserOptions )->getText();
-			// BugID: 44365 - if people try to align the __TOC__ directive, Parser doesn't follow __NOTOC__ (note the ungreediness)
-			$content = preg_replace('/<table id="toc" class="toc">.*<\/table>/msU', '', $content);
-			$content = self::stripContentOfTags($content,$this->mTagsToRemove);
-			// strip HTML tags
-			$content = trim(strip_tags($content));
-			$content = mb_substr($content, 0, $length + 200);
-			// stripping some html entities
-			$content = strtr($content, array('&nbsp;' => ' ', '&amp;' => '&', '&bull;' => '', '&#8226' => ''));
-			// stripping leftover '[' & ']' as well as things between them
-			$content = preg_replace('/\[(.*?)\]/', '', $content);
-			// stripping leading non-alnum characters
-			$content = preg_replace('/^[[:punct:][:space:][:cntrl:]]*/', "", $content);
-			// compress white characters
-			$content = preg_replace('/\s+/',' ',$content);
-			$content = trim( $content );
-			if(mb_strlen($content) > $length) {
-				$content = mb_substr( $content, 0, $length-3 );
-				$content = mb_substr( $content, 0, mb_strrpos($content,' ')) . '...';
-			}
-			
-			$cacheContent = mb_substr( $content, 0, self::MAX_CACHED_TEXT_LENGTH-3 );
-
-			if ( $length <= self::MAX_CACHED_TEXT_LENGTH ){
-				$this->wg->memc->set( $sKey, $cacheContent, 86400 );
-			} else {
-				wfDebug(__METHOD__ . ": requested string to long to be cached. Served without cache \n");
-			}
-
-			wfProfileOut(__METHOD__ . '::miss');
+		//memoize to avoid Memcache access overhead
+		//when the same article needs to be processed
+		//more than once in the same process
+		if ( array_key_exists( $id, self::$localCache ) ) {
+			$text = self::$localCache[$id];
 		} else {
-			$content = $cachedResult;
+			$key = self::getCacheKey( $id );
+			$app = $this->app;
+			$article = $this->article;
+			$tags = $this->tags;
+			$pats = $this->patterns;
+			$text = self::$localCache[$id] = WikiaDataAccess::cache(
+				$key,
+				86400 /*24h*/,
+				function() use ( $app, $article, $tags, $pats, $length ){
+					$app->wf->profileIn( __METHOD__ . '::CacheMiss' );
+
+					//get standard parser cache for anons,
+					//99% of the times it will be available but
+					//generate it in case is not
+					$page = $article->getPage();
+					$opts = $page->makeParserOptions( new User() );
+					$content = $page->getParserOutput( $opts )->getText();
+
+					//Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
+					wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$article, &$content, $length ) );
+
+					if ( mb_strlen( $content ) > 0 ) {
+						//remove all unwanted tag pairs and their contents
+						foreach ( $tags as $tag ) {
+							$content = preg_replace( "/<{$tag}\b[^>]*>.*<\/{$tag}>/imsU", '', $content );
+						}
+
+						//cleanup remaining tags
+						$content = strip_tags( $content );
+
+						//apply some replacements
+						foreach ( $pats as $reg => $rep ) {
+							$content = preg_replace( $reg, $rep, $content );
+						}
+
+						//decode entities
+						$content = html_entity_decode( $content );
+						$content = trim( $content );
+
+						if ( mb_strlen( $content ) > ArticleService::MAX_LENGTH ) {
+							$content = mb_substr( $content, 0, ArticleService::MAX_LENGTH );
+						}
+					}
+
+					$app->wf->profileOut( __METHOD__ . '::CacheMiss' );
+					return $content;
+				}
+			);
 		}
 
-		$content = mb_substr( $content, 0, $length );
+		$textLen = mb_strlen( $text );
 
-		// store first x characters of parsed content
-		if ($content == '') {
-			wfDebug(__METHOD__ . ": got empty snippet for article #{$this->mArticle->getID()}\n");
-		}
+		if ( $textLen > $length ) {
+			$maxLen = $length - $suffixLen;
+			$cutPos = mb_strrpos( $text, ' ',  -( $textLen - $maxLen ) );
 
-		wfProfileOut(__METHOD__);
-		return $content;
-	}
-
-	private function getNsAlias( $ns ) {
-		foreach( $this->wg->NamespaceAliases as $alias => $nsAlias ) {
-			if( $nsAlias == $ns ) {
-				return $alias;
+			if ( $cutPos === false || $cutPos > $maxLen ) {
+				$cutPos = $maxLen;
 			}
+
+			$snippet = mb_substr( $text, 0, $cutPos );
+			$snippet = preg_replace( '/\W$/', '', $snippet ) . self::SUFFIX;
+		} else {
+			$snippet = $text;
 		}
-		return null;
+
+		$this->wf->profileOut( __METHOD__ );
+		return $snippet;
 	}
 
-	public function getMemcKey() {
-		return $this->wf->MemcKey(
-			self::CACHE_KEY,
-			$this->mArticle->getID()
+	static public function getCacheKey( $articleId ) {
+		return F::app()->wf->MemcKey(
+			__CLASS__,
+			self::CACHE_VERSION,
+			$articleId
 		);
-	}
-
-	/**
-	 * @param $content string
-	 * @param $tags
-	 * @return string
-	 */
-	public static function stripContentOfTags($content,$tags) {
-		// the ? in (.*?) is INCREDIBLY important, guaranting non-greedy behaviour
-		foreach ( $tags as $tag ) {
-			$content = preg_replace( "#<{$tag}[^>]*>(.*?)<\/{$tag}>#sm", '', $content );
-			$content = preg_replace( "#<\/{$tag}>#sm", '', $content );
-		}
-		return $content;
 	}
 
 	/**
@@ -176,10 +166,14 @@ class ArticleService extends WikiaService {
 		/**
 		 * @var $service ArticleService
 		 */
-		$service = F::build( 'ArticleService', array( $page->getId() ) );
+		if ( $page->exists() ) {
+			$id = $page->getId();
 
-		if ( !is_null( $service->mArticle ) ) {
-			F::app()->wg->Memc->delete( $service->getMemcKey() );
+			F::app()->wg->Memc->delete( self::getCacheKey( $id ) );
+
+			if ( array_key_exists( $id, self::$localCache ) ) {
+				unset( self::$localCache[$id] );
+			}
 		}
 
 		return true;
@@ -188,14 +182,18 @@ class ArticleService extends WikiaService {
 	/**
 	 * Clear the cache when the page is edited
 	 */
-	static public function onArticleSaveComplete( WikiPage &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	static public function onArticleSaveComplete( WikiPage &$page, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
 		/**
 		 * @var $service ArticleService
 		 */
-		$service = F::build( 'ArticleService', array( $article->getId() ) );
+		if ( $page->exists() ) {
+			$id = $page->getId();
 
-		if ( !is_null( $service->mArticle ) ) {
-			F::app()->wg->Memc->delete( $service->getMemcKey() );
+			F::app()->wg->Memc->delete( self::getCacheKey( $id ) );
+
+			if ( array_key_exists( $id, self::$localCache ) ) {
+				unset( self::$localCache[$id] );
+			}
 		}
 
 		return true;
