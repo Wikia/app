@@ -26,6 +26,7 @@ $messages['en'] = array(
 	'editaccount-label-pass' => 'Set new password',
 	'editaccount-label-realname' => 'Set new real name',
 	'editaccount-label-clearunsub' => 'Unsubscribed',
+	'editaccount-label-toggleadopt' => 'Modify adopter status (for AutomaticWikiAdopt)',
 	'editaccount-submit-email' => 'Save and confirm email address',
 	'editaccount-submit-pass' => 'Save password',
 	'editaccount-submit-realname' => 'Save real name',
@@ -91,6 +92,7 @@ $messages['qqq'] = array(
 Per [[Thread:Support/About_Wikia:Editaccount-status-realuser/ms_and_Wikia:Editaccount-status-tempuser/ms/reply|user TOR on support]]',
 	'editaccount-status-tempuser' => 'This is the status of the account in the Wikia UserLogin system – a "real user" means an active account, while a "temp user" means it\'s an inactive account. Accounts are activated once the user clicks on a link in an e-mail we send them.',
 	'right-editaccount' => '{{doc-right|editaccount}}',
+	'editaccount-label-toggleadopt' => 'Label for option to toggle whether or not the user is allowed to automatically adopt a wiki.',
 );
 
 /** Afrikaans (Afrikaans)
