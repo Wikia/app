@@ -110,13 +110,13 @@ $messages['en'] = array(
 	'multidelete_swedish_wikis' => 'all swedish wikis',
 	'multidelete_german_wikis' => 'all german wikis',
 	'action-multidelete' => 'delete a batch of pages',
-/*multi-wiki finder*/	
+/*multi-wiki finder*/
 	'multiwikifinder' => 'Multiwiki Title Finder',
 	'multiwikifindpagenames' => 'Find pagenames',
 	'multiwikienterpagename' => 'Enter a pagename:',
 	'multiwikirecords' => '$1 wiki found',
 	'action-multiwikifinder' => 'search for a specific title across Wikia',
-) ;
+);
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
@@ -124,6 +124,7 @@ $messages['en'] = array(
  * @author LWChris
  * @author McDutchie
  * @author Siebrand
+ * @author Kghbln
  */
 $messages['qqq'] = array(
 	'multiwikiedit_task_link' => ' "check" as in "verify" or as in "select"?',
@@ -134,13 +135,6 @@ $messages['qqq'] = array(
 No, the message won\'t be displayed of $1 or $2 was just "1".',
 	'multidelete_max_display_size' => 'Needs plural support for $1',
 	'multiwikirecords' => 'If $1 is a number, add plural support',
-);
-
-/** Message documentation (Message documentation)
- * @author Kghbln
- * @author Siebrand
- */
-$messages['qqq'] = array(
 	'multiwikiedit_task_link' => ' "check" as in "verify" or as in "select"?',
 	'multiwikiedit_on' => 'Lego. Probably has leading and trailing parameters. Please add this to the message...',
 	'action-multiwikiedit' => '{{doc-action|multiwikiedit}}',
