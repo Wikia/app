@@ -1,4 +1,9 @@
 <?php
+/**
+ * A service to retrieve plain text snippets from articles
+ *
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ */
 class ArticleService extends WikiaObject {
 	const MAX_LENGTH = 500;
 	const CACHE_VERSION = 6;
@@ -31,6 +36,11 @@ class ArticleService extends WikiaObject {
 	);
 	private static $localCache = array();
 
+	/**
+	 * ArticleService constructor
+	 *
+	 * @param mixed $articleOrId [OPTIONAL] An Article instance or a valid article ID
+	 */
 	public function __construct( $articleOrId = null ) {
 		parent::__construct();
 
@@ -43,20 +53,45 @@ class ArticleService extends WikiaObject {
 		}
 	}
 
+	/**
+	 * Sets the Article instance
+	 * @param Article $article An instance of the Article
+	 * class to use as a source of content
+	 */
 	public function setArticle( Article $article ) {
 		$this->article = $article;
 	}
 
+	/**
+	 * Sets the Article instance via an article ID
+	 * @param integer $articleId A valid article ID from which
+	 * an Article instance will be constructed to be used as a
+	 * source of content
+	 */
 	public function setArticleById( $articleId ) {
 		$this->article = F::build('Article',array($articleId), 'newFromID');
 	}
 
 	/**
-	 * get text snippet of article content
+	 * Gets a plain text snippet from an article
 	 *
-	 * @param int $articleId article id
-	 * @param int $length snippet length
-	 * @return string
+	 * @param integer $length [OPTIONAL] The maximum snippet length, defaults to 100
+	 *
+	 * @return string The plain text snippet, it includes SUFFIX at the end of the string
+	 * if the length of the article's content is longer than $length, the text will be cut
+	 * respecting the integrity of the words
+	 *
+	 * @throws WikiaException If $length is bigger than MAX_LENGTH
+	 *
+	 * @example
+	 * $service = new ArticleService( $article );
+	 * $snippet = $service->getTextSnippet( 250 );
+	 *
+	 * $service->setArticleById( $title->getArticleID() );
+	 * $snippet = $service->getTextSnippet( 50 );
+	 *
+	 * $service->setArticle( $anotherArticle );
+	 * $snippet = $service->getTextSnippet();
 	 */
 	public function getTextSnippet( $length = 100 ) {
 		//don't allow more than the maximum to avoid flooding Memcached
@@ -151,6 +186,13 @@ class ArticleService extends WikiaObject {
 		return $snippet;
 	}
 
+	/**
+	 * Gets the cache key associated to an article
+	 *
+	 * @param  integer $articleId A valid article ID
+	 *
+	 * @return string The cache key associated to the article
+	 */
 	static public function getCacheKey( $articleId ) {
 		return F::app()->wf->MemcKey(
 			__CLASS__,
