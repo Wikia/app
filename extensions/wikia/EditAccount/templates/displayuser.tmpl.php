@@ -57,13 +57,13 @@
 	</tr>
 	<tr>
 		<form method="post" action="">
-		<td>
-			Modify adopter status (for AutomaticWikiAdopt)
-		</td>
+		<td><?= wfMessage( 'editaccount-label-toggleadopt' )->escaped() ?></td>
 		<td>
 			<input type="submit" value="<?= ( $isAdopter ) ? 'prevent auto adoption' : 'allow auto adoption' ?>" />
 			<input type="hidden" name="wpAction" value="toggleadopter" />
+			<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
 		</td>
+		</form>
 	</tr>
 <?php if( $isUnsub ) { ?>
 	<tr>
