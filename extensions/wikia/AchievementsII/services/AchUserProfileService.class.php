@@ -2,10 +2,7 @@
 
 class AchUserProfileService {
 
-	const ITEMS_PER_BATCH = 9;
-
 	var $mOwnerBadgesSimple = array();
-	var $mOwnerBadgesCount;
 	var $mOwnerBadgesExtended = array();
 	var $mViewerBadgesExtended = array();
 	var $mViewerCounters = null;
@@ -37,8 +34,7 @@ class AchUserProfileService {
 				$this->loadViewerCounters();
     		}
 
-			$this->loadOwnerBadgesCount();
-			$this->loadOwnerBadges();
+    		$this->loadOwnerBadges();
 			$this->loadOwnerCounters();
     		$this->prepareChallenges();
 
@@ -69,25 +65,6 @@ class AchUserProfileService {
 		wfProfileOut(__METHOD__);
     	return $out;
     }
-
-	public function initOwnerBadges($userName = '', $page = 0){
-		wfProfileIn(__METHOD__);
-		global $wgUser;
-
-		$this->mUserOwner = F::build('User', array( $userName ), 'newFromName');
-
-		if(
-			in_array( strtolower( RequestContext::getMain()->getSkin()->getSkinName() ), array( 'oasis' ) ) &&
-			$this->mUserOwner &&
-			AchAwardingService::canEarnBadges( $this->mUserOwner ) &&
-			$this->mUserOwner->isLoggedIn() &&
-			!($wgUser->getId() == $this->mUserOwner->getId() && $wgUser->getOption('hidepersonalachievements')) &&
-			$page >= 0){
-
-			$this->loadOwnerBadges($page);
-		}
-		wfProfileOut(__METHOD__);
-	}
 
 	/**
 	 * Service method to get the most recently earned badge for a list of users
@@ -279,33 +256,7 @@ class AchUserProfileService {
 		wfProfileOut(__METHOD__);
 	}
 
-	private function loadOwnerBadgesCount(){
-		global $wgCityId, $wgExternalSharedDB;
-		global $wgEnableAchievementsStoreLocalData;
-		wfProfileIn(__METHOD__);
-
-		$where = array('user_id' => $this->mUserOwner->getId());
-		if(empty($wgEnableAchievementsStoreLocalData)) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-			$where['wiki_id'] = $wgCityId;
-		} else {
-			$dbr = wfGetDB(DB_SLAVE);
-		}
-
-		$res = $dbr->selectRow(
-			'ach_user_badges',
-			array( 'COUNT(*) AS count' ),
-			$where,
-			__METHOD__
-			);
-
-		$this->mOwnerBadgesCount =  isset( $res->count ) ? $res->count : 0 ;
-		wfProfileOut(__METHOD__);
-	}
-
-
-
-	private function loadOwnerBadges($page = 0) {
+	private function loadOwnerBadges() {
 		global $wgCityId, $wgExternalSharedDB;
 		global $wgEnableAchievementsStoreLocalData;
 		wfProfileIn(__METHOD__);
@@ -323,7 +274,7 @@ class AchUserProfileService {
 			'badge_type_id, badge_lap',
 			$where,
 			__METHOD__,
-			array('ORDER BY' => 'date DESC, badge_lap DESC', 'OFFSET' => $page*self::ITEMS_PER_BATCH, 'LIMIT' =>  self::ITEMS_PER_BATCH)
+			array('ORDER BY' => 'date DESC, badge_lap DESC')
 		);
 
 		while($row = $dbr->fetchObject($res)) {
