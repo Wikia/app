@@ -8,7 +8,10 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 	'use strict';
 	/** @private **/
 
-	var	images = [],
+	var	transform = (function(style, undef){
+			return style.transform != undef ? 'transform' : style.webkitTransform != undef ? 'webkitTransform' : style.oTransform != undef ? 'oTransform' : style.mozTransform != undef ? 'mozTransform' : 'msTransform';
+		})(document.createElement('div').style),
+		images = [],
 		elements,
 		pages = [],
 		videoCache = {},
@@ -29,11 +32,21 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 		startX,
 		startY,
 		touched,
+		currentZoom,
 		zoomed,
 		zooming,
-		currentSize,
+		zoomable = true,
+		img,
+		imgW,
+		imgH,
+		origW,
+		origH,
+		dx,
+		dy,
 		sx,
 		sy,
+		xMax,
+		yMax,
 		widthFll,
 		heightFll,
 		startD,
@@ -86,7 +99,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 					images[images.length] = new Media(element, imageData, l, j);
 
 					//create pages for modal
-					pages[imagesLength++] = '<div style="background-image: url(' + imageData.full + ')"></div>';
+					pages[imagesLength++] = '<section><img src=' + imageData.full + '></section>';
 				}
 			}
 		}
@@ -134,8 +147,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 	function handleError(msg){
 		modal.setCaption(msg || '');
 		modal.showUI();
-		currentImage.style.backgroundImage = '';
-		currentImage.style.backgroundSize = '50%';
+		currentImageStyle.webkitTransform = 'scale(1)';
 		currentImage.className += ' imgPlcHld';
 	}
 
@@ -148,8 +160,8 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 		//inject the content only if it was not already there in the page
 		//to avoid refresh the contents (it triggers a full
 		//reload of iframe contents for videos)
-		if (!pager.getCurrent().innerHTML) {
-			if(image.isVideo) {// video
+		if(image.isVideo) {// video
+			if(!pager.getCurrent().innerHTML) {
 				var imgTitle = image.name;
 				currentImageStyle.backgroundImage = '';
 
@@ -182,24 +194,32 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 						}
 					});
 				}
+			}
+		}else{
+			var img = new Image();
+			img.src = image.url;
+
+			if(!img.complete){
+				img.onload = function(){
+					loader.hide(currentImage);
+
+					var img = currentImage.getElementsByTagName('img')[0];
+					origW = img.width;
+					origH = img.height;
+				};
+
+				img.onerror = function(){
+					loader.hide(currentImage);
+					handleError(msg('wikiamobile-image-not-loaded'));
+				};
+
+				loader.show(currentImage, {
+					center: true
+				});
 			}else{
-				var img = new Image();
-				img.src = image.url;
-
-				if(!img.complete){
-					img.onload = function(){
-						loader.hide(currentImage);
-					};
-
-					img.onerror = function(){
-						loader.hide(currentImage);
-						handleError(msg('wikiamobile-image-not-loaded'));
-					};
-
-					loader.show(currentImage, {
-						center: true
-					});
-				}
+				img = currentImage.getElementsByTagName('img')[0];
+				origW = img.width;
+				origH = img.height;
 			}
 		}
 	}
@@ -238,10 +258,9 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 
 		if(zoomed){
 			resetZoom();
-			//trackObj.ga_label = 'zoom-out';
 		}else{
-			currentImageStyle.backgroundSize = 'cover';
-			//trackObj.ga_label = 'zoom-in';
+			currentZoom = 2;
+			currentImageStyle[transform] = 'scale(2)';
 		}
 
 		onZoom();
@@ -250,6 +269,13 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 	function onZoom(state){
 		zoomed = (state === undefined) ? !zoomed : state;
 		if(zoomed){
+
+			imgW = origW * currentZoom;
+			imgH = origH * currentZoom;
+
+			xMax = imgW / 2 - widthFll / 2 + 10;
+			yMax = imgH / 2 - heightFll / 2 + 10;
+
 			modal.hideUI();
 		}else{
 			modal.showUI();
@@ -262,24 +288,25 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 		var x = b.clientX - a.clientX,
 			y = b.clientY - a.clientY;
 
-		return Math.sqrt((x * x) + (y * y));
+		return Math.sqrt((x * x) + (y * y)) / 1000;
 	}
 
 	function onStart(ev){
 		var touches = ev.touches,
-			l = touches.length,
-			computedStyle = getComputedStyle(currentImage);
+			l = touches.length;
+
+		ev.scale && wrapper.removeEventListener('touchstart', onStart);
+		wrapper.addEventListener('touchmove', onMove);
+		wrapper.addEventListener('touchend', onEnd);
+		wrapper.addEventListener('touchcancel', onEnd);
 
 		window.scrollTo(0,0);
 
-		//I need to split it as ios4 adds auto at the end of this property if you set only one % value
-		currentSize = ~~computedStyle.backgroundSize.split('%')[0] || 100;
-
 		if(l == 1){
-			sx = ~~computedStyle.backgroundPositionX.slice(0,-1);
-			sy = ~~computedStyle.backgroundPositionY.slice(0,-1);
-			startX = touches[0].clientX;
-			startY = touches[0].clientY;
+			sx = dx || 0;
+			sy = dy || 0;
+			startX = touches[0].clientX * currentZoom;
+			startY = touches[0].clientY * currentZoom;
 
 			if(touched) {
 				ondblTap(ev);
@@ -292,77 +319,85 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 		}
 
 		if(l === 2 && !ev.scale){
+			wrapper.removeEventListener('touchstart', onStart);
 			startD = distance(touches[0], touches[1]);
 		}
 	}
 
 	function onMove(ev){
-		var touches = ev.touches,
-			l = touches ? touches.length : 0,
-			zoom,
-			scale;
+		if ( zoomable ) {
+			var touches = ev.touches,
+				l = touches ? touches.length : 0;
 
-		ev.preventDefault();
+			ev.preventDefault();
 
-		if(l === 1 && zoomed) {
-			var touch = touches[0],
-				x = (((startX - touch.clientX) / widthFll) * 100) + sx,
-				y = (((startY - touch.clientY) / heightFll) * 100) + sy;
+			if(l === 1 && zoomed) {
+				var touch = touches[0];
 
-			currentImageStyle.backgroundPosition =  Math.min(Math.max(x, 0), 100) + '% ' + Math.min(Math.max(y, 0), 100) + '%';
+				dx = (imgW <= widthFll) ? 0 : ~~(Math.max(-xMax, Math.min(xMax, (-(touch.clientX * currentZoom - startX) + sx) / currentZoom)));
+				dy = (imgH <= heightFll) ? 0 : ~~(Math.max(-yMax, Math.min(yMax, (-(touch.clientY * currentZoom - startY) + sy) / currentZoom)));
 
-			modal.hideUI();
-		}
+				currentImageStyle[transform] = 'scale(' + currentZoom + ') translate(' + -dx/2 + 'px,' + -dy/2 + 'px)';
 
-		if(l === 2){
-			scale = ev.scale || distance(touches[0], touches[1]) / startD;
-			//max 3x min 1x
-			zoom = Math.min(Math.max(~~(currentSize * scale), 100), 300);
+				modal.hideUI();
+			}
 
-			if(!zoomed && scale < 1){
-				if(!zooming && scale < 0.8){
-					require(['mediagallery'], function(mg){
-						mg.open();
-					});
-				}
-			}else {
-				zooming = (scale > 1) ? 'zoom-in' : 'zoom-out';
+			if(l === 2){
+				//max 4x
+				var scale = (ev.scale || (distance(touches[0], touches[1]) / startD)),
+					newZoom = Math.min(4, currentZoom * (Math.sqrt(scale) * 100) / 100);
 
-				if(zoom > 100){
-					currentImageStyle.backgroundSize = zoom + '%';
-					onZoom(true);
-				}else{
-					resetZoom();
-					onZoom(false);
+				if(newZoom != currentZoom) {
+					if(!zoomed && newZoom < 1){
+						if(!zooming && newZoom < 0.9){
+							require([require.optional('mediagallery')], function(mg){
+								mg && mg.open();
+							});
+							currentZoom = 1;
+						}
+					}else {
+						zooming = (scale > 1) ? 'zoom-in' : 'zoom-out';
+
+						if(newZoom > 1){
+							currentZoom = newZoom;
+
+							currentImageStyle[transform] = 'scale(' + newZoom + ')';
+
+							onZoom(true);
+						}else{
+							resetZoom();
+							onZoom(false);
+						}
+					}
 				}
 			}
+		} else {
+			onEnd();
 		}
+
 	}
 
 	function onEnd(){
-		if(zooming){
-			zooming = '';
-		}
+		wrapper.addEventListener('touchstart', onStart);
+		wrapper.removeEventListener('touchmove', onMove);
+		wrapper.removeEventListener('touchend', onEnd);
+		wrapper.removeEventListener('touchcancel', onEnd);
+		zooming = '';
 	}
 
 	function resetZoom(){
-		currentImageStyle.backgroundPosition = '50% 50%';
-		currentImageStyle.backgroundSize = 'contain';
+		currentZoom = 1;
+		currentImageStyle && (currentImageStyle[transform] = 'scale(1)');
 	}
 
 	function addZoom(){
 		zoomed = false;
+		resetZoom();
 		wrapper.addEventListener('touchstart', onStart);
-		wrapper.addEventListener('touchmove', onMove);
-		wrapper.addEventListener('touchend', onEnd);
-		wrapper.addEventListener('touchcancel', onEnd);
 	}
 
 	function removeZoom(){
 		wrapper.removeEventListener('touchstart', onStart);
-		wrapper.removeEventListener('touchmove', onMove);
-		wrapper.removeEventListener('touchend', onEnd);
-		wrapper.removeEventListener('touchcancel', onEnd);
 	}
 
 	function refresh(){
@@ -388,6 +423,8 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 				removeZoom();
 			}
 		});
+
+		wrapper = modal.getWrapper();
 
 		if(imagesLength > 1 && !galleryInited) {
 			galleryData = cache && cache.get(cacheKey);
@@ -420,12 +457,6 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 			galleryInited = true;
 		}
 
-		//setup of zoom
-		wrapper = modal.getWrapper();
-
-		addZoom();
-		//end of zoom setup
-
 		wkMdlImages = document.getElementById('wkMdlImages');
 
 		widthFll = wkMdlImages.offsetWidth;
@@ -440,7 +471,11 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 				setCancel: function(){
 					return (zoomed || zooming);
 				},
+				onStart: function(){
+					zoomable = false;
+				},
 				onEnd: function(n){
+					zoomable = true;
 					//make sure user changed page
 					if(current !== n) {
 						track.event('modal', track.PAGINATE, {
@@ -470,6 +505,8 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 				document.getElementById('nxtImg').addEventListener('click', tap);
 				document.getElementById('prvImg').addEventListener('click', tap);
 			}
+
+			addZoom();
 
 			//setupImage and get references to currentImage and it's style property
 			refresh();

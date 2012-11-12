@@ -43,6 +43,7 @@ define('pager', function () {
 			isFunction,
 			container,
 			wrapper,
+			onStart,
 			onEnd,
 			onOrientCallback,
 			checkCancel,
@@ -170,38 +171,65 @@ define('pager', function () {
 				setTransform(prev, current, next, toX);
 			},
 			onTouchStart = function(ev){
-				if(ev.touches.length === 1) {
-					if(isFunction ? !checkCancel() : true)
-						pos = ev.touches[0].pageX;
+				ev.preventDefault();
+				if ( ev.touches.length === 1 && isFunction ? !checkCancel() : true ) {
+					ev.stopPropagation();
+					pos = ev.touches[0].pageX;
+
+					onStart && onStart();
+
+					wrapper.removeEventListener('touchstart', onTouchStart);
+					wrapper.addEventListener('touchmove', onTouchMove);
+					wrapper.addEventListener('touchend', onTouchEnd);
+					wrapper.addEventListener('touchcancel', onTouchEnd);
+				} else {
+					wrapper.addEventListener('touchstart', onTouchStart);
+					wrapper.removeEventListener('touchmove', onTouchMove);
+					wrapper.removeEventListener('touchend', onTouchEnd);
+					wrapper.removeEventListener('touchcancel', onTouchEnd);
 				}
 			},
 			onTouchMove = function(ev){
-				ev.preventDefault();
-				if(isFunction ? !checkCancel() : true)
-					setTransform(prev, current, next, ev.touches[0].pageX - pos);
+				if ( ev.touches.length === 1 ) {
+					ev.preventDefault();
+
+					if( isFunction ? !checkCancel() : true ) {
+						var delta = ev.touches[0].pageX - pos;
+
+						setTransform(prev, current, next, delta);
+					} else {
+						wrapper.addEventListener('touchstart', onTouchStart);
+						wrapper.removeEventListener('touchmove', onTouchMove);
+						wrapper.removeEventListener('touchend', onTouchEnd);
+						wrapper.removeEventListener('touchcancel', onTouchEnd);
+
+						onEnd && onEnd(currentPageNum);
+					}
+				}
 			},
 			onTouchEnd = function(ev){
 				if(ev.touches.length === 0) {
-					var delta = ev.changedTouches[0].pageX - pos;
-					if((isFunction ? !checkCancel() : true) && delta !== 0)
-						goTo(delta);
+					ev.preventDefault();
+
+					if ( isFunction ? !checkCancel() : true ) {
+							goTo(ev.changedTouches[0].pageX - pos);
+					}
+
+					wrapper.addEventListener('touchstart', onTouchStart);
+					wrapper.removeEventListener('touchmove', onTouchMove);
+					wrapper.removeEventListener('touchend', onTouchEnd);
+					wrapper.removeEventListener('touchcancel', onTouchEnd);
 				}
 			},
 			cleanup = function(onePage){
 				eventsNotAdded = true;
 				!onePage && window.removeEventListener('viewportsize', onResize);
-				wrapper.removeEventListener('touchstart', onTouchStart, true);
-				wrapper.removeEventListener('touchmove', onTouchMove, true);
-				wrapper.removeEventListener('touchend', onTouchEnd, true);
-				wrapper.removeEventListener('touchcancel', onTouchEnd, true);
+				wrapper.removeEventListener('touchstart', onTouchStart);
 			},
 			events = function(){
 				if(eventsNotAdded){
 					eventsNotAdded = false;
-					wrapper.addEventListener('touchstart', onTouchStart, true);
-					wrapper.addEventListener('touchmove', onTouchMove, true);
-					wrapper.addEventListener('touchend', onTouchEnd, true);
-					wrapper.addEventListener('touchcancel', onTouchEnd, true);
+					//wrapper.addEventListener('touchstart', onTouchStart);
 				}
 			},
 			onResize = function(){
@@ -214,6 +242,7 @@ define('pager', function () {
 		wrapper = options.wrapper || container;
 		currentPageNum = options.pageNumber || 0;
 		onEnd = (typeof options.onEnd === 'function') ? options.onEnd : false;
+		onStart = (typeof options.onStart === 'function') ? options.onStart : false;
 		onOrientCallback = (typeof options.onResize === 'function') ? options.onResize : false;
 		checkCancel = options.setCancel;
 		isFunction = (typeof checkCancel === 'function');
