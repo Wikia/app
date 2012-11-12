@@ -254,12 +254,17 @@ class WikiaSearch extends WikiaObject {
 	    } else {
 	        // tweakable heuristic:
 	        // the document frequency for the interesting terms needs to be at least 50% of the wiki's pages
-	        $data = $this->callMediaWikiAPI( array( 'action'	=> 'query',
-									                'prop'		=> 'info|categories',
-									                'inprop'	=> 'url|created|views|revcount',
-									                'meta'		=> 'siteinfo',
-									                'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
-	                						));
+
+	    	$params = array('action'	=> 'query',
+			                'prop'		=> 'info|categories',
+			                'inprop'	=> 'url|created|views|revcount',
+			                'meta'		=> 'siteinfo',
+			                'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
+                			);
+	    	
+			$api = F::build( 'ApiMain', array( 'request' => new FauxRequest($params) ) );
+			$api->execute();
+			$data = $api->getResultData();
 	
 			if ( isset( $data['query'] ) && isset( $data['query']['statistics'] ) && isset( $data['query']['statistics']['articles'] ) ) {
 				$searchConfig->setMindf( (int) ($data['query']['statistics']['articles'] * .5) );
@@ -723,21 +728,6 @@ class WikiaSearch extends WikiaObject {
 		return $results;
 	}
 
-	/**
-	 * Used to access API data from various MediaWiki services
-	 * @param  array $params
-	 * @return array result data
-	 **/
-	private function callMediaWikiAPI( Array $params ) {
-		wfProfileIn(__METHOD__);
-
-		$api = F::build( 'ApiMain', array( 'request' => new FauxRequest($params) ) );
-		$api->execute();
-
-		wfProfileOut(__METHOD__);
-		return  $api->getResultData();
-	}
-	
 	/**
 	 * get list of wikis excluded from inter-wiki searching
 	 * @param  int $currentWikiId
