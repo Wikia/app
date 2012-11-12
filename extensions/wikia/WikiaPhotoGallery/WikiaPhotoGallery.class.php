@@ -421,9 +421,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			// store list of images actually shown (to be used by front-end)
 			$this->mData['imagesShown'][] = $imageItem;
 
-			// use global instance of parser (RT #44689 / RT #44712)
-			$caption = $this->mParser->recursiveTagParse($caption);
-
 			$this->add($nt, $caption, $link);
 
 			// Only add real images (bug #5586)
@@ -949,7 +946,9 @@ class WikiaPhotoGallery extends ImageGallery {
 						)
 					);
 
-					$html .= $image['caption'];
+
+					// use global instance of parser (RT #44689 / RT #44712)
+					$html .= $this->mParser->recursiveTagParse( $image['caption'] );
 					$html .= Xml::closeElement('div');
 				}
 
@@ -1077,7 +1076,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			 * @var $nt Title
 			 */
 			$nt = $pair[0];
-			$text = $pair[1];
+			// use global instance of parser (RT #44689 / RT #44712)
+			$text = $this->mParser->recursiveTagParse( $pair[1] );
 			$link = $pair[2];
 
 			# Give extensions a chance to select the file revision for us
@@ -1346,7 +1346,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			 * @var $link String
 			 */
 			$nt = $pair[0];
-			$text = $pair[1];
+			// use global instance of parser (RT #44689 / RT #44712)
+			$text = $this->mParser->recursiveTagParse( $pair[1] );
 			$link = $pair[2];
 			$linkText = $this->mData['images'][$p]['linktext'];
 			$shortText = $this->mData['images'][$p]['shorttext'];
@@ -1901,7 +1902,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$result = '';
 
 		foreach( $this->mImages as $val ) {
-			$item = wfFindFile( $val[0] );
+			$item = $this->getImage($val[0]);
 
 			if( !empty( $item ) ) {
 				$media[] = array(
