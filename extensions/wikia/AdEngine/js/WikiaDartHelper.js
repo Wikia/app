@@ -354,6 +354,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux) {
 	};
 
 	return {
-		getUrl: getUrl
+		getUrl: getUrl,
+		getCustomKeyValues: getCustomKeyValues
 	};
 };
