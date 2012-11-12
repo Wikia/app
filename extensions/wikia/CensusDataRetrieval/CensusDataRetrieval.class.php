@@ -74,7 +74,11 @@ class CensusDataRetrieval {
                 $censusData = null;
                 foreach ($this->typeMap as $key => $value) {
                         $censusData = $http->get( self::QUERY_URL.$key.'/?code='.$this->query );
-                        if ( !empty( $censusData ) ) {
+                        $map = json_decode($censusData);
+                        $property = $key . '_list';
+                        if ( $map->returned > 0 ) {
+                                $censusData = $map->{$property}[0];
+                                $this->type = $key;
                                 break;
                         }
                 }
@@ -152,25 +156,23 @@ class CensusDataRetrieval {
 	 *
 	 * @return array
 	 */
-	private function mapData( $censusData ) {
+	private function mapData( $object ) {
 //                $arr= array();
 //                preg_match('/<body>(.*)<\/body>/s', $html, $arr);
 //                $json = $arr[1];
 //                $json = strip_tags($json);
-                $map = json_decode($censusData);
-		foreach ( $this->supportedTypes as $type ) {
-			$property = $type . '_list';
-			if ( isset( $map->$property ) ) {
-				$object = $map->{$property}[0];
-				$this->type = $type;
-				break;
-			}
-		}
+//                $map = json_decode($censusData);
+//		foreach ( $this->supportedTypes as $type ) {
+//			$property = $type . '_list';
+//				$object = $map->{$property}[0];
+//				
+//				break;
+//		}
 		if ( empty( $object ) ) {
 			wfDebug( __METHOD__ . ': Unsupported object type' );
 			return false;
 		} else {
-			wfDebug( __METHOD__ . ": Found object of type {$object->type}" );
+			//wfDebug( __METHOD__ . ": Found object of type {$object->type}" );
 		}
 
 		// @TODO this needs to be generalized ot be based on a per-type map array defined in a class variable
