@@ -2,7 +2,7 @@
 /**
  * @author ADi
  */
-class SDValueObject extends SDRenderableObject {
+class SDElementPropertyValue extends SDRenderableObject {
 	/**
 	 * @var SDElementPropertyType
 	 */

@@ -7,10 +7,10 @@ $dir = dirname(__FILE__) . '/';
  */
 $app->registerClass('StructuredDataAPIClient', $dir . 'StructuredDataAPIClient.class.php');
 $app->registerClass('StructuredData', $dir . 'StructuredData.class.php');
-$app->registerClass('SDValueObject', $dir . 'SDValueObject.class.php');
 $app->registerClass('SDRenderableObject', $dir . 'SDRenderableObject.class.php');
 $app->registerClass('SDElement', $dir . 'SDElement.class.php');
 $app->registerClass('SDElementProperty', $dir . 'SDElementProperty.class.php');
+$app->registerClass('SDElementPropertyValue', $dir . 'SDElementPropertyValue.class.php');
 $app->registerClass('SDElementPropertyType', $dir . 'SDElementPropertyType.class.php');
 $app->registerClass('SDElementPropertyTypeRange', $dir . 'SDElementPropertyTypeRange.class.php');
 $app->registerClass('SDElementRendererFactory', $dir . 'SDElementRendererFactory.class.php');
