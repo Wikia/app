@@ -350,9 +350,9 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @param $html  String: additional HTML text to be shown. The name and size of the image are always shown.
 	 * @param $link  String: value of link= parameter
 	 */
-	function add($title, $html='', $link='') {
+	function add($title, $html='', $link='', $origHtml='') {
 		if ($title instanceof Title) {
-			$this->mImages[] = array($title, $html, $link);
+			$this->mImages[] = array( $title, $html, $link, $origHtml );
 			wfDebug( __METHOD__ . ' - ' . $title->getText() . "\n" );
 		}
 	}
@@ -421,7 +421,15 @@ class WikiaPhotoGallery extends ImageGallery {
 			// store list of images actually shown (to be used by front-end)
 			$this->mData['imagesShown'][] = $imageItem;
 
-			$this->add($nt, $caption, $link);
+
+
+			$this->add(
+				$nt,
+				// use global instance of parser (RT #44689 / RT #44712)
+				$this->mParser->recursiveTagParse( $caption ),
+				$link,
+				$caption
+			);
 
 			// Only add real images (bug #5586)
 			if ($nt->getNamespace() == NS_FILE) {
@@ -946,9 +954,7 @@ class WikiaPhotoGallery extends ImageGallery {
 						)
 					);
 
-
-					// use global instance of parser (RT #44689 / RT #44712)
-					$html .= $this->mParser->recursiveTagParse( $image['caption'] );
+					$html .= $image['caption'];
 					$html .= Xml::closeElement('div');
 				}
 
@@ -1076,8 +1082,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			 * @var $nt Title
 			 */
 			$nt = $pair[0];
-			// use global instance of parser (RT #44689 / RT #44712)
-			$text = $this->mParser->recursiveTagParse( $pair[1] );
+			$text = $pair[1];
 			$link = $pair[2];
 
 			# Give extensions a chance to select the file revision for us
@@ -1346,8 +1351,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			 * @var $link String
 			 */
 			$nt = $pair[0];
-			// use global instance of parser (RT #44689 / RT #44712)
-			$text = $this->mParser->recursiveTagParse( $pair[1] );
+			$text = $pair[1];
 			$link = $pair[2];
 			$linkText = $this->mData['images'][$p]['linktext'];
 			$shortText = $this->mData['images'][$p]['shorttext'];
@@ -1902,12 +1906,12 @@ class WikiaPhotoGallery extends ImageGallery {
 		$result = '';
 
 		foreach( $this->mImages as $val ) {
-			$item = $this->getImage($val[0]);
+			$item = wfFindFile( $val[0] );
 
 			if( !empty( $item ) ) {
 				$media[] = array(
 					'title' => $val[0],
-					'caption' => $val[1],
+					'caption' => $val[3],
 					'link' => $val[2]
 				);
 			}
