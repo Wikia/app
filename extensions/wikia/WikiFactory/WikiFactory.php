@@ -74,6 +74,11 @@ class WikiFactory {
 		"hash"
 	);
 
+	/**
+	 * list of valid database clusters used for creating wikis
+	 */
+	static public $clusters = array( "c1", "c2", "c3", "c4" );
+
 	static public $levels = array(
 		1 => "read only",
 		2 => "editable by staff",
@@ -2840,6 +2845,18 @@ class WikiFactory {
 
 		wfProfileOut( __METHOD__ );
 		return $clusters;
+	}
+
+	/**
+	 * isValidCluster -- check if name is valid cluster (c1, c2, c3, ... )
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param string $cluster cluster name
+	 */
+	static public function isValidCluster( $cluster ) {
+		return isset( self::$clusters[ $cluster ] );
 	}
 
 	/**

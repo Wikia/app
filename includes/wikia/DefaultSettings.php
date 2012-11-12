@@ -985,7 +985,3 @@ $wgLBDefaultSection = 'DEFAULT';
  */
 $wgEnableMemcachedBulkMode = false;
 
-/**
- * list of valid database clusters used for creating wikis
- */
-$wgDBValidClusters = array( "c1", "c2", "c3", "c4" );
