@@ -351,4 +351,20 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		);
 	}
 	
+	/**
+	 * @covers WikiaSearchResult::replaceUnusualEscapes
+	 * @covers WikiaSearchResult::replaceUnusualEscapesCallback
+	 */
+	public function testReplaceUnusualEscapes() {
+		$this->assertEquals(
+				'%5Bfoo+bar%25_%3F!',
+				WikiaSearchResult::replaceUnusualEscapes( urlencode( '[foo bar%_?!' ) )
+		);
+		
+		$this->assertEquals(
+				'100%25+Completion',
+				WikiaSearchResult::replaceUnusualEscapes( urlencode( '100% Completion' ) )
+		);
+		
+	}
 }
