@@ -258,6 +258,8 @@ END;
 			$sql .= "	JOIN $smw_ids o_ids ON $table_name.o_id = o_ids.smw_id\n";
 		}
 		$sql .= "	WHERE p_ids.smw_title = '$query_property'";
+		$sql = preg_replace('/\s+/', ' ', trim($sql));
+		error_log( "SQL: " . $sql );
 		$dbr->query( $sql );
 	}
 
