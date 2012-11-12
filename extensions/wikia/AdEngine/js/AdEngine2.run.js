@@ -2,12 +2,12 @@
 	var module = 'AdEngine2.run'
 		, adConfig
 		, adEngine
+		, adLogicShortPage
 		, scriptWriter
 		, wikiaDart
 		, evolveHelper
 		, adProviderAdDriver2
 		, adProviderEvolve
-		, adProviderEvolveRS
 		, adProviderGamePro
 		, adProviderLater
 		, adProviderNull
@@ -20,12 +20,14 @@
 	// Construct Ad Engine
 	adEngine = AdEngine2(log, LazyQueue);
 
-	// Construct Ad Providers
+	// Construct various helpers
+	adLogicShortPage = AdLogicShortPage(document);
 	slotTweaker = SlotTweaker(log, document);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
-	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux);
+	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux, adLogicShortPage);
 	evolveHelper = EvolveHelper(log, window);
 
+	// Construct Ad Providers
 	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, Cache);
 	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
@@ -37,7 +39,7 @@
 
 	adConfig = AdConfig2(
 		// regular dependencies:
-		log, window, document, Geo
+		log, window, document, Geo, adLogicShortPage
 
 		// AdProviders:
 		, adProviderAdDriver2
