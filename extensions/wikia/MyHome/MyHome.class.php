@@ -174,27 +174,12 @@ class MyHome {
 			return true;
 		}
 
-<<<<<<< HEAD
 		// user must be logged in and have redirect enabled; this is not used for Corporate Sites where Wikia Visualization
 		// is enabled
 		if ($wgUser->isLoggedIn()
 			&& ($wgUser->getOption('myhomedisableredirect') != true)
 			&& empty($wgEnableWikiaHomePageExt )) {
 			$title = Title::newFromText('WikiActivity', NS_SPECIAL);
-=======
-		//user must be logged in and have redirect enabled;
-		//this is not used for Corporate Sites where Wikia Visualization is enabled
-		if( $wgUser->isLoggedIn() && empty($wgEnableWikiaHomePageExt) ) {
-			$value = $wgUser->getOption('myhomedisableredirect');
-			switch($value) {
-				case UserPreferencesV2::MYINFO_REDIRECT_WIKI_ACTIVITY:
-					$title = Title::newFromText('WikiActivity', NS_SPECIAL);
-					break;
-				case UserPreferencesV2::MYINFO_REDIRECT_RECENT_CHANGES:
-					$title = Title::newFromText('RecentChanges', NS_SPECIAL);
-					break;
-			}
->>>>>>> parent of 9d0e8a5... changed name of landing page property
 		}
 
 		wfProfileOut(__METHOD__);
