@@ -261,12 +261,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	}
 
 	public function getRendererNames() {
-		return array( $this->type );
-	}
-
-	public function render( $context = SD_CONTEXT_DEFAULT ) {
-		$result = parent::render( $context );
-		return ( $result !== false ) ? $result : '<a href="'.$this->getSpecialPageUrl().'">'. htmlspecialchars( $this->getName() ) . '</a>';
+		return array( $this->type, 'default' );
 	}
 
 	public function getSpecialPageUrl() {

@@ -12,6 +12,7 @@ $app->registerClass('SDRenderableObject', $dir . 'SDRenderableObject.class.php')
 $app->registerClass('SDElement', $dir . 'SDElement.class.php');
 $app->registerClass('SDElementProperty', $dir . 'SDElementProperty.class.php');
 $app->registerClass('SDElementPropertyType', $dir . 'SDElementPropertyType.class.php');
+$app->registerClass('SDElementPropertyTypeRange', $dir . 'SDElementPropertyTypeRange.class.php');
 $app->registerClass('SDElementRendererFactory', $dir . 'SDElementRendererFactory.class.php');
 $app->registerClass('SDContext', $dir . 'SDContext.class.php');
 
@@ -43,7 +44,8 @@ $wgStructuredDataConfig = array(
 		'xsd:anyURI' => 'anyURI',
 		'@set' => 'container',
 		'@list' => 'container',
-		'value_default' => 'value_default'
+		'value_default' => 'value_default',
+		'default' => 'default'
 	)
 );
 

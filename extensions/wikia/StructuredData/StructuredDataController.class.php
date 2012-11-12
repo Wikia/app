@@ -161,7 +161,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 	public function getCollection() {
 		$objectType = $this->request->getVal( 'objectType', false );
 		if( !empty( $objectType ) ) {
-			$collection = $this->APIClient->getCollection( $objectType );
+			$collection = $this->structuredData->getCollectionByType( $objectType );
 			$this->response->setVal( "list", $collection );
 		}
 	}

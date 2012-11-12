@@ -47,6 +47,15 @@ class StructuredData {
 		return $this->getSDElement( $element, $elementDepth );
 	}
 
+	/**
+	 * fetch all objects of given type from SDS
+	 * @param $type
+	 * @return array
+	 */
+	public function getCollectionByType( $type ) {
+		return $this->APIClient->getCollection( $type );
+	}
+
 	private function getSDElement(stdClass $element, $elementDepth = 0) {
 		$template = $this->APIClient->getTemplate( $element->type );
 

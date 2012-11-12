@@ -4,11 +4,17 @@
  */
 class SDElementPropertyType {
 	protected $name;
+	/**
+	 * @var SDElementPropertyTypeRange
+	 */
 	protected $range;
 
-	public function __construct($name = '@set', $range = null) {
+	public function __construct($name = '@set', array $rawRange = null) {
 		$this->name = $name;
-		$this->range = $range;
+
+		if( !empty($rawRange) ) {
+			$this->range = F::build( 'SDElementPropertyTypeRange', array( 'data' => $rawRange ) );
+		}
 	}
 
 	public function isCollection() {
@@ -23,16 +29,26 @@ class SDElementPropertyType {
 		return $this->name;
 	}
 
-	public function setRange($range) {
+	public function setRange(SDElementPropertyTypeRange $range) {
 		$this->range = $range;
 	}
 
+	/**
+	 * @return SDElementPropertyTypeRange
+	 */
 	public function getRange() {
 		return $this->range;
 	}
 
 	public function hasRange() {
 		return ( !empty($this->range) ? true : false );
+	}
+
+	public function getAcceptedValues() {
+		if($this->hasRange()) {
+			return $this->getRange()->getAcceptedValues();
+		}
+		return array();
 	}
 
 }

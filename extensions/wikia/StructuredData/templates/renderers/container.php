@@ -10,7 +10,7 @@ if ( !$object->isCollection() ) { // @todo - again we assume that collection can
 	/*
 	 * property is an array
 	 */
-	if ( !count( $value ) ){
+	if ( !count( $value ) ) {
 		if ($context != SD_CONTEXT_EDITING) {
 			echo '<p class="empty">empty</p>';
 		}
@@ -42,7 +42,14 @@ if ( !$object->isCollection() ) { // @todo - again we assume that collection can
 	}
 
 	if ($context == SD_CONTEXT_EDITING) {
-		echo "todo: button to add new element";
+		echo "todo: button to add new element.";
+		if($object->getType()->hasRange()) {
+			echo "<br>Possible values:<br>";
+			var_dump($object->getType()->getAcceptedValues());
+		}
+		else {
+			echo " (object of type: " . $object->getType()->getName() . " has no range)";
+		}
 	}
 
 }
