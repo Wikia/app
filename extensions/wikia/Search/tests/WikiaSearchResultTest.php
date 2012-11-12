@@ -59,6 +59,9 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	 */
 	public function testTitleFieldMethods() {
 		
+		global $wgLanguageCode;
+		$wgLanguageCode = 'fr';
+		
 		$fieldsCopy = $this->defaultFields;
 		unset($fieldsCopy['title']);
 		unset($fieldsCopy[WikiaSearch::field('title')]);
@@ -103,6 +106,17 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 				$result->getTitle(),
 				'A title set with WikiaSearch::setTitle() should be filtered with WikiaSearch::fixSnippeting before storage.'
 		);
+		
+		unset( $result[WikiaSearch::field( 'title' )] );
+		unset( $result['title'] );
+		$result[WikiaSearch::field( 'title', 'en' )] = $languageTitle;
+		
+		$this->assertEquals(
+		        $languageTitle,
+		        $result->getTitle(),
+		        'A result should return the english language title field during getTitle() if it exists, but the non-english field doesn\'t (video support).'
+		);
+		
 	}
 	
 	/**
