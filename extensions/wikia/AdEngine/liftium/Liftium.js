@@ -2626,11 +2626,7 @@ if (LiftiumOptions.error_beacon !== false ){
 
 // Gentlemen, Start your optimization!
 if (Liftium.empty(LiftiumOptions.offline)){
-	if (wgDBname === 'fallout' || wgDBname === 'muppet') {
-		Liftium.addEventListener(window, 'load', Liftium.init);
-	} else {
-		Liftium.init();
-	}
+	Liftium.init();
 }
 
 Liftium.addEventListener(window, 'load', Liftium.onLoadHandler);

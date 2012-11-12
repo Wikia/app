@@ -5,17 +5,31 @@
 
 module('AdProviderGamePro');
 
+test('rebuildKV', function() {
+	var logMock = function() {}
+		, scriptWriterMock
+		, wikiaTrackerMock
+		, windowMock = {wgInsideUnitTest: true}
+		, documentMock
+		, adProviderGamePro;
+
+	adProviderGamePro = AdProviderGamePro(
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
+	);
+
+    equal(adProviderGamePro.rebuildKV('egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv'), 'egnre=action,adventure,drama,scifi;media=tv', 'egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv');
+});
+
 test('canHandleSlot GamePro de', function() {
 	var logMock = function() {}
 		, scriptWriterMock
-		, wikiaDartMock
 		, wikiaTrackerMock
 		, windowMock = {wgInsideUnitTest: true, wgContentLanguage: 'de'}
 		, documentMock
 		, adProviderGamePro;
 
 	adProviderGamePro = AdProviderGamePro(
-		wikiaDartMock, scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
+		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
 	);
 
 	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_LEADERBOARD']), true, 'de slot HOME_TOP_LEADERBOARD');
