@@ -56,6 +56,8 @@ class RelatedForumDiscussionController extends WikiaController {
 		// load assets related to this if there is a discussions section
 		$this->response->addAsset( 'extensions/wikia/Forum/css/RelatedForumDiscussion.scss' );
 		
+		$messages = array();
+		
 		// don't render anything if there are no discussions for this article
 		if(empty($messages)) {
 			$this->forward( 'RelatedForumDiscussion', 'zeroState', false );
@@ -67,7 +69,7 @@ class RelatedForumDiscussionController extends WikiaController {
 	
 	private function setupCommon($title) {
 		// set template rendering to mustache
-		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
+		//$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
 		
 		// common data
 		$this->sectionHeading = $this->wf->Msg('forum-related-discussion-heading', $title->getText());
@@ -92,7 +94,7 @@ class RelatedForumDiscussionController extends WikiaController {
 	}
 	
 	public function zeroState() {
-		$this->setupCommon($wgTitle);
+		$this->setupCommon($this->wg->Title);
 	
 		$this->creative = $this->wf->MsgExt('forum-related-discussion-zero-state-creative', 'parseinline');
 	}

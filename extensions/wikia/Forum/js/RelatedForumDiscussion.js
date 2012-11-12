@@ -13,6 +13,7 @@
 				articleTitle: 'Kermit'
 			},
 			callback: function(json) {
+				section.removeClass('forum-invisible');
 				if(json && json.replace) {
 					section.replaceWith(json.html);
 				}
