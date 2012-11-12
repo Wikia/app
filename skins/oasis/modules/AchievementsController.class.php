@@ -9,11 +9,10 @@ class AchievementsController extends WikiaController {
 
 		$this->leaderboard_url = null;
 		$this->customize_url = null;
-		$this->ownerBadgesCount = 0;
 		$this->ownerBadges = array();
 		$this->ownerCounters = array();
 		$this->challengesBadges = array();
-		//$this->max_badges = 6; // sets how many badges are visible from the begining, more badges create 'more'-link
+		$this->max_badges = 6; // sets how many badges are visible from the begining, more badges create 'more'-link
 		$this->max_challenges = 'all';  // limit how many badges are in the "more badges you can earn" list. either a number or 'all'
 	}
 
@@ -36,7 +35,6 @@ class AchievementsController extends WikiaController {
 		$userProfileService->getHTML();   // have to call this because it creates our data as a side effect
 
 		$this->ownerName = $userProfileService->mUserOwner->getName();
-		$this->ownerBadgesCount = $userProfileService->mOwnerBadgesCount;
 		$this->ownerBadges = $userProfileService->mOwnerBadgesSimple;
 		$this->ownerCounters = $userProfileService->mOwnerCounters;
 
@@ -61,14 +59,5 @@ class AchievementsController extends WikiaController {
 		if($userProfileService->mUserViewer && $userProfileService->mUserViewer->isAllowed('editinterface')) {
 			$this->customize_url = Skin::makeSpecialUrl("AchievementsCustomize");
 		}
-	}
-
-	public function executeBadges() {
-		$user = trim( $this->getVal( 'user', '' ) );
-		$page = $this->request->getInt( 'page', 0 );
-
-		$userProfileService = new AchUserProfileService();
-		$userProfileService->initOwnerBadges($user, $page);
-		$this->ownerBadges = $userProfileService->mOwnerBadgesSimple;
 	}
 }
