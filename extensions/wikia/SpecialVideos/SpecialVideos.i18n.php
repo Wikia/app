@@ -41,12 +41,12 @@ $messages['de'] = array(
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Videos auf<br /> diesem Wiki|Videos auf<br /> Diesem Wiki}}</span>',
 	'specialvideos-sort-by' => 'Sortieren nach',
 	'specialvideos-sort-latest' => 'Neueste',
-	'specialvideos-sort-most-popular' => 'PopulŠrsten',
+	'specialvideos-sort-most-popular' => 'Populärste',
 	'specialvideos-sort-trending' => 'Trends',
 	'specialvideos-sort-featured' => 'Quelle: Wikia-Bibliothek',
 	'specialvideos-uploadby' => 'von $1',
-	'specialvideos-posted-in' => 'Veršffentlicht auf $1',
-	'special-videos-add-video' => 'Video hinzufŸgen',
+	'specialvideos-posted-in' => 'Veröffentlicht auf $1',
+	'special-videos-add-video' => 'Video hinzufügen',
 );
 
 $messages['es'] = array(
