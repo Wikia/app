@@ -1,12 +1,9 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/mixins/gradient";
 @import "skins/oasis/css/mixins/opacity";
-@import "skins/oasis/css/mixins/transition";
 
 
 .RelatedForumDiscussion {
-	@include transition-shorthand(400ms opacity);
-
 	/* style resets */
 	h4 {
 		margin: 0;
@@ -20,8 +17,10 @@
 		}
 	}
 	
-	&.forum-invisible {
-		@include opacity(0);
+	.forum-content {
+		&.forum-invisible {
+			@include opacity(0);
+		}
 	}
 	
 	.forum-discussions {

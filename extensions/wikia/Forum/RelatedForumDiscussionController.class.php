@@ -56,46 +56,33 @@ class RelatedForumDiscussionController extends WikiaController {
 		// load assets related to this if there is a discussions section
 		$this->response->addAsset( 'extensions/wikia/Forum/css/RelatedForumDiscussion.scss' );
 		
-		$messages = array();
+		$content = '';
 		
 		// don't render anything if there are no discussions for this article
 		if(empty($messages)) {
-			$this->forward( 'RelatedForumDiscussion', 'zeroState', false );
+			$content = $this->app->renderView( "RelatedForumDiscussion", "zeroState" );
 		} else {
-			$this->messages = $messages;
-			$this->forward( 'RelatedForumDiscussion', 'relatedForumDiscussion', false );
+			$content = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array('messages' => $messages) );
 		}
-	}
-	
-	private function setupCommon($title) {
-		// set template rendering to mustache
-		//$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
 		
+		$this->content = $content;
 		// common data
-		$this->sectionHeading = $this->wf->Msg('forum-related-discussion-heading', $title->getText());
+		$this->sectionHeading = $this->wf->Msg('forum-related-discussion-heading', $this->wg->Title->getText());
 		$this->newPostButton = $this->wf->Msg('forum-related-discussion-new-post-button');
 		$this->newPostUrl = '#';
-		$this->newPostTooltip = $this->wf->Msg('forum-related-discussion-new-post-tooltip', $title->getText());
+		$this->newPostTooltip = $this->wf->Msg('forum-related-discussion-new-post-tooltip', $this->wg->Title->getText());
 		$this->blankImgUrl = $this->wf->BlankImgUrl();
 	}
 	
 	public function relatedForumDiscussion() {
-		$title = $this->getVal('title', $this->wg->Title);
-	
-		if(empty($this->messages)) {
-			$this->messages = $this->getVal('messages');
-		}
-		
-		$this->setupCommon($title);
-	
+		$this->messages = $this->getVal('messages');
+
 		// set template data
 		$this->seeMoreUrl = "#";
 		$this->seeMoreText = "See more";
 	}
 	
 	public function zeroState() {
-		$this->setupCommon($this->wg->Title);
-	
 		$this->creative = $this->wf->MsgExt('forum-related-discussion-zero-state-creative', 'parseinline');
 	}
 	
@@ -156,7 +143,7 @@ class RelatedForumDiscussionController extends WikiaController {
 			),
 		);
 		
-		$this->html = $this->app->renderView( "RelatedForumDiscussion", "index", array('messages' => $messages, 'title' => $title) );
+		$this->html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array('messages' => $messages) );
 
 	}
 	
