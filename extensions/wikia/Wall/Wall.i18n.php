@@ -368,7 +368,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-topic-edit' => 'Edit Topics',
 
 
-    'wall-userdoesnotexist' => 'User account "$1" does not exist or has never logged in on this wiki.'
+	'wall-userdoesnotexist' => 'User account "$1" does not exist or has never logged in on this wiki.'
 
 );
 
