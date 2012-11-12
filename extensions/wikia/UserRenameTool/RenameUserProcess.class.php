@@ -209,14 +209,17 @@ class RenameUserProcess {
 		return (defined('ENV_DEVBOX')) ? '`user`' : 'user';
 	}
 
-	protected function renameAccount($cluster = null){
+	protected function renameAccount( $cluster ) {
 		wfProfileIn(__METHOD__);
-		$dbw = (!empty($cluster) && $cluster != RenameUserHelper::CLUSTER_DEFAULT) ? wfGetDb(DB_MASTER, array(), "wikicities_{$cluster}") : WikiFactory::db(DB_MASTER);
-		$database = $dbw->getDBname();
-		$table = '`user`';
-		$where = "{$database} on cluster {$cluster}";
+		$dbName = 'wikicities';
+		if ( !empty( $cluster ) ) {
+			$dbName .= "_{$cluster}";
+		}
+		$dbw = wfGetDb( DB_MASTER, array(), $dbName );
 
-		$this->addLog("Changing user {$this->mOldUsername} to {$this->mNewUsername} in {$where}");
+		$table = '`user`';
+
+		$this->addLog("Changing user {$this->mOldUsername} to {$this->mNewUsername} in {$dbName}");
 
 		if($dbw->tableExists($table)){
 			$dbw->update($table,
@@ -230,14 +233,14 @@ class RenameUserProcess {
 
 			if($affectedRows) {
 				$dbw->commit();
-				$this->addLog("Changed user {$this->mOldUsername} to {$this->mNewUsername} in {$where}");
+				$this->addLog("Changed user {$this->mOldUsername} to {$this->mNewUsername} in {$dbName}");
 				wfProfileOut(__METHOD__);
 				return true;
 			} else {
-				$this->addLog("No changes in {$where} for user {$this->mOldUsername}");
+				$this->addLog("No changes in {$dbName} for user {$this->mOldUsername}");
 			}
 		} else {
-			$this->addLog("Table \"{$table}\" not found in {$where}");
+			$this->addLog("Table \"{$table}\" not found in {$dbName}");
 		}
 
 		wfProfileOut(__METHOD__);
@@ -552,18 +555,18 @@ class RenameUserProcess {
 		wfRunHooks($hookName, array($this->mUserId, $this->mOldUsername, $this->mNewUsername));
 
 		//rename the user account across clusters
-		$clusters = WikiFactory::getClusters();
+		$clusters = WikiFactory::getClusters(); // wikicities with a c1 .. cx cluster suffix.
+		$clusters[] = ''; // wikicities without the cluster suffix.
 
 		foreach ($clusters as $clusterName) {
 			if(!$this->renameAccount($clusterName)){
-				$this->addLog("Renaming user account on cluster {$clusterName} resulted in a failure.");
-
-				//if main shared DB, rename operation failed and not repeating then something's wrong dude...
-				if($clusterName === RenameUserHelper::CLUSTER_DEFAULT && empty($this->mFakeUserId)){
-					$this->addLog("Cluster {$clusterName} is the main shared DB, aborting.");
+				if ( $clusterName === RenameUserHelper::CLUSTER_DEFAULT ) {
+					$this->addLog("Renaming user account on the main cluster resulted in a failure.");
 					$this->addError(wfMsgForContent('userrenametool-error-cannot-rename-account'));
 					wfProfileOut(__METHOD__);
 					return false;
+				} else {
+					$this->addLog("Renaming user account on cluster {$clusterName} resulted in a failure.");
 				}
 			}
 		}
@@ -578,7 +581,7 @@ class RenameUserProcess {
 		$fakeUser = null;
 
 		if(empty($this->mFakeUserId)){
-			//IMPORTANT: thi extension is meant to be enabled only on community central
+			//IMPORTANT: the extension is meant to be enabled only on community central
 			$fakeUser = User::createNew($this->mOldUsername);
 			$fakeUser->setOption( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
 			$fakeUser->saveToCache();
