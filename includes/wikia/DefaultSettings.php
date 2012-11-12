@@ -984,3 +984,4 @@ $wgLBDefaultSection = 'DEFAULT';
  * @var boolean
  */
 $wgEnableMemcachedBulkMode = false;
+
