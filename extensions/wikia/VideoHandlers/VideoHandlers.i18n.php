@@ -30,7 +30,7 @@ $messages['en'] = array(
 	'videos-add-video' => 'Add a video',
 	'videos-add-video-to-this-wiki' => 'Add a video to this wiki',
 	'videos-add-video-label-name' => 'Enter the full URL, from any of the supported sites.',
-	'videod-add-video-label-all' => 'See all',
+	'videos-add-video-label-all' => 'See all',
 	'videos-add-video-ok' => 'Add',
 	'videos-notify' => 'Please wait while we process this video',
 	'videos-something-went-wrong' => 'We are sorry, but something went wrong with the upload.',
@@ -60,7 +60,7 @@ $messages['qqq'] = array(
 	'videos-add-video' => 'Button text to click to add a video to the wiki',
 	'videos-add-video-to-this-wiki' => 'Tooltip text for the button to add a video to this wiki',
 	'videos-add-video-label-name' => 'Instructions for adding a video to a wiki',
-	'videod-add-video-label-all' => 'Link to see a list of supported video providers',
+	'videos-add-video-label-all' => 'Link to see a list of supported video providers',
 	'videos-add-video-ok' => 'Button text to submit the add video form',
 	'videos-notify' => 'Loading text - wait while video is being added',
 	'videos-something-went-wrong' => 'Error message when a generic problem occurs while adding a video to a wiki',
@@ -166,6 +166,8 @@ $messages['de'] = array(
 	'videos-add-video-label-name' => 'Gib die vollständige URL von einer der unterstützten Websites ein.',
 	'videos-add-video-ok' => 'Hinzufügen',
 	'videos-add-video-label-all' => 'Alle anzeigen',
+	'videos-add-video' => 'Video hinzufügen',
+	'videos-add-video-to-this-wiki' => 'Ein neues Video zu diesem Wiki hinzufügen',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
