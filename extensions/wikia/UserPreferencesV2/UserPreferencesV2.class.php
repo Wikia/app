@@ -3,10 +3,6 @@ class UserPreferencesV2 {
 	const MASTHEAD_OPTIONS_STORAGE_ARRAY_KEY_NAME = 'mastheadOptions';
 	const MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME = 'myToolbarOptions';
 
-	const MYINFO_REDIRECT_MAIN_PAGE = 1;
-	const MYINFO_REDIRECT_WIKI_ACTIVITY = 0;
-	const MYINFO_REDIRECT_RECENT_CHANGES = 2;
-
 	/**
 	 * @brief This function change user preferences special page
 	 *
@@ -79,9 +75,9 @@ class UserPreferencesV2 {
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'skin');
 		}
 		if (isset($defaultPreferences['myhomedisableredirect'])) {
-			$redirectOptions[wfMsg('preferences-v2-redirect-main-page')] = self::MYINFO_REDIRECT_MAIN_PAGE;
-			$redirectOptions[wfMsg('preferences-v2-redirect-wiki-activity')] = self::MYINFO_REDIRECT_WIKI_ACTIVITY;
-			$redirectOptions[wfMsg('preferences-v2-redirect-recent-changes')] = self::MYINFO_REDIRECT_RECENT_CHANGES;
+			$redirectOptions[wfMsg('preferences-v2-redirect-wiki-activity')] = 0;
+			$redirectOptions[wfMsg('preferences-v2-redirect-main-page')] = 1;
+			$redirectOptions[wfMsg('preferences-v2-redirect-recent-changes')] = 2;
 			$defaultPreferences['myhomedisableredirect']['type'] = 'select';
 			$defaultPreferences['myhomedisableredirect']['options'] = $redirectOptions;
 			$defaultPreferences['myhomedisableredirect']['label-message'] = 'preferences-v2-myhomedisableredirect';
