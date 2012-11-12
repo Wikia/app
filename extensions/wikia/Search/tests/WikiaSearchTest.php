@@ -816,7 +816,8 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 				'setInterestingTerms',
 				'addFilterQuery',
 				'setQuery',
-				'addParam'
+				'addParam',
+				'setMinimumDocumentFrequency'
 		);
 		
 		$mockMoreLikeThis	=	$this->getMock( 'Solarium_Query_MoreLikeThis', $defaultMltMethods + $addtlMltMethods );
@@ -901,6 +902,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		);
 		
 		$searchConfig->setMltFilterQuery( false );
+		$searchConfig->setMindf( 20 );
 		
 		$exceptionMock = $this->getMock( 'Solarium_Exception', array() );
 		
@@ -915,9 +917,6 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		        $method->invoke( $wikiaSearch, $searchConfig ),
 		        'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet, even if the client throws an exception.'
 		);
-		
-		// lots more to do for this one, but the dependencies are really hard.
-		
 	}
 	
 	

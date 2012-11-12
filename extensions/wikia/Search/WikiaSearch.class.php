@@ -701,6 +701,10 @@ class WikiaSearch extends WikiaObject {
 		if ( $searchConfig->getInterestingTerms() == 'list' ) {
 			$mlt->setInterestingTerms( 'list' );
 		}
+		
+		if ( $searchConfig->getMindf() !== false ) {
+			$mlt->setMinimumDocumentFrequency( $searchConfig->getMindf() );
+		}
 
 		if ( $searchConfig->getMltFilterQuery() ) {
 			$mlt->addFilterQuery( array(
