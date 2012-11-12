@@ -18,7 +18,7 @@ class StructuredData {
 	}
 
 	/**
-	 * @param int $id
+	 * @param string $id
 	 * @param int $elementDepth
 	 * @return SDElement
 	 */
