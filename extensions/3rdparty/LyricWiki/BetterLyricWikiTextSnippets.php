@@ -6,7 +6,7 @@
  * Extension that makes the text snippets returned by the ArticleService::getTextSnippet()
  * be more useful on LyricWiki.
  */
- 
+
  if ( ! defined( 'MEDIAWIKI' ) ){
 	die("Extension file.  Not a valid entry point");
 }
@@ -32,12 +32,14 @@ $wgHooks['ArticleService::getTextSnippet::beforeStripping'][] = 'efLyricWikiGetT
  *
  * Will modify the value of 'content' parameter to cause any changes desired.
  */
-function efLyricWikiGetTextSnippet(&$article, &$content, $length){
+function efLyricWikiGetTextSnippet( &$article, &$content, $length ) {
 	$matches = array();
+	$text = $article->getText();
 
 	// If the page contains lyrics, use that as the summary.
-	if(0 < preg_match("/<(gracenotelyric|lyric)s?>(.*?)<\/(gracenotelyric|lyric)/is", $content, $matches)){
-		$content = $matches[2];
+	if ( !empty( $text ) && preg_match( "/<(gracenotelyric|lyric)s?>(.*?)<\/(gracenotelyric|lyric)/is", $text, $matches ) > 0 ){
+		$tmpParser = new Parser();
+		$content = $tmpParser->parse( $matches[2],  $article->getTitle(), new ParserOptions() )->getText();
 	}
 
 	return true;
