@@ -306,20 +306,14 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	 * Looks like this is a victim of MediaWiki's habit of declaring multiple classes in a single file?
 	 */
 	public function testGetThumbnail() {
-		/**
 		$result		= F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
-		$titleMock	= $this->getMock( 'Title', array( 'MakeTitle' ) );
-		$mockImage  = $this->getMock( 'stdClass', array( 'transform' ), array(), 'File' );
+		$titleMock	= $this->getMock( 'Title' );
+		$mockImage	= $this->getMock( 'stdClass', array( 'transform' ), array(), 'File' );
 		$mockThumb	= $this->getMock( 'stdClass', array(), array(), 'ThumbnailImage' );
+		$mockMTO	= $this->getMock( 'stdClass', array(), array(), 'MediaTransformOutput' );
 		
 		$result['title']	= 'File:Foo.jpg';
 		$result['ns']		= NS_FILE;
-		
-		$titleMock
-			->expects	( $this->any() )
-			->method	( 'MakeTitle' )
-			->will		( $this->returnValue( $titleMock ) )
-		;
 		
 		$mockImage
 			->expects	( $this->any() )
@@ -327,15 +321,17 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( $mockThumb ) )
 		;
 		
-		$this->mockClass( 'ThumbnailImage', $mockThumb );
-		$this->mockGlobalFunction( 'FindFile', $mockImage );
+		$this->mockGlobalFunction( 'findFile', $mockImage, 1, array( $titleMock ) );
+		$this->mockClass( 'Title', $titleMock );
+		$this->mockClass( 'MediaTransformOutput', $mockMTO );
+		$this->mockClass( 'File', $mockImage );
+		$this->mockClass( 'ThumbnailImage', $mockThumb);
 		$this->mockApp();
 		
 		$this->assertInstanceOf(
-				'MediaTransformOutput',
+				'ThumbnailImage',
 				$result->getThumbnail(),
 				'The result of WikiaSearch::getThumbnail should be an instance of MediaTransformOutput if the thumbnail exists.'
 		);
-		**/
 	}
 }
