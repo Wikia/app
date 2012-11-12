@@ -884,18 +884,6 @@ $this->printCustomFooter();
 ?>
 
 <?php
-/* Put two "invisible" ad slots here. These are for loading ads that just load javascript,
-but it isn't positioned at any particular part of a page, such as a slider or a interstitial */
-if ($wgOut->isArticle() && WikiaPageType::isContentPage()){
-	echo AdEngine::getInstance()->getAd('INVISIBLE_1');
-}
-
-echo AdEngine::getInstance()->getDelayedIframeLoadingCode();
-
-if ($wgOut->isArticle() && WikiaPageType::isContentPage()){
-	echo AdEngine::getInstance()->getAd('INVISIBLE_2');
-}
-
 
 echo '</div>';
 
