@@ -919,5 +919,35 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		);
 	}
 	
-	
+	/**
+	 * @covers WikiaSearch::onGetPreferences
+	 */
+	public function testOnGetPreferences() {
+		$mockUser		= $this->getMock( 'User' );
+		$wikiaSearch	= F::build( 'WikiaSearch' );
+		
+		$defaultPreferences = array(
+				'searchlimit' => array(),
+				'contextlines' => array(),
+				'contextchars' => array(),
+				'disablesuggest' => array(),
+				'searcheverything' => array(),
+				'searchnamespaces' => array(),
+				);
+		
+		$oldPrefs = $defaultPreferences;
+		
+		$this->assertTrue(
+				$wikiaSearch->onGetPreferences( $mockUser, $defaultPreferences )
+		);
+		
+		foreach ( $oldPrefs as $key => $whocares ) {
+			$this->assertArrayNotHasKey(
+					$key,
+					$defaultPreferences
+			);
+		}
+		
+		
+	}
 }
