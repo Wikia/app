@@ -1,6 +1,7 @@
 <?php
 
 class CensusDataRetrieval {
+        var $app;
 	var $query = '';
 	var $data = array();
         
@@ -23,6 +24,8 @@ class CensusDataRetrieval {
                 
                 
 	);
+        
+        var $censusDataArr = array();
 
 	const QUERY_URL = 'http://data.soe.com/s:wikia/json/get/ps2/';
 	const FLAG_CATEGORY = 'census-data-retrieval-flag-category';
@@ -46,6 +49,7 @@ class CensusDataRetrieval {
 	 * main method, handles flow and sequence, decides when to give up
 	 */
 	public function execute( $title ) {
+                $this->app = F::App();
 		$this->query = $this->prepareCode( $title->getText() );
 
 		if ( !$this->fetchData() ) {
@@ -72,15 +76,22 @@ class CensusDataRetrieval {
 
 		// @TODO find a way to query all object types, preferably in one query
                 $censusData = null;
-
-                foreach ($this->supportedTypes as $type) {
-                        $censusData = $http->get( self::QUERY_URL.$type.'/?code='.$this->query );
+                 //get memcache obj
+                $this->censusDataArr = $this->app->wg->Memc->get('censusDataArr');
+                if ( $this->censusDataArr == false ) {
+                        $this->cacheCensusData();
+                }
+                $key = array_search($this->query, $this->censusDataArr);
+                //set type and id
+                if ( $key ) {
+                        $key = explode('.', $key);
+                        $type = $key[0];
+                        $id = $key[1];
+                        $censusData = $http->get( self::QUERY_URL.$type.'/'.$id );
                         $map = json_decode($censusData);
-                        $property = $type . '_list';
                         if ( $map->returned > 0 ) {
-                                $censusData = $map->{$property}[0];
+                                $censusData = $map->{$type.'_list'}[0];
                                 $this->type = $type;
-                                break;
                         }
                 }
                 // error handling
@@ -89,9 +100,7 @@ class CensusDataRetrieval {
 			return false;
 		}
  
-                // @TODO use data map to filter out unneeded data
-                // 
-                // @TODO assuming vehicle for now, but this needs to be generic
+                // use data map to filter out unneeded data
 		return $this->mapData($censusData);
 	}
 
@@ -168,17 +177,6 @@ class CensusDataRetrieval {
 	 * @return array
 	 */
 	private function mapData( $object ) {
-//                $arr= array();
-//                preg_match('/<body>(.*)<\/body>/s', $html, $arr);
-//                $json = $arr[1];
-//                $json = strip_tags($json);
-//                $map = json_decode($censusData);
-//		foreach ( $this->supportedTypes as $type ) {
-//			$property = $type . '_list';
-//				$object = $map->{$property}[0];
-//				
-//				break;
-//		}
 		if ( empty( $object ) ) {
 			wfDebug( __METHOD__ . ': Unsupported object type' );
 			return false;
@@ -236,13 +234,12 @@ class CensusDataRetrieval {
 	 */
 	private function cacheCensusData() {
                 $http = new Http();
-                $app = F::App();
 		// @TODO find a way to query all object types, preferably in one query
-                $censusDataArr = array();
+                $this->censusDataArr = array();
                 foreach ($this->supportedTypes as $type) {
                         $censusData = $http->get( self::QUERY_URL.$type.'/?c:show=id,name.en&c:limit=0' );
                         $map = json_decode($censusData);
-                        $this->mergeResult( $censusDataArr, $map, $type );
+                        $this->mergeResult( $this->censusDataArr, $map, $type );
                 }
                 // error handling
 		if ( empty( $censusData ) ) {
