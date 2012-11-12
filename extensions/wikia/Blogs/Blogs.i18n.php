@@ -159,6 +159,7 @@ $messages['qqq'] = array(
 	'blog-desc' => '{{desc}}',
 	'blogs-searchprofile' => 'Name of a tab with blog articles and blog listings. This tab is displayed in the right column on search page',
 	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings. Tooltip displayed on hover on Blogs Tab in the right column on search page',
+	'user-blog-url-link' => 'Link - links to users Blog main page',
 );
 
 /** Afrikaans (Afrikaans)
@@ -865,6 +866,7 @@ $messages['de'] = array(
 	'blog-by' => '$1 von $2',
 	'blogs-searchprofile' => 'Blogs',
 	'blogs-searchprofile-tooltip' => 'In Blogartikeln und Bloglisten suchen',
+	'user-blog-url-link' => 'Benutzer Blog:$1',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
