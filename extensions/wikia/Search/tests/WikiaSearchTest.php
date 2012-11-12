@@ -900,6 +900,21 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		        'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet, even if the client throws an exception.'
 		);
 		
+		$searchConfig->setMltFilterQuery( false );
+		
+		$exceptionMock = $this->getMock( 'Solarium_Exception', array() );
+		
+		$mockClient
+			->expects	( $this->any() )
+			->method	( 'moreLikeThis' )
+			->will		( $this->throwException( $exceptionMock ) )
+		;
+		
+		$this->assertInstanceOf(
+		        'WikiaSearchResultSet',
+		        $method->invoke( $wikiaSearch, $searchConfig ),
+		        'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet, even if the client throws an exception.'
+		);
 		
 		// lots more to do for this one, but the dependencies are really hard.
 		
