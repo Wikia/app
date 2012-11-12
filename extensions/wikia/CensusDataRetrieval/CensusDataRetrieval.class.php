@@ -46,7 +46,7 @@ class CensusDataRetrieval {
 	 * main method, handles flow and sequence, decides when to give up
 	 */
 	public function execute( $title ) {
-		$this->query = strtolower(str_replace(' ', '_', $title->getText()));
+		$this->query = $this->prepareCode( $title->getText() );
 
 		if ( !$this->fetchData() ) {
 			// no data in Census or something went wrong, quit
@@ -72,6 +72,7 @@ class CensusDataRetrieval {
 
 		// @TODO find a way to query all object types, preferably in one query
                 $censusData = null;
+
                 foreach ($this->supportedTypes as $type) {
                         $censusData = $http->get( self::QUERY_URL.$type.'/?code='.$this->query );
                         $map = json_decode($censusData);
@@ -124,6 +125,16 @@ class CensusDataRetrieval {
 	 */
 	private function getType() {
 		return $this->type;
+	}
+        
+	/**
+ 	 * getType
+	 * determines type based on fetched data
+	 *
+	 * @return string
+	 */
+	private function prepareCode( $name ) {
+                return strtolower(str_replace(' ', '_', $name));
 	}
 
 	/**
@@ -224,6 +235,42 @@ class CensusDataRetrieval {
          * 
 	 */
 	private function cacheCensusData() {
+                $http = new Http();
+                $app = F::App();
+		// @TODO find a way to query all object types, preferably in one query
+                $censusDataArr = array();
+                foreach ($this->supportedTypes as $type) {
+                        $censusData = $http->get( self::QUERY_URL.$type.'/?c:show=id,name.en&c:limit=0' );
+                        $map = json_decode($censusData);
+                        $this->mergeResult( $censusDataArr, $map, $type );
+                }
+                // error handling
+		if ( empty( $censusData ) ) {
+			wfDebug( __METHOD__ . 'Connection problem or no data' );
+			return false;
+		}
+ 
+                // @TODO use data map to filter out unneeded data
+                // 
+                // @TODO assuming vehicle for now, but this needs to be generic
 	}
+        
+        /**
+	 * mergeResult
+         * adds records form provided map to provided array
+         * 
+         * @param array $censusDataArr
+         * @param $map fetched collection
+         * @param $type type of object
+         * 
+	 */
+	private function mergeResult( &$censusDataArr, $map, $type) {
+                $list = $map->{$type.'_list'};
+                foreach ( $list as $obj ) {
+                        if ( isset($obj->name->en) ) {
+                                $censusDataArr[$type.'.'.$obj->id] = $this->prepareCode( $obj->name->en );
+                        }
+                }
+        }
         
 }
