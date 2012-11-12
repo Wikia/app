@@ -44,13 +44,11 @@ figure{
 
 	.link & {
 		padding-right: 15px;
-
-		a {
-			pointer-events: auto;
-		}
 	}
 
 	a {
+		pointer-events: auto;
+
 		color: inherit;
 		text-decoration: underline;
 	}
