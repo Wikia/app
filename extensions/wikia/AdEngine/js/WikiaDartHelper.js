@@ -1,4 +1,4 @@
-var WikiaDartHelper = function (log, window, document, Geo, Krux) {
+var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPage) {
 	'use strict';
 
 	var logGroup = 'WikiaDartHelper'
@@ -186,13 +186,11 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux) {
 		return '';
 	};
 
-	// TODO FIXME? remove?
 	getPrefooterStatus = function() {
-		return "hasp=unknown;";
-		/*if (AdEngine.isSlotDisplayableOnCurrentPage("PREFOOTER_LEFT_BOXAD")) {
-		 return "hasp=yes;";
-		 }
-		 return "hasp=no;";*/
+		if (adLogicShortPage.hasPreFooters()) {
+			return 'hasp=yes;';
+		}
+		return 'hasp=no;';
 	};
 
 	// TODO FIXME? remove?

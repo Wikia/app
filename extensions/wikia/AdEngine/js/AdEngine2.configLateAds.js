@@ -14,7 +14,7 @@
 		, adProviderNull
 	;
 
-	// TODO: make Liftium and AdEngine2 less reliable on order of execution
+	// TODO: make Liftium and AdEngine2 rely less on order of execution
 	fakeLiftium.callInjectedIframeAd = function(sizeOrSlot, iframeElement, placement) {
 		return window.Liftium.callInjectedIframeAd(sizeOrSlot, iframeElement, placement);
 	};
