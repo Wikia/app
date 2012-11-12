@@ -1,4 +1,6 @@
 <?php
+// list element (@set, @list) renderer
+/* @var SDElementProperty $object */
 $value = $object->getValue();
 if ( !$object->isCollection() ) { // @todo - again we assume that collection can only contain references - this won't be always true
 	/*
@@ -22,7 +24,7 @@ if ( !$object->isCollection() ) { // @todo - again we assume that collection can
 			if ( $renderList ) echo '<li>';
 			$referenceHTML = false;
 			if (is_object($reference) && (!is_null($reference->object))) {
-				$referenceHTML = $reference->object->render( $context );
+				$referenceHTML = $reference->object->render( $context, array( 'fieldName' => $object->getName() . '[]' ) );
 			}
 			if ($referenceHTML !== false) {
 				echo $referenceHTML;
