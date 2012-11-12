@@ -367,7 +367,6 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-topic-heading' => 'Topics for this thread:',
 	'wall-topic-edit' => 'Edit Topics',
 
-
 	'wall-userdoesnotexist' => 'User account "$1" does not exist or has never logged in on this wiki.'
 
 );
@@ -757,6 +756,7 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 	'wall-topic-input-error-limit' => 'Error message saying user has reached the maximum amount of topics.  $1 is the max such as 4',
 	'wall-topic-heading' => 'Related Topics section heading',
 	'wall-topic-edit' => 'Edit Topics call to action that brings up modal',
+	'wall-userdoesnotexist' => 'User account "$1" does not exist or has never logged in on this wiki.'
 );
 
 /** Bulgarian (български)
@@ -4707,6 +4707,7 @@ ___________________________________________<br />
 	'wall-topic-input-error-limit' => 'Wątek może mieć nie więcej niż $1 tematów.',
 	'wall-topic-heading' => 'Tematy tego wątku:',
 	'wall-topic-edit' => 'Edytuj tematy',
+	'wall-userdoesnotexist' => 'Konto użytkownika „$1” nie jest zarejestrowane.',
 );
 
 /** Pashto (پښتو)
