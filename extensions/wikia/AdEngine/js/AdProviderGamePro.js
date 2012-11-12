@@ -51,46 +51,9 @@ var AdProviderGamePro = function(wikiaDart, ScriptWriter, WikiaTracker, log, win
 		return url;
 	}
 
-	// TODO: cache it
-	function rebuildKV(kv) {
-		log('rebuildKV', 5, 'AdProviderGamePro');
-		log(kv, 5, 'AdProviderGamePro');
-
-		if (kv.indexOf(';') === -1) {
-			return kv;
-		}
-
-		kv = kv.split(';');
-		kv.sort();
-
-		var out = '', last_k = '';
-		for (var i = 0; i < kv.length; i++) {
-			var k_v = kv[i].split('=');
-			if (k_v[0] == last_k) {
-				out = out + ',' + k_v[1];
-			} else {
-				out = out + ';' + k_v[0] + '=' + k_v[1];
-				last_k = k_v[0];
-			}
-		}
-
-		out = out.substring(1);
-		log(out, 7, 'AdProviderGamePro');
-		return out;
-	}
-
-	var iface = {
+	return {
 		name: 'GamePro',
 		fillInSlot: fillInSlot,
 		canHandleSlot: canHandleSlot
 	};
-
-	// TODO: @mech rethink
-	// TODO: @rychu change tests
-	if (window.wgInsideUnitTest) {
-		iface.rebuildKV = rebuildKV;
-	}
-
-	return iface;
-
 };
