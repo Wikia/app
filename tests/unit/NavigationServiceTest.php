@@ -278,12 +278,6 @@ class NavigationServiceTest extends WikiaBaseTest {
 	}
 
 	function testParseErrors() {
-		global $wgOasisNavV2;
-		if (empty($wgOasisNavV2)) {
-			$this->markTestSkipped('wgOasisNavV2 set to false');
-			return;
-		}
-
 		$service = new NavigationService();
 		$this->assertEmpty($service->getErrors());
 

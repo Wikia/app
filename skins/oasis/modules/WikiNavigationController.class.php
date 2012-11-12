@@ -92,9 +92,7 @@ class WikiNavigationController extends WikiaController {
 	 * @return bool return true
 	 */
 	public static function onEditPageLayoutModifyPreview(Title $title, &$html, $wikitext) {
-		global $wgOasisNavV2;
-
-		if (self::isWikiNavMessage($title) && !empty($wgOasisNavV2)) {
+		if (self::isWikiNavMessage($title)) {
 			// render a preview
 			$html = F::app()->renderView('WikiNavigation', 'Index', array(
 				'msgName' => $title->getText(),
@@ -124,9 +122,9 @@ HEADER;
 	 * @return bool return true
 	 */
 	public static function onEditPageMakeGlobalVariablesScript(Array &$vars) {
-		global $wgTitle, $wgOasisNavV2;
+		global $wgTitle;
 
-		if (self::isWikiNavMessage($wgTitle) && !empty($wgOasisNavV2)) {
+		if (self::isWikiNavMessage($wgTitle)) {
 			$vars['wgIsWikiNavMessage'] = true;
 		}
 
