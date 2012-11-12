@@ -3,7 +3,7 @@
 class CensusDataRetrieval {
 	var $query = '';
 	var $data = array();
-
+        
 	var $supportedTypes = array( 'vehicle', 'zone' );
 
 	// mapping array translating census data into tempate call data
@@ -72,13 +72,13 @@ class CensusDataRetrieval {
 
 		// @TODO find a way to query all object types, preferably in one query
                 $censusData = null;
-                foreach ($this->typeMap as $key => $value) {
-                        $censusData = $http->get( self::QUERY_URL.$key.'/?code='.$this->query );
+                foreach ($this->supportedTypes as $type) {
+                        $censusData = $http->get( self::QUERY_URL.$type.'/?code='.$this->query );
                         $map = json_decode($censusData);
-                        $property = $key . '_list';
+                        $property = $type . '_list';
                         if ( $map->returned > 0 ) {
                                 $censusData = $map->{$property}[0];
-                                $this->type = $key;
+                                $this->type = $type;
                                 break;
                         }
                 }
