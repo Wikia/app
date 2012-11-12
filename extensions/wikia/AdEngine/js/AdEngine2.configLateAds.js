@@ -7,6 +7,7 @@
 (function(log, WikiaTracker, window, ghostwriter, document) {
 	var adConfig
 		, scriptWriter
+		, wikiaDart
 		, slotTweaker
 		, fakeLiftium = {}
 		, adProviderGamePro
@@ -20,12 +21,13 @@
 	};
 
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
+	wikiaDart = WikiaDartHelper(log, window, document, /* Geo */ null, /* Krux */ null); // TODO FIXME Geo and Krux are not needed for GamePro
 	slotTweaker = SlotTweaker(log, document);
 
 	// TODO: ad provider error
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
-	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
+	adProviderGamePro = AdProviderGamePro(wikiaDart, scriptWriter, WikiaTracker, log, window, document);
 	adProviderLiftium2Dom = AdProviderLiftium2Dom(WikiaTracker, log, document, slotTweaker, fakeLiftium, scriptWriter);
 
 	adConfig = AdConfig2Late(
