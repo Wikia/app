@@ -8,10 +8,12 @@ class SDValueObject extends SDRenderableObject {
 	 */
 	protected $type = null;
 	protected $value = null;
+	protected $propertyName = null;
 
-	public function __construct( SDElementPropertyType $type, $value ) {
+	public function __construct( SDElementPropertyType $type, $value, $propertyName ) {
 		$this->type = $type;
 		$this->value = $value;
+		$this->propertyName = $propertyName;
 	}
 
 	public function setValue($value) {
@@ -38,6 +40,14 @@ class SDValueObject extends SDRenderableObject {
 
 	public function getRendererNames() {
 		return array( 'value_default' );
+	}
+
+	public function setPropertyName($propertyName) {
+		$this->propertyName = $propertyName;
+	}
+
+	public function getPropertyName() {
+		return $this->propertyName;
 	}
 
 	public function render( $context = SD_CONTEXT_DEFAULT ) {

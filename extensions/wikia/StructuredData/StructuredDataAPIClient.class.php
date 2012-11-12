@@ -96,7 +96,7 @@ class StructuredDataAPIClient {
 			$collection[] = array(
 						"id" => $obj->id,
 						"url" => ( isset($obj->{"schema:url"}) ? $obj->{"schema:url"} : null ),
-						"name" => $obj->{"schema:name"},
+						"name" => ( isset($obj->{"schema:name"}) ? $obj->{"schema:name"} : null ),
 						"type" => $obj->type
 			);
 		}

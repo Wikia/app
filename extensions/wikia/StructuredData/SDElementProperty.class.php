@@ -66,11 +66,11 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		$value = $this->getValue();
 		$type = $this->getType();
 		if ( !$this->isCollection()) {
-			return F::build( 'SDValueObject', array( 'type' => $this->getType(), 'value' => $value ) );
+			return F::build( 'SDValueObject', array( 'type' => $this->getType(), 'value' => $value, 'propertyName' => $this->getName() ) );
 		}
 		$result = array();
 		foreach($value as $v) {
-			return F::build( 'SDValueObject', array( 'type' => $this->getType(), 'value' => $v ) );
+			return F::build( 'SDValueObject', array( 'type' => $this->getType(), 'value' => $v, 'propertyName' => $this->getName() ) );
 		}
 		return $result;
 
