@@ -270,4 +270,24 @@ class CensusDataRetrieval {
                 }
         }
         
+        /**
+	 * replaceLinks
+         * EditPage::attemptSave hook function
+         * replaces links to Census pages with template
+         * 
+	 */
+        public static function replaceLinks( $editpage ) {
+                $wikitextArticle = $editpage->textbox1;
+                //get all links
+//                preg_match_all($regex, $wikitextArticle, $matches);
+//                for each match
+//                foreach ($matches as $match) {
+//                        //check if is census page
+//                        //replace string
+//                }
+//                //replace the text
+//                $editpage->textbox1 = $newWikitextArticle;
+                return true;
+        }
+        
 }
