@@ -2850,13 +2850,14 @@ class WikiFactory {
 	/**
 	 * isValidCluster -- check if name is valid cluster (c1, c2, c3, ... )
 	 *
+	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
 	 * @access public
 	 * @static
 	 *
 	 * @param string $cluster cluster name
 	 */
 	static public function isValidCluster( $cluster ) {
-		return isset( self::$clusters[ $cluster ] );
+		return in_array( $cluster. self::$clusters );
 	}
 
 	/**
