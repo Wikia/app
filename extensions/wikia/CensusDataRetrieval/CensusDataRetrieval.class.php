@@ -4,7 +4,7 @@ class CensusDataRetrieval {
 	var $query = '';
 	var $data = array();
 
-	var $supportedTypes = array( 'vehicle' );
+	var $supportedTypes = array( 'vehicle', 'zone' );
 
 	// mapping array translating census data into tempate call data
 	// note: a null value means a user-supplied parameter, not in Census
@@ -182,12 +182,31 @@ class CensusDataRetrieval {
 		return true;
 	}
         
+        /**
+ 	 * getPropValue
+	 * Returns value from object by provided path
+         * Prepares params for doGetPropValue()
+         * 
+         * @param $object object to retrieve data form
+	 * @param $propertyStr path to value separated by '.'
+         * 
+	 * @return array
+	 */
         private function getPropValue( $object, $propertyStr ) {
                 $fieldPath = explode('.', $propertyStr);
                 $i = sizeof($fieldPath) - 1;
                 return $this->doGetPropValue( $object, $fieldPath, $i );
         }
         
+        /**
+ 	 * doGetPropValue
+	 * Recursive function returns value from object by provided path
+         * @param $object object to retrieve data form
+         * @param array $fieldPath path to value in array
+         * @i current step counter
+	 *
+	 * @return array
+	 */
         private function doGetPropValue( $object, $fieldPath, $i ) {
                 if ( $i > 0) {
                         $object_temp = $this->doGetPropValue( $object, $fieldPath, $i-1 )->{$fieldPath[$i]};
@@ -195,5 +214,16 @@ class CensusDataRetrieval {
                 }
                 return $object->{$fieldPath[$i]};
         }
+        
+        /**
+	 * cacheCensusData
+         * sets Memcache object form Census gathering all required data to find object when user is creating article
+         * 
+         * Memcache object:
+         * array ( 'type.id' => 'code');
+         * 
+	 */
+	private function cacheCensusData() {
+	}
         
 }
