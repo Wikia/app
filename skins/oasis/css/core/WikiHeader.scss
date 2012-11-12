@@ -8,7 +8,7 @@
 @import "../mixins/opacity";
 @import "../mixins/wordmark";
 
-.WikiHeaderRestyle {
+.WikiHeader {
 
 	$color-level-3rd: mix($color-buttons, $color-page, 20%);
 	@if $is-dark-wiki {
@@ -379,7 +379,7 @@
 	}
 }
 
-.oasis-split-skin .WikiHeaderRestyle {
+.oasis-split-skin .WikiHeader {
 	padding-top: 20px;
 	>nav {
 		top: 20px;

@@ -104,7 +104,7 @@ class WikiNavigationController extends WikiaController {
 
 			// wrap it inside header wrapper and run JS to make the preview interactive
 			$html = <<<HEADER
-				<header id="WikiHeader" class="WikiHeaderRestyle WikiHeaderPreview">
+				<header id="WikiHeader" class="WikiHeader WikiHeaderPreview">
 					<nav>
 					$html
 					</nav>

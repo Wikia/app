@@ -1,4 +1,4 @@
-<header id="WikiHeader" class="WikiHeaderRestyle">
+<header id="WikiHeader" class="WikiHeader">
 	<?= F::app()->renderView('WikiHeader', 'Wordmark') ?>
     <nav class="WikiNav">
         <h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ); ?></h1>

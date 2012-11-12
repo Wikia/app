@@ -16,7 +16,7 @@ var SharingToolbar = {
 
 		$(window).bind('scroll', $.proxy(this.onScroll, this));
 		this.toolbarNode.find('.email-link').bind('click', this.onEmailClick);
-		$('.WikiHeaderRestyle .share-button').bind('click', this.toolbarToggle);
+		$('.WikiHeader .share-button').bind('click', this.toolbarToggle);
 	},
 	onScroll: function() {
 		if ($(window).scrollTop() >= this.contributeOffsetTop) {
