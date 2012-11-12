@@ -835,18 +835,20 @@ class WallMessage {
 		$wikiId = $this->cityId;
 		$userIdRemoving = $user->getId();
 		$userIdWallOwner = $this->getWallOwner()->getId();
+		$parentPageId = $this->getArticleTitle()->getArticleId();
+		
 		$url = $this->getMessagePageUrl();
 		$title = $this->getMetaTitle();
 		$messageId = $this->getId();
 
 		if( $this->isMain() ) {
-			$wnae = new WallNotificationAdminEntity($wikiId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, 0, false, $reason);
+			$wnae = new WallNotificationAdminEntity($wikiId, $parentPageId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, 0, false, $reason);
 		} else {
 			$parent = $this->getTopParentObj();
 			$parent->load();
 			$parentMessageId = $parent->getId();
 			$title = $parent->getMetaTitle();
-			$wnae = new WallNotificationAdminEntity($wikiId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentMessageId, true, $reason);
+			$wnae = new WallNotificationAdminEntity($wikiId, $parentPageId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentMessageId, true, $reason);
 		}
 
 		return $wnae;

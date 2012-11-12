@@ -100,6 +100,8 @@ class WallNotificationEntity {
 		$this->data->timestamp = $rev->getTimestamp();
 
 		$this->data->parent_id = null;
+		
+		$this->data->parent_page_id = $ac->getWallTitle()->getArticleId();
 
 		if( $authoruser instanceof User ) {
 			$this->data->msg_author_id = $authoruser->getId();

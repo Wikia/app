@@ -2,7 +2,7 @@
 
 
 class WallNotificationAdminEntity {
-	public function __construct($wikiId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentId, $isReply, $reason) {
+	public function __construct($wikiId, $parentPageId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentId, $isReply, $reason) {
 		$app = F::App();
 		
 		$this->data = null;
@@ -10,7 +10,7 @@ class WallNotificationAdminEntity {
 		$this->data->type = 'ADMIN';
 		
 		$this->data->wiki_id = $wikiId;
-		
+		$this->data->parent_page_id = $parentPageId;
 		$this->data->timestamp = $app->wf->TimestampNow();
 		$this->data->url = $url;
 		$this->data->title = $title;
