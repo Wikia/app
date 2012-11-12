@@ -4,14 +4,6 @@ class UserPreferencesV2 {
 	const MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME = 'myToolbarOptions';
 
 	/**
-	 * @const Name of property saved in user_properties table
-	 */
-	const LANDING_PAGE_PROP_NAME = 'userlandingpage';
-	const LANDING_PAGE_MAIN_PAGE = 1;
-	const LANDING_PAGE_WIKI_ACTIVITY = 2;
-	const LANDING_PAGE_RECENT_CHANGES = 3;
-
-	/**
 	 * @brief This function change user preferences special page
 	 *
 	 * @param User $user reference to the current user
@@ -82,16 +74,14 @@ class UserPreferencesV2 {
 			$defaultPreferences['skin']['label-message'] = 'preferences-v2-skin';
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'skin');
 		}
-		if (isset($defaultPreferences[self::LANDING_PAGE_PROP_NAME])) {
-			$redirectOptions[wfMsg('preferences-v2-redirect-main-page')] = self::LANDING_PAGE_MAIN_PAGE;
-			$redirectOptions[wfMsg('preferences-v2-redirect-wiki-activity')] = self::LANDING_PAGE_WIKI_ACTIVITY;
-			$redirectOptions[wfMsg('preferences-v2-redirect-recent-changes')] = self::LANDING_PAGE_RECENT_CHANGES;
-			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['type'] = 'select';
-			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['options'] = $redirectOptions;
-			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['label-message'] = 'preferences-v2-myhomedisableredirect';
-			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['section'] = 'personal/appearance';
-			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['help'] = wfMsg('preferences-v2-redirect-explanation');
-			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, self::LANDING_PAGE_PROP_NAME);
+		if (isset($defaultPreferences['myhomedisableredirect'])) {
+			$redirectOptions[wfMsg('preferences-v2-redirect-enable')] = 0;
+			$redirectOptions[wfMsg('preferences-v2-redirect-disable')] = 1;
+			$defaultPreferences['myhomedisableredirect']['type'] = 'select';
+			$defaultPreferences['myhomedisableredirect']['options'] = $redirectOptions;
+			$defaultPreferences['myhomedisableredirect']['label-message'] = 'preferences-v2-myhomedisableredirect';
+			$defaultPreferences['myhomedisableredirect']['section'] = 'personal/appearance';
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'myhomedisableredirect');
 		}
 		if (isset($defaultPreferences['showAds'])) {
 			$defaultPreferences['showAds']['section'] = 'personal/appearance';
@@ -101,6 +91,9 @@ class UserPreferencesV2 {
 			$adOptions[wfMsg('preferences-v2-showads-enable')] = 1;
 			$defaultPreferences['showAds']['options'] = $adOptions;
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'showAds');
+		}
+		if (isset($defaultPreferences['myhomedisableredirect'])) {
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'myhomedisableredirect');
 		}
 
 		//Tab 2: Email
@@ -376,19 +369,6 @@ class UserPreferencesV2 {
 		unset($defaultPreferences['nocache']);
 		unset($defaultPreferences['numberheadings']);
 		unset($defaultPreferences['showjumplinks']);
-
-		return true;
-	}
-
-	/**
-	 * @desc Sets default landing page property for users who don't have this property set in user_properties
-	 *
-	 * @param $defOpt
-	 *
-	 * @return bool true
-	 */
-	public function onUserGetDefaultOptions(&$defOpt) {
-		$defOpt[self::LANDING_PAGE_PROP_NAME] = self::LANDING_PAGE_MAIN_PAGE;
 
 		return true;
 	}
