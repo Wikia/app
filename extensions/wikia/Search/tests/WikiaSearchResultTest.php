@@ -334,4 +334,21 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 				'The result of WikiaSearch::getThumbnail should be an instance of MediaTransformOutput if the thumbnail exists.'
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearchResult::toArray
+	 */
+	public function testToArray() {
+		$result = F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
+		$array  = $result->toArray( array( 'wid' ) );
+		$this->assertArrayHasKey(
+				'wid',
+				$array
+		);
+		$this->assertEquals(
+				123,
+				$array['wid']
+		);
+	}
+	
 }
