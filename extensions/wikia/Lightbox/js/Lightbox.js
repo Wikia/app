@@ -211,6 +211,10 @@ var Lightbox = {
 		// Clear image tracking 
 		clearTimeout(Lightbox.image.trackingTimeout);	
 	},
+	//  method for removing class and inline styles applied to the lightbox by Lightbox.error.updateLightbox
+	clearErrorMessageStyling: function() {
+		this.openModal.media.removeClass('error-lightbox').attr('style', 'line-height: normal;');
+	},
 	image: {
 		trackingTimeout: false,
 		updateLightbox: function(data) {
@@ -584,6 +588,12 @@ var Lightbox = {
 				Lightbox.error.updateLightbox();
 				return;
 			}
+
+			// remove error message style/class chagnes to lightbox
+			if (Lightbox.openModal.media.hasClass('error-lightbox')) {
+				Lightbox.clearErrorMessageStyling();
+			}
+
 			Lightbox[type].updateLightbox(data);		
 		});
 		
