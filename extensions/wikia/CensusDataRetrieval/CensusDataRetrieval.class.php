@@ -27,7 +27,7 @@ class CensusDataRetrieval {
         
         var $censusDataArr = array();
 
-	const QUERY_URL = 'http://data.soe.com/s:wikia/json/get/ps2/';
+	const QUERY_URL = 'http://data.soe.com/s:wikia/json/get/ps2/%s/%s';
 	const FLAG_CATEGORY = 'census-data-retrieval-flag-category';
 
 	/**
@@ -87,7 +87,7 @@ class CensusDataRetrieval {
                         $key = explode('.', $key);
                         $type = $key[0];
                         $id = $key[1];
-                        $censusData = $http->get( self::QUERY_URL.$type.'/'.$id );
+                        $censusData = $http->get( sprintf(self::QUERY_URL, $type, $id) );
                         $map = json_decode($censusData);
                         if ( $map->returned > 0 ) {
                                 $censusData = $map->{$type.'_list'}[0];
@@ -237,7 +237,7 @@ class CensusDataRetrieval {
 		// @TODO find a way to query all object types, preferably in one query
                 $this->censusDataArr = array();
                 foreach ($this->supportedTypes as $type) {
-                        $censusData = $http->get( self::QUERY_URL.$type.'/?c:show=id,name.en&c:limit=0' );
+                        $censusData = $http->get( sprintf(self::QUERY_URL, $type, '?c:show=id,name.en&c:limit=0') );
                         $map = json_decode($censusData);
                         $this->mergeResult( $this->censusDataArr, $map, $type );
                 }
