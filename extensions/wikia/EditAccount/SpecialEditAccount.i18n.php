@@ -26,13 +26,17 @@ $messages['en'] = array(
 	'editaccount-label-pass' => 'Set new password',
 	'editaccount-label-realname' => 'Set new real name',
 	'editaccount-label-clearunsub' => 'Unsubscribed',
-	'editaccount-label-toggleadopt' => 'Modify adopter status (for AutomaticWikiAdopt)',
+	'editaccount-label-toggleadopt' => 'Modify adopter status (for AutomaticWikiAdopt):',
+	'editaccount-label-toggleadopt-prevent' => 'Prevent auto adoption',
+	'editaccount-label-toggleadopt-allow' => 'Allow auto adoption',
+	'editaccount-label-reason' => 'Reason:',
 	'editaccount-submit-email' => 'Save and confirm email address',
 	'editaccount-submit-pass' => 'Save password',
 	'editaccount-submit-realname' => 'Save real name',
 	'editaccount-submit-clearunsub' => 'Clear unsubscribe',
 	'editaccount-submit-cleardisable' => 'Clear disable flag',
 	'editaccount-submit-close' => 'Close account',
+	'editaccount-submit-button' => 'Save',
 	'editaccount-usage-close' => 'You can also disable a user account by scrambling its password and removing the e-mail address. Note that this data is lost and will not be recoverable.',
 	'editaccount-warning-close' => '<b>Caution!</b> You are about to permanently disable the account of user <b>$1</b>. This cannot be reverted. Are you sure that is what you want to do?',
 	'editaccount-status' => 'Status message',
@@ -72,6 +76,7 @@ $messages['en'] = array(
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">This account has been disabled globally by Wikia.</div>',
 	// For Special:ListGroupRights
 	'right-editaccount' => "Edit other users' information",
+	'action-editaccount' => "edit other users' information",
 );
 
 /** Message documentation (Message documentation)
@@ -93,6 +98,11 @@ Per [[Thread:Support/About_Wikia:Editaccount-status-realuser/ms_and_Wikia:Editac
 	'editaccount-status-tempuser' => 'This is the status of the account in the Wikia UserLogin system – a "real user" means an active account, while a "temp user" means it\'s an inactive account. Accounts are activated once the user clicks on a link in an e-mail we send them.',
 	'right-editaccount' => '{{doc-right|editaccount}}',
 	'editaccount-label-toggleadopt' => 'Label for option to toggle whether or not the user is allowed to automatically adopt a wiki.',
+	'editaccount-label-toggleadopt-prevent' => 'Label for option to prevent user from automatically adopting a wiki.',
+	'editaccount-label-toggleadopt-allow' => 'Label for option to allow user to automatically adopting a wiki.',
+	'editaccount-submit-button' => 'Text of the submission button.',
+	'editaccount-label-reason' => 'Label for reason field.',
+	'action-editaccount' => '{{doc-action|editaccount}}',
 );
 
 /** Afrikaans (Afrikaans)
