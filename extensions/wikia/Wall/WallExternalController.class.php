@@ -27,6 +27,11 @@ class WallExternalController extends WikiaController {
 		
 	}
 	
+	public function moveModal() {
+		$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
+		$this->destinationBoards[] = array('value' => '123', 'content' => 'Test board1');
+	}
+	
 	public function votersModal() {
 		/**
 		 * @var $mw WallMessage

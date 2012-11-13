@@ -91,6 +91,14 @@
 				'text' => wfMsg('wall-message-reopen-thread'),
 			);
 		}
+		
+		if($canMove) {
+			$dropdown[] = array(
+				'class' => 'move-thread',
+				'href' => '#',
+				'text' => wfMsg('wall-message-move-thread'),
+			);
+		}
 	?>
 	<?php if(!empty($dropdown)): ?>
 		<?= F::app()->renderView('MenuButton',

@@ -1331,4 +1331,8 @@ class WallMessage {
 		$app = F::App();
 		return $this->helper->isAllowedNotifyEveryone($this->title->getNamespace(), $app->wg->User);
 	}
+	
+	public function canMove(User $user) {
+		return ( $this->isMain() && !$this->isRemove() && $this->can($user, 'wallmessagemove'));
+	}
 }

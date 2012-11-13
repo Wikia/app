@@ -53,6 +53,7 @@ var Wall = $.createClass(Object, {
 			.on('mouseleave', '.follow', this.proxy(this.unhoverFollow))
 			.on('click', '.load-more a', this.proxy(this.loadMore))
 			.on('click', '.related-topics .edit-topic-link', this.proxy(this.handleEditTopics))
+			.on('click', '.move-thread', this.proxy(this.moveThread))
 			// Fix FireFox bug where textareas remain disabled on page reload
 			.find('textarea').removeAttr('disabled');
 
@@ -672,6 +673,24 @@ var Wall = $.createClass(Object, {
 		
 		messageTopic.input.focus();
 		
+	},
+	
+	moveThread: function(e) {
+		var id = $(e.target).closest('.message').data('id');
+		$.nirvana.sendRequest({
+			controller: 'WallExternalController',
+			method: 'moveModal',
+			format: 'html',
+			data: {
+				id: id
+			},
+			callback: function(html) {
+				var modal = $(html).makeModal({
+					'width': 500
+				});
+				
+			}
+		});
 	},
 
 	proxy: function(func) {

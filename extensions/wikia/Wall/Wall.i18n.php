@@ -60,6 +60,7 @@ $messages['en'] = array(
 	'wall-message-removed-thread-because' => "$1 removed this thread because:",
 	'wall-message-deleted-thread-because' => "$1 deleted this thread because:",
 	'wall-message-restore-thread' => "Restore Thread",
+	'wall-message-move-thread' => 'Move this thread',
 	'wall-message-removed-reply-because' => "$1 removed this reply because:",
 	'wall-message-deleted-reply-because' => "$1 deleted this reply because:",
 	'wall-message-closed-by' => "[[$2|$1]] closed this thread",
@@ -113,6 +114,10 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-action-rev-reply-confirm' => 'Are you sure you want to delete this message?',
 	'wall-action-rev-thread-confirm' => 'Are you sure you want to revision delete this thread and all of its history from the wiki? This cannot be undone.',
 	'wall-action-rev-confirm-ok' => 'Yes, delete',
+	
+	'wall-action-move-thread-heading' => 'Move this thread',
+	'wall-action-move-thread-ok' => 'Move thread',
+	'wall-action-move-board-label' => 'Select a board to move to',
 
 	'wall-notifications' => 'Notifications',
 	'wall-notifications-all' => 'All Notifications',
@@ -430,6 +435,7 @@ $messages['qqq'] = array(
 	'wall-message-delete' => 'Menu item to delete a message',
 	'wall-message-close-thread' => 'Menu item to close a thread or message',
 	'wall-message-reopen-thread' => 'Menu item to reopen a thread',
+	'wall-message-move-thread' => 'Menu time to move a message',
 	'wall-message-removed-thread-because' => 'Summary at the top of a removed thread page. Parameters:
 * $1 is the user who removed the thread (GENDER is supported in this message).',
 	'wall-message-deleted-thread-because' => 'Summary at the top of a deleted thread page. Parameters:
@@ -474,6 +480,9 @@ $messages['qqq'] = array(
 	'wall-action-rev-reply-confirm' => 'Confirmation for revision delete reply modal',
 	'wall-action-rev-thread-confirm' => 'Confirmation for revision delete thread modal',
 	'wall-action-rev-confirm-ok' => 'Button for confirming revision delete',
+	'wall-action-move-thread-heading' => 'Heading for thread moving modal dialog',
+	'wall-action-move-thread-ok' => 'Confirmation button for moving thread',
+	'wall-action-move-board-label' => 'Label for list of board dropdown',
 	'wall-notifications' => 'Title of notification dropdown',
 	'wall-notifications-all' => 'Text in notification dropdown menu',
 	'wall-notifications-markasread' => 'Option in notification dropdown menu to mark all threads as read',

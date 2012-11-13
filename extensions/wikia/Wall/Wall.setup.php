@@ -244,3 +244,8 @@ $wgGroupPermissions['*']['wallfastadmindelete'] = false;
 $wgGroupPermissions['sysop']['wallfastadmindelete'] = false;
 $wgGroupPermissions['vstf']['wallfastadmindelete'] = true;
 $wgGroupPermissions['staff']['wallfastadmindelete'] = true;
+
+$wgGroupPermissions['*']['wallmessagemove'] = false;
+$wgGroupPermissions['sysop']['wallmessagemove'] = true;
+$wgGroupPermissions['vstf']['wallmessagemove'] = true;
+$wgGroupPermissions['staff']['wallmessagemove'] = true;
