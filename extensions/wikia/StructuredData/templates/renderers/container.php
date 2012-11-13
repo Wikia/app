@@ -16,6 +16,9 @@ if ( !$object->isCollection() ) { // @todo - again we assume that collection can
 		if ($context != SD_CONTEXT_EDITING) {
 			echo '<p class="empty">empty</p>';
 		}
+		if ($context == SD_CONTEXT_EDITING) {
+			echo ($rendererName == '@list') ? '<ol></ol>' : '<ul></ul>';
+		}
 	} else {
 		$renderList = ( count( $value ) > 1 || $context == SD_CONTEXT_EDITING) ? true : false;
 		if ( $renderList ) echo ($rendererName == '@list') ? '<ol>' : '<ul>';
