@@ -76,21 +76,23 @@ class Phalanx {
 		return $types;
 	}
 
-	static public function getFromFilter( $moduleId, $lang = null, $master = false ) {
+	static public function getFromFilter( $moduleId, $lang = null, $master = false, $skipCache = false ) {
 		global $wgExternalSharedDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		$timestampNow = wfTimestampNow();
 		$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
 		$sLang = $lang ? $lang : 'all';
-		if (isset(self::$moduleData[$moduleId][$sLang])) {
+		if ( $skipCache ) {
+			$blocksData = null;
+		} else if (isset(self::$moduleData[$moduleId][$sLang])) {
 			$blocksData = self::$moduleData[$moduleId][$sLang];
 		} else {
 			$blocksData = $wgMemc->get($key);
 		}
 
 		//cache miss (or we have expired blocks in cache), get from DB
-		if (empty($blocksData) || (!is_null($blocksData['closestExpire']) && $blocksData['closestExpire'] < $timestampNow && $blocksData['closestExpire'])) {
+		if ( empty($blocksData) || (!is_null($blocksData['closestExpire']) && $blocksData['closestExpire'] < $timestampNow && $blocksData['closestExpire'])) {
 			$blocks = $cond = array();
 			$closestTimestamp = 0;
 			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB );
