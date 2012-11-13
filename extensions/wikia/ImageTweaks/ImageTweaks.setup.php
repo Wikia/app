@@ -25,7 +25,7 @@ $app->wg->append(
 		"author" => array(
 			'Maciej Błaszkowski',
 			'Christian Williams',
-			'Federico "Lox" Lucignano <federco@wikia-inc.com>'
+			'Federico "Lox" Lucignano <federico@wikia-inc.com>'
 		)
 	),
 	'other'
