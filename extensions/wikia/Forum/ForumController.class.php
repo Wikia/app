@@ -31,11 +31,6 @@ class ForumController extends WallBaseController {
 		if ( $this->wall->getTitle()->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$board = F::build( 'ForumBoard', array( 0 ), 'newFromId' );
 
-			if ( empty( $board ) ) {
-				$this->redirectToIndex();
-				return true;
-			}
-
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
 			$this->response->setVal( 'isTopicPage', true );
 		} else {
