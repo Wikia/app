@@ -3,8 +3,9 @@
  * @author ADi
  * @author Jacek Jursza
  */
-class StructuredDataAPIClient {
+class StructuredDataAPIClient extends WikiaObject {
 	const VOCABS_PATH = 'vocabs';
+	const TEMPLATE_CACHE_TTL = 180;
 
 	private $httpRequest = null;
 	protected $baseUrl = null;
@@ -17,6 +18,7 @@ class StructuredDataAPIClient {
 		$this->schemaPath = $schemaPath;
 
 		$this->httpRequest = new HTTP_Request();
+		parent::__construct();
 	}
 
 	protected function call( $url, $method = null, $body = null ) {
@@ -105,10 +107,24 @@ class StructuredDataAPIClient {
 	}
 
 	public function getTemplate( $objectType, $asJson = false ) {
-		$rawResponse = $this->call(  $this->getVocabsPath() . str_replace(':', '/', $objectType) . '?template=true' );
-		$response = json_decode( $rawResponse );
+		$templateUrl = $this->getVocabsPath() . str_replace(':', '/', $objectType) . '?template=true';
+		$templateCacheKey = $this->wf->SharedMemcKey( __METHOD__, $templateUrl );
 
-		return $asJson ? $rawResponse : $this->isValidResponse($response);
+		$rawResponse = $this->wg->Memc->get( $templateCacheKey );
+		if( empty( $rawResponse ) ) {
+			$rawResponse = $this->call( $templateUrl );
+			$response = json_decode( $rawResponse );
+			if($this->isValidResponse($response)) {
+				// cache only valid responses
+				$this->wg->Memc->set( $templateCacheKey, $rawResponse, self::TEMPLATE_CACHE_TTL );
+			}
+
+		}
+		else {
+			$response = json_decode( $rawResponse );
+		}
+
+		return $asJson ? $rawResponse : $response;
 	}
 
 	public function getContext( $contextUrl, $relative = true ) {
