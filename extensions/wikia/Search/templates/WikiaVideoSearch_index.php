@@ -142,7 +142,7 @@ jQuery(document).ready( function() {
 <div class ="video-search-results">
 	<section>
 		<div class="number">V</div>
-	<? if ( $wikiMltResults ) : ?>
+	<? if ( $combinedSearchResults ) : ?>
 		<h3>Video Search Against <i><?= $combinedQuery ?></i></h3>
 		<ul>
 		<? foreach ( $combinedSearchResults as  $resultFields ) : ?>
