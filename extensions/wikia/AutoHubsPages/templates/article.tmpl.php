@@ -96,7 +96,7 @@
 	}
 	?>
 	<?php if (AutoHubsPagesHelper::showAds()): /* move to AdEngine, use hooks */ ?>
-	<div id='CORP_TOP_RIGHT_BOXAD' style='margin-top:-15px'><?php echo AdEngine::getInstance()->getAd('CORP_TOP_RIGHT_BOXAD')?></div>
+		<?= $app->renderView('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD')); ?>
 	<?php endif; ?>
 
 
