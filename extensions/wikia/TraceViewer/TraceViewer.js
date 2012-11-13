@@ -1344,6 +1344,7 @@
 			var self = this,
 				origUrl = url;;
 			url += ( url.indexOf('?') >= 0 ? '&' : '?' ) + 'forcetrace=2';
+			url += ( url.indexOf('?') >= 0 ? '&' : '?' ) + 'tcb=' + (new Date()).getTime();
 			$.ajax({
 				url: url,
 				data: data,
