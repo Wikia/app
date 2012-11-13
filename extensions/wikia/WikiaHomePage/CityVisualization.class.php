@@ -5,11 +5,6 @@
  * @todo refactor, the queries should be part of /includes/wikia/models/WikisModel.class.php
  */
 class CityVisualization extends WikiaModel {
-	//todo: think of better solution (WikiFactory variable?)
-	const GERMAN_CORPORATE_SITE_ID = 111264;
-	const ENGLISH_CORPORATE_SITE_ID = 80433;
-	const WIKIA_HOME_PAGE_WF_VAR_NAME = 'wgEnableWikiaHomePageExt';
-
 	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.77';
 	const WIKI_STANDARD_BATCH_SIZE_MULTIPLIER = 100;
 
@@ -781,36 +776,9 @@ class CityVisualization extends WikiaModel {
 	 * @return array
 	 */
 	public function getVisualizationWikisData() {
-		$corporateSites = $this->getCorporateSitesList();
+		$corporateSites = HubService::getCorporateSitesList();
 		$this->addLangToCorporateSites($corporateSites);
 		return $this->cleanVisualizationWikisArray($corporateSites);
-	}
-
-	/**
-	 * @desc Gets id of WF variable and then loads and returns list of corporate sites
-	 * @return array
-	 */
-	public function getCorporateSitesList() {
-		$wikiFactoryList = array();
-		$this->wikiFactoryVarId = WikiFactory::getVarIdByName(self::WIKIA_HOME_PAGE_WF_VAR_NAME);
-
-		if( is_int($this->wikiFactoryVarId) ) {
-			$wikiFactoryList = WikiaDataAccess::cache(
-				$this->getCorporatePagesListKey(),
-				24 * 60 * 60,
-				array($this, 'loadCorporateSitesList')
-			);
-		}
-
-		return $wikiFactoryList;
-	}
-
-	/**
-	 * @desc Loads list of corporate sites (sites which have $wgEnableWikiaHomePageExt WF variable set to true)
-	 * @return array
-	 */
-	public function loadCorporateSitesList() {
-		return WikiFactory::getListOfWikisWithVar($this->wikiFactoryVarId, 'bool', '=', true);
 	}
 
 	/**
@@ -845,10 +813,6 @@ class CityVisualization extends WikiaModel {
 		}
 
 		return $results;
-	}
-
-	public function getCorporatePagesListKey() {
-		return $this->wf->MemcKey('corporate_pages_list', 'v1.04', __METHOD__);
 	}
 
 	public function getWikisCountForStaffTool($opt) {
