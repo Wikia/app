@@ -465,10 +465,7 @@ class WikiaSearch extends WikiaObject {
 					 ->setMaxAlternateFieldLength	( 100 )
 		;
 		
-		$query->addFilterQuery( array(
-				'query'		=>		$this->getFilterQueryString( $searchConfig ),
-				'key'		=>		'fq1' // constraint of library
-		) );
+		$searchConfig->setFilterQuery( $this->getFilterQueryString( $searchConfig ) );
 		
 		if ( $searchConfig->isInterWiki() ) {
 			$grouping = $query->getGrouping();
@@ -485,11 +482,10 @@ class WikiaSearch extends WikiaObject {
 			$article	= $am->getArticle();  
 			$noPtt		= self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
 			
-			$query->addFilterQuery( array(
-					'query'		=>	$noPtt,
-					'key'		=>	'ptt'
-			) );
+			$searchConfig->setFilterQuery( $noPtt, 'ptt' );
 		}
+		
+		$query->addFilterQueries( $searchConfig->getFilterQueries() );
 		
 		$formulatedQuery = sprintf('%s AND (%s)', $this->getQueryClausesString( $searchConfig ), $this->getNestedQuery( $searchConfig ));
 		$query->setQuery( $formulatedQuery );
