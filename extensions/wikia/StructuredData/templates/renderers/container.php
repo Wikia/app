@@ -44,10 +44,11 @@ if ( !$object->isCollection() ) { // @todo - again we assume that collection can
 	}
 
 	if ($context == SD_CONTEXT_EDITING) {
-		echo "todo: button to add new element.";
 		if($object->getType()->hasRange()) {
-			echo "<br>Possible values:<br>";
-			var_dump($object->getType()->getAcceptedValues());
+			$types = $object->getType()->getAcceptedValues();
+			echo '<button class="add-reference" data-range="' . join(' ', $types['classes']) .
+				'">Add</button>';
+			//var_dump($object->getType()->getAcceptedValues());
 		}
 		else {
 			echo " (object of type: " . $object->getType()->getName() . " has no range)";
