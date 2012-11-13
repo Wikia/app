@@ -274,7 +274,7 @@ class WikiaSearch extends WikiaObject {
 
 		$searchConfig
 			->setQuery			( $query )
-			->setMltFilterQuery	( $filterQuery )
+			->setFilterQuery	( $filterQuery )
 		    // note that we're also adding the default title field
 		    // for slightly better foreign language coverage
 			->setMltFields		( array( self::field( 'title' ), self::field('html'), 'title' ) );
@@ -706,12 +706,10 @@ class WikiaSearch extends WikiaObject {
 			$mlt->setMinimumDocumentFrequency( $searchConfig->getMindf() );
 		}
 
-		if ( $searchConfig->getMltFilterQuery() ) {
-			$mlt->addFilterQuery( array(
-				'query'	=>	$searchConfig->getMltFilterQuery(),
-				'key'	=>	'mltfilterquery'
-			) );
+		if ( $searchConfig->hasFilterQueries() ) {
+			$mlt->addFilterQueries( $searchConfig->getFilterQueries() );
 		}
+		
 		if (! empty( $query ) ) { 
 			$mlt->setQuery( $query );
 		} else if ( $streamBody ) {
