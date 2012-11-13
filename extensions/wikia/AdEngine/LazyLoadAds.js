@@ -1,59 +1,60 @@
-var LazyLoadAds = {
+(function( window, $ ) {
 
-	log: function(msg) {
-		$().log(msg, 'LazyLoadAds');
-	},
+var $window = $( window ),
+	scroll = 'scroll.LazyLoadAds',
+	Wikia = window.Wikia || {};
 
-	settings : {
-		threshhold : 200
-	},
+var LazyLoadAds = function( settings ) {
+	settings = $.extend( {}, LazyLoadAds.settings, settings );
 
-	init : function() {
-		LazyLoadAds.update();
-		$(window).scroll(LazyLoadAds.update);
-	},
+	this.ads = $( settings.selector ).get();
+	this.adsLength = this.ads.length;
+	this.settings = settings;
 
-	update : function() {
+	if ( settings.onScroll ) {
 
-		if(!LazyLoadAds.allAds) {
-			LazyLoadAds.w = $(window);
-			LazyLoadAds.allAds = [];
-			$(".LazyLoadAd").each(function(i, el) {
-				LazyLoadAds.allAds.push($(el));
-			});
-			LazyLoadAds.num = LazyLoadAds.allAds.length;
-		}
-
-		var fold = LazyLoadAds.w.height() + LazyLoadAds.w.scrollTop();
-
-		for(var i = 0; i < LazyLoadAds.num; i++) {
-			if(LazyLoadAds.allAds[i]) {
-				var top = LazyLoadAds.allAds[i].offset().top;
-				if(top > 0 && top < (fold + LazyLoadAds.settings.threshhold) ) {
-					var elemId = LazyLoadAds.allAds[i].attr("id");
-					var adslot = elemId;
-
-					if($('#'+elemId).get(0).nodeName == 'IFRAME') {
-						var fillFunction = "fillIframe_" + adslot.replace("_iframe", "");
-					} else {
-						var fillFunction = "fillElem_" + adslot;
-					}
-
-					if (typeof(window[fillFunction]) !== 'undefined') {
-						window[fillFunction]();
-						window[fillFunction] = false;
-					}
-					else {
-						LazyLoadAds.log("Warning! " + fillFunction + " does not exist.");
-					}
-
-					LazyLoadAds.allAds[i] = false;
-				}
-			}
-		}
+		// TODO: throttle this better?
+		$window.on( scroll, $.throttle( 100, $.proxy( this.onScroll, this ) ) ).trigger( scroll );
 	}
 };
 
-$(function() {
-	LazyLoadAds.init();
-});
+LazyLoadAds.prototype.onScroll = function() {
+	var ad, funcName,
+		fold = $window.height() + $window.scrollTop() + this.settings.onScroll.threshold,
+		i = 0;
+
+	for ( ; i < this.adsLength; i++ ) {
+		ad = this.ads[ i ];
+
+		if ( $( ad ).offset().top <= fold ) {
+			funcName = ad.nodeName == 'IFRAME'
+				? 'fillIframe_' + ad.id.replace( '_iframe', '' ) : 'fillElem_' + ad.id;
+
+			if ( typeof window[ funcName ] != 'undefined' ) {
+				window[ funcName ]();
+			}
+
+			// Remove this item
+			this.ads.splice( i, 1 );
+			this.adsLength--;
+		}
+	}
+
+	// Unbind scroll when there are no items left to load
+	if ( !this.adsLength ) {
+		$window.off( scroll );
+	}
+};
+
+LazyLoadAds.settings = {
+	onScroll: {
+		threshold: 200
+	},
+	selector: '.LazyLoadAd'
+};
+
+// Exports
+Wikia.LazyLoadAds = LazyLoadAds;
+window.Wikia = Wikia;
+
+})( window, jQuery );
