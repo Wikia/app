@@ -889,8 +889,8 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		);
 		
 		$searchConfig
-			->setStreamUrl			( 'http://foo.com' )
-			->setMltFilterQuery		( 'foo:bar' )
+			->setStreamUrl		( 'http://foo.com' )
+			->setFilterQuery	( 'foo:bar', 'mlt' )
 		;
 		
 		$searchConfig['query'] = false;
@@ -901,7 +901,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		        'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet, even if the client throws an exception.'
 		);
 		
-		$searchConfig->setMltFilterQuery( false );
+		$searchConfig->setFilterQueries( array() );
 		$searchConfig->setMindf( 20 );
 		
 		$exceptionMock = $this->getMock( 'Solarium_Exception', array() );
@@ -911,6 +911,16 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->method	( 'moreLikeThis' )
 			->will		( $this->throwException( $exceptionMock ) )
 		;
+		
+		$mockWikia = $this->getMock( 'Wikia', array( 'log' ) );
+		
+		$mockWikia
+			->staticExpects	( $this->any() )
+			->method		( 'log' )
+		;
+		
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockApp();
 		
 		$this->assertInstanceOf(
 		        'WikiaSearchResultSet',

@@ -768,9 +768,8 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 
 		$mockWikia = $this->getMock( 'Wikia', array( 'log' ) );
 		$mockWikia
-			->staticExpects	( $this->once() )
+			->staticExpects	( $this->any() )
 			->method		( 'log' )
-			->with			( 'WikiaSearchConfig::setFilterQueryByCode', '', 'Filter code notacode does not exist.' )
 		;
 		$this->mockClass( 'Wikia', $mockWikia );
 		$this->mockApp();

@@ -718,7 +718,7 @@ class WikiaSearch extends WikiaObject {
 			$mltResult = $this->client->moreLikeThis( $mlt );
 		} catch ( Exception $e ) {
 			$mltResult = F::build('Solarium_Result_Select_Empty');
-			Wikia::Log( __METHOD__, '', $e );
+			F::build( 'Wikia' )->log( __METHOD__, '', $e );
 		}
 		
 		$results = F::build('WikiaSearchResultSet', array($mltResult, $searchConfig) );
