@@ -76,14 +76,16 @@ class Phalanx {
 		return $types;
 	}
 
-	static public function getFromFilter( $moduleId, $lang = null, $master = false ) {
+	static public function getFromFilter( $moduleId, $lang = null, $master = false, $skipCache = false ) {
 		global $wgExternalSharedDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		$timestampNow = wfTimestampNow();
 		$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
 		$sLang = $lang ? $lang : 'all';
-		if (isset(self::$moduleData[$moduleId][$sLang])) {
+		if ( $skipCache ) {
+			$blocksData = null;
+		} else if (isset(self::$moduleData[$moduleId][$sLang])) {
 			$blocksData = self::$moduleData[$moduleId][$sLang];
 		} else {
 			$blocksData = $wgMemc->get($key);

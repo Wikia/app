@@ -19,10 +19,8 @@ $aLanguages = array_keys( $wgPhalanxSupportedLanguages );
 foreach ( $aTypes as $iType ) {
 	// ... and languages.
 	foreach ( $aLanguages as $sLanguage ) {
-		// Purge the cache.
-		$wgMemc->delete( "phalanx:{$iType}:{$sLanguage}" );
 		// Fill the cache with the current data from DB_MASTER.
-		Phalanx::getFromFilter( $iType, $sLanguage, true );
+		Phalanx::getFromFilter( $iType, $sLanguage, true, true );
 	}
 	// Touch.
 	Phalanx::setLastUpdate();
