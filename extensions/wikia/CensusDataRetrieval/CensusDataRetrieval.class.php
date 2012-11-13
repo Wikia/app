@@ -62,7 +62,7 @@ class CensusDataRetrieval {
 		$text .= $this->getLayout();
 
 		$text .= "\n[[" . Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY )->getPrefixedText() . ']]';
-
+var_dump(Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY )->getPrefixedText());
 		return $text;
 	}
 
