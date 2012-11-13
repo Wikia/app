@@ -83,14 +83,16 @@ class Phalanx {
 		$timestampNow = wfTimestampNow();
 		$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
 		$sLang = $lang ? $lang : 'all';
-		if (isset(self::$moduleData[$moduleId][$sLang])) {
+		if ( $skipCache ) {
+			$blocksData = null;
+		} else if (isset(self::$moduleData[$moduleId][$sLang])) {
 			$blocksData = self::$moduleData[$moduleId][$sLang];
 		} else {
 			$blocksData = $wgMemc->get($key);
 		}
 
 		//cache miss (or we have expired blocks in cache), get from DB
-		if ( $skipCache || empty($blocksData) || (!is_null($blocksData['closestExpire']) && $blocksData['closestExpire'] < $timestampNow && $blocksData['closestExpire'])) {
+		if ( empty($blocksData) || (!is_null($blocksData['closestExpire']) && $blocksData['closestExpire'] < $timestampNow && $blocksData['closestExpire'])) {
 			$blocks = $cond = array();
 			$closestTimestamp = 0;
 			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB );
