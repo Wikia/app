@@ -12,14 +12,14 @@ class  WikiaMobileNavigationService extends WikiaService {
 	private $navService = null;
 
 	function init(){
-		$this->navService = F::build( 'WikiNavigationService' );
+		$this->navService = new WikiNavigationService();
 	}
 
 	public function index() {
 		/**
 		 * @var $themeSettings ThemeSettings
 		 */
-		$themeSettings = F::build( 'ThemeSettings' );
+		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
 		$this->response->setVal( 'wordmarkText', $settings["wordmark-text"] );
