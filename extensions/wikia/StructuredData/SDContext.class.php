@@ -3,8 +3,8 @@
  * @author ADi
  */
 class SDContext extends WikiaObject {
-	const RESOURCE_CACHE_TTL = 60;
-	const DESCRIPTION_CACHE_TTL = 60;
+	const RESOURCE_CACHE_TTL = 300;
+	const DESCRIPTION_CACHE_TTL = 300;
 
 	protected $resources = array();
 	protected $objectDescriptions = array();

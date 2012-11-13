@@ -56,6 +56,11 @@ class StructuredData {
 		return $this->APIClient->getCollection( $type, $extraFields );
 	}
 
+	public function updateSDElement(SDElement $element, array $params) {
+		$element->update($params);
+		var_dump( $this->APIClient->saveObject($element->getId(), $element->toSDSJson()) );
+	}
+
 	private function getSDElement(stdClass $element, $elementDepth = 0) {
 		$template = $this->APIClient->getTemplate( $element->type );
 

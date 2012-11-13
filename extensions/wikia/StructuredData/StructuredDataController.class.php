@@ -115,8 +115,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		}
 		else {
 			if($this->getRequest()->wasPosted()) {
-				$sdsObject->update($this->getRequest()->getParams());
-				$this->APIClient->saveObject($sdsObject->getId(), $sdsObject->toSDSJson());
+				$this->structuredData->updateSDElement($sdsObject, $this->getRequest()->getParams());
 				$action = 'render';
 			}
 		}
