@@ -127,6 +127,9 @@ class ImageLightbox {
 		$res = array(
 			'html' => $html,
 			'title' => $wgTitle->getText(),
+			'titleKey' => $wgTitle->getDBKey(),
+			'type' => 'image',
+			'provider' => null,
 			'width' => $wrapperWidth,
 		);
 
@@ -152,10 +155,8 @@ class ImageLightbox {
 					return array();
 				}
 			} else {
-
 				$image = $img;
 			}
-
 
 			$maxWidth = $wgRequest->getInt('maxwidth', 500);
 
@@ -204,6 +205,9 @@ class ImageLightbox {
 				'html' => $html,
 				'jsonData' => $jsonData,
 				'title' => $wgTitle->getText(),
+				'titleKey' => $wgTitle->getDBKey(),
+				'type' => 'video',
+				'provider' => $image->getProviderName(),
 				'width' => $maxWidth,
 				'asset' => $asset
 			);
