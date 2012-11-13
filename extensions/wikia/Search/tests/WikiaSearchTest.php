@@ -816,7 +816,8 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 				'setInterestingTerms',
 				'addFilterQuery',
 				'setQuery',
-				'addParam'
+				'addParam',
+				'setMinimumDocumentFrequency'
 		);
 		
 		$mockMoreLikeThis	=	$this->getMock( 'Solarium_Query_MoreLikeThis', $defaultMltMethods + $addtlMltMethods );
@@ -900,10 +901,53 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		        'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet, even if the client throws an exception.'
 		);
 		
+		$searchConfig->setMltFilterQuery( false );
+		$searchConfig->setMindf( 20 );
 		
-		// lots more to do for this one, but the dependencies are really hard.
+		$exceptionMock = $this->getMock( 'Solarium_Exception', array() );
 		
+		$mockClient
+			->expects	( $this->any() )
+			->method	( 'moreLikeThis' )
+			->will		( $this->throwException( $exceptionMock ) )
+		;
+		
+		$this->assertInstanceOf(
+		        'WikiaSearchResultSet',
+		        $method->invoke( $wikiaSearch, $searchConfig ),
+		        'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet, even if the client throws an exception.'
+		);
 	}
 	
-	
+	/**
+	 * @covers WikiaSearch::onGetPreferences
+	 */
+	public function testOnGetPreferences() {
+		$mockUser		= $this->getMock( 'User' );
+		$wikiaSearch	= F::build( 'WikiaSearch' );
+		
+		$defaultPreferences = array(
+				'searchlimit' => array(),
+				'contextlines' => array(),
+				'contextchars' => array(),
+				'disablesuggest' => array(),
+				'searcheverything' => array(),
+				'searchnamespaces' => array(),
+				);
+		
+		$oldPrefs = $defaultPreferences;
+		
+		$this->assertTrue(
+				$wikiaSearch->onGetPreferences( $mockUser, $defaultPreferences )
+		);
+		
+		foreach ( $oldPrefs as $key => $whocares ) {
+			$this->assertArrayNotHasKey(
+					$key,
+					$defaultPreferences
+			);
+		}
+		
+		
+	}
 }
