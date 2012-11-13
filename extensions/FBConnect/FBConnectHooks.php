@@ -139,19 +139,6 @@ class FBConnectHooks {
 				$out->addInlineScript( $mgvs_script );
 			}
 
-			// macbre: lazy load JavaScript Facebook API
-			if ( empty( $wgNoExternals ) ) {
-				$out->addHTML(
-					F::build('JSSnippets')->addToStack(
-						array(),
-						array(
-							'$.loadFacebookAPI'
-						),
-						'window.onFBloaded'
-					)
-				);
-			}
-
 			// Add a Facebook logo to the class .mw-fblink
 			$style = empty($fbLogo) ? '' : <<<STYLE
 			/* Add a pretty logo to Facebook links */

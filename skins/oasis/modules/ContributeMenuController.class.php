@@ -17,9 +17,6 @@ class ContributeMenuController extends WikiaController {
 
 		// menu items linking to special pages
 		$specialPagesLinks = array(
-			'WikiaVideoAdd' => array(
-				'label' => 'oasis-navigation-v2-add-video'			
-			),
 			'Upload' => array(
 				'label' => 'oasis-navigation-v2-add-photo'
 			),
@@ -32,6 +29,17 @@ class ContributeMenuController extends WikiaController {
 				'accesskey' => 'g',
 			)
 		);
+		
+		// bugid-52607 - Check if VET and Special:Videos are enabled before showing 'add video' link
+		if($this->wg->EnableSpecialVideosExt && $this->wg->EnableVideoToolExt) {
+			$addVideoLink = array(
+				'WikiaVideoAdd' => array(
+					'label' => 'oasis-navigation-v2-add-video'			
+				)
+			);
+
+			$specialPagesLinks = array_merge($addVideoLink, $specialPagesLinks);
+		}
 
 		foreach ($specialPagesLinks as $specialPageName => $link) {
 			$specialPageTitle = SpecialPage::getTitleFor( $specialPageName );

@@ -92,11 +92,14 @@ class WallMessage {
 		}
 
 		// create wall page by bot if not exist
-		if ( !$userPageTitle->exists() ) {
+		if ( $userPageTitle instanceof Title && !$userPageTitle->exists() ) {
 			$userPageTitle = self::addMessageWall( $userPageTitle );
 		}
 
 		if( empty($userPageTitle) ) {
+			Wikia::log(__METHOD__, '', '$userPageTitle not an instance of Title');
+			Wikia::logBacktrace(__METHOD__);
+
 			wfProfileOut(__METHOD__);
 			return false;
 		}

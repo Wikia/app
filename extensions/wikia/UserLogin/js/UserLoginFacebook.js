@@ -23,12 +23,18 @@ var UserLoginFacebook = {
 	},
 
 	loginSetup: function() {
-		$('body').undelegate('fb').delegate('.sso-login-facebook', 'click.fb', $.proxy(function(ev) {
+		$('body').off('fb').on('click.fb', '.sso-login-facebook', $.proxy(function(ev) {
 			ev.preventDefault();
 
-			this.log('FBConnect clicked');
-			// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
-			FB.login($.proxy(this.loginCallback, this), {scope:'publish_stream,email'});
+			// Lazy load the facebook API
+			$.loadFacebookAPI().done(function() {
+				window.onFBloaded();
+
+				// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
+				FB.login($.proxy(this.loginCallback, this), {
+					scope:'publish_stream,email'
+				});
+			});
 		}, this));
 	},
 
