@@ -122,6 +122,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		}
 
 		$this->response->addAsset('extensions/wikia/StructuredData/css/StructuredData.scss');
+		$this->response->addAsset('resources/wikia/libraries/mustache/mustache.js');
 		$this->response->addAsset('extensions/wikia/StructuredData/js/StructuredData.js');
 		$this->setVal('sdsObject', $sdsObject);
 		$this->setVal('context', ( $action == 'edit' ) ? SD_CONTEXT_EDITING : SD_CONTEXT_SPECIAL );
