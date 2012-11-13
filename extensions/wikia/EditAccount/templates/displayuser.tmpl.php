@@ -15,7 +15,7 @@
 	<?= wfMsg('editaccount-labal-account-status') ?>: <?php echo $userStatus; ?><br />
 	<?= wfMsg('editaccount-labal-email-status') ?>: <?php echo $emailStatus; ?><br />
 	<?= $changeEmailRequested; ?><br />
-	<form method="post" action="">
+	<form method="post" action="" id="EditAccountForm">
 		<div>
 			<input type="radio" id="wpActionSetEmail" name="wpAction" value="setemail" />
 			<label for="wpActionSetEmail"><?= wfMessage( 'editaccount-label-email' )->escaped() ?></label>
@@ -77,4 +77,13 @@
 	</form>
 <?php } //end undisable ?>
 </fieldset>
+<script type="text/javascript">
+jQuery( document ).ready( function( $ ) {
+	$( '#EditAccountForm' ).find( 'input[type="text"]' ).focus( function() {
+		if ( $( this ).siblings( 'input[type="radio"]' ).length ) {
+			$( this ).siblings( 'input[type="radio"]' ).prop( 'checked', true );
+		}
+	} );
+} );
+</script>
 <!-- e:<?= __FILE__ ?> -->
