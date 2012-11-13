@@ -4,7 +4,7 @@ var StructureData = {
 	init: function() {
 		var that = this;
 		// Attach handlers
-		$('#SDObject').on('click', 'td button', function(event) {
+		$('#SDObject').on('click', 'td button.load-dropdown', function(event) {
 			event.preventDefault();
 			var $target = $(event.target);
 			that.getObjectsToAdd($target, $target.data('range'));
@@ -12,6 +12,10 @@ var StructureData = {
 		});
 		$('#SDObject').on('change', 'select.objects-to-add', function() {
 			that.addObject($(this));
+		});
+		$('#SDObject').on('click', 'td button.remove', function(event) {
+			event.preventDefault();
+			$(event.target).parent().remove();
 		});
 	},
 	// METHOD for fetching collection of SDS objects form a given class and rendering <select> element with them insiede

@@ -48,7 +48,7 @@ if ( !$object->isCollection() ) { // @todo - again we assume that collection can
 	if ($context == SD_CONTEXT_EDITING) {
 		if($object->getType()->hasRange()) {
 			$types = $object->getType()->getAcceptedValues();
-			echo '<button class="add-reference" data-range="' . join(' ', $types['classes']) .
+			echo '<button class="load-dropdown" data-range="' . join(' ', $types['classes']) .
 				'">Add</button>';
 			//var_dump($object->getType()->getAcceptedValues());
 		}
