@@ -506,6 +506,17 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	}
 	
 	/**
+	 * Allows you to set all filter queries wholesale.
+	 * Pass an empty array if you want to reinitialize this property.
+	 * @param  array $filterQueries
+	 * @return WikiaSearchConfig
+	 */
+	public function setFilterQueries( array $filterQueries ) {
+		$this->filterQueries = $filterQueries;
+		return $this;
+	}
+	
+	/**
 	 * Returns filter query associative array
 	 * @return array
 	 */
