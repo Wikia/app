@@ -48,7 +48,7 @@ if( $putItToAmessage ) {
 
 class WikiaComWikisListImport {
 	const SPREADSHEET_FIRST_ADD_IMG_IDX = 6;
-	const SPREADSHEET_LAST_ADD_IMG_IDX = 6;
+	const SPREADSHEET_LAST_ADD_IMG_IDX = 5;
 
 	protected $options = null;
 	protected $verticalsNames = array('Video Games', 'Entertainment', 'Lifestyle');
@@ -193,6 +193,7 @@ class WikiaComWikisListImport {
 				} else {
 					$this->wikisNotAdded[] = $wikiDomain.' ('.$wikiId.') ';
 				}
+
 			}
 		}
 
