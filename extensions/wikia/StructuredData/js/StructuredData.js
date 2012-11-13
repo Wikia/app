@@ -1,5 +1,5 @@
 var StructureData = {
-	selectTemplate: '<select class="objects-to-add">{{#list}}<option value="{{id}}" data-url="{{url}}" data-type="{{type}}">{{name}}</option>{{/list}}{{^list}}<option>No objects found!</option>{{/list}}</select> ',
+	selectTemplate: '<select class="objects-to-add">{{#list}}<option data-value="{{id}}" data-url="{{url}}" data-type="{{type}}">{{name}}</option>{{/list}}{{^list}}<option>No objects found!</option>{{/list}}</select> ',
 	objectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}">{{name}}</a><button class="secondary remove">Remove</button></li>',
 	init: function() {
 		var that = this;
@@ -42,7 +42,7 @@ var StructureData = {
 			i,
 			alreadyExists = false;
 		placeToAdd.find('input[type="hidden"]').each(function(){
-			if ($(this).val() === selectedObject.val()) {
+			if ($(this).val() === selectedObject.data('value')) {
 				alert('Object already in the list!');
 				alreadyExists = true;
 			}
@@ -51,7 +51,7 @@ var StructureData = {
 			var	objectData = {
 					name: selectedObject.text(),
 					url: selectedObject.data('url'),
-					id: selectedObject.val(),
+					id: selectedObject.data('value'),
 					type: selectedObject.data('type')
 				},
 				html = Mustache.render(this.objectTemplate, objectData);
