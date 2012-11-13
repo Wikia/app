@@ -495,13 +495,16 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Adds a filter query based on the optional key, or automatically incremented key
-	 * @param  $queryString
-	 * @param  $key
+	 * @param  string $queryString
+	 * @param  string $key
 	 * @return WikiaSearchConfig
 	 */
 	public function setFilterQuery( $queryString, $key = null ) {
-		$key = $key ?: sprintf( 'fq_%d', self::$filterQueryCount++ );
-		$this->filterQueries[$key] = $queryString;
+		$key = $key ?: sprintf( 'fq%d', ++self::$filterQueryCount );
+		$this->filterQueries[$key] = array( 
+				'key' => $key, 
+				'query' => $queryString 
+		);
 		return $this;
 	}
 	
