@@ -80,13 +80,6 @@
 				<? if($displayAdminDashboardChromedArticle) { ?>
 					<?= (string)$app->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array('headerText' => $wg->Title->getText() )) ?>
 				<? } ?>
-				<?php
-					global $wfMainPageTag_rcs_called;
-
-					if(empty($wfMainPageTag_rcs_called)) {
-						echo $app->renderView('Ad', 'Column');
-					}
-				?>
 
 				<?php
 				// for InfoBox-Testing
