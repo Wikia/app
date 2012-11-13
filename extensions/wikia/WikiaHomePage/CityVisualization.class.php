@@ -632,6 +632,16 @@ class CityVisualization extends WikiaModel {
 				$updateArray = array();
 
 				$image->reviewer_id = null;
+				$image->review_start = null;
+				$image->review_end = null;
+
+				$oldPageId = $image->page_id;
+
+				$title = F::build('Title', array($image->image_name, NS_FILE), 'newFromText');
+				if($title instanceof Title) {
+					$image->page_id = $title->getArticleId();
+				}
+
 				foreach ($image as $field => $value) {
 					$updateArray[$field] = $value;
 				}
@@ -641,7 +651,7 @@ class CityVisualization extends WikiaModel {
 					$updateArray,
 					array(
 						'city_id' => $image->city_id,
-						'page_id' => $image->page_id,
+						'page_id' => $oldPageId,
 						'city_lang_code' => $image->city_lang_code,
 					)
 				);
