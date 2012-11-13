@@ -15,12 +15,23 @@ class SDElementPropertyTypeRange {
 		return isset( $this->data->oneOf ) ? true : false;
 	}
 
-	public function hasClass() {
+	public function hasClasses() {
 		return isset( $this->data->id ) ? true : false;
 	}
 
-	public function getClass() {
-		return $this->hasClass() ? $this->data->id : false;
+	public function getClasses() {
+		$classes = array();
+		if($this->hasClasses()) {
+			if(isset($this->data->unionOf)) {
+				foreach($this->data->unionOf as $unionOf) {
+					$classes[] = $unionOf->id;
+				}
+			}
+			else {
+				$classes[] = $this->data->id;
+			}
+		}
+		return $classes;
 	}
 
 	public function getAcceptedValues() {
@@ -29,8 +40,8 @@ class SDElementPropertyTypeRange {
 		if($this->isEnum()) {
 			$values['enum'] = $this->data->oneOf;
 		}
-		else if($this->hasClass()) {
-			$values['classes'] = array( $this->getClass() );
+		else {
+			$values['classes'] = $this->getClasses();
 		}
 
 		return $values;
