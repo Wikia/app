@@ -29,8 +29,8 @@ $messages['en'] = array(
 	'unsubscribe-preferences-toggle-v2' => 'Disable all emails from Wikia (overrides all other options)',
 	'tog-watchlistdigest-v2' => '...a Weekly Digest of changes to my followed Wikia pages is ready',
 	'tog-justify-v2' => 'Show justified paragraphs',
-	
-	'preferences-v2-myhomedisableredirect' => 'Landing page:',
+
+	'preferences-v2-user-landing-page' => 'Landing page:',
 	'preferences-v2-redirect-wiki-activity' => 'Wiki Activity',
 	'preferences-v2-redirect-main-page' => 'Main Page',
 	'preferences-v2-redirect-recent-changes' => 'Recent Changes',
