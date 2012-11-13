@@ -85,6 +85,17 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	);
 	
 	/**
+	 * Associates short key names with filter queries.
+	 * This approach doesn't support on-the-fly language fields.
+	 * We could still append a key in __construct() if it becomes an issue.
+	 * @var array
+	 */
+	private $filterCodes = array(
+			'is_video'			=>	'is_video:true',
+			'is_image'			=>	'is_image:true',
+	);
+	
+	/**
 	 * This is used to keep non-keyed filter queries unique in Solarium
 	 * @var int
 	 */
@@ -533,6 +544,32 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 */
 	public function hasFilterQueries() {
 		return empty( $this->filterQueries );
+	}
+	
+	/**
+	 * Uses pre-determined filter queries that can be set by the controller (e.g. video filtering)
+	 * @param  string $code
+	 * @return WikiaSearchConfig
+	 */
+	public function setFilterQueryByCode( $code ) {
+		if ( isset( $this->filterCodes[$code] ) ) {
+			$this->setFilterQuery( $this->filterCodes[$code], $code );
+		} else {
+			Wikia::log( __METHOD__, '', "Filter code {$code} does not exist." );
+		}
+		return $this;
+	}
+	
+	/**
+	 * Allows us to use pass array of codes in the controller to the search config
+	 * @param  array $codes
+	 * @return WikiaSearchConfig
+	 */
+	public function setFilterQueriesFromCodes( array $codes ) {
+		foreach ( $codes as $code ) {
+			$this->setFilterQueryByCode( $code );
+		}
+		return $this;
 	}
 
 }
