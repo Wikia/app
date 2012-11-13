@@ -76,6 +76,7 @@ $messages['en'] = array(
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">This account has been disabled globally by Wikia.</div>',
 	// For Special:ListGroupRights
 	'right-editaccount' => "Edit other users' information",
+	'action-editaccount' => "edit other users' information",
 );
 
 /** Message documentation (Message documentation)
@@ -101,6 +102,7 @@ Per [[Thread:Support/About_Wikia:Editaccount-status-realuser/ms_and_Wikia:Editac
 	'editaccount-label-toggleadopt-allow' => 'Label for option to allow user to automatically adopting a wiki.',
 	'editaccount-submit-button' => 'Text of the submission button.',
 	'editaccount-label-reason' => 'Label for reason field.',
+	'action-editaccount' => '{{doc-action|editaccount}}',
 );
 
 /** Afrikaans (Afrikaans)
