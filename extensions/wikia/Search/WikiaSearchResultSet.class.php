@@ -3,8 +3,8 @@
 /**
  * This class is intended to provide additional functionality over a simple array
  * for an aggregation of WikiaSearchResult classes. They also accommodate same-class
- * nesting so that we can reuse this class for grouped interwiki search. 
- *  
+ * nesting so that we can reuse this class for grouped interwiki search.
+ *
  * @author Robert Elwell
  *
  */
@@ -15,7 +15,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @var int
 	 */
 	private $position = 0;
-	
+
 	/**
 	 * Used to to access the documents for a given search result grouping
 	 * @var int
@@ -27,65 +27,65 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @var int
 	 */
 	protected $resultsFound = 0;
-	
+
 	/**
 	 * Offset of entire search result set we are starting from
 	 * @var int
 	 */
 	protected $resultsStart = 0;
-	
+
 	/**
 	 * Header values are used for search result grouping metadata
 	 * @var array
 	 */
 	protected $header = array();
-	
+
 	/**
-	 * This is the associative array handling results. 
+	 * This is the associative array handling results.
 	 * Keys are IDs, values are WikiaSearchResult instances.
 	 * @var array
 	 */
 	protected $results = array();
-	
+
 	/**
-	 * The query string provided by the user for the search 
+	 * The query string provided by the user for the search
 	 * (not the complex query we create from it)
 	 * @var string
 	 */
 	protected $query;
-	
+
 	/**
 	 * Time it took for the query to complete on the Solr side.
 	 * Mostly used for debugging.
 	 * @var int
 	 */
 	protected $queryTime = 0;
-	
+
 	/**
 	 * Used primarily for search groupings.
-	 * This is the hostname of the wiki all the results belong to. 
+	 * This is the hostname of the wiki all the results belong to.
 	 * @var string
 	 */
 	protected $host;
-	
+
 	/**
 	 * The object that Solarium builds after getting a Solr response
 	 * @var Solarium_Result_Select
 	 */
 	protected $searchResultObject;
-	
+
 	/**
 	 * The subcomponent handling snippeting
 	 * @var Solarium_Result_Select_Highlighting
 	 */
 	protected $highlightingObject;
-	
+
 	/**
 	 * The configuration used in handling searhes
 	 * @var WikiaSearchConfig
 	 */
 	protected $searchConfig;
-	
+
 	/**
 	 * Used in grouped search.
 	 * @var WikiaSearchResultSet
@@ -106,25 +106,25 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$this->searchResultObject = $result;
 		$this->searchConfig = $searchConfig;
 		$this->setQuery( $searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED ) );
-		
+
 		if ( $result instanceof Solarium_Result_Select_Empty ) {
 			wfProfileOut(__METHOD__);
 			return;
 		}
-		
+
 		if ( ( $parent === null ) && $this->searchConfig->getGroupResults() ) {
-			
+
 			$this->setResultGroupings( $result, $searchConfig );
 			$this->setResultsFound( $this->getHostGrouping()->getMatches() );
-			
+
 		} else {
 			$this->parent				= $parent;
 			$this->metaposition			= $metaposition;
 			$this->highlightingObject	= $result->getHighlighting();
-			
+
 			$this	->setResultsStart	( $result->getStart() )
 					->setQueryTime		( $result->getQueryTime() );
-			
+
 			if ( ( $this->parent !== null ) && ( $this->metaposition !==  null ) ) {
 				$this->prepareChildResultSet();
 			} else {
@@ -138,7 +138,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		}
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	/**
 	 * This is the subroutine used to prepare a search result set instance with a parent.
 	 * @return WikiaSearchResultSet provides for fluent interface
@@ -149,24 +149,24 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$valueGroup		= $valueGroups[$this->metaposition];
 		$this->host		= $valueGroup->getValue();
 		$documents		= $valueGroup->getDocuments();
-		
+
 		$this	->setResults		( $documents )
 				->setResultsFound	( $valueGroup->getNumFound() );
-		
+
 		if ( count( $documents ) > 0 ) {
 			$exampleDoc		= $documents[0];
 			$cityId			= $exampleDoc->getCityId();
-			
+
 			$this->setHeader( 'cityId',				$cityId );
 			$this->setHeader( 'cityTitle',			WikiFactory::getVarValueByName( 'wgSitename', $cityId ) );
 			$this->setHeader( 'cityUrl',			WikiFactory::getVarValueByName( 'wgServer', $cityId ) );
 			$this->setHeader( 'cityArticlesNum',	$exampleDoc['wikiarticles'] );
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return $this;
 	}
-	
+
 	/**
 	 * Reusable method for grabbing the resultset grouped by host.
 	 * @throws Exception
@@ -203,7 +203,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		wfProfileOut(__METHOD__);
 		return $this;
 	}
-	
+
 	/**
 	 * set result documents
 	 * @param  array $results list of WikiaResult or WikiaResultSet (for result grouping) objects
@@ -215,7 +215,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		foreach($results as $result) {
 			$this->addResult($result);
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return $this;
 	}
@@ -233,12 +233,12 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	}
 
 	/**
-	 * Subroutine for optionally prepending article match to result array. 
+	 * Subroutine for optionally prepending article match to result array.
 	 * @return WikiaSearchResultSet provides fluent interface
 	 */
 	public function prependArticleMatchIfExists() {
 		wfProfileIn(__METHOD__);
-		
+
 		if (! ( $this->searchConfig->hasArticleMatch() && $this->resultsStart == 0 ) ) {
 			wfProfileOut(__METHOD__);
 			return $this;
@@ -248,13 +248,13 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$article		= $articleMatch->getCanonicalArticle();
 		$title			= $article->getTitle();
 		$articleId		= $article->getID();
-		
-		if (! in_array( $title->getNamespace(), $this->searchConfig->getNamespaces() ) ) { 
+
+		if (! in_array( $title->getNamespace(), $this->searchConfig->getNamespaces() ) ) {
 			// we had an article match by name, but not in our desired namespaces
 			wfProfileOut(__METHOD__);
 			return $this;
 		}
-		
+
 		$articleMatchId	= sprintf( '%s_%s', $this->wg->CityId, $articleId );
 		$articleService	= F::build('ArticleService', array( $articleId ) );
 		$firstRev		= $title->getFirstRevision();
@@ -274,25 +274,25 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 				'touched'		=>	$touched,
 				);
 		//@TODO: we could put categories ^^ here but we aren't really using them yet
-		
+
 		$result		= F::build( 'WikiaSearchResult', array($fieldsArray) );
 		$snippet	= $articleService->getTextSnippet(250);
-		
+
 		$result->setText( $snippet );
 		if ( $articleMatch->hasRedirect() ) {
 			$result->setVar( 'redirectTitle', $articleMatch->getArticle()->getTitle() );
 		}
-		
+
 		$result->setVar( 'id', $articleMatchId );
-		
+
 		$this->addResult( $result );
-		
+
 		$this->resultsFound++;
-		
+
 		wfProfileOut(__METHOD__);
 		return $this;
 	}
-	
+
 	/**
 	 * Does a little prep on a result oject, applies highlighting if exists, and adds to result array.
 	 * @param  WikiaSearchResult $result
@@ -302,16 +302,16 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	private function addResult( WikiaSearchResult $result ) {
 		if( $this->isValidResult( $result ) ) {
 			$id = $result['id'];
-			if ( 		( $this->highlightingObject !==	null ) 
+			if ( 		( $this->highlightingObject !==	null )
 					&&  ( $hlResult 				=	$this->highlightingObject->getResult( $id ) )
 					&&  ( $field					=	$hlResult->getField( WikiaSearch::field( 'html' ) ) ) ) {
 				$result->setText( $field[0] );
 			}
-			
+
 			if ( ( $result['created'] !== null ) && $this->wg->Lang ) {
 				$result	->setVar( 'created',		$result['created'] )
 						->setVar( 'fmt_timestamp',	$this->wg->Lang->date( wfTimestamp( TS_MW, $result['created'] ) ) );
-				
+
 				if ( $result->getVar( 'fmt_timestamp' ) ) {
 				    $result->setVar( 'created_30daysago', time() - strtotime( $result['created'] ) > 2592000 );
 				}
@@ -320,7 +320,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 			$result	->setVar('categories',		$result[WikiaSearch::field( 'categories' )] ?: 'NONE' )
 					->setVar('cityArticlesNum',	$result['wikiarticles'] )
 					->setVar('wikititle',		$result[WikiaSearch::field( 'wikititle' )] );
-			
+
 			$this->results[$id] = $result;
 		}
 		else {
@@ -459,11 +459,11 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$this->query = $query;
 		return $this;
 	}
-	
+
 	public function getQueryTime() {
 		return $this->queryTime;
 	}
-	
+
 	public function setQueryTime($val) {
 		$this->queryTime = $val;
 		return $this;
@@ -482,7 +482,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	public function isOnlyArticleMatchFound() {
 		return $this->getResultsNum() == 1 && $this->results[0]->getVar( 'isArticleMatch' ) == true;
 	}
-	
+
 	/* (non-PHPdoc)
 	 * @see ArrayAccess::offsetExists()
 	 */
@@ -510,7 +510,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	public function offsetUnset ($offset) {
 		unset($this->results[$offset]);
 	}
-	
+
 	/**
 	 * Returns the parent value set during instantiation
 	 * @return WikiaSearchResultSet|null
@@ -518,7 +518,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	public function getParent() {
 		return $this->parent;
 	}
-	
+
 	/**
 	 * For a search result set with a parent, returns the host value of the grouping.
 	 * @return string|null
@@ -526,7 +526,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	public function getId() {
 		return $this->host;
 	}
-	
+
 	/**
 	 * Returns the array of results
 	 * @return array
@@ -534,12 +534,12 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	public function getResults() {
 		return $this->results;
 	}
-	
+
 	/*
 	 * Done to return results in json format
 	 * Can be removed after upgrade to 5.4 and specify serialized Json data on WikiaSearchResult
 	 * http://php.net/manual/en/jsonserializable.jsonserialize.php
-	 * 
+	 *
 	 * @return array
 	 */
 	public function toNestedArray() {
