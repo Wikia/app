@@ -85,6 +85,19 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	);
 	
 	/**
+	 * This is used to keep non-keyed filter queries unique in Solarium
+	 * @var int
+	 */
+	public static $filterQueryCount = 0;
+	
+	/**
+	 * Filter queries stored by "key"
+	 * Separate from traditional storage because the requirements are a bit more complex
+	 * @var array
+	 */
+	private $filterQueries = array();
+	
+	/**
 	 * Constructor method
 	 * @see   WikiaSearchConfigTest::testConstructor
 	 * @param array $params
@@ -472,10 +485,40 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Normalizes the cityId value in case of mistyping
-	 * @see   WikiaSearchConfigTest::testGetCityId
-	 * @param int $value
+	 * @see    WikiaSearchConfigTest::testGetCityId
+	 * @param  int $value
+	 * @return WikiaSearchConfig
 	 */
 	public function setCityID( $value ) {
 		return $this->__call( 'setCityId', array( $value ) );
 	}
+	
+	/**
+	 * Adds a filter query based on the optional key, or automatically incremented key
+	 * @param  $queryString
+	 * @param  $key
+	 * @return WikiaSearchConfig
+	 */
+	public function setFilterQuery( $queryString, $key = null ) {
+		$key = $key ?: sprintf( 'fq_%d', self::$filterQueryCount++ );
+		$this->filterQueries[$key] = $queryString;
+		return $this;
+	}
+	
+	/**
+	 * Returns filter query associative array
+	 * @return array
+	 */
+	public function getFilterQueries() {
+		return $this->filterQueries;
+	}
+	
+	/**
+	 * Returns true or false depending on whether we've got filter queries set
+	 * @return bool
+	 */
+	public function hasFilterQueries() {
+		return empty( $this->filterQueries );
+	}
+
 }
