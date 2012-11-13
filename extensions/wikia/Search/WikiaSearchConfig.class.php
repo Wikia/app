@@ -99,7 +99,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * This is used to keep non-keyed filter queries unique in Solarium
 	 * @var int
 	 */
-	public static $filterQueryCount = 0;
+	public static $filterQueryIncrement = 0;
 	
 	/**
 	 * Filter queries stored by "key"
@@ -506,12 +506,13 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Adds a filter query based on the optional key, or automatically incremented key
+	 * Note that if you provide a key that already exists, you are overwriting that filter query.
 	 * @param  string $queryString
 	 * @param  string $key
 	 * @return WikiaSearchConfig
 	 */
 	public function setFilterQuery( $queryString, $key = null ) {
-		$key = $key ?: sprintf( 'fq%d', ++self::$filterQueryCount );
+		$key = $key ?: sprintf( 'fq%d', ++self::$filterQueryIncrement );
 		$this->filterQueries[$key] = array( 
 				'key' => $key, 
 				'query' => $queryString 
@@ -526,7 +527,16 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @return WikiaSearchConfig
 	 */
 	public function setFilterQueries( array $filterQueries ) {
-		$this->filterQueries = $filterQueries;
+		$newFilterQueries = array();
+		$this->filterQueries = array();
+		self::$filterQueryIncrement = 0;
+		foreach ( $filterQueries as $filterQuery ) {
+			if ( is_array( $filterQuery ) && isset( $filterQuery['query'] ) ) {
+				$this->setFilterQuery( $filterQuery['query'], ( isset( $filterQuery['key'] ) ? $filterQuery['key'] : null ) );
+			} else if ( is_string( $filterQuery ) ) {
+				$this->setFilterQuery( $filterQuery );
+			} 
+		}
 		return $this;
 	}
 	
@@ -543,7 +553,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @return bool
 	 */
 	public function hasFilterQueries() {
-		return empty( $this->filterQueries );
+		return !empty( $this->filterQueries );
 	}
 	
 	/**
@@ -555,7 +565,8 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		if ( isset( $this->filterCodes[$code] ) ) {
 			$this->setFilterQuery( $this->filterCodes[$code], $code );
 		} else {
-			Wikia::log( __METHOD__, '', "Filter code {$code} does not exist." );
+			// the fun things we do to test static methods
+			F::build( 'Wikia' )->log( __METHOD__, '', "Filter code {$code} does not exist." );
 		}
 		return $this;
 	}
