@@ -48,8 +48,17 @@ if ( !$object->isCollection() ) { // @todo - again we assume that collection can
 	if ($context == SD_CONTEXT_EDITING) {
 		if($object->getType()->hasRange()) {
 			$types = $object->getType()->getAcceptedValues();
-			echo '<button class="load-dropdown" data-range="' . join(' ', $types['classes']) .
-				'">Add</button>';
+			if (array_key_exists('enum', $types)) {
+				echo '<select>';
+				echo '<option>choose...</option>';
+				foreach ($types['enum'] as $value) {
+					echo '<option value="' . $value . '">' . $value . '</option>';
+				}
+				echo '</select>';
+			} else {
+				echo '<button class="load-dropdown" data-range="' . join(' ', $types['classes']) .
+					'">Add</button>';
+			}
 			//var_dump($object->getType()->getAcceptedValues());
 		}
 		else {
