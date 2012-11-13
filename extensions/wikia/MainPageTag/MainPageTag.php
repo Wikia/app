@@ -41,7 +41,7 @@ function wfMainPageTag_rcs( $input, $args, $parser ) {
 		$wfMainPageTag_rcs_called = true;
 	}
 	$html = '<div class="main-page-tag-rcs'.(empty($wgOasisGrid) ? '' : ' grid-2').'"><div>';
-	$html .= F::app()->renderView('Ad', 'Column');
+	$html .= F::app()->renderView('Ad', 'MainPageRightColumn');
 
 	return $html;
 }
