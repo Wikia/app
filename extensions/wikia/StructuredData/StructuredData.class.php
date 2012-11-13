@@ -64,14 +64,30 @@ class StructuredData {
 		return $SDElement;
 	}
 
+	public function onParserFirstCallInitParserFunctionHook( Parser &$parser ) {
+		$parser->setFunctionHook('data', array( $this, 'dataParserFunction') );
+		return true;
+	}
+
 	public function onParserFirstCallInit( Parser &$parser ) {
 		$parser->setHook( 'data', array( $this, 'dataParserHook' ) );
 		return true;
 	}
 
-	public function dataParserHook( $input, $args, Parser $parser, PPFrame $frame ) {
+	public function onBeforeInternalParse( Parser &$parser ) {
+		$parser->setHook( 'data', array( $this, 'dataParserHook' ) );
+		return true;
+	}
+
+	public function dataParserFunction( $parser, $param1='', $param2='' ) {
+		return $this->dataParserHook( $param1, null, $parser );
+	}
+
+	public function dataParserHook( $input, $args, Parser $parser, PPFrame $frame = null ) {
 		$result = '';
-		$input = $parser->recursiveTagParse($input, $frame);
+		if ( !empty( $frame ) ) {
+			$input = $parser->recursiveTagParse($input, $frame);
+		}
 		$inputData = $this->parseHookInput($input);
 
 		if( isset($inputData['hash']) ) {
@@ -151,8 +167,7 @@ class StructuredData {
 				$result = "Unknown element: " . ( $inputData['type'] . '/' . $inputData['name'] );
 			}
 		}
-
-		return $result;
+		return trim($result);
 	}
 
 	private function parseHookInput( $input ) {

@@ -21,7 +21,9 @@ require_once( $dir . '../../../lib/HTTP/Request.php');
 /**
  * hooks
  */
+//$app->registerHook('ParserBeforeInternalParse', 'StructuredData', 'onBeforeInternalParse');
 $app->registerHook('ParserFirstCallInit', 'StructuredData', 'onParserFirstCallInit');
+$app->registerHook('ParserFirstCallInit', 'StructuredData', 'onParserFirstCallInitParserFunctionHook');
 
 /**
  * controllers
@@ -67,3 +69,5 @@ define('SD_CONTEXT_EDITING', 2);
 F::addClassConstructor( 'StructuredDataAPIClient', array( 'baseUrl' => $wgStructuredDataConfig['baseUrl'], 'apiPath' => $wgStructuredDataConfig['apiPath'], 'schemaPath' => $wgStructuredDataConfig['schemaPath'] ) );
 F::addClassConstructor( 'StructuredData', array( 'apiClient' => F::build( 'StructuredDataAPIClient' )));
 F::addClassConstructor( 'SDElementRendererFactory', array( 'config' => $wgStructuredDataConfig ) );
+
+$wgExtensionMessagesFiles['StructuredContent'] = "$dir/StructuredData.i18n.php";
