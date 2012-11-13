@@ -180,10 +180,10 @@ class MyHome {
 			$value = $wgUser->getOption(UserPreferencesV2::LANDING_PAGE_PROP_NAME);
 			switch($value) {
 				case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
-					$title = Title::newFromText('WikiActivity', NS_SPECIAL);
+					$title = SpecialPage::getTitleFor('WikiActivity');
 					break;
 				case UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
-					$title = Title::newFromText('RecentChanges', NS_SPECIAL);
+					$title = SpecialPage::getTitleFor('RecentChanges');
 					break;
 			}
 		}
