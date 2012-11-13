@@ -350,9 +350,9 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @param $html  String: additional HTML text to be shown. The name and size of the image are always shown.
 	 * @param $link  String: value of link= parameter
 	 */
-	function add($title, $html='', $link='', $origHtml='') {
+	function add($title, $html='', $link='', $wikitext='') {
 		if ($title instanceof Title) {
-			$this->mImages[] = array( $title, $html, $link, $origHtml );
+			$this->mImages[] = array( $title, $html, $link, $wikitext );
 			wfDebug( __METHOD__ . ' - ' . $title->getText() . "\n" );
 		}
 	}
