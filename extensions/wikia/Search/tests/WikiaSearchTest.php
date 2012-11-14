@@ -837,7 +837,9 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$mockMltResult		=	$this->getMock( 'Solarium_Result_MoreLikeThis', array(), array( $mockClient, $mockMoreLikeThis, $mockResponse ) );
 		$wikiaSearch		=	F::build( 'WikiaSearch', array( $mockClient ) );
 		$searchConfig		=	F::build( 'WikiaSearchConfig' );
-		$mockResultSet		=	$this->getMock( 'stdClass', array(), array(), 'WikiaSearchResultSet' );
+		$mockResultSet		=	$this->getMockBuilder( 'WikiaSearchResultSet' )
+									->disableOriginalConstructor()
+									->getMock();
 		$method				=	new ReflectionMethod( 'WikiaSearch', 'moreLikeThis' );
 		
 		$method->setAccessible( true );
@@ -1100,7 +1102,6 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 				'getQuery', 'getStreamUrl', 'getStreamBody', 'setFilterQuery', 'setMltBoost', 'setMltFields'
 				);
 		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', $searchConfigMethods );
-		$mockClient		=	$this->getMock( 'Solarium_Client', array() );
 		$mockSearch 	=	$this->getMockBuilder( 'WikiaSearch' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'moreLikeThis', 'getQueryClausesString' ) )
@@ -1151,5 +1152,158 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 				'WikiaSearch::getSimilarPages should return associative array keyed by the URL of each result, with a value containing the wid and page id of that result' 
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearch::getRelatedVideos
+	 */
+	public function testGetRelatedVideosWithPageId() {
+		$searchConfigMethods = array(
+				'getCityId', 'getPageId', 'setMindf', 'setQuery', 'setFilterQuery', 'setMltFields'
+				);
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', $searchConfigMethods );
+		$mockSearch 	=	$this->getMockBuilder( 'WikiaSearch' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'moreLikeThis' ) )
+								->getMock();
+		
+		$mockResults	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$filterQuery = sprintf( '%s AND %s AND %s', 
+	    							WikiaSearch::valueForField( 'wid', 123 ), 
+	    							WikiaSearch::valueForField( 'is_video', 'true' ),
+	    							WikiaSearch::valueForField( 'ns',			NS_FILE ) 
+	    							);
+		
+		$mockConfig
+			->expects	( $this->any() )
+			->method	( 'getPageId' )
+			->will		( $this->returnValue( 234 ) )
+		;
+		$mockConfig
+			->expects	( $this->any() )
+			->method	( 'getCityId' )
+			->will		( $this->returnValue( 123 ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setQuery' )
+			->with		( '(wid:123) AND (pageid:234)' )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setFilterQuery' )
+			->with		( $filterQuery )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setMltFields' )
+			->with		( array( WikiaSearch::field( 'title' ), WikiaSearch::field( 'html' ), 'title' ) )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockSearch
+			->expects	( $this->once() )
+			->method	( 'moreLikeThis' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $mockResults ) )
+		;
+		
+		$mockSearch->getRelatedVideos( $mockConfig );
+	}
+	
+	/**
+	 * @covers WikiaSearch::getRelatedVideos
+	 */
+	public function testGetRelatedVideosWithoutPageId() {
+		$searchConfigMethods = array(
+				'getCityId', 'getPageId', 'setMindf', 'setQuery', 'setFilterQuery', 'setMltFields'
+				);
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', $searchConfigMethods );
+		$mockSearch 	=	$this->getMockBuilder( 'WikiaSearch' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'moreLikeThis' ) )
+								->getMock();
+		
+		$mockResults	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockApiService	=	$this->getMock( 'ApiService', array( 'call' ) );
+		
+		$params = array('action'	=> 'query',
+		                'prop'		=> 'info|categories',
+		                'inprop'	=> 'url|created|views|revcount',
+		                'meta'		=> 'siteinfo',
+		                'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
+               			);
+		
+		$mockServiceResult = array(
+				'query'	=>	array(
+								'statistics' => array( 'articles' => 100 )	
+							)
+		);
+		
+		$mockApiService
+			->staticExpects	( $this->once() )
+			->method		( 'call' )
+			->with			( $params )
+			->will			( $this->returnValue( $mockServiceResult ) )
+		;
+		
+		$filterQuery = sprintf( '%s AND %s AND %s', 
+	    							WikiaSearch::valueForField( 'wid', 123 ), 
+	    							WikiaSearch::valueForField( 'is_video', 'true' ),
+	    							WikiaSearch::valueForField( 'ns',			NS_FILE ) 
+	    							);
+		
+		$mockConfig
+			->expects	( $this->any() )
+			->method	( 'getPageId' )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockConfig
+			->expects	( $this->any() )
+			->method	( 'getCityId' )
+			->will		( $this->returnValue( 123 ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setQuery' )
+			->with		( '(wid:123) AND (iscontent:true)' )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setFilterQuery' )
+			->with		( $filterQuery )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setMltFields' )
+			->with		( array( WikiaSearch::field( 'title' ), WikiaSearch::field( 'html' ), 'title' ) )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setMindf' )
+			->with		( 50 )
+		;
+		$mockSearch
+			->expects	( $this->once() )
+			->method	( 'moreLikeThis' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $mockResults ) )
+		;
+		
+		$this->mockClass( 'ApiService', $mockApiService );
+		$this->mockApp();
+		
+		$mockSearch->getRelatedVideos( $mockConfig );
+	}
+	
 	
 }

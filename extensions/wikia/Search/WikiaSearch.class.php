@@ -261,8 +261,8 @@ class WikiaSearch extends WikiaObject {
 			                'meta'		=> 'siteinfo',
 			                'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
                 			);
-	    	
-			$data = ApiService::call( $params );
+	    	// I think it's lame I have to do this to get unit tests to work. Just sayin'.
+			$data = F::build( 'ApiService' )->call( $params );
 	
 			if ( isset( $data['query'] ) && isset( $data['query']['statistics'] ) && isset( $data['query']['statistics']['articles'] ) ) {
 				$searchConfig->setMindf( (int) ($data['query']['statistics']['articles'] * .5) );
