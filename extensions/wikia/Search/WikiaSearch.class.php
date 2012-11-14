@@ -164,12 +164,12 @@ class WikiaSearch extends WikiaObject {
 			$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
 			
 		} catch ( Exception $e ) {
-			Wikia::log(__METHOD__, 'Querying Solr First Time', $e);
+			F::build('Wikia')->log(__METHOD__, 'Querying Solr First Time', $e);
 			$searchConfig->setSkipBoostFunctions( true );
 			try {
 				$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
 			} catch ( Exception $e ) {
-				Wikia::log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
+				F::build('Wikia')->log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
 				$result = F::build('Solarium_Result_Select_Empty');
 			}
 		}
@@ -182,11 +182,11 @@ class WikiaSearch extends WikiaObject {
 
 		if( $searchConfig->getPage() == 1 ) {
 			$resultCount = $results->getResultsFound();
-			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
-							array(	'sterm'	=> $searchConfig->getQuery(), 
-									'rver'	=> self::RELEVANCY_FUNCTION_ID,
-									'stype'	=> ( $searchConfig->getCityId() == 0 ? 'inter' : 'intra' ) 
-								 ) 
+			F::build( 'Track' )->event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
+										array(	'sterm'	=> $searchConfig->getQuery(), 
+												'rver'	=> self::RELEVANCY_FUNCTION_ID,
+												'stype'	=> ( $searchConfig->getIsInterWiki() ? 'inter' : 'intra' ) 
+											 ) 
 						);
 		}
 
