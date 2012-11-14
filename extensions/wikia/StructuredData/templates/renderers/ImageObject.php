@@ -8,9 +8,15 @@
 	</figure>
 	<dl>
 		<dt>Link to file page:</dt>
-		<dd><a href="<?php echo $object->getPropertyValue('schema:url', false); ?>" title=""><?php echo $imgSrc = $object->getPropertyValue('schema:url', false); ?></a></p>
-</dd>
+		<dd>
+			<a href="<?php echo $object->getPropertyValue('schema:url', false); ?>" title=""><?php echo $imgSrc = $object->getPropertyValue('schema:url', false); ?></a>
+		</dd>
 	</dl>
-	<?php else : ?>
+<?php elseif ($context == SD_CONTEXT_EDITING): ?>
+	<input type="hidden" name="<?=$params['fieldName'];?>" value="<?=$object->getId();?>" />
+	<a href="<?=$object->getSpecialPageUrl();?>" title="<?=htmlspecialchars( $object->getName() ); ?>"><img src="<?=
+		$object->getPropertyValue('schema:contentURL', false); ?>" alt="<?=htmlspecialchars( $object->getName() ); ?>" /></a>
+	<button class="secondary remove">Remove</button>
+<?php else : ?>
 	<img src="<?= $object->getPropertyValue('schema:contentURL', false); ?>" />
 <?php endif; ?>

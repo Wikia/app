@@ -1,7 +1,8 @@
 var StructureData = {
-	selectTemplate: '<select class="objects-to-add">{{#list}}<option data-value="{{id}}" data-url="{{url}}" data-type="{{type}}">{{name}}</option>{{/list}}{{^list}}<option>No objects found!</option>{{/list}}</select> ',
+	selectTemplate: '<select class="objects-to-add">{{#list}}<option data-value="{{id}}" data-url="{{url}}" data-type="{{type}}" {{#imageUrl}}data-image-url="{{imageUrl}}"{{/imageUrl}} >{{name}}</option>{{/list}}{{^list}}<option>No objects found!</option>{{/list}}</select> ',
 	objectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}">{{name}}</a> <button class="secondary remove">Remove</button></li>',
-	inputTemplate: '<li><div class="input-group"><input type="text" name="{{type}}[]" value="" /><button class="secondary remove">Remove</button></div></li>',
+	imageObjectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}" title="{{name}}"><img src="{{imageUrl}}" alt="{{name}}"</a> <button class="secondary remove">Remove</button></li>',
+	inputTemplate: '<li><div class="input-group"><input type="text" name="{{type}}[]" value="" /> <button class="secondary remove">Remove</button></div></li>',
 	init: function() {
 		var that = this;
 		// Attach handlers
@@ -55,7 +56,6 @@ var StructureData = {
 	addObject: function(objectsList) {
 		var selectedObject = objectsList.children(':selected'),
 			placeToAdd = ($eventTarget.siblings('ol').length > 0) ? $eventTarget.siblings('ol') : $eventTarget.siblings('ul'),
-			i,
 			alreadyExists = false;
 		placeToAdd.find('input[type="hidden"]').each(function(){
 			if ($(this).val() === selectedObject.data('value')) {
@@ -70,7 +70,13 @@ var StructureData = {
 					id: selectedObject.data('value'),
 					type: placeToAdd.data('field-name')
 				},
+				html;
+			if (objectData.type === 'schema:photos') {
+				objectData.imageUrl = selectedObject.data('image-url');
+				html = Mustache.render(this.imageObjectTemplate, objectData);
+			} else {
 				html = Mustache.render(this.objectTemplate, objectData);
+			}
 			placeToAdd.append(html);
 		}
 	}
