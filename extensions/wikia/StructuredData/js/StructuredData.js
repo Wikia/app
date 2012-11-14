@@ -37,6 +37,23 @@ var StructureData = {
 			event.preventDefault();
 			$(event.target).parents('li').remove();
 		});
+		// Attach hand;ers - Use 'ENTER' to go to the next input in list or add new if pressed on last one HACK SOLUTION
+		SDObjectWrapper.on('keydown', 'td li input[type="text"]', function(event) {
+			if (event.which == 13) {
+				event.preventDefault();
+			}
+		}).on('keyup', 'td li input[type="text"]', function(event) {
+			if (event.which == 13) {
+				event.preventDefault();
+				var $target = $(event.target),
+					$nextField = $target.parents('li').next().find('input');
+				if ($nextField.length > 0) {
+					$target.parents('li').next().find('input').focus();
+				} else {
+					$target.parents('li').parent().siblings('button.add-input').click();
+				}
+			}
+		});
 	},
 
 	// METHOD for fetching collection of SDS objects form a given class and rendering <select> element with them inside
