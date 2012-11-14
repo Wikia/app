@@ -23,6 +23,16 @@ $.nirvana = {
 
 		var url = (typeof attr.scriptPath == 'undefined') ? wgScriptPath : attr.scriptPath;
 
+		var sortedKeys = [];
+		for(var key in data) {
+			sortedKeys[sortedKeys.length] = key;
+		}
+		sortedKeys.sort();
+		var sortedDict = {};
+		for(var i = 0; i < sortedKeys.length; i++) {
+			sortedDict[sortedKeys[i]] = data[sortedKeys[i]];
+		}
+
 		return $.ajax({
 			url: url + '/wikia.php?' + $.param({ /* JSlint ignore */
 				//Iowa strips out POST parameters, Nirvana requires these to be set
@@ -33,7 +43,7 @@ $.nirvana = {
 			}),
 			dataType: format,
 			type: type,
-			data: data,
+			data: sortedDict,
 			success: callback,
 			error: onErrorCallback
 		});
