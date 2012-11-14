@@ -100,4 +100,13 @@
 	.add-reference {
 		display: block;
 	}
+	.throbber-wrapper {
+		display: inline-block;
+		height: 8px;
+		position: relative;
+		width: 30px;
+		.wikiaThrobber {
+			background-color: transparent;
+		}
+	}
 }

@@ -7,27 +7,28 @@ var StructureData = {
 
 	init: function() {
 		// Cache selectors
-		this.cachedSelectors.SDObjectWrapper = $('#SDObject');
-		var that = this;
+		var SDObjectWrapper = $('#SDObject'),
+			that = this;
 		// Attach handlers - load dropdown with objects to add
-		this.cachedSelectors.SDObjectWrapper.on('click', 'td button.load-dropdown', function(event) {
+		SDObjectWrapper.on('click', 'td button.load-dropdown', function(event) {
 			event.preventDefault();
 			var $target = $(event.target);
+			$('<div class="throbber-wrapper"></div>').insertAfter($target).startThrobbing();
 			that.getObjectsToAdd($target, $target.data('range'));
 			$target.attr('disabled', 'disabled');
 		});
 		// Attach handlers - add empty input to the list
-		this.cachedSelectors.SDObjectWrapper.on('click', 'td button.add-input', function(event) {
+		SDObjectWrapper.on('click', 'td button.add-input', function(event) {
 			event.preventDefault();
 			var $target = $(event.target);
 			that.addEmptyInput($target);
 		});
 		// Attach handlers - add object from dropdown to list
-		this.cachedSelectors.SDObjectWrapper.on('change', 'select.objects-to-add', function() {
+		SDObjectWrapper.on('change', 'select.objects-to-add', function() {
 			that.addObject($(this));
 		});
 		// Attach handlers - remove object from list
-		this.cachedSelectors.SDObjectWrapper.on('click', 'td button.remove', function(event) {
+		SDObjectWrapper.on('click', 'td button.remove', function(event) {
 			event.preventDefault();
 			$(event.target).parents('li').remove();
 		});
@@ -48,6 +49,7 @@ var StructureData = {
 			},
 			callback: function(data) {
 				var html = Mustache.render(that.selectTemplate, data);
+				$eventTarget.next().stopThrobbing();
 				$eventTarget.after(html);
 			}
 		});
@@ -66,7 +68,7 @@ var StructureData = {
 	// METHOD for adding reference object to the list
 	addObject: function(objectsList) {
 		var selectedObject = objectsList.children(':selected'),
-			placeToAdd = ($eventTarget.siblings('ol').length > 0) ? $eventTarget.siblings('ol') : $eventTarget.siblings('ul'),
+			placeToAdd = (objectsList.siblings('ol').length > 0) ? objectsList.siblings('ol') : objectsList.siblings('ul'),
 			alreadyInList = false;
 		// Check if the object is already in the list
 		placeToAdd.find('input[type="hidden"]').each(function(){
