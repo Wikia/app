@@ -13,8 +13,7 @@ class CreateWikiTest extends WikiaBaseTest {
 	const TEST_PROJECT_DESC = 'Create Wiki';
 	const TEST_WIKI_ID = 177;
 	const TEST_EXTENSION = '';
-	const TEST_USER_ID1 = 1;
-	const TEST_USER_ID2 = 2;
+	const TEST_USER_ID1 = 4663069; // WikiaBot
 
 	private $wgUserBackup = null;
 	private $mIP = null;
