@@ -106,6 +106,8 @@ class Phalanx {
 				$cond[] = "p_lang IS NULL";
 			}
 
+			$cond[] = "p_expire is null or p_expire > '{$timestampNow}'";
+
 			$res = $dbr->select(
 				'phalanx',
 				'*',
@@ -114,9 +116,6 @@ class Phalanx {
 			);
 
 			while ( $row = $res->fetchObject() ) {
-				if ($timestampNow > $row->p_expire && !is_null($row->p_expire)) {
-					continue;       //skip expired
-				}
 				//use p_id as array key for easier deletion from cache
 				$blocks[$row->p_id] = array(
 					'id' => $row->p_id,
