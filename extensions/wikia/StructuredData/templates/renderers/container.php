@@ -55,9 +55,10 @@ if ( !$object->isCollection() ) { // @todo - again we assume that collection can
 					echo '<option value="' . $value . '">' . $value . '</option>';
 				}
 				echo '</select>';
+			} elseif (count($types['classes']) == 1 && in_array('rdfs:Literal', $types['classes'])) {
+				echo '<button class="add-input" data-range="' . join('', $types['classes']) . '">Add new</button>';
 			} else {
-				echo '<button class="load-dropdown" data-range="' . join(' ', $types['classes']) .
-					'">Add</button>';
+				echo '<button class="load-dropdown" data-range="' . join(' ', $types['classes']) . '">Add</button>';
 			}
 			//var_dump($object->getType()->getAcceptedValues());
 		}
