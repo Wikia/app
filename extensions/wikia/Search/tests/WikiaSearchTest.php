@@ -889,8 +889,8 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		);
 		
 		$searchConfig
-			->setStreamUrl			( 'http://foo.com' )
-			->setMltFilterQuery		( 'foo:bar' )
+			->setStreamUrl		( 'http://foo.com' )
+			->setFilterQuery	( 'foo:bar', 'mlt' )
 		;
 		
 		$searchConfig['query'] = false;
@@ -901,7 +901,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		        'WikiaSearch::moreLikeThis should return an instance of WikiaSearchResultSet, even if the client throws an exception.'
 		);
 		
-		$searchConfig->setMltFilterQuery( false );
+		$searchConfig->setFilterQueries( array() );
 		$searchConfig->setMindf( 20 );
 		
 		$exceptionMock = $this->getMock( 'Solarium_Exception', array() );
@@ -911,6 +911,16 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->method	( 'moreLikeThis' )
 			->will		( $this->throwException( $exceptionMock ) )
 		;
+		
+		$mockWikia = $this->getMock( 'Wikia', array( 'log' ) );
+		
+		$mockWikia
+			->staticExpects	( $this->any() )
+			->method		( 'log' )
+		;
+		
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockApp();
 		
 		$this->assertInstanceOf(
 		        'WikiaSearchResultSet',
@@ -947,7 +957,187 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 					$defaultPreferences
 			);
 		}
-		
-		
 	}
+	
+	/**
+	 * @covers WikiaSearch::getSimilarPages
+	 */
+	public function testGetSimilarPagesForStream() {
+		$searchConfigMethods = array(
+				'getQuery', 'getStreamUrl', 'getStreamBody', 'setFilterQuery', 'setMltBoost', 'setMltFields'
+				);
+		$mockConfig =	$this->getMock( 'WikiaSearchConfig', $searchConfigMethods );
+		$mockClient	=	$this->getMock( 'Solarium_Client', array() );
+		$mockSearch =	$this->getMockBuilder( 'WikiaSearch' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'moreLikeThis', 'getQueryClausesString' ) )
+							->getMock();
+		$mockConfig
+			->expects	( $this->any() )
+			->method	( 'getQuery' )
+			->will		( $this->returnValue( false ) ) 
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'getStreamUrl' )
+			->will		( $this->returnValue( false ) ) 
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'getStreamBody' )
+			->will		( $this->returnValue( 'stream' ) ) 
+		;
+		$mockSearch
+			->expects	( $this->once() )
+			->method	( 'getQueryClausesString' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( 'queryClausesString' ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setFilterQuery' )
+			->with		( 'queryClausesString' ) 
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setMltBoost' )
+			->with		( true )
+			->will		( $this->returnValue( $mockConfig ) ) 
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setMltFields' )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockSearch
+			->expects	( $this->any() )
+			->method	( 'moreLikeThis' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( array() ) ) 
+		;
+		
+		$mockSearch->getSimilarPages( $mockConfig );
+	}
+	
+	/**
+	 * @covers WikiaSearch::getSimilarPages
+	 */
+	public function testGetSimilarPagesForUrl() {
+		$searchConfigMethods = array(
+				'getQuery', 'getStreamUrl', 'getStreamBody', 'setFilterQuery', 'setMltBoost', 'setMltFields'
+				);
+		$mockConfig =	$this->getMock( 'WikiaSearchConfig', $searchConfigMethods );
+		$mockClient	=	$this->getMock( 'Solarium_Client', array() );
+		$mockSearch =	$this->getMockBuilder( 'WikiaSearch' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'moreLikeThis', 'getQueryClausesString' ) )
+							->getMock();
+		$mockConfig
+			->expects	( $this->any() )
+			->method	( 'getQuery' )
+			->will		( $this->returnValue( false ) ) 
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'getStreamUrl' )
+			->will		( $this->returnValue( 'http://www.theonion.com/' ) ) 
+		;
+		$mockConfig
+			->expects	( $this->never() )
+			->method	( 'getStreamBody' )
+		;
+		$mockSearch
+			->expects	( $this->once() )
+			->method	( 'getQueryClausesString' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( 'queryClausesString' ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setFilterQuery' )
+			->with		( 'queryClausesString' ) 
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setMltBoost' )
+			->with		( true )
+			->will		( $this->returnValue( $mockConfig ) ) 
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setMltFields' )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockSearch
+			->expects	( $this->any() )
+			->method	( 'moreLikeThis' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( array() ) ) 
+		;
+		
+		$mockSearch->getSimilarPages( $mockConfig );
+	}
+	
+	/**
+	 * @covers WikiaSearch::getSimilarPages
+	 */
+	public function testGetSimilarPagesWithQuery() {
+		$searchConfigMethods = array(
+				'getQuery', 'getStreamUrl', 'getStreamBody', 'setFilterQuery', 'setMltBoost', 'setMltFields'
+				);
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', $searchConfigMethods );
+		$mockClient		=	$this->getMock( 'Solarium_Client', array() );
+		$mockSearch 	=	$this->getMockBuilder( 'WikiaSearch' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'moreLikeThis', 'getQueryClausesString' ) )
+								->getMock();
+		
+		$mockConfig
+			->expects	( $this->any() )
+			->method	( 'getQuery' )
+			->will		( $this->returnValue( 'query fo sho' ) ) 
+		;
+		$mockConfig
+			->expects	( $this->never() )
+			->method	( 'getStreamUrl' )
+		;
+		$mockConfig
+			->expects	( $this->never() )
+			->method	( 'getStreamBody' )
+		;
+		$mockSearch
+			->expects	( $this->never() )
+			->method	( 'getQueryClausesString' )
+		;
+		$mockConfig
+			->expects	( $this->never() )
+			->method	( 'setFilterQuery' )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setMltBoost' )
+			->with		( true )
+			->will		( $this->returnValue( $mockConfig ) ) 
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setMltFields' )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockSearch
+			->expects	( $this->any() )
+			->method	( 'moreLikeThis' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( array( array( 'wid' => 123, 'pageid' => 321, 'junk' => 'foo', 'url' => 'http://www.memepool.com' ) ) ) )
+		;
+			
+		$this->assertEquals(
+				array( 'http://www.memepool.com' => array( 'wid' => 123, 'pageid' => 321 ) ),
+				$mockSearch->getSimilarPages( $mockConfig ),
+				'WikiaSearch::getSimilarPages should return associative array keyed by the URL of each result, with a value containing the wid and page id of that result' 
+		);
+	}
+	
 }

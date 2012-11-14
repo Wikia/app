@@ -428,7 +428,7 @@ class WikiaSearch extends WikiaObject {
 	}
 	
 	/**
-	 * Private functions -- used mostly for query preparation and configuration
+	 * Protected functions -- used mostly for query preparation and configuration
 	 *------------------------------------------------------------------------*/
 	
 	/**
@@ -438,7 +438,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return Solarium_Query_Select
 	 */
-	private function getSelectQuery( WikiaSearchConfig $searchConfig )
+	protected function getSelectQuery( WikiaSearchConfig $searchConfig )
 	{
 		wfProfileIn(__METHOD__);
 		$query = $this->client->createSelect();
@@ -499,7 +499,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return Solarium_Query_Select
 	 */
-	private function getNestedQuery( WikiaSearchConfig $searchConfig ) {
+	protected function getNestedQuery( WikiaSearchConfig $searchConfig ) {
 		wfProfileIn( __METHOD__ );
 		$nestedQuery = $this->client->createSelect();
 		$nestedQuery->setQuery( $searchConfig->getQuery() );
@@ -543,7 +543,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return string
 	 */
-	private function getQueryFieldsString( WikiaSearchConfig $searchConfig ) {
+	protected function getQueryFieldsString( WikiaSearchConfig $searchConfig ) {
 
 		$queryFieldsString = sprintf( '%s^5 %s^1.5 %s^4 %s^1', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ), self::field( 'categories' ) );
 
@@ -565,7 +565,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param WikiaSearchConfig $searchConfig
 	 * @return string
 	 */
-	private function getFilterQueryString( WikiaSearchConfig $searchConfig )
+	protected function getFilterQueryString( WikiaSearchConfig $searchConfig )
 	{
 		wfProfileIn(__METHOD__);
 		$filterQueries = array();
@@ -595,7 +595,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return string
 	 */
-	private function getQueryClausesString( WikiaSearchConfig $searchConfig )
+	protected function getQueryClausesString( WikiaSearchConfig $searchConfig )
 	{
 		$queryClauses = array();
 		
@@ -647,7 +647,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return string
 	 */
-	private function getBoostQueryString( WikiaSearchConfig $searchConfig )
+	protected function getBoostQueryString( WikiaSearchConfig $searchConfig )
 	{
 		$queryNoQuotes = $searchConfig->getQueryNoQuotes( true );
 		
@@ -675,7 +675,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return WikiaSearchResultSet
 	 */
-	private function moreLikeThis( WikiaSearchConfig $searchConfig )
+	protected function moreLikeThis( WikiaSearchConfig $searchConfig )
 	{
 		$query		= $searchConfig->getQuery( WikiaSearchConfig::QUERY_RAW );
 		$streamBody	= $searchConfig->getStreamBody();
@@ -718,7 +718,7 @@ class WikiaSearch extends WikiaObject {
 			$mltResult = $this->client->moreLikeThis( $mlt );
 		} catch ( Exception $e ) {
 			$mltResult = F::build('Solarium_Result_Select_Empty');
-			Wikia::Log( __METHOD__, '', $e );
+			F::build( 'Wikia' )->log( __METHOD__, '', $e );
 		}
 		
 		$results = F::build('WikiaSearchResultSet', array($mltResult, $searchConfig) );
@@ -731,7 +731,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  int $currentWikiId
 	 * @return array
 	 */
-	private function getInterWikiSearchExcludedWikis( $currentWikiId = 0 ) {
+	protected function getInterWikiSearchExcludedWikis( $currentWikiId = 0 ) {
 	    wfProfileIn(__METHOD__);
 	
 	    $cacheKey		= $this->wf->SharedMemcKey( 'crossWikiaSearchExcludedWikis' );
@@ -792,5 +792,4 @@ class WikiaSearch extends WikiaObject {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-
 }
