@@ -6,8 +6,7 @@
  */
 class ArticleService extends WikiaObject {
 	const MAX_LENGTH = 500;
-	const CACHE_VERSION = 6;
-	const SUFFIX = '...';
+	const CACHE_VERSION = 7;
 
 	private $article = null;
 	private $tags = array(
@@ -99,10 +98,8 @@ class ArticleService extends WikiaObject {
 			throw new WikiaException( 'Maximum allowed length is ' . self::MAX_LENGTH );
 		}
 
-		$suffixLen = strlen( self::SUFFIX );
-
 		// it may sometimes happen that the aricle is just not there
-		if ( is_null( $this->article ) || $length <= $suffixLen ) {
+		if ( !( $this->article instanceof Article ) ) {
 			return '';
 		}
 
@@ -124,7 +121,7 @@ class ArticleService extends WikiaObject {
 			$text = self::$localCache[$id] = WikiaDataAccess::cache(
 				$key,
 				86400 /*24h*/,
-				function() use ( $app, $article, $tags, $pats, $length ){
+				function() use ( $app, $article, $tags, $pats ){
 					$app->wf->profileIn( __METHOD__ . '::CacheMiss' );
 
 					//get standard parser cache for anons,
@@ -135,7 +132,7 @@ class ArticleService extends WikiaObject {
 					$content = $page->getParserOutput( $opts )->getText();
 
 					//Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
-					wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$article, &$content, $length ) );
+					wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$article, &$content, ArticleService::MAX_LENGTH ) );
 
 					if ( mb_strlen( $content ) > 0 ) {
 						//remove all unwanted tag pairs and their contents
@@ -166,21 +163,7 @@ class ArticleService extends WikiaObject {
 			);
 		}
 
-		$textLen = mb_strlen( $text );
-
-		if ( $textLen > $length ) {
-			$maxLen = $length - $suffixLen;
-			$cutPos = mb_strrpos( $text, ' ',  -( $textLen - $maxLen ) );
-
-			if ( $cutPos === false || $cutPos > $maxLen ) {
-				$cutPos = $maxLen;
-			}
-
-			$snippet = mb_substr( $text, 0, $cutPos );
-			$snippet = preg_replace( '/\W$/', '', $snippet ) . self::SUFFIX;
-		} else {
-			$snippet = $text;
-		}
+		$snippet = $this->wf->ShortenText( $text, $length, true /*use content language*/ );
 
 		$this->wf->profileOut( __METHOD__ );
 		return $snippet;

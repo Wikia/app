@@ -262,7 +262,7 @@ TEXT;
 			array( // article is very long
 				10,
 				'This is the test line that is very long and should be cut off at some point to avoid generating too long snippets',
-				'This is...',
+				'This...',
 			),
 			array(//length is too short
 				2,
@@ -272,7 +272,7 @@ TEXT;
 			array( // example real article 1 - Rachel_Berry (glee)
 				100,
 				$article1,
-				'Rachel Barbra Berry is a main character of Glee. She is currently a student at NYADA, run by dean...',
+				'Rachel Barbra Berry is a main character of Glee. She is currently a student at NYADA, run by...',
 			),
 			array( // example real article 2 - Glee_TV_Show_Wiki (glee)
 				100,

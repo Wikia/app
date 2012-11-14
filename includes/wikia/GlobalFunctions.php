@@ -229,20 +229,37 @@ function wfGetReviewReason($max = 5) {
  * word. From: http://www.totallyphp.co.uk/code/shorten_a_text_string.htm
  * Added multibyte string support
  */
-function wfShortenText($text, $chars = 25){
-    if( mb_strlen( $text ) <= $chars )
-        return $text;
+function wfShortenText( $text, $chars = 25, $useContentLanguage = false ){
+	if( mb_strlen( $text ) <= $chars ) {
+		return $text;
+	}
 
-    $text = $text . " ";
-    $text = mb_substr( $text, 0, $chars );
+	static $ellipsis;
+	static $ellipsisLen;
 
-    if( mb_strrpos( $text, ' ') || mb_strrpos( $text, '/' ) )
-    {
-        $text = mb_substr( $text, 0, max( mb_strrpos( $text, ' '), mb_strrpos( $text, '/' ) ) );
-    }
+	if ( !isset( $ellipsis ) ) {
+		$ellipsis = ( !empty( $useContentLanguage ) ) ?
+			wfMsgForContent( 'ellipsis' ) :
+			wfMsg( 'ellipsis' );
+		$ellipsisLen = mb_strlen( $ellipsis );
+	}
 
-    $text .= wfMsg('ellipsis');
-    return $text;
+	if ( $ellipsisLen >= $chars ) {
+		return '';
+	}
+
+	$text = mb_substr( $text, 0, $chars - $ellipsisLen );
+	$spacePos = mb_strrpos( $text, ' ' );
+	$backslashPos = mb_strrpos( $text, '/' );
+
+	if ( $spacePos || $backslashPos ) {
+		$text = mb_substr( $text, 0, max( $spacePos, $backslashPos ) );
+	}
+
+	//remove symbols at the end of the snippet to avoid situations like:
+	//:... or ?... or ,... etc. etc.
+	$text = preg_replace( '/[[:punct:]]+$/', '', $text ) . $ellipsis ;
+	return $text;
 }
 
 function wfGetBreadCrumb( $cityId = 0 ) {
@@ -908,7 +925,7 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 		}
 
 		// notify wfMsgHTMLwithLanguageAndAlternative() that we didn't get a match
-		if ( !$found ) $msgRichFallbacked++;	
+		if ( !$found ) $msgRichFallbacked++;
 
 		if($msgRichFallbacked > $msgPlainFallbacked || wfEmptyMsg($keyHTML, $msgRich)) {
 			$msgRich = null;
@@ -1253,7 +1270,7 @@ function wfGetWikiaPageProp($type, $pageID, $db = DB_SLAVE, $dbname = '') {
 }
 
 /**
- * this function can be use when we are doing joins with props table 
+ * this function can be use when we are doing joins with props table
  * and we want to unserialize multiple rows of result
  */
 
