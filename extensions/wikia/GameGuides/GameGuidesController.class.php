@@ -454,7 +454,7 @@ class GameGuidesController extends WikiaController {
 	 * @responseReturn See getTagCategories
 	 */
 	private function getTags( $content ) {
-		$this->wf->profileOut( __METHOD__ );
+		$this->wf->profileIn( __METHOD__ );
 
 		$this->response->setVal(
 			'tags',
