@@ -207,7 +207,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 * primary intended use is for Purging those URLs in Varnish
 	 * @return String url
 	 */
-	public static function getUrlToAjaxMethod($method, $format = 'html', $params = array() ) {
+	public static function getUrl($method, $format = 'html', $params = array() ) {
 		$app = F::app();
 		$basePath = $app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
 		$baseParams = array(
@@ -215,10 +215,19 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 			'method' => $method,
 			'format' => $format,
 		);
+		ksort($params);
 		$params = array_merge( $baseParams, $params );
 		return $app->wf->AppendQuery( $basePath, $params );
-
 	}
 
+
+	/**
+	 * purge external method call from caches
+	 */
+	public static function purgeMethod($method, $format = 'html', $params = array() ) {
+		$url = call_user_func(get_called_class()."::getUrl", $method, $format, $params );
+		$squidUpdate = new SquidUpdate( array($url) );
+		$squidUpdate->doUpdate();
+	}
 
 }

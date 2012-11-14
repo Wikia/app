@@ -866,7 +866,7 @@ class ArticleComment {
 
 			for ( $page = 1; $page <= $pages; $page++ ) {
 				$params[ 'page' ] = $page;
-				$urls[] = ArticleCommentsController::getUrlToAjaxMethod(
+				$urls[] = ArticleCommentsController::getUrl(
 					'Content',
 					'html',
 					array( 'articleId' => $articleId, 'page' => $page, 'skin' => "true" )
