@@ -173,19 +173,19 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$method->setAccessible( true );
 		
 		$searchConfig->setQuery('foo bar');
-		$this->assertEquals( '(html:\"foo bar\")^5 (title:\"foo bar\")^10',
+		$this->assertEquals( '(html_en:\"foo bar\")^5 (title_en:\"foo bar\")^10',
 							$method->invoke( $wikiaSearch, $searchConfig ),
 							'WikiaSearch::getBoostQueryString should boost exact-match in quotes for html and title field'
 							);
 		
 		$searchConfig->setQuery('"foo bar"');
-		$this->assertEquals( '(html:\"foo bar\")^5 (title:\"foo bar\")^10',
+		$this->assertEquals( '(html_en:\"foo bar\")^5 (title_en:\"foo bar\")^10',
 					        $method->invoke( $wikiaSearch, $searchConfig ),
 					        'WikiaSearch::getBoostQueryString should strip quotes from original query'
 							);
 
 		$searchConfig->setQuery("'foo bar'");
-		$this->assertEquals( '(html:\"foo bar\")^5 (title:\"foo bar\")^10',
+		$this->assertEquals( '(html_en:\"foo bar\")^5 (title_en:\"foo bar\")^10',
 							 $method->invoke( $wikiaSearch, $searchConfig ),
 					        'WikiaSearch::getBoostQueryString should strip quotes from original query'
 							);
@@ -193,7 +193,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$searchConfig	->setQuery		('foo bar wiki')
 						->setIsInterWiki(true)
 		;
-		$this->assertEquals( '(html:\"foo bar\")^5 (title:\"foo bar\")^10 (wikititle:\"foo bar\")^15 -(host:answers)^10 -(host:respuestas)^10',
+		$this->assertEquals( '(html_en:\"foo bar\")^5 (title_en:\"foo bar\")^10 (wikititle_en:\"foo bar\")^15 -(host:answers)^10 -(host:respuestas)^10',
 					        $method->invoke( $wikiaSearch, $searchConfig ),
 					        'WikiaSearch::getBoostQueryString should remove "wiki" from searches,, include wikititle, and remove answers wikis'
 							);
