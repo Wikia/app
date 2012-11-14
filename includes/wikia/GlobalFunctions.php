@@ -241,7 +241,6 @@ function wfShortenText( $text, $chars = 25, $useContentLanguage = false ){
 	//this might be called many times in the
 	//same process/request
 	if ( !array_key_exists( $key, $ellipsis ) ) {
-var_dump('asdasdasdasdasdadsadsad');
 		$msg = ( !empty( $useContentLanguage ) ) ?
 			wfMsgForContent( 'ellipsis' ) :
 			wfMsg( 'ellipsis' );
