@@ -274,9 +274,7 @@ var LightboxLoader = {
 
 	removeInlineVideos: function() {
 		clearTimeout(LightboxTracker.inlineVideoTrackingTimeout);
-		LightboxLoader.inlineVideoLinks.each(function(){
-			$(this).show().next().remove();
-		});
+		LightboxLoader.inlineVideoLinks.show().next().remove();
 	},
 
 	getMediaDetail: function(mediaParams, callback) {
