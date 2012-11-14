@@ -30,7 +30,8 @@ class StructuredDataAPIClient extends WikiaObject {
 		$this->httpRequest->addHeader( 'Accept', 'application/ld+json' );
 		$this->httpRequest->sendRequest();
 
-		if ( in_array( $this->httpRequest->getResponseCode(), array( 500, 501 ) ) ) {
+		$decodedResponse = json_decode ( $this->httpRequest->getResponseBody() );
+		if ( empty($decodedResponse) && in_array( $this->httpRequest->getResponseCode(), array( 500, 501 ) ) ) {
 			return '{"error":"Internal Server Error","message":""}';
 		}
 		else {
@@ -98,6 +99,8 @@ class StructuredDataAPIClient extends WikiaObject {
 	public function getCollection( $type, $extraFields=array() ) {
 		$rawResponse = $this->call( rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) );
 		$response = json_decode( $rawResponse );
+		$response = $this->isValidResponse($response);
+
 		$collection = array();
 		$i = 0;
 		foreach ( $response->{"@graph"} as $obj ) {
