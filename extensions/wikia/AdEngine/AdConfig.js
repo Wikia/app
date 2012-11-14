@@ -18,7 +18,6 @@ var AdConfig = {
 			case 'HOME_TOP_LEADERBOARD':
 			case 'HOME_TOP_RIGHT_BOXAD':
 			case 'HUB_TOP_LEADERBOARD':
-			case 'INVISIBLE_MODAL':
 			case 'LEFT_SKYSCRAPER_2':
 			case 'MIDDLE_RIGHT_BOXAD':
 			case 'MODAL_RECTANGLE':
@@ -101,7 +100,6 @@ AdConfig.DART = {
 	   'INCONTENT_LEADERBOARD_5': {'tile':8, 'loc': "middle"},
 	   'INVISIBLE_1': {'tile':10, 'loc': "invisible"},
 	   'INVISIBLE_2': {'tile':11, 'loc': "invisible"},
-	   'INVISIBLE_MODAL': {'tile':14, 'loc': "invisible"},
 	   'JWPLAYER': {'tile': 2, 'loc': "top"},
 	   'LEFT_SKYSCRAPER_1': {'tile': 3, 'loc': "top"},
 	   'LEFT_SKYSCRAPER_2': {'tile': 3, 'loc': "middle"},
