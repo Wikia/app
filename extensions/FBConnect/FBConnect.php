@@ -124,7 +124,6 @@ if ($fbUserRightsFromGroup) {
 
 $wgAjaxExportList[] = "FBConnect::disconnectFromFB";
 $wgAjaxExportList[] = "SpecialConnect::getLoginButtonModal";
-$wgAjaxExportList[] = "SpecialConnect::ajaxModalChooseName";
 $wgAjaxExportList[] = "SpecialConnect::checkCreateAccount";
 
 // These hooks need to be hooked up prior to init() because runhooks may be called for them before init is run.
