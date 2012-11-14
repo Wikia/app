@@ -792,5 +792,4 @@ class WikiaSearch extends WikiaObject {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-
 }
