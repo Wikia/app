@@ -234,21 +234,29 @@ function wfShortenText( $text, $chars = 25, $useContentLanguage = false ){
 		return $text;
 	}
 
-	static $ellipsis;
-	static $ellipsisLen;
+	static $ellipsis = array();
+	$key = ( !empty( $useContentLanguage ) ) ? 'user' : 'content';
 
-	if ( !isset( $ellipsis ) ) {
-		$ellipsis = ( !empty( $useContentLanguage ) ) ?
+	//memoize the message to avoid overhead,
+	//this might be called many times in the
+	//same process/request
+	if ( !array_key_exists( $key, $ellipsis ) ) {
+var_dump('asdasdasdasdasdadsadsad');
+		$msg = ( !empty( $useContentLanguage ) ) ?
 			wfMsgForContent( 'ellipsis' ) :
 			wfMsg( 'ellipsis' );
-		$ellipsisLen = mb_strlen( $ellipsis );
+
+		$ellipsis[$key] = array(
+			$msg,
+			mb_strlen( $msg )
+		);
 	}
 
-	if ( $ellipsisLen >= $chars ) {
+	if ( $ellipsis[$key][1] >= $chars ) {
 		return '';
 	}
 
-	$text = mb_substr( $text, 0, $chars - $ellipsisLen );
+	$text = mb_substr( $text, 0, $chars - $ellipsis[$key][1] );
 	$spacePos = mb_strrpos( $text, ' ' );
 	$backslashPos = mb_strrpos( $text, '/' );
 
@@ -258,7 +266,7 @@ function wfShortenText( $text, $chars = 25, $useContentLanguage = false ){
 
 	//remove symbols at the end of the snippet to avoid situations like:
 	//:... or ?... or ,... etc. etc.
-	$text = preg_replace( '/[[:punct:]]+$/', '', $text ) . $ellipsis ;
+	$text = preg_replace( '/[[:punct:]]+$/', '', $text ) . $ellipsis[$key][0];
 	return $text;
 }
 
