@@ -52,8 +52,8 @@ class StructuredData {
 	 * @param $type
 	 * @return array
 	 */
-	public function getCollectionByType( $type ) {
-		return $this->APIClient->getCollection( $type );
+	public function getCollectionByType( $type, $extraFields=array() ) {
+		return $this->APIClient->getCollection( $type, $extraFields );
 	}
 
 	private function getSDElement(stdClass $element, $elementDepth = 0) {

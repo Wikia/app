@@ -89,18 +89,24 @@ class StructuredDataAPIClient extends WikiaObject {
 		throw new WikiaException('SD API Error: ' . $url . ' object not found');
 	}
 
-	public function getCollection( $type ) {
+	public function getCollection( $type, $extraFields=array() ) {
 		$rawResponse = $this->call( rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) );
 		$response = json_decode( $rawResponse );
 		$collection = array();
+		$i = 0;
 		foreach ( $response->{"@graph"} as $obj ) {
 
-			$collection[] = array(
+			$collection[ $i ] = array(
 						"id" => $obj->id,
 						"url" => ( isset($obj->{"schema:url"}) ? $obj->{"schema:url"} : null ),
 						"name" => ( isset($obj->{"schema:name"}) ? $obj->{"schema:name"} : null ),
 						"type" => $obj->type
 			);
+
+			foreach ( $extraFields as $field ) {
+				$collection[ $i ][ $field ] = isset( $obj->$field ) ?  $obj->$field : null;
+			}
+			$i++;
 		}
 
 		return $collection;

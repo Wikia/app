@@ -161,10 +161,37 @@ class StructuredDataController extends WikiaSpecialPageController {
 	}
 
 	public function getCollection() {
+
+		//TODO: move it somewhere
+		$specialFields = array(
+			'schema:ImageObject' => array('schema:contentURL')
+		);
+
+
 		$objectType = $this->request->getVal( 'objectType', false );
 		if( !empty( $objectType ) ) {
-			$collection = $this->structuredData->getCollectionByType( $objectType );
-			$this->response->setVal( "list", $collection );
+
+			$resultCollection = array();
+
+			// types came from the request as coma-separated list
+			$objectTypes = explode(",", $objectType);
+
+			foreach ( $objectTypes as $type ) {
+
+				$getSpecialFields = array();
+				if ( isset( $specialFields[ $type ] ) ) $getSpecialFields = $specialFields[ $type ];
+				$collection = $this->structuredData->getCollectionByType( $objectTypes[0], $getSpecialFields );
+
+				if ( is_array( $collection ) ) {
+
+					foreach ( $collection as $item ) {
+						if ( !in_array( $item, $resultCollection ) ) {
+							$resultCollection[] = $item;
+						}
+					}
+				}
+			}
+			$this->response->setVal( "list", $resultCollection );
 		}
 	}
 
