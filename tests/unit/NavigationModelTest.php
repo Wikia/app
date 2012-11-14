@@ -124,7 +124,7 @@ class NavigationModelTest extends WikiaBaseTest {
 		$this->mockGlobalFunction('msg', '*whatever', 2);
 		$this->mockApp();
 
-		$model = F::build('NavigationModel');
+		$model = new NavigationModel();
 
 		$nodes = array(
 			array(
