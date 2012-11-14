@@ -7,12 +7,12 @@
  */
 class  WikiaMobileNavigationService extends WikiaService {
 	/**
-	 * @var $navService WikiNavigationService
+	 * @var $navService NavigationModel
 	 */
-	private $navService = null;
+	private $navModel = null;
 
 	function init(){
-		$this->navService = new WikiNavigationService();
+		$this->navModel = new NavigationModel();
 	}
 
 	public function index() {
@@ -36,36 +36,27 @@ class  WikiaMobileNavigationService extends WikiaService {
 	}
 
 	public function navMenu(){
-		// render global wikia navigation ("On the Wiki" menu)
-		$this->response->setVal( 'wikiaMenuNodes',
-			$this->navService->parseVariable(
-					'wgWikiaMobileGlobalNavigationMenu',
-					array(
-						$this->wg->maxLevelOneNavElements,
-						$this->wg->maxLevelTwoNavElements,
-						$this->wg->maxLevelThreeNavElements
-					),
-					WikiNavigationService::CACHE_TTL,
-					true,
-					false
-				)
+
+		$mobileNav =  $this->navModel->parse(
+			NavigationModel::TYPE_VARIABLE,
+			'wgWikiaMobileGlobalNavigationMenu',
+			array(
+				$this->wg->maxLevelOneNavElements,
+				$this->wg->maxLevelTwoNavElements,
+				$this->wg->maxLevelThreeNavElements
+			),
+			NavigationModel::CACHE_TTL,
+			true
 		);
 
-		// render local navigation (more tabs)
-		$this->response->setVal( 'wikiMenuNodes',
-			$this->navService->parseMenu(
-				WikiNavigationService::WIKI_LOCAL_MESSAGE,
-				array(
-					$this->wg->maxLevelOneNavElements,
-					$this->wg->maxLevelTwoNavElements,
-					$this->wg->maxLevelThreeNavElements
-				)
-			)
-		);
+		$this->response->setVal( 'wikiNav', array(
+			$mobileNav,
+			$this->navModel->getWiki()['wiki']
+		));
 
 		$blacklist = array();
 
-		foreach ( $this->wg->WikiaMobileNavigationBlacklist as $index => $item ) {
+		foreach ( $this->wg->WikiaMobileNavigationBlacklist as $item ) {
 			$title = SpecialPage::getTitleFor( $item );
 			$blacklist[] = $title->getLocalURL();
 			$blacklist[] = $title->getFullURL();
@@ -74,6 +65,6 @@ class  WikiaMobileNavigationService extends WikiaService {
 		$this->response->setVal( 'blacklist', $blacklist );
 
 		// report wiki nav parse errors (BugId:15240)
-		$this->response->setVal( 'parseErrors', $this->navService->getErrors() );
+		$this->response->setVal( 'parseErrors', $this->navModel->getErrors() );
 	}
 }
