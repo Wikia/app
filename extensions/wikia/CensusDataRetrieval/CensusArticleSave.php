@@ -17,10 +17,11 @@ class CensusArticleSave {
          * replaces links to Census pages with template
 	 */
         public static function replaceLinks( $editpage ) {
+                wfProfileIn(__METHOD__);
                 $cas = new self();
 
 		$cas->execute( $editpage->textbox1 );
-
+                wfProfileOut(__METHOD__);
 		return true;
         }
         
@@ -28,6 +29,7 @@ class CensusArticleSave {
 	 * main method, handles flow and sequence, decides when to give up
 	 */
         public function execute( &$wikitextArticle ) {
+                wfProfileIn(__METHOD__);
                 //regular expression to fit all links
                 //everything between '[[' and ']]' not containing any additive '[[' inside
                 $regex = "/\[\[([^\[][^\[]*?)\]\]/si";
@@ -44,6 +46,7 @@ class CensusArticleSave {
                                 $this->performReplacement($wikitextArticle, $matches[0][$key], $lnkContents );
                         }
                 }
+                wfProfileOut(__METHOD__);
         }
         
         
@@ -54,13 +57,16 @@ class CensusArticleSave {
          * @param $pageName String
 	 */
         public function isInfoboxPage( $pageName ) {
+                wfProfileIn(__METHOD__);
                 $title = Title::newFromText( $pageName );
                 $parentCategories = $title->getParentCategories();
                 $catTitle = Title::newFromText( wfMsgForContent( CensusDataRetrieval::FLAG_CATEGORY ), NS_CATEGORY );
                 $category = $catTitle->getPrefixedDBkey();
                 if ( isset( $parentCategories[$category] ) && $parentCategories[$category] ==  $title->getText() ) {
+                        wfProfileOut(__METHOD__);
                         return true;
                 }
+                wfProfileOut(__METHOD__);
                 return false;
         }
         
@@ -73,8 +79,10 @@ class CensusArticleSave {
          * @param $lnkContents Array [0] link url [1] link display name
 	 */
         public function performReplacement( &$wikitextArticle, $replacePatt, $lnkContents ) {
+                wfProfileIn(__METHOD__);
                 $templ = $this->prepareTemplCode( $lnkContents );
                 $wikitextArticle = str_replace($replacePatt, $templ, $wikitextArticle);
+                wfProfileOut(__METHOD__);
         }
         
         /**
@@ -84,13 +92,14 @@ class CensusArticleSave {
          * @return $templ String wikitext to call hover infobox template
 	 */
         public function prepareTemplCode( $lnkContents ) {
-                
+                wfProfileIn(__METHOD__);
                 $templ = '{{' . self::HOVER_INFOBOX_TEMPLATE_NAME;
                 $templ .= '|'. $lnkContents[0];
                 if ( isset($lnkContents[1]) ) {
                         $templ .= '|'. $lnkContents[1];
                 }
 		$templ .= "}}";
+                wfProfileOut(__METHOD__);
 		return $templ;
         }
         
