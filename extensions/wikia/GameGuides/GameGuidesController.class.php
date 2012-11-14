@@ -308,7 +308,7 @@ class GameGuidesController extends WikiaController {
 			)
 		);
 
-		$this->response->setVal( 'cb', $this->wg->StyleVersion );
+		$this->response->setVal( 'cb', (string) $this->wg->StyleVersion );
 	}
 
 	/**
