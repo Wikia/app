@@ -253,6 +253,7 @@ class CensusDataRetrieval {
                 wfProfileIn(__METHOD__);
                 $key = wfMemcKey('census-data');
                 $data = $this->app->wg->Memc->get($key);
+                //$data = array();
 
                 if(!empty($data)) {
                         wfProfileOut(__METHOD__);
@@ -273,7 +274,7 @@ class CensusDataRetrieval {
 			return false;
 		}
  
-                $this->app->wg->Memc->set( $data, $key, 3600 );
+                $this->app->wg->Memc->set( $key, $data, 3600 );
                 wfProfileOut(__METHOD__);
                 return $data;
 	}
