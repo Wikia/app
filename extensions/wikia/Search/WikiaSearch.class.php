@@ -262,9 +262,7 @@ class WikiaSearch extends WikiaObject {
 			                'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
                 			);
 	    	
-			$api = F::build( 'ApiMain', array( 'request' => new FauxRequest($params) ) );
-			$api->execute();
-			$data = $api->getResultData();
+			$data = ApiService::call( $params );
 	
 			if ( isset( $data['query'] ) && isset( $data['query']['statistics'] ) && isset( $data['query']['statistics']['articles'] ) ) {
 				$searchConfig->setMindf( (int) ($data['query']['statistics']['articles'] * .5) );
