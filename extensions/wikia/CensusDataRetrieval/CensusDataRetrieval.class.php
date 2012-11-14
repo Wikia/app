@@ -42,12 +42,13 @@ class CensusDataRetrieval {
 	 * @return true
 	 */
 	public static function retrieveFromName( &$text, &$title ) {
+                wfProfileIn(__METHOD__);
 		// @TODO check if namespace is correct, quit if not
 
 		$cdr = new self();
 
 		$text = $cdr->execute( $title );
-
+                wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -55,11 +56,13 @@ class CensusDataRetrieval {
 	 * main method, handles flow and sequence, decides when to give up
 	 */
 	public function execute( $title ) {
+                wfProfileIn(__METHOD__);
                 $this->app = F::App();
 		$this->query = $this->prepareCode( $title->getText() );
 
 		if ( !$this->fetchData() ) {
 			// no data in Census or something went wrong, quit
+                        wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -68,7 +71,7 @@ class CensusDataRetrieval {
 		$text .= $this->getLayout();
 
 		$text .= "\n[[" . Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY )->getPrefixedText() . ']]';
-
+                wfProfileOut(__METHOD__);
                 return $text;
 	}
 
@@ -77,6 +80,7 @@ class CensusDataRetrieval {
 	 * @return boolean true on success, false on failed connection or empty result
 	 */
 	private function fetchData() {
+                wfProfileIn(__METHOD__);
 		// fetch data from API based on $this->query
                 $http = new Http();
 
@@ -103,10 +107,12 @@ class CensusDataRetrieval {
                 // error handling
 		if ( empty( $censusData ) ) {
 			wfDebug( __METHOD__ . 'Connection problem or no data' );
+                        wfProfileOut(__METHOD__);
 			return false;
 		}
  
                 // use data map to filter out unneeded data
+                wfProfileOut(__METHOD__);
 		return $this->mapData($censusData);
 	}
 
@@ -115,6 +121,7 @@ class CensusDataRetrieval {
 	 * @return string
 	 */
 	private function parseData() {
+                wfProfileIn(__METHOD__);
 		$type = $this->getType();
 
 		$output = '{{' . $type . " infobox";
@@ -128,7 +135,7 @@ class CensusDataRetrieval {
 		}
 
 		$output .= "\n}}\n";
-
+                wfProfileOut(__METHOD__);
 		return $output;
 	}
 
@@ -183,8 +190,10 @@ class CensusDataRetrieval {
 	 * @return array
 	 */
 	private function mapData( $object ) {
+                wfProfileIn(__METHOD__);
 		if ( empty( $object ) ) {
 			wfDebug( __METHOD__ . ': Unsupported object type' );
+                        wfProfileOut(__METHOD__);
 			return false;
 		} else {
 			//wfDebug( __METHOD__ . ": Found object of type {$object->type}" );
@@ -194,6 +203,7 @@ class CensusDataRetrieval {
                 foreach ( $this->typeMap[$this->type] as $name => $propertyStr ) {
                         $this->data[$name] = $this->getPropValue($object, $propertyStr);
                 }
+                wfProfileOut(__METHOD__);
 		return true;
 	}
         
@@ -208,8 +218,10 @@ class CensusDataRetrieval {
 	 * @return array
 	 */
         private function getPropValue( $object, $propertyStr ) {
+                wfProfileIn(__METHOD__);
                 $fieldPath = explode('.', $propertyStr);
                 $i = sizeof($fieldPath) - 1;
+                wfProfileOut(__METHOD__);
                 return $this->doGetPropValue( $object, $fieldPath, $i );
         }
         
@@ -223,22 +235,27 @@ class CensusDataRetrieval {
 	 * @return array
 	 */
         private function doGetPropValue( $object, $fieldPath, $i ) {
+                wfProfileIn(__METHOD__);
                 if ( $i > 0) {
                         $object_temp = $this->doGetPropValue( $object, $fieldPath, $i-1 )->{$fieldPath[$i]};
+                        wfProfileOut(__METHOD__);
                         return $object_temp;
                 }
+                wfProfileOut(__METHOD__);
                 return $object->{$fieldPath[$i]};
         }
         
         /**
 	 * cacheCensusData
-         * sets Memcache object form Census gathering all required data to find object when user is creating article
+         * sets Memcache object form Census gathering all required data to find 
+         * object when user is creating article
          * 
          * Memcache object:
          * array ( 'type.id' => 'code');
          * 
 	 */
 	private function cacheCensusData() {
+                wfProfileIn(__METHOD__);
                 $http = new Http();
 		// @TODO find a way to query all object types, preferably in one query
                 $this->censusDataArr = array();
@@ -250,12 +267,14 @@ class CensusDataRetrieval {
                 // error handling
 		if ( empty( $censusData ) ) {
 			wfDebug( __METHOD__ . 'Connection problem or no data' );
+                        wfProfileOut(__METHOD__);
 			return false;
 		}
  
                 // @TODO use data map to filter out unneeded data
                 // 
                 // @TODO assuming vehicle for now, but this needs to be generic
+                wfProfileOut(__METHOD__);
 	}
         
         /**
@@ -268,12 +287,14 @@ class CensusDataRetrieval {
          * 
 	 */
 	private function mergeResult( &$censusDataArr, $map, $type) {
+                wfProfileIn(__METHOD__);
                 $list = $map->{$type.'_list'};
                 foreach ( $list as $obj ) {
                         if ( isset($obj->name->en) ) {
                                 $censusDataArr[$type.'.'.$obj->id] = $this->prepareCode( $obj->name->en );
                         }
                 }
+                wfProfileOut(__METHOD__);
         }
         
 }
