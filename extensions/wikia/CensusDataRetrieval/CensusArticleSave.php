@@ -59,6 +59,12 @@ class CensusArticleSave {
         public function isInfoboxPage( $pageName ) {
                 wfProfileIn(__METHOD__);
                 $title = Title::newFromText( $pageName );
+
+		if ( !is_object( $title ) ) {
+			wfProfileOut(__METHOD__);
+			return false;
+		}
+
                 $parentCategories = $title->getParentCategories();
                 $catTitle = Title::newFromText( wfMsgForContent( CensusDataRetrieval::FLAG_CATEGORY ), NS_CATEGORY );
                 $category = $catTitle->getPrefixedDBkey();
@@ -66,6 +72,7 @@ class CensusArticleSave {
                         wfProfileOut(__METHOD__);
                         return true;
                 }
+
                 wfProfileOut(__METHOD__);
                 return false;
         }
