@@ -183,19 +183,19 @@ class StructuredDataController extends WikiaSpecialPageController {
 				if ( is_array( $collection ) ) {
 
 					foreach ( $collection as $item ) {
-						if ( !in_array( $item, $resultCollection ) ) {
 
-							$specialPageUrl = null;
-							if ( isset( $item['name'] ) && isset( $item['type'] ) ) {
-								$specialPageUrl = SDElement::createSpecialPageUrl( $item );
-							}
-							$item['url'] = $specialPageUrl;
+						$specialPageUrl = null;
+						if ( isset( $item['name'] ) && isset( $item['type'] ) ) {
+							$specialPageUrl = SDElement::createSpecialPageUrl( $item );
+						}
+						$item['url'] = $specialPageUrl;
+
+						if ( !in_array( $item, $resultCollection ) ) {
 							$resultCollection[] = $item;
 						}
 					}
 				}
 			}
-
 			$this->response->setVal( "list", $resultCollection );
 		}
 	}
