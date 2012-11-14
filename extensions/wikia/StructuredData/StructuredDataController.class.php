@@ -80,7 +80,8 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$name = $this->request->getVal( 'name', false );
 		$action = $this->request->getVal( 'action', 'render' );
 
-		if( $action == 'edit' && !$this->wg->User->isAllowed( 'sdsediting' ) ) {
+		$isEditAllowed = $this->wg->User->isAllowed( 'sdsediting' );
+		if( ( $action == 'edit' ) && !$isEditAllowed ) {
 			$this->displayRestrictionError($this->wg->User);
 			$this->skipRendering();
 			return false;
@@ -125,6 +126,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$this->response->addAsset('extensions/wikia/StructuredData/js/StructuredData.js');
 		$this->setVal('sdsObject', $sdsObject);
 		$this->setVal('context', ( $action == 'edit' ) ? SD_CONTEXT_EDITING : SD_CONTEXT_SPECIAL );
+		$this->setVal('isEditAllowed', $isEditAllowed);
 	}
 
 	public function getObject() {
