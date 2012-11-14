@@ -508,4 +508,29 @@ class SitemapPage extends UnlistedSpecialPage {
 		$out .= "404: Page doesn't exist";
 		print $out;
 	}
+
+	/**
+	 * LoadExtensionSchemaUpdates handler; set up sitemap_blobs table on install/upgrade.
+	 */
+	public static function onLoadExtensionSchemaUpdates( $updater = null ) {
+		wfProfileIn( __METHOD__ );
+
+		if( !empty( $updater ) ) {
+			$map = array(
+				'mysql' => 'sitemap_blobs.patch.sql',
+			);
+
+			$type = $updater->getDB()->getType();
+			if( isset( $map[$type] ) ) {
+				$sql = dirname( __FILE__ ) . "/" . $map[ $type ];
+				$updater->addExtensionTable( 'wikia_page_backlinks', $sql );
+			}
+			else {
+				throw new MWException( "Sitemap extension does not currently support $type database." );
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 }
