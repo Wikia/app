@@ -70,7 +70,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		}
 		$result = array();
 		foreach($value as $v) {
-			return F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $v, 'propertyName' => $this->getName() ) );
+			$result[] = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $v, 'propertyName' => $this->getName() ) );
 		}
 		return $result;
 
@@ -154,8 +154,12 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		if(!$this->getType()->hasRange()) {
 			$propertyDescription = $subject->getContext()->getPropertyDescription( $subject->getType(), $this->name );
 			if(is_object($propertyDescription) && isset($propertyDescription->range) && (count($propertyDescription->range) > 0)) {
+				//
+				// schema:name
 				if ( $guessType && (count($propertyDescription->range) == 1) ) {
-					if ($propertyDescription->range[0]->id == "rdfs:Literal") {
+					if ( ( $propertyDescription->range[0]->id == "rdfs:Literal" ) &&
+						in_array( $this->getName(), array('schema:description', 'schema:name' ) ) ) {
+
 						$this->getType()->setName( $propertyDescription->range[0]->id );
 					}
 				}
