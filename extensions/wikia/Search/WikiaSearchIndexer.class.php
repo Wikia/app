@@ -327,7 +327,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		wfProfileIn(__METHOD__);
 		$result = array();
 	
-		$data = $this->callMediaWikiAPI( array(
+		$data = ApiService::call( array(
 				'titles'	=> $page->getTitle(),
 				'bltitle'	=> $page->getTitle(),
 				'action'	=> 'query',
@@ -338,7 +338,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['backlinks'] = isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0;  
 	
 		if (! empty( $this->wg->ExternalSharedDB ) ) {
-			$data = $this->callMediaWikiAPI( array(
+			$data = ApiService::call( array(
 					'pageids'	=> $page->getId(),
 					'action'	=> 'query',
 					'prop'		=> 'info|categories',
@@ -446,21 +446,6 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		wfProfileOut(__METHOD__);
 		return $row;
-	}
-
-	/**
-	 * Used to access API data from various MediaWiki services
-	 * @param  array $params
-	 * @return array result data
-	 **/
-	private function callMediaWikiAPI( Array $params ) {
-	    wfProfileIn(__METHOD__);
-	
-	    $api = F::build( 'ApiMain', array( 'request' => new FauxRequest($params) ) );
-	    $api->execute();
-	
-	    wfProfileOut(__METHOD__);
-	    return  $api->getResultData();
 	}
 	
 	/**
