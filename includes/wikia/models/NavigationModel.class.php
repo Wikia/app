@@ -24,6 +24,9 @@ class NavigationModel extends WikiaModel {
 	const TYPE_MESSAGE = 'message';
 	const TYPE_VARIABLE = 'variable';
 
+	const WIKIA_GLOBAL = 'global';
+	const WIKI = 'wiki';
+
 	const COMMUNITY_WIKI_ID = 177;
 
 	// magic word used to force given menu item to not be turned into a link (BugId:15189)
@@ -63,7 +66,7 @@ class NavigationModel extends WikiaModel {
 	 * @param int $cityId city ID (false - default to current wiki)
 	 * @return string memcache key
 	 */
-	public function getMemcKey( $messageName, $cityId = false ) {
+	private function getMemcKey( $messageName, $cityId = false ) {
 		if ( $this->useSharedMemcKey ) {
 			$wikiId = substr( $this->wf->SharedMemcKey(), 0, -1 );
 
@@ -78,7 +81,13 @@ class NavigationModel extends WikiaModel {
 
 		$messageName = str_replace(' ', '_', $messageName);
 
-		return implode(':', array(__CLASS__, $wikiId, $this->wg->Lang->getCode(), $messageName, self::version));
+		return implode( ':', array( __CLASS__, $wikiId, $this->wg->Lang->getCode(), $messageName, self::version ) );
+	}
+
+	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE, $city_id = false ){
+		$this->wg->Memc->delete(
+			$this->getMemcKey( $key, $city_id )
+		);
 	}
 
 	/**
@@ -90,55 +99,50 @@ class NavigationModel extends WikiaModel {
 		return $this->errors;
 	}
 
-	public function get(){
-		return $this->parseMenu(
+	public function getWiki( $msgName = false, $wikiText = ''){
+
+		$wikia = $this->parse(
+			self::TYPE_VARIABLE,
 			self::WIKIA_GLOBAL_VARIABLE,
 			array(
-				4,
-				4,
-				4
+				1,
+				$this->wg->maxLevelTwoNavElements,
+				$this->wg->maxLevelThreeNavElements
 			),
+			self::CACHE_TTL,
+			true, // $forContent,
 			true
 		);
-	}
 
-	public function parseMenu( $menuName, Array $maxChildrenAtLevel, $filterInactiveSpecialPages = false ){
-		switch( $menuName ) {
-			case self::WIKIA_GLOBAL_VARIABLE:
-				// get menu content from WikiFactory variable
-				return $this->parseVariable(
-					$menuName,
-					$maxChildrenAtLevel,
+		if( !empty( $msgName ) && $msgName == self::WIKI_LOCAL_MESSAGE && !empty( $wikiText ) ) {
+			 $wiki = $this->parseText(
+				 $wikiText,
+				 array(
+					 $this->wg->maxLevelOneNavElements,
+					 $this->wg->maxLevelTwoNavElements,
+					 $this->wg->maxLevelThreeNavElements
+				 ),
+				 true /* $forContent */
+			 );
+		} else {
+			$wiki = ( $this->wg->User->isAllowed( 'read' ) ? // Only show menu items if user is allowed to view wiki content (BugId:44632)
+				$this->parse(
+					self::TYPE_MESSAGE,
+					self::WIKI_LOCAL_MESSAGE,
+					array(
+						$this->wg->maxLevelOneNavElements,
+						$this->wg->maxLevelTwoNavElements,
+						$this->wg->maxLevelThreeNavElements
+					),
 					self::CACHE_TTL,
-					true /* $forContent */,
-					$filterInactiveSpecialPages
-				);
-				break;
-
-			case self::WIKI_LOCAL_MESSAGE:
-			default:
-				// get menu content from the message
-				return $this->parseMessage(
-					$menuName,
-					$maxChildrenAtLevel,
-					self::CACHE_TTL,
-					true /* $forContent */,
-					$filterInactiveSpecialPages
-				);
+					true // $forContent
+				) : array() );
 		}
-	}
 
-	/**
-	 * @author: Inez Korczyński
-	 */
-	public function parseMessage($messageName, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false) {
-
-		return $this->parseHelper(self::TYPE_MESSAGE, $messageName, $maxChildrenAtLevel, $duration, $forContent, $filterInactiveSpecialPages);
-	}
-
-	public function parseVariable($variableName, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false) {
-
-		return $this->parseHelper(self::TYPE_VARIABLE, $variableName, $maxChildrenAtLevel, $duration, $forContent, $filterInactiveSpecialPages);
+		return array(
+			'wikia' => $wikia,
+			'wiki' => $wiki
+		);
 	}
 
 	/**
@@ -152,15 +156,15 @@ class NavigationModel extends WikiaModel {
 	 * @param boolean $filterInactiveSpecialPages ignore item linking to not existing special pages?
 	 * @return array parsed menu wikitext
 	 */
-	private function parseHelper( $type, $source, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
+	public function parse( $type, $source, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
 		$this->wf->ProfileIn( __METHOD__ . ":$type");
 
 		$this->forContent = $forContent;
 
-		$cacheKey = $this->getMemcKey($source);
-		$nodes = $this->wg->Memc->get($cacheKey);
+		$cacheKey = $this->getMemcKey( $source );
+		$nodes = $this->wg->Memc->get( $cacheKey );
 
-		if ( !is_array( $nodes ) ) {
+		if ( empty( $nodes ) ) {
 			$this->wf->ProfileIn( __METHOD__  . '::miss' );
 
 			// get wikitext from given source
@@ -522,7 +526,7 @@ class NavigationModel extends WikiaModel {
 
 			$this->biggestCategories = WikiaDataAccess::cache(
 				$this->wf->MemcKey( 'biggest', $limit ),
-				60 * 60 * 24 * 7,
+				604800, // a week
 				function() use ( $blackList, $limit ) {
 					$filterWordsA = array();
 
