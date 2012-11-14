@@ -1,8 +1,8 @@
 var StructureData = {
 	// Mustache templates
-	selectTemplate: '<select class="objects-to-add">{{#list}}<option data-value="{{id}}" data-url="{{url}}" data-type="{{type}}" {{#imageUrl}}data-image-url="{{imageUrl}}"{{/imageUrl}} >{{name}}</option>{{/list}}{{^list}}<option>No objects found!</option>{{/list}}</select> ',
+	selectTemplate: '<select class="objects-to-add"><option value="false">choose object...</option>{{#list}}<option data-value="{{id}}" data-url="{{url}}" data-type="{{type}}" {{#schema:contentURL}}data-image-url="{{schema:contentURL}}"{{/schema:contentURL}} >{{name}}</option>{{/list}}</select> ',
 	objectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}">{{name}}</a> <button class="secondary remove">Remove</button></li>',
-	imageObjectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}" title="{{name}}"><img src="{{imageUrl}}" alt="{{name}}"</a> <button class="secondary remove">Remove</button></li>',
+	imageObjectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}" title="{{name}}"><img src="{{imageUrl}}" alt="{{name}}" /></a> <button class="secondary remove">Remove</button></li>',
 	inputTemplate: '<li><div class="input-group"><input type="text" name="{{type}}[]" value="" /> <button class="secondary remove">Remove</button></div></li>',
 
 	init: function() {
@@ -25,7 +25,10 @@ var StructureData = {
 		});
 		// Attach handlers - add object from dropdown to list
 		SDObjectWrapper.on('change', 'select.objects-to-add', function() {
-			that.addObject($(this));
+			if ($(this).children(':selected').val() !== 'false') {
+				that.addObject($(this));
+			}
+			$(this).children().first().attr('selected', 'selected');
 		});
 		// Attach handlers - remove object from list
 		SDObjectWrapper.on('click', 'td button.remove', function(event) {
@@ -48,7 +51,12 @@ var StructureData = {
 				objectType: classesStr
 			},
 			callback: function(data) {
-				var html = Mustache.render(that.selectTemplate, data);
+				var html;
+				if (data.list.length > 0) {
+					html = Mustache.render(that.selectTemplate, data);
+				} else {
+					html = '<span> No objects found !</span>';
+				}
 				$eventTarget.next().stopThrobbing();
 				$eventTarget.after(html);
 			}
