@@ -59,7 +59,7 @@ class CensusDataRetrieval {
                 wfProfileIn(__METHOD__);
                 $this->app = F::App();
 		$this->query = $this->prepareCode( $title->getText() );
-
+                $this->censusDataArr = $this->getCacheCensusDataArr();
 		if ( !$this->fetchData() ) {
 			// no data in Census or something went wrong, quit
                         wfProfileOut(__METHOD__);
@@ -86,11 +86,6 @@ class CensusDataRetrieval {
 
 		// @TODO find a way to query all object types, preferably in one query
                 $censusData = null;
-                 //get memcache obj
-                $this->censusDataArr = $this->app->wg->Memc->get('censusDataArr');
-                if ( $this->censusDataArr == false ) {
-                        $this->cacheCensusData();
-                }
                 $key = array_search($this->query, $this->censusDataArr);
                 //set type and id
                 if ( $key ) {
@@ -246,7 +241,7 @@ class CensusDataRetrieval {
         }
         
         /**
-	 * cacheCensusData
+	 * getCacheCensusDataArr
          * sets Memcache object form Census gathering all required data to find 
          * object when user is creating article
          * 
@@ -254,15 +249,22 @@ class CensusDataRetrieval {
          * array ( 'type.id' => 'code');
          * 
 	 */
-	private function cacheCensusData() {
+	private function getCacheCensusDataArr() {
                 wfProfileIn(__METHOD__);
+                $key = wfMemcKey('census-data');
+                $data = $this->app->wg->Memc->get($key);
+
+                if(!empty($data)) {
+                        wfProfileOut(__METHOD__);
+                        return $data;
+                }
+                
                 $http = new Http();
-		// @TODO find a way to query all object types, preferably in one query
-                $this->censusDataArr = array();
+                $data = array();
                 foreach ($this->supportedTypes as $type) {
                         $censusData = $http->get( sprintf(self::QUERY_URL, $type, '?c:show=id,name.en&c:limit=0') );
                         $map = json_decode($censusData);
-                        $this->mergeResult( $this->censusDataArr, $map, $type );
+                        $this->mergeResult( $data, $map, $type );
                 }
                 // error handling
 		if ( empty( $censusData ) ) {
@@ -271,10 +273,9 @@ class CensusDataRetrieval {
 			return false;
 		}
  
-                // @TODO use data map to filter out unneeded data
-                // 
-                // @TODO assuming vehicle for now, but this needs to be generic
+                $this->app->wg->Memc->set( $data, $key, 3600 );
                 wfProfileOut(__METHOD__);
+                return $data;
 	}
         
         /**
