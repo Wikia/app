@@ -1,0 +1,1 @@
+BOOOLEAAAAN <input type="checkbox" name="" value="" />
