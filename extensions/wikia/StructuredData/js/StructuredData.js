@@ -25,9 +25,11 @@ var StructureData = {
 		});
 		// Attach handlers - add object from dropdown to list
 		SDObjectWrapper.on('change', 'select.objects-to-add', function() {
+			// Check if the option containing proper object was selected
 			if ($(this).children(':selected').val() !== 'false') {
 				that.addObject($(this));
 			}
+			// Reset dropdown
 			$(this).children().first().attr('selected', 'selected');
 		});
 		// Attach handlers - remove object from list
