@@ -71,24 +71,24 @@ class WikiaComWikisListImport {
 		wfProfileIn(__METHOD__);
 
 		if( !empty($data[2]) && !empty($data[4]) && in_array($data[3], $this->verticalsNames) ) {
-			wfProfileOut(__METHOD__);
-			return true;
+			$res = true;
 		} else {
-			wfProfileOut(__METHOD__);
-			return false;
+			$res = false;
 		}
+		wfProfileOut(__METHOD__);
+		return $res;
 	}
 
 	protected function areAllRequiredWikiDataForDatabaseSet($data) {
 		wfProfileIn(__METHOD__);
 
 		if( !empty($data[2]) && !empty($data[4]) ) {
-			wfProfileOut(__METHOD__);
-			return true;
+			$res = true;
 		} else {
-			wfProfileOut(__METHOD__);
-			return false;
+			$res = false;
 		}
+		wfProfileOut(__METHOD__);
+		return $res;
 	}
 
 	public function loadDataAndUpdateMessage() {

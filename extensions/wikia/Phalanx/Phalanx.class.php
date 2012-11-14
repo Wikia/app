@@ -176,12 +176,12 @@ class Phalanx {
 				'lang' => $row->p_lang,
 			);
 
-			wfProfileOut( __METHOD__ );
-			return $block ;
+			$res = $block;
 		} else {
-			wfProfileOut( __METHOD__ );
-			return false ;
+			$res = false;
 		}
+		wfProfileOut( __METHOD__ );
+		return $res;
 	}
 
 	/**
@@ -209,6 +209,7 @@ class Phalanx {
 		// hack to not count testFilters hits,
 		// otherwise phalanxexempt users will *not* get here
 		if ( $wgUser->isAllowed( 'phalanxexempt' ) ) {
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 		

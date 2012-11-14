@@ -193,6 +193,7 @@ class JSMessages {
 					}
 					else {
 						Wikia::logBacktrace(__METHOD__);
+						$this->app->wf->ProfileOut(__METHOD__);
 						trigger_error("JSMessages: '{$name}' package with wildcard matching can only be used in EXTERNAL mode", E_USER_ERROR);
 						return;
 					}

@@ -416,6 +416,7 @@ class WikiaSearchIndexer extends WikiaObject {
 
 		// should probably re-poll for wikis without much love
 		if ( ( $result = $this->wg->Memc->get( $key ) ) && ( $result->weekly > 0 || $result->monthly > 0 ) ) {
+			wfProfileOut(__METHOD__);
 			return $result;
 		}
 	

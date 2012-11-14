@@ -980,6 +980,7 @@ class WikiaGlobalStats {
 			$result = $wgTTCache->get($memkey);
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
@@ -1008,6 +1009,7 @@ class WikiaGlobalStats {
 			$result = $wgTTCache->get($memkey);
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 }

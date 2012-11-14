@@ -143,7 +143,9 @@ function getLinkSuggest() {
 	}
 
 	if (isset($out)) {
-		return linkSuggestAjaxResponse($out);
+		$res = linkSuggestAjaxResponse($out);
+		wfProfileOut(__METHOD__);
+		return $res;
 	}
 
 	// Allow the calling-code to specify a namespace to search in (which at the moment, could be overridden by having prefixed text in the input field).
@@ -176,7 +178,9 @@ function getLinkSuggest() {
 				 ? json_encode(array('suggestions'=>array(),'redirects'=>array()))
 				 : '';
 
-			return linkSuggestAjaxResponse($out);
+			$res = linkSuggestAjaxResponse($out);
+			wfProfileOut(__METHOD__);
+			return $res;
 		}
 
 	}

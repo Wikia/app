@@ -334,6 +334,7 @@ class WikiaSearch extends WikiaObject {
 	    wfProfileIn(__METHOD__);
 	
 	    if ( $config->hasArticleMatch() ) {
+			wfProfileOut(__METHOD__);
 	        return $config->getArticleMatch();
 	    }
 	    

@@ -427,6 +427,7 @@ EOF;
 
 		// rarely ever happens, but it does
 		if ( empty( $tpl->data['content_actions'] ) ) {
+			wfProfileOut( __METHOD__ );
 			return $links;
 		}
 

@@ -443,6 +443,7 @@ class RenameuserSQL {
 		);
 		if ( !$dbw->affectedRows() ) {
 			$dbw->rollback();
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 		// Reset token to break login with central auth systems.

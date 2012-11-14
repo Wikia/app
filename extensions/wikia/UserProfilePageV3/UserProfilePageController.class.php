@@ -425,6 +425,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal('status', $status);
 		if ($status === 'error') {
 			$this->setVal('errorMsg', $errorMsg);
+			$this->app->wf->ProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -432,6 +433,7 @@ class UserProfilePageController extends WikiaController {
 			$status = $this->saveUsersAvatar($user->getID(), $userData->avatarData);
 			if ($status !== true) {
 				$this->setVal('errorMsg', $errorMsg);
+				$this->app->wf->ProfileOut(__METHOD__);
 				return true;
 			}
 		}
@@ -521,12 +523,12 @@ class UserProfilePageController extends WikiaController {
 		$localPath = $this->getLocalPath($user);
 
 		if ($errorNo != UPLOAD_ERR_OK) {
-			$this->app->wf->ProfileOut(__METHOD__);
-			return false;
+			$res = false;
 		} else {
-			$this->app->wf->ProfileOut(__METHOD__);
-			return $localPath;
+			$res = $localPath;
 		}
+		$this->app->wf->ProfileOut(__METHOD__);
+		return $res;
 	}
 
 	/**
@@ -560,6 +562,7 @@ class UserProfilePageController extends WikiaController {
 			if (is_int($thumbnail)) {
 				$result = array('success' => false, 'error' => $this->validateUpload($thumbnail));
 				$this->setVal('result', $result);
+				$this->app->wf->ProfileOut(__METHOD__);
 				return;
 			}
 
@@ -574,6 +577,7 @@ class UserProfilePageController extends WikiaController {
 
 		$result = array('success' => false, 'error' => $errorMsg);
 		$this->setVal('result', $result);
+		$this->app->wf->ProfileOut(__METHOD__);
 		return;
 	}
 
@@ -586,6 +590,7 @@ class UserProfilePageController extends WikiaController {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		if (filesize($fileName) > self::AVATAR_MAX_SIZE) {
+			$this->app->wf->ProfileOut(__METHOD__);
 			return UPLOAD_ERR_FORM_SIZE;
 		}
 
@@ -600,6 +605,7 @@ class UserProfilePageController extends WikiaController {
 
 		$out = $ioh->postProcessFile($fileName);
 		if ($out !== true) {
+			$this->app->wf->ProfileOut(__METHOD__);
 			return $out;
 		}
 

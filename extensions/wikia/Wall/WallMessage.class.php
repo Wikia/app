@@ -470,16 +470,16 @@ class WallMessage {
 		if($this->isMain()){
 			wfProfileOut(__METHOD__);
 			return '';
-		} else {
-			$order = $this->getOrderId();
-			if($order != null) {
-				wfProfileOut(__METHOD__);
-				return $order;
-			} else {
-				wfProfileOut(__METHOD__);
-				return $this->getId();
-			}
 		}
+
+		$order = $this->getOrderId();
+		if($order != null) {
+			$res = $order;
+		} else {
+			$res = $this->getId();
+		}
+		wfProfileOut(__METHOD__);
+		return $res;
 	}
 
 	public function getMessagePageUrl($withoutAnchor = false) {

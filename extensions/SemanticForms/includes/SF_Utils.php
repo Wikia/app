@@ -778,10 +778,12 @@ END;
 
 		// Exit if we're not in preview mode.
 		if ( !$editpage->preview ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 		// Exit if we aren't in the "Form" namespace.
 		if ( $editpage->getArticle()->getTitle()->getNamespace() != SF_NS_FORM ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 

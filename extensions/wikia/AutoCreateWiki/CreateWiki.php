@@ -574,6 +574,8 @@ class CreateWiki {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $status;
 	}
 

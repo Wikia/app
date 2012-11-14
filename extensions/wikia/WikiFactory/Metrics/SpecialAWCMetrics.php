@@ -261,6 +261,7 @@ class WikiMetrics {
 				}
 			}
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	/*

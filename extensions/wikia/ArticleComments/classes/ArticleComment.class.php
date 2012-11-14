@@ -226,6 +226,7 @@ class ArticleComment {
 			}
 
 			if(empty($this->mFirstRevision) || empty($this->mLastRevision) ){
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
@@ -800,6 +801,7 @@ class ArticleComment {
 		$wgTitle = $commentTitle;
 
 		if( !($commentTitle instanceof Title) ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 

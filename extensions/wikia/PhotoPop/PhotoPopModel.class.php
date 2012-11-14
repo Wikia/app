@@ -140,6 +140,7 @@ class PhotoPopModel extends WikiaModel{
 		$this->app->wf->profileIn( __METHOD__ );
 
 		if ( empty( $titleName ) ) {
+			$this->app->wf->profileOut( __METHOD__ );
 			return null;
 		}
 
