@@ -1391,7 +1391,63 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 				$mockSearch->getKeywords( $mockConfig ),
 				'WikiaSearch::getKeywords should return an array of interesting terms'
 		);
+	}
+	
+	/**
+	 * @covers WikiaSearch::getInterestingTerms
+	 */
+	public function testGetInterestingTerms() {
+		$searchConfigMethods = array(
+				'setInterestingTerms', 'setMltFields', 'setMltBoost'
+				);
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', $searchConfigMethods );
+		$mockSearch 	=	$this->getMockBuilder( 'WikiaSearch' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'moreLikeThis' ) )
+								->getMock();
 		
+		$mockResultSet	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getInterestingTerms' ) )
+								->getMock();
+		
+		$mockTerms = array( 'mock', 'terms' );
+		
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setInterestingTerms' )
+			->with		( 'list' )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setMltFields' )
+			->with		( array( $mockSearch->field( 'title' ), $mockSearch->field( 'html' ), 'title' ) )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setMltBoost' )
+			->with		( true )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockSearch
+			->expects	( $this->once() )
+			->method	( 'moreLikeThis' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $mockResultSet ) )
+		;
+		$mockResultSet
+			->expects	( $this->once() )
+			->method	( 'getInterestingTerms' )
+			->will		( $this->returnValue( $mockTerms ) )
+		;
+		
+		$this->assertEquals(
+				$mockTerms,
+				$mockSearch->getInterestingTerms( $mockConfig ),
+				'WikiaSearch::getInterestingTerms should perform a moreLikeThis call and return the interesting terms of the result set in an array'
+		);
 		
 	}
 }
