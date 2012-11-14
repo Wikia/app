@@ -1305,5 +1305,93 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$mockSearch->getRelatedVideos( $mockConfig );
 	}
 	
-	
+	/**
+	 * @covers WikiaSearch::getKeywords
+	 */
+	public function testGetKeywords() {
+		$searchConfigMethods = array(
+				'getCityId', 'getPageId', 'setQuery', 'setMltFields'
+				);
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', $searchConfigMethods );
+		$mockSearch 	=	$this->getMockBuilder( 'WikiaSearch' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getInterestingTerms' ) )
+								->getMock();
+		
+		$noPageQuery = '(wid:123) AND (is_main_page:1)';
+		$withPageQuery = '(wid:123) AND (pageid:234)'; 
+		
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'getCityId' )
+			->will		( $this->returnValue( '123' ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 1 ) )
+			->method	( 'getPageId' )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 2 ) )
+			->method	( 'setQuery' )
+			->with		( $noPageQuery )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 3 ) )
+			->method	( 'setMltFields' )
+			->with		( array( WikiaSearch::field( 'title' ), WikiaSearch::field( 'html' ), 'title' ) )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$interestingTerms = array( 'interesting', 'terms' );
+		$mockSearch
+			->expects	( $this->any() )
+			->method	( 'getInterestingTerms' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $interestingTerms ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 4 ) )
+			->method	( 'getCityId' )
+			->will		( $this->returnValue( '123' ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 5 ) )
+			->method	( 'getPageId' )
+			->will		( $this->returnValue( '234' ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 6 ) )
+			->method	( 'getPageId' )
+			->will		( $this->returnValue( '234' ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 7 ) )
+			->method	( 'setQuery' )
+			->with		( $withPageQuery )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 8 ) )
+			->method	( 'setMltFields' )
+			->with		( array( WikiaSearch::field( 'title' ), WikiaSearch::field( 'html' ), 'title' ) )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		
+		//without pageid
+		$this->assertEquals(
+				$interestingTerms,
+				$mockSearch->getKeywords( $mockConfig ),
+				'WikiaSearch::getKeywords should return an array of interesting terms'
+		);
+		
+		//with pageid		
+		$this->assertEquals(
+				$interestingTerms,
+				$mockSearch->getKeywords( $mockConfig ),
+				'WikiaSearch::getKeywords should return an array of interesting terms'
+		);
+		
+		
+	}
 }
