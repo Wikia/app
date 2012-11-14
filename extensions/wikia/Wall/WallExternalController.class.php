@@ -27,9 +27,44 @@ class WallExternalController extends WikiaController {
 		
 	}
 	
+	/**
+	 * Move thread (TODO: Should this be in Forums?)
+	 */
 	public function moveModal() {
+		if ( !$this->wg->User->isAllowed( 'wallmessagemove' ) ) {
+			$this->displayRestrictionError();
+			return false;
+			// skip rendering
+		}
+			
+		$forum = new Forum();
+
+		$list = $forum->getBoardList();
+
 		$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
-		$this->destinationBoards[] = array('value' => '123', 'content' => 'Test board1');
+
+		foreach ( $list as $value ) {
+			$this->destinationBoards[] = array( 'value' => $value['id'], 'content' => htmlspecialchars( $value['name'] ) );
+		}
+	}
+	
+	/**
+	 * Moves thread (TODO: Should this be in Forums?)
+	 * @request destinationBoardId - id of destination board
+	 * @request rootMessageId - thread id
+	 */
+	public function moveThread() {
+		// permission check needed here
+		if ( !$this->wg->User->isAllowed( 'wallmessagemove' ) ) {
+			$this->displayRestrictionError();
+			return false;
+			// skip rendering
+		}
+	
+		$destinationId = $this->getVal('destinationId', '');
+		
+		$this->status = 'error';
+		$this->errormsg = 'nothing is here';
 	}
 	
 	public function votersModal() {

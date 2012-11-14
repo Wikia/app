@@ -685,10 +685,38 @@ var Wall = $.createClass(Object, {
 				id: id
 			},
 			callback: function(html) {
-				var modal = $(html).makeModal({
+				var dialog = $(html).makeModal({
 					'width': 500
 				});
-				
+				var buttons = $('.modalToolbar button'),
+					form = new WikiaForm(dialog.find('.WikiaForm'));
+				dialog.on('click.Wall', '.cancel', function(e) {
+					dialog.closeModal();
+				}).on('click.Wall', '.submit', function(e) {
+					buttons.attr('disabled', true);
+					$.nirvana.sendRequest({
+						controller: 'WallExternalController',
+						method: 'moveThread',
+						format: 'json',
+						data: {
+							destinationBoardId: dialog.find('.destinationBoardId option:selected').val(),
+							rootMessageId: id
+						},
+						callback: function(json) {
+							if(json.status === 'ok') {
+								// redirect?
+							} else if(json.status === 'error') {
+								form.clearAllInputErrors();
+								if(json.errorfield) {
+									form.showInputError(json.errorfield, json.errormsg);
+								} else {
+									form.showGenericError(json.errormsg);
+								}
+								buttons.removeAttr('disabled');
+							}
+						}
+					});
+				});
 			}
 		});
 	},
