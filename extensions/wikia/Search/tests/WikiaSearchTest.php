@@ -3,6 +3,18 @@
 require_once( 'WikiaSearchBaseTest.php' );
 
 class WikiaSearchTest extends WikiaSearchBaseTest {
+
+	// bugid: 64199 -- reset language code 
+	public function setUp() {
+		parent::setUp();
+		global $wgLanguageCode;
+		$this->defaultLanguageCode = $wgLanguageCode;
+	}
+	public function tearDown() {
+		global $wgLanguageCode;
+		$wgLanguageCode = $this->defaultLanguageCode;
+		parent::tearDown();
+	}
 	
 	/**
 	 * Tests our support for dynamic fields
