@@ -39,6 +39,8 @@ html {
 
 	font-size: 1em;
 
+	font-family: 'Helvetica-Light', Helvetica, 'Roboto-Thin', 'Lucida Grande';
+
 	&.serif {
 		font-family: 'Droid Serif', serif;
 	}
@@ -50,8 +52,6 @@ body {
 	padding: 10px 20px;
 
 	color: $textColor;
-
-	font-family: 'Helvetica-Light', Helvetica, 'Roboto-Thin', 'Lucida Grande';
 
 	line-height: 1.7em;
 }
