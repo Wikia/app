@@ -57,17 +57,6 @@
 				<?php // Render properties manually ?>
 				<tr>
 					<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</th>
-				
-					<?php // display 'empty' for empty object properties ?>
-					<?php if (($context != SD_CONTEXT_EDITING) && empty($propertyValue)) : ?>
-						<td><p class="empty">empty (!container)</p></td>
-						<?php if($context == SD_CONTEXT_SPECIAL): ?>
-							<td><pre><?= $propertyName; ?></pre></td>
-						<?php endif; ?>
-				</tr>
-						<?php continue; ?>
-					<? endif ?>
-		
 					<td><p><?php echo $property->getValueObject()->render($context); ?></p></td>
 					<?php if($context == SD_CONTEXT_SPECIAL): ?>
 						<td><pre><?= $propertyName; ?></pre></td>
