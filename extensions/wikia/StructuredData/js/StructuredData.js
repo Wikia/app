@@ -52,7 +52,7 @@ var StructureData = {
 					name: selectedObject.text(),
 					url: selectedObject.data('url'),
 					id: selectedObject.data('value'),
-					type: selectedObject.data('type')
+					type: placeToAdd.data('field-name')
 				},
 				html = Mustache.render(this.objectTemplate, objectData);
 			placeToAdd.append(html);
