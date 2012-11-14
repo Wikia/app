@@ -42,9 +42,7 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 		;
 
 		slotsize = slotsize.replace(/,.*$/, '');
-		WikiaTracker.trackAdEvent('liftium.slot2', {
-			'ga_category': 'slot2/' + slotsize, 'ga_action': slotname, 'ga_label': 'evolve'
-		}, 'ga');
+		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category': 'slot2/' + slotsize, 'ga_action': slotname, 'ga_label': 'evolve'}, 'ga');
 
 		slotTimer2[slotname] = new Date().getTime();
 		log('slotTimer2 start for ' + slotname, 7, 'AdProviderEvolve');

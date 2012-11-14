@@ -26,8 +26,13 @@ var AdProviderGamePro = function(wikiaDart, ScriptWriter, WikiaTracker, log, win
 		log('fillInSlot', 5, 'AdProviderGamePro');
 		log(slot, 5, 'AdProviderGamePro');
 
-		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category':'slot2/' + slot[1], 'ga_action':slot[0], 'ga_label':'gamepro'}, 'ga');
-		ScriptWriter.injectScriptByUrl(slot[0], getUrl(slot[0]));
+		var slotname = slot[0]
+			, slotsize = slot[1] || slotMap[slotname].size
+		;
+
+		slotsize = slotsize.replace(/,.*$/, '');
+		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category': 'slot2/' + slotsize, 'ga_action': slotname, 'ga_label': 'gamepro'}, 'ga');
+		ScriptWriter.injectScriptByUrl(slotname, getUrl(slotname));
 	}
 
 	// adapted for GP + simplified copy of AdConfig.DART.getUrl
