@@ -393,7 +393,7 @@ var Lightbox = {
 
 				// Set all future click sources to Lightbox rather than DOM element
 				Lightbox.openModal.clickSource = LightboxTracker.clickSource.LB;
-			}, 1000); // Was 5000, changed on 8/21/12
+			}, 1000); // Was 5000, from 7/27/12 - 8/21/12
 
 		}
 	},
