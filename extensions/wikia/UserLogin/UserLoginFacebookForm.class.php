@@ -37,16 +37,16 @@ class UserLoginFacebookForm extends UserLoginForm {
 
 	function addNewAccount() {
 		// FIXME: an ugly hack to disable captcha checking
-		$app = F::app();
-		$oldValue = $app->wg->CaptchaTriggers;
-
 		global $wgCaptchaTriggers;
+
+		$oldValue = $wgCaptchaTriggers;
+		
 		$wgCaptchaTriggers['createaccount'] = false;
 
 		$ret = $this->addNewAccountInternal();
 
 		// and bring back the old value
-		$this->wg->CaptchaTriggers = $oldValue;
+		$wgCaptchaTriggers = $oldValue;
 
 		return $ret;
 	}
