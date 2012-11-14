@@ -9,6 +9,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		parent::setUp();
 		global $wgLanguageCode;
 		$this->defaultLanguageCode = $wgLanguageCode;
+		$wgLanguageCode = 'en';
 	}
 	public function tearDown() {
 		global $wgLanguageCode;
