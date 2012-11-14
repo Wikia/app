@@ -12,11 +12,53 @@ class NavigationApiController extends WikiaApiController {
 	 *
 	 * @responseParam array $navigation Wiki Navigation
 	 *
-	 * @example wikia.php?controller=NavigationApi&method=get
+	 * @example wikia.php?controller=NavigationApi&method=getData
 	 */
-	public function get(){
+	public function getData(){
 		$model = new NavigationModel();
+		$nav = $model->getWiki();
 
-		$this->response->setVal( 'nav', $model->get() );
+		$ret = array();
+
+		foreach( $nav as $type => $list ){
+			$ret[$type] = $this->getChildren( $list );
+		}
+
+		$this->response->setVal( 'navigation', $ret );
+
+		$errors = $model->getErrors();
+
+		if ( !empty( $errors ) ) {
+			$this->response->setVal( 'errors', $errors );
+		}
+	}
+
+	private function getChildren( $list, $i = 0 ){
+		$children = array();
+		$next = array();
+
+		$element = $list[$i];
+
+		if ( isset( $element['children'] ) ) {
+			foreach( $element['children'] as $child ){
+				$children[] = $this->getChildren( $list, $child );
+			}
+		}
+
+		if ( isset( $element['text'] ) ) {
+			$next = array(
+				'text' => $element['text'],
+				'href' => $element['href']
+			);
+
+			if( !empty( $children ) ) {
+				$next['children'] = $children;
+			}
+
+		} else if ( !empty( $children ) ) {
+			$next = $children;
+		}
+
+		return $next;
 	}
 }
