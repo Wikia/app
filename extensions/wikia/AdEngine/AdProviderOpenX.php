@@ -155,7 +155,6 @@ EOT;
 		wfProfileOut(__METHOD__);
 
 		return $adtag;
-
 	}
 
 	/**
@@ -239,52 +238,24 @@ EOT;
 	private function getFillElemFunctionDefinition($functionName, Array $slotnames) {
 		wfProfileIn(__METHOD__);
 
-		// This function addresses two cases: OpenX SPC is fully loaded before LazyLoadAds.js
-		// displays this Spotlight, and OpenXSPC is not fully loaded yet.
-
-		// In both cases, the code that actually displays the contents of the Spotlight is
-		// the same. Here is that code.
+		// The code that displays the contents of the spotlights.
 		$out = <<<EOT
-	{$functionName}_helper = function() {
-		if (typeof OA_output != 'undefined') {
+
+		window.OpenXSPC = {};
+		window.OpenXSPC[ '{$functionName}' ] = function() {
+			var output = window.OA_output || [];
 EOT;
 		for ($i = 0; $i < count($slotnames); $i++) {
 			$out .= <<<EOT
-			if (typeof OA_output['{$this->zoneIds[$slotnames[$i]]}'] != 'undefined') {
-				$('#{$slotnames[$i]}').html(OA_output['{$this->zoneIds[$slotnames[$i]]}']);
-			}
+
+			( {$this->zoneIds[$slotnames[$i]]} in output ) && $( '#{$slotnames[$i]}' ).html( output[ {$this->zoneIds[$slotnames[$i]]} ] );
 EOT;
 		}
 		$out .= <<<EOT
-		}
-	};
-EOT;
 
-		// The following function is called by LazyLoadAds.js to show this Spotlight.
-		$out .= <<<EOT
-	{$functionName} = function () {
-		{$functionName}_helper();
-	};
-EOT;
-
-		// The following code covers the case when OpenX SPC has not finished loading.
-		// Here, we have to define a new function, because LazyLoadAds.js has redefined the
-		// function above to null.
-		$out .= <<<EOT
-	if (typeof OA_output == 'undefined') {
-		{$functionName}_callback = function() {
-			{$functionName}_helper();	
 		};
 EOT;
-		// After defining this function, register it as a callback for the OpenX SPC loader.
-		// (See AdProviderOpenX.js for more info.)
-		$out .= <<<EOT
-		if (typeof window.spcCallbacks == 'undefined') {
-			window.spcCallbacks = new Array();
-		}
-		window.spcCallbacks.push('{$functionName}_callback');
-	}
-EOT;
+
 		wfProfileOut(__METHOD__);
 
 		return $out;

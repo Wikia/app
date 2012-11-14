@@ -19,29 +19,34 @@ var LazyLoadAds = function( settings ) {
 };
 
 LazyLoadAds.prototype.onScroll = function() {
-	var ad, funcName,
+	var ad, func, funcName,
 		fold = $window.height() + $window.scrollTop() + this.settings.onScroll.threshold,
+		spc = window.OpenXSPC,
 		i = 0;
 
-	for ( ; i < this.adsLength; i++ ) {
-		ad = this.ads[ i ];
+	// See: /extensions/AdEngine/AdProviderOpenX.php
+	if ( spc && this.adsLength ) {
+		for ( ; i < this.adsLength; i++ ) {
+			ad = this.ads[ i ];
 
-		if ( $( ad ).offset().top <= fold ) {
-			funcName = ad.nodeName == 'IFRAME'
-				? 'fillIframe_' + ad.id.replace( '_iframe', '' ) : 'fillElem_' + ad.id;
+			if ( $( ad ).offset().top <= fold ) {
+				funcName = ad.nodeName == 'IFRAME'
+					? 'fillIframe_' + ad.id.replace( '_iframe', '' ) : 'fillElem_' + ad.id;
 
-			if ( typeof window[ funcName ] != 'undefined' ) {
-				window[ funcName ]();
+				// Call OpenXSPC callback function
+				if ( $.isFunction( func = spc[ funcName ] ) ) {
+					func();
+				}
+
+				// Remove this item
+				this.ads.splice( i, 1 );
+				this.adsLength--;
 			}
-
-			// Remove this item
-			this.ads.splice( i, 1 );
-			this.adsLength--;
 		}
 	}
 
 	// Unbind scroll when there are no items left to load
-	if ( !this.adsLength ) {
+	if ( !spc || !this.adsLength ) {
 		$window.off( scroll );
 	}
 };
