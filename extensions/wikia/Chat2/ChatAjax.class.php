@@ -106,6 +106,7 @@ class ChatAjax {
 
 	/**
 	 *  injecting data from chat to memcache
+	 *  and purging cache for ChatEntryPoint used by Anons
 	 */
 
 	static public function setUsersList() {
@@ -118,6 +119,8 @@ class ChatAjax {
 		}
 
 		NodeApiClient::setChatters($wgRequest->getArray('users'));
+
+		ChatRailController::purgeMethod("content");
 
 		wfProfileOut( __METHOD__ );
 		return array('status' => $wgRequest->getArray('users') );
