@@ -43,39 +43,35 @@ class CreateWikiTest extends WikiaBaseTest {
 
 		$languages = array( 'en', 'pl', 'de', 'pt-br' );;
 
-		$types = array( false, "answers" );
+		foreach ( $languages as $lang ) {
+			$domain = sprintf("test%stest", date('YmdHis'));
 
-		foreach ( $types as $type ) {
-			foreach ( $languages as $lang ) {
-				$domain = sprintf("test%stest", date('YmdHis'));
+			$this->oCWiki = new CreateWiki(
+				"Test Create Wiki", // sitename
+				$domain, // domain
+				$lang, // lang
+				1, // hub
+				$type
+			);
 
-				$this->oCWiki = new CreateWiki(
-					"Test Create Wiki", // sitename
-					$domain, // domain
-					$lang, // lang
-					1, // hub
-					$type
+			$created = $this->oCWiki->create();
+
+			$this->assertEquals( 0, $created, "CreateWiki failed for language: {$lang} and type: {$type}" );
+
+			if ( $created == 0 ) {
+				$city_id = $this->oCWiki->getWikiInfo('city_id');
+				$cmd = sprintf(
+					"SERVER_ID=%d %s %s/extensions/wikia/WikiFactory/Close/simpleclose.php --wiki_id=%d --conf %s",
+					$wgCityId,
+					"/usr/bin/php",
+					$this->mIP,
+					$city_id,
+					$wgWikiaLocalSettingsPath
 				);
-
-				$created = $this->oCWiki->create();
-
-				$this->assertEquals( 0, $created, "CreateWiki failed for language: {$lang} and type: {$type}" );
-
-				if ( $created == 0 ) {
-					$city_id = $this->oCWiki->getWikiInfo('city_id');
-					$cmd = sprintf(
-						"SERVER_ID=%d %s %s/extensions/wikia/WikiFactory/Close/simpleclose.php --wiki_id=%d --conf %s",
-						$wgCityId,
-						"/usr/bin/php",
-						$this->mIP,
-						$city_id,
-						$wgWikiaLocalSettingsPath
-					);
-					$err = wfShellExec( $cmd, $retval );
-					$this->assertEquals( 0, $retval, "Drop Wiki failed for id: {$city_id}, language: {$lang} and type: {$type}, err: {$err}" );
-				}
+				$err = wfShellExec( $cmd, $retval );
+				$this->assertEquals( 0, $retval, "Drop Wiki failed for id: {$city_id}, language: {$lang} and type: {$type}, err: {$err}" );
 			}
-		}
+		}		
 	}
 }
 
