@@ -30,8 +30,8 @@ var AdProviderGamePro = function(ScriptWriter, WikiaTracker, log, window, docume
 			, slotsize = slot[1] || slotMap[slotname].size
 		;
 
-		slotsize = slotsize.replace(/,.*$/, '');
-		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category': 'slot2/' + slotsize, 'ga_action': slotname, 'ga_label': 'gamepro'}, 'ga');
+		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category': 'slot2/' + slotsize.replace(/,.*$/, ''), 'ga_action': slotname, 'ga_label': 'gamepro'}, 'ga');
+
 		ScriptWriter.injectScriptByUrl(slotname, getUrl(slotname));
 	}
 
