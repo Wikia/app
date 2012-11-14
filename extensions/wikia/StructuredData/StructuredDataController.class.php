@@ -161,11 +161,10 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 	public function getCollection() {
 
-		//TODO: move it somewhere
+		// configure additional fields per object type
 		$specialFields = array(
 			'schema:ImageObject' => array('schema:contentURL')
 		);
-
 
 		$objectType = $this->request->getVal( 'objectType', false );
 		if( !empty( $objectType ) ) {
@@ -185,11 +184,18 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 					foreach ( $collection as $item ) {
 						if ( !in_array( $item, $resultCollection ) ) {
+
+							$specialPageUrl = null;
+							if ( isset( $item['name'] ) && isset( $item['type'] ) ) {
+								$specialPageUrl = SDElement::createSpecialPageUrl( $item );
+							}
+							$item['url'] = $specialPageUrl;
 							$resultCollection[] = $item;
 						}
 					}
 				}
 			}
+
 			$this->response->setVal( "list", $resultCollection );
 		}
 	}
