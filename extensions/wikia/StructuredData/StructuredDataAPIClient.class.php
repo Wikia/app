@@ -29,7 +29,13 @@ class StructuredDataAPIClient extends WikiaObject {
 
 		$this->httpRequest->addHeader( 'Accept', 'application/ld+json' );
 		$this->httpRequest->sendRequest();
-		return $this->httpRequest->getResponseBody();
+
+		if ( in_array( $this->httpRequest->getResponseCode(), array( 500, 501 ) ) ) {
+			return '{"error":"Internal Server Error","message":""}';
+		}
+		else {
+			return $this->httpRequest->getResponseBody();
+		}
 	}
 
 	private function getApiPath() {
@@ -45,7 +51,7 @@ class StructuredDataAPIClient extends WikiaObject {
 			return $response;
 		}
 		else {
-			throw new WikiaException('SD API Error: ' . $response->error . ' - ' . $response->message);
+			throw new WikiaException('SD API Error: ' . $response->error . ( !empty($response->message) ? ( ' - ' . $response->message ) : '' ) );
 		}
 	}
 
