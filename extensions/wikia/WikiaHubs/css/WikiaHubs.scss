@@ -1,5 +1,8 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/clearfix";
+
+$wikiahubs-line-height: 16px;
+
 @import 'NewsTabs';
 @import 'Explore';
 @import 'Pulse';
@@ -10,12 +13,8 @@
 @import 'CorporateFooter';
 @import 'ColorsPerVertical';
 
-$wikiahubs-line-height: 16px;
-
 .WikiaHubs {
 	font-size: 13px;	/* reset font size */
-	line-height: $wikiahubs-line-height;	/* reset line height */
-
 	/* reset article styling */
 	p {
 		margin: 0;
@@ -51,6 +50,8 @@ $wikiahubs-line-height: 16px;
 
 	/* From the Community Module */
 	.wikiahubs-from-the-community {
+		line-height: $wikiahubs-line-height;	/* reset line height */
+
 		h1 {
 			margin-bottom: 10px;
 		}

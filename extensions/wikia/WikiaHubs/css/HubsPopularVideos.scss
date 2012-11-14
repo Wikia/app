@@ -1,5 +1,7 @@
 .WikiaArticle {
 	.wikiahubs-popular-videos {
+		line-height: $wikiahubs-line-height;	/* reset line height */
+
 		h2 {
 			display: inline;
 			border: none;

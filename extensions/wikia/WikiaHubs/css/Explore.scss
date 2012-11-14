@@ -1,5 +1,7 @@
 .WikiaArticle {
 	.wikiahubs-explore {
+		line-height: $wikiahubs-line-height;	/* reset line height */
+
 		.title-wrapper {
 			width: 100%;
 			@include clearfix;

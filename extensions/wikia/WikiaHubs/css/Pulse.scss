@@ -2,6 +2,7 @@
 
 .WikiaArticle {
 	.wikiahubs-pulse {
+		line-height: $wikiahubs-line-height;	/* reset line height */
 		height: 160px;
 		position: relative;
 		padding-bottom: 9px;

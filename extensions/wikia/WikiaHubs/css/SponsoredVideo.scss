@@ -1,5 +1,6 @@
 .WikiaArticle {
 	.wikiahubs-sponsored-video {
+		line-height: $wikiahubs-line-height;	/* reset line height */
 		background: #f0f0f0;
 		overflow:hidden;
 		padding: 10px;
