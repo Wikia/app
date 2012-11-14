@@ -18,7 +18,8 @@ class AnalyticsProviderTest extends WikiaBaseTest {
 		$page = Http::get($url);
 		if (preg_match('/<img src="([^">]+)" [^>]+ alt="szmtag"/', $page, $m)) {
 			$path = parse_url($m[1], PHP_URL_PATH);
-			return array_pop(explode('/', $path));
+			$arr = explode('/', $path);
+			return array_pop($arr);
 		} else {
 			$this->fail('Cannot find the analytics image on page ' . $url);
 		}
