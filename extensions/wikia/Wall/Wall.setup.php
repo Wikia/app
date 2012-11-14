@@ -23,6 +23,8 @@ include($dir . '/WallNamespaces.php');
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
+$app = F::app();
+
 $app->registerClass('Wall', $dir . '/Wall.class.php');
 $app->registerClass('WallThread', $dir . '/WallThread.class.php');
 
