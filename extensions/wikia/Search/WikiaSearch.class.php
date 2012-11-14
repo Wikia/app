@@ -274,7 +274,7 @@ class WikiaSearch extends WikiaObject {
 
 		$searchConfig
 			->setQuery			( $query )
-			->setMltFilterQuery	( $filterQuery )
+			->setFilterQuery	( $filterQuery )
 		    // note that we're also adding the default title field
 		    // for slightly better foreign language coverage
 			->setMltFields		( array( self::field( 'title' ), self::field('html'), 'title' ) );
@@ -465,10 +465,7 @@ class WikiaSearch extends WikiaObject {
 					 ->setMaxAlternateFieldLength	( 100 )
 		;
 		
-		$query->addFilterQuery( array(
-				'query'		=>		$this->getFilterQueryString( $searchConfig ),
-				'key'		=>		'fq1' // constraint of library
-		) );
+		$searchConfig->setFilterQuery( $this->getFilterQueryString( $searchConfig ) );
 		
 		if ( $searchConfig->isInterWiki() ) {
 			$grouping = $query->getGrouping();
@@ -485,11 +482,10 @@ class WikiaSearch extends WikiaObject {
 			$article	= $am->getArticle();  
 			$noPtt		= self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
 			
-			$query->addFilterQuery( array(
-					'query'		=>	$noPtt,
-					'key'		=>	'ptt'
-			) );
+			$searchConfig->setFilterQuery( $noPtt, 'ptt' );
 		}
+		
+		$query->addFilterQueries( $searchConfig->getFilterQueries() );
 		
 		$formulatedQuery = sprintf('%s AND (%s)', $this->getQueryClausesString( $searchConfig ), $this->getNestedQuery( $searchConfig ));
 		$query->setQuery( $formulatedQuery );
@@ -706,12 +702,10 @@ class WikiaSearch extends WikiaObject {
 			$mlt->setMinimumDocumentFrequency( $searchConfig->getMindf() );
 		}
 
-		if ( $searchConfig->getMltFilterQuery() ) {
-			$mlt->addFilterQuery( array(
-				'query'	=>	$searchConfig->getMltFilterQuery(),
-				'key'	=>	'mltfilterquery'
-			) );
+		if ( $searchConfig->hasFilterQueries() ) {
+			$mlt->addFilterQueries( $searchConfig->getFilterQueries() );
 		}
+		
 		if (! empty( $query ) ) { 
 			$mlt->setQuery( $query );
 		} else if ( $streamBody ) {
