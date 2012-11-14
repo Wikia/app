@@ -48,7 +48,7 @@ var StructureData = {
 				var $target = $(event.target),
 					$nextField = $target.parents('li').next().find('input');
 				if ($nextField.length > 0) {
-					$target.parents('li').next().find('input').focus();
+					$nextField.focus();
 				} else {
 					$target.parents('li').parent().siblings('button.add-input').click();
 				}
