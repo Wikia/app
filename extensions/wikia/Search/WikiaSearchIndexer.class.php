@@ -475,7 +475,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		try {
 			return $this->deleteArticle( $id );
 		} catch ( Exception $e ) {
-		    Wikia::log( __METHOD__, '', $e );
+		    F::build( 'Wikia' )->log( __METHOD__, '', $e );
 		    return true;
 		}
 	}
@@ -499,7 +499,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		try {
 			return $this->reindexBatch( array( $article->getTitle()->getArticleID() ) );
 		} catch ( Exception $e ) {
-		    Wikia::log( __METHOD__, '', $e );
+		    F::build( 'Wikia' )->log( __METHOD__, '', $e );
 		    return true;
 		}
 	}
@@ -513,7 +513,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		try {
 			return $this->reindexBatch( array( $title->getArticleID() ) );
 		} catch ( Exception $e ) {
-			Wikia::log( __METHOD__, '', $e );
+			F::build( 'Wikia' )->log( __METHOD__, '', $e );
 			return true;
 		}
 	}
