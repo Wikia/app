@@ -1,6 +1,6 @@
 var StructureData = {
 	selectTemplate: '<select class="objects-to-add">{{#list}}<option data-value="{{id}}" data-url="{{url}}" data-type="{{type}}">{{name}}</option>{{/list}}{{^list}}<option>No objects found!</option>{{/list}}</select> ',
-	objectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}">{{name}}</a><button class="secondary remove">Remove</button></li>',
+	objectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}">{{name}}</a> <button class="secondary remove">Remove</button></li>',
 	init: function() {
 		var that = this;
 		// Attach handlers
