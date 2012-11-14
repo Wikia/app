@@ -50,6 +50,7 @@ class SpecialScavengerHunt extends SpecialPage {
 
 		if ($this->isRestricted() && !$this->userCanExecute($this->user)) {
 			$this->displayRestrictionError();
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
@@ -66,6 +67,7 @@ class SpecialScavengerHunt extends SpecialPage {
 				NotificationsController::CONFIRMATION_ERROR
 			);
 			$this->out->redirect( $this->mTitle->getFullUrl() );
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
@@ -108,6 +110,7 @@ class SpecialScavengerHunt extends SpecialPage {
 
 					//success! go to the list
 					$this->out->redirect( $this->mTitle->getFullUrl() );
+					wfProfileOut(__METHOD__);
 					return;
 				} else {
 					//failure - display errors
@@ -133,6 +136,7 @@ class SpecialScavengerHunt extends SpecialPage {
 							);
 
 							$this->out->redirect( $this->mTitle->getFullUrl() . "/edit/$id" );
+							wfProfileOut(__METHOD__);
 							return;
 						} else {
 							$game->setEnabled( false );
@@ -145,6 +149,7 @@ class SpecialScavengerHunt extends SpecialPage {
 							wfMsg('scavengerhunt-game-has-been-deleted')
 						);
 						$this->out->redirect( $this->mTitle->getFullUrl() );
+						wfProfileOut(__METHOD__);
 						return;
 					}
 				}
@@ -165,6 +170,7 @@ class SpecialScavengerHunt extends SpecialPage {
 							);
 
 							$this->out->redirect( $this->mTitle->getFullUrl() );
+							wfProfileOut(__METHOD__);
 							return;
 						} else {
 							NotificationsController::addConfirmation(
@@ -323,6 +329,7 @@ class SpecialScavengerHunt extends SpecialPage {
 		}
 
 		if (!$game->isEnabled()) {
+			wfProfileOut(__METHOD__);
 			return array(
 				'errors' => $errors,
 				'highlight' => $highlight

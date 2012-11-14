@@ -244,6 +244,7 @@ class MultiwikifinderPage {
 				$wgOut->addHTML( '<p>' . $paging . '</p>' );
 			} else {
 				$wgOut->addHTML( XML::closeElement( 'div' ) );
+				wfProfileOut( __METHOD__ );
 				return;
 			}
 		}

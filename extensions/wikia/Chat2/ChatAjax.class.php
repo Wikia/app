@@ -27,6 +27,7 @@ class ChatAjax {
 
 		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
 		if( empty($data) ) {
+			wfProfileOut( __METHOD__ );
 			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 		}
 

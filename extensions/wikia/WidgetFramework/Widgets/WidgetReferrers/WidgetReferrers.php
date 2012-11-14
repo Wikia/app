@@ -88,6 +88,8 @@ function WidgetReferrers($id, $params) {
 	    $default = '<span title="www.wikia.com/1" class="widgetReferrersDomainTag" style="font-size:1em">';
 	    $default .= '<a href="http://www.wikia.com">www.wikia.com</a></span>';
 
+		wfProfileOut(__METHOD__.'::miss');
+		wfProfileOut(__METHOD__);
 	    return '<div style="text-align:center">'.$default.'</div>';
 	}
 
@@ -107,6 +109,8 @@ function WidgetReferrers($id, $params) {
 	if ( empty( $domains ) ) {
 		$wgMemc->set( $memcKey, '', 7200 ); // store for 2h
 		// FIXME: should probably give some sort of message to the user
+		wfProfileOut(__METHOD__.'::miss');
+		wfProfileOut(__METHOD__);
 		return '';
 	}
 

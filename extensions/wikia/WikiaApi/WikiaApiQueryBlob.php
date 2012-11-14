@@ -40,7 +40,8 @@ class WikiaApiQueryBlob extends ApiQueryBase {
 		$result->reset();
 		$result->addValue( null, 'text', $text );
 		$result->addValue( null, 'mime', 'text/plain' );		
-		$result->enableSizeCheck();		
+		$result->enableSizeCheck();
+		wfProfileOut(__METHOD__);
 	}
 	
 	public function getCustomPrinter() {

@@ -196,6 +196,7 @@ class CommentsIndex extends WikiaModel {
 
 		//Just for transition time
 		if(empty($this->wg->EnableWallEngine) || !WallHelper::isWallNamespace($this->namespace) ) {
+			$this->wf->ProfileOut( __METHOD__ );
 			return false;
 		}
 

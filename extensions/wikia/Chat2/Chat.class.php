@@ -113,6 +113,7 @@ class Chat {
 			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement thatwgReadOnly
 				if($dir == 'remove') {
 					if(Chat::getBanInformation($cityId, $banUser) === false) {
+						wfProfileOut( __METHOD__ );
 						return true;
 					}
 					$dbw->delete(
@@ -419,6 +420,7 @@ class Chat {
 		
 		if( $wgDevelEnvironment ) {
 		//devbox
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 

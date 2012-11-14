@@ -67,6 +67,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		if ( !$this->wg->User->isAllowed( 'forumadmin' ) ) {
 			$this->displayRestrictionError();
+			$this->wf->ProfileOut( __METHOD__ );
 			return false;
 			// skip rendering
 		}
@@ -85,6 +86,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		if ( !$this->wg->User->isAllowed( 'forumadmin' ) ) {
 			$this->displayRestrictionError();
+			$this->wf->ProfileOut( __METHOD__ );
 			return false;
 			// skip rendering
 		}
@@ -97,6 +99,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		if ( !$this->wg->User->isAllowed( 'forumadmin' ) ) {
 			$this->displayRestrictionError();
+			$this->wf->ProfileOut( __METHOD__ );
 			return false;
 			// skip rendering
 		}
@@ -118,6 +121,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		if ( !$this->wg->User->isAllowed( 'forumadmin' ) ) {
 			$this->displayRestrictionError();
+			$this->wf->ProfileOut( __METHOD__ );
 			return false;
 			// skip rendering
 		}

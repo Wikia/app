@@ -101,7 +101,8 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 			$condition,
 			__METHOD__ 
 		);
-		
+
+		wfProfileOut(__METHOD__);
 		return ( is_object($row) ) ? $row->user_registration : null;
 	}
 
