@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * class CensusDataRetrieval
+ * For retrieving data from Census DB
+ * 
+ * @author Lucas TOR Garczewski <tor@wikia-inc.com>
+ * @author Kamil Koterba <kamil@wikia-inc.com>
+ */
 class CensusDataRetrieval {
         var $app;
 	var $query = '';
@@ -62,8 +68,8 @@ class CensusDataRetrieval {
 		$text .= $this->getLayout();
 
 		$text .= "\n[[" . Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY )->getPrefixedText() . ']]';
-var_dump(Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY )->getPrefixedText());
-		return $text;
+
+                return $text;
 	}
 
 	/**
@@ -268,26 +274,6 @@ var_dump(Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY
                                 $censusDataArr[$type.'.'.$obj->id] = $this->prepareCode( $obj->name->en );
                         }
                 }
-        }
-        
-        /**
-	 * replaceLinks
-         * EditPage::attemptSave hook function
-         * replaces links to Census pages with template
-         * 
-	 */
-        public static function replaceLinks( $editpage ) {
-                $wikitextArticle = $editpage->textbox1;
-                //get all links
-//                preg_match_all($regex, $wikitextArticle, $matches);
-//                for each match
-//                foreach ($matches as $match) {
-//                        //check if is census page
-//                        //replace string
-//                }
-//                //replace the text
-//                $editpage->textbox1 = $newWikitextArticle;
-                return true;
         }
         
 }
