@@ -156,6 +156,58 @@ class WallRelatedPages extends WikiaModel {
 	}
 	
 	
+	public function getArticlesRelatedMessgesSnippet($pageId, $messageCount, $replyCount) {
+		$messages = $this->getArticlesRelatedMessgesIds($pageId, 'last_update', $messageCount);
+			
+		$out = array();
+		
+		$update = array();
+		foreach($messages as $value) {
+			$wallThread = WallThread::newFromId($value['comment_id']);
+			
+			if(empty($wallThread)) {
+				continue;
+			}
+			
+			$wallMessage = $wallThread->getThreadMainMsg();
+			
+			$update[] = $wallMessage->getCreateTime(TS_MW);
+			
+			$wallMessage->load();
+			$row = array();
+			$row['metaTitle'] = $wallMessage->getMetaTitle();
+			$row['threadUrl'] = $wallMessage->getMessagePageUrl(); 
+			$row['totalReplies'] = $wallThread->getRepliesCount();
+			
+			$row['replies'] = array();
+			
+			$replies = $wallThread->getRepliesWallMessages(2, "DESC");
+			
+			foreach($replies as $reply) {
+				$reply->load();
+				$update[] = $reply->getCreateTime(TS_MW);
+				$replyRow = array(
+					'userName' =>  $reply->getUser()->getName(),
+					'userUrl' => $reply->getUser()->getUserPage()->getFullUrl(),
+					'messageBody' => $reply->getText(),
+					'timeStamp' => $reply->getCreateTime()
+				);
+				$row['replies'][] = $replyRow;	
+			}	
+			
+			$out[] = $row;
+		}
+
+		$out['lastupdate'] = max($update);
+		
+		return $out;
+	}
+		
+	public function invalidateData( $threads, $replies ) {
+		
+	}
+
+	
 	/**
 	 * 
 	 * get list of messages related to Article

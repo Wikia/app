@@ -11,7 +11,7 @@
 			<ul class="forum-replies">
 				<? foreach($message['replies'] as $reply): ?>
 					<li class="forum-reply">
-						<img class="forum-user-avatar" src="<?= $reply['userAvatarUrl'] ?>">
+						<img class="forum-user-avatar" src="<?= AvatarService::getAvatarUrl($reply['userName'], 50) ?>">
 						<div class="forum-user-name">
 							<a href="<?= $reply['userUrl'] ?>"><?= $reply['userName'] ?></a>
 						</div>

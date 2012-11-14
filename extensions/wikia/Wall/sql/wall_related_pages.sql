@@ -6,3 +6,9 @@ CREATE TABLE `wall_related_pages` (
   KEY `comment_id_idx` (`comment_id`),
   KEY `page_id_idx` (`page_id`)
 ) ENGINE=InnoDB;
+
+alter table wall_related_pages add last_update timestamp;
+
+alter table wall_related_pages drop key page_id_idx;
+
+alter table wall_related_pages add key page_id_idx (`page_id`, `last_update`);

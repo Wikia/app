@@ -6,52 +6,13 @@ class RelatedForumDiscussionController extends WikiaController {
 	}
 	
 	public function index() {
-		// mock data
-		$messages = array(
-			array(
-				'metaTitle' => 'Placeholder main title',
-				'threadUrl' => '#',
-				'totalReplies' => $this->wf->Msg('forum-related-discussion-total-replies', 29),
-				'replies' => array(
-					array(
-						'userName' => 'SomeDude',
-						'userAvatarUrl' => $this->wf->BlankImgUrl(),
-						'userUrl' => '#',
-						'messageBody' => 'Message body goes here',
-						'timeStamp' => '3 hour ago',
-					),
-					array(
-						'userName' => 'SomeDude2',
-						'userAvatarUrl' => $this->wf->BlankImgUrl(),
-						'userUrl' => '#',
-						'messageBody' => 'Message body 2 goes here',
-						'timeStamp' => '1 hour ago',
-					),
-				),
-			),
-			array(
-				'metaTitle' => 'Placeholder main title',
-				'threadUrl' => '#',
-				'totalReplies' => $this->wf->Msg('forum-related-discussion-total-replies', 14),
-				'replies' => array(
-					array(
-						'userName' => 'SomeDude',
-						'userAvatarUrl' => $this->wf->BlankImgUrl(),
-						'userUrl' => '#',
-						'messageBody' => 'Message body goes here',
-						'timeStamp' => '3 hour ago',
-					),
-					array(
-						'userName' => 'SomeDude2',
-						'userAvatarUrl' => $this->wf->BlankImgUrl(),
-						'userUrl' => '#',
-						'messageBody' => 'Message body 2 goes here',
-						'timeStamp' => '1 hour ago',
-					),
-				),
-			),
-		);
 		
+		$wlp = new WallRelatedPages(); 
+	
+		$messages = $wlp->getArticlesRelatedMessgesSnippet($this->app->wg->Title->getArticleId(), 2, 2 );
+	
+		unset($messages['lastupdate']);
+	
 		// resources
 		// load assets related to this if there is a discussions section
 		$this->response->addAsset( 'extensions/wikia/Forum/css/RelatedForumDiscussion.scss' );

@@ -129,7 +129,7 @@ class WallHistory extends WikiaModel {
 			)
 		);
 	}
-	
+
 	public function  getLastPosts($ns, $count = 5) {
 		$where = array(
 			'action' => WH_NEW,

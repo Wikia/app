@@ -58,7 +58,7 @@ class WallThread {
 		foreach( $this->data->threadReplyIds as $id ) {
 			$wm = WallMessage::newFromId( $id, $this->mForceMaster );
 			if($wm instanceof WallMessage && !$wm->isAdminDelete()) {
-				$this->data->threadReplyObjs[ $id ] = $wm;
+				$this->data->threadReplyObjs[] = $wm;
 			}
 		}
 	}
@@ -137,11 +137,31 @@ class WallThread {
 	public function getThreadMainMsg() {
 		return WallMessage::newFromId( $this->mThreadId );
 	}
+	
+	public function getRepliesCount() {
+		if($this->data->threadReplyObjs === false) {
+			$this->loadReplyObjs();	
+		}
+		
+		return count($this->data->threadReplyObjs);
+	}
+	//TODO: fix the performace of Replies Wall
 
-	public function getRepliesWallMessages() {
-		if($this->data->threadReplyObjs === false)
-			$this->loadReplyObjs();
-		return $this->data->threadReplyObjs;
+	public function getRepliesWallMessages($limit = 0, $order = "ASC" ) {
+		if($this->data->threadReplyObjs === false) {
+			$this->loadReplyObjs();	
+		}
+		
+		$out = $this->data->threadReplyObjs;
+		
+		if($limit > 0) {
+			$out = array_slice($out, 0, $limit);
+		}
+		
+		
+		$out = array_reverse($out);
+		
+		return $out;
 	}
 
 }
