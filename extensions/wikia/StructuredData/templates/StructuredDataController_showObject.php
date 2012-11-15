@@ -17,7 +17,8 @@
 		<dt>Type:</dt>
 		<dd><?= $sdsObject->getType(); ?></dd>
 	</dl>
-	
+	<?/*<pre>ID: <?=$sdsObject->getId();?></pre>*/?>
+
 	<table class="article-table SDObjectProperties WikiaGrid">
 		<caption>Object properties:</caption>
 		<thead>

@@ -87,6 +87,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		} else {
 			$valueObject = new stdClass();
 			$valueObject->id = $value;
+			$valueObject->object = null;
 			return $valueObject;
 
 		}
