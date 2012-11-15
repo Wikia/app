@@ -41,13 +41,14 @@ class CensusDataRetrieval {
 	 * called by hook 'onEditFormPreloadText'
 	 * @return true
 	 */
-	public static function retrieveFromName( &$text, &$title ) {
+	public static function retrieveFromName( &$editPage ) {
                 wfProfileIn(__METHOD__);
 		// @TODO check if namespace is correct, quit if not
 
 		$cdr = new self();
 
-		$text = $cdr->execute( $title );
+		$editPage->textbox1 = $cdr->execute( $editPage->mTitle );
+                $editPage->addEditNotice(wfMsgForContent('census-data-retrieval-notification'));
                 wfProfileOut(__METHOD__);
 		return true;
 	}
