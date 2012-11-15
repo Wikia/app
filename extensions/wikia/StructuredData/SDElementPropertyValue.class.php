@@ -39,7 +39,7 @@ class SDElementPropertyValue extends SDRenderableObject {
 	}
 
 	public function getRendererNames() {
-		return array( $this->type->getName(), 'value_default' );
+		return array( 'value_'.$this->type->getName(), 'value_default' );
 	}
 
 	public function setPropertyName($propertyName) {

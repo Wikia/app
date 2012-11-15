@@ -19,7 +19,7 @@ class SDElementPropertyType {
 
 	public function isCollection() {
 		return in_array( $this->name, array( '@set', '@list' ) );
-	}
+			}
 
 	public function setName($name) {
 		$this->name = $name;
@@ -30,6 +30,7 @@ class SDElementPropertyType {
 	}
 
 	public function setRange(SDElementPropertyTypeRange $range) {
+		if ($range->isEnum()) $this->name = 'enum';
 		$this->range = $range;
 	}
 

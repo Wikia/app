@@ -44,11 +44,12 @@ $wgStructuredDataConfig = array(
 	'renderers' => array(
 		'schema:ImageObject' => 'ImageObject',
 		'xsd:anyURI' => 'anyURI',
-		'xsd:boolean' => 'boolean',
+		'value_xsd:boolean' => 'value_boolean',
 		'@set' => 'container',
 		'@list' => 'container',
 		'value_default' => 'value_default',
-		'default' => 'default'
+		'default' => 'default',
+		'value_enum' => 'value_enum'
 	)
 );
 

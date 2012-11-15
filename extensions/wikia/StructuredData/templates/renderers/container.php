@@ -53,14 +53,7 @@ if ( !$object->isCollection() ) { // @todo - again we assume that collection can
 	if ($context == SD_CONTEXT_EDITING) {
 		if($object->getType()->hasRange()) {
 			$types = $object->getType()->getAcceptedValues();
-			if (array_key_exists('enum', $types)) {
-				echo '<select name="' . $object->getName() .  '" >';
-				echo '<option>choose...</option>';
-				foreach ($types['enum'] as $value) {
-					echo '<option value="' . $value . '">' . $value . '</option>';
-				}
-				echo '</select>';
-			} elseif (count($types['classes']) == 1 && in_array('rdfs:Literal', $types['classes'])) {
+			if (count($types['classes']) == 1 && in_array('rdfs:Literal', $types['classes'])) {
 				echo '<button class="add-input" data-range="' . join('', $types['classes']) . '">Add new</button>';
 			} else {
 				echo '<button class="load-dropdown" data-range="' . join(' ', $types['classes']) . '">Add</button>';
