@@ -34,6 +34,16 @@ class WallThread {
 		}
 		return $this->mCached;
 	}
+	
+	public function move(Wall $dest) {
+		CommentsIndex::changeParent( 0, $dest->getId(), $this->mThreadId);
+		
+		$wallHistory = new WallHistory( $this->mCityId );
+		$wallHistory->moveThread( 0, $dest->getId(), $this->mThreadId);
+		
+		$this->invalidateCache();
+	}
+	
 
 	public function setReplies( $ids ) {
 		// set and cache replies of this thread

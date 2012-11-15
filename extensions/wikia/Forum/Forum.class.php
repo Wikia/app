@@ -4,67 +4,13 @@
  * Forum
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  */
-class Forum extends WikiaModel {
+class Forum extends Walls {
 
 	const ACTIVE_DAYS = 7;
 	const BOARD_MAX_NUMBER = 50;
 	const AUTOCREATE_USER = 'Wikia';
 	//controlling from outside if use can edit/create/delete board page
 	static $allowToEditBoard = false;
-	/**
-	 * get list of board
-	 * @return array boards
-	 */
-	public function getBoardList( $db = DB_SLAVE ) {
-		$this->wf->profileIn( __METHOD__ );
-
-		$dbw = $this->wf->GetDB( $db );
-
-		// get board list
-		$result = $dbw->select(
-			array( 'page', 'page_wikia_props' ),
-			array( 'page.page_id as page_id, page.page_title as page_title, page_wikia_props.props as order_index' ),
-			array(
-				'page.page_namespace' => NS_WIKIA_FORUM_BOARD,
-				'page_wikia_props.page_id = page.page_id',
-				'page_wikia_props.propname' => WPP_FORUM_ORDER_INDEX
-			),
-			__METHOD__,
-			array( 'ORDER BY' => 'page_title' )
-		);
-
-		$boards = array();
-		while ( $row = $dbw->fetchObject( $result ) ) {
-			$boardId = $row->page_id;
-			if ( $db == DB_MASTER ) {
-				$title = Title::newFromID( $boardId, Title::GAID_FOR_UPDATE );
-			} else {
-				$title = Title::newFromID( $boardId );
-			}
-
-			if ( $title instanceof Title ) {
-				$board = ForumBoard::newFromId( $boardId );
-				$boardInfo = $board->getBoardInfo();
-				$boardInfo['id'] = $boardId;
-				$boardInfo['name'] = $title->getText();
-				$boardInfo['description'] = $board->getDescription();
-				$boardInfo['url'] = $title->getFullURL();
-				$boardInfo['order_index'] = wfUnserializeProp( $row->order_index );
-				$boards[$boardId] = $boardInfo;
-			}
-		}
-
-		usort( $boards, function( $a, $b ) {
-			if ( $a['order_index'] == $b['order_index'] ) {
-				return 0;
-			}
-			return ($a['order_index'] < $b['order_index']) ? -1 : 1;
-		} );
-
-		$this->wf->profileOut( __METHOD__ );
-
-		return $boards;
-	}
 
 	/**
 	 * get count of boards
@@ -186,15 +132,15 @@ class Forum extends WikiaModel {
 	}
 
 	public function swapBoards( $boardId1, $boardId2 ) {
-		$orderId1 = wfGetWikiaPageProp( WPP_FORUM_ORDER_INDEX, $boardId1 );
-		$orderId2 = wfGetWikiaPageProp( WPP_FORUM_ORDER_INDEX, $boardId2 );
+		$orderId1 = wfGetWikiaPageProp( WPP_WALL_ORDER_INDEX, $boardId1 );
+		$orderId2 = wfGetWikiaPageProp( WPP_WALL_ORDER_INDEX, $boardId2 );
 
 		if ( empty( $orderId1 ) || empty( $orderId2 ) ) {
 			return false;
 		}
 
-		wfSetWikiaPageProp( WPP_FORUM_ORDER_INDEX, $boardId1, $orderId2 );
-		wfSetWikiaPageProp( WPP_FORUM_ORDER_INDEX, $boardId2, $orderId1 );
+		wfSetWikiaPageProp( WPP_WALL_ORDER_INDEX, $boardId1, $orderId2 );
+		wfSetWikiaPageProp( WPP_WALL_ORDER_INDEX, $boardId2, $orderId1 );
 	}
 
 	/**
@@ -215,7 +161,7 @@ class Forum extends WikiaModel {
 		);
 
 		while ( $row = $dbw->fetchObject( $result ) ) {
-			wfSetWikiaPageProp( WPP_FORUM_ORDER_INDEX, $row->page_id, $row->page_id );
+			wfSetWikiaPageProp( WPP_WALL_ORDER_INDEX, $row->page_id, $row->page_id );
 		}
 
 		$this->wf->profileOut( __METHOD__ );
@@ -284,7 +230,7 @@ class Forum extends WikiaModel {
 		if ( $id == null ) {
 			$title = Title::newFromText( $titletext, NS_WIKIA_FORUM_BOARD );
 			if ( !empty( $title ) ) {
-				wfSetWikiaPageProp( WPP_FORUM_ORDER_INDEX, $title->getArticleId(), $title->getArticleId() );
+				wfSetWikiaPageProp( WPP_WALL_ORDER_INDEX, $title->getArticleId(), $title->getArticleId() );
 			}
 		}
 

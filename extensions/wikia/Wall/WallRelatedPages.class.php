@@ -161,7 +161,7 @@ class WallRelatedPages extends WikiaModel {
 			
 		$out = array();
 		
-		$update = array();
+		$update = array(0);
 		foreach($messages as $value) {
 			$wallThread = WallThread::newFromId($value['comment_id']);
 			

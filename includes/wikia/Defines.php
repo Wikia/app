@@ -52,5 +52,5 @@ define("WPP_CONTENT_WARNING", 15);
 define("WPP_WALL_QUOTE_OF", 16);
 
 //Forum Order 
-define("WPP_FORUM_ORDER_INDEX", 17);
+define("WPP_WALL_ORDER_INDEX", 17);
 

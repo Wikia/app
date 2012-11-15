@@ -24,6 +24,7 @@ include($dir . '/WallNamespaces.php');
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
 $app->registerClass('Wall', $dir . '/Wall.class.php');
+$app->registerClass('Walls', $dir . '/Walls.class.php');
 $app->registerClass('WallThread', $dir . '/WallThread.class.php');
 
 $app->registerClass('WallMessage', $dir . '/WallMessage.class.php');

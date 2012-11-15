@@ -414,13 +414,20 @@ class CommentsIndex extends WikiaModel {
 	/**
 	 *  fast moving of comment from one page to another
 	 */ 
-	public static function changeParent($from, $to) {
+	public static function changeParent($from, $to, $parent_comment = null) {
 		$db = wfGetDB( DB_MASTER );
+
+		if(!empty($parent_comment)) {
+			$where = array( "parent_comment_id = ". $parent_comment ." or comment_id = ". $parent_comment );
+		} else {
+			$where = array( 'parent_page_id' => $from );
+			
+		}
 
 		$db->update(
 			'comments_index',
 			array( 'parent_page_id' => $to ),
-			array( 'parent_page_id' => $from ),
+			$where,
 			__METHOD__
 		);
 		

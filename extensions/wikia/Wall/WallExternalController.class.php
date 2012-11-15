@@ -39,17 +39,18 @@ class WallExternalController extends WikiaController {
 			
 		$forum = new Forum();
 
-		$list = $forum->getBoardList();
+		$list = $forum->getList(DB_SLAVE, NS_WIKIA_FORUM_BOARD);
 
 		$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
 
 		foreach ( $list as $value ) {
-			$this->destinationBoards[] = array( 'value' => $value['id'], 'content' => htmlspecialchars( $value['name'] ) );
+			$wall = Wall::newFromId($value);
+			$this->destinationBoards[] = array( 'value' => $value, 'content' => htmlspecialchars( $wall->getTitle()->getText() ) );
 		}
 	}
 	
 	/**
-	 * Moves thread (TODO: Should this be in Forums?)
+	 * Moves thread
 	 * @request destinationBoardId - id of destination board
 	 * @request rootMessageId - thread id
 	 */
@@ -60,11 +61,29 @@ class WallExternalController extends WikiaController {
 			return false;
 			// skip rendering
 		}
-	
-		$destinationId = $this->getVal('destinationId', '');
 		
 		$this->status = 'error';
-		$this->errormsg = 'nothing is here';
+
+		$destinationId = $this->getVal('destinationBoardId', '');
+		$threadId = $this->getVal('rootMessageId', ''); 
+		
+		if(empty($destinationId)) {
+			$this->errormsg = wfMsg('wall-action-move-validation-select-wall');
+			return true;
+		}
+		
+		//TODO validation
+		
+		$wall = Wall::newFromId( $destinationId );
+		$thread = WallThread::newFromId( $threadId );
+		
+		if(empty($wall)) {
+			$this->errormsg = 'unknown';
+		}
+		
+		
+		$thread->move($wall);
+		$this->status = 'ok';
 	}
 	
 	public function votersModal() {
