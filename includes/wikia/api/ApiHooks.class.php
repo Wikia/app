@@ -20,7 +20,7 @@ class ApiHooks {
 		if ( $cv_name == NavigationModel::WIKIA_GLOBAL_VARIABLE ) {
 			SquidUpdate::purge(
 				array(
-					NavigationApiController::getUrlToAjaxMethod('getData')
+					NavigationApiController::getUrlToAjaxMethod( 'getData' )
 				)
 			);
 		}
@@ -32,7 +32,7 @@ class ApiHooks {
 		if ( self::isWikiNavMessage( Title::newFromText( $title, NS_MEDIAWIKI ) ) ) {
 			SquidUpdate::purge(
 				array(
-					NavigationApiController::getUrlToAjaxMethod('getData')
+					NavigationApiController::getUrlToAjaxMethod( 'getData' )
 				)
 			);
 		}
