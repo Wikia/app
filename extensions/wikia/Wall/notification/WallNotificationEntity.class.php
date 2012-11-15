@@ -63,8 +63,6 @@ class WallNotificationEntity {
 	public function loadDataFromRev(Revision $rev, $wiki) {
 		$this->id = $rev->getId(). '_' .  $wiki;
 
-		$title = $rev->getTitle();
-
 		$ac = F::build('WallMessage', array($rev->getTitle()), 'newFromTitle' ); /* @var $ac WallMessage */
 		$ac->load();
 
@@ -80,6 +78,7 @@ class WallNotificationEntity {
 			return;
 		}
 
+		$this->data = new StdClass();
 		$this->data->wiki = $wiki;
 		$this->data->wikiname = $app->wg->sitename;
 		$this->data->rev_id = $rev->getId();
