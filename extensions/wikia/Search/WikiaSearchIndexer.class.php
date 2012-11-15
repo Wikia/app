@@ -406,8 +406,11 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$wikiViews = $this->getWikiViews($page);
 	
+		$wam = DataMartService::getCurrentWamScoreForWiki( $this->wg->CityId );
+		
 		$result['wikiviews_weekly']		= (int) $wikiViews->weekly;
 		$result['wikiviews_monthly']	= (int) $wikiViews->monthly;
+		$result['wam']					= $wam > 0 ? ceil( $wam ) : 1; //mapped here for computational cheapness
 	
 		wfProfileOut(__METHOD__);
 		return $result;
