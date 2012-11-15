@@ -33,10 +33,17 @@ class Facebook3 extends BaseFacebook
    * @see BaseFacebook::__construct in facebook.php
    */
   public function __construct($config) {
-    if (!session_id()) {
-      //session_start();
-    }
-    parent::__construct($config);
+	if (!session_id()) {
+		// Wikia change - begin
+		wfSuppressWarnings();
+		if (!session_start()) {
+			Wikia::log(__METHOD__, '', 'session creation failed');
+			Wikia::logBacktrace(__METHOD__);
+		}
+		wfRestoreWarnings();
+		// Wikia change - end
+	}
+	parent::__construct($config);
   }
 
   protected static $kSupportedKeys =
