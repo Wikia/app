@@ -54,7 +54,7 @@ var StructureData = {
 				}
 			}
 		});
-		// Add timepicker to required input fields
+		// Add widgets for date and date + time input types
 		$('input[name="schema:startDate"]').datetimepicker({
 			changeMonth: true,
 			changeYear: true,
