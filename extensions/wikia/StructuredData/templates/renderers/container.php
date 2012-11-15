@@ -54,7 +54,7 @@ if ( !$object->isCollection() ) { // @todo - again we assume that collection can
 		if($object->getType()->hasRange()) {
 			$types = $object->getType()->getAcceptedValues();
 			if (array_key_exists('enum', $types)) {
-				echo '<select>';
+				echo '<select name="' . $object->getName() .  '" >';
 				echo '<option>choose...</option>';
 				foreach ($types['enum'] as $value) {
 					echo '<option value="' . $value . '">' . $value . '</option>';
