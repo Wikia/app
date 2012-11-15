@@ -1,7 +1,7 @@
 <?php $value = $object->getValue(); ?>
 <?php if($context == SD_CONTEXT_EDITING): ?>
 	<div class="input-group">
-		<select name="<?=$object->getName();?>">
+		<select name="<?=$object->getPropertyName();?>">
 			<option <?=(empty($value)) ? 'selected="selected"' : ''; ?> >empty</option>
 			<option <?=($value === 'true') ? 'selected="selected"' : ''; ?> value="true">true</option>
 			<option <?=($value === 'false') ? 'selected="selected"' : ''; ?> value="false">false</option>

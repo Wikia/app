@@ -119,7 +119,11 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		$this->value = $value;
 	}
 
-	public function getValue() {
+	public function getValue( $expand = false ) {
+		if ( $expand ) {
+			$this->expandValue( F::build( 'StructuredData' ), 0);
+		}
+
 		if ( $this->isCollection() ) {
 			if (!is_array( $this->value )) {
 				if ( empty( $this->value ) ) return array();
@@ -163,7 +167,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 
 		if(is_array($value)) {
 			foreach($value as $v) {
-				if(isset($v->id)) {
+				if(isset($v->id) && empty($v->object)) {
 					try {
 						$SDElement = $structuredData->getSDElementById($v->id, $elementDepth+1);
 						$v->object = $SDElement;
