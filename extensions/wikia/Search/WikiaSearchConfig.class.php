@@ -82,6 +82,8 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	        'most-viewed'		=>	array( 'views',		Solarium_Query_Select::SORT_DESC ),
 	        'freshest'			=>	array( 'indexed',	Solarium_Query_Select::SORT_DESC ),
 	        'stalest'			=>	array( 'indexed', 	Solarium_Query_Select::SORT_ASC  ),
+			'shortest'			=>	array( 'video_duration_i', Solarium_Query_Select::SORT_ASC ),
+			'longest'			=>	array( 'video_duration_i', Solarium_Query_Select::SORT_DESC ),
 	);
 	
 	/**
