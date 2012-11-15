@@ -54,6 +54,8 @@ var StructureData = {
 				}
 			}
 		});
+		// Add timepicker to required input fields
+		$('input[name="schema:startDate"]').datetimepicker();
 	},
 
 	// METHOD for fetching collection of SDS objects form a given class and rendering <select> element with them inside

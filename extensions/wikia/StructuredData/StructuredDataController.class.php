@@ -122,7 +122,18 @@ class StructuredDataController extends WikiaSpecialPageController {
 		}
 
 		$this->response->addAsset('extensions/wikia/StructuredData/css/StructuredData.scss');
+		$this->response->addAsset('resources/jquery.ui/themes/default/jquery.ui.core.css');
+		$this->response->addAsset('resources/jquery.ui/themes/default/jquery.ui.theme.css');
+		$this->response->addAsset('resources/jquery.ui/themes/default/jquery.ui.slider.css');
+		$this->response->addAsset('resources/jquery.ui/themes/default/jquery.ui.datepicker.css');
+		$this->response->addAsset('resources/wikia/libraries/jquery-ui/themes/default/jquery.ui.timepicker.css');
 		$this->response->addAsset('resources/wikia/libraries/mustache/mustache.js');
+		$this->response->addAsset('resources/wikia/libraries/jquery-ui/jquery-ui-1.8.14.custom.js');
+		$this->response->addAsset('resources/jquery.ui/jquery.ui.widget.js');
+		$this->response->addAsset('resources/jquery.ui/jquery.ui.mouse.js');
+		$this->response->addAsset('resources/jquery.ui/jquery.ui.datepicker.js');
+		$this->response->addAsset('resources/jquery.ui/jquery.ui.slider.js');
+		$this->response->addAsset('resources/wikia/libraries/jquery-ui/jquery.ui.timepicker.js');
 		$this->response->addAsset('extensions/wikia/StructuredData/js/StructuredData.js');
 		$this->setVal('sdsObject', $sdsObject);
 		$this->setVal('context', ( $action == 'edit' ) ? SD_CONTEXT_EDITING : SD_CONTEXT_SPECIAL );
