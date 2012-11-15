@@ -430,8 +430,8 @@ class WikiaSearchIndexer extends WikiaObject {
 								'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)' ),
 						__METHOD__
 				);
-			} catch ( Exception $e ) { 
-				Wikia::log( __METHOD__, '', $e );
+			} catch ( Exception $e ) {
+				F::build( 'Wikia' )->log( __METHOD__, '', $e );
 			}
 		}
 	

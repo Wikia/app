@@ -18,27 +18,80 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		 */
 		$mockTitle		=	$this->getMock( 'Title' );
 		$mockArticle	=	$this->getMock( 'Article', array(), array( $mockTitle ) );
-		$mockMemc		=	$this->getMock( 'stdClass', array( 'get', 'set' ) );
+		$mockMemc		=	$this->getMockBuilder( 'MemcachedClient' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'get', 'set' ) )
+								->getMock();
 		$mockResult		=	$this->getMock( 'stdClass' );
 		
+		$mockDb			=	$this->getMockBuilder( 'DatabaseMysql' )
+								->setMethods( array( 'selectRow' ) )
+								->getMock();
+		
+		$mockWikia		=	$this->getMock( 'Wikia' );
+		
+		$mockException	=	$this->getMock( 'Exception' );
+		
 		$mockMemc
-			->expects	( $this->any() )
+			->expects	( $this->at( 0 ) )
 			->method	( 'get' )
 			->will		( $this->returnValue( $mockResult ) )
 		;
-		
+		$mockMemc
+			->expects	( $this->at( 1 ) )
+			->method	( 'get' )
+			->will		( $this->returnValue( null ) )
+		;
+		$mockMemc
+			->expects	( $this->at( 2 ) )
+			->method	( 'get' )
+			->will		( $this->returnValue( null ) )
+		;
+		$mockDb
+			->expects	( $this->at( 0 ) )
+			->method	( 'selectRow' )
+			->will		( $this->returnValue( $mockResult ) )
+		;
+		$mockDb
+			->expects	( $this->at( 1 ) )
+			->method	( 'selectRow' )
+			->will		( $this->throwException( $mockException ) )
+		;
+		$mockWikia
+			->staticExpects	( $this->any() )
+			->method		( 'log' )
+		;
 		// need values greater than 1
 		$mockResult->weekly		= 1;
 		$mockResult->monthly	= 1;
-
+		$statsDb = 'stats';
+		$this->mockGlobalVariable( 'wgStatsDBEnabled', true );
 		$this->mockGlobalVariable( 'wgMemc', $mockMemc );
+		$this->mockGlobalVariable( 'wgStatsDB', $statsDb );
+		$this->mockGlobalFunction( 'getDB', $mockDb, 2, array( DB_SLAVE, array(), $statsDb ) );
+		$this->mockClass( 'Wikia', $mockWikia );
 		$this->mockApp();
 		
 		$indexer 	= F::build( 'WikiaSearchIndexer' );
 		$method		= new ReflectionMethod( 'WikiaSearchIndexer', 'getWikiViews' );
 		$method->setAccessible( true );
 		
-		$this->assertEquals( $mockResult, $method->invoke( $indexer, $mockArticle ), 'A cached value with weekly and monthly rows greater than 0 should get returned' );
+		$this->assertEquals( 
+				$mockResult, 
+				$method->invoke( $indexer, $mockArticle ), 
+				'A cached value with weekly and monthly rows greater than 0 should get returned' 
+		);
+		$this->assertEquals( 
+				$mockResult, 
+				$method->invoke( $indexer, $mockArticle ), 
+				'An uncached value with weekly and monthly rows greater than 0 should get returned' 
+		);
+		$backoffResult = $method->invoke( $indexer, $mockArticle );
+		$this->assertEquals(
+				0,
+				$backoffResult->weekly + $backoffResult->monthly,
+				'In case of an error, a row with zeros for the expected values should be returned'
+		); 
 	}
 	
 	/**
