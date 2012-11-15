@@ -72,8 +72,6 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 		
-		//TODO validation
-		
 		$wall = Wall::newFromId( $destinationId );
 		$thread = WallThread::newFromId( $threadId );
 		
