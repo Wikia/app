@@ -308,9 +308,15 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 	public function testGetThumbnail() {
 		$result		= F::build( 'WikiaSearchResult', array( $this->defaultFields ) );
 		$titleMock	= $this->getMock( 'Title' );
-		$mockImage	= $this->getMock( 'stdClass', array( 'transform' ), array(), 'File' );
-		$mockThumb	= $this->getMock( 'stdClass', array(), array(), 'ThumbnailImage' );
-		$mockMTO	= $this->getMock( 'stdClass', array(), array(), 'MediaTransformOutput' );
+		$mockImage	= $this->getMockBuilder( 'File' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'transform' ) )
+							->getMock();
+		$mockThumb	= $this->getMockBuilder( 'ThumbnailImage' )
+							->disableOriginalConstructor()
+							->getMock();
+		$mockMTO	= $this->getMockBuilder( 'MediaTransformOutput' )
+							->disableOriginalConstructor();
 		
 		$result['title']	= 'File:Foo.jpg';
 		$result['ns']		= NS_FILE;

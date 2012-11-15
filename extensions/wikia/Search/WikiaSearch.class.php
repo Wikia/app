@@ -164,12 +164,12 @@ class WikiaSearch extends WikiaObject {
 			$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
 			
 		} catch ( Exception $e ) {
-			Wikia::log(__METHOD__, 'Querying Solr First Time', $e);
+			F::build('Wikia')->log(__METHOD__, 'Querying Solr First Time', $e);
 			$searchConfig->setSkipBoostFunctions( true );
 			try {
 				$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
 			} catch ( Exception $e ) {
-				Wikia::log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
+				F::build('Wikia')->log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
 				$result = F::build('Solarium_Result_Select_Empty');
 			}
 		}
@@ -182,11 +182,11 @@ class WikiaSearch extends WikiaObject {
 
 		if( $searchConfig->getPage() == 1 ) {
 			$resultCount = $results->getResultsFound();
-			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
-							array(	'sterm'	=> $searchConfig->getQuery(), 
-									'rver'	=> self::RELEVANCY_FUNCTION_ID,
-									'stype'	=> ( $searchConfig->getCityId() == 0 ? 'inter' : 'intra' ) 
-								 ) 
+			F::build( 'Track' )->event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
+										array(	'sterm'	=> $searchConfig->getQuery(), 
+												'rver'	=> self::RELEVANCY_FUNCTION_ID,
+												'stype'	=> ( $searchConfig->getIsInterWiki() ? 'inter' : 'intra' ) 
+											 ) 
 						);
 		}
 
@@ -261,8 +261,8 @@ class WikiaSearch extends WikiaObject {
 			                'meta'		=> 'siteinfo',
 			                'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
                 			);
-	    	
-			$data = ApiService::call( $params );
+	    	// I think it's lame I have to do this to get unit tests to work. Just sayin'.
+			$data = F::build( 'ApiService' )->call( $params );
 	
 			if ( isset( $data['query'] ) && isset( $data['query']['statistics'] ) && isset( $data['query']['statistics']['articles'] ) ) {
 				$searchConfig->setMindf( (int) ($data['query']['statistics']['articles'] * .5) );

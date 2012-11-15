@@ -323,7 +323,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @see WikiaSearchIndexer::getPage()
 	 * @param Article $page
 	 */
-	private function getPageMetaData( Article $page ) {
+	protected function getPageMetaData( Article $page ) {
 		wfProfileIn(__METHOD__);
 		$result = array();
 	
@@ -385,7 +385,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param  Article $page
 	 * @return string the pipe-joined redirect titles with underscores replaced with spaces
 	 */
-	private function getRedirectTitles( Article $page ) {
+	protected function getRedirectTitles( Article $page ) {
 		wfProfileIn(__METHOD__);
 	
 		$dbr = $this->wf->GetDB(DB_SLAVE);
@@ -410,7 +410,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @see   WikiaSearchIndexerTest::testGetWikiViewsNoCacheNoDb
 	 * @param Article $page
 	 */
-	private function getWikiViews( Article $page ) {
+	protected function getWikiViews( Article $page ) {
 		wfProfileIn(__METHOD__);
 		$key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
 
@@ -431,8 +431,8 @@ class WikiaSearchIndexer extends WikiaObject {
 								'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)' ),
 						__METHOD__
 				);
-			} catch ( Exception $e ) { 
-				Wikia::log( __METHOD__, '', $e );
+			} catch ( Exception $e ) {
+				F::build( 'Wikia' )->log( __METHOD__, '', $e );
 			}
 		}
 	
@@ -476,7 +476,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		try {
 			return $this->deleteArticle( $id );
 		} catch ( Exception $e ) {
-		    Wikia::log( __METHOD__, '', $e );
+		    F::build( 'Wikia' )->log( __METHOD__, '', $e );
 		    return true;
 		}
 	}
@@ -500,7 +500,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		try {
 			return $this->reindexBatch( array( $article->getTitle()->getArticleID() ) );
 		} catch ( Exception $e ) {
-		    Wikia::log( __METHOD__, '', $e );
+		    F::build( 'Wikia' )->log( __METHOD__, '', $e );
 		    return true;
 		}
 	}
@@ -514,7 +514,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		try {
 			return $this->reindexBatch( array( $title->getArticleID() ) );
 		} catch ( Exception $e ) {
-			Wikia::log( __METHOD__, '', $e );
+			F::build( 'Wikia' )->log( __METHOD__, '', $e );
 			return true;
 		}
 	}

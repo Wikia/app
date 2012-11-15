@@ -36,7 +36,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 	}
 	
 	private function getPageViews(&$result) {
-		$res = &$result->getData();
+		$res = $result->getData();
 		
 		if ( isset($res['query']) && isset($res['query']['pages']) ) {
 			$aTitles = $this->getPageSet()->getGoodTitles();
@@ -65,7 +65,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 	}
 
 	private function getCreateDate(&$result) {
-		$res = &$result->getData();
+		$res = $result->getData();
 		
 		if ( isset($res['query']) && isset($res['query']['pages']) ) {
 			$aTitles = $this->getPageSet()->getGoodTitles();
@@ -96,7 +96,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 	}
 
 	private function getRevCount(&$result) {
-		$res = &$result->getData();
+		$res = $result->getData();
 		$db = $this->getDB();
 		if ( isset($res['query']) && isset($res['query']['pages']) ) {
 			foreach ($this->getPageSet()->getGoodTitles() as $page_id => $oTitle) {
