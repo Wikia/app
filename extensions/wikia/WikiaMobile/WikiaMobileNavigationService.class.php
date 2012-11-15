@@ -7,7 +7,7 @@
  */
 class  WikiaMobileNavigationService extends WikiaService {
 	/**
-	 * @var $navService NavigationModel
+	 * @var $navModel NavigationModel
 	 */
 	private $navModel = null;
 
