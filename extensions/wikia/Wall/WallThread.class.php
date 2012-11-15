@@ -39,7 +39,7 @@ class WallThread {
 		CommentsIndex::changeParent( 0, $dest->getId(), $this->mThreadId);
 		
 		$wallHistory = new WallHistory( $this->mCityId );
-		$wallHistory->moveThread( 0, $dest->getId(), $this->mThreadId);
+		$wallHistory->moveThread( $this->mThreadId, $dest->getId() );
 		
 		$this->invalidateCache();
 	}

@@ -226,7 +226,7 @@ class Wall extends WikiaModel {
 		CommentsIndex::changeParent( $this->getId(), $dest->getId() );
 
 		$wallHistory = new WallHistory( $this->mCityId );
-		$wallHistory->moveThread( $this->getId(), $dest->getId() );
+		$wallHistory->moveThreads( $this->getId(), $dest->getId() );
 	}
 	
 	public function setMaxPerPage( $val ) {

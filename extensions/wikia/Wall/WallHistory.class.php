@@ -38,12 +38,26 @@ class WallHistory extends WikiaModel {
 		);
 	}
 	
-	public function moveThread( $from, $to ) {
+	public function moveThreads( $from, $to ) {
 		$this->getDB(DB_MASTER)->update(
 			'wall_history',
 			array( 'parent_page_id' => $to ),
 			array( 
 				'parent_page_id' => $from 
+			),
+			__METHOD__
+		);
+		
+		$this->getDB(DB_MASTER)->commit();
+	}
+	
+		
+	public function moveThread( $thread, $to ) {
+		$this->getDB(DB_MASTER)->update(
+			'wall_history',
+			array( 'parent_page_id' => $to ),
+			array( 
+				"parent_comment_id = $thread or comment_id = $thread" 
 			),
 			__METHOD__
 		);
