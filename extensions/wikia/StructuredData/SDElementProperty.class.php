@@ -41,6 +41,74 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		return $this->type;
 	}
 
+	/**
+	 * used by toSDSJson to convert a single value
+	 * @return string
+	 */
+	protected function convertValueToSDSJson($value) {
+		if ( is_object($value) ) {
+			$valueObject = new stdClass();
+			if(isset($valueObject->id)) {
+				$valueObject->id = $valueObject->id;
+			}
+			return $valueObject;
+		}
+		return $value;
+	}
+
+	/**
+	 * get SDS compatible json representation of this object
+	 * @return string
+	 */
+	public function toSDSJson() {
+		$value = $this->getValue();
+		if ( $this->isCollection() ) {
+			$values = array();
+			foreach($value as $v) {
+				$values[] = $this->convertValueToSDSJson($v);
+			}
+			$value = $values;
+		} else {
+			$value = $this->convertValueToSDSJson($value);
+		}
+		return $value;
+	}
+
+	/**
+	 * Parses a single value posted by a user
+	 * @param $value from the request
+	 * @return anyType
+	 */
+	protected function parseRequestValue( $value ) {
+		$range = $this->getType()->getRange();
+		$rangeClasses = ($range) ? $this->getType()->getRange()->getClasses() : array('rdfs:Literal');
+		if ( in_array('rdfs:Literal', $rangeClasses) || in_array('xsd:anyURI', $rangeClasses) ) {
+			return $value;
+		} else {
+			$valueObject = new stdClass();
+			$valueObject->id = $value;
+			return $valueObject;
+
+		}
+		return $value;
+	}
+
+	/**
+	 * Set a field value based on request values
+	 * @param $value single value or an array of values
+	 */
+	public function setValueFromRequest($value) {
+		if ( $this->isCollection() ) {
+			$parsedValue = array();
+			foreach($value as $v) {
+				$parsedValue[] = $this->parseRequestValue($v);
+			}
+		} else {
+			$parsedValue = $this->parseRequestValue($value);
+		}
+		$this->value = $parsedValue;
+	}
+
 	public function setValue($value) {
 		$this->value = $value;
 	}

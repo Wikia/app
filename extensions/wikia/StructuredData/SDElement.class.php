@@ -188,23 +188,8 @@ class SDElement extends SDRenderableObject implements SplSubject {
 
 		/** @var $property SDElementProperty */
 		foreach($this->properties as $property) {
-			$value = $property->getValue();
+			$data->{$property->getName()} = $property->toSDSJson();
 
-			if ( $property->isCollection() ) {
-				// @todo - we assume that there can only be a collection of references, which is wrong :) (ojtam, ojtam... :D)
-				$values = array();
-				foreach($value as $v) {
-					$valueObject = new stdClass();
-					if(isset($v->id)) {
-						$valueObject->id = $v->id;
-					$values[] = $valueObject;
-					}
-				}
-				$data->{$property->getName()} = $values;
-			}
-			else {
-				$data->{$property->getName()} = $value;
-			}
 		}
 
 		return json_encode( $data );
@@ -215,16 +200,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		foreach($this->properties as $property) {
 			if(isset($params[$property->getName()])) {
 				$value = $params[$property->getName()];
-				if(is_array($value)) {
-					$values = array();
-					foreach($value as $v) {
-						$valueObject = new stdClass();
-						$valueObject->id = $v;
-						$values[] = $valueObject;
-					}
-					$value = $values;
-				}
-				$property->setValue($value);
+				$property->setValueFromRequest($value);
 			}
 		}
 	}
