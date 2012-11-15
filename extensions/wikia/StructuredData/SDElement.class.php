@@ -130,6 +130,9 @@ class SDElement extends SDRenderableObject implements SplSubject {
 			}
 
 			if(!in_array( $propertyName, self::$excludedNames )) {
+				if(is_object($propertyValue) && isset($propertyValue->{"@value"})) {
+					$propertyValue = $propertyValue->{"@value"};
+				}
 				/** @var $property SDElementProperty */
 				$property = F::build( 'SDElementProperty', array( $propertyName, $propertyValue ) );
 				if($depth == 0) {
