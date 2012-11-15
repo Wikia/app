@@ -121,7 +121,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 
 	public function getValue( $expand = false ) {
 		if ( $expand ) {
-			$this->expandValue( F::build( 'StructuredData' ), 0);
+			$this->expandValue( F::build( 'StructuredData' ), 1);
 		}
 
 		if ( $this->isCollection() ) {

@@ -1,10 +1,7 @@
 <?php
 // list element (@set, @list) renderer
 /* @var SDElementProperty $object */
-$value = $object->getValue();
-/*
- * property is an array
- */
+$value = $object->getValue(true);
 if ( !count( $value ) ) {
 	if ($context != SD_CONTEXT_EDITING) {
 		echo '<p class="empty">empty</p>';
