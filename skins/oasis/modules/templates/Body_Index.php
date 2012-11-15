@@ -22,7 +22,11 @@
 
 		<?= empty($wg->GlobalHeaderFullWidth) ? $app->renderView('Ad', 'Top') : '' ?>
 
-		<?= $app->renderView( 'WikiHeader', 'Index' ); ?>
+		<?php
+			if ( empty( $wg->SuppressWikiHeader ) ) {
+				echo $app->renderView( 'WikiHeader', 'Index' );
+			}
+		?>
 
 		<?php
 			if (!empty($wg->EnableWikiAnswers)) {
