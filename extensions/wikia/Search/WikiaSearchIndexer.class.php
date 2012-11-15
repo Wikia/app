@@ -123,6 +123,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$isVideo	= false;
 		$isImage	= false;
+		$vidFields	= array();	
 		
 		if ( $namespace == NS_FILE && ($file = $this->wf->findFile( $this->wg->Title->getText() )) ) {
 			$detail		= WikiaFileHelper::getMediaDetail( $this->wg->Title );
@@ -132,13 +133,43 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 			if ( $metadata !== "0" ) {
 				$metadata = unserialize( $metadata );
-	
-				$fileParams = array('description', 'keywords')
-				+ ($isVideo ? array('movieTitleAndYear', 'videoTitle') : array());
+				$fileParams = array( 'description', 'keywords' );
+				$videoParams = array( 'movieTitleAndYear', 'videoTitle', 'title', 'tags', 'category' );
+				if ( $isVideo ) {
+					$fileParams = array_merge( $fileParams, $videoParams );
+					
+					/**
+					 * This maps video metadata field keys to dynamic fields
+					 */
+					$videoMetadataMapper = array(
+							'duration'		=>	'video_duration_i',
+							'provider'		=>	'video_provider_s',
+							'videoId'		=>	'video_id_s',
+							'altVideoId'	=>	'video_altid_s',
+							'aspectRatio'	=>	'video_aspectratio_s'
+							);
+					
+					foreach ( $videoMetadataMapper as $key => $field ) {
+						if ( isset( $metadata[$key] ) ) {
+							$vidFields[$field] = $metadata[$key];
+						}
+					}
+					// special cases
+					if ( isset( $metadata['hd'] ) ) {
+						$vidFields['video_hd_b'] = empty( $metadata['hd'] ) ? 'false' : 'true';
+					}
+					if ( isset( $metadata['genres'] ) ) {
+						$vidFields['video_genres_txt'] = preg_split( '/, ?/', $metadata['genres'] );
+					}
+					if ( isset( $metadata['actors'] ) ) {
+						$vidFields['video_actors_txt'] = preg_split( '/, ?/', $metadata['actors'] );
+					}
+				}
 	
 				foreach ($fileParams as $datum) {
 					$html .= isset( $metadata[$datum] ) ? ' ' . $metadata[$datum] : '';
 				}
+				
 			}
 		}
 	
@@ -180,6 +211,10 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		if ( $this->wg->EnableBacklinksExt && $this->wg->IndexBacklinks ) {
 			$result['backlink_text'] = Backlinks::getForArticle($page);
+		}
+		
+		foreach ( $vidFields as $fieldName => $fieldValue ) {
+			$result[$fieldName] = $fieldValue;
 		}
 		
 		$result = array_merge($result, $this->getPageMetaData($page));
@@ -371,8 +406,11 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$wikiViews = $this->getWikiViews($page);
 	
+		$wam = DataMartService::getCurrentWamScoreForWiki( $this->wg->CityId );
+		
 		$result['wikiviews_weekly']		= (int) $wikiViews->weekly;
 		$result['wikiviews_monthly']	= (int) $wikiViews->monthly;
+		$result['wam']					= $wam > 0 ? ceil( $wam ) : 1; //mapped here for computational cheapness
 	
 		wfProfileOut(__METHOD__);
 		return $result;
