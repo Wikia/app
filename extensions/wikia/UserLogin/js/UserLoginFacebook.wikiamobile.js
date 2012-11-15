@@ -48,7 +48,7 @@ require(['track', 'events', 'querystring', 'toast'], function(track, events, qs,
 									reload.setPath(wgArticlePath.replace('$1', returnto));
 								}
 
-								reload.removeVal('returnto').addCb().goTo();
+								reload.removeVal('returnto').removeHash('topbar').addCb().goTo();
 
 							}else{
 								track.event('login', track.CLICK, {
