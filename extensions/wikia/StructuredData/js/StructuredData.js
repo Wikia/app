@@ -66,6 +66,11 @@ var StructureData = {
 			timeFormat: "HH:mm:ss",
 			alwaysSetTime: false
 		});
+		$('input[name="schema:birthDate"]').datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'yy-m-d'
+		});
 	},
 
 	// METHOD for fetching collection of SDS objects form a given class and rendering <select> element with them inside
