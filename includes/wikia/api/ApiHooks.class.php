@@ -18,11 +18,7 @@ class ApiHooks {
 
 	public static function onWikiFactoryChanged( $cv_name , $city_id, $value ) {
 		if ( $cv_name == NavigationModel::WIKIA_GLOBAL_VARIABLE ) {
-			SquidUpdate::purge(
-				array(
-					NavigationApiController::getUrlToAjaxMethod( 'getData' )
-				)
-			);
+			NavigationApiController::purgeMethod( 'getData' );
 		}
 
 		return true;
@@ -30,11 +26,7 @@ class ApiHooks {
 
 	public static function onMessageCacheReplace( $title, $text ) {
 		if ( self::isWikiNavMessage( Title::newFromText( $title, NS_MEDIAWIKI ) ) ) {
-			SquidUpdate::purge(
-				array(
-					NavigationApiController::getUrlToAjaxMethod( 'getData' )
-				)
-			);
+			NavigationApiController::purgeMethod( 'getData' );
 		}
 
 		return true;
