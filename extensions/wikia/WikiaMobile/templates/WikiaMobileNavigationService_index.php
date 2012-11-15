@@ -9,7 +9,7 @@
  * @var $userName String
  */
 
-$loggedIn = $wg->User->getId() > 0;
+	$loggedIn = $wg->User->isLoggedIn();
     $searchPage = $wg->Title->isSpecial( 'Search' );
 
 	if ( $loggedIn ) {
