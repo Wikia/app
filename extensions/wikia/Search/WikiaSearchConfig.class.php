@@ -82,6 +82,8 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	        'most-viewed'		=>	array( 'views',		Solarium_Query_Select::SORT_DESC ),
 	        'freshest'			=>	array( 'indexed',	Solarium_Query_Select::SORT_DESC ),
 	        'stalest'			=>	array( 'indexed', 	Solarium_Query_Select::SORT_ASC  ),
+			'shortest'			=>	array( 'video_duration_i', Solarium_Query_Select::SORT_ASC ),
+			'longest'			=>	array( 'video_duration_i', Solarium_Query_Select::SORT_DESC ),
 	);
 	
 	/**
@@ -93,6 +95,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	private $filterCodes = array(
 			'is_video'			=>	'is_video:true',
 			'is_image'			=>	'is_image:true',
+			'is_hd'				=>	'video_hd_b:true',
 	);
 	
 	/**
@@ -115,6 +118,15 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 */
 	public function __construct( array $params = array() ) {
 		parent::__construct();
+		
+		$dynamicFilterCodes = array(
+				'cat_videogames'	=>	WikiaSearch::valueForField( 'categories', 'Video Games', array( 'quote'=>'"' )  ),
+				'cat_entertainment'	=>	WikiaSearch::valueForField( 'categories', 'Entertainment' ),
+				'cat_lifestyle'		=>	WikiaSearch::valueForField( 'categories', 'Lifestyle'),
+				);
+		
+		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
+		
 		$this->params = array_merge( $this->params, 
 									 array( 'requestedFields' => $this->requestedFields ), 
 									 $params );
