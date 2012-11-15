@@ -362,7 +362,9 @@ class WikiaSearchIndexer extends WikiaObject {
 		wfProfileIn(__METHOD__);
 		$result = array();
 	
-		$data = ApiService::call( array(
+		$apiService = F::build( 'ApiService' );
+		
+		$data = $apiService->call( array(
 				'titles'	=> $page->getTitle(),
 				'bltitle'	=> $page->getTitle(),
 				'action'	=> 'query',
@@ -373,7 +375,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['backlinks'] = isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0;  
 	
 		if (! empty( $this->wg->ExternalSharedDB ) ) {
-			$data = ApiService::call( array(
+			$data = $apiService->call( array(
 					'pageids'	=> $page->getId(),
 					'action'	=> 'query',
 					'prop'		=> 'info|categories',
