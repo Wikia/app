@@ -70,6 +70,7 @@ class AdminDashboardLogic {
 				"LookupContribs",
 				"LookupUser",
 				"ManageWikiaHome",
+				"MarketingToolbox",
 				"MiniEditor",
 				"MovePage",
 				"MultiLookup",
