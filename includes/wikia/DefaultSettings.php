@@ -127,6 +127,9 @@ include_once( "$IP/lib/ApiGate/config.php" );
 //Wikia API Hooks
 $app->registerClass( 'ApiHooks', "{$IP}/includes/wikia/api/ApiHooks.class.php" );
 
+$app->registerHook( 'WikiFactoryChanged', 'ApiHooks', 'onWikiFactoryChanged' );
+$app->registerHook( 'MessageCacheReplace', 'ApiHooks', 'onMessageCacheReplace' );
+
 //Wikia API base controller, all the others extend this class
 $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiController.class.php" );
 
