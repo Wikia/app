@@ -88,7 +88,7 @@ var Lightbox = {
 			LightboxLoader.lightboxLoading = false;
 			
 			/* tracking after lightbox has fully loaded */
-			var trackingTitle = Lightbox.getTitleForTracking();
+			var trackingTitle = Lightbox.getTitleDbKey();
 			LightboxTracker.track(WikiaTracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': trackingCarouselType});
 		};
 
@@ -137,7 +137,7 @@ var Lightbox = {
 					.filter('.share-input')
 					.click();
 				
-				var trackingTitle = Lightbox.getTitleForTracking();
+				var trackingTitle = Lightbox.getTitleDbKey();
 				LightboxTracker.track(WikiaTracker.ACTIONS.CLICK, 'lightboxShare', null, {title: trackingTitle, type: Lightbox.current.type});
 				
 				Lightbox.openModal.share.shareUrl = json.shareUrl; // cache shareUrl for email share
@@ -248,6 +248,8 @@ var Lightbox = {
 				$(window).trigger('resize'); // firefox image loading hack (BugId:32477)
 
 				Lightbox.updateArrows();
+				
+				Lightbox.updateUrlState();
 
 				Lightbox.renderHeader();
 
@@ -255,7 +257,7 @@ var Lightbox = {
 
 				Lightbox.clearTrackingTimeouts();
 
-				var trackingTitle = Lightbox.getTitleForTracking(); // prevent race conditions from timeout
+				var trackingTitle = Lightbox.getTitleDbKey(); // prevent race conditions from timeout
 				Lightbox.image.trackingTimeout = setTimeout(function() {
 					Lightbox.openModal.aggregateViewCount++;
 					LightboxTracker.track(WikiaTracker.ACTIONS.VIEW, 'image', Lightbox.openModal.aggregateViewCount, {title: trackingTitle, clickSource: Lightbox.openModal.clickSource});
@@ -380,13 +382,15 @@ var Lightbox = {
 			
 			Lightbox.updateArrows();
 
+			Lightbox.updateUrlState();
+
 			Lightbox.renderHeader();
 
             Lightbox.updateMediaType();
 			
 			Lightbox.clearTrackingTimeouts();
 
-			var trackingTitle = Lightbox.getTitleForTracking(); // prevent race conditions from timeout
+			var trackingTitle = Lightbox.getTitleDbKey(); // prevent race conditions from timeout
 			Lightbox.video.trackingTimeout = setTimeout(function() {
 				Lightbox.openModal.aggregateViewCount++;
 				LightboxTracker.track(WikiaTracker.ACTIONS.VIEW, 'video', Lightbox.openModal.aggregateViewCount, {title: trackingTitle, provider: data.providerName, clickSource: Lightbox.openModal.clickSource});		
@@ -618,6 +622,14 @@ var Lightbox = {
 			previous.removeClass('disabled');
 			next.removeClass('disabled');
 		}
+	},
+	updateUrlState: function() {
+		var dbKey = Lightbox.getTitleDbKey(),
+			stateObj = {
+				title: dbKey
+			};
+
+		window.history.pushState(stateObj, document.title + ", " + Lightbox.current.title, "?file="+dbKey);
 	},
 	getShareCodes: function(mediaParams, callback) {
 		var title = mediaParams['fileTitle'];
@@ -870,7 +882,7 @@ var Lightbox = {
 					}
 					shareEmailForm.find('input[type=text]').val('');
 					
-					var trackingTitle = Lightbox.getTitleForTracking(); // prevent race conditions from timeout
+					var trackingTitle = Lightbox.getTitleDbKey(); // prevent race conditions from timeout
 					LightboxTracker.track(WikiaTracker.ACTIONS.SHARE, 'email', null, {title: trackingTitle, type: Lightbox.current.type});
 				}
 			});
@@ -1154,7 +1166,7 @@ var Lightbox = {
 
 	},
 
-	getTitleForTracking: function() {
+	getTitleDbKey: function() {
 		return LightboxLoader.cache.details[Lightbox.current.title].title; // get dbkey title for tracking (BugId:47644)	
 	},
 	

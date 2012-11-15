@@ -209,8 +209,14 @@ var LightboxLoader = {
 		var deferredList = [];
 		if(!LightboxLoader.assetsLoaded) {
 			deferredList.push($.loadMustache());
-			deferredList.push($.getResources([$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss')]));
-			deferredList.push($.getResources([window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js']));
+			
+			var resources = [
+				//'history_polyfill_js',
+				$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss'),
+				window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js'
+			];
+			
+			deferredList.push($.getResources(resources));
 			
 			var deferredTemplate = $.Deferred();
 			$.nirvana.sendRequest({
