@@ -9,6 +9,12 @@
 ?>
 
 <form class="WikiaForm SDObject" id="SDObject" method="POST">
+	<?php if(!empty($updateResult)): ?>
+		<pre><?=$updateResult->message;?></pre>
+		<?php if(isset($updateResult->errors)): ?>
+			<?php var_dump($updateResult->errors); ?>
+		<?php endif; ?>
+	<?php endif; ?>
 	<h1><strong><?= $sdsObject->getName(); ?></strong></h1>
 	<?php if($context == SD_CONTEXT_SPECIAL && $isEditAllowed): ?>
 		<a href="?action=edit" class="wikia-button" title="Edit SDS Object">Edit</a>

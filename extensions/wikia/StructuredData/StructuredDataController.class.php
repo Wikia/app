@@ -116,8 +116,18 @@ class StructuredDataController extends WikiaSpecialPageController {
 		}
 		else {
 			if($this->getRequest()->wasPosted()) {
-				$this->structuredData->updateSDElement($sdsObject, $this->getRequest()->getParams());
-				$action = 'render';
+				$result = $this->structuredData->updateSDElement($sdsObject, $this->getRequest()->getParams());
+				if( isset($result->error) ) {
+					$updateResult = $result;
+					$action = 'edit';
+				}
+				else {
+					$updateResult = new stdClass();
+					$updateResult->error = false;
+					$updateResult->message = wfMsg( 'structureddata-object-updated' );
+					$action = 'render';
+				}
+				$this->setVal('updateResult', $updateResult);
 			}
 		}
 

@@ -58,7 +58,7 @@ class StructuredDataAPIClient extends WikiaObject {
 
 	public function saveObject( $id, $body ) {
 		$response = json_decode( $this->call( $this->getApiPath() . $id, HTTP_REQUEST_METHOD_PUT, $body ) );
-		return $this->isValidResponse($response);
+		return $response;
 	}
 
 	public function createObject( $body ) {
@@ -84,7 +84,7 @@ class StructuredDataAPIClient extends WikiaObject {
 	}
 
 	public function getObjectByTypeAndName($type, $name) {
-		$url = rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) . '&withProperty='.urlencode('schema:name').'&withValue=' .urlencode($name);
+		$url = rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) . '&withProperty='.urlencode('schema:name').'&withValue=' .urlencode($name).'&cache=false&cb=' . time();
 		$response = json_decode( $this->call( $url ) );
 
 		if(isset($response->{"@graph"})) {

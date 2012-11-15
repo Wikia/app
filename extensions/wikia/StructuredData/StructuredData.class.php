@@ -58,8 +58,7 @@ class StructuredData {
 
 	public function updateSDElement(SDElement $element, array $params) {
 		$element->update($params);
-		$response = $this->APIClient->saveObject($element->getId(), $element->toSDSJson());
-		// @todo implement error response processing
+		return $this->APIClient->saveObject($element->getId(), $element->toSDSJson());
 	}
 
 	private function getSDElement(stdClass $element, $elementDepth = 0) {
