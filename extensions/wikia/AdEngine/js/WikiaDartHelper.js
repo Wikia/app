@@ -1,8 +1,9 @@
+
 var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPage) {
 	'use strict';
 
 	var logGroup = 'WikiaDartHelper'
-		, fillSlot, getUrl
+		, getUrl
 		, ord = Math.round(Math.random() * 23456787654)
 		, tile = 1
 		, initSiteAndZones
@@ -187,7 +188,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 	};
 
 	getPrefooterStatus = function() {
-		if (adLogicShortPage.hasPreFooters()) {
+		if (adLogicShortPage && adLogicShortPage.hasPreFooters()) {
 			return 'hasp=yes;';
 		}
 		return 'hasp=no;';
@@ -247,21 +248,44 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		return trimKvs(categories, categoryStrMaxLength);
 	};
 
+	/**
+	 * Get URL for DART call
+	 *
+	 * @param params {
+	 *   REQUIRED:
+	 *     slotname
+	 *     slotsize
+	 *   OPTIONAL:
+	 *     adType (default: adj, adi, jwplayer, mobile)
+	 *     src (default: driver)
+	 *     subdomain (default: by geo)
+	 *     loc, dcopt, tile, positionfixed
+	 * }
+	 * @return {String} URL of DART script
+	 */
 	getUrl = function(params) {
-		var slotname = params.slotname
-			, size = params.slotsize
-			, adType = params.adType || 'adj'
-			, loc = decorateAsKv('loc', params.loc)
-			, dcopt = decorateAsKv('dcopt', params.dcopt)
-			, src = params.src || 'driver'
-			, localTile
-			, kruxKV = ''
-			, url
-			;
+		var slotname = params.slotname,
+			size = params.slotsize,
+			adType = params.adType || 'adj',
+			pathPrefix,
+			loc = decorateAsKv('loc', params.loc),
+			dcopt = decorateAsKv('dcopt', params.dcopt),
+			src = params.src || 'driver',
+			localTile,
+			kruxKV = '',
+			url,
+			subdomain = params.subdomain || getSubdomain(),
+			endTag = params.omitEndTag ? '' : 'endtag=$;';
 
 		if (adType === 'jwplayer') {
-			adType = 'pfadx';
+			pathPrefix = 'pfadx/';
 		}
+
+		if (adType === 'mobile') {
+			pathPrefix = 'DARTProxy/mobile.handler?k=';
+		}
+
+		pathPrefix = pathPrefix || adType + '/';
 
 		if (params.tile) {
 			localTile = params.tile;
@@ -270,7 +294,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			tile += 1;
 		}
 
-		if (Krux.dartKeyValues) {
+		if (Krux && Krux.dartKeyValues) {
 			kruxKV = trimKvs(Krux.dartKeyValues, kvStrMaxLength);
 		}
 
@@ -292,9 +316,9 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		 loc=top;                          dcopt=ist;mtfIFPath=/extensions/wikia/AdEngine/;src=driver;sz=728x90,468x60,980x130,980x65;mtfInline=true;tile=1;endtag=$;ord=21889937933?
 		 */
 		url = 'http://' +
-			getSubdomain() +
+			subdomain +
 			'.doubleclick.net/' +
-			adType + '/' +
+			pathPrefix +
 			site + '/' + zone1 + '/' + zone2 + ';' +
 			's0=' + site.replace(/wka\./, '') + ';' +
 			's1=' + zone1 + ';' +
@@ -308,6 +332,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			getLanguage() +
 			getResolution() +
 			getPrefooterStatus() + // TODO FIXME just height
+			decorateAsKv('positionfixed', params.positionfixed) +
 			kruxKV +
 			// getImpressionCount(slotname) + // TODO remove missing
 			// getPartnerKeywords() + // TODO remove missing
@@ -315,12 +340,12 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			loc +
 			dcopt +
 			(window.AdMeldAPIClient ? window.AdMeldAPIClient.getParamForDART(slotname) : '') + // TODO FIXME missing in adsinhead
-			'mtfIFPath=/extensions/wikia/AdEngine/;' +
 			'src=' + src + ';' +
 			'sz=' + size + ';' +
+			'mtfIFPath=/extensions/wikia/AdEngine/;' +
 			'mtfInline=true;' +	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
 			'tile=' + localTile + ';' +
-			'endtag=$;' +
+			endTag +
 			'ord=' + ord + '?';
 
 		log(url, /* 7 */ 5, logGroup);
@@ -354,5 +379,31 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 	return {
 		getUrl: getUrl,
 		getCustomKeyValues: getCustomKeyValues
+	};
+};
+
+var WikiaDartMobileHelper = function(log, window, document) {
+	'use strict';
+
+	var wikiaDartHelper = WikiaDartHelper(log, window, document);
+
+	return {
+		/**
+		 * Get URL for a mobile ad
+		 *
+		 * @param params (slotname, positionfixed, uniqueId)
+		 * @return {String} URL of DART script
+		 */
+		getMobileUrl: function(params) {
+			return wikiaDartHelper.getUrl({
+				slotname: params.slotname,
+				positionfixed: params.positionfixed,
+				subdomain: 'ad.mo',
+				adType: 'mobile',
+				src: 'mobile',
+				slotsize: '5x5',
+				omitEndTag: true
+			}) + '&csit=1&dw=1&u=' + params.uniqueId;
+		}
 	};
 };

@@ -504,12 +504,12 @@ $config['wikiamobile_js_ads'] = array(
 		//libraries
 		'//resources/wikia/libraries/DOMwriter/domwriter.js',
 
+		//advertisement "core"
+		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
+
 		//modules
 		'//resources/wikia/modules/geo.js',
 		'//extensions/wikia/WikiaMobile/js/ads.js',
-
-		//advertisement core, depends on geo.js
-		'//extensions/wikia/AdEngine/AdConfig.js'
 	)
 );
 
