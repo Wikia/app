@@ -133,8 +133,10 @@ class WikiaSearchIndexer extends WikiaObject {
 			if ( $metadata !== "0" ) {
 				$metadata = unserialize( $metadata );
 	
-				$fileParams = array('description', 'keywords')
-				+ ($isVideo ? array('movieTitleAndYear', 'videoTitle') : array());
+				$videoParams = array( 'movieTitleAndYear', 'videoTitle', 'Keywords', 'tags', 'category' );
+				
+				$fileParams = array( 'description', 'keywords' )
+				+ ( $isVideo ? $videoParams : array() );
 	
 				foreach ($fileParams as $datum) {
 					$html .= isset( $metadata[$datum] ) ? ' ' . $metadata[$datum] : '';
