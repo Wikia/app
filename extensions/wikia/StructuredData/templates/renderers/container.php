@@ -37,7 +37,7 @@ if ( !$object->isCollection() ) { // @todo - again we assume that collection can
 				}
 				else {
 					if ($context == SD_CONTEXT_EDITING) {
-						echo '<div class="input-group"><input type="text" name="'. $object->getName() . '" value="'
+						echo '<div class="input-group"><input type="text" name="'. $object->getName() . '[]" value="'
 						. $reference . '" /> <button class="secondary remove">Remove</button></div>';
 					}  else {
 						echo $reference;
