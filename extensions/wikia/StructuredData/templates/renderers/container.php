@@ -36,7 +36,12 @@ if ( !$object->isCollection() ) { // @todo - again we assume that collection can
 					echo '<p class="empty">' . $reference->id . '</p>';
 				}
 				else {
-					echo $reference;
+					if ($context == SD_CONTEXT_EDITING) {
+						echo '<div class="input-group"><input type="text" name="'. $object->getName() . '" value="'
+						. $reference . '" /> <button class="secondary remove">Remove</button></div>';
+					}  else {
+						echo $reference;
+					}
 				}
 			}
 			if ( $renderList ) echo '</li>';
