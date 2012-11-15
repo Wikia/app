@@ -49,9 +49,11 @@ class  WikiaMobileNavigationService extends WikiaService {
 			true
 		);
 
+		$wikiNav = $this->navModel->getWiki();
+
 		$this->response->setVal( 'wikiNav', array(
 			$mobileNav,
-			$this->navModel->getWiki()['wiki']
+			$wikiNav['wiki']
 		));
 
 		$blacklist = array();
