@@ -63,8 +63,7 @@ var StructureData = {
 			showSecond: 'true',
 			separator: 'T',
 			controlType: 'select',
-			timeFormat: "HH:mm:ss",
-			alwaysSetTime: false
+			timeFormat: "HH:mm:ss"
 		});
 		$('input[name="schema:birthDate"]').datepicker({
 			changeMonth: true,
