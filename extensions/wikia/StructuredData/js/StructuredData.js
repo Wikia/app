@@ -61,9 +61,10 @@ var StructureData = {
 			yearRange: '-100:+0',
 			dateFormat: 'yy-mm-dd',
 			showSecond: 'true',
-			separator: '',
+			separator: 'T',
 			controlType: 'select',
-			timeFormat: "'T'hh:mm:ss"
+			timeFormat: "HH:mm:ss",
+			alwaysSetTime: false
 		});
 	},
 
