@@ -10,9 +10,9 @@
 
 <form class="WikiaForm SDObject" id="SDObject" method="POST">
 	<?php if(!empty($updateResult)): ?>
-		<pre><?=$updateResult->message;?></pre>
+		<div class="validation-main-message"><?=$updateResult->message;?></div>
 		<?php if(isset($updateResult->errors)): ?>
-			<?php var_dump($updateResult->errors); ?>
+			<?php //var_dump($updateResult->errors); ?>
 		<?php endif; ?>
 	<?php endif; ?>
 	<h1><strong><?= $sdsObject->getName(); ?></strong></h1>
@@ -45,6 +45,11 @@
 					$propertyLabel = $property->getLabel();
 					$propertyName = $property->getName();
 					$propertyHTML = $property->render( $context );
+					$validationError = (isset($updateResult->errors) && array_key_exists($propertyName,
+						$updateResult->errors)) ? true : false;
+				    if (!empty($validationError)) {
+					    $validationErrorMsg = $error = $updateResult->errors->{$propertyName}[0];
+				    }
 				?>
 
 				<?php // Render HTML using renderers  ?>
@@ -52,7 +57,12 @@
 				<?php if($propertyHTML !== false) : ?>
 					<tr>
 						<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}',$propertyLabel)); ?>:</th>
-						<td><?= $propertyHTML;?></td>
+						<td <?= (!empty($validationError)) ? 'class="validation-error"' : '' ?>>
+							<?= $propertyHTML;?>
+							<?php if (!empty($validationError)): ?>
+							    <div class="validation-message"><?= $validationErrorMsg; ?></div>
+							<?php endif; ?>
+						</td>
 						<?php if($context == SD_CONTEXT_SPECIAL): ?>
 							<td><pre><?= $propertyName; ?></pre></td>
 						<?php endif; ?>

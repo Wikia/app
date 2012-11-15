@@ -1,4 +1,5 @@
 @import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/box-sizing";
 .SDObject {
 	h1 {
 		float: left;
@@ -108,6 +109,26 @@
 		.wikiaThrobber {
 			background-color: transparent;
 		}
+	}
+	.validation-main-message, .validation-message {
+		background-color: $color-error;
+		border: 1px solid mix($color-error, #000, 50%);
+		color: #fff;
+	}
+	.validation-error {
+		input[type="text"], textarea {
+			border-color: $color-error !important;
+		}
+	}
+	.validation-main-message {
+		font-size: 18px;
+		padding: 15px 10px;
+		@include box-sizing();
+	}
+	.validation-message {
+		margin-top: 10px;
+		max-width: 500px;
+		padding: 5px 10px;
 	}
 }
 .ui-state-default {
