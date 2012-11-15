@@ -79,7 +79,9 @@ class WallNotificationEntity {
 			$this->data_noncached = null;
 			return;
 		}
-
+		$this->data = new stdClass;
+		$this->data_non_cached = new stdClass;
+		
 		$this->data->wiki = $wiki;
 		$this->data->wikiname = $app->wg->sitename;
 		$this->data->rev_id = $rev->getId();
@@ -161,11 +163,11 @@ class WallNotificationEntity {
 				$this->data->parent_username = $this->data->parent_displayname = $app->wf->Msg('oasis-anon-user');
 				$this->data->parent_user_id = 0;
 			}
-
+			$title = $acParent->getTitle();
 			$this->data_non_cached->thread_title_full = $acParent->getMetaTitle();
 			$this->data->thread_title = $acParent->getMetaTitle();
-			$this->data_noncached->parent_title_dbkey = $acParent->getTitle()->getDBkey();
-			$this->data->parent_id = $acParent->getTitle()->getArticleId();
+			$this->data_noncached->parent_title_dbkey = $title->getDBkey();
+			$this->data->parent_id = $acParent->getId();
 			$this->data->url = $ac->getMessagePageUrl();
 
 		} else {

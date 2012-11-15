@@ -28,8 +28,10 @@ class ForumController extends WallBaseController {
 
 		$this->addMiniEditorAssets();
 
+		$this->description = ''; 
+
 		if ( $this->wall->getTitle()->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			$board = F::build( 'ForumBoard', array( 0 ), 'newFromId' );
+			$board = F::build( 'ForumBoard', array( ), 'getEmpty' );
 
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
 			$this->response->setVal( 'isTopicPage', true );
@@ -44,9 +46,9 @@ class ForumController extends WallBaseController {
 
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads() );
 			$this->response->setVal( 'isTopicPage', false );
+			
+			$this->description = $board->getDescription();
 		}
-		
-		$this->description = $board->getDescription();
 
 		//TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( 0, 0 );
