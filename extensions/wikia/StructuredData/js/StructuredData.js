@@ -55,7 +55,16 @@ var StructureData = {
 			}
 		});
 		// Add timepicker to required input fields
-		$('input[name="schema:startDate"]').datetimepicker();
+		$('input[name="schema:startDate"]').datetimepicker({
+			changeMonth: true,
+			changeYear: true,
+			yearRange: '-100:+0',
+			dateFormat: 'yy-mm-dd',
+			showSecond: 'true',
+			separator: '',
+			controlType: 'select',
+			timeFormat: "'T'hh:mm:ss"
+		});
 	},
 
 	// METHOD for fetching collection of SDS objects form a given class and rendering <select> element with them inside
