@@ -460,7 +460,7 @@ class NavigationModel extends WikiaModel {
 
 			//if the name is still empty abort and display it to user
 			//so he/she can fix it
-			//most definatelly he put something like: #category or #category_
+			//most it was something like: #category or #category_
 			if ( !empty( $name ) ) {
 
 				$node[ self::HREF ] = Title::makeTitle( NS_CATEGORY, $name )->getLocalURL();
