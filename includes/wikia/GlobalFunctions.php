@@ -580,11 +580,8 @@ function getPagesWithCategory( Title $category, $skipCache = false ) {
 		wfProfileIn( $method . "-fromdb" );
                 $dbr = wfGetDB( DB_SLAVE, 'category' );
                 $res = $dbr->select(
-                        array( 'page', 'categorylinks', 'category' ),
-                        array( 'page_id', 'page_title', 'page_namespace', 'page_len',
-                                'page_is_redirect', 'cl_sortkey', 'cat_id', 'cat_title',
-                                'cat_subcats', 'cat_pages', 'cat_files',
-                                'cl_sortkey_prefix', 'cl_collation' ),
+                        array( 'page', 'categorylinks' ),
+                        array( 'page_title', 'page_namespace' ),
                         array( 'cl_to' => $category->getDBkey() ),
                         __METHOD__,
                         array(
@@ -592,7 +589,6 @@ function getPagesWithCategory( Title $category, $skipCache = false ) {
                         ),
                         array(
                                 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
-                                'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY )
                         )
                 );
                 wfProfileOut( $method . "-fromdb" );
@@ -605,7 +601,6 @@ function getPagesWithCategory( Title $category, $skipCache = false ) {
 
 		$wgMemc->set( $memckey , $pagesWithCategory, 3600 );
 	}
-
 	wfProfileOut( $method );
 	return $pagesWithCategory;
 }
