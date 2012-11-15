@@ -18,9 +18,12 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		if( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('marketingtoolbox') ) {
 			$this->wf->ProfileOut(__METHOD__);
-			$this->overrideTemplate('onWrongRights');
+			$this->specialPage->displayRestrictionError();
 			return false;
 		}
+
+		$this->response->addAsset('/extensions/wikia/MarketingToolbox/css/MarketingToolbox.scss');
+		$this->response->addAsset('/extensions/wikia/MarketingToolbox/js/MarketingToolbox.js');
 
 		$this->wf->ProfileOut(__METHOD__);
 		return true;
@@ -35,6 +38,15 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		}
 	}
 
-
-
+	/**
+	 * @param $timestamp (of start date)
+	 * @return array
+	 */
+	public function getCalendarData($timestamp = null) {
+		if(empty($timestamp)) {
+			$timestamp = time();
+		}
+		$toolboxModel = new MarketingToolboxModel();
+		$this->calendarData = $toolboxModel->getData($timestamp);
+	}
 }

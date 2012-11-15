@@ -28,6 +28,12 @@ $wgExtensionCredits['specialpage'][] = array(
 //classes
 $app->registerController('MarketingToolboxController', $dir.'MarketingToolboxController.class.php');
 
+$app->registerClass('MarketingToolboxModel', $dir.'models/MarketingToolboxModel.class.php');
+$app->registerClass('MarketingToolboxHooks', $dir.'hooks/MarketingToolboxHooks.class.php');
+
+// hooks
+$app->registerHook('MakeGlobalVariablesScript', 'MarketingToolboxHooks', 'onMakeGlobalVariablesScript');
+
 //special page
 $app->registerSpecialPage('MarketingToolbox', 'MarketingToolboxController', 'wikia');
 
