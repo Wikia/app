@@ -578,7 +578,6 @@ function getPagesWithCategory( Title $category, $skipCache = false ) {
                 $pagesWithCategory = array();
                 
 		wfProfileIn( $method . "-fromdb" );
-//		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
                 $dbr = wfGetDB( DB_SLAVE, 'category' );
                 $res = $dbr->select(
                         array( 'page', 'categorylinks', 'category' ),
@@ -586,13 +585,10 @@ function getPagesWithCategory( Title $category, $skipCache = false ) {
                                 'page_is_redirect', 'cl_sortkey', 'cat_id', 'cat_title',
                                 'cat_subcats', 'cat_pages', 'cat_files',
                                 'cl_sortkey_prefix', 'cl_collation' ),
-                        //array_merge( array( 'cl_to' => $category->getDBkey() ),  $extraConds ),
                         array( 'cl_to' => $category->getDBkey() ),
                         __METHOD__,
                         array(
                                 'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
-//                                'LIMIT' => /* <Wikia> */( is_integer( $this->limit ) ) /* </Wikia> */ ? $this->limit + 1 : null,
-//                                'ORDER BY' => $this->flip[$type] ? 'cl_sortkey DESC' : 'cl_sortkey',
                         ),
                         array(
                                 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
@@ -609,7 +605,6 @@ function getPagesWithCategory( Title $category, $skipCache = false ) {
 
 		$wgMemc->set( $memckey , $pagesWithCategory, 3600 );
 	}
-var_dump($pagesWithCategory);
 
 	wfProfileOut( $method );
 	return $pagesWithCategory;
