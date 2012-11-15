@@ -67,7 +67,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 			global $wgCityId;
 			
 			$wgCityId = $this->wgCityId;
-			F::unsetInstance('FounderProgressBarController');
+			parent::tearDown();
 		}
 			
 		/**

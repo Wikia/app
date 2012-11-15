@@ -28,6 +28,7 @@ class CreateWikiTest extends WikiaBaseTest {
 	protected function tearDown() {
 		global $wgUser;
 		$wgUser = $this->wgUserBackup;
+		parent::tearDown();
 	}
 
 	/**
@@ -50,13 +51,12 @@ class CreateWikiTest extends WikiaBaseTest {
 				"Test Create Wiki", // sitename
 				$domain, // domain
 				$lang, // lang
-				1, // hub
-				$type
+				1 // hub
 			);
 
 			$created = $this->oCWiki->create();
 
-			$this->assertEquals( 0, $created, "CreateWiki failed for language: {$lang} and type: {$type}" );
+			$this->assertEquals( 0, $created, "CreateWiki failed for language: {$lang}" );
 
 			if ( $created == 0 ) {
 				$city_id = $this->oCWiki->getWikiInfo('city_id');
@@ -69,7 +69,7 @@ class CreateWikiTest extends WikiaBaseTest {
 					$wgWikiaLocalSettingsPath
 				);
 				$err = wfShellExec( $cmd, $retval );
-				$this->assertEquals( 0, $retval, "Drop Wiki failed for id: {$city_id}, language: {$lang} and type: {$type}, err: {$err}" );
+				$this->assertEquals( 0, $retval, "Drop Wiki failed for id: {$city_id}, language: {$lang}, err: {$err}" );
 			}
 		}		
 	}
