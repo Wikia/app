@@ -323,7 +323,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @see WikiaSearchIndexer::getPage()
 	 * @param Article $page
 	 */
-	private function getPageMetaData( Article $page ) {
+	protected function getPageMetaData( Article $page ) {
 		wfProfileIn(__METHOD__);
 		$result = array();
 	
@@ -385,7 +385,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param  Article $page
 	 * @return string the pipe-joined redirect titles with underscores replaced with spaces
 	 */
-	private function getRedirectTitles( Article $page ) {
+	protected function getRedirectTitles( Article $page ) {
 		wfProfileIn(__METHOD__);
 	
 		$dbr = $this->wf->GetDB(DB_SLAVE);
@@ -410,7 +410,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @see   WikiaSearchIndexerTest::testGetWikiViewsNoCacheNoDb
 	 * @param Article $page
 	 */
-	private function getWikiViews( Article $page ) {
+	protected function getWikiViews( Article $page ) {
 		wfProfileIn(__METHOD__);
 		$key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
 
