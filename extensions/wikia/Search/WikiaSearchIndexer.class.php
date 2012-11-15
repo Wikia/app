@@ -144,7 +144,7 @@ class WikiaSearchIndexer extends WikiaObject {
 					$videoMetadataMapper = array(
 							'duration'		=>	'video_duration_i',
 							'provider'		=>	'video_provider_s',
-							'videoId'		=>	'video_id_i',
+							'videoId'		=>	'video_id_s',
 							'altVideoId'	=>	'video_altid_s',
 							'aspectRatio'	=>	'video_aspectratio_s'
 							);
