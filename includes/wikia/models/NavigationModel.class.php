@@ -437,7 +437,7 @@ class NavigationModel extends WikiaModel {
 	 *
 	 * Return false when given submenu should not be added in a given place
 	 */
-	private function handleExtraWords(&$node, &$nodes, $depth) {
+	private function handleExtraWords( &$node, &$nodes, $depth ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$originalLower = strtolower( $node[ self::ORIGINAL ] );
@@ -445,7 +445,7 @@ class NavigationModel extends WikiaModel {
 		if ( substr( $originalLower, 0, 9 ) == '#category' ) {
 			// ignore magic words in Level 1 (BugId:15240)
 			if ( $depth == 1 ) {
-				$this->wf->ProfileOut(__METHOD__);
+				$this->wf->ProfileOut( __METHOD__ );
 				return false;
 			}
 
@@ -458,22 +458,27 @@ class NavigationModel extends WikiaModel {
 				$name = substr($param, 1);
 			}
 
-			$node[ self::HREF ] = Title::makeTitle( NS_CATEGORY, $name )->getLocalURL();
+			//if the name is still empty abort and display it to user
+			//so he/she can fix it
+			//most definatelly he put something like: #category or #category_
+			if ( !empty( $name ) ) {
 
-			if ( strpos( $node[ self::TEXT ], '#' ) === 0 ) {
-				$node[ self::TEXT ] = str_replace( '_', ' ', $name );
-			}
+				$node[ self::HREF ] = Title::makeTitle( NS_CATEGORY, $name )->getLocalURL();
 
-			$data = getMenuHelper( $name );
+				if ( strpos( $node[ self::TEXT ], '#' ) === 0 ) {
+					$node[ self::TEXT ] = str_replace( '_', ' ', $name );
+				}
 
-			foreach( $data as $val ) {
-				$title = Title::newFromId($val);
+				$data = getMenuHelper( $name );
 
-				if ( is_object( $title ) ) {
-					$this->addChildNode( $node, $nodes, $title->getText(), $title->getLocalUrl() );
+				foreach( $data as $val ) {
+					$title = Title::newFromId($val);
+
+					if ( is_object( $title ) ) {
+						$this->addChildNode( $node, $nodes, $title->getText(), $title->getLocalUrl() );
+					}
 				}
 			}
-
 		} else {
 			$extraWord = trim( $originalLower, '#' );
 
