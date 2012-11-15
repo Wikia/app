@@ -660,6 +660,11 @@ class WikiaApp {
 	 */
 
 	public function renderPartialCached( $controllerName, $method, $key, Array $params = array() ) {
+		if(is_array($key)) {
+			$key = implode("_", $key);
+		}
+		
+		
 		if(empty(self::$viewCache["P_". $controllerName . $method . $key])) {
 			self::$viewCache["P_". $controllerName . $method . $key] =  $this->renderPartial($controllerName, $method, $params);
 		}

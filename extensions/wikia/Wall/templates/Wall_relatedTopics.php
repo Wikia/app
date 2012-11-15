@@ -24,7 +24,7 @@
 	</li>
 </ul>
 <div class="message-topic-edit">
-	<?= F::app()->renderPartialCached( 'Wall', 'messageTopic', array() ) ?>
+	<?= F::app()->renderPartial( 'Wall', 'messageTopic') ?>
 	<button class="save-button">Save</button>
 	<button class="secondary cancel-button">Cancel</button>
 </div>

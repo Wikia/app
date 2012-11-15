@@ -12,6 +12,26 @@ class Forum extends Walls {
 	//controlling from outside if use can edit/create/delete board page
 	static $allowToEditBoard = false;
 
+
+	public function getBoardList($db = DB_SLAVE) {
+		$boardsIds = $this->getList( $db, NS_WIKIA_FORUM_BOARD );
+
+		$boards = array();
+		
+		foreach($boardsIds as $key => $id) {
+			$board = ForumBoard::newFromId( $id );
+			$boardInfo = $board->getBoardInfo();
+			$boardInfo['id'] = $id;
+			$boardInfo['name'] = $board->getTitle()->getText();
+			$boardInfo['description'] = $board->getDescription();
+			$boardInfo['url'] = $board->getTitle()->getFullURL();
+			$boardInfo['order_index'] = $key;
+			$boards[] = $boardInfo;
+		}
+		
+		return $boards;
+	}
+
 	/**
 	 * get count of boards
 	 * @return int board count

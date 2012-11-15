@@ -41,25 +41,10 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$forum = F::build( 'Forum' );
 
-		/* if the Board is empty we will create defult board */
-		//TODO: move create to wikilabs hook
 		if ( $forum->createDefaultBoard() ) {
-			$boards = $forum->getList( DB_MASTER, NS_WIKIA_FORUM_BOARD );
+			$this->boards = $forum->getBoardList( DB_MASTER, NS_WIKIA_FORUM_BOARD );
 		} else {
-			$boards = $forum->getList( DB_SLAVE, NS_WIKIA_FORUM_BOARD );
-		}
-
-		$this->boards = array();
-		
-		foreach($boards as $key => $id) {
-			$board = ForumBoard::newFromId( $id );
-			$boardInfo = $board->getBoardInfo();
-			$boardInfo['id'] = $id;
-			$boardInfo['name'] = $board->getTitle()->getText();
-			$boardInfo['description'] = $board->getDescription();
-			$boardInfo['url'] = $board->getTitle()->getFullURL();
-			$boardInfo['order_index'] = $key;
-			$this->boards[] = $boardInfo;
+			$this->boards = $forum->getBoardList( DB_SLAVE, NS_WIKIA_FORUM_BOARD );
 		}
 
 		if ( $forum->haveOldForums() ) {
