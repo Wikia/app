@@ -37,14 +37,14 @@ class WikiaDataAccess {
 	 * otherwise gets the data and saves the result in cache before returning it
 	 * @author Piotr Bablok <pbablok@wikia-inc.com>
 	 */
-	static function cache( $key, $cacheTime, $getData ) {
-		$app = F::app();
+	static function cache( $key, $cacheTime, $getData, $debug = false ) {
+		$wg = F::app()->wg;
 
-		$result = $app->wg->Memc->get( $key );
+		$result = !$debug ? $wg->Memc->get( $key ) : null;
 
-		if( is_null($result) || $result === false ) {
+		if( is_null( $result ) || $result === false ) {
 			$result = $getData();
-			$app->wg->Memc->set( $key, $result, $cacheTime );
+			!$debug && $wg->Memc->set( $key, $result, $cacheTime );
 		}
 
 		return $result;
