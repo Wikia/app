@@ -45,6 +45,9 @@ var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, 
 
 	// adapted for Evolve + simplified copy of AdDriverDelayedLoader.callLiftium
 	fillInSlot = function(slot) {
+		log(['fillInSlot', slot], 5, logGroup);
+		log(slot, 5, logGroup);
+
 		var slotname = slot[0]
 			, slotsize = slotMap[slotname].size
 			, useGw = slotMap[slotname].useGw
@@ -54,9 +57,8 @@ var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, 
 			, script
 		;
 
-		log('fillInSlot', 5, logGroup);
-		log(slot, 5, logGroup);
-		log('size: ' + slotsize, 7, logGroup);
+		// not needed, liftium got its own tracking (but pls keep it for reference)
+		//WikiaTracker.trackAdEvent('liftium.slot2', {ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''), ga_action: slotname, ga_label: 'liftium2'}, 'ga');
 
 		if (useGw) {
 			log('using ghostwriter for #' + slotname, 6, logGroup);
