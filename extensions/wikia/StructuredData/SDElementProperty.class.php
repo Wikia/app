@@ -48,8 +48,8 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 	protected function convertValueToSDSJson($value) {
 		if ( is_object($value) ) {
 			$valueObject = new stdClass();
-			if(isset($valueObject->id)) {
-				$valueObject->id = $valueObject->id;
+			if(isset($value->id)) {
+				$valueObject->id = $value->id;
 			}
 			return $valueObject;
 		}
@@ -100,6 +100,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 	public function setValueFromRequest($value) {
 		if ( $this->isCollection() ) {
 			$parsedValue = array();
+			if (empty($value)) $value = array();
 			foreach($value as $v) {
 				$parsedValue[] = $this->parseRequestValue($v);
 			}

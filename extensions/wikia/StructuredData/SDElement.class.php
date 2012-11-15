@@ -198,10 +198,8 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	public function update(array $params) {
 		/** @var $property SDElementProperty */
 		foreach($this->properties as $property) {
-			if(isset($params[$property->getName()])) {
-				$value = $params[$property->getName()];
-				$property->setValueFromRequest($value);
-			}
+			$value = (isset($params[$property->getName()])) ? $params[$property->getName()] : null;
+			$property->setValueFromRequest($value);
 		}
 	}
 
