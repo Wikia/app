@@ -39,19 +39,7 @@ class SDElementPropertyValue extends SDRenderableObject {
 	}
 
 	public function getRendererNames() {
-
-		$name = $this->type->getName();
-
-		switch ( $name ) {
-
-			case 'xsd:boolean':
-				return array( 'xsd:boolean' );
-			break;
-
-			default:
-				return array( 'value_default' );
-			break;
-		}
+		return array( $this->type->getName(), 'value_default' );
 	}
 
 	public function setPropertyName($propertyName) {
