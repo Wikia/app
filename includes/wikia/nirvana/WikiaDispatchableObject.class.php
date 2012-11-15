@@ -207,26 +207,38 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 * primary intended use is for Purging those URLs in Varnish
 	 * @return String url
 	 */
-	public static function getUrl($method, $format = 'html', $params = array() ) {
+	public static function getUrl( $method, $format = false, $params = array() ) {
 		$app = F::app();
+
 		$basePath = $app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
+
 		$baseParams = array(
-			'controller' => get_called_class(),
-			'method' => $method,
-			'format' => $format,
+			'controller' => str_replace( 'Controller', '', get_called_class() ),
+			'method' => $method
 		);
-		ksort($params);
-		$params = array_merge( $baseParams, $params );
-		return $app->wf->AppendQuery( $basePath, $params );
+
+		if ( !empty( $format ) ) {
+			$baseParams['format'] =  $format;
+		}
+
+		ksort( $params );
+
+		return $app->wf->AppendQuery(
+			$basePath,
+			array_merge( $baseParams, $params ) // all params
+		);
 	}
 
 
 	/**
 	 * purge external method call from caches
 	 */
-	public static function purgeMethod($method, $format = 'html', $params = array() ) {
-		$url = call_user_func(get_called_class()."::getUrl", $method, $format, $params );
-		$squidUpdate = new SquidUpdate( array($url) );
+	public static function purgeMethod( $method, $format = false, $params = array() ) {
+		$squidUpdate = new SquidUpdate(
+			array(
+				self::getUrl( $method, $format, $params )
+			)
+		);
 		$squidUpdate->doUpdate();
 	}
 
