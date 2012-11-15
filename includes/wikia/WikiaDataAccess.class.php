@@ -42,9 +42,11 @@ class WikiaDataAccess {
 
 		$result = !$debug ? $wg->Memc->get( $key ) : null;
 
-		if( is_null( $result ) || $result === false ) {
+		if ( is_null( $result ) || $result === false ) {
 			$result = $getData();
-			!$debug && $wg->Memc->set( $key, $result, $cacheTime );
+			if ( !$debug ) {
+				$wg->Memc->set( $key, $result, $cacheTime );
+			}
 		}
 
 		return $result;
