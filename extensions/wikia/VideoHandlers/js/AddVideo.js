@@ -10,11 +10,13 @@
 		
 		var self = this,
 			alreadyLoggedIn = false,
-			assetsLoaded = false;
+			assetsLoaded = false,
+			options = options || {};
 
 		var settings = {
 			modalWidth: 666,
-			gaCat: null
+			gaCat: null,
+			callback: null
 		}
 
 		settings = $.extend(settings, options);

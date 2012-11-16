@@ -26,6 +26,7 @@ class WikiaStatsAutoHubsConsumerDB {
 	private function makeInsert($table, $data, $options = array(), $onUpdate = '') {
 		wfProfileIn( __METHOD__ );
 		if ( !is_array($data) ) {
+			wfProfileOut( __METHOD__ );
 			return null;
 		}
 		$keys = array_keys( $data[0] );
@@ -437,6 +438,7 @@ class WikiaStatsAutoHubsConsumerDB {
 		$dbs = WikiFactory::db( DB_SLAVE );
 
 		if ( empty($city_array) ) {
+			wfProfileOut( __METHOD__ );
 			return array("value" => array(), "age" => time());
 		}
 

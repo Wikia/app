@@ -6,10 +6,6 @@ class WikiaQuizTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	protected function tearDown() {
-		F::unsetInstance('Category');
-	}
-
 	public function testFoo() {
 		$this->markTestIncomplete('Test class without tests always fails');
 	}

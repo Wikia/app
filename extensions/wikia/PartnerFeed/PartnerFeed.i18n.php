@@ -634,4 +634,3 @@ $messages['zh-hans'] = array(
 	'partner-feed-recent-changes' => '最新更改',
 	'all-blog-posts' => '全部分类',
 );
-

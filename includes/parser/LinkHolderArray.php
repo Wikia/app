@@ -269,6 +269,30 @@ class LinkHolderArray {
 
 		$linkcolour_ids = array();
 
+		// experimental - begin - @author: wladek - preload data from memcached
+		// todo: verify results
+		global $wgMemc, $wgEnableFastLinkCache, $wgEnableMemcachedBulkMode;
+		if ( !empty( $wgEnableFastLinkCache ) && !empty( $wgEnableMemcachedBulkMode ) ) {
+			$memcKeys = array();
+			foreach ( $this->internals as $ns => $entries ) {
+				if ( $ns == NS_SPECIAL ) {
+					continue;
+				}
+				foreach ( $entries as $entry ) {
+					if ( is_null( $entry['title'] ) ) {
+						continue;
+					}
+					if ( $entry['pdbk'] !== '' ) {
+						$memcKeys[] = LinkCache::getMemcKey($entry['pdbk'], 'good');
+						$memcKeys[] = LinkCache::getMemcKey($entry['pdbk'], 'fields');
+					}
+				}
+			}
+			$wgMemc->getMulti($memcKeys);
+		}
+		// experimental - end
+
+
 		# Generate query
 		$queries = array();
 		foreach ( $this->internals as $ns => $entries ) {

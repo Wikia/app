@@ -12,7 +12,7 @@
 	// instance tracking
 	WE.instanceId = '';
 	WE.instanceCount = 0;
-	
+
 	WE.debounce = false;
 
 	// Lazy loaded components manager
@@ -23,8 +23,10 @@
 				loaded: false,
 				requires: [
 					$.loadYUI,
-					$.getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'),
-					wgResourceBasePath + '/extensions/wikia/VideoEmbedTool/js/VET.js'
+					$.getSassCommonURL( 'extensions/wikia/VideoEmbedTool/css/VET.scss' ),
+					$.getSassCommonURL( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' ),
+					wgResourceBasePath + '/extensions/wikia/VideoEmbedTool/js/VET.js',
+					wgResourceBasePath + '/extensions/wikia/WikiaStyleGuide/js/Dropdown.js'
 				]
 			},
 			WikiaMiniUpload: {
@@ -146,13 +148,13 @@
 
 	WE.callFunction = function( id ) {
 		// Bugid 17716 - Don't fire twice if button is double-clicked
-		if (WE.debounce) return;	
+		if (WE.debounce) return;
 		setTimeout(function() { WE.debounce = false; }, 500);
 		WE.debounce = true;
-		
+
 		var args = Array.prototype.slice.call(arguments,1);
 		var conf = WE.functions[id];
-		return conf.fn.apply(conf.scope,args);	
+		return conf.fn.apply(conf.scope,args);
 	};
 
 	WE.initAddons = (function(){

@@ -841,7 +841,7 @@ class EditPage {
 
 							# If we just undid one rev, use an autosummary
 							$firstrev = $oldrev->getNext();
-							if ( $firstrev->getId() == $undo ) {
+							if ( ($firstrev instanceof Revision) && ($firstrev->getId() == $undo) ) {
 								$undoSummary = wfMsgForContent( 'undo-summary', $undo, $undorev->getUserText() );
 								if ( $this->summary === '' ) {
 									$this->summary = $undoSummary;

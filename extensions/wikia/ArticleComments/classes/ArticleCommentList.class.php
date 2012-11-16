@@ -608,6 +608,11 @@ class ArticleCommentList {
 				return true;
 			}
 		}
+		
+		if(class_exists('WallHelper') && WallHelper::isWallNamespace( $title->getNamespace() )) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
 
 		//watch out for recursion
 		if (self::$mDeletionInProgress) {

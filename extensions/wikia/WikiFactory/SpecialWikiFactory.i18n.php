@@ -167,15 +167,15 @@ $messages['qqq'] = array(
 	'wikifactory-label-findtags' => 'Label for a tab that contains a form, allowing staff to find wikis by tag. [http://translatewiki.net/w/i.php?title=Thread:Translating_talk:Wikia/MassTag%3F_FindTag%3F/reply source]',
 	'right-wikifactory' => '{{doc-right|wikifactory}}',
 	'action-wikifactory' => '{{doc-action|wikifactory}}',
-	'closewiki-nbr-wiki' => 'What is $1? If it is a number it should support PLURAL',
+	'closewiki-nbr-wiki' => 'What is $1? If it is a number it should support PLURAL', # Fuzzy
 	'closewiki-unknown' => '{{Identical|Unknown}}',
 	'wikifactory-public-status-change-default-reason' => 'WikiFactory is a staff tool that allows Wikia to manage per-wiki settings across their network. The "public status" setting determines whether a wiki is available for users or closed and assigned for removal. Staff members usually justify a change of the status of a wiki by filling in the "Reason" field in the form. If no reason is provided, the wikifactory-public-status-change-default-reason is used automatically so it can be deduced where the change had been requested from.',
 	'awc-metrics-nbr-result' => '{{Identical|Result}}',
 	'awc-metrics-close' => '{{Identical|Close}}',
 	'awc-metrics-active' => '{{Identical|Active}}',
 	'awc-metrics-closed' => '{{Identical|Closed}}',
-	'awc-metrics-fewer-than' => 'Lego.',
-	'awc-metrics-edits-label' => 'Lego, unknown paramters.',
+	'awc-metrics-fewer-than' => 'Lego.', # Fuzzy
+	'awc-metrics-edits-label' => 'Lego, unknown paramters.', # Fuzzy
 	'awc-metrics-pageviews-label' => 'Needs plural support for $1 and $2',
 	'awc-metrics-exact-match' => '{{Identical|Exact match}}',
 	'awc-metrics-recordspager' => 'Recordspager message. This message cannot support PLURAL for now, because it is used in JavaScript. Parameters:
@@ -260,7 +260,7 @@ bladsygrootte',
 	'awc-metrics-db-size' => 'DB grootte',
 	'awc-metrics-images' => 'Beelde',
 	'awc-metrics-all-users' => 'Gereg.<br />gebruikers',
-	'awc-metrics-all-users-edit-main-ns' => 'Gereg. gebruikers<br />(NS_MAIN)',
+	'awc-metrics-all-users-edit-main-ns' => 'Gereg. gebruikers<br />(NS_MAIN)', # Fuzzy
 	'awc-metrics-pageviews' => 'Gewysde<br />bladsye',
 	'awc-metrics-statistics' => 'Statistieke (gemiddelde vir alle maande)',
 	'awc-metrics-close' => 'Sluit',
@@ -283,7 +283,7 @@ bladsygrootte',
 	'closed-wiki' => 'Gesluite Wiki',
 	'closed-wiki-info' => 'Hierdie wiki is gesluit',
 	'disabled-wiki-info' => 'Hierdie wiki is gedeaktiveer',
-	'closed-wiki-dump-exists' => 'Wil u [$1 die inhoud van u wiki aflaai]?',
+	'closed-wiki-dump-exists' => 'Wil u [$1 die inhoud van u wiki aflaai]?', # Fuzzy
 	'closed-wiki-dump-noexists' => "Hierdie wiki is gesluit.
 'n Dump van die inhoud sal wees binne 24 uur beskikbaar wees.
 Kom asseblief later terug.",
@@ -312,6 +312,7 @@ $messages['an'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Alexknight12
  * @author Meno25
  * @author OsamaK
  */
@@ -343,7 +344,7 @@ $messages['ar'] = array(
 	'right-wikifactory' => 'تغيير الإعدادات الداخلية للويكي',
 	'closewiki-check-and-confirm' => 'فحص الويكيات و تأكيد العملية',
 	'closewiki-redirect-to' => 'إعادة التوجيه',
-	'closewiki-message' => 'إسم النطاق $1',
+	'closewiki-message' => 'اسم النطاق $1',
 	'closewiki-confirm-button' => "تأكيد '$1' من $2",
 	'closewiki-nbr-wiki' => '$1 ويكيات',
 	'closewiki-wiki-closed' => "تم إغلاق '''$1'''($2)",
@@ -368,7 +369,7 @@ $messages['ar'] = array(
 	'awc-metrics-three-months' => 'أنشأت < منذ 3 أشهر',
 	'awc-metrics-half-year' => 'أنشأت < منذ 6 أشهر',
 	'awc-metrics-by-email' => 'أو (البريد الإلكتروني للمستخدم):',
-	'awc-metrics-by-user' => 'أسست من قبل (إسم المستخدم):',
+	'awc-metrics-by-user' => 'أسست من قبل (اسم المستخدم):',
 	'awc-metrics-by-dbname' => 'أين تحتوي أسماء DB:',
 	'awc-metrics-by-title' => 'و العناوين تبدأ من:',
 	'awc-metrics-by-domains' => 'و تتضمن المجالات:',
@@ -384,7 +385,7 @@ $messages['ar'] = array(
 	'awc-metrics-db-size' => 'حجم DB',
 	'awc-metrics-images' => 'الصور',
 	'awc-metrics-all-users' => 'التسجيل  <br />المسخدمون',
-	'awc-metrics-all-users-edit-main-ns' => 'تجيلات المستخدمين <br />(NS_MAIN)',
+	'awc-metrics-all-users-edit-main-ns' => 'تجيلات المستخدمين <br />(NS_MAIN)', # Fuzzy
 	'awc-metrics-pageviews' => 'الصفحة <br />المشاهدات',
 	'awc-metrics-statistics' => '  الإحصائات (معدل كل الأشهر)',
 	'awc-metrics-close' => 'أغلق',
@@ -408,7 +409,7 @@ $messages['ar'] = array(
 	'closed-wiki' => 'ويكي مغلقة',
 	'closed-wiki-info' => 'تم إغلاق هذه الويكي',
 	'disabled-wiki-info' => 'هذه الويكي تم غلقها',
-	'closed-wiki-dump-exists' => 'الرجاء النقر [$1 هنا] إذا أردت إسترداد المحتويات التي وضعتها.',
+	'closed-wiki-dump-exists' => 'الرجاء النقر [$1 هنا] إذا أردت إسترداد المحتويات التي وضعتها.', # Fuzzy
 	'closed-wiki-dump-noexists' => 'تم إغلاق هذه الويكي. ما بقي من المحتوى سيكون متاحا في غضون 24 ساعة. يرجى العودة.',
 	'closed-wiki-create-wiki' => 'إنشاء ويكي جديدة',
 	'closed-wiki-policy' => 'أنظر سياسة ويكيا حول الإغلاق',
@@ -644,7 +645,7 @@ $messages['be-tarask'] = array(
 	'awc-metrics-db-size' => 'Памер базы зьвестак',
 	'awc-metrics-images' => 'Файлы',
 	'awc-metrics-all-users' => 'Зарэгістраваныя<br />удзельнікі',
-	'awc-metrics-all-users-edit-main-ns' => 'Зарэгістраваныя удзельнікі<br />(NS_MAIN)',
+	'awc-metrics-all-users-edit-main-ns' => 'Зарэгістраваныя удзельнікі<br />(NS_MAIN)', # Fuzzy
 	'awc-metrics-pageviews' => 'Праглядаў<br />старонак',
 	'awc-metrics-statistics' => 'Статыстыка (у сярэднім за ўсе месяцы)',
 	'awc-metrics-close' => 'Закрыць',
@@ -667,7 +668,7 @@ $messages['be-tarask'] = array(
 	'closed-wiki' => 'Закрытая вікі',
 	'closed-wiki-info' => 'Гэтая вікі была закрытая',
 	'disabled-wiki-info' => 'Гэтая вікі адключаная',
-	'closed-wiki-dump-exists' => 'Калі ласка, націсьніце [$1 тут], калі Вы атрымаць Ваш зьмест',
+	'closed-wiki-dump-exists' => 'Калі ласка, націсьніце [$1 тут], калі Вы атрымаць Ваш зьмест', # Fuzzy
 	'closed-wiki-dump-noexists' => 'Гэтая вікі была закрытая. Зьмест копіі будзе даступны на працягу 24 гадзінаў. Калі ласка, праверце.',
 	'closed-wiki-create-wiki' => 'Стварыць новую вікі',
 	'closed-wiki-policy' => 'Паказаць правілы закрыцьця вікі ў Wikia',
@@ -742,11 +743,11 @@ $messages['bg'] = array(
 	'awc-metrics-news-day' => 'Нови уикита (дневно)',
 	'awc-metrics-sum-month' => 'Бройки (на месец)',
 	'awc-metrics-sum-day' => 'Бройки (за ден)',
-	'awc-metrics-fewer-than' => 'с по-малко от $1 статии,',
-	'awc-metrics-edits-label' => '$1 редакции през $2,',
+	'awc-metrics-fewer-than' => 'с по-малко от $1 статии,', # Fuzzy
+	'awc-metrics-edits-label' => '$1 редакции през $2,', # Fuzzy
 	'awc-metrics-this-month' => 'този месец',
-	'awc-metrics-last-month' => 'последните $1 месеца',
-	'awc-metrics-pageviews-label' => 'и $1 показвания през последните $2 дни',
+	'awc-metrics-last-month' => 'последните $1 месеца', # Fuzzy
+	'awc-metrics-pageviews-label' => 'и $1 показвания през последните $2 дни', # Fuzzy
 	'awc-metrics-close-listed' => 'Затваряне на всички изброени',
 	'closed-wiki-create-wiki' => 'Създаване на ново уики',
 	'closed-delete-images' => 'Изтриване на картинките',
@@ -872,7 +873,7 @@ $messages['br'] = array(
 	'closed-wiki' => 'Wiki bet serret',
 	'closed-wiki-info' => 'Serret eo bet ar wiki-se',
 	'disabled-wiki-info' => 'Diweredekaet eo bet ar Wiki',
-	'closed-wiki-dump-exists' => "Klikit ($1 amañ), mar plij, m'ho peus c'hoant da adtapout hoc'h endalch",
+	'closed-wiki-dump-exists' => "Klikit ($1 amañ), mar plij, m'ho peus c'hoant da adtapout hoc'h endalch", # Fuzzy
 	'closed-wiki-dump-noexists' => "Klozet eo bet ar Wiki-mañ. Un dump eus an endalc'h a c'hallor kaout a-benn1 devezh. Distroit da welet diwezhatoc'h.",
 	'closed-wiki-create-wiki' => 'Krouiñ ur wiki nevez',
 	'closed-wiki-policy' => 'Gwelet politikerezh klozañ Wikia',
@@ -1004,17 +1005,17 @@ $messages['ca'] = array(
 	'awc-metrics-not-found' => "No s'ha trobat cap Wiki",
 	'awc-metrics-nbr-result' => 'Resultats:',
 	'awc-metrics-created-between' => 'creada entre  $1  (DD/MM/AAAA) i  $2  (DD/MM/AAAA)',
-	'awc-metrics-wikians' => 'Wikians<br>(> 10 edicions)',
+	'awc-metrics-wikians' => 'Wikians<br>(> 10 edicions)', # Fuzzy
 	'awc-metrics-articles' => 'Articles',
-	'awc-metrics-articles-per-day' => 'Articles<br>(mitjana per dia)',
-	'awc-metrics-revisions-per-page' => 'Revisions<br>(AVG. per pàgina)',
-	'awc-metrics-article-avg-size' => 'Art AVG..<br>mida',
+	'awc-metrics-articles-per-day' => 'Articles<br>(mitjana per dia)', # Fuzzy
+	'awc-metrics-revisions-per-page' => 'Revisions<br>(AVG. per pàgina)', # Fuzzy
+	'awc-metrics-article-avg-size' => 'Art AVG..<br>mida', # Fuzzy
 	'awc-metrics-edits' => 'Edicions',
 	'awc-metrics-db-size' => 'Mida de DB',
 	'awc-metrics-images' => 'Imatges',
-	'awc-metrics-all-users' => 'Reg.<br>usuaris',
-	'awc-metrics-all-users-edit-main-ns' => 'Usuaris de reg.<br>(Contingut NS)',
-	'awc-metrics-pageviews' => 'Pàgina<br>vistes',
+	'awc-metrics-all-users' => 'Reg.<br>usuaris', # Fuzzy
+	'awc-metrics-all-users-edit-main-ns' => 'Usuaris de reg.<br>(Contingut NS)', # Fuzzy
+	'awc-metrics-pageviews' => 'Pàgina<br>vistes', # Fuzzy
 	'awc-metrics-statistics' => 'Estadístiques (mitjana per a tots els mesos)',
 	'awc-metrics-close' => 'Tancar',
 	'awc-metrics-close-action' => 'Tancar',
@@ -1038,7 +1039,7 @@ $messages['ca'] = array(
 	'closed-wiki' => 'Wiki tancat',
 	'closed-wiki-info' => "S'ha tancat aquest wiki",
 	'disabled-wiki-info' => 'Aquest wiki ha estat inhabilitat',
-	'closed-wiki-dump-exists' => "Si us plau, fes clic a [$1  aquí] si vols recuperar el seu contingut.<br/> (Si el teu wiki s'ha tancat fa poc, pot trigar un període curt de temps a generar fitxers)",
+	'closed-wiki-dump-exists' => "Si us plau, fes clic a [$1  aquí] si vols recuperar el seu contingut.<br/> (Si el teu wiki s'ha tancat fa poc, pot trigar un període curt de temps a generar fitxers)", # Fuzzy
 	'closed-wiki-dump-noexists' => "S'ha tancat aquest wiki. La descàrrega de contingut estarà disponible d'aquí 24 hores. Si us plau, comprova-ho una altra vegada més tard.",
 	'closed-wiki-create-wiki' => 'Crear un nou wiki',
 	'closed-wiki-policy' => 'Veure Política de Tancament de Wikia',
@@ -1067,7 +1068,8 @@ $messages['ce'] = array(
 	'closed-reason' => 'Бахьан:',
 );
 
-/** Sorani Kurdish (کوردی) */
+/** Sorani Kurdish (کوردی)
+ */
 $messages['ckb'] = array(
 	'wf_cc_name' => 'پۆل',
 	'closed-reason' => 'هۆکار:',
@@ -1185,7 +1187,7 @@ $messages['cs'] = array(
 	'closed-wiki' => 'Uzavřená wiki',
 	'closed-wiki-info' => 'Tato wiki byla uzavřena',
 	'disabled-wiki-info' => 'Tato wiki byla odpojena',
-	'closed-wiki-dump-exists' => 'Pokud chcete znovu načíst obsah, klikněte [$1 sem]<br />(Pokud byla vaše wiki nedávno zavřena, může generování souborů chvíli trvat.)',
+	'closed-wiki-dump-exists' => 'Pokud chcete znovu načíst obsah, klikněte [$1 sem]<br />(Pokud byla vaše wiki nedávno zavřena, může generování souborů chvíli trvat.)', # Fuzzy
 	'closed-wiki-dump-noexists' => 'Tato wiki byla uzavřena. Obsah výstupu z databáze bude k dispozici během 24 hodin. Zkontrolujte prosím později.',
 	'closed-wiki-create-wiki' => 'Vytvořit novou wiki',
 	'closed-wiki-policy' => 'Zobrazit pravidla Wikie ohledně uzavírání wiki',
@@ -1206,7 +1208,8 @@ $messages['cs'] = array(
 	'newwikisgraph-param-other' => 'Ostatní',
 );
 
-/** Kashubian (kaszëbsczi) */
+/** Kashubian (kaszëbsczi)
+ */
 $messages['csb'] = array(
 	'wf_city_title' => 'Titel',
 	'wf_city_lang' => 'Jãzëk',
@@ -1449,19 +1452,22 @@ $messages['diq'] = array(
 	'wf_city_id' => 'id',
 	'wf_city_title' => 'Sername',
 	'wf_city_created' => 'Vıraziya',
+	'wf_city_founding_user' => 'Weqıfdar',
 	'wf_city_public' => 'Weziyet',
 	'wf_city_lang' => 'Zıwan',
 	'wf_cc_name' => 'Kategoriye',
 	'wikifactory-label-info' => 'Zanışe',
+	'wikifactory-label-variables' => 'Vurnayeyî',
 	'wikifactory-label-variables2' => 'Heran',
+	'wikifactory-label-hubs' => 'Merkezi',
 	'wikifactory-label-domains' => 'Domaini',
-	'wikifactory-label-actions' => 'Kerdeni',
+	'wikifactory-label-actions' => 'Kerdışi',
 	'wikifactory-label-google' => 'Google Tools',
 	'wikifactory-label-close' => 'Racnê',
 	'wikifactory-label-tags' => 'Etiketi',
 	'wikifactory-label-tags2' => 'Etiketi',
 	'closewiki-nbr-wiki' => 'Wikiyê $1',
-	'closewiki-unknown' => 'Nêzanıte',
+	'closewiki-unknown' => 'Nêzanayen',
 	'wikifactory-button-save' => 'Vurnayîşa qeyd ke',
 	'awc-metrics-wikis' => 'Wikiya Vinayış',
 	'awc-metrics-select' => 'Wiki bımocne:',
@@ -2087,7 +2093,8 @@ $messages['gv'] = array(
 	'closed-reason' => 'Fa:',
 );
 
-/** Hausa (Hausa) */
+/** Hausa (Hausa)
+ */
 $messages['ha'] = array(
 	'wf_cc_name' => 'Rukuni',
 	'closed-reason' => 'Dalili:',
@@ -2113,16 +2120,16 @@ $messages['he'] = array(
 	'awc-metrics-news-day' => 'ויקי חדשים (יומי)',
 	'awc-metrics-sum-month' => 'ספירה (בחודש)',
 	'awc-metrics-sum-day' => 'ספירה (ביום)',
-	'awc-metrics-fewer-than' => 'לזה יש פחות מ$1 מאמרים,',
-	'awc-metrics-edits-label' => '$1 עריכות ב $2,',
+	'awc-metrics-fewer-than' => 'לזה יש פחות מ$1 מאמרים,', # Fuzzy
+	'awc-metrics-edits-label' => '$1 עריכות ב $2,', # Fuzzy
 	'awc-metrics-this-month' => 'החודש',
-	'awc-metrics-last-month' => 'ב$1 החודשים האחרונים',
-	'awc-metrics-pageviews-label' => 'ו $1 צפיות עמודים ב $2 ימים האחרונים',
+	'awc-metrics-last-month' => 'ב$1 החודשים האחרונים', # Fuzzy
+	'awc-metrics-pageviews-label' => 'ו $1 צפיות עמודים ב $2 ימים האחרונים', # Fuzzy
 	'awc-metrics-exact-match' => 'התאמה מדויקת',
 	'closed-wiki' => 'ויקי סגור',
 	'closed-wiki-info' => 'ויקי זה נסגר',
 	'disabled-wiki-info' => 'ויקי זה הושבת',
-	'closed-wiki-dump-exists' => 'אנא לחץ על [$1 כאן] אם ברצונך לשחזר את התוכן שלך',
+	'closed-wiki-dump-exists' => 'אנא לחץ על [$1 כאן] אם ברצונך לשחזר את התוכן שלך', # Fuzzy
 	'closed-wiki-dump-noexists' => 'ויקי זה נסגר. גיבוי התוכן יהיה זמין תוך 24 שעות. אנא בדוק בקרוב.',
 	'closed-wiki-create-wiki' => 'צור אתר ויקי חדש',
 );
@@ -2499,7 +2506,7 @@ $messages['id'] = array(
 	'closed-wiki' => 'Menutup Wiki',
 	'closed-wiki-info' => 'Wiki ini telah ditutup',
 	'disabled-wiki-info' => 'Wiki ini telah dinonaktifkan',
-	'closed-wiki-dump-exists' => 'Silahkan klik di [$1 sini] jika Anda ingin mengambil konten Anda',
+	'closed-wiki-dump-exists' => 'Silahkan klik di [$1 sini] jika Anda ingin mengambil konten Anda', # Fuzzy
 	'closed-wiki-dump-noexists' => 'Wiki ini telah ditutup. Dump konten akan tersedia dalam 24 jam. Silakan periksa kembali.',
 	'closed-wiki-create-wiki' => 'Buat wiki baru',
 	'closed-wiki-policy' => 'Lihat Kebijakan menutup Wikia',
@@ -2780,7 +2787,7 @@ $messages['krc'] = array(
 	'awc-metrics-db-size' => 'ББ-ни ёлчеми',
 	'awc-metrics-images' => 'Суратла',
 	'awc-metrics-all-users' => '.<br />къошулуучуну рег.',
-	'awc-metrics-all-users-edit-main-ns' => 'Къошулуучуну регистрация эт<br />(NS_MAIN)',
+	'awc-metrics-all-users-edit-main-ns' => 'Къошулуучуну регистрация эт<br />(NS_MAIN)', # Fuzzy
 	'awc-metrics-pageviews' => '<br />кере бетлеге къаралгъанды',
 	'awc-metrics-statistics' => 'Статистика (айлагъа орталама)',
 	'awc-metrics-close' => 'Джаб',
@@ -2803,7 +2810,7 @@ $messages['krc'] = array(
 	'closed-wiki' => 'Джабыкъ вики',
 	'closed-wiki-info' => 'Бу вики джабылыбды',
 	'disabled-wiki-info' => 'Бу вики джукъланыбды',
-	'closed-wiki-dump-exists' => ' Ичиндегини кёрюр ючюн, тилейбиз  [$1 былайын] басыгъыз',
+	'closed-wiki-dump-exists' => ' Ичиндегини кёрюр ючюн, тилейбиз  [$1 былайын] басыгъыз', # Fuzzy
 	'closed-wiki-dump-noexists' => 'Бу вики джабылгъан этгенди. Ичиндегилени списогу 24 сагъатны ичинде кёрюннюкдю. Кечирек киригиз.',
 	'closed-wiki-create-wiki' => 'Джангы вики къура',
 	'closed-wiki-policy' => 'Викини джабыууну джорукъларына къара',
@@ -2825,7 +2832,7 @@ $messages['krc'] = array(
 $messages['ksh'] = array(
 	'wf_city_title' => 'Tittel',
 	'awc-metrics-nbr-result' => 'Erus kütt:',
-	'closed-wiki-dump-exists' => 'Do kanns der [$1 Ennhald vun däm Wiki afroofe].',
+	'closed-wiki-dump-exists' => 'Do kanns der [$1 Ennhald vun däm Wiki afroofe].', # Fuzzy
 	'closed-wiki-dump-noexists' => 'Dat Wiki heh es zohjemaat woode. Däm singe Enhalld sullt innerhallf vun 24 Shtunde als e Aschiiv paraat shtonn. Bes esu joot, un loor spääder noch end donoh.',
 	'closed-wiki-create-wiki' => 'E neu Wiki opmaache',
 	'closed-wiki-policy' => 'Donn Wikia sing Reschlinnije för et Zohmaache aanzeije',
@@ -3035,7 +3042,8 @@ $messages['mk'] = array(
 	'newwikisgraph-param-other' => 'Други',
 );
 
-/** Malayalam (മലയാളം) */
+/** Malayalam (മലയാളം)
+ */
 $messages['ml'] = array(
 	'wf_city_url' => 'വിലാസം',
 	'wf_city_title' => 'ശീർഷകം',
@@ -3312,7 +3320,8 @@ $messages['my'] = array(
 	'awc-metrics-search' => 'ရှာဖွေရန် ရွေးချယ်မှု',
 );
 
-/** Mazanderani (مازِرونی) */
+/** Mazanderani (مازِرونی)
+ */
 $messages['mzn'] = array(
 	'wf_city_lang' => 'زوون',
 	'wf_cc_name' => 'رج',
@@ -3592,7 +3601,7 @@ Kom hier alstublieft terug.',
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
-	'closed-wiki-dump-exists' => 'Wil je [$1 de inhoud van je wiki downloaden]?',
+	'closed-wiki-dump-exists' => 'Wil je [$1 de inhoud van je wiki downloaden]?', # Fuzzy
 );
 
 /** Norwegian Nynorsk (norsk (nynorsk)‎)
@@ -4128,13 +4137,13 @@ regist.',
 );
 
 /** Brazilian Portuguese (português do Brasil)
- * @author 555
  * @author Aristóbulo
  * @author Caio1478
  * @author Daemorris
  * @author Giro720
  * @author Jesielt
  * @author Luckas Blade
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'wikifactorypagetitle' => 'Configurador da Fábrica de Wikis',
@@ -5076,7 +5085,8 @@ $messages['uk'] = array(
 	'closed-reason' => 'Причина:',
 );
 
-/** Urdu (اردو) */
+/** Urdu (اردو)
+ */
 $messages['ur'] = array(
 	'closed-reason' => 'وجہ:',
 );
@@ -5088,7 +5098,8 @@ $messages['uz'] = array(
 	'wikifactory-label-info' => "Ma'lumot",
 );
 
-/** Wu (吴语) */
+/** Wu (吴语)
+ */
 $messages['wuu'] = array(
 	'closed-reason' => '理由：',
 );
@@ -5171,7 +5182,7 @@ $messages['zh-hant'] = array(
 	'awc-metrics-three-months' => '創建 < 3 個月前',
 	'awc-metrics-wikians' => 'Wikia人<br />(>10 次編輯)',
 	'awc-metrics-articles' => '條目',
-	'awc-metrics-articles-per-day' => '文章數<br>(每日平均)',
+	'awc-metrics-articles-per-day' => '文章數<br>(每日平均)', # Fuzzy
 	'awc-metrics-revisions-per-page' => '修改<br />(平均每頁)',
 	'awc-metrics-edits' => '編輯次數',
 	'awc-metrics-db-size' => '資料庫大小',
@@ -5210,4 +5221,3 @@ $messages['zh-hant'] = array(
 $messages['zh-tw'] = array(
 	'closed-wiki' => '關閉的圍紀',
 );
-

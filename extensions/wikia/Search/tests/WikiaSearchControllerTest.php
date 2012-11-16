@@ -287,38 +287,48 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	public function testTabs() {
 		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect', 'setVal' ), array( 'html' ) );
 		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
-		$mockSearchConfig	=	$this->getMock( 'WikiaSearchConfig' );
+		$mockSearchConfig	=	$this->getMock( 'WikiaSearchConfig', array( 'getNamespaces', 'getQuery' ) );
+		$mockSearchEngine   =   $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'namespacesAsText', 'searchableNamespaces' ) );
+		
+		$mockSearchEngine->staticExpects( $this->any() )->method( 'defaultNamespaces' )->will( $this->returnValue( array( NS_MAIN, NS_CATEGORY ) ) );
+		$mockSearchEngine->staticExpects( $this->any() )->method( 'namespacesAsText' )->will( $this->returnValue( array( 'Article', 'Category' ) ) );
+		$mockSearchEngine->staticExpects( $this->any() )->method( 'searchableNamespaces' )->will( $this->returnValue( array( NS_MAIN, NS_CATEGORY, NS_FILE, NS_USER ) ) );
+		$mockSearchConfig->expects( $this->any() )->method( 'getNamespaces' )->will( $this->returnValue( array( NS_MAIN, NS_CATEGORY, NS_FILE, NS_USER ) ) );
+		$defaultNamespaces = $mockSearchEngine->defaultNamespaces();
+		
+		$nsAllSet = $mockSearchEngine->searchableNamespaces();
+		
+		$this->mockGlobalVariable( 'wgDefaultSearchProfile', SEARCH_PROFILE_DEFAULT );
 		
 		$searchProfileArray = array(
-	            'default' => array(
+	            SEARCH_PROFILE_DEFAULT => array(
 	                    'message' => 'wikiasearch2-tabs-articles',
 	                    'tooltip' => 'searchprofile-articles-tooltip',
-	                    'namespaces' => array( NS_MAIN, NS_CATEGORY ),
-	                    'namespace-messages' => array( 'Article', 'Category' ),
+	                    'namespaces' => $defaultNamespaces,
+	                    'namespace-messages' => $mockSearchEngine->namespacesAsText( $defaultNamespaces ),
 	            ),
-	            'images' => array(
+	            SEARCH_PROFILE_IMAGES => array(
 	                    'message' => 'wikiasearch2-tabs-photos-and-videos',
 	                    'tooltip' => 'searchprofile-images-tooltip',
 	                    'namespaces' => array( NS_FILE ),
 	            ),
-	            'users' => array(
+	            SEARCH_PROFILE_USERS => array(
 	                    'message' => 'wikiasearch2-users',
 	                    'tooltip' => 'wikiasearch2-users-tooltip',
 	                    'namespaces' => array( NS_USER )
 	            ),
-	            'all' => array(
+	            SEARCH_PROFILE_ALL => array(
 	                    'message' => 'searchprofile-everything',
 	                    'tooltip' => 'searchprofile-everything-tooltip',
-	                    'namespaces' => array( NS_MAIN, NS_CATEGORY, NS_FILE, NS_USER ),
+	                    'namespaces' => $nsAllSet,
 	            ),
-	            'advanced' => array(
+	            SEARCH_PROFILE_ADVANCED => array(
 	                    'message' => 'searchprofile-advanced',
 	                    'tooltip' => 'searchprofile-advanced-tooltip',
-	                    'namespaces' => array( NS_MAIN, NS_CATEGORY ),
+	                    'namespaces' => $mockSearchConfig->getNamespaces(),
 	                    'parameters' => array( 'advanced' => 1 ),
 	            )
-	    );
-		
+		);
 		
 		try {
 		    $this->searchController->tabs();
@@ -389,6 +399,8 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		;
 		
 		$this->searchController->setResponse( $mockResponse );
+		
+		$this->mockApp();
 		
 		$this->searchController->tabs();
 		/**

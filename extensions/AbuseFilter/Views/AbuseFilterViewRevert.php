@@ -90,7 +90,7 @@ class AbuseFilterViewRevert extends AbuseFilterView {
 				Html::hidden( 'title', $this->getTitle( "revert/$filter" )->getPrefixedText() ) .
 				Html::hidden( 'wpPeriodStart', $this->origPeriodStart ) .
 				Html::hidden( 'wpPeriodEnd', $this->origPeriodEnd ) .
-				Html::inputLabel(
+				Xml::inputLabel(
 					wfMsg( 'abusefilter-revert-reasonfield' ),
 					'wpReason', 'wpReason', 45
 				) .

@@ -478,12 +478,12 @@ class MWMemcached {
 
 		# start wikia change
 		# Owen wants to get more detailed profiling info
-		if (isset ($val[$key])) {
+		if ( array_key_exists($key,$val) ) {
 			$this->_dupe_cache[$key] = $val[$key];
 			wfProfileIn ( __METHOD__ . "::$key !HIT");
 			wfProfileOut ( __METHOD__ . "::$key !HIT");
 		} else {
-			$this->_dupe_cache[$key] = null;
+			$this->_dupe_cache[$key] = false;
 			wfProfileIn ( __METHOD__ . "::$key !MISS");
 			wfProfileOut ( __METHOD__ . "::$key !MISS");
 		}
@@ -508,7 +508,14 @@ class MWMemcached {
 	 * @return Array
 	 */
 	public function get_multi( $keys ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( $this->_debug ) {
+			$this->_debugprint( sprintf( "MemCache: get_multi: called with %d key(s)\n", count($keys) ) );
+		}
+
 		if ( !$this->_active ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -517,6 +524,27 @@ class MWMemcached {
 		} else {
 			$this->stats['get_multi'] = 1;
 		}
+
+		// Wikia change - begin - @author: wladek
+		$val = array();
+		foreach ($keys as $k => $key) {
+			if ( array_key_exists( $key, $this->_dupe_cache ) ) {
+				wfProfileIn ( __METHOD__ . "::$key !DUPE" );
+				wfProfileOut ( __METHOD__ . "::$key !DUPE" );
+				unset($keys[$k]);
+				$val[$key] = $this->_dupe_cache[$key];
+			}
+		}
+		if ( empty( $keys ) ) {
+			if ( $this->_debug ) {
+				$this->_debugprint( sprintf( "MemCache: get_multi: all requested data has been found in dupe cache\n" ) );
+			}
+
+			wfProfileOut( __METHOD__ );
+			return $val;
+		}
+		// Wikia change - end
+
 		$sock_keys = array();
 
 		foreach ( $keys as $key ) {
@@ -548,7 +576,7 @@ class MWMemcached {
 		}
 
 		// Parse responses
-		$val = array();
+		//$val = array(); // defined earlier in this function - @author: wladek
 		foreach ( $gather as $sock ) {
 			$this->_load_items( $sock, $val );
 		}
@@ -559,6 +587,22 @@ class MWMemcached {
 			}
 		}
 
+		// Wikia change - begin - @author: wladek
+		foreach ($keys as $key) {
+			if ( array_key_exists($key,$val) ) {
+				$this->_dupe_cache[$key] = $val[$key];
+				wfProfileIn ( __METHOD__ . "::$key !HIT");
+				wfProfileOut ( __METHOD__ . "::$key !HIT");
+			} else {
+				$val[$key] = false;
+				$this->_dupe_cache[$key] = false;
+				wfProfileIn ( __METHOD__ . "::$key !MISS");
+				wfProfileOut ( __METHOD__ . "::$key !MISS");
+			}
+		}
+		// Wikia change - end
+
+		wfProfileOut( __METHOD__ );
 		return $val;
 	}
 

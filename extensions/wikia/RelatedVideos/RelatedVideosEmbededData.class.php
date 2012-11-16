@@ -79,6 +79,7 @@ class RelatedVideosEmbededData extends RelatedVideosNamespaceData {
 			);
 
 			if ( empty( $res ) ){
+				wfProfileOut(__METHOD__);
 				return;
 			}
 			while ( $row = $res->fetchObject( $res ) ) {

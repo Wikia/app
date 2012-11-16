@@ -27,6 +27,10 @@ class PhalanxHelper {
 		$result = false;
 		wfProfileIn( __METHOD__ );
 
+		if ( ( $data['type'] & Phalanx::TYPE_USER ) && User::isIP( $data['text'] ) ) {
+			$data['ip_hex'] = IP::toHex( $data['text'] );
+		}
+
 		//get data before update - we need it for cache update
 		$oldData = Phalanx::getFromId($data['id']);
 
@@ -63,6 +67,10 @@ class PhalanxHelper {
 		$result = false;
 		wfProfileIn( __METHOD__ );
 
+		if ( ( $data['type'] & Phalanx::TYPE_USER ) && User::isIP( $data['text'] ) ) {
+			$data['ip_hex'] = IP::toHex( $data['text'] );
+		}
+
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$dbw->insert(
 			'phalanx',
@@ -91,7 +99,7 @@ class PhalanxHelper {
 	static public function setBlock() {
 		global $wgRequest, $wgUser;
 
-		wfProfileOut( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$id = $wgRequest->getVal( 'id', false ); // only set for update
 		$filter = $wgRequest->getText( 'wpPhalanxFilter' );
@@ -359,11 +367,10 @@ class PhalanxHelper {
 				continue;
 			}
 
-			foreach( $filters as $filter ) {
-				$result = Phalanx::isBlocked( $text, $filter );
-				if ( $result['blocked'] == true ) {
-					$data[$module][] = $filter;
-				}
+			$filter = null;
+			$result = Phalanx::findBlocked( $text, $filters, true, $filter );
+			if ( $result['blocked'] == true ) {
+				$data[$module][] = $filter;
 			}
 
 			if ( !empty( $data[$module] ) ) {

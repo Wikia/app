@@ -152,6 +152,7 @@ class CreateWiki {
 			"{$this->mIP}/maintenance/archives/wikia/patch-create-page_visited.sql",
 			//article comments list use by wall/forum
 			"{$this->mIP}/extensions/wikia/ArticleComments/patch-create-comments_index.sql",
+			"{$this->mIP}/extensions/wikia/VideoHandlers/sql/video_info.sql",
 		);
 
 		/**
@@ -572,6 +573,8 @@ class CreateWiki {
 				$status = self::ERROR_DOMAIN_NAME_TAKEN;
 			}
 		}
+
+		wfProfileOut(__METHOD__);
 
 		return $status;
 	}
@@ -1042,7 +1045,6 @@ class CreateWiki {
 				$this->mWFSettingVars['wgEnableMagicAnswer']             = false;
 				$this->mWFSettingVars['wgEnableCategoryHubsExt']         = false;
 				$this->mWFSettingVars['wgEnableEditingTipsExt']          = false;
-				$this->mWFSettingVars['wgAdslot_HOME_LEFT_SKYSCRAPER_1'] = "Null";
 
 				$mapArray = array( "ar" => true, "he" => true, "ja" => true, "th" => true, "zh" => true );
 				if ( Wikia::langToSomethingMap( $mapArray, $this->mNewWiki->language, false ) ) {

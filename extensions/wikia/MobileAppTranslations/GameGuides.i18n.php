@@ -11,7 +11,6 @@
 
 $messages = array();
 
-// Lang: en
 $messages['en'] = array(
 	'activityindicator-message' => 'Loading...',
 	
@@ -344,7 +343,7 @@ $messages['ko'] = array(
 	'window-wikis-wikilist-search-hint' => '찾기 우리의 탑 게임들',
 	'window-category-load-batch' => '더',
 	'window-article-button-close' => '닫기',
-	'window-article-button-back' => '뒤',
+	'window-article-button-back' => '뒤로',
 	'window-article-menu-search-label' => '찾기',
 	'window-article-menu-dashboard-label' => '도움말 목차',
 	'window-article-menu-cancel-label' => '취소',
@@ -666,4 +665,3 @@ $messages['zh-hans'] = array(
 	'window-article-button-back' => '返回',
 	'searchview-button-back-article' => '返回条目',
 );
-

@@ -30,6 +30,10 @@ $wgExtensionCredits['parserhook'][] = array(
 
 $wgHooks['LanguageGetMagic'][] = 'wfDynamicFunctionsLanguageGetMagic';
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfDynamicFunctions( $parser ) {
     global $wgExtDynamicFunctions;
 
@@ -58,6 +62,10 @@ function wfDynamicFunctionsLanguageGetMagic( &$magicWords, $langCode ) {
 class ExtDynamicFunctions
 {
 
+	/**
+	 * @param Parser $parser
+	 * @return bool
+	 */
     function arg( &$parser, $name = '', $default = '' )
     {
         global $wgRequest;
@@ -65,18 +73,30 @@ class ExtDynamicFunctions
         return $wgRequest->getVal($name, $default);
     }
 
+	/**
+	 * @param Parser $parser
+	 * @return bool
+	 */
     function ip( &$parser )
     {
         $parser->disableCache();
         return wfGetIP();
     }
 
+	/**
+	 * @param Parser $parser
+	 * @return bool
+	 */
     function rand( &$parser, $a = 0, $b = 1 )
     {
         $parser->disableCache();
         return mt_rand( intval($a), intval($b) );
     }
 
+	/**
+	 * @param Parser $parser
+	 * @return bool
+	 */
     function skin( &$parser )
     {
         global $wgUser, $wgRequest;

@@ -7,6 +7,9 @@
 	.msg{
 		font-size: 13px;
 		line-height: 16px;
+		a {
+			text-decoration: underline;
+		}
 	}
 	.close {
 		float: right;
@@ -32,6 +35,9 @@
 		.close{
 			background-color: mix(#92CD8E , #000000, 15%);
 		}
+		a {
+			color: mix(#92CD8E, #28482E, 20%);
+		}
 	}
 	&.notify { // Blue
 		background: #7ABFDD;
@@ -40,6 +46,9 @@
 		color: #22424F;
 		.close{
 			background-color: mix(#7ABFDD, #000000, 15%);
+		}
+		a {
+			color: mix(#7ABFDD, #22424F, 20%);
 		}
 	}
 	&.error { // Red
@@ -50,6 +59,9 @@
 		.close{
 			background-color: mix(#E56667, #000000, 15%);
 		}
+		a {
+			color: mix(#E56667, #511616, 20%);
+		}
 	}
 	&.warn { // Yellow
 		background: #F2CF60;
@@ -58,6 +70,9 @@
 		color: #524616;
 		.close{
 			background-color: mix(#F2CF60, #000000, 15%);
+		}
+		a {
+			color: mix(#F2CF60, #524616, 20%);
 		}
 	}
 	&.float {

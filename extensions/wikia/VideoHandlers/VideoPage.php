@@ -54,8 +54,7 @@ class WikiaVideoPage extends ImagePage {
 		$img =  $this->getDisplayedFile();
 		$handler = $img->getHandler();
 		if ( $handler instanceof VideoHandler && $handler->isBroken() ) {
-			wfProfileOut( __METHOD__ );
-			return $this->dupes = array();
+			$res = $this->dupes = array();
 		} else {
 			$dupes = parent::getDuplicates();
 			$finalDupes = array();
@@ -66,9 +65,10 @@ class WikiaVideoPage extends ImagePage {
 		                    $finalDupes[] = $dupe;
 		                }
 			}
-			wfProfileOut( __METHOD__ );
-			return $finalDupes;
+			$res = $finalDupes;
 		}
+		wfProfileOut( __METHOD__ );
+		return $res;
 	}
 
 	public static function getVideosCategory() {

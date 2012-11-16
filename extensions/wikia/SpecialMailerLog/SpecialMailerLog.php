@@ -31,6 +31,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		if ( !$wgUser || !$wgUser->isLoggedIn() ) {
 			$login = SpecialPage::getTitleFor( 'UserLogin' );
 			$wgOut->redirect( $login->getFullURL( 'returnto=Special:MailerLog' ) );
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 

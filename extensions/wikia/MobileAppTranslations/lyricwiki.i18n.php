@@ -11,7 +11,6 @@
 
 $messages = array();
 
-// Lang: en
 $messages['en'] = array(
 	//  Tabs 
 	'app-loading' => 'Loading...',
@@ -330,7 +329,7 @@ $messages['fi'] = array(
 	'about-heading-feedback' => 'Palaute',
 	'about-feedback-0' => 'Palautetta ohjelmasta? Lähetä minulle sähköpostia: %s (englanniksi)',
 	'about-heading-rate' => 'Arvioi ohjelma Marketissa!',
-	'about-rate-0-android' => 'Jos pidät tästä ohjelmasta, niin miksi et antaisi sille viittä tähteä Android Marketissa? :)',
+	'about-rate-0-android' => 'Jos pidät tästä ohjelmasta, niin miksi et antaisi sille viittä tähteä Android Marketissa? :)', # Fuzzy
 	'gracenote-takedown' => 'Valitettavasti emme tekijänoikeussyistä voi näyttää etsimäsi kappaleen koko sanoja. Tätä tapahtuu alle prosentille sanoituksistamme. Yritä uudelleen myöhemmin.',
 	'lyrics-artist-byline' => 'esittäjä: %s',
 	'ringtone-matcher-by-song' => 'Lähetä %s soittoäänenä puhelimeesi!',
@@ -504,7 +503,8 @@ $messages['inh'] = array(
 	'app-tab-browse' => 'А...I',
 );
 
-/** Italian (italiano) */
+/** Italian (italiano)
+ */
 $messages['it'] = array(
 	'app-loading' => 'Caricamento..',
 	'app-tab-search' => 'Cerca',
@@ -530,7 +530,7 @@ $messages['it'] = array(
 	'about-heading-feedback' => 'Feedback',
 	'about-feedback-0' => "Vuoi inviarci le tue opinioni su questa applicazone? Inviaci un'e-mail: %s",
 	'about-heading-rate' => 'Ricorda di votare questa applicazione!',
-	'about-rate-0-android' => "Se questa applicazione ti piace, votala con 5 stelle nell'Android Market :)",
+	'about-rate-0-android' => "Se questa applicazione ti piace, votala con 5 stelle nell'Android Market :)", # Fuzzy
 	'gracenote-takedown' => "Oops! Sfortunatamente non abbiamo la licenza per mostrare il testo completo per questa canzone al momento (questo accade circa per l'1% delle nostre canzoni). Riprova la prossima settimana.",
 	'lyrics-artist-byline' => 'by %s',
 	'ringtone-matcher-by-song' => 'Invia la suoneria di %s sul tuo cellulare',
@@ -1100,4 +1100,3 @@ $messages['zh-hans'] = array(
 	'lyrics-artist-byline' => '%s歌唱',
 	'ringtone-matcher-by-song' => '传送%s铃声到您的手机',
 );
-

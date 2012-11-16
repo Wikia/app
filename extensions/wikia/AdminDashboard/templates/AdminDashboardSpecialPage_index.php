@@ -144,6 +144,16 @@
 							<?= wfMsg("admindashboard-control-add-photo-label") ?>
 						</a>
 					</li>
+					<? if( $showVideoLink ) { ?>
+						<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-add-video-tooltip") ?>">
+							<a href="<?= $urlAddVideo ?>" class="set addVideoButton" data-return-url="<?= $urlAddVideoReturnUrl ?>" data-tracking="general/addvideo">
+								<span class="representation">
+									<span class="icon addvideo"></span>
+								</span>
+								<?= wfMsg("admindashboard-control-add-video-label") ?>
+							</a>
+						</li>
+					<? } ?>
 					<li class="control" data-tooltip="<?= wfMsg("admindashboard-control-add-blog-tooltip") ?>">
 						<a href="<?= $urlCreateBlogPage ?>" class="set" data-tracking="general/createblog">
 							<span class="representation">

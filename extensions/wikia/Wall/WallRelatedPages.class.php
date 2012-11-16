@@ -13,6 +13,7 @@ class WallRelatedPages extends WikiaModel {
 			$db = $this->wf->GetDB( DB_MASTER );
 			if ( !$db->tableExists('wall_related_pages') ) {
 				$db->sourceFile( $dir . '/sql/wall_related_pages.sql' );
+				wfProfileOut( __METHOD__ );
 				return true;
 			}
 		}

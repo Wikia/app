@@ -490,8 +490,8 @@ class DataProvider {
 				$results = array_slice($results, 0, $limit);
 				$wgMemc->set($memckey, $results, 60 * 60 * 12);
 			}
-			wfProfileOut(__METHOD__);
 		}
+		wfProfileOut(__METHOD__);
 		return $results;
 	}
 
@@ -509,6 +509,7 @@ class DataProvider {
 		/* check if table exists */
 		if (!empty($exists_table)) {
 			if ($dbr->tableExists($exists_table) === false) {
+				wfProfileOut(__METHOD__);
 				return false;
 			}
 		}

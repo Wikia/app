@@ -377,9 +377,9 @@ SpecialPromote.prototype = {
 			method: 'saveData',
 			data: data,
 			callback: function (response) {
-				var url = new Wikia.Querystring();
-				url.setVal('cb', Math.ceil(Math.random() * 10001));
-				url.goTo();
+				(new Wikia.Querystring())
+					.addCb()
+					.goTo();
 			},
 			onErrorCallback: function () {
 				$().log('error');

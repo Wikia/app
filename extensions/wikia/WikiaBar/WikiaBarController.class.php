@@ -45,7 +45,7 @@ class WikiaBarController extends WikiaController {
 
 	protected function isCorporateMainPageNonAnon() {
 		return (
-			HubService::isCorporatePage(F::app()->wg->cityId)
+			HubService::isCorporatePage()
 			&& Wikia::isMainPage()
 			&& !F::app()->wg->User->isAnon()
 		);
@@ -106,7 +106,8 @@ class WikiaBarController extends WikiaController {
 			$results->success = true;
 		}
 
-		$this->setWikiaBarState($changeTo);
+		$wikiaUserProperties = F::build('WikiaUserPropertiesController');
+		$wikiaUserProperties->saveWikiaBarState($changeTo);
 		$this->results = $results;
 	}
 
@@ -114,25 +115,24 @@ class WikiaBarController extends WikiaController {
 	 * @desc Gets Wikia Bar display state from user_properties table. If it's not set will return default value WIKIA_BAR_SHOWN_STATE_VALUE
 	 */
 	public function getUserStateBar() {
-		$results = new stdClass();
+		$this->results = new stdClass();
 
-		if( $this->wg->User->isLoggedIn() ) {
-			$results->wikiaBarState = $this->wg->User->getOption(self::WIKIA_BAR_STATE_OPTION_NAME, self::WIKIA_BAR_SHOWN_STATE_VALUE);
-			$results->success = true;
-		} else {
-			$results->error = wfMsg('wikiabar-get-state-error');
-			$results->success = false;
+		try {
+			$response = $this->app->sendRequest('WikiaUserPropertiesController', 'getUserPropertyValue', array(
+				'propertyName' => self::WIKIA_BAR_STATE_OPTION_NAME,
+				'defaultOption' => self::WIKIA_BAR_SHOWN_STATE_VALUE
+			));
+			$results = $response->getVal('results', false);
+
+			if( $results ) {
+				$this->results->wikiaBarState = $results->value;
+				$this->results->success = true;
+			} else {
+				$this->results->success = false;
+			}
+		} catch( Exception $e ) {
+			$this->results->error = wfMsg('wikiabar-get-state-error');
+			$this->results->success = false;
 		}
-
-		$this->results = $results;
-	}
-
-	/**
-	 * @desc Sets Wikia Bar display state in user_properties table
-	 * @param String $state
-	 */
-	protected function setWikiaBarState($state) {
-		$this->wg->User->setOption(self::WIKIA_BAR_STATE_OPTION_NAME, $state);
-		$this->wg->User->saveSettings();
 	}
 }

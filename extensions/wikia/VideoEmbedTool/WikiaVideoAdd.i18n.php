@@ -3,11 +3,11 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wva-success' => 'Video page $1 was successfully added.',
-	'wva-success-replaced' => 'Video page $1 was successfully replaced.',
+	'wva-success' => 'Video page [[:$1]] was successfully added.',
+	'wva-success-replaced' => 'Video page [[:$1]] was successfully replaced.',
 	'wva-failure' => 'Please supply valid parameters.',
-	'wva-name' => 'Enter the name:',
-	'wva-url' => 'Enter the URL:',
+	'wva-name' => 'Video name:',
+	'wva-url' => 'Video URL:',
 	'wva-add' => 'Add',
 	'wva-title' => 'Quickly add video From URL',
 	'wva-notlogged' => 'You need to log in or register to insert videos.',
@@ -190,6 +190,7 @@ $messages['diq'] = array(
 	'wva-name' => 'Name deke:',
 	'wva-url' => 'URL deke:',
 	'wva-add' => 'Deke',
+	'wva-protected' => 'Na vidyoya stare deya.',
 );
 
 /** Esperanto (Esperanto)
@@ -375,6 +376,7 @@ $messages['ig'] = array(
 );
 
 /** Italian (italiano)
+ * @author Beta16
  * @author HalphaZ
  * @author Pietrodn
  */
@@ -389,6 +391,7 @@ $messages['it'] = array(
 	'wva-notlogged' => 'Devi accedere o registrati per inserire video.',
 	'wva-notallowed' => 'Non puoi inserire video su questo wiki.',
 	'wva-protected' => 'Questo video è protetto.',
+	'wva-thumbnail-upload-failed' => 'Incorporazione del video fallita, impossibile ottenere una miniatura corretta',
 );
 
 /** Japanese (日本語)
@@ -693,7 +696,8 @@ $messages['ru'] = array(
 	'wva-thumbnail-upload-failed' => 'Видео добавлено с ошибкой, невозможно получить корректной миниатюры',
 );
 
-/** Sinhala (සිංහල) */
+/** Sinhala (සිංහල)
+ */
 $messages['si'] = array(
 	'wva-name' => 'නම යොදන්න:',
 	'wva-url' => 'URLඑක යොදන්න:',
@@ -809,4 +813,3 @@ $messages['zh-hans'] = array(
 	'wva-url' => '输入URL：',
 	'wva-add' => '添加',
 );
-

@@ -55,6 +55,7 @@ $starttime = microtime( true );
 
 // URL safety checks
 if ( !$wgRequest->checkUrlExtension() ) {
+	wfProfileOut( 'api.php' );
 	return;
 }
 

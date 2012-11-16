@@ -19,13 +19,17 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		$assetManager = AssetsManager::getInstance();
 
-		$styles = $assetManager->getUrl( 'extensions/wikia/GameGuides/css/GameGuidesContentManagmentTool.scss' );
+		$styles = $assetManager->getURL(
+			'extensions/wikia/GameGuides/css/GameGuidesContentManagmentTool.scss'
+		);
 
 		foreach( $styles as $s ) {
 			$this->wg->Out->addStyle( $s );
 		}
 
-		$scripts = $assetManager->getURL( 'extensions/wikia/GameGuides/js/GameGuidesContentManagmentTool.js' );
+		$scripts = $assetManager->getURL(
+			'extensions/wikia/GameGuides/js/GameGuidesContentManagmentTool.js'
+		);
 
 		foreach( $scripts as $s ) {
 			$this->wg->Out->addScriptFile( $s );
@@ -59,19 +63,21 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 					$err[] = $categoryName;
 				} else if ( empty( $err ) ) {
 
+					$category = array(
+						'name' => $categoryName
+					);
+
+					if ( !empty( $values['name'] ) ) {
+						$category['label'] = $values['name'];
+					}
+
 					if ( array_key_exists( $values['tag'], $tags ) ) {
-						$tags[$values['tag']]['categories'][] = array(
-							'category' => $categoryName,
-							'name' => $values['name']
-						);
+						$tags[$values['tag']]['categories'][] = $category;
 					} else {
 						$tags[$values['tag']] = array(
 							'name' => $values['tag'],
 							'categories' => array(
-								array(
-									'category' => $categoryName,
-									'name' => $values['name']
-								)
+								$category
 							)
 						);
 					}
@@ -89,6 +95,21 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		if ( $status ) {
 			$this->wf->RunHooks( 'GameGuidesContentSave' );
+		}
+
+		return true;
+	}
+
+	//This should appear on WikiFeatures list only when GG extension is turned on and be visible only to staff
+	static public function onWikiFeatures(){
+		$wg = F::app()->wg;
+
+		if ( $wg->User->isAllowed( 'gameguidescontent-switchforadmins' ) ) {
+			$wg->append(
+				'wgWikiFeatures',
+				'wgGameGuidesContentForAdmins',
+				'normal'
+			);
 		}
 
 		return true;

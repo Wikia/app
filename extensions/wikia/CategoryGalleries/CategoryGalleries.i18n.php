@@ -268,4 +268,3 @@ $messages['vi'] = array(
 $messages['zh-hant'] = array(
 	'categorygalleries-desc' => '於分類頁面上顯示頁面庫',
 );
-

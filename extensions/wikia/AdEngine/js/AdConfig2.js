@@ -1,6 +1,6 @@
 var AdConfig2 = function (
 	// regular dependencies
-	log, window, document, Geo
+	log, window, document, Geo, adLogicShortPage
 
 	// adProviders
 	, adProviderAdDriver2
@@ -22,17 +22,13 @@ var AdConfig2 = function (
 		'CORP_TOP_LEADERBOARD':true,
 		'CORP_TOP_RIGHT_BOXAD':true,
 		'EXIT_STITIAL_BOXAD_1':true,
-		'HOME_INVISIBLE_TOP':true,
 		'HOME_TOP_LEADERBOARD':true,
 		'HOME_TOP_RIGHT_BOXAD':true,
 		'HUB_TOP_LEADERBOARD':true,
-		'INVISIBLE_MODAL':true,
-		'INVISIBLE_TOP':true,
 		'LEFT_SKYSCRAPER_2':true,
 		'MIDDLE_RIGHT_BOXAD':true,
 		'MODAL_RECTANGLE':true,
 		'MODAL_INTERSTITIAL':true,
-		'MODAL_VERTICAL_BANNER':true,
 		'TEST_HOME_TOP_RIGHT_BOXAD':true,
 		'TEST_TOP_RIGHT_BOXAD':true,
 		'TOP_LEADERBOARD':true,
@@ -53,18 +49,15 @@ var AdConfig2 = function (
 	highValueSlots = defaultHighValueSlots;
 
 	getProvider = function(slot) {
-		var slotname = slot[0]
-			, pageHeight = document.documentElement.offsetHeight;
+		var slotname = slot[0];
 
 		log('getProvider', 5, log_group);
 		log(slot, 5, log_group);
 
-		// Check height of page for some slots
-		if (slotsOnlyOnLongPages[slotname]) {
-			if (pageHeight < slotsOnlyOnLongPages[slotname]) {
-				log('#' + slotname + ' disabled. Page too short', 7, log_group);
-				return adProviderNull;
-			}
+		// Check if page is too short for that slot
+		if (adLogicShortPage.isPageTooShortForSlot(slotname)) {
+			log('#' + slotname + ' disabled. Page too short', 7, log_group);
+			return adProviderNull;
 		}
 
 		// Force providers:

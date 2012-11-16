@@ -12,6 +12,7 @@ class SpecialFinishCreate extends UnlistedSpecialPage {
 		
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
+			wfProfileOut(__METHOD__);
 			return;
 		}
 		

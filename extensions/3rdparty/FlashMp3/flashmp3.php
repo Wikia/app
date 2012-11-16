@@ -36,12 +36,10 @@ $wgExtensionCredits['parserhook'][] = array(
 		'version' => 'v0.92'
 );
 
-
 function wfFlashMP3() {
 		global $wgParser;
 		$wgParser->setHook('flashmp3', 'renderFlashMP3');
 }
-
 
 // The callback function for converting the input text to HTML output
 function renderFlashMP3($input, $args) {
@@ -50,7 +48,8 @@ function renderFlashMP3($input, $args) {
 		$id = 1;
 		$params = explode("|", htmlspecialchars($input));
 		$files = explode(",", array_shift($params));
-		$player_path = $wgScriptPath.'/extensions/FlashMP3/';
+		$player_path = $wgScriptPath.'/extensions/3rdparty/FlashMp3/';
+		$output = '';
 
 		if (isset($args['type'])) {
 		   $type = $args['type'];
@@ -58,7 +57,6 @@ function renderFlashMP3($input, $args) {
 
 		switch ($type) {
 				case 'lastfm':
-
 						// concat the parameter string
 						$typeParameter = array_shift($params);  // this is the resourceType
 						$param_string = implode('&amp;', $params);
@@ -102,9 +100,7 @@ function renderFlashMP3($input, $args) {
 						break;
 
 				case '1pixelout':
-
 				default:
-
 						if (isset($args['id']) && preg_match('/^[a-z0-9]+$/iD', $args['id'])) {
 								$id = $args['id'];
 						}
@@ -150,7 +146,6 @@ function renderFlashMP3($input, $args) {
 
 		return $output;
 }
-
 
 function flashMP3NotFoundError($input) {
 		return '<div style=\'border: solid red 1px\'>

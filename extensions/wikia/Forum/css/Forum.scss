@@ -16,6 +16,14 @@
 	textarea {
 		font: inherit;
 	}
+	
+	.board-description {
+		clear: both;
+		color: $color-alternate-text;
+		font-size: 13px;
+		line-height: 23px;
+		margin-top: 5px;
+	}
 
 	.BreadCrumbs {
 		@include clearfix;

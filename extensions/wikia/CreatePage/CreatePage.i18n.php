@@ -59,7 +59,7 @@ $messages['qqq'] = array(
 $messages['af'] = array(
 	'createpage-sp-title' => "Skep 'n nuwe bladsy",
 	'createpage_title' => "Skep 'n nuwe artikel",
-	'createpage_title_caption' => 'Bladsynaam:',
+	'createpage_title_caption' => 'Bladsynaam:', # Fuzzy
 	'createpage_enter_text' => 'Teks:',
 	'createpage_empty_title_error' => "'n Bladsynaam is verpligtend",
 	'createpage_empty_article_body_error' => 'Bladsyteks is verpligtend',
@@ -102,7 +102,7 @@ Skryf die tweede afdeling van u bladsy hier.',
 $messages['ar'] = array(
 	'createpage-sp-title' => 'إنشاء صفحة جديدة',
 	'createpage_title' => 'أنشئ مقالة جديدة',
-	'createpage_title_caption' => 'العنوان',
+	'createpage_title_caption' => 'العنوان', # Fuzzy
 	'createpage_enter_text' => 'النص:',
 	'createpage_empty_title_error' => 'العنوان مطلوب',
 	'createpage_empty_article_body_error' => 'نص المقالة مطلوب',
@@ -126,7 +126,7 @@ $messages['ar'] = array(
 الرجاء اختيار عنوان آخر.',
 	'createpage-error-article-blocked' => 'آسف، أنت غير قادر على إنشاء ذلك المقال حاليا.',
 	'tog-createpagedefaultblank' => 'استخدم الصفحة الفارغة افتراضيا لإنشاء صفحة جديدة',
-	'tog-createpagepopupdisabled' => 'تعطيل إنبثاق منشئ الصفحات',
+	'tog-createpagepopupdisabled' => 'تعطيل إنبثاق منشئ الصفحات', # Fuzzy
 	'newpagelayout' => '[[ملف:Placeholder|يسار|300بك]]
 قم بكتابة الفقرة الأولى من المقالة هنا.
 
@@ -157,7 +157,7 @@ $messages['as'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
-	'createpage_title_caption' => 'Başlıq:',
+	'createpage_title_caption' => 'Başlıq:', # Fuzzy
 	'createpage_enter_text' => 'Mətn:',
 );
 
@@ -220,7 +220,7 @@ Gellout a rit mont da <a href="$1">$2,</a> pe adenvel ho pajenn',
 Mar plij implijit un titl disheñvel.",
 	'createpage-error-article-blocked' => "Digarezit, ne c'helloc'h ket krouiñ ar pennad-se er mare-mañ.",
 	'tog-createpagedefaultblank' => "Implijout ur bajenn c'houllo dre ziouer evit krouiñ ur bajenn nevez",
-	'tog-createpagepopupdisabled' => 'Diweredekaat Krouiñ ar bajenn difoupañ',
+	'tog-createpagepopupdisabled' => 'Diweredekaat ar wazh "Krouiñ ur pennad nevez" (N\'eo ket erbedet)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Skrivit amañ rannbennad kentañ ho pennad.
 
@@ -419,7 +419,7 @@ $messages['el'] = array(
 	'createpage-desc' => 'Σας επιτρέπει να δημιουργήσετε μια νέα σελίδα χρησιμοποιώντας τον επεξεργαστή WYSIWYG της Wikia',
 	'createpage-sp-title' => 'Δημιουργήσετε μια νέα σελίδα',
 	'createpage_title' => 'Δημιουργήστε ένα καινούργιο άρθρο',
-	'createpage_title_caption' => 'Τίτλος:',
+	'createpage_title_caption' => 'Τίτλος:', # Fuzzy
 	'createpage_invalid_title_error' => 'Άκυρος τίτλος',
 	'createpage-dialog-blank' => 'Κενή σελίδα',
 );
@@ -668,7 +668,7 @@ $messages['he'] = array(
 	'createpage-desc' => 'ההרחבה מאפשרת ליצור דף חדש באמצעות העורך החזותי של Wikia',
 	'createpage-sp-title' => 'כתוב מאמר חדש',
 	'createpage_title' => 'כתוב מאמר חדש',
-	'createpage_title_caption' => 'כותרת:',
+	'createpage_title_caption' => 'כותרת:', # Fuzzy
 	'createpage_enter_text' => 'טקסט:',
 	'createpage_empty_title_error' => 'דרושה כותרת',
 	'createpage_empty_article_body_error' => 'דרוש טקסט במאמר',
@@ -692,7 +692,7 @@ $messages['he'] = array(
 אנא השתמש בכותרת שונה.',
 	'createpage-error-article-blocked' => 'מצטערים, אינך יכול ליצור את המאמר הזה כרגע.',
 	'tog-createpagedefaultblank' => 'השתמש בדף ריק ליצירת מאמרים כברירת מחדל',
-	'tog-createpagepopupdisabled' => 'נטרול החלונית ליצירת דפים',
+	'tog-createpagepopupdisabled' => 'נטרול החלונית ליצירת דפים', # Fuzzy
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 כתוב את הפסקה הראשונה במאמר שלך כאן.
 
@@ -829,7 +829,7 @@ Anda dapat pergi ke <a href="$1">$2</a>, atau merubah nama halaman Anda',
 Gunakan judul yang berbeda.',
 	'createpage-error-article-blocked' => 'Maaf, Anda tidak dapat membuat halaman saat ini.',
 	'tog-createpagedefaultblank' => 'Gunakan halaman kosong sebagai default untuk membuat sebuah halaman baru',
-	'tog-createpagepopupdisabled' => 'Nonaktifkan "Buat artikel baru" pop-up dialog',
+	'tog-createpagepopupdisabled' => 'Nonaktifkan "Buat artikel baru" pop-up dialog', # Fuzzy
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Tulis paragraf pertama dari halaman Anda di sini.
 
@@ -932,7 +932,7 @@ $messages['ja'] = array(
 $messages['km'] = array(
 	'createpage-sp-title' => 'បង្កើតទំព័រថ្មីមួយ',
 	'createpage_title' => 'បង្កើតទំព័រថ្មីមួយ',
-	'createpage_title_caption' => 'ចំណងជើង៖',
+	'createpage_title_caption' => 'ចំណងជើង៖', # Fuzzy
 	'createpage_enter_text' => 'អត្ថបទ៖',
 	'createpage_empty_title_error' => 'តំរូវអោយមានចំណងជើង',
 	'createpage_empty_article_body_error' => 'តំរូវអោយមានអត្ថបទ',
@@ -973,7 +973,7 @@ $messages['km'] = array(
 $messages['ku-latn'] = array(
 	'createpage-sp-title' => 'Rûpeleka nû çêke',
 	'createpage_title' => 'Rûpeleka nû çêke',
-	'createpage_title_caption' => 'Sernav:',
+	'createpage_title_caption' => 'Sernav:', # Fuzzy
 	'createpage_enter_text' => 'Nivîs:',
 	'createpage-dialog-title' => 'Rûpeleka nû çêke',
 );
@@ -1049,7 +1049,7 @@ Prašome naudoti kitą pavadinimą.',
 	'tog-createpagepopupdisabled' => 'Išjungti "Sukurti naują straipsnį" srautą (Nerekomenduojama)',
 );
 
-/** Lushai (Mizo ţawng)
+/** Mizo (Mizo ţawng)
  * @author RMizo
  */
 $messages['lus'] = array(
@@ -1096,7 +1096,7 @@ $messages['mg'] = array(
 	'createpage-desc' => "Avela mamorona pejy amin'ny mpanova pejy WYSWIG an'i Wikia",
 	'createpage-sp-title' => 'Hamorona takelaka vaovzo',
 	'createpage_title' => 'Hamorona takelaka vaovao',
-	'createpage_title_caption' => 'Lohateny :',
+	'createpage_title_caption' => 'Lohateny :', # Fuzzy
 	'createpage_enter_text' => 'Soratra :',
 	'createpage_empty_title_error' => 'Ilaina ny lohateny',
 	'createpage_empty_article_body_error' => "Ilaina ny soratra ao amin'ny takelaka",
@@ -1174,7 +1174,7 @@ $messages['mk'] = array(
 $messages['ml'] = array(
 	'createpage-sp-title' => 'പുതിയൊരു താൾ സൃഷ്ടിക്കുക',
 	'createpage_title' => 'പുതിയൊരു താൾ സൃഷ്ടിക്കുക',
-	'createpage_title_caption' => 'ശീർഷകം:',
+	'createpage_title_caption' => 'ശീർഷകം:', # Fuzzy
 );
 
 /** Malay (Bahasa Melayu)
@@ -1339,7 +1339,7 @@ $messages['pa'] = array(
 	'createpage-desc' => 'ਵਿਕਿ ਦੇ WYSIWYG ਐਡੀਟਰ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਨਵਾਂ ਸਫ਼ਾ ਬਣਾਉਣਾ ਮਨਜ਼ੂਰ',
 	'createpage-sp-title' => 'ਨਵਾਂ ਸਫ਼ਾ ਬਣਾਉ',
 	'createpage_title' => 'ਨਵਾਂ ਸਫ਼ਾ ਬਣਾਓ',
-	'createpage_title_caption' => 'ਟਾਈਟਲ:',
+	'createpage_title_caption' => 'ਟਾਈਟਲ:', # Fuzzy
 	'createpage_enter_text' => 'ਟੈਕਸਟ:',
 	'createpage_empty_title_error' => 'ਟਾਈਟਲ ਚਾਹੀਦਾ ਹੈ',
 	'createpage_empty_article_body_error' => 'ਸਫ਼ਾ ਟੈਕਸਟ ਚਾਹੀਦਾ ਹੈ',
@@ -1647,7 +1647,7 @@ $messages['sah'] = array(
 	'createpage-desc' => 'Викиа визуал эрэдээктэрин көмөтүнэн саҥа сирэйдэри оҥорору хааччыйар',
 	'createpage-sp-title' => 'Саҥа сирэйи оҥоруу',
 	'createpage_title' => 'Саҥа ыстатыйаны айыы',
-	'createpage_title_caption' => 'Аата:',
+	'createpage_title_caption' => 'Аата:', # Fuzzy
 	'createpage_enter_text' => 'Тиэкиһэ:',
 	'createpage_empty_title_error' => 'Хайаан да ааттаныахтаах',
 	'createpage_empty_article_body_error' => 'Хайаан да тиэкистээх буолуохтаах',
@@ -1671,7 +1671,7 @@ $messages['sah'] = array(
 Бука диэн, атын ааты тал.',
 	'createpage-error-article-blocked' => 'Хомойуох иһин, билигин маннык ыстатыйаны айарыҥ табыллыбат.',
 	'tog-createpagedefaultblank' => 'Саҥа сирэйи айар буоллахха кураанах сирэйи аһарга',
-	'tog-createpagepopupdisabled' => 'Саҥа сирэйи айарга тахсан кэлэр түннүгү таһаарыма',
+	'tog-createpagepopupdisabled' => 'Саҥа сирэйи айарга тахсан кэлэр түннүгү таһаарыма', # Fuzzy
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Манна ыстатыйаҥ бастакы аҥаарын суруй.
 
@@ -1761,9 +1761,10 @@ Skriv det första avsnittet på din sida här.
 Skriv det andra avsnittet på din sida här',
 );
 
-/** Swahili (Kiswahili) */
+/** Swahili (Kiswahili)
+ */
 $messages['sw'] = array(
-	'createpage_title_caption' => 'Cheo:',
+	'createpage_title_caption' => 'Cheo:', # Fuzzy
 	'createpage_invalid_title_error' => 'Jina batili',
 	'createpage-dialog-blank' => 'Ukurasa tupu',
 );
@@ -1774,7 +1775,7 @@ $messages['sw'] = array(
 $messages['ta'] = array(
 	'createpage-sp-title' => 'ஒரு புதிய பக்கத்தை உருவாக்கவும்',
 	'createpage_title' => 'ஒரு புதிய பக்கத்தை உருவாக்கவும்',
-	'createpage_title_caption' => 'தலைப்பு:',
+	'createpage_title_caption' => 'தலைப்பு:', # Fuzzy
 	'createpage_enter_text' => 'சொற்றொடர்:',
 	'createpage_invalid_title_error' => 'தவறான தலைப்பு',
 );
@@ -1783,7 +1784,7 @@ $messages['ta'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
-	'createpage_title_caption' => 'శీర్షిక:',
+	'createpage_title_caption' => 'శీర్షిక:', # Fuzzy
 	'createpage_enter_text' => 'పాఠ్యం:',
 	'createpage_empty_title_error' => 'శీర్షిక తప్పనిసరి',
 	'createpage_empty_article_body_error' => 'వ్యాసపు పాఠ్యం తప్పనిసరి',
@@ -1984,19 +1985,21 @@ Viết cho đề mục 1 tại đây
 Viết cho đề mục 2 tại đây',
 );
 
-/** Chinese (中文) */
+/** Chinese (中文)
+ */
 $messages['zh'] = array(
 	'createpage-sp-title' => '新增文章',
 	'createpage_title' => '發表新文章',
-	'createpage_title_caption' => '文章標題',
+	'createpage_title_caption' => '文章標題', # Fuzzy
 	'createpage_enter_text' => '輸入文字',
 );
 
-/** Chinese (China) (中文（中国大陆）‎) */
+/** Chinese (China) (中文（中国大陆）‎)
+ */
 $messages['zh-cn'] = array(
 	'createpage-sp-title' => '新增文章',
 	'createpage_title' => '发表新文章',
-	'createpage_title_caption' => '文章标题',
+	'createpage_title_caption' => '文章标题', # Fuzzy
 	'createpage_enter_text' => '输入文字',
 );
 
@@ -2066,18 +2069,19 @@ $messages['zh-hk'] = array(
 	'createpage_enter_text' => '輸入文字',
 );
 
-/** Chinese (Singapore) (中文（新加坡）‎) */
+/** Chinese (Singapore) (中文（新加坡）‎)
+ */
 $messages['zh-sg'] = array(
 	'createpage_title' => '发表新文章',
-	'createpage_title_caption' => '文章标题',
+	'createpage_title_caption' => '文章标题', # Fuzzy
 	'createpage_enter_text' => '输入文字',
 );
 
-/** Chinese (Taiwan) (中文（台灣）‎) */
+/** Chinese (Taiwan) (中文（台灣）‎)
+ */
 $messages['zh-tw'] = array(
 	'createpage-sp-title' => '新增文章',
 	'createpage_title' => '發表新文章',
-	'createpage_title_caption' => '文章標題',
+	'createpage_title_caption' => '文章標題', # Fuzzy
 	'createpage_enter_text' => '輸入文字',
 );
-

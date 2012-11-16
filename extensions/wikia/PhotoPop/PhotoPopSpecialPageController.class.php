@@ -5,6 +5,7 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class PhotoPopSpecialPageController extends WikiaSpecialPageController {
+	/* @var PhotoPopModel */
 	private $model;
 
 	public function __construct() {

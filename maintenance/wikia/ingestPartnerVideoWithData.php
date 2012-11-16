@@ -107,7 +107,6 @@ foreach ($providersVideoFeed as $provider) {
 		case VideoFeedIngester::PROVIDER_REALGRAVITY:
 			// no file needed
 			$startDate = date('Y-m-d', $startDateTS);
-			$endDate = date('Y-m-d', $endDateTS);
 			break;
 		case VideoFeedIngester::PROVIDER_ANYCLIP:
 			$file = $feedIngester->downloadFeed( $getAllVideos );

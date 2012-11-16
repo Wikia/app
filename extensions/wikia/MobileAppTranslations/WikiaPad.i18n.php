@@ -11,7 +11,6 @@
 
 $messages = array();
 
-// Lang: en
 $messages['en'] = array(
 	//  Tabs 
 	'main-tab-discover' => 'Discover',
@@ -230,7 +229,8 @@ $messages['inh'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'ХӀаа',
 );
 
-/** Italian (italiano) */
+/** Italian (italiano)
+ */
 $messages['it'] = array(
 	'main-tab-discover' => 'Scopri',
 	'main-tab-personal' => 'My Wikia',
@@ -460,4 +460,3 @@ $messages['ug-arab'] = array(
 	'tab-search-loading-message' => 'ئىزدەۋاتىدۇ…',
 	'browser-loading-message' => 'يۈكلەۋاتىدۇ…',
 );
-

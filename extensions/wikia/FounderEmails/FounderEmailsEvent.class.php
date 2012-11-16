@@ -41,7 +41,7 @@ abstract class FounderEmailsEvent {
 
 		$oEvent = new $sClassName();
 
-		wfProfileIn( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $oEvent;
 	}
 

@@ -144,15 +144,39 @@
 		color: white;
 		padding-left: 10px;
 
+		-webkit-animation: expand .6s ease-in-out;
+		-moz-animation: expand .6s ease-in-out;
+		animation: expand .6s ease-in-out;
+
 		&.up{
 			text-transform: uppercase;
-			padding-left: 10px;
 		}
 
 		.avatar{
 			margin: -2px 10px 0 4px;
 			vertical-align: middle;
 		}
+	}
+}
+
+@-webkit-keyframes expand {
+	0%{
+		color: transparent;
+		padding-left: 0;
+	}
+}
+
+@-moz-keyframes expand {
+	0%{
+		color: transparent;
+		padding-left: 0;
+	}
+}
+
+@keyframes expand {
+	0%{
+		color: transparent;
+		padding-left: 0;
 	}
 }
 
@@ -272,6 +296,9 @@
 	header {
 		color: $link-color;
 		line-height: 50px;
+
+		height: 50px;
+		border-bottom: 1px solid $border-color;
 
 		background: white;
 

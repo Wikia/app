@@ -9,6 +9,7 @@ $wgExtensionCredits['other'][] = array(
 		'[http://community.wikia.com/wiki/User:Macbre Maciej Brencz]',
 		'[http://community.wikia.com/wiki/User:TOR Lucas \'TOR\' Garczewski]',
 		'Bartek Łapiński',
+		'[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]',
 	)
 );
 

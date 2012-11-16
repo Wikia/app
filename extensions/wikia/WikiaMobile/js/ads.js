@@ -6,13 +6,15 @@
  * @require events
  * @require domwriter
  * @require cookies
+ * @require track
+ * @require log
  *
  * @author Jakub Olek
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 
 /*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, AdConfig*/
-define('ads', ['events', 'domwriter', 'cookies', 'track'], function (ev, dw, ck, track) {
+define('ads', ['events', 'domwriter', 'cookies', 'track', 'log'], function (ev, dw, ck, track, log) {
 	'use strict';
 
 	var AD_TYPES = {
@@ -36,7 +38,8 @@ define('ads', ['events', 'domwriter', 'cookies', 'track'], function (ev, dw, ck,
 		inited,
 		positionfixed = Features.positionfixed,
 		type,
-		w = window;
+		w = window,
+		dartHelper = w.WikiaDartMobileHelper(log, w, d);
 
 	/**
 	 * @private
@@ -77,6 +80,19 @@ define('ads', ['events', 'domwriter', 'cookies', 'track'], function (ev, dw, ck,
 		return (~~(ck.get(STOP_COOKIE_NAME))) !== 1;
 	}
 
+	function getUniqueId() {
+		var wikia_mobile_id = ck.get('wikia_mobile_id');
+		if (!wikia_mobile_id) {
+			wikia_mobile_id = Math.round(Math.random() * 23456787654);
+			ck.set('wikia_mobile_id', wikia_mobile_id, {
+				expires: 1000*60*60*24*180, // 3 months
+				path: window.wgCookiePath,
+				domain: window.wgCookieDomain
+			});
+		}
+		return wikia_mobile_id;
+	}
+
 	/**
 	 * Sets up the slot, this function is called
 	 * usually from an AdEngine provider
@@ -88,8 +104,12 @@ define('ads', ['events', 'domwriter', 'cookies', 'track'], function (ev, dw, ck,
 	 * @param {String} provider The provider name (e.g. DARTMobile)
 	 */
 	function setupSlot(name, size, provider) {
-		if (shouldRequestAd() && AdConfig) {
-			var url = AdConfig.DART.getMobileUrl(name, size, true, provider),
+		if (shouldRequestAd()) {
+			var url = dartHelper.getMobileUrl({
+					slotname: name,
+					positionfixed: (Features.positionfixed ? 'css' : 'js'),
+					uniqueId: getUniqueId()
+				}),
 				s = d.createElement('script');
 
 			if (contentWrapper) {

@@ -41,6 +41,7 @@ class EditPageLayoutHelper {
 		if ($this->app->runFunction('wfReadOnly')) {
 			// set correct page title
 			$this->out->setPageTitle($this->app->runFunction('wfMsg', 'editing', $this->app->getGlobal('wgTitle')->getPrefixedText()));
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 

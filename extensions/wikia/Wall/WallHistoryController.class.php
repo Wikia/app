@@ -8,7 +8,8 @@ class WallHistoryController extends WallController {
 	
 	public function index() {
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL); 
-		$title = $this->request->getVal('title', $this->app->wg->Title);
+		$title = $this->app->wg->Title;
+		
 		$this->isThreadLevel = $this->request->getVal('threadLevelHistory', false);
 		
 		$path = array();
@@ -66,9 +67,26 @@ class WallHistoryController extends WallController {
 			$perPage = 100;
 			$wallHistory = F::build( 'WallHistory', array( $this->app->wg->CityId ) );
 			$wallHistory->setPage($page, $perPage);
-			$count = $wallHistory->getCount($wallOwnerUser);
 			$sort = $this->getSortingSelected();
-			$history = $wallHistory->get($wallOwnerUser, $sort);
+			
+			if( $title->getNamespace() == NS_USER_WALL ) {
+				//Mesage wall have special case query base on user 
+				$wall = F::build('Wall', array($title), 'newFromTitle');
+				$wallOwnerUser = $wall->getUser();
+				
+				$count = $wallHistory->getCount($wallOwnerUser);
+				$history = $wallHistory->get($wallOwnerUser, $sort, null, false);
+			} else {
+				//Others pages bases on page id
+				if( $title->exists() ) {
+					$count = $wallHistory->getCount(null, $title->getArticleId(), false);
+					$history = $wallHistory->get(null, $sort, $title->getArticleId(), false);					
+				} else {
+					$count = 0;
+					$history = array();
+				}
+			}
+			
 			
 			$wallUrl = $wall->getUrl();
 			$this->response->setVal('wallHistory', $this->getFormatedHistoryData($history));

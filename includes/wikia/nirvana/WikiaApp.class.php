@@ -109,8 +109,11 @@ class WikiaApp {
 		if(is_object($this->wg)) {
 			$this->wg->append('wgAjaxExportList', 'WikiaApp::ajax');
 		} else {
-			Wikia::log( __METHOD__, false, 'WikiaGlobalRegistry not set in ' . __CLASS__ . ' ' . __METHOD__ );
-			Wikia::logBacktrace(__METHOD__);
+			// can't use Wikia::log at this point (not defined yet)
+			error_log( __METHOD__ . ': WikiaGlobalRegistry not set in ' . __CLASS__ . ' ' . __METHOD__ );
+			$backtrace = trim(strip_tags(wfBacktrace()));
+			$message = str_replace("\n", '/', $backtrace);
+			error_log( __METHOD__ . ': ' . $message );
 		}
 	}
 

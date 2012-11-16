@@ -6,10 +6,12 @@ CREATE TABLE IF NOT EXISTS `video_info` (
   `premium` tinyint(1) NOT NULL DEFAULT '0',
   `hdfile` tinyint(1) NOT NULL DEFAULT '0',
   `removed` tinyint(1) NOT NULL DEFAULT '0',
+  `featured` tinyint(1) NOT NULL DEFAULT '0',
   `views_30day` int(10) unsigned DEFAULT '0',
   `views_total` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`video_title`),
   KEY `added_at` (`added_at`, `duration`),
   KEY `premium` (`premium`, `added_at`),
-  KEY `hdfile` (`hdfile`, `added_at`)
+  KEY `hdfile` (`hdfile`, `added_at`),
+  KEY `featured` (`featured`, `added_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

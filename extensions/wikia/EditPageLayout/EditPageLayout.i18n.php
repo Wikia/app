@@ -81,6 +81,7 @@ $messages['en'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Note:''' You are recreating a page that was previously deleted. [More info]",
 	'restore-edits-notice' => "Welcome back! We've restored some changes you had not published. <a class='notice-action restoreeditlink'>Delete my changes and start a new edit</a>",
 	'restore-edits-diff-notice' => "Welcome back! We've restored some changes you had not published. However, the page has been updated since then. Would you like to: <a class='notice-action restoreeditlink'>Delete my changes and start with the latest text</a> or <a class='notice-action difflink'>View a comparison of changes with the latest page</a>",
+	'mainpagewarning-notice' => "Learn more about [[w:c:community:Help:Main_page|editing the main page.]]",
 
 	// "editing" preferences sections
 	'prefs-general' => 'General',
@@ -118,18 +119,11 @@ $messages['qqq'] = array(
 	'wikia-editor-source-italic-tooltip' => 'Tooltip for the button used to italicize text in source mode.',
 	'wikia-editor-source-link-tooltip' => 'Tooltip for the button used to add a link in source mode.',
 	'wikia-editor-modules-license-text' => 'Needs plural support.
-The first parameter is a placeholder for the license logo/image. The third parameter is the license name.',
+The first parameter is a placeholder for the license logo/image. The third parameter is the license name.', # Fuzzy
 	'restore-edits-notice' => "Please preserve the HTML markup as it's used to bind functionality via JS",
 	'restore-edits-diff-notice' => "Please preserve the HTML markup as it's used to bind functionality via JS",
 	'prefs-starting-an-edit' => 'This is a heading in Special:Preferences',
 	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
-);
-
-/** Tati (Tati)
- * @author Erdemaslancan
- */
-$messages['ttt'] = array(
-	'editpagelayout-captcha-title' => 'Captcha',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -205,12 +199,12 @@ $messages['bar'] = array(
 	'wikia-editor-notices-dialog-title' => 'Hihweis-Details',
 	'wikia-editor-preview-editSummary' => 'Zaummfossung: $1',
 	'nonunicodebrowser-notice' => "'''Ówocht: Deih Browser is néd Unicode-kompatiwé.'''",
-	'rev-deleted-text-notice' => "Dé Versión is '''gléscht''' worn. [Merer Informaziónen]",
-	'readonlywarning-notice' => "'''Ówocht: Dé Daatenbånk is wéng Wartungsorweiten gsperrd worn.''' [Merer Informaziónen]",
+	'rev-deleted-text-notice' => "Dé Versión is '''gléscht''' worn. [Merer Informaziónen]", # Fuzzy
+	'readonlywarning-notice' => "'''Ówocht: Dé Daatenbånk is wéng Wartungsorweiten gsperrd worn.''' [Merer Informaziónen]", # Fuzzy
 	'userinvalidcssjstitle-notice' => "'''Ówocht:''' Dén Skin \"\$1\" gibts nimmer. [Merer Informaziónen]",
-	'semiprotectedpagewarning-notice' => "'''Hihweis:''' Dé Seiten do is fyr nédågmödte Beorweiter gsperrd worn. [Merer Informaziónen]",
-	'protectedpagewarning-notice' => "'''Hihweis:''' Dé Seiten do is gsperrd worn und kå netter voh Administraatorn beorweitt wern. [Merer Informaziónen]",
-	'titleprotectedwarning-notice' => "'''Hihweis:''' Dé Seiten is gsperrd worn und kå netter voh ausgwöde Benutzer beorweitt wern. [Merer Informaziónen]",
+	'semiprotectedpagewarning-notice' => "'''Hihweis:''' Dé Seiten do is fyr nédågmödte Beorweiter gsperrd worn. [Merer Informaziónen]", # Fuzzy
+	'protectedpagewarning-notice' => "'''Hihweis:''' Dé Seiten do is gsperrd worn und kå netter voh Administraatorn beorweitt wern. [Merer Informaziónen]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''Hihweis:''' Dé Seiten is gsperrd worn und kå netter voh ausgwöde Benutzer beorweitt wern. [Merer Informaziónen]", # Fuzzy
 	'recreate-moveddeleted-warn-notice' => "'''Hihweis:''' Du erstöst a Seiten, dé schoh friarer gléscht worn is.  [Merer Informaziónen]",
 	'prefs-general' => 'Oigmoah',
 	'prefs-starting-an-edit' => 'Beorweitung åfånger',
@@ -237,6 +231,7 @@ $messages['bg'] = array(
 
 /** Breton (brezhoneg)
  * @author Fulup
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -249,6 +244,7 @@ $messages['br'] = array(
 	'editpagelayout-diff-header-url' => 'Help:Diff',
 	'editpagelayout-diff-header' => "An diforc'hioù ([[{{MediaWiki:Editpagelayout-diff-header-url}}|sikour]])",
 	'editpagelayout-myedit-header' => 'Setu ho kemm. Kopiit ho kemmoù er voest amañ a-us !',
+	'editpagelayout-captcha-title' => 'Captcha',
 	'editpagelayout-pageControls-pageLink' => "distreiñ d'ar bajenn",
 	'editpagelayout-pageControls-minorEdit' => 'Kemmig dister',
 	'editpagelayout-pageControls-summaryLabel' => 'Ouzhpennañ un diverradenn eus ho kemmoù',
@@ -256,6 +252,7 @@ $messages['br'] = array(
 	'editpagelayout-pageControls-back' => "Distreiñ d'ar bajenn kemmañ",
 	'editpagelayout-pageControls-changes' => 'Kemmoù',
 	'editpagelayout-blocked-user' => "Hoc'h anv-implijer pe ho chomlec'h IP a zo bet stanket",
+	'editpagelayout-subject-headline-label' => 'Danvez/Titl',
 	'wikia-editor-media-image' => "Luc'hskeudenn",
 	'wikia-editor-media-gallery' => 'Skeudennaoueg',
 	'wikia-editor-media-slideshow' => "Kinnig luc'hvannoù",
@@ -276,20 +273,23 @@ $messages['br'] = array(
 	'wikia-editor-modules-templates-otherTemplates' => 'Ouzhpennañ patromoù all',
 	'wikia-editor-modules-templates-showUsedList' => 'Diskouez roll ar patromoù implijet',
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Roll ar patromoù implijet',
-	'wikia-editor-modules-license-text' => '$1 degasadenn dindan aotre-implijout CC-BY-SA. <a href="$2">Muioc\'h a ditouroù.</a>',
+	'wikia-editor-modules-templates-makeLayout' => 'Krouiñ ur gobari nevez adalek ar bajenn-mañ',
+	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Krouiñ ur gobari adalek ar bajenn-mañ',
+	'wikia-editor-modules-license-text' => '$1 degasadenn dindan aotre-implijout $3. <a href="$2">Muioc\'h a ditouroù.</a>',
 	'wikia-editor-modules-insert-title' => "Ouzhpennañ arc'hweladurioù ha mediaoù",
 	'wikia-editor-modules-categories-title' => 'Rummadoù',
 	'wikia-editor-loadingStates-loading' => 'O kargañ an aozer...',
 	'wikia-editor-loadingStates-toSource' => "O vont d'ar mod mammenn...",
 	'wikia-editor-loadingStates-toVisual' => "O vont d'ar mod gwelet...",
 	'wikia-editor-loadingStates-saving' => 'Embann ho kemmoù !',
-	'wikia-editor-edittools-caption' => 'Berradennoù ouzhpenn',
+	'wikia-editor-edittools-caption' => "muioc'h",
 	'wikia-editor-edittools-dialog-title' => 'Berradennoù wikitext',
 	'wikia-editor-notices-dialog-title' => 'Munudoù an alioù',
 	'wikia-editor-preview-editSummary' => "Diverrañ ar c'hemmoù : $1",
+	'wikia-editor-leaveconfirm-message' => "Graet ho peus kemmoù n'int ket bet embannet. Ha sur eo ho peus c'hoant da guitaat hep embann anezho?",
 	'nonunicodebrowser-notice' => "'''Diwallit : ho merdeer na embreg ket Unicode.'''",
-	'rev-deleted-text-notice' => "'''Diverket''' eo bet ar stumm-mañ eus ar bajenn. [Muioc'h a ditouroù]",
-	'readonlywarning-notice' => "'''Diwallit : prennet eo bet an diaz roadennoù evit ar c'has en-dro.''' [Muioc'h a ditouroù]",
+	'rev-deleted-text-notice' => "'''Diverket''' eo bet ar stumm-mañ eus ar bajenn. [Muioc'h a ditouroù]", # Fuzzy
+	'readonlywarning-notice' => "'''Diwallit : prennet eo bet an diaz roadennoù evit ar c'has en-dro.''' [Muioc'h a ditouroù]", # Fuzzy
 	'userinvalidcssjstitle-notice' => "'''Diwallit:''' N'eus ket eus an neuz \"\$1\". [Muioc'h a ditouroù]",
 	'prefs-general' => 'Hollek',
 	'prefs-editing-experience' => 'O kemmañ an arnod',
@@ -527,6 +527,7 @@ $messages['diq'] = array(
 	'editpagelayout-pageControls-changes' => 'Vurnayışi',
 	'editpagelayout-blocked-user' => 'Nameyê karberi ya zi adresa IPê şıma kılit biya.',
 	'editpagelayout-edit-summary-label' => 'Xulasay Bıvurnen',
+	'editpagelayout-subject-headline-label' => 'Mewzu/sernuşte:',
 	'wikia-editor-media-image' => 'Fotraf',
 	'wikia-editor-media-gallery' => 'Galeri',
 	'wikia-editor-media-slideshow' => 'Slaytşow',
@@ -541,6 +542,9 @@ $messages['diq'] = array(
 	'wikia-editor-source-italic-tooltip' => 'İtalik',
 	'wikia-editor-source-link-tooltip' => 'Gre deke',
 	'wikia-editor-modules-templates-title' => 'Şabloni',
+	'wikia-editor-modules-templates-add-tooltip' => 'Şablonê "$1" De ke',
+	'wikia-editor-modules-templates-otherTemplates' => 'Zewbi şablon de ke',
+	'wikia-editor-modules-templates-showUsedList' => 'Listey şablonan de karyaya bıvin',
 	'wikia-editor-modules-categories-title' => 'Kategoriy',
 	'wikia-editor-edittools-caption' => 'dehana vêşi',
 	'prefs-general' => 'Heran',
@@ -918,11 +922,11 @@ $messages['he'] = array(
 	'wikia-editor-preview-editSummary' => 'תקציר עריכה: $1',
 	'wikia-editor-leaveconfirm-message' => 'ביצעת מספר עריכות שלא פורסמו. האם לצאת מבלי לפרסם אותן?',
 	'nonunicodebrowser-notice' => "'''אזהרה: הדפדפן שלך אינו תואם יוניקוד'''.",
-	'rev-deleted-text-notice' => "הגרסה בדף זה כבר '''נמחקה'''. [מידע נוסף]",
-	'readonlywarning-notice' => "'''אזהרה: מסד הנתונים ננעל לצורך תחזוקה''' [מידע נוסף]",
-	'semiprotectedpagewarning-notice' => "'''הערה:''' דף זה ננעל כך שרק משתמשים רשומים יכולים לערוך אותו. [מידע נוסף]",
-	'protectedpagewarning-notice' => "'''אזהרה:''' דף זה ננעל כך שרק משתמשים עם הרשאות מסוימות יכולים לערוך אותו. [מידע נוסף]",
-	'titleprotectedwarning-notice' => "'''אזהרה:''' דף זה ננעל כך שרק משתמשים מסוימים יכולים ליצור אותו. [מידע נוסף]",
+	'rev-deleted-text-notice' => "הגרסה בדף זה כבר '''נמחקה'''. [מידע נוסף]", # Fuzzy
+	'readonlywarning-notice' => "'''אזהרה: מסד הנתונים ננעל לצורך תחזוקה''' [מידע נוסף]", # Fuzzy
+	'semiprotectedpagewarning-notice' => "'''הערה:''' דף זה ננעל כך שרק משתמשים רשומים יכולים לערוך אותו. [מידע נוסף]", # Fuzzy
+	'protectedpagewarning-notice' => "'''אזהרה:''' דף זה ננעל כך שרק משתמשים עם הרשאות מסוימות יכולים לערוך אותו. [מידע נוסף]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''אזהרה:''' דף זה ננעל כך שרק משתמשים מסוימים יכולים ליצור אותו. [מידע נוסף]", # Fuzzy
 	'recreate-moveddeleted-warn-notice' => "'''הערה:''' שחזרת עמוד שנמחק בעבר. [מידע נוסף]",
 	'prefs-general' => 'כללי',
 	'prefs-starting-an-edit' => 'התחלת עריכה',
@@ -1170,24 +1174,24 @@ $messages['ja'] = array(
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => '使用しているテンプレートの一覧',
 	'wikia-editor-modules-templates-makeLayout' => 'このページから新規レイアウトを作成',
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'このページからレイアウトを作成',
-	'wikia-editor-modules-license-text' => '$1 投稿は CC-BY-SA ライセンスの下に置かれます。<a href="$2">詳細情報</a>',
+	'wikia-editor-modules-license-text' => '$1 投稿は CC-BY-SA ライセンスの下に置かれます。<a href="$2">詳細情報</a>', # Fuzzy
 	'wikia-editor-modules-insert-title' => '機能とメディアを追加',
 	'wikia-editor-modules-categories-title' => 'カテゴリ',
 	'wikia-editor-loadingStates-loading' => 'エディタを読み込んでいます',
 	'wikia-editor-loadingStates-toSource' => 'ソースモードに切り替えています',
 	'wikia-editor-loadingStates-toVisual' => 'ビジュアルモードに切り替えています',
 	'wikia-editor-loadingStates-saving' => '編集を保存しています',
-	'wikia-editor-edittools-caption' => 'ショートカットをさらに表示',
+	'wikia-editor-edittools-caption' => 'ショートカットをさらに表示', # Fuzzy
 	'wikia-editor-edittools-dialog-title' => 'ウィキテキストショートカット',
 	'wikia-editor-notices-dialog-title' => '通知の詳細',
 	'wikia-editor-preview-editSummary' => '編集内容の要約: $1',
 	'nonunicodebrowser-notice' => "'''警告:''' 使用中のブラウザがUnicodeに対応していません。",
-	'rev-deleted-text-notice' => "この版は'''削除されています'''。[詳細]",
-	'readonlywarning-notice' => "'''警告:''' データベースがメンテナンスのためにロックされています。[詳細]",
+	'rev-deleted-text-notice' => "この版は'''削除されています'''。[詳細]", # Fuzzy
+	'readonlywarning-notice' => "'''警告:''' データベースがメンテナンスのためにロックされています。[詳細]", # Fuzzy
 	'userinvalidcssjstitle-notice' => "'''警告:''' 「$1」というスキンはありません。[詳細]",
-	'semiprotectedpagewarning-notice' => "'''注意:''' このページは保護されているため、登録利用者しか編集できません。[詳細]",
-	'protectedpagewarning-notice' => "'''警告:''' このページは保護されているため、管理者しか編集できません。[詳細]",
-	'titleprotectedwarning-notice' => "'''警告:''' このページは保護されているため、作成には特定の権限が必要です。[詳細]",
+	'semiprotectedpagewarning-notice' => "'''注意:''' このページは保護されているため、登録利用者しか編集できません。[詳細]", # Fuzzy
+	'protectedpagewarning-notice' => "'''警告:''' このページは保護されているため、管理者しか編集できません。[詳細]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''警告:''' このページは保護されているため、作成には特定の権限が必要です。[詳細]", # Fuzzy
 	'recreate-moveddeleted-warn-notice' => "'''注意:''' 以前に削除されたページを再作成しようとしています。[詳細]",
 	'prefs-general' => '全般',
 	'prefs-starting-an-edit' => '編集の開始',
@@ -1875,9 +1879,9 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
- * @author 555
  * @author Caio1478
  * @author Luckas Blade
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'editpagelayout-more' => 'mais',
@@ -2233,6 +2237,13 @@ $messages['tr'] = array(
 	'prefs-general' => 'Genel',
 );
 
+/** Tati (Tati)
+ * @author Erdemaslancan
+ */
+$messages['ttt'] = array(
+	'editpagelayout-captcha-title' => 'Captcha',
+);
+
 /** Ukrainian (українська)
  * @author A1
  */
@@ -2338,6 +2349,7 @@ $messages['vi'] = array(
  * @author Anakmalaysia
  * @author Dimension
  * @author Hzy980512
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'editpagelayout-more' => '更多',
@@ -2362,6 +2374,7 @@ $messages['zh-hans'] = array(
 	'wikia-editor-media-slideshow' => '幻灯片',
 	'wikia-editor-media-slider' => '滑块',
 	'wikia-editor-media-video' => '视频',
+	'wikia-editor-media-mut' => '视频',
 	'wikia-editor-media-image-tooltip' => '添加照片',
 	'wikia-editor-media-gallery-tooltip' => '添加图库',
 	'wikia-editor-media-slider-tooltip' => '添加滑块',
@@ -2391,4 +2404,3 @@ $messages['zh-hans'] = array(
 	'tog-minordefault' => '默认将所有编辑标为“小编辑”',
 	'tog-forceeditsummary' => '在我未填写编辑概要时提示我',
 );
-

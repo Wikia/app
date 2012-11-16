@@ -40,7 +40,7 @@ class WallHooksHelper {
 
 			$mainTitle = Title::newFromId($title->getText());
 			if(empty($mainTitle)) {
-				$dbkey = $helper->getDbkeyFromArticleId_forDeleted($title->getText());
+				$dbkey = null;
 				$fromDeleted = true;
 			} else {
 				$dbkey = $mainTitle->getDBkey();
@@ -94,8 +94,7 @@ class WallHooksHelper {
 		}
 		
 		
-		if( $title->getNamespace() === NS_USER_WALL
-				&& !$title->isSubpage()
+		if( $title->getNamespace() === NS_USER_WALL && !$title->isSubpage()
 		) {
 			//message wall index
 			$outputDone = true;
@@ -326,11 +325,10 @@ class WallHooksHelper {
 	 **/
 	function onBeforeToolbarMenu(&$items) {
 		$app = F::app();
-		
 		if( empty( $app->wg->EnableWallExt ) ){
 			return true;
-		}		
-		
+		}
+
 		$title = $app->wg->Title;
 		$action = $app->wg->Request->getText('action');
 
@@ -897,6 +895,7 @@ class WallHooksHelper {
 			if( !($rcTitle instanceof Title) ) {
 				//it can be media wiki deletion of an article -- we ignore them
 				Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_DIFF_HIST " . print_r(array($rc), true));
+				wfProfileOut(__METHOD__);
 				return true;
 			}
 
@@ -1050,8 +1049,6 @@ class WallHooksHelper {
 				$wfMsgOptsBase['wallPageName'],
 				$wfMsgOptsBase['actionUser']);
 
-
-
 			$msgType = ($wfMsgOptsBase['isThread']) ? 'thread' : 'reply';
 
 			//created in WallHooksHelper::getMessageOptions()
@@ -1134,61 +1131,6 @@ class WallHooksHelper {
 		}
 
 		return true;
-	}
-
-	/**
-	 * @brief Getting the title of a message
-	 *
-	 * @desc Callback method used in WallHooksHelper::onChangesListInsertLogEntry() hook if deleted message was a reply
-	 *
-	 * @param string $title
-	 *
-	 * @return string
-	 *
-	 * @author Andrzej 'nAndy' Lukaszewski
-	 */
-	private function getParentTitleTxt($title) {
-		wfProfileIn(__METHOD__);
-
-		$app = F::app();
-
-		if( $title instanceof Title ) {
-			$helper = F::build('WallHelper', array());
-
-			$wm = F::build('WallMessage', array($title));
-
-			$titleText = $title->getText();
-			$parentTitleTxt = $wm->getTopParentText($titleText);
-			if( is_null($parentTitleTxt) ) {
-				$parts = explode('/@', $titleText);
-				if( count($parts) > 1 ) {
-					$parentTitleTxt = $parts[0] . '/@' . $parts[1];
-				}
-			}
-
-			$articleData = array('text_id' => '');
-			$articleId = $helper->getArticleId_forDeleted($parentTitleTxt, $articleData);
-			if( !empty($articleId) ) {
-				//parent article was deleted as well
-				$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
-			} else {
-				$title = F::build('Title', array($parentTitleTxt, MWNamespace::getTalk($title->getNamespace())), 'newFromText');
-
-				if( $title instanceof Title ) {
-					$parentWallMsg = F::build('WallMessage', array($title));
-					$parentWallMsg->load(true);
-					$articleTitleTxt = $parentWallMsg->getMetaTitle();
-				} else {
-					$articleTitleTxt = null;
-				}
-			}
-
-			wfProfileOut(__METHOD__);
-			return $articleTitleTxt;
-		}
-
-		wfProfileOut(__METHOD__);
-		return null;
 	}
 
 	/**
@@ -1676,12 +1618,6 @@ class WallHooksHelper {
 	private function getMessageOptions($rc = null, $row = null, $fullUrls = false) {
 		wfProfileIn(__METHOD__);
 
-		if( !is_null($rc) ) {
-			$actionUser = $rc->getAttribute('rc_user_text');
-		} else {
-			$actionUser = '';
-		}
-
 		if( is_object($row) ) {
 			$objTitle = F::build('Title', array($row->page_title, $row->page_namespace), 'newFromText');
 			$userText = !empty($row->rev_user_text) ? $row->rev_user_text : '';
@@ -1698,47 +1634,41 @@ class WallHooksHelper {
 			$isNew = false; //it doesn't metter for rc -- we've got there rc_log_action
 		}
 
-		$wallTitleObj = F::build('Title', array($userText, NS_USER_WALL), 'newFromText');
-		$wallUrl = ($wallTitleObj instanceof Title) ? $wallTitleObj->getLocalUrl() : '#';
 
 		if( !($objTitle instanceof Title) ) {
 			//it can be media wiki deletion of an article -- we ignore them
 			Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r(array($rc, $row), true));
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
-		$parts = explode('/@', $objTitle->getText());
-		$isThread = ( count($parts) === 2 ) ? true : false;
-		$app = F::app();
-		$articleTitleTxt = $this->getParentTitleTxt($objTitle);
-		$wm = F::build('WallMessage', array($objTitle));
-		$articleId = $wm->getId();
-		$wallMsgNamespace = $app->wg->Lang->getNsText(NS_USER_WALL_MESSAGE);
-		$articleUrl = !empty($articleId) ? $wallMsgNamespace.':'.$articleId : '#';
-		$wallOwnerName = $wm->getWallOwnerName();
-		$userText = empty($wallOwnerName) ? $userText : $wallOwnerName;
-		$wallNamespace = $app->wg->Lang->getNsText(MWNamespace::getSubject($objTitle->getNamespace()));
-		$wallUrl = $wallNamespace.':'.$userText;
-
-		if( $fullUrls === true ) {
-		//by default it's Thread:xxx and Message_wall:XXX for messages of recent changes
-		//i.e. 'wall-recentchanges-wall-removed-thread'
-		//but here we need the entire links
-			$articleUrl = $wm->getMessagePageUrl();
-			$wallUrl = $wm->getWallUrl();
+		$wm = WallMessage::newFromId( $objTitle->getArticleId() );
+		$wm->load();
+		
+		if( empty($wm) ) {
+			//it can be media wiki deletion of an article -- we ignore them
+			Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r(array($rc, $row), true));
+			wfProfileOut(__METHOD__);
+			return true;
 		}
+		
+		$articleId = $wm->getId();
+		$wallOwnerName = $wm->getArticleTitle()->getText();
+		$articleTitleTxt =  $wm->getMetaTitle();
 
-		wfProfileOut(__METHOD__);
-		return array(
-			'articleUrl' => $articleUrl,
+		$out = array(
+			'articleUrl' => $wm->getMessagePageUrl(),
 			'articleTitleVal' => $articleTitleTxt,
-			'articleTitleTxt' => empty($articleTitleTxt) ? $app->wf->Msg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
-			'wallPageUrl' => $wallUrl,
-			'wallPageName' => $userText,
-			'actionUser' => $actionUser,
-			'isThread' => $isThread,
+			'articleTitleTxt' => empty($articleTitleTxt) ? wfMsg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
+			'wallPageUrl' => $wm->getArticleTitle()->getFullUrl(),
+			'wallPageName' => $wm->getArticleTitle()->getText(),
+			'actionUser' => $userText,
+			'isThread' => $wm->isMain(),
 			'isNew' => $isNew,
 		);
+		wfProfileOut(__METHOD__);
+
+		return $out;
 	}
 
 	/**

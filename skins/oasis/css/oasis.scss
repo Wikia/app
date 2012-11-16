@@ -34,7 +34,6 @@
 @import "core/page";
 @import "core/CommentsLikes";
 @import "core/WikiHeader";
-@import "core/WikiHeaderV2";
 @import "core/PageHeader";
 @import "core/Search";
 @import "core/article";
@@ -47,7 +46,6 @@
 @import "core/successerror";
 @import "core/SpeechBubble";
 @import "core/ArticleAfterComments";
-@import "core/SharingToolbar";
 @import "core/GlobalNotification";
 @import "core/WikiaBar";
 @import "core/jquery.ui.autocomplete"; // TODO: load on demand

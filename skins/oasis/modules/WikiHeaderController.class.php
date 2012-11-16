@@ -3,22 +3,38 @@
 class WikiHeaderController extends WikiaController {
 
 	public function executeIndex() {
-		global $wgCityId, $wgUser, $wgIsPrivateWiki, $wgEnableAdminDashboardExt, $wgTitle;
+		OasisController::addBodyClass('wikinav2');
 
-		//fb#1090
-		$this->isInternalWiki = empty($wgCityId);
-		$this->showMenu = !(($this->isInternalWiki || $wgIsPrivateWiki) && $wgUser->isAnon());
+		$themeSettings = new ThemeSettings();
+		$settings = $themeSettings->getSettings();
 
-		if($wgUser->isAllowed('editinterface')) {
-			$editURL['href'] = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI)->getFullURL();
-			$editURL['text'] = wfMsg('oasis-edit-this-menu');
-			$this->editURL = $editURL;
+		$this->wordmarkText = $settings["wordmark-text"];
+		$this->wordmarkType = $settings["wordmark-type"];
+		$this->wordmarkSize = $settings["wordmark-font-size"];
+		$this->wordmarkFont = $settings["wordmark-font"];
+
+		if ($this->wordmarkType == "graphic") {
+			wfProfileIn(__METHOD__ . 'graphicWordmarkV2');
+			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
+			$imageTitle = Title::newFromText($themeSettings::WordmarkImageName, NS_IMAGE);
+			if ($imageTitle instanceof Title) {
+				$attributes = array();
+				$file = wfFindFile($imageTitle);
+				if ($file instanceof File) {
+					$attributes [] = 'width="' . $file->width . '"';
+					$attributes [] = 'height="' . $file->height . '"';
+
+					if (!empty($attributes)) {
+						$this->wordmarkStyle = ' ' . implode(' ', $attributes) . ' ';
+					}
+				}
+			}
+			wfProfileOut(__METHOD__ . 'graphicWordmarkV2');
 		}
 
-		$service = new NavigationService();
-		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7, 7), 60*60*3 /* 3 hours */, true);
+		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
-		$this->displaySearch = !empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard(F::app(), $wgTitle);
+		$this->displaySearch = !empty($this->wg->EnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this, $this->wg->Title);
 	}
 
 	public function executeWordmark() {
@@ -33,21 +49,21 @@ class WikiHeaderController extends WikiaController {
 		$this->wordmarkUrl = '';
 		if ($this->wordmarkType == "graphic") {
 			wfProfileIn(__METHOD__ . 'graphicWordmark');
-			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());			
-			$imageTitle = Title::newFromText($themeSettings::WordmarkImageName,NS_IMAGE);
-			if($imageTitle instanceof Title) {
+			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
+			$imageTitle = Title::newFromText($themeSettings::WordmarkImageName, NS_IMAGE);
+			if ($imageTitle instanceof Title) {
 				$attributes = array();
 				$file = wfFindFile($imageTitle);
-				if($file instanceof File) {
-					$attributes []= 'width="' . $file->width . '"';
-					$attributes []= 'height="' . $file->height. '"';
-	
-					if(!empty($attributes)) {
-						$this->wordmarkStyle = ' ' . implode(' ',$attributes) . ' ';
+				if ($file instanceof File) {
+					$attributes [] = 'width="' . $file->width . '"';
+					$attributes [] = 'height="' . $file->height . '"';
+
+					if (!empty($attributes)) {
+						$this->wordmarkStyle = ' ' . implode(' ', $attributes) . ' ';
 					}
 				}
 			}
-			wfProfileOut(__METHOD__. 'graphicWordmark');
+			wfProfileOut(__METHOD__ . 'graphicWordmark');
 		}
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();

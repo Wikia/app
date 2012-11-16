@@ -561,7 +561,7 @@ class working{
 		# Dont want ot redirect...
 		#$oldid = 0; # new article
 		#$article->showArticle( $text, wfMsg( 'newarticle' ), false, $isminor, $now, $summary, $oldid );
-		#wfProfileOut( $fname );
+		wfProfileOut( $fname );
 	}
 	
 	function wadtch($article) {

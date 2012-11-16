@@ -418,8 +418,8 @@ class WallNotifications {
 			array(
 				'wl_title' => array($titleDbkey, $userTitle->getDBkey() ),
 				'wl_namespace' => array(MWNamespace::getSubject($ns), MWNamespace::getTalk($ns)),
-                                //THIS hack will be removed after runing script with will clear all notification copy
-                                "((wl_wikia_addedtimestamp > '2012-01-31' and wl_namespace = ".MWNamespace::getSubject($ns).") or ( wl_namespace = " .MWNamespace::getTalk($ns). " ))"
+				//THIS hack will be removed after runing script with will clear all notification copy
+                "((wl_wikia_addedtimestamp > '2012-01-31' and wl_namespace = ".MWNamespace::getSubject($ns).") or ( wl_namespace = " .MWNamespace::getTalk($ns). " ))"
 			), __METHOD__
 		);
 
@@ -458,8 +458,8 @@ class WallNotifications {
 							// notification
 
 		$memcSync = $this->getCache($userId, $wikiId);
+		$count = 0; //use to set priority of process
 		do {
-			$count = 0; //use to set priority of process
 			if($memcSync->lock()) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 
@@ -533,8 +533,8 @@ class WallNotifications {
 
 			if($this->isCachedData($uId, $wikiId)) {
 				$memcSync = $this->getCache($uId, $wikiId);
+				$count = 0; //use to set priority of process
 				do {
-					$count = 0; //use to set priority of process
 					if($memcSync->lock()) {
 						$data = $this->getData($memcSync, $uId, $wikiId);
 						$this->remNotificationFromData($data, $uniqueId);
@@ -631,8 +631,8 @@ class WallNotifications {
 		//id use to prevent having of extra entry after memc fail.
 
 		$memcSync = $this->getCache($userId, $wikiId);
+		$count = 0; //use to set priority of process
 		do {
-			$count = 0; //use to set priority of process
 			if($memcSync->lock()) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 				$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, false, $notifyeveryone );
@@ -881,7 +881,7 @@ class WallNotifications {
 	}
 
 	protected function getCache($userId, $wikiId) {
-		return F::build('MemcacheSync', array($this->app->wg->Memc, $this->getKey($userId, $wikiId)));
+		return new MemcacheSync($this->app->wg->Memc, $this->getKey($userId, $wikiId));
 	}
 
 	public function getDB($master = false){

@@ -350,7 +350,10 @@ class DefaultMessagesCache {
 		$statusKey = $this->memcKey( 'messages', $code, 'status' );
 
 		$success = $this->mMemc->add( $statusKey, 'loading', MSG_LOAD_TIMEOUT );
-		if ( !$success ) return true; # Other process should be updating them now
+		if ( !$success ) {
+			wfProfileOut( __METHOD__ );
+			return true; # Other process should be updating them now
+		}
 
 		$i = 0;
 		if ( $memc ) {

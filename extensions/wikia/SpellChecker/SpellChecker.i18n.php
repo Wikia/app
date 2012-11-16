@@ -17,7 +17,8 @@ $messages['en'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Spelling suggestions for "$1": $2',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'spellchecker-info' => 'Special page description',
 );
@@ -58,7 +59,7 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'spellchecker-desc' => 'Pourchas a ra un etrefas gwiriañ ar reizhskrivañ evit ar vodulenn PHP enchant',
-	'enablespellchecker' => 'Gweredekaat ar reizhskriver',
+	'enablespellchecker' => 'Gweredekaat ar reizhskriver', # Fuzzy
 	'spellchecker-info' => 'Titouroù war ar reizhskriver',
 	'spellchecker-info-languages' => 'Yezhoù hegerz ($1)',
 	'spellchecker-info-provider' => 'Pourvezer',
@@ -367,7 +368,7 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'spellchecker-desc' => 'Fornece interface de verificação ortográfica para encantar módulo PHP',
-	'enablespellchecker' => 'Habilitar corretor ortográfico',
+	'enablespellchecker' => 'Habilitar corretor ortográfico', # Fuzzy
 	'spellchecker-info' => 'Informação da verificação ortográfica',
 	'spellchecker-info-languages' => 'Os idiomas disponíveis ($1)',
 	'spellchecker-info-provider' => 'Operadora',
@@ -500,4 +501,3 @@ $messages['wa'] = array(
 $messages['zh-hans'] = array(
 	'spellchecker-info-spellcheck-languages' => '语言',
 );
-

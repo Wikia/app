@@ -76,21 +76,23 @@ class Phalanx {
 		return $types;
 	}
 
-	static public function getFromFilter( $moduleId, $lang = null, $master = false ) {
+	static public function getFromFilter( $moduleId, $lang = null, $master = false, $skipCache = false ) {
 		global $wgExternalSharedDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		$timestampNow = wfTimestampNow();
 		$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
 		$sLang = $lang ? $lang : 'all';
-		if (isset(self::$moduleData[$moduleId][$sLang])) {
+		if ( $skipCache ) {
+			$blocksData = null;
+		} else if (isset(self::$moduleData[$moduleId][$sLang])) {
 			$blocksData = self::$moduleData[$moduleId][$sLang];
 		} else {
 			$blocksData = $wgMemc->get($key);
 		}
 
 		//cache miss (or we have expired blocks in cache), get from DB
-		if (empty($blocksData) || (!is_null($blocksData['closestExpire']) && $blocksData['closestExpire'] < $timestampNow && $blocksData['closestExpire'])) {
+		if ( empty($blocksData) || (!is_null($blocksData['closestExpire']) && $blocksData['closestExpire'] < $timestampNow && $blocksData['closestExpire'])) {
 			$blocks = $cond = array();
 			$closestTimestamp = 0;
 			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB );
@@ -104,6 +106,8 @@ class Phalanx {
 				$cond[] = "p_lang IS NULL";
 			}
 
+			$cond[] = "p_expire is null or p_expire > '{$timestampNow}'";
+
 			$res = $dbr->select(
 				'phalanx',
 				'*',
@@ -112,9 +116,6 @@ class Phalanx {
 			);
 
 			while ( $row = $res->fetchObject() ) {
-				if ($timestampNow > $row->p_expire && !is_null($row->p_expire)) {
-					continue;       //skip expired
-				}
 				//use p_id as array key for easier deletion from cache
 				$blocks[$row->p_id] = array(
 					'id' => $row->p_id,
@@ -175,12 +176,12 @@ class Phalanx {
 				'lang' => $row->p_lang,
 			);
 
-			wfProfileOut( __METHOD__ );
-			return $block ;
+			$res = $block;
 		} else {
-			wfProfileOut( __METHOD__ );
-			return false ;
+			$res = false;
 		}
+		wfProfileOut( __METHOD__ );
+		return $res;
 	}
 
 	/**
@@ -208,6 +209,7 @@ class Phalanx {
 		// hack to not count testFilters hits,
 		// otherwise phalanxexempt users will *not* get here
 		if ( $wgUser->isAllowed( 'phalanxexempt' ) ) {
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 		
@@ -317,6 +319,92 @@ class Phalanx {
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
+
+	/**
+	 * test if provided text is blocked
+	 * @param string $text string to be tested against filter
+	 * @param array $blocksData blocks data (text, params, id)
+	 * @param boolean $writeStats should stats be recorded?
+	 * @param array $matchingBlockData (out) block data that matched
+	 *
+	 * @return Array with 'blocked' key containing boolean status
+	 *
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * @author Władysław Bodzek
+	 */
+	static function findBlocked($text, $blocksData, $writeStats = true, &$matchingBlockData = null) {
+		wfProfileIn( __METHOD__ );
+		$result = array('blocked' => false, 'msg' => '');
+		foreach ($blocksData as $blockData) {
+			$blockText = $blockData['text'];
+
+			if ($blockData['regex']) {
+				wfProfileIn( __METHOD__ . '-regex' );
+				//escape slashes uses as regex delimiter
+				$blockText = str_replace('/', '\/', preg_replace('|\\\*/|', '/', $blockText));
+				if ($blockData['exact']) {
+					//add begining and end anchor only once (user might added it already)
+					if (strpos($blockText, '^') !== 0) {
+						$blockText = '^' . $blockText;
+					}
+					if (substr($blockText, -1) != '$') {
+						$blockText .= '$';
+					}
+				}
+				$blockText = "/$blockText/";
+				if (!$blockData['case']) {
+					$blockText .= 'i';
+				}
+				//QuickFix™ for bad regexes
+				//TODO: validate regexes on save/edit
+				wfSuppressWarnings();
+				$matched = preg_match($blockText, $text, $matches);
+				if ($matched === false) {
+					Wikia::log(__METHOD__, __LINE__, "Bad regex found: $blockText");
+				}
+				wfRestoreWarnings();
+				if ($matched) {
+					if ($writeStats) {
+						self::addStats($blockData['id'], $blockData['type']);
+					}
+					$result['blocked'] = true;
+					$result['msg'] = $matches[0];
+				}
+				wfProfileOut( __METHOD__ . '-regex' );
+			} else { //plain text
+				wfProfileIn( __METHOD__ . '-plain' );
+				if (!$blockData['case']) {
+					$text = strtolower($text);
+					$blockText = strtolower($blockText);
+				}
+				if ($blockData['exact']) {
+					if ($text == $blockText) {
+						if ($writeStats) {
+							self::addStats($blockData['id'], $blockData['type']);
+						}
+						$result['blocked'] = true;
+						$result['msg'] = $blockData['text'];    //original case
+					}
+				} else {
+					if ( !empty($blockText) && strpos($text, $blockText) !== false) {
+						if ($writeStats) {
+							self::addStats($blockData['id'], $blockData['type']);
+						}
+						$result['blocked'] = true;
+						$result['msg'] = $blockData['text'];    //original case
+					}
+				}
+				wfProfileOut( __METHOD__ . '-plain' );
+			}
+			if ( $result['blocked'] ) {
+				$matchingBlockData = $blockData;
+				break;
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}
+
 
 	static public function clearCache( $moduleId, $lang ) {
 		$sLang = $lang ? $lang : 'all';

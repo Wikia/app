@@ -13,7 +13,8 @@
 		//hide all childs of body that is not #wkMdlWrp
 		//see bugid: 49662
 		& > *:not(#wkMdlWrp) {
-			display: none;
+			//yup they are useing inline styles
+			display: none !important;
 		}
 	}
 }
@@ -64,10 +65,12 @@
 	height: 30px;
 	margin: 0;
 	padding: 0;
+
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 20;
+
 	background-color: rgba(0,0,0,.8);
 	@include transition(top .2s ease);
 

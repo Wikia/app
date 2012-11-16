@@ -1,5 +1,3 @@
-/*global AdDriverDelayedLoader: true */
-
 //Modal
 $.fn.extend({
 
@@ -221,12 +219,6 @@ $.fn.extend({
 
 		if (typeof settings.onCreate == 'function') {
 			settings.onCreate(this,wrapper);
-		}
-
-		// call AdDriver if necessary
-		if (window.loadAd) {
-			AdDriverDelayedLoader.load();
-			window.loadAd = false;
 		}
 
 		// BugId:7498

@@ -77,6 +77,7 @@ $messages['an'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Alexknight12
  * @author Meno25
  * @author OsamaK
  */
@@ -89,17 +90,17 @@ $messages['ar'] = array(
 	'categoryselect-infobox-sortkey' => 'يرتب أبجديا هذا المقال في صفحة تصنيف "$1" تحت الاسم',
 	'categoryselect-addcategory-button' => 'أضف تصنيفا',
 	'categoryselect-suggest-hint' => 'إظغط على Enter اذا انتهيت',
-	'categoryselect-tooltip' => "'''جديد!''' شريط أدوات علامات التصنيف. جربه أو أنظر [[مساعدة:إختيار التصنيف|المساعدة]] لتعرف المزيد",
+	'categoryselect-tooltip' => "'''جديد!''' شريط أدوات علامات التصنيف. جربه أو أنظر [[مساعدة:إختيار التصنيف|المساعدة]] لتعرف المزيد", # Fuzzy
 	'categoryselect-unhandled-syntax' => 'تم الكشف عن بناء جملة غير معالج - يتم التحويل إلى العرض المرئي',
 	'categoryselect-edit-summary' => 'إضافة التصانيف',
-	'categoryselect-empty-name' => 'يوفر إسم التصنيف (الجزء قبل |)',
+	'categoryselect-empty-name' => 'أضف اسم التصنيف (الجزء قبل |)',
 	'categoryselect-button-save' => 'سجل',
 	'categoryselect-button-cancel' => 'إلغاء',
 	'categoryselect-error-not-exist' => 'المقالة [id=$1] لا وجود لها',
 	'categoryselect-error-user-rights' => 'خطأ في حقوق المستخدم',
 	'categoryselect-error-db-locked' => 'قاعدة البيانات مغلقة',
 	'categoryselect-edit-abort' => 'التعديل الذي تحاول أن تقوم به أجهض من قبل تمديد هوك',
-	'tog-disablecategoryselect' => 'تعطيل وسم التصنيفات',
+	'tog-disablecategoryselect' => 'تعطيل وسم التصنيفات', # Fuzzy
 );
 
 /** Assamese (অসমীয়া)
@@ -188,7 +189,7 @@ $messages['br'] = array(
 	'categoryselect-error-user-rights' => 'Fazi en aotreoù implijerien.',
 	'categoryselect-error-db-locked' => 'Stanket eo ar bank roadennoù',
 	'categoryselect-edit-abort' => "Ar c'hemm hoc'h eus klasket degas zo bet harzet gant ur c'hrog astenn.",
-	'tog-disablecategoryselect' => 'Diweredekaat balizadur ar rummadoù',
+	'tog-disablecategoryselect' => 'Diweredekaat balizadur ar rummadoù', # Fuzzy
 );
 
 /** Catalan (català)
@@ -219,7 +220,8 @@ $messages['ca'] = array(
 	'tog-disablecategoryselect-v2' => "Desactivar el mòdul de categories (només s'aplica si l'edició en mode visual està desactivada).",
 );
 
-/** Sorani Kurdish (کوردی) */
+/** Sorani Kurdish (کوردی)
+ */
 $messages['ckb'] = array(
 	'categoryselect-button-save' => 'پاشەکەوت',
 );
@@ -351,7 +353,8 @@ $messages['eu'] = array(
 	'categoryselect-button-cancel' => 'Utzi',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ */
 $messages['fa'] = array(
 	'categoryselect-addcategory-button' => 'افزودن رده',
 	'categoryselect-suggest-hint' => 'پس از اتمام دکمه اینتر را فشار دهید',
@@ -458,7 +461,8 @@ $messages['grc'] = array(
 	'categoryselect-button-cancel' => 'Ἀκυροῦν',
 );
 
-/** Hausa (Hausa) */
+/** Hausa (Hausa)
+ */
 $messages['ha'] = array(
 	'categoryselect-button-cancel' => 'Soke',
 );
@@ -951,10 +955,10 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
- * @author 555
  * @author Aristóbulo
  * @author Giro720
  * @author Jesielt
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'categoryselect-desc' => 'Disponibiliza uma interface para a administração de categorias de uma página sem que seja necessário editá-lo por inteiro',
@@ -976,7 +980,7 @@ $messages['pt-br'] = array(
 	'categoryselect-error-user-rights' => 'Erro nos direitos de usuário.',
 	'categoryselect-error-db-locked' => 'O banco de dados está bloqueado.',
 	'categoryselect-edit-abort' => "A alteração que você tentou fazer foi abortada pelo ''hook'' de uma extensão",
-	'tog-disablecategoryselect' => 'Desabilitar os botões de aplicação de categoria',
+	'tog-disablecategoryselect' => 'Desabilitar os botões de aplicação de categoria', # Fuzzy
 );
 
 /** Romanian (română)
@@ -1080,7 +1084,8 @@ $messages['sv'] = array(
 	'tog-disablecategoryselect-v2' => 'Inaktivera kategorimodulen (gäller endast om det visuella redigeringsläget är inaktiverat)',
 );
 
-/** Swahili (Kiswahili) */
+/** Swahili (Kiswahili)
+ */
 $messages['sw'] = array(
 	'categoryselect-button-save' => 'Hifadhi',
 	'categoryselect-button-cancel' => 'Batilisha',
@@ -1179,7 +1184,8 @@ $messages['uk'] = array(
 	'categoryselect-error-user-rights' => 'Помилка прав користувача.',
 );
 
-/** Urdu (اردو) */
+/** Urdu (اردو)
+ */
 $messages['ur'] = array(
 	'categoryselect-button-cancel' => 'منسوخ',
 );
@@ -1219,12 +1225,14 @@ $messages['vi'] = array(
 	'tog-disablecategoryselect-v2' => 'Vô hiệu hóa bản Thể loại (chỉ áp dụng khi sửa đổi ở chế độ trực quan bị vô hiệu hoá)',
 );
 
-/** Wu (吴语) */
+/** Wu (吴语)
+ */
 $messages['wuu'] = array(
 	'categoryselect-button-cancel' => '取消',
 );
 
-/** Chinese (中文) */
+/** Chinese (中文)
+ */
 $messages['zh'] = array(
 	'categoryselect-infobox-caption' => '分類選項',
 	'categoryselect-infobox-category' => '分類的名稱',
@@ -1272,4 +1280,3 @@ $messages['zh-hant'] = array(
 	'categoryselect-error-user-rights' => '用戶權限錯誤。',
 	'categoryselect-error-db-locked' => '資料庫已鎖定。',
 );
-

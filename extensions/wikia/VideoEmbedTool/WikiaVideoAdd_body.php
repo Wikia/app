@@ -13,23 +13,36 @@ class WikiaVideoAddForm extends SpecialPage {
 	}
 
 	public function execute( $subpage ) {
-		global $wgOut, $wgRequest, $wgUser;
+		global $wgOut;
 
-		if( $wgUser->isBlocked() ) {
+		if ( !$this->getUser()->isLoggedIn() ) {
+			$wgOut->addHTML( wfMsg( 'wva-notlogged' ) );
+			return;
+		}
+
+		if ( $this->getUser()->isBlocked() ) {
 			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
+		if ( !$this->getUser()->isAllowed( 'upload' ) ) {
+			$wgOut->addHTML( wfMsg( 'wva-notallowed' ) );
+			return;
+		}
+
+		// Add css for form
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/WikiaVideoAdd.scss'));
+		
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'WikiaVideoAdd' );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setPageTitle( "WikiaVideoAdd" );
 		$wgOut->setArticleRelated( false );
 
-		$this->mAction = $wgRequest->getVal( "action" );
-		$this->mPosted = $wgRequest->wasPosted();
+		$this->mAction = $this->getRequest()->getVal( "action" );
+		$this->mPosted = $this->getRequest()->wasPosted();
 
 		switch( $this->mAction ) {
 			case 'submit' :
-				if ( $wgRequest->wasPosted() ) {
+				if ( $this->mPosted ) {
 					$this->mAction = $this->doSubmit();
 				}
 				break;
@@ -39,14 +52,18 @@ class WikiaVideoAddForm extends SpecialPage {
 		}
 	}
 
-	public function showForm() {
-		global $wgOut, $wgRequest, $wgUser;
+	public function showForm( $errors = array() ) {
+		global $wgOut, $wgUser;
+
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'WikiaVideoAdd' );
 		$action = htmlspecialchars($titleObj->getLocalURL( "action=submit" ));
-		( '' != $wgRequest->getVal( 'name' ) ) ? $name = $wgRequest->getVal( 'name' ) : $name = '';
-
-		if( !$wgUser->isAllowed( 'upload' ) ) {
-			if( !$wgUser->isLoggedIn() ) {
+		
+		$name = $this->getRequest()->getVal( 'name', '' );
+		$wpWikiaVideoAddName = $this->getRequest()->getVal( 'wpWikiaVideoAddName', '' );
+		$wpWikiaVideoAddUrl = $this->getRequest()->getVal( 'wpWikiaVideoAddUrl', '');
+		
+		if ( !$wgUser->isAllowed( 'upload' ) ) {
+			if ( !$wgUser->isLoggedIn() ) {
 				$wgOut->addHTML( wfMsg( 'wva-notlogged' ) );
 			} else {
 				$wgOut->addHTML( wfMsg( 'wva-notallowed' ) );
@@ -54,31 +71,47 @@ class WikiaVideoAddForm extends SpecialPage {
 		} else {
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars( array(
-						"out"		=> 	$wgOut,
-						"action"	=>	$action,
-						"name"		=> 	$name,
-						) );
-			$wgOut->addHTML( $oTmpl->render("quickform") );
+				'out' => $wgOut,
+				'action' => $action,
+				'name' => $name,
+				'errors' => $errors,
+				'wpWikiaVideoAddName' => $wpWikiaVideoAddName,
+				'wpWikiaVideoAddUrl' => $wpWikiaVideoAddUrl,
+			) );
+			$wgOut->addHTML( $oTmpl->render('quickform') );
 		}
 	}
 
 	public function doSubmit() {
-		global $wgOut, $wgRequest, $wgUser;
+		global $wgOut;
+
+		$errors = array();
 		$replaced = false;
-		if( '' == $wgRequest->getVal( 'wpWikiaVideoAddName' ) ) {
-			if( '' != $wgRequest->getVal( 'wpWikiaVideoAddPrefilled' ) ) {
-				$this->mName = $wgRequest->getVal( 'wpWikiaVideoAddPrefilled' );
+
+		$this->mUrl = $this->getRequest()->getVal( 'wpWikiaVideoAddUrl', '' );
+		$this->mName = $this->getRequest()->getVal( 'wpWikiaVideoAddName', '' );
+		if ( $this->mName == '' ) {
+			$this->mName = $this->getRequest()->getVal( 'name', '' );
+			if ( $this->mName != '' ) {
 				$replaced = true;
-			} else {
-				$this->mName = '';
 			}
-		} else {
-			$this->mName = $wgRequest->getVal( 'wpWikiaVideoAddName' );
 		}
 
-		( '' != $wgRequest->getVal( 'wpWikiaVideoAddUrl' ) ) ? $this->mUrl = $wgRequest->getVal( 'wpWikiaVideoAddUrl' ) : $this->mUrl = '';
-
-		if ( ( '' != $this->mName ) && ( '' != $this->mUrl ) ) {
+		if ( $this->mUrl == '' ) {
+			$errors['videoUrl'] = wfMsg( 'wva-failure' );
+			$this->showForm($errors);
+			return;
+		} else if ( $this->mName == '' ) {
+			$videoService = F::build( 'VideoService' );
+			$retval = $videoService->addVideo( $this->mUrl );
+			if ( is_array($retval) ) {
+				list( $title, $videoPageId, $videoProvider ) = $retval;
+			} else {
+				$errors['videoUrl'] = wfMsg( 'wva-failure' );
+				$this->showForm($errors);
+				return;
+			}
+		} else {
 			$this->mName = ucfirst($this->mName);
 
 			// sanitize all video titles
@@ -86,9 +119,9 @@ class WikiaVideoAddForm extends SpecialPage {
 
 			$title = Title::makeTitleSafe( NS_VIDEO, $this->mName );
 			if ( $title instanceof Title ) {
-				$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
-				$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
-				$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
+				$permErrors = $title->getUserPermissionsErrors( 'edit', $this->getUser() );
+				$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $this->getUser() );
+				$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $this->getUser() ) );
 
 				if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
 					header('X-screen-type: error');
@@ -103,7 +136,8 @@ class WikiaVideoAddForm extends SpecialPage {
 					} catch (Exception $e) {}
 
 					if( !$res ) {
-						$wgOut->addHTML( wfMsg( 'wva-failure' ) );
+						$errors['videoUrl'] = wfMsg( 'wva-failure' );	
+						$this->showForm($errors);
 						return;
 					}
 				}
@@ -114,23 +148,25 @@ class WikiaVideoAddForm extends SpecialPage {
 					$video->setName( $this->mName );
 					$video->save();
 				}
-
-				$sk = RequestContext::getMain()->getSkin();
-				$link_back = $sk->makeKnownLinkObj( $title );
-
-				if ($replaced) {
-					$wgOut->addHTML( wfMsg( 'wva-success-replaced', $link_back ) );
-				} else {
-					$wgOut->addHTML( wfMsg( 'wva-success', $link_back ) );
-				}
 			} else {
 				//bad title returned
-				$wgOut->addHTML( wfMsg( 'wva-failure' ) );
+				$errors['name'] = wfMsg( 'wva-failure' );			
+				$this->showForm($errors);
+				return;
 			}
-		} else {
-			//one of two params blank
-			$wgOut->addHTML( wfMsg( 'wva-failure' ) );
 		}
+
+		if ( $replaced ) {
+			$successMsgKey = 'wva-success-replaced';
+		} else {
+			$successMsgKey = 'wva-success';
+		}
+
+		$query = array(
+			"sort" => "recent",
+			"msg" => $successMsgKey,
+			"msgTitle" => urlencode($title),
+		);
+		$wgOut->redirect( SpecialPage::getTitleFor("Videos")->getLocalUrl( $query ) );
 	}
 }
-

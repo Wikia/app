@@ -57,13 +57,9 @@ AdProviderOpenX.getUrl2 = function() {
 };
 
 if (!window.wgNoExternals && window.wgEnableOpenXSPC && !window.wgIsEditPage) {
-	setTimeout(function() {
+	jQuery(function($) {
 		$.getScript(AdProviderOpenX.getUrl2(), function() {
-			if (typeof window.spcCallbacks != 'undefined') {
-				for (var i=0; i<window.spcCallbacks.length; i++) {
-					window[window.spcCallbacks[i]]();
-				}
-			}
+			var lazy = new window.Wikia.LazyLoadAds();
 		});
-	}, 0);
+	});
 }

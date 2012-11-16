@@ -69,6 +69,7 @@ class WallHelper {
         $user = null;
 
         if( $ns == NS_USER_WALL ) {
+
 			/**
 			 * @var $w Wall
 			 */
@@ -78,6 +79,7 @@ class WallHelper {
 			/**
 			 * @var $wm WallMessage
 			 */
+			 
 			$wm = F::build( 'WallMessage', array( $title ), 'newFromTitle' );
             $user = $wm->getWallOwner();
 		}
@@ -226,6 +228,7 @@ class WallHelper {
 			//this should never happen
 				Wikia::log(__METHOD__, false, 'No WallMessage instance article id: '.$parentId);
 
+				$app->wf->ProfileOut(__METHOD__);
 				return array(
 					'count' => $commentsCount,
 					'comments' => $comments,
@@ -386,101 +389,6 @@ class WallHelper {
 		$wgEnableParserCache = false;
 
 		return $wgParser->parse( $rawtext, $title, $wgOut->parserOptions())->getText();
-	}
-
-	/**
-	 * @brief Returns id of a deleted article
-	 *
-	 * @brief Returns id of deleted article from table archive. If an article was restored then it returns false.
-	 *
-	 * @param string $dbkey
-	 * @param array $optFields a referance with other data we'd like to recieve
-	 *
-	 * @return int | boolean
-	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
-	 */
-	public function getArticleId_forDeleted($dbkey, &$optFields) {
-		$dbr = wfGetDB( DB_SLAVE );
-
-		$fields = array('ar_page_id');
-
-		if( is_array($optFields) ) {
-			if( isset($optFields['text_id']) ) {
-				$fields[] = 'ar_text_id';
-			}
-		}
-
-		$row = $dbr->selectRow(
-			'archive',
-			$fields,
-			array( 'ar_title' => str_replace(' ', '_', $dbkey) ),
-			__METHOD__
-		);
-
-		if( is_array($optFields) ) {
-			if( isset($optFields['text_id']) && !empty($row->ar_text_id) ) {
-				$optFields['text_id'] = $row->ar_text_id;
-			}
-		}
-
-		return isset($row->ar_page_id) ? $row->ar_page_id : false;
-	}
-
-	public function getDbkeyFromArticleId_forDeleted($articleId) {
-		$dbkey = null;
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$row = $dbr->selectRow( 'archive',
-			array( 'ar_title' ),
-			array( 'ar_page_id' => $articleId ),
-			__METHOD__ );
-
-		if(!empty($row)) $dbkey = $row->ar_title;
-
-		if(empty($dbkey)) {
-			// try again from master
-			$dbr = wfGetDB( DB_MASTER );
-			$row = $dbr->selectRow( 'archive',
-				array( 'ar_title' ),
-				array( 'ar_page_id' => $articleId ),
-				__METHOD__ );
-
-			if(!empty($row)) $dbkey = $row->ar_title;
-		}
-
-		return $dbkey;
-	}
-
-	public function getUserFromArticleId_forDeleted($articleId) {
-		/*
-		 * This is ugly way of doing that
-		 * but for removed threads that we only have ArticleId for
-		 * there is no other way (can't create WallMessage object
-		 * for deleted threads)
-		 */
-		$user_id = null;
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$row = $dbr->selectRow( 'archive',
-			array( 'ar_user' ),
-			array( 'ar_page_id' => $articleId ),
-			__METHOD__ );
-
-		if(!empty($row)) $user_id = $row->ar_user;
-
-		if(empty($dbkey)) {
-			// try again from master
-			$dbr = wfGetDB( DB_MASTER );
-			$row = $dbr->selectRow( 'archive',
-				array( 'ar_user' ),
-				array( 'ar_page_id' => $articleId ),
-				__METHOD__ );
-
-			if(!empty($row)) $user_id = $row->ar_user;
-		}
-
-		return User::newFromId( $user_id );
 	}
 
 	public function isDbkeyFromWall($dbkey) {

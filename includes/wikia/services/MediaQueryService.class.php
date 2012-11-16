@@ -7,6 +7,8 @@ class MediaQueryService extends WikiaService {
 	const MEDIA_TYPE_VIDEO = 'video';
 	const MEDIA_TYPE_IMAGE = 'image';
 
+	private $mediaCache = array();
+
 	/**
 	 * Get list of images which:
 	 *  - are used on pages (in content namespaces) matching given query
@@ -164,6 +166,40 @@ class MediaQueryService extends WikiaService {
 		return true;
 	}
 
+	private function getMediaDataFromCache( Title $media ) {
+		wfProfileIn(__METHOD__);
+
+		if( !isset($this->mediaCache[ $media->getDBKey() ] ) ) {
+			$file = wfFindFile( $media );
+			if( !empty( $file ) && $file->canRender() ) {
+				$articleService = F::build('ArticleService', array( $media->getArticleID() ));
+
+				$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
+				if( $isVideo ) {
+					/** @var $videoHandler VideoHandler */
+					$videoHandler = $file->getHandler();
+					$thumb = $file->transform( array('width'=> 320), 0 );
+				}
+				else {
+					$videoHandler = false;
+				}
+				$this->mediaCache[ $media->getDBKey() ] = array(
+					'title' => $media->getText(),
+					'desc' => $articleService->getTextSnippet( 256 ),
+					'type' => ( $isVideo ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE ),
+					'meta' => ( $videoHandler ? array_merge( $videoHandler->getMetadata(true), $videoHandler->getEmbedSrcData() ) : array() ),
+					'thumbUrl' => ( !empty($thumb) ? $thumb->getUrl() : false
+				));
+			}
+			else {
+				$this->mediaCache[ $media->getDBKey() ] = false;
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return $this->mediaCache[ $media->getDBKey() ];
+	}
+
 	public function getMediaFromArticle(Title $title, $type = null, $limit = null) {
 		wfProfileIn(__METHOD__);
 
@@ -185,26 +221,10 @@ class MediaQueryService extends WikiaService {
 
 					while ($row = $db->fetchObject( $result ) ) {
 						$media = F::build('Title', array($row->il_to, NS_FILE), 'newFromText');
-						$articleService = F::build('ArticleService', array( $media->getArticleID() ));
-						$file = wfFindFile( $media );
-						if ( !empty( $file ) ) {
-							if ( $file->canRender() ) {
-								$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
-								if( $isVideo ) {
-									/** @var $videoHandler VideoHandler */
-									$videoHandler = $file->getHandler();
-									$thumb = $file->transform( array('width'=> 320), 0 );
-								}
-								else {
-									$videoHandler = false;
-								}
-								$titles[] = array(
-									'title' => $media->getText(),
-									'desc' => $articleService->getTextSnippet( 256 ),
-									'type' => ( $isVideo ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE ),
-									'meta' => ( $videoHandler ? array_merge( $videoHandler->getMetadata(true), $videoHandler->getEmbedSrcData() ) : array() ),
-									'thumbUrl' => ( !empty($thumb) ? $thumb->getUrl() : false ));
-							}
+
+						$mediaData = $this->getMediaDataFromCache( $media );
+						if( $mediaData !== false ) {
+							$titles[] = $mediaData;
 						}
 					}
 					$this->wg->memc->set($memcKey, $titles);

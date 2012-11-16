@@ -278,4 +278,3 @@ $messages['uk'] = array(
 $messages['zh-hans'] = array(
 	'sharedhelp-autotalkcreate-summary' => '讨论页已自动创建',
 );
-

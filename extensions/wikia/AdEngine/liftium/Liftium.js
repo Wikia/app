@@ -1357,8 +1357,6 @@ Liftium.init = function (callback) {
 
 	Liftium.pullGeo();
 	Liftium.pullConfig(callback2);
-	
-	Liftium.addEventListener(window, "load", Liftium.onLoadHandler);
 
 	// Tell the parent window to listen to hop messages 
 	if (LiftiumOptions.enableXDM !== false ){
@@ -1452,6 +1450,7 @@ Liftium.isNetworkInChain = function (network_name, slotname){
 	return found;
 };
 
+Liftium.isHighValueCountry = AdLogicHighValueCountry(window).isHighValueCountry;
 
 /* Check to see if the user from the right geography */
 Liftium.isValidCountry = function (countryList){
@@ -1461,7 +1460,7 @@ Liftium.isValidCountry = function (countryList){
 	Liftium.d("Checking if '" + ac + "' is in:", 8, countryList);
 
 	if (Liftium.in_array("row", countryList, true) &&
-		!AdConfig.isHighValueCountry(ac)){
+		!Liftium.isHighValueCountry(ac)){
 		Liftium.d("ROW targetted, and country not high-value", 8);
 		return true;
 	}
@@ -1684,7 +1683,7 @@ Liftium.onLoadHandler = function () {
 	//Liftium.trackEvent(["onload", Liftium.formatTrackTime(Liftium.debugTime(), 30)], "UA-17475676-7");
 
 	Liftium.pageLoaded = true;
-	if ( Liftium.iframesLoaded()) {
+	if (!Liftium.e(Liftium.config) && Liftium.iframesLoaded()) {
 		Liftium.sendBeacon();
 	} else if (Liftium.loadDelay < Liftium.maxLoadDelay){
 		// Check again in a bit. Keep increasing the time
@@ -2627,11 +2626,8 @@ if (LiftiumOptions.error_beacon !== false ){
 
 
 // Gentlemen, Start your optimization!
-if (Liftium.empty(LiftiumOptions.offline) && LiftiumOptions.autoInit !== false){
+if (Liftium.empty(LiftiumOptions.offline)){
 	Liftium.init();
 }
 
-// If an ad was specified in LiftiumOptions, call the ad directly
-if (LiftiumOptions.callAd){
-	Liftium.callAd(LiftiumOptions.callAd);
-}
+Liftium.addEventListener(window, 'load', Liftium.onLoadHandler);

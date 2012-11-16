@@ -31,7 +31,8 @@ $messages['en'] = array(
 	'places-category-switch-off' => 'Enable geotagging'
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'places-in-category' => '$1 is a category name',
 	'places-on-map' => 'Counter of places on a map ($1 is number of places)',
@@ -262,6 +263,13 @@ $messages['it'] = array(
 	'places-geolocation-button-label' => 'Aggiungi posizione',
 	'places-geolocation-modal-add-title' => 'Aggiungi posizione',
 	'places-geolocation-modal-error-title' => 'Errore',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'places-geolocation-modal-error-title' => 'Çewtî',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -600,4 +608,3 @@ $messages['zh-hans'] = array(
 	'places-geolocation-button-label' => '添加位置',
 	'places-geolocation-modal-error-title' => '错误',
 );
-

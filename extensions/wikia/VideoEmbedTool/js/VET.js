@@ -29,6 +29,7 @@ var VET_wysiwygStart = 1;
 var VET_ratio = 1;
 var VET_shownMax = false;
 var VET_inGalleryPosition = false;
+var VET_notificationTimout = 4000;
 
 // Returns the DOM element for the RTE textarea
 function VET_getTextarea() {
@@ -53,31 +54,41 @@ function VET_editVideo() {
 		success: function(o) {
 			var data = FCK.wysiwygData[VET_refid];
 
-			VET_displayDetails(o.responseText);
+			VET_displayDetails(o.responseText, data);
 
 			$G('VideoEmbedBack').style.display = 'none';
 
 			setTimeout(function() {
 
-        if ( (typeof (data.thumbnail) != "undefined" && data.thumbnail ) ||
-             (typeof (data.thumb) != "undefined" && data.thumb ) ) {
-
-             $G("VideoEmbedThumbOption").checked = true;
-        }  else {
-
-             $G("VideoEmbedThumbOption").checked = false;
-        }
+				if ( (typeof (data.thumbnail) != "undefined" && data.thumbnail ) ||
+		             (typeof (data.thumb) != "undefined" && data.thumb ) ) {
+		
+		             $("#VideoEmbedThumbOption").attr('checked', 'checked');
+		             $('#VET_StyleThumb').addClass('selected');
+		        }  else {
+		        	 $('#VideoEmbedSizeRow > div').children('input').removeClass('show');
+					 $('#VideoEmbedSizeRow > div').children('p').addClass('show');
+		        	 $("#VideoEmbedThumbOption").attr('checked', '');
+		             $("#VideoEmbedNoThumbOption").attr('checked', 'checked');
+		             $('#VET_StyleThumb').removeClass('selected');
+		             $('#VET_StyleNoThumb').addClass('selected');     
+		        }
 
 				if(data.align && data.align == 'left') {
-					$G('VideoEmbedLayoutLeft').click();
+					$('#VideoEmbedLayoutLeft').attr('checked', 'checked').parent().addClass('selected');
+				} else if (data.align && data.align == 'center') {
+					$('#VideoEmbedLayoutCenter').attr('checked', 'checked').parent().addClass('selected');
+				} else {
+					$('#VideoEmbedLayoutRight').attr('checked', 'checked').parent().addClass('selected');
 				}
+				
 				if(data.width) {
 					VET_readjustSlider( data.width );
 					VET_width = data.width;
-					$G( 'VideoEmbedManualWidth' ).value = VET_width;
+					$('#VideoEmbedManualWidth').val(VET_width);
 				}
+				
 			}, 200);
-
 			if(data.caption) {
 				$G('VideoEmbedCaption').value = data.caption;
 			}
@@ -101,9 +112,10 @@ function VET_editVideo() {
 	} else {
 		escTitle = FCK.wysiwygData[VET_refid].href;
 	}
-	escTitle = (escTitle).replace(/&/g, escape("&"));
+	escTitle = encodeURIComponent(escTitle);
 	params.push( 'itemTitle='+escTitle );
 
+	YAHOO.util.Connect.initHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
 	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=editVideo&' + params.join('&'), callback);
 }
 
@@ -125,6 +137,8 @@ function VET_doEditVideo() {
 	//if (extraData.thumb) { // bugId:26619
 		if( $G('VideoEmbedLayoutLeft').checked ) {
 			extraData.align = 'left';
+		} else if ($G('VideoEmbedLayoutCenter').checked ) {
+			extraData.align = 'center';
 		} else {
 			extraData.align = 'right';
 		}
@@ -213,32 +227,34 @@ function VET_moveBackButton(selector) {
 function VET_toggleSizing( enable ) {
 	if( enable ) {
 		$G( 'VideoEmbedThumbOption' ).disabled = false;
+		$G( 'VideoEmbedNoThumbOption' ).disabled = false;
 		$G( 'VideoEmbedWidthRow' ).style.display = '';
 		$G( 'VideoEmbedSizeRow' ).style.display = '';
 	} else {
 		$G( 'VideoEmbedThumbOption' ).disabled = true;
+		$G( 'VideoEmbedNoThumbOption' ).disabled = true;
 		$G( 'VideoEmbedWidthRow' ).style.display = 'none';
 		$G( 'VideoEmbedSizeRow' ).style.display = 'none';
 	}
 }
 
 function VET_manualWidthInput( elem ) {
-        var val = parseInt( elem.value );
-        if ( isNaN( val ) ) {
-		$G( 'VideoEmbedManualWidth' ).value = 300;
-		VET_readjustSlider( 300 );
+    var val = parseInt( elem.value );
+    if ( isNaN( val ) ) {
+		$G( 'VideoEmbedManualWidth' ).value = 335;
+		VET_readjustSlider( 335 );
 		return false;
-        }
+    }
 	$G( 'VideoEmbedManualWidth' ).value = val;
 	VET_readjustSlider( val );
 }
 
 function VET_readjustSlider( value ) {
-		if ( 500 < value ) { // too big, hide slider
+		if ( 670 < value ) { // too big, hide slider
 			if ( $('#VideoEmbedSlider .ui-slider-handle').is(':visible') ) {
 				$('#VideoEmbedSlider .ui-slider-handle').hide();
 				$('#VideoEmbedSlider').slider && $('#VideoEmbedSlider').slider({
-					value: 200
+					value: 335
 				});
 			}
 		} else {
@@ -339,6 +355,7 @@ function VET_getFirstFree( gallery, box ) {
 
 // some parameters are
 function VET_show( e, gallery, box, align, thumb, size, caption ) {
+	var errorDiv = $('#VideoEmbedError')
 	// Handle MiniEditor focus
 	// (BugId:18713)
 	if (window.WikiaEditor) {
@@ -363,7 +380,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 	if(typeof gallery != "undefined") {
 		// if in preview mode, go away
 		if ($G ( 'editform' ) && !YAHOO.lang.isNumber(e) ) {
-			alert( vet_no_preview );
+			GlobalNotification.show( vet_no_preview, 'error', errorDiv, VET_notificationTimout );
 			return false;
 		}
 		VET_gallery = gallery;
@@ -460,12 +477,12 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 	} else {
 		var html = '';
 		html += '<div class="reset" id="VideoEmbed">';
+		html += '	<div id="VideoEmbedError"></div>';
 		html += '	<div id="VideoEmbedBorder"></div>';
 		html += '	<div id="VideoEmbedProgress1" class="VideoEmbedProgress"></div>';
 		html += '	<div id="VideoEmbedBack"><img src="'+wgBlankImgUrl+'" id="fe_vetback_img" class="sprite back" alt="' + vet_back + '" /><a href="#">' + vet_back + '</a></div>';
-		html += '	<div id="VideoEmbedClose"><img src="'+wgBlankImgUrl+'" id="fe_vetclose_img" class="sprite close" alt="' + vet_close + '" /><a href="#">' + vet_close + '</a></div>';
 		html += '	<div id="VideoEmbedBody">';
-		html += '		<div id="VideoEmbedError"></div>';
+		html += '		<div id="VideoEmbedClose"><img src="'+wgBlankImgUrl+'" id="fe_vetclose_img" class="sprite close" alt="' + vet_close + '" /><a href="#">' + vet_close + '</a></div>';
 		html += '		<div id="VideoEmbedMain"></div>';
 		html += '		<div id="VideoEmbedDetails" style="display: none;"></div>';
 		html += '		<div id="VideoEmbedConflict" style="display: none;"></div>';
@@ -475,7 +492,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 
 		var element = document.createElement('div');
 		element.id = 'VET_div';
-		element.style.width = '812px';
+		element.style.width = '970px';
 		element.style.height = '487px';
 		element.innerHTML = html;
 
@@ -532,6 +549,9 @@ function VET_loadMain() {
 			if ( window.wgEnableAjaxLogin == true && $('#VideoEmbedLoginMsg').exists() ) {
 				$('#VideoEmbedLoginMsg').click(openLogin).css('cursor', 'pointer').log('VET: ajax login enabled');
 			}
+			
+			// Add suggestions and search to VET
+			VETExtended.init();
 		}
 	}
 	VET_indicator(1, true);
@@ -591,6 +611,20 @@ function VET_recentlyUploaded(param, pagination) {
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=recentlyUploaded&'+param, callback);
 }
 
+function VET_sendQuery(query, page, sourceId, pagination) {
+	var callback = {
+		success: function(o) {
+			$G('VET_results_' + o.argument[0]).innerHTML = o.responseText;
+			VET_indicator(1, false);
+		},
+		argument: [sourceId]
+	}
+	VET_lastQuery[sourceId] = query;
+	VET_indicator(1, true);
+	YAHOO.util.Connect.abort(VET_asyncTransaction);
+	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId, callback);
+}
+
 function VET_indicator(id, show) {
 	if(show) {
 		if(id == 1) {
@@ -629,10 +663,12 @@ function VET_onVideoEmbedUrlKeypress(e) {
 }
 
 function VET_preQuery(e) {
+	var errorDiv = $('#VideoEmbedError');
 	if($G('VideoEmbedUrl').value == '') {
-		alert(vet_warn2);
+		GlobalNotification.show( vet_warn2, 'error', errorDiv, VET_notificationTimout );
 		return false;
 	} else {
+		errorDiv.hide();
 		var query = $G('VideoEmbedUrl').value;
 		VET_indicator(1, true);
 		VET_sendQueryEmbed( query );
@@ -657,7 +693,9 @@ function VET_insertTag( target, tag, position ) {
 	}
 }
 
-function VET_displayDetails(responseText) {
+function VET_displayDetails(responseText, dataFromEditMode) {
+	var errorDiv = $('#VideoEmbedError');
+
 	VET_switchScreen('Details');
 	VET_width = null;
 	$G('VideoEmbedBack').style.display = 'inline';
@@ -672,17 +710,24 @@ function VET_displayDetails(responseText) {
 		var thumbSize = [image.width, image.height];
 		VET_orgThumbSize = null;
 	}
-
-	function initSlider() {
+	
+	var value = 335;
+	
+	if (dataFromEditMode && dataFromEditMode.width) {
+		value = dataFromEditMode.width;
+	}
+	
+	function initSlider() {	
+			
 		$('.WikiaSlider').slider({
 			min: 100,
-			max: 500,
-			value: 300,
+			max: 670,
+			value: value,
 			slide: function(event, ui) {
 				$('#VideoEmbedManualWidth').val(ui.value);
 			},
 			create: function(event, ui) {
-				$('#VideoEmbedManualWidth').val(300);
+				$('#VideoEmbedManualWidth').val(value);
 			}
 		});
 	}
@@ -701,7 +746,7 @@ function VET_displayDetails(responseText) {
 	}
 
 	if ($G( 'VET_error_box' )) {
-		alert( $G( 'VET_error_box' ).innerHTML );
+		GlobalNotification.show( $G( 'VET_error_box' ).innerHTML, 'error', errorDiv, VET_notificationTimout );
 	}
 
 	if( 0 < VET_align ) {
@@ -743,9 +788,12 @@ function VET_displayDetails(responseText) {
 	}
 
 	VET_indicator(1, false);
+	$('#VideoEmbedCaption').placeholder();
 }
 
 function VET_insertFinalVideo(e, type) {
+	var errorDiv = $('#VideoEmbedError');
+
 	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);
 
 	YAHOO.util.Event.preventDefault(e);
@@ -755,16 +803,16 @@ function VET_insertFinalVideo(e, type) {
 
 	if(!$G('VideoEmbedName')) {
 		if ($G( 'VideoEmbedOname' ) ) {
-			if ('' == $G( 'VideoEmbedOname' ).value)	 {
-				alert( vet_warn3 );
+			if ('' == $G( 'VideoEmbedOname' ).value) {
+				GlobalNotification.show( vet_warn3, 'error', errorDiv, VET_notificationTimout );
 				return false;
 			}
 		} else {
-			alert( vet_warn3 );
+			GlobalNotification.show( vet_warn3, 'error', errorDiv, VET_notificationTimout );
 			return false;
 		}
 	} else if ('' == $G( 'VideoEmbedName' ).value ) {
-		alert( vet_warn3 );
+		GlobalNotification.show( vet_warn3, 'error', errorDiv, VET_notificationTimout );
 		return false;
 	}
 
@@ -814,6 +862,8 @@ function VET_insertFinalVideo(e, type) {
 			params.push( 'layout=left' );
 		} else if( $G('VideoEmbedLayoutGallery').checked ) {
 			params.push( 'layout=gallery' );
+		} else if ( $G('VideoEmbedLayoutCenter').checked ) {
+			params.push( 'layout=center' )
 		} else {
 			params.push( 'layout=right' );
 		}
@@ -846,7 +896,7 @@ function VET_insertFinalVideo(e, type) {
 			switch(YAHOO.lang.trim(screenType)) {
 				case 'error':
 					o.responseText = o.responseText.replace(/<script.*script>/, "" );
-					alert(o.responseText);
+					GlobalNotification.show( o.responseText, 'error', errorDiv, VET_notificationTimout );
 					break;
 				case 'conflict':
 					VET_switchScreen('Conflict');
@@ -863,9 +913,7 @@ function VET_insertFinalVideo(e, type) {
 							}
 							if ('-1' == VET_gallery) {
 								if (!VET_inGalleryPosition) {
-									if($G('wpTextbox1')){
-										 $G('wpTextbox1').focus();
-									}
+									VET_getTextarea().focus();
 									insertTags( $G('VideoEmbedTag').value, '', '', VET_getTextarea());
 								} else {
 									VET_insertTag( VET_getTextarea(), $G('VideoEmbedTag').value, VET_inGalleryPosition );
@@ -894,6 +942,8 @@ function VET_insertFinalVideo(e, type) {
 							}
 							if($G('VideoEmbedLayoutLeft').checked) {
 								options.align = 'left';
+							} else if ($G('VideoEmbedLayoutCenter').checked) {
+								options.align = 'center';
 							} else {
 								options.align = null;
 							}
@@ -932,7 +982,7 @@ function VET_insertFinalVideo(e, type) {
 			VET_indicator(1, false);
 		},
 		failure: function(o) {
-			alert( vet_insert_error );
+			GlobalNotification.show( vet_insert_error, 'error', errorDiv, VET_notificationTimout );
 		}
 	}
 
@@ -947,6 +997,9 @@ function VET_switchScreen(to) {
 	VET_curScreen = to;
 	$G('VideoEmbed' + VET_prevScreen).style.display = 'none';
 	$G('VideoEmbed' + VET_curScreen).style.display = '';
+	// this is called in both cases - when hitting 'back' and when closing the dialog.
+	// in any case we want to stop the video
+	$('#VideoEmbedThumb').children().remove();
 	if(VET_curScreen == 'Main') {
 		$G('VideoEmbedBack').style.display = 'none';
 	}
@@ -958,7 +1011,7 @@ function VET_switchScreen(to) {
 
 			switch(to) {
 				case 'Details':
-					VET_moveBackButton($('.VideoEmbedNoBorder').find('input'));
+					VET_moveBackButton($('.VideoEmbedNoBorder.addVideoDetailsFormControls').find('input'));
 					break;
 
 				case 'Conflict':
@@ -989,10 +1042,13 @@ function VET_previewClose(e) {
 }
 
 function VET_close(e) {
+	var errorDiv = $('#VideoEmbedError');
 
 	if(e) {
 		YAHOO.util.Event.preventDefault(e);
 	}
+	
+	errorDiv.hide();
 
 	VET_panel.hide();
 	if ( 400 == wgNamespaceNumber ) {
@@ -1026,6 +1082,7 @@ function VET_tracking(action, label, value) {
 }
 
 function VET_sendQueryEmbed(query) {
+	var errorDiv = $('#VideoEmbedError')
 	var callback = {
 		success: function(o) {
 			var screenType = o.getResponseHeader['X-screen-type'];
@@ -1034,14 +1091,469 @@ function VET_sendQueryEmbed(query) {
 			}
 
 			if( 'error' == YAHOO.lang.trim(screenType) ) {
-				alert( o.responseText );
+				GlobalNotification.show( o.responseText, 'error', errorDiv, VET_notificationTimout );
 			} else {
+				// attach handlers - close preview on VET modal close (IE bug fix)
+				VETExtended.cachedSelectors.closePreviewBtn.click();
 				VET_displayDetails(o.responseText);
 			}
 			VET_indicator(1, false);
+			
+			
+			
 		}
 	}
 	VET_indicator(1, true);
 	YAHOO.util.Connect.abort(VET_asyncTransaction);
-	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('POST', wgScriptPath + '/index.php', callback, 'action=ajax&rs=VET&method=insertVideo&url=' + escape($G('VideoEmbedUrl').value));
+	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('POST', wgScriptPath + '/index.php', callback, 'action=ajax&rs=VET&method=insertVideo&url=' + escape(query));
 }
+
+//***********************************************
+//
+// New Features to VET - suggestions, search, preview etc.
+//
+// author: Rafal Leszczynski, Jacek Jursza
+//
+//***********************************************
+
+var VETExtended = {
+
+	canFatch: true, // flag for blocking fetching if it's in progress or no more items to fetch
+	
+	// object for caching stuff for suggestions 
+	suggestionsCachedStuff: {
+		
+		cashedSuggestions: [], 
+		fetchedResoultsCount: 0
+	},
+	
+	// object for caching stuff for search 
+	searchCachedStuff: {
+		
+		inSearchMode: false,
+		currentKeywords: '',
+		fetchedResoultsCount: 0,
+		searchType: 'premium'
+	},
+
+	init: function() {
+
+		var that = this;
+		
+		// reset cached stuff on init if some old values preserved
+		this.searchCachedStuff.currentKeywords = '';
+		this.searchCachedStuff.inSearchMode = false;
+		this.suggestionsCachedStuff.cashedSuggestions = [];
+		this.suggestionsCachedStuff.fetchedResoultsCount = 0;
+		
+		// load mustache as deferred object and then make request for suggestions 
+		$.when(
+			$.loadMustache()
+		).done($.proxy(this.fetchSuggestions, this));
+		
+		// cache selectors
+		this.cachedSelectors = {
+			carousel: $('#VET-suggestions'),
+			carouselWrapper: $('#VET-carousel-wrapper'),
+			suggestionsWrapper: $('#VET-suggestions-wrapper'),
+			previewWrapper: $('#VET-preview'),
+			videoWrapper: $('#VET-video-wrapper'),
+			searchForm: $('#VET-search-form'),
+			resultCaption: $('#VET-carousel-wrapper > p.results strong'),
+			backToSuggestions: $('#VET-carousel-wrapper > a.back-link'),
+			closePreviewBtn: $('#VET-preview-close'),
+			positionOptions: $('#VideoEmbedLayoutRow'),
+			searchDropDown: $('#VET-search-dropdown')
+		};
+		
+		// set search type to local if premium disabled
+		if (this.cachedSelectors.searchDropDown.attr('data-selected') === 'local') {
+			this.searchCachedStuff.searchType = 'local';
+		} else {
+			this.searchCachedStuff.searchType = 'premium';
+		}
+
+		// attach handlers - add video button
+		this.cachedSelectors.carousel.on('click', 'li > a', function(event) {
+			event.preventDefault();
+			VET_sendQueryEmbed($(this).attr('href'));
+		});
+
+		// attach handlers - play button (open video preview)
+		this.cachedSelectors.carousel.on('click', 'li a.video', function(event){
+			event.preventDefault();
+			var videoTitle = $("img", this).attr("data-video");
+			that.fetchVideoPlayer(videoTitle);
+			
+			// remove in-preview class from previously check item if exists
+			that.removeInPreview();
+			
+			// cache current in preview element in carousel
+			that.cachedSelectors.inPreview = $(this).parents('li').addClass('in-preview');
+		});
+		
+		// attach handlers - close preview
+		this.cachedSelectors.previewWrapper.on('click', '#VET-preview-close', function(event) {
+			event.preventDefault();	
+			that.cachedSelectors.previewWrapper.stop().slideUp('slow', function() {
+				that.cachedSelectors.videoWrapper.children().remove();
+				that.removeInPreview();
+			});	
+		});
+		
+		// attach handlers - add video button from preview
+		this.cachedSelectors.previewWrapper.on('click', '#VET-add-from-preview', function(event) {
+			event.preventDefault();
+			that.cachedSelectors.inPreview.children('a').click();
+		});
+
+		// attach handlers - back to suggestions
+		this.cachedSelectors.backToSuggestions.on('click', function(e) {
+
+            that.searchCachedStuff.inSearchMode = false;
+
+            if(that.requestInProgress) {
+                that.requestInProgress.abort();
+            }
+            that.searchCachedStuff.currentKeywords = '';
+            that.cachedSelectors.backToSuggestions.removeClass('show');
+            that.cachedSelectors.carousel.find('p').removeClass('show');
+            that.updateResultCaption();
+			that.cachedSelectors.closePreviewBtn.click();
+            that.cachedSelectors.carousel.find('li').remove();
+            that.addSuggestions({items: that.suggestionsCachedStuff.cashedSuggestions});
+            if (that.cachedSelectors.carousel.resetPosition) that.cachedSelectors.carousel.resetPosition();
+
+            that.isCarouselCheck();
+		});
+		
+		// attach handlers - search
+		this.cachedSelectors.searchForm.submit(function(event) {
+			event.preventDefault();
+			var keywords = $(this).find('#VET-search-field').val();
+			if(keywords !== '' && that.searchCachedStuff.currentKeywords !== keywords) {
+
+				// switch fetch more handler to fetch search mode; 
+				that.searchCachedStuff.inSearchMode = true;
+				
+				// stop proccesing previous fetching request (exp. using search when still loading suggestions on init)
+				if(that.requestInProgress) {
+					that.requestInProgress.abort();
+				}
+
+				// reset cached properties for new search query
+				that.searchCachedStuff.fetchedResoultsCount = 0;
+				that.searchCachedStuff.currentKeywords = keywords;
+				that.canFatch = true;
+				
+				// cleanup carousel if new search phrase
+				that.cachedSelectors.closePreviewBtn.click();
+				that.cachedSelectors.carousel.find('li').remove();
+				that.cachedSelectors.carousel.find('p').removeClass('show');
+	
+				
+				
+				that.cachedSelectors.suggestionsWrapper.startThrobbing();
+				
+				that.fetchSearch();
+			}
+		});
+		
+		// attach handlers - close preview on VET modal close (IE bug fix)
+		$('#VideoEmbedClose').click(function(){
+			that.cachedSelectors.closePreviewBtn.click();
+		});
+		
+		// attach handlers - bottom close modal button
+		$('#bottom-close-button').click(function(event){
+			event.preventDefault();
+			VET_close();
+		});
+		
+		// attach handlers - selection border around position options in video display options tab
+		$('#VideoEmbedDetails').on('click', '#VideoEmbedLayoutRow span, #VideoEmbedSizeRow span', function() {
+			
+			var parent = $(this).parent();
+			parent.find('span').removeClass('selected');
+			$(this).addClass('selected');
+			
+			// show/hide caption input for "Style" option
+			if ($(this).is('#VET_StyleThumb')) {
+				parent.children('p').removeClass('show');
+				parent.children('input').addClass('show');
+			} else {
+				parent.children('input').removeClass('show');
+				parent.children('p').addClass('show');
+			}
+		});
+		
+		// attach handler - submit display options tab
+		$('#VideoEmbedDetails').on('submit', '#VET-display-options', function(event) {
+			event.preventDefault();
+			VET_insertFinalVideo(event, 'details');
+		});
+		$('#VideoEmbedDetails').on('submit', '#VET-display-options-update', function(event) {
+			event.preventDefault();
+			VET_doEditVideo();
+		});
+		 
+		
+		// create dropdown for search filters
+		this.cachedSelectors.searchDropDown.wikiaDropdown({
+			onChange: function(e, $target) {
+				var currSort = this.$selectedItemsList.text(),
+					newSort = $target.text();
+
+				if(currSort != newSort) {
+					var sort = $target.data('sort');
+					that.searchCachedStuff.searchType = sort;
+					that.searchCachedStuff.currentKeywords = '';
+					that.cachedSelectors.closePreviewBtn.click();
+					$('#VET-search-submit').click();
+				}
+			}
+		});
+		
+	},
+	
+	// METHOD: Remove selected state from in-preview thumbnail
+	removeInPreview: function() {
+	
+		if (this.cachedSelectors.inPreview) {
+			this.cachedSelectors.inPreview.removeClass('in-preview');
+		}
+		
+	},
+
+	// METHOD: Trim titles
+	trimTitles: function(data) {
+	
+		var item;
+		
+		// trim video titles to two lines
+		for ( var i in data.items ) {
+			item = data.items[i];
+			if (item.title) {
+				item.trimTitle = item.title.substr(0, 35);
+				if ( item.trimTitle.length < item.title.length ) {
+					item.trimTitle += "...";
+				}
+			}
+		}
+		
+	},
+	
+	// METHOD: add items to carousel
+	addSuggestions: function(data) {
+		
+		var html,
+			template = '{{#items}}<li><figure>{{{thumbnail}}}<figcaption><strong>{{trimTitle}}</strong></figcaption></figure><a href="{{url}}" title="{{title}}">Add video</a></li>{{/items}}';
+		
+		html = $.mustache(template, data);
+		this.cachedSelectors.carousel.find('ul').append(html);
+		
+	},
+	
+	// METHOD: create carousel instance
+	createCarousel: function() {
+	
+		var that = this,
+			itemsShown = 5; // items displayed per carousel slide
+		
+		// show carousel if suggestions returned
+		this.cachedSelectors.carouselWrapper.addClass('show');
+		
+		// create carousel instance
+		this.carouselInstance = this.cachedSelectors.carousel.carousel({
+			transitionSpeed: 500,
+			itemsShown: itemsShown,
+			nextClass: "scrollright",
+			prevClass: "scrollleft",
+			trackProgress: function(indexStart, indexEnd, totalItems) {
+				if (itemsShown * 2 > totalItems - indexEnd) {
+					// depends on fetch mode send request to different controller
+					if (!that.searchCachedStuff.inSearchMode) {
+						that.fetchSuggestions();
+					} else {
+						that.fetchSearch();
+					}	
+				}
+			}
+		});
+		
+	},
+	
+	// METHOD: Update carousel after adding new items
+	updateCarousel: function() {
+		this.carouselInstance.updateCarouselItems();
+		this.carouselInstance.updateCarouselWidth();
+		this.carouselInstance.updateCarouselArrows();
+	},
+	
+	// METHOD: update carousel after adding new items or create one if not already created
+	isCarouselCheck: function() {
+	
+		if (this.cachedSelectors.carouselWrapper.hasClass('show')) {
+			this.updateCarousel();
+		} else {
+			this.createCarousel();	
+		}
+		
+	},
+	
+
+	// METHOD: show preview of the selected video
+	showVideoPreview: function(data) {
+	
+		var previewWrapper = this.cachedSelectors.previewWrapper,
+			videoWrapper = this.cachedSelectors.videoWrapper;
+		if ( data.playerAsset && data.playerAsset.length > 0 ) { // screenplay special case
+			$.getScript(data.playerAsset, function() {
+				videoWrapper.html( '<div id="'+data.videoEmbedCode.id+'" class="Wikia-video-enabledEmbedCode"></div>');
+				$('body').append('<script>' + data.videoEmbedCode.script + ' loadJWPlayer(); </script>');
+			});
+		} else {
+			videoWrapper.html('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>');
+		}
+		
+		// expand preview is hidden
+		if (!previewWrapper.is(':visible')) {
+			previewWrapper.stop().slideDown('slow');
+		}
+		
+	},
+	
+	// METHOD: fech player embed code
+	fetchVideoPlayer: function(title) {
+		
+		var that = this;
+
+		$.nirvana.sendRequest({
+			controller: 'VideoEmbedToolController',
+			method: 'getEmbedCode',
+			type: 'get',
+			data: {
+				fileTitle: title
+			},
+			callback: function(data) {
+				that.showVideoPreview(data);
+			}
+		});
+
+	},
+
+	// METHOD: update caption
+	updateResultCaption: function( txt ) {
+	      if (!this.cachedResultCaption) this.cachedResultCaption = this.cachedSelectors.resultCaption.text();
+	      if ( txt ) this.cachedSelectors.resultCaption.text( txt );
+	      else this.cachedSelectors.resultCaption.text( this.cachedResultCaption );
+	},
+
+	// METHOD: fetch part of suggestions
+	fetchSuggestions: function() {
+	
+		var that = this,
+			svStart = this.suggestionsCachedStuff.fetchedResoultsCount, // index - start fetching from item number... 
+			svSize = 20; // number of requested items
+			
+		if (this.canFatch === true) {
+			this.canFatch = false; // fetching in progress
+		
+			this.requestInProgress = $.nirvana.sendRequest({
+				controller: 'VideoEmbedToolController',
+				method: 'getSuggestedVideos',
+				type: 'get',
+				data: {
+					svStart: svStart,  
+					svSize: svSize, 
+					articleId: wgArticleId	
+				},
+				callback: function(data) {
+					var i,
+						items = data.items,
+						length = items.length;
+					
+					if (length > 0) {
+						
+						that.trimTitles(data);
+						that.addSuggestions(data);
+						
+						// update results counter
+						that.suggestionsCachedStuff.fetchedResoultsCount = data.nextStartFrom;
+						
+						// cache fetched items
+						for (i = 0; i < length; i += 1) {
+							that.suggestionsCachedStuff.cashedSuggestions.push(items[i]);
+						}
+						
+						that.isCarouselCheck();
+						that.canFatch = true;
+					} 
+				}
+			});
+		}
+		
+	},
+				
+	// METHOD: fetch part of search results
+	fetchSearch: function() {
+		
+		var that = this,
+			svStart = this.searchCachedStuff.fetchedResoultsCount,
+			svSize = 20; // number of requested items
+			phrase = this.searchCachedStuff.currentKeywords;
+			
+		if (this.canFatch === true) {
+			this.canFatch = false; // fetching in progress
+		
+			this.requestInProgress = $.nirvana.sendRequest({
+				controller: 'VideoEmbedToolController',
+				method: 'search',
+				type: 'get',
+				data: {
+					svStart: svStart,
+					svSize: svSize,
+					phrase: phrase,
+					type: that.searchCachedStuff.searchType
+				},
+				callback: function(data) {
+					
+					var i,
+						items = data.items,
+						length = items.length;
+					
+					// show results count
+					that.updateResultCaption( data.caption );
+										
+					if (length > 0) {
+						
+						// update results counter
+						that.searchCachedStuff.fetchedResoultsCount = data.nextStartFrom;
+						
+						that.trimTitles(data);
+						that.addSuggestions(data);
+						
+						// reset carousel container to the first slide position
+						if (svStart === 0) {
+							if (that.cachedSelectors.carousel.resetPosition) that.cachedSelectors.carousel.resetPosition();
+						}
+						
+					} else if (that.searchCachedStuff.fetchedResoultsCount === 0) {
+						// show no results found for new search with not results returned from controller
+						that.cachedSelectors.carousel.find('p').addClass('show');	
+					}
+
+					if (that.suggestionsCachedStuff.cashedSuggestions.length > 0)
+						that.cachedSelectors.backToSuggestions.addClass('show');
+					
+					that.isCarouselCheck();						
+					that.canFatch = true;
+					that.cachedSelectors.suggestionsWrapper.stopThrobbing();
+					
+				}
+			});
+		}
+		
+	}
+	
+};

@@ -66,6 +66,9 @@ class WallBaseController extends WikiaController{
 			$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
 		}
 
+		//TODO: keep the varnish cache and do purging on post 
+		$this->response->setCacheValidity(0, 0);
+
 		wfProfileOut( __METHOD__ );	
 	}
 
@@ -73,15 +76,31 @@ class WallBaseController extends WikiaController{
 		wfProfileIn( __METHOD__ );
 
 		$this->addAsset();
-		
+
 		$title = $this->request->getVal('title', $this->app->wg->Title);
+
+		$userName = ($title instanceof Title) ? $title->getText() : $title;
+		if (User::idFromName($userName) === null) {
+			wfRunHooks('ShowMissingArticle', array($this));
+
+			$this->app->wg->Out->setStatusCode(404);
+			$this->response->getView()->setTemplate('Wall', '404');
+
+			$showMissingArticle = wfRunHooks('BeforeDisplayNoArticleText', array($this));
+
+			$this->response->setVal('showMissingArticle', $showMissingArticle);
+			$this->response->setVal('userName', $userName);
+			wfProfileOut(__METHOD__);
+			return;
+		}
+
 		$page = $this->request->getVal('page', 1);
 
 		$wallMessagesPerPage = 10;
 		if( !empty($this->app->wg->WallMessagesPerPage) ){
 			$wallMessagesPerPage = $this->app->wg->WallMessagesPerPage;
 		};
-		
+
 		$this->getThreads($title, $page, $wallMessagesPerPage);
 
 		$this->response->setVal('type', 'Board');
@@ -110,6 +129,9 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('itemsPerPage', $wallMessagesPerPage);
 		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
 		$this->response->setVal('currentPage', $page );
+		
+		//TODO: keep the varnish cache and do purging on post 
+		$this->response->setCacheValidity(0, 0);
 		
 		wfProfileOut( __METHOD__ );
 	}

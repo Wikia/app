@@ -18,7 +18,7 @@ You can use your watchlist to keep track of the latest changes to pages that you
 	'myhome-hot-spots-feed-empty' => "This wiki is waiting for you to get involved.
 Click on '''[[Special:CreatePage|New page]]''' to start writing!",
 	'myhome-hot-spots-newest' => 'New pages on the wiki',
-	'tog-myhomedisableredirect' => 'Disable my redirect to Wiki Activity',
+	'tog-userlandingpage' => 'Landing page:',
 	'prefs-myhome' => 'My Home',
 
 	'myhome-feed-newpage' => 'new page',
@@ -105,6 +105,7 @@ For example, you could:
  * @author EugeneZelenko
  * @author McDutchie
  * @author Siebrand
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'myhome-activity-feed' => 'This the title of the list/summary of recent activity in "My home page" in Wikia. "Feed" here does not refer to an RSS/Atom-type feed.',
@@ -121,6 +122,8 @@ $messages['qqq'] = array(
 The parameter $1 is replaced by either:
 * {{msg-wikia|Myhome-activity-feed}}, or:
 * {{msg-wikia|Myhome-watchlist-feed}}",
+	'tog-userlandingpage' => 'Label next to selectbox when user can choose her landing page will be one of: Main Page, WikiActivity, RecentChanges',
+	'accesskey-pt-myhome' => '{{doc-accesskey}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -133,7 +136,7 @@ $messages['af'] = array(
 	'myhome-user-contributions-feed' => 'Bydraes',
 	'myhome-hot-spots-feed-empty' => "Hierdie wiki wag vir jou om betrokke te raak. Kliek op '''[[Special:CreatePage|Nuwe bladsy]]''' om te begin skryf!",
 	'myhome-hot-spots-newest' => 'Nuwe bladsye op die wiki',
-	'tog-myhomedisableredirect' => 'Skakel aanstuur na My Tuisblad af',
+	'tog-myhomedisableredirect' => 'Skakel aanstuur na My Tuisblad af', # Fuzzy
 	'myhome-feed-newpage' => 'nuwe bladsy',
 	'myhome-feed-edit' => 'wysig',
 	'myhome-feed-move' => 'bladsy geskuif',
@@ -167,7 +170,7 @@ $messages['af'] = array(
 	'myhome-log-in' => "<center>Die My Tuisblad-funksie is slegs beskikbaar as u aangeteken is.<br /><br />
 <big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Teken asseblief aan om hierdie bladsy te wys!]</span>'''</big></center>",
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => 'Geselshoekie',
+	'myhome-community-corner-header' => 'Geselshoekie', # Fuzzy
 	'myhome-community-corner-edit' => 'wysig boodskap',
 	'myhome-hot-spots-definition' => 'Bladsye met die meeste outeurs oor die laaste {{PLURAL:$1|dag|$1 dage}}.',
 	'tooltip-pt-myhome' => 'Gaan na My Tuisblad',
@@ -193,7 +196,7 @@ $messages['ar'] = array(
 	'myhome-hot-spots-feed-empty' => "هذه الويكي تنتظر مشاركتك.
 أنقر على '''[[خاص:CreatePage|صفحة جديدة]]''' لبداية التعديل!",
 	'myhome-hot-spots-newest' => 'الصفحات الجديدة في الويكي',
-	'tog-myhomedisableredirect' => 'عدم توجيهي إلى "صفحتي الرئيسية" أوتوماتيكيا',
+	'tog-myhomedisableredirect' => 'عدم توجيهي إلى "صفحتي الرئيسية" أوتوماتيكيا', # Fuzzy
 	'myhome-feed-newpage' => 'صفحة جديدة',
 	'myhome-feed-edit' => 'تعديل',
 	'myhome-feed-move' => 'نقلت الصفحة',
@@ -231,7 +234,7 @@ $messages['ar'] = array(
 جربه!',
 	'myhome-hot-spots-number-of-editors' => 'محرر',
 	'myhome-log-in' => "<center>خاصية \"صفحتي الرئيسية\" غير متوفرة إلا إذا سجلت الدخول. <br /><br /><big>'''[{{fullurl:خاص:Signup|\$1}} الرجاء التسجيل لرؤية هذه الصفحة.]''' </big></center>",
-	'myhome-community-corner-header' => 'ركن المجتمع',
+	'myhome-community-corner-header' => 'ركن المجتمع', # Fuzzy
 	'myhome-community-corner-edit' => 'عدل الرسالة',
 	'community-corner' => "'''مرحبا بك في صفحتي الرئيسية'''
 
@@ -306,7 +309,7 @@ $messages['be-tarask'] = array(
 	'myhome-hot-spots-feed-empty' => "{{SITENAME}} чакае Вашага ўдзелу.
 Націсьніце спасылку '''[[Special:CreatePage|Новая старонка]]''', каб пачаць пісаць!",
 	'myhome-hot-spots-newest' => 'Новыя старонкі ў {{GRAMMAR:месны|{{SITENAME}}}}',
-	'tog-myhomedisableredirect' => 'Адключыць перанакіраваньне на маю хатнюю старонку',
+	'tog-myhomedisableredirect' => 'Адключыць перанакіраваньне на маю хатнюю старонку', # Fuzzy
 	'myhome-feed-newpage' => 'новая старонка',
 	'myhome-feed-edit' => 'рэдагаваць',
 	'myhome-feed-move' => 'старонка перанесеная',
@@ -372,7 +375,7 @@ $messages['bo'] = array(
 	'myhome-watchlist-feed' => 'མཉམ་འཇོག་ཐོ།',
 	'myhome-user-contributions-feed' => 'བྱས་རྗེས།',
 	'myhome-hot-spots-newest' => 'ཝེ་ཁེ་སྟེང་གི་ཤོག་ངོས་གསར་བ།',
-	'tog-myhomedisableredirect' => 'ང་ཡི་ཁྱིམ་ལ་ཁ་ཕྱོགས་གསར་བ་ནུས་མེད་གཏོང་བ།',
+	'tog-myhomedisableredirect' => 'ང་ཡི་ཁྱིམ་ལ་ཁ་ཕྱོགས་གསར་བ་ནུས་མེད་གཏོང་བ།', # Fuzzy
 	'prefs-myhome' => 'ང་ཡི་ཁྱིམ།',
 	'myhome-feed-newpage' => 'ཤོག་ངོས་གསར་བ།',
 	'myhome-feed-edit' => 'རྩོམ་སྒྲིག',
@@ -411,7 +414,7 @@ Gallout a rit implijout ho roll evezhiañ evit mirout ur roud eus eus ar cheñch
 	'myhome-hot-spots-feed-empty' => "Emañ ar wiki-mañ o gortoz e kemerfer perzh ennañ.
 Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !",
 	'myhome-hot-spots-newest' => 'Pajennoù nevez war ar wiki',
-	'tog-myhomedisableredirect' => 'Diweredekaat an adkas davet Ma Degemer',
+	'tog-myhomedisableredirect' => 'Diweredekaat an adkas davet Ma Degemer', # Fuzzy
 	'prefs-myhome' => 'Ma fajenn degemer',
 	'myhome-feed-newpage' => 'pajenn nevez',
 	'myhome-feed-edit' => 'kemmañ',
@@ -450,7 +453,7 @@ Savet eo ar wiki gant ar gumuniezh. Ur wech m'ho po kliket war ar bouton kemmañ
 Klaskit eta !",
 	'myhome-hot-spots-number-of-editors' => 'kenlabourerien',
 	'myhome-log-in' => "<center>An arc'hwel Ma Degemer a c'hallit kaout nemet e vefec'h kevreet.<br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|\$1}} Kevreit, mar plij, evit gwelet ar  bajenn-mañ]</span>'''</big></center>",
-	'myhome-switch-to-monaco' => "Ne c'haller kaout an Arc'hwel Ma Degemer nemet e vefe implijet ar fichadenn Monaco ganeoc'h. M'ho peus c'hoant da vont war Ma Degemer, gweladennit'''[[Special:Preferences|ho Tibaboù gwellañ]]''', mar plij, evit kemmañ ho fichadenn.",
+	'myhome-switch-to-monaco' => "Ne c'haller kaout an Arc'hwel Ma Degemer nemet e vefe implijet ar fichadenn Monaco ganeoc'h. M'ho peus c'hoant da vont war Ma Degemer, gweladennit'''[[Special:Preferences|ho Tibaboù gwellañ]]''', mar plij, evit kemmañ ho fichadenn.", # Fuzzy
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => 'Kemennadennoù ar gumuniezh',
 	'oasis-myhome-community-corner-edit' => 'kemmañ ar gemennadenn &gt;',
@@ -781,7 +784,7 @@ Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachri
 $messages['diq'] = array(
 	'myhome' => 'Keyey me',
 	'myhome-watchlist-feed' => 'Lista seyr-kerdışi',
-	'myhome-user-contributions-feed' => 'Dekerdeni',
+	'myhome-user-contributions-feed' => 'İştıraqi',
 	'prefs-myhome' => 'Keyey me',
 	'myhome-feed-edit' => 'bıvurne',
 	'myhome-feed-created-by' => "$1'i vıraşt",
@@ -800,6 +803,7 @@ $messages['diq'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Resime ke debyay|Resime ke debyay}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Videoye ke debyay|Videoye ke debyay}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kategoriye ke debyay|Kategoriye ke debyay}}',
+	'myhome-namespace-blog' => 'Qeyd',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|yew mesac|$1 mesaci}}',
 );
 
@@ -824,7 +828,7 @@ $messages['el'] = array(
 	'myhome-hot-spots-feed-empty' => "Αυτό το wiki σας περιμένει να πάρετε μέρος.
 Κάντε κλικ στο'''[[Special:CreatePage|Νέα σελίδα]]''' και αρχίστε να γράφετε!",
 	'myhome-hot-spots-newest' => 'Νέες σελίδες στο wiki',
-	'tog-myhomedisableredirect' => 'Απενεργοποιήστε την ανακατεύθυνση στην "Αρχική μου σελίδα"',
+	'tog-myhomedisableredirect' => 'Απενεργοποιήστε την ανακατεύθυνση στην "Αρχική μου σελίδα"', # Fuzzy
 	'prefs-myhome' => 'Η αρχική μου σελίδα',
 	'myhome-feed-newpage' => 'νέα σελίδα',
 	'myhome-feed-edit' => 'επεξεργασία',
@@ -857,13 +861,13 @@ $messages['el'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Προσθεμένη φωτογραφία|Προσθεμένες φωτογραφίες}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Προσθεμένη ταινία|Προσθεμένες ταινίες}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Προσθεμένη κατηγορία|Προσθεμένες κατηγορίες}}',
-	'myhome-user-contributions-empty' => 'Μπορείς να συμετάσχεις σε αυτό το wiki πατώντας στο κουμπί "{{int:editthispage}}" σε οποιοδήποτε άρθρο, προσθέτωντας ό,τι ξέρεις. Όλοι μπορούν να κάνουν αλλαγές, να προσθέσουν πληροφορίες ή να διορθώσουν λάθη. Το wiki χτίζεται από την κοινώτητα και γίνεσαι μέλος της μόλις πατήσεις το κουμπί "επεξεργασία".',
+	'myhome-user-contributions-empty' => 'Μπορείς να συμετάσχεις σε αυτό το wiki πατώντας στο κουμπί "{{int:editthispage}}" σε οποιοδήποτε άρθρο, προσθέτωντας ό,τι ξέρεις. Όλοι μπορούν να κάνουν αλλαγές, να προσθέσουν πληροφορίες ή να διορθώσουν λάθη. Το wiki χτίζεται από την κοινώτητα και γίνεσαι μέλος της μόλις πατήσεις το κουμπί "επεξεργασία".', # Fuzzy
 	'myhome-hot-spots-number-of-editors' => 'συντάκτες',
 	'myhome-log-in' => "<center>Το χαρακτηριστικό ''Αρχική σελίδα'' είναι διαθέσιμο μόνο αν έχετε συνδεθεί.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Παρακαλώ συνδεθείτε για να δείτε αυτή τη σελίδα!]'''</big></center>",
 	'myhome-switch-to-monaco' => "Το χαρακτηριστικό ''Η αρχική μου σελίδα'' είναι διαθέσιμη μόνο εάν χρησιμοποιείτε το θέμα Monaco.
-Αν θέλετε να δείτε την ''Αρχική μου σελίδα'', παρακαλώ επισκεφθείτε '''[[Special:Preferences|τις Προτιμήσεις σας]]''' για να αλλάξετε το θέμα σας.",
+Αν θέλετε να δείτε την ''Αρχική μου σελίδα'', παρακαλώ επισκεφθείτε '''[[Special:Preferences|τις Προτιμήσεις σας]]''' για να αλλάξετε το θέμα σας.", # Fuzzy
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => 'Στέκι της κοινότητας',
+	'myhome-community-corner-header' => 'Στέκι της κοινότητας', # Fuzzy
 	'oasis-myhome-community-corner-edit' => 'επεξεργασία μηνύματος &gt;',
 	'myhome-community-corner-edit' => 'επεξεργασία μηνύματος',
 	'community-corner' => "'''Καλωσήρθατε στην Αρχική σας Σελίδα!'''
@@ -882,7 +886,7 @@ $messages['el'] = array(
 * Να αναδείξετε ένα συντάκτη που έβαλε κάτι ξεχωριστό σε αυτό το wiki
 
 * Ή απλά να δώσετε κουράγιο!",
-	'myhome-hot-spots-definition' => 'Σελίδες με τις περισσότερες επεξεργασίες τις τελευταίες $1 μέρες.',
+	'myhome-hot-spots-definition' => 'Σελίδες με τις περισσότερες επεξεργασίες τις τελευταίες $1 μέρες.', # Fuzzy
 	'myhome-default-view-checkbox' => 'Κάνε $1 την προεπιλεγμένη μου προβολή',
 	'myhome-default-view-success' => 'Εντάξει, αυτή είναι πλέον η προεπιλεγμένη σου προβολή',
 	'tooltip-pt-myhome' => 'Πήγαινε στην αρχική μου σελίδα',
@@ -1364,7 +1368,8 @@ Se vostede é o fundador ou un administrador desde wiki, pode cambiar esta mensa
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|unha mensaxe|$1 mensaxes}}',
 );
 
-/** Hausa (Hausa) */
+/** Hausa (Hausa)
+ */
 $messages['ha'] = array(
 	'myhome-feed-new-blog-comment-details' => 'Bahasi',
 	'myhome-feed-new-article-comment-details' => 'Bahasi',
@@ -1390,7 +1395,7 @@ $messages['he'] = array(
 	'myhome-hot-spots-feed-empty' => "אנחנו מחכים שתצטרף אלינו ותהיה מעורב.
 לחץ על '''[[Special:CreatePage|New page]]''' כדי להתחיל לכתוב!",
 	'myhome-hot-spots-newest' => 'דפים חדשים בויקי',
-	'tog-myhomedisableredirect' => 'הפסק את ההפניה האוטומאטית לדף הבית',
+	'tog-myhomedisableredirect' => 'הפסק את ההפניה האוטומאטית לדף הבית', # Fuzzy
 	'myhome-feed-newpage' => 'דף חדש',
 	'myhome-feed-edit' => 'עריכה',
 	'myhome-feed-move' => 'דף הועבר',
@@ -1429,7 +1434,7 @@ $messages['he'] = array(
 	'myhome-hot-spots-number-of-editors' => 'עורכים',
 	'myhome-log-in' => "<center>הבית שלי זמין רק אם אתה מחובר.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} אנא התחבר כדי לראות את העמוד!]'''</big></center>",
 	'myhome-switch-to-monaco' => "פיצ'ר \"הבית שלי\" זמין אך ורק אם אתה משתמש בסקין \"מונקו\".
-אם ברצונך להשתמש בפיצ'ר \"הבית שלי\", אנא היכנס ל'''[[Special:Preferences|your Preferences]]''' כדי לשנות את הסקין שלך.",
+אם ברצונך להשתמש בפיצ'ר \"הבית שלי\", אנא היכנס ל'''[[Special:Preferences|your Preferences]]''' כדי לשנות את הסקין שלך.", # Fuzzy
 	'myhome-namespace-blog' => 'בלוג',
 	'myhome-community-corner-header' => 'הודעות הקהילה',
 	'oasis-myhome-community-corner-edit' => 'עריכת הודעה &gt;',
@@ -1713,6 +1718,7 @@ $messages['ig'] = array(
 );
 
 /** Italian (italiano)
+ * @author Beta16
  * @author Leviathan 89
  * @author McDutchie
  * @author Minerva Titani
@@ -1720,6 +1726,7 @@ $messages['ig'] = array(
 $messages['it'] = array(
 	'myhome-desc' => 'Una home page privata per gli utenti registrati',
 	'myhome' => 'My Home',
+	'wikiactivity' => 'Attività su wiki',
 	'myhome-activity-more' => 'vedi altre attività',
 	'myhome-activity-feed' => 'Attività recenti',
 	'myhome-activity-feed-empty' => "Questo wiki attende il tuo operato. Clicca su '''[[Special:CreatePage|Nuova pagina]]''' per iniziare a scrivere!",
@@ -1730,6 +1737,7 @@ $messages['it'] = array(
 	'myhome-hot-spots-feed-empty' => "Questo wiki attende il tuo operato. Clicca su '''[[Special:CreatePage|Nuova pagina]]''' per iniziare a scrivere!",
 	'myhome-hot-spots-newest' => 'Nuove pagine',
 	'tog-myhomedisableredirect' => 'Disabilita il reindirizzamento a My Home',
+	'prefs-myhome' => 'My Home',
 	'myhome-feed-newpage' => 'nuova pagina',
 	'myhome-feed-edit' => 'modifica',
 	'myhome-feed-move' => 'pagina spostata',
@@ -1766,7 +1774,7 @@ $messages['it'] = array(
 	'myhome-log-in' => "<center>Il servizio My Home è disponibile solo se effettui il log in. <br /><br /><big>'''<span class=\"plainlinks\">[{{fullurl:Special:UserLogin|\$1}} Accedi per vedere la pagina!]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "ll servizio Wiki Activity è disponibile solo se stai usando lo skin Wikia. Se vuoi visualizzare My Home, modifica le '''[[Special:Preferences|tue Preferenze]]''' per cambiare l'aspetto grafico.",
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => "L'angolo della comunità",
+	'myhome-community-corner-header' => 'Messaggi della comunità',
 	'oasis-myhome-community-corner-edit' => 'modifica messaggio &gt;',
 	'myhome-community-corner-edit' => 'modifica messaggio',
 	'community-corner' => "''' Benvenuto nell'Angolo della Community! '''
@@ -2458,8 +2466,8 @@ $messages['pdc'] = array(
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Videofeil dezu geduh|Videofeils dezu geduh}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Abdeeling dezu geduh|Abdeelinge dezu geduh}}',
 	'myhome-hot-spots-number-of-editors' => 'Schreiwer',
-	'myhome-community-corner-header' => 'Gmeeschafts-Portal',
-	'myhome-hot-spots-definition' => 'Bledder mit de meescht Schreiwer vun de letscht $1 Daag.',
+	'myhome-community-corner-header' => 'Gmeeschafts-Portal', # Fuzzy
+	'myhome-hot-spots-definition' => 'Bledder mit de meescht Schreiwer vun de letscht $1 Daag.', # Fuzzy
 );
 
 /** Pälzisch (Pälzisch)
@@ -3218,7 +3226,8 @@ Om du är grundaren eller en administratör på denna wiki kan du ändra detta b
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|ett meddelande|$1 meddelanden}}',
 );
 
-/** Swahili (Kiswahili) */
+/** Swahili (Kiswahili)
+ */
 $messages['sw'] = array(
 	'myhome-feed-summary-details' => 'Muhtasari',
 );
@@ -3381,7 +3390,7 @@ $messages['tr'] = array(
 	'myhome-activity-feed' => 'Etkinlik beslemesi',
 	'myhome-watchlist-feed' => 'İzleme listesi',
 	'myhome-user-contributions-feed' => 'Katkılar',
-	'tog-myhomedisableredirect' => 'Evime yönlendirmemi devre dışı bırak',
+	'tog-myhomedisableredirect' => 'Evime yönlendirmemi devre dışı bırak', # Fuzzy
 	'myhome-feed-newpage' => 'yeni sayfa',
 	'myhome-feed-edit' => 'değiştir',
 	'myhome-feed-move' => 'sayfa taşındı',
@@ -3413,9 +3422,9 @@ $messages['tr'] = array(
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Eklenen kategori|Eklenen kategoriler}}',
 	'myhome-hot-spots-number-of-editors' => 'editörler',
 	'myhome-namespace-blog' => 'Günlük',
-	'myhome-community-corner-header' => 'Topluluk Köşesi',
+	'myhome-community-corner-header' => 'Topluluk Köşesi', # Fuzzy
 	'myhome-community-corner-edit' => 'iletiyi değiştir',
-	'myhome-hot-spots-definition' => 'Son $1 günde en fazla editöre sahip sayfalar',
+	'myhome-hot-spots-definition' => 'Son $1 günde en fazla editöre sahip sayfalar', # Fuzzy
 	'myhome-default-view-checkbox' => '$1 sayfasını varsayılan görünümüm yap',
 	'myhome-default-view-success' => 'Tamam, bu artık sizin varsayılanınız',
 	'tooltip-pt-myhome' => 'Evime git',
@@ -3499,6 +3508,15 @@ $messages['tt-cyrl'] = array(
 	'tooltip-pt-myhome' => 'Шәхси кабинетка күчү',
 	'activityfeed' => 'Гамәлләр тасмасы',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|бер хәбәр|$1 хәбәр}}',
+);
+
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'myhome-feed-newpage' => 'ⵜⴰⵙⵏⴰ ⵜⴰⵎⴰⵢⵏⵓⵜ',
+	'myhome-feed-by' => 'ⵖⵓⵔ $1',
+	'myhome-feed-new-page-details' => 'ⵜⴰⵙⵏⴰ ⵜⴰⵎⴰⵢⵏⵓⵜ',
 );
 
 /** Ukrainian (українська)
@@ -3771,4 +3789,3 @@ $messages['zh-tw'] = array(
 	'myhome' => '我的首頁',
 	'myhome-feed-edit' => '編輯',
 );
-

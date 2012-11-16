@@ -427,6 +427,7 @@ EOF;
 
 		// rarely ever happens, but it does
 		if ( empty( $tpl->data['content_actions'] ) ) {
+			wfProfileOut( __METHOD__ );
 			return $links;
 		}
 
@@ -759,12 +760,8 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	// This sucks to have a blocking call at the top of the page, but they promised
 	// to only do it if they needed. Only use DART or Google (fast Ad Providers with good infrastructure)
 	global $wgOut;
-	if (WikiaPageType::isMainPage()){
+	if (WikiaPageType::isMainPage() || ($wgOut->isArticle() && WikiaPageType::isContentPage())){
 		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
-		echo AdEngine::getInstance()->getAd('HOME_INVISIBLE_TOP');
-	} else if ($wgOut->isArticle() && WikiaPageType::isContentPage()){
-		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
-		echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
 	}
 ?>
 <?php
@@ -888,18 +885,6 @@ $this->printCustomFooter();
 ?>
 
 <?php
-/* Put two "invisible" ad slots here. These are for loading ads that just load javascript,
-but it isn't positioned at any particular part of a page, such as a slider or a interstitial */
-if ($wgOut->isArticle() && WikiaPageType::isContentPage()){
-	echo AdEngine::getInstance()->getAd('INVISIBLE_1');
-}
-
-echo AdEngine::getInstance()->getDelayedIframeLoadingCode();
-
-if ($wgOut->isArticle() && WikiaPageType::isContentPage()){
-	echo AdEngine::getInstance()->getAd('INVISIBLE_2');
-}
-
 
 echo '</div>';
 

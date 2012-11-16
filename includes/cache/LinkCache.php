@@ -37,7 +37,7 @@ class LinkCache {
 	}
 
 	/**
-	 * @param $title
+	 * @param string $title title's DB key
 	 * @return array|int
 	 */
 	public function getGoodLinkID( $title ) {
@@ -46,9 +46,11 @@ class LinkCache {
 		if ( array_key_exists( $title, $this->mGoodLinks ) ) {
 			return $this->mGoodLinks[$title];
 		}
+		// start wikia change
 		elseif( $wgEnableFastLinkCache ) {
-			return (int) $wgMemc->get(wfMemcKey("linkcache:good:$title"));
+			return (int) $wgMemc->get(self::getMemcKey($title, 'good'));
 		}
+		// end wikia change
 		else {
 			return 0;
 		}
@@ -68,10 +70,12 @@ class LinkCache {
 		if ( array_key_exists( $dbkey, $this->mGoodLinkFields ) ) {
 			return $this->mGoodLinkFields[$dbkey][$field];
 		}
+		// start wikia change
 		elseif( $wgEnableFastLinkCache ) {
-			$fields = $wgMemc->get(wfMemcKey("linkcache:fields:$dbkey"));
+			$fields = $wgMemc->get(self::getMemcKey($dbkey, 'fields'));
 			return isset($fields[$field]) ? $fields[$field] : null;
 		}
+		// end wikia change
 		else {
 			return null;
 		}
@@ -95,8 +99,6 @@ class LinkCache {
 	 * @param $revision Integer: latest revision's ID
 	 */
 	public function addGoodLinkObj( $id, $title, $len = -1, $redir = null, $revision = false ) {
-		global $wgMemc, $wgEnableFastLinkCache; // wikia change
-
 		$dbkey = $title->getPrefixedDbKey();
 		$this->mGoodLinks[$dbkey] = intval( $id );
 		$this->mGoodLinkFields[$dbkey] = array(
@@ -105,9 +107,10 @@ class LinkCache {
 			'revision' => intval( $revision ) );
 
 		// start wikia change
+		global $wgMemc, $wgEnableFastLinkCache;
 		if ( $wgEnableFastLinkCache ) {
-			$wgMemc->set(wfMemcKey("linkcache:good:$dbkey"), intval( $id ), 3600);
-			$wgMemc->set(wfMemcKey("linkcache:fields:$dbkey"), $this->mGoodLinkFields[$dbkey], 3600);
+			$wgMemc->set(self::getMemcKey($dbkey, 'good'), intval( $id ), 3600);
+			$wgMemc->set(self::getMemcKey($dbkey, 'fields'), $this->mGoodLinkFields[$dbkey], 3600);
 		}
 		// end wikia change
 	}
@@ -120,8 +123,6 @@ class LinkCache {
 	 *  page_latest
 	 */
 	public function addGoodLinkObjFromRow( $title, $row ) {
-		global $wgMemc, $wgEnableFastLinkCache; // wikia change
-
 		$dbkey = $title->getPrefixedDbKey();
 		$this->mGoodLinks[$dbkey] = intval( $row->page_id );
 		$this->mGoodLinkFields[$dbkey] = array(
@@ -129,10 +130,12 @@ class LinkCache {
 			'redirect' => intval( $row->page_is_redirect ),
 			'revision' => intval( $row->page_latest ),
 		);
+
 		// start wikia change
+		global $wgMemc, $wgEnableFastLinkCache;
 		if ( $wgEnableFastLinkCache ) {
-			$wgMemc->set(wfMemcKey("linkcache:good:$dbkey"), intval( $row->page_id ), 3600);
-			$wgMemc->set(wfMemcKey("linkcache:fields:$dbkey"), $this->mGoodLinkFields[$dbkey], 3600);
+			$wgMemc->set(self::getMemcKey($dbkey, 'good'), intval( $row->page_id ), 3600);
+			$wgMemc->set(self::getMemcKey($dbkey, 'fields'), $this->mGoodLinkFields[$dbkey], 3600);
 		}
 		// end wikia change
 	}
@@ -163,9 +166,10 @@ class LinkCache {
 		// start wikia change
 		global $wgMemc, $wgEnableFastLinkCache;
 		if( $wgEnableFastLinkCache ) {
-			$wgMemc->delete(wfMemcKey("linkcache:good:$dbkey"));
-			$wgMemc->delete(wfMemcKey("linkcache:fields:$dbkey"));
+			$wgMemc->delete(self::getMemcKey($dbkey, 'good'));
+			$wgMemc->delete(self::getMemcKey($dbkey, 'fields'));
 		}
+		// end wikia change
 	}
 
 	public function getGoodLinks() { return $this->mGoodLinks; }
@@ -249,5 +253,20 @@ class LinkCache {
 		$this->mGoodLinks = array();
 		$this->mGoodLinkFields = array();
 		$this->mBadLinks = array();
+	}
+
+	/**
+	 * Gets memcache key for given title's DB key and entry's type
+	 *
+	 * @param string $dbkey title's DB key
+	 * @param string $type either "good" or "fields"
+	 * @return string memcache key
+	 *
+	 * @aauthor macbre
+	 */
+	static public function getMemcKey($dbkey, $type) {
+		// Mediawiki's title can be up to 255 characters long, memcache key can have a maximum of 250 characters
+		$hash = md5($dbkey);
+		return wfMemcKey("linkcache:{$type}:{$hash}");
 	}
 }

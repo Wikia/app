@@ -7,6 +7,7 @@
 
 
 $messages = array();
+
 $messages['en'] = array(
 	"taskmanager" => "Display and manage background tasks",
 	"taskmanager_title" => "Display and manage background tasks",
@@ -144,7 +145,8 @@ $messages['gl'] = array(
 	'action-taskmanager' => 'mostrar e xestionar as tarefas de fondo',
 );
 
-/** Hebrew (עברית) */
+/** Hebrew (עברית)
+ */
 $messages['he'] = array(
 	'taskmanager' => 'הצגה וניהול של משימות רקע',
 	'taskmanager_title' => 'הצגה וניהול של משימות רקע',
@@ -200,6 +202,7 @@ $messages['id'] = array(
 );
 
 /** Italian (italiano)
+ * @author Beta16
  * @author HalphaZ
  * @author Pietrodn
  */
@@ -209,6 +212,8 @@ $messages['it'] = array(
 	'taskmanager_tasklist' => 'Ritorna alla lista dei task',
 	'right-taskmanager' => 'Può visualizzare le operazioni in background',
 	'right-taskmanager-action' => 'Può gestire le operazioni in background',
+	'taskmanager-invert' => 'Inverti selezione',
+	'action-taskmanager' => 'visualizzare e gestire i task in background',
 );
 
 /** Japanese (日本語)
@@ -425,4 +430,3 @@ $messages['tr'] = array(
 	'taskmanager_title' => 'Geri plandaki işlemleri göster ve yönet',
 	'taskmanager_tasklist' => 'İşlem Listesine geri dön',
 );
-

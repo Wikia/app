@@ -7,11 +7,6 @@
 @import "../mixins/forms";
 @import "../mixins/menus";
 
-$use-dark-icons: false;
-@if lightness($color-buttons) > 50 {
-	$use-dark-icons: true;
-}
-
 .WikiaSearch {
 	@include clearfix;
 	margin-bottom: 10px;

@@ -4,6 +4,7 @@
  * CommentsIndex Class
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  */
+
 class CommentsIndex extends WikiaModel {
 
 	protected $parentPageId = 0;
@@ -21,11 +22,15 @@ class CommentsIndex extends WikiaModel {
 	protected $lastRevId = 0;
 	protected $lastTouched = 0;
 	protected $namespace = 0;
+	protected $data = array();
 
-	public function __construct( $data = array() ) {
+
+	public function __construct( $data = array() ) {	
+		$this->data = $data;
 		foreach ( $data as $key => $value ) {
 			$this->$key = $value;
 		}
+	
 		parent::__construct();
 	}
 
@@ -191,6 +196,7 @@ class CommentsIndex extends WikiaModel {
 
 		//Just for transition time
 		if(empty($this->wg->EnableWallEngine) || !WallHelper::isWallNamespace($this->namespace) ) {
+			$this->wf->ProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -267,19 +273,17 @@ class CommentsIndex extends WikiaModel {
 
 		$db = $app->wf->GetDB( DB_SLAVE );
 
-		$row = $db->selectRow(
-			'comments_index',
-			'*',
-			$sqlWhere,
-			__METHOD__,
-			array( 'LIMIT' => 1 )
-		);
+		$row = self::selectRow( $db, $sqlWhere );
+
+		if( empty($row) ) {
+			$db = $app->wf->GetDB( DB_MASTER );
+			$row = self::selectRow( $db, $sqlWhere );	
+		}
 
 		if ( $row ) {
 			$comment = self::newFromRow( $row );
-
 			// reset parent page id
-			if ( empty($parentPageId) ) {
+			if ( !empty($parentPageId) ) {
 				$comment->parentPageId = $parentPageId;
 			}
 		} else {
@@ -290,6 +294,21 @@ class CommentsIndex extends WikiaModel {
 
 		return $comment;
 	}
+	
+	/**
+	 * just select the row form comment index
+	 */
+	 
+	 public static function selectRow($db, $sqlWhere) {
+	 	$row = $db->selectRow(
+			'comments_index',
+			'*',
+			$sqlWhere,
+			__METHOD__,
+			array( 'LIMIT' => 1 )
+		);	
+		return $row;
+	 }
 
 	/**
 	 * get CommentsIndex object from row
@@ -313,6 +332,7 @@ class CommentsIndex extends WikiaModel {
 			'lastRevId' => $row->last_rev_id,
 			'lastTouched' => $row->last_touched,
 		);
+		
 		$comment = F::build( 'CommentsIndex', array($data) );
 
 		return $comment;
@@ -377,61 +397,35 @@ class CommentsIndex extends WikiaModel {
 	}
 
 	/**
-	 * get list of parent page id
+	 * get of parent page id
 	 * @return array $parentPageIds
 	 */
-	public function getParentPageIds() {
-		$this->wf->ProfileIn( __METHOD__ );
-
-		$db = $this->wf->GetDB( DB_SLAVE );
-
-		$result = $db->select(
-			array( 'comments_index' ),
-			array( 'parent_page_id' ),
-			array( 'comment_id' => $this->commentId ),
-			__METHOD__
-		);
-
-		$parentPageIds = array();
-		while ( $row = $db->fetchObject($result) ) {
-			$parentPageIds[] = $row->parent_page_id;
-		}
-
-		if ( (!empty($this->parentPageId)) && (!in_array($this->parentPageId, $parentPageIds)) ) {
-			$parentPageIds[] = $this->parentPageId;
-		}
-
-		$this->wf->ProfileOut( __METHOD__ );
-
-		return $parentPageIds;
+	public function getParentPageId() {
+		return $this->parentPageId;
 	}
 
 	/**
-	 * update schema on comments_index table
+	 * get parent comemnt index
 	 */
-	public function patchTableCommentsIndexV1() {
-		$this->wf->ProfileIn( __METHOD__ );
 
-		if ( !$this->wf->ReadOnly() ) {
-			$db = $this->wf->GetDB( DB_MASTER );
+	public function getParentCommentId() {
+		return $this->parentCommentId;
+	}
+	
+	/**
+	 *  fast moving of comment from one page to another
+	 */ 
+	public static function changeParent($from, $to) {
+		$db = wfGetDB( DB_MASTER );
 
-			if ( $db->tableExists('comments_index') ) {
-				$sql =<<<SQL
-					ALTER TABLE comments_index
-					MODIFY first_rev_id int(10) unsigned NOT NULL DEFAULT '0',
-					MODIFY created_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-					MODIFY last_rev_id int(10) unsigned NOT NULL DEFAULT '0',
-					MODIFY last_touched datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-					DROP INDEX parent_page_id,
-					ADD INDEX parent_page_id( parent_page_id, archived, deleted, removed, parent_comment_id );
-SQL;
-				$db->query( $sql );
-			} else {
-				$this->createTableCommentsIndex();
-			}
-		}
-
-		$this->wf->ProfileOut( __METHOD__ );
+		$db->update(
+			'comments_index',
+			array( 'parent_page_id' => $to ),
+			array( 'parent_page_id' => $from ),
+			__METHOD__
+		);
+		
+		$db->commit();
 	}
 
 	/**

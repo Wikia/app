@@ -151,13 +151,13 @@ $messages['ar'] = array(
 	'toplists-error-title-exists' => 'هذه الصفحة موجودة بالفعل. يمكنك الذهاب إلى <a href="<span class=" notranslate"="">$2 "الهدف =" _blank ">$1</a> أو قم بتوفير اسم مختلف.',
 	'toplists-error-title-spam' => 'النص يحتوي على بعض الكلمات المعرفة كدعاية.',
 	'toplists-error-article-blocked' => 'عذراً غير مسموح لك إنشاء صفحة بهذا الاسم.',
-	'toplists-error-article-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟',
-	'toplists-error-picture-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟',
+	'toplists-error-article-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟', # Fuzzy
+	'toplists-error-picture-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟', # Fuzzy
 	'toplists-error-duplicated-entry' => 'لا يمكنك استخدام نفس الاسم أكثر من مرة.',
 	'toplists-error-empty-item-name' => 'لا يمكن أن يكون اسم عنصر القائمة فارغة.',
 	'toplists-item-cannot-delete' => 'فشل في حذف هذا البند.',
 	'toplists-error-image-already-exists' => 'صورة مع نفس الاسم موجود مسبقا.',
-	'toplists-error-add-item-anon' => 'ولا يسمح للمستخدمين المجهولين إضافة عناصر إلى القوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$ 1 "> الدخول</a> أو <a class="ajaxLogin" id="signup" href="<span class="notranslate">$ 2 "> تسجيل حساب جديد</a> .',
+	'toplists-error-add-item-anon' => 'ولا يسمح للمستخدمين المجهولين إضافة عناصر إلى القوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$ 1 "> الدخول</a> أو <a class="ajaxLogin" id="signup" href="<span class="notranslate">$ 2 "> تسجيل حساب جديد</a> .', # Fuzzy
 	'toplists-error-add-item-permission' => 'خطأ في إذن الوصول: الحساب الخاص بك لم يتم منح الحق في إنشاء عناصر جديدة.',
 	'toplists-error-add-item-list-not-exists' => '"$1" لا توجد في قائمة أعلى 10',
 	'toplists-upload-error-unknown' => 'حدث خطأ أثناء معالجة طلب التحميل. يرجى المحاولة مرة أخرى.',
@@ -186,7 +186,7 @@ $messages['ar'] = array(
 	'toplists-item-remove-summary' => 'تمت إزالة البند من القائمة',
 	'toplists-item-restored' => 'تم استعادة عنصر',
 	'toplists-list-related-to' => 'المتعلقة بما يلي :',
-	'toplists-list-created-by' => 'بواسطة [[مستخدم : $1 | $1 ]]',
+	'toplists-list-created-by' => 'بواسطة [[مستخدم : $1 | $1 ]]', # Fuzzy
 	'toplists-list-vote-up' => 'التصويت حتى',
 	'toplists-list-add-item-label' => 'أضف عنصرًا',
 	'toplists-list-add-item-name-label' => 'الحفاظ على القائمة مستمرة...',
@@ -2280,4 +2280,3 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'toplists-list-item-voted' => '投票了',
 );
-

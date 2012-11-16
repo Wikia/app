@@ -50,7 +50,7 @@ Try once again.',
 $messages['qqq'] = array(
 	'textregex' => '"Regex" is a abbreviation for "regular expression".',
 	'textregex-desc' => '{{desc}}',
-	'textregex-addedby-user' => 'If $2 is a time stamp, split date and time',
+	'textregex-addedby-user' => 'If $2 is a time stamp, split date and time', # Fuzzy
 	'textregex-remove-url' => '{{Identical|Remove}}',
 	'textregex-stats-url' => '{{Identical|Statistics}}',
 	'textregex-select-default' => '{{Identical|Select}}',
@@ -926,4 +926,3 @@ $messages['yi'] = array(
 $messages['zh-hans'] = array(
 	'textregex-select-default' => '-- 选择 --',
 );
-

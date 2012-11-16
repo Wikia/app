@@ -182,15 +182,10 @@ $messages['en'] = array(
 	'scavengerhunt-editor-tip-facebook-description' => 'Text that will be displayed in sharing message',
 	'scavengerhunt-facebook-image' => 'Facebook sharing image',
 	'scavengerhunt-facebook-description' => 'Facebook sharing text',
-	
-
-);
-/** Message documentation (Message documentation) */
-$messages['qqq'] = array(
-	'scavengerhunt-desc' => '{{desc}}',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
 );
@@ -249,14 +244,14 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'scavengerhunt-list-header-name' => "Anv ar c'hoari",
-	'scavengerhunt-list-header-is-enabled' => 'Gweredekaet ?',
+	'scavengerhunt-list-header-is-enabled' => 'Gweredekaet ?', # Fuzzy
 	'scavengerhunt-list-header-actions' => 'Oberoù',
 	'scavengerhunt-list-enabled' => 'Gweredekaet',
 	'scavengerhunt-list-disabled' => 'Diweredekaet',
 	'scavengerhunt-list-edit' => 'kemmañ',
 	'scavengerhunt-label-general' => 'Hollek',
 	'scavengerhunt-label-name' => 'Anv :',
-	'scavengerhunt-label-article-title' => 'Titl ar bajenn :',
+	'scavengerhunt-label-article-title' => 'Titl ar bajenn :', # Fuzzy
 	'scavengerhunt-label-article-hidden-image' => 'Skeudenn kuzhet :',
 	'scavengerhunt-button-add' => "Ouzhpennañ ur c'hoari",
 	'scavengerhunt-button-save' => 'Enrollañ',
@@ -467,15 +462,18 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'scavengerhunt-list-header-name' => 'Namey qayer',
-	'scavengerhunt-list-header-actions' => 'Kerdeni',
+	'scavengerhunt-list-header-actions' => 'Kerdışi',
+	'scavengerhunt-list-enabled' => 'Kerdo aktif',
+	'scavengerhunt-list-disabled' => 'Astengın',
 	'scavengerhunt-label-general' => 'Heran',
 	'scavengerhunt-label-name' => 'Name:',
 	'scavengerhunt-button-save' => 'Star ke',
 	'scavengerhunt-button-disable' => 'Bikefilne',
-	'scavengerhunt-button-enable' => 'Mekefilne',
+	'scavengerhunt-button-enable' => 'Aktif ke',
 	'scavengerhunt-button-delete' => 'Besterne',
 	'scavengerhunt-entry-form-name' => 'Namey şıma',
 	'scavengerhunt-quit-game-button-quit' => 'Bıvci',
@@ -2117,6 +2115,7 @@ $messages['ro'] = array(
  * @author DCamer
  * @author Kuzura
  * @author Lvova
+ * @author Volkov
  */
 $messages['ru'] = array(
 	'scavengerhunt-desc' => 'Разрешает создавать охоту на мусор.',
@@ -2246,7 +2245,7 @@ $messages['ru'] = array(
 	'scavengerhunt-editor-tip-startPopupSprite' => 'Если нужно изображение в диалоговом окне начальной подсказки, то введите здесь координаты.',
 	'scavengerhunt-editor-tip-articleTitle' => 'Это расположение страницы с следующим элементом.',
 	'scavengerhunt-editor-tip-spriteNotFound' => 'Этот раздел определяет изображение для подсказки.',
-	'scavengerhunt-editor-tip-spriteInProgressBar' => 'В этом разделе определяется значок строки прогресса появляющийся после того, как элемент был найден.',
+	'scavengerhunt-editor-tip-spriteInProgressBar' => 'В этом разделе определяется значок строки прогресса, появляющийся после того, как элемент был найден.',
 	'scavengerhunt-editor-tip-spriteInProgressBarHover' => 'В этом разделе определяется значок строки прогресса при наведении мышки.',
 	'scavengerhunt-editor-tip-spriteInProgressBarNotFound' => 'В этом разделе определяется значок строки прогресса появляющийся когда элемент еще не найден.',
 	'scavengerhunt-editor-tip-article-title' => 'Это расположение страницы с следующим элементом.',
@@ -2619,4 +2618,3 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-entry-form-name' => '您的名字：',
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
 );
-

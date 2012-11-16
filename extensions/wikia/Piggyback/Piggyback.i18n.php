@@ -19,13 +19,15 @@ Check your spelling.',
 	'log-description-piggyback' => 'This log is a record of account piggybacks.',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'log-name-piggyback' => '{{doc-logpage}}',
 	'log-description-piggyback' => 'Appears on top of Special:Log/piggyback.',
 );
 
-/** Afrikaans (Afrikaans) */
+/** Afrikaans (Afrikaans)
+ */
 $messages['af'] = array(
 	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Ander gebruikersnaam:',
@@ -34,7 +36,8 @@ $messages['af'] = array(
 	'piggyback-itisyou' => 'U kan nie piggyback op uself gebruik nie.',
 );
 
-/** Breton (brezhoneg) */
+/** Breton (brezhoneg)
+ */
 $messages['br'] = array(
 	'piggyback-otherusername' => 'Anv implijer all',
 	'piggyback-wronguser' => "N'eo ket $1 ho anv implijer",
@@ -79,6 +82,13 @@ Bitte Schreibweise überprüfen.',
 	'action-piggyback' => 'als anderer Benutzer anmelden',
 	'log-name-piggyback' => 'Huckepack-Logbuch',
 	'log-description-piggyback' => "Dieses Logbuch zeigt ''Huckepack''-Kontoübernahmen.",
+);
+
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'piggyback' => 'Piggyback',
 );
 
 /** Spanish (español)
@@ -338,7 +348,8 @@ Ch\'a contròla l\'ortografìa.',
 	'log-description-piggyback' => "Ës registr a l'é na lista dj'intrade ant ël sistema con vàire cont.",
 );
 
-/** Portuguese (português) */
+/** Portuguese (português)
+ */
 $messages['pt'] = array(
 	'piggybac-desc' => 'Permite a autenticação em nome de outro utilizador',
 	'piggyback' => 'Personificação',
@@ -413,7 +424,8 @@ Kontrollera stavningen.',
 	'log-description-piggyback' => 'Denna logg är en dokumentering av konto-ryggridning.',
 );
 
-/** Telugu (తెలుగు) */
+/** Telugu (తెలుగు)
+ */
 $messages['te'] = array(
 	'piggyback-otherusername' => 'ఇతర వాడుకరిపేరు:',
 	'piggyback-wronguser' => '$1 అన్నది మీ వాడుకరి పేరు కాదు',
@@ -460,4 +472,3 @@ $messages['zh-hans'] = array(
 	'piggyback-otherusername' => '其他用户名：',
 	'piggyback-wronguser' => '$1 不是您的用户名',
 );
-

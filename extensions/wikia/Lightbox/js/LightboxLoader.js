@@ -11,7 +11,6 @@ var LightboxLoader = {
 		share: {},
 		to: 0
 	},
-	inlineVideos: $(),	// jquery array of inline videos
 	inlineVideoLinks: $(),	// jquery array of inline video links
 	lightboxLoading: false,
 	inlineVideoLoading: [],
@@ -161,14 +160,12 @@ var LightboxLoader = {
 		}
 		
 		// for Video Thumbnails:
-		var targetChildImg = target.find('img').eq(0),
-			dataVideo;
-		if ( targetChildImg.length > 0 && targetChildImg.hasClass('Wikia-video-thumb') ) {
+		var targetChildImg = target.find('img').eq(0);
+		if ( targetChildImg.hasClass('Wikia-video-thumb') || target.hasClass('video') ) {
 			if ( target.data('video-name') ) {
 				mediaTitle = target.data('video-name');
-			// Assignment is intentional here
-			} else if ((dataVideo = targetChildImg.data('video'))) {
-				mediaTitle = dataVideo;
+			} else if (targetChildImg.data('video')) {
+				mediaTitle = targetChildImg.data('video');
 			}
 			
 			// check if we need to play video inline, and stop lightbox execution
@@ -255,9 +252,7 @@ var LightboxLoader = {
 			width: targetChildImg.width()
 		}, function(json) {
 			//retrieve DOM reference
-			var videoReference = target.next(),
-				embedCode = json['videoEmbedCode'];
-			
+			var	embedCode = json['videoEmbedCode'];
 			target.hide().after(embedCode);
 
 			// if player script, run it
@@ -267,8 +262,6 @@ var LightboxLoader = {
 
 			// save references for inline video removal later
 			LightboxLoader.inlineVideoLinks = target.add(LightboxLoader.inlineVideoLinks);
-			LightboxLoader.inlineVideos = videoReference.add(LightboxLoader.inlineVideos);
-
 			LightboxTracker.inlineVideoTrackingTimeout = setTimeout(function() {
 				LightboxTracker.track(WikiaTracker.ACTIONS.VIEW, 'video-inline', null, {title:json.title, provider: json.providerName, clickSource: clickSource});
 			}, 1000);
@@ -279,8 +272,7 @@ var LightboxLoader = {
 
 	removeInlineVideos: function() {
 		clearTimeout(LightboxTracker.inlineVideoTrackingTimeout);
-		LightboxLoader.inlineVideos.remove();
-		LightboxLoader.inlineVideoLinks.show();
+		LightboxLoader.inlineVideoLinks.show().next().remove();
 	},
 
 	getMediaDetail: function(mediaParams, callback) {

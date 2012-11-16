@@ -214,7 +214,7 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-upload-findbutton' => '{{Identical|Find}}',
 	'wikiaPhotoGallery-upload-page-next' => '{{Identical|Next}}',
 	'wikiaPhotoGallery-upload-page-prev' => '{{Identical|Previous}}',
-	'wikiaPhotoGallery-upload-error-title' => '"Error" but successful? Maybe "could not be completed" is meant?',
+	'wikiaPhotoGallery-upload-error-title' => '"Error" but successful? Maybe "could not be completed" is meant?', # Fuzzy
 	'wikiaPhotoGallery-upload-error-conflict-insert' => '{{Identical|Insert}}',
 	'wikiaPhotoGallery-upload-select-images' => '{{Identical|Select}}',
 	'wikiaPhotoGallery-photooptions-done' => '{{Identical|Done}}',
@@ -361,7 +361,7 @@ $messages['ar'] = array(
 	'wikiaPhotoGallery-upload-select-images' => 'اختر',
 	'wikiaPhotoGallery-photooptions-title' => 'خيارات الصور',
 	'wikiaPhotoGallery-photooptions-done' => 'تم.',
-	'wikiaPhotoGallery-preview-title' => 'حرّر المعرض',
+	'wikiaPhotoGallery-preview-title' => 'حرّر المعرض', # Fuzzy
 	'wikiaPhotoGallery-preview-hover-modify' => 'عدّل',
 	'wikiaPhotoGallery-preview-hover-delete' => 'حذف',
 	'wikiaPhotoGallery-preview-previewtitle' => 'معاينة المعرض',
@@ -1064,7 +1064,8 @@ Alternativament, pot fer clic " $2 " per veure la pàgina en la seva forma d\'ac
 	'galery-slider-read-more' => 'Llegir més',
 );
 
-/** Sorani Kurdish (کوردی) */
+/** Sorani Kurdish (کوردی)
+ */
 $messages['ckb'] = array(
 	'wikiaPhotoGallery-preview-hover-delete' => 'سڕینەوە',
 );
@@ -1480,6 +1481,7 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-photooptions-done' => 'Qeyd kerd',
 	'wikiaPhotoGallery-preview-hover-modify' => 'bıvurne',
 	'wikiaPhotoGallery-preview-hover-delete' => 'besterne',
+	'wikiaPhotoGallery-preview-add-photo' => 'Fotraf deke',
 	'wikiaPhotoGallery-preview-tab-layout' => 'Ca gınayiş',
 	'wikiaPhotoGallery-preview-px' => 'px',
 	'wikiaPhotoGallery-preview-position-left' => 'Çep',
@@ -1502,6 +1504,8 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-preview-captions-right' => 'Raşt',
 	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Resim Deke',
 	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'Resimo peyên',
+	'wikiaPhotoGallery-slideshow-view-title' => 'Slaytşow',
+	'wikiaPhotoGallery-slideshow-view-number' => '$1 be $2 ra',
 	'wikiaPhotoGallery-slideshow-view-startslideshow' => 'Slaytşowi kayfiye',
 	'wikiaPhotoGallery-slideshow-view-stopslideshow' => 'Slaytşowi vındarnê',
 	'wikiaPhotoGallery-slideshow-view-details-tooltip' => 'teferruatê resimi bıvin',
@@ -1509,17 +1513,21 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-choice-title' => 'Slaytşow yana Galeri vırazê',
 	'wikiaPhotoGallery-choice-slideshow' => 'Slaytşow deke',
 	'wikiaPhotoGallery-choice-gallery' => 'Galeri vırazê',
+	'wikiaPhotoGallery-slideshowpreview-addphoto' => 'Fotraf deke',
 	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Çep',
 	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Merkezi',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Raşt',
+	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Fotraf deke',
 	'wikiaPhotoGallery-upload-uploadbutton' => 'Resim Barke',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'ena pele',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Weçine',
 	'wikiaPhotoGallery-photooptions-description' => 'Teferruatê Resimi',
+	'wikiaPhotoGallery-not-displayed' => 'Nêasiyayo',
 	'galery-slider-read-more' => 'Dehana vêşi >',
 );
 
-/** Ewe (eʋegbe) */
+/** Ewe (eʋegbe)
+ */
 $messages['ee'] = array(
 	'wikiaPhotoGallery-error-caption' => 'Vodada',
 	'wikiaPhotoGallery-preview-hover-delete' => 'tutui',
@@ -1776,8 +1784,8 @@ $messages['fa'] = array(
  * @author Tofu II
  */
 $messages['fi'] = array(
-	'wikiaphotogallery-desc' => 'Tarjoaa käyttöliittymän galleriahallintaan sivuilla',
-	'wikiaPhotoGallery-add-gallery' => 'Aseta kuvagalleria',
+	'wikiaphotogallery-desc' => 'Tarjoaa käyttöliittymän galleriahallintaan sivuilla', # Fuzzy
+	'wikiaPhotoGallery-add-gallery' => 'Aseta kuvagalleria', # Fuzzy
 	'wikiaPhotoGallery-viewmode-addphoto' => 'Lisää kuva tähän galleriaan',
 	'wikiaPhotoGallery-edit-abort' => 'Laajennusriippuvuus keskeytti yrittämäsi muutoksen',
 	'wikiaPhotoGallery-edit-summary' => 'Muokataan galleriaa',
@@ -1785,7 +1793,7 @@ $messages['fi'] = array(
 	'wikiaPhotoGallery-error-outdated' => 'Tätä galleriaa muokattiin, kun katselit sivua.
 Päivitä sivu ja yritä uudelleen.',
 	'wikiaPhotoGallery-error-user-rights' => 'Käyttäjäoikeusvirhe.',
-	'wikiaPhotoGallery-upload-title' => 'Valitse kuva',
+	'wikiaPhotoGallery-upload-title' => 'Valitse kuva', # Fuzzy
 	'wikiaPhotoGallery-upload-info-images-label' => 'kuvat tältä sivulta',
 	'wikiaPhotoGallery-upload-findtitle' => 'Etsi',
 	'wikiaPhotoGallery-upload-findbutton' => 'Etsi',
@@ -1794,7 +1802,7 @@ Päivitä sivu ja yritä uudelleen.',
 	'wikiaPhotoGallery-upload-page-next' => 'Seuraavat 8',
 	'wikiaPhotoGallery-upload-page-prev' => 'Edelliset 8',
 	'wikiaPhotoGallery-upload-filesinsert' => 'Lisää tämä kuva',
-	'wikiaPhotoGallery-upload-error-title' => 'Lähettämisesi saatiin valmiiksi',
+	'wikiaPhotoGallery-upload-error-title' => 'Lähettämisesi saatiin valmiiksi', # Fuzzy
 	'wikiaPhotoGallery-upload-error-bad-extension' => 'Tätä tiedostotyyppiä ei voi käyttää.',
 	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'Tiedostonimi sisältää merkkejä, joita ei sallita sivujen otsikoissa.
 Nimeä tiedosto uudelleen ja yritä uudelleen.',
@@ -1810,7 +1818,7 @@ Mitä haluaisit tehdä?',
 	'wikiaPhotoGallery-upload-select-images' => 'Valitse',
 	'wikiaPhotoGallery-photooptions-title' => 'Kuvavalitsimet',
 	'wikiaPhotoGallery-photooptions-done' => 'Valmis',
-	'wikiaPhotoGallery-preview-title' => 'Muokkaa galleriaa',
+	'wikiaPhotoGallery-preview-title' => 'Muokkaa galleriaa', # Fuzzy
 	'wikiaPhotoGallery-preview-hover-modify' => 'muokkaa',
 	'wikiaPhotoGallery-preview-hover-delete' => 'poista',
 	'wikiaPhotoGallery-preview-add-photo' => 'Lisää kuva',
@@ -1845,7 +1853,7 @@ Vaihtoehtoisesti voit napsauttaa "$2" ja nähdä sivun päivitetyssä muodossa.'
 	'wikiaPhotoGallery-choice-gallery' => 'Luo galleria',
 	'wikiaPhotoGallery-slideshowpreview-optionstitle' => 'Diaesityksen asetukset',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Lähetä',
-	'wikiaPhotoGallery-upload-uploadbutton' => 'Lähetä',
+	'wikiaPhotoGallery-upload-uploadbutton' => 'Lähetä', # Fuzzy
 	'wikiaPhotoGallery-upload-selectbutton' => 'Valitse',
 	'wikiaPhotoGallery-photooptions-captiontitle' => 'Kuvateksti',
 	'wikiaPhotoGallery-photooptions-captionsub' => "'''Valinnainen.'''
@@ -2222,7 +2230,8 @@ Describa esta foto.",
 	'galery-slider-read-more' => ' Ler máis >',
 );
 
-/** Hausa (Hausa) */
+/** Hausa (Hausa)
+ */
 $messages['ha'] = array(
 	'wikiaPhotoGallery-preview-hover-delete' => 'soke',
 );
@@ -2401,8 +2410,8 @@ $messages['he'] = array(
 	'wikiaPhotoGallery-photooptions-linkurl' => 'קישור אל (שם דף או כתובת אינטרנט)',
 	'wikiaPhotoGallery-photooptions-description' => 'פרטי התמונה.',
 	'wikiaPhotoGallery-search-tooltip' => 'חיפוש תמונות באתר זה',
-	'wikiaPhotoGallery-upload-image-size-error' => 'גודל התמונה שגוי. התמונות צריכות להיות בגודל 673 על 410 פיקסלים.',
-	'wikiaPhotoGallery-upload-image-size' => 'התמונות חייבות להיות בגודל 673  על  410 פיקסלים.',
+	'wikiaPhotoGallery-upload-image-size-error' => 'גודל התמונה שגוי. התמונות צריכות להיות בגודל 673 על 410 פיקסלים.', # Fuzzy
+	'wikiaPhotoGallery-upload-image-size' => 'התמונות חייבות להיות בגודל 673  על  410 פיקסלים.', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'לא מוצג',
 	'galery-slider-read-more' => 'קריאה נוספת >',
 );
@@ -2795,7 +2804,7 @@ $messages['id'] = array(
 	'wikiaPhotoGallery-upload-select-images' => 'Pilih',
 	'wikiaPhotoGallery-photooptions-title' => 'Pilihan Foto',
 	'wikiaPhotoGallery-photooptions-done' => 'Selesai',
-	'wikiaPhotoGallery-preview-title' => 'Sunting galeri',
+	'wikiaPhotoGallery-preview-title' => 'Sunting galeri', # Fuzzy
 	'wikiaPhotoGallery-preview-hover-modify' => 'ubah',
 	'wikiaPhotoGallery-preview-hover-delete' => 'hapus',
 	'wikiaPhotoGallery-preview-add-photo' => 'Tambah Foto',
@@ -2839,10 +2848,10 @@ $messages['inh'] = array(
  * @author Nemo bis
  */
 $messages['it'] = array(
-	'wikiaphotogallery-desc' => "Fornisce un'interfaccia per la gestione di gallerie nelle pagine",
+	'wikiaphotogallery-desc' => "Fornisce un'interfaccia per la gestione di gallerie nelle pagine", # Fuzzy
 	'wikiaPhotoGallery-back' => 'Indietro',
 	'wikiaPhotoGallery-finish' => 'Finito',
-	'wikiaPhotoGallery-add-gallery' => 'Inserisci una galleria fotografica',
+	'wikiaPhotoGallery-add-gallery' => 'Inserisci una galleria fotografica', # Fuzzy
 	'wikiaPhotoGallery-viewmode-addphoto' => 'Aggiungi una foto per questa galleria',
 	'wikiaPhotoGallery-edit-abort' => "La modifica che si sta tentando di fare è stata interrotta da un problema dell'estensione",
 	'wikiaPhotoGallery-edit-summary' => 'Modifica di una galleria',
@@ -2858,7 +2867,7 @@ $messages['it'] = array(
 	'wikiaPhotoGallery-upload-page-next' => 'Successive 8',
 	'wikiaPhotoGallery-upload-page-prev' => 'Precedenti 8',
 	'wikiaPhotoGallery-upload-filesinsert' => 'Inserisci questa foto',
-	'wikiaPhotoGallery-upload-error-title' => 'Il caricamento può essere completato',
+	'wikiaPhotoGallery-upload-error-title' => 'Il caricamento può essere completato', # Fuzzy
 	'wikiaPhotoGallery-upload-error-bad-extension' => 'Questo tipo di file non può essere utilizzato.',
 	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'Il nome del file contiene caratteri che non sono ammessi nei titoli delle pagine. Si prega di rinominare il file e riprovare.',
 	'wikiaPhotoGallery-upload-error-filetype-incorrect' => "Il file ha un'estensione non corretta.",
@@ -2872,7 +2881,7 @@ $messages['it'] = array(
 	'wikiaPhotoGallery-upload-select-images' => 'Seleziona',
 	'wikiaPhotoGallery-photooptions-title' => 'Opzioni foto',
 	'wikiaPhotoGallery-photooptions-done' => 'Fatto',
-	'wikiaPhotoGallery-preview-title' => 'Modifica galleria',
+	'wikiaPhotoGallery-preview-title' => 'Modifica galleria', # Fuzzy
 	'wikiaPhotoGallery-preview-hover-modify' => 'modifica',
 	'wikiaPhotoGallery-preview-hover-delete' => 'cancella',
 	'wikiaPhotoGallery-preview-add-photo' => 'Aggiungi una foto',
@@ -2922,7 +2931,7 @@ In alternativa, è possibile fare clic su "$2" per vedere la pagina nella sua fo
 	'wikiaPhotoGallery-upload-title-gallery' => 'Creatore Gallerie - Trova e carica foto',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Carica',
 	'wikiaPhotoGallery-upload-uploadtext' => "'''Oppure''' carica una foto dal tuo computer",
-	'wikiaPhotoGallery-upload-uploadbutton' => 'Carica',
+	'wikiaPhotoGallery-upload-uploadbutton' => 'Carica', # Fuzzy
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'questa pagina',
 	'wikiaPhotoGallery-upload-existingtext-recentupload' => 'Caricamenti più recenti',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Seleziona',
@@ -3120,7 +3129,7 @@ $messages['kn'] = array(
 	'wikiaPhotoGallery-error-caption' => 'ದೋಷ',
 	'wikiaPhotoGallery-upload-findtitle' => 'ಹುಡುಕು',
 	'wikiaPhotoGallery-upload-findbutton' => 'ಹುಡುಕು',
-	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'ಫೈಲಿನ ಹೆಸರು "$1" ಶೀರ್ಷಿಕೆಗಳಲ್ಲಿ ನಿಷಿದ್ಧವಾಗಿರುವ ಚಿಹ್ನೆಗಳನ್ನು ಹೊಂದಿದೆ.ದಯವಿಟ್ಟು ಫೈಲಿನ ಹೆಸರನ್ನು ಬದಲಾಯಿಸಿ ಮತ್ತೆ ಅಪ್ಲೋಡ್ ಮಾಡಲು ಪ್ರಯತ್ನಿಸಿ.',
+	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'ಫೈಲಿನ ಹೆಸರು "$1" ಶೀರ್ಷಿಕೆಗಳಲ್ಲಿ ನಿಷಿದ್ಧವಾಗಿರುವ ಚಿಹ್ನೆಗಳನ್ನು ಹೊಂದಿದೆ.ದಯವಿಟ್ಟು ಫೈಲಿನ ಹೆಸರನ್ನು ಬದಲಾಯಿಸಿ ಮತ್ತೆ ಅಪ್ಲೋಡ್ ಮಾಡಲು ಪ್ರಯತ್ನಿಸಿ.', # Fuzzy
 	'wikiaPhotoGallery-preview-hover-delete' => 'ಅಳಿಸಿ',
 	'wikiaPhotoGallery-preview-position-left' => 'ಎಡ',
 	'wikiaPhotoGallery-preview-position-right' => 'ಬಲ',
@@ -3304,7 +3313,7 @@ Ką norėtumėte daryti?',
 	'wikiaPhotoGallery-upload-select-images' => 'Pasirinkti',
 	'wikiaPhotoGallery-photooptions-title' => 'Nuotraukos galimybės',
 	'wikiaPhotoGallery-photooptions-done' => 'Atlikta',
-	'wikiaPhotoGallery-preview-title' => 'Redaguoti galeriją',
+	'wikiaPhotoGallery-preview-title' => 'Redaguoti galeriją', # Fuzzy
 	'wikiaPhotoGallery-preview-hover-modify' => 'pakeisti',
 	'wikiaPhotoGallery-preview-hover-delete' => 'panaikinti',
 	'wikiaPhotoGallery-preview-add-photo' => 'Pridėti nuotrauką',
@@ -4162,7 +4171,8 @@ $messages['pdc'] = array(
 	'wikiaPhotoGallery-preview-bordersize-small' => 'Glee',
 );
 
-/** Pälzisch (Pälzisch) */
+/** Pälzisch (Pälzisch)
+ */
 $messages['pfl'] = array(
 	'wikiaPhotoGallery-upload-page-next' => 'Negschte 8',
 	'wikiaPhotoGallery-upload-page-prev' => 'Voriche 8',
@@ -6145,10 +6155,10 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-search-tooltip' => '在该维基搜索图片',
 );
 
-/** Chinese (Taiwan) (中文（台灣）‎) */
+/** Chinese (Taiwan) (中文（台灣）‎)
+ */
 $messages['zh-tw'] = array(
 	'wikiaphotogallery-desc' => '提供一個界面以管理頁面中的圖片集與幻燈片',
 	'wikiaPhotoGallery-back' => '返回',
 	'wikiaPhotoGallery-finish' => '完成',
 );
-

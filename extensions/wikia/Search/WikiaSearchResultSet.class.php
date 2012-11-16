@@ -108,6 +108,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$this->setQuery( $searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED ) );
 		
 		if ( $result instanceof Solarium_Result_Select_Empty ) {
+			wfProfileOut(__METHOD__);
 			return;
 		}
 		
@@ -239,6 +240,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		wfProfileIn(__METHOD__);
 		
 		if (! ( $this->searchConfig->hasArticleMatch() && $this->resultsStart == 0 ) ) {
+			wfProfileOut(__METHOD__);
 			return $this;
 		}
 
@@ -249,6 +251,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		
 		if (! in_array( $title->getNamespace(), $this->searchConfig->getNamespaces() ) ) { 
 			// we had an article match by name, but not in our desired namespaces
+			wfProfileOut(__METHOD__);
 			return $this;
 		}
 		
@@ -365,7 +368,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @return boolean
 	 */
 	public function hasResults() {
-		return ! empty( $this->results );
+		return !empty( $this->results );
 	}
 
 	/**

@@ -30,11 +30,13 @@ function WidgetAnswers($id, $params) {
 	if (empty( $wgAvailableAnswersLang ) ||
 	(!in_array($wgLanguageCode, $wgAvailableAnswersLang) && !in_array(preg_replace("/-.*$/", "", $wgLanguageCode), $wgAvailableAnswersLang))
 	) {
+		wfProfileOut(__METHOD__);
 		return '';
 	}
 
 	global $wgEnableAnswersMonacoWidget;
 	if (empty($wgEnableAnswersMonacoWidget)) {
+		wfProfileOut(__METHOD__);
 		return '';
 	}
 

@@ -3,6 +3,7 @@
  * @author Bartek Łapiński
  */
 
+
 if(!defined('MEDIAWIKI')) {
 	exit(1);
 }
@@ -15,8 +16,10 @@ $wgExtensionCredits['other'][] = array(
         'author' => 'Bartek Łapiński, Inez Korczyński',
 	'version' => '0.99',
 );
-
+$app = F::app();
 $dir = dirname(__FILE__).'/';
+
+$app->registerController('VideoEmbedToolController',	$dir . '/VideoEmbedToolController.class.php' );
 
 define( 'VIDEO_PREVIEW', 350 );
 

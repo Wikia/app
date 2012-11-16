@@ -110,48 +110,34 @@ $messages['en'] = array(
 	'multidelete_swedish_wikis' => 'all swedish wikis',
 	'multidelete_german_wikis' => 'all german wikis',
 	'action-multidelete' => 'delete a batch of pages',
-/*multi-wiki finder*/	
+/*multi-wiki finder*/
 	'multiwikifinder' => 'Multiwiki Title Finder',
 	'multiwikifindpagenames' => 'Find pagenames',
 	'multiwikienterpagename' => 'Enter a pagename:',
 	'multiwikirecords' => '$1 wiki found',
 	'action-multiwikifinder' => 'search for a specific title across Wikia',
-) ;
+);
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author IAlex
+ * @author Kghbln
  * @author LWChris
  * @author McDutchie
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'multiwikiedit_task_link' => ' "check" as in "verify" or as in "select"?',
-	'multiwikiedit_on' => 'Lego. Probably has leading and trailing parameters. Please add this to the message...',
-	'multidelete_button' => '{{Identical|Delete}}',
-	'multidelete_task_link' => ' "check" as in "verify" or as in "select"?',
-	'multidelete_split_results' => 'Needs plural support for $1 and $2.
-No, the message won\'t be displayed of $1 or $2 was just "1".',
-	'multidelete_max_display_size' => 'Needs plural support for $1',
-	'multiwikirecords' => 'If $1 is a number, add plural support',
-);
-
-/** Message documentation (Message documentation)
- * @author Kghbln
- * @author Siebrand
- */
-$messages['qqq'] = array(
-	'multiwikiedit_task_link' => ' "check" as in "verify" or as in "select"?',
-	'multiwikiedit_on' => 'Lego. Probably has leading and trailing parameters. Please add this to the message...',
+	'multiwikiedit_task_link' => ' "check" as in "verify" or as in "select"?', # Fuzzy
+	'multiwikiedit_on' => 'Lego. Probably has leading and trailing parameters. Please add this to the message...', # Fuzzy
 	'action-multiwikiedit' => '{{doc-action|multiwikiedit}}',
 	'multidelete_button' => '{{Identical|Delete}}',
-	'multidelete_task_link' => ' "check" as in "verify" or as in "select"?',
+	'multidelete_task_link' => ' "check" as in "verify" or as in "select"?', # Fuzzy
 	'multidelete_reason' => '{{Identical|Reason for deletion}}',
 	'multidelete_split_results' => 'Needs plural support for $1 and $2.
-No, the message won\'t be displayed of $1 or $2 was just "1".',
-	'multidelete_max_display_size' => 'Needs plural support for $1',
+No, the message won\'t be displayed of $1 or $2 was just "1".', # Fuzzy
+	'multidelete_max_display_size' => 'Needs plural support for $1', # Fuzzy
 	'action-multidelete' => '{{doc-action|multidelete}}',
-	'multiwikirecords' => 'If $1 is a number, add plural support',
+	'multiwikirecords' => 'If $1 is a number, add plural support', # Fuzzy
 	'action-multiwikifinder' => '{{doc-action|multiwikifinder}}',
 );
 
@@ -418,7 +404,8 @@ $messages['ce'] = array(
 	'multidelete_title' => 'Дуккха дIадайар',
 );
 
-/** Sorani Kurdish (کوردی) */
+/** Sorani Kurdish (کوردی)
+ */
 $messages['ckb'] = array(
 	'multidelete_button' => 'سڕینەوە',
 );
@@ -687,6 +674,7 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'multitasks-link-back-label' => 'tiya',
@@ -695,15 +683,23 @@ $messages['diq'] = array(
 	'multiwikiedit_caption' => 'Listeya pelan',
 	'multiwikiedit_title' => 'Zafın Wiki Vurnayış',
 	'multiwikiedit_or' => '<b>YA NA</b>',
+	'multiwikiedit_on' => 'akerde',
 	'multiwikiedit_list_caption' => 'Listeya Wikiyan',
 	'multiwikiedit_minoredit_caption' => 'Vurnayişo qıcek',
+	'multiwikiedit_from_form' => 'cı ra form',
+	'multiwikiedit_this_wiki' => 'eno wiki',
+	'multiwikiedit_all_wikis' => 'wikiy pêro',
 	'multiwikiedit_select_yourself' => 'Tı',
 	'multidelete_button' => 'BESTERE',
 	'multidelete_caption' => 'Listeya pelan',
 	'multidelete_title' => 'Zafın Besternayış',
+	'multidelete_or' => '<b>YA Zİ</b>',
+	'multidelete_select_all' => 'Pêrune weçine',
+	'multidelete_all_wikis' => 'wikiy pêro',
 );
 
-/** Ewe (eʋegbe) */
+/** Ewe (eʋegbe)
+ */
 $messages['ee'] = array(
 	'multidelete_button' => 'Tutui',
 );
@@ -835,7 +831,8 @@ $messages['es'] = array(
 	'action-multiwikifinder' => 'Buscador de Títulos Multiwiki',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ */
 $messages['fa'] = array(
 	'multidelete_select_all' => 'انتخاب همه',
 );
@@ -1118,7 +1115,8 @@ $messages['gl'] = array(
 	'action-multiwikifinder' => 'procurar un título específico en toda Wikia',
 );
 
-/** Hausa (Hausa) */
+/** Hausa (Hausa)
+ */
 $messages['ha'] = array(
 	'multidelete_button' => 'SOKE',
 );
@@ -1555,7 +1553,7 @@ $messages['ku-latn'] = array(
 	'multiwikiedit_or' => '<b>AN</b>',
 	'multiwikiedit_on' => 'li ser',
 	'multiwikiedit_minoredit_caption' => 'Guhertina biçûk',
-	'multiwikiedit_success_subtitle' => 'ji bo $',
+	'multiwikiedit_success_subtitle' => 'ji bo $', # Fuzzy
 	'multiwikiedit_select_yourself' => 'tu',
 	'multidelete_button' => 'JÊ BIBE',
 	'multidelete_or' => '<b>AN</b>',
@@ -3212,4 +3210,3 @@ $messages['zh-tw'] = array(
 	'multidelete_caption' => '頁面列表',
 	'multidelete_reason' => '刪除原因',
 );
-

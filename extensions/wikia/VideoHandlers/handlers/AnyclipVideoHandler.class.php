@@ -16,25 +16,27 @@ class AnyclipVideoHandler extends VideoHandler {
 
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );
+		$autoPlayStr = ( $autoplay ) ? ', autoPlay:true' : '';
+		$ajaxStr = (bool) $isAjax;
 
 		$html = <<<EOT
-<div id="AnyClipPlayer-{$this->videoId}" style="width: {$width}px; height: {$height}px;"></div>
+<div id="AnyClipPlayer-{$this->videoId}-{$ajaxStr}" style="width: {$width}px; height: {$height}px;"></div>
 EOT;
 
-		if ( $autoplay ) {
+		if ( $isAjax || $postOnload ) {
 			$html .= <<<EOT
 <script type="text/javascript">
 	$.when(
 		$.getScript('http://player.anyclip.com/embed/AnyClipPlayer.js')
 	).done(function() {
-		AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}", {clipID:"{$this->videoId}", autoPlay:true}]);
+		AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}"{$autoPlayStr}}]);
 	});
 </script>
 EOT;
 		} else {
 			$html .= <<<EOT
 <script type="text/javascript" src="http://player.anyclip.com/embed/AnyClipPlayer.js"></script>
-<script type="text/javascript">AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}", {clipID:"{$this->videoId}"}]);</script>
+<script type="text/javascript">AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}{$autoPlayStr}"}]);</script>
 EOT;
 		}
 
