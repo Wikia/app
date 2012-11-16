@@ -10,8 +10,9 @@ if ($context == SD_CONTEXT_EDITING):
 }
 echo '</select>';
 else:
+	$value = $object->getValue();
 	if(empty($value)): ?>
 	<p class="empty">empty</p>
-	<?php else: ?><?=$object->getValue();?><?php endif; ?>
+	<?php else: ?><?=$value;?><?php endif; ?>
 <?php endif; ?>
 
