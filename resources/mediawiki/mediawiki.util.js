@@ -12,7 +12,7 @@
 		 * (don't call before document ready)
 		 */
 		init: function () {
-			var profile, $tocTitle, $tocToggleLink, hideTocCookie;
+			var profile, $tocTitle, $tocToggleLink;
 
 			/* Set up $.messageBox */
 			$.messageBoxNew( {
@@ -94,9 +94,8 @@
 			$tocToggleLink = $( '#togglelink' );
 			// Only add it if there is a TOC and there is no toggle added already
 			if ( $( '#toc' ).length && $tocTitle.length && !$tocToggleLink.length ) {
-				hideTocCookie = $.cookie( 'mw_hidetoc' );
 					$tocToggleLink = $( '<a href="#" class="internal" id="togglelink"></a>' )
-						.text( mw.msg( 'hidetoc' ) )
+						.text( mw.msg( 'showtoc' ) )
 						.click( function ( e ) {
 							e.preventDefault();
 							util.toggleToc( $(this) );
@@ -108,10 +107,6 @@
 							.prepend( '&nbsp;[' )
 							.append( ']&nbsp;' )
 				);
-
-				if ( hideTocCookie === '1' ) {
-					util.toggleToc( $tocToggleLink );
-				}
 			}
 		},
 
