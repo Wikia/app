@@ -104,7 +104,8 @@ class WikiaHomePageController extends WikiaController {
 				$results[] = array(
 					'class' => $lang,
 					'href' => $wiki['url'],
-					'text' => ''
+					'text' => '',
+					'title' => $wiki['wikiTitle']
 				);
 			}
 		}

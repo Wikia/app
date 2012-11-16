@@ -909,7 +909,7 @@ class CityVisualization extends WikiaModel {
 
 		if( is_int(self::$wikiFactoryVarId) ) {
 			$wikiFactoryList = WikiaDataAccess::cache(
-				F::app()->wf->MemcKey('corporate_pages_list', 'v1.06', __METHOD__),
+				F::app()->wf->MemcKey('corporate_pages_list', 'v1.07', __METHOD__),
 				24 * 60 * 60,
 				array($this, 'loadCorporateSitesList')
 			);
