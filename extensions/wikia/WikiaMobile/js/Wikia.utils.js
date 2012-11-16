@@ -200,7 +200,7 @@
 			if(!(format in formats))
 				throw "Only Json, Jsonp and Html format are allowed";
 
-			for(var i = 0; i < keys.length; i++) {
+			for(var i = 0, l = keys.length; i < l; i++) {
 				sortedDict[keys[i]] = data[keys[i]];
 			}
 
