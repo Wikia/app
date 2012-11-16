@@ -56,6 +56,8 @@ class ArticlesApiController extends WikiaApiController {
 				}
 			}
 
+			$articles = null;
+
 			if ( count( $ids) > 0 ) {
 				$titles = Title::newFromIDs( $ids );
 
@@ -75,9 +77,12 @@ class ArticlesApiController extends WikiaApiController {
 						$this->wg->Memc->set( $this->getArticleCacheKey( $id ), $collection[$id], 86400 );
 					}
 				}
+
+				$titles = null;
 			}
 
 			$batches = $this->wf->PaginateArray( $collection, $limit, $batch );
+			$collection = null;
 		}
 
 		$this->response->setCacheValidity(
@@ -93,10 +98,87 @@ class ArticlesApiController extends WikiaApiController {
 			$this->response->setVal( $name, $value );
 		}
 
+		$batches = null;
+		$this->wf->ProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Get details about one or more articles
+	 *
+	 * @requestParam string $ids A string with a comma-separated list of article ID's
+	 *
+	 * @responseParam array A list of results with the article ID as the index, each item has a ... property
+	 *
+	 * @example http://glee.wikia.com/wikia.php?controller=ArticlesApi&method=getDetails&ids=3125,490
+	 */
+	public function getDetails() {
+		$this->wf->profileIn( __METHOD__ );
+
+		$articles = $this->request->getVal( 'ids', null );
+		$collection = array();
+
+		if ( !empty( $articles ) ) {
+			$articles = explode( ',', $articles );
+			$ids = array();
+
+
+			foreach ( $articles as $i ) {
+				$cache = $this->wg->Memc->get( $this->getDetailsCacheKey( $i ) );
+
+				if ( !is_array( $cache ) ) {
+					$ids[] = $i;
+				} else {
+					$collection[$i] = $cache;
+				}
+			}
+
+			$articles = null;
+
+			if ( count( $ids ) > 0 ) {
+				$titles = Title::newFromIDs( $ids );
+
+				if ( !empty( $titles ) ) {
+					foreach ( $titles as $t ) {
+						$ns = $t->getNamespace();
+						$id =$t->getArticleID();
+						$collection[$id] = array(
+							'revision' => $t->getLatestRevID(),
+							'abstract' => (new ArticleService( $id ))->getTextSnippet()
+						);
+
+						if ( class_exists( 'ArticleCommentList' ) ) {
+							$collection[$id]['comments'] = ArticleCommentList::newFromTitle( $t )->getCountAllNested();
+						}
+
+						$this->wg->Memc->set( $this->getDetailsCacheKey( $id ), $collection[$id], 86400 );
+					}
+				}
+
+				$titles = null;
+			}
+		}
+
+		$this->response->setCacheValidity(
+			86400,
+			86400,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
+
+
+		$this->response->setVal( 'items', $collection );
+
+		$collection = null;
 		$this->wf->ProfileOut( __METHOD__ );
 	}
 
 	private function getArticleCacheKey( $id ) {
 		return $this->wf->MemcKey( __CLASS__, self::CACHE_VERSION, 'article', $id );
+	}
+
+	private function getDetailsCacheKey( $id ) {
+		return $this->wf->MemcKey( __CLASS__, self::CACHE_VERSION, 'details', $id );
 	}
 }
