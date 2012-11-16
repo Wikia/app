@@ -165,10 +165,12 @@ class WikiaSearch extends WikiaObject {
 			
 		} catch ( Exception $e ) {
 			F::build('Wikia')->log(__METHOD__, 'Querying Solr First Time', $e);
-			$searchConfig->setSkipBoostFunctions( true );
+			$searchConfig	->setSkipBoostFunctions( true )
+							->setError( $e );
 			try {
 				$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
 			} catch ( Exception $e ) {
+				$searchConfig->setError( $e );
 				F::build('Wikia')->log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
 				$result = F::build('Solarium_Result_Select_Empty');
 			}
