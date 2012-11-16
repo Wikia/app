@@ -6,6 +6,8 @@
  * @require events
  * @require domwriter
  * @require cookies
+ * @require track
+ * @require log
  *
  * @author Jakub Olek
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
