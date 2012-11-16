@@ -870,8 +870,12 @@ class ArticleComment {
 				$params[ 'page' ] = $page;
 				$urls[] = ArticleCommentsController::getUrl(
 					'Content',
-					'html',
-					array( 'articleId' => $articleId, 'page' => $page, 'skin' => "true" )
+					array(
+						'format' => 'html',
+						'articleId' => $articleId,
+						'page' => $page,
+						'skin' => 'true'
+					)
 				);
 			}
 
