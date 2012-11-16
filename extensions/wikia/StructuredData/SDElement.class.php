@@ -71,6 +71,12 @@ class SDElement extends SDRenderableObject implements SplSubject {
 			    				'wikia:element',
 			    				'schema:video',
 			    				'callofduty:timeline',
+		    ) ,
+		    'callofduty:Weapon' => array(
+			    				'wikia:includeWith',
+			    				'wikia:namespace',
+			    				'schema:audio',
+			    				'schema:video'
 		    )
 		);
 
