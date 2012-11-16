@@ -12,6 +12,12 @@ class CityVisualization extends WikiaModel {
 	const PROMOTED_ARRAY_KEY = 'promoted';
 	const DEMOTED_ARRAY_KEY = 'demoted';
 
+	/**
+	 * @const String name of variable in city_variables table which enables WikiaHomePage extension
+	 */
+	const WIKIA_HOME_PAGE_WF_VAR_NAME = 'wgEnableWikiaHomePageExt';
+	static $wikiFactoryVarId = null;
+
 	protected $verticalMap = array(
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'lifestyle',
 		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'entertainment',
@@ -776,7 +782,7 @@ class CityVisualization extends WikiaModel {
 	 * @return array
 	 */
 	public function getVisualizationWikisData() {
-		$corporateSites = HubService::getCorporateSitesList();
+		$corporateSites = $this->getCorporateSitesList();
 		$this->addLangToCorporateSites($corporateSites);
 		return $this->cleanVisualizationWikisArray($corporateSites);
 	}
@@ -891,6 +897,33 @@ class CityVisualization extends WikiaModel {
 		}
 
 		return $sqlOptions;
+	}
+
+	/**
+	 * @desc Gets id of WF variable and then loads and returns list of corporate sites
+	 * @return array
+	 */
+	protected function getCorporateSitesList() {
+		$wikiFactoryList = array();
+		self::$wikiFactoryVarId = WikiFactory::getVarIdByName(self::WIKIA_HOME_PAGE_WF_VAR_NAME);
+
+		if( is_int(self::$wikiFactoryVarId) ) {
+			$wikiFactoryList = WikiaDataAccess::cache(
+				F::app()->wf->MemcKey('corporate_pages_list', 'v1.06', __METHOD__),
+				24 * 60 * 60,
+				array($this, 'loadCorporateSitesList')
+			);
+		}
+
+		return $wikiFactoryList;
+	}
+
+	/**
+	 * @desc Loads list of corporate sites (sites which have $wgEnableWikiaHomePageExt WF variable set to true)
+	 * @return array
+	 */
+	public function loadCorporateSitesList() {
+		return WikiFactory::getListOfWikisWithVar(self::$wikiFactoryVarId, 'bool', '=', true);
 	}
 
 }

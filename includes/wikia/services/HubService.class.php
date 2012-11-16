@@ -1,12 +1,6 @@
 <?php
 
 class HubService extends Service {
-	/**
-	 * @const String name of variable in city_variables table which enables WikiaHomePage extension
-	 */
-	const WIKIA_HOME_PAGE_WF_VAR_NAME = 'wgEnableWikiaHomePageExt';
-	static $wikiFactoryVarId = null;
-
 	private static $comscore_prefix = 'comscore_';
 
 	/**
@@ -20,7 +14,7 @@ class HubService extends Service {
 	 * @return stdClass ($row->cat_id $row->cat_name)
 	 */
 	public static function getComscoreCategory($cityId) {
-		if (self::isCorporatePage($cityId) && $cityId == F::app()->wg->CityId) {
+		if( self::isCorporatePage() ) {
 			// Page-level hub-related vertical checking only works locally
 			return self::getCategoryInfoForCurrentPage();
 		}
@@ -81,11 +75,11 @@ class HubService extends Service {
 
 		$categoryId = null;
 
-		if (self::isCorporatePage($cityId)) {
+		if( self::isCorporatePage() ) {
 			$categoryId = self::getHubIdForCurrentPage();
 		}
 
-		if (empty($categoryId)) {
+		if( empty($categoryId) ) {
 			$categoryId = self::getCategoryIdForCity($cityId);
 		}
 
@@ -102,7 +96,7 @@ class HubService extends Service {
 	private static function getCategoryIdForCity($cityId) {
 		$categoryId = null;
 
-		if (self::isCorporatePage($cityId)) {
+		if( self::isCorporatePage() ) {
 			$categoryId = WikiFactoryHub::CATEGORY_ID_CORPORATE;
 		} else {
 			$category = WikiFactory::getCategory($cityId);
@@ -135,14 +129,14 @@ class HubService extends Service {
 	 * @return bool
 	 */
 	public static function isCurrentPageAWikiaHub() {
-		return (self::isCorporatePage(F::app()->wg->CityId) && self::getHubIdForCurrentPage());
+		return ( self::isCorporatePage() && self::getHubIdForCurrentPage() );
 	}
 
 	/**
 	 * Check if given city is Wikia corporate city
 	 */
-	public static function isCorporatePage($cityId) {
-		return (in_array($cityId, array_keys(self::getCorporateSitesList())));
+	public static function isCorporatePage() {
+		return !empty( F::app()->wg->EnableWikiaHomePageExt );
 	}
 
 	private static function getHubIdForCurrentPage() {
@@ -205,30 +199,4 @@ class HubService extends Service {
 		return $categoryInfo;
 	}
 
-	/**
-	 * @desc Gets id of WF variable and then loads and returns list of corporate sites
-	 * @return array
-	 */
-	static public function getCorporateSitesList() {
-		$wikiFactoryList = array();
-		self::$wikiFactoryVarId = WikiFactory::getVarIdByName(self::WIKIA_HOME_PAGE_WF_VAR_NAME);
-
-		if( is_int(self::$wikiFactoryVarId) ) {
-			$wikiFactoryList = WikiaDataAccess::cache(
-				F::app()->wf->MemcKey('corporate_pages_list', 'v1.05', __METHOD__),
-				24 * 60 * 60,
-				array('HubService', 'loadCorporateSitesList')
-			);
-		}
-
-		return $wikiFactoryList;
-	}
-
-	/**
-	 * @desc Loads list of corporate sites (sites which have $wgEnableWikiaHomePageExt WF variable set to true)
-	 * @return array
-	 */
-	static public function loadCorporateSitesList() {
-		return WikiFactory::getListOfWikisWithVar(self::$wikiFactoryVarId, 'bool', '=', true);
-	}
 }
