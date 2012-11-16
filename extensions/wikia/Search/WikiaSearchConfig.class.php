@@ -358,6 +358,10 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 			$fieldsPrepped[] = WikiaSearch::field( $field );
 		}
 		
+		if (! ( in_array( 'id', $fieldsPrepped ) || in_array( '*', $fieldsPrepped ) ) ) {
+			$fieldsPrepped[] = 'id';
+		} 
+		
 		return $fieldsPrepped;
 	}
 	
