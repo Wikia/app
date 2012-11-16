@@ -50,7 +50,7 @@
 				$href = isset($item['href']) ? htmlspecialchars($item['href']) : '#';
 ?>
 		<li>
-			<a href="<?= $href ?>"<?= $accesskey ?> data-id="<?= $key ?>"<?= empty($item['id']) ? '' : ' id="'.$item['id'].'"' ?><?= empty($item['class']) ? '' : ' class="'.$item['class'].'"' ?><?= empty($item['attr']) ? '' : ' '.$item['attr'] ?>><?=htmlspecialchars($item['text']) ?></a>
+			<a href="<?= $href ?>" <?= $accesskey ?> data-id="<?= $key ?>" <?= empty($item['title']) ? '' : ' title="'.$item['title'].'"'; ?> <?= empty($item['id']) ? '' : ' id="'.$item['id'].'"' ?><?= empty($item['class']) ? '' : ' class="'.$item['class'].'"' ?><?= empty($item['attr']) ? '' : ' '.$item['attr'] ?><?= empty($item['class']) ? '' : ' class="'.$item['class'].'"' ?>><?=htmlspecialchars($item['text']) ?></a>
 		</li>
 <?php
 			}

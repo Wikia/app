@@ -10,7 +10,6 @@
  * --message='TestMessageForVisualisation_test'
  * --overwritelang=en
  * --skipupload
- * --supressfilenames
  * --addimageuploadtask
  */
 require_once("../../commandLine.inc");
@@ -22,14 +21,13 @@ $params = new stdClass();
 $params->csvContent = explode("\n", file_get_contents($options['file']));
 $params->overwrittenLang = isset($options['overwritelang']) ? $options['overwritelang'] : false;
 $params->skipUpload = isset($options['skipupload']) ? true : false;
-$params->supressFileNames = isset($options['supressfilenames']) ? true : false;
 $params->addImageUploadTask = isset($options['addimageuploadtask']) ? true : false;
 
 if( $params->overwrittenLang !== false ) {
 	$params->overwrittenLang = strtolower( substr($params->overwrittenLang, 0, 2) );
 }
 
-if( true === $params->supressFileNames && empty($wgEnableSpecialPromoteExt) ) {
+if( empty($wgEnableSpecialPromoteExt) ) {
 	include_once('../../../extensions/wikia/SpecialPromote/UploadVisualizationImageFromFile.class.php');
 }
 
@@ -50,7 +48,7 @@ if( $putItToAmessage ) {
 
 class WikiaComWikisListImport {
 	const SPREADSHEET_FIRST_ADD_IMG_IDX = 6;
-	const SPREADSHEET_LAST_ADD_IMG_IDX = 6;
+	const SPREADSHEET_LAST_ADD_IMG_IDX = 5;
 
 	protected $options = null;
 	protected $verticalsNames = array('Video Games', 'Entertainment', 'Lifestyle');
@@ -195,6 +193,7 @@ class WikiaComWikisListImport {
 				} else {
 					$this->wikisNotAdded[] = $wikiDomain.' ('.$wikiId.') ';
 				}
+
 			}
 		}
 
@@ -218,12 +217,10 @@ class WikiaComWikisListImport {
 	protected function getCorpDestImageName($wikiUrl, $origImageName, $index = false) {
 		wfProfileIn(__METHOD__);
 
-		if( $this->options->supressFileNames ) {
-			$wikiDomain = trim( str_replace('http://', '', $wikiUrl), '/');
-			$wikiDb = WikiFactory::DomainToDB($wikiDomain);
-		}
+		$wikiDomain = trim( str_replace('http://', '', $wikiUrl), '/');
+		$wikiDb = WikiFactory::DomainToDB($wikiDomain);
 
-		if( $this->options->supressFileNames && !empty($wikiDb) ) {
+		if( !empty($wikiDb) ) {
 			if( $index === false ) {
 				$resultName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
 				$resultNameArr = explode('.', $resultName);

@@ -5,16 +5,18 @@
  * @todo refactor, the queries should be part of /includes/wikia/models/WikisModel.class.php
  */
 class CityVisualization extends WikiaModel {
-	//todo: think of better solution (WikiFactory variable?)
-	const GERMAN_CORPORATE_SITE_ID = 111264;
-	const ENGLISH_CORPORATE_SITE_ID = 80433;
-
 	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.77';
 	const WIKI_STANDARD_BATCH_SIZE_MULTIPLIER = 100;
 
 	const PROMOTED_SLOTS = 3;
 	const PROMOTED_ARRAY_KEY = 'promoted';
 	const DEMOTED_ARRAY_KEY = 'demoted';
+
+	/**
+	 * @const String name of variable in city_variables table which enables WikiaHomePage extension
+	 */
+	const WIKIA_HOME_PAGE_WF_VAR_NAME = 'wgEnableWikiaHomePageExt';
+	static $wikiFactoryVarId = null;
 
 	protected $verticalMap = array(
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'lifestyle',
@@ -781,16 +783,8 @@ class CityVisualization extends WikiaModel {
 	}
 
 	public function getTargetWikiId($langCode) {
-		switch ($langCode) {
-			case 'de':
-				$wikiId = self::GERMAN_CORPORATE_SITE_ID;
-				break;
-
-			case 'en':
-			default:
-				$wikiId = self::ENGLISH_CORPORATE_SITE_ID;
-		}
-		return $wikiId;
+		$corporateSites = $this->getVisualizationWikisData();
+		return ( isset($corporateSites[$langCode]['wikiId']) ) ? $corporateSites[$langCode]['wikiId'] : false;
 	}
 
 	/**
@@ -798,16 +792,43 @@ class CityVisualization extends WikiaModel {
 	 * @return array
 	 */
 	public function getVisualizationWikisData() {
-		return array(
-			'en' => array(
-				'wikiId' => self::ENGLISH_CORPORATE_SITE_ID,
-				'url' => WikiFactory::getVarValueByName('wgServer', self::ENGLISH_CORPORATE_SITE_ID)
-			),
-			'de' => array(
-				'wikiId' => self::GERMAN_CORPORATE_SITE_ID,
-				'url' => WikiFactory::getVarValueByName('wgServer', self::GERMAN_CORPORATE_SITE_ID)
-			)
-		);
+		$corporateSites = $this->getCorporateSitesList();
+		$this->addLangToCorporateSites($corporateSites);
+		return $this->cleanVisualizationWikisArray($corporateSites);
+	}
+
+	/**
+	 * @param Array $sites reference to an array with lists from WikiFactory::getListOfWikisWithVar()
+	 */
+	protected function addLangToCorporateSites(&$sites) {
+		foreach($sites as $wikiId => $wiki) {
+			$lang = WikiFactory::getVarByName('wgLanguageCode', $wikiId);
+			$lang = unserialize($lang->cv_value);
+
+			if( !empty($lang) ) {
+				$sites[$wikiId]['lang'] = $lang;
+			}
+		}
+	}
+
+	/**
+	 * @param Array $sites lists of wikis from WikiFactory::getListOfWikisWithVar()
+	 * @return array
+	 */
+	protected function cleanVisualizationWikisArray($sites) {
+		$results = array();
+
+		foreach($sites as $wikiId => $wiki) {
+			$lang = $wiki['lang'];
+			$results[$lang] = array(
+				'wikiId' => $wikiId,
+				'wikiTitle' => $wiki['t'],
+				'url' => $wiki['u'],
+				'lang' => $lang
+			);
+		}
+
+		return $results;
 	}
 
 	public function getWikisCountForStaffTool($opt) {
@@ -886,6 +907,33 @@ class CityVisualization extends WikiaModel {
 		}
 
 		return $sqlOptions;
+	}
+
+	/**
+	 * @desc Gets id of WF variable and then loads and returns list of corporate sites
+	 * @return array
+	 */
+	protected function getCorporateSitesList() {
+		$wikiFactoryList = array();
+		self::$wikiFactoryVarId = WikiFactory::getVarIdByName(self::WIKIA_HOME_PAGE_WF_VAR_NAME);
+
+		if( is_int(self::$wikiFactoryVarId) ) {
+			$wikiFactoryList = WikiaDataAccess::cache(
+				F::app()->wf->MemcKey('corporate_pages_list', 'v1.07', __METHOD__),
+				24 * 60 * 60,
+				array($this, 'loadCorporateSitesList')
+			);
+		}
+
+		return $wikiFactoryList;
+	}
+
+	/**
+	 * @desc Loads list of corporate sites (sites which have $wgEnableWikiaHomePageExt WF variable set to true)
+	 * @return array
+	 */
+	public function loadCorporateSitesList() {
+		return WikiFactory::getListOfWikisWithVar(self::$wikiFactoryVarId, 'bool', '=', true);
 	}
 
 }

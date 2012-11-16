@@ -3,9 +3,6 @@
 class HubService extends Service {
 	private static $comscore_prefix = 'comscore_';
 
-	// WF city_ids
-	private static $corporate_sites = array(80433, 111264);
-
 	/**
 	 * Get proper category to report to Comscore for given cityId
 	 * (wgTitle GLOBAL will be used in case the city is corporate wiki)
@@ -17,7 +14,7 @@ class HubService extends Service {
 	 * @return stdClass ($row->cat_id $row->cat_name)
 	 */
 	public static function getComscoreCategory($cityId) {
-		if (self::isCorporatePage($cityId) && $cityId == F::app()->wg->CityId) {
+		if( self::isCorporatePage() && $cityId == F::app()->wg->CityId ) {
 			// Page-level hub-related vertical checking only works locally
 			return self::getCategoryInfoForCurrentPage();
 		}
@@ -78,11 +75,11 @@ class HubService extends Service {
 
 		$categoryId = null;
 
-		if (self::isCorporatePage($cityId)) {
+		if( self::isCorporatePage() ) {
 			$categoryId = self::getHubIdForCurrentPage();
 		}
 
-		if (empty($categoryId)) {
+		if( empty($categoryId) ) {
 			$categoryId = self::getCategoryIdForCity($cityId);
 		}
 
@@ -99,7 +96,7 @@ class HubService extends Service {
 	private static function getCategoryIdForCity($cityId) {
 		$categoryId = null;
 
-		if (self::isCorporatePage($cityId)) {
+		if( self::isCorporatePage() ) {
 			$categoryId = WikiFactoryHub::CATEGORY_ID_CORPORATE;
 		} else {
 			$category = WikiFactory::getCategory($cityId);
@@ -132,14 +129,14 @@ class HubService extends Service {
 	 * @return bool
 	 */
 	public static function isCurrentPageAWikiaHub() {
-		return (self::isCorporatePage(F::app()->wg->CityId) && self::getHubIdForCurrentPage());
+		return ( self::isCorporatePage() && self::getHubIdForCurrentPage() );
 	}
 
 	/**
 	 * Check if given city is Wikia corporate city
 	 */
-	public static function isCorporatePage($cityId) {
-		return (in_array($cityId, self::$corporate_sites));
+	public static function isCorporatePage() {
+		return !empty( F::app()->wg->EnableWikiaHomePageExt );
 	}
 
 	private static function getHubIdForCurrentPage() {
@@ -201,4 +198,5 @@ class HubService extends Service {
 		$categoryInfo->cat_name = $categoryRow['name'];
 		return $categoryInfo;
 	}
+
 }
