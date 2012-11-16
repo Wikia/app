@@ -69,7 +69,7 @@ class ContributeMenuController extends WikiaController {
 		if($wgUser->isAllowed('editinterface')) {
 			$dropdownItems['wikinavedit'] = array(
 				'text' => wfMsg('oasis-navigation-v2-edit-this-menu'),
-				'href' => Title::newFromText(WikiNavigationService::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI)->getLocalURL('action=edit'),
+				'href' => Title::newFromText(NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI)->getLocalURL('action=edit'),
 			);
 		}
 		$this->response->setVal('dropdownItems', $dropdownItems);
