@@ -7,7 +7,7 @@
 
 class ArticlesApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
-	const CACHE_VERSION = 1;
+	const CACHE_VERSION = 2;
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by vertical namespace
@@ -141,9 +141,15 @@ class ArticlesApiController extends WikiaApiController {
 					foreach ( $titles as $t ) {
 						$ns = $t->getNamespace();
 						$id =$t->getArticleID();
+						$as = new ArticleService( $id );
+
 						$collection[$id] = array(
 							'revision' => $t->getLatestRevID(),
-							'abstract' => (new ArticleService( $id ))->getTextSnippet()
+							'abstract' => $as->getTextSnippet(),
+							'namespace' => array(
+								'id' => $t->getNamespace(),
+								'text' => ( $ns === 0 ) ? 'Main' : $t->getNsText()
+							)
 						);
 
 						if ( class_exists( 'ArticleCommentList' ) ) {
