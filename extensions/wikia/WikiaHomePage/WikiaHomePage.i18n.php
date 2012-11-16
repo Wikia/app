@@ -285,7 +285,7 @@ $messages['es'] = array(
 
 	'wikiahome-visualisation-remix-mixitup' => '¡Mézclalos!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Miles de wikis están a tu alcance. Remuévelos de nuevo para explorar más wikis.',
-	'wikiahome-visualisation-remix-button' => 'Remover',
+//	'wikiahome-visualisation-remix-button' => 'Remover',
 
 	'wikiahome-stats-heading' => 'La colaboración en acción',
 	'wikiahome-stats-content' => 'Midiendo la revolución de los medios',
@@ -308,8 +308,8 @@ $messages['es'] = array(
 	'wikiahome-hubs-videogames-more-heading' => 'Más en Videojuegos',
 	'wikiahome-hubs-videogames-more-list' => '
 *[http://es.wikia.com/wiki/Videojuegos Guías de juegos]
-*[http://es.wikia.com/wiki/Videojuegos Kickstarter Portal]
-*[http://es.wikia.com/wiki/Videojuegos Encylopedia Gamia]',
+*[http://videojuego.wikia.com/wiki/Wikijuegos:Portada Portal de videojuegos]
+*[http://es.wikia.com/wiki/Videojuegos Las últimas noticias]',
 
 	'wikiahome-hubs-entertainment-heading' => 'Entretenimiento',
 	'wikiahome-hubs-entertainment-url' => 'http://es.wikia.com/Entretenimiento',
@@ -416,71 +416,96 @@ $messages['fr'] = array(
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=fr',
 	'wikiahome-visualisation-remix-mixitup' => 'Mélanger&nbsp;!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Des centaines de wikis à votre portée. Mélangez pour explorer encore plus de wikis.',
-	'wikiahome-visualisation-remix-button' => 'Mélanger',
+//	'wikiahome-visualisation-remix-button' => 'Mélanger',
 	'wikiahome-stats-heading' => 'Collaboration en action',
 	'wikiahome-stats-content' => 'Mesurer la révolution des médias.',
 	'wikiahome-stats-visitors' => 'Personnes en un mois',
-	'wikiahome-stats-edits' => 'Modifications aujourd’hui',
+	'wikiahome-stats-edits' => 'Modifications à date',
 	'wikiahome-stats-communities' => 'Communautés',
 	'wikiahome-stats-totalpages' => 'Pages totales',
-//	'wikia-home-page-preview' => '',
-//	'wikia-home-page-visit' => '',
-//	'wikia-home-parse-source-empty-exception' => '',
-//	'wikia-home-parse-vertical-invalid-data' => '',
-//	'wikia-home-parse-source-invalid-slots-number' => '',
-//	'wikia-home-parse-wiki-too-few-parameters' => '',
+	'wikia-home-page-preview' => 'Aperçu',
+	'wikia-home-page-visit' => 'Visiter',
+	'wikia-home-parse-source-empty-exception' => 'Le message MediaWiki est vide.',
+	'wikia-home-parse-vertical-invalid-data' => 'Données verticales non valides.',
+	'wikia-home-parse-source-invalid-slots-number' => 'Nombre de slots verticaux non valide.',
+	'wikia-home-parse-wiki-too-few-parameters' => 'Données du wiki non valides - plus de paramètres sont nécessaires.',
 	'wikiahome-hubs-videogames-heading' => 'Jeux vidéo',
 	'wikiahome-hubs-videogames-url' => 'http://fr.wikia.com/Jeux_vidéo',
 	'wikiahome-hubs-videogames-creative' => 'Wikia est par là où il faut commencer en ce qui concerne le monde des jeux vidéo.',
-	'wikiahome-hubs-videogames-more-heading' => 'Plus dans Jeux vidéo',
-//	'wikiahome-hubs-videogames-more-list' => '',
+	'wikiahome-hubs-videogames-more-heading' => '',
+	'wikiahome-hubs-videogames-more-list' => '',
 	'wikiahome-hubs-entertainment-heading' => 'Divertissement',
 	'wikiahome-hubs-entertainment-url' => 'http://fr.wikia.com/Divertissement',
 	'wikiahome-hubs-entertainment-creative' => 'N’allez pas chercher votre dose quotidienne de buzz en divertissement plus loin que les communautés qui savent.',
-	'wikiahome-hubs-entertainment-more-heading' => 'Plus dans Divertissement',
-//	'wikiahome-hubs-entertainment-more-list' => '',
+	'wikiahome-hubs-entertainment-more-heading' => '',
+	'wikiahome-hubs-entertainment-more-list' => '',
 	'wikiahome-hubs-lifestyle-heading' => 'Mode de vie',
 	'wikiahome-hubs-lifestyle-url' => 'http://fr.wikia.com/Mode_de_vie',
 	'wikiahome-hubs-lifestyle-creative' => 'Découvrez des communautés informées et passionnées qui partagent ce qu’elles savent sur le monde qui nous entoure.',
-	'wikiahome-hubs-lifestyle-more-heading' => 'Plus dans Mode de vie, Actualité et Culture',
-//	'wikiahome-hubs-lifestyle-more-list' => '',
+	'wikiahome-hubs-lifestyle-more-heading' => '',
+	'wikiahome-hubs-lifestyle-more-list' => '',
 	'wikiahome-community-column1-heading' => 'Ressources communautaires',
 	'wikiahome-community-column1-link' => 'http://communaute.wikia.com',
 	'wikiahome-community-column1-creative' => 'Tout ce dont vous avez besoin pour démarrer et étendre votre communauté sur Wikia, d\'astuces et d\'outils jusqu\'à l\'information et l\'accès à des personnes prêtes à aider.',
 	'wikiahome-community-column2-heading' => 'Nouveauté chez Wikia',
-//	'wikiahome-community-column2-link' => '',
+	'wikiahome-community-column2-link' => 'http://www.wikia.com/Mobile',
 	'wikiahome-community-column2-creative' => 'Voyez comment Wikia a un impact dans l\'univers de la mobilité avec son nouveau site Web adapté aux appareils mobiles.',
 	'wikiahome-community-column3-heading' => 'Nous suivre',
 	'wikiahome-community-social-wikia-blog' => 'Blog Wikia',
 	'wikiahome-community-social-wikia-blog-link' => 'http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia',
-//	'wikiahome-community-social-twitter' => '',
+	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-twitter-link' => 'https://twitter.com/#!/wikia_fr',
-//	'wikiahome-community-social-facebook' => '',
+	'wikiahome-community-social-facebook' => 'Facebook',
 	'wikiahome-community-social-facebook-link' => 'http://www.facebook.com/wikia.fr',
-//	'wikiahome-community-social-googleplus' => '',
-//	'wikiahome-community-social-googleplus-link' => '',
-//	'wikiahome-footer-wikiainc' => '',
-//	'wikiahome-footer-get-started-heading' => '',
+	'wikiahome-community-social-googleplus' => '',
+	'wikiahome-community-social-googleplus-link' => '',
+	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
+*[http://www.wikia.com/About_Us À propos de nous]
+*[http://www.wikia.com/Special:Contact Contacter Wikia]
+*[http://www.wikia.com/Careers Emplois]
+*[http://www.wikia.com/Press Presse]
+__NOEDITSECTION__',
+	'wikiahome-footer-get-started-heading' => '===Commencer===
+__NOEDITSECTION__',
 	'wikiahome-footer-get-started-creative' => 'Trouvez votre communauté,<br />commencez quelque chose de grand.',
-//	'wikiahome-footer-get-started-button' => '',
-//	'wikiahome-footer-follow-us' => '',
-//	'wikiahome-footer-community' => '',
-//	'wikiahome-footer-everywhere' => '',
-//	'wikiahome-footer-advertise' => '',
-//	'wikia-home-page-hot' => '',
-//	'wikia-home-page-new' => '',
-//	'wikia-home-page-official' => '',
-//	'wikia-home-parse-exception-empty-data-from-database' => '',
-//	'wikia-home-parse-exception-read-only' => '',
+	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=fr',
+	'wikiahome-footer-follow-us' => '===Nous suivre===
+*[http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia Blog Wikia]
+*[http://www.facebook.com/wikia.fr Facebook]
+*[https://twitter.com/#!/wikia_fr Twitter]
+__NOEDITSECTION__',
+	'wikiahome-footer-community' => '===Communauté===
+*[http://communaute.wikia.com Community Central]
+*[http://communaute.wikia.com/wiki/Centre_des_administrateurs:Accueil Fondateurs et administrateurs]
+*[http://fr.wikia.com/Special:Contact Contacter le support]
+*[http://aide.wikia.com/wiki/Aide:Contenu Aide]
+__NOEDITSECTION__',
+	'wikiahome-footer-everywhere' => '===Wikia en tous lieux===
+*[http://www.wikia.com/Mobile Wikia Mobile]
+*[http://www.wikia.com/Mobile/GameGuides Video Game Apps]
+*[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
+*[http://api.wikia.com/wiki/Wikia_API_Wiki API]
+__NOEDITSECTION__',
+	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Publicité]===
+*[http://mediakit.wikia.com/Solutions/Audience Taux d’écoute]
+*[http://mediakit.wikia.com/Solutions Solutions]
+*[http://mediakit.wikia.com/Advertising-Products Produits publicitaires]
+*[https://wikia.sl.advertising.com/admin/advertisers/indexPl.jsp Libre-service]
+__NOEDITSECTION__',
+	'wikia-home-page-hot' => 'Chaud',
+	'wikia-home-page-new' => 'Nouveau',
+	'wikia-home-page-official' => 'Officiel',
+	'wikia-home-parse-exception-empty-data-from-database' => 'Notre base de données n\'a retourné aucune donnée. La table en base est vide ou tous les wikis sont bloqués.',
+	'wikia-home-parse-exception-read-only' => 'Nos bases de données sont en lecture seule.',
 //	'wikiahome-preview-stats-page' => '<b>1</b> page',
 //	'wikiahome-preview-stats-photos' => '<b>1</b> image',
 	'wikiahome-preview-stats-videos' => "'''1''' {{PLURAL:$1|vidéo|vidéos}}",
 //	'wikiahome-preview-user-edits' => '1 modification',
-//	'wikiahome-preview-description-heading' => '',
+	'wikiahome-preview-description-heading' => '$1',
 	'wikiahome-preview-admins-heading' => 'Administrateurs',
 	'wikiahome-preview-contributors-heading' => 'Meilleurs contributeurs',
 	'wikiahome-preview-user-profile-link-label' => 'Profil utilisateur',
-//	'wikiahome-preview-user-contributions-link-label' => '',
+	'wikiahome-preview-user-contributions-link-label' => 'Contributions',
 	'wikiahome-preview-go-to-wiki-label' => 'Visiter le wiki',
 	'wikiahome-preview-error' => 'Erreur interstitielle',
 	'wikiahome-preview-user-member-since' => 'Membre depuis $1',
