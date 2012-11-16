@@ -219,8 +219,6 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 		$params = array_merge( $baseParams, $params );
 		return $app->wf->AppendQuery( $basePath, $params );
 	}
-
-
 	/**
 	 * purge external method call from caches
 	 */
@@ -229,5 +227,27 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 		$squidUpdate = new SquidUpdate( array($url) );
 		$squidUpdate->doUpdate();
 	}
+	
+	
+	/**
+	 *  purge external method with multiple sets of parameters 
+	 * 
+	 *  For example we have method which get some information about article: 
+	 *  controller=somectr&method=getSomeData&articleId=2 
+	 * 
+	 *  Now after some action in system we want to purge this method for articleId=1 and articleId=2
+	 * 
+	 *  we can call somectr::purgeMethodWithMultipleInputs('getSomeData', 'html', array( array('articleId' => 1), array('articleId' => 2) ) );
+	 *   
+	 */
+	public static function purgeMethodWithMultipleInputs($method, $format = 'html', $paramsArray = array() ) {
+		$urls = array();
+		foreach($paramsArray as $params) {
+			$url = call_user_func(get_called_class()."::getUrl", $method, $format, $params );
+			$urls[] = $url;			
+		}
 
+		$squidUpdate = new SquidUpdate( $urls );
+		$squidUpdate->doUpdate();		
+	}
 }
