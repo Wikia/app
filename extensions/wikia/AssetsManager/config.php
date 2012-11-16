@@ -72,6 +72,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdLogicShortPage.js',
+		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
 
@@ -503,12 +504,12 @@ $config['wikiamobile_js_ads'] = array(
 		//libraries
 		'//resources/wikia/libraries/DOMwriter/domwriter.js',
 
+		//advertisement "core"
+		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
+
 		//modules
 		'//resources/wikia/modules/geo.js',
 		'//extensions/wikia/WikiaMobile/js/ads.js',
-
-		//advertisement core, depends on geo.js
-		'//extensions/wikia/AdEngine/AdConfig.js'
 	)
 );
 
