@@ -7,7 +7,7 @@
 
 class ArticlesApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
-	const CACHE_VERSION = 4;
+	const CACHE_VERSION = 5;
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by vertical namespace
@@ -106,17 +106,21 @@ class ArticlesApiController extends WikiaApiController {
 	 * Get details about one or more articles
 	 *
 	 * @requestParam string $ids A string with a comma-separated list of article ID's
-	 * @requestParam integer $abstract The desired length for the article's abstract, defaults to 100, maximum 500
+	 * @requestParam integer $abstract [OPTIONAL] The desired length for the article's abstract, defaults to 100, maximum 500, 0 for no abstract
+	 * @requestParam integer $width [OPTIONAL] The desired width for the thumbnail, defaults to 200, 0 for no thumbnail
+	 * @requestParam integer $height [OPTIONAL] The desired height for the thumbnail, defaults to 200, 0 for no thumbnail
 	 *
-	 * @responseParam array A list of results with the article ID as the index, each item has a ... property
+	 * @responseParam array A list of results with the article ID as the index, each item has a revision, namespace (id, text), comments (if ArticleComments is enabled on the wiki), abstract (if available), thumbnail (if available) property
 	 *
-	 * @example http://glee.wikia.com/wikia.php?controller=ArticlesApi&method=getDetails&ids=3125,490
+	 * @example http://glee.federico.wikia-dev.com/wikia.php?controller=ArticlesApi&method=getDetails&ids=2187,23478&abstract=200&width=300&height=150
 	 */
 	public function getDetails() {
 		$this->wf->profileIn( __METHOD__ );
 
 		$articles = $this->request->getVal( 'ids', null );
 		$abstractLen = $this->request->getInt( 'abstract', 100 );
+		$width = $this->request->getInt( 'width', 200 );
+		$height = $this->request->getInt( 'height', 200 );
 		$collection = array();
 
 		if ( !empty( $articles ) ) {
@@ -133,8 +137,6 @@ class ArticlesApiController extends WikiaApiController {
 					$collection[$i] = $cache;
 				}
 			}
-
-			$articles = null;
 
 			if ( count( $ids ) > 0 ) {
 				$titles = Title::newFromIDs( $ids );
@@ -163,15 +165,38 @@ class ArticlesApiController extends WikiaApiController {
 				$titles = null;
 			}
 
+			//ImageServing has separate caching
+			//so processing it separately allows to
+			//make the thumbnail's size parametrical without
+			//invalidating the titles details' cache
+			//or the need to duplicate it
+			if ( $width > 0 && $height > 0 ) {
+				$is = new ImageServing( $articles, $width, $height );
+				$thumbnails = $is->getImages( 1 );
+			} else {
+				$thumbnails = array();
+			}
+
+			$articles = null;
+
 			//ArticleService has separate caching
 			//so processing it separately allows to
 			//make the length parametrical without
 			//invalidating the titles details' cache
 			//or the need to duplicate it
 			foreach ( $collection as $id => &$details ) {
-				$as = new ArticleService( $id );
-				$details['abstract'] = $as->getTextSnippet( $abstractLen );
+				if ( $abstractLen > 0 ) {
+					$as = new ArticleService( $id );
+					$snippet = $as->getTextSnippet( $abstractLen );
+				} else {
+					$snippet = null;
+				}
+
+				$details['abstract'] = $snippet;
+				$details['thumbnail'] = ( array_key_exists( $id, $thumbnails ) ) ? $thumbnails[$id][0]['url'] : null;
 			}
+
+			$thumbnails = null;
 		}
 
 		$this->response->setCacheValidity(
@@ -182,7 +207,6 @@ class ArticlesApiController extends WikiaApiController {
 				WikiaResponse::CACHE_TARGET_VARNISH
 			)
 		);
-
 
 		$this->response->setVal( 'items', $collection );
 
