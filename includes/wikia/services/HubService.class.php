@@ -14,7 +14,7 @@ class HubService extends Service {
 	 * @return stdClass ($row->cat_id $row->cat_name)
 	 */
 	public static function getComscoreCategory($cityId) {
-		if( self::isCorporatePage() ) {
+		if( self::isCorporatePage() && $cityId == F::app()->wg->CityId ) {
 			// Page-level hub-related vertical checking only works locally
 			return self::getCategoryInfoForCurrentPage();
 		}
