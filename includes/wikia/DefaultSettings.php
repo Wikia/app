@@ -129,6 +129,7 @@ $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiCon
 
 //Wikia API controllers
 $app->registerApiController( 'DiscoverApiController', "{$IP}/includes/wikia/api/DiscoverApiController.class.php" );
+$app->registerApiController( 'ArticlesApiController', "{$IP}/includes/wikia/api/ArticlesApiController.class.php" );
 
 /**
  * Wikia API end
