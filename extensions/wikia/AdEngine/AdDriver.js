@@ -3,6 +3,8 @@
 /* requires Liftium.js */
 /* requires extensions/wikia/AdEngine/ghost */
 
+if (!window.wgDisableOldAdDriver) {
+
 ///// BEGIN AdDriver
 var AdDriver = {
 	adProviderAdDriver: 'AdDriver',
@@ -883,3 +885,5 @@ if (!window.adslots) {
 $(window).load(function() {
 	AdDriverDelayedLoader.load();
 });
+
+} // endif (!window.wgDisableOldAdDriver)
