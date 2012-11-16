@@ -168,12 +168,13 @@ class WallThread {
 		
 		$out = $this->data->threadReplyObjs;
 		
+		if($order == "DESC") {
+			$out = array_reverse($out);	
+		}
+				
 		if($limit > 0) {
 			$out = array_slice($out, 0, $limit);
 		}
-		
-		
-		$out = array_reverse($out);
 		
 		return $out;
 	}

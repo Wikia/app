@@ -280,5 +280,14 @@ class ForumHooksHelper {
 		}
 		return true;
 	}
-
+	
+	/**
+	 * purge memc and vernish cache for pages releated to this thread
+	 */
+	
+	public static function onWallAction($action, $id, $namespace) {
+		tomekbug(array($action, $id, $namespace));
+		return true;
+	}
+	
 }

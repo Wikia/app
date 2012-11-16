@@ -22,7 +22,6 @@
 					articleId: window.wgArticleId ? window.wgArticleId:0 
 				},
 				callback: function(json) {
-					alert("omnomnomnom");
 					if(json && json.replace) {
 						$content.html(json.html);
 					} 

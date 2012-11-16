@@ -6,10 +6,8 @@ class RelatedForumDiscussionController extends WikiaController {
 	}
 	
 	public function index() {
-		
-		$wlp = new WallRelatedPages(); 
 	
-		$messages = $wlp->getArticlesRelatedMessgesSnippet($this->app->wg->Title->getArticleId(), 2, 2 );
+		$messages = $this->getData($this->app->wg->Title->getArticleId());
 		
 		unset($messages['lastupdate']);
 	
@@ -49,14 +47,14 @@ class RelatedForumDiscussionController extends WikiaController {
 	
 	public function checkData() {
 		$articleId = $this->getVal('articleId');
-		$title = Title::newFromText($articleTitle);
-		if(empty($articleTitle) || empty($title)) {
+		$title = Title::newFromId($articleId);
+		if(empty($articleId) || empty($title)) {
 			$this->replace = false;
+			$this->articleId = 	$articleId;
 			return;
 		}
 		
-		$wlp = new WallRelatedPages();
-		$messages = $wlp->getArticlesRelatedMessgesSnippet($articleId, 2, 2 );
+		$messages = $this->getData($articleId);
 		
 		$timediff = time() - $messages['lastupdate'];
 		
@@ -67,7 +65,7 @@ class RelatedForumDiscussionController extends WikiaController {
 
 		if($timediff < 24*60*60) {
 			$this->replace = true;
-			$this->html = $this->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array('messages' => $messages) );			
+			$this->html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array('messages' => $messages) );			
 		} else {
 			$this->replace = false;
 			$this->html = '';
@@ -75,6 +73,13 @@ class RelatedForumDiscussionController extends WikiaController {
 		
 		$this->response->setCacheValidity( 0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER) );
 		$this->response->setCacheValidity( 6*60*60, 6*60*60, array(WikiaResponse::CACHE_TARGET_VARNISH) );
+	}
+
+	private function getData($id) {
+		return WikiaDataAccess::cache( wfMemcKey( __CLASS__, __METHOD__, $id ), 24*60*60, function($id) use $id {
+			$wlp = new WallRelatedPages(); 
+			$messages = $wlp->getArticlesRelatedMessgesSnippet($id, 2, 2 );			
+		});
 	}
 	
 }

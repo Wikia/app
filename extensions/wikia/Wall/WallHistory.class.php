@@ -14,6 +14,9 @@ class WallHistory extends WikiaModel {
 	}
 	
 	public function add( $type, $feed, $user ) {
+		//wall the wall action goes through this point.  
+		wfRunHooks('WallAction', array($type, $feed->data->title_id, $feed->data->article_title_ns));
+		
 		switch($type) {
 			case WH_EDIT: 
 			case WH_NEW:
@@ -77,7 +80,7 @@ class WallHistory extends WikiaModel {
 			$feed->data->title_id,
 			$feed->data->article_title_ns,
 			$feed->data->parent_id,
-			$feed->data_non_cached->thread_title_full,
+			$feed->data_noncached->thread_title_full,
 			$action,
 			$feed->data->reason,
 			$feed->data->rev_id
