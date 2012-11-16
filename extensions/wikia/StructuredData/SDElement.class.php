@@ -77,9 +77,10 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		if ( $property instanceof SDElementProperty ) {
 			$property = $property->getName();
 		}
-
-		if ( in_array( $property, $mockData[ $this->type ]) ) {
-			return false;
+		if ( isset($mockData[ $this->type ])) {
+			if ( in_array( $property, $mockData[ $this->type ]) ) {
+				return false;
+			}
 		}
 
 		return true;
