@@ -4,6 +4,7 @@
  * ArticleCommentList is a listing, basicly it's an array of comments
  */
 class ArticleCommentList {
+	const CACHE_VERSION = 'v2';
 
 	private $mTitle;
 	private $mText;
@@ -161,7 +162,7 @@ class ArticleCommentList {
 
 		$action = $wgRequest->getText( 'action', false );
         $title = $this->getTitle();
-		$memckey = wfMemcKey( 'articlecomment', 'comm', $title->getDBkey(), $title->getNamespace(), 'v2' );
+		$memckey = self::getCacheKey( $title );
 
 		/**
 		 * skip cache if purging or using master connection or in case of single comment
@@ -546,14 +547,7 @@ class ArticleCommentList {
 	 * remove lising from cache and mark title for squid as invalid
 	 */
 	public function purge() {
-		global $wgMemc;
-		wfProfileIn( __METHOD__ );
-
-		$wgMemc->delete( wfMemcKey( 'articlecomment', 'comm', $this->mTitle->getDBkey(), 'v1' ) );
-		$this->mTitle->invalidateCache();
-		$this->mTitle->purgeSquid();
-
-		wfProfileOut( __METHOD__ );
+		self::purgeCache( $this->mTitle );
 	}
 
 	/**
@@ -584,6 +578,36 @@ class ArticleCommentList {
 	}
 
 	/**
+	 * Generates a cache key give a Title instance
+	 *
+	 * @param Title $title
+	 *
+	 * @return string The cache key
+	 */
+	static private function getCacheKey( Title $title ) {
+		return wfMemcKey( 'articlecomment', 'comm', $title->getDBkey(), $title->getNamespace(), self::CACHE_VERSION );
+	}
+
+	/**
+	 * Centralized memcache purging to avoid getting the cache out of sync.
+	 *
+	 * @param Title $title [description]
+	 *
+	 * @return [type] [description]
+	 */
+	static public function purgeCache( Title $title ) {
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
+
+		$wgMemc->delete( self::getCacheKey( $title ) );
+		$title->invalidateCache();
+		$title->purgeSquid();
+
+		wfRunHooks( 'ArticleCommentListPurgeComplete', array( $title ) );
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
 	 * Hook
 	 *
 	 * @param Article $article -- instance of Article class
@@ -608,7 +632,7 @@ class ArticleCommentList {
 				return true;
 			}
 		}
-		
+
 		if(class_exists('WallHelper') && WallHelper::isWallNamespace( $title->getNamespace() )) {
 			wfProfileOut( __METHOD__ );
 			return true;
