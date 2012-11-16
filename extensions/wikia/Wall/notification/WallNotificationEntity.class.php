@@ -4,6 +4,7 @@ class WallNotificationEntity {
 
 	public $id;
 	public $data; // data stored in memcache
+	public $data_non_cached;
 	public $data_noncached; // this data is here only after you create this object
 	                        // when recreating object from memcache this will be empty
 
@@ -63,8 +64,6 @@ class WallNotificationEntity {
 	public function loadDataFromRev(Revision $rev, $wiki) {
 		$this->id = $rev->getId(). '_' .  $wiki;
 
-		$title = $rev->getTitle();
-
 		$ac = F::build('WallMessage', array($rev->getTitle()), 'newFromTitle' ); /* @var $ac WallMessage */
 		$ac->load();
 
@@ -76,9 +75,13 @@ class WallNotificationEntity {
 		if(empty($walluser)) {
 			error_log('WALL_NO_OWNER: (entityId)'.$this->id);
 			$this->data = null;
+			// FIXME: shouldn't it be data_non_cached ?
 			$this->data_noncached = null;
 			return;
 		}
+
+		$this->data = new StdClass();
+		$this->data_non_cached = new StdClass();
 
 		$this->data->wiki = $wiki;
 		$this->data->wikiname = $app->wg->sitename;

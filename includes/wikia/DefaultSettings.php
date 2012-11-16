@@ -124,11 +124,18 @@ $wgWikiaAPIControllers = array();
 //ApiGate dependencies
 include_once( "$IP/lib/ApiGate/config.php" );
 
+//Wikia API Hooks
+$app->registerClass( 'ApiHooks', "{$IP}/includes/wikia/api/ApiHooks.class.php" );
+
+$app->registerHook( 'WikiFactoryChanged', 'ApiHooks', 'onWikiFactoryChanged' );
+$app->registerHook( 'MessageCacheReplace', 'ApiHooks', 'onMessageCacheReplace' );
+
 //Wikia API base controller, all the others extend this class
 $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiController.class.php" );
 
 //Wikia API controllers
 $app->registerApiController( 'DiscoverApiController', "{$IP}/includes/wikia/api/DiscoverApiController.class.php" );
+$app->registerApiController( 'NavigationApiController', "{$IP}/includes/wikia/api/NavigationApiController.class.php" );
 
 /**
  * Wikia API end
@@ -196,8 +203,6 @@ $wgAutoloadClasses['ArticleService'] = $IP.'/includes/wikia/services/ArticleServ
 $wgAutoloadClasses['AvatarService'] = $IP.'/includes/wikia/services/AvatarService.class.php';
 $wgAutoloadClasses['MediaQueryService'] = $IP.'/includes/wikia/services/MediaQueryService.class.php';
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
-$wgAutoloadClasses['NavigationService']  =  $IP.'/includes/wikia/services/NavigationService.class.php';
-$wgAutoloadClasses['WikiNavigationService']  =  $IP.'/includes/wikia/services/WikiNavigationService.class.php';
 $wgAutoloadClasses['OasisService']  =  $IP.'/includes/wikia/services/OasisService.php';
 $wgAutoloadClasses['PageStatsService']  =  $IP.'/includes/wikia/services/PageStatsService.class.php';
 $wgAutoloadClasses['UserContribsProviderService'] = $IP.'/includes/wikia/services/UserContribsProviderService.class.php';
@@ -227,6 +232,7 @@ $wgAutoloadClasses['SassService']  =  $IP.'/includes/wikia/services/SassService.
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
+$wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationModel.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';

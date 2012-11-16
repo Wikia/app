@@ -743,6 +743,10 @@ class WikiFactoryLoader {
 					case "wgTrustedMediaFormatsLocal":
 						$this->LocalToGlobalArray( $tValue, $GLOBALS["wgTrustedMediaFormats"] );
 						break;
+
+					case "wgFileBlacklistLocal":
+						$this->LocalToGlobalArray( $tValue, $GLOBALS["wgFileBlacklist"] );
+						break;
 				}
 
 				if ($key == 'wgServer') {

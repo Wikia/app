@@ -52,45 +52,70 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	protected function filterImages($imagesList = array()) {
 		wfProfileIn( __METHOD__ );
 
-		# get image names from imagelinks table
-		$imagesName = array_keys($imagesList);
-		if ( !empty($imagesName) ) {
-			foreach ( $imagesName as $img_name ) {
-				$result = $this->db->select(
-					array( 'imagelinks' ),
-					array( 'il_from' ),
-					array(
-						'il_to' => $img_name
-					),
-					__METHOD__,
-					array ('LIMIT' => ($this->maxCount + 1))
-				);
-				#something goes wrong
-				if ( empty( $result ) ) continue;
-				# skip images which are too popular
-				if ($result->numRows() > $this->maxCount ) continue;
-				# check image table
-				$oRowImg = $this->db->selectRow(
-					array( 'image' ),
-					array( 'img_name', 'img_height', 'img_width', 'img_minor_mime' ),
-					array(
-						'img_name' => $img_name
-					),
-					__METHOD__
-				);
+		if ( empty( $imagesList ) ) {
+			wfProfileOut( __METHOD__ );
+			return;
+		}
 
-				if ( empty ( $oRowImg ) ) {
-					continue;
+		$imageNames = array_keys($imagesList);
+		$imageRefs = array();
+		$imageData = array();
+
+		// filter out images that are too widely used
+		if ( !empty($imageNames) ) {
+			$result = $this->db->select(
+				array( 'imagelinks' ),
+				array( 'il_to AS img_name', 'count(*) AS img_used_count' ),
+				array(
+					'il_to' => $imageNames,
+				),
+				__METHOD__,
+				array(
+					'GROUP BY' => 'il_to',
+				)
+			);
+			foreach ($result as $row) {
+				if ( $row->img_used_count <= $this->maxCount ) {
+					$imageRefs[$row->img_name] = intval($row->img_used_count);
 				}
+			}
+			$result->free();
+		}
 
-				if ( $oRowImg->img_height > $this->minSize && $oRowImg->img_width > $this->minSize ) {
-					if ( !in_array( $oRowImg->img_minor_mime, array( "svg+xml","svg") ) ) {
-						$this->addToFiltredList( $oRowImg->img_name, $result->numRows(), $oRowImg->img_width, $oRowImg->img_height, $oRowImg->img_minor_mime);
+		// collect metadata about images
+		if ( !empty($imageRefs) ) {
+			$result = $this->db->select(
+				array( 'image' ),
+				array( 'img_name', 'img_height', 'img_width', 'img_minor_mime' ),
+				array(
+					'img_name' => array_keys($imageRefs),
+				),
+				__METHOD__
+
+			);
+			foreach ($result as $row) {
+				if ( $row->img_height > $this->minSize && $row->img_width > $this->minSize ) {
+					if ( !in_array( $row->img_minor_mime, array( "svg+xml","svg") ) ) {
+						$imageData[$row->img_name] = $row;
 					}
+				}
+			}
+			$result->free();
+		}
+
+		// finally record all the information gathered in previous steps
+		if ( !empty($imageData) ) {
+			foreach ($imageNames as $imageName) {
+				if ( isset($imageRefs[$imageName]) && isset($imageData[$imageName] ) ) {
+					$row = $imageData[$imageName];
+					$this->addToFiltredList( $row->img_name, $imageRefs[$imageName],
+						$row->img_width, $row->img_height, $row->img_minor_mime);
+
 				}
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
 	}
+
 }

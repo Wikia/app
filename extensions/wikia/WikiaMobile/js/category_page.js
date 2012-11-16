@@ -27,7 +27,7 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 				this.className = this.className.replace(' exp', '');
 
 				for(i = 0; i < l; i++){
-					elements[i].className = elements[i].className.replace(' open', '');
+					elements[i].className = elements[i].className.replace(/ open(?!\S)/g, '');
 				}
 			} else {
 				this.className += ' exp';
