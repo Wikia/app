@@ -203,6 +203,8 @@ var Lightbox = {
 			}
 
 			Lightbox.openModal.find('.carousel li').eq(Lightbox.current.index).trigger('click');
+		}).on('click.Lightbox', '.LightboxHeader .close', function() {
+				$('#LightboxModal .video-media').children().remove();
 		});
 	},
 	clearTrackingTimeouts: function() {
