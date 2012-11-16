@@ -45,6 +45,7 @@ class AdEngine2Controller extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		$wg = $this->app->wg;
+		$req = $wg->Request;
 
 		// AdEngine2.js
 		$vars['adslots2'] = array();
@@ -52,8 +53,13 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wgAdsShowableOnPage'] = self::areAdsShowableOnPage();
 		$vars['wgShowAds'] = $wg->ShowAds;
 
-		// TODO remove later, legacy addriver for adsinhead=1
-		$vars['adDriverLastDARTCallNoAds'] = array();
+		$disableOldAdDriver = $req->getCookie('newadsonly', '', $wg->DisableOldAdDriver);
+		$disableOldAdDriver = $req->getBool('newadsonly', $disableOldAdDriver);
+		$vars['wgDisableOldAdDriver'] = (bool) $disableOldAdDriver;
+
+		if (!$disableOldAdDriver) {
+			$vars['adDriverLastDARTCallNoAds'] = array();
+		}
 
 		// WikiaDartHelper.js
 		if (!empty($wg->DartCustomKeyValues)) {
