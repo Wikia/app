@@ -15,6 +15,11 @@ class WikiaDataAccess {
 
 	const LOCK_TIMEOUT = 60; // lock for at most 60s
 
+	/**
+	 * WikiaDataAccess::USE_CACHE - does not have to be passed to cache or cacheWithLock [default]
+	 * WikiaDataAccess::SKIP_CACHE - is equivalent of mcache=none for one variable
+	 * WikiaDataAccess::REFRESH_CACHE - is equivalent of mcahce=writeonly for one variable
+	 */
 	const USE_CACHE = 0;
 	const SKIP_CACHE = 1;
 	const REFRESH_CACHE = 2;
@@ -45,6 +50,7 @@ class WikiaDataAccess {
 	 * @param $cacheTime Integer
 	 * @param $getData Callable
 	 * @param $skipCache Integer
+	 *
 	 */
 	static function cache( $key, $cacheTime, $getData, $command = self::USE_CACHE ) {
 		$wg = F::app()->wg;
