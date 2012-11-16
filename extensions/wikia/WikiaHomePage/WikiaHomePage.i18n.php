@@ -227,7 +227,7 @@ $messages['de'] = array(
 *[http://de.wikia.com/Mobil/GameGuides Videospiele-Apps]
 *[http://de.wikia.com/Mobil/LyricWiki Entertainment-Apps]
 *[http://api.wikia.com API (en)]',
-	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Auf Wikia werben (en)]===
+	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Auf Wikia werben]===
 *[http://mediakit.wikia.com/Solutions/Audience Zielgruppe]
 *[http://mediakit.wikia.com/Solutions Lösungen]
 *[http://mediakit.wikia.com/Advertising-Products Produkte]
