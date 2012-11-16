@@ -57,10 +57,7 @@ class WikiaDataAccess {
 
 		if ( is_null( $result ) || $result === false ) {
 			$result = $getData();
-			if ( $command == self::USE_CACHE || $command == self::REFRESH_CACHE ) {
-				$wg->Memc->set( $key, $result, $cacheTime );
-				Wikia::log( __METHOD__, 'debug', "Cache refreshed for key:{$key}, if this is on production please contact the author of the code.", true);
-			}
+			self::setCache( $key, $result, $cacheTime, $command );
 		}
 
 		return $result;
@@ -73,6 +70,27 @@ class WikiaDataAccess {
 	 */
 	static function cachePurge( $key ) {
 		F::app()->wg->Memc->delete( $key );
+	}
+
+	/**
+	 *
+	 * Helper to set cache along
+	 * with Logging if getting was skipped
+	 * but refresh is made
+	 *
+	 * @param $key String
+	 * @param $result Mixed
+	 * @param $cacheTime Integer
+	 * @param $command Integer
+	 */
+	static private function setCache( $key, $result, $cacheTime, $command ) {
+		if ( $command == self::USE_CACHE || $command == self::REFRESH_CACHE ) {
+			F::app()->wg->Memc->set( $key, $result, $cacheTime * 2 );
+		}
+
+		if ( $command == self::REFRESH_CACHE ) {
+			Wikia::log( __METHOD__, 'debug', "Cache refreshed for key:{$key}, if this is on production please contact the author of the code.", true );
+		}
 	}
 
 	/**
@@ -113,7 +131,7 @@ class WikiaDataAccess {
 			if( $wasLocked && $gotLock ) {
 				self::unlock( $keyLock );
 				$gotLock = false;
-				$result = $tryCache($key);
+				$result = ($command == self::USE_CACHE) ? $tryCache($key) : null;
 			}
 
 			if( is_null( $result ) ) {
@@ -121,9 +139,7 @@ class WikiaDataAccess {
 					'data' => $getData(),
 					'time' => $app->wf->Timestamp( TS_UNIX )
 				);
-				if ( $command == self::USE_CACHE || $command == self::REFRESH_CACHE ) {
-					$app->wg->Memc->set( $key, $result, $cacheTime * 2 );
-				}
+				self::setCache( $key, $result, $cacheTime * 2, $command );
 			}
 
 			if( $gotLock ) self::unlock( $keyLock );
@@ -144,9 +160,7 @@ class WikiaDataAccess {
 						'data' => $getData(),
 						'time' => $app->wf->Timestamp( TS_UNIX )
 					);
-					if ( $command == self::USE_CACHE || $command == self::REFRESH_CACHE ) {
-						$app->wg->Memc->set( $key, $result, $cacheTime * 2 );
-					}
+					self::setCache( $key, $result, $cacheTime * 2, $command );
 					self::unlock( $keyLock );
 				} else {
 					// what we already have in $result is good enough
