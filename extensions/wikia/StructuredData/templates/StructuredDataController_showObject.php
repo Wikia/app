@@ -69,7 +69,8 @@
 							<?php endif; ?>
 						</td>
 						<?php if($context == SD_CONTEXT_SPECIAL): ?>
-							<td><pre><?= $sdsObject->getType() . '/' . $objectName . '/' . $propertyName; ?></pre></td>
+							<td><p class="example"><?= $sdsObject->getType() . '/' . $objectName . '/' .
+								$propertyName; ?></p></td>
 						<?php endif; ?>
 					</tr>
 					<?php continue; ?>
@@ -81,7 +82,8 @@
 					<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</th>
 					<td><p><?php echo $property->getValueObject()->render($context); ?></p></td>
 					<?php if($context == SD_CONTEXT_SPECIAL): ?>
-						<td><pre><?= $sdsObject->getType() . '/' . $objectName . '/'. $propertyName; ?></pre></td>
+						<td><p class="example"><?= $sdsObject->getType() . '/' . $objectName . '/'. $propertyName;
+							?></p></td>
 					<?php endif; ?>
 				</tr>
 			<?php endforeach; ?>
