@@ -126,9 +126,12 @@ include_once( "$IP/lib/ApiGate/config.php" );
 
 //Wikia API Hooks
 $app->registerClass( 'ApiHooks', "{$IP}/includes/wikia/api/ApiHooks.class.php" );
-
 $app->registerHook( 'WikiFactoryChanged', 'ApiHooks', 'onWikiFactoryChanged' );
 $app->registerHook( 'MessageCacheReplace', 'ApiHooks', 'onMessageCacheReplace' );
+$app->registerHook( 'ArticleDeleteComplete', 'ApiHooks', 'onArticleDeleteComplete' );
+$app->registerHook( 'ArticleSaveComplete', 'ApiHooks', 'onArticleSaveComplete' );
+$app->registerHook( 'ArticleRollbackComplete', 'ApiHooks', 'onArticleRollbackComplete' );
+$app->registerHook( 'ArticleCommentListPurgeComplete', 'ApiHooks', 'ArticleCommentListPurgeComplete' );
 
 //Wikia API base controller, all the others extend this class
 $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiController.class.php" );

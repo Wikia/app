@@ -7,7 +7,7 @@
 
 class ArticlesApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
-	const CACHE_VERSION = 5;
+	const CACHE_VERSION = 6;
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by vertical namespace
@@ -47,7 +47,7 @@ class ArticlesApiController extends WikiaApiController {
 			$ids = array();
 
 			foreach ( array_keys( $articles ) as $i ) {
-				$cache = $this->wg->Memc->get( $this->getArticleCacheKey( $i ) );
+				$cache = $this->wg->Memc->get( self::getArticleCacheKey( $i ) );
 
 				if ( !is_array( $cache ) ) {
 					$ids[] = $i;
@@ -74,7 +74,7 @@ class ArticlesApiController extends WikiaApiController {
 							)
 						);
 
-						$this->wg->Memc->set( $this->getArticleCacheKey( $id ), $collection[$id], 86400 );
+						$this->wg->Memc->set( self::getArticleCacheKey( $id ), $collection[$id], 86400 );
 					}
 				}
 
@@ -129,7 +129,7 @@ class ArticlesApiController extends WikiaApiController {
 
 
 			foreach ( $articles as $i ) {
-				$cache = $this->wg->Memc->get( $this->getDetailsCacheKey( $i ) );
+				$cache = $this->wg->Memc->get( self::getDetailsCacheKey( $i ) );
 
 				if ( !is_array( $cache ) ) {
 					$ids[] = $i;
@@ -154,11 +154,9 @@ class ArticlesApiController extends WikiaApiController {
 							)
 						);
 
-						if ( class_exists( 'ArticleCommentList' ) ) {
-							$collection[$id]['comments'] = ArticleCommentList::newFromTitle( $t )->getCountAllNested();
-						}
+						$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
 
-						$this->wg->Memc->set( $this->getDetailsCacheKey( $id ), $collection[$id], 86400 );
+						$this->wg->Memc->set( self::getDetailsCacheKey( $id ), $collection[$id], 86400 );
 					}
 				}
 
@@ -214,11 +212,17 @@ class ArticlesApiController extends WikiaApiController {
 		$this->wf->ProfileOut( __METHOD__ );
 	}
 
-	private function getArticleCacheKey( $id ) {
-		return $this->wf->MemcKey( __CLASS__, self::CACHE_VERSION, 'article', $id );
+	static private function getArticleCacheKey( $id ) {
+		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, 'article', $id );
 	}
 
-	private function getDetailsCacheKey( $id ) {
-		return $this->wf->MemcKey( __CLASS__, self::CACHE_VERSION, 'details', $id );
+	static private function getDetailsCacheKey( $id ) {
+		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, 'details', $id );
+	}
+
+	static public function purgeCache( $id ) {
+		$app = F::app();
+		$app->wg->Memc->delete( self::getArticleCacheKey( $id ) );
+		$app->wg->Memc->delete( self::getDetailsCacheKey( $id ) );
 	}
 }
