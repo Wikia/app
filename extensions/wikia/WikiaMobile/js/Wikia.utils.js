@@ -184,10 +184,12 @@
 
 	Wikia.nirvana = {
 		sendRequest: function(attr){
-			var type = (attr.type && attr.type.toUpperCase()) || 'POST',
+			var sortedDict = {},
+				type = (attr.type && attr.type.toUpperCase()) || 'POST',
 				format = (attr.format && attr.format.toLowerCase()) || 'json',
 				formats = {'json':1, 'jsonp':1, 'html':1},
 				data = attr.data || {},
+				keys = Object.keys(data).sort(),
 				callback = attr.callback || function(){},
 				onErrorCallback = attr.onErrorCallback || function(){},
 				url = attr.scriptPath || wgScriptPath;
@@ -197,6 +199,10 @@
 
 			if(!(format in formats))
 				throw "Only Json, Jsonp and Html format are allowed";
+
+			for(var i = 0; i < keys.length; i++) {
+				sortedDict[keys[i]] = data[keys[i]];
+			}
 
 			Wikia.ajax({
 				url: url + '/wikia.php?' + Wikia.param({
