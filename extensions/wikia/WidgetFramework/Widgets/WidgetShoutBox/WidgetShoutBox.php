@@ -50,6 +50,7 @@ function WidgetShoutBox($id, $params) {
 
 	// check if widget is enabled for this wiki and quit early if not
 	if ( isset( $wgEnableWidgetShoutbox ) && !$wgEnableWidgetShoutbox ) {
+		wfProfileOut(__METHOD__);
 		return wfMsg('widget-shoutbox-disabled');
 	}
 
@@ -426,6 +427,7 @@ function WidgetShoutBoxGenerateHostname() {
 		2698	=> 'zh-cn.memory-alpha.org',
 	);
 	if (!empty($hack_domains[$wgCityId])) {
+		wfProfileOut( __METHOD__ );
 		return $hack_domains[$wgCityId];
 	}
 

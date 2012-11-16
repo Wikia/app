@@ -75,14 +75,11 @@ class PhotoPopController extends WikiaController {
 			$this->response->setVal( 'jsonData', json_encode( $result ) );
 			$this->response->setVal( 'callbackName', $callbackName );
 
-			$this->wf->profileOut( __METHOD__ );
-
 			$this->forward( __CLASS__, 'jsonp', false );
 		} else {
 			$this->response->setVal( 'data', $result );
-
-			$this->wf->profileOut( __METHOD__ );
 		}
+		$this->wf->profileOut( __METHOD__ );
 	}
 
 	public function getData(){
@@ -111,14 +108,11 @@ class PhotoPopController extends WikiaController {
 			$this->response->setVal( 'jsonData', json_encode( $result ) );
 			$this->response->setVal( 'callbackName', $callbackName );
 
-			$this->wf->profileOut( __METHOD__ );
-
 			$this->forward( __CLASS__, 'jsonp', false );
 		} else {
 			$this->response->setVal( 'data', $result );
-
-			$this->wf->profileOut( __METHOD__ );
 		}
+		$this->wf->profileOut( __METHOD__ );
 	}
 
 	private function checkGameAllowed(){

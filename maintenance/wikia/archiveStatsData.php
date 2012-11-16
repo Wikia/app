@@ -116,7 +116,10 @@ function checkIsNew($page_id, $rev_id) {
 		array( 'ORDER BY' => 'rev_id') 
 	);
 
-	$return = ( isset( $oRow->rev_id ) ) ? false : true; 
+	$return = ( isset( $oRow->rev_id ) ) ? false : true;
+
+	wfProfileOut( __METHOD__ );
+	return $return;
 }
 
 function callEditHook($page_id, $rev_id, $page_ns, $user_id, $serverName) {

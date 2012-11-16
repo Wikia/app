@@ -99,7 +99,7 @@ class PhalanxHelper {
 	static public function setBlock() {
 		global $wgRequest, $wgUser;
 
-		wfProfileOut( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$id = $wgRequest->getVal( 'id', false ); // only set for update
 		$filter = $wgRequest->getText( 'wpPhalanxFilter' );

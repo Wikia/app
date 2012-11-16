@@ -458,6 +458,7 @@ class PageHeaderController extends WikiaController {
 	 */
 	public function executeEditPage() {
 		global $wgTitle, $wgRequest, $wgSuppressToolbar, $wgShowMyToolsOnly, $wgEnableWallExt;
+		wfProfileIn(__METHOD__);
 
 		// special handling for special pages (CreateBlogPost, CreatePage)
 		$ns = $wgTitle->getNamespace();
@@ -563,6 +564,7 @@ class PageHeaderController extends WikiaController {
 		}
 
 		wfRunHooks('PageHeaderEditPage', array(&$this, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory));
+		wfProfileOut(__METHOD__);
 	}
 
 	/**

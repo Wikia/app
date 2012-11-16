@@ -771,7 +771,7 @@ function albumResult($artist, $album, $year){
 				break;
 		} // end switch
 
-		wfProfileIn( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	} // end rest_printListing()
 
 	public function getVersion() {

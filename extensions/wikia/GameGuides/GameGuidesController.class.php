@@ -308,7 +308,7 @@ class GameGuidesController extends WikiaController {
 			)
 		);
 
-		$this->response->setVal( 'cb', $this->wg->StyleVersion );
+		$this->response->setVal( 'cb', (string) $this->wg->StyleVersion );
 	}
 
 	/**
@@ -454,7 +454,7 @@ class GameGuidesController extends WikiaController {
 	 * @responseReturn See getTagCategories
 	 */
 	private function getTags( $content ) {
-		$this->wf->profileOut( __METHOD__ );
+		$this->wf->profileIn( __METHOD__ );
 
 		$this->response->setVal(
 			'tags',

@@ -13,7 +13,8 @@
 		//hide all childs of body that is not #wkMdlWrp
 		//see bugid: 49662
 		& > *:not(#wkMdlWrp) {
-			display: none;
+			//yup they are useing inline styles
+			display: none !important;
 		}
 	}
 }

@@ -97,17 +97,17 @@
 		
 		public function toggleFeatureDataProvider() {
 			return array(
-				array(false, null, null,'error', wfMsg('wikifeatures-error-permission')),								// permission denied
-				array(true, null, null,'error', wfMsg('wikifeatures-error-invalid-parameter')),							// missing params - not pass $feature and $enabled
-				array(true, null, 0,'error', wfMsg('wikifeatures-error-invalid-parameter')),							// missing params - not pass $feature
-				array(true, 'wgEnableAchievementsExt', null,'error', wfMsg('wikifeatures-error-invalid-parameter')),	// missing params - not pass $enabled
-				array(true, 'wgEnableAchievements', 'true','error', wfMsg('wikifeatures-error-invalid-parameter')),		// invalid params - $feature not found
-				array(true, 'wgEnableWikiaLabsExt', 'true','error', wfMsg('wikifeatures-error-invalid-parameter')),		// invalid params - $feature not allowed
-				array(true, 123, 0,'error', wfMsg('wikifeatures-error-invalid-parameter')),								// invalid params - $feature is integer
-				array(true, 'wgEnableAchievementsExt', 1,'error', wfMsg('wikifeatures-error-invalid-parameter')),		// invalid params - $enabled > 1
-				array(true, 'wgEnableAchievementsExt', -3,'error', wfMsg('wikifeatures-error-invalid-parameter')),		// invalid params - $enabled is negative
-				array(true, 'wgEnableAchievementsExt', 'test','error', wfMsg('wikifeatures-error-invalid-parameter')),	// invalid params - $enabled is string
-				array(true, 'wgEnableAchievementsExt', '0','error', wfMsg('wikifeatures-error-invalid-parameter')),		// invalid params - $enabled is string
+				array(false, null, null,'error', wfMsg('wikifeatures-error-permission', null)),								// permission denied
+				array(true, null, null,'error', wfMsg('wikifeatures-error-invalid-parameter', null)),							// missing params - not pass $feature and $enabled
+				array(true, null, 0,'error', wfMsg('wikifeatures-error-invalid-parameter', null)),							// missing params - not pass $feature
+				array(true, 'wgEnableAchievementsExt', null,'error', wfMsg('wikifeatures-error-invalid-parameter', 'wgEnableAchievementsExt')),	// missing params - not pass $enabled
+				array(true, 'wgEnableAchievements', 'true','error', wfMsg('wikifeatures-error-invalid-parameter', 'wgEnableAchievements')),		// invalid params - $feature not found
+				array(true, 'wgEnableWikiaLabsExt', 'true','error', wfMsg('wikifeatures-error-invalid-parameter', 'wgEnableWikiaLabsExt')),		// invalid params - $feature not allowed
+				array(true, 123, 0,'error', wfMsg('wikifeatures-error-invalid-parameter', 123)),								// invalid params - $feature is integer
+				array(true, 'wgEnableAchievementsExt', 1,'error', wfMsg('wikifeatures-error-invalid-parameter', 'wgEnableAchievementsExt')),		// invalid params - $enabled > 1
+				array(true, 'wgEnableAchievementsExt', -3,'error', wfMsg('wikifeatures-error-invalid-parameter', 'wgEnableAchievementsExt')),		// invalid params - $enabled is negative
+				array(true, 'wgEnableAchievementsExt', 'test','error', wfMsg('wikifeatures-error-invalid-parameter', 'wgEnableAchievementsExt')),	// invalid params - $enabled is string
+				array(true, 'wgEnableAchievementsExt', '0','error', wfMsg('wikifeatures-error-invalid-parameter', 'wgEnableAchievementsExt')),		// invalid params - $enabled is string
 
 				array(true, 'wgEnableAchievementsExt', 'true','ok', null),	// enable feature
 				array(true, 'wgEnableAchievementsExt', 'false','ok', null),	// disable feature

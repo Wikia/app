@@ -95,6 +95,7 @@ abstract class VideoFeedIngester {
 				if($debug) {
 					print "Not uploading - video already exists and reupload is disabled\n";
 				}
+				wfProfileOut( __METHOD__ );
 				return 0;
 			}
 
@@ -160,6 +161,7 @@ abstract class VideoFeedIngester {
 				$timeNow = intval(wfTimestamp( TS_UNIX, time() ) );
 				if($timeUnix + $ignoreRecent >= $timeNow) {
 					print "Recently uploaded, ignoring\n";
+					wfProfileOut( __METHOD__ );
 					return 0;
 				}
 			}
@@ -248,6 +250,7 @@ abstract class VideoFeedIngester {
 		$memcKey = wfMemcKey( self::CACHE_KEY );
 		$aWikis = $wgMemc->get( $memcKey );
 		if ( !empty( $aWikis ) ) {
+			wfProfileOut( __METHOD__ );
 			return $aWikis;
 		}
 

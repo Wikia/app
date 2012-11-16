@@ -110,6 +110,7 @@ class NMStorageSQL {
 		$fname = 'NotifyMe::addNotifyMonitor';
 		wfProfileIn( $fname );
 
+		$res = null;
 		$db = wfGetDB( DB_MASTER );
 		foreach ( $remove_monitored as $monitor ) {
 			$db->delete( $db->tableName( 'smw_nm_monitor' ), array( 'notify_id' => $monitor['notify_id'], 'page_id' => $monitor['page_id'] ), $fname );
@@ -145,6 +146,7 @@ class NMStorageSQL {
 				$dbw->freeResult( $res );
 			} else {
 				$dbw->freeResult( $res );
+				wfProfileOut( $fname );
 				return false;
 			}
 

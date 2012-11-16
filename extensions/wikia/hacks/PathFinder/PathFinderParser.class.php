@@ -45,6 +45,7 @@ class PathFinderParser {
 		$this->app->wf->profileIn( __METHOD__ );
 		
 		if ( empty( $wikis ) ) {
+			$this->app->wf->profileOut( __METHOD__ );
 			return false;
 		}
 		

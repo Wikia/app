@@ -521,6 +521,7 @@ class RenameUserProcess {
 			$this->addMainLog("fail", RenameUserLogFormatter::fail($this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks));
 		}
 
+		wfProfileOut(__METHOD__);
 		return $status;
 	}
 
@@ -531,6 +532,7 @@ class RenameUserProcess {
 	 */
 	private function doRun() {
 		global $wgMemc, $wgAuth;
+		wfProfileIn(__METHOD__);
 
 		$this->addLog("User rename global task start." . ((!empty($this->mFakeUserId)) ? ' Process is being repeated.' : null));
 		$this->addLog("Renaming user {$this->mOldUsername} (ID {$this->mUserId}) to {$this->mNewUsername}");

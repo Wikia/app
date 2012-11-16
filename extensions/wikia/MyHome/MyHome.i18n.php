@@ -18,7 +18,7 @@ You can use your watchlist to keep track of the latest changes to pages that you
 	'myhome-hot-spots-feed-empty' => "This wiki is waiting for you to get involved.
 Click on '''[[Special:CreatePage|New page]]''' to start writing!",
 	'myhome-hot-spots-newest' => 'New pages on the wiki',
-	'tog-myhomedisableredirect' => 'Disable my redirect to Wiki Activity',
+	'tog-userlandingpage' => 'Landing page:',
 	'prefs-myhome' => 'My Home',
 
 	'myhome-feed-newpage' => 'new page',
@@ -122,6 +122,7 @@ $messages['qqq'] = array(
 The parameter $1 is replaced by either:
 * {{msg-wikia|Myhome-activity-feed}}, or:
 * {{msg-wikia|Myhome-watchlist-feed}}",
+	'tog-userlandingpage' => 'Label next to selectbox when user can choose her landing page will be one of: Main Page, WikiActivity, RecentChanges',
 	'accesskey-pt-myhome' => '{{doc-accesskey}}',
 );
 

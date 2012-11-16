@@ -82,7 +82,34 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	        'most-viewed'		=>	array( 'views',		Solarium_Query_Select::SORT_DESC ),
 	        'freshest'			=>	array( 'indexed',	Solarium_Query_Select::SORT_DESC ),
 	        'stalest'			=>	array( 'indexed', 	Solarium_Query_Select::SORT_ASC  ),
+			'shortest'			=>	array( 'video_duration_i', Solarium_Query_Select::SORT_ASC ),
+			'longest'			=>	array( 'video_duration_i', Solarium_Query_Select::SORT_DESC ),
 	);
+	
+	/**
+	 * Associates short key names with filter queries.
+	 * This approach doesn't support on-the-fly language fields.
+	 * We could still append a key in __construct() if it becomes an issue.
+	 * @var array
+	 */
+	private $filterCodes = array(
+			'is_video'			=>	'is_video:true',
+			'is_image'			=>	'is_image:true',
+			'is_hd'				=>	'video_hd_b:true',
+	);
+	
+	/**
+	 * This is used to keep non-keyed filter queries unique in Solarium
+	 * @var int
+	 */
+	public static $filterQueryIncrement = 0;
+	
+	/**
+	 * Filter queries stored by "key"
+	 * Separate from traditional storage because the requirements are a bit more complex
+	 * @var array
+	 */
+	private $filterQueries = array();
 	
 	/**
 	 * Constructor method
@@ -91,6 +118,15 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 */
 	public function __construct( array $params = array() ) {
 		parent::__construct();
+		
+		$dynamicFilterCodes = array(
+				'cat_videogames'	=>	WikiaSearch::valueForField( 'categories', 'Video Games', array( 'quote'=>'"' )  ),
+				'cat_entertainment'	=>	WikiaSearch::valueForField( 'categories', 'Entertainment' ),
+				'cat_lifestyle'		=>	WikiaSearch::valueForField( 'categories', 'Lifestyle'),
+				);
+		
+		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
+		
 		$this->params = array_merge( $this->params, 
 									 array( 'requestedFields' => $this->requestedFields ), 
 									 $params );
@@ -472,10 +508,91 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Normalizes the cityId value in case of mistyping
-	 * @see   WikiaSearchConfigTest::testGetCityId
-	 * @param int $value
+	 * @see    WikiaSearchConfigTest::testGetCityId
+	 * @param  int $value
+	 * @return WikiaSearchConfig
 	 */
 	public function setCityID( $value ) {
 		return $this->__call( 'setCityId', array( $value ) );
 	}
+	
+	/**
+	 * Adds a filter query based on the optional key, or automatically incremented key
+	 * Note that if you provide a key that already exists, you are overwriting that filter query.
+	 * @param  string $queryString
+	 * @param  string $key
+	 * @return WikiaSearchConfig
+	 */
+	public function setFilterQuery( $queryString, $key = null ) {
+		$key = $key ?: sprintf( 'fq%d', ++self::$filterQueryIncrement );
+		$this->filterQueries[$key] = array( 
+				'key' => $key, 
+				'query' => $queryString 
+		);
+		return $this;
+	}
+	
+	/**
+	 * Allows you to set all filter queries wholesale.
+	 * Pass an empty array if you want to reinitialize this property.
+	 * @param  array $filterQueries
+	 * @return WikiaSearchConfig
+	 */
+	public function setFilterQueries( array $filterQueries ) {
+		$newFilterQueries = array();
+		$this->filterQueries = array();
+		self::$filterQueryIncrement = 0;
+		foreach ( $filterQueries as $filterQuery ) {
+			if ( is_array( $filterQuery ) && isset( $filterQuery['query'] ) ) {
+				$this->setFilterQuery( $filterQuery['query'], ( isset( $filterQuery['key'] ) ? $filterQuery['key'] : null ) );
+			} else if ( is_string( $filterQuery ) ) {
+				$this->setFilterQuery( $filterQuery );
+			} 
+		}
+		return $this;
+	}
+	
+	/**
+	 * Returns filter query associative array
+	 * @return array
+	 */
+	public function getFilterQueries() {
+		return $this->filterQueries;
+	}
+	
+	/**
+	 * Returns true or false depending on whether we've got filter queries set
+	 * @return bool
+	 */
+	public function hasFilterQueries() {
+		return !empty( $this->filterQueries );
+	}
+	
+	/**
+	 * Uses pre-determined filter queries that can be set by the controller (e.g. video filtering)
+	 * @param  string $code
+	 * @return WikiaSearchConfig
+	 */
+	public function setFilterQueryByCode( $code ) {
+		if ( isset( $this->filterCodes[$code] ) ) {
+			$this->setFilterQuery( $this->filterCodes[$code], $code );
+		} else {
+			// the fun things we do to test static methods
+			F::build( 'Wikia' )->log( __METHOD__, '', "Filter code {$code} does not exist." );
+		}
+		return $this;
+	}
+	
+	/**
+	 * Allows us to use pass array of codes in the controller to the search config
+	 * @param  array $codes
+	 * @return WikiaSearchConfig
+	 */
+	public function setFilterQueriesFromCodes( array $codes ) {
+		foreach ( $codes as $code ) {
+			$this->setFilterQueryByCode( $code );
+		}
+		return $this;
+	}
+
 }

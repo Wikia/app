@@ -133,7 +133,7 @@ class WikiaVideoSearchController extends WikiaSpecialPageController {
 						->setVideoSearch( true )
 						->setPageId		( false )
 		;
-
+		
 		$this->combinedSearchResults = $this->wikiaSearch->doSearch( $searchConfig ); 
 		
 		return $this->combinedSearchResults; 

@@ -76,21 +76,23 @@ class Phalanx {
 		return $types;
 	}
 
-	static public function getFromFilter( $moduleId, $lang = null, $master = false ) {
+	static public function getFromFilter( $moduleId, $lang = null, $master = false, $skipCache = false ) {
 		global $wgExternalSharedDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		$timestampNow = wfTimestampNow();
 		$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all');
 		$sLang = $lang ? $lang : 'all';
-		if (isset(self::$moduleData[$moduleId][$sLang])) {
+		if ( $skipCache ) {
+			$blocksData = null;
+		} else if (isset(self::$moduleData[$moduleId][$sLang])) {
 			$blocksData = self::$moduleData[$moduleId][$sLang];
 		} else {
 			$blocksData = $wgMemc->get($key);
 		}
 
 		//cache miss (or we have expired blocks in cache), get from DB
-		if (empty($blocksData) || (!is_null($blocksData['closestExpire']) && $blocksData['closestExpire'] < $timestampNow && $blocksData['closestExpire'])) {
+		if ( empty($blocksData) || (!is_null($blocksData['closestExpire']) && $blocksData['closestExpire'] < $timestampNow && $blocksData['closestExpire'])) {
 			$blocks = $cond = array();
 			$closestTimestamp = 0;
 			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB );
@@ -104,6 +106,8 @@ class Phalanx {
 				$cond[] = "p_lang IS NULL";
 			}
 
+			$cond[] = "p_expire is null or p_expire > '{$timestampNow}'";
+
 			$res = $dbr->select(
 				'phalanx',
 				'*',
@@ -112,9 +116,6 @@ class Phalanx {
 			);
 
 			while ( $row = $res->fetchObject() ) {
-				if ($timestampNow > $row->p_expire && !is_null($row->p_expire)) {
-					continue;       //skip expired
-				}
 				//use p_id as array key for easier deletion from cache
 				$blocks[$row->p_id] = array(
 					'id' => $row->p_id,
@@ -175,12 +176,12 @@ class Phalanx {
 				'lang' => $row->p_lang,
 			);
 
-			wfProfileOut( __METHOD__ );
-			return $block ;
+			$res = $block;
 		} else {
-			wfProfileOut( __METHOD__ );
-			return false ;
+			$res = false;
 		}
+		wfProfileOut( __METHOD__ );
+		return $res;
 	}
 
 	/**
@@ -208,6 +209,7 @@ class Phalanx {
 		// hack to not count testFilters hits,
 		// otherwise phalanxexempt users will *not* get here
 		if ( $wgUser->isAllowed( 'phalanxexempt' ) ) {
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 		

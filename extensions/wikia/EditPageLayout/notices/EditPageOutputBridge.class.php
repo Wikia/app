@@ -9,9 +9,9 @@ class EditPageOutputBridge {
 	static protected $methods = array(
 		//'showErrorPage',
 		//'addWikiText',
-		self::ACTION_ADDWIKIMSG,
-		self::ACTION_WRAPWIKIMSG,
-		self::ACTION_ADDHTML,
+		self::ACTION_ADDWIKIMSG => '',
+		self::ACTION_WRAPWIKIMSG => '$text',
+		self::ACTION_ADDHTML => '$text',
 	);
 
 	protected $editPage = null;

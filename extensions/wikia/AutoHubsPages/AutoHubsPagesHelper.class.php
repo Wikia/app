@@ -16,6 +16,7 @@ class AutoHubsPagesHelper{
 		wfProfileIn( __METHOD__ );
 
 		if( empty($wgHubsPages[$wgContLanguageCode]) ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 

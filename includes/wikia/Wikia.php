@@ -1018,10 +1018,12 @@ class Wikia {
 	 */
 
 	static public function getProps( $page_id, $oneProp = null ) {
-
 		wfProfileIn( __METHOD__ );
 		$return = array();
-		if (empty($page_id)) return null;
+		if (empty($page_id)) {
+			wfProfileOut( __METHOD__ );
+			return null;
+		}
 
 		$where = array( "pp_page" => $page_id );
 		if ($oneProp != null) {

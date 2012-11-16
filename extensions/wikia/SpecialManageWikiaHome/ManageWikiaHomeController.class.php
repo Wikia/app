@@ -42,6 +42,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle(wfMsg('managewikiahome'));
 
 		if( !$this->checkAccess() ) {
+			$this->wf->ProfileOut(__METHOD__);
 			$this->forward('ManageWikiaHome', 'onWrongRights');
 			return false;
 		}
@@ -113,6 +114,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->wf->ProfileIn(__METHOD__);
 
 		if( !$this->checkAccess() ) {
+			$this->wf->ProfileOut(__METHOD__);
 			return false;
 		}
 

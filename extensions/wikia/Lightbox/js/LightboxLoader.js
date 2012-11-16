@@ -160,14 +160,12 @@ var LightboxLoader = {
 		}
 		
 		// for Video Thumbnails:
-		var targetChildImg = target.find('img').eq(0),
-			dataVideo;
-		if ( targetChildImg.length > 0 && targetChildImg.hasClass('Wikia-video-thumb') ) {
+		var targetChildImg = target.find('img').eq(0);
+		if ( targetChildImg.hasClass('Wikia-video-thumb') || target.hasClass('video') ) {
 			if ( target.data('video-name') ) {
 				mediaTitle = target.data('video-name');
-			// Assignment is intentional here
-			} else if ((dataVideo = targetChildImg.data('video'))) {
-				mediaTitle = dataVideo;
+			} else if (targetChildImg.data('video')) {
+				mediaTitle = targetChildImg.data('video');
 			}
 			
 			// check if we need to play video inline, and stop lightbox execution
@@ -274,9 +272,7 @@ var LightboxLoader = {
 
 	removeInlineVideos: function() {
 		clearTimeout(LightboxTracker.inlineVideoTrackingTimeout);
-		LightboxLoader.inlineVideoLinks.each(function(){
-			$(this).show().next().remove();
-		});
+		LightboxLoader.inlineVideoLinks.show().next().remove();
 	},
 
 	getMediaDetail: function(mediaParams, callback) {

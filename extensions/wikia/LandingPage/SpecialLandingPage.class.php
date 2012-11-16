@@ -20,6 +20,7 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 			$destArticlePath = WikiFactory::getVarValueByName( 'wgArticlePath', $this->destCityId );
 
 			$wgOut->redirect( $destServer . str_replace( '$1', 'Special:LandingPage', $destArticlePath ) );
+			wfProfileOut(__METHOD__);
 			return;
 		}
 

@@ -21,8 +21,8 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			'name' => 'Skee.TV',
 			'categories' => array( 'Lifestyle' )
 		),
-		503 => array(
-			'name' => 'Outside Lines Media',
+		419 => array(
+			'name' => 'Outside Lines Travel',
 			'categories' => array()
 		),
 		196 => array(

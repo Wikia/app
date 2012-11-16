@@ -817,7 +817,7 @@ abstract class DatabaseBase implements DatabaseType {
 		# <Wikia>
 		global $wgProfiler, $wgDBReadOnly;
 		if ( $is_writeable && $wgDBReadOnly ) {
-			if ( isset( $wgProfiler ) ) {
+			if ( !Profiler::instance()->isStub() ) {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
 			}

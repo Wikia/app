@@ -583,6 +583,7 @@ class RTEReverseParser {
 		$comment = self::parseComment($node);
 
 		if (empty($comment)) {
+			wfProfileOut(__METHOD__);
 			return '';
 		}
 
@@ -985,6 +986,7 @@ class RTEReverseParser {
 				$attributes = self::getAttributesStr($node);
 
 				$out = "<{$node->nodeName}{$attributes}>{$textContent}</{$node->nodeName}>";
+				wfProfileOut(__METHOD__);
 				return $out;
 
 			// 1 '</b><i><b>' => '<i>'
@@ -1229,6 +1231,7 @@ class RTEReverseParser {
 		wfProfileIn(__METHOD__);
 
 		if (self::wasHtml($node)) {
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
@@ -1264,6 +1267,7 @@ class RTEReverseParser {
 		wfProfileIn(__METHOD__);
 
 		if (self::wasHtml($node)) {
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
@@ -1905,6 +1909,7 @@ class RTEReverseParser {
 
 		// validate comment
 		if ( (count($fields) != 2) || ($fields[0] != 'RTE') ) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 

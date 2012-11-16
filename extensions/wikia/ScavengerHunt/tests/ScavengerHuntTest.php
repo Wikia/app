@@ -5,11 +5,6 @@ class ScavengerHuntTest extends WikiaBaseTest {
 		$this->setupFile = dirname(__FILE__) . '/../ScavengerHunt_setup.php';
 		parent::setUp();
 	}
-	
-	public function tearDown() {
-		F::unsetInstance('GlobalTitle');
-		F::unsetInstance('ScavengerHuntGames');
-	}
 
 	public function getFakeSprite() {
 		return array( 'X' => 50, 'Y' => 50, 'X1' => 0, 'Y1' => 0, 'X2' => 10, 'Y2' => 20 );

@@ -92,11 +92,14 @@ class WallMessage {
 		}
 
 		// create wall page by bot if not exist
-		if ( !$userPageTitle->exists() ) {
+		if ( $userPageTitle instanceof Title && !$userPageTitle->exists() ) {
 			$userPageTitle = self::addMessageWall( $userPageTitle );
 		}
 
 		if( empty($userPageTitle) ) {
+			Wikia::log(__METHOD__, '', '$userPageTitle not an instance of Title');
+			Wikia::logBacktrace(__METHOD__);
+
 			wfProfileOut(__METHOD__);
 			return false;
 		}
@@ -467,16 +470,16 @@ class WallMessage {
 		if($this->isMain()){
 			wfProfileOut(__METHOD__);
 			return '';
-		} else {
-			$order = $this->getOrderId();
-			if($order != null) {
-				wfProfileOut(__METHOD__);
-				return $order;
-			} else {
-				wfProfileOut(__METHOD__);
-				return $this->getId();
-			}
 		}
+
+		$order = $this->getOrderId();
+		if($order != null) {
+			$res = $order;
+		} else {
+			$res = $this->getId();
+		}
+		wfProfileOut(__METHOD__);
+		return $res;
 	}
 
 	public function getMessagePageUrl($withoutAnchor = false) {

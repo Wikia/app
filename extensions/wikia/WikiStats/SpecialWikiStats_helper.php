@@ -300,6 +300,8 @@ class WikiStats {
 			if (self::USE_MEMC) $wgMemc->set($memkey, $this->mUpdateDate, 60*60);
 		}
 
+		wfProfileOut( __METHOD__ );
+
 		return $this->mUpdateDate;
 	}
 
@@ -979,7 +981,10 @@ class WikiStats {
 		// Get a list of all months that exist for these stats
 		$months = array_keys($this->mMainStats);
 		sort($months);
-		if (empty($months)) return $months;
+		if (empty($months)) {
+			wfProfileOut( __METHOD__ );
+			return $months;
+		}
 
 		// Get the column names used, eliminate the 'date' field.
 		$columns = array_keys($this->mMainStats[$months[0]]);
@@ -1636,6 +1641,7 @@ class WikiStats {
 		# only for special users
 		if ( !WikiStats::isAllowed() ) {
 			Wikia::log( __METHOD__, false, "unauthorized user: " . $wgUser->getName() . " tried to retrieve data");
+			wfProfileOut( __METHOD__ ) ;
 			return false;
 		}
 
@@ -1654,6 +1660,7 @@ class WikiStats {
 
 		if ( empty($lang_id) ) {
 			Wikia::log( __METHOD__, false, "invalid language code: $lang");
+			wfProfileOut( __METHOD__ ) ;
 			return false;
 		}
 

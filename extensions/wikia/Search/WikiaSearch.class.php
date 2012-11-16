@@ -164,12 +164,12 @@ class WikiaSearch extends WikiaObject {
 			$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
 			
 		} catch ( Exception $e ) {
-			Wikia::log(__METHOD__, 'Querying Solr First Time', $e);
+			F::build('Wikia')->log(__METHOD__, 'Querying Solr First Time', $e);
 			$searchConfig->setSkipBoostFunctions( true );
 			try {
 				$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
 			} catch ( Exception $e ) {
-				Wikia::log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
+				F::build('Wikia')->log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
 				$result = F::build('Solarium_Result_Select_Empty');
 			}
 		}
@@ -182,11 +182,11 @@ class WikiaSearch extends WikiaObject {
 
 		if( $searchConfig->getPage() == 1 ) {
 			$resultCount = $results->getResultsFound();
-			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
-							array(	'sterm'	=> $searchConfig->getQuery(), 
-									'rver'	=> self::RELEVANCY_FUNCTION_ID,
-									'stype'	=> ( $searchConfig->getCityId() == 0 ? 'inter' : 'intra' ) 
-								 ) 
+			F::build( 'Track' )->event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
+										array(	'sterm'	=> $searchConfig->getQuery(), 
+												'rver'	=> self::RELEVANCY_FUNCTION_ID,
+												'stype'	=> ( $searchConfig->getIsInterWiki() ? 'inter' : 'intra' ) 
+											 ) 
 						);
 		}
 
@@ -254,12 +254,15 @@ class WikiaSearch extends WikiaObject {
 	    } else {
 	        // tweakable heuristic:
 	        // the document frequency for the interesting terms needs to be at least 50% of the wiki's pages
-	        $data = $this->callMediaWikiAPI( array( 'action'	=> 'query',
-									                'prop'		=> 'info|categories',
-									                'inprop'	=> 'url|created|views|revcount',
-									                'meta'		=> 'siteinfo',
-									                'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
-	                						));
+
+	    	$params = array('action'	=> 'query',
+			                'prop'		=> 'info|categories',
+			                'inprop'	=> 'url|created|views|revcount',
+			                'meta'		=> 'siteinfo',
+			                'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
+                			);
+	    	// I think it's lame I have to do this to get unit tests to work. Just sayin'.
+			$data = F::build( 'ApiService' )->call( $params );
 	
 			if ( isset( $data['query'] ) && isset( $data['query']['statistics'] ) && isset( $data['query']['statistics']['articles'] ) ) {
 				$searchConfig->setMindf( (int) ($data['query']['statistics']['articles'] * .5) );
@@ -269,7 +272,7 @@ class WikiaSearch extends WikiaObject {
 
 		$searchConfig
 			->setQuery			( $query )
-			->setMltFilterQuery	( $filterQuery )
+			->setFilterQuery	( $filterQuery )
 		    // note that we're also adding the default title field
 		    // for slightly better foreign language coverage
 			->setMltFields		( array( self::field( 'title' ), self::field('html'), 'title' ) );
@@ -331,6 +334,7 @@ class WikiaSearch extends WikiaObject {
 	    wfProfileIn(__METHOD__);
 	
 	    if ( $config->hasArticleMatch() ) {
+			wfProfileOut(__METHOD__);
 	        return $config->getArticleMatch();
 	    }
 	    
@@ -423,7 +427,7 @@ class WikiaSearch extends WikiaObject {
 	}
 	
 	/**
-	 * Private functions -- used mostly for query preparation and configuration
+	 * Protected functions -- used mostly for query preparation and configuration
 	 *------------------------------------------------------------------------*/
 	
 	/**
@@ -433,7 +437,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return Solarium_Query_Select
 	 */
-	private function getSelectQuery( WikiaSearchConfig $searchConfig )
+	protected function getSelectQuery( WikiaSearchConfig $searchConfig )
 	{
 		wfProfileIn(__METHOD__);
 		$query = $this->client->createSelect();
@@ -460,10 +464,7 @@ class WikiaSearch extends WikiaObject {
 					 ->setMaxAlternateFieldLength	( 100 )
 		;
 		
-		$query->addFilterQuery( array(
-				'query'		=>		$this->getFilterQueryString( $searchConfig ),
-				'key'		=>		'fq1' // constraint of library
-		) );
+		$searchConfig->setFilterQuery( $this->getFilterQueryString( $searchConfig ) );
 		
 		if ( $searchConfig->isInterWiki() ) {
 			$grouping = $query->getGrouping();
@@ -480,11 +481,10 @@ class WikiaSearch extends WikiaObject {
 			$article	= $am->getArticle();  
 			$noPtt		= self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
 			
-			$query->addFilterQuery( array(
-					'query'		=>	$noPtt,
-					'key'		=>	'ptt'
-			) );
+			$searchConfig->setFilterQuery( $noPtt, 'ptt' );
 		}
+		
+		$query->addFilterQueries( $searchConfig->getFilterQueries() );
 		
 		$formulatedQuery = sprintf('%s AND (%s)', $this->getQueryClausesString( $searchConfig ), $this->getNestedQuery( $searchConfig ));
 		$query->setQuery( $formulatedQuery );
@@ -498,7 +498,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return Solarium_Query_Select
 	 */
-	private function getNestedQuery( WikiaSearchConfig $searchConfig ) {
+	protected function getNestedQuery( WikiaSearchConfig $searchConfig ) {
 		wfProfileIn( __METHOD__ );
 		$nestedQuery = $this->client->createSelect();
 		$nestedQuery->setQuery( $searchConfig->getQuery() );
@@ -542,7 +542,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return string
 	 */
-	private function getQueryFieldsString( WikiaSearchConfig $searchConfig ) {
+	protected function getQueryFieldsString( WikiaSearchConfig $searchConfig ) {
 
 		$queryFieldsString = sprintf( '%s^5 %s^1.5 %s^4 %s^1', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ), self::field( 'categories' ) );
 
@@ -564,7 +564,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param WikiaSearchConfig $searchConfig
 	 * @return string
 	 */
-	private function getFilterQueryString( WikiaSearchConfig $searchConfig )
+	protected function getFilterQueryString( WikiaSearchConfig $searchConfig )
 	{
 		wfProfileIn(__METHOD__);
 		$filterQueries = array();
@@ -594,7 +594,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return string
 	 */
-	private function getQueryClausesString( WikiaSearchConfig $searchConfig )
+	protected function getQueryClausesString( WikiaSearchConfig $searchConfig )
 	{
 		$queryClauses = array();
 		
@@ -646,7 +646,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return string
 	 */
-	private function getBoostQueryString( WikiaSearchConfig $searchConfig )
+	protected function getBoostQueryString( WikiaSearchConfig $searchConfig )
 	{
 		$queryNoQuotes = $searchConfig->getQueryNoQuotes( true );
 		
@@ -674,7 +674,7 @@ class WikiaSearch extends WikiaObject {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return WikiaSearchResultSet
 	 */
-	private function moreLikeThis( WikiaSearchConfig $searchConfig )
+	protected function moreLikeThis( WikiaSearchConfig $searchConfig )
 	{
 		$query		= $searchConfig->getQuery( WikiaSearchConfig::QUERY_RAW );
 		$streamBody	= $searchConfig->getStreamBody();
@@ -696,13 +696,15 @@ class WikiaSearch extends WikiaObject {
 		if ( $searchConfig->getInterestingTerms() == 'list' ) {
 			$mlt->setInterestingTerms( 'list' );
 		}
-
-		if ( $searchConfig->getMltFilterQuery() ) {
-			$mlt->addFilterQuery( array(
-				'query'	=>	$searchConfig->getMltFilterQuery(),
-				'key'	=>	'mltfilterquery'
-			) );
+		
+		if ( $searchConfig->getMindf() !== false ) {
+			$mlt->setMinimumDocumentFrequency( $searchConfig->getMindf() );
 		}
+
+		if ( $searchConfig->hasFilterQueries() ) {
+			$mlt->addFilterQueries( $searchConfig->getFilterQueries() );
+		}
+		
 		if (! empty( $query ) ) { 
 			$mlt->setQuery( $query );
 		} else if ( $streamBody ) {
@@ -715,7 +717,7 @@ class WikiaSearch extends WikiaObject {
 			$mltResult = $this->client->moreLikeThis( $mlt );
 		} catch ( Exception $e ) {
 			$mltResult = F::build('Solarium_Result_Select_Empty');
-			Wikia::Log( __METHOD__, '', $e );
+			F::build( 'Wikia' )->log( __METHOD__, '', $e );
 		}
 		
 		$results = F::build('WikiaSearchResultSet', array($mltResult, $searchConfig) );
@@ -724,26 +726,11 @@ class WikiaSearch extends WikiaObject {
 	}
 
 	/**
-	 * Used to access API data from various MediaWiki services
-	 * @param  array $params
-	 * @return array result data
-	 **/
-	private function callMediaWikiAPI( Array $params ) {
-		wfProfileIn(__METHOD__);
-
-		$api = F::build( 'ApiMain', array( 'request' => new FauxRequest($params) ) );
-		$api->execute();
-
-		wfProfileOut(__METHOD__);
-		return  $api->getResultData();
-	}
-	
-	/**
 	 * get list of wikis excluded from inter-wiki searching
 	 * @param  int $currentWikiId
 	 * @return array
 	 */
-	private function getInterWikiSearchExcludedWikis( $currentWikiId = 0 ) {
+	protected function getInterWikiSearchExcludedWikis( $currentWikiId = 0 ) {
 	    wfProfileIn(__METHOD__);
 	
 	    $cacheKey		= $this->wf->SharedMemcKey( 'crossWikiaSearchExcludedWikis' );
@@ -804,5 +791,4 @@ class WikiaSearch extends WikiaObject {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-
 }

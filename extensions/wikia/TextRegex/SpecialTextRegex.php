@@ -208,12 +208,11 @@ class TextRegexList {
 
 		if ( $dbw->affectedRows() ) {
 			/* success  */
-			wfProfileOut( __METHOD__ );
 			$wgOut->redirect( $this->oTitle->getFullURL( 'action=success_unblock&text='.urlencode($oRegexInfo->tr_text).'&'.$this->getListBits() ) );
 		} else {
-			wfProfileOut( __METHOD__ );
 			$wgOut->redirect( $this->oTitle->getFullURL( 'action=failure_unblock&text='.urlencode($oRegexInfo->tr_text).'&'.$this->getListBits() ) );
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -506,6 +505,7 @@ class TextRegexCore {
 		$aBadWords = $this->getRegexes( DB_MASTER );
 		$result = (count($aBadWords) > 0);
 
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
@@ -604,7 +604,7 @@ class TextRegexCore {
 		$dbw->insert( "text_regex_stats", $data, __METHOD__, array( 'IGNORE' ) );
 		$dbw->commit();
 		$lastId = $dbw->insertId();
-		wfProfileIn( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		return $lastId;
 	}

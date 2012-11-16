@@ -536,7 +536,7 @@ class EditPageLayout extends EditPage {
 	 * Parameters are the same as OutputPage:readOnlyPage()
 	 * Redirect to the article page if redlink=1
 	 */
-	function displayPermissionsError( $permErrors ) {
+	function displayPermissionsError( array $permErrors ) {
 		$this->mIsReadOnlyPage = true;
 		$this->helper->addJsVariable( 'wgEditPageIsReadOnly', true );
 

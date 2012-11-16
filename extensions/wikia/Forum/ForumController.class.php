@@ -31,6 +31,11 @@ class ForumController extends WallBaseController {
 		if ( $this->wall->getTitle()->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$board = F::build( 'ForumBoard', array( 0 ), 'newFromId' );
 
+			if ( empty( $board ) ) {
+				$this->redirectToIndex();
+				return true;
+			}
+
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
 			$this->response->setVal( 'isTopicPage', true );
 		} else {
@@ -88,6 +93,7 @@ class ForumController extends WallBaseController {
 		$this->setIsForum();
 		$wallMessage = $this->getWallMessage();
 		if ( !($wallMessage instanceof WallMessage) ) {
+			$this->wf->ProfileOut( __METHOD__ );
 			$this->forward( __CLASS__, 'message_error' );
 			return true;
 		}

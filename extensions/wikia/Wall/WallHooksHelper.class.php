@@ -895,6 +895,7 @@ class WallHooksHelper {
 			if( !($rcTitle instanceof Title) ) {
 				//it can be media wiki deletion of an article -- we ignore them
 				Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_DIFF_HIST " . print_r(array($rc), true));
+				wfProfileOut(__METHOD__);
 				return true;
 			}
 
@@ -1637,6 +1638,7 @@ class WallHooksHelper {
 		if( !($objTitle instanceof Title) ) {
 			//it can be media wiki deletion of an article -- we ignore them
 			Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r(array($rc, $row), true));
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -1646,6 +1648,7 @@ class WallHooksHelper {
 		if( empty($wm) ) {
 			//it can be media wiki deletion of an article -- we ignore them
 			Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r(array($rc, $row), true));
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 		
@@ -1653,7 +1656,6 @@ class WallHooksHelper {
 		$wallOwnerName = $wm->getArticleTitle()->getText();
 		$articleTitleTxt =  $wm->getMetaTitle();
 
-		wfProfileOut(__METHOD__);
 		$out = array(
 			'articleUrl' => $wm->getMessagePageUrl(),
 			'articleTitleVal' => $articleTitleTxt,
@@ -1664,6 +1666,7 @@ class WallHooksHelper {
 			'isThread' => $wm->isMain(),
 			'isNew' => $isNew,
 		);
+		wfProfileOut(__METHOD__);
 
 		return $out;
 	}

@@ -25,7 +25,10 @@ function WidgetCategoryCloud($id, $params) {
 		$wgMemc->set($key, $data, 3600);
 	}
 
-	if (empty($data)) return wfMsgForContent("widget-categorycloud-empty");
+	if (empty($data)) {
+		wfProfileOut( __METHOD__ );
+		return wfMsgForContent("widget-categorycloud-empty");
+	}
 
 	foreach ($data as $name => $value) {
 		$category = Title::newFromText($name, NS_CATEGORY);
@@ -39,7 +42,10 @@ function WidgetCategoryCloud($id, $params) {
 		}
 	}
 
-	if (empty($output)) return wfMsgForContent("widget-categorycloud-empty");
+	if (empty($output)) {
+		wfProfileOut( __METHOD__ );
+		return wfMsgForContent("widget-categorycloud-empty");
+	}
 
 	$output = Xml::openElement("ul") . $output . Xml::closeElement("ul");
 

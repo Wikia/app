@@ -31,7 +31,7 @@ class ContributeMenuController extends WikiaController {
 		);
 		
 		// bugid-52607 - Check if VET and Special:Videos are enabled before showing 'add video' link
-		if($this->wg->EnableSpecialVideosExt && $this->wg->EnableVideoToolExt) {
+		if( !empty( $this->wg->EnableSpecialVideosExt ) && !empty( $this->wg->EnableVideoToolExt ) ) {
 			$addVideoLink = array(
 				'WikiaVideoAdd' => array(
 					'label' => 'oasis-navigation-v2-add-video'			

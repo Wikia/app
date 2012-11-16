@@ -48,6 +48,7 @@ wfProfileIn( 'load.php' );
 
 // URL safety checks
 if ( !$wgRequest->checkUrlExtension() ) {
+	wfProfileOut( 'load.php' );
 	return;
 }
 

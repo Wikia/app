@@ -59,6 +59,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setIsInterWiki	( $this->request->getBool('crossWikia', false) || $this->isCorporateWiki() )
 			->setVideoSearch	( $this->getVal('videoSearch', false) )
 			->setGroupResults	( $searchConfig->isInterWiki() || $this->getVal('grouped', false) )
+			->setFilterQueriesFromCodes( $this->getVal( 'filters', array() ) )
 		 ;
 
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );

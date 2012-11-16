@@ -22,7 +22,11 @@
 
 		<?= empty($wg->GlobalHeaderFullWidth) ? $app->renderView('Ad', 'Top') : '' ?>
 
-		<?= $app->renderView( 'WikiHeader', 'Index' ); ?>
+		<?php
+			if ( empty( $wg->SuppressWikiHeader ) ) {
+				echo $app->renderView( 'WikiHeader', 'Index' );
+			}
+		?>
 
 		<?php
 			if (!empty($wg->EnableWikiAnswers)) {
@@ -80,18 +84,6 @@
 				<? if($displayAdminDashboardChromedArticle) { ?>
 					<?= (string)$app->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array('headerText' => $wg->Title->getText() )) ?>
 				<? } ?>
-				<div class="home-top-right-ads">
-				<?php
-					if (in_array('leaderboard', $wg->ABTests)) {
-						echo $app->renderView('Ad', 'Index', array('slotname' => 'TEST_HOME_TOP_RIGHT_BOXAD'));
-					} else {
-						echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
-					}
-
-					echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BUTTON'));
-				?>
-				</div>
-
 
 				<?php
 				// for InfoBox-Testing

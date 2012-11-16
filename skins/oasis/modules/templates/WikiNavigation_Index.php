@@ -1,94 +1,83 @@
-		<ul<?= !empty($parseErrors) ? ' data-parse-errors="true"' : '' ?>>
-<?php
-$counter = 0;
-$firstChild = true;
-foreach ( $wikiMenuNodes as $menuNodes )
-if ( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
-	foreach ($menuNodes[0][ NavigationModel::CHILDREN ] as $level0) {
-		$menuNode0 = $menuNodes[$level0];
+<ul class="nav"<? if ( !empty( $parseErrors ) ): ?> data-parse-errors="true"<? endif ?>>
+	<?
+		$counter = 0;
+		$firstChild = true;
+	?>
+	<? foreach ( $wikiMenuNodes as $menuNodes ): ?>
+		<? if ( is_array( $menuNodes ) && isset( $menuNodes[ 0 ] ) && $showMenu ): ?>
+			<? foreach ( $menuNodes[ 0 ][ NavigationModel::CHILDREN ] as $level0 ): ?>
+				<? $menuNode0 = $menuNodes[ $level0 ] ?>
+				<? if ( $menuNode0[ NavigationModel::TEXT ] ): ?>
+					<li class="nav-item<? if ( $counter == 0 ): $counter++ ?> marked<? endif ?>">
+						<a<? if ( !empty( $menuNode0[ NavigationModel::SPECIAL ] ) ):
+							?> data-extra="<?= $menuNode0[ NavigationModel::SPECIAL ] ?>"<? endif
+							?> href="<?= $menuNode0[ NavigationModel::HREF ]
+							?>"><?= $menuNode0[ NavigationModel::TEXT ] ?></a>
 
-		if ($menuNode0[ NavigationModel::TEXT ]) {
-?>
-			<li<?php echo ($counter == 0 ) ? ' class="marked"' : '';
-				$counter++;
-			?>>
-				<a<?= empty( $menuNode0[ NavigationModel::SPECIAL ] ) ? '' : ' data-extra="'.$menuNode0[ NavigationModel::SPECIAL ].'"' ?> href="<?= $menuNode0[ NavigationModel::HREF ] ?>"><?= $menuNode0[ NavigationModel::TEXT ] ?></a>
-<?php
-			if (isset($menuNodes[$level0][ NavigationModel::CHILDREN ])) {
-?>
-				<ul class="subnav-2 accent"<? if ( $firstChild ){ echo ' style="display:block"'; $firstChild = false; } ?>>
-<?php
-				foreach ($menuNodes[$level0][ NavigationModel::CHILDREN ] as $level1) {
-					$menuNode1 = $menuNodes[$level1];
-					$hasChildNodes = isset($menuNode1[ NavigationModel::CHILDREN ]);
-?>
-					<li>
-						<a class="subnav-2a"<?= empty( $menuNode1[ NavigationModel::SPECIAL ] ) ? '' : ' data-extra="'.$menuNode1[ NavigationModel::SPECIAL ].'"' ?> href="<?= $menuNode1[ NavigationModel::HREF ] ?>"<?= empty( $menuNode1[ NavigationModel::CANONICAL_NAME ] ) ? '' : ' data-canonical="'.strtolower($menuNode1[ NavigationModel::CANONICAL_NAME ]).'"' ?>><?= $menuNode1[ NavigationModel::TEXT ] ?><?php if($hasChildNodes):?><img src="<?= wfBlankImgUrl() ?>" class="chevron"><?php endif; ?></a>
-<?php
-					if ($hasChildNodes) {
-?>
-						<ul class="subnav subnav-3">
-<?php
-						foreach ($menuNode1[ NavigationModel::CHILDREN ] as $level2) {
-							$menuNode2 = $menuNodes[$level2];
-?>
-							<li>
-								<a class="subnav-3a"<?= empty( $menuNode2[ NavigationModel::SPECIAL ] ) ? '' : ' data-extra="'.$menuNode2[ NavigationModel::SPECIAL ].'"' ?> href="<?= $menuNode2[ NavigationModel::HREF ] ?>"><?= $menuNode2[ NavigationModel::TEXT ] ?></a>
-							</li>
-<?php
-						}
-?>
-						</ul>
-<?php
-					}
-?>
-					</li>
-<?php
-				}
-?>
-<?php
-				if (
-					!empty( $wikiaMenuLocalNodes ) &&
-					isset( $wikiaMenuLocalNodes[0] ) &&
-					isset( $wikiaMenuLocalNodes[0][ NavigationModel::CHILDREN ] )
-				)
-					foreach ( $wikiaMenuLocalNodes[0][ NavigationModel::CHILDREN ] as $level1 ){
-?>
-					<li>
-						<a class="subnav-2a"<?= empty( $wikiaMenuLocalNodes[$level1][ NavigationModel::SPECIAL ] ) ? '' : ' data-extra="'.$wikiaMenuLocalNodes[$level1][ NavigationModel::SPECIAL ].'"' ?> href="<?= $wikiaMenuLocalNodes[$level1][ NavigationModel::HREF ] ?>">
-							<?= $wikiaMenuLocalNodes[$level1][ NavigationModel::TEXT ] ?>
-						</a>
-<?php
-					if (isset($wikiaMenuLocalNodes[$level1][ NavigationModel::CHILDREN ])) {
-?>
-						<ul class="subnav subnav-3">
-<?php
-						foreach ($wikiaMenuLocalNodes[$level1][ NavigationModel::CHILDREN ] as $level2) {
-?>
-							<li>
-								<a class="subnav-3a"<?= empty( $wikiaMenuLocalNodes[$level2][ NavigationModel::SPECIAL ] ) ? '' : ' data-extra="'.$wikiaMenuLocalNodes[$level2][ NavigationModel::SPECIAL ].'"' ?> href="<?= $wikiaMenuLocalNodes[$level2][ NavigationModel::HREF ] ?>"><?= $wikiaMenuLocalNodes[$level2][ NavigationModel::TEXT ] ?></a>
-							</li>
-<?php
-						}
-?>
-						</ul>
-<?php
-					}
-?>
-					</li>
-<?php
-				}
-?>
-				</ul>
-<?php
-			}
-?>
-			</li>
-<?php
-		}
-	}
-}
-?>
-		</ul>
+						<? if ( isset( $menuNodes[ $level0 ][ NavigationModel::CHILDREN ] ) ): ?>
+							<ul class="subnav-2 accent<? if ( $firstChild ): ?><? $firstChild = false ?> firstChild<? endif ?>">
+								<? foreach ( $menuNodes[ $level0 ][ NavigationModel::CHILDREN ] as $level1 ): ?>
+									<?
+										$menuNode1 = $menuNodes[ $level1 ];
+										$hasChildNodes = isset( $menuNode1[ NavigationModel::CHILDREN ] );
+									?>
+									<li class="subnav-2-item">
+										<a class="subnav-2a"<? if ( !empty( $menuNode1[ NavigationModel::SPECIAL ] ) ):
+											?> data-extra="<?= $menuNode1[ NavigationModel::SPECIAL ] ?>"<? endif
+											?> href="<?= $menuNode1[ NavigationModel::HREF ] ?>"<? if ( !empty( $menuNode1[ NavigationModel::CANONICAL_NAME ] ) ):
+											?> data-canonical="<?= strtolower( $menuNode1[ NavigationModel::CANONICAL_NAME ] ) ?>"<? endif
+											?>><?= $menuNode1[ NavigationModel::TEXT ] ?><? if ( $hasChildNodes ):
+											?><img src="<?= $wf->BlankImgUrl() ?>" class="chevron"><? endif ?></a>
 
-		<div class="navbackground"><div></div><img src="<?= $wg->BlankImgUrl; ?>" class="chevron" width="0" height="0"></div>
+										<? if ( $hasChildNodes ): ?>
+											<ul class="subnav-3 subnav">
+												<? foreach ( $menuNode1[ NavigationModel::CHILDREN ] as $level2 ): ?>
+													<? $menuNode2 = $menuNodes[ $level2 ] ?>
+													<li class="subnav-3-item">
+														<a class="subnav-3a"<? if ( !empty( $menuNode2[ NavigationModel::SPECIAL ] ) ):
+															?> data-extra="<?= $menuNode2[ NavigationModel::SPECIAL ] ?>"<? endif
+															?> href="<?= $menuNode2[ NavigationModel::HREF ]
+															?>"><?= $menuNode2[ NavigationModel::TEXT ] ?></a>
+													</li>
+												<? endforeach ?>
+											</ul>
+										<? endif ?>
+									</li>
+								<? endforeach ?>
+								<? if ( !empty( $wikiaMenuLocalNodes ) && isset( $wikiaMenuLocalNodes[ 0 ] ) && isset( $wikiaMenuLocalNodes[ 0 ][ NavigationModel::CHILDREN ] ) ): ?>
+									<? foreach ( $wikiaMenuLocalNodes[ 0 ][ NavigationModel::CHILDREN ] as $level1 ): ?>
+										<li class="subnav-2-item">
+											<a class="subnav-2a"<? if ( !empty( $wikiaMenuLocalNodes[ $level1 ][ NavigationModel::SPECIAL ] ) ):
+												?> data-extra="<?= $wikiaMenuLocalNodes[ $level1 ][ NavigationModel::SPECIAL ] ?>"<? endif
+												?> href="<?= $wikiaMenuLocalNodes[ $level1 ][ NavigationModel::HREF ] ?>">
+												<?= $wikiaMenuLocalNodes[$level1][ NavigationModel::TEXT ] ?>
+											</a>
+
+											<? if ( isset( $wikiaMenuLocalNodes[ $level1 ][ NavigationModel::CHILDREN ] ) ): ?>
+												<ul class="subnav-3 subnav">
+													<? foreach ( $wikiaMenuLocalNodes[ $level1 ][ NavigationModel::CHILDREN ] as $level2 ): ?>
+														<li class="subnav-3-item">
+															<a class="subnav-3a"<? if ( !empty( $wikiaMenuLocalNodes[ $level2 ][ NavigationModel::SPECIAL ] ) ):
+																?> data-extra="<?= $wikiaMenuLocalNodes[ $level2 ][ NavigationModel::SPECIAL ] ?>"<? endif
+																?> href="<?= $wikiaMenuLocalNodes[ $level2 ][ NavigationModel::HREF ]
+																?>"><?= $wikiaMenuLocalNodes[$level2][ NavigationModel::TEXT ] ?></a>
+														</li>
+													<? endforeach ?>
+												</ul>
+											<? endif ?>
+										</li>
+									<? endforeach ?>
+								<? endif ?>
+							</ul>
+						<? endif ?>
+					</li>
+				<? endif ?>
+			<? endforeach ?>
+		<? endif ?>
+	<? endforeach ?>
+</ul>
+
+<div class="navbackground">
+	<div></div>
+	<img src="<?= $wg->BlankImgUrl; ?>" class="chevron">
+</div>

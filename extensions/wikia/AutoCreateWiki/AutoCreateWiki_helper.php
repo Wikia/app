@@ -436,12 +436,14 @@ class AutoCreateWiki {
 		wfProfileIn(__METHOD__);
 
 		if( !wfRunHooks( 'AutoCreateWiki::checkBadWords', array( $sText, $where, $split ) ) ) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
 		// TODO: temporary check for Phalanx (don't perform additional filtering when enabled)
                 global $wgEnablePhalanxExt;
                 if (!empty($wgEnablePhalanxExt)) {
+						wfProfileOut(__METHOD__);
                         return true;
                 }
 

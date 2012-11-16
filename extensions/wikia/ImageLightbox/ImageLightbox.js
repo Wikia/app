@@ -216,7 +216,7 @@ var ImageLightbox = {
 
 			// click tracking
 			var eventValue = 0;
-			// Related Videos module
+			// Related Videos module - Not used in hubs because $('.RelatedVideosModule') doesn't exist
 			var rvModule = target.closest('.RelatedVideosModule');
 			if (rvModule && rvModule.length) {
 				var localItem = target.closest('.item');
@@ -246,7 +246,6 @@ var ImageLightbox = {
 	},
 
 	displayInlineVideo: function(targetImage, imageName) {
-
 		var parentTag = targetImage.parent();
 		if (!parentTag.is('a')) {
 			return;
@@ -279,6 +278,7 @@ var ImageLightbox = {
                     wrapperTag.find('a').hide();
                     wrapperTag.append('<div  class="Wikia-video-enabledEmbedCode">'+res.html+'</div>');
 				}
+				ImageLightbox.doViewTracking(res.titleKey, res.type, res.provider);
 			}
 		});
 
@@ -335,7 +335,7 @@ var ImageLightbox = {
 			if (res && ( res.html || res.jsonData ) ) {
 				if (res.asset) {
 					$.getScript(res.asset, function() {
-						self.showLightbox(res.title, '<div id="'+res.jsonData.id+'"></div>'+res.html, caption, res.width, function(){
+						self.showLightbox(res.title, '<div id="'+res.jsonData.id+'"></div>'+res.html, caption, res.width, res.titleKey, res.type, res.provider, function(){
 
 
 							if ( typeof(res.jsonData.events) == "undefined" || typeof(res.jsonData.events.onReady) == "undefined" ) {
@@ -350,7 +350,7 @@ var ImageLightbox = {
 						});
 					});
 				} else {
-					self.showLightbox(res.title, res.html, caption, res.width);
+					self.showLightbox(res.title, res.html, caption, res.width, res.titleKey, res.type, res.provider);
 					self.setTopPosition();
 				}
 			} else {
@@ -361,7 +361,7 @@ var ImageLightbox = {
 	},
 
 	// create modal popup
-	showLightbox: function(title, content, caption, width, secondCallBack) {
+	showLightbox: function(title, content, caption, width, titleKey, type, provider, secondCallBack) {
 		var self = this;
 
 		// fix caption when not provided
@@ -372,6 +372,8 @@ var ImageLightbox = {
 			'width': width || 'auto',
 			'callback': function() {
 				var lightbox = $('#lightbox');
+
+				self.doViewTracking(titleKey, type, provider);
 
 				$('#lightbox-share-buttons').find('a').click(function() {
 					var source = $(this).attr('data-func');
@@ -465,10 +467,36 @@ var ImageLightbox = {
 				delete self.lock;
 			}
 		});
-	}
+	},
+	doViewTracking: function(titleKey, type, provider) {
+		// Video and Image view tracking
+		clearTimeout(ImageLightbox.trackingTimeout);
+		if(typeof titleKey != "undefined") {
+			var trackingTitle = titleKey,
+				timeout = (type == 'video') ? 1000 : 500;
+			ImageLightbox.trackingTimeout = setTimeout(function() {
+				ImageLightbox.track(WikiaTracker.ACTIONS.VIEW, type, 0, {title: trackingTitle, provider: provider, clickSource: 'hubs'});		
+			}, timeout);
+		}	
+	},
+	track: function(action, label, value, data) {
+		// @param data - any extra params we want to pass to internal tracking
+		// Don't add willy nilly though... check with Jonathan.  
+		var ga_params  = {		
+			ga_category: 'lightbox',
+			ga_action: action,
+			ga_label: label || '',
+			ga_value: value || 0
+		}
+
+		var trackParams = $.extend({}, data || {}, ga_params);
+
+		WikiaTracker.trackEvent(null, trackParams, 'internal');
+	},
+	trackingTimeout: false
 };
 
-if ( (typeof window.skin != 'undefined') && (window.skin == 'monaco' || window.skin == 'oasis') ) {
+if ( typeof window.skin != 'undefined' && window.skin == 'oasis' ) {
 	$(function() {
 		ImageLightbox.init.call(ImageLightbox);
 		var image = $('#' + $.getUrlVar('image'));

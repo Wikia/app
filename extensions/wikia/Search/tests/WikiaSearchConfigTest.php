@@ -654,4 +654,144 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		
 	}
 	
+	/**
+	 * @covers WikiaSearchConfig::setFilterQuery
+	 * @covers WikiaSearchConfig::setFilterQueries
+	 * @covers WikiaSearchConfig::getFilterQueries
+	 * @covers WikiaSearchConfig::setFilterQueryByCode
+	 * @covers WikiaSearchConfig::setFilterQueriesFromCodes
+	 */
+	public function testFilterQueryMethods() {
+		$config	= F::build( 'WikiaSearchConfig' ); /* @var WikiaSearchConfig */
+		$fqAttr	= new ReflectionProperty( 'WikiaSearchConfig', 'filterQueries' );
+		$fqAttr->setAccessible( true );
+		
+		$this->assertFalse(
+				$config->hasFilterQueries(),
+				'WikiaSearchConfig::hasFilterQueries should return false if no filter queries have been explicitly set.'
+		);
+		$this->assertEquals(
+				$config,
+				$config->setFilterQuery( 'foo:bar' ),
+				'WikiaSearchConfig::setFilterQuery should provide a fluent interface.'
+		);
+		$this->assertArrayHasKey(
+				'fq1',
+				$fqAttr->getValue( $config ),
+				'WikiaSearchConfig::setFilterQuery should assign an auto-incremented key when a key is not provided'
+		);
+		$this->assertArrayHasKey(
+				'foo',
+				$fqAttr->getValue( $config->setFilterQuery( 'bar:foo', 'foo' ) ),
+				'WikiaSearchConfig::setFilterQuery should store the filter query by the provided key'
+		);
+		$this->assertContains(
+				array( 'key' => 'foo', 'query' => 'bar:foo' ),
+				$fqAttr->getValue( $config ),
+				'WikiaSearchConfig::setFilterQuery should store the key and query as associative values in the value array per Solarium expected format'
+		);
+		$this->assertTrue(
+				$config->hasFilterQueries(),
+				'WikiaSearchConfig::hasFilterQueries should return true if filter queries have been set'
+		);
+		$this->assertEquals(
+				$fqAttr->getValue( $config ),
+				$config->getFilterQueries(),
+				'WikiaSearchConfig::getFilterQueries should return the filterQueries attribute'
+		);
+		$this->assertEquals(
+				$config,
+				$config->setFilterQueries( array() ),
+				'WikiaSearchConfig::setFilterQueries should provide a fluent interface'
+		);
+		$this->assertEmpty(
+				$fqAttr->getValue( $config ),
+				'Passing an empty array to WikiaSearchConfig::setFilterQueries should remove all filter queries.'
+		);
+		$this->assertEquals(
+				0,
+				WikiaSearchConfig::$filterQueryIncrement,
+				'WikiaSearchConfig::setFilterQueries should reset the filter query increment'
+		);
+		
+		$config->setFilterQueries( array(
+				array(
+						'query' => 'foo:bar',
+						'key'   => 'baz',
+				),
+				'qux',
+				true
+		));
+		$this->assertArrayHasKey(
+				'baz',
+				$fqAttr->getValue( $config ),
+				'A properly formatted filter query array passed as a value to the array argument of '
+				.' WikiaSearchConfig::setFilterQueries should respect the previously set key'
+		);
+		$this->assertArrayHasKey(
+				'fq1',
+				$fqAttr->getValue( $config ),
+				'Values in the argument array that are string-typed should receive '
+				.' an auto-incremented key per WikiaSearchConfig::setFilterQuery' 
+		);
+		$this->assertEquals(
+				2,
+				count( $fqAttr->getValue( $config ) ),
+				'Values in the array passed to WikiaSearchConfig::setFilterQueries that are not properly formatted should be ignored'
+		);
+		
+		// resetting
+		$config->setFilterQueries( array() );
+		
+		$this->assertEquals(
+				$config,
+				$config->setFilterQueryByCode( 'is_video' ),
+				'WikiaSearchConfig::setFilterQueryByCode should provide a fluent interface'
+		);
+		$fqArray = $fqAttr->getValue( $config );
+		$this->assertArrayHasKey(
+				'is_video',
+				$fqArray,
+				'WikiaSearchConfig::setFilterQueryByCode should set the code as the key for the new filter query'
+		);
+		
+		$fcAttr = new ReflectionProperty( 'WikiaSearchConfig', 'filterCodes' );
+		$fcAttr->setAccessible( true );
+		$filterCodes = $fcAttr->getValue( $config );
+		
+		$this->assertEquals(
+				array( 'key' => 'is_video', 'query' => $filterCodes['is_video'] ),
+				$fqArray['is_video'],
+				'WikiaSearchConfig::setFilterQueryByCode should set exactly the query string that is '
+				.'the value in WikiaSearchConfig::filterCodes, keyed by the code provided' 
+		);
+
+		$mockWikia = $this->getMock( 'Wikia', array( 'log' ) );
+		$mockWikia
+			->staticExpects	( $this->any() )
+			->method		( 'log' )
+		;
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockApp();
+		// this satisfies the above expectation
+		$config->setFilterQueryByCode( 'notacode' );
+		
+		$this->assertEquals(
+				$config,
+				$config->setFilterQueriesFromCodes( array( 'is_video', 'is_image' ) ),
+				'WikiaSearchConfig::setFilterQueriesFromCodes should provide a fluent interface'
+		);
+		$this->assertEquals(
+				2,
+				count( $fqAttr->getValue( $config ) ), 
+				'WikiaSearchConfig::setFilterQueriesFromCode should function over each array '
+				.' value provided as a code key to WikiaSearchConfig::setFilterQueryByCode. '
+				.' This test also proves a vital part of filter query data architecture: overwriting a key is allowed, '
+				.' and warnings are not issues if you do so.'
+		);
+		// needs resetting to get the testing environment back in shape
+		WikiaSearchConfig::$filterQueryIncrement = 0;
+	} 
+	
+	
 }

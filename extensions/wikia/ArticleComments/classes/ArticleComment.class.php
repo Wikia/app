@@ -226,6 +226,7 @@ class ArticleComment {
 			}
 
 			if(empty($this->mFirstRevision) || empty($this->mLastRevision) ){
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
@@ -800,6 +801,7 @@ class ArticleComment {
 		$wgTitle = $commentTitle;
 
 		if( !($commentTitle instanceof Title) ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -866,7 +868,7 @@ class ArticleComment {
 
 			for ( $page = 1; $page <= $pages; $page++ ) {
 				$params[ 'page' ] = $page;
-				$urls[] = ArticleCommentsController::getUrlToAjaxMethod(
+				$urls[] = ArticleCommentsController::getUrl(
 					'Content',
 					'html',
 					array( 'articleId' => $articleId, 'page' => $page, 'skin' => "true" )

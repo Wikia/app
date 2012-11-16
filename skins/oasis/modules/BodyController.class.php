@@ -143,6 +143,7 @@ class BodyController extends WikiaController {
 				1000 => array('Forum', 'forumParticipationModule', null),
 				1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')),
 			);
+			wfProfileOut(__METHOD__);
 			return $railModuleList;
 		}
 
