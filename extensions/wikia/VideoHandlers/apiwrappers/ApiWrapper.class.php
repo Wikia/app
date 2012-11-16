@@ -68,7 +68,6 @@ abstract class ApiWrapper {
 		}
 
 		$this->loadMetadata( $overrideMetadata );
-
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -152,8 +151,11 @@ abstract class ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$apiUrl = $this->getApiUrl();
-		$memcKey = F::app()->wf->memcKey( static::$CACHE_KEY, $apiUrl, static::$CACHE_KEY_VERSION );
+
+		// use URL's hash to avoid going beyond 250 characters limit of memcache key
+		$memcKey = F::app()->wf->memcKey( static::$CACHE_KEY, md5($apiUrl), static::$CACHE_KEY_VERSION );
 		if ( empty($this->videoId) ){
+			wfProfileOut( __METHOD__ );
 			throw new EmptyResponseException($apiUrl);
 		}
 		$response = F::app()->wg->memc->get( $memcKey );
@@ -166,6 +168,7 @@ abstract class ApiWrapper {
 				$response = $req->getContent();
 				$this->response = $response;	// Only for migration purposes
 				if ( empty( $response ) ) {
+					wfProfileOut( __METHOD__ );
 					throw new EmptyResponseException($apiUrl);
 				} else {
 
