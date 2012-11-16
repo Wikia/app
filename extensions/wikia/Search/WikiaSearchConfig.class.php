@@ -287,6 +287,11 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @return array where index 0 is the field name and index 1 is the constant used for ASC or DESC in solarium
 	 */
 	public function getSort() {
+		// Allows you to override our default keyword-based ranking functionality. Don't abuse this.
+		// I have aggressively validated this value to protect your query.
+		if ( isset( $this->params['sort'] ) && is_array( $this->params['sort'] ) && count( $this->params['sort'] ) == 2 ) {
+			return $this->params['sort'];
+		}
 		$rank = $this->getRank();
 		return isset($this->rankOptions[$rank]) ? $this->rankOptions[$rank] : $this->rankOptions['default']; 
 	}
