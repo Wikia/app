@@ -7,7 +7,7 @@
 
 class ArticlesApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
-	const CACHE_VERSION = 3;
+	const CACHE_VERSION = 4;
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by vertical namespace
@@ -106,6 +106,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * Get details about one or more articles
 	 *
 	 * @requestParam string $ids A string with a comma-separated list of article ID's
+	 * @requestParam integer $abstract The desired length for the article's abstract, defaults to 100, maximum 500
 	 *
 	 * @responseParam array A list of results with the article ID as the index, each item has a ... property
 	 *
@@ -115,6 +116,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->wf->profileIn( __METHOD__ );
 
 		$articles = $this->request->getVal( 'ids', null );
+		$abstractLen = $this->request->getInt( 'abstract', 100 );
 		$collection = array();
 
 		if ( !empty( $articles ) ) {
@@ -141,11 +143,9 @@ class ArticlesApiController extends WikiaApiController {
 					foreach ( $titles as $t ) {
 						$ns = $t->getNamespace();
 						$id = $t->getArticleID();
-						$as = new ArticleService( $id );
 
 						$collection[$id] = array(
 							'revision' => $t->getLatestRevID(),
-							'abstract' => $as->getTextSnippet(),
 							'namespace' => array(
 								'id' => $t->getNamespace(),
 								'text' => ( $ns === 0 ) ? 'Main' : $t->getNsText()
@@ -161,6 +161,16 @@ class ArticlesApiController extends WikiaApiController {
 				}
 
 				$titles = null;
+			}
+
+			//ArticleService has separate caching
+			//so processing it separately allows to
+			//make the length parametrical without
+			//invalidating the titles details' cache
+			//or the need to duplicate it
+			foreach ( $collection as $id => &$details ) {
+				$as = new ArticleService( $id );
+				$details['abstract'] = $as->getTextSnippet( $abstractLen );
 			}
 		}
 
