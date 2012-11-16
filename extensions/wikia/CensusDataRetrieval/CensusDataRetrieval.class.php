@@ -52,10 +52,15 @@ class CensusDataRetrieval {
                 wfProfileIn(__METHOD__);
 		// @TODO check if namespace is correct, quit if not
 
-		$cdr = new self();
-
-		$editPage->textbox1 = $cdr->execute( $editPage->mTitle );
-                $editPage->addEditNotice(wfMsgForContent('census-data-retrieval-notification'));
+                if ( !$editPage->mTitle->getArticleId() ) {//only on creating new article
+                        $cdr = new self();
+                        $result = $cdr->execute( $editPage->mTitle );
+                        if ( $result ) {
+                                $editPage->textbox1 = $result;
+                                $editPage->addEditNotice(wfMsgForContent('census-data-retrieval-notification'));
+                        }
+                }
+                
                 wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -106,7 +111,13 @@ class CensusDataRetrieval {
                         if ( $map->returned > 0 ) {
                                 $censusData = $map->{$type.'_list'}[0];
                                 $this->type = $type;
+                        } else {//no data
+                                wfProfileOut(__METHOD__);
+                                return false;
                         }
+                } else {//no data
+                        wfProfileOut(__METHOD__);
+                        return false;
                 }
                 // error handling
 		if ( empty( $censusData ) ) {
