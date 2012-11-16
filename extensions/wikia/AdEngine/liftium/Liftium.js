@@ -1450,6 +1450,7 @@ Liftium.isNetworkInChain = function (network_name, slotname){
 	return found;
 };
 
+Liftium.isHighValueCountry = AdLogicHighValueCountry(window).isHighValueCountry;
 
 /* Check to see if the user from the right geography */
 Liftium.isValidCountry = function (countryList){
@@ -1459,7 +1460,7 @@ Liftium.isValidCountry = function (countryList){
 	Liftium.d("Checking if '" + ac + "' is in:", 8, countryList);
 
 	if (Liftium.in_array("row", countryList, true) &&
-		!AdConfig.isHighValueCountry(ac)){
+		!Liftium.isHighValueCountry(ac)){
 		Liftium.d("ROW targetted, and country not high-value", 8);
 		return true;
 	}

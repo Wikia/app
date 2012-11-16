@@ -3,6 +3,7 @@
 		, adConfig
 		, adEngine
 		, adLogicShortPage
+		, adLogicHighValueCountry
 		, scriptWriter
 		, wikiaDart
 		, evolveHelper
@@ -22,13 +23,14 @@
 
 	// Construct various helpers
 	adLogicShortPage = AdLogicShortPage(document);
+	adLogicHighValueCountry = AdLogicHighValueCountry(window);
 	slotTweaker = SlotTweaker(log, document);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux, adLogicShortPage);
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
-	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, Cache);
+	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry);
 	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderGamePro = AdProviderGamePro(wikiaDart, scriptWriter, WikiaTracker, log, window, document);
 	adProviderNull = AdProviderNull(log, slotTweaker);

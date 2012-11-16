@@ -1,4 +1,7 @@
 /* global Features */
+
+if (!window.wgDisableOldAdDriver) {
+
 var AdConfig = {
 	adSlotsRequiringJSInvocation: { INVISIBLE_1:1, INVISIBLE_2:1 },
 	geo: null,
@@ -598,3 +601,5 @@ AdConfig.DART.getUniqueId = function () {
 };
 
 AdConfig.init();
+
+} // endif (!window.wgDisableOldAdDriver)

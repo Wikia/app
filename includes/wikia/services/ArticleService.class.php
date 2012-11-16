@@ -103,6 +103,7 @@ class ArticleService extends WikiaObject {
 			return '';
 		}
 
+		$fname = __METHOD__;
 		$this->wf->profileIn( __METHOD__ );
 
 		$id = $this->article->getID();
@@ -121,8 +122,8 @@ class ArticleService extends WikiaObject {
 			$text = self::$localCache[$id] = WikiaDataAccess::cache(
 				$key,
 				86400 /*24h*/,
-				function() use ( $app, $article, $tags, $pats ){
-					$app->wf->profileIn( __METHOD__ . '::CacheMiss' );
+				function() use ( $app, $article, $tags, $pats, $fname ){
+					$app->wf->profileIn( $fname . '::CacheMiss' );
 
 					//get standard parser cache for anons,
 					//99% of the times it will be available but
@@ -157,7 +158,7 @@ class ArticleService extends WikiaObject {
 						}
 					}
 
-					$app->wf->profileOut( __METHOD__ . '::CacheMiss' );
+					$app->wf->profileOut( $fname . '::CacheMiss' );
 					return $content;
 				}
 			);

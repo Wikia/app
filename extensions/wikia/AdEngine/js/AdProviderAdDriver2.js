@@ -1,45 +1,21 @@
 // TODO: move WikiaTracker outside
 
-var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, cacheStorage) {
+var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry) {
 	'use strict';
 
-	var logGroup = 'AdProviderAdDriver2'
-		, slotMap
-		, forgetAdsShownAfterTime = 3600 // an hour
-		, incrementItemInStorage
-		, fillInSlot, canHandleSlot
-		, formatTrackTime
-		, country = Geo.getCountryCode()
-		, now = window.wgNow || new Date()
-		, highValueCountries, defaultHighValueCountries
-		, isHighValueCountry, maxCallsToDART
-	;
+	var logGroup = 'AdProviderAdDriver2',
+		slotMap,
+		forgetAdsShownAfterTime = 3600, // an hour
+		incrementItemInStorage,
+		fillInSlot, canHandleSlot,
+		formatTrackTime,
+		country = Geo.getCountryCode(),
+		now = window.wgNow || new Date(),
+		maxCallsToDART,
+		isHighValueCountry;
 
-	// copy of CommonSettings wgHighValueCountries
-	defaultHighValueCountries = {
-		'CA': 3,
-		'DE': 3,
-		'DK': 3,
-		'ES': 3,
-		'FI': 3,
-		'FR': 3,
-		'GB': 3,
-		'IT': 3,
-		'NL': 3,
-		'NO': 3,
-		'SE': 3,
-		'UK': 3,
-		'US': 3
-	};
-
-	highValueCountries = window.wgHighValueCountries || defaultHighValueCountries;
-
-	// Fetch number of calls to make to DART
-	if (country) {
-		maxCallsToDART = highValueCountries[country.toUpperCase()];
-	}
-	maxCallsToDART = maxCallsToDART || 0;
-	isHighValueCountry = !!maxCallsToDART;
+	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
+	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
 
 	// TODO: tile is not used, keys without apostrophes
 

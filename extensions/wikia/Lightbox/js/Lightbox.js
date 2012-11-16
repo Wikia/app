@@ -398,6 +398,19 @@ var Lightbox = {
 		}
 	},
 	ads: {
+		// preload ad after this number of unique images/videos are shown
+		adMediaCountPreload: 2,
+		// show an ad after this number of unique images/videos are shown
+		adMediaCount: 2,
+		// array of media titles shown for tracking unique views
+		adMediaProgress: [],
+		// is an ad already loaded?
+		adWasPreloaded: false,
+		// has an ad already been shown?
+		adWasShown: false,
+		// are we showing an ad right now?
+		adIsShowing: false,
+
 		// should user see ads?
 		showAds: function() {
 			if (Geo.getCountryCode() === 'US') {
@@ -405,28 +418,29 @@ var Lightbox = {
 			}
 			return false;
 		},
-		// show an ad after this number of unique images/videos are shown
-		adMediaCount: 2, 
-		// array of media titles shown for tracking unique views
-		adMediaProgress: [], 
-		 // has an ad already been shown?
-		adWasShown: false,
-		// are we showing an ad right now?
-		adIsShowing: false, 
-		
+		preloadAds: function() {
+			if (!this.adWasPreloaded) {
+				this.adWasPreloaded = true;
+				window.adslots2.push(['MODAL_INTERSTITIAL']);
+			}
+		},
 		// Determine if we should show an ad
 		showAd: function(title, type) {
 			// Already shown?
-			if(!Lightbox.ads.showAds() || Lightbox.ads.adWasShown) {
+			if(!this.showAds() || this.adWasShown) {
 				return false;
 			}
 			
-			var count = Lightbox.ads.adMediaCount,
-				progress = Lightbox.ads.adMediaProgress;
+			var countToShow = this.adMediaCount,
+				countToLoad = this.adMediaCountPreload,
+				progress = this.adMediaProgress;
 			
 			if(progress.indexOf(title) < 0) {
-				if(progress.length >= count && type != 'video') {
-					Lightbox.ads.updateLightbox();
+				if(progress.length >= countToLoad) {
+					this.preloadAds();
+				}
+				if(progress.length >= countToShow && type != 'video') {
+					this.updateLightbox();
 					return true;
 				}
 				progress.push(title);
@@ -441,6 +455,9 @@ var Lightbox = {
 			
 			// Show special header for ads
 			Lightbox.renderAdHeader();
+
+			// Show the ad
+			$('#MODAL_INTERSTITIAL').show();
 			
 			Lightbox.openModal.progress.addClass('invisible');
 			
@@ -459,8 +476,6 @@ var Lightbox = {
 
 			// Resize modal
 			Lightbox.openModal.css(css);
-
-			window.adslots2.push(['MODAL_INTERSTITIAL']);
 
 			// Set flag to indicate we're showing an ad (for arrow click handler)
 			Lightbox.ads.adIsShowing = true;
