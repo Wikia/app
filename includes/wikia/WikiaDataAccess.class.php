@@ -18,7 +18,7 @@ class WikiaDataAccess {
 	/**
 	 * WikiaDataAccess::USE_CACHE - does not have to be passed to cache or cacheWithLock [default]
 	 * WikiaDataAccess::SKIP_CACHE - is equivalent of mcache=none for one variable
-	 * WikiaDataAccess::REFRESH_CACHE - is equivalent of mcahce=writeonly for one variable
+	 * WikiaDataAccess::REFRESH_CACHE - is equivalent of mcache=writeonly for one variable
 	 */
 	const USE_CACHE = 0;
 	const SKIP_CACHE = 1;
@@ -89,7 +89,7 @@ class WikiaDataAccess {
 	 * @param $cacheTime Integer
 	 * @param $command Integer
 	 */
-	static private function setCache( $key, $result, $cacheTime, $command ) {
+	static private function setCache( $key, $result, $cacheTime, $command = self::USE_CACHE ) {
 		if ( $command == self::USE_CACHE || $command == self::REFRESH_CACHE ) {
 			F::app()->wg->Memc->set( $key, $result, $cacheTime * 2 );
 		}
