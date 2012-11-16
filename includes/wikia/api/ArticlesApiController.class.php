@@ -7,7 +7,7 @@
 
 class ArticlesApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
-	const CACHE_VERSION = 2;
+	const CACHE_VERSION = 3;
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by vertical namespace
