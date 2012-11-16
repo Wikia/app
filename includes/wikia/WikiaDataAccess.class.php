@@ -15,6 +15,10 @@ class WikiaDataAccess {
 
 	const LOCK_TIMEOUT = 60; // lock for at most 60s
 
+	const USE_CACHE = 0;
+	const SKIP_CACHE = 1;
+	const REFRESH_CACHE = 2;
+
 
 	/***********************************
 	 * Public Interface
@@ -36,15 +40,20 @@ class WikiaDataAccess {
 	 * returns cached data if possible (up to $cacheTime old)
 	 * otherwise gets the data and saves the result in cache before returning it
 	 * @author Piotr Bablok <pbablok@wikia-inc.com>
+	 *
+	 * @param $key String
+	 * @param $cacheTime Integer
+	 * @param $getData Callable
+	 * @param $skipCache Integer
 	 */
-	static function cache( $key, $cacheTime, $getData, $debug = false ) {
+	static function cache( $key, $cacheTime, $getData, $skipCache = self::USE_CACHE ) {
 		$wg = F::app()->wg;
 
-		$result = !$debug ? $wg->Memc->get( $key ) : null;
+		$result = ($skipCache == self::USE_CACHE) ? $wg->Memc->get( $key ) : null;
 
 		if ( is_null( $result ) || $result === false ) {
 			$result = $getData();
-			if ( !$debug ) {
+			if ( $skipCache == self::USE_CACHE || $skipCache == self::REFRESH_CACHE ) {
 				$wg->Memc->set( $key, $result, $cacheTime );
 			}
 		}
@@ -72,7 +81,7 @@ class WikiaDataAccess {
 	*    the same data as the first thread
 	* @author Piotr Bablok <pbablok@wikia-inc.com>
 	*/
-	static function cacheWithLock( $key, $cacheTime, $getData ) {
+	static function cacheWithLock( $key, $cacheTime, $getData, $skipCache = self::USE_CACHE ) {
 		$app = F::app();
 
 		$keyLock = $key . ':lock';
