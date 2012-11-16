@@ -1,9 +1,13 @@
 <?php
 
 $messages = array();
+$magicWords = array();
 
 $messages['en'] = array(
-	//'data' => array( 0, 'data' ),
-	'structureddata-object-updated' => 'Object updated'
+	'structureddata-object-updated' => 'Object updated',
+	'structureddata' => 'Structured Data'
 );
 
+$magicWords['en'] = array(
+	'data' => array( 0, 'data' )
+);
