@@ -5,6 +5,7 @@
  * 
  * @author Lucas TOR Garczewski <tor@wikia-inc.com>
  * @author Kamil Koterba <kamil@wikia-inc.com>
+ * @since Nov 2012 | MediaWiki 1.19
  */
 class CensusDataRetrieval {
         var $app;
@@ -31,6 +32,12 @@ class CensusDataRetrieval {
                 
 	);
         
+        /**
+         * Cachable Array containing information about names of records 
+         * of all supported types, indexed by type and id
+         * 'type.id' => 'name'
+         * @var Array
+         */
         var $censusDataArr = array();
 
 	const QUERY_URL = 'http://data.soe.com/s:wikia/json/get/ps2/%s/%s';
@@ -77,7 +84,7 @@ class CensusDataRetrieval {
 	}
 
 	/**
-	 * gets data from the Census API and returns the part we care about
+	 * Retrieves data from the Census API and filters the part we care about
 	 * @return boolean true on success, false on failed connection or empty result
 	 */
 	private function fetchData() {
@@ -85,14 +92,15 @@ class CensusDataRetrieval {
 		// fetch data from API based on $this->query
                 $http = new Http();
 
-		// @TODO find a way to query all object types, preferably in one query
                 $censusData = null;
+                //Check censusDataArr to find out if relevant data exists in Census
                 $key = array_search($this->query, $this->censusDataArr);
-                //set type and id
+                //fetch using key
                 if ( $key ) {
                         $key = explode('.', $key);
                         $type = $key[0];
                         $id = $key[1];
+                        //fetch data from Census by type and id
                         $censusData = $http->get( sprintf(self::QUERY_URL, $type, $id) );
                         $map = json_decode($censusData);
                         if ( $map->returned > 0 ) {
@@ -107,9 +115,9 @@ class CensusDataRetrieval {
 			return false;
 		}
  
-                // use data map to filter out unneeded data
                 wfProfileOut(__METHOD__);
-		return $this->mapData($censusData);
+                // use data map to filter out unneeded data
+		return $this->mapData( $censusData );
 	}
 
 	/**
@@ -195,7 +203,7 @@ class CensusDataRetrieval {
 			//wfDebug( __METHOD__ . ": Found object of type {$object->type}" );
 		}
 
-		// @TODO this needs to be generalized ot be based on a per-type map array defined in a class variable
+		// perform mapping each required property basing on typeMap array
                 foreach ( $this->typeMap[$this->type] as $name => $propertyStr ) {
                         $this->data[$name] = $this->getPropValue($object, $propertyStr);
                 }

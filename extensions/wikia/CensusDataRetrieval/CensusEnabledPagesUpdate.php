@@ -5,6 +5,7 @@
  * 
  * @author Lucas TOR Garczewski <tor@wikia-inc.com>
  * @author Kamil Koterba <kamil@wikia-inc.com>
+ * @since Nov 2012 | MediaWiki 1.19
  */
 
 class CensusEnabledPagesUpdate {
