@@ -285,12 +285,12 @@ $messages['es'] = array(
 
 	'wikiahome-visualisation-remix-mixitup' => '¡Mézclalos!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Miles de wikis están a tu alcance. Remuévelos de nuevo para explorar más wikis.',
-//	'wikiahome-visualisation-remix-button' => 'Remover',
+	'wikiahome-visualisation-remix-button' => 'Mover',
 
 	'wikiahome-stats-heading' => 'La colaboración en acción',
 	'wikiahome-stats-content' => 'Midiendo la revolución de los medios',
 	'wikiahome-stats-visitors' => 'Personas al mes',
-	'wikiahome-stats-edits' => 'Cambios realizados hoy',
+	'wikiahome-stats-edits' => 'Ediciones de hoy',
 	'wikiahome-stats-communities' => 'Comunidades',
 	'wikiahome-stats-totalpages' => 'Páginas totales',
 
@@ -304,7 +304,7 @@ $messages['es'] = array(
 
 	'wikiahome-hubs-videogames-heading' => 'Videojuegos',
 	'wikiahome-hubs-videogames-url' => 'http://es.wikia.com/wiki/Videojuegos',
-	'wikiahome-hubs-videogames-creative' => 'Wikia es donde todo comienza cuando llegas al mundo de los videojuegos. Prepárate para perderte.',
+	'wikiahome-hubs-videogames-creative' => '"Wikia es donde todo comienza cuando llegas al mundo de los videojuegos. Prepárate para perderte en un mundo más real de lo que imaginas.',
 	'wikiahome-hubs-videogames-more-heading' => 'Más en Videojuegos',
 	'wikiahome-hubs-videogames-more-list' => '
 *[http://es.wikia.com/wiki/Videojuegos Guías de juegos]
@@ -497,10 +497,9 @@ __NOEDITSECTION__',
 	'wikia-home-page-official' => 'Officiel',
 	'wikia-home-parse-exception-empty-data-from-database' => 'Notre base de données n\'a retourné aucune donnée. La table en base est vide ou tous les wikis sont bloqués.',
 	'wikia-home-parse-exception-read-only' => 'Nos bases de données sont en lecture seule.',
-//	'wikiahome-preview-stats-page' => '<b>1</b> page',
-//	'wikiahome-preview-stats-photos' => '<b>1</b> image',
+
 	'wikiahome-preview-stats-videos' => "'''1''' {{PLURAL:$1|vidéo|vidéos}}",
-//	'wikiahome-preview-user-edits' => '1 modification',
+
 	'wikiahome-preview-description-heading' => '$1',
 	'wikiahome-preview-admins-heading' => 'Administrateurs',
 	'wikiahome-preview-contributors-heading' => 'Meilleurs contributeurs',
