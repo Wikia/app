@@ -46,15 +46,20 @@ class WikiaDataAccess {
 	 * @param $getData Callable
 	 * @param $skipCache Integer
 	 */
-	static function cache( $key, $cacheTime, $getData, $skipCache = self::USE_CACHE ) {
+	static function cache( $key, $cacheTime, $getData, $command = self::USE_CACHE ) {
 		$wg = F::app()->wg;
 
-		$result = ($skipCache == self::USE_CACHE) ? $wg->Memc->get( $key ) : null;
+		if ( $command == self::SKIP_CACHE ) {
+			Wikia::log( __METHOD__, 'debug', "Cache disabled for key:{$key}, if this is on production please contact the author of the code.", true);
+		}
+
+		$result = ($command == self::USE_CACHE) ? $wg->Memc->get( $key ) : null;
 
 		if ( is_null( $result ) || $result === false ) {
 			$result = $getData();
-			if ( $skipCache == self::USE_CACHE || $skipCache == self::REFRESH_CACHE ) {
+			if ( $command == self::USE_CACHE || $command == self::REFRESH_CACHE ) {
 				$wg->Memc->set( $key, $result, $cacheTime );
+				Wikia::log( __METHOD__, 'debug', "Cache refreshed for key:{$key}, if this is on production please contact the author of the code.", true);
 			}
 		}
 
@@ -81,8 +86,12 @@ class WikiaDataAccess {
 	*    the same data as the first thread
 	* @author Piotr Bablok <pbablok@wikia-inc.com>
 	*/
-	static function cacheWithLock( $key, $cacheTime, $getData, $skipCache = self::USE_CACHE ) {
+	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE ) {
 		$app = F::app();
+
+		if ( $command == self::SKIP_CACHE ) {
+			Wikia::log( __METHOD__, 'debug', "Cache disabled for key:{$key}, if this is on production please contact the author of the code.", true);
+		}
 
 		$keyLock = $key . ':lock';
 		$key .= '-withDate';
@@ -95,9 +104,9 @@ class WikiaDataAccess {
 			return $result;
 		};
 
-		$result = $tryCache($key);
+		$result = ($command == self::USE_CACHE) ? $tryCache($key) : null;
 
-		if( is_null($result) ) {
+		if ( is_null( $result ) ) {
 
 			list($gotLock, $wasLocked) = self::lock( $keyLock );
 
@@ -107,12 +116,14 @@ class WikiaDataAccess {
 				$result = $tryCache($key);
 			}
 
-			if( is_null($result) ) {
+			if( is_null( $result ) ) {
 				$result = array(
 					'data' => $getData(),
 					'time' => $app->wf->Timestamp( TS_UNIX )
 				);
-				$app->wg->Memc->set( $key, $result, $cacheTime * 2 );
+				if ( $command == self::USE_CACHE || $command == self::REFRESH_CACHE ) {
+					$app->wg->Memc->set( $key, $result, $cacheTime * 2 );
+				}
 			}
 
 			if( $gotLock ) self::unlock( $keyLock );
@@ -133,7 +144,9 @@ class WikiaDataAccess {
 						'data' => $getData(),
 						'time' => $app->wf->Timestamp( TS_UNIX )
 					);
-					$app->wg->Memc->set( $key, $result, $cacheTime * 2 );
+					if ( $command == self::USE_CACHE || $command == self::REFRESH_CACHE ) {
+						$app->wg->Memc->set( $key, $result, $cacheTime * 2 );
+					}
 					self::unlock( $keyLock );
 				} else {
 					// what we already have in $result is good enough
