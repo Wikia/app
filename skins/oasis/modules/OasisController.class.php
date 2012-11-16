@@ -440,6 +440,7 @@ class OasisController extends WikiaController {
 	var wsl_assets = {$assets};
 EOT;
 
+// TODO: sort this out
 		if ($this->jsAtBottom) {
 			$jsLoader .= <<<EOT
 if ( window.Wikia.AbTest && ( window.wgLoadAdDriverOnLiftiumInit || Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "AS_WRAPPERS_ARE_RENDERED" ) ) ) {
