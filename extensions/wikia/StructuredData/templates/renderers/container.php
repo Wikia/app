@@ -8,6 +8,9 @@ if ( !count( $value ) ) {
 	}
 	if ($context == SD_CONTEXT_EDITING) {
 		echo ($rendererName == '@list') ? '<ol data-field-name="'.$object->getName().'"></ol>' : '<ul data-field-name="'.$object->getName().'"></ul>';
+		if( !$object->getType()->hasRange()) {
+			echo '<div class="input-group"><input type="text" name="'. $object->getName() . '[]" value="" /></div>';
+		}
 	}
 } else {
 	$renderList = ( count( $value ) > 1 || $context == SD_CONTEXT_EDITING) ? true : false;
@@ -27,8 +30,12 @@ if ( !count( $value ) ) {
 			}
 			else {
 				if ($context == SD_CONTEXT_EDITING) {
-					echo '<div class="input-group"><input type="text" name="'. $object->getName() . '[]" value="'
-					. $reference . '" /> <button class="secondary remove">Remove</button></div>';
+					if($object->getType()->hasRange()) {
+						echo '<div class="input-group"> !!!<input type="text" name="'. $object->getName() . '[]" value="'. $reference . '" /> <button class="secondary remove">Remove</button></div>';
+					} else {
+						echo '<div class="input-group"><input type="text" name="'. $object->getName() . '[]" value="'. $reference . '" /></div>';
+					}
+
 				}  else {
 					echo $reference;
 				}
@@ -51,6 +58,7 @@ if ($context == SD_CONTEXT_EDITING) {
 		//var_dump($object->getType()->getAcceptedValues());
 	}
 	else {
-		echo " (object of type: " . $object->getType()->getName() . " has no range)";
+		//echo '<input type="text" value="" name="'.$object->getName().'" />';
+		//echo " (object of type: " . $object->getType()->getName() . " has no range)";
 	}
 }

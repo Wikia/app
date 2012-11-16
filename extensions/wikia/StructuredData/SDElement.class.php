@@ -59,6 +59,32 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		return $this->properties;
 	}
 
+	public function isPropertyVisible( $property ) {
+
+		//TODO: it should be SDS API dependent (object template?)
+		// fields to hide
+		$mockData = array(
+		    'callofduty:Character' => array( 	'wikia:includeWith',
+		    				     	'wikia:elementIn',
+			    				'wikia:namespace',
+			    				'schema:audio',
+			    				'wikia:element',
+			    				'schema:video',
+			    				'callofduty:timeline',
+		    )
+		);
+
+		if ( $property instanceof SDElementProperty ) {
+			$property = $property->getName();
+		}
+
+		if ( in_array( $property, $mockData[ $this->type ]) ) {
+			return false;
+		}
+
+		return true;
+	}
+
 	/**
 	 * Return a property based on its schema name
 	 * @return SDElementProperty
@@ -191,8 +217,9 @@ class SDElement extends SDRenderableObject implements SplSubject {
 
 		/** @var $property SDElementProperty */
 		foreach($this->properties as $property) {
-			$data->{$property->getName()} = $property->toSDSJson();
 
+			if ( $this->isPropertyVisible($this->type, $property) )
+				$data->{$property->getName()} = $property->toSDSJson();
 		}
 
 		return json_encode( $data );

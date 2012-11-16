@@ -41,7 +41,10 @@
 		</thead>
 		<tbody>
 			<?php foreach ( $properties as $property ) : ?>
-				<?php 
+				<?php
+					if ( !$sdsObject->isPropertyVisible( $property ) ) {
+						continue;
+					}
 					$propertyValue = $property->getValue();
 					$propertyLabel = $property->getLabel();
 					$propertyName = $property->getName();
