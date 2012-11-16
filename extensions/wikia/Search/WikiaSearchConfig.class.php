@@ -354,8 +354,8 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	public function getRequestedFields()
 	{
 		$fieldsPrepped = array();
-		foreach ($this['requestedFields'] as $field) {
-			$fieldsPrepped[] = WikiaSearch::field( $field, $this->getLang() );
+		foreach ( $this['requestedFields'] as $field ) {
+			$fieldsPrepped[] = WikiaSearch::field( $field );
 		}
 		
 		return $fieldsPrepped;
@@ -598,18 +598,6 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 			$this->setFilterQueryByCode( $code );
 		}
 		return $this;
-	}
-	
-	/**
-	 * Allows us to set the language WikiaSearchConfig is operating under.
-	 * Defaults to wgContlang
-	 * @return string
-	 */
-	public function getLang() {
-		if (! isset( $this->params['lang'] ) ) {
-			$this->params['lang'] = $this->wg->ContLang->mCode;
-		}
-		return $this->params['lang'];
 	}
 
 }
