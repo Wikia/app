@@ -31,7 +31,7 @@ if ( !count( $value ) ) {
 			else {
 				if ($context == SD_CONTEXT_EDITING) {
 					if($object->getType()->hasRange()) {
-						echo '<div class="input-group"> !!!<input type="text" name="'. $object->getName() . '[]" value="'. $reference . '" /> <button class="secondary remove">Remove</button></div>';
+						echo '<div class="input-group"><input type="text" name="'. $object->getName() . '[]" value="'. $reference . '" /> <button class="secondary remove">Remove</button></div>';
 					} else {
 						echo '<div class="input-group"><input type="text" name="'. $object->getName() . '[]" value="'. $reference . '" /></div>';
 					}
