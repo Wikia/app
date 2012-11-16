@@ -33,6 +33,7 @@ class WikiaUpdater {
 			array( 'addTable', 'page_wikia_props', $ext_dir . '/wikia/ImageServing/sql/table.sql', true ),
 			array( 'addTable', 'ach_user_score', $dir . 'patch-create-achievements_user_score.sql', true ),
 			array( 'addTable', 'ach_user_badges', $dir . 'patch-create-achievements_user_badges.sql', true ),
+			array( 'addTable', 'ach_user_badges_notified', $dir . 'patch-create-achievements_user_badges_notified.sql', true ),
 			array( 'addTable', 'ach_user_counters', $dir . 'patch-create-achievements_user_counters.sql', true ),
 			array( 'addTable', 'ach_custom_badges', $dir . 'patch-create-achievements_custom_badges.sql', true ),
 			array( 'addTable', 'ach_ranking_snapshots', $dir . 'patch-create-achievements_ranking_snapshots.sql', true ),
