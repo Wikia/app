@@ -387,7 +387,7 @@ class WallMessage {
 		if($this->isMain()) {
 			$this->getArticleComment()->setMetaData('title', $title);
 		}
-		return false;
+		return true;
 	}
 
 	public function setRelatedTopics($user, $relatedTopics) {
@@ -396,7 +396,15 @@ class WallMessage {
 			$this->storeRelatedTopicsInDB($relatedTopics);
 			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-message-update-topics-summary' ) );
 		}
-		return false;
+		return true;
+	}
+
+	public function markAsMove($user) {
+		if($this->isMain()) {
+			$this->getArticleComment()->setMetaData('lastmove', time());
+			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-action-move-topics-summary' ) );
+		}
+		return true; 
 	}
 
 

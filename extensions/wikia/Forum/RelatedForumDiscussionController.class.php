@@ -10,7 +10,7 @@ class RelatedForumDiscussionController extends WikiaController {
 		$wlp = new WallRelatedPages(); 
 	
 		$messages = $wlp->getArticlesRelatedMessgesSnippet($this->app->wg->Title->getArticleId(), 2, 2 );
-	
+		
 		unset($messages['lastupdate']);
 	
 		// resources
@@ -48,64 +48,33 @@ class RelatedForumDiscussionController extends WikiaController {
 	}
 	
 	public function checkData() {
-		$articleTitle = $this->getVal('articleTitle');
+		$articleId = $this->getVal('articleId');
 		$title = Title::newFromText($articleTitle);
 		if(empty($articleTitle) || empty($title)) {
 			$this->replace = false;
 			return;
 		}
-	
-		$replace = true;
-		$this->replace = $replace;
-
-		// mock data
-		$messages = array(
-			array(
-				'metaTitle' => 'Placeholder main title',
-				'threadUrl' => '#',
-				'totalReplies' => $this->wf->Msg('forum-related-discussion-total-replies', 29),
-				'replies' => array(
-					array(
-						'userName' => 'SomeDude',
-						'userAvatarUrl' => $this->wf->BlankImgUrl(),
-						'userUrl' => '#',
-						'messageBody' => 'Message body goes here',
-						'timeStamp' => '3 hour ago',
-					),
-					array(
-						'userName' => 'SomeDude2',
-						'userAvatarUrl' => $this->wf->BlankImgUrl(),
-						'userUrl' => '#',
-						'messageBody' => 'Message body 2 goes here',
-						'timeStamp' => '1 hour ago',
-					),
-				),
-			),
-			array(
-				'metaTitle' => 'Placeholder main title',
-				'threadUrl' => '#',
-				'totalReplies' => $this->wf->Msg('forum-related-discussion-total-replies', 14),
-				'replies' => array(
-					array(
-						'userName' => 'SomeDude',
-						'userAvatarUrl' => $this->wf->BlankImgUrl(),
-						'userUrl' => '#',
-						'messageBody' => 'Message body goes here',
-						'timeStamp' => '3 hour ago',
-					),
-					array(
-						'userName' => 'SomeDude2',
-						'userAvatarUrl' => $this->wf->BlankImgUrl(),
-						'userUrl' => '#',
-						'messageBody' => 'Message body 2 goes here',
-						'timeStamp' => '1 hour ago',
-					),
-				),
-			),
-		);
 		
-		$this->html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array('messages' => $messages) );
+		$wlp = new WallRelatedPages();
+		$messages = $wlp->getArticlesRelatedMessgesSnippet($articleId, 2, 2 );
+		
+		$timediff = time() - $messages['lastupdate'];
+		
+		$this->lastupdate = $messages['lastupdate'];
+		$this->timediff = $timediff;
+		
+		unset($messages['lastupdate']);
 
+		if($timediff < 24*60*60) {
+			$this->replace = true;
+			$this->html = $this->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array('messages' => $messages) );			
+		} else {
+			$this->replace = false;
+			$this->html = '';
+		}
+		
+		$this->response->setCacheValidity( 0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER) );
+		$this->response->setCacheValidity( 6*60*60, 6*60*60, array(WikiaResponse::CACHE_TARGET_VARNISH) );
 	}
 	
 }

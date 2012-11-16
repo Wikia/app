@@ -50,8 +50,7 @@ class WallHistory extends WikiaModel {
 		
 		$this->getDB(DB_MASTER)->commit();
 	}
-	
-		
+
 	public function moveThread( $thread, $to ) {
 		$this->getDB(DB_MASTER)->update(
 			'wall_history',

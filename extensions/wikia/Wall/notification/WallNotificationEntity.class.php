@@ -70,6 +70,9 @@ class WallNotificationEntity {
 
 		$app = F::app();
 
+		$this->data = new stdObject;
+		$this->data_non_cached = new stdObject;
+
 		$walluser = $ac->getWallOwner();
 		$authoruser = User::newFromId($rev->getUser());
 

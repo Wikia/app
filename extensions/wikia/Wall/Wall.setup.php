@@ -138,7 +138,6 @@ $app->registerHook('ListredirectsPage::getQueryInfo', 'WallHooksHelper', 'onList
 
 $app->registerHook('BeforeInitialize', 'WallHooksHelper', 'onBeforeInitialize');
 // lazy loaded by the previous hook
-//$app->registerHook('AfterLanguageGetNamespaces', 'WallHooksHelper', 'onAfterLanguageGetNamespaces');
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',

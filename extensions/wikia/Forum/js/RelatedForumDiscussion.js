@@ -13,16 +13,16 @@
 	
 	// if user is not logged in, check for cache, and replace if needed
 	if(!window.wgUserName) {
-	
 		function loadRelatedDiscussion() {
 			$.nirvana.sendRequest({
 				controller: 'RelatedForumDiscussionController',
 				method: 'checkData',
 				format: 'json',
 				data: {
-					articleTitle: 'Kermit'
+					articleId: window.wgArticleId ? window.wgArticleId:0 
 				},
 				callback: function(json) {
+					alert("omnomnomnom");
 					if(json && json.replace) {
 						$content.html(json.html);
 					} 

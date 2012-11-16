@@ -35,12 +35,16 @@ class WallThread {
 		return $this->mCached;
 	}
 	
-	public function move(Wall $dest) {
+	public function move(Wall $dest, $user) {
 		CommentsIndex::changeParent( 0, $dest->getId(), $this->mThreadId);
 		
 		$wallHistory = new WallHistory( $this->mCityId );
 		$wallHistory->moveThread( $this->mThreadId, $dest->getId() );
 		
+		$main = $this->getThreadMainMsg();
+		$main->load();
+		//this is use to build a history in contribiution page
+		$main->markAsMove($user);
 		$this->invalidateCache();
 	}
 	

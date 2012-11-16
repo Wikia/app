@@ -170,10 +170,10 @@ class WallRelatedPages extends WikiaModel {
 			}
 			
 			$wallMessage = $wallThread->getThreadMainMsg();
-			
-			$update[] = $wallMessage->getCreateTime(TS_MW);
-			
 			$wallMessage->load();
+			
+			$update[] = $wallMessage->getCreateTime(TS_UNIX);
+			
 			$row = array();
 			$row['metaTitle'] = $wallMessage->getMetaTitle();
 			$row['threadUrl'] = $wallMessage->getMessagePageUrl(); 
@@ -185,7 +185,7 @@ class WallRelatedPages extends WikiaModel {
 			
 			foreach($replies as $reply) {
 				$reply->load();
-				$update[] = $reply->getCreateTime(TS_MW);
+				$update[] = $reply->getCreateTime(TS_UNIX);
 				$replyRow = array(
 					'userName' =>  $reply->getUser()->getName(),
 					'userUrl' => $reply->getUser()->getUserPage()->getFullUrl(),
@@ -198,11 +198,12 @@ class WallRelatedPages extends WikiaModel {
 			$out[] = $row;
 		}
 
+
 		$out['lastupdate'] = max($update);
 		
 		return $out;
 	}
-		
+
 	public function invalidateData( $threads, $replies ) {
 		
 	}

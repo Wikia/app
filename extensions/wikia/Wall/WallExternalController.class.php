@@ -80,7 +80,7 @@ class WallExternalController extends WikiaController {
 		}
 		
 		
-		$thread->move($wall);
+		$thread->move($wall, $this->wg->User);
 		$this->status = 'ok';
 	}
 	

@@ -117,6 +117,7 @@ The original post and your summary will still appear in the wiki's history.",
 	
 	'wall-action-move-thread-heading' => 'Move this thread',
 	'wall-action-move-validation-select-wall' => 'Please select a board',
+	'wall-action-move-topics-summary' => 'Thread moved',
 	'wall-action-move-thread-ok' => 'Move thread',
 	'wall-action-move-board-label' => 'Select a board to move to',
 
@@ -372,8 +373,6 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-topic-input-error-limit' => 'A thread can only have $1 Topics maximum.',
 	'wall-topic-heading' => 'Topics for this thread:',
 	'wall-topic-edit' => 'Edit Topics',
-	
-	'wall-move-thread' => 'Please select board'
 );
 
 /** Message documentation (Message documentation)
@@ -485,6 +484,7 @@ $messages['qqq'] = array(
 	'wall-action-rev-confirm-ok' => 'Button for confirming revision delete',
 	'wall-action-move-thread-heading' => 'Heading for thread moving modal dialog',
 	'wall-action-move-validation-select-wall' => "validation error when the wall is not select",
+	'wall-action-move-topics-summary' => 'Summery for change in user contribution',
 	'wall-action-move-thread-ok' => 'Confirmation button for moving thread',
 	'wall-action-move-board-label' => 'Label for list of board dropdown',
 	'wall-notifications' => 'Title of notification dropdown',
