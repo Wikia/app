@@ -86,7 +86,6 @@ class StructuredDataAPIClient extends WikiaObject {
 	public function getObjectByTypeAndName($type, $name) {
 		$url = rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) . '&withProperty='.urlencode('schema:name').'&withValue=' .urlencode($name).'&cache=false&cb=' . time();
 		$response = json_decode( $this->call( $url ) );
-
 		if(isset($response->{"@graph"})) {
 			$object = array_shift( $response->{"@graph"} );
 			if( !empty($object)) {

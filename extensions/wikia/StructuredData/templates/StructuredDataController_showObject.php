@@ -6,6 +6,7 @@
 
 	// Array of SD object properties 
 	$properties = $sdsObject->getProperties();
+	$objectName = $sdsObject->getName();
 ?>
 
 <form class="WikiaForm SDObject" id="SDObject" method="POST">
@@ -16,7 +17,7 @@
 			<?php //var_dump($updateResult->errors); ?>
 		<?php endif; ?>
 	<?php endif; ?>
-	<h1><strong><?= $sdsObject->getName(); ?></strong></h1>
+	<h1><strong><?= $objectName; ?></strong></h1>
 	<?php if($context == SD_CONTEXT_SPECIAL && $isEditAllowed): ?>
 		<a href="?action=edit" class="wikia-button" title="Edit SDS Object">Edit</a>
 	<?php endif; ?>
@@ -68,7 +69,7 @@
 							<?php endif; ?>
 						</td>
 						<?php if($context == SD_CONTEXT_SPECIAL): ?>
-							<td><pre><?= $propertyName; ?></pre></td>
+							<td><pre><?= $sdsObject->getType() . '/' . $objectName . '/' . $propertyName; ?></pre></td>
 						<?php endif; ?>
 					</tr>
 					<?php continue; ?>
@@ -80,7 +81,7 @@
 					<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</th>
 					<td><p><?php echo $property->getValueObject()->render($context); ?></p></td>
 					<?php if($context == SD_CONTEXT_SPECIAL): ?>
-						<td><pre><?= $propertyName; ?></pre></td>
+						<td><pre><?= $sdsObject->getType() . '/' . $objectName . '/'. $propertyName; ?></pre></td>
 					<?php endif; ?>
 				</tr>
 			<?php endforeach; ?>
