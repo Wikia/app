@@ -22,8 +22,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		$this->response->addAsset('/extensions/wikia/MarketingToolbox/css/MarketingToolbox.scss');
-		$this->response->addAsset('/extensions/wikia/MarketingToolbox/js/MarketingToolbox.js');
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
 
 		$this->wf->ProfileOut(__METHOD__);
 		return true;
