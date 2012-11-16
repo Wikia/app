@@ -140,7 +140,7 @@ class ArticlesApiController extends WikiaApiController {
 				if ( !empty( $titles ) ) {
 					foreach ( $titles as $t ) {
 						$ns = $t->getNamespace();
-						$id =$t->getArticleID();
+						$id = $t->getArticleID();
 						$as = new ArticleService( $id );
 
 						$collection[$id] = array(
