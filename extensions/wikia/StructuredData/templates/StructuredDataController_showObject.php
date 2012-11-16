@@ -10,7 +10,8 @@
 
 <form class="WikiaForm SDObject" id="SDObject" method="POST">
 	<?php if(!empty($updateResult)): ?>
-		<div class="validation-main-message"><?=$updateResult->message;?></div>
+		<div class="validation-main-message <?= (empty($updateResult->errors)) ? 'success' : '' ?>"
+				><?=$updateResult->message;?></div>
 		<?php if(isset($updateResult->errors)): ?>
 			<?php //var_dump($updateResult->errors); ?>
 		<?php endif; ?>

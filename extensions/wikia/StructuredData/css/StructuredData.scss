@@ -124,6 +124,10 @@
 		font-size: 18px;
 		padding: 15px 10px;
 		@include box-sizing();
+		&.success {
+			background-color: #006400;
+			border-color: mix(#006400, #000, 50%); ;
+		}
 	}
 	.validation-message {
 		margin-top: 10px;
