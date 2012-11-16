@@ -24,7 +24,7 @@ function __makeParamValue() {
 }
 
 $(document).ready(function() {
-    var baseurl = '/wikia.php?controller=SpecialSpamWikisController&method=getSpamWikis&format=json';
+    var baseurl = '/wikia.php?controller=SpecialSpamWikis&method=getSpamWikis&format=json';
     
     var oTable = $('#spamwikis-table').dataTable( {
         'oLanguage': {

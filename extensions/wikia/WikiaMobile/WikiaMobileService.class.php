@@ -7,7 +7,7 @@
  */
 class WikiaMobileService extends WikiaService {
 	//AppCache will be disabled for the first several releases
-	//const CACHE_MANIFEST_PATH = 'wikia.php?controller=WikiaMobileAppCacheController&method=serveManifest&format=html';
+	//const CACHE_MANIFEST_PATH = 'wikia.php?controller=WikiaMobileAppCache&method=serveManifest&format=html';
 	const LYRICSWIKI_ID = 43339;
 
 	static protected $initialized = false;
