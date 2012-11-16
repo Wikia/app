@@ -68,6 +68,7 @@ var StructureData = {
 		$('input[name="schema:birthDate"]').datepicker({
 			changeMonth: true,
 			changeYear: true,
+			yearRange: '-150:+0',
 			dateFormat: 'yy-m-d'
 		});
 	},
