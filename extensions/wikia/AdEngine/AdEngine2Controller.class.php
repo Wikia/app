@@ -87,7 +87,7 @@ class AdEngine2Controller extends WikiaController {
 			return true;
 		}
 
-		if (F::app()->wg->LoadAdsInHead) {
+		if ($this->wg->LoadAdsInHead) {
 			// Removing oasis_shared_core_js asset group
 			array_splice($jsAssets, $coreGroupIndex, 1);
 		} else {
@@ -105,7 +105,7 @@ class AdEngine2Controller extends WikiaController {
 	 * @return bool
 	 */
 	public function onOasisSkinAssetGroupsBlocking(&$jsAssets) {
-		if (F::app()->wg->LoadAdsInHead) {
+		if ($this->wg->LoadAdsInHead) {
 			// Add ad asset to JavaScripts loaded on top (in <head>)
 			$jsAssets[] = self::ASSET_GROUP_CORE;
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE;
