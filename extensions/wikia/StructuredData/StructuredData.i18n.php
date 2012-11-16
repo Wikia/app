@@ -1,9 +1,9 @@
 <?php
 
-$magicWords = array();
+$messages = array();
 
-$magicWords['en'] = array(
-	'data' => array( 0, 'data' ),
+$messages['en'] = array(
+	//'data' => array( 0, 'data' ),
 	'structureddata-object-updated' => 'Object updated'
 );
 

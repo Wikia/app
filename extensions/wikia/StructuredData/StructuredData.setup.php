@@ -72,4 +72,7 @@ F::addClassConstructor( 'StructuredDataAPIClient', array( 'baseUrl' => $wgStruct
 F::addClassConstructor( 'StructuredData', array( 'apiClient' => F::build( 'StructuredDataAPIClient' )));
 F::addClassConstructor( 'SDElementRendererFactory', array( 'config' => $wgStructuredDataConfig ) );
 
-$wgExtensionMessagesFiles['StructuredContent'] = "$dir/StructuredData.i18n.php";
+/**
+ * message files
+ */
+$app->registerExtensionMessageFile('StructuredData', $dir . 'StructuredData.i18n.php' );
