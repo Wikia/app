@@ -197,14 +197,10 @@ class ArticlesApiController extends WikiaApiController {
 			$thumbnails = null;
 		}
 
-		$this->response->setCacheValidity(
-			86400,
-			86400,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		/*
+		 * Varnish/Browser caching not appliable for
+		 * for this method's data to be kept up-to-date
+		 */
 
 		$this->response->setVal( 'items', $collection );
 
