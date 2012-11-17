@@ -629,10 +629,10 @@ class EditPageLayout extends EditPage {
 
 		// Edit notice (BugId:7616)
 		$editnotice_ns_key = 'editnotice-'.$this->mTitle->getNamespace();
-		$editnotice_ns = $this->app->wf->msgExt( $editnotice_ns_key, array( 'parse' ) );
-		if ( !wfEmptyMsg( $editnotice_ns_key, $editnotice_ns ) ) {
+		$editnotice_ns_msg = new Message( $editnotice_ns_key );
+		if ( !$editnotice_ns_msg->isDisabled() ) {
 			$this->mEditPagePreloads['EditPageEditNotice'] = array(
-				'content' => $editnotice_ns,
+				'content' => $editnotice_ns_msg->parse(),
 				'class' => 'mw-editnotice',
 			);
 		}
