@@ -285,8 +285,13 @@ class ForumHooksHelper {
 	 * purge memc and vernish cache for pages releated to this thread
 	 */
 	
-	public static function onWallAction($action, $id, $namespace) {
-		tomekbug(array($action, $id, $namespace));
+	public static function onWallAction($action, $parent, $id, $namespace) {
+		$app = F::App();
+		
+		if ( MWNamespace::getSubject( $namespace ) == NS_WIKIA_FORUM_BOARD ) {
+			$app->sendRequest( "RelatedForumDiscussion", "purgeCache", array('threadId' => empty($parent) ? $id:$parent ) );
+		}
+		
 		return true;
 	}
 	

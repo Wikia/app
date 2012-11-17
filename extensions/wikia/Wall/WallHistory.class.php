@@ -15,7 +15,7 @@ class WallHistory extends WikiaModel {
 	
 	public function add( $type, $feed, $user ) {
 		//wall the wall action goes through this point.  
-		wfRunHooks('WallAction', array($type, $feed->data->title_id, $feed->data->article_title_ns));
+		wfRunHooks('WallAction', array($type, $feed->data->parent_id, $feed->data->title_id, $feed->data->article_title_ns));
 		
 		switch($type) {
 			case WH_EDIT: 
@@ -32,11 +32,11 @@ class WallHistory extends WikiaModel {
 		}
 	}
 
-	public function remove($postUserId) {
+	public function remove($pageId) {
 		$this->getDB(DB_MASTER)->delete(
 			'wall_history', 
 			array(
-				'page_id ='.((int) $postUserId).' OR parent_page_id = '.((int) $postUserId)
+				'parent_comment_id' => ((int) $pageId)
 			)
 		);
 	}
@@ -117,9 +117,9 @@ class WallHistory extends WikiaModel {
 			'wall_history',
 			'deleted_or_removed',
 			(($action == WH_DELETE || $action == WH_REMOVE) ? 1:0),
-			$this->getDB(DB_MASTER)->makeList( array(
+			array(
 				'comment_id' => $feed->data->message_id 
-			), LIST_AND ),
+			),
 			__METHOD__
 		);
 			
@@ -184,6 +184,7 @@ class WallHistory extends WikiaModel {
 			'wall_history',
 			array(
 				'max(revision_id) as revision_id',
+				'max(event_date) as max_event_date'
 			), 
 			array(
 				'action' => WH_NEW,
@@ -194,7 +195,7 @@ class WallHistory extends WikiaModel {
 			array(
 				'GROUP BY' => ' post_user_id, post_user_ip',		
 				'LIMIT' => 50,
-				'ORDER BY' => 'event_date desc'
+				'ORDER BY' => 'max_event_date desc'
 			)
 		);
 		

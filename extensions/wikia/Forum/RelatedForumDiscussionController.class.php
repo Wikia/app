@@ -75,8 +75,24 @@ class RelatedForumDiscussionController extends WikiaController {
 		$this->response->setCacheValidity( 6*60*60, 6*60*60, array(WikiaResponse::CACHE_TARGET_VARNISH) );
 	}
 
+	public function purgeCache() {
+		$threadId = $this->getVal('threadId');
+		
+		$rm = new WallRelatedPages();
+		$ids = $rm->getMessagesRelatedArticleIds($threadId);
+		$requestsParams = array(); 
+		
+		foreach($ids as $id) {
+			$key = wfMemcKey( __CLASS__, 'getData', $id );
+			WikiaDataAccess::cachePurge($key);
+			$requestsParams[] = array('articleId' => $id);
+		}
+		
+		RelatedForumDiscussionController::purgeMethodWithMultipleInputs('checkData', 'json', $requestsParams);
+	}
+
 	private function getData($id) {
-		return WikiaDataAccess::cache( wfMemcKey( __CLASS__, __METHOD__, $id ), 24*60*60, function($id) use $id {
+		return WikiaDataAccess::cacheWithLock( wfMemcKey( __CLASS__, 'getData', $id ), 24*60*60, function($id) use ($id) {
 			$wlp = new WallRelatedPages(); 
 			$messages = $wlp->getArticlesRelatedMessgesSnippet($id, 2, 2 );			
 		});

@@ -62,6 +62,8 @@ $app->registerHook( 'ArticleViewHeader', 'ForumHooksHelper', 'onArticleViewHeade
 // forum discussion on article
 $app->registerHook( 'OutputPageBeforeHTML', 'ForumHooksHelper', 'onOutputPageBeforeHTML');
 
+$app->registerHook( 'WallAction', 'ForumHooksHelper', 'onWallAction');
+
 include ($dir . '/Forum.namespace.setup.php');
 
 // permissions
