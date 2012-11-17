@@ -5,6 +5,8 @@
  */
 class EditPageLayout extends EditPage {
 
+	const COPYRIGHT_CACHE_TTL = 86400;
+
 	protected $app;
 	protected $out;
 	protected $request;
@@ -717,9 +719,21 @@ class EditPageLayout extends EditPage {
 	 * Return contribution/copyright notice
 	 */
 	public function getCopyrightNotice() {
-		$wikitext = parent::getCopywarn();
-		$parser = new Parser();
+		global $wgMemc, $wgLang;
+		wfProfileIn( __METHOD__ );
 
-		return $parser->parse($wikitext, $this->app->wg->Title, new ParserOptions())->getText();
+		$wikitext = parent::getCopywarn();
+		$key = wfMemcKey(__METHOD__,$wgLang->getCode(),md5($wikitext));
+		$text = $wgMemc->get($key);
+		if ( empty($text) ) {
+			wfProfileIn( __METHOD__ . '-parse');
+			$parser = new Parser();
+			$text = $parser->parse($wikitext, $this->app->wg->Title, new ParserOptions())->getText();
+			wfProfileOut( __METHOD__ . '-parse');
+			$wgMemc->set($key,$text,self::COPYRIGHT_CACHE_TTL);
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $text;
 	}
 }
