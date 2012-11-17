@@ -209,9 +209,9 @@ var LightboxLoader = {
 		var deferredList = [];
 		if(!LightboxLoader.assetsLoaded) {
 			deferredList.push($.loadMustache());
-			
+
 			var resources = [
-				//'history_polyfill_js',
+				$.getAssetManagerGroupUrl('history_polyfill_js'),
 				$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss'),
 				window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js'
 			];
@@ -367,6 +367,19 @@ $(function() {
 	LightboxLoader.init();
 	
 	var fileTitle = $.getUrlVar('file');
+	
+	// account for html4 browsers like IE < 10
+	if(typeof window.history.pushState == 'undefined') {
+		var hash = window.location.hash,
+			rFile = /\?file=/;
+		matches = hash.match(rFile);
+		if(matches) {
+			var tmpArr = hash.split("?file="), // split hash string into part before "?file=" and part after
+				tmpStr = tmpArr[tmpArr.length-1], // get only part after "?file="
+				titleArr = tmpStr.split("&");
+			fileTitle = titleArr[0];
+		}
+	}
 	
 	if(fileTitle) {
 		var trackingInfo = {

@@ -629,7 +629,7 @@ var Lightbox = {
 				title: dbKey
 			};
 
-		window.history.pushState(stateObj, document.title + ", " + Lightbox.current.title, "?file="+dbKey);
+		window.History.pushState(stateObj, document.title + ", " + Lightbox.current.title, window.location.pathname + "?file="+dbKey);
 	},
 	getShareCodes: function(mediaParams, callback) {
 		var title = mediaParams['fileTitle'];
