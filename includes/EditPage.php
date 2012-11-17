@@ -1914,8 +1914,12 @@ class EditPage {
 
 		$wgOut->addHTML( $this->editFormTextAfterTools . "\n" );
 
-		$wgOut->addHTML( Html::rawElement( 'div', array( 'class' => 'templatesUsed' ),
-			Linker::formatTemplates( $this->getTemplates(), $this->preview, $this->section != '' ) ) );
+		# <Wikia>
+		if ( empty( $this->preventRenderingTemplatesList ) ) {
+			$wgOut->addHTML( Html::rawElement( 'div', array( 'class' => 'templatesUsed' ),
+				Linker::formatTemplates( $this->getTemplates(), $this->preview, $this->section != '' ) ) );
+		}
+		# </Wikia>
 
 		# <Wikia>
 		if ( wfRunHooks( 'EditPage::CategoryBox', array( &$this ) ) ) {

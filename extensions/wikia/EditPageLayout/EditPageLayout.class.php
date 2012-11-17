@@ -48,10 +48,10 @@ class EditPageLayout extends EditPage {
 		array( 'type' => 'save' ),
 	);
 
-	//prevent of save
+	// prevent of save
 	public $mPreventSave = false;
 
-	//used to call beforeSave method
+	// used to call beforeSave method
 	public $mSpecialPage = null;
 
 	// is edit page read only (i.e. anon can not edit)
@@ -63,8 +63,11 @@ class EditPageLayout extends EditPage {
 	// edit page preloads
 	protected $mEditPagePreloads = array();
 
-	//hide title on special CreateBlogPage
+	// hide title on special CreateBlogPage
 	public $hideTitle = false;
+
+	// prevent rendering list of used templates
+	protected $preventRenderingTemplatesList = true;
 
 	/**
 	 * @param Article $article
