@@ -76,7 +76,7 @@ class CensusDataRetrieval {
 		if ( !$this->fetchData() ) {
 			// no data in Census or something went wrong, quit
                         wfProfileOut(__METHOD__);
-			return true;
+			return false;
 		}
 
 		$text = $this->parseData();
@@ -108,7 +108,7 @@ class CensusDataRetrieval {
                         //fetch data from Census by type and id
                         $censusData = $http->get( sprintf(self::QUERY_URL, $type, $id) );
                         $map = json_decode($censusData);
-                        if ( $map->returned > 0 ) {
+			if ( $map->returned > 0 ) {
                                 $censusData = $map->{$type.'_list'}[0];
                                 $this->type = $type;
                         } else {//no data
@@ -277,7 +277,7 @@ class CensusDataRetrieval {
 
                 if(!empty($data)) {
                         wfProfileOut(__METHOD__);
-                        return $data;
+                        //return $data;
                 }
                 
                 $http = new Http();
@@ -310,12 +310,14 @@ class CensusDataRetrieval {
 	 */
 	private function mergeResult( &$censusDataArr, $map, $type) {
                 wfProfileIn(__METHOD__);
-                $list = $map->{$type.'_list'};
-                foreach ( $list as $obj ) {
-                        if ( isset($obj->name->en) ) {
-                                $censusDataArr[$type.'.'.$obj->id] = $this->prepareCode( $obj->name->en );
-                        }
-                }
+		if ( is_object( $map ) && $map->returned > 0 ) {
+                	$list = $map->{$type.'_list'};
+	                foreach ( $list as $obj ) {
+        	                if ( isset($obj->name->en) ) {
+                	                $censusDataArr[$type.'.'.$obj->id] = $this->prepareCode( $obj->name->en );
+                        	}
+	                }
+		}
                 wfProfileOut(__METHOD__);
         }
         
