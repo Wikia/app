@@ -132,6 +132,11 @@ class TitleBatch {
 	static public function newFromIds( $ids, $dbType ) {
 		wfProfileIn( __METHOD__ );
 
+		if ( empty($ids) ) {
+			wfProfileOut( __METHOD__ );
+			return array();
+		}
+
 		$list = array();
 
 		$db = wfGetDB( $dbType == DB_SLAVE_BEFORE_MASTER ? DB_SLAVE : $dbType );
