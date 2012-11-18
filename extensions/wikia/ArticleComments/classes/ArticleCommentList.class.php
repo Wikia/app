@@ -129,19 +129,37 @@ class ArticleCommentList {
 		$this->mCount = count($this->mComments);
 		$this->mCountNested = 0;
 
+		// grab list of required article IDs
+		$commentsQueue = array();
+		foreach($this->mComments as $id => &$levels) {
+			if(isset($levels['level1'])) {
+				$commentsQueue[] = $id;
+			}
+			if(isset($levels['level2'])) {
+				$commentsQueue = array_merge( $commentsQueue, array_keys( $levels['level2'] ) );
+			}
+		}
+
+		$titles = TitleBatch::newFromIds($commentsQueue,DB_SLAVE_BEFORE_MASTER);
+		$comments = array();
+		foreach ($commentsQueue as $id) {
+			$comments[$id] = !empty($titles[$id]) ? ArticleComment::newFromTitle($titles[$id]) : false;
+		}
+
 		// grab article contents for each comment
 		foreach($this->mComments as $id => &$levels) {
 			if(isset($levels['level1'])) {
-				$levels['level1'] = ArticleComment::newFromId($id);
+				$levels['level1'] = $comments[$id];
 				$this->mCountNested++;
 			}
 			if(isset($levels['level2'])) {
 				foreach($levels['level2'] as $subid => &$sublevel) {
-					$sublevel = ArticleComment::newFromId($subid);
+					$sublevel = $comments[$subid];
 					$this->mCountNested++;
 				}
 			}
 		}
+
 		return $this->mComments;
 	}
 
@@ -558,6 +576,7 @@ class ArticleCommentList {
 	}
 
 	protected function preloadFirstRevId( $comments ) {
+		wfProfileIn( __METHOD__ );
 		$articles = array();
 		foreach ($comments as $id => $levels) {
 			if ( isset($levels['level1']) ) {
@@ -593,7 +612,7 @@ class ArticleCommentList {
 				$comment->setFirstRevId( false, DB_SLAVE );
 			}
 		}
-
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
