@@ -21,6 +21,9 @@ foreach ( $aTypes as $iType ) {
 	foreach ( $aLanguages as $sLanguage ) {
 		// Fill the cache with the current data from DB_MASTER.
 		Phalanx::getFromFilter( $iType, $sLanguage, true, true );
+		if ( $iType == Phalanx::TYPE_USER ) {
+			Phalanx::getFromFilterShort( $iType, $sLanguage, true, true );
+		}
 	}
 	// Touch.
 	Phalanx::setLastUpdate();

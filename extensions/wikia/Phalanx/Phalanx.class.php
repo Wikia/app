@@ -14,6 +14,10 @@ class Phalanx {
 	const SCRIBE_KEY = 'log_phalanx';
 	const LAST_UPDATE_KEY = 'phalanx:last-update';
 
+	const FLAG_EXACT = 1;
+	const FLAG_REGEX = 2;
+	const FLAG_CASE = 4;
+
 	public static $typeNames = array(
 		1 => 'content',
 		2 => 'summary',
@@ -27,6 +31,7 @@ class Phalanx {
 	);
 
 	public static $moduleData = array();
+	public static $moduleDataShort = array();
 
 	/*
 		get the values for the expire select
@@ -140,6 +145,69 @@ class Phalanx {
 			$wgMemc->set($key, $blocksData);
 		}
 		self::$moduleData[$moduleId][$sLang] = $blocksData;
+
+		wfProfileOut( __METHOD__ );
+		return $blocksData['blocks'];
+	}
+
+	static public function getFromFilterShort( $moduleId, $lang = null, $master = false, $skipCache = false ) {
+		global $wgExternalSharedDB, $wgMemc;
+		wfProfileIn( __METHOD__ );
+
+		$timestampNow = wfTimestampNow();
+		$key = 'phalanx:' . $moduleId . ':' . ($lang ? $lang : 'all') . ':short';
+		$sLang = $lang ? $lang : 'all';
+		if ( $skipCache ) {
+			$blocksData = null;
+		} else if (isset(self::$moduleDataShort[$moduleId][$sLang])) {
+			$blocksData = self::$moduleDataShort[$moduleId][$sLang];
+		} else {
+			$blocksData = $wgMemc->get($key);
+		}
+		$blocksData = null;
+
+		//cache miss (or we have expired blocks in cache), get from DB
+		if ( empty($blocksData) || (!is_null($blocksData['closestExpire']) && $blocksData['closestExpire'] < $timestampNow && $blocksData['closestExpire'])) {
+			$blocks = $cond = array();
+			$closestTimestamp = 0;
+			$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB );
+
+			if( !empty( $moduleId ) && is_numeric( $moduleId ) ) {
+				$cond[] = "p_type & $moduleId = $moduleId";
+			}
+			if( !empty( $lang ) && Language::isValidCode( $lang ) ) {
+				$cond[] = "(p_lang = '$lang' OR p_lang IS NULL)";
+			} else {
+				$cond[] = "p_lang IS NULL";
+			}
+
+			$cond[] = "p_expire is null or p_expire > '{$timestampNow}'";
+
+			$res = $dbr->select(
+				'phalanx',
+				'*',
+				$cond,
+				__METHOD__
+			);
+
+			foreach ($res as $row) {
+				$blocks[$row->p_id] = array(
+					$row->p_id,
+					$row->p_text,
+					  ($row->p_exact ? self::FLAG_EXACT : 0)
+					+ ($row->p_regex ? self::FLAG_REGEX : 0)
+					+ ($row->p_case ? self::FLAG_CASE : 0)
+				);
+				if (!is_null($row->p_expire) && $closestTimestamp > $row->p_expire || !$closestTimestamp) {
+					$closestTimestamp = $row->p_expire;
+				}
+			}
+
+			$blocksData['blocks'] = $blocks;
+			$blocksData['closestExpire'] = $closestTimestamp;
+			$wgMemc->set($key, $blocksData);
+		}
+		self::$moduleDataShort[$moduleId][$sLang] = $blocksData;
 
 		wfProfileOut( __METHOD__ );
 		return $blocksData['blocks'];
@@ -323,7 +391,7 @@ class Phalanx {
 	/**
 	 * test if provided text is blocked
 	 * @param string $text string to be tested against filter
-	 * @param array $blocksData blocks data (text, params, id)
+	 * @param array $blocksData blocks data (text, params, id), either in full or short format
 	 * @param boolean $writeStats should stats be recorded?
 	 * @param array $matchingBlockData (out) block data that matched
 	 *
@@ -336,13 +404,25 @@ class Phalanx {
 		wfProfileIn( __METHOD__ );
 		$result = array('blocked' => false, 'msg' => '');
 		foreach ($blocksData as $blockData) {
-			$blockText = $blockData['text'];
+			if ( isset( $blockData['id'] ) ) { // full format
+				$blockId = $blockData['id'];
+				$blockText = $blockData['text'];
+				$isRegex = $blockData['regex'];
+				$isExact = $blockData['exact'];
+				$isCase = $blockData['case'];
+			} else { // short format
+				list( $blockId, $blockText, $blockFlags ) = $blockData;
+				$isRegex = ($blockFlags & self::FLAG_REGEX) > 0;
+				$isExact = ($blockFlags & self::FLAG_EXACT) > 0;
+				$isCase = ($blockFlags & self::FLAG_CASE) > 0;
+			}
+			$origText = $blockText;
 
-			if ($blockData['regex']) {
+			if ($isRegex) {
 				wfProfileIn( __METHOD__ . '-regex' );
 				//escape slashes uses as regex delimiter
 				$blockText = str_replace('/', '\/', preg_replace('|\\\*/|', '/', $blockText));
-				if ($blockData['exact']) {
+				if ($isExact) {
 					//add begining and end anchor only once (user might added it already)
 					if (strpos($blockText, '^') !== 0) {
 						$blockText = '^' . $blockText;
@@ -352,7 +432,7 @@ class Phalanx {
 					}
 				}
 				$blockText = "/$blockText/";
-				if (!$blockData['case']) {
+				if (!$isCase) {
 					$blockText .= 'i';
 				}
 				//QuickFix™ for bad regexes
@@ -364,34 +444,43 @@ class Phalanx {
 				}
 				wfRestoreWarnings();
 				if ($matched) {
-					if ($writeStats) {
-						self::addStats($blockData['id'], $blockData['type']);
+					$blockData = Phalanx::getFromId($blockId);
+					if ( $blockData ) {
+						if ($writeStats) {
+							self::addStats($blockData['id'], $blockData['type']);
+						}
+						$result['blocked'] = true;
+						$result['msg'] = $matches[0];
 					}
-					$result['blocked'] = true;
-					$result['msg'] = $matches[0];
 				}
 				wfProfileOut( __METHOD__ . '-regex' );
 			} else { //plain text
 				wfProfileIn( __METHOD__ . '-plain' );
-				if (!$blockData['case']) {
+				if (!$isCase) {
 					$text = strtolower($text);
 					$blockText = strtolower($blockText);
 				}
-				if ($blockData['exact']) {
+				if ($isExact) {
 					if ($text == $blockText) {
-						if ($writeStats) {
-							self::addStats($blockData['id'], $blockData['type']);
+						$blockData = Phalanx::getFromId($blockId);
+						if ( $blockData ) {
+							if ($writeStats) {
+								self::addStats($blockData['id'], $blockData['type']);
+							}
+							$result['blocked'] = true;
+							$result['msg'] = $origText;    //original case
 						}
-						$result['blocked'] = true;
-						$result['msg'] = $blockData['text'];    //original case
 					}
 				} else {
 					if ( !empty($blockText) && strpos($text, $blockText) !== false) {
-						if ($writeStats) {
-							self::addStats($blockData['id'], $blockData['type']);
+						$blockData = Phalanx::getFromId($blockId);
+						if ( $blockData ) {
+							if ($writeStats) {
+								self::addStats($blockData['id'], $blockData['type']);
+							}
+							$result['blocked'] = true;
+							$result['msg'] = $origText;    //original case
 						}
-						$result['blocked'] = true;
-						$result['msg'] = $blockData['text'];    //original case
 					}
 				}
 				wfProfileOut( __METHOD__ . '-plain' );
@@ -409,5 +498,6 @@ class Phalanx {
 	static public function clearCache( $moduleId, $lang ) {
 		$sLang = $lang ? $lang : 'all';
 		unset(self::$moduleData[$moduleId][$sLang]);
+		unset(self::$moduleDataShort[$moduleId][$sLang]);
 	}
 }
