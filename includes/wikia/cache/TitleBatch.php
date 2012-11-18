@@ -122,4 +122,37 @@ class TitleBatch {
 		return $this->titles;
 	}
 
+	/**
+	 * Get Title objects for a given set of article IDs. Skips articles that do not exist.
+	 *
+	 * @param $ids array List of article IDs
+	 * @param $dbType int Database connection type
+	 * @return array Array with article IDs as keys and Title objects as values (non-existent articles ore omitted)
+	 */
+	static public function newFromIds( $ids, $dbType ) {
+		wfProfileIn( __METHOD__ );
+
+		$list = array();
+
+		$db = wfGetDB( $dbType == DB_SLAVE_BEFORE_MASTER ? DB_SLAVE : $dbType );
+		$res = $db->select( 'page', '*', array( 'page_id' => $ids ), __METHOD__ );
+		foreach ($res as $row) {
+			$list[$row->page_id] = Title::newFromRow($row);
+		}
+		$res->free();
+
+		if ( $dbType == DB_SLAVE_BEFORE_MASTER ) {
+			$remainingIds = array_diff( $ids, array_keys($list) );
+			$db = wfGetDB( DB_MASTER );
+			$res = $db->select( 'page', '*', array( 'page_id' => $remainingIds ), __METHOD__ );
+			foreach ($res as $row) {
+				$list[$row->page_id] = Title::newFromRow($row);
+			}
+			$res->free();
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $list;
+	}
+
 }
