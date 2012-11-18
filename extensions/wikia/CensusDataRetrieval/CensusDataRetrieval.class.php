@@ -273,11 +273,10 @@ class CensusDataRetrieval {
                 wfProfileIn(__METHOD__);
                 $key = wfMemcKey('census-data');
                 $data = $this->app->wg->Memc->get($key);
-                //$data = array();
 
                 if(!empty($data)) {
                         wfProfileOut(__METHOD__);
-                        //return $data;
+                        return $data;
                 }
                 
                 $http = new Http();
