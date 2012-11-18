@@ -141,7 +141,7 @@ class TitleBatch {
 		}
 		$res->free();
 
-		if ( $dbType == DB_SLAVE_BEFORE_MASTER ) {
+		if ( $dbType == DB_SLAVE_BEFORE_MASTER && count($list) < count($ids) ) {
 			$remainingIds = array_diff( $ids, array_keys($list) );
 			$db = wfGetDB( DB_MASTER );
 			$res = $db->select( 'page', '*', array( 'page_id' => $remainingIds ), __METHOD__ );
