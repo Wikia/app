@@ -13,6 +13,20 @@ abstract class WikiaApiController extends WikiaController {
 		'raw'
 	);
 
+	public final function __construct() {
+		parent::__construct();
+
+		$query = RequestContext::getMain()->getRequest()->getQueryValues();
+
+		$origQuery = $query;
+
+		ksort($query);
+
+		var_dump($query === $origQuery);exit();
+
+		//throw an error if not in correct order
+	}
+
 	/**
 	 * Sets the WikiaResponse instance attached to the controller.
 	 * For API controllers force json as the output format
