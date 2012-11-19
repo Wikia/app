@@ -8,6 +8,7 @@
 class ArticlesApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 	const CACHE_VERSION = 6;
+	const CLIENT_CACHE_VALIDITY = 86400;//24h
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by vertical namespace
@@ -86,8 +87,8 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		$this->response->setCacheValidity(
-			86400,
-			86400,
+			self::CLIENT_CACHE_VALIDITY,
+			self::CLIENT_CACHE_VALIDITY,
 			array(
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH
@@ -112,7 +113,7 @@ class ArticlesApiController extends WikiaApiController {
 	 *
 	 * @responseParam array A list of results with the article ID as the index, each item has a revision, namespace (id, text), comments (if ArticleComments is enabled on the wiki), abstract (if available), thumbnail (if available) property
 	 *
-	 * @example http://glee.federico.wikia-dev.com/wikia.php?controller=ArticlesApi&method=getDetails&ids=2187,23478&abstract=200&width=300&height=150
+	 * @example http://glee.wikia.com/wikia.php?controller=ArticlesApi&method=getDetails&ids=2187,23478&abstract=200&width=300&height=150
 	 */
 	public function getDetails() {
 		$this->wf->profileIn( __METHOD__ );
@@ -217,8 +218,8 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	static public function purgeCache( $id ) {
-		$app = F::app();
-		$app->wg->Memc->delete( self::getArticleCacheKey( $id ) );
-		$app->wg->Memc->delete( self::getDetailsCacheKey( $id ) );
+		$memc = F::app()->wg->Memc;
+		$memc->delete( self::getArticleCacheKey( $id ) );
+		$memc->delete( self::getDetailsCacheKey( $id ) );
 	}
 }
