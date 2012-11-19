@@ -396,6 +396,14 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				$config->getSort(),
 				'A well-formed rank key should return the appropriate sort array.'
 		);
+		
+		$config->setSort( array( 'created', 'asc' ) );
+		
+		$this->assertEquals(
+				array( 'created', 'asc' ),
+				$config->getSort(),
+				'WikiaSearchConfig::getSort should return a value set by setSort if it has been invoked'
+		);
 	}
 	
 	/**
@@ -792,6 +800,28 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		// needs resetting to get the testing environment back in shape
 		WikiaSearchConfig::$filterQueryIncrement = 0;
 	} 
+	
+	/**
+	 * @covers WikiaSearchConfig::getRequestedFields
+	 */
+	public function testGetRequestedFields() {
+		$config = F::build( 'WikiaSearchConfig' );
+		
+		$config->setRequestedFields( array( 'html' ) );
+		
+		$fields = $config->getRequestedFields();
+		
+		$this->assertContains(
+				WikiaSearch::field( 'html' ),
+				$fields,
+				'WikiaSearchConfig::getRequestedFields() should perform language field transformation'
+		);
+		$this->assertContains(
+				'id',
+				$fields,
+				'WikiaSearchConfig::getRequestedFields() should always include an id'
+		);
+	}
 	
 	
 }

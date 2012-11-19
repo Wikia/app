@@ -68,7 +68,6 @@ define('sections', ['events', 'JSMessages'], function(ev, msg){
 				if (nodeName != '#comment' && nodeName != 'SCRIPT') {
 					if(node.id == 'WkMainCntFtr' || node.className == 'printfooter' || (node.className && node.className.indexOf('noWrap') > -1)){
 						//do not wrap these elements
-						currentSection && currentSection.insertAdjacentHTML('beforeend', goBck);
 						root = fragment;
 					}else if (isH2){
 
@@ -92,6 +91,7 @@ define('sections', ['events', 'JSMessages'], function(ev, msg){
 						//append chevron
 						node.insertAdjacentHTML('beforeend', '<span class=chev></span>');
 						fragment.appendChild(node);
+						currentSection.insertAdjacentHTML('beforeend', goBck);
 						fragment.appendChild(currentSection);
 						root = currentSection;
 						continue;
@@ -127,6 +127,8 @@ define('sections', ['events', 'JSMessages'], function(ev, msg){
 	}
 
 	function toggle(h2, scroll){
+		(typeof h2 == 'string') && (h2 = document.getElementById(h2));
+
 		if(h2){
 			if(isOpen(h2)){
 				close(h2);

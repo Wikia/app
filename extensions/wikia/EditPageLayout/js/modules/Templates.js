@@ -11,6 +11,8 @@
 
 		items: false,
 
+		usedTemplates: false,
+
 		init: function() {
 			this.items = [];
 			var list = this.editor.config.popularTemplates || [];
@@ -117,13 +119,27 @@
 		},
 
 		showUsedTemplates: function() {
-			var el = this.editor.element.find('.templatesUsed');
-			if (el.exists()) {
-				var list = $('<div>');
-				list.html(el.html());
-				list.children().not('ul').remove();
-				list.find('a').attr('target','_blank');
-				$.showModal(this.msg('templates-showUsedList-dialog-title'),list.html(),{
+			var self = this;
+			if ( self.usedTemplates === false ) {
+				self.usedTemplates = true;
+				var url = window.wgEditPageHandler.replace('$1', encodeURIComponent(window.wgEditedTitle));
+				return $.post(url, {
+					method: 'getTemplatesList',
+				}, function(data) {
+					if ( typeof data.templates == 'undefined' ) {
+						return;
+					}
+					var list = $('<div>');
+					list.html(data.templates);
+					list.children().not('ul').remove();
+					list.find('a').attr('target','_blank');
+					self.usedTemplates = list.html();
+					self.showUsedTemplates();
+				}, 'json');
+			} else if ( self.usedTemplates === true ) {
+				// do nothing... ajax call in progress
+			} else {
+				$.showModal(this.msg('templates-showUsedList-dialog-title'),self.usedTemplates,{
 					width: 400
 				});
 			}

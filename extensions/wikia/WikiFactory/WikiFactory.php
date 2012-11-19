@@ -819,6 +819,30 @@ class WikiFactory {
 	}
 
 	/**
+	 * getVarIdByName
+	 *
+	 * gets variable id using cv_name field
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param string	$cv_name	variable name in city_variables_pool
+	 * @param boolean	$master		choose between master & slave connection
+	 *
+	 * @return mixed 	variable id or false if not found city_variables & city_variables_pool
+	 */
+	static public function getVarIdByName( $cv_name, $master = false ) {
+		$varId = 0;
+		$varData = self::loadVariableFromDB( false, $cv_name, false, $master );
+
+		if( $varData ) {
+			$varId = (int) $varData->cv_id;
+		}
+
+		return ($varId > 0) ? $varId : false;
+	}
+
+	/**
 	 * getVarValueByName
 	 *
 	 * return only value of variable not whole data for it, this value will be:

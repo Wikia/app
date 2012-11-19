@@ -1,45 +1,21 @@
 // TODO: move WikiaTracker outside
 
-var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, cacheStorage) {
+var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry) {
 	'use strict';
 
-	var logGroup = 'AdProviderAdDriver2'
-		, slotMap
-		, forgetAdsShownAfterTime = 3600 // an hour
-		, incrementItemInStorage
-		, fillInSlot, canHandleSlot
-		, formatTrackTime
-		, country = Geo.getCountryCode()
-		, now = window.wgNow || new Date()
-		, highValueCountries, defaultHighValueCountries
-		, isHighValueCountry, maxCallsToDART
-	;
+	var logGroup = 'AdProviderAdDriver2',
+		slotMap,
+		forgetAdsShownAfterTime = 3600, // an hour
+		incrementItemInStorage,
+		fillInSlot, canHandleSlot,
+		formatTrackTime,
+		country = Geo.getCountryCode(),
+		now = window.wgNow || new Date(),
+		maxCallsToDART,
+		isHighValueCountry;
 
-	// copy of CommonSettings wgHighValueCountries
-	defaultHighValueCountries = {
-		'CA': 3,
-		'DE': 3,
-		'DK': 3,
-		'ES': 3,
-		'FI': 3,
-		'FR': 3,
-		'GB': 3,
-		'IT': 3,
-		'NL': 3,
-		'NO': 3,
-		'SE': 3,
-		'UK': 3,
-		'US': 3
-	};
-
-	highValueCountries = window.wgHighValueCountries || defaultHighValueCountries;
-
-	// Fetch number of calls to make to DART
-	if (country) {
-		maxCallsToDART = highValueCountries[country.toUpperCase()];
-	}
-	maxCallsToDART = maxCallsToDART || 0;
-	isHighValueCountry = !!maxCallsToDART;
+	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
+	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
 
 	// TODO: tile is not used, keys without apostrophes
 
@@ -108,10 +84,10 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 		return false;
 	};
 
-	fillInSlot = function(slotinfo) {
-		log(['fillInSlot', slotinfo], 5, logGroup);
+	fillInSlot = function(slot) {
+		log(['fillInSlot', slot], 5, logGroup);
 
-		var slotname = slotinfo[0]
+		var slotname = slot[0]
 
 			, slotsize = slotMap[slotname].size
 			, loc = slotMap[slotname].loc
@@ -119,8 +95,8 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 
 			// Do this when DART hops or doesn't handle
 			, error = function() {
-				slotinfo[2] = 'Liftium2';
-				window.adslots2.push(slotinfo);
+				slot[2] = 'Liftium2';
+				window.adslots2.push(slot);
 			}
 
 			// Do this when filling slot by DART
@@ -160,11 +136,7 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 			}
 		}
 
-		WikiaTracker.trackAdEvent('liftium.slot2', {
-			ga_category: 'slot2/' + slotsize,
-			ga_action: slotname,
-			ga_label: 'addriver2'
-		}, 'ga');
+		WikiaTracker.trackAdEvent('liftium.slot2', {ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''), ga_action: slotname, ga_label: 'addriver2'}, 'ga');
 
 		hopTimer = new Date().getTime();
 		log('hopTimer start for ' + slotname, 7, logGroup);

@@ -9,6 +9,10 @@
 abstract class ImageServingDriverBase {
 	private $articles;
 	private $proportion;
+	/**
+	 * @var Database
+	 */
+	var $db;
 
 	function __construct($db, $imageServing, $proportion) {
 		$this->app = F::app();

@@ -962,6 +962,7 @@ abstract class RedirectSpecialPage extends UnlistedSpecialPage {
 	protected $mAddedRedirectParams = array();
 
 	public function execute( $par ) {
+		wfProfileIn( __METHOD__ );
 		$redirect = $this->getRedirect( $par );
 		$query = $this->getRedirectQuery();
 		// Redirect to a page title with possible query parameters
@@ -979,6 +980,7 @@ abstract class RedirectSpecialPage extends UnlistedSpecialPage {
 			return $redirect;
 		} else {
 			$class = __CLASS__;
+			wfProfileOut( __METHOD__ );
 			throw new MWException( "RedirectSpecialPage $class doesn't redirect!" );
 		}
 	}

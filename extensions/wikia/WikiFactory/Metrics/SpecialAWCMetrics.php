@@ -575,6 +575,7 @@ class WikiMetrics {
 	 */
 	public function getCategoriesRecords() {
 		global $wgUser, $wgLang, $wgExternalSharedDB;
+		wfProfileIn( __METHOD__ );
 		/* db */
 		$dbr = wfGetDB( DB_SLAVE, "stats", $wgExternalSharedDB );
 		/* check params */

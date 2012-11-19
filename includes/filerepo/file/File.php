@@ -285,6 +285,13 @@ abstract class File {
 		if ( !isset( $this->url ) ) {
 			$this->assertRepoDefined();
 			$this->url = $this->repo->getZoneUrl( 'public' ) . '/' . $this->getUrlRel();
+
+			# start wikia change
+			global $wgDevelEnvironment;
+			if (!empty($wgDevelEnvironment)) {
+				$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() );
+			}
+			# end wikia change
 		}
 		return $this->url;
 	}
@@ -756,7 +763,7 @@ abstract class File {
 
 	/**
 	 * Return either a MediaTransformError or placeholder thumbnail (if $wgIgnoreImageErrors)
-	 * 
+	 *
 	 * @param $thumbPath string Thumbnail storage path
 	 * @param $thumbUrl string Thumbnail URL
 	 * @param $params Array

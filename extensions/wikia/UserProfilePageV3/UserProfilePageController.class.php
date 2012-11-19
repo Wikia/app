@@ -1006,6 +1006,8 @@ class UserProfilePageController extends WikiaController {
 	 */
 
 	public function onFacebookConnectAvatar() {
+		$this->app->wf->ProfileIn(__METHOD__);
+
 		$user = $this->app->wg->User;
 
 		$result = array('success' => false, 'error' => $this->wf->Msg('userprofilepage-interview-save-internal-error'));

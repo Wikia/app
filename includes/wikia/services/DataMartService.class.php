@@ -545,4 +545,42 @@
 			$app->wf->ProfileOut( __METHOD__ );
 			return $topArticles;
 		}
+		
+		/**
+		 * Returns the latest WAM score provided a wiki ID
+		 * @param int $wikiId
+		 * @return number
+		 */
+		public static function getCurrentWamScoreForWiki( $wikiId ) {
+			$app = F::app();
+			$app->wf->ProfileIn( __METHOD__ );
+			
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'wam', $wikiId );
+			
+			$getData = function() use ( $app, $wikiId ) {
+				$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+				
+				$result = $db->select(
+							array( 'fact_wam_scores' ),
+							array(
+								'wam'
+							),
+							array(
+								'wiki_id' => $wikiId
+							),
+							__METHOD__,
+							array(
+								'ORDER BY' => 'time_id DESC',
+								'LIMIT' => 1
+							)
+						);
+				
+				return ( $row = $db->fetchObject( $result ) ) ? $row->wam : 0;
+			};
+			
+			$wamScore = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData );
+			$app->wf->ProfileOut( __METHOD__ );
+			return $wamScore;
+		}
+		
 	}

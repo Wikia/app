@@ -23,7 +23,9 @@ var UserLoginFacebook = {
 	},
 
 	loginSetup: function() {
-		$('body').off('fb').on('click.fb', '.sso-login-facebook', $.proxy(function(ev) {
+		var self = this;
+
+		$('body').off('fb').on('click.fb', '.sso-login-facebook', function(ev) {
 			ev.preventDefault();
 
 			// Lazy load the facebook API
@@ -31,11 +33,11 @@ var UserLoginFacebook = {
 				window.onFBloaded();
 
 				// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
-				FB.login($.proxy(this.loginCallback, this), {
+				FB.login($.proxy(self.loginCallback, self), {
 					scope:'publish_stream,email'
 				});
 			});
-		}, this));
+		});
 	},
 
 	// callback for FB.login

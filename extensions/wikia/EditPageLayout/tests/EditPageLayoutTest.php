@@ -105,12 +105,19 @@ class EditPageLayoutTest extends WikiaBaseTest {
 	public function testPreloadText() {
 		$title = WF::build('Title', array('NewArticle'), 'newFromText');
 		$editPage = $this->editPageFactory($title);
+		// This test has a dependency on the global title
+		// TODO: fixme with $this->mockProxy
+		global $wgTitle;
+		$tempTitle = $wgTitle;
+		$wgTitle = $title;
 
 		$preload = 'Preload - testing, testing...';
 		$editPage->setPreloadedText($preload);
 		$editPage->showEditForm();
 
-		$this->assertEquals($preload, $editPage->textbox1);
+		// With RTE enabled by default now, this is wrapped in a <p> tag
+		$this->assertContains($preload, $editPage->textbox1);
+		$wgTitle = $tempTitle;
 	}
 
 	public function testEditNotices() {
