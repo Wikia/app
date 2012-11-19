@@ -95,7 +95,7 @@
     </target>
 
 	<target name="codelint-php">
-		<exec executable="php" dir="${basedir}/source/maintenance/wikia" failonerror="true">
+		<exec executable="php" dir="${basedir}/../maintenance/wikia" failonerror="true">
 			<env key="SERVER_ID" value="165" />
 			<arg line="codelint.php
 					   --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
@@ -109,7 +109,7 @@
 	</target>
 
 	<target name="codelint-js">
-		<exec executable="php" dir="${basedir}/source/maintenance/wikia" failonerror="true">
+		<exec executable="php" dir="${basedir}/../maintenance/wikia" failonerror="true">
 			<env key="SERVER_ID" value="165" />
 			<arg line="codelint.php
 					   --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
