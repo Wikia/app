@@ -23,7 +23,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockArticleMatch	=	$this->getMock( 'WikiaSearchArticleMatch', array( 'getArticle' ), array( $mockArticle ) );
 		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect' ), array( 'html' ) );
 		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal', 'setVal' ), array( array() ) );
-		$mockTrack			=	$this->getMock( 'Track', array( 'event' ) );
 
 		$searchConfig
 			->expects	( $this->any() )
@@ -60,11 +59,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->method	( 'getTitle' )
 			->will		( $this->returnValue( $mockTitle ) )
 		;
-		$mockTrack
-			->staticExpects	( $this->once() )
-			->method	( 'event' )
-			->with		( 'search_start_gomatch', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) )
-		;
 		$mockRequest
 			->expects	( $this->once() )
 			->method	( 'getVal' )
@@ -72,9 +66,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( '0' ) )
 		;
 
-		$this->mockClass( 'Track', $mockTrack );
-		$this->mockApp();		
-		
 		$this->searchController->setRequest( $mockRequest );
 		$this->searchController->setResponse( $mockResponse );
 		
@@ -98,7 +89,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockArticleMatch	=	$this->getMock( 'WikiaSearchArticleMatch', array( 'getArticle' ), array( $mockArticle ) );
 		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect' ), array( 'html' ) );
 		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal', 'setVal' ), array( array() ) );
-		$mockTrack			=	$this->getMock( 'Track', array( 'event' ) );
 
 		$searchConfig
 			->expects	( $this->any() )
@@ -131,9 +121,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( $mockTitle ) )
 		;
 
-		$this->mockClass( 'Track', $mockTrack );
-		$this->mockApp();		
-		
 		$this->searchController->setRequest( $mockRequest );
 		$this->searchController->setResponse( $mockResponse );
 		

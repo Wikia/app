@@ -1482,11 +1482,6 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 								->disableOriginalConstructor()
 								->getMock();
 		
-		$mockTrack		=	$this->getMockBuilder( 'Track' )
-								->disableOriginalConstructor()
-								->setMethods( array( 'event' ) )
-								->getMock();
-		
 		$mockConfig
 			->expects	( $this->at( 0 ) )
 			->method	( 'getGroupResults' )
@@ -1551,19 +1546,8 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->with		( $mockQuery )
 			->will		( $this->returnValue( $mockSolResult ) )
 		;
-		$trackingInfo = array(
-				'sterm' => 'foo',
-				'rver'	=> WikiaSearch::RELEVANCY_FUNCTION_ID,
-				'stype'	=> 'inter'
-		);
-		$mockTrack
-			->staticExpects	( $this->once() )
-			->method		( 'event' )
-			->with			( 'search_start', $trackingInfo )
-		;
 		
 		$this->mockClass( 'WikiaSearchResultSet', $mockResultSet );
-		$this->mockClass( 'Track', $mockTrack );
 		$this->mockApp();
 		
 		$this->assertEquals(
