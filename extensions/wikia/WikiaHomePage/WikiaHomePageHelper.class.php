@@ -144,28 +144,11 @@ class WikiaHomePageHelper extends WikiaModel {
 		$this->wf->ProfileIn(__METHOD__);
 
 		$visitors = 0;
-		if (!empty($this->wg->StatsDBEnabled)) {
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->StatsDB);
-
-			// for testing
-			if ($this->wg->DevelEnvironment) {
-				$row = $db->selectRow(
-					array('page_views'),
-					array('sum(pv_views) cnt'),
-					array("pv_use_date between date_format(curdate() - interval 30 day,'%Y%m%d') and date_format(curdate(),'%Y%m%d')"),
-					__METHOD__
-				);
-			} else {
-				$row = $db->selectRow(
-					array('google_analytics.pageviews'),
-					array('sum(pageviews) cnt'),
-					array("date between curdate() - interval 30 day and curdate()"),
-					__METHOD__
-				);
-			}
-
-			if ($row) {
-				$visitors = intval($row->cnt);
+		$dates = array( date( 'Y-m-01', strtotime('-1 month') ), date( 'Y-m-01', strtotime('now') ) );
+		$pageviews = DataMartService::getSumPageviewsMonthly( $dates );
+		if ( empty( $pageviews ) ) {
+			foreach ( $pageviews as $date => $pviews ) {
+				$visitors += $pviews;
 			}
 		}
 
