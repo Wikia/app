@@ -1,0 +1,61 @@
+/**
+ * VisualEditor user interface vector icon styles.
+ *
+ * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-icon-down {
+	/* @embed */
+	background-image: url(images/icons/down.svg);
+}
+
+.ve-ui-icon-undo:before {
+	/* @embed */
+	background-image: url(images/icons/arched-arrow-rtl.svg);
+}
+
+.ve-ui-icon-redo:before {
+	/* @embed */
+	background-image: url(images/icons/arched-arrow-ltr.svg);
+}
+
+.ve-ui-icon-bold:before {
+	/* @embed */
+	background-image: url(images/icons/bold.svg);
+}
+
+.ve-ui-icon-italic:before {
+	/* @embed */
+	background-image: url(images/icons/italic.svg);
+}
+
+.ve-ui-icon-link:before {
+	/* @embed */
+	background-image: url(images/icons/link.svg);
+}
+
+.ve-ui-icon-clear:before {
+	/* @embed */
+	background-image: url(images/icons/clear.svg);
+}
+
+.ve-ui-icon-number:before {
+	/* @embed */
+	background-image: url(images/icons/number-list-ltr.svg);
+}
+
+.ve-ui-icon-bullet:before {
+	/* @embed */
+	background-image: url(images/icons/bullet-list-ltr.svg);
+}
+
+.ve-ui-icon-indent:before {
+	/* @embed */
+	background-image: url(images/icons/indent-list-ltr.svg);
+}
+
+.ve-ui-icon-outdent:before {
+	/* @embed */
+	background-image: url(images/icons/outdent-list-ltr.svg);
+}

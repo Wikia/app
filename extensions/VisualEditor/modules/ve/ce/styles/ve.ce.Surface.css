@@ -1,0 +1,67 @@
+/**
+ * VisualEditor content editable Surface styles.
+ *
+ * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ce-surface {
+	overflow: hidden;
+	font-size: 1em; /* to look more like MediaWiki use: 0.8em */;
+}
+
+.ve-ce-surface-textarea {
+	position: absolute;
+	z-index: -1;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	color: white;
+	background-color: #fff;
+	border: none;
+	padding: 0;
+	margin: 0;
+	width: 1px;
+}
+
+.ve-ce-surface-textarea:focus {
+	outline: none;
+}
+
+.ve-ce-surface-cursor {
+	position: absolute;
+	background-color: #000;
+	width: 1px;
+	display: none;
+}
+
+.ve-ce-phantoms {
+	cursor: not-allowed;
+	left: 0;
+	opacity: .85;
+	position: absolute;
+	top: 0;
+}
+
+.ve-ce-phantom {
+	background-image: -webkit-repeating-linear-gradient(-45deg, white 0px, white 5px, #C3E59A 5px, #C3E59A 10px );
+	background-image: -moz-repeating-linear-gradient(-45deg, white 0px, white 5px, #C3E59A 5px, #C3E59A 10px);
+	background-size: 14px 14px;
+	position: absolute;
+}
+
+#paste {
+	display: none;
+	height: 1px;
+	left: 0;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	width: 1px;
+}
+
+#paste * {
+	height: 1px !important;
+	width: 1px !important;
+}
