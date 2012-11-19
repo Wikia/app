@@ -638,13 +638,12 @@ class EditPageLayout extends EditPage {
 	 * @return bool
 	 */
 	protected function userDismissedEduNote() {
-		$wikiaUserPropertiesController = F::build('WikiaUserPropertiesController'); /** @var WikiaUserPropertiesController $wikiaUserPropertiesController */
+		$RTEUserPropertiesHandler = F::build('RTEUserPropertiesHandler'); /** @var WikiaUserPropertiesController $wikiaUserPropertiesController */
 
 		try {
-			$response = $this->app->sendRequest('WikiaUserPropertiesController', 'getUserPropertyValue', array(
-				'propertyName' => $wikiaUserPropertiesController->getRTEMainPageNoticePropertyName()
-			));
-			$results = $response->getVal('results', false);
+			$results = $RTEUserPropertiesHandler->getUserPropertyValue(
+				$RTEUserPropertiesHandler->getRTEMainPageNoticePropertyName()
+			);
 			$result = ($results->value == true) ? true : false;
 		} catch( Exception $e ) {
 			$result = false;
