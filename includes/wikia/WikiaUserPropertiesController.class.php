@@ -13,7 +13,7 @@ class WikiaUserPropertiesController extends WikiaController {
 	public function performPropertyOperation() {
 		$handlerName = $this->request->getVal('handlerName', null);
 		$methodName = $this->request->getVal('methodName', null);
-		$methodParams = $this->request->getVal('callParams');
+		$methodParams = $this->request->getVal('callParams',array());
 
 		$this->results = new stdClass();
 		$this->results->success = false;
