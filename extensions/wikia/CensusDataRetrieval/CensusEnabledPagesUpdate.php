@@ -37,7 +37,7 @@ class CensusEnabledPagesUpdate {
                         $oTitle = Title::newFromText( $titlePrefixedText );
                         $oArticle = new Article($oTitle);
                         $newText = getUpdatedContent( $oArticle->getContent(), $oTitle->getText() );
-                        $oArticle->doEdit( $newText, 'Updating infobox with data from Sony DB', EDIT_UPDATE );
+//                        $oArticle->doEdit( $newText, 'Updating infobox with data from Sony DB', EDIT_UPDATE );
                         break;
                 }
                 //pull census data
