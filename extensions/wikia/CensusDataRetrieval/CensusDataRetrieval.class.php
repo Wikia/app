@@ -23,11 +23,23 @@ class CensusDataRetrieval {
 			'description' => 'description.en',
 			'cost' => 'ingame_costs.cost',
 			'cost_resource' => 'ingame_costs.resource.en',
+                        'decay' => 'decay'
 		),
-                'zone' => array(
-                        'name' => 'name.en',
-                        'description' => 'description.en',
+                'item' => array(
+                        'activatable_recast_seconds' => 'activatable_recast_seconds',
+                        'combat_only' => 'combat_only',
+                        'max_stack_size' => 'max_stack_size',
+                        'min_profile_rank' => 'min_profile_rank',
+                        'power_rating' => 'power_rating',
+                        'rarity' => 'rarity',
+                        'type' => 'type',
+                        'use_requirement' => 'use_requirement',
+                        'activatable_ability' => 'activatable_ability'
                 )
+//                'zone' => array(
+//                        'name' => 'name.en',
+//                        'description' => 'description.en',
+//                )
                 
                 
 	);
