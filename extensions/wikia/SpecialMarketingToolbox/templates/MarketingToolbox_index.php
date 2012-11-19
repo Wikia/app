@@ -30,7 +30,7 @@
 		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 		<div class="ml15">
 			<h2><?= wfMsg('marketing-toolbox-date-title'); ?></h2>
-			calendar here
+			<div id="date-picker"></div>
 		</div>
 	</div>
 </div>
