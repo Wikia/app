@@ -580,11 +580,15 @@ class ArticleCommentList {
 		$articles = array();
 		foreach ($comments as $id => $levels) {
 			if ( isset($levels['level1']) ) {
-				$articles[$levels['level1']->getTitle()->getArticleID()] = $levels['level1'];
+				if ( !empty( $levels['level1'] ) ) {
+					$articles[$levels['level1']->getTitle()->getArticleID()] = $levels['level1'];
+				}
 			}
 			if ( isset($levels['level2']) ) {
 				foreach ($levels['level2'] as $nested) {
-					$articles[$nested->getTitle()->getArticleID()] = $nested;
+					if ( !empty( $nested ) ) {
+						$articles[$nested->getTitle()->getArticleID()] = $nested;
+					}
 				}
 			}
 		}
