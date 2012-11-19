@@ -113,6 +113,19 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return rtrim( $sig, '=' );
 	}
 
+	protected function loadMetadata(array $overrideFields = array()) {
+		parent::loadMetadata($overrideFields);
+
+		if ( !isset($metadata['genres']) ) {
+			$metadata['genres'] = $this->getGenres();
+		}
+		if ( !isset($metadata['actors']) ) {
+			$metadata['actors'] = $this->getActors();
+		}
+
+		$this->metadata = array_merge( $this->metadata, $metadata );
+	}
+
 	protected function getOriginalDescription() {
 		if ( !empty($this->metadata['description']) ) {
 			return $this->metadata['description'];

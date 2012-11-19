@@ -311,12 +311,6 @@ abstract class ApiWrapper {
 		if ( !isset($metadata['tags']) ) {
 			$metadata['tags'] = $this->getVideoTags();
 		}
-		if ( !isset($metadata['genres']) ) {
-			$metadata['genres'] = $this->getGenres();
-		}
-		if ( !isset($metadata['actors']) ) {
-			$metadata['actors'] = $this->getActors();
-		}
 
 		$this->metadata = $metadata;
 
