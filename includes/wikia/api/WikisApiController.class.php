@@ -22,6 +22,7 @@ class WikisApiController extends WikiaApiController {
 	 * @requestParam string $hub [OPTIONAL] The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter
 	 * @requestParam string $lang [OPTIONAL] The language code (e.g. en, de, fr, es, it, etc.) to use as a filter
 	 * @requestParam integer $limit [OPTIONAL] The maximum number of results to fetch, defaults to 25
+	 * @requestParam integer $batch [OPTIONAL] The batch/page index to retrieve, defaults to 1
 	 *
 	 * @responseParam array $items The list of top wikis by pageviews matching the optional filtering
 	 * @responseParam integer $total The total number of results
@@ -29,7 +30,7 @@ class WikisApiController extends WikiaApiController {
 	 * @responseParam integer $batches The total number of batches/pages
 	 * @responseParam integer $next The amount of items in the next batch/page
 	 *
-	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getList&hub=Gaming&lang=en&format=json
+	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getList&hub=Gaming&lang=en
 	 */
 	public function getList() {
 		$hub = trim( $this->request->getVal( 'hub', null ) );
@@ -69,7 +70,7 @@ class WikisApiController extends WikiaApiController {
 	 * @responseParam integer $batches The total number of batches/pages
 	 * @responseParam integer $next The amount of items in the next batch/page
 	 *
-	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getByString&string=call+of+duty&hub=Gaming&lang=en&format=json
+	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getByString&string=call+of+duty&hub=Gaming&lang=en
 	 */
 	public function getByString() {
 		$this->wf->profileIn( __METHOD__ );
@@ -108,7 +109,7 @@ class WikisApiController extends WikiaApiController {
 	 *
 	 * @responseParam array A list of results with the wiki ID as the index, each item has a headline, desc, image and flags property
 	 *
-	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getDetails&ids=3125,490&format=json
+	 * @example http://www.wikia.com/wikia.php?controller=WikisApi&method=getDetails&ids=3125,490
 	 */
 	public function getDetails() {
 		$this->wf->profileIn( __METHOD__ );
