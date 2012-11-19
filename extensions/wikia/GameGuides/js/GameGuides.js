@@ -80,7 +80,7 @@
 		Ponto.PontoBaseHandler.derive(Sections);
 
 		Sections.getInstance = function(){
-			return s;
+			return new Sections();
 		};
 
 		w.Sections = Sections;
