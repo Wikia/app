@@ -3,6 +3,10 @@
 		<h2><?= wfMsg('marketing-toolbox-region-title'); ?></h2>
 		<select id="marketingToolboxRegionSelect">
 			<option><?= wfMsg('marketing-toolbox-region-select-default-value'); ?></option>
+			<? asort($corporateWikisLanguages); ?>
+			<? foreach ($corporateWikisLanguages as $corporateWikiId => $corporateWikiLanguage): ?>
+				<option value="<?=$corporateWikiId?>"><?=$corporateWikiLanguage?></option>
+			<? endforeach ?>
 		</select>
 	</div>
 	<div class="grid-1">
@@ -10,9 +14,9 @@
 		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 		<div class="ml15">
 			<h2><?= wfMsg('marketing-toolbox-section-title'); ?></h2>
-			<input class="big" type="button" value="<?= wfMsg('marketing-toolbox-section-hubs-button'); ?>" />
-			<input class="big" type="button" value="<?= wfMsg('marketing-toolbox-section-bar-button'); ?>" />
-			<input class="big secondary"  type="button" value="<?= wfMsg('marketing-toolbox-section-homepage-button'); ?>" />
+			<? foreach ($sections as $sectionId => $section): ?>
+				<input class="big" type="button" value="<?=$section?>" />
+			<? endforeach ?>
 		</div>
 	</div>
 	<div class="grid-1">
@@ -20,10 +24,11 @@
 		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 		<div class="ml15">
 			<h2><?= wfMsg('marketing-toolbox-vertical-title'); ?></h2>
-			<input class="big" type="button" value="<?= wfMsg('marketing-toolbox-section-games-button'); ?>" />
-			<input class="big secondary"  type="button" value="<?= wfMsg('marketing-toolbox-section-entertainment-button'); ?>" />
-			<input class="big secondary" type="button" value="<?= wfMsg('marketing-toolbox-section-lifestyle-button'); ?>" />
-			</div>
+
+			<? foreach ($verticals as $verticalId => $vertical): ?>
+				<input class="big secondary" type="button" value="<?=$vertical?>" />
+			<? endforeach ?>
+		</div>
 	</div>
 	<div class="grid-2">
 		<img class="chevron border" src="<?= $wg->BlankImgUrl; ?>">

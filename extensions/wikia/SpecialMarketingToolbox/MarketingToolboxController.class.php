@@ -2,6 +2,8 @@
 
 class MarketingToolboxController extends WikiaSpecialPageController {
 
+	protected $toolboxModel;
+
 	public function __construct() {
 		parent::__construct('MarketingToolbox', 'marketingtoolbox', true);
 	}
@@ -11,6 +13,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
+        $this->toolboxModel = new MarketingToolboxModel();
 	}
 
 	protected function checkAccess() {
@@ -34,7 +37,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle(wfMsg('marketing-toolbox-title'));
 
 		if( $this->checkAccess() ) {
-
+			$this->corporateWikisLanguages = $this->toolboxModel->getCorporateWikisLanguages();
+			$this->sections = $this->toolboxModel->getAvailableSections();
+			$this->verticals = $this->getVerticals(MarketingToolboxModel::SECTION_HUBS);
 		}
 	}
 
@@ -46,7 +51,16 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		if(empty($timestamp)) {
 			$timestamp = time();
 		}
-		$toolboxModel = new MarketingToolboxModel();
-		$this->calendarData = $toolboxModel->getData($timestamp);
+		$this->calendarData = $this->toolboxModel->getData($timestamp);
+	}
+
+	/**
+	 * Get available verticals for selected Section
+	 *
+	 * @param int $sectionId
+	 * @return array
+	 */
+	public function getVerticals($sectionId) {
+		return $this->toolboxModel->getAvailableVerticals(MarketingToolboxModel::SECTION_HUBS);
 	}
 }
