@@ -16,15 +16,29 @@ abstract class WikiaApiController extends WikiaController {
 	public final function __construct() {
 		parent::__construct();
 
+		$this->checkParameters();
+	}
+
+	private function checkParameters(){
 		$query = RequestContext::getMain()->getRequest()->getQueryValues();
 
-		$origQuery = $query;
+		$keys = array_keys($query);
 
-		ksort($query);
+		if ( array_shift($keys) === 'controller' && array_shift($keys) === 'method') {
 
-		var_dump($query === $origQuery);exit();
+			unset($query['controller']);
+			unset($query['method']);
 
-		//throw an error if not in correct order
+			$origQuery = $query;
+
+			ksort($query);
+
+			if ( $query !== $origQuery ) {
+				throw new WikiaException();
+			}
+		} else {
+			throw new WikiaException();
+		}
 	}
 
 	/**
