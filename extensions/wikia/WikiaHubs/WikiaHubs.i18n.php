@@ -54,3 +54,30 @@ $messages['de'] = array(
 	'wikiahubs-error-invalid-article-url-length' => 'Die Artikel-URL muss mindestens 10 Zeichen lang sein.',
 	'wikiahubs-error-invalid-reason-length' => 'Dein Kommentar muss zwischen 1 und 140 Zeichen lang sein.',
 );
+
+$messages['es'] = array(
+	// general
+	'wikiahubs-button-cancel' => 'Cancelar',
+	'wikiahubs-button-close' => 'Finalizar',
+
+	// suggest related video
+	'wikiahubs-suggest-video-header' => 'Sugerir un vídeo',
+	'wikiahubs-suggest-video-submit-button' => 'Sugerir vídeo',
+	'wikiahubs-suggest-video-what-video' => '¿Qué vídeo quieres compartir?',
+	'wikiahubs-suggest-video-what-video-default-value' => 'Desde YouTube, Hulu, tu wiki favorito, etc.',
+	'wikiahubs-suggest-video-which-wiki' => '¿De qué wiki viene este vídeo?',
+	'wikiahubs-suggest-video-which-wiki-default-value' => 'Star Wars, ...',
+	'wikiahubs-suggest-video-success' => 'Gracias por sugerirnos un vídeo, nuestros editores lo revisarán. ¡Vuelve a visitarnos para comprobar si lo pusieron!',
+	'wikiahubs-error-invalid-video-url-length' => 'La dirección del vídeo tiene que tener al menos 10 caracteres',
+	'wikiahubs-error-invalid-wikiname-length' => 'El nombre del wiki tiene que tener al menos 1 letra',
+
+	// suggest article
+	'wikiahubs-suggest-article-header' => 'Sugiere un artículo',
+	'wikiahubs-suggest-article-submit-button' => 'Sugerir',
+	'wikiahubs-suggest-article-what-article' => '¿Qué artículo quiere compartir?',
+	'wikiahubs-suggest-article-reason' => '¿Por qué es tan cool como para ser destacado? (140 caracteres como mucho)',
+	'wikiahubs-suggest-article-success' => 'Gracias por sugerirnos un artículo, nuestros editores lo revisarán. ¡Vuelve a visitarnos para comprobar si lo pusieron!',
+	'wikiahubs-error-invalid-article-url-length' => 'La dirección del artículo tiene que tener al menos 10 caracteres',
+	'wikiahubs-error-invalid-reason-length' => 'El comentario tiene que tener entre 1 y 140 caracteres',
+);
+
