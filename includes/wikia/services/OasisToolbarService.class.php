@@ -132,47 +132,11 @@
 			return array_values($list);
 		}
 
-
-
-		static protected $navigationUrls = null;
-
-		protected function getNavigationUrls() {
-			if (is_null(self::$navigationUrls)) {
-				$context = RequestContext::getMain();
-				$skin = $context->getSkin();
-
-				if (!isset($skin->iscontent)) {
-					/* safe and slow version - possible side-efectes */
-					/*
-					global $wgForceSkin, $wgOut;
-
-					$wgForceSkin = 'oasis';
-					ob_start();
-					$skin->outputPage($wgOut);
-					ob_end_clean();
-					*/
-					/* unsafe but a lot faster version - hard trick */
-					$title = $skin->getTitle();
-
-					$skin->iscontent = ( $title->getNamespace() != NS_SPECIAL || 1 == 1);
-					$skin->thispage = $title->getPrefixedDBkey();
-					$skin->loggedin = $context->getUser()->isLoggedIn();
-				}
-
-				self::$navigationUrls = array(
-					'content_actions' => $skin->buildContentActionUrls( $skin->buildContentNavigationUrls() ),
-					'nav_urls' => $skin->buildNavUrls(),
-				);
-			}
-
-			return self::$navigationUrls;
-		}
-
 		protected $userCommandsService = null;
 
 		protected function getUserCommandsService() {
 			if (empty($this->userCommandsService)) {
-				$this->userCommandsService = new UserCommandsService($this->getNavigationUrls());
+				$this->userCommandsService = new UserCommandsService();
 			}
 			return $this->userCommandsService;
 		}
