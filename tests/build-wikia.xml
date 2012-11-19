@@ -94,6 +94,34 @@
         </exec>
     </target>
 
+	<target name="codelint-php">
+		<exec executable="php" dir="${basedir}/source/maintenance/wikia" failonerror="true">
+			<env key="SERVER_ID" value="165" />
+			<arg line="codelint.php
+					   --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
+					   --mode=php
+					   --dir=${basedir}/source/extensions/wikia,${basedir}/source/includes/wikia,${basedir}/source/skins/oasis,${basedir}/source/extensions/3rdparty/LyricWiki
+					   --blacklist=${basedir}/source/extensions/wikia/hacks,${basedir}/source/extensions/wikia/CodeLint/examples,/templates/,.tmpl.php
+					   --format=html
+					   --output=${basedir}/build/phplint/report.html
+					   " />
+		</exec>
+	</target>
+
+	<target name="codelint-js">
+		<exec executable="php" dir="${basedir}/source/maintenance/wikia" failonerror="true">
+			<env key="SERVER_ID" value="165" />
+			<arg line="codelint.php
+					   --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
+					   --mode=js
+					   --dir=${basedir}/source/skins/oasis,${basedir}/source/skins/wikia,${basedir}/source/resources,${basedir}/source/extensions/wikia
+					   --blacklist=/CodeLint/examples/anticode.js,/AdEngine/ghost/,/libraries/zepto/,/libraries/yui,/CodeLint/js/,/RTE/ckeditor/_source/,/jquery/jquery-,/resources/jquery,/resources/mediawiki,/Chat/js/lib/,lib/socket.io,/AdEngine/bezen/,/extensions/wikia/hacks,/extensions/wikia/SemanticBundle,qunit/qunit.js,jasmine/jasmine.js,/resources/mediawiki.language/
+					   --format=html
+					   --output=${basedir}/build/jslint/report.html
+					   " />
+		</exec>
+	</target>
+
     <path id="compile.classpath">
         <fileset dir="${basedir}/lib">
             <include name="**/*.jar" />
