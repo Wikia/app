@@ -300,13 +300,15 @@ class CensusDataRetrieval {
          * Memcache object:
          * array ( 'type.id' => 'code');
          * 
+         * @param Boolean $skipCache Set true to skip cache
+         * 
 	 */
-	private function getCacheCensusDataArr() {
+	private function getCacheCensusDataArr($skipCache = false) {
                 wfProfileIn(__METHOD__);
                 $key = wfMemcKey('census-data');
                 $data = $this->app->wg->Memc->get($key);
 
-                if(!empty($data)) {
+                if( !empty($data) && !$skipCache ) {
                         wfProfileOut(__METHOD__);
                         return $data;
                 }
