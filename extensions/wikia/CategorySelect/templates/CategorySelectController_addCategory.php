@@ -1,0 +1,1 @@
+<input type="text" class="addCategory" id="CategorySelectAdd" name="CategorySelectAdd" placeholder="<?= wfMsg( 'categoryselect-category-add' ) ?>">

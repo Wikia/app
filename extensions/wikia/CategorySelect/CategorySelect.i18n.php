@@ -21,7 +21,7 @@ $messages = array();
 
 $messages[ 'en' ] = array(
 	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article',
-	'categoryselect-category-add' => 'Add a category',
+	'categoryselect-category-add' => 'Add category...',
 	'categoryselect-category-edit' => 'Edit category',
 	'categoryselect-category-remove' => 'Remove category',
 	'categoryselect-error-db-locked' => 'Database is locked.',

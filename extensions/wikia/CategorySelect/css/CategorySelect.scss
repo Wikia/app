@@ -1,13 +1,28 @@
 @import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/transition";
+
+$categoryselect-color-category: mix( $color-text, $color-page, 5% );
 
 // These styles are for view pages only
 .WikiaArticleCategories {
+	@include clear-linear-gradient();
 	position: relative;
 
 	.addCategory {
-		bottom: -10px;
-		position: absolute;
-		right: 10px;
+		// FIXME: nice to have
+		//@include transition( opacity, 400ms, ease, 0 );
+		//opacity: 0;
+		outline: none;
+		width: 100px;
+	}
+
+	.addCategory,
+	.catlinks li {
+		border: 0;
+		display: block;
+		float: left;
+		margin: 0 5px 5px 0;
+		padding: 5px;
 	}
 
 	.catlinks {
@@ -17,6 +32,11 @@
 			display: block;
 			float: left;
 			width: 75px;
+		}
+
+		li {
+			@include border-radius( 4px );
+			background-color: $categoryselect-color-category;
 		}
 
 		ul {

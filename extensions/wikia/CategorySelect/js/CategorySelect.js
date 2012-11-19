@@ -236,7 +236,7 @@ $.fn.categorySelect = (function() {
 
 						// Add the category to the DOM
 						$.when( getTemplate( 'category' ) ).done(function( template ) {
-							$categories.prepend( Mustache.render( template, {
+							$categories[ options.categoryInsertMethod ]( Mustache.render( template, {
 								blankImageUrl: blankImageUrl,
 								category: category,
 								edit: cache.messages.categoryEdit,
@@ -365,6 +365,7 @@ $.fn.categorySelect.options = {
 	},
 	categories: '.categories',
 	category: '.category',
+	categoryInsertMethod: 'prepend',
 	data: [],
 	addCategory: '.addCategory',
 	editCategory: '.editCategory',

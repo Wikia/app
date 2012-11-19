@@ -17,7 +17,16 @@ class CategorySelectController extends WikiaController {
 	 * The template used for article pages.
 	 */
 	public function articlePage() {
-		// TODO
+		$categories = array();
+		$categoryLinks = $this->wg->Out->getCategoryLinks();
+		$data = CategorySelect::getExtractedCategoryData();
+
+		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
+			$categories = $data[ 'categories' ];
+		}
+
+		// TODO: figure out how to separate normal/hidden categories
+		$this->response->setVal( 'categories', $categories );
 	}
 
 	/**

@@ -246,8 +246,12 @@ class CategorySelectHooksHelper {
 
 			$app->registerHook( 'MakeGlobalVariablesScript', 'CategorySelectHooksHelper', 'onMakeGlobalVariablesScript' );
 
+			// Add hooks for view pages
+			if ( $action == 'view' || $action == 'purge' ) {
+				$app->registerHook( 'OutputPageMakeCategoryLinks', 'CategorySelectHooksHelper', 'onOutputPageMakeCategoryLinks' );
+
 			// Add hooks for edit pages
-			if ( $force || $action == 'edit' || $action == 'submit' ) {
+			} else if ( $force || $action == 'edit' || $action == 'submit' ) {
 				$app->registerHook( 'EditForm::MultiEdit:Form', 'CategorySelectHooksHelper', 'onEditFormMultiEditForm' );
 				$app->registerHook( 'EditPage::CategoryBox', 'CategorySelectHooksHelper', 'onEditPageCategoryBox' );
 				$app->registerHook( 'EditPage::getContent::end', 'CategorySelectHooksHelper', 'onEditPageGetContentEnd' );
@@ -261,6 +265,11 @@ class CategorySelectHooksHelper {
 		}
 
 		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	public static function onOutputPageMakeCategoryLinks( &$out, $categories, &$categoryLinks ) {
+		// TODO
 		return true;
 	}
 }
