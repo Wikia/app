@@ -67,6 +67,9 @@ $messages['en'] = array(
 	'promote-statusbar-rejected' => 'One or more of your images was not approved. [[Special:Contact|Find out why]]',
 
 	'promote-error-oasis-only' => 'This page is not supported under your skin. Please [[Special:Preferences|switch to the Wikia skin]] to access this feature.',
+
+	//message included in auto-uploaded image's description fb#45624
+	'wikiahome-image-auto-uploaded-comment' => 'Auto-generated image to be used on http://wikia.com/ – stay tuned for more info on the Staff Blog: http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
 );
 
 $messages['de'] = array(
@@ -126,6 +129,9 @@ $messages['de'] = array(
 	'promote-statusbar-inreview' => 'Einige deiner Bilder sind noch im Review-Prozess. Sie tauchen auf [http://de.wikia.com Wikias Hauptseite] auf, nachdem sie gerpüft wurden. Das kann 2-4 Arbeitstage dauern. Du findest dann hier ein Update, sobald das erledigt ist.',
 	'promote-statusbar-approved' => 'Juchu! $1 wird nun auf [http://de.wikia.com Wikias Hauptseite] angezeigt!',
 	'promote-statusbar-rejected' => 'Ein oder mehrere Bilder wurden nicht akzeptiert [[Special:Contact|Finde den Grund heraus]].',
+
+	//message included in auto-uploaded image's description fb#45624
+	'wikiahome-image-auto-uploaded-comment' => 'Automatisch erstelltes Bild für die Nutzung auf http://de.wikia.com – in Kürze dazu mehr Informationen im Wikia-Blog: http://de.community.wikia.com/wiki/Blog:Wikia_Deutschland_News',
 );
 
 $messages['fr'] = array(
@@ -187,6 +193,9 @@ $messages['fr'] = array(
 	'promote-statusbar-rejected' => 'Une ou plusieurs de vos images n\'ont pas été approuvées. [[Special:Contact|Demander pourquoi]].',
 
 	'promote-error-oasis-only' => 'Cette page n\'est pas supportée avec cette apparence. Veuillez [[Special:Preferences|passer à l\'apparence Wikia]] pour accéder à cette fonctionnalité.',
+
+	//message included in auto-uploaded image's description fb#45624
+	'wikiahome-image-auto-uploaded-comment' => 'Image générée automatiquement pour être utilisée sur <a  class="free" href="http://fr.wikia.com/">http://fr.wikia.com/</a> &#8212; retrouvez plus d\'informations sur le blog dédié&nbsp;: <a  class="free" href="http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia">http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia</a>',
 );
 
 $messages['es'] = array(
@@ -246,6 +255,9 @@ $messages['es'] = array(
 	'promote-statusbar-inreview' => 'Algunas de tus imágenes están actualmente bajo revisión y aparecerán en [http://es.wikia.com es.wikia.com] una vez se aprueben. Normalmente esto puede llevar unos 2 o 4 días laborables, así que te mantendremos informado por aquí cuando lo hayamos hecho.',
 	'promote-statusbar-approved' => '¡Yuju! $1 se está promocionando en [http://es.wikia.com es.wikia.com]!',
 	'promote-statusbar-rejected' => 'Una o más de tus imágenes no fue aprobada. [[Special:Contact|Pregunta por qué]].',
+
+	//message included in auto-uploaded image's description fb#45624
+	'wikiahome-image-auto-uploaded-comment' => 'Imagen generada automáticamente para ser usada en http://es.wikia.com/ – estate atento al blog del Staff para más información: http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia',
 );
 
 $messages['qqq'] = array(
@@ -304,6 +316,4 @@ $messages['qqq'] = array(
 	'promote-statusbar-inreview' => 'Status information when wiki is in review',
 	'promote-statusbar-approved' => 'Status information when wiki is in approved',
 	'promote-statusbar-rejected' => 'Status information when wiki is in rejected',
-
 );
-
