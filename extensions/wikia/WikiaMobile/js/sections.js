@@ -128,6 +128,8 @@ define('sections', ['events', 'JSMessages'], function(ev, msg){
 
 	function toggle(h2, scroll){
 		if(h2){
+			(typeof h2 == 'string') && (h2 = document.getElementById(h2));
+
 			if(isOpen(h2)){
 				close(h2);
 			}else{
