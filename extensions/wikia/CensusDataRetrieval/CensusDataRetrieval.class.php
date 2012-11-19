@@ -12,7 +12,7 @@ class CensusDataRetrieval {
 	var $query = '';
 	var $data = array();
         
-	var $supportedTypes = array( 'vehicle', 'zone' );
+	var $supportedTypes = array( 'vehicle', 'item' );
 
 	// mapping array translating census data into tempate call data
 	// note: a null value means a user-supplied parameter, not in Census
@@ -26,6 +26,8 @@ class CensusDataRetrieval {
                         'decay' => 'decay'
 		),
                 'item' => array(
+                        'name' => 'name.en',
+                        'description' => 'description.en',
                         'activatable_recast_seconds' => 'activatable_recast_seconds',
                         'combat_only' => 'combat_only',
                         'max_stack_size' => 'max_stack_size',
@@ -174,6 +176,9 @@ class CensusDataRetrieval {
 		$output = '{{' . $type . " infobox";
 
 		foreach ( $this->data as $key => $value ) {
+                        if (is_object($value)) {
+                                break; //temporary solution to prevent errors with objects (value sould be a string)
+                        }
 			$output .= "\n|$key = ";
 
 			if ( !is_null( $value ) ) {
