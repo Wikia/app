@@ -542,11 +542,11 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 *
 	 * @return array
 	 */
-	public function toNestedArray() {
+	public function toNestedArray( array $expectedFields = array( 'title', 'url' ) ) {
 		$tempResults = array();
-		foreach( $this as $result ){
-		    if($result instanceof WikiaSearchResult){
-		        $tempResults[] = $result->toArray(array('title', 'url'));
+		foreach( $this->results as $result ){
+		    if( $result instanceof WikiaSearchResult ){
+		        $tempResults[] = $result->toArray( $expectedFields );
 		    }
 		}
 		return $tempResults;
