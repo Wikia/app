@@ -225,7 +225,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 			    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
 			        $this->params['queryNamespace'] = $queryNamespace;
 			    } 
-			    $query = implode( $queryNsExploded );
+			    $query = implode( ':', $queryNsExploded );
 			}
 		}
 		
