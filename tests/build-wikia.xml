@@ -36,6 +36,7 @@
         <exec executable="php" dir="${basedir}" failonerror="true">
             <env key="SERVER_ID" value="165" />
             <arg line="run-test.php
+                       --log-junit ${basedir}/build/logs/phpunit.xml
                        --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
                        --configuration ${basedir}/phpunit.xml
 					   --exclude-group ${phpunitexcludegroups}
