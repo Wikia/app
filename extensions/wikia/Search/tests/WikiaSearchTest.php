@@ -1288,11 +1288,6 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->with		( array( WikiaSearch::field( 'title' ), WikiaSearch::field( 'html' ), 'title' ) )
 			->will		( $this->returnValue( $mockConfig ) )
 		;
-		$mockConfig
-			->expects	( $this->once() )
-			->method	( 'setMindf' )
-			->with		( 50 )
-		;
 		$mockSearch
 			->expects	( $this->once() )
 			->method	( 'moreLikeThis' )
@@ -1304,6 +1299,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$this->mockApp();
 		
 		$mockSearch->getRelatedVideos( $mockConfig );
+		$this->tearDown();
 	}
 	
 	/**
