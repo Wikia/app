@@ -251,8 +251,12 @@ var WikiaBar = {
 	},
 	getLoggedInUserStateBarAndChangeLocalStorage: function () {
 		$.nirvana.sendRequest({
-			controller: 'WikiaBarController',
-			method: 'getUserStateBar',
+			controller: 'WikiaUserPropertiesController',
+			method: 'performPropertyOperation',
+			data: {
+				handlerName: 'WikiaBarUserPropertiesHandler',
+				methodName: 'getWikiaBarState'
+			},
 			type: 'get',
 			format: 'json',
 			callback: $.proxy(this.onGetLoggedInUserStateBarAndChangeLocalStorage, this),
@@ -265,17 +269,21 @@ var WikiaBar = {
 		this.setLocalStorageData(changeState);
 
 		$.nirvana.sendRequest({
-			controller: 'WikiaBarController',
-			method: 'changeUserStateBar',
+			controller: 'WikiaUserPropertiesController',
+			method: 'performPropertyOperation',
 			data: {
-				changeTo: changeState
+				handlerName: 'WikiaBarUserPropertiesHandler',
+				methodName: 'changeWikiaBarState',
+				callParams: {
+					changeTo: changeState
+				}
 			},
 			type: 'post',
 			format: 'json'
 		});
 	},
 	onGetLoggedInUserStateBarAndChangeLocalStorage: function (response) {
-		var state = response.results.wikiaBarState || this.WIKIA_BAR_SHOWN_STATE_VALUE;
+		var state = response.results.propertyValue || this.WIKIA_BAR_SHOWN_STATE_VALUE;
 		this.setLocalStorageData(state);
 		this.doWikiaBarAnimationDependingOnState(state);
 	},
