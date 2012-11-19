@@ -1180,7 +1180,7 @@ $config['history_polyfill_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//resources/wikia/polyfills/history/history.adapter.jquery.js',
-		'//resources/wikia/polyfills/history/history.html4.js',
+		//'//resources/wikia/polyfills/history/history.html4.js', // add this back in when we're ready to support IE
 		'//resources/wikia/polyfills/history/history.js',
 	)	
 );
