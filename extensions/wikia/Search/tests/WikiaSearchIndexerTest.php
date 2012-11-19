@@ -459,5 +459,71 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		);
 	}
 	
-	
+	/**
+	 * @covers WikiaSearchIndexer::getPageMetaData
+	 */
+	public function testGetPageMetadata() {
+		$mockSearchIndexer 	= $this->getMockBuilder( 'WikiaSearchIndexer' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getRedirectTitles', 'getWikiViews' ) )
+									->getMock();
+		
+		$mockArticle		= $this->getMockBuilder( 'Article' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getTitle', 'getId' ) )
+									->getMock();
+		
+		$mockApiService		= $this->getMock( 'ApiService', array( 'call' ) );
+		$mockDataMart		= $this->getMock( 'DataMartServie', array( 'getCurrentWamScoreForWiki' ) );
+		
+		$mockTitle			= 'PHPUnit/Being_Awesome';
+		$mockId				= 123;
+		
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getId' )
+			->will		( $this->returnValue( $mockId ) )
+		;
+		$mockApiService
+			->staticExpects	( $this->any() )
+			->method	( 'call' );
+		;
+		$mockSearchIndexer
+			->expects	( $this->once() )
+			->method	( 'getWikiViews' )
+			->with		( $mockArticle )
+			->will		( $this->returnValue( (object) array( 'weekly' => 10, 'monthly' => 100 ) ) )
+		;
+		$redirectTitles = array( 'foo', 'bar', 'baz', 'qux' );
+		$mockSearchIndexer
+			->expects	( $this->once() )
+			->method	( 'getRedirectTitles' )
+			->with		( $mockArticle )
+			->will		( $this->returnValue( $redirectTitles ) )
+		;
+		$mockDataMart
+			->expects	( $this->once() )
+			->method	( 'getCurrentWamScoreForWiki' )
+		;
+		
+		$wgProperty = new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
+		$wgProperty->setAccessible( true );
+		$wgProperty->setValue( $mockSearchIndexer, (object) array( 'CityId' => 123, 'ExternalSharedDB' => true ) );
+		
+		$method = new ReflectionMethod( 'WikiaSearchIndexer', 'getPageMetaData' );
+		$method->setAccessible( true );
+		
+		$this->mockClass( 'ApiService', $mockApiService );
+		$this->mockClass( 'DataMartService', $mockDataMart );
+		$this->mockApp();
+
+		$result = $method->invoke( $mockSearchIndexer, $mockArticle );
+		
+		$this->tearDown();
+	}
 }

@@ -362,7 +362,8 @@ class WikiaSearchIndexer extends WikiaObject {
 		wfProfileIn(__METHOD__);
 		$result = array();
 	
-		$data = ApiService::call( array(
+		$apiService = F::build( 'ApiService' );
+		$data = $apiService->call( array(
 				'titles'	=> $page->getTitle(),
 				'bltitle'	=> $page->getTitle(),
 				'action'	=> 'query',
@@ -372,18 +373,20 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$result['backlinks'] = isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0;  
 	
+		$pageId = $page->getId();
+		
 		if (! empty( $this->wg->ExternalSharedDB ) ) {
-			$data = ApiService::call( array(
-					'pageids'	=> $page->getId(),
+			$data = $apiService->call( array(
+					'pageids'	=> $pageId,
 					'action'	=> 'query',
 					'prop'		=> 'info|categories',
 					'inprop'	=> 'url|created|views|revcount',
 					'meta'		=> 'siteinfo',
 					'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
 			));
-		
-			if( isset( $data['query']['pages'][$page->getId()] ) ) {
-				$pageData = $data['query']['pages'][$page->getId()];
+			
+			if( isset( $data['query']['pages'][$pageId] ) ) {
+				$pageData = $data['query']['pages'][$pageId];
 				$result['views']	= $pageData['views'];
 				$result['revcount']	= $pageData['revcount'];
 				$result['created']	= $pageData['created'];
@@ -406,7 +409,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$wikiViews = $this->getWikiViews($page);
 	
-		$wam = DataMartService::getCurrentWamScoreForWiki( $this->wg->CityId );
+		$wam = F::build( 'DataMartService' )->getCurrentWamScoreForWiki( $this->wg->CityId );
 		
 		$result['wikiviews_weekly']		= (int) $wikiViews->weekly;
 		$result['wikiviews_monthly']	= (int) $wikiViews->monthly;
