@@ -277,13 +277,6 @@ class ForumController extends WallBaseController {
 		$this->response->setVal( 'posts', $out );
 	}
 
-	public function forumParticipationModule() {
-		$wallHistory = F::build( 'WallHistory', array( $this->app->wg->CityId ) );
-		$out = $wallHistory->getLastUsers( NS_WIKIA_FORUM_BOARD );
-
-		$this->response->setVal( 'participants', $out );
-	}
-
 	public function forumRelatedThreads() {
 		$title = F::build( 'Title', array( $this->app->wg->Title->getText() ), 'newFromId' );
 		$this->response->setVal( 'showModule', false );

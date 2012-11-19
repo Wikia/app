@@ -178,50 +178,6 @@ class WallHistory extends WikiaModel {
 		return $out;
 	}
 	
-	public function getLastUsers($ns, $count = 10) {
-		$db =  $this->getDB(DB_SLAVE);
-		$res = $db->select(
-			'wall_history',
-			array(
-				'max(revision_id) as revision_id',
-				'max(event_date) as max_event_date'
-			), 
-			array(
-				'action' => WH_NEW,
-				'post_ns' => $ns,
-				'deleted_or_removed' => 0
-			),
-			__METHOD__,
-			array(
-				'GROUP BY' => ' post_user_id, post_user_ip',		
-				'LIMIT' => 50,
-				'ORDER BY' => 'max_event_date desc'
-			)
-		);
-		
-		$in = array();
-				
-		while ($row = $db->fetchRow($res)) {
-			$rev = Revision::newFromId( (int) $row['revision_id'] );
-			if(!empty($rev)) {
-				$in[] = $row['revision_id'];
-			}
-		}
-		
-		if(empty($in)) {
-			return array(); 
-		}
-		
-		$where = array(
-			'revision_id' => $in,
-			'action' => WH_NEW,
-			'post_ns' => $ns, 
-			'deleted_or_removed' => 0
-		);
-		
-		return $this->loadFromDB($where, $count, 0, 'desc');
-	}
-	
 	public function get($parent_page_id, $sort, $parent_comment_id = 0, $show_replay = true) {
 		$sort = ($sort === 'nf') ? 'desc' : 'asc';
 		$where = $this->getWhere($parent_page_id, $parent_comment_id, $show_replay);

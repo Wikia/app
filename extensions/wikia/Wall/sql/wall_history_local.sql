@@ -12,7 +12,6 @@ CREATE TABLE wall_history (
 	revision_id INT(11),
 	deleted_or_removed tinyint(1) DEFAULT 0,
 	event_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	key `getLastUsers` (action, post_ns, deleted_or_removed),
 	key `getByParentPage` (parent_page_id, event_date),
 	key `getByParentComment` (parent_comment_id, event_date),
 	key `addStatChangeAction` (comment_id) 
