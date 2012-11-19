@@ -87,6 +87,26 @@ class CensusDataRetrieval {
                 wfProfileOut(__METHOD__);
                 return $text;
 	}
+        
+        /**
+	 * getInfoboxCode
+         * Retrieves, prepares and returns infobox template code
+         * 
+         * @param $title Title is used to form a query to Census
+         * @return $templateCode String
+	 */
+        public function getInfoboxCode( Title $title ) {
+                $this->app = F::App();
+		$this->query = $this->prepareCode( $title->getText() );
+                $this->censusDataArr = $this->getCacheCensusDataArr();
+                if ( !$this->fetchData() ) {
+			// no data in Census or something went wrong, quit
+                        wfProfileOut(__METHOD__);
+			return false;
+		}
+                $templateCode = $this->parseData();
+                return $templateCode;
+        }
 
 	/**
 	 * Retrieves data from the Census API and filters the part we care about
@@ -108,7 +128,7 @@ class CensusDataRetrieval {
                         //fetch data from Census by type and id
                         $censusData = $http->get( sprintf(self::QUERY_URL, $type, $id) );
                         $map = json_decode($censusData);
-			if ( $map->returned > 0 ) {
+                        if ( $map->returned > 0 ) {
                                 $censusData = $map->{$type.'_list'}[0];
                                 $this->type = $type;
                         } else {//no data
@@ -309,15 +329,25 @@ class CensusDataRetrieval {
 	 */
 	private function mergeResult( &$censusDataArr, $map, $type) {
                 wfProfileIn(__METHOD__);
-		if ( is_object( $map ) && $map->returned > 0 ) {
-                	$list = $map->{$type.'_list'};
-	                foreach ( $list as $obj ) {
-        	                if ( isset($obj->name->en) ) {
-                	                $censusDataArr[$type.'.'.$obj->id] = $this->prepareCode( $obj->name->en );
-                        	}
-	                }
-		}
+                if ( is_object( $map ) && $map->returned > 0 ) {
+                        $list = $map->{$type.'_list'};
+                        foreach ( $list as $obj ) {
+                                if ( isset($obj->name->en) ) {
+                                        $censusDataArr[$type.'.'.$obj->id] = $this->prepareCode( $obj->name->en );
+                                }
+                        }
+                }
                 wfProfileOut(__METHOD__);
+        }
+        
+        /**
+	 * getFlagCategoryTitle
+         * Returns instance of Title for Census enabled pages category
+         * 
+         * @return Title
+	 */
+        public function getFlagCategoryTitle () {
+                return Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY );
         }
         
 }
