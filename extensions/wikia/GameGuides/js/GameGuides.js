@@ -68,12 +68,12 @@
 
 	require(['sections'], function(s){
 		function Sections(){
-			this.open = function(data){
-				s.open(data.id, data.scroll);
+			this.open = function(id){
+				s.open(id, true);
 			}
 			this.close = s.close;
-			this.toggle = function(data) {
-				s.toggle(data.id, data.scroll);
+			this.toggle = function(id) {
+				s.toggle(id, true);
 			}
 		}
 
