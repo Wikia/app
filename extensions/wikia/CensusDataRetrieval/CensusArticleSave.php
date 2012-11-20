@@ -9,7 +9,7 @@
 
 class CensusArticleSave {
 
-        const HOVER_INFOBOX_TEMPLATE_NAME = 'infobox';
+        const HOVER_INFOBOX_TEMPLATE_NAME = 'link';
         
         /**
 	 * replaceLinks
