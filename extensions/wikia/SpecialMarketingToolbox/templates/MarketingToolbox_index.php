@@ -44,7 +44,7 @@
 <div class="ui-datepicker-inline ui-datepicker datepicker-example">
 	<table class="ui-datepicker-calendar">
 		<tr>
-			<td class="ui-datepicker-current-day">
+			<td class="ui-datepicker-current-day-legend">
 				<a>&nbsp;&nbsp;</a>
 				<?= wfMsg('marketing-toolbox-tooltip-current-date'); ?>
 			</td>

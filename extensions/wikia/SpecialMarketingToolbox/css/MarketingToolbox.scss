@@ -52,6 +52,10 @@ $color-toolbox-datepicker-font-alternative-color: #bbbbbb;
 	&.WikiaGrid .grid-2 {
 		width: 320px;
 	}
+
+	#marketingToolboxRegionSelect {
+		width: 100%;
+	}
 }
 
 .ui-datepicker.ui-datepicker-inline {
@@ -105,14 +109,15 @@ $color-toolbox-datepicker-font-alternative-color: #bbbbbb;
 		border: 1px solid #fff;
 		width: 24px;
 		height: 22px;
+		line-height: 23px;
 	}
 
-	.ui-datepicker-current-day a {
+	.ui-datepicker-today a, .ui-datepicker-current-day-legend a {
 		border: 1px solid $color-toolbox-datepicker-curentdate-border;
 	}
 
 	&.datepicker-example {
-		width: 600px;
+		width: 500px;
 		margin: 0 auto;
 		display: block;
 		background-color: transparent;
@@ -122,5 +127,9 @@ $color-toolbox-datepicker-font-alternative-color: #bbbbbb;
 			display: inline;
 			padding: 0.2em 0.5em;
 		}
+	}
+
+	table.ui-datepicker-calendar td {
+		text-align: center;
 	}
 }
