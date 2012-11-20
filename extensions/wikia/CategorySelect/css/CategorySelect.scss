@@ -4,7 +4,7 @@
 $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 
 // These styles are for view pages only
-.CategorySelect {
+.CategorySelect.articlePage {
 	@include clear-linear-gradient();
 	line-height: normal;
 	padding-bottom: 5px;
