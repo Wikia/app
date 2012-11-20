@@ -136,6 +136,9 @@ pre {
 	padding-left: 0;
 	text-align: left;
 }
+.TOC_hide #toc ul, .TOC_hide .toc ul {
+	display: none;
+}
 #toc ul ul,
 .toc ul ul {
 	margin: 0 0 0 2em;
@@ -957,7 +960,7 @@ table.gallery caption {
 }
 
 div.gallerybox div.thumb {
-	border-color: 1px solid #ccc;
+	border: 1px solid #ccc;
 }
 
 

@@ -461,7 +461,7 @@ table.wikitable {
 }
 
 .article-table { // This parallels WikiaTable in _table.scss
-	@extend .WikiaTable
+	@extend .WikiaTable;
 }
 
 // /** Interlang Links **/
@@ -501,6 +501,9 @@ table.wikitable {
 	}
 }
 
+.TOC_hide .toc ul {
+	display: none;
+}
 
 // /** WikiaWideTables **/
 .WikiaWideTablesWrapper {
