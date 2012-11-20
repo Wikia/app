@@ -642,6 +642,150 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				$mockIndexer->deleteBatch( array( 123 ) ),
 				'WikiaSearchIndexer::deleteBatch should always return true'
 		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::reindexBatch
+	 */
+	public function testReindexBatchWorks() {
+		$mockClient		=	$this->getMock( 'Solarium_Client', array( 'update', 'createUpdate' ) );
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->setConstructorArgs( array( $mockClient ) )
+								->setMethods( array( 'getSolrDocument' ) )
+								->getMock();
 		
+		$mockDocument	=	$this->getMock( 'Solarium_Document_ReadWrite' );
+		
+		$mockHandler	=	$this->getMock( 'Solarium_Query_Update', array( 'addDocuments', 'addCommit' ) );
+		
+		$mockClient
+			->expects	( $this->at( 0 ) )
+			->method	( 'createUpdate' )
+			->will		( $this->returnValue( $mockHandler ) )
+		;
+		$mockIndexer
+			->expects	( $this->at( 0 ) )
+			->method	( 'getSolrDocument' )
+			->with		( 123 )
+			->will		( $this->returnValue( $mockDocument ) )
+		;
+		$mockHandler
+			->expects	( $this->at( 0 ) )
+			->method	( 'addDocuments' )
+			->with		( array( $mockDocument ) )
+		;
+		$mockHandler
+			->expects	( $this->at( 1 ) )
+			->method	( 'addCommit' )
+		;
+		$mockClient
+			->expects	( $this->at( 1 ) )
+			->method	( 'update' )
+			->with		( $mockHandler )
+		;
+		
+		$this->assertTrue(
+				$mockIndexer->reindexBatch( array( 123 ) ),
+				'WikiaSearchIndexer::reindexBatch should always return true'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::reindexBatch
+	 */
+	public function testReindexBatchBreaks() {
+		$mockClient		=	$this->getMock( 'Solarium_Client', array( 'update', 'createUpdate' ) );
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->setConstructorArgs( array( $mockClient ) )
+								->setMethods( array( 'getSolrDocument' ) )
+								->getMock();
+		
+		$mockDocument	=	$this->getMock( 'Solarium_Document_ReadWrite' );
+		
+		$mockException	=	$this->getMock( 'Exception' );
+		
+		$mockHandler	=	$this->getMock( 'Solarium_Query_Update', array( 'addDocuments', 'addCommit' ) );
+		
+		$mockWikia		=	$this->getMock( 'Wikia', array( 'log' ) );
+		
+		$mockClient
+			->expects	( $this->at( 0 ) )
+			->method	( 'createUpdate' )
+			->will		( $this->returnValue( $mockHandler ) )
+		;
+		$mockIndexer
+			->expects	( $this->at( 0 ) )
+			->method	( 'getSolrDocument' )
+			->with		( 123 )
+			->will		( $this->returnValue( $mockDocument ) )
+		;
+		$mockHandler
+			->expects	( $this->at( 0 ) )
+			->method	( 'addDocuments' )
+			->with		( array( $mockDocument ) )
+		;
+		$mockHandler
+			->expects	( $this->at( 1 ) )
+			->method	( 'addCommit' )
+		;
+		$mockClient
+			->expects	( $this->at( 1 ) )
+			->method	( 'update' )
+			->with		( $mockHandler )
+			->will		( $this->throwException( $mockException ) )
+		;
+		$mockWikia
+			->expects	( $this->any() )
+			->method	( 'log' )
+		;
+		
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockApp();
+		
+		$this->assertTrue(
+				$mockIndexer->reindexBatch( array( 123 ) ),
+				'WikiaSearchIndexer::reindexBatch should always return true'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearch::getSolrDocument
+	 */
+	public function testGetSolrDocument() {
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getPage' ) )
+								->getMock();
+		
+		$pageData = array(
+				'id'	=>	'234_123',
+				'title'	=>	'my crappy test',
+				'html'	=>	'foo bar baz yes i am skipping testing regexes that is a trap',
+				);
+		
+		$mockIndexer
+			->expects	( $this->once() )
+			->method	( 'getPage' )
+			->with		( 123 )
+			->will		( $this->returnValue( $pageData ) )
+		;
+		
+		$doc = $mockIndexer->getSolrDocument( 123 );
+		
+		$this->assertInstanceOf(
+				'Solarium_Document_ReadWrite',
+				$doc,
+				'WikiaSearchIndexer::getSolrDocument should return an instance of Solarium_Document_ReadWrite'
+		);
+		$this->assertEquals(
+				'234_123',
+				$doc['id'],
+				'The return value of WikiaSearchIndexer::getSolrDocument should have the values retrieved from getPage() set in the Solr document'
+		);
+		$this->assertEquals(
+				$doc['html_en'],
+				$doc['html'],
+				'Language fields should be transformed during WikiaSearchIndexer::getSolrDocument'
+		);
 	}
 }

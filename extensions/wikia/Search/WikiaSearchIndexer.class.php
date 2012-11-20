@@ -273,7 +273,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		try {
 			$this->client->update( $updateHandler );
 		} catch ( Exception $e ) {
-			Wikia::Log( __METHOD__, implode( ',', $documentIds ), $e);
+			F::build( 'Wikia' )->Log( __METHOD__, implode( ',', $documentIds ), $e);
 		}
 		
 		return true;
