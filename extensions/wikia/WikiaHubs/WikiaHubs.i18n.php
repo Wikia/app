@@ -1,9 +1,9 @@
 <?php
 /**
-* Internationalisation file for the WikiaHubs extension.
-*
-* @addtogroup Languages
-*/
+ * Internationalisation file for the WikiaHubs extension.
+ *
+ * @addtogroup Languages
+ */
 
 $messages = array();
 
@@ -11,7 +11,7 @@ $messages['en'] = array(
 	// general
 	'wikiahubs-button-cancel' => 'Cancel',
 	'wikiahubs-button-close' => 'Finished',
-	
+
 	// suggest related video
 	'wikiahubs-suggest-video-header' => 'Suggest a Video',
 	'wikiahubs-suggest-video-submit-button' => 'Suggest Video',
@@ -81,3 +81,26 @@ $messages['es'] = array(
 	'wikiahubs-error-invalid-reason-length' => 'El comentario tiene que tener entre 1 y 140 caracteres',
 );
 
+$messages['fr'] = array(
+	// general
+	'wikiahubs-button-cancel' => 'Annuler',
+	'wikiahubs-button-close' => 'Terminer',
+	// suggest related video
+	'wikiahubs-suggest-video-header' => 'Suggérer une vidéo',
+	'wikiahubs-suggest-video-submit-button' => 'Suggérer',
+	'wikiahubs-suggest-video-what-video' => 'Quelle vidéo souhaitez-vous partager ?',
+	'wikiahubs-suggest-video-what-video-default-value' => 'De YouTube, Hulu, votre wiki préféré, etc.',
+	'wikiahubs-suggest-video-which-wiki' => 'De quelle wiki vient-elle ?',
+	'wikiahubs-suggest-video-which-wiki-default-value' => 'Glee, ...',
+	'wikiahubs-suggest-video-success' => 'Merci d\'avoir suggéré une vidéo, ceux qui s\'occupent de la page vont la regarder. Revenez souvent pour voir si elle est en ligne!',
+	'wikiahubs-error-invalid-video-url-length' => 'L\'URL de la vidéo doit être d\'au moins 10 caractères',
+	'wikiahubs-error-invalid-wikiname-length' => 'Le nom du wiki doit être d\'au moins 1 caractère',
+	// suggest article
+	'wikiahubs-suggest-article-header' => 'Suggérer un article',
+	'wikiahubs-suggest-article-submit-button' => 'Suggérer',
+	'wikiahubs-suggest-article-what-article' => 'Que souhaitez-vous partager ?',
+	'wikiahubs-suggest-article-reason' => 'Pourquoi est-ce si intéressant ? (limite de 140 caractères)',
+	'wikiahubs-suggest-article-success' => 'Merci d\'avoir suggéré un article, ceux qui s\'occupent de la page vont le regarder. Revenez souvent pour voir si il est en ligne !',
+	'wikiahubs-error-invalid-article-url-length' => 'L\'URL de l\'article doit être d\'au moins 10 caractères',
+	'wikiahubs-error-invalid-reason-length' => 'Le commentaire doit être entre 1 et 140 caractères',
+);
