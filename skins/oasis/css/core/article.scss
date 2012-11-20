@@ -184,6 +184,7 @@
 		margin: 1em 0;
 		padding: 5px;
 		ul {
+			display: none;
 			margin: 0;
 			list-style: none;
 			ul {
@@ -461,7 +462,7 @@ table.wikitable {
 }
 
 .article-table { // This parallels WikiaTable in _table.scss
-	@extend .WikiaTable
+	@extend .WikiaTable;
 }
 
 // /** Interlang Links **/

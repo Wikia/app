@@ -37,7 +37,17 @@ $wgExtensionFunctions[] = 'TOCimprovementsInit';
  */
 function TOCimprovementsInit() {
 	global $wgHooks;
-	$wgHooks['SkinGetPageClasses'][] = 'TOCimprovementsAddBodyClass';
+	//$wgHooks['SkinGetPageClasses'][] = 'TOCimprovementsAddBodyClass';
+	$wgHooks['BeforePageDisplay'][] = 'TOCcssfornoscript';
+}
+
+/**
+ * Adds a script to a page that protects users without JavaScript from not being able
+ * too see TOC (which is now hidden by default)
+ */
+function TOCcssfornoscript( OutputPage &$out, &$skin ) {
+	$out->addHtml( '<noscript><link rel="stylesheet" href="' . F::app()->wg->ExtensionsPath . '/wikia/TOCimprovements/css/TOCNoScript.css" /></noscript>' );
+	return true;
 }
 
 /**

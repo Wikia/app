@@ -130,6 +130,7 @@ pre {
 }
 #toc ul,
 .toc ul {
+	display: none;
 	list-style-type: none;
 	list-style-image: none;
 	margin-left: 0;
@@ -957,7 +958,7 @@ table.gallery caption {
 }
 
 div.gallerybox div.thumb {
-	border-color: 1px solid #ccc;
+	border: 1px solid #ccc;
 }
 
 
