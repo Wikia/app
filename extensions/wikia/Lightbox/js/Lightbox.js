@@ -504,6 +504,9 @@ var Lightbox = {
 
 			// Ad's been shown, don't show it again. 
 			Lightbox.ads.adWasShown = true;
+
+			// remove "?file=" from URL
+			Lightbox.updateUrlState(true);
 		},
 		// Remove showing ad flag
 		reset: function() {
@@ -541,6 +544,9 @@ var Lightbox = {
 				})
 				.addClass('error-lightbox')
 				.html(Lightbox.openModal.errorMessage);
+
+			// remove "?file=" from URL
+			Lightbox.updateUrlState(true);
 		}
 	},
     updateMediaType: function() {
