@@ -485,7 +485,10 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->with		( array( '123_234' ) )
 		;
 		
-		$mockIndexer->deleteArticle( 234 );
+		$this->assertTrue( 
+				$mockIndexer->deleteArticle( 234 ),
+				'WikiaSearchIndexer::deleteArticle should always return true'
+		);
 	}
 	
 	/**
@@ -507,6 +510,138 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->with		( array( '123_234' ) )
 		;
 		
-		$mockIndexer->deleteArticle( 234 );
+		$this->assertTrue( 
+				$mockIndexer->deleteArticle( 234 ),
+				'WikiaSearchIndexer::deleteArticle should always return true'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::reindexPage
+	 */
+	public function testReindexPage() {
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getSolrDocument', 'reindexBatch' ) )
+								->getMock();
+		
+		$mockDocument	=	$this->getMock( 'Solarium_Document_ReadWrite' );
+		
+		$mockWikia		= $this->getMock( 'Wikia', array( 'log' ) );
+
+		$mockIndexer
+			->expects	( $this->at( 0 ) )
+			->method	( 'getSolrDocument' )
+			->with		( 123 )
+			->will		( $this->returnValue( $mockDocument ) )
+		;
+		$mockIndexer
+			->expects	( $this->at( 1 ) )
+			->method	( 'reindexBatch' )
+			->with		( array( $mockDocument ) )
+		;
+		$mockWikia
+			->expects	( $this->any() )
+			->method	( 'log' )
+		;
+		
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockApp();
+		
+		$this->assertTrue(
+				$mockIndexer->reindexPage( 123 ),
+				'WikiaSearchIndexer::reindexPage should always return true'
+				);
+
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::deleteBatch
+	 */
+	public function testDeletBatchWorks() {
+		$mockClient		=	$this->getMock( 'Solarium_Client', array( 'update', 'createUpdate' ) );
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->setConstructorArgs( array( $mockClient ) )
+								->setMethods( array( 'getSolrDocument', 'reindexBatch' ) )
+								->getMock();
+		
+		$mockHandler	=	$this->getMock( 'Solarium_Query_Update', array( 'addDeleteQuery', 'addCommit' ) );
+		
+		$mockClient
+			->expects	( $this->at( 0 ) )
+			->method	( 'createUpdate' )
+			->will		( $this->returnValue( $mockHandler ) )
+		;
+		$mockHandler
+			->expects	( $this->at( 0 ) )
+			->method	( 'addDeleteQuery' )
+			->with		( WikiaSearch::valueForField( 'id', 123 ) )
+		;
+		$mockHandler
+			->expects	( $this->at( 1 ) )
+			->method	( 'addCommit' )
+		;
+		$mockClient
+			->expects	( $this->at( 1 ) )
+			->method	( 'update' )
+			->with		( $mockHandler )
+		;
+		
+		$this->assertTrue(
+				$mockIndexer->deleteBatch( array( 123 ) ),
+				'WikiaSearchIndexer::deleteBatch should always return true'
+		);
+		
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::deleteBatch
+	 */
+	public function testDeletBatchBreaks() {
+		$mockClient		=	$this->getMock( 'Solarium_Client', array( 'update', 'createUpdate' ) );
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->setConstructorArgs( array( $mockClient ) )
+								->setMethods( array( 'getSolrDocument', 'reindexBatch' ) )
+								->getMock();
+		
+		$mockHandler	=	$this->getMock( 'Solarium_Query_Update', array( 'addDeleteQuery', 'addCommit' ) );
+		
+		$mockException	=	$this->getMock( 'Exception' );
+		
+		$mockWikia		=	$this->getMock( 'Wikia', array( 'log' ) );
+		
+		$mockClient
+			->expects	( $this->at( 0 ) )
+			->method	( 'createUpdate' )
+			->will		( $this->returnValue( $mockHandler ) )
+		;
+		$mockHandler
+			->expects	( $this->at( 0 ) )
+			->method	( 'addDeleteQuery' )
+			->with		( WikiaSearch::valueForField( 'id', 123 ) )
+		;
+		$mockHandler
+			->expects	( $this->at( 1 ) )
+			->method	( 'addCommit' )
+		;
+		$mockClient
+			->expects	( $this->at( 1 ) )
+			->method	( 'update' )
+			->with		( $mockHandler )
+			->will		( $this->throwException( $mockException ) )
+		;
+		$mockWikia
+			->expects	( $this->any() )
+			->method	( 'log' )
+		;
+		
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockApp();
+		
+		$this->assertTrue(
+				$mockIndexer->deleteBatch( array( 123 ) ),
+				'WikiaSearchIndexer::deleteBatch should always return true'
+		);
+		
 	}
 }
