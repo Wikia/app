@@ -2,7 +2,7 @@
 	<div class="grid-2">
 		<h2><?= wfMsg('marketing-toolbox-region-title'); ?></h2>
 		<select id="marketingToolboxRegionSelect">
-			<option><?= wfMsg('marketing-toolbox-region-select-default-value'); ?></option>
+			<option class="placeholder-option"><?= wfMsg('marketing-toolbox-region-select-default-value'); ?></option>
 			<? asort($corporateWikisLanguages); ?>
 			<? foreach ($corporateWikisLanguages as $corporateWikiId => $corporateWikiLanguage): ?>
 				<option value="<?=$corporateWikiId?>"><?=$corporateWikiLanguage?></option>
@@ -15,7 +15,7 @@
 		<div class="ml15">
 			<h2><?= wfMsg('marketing-toolbox-section-title'); ?></h2>
 			<? foreach ($sections as $sectionId => $section): ?>
-				<input class="big" disabled="disabled" type="button" value="<?=$section?>" />
+				<input class="big secondary" disabled="disabled" type="button" value="<?=$section?>" />
 			<? endforeach ?>
 		</div>
 	</div>
@@ -35,7 +35,7 @@
 		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 		<div class="ml15">
 			<h2><?= wfMsg('marketing-toolbox-date-title'); ?></h2>
-			<div id="date-picker"></div>
+			<div id="date-picker"><?=wfMsg('marketing-toolbox-tooltip-calendar-placeholder')?></div>
 		</div>
 	</div>
 </div>
