@@ -1525,6 +1525,7 @@ function wfMsgWikiHtml( $key ) {
  * @return String
  */
 function wfMsgExt( $key, $options ) {
+	wfProfileIn(__METHOD__);
 	$args = func_get_args();
 	array_shift( $args );
 	array_shift( $args );
@@ -1590,6 +1591,7 @@ function wfMsgExt( $key, $options ) {
 	if( in_array( 'replaceafter', $options, true ) ) {
 		$string = wfMsgReplaceArgs( $string, $args );
 	}
+	wfProfileOut(__METHOD__);
 
 	return $string;
 }
