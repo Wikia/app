@@ -23,7 +23,12 @@ $messages['en'] = array(
 	'marketing-toolbox-section-entertainment-button' => 'Entertainment',
 	'marketing-toolbox-section-lifestyle-button' => 'Lifestyle',
 
-	'marketing-toolbox-region-select-default-value' => 'Choose your Region'
+	'marketing-toolbox-region-select-default-value' => 'Choose your Region',
+
+	'marketing-toolbox-tooltip-current-date' => 'Current date',
+	'marketing-toolbox-tooltip-published' => 'Published',
+	'marketing-toolbox-tooltip-in-progress' => 'Not published',
+	'marketing-toolbox-tooltip-calendar-placeholder' => 'To activate the calendar select Vertical first.',
 );
 
 $messages['qqq'] = array(

@@ -7,6 +7,7 @@ MarketingToolbox.prototype = {
 		'2012-11-21': 1,
 		'2012-11-12': 2
 	},
+	isCalendarReady: false,
 	init: function() {
 		this.tooltipMessages[window.wgMarketingToolboxConstants.DAY_EDITED_NOT_PUBLISHED] = $.msg('marketing-toolbox-tooltip-in-progress');
 		this.tooltipMessages[window.wgMarketingToolboxConstants.DAY_PUBLISHED] = $.msg('marketing-toolbox-tooltip-published');
@@ -15,11 +16,7 @@ MarketingToolbox.prototype = {
 			// jQuery UI datepicker plugin
 			mw.loader.use(['jquery.ui.datepicker'])
 		).then($.proxy(function(getResourcesData) {
-			$("#date-picker").datepicker({
-				showOtherMonths: true,
-				selectOtherMonths: true,
-				beforeShowDay: $.proxy(this.datePickerBeforeShowDay, this)
-			});
+			this.isCalendarReady = true;
 		}, this));
 
 		this.interactionsHandler();
@@ -43,12 +40,22 @@ MarketingToolbox.prototype = {
 	interactionsHandler: function() {
 		$('#marketingToolboxRegionSelect').change(function() {
 			$('.marketingToolbox input').removeAttr('disabled');
+			$('.section input').removeClass('secondary');
+			$('.placeholder-option').remove();
 		});
 		var verticalInputs = $('.vertical input');
-		verticalInputs.click(function() {
+		verticalInputs.click($.proxy(function(e) {
 			verticalInputs.addClass('secondary');
-			$(this).removeClass('secondary');
-		});
+			$(e.target).removeClass('secondary');
+			if (this.isCalendarReady) {
+				$("#date-picker").text('').datepicker({
+					showOtherMonths: true,
+					selectOtherMonths: true,
+					beforeShowDay: $.proxy(this.datePickerBeforeShowDay, this)
+				});
+				this.isCalendarReady = false;
+			}
+		}, this));
 	}
 };
 
