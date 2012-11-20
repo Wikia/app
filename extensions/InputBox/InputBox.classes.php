@@ -86,8 +86,7 @@ class InputBox {
 		// Build HTML
 		$htmlOut = Xml::openElement( 'div',
 			array(
-				'align' => 'center',
-				'style' => 'background-color:' . $this->mBGColor
+			'style' => 'margin-left: auto; margin-right: auto; text-align: center; background-color:' . $this->mBGColor
 			)
 		);
 		$htmlOut .= Xml::openElement( 'form',
@@ -315,8 +314,7 @@ class InputBox {
 
 		$htmlOut = Xml::openElement( 'div',
 			array(
-				'align' => 'center',
-				'style' => 'background-color:' . $this->mBGColor
+			'style' => 'margin-left: auto; margin-right: auto; text-align: center; background-color:' . $this->mBGColor
 			)
 		);
 		$createBoxParams = array(
@@ -425,8 +423,7 @@ class InputBox {
 
 		$htmlOut = Xml::openElement( 'div',
 			array(
-				'align' => 'center',
-				'style' => 'background-color:' . $this->mBGColor
+			'style' => 'margin-left: auto; margin-right: auto; text-align: center; background-color:' . $this->mBGColor
 			)
 		);
 		$commentFormParams = array(
