@@ -55,3 +55,139 @@ class WikiaException extends MWException {
 		parent::report();
 	}
 }
+
+/**
+ * Exception thrown by WikiaDispatcher::dispatch
+ *
+ * @ingroup nirvana
+ *
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ */
+class WikiaDispatchedException extends WikiaException {
+	/**
+	 * Original exception
+	 *
+	 * @var Exception|null
+	 */
+	private $_original;
+
+	/**
+	 * Constructor
+	 *
+	 * @link  http://pl2.php.net/manual/en/exception.construct.php
+	 * @param string $message
+	 * @param int $code
+	 * @param Exception $original
+	 */
+	public function __construct($message = '',  Exception $original = null) {
+			parent::__construct( $message );
+			$this->_original = $original;
+	}
+
+
+	/**
+	 * Original exception getter
+	 *
+	 * @return Exception|null
+	 */
+	protected function getOriginal() {
+		return $this->_original;
+	}
+
+	/**
+	 * String representation of the exception
+	 *
+	 * @link http://pl2.php.net/manual/en/exception.tostring.php
+	 * @return string
+	 */
+	public function __toString() {
+		$ret = '';
+
+		if ( null !== ( $e = $this->getOriginal() ) ) {
+			$ret .= $e->__toString() . "\n\n";
+		}
+
+		$ret .= 'Reported by ' . parent::__toString();
+
+		return $ret;
+	}
+
+	/**
+	 * Override WikiaException report() and write exceptions to error_log
+	 */
+	function report() {
+		global $wgRequest;
+		$info = '';
+
+		if ( !empty( $this->_original ) ) {
+			$file = $this->_original->getFile();
+			$line = $this->_original->getLine();
+			$message = $this->_original->getMessage();
+
+			$info = "exception has occurred at line {$line} of {$file}: {$message}";
+		} else {
+			$info = "unknown exception has occurred";
+		}
+
+		$url = '[no URL]';
+
+		if ( isset( $wgRequest ) ) {
+			$url = $wgRequest->getFullRequestURL();
+		}
+
+		// Display normal mediawiki eror page for mediawiki exceptions
+		if ( $this->_original instanceof MWException ) {
+			$this->_original->report();
+		}
+
+		else {
+			trigger_error("[REPORT: {$this->getMessage()}] WikiaDispatcher reports an {$info}  (URL: {$url}) [REPORT: End]", E_USER_ERROR);
+		}
+	}
+}
+
+/**
+ * Base class for exceptions that match HTTP status codes,
+ * mainly meant for Wikia's API modules but could be used
+ * in any Nirvana-based code.
+ *
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ */
+abstract class WikiaHttpException extends WikiaException {
+	protected $code = null;
+	protected $message = null;
+
+	function __construct( Exception $previous = null ) {
+		parent::__construct( $this->message, $this->code, $previous );
+	}
+}
+
+/**
+ * The following is a collection of WikiaHttpException
+ * subclasses each matching a specific HTTP status code
+ */
+
+abstract class BadRequestException extends WikiaHttpException {
+	protected $code = 400;
+	protected $message = 'Bad request';
+}
+
+abstract class ForbiddenException extends WikiaHttpException {
+	protected $code = 403;
+	protected $message = 'Forbidden';
+}
+
+abstract class NotFoundException extends WikiaHttpException {
+	protected $code = 404;
+	protected $message = 'Not found';
+}
+
+abstract class MethodNotAllowedException extends WikiaHttpException {
+	protected $code = 405;
+	protected $message = 'Method not allowed';
+}
+
+abstract class NotImplementedException extends WikiaHttpException {
+	protected $code = 501;
+	protected $message = 'Not implemented';
+}
