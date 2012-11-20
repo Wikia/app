@@ -197,10 +197,6 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['is_video']		= $isVideo ? 'true' : 'false';
 		$result['is_image']		= $isImage ? 'true' : 'false';
 	
-		if ( $this->wg->EnableBacklinksExt && $this->wg->IndexBacklinks ) {
-			$result['backlink_text'] = Backlinks::getForArticle($page);
-		}
-		
 		foreach ( $vidFields as $fieldName => $fieldValue ) {
 			$result[$fieldName] = $fieldValue;
 		}
