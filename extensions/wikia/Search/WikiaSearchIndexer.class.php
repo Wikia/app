@@ -370,7 +370,6 @@ class WikiaSearchIndexer extends WikiaObject {
 				'list'		=> 'backlinks',
 				'blcount'	=> 1
 		));
-	
 		$result['backlinks'] = isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0;  
 	
 		$pageId = $page->getId();
@@ -384,7 +383,6 @@ class WikiaSearchIndexer extends WikiaObject {
 					'meta'		=> 'siteinfo',
 					'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
 			));
-			
 			if( isset( $data['query']['pages'][$pageId] ) ) {
 				$pageData = $data['query']['pages'][$pageId];
 				$result['views']	= $pageData['views'];

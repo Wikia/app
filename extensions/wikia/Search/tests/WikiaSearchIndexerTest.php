@@ -414,9 +414,23 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method	( 'getId' )
 			->will		( $this->returnValue( $mockId ) )
 		;
+		$mockBacklinks = array( 'query' => array( 'backlinks_count' => 20 ) );
 		$mockApiService
-			->staticExpects	( $this->any() )
-			->method	( 'call' );
+			->staticExpects	( $this->at( 0 ) )
+			->method		( 'call' )
+			->will			( $this->returnValue( $mockBacklinks ) )
+		;
+		$mockPageData = array( 'query' => array( 'pages' => array( $mockId => 
+				array( 'views' => 100, 
+						'revcount' => 20, 
+						'created' => date( 'Y-m-d' ), 
+						'touched' => date( 'Y-m-d' ),
+						'categories' => array( array( 'title' => 'Category:Stuff' ), array( 'title' => 'Category:Things' ), array( 'title' => 'Category:Miscellany' ) ) 
+						) ) ) );
+		$mockApiService
+			->staticExpects	( $this->at( 1 ) )
+			->method		( 'call' )
+			->will			( $this->returnValue( $mockPageData ) )
 		;
 		$mockSearchIndexer
 			->expects	( $this->once() )
