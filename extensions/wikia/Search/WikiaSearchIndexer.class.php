@@ -15,18 +15,6 @@ class WikiaSearchIndexer extends WikiaObject {
 	const WIKIPAGES_CACHE_TTL	= 604800;
 	
 	/**
-	 * Don't dump anything out during a full reindex
-	 * @var int
-	 */
-	const REINDEX_DEFAULT		= 0;
-	
-	/**
-	 * Be verbose during reindexing
-	 * @var int
-	 */
-	const REINDEX_VERBOSE		= 1;
-	
-	/**
 	 * Used to determine whether we have registered the onParserClearState hook
 	 * @var boolean
 	 */
@@ -272,7 +260,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param  array $documentIds
 	 * @return bool true
 	 */
-	public function reindexBatch( array $documentIds = array(), $verbosity = self::REINDEX_DEFAULT ) {
+	public function reindexBatch( array $documentIds = array() ) {
 		$updateHandler = $this->client->createUpdate();
 		
 		$documents = array();
@@ -284,16 +272,8 @@ class WikiaSearchIndexer extends WikiaObject {
 		$updateHandler->addCommit();
 		try {
 			$this->client->update( $updateHandler );
-			$confirmationString = count( $documents ) . " document(s) updated\n";
-			if ( $verbosity == self::REINDEX_VERBOSE ) {
-				echo $confirmationString;
-			}
 		} catch ( Exception $e ) {
-			$id = rand(1000, 9999);
-			Wikia::Log( __METHOD__, $id, $e);
-			if ( $verbosity == self::REINDEX_VERBOSE ) {
-				echo "There was an error updating the index. Please search for {$id} in the logs.\n";
-			}
+			Wikia::Log( __METHOD__, implode( ',', $documentIds ), $e);
 		}
 		
 		return true;
@@ -304,7 +284,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param  array $documentIds
 	 * @return bool true
 	 */
-	public function deleteBatch( array $documentIds = array(), $verbosity = self::REINDEX_DEFAULT ) {
+	public function deleteBatch( array $documentIds = array() ) {
 	    $updateHandler = $this->client->createUpdate();
 	    foreach ( $documentIds as $id ) {
 		    $updateHandler->addDeleteQuery( WikiaSearch::valueForField( 'id', $id ) );
@@ -313,15 +293,8 @@ class WikiaSearchIndexer extends WikiaObject {
 	    try {
 	        $this->client->update( $updateHandler );
 	        $confirmationString = implode(' ', $documentIds). ' ' . count( $documentIds ) . " document(s) deleted\n";
-	        if ( $verbosity == self::REINDEX_VERBOSE ) {
-	            echo $confirmationString;
-	        }
 	    } catch ( Exception $e ) {
-	        $id = rand(1000, 9999);
-	        Wikia::Log( __METHOD__, $id, $e);
-	        if ( $verbosity == self::REINDEX_VERBOSE ) {
-	            echo "There was an error deleting from the index. Please search for {$id} in the logs.\n";
-			}
+	        F::build( 'Wikia' )->Log( __METHOD__, implode( ',', $documentIds ), $e);
 		}
 
 		return true;
@@ -332,7 +305,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param int $pageId
 	 */
 	public function reindexPage( $pageId ) {
-		Wikia::log( __METHOD__, '', $pageId );
+		F::build( 'Wikia' )->log( __METHOD__, '', $pageId );
 		$document = $this->getSolrDocument( $pageId );
 		$this->reindexBatch( array( $document ) );
 		
