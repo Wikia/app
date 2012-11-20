@@ -115,21 +115,8 @@ var Lightbox = {
 		
 	},
 	bindEvents: function() {
-		// Bind to StateChange Event
-		History.Adapter.bind(window, 'statechange.Lightbox', function(e) { // Note: We are using statechange instead of popstate
-
-			if(e.target == window) { // back or forward button clicked
-				var state = History.getState(); // Note: We are using History.getState() instead of event.state
-				LightboxLoader.getMediaDetail(state.data, function(data) {
-					Lightbox.current.title = data.title;
-					Lightbox.current.type = data.mediaType;
-
-					Lightbox.setCarouselIndex();
-					Lightbox.openModal.carousel.find('li').eq(Lightbox.current.index).click();
-				});
-			}
-		});
-	
+		Lightbox.bindHistoryEvents();
+				
 		Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
 			var time = new Date().getTime();
 			if ( ( time - Lightbox.eventTimers.lastMouseUpdated ) > 100 ) { 
@@ -669,26 +656,43 @@ var Lightbox = {
 			next.removeClass('disabled');
 		}
 	},
+	
+	// Handle history API
+	bindHistoryEvents: function() {
+		// Handle forward and back buttons 
+		History.Adapter.bind(window, 'statechange.Lightbox', function(e) { // Note: History.js uses custom 'statechange' event instead of popstate
+			// History.replaceState will trigger the statechange event, if this is the case, ignore this event
+			if(Lightbox.stateChangedManually === true) {
+				Lightbox.stateChangedManually = false;
+				return;
+			}
+			LightboxLoader.loadFromURL()
+		});	
+	},
 	updateUrlState: function(clear) {
 		var History = window.History;
+		
 		// Only support HTML5 browsers for now
 		if(!History.enabled) {
 			return false;
 		}
 		
 		var dbKey = Lightbox.getTitleDbKey(),
-			stateObj = {
-				fileTitle: dbKey
-			},
-			stateUrl = window.location.pathname,
 			newSearch = "?file="+dbKey;
+
+		if((window.location.search != newSearch) || clear) {
+			var stateObj = {
+					fileTitle: dbKey
+				},
+				stateUrl = window.location.pathname;
 			
 			stateUrl += clear ? "" : newSearch;
 
-		if(window.location.search != newSearch || clear) {
-			History.pushState(stateObj, History.options.initialTitle + ", " + Lightbox.current.title, stateUrl);
+			Lightbox.stateChangedManually = true;
+			History.replaceState(stateObj, History.options.initialTitle + ", " + Lightbox.current.title, stateUrl);
 		}
 	},
+	
 	getShareCodes: function(mediaParams, callback) {
 		var title = mediaParams['fileTitle'];
 		if(LightboxLoader.cache.share[title]) {

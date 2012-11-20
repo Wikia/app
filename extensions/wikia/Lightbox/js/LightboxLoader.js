@@ -328,7 +328,38 @@ var LightboxLoader = {
 		} else {
 			callback(json);
 		}
+	},
+	loadFromURL: function() {
+		var fileTitle = $.getUrlVar('file'),
+			openModal = $('#LightboxModal');
+		
+		if(fileTitle) {
+			if(openModal.length) {
+				// Lightbox is already open, update it
+				LightboxLoader.getMediaDetail({fileTitle: fileTitle}, function(data) {
+					Lightbox.current.title = data.title;
+					Lightbox.current.type = data.mediaType;
+	
+					Lightbox.setCarouselIndex();
+					Lightbox.openModal.carousel.find('li').eq(Lightbox.current.index).click();
+				});
+				
+			} else {
+				// Open new Lightbox
+				// set a fake parent for carouselType
+				var trackingInfo = {
+					parent: $('#WikiaArticle'), 
+					clickSource: LightboxTracker.clickSource.SHARE
+				}
+				LightboxLoader.loadLightbox(fileTitle, trackingInfo);
+			}
+		} else {
+			if(openModal.length) {
+				openModal.closeModal();
+			}
+		}
 	}
+
 };
 
 LightboxTracker = {
@@ -358,7 +389,7 @@ LightboxTracker = {
 		LB: 'lightbox',
 		SHARE: 'share',
 		OTHER: 'other'
-	}	 
+	}
 };
 
 $(function() {
@@ -368,27 +399,5 @@ $(function() {
 
 	LightboxLoader.init();
 	
-	var fileTitle = $.getUrlVar('file');
-	
-	// account for html4 browsers like IE < 10
-	/*if(typeof window.history.pushState == 'undefined') {
-		var hash = window.location.hash,
-			rFile = /\?file=/;
-		matches = hash.match(rFile);
-		if(matches) {
-			var tmpArr = hash.split("?file="), // split hash string into part before "?file=" and part after
-				tmpStr = tmpArr[tmpArr.length-1], // get only part after "?file="
-				titleArr = tmpStr.split("&");
-			fileTitle = titleArr[0];
-		}
-	}*/
-	
-	if(fileTitle) {
-		var trackingInfo = {
-			// set a fake parent for carouselType
-			parent: $('#WikiaArticle'), 
-			clickSource: LightboxTracker.clickSource.SHARE
-		}
-		LightboxLoader.loadLightbox(fileTitle, trackingInfo);
-	}
+	LightboxLoader.loadFromURL();
 });
