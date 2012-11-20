@@ -7,7 +7,7 @@ class VideoEmbedToolController extends WikiaController {
 
 	/*
 	 *   Example of use:
-	 *   http://harrypotter.jacek.wikia-dev.com/wikia.php?controller=VideoEmbedToolController&method=getSuggestedVideos&svStart=0&svSize=5&articleId=15&format=json
+	 *   http://harrypotter.jacek.wikia-dev.com/wikia.php?controller=VideoEmbedTool&method=getSuggestedVideos&svStart=0&svSize=5&articleId=15&format=json
 	 *   svStart     - offset
 	 *   svSize      - limit
 	 *   videoWidth  - thumbnail width

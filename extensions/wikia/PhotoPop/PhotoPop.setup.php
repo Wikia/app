@@ -31,9 +31,9 @@ $app->wg->append(
 			'controllers' => 'PhotoPopController',
 			'methods' => 'index',
 			'examples' => array(
-				'api.php?action=wikia&controller=PhotoPopController',
-				'api.php?action=wikia&controller=PhotoPopController&format=html',
-				'api.php?action=wikia&controller=PhotoPopController&format=json'
+				'api.php?action=wikia&controller=PhotoPop',
+				'api.php?action=wikia&controller=PhotoPop&format=html',
+				'api.php?action=wikia&controller=PhotoPop&format=json'
 			)
 		)
 	),
