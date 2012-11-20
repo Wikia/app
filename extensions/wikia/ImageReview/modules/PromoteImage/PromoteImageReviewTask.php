@@ -18,7 +18,7 @@ class PromoteImageReviewTask extends BatchTask {
 
 	protected $helper;
 	protected $model; /** @var CityVisualization $model */
-	protected $corporatePagesIds = array(80433, 111264);
+	protected $corporatePagesIds = array();
 	protected $dbNamesToBeSkipped = array('wikiaglobal', 'dewiki');
 
 	function __construct($params = array()) {
@@ -56,6 +56,7 @@ class PromoteImageReviewTask extends BatchTask {
 		$this->helper = F::build('WikiGetDataForVisualizationHelper');
 		/** @var WikiGetDataForVisualizationHelper $this->model  */
 		$this->model = F::build('CityVisualization');
+		$this->corporatePagesIds = $this->model->getVisualizationWikisIds();
 
 		$data = unserialize($params->task_arguments);
 		if( isset($data['upload_list']) ) {
@@ -143,7 +144,7 @@ class PromoteImageReviewTask extends BatchTask {
 		$retval = "";
 
 		$dbname = WikiFactory::IDtoDB($sourceWikiId);
-		$imageTitle = F::build('GlobalTitle',array($imageId,$sourceWikiId),'newFromId');
+		$imageTitle = F::build('GlobalTitle', array($imageId, $sourceWikiId), 'newFromId');
 
 		$sourceImageUrl = null;
 		if($imageTitle instanceof GlobalTitle) {
@@ -156,8 +157,8 @@ class PromoteImageReviewTask extends BatchTask {
 
 			$response = ApiService::foreignCall($dbname, $param);
 
-			if(!empty($response["query"]["pages"][$imageId])
-				&&(!empty($response["query"]["pages"][$imageId]["imageinfo"][0]["url"]))) {
+			if( !empty($response["query"]["pages"][$imageId])
+				&&( !empty($response["query"]["pages"][$imageId]["imageinfo"][0]["url"])) ) {
 				$sourceImageUrl = wfReplaceImageServer($response["query"]["pages"][$imageId]["imageinfo"][0]["url"]);
 			}
 		}

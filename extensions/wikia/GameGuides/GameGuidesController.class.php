@@ -200,32 +200,12 @@ class GameGuidesController extends WikiaController {
 	}
 
 	/**
-	 * @param string $method method name
-	 * @param array $parameters parameters that are part of a url
-	 * @return string url to be purged
-	 */
-	static function getVarnishUrl( $method = 'index', $parameters = array() ){
-		$app = F::app();
-
-		$url = $app->wg->Server . '/wikia.php?';
-
-		$params = array(
-			'controller' => str_replace( 'Controller', '', __CLASS__ ),
-			'method' => $method
-		);
-
-		$params = array_merge( $params, $parameters );
-
-		return $url . http_build_query( $params );
-	}
-
-	/**
 	 * @param $title Title
 	 * @param $urls String[]
 	 * @return bool
 	 */
 	static function onTitleGetSquidURLs( $title, &$urls ){
-		$urls[] = GameGuidesController::getVarnishUrl( 'getPage', array(
+		$urls[] = GameGuidesController::getUrl( 'getPage', array(
 			'title' => $title->getPartialURL()
 		));
 
@@ -553,19 +533,7 @@ class GameGuidesController extends WikiaController {
 	 * @return bool
 	 */
 	static function onGameGuidesContentSave(){
-		$app = F::app();
-
-		SquidUpdate::purge(
-			array(
-				$app->wf->AppendQuery(
-					$app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' ),
-					array(
-						'controller' => __CLASS__,
-						'method' => 'getList'
-					)
-				)
-			)
-		);
+		self::purgeMethod( 'getList' );
 
 		return true;
 	}

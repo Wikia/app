@@ -26,7 +26,7 @@ $.nirvana = {
 		var getUrl = { /* JSlint ignore */
 			//Iowa strips out POST parameters, Nirvana requires these to be set
 			//so we're passing them in the GET part of the request
-			controller: attr.controller,
+			controller: attr.controller.replace(/Controller$/, ''),
 			method: attr.method
 		};
 

@@ -7,19 +7,25 @@ class solr2rss extends UnlistedSpecialPage {
 	}
 
 	public function execute() {
-		global $wgRequest, $wgOut, $wgSolrHost, $wgSolrPort, $wgEnableWikiaSearchExt;
+		global $wgRequest, $wgOut, $wgEnableWikiaSearchExt, $wgContLang;
 
 		if (empty($wgEnableWikiaSearchExt)) {
 			$wgOut->addHTML( "ERROR: WikiaSearch extension is disabled" );
 			return;
 		}
+		
+		$searchConfig = F::build( 'WikiaSearchConfig' );
 
-		$params = array();
-
+		$lang = $wgRequest->getVal( 'uselang', $wgContLang->mCode );
+		
+		$fields = array(
+				WikiaSearch::field( 'title',	$lang ),
+				WikiaSearch::field( 'url',		$lang ),
+				WikiaSearch::field( 'html',		$lang ),
+				WikiaSearch::field( 'created',	$lang ),
+				);
+		
 		$query = $wgRequest->getVal('q');
-		$sort = $wgRequest->getVal('sort');
-
-		$params['sort'] = !empty($sort) ? $sort : 'created desc';
 		$params['fl'] = 'title,url,html,created';
 
 		$lang = $wgRequest->getVal('uselang');
@@ -47,14 +53,19 @@ class solr2rss extends UnlistedSpecialPage {
 			}
 			$query .= " AND ($nsQuery)";
 		}
+		
+		$rows = $wgRequest->getVal( 'rows' );
+		$rows = ( empty( $rows ) || ( $rows > 100 ) ) ? 15 : $rows;
+		$searchConfig->setSort				( $wgRequest->getVal( 'sort', 'created desc' ) )
+					 ->setRequestedFields	( $fields )
+					 ->setQuery				( $query )
+					 ->setLength			( $rows )
+		;
 
-		$limit = $wgRequest->getVal('rows');
-		$limit = ( empty($limit) || ( $limit > 100 ) ) ? 15 : $limit;
-
-		if(!empty($query)) {
-			$solr = new Apache_Solr_Service($wgSolrHost, $wgSolrPort, '/solr');
+		if( !empty( $query ) ) {
+			$wikiaSearch = F::build( 'WikiaSearch' );
 			try {
-				$response = $solr->search( $query, 0, $limit, $params );
+				$resultSet = $wikiaSearch->searchByLuceneQuery( $searchConfig );
 			}
 			catch (Exception $exception) {
 				$wgOut->addHTML( 'ERROR: ' . $exception->getMessage() );
@@ -65,8 +76,9 @@ class solr2rss extends UnlistedSpecialPage {
 			$oTmpl->set_vars(
 				array(
 					'url' => $wgRequest->getFullRequestURL(),
-					'docs' => !is_null($response->response->docs) ? $response->response->docs : array(),
-					'dateFormat' => 'D, d M Y H:i:s O'
+					'docs' => $resultSet->toNestedArray( $fields ),
+					'dateFormat' => 'D, d M Y H:i:s O',
+					'lang'	=> $lang
 				));
 
 			$wgRequest->response()->header('Cache-Control: max-age=60');
