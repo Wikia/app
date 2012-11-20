@@ -57,9 +57,8 @@ class AdEngine2Controller extends WikiaController {
 		$disableOldAdDriver = $req->getBool('newadsonly', $disableOldAdDriver);
 		$vars['wgDisableOldAdDriver'] = (bool) $disableOldAdDriver;
 
-		if (!$disableOldAdDriver) {
-			$vars['adDriverLastDARTCallNoAds'] = array();
-		}
+		// Used to hop by DART ads
+		$vars['adDriverLastDARTCallNoAds'] = array();
 
 		// WikiaDartHelper.js
 		if (!empty($this->wg->DartCustomKeyValues)) {
