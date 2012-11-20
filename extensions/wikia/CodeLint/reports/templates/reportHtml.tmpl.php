@@ -152,7 +152,7 @@
 			$blameLinks = array();
 			foreach ($entry['lines'] as $lineNo) {
 				$blameLinks[] = Xml::element('a', array(
-					'href' => "{$fileEntry['blameUrl']}#L{$lineNo}",
+					'href' => "{$fileEntry['blameUrl']}#LID{$lineNo}",
 					'title' => 'Blame'
 				), $lineNo);
 			}
