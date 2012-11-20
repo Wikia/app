@@ -20,7 +20,6 @@ $wgVisualEditorParsoidPrefix = 'localhost';
 $wgVisualEditorParsoidTimeout = 100;
 // Namespaces to enable VisualEditor in
 $wgVisualEditorNamespaces = array( NS_MAIN );
-
 /* Setup */
 
 $wgExtensionCredits['other'][] = array(
@@ -83,8 +82,21 @@ $wgResourceModules += array(
 		'scripts' => array(
 			've/init/mw/ve.init.mw.js',
 			've/init/mw/ve.init.mw.Platform.js',
-			've/init/mw/ve.init.mw.Target.js',
-			've/init/mw/targets/ve.init.mw.ViewPageTarget.js',
+			've/init/mw/ve.init.mw.Target.js'
+		),
+		'skinScripts' => array(
+			'vector' => array(
+				've/init/mw/targets/ve.init.mw.ViewPageTarget.js'
+			),
+			'apex' => array(
+				've/init/mw/targets/ve.init.mw.ViewPageTarget.js'
+			),
+			'monobook' => array(
+				've/init/mw/targets/ve.init.mw.ViewPageTarget.js'
+			),
+			'oasis' => array(
+				've/init/mw/targets/ve.init.mw.ViewPageTarget.oasis.js'
+			)
 		),
 		'styles' => array(
 			've/init/mw/styles/ve.init.mw.ViewPageTarget.css',

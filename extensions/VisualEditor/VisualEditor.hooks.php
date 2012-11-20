@@ -10,7 +10,7 @@
 
 class VisualEditorHooks {
 	/** List of skins VisualEditor integration supports */
-	protected static $supportedSkins = array( 'vector', 'apex', 'monobook', 'oasis' );
+	protected static $supportedSkins = array( /*'vector', 'apex', 'monobook'*/ 'oasis' );
 
 	/**
 	 * Adds VisualEditor JS to the output if in the correct namespace.
@@ -39,7 +39,9 @@ class VisualEditorHooks {
 			$output->addModules( array( 'ext.visualEditor.viewPageTarget' ) );
 		}
 		*/
-		$output->addModules( array( 'ext.visualEditor.viewPageTarget' ) );
+		if ( in_array( $skin->getSkinName(), self::$supportedSkins ) ) {
+			$output->addModules( array( 'ext.visualEditor.viewPageTarget' ) );
+		}
 		return true;
 	}
 
