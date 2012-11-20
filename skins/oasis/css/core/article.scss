@@ -184,7 +184,6 @@
 		margin: 1em 0;
 		padding: 5px;
 		ul {
-			display: none;
 			margin: 0;
 			list-style: none;
 			ul {
@@ -502,6 +501,9 @@ table.wikitable {
 	}
 }
 
+.TOC_hide .toc ul {
+	display: none;
+}
 
 // /** WikiaWideTables **/
 .WikiaWideTablesWrapper {

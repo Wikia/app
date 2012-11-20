@@ -392,12 +392,14 @@ table.small {
 }
 #toc ul,
 .toc ul {
-	display: none;
 	list-style-type: none;
 	list-style-image: none;
 	margin-left: 0;
 	padding-left: 0;
 	text-align: left;
+}
+.TOC_hide #toc ul, .TOC_hide .toc ul {
+	display: none;
 }
 #toc ul ul,
 .toc ul ul {

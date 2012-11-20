@@ -92,10 +92,12 @@
 			// Table of contents toggle
 			$tocTitle = $( '#toctitle' );
 			$tocToggleLink = $( '#togglelink' );
+			var $tocList = $( '#toc ul:first' );
+			var toggleText = $tocList.is( ':hidden' ) ? mw.msg( 'showtoc' ) : mw.msg( 'hidetoc' );
 			// Only add it if there is a TOC and there is no toggle added already
 			if ( $( '#toc' ).length && $tocTitle.length && !$tocToggleLink.length ) {
 					$tocToggleLink = $( '<a href="#" class="internal" id="togglelink"></a>' )
-						.text( mw.msg( 'showtoc' ) )
+						.text( toggleText )
 						.click( function ( e ) {
 							e.preventDefault();
 							util.toggleToc( $(this) );
