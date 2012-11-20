@@ -665,6 +665,8 @@ var Lightbox = {
 	
 	// Handle history API
 	bindHistoryEvents: function() {
+		var History = window.History;
+
 		// Handle forward and back buttons 
 		History.Adapter.bind(window, 'statechange.Lightbox', function(e) { // Note: History.js uses custom 'statechange' event instead of popstate
 			// History.replaceState will trigger the statechange event, if this is the case, ignore this event
@@ -672,7 +674,7 @@ var Lightbox = {
 				Lightbox.stateChangedManually = false;
 				return;
 			}
-			LightboxLoader.loadFromURL()
+			LightboxLoader.loadFromURL();
 		});	
 	},
 	updateUrlState: function(clear) {
@@ -806,7 +808,36 @@ var Lightbox = {
 			
 			Lightbox.updateMedia();
 			
-		}
+		};
+		
+		var trackBackfillProgress = function(idx1, idx2) {
+			var originalCount = LightboxLoader.cache[Lightbox.current.carouselType].length;
+
+			idx1 = idx1 - originalCount - 1;
+			// (BugId:38546) Don't count placeholder thumb when it is first in the row 
+			if(idx1 == 0) {
+				idx1 = 1;
+			}
+			idx2 = idx2 - originalCount - 1;
+			
+			return {
+				idx1: idx1,
+				idx2: idx2,
+				total: Lightbox.backfillCountMessage
+			}
+		};
+		
+		var trackOriginalProgress = function(idx1, idx2) {
+			var originalCount = LightboxLoader.cache[Lightbox.current.carouselType].length;
+			
+			idx2 = Math.min(idx2, originalCount);
+			
+			return {
+				idx1: idx1,
+				idx2: idx2,
+				total: originalCount
+			};
+		};
 		
 		var trackProgressCallback = function(idx1, idx2, total) {
 			
@@ -824,41 +855,11 @@ var Lightbox = {
 				html = template.mustache(progress);
 			
 			Lightbox.openModal.progress.html(html);
-		}
-		
-		var trackBackfillProgress = function(idx1, idx2) {
-			var originalCount = LightboxLoader.cache[Lightbox.current.carouselType].length;
-
-			idx1 = idx1 - originalCount - 1;
-			// (BugId:38546) Don't count placeholder thumb when it is first in the row 
-			if(idx1 == 0) {
-				idx1 = 1;
-			}
-			idx2 = idx2 - originalCount - 1;
-			total = Lightbox.backfillCount;
-			
-			return {
-				idx1: idx1,
-				idx2: idx2,
-				total: Lightbox.backfillCountMessage
-			}
-		}
-		
-		var trackOriginalProgress = function(idx1, idx2) {
-			var originalCount = LightboxLoader.cache[Lightbox.current.carouselType].length;
-			
-			idx2 = Math.min(idx2, originalCount);
-			
-			return {
-				idx1: idx1,
-				idx2: idx2,
-				total: originalCount,
-			}			
-		}
+		};
 		
 		var beforeMove = function() {
 			Lightbox.openModal.carousel.find('.Wikia-video-play-button').hide();
-		}
+		};
 		
 		var afterMove = function(idx) {
 			Lightbox.openModal.carousel.find('.Wikia-video-play-button').show();
@@ -866,7 +867,7 @@ var Lightbox = {
 			if(Lightbox.current.thumbs.length - idx < Lightbox.thumbLoadCount) {
 				Lightbox.getMediaThumbs.wikiPhotos();
 			}
-		}
+		};
 		
 		var itemsShown = Lightbox.ads.showAds() ? 6 : 9;
 
