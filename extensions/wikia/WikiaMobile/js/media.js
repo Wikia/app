@@ -303,8 +303,8 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 		window.scrollTo(0,0);
 
 		if(l == 1){
-			sx = dx || 0;
-			sy = dy || 0;
+			sx = dx * currentZoom || 0;
+			sy = dy * currentZoom || 0;
 			startX = touches[0].clientX * currentZoom;
 			startY = touches[0].clientY * currentZoom;
 
@@ -337,7 +337,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 				dx = (imgW <= widthFll) ? 0 : ~~(Math.max(-xMax, Math.min(xMax, (-(touch.clientX * currentZoom - startX) + sx) / currentZoom)));
 				dy = (imgH <= heightFll) ? 0 : ~~(Math.max(-yMax, Math.min(yMax, (-(touch.clientY * currentZoom - startY) + sy) / currentZoom)));
 
-				currentImageStyle[transform] = 'scale(' + currentZoom + ') translate(' + -dx/2 + 'px,' + -dy/2 + 'px)';
+				currentImageStyle[transform] = 'scale(' + currentZoom + ') translate(' + -dx / currentZoom + 'px,' + -dy / currentZoom + 'px)';
 
 				modal.hideUI();
 			}
