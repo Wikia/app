@@ -268,19 +268,18 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 
 	function onZoom(state){
 		zoomed = (state === undefined) ? !zoomed : state;
+
+		imgW = origW * currentZoom;
+		imgH = origH * currentZoom;
+
+		xMax = imgW / 2 - widthFll / 2 + 10;
+		yMax = imgH / 2 - heightFll / 2 + 10;
+
 		if(zoomed){
-
-			imgW = origW * currentZoom;
-			imgH = origH * currentZoom;
-
-			xMax = imgW / 2 - widthFll / 2 + 10;
-			yMax = imgH / 2 - heightFll / 2 + 10;
-
 			modal.hideUI();
 		}else{
 			modal.showUI();
 		}
-
 	}
 
 	//for the ones that does not have ev.scale...
