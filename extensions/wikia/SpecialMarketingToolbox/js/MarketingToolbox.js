@@ -42,7 +42,12 @@ MarketingToolbox.prototype = {
 	},
 	interactionsHandler: function() {
 		$('#marketingToolboxRegionSelect').change(function() {
-			$().log('Handler for .change() called, value is '+$(this).val());
+			$('.marketingToolbox input').removeAttr('disabled');
+		});
+		var verticalInputs = $('.vertical input');
+		verticalInputs.click(function() {
+			verticalInputs.addClass('secondary');
+			$(this).removeClass('secondary');
 		});
 	}
 };

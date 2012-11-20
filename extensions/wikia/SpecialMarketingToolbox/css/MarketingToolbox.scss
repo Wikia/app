@@ -41,7 +41,7 @@ $color-toolbox-datepicker-font-alternative-color: #bbbbbb;
 		margin-left: -1px;
 		margin-top: -15px;
 		position: absolute;
-		top: 50%;
+		top: 37%;
 	}
 
 	.chevron.border {
@@ -99,6 +99,12 @@ $color-toolbox-datepicker-font-alternative-color: #bbbbbb;
 
 	.inProg a {
 		background-color: $color-toolbox-datepicker-inprog-background;
+	}
+
+	.ui-datepicker-calendar a {
+		border: 1px solid #fff;
+		width: 24px;
+		height: 22px;
 	}
 
 	.ui-datepicker-current-day a {
