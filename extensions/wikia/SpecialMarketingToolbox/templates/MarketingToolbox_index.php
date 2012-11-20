@@ -15,7 +15,7 @@
 		<div class="ml15">
 			<h2><?= wfMsg('marketing-toolbox-section-title'); ?></h2>
 			<? foreach ($sections as $sectionId => $section): ?>
-				<input class="big" type="button" value="<?=$section?>" />
+				<input class="big secondary" type="button" value="<?=$section?>" />
 			<? endforeach ?>
 		</div>
 	</div>
@@ -26,7 +26,7 @@
 			<h2><?= wfMsg('marketing-toolbox-vertical-title'); ?></h2>
 
 			<? foreach ($verticals as $verticalId => $vertical): ?>
-				<input class="big secondary" type="button" value="<?=$vertical?>" />
+				<input class="big secondary" disabled="disabled" type="button" value="<?=$vertical?>" />
 			<? endforeach ?>
 		</div>
 	</div>
