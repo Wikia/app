@@ -12,6 +12,7 @@
 
 class CategorySelect {
 	private static $categories;
+	private static $categoryTypes;
 	private static $data;
 	private static $frame;
 	private static $maybeCategory;
@@ -21,6 +22,54 @@ class CategorySelect {
 	private static $outerTag;
 	private static $tagsWhiteList;
 
+	/**
+	 * Change format of categories metadata. Supports:
+	 * array -> json, array -> wikitext, json -> wikitext, json -> array
+	 */
+	public static function changeFormat( $categories, $from, $to ) {
+		if ( $from == 'json' ) {
+			$categories = $categories == '' ? array() : json_decode( $categories, true );
+		}
+
+		if ( $to == 'wikitext' ) {
+			$changed = '';
+			if ( !empty( $categories ) && is_array( $categories ) ) {
+				foreach( $categories as $category ) {
+					if ( empty( $category ) ) {
+						continue;
+					}
+
+					$str = "\n[[" . $category[ 'namespace' ] . ':' . $category[ 'name' ];
+
+					if ( !empty( $category[ 'sortKey' ] ) ) {
+						$str .= '|' . $category[ 'sortKey' ];
+					}
+
+					$str .= ']]';
+
+					if ( !empty( $category[ 'outerTag' ] ) ) {
+						$str = '<' . $category[ 'outerTag' ] . '>' . $str . '</' . $category[ 'outerTag' ] . '>';
+					}
+
+					$changed .= $str;
+				}
+			}
+
+		} else if ( $to == 'array' ) {
+			$changed = $categories;
+
+		} else if ( $to == 'json' ) {
+			$changed = json_encode( $categories );
+		}
+
+		return $changed;
+	}
+
+	/**
+	 * Extracts category tags from wikitext and returns a hash with an array
+	 * of categories data and a modified version of the wikitext with the category
+	 * tags removed.
+	 */
 	public static function extractCategoriesFromWikitext( $wikitext, $force = false ) {
 		wfProfileIn( __METHOD__ );
 
@@ -79,11 +128,15 @@ class CategorySelect {
 		return self::$data;
 	}
 
-	public function getExtractedCategoryData() {
+	public static function getCategoryTypes() {
+		return self::$categoryTypes;
+	}
+
+	public static function getExtractedCategoryData() {
 		return self::$data;
 	}
 
-	public function getDefaultNamespaces() {
+	public static function getDefaultNamespaces() {
 		if ( !empty( self::$namespaces ) ) {
 			return self::$namespaces;
 		}
@@ -100,49 +153,14 @@ class CategorySelect {
 	}
 
 	/**
-	 * Change format of categories metadata. Supports:
-	 * array -> json, array -> wikitext, json -> wikitext, json -> array
+	 * Sets the type associated with categories (either "normal" or "hidden").
+	 * This function is called from a hook for view pages only.
 	 */
-	public function changeFormat( $categories, $from, $to ) {
-		if ( $from == 'json' ) {
-			$categories = $categories == '' ? array() : json_decode( $categories, true );
-		}
-
-		if ( $to == 'wikitext' ) {
-			$changed = '';
-			if ( !empty( $categories ) && is_array( $categories ) ) {
-				foreach( $categories as $category ) {
-					if ( empty( $category ) ) {
-						continue;
-					}
-
-					$str = "\n[[" . $category[ 'namespace' ] . ':' . $category[ 'name' ];
-
-					if ( !empty( $category[ 'sortKey' ] ) ) {
-						$str .= '|' . $category[ 'sortKey' ];
-					}
-
-					$str .= ']]';
-
-					if ( !empty( $category[ 'outerTag' ] ) ) {
-						$str = '<' . $category[ 'outerTag' ] . '>' . $str . '</' . $category[ 'outerTag' ] . '>';
-					}
-
-					$changed .= $str;
-				}
-			}
-
-		} else if ( $to == 'array' ) {
-			$changed = $categories;
-
-		} else if ( $to == 'json' ) {
-			$changed = json_encode( $categories );
-		}
-
-		return $changed;
+	public function setCategoryTypes( $categoryTypes ) {
+		self::$categoryTypes = $categoryTypes;
 	}
 
-	static private function parseNode(&$root, $outerTag = '') {
+	private static function parseNode(&$root, $outerTag = '') {
 		self::$nodeLevel++;
 
 		$out = array();
@@ -278,7 +296,7 @@ class CategorySelect {
 		return $out;
 	}
 
-	static private function lookForCategory(&$text, $outerTag) {
+	private static function lookForCategory(&$text, $outerTag) {
 		self::$categories = array();
 		self::$outerTag = $outerTag;
 		$text = preg_replace_callback('/\[\[(' . self::$namespaces . '):([^]]+)]]\n?/i', array('self', 'replaceCallback'), $text);
@@ -302,7 +320,7 @@ class CategorySelect {
 	}
 
 	//used in lookForCategory() as a callback function for preg_replace_callback()
-	static private function replaceCallback($match) {
+	private static function replaceCallback($match) {
 		if (strpos($match[2], '[') !== false || strpos($match[2], ']') !== false) {
 			return $match[0];
 		}

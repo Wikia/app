@@ -268,8 +268,11 @@ class CategorySelectHooksHelper {
 		return true;
 	}
 
+	/**
+	 * Set category types for view pages (either "normal" or "hidden").
+	 */
 	public static function onOutputPageMakeCategoryLinks( &$out, $categories, &$categoryLinks ) {
-		// TODO
+		CategorySelect::setCategoryTypes( $categories );
 		return true;
 	}
 }

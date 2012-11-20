@@ -17,16 +17,51 @@ class CategorySelectController extends WikiaController {
 	 * The template used for article pages.
 	 */
 	public function articlePage() {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$categoryTypes = CategorySelect::getCategoryTypes();
 		$categories = array();
-		$categoryLinks = $this->wg->Out->getCategoryLinks();
 		$data = CategorySelect::getExtractedCategoryData();
 
 		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
 			$categories = $data[ 'categories' ];
+
+			foreach( $categories as $index => &$category ) {
+				$title = Title::newFromText( $category[ 'name' ], NS_CATEGORY );
+
+				if ( !is_null( $title ) ) {
+					$category[ 'link' ] = htmlspecialchars( $title->getLinkURL() );
+
+					// Add variant support
+					$category[ 'name' ] = $this->wg->ContLang->convertHtml( $title->getText() );
+
+					// Category type ("normal" or "hidden")
+					$key = $title->getDBKey();
+					if ( array_key_exists( $key, $categoryTypes ) ) {
+						$category[ 'type' ] = $categoryTypes[ $key ];
+					}
+				}
+			}
+
+			unset( $category );
 		}
 
-		// TODO: figure out how to separate normal/hidden categories
+		// Categories link
+		$categoriesLinkAttributes = array( 'class' => 'categoriesLink' );
+		$categoriesLinkPage = $this->wf->Message( 'pagecategorieslink' )->inContentLanguage()->text();
+		$categoriesLinkText = $this->wf->Message( 'pagecategories', count( $categories ) )->escaped();
+
+		if ( !empty( $this->wg->WikiaUseNoFollow ) ) {
+			$categoriesLinkAttributes[ 'rel' ] = 'nofollow';
+		}
+
+		$categoriesLink = Linker::link( Title::newFromText( $categoriesLinkPage ), $categoriesLinkText, $categoriesLinkAttributes );
+
 		$this->response->setVal( 'categories', $categories );
+		$this->response->setVal( 'categoriesLink', $categoriesLink );
+		$this->response->setVal( 'showHidden', $this->wg->User->getBoolOption( 'showhiddencats' ) );
+
+		$this->wf->ProfileOut( __METHOD__ );
 	}
 
 	/**
