@@ -465,4 +465,48 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		
 		$this->tearDown();
 	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::deleteArticle
+	 */
+	public function testDeleteArticleCityId() {
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'deleteBatch' ) )
+								->getMock();
+
+		$reflectionWg	=	new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
+		$reflectionWg->setAccessible( true );
+		$reflectionWg->setValue( $mockIndexer, (object) array( 'CityId' => 123 ) );
+		
+		$mockIndexer
+			->expects	( $this->once() )
+			->method	( 'deleteBatch' )
+			->with		( array( '123_234' ) )
+		;
+		
+		$mockIndexer->deleteArticle( 234 );
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::deleteArticle
+	 */
+	public function testDeleteArticleNoCityId() {
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'deleteBatch' ) )
+								->getMock();
+
+		$reflectionWg	=	new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
+		$reflectionWg->setAccessible( true );
+		$reflectionWg->setValue( $mockIndexer, (object) array( 'CityId' => null, 'SearchWikiId' => 123 ) );
+		
+		$mockIndexer
+			->expects	( $this->once() )
+			->method	( 'deleteBatch' )
+			->with		( array( '123_234' ) )
+		;
+		
+		$mockIndexer->deleteArticle( 234 );
+	}
 }

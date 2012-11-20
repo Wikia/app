@@ -345,7 +345,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 */
 	public function deleteArticle( $pageId) {
 		
-		$cityId	= $this->wg->cityId ?: $this->wg->SearchWikiId;
+		$cityId	= $this->wg->CityId ?: $this->wg->SearchWikiId;
 		$id		= sprintf( '%s_%s', $cityId, $pageId );
 		
 		$this->deleteBatch( array( $id ) );
