@@ -360,6 +360,7 @@ table.small {
 }
 #toc ul,
 .toc ul {
+	display: none;
 	list-style-type: none;
 	list-style-image: none;
 	margin-left: 0;

@@ -26,6 +26,7 @@ class UserBlock {
 
 		if ( $user->isAllowed( 'phalanxexempt' ) ) {
 			wfDebug ( __METHOD__ . ": user has 'phalanxexempt' right - no block will be applied\n" );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
