@@ -38,13 +38,12 @@ abstract class WikiaApiController extends WikiaController {
 	 */
 	private function checkParameters(){
 		$paramKeys = array_keys( F::app()->wg->Request->getQueryValues() );
+		$count = count( $paramKeys );
 
-		if ( $paramKeys[0] === 'controller' && $paramKeys[1] === 'method') {
+		if ( $count >= 2 && $paramKeys[0] === 'controller' && $paramKeys[1] === 'method') {
 
-			$paramKeys = array_slice( $paramKeys, 2 );
-
-			if ( !empty( $paramKeys ) ) {
-				$origParam = $paramKeys = array_flip( $paramKeys );;
+			if ( $count > 2 ) {
+				$origParam = $paramKeys = array_flip( array_slice( $paramKeys, 2 ) );;
 
 				ksort( $paramKeys );
 
