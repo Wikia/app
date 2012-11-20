@@ -1822,6 +1822,12 @@ class Linker {
 			}
 			$outText .= "</div><ul>\n";
 
+			// Wikia change - begin - @author: wladek
+			// preload restrictions
+			$titleBatch = new TitleBatch($templates);
+			$titleBatch->loadRestrictions();
+			// Wikia change - end
+
 			usort( $templates, array( 'Title', 'compare' ) );
 			foreach ( $templates as $titleObj ) {
 				$r = $titleObj->getRestrictions( 'edit' );

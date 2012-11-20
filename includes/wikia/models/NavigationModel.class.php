@@ -193,7 +193,7 @@ class NavigationModel extends WikiaModel {
 			$this->wf->ProfileOut( __METHOD__  . '::miss');
 		}
 
-		$this->wf->ProfileOut( __METHOD__ . "$type");
+		$this->wf->ProfileOut( __METHOD__ . ":$type");
 		return $nodes;
 	}
 

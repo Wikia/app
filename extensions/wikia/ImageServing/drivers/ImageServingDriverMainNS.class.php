@@ -49,7 +49,48 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		return $out;
 	}
 
-	protected function filterImages($imagesList = array()) {
+	protected function getImagesPopularity( $imageNames, $limit ) {
+		$result = array();
+
+		$sqlCount = $limit + 1;
+		$imageNames = array_values($imageNames);
+		$count = count($imageNames);;
+		$i = 0;
+		$imageLinksTable = $this->db->tableName('imagelinks');
+		while ( $i < $count ) {
+			$batch = array_slice( $imageNames, $i, 100 );
+			$i += 100;
+			$sql = array();
+			foreach ( $batch as $imageName ) {
+				$sql[] = "(select il_to from {$imageLinksTable} where il_to = {$this->db->addQuotes($imageName)} limit {$sqlCount} )";
+			}
+			$sql = implode(' UNION ALL ',$sql);
+			$batchResult = $this->db->query($sql);
+
+			// do a "group by" on PHP side
+			$batchResponse = array();
+			foreach ($batchResult as $row) {
+				if ( !isset($batchResponse[$row->il_to]) ) {
+					$batchResponse[$row->il_to] = 1;
+				} else {
+					$batchResponse[$row->il_to]++;
+				}
+			}
+			$batchResult->free();
+
+			// remove rows that exceed usage limit
+			foreach ($batchResponse as $k => $imageCount) {
+				if ( $imageCount > $limit ) {
+					unset($batchResponse[$k]);
+				}
+			}
+
+			$result = array_merge( $result, $batchResponse );
+		}
+		return $result;
+	}
+
+	protected function filterImages( $imagesList = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $imagesList ) ) {
@@ -63,23 +104,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 
 		// filter out images that are too widely used
 		if ( !empty($imageNames) ) {
-			$result = $this->db->select(
-				array( 'imagelinks' ),
-				array( 'il_to AS img_name', 'count(*) AS img_used_count' ),
-				array(
-					'il_to' => $imageNames,
-				),
-				__METHOD__,
-				array(
-					'GROUP BY' => 'il_to',
-				)
-			);
-			foreach ($result as $row) {
-				if ( $row->img_used_count <= $this->maxCount ) {
-					$imageRefs[$row->img_name] = intval($row->img_used_count);
-				}
-			}
-			$result->free();
+			$imageRefs = $this->getImagesPopularity($imageNames,$this->maxCount);
 		}
 
 		// collect metadata about images

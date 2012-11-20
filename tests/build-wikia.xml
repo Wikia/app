@@ -36,6 +36,7 @@
         <exec executable="php" dir="${basedir}" failonerror="true">
             <env key="SERVER_ID" value="165" />
             <arg line="run-test.php
+                       --log-junit ${basedir}/build/logs/phpunit.xml
                        --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
                        --configuration ${basedir}/phpunit.xml
 					   --exclude-group ${phpunitexcludegroups}
@@ -92,6 +93,34 @@
                        " />
         </exec>
     </target>
+
+	<target name="codelint-php">
+		<exec executable="php" dir="${basedir}/../maintenance/wikia" failonerror="true">
+			<env key="SERVER_ID" value="165" />
+			<arg line="codelint.php
+					   --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
+					   --mode=php
+					   --dir=${basedir}/../extensions/wikia,${basedir}/../includes/wikia,${basedir}/../skins/oasis,${basedir}/../extensions/3rdparty/LyricWiki
+					   --blacklist=${basedir}/../extensions/wikia/hacks,${basedir}/../extensions/wikia/CodeLint/examples,/templates/,.tmpl.php
+					   --format=html
+					   --output=${basedir}/build/phplint.html
+					   " />
+		</exec>
+	</target>
+
+	<target name="codelint-js">
+		<exec executable="php" dir="${basedir}/../maintenance/wikia" failonerror="true">
+			<env key="SERVER_ID" value="165" />
+			<arg line="codelint.php
+					   --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
+					   --mode=js
+					   --dir=${basedir}/../skins/oasis,${basedir}/../skins/wikia,${basedir}/../re..s,${basedir}/../extensions/wikia
+					   --blacklist=/CodeLint/examples/anticode.js,/AdEngine/ghost/,/libraries/zepto/,/libraries/yui,/CodeLint/js/,/RTE/ckeditor/_../,/jquery/jquery-,/re..s/jquery,/re..s/mediawiki,/Chat/js/lib/,lib/socket.io,/AdEngine/bezen/,/extensions/wikia/hacks,/extensions/wikia/SemanticBundle,qunit/qunit.js,jasmine/jasmine.js,/re..s/mediawiki.language/
+					   --format=html
+					   --output=${basedir}/build/jslint.html
+					   " />
+		</exec>
+	</target>
 
     <path id="compile.classpath">
         <fileset dir="${basedir}/lib">

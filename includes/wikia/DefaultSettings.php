@@ -126,9 +126,12 @@ include_once( "$IP/lib/ApiGate/config.php" );
 
 //Wikia API Hooks
 $app->registerClass( 'ApiHooks', "{$IP}/includes/wikia/api/ApiHooks.class.php" );
-
 $app->registerHook( 'WikiFactoryChanged', 'ApiHooks', 'onWikiFactoryChanged' );
 $app->registerHook( 'MessageCacheReplace', 'ApiHooks', 'onMessageCacheReplace' );
+$app->registerHook( 'ArticleDeleteComplete', 'ApiHooks', 'onArticleDeleteComplete' );
+$app->registerHook( 'ArticleSaveComplete', 'ApiHooks', 'onArticleSaveComplete' );
+$app->registerHook( 'ArticleRollbackComplete', 'ApiHooks', 'onArticleRollbackComplete' );
+$app->registerHook( 'ArticleCommentListPurgeComplete', 'ApiHooks', 'ArticleCommentListPurgeComplete' );
 
 //Wikia API base controller, all the others extend this class
 $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiController.class.php" );
@@ -136,6 +139,7 @@ $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiCon
 //Wikia API controllers
 $app->registerApiController( 'DiscoverApiController', "{$IP}/includes/wikia/api/DiscoverApiController.class.php" );
 $app->registerApiController( 'NavigationApiController', "{$IP}/includes/wikia/api/NavigationApiController.class.php" );
+$app->registerApiController( 'ArticlesApiController', "{$IP}/includes/wikia/api/ArticlesApiController.class.php" );
 
 /**
  * Wikia API end
@@ -177,6 +181,7 @@ $wgAutoloadClasses[ 'phpFlickr'                       ] = "$IP/lib/phpFlickr/php
 $wgAutoloadClasses[ 'WikiaDataAccess'                 ] = "$IP/includes/wikia/WikiaDataAccess.class.php";
 $wgAutoloadClasses[ 'ImageReviewStatuses'             ] = "$IP/extensions/wikia/ImageReview/ImageReviewStatuses.class.php";
 $wgAutoloadClasses[ 'WikiaUserPropertiesController'   ] = "$IP/includes/wikia/WikiaUserPropertiesController.class.php";
+$wgAutoloadClasses[ 'TitleBatch'                      ] = "$IP/includes/wikia/cache/TitleBatch.php";
 
 /**
  * Resource Loader enhancements

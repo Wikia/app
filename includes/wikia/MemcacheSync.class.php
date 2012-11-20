@@ -27,7 +27,9 @@ class MemcacheSync{
 		$lock = $this->getLockStatus();
 
 		if(empty($lock) || $lock == $this->instance ) {
-			$this->memc->set($this->lockKey, $this->instance, $time);
+			if(empty($lock)) {
+				$this->memc->set($this->lockKey, $this->instance, $time);
+			}
 			return true;
 		}
 		return false;
