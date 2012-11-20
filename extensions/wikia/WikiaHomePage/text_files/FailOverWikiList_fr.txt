@@ -1,29 +1,10 @@
 *Video Games
-**Assassin's Creed|http://fr.assassinscreed.wikia.com|Wikia-Visualization-Main,frassassinscreed.png|Ce wiki traite de la série de jeux vidéo Assassin's Creed.
-**Les Sims|http://fr.sims.wikia.com|Wikia-Visualization-Main,frsims.png|Ce wiki a pour but de rassembler toutes les informations sur la série de jeux vidéo Les Sims.
-**Kingdom Hearts|http://fr.kingdomhearts.wikia.com|Wikia-Visualization-Main,frkingdomhearts.png|Ce wiki traite de la série de jeux vidéo Kingdom Hearts, qui mêle RPG et personnages de Disney.
-**Red Dead Redemption|http://fr.reddead.wikia.com|Wikia-Visualization-Main,frreddeadredemptionfr.png|Ce wiki traite du jeu vidéo Red Dead Redemption.
-**Guild Wars|http://fr.guildwars.wikia.com|Wikia-Visualization-Main,frguildwars.png|Ce wiki a pour but de rassembler les informations sur le CORPG Guild Wars.
-**Elder Scrolls|http://fr.elderscrolls.wikia.com|Wikia-Visualization-Main,frelderscrolls.png|Ce wiki traite de la série de jeux vidéo The Elder Scrolls, dont le dernier en date est Skyrim.
-**Mass Effect|http://fr.masseffect.wikia.com|Wikia-Visualization-Main,frmasseffect.png|Ce wiki a pour but de rassembler toutes les informations sur la série de jeux vidéo Mass Effect.
-**Kirby|http://fr.kirby.wikia.com|Wikia-Visualization-Main,frkirby.png|Ce wiki traite de tout ce qui touche à l'univers de la boule rose de Nintendo.
-**Final Fantasy|http://fr.finalfantasy.wikia.com|Wikia-Visualization-Main,frfinalfantasy.png|Ce wiki a pour ambition de traiter tout ce qui a trait à la série de jeux vidéo Final Fantasy.
-**GTA|http://fr.gta.wikia.com|Wikia-Visualization-Main,frgta.png|Ce wiki est dédié à la série de jeux vidéo Grand Thef Auto (GTA).
-**Eden Eternal|http://fr.eden-eternal.wikia.com|Wikia-Visualization-Main,fredeneternal.png|Ce wiki est consacré au jeu vidéo Eden Eternal. Dans un univers onirique, avec de superbes graphismes en 3D, Eden Eternal offre aux joueurs deux innovations majeures.
-**World of Warcraft|http://fr.wowwiki.com|Wikia-Visualization-Main,frwow.png|Ce wiki est un site communautaire autour de World of Warcraft (aka WoW). Entretenu uniquement par des passionnés, son but est de fournir le maximum d'informations sures, aussi bien du point de vue du game-play du jeu que de l'histoire du monde de Warcraft.
-**ZePirates|http://fr.zep.wikia.com|Wikia-Visualization-Main,frzep.png|Sur ce wiki, vous trouverez toutes les informations nécessaires afin de pouvoir profiter au mieux du jeu Zepirates.
-**Zelda|http://fr.zelda.wikia.com|Wikia-Visualization-Main,frzelda.png|Ce wiki traite de l'univers de jeux vidéo Zelda, dont les différets titres mettent en scène un jeune garçon, Link.
-**Sims Fanon|http://fr.simsfanon.wikia.com|Wikia-Visualization-Main,frsimsfanon.png|Ce wiki est dédié aux créations (ou simcréations) des fans de sims. Contrairement à Les Sims Wiki, sur Les Sims Fanon Wiki vous pouvez créer des pages de sims, de maisons, d'animaux que VOUS avez créés.
-**Grand Fantasia|http://fr.grandfantasia.wikia.com/|Wikia-Visualization-Main,frgrandfantasia.png|Grand Fantasia Wiki est un site collaboratif à propos de tout ce qui concerne le MMORPG d'Aeria Games Grand Fantasia en français.
-**Dragons of Atlantis|http://fr.dragonsofatlantis.wikia.com/|Wikia-Visualization-Main,frdragonsofatlantis.png|Dragons of Atlantis est un jeu de stratégie qui se déroule dans un univers de fantasy. Mélangeant à la fois des phases de constructions de bâtiments dans votre cité et a la fois des phases de progression tactique de vos ressources militaires, le jeu est très riche et vous propose de nombreuses possibilités.
-**Shaiya|http://fr.shaiya.wikia.com/|Wikia-Visualization-Main,frshaiya.png|
-**Sorceleur|http://sorceleur.wikia.com/|Wikia-Visualization-Main,sorceleur.png|Bienvenue sur le Sorceleur Wiki. Aidez-nous à la création du guide pour le Sorceleur, les livres, The Witcher le jeu vidéo et les autres adaptations du travail d'Andrzej Sapkowski!
-**League of Legends|http://fr.leagueoflegends.wikia.com/|Wikia-Visualization-Main,frleagueoflegends.png|Bienvenue sur le Wiki League of Legends, le wiki francophone entièrement consacré à League of Legends où tout le monde peut contribuer!
-**The Binding of Isaac|http://fr.thebindingofisaac.wikia.com/|Wikia-Visualization-Main,frthebindingofisaac.png|Ce wiki aide à répertorier et à classer tous les objets, les salles, les monstres , les boss de fin de niveau, les passages secrets, les différentes réalisations, les différents personnages jouables, les étages et tout ce qui concerne le jeu-vidéo : The Binding of Isaac
-**Bioshock|http://fr.bioshock.wikia.com/|Wikia-Visualization-Main,frbioshockfrance.png|Bienvenue sur BioShock Wiki. Le Wiki francophone de la série BioShock sur PC et consoles.
 *Entertainment
 **Glee|http://fr.glee.wikia.com|Wikia-Visualization-Main,frglee.png|Ce wiki traite de la série télévisée Glee qui met en scène les membres atypiques de la chorale d'un lycée.
+**Nick Cutter|http://fr.nickcutter.wikia.com|Wikia-Visualization-Main,frnickcutter.png|Ce wiki est consacré à la série télévisée Primeval, connue sous le titre français Nick Cutter et les Portes du temps.
 **NCIS|http://fr.ncis.wikia.com/|Wikia-Visualization-Main,frncis.png|Ce wiki a pour objectif de rassembler les informations sur les séries JAG, NCIS et NCIS: Los Angeles.
+**FBI : Duo très spécial|http://fr.whitecollar.wikia.com|Wikia-Visualization-Main,frwhitecollar.png|Ce wiki a pour but de rassembler les informations sur la série télévisée White Collar, connue sous le titre français FBI: Duo très spécial.
+**Castle|http://fr.castle.wikia.com|Wikia-Visualization-Main,frcastle.png|Ce wiki est dédié à la série télévisée Castle.
 **One Piece|http://fr.onepiece.wikia.com|Wikia-Visualization-Main,fronepiece.png|Ce wiki traite du manga et de la série animée One Piece.
 **Naruto|http://fr.naruto.wikia.com|Wikia-Visualization-Main,frnaruto.png|Ce wiki traite de tout ce qui concerne l'univers de Naruto.
 **Vampire Diaries|http://fr.vampirediaries.wikia.com|Wikia-Visualization-Main,frvampirediariesfrance.png|Ce wiki est consacré à la série télévisée Vampire Diaries.
@@ -33,16 +14,17 @@
 **Supernatural|http://fr.supernatural.wikia.com|Wikia-Visualization-Main,frsupernatural.png|Ce wiki traite de la série télévisée Supernatural.
 **The Secret Circle|http://fr.thesecretcircle.wikia.com|Wikia-Visualization-Main,frthesecretcircle.png|Ce wiki est consacré à la série télévisée The Secret Circle.
 **Bleach|http://fr.bleach.wikia.com|Wikia-Visualization-Main,frbleach.png|Ce wiki est dédié à l'anime Bleach.
-**Disney|http://fr.waltdisney.wikia.com|Wikia-Visualization-Main,frwaltdisney267.png|Ce wiki traite de tout ce qui touche à l'univers de Disney.
+**On n'demande qu'à en rire|http://fr.ondaronndemandequenrire.wikia.com/|Wikia-Visualization-Main,frondaronndemandequenrire.png|Ce wiki a pour but de rassembler les informations sur le divertissement télévisuel On n'demande qu'à en rire.
+**Disney|http://fr.waltdisney.wikia.com|Wikia-Visualization-Main,frlemondededisney.png|Ce wiki traite de tout ce qui touche à l'univers de Disney.
 **Harry Potter|http://fr.harrypotter.wikia.com/|Wikia-Visualization-Main,frharrypotter.png|Ce wiki est consacré à l'univers du jeune sorcier Harry Potter.
-**Lady Gaga|http://fr.ladygaga.wikia.com|Wikia-Visualization-Main,frladygaga106.png|Ce wiki est consacré à l'une des icônes de la culture pop étasunienne, la chanteuse Lady Gaga, aussi connue pour sa grande excentricité.
-**Inazuma Eleven|http://fr.inazuma-eleven.wikia.com|Wikia-Visualization-Main,frinazumaeleven876.png|Ce wiki est une encyclopédie comprenant tout ce qu'il y a dans l'univers Inazuma Eleven, jeux, manga et anime.
 **The Hunger Games|http://fr.hungergames.wikia.com|Wikia-Visualization-Main,frhungergamesfrance.png|Dans un proche futur, les États-Unis sont devenues un gouvernement fédéral dystopique dans lequel chaque district doit envoyer un garçon et une fille combattre lors d'un événement annuel télévisé, "The Hunger Games", dont la seule issue est : tuer ou être tué.
 **Fairy Tale|http://fr.fairy-tail.wikia.com/|Wikia-Visualization-Main,frfairytail.png|Sur ce wiki, vous trouverez des informations sur le manga et l'anime du même nom.
 **Star Wars|http://fr.starwars.wikia.com/|Wikia-Visualization-Main,starwarsfr.png|Bienvenue sur le wiki Star Wars en français, une encyclopédie Star Wars francophone que n'importe qui peut modifier.
 **Memory Alpha|http://fr.memory-alpha.org/|Wikia-Visualization-Main,frmemoryalpha.png|Memory Alpha est un projet collaboratif destiné à créer l'encyclopédie de référence la plus complète, précise et accessible à tous, sur tout ce qui est lié à Star Trek. La version francophone est disponible depuis novembre 2005.
 **Hunter Database|http://fr.hunterxhunter.wikia.com/|Wikia-Visualization-Main,frhunterxhunter.png|Bienvenue dans Hunter Database! Nous sommes heureux de votre visite sur ce wiki très complet consacré au manga de Yoshihiro Togashi!
+**Once Upon a Time|http://fr.onceuponatime.wikia.com/|Wikia-Visualization-Main,fronceuponatime.png|Bienvenue sur Wiki Once Upon a Time, le wiki consacré au monde des contes de fées !
 *Lifestyle
-**On n'demande qu'à en rire|http://fr.ondaronndemandequenrire.wikia.com/|Wikia-Visualization-Main,frondaronndemandequenrire.png|Ce wiki a pour but de rassembler les informations sur le divertissement télévisuel On n'demande qu'à en rire.
+**Lady Gaga|http://fr.ladygaga.wikia.com|Wikia-Visualization-Main,frladygaga106.png|Ce wiki est consacré à l'une des icônes de la culture pop étasunienne, la chanteuse Lady Gaga, aussi connue pour sa grande excentricité.
 **WikiSara|http://routes.wikia.com|Wikia-Visualization-Main,routes.png|Ce wiki a pour but de collecter les informations sur les routes et autoroutes de France et les pays francophones voisins.
+**Sims Fanon|http://fr.simsfanon.wikia.com|Wikia-Visualization-Main,frsimsfanon.png|Ce wiki est dédié aux créations (ou simcréations) des fans de sims. Contrairement à Les Sims Wiki, sur Les Sims Fanon Wiki vous pouvez créer des pages de sims, de maisons, d'animaux que VOUS avez créés.
 **Picsou|http://fr.picsou.wikia.com|Wikia-Visualization-Main,frpicsou.png|Ce wiki a pour but de rassembler toutes les informations sur l'univers du plus riche des canards.
