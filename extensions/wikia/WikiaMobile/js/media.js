@@ -292,35 +292,37 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 	}
 
 	function onStart(ev){
-		var touches = ev.touches,
-			l = touches.length;
+		if (zoomable) {
+			var touches = ev.touches,
+				l = touches.length;
 
-		ev.scale && wrapper.removeEventListener('touchstart', onStart);
-		wrapper.addEventListener('touchmove', onMove);
-		wrapper.addEventListener('touchend', onEnd);
-		wrapper.addEventListener('touchcancel', onEnd);
+			ev.scale && wrapper.removeEventListener('touchstart', onStart);
+			wrapper.addEventListener('touchmove', onMove);
+			wrapper.addEventListener('touchend', onEnd);
+			wrapper.addEventListener('touchcancel', onEnd);
 
-		window.scrollTo(0,0);
+			window.scrollTo(0,0);
 
-		if(l == 1){
-			sx = dx * currentZoom || 0;
-			sy = dy * currentZoom || 0;
-			startX = touches[0].clientX * currentZoom;
-			startY = touches[0].clientY * currentZoom;
+			if(l == 1){
+				sx = dx * currentZoom || 0;
+				sy = dy * currentZoom || 0;
+				startX = touches[0].clientX * currentZoom;
+				startY = touches[0].clientY * currentZoom;
 
-			if(touched) {
-				ondblTap(ev);
-			}else{
-				touched = true;
-				setTimeout(function(){
-					touched = false;
-				}, 300);
+				if(touched) {
+					ondblTap(ev);
+				}else{
+					touched = true;
+					setTimeout(function(){
+						touched = false;
+					}, 300);
+				}
 			}
-		}
 
-		if(l === 2 && !ev.scale){
-			wrapper.removeEventListener('touchstart', onStart);
-			startD = distance(touches[0], touches[1]);
+			if(l === 2 && !ev.scale){
+				wrapper.removeEventListener('touchstart', onStart);
+				startD = distance(touches[0], touches[1]);
+			}
 		}
 	}
 

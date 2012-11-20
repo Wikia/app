@@ -22,7 +22,7 @@ define('pager', function () {
 				function(){};
 		})(),
 		setTransform = function(prev, current, next, x){
-			var translate = 'translate3d(' + (x * 1.1) + 'px,0,0)';
+			var translate = 'translate3d(' + ~~(x * 1.1) + 'px,0,0)';
 
 			current.style.webkitTransform = translate;
 			if (prev) { prev.style.webkitTransform = (x > 0) ? translate : ''; }
@@ -44,6 +44,8 @@ define('pager', function () {
 			container,
 			wrapper,
 			onStart,
+			onStartFired = false,
+			animating = false,
 			onEnd,
 			onOrientCallback,
 			checkCancel,
@@ -123,6 +125,7 @@ define('pager', function () {
 					}
 				}
 
+				onStartFired = animating = false;
 				onEnd && onEnd(currentPageNum);
 			},
 			loadCurrentPage = function(){
@@ -166,53 +169,44 @@ define('pager', function () {
 				if(prev) prev.style.webkitTransition = '-webkit-transform .3s';
 				if(next) next.style.webkitTransition = '-webkit-transform .3s';
 
+				animating = true;
 				addTransitionEnd(current, end, 300);
 
 				setTransform(prev, current, next, toX);
 			},
 			onTouchStart = function(ev){
-				ev.preventDefault();
-				if ( ev.touches.length === 1 && isFunction ? !checkCancel() : true ) {
-					ev.stopPropagation();
-					pos = ev.touches[0].pageX;
+				if (ev.touches.length == 1) {
+					if ( isFunction ? !checkCancel() : true ) {
+						pos = ev.touches[0].pageX;
 
-					onStart && onStart();
-
-					wrapper.removeEventListener('touchstart', onTouchStart);
-					wrapper.addEventListener('touchmove', onTouchMove);
-					wrapper.addEventListener('touchend', onTouchEnd);
-					wrapper.addEventListener('touchcancel', onTouchEnd);
-				} else {
-					wrapper.addEventListener('touchstart', onTouchStart);
-					wrapper.removeEventListener('touchmove', onTouchMove);
-					wrapper.removeEventListener('touchend', onTouchEnd);
-					wrapper.removeEventListener('touchcancel', onTouchEnd);
+						wrapper.removeEventListener('touchstart', onTouchStart);
+						wrapper.addEventListener('touchmove', onTouchMove);
+						wrapper.addEventListener('touchend', onTouchEnd);
+						wrapper.addEventListener('touchcancel', onTouchEnd);
+					}
 				}
+
 			},
 			onTouchMove = function(ev){
 				if ( ev.touches.length === 1 ) {
-					ev.preventDefault();
-
 					if( isFunction ? !checkCancel() : true ) {
+						ev.preventDefault();
+
 						var delta = ev.touches[0].pageX - pos;
 
-						setTransform(prev, current, next, delta);
-					} else {
-						wrapper.addEventListener('touchstart', onTouchStart);
-						wrapper.removeEventListener('touchmove', onTouchMove);
-						wrapper.removeEventListener('touchend', onTouchEnd);
-						wrapper.removeEventListener('touchcancel', onTouchEnd);
+						onStart && !onStartFired && onStart();
 
-						onEnd && onEnd(currentPageNum);
+						onStartFired = true;
+
+						!animating && setTransform(prev, current, next, delta);
 					}
 				}
 			},
 			onTouchEnd = function(ev){
 				if(ev.touches.length === 0) {
-					ev.preventDefault();
 
 					if ( isFunction ? !checkCancel() : true ) {
-							goTo(ev.changedTouches[0].pageX - pos);
+						onStartFired && goTo(ev.changedTouches[0].pageX - pos);
 					}
 
 					wrapper.addEventListener('touchstart', onTouchStart);
