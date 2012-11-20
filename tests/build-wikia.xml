@@ -33,6 +33,7 @@
     </target>
 
     <target name="phpunit" depends="setup">
+		<mkdir dir="${basedir}/build" mode="777" />
         <exec executable="php" dir="${basedir}" failonerror="true">
             <env key="SERVER_ID" value="165" />
             <arg line="run-test.php
