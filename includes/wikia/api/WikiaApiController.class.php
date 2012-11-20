@@ -13,12 +13,29 @@ abstract class WikiaApiController extends WikiaController {
 		'raw'
 	);
 
+	/**
+	 * In API we check if parameters are sorted
+	 * so it makes purging varnish easier and possible
+	 *
+	 * it happens in final __construct so we are sure
+	 * that this rule is obeyed
+	 */
 	public final function __construct() {
 		parent::__construct();
 
 		$this->checkParameters();
 	}
 
+	/**
+	 * Check if:
+	 * controller - is first parameter
+	 * method - is second parameter
+	 * rest of parameters - are sorted
+	 *
+	 * @author Jakub Olek <jolek@wikia-inc.com>
+	 *
+	 * @throws WikiaException
+	 */
 	private function checkParameters(){
 		$paramKeys = array_keys( F::app()->wg->Request->getQueryValues() );
 
@@ -27,11 +44,11 @@ abstract class WikiaApiController extends WikiaController {
 			$paramKeys = array_slice( $paramKeys, 2 );
 
 			if ( !empty( $paramKeys ) ) {
-				$origQuery = $paramKeys = array_flip( $paramKeys );;
+				$origParam = $paramKeys = array_flip( $paramKeys );;
 
 				ksort( $paramKeys );
 
-				if ( $paramKeys !== $origQuery ) {
+				if ( $paramKeys !== $origParam ) {
 					throw new WikiaException();
 				}
 			}
