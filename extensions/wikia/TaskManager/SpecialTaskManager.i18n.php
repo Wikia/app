@@ -93,6 +93,13 @@ $messages['de'] = array(
 	'action-taskmanager' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'taskmanager_tasklist' => 'Peyser şo lista da gurenin',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Translationista

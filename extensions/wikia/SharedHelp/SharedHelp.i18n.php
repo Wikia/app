@@ -59,6 +59,7 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Metalhead64
  * @author PtM
  * @author SVG
  * @author The Evil IP address
@@ -66,6 +67,8 @@ $messages['cs'] = array(
 $messages['de'] = array(
 	'sharedhelp-desc' => 'Holt Seiten aus dem [[w:c:de.community|Community-Wiki]] und fügt sie in den {{ns:help}}-Namensraum dieses Wikis ein',
 	'sharedhelp-autotalkcreate-summary' => 'Diskussionsseite automatisch erstellt',
+	'sharedhelp-searchprofile' => 'Hilfeseiten',
+	'sharedhelp-searchprofile-tooltip' => 'Hilfeseiten durchsuchen',
 );
 
 /** Lower Sorbian (dolnoserbski)
@@ -78,10 +81,13 @@ $messages['dsb'] = array(
 
 /** Spanish (español)
  * @author Crazymadlover
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'sharedhelp-desc' => 'Toma páginas de [[w:c:Help|Help Wikia]] y los inserta en el espacio de nombre {{ns:help}} en este wiki',
 	'sharedhelp-autotalkcreate-summary' => 'Página de discusión creada automáticamente',
+	'sharedhelp-searchprofile' => 'Páginas de ayuda',
+	'sharedhelp-searchprofile-tooltip' => 'Buscar páginas de ayuda',
 );
 
 /** Finnish (suomi)
@@ -93,12 +99,16 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Peter17
+ * @author Wyz
  * @author Yumeki
  */
 $messages['fr'] = array(
 	'sharedhelp-desc' => 'Prend des pages de [[w:c:Help|l’aide de Wikia]] et les insère dans l’espace de nom {{ns:help}} de ce wiki',
 	'sharedhelp-autotalkcreate-summary' => 'Page de discussion créée automatiquement',
+	'sharedhelp-searchprofile' => "Pages d'aide",
+	'sharedhelp-searchprofile-tooltip' => "Rechercher dans les pages d'aide",
 );
 
 /** Galician (galego)
@@ -107,6 +117,8 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'sharedhelp-desc' => 'Toma páxinas da [[w:c:Help|axuda de Wikia]] e insíreas no espazo de nomes "{{ns:help}}" deste wiki',
 	'sharedhelp-autotalkcreate-summary' => 'Páxina de conversa creada automaticamente',
+	'sharedhelp-searchprofile' => 'Páxinas de axuda',
+	'sharedhelp-searchprofile-tooltip' => 'Procurar nas páxinas de axuda',
 );
 
 /** Upper Sorbian (hornjoserbsce)
@@ -171,6 +183,8 @@ $messages['ksh'] = array(
 $messages['mk'] = array(
 	'sharedhelp-desc' => 'Презема страници од [[w:c:Help|Помогнете ѝ на Викија]] и ги вметнува во именскиот простор {{ns:help}} на ова вики',
 	'sharedhelp-autotalkcreate-summary' => 'Страницата за разговор е автоматски создадена',
+	'sharedhelp-searchprofile' => 'Страници за помош',
+	'sharedhelp-searchprofile-tooltip' => 'Пребарување на страниците за помош',
 );
 
 /** Malay (Bahasa Melayu)
@@ -179,6 +193,8 @@ $messages['mk'] = array(
 $messages['ms'] = array(
 	'sharedhelp-desc' => 'Mengambil laman dari [[w:c:Help|Wikia Bantuan]] lalu menyisipkannya ke dalam ruang nama {{ns:help}} di wiki ini',
 	'sharedhelp-autotalkcreate-summary' => 'Laman perbincangan dicipta secara automatik',
+	'sharedhelp-searchprofile' => 'Halaman bantuan',
+	'sharedhelp-searchprofile-tooltip' => 'Cari dalam halaman Bantuan',
 );
 
 /** Norwegian Bokmål (norsk (bokmål)‎)
@@ -188,6 +204,8 @@ $messages['ms'] = array(
 $messages['nb'] = array(
 	'sharedhelp-desc' => 'Tar sider fra [[w:c:Help|Hjelpe-Wikia]] og setter dem inn i {{ns:help}}-navnerommet på denne wikien',
 	'sharedhelp-autotalkcreate-summary' => 'Diskusjonsside opprettet automatisk',
+	'sharedhelp-searchprofile' => 'Hjelpesider',
+	'sharedhelp-searchprofile-tooltip' => 'Søk i hjelpesidene',
 );
 
 /** Dutch (Nederlands)
@@ -199,11 +217,14 @@ $messages['nl'] = array(
 );
 
 /** Polish (polski)
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'sharedhelp-desc' => 'Dodaje [[w:c:Help|strony pomocy Wikii]] do tej wiki w przestrzeni {{ns:help}}',
 	'sharedhelp-autotalkcreate-summary' => 'Strona dyskusji utworzona automatycznie',
+	'sharedhelp-searchprofile' => 'Strony pomocy',
+	'sharedhelp-searchprofile-tooltip' => 'Przeszukaj strony pomocy',
 );
 
 /** Piedmontese (Piemontèis)
@@ -240,11 +261,14 @@ $messages['pt-br'] = array(
 
 /** Russian (русский)
  * @author Eleferen
+ * @author Kuzura
  * @author Ytsukeng Fyvaprol
  */
 $messages['ru'] = array(
 	'sharedhelp-desc' => 'Берутся страницы из [[w:c:Help|Help Wikia]] и вставляются в пространство имён {{ns:help}} данной вики',
 	'sharedhelp-autotalkcreate-summary' => 'Страница обсуждения создана автоматически',
+	'sharedhelp-searchprofile' => 'Страницы справки',
+	'sharedhelp-searchprofile-tooltip' => 'Поиск по Справке',
 );
 
 /** Swedish (svenska)
@@ -254,6 +278,8 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'sharedhelp-desc' => 'Tar sidor från [[w:c:Help|Hjälp-Wikia]] och infogar dem i namnområdet {{ns:help}} på denna wiki',
 	'sharedhelp-autotalkcreate-summary' => 'Diskussionssidan skapas automatiskt',
+	'sharedhelp-searchprofile' => 'Hjälpsidor',
+	'sharedhelp-searchprofile-tooltip' => 'Sök hjälpsidor',
 );
 
 /** Tagalog (Tagalog)

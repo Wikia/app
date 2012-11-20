@@ -958,11 +958,13 @@ $messages['pt'] = array(
  * @author Aristóbulo
  * @author Giro720
  * @author Jesielt
+ * @author TheGabrielZaum
  * @author 555
  */
 $messages['pt-br'] = array(
 	'categoryselect-desc' => 'Disponibiliza uma interface para a administração de categorias de uma página sem que seja necessário editá-lo por inteiro',
 	'categoryselect-code-view' => 'Ver em modo de código',
+	'categoryselect-code-view-placeholder' => 'Adicione categorias aqui, ex. [[Category:Nome]]',
 	'categoryselect-visual-view' => 'Exibição visual',
 	'categoryselect-infobox-caption' => 'Opções de categoria',
 	'categoryselect-infobox-category' => 'Dê o nome da categoria:',
@@ -980,7 +982,8 @@ $messages['pt-br'] = array(
 	'categoryselect-error-user-rights' => 'Erro nos direitos de usuário.',
 	'categoryselect-error-db-locked' => 'O banco de dados está bloqueado.',
 	'categoryselect-edit-abort' => "A alteração que você tentou fazer foi abortada pelo ''hook'' de uma extensão",
-	'tog-disablecategoryselect' => 'Desabilitar os botões de aplicação de categoria', # Fuzzy
+	'tog-disablecategoryselect' => 'Desabilitar o módulo de categorias (apenas aplicado caso a edição em modo visual foi desabilitada)',
+	'tog-disablecategoryselect-v2' => 'Desativar o módulo de Categorias (aplicado apenas se o Modo Visual está desativado)',
 );
 
 /** Romanian (română)

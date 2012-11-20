@@ -1288,11 +1288,6 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->with		( array( WikiaSearch::field( 'title' ), WikiaSearch::field( 'html' ), 'title' ) )
 			->will		( $this->returnValue( $mockConfig ) )
 		;
-		$mockConfig
-			->expects	( $this->once() )
-			->method	( 'setMindf' )
-			->with		( 50 )
-		;
 		$mockSearch
 			->expects	( $this->once() )
 			->method	( 'moreLikeThis' )
@@ -1304,6 +1299,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$this->mockApp();
 		
 		$mockSearch->getRelatedVideos( $mockConfig );
+		$this->tearDown();
 	}
 	
 	/**
@@ -1482,11 +1478,6 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 								->disableOriginalConstructor()
 								->getMock();
 		
-		$mockTrack		=	$this->getMockBuilder( 'Track' )
-								->disableOriginalConstructor()
-								->setMethods( array( 'event' ) )
-								->getMock();
-		
 		$mockConfig
 			->expects	( $this->at( 0 ) )
 			->method	( 'getGroupResults' )
@@ -1551,19 +1542,8 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->with		( $mockQuery )
 			->will		( $this->returnValue( $mockSolResult ) )
 		;
-		$trackingInfo = array(
-				'sterm' => 'foo',
-				'rver'	=> WikiaSearch::RELEVANCY_FUNCTION_ID,
-				'stype'	=> 'inter'
-		);
-		$mockTrack
-			->staticExpects	( $this->once() )
-			->method		( 'event' )
-			->with			( 'search_start', $trackingInfo )
-		;
 		
 		$this->mockClass( 'WikiaSearchResultSet', $mockResultSet );
-		$this->mockClass( 'Track', $mockTrack );
 		$this->mockApp();
 		
 		$this->assertEquals(

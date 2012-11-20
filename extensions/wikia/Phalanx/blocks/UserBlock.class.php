@@ -24,6 +24,11 @@ class UserBlock {
 		global $wgUser, $wgMemc, $wgRequest;
 		wfProfileIn( __METHOD__ );
 
+		if ( $user->isAllowed( 'phalanxexempt' ) ) {
+			wfDebug ( __METHOD__ . ": user has 'phalanxexempt' right - no block will be applied\n" );
+			return true;
+		}
+
 		$ret = true;
 		$text = $user->getName();
 

@@ -195,6 +195,7 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$config = F::build( 'WikiaSearchConfig' );
 		$noNsQuery			= 'foo';
 		$nsQuery			= 'File:foo';
+		$phantomNsQuery		= 'file';
 		
 		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'DefaultNamespaces' ), array() );
 
@@ -363,6 +364,13 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				'foo bar',
 				$config->getQuery(),
 				'WikiaSearch::getQuery() should strip the term "wiki" from the set query if the search is interwiki'
+		);
+		
+		$config->setQuery( $phantomNsQuery );
+		$this->assertEquals(
+				$phantomNsQuery,
+				$config->getQuery(),
+				'A query that initially matches a namespaces but does not end with a colon should not strip namespaces'
 		);
 		
 	}

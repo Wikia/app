@@ -228,6 +228,13 @@ $messages['az'] = array(
 	'scavengerhunt-entry-form-email' => 'Sizin e-poçt ünvanınız:',
 );
 
+/** تورکجه (تورکجه)
+ * @author Erdemaslancan
+ */
+$messages['azb'] = array(
+	'scavengerhunt-list-enabled' => 'قوشولوب',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -467,8 +474,9 @@ $messages['de-formal'] = array(
 $messages['diq'] = array(
 	'scavengerhunt-list-header-name' => 'Namey qayer',
 	'scavengerhunt-list-header-actions' => 'Kerdışi',
-	'scavengerhunt-list-enabled' => 'Kerdo aktif',
+	'scavengerhunt-list-enabled' => 'Aktifiyaye',
 	'scavengerhunt-list-disabled' => 'Astengın',
+	'scavengerhunt-list-edit' => 'bıvurne',
 	'scavengerhunt-label-general' => 'Heran',
 	'scavengerhunt-label-name' => 'Name:',
 	'scavengerhunt-button-save' => 'Star ke',
@@ -2325,6 +2333,7 @@ $messages['sv'] = array(
 	'scavengerhunt-label-article-clue-image' => 'Bild för popup-ledtråd (URL-adress):',
 	'scavengerhunt-label-article-clue-button-text' => 'Knapptext för popup-ledtråd:',
 	'scavengerhunt-label-article-clue-button-target' => 'Knappmål för popup-ledtråd (URL-adress):',
+	'scavengerhunt-label-entry-form' => 'Anmälningsformulär',
 	'scavengerhunt-label-entry-form-title' => 'Popup-titel:',
 	'scavengerhunt-label-entry-form-text' => 'Popup-text:',
 	'scavengerhunt-label-entry-form-image' => 'Popup-bild (URL-adress):',
@@ -2353,6 +2362,7 @@ $messages['sv'] = array(
 	'scavengerhunt-form-error-article-clue' => 'Var god fyll i alla information om artikelledtrådarna.',
 	'scavengerhunt-form-error-clue' => 'Var god fyll i all information  om artikelns gratulationsmeddelande.',
 	'scavengerhunt-form-error-progressBarBackgroundSprite-sprite-empty' => 'Spritedimensionerna för förloppsmätaren är ogiltig',
+	'scavengerhunt-form-error-progressBarExitSprite-sprite-empty' => 'Dimensionerna för förloppsmätarens avslutningsknapp är ogiltiga.',
 	'scavengerhunt-form-error-article-spriteNotFound-sprite-empty' => 'Var god välj passande dimensioner för skattjaktens objektsbild',
 	'scavengerhunt-form-error-no-sprite-image' => 'Var god ange fullständig sökväg till bildfilen',
 	'scavengerhunt-form-error-no-articles' => 'Jakten måste åtminstone har en ledtråd/artikel.',
@@ -2366,6 +2376,7 @@ $messages['sv'] = array(
 	'scavengerhunt-edit-token-mismatch' => 'Redigeringskoden stämde inte - var god försök igen.',
 	'scavengerhunt-entry-form-name' => 'Ditt namn:',
 	'scavengerhunt-entry-form-email' => 'Din e-postadress:',
+	'scavengerhunt-entry-form-submit' => 'Skicka in',
 	'scavengerhunt-label-sprite-img' => 'Sökväg för spritebild',
 	'scavengerhunt-label-sprite-X' => 'Objektposition',
 	'scavengerhunt-label-sprite-X1' => 'Sprite längst upp till höger',
@@ -2388,6 +2399,7 @@ $messages['sv'] = array(
 	'scavengerhunt-label-spriteInProgressBarHover' => 'Koordinater för förloppsmätarsprite vid hovring',
 	'scavengerhunt-label-spriteInProgressBarNotFound' => 'Förloppsmätarobjekt hittades inte',
 	'scavengerhunt-label-startPopupSprite' => 'Koordinater för popup-bildsprite',
+	'scavengerhunt-label-finishPopupSprite' => 'Koordinater för popup-bildsprite',
 	'scavengerhunt-label-clue-color' => 'Teckenfärg',
 	'scavengerhunt-label-clue-size' => 'Teckenstorlek',
 	'scavengerhunt-label-clue-font' => 'Teckendekorationer',
@@ -2401,8 +2413,11 @@ $messages['sv'] = array(
 (2) vilken del av spritefilen som är det aktiva bildobjektet.',
 	'scavengerhunt-editor-tip-progressBarExitSprite' => 'OBS: Alla koordinater är relativa till referenspunkten i det nedre högra hörnet på sidan',
 	'scavengerhunt-editor-tip-starting-clue-text' => 'Detta är texten som orienterar spelaren och startar jakten.',
+	'scavengerhunt-editor-tip-starting-clue-button-target' => 'Detta är adressen till sidan med det första objektet.',
 	'scavengerhunt-editor-tip-articleTitle' => 'Detta är sidan med nästa objekt.',
 	'scavengerhunt-editor-tip-spriteNotFound' => 'Detta avsnitt definierar bilden som ska vara ledtråden.',
+	'scavengerhunt-editor-tip-spriteInProgressBarHover' => 'Detta avsnitt definierar ikonen som dyker upp i förloppsmätaren när muspekaren vilar på den.',
+	'scavengerhunt-editor-tip-spriteInProgressBarNotFound' => 'Detta avsnitt definierar ikonen som dyker upp i förloppsmätaren när objektet inte har hittats ännu.',
 	'scavengerhunt-editor-tip-article-title' => 'Detta är platsen för sidan med nästa objekt.',
 	'scavengerhunt-editor-tip-entry-form-title' => 'Detta är titeln för dialogrutan som visas i slutet av jakten.',
 	'scavengerhunt-editor-tip-entry-form-text' => 'Detta är texten i dialogrutan som visas i slutet av jakten.',
@@ -2608,13 +2623,20 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'scavengerhunt-list-header-name' => '游戏名',
+	'scavengerhunt-list-edit' => '编辑',
+	'scavengerhunt-label-general' => '简单介绍',
 	'scavengerhunt-label-name' => '名：',
 	'scavengerhunt-button-add' => '添加一个游戏',
 	'scavengerhunt-button-save' => '保存',
 	'scavengerhunt-button-delete' => '删除',
 	'scavengerhunt-entry-form-name' => '您的名字：',
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
+	'scavengerhunt-quit-game-button-quit' => '退出',
+	'scavengerhunt-quit-game-button-cancel' => '取消',
+	'scavengerhunt-label-clue-color' => '字体颜色',
+	'scavengerhunt-label-clue-size' => '字体大小',
 );

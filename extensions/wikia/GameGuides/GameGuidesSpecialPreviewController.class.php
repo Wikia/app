@@ -29,7 +29,16 @@ class GameGuidesSpecialPreviewController extends WikiaSpecialPageController {
 		// to get global assets
 		// http://fallout.jolek.wikia-dev.com/wikia.php?controller=AssetsManager&method=getMultiTypePackage&scripts=gameguides_js&styles=//extensions/wikia/GameGuides/css/GameGuides.scss
 
-		$this->setVal( 'url', $this->wg->Server .'/wikia.php?allinone=1&controller=GameGuidesController&method=renderFullPage&title=' . $titleName );
+		$this->setVal(
+			'url',
+			GameGuidesController::getUrl(
+				'renderFullPage',
+				array(
+					'allinone' => 1,
+					'title' => $titleName
+				)
+			)
+		);
 		return true;
 	}
 

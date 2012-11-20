@@ -499,11 +499,12 @@ $messages['ja'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 아라
  */
 $messages['ko'] = array(
-	'contact' => '위키아에 문의',
-	'specialcontact-wikia' => '위키아에 문의',
-	'specialcontact-pagetitle' => '위키아에 문의',
+	'contact' => '위키아에 문의하기',
+	'specialcontact-wikia' => '위키아에 문의하기',
+	'specialcontact-pagetitle' => '위키아에 문의하기',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

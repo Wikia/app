@@ -612,9 +612,12 @@ $messages['diq'] = array(
 	'chat-ban-undolink' => 'peyser bia',
 	'chat-ban-modal-button-cancel' => 'Bıterkne',
 	'chat-live2' => 'Live! Chat',
-	'chat-edit-count' => '{{PLURAL:$1|$1 vurnayışt|$1 vurnayışi}}',
+	'chat-edit-count' => '{{PLURAL:$1|$1 vurnayış|$1 vurnayışi}}',
 	'chat-user-menu-talk-page' => 'Pela werênayışi',
 	'chat-user-menu-kick' => 'Kick',
+	'chat-user-menu-ban' => 'Wedarnê',
+	'chat-checkuser-join-action' => 'Chat Kewê',
+	'chat-status-away' => 'Duri de',
 );
 
 /** Spanish (español)
@@ -1365,6 +1368,7 @@ $messages['khw'] = array(
 /** Korean (한국어)
  * @author Cafeinlove
  * @author Infinity
+ * @author 아라
  */
 $messages['ko'] = array(
 	'chat-desc' => '[[Special:Chat|실시간 채팅]]',
@@ -1380,7 +1384,7 @@ $messages['ko'] = array(
 	'chat-kick-log-reason' => '$1에 의해 채팅에서 추방됨. 더 자세한 이유는 운영진에게 문의.',
 	'chat-start-a-chat' => '채팅 시작하기',
 	'chat-join-the-chat' => '채팅 참가하기',
-	'chat-edit-count' => '$1회 기여', # Fuzzy
+	'chat-edit-count' => '편집 $1회',
 	'chat-member-since' => '$1부터 기여',
 	'chat-user-menu-message-wall' => '메시지 담벼락',
 );
@@ -2051,6 +2055,7 @@ $messages['pt'] = array(
  * @author Caio1478
  * @author Luckas Blade
  * @author Pedroca cerebral
+ * @author TheGabrielZaum
  * @author 555
  */
 $messages['pt-br'] = array(
@@ -2059,11 +2064,17 @@ $messages['pt-br'] = array(
 	'chat-no-login' => 'Você precisa estar logado no chat.',
 	'chat-no-login-text' => 'Por favor, faça login para entrar no chat.',
 	'chat-default-topic' => 'Bem-vindo ao chat do $1',
+	'chat-welcome-message' => 'Bem-vindo ao chat de $1',
 	'chat-user-joined' => '$1 entrou no chat.',
 	'chat-read-only' => 'O chat está temporariamente indisponível porque a wiki está em modo de leitura.',
+	'chat-private-messages' => 'Mensagens Privadas',
 	'chat-user-parted' => '$1 saiu do chat.',
 	'chat-user-blocked' => '$1 bloqueou $2.',
 	'chat-user-allow' => '$1 permitiu $2.',
+	'chat-kick-you-need-permission' => 'Você não tem permissão de expulsar um usuário.',
+	'chat-kick-cant-kick-moderator' => 'Você não pode expulsar outro Moderador do Chat.',
+	'chat-user-was-kicked' => '$1 foi expulso por $2.',
+	'chat-you-were-kicked' => 'Você foi expulso por $1.',
 	'chat-user-permanently-disconnected' => 'Você está desconectado, verifique sua conexão com a Internet e atualize a janela do seu navegador',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 tornou <strong>$2</strong> um moderador do chat.',
 	'chat-err-connected-from-another-browser' => 'Ligou-se a partir de outro browser. Esta ligação será fechada.',
@@ -2484,6 +2495,13 @@ Mangyaring makipag-ugnayan sa kanila para sa mas maraming kabatiran.',
  */
 $messages['tt-cyrl'] = array(
 	'chat-great-youre-logged-in' => 'Шәп! Сез системага кердегез.',
+);
+
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'chat-ban-modal-button-cancel' => 'ⵓⵖⴰⵍ',
 );
 
 /** Veps (vepsän kel’)

@@ -16,7 +16,6 @@
 		const PERIOD_ID_ROLLING_28DAYS = 1028;		// every day
 		const PERIOD_ID_ROLLING_24HOURS = 10024;	// every 15 minutes
 
-
 		/**
 		 * get pageviews
 		 * @param integer $periodId
@@ -71,27 +70,147 @@
 			return $pageviews;
 		}
 
+		/**
+		 * get pageviews for list of Wikis
+		 * @param integer $periodId
+		 * @param array $wikis
+		 * @param string $startDate [YYYY-MM-DD]
+		 * @param string $endDate [YYYY-MM-DD]
+		 * @return array $pageviews [ array( 'WIKI_ID' => array( 'YYYY-MM-DD' => pageviews, 'SUM' => sum(pageviews) ) ) ]
+		 */
+		protected static function getPageviewsForWikis( $periodId, $wikis, $startDate, $endDate = null ) {
+			$app = F::app(); 
+
+			$app->wf->ProfileIn( __METHOD__ );
+
+			if ( empty($wikis) ) {
+				$app->wf->ProfileOut( __METHOD__ );
+				return array();
+			}
+
+			if ( empty($endDate) ) {
+				if ( $periodId == self::PERIOD_ID_MONTHLY ) {
+					$endDate = date( 'Y-m-01' );
+				} else {
+					$endDate = date( 'Y-m-d', strtotime('-1 day') );
+				}
+			}
+
+			$wkey = md5( implode(":", $wikis) );
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'pageviews_wikis', $wkey, $periodId, $startDate, $endDate );
+			$pageviews = $app->wg->Memc->get( $memKey );
+			if (!is_array($pageviews) ) {
+				$pageviews = array();
+				if ( !empty($app->wg->StatsDBEnabled) ) {
+					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+
+					$result = $db->select(
+						array('rollup_wiki_pageviews'),
+						array("wiki_id, date_format(time_id,'%Y-%m-%d') as date, pageviews as cnt"),
+						array('period_id' => $periodId,
+							  'wiki_id'   => $wikis,
+							  "time_id between '$startDate' and '$endDate'"
+						),
+						__METHOD__
+					);
+
+					while ( $row = $db->fetchObject($result) ) {
+						$pageviews[ $row->wiki_id ][ $row->date ] = $row->cnt;
+						$pageviews[ $row->wiki_id ][ 'SUM' ] += $row->cnt;
+					}
+
+					$app->wg->Memc->set( $memKey, $pageviews, 60*60*12 );
+				}
+			}
+
+			$app->wf->ProfileOut( __METHOD__ );
+
+			return $pageviews;
+		}
+		
+		/**
+		 * get pageviews
+		 * @param array $dates ( YYYY-MM-DD, YYYY-MM-DD ... )
+		 * @return array $pageviews [ array( 'YYYY-MM-DD' => pageviews ) ]
+		 */
+		protected static function getSumPageviewsMonthly( $dates = array() ) {
+			$app = F::app();
+
+			$app->wf->ProfileIn( __METHOD__ );
+			$periodId = self::PERIOD_ID_MONTHLY;
+
+			if ( empty($dates) ) {
+				$app->wf->ProfileOut( __METHOD__ );
+				return array();
+			}
+
+			$dkey = md5( implode(":", $dates) );
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'sumpageviews', $periodId, $dkey );
+			$pageviews = $app->wg->Memc->get( $memKey );
+			if (!is_array($pageviews) ) {
+				$pageviews = array();
+				if ( !empty($app->wg->StatsDBEnabled) ) {
+					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+
+					foreach ( $dates as $date ) {
+						$row = $db->selectRow(
+							array('rollup_wiki_pageviews'),
+							array("sum(pageviews) as cnt"),
+							array(
+								'period_id' => $periodId,
+								'wiki_id'   => $wikiId,
+								'time_id'	=> $date
+							),
+							__METHOD__
+						);
+
+						if ($row) {
+							$pageviews[ $date ] = intval($row->cnt);
+						}
+					}
+
+					$app->wg->Memc->set( $memKey, $pageviews, 60*60*12 );
+				}
+			}
+
+			$app->wf->ProfileOut( __METHOD__ );
+
+			return $pageviews;
+		}
+		
 		// get daily pageviews
-		public static function getPageviewsDaily( $startDate, $endDate = null, $wikiId = null ) {
-			$pageviews = self::getPageviews( self::PERIOD_ID_DAILY, $startDate, $endDate, $wikiId );
+		public static function getPageviewsDaily( $startDate, $endDate = null, $wiki = null ) {
+			if ( is_array( $wiki ) ) {
+				$pageviews = self::getPageviewsForWikis( self::PERIOD_ID_DAILY, /* array of Wikis */ $wiki, $startDate, $endDate );
+			} else {
+				$pageviews = self::getPageviews( self::PERIOD_ID_DAILY, $startDate, $endDate, /* ID */ $wiki );
+			}
 
 			return $pageviews;
 		}
 
 		// get weekly pageviews
-		public static function getPageviewsWeekly( $startDate, $endDate = null, $wikiId = null ) {
-			$pageviews = self::getPageviews( self::PERIOD_ID_WEEKLY, $startDate, $endDate, $wikiId );
+		public static function getPageviewsWeekly( $startDate, $endDate = null, $wiki = null ) {
+			if ( is_array( $wiki ) ) {
+				$pageviews = self::getPageviewsForWikis( self::PERIOD_ID_WEEKLY, /* array of Wikis */ $wiki, $startDate, $endDate );
+			} else {
+				$pageviews = self::getPageviews( self::PERIOD_ID_WEEKLY, $startDate, $endDate, /* ID */ $wiki );
+			}
 
 			return $pageviews;
 		}
 
 		// get monthly pageviews
-		public static function getPageviewsMonthly( $startDate, $endDate = null, $wikiId = null ) {
-			$pageviews = self::getPageviews( self::PERIOD_ID_MONTHLY, $startDate, $endDate, $wikiId );
+		public static function getPageviewsMonthly( $startDate, $endDate = null, $wiki = null ) {
+			if ( is_array( $wiki ) ) {
+				$pageviews = self::getPageviewsForWikis( self::PERIOD_ID_MONTHLY, /* array of Wikis */ $wiki, $startDate, $endDate );
+			} else {
+				$pageviews = self::getPageviews( self::PERIOD_ID_MONTHLY, $startDate, $endDate, /* ID */ $wiki );
+			}
 
 			return $pageviews;
 		}
-
+		
 		/**
 		 * Get top wikis by pageviews over a specified span of time, optionally filtering by
 		 * public status, language and vertical (hub)
@@ -583,4 +702,79 @@
 			return $wamScore;
 		}
 		
+		/**
+		 * Gets the list of top wikis for tag_id and language on a monthly pageviews basis
+		 * 
+		 * @param integer $tagId A valid tag_id from city_tag_map table
+		 * @param string $startDate [YYYY-MM-DD]
+		 * @param string $endDate [YYYY-MM-DD]
+		 * @param integer $langCode A valid Wiki's language code 
+		 * @param integer $periodId
+		 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
+		 *
+		 * @return Array The list, the key contains Wiki ID's and "pageviews" number
+		 */
+		public static function getTopTagsWikisByPageviews( $tagId, $startDate, $endDate, $langCode = 'en', $periodId = null, $limit = 200 ) {
+			$app = F::app();
+
+			$app->wf->ProfileIn( __METHOD__ );
+
+			if ( empty($endDate) ) {
+				if ( $periodId == self::PERIOD_ID_MONTHLY ) {
+					$endDate = date( 'Y-m-01' );
+				} else {
+					$endDate = date( 'Y-m-d', strtotime('-1 day') );
+				}
+			}
+
+			if ( empty($periodId) ) {
+				$periodId = self::PERIOD_ID_MONTHLY;
+			}
+
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'tags_top_wikis', $tagId, $periodId, $startDate, $endDate, $langCode = 'en', $limit );
+			$tagViews = $app->wg->Memc->get( $memKey );
+			if ( !is_array($tagViews) ) {
+				$tagViews = array();
+				if ( !empty($app->wg->StatsDBEnabled) ) {
+					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+
+					$tables = array( 
+						'r' => 'rollup_wiki_pageviews', 
+						'c' => 'wikicities.city_tag_map', 
+						'd' => 'dimension_wikis' 
+					);
+					$fields = array(
+						'c.tag_id as tag_id', 
+						'r.wiki_id', 
+						'sum(r.pageviews) as pviews'
+					);
+					$cond = array( 
+						'period_id' => $periodId,
+						'tag_id'	=> $tagId,
+						"time_id between '{$startDate}' AND '{$endDate}'", 
+					);
+					$opts = array( 
+						'GROUP BY'	=> 'c.tag_id, r.wiki_id',
+						'ORDER BY'	=> 'pviews DESC',
+						'LIMIT'		=> $limit
+					);
+					$join_conds = array( 
+						'c' => array( 'INNER JOIN', array( 'c.city_id = r.wiki_id' ) ),
+						'd' => array( 'INNER JOIN', array( 'd.wiki_id = r.wiki_id', 'd.public = 1', "d.lang = '{$langCode}'" ) )
+					);
+
+					$result = $db->select( $tables, $fields, $cond, __METHOD__, $opts, $join_conds );
+
+					while ( $row = $db->fetchObject($result) ) {
+						$tagViews[ $row->wiki_id ] = $row->pviews;
+					}
+
+					$app->wg->Memc->set( $memKey, $tagViews, 60*60*12 );
+				}
+			}
+
+			$app->wf->ProfileOut( __METHOD__ );
+
+			return $tagViews;
+		}
 	}

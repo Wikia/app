@@ -215,13 +215,18 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		$query = html_entity_decode( Sanitizer::StripAllTags ( $query ), ENT_COMPAT, 'UTF-8');
 		
 		$this->params['originalQuery'] = $query;
-		$queryNamespace	= $this->wg->ContLang->getNsIndex( preg_replace( '/^(.*):.*$/', '$1', strtolower( $query ) ) );
-		if ( $queryNamespace ) {
-			$namespaces = $this->getNamespaces();
-		    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
-		        $this->params['queryNamespace'] = $queryNamespace;
-		    } 
-		    $query = implode( ':', array_slice( explode( ':', $query ), 1 ) );
+		
+		if ( strpos( $query, ':' ) !== false ) {
+			$queryNsExploded = explode( ':', $query );
+			$queryNamespaceStr = array_shift( $queryNsExploded );
+			$queryNamespace	= $this->wg->ContLang->getNsIndex( $queryNamespaceStr );
+			if ( $queryNamespace ) {
+				$namespaces = $this->getNamespaces();
+			    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
+			        $this->params['queryNamespace'] = $queryNamespace;
+			    } 
+			    $query = implode( ':', $queryNsExploded );
+			}
 		}
 		
 		$this->params['query'] = $query;

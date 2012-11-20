@@ -496,11 +496,18 @@ $messages['diq'] = array(
 	'createtoplist' => 'listey Tewr 10ano newe vırazê',
 	'edittoplist' => 'listey Tewr 10a bıvurnê',
 	'toplists-category' => 'listey Tewr 10a',
+	'toplists-editor-title-label' => 'Namey lista',
 	'toplists-editor-image-browser-tooltip' => 'Resim deke',
 	'toplists-create-button' => 'Liste vırazê',
 	'toplists-update-button' => 'Listi qeyd ke',
 	'toplists-cancel-button' => 'Bıterkne',
+	'toplists-items-removed' => '$1 {{PLURAL:$1|çi|çiy}} wedariyaya',
+	'toplists-items-created' => '$1 {{PLURAL:$1|çi|çiy}} vıraziyay',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|çi|çiy}} rocneya',
+	'toplists-image-browser-upload-btn' => 'Weçinayış',
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />rey|$1<br />reyi}}',
 	'toplists-list-created-by' => '[[User:$1|$1]]',
+	'toplists-list-add-item-label' => 'Çi de ke',
 	'toplists-list-item-voted' => 'Rey Bıdê',
 	'toplists-seconds' => '$1 {{PLURAL:$1|saniye|saniyeyan}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|deqa|deqey}}',
@@ -2226,6 +2233,13 @@ Tumungo sa Wikia upang suriin ang mga pagbabago! $1
 	'toplists-create-heading' => '<em>Bago!</em> Lumikha Ng Sarili Mong Nangungunang Sampu',
 	'toplists-create-button-msg' => 'Lumikha ng isang talaan',
 	'toplists-oasis-only' => 'Ang paggawa at pagmamatnugot ng nangungunang 10 listahan ay hindi maari sa Monobook. Kung gusto mo na magamit ang katangian na ito, manyaring ilipat ang iyong mga nais sa pabalat ng Wikia.',
+);
+
+/** Turkish (Türkçe)
+ * @author Emperyan
+ */
+$messages['tr'] = array(
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />oy|$1<br />oy}}}}', # Fuzzy
 );
 
 /** Ukrainian (українська)
