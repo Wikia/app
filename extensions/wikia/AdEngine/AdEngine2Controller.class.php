@@ -38,29 +38,34 @@ class AdEngine2Controller extends WikiaController {
 	 * Register ad-related vars on top
 	 *
 	 * @param array $vars
+	 * @param array $scripts
 	 *
 	 * @return bool
 	 */
 	public function onWikiaSkinTopScripts(&$vars, &$scripts) {
 		wfProfileIn(__METHOD__);
 
-		$wg = $this->app->wg;
+		$req = $this->wg->Request;
 
 		// AdEngine2.js
 		$vars['adslots2'] = array();
-		$vars['wgLoadAdsInHead'] = !empty($wg->LoadAdsInHead);
+		$vars['wgLoadAdsInHead'] = !empty($this->wg->LoadAdsInHead);
 		$vars['wgAdsShowableOnPage'] = self::areAdsShowableOnPage();
-		$vars['wgShowAds'] = $wg->ShowAds;
+		$vars['wgShowAds'] = $this->wg->ShowAds;
 
-		// TODO remove later, legacy addriver for adsinhead=1
+		$disableOldAdDriver = $req->getCookie('newadsonly', '', $this->wg->DisableOldAdDriver);
+		$disableOldAdDriver = $req->getBool('newadsonly', $disableOldAdDriver);
+		$vars['wgDisableOldAdDriver'] = (bool) $disableOldAdDriver;
+
+		// Used to hop by DART ads
 		$vars['adDriverLastDARTCallNoAds'] = array();
 
 		// WikiaDartHelper.js
-		if (!empty($wg->DartCustomKeyValues)) {
-			$vars['wgDartCustomKeyValues'] = $wg->DartCustomKeyValues;
+		if (!empty($this->wg->DartCustomKeyValues)) {
+			$vars['wgDartCustomKeyValues'] = $this->wg->DartCustomKeyValues;
 		}
 		$cat = AdEngine::getCachedCategory();
-		$vars["cityShort"] = $cat['short'];
+		$vars['cityShort'] = $cat['short'];
 
 		wfProfileOut(__METHOD__);
 
@@ -81,7 +86,7 @@ class AdEngine2Controller extends WikiaController {
 			return true;
 		}
 
-		if (F::app()->wg->LoadAdsInHead) {
+		if ($this->wg->LoadAdsInHead) {
 			// Removing oasis_shared_core_js asset group
 			array_splice($jsAssets, $coreGroupIndex, 1);
 		} else {
@@ -99,7 +104,7 @@ class AdEngine2Controller extends WikiaController {
 	 * @return bool
 	 */
 	public function onOasisSkinAssetGroupsBlocking(&$jsAssets) {
-		if (F::app()->wg->LoadAdsInHead) {
+		if ($this->wg->LoadAdsInHead) {
 			// Add ad asset to JavaScripts loaded on top (in <head>)
 			$jsAssets[] = self::ASSET_GROUP_CORE;
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE;
@@ -119,12 +124,10 @@ class AdEngine2Controller extends WikiaController {
 	 * @return bool
 	 */
 	public function onLinkerMakeExternalLink(&$url, &$text, &$link, &$attribs) {
-		$wg = $this->app->wg;
-
-		if (!$wg->EnableOutboundScreenExt
-			|| $wg->RTEParserEnabled    // skip logic when in FCK
-			|| empty($wg->Title)        // setup functions can call MakeExternalLink before wgTitle is set RT#144229
-			|| $wg->User->isLoggedIn()  // logged in users have no exit stitial ads
+		if (!$this->wg->EnableOutboundScreenExt
+			|| $this->wg->RTEParserEnabled    // skip logic when in FCK
+			|| empty($this->wg->Title)        // setup functions can call MakeExternalLink before wgTitle is set RT#144229
+			|| $this->wg->User->isLoggedIn()  // logged in users have no exit stitial ads
 			|| strpos($url, 'http://') !== 0
 		) {
 			return true;
@@ -145,11 +148,8 @@ class AdEngine2Controller extends WikiaController {
 			return self::$EXITSTITIAL_URLS_WHITE_LIST;
 		}
 
-		$wg = $this->app->wg;
-		$wf = $this->app->wf;
-
 		$whiteList = array();
-		$whiteListContent = $wf->MsgExt('outbound-screen-whitelist', array('language' => 'en'));
+		$whiteListContent = $this->wf->MsgExt('outbound-screen-whitelist', array('language' => 'en'));
 
 		if (!empty($whiteListContent)) {
 			$lines = explode("\n", $whiteListContent);
@@ -160,13 +160,13 @@ class AdEngine2Controller extends WikiaController {
 			}
 		}
 
-		$wikiDomains = WikiFactory::getDomains($wg->CityId);
+		$wikiDomains = WikiFactory::getDomains($this->wg->CityId);
 		if ($wikiDomains !== false) {
 			$whiteList = array_merge($wikiDomains, $whiteList);
 		}
 
 		// Devboxes run on different domains than just what is in WikiFactory.
-		if ($wg->DevelEnvironment && !empty($_SERVER['SERVER_NAME'])) {
+		if ($this->wg->DevelEnvironment && !empty($_SERVER['SERVER_NAME'])) {
 			array_unshift($whiteList, $_SERVER['SERVER_NAME']);
 		}
 

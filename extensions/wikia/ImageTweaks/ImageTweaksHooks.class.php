@@ -16,6 +16,10 @@ class ImageTweaksHooks extends WikiaObject {
 	}
 
 	public function onThumbnailAfterProduceHTML( $title, $file, $frameParams, $handlerParams, $outerWidth, $thumb, $thumbParams, $zoomIcon, $url,  $time, $origHTML, &$html ){
+		if ( !empty( $this->app->wg->RTEParserEnabled ) ) {
+			return true;
+		}
+
 		$this->wf->profileIn( __METHOD__ );
 
 		if ( self::$isWikiaMobile ) {
@@ -74,6 +78,10 @@ class ImageTweaksHooks extends WikiaObject {
 	}
 
 	public function onImageAfterProduceHTML( $title, $file, $frameParams, $handlerParams, $thumb, $params, $time, $origHTML, &$html ){
+		if ( !empty( $this->app->wg->RTEParserEnabled ) ) {
+			return true;
+		}
+
 		/**
 		 * WikiaMobile - non-framed non-thumb images should have the same markup as thumbed/framed images/thumbnails
 		 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
@@ -92,7 +100,7 @@ class ImageTweaksHooks extends WikiaObject {
 					'content' => $origHTML,
 					//force the caption wrapper to exist if it's a linked image without caption
 					'caption' => ( $linked && empty( $caption ) ) ? '' : $caption,
-					'showRibbon' => ( is_object( $thumb ) ) ?
+					'showRibbonwfdebug' => ( is_object( $thumb ) ) ?
 						WikiaMobileMediaService::showRibbon( $thumb->getWidth(), $thumb->getHeight() ) :
 						false
 				),
@@ -106,6 +114,10 @@ class ImageTweaksHooks extends WikiaObject {
 	}
 
 	public function onThumbnailImageHTML( $options, $linkAttribs, $imageAttribs, File $file, &$html ){
+		if ( !empty( $this->app->wg->RTEParserEnabled ) ) {
+			return true;
+		}
+
 		$this->wf->profileIn( __METHOD__ );
 
 
@@ -232,6 +244,10 @@ class ImageTweaksHooks extends WikiaObject {
 	}
 
 	public function onThumbnailVideoHTML( $options, $linkAttribs, $imageAttribs, File $file, &$html ){
+		if ( !empty( $this->app->wg->RTEParserEnabled ) ) {
+			return true;
+		}
+
 		$this->wf->profileIn( __METHOD__ );
 
 		if ( self::$isWikiaMobile ) {

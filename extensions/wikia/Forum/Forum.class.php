@@ -84,6 +84,7 @@ class Forum extends WikiaModel {
 			array() 
 		);
 
+		$this->wf->profileOut(__METHOD__);
 		return $result['cnt'];
 	}
 
@@ -177,8 +178,8 @@ class Forum extends WikiaModel {
 			}
 		} );
 
-		return $out == "YES";
 		$this->wf->ProfileOut( __METHOD__ );
+		return $out == "YES";
 	}
 
 	public function haveOldForums() {
@@ -331,12 +332,12 @@ class Forum extends WikiaModel {
 
 			$app->wg->User = $tmpUser;
 
+			$this->wf->ProfileOut( __METHOD__ );
 			return true;
 		}
 
-		return false;
-
 		$this->wf->ProfileOut( __METHOD__ );
+		return false;
 	}
 
 }

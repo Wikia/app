@@ -373,40 +373,6 @@ class WikiStatsPage extends IncludableSpecialPage
 		return 1;
 	}
 
-	private function showLatestview($subpage = '') {
-		global $wgUser, $wgContLang, $wgLang, $wgOut;
-
-		wfProfileIn( __METHOD__ );
-		$rows = $this->mStats->latestViewPages();
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars( array(
-			"user"			=> $wgUser,
-			"cityId"		=> $this->mCityId,
-			"wgContLang" 	=> $wgContLang,
-			"wgLang"		=> $wgLang,
-			"data"			=> $rows,
-		) );
-		$wgOut->addHTML( $oTmpl->render("latestview") );
-		wfProfileOut( __METHOD__ );
-	}
-
-	private function showUserview($subpage = '') {
-		global $wgUser, $wgContLang, $wgLang, $wgOut;
-
-		wfProfileIn( __METHOD__ );
-		$rows = $this->mStats->userViewPages(1);
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars( array(
-			"user"			=> $wgUser,
-			"cityId"		=> $this->mCityId,
-			"wgContLang" 	=> $wgContLang,
-			"wgLang"		=> $wgLang,
-			"data"			=> $rows,
-		) );
-		$wgOut->addHTML( $oTmpl->render("user_activity") );
-		wfProfileOut( __METHOD__ );
-	}
-
 	private function showActivity($subpage = '') {
 		global $wgUser, $wgContLang, $wgLang, $wgOut, $wgJsMimeType, $wgResourceBasePath;
 		wfProfileIn( __METHOD__ );

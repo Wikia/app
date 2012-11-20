@@ -158,60 +158,45 @@ class GameGuidesController extends WikiaController {
 		$titleName = $this->getVal( 'title' );
 
 		$title = Title::newFromText( $titleName );
-		$revId = $title->getLatestRevID();
 
-		if ( $revId > 0 ) {
-			$relatedPages = (
-				!empty( $this->wg->EnableRelatedPagesExt ) &&
-					empty( $this->wg->MakeWikiWebsite ) &&
-					empty( $this->wg->EnableAnswers ) ) ?
-				$this->app->sendRequest( 'RelatedPagesController', 'index', array(
-						'categories' => $this->wg->Title->getParentCategories()
-					)
-				) : null;
+		if ( $title instanceof Title ) {
+			$revId = $title->getLatestRevID();
 
-			if ( !is_null( $relatedPages ) ) {
-				$relatedPages = $relatedPages->getVal('pages');
+			if ( $revId > 0 ) {
+				$relatedPages = (
+					!empty( $this->wg->EnableRelatedPagesExt ) &&
+						empty( $this->wg->MakeWikiWebsite ) &&
+						empty( $this->wg->EnableAnswers ) ) ?
+					$this->app->sendRequest( 'RelatedPagesController', 'index', array(
+							'categories' => $this->wg->Title->getParentCategories()
+						)
+					) : null;
 
-				if ( !empty ( $relatedPages ) ) {
-					$this->response->setVal( 'relatedPages', $relatedPages );
+				if ( !is_null( $relatedPages ) ) {
+					$relatedPages = $relatedPages->getVal('pages');
+
+					if ( !empty ( $relatedPages ) ) {
+						$this->response->setVal( 'relatedPages', $relatedPages );
+					}
 				}
+
+				$this->response->setVal(
+					'html',
+					$this->sendSelfRequest( 'renderPage', array(
+							'title' => $titleName
+						)
+					)->toString() );
+
+				$this->response->setVal(
+					'revisionid',
+					$title->getLatestRevID()
+				);
+			} else {
+				$this->response->setVal( 'error', 'Revision ID = 0' );
 			}
-
-			$this->response->setVal(
-				'html',
-				$this->sendSelfRequest( 'renderPage', array(
-						'title' => $titleName
-					)
-				)->toString() );
-
-			$this->response->setVal(
-				'revisionid',
-				$title->getLatestRevID()
-			);
 		} else {
-			$this->response->setVal( 'error', 'Revision ID = 0' );
+			$this->response->setVal( 'error', 'Title not found' );
 		}
-	}
-
-	/**
-	 * @param string $method method name
-	 * @param array $parameters parameters that are part of a url
-	 * @return string url to be purged
-	 */
-	static function getVarnishUrl( $method = 'index', $parameters = array() ){
-		$app = F::app();
-
-		$url = $app->wg->Server . '/wikia.php?';
-
-		$params = array(
-			'controller' => str_replace( 'Controller', '', __CLASS__ ),
-			'method' => $method
-		);
-
-		$params = array_merge( $params, $parameters );
-
-		return $url . http_build_query( $params );
 	}
 
 	/**
@@ -220,7 +205,7 @@ class GameGuidesController extends WikiaController {
 	 * @return bool
 	 */
 	static function onTitleGetSquidURLs( $title, &$urls ){
-		$urls[] = GameGuidesController::getVarnishUrl( 'getPage', array(
+		$urls[] = GameGuidesController::getUrl( 'getPage', array(
 			'title' => $title->getPartialURL()
 		));
 
@@ -308,7 +293,7 @@ class GameGuidesController extends WikiaController {
 			)
 		);
 
-		$this->response->setVal( 'cb', $this->wg->StyleVersion );
+		$this->response->setVal( 'cb', (string) $this->wg->StyleVersion );
 	}
 
 	/**
@@ -454,7 +439,7 @@ class GameGuidesController extends WikiaController {
 	 * @responseReturn See getTagCategories
 	 */
 	private function getTags( $content ) {
-		$this->wf->profileOut( __METHOD__ );
+		$this->wf->profileIn( __METHOD__ );
 
 		$this->response->setVal(
 			'tags',
@@ -548,19 +533,7 @@ class GameGuidesController extends WikiaController {
 	 * @return bool
 	 */
 	static function onGameGuidesContentSave(){
-		$app = F::app();
-
-		SquidUpdate::purge(
-			array(
-				$app->wf->AppendQuery(
-					$app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' ),
-					array(
-						'controller' => __CLASS__,
-						'method' => 'getList'
-					)
-				)
-			)
-		);
+		self::purgeMethod( 'getList' );
 
 		return true;
 	}

@@ -21,6 +21,7 @@ function WidgetFeaturedUser($id, $params) {
 	global $wgOut, $wgDBname;
 
 	if($wgDBname != 'gamergear') {
+		wfProfileOut(__METHOD__);
 		return '';
 	}
 

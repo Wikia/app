@@ -88,6 +88,9 @@
 		width: 270px;
 		.input-group {
 			width: 256px;
+			label {
+				display:block;
+			}
 		}
 		input[type=text],
 		input[type=password] {

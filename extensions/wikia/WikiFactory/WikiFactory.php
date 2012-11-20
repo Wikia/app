@@ -74,6 +74,11 @@ class WikiFactory {
 		"hash"
 	);
 
+	/**
+	 * list of valid database clusters used for creating wikis
+	 */
+	static public $clusters = array( "c1", "c2", "c3", "c4" );
+
 	static public $levels = array(
 		1 => "read only",
 		2 => "editable by staff",
@@ -811,6 +816,30 @@ class WikiFactory {
 	 */
 	static public function getVarByName( $cv_name, $wiki, $master = false ) {
 		return self::loadVariableFromDB( false, $cv_name, $wiki, $master );
+	}
+
+	/**
+	 * getVarIdByName
+	 *
+	 * gets variable id using cv_name field
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param string	$cv_name	variable name in city_variables_pool
+	 * @param boolean	$master		choose between master & slave connection
+	 *
+	 * @return mixed 	variable id or false if not found city_variables & city_variables_pool
+	 */
+	static public function getVarIdByName( $cv_name, $master = false ) {
+		$varId = 0;
+		$varData = self::loadVariableFromDB( false, $cv_name, false, $master );
+
+		if( $varData ) {
+			$varId = (int) $varData->cv_id;
+		}
+
+		return ($varId > 0) ? $varId : false;
 	}
 
 	/**
@@ -2840,6 +2869,19 @@ class WikiFactory {
 
 		wfProfileOut( __METHOD__ );
 		return $clusters;
+	}
+
+	/**
+	 * isValidCluster -- check if name is valid cluster (c1, c2, c3, ... )
+	 *
+	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+	 * @access public
+	 * @static
+	 *
+	 * @param string $cluster cluster name
+	 */
+	static public function isValidCluster( $cluster ) {
+		return in_array( $cluster. self::$clusters );
 	}
 
 	/**

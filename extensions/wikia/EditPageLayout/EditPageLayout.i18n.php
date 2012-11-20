@@ -119,18 +119,11 @@ $messages['qqq'] = array(
 	'wikia-editor-source-italic-tooltip' => 'Tooltip for the button used to italicize text in source mode.',
 	'wikia-editor-source-link-tooltip' => 'Tooltip for the button used to add a link in source mode.',
 	'wikia-editor-modules-license-text' => 'Needs plural support.
-The first parameter is a placeholder for the license logo/image. The third parameter is the license name.',
+The first parameter is a placeholder for the license logo/image. The third parameter is the license name.', # Fuzzy
 	'restore-edits-notice' => "Please preserve the HTML markup as it's used to bind functionality via JS",
 	'restore-edits-diff-notice' => "Please preserve the HTML markup as it's used to bind functionality via JS",
 	'prefs-starting-an-edit' => 'This is a heading in Special:Preferences',
 	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
-);
-
-/** Tati (Tati)
- * @author Erdemaslancan
- */
-$messages['ttt'] = array(
-	'editpagelayout-captcha-title' => 'Captcha',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -206,12 +199,12 @@ $messages['bar'] = array(
 	'wikia-editor-notices-dialog-title' => 'Hihweis-Details',
 	'wikia-editor-preview-editSummary' => 'Zaummfossung: $1',
 	'nonunicodebrowser-notice' => "'''Ówocht: Deih Browser is néd Unicode-kompatiwé.'''",
-	'rev-deleted-text-notice' => "Dé Versión is '''gléscht''' worn. [Merer Informaziónen]",
-	'readonlywarning-notice' => "'''Ówocht: Dé Daatenbånk is wéng Wartungsorweiten gsperrd worn.''' [Merer Informaziónen]",
+	'rev-deleted-text-notice' => "Dé Versión is '''gléscht''' worn. [Merer Informaziónen]", # Fuzzy
+	'readonlywarning-notice' => "'''Ówocht: Dé Daatenbånk is wéng Wartungsorweiten gsperrd worn.''' [Merer Informaziónen]", # Fuzzy
 	'userinvalidcssjstitle-notice' => "'''Ówocht:''' Dén Skin \"\$1\" gibts nimmer. [Merer Informaziónen]",
-	'semiprotectedpagewarning-notice' => "'''Hihweis:''' Dé Seiten do is fyr nédågmödte Beorweiter gsperrd worn. [Merer Informaziónen]",
-	'protectedpagewarning-notice' => "'''Hihweis:''' Dé Seiten do is gsperrd worn und kå netter voh Administraatorn beorweitt wern. [Merer Informaziónen]",
-	'titleprotectedwarning-notice' => "'''Hihweis:''' Dé Seiten is gsperrd worn und kå netter voh ausgwöde Benutzer beorweitt wern. [Merer Informaziónen]",
+	'semiprotectedpagewarning-notice' => "'''Hihweis:''' Dé Seiten do is fyr nédågmödte Beorweiter gsperrd worn. [Merer Informaziónen]", # Fuzzy
+	'protectedpagewarning-notice' => "'''Hihweis:''' Dé Seiten do is gsperrd worn und kå netter voh Administraatorn beorweitt wern. [Merer Informaziónen]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''Hihweis:''' Dé Seiten is gsperrd worn und kå netter voh ausgwöde Benutzer beorweitt wern. [Merer Informaziónen]", # Fuzzy
 	'recreate-moveddeleted-warn-notice' => "'''Hihweis:''' Du erstöst a Seiten, dé schoh friarer gléscht worn is.  [Merer Informaziónen]",
 	'prefs-general' => 'Oigmoah',
 	'prefs-starting-an-edit' => 'Beorweitung åfånger',
@@ -238,6 +231,7 @@ $messages['bg'] = array(
 
 /** Breton (brezhoneg)
  * @author Fulup
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -250,6 +244,7 @@ $messages['br'] = array(
 	'editpagelayout-diff-header-url' => 'Help:Diff',
 	'editpagelayout-diff-header' => "An diforc'hioù ([[{{MediaWiki:Editpagelayout-diff-header-url}}|sikour]])",
 	'editpagelayout-myedit-header' => 'Setu ho kemm. Kopiit ho kemmoù er voest amañ a-us !',
+	'editpagelayout-captcha-title' => 'Captcha',
 	'editpagelayout-pageControls-pageLink' => "distreiñ d'ar bajenn",
 	'editpagelayout-pageControls-minorEdit' => 'Kemmig dister',
 	'editpagelayout-pageControls-summaryLabel' => 'Ouzhpennañ un diverradenn eus ho kemmoù',
@@ -257,6 +252,7 @@ $messages['br'] = array(
 	'editpagelayout-pageControls-back' => "Distreiñ d'ar bajenn kemmañ",
 	'editpagelayout-pageControls-changes' => 'Kemmoù',
 	'editpagelayout-blocked-user' => "Hoc'h anv-implijer pe ho chomlec'h IP a zo bet stanket",
+	'editpagelayout-subject-headline-label' => 'Danvez/Titl',
 	'wikia-editor-media-image' => "Luc'hskeudenn",
 	'wikia-editor-media-gallery' => 'Skeudennaoueg',
 	'wikia-editor-media-slideshow' => "Kinnig luc'hvannoù",
@@ -277,20 +273,23 @@ $messages['br'] = array(
 	'wikia-editor-modules-templates-otherTemplates' => 'Ouzhpennañ patromoù all',
 	'wikia-editor-modules-templates-showUsedList' => 'Diskouez roll ar patromoù implijet',
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Roll ar patromoù implijet',
-	'wikia-editor-modules-license-text' => '$1 degasadenn dindan aotre-implijout CC-BY-SA. <a href="$2">Muioc\'h a ditouroù.</a>',
+	'wikia-editor-modules-templates-makeLayout' => 'Krouiñ ur gobari nevez adalek ar bajenn-mañ',
+	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Krouiñ ur gobari adalek ar bajenn-mañ',
+	'wikia-editor-modules-license-text' => '$1 degasadenn dindan aotre-implijout $3. <a href="$2">Muioc\'h a ditouroù.</a>',
 	'wikia-editor-modules-insert-title' => "Ouzhpennañ arc'hweladurioù ha mediaoù",
 	'wikia-editor-modules-categories-title' => 'Rummadoù',
 	'wikia-editor-loadingStates-loading' => 'O kargañ an aozer...',
 	'wikia-editor-loadingStates-toSource' => "O vont d'ar mod mammenn...",
 	'wikia-editor-loadingStates-toVisual' => "O vont d'ar mod gwelet...",
 	'wikia-editor-loadingStates-saving' => 'Embann ho kemmoù !',
-	'wikia-editor-edittools-caption' => 'Berradennoù ouzhpenn',
+	'wikia-editor-edittools-caption' => "muioc'h",
 	'wikia-editor-edittools-dialog-title' => 'Berradennoù wikitext',
 	'wikia-editor-notices-dialog-title' => 'Munudoù an alioù',
 	'wikia-editor-preview-editSummary' => "Diverrañ ar c'hemmoù : $1",
+	'wikia-editor-leaveconfirm-message' => "Graet ho peus kemmoù n'int ket bet embannet. Ha sur eo ho peus c'hoant da guitaat hep embann anezho?",
 	'nonunicodebrowser-notice' => "'''Diwallit : ho merdeer na embreg ket Unicode.'''",
-	'rev-deleted-text-notice' => "'''Diverket''' eo bet ar stumm-mañ eus ar bajenn. [Muioc'h a ditouroù]",
-	'readonlywarning-notice' => "'''Diwallit : prennet eo bet an diaz roadennoù evit ar c'has en-dro.''' [Muioc'h a ditouroù]",
+	'rev-deleted-text-notice' => "'''Diverket''' eo bet ar stumm-mañ eus ar bajenn. [Muioc'h a ditouroù]", # Fuzzy
+	'readonlywarning-notice' => "'''Diwallit : prennet eo bet an diaz roadennoù evit ar c'has en-dro.''' [Muioc'h a ditouroù]", # Fuzzy
 	'userinvalidcssjstitle-notice' => "'''Diwallit:''' N'eus ket eus an neuz \"\$1\". [Muioc'h a ditouroù]",
 	'prefs-general' => 'Hollek',
 	'prefs-editing-experience' => 'O kemmañ an arnod',
@@ -418,6 +417,7 @@ $messages['cs'] = array(
  * @author Geitost
  * @author LWChris
  * @author MF-Warburg
+ * @author Metalhead64
  * @author MtaÄ
  * @author PtM
  * @author SVG
@@ -490,6 +490,7 @@ $messages['de'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Hinweis:''' Du erstellst eine Seite, die zuvor gelöscht wurde. [Mehr Informationen]",
 	'restore-edits-notice' => "Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die du nicht veröffentlicht hattest. <a class='notice-action restoreeditlink'>Meine Änderungen verwerfen und eine neue Bearbeitung beginnen.</a>",
 	'restore-edits-diff-notice' => "Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die du nicht veröffentlicht hattest. Allerdings ist seitdem die Seite aktualisiert worden. Was möchtest du tun?: <a class='notice-action restoreeditlink'>Meine Änderungen verwerfen und mit der aktuellen Textversion beginnen</a> oder <a class='notice-action difflink'>einen Vergleich der Änderungen mit der aktuellen Seite ansehen.</a>",
+	'mainpagewarning-notice' => 'Mehr über [[w:c:community:Help:Main_page|das Bearbeiten der Hauptseite]] erfahren.',
 	'prefs-general' => 'Allgemein',
 	'prefs-starting-an-edit' => 'Bearbeitung beginnen',
 	'prefs-editing-experience' => 'Bearbeitungsart',
@@ -528,6 +529,7 @@ $messages['diq'] = array(
 	'editpagelayout-pageControls-changes' => 'Vurnayışi',
 	'editpagelayout-blocked-user' => 'Nameyê karberi ya zi adresa IPê şıma kılit biya.',
 	'editpagelayout-edit-summary-label' => 'Xulasay Bıvurnen',
+	'editpagelayout-subject-headline-label' => 'Mewzu/sernuşte:',
 	'wikia-editor-media-image' => 'Fotraf',
 	'wikia-editor-media-gallery' => 'Galeri',
 	'wikia-editor-media-slideshow' => 'Slaytşow',
@@ -542,6 +544,9 @@ $messages['diq'] = array(
 	'wikia-editor-source-italic-tooltip' => 'İtalik',
 	'wikia-editor-source-link-tooltip' => 'Gre deke',
 	'wikia-editor-modules-templates-title' => 'Şabloni',
+	'wikia-editor-modules-templates-add-tooltip' => 'Şablonê "$1" De ke',
+	'wikia-editor-modules-templates-otherTemplates' => 'Zewbi şablon de ke',
+	'wikia-editor-modules-templates-showUsedList' => 'Listey şablonan de karyaya bıvin',
 	'wikia-editor-modules-categories-title' => 'Kategoriy',
 	'wikia-editor-edittools-caption' => 'dehana vêşi',
 	'prefs-general' => 'Heran',
@@ -621,6 +626,7 @@ $messages['es'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Nota:''' Estás creando una página que fue borrada previamente. [Más información]",
 	'restore-edits-notice' => "¡Bienvenido! Hemos restaurado algunos cambios que no has publicado. <a class='notice-action restoreeditlink'>Borrar mis cambios y comenzar una nueva edición</a>",
 	'restore-edits-diff-notice' => "¡Bienvenido! Hemos restaurado algunos cambios que no has publicado. Sin embargo, la página se ha actualizado desde entonces. ¿Te gustaría <a class='notice-action restoreeditlink'>borrar mis cambios y comenzar con el texto más reciente</a> o <a class='notice-action difflink'>ver una comparación de los cambios con la última página</a>?",
+	'mainpagewarning-notice' => 'Aprende más acerca de cómo [[w:c:demo-portada:Demostración_de_Portada|editar la portada]].', # Fuzzy
 	'prefs-general' => 'General',
 	'prefs-starting-an-edit' => 'Comenzar una edición',
 	'prefs-editing-experience' => 'Experiencia en la edición',
@@ -777,6 +783,7 @@ $messages['fr'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Note :''' vous êtes en train de recréer une page qui a été précédemment supprimée. [Plus d’infos]",
 	'restore-edits-notice' => "Bienvenue ! Nous avons restauré certaines modifications que vous n’avez pas mises en ligne. <a class='notice-action restoreeditlink'>Supprimez mes modifications et recommencer</a>",
 	'restore-edits-diff-notice' => "Bienvenue ! Nous avons restauré certaines modifications que vous n’avez pas mises en ligne. Toutefois, la page a été mise à jour depuis. Que souhaitez-vous faire : <a class='notice-action restoreeditlink'>Supprimer mes modifications et commencer avec la dernière version à date</a> or <a class='notice-action difflink'>Afficher une comparaison des modifications avec la dernière version à date</a>",
+	'mainpagewarning-notice' => 'En savoir plus sur [[w:c:community:Help:Main_page|la modification de la page principale.]]',
 	'prefs-general' => 'Général',
 	'prefs-starting-an-edit' => 'Commencer à modifier',
 	'prefs-editing-experience' => 'Expérience de modification',
@@ -858,6 +865,7 @@ $messages['gl'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Nota:''' Vai volver crear unha páxina que foi borrada anteriormente. [Máis información]",
 	'restore-edits-notice' => "Ola de novo! Restauramos algunhas modificacións que non publicou. <a class='notice-action restoreeditlink'>Borrar os meus cambios e comezar a editar outra vez</a>",
 	'restore-edits-diff-notice' => "Ola de novo! Restauramos algunhas modificacións que non publicou. Con todo, houbo unha actualización na páxina desde entón. Quere <a class='notice-action restoreeditlink'>borrar os seus cambios e comezar a editar o texto máis recente</a> ou <a class='notice-action difflink'>ollar unha comparación dos cambios coa páxina actual</a>?",
+	'mainpagewarning-notice' => 'Máis información sobre [[w:c:community:Help:Main_page|a edición da páxina principal]].',
 	'prefs-general' => 'Xeral',
 	'prefs-starting-an-edit' => 'Comezar unha edición',
 	'prefs-editing-experience' => 'Experiencia de edición',
@@ -919,11 +927,11 @@ $messages['he'] = array(
 	'wikia-editor-preview-editSummary' => 'תקציר עריכה: $1',
 	'wikia-editor-leaveconfirm-message' => 'ביצעת מספר עריכות שלא פורסמו. האם לצאת מבלי לפרסם אותן?',
 	'nonunicodebrowser-notice' => "'''אזהרה: הדפדפן שלך אינו תואם יוניקוד'''.",
-	'rev-deleted-text-notice' => "הגרסה בדף זה כבר '''נמחקה'''. [מידע נוסף]",
-	'readonlywarning-notice' => "'''אזהרה: מסד הנתונים ננעל לצורך תחזוקה''' [מידע נוסף]",
-	'semiprotectedpagewarning-notice' => "'''הערה:''' דף זה ננעל כך שרק משתמשים רשומים יכולים לערוך אותו. [מידע נוסף]",
-	'protectedpagewarning-notice' => "'''אזהרה:''' דף זה ננעל כך שרק משתמשים עם הרשאות מסוימות יכולים לערוך אותו. [מידע נוסף]",
-	'titleprotectedwarning-notice' => "'''אזהרה:''' דף זה ננעל כך שרק משתמשים מסוימים יכולים ליצור אותו. [מידע נוסף]",
+	'rev-deleted-text-notice' => "הגרסה בדף זה כבר '''נמחקה'''. [מידע נוסף]", # Fuzzy
+	'readonlywarning-notice' => "'''אזהרה: מסד הנתונים ננעל לצורך תחזוקה''' [מידע נוסף]", # Fuzzy
+	'semiprotectedpagewarning-notice' => "'''הערה:''' דף זה ננעל כך שרק משתמשים רשומים יכולים לערוך אותו. [מידע נוסף]", # Fuzzy
+	'protectedpagewarning-notice' => "'''אזהרה:''' דף זה ננעל כך שרק משתמשים עם הרשאות מסוימות יכולים לערוך אותו. [מידע נוסף]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''אזהרה:''' דף זה ננעל כך שרק משתמשים מסוימים יכולים ליצור אותו. [מידע נוסף]", # Fuzzy
 	'recreate-moveddeleted-warn-notice' => "'''הערה:''' שחזרת עמוד שנמחק בעבר. [מידע נוסף]",
 	'prefs-general' => 'כללי',
 	'prefs-starting-an-edit' => 'התחלת עריכה',
@@ -1171,24 +1179,24 @@ $messages['ja'] = array(
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => '使用しているテンプレートの一覧',
 	'wikia-editor-modules-templates-makeLayout' => 'このページから新規レイアウトを作成',
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'このページからレイアウトを作成',
-	'wikia-editor-modules-license-text' => '$1 投稿は CC-BY-SA ライセンスの下に置かれます。<a href="$2">詳細情報</a>',
+	'wikia-editor-modules-license-text' => '$1 投稿は CC-BY-SA ライセンスの下に置かれます。<a href="$2">詳細情報</a>', # Fuzzy
 	'wikia-editor-modules-insert-title' => '機能とメディアを追加',
 	'wikia-editor-modules-categories-title' => 'カテゴリ',
 	'wikia-editor-loadingStates-loading' => 'エディタを読み込んでいます',
 	'wikia-editor-loadingStates-toSource' => 'ソースモードに切り替えています',
 	'wikia-editor-loadingStates-toVisual' => 'ビジュアルモードに切り替えています',
 	'wikia-editor-loadingStates-saving' => '編集を保存しています',
-	'wikia-editor-edittools-caption' => 'ショートカットをさらに表示',
+	'wikia-editor-edittools-caption' => 'ショートカットをさらに表示', # Fuzzy
 	'wikia-editor-edittools-dialog-title' => 'ウィキテキストショートカット',
 	'wikia-editor-notices-dialog-title' => '通知の詳細',
 	'wikia-editor-preview-editSummary' => '編集内容の要約: $1',
 	'nonunicodebrowser-notice' => "'''警告:''' 使用中のブラウザがUnicodeに対応していません。",
-	'rev-deleted-text-notice' => "この版は'''削除されています'''。[詳細]",
-	'readonlywarning-notice' => "'''警告:''' データベースがメンテナンスのためにロックされています。[詳細]",
+	'rev-deleted-text-notice' => "この版は'''削除されています'''。[詳細]", # Fuzzy
+	'readonlywarning-notice' => "'''警告:''' データベースがメンテナンスのためにロックされています。[詳細]", # Fuzzy
 	'userinvalidcssjstitle-notice' => "'''警告:''' 「$1」というスキンはありません。[詳細]",
-	'semiprotectedpagewarning-notice' => "'''注意:''' このページは保護されているため、登録利用者しか編集できません。[詳細]",
-	'protectedpagewarning-notice' => "'''警告:''' このページは保護されているため、管理者しか編集できません。[詳細]",
-	'titleprotectedwarning-notice' => "'''警告:''' このページは保護されているため、作成には特定の権限が必要です。[詳細]",
+	'semiprotectedpagewarning-notice' => "'''注意:''' このページは保護されているため、登録利用者しか編集できません。[詳細]", # Fuzzy
+	'protectedpagewarning-notice' => "'''警告:''' このページは保護されているため、管理者しか編集できません。[詳細]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''警告:''' このページは保護されているため、作成には特定の権限が必要です。[詳細]", # Fuzzy
 	'recreate-moveddeleted-warn-notice' => "'''注意:''' 以前に削除されたページを再作成しようとしています。[詳細]",
 	'prefs-general' => '全般',
 	'prefs-starting-an-edit' => '編集の開始',
@@ -1411,6 +1419,7 @@ $messages['mk'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Напомена:''' Пресоздавате претходно избришана страница. [Повеќе инфо]",
 	'restore-edits-notice' => "Драго ни е што се вративте! Вративме некои измени што ги немавте објавено. <a class='notice-action restoreeditlink'>Избриши ги моите измени и дај ми ново уредување</a>",
 	'restore-edits-diff-notice' => "Драго ни е што се вративте! Вративме некои измени што ги немавте објавено. Меѓутоа, оттогаш наваму страница е подновена. Дали би сакале да: <a class='notice-action restoreeditlink'>ги избришете вашите измени и да почнете со најновиот текст</a> или пак да <a class='notice-action difflink'>погледате споредба на измените со најновата страница</a>",
+	'mainpagewarning-notice' => 'Дознајте повеќе за [[w:c:community:Help:Main_page|уредувањето на главната страница.]]',
 	'prefs-general' => 'Општи',
 	'prefs-starting-an-edit' => 'Започнување со уредувањето',
 	'prefs-editing-experience' => 'Уредувачко искуство',
@@ -1492,6 +1501,7 @@ $messages['ms'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Perhatian:''' Anda sedang mencipta semula laman yang pernah dihapuskan. [Maklumat lanjut].",
 	'restore-edits-notice' => "Selamat kembali! Kami telah memulihkan beberapa perubahan yang anda belum terbitkan. <a class='notice-action restoreeditlink'>Padamkan perubahan saya dan mulakan suntingan baru</a>",
 	'restore-edits-diff-notice' => "Selamat kembali! Kami telah memulihkan beberapa perubahan yang anda belum terbitkan. Bagaimanapun, laman ini telah dikemaskinikan lagi sejak itu. Adakah anda ingin: <a class='notice-action restoreeditlink'>Padamkan perubahan saya dan mulakan dengan teks terbaru</a> atau <a class='notice-action difflink'>Lihat perbandingan perubahan dengan laman terkini</a>",
+	'mainpagewarning-notice' => 'Ketahui lebih lanjut tentang [[w:c:community:Help:Main_page|menyunting halaman utama.]]',
 	'prefs-general' => 'Umum',
 	'prefs-starting-an-edit' => 'Bermula menyunting',
 	'prefs-editing-experience' => 'Pengalaman ketika menyunting',
@@ -1574,6 +1584,7 @@ $messages['nb'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Merk:''' Du er i ferd med å opprette en side som tidligere har blitt slettet. [Mer info]",
 	'restore-edits-notice' => "Velkommen tilbake! Vi har gjenopprettet noen endringer du ikke publiserte. <a class='notice-action restoreeditlink'>Slett endringene mine og begynn å redigere på nytt</a>",
 	'restore-edits-diff-notice' => "Velkommen tilbake! Vi har gjenopprettet noen endringer du ikke publiserte. Siden har imidlertid blirr oppdatert siden den gang. Ønsker du å: <a class='notice-action restoreeditlink'>Slette endringene mine og begynne med den siste teksten</a> eller <a class='notice-action difflink'>Vise en sammenligning av endringer med den siste siden</a>",
+	'mainpagewarning-notice' => 'Lær mer om [[w:c:Community:Help:Main page|redigering av hovedsiden]].', # Fuzzy
 	'prefs-general' => 'Generelt',
 	'prefs-starting-an-edit' => 'Starter en redigering',
 	'prefs-editing-experience' => 'Redigeringserfaring',
@@ -1757,6 +1768,7 @@ $messages['pl'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Uwaga:''' Odtwarzasz stronę, która została wcześniej usunięta. [Więcej informacji]",
 	'restore-edits-notice' => "Witamy ponownie! Przywróciliśmy część zmian, które nie zostały opublikowane. <a class='notice-action restoreeditlink'>Anuluj moje zmiany i rozpocznij edytowanie na nowo</a>",
 	'restore-edits-diff-notice' => "Witamy ponownie! Przywróciliśmy część zmian, które nie zostały opublikowane. Jednak strona była edytowana w tym czasie. <a class='notice-action restoreeditlink'>Anulować moje zmiany i rozpocząć edytowanie na nowo w obecnej wersji</a> czy <a class='notice-action difflink'>zobaczyć porównanie zmian z najnowszą wersją</a>.",
+	'mainpagewarning-notice' => 'Dowiedz się więcej o [[w:c:community:Help:Main_page|edytowaniu strony głównej.]]',
 	'prefs-general' => 'Ogólne',
 	'prefs-starting-an-edit' => 'Rozpoczęcie edytowania',
 	'prefs-editing-experience' => 'Doświadczenie edytowania',
@@ -1876,9 +1888,9 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
- * @author 555
  * @author Caio1478
  * @author Luckas Blade
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'editpagelayout-more' => 'mais',
@@ -1997,6 +2009,7 @@ $messages['ru'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Примечание.''' Вы пытаетесь создать страницу, которая ранее удалялась. [Подробнее]",
 	'restore-edits-notice' => "С возвращением! Ваши правки, которые не были опубликованы, были восстановлены. <a class='notice-action restoreeditlink'>Удалить мои изменения и начать новое редактирование</a>",
 	'restore-edits-diff-notice' => "С возвращением! Правки, которые не были опубликованы, были восстановлены. Однако с тех пор была обновлена страница. Вы хотите: <a class='notice-action restoreeditlink'>удалить изменения и начать с последнего варианта текста</a> или <a class='notice-action difflink'>сравнить изменения с момента обновления страницы</a>",
+	'mainpagewarning-notice' => 'Узнайте больше о [[w:c:community:Help:Main_page|редактировании Заглавной страницы.]]',
 	'prefs-general' => 'Общее',
 	'prefs-starting-an-edit' => 'Начало редактирования',
 	'prefs-editing-experience' => 'Редактирование для опытных',
@@ -2078,6 +2091,7 @@ $messages['sv'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''OBS:''' Du återskapar en sida som tidigare togs bort. [Mer info]",
 	'restore-edits-notice' => "Välkommen tillbaka! Vi har återställt vissa ändringar som du inte hade publicerat. <a class='notice-action restoreeditlink'>Ta bort mina ändringar och starta en ny redigering</a>",
 	'restore-edits-diff-notice' => "Välkommen tillbaka! Vi har återställt vissa ändringar som du inte hade publicerat. Men sidan har uppdaterats sedan dess. Vill du: <a class='notice-action restoreeditlink'>Radera mina ändringar och börja med den senaste texten</a> eller <a class='notice-action difflink'>Visa en jämförelse av ändringar med den senaste sidan</a>",
+	'mainpagewarning-notice' => 'Läs mer om att [[w:c:community:Help:Main_page|redigera huvudsidan.]]',
 	'prefs-general' => 'Allmänt',
 	'prefs-starting-an-edit' => 'Starta en redigering',
 	'prefs-editing-experience' => 'Redigeringserfarenhet',
@@ -2234,6 +2248,13 @@ $messages['tr'] = array(
 	'prefs-general' => 'Genel',
 );
 
+/** Tati (Tati)
+ * @author Erdemaslancan
+ */
+$messages['ttt'] = array(
+	'editpagelayout-captcha-title' => 'Captcha',
+);
+
 /** Ukrainian (українська)
  * @author A1
  */
@@ -2339,6 +2360,7 @@ $messages['vi'] = array(
  * @author Anakmalaysia
  * @author Dimension
  * @author Hzy980512
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'editpagelayout-more' => '更多',
@@ -2363,6 +2385,7 @@ $messages['zh-hans'] = array(
 	'wikia-editor-media-slideshow' => '幻灯片',
 	'wikia-editor-media-slider' => '滑块',
 	'wikia-editor-media-video' => '视频',
+	'wikia-editor-media-mut' => '视频',
 	'wikia-editor-media-image-tooltip' => '添加照片',
 	'wikia-editor-media-gallery-tooltip' => '添加图库',
 	'wikia-editor-media-slider-tooltip' => '添加滑块',
@@ -2388,8 +2411,8 @@ $messages['zh-hans'] = array(
 	'titleprotectedwarning-notice' => "'''注：''' 本页面已被锁定，只有管理员可以创建。本地管理员可以更改此状态。[详细内容]",
 	'recreate-moveddeleted-warn-notice' => "'''注：'''您正在重新创建一个已删除页面。[详细内容]",
 	'restore-edits-notice' => "欢迎回来！我们保存了一些您尚未发布的更改。<a class='notice-action restoreeditlink'>删除我的更改，开始新的编辑</a>",
+	'prefs-general' => '简单介绍',
 	'prefs-starting-an-edit' => '开始编辑',
 	'tog-minordefault' => '默认将所有编辑标为“小编辑”',
 	'tog-forceeditsummary' => '在我未填写编辑概要时提示我',
 );
-

@@ -1,7 +1,7 @@
 <?php
-class NavigationServiceTest extends WikiaBaseTest {
+class NavigationModelTest extends WikiaBaseTest {
 	function testParseLines() {
-		$service = new NavigationService();
+		$model = new NavigationModel();
 
 		$cases = array();
 
@@ -113,16 +113,18 @@ class NavigationServiceTest extends WikiaBaseTest {
 		foreach($cases as $case) {
 			$this->assertEquals(
 				$case['out'],
-				$service->parseLines($case['param1'], $case['param2'])
+				$model->parseLines($case['param1'], $case['param2'])
 			);
 		}
 	}
 
 	function testParseMessage() {
 		$messageName = 'test'.rand();
-		$service = F::build('NavigationService');
-		$this->mockGlobalFunction('msg', '*whatever');
+
+		$this->mockGlobalFunction('msg', '*whatever', 2);
 		$this->mockApp();
+
+		$model = new NavigationModel();
 
 		$nodes = array(
 			array(
@@ -140,11 +142,16 @@ class NavigationServiceTest extends WikiaBaseTest {
 
 		$nodes[0]['hash'] = md5(serialize($nodes));
 
-		$this->assertEquals($nodes, $service->parseMessage($messageName, array(), 1));
+		$this->assertEquals($nodes, $model->parse(
+			NavigationModel::TYPE_MESSAGE,
+			$messageName,
+			array(),
+			1
+		));
 	}
 
 	function testParseOneLine() {
-		$service = new NavigationService();
+		$model = new NavigationModel();
 
 		$cases = array();
 
@@ -241,13 +248,13 @@ class NavigationServiceTest extends WikiaBaseTest {
 		foreach($cases as $case) {
 			$this->assertEquals(
 				$case['out'],
-				$service->parseOneLine($case['line'])
+				$model->parseOneLine($case['line'])
 			);
 		}
 	}
 
 	function testParseText() {
-		$service = new NavigationService();
+		$model = new NavigationModel();
 
 		$cases = array();
 
@@ -272,27 +279,21 @@ class NavigationServiceTest extends WikiaBaseTest {
 			$case['out'][0]['hash'] = md5(serialize($case['out']));
 			$this->assertEquals(
 				$case['out'],
-				$service->parseText($case['text'])
+				$model->parseText($case['text'])
 			);
 		}
 	}
 
 	function testParseErrors() {
-		global $wgOasisNavV2;
-		if (empty($wgOasisNavV2)) {
-			$this->markTestSkipped('wgOasisNavV2 set to false');
-			return;
-		}
-
-		$service = new NavigationService();
-		$this->assertEmpty($service->getErrors());
+		$model = new NavigationModel();
+		$this->assertEmpty($model->getErrors());
 
 		// magic words are not allowed on level #1
-		$nodes = $service->parseText("*#category1");
-		$this->assertTrue(count($service->getErrors()) == 1);
+		$nodes = $model->parseText("*#category1");
+		$this->assertTrue(count($model->getErrors()) == 1);
 
 		// magic words are  allowed on level #2
-		$nodes = $service->parseText("*foo\n**#category1");
-		$this->assertEmpty($service->getErrors());
+		$nodes = $model->parseText("*foo\n**#category1");
+		$this->assertEmpty($model->getErrors());
  	}
 }

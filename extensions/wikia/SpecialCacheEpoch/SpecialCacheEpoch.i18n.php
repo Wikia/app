@@ -14,7 +14,8 @@ $messages['en'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory is not enabled on this wiki. Unable to alter wgCacheEpoch.',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'cacheepoch-desc' => '{{desc}}',
 	'cacheepoch-wf-reason' => 'Log message for administrators only. Do not change "Special:CacheEpoch"',
@@ -332,4 +333,3 @@ $messages['vi'] = array(
 	'cacheepoch-wf-reason' => 'Cập nhật giá trị thông qua Special:CacheEpoch',
 	'cacheepoch-no-wf' => 'WikiFactory không được kích hoạt trên wiki này. Không thể thay đổi lưu trữ bộ đệm.',
 );
-

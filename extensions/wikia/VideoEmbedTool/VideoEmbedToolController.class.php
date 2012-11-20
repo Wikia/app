@@ -7,7 +7,7 @@ class VideoEmbedToolController extends WikiaController {
 
 	/*
 	 *   Example of use:
-	 *   http://harrypotter.jacek.wikia-dev.com/wikia.php?controller=VideoEmbedToolController&method=getSuggestedVideos&svStart=0&svSize=5&articleId=15&format=json
+	 *   http://harrypotter.jacek.wikia-dev.com/wikia.php?controller=VideoEmbedTool&method=getSuggestedVideos&svStart=0&svSize=5&articleId=15&format=json
 	 *   svStart     - offset
 	 *   svSize      - limit
 	 *   videoWidth  - thumbnail width
@@ -29,26 +29,33 @@ class VideoEmbedToolController extends WikiaController {
 			$svStart = $this->request->getInt( 'svStart', 0 );
 			$svSize = $this->request->getInt( 'svSize', 20 );
 			$trimTitle = $this->request->getInt( 'trimTitle', 0 );
-
+			
 			$wikiaSearchConfig = F::build( 'WikiaSearchConfig' );  /* @var $wikiaSearchConfig WikiaSearchConfig */
+			$requestedFields   = $wikiaSearchConfig->getRequestedFields();
+			$requestedFields[] = 'pageid';
+			$articleId         = $this->request->getInt('articleId', 0 );
+			$article           = ( $articleId > 0 ) ? F::build( 'Article', array( $articleId ), 'newFromId' ) : null;
+			$articleTitle      = ( $article !== null ) ? $article->getTitle() : '';
+			$wikiTitleSansWiki = preg_replace( '/\bwiki\b/i', '', $this->wg->Sitename );
+			
 			$wikiaSearchConfig  ->setStart( $svStart )
 								->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
-								->setCityID( WikiaSearch::VIDEO_WIKI_ID );
-			$articleId = $this->request->getInt('articleId', 0 );
+								->setCityID( WikiaSearch::VIDEO_WIKI_ID )
+								->setRequestedFields( $requestedFields )
+								->setIsVideo( true )
+								->setNamespaces( array( NS_FILE ) );
 
-			if ( $articleId > 0 ) {
-				$wikiaSearchConfig->setPageId( $articleId );
-			}
+			$wikiaSearchConfig->setQuery( $articleTitle . ' ' . $wikiTitleSansWiki );
 
 			$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
-			$response = $search->getRelatedVideos( $wikiaSearchConfig );
-
-			if ( !$response->hasResults() && ( $articleId > 0 ) && ( $this->request->getVal('debug') != 1 ) ) {
-				// if nothing for specify article, do general search
-				$wikiaSearchConfig->setPageId( false );
-				$response = $search->getRelatedVideos( $wikiaSearchConfig );
+			 
+			$response = $search->doSearch( $wikiaSearchConfig );
+			
+			if ( $response->getResultsFound() == 0 ) {
+				$wikiaSearchConfig->setQuery( $articleTitle == '' ? $wikiTitleSansWiki : $articleTitle ); 
+				$response = $search->doSearch( $wikiaSearchConfig );
 			}
-
+			
 			//TODO: fill $currentVideosByTitle array with unwated videos
 			$currentVideosByTitle = array();
 
@@ -90,14 +97,12 @@ class VideoEmbedToolController extends WikiaController {
 
 		if ( !empty( $phrase ) && strlen( $phrase ) > 0 ) {
 			
-			$englishFields = $this->wg->Lang->mCode == 'en' 
-							? array() // get for free
-							: array( WikiaSearch::field( 'title', 'en' ), WikiaSearch::field( 'html', 'en' ) );
+			$requestedFields = $this->wg->ContLang->mCode == 'en' 
+							? array( 'pageid' ) // get English for free
+							: array( 'pageid', WikiaSearch::field( 'title', 'en' ), WikiaSearch::field( 'html', 'en' ) );
 							  
-			
 			$wikiaSearchConfig->setQuery( $phrase )
-							  ->setRequestedFields( array_merge( $wikiaSearchConfig->getRequestedFields(), $englishFields ) );
-			
+							  ->setRequestedFields( array_merge( $wikiaSearchConfig->getRequestedFields(), $requestedFields ) );
 			$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
 
 			$searchResults = $search->doSearch( $wikiaSearchConfig );
@@ -141,10 +146,9 @@ class VideoEmbedToolController extends WikiaController {
 		$nextStartFrom = $svStart;
 		foreach( $response  as $result ) {   /* @var $result WikiaSearchResult */
 			$singleVideoData = array();
-			$singleVideoData['pageid'] = $result->getVar("pageId");
+			$singleVideoData['pageid'] = $result['pageid'];
 			$singleVideoData['wid'] =  $result->getCityId();
 			$singleVideoData['title'] = $result->getTitle();
-
 			if( empty($singleVideoData['title']) || isset( $excludedVideos[ $singleVideoData['title'] ] ) ) {
 				// don't suggest this video
 				continue;

@@ -61,6 +61,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Sam Wang
  * @author Siebrand
  * @author The Evil IP address
  */
@@ -75,6 +76,7 @@ $messages['qqq'] = array(
 	'themedesigner-small' => '{{Identical|Small}}',
 	'themedesigner-medium' => '{{Identical|Medium}}',
 	'themedesigner-large' => '{{Identical|Large}}',
+	'themedesigner-tile-background' => 'Used in Theme Designer, and can be triggered to allow the current background graphic to tile, repeating itself around the page.',
 	'themedesigner-tab-theme' => '{{Identical|Theme}}',
 	'themedesigner-rules-favicon-learn-more-link' => 'Learn more about favicons (link)',
 	'themedesigner-history-item' => 'Parameters:
@@ -118,7 +120,7 @@ $messages['af'] = array(
 	'themedesigner-upload-your-own' => 'Laai u eie',
 	'themedesigner-button-upload' => 'Oplaai',
 	'themedesigner-button-upload-wordmark' => 'Laai op',
-	'themedesigner-rules-background' => 'JPG, GIF of PNG. Maksimum 100 kilogrepe.',
+	'themedesigner-rules-background' => 'JPG, GIF of PNG. Maksimum 100 kilogrepe.', # Fuzzy
 	'themedesigner-default' => 'Standaard',
 	'themedesigner-font' => 'lettertipe',
 	'themedesigner-size' => 'grootte',
@@ -221,7 +223,7 @@ $messages['br'] = array(
 	'themedesigner-small' => 'Bihan',
 	'themedesigner-medium' => 'Etre',
 	'themedesigner-large' => 'Bras',
-	'themedesigner-tile-background' => 'drekleur ar garrezenn',
+	'themedesigner-tile-background' => 'drekleur ar garrezenn', # Fuzzy
 	'themedesigner-transparency' => 'treuzwelusted',
 	'themedesigner-tab-theme' => 'Dodenn',
 	'themedesigner-tab-customize' => 'Personelaat',
@@ -239,15 +241,15 @@ $messages['br'] = array(
 	'themedesigner-upload-your-own' => 'Enporzhiañ ho hini',
 	'themedesigner-button-upload' => 'Enporzhiañ',
 	'themedesigner-button-upload-wordmark' => 'Enporzhiañ',
-	'themedesigner-rules-background' => 'jpg, gif pe png. Bevenn : 100 Ko',
+	'themedesigner-rules-background' => 'jpg, gif pe png. Bevenn : 100 Ko', # Fuzzy
 	'themedesigner-default' => 'Dre ziouer',
 	'themedesigner-font' => 'font',
 	'themedesigner-size' => 'ment',
 	'themedesigner-button-save' => 'Enrollañ',
 	'themedesigner-upload-a-graphic' => 'enporzhiañ ur grafik',
-	'themedesigner-rules-wordmark' => 'betek 250x65 piksel (restroù .png hepken)',
+	'themedesigner-rules-wordmark' => 'betek 250x65 piksel (restroù .png hepken)', # Fuzzy
 	'themedesigner-rules-favicon-learn-more-link' => "Gouzout hiroc'h.",
-	'themedesigner-dont-use-a-graphic' => 'Non pas implijout a grafik',
+	'themedesigner-dont-use-a-graphic' => 'Non pas implijout a grafik', # Fuzzy
 	'themedesigner-history-item' => '$1 dre $2',
 	'themedesigner-button-change-text' => 'Kemmañ an destenn',
 	'themedesigner-wodmark-preview' => 'Rakwelet',
@@ -310,14 +312,14 @@ $messages['ca'] = array(
 	'themedesigner-upload-your-own' => 'Carrega el teu propi disseny',
 	'themedesigner-button-upload' => 'Carrega',
 	'themedesigner-button-upload-wordmark' => 'Carrega',
-	'themedesigner-rules-background' => 'jpg, gif or png. Límit de 100 kilobyte',
+	'themedesigner-rules-background' => 'jpg, gif or png. Límit de 100 kilobyte', # Fuzzy
 	'themedesigner-default' => 'Per defecte',
 	'themedesigner-font' => 'tipus de lletra',
 	'themedesigner-size' => 'mida',
 	'themedesigner-button-save' => 'Desa',
 	'themedesigner-upload-a-graphic' => 'carrega un gràfic',
-	'themedesigner-rules-wordmark' => 'fins a 250 x 65 píxels (només arxius .png)',
-	'themedesigner-dont-use-a-graphic' => 'No utilitzeu un gràfic',
+	'themedesigner-rules-wordmark' => 'fins a 250 x 65 píxels (només arxius .png)', # Fuzzy
+	'themedesigner-dont-use-a-graphic' => 'No utilitzeu un gràfic', # Fuzzy
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Canvia el text',
 	'themedesigner-reason' => 'Dissenyador de Temes - guardat de $1',
@@ -351,7 +353,7 @@ $messages['cs'] = array(
 	'themedesigner-small' => 'Malé',
 	'themedesigner-medium' => 'Střední',
 	'themedesigner-large' => 'Velké',
-	'themedesigner-tile-background' => 'opakovat pozadí',
+	'themedesigner-tile-background' => 'opakovat pozadí', # Fuzzy
 	'themedesigner-fix-background' => 'oprava',
 	'themedesigner-transparency' => 'průhlednost',
 	'themedesigner-tab-theme' => 'Motiv',
@@ -370,13 +372,13 @@ $messages['cs'] = array(
 	'themedesigner-upload-your-own' => 'Nahrát své vlastní',
 	'themedesigner-button-upload' => 'Nahrát',
 	'themedesigner-button-upload-wordmark' => 'Odeslat',
-	'themedesigner-rules-background' => 'jpg, gif nebo png. Limit 100 kilobyte',
+	'themedesigner-rules-background' => 'jpg, gif nebo png. Limit 100 kilobyte', # Fuzzy
 	'themedesigner-default' => 'Standardní',
 	'themedesigner-font' => 'písmo',
 	'themedesigner-size' => 'velikost',
 	'themedesigner-button-save' => 'Uložit',
 	'themedesigner-upload-a-graphic' => 'nahrát grafiku',
-	'themedesigner-rules-wordmark' => 'až do 250x65 pixelů (pouze soubory .png)',
+	'themedesigner-rules-wordmark' => 'až do 250x65 pixelů (pouze soubory .png)', # Fuzzy
 	'themedesigner-rules-favicon-learn-more-link' => 'Další informace.',
 	'themedesigner-dont-use-a-graphic' => 'vyjmout',
 	'themedesigner-history-item' => '$1 - $2',
@@ -459,10 +461,11 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'themedesigner-or' => 'ya na',
-	'themedesigner-page' => 'Per',
+	'themedesigner-page' => 'Pele',
 	'themedesigner-color' => 'dawte',
 	'themedesigner-graphic' => 'grafik',
 	'themedesigner-buttons' => 'makiy',
@@ -474,12 +477,20 @@ $messages['diq'] = array(
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-button-cancel' => 'Bıterkne',
 	'themedesigner-button-ok' => 'Temam',
+	'themedesigner-button-upload' => 'Barke',
 	'themedesigner-button-upload-wordmark' => 'Barke',
+	'themedesigner-rules-background' => 'jpg, gif yana png. limita cı {{PLURAL:$1|$1 kilobayt bo|$1 kilobayti bê}}',
 	'themedesigner-default' => 'Hesıbyaye',
+	'themedesigner-size' => 'gırdiye',
+	'themedesigner-button-save' => 'Star ke',
+	'themedesigner-dont-use-a-graphic' => 'wedarne',
+	'themedesigner-history-item' => '$1 ra $2',
+	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Verqayt',
 );
 
-/** British English (British English) */
+/** British English (British English)
+ */
 $messages['en-gb'] = array(
 	'themedesigner-color' => 'colour',
 	'themedesigner-color-name-or-hex-code' => 'Colour name or hex code',
@@ -979,14 +990,14 @@ $messages['km'] = array(
 	'themedesigner-dont-use-a-background' => 'កុំប្រើផ្ទៃខាងក្រោយ',
 	'themedesigner-upload-your-own' => 'ផ្ទុកឡើងរបស់អ្នក',
 	'themedesigner-button-upload' => 'ផ្ទុកឡើង',
-	'themedesigner-rules-background' => 'jpg, gif ឬ png។ អតិបរមាត្រឹម 100 គីឡូបៃ។',
+	'themedesigner-rules-background' => 'jpg, gif ឬ png។ អតិបរមាត្រឹម 100 គីឡូបៃ។', # Fuzzy
 	'themedesigner-default' => 'លំនាំដើម',
 	'themedesigner-font' => 'ពុម្ព​អក្សរ​',
 	'themedesigner-size' => 'ទំហំ',
 	'themedesigner-button-save' => 'រក្សាទុក',
 	'themedesigner-upload-a-graphic' => 'ផ្ទុកឡើងក្រាហ្វិច',
-	'themedesigner-rules-wordmark' => 'ធំបំផុតត្រឹម 250x65 ភិចសែល (ឯកសារប្រភេទ .png ប៉ុណ្ណោះ)',
-	'themedesigner-dont-use-a-graphic' => 'កុំប្រើក្រាហ្វិច',
+	'themedesigner-rules-wordmark' => 'ធំបំផុតត្រឹម 250x65 ភិចសែល (ឯកសារប្រភេទ .png ប៉ុណ្ណោះ)', # Fuzzy
+	'themedesigner-dont-use-a-graphic' => 'កុំប្រើក្រាហ្វិច', # Fuzzy
 	'themedesigner-history-item' => '$1 ដោយ $2',
 	'themedesigner-button-change-text' => 'ប្ដូរអត្ថបទ',
 	'themedesigner-size-error' => 'ទំហំឯកសារមិនត្រឹមត្រូវ',
@@ -1001,7 +1012,7 @@ $messages['km'] = array(
  */
 $messages['ko'] = array(
 	'themedesigner-or' => '또는',
-	'themedesigner-desc' => '위키 관리자가 스킨을 디자인할 수 있게 해 줍니다.',
+	'themedesigner-desc' => '위키 관리자가 테마를 디자인하도록 허용',
 	'themedesigner-title' => '위키아 테마 디자이너',
 	'themedesigner-background' => '배경',
 	'themedesigner-page' => '문서',
@@ -1009,18 +1020,21 @@ $messages['ko'] = array(
 	'themedesigner-graphic' => '그림',
 	'themedesigner-buttons' => '버튼',
 	'themedesigner-links' => '링크',
-	'themedesigner-header' => '상단부',
+	'themedesigner-header' => '머리말',
 	'themedesigner-text-wordmark' => '글자 로고',
 	'themedesigner-graphic-wordmark' => '그림 로고',
+	'themedesigner-small' => '작게',
+	'themedesigner-medium' => '보통',
+	'themedesigner-large' => '크게',
 	'themedesigner-tile-background' => '바둑판식',
 	'themedesigner-fix-background' => '고정',
 	'themedesigner-transparency' => '투명도',
 	'themedesigner-tab-theme' => '테마',
-	'themedesigner-tab-customize' => '커스터마이징',
+	'themedesigner-tab-customize' => '사용자 설정',
 	'themedesigner-tab-wordmark' => '로고',
-	'themedesigner-preview-mode' => '미리 보기...',
+	'themedesigner-preview-mode' => '미리 보기 모드...',
 	'themedesigner-previous-versions' => '이전 버전',
-	'themedesigner-button-save-im-done' => '변경한 테마를 저장하기',
+	'themedesigner-button-save-im-done' => '저장하고 완료',
 	'themedesigner-button-cancel' => '취소',
 );
 
@@ -1191,7 +1205,7 @@ $messages['my'] = array(
 	'themedesigner-pick-an-image' => 'ပုံရွေးချယ်ရန်',
 	'themedesigner-dont-use-a-background' => 'နောက်ခံပုံမရွေးချယ်ရန်',
 	'themedesigner-button-upload' => 'Upload တင်ရန်',
-	'themedesigner-rules-background' => 'jpg, gif or png. 100 kilobyte သာသတ်မှတ်ထားသည်',
+	'themedesigner-rules-background' => 'jpg, gif or png. 100 kilobyte သာသတ်မှတ်ထားသည်', # Fuzzy
 	'themedesigner-default' => 'ပုံမှန်',
 	'themedesigner-font' => 'ဖောင့်',
 	'themedesigner-size' => 'အရွယ်အစား',
@@ -1330,7 +1344,8 @@ $messages['nl'] = array(
 	'themedesigner-wodmark-preview' => 'Voorvertoning',
 );
 
-/** Deitsch (Deitsch) */
+/** Deitsch (Deitsch)
+ */
 $messages['pdc'] = array(
 	'themedesigner-small' => 'Glee',
 );
@@ -1418,7 +1433,7 @@ $messages['pms'] = array(
 	'themedesigner-small' => 'Cit',
 	'themedesigner-medium' => 'Medi',
 	'themedesigner-large' => 'Gròss',
-	'themedesigner-tile-background' => 'sfond an mosàich',
+	'themedesigner-tile-background' => 'sfond an mosàich', # Fuzzy
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-customize' => 'Përsonalisa',
 	'themedesigner-tab-wordmark' => 'Sìmbol',
@@ -1434,14 +1449,14 @@ $messages['pms'] = array(
 	'themedesigner-dont-use-a-background' => 'Dovré pa dë sfond',
 	'themedesigner-upload-your-own' => 'Caria tò pròpi',
 	'themedesigner-button-upload' => 'Carié',
-	'themedesigner-rules-background' => 'jpg, gif o png. lìmit ëd 100 kilobyte',
+	'themedesigner-rules-background' => 'jpg, gif o png. lìmit ëd 100 kilobyte', # Fuzzy
 	'themedesigner-default' => 'Për sòlit',
 	'themedesigner-font' => 'font (caràter)',
 	'themedesigner-size' => 'dimension',
 	'themedesigner-button-save' => 'Salva',
 	'themedesigner-upload-a-graphic' => 'caria un gràfich',
-	'themedesigner-rules-wordmark' => 'fin a 250x65 pontin (mach archivi .png)',
-	'themedesigner-dont-use-a-graphic' => "Dovré pa 'd gràfich",
+	'themedesigner-rules-wordmark' => 'fin a 250x65 pontin (mach archivi .png)', # Fuzzy
+	'themedesigner-dont-use-a-graphic' => "Dovré pa 'd gràfich", # Fuzzy
 	'themedesigner-history-item' => '$1 da $2',
 	'themedesigner-button-change-text' => 'Modifiché ël test',
 	'themedesigner-reason' => 'Progetista ëd tema - salvatagi fàit da $1',
@@ -1560,7 +1575,7 @@ $messages['pt-br'] = array(
 	'themedesigner-small' => 'Pequeno',
 	'themedesigner-medium' => 'Médio',
 	'themedesigner-large' => 'Grande',
-	'themedesigner-tile-background' => 'repetir imagem de fundo',
+	'themedesigner-tile-background' => 'repetir imagem de fundo', # Fuzzy
 	'themedesigner-transparency' => 'transparência',
 	'themedesigner-tab-theme' => 'Variante',
 	'themedesigner-tab-customize' => 'Personalizar',
@@ -1583,8 +1598,8 @@ $messages['pt-br'] = array(
 	'themedesigner-size' => 'tamanho',
 	'themedesigner-button-save' => 'Salvar',
 	'themedesigner-upload-a-graphic' => 'upload de um padrão gráfico',
-	'themedesigner-rules-wordmark' => 'até 250x65 pixels (só ficheiros .png)',
-	'themedesigner-dont-use-a-graphic' => 'Não usar um padrão gráfico',
+	'themedesigner-rules-wordmark' => 'até 250x65 pixels (só ficheiros .png)', # Fuzzy
+	'themedesigner-dont-use-a-graphic' => 'Não usar um padrão gráfico', # Fuzzy
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Alterar texto',
 	'themedesigner-reason' => 'Compositor de Temas Visuais - gravado por $1',
@@ -1695,7 +1710,7 @@ $messages['sr-ec'] = array(
 	'themedesigner-dont-use-a-background' => 'Не користите позадину',
 	'themedesigner-upload-your-own' => 'Отпремите',
 	'themedesigner-button-upload' => 'Отпреми',
-	'themedesigner-rules-background' => 'JPG, GIF или PNG. Ограничено на $1 kB',
+	'themedesigner-rules-background' => 'JPG, GIF или PNG. Ограничено на $1 kB', # Fuzzy
 	'themedesigner-default' => 'Подразумевано',
 	'themedesigner-font' => 'фонт',
 	'themedesigner-size' => 'величина',
@@ -1948,19 +1963,36 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
+	'themedesigner-or' => '或',
+	'themedesigner-background' => '背景',
 	'themedesigner-page' => '页面',
 	'themedesigner-color' => '颜色',
+	'themedesigner-graphic' => '图案',
+	'themedesigner-buttons' => '按钮',
+	'themedesigner-links' => '链接',
 	'themedesigner-small' => '小',
 	'themedesigner-medium' => '中',
 	'themedesigner-large' => '大',
+	'themedesigner-tab-customize' => '自定义',
+	'themedesigner-preview-mode' => '预览模式',
 	'themedesigner-button-save-im-done' => '保存，我做好了',
 	'themedesigner-button-cancel' => '取消',
 	'themedesigner-pick-a-color' => '选一个颜色',
 	'themedesigner-button-ok' => '好',
+	'themedesigner-pick-an-image' => '选择图片',
+	'themedesigner-dont-use-a-background' => '不用背景',
 	'themedesigner-button-upload' => '上载',
+	'themedesigner-button-upload-wordmark' => '上传',
+	'themedesigner-rules-background' => 'jpg，gif或png。{{PLURAL:$1|$1 kilobyte|$1 kilobytes}}限制',
+	'themedesigner-default' => '磨人',
+	'themedesigner-font' => '字体',
+	'themedesigner-size' => '大小',
 	'themedesigner-button-save' => '保存',
+	'themedesigner-upload-a-graphic' => '上传图案',
+	'themedesigner-wodmark-preview' => '预览',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -2003,4 +2035,3 @@ $messages['zh-hant'] = array(
 	'themedesigner-type-error' => '不正確的檔案大小',
 	'themedesigner-unknown-error' => '發生了錯誤，不幸的是我們無法識別它，請再試一次',
 );
-

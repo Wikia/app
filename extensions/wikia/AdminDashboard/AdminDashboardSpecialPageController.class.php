@@ -8,12 +8,6 @@
  */
 class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 
-	private $pagesWithSubtitle = array ( 
-            'Watchlist', 
-            'EditWatchlist', 
-            'EditWatchlist/raw' 
-        );
-
 	public function __construct() {
 		parent::__construct('AdminDashboard', '', false);
 	}
@@ -44,8 +38,13 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->urlAllCategories = Title::newFromText('Categories', NS_SPECIAL)->getFullURL();
 		$this->urlAddPage = Title::newFromText('CreatePage', NS_SPECIAL)->getFullURL();
 		$this->urlAddPhoto = Title::newFromText('Upload', NS_SPECIAL)->getFullURL();
-		$this->urlAddVideo = Title::newFromText('WikiaVideoAdd', NS_SPECIAL)->getFullURL();
-		$this->urlAddVideoReturnUrl = !empty($this->app->wg->EnableSpecialVideosExt) ? SpecialPage::getTitleFor("Videos")->escapeLocalUrl() . "?sort=recent" : Title::newFromText(WikiaVideoPage::getVideosCategory())->getFullUrl();
+		if( !empty( $this->wg->EnableSpecialVideosExt ) && !empty( $this->wg->EnableVideoToolExt ) ) {
+			$this->showVideoLink = true;
+			$this->urlAddVideo = Title::newFromText('WikiaVideoAdd', NS_SPECIAL)->getFullURL();
+			$this->urlAddVideoReturnUrl = !empty($this->app->wg->EnableSpecialVideosExt) ? SpecialPage::getTitleFor("Videos")->escapeLocalUrl( "sort=recent" ) : Title::newFromText(WikiaVideoPage::getVideosCategory())->getFullUrl();
+		} else {
+			$this->showVideoLink = false;			
+		}
 		$this->urlCreateBlogPage = Title::newFromText('CreateBlogPage', NS_SPECIAL)->getFullURL();
 		$this->urlMultipleUpload = Title::newFromText('MultipleUpload', NS_SPECIAL)->getFullURL();
 		$this->urlGetPromoted = Title::newFromText('Promote', NS_SPECIAL)->getFullURL();
@@ -118,10 +117,8 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
                 }
 		$headerText = SpecialPage::getLocalNameFor($page);
 		$this->headerText = $headerText;
-                if( in_array($page, $this->pagesWithSubtitle) ) {
-                    $this->tagline = $this->msg('tagline');
-                    $this->subtitle = $this->wg->Out->getSubtitle();
-                }
+		$this->tagline = $this->msg('tagline');
+		$this->subtitle = $this->wg->Out->getSubtitle();
 	}
 
 	/**

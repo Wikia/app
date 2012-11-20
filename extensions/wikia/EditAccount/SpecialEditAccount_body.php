@@ -97,20 +97,22 @@ class EditAccount extends SpecialPage {
 		// FB:23860
 		if ( !( $this->mUser instanceof User ) ) $action = '';
 
+		$changeReason = $wgRequest->getVal( 'wpReason' );
+
 		switch( $action ) {
 			case 'setemail':
 				$newEmail = $wgRequest->getVal( 'wpNewEmail' );
-				$this->mStatus = $this->setEmail( $newEmail );
+				$this->mStatus = $this->setEmail( $newEmail, $changeReason );
 				$template = 'displayuser';
 				break;
 			case 'setpass':
 				$newPass = $wgRequest->getVal( 'wpNewPass' );
-				$this->mStatus = $this->setPassword( $newPass );
+				$this->mStatus = $this->setPassword( $newPass, $changeReason );
 				$template = 'displayuser';
 				break;
 			case 'setrealname':
 				$newRealName = $wgRequest->getVal( 'wpNewRealName' );
-				$this->mStatus = $this->setRealName( $newRealName );
+				$this->mStatus = $this->setRealName( $newRealName, $changeReason );
 				$template = 'displayuser';
 				break;
 			case 'closeaccount':
@@ -119,7 +121,7 @@ class EditAccount extends SpecialPage {
 				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
 				break;
 			case 'closeaccountconfirm':
-				$this->mStatus = $this->closeAccount();
+				$this->mStatus = $this->closeAccount( $changeReason );
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
 			case 'clearunsub':
@@ -202,9 +204,10 @@ class EditAccount extends SpecialPage {
 	/**
 	 * Set a user's email
 	 * @param $email Mixed: email address to set to the user
+	 * @param $changeReason String: reason for change
 	 * @return Boolean: true on success, false on failure (i.e. if we were given an invalid email address)
 	 */
-	function setEmail( $email ) {
+	function setEmail( $email, $changeReason = '' ) {
 		$oldEmail = $this->mUser->getEmail();
 		if ( Sanitizer::validateEmail( $email ) || $email == '' ) {
 			if ( $this->mTempUser ) {
@@ -234,7 +237,7 @@ class EditAccount extends SpecialPage {
 				global $wgUser, $wgTitle;
 
 				$log = new LogPage( 'editaccnt' );
-				$log->addEntry( 'mailchange', $wgTitle, '', array( $this->mUser->getUserPage() ) );
+				$log->addEntry( 'mailchange', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
 
 				if ( $email == '' ) {
 					$this->mStatusMsg = wfMsg( 'editaccount-success-email-blank', $this->mUser->mName );
@@ -255,9 +258,10 @@ class EditAccount extends SpecialPage {
 	/**
 	 * Set a user's password
 	 * @param $pass Mixed: password to set to the user
+	 * @param $changeReason String: reason for change
 	 * @return Boolean: true on success, false on failure
 	 */
-	function setPassword( $pass ) {
+	function setPassword( $pass, $changeReason = '' ) {
 		if ( $this->mUser->setPassword( $pass ) ) {
 			global $wgUser, $wgTitle;
 
@@ -273,7 +277,7 @@ class EditAccount extends SpecialPage {
 
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );
-			$log->addEntry( 'passchange', $wgTitle, '', array( $this->mUser->getUserPage() ) );
+			$log->addEntry( 'passchange', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
 
 			// And finally, inform the user that everything went as planned
 			$this->mStatusMsg = wfMsg( 'editaccount-success-pass', $this->mUser->mName );
@@ -288,9 +292,10 @@ class EditAccount extends SpecialPage {
 	/**
 	 * Set a user's real name
 	 * @param $pass Mixed: real name to set to the user
+	 * @param $changeReason String: reason for change
 	 * @return Boolean: true on success, false on failure
 	 */
-	function setRealName( $realname ) {
+	function setRealName( $realname, $changeReason = '' ) {
 		$this->mUser->setRealName( $realname );
 		$this->mUser->saveSettings();
 
@@ -300,7 +305,7 @@ class EditAccount extends SpecialPage {
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );
 
-			$log->addEntry( 'realnamechange', $wgTitle, '', array( $this->mUser->getUserPage() ) );
+			$log->addEntry( 'realnamechange', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
 
 			// And finally, inform the user that everything went as planned
 			$this->mStatusMsg = wfMsg( 'editaccount-success-realname', $this->mUser->mName );
@@ -315,9 +320,10 @@ class EditAccount extends SpecialPage {
 	/**
 	 * Scrambles the user's password, sets an empty e-mail and marks as disabled
 	 *
+	 * @param $changeReason String: reason for change
 	 * @return Boolean: true on success, false on failure
 	 */
-	function closeAccount() {
+	function closeAccount( $changeReason = '' ) {
 		# Set flag for Special:Contributions
 		# NOTE: requires FlagClosedAccounts.php to be included separately
 		if ( defined( 'CLOSED_ACCOUNT_FLAG' ) ) {
@@ -361,7 +367,7 @@ class EditAccount extends SpecialPage {
 
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );
-			$log->addEntry( 'closeaccnt', $wgTitle, '', array( $this->mUser->getUserPage() ) );
+			$log->addEntry( 'closeaccnt', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
 
 			// All clear!
 			$this->mStatusMsg = wfMsg( 'editaccount-success-close', $this->mUser->mName );

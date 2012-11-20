@@ -269,8 +269,8 @@ $messages['be-tarask'] = array(
 	'rte-ck-link-status-external' => 'Вонкавая спасылка',
 	'rte-ck-media-delete' => 'выдаліць',
 	'rte-ck-media-edit' => 'зьмяніць',
-	'rte-ck-modeSwitch-toSource' => 'Пераключыць у крынічны рэжым',
-	'rte-ck-modeSwitch-toWysiwyg' => 'Пераключыць у візуальны рэжым WYSIWYG',
+	'rte-ck-modeSwitch-toSource' => 'Пераключыць у крынічны рэжым', # Fuzzy
+	'rte-ck-modeSwitch-toWysiwyg' => 'Пераключыць у візуальны рэжым WYSIWYG', # Fuzzy
 	'rte-ck-photoGallery-confirmDelete' => 'Вы ўпэўнены, што жадаеце выдаліць галерэю з гэтай старонкі?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Выдаліць гэтую галерэю?',
 	'rte-ck-photoGallery-tooltip' => 'Гэта галерэя.',
@@ -379,7 +379,7 @@ $messages['br'] = array(
 	'rte-ck-media-delete' => 'lemel',
 	'rte-ck-media-edit' => 'kemmañ',
 	'rte-ck-modeSwitch-toSource' => 'Mammenn',
-	'rte-ck-modeSwitch-toWysiwyg' => "Mont d'ar mod WYSIWYG",
+	'rte-ck-modeSwitch-toWysiwyg' => "Mont d'ar mod WYSIWYG", # Fuzzy
 	'rte-ck-photoGallery-gallery' => 'Skeudennaoueg',
 	'rte-ck-photoGallery-slideshow' => "Kinnig luc'hvannoù",
 	'rte-ck-photoGallery-slider' => 'Dibuner',
@@ -805,6 +805,7 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'rte-ck-bucket-controls' => 'Qontroli',
+	'rte-ck-errorPopupTitle' => 'Xırab',
 	'rte-ck-hoverPreview-comment-title' => 'Vatış',
 	'rte-ck-hoverPreview-delete' => 'besterne',
 	'rte-ck-hoverPreview-edit' => 'bıvurne',
@@ -827,6 +828,7 @@ $messages['diq'] = array(
 	'rte-ck-signature-add' => 'İmzay xo deke',
 	'rte-ck-signature-label' => 'imza',
 	'rte-ck-table-toolbarTooltip' => 'Tablo Deke',
+	'rte-ck-templateDropDown-showUsedList' => 'Listey şablonan de karyaya bıvin',
 	'rte-ck-templateDropDown-label' => 'Şablon',
 	'rte-ck-templateEditor-editor-parameters' => 'Parametrey',
 	'rte-ck-templateEditor-editor-previewButton' => 'Verqayt',
@@ -965,7 +967,8 @@ $messages['es'] = array(
 	'rte-ck-format-tag_h5' => 'Encabezado 5',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ */
 $messages['fa'] = array(
 	'rte-ck-errorPopupTitle' => 'خطا!',
 	'rte-ck-hoverPreview-delete' => 'حذف',
@@ -2503,8 +2506,8 @@ $messages['pms'] = array(
 	'rte-ck-link-status-external' => 'Anliura esterna',
 	'rte-ck-media-delete' => 'gava',
 	'rte-ck-media-edit' => 'modìfica',
-	'rte-ck-modeSwitch-toSource' => 'Passé an manera sorgiss',
-	'rte-ck-modeSwitch-toWysiwyg' => 'Cangia a manera WYSIWYG',
+	'rte-ck-modeSwitch-toSource' => 'Passé an manera sorgiss', # Fuzzy
+	'rte-ck-modeSwitch-toWysiwyg' => 'Cangia a manera WYSIWYG', # Fuzzy
 	'rte-ck-modeSwitch-error' => "A l'é ancapitaje n'eror durant ël cangiament ëd manera. Për piasì, ch'a preuva torna.",
 	'rte-ck-photoGallery-confirmDelete' => 'É-lo sigur ëd vorèj gavé la galarìa da sta pàgina?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Gavé sta galarìa?',
@@ -3313,8 +3316,8 @@ $messages['tr'] = array(
 	'rte-ck-link-status-external' => 'Dış bağlantı',
 	'rte-ck-media-delete' => 'kaldır',
 	'rte-ck-media-edit' => 'değiştir',
-	'rte-ck-modeSwitch-toSource' => 'Kaynak moda geç',
-	'rte-ck-modeSwitch-toWysiwyg' => 'WYSIWYG Moda geç',
+	'rte-ck-modeSwitch-toSource' => 'Kaynak moda geç', # Fuzzy
+	'rte-ck-modeSwitch-toWysiwyg' => 'WYSIWYG Moda geç', # Fuzzy
 	'rte-ck-photoGallery-confirmDelete' => 'Bu galeriyi sayfadan kaldırmak istediğinize emin misiniz?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Galeriyi kaldır?',
 	'rte-ck-photoGallery-tooltip' => 'Bu bir galeridir.',
@@ -3650,4 +3653,3 @@ $messages['zh-hans'] = array(
 $messages['zh-tw'] = array(
 	'rte-ck-hoverPreview-edit' => '編輯',
 );
-

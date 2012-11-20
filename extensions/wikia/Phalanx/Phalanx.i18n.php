@@ -143,15 +143,6 @@ $messages['qqq'] = array(
 	'action-phalanx' => '{{doc-action|phalanx}}',
 );
 
-/** ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ (ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ)
- * @author MooRePrabu
- */
-$messages['saz'] = array(
-	'phalanx-type-user' => 'ꢮꢮ꣄ꢬꢸꢥꢵꢬ꣄',
-	'phalanx-label-filter' => 'ꢏꢜ꣄ꢗꢶ',
-	'phalanx-stats-table-language' => 'ꢩꢵꢰꣁ',
-);
-
 /** Arabic (العربية)
  * @author OsamaK
  */
@@ -381,12 +372,15 @@ Ein Klick auf „{{int:phalanx-edit-block}}“ speichert Ihre Änderungen!',
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
+	'phalanx' => 'Falanc',
 	'phalanx-type-user' => 'karber',
 	'phalanx-type-user-email' => 'E-posta',
 	'phalanx-label-filter' => 'Avrêc:',
 	'phalanx-label-reason' => 'Sebeb:',
+	'phalanx-label-expiry' => 'Qediyayış:',
 	'phalanx-label-type' => 'Babet:',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-stats-table-type' => 'Babet',
@@ -553,7 +547,7 @@ $messages['fi'] = array(
 	'phalanx-legend-listing' => 'Tällä hetkellä käytetyt suodattimet',
 	'phalanx-unblock-message' => 'Estotunnisteen #$1 poisto onnistui',
 	'phalanx-user-block-reason-exact' => 'Tämä käyttäjätunnus tai IP-osoite on estetty ilkivallan tai muunlaisen häiriköinnin vuoksi.
-Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wikiaan]].',
+Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wikiaan]].', # Fuzzy
 );
 
 /** French (français)
@@ -2107,6 +2101,15 @@ $messages['ru'] = array(
 	'right-phalanxemailblock' => 'Можно обратиться, просмотреть и управлять e-mail на основе блоков',
 );
 
+/** ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ (ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ)
+ * @author MooRePrabu
+ */
+$messages['saz'] = array(
+	'phalanx-type-user' => 'ꢮꢮ꣄ꢬꢸꢥꢵꢬ꣄',
+	'phalanx-label-filter' => 'ꢏꢜ꣄ꢗꢶ',
+	'phalanx-stats-table-language' => 'ꢩꢵꢰꣁ',
+);
+
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
@@ -2206,6 +2209,7 @@ Om du tror att detta är ett fel, var god [[Special:Contact|kontakta Wikia]].<br
 Var god [[Special:Contact|kontakta Wikia]] om problemet.<br />Blockeringen gav också denna tilläggande anledning: $1.',
 	'phalanx-title-move-summary' => 'Anledningen du skrev in innehöll en blockerad fras.',
 	'phalanx-content-spam-summary' => 'Texten hittades i sidans sammanfattning.',
+	'phalanx-stats-title' => 'Phalanx-statistik',
 	'phalanx-stats-block-notfound' => 'blockerings-ID hittades inte',
 	'phalanx-stats-table-id' => 'Blockerings-ID',
 	'phalanx-stats-table-user' => 'Lades till av',
@@ -2227,7 +2231,9 @@ Var god [[Special:Contact|kontakta Wikia]] om problemet.<br />Blockeringen gav o
 	'phalanx-stats-table-wiki-url' => 'Wiki-URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Senast redigerad',
 	'phalanx-email-filter-hidden' => 'E-postfilter dolt. Du har inte behörighet att visa texten.',
+	'action-phalanx' => 'använd den integrerade försvarsmekanismen mot spam',
 	'right-phalanx' => 'Kan hantera globala blockeringar och spamfilter',
+	'right-phalanxexempt' => 'Förutom Phalanx-regler',
 	'right-phalanxemailblock' => 'Kan ordna, visa och hantera e-postbaserade blockeringar',
 );
 
@@ -2450,4 +2456,3 @@ $messages['zh-hans'] = array(
 	'phalanx-stats-table-wiki-name' => '维基名字',
 	'phalanx-stats-table-wiki-url' => '维基 URL',
 );
-

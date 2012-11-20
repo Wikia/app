@@ -29,12 +29,12 @@ $messages['en'] = array(
 	'unsubscribe-preferences-toggle-v2' => 'Disable all emails from Wikia (overrides all other options)',
 	'tog-watchlistdigest-v2' => '...a Weekly Digest of changes to my followed Wikia pages is ready',
 	'tog-justify-v2' => 'Show justified paragraphs',
-	
-	'preferences-v2-myhomedisableredirect' => 'Landing page:',
+
+	'preferences-v2-user-landing-page' => 'Landing page:',
 	'preferences-v2-redirect-wiki-activity' => 'Wiki Activity',
 	'preferences-v2-redirect-main-page' => 'Main Page',
 	'preferences-v2-redirect-recent-changes' => 'Recent Changes',
-	'preferences-v2-redirect-explanation' => 'This changes the default page that you will see each time you log into the wiki.',
+	'preferences-v2-redirect-explanation' => 'This option allows you to go directly to Wiki Activity or Recent Changes the first time you access a wikis main page.',
 	'prefs-monobookv2' => 'Monobook',
 	'prefs-under-the-hood' => 'Under the Hood',
 	'prefs-recent-changesv2' => 'Recent changes, histories, and logs',

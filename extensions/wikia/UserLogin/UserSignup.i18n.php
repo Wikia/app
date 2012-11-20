@@ -295,12 +295,14 @@ $messages['qqq'] = array(
 	'usersignup-confirmation-email-content' => 'Confirmation email template body content.  $CONFIRMURL is full url to goto confirm email, and is displayed as-is.',
 	'usersignup-confirmation-email-signature' => 'Confirmation email template footer signature.',
 	'usersignup-confirmation-email_body' => 'Text only version of the confirmation email.  Contains the same content as the templated version.  $2 is username, $3 is confirmation url.',
+	'usersignup-confirmation-email_body-HTML' => 'Standalone HTML version of confirmation email.  Contains the same content as the templated version.  $1 is username, $2 is confirmation url.',
 	'usersignup-reconfirmation-email-sent' => 'Message telling user that the e-mail address has been changed to $1.',
 	'usersignup-reconfirmation-email_subject' => 'Subject of Confirmation email stating email has changed',
 	'usersignup-reconfirmation-email-greeting' => 'Greeting of Confirmation email stating email has changed.',
 	'usersignup-reconfirmation-email-content' => 'Body of Confirmation email stating email has changed.  $CONFIRMURL is url to confirm the email change, and is displayed and linked as-is.',
 	'usersignup-reconfirmation-email-signature' => 'Signature of confirmation email stating email has changed.',
 	'usersignup-reconfirmation-email_body' => 'Text-only version of Confirmation email stating email has changed.  $2 is username, $3 is confirmation url.',
+	'usersignup-reconfirmation-email_body-HTML' => 'Standalone HTML email version of confirmation email stating email has changed.  $1 is username, $2 is confirmation link.',
 	'usersignup-welcome-email-subject' => 'Welcome email subject.  $USERNAME is magic word for user name.',
 	'usersignup-welcome-email-greeting' => 'Welcome email greeting.  $USERNAME is magic word for user name.',
 	'usersignup-welcome-email-heading' => 'Welcome email heading.  SITENAME is MediaWiki magic word for wiki name.',
@@ -342,11 +344,23 @@ $messages['qqq'] = array(
 	'usersignup-account-creation-email-content' => 'Confirmation email body for people receiving the account when byemail=1 is used.  $USERNAME is user name, $NEWPASSWORD is new password for the user to use.',
 	'usersignup-account-creation-email-signature' => 'Confirmation email signature for people receiving the account when byemail=1 is used.',
 	'usersignup-account-creation-email-body' => 'Text-only version of confirmation email for people receiving the account when byemail=1 is used.  $2 is username, $3 is the new password.',
+	'usersignup-account-creation-email-body-HTML' => 'Standalone HTML version of confirmation email for people receiving the account when byemail=1 is used.  $2 is username, $3 is the new password.',
 	'usersignup-confirmation-reminder-email_subject' => 'Confirmation email subject that is sent 7 days after user has started the signup process without confirming.',
 	'usersignup-confirmation-reminder-email-greeting' => 'Confirmation email greeting that is sent 7 days after user has started the signup process without confirming.  $USERNAME is user name.',
 	'usersignup-confirmation-reminder-email-content' => 'Confirmation email body that is sent 7 days after user has started the signup process without confirming.  $CONFIRMURL is confirmation url, and should be displayed and linked as-is.  $USERNAME is user name.',
 	'usersignup-confirmation-reminder-email-signature' => 'Confirmation email signature that is sent 7 days after user has started the signup process without confirming.',
 	'usersignup-confirmation-reminder-email_body' => 'Text-only version of confirmation email that is sent 7 days after user has started the signup process without confirming.  $1 is username, $2 is confirmation url.',
+	'usersignup-confirmation-reminder-email_body-HTML' => 'Stand-alone HTML version of confirmation email that is sent 7 days after user has started the signup process without confirming.  $1 is username, $2 is confirmation url.',
+);
+
+/** تورکجه (تورکجه)
+ * @author Arjanizary
+ */
+$messages['azb'] = array(
+	'usersignup-reconfirmation-email-greeting' => 'سلام $USERNAME,',
+	'usersignup-welcome-email-greeting' => 'سلام $USERNAME,',
+	'usersignup-marketing-global-heading' => 'یارات',
+	'usersignup-confirmation-reminder-email-greeting' => 'سلام $USERNAME,',
 );
 
 /** Breton (brezhoneg)
@@ -662,7 +676,10 @@ Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}
  */
 $messages['diq'] = array(
 	'usersignup-page-title' => 'Dekew Wikia',
+	'usersignup-confirm-page-title' => 'Epostay xo araşt kerê',
+	'usersignup-confirm-email-new-email-label' => 'Epostaya newi',
 	'usersignup-confirm-email-update' => 'Noroc resn',
+	'usersignup-confirm-page-heading-confirmed-user' => 'Tebrik keme!',
 	'usersignup-confirmation-email-greeting' => 'Merheba $USERNAME,',
 	'usersignup-confirmation-email-signature' => 'Taxıma Wikia',
 	'usersignup-reconfirmation-email-greeting' => 'Merheba $USERNAME,',
@@ -670,9 +687,12 @@ $messages['diq'] = array(
 	'usersignup-welcome-email-greeting' => 'Merheba $USERNAME,',
 	'usersignup-welcome-email-edit-profile-heading' => 'Profilê xo bıvurne',
 	'usersignup-welcome-email-edit-profile-button' => 'Şo ri profil',
+	'usersignup-welcome-email-explore-wiki-button' => 'Şo wikia.com',
 	'usersignup-welcome-email-signature' => 'Taxıma Wikia',
 	'usersignup-heading' => 'Noroc dekewe Wikia',
+	'usersignup-marketing-community-heading' => 'Piyakarkerdış',
 	'usersignup-marketing-global-heading' => 'Vıraze',
+	'usersignup-marketing-creativity-heading' => 'Oricinal be',
 	'usersignup-account-creation-email-greeting' => 'Merheba,',
 	'usersignup-account-creation-email-signature' => 'Taxıma Wikia',
 	'usersignup-confirmation-reminder-email-greeting' => 'Merheba $USERNAME,',
@@ -2585,7 +2605,7 @@ Wilt u bepalen welke e-mails u ontvangt? Ga dan naar {{fullurl:{{ns:special}}:Pr
 	'usersignup-marketing-benefits' => 'Doe mee aan iets groots',
 	'usersignup-marketing-community-heading' => 'Samenwerken',
 	'usersignup-marketing-community' => 'Ontdek en verken onderwerpen van videogames tot films en televisie. Ontmoet mensen met gelijke interesses en passies.',
-	'usersignup-marketing-global-heading' => 'Creëer',
+	'usersignup-marketing-global-heading' => 'Aanmaken',
 	'usersignup-marketing-global' => 'Begin een wiki. Begin klein en groei groot, samen met anderen.',
 	'usersignup-marketing-creativity-heading' => 'Wees origineel',
 	'usersignup-marketing-creativity' => "Gebruik Wikia om uw creativiteit uit te drukken met peilingen, top-10 lijsten, galerijen met foto's en video, apps en meer.",
@@ -3540,6 +3560,13 @@ Nais mo bang tabanan ang kung anong mga e-liham ang matatanggap mo? Magpunta sa:
 	'usersignup-facebook-problem' => 'Nagkaroon ng isang suliranin sa pakikipag-ugnayan sa Facebook. Paki subukan ulit mamaya.',
 );
 
+/** Turkish (Türkçe)
+ * @author Erdemaslancan
+ */
+$messages['tr'] = array(
+	'usersignup-marketing-creativity-heading' => 'Orijinal olmak',
+);
+
 /** Ukrainian (українська)
  * @author Wildream
  */
@@ -3554,6 +3581,62 @@ $messages['uk'] = array(
 	'usersignup-error-empty-username' => 'Будь ласка, заповніть поле для імені користувача.',
 	'usersignup-error-already-confirmed' => 'Ви вже підтвердили цю адресу електронної пошти.',
 	'usersignup-error-throttled-email' => 'Вам було відправлено занадто багато листів з підтвердженням. Будь ласка, спробуйте ще раз, але трохи пізніше.',
+	'usersignup-error-too-many-changes' => 'Досягнуто максимальної межі для спроб зміни електронної пошти на сьогодні. Будь ласка, повторіть спробу пізніше.',
+	'usersignup-error-password-length' => 'На жаль, ваш пароль занадто довгий. Будь ласка, виберіть пароль, який складається з 50 символів або менше.',
+	'usersignup-error-confirmed-user' => 'Схоже, що ви вже підтвердили свою електронну адресу для $1! Будь ласка, перевірте ваш [$2 профіль користувача].',
+	'usersignup-facebook-heading' => 'Завершити реестрацію.',
+	'usersignup-facebook-create-account' => 'Створити обліковий запис',
+	'usersignup-facebook-email-tooltip' => 'Якщо ви захочете використовувати іншу електронну адресу, ви зможете змінити її в налаштуваннях пізніше.',
+	'usersignup-facebook-have-an-account-heading' => 'Ви вже зареєстровані?',
+	'usersignup-facebook-have-an-account' => "Підключіть уже існуюче ім'я користувача до мережі Facebook",
+	'usersignup-facebook-proxy-email' => 'Анонімна електронна пошта Facebook',
+	'usersignup-user-pref-emailconfirmlink' => 'Надіслати запит про новий лист підтвердження електронної пошти',
+	'usersignup-user-pref-confirmemail_send' => 'Надіслати мені підтвердження електронної пошти',
+	'usersignup-user-pref-emailauthenticated' => 'Дякуємо! Ваша адреса електронної пошти була підтверджена $2 в $3.',
+	'usersignup-user-pref-emailnotauthenticated' => 'Перевірте вашу адресу електронної пошти і натисніть на посилання, щоб підтвердити зміну своєї електронної пошти на $1',
+	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Адресу Вашої електронної пошти не було підтверджено. Функції електронної пошти не будуть працювати, доки ви не підтвердите її.',
+	'usersignup-user-pref-reconfirmation-email-sent' => 'Ми надіслали вам листа з підтвердженням на $1. Перевірте свою електронну пошту і натисніть на посилання, щоб закінчити підтверждення вашої електронної пошти.',
+	'usersignup-user-pref-noemailprefs' => 'Схоже, у нас немає вашої адреси електронної пошти. Будь ласка, введіть вашу адресу електронної пошти вище.',
+	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Вашу адресу електронної пошти не було підтверджено. Ми вже надіслали вам повідомлення, в якому треба натиснути на посилання для підтвердження.',
+	'usersignup-user-pref-confirmemail_noemail' => 'Схоже, у нас немає адреси електронної пошти для вас. Перейдіть на сторінку [[Special:Preferences|ваших налаштувань]] щоб підтвердити її.',
+	'usersignup-confirm-page-title' => 'Підтвердити вашу адресу електронної пошти',
+	'usersignup-confirm-email-resend-email' => 'Надіслати мені ще один лист з підтвердженням електронною поштою',
+	'usersignup-confirm-email-change-email-content' => 'Я хочу використовувати іншу адресу електронної пошти.',
+	'usersignup-confirm-email-change-email' => 'Змінити мою адресу електронної пошти',
+	'usersignup-confirm-email-new-email-label' => 'Новий email',
+	'usersignup-confirm-email-update' => 'Оновити',
+	'usersignup-confirm-email-tooltip' => 'Вы ввели адресу електронної пошти, яку не можете підтвердити, або хочете використовувати іншу електронну адресу? Не хвилюйтеся, натисніть на посилання нижче, щоб змінити свою адресу електронної пошти і отримати нове підтвердження.',
+	'usersignup-resend-email-heading-success' => 'Нове повідомлення надіслано.',
+	'usersignup-resend-email-heading-failure' => 'Повторне повідомлення не надіслано.',
+	'usersignup-confirm-page-heading-confirmed-user' => 'Вітаємо!',
+	'usersignup-confirm-page-subheading-confirmed-user' => 'Ви вже підтвердили',
+	'usersignup-confirmation-heading' => 'Майже готово',
+	'usersignup-confirmation-heading-email-resent' => 'Нове повідомлення надіслано.',
+	'usersignup-confirmation-subheading' => 'Перевірте вашу електронну пошту',
+	'usersignup-confirmation-email-sent' => "Ми направили листа до '''$1'''.
+Натисніть на посилання для підтвердження вашої електронної пошти, щоб завершити створення облікового запису.",
+	'usersignup-confirmation-email_subject' => 'Майже все! Підтвердіть ваш обліковий запис Вікія',
+	'usersignup-confirmation-email-greeting' => 'Привіт, $USERNAME,',
+	'usersignup-confirmation-email-content' => 'Ви в одному кроці від створення облікового запису Вікія! Натисніть на посилання нижче, щоб підтвердити свою адресу електронної пошти і почати роботу.
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
+	'usersignup-confirmation-email-signature' => 'Команда Вікія',
+	'usersignup-confirmation-email_body' => 'Привіт $2,
+
+Ви в одному кроці від створення облікового запису Вікія! Натисніть на посилання нижче, щоб підтвердити свою адресу електронної пошти і почати роботу.
+
+$3
+
+Команда Вікія
+
+
+___________________________________________
+
+Щоб дізнатись про останні події на Вікія, відвідайте http://community.wikia.com
+Хочете налаштувати типи повідомлень, які ви отримаєте? Перейдіть до: {{fullurl:{{ns:special}}:Preferences}}',
+	'usersignup-reconfirmation-email-sent' => 'Вашу адресу електронної пошти було змінено на $1. Ми відправили вам нового листа з підтвердженням електронною поштою. Будь ласка, підтвердіть нову адресу електронної пошти.',
+	'usersignup-reconfirmation-email_subject' => 'Підтвердити зміну адресі вашої електронної пошти на Вікія',
+	'usersignup-reconfirmation-email-greeting' => 'Привіт, $USERNAME,',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -3617,7 +3700,7 @@ $messages['zh-hans'] = array(
 
 $3
 
-Wikia团队',
+Wikia团队', # Fuzzy
 	'usersignup-reconfirmation-email-sent' => '您的电子邮箱地址已换成$1。我们已向您发送确认邮件。请确认您新的邮箱地址。',
 	'usersignup-reconfirmation-email_subject' => '在Wikia上确认您的电子邮箱地址。',
 	'usersignup-reconfirmation-email-greeting' => '你好$USERNAME',
@@ -3752,4 +3835,3 @@ ___________________________________________
 想控制接收那些电子邮件？请查看：{{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => '与脸谱链接出错，请稍后再试。',
 );
-

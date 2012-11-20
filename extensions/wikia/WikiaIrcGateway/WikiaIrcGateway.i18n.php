@@ -443,7 +443,8 @@ $messages['ru'] = array(
 	'ircgate-channel' => 'Канал:',
 );
 
-/** Sinhala (සිංහල) */
+/** Sinhala (සිංහල)
+ */
 $messages['si'] = array(
 	'ircgate-username' => 'පරිශීලක-නාමය:',
 	'ircgate-channel' => 'චැනලය:',
@@ -528,4 +529,3 @@ $messages['zh-hans'] = array(
 	'ircgate-username' => '用户名：',
 	'ircgate-channel' => '频道：',
 );
-

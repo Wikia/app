@@ -123,6 +123,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$isVideo	= false;
 		$isImage	= false;
+		$vidFields	= array();	
 		
 		if ( $namespace == NS_FILE && ($file = $this->wf->findFile( $this->wg->Title->getText() )) ) {
 			$detail		= WikiaFileHelper::getMediaDetail( $this->wg->Title );
@@ -132,13 +133,43 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 			if ( $metadata !== "0" ) {
 				$metadata = unserialize( $metadata );
-	
-				$fileParams = array('description', 'keywords')
-				+ ($isVideo ? array('movieTitleAndYear', 'videoTitle') : array());
+				$fileParams = array( 'description', 'keywords' );
+				$videoParams = array( 'movieTitleAndYear', 'videoTitle', 'title', 'tags', 'category' );
+				if ( $isVideo ) {
+					$fileParams = array_merge( $fileParams, $videoParams );
+					
+					/**
+					 * This maps video metadata field keys to dynamic fields
+					 */
+					$videoMetadataMapper = array(
+							'duration'		=>	'video_duration_i',
+							'provider'		=>	'video_provider_s',
+							'videoId'		=>	'video_id_s',
+							'altVideoId'	=>	'video_altid_s',
+							'aspectRatio'	=>	'video_aspectratio_s'
+							);
+					
+					foreach ( $videoMetadataMapper as $key => $field ) {
+						if ( isset( $metadata[$key] ) ) {
+							$vidFields[$field] = $metadata[$key];
+						}
+					}
+					// special cases
+					if ( isset( $metadata['hd'] ) ) {
+						$vidFields['video_hd_b'] = empty( $metadata['hd'] ) ? 'false' : 'true';
+					}
+					if ( isset( $metadata['genres'] ) ) {
+						$vidFields['video_genres_txt'] = preg_split( '/, ?/', $metadata['genres'] );
+					}
+					if ( isset( $metadata['actors'] ) ) {
+						$vidFields['video_actors_txt'] = preg_split( '/, ?/', $metadata['actors'] );
+					}
+				}
 	
 				foreach ($fileParams as $datum) {
 					$html .= isset( $metadata[$datum] ) ? ' ' . $metadata[$datum] : '';
 				}
+				
 			}
 		}
 	
@@ -169,7 +200,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['url']			= $page->getTitle()->getFullUrl();
 		$result['ns']			= $page->getTitle()->getNamespace();
 		$result['host']			= substr($this->wg->Server, 7);
-		$result['lang']			= $this->wg->Lang->mCode;
+		$result['lang']			= $this->wg->ContLang->mCode;
 	
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
 		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
@@ -180,6 +211,10 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		if ( $this->wg->EnableBacklinksExt && $this->wg->IndexBacklinks ) {
 			$result['backlink_text'] = Backlinks::getForArticle($page);
+		}
+		
+		foreach ( $vidFields as $fieldName => $fieldValue ) {
+			$result[$fieldName] = $fieldValue;
 		}
 		
 		$result = array_merge($result, $this->getPageMetaData($page));
@@ -323,11 +358,12 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @see WikiaSearchIndexer::getPage()
 	 * @param Article $page
 	 */
-	private function getPageMetaData( Article $page ) {
+	protected function getPageMetaData( Article $page ) {
 		wfProfileIn(__METHOD__);
 		$result = array();
 	
-		$data = $this->callMediaWikiAPI( array(
+		$apiService = F::build( 'ApiService' );
+		$data = $apiService->call( array(
 				'titles'	=> $page->getTitle(),
 				'bltitle'	=> $page->getTitle(),
 				'action'	=> 'query',
@@ -337,18 +373,20 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$result['backlinks'] = isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0;  
 	
+		$pageId = $page->getId();
+		
 		if (! empty( $this->wg->ExternalSharedDB ) ) {
-			$data = $this->callMediaWikiAPI( array(
-					'pageids'	=> $page->getId(),
+			$data = $apiService->call( array(
+					'pageids'	=> $pageId,
 					'action'	=> 'query',
 					'prop'		=> 'info|categories',
 					'inprop'	=> 'url|created|views|revcount',
 					'meta'		=> 'siteinfo',
 					'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
 			));
-		
-			if( isset( $data['query']['pages'][$page->getId()] ) ) {
-				$pageData = $data['query']['pages'][$page->getId()];
+			
+			if( isset( $data['query']['pages'][$pageId] ) ) {
+				$pageData = $data['query']['pages'][$pageId];
 				$result['views']	= $pageData['views'];
 				$result['revcount']	= $pageData['revcount'];
 				$result['created']	= $pageData['created'];
@@ -371,8 +409,11 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$wikiViews = $this->getWikiViews($page);
 	
+		$wam = F::build( 'DataMartService' )->getCurrentWamScoreForWiki( $this->wg->CityId );
+		
 		$result['wikiviews_weekly']		= (int) $wikiViews->weekly;
 		$result['wikiviews_monthly']	= (int) $wikiViews->monthly;
+		$result['wam']					= $wam > 0 ? ceil( $wam ) : 1; //mapped here for computational cheapness
 	
 		wfProfileOut(__METHOD__);
 		return $result;
@@ -385,7 +426,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param  Article $page
 	 * @return string the pipe-joined redirect titles with underscores replaced with spaces
 	 */
-	private function getRedirectTitles( Article $page ) {
+	protected function getRedirectTitles( Article $page ) {
 		wfProfileIn(__METHOD__);
 	
 		$dbr = $this->wf->GetDB(DB_SLAVE);
@@ -410,57 +451,42 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @see   WikiaSearchIndexerTest::testGetWikiViewsNoCacheNoDb
 	 * @param Article $page
 	 */
-	private function getWikiViews( Article $page ) {
+	protected function getWikiViews( Article $page ) {
 		wfProfileIn(__METHOD__);
 		$key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
 
 		// should probably re-poll for wikis without much love
 		if ( ( $result = $this->wg->Memc->get( $key ) ) && ( $result->weekly > 0 || $result->monthly > 0 ) ) {
+			wfProfileOut(__METHOD__);
 			return $result;
 		}
-	
-		if ( $this->wg->statsDBEnabled ) {
-			try {
-				$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->statsDB );
-				$row = $db->selectRow(
-						array( 'page_views' ),
-						array(	'SUM(pv_views) as "monthly"',
-								'SUM(CASE WHEN pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) THEN pv_views ELSE 0 END) as "weekly"' ),
-						array(	'pv_city_id' => (int) $this->wg->CityId,
-								'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)' ),
-						__METHOD__
-				);
-			} catch ( Exception $e ) { 
-				Wikia::log( __METHOD__, '', $e );
+
+		$row = new stdClass();	
+		$row->weekly = 0;
+		$row->monthly = 0;
+			
+		$startDate = date( 'Y-m-d', strtotime('-1 week') );
+		$endDate = date( 'Y-m-01', strtotime('now') );	
+		$pageviews_weekly = DataMartService::getPageviewsWeekly( $startDate, $endDate, (int) $this->wg->CityId );
+
+		if ( empty( $pageviews_weekly ) ) {
+			foreach ( $pageviews_weekly as $pview ) {
+				$row->weekly += $pview;
 			}
 		}
-	
-		// a pinch of defensive programming
-		if ( ! isset( $row ) ) {
-			$row = new stdClass();
-			$row->weekly = 0;
-			$row->monthly = 0;
+			
+		$startDate = date( 'Y-m-01', strtotime('-1 month') );
+		$pageviews_monthly = DataMartService::getPageviewsMonthly( $startDate, $endDate, (int) $this->wg->CityId );
+		if ( empty( $pageviews_monthly ) ) {
+			foreach ( $pageviews_monthly as $pview ) {
+				$row->monthly += $pview;
+			}
 		}
 	
 		$this->wg->Memc->set( $key, $row, self::WIKIPAGES_CACHE_TTL );
 	
 		wfProfileOut(__METHOD__);
 		return $row;
-	}
-
-	/**
-	 * Used to access API data from various MediaWiki services
-	 * @param  array $params
-	 * @return array result data
-	 **/
-	private function callMediaWikiAPI( Array $params ) {
-	    wfProfileIn(__METHOD__);
-	
-	    $api = F::build( 'ApiMain', array( 'request' => new FauxRequest($params) ) );
-	    $api->execute();
-	
-	    wfProfileOut(__METHOD__);
-	    return  $api->getResultData();
 	}
 	
 	/**
@@ -490,7 +516,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		try {
 			return $this->deleteArticle( $id );
 		} catch ( Exception $e ) {
-		    Wikia::log( __METHOD__, '', $e );
+		    F::build( 'Wikia' )->log( __METHOD__, '', $e );
 		    return true;
 		}
 	}
@@ -514,7 +540,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		try {
 			return $this->reindexBatch( array( $article->getTitle()->getArticleID() ) );
 		} catch ( Exception $e ) {
-		    Wikia::log( __METHOD__, '', $e );
+		    F::build( 'Wikia' )->log( __METHOD__, '', $e );
 		    return true;
 		}
 	}
@@ -528,7 +554,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		try {
 			return $this->reindexBatch( array( $title->getArticleID() ) );
 		} catch ( Exception $e ) {
-			Wikia::log( __METHOD__, '', $e );
+			F::build( 'Wikia' )->log( __METHOD__, '', $e );
 			return true;
 		}
 	}

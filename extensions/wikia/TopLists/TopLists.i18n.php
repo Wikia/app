@@ -151,13 +151,13 @@ $messages['ar'] = array(
 	'toplists-error-title-exists' => 'هذه الصفحة موجودة بالفعل. يمكنك الذهاب إلى <a href="<span class=" notranslate"="">$2 "الهدف =" _blank ">$1</a> أو قم بتوفير اسم مختلف.',
 	'toplists-error-title-spam' => 'النص يحتوي على بعض الكلمات المعرفة كدعاية.',
 	'toplists-error-article-blocked' => 'عذراً غير مسموح لك إنشاء صفحة بهذا الاسم.',
-	'toplists-error-article-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟',
-	'toplists-error-picture-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟',
+	'toplists-error-article-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟', # Fuzzy
+	'toplists-error-picture-not-exists' => '" $1 "غير موجود. هل تريد <a href="<span class="notranslate">$ 2 "الهدف =" _blank "> إنشائه</a> ؟', # Fuzzy
 	'toplists-error-duplicated-entry' => 'لا يمكنك استخدام نفس الاسم أكثر من مرة.',
 	'toplists-error-empty-item-name' => 'لا يمكن أن يكون اسم عنصر القائمة فارغة.',
 	'toplists-item-cannot-delete' => 'فشل في حذف هذا البند.',
 	'toplists-error-image-already-exists' => 'صورة مع نفس الاسم موجود مسبقا.',
-	'toplists-error-add-item-anon' => 'ولا يسمح للمستخدمين المجهولين إضافة عناصر إلى القوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$ 1 "> الدخول</a> أو <a class="ajaxLogin" id="signup" href="<span class="notranslate">$ 2 "> تسجيل حساب جديد</a> .',
+	'toplists-error-add-item-anon' => 'ولا يسمح للمستخدمين المجهولين إضافة عناصر إلى القوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$ 1 "> الدخول</a> أو <a class="ajaxLogin" id="signup" href="<span class="notranslate">$ 2 "> تسجيل حساب جديد</a> .', # Fuzzy
 	'toplists-error-add-item-permission' => 'خطأ في إذن الوصول: الحساب الخاص بك لم يتم منح الحق في إنشاء عناصر جديدة.',
 	'toplists-error-add-item-list-not-exists' => '"$1" لا توجد في قائمة أعلى 10',
 	'toplists-upload-error-unknown' => 'حدث خطأ أثناء معالجة طلب التحميل. يرجى المحاولة مرة أخرى.',
@@ -186,7 +186,7 @@ $messages['ar'] = array(
 	'toplists-item-remove-summary' => 'تمت إزالة البند من القائمة',
 	'toplists-item-restored' => 'تم استعادة عنصر',
 	'toplists-list-related-to' => 'المتعلقة بما يلي :',
-	'toplists-list-created-by' => 'بواسطة [[مستخدم : $1 | $1 ]]',
+	'toplists-list-created-by' => 'بواسطة [[مستخدم : $1 | $1 ]]', # Fuzzy
 	'toplists-list-vote-up' => 'التصويت حتى',
 	'toplists-list-add-item-label' => 'أضف عنصرًا',
 	'toplists-list-add-item-name-label' => 'الحفاظ على القائمة مستمرة...',
@@ -496,11 +496,18 @@ $messages['diq'] = array(
 	'createtoplist' => 'listey Tewr 10ano newe vırazê',
 	'edittoplist' => 'listey Tewr 10a bıvurnê',
 	'toplists-category' => 'listey Tewr 10a',
+	'toplists-editor-title-label' => 'Namey lista',
 	'toplists-editor-image-browser-tooltip' => 'Resim deke',
 	'toplists-create-button' => 'Liste vırazê',
 	'toplists-update-button' => 'Listi qeyd ke',
 	'toplists-cancel-button' => 'Bıterkne',
+	'toplists-items-removed' => '$1 {{PLURAL:$1|çi|çiy}} wedariyaya',
+	'toplists-items-created' => '$1 {{PLURAL:$1|çi|çiy}} vıraziyay',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|çi|çiy}} rocneya',
+	'toplists-image-browser-upload-btn' => 'Weçinayış',
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />rey|$1<br />reyi}}',
 	'toplists-list-created-by' => '[[User:$1|$1]]',
+	'toplists-list-add-item-label' => 'Çi de ke',
 	'toplists-list-item-voted' => 'Rey Bıdê',
 	'toplists-seconds' => '$1 {{PLURAL:$1|saniye|saniyeyan}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|deqa|deqey}}',
@@ -2228,6 +2235,13 @@ Tumungo sa Wikia upang suriin ang mga pagbabago! $1
 	'toplists-oasis-only' => 'Ang paggawa at pagmamatnugot ng nangungunang 10 listahan ay hindi maari sa Monobook. Kung gusto mo na magamit ang katangian na ito, manyaring ilipat ang iyong mga nais sa pabalat ng Wikia.',
 );
 
+/** Turkish (Türkçe)
+ * @author Emperyan
+ */
+$messages['tr'] = array(
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />oy|$1<br />oy}}}}', # Fuzzy
+);
+
 /** Ukrainian (українська)
  * @author Pig1995z
  */
@@ -2280,4 +2294,3 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'toplists-list-item-voted' => '投票了',
 );
-

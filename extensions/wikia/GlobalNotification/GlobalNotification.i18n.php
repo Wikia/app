@@ -12,7 +12,8 @@ $messages['en'] = array(
 	'globalnotification-general-ajax-failure' => 'The browser could not connect to the Wikia.  Try again later.',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'globalnotification-desc' => 'Description of this extension',
 	'globalnotification-general-ajax-failure' => 'General message for AJAX failure to be put on global notification',
@@ -195,4 +196,3 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'globalnotification-general-ajax-failure' => '瀏覽器無法連接到 Wikia。請稍後再試。',
 );
-

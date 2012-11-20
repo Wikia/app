@@ -9,7 +9,7 @@ $messages['en'] = array(
 	'categorygalleries-desc' => 'Shows a pages gallery on category pages',
 );
 
-/**    زَوُن (   زَوُن)
+/** Tunisian Spoken Arabic (   زَوُن)
  * @author Csisc
  */
 $messages['aeb'] = array(
@@ -268,4 +268,3 @@ $messages['vi'] = array(
 $messages['zh-hant'] = array(
 	'categorygalleries-desc' => '於分類頁面上顯示頁面庫',
 );
-

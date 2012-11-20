@@ -368,4 +368,3 @@ $messages['zh-hant'] = array(
 	'randomwiki-desc' => '容許用戶去訪問一個隨機的維基',
 	'randomwiki' => '隨機維基',
 );
-

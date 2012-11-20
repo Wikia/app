@@ -42,3 +42,8 @@ $wgExtensionMessagesFiles['Sitemap'] = $dir . 'Sitemap.alias.php';
 $wgAutoloadClasses['SitemapPage'] = $dir . 'SpecialSitemap_body.php';
 $wgSpecialPages['Sitemap'] = 'SitemapPage';
 $wgSpecialPageGroups['Sitemap'] = 'wikia';
+
+/**
+ * hooks
+ */
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'SitemapPage::onLoadExtensionSchemaUpdates';

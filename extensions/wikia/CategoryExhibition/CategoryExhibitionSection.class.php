@@ -20,6 +20,7 @@ class CategoryExhibitionSection {
 	public $urlParameter = 'section';	// contains section url variable that stores pagination
 	public $paginatorPosition = 1;		// default pagination
 	public $sUrl = '';
+	/* @var Title */
 	public $categoryTitle = false;		// title object of category
 	public $templateName = 'section';	// name of the section template
 	public $isFromAjax = false;		// true if request comes from ajax
@@ -49,6 +50,7 @@ class CategoryExhibitionSection {
 
 		// Check if page is a redirect
 		if( $this->categoryTitle->isRedirect() ){
+			/* @var WikiPage $oTmpArticle */
 			$oTmpArticle = new Article( $this->categoryTitle );
 			if ( !is_null( $oTmpArticle ) ) {
 				$rdTitle = $oTmpArticle->getRedirectTarget();
@@ -185,7 +187,6 @@ class CategoryExhibitionSection {
 	 * @param $namespace mixed: int namespace or array of int for category query
 	 * @return EasyTemplate object
 	 */
-
 	protected function getTemplateForNameSpace( $namespace, $itemsPerPage = 16, $negative = false ){
 
 		$cachedContent = $this->getFromCache();
@@ -257,7 +258,7 @@ class CategoryExhibitionSection {
 		$imageServing = new ImageServing( $mPageId, $this->thumbWidth , array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
 		$imageUrl = '';
 
-		foreach ( $imageServing->getImages( 1 ) as $key => $value ){
+		foreach ( $imageServing->getImages( 1 ) as $value ){
 			if ( !empty( $value[0]['name'] ) ){
 				$tmpTitle = Title::newFromText( $value[0]['name'], NS_FILE );
 				$image = wfFindFile( $tmpTitle );
@@ -266,7 +267,7 @@ class CategoryExhibitionSection {
 				}
 				$imageUrl = wfReplaceImageServer(
 					$image->getThumbUrl(
-						$imageServing->getCut( $image->width, $image->height )."-".$image->getName()
+						$imageServing->getCut( $image->getWidth(), $image->getHeight() )."-".$image->getName()
 					)
 				);
 			}
@@ -348,6 +349,10 @@ class CategoryExhibitionSection {
 		return $returnData;
 	}
 
+	/**
+	 * @param Title $oTitle
+	 * @return mixed
+	 */
 	protected function getTitleForElement( $oTitle ){
 		return $oTitle->getText();
 	}
@@ -372,7 +377,7 @@ class CategoryExhibitionSection {
 		}
 
 		$url = $wgTitle->getFullURL().'?'.implode( '&', $return );
-		if ( count($value) > 0 ){
+		if ( count($return) > 0 ){
 			$url.= '&'.$variableName.'=%s';
 		} else {
 			$url.= '?'.$variableName.'=%s';
@@ -385,12 +390,11 @@ class CategoryExhibitionSection {
 	/**
 	 * Caching functions.
 	 */
-
 	protected function getKey() {
 		global $wgVideoHandlersVideosMigrated;
 		return wfMemcKey(
 			'category_exhibition_section_0',
-			$this->categoryTitle->getDBKey(),
+			md5($this->categoryTitle->getDBKey()),
 			$this->templateName,
 			$this->paginatorPosition,
 			$this->getDisplayType(),

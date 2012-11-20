@@ -340,44 +340,24 @@ class DataProvider {
 	 */
 	final public static function GetMostVisitedArticles($limit = 7, $ns = array(NS_MAIN), $fillUpMostPopular = true) {
 		wfProfileIn(__METHOD__);
-		global $wgMemc;
+		global $wgMemc, $wgCityId;
 
 		$memckey = wfMemcKey("MostVisited", $limit, implode(",", $ns), $fillUpMostPopular);
 		$results = $wgMemc->get($memckey);
 
 		if (!is_array($results)) {
-			global $wgStatsDB, $wgCityId, $wgStatsDBEnabled;
-
-			$articlepages = array();
-			if (!empty($wgStatsDBEnabled)) {
-				// production version
-				$dbr = wfGetDB(DB_SLAVE, null, $wgStatsDB);
-				$res = $dbr->select(
-					array('specials.page_views_summary_articles'),
-					array('page_id', 'pv_views', 'page_ns'),
-					array(
-						'city_id' => $wgCityId,
-						'page_ns' => (!empty($ns) ? $ns : array()),
-						'pv_views > 0'
-					),
-					__METHOD__,
-					array(
-						'ORDER BY' => 'pv_views DESC',
-						'LIMIT' => $limit,
-					)
-				);
-				while ($row = $res->fetchObject($res)) {
-					$articlepages[$row->page_id] = $row->pv_views;
-				}
-
-				$results = array();
-				foreach ($articlepages as $articleid => $cnt) {
-					$title = Title::newFromID($articleid);
-					if (is_object($title)) {
-						if (wfMsg("mainpage") != $title->getText()) {
-							$article['url'] = $title->getLocalUrl();
-							$article['text'] = $title->getPrefixedText();
-							$article['count'] = $cnt;
+			$results = array();
+			$data = DataMartService::getTopArticlesByPageview( $wgCityId, null, $ns, false, 2 * $limit );
+			if ( !empty( $data ) ) {
+				foreach ( $data as $article_id => $row ) {
+					$title = Title::newFromID($article_id);
+					if ( is_object($title) ) {
+						if ( wfMsg("mainpage") != $title->getText() ) {
+							$article = array( 
+								'url'	=> $title->getLocalUrl(),
+								'text'	=> $title->getPrefixedText(),
+								'count' => $row['pageviews']
+							);
 							$results[] = $article;
 						}
 					}
@@ -388,8 +368,6 @@ class DataProvider {
 				if (!empty($results)) {
 					$results = array_slice($results, 0, $limit);
 				}
-
-				$wgMemc->set($memckey, $results, 60 * 60 * 3);
 			}
 		}
 
@@ -490,8 +468,8 @@ class DataProvider {
 				$results = array_slice($results, 0, $limit);
 				$wgMemc->set($memckey, $results, 60 * 60 * 12);
 			}
-			wfProfileOut(__METHOD__);
 		}
+		wfProfileOut(__METHOD__);
 		return $results;
 	}
 
@@ -509,6 +487,7 @@ class DataProvider {
 		/* check if table exists */
 		if (!empty($exists_table)) {
 			if ($dbr->tableExists($exists_table) === false) {
+				wfProfileOut(__METHOD__);
 				return false;
 			}
 		}

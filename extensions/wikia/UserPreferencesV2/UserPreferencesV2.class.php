@@ -88,7 +88,7 @@ class UserPreferencesV2 {
 			$redirectOptions[wfMsg('preferences-v2-redirect-recent-changes')] = self::LANDING_PAGE_RECENT_CHANGES;
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['type'] = 'select';
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['options'] = $redirectOptions;
-			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['label-message'] = 'preferences-v2-myhomedisableredirect';
+			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['label-message'] = 'preferences-v2-user-landing-page';
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['section'] = 'personal/appearance';
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['help'] = wfMsg('preferences-v2-redirect-explanation');
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, self::LANDING_PAGE_PROP_NAME);

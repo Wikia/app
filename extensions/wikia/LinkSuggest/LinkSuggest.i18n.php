@@ -26,21 +26,21 @@ $messages['az'] = array(
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
-	'tog-disablelinksuggest' => 'Не паказваць прапановы спасылак',
+	'tog-disablelinksuggest' => 'Не паказваць прапановы спасылак', # Fuzzy
 );
 
 /** Breton (brezhoneg)
  * @author Gwenn-Ael
  */
 $messages['br'] = array(
-	'tog-disablelinksuggest' => 'Chomp hep diskouez al liammoù kinniget',
+	'tog-disablelinksuggest' => 'Chomp hep diskouez al liammoù kinniget', # Fuzzy
 );
 
 /** Catalan (català)
  * @author Paucabot
  */
 $messages['ca'] = array(
-	'tog-disablelinksuggest' => "No mostris suggeriments d'enllaços",
+	'tog-disablelinksuggest' => "No mostris suggeriments d'enllaços", # Fuzzy
 );
 
 /** Czech (česky)
@@ -99,14 +99,14 @@ $messages['gl'] = array(
  * @author MacTire02
  */
 $messages['gv'] = array(
-	'tog-disablelinksuggest' => 'Ny taishbyney kiangley-choyrlaghey',
+	'tog-disablelinksuggest' => 'Ny taishbyney kiangley-choyrlaghey', # Fuzzy
 );
 
 /** Hebrew (עברית)
  * @author Rotemliss
  */
 $messages['he'] = array(
-	'tog-disablelinksuggest' => 'ביטול הצגת הצעות לקישורים',
+	'tog-disablelinksuggest' => 'ביטול הצגת הצעות לקישורים', # Fuzzy
 );
 
 /** Upper Sorbian (hornjoserbsce)
@@ -162,7 +162,7 @@ $messages['ja'] = array(
  * @author គីមស៊្រុន
  */
 $messages['km'] = array(
-	'tog-disablelinksuggest' => 'កុំបង្ហាញសំណើតំណភ្ជាប់',
+	'tog-disablelinksuggest' => 'កុំបង្ហាញសំណើតំណភ្ជាប់', # Fuzzy
 );
 
 /** Colognian (Ripoarisch)
@@ -173,9 +173,10 @@ $messages['ksh'] = array(
 	'tog-redirected-from' => '&ndash; ömjeleidt vun $1',
 );
 
-/** Ladino (Ladino) */
+/** Ladino (Ladino)
+ */
 $messages['lad'] = array(
-	'tog-disablelinksuggest' => 'No amostrar avisos de atadijos',
+	'tog-disablelinksuggest' => 'No amostrar avisos de atadijos', # Fuzzy
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -189,7 +190,7 @@ $messages['lb'] = array(
  * @author Xil
  */
 $messages['lv'] = array(
-	'tog-disablelinksuggest' => 'Neradīt saišu ieteikumus',
+	'tog-disablelinksuggest' => 'Neradīt saišu ieteikumus', # Fuzzy
 );
 
 /** Macedonian (македонски)
@@ -229,14 +230,14 @@ $messages['nl'] = array(
  * @author Harald Khan
  */
 $messages['nn'] = array(
-	'tog-disablelinksuggest' => 'Ikkje vis lenkjeframlegg',
+	'tog-disablelinksuggest' => 'Ikkje vis lenkjeframlegg', # Fuzzy
 );
 
 /** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'tog-disablelinksuggest' => 'Far pas veire los ligams suggerits',
+	'tog-disablelinksuggest' => 'Far pas veire los ligams suggerits', # Fuzzy
 );
 
 /** Polish (polski)
@@ -272,8 +273,8 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
- * @author 555
  * @author Daemorris
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo de exibição de código',
@@ -307,7 +308,7 @@ $messages['sr-ec'] = array(
  * @author Kandar
  */
 $messages['su'] = array(
-	'tog-disablelinksuggest' => 'Sumputkeun usulan tutumbu',
+	'tog-disablelinksuggest' => 'Sumputkeun usulan tutumbu', # Fuzzy
 );
 
 /** Swedish (svenska)
@@ -338,7 +339,7 @@ $messages['tl'] = array(
  * @author Manco Capac
  */
 $messages['tr'] = array(
-	'tog-disablelinksuggest' => 'Bağlantı önermesini gösterme',
+	'tog-disablelinksuggest' => 'Bağlantı önermesini gösterme', # Fuzzy
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -348,9 +349,10 @@ $messages['tt-cyrl'] = array(
 	'tog-disablelinksuggest' => 'Сылтамаларның тәкъдимнәрен күрсәтмәү',
 );
 
-/** Ukrainian (українська) */
+/** Ukrainian (українська)
+ */
 $messages['uk'] = array(
-	'tog-disablelinksuggest' => 'Не показувати пропозиції посилань',
+	'tog-disablelinksuggest' => 'Не показувати пропозиції посилань', # Fuzzy
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -370,4 +372,3 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'tog-disablelinksuggest' => '源代碼模式時不顯示鏈接建議',
 );
-

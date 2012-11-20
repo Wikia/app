@@ -29,7 +29,7 @@ var VET_wysiwygStart = 1;
 var VET_ratio = 1;
 var VET_shownMax = false;
 var VET_inGalleryPosition = false;
-var VET_notificationTimout = 3000;
+var VET_notificationTimout = 4000;
 
 function VET_getTextarea() {
 	// return dom element, not jquery object

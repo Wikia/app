@@ -11,6 +11,8 @@
  */
 define("DB_DPL", 3);
 
+define('DB_SLAVE_BEFORE_MASTER',-100);
+
 /**
  * Defines for Forum namespace
  */

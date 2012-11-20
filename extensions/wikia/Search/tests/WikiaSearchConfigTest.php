@@ -44,6 +44,16 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				$config['valueThatDoesntExist'],
 				'Any value set in WikiaSearchConfig should be exposed via array access.'
 		);
+		
+		$exception = false;
+		try {
+			$config->thisIsAMethodIJustMadeUp();
+		} catch ( Exception $exception ) { }
+		
+		$this->assertInstanceOf(
+				'BadMethodCallException',
+				$exception
+		);
 	}
 	
 	/**
@@ -68,7 +78,9 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				'Array access value setting should result in future array access returning the assigned value.'
 		);
 		
-		unset($config['valueThatDoesntExist']);
+		if ( isset( $config['valueThatDoesntExist'] ) ) {
+			unset($config['valueThatDoesntExist']);
+		}
 		
 		$this->assertNull(
 		        $config['valueThatDoesntExist'],
@@ -183,13 +195,19 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$config = F::build( 'WikiaSearchConfig' );
 		$noNsQuery			= 'foo';
 		$nsQuery			= 'File:foo';
+		$phantomNsQuery		= 'file';
 		
 		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'DefaultNamespaces' ), array() );
 
 		$expectedDefaultNamespaces = array( NS_MAIN );
 		
 		$searchEngineMock
-			->staticExpects	( $this->any() )
+			->staticExpects	( $this->at( 0 ) )
+			->method		( 'DefaultNamespaces' )
+			->will			( $this->returnValue( null ) )
+		;
+		$searchEngineMock
+			->staticExpects	( $this->at( 1 ) )
 			->method		( 'DefaultNamespaces' )
 			->will			( $this->returnValue( $expectedDefaultNamespaces ) )
 		;
@@ -197,6 +215,10 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$this->mockClass( 'SearchEngine',	$searchEngineMock );
 		$this->mockApp();
 		F::setInstance( 'SearchEngine', $searchEngineMock );
+		
+		$emptyNamespaces = $config->getNamespaces();
+		
+		$this->assertEmpty( $emptyNamespaces );
 		
 		$originalNamespaces = $config->getNamespaces();
 		$this->assertEquals(
@@ -335,6 +357,22 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		        'WikiaSearch::getQuery() should properly HTML-encode UTF-8 characters when using the encoded query strategy.'
 		);
 		
+		$config->setQuery( 'foo bar wiki' );
+		$config->setIsInterWiki( true );
+		
+		$this->assertEquals(
+				'foo bar',
+				$config->getQuery(),
+				'WikiaSearch::getQuery() should strip the term "wiki" from the set query if the search is interwiki'
+		);
+		
+		$config->setQuery( $phantomNsQuery );
+		$this->assertEquals(
+				$phantomNsQuery,
+				$config->getQuery(),
+				'A query that initially matches a namespaces but does not end with a colon should not strip namespaces'
+		);
+		
 	}
 	
 	/**
@@ -365,6 +403,14 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				array( 'created',	Solarium_Query_Select::SORT_DESC ),
 				$config->getSort(),
 				'A well-formed rank key should return the appropriate sort array.'
+		);
+		
+		$config->setSort( array( 'created', 'asc' ) );
+		
+		$this->assertEquals(
+				array( 'created', 'asc' ),
+				$config->getSort(),
+				'WikiaSearchConfig::getSort should return a value set by setSort if it has been invoked'
 		);
 	}
 	
@@ -528,5 +574,262 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				'If we set a different city ID, we should get a different city ID.'
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearchConfig::getSearchProfiles
+	 */
+	public function testGetSearchProfiles() {
+		$config 			= F::build( 'WikiaSearchConfig' );
+		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
+		
+		$searchEngineMock
+			->staticExpects	( $this->any() )
+			->method		( 'searchableNamespaces' )
+			->will			( $this->returnValue( array( NS_MAIN, NS_TALK, NS_CATEGORY, NS_FILE, NS_USER ) ) )
+		;
+		$searchEngineMock
+			->staticExpects	( $this->any() )
+			->method		( 'defaultNamespaces' )
+			->will			( $this->returnValue( array( NS_FILE, NS_CATEGORY ) ) )
+		;
+		$searchEngineMock
+			->staticExpects	( $this->any() )
+			->method		( 'namespacesAsText' )
+			->will			( $this->returnValue( 'Article', 'Category' ) )
+		;
+		
+		$this->mockClass( 'SearchEngine', $searchEngineMock );
+		$this->mockApp();
+		
+		$profiles = $config->getSearchProfiles();
+		$profileConstants = array( SEARCH_PROFILE_DEFAULT, SEARCH_PROFILE_IMAGES, SEARCH_PROFILE_USERS, SEARCH_PROFILE_ALL );
+		foreach ( $profileConstants as $profile ) {
+			$this->assertArrayHasKey(
+					$profile,
+					$profiles
+			);
+		}
+	}
+
+	/**
+	 * @covers WikiaSearchConfig::getActiveTab
+	 */
+	public function testGetActiveTab() {
+		
+		$config 			= F::build( 'WikiaSearchConfig' );
+		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
+		
+		$config->setAdvanced( true );
+		
+		$this->assertEquals(
+				SEARCH_PROFILE_ADVANCED,
+				$config->getActiveTab()
+		);
+		
+		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
+		
+		$this->mockClass( 'SearchEngine', $searchEngineMock );
+		$this->mockGlobalVariable( 'wgDefaultNamespaces', array() );
+		$this->mockApp();
+		
+		$config->setAdvanced( false );
+		$this->assertEquals(
+				SEARCH_PROFILE_DEFAULT,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array( NS_FILE ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_IMAGES,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array( NS_USER ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_USERS,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array( NS_FILE, NS_USER ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_ADVANCED,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array_keys( $searchEngineMock->searchableNamespaces() ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_ALL,
+				$config->getActiveTab()
+		);
+		
+		$config->setNamespaces( array( NS_FILE, NS_MAIN ) );
+		$this->assertEquals(
+				SEARCH_PROFILE_ADVANCED,
+				$config->getActiveTab()
+		);
+		
+	}
+	
+	/**
+	 * @covers WikiaSearchConfig::setFilterQuery
+	 * @covers WikiaSearchConfig::setFilterQueries
+	 * @covers WikiaSearchConfig::getFilterQueries
+	 * @covers WikiaSearchConfig::setFilterQueryByCode
+	 * @covers WikiaSearchConfig::setFilterQueriesFromCodes
+	 */
+	public function testFilterQueryMethods() {
+		$config	= F::build( 'WikiaSearchConfig' ); /* @var WikiaSearchConfig */
+		$fqAttr	= new ReflectionProperty( 'WikiaSearchConfig', 'filterQueries' );
+		$fqAttr->setAccessible( true );
+		
+		$this->assertFalse(
+				$config->hasFilterQueries(),
+				'WikiaSearchConfig::hasFilterQueries should return false if no filter queries have been explicitly set.'
+		);
+		$this->assertEquals(
+				$config,
+				$config->setFilterQuery( 'foo:bar' ),
+				'WikiaSearchConfig::setFilterQuery should provide a fluent interface.'
+		);
+		$this->assertArrayHasKey(
+				'fq1',
+				$fqAttr->getValue( $config ),
+				'WikiaSearchConfig::setFilterQuery should assign an auto-incremented key when a key is not provided'
+		);
+		$this->assertArrayHasKey(
+				'foo',
+				$fqAttr->getValue( $config->setFilterQuery( 'bar:foo', 'foo' ) ),
+				'WikiaSearchConfig::setFilterQuery should store the filter query by the provided key'
+		);
+		$this->assertContains(
+				array( 'key' => 'foo', 'query' => 'bar:foo' ),
+				$fqAttr->getValue( $config ),
+				'WikiaSearchConfig::setFilterQuery should store the key and query as associative values in the value array per Solarium expected format'
+		);
+		$this->assertTrue(
+				$config->hasFilterQueries(),
+				'WikiaSearchConfig::hasFilterQueries should return true if filter queries have been set'
+		);
+		$this->assertEquals(
+				$fqAttr->getValue( $config ),
+				$config->getFilterQueries(),
+				'WikiaSearchConfig::getFilterQueries should return the filterQueries attribute'
+		);
+		$this->assertEquals(
+				$config,
+				$config->setFilterQueries( array() ),
+				'WikiaSearchConfig::setFilterQueries should provide a fluent interface'
+		);
+		$this->assertEmpty(
+				$fqAttr->getValue( $config ),
+				'Passing an empty array to WikiaSearchConfig::setFilterQueries should remove all filter queries.'
+		);
+		$this->assertEquals(
+				0,
+				WikiaSearchConfig::$filterQueryIncrement,
+				'WikiaSearchConfig::setFilterQueries should reset the filter query increment'
+		);
+		
+		$config->setFilterQueries( array(
+				array(
+						'query' => 'foo:bar',
+						'key'   => 'baz',
+				),
+				'qux',
+				true
+		));
+		$this->assertArrayHasKey(
+				'baz',
+				$fqAttr->getValue( $config ),
+				'A properly formatted filter query array passed as a value to the array argument of '
+				.' WikiaSearchConfig::setFilterQueries should respect the previously set key'
+		);
+		$this->assertArrayHasKey(
+				'fq1',
+				$fqAttr->getValue( $config ),
+				'Values in the argument array that are string-typed should receive '
+				.' an auto-incremented key per WikiaSearchConfig::setFilterQuery' 
+		);
+		$this->assertEquals(
+				2,
+				count( $fqAttr->getValue( $config ) ),
+				'Values in the array passed to WikiaSearchConfig::setFilterQueries that are not properly formatted should be ignored'
+		);
+		
+		// resetting
+		$config->setFilterQueries( array() );
+		
+		$this->assertEquals(
+				$config,
+				$config->setFilterQueryByCode( 'is_video' ),
+				'WikiaSearchConfig::setFilterQueryByCode should provide a fluent interface'
+		);
+		$fqArray = $fqAttr->getValue( $config );
+		$this->assertArrayHasKey(
+				'is_video',
+				$fqArray,
+				'WikiaSearchConfig::setFilterQueryByCode should set the code as the key for the new filter query'
+		);
+		
+		$fcAttr = new ReflectionProperty( 'WikiaSearchConfig', 'filterCodes' );
+		$fcAttr->setAccessible( true );
+		$filterCodes = $fcAttr->getValue( $config );
+		
+		$this->assertEquals(
+				array( 'key' => 'is_video', 'query' => $filterCodes['is_video'] ),
+				$fqArray['is_video'],
+				'WikiaSearchConfig::setFilterQueryByCode should set exactly the query string that is '
+				.'the value in WikiaSearchConfig::filterCodes, keyed by the code provided' 
+		);
+
+		$mockWikia = $this->getMock( 'Wikia', array( 'log' ) );
+		$mockWikia
+			->staticExpects	( $this->any() )
+			->method		( 'log' )
+		;
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockApp();
+		// this satisfies the above expectation
+		$config->setFilterQueryByCode( 'notacode' );
+		
+		$this->assertEquals(
+				$config,
+				$config->setFilterQueriesFromCodes( array( 'is_video', 'is_image' ) ),
+				'WikiaSearchConfig::setFilterQueriesFromCodes should provide a fluent interface'
+		);
+		$this->assertEquals(
+				2,
+				count( $fqAttr->getValue( $config ) ), 
+				'WikiaSearchConfig::setFilterQueriesFromCode should function over each array '
+				.' value provided as a code key to WikiaSearchConfig::setFilterQueryByCode. '
+				.' This test also proves a vital part of filter query data architecture: overwriting a key is allowed, '
+				.' and warnings are not issues if you do so.'
+		);
+		// needs resetting to get the testing environment back in shape
+		WikiaSearchConfig::$filterQueryIncrement = 0;
+	} 
+	
+	/**
+	 * @covers WikiaSearchConfig::getRequestedFields
+	 */
+	public function testGetRequestedFields() {
+		$config = F::build( 'WikiaSearchConfig' );
+		
+		$config->setRequestedFields( array( 'html' ) );
+		
+		$fields = $config->getRequestedFields();
+		
+		$this->assertContains(
+				WikiaSearch::field( 'html' ),
+				$fields,
+				'WikiaSearchConfig::getRequestedFields() should perform language field transformation'
+		);
+		$this->assertContains(
+				'id',
+				$fields,
+				'WikiaSearchConfig::getRequestedFields() should always include an id'
+		);
+	}
+	
 	
 }

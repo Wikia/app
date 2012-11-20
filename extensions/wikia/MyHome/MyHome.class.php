@@ -180,10 +180,10 @@ class MyHome {
 			$value = $wgUser->getOption(UserPreferencesV2::LANDING_PAGE_PROP_NAME);
 			switch($value) {
 				case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
-					$title = Title::newFromText('WikiActivity', NS_SPECIAL);
+					$title = SpecialPage::getTitleFor('WikiActivity');
 					break;
 				case UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
-					$title = Title::newFromText('RecentChanges', NS_SPECIAL);
+					$title = SpecialPage::getTitleFor('RecentChanges');
 					break;
 			}
 		}
@@ -315,11 +315,11 @@ class MyHome {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
 	public static function onGetPreferences($user, &$preferences) {
-		//we've changed 'myhomedisableredirect' to 'userlendingpage' during work on fb#51756
+		//we've changed 'myhomedisableredirect' to 'userlandingpage' during work on fb#51756
 		$preferences[UserPreferencesV2::LANDING_PAGE_PROP_NAME] = array(
 			'type' => 'toggle',
 			'section' => 'misc/myhome',
-			'label-message' => 'tog-myhomedisableredirect',
+			'label-message' => 'tog-userlandingpage',
 		);
 
 		return true;

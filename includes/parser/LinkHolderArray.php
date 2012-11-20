@@ -283,8 +283,8 @@ class LinkHolderArray {
 						continue;
 					}
 					if ( $entry['pdbk'] !== '' ) {
-						$memcKeys[] = wfMemcKey("linkcache:good:{$entry['pdbk']}");
-						$memcKeys[] = wfMemcKey("linkcache:fields:{$entry['pdbk']}");
+						$memcKeys[] = LinkCache::getMemcKey($entry['pdbk'], 'good');
+						$memcKeys[] = LinkCache::getMemcKey($entry['pdbk'], 'fields');
 					}
 				}
 			}

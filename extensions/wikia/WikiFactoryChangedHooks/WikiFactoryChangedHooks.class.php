@@ -32,34 +32,6 @@ Class WikiFactoryChangedHooks {
 		return true;
 	}
 
-	static public function oasisnav2($cv_name, $city_id, $value) {
-		wfProfileIn(__METHOD__);
-		Wikia::log(__METHOD__, $city_id, $cv_name . ' = ' . intval($value));
-
-		if ($cv_name == 'wgOasisNavV2') {
-			Wikia::log(__METHOD__, '', 'Started purging wgOasisNav2');
-			/* @var $navService WikiNavigationService */
-			$navService = F::build('WikiNavigationService');
-			$memCacheKey = $navService->getMemcKey(WikiNavigationService::WIKI_LOCAL_MESSAGE);
-			F::app()->wg->memc->set($memCacheKey, null);
-
-			$title = F::build('Title', array(WikiNavigationService::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI), 'newFromText');
-
-			if ($title instanceof Title) {
-				$article = Article::newFromID($title->getArticleID());
-				if ($article instanceof Article) {
-					$article->doPurge();
-				}
-			}
-			WikiFactory::clearCache($city_id);
-			Wikia::log(__METHOD__, '', 'Finished purging wgOasisNav2');
-		}
-		wfProfileOut(__METHOD__);
-
-		return true;
-	}
-
-
 	/**
 	 * Hook handler - will install the datbase and messaging changes for recipes sites with RecipesTweaks.
 	 *

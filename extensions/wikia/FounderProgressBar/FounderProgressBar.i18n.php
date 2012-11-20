@@ -128,57 +128,63 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'founderprogressbar-themedesigner-visit-action' => 'Ugly!',
-	'founderprogressbar-photo-add10-label' => 'Needs plural.',
-	'founderprogressbar-category-add3-label' => 'Needs plural.',
+	'founderprogressbar-themedesigner-visit-action' => 'Ugly!', # Fuzzy
+	'founderprogressbar-photo-add10-label' => 'Needs plural.', # Fuzzy
+	'founderprogressbar-category-add3-label' => 'Needs plural.', # Fuzzy
 );
 
 /** Breton (brezhoneg)
  * @author Fohanno
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
 	'founderprogressbar-credits' => 'Ur strollad trevelloù hag heñcher evit diazezerien wikioù nevez',
 	'founderprogressbar-widget-label' => 'Araokadur {{SITENAME}}',
-	'founderprogressbar-progress-label' => 'Obererezhioù echuet',
+	'founderprogressbar-progress-label' => 'Obererezhioù echuet', # Fuzzy
 	'founderprogressbar-progress-see-full-list' => 'Gwelet ar roll klok',
 	'founderprogressbar-progress-hide-full-list' => 'Kuzhat ar roll klok',
 	'founderprogressbar-skip-for-now' => 'Tremen evit poent',
 	'founderprogressbar-task-completed' => 'Graet',
 	'founderprogressbar-list-label' => 'Trevelloù {{SITENAME}}',
 	'founderprogressbar-list-task-label' => 'Trevelloù',
-	'founderprogressbar-page-add10-label' => 'Ouzhpennañ $1 pajenn',
+	'founderprogressbar-page-add10-label' => 'Ouzhpennañ $1 pajenn', # Fuzzy
 	'founderprogressbar-page-add10-action' => 'Ouzhpennañ ur bajenn',
 	'founderprogressbar-themedesigner-visit-label' => 'Personelaat ho tem.',
 	'founderprogressbar-mainpage-edit-action' => 'Kemmañ ar bajenn degemer',
-	'founderprogressbar-photo-add10-label' => 'Ouzhpennañ $1 skeudenn',
+	'founderprogressbar-photo-add10-label' => 'Ouzhpennañ $1 skeudenn', # Fuzzy
 	'founderprogressbar-photo-add10-action' => 'Ouzhpennañ ur skeudenn',
-	'founderprogressbar-category-add3-label' => 'Ouzhpennañ $1 rummad',
+	'founderprogressbar-category-add3-label' => 'Ouzhpennañ $1 rummad', # Fuzzy
 	'founderprogressbar-category-add3-action' => 'Ouzhpennañ ur rummad',
 	'founderprogressbar-wikiactivity-visit-label' => 'Gweladenniñ Wiki Activity',
 	'founderprogressbar-wikiactivity-visit-action' => 'Mont da Dibar:WikiActivity',
 	'founderprogressbar-profile-edit-action' => "Mont d'ho pajenn profil",
-	'founderprogressbar-photo-add20-label' => 'Ouzhpennañ $1 skeudenn',
+	'founderprogressbar-photo-add20-label' => 'Ouzhpennañ $1 skeudenn', # Fuzzy
 	'founderprogressbar-photo-add20-action' => 'Ouzhpennañ ur skeudenn',
 	'founderprogressbar-total-edit75-label' => 'Tizhout 75 kemm',
 	'founderprogressbar-total-edit75-action' => 'Ouzhpennañ ur bajenn',
-	'founderprogressbar-page-add20-label' => 'Ouzhpennañ $1 pajenn',
+	'founderprogressbar-page-add20-label' => 'Ouzhpennañ $1 pajenn', # Fuzzy
 	'founderprogressbar-page-add20-action' => 'Ouzhpennañ ur bajenn',
+	'founderprogressbar-category-edit-label' => 'Kemmañ ur bajenn rummañ',
 	'founderprogressbar-category-edit-action' => 'Mont da Rummadoù',
 	'founderprogressbar-wikialabs-visit-label' => 'Gweladenniñ Wikia Labs',
 	'founderprogressbar-wikialabs-visit-action' => 'Mont da Wikia Labs',
 	'founderprogressbar-category-add5-action' => 'Ouzhpennañ ur rummad',
 	'founderprogressbar-gallery-add-label' => 'Ouzhpennañ ur skeudennaoueg',
 	'founderprogressbar-gallery-add-action' => "Mont d'ar Bajenn Skoazell",
+	'founderprogressbar-topnav-edit-label' => 'Personelaat ho merdeadur',
 	'founderprogressbar-topnav-edit-action' => 'Kemmañ ar merdeiñ',
 	'founderprogressbar-mainpage-addslider-label' => 'Ouzhpennañ un dibuner war ar bajenn degemer',
 	'founderprogressbar-mainpage-addslider-action' => 'Kemmañ ar bajenn degemer',
 	'founderprogressbar-video-add-label' => 'Ouzhpennañ ur video',
 	'founderprogressbar-video-add-action' => 'Ouzhpennañ ur video',
+	'founderprogressbar-user-add5-label' => 'Tizhout 5 profil implijer',
+	'founderprogressbar-user-add5-action' => "Mont d'ar Bajenn Skoazell",
 	'founderprogressbar-recentchanges-visit-label' => 'Gweladenniñ Kemmoù Diwezhañ',
+	'founderprogressbar-wordmark-edit-label' => 'Enporzhiañ ul logo',
 	'founderprogressbar-fb-likes3-action' => "Mont d'ar Bajenn Degemer",
 	'founderprogressbar-uncategorized-visit-action' => 'Mont da Dibar:UncategorizedPages',
-	'founderprogressbar-total-edit300-label' => 'Tizhout $1 kemm',
+	'founderprogressbar-total-edit300-label' => 'Tizhout $1 kemm', # Fuzzy
 	'founderprogressbar-total-edit300-action' => 'Ouzhpennañ ur bajenn',
 	'founderprogressbar-bonus-photo-add10-action' => "Ouzhpennañ ul luc'hskeudenn",
 	'founderprogressbar-bonus-page-add5-action' => 'Ouzhpennañ ur bajenn',
@@ -377,6 +383,7 @@ $messages['diq'] = array(
 	'founderprogressbar-video-add-label' => 'Video deke',
 	'founderprogressbar-video-add-action' => 'Video deke',
 	'founderprogressbar-fb-likes3-action' => 'Şo Pela Seri',
+	'founderprogressbar-bonus-photo-add10-action' => 'Fotraf deke',
 	'founderprogressbar-browse-page-name' => 'Çımpawe',
 );
 
@@ -1074,7 +1081,9 @@ $messages['ku-latn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'founderprogressbar-progress-see-full-list' => 'Ganz Lëscht weisen',
 	'founderprogressbar-list-task-label' => 'Aufgaben',
+	'founderprogressbar-list-skipped-task-desc' => 'Dir kënnt dës zu all Moment fäerdeg maachen.',
 	'founderprogressbar-page-add10-action' => 'Eng Säit derbäisetzen',
 	'founderprogressbar-mainpage-edit-action' => 'Haaptsäit änneren',
 	'founderprogressbar-photo-add10-action' => 'Eng Foto derbäisetzen',
@@ -1082,6 +1091,8 @@ $messages['lb'] = array(
 	'founderprogressbar-photo-add20-action' => 'Eng Foto derbäisetzen',
 	'founderprogressbar-total-edit75-action' => 'Eng Säit derbäisetzen',
 	'founderprogressbar-page-add20-action' => 'Eng Säit derbäisetzen',
+	'founderprogressbar-category-edit-label' => 'Eng Säit vun enger Kategorie änneren',
+	'founderprogressbar-fb-connect-action' => 'Facebook Connect',
 	'founderprogressbar-category-add5-action' => 'Eng Kategorie derbäisetzen',
 	'founderprogressbar-gallery-add-label' => 'Eng Fotogalerie derbäisetzen',
 	'founderprogressbar-mainpage-addslider-action' => 'Haaptsäit änneren',
@@ -1952,6 +1963,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Geitost
+ * @author Grytolle
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1964,6 +1976,7 @@ $messages['sv'] = array(
 	'founderprogressbar-task-completed' => 'Färdigt',
 	'founderprogressbar-list-label' => '{{SITENAME}}s uppgifter',
 	'founderprogressbar-list-description1' => 'Är du redo att driva din wiki till framgång? Utför alla uppgifter som listas nedan för att få din förloppsmätare till 100 %! Vem som helst på din wiki kan hjälpa till och alla deras bidrag kommer att räknas in i uppgifterna på denna lista.',
+	'founderprogressbar-list-description2' => 'Uppgiftshubben visar en lista över alla uppgifter som du måste slutföra. Om du hoppar över en uppgift flyttas den till sektionen för överhoppade uppgifter, där den finns kvar så att du kan utföra den när du vill. Finns det en uppgift i listan som du känner att den aldrig kommer passa din wiki? Ingen fara -- när det bara finns överhoppade uppgifter kvar kommer vi att låsa upp dina bonusuppgifter. Bonusuppgifter kan du slutföra för att kompensera för de standarduppgifter som du aldrig tänker utföra, så uppnår du ändå dina eftertraktade 100%.',
 	'founderprogressbar-list-task-label' => 'Uppgifter',
 	'founderprogressbar-list-skipped-task-label' => 'Överhoppade uppgifter',
 	'founderprogressbar-list-skipped-task-desc' => 'Du kan slutföra dessa när som helst.',
@@ -2007,6 +2020,7 @@ $messages['sv'] = array(
 	'founderprogressbar-page-add20-description' => 'Fortsätt arbeta för att göra din wiki en omfattande resurs om ditt ämne. Kom ihåg, skapa inte bara sidor -- se till att de har gott om innehåll i dem också.',
 	'founderprogressbar-category-edit-label' => 'Redigera en kategorisida',
 	'founderprogressbar-category-edit-action' => 'Gå till kategorier',
+	'founderprogressbar-category-edit-description' => 'Kategorier visar inte bara länkar till alla sidor i kategorin; du kan även redigera dem för att berätta folk vad kategorin handlar om och låta dem veta vilka sidor som borde läggas till där. Dessutom, genom att redigera kategorisidan ändras den röda länken till en mer aktiv blåfärgad länk.',
 	'founderprogressbar-wikialabs-visit-label' => 'Besök Wikia-labs',
 	'founderprogressbar-wikialabs-visit-action' => 'Gå till Wikia-labs',
 	'founderprogressbar-wikialabs-visit-description' => 'Wikia-labs låter dig aktivera de nyaste funktionerna från Wikia på din wiki. Dessa funktioner är alla i betastadiet, men det är alltid ett bra sätt att se vad som är på gång från Wikia och prova det själv.',
@@ -2042,14 +2056,19 @@ $messages['sv'] = array(
 	'founderprogressbar-wordmark-edit-description' => 'Din wikis logotyp är flaggskeppet för din wiki, den är synlig på varje sida och kan verkligen ge användarna en försmak på ämnet. Ladda upp din egen grafiska logotyp är ett jättebra sätt att få din wikis märke att stå ut ännu mer.',
 	'founderprogressbar-mostvisited-visit-label' => 'Se dina mest besökta sidor',
 	'founderprogressbar-mostvisited-visit-action' => 'Gå till Special:MostVisitedPages',
+	'founderprogressbar-mostvisited-visit-description' => 'När din wiki verkligen tagit fart är det praktiskt att se vilka sidor som är populärast, så att du kan förbättra dem och lägga till länkar till mindre populära sidor. Se dina mest besökta sidor för att få en idé om vad som fungerar bäst på din wiki, så att du kan genomföra liknande förbättringar på andra sidor.',
 	'founderprogressbar-toptenlist-add-label' => 'Lägg till en "topp tio"-lista',
 	'founderprogressbar-toptenlist-add-action' => 'Lägg till en "topp tio"-lista',
+	'founderprogressbar-toptenlist-add-description' => 'Topp 10-listan uppmuntrar besökare som kanske är blyga till att delta på din wiki. Den skapar samhörighetskänsla och gör det lätt för folk att ge tummen upp eller ner åt vissa punkter, eller göra tillägg i listorna.',
 	'founderprogressbar-blogpost-add-label' => 'Skriv ett blogginlägg',
 	'founderprogressbar-blogpost-add-action' => 'Gå till din bloggsida',
+	'founderprogressbar-blogpost-add-description' => 'Bloggposter på din wiki är ett bra verktyg för att tillkännage information, beskriva vad som behövs på wikin, skriva åsiktsbaserade sidor och uppmuntra andra till att skriva egna bloggposter de med. Ge det en chans!',
 	'founderprogressbar-fb-likes3-label' => 'Nå $1 gilla-markeringar på Facebook',
 	'founderprogressbar-fb-likes3-action' => 'Gå till huvudsidan',
+	'founderprogressbar-fb-likes3-description' => 'Att dela är att bry sig, och delning kan verkligen hjälpa till att göra din wiki känd i resten av världen. Uppmuntra dina medlemmar och läsare att "gilla" din wikis förstasida på Facebook för att göra den mer känd.',
 	'founderprogressbar-uncategorized-visit-label' => 'Se okategoriserade sidor',
 	'founderprogressbar-uncategorized-visit-action' => 'Gå till Special:UncategorizedPages',
+	'founderprogressbar-uncategorized-visit-description' => 'När din wiki har mer innehåll kan det vara lätt att tappa taget om organiseringen. Håll koll genom att spåra sidor som inte har kategorier, och lägg till kategorier till dessa sidor för att hålla dem tillgängliga och organiserade.',
 	'founderprogressbar-total-edit300-label' => 'Nå {{PLURAL:$1|$1 redigering|$1 redigeringar}}',
 	'founderprogressbar-total-edit300-action' => 'Lägg till en sida',
 	'founderprogressbar-total-edit300-description' => '$1 redigeringar är en fantastisk milstolpe. Med så många ändringar som görs och innehåll som läggs till på din wiki kommer den vara bra på god väg att uppnå framgång!',
@@ -2217,7 +2236,7 @@ $messages['tr'] = array(
 $messages['tt-cyrl'] = array(
 	'founderprogressbar-page-add10-action' => 'Мәкалә өстәү',
 	'founderprogressbar-total-edit75-action' => 'Мәкалә өстәү',
-	'founderprogressbar-page-add20-label' => '$1 мәкалә өстәү',
+	'founderprogressbar-page-add20-label' => '$1 мәкалә өстәү', # Fuzzy
 	'founderprogressbar-gallery-add-url' => 'http://community.wikia.com/wiki/Help:Gallery',
 	'founderprogressbar-user-add5-url' => 'http://help.wikia.com/wiki/Advice:Building_a_Community',
 );
@@ -2243,6 +2262,7 @@ $messages['uk'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hzy980512
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'founderprogressbar-progress-see-full-list' => '查看完整列表',
@@ -2258,6 +2278,7 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-mainpage-edit-action' => '编辑主页',
 	'founderprogressbar-photo-add10-action' => '添加一张图片',
 	'founderprogressbar-category-add3-action' => '添加一个分类',
+	'founderprogressbar-commcentral-visit-label' => '访问创立者与管理人员在红心',
 	'founderprogressbar-wikiactivity-visit-label' => '访问维基动态',
 	'founderprogressbar-profile-edit-label' => '填写您的档案页',
 	'founderprogressbar-profile-edit-action' => '到达您的档案页',
@@ -2265,10 +2286,13 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-total-edit75-label' => '编辑数达到 75 次',
 	'founderprogressbar-total-edit75-action' => '添加一个页面',
 	'founderprogressbar-page-add20-action' => '添加一个页面',
+	'founderprogressbar-fb-connect-label' => 'Facebook链接',
+	'founderprogressbar-fb-connect-action' => 'Facebook链接',
 	'founderprogressbar-category-add5-action' => '添加一个分类',
 	'founderprogressbar-gallery-add-label' => '添加图片库',
 	'founderprogressbar-gallery-add-action' => '转到帮助页',
 	'founderprogressbar-topnav-edit-action' => '编辑导航',
+	'founderprogressbar-mainpage-addslider-action' => '编辑主页',
 	'founderprogressbar-video-add-label' => '添加一段视频',
 	'founderprogressbar-user-add5-label' => '查看5个用户的档案',
 	'founderprogressbar-user-add5-action' => '转到帮助页',
@@ -2339,4 +2363,3 @@ $messages['zh-hant'] = array(
 	'founderprogressbar-recentchanges-visit-action' => '到最近更改',
 	'founderprogressbar-mostvisited-visit-label' => '查詢訪問數最多的頁面',
 );
-

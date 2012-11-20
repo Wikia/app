@@ -82,7 +82,34 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	        'most-viewed'		=>	array( 'views',		Solarium_Query_Select::SORT_DESC ),
 	        'freshest'			=>	array( 'indexed',	Solarium_Query_Select::SORT_DESC ),
 	        'stalest'			=>	array( 'indexed', 	Solarium_Query_Select::SORT_ASC  ),
+			'shortest'			=>	array( 'video_duration_i', Solarium_Query_Select::SORT_ASC ),
+			'longest'			=>	array( 'video_duration_i', Solarium_Query_Select::SORT_DESC ),
 	);
+	
+	/**
+	 * Associates short key names with filter queries.
+	 * This approach doesn't support on-the-fly language fields.
+	 * We could still append a key in __construct() if it becomes an issue.
+	 * @var array
+	 */
+	private $filterCodes = array(
+			'is_video'			=>	'is_video:true',
+			'is_image'			=>	'is_image:true',
+			'is_hd'				=>	'video_hd_b:true',
+	);
+	
+	/**
+	 * This is used to keep non-keyed filter queries unique in Solarium
+	 * @var int
+	 */
+	public static $filterQueryIncrement = 0;
+	
+	/**
+	 * Filter queries stored by "key"
+	 * Separate from traditional storage because the requirements are a bit more complex
+	 * @var array
+	 */
+	private $filterQueries = array();
 	
 	/**
 	 * Constructor method
@@ -91,6 +118,15 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 */
 	public function __construct( array $params = array() ) {
 		parent::__construct();
+		
+		$dynamicFilterCodes = array(
+				'cat_videogames'	=>	WikiaSearch::valueForField( 'categories', 'Video Games', array( 'quote'=>'"' )  ),
+				'cat_entertainment'	=>	WikiaSearch::valueForField( 'categories', 'Entertainment' ),
+				'cat_lifestyle'		=>	WikiaSearch::valueForField( 'categories', 'Lifestyle'),
+				);
+		
+		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
+		
 		$this->params = array_merge( $this->params, 
 									 array( 'requestedFields' => $this->requestedFields ), 
 									 $params );
@@ -102,6 +138,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @see    WikiaSearchConfigTest::testMagicMethods 
 	 * @param  string $method
 	 * @param  array  $params
+	 * @throws  BadMethodCallException
 	 * @return Ambigous <NULL, multitype:>|WikiaSearchConfig
 	 */
 	public function __call($method, $params) {
@@ -111,6 +148,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 			$this->offsetSet( strtolower($method[3]).substr($method, 4), $params[0] );
 			return $this; // fluent
 		}
+		throw new BadMethodCallException( "Unknown method: {$method}" );
 	}
 	
 	/**
@@ -177,13 +215,18 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		$query = html_entity_decode( Sanitizer::StripAllTags ( $query ), ENT_COMPAT, 'UTF-8');
 		
 		$this->params['originalQuery'] = $query;
-		$queryNamespace	= $this->wg->ContLang->getNsIndex( preg_replace( '/^(.*):.*$/', '$1', strtolower( $query ) ) );
-		if ( $queryNamespace ) {
-			$namespaces = $this->getNamespaces();
-		    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
-		        $this->params['queryNamespace'] = $queryNamespace;
-		    } 
-		    $query = implode( ':', array_slice( explode( ':', $query ), 1 ) );
+		
+		if ( strpos( $query, ':' ) !== false ) {
+			$queryNsExploded = explode( ':', $query );
+			$queryNamespaceStr = array_shift( $queryNsExploded );
+			$queryNamespace	= $this->wg->ContLang->getNsIndex( $queryNamespaceStr );
+			if ( $queryNamespace ) {
+				$namespaces = $this->getNamespaces();
+			    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
+			        $this->params['queryNamespace'] = $queryNamespace;
+			    } 
+			    $query = implode( ':', $queryNsExploded );
+			}
 		}
 		
 		$this->params['query'] = $query;
@@ -233,16 +276,12 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		$searchEngine = F::build( 'SearchEngine' );
 		$namespaces = ( isset($this->params['namespaces']) && !empty($this->params['namespaces']) ) 
 					? $this->params['namespaces'] 
-					: $searchEngine->DefaultNamespaces();
+					: $searchEngine->defaultNamespaces();
 		if (! is_array( $namespaces ) ) { 
 			$namespaces = array();
 		}
-		$queryNamespaceArray = (isset($this->params['queryNamespace'])) ? array($this->params['queryNamespace']) : array(); 
-		$this->params['namespaces'] = array_unique( array_merge($namespaces, $queryNamespaceArray) );
-		
-		if (! is_array( $this->params['namespaces'] ) ) {
-			$this->params['namespaces'] = array();
-		}
+		$queryNamespaceArray = ( isset( $this->params['queryNamespace'] ) ) ? array( $this->params['queryNamespace'] ) : array(); 
+		$this->params['namespaces'] = array_unique( array_merge( $namespaces, $queryNamespaceArray ) );
 		
 		return $this->params['namespaces'];
 	}
@@ -253,6 +292,11 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @return array where index 0 is the field name and index 1 is the constant used for ASC or DESC in solarium
 	 */
 	public function getSort() {
+		// Allows you to override our default keyword-based ranking functionality. Don't abuse this.
+		// I have aggressively validated this value to protect your query.
+		if ( isset( $this->params['sort'] ) && is_array( $this->params['sort'] ) && count( $this->params['sort'] ) == 2 ) {
+			return $this->params['sort'];
+		}
 		$rank = $this->getRank();
 		return isset($this->rankOptions[$rank]) ? $this->rankOptions[$rank] : $this->rankOptions['default']; 
 	}
@@ -315,9 +359,13 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	public function getRequestedFields()
 	{
 		$fieldsPrepped = array();
-		foreach ($this['requestedFields'] as $field) {
-			$fieldsPrepped[] = WikiaSearch::field($field);
+		foreach ( $this['requestedFields'] as $field ) {
+			$fieldsPrepped[] = WikiaSearch::field( $field );
 		}
+		
+		if (! ( in_array( 'id', $fieldsPrepped ) || in_array( '*', $fieldsPrepped ) ) ) {
+			$fieldsPrepped[] = 'id';
+		} 
 		
 		return $fieldsPrepped;
 	}
@@ -380,42 +428,42 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	    // Builds list of Search Types (profiles)
 	    $searchEngine = F::build( 'SearchEngine' );
 	    $nsAllSet = array_keys( $searchEngine->searchableNamespaces() );
+	    $defaultNamespaces = $searchEngine->defaultNamespaces();
+
 	    $profiles = array(
-	            'default' => array(
+	            SEARCH_PROFILE_DEFAULT => array(
 	                    'message' => 'wikiasearch2-tabs-articles',
 	                    'tooltip' => 'searchprofile-articles-tooltip',
-	                    'namespaces' => SearchEngine::defaultNamespaces(),
-	                    'namespace-messages' => SearchEngine::namespacesAsText(
-	                            SearchEngine::defaultNamespaces()
-	                    ),
+	                    'namespaces' => $defaultNamespaces,
+	                    'namespace-messages' => $searchEngine->namespacesAsText( $defaultNamespaces ),
 	            ),
-	            'images' => array(
+	            SEARCH_PROFILE_IMAGES => array(
 	                    'message' => 'wikiasearch2-tabs-photos-and-videos',
 	                    'tooltip' => 'searchprofile-images-tooltip',
 	                    'namespaces' => array( NS_FILE ),
 	            ),
-	            'users' => array(
+	            SEARCH_PROFILE_USERS => array(
 	                    'message' => 'wikiasearch2-users',
 	                    'tooltip' => 'wikiasearch2-users-tooltip',
 	                    'namespaces' => array( NS_USER )
 	            ),
-	            'all' => array(
+	            SEARCH_PROFILE_ALL => array(
 	                    'message' => 'searchprofile-everything',
 	                    'tooltip' => 'searchprofile-everything-tooltip',
 	                    'namespaces' => $nsAllSet,
 	            ),
-	            'advanced' => array(
+	            SEARCH_PROFILE_ADVANCED => array(
 	                    'message' => 'searchprofile-advanced',
 	                    'tooltip' => 'searchprofile-advanced-tooltip',
 	                    'namespaces' => $this->getNamespaces(),
 	                    'parameters' => array( 'advanced' => 1 ),
 	            )
 	    );
-	
-	    wfRunHooks( 'SpecialSearchProfiles', array( &$profiles ) );
+	    
+	    $this->wf->RunHooks( 'SpecialSearchProfiles', array( &$profiles ) );
 	
 	    foreach( $profiles as $key => &$data ) {
-	        sort($data['namespaces']);
+	        sort( $data['namespaces'] );
 	    }
 	
 	    return $profiles;
@@ -428,23 +476,23 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	public function getActiveTab() {
 		
 		if( $this->getAdvanced() ) {
-		    return 'advanced';
+		    return SEARCH_PROFILE_ADVANCED;
 		}
+		$searchEngine = F::build( 'SearchEngine' ); 
+		$searchableNamespaces = array_keys( $searchEngine->searchableNamespaces() );
 		
-		$searchableNamespaces = array_keys( SearchEngine::searchableNamespaces() );
+		// $nsVals should always have a value at this point
 		$nsVals = $this->getNamespaces();
 		
-		if(empty($nsVals)) {
-		    return $this->wg->User->getOption('searchAllNamespaces') ? 'all' :  'default';
-		}
-		
+		// we will always return at least SEARCH_PROFILE_ADVANCED, because it is identical to the return value of getNamespaces
+		$searchProfile = SEARCH_PROFILE_ADVANCED;
 		foreach( $this->getSearchProfiles() as $name => $profile ) {
-		    if ( !count( array_diff( $nsVals, $profile['namespaces'] ) ) && !count( array_diff($profile['namespaces'], $nsVals ) )) {
-		        return $name;
+		    if (   ( count( array_diff( $nsVals, $profile['namespaces'] ) ) == 0 ) 
+		    	&& ( count( array_diff($profile['namespaces'], $nsVals ) ) == 0 ) ) {
+	        	$searchProfile = $name !== SEARCH_PROFILE_ADVANCED ? $name : $searchProfile;
 		    }
 		}
-		
-		return 'advanced';
+		return $searchProfile;
 	}
 	
 	/**
@@ -474,10 +522,91 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	
 	/**
 	 * Normalizes the cityId value in case of mistyping
-	 * @see   WikiaSearchConfigTest::testGetCityId
-	 * @param int $value
+	 * @see    WikiaSearchConfigTest::testGetCityId
+	 * @param  int $value
+	 * @return WikiaSearchConfig
 	 */
 	public function setCityID( $value ) {
 		return $this->__call( 'setCityId', array( $value ) );
 	}
+	
+	/**
+	 * Adds a filter query based on the optional key, or automatically incremented key
+	 * Note that if you provide a key that already exists, you are overwriting that filter query.
+	 * @param  string $queryString
+	 * @param  string $key
+	 * @return WikiaSearchConfig
+	 */
+	public function setFilterQuery( $queryString, $key = null ) {
+		$key = $key ?: sprintf( 'fq%d', ++self::$filterQueryIncrement );
+		$this->filterQueries[$key] = array( 
+				'key' => $key, 
+				'query' => $queryString 
+		);
+		return $this;
+	}
+	
+	/**
+	 * Allows you to set all filter queries wholesale.
+	 * Pass an empty array if you want to reinitialize this property.
+	 * @param  array $filterQueries
+	 * @return WikiaSearchConfig
+	 */
+	public function setFilterQueries( array $filterQueries ) {
+		$newFilterQueries = array();
+		$this->filterQueries = array();
+		self::$filterQueryIncrement = 0;
+		foreach ( $filterQueries as $filterQuery ) {
+			if ( is_array( $filterQuery ) && isset( $filterQuery['query'] ) ) {
+				$this->setFilterQuery( $filterQuery['query'], ( isset( $filterQuery['key'] ) ? $filterQuery['key'] : null ) );
+			} else if ( is_string( $filterQuery ) ) {
+				$this->setFilterQuery( $filterQuery );
+			} 
+		}
+		return $this;
+	}
+	
+	/**
+	 * Returns filter query associative array
+	 * @return array
+	 */
+	public function getFilterQueries() {
+		return $this->filterQueries;
+	}
+	
+	/**
+	 * Returns true or false depending on whether we've got filter queries set
+	 * @return bool
+	 */
+	public function hasFilterQueries() {
+		return !empty( $this->filterQueries );
+	}
+	
+	/**
+	 * Uses pre-determined filter queries that can be set by the controller (e.g. video filtering)
+	 * @param  string $code
+	 * @return WikiaSearchConfig
+	 */
+	public function setFilterQueryByCode( $code ) {
+		if ( isset( $this->filterCodes[$code] ) ) {
+			$this->setFilterQuery( $this->filterCodes[$code], $code );
+		} else {
+			// the fun things we do to test static methods
+			F::build( 'Wikia' )->log( __METHOD__, '', "Filter code {$code} does not exist." );
+		}
+		return $this;
+	}
+	
+	/**
+	 * Allows us to use pass array of codes in the controller to the search config
+	 * @param  array $codes
+	 * @return WikiaSearchConfig
+	 */
+	public function setFilterQueriesFromCodes( array $codes ) {
+		foreach ( $codes as $code ) {
+			$this->setFilterQueryByCode( $code );
+		}
+		return $this;
+	}
+
 }

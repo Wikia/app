@@ -267,8 +267,8 @@ $messages['qqq'] = array(
 	'wikistats_showstats_btn' => 'Button text, also referenced in {{msg-mw|wikistats_info}}.',
 	'wikistats_panel_close_btn' => 'Button text. Translate as verb.',
 	'wikistats_daterange_from' => '{{Identical|From}}',
-	'wikistats_latest_userviews_pages' => 'Needs plural',
-	'wikistats_latest_pageviews_subtitle' => 'Needs plural support.',
+	'wikistats_latest_userviews_pages' => 'Needs plural', # Fuzzy
+	'wikistats_latest_pageviews_subtitle' => 'Needs plural support.', # Fuzzy
 	'wikistats_active_wikians_date' => 'Seen on the "Editor activity" page, the selections being "1 month", "2 months" ... "6 months".',
 	'wikistats_uploaded_images' => '{{Identical|Uploaded}}',
 	'wikistats_wikicategory' => '{{Identical|Category}}',
@@ -276,7 +276,7 @@ $messages['qqq'] = array(
 	'wikistats_more_200_ch' => 'What does this mean? "characters"?',
 	'wikistats_register' => 'Abbreviation for "Registered users"',
 	'wikistats_unregister' => 'Abbreviation for "Unregistered users" (anonymous)',
-	'wikistats_days_ago' => 'Number of days should be a parameters in the message; also add PLURAL support',
+	'wikistats_days_ago' => 'Number of days should be a parameters in the message; also add PLURAL support', # Fuzzy
 	'wikistats_wikilang' => '{{Identical|Language}}',
 	'wikistats_trend_ordered' => 'Typo: wiki -> wikis',
 	'wikistats_xls_cancel' => '{{Identical|Cancel}}',
@@ -309,7 +309,7 @@ $messages['af'] = array(
 	'wikistats_distrib_article' => 'Aktiwiteit-verspreiding van outeurs',
 	'wikistats_active_absent_wikians' => 'Analise van aktiwiteit van geregistreerde outeurs',
 	'wikistats_anon_wikians' => 'Analise van aktiwiteit van anonieme outeurs',
-	'wikistats_anon_wikians_count' => '$1 anonieme gebruikers gevind',
+	'wikistats_anon_wikians_count' => '$1 anonieme gebruikers gevind', # Fuzzy
 	'wikistats_pageviews' => 'Bladsy kyke per naamruimte per maand',
 	'wikistats_article_one_link' => 'Bladsye wat ten minste 1 interne skakel bevat',
 	'wikistats_anon_wikians_subtitle' => 'slegs wysigings in inhoudelike naamruimtes word getel',
@@ -317,8 +317,8 @@ $messages['af'] = array(
 	'wikistats_pageviews_counting' => 'x%: wysiging in vergelyking met die vorige dag of maand',
 	'wikistats_pageviews_percent' => 'Persentasie toename of afname vergeleke met vorige maand',
 	'wikistats_namespace_records' => 'Databasisrekords per naamruimte',
-	'wikistats_page_edits_count' => '$1 mees gewysigde artikels gevind',
-	'wikistats_other_nspaces_edits_count' => '$1 mees gewysigde bladsye gevind',
+	'wikistats_page_edits_count' => '$1 mees gewysigde artikels gevind', # Fuzzy
+	'wikistats_other_nspaces_edits_count' => '$1 mees gewysigde bladsye gevind', # Fuzzy
 	'wikistats_active_wikians_date' => 'Wys veranderinge vir die laaste',
 	'wikistats_active_day' => 'dag',
 	'wikistats_active_month' => 'maand',
@@ -362,7 +362,7 @@ $messages['af'] = array(
 	'wikistats_external' => 'ekstern',
 	'wikistats_redirects' => 'aansture',
 	'wikistats_edited_in_namespace' => 'gewysig in naamruimte',
-	'wikistats_main_namespace' => 'inhoud<br />naamruimtes',
+	'wikistats_main_namespace' => 'inhoud<br />naamruimtes', # Fuzzy
 	'wikistats_image_namespace' => 'beeld',
 	'wikistats_page_requests' => 'bladsyversoeke',
 	'wikistats_visits' => 'besoeke',
@@ -449,7 +449,8 @@ $messages['af'] = array(
 	'wikistats_month' => 'Maandelikse statistieke',
 );
 
-/** Aragonese (aragonés) */
+/** Aragonese (aragonés)
+ */
 $messages['an'] = array(
 	'wikistats_other' => 'Atros',
 	'wikistats_date' => 'Calendata',
@@ -601,9 +602,17 @@ $messages['az'] = array(
 	'wikistats_nbr_giga' => 'G = M x 1000',
 	'wikistats_current_month' => 'Bu ay',
 	'wikistats_see_also' => 'Həmçinin bax:',
-	'wikistats_language_top' => 'Dillərin Top-10-u',
+	'wikistats_language_top' => 'Dillərin Top-10-u', # Fuzzy
 	'wikistats_language_all' => 'Bütün dillər',
 	'wikistats_title' => 'Başlıq',
+);
+
+/** تورکجه (تورکجه)
+ * @author Erdemaslancan
+ */
+$messages['azb'] = array(
+	'wikistats_namespaces' => 'آدلار فضاسی',
+	'wikistats_ns_statistics_legend' => 'آدلار فضاسی:',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
@@ -643,7 +652,7 @@ $messages['be-tarask'] = array(
 	'wikistats_pageviews_percent' => 'Павелічэньне ці зьмяншэньне ў адсотках ў параўнаньні з папярэднім месяцам',
 	'wikistats_distrib_article_subtext' => 'улічваюцца толькі артыкулы з рэдагаваньнямі, без рэдагаваньня старонак абмеркаваньня і г. д.',
 	'wikistats_namespace_records' => 'Запісы ў базе зьвестак па прасторах назваў',
-	'wikistats_page_edits' => 'Старонкі з найбольшай колькасьцю рэдагаваньняў (прасторы назваў са зьместам) (&gt; 25 рэдагаваньняў)',
+	'wikistats_page_edits' => 'Старонкі з найбольшай колькасьцю рэдагаваньняў (прасторы назваў са зьместам) (&gt; 25 рэдагаваньняў)', # Fuzzy
 	'wikistats_other_nspaces_edits' => 'Старонкі з найбольшай колькасьцю рэдагаваньняў (іншыя прасторы назваў) (&gt; 25 рэдагаваньняў)',
 	'wikistats_page_edits_count' => '{{PLURAL:$1|знойдзены $1 артыкул з найбольшай колькасьцю рэдагаваньняў|знойдзеныя $1 артыкулы з найбольшай колькасьцю рэдагаваньняў|знойдзеныя $1 артыкулаў з найбольшай колькасьцю рэдагаваньняў}}',
 	'wikistats_other_nspaces_edits_count' => '{{PLURAL:$1|знойдзеная $1 старонка з найбольшай колькасьцю рэдагаваньняў|знойдзеныя $1 старонкі з найбольшай колькасьцю рэдагаваньняў|знойдзеныя $1 старонак з найбольшай колькасьцю рэдагаваньняў}}',
@@ -690,7 +699,7 @@ $messages['be-tarask'] = array(
 	'wikistats_external' => 'вонкавы',
 	'wikistats_redirects' => 'перанакіраваньні',
 	'wikistats_edited_in_namespace' => 'рэдагавана ў прасторы назваў',
-	'wikistats_main_namespace' => 'прасторы назваў<br />са зьместам',
+	'wikistats_main_namespace' => 'прасторы назваў<br />са зьместам', # Fuzzy
 	'wikistats_image_namespace' => 'выява',
 	'wikistats_page_requests' => 'запытаў старонкі',
 	'wikistats_visits' => 'наведваньняў',
@@ -994,7 +1003,7 @@ $messages['br'] = array(
 	'wikistats_pageviews_percent' => 'Tregantad kresk pe digresk keñveriet ouzh hini ar miz kent',
 	'wikistats_distrib_article_subtext' => "Ne vez kontet nemet ar c'hemmoù er pennadoù, ket ar c'hemmoù er pajennoù divizout, ...",
 	'wikistats_namespace_records' => 'Enrolladennoù en diaz titouroù dre egorenn anvioù',
-	'wikistats_page_edits' => 'Pennadoù kemmet ar muiañ (egorennoù anvioù) (&gt; 25 kemm)',
+	'wikistats_page_edits' => 'Pennadoù kemmet ar muiañ (egorennoù anvioù) (&gt; 25 kemm)', # Fuzzy
 	'wikistats_other_nspaces_edits' => 'Pajennoù kemmet ar muiañ (egorenn anvioù all) (%gt; 25 kemm)',
 	'wikistats_page_edits_count' => '$1 pennad{{PLURAL:$1||}} kemmet ar muiañ kavet',
 	'wikistats_other_nspaces_edits_count' => '$1 pajenn{{PLURAL:$1||}} kemmet ar muiañ kavet',
@@ -1045,7 +1054,7 @@ $messages['br'] = array(
 	'wikistats_namespaces' => 'esaouennoù anv',
 	'wikistats_redirects' => 'adkasoù',
 	'wikistats_edited_in_namespace' => 'Kemmet en egorenn anvioù',
-	'wikistats_main_namespace' => 'Endalch <br /> egorenn anvioù',
+	'wikistats_main_namespace' => 'Endalch <br /> egorenn anvioù', # Fuzzy
 	'wikistats_image_namespace' => 'skeudenn',
 	'wikistats_page_requests' => 'goulennoù pajennoù',
 	'wikistats_visits' => 'gweladennoù',
@@ -1197,7 +1206,7 @@ $messages['ca'] = array(
 	'wikistats_latest_pageviews' => 'Pàgines més visitades',
 	'wikistats_latest_userviews' => 'Usuaris (pàgines vistes)',
 	'wikistats_active_useredits' => 'Activitat idioma',
-	'wikistats_latest_userviews_pages' => 'Pàgines més visitades',
+	'wikistats_latest_userviews_pages' => 'Pàgines més visitades', # Fuzzy
 	'wikistats_latest_userviews_list' => "Llista d'usuaris que han visitat la Wiki en la darrera hora (ordre per última visita)",
 	'wikistats_latest_pageviews_subtitle' => 'en els darrers $1 minuts',
 	'wikistats_pageviews' => 'Vistes de pàgina per espai de nom per mes',
@@ -1212,7 +1221,7 @@ $messages['ca'] = array(
 	'wikistats_pageviews_percent' => "Percentatge d'augment o disminució en comparació amb el mes anterior",
 	'wikistats_distrib_article_subtext' => 'només article les modificacions es compten, no les edicions en pàgines de discussió, etc',
 	'wikistats_namespace_records' => "Registres de base de dades per l'espai de nom",
-	'wikistats_page_edits' => 'Més opció (contingut p ├ ágines), (&gt; 25 edicions)',
+	'wikistats_page_edits' => 'Més opció (contingut p ├ ágines), (&gt; 25 edicions)', # Fuzzy
 	'wikistats_other_nspaces_edits' => 'Més opció (contingut p ├ ágines), (&gt; 25 edicions)',
 	'wikistats_page_edits_count' => "$1 {{PLURAL:$1|s'ha trobat article|most editat editat articles}}",
 	'wikistats_other_nspaces_edits_count' => "$1 {{PLURAL:$1|s'ha trobat article|most editat editat articles}}",
@@ -1266,11 +1275,11 @@ $messages['ca'] = array(
 	'wikistats_namespaces' => 'p ├ ágines',
 	'wikistats_redirects' => 'Redirecció',
 	'wikistats_edited_in_namespace' => 'editat en espai de nom',
-	'wikistats_main_namespace' => 'contingut<br>p ├ ágines',
+	'wikistats_main_namespace' => 'contingut<br>p ├ ágines', # Fuzzy
 	'wikistats_image_namespace' => 'Imatge',
 	'wikistats_page_requests' => 'sol·licituds de pàgina',
 	'wikistats_visits' => 'visites',
-	'wikistats_new_per_day' => 'nou<br>per dia',
+	'wikistats_new_per_day' => 'nou<br>per dia', # Fuzzy
 	'wikistats_official' => 'oficial',
 	'wikistats_more_200_ch' => '&gt; 200 ch',
 	'wikistats_count' => 'Recompte',
@@ -1278,7 +1287,7 @@ $messages['ca'] = array(
 	'wikistats_first_edit' => 'Primera edició',
 	'wikistats_last_edit' => 'Última edició',
 	'wikistats_rank' => 'posició',
-	'wikistats_previous_month' => 'anterior<br>mes',
+	'wikistats_previous_month' => 'anterior<br>mes', # Fuzzy
 	'wikistats_total' => 'Total',
 	'wikistats_new' => 'nou',
 	'wikistats_register' => 'Reg.',
@@ -1315,7 +1324,7 @@ $messages['ca'] = array(
 	'wikistats_trend_growth_info' => 'Creixement = mitjana mensual creixement durant mesos es Mostra',
 	'wikistats_trend_value' => 'Valor',
 	'wikistats_trend_formula' => 'Fórmula',
-	'wikistats_trend_ordered' => "Wiki tots estan ordenats per nombres d'articles.<br>Seleccioneu la part d'aquestes Estadístiques:",
+	'wikistats_trend_ordered' => "Wiki tots estan ordenats per nombres d'articles.<br>Seleccioneu la part d'aquestes Estadístiques:", # Fuzzy
 	'wikistats_trend_where_text' => 'on:',
 	'wikistats_trend_all_wikia_text' => 'totes les Wikis',
 	'wikistats_always_selected' => '(sempre seleccionades)',
@@ -1377,10 +1386,10 @@ $messages['ca'] = array(
 	'wikistats_content' => 'Contingut',
 	'wikistats_content_editors' => 'Editors de contingut',
 	'wikistats_userns' => 'Usuari',
-	'wikistats_other_namespace' => 'altres<br>p ├ ágines',
+	'wikistats_other_namespace' => 'altres<br>p ├ ágines', # Fuzzy
 	'wikistats_restricted_page' => "Pàgina restringit.<br>
 Vostè ha d'estar connectat per veure estadístiques de Wikia.
-Si us plau, [[especial: UserLogin|log en o crear un compte]] si vostè no té un.",
+Si us plau, [[especial: UserLogin|log en o crear un compte]] si vostè no té un.", # Fuzzy
 	'wikistats_code_version' => 'Versió de codi:',
 	'wikistats_mediawiki_stats' => 'Estadístiques de MediaWiki:',
 	'wikistats_statistics_information' => "Informació d'estadística",
@@ -1392,7 +1401,7 @@ Si us plau, [[especial: UserLogin|log en o crear un compte]] si vostè no té un
 	'wikistats_month' => 'Estadístiques mensuals',
 	'wikistats_current_month' => 'Mes en curs',
 	'wikistats_see_also' => 'Vegeu també:',
-	'wikistats_language_top' => 'Top 10 idiomes',
+	'wikistats_language_top' => 'Top 10 idiomes', # Fuzzy
 	'wikistats_language_all' => 'Tots els idiomes',
 	'wikistats_recordspager' => "S'estan mostrant ' ' $1 ' ' per ' ' $2 ' ' de ' ' $3 ' ' records.",
 	'wikistats_title' => 'Títol',
@@ -1414,7 +1423,8 @@ $messages['ce'] = array(
 	'wikistats_username' => 'Декъашхо',
 );
 
-/** Sorani Kurdish (کوردی) */
+/** Sorani Kurdish (کوردی)
+ */
 $messages['ckb'] = array(
 	'wikistats_wikicategory' => 'پۆل:',
 	'wikistats_username' => 'بەکارهێنەر',
@@ -1895,7 +1905,9 @@ $messages['diq'] = array(
 	'wikistats_interwiki' => 'interwiki',
 	'wikistats_image' => 'resım',
 	'wikistats_external' => 'teber',
+	'wikistats_namespaces' => 'Cayê namam',
 	'wikistats_redirects' => 'Hetenayış',
+	'wikistats_main_namespace' => 'ser',
 	'wikistats_image_namespace' => 'resım',
 	'wikistats_page_requests' => 'Pela wastış',
 	'wikistats_visits' => 'Ziyaret',
@@ -1906,12 +1918,14 @@ $messages['diq'] = array(
 	'wikistats_first_edit' => 'Vurnayışo sıfteyên',
 	'wikistats_last_edit' => 'Vurnayışo peyên',
 	'wikistats_rank' => 'rate',
+	'wikistats_previous_month' => 'menga<br />veror',
 	'wikistats_total' => 'pêro',
 	'wikistats_new' => 'newe',
 	'wikistats_register' => 'Qey.',
 	'wikistats_more_txt' => 'Dehana vêşi',
 	'wikistats_now' => 'newke',
 	'wikistats_days_ago' => 'rocê verêni',
+	'wikistats_month_ago' => 'verdê $1 $2',
 	'wikistats_wikiurl' => 'GIRE:',
 	'wikistats_wikicreated' => 'Vıraziya:',
 	'wikistats_wikilang' => 'Zıwan:',
@@ -1927,18 +1941,22 @@ $messages['diq'] = array(
 	'wikistats_trend_formula' => 'Formûl',
 	'wikistats_trend_where_text' => 'Kon ca:',
 	'wikistats_trend_all_wikia_text' => 'Wikiy pêro',
+	'wikistats_creation_wikia_filename' => 'Verên_vıraşten',
+	'wikistats_select_statistics' => 'İstatistkan weçine',
 	'wikistats_xls_files_stats' => 'XLS',
 	'wikistats_full_dump_stats' => 'Pêro',
 	'wikistats_current_dump_stats' => 'Nıkayên',
+	'wikistats_xls_generate' => 'Vıraşten',
 	'wikistats_xls_cancel' => 'Bıterkne',
 	'wikistats_select_text' => 'Wikia bıweçin:',
 	'wikistats_select_btn' => 'Weçine',
+	'wikistats_xls_uncheck_list' => 'Wedarne',
 	'wikistats_dbdump_generated' => 'Vurnayış:',
 	'wikistats_records' => 'Qeydi',
 	'wikistats_generate_stats_msg' => 'Şıma ra reca pıpawê ... vırazêno ...',
 	'wikistats_language_stats' => 'İstatistike zıwani',
 	'wikistats_main_statistics_legend' => 'İstatistikê serêni',
-	'wikistats_ns_statistics_legend' => 'Cayê namey',
+	'wikistats_ns_statistics_legend' => 'Cayê namam',
 	'wikistats_other_statistics_legend' => 'Îstatistiksê binî',
 	'wikistats_date_of_generate' => '$1 vıraziya',
 	'wikistats_search_text' => 'Cı geyre',
@@ -1962,11 +1980,15 @@ $messages['diq'] = array(
 	'wikistats_nbr_kilo' => 'K = x 1000',
 	'wikistats_nbr_mega' => 'M = K x 1000',
 	'wikistats_nbr_giga' => 'G = M x 1000',
+	'wikistats_month' => 'İstatistikê Aşmek',
+	'wikistats_current_month' => 'Aşmiya newki',
 	'wikistats_see_also' => 'bıvin:',
+	'wikistats_language_top' => 'Top $1 zıwani',
 	'wikistats_language_all' => 'Zıwani pêro',
 	'wikistats_title' => 'Sername',
 	'wikistats_summary_data' => 'Melumatê mersel',
 	'wikistats_namespaces_top10list' => 'listey Tewr 10a',
+	'wikistats_namespace_top' => 'Verşınasiya Cayênaman',
 );
 
 /** Greek (Ελληνικά)
@@ -2268,7 +2290,7 @@ $messages['eu'] = array(
 	'wikistats_interwiki' => 'interwiki',
 	'wikistats_image' => 'irudi',
 	'wikistats_redirects' => 'birzuzenketa',
-	'wikistats_main_namespace' => 'nagusia',
+	'wikistats_main_namespace' => 'nagusia', # Fuzzy
 	'wikistats_image_namespace' => 'irudi',
 	'wikistats_visits' => 'bisita',
 	'wikistats_new_per_day' => 'berri<br />eguneko',
@@ -2377,7 +2399,7 @@ $messages['fi'] = array(
 	'wikistats_pageviews_counting' => 'x% = muutos verrattuna edelliseen päivään/kuukauteen',
 	'wikistats_pageviews_percent' => 'Prosentuaalinen lisäys tai vähennys verrattuna edelliseen kuukauteen',
 	'wikistats_distrib_article_subtext' => 'vain artikkelimuokkaukset lasketaan, ei muokkauksia keskustelusivuille jne.',
-	'wikistats_page_edits' => 'Muokatuimmat artikkelit (sisältönimiavaruuksissa) (&gt; 25 muokkausta)',
+	'wikistats_page_edits' => 'Muokatuimmat artikkelit (sisältönimiavaruuksissa) (&gt; 25 muokkausta)', # Fuzzy
 	'wikistats_other_nspaces_edits' => 'Muokatuimmat sivut (muut nimiavaruudet) (&gt; 25 muokkausta)',
 	'wikistats_page_edits_count' => '$1 {{PLURAL:$1|muokattu artikkeli|muokatuinta artikkelia}} löytyi',
 	'wikistats_other_nspaces_edits_count' => '$1 {{PLURAL:$1|muokattu sivu|muokatuinta sivua}} löytyi',
@@ -2931,7 +2953,8 @@ Por favor, [[Special:UserLogin|acceda ao sistema ou cree unha conta]] se aínda 
 	'wikistats_error_malformed_date' => 'Erro: A data fornecida é incorrecta',
 );
 
-/** Hausa (Hausa) */
+/** Hausa (Hausa)
+ */
 $messages['ha'] = array(
 	'wikistats_namespace' => 'Sararin suna',
 	'wikistats_show' => 'Nuna',
@@ -3081,7 +3104,7 @@ $messages['hu'] = array(
 	'wikistats_namespaces' => 'névterek',
 	'wikistats_redirects' => 'átirányítások',
 	'wikistats_edited_in_namespace' => 'szerkesztett névtér',
-	'wikistats_main_namespace' => 'tartalmi<br />névterek',
+	'wikistats_main_namespace' => 'tartalmi<br />névterek', # Fuzzy
 	'wikistats_image_namespace' => 'kép',
 	'wikistats_page_requests' => 'laplekérés',
 	'wikistats_visits' => 'látogatás',
@@ -3502,7 +3525,7 @@ $messages['id'] = array(
 	'wikistats_pageviews_percent' => 'Persentase peningkatan atau penurunan dibandingkan dengan bulan sebelumnya',
 	'wikistats_distrib_article_subtext' => 'hanya suntingan artikel yang dihitung, bukan suntingan pada halaman diskusi, dll',
 	'wikistats_namespace_records' => 'Rekaman basis data per namespace',
-	'wikistats_page_edits' => 'Artikel terbanyak disunting (Konten namespaces) (&gt; 25 suntingan)',
+	'wikistats_page_edits' => 'Artikel terbanyak disunting (Konten namespaces) (&gt; 25 suntingan)', # Fuzzy
 	'wikistats_other_nspaces_edits' => 'Halaman terbanyak disunting (namespaces lain) (&gt; 25 suntingan)',
 	'wikistats_page_edits_count' => '$1 {{PLURAL:$1|edited article|most edited articles}} ditemukan',
 	'wikistats_other_nspaces_edits_count' => '$1 {{PLURAL:$1|edited page|most edited pages}} ditemukan',
@@ -4170,7 +4193,7 @@ $messages['km'] = array(
 	'wikistats_external' => 'ក្រៅ',
 	'wikistats_redirects' => 'ការបញ្ជូនបន្ត',
 	'wikistats_edited_in_namespace' => 'បានកែប្រែក្នុងប្រភេទ',
-	'wikistats_main_namespace' => 'មេ',
+	'wikistats_main_namespace' => 'មេ', # Fuzzy
 	'wikistats_image_namespace' => 'រូបភាព',
 	'wikistats_page_requests' => 'សំណើសុំទំព័រ',
 	'wikistats_visits' => 'ចំនួនការចូលមើល',
@@ -4308,13 +4331,13 @@ $messages['ko'] = array(
 	'wikistats_showstats_btn' => '통계 보기',
 	'wikistats_wikia_information' => '위키아 정보',
 	'wikiastast_refresh_data' => '데이터 새로 고침',
-	'wikistats_export_xls' => 'XLS 파일로 저장하기',
-	'wikistats_breakdown_editors' => '가입된 편집자 활동',
-	'wikistats_breakdown_anons' => '비가입 편집자 활동',
-	'wikistats_latest_pageviews' => '최근에 열람된 문서',
-	'wikistats_latest_userviews' => '활성 사용자 (페이지 뷰)',
-	'wikistats_active_useredits' => '언어별 활동 내역',
-	'wikistats_pageviews' => '이름공간별 및 월별 페이지 조회수',
+	'wikistats_export_xls' => 'XLS로 내보내기',
+	'wikistats_breakdown_editors' => '편집자 활동',
+	'wikistats_breakdown_anons' => '익명 편집자 활동',
+	'wikistats_latest_pageviews' => '최근 방문한 문서',
+	'wikistats_latest_userviews' => '활동 사용자 (문서 조회수)',
+	'wikistats_active_useredits' => '언어 활동',
+	'wikistats_pageviews' => '이름공간별 매월 문서 조회수',
 	'wikistats_active_day' => '일',
 	'wikistats_active_month' => '월',
 	'wikistats_active_year' => '년',
@@ -4329,27 +4352,27 @@ $messages['ko'] = array(
 	'wikistats_uploaded_images' => '올려짐',
 	'wikistats_date' => '날짜',
 	'wikistats_namespace' => '이름공간',
-	'wikistats_wikicategory' => '분류',
+	'wikistats_wikicategory' => '분류:',
 	'wikistats_edits' => '편집',
-	'wikistats_unique_users' => '편집자',
-	'wikistats_first_edit' => '최초의 편집',
-	'wikistats_last_edit' => '가장 최근의 편집',
-	'wikistats_wikicreated' => '생성일:',
+	'wikistats_unique_users' => '고유 사용자',
+	'wikistats_first_edit' => '첫 편집',
+	'wikistats_last_edit' => '마지막 편집',
+	'wikistats_wikicreated' => '만든 날짜:',
 	'wikistats_wikilang' => '언어:',
-	'wikistats_see_wikia_wide_stats' => '위키아 전체 통계 보기:',
-	'wikistats_see_help_page' => '위키아 통계 도움말 읽기:',
+	'wikistats_see_wikia_wide_stats' => '위키아 전체 통계 같이 보기:',
+	'wikistats_see_help_page' => '위키아 통계 도움말 문서:',
 	'wikistats_main_statistics_legend' => '주요 통계',
-	'wikistats_blog_created' => '블로그 생성됨',
-	'wikistats_blog_comment' => '블로그 댓글',
-	'wikistats_see_also' => '같이 보기',
+	'wikistats_blog_created' => '블로그 만듦',
+	'wikistats_blog_comment' => '블로그 덧글',
+	'wikistats_see_also' => '같이 보기:',
 	'wikistats_language_all' => '모든 언어',
-	'wikistats_recordspager' => "'''$3'''개의 항목 중 '''$1'''부터 '''$2'''까지",
-	'wikistats_title' => '위키 이름',
-	'wikistats_summary_data' => '데이터 요약',
-	'wikistats_namespaces_talk' => '토론 (댓글 포함)',
+	'wikistats_recordspager' => "기록 '''$3'''개 중 '''$1'''부터 '''$2'''까지 봅니다.",
+	'wikistats_title' => '제목',
+	'wikistats_summary_data' => '요약 데이터',
+	'wikistats_namespaces_talk' => '토론 (덧글 포함)',
 	'wikistats_namespaces_top10list' => '상위 10개 목록',
-	'wikistats_namespaces_blog' => '블로그 (블로그, 블로그 댓글 포함)',
-	'wikistats_namespaces_user' => '사용자 (사용자토론 포함)',
+	'wikistats_namespaces_blog' => '블로그 (블로그와 블로그 덧글 포함)',
+	'wikistats_namespaces_user' => '사용자 (사용자 토론 포함)',
 	'wikistats_namespaces_maintenance' => '관리 (미디어위키, 틀, 프로젝트)',
 );
 
@@ -4388,7 +4411,7 @@ $messages['krc'] = array(
 	'wikistats_pageviews_percent' => 'Озгъан айгъа кёре процентли кёбейиу неда азайыу',
 	'wikistats_distrib_article_subtext' => 'сюзюлюулени тюзетиулери эмда аны кибикле саналмайдыла, къуру статьялада тюзетиуле саналадыла',
 	'wikistats_namespace_records' => 'Атланы аламына кёре билги базала',
-	'wikistats_page_edits' => 'Эм кёб тюрлендирилген статьяла (баш ат алам) (&gt; 25 тюзетиу)',
+	'wikistats_page_edits' => 'Эм кёб тюрлендирилген статьяла (баш ат алам) (&gt; 25 тюзетиу)', # Fuzzy
 	'wikistats_other_nspaces_edits' => 'Эм кёб тюрлендирилген статьяла (башха ат алам) (&gt; 25 тюзетиу)',
 	'wikistats_page_edits_count' => '$1 {{PLURAL:$1|тюрлендирилген статья|эм кёб тюрлендирилген статья}} табылгъанды',
 	'wikistats_other_nspaces_edits_count' => '$1 {{PLURAL:$1|тюрлендирилген бет|эм кёб тюрлендирилген бет}} табылгъанды',
@@ -4435,7 +4458,7 @@ $messages['krc'] = array(
 	'wikistats_external' => 'тыш',
 	'wikistats_redirects' => 'джангыдан джибериуле',
 	'wikistats_edited_in_namespace' => 'атланы аламында тюрлендирилгенди',
-	'wikistats_main_namespace' => 'баш',
+	'wikistats_main_namespace' => 'баш', # Fuzzy
 	'wikistats_image_namespace' => 'сурат',
 	'wikistats_page_requests' => 'бетлени излеую',
 	'wikistats_visits' => 'кириуле',
@@ -4749,7 +4772,7 @@ $messages['lez'] = array(
 	'wikistats_namespaces' => 'тlварарин генгвилер',
 	'wikistats_redirects' => 'рахкъурунар',
 	'wikistats_edited_in_namespace' => 'тIварарин генгвилера дуьзар хъувуна',
-	'wikistats_main_namespace' => '<br /> къене авайбурун тIварарин генгвилер',
+	'wikistats_main_namespace' => '<br /> къене авайбурун тIварарин генгвилер', # Fuzzy
 	'wikistats_image_namespace' => 'суьрет',
 	'wikistats_page_requests' => 'ччинар тIалабун',
 	'wikistats_visits' => 'кьилив финар',
@@ -4854,7 +4877,7 @@ $messages['li'] = array(
 	'wikistats_namespaces' => 'Naamruumdes',
 	'wikistats_redirects' => 'dórchverwiezinge',
 	'wikistats_edited_in_namespace' => 'bewirk in naamruumde',
-	'wikistats_main_namespace' => 'inhaud<br />naamruumdes',
+	'wikistats_main_namespace' => 'inhaud<br />naamruumdes', # Fuzzy
 	'wikistats_image_namespace' => 'aafbeilding',
 	'wikistats_page_requests' => 'paginaverzeuke',
 	'wikistats_visits' => 'bezeuke',
@@ -4875,7 +4898,7 @@ $messages['ltg'] = array(
 	'wikistats_website' => 'Teiklavīta',
 );
 
-/** Lushai (Mizo ţawng)
+/** Mizo (Mizo ţawng)
  * @author RMizo
  */
 $messages['lus'] = array(
@@ -4929,7 +4952,7 @@ $messages['lus'] = array(
 	'wikistats_namespaces' => 'hminghmun',
 	'wikistats_redirects' => 'hruailuhnate',
 	'wikistats_edited_in_namespace' => 'he hminghmun chhunga siamṭhatte',
-	'wikistats_main_namespace' => '<br /> hminghmun chhunga thuziakte',
+	'wikistats_main_namespace' => '<br /> hminghmun chhunga thuziakte', # Fuzzy
 	'wikistats_image_namespace' => 'thlalâk',
 	'wikistats_page_requests' => 'phêk dilnate',
 	'wikistats_visits' => 'tlawh zât',
@@ -5323,7 +5346,7 @@ $messages['mr'] = array(
 	'wikistats_active_useredits' => 'भाषा संबंधी कार्य',
 	'wikistats_latest_userviews_pages' => '$1 पाहिलेले पान',
 	'wikistats_latest_userviews_list' => 'मागील तासात विकिला भेट देऊन गेलेल्या सदस्यांची यादी (क्रम शेवेटची भेट पहिली)',
-	'wikistats_latest_pageviews_subtitle' => 'शेवटच्या $१ मिनिटात',
+	'wikistats_latest_pageviews_subtitle' => 'शेवटच्या $१ मिनिटात', # Fuzzy
 	'wikistats_recently_active_wikians' => '$1 अत्ताची सक्रीय नोंदणी {{PLURAL:$1|संपादक|संपादक, क्रम केलेक्या योगदानानुसार}}',
 	'wikistats_recently_absent_wikians' => '$1 अत्ताची अनुपस्थित नोंदणी {{PLURAL:$1|संपादक|संपादक, क्रम केलेक्या योगदानानुसार}}',
 	'wikistats_pageviews_subtext' => 'या महिन्यात पाहिलेले पाने (K = x 1000, M = K x 1000, G = M x 1000, T = G x 1000)',
@@ -5368,7 +5391,7 @@ $messages['mr'] = array(
 	'wikistats_external' => 'बाहेरचा',
 	'wikistats_namespaces' => 'नामविश्वे',
 	'wikistats_edited_in_namespace' => 'नामविश्वेतील संपादने',
-	'wikistats_main_namespace' => 'माहिती<br />नामविश्वे',
+	'wikistats_main_namespace' => 'माहिती<br />नामविश्वे', # Fuzzy
 	'wikistats_image_namespace' => 'चित्र',
 	'wikistats_visits' => 'भेटी',
 	'wikistats_new_per_day' => 'नवीन<br />दर दिवशी',
@@ -6264,7 +6287,7 @@ $messages['oc'] = array(
 	'wikistats_namespaces' => 'espacis de noms',
 	'wikistats_redirects' => 'redireccions',
 	'wikistats_edited_in_namespace' => "modificat dins l'espaci de noms",
-	'wikistats_main_namespace' => 'principal',
+	'wikistats_main_namespace' => 'principal', # Fuzzy
 	'wikistats_image_namespace' => 'imatge',
 	'wikistats_page_requests' => 'requèstas de paginas',
 	'wikistats_visits' => 'visitas',
@@ -6600,7 +6623,7 @@ $messages['pms'] = array(
 	'wikistats_pageviews_percent' => 'Persentual an pi o an men confrontà al mèis prima',
 	'wikistats_distrib_article_subtext' => "a son mach contà le modìfiche ant j'artìcoj, pa le modìfiche dzora a le pàgine ëd discussion e via fòrt",
 	'wikistats_namespace_records' => 'Argistrassion ant la base ëd dàit për spassi nominal',
-	'wikistats_page_edits' => 'Artìcoj pi modificà (spassi nominal ëd contnù) (&gt; 25 modìfiche)',
+	'wikistats_page_edits' => 'Artìcoj pi modificà (spassi nominal ëd contnù) (&gt; 25 modìfiche)', # Fuzzy
 	'wikistats_other_nspaces_edits' => 'Pàgine pi modificà (àutri spassi nominaj) (&gt; 25 modìfiche)',
 	'wikistats_page_edits_count' => 'Trovà $1 {{PLURAL:$1|artìcol modificà|artìcoj pi modificà}}',
 	'wikistats_other_nspaces_edits_count' => 'Trovà $1 {{PLURAL:$1|pàgina modificà|pàgine pi modificà}}',
@@ -6647,7 +6670,7 @@ $messages['pms'] = array(
 	'wikistats_external' => 'estern',
 	'wikistats_redirects' => 'ridiression',
 	'wikistats_edited_in_namespace' => 'modificà ant lë spassi nominal',
-	'wikistats_main_namespace' => 'contnù<br />spassi nominaj',
+	'wikistats_main_namespace' => 'contnù<br />spassi nominaj', # Fuzzy
 	'wikistats_image_namespace' => 'figura',
 	'wikistats_page_requests' => 'arceste ëd pàgine',
 	'wikistats_visits' => 'vìsite',
@@ -6781,7 +6804,7 @@ $messages['ps'] = array(
 	'wikistats_image' => 'انځور',
 	'wikistats_external' => 'باندنۍ',
 	'wikistats_namespaces' => 'نوم-تشيالونه',
-	'wikistats_main_namespace' => 'آرنی',
+	'wikistats_main_namespace' => 'آرنی', # Fuzzy
 	'wikistats_image_namespace' => 'انځور',
 	'wikistats_page_requests' => 'د مخ غوښتنې',
 	'wikistats_visits' => 'کتنې',
@@ -7084,11 +7107,11 @@ Precisa de estar autenticado para ver as Estatísticas da Wikia.
 );
 
 /** Brazilian Portuguese (português do Brasil)
- * @author 555
  * @author Aristóbulo
  * @author Caio1478
  * @author Jesielt
  * @author Luckas Blade
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'wikistats' => 'Wikia Estatísticas',
@@ -7652,7 +7675,7 @@ $messages['sr-ec'] = array(
 	'wikistats_distrib_article_subtext' => 'рачунају се само измене на чланцима, не на страницама за разговор и др.',
 	'wikistats_distrib_article_counting' => '1 : 3 : 10 : 32 : 100 : 316 : 1000 ... = 1 : √10 : 10 : 10√10 : 100 : 100√10 : 1000 ...',
 	'wikistats_namespace_records' => 'Белешке базе података по именском простору',
-	'wikistats_page_edits' => 'Чланци с највише измена (више од 25 измена)',
+	'wikistats_page_edits' => 'Чланци с највише измена (више од 25 измена)', # Fuzzy
 	'wikistats_other_nspaces_edits' => 'Чланци с највише измена (више од 25 измена)',
 	'wikistats_page_edits_count' => '$1 {{PLURAL:$1|измењен чланак|највише мењан чланак}}',
 	'wikistats_other_nspaces_edits_count' => '$1 {{PLURAL:$1|измењена страница|највише мењане странице}}',
@@ -7705,7 +7728,7 @@ $messages['sr-ec'] = array(
 	'wikistats_namespaces' => 'именски простори',
 	'wikistats_redirects' => 'преусмерења',
 	'wikistats_edited_in_namespace' => 'измењено у именском простору',
-	'wikistats_main_namespace' => 'именски простори<br/ >за садржај',
+	'wikistats_main_namespace' => 'именски простори<br/ >за садржај', # Fuzzy
 	'wikistats_image_namespace' => 'слика',
 	'wikistats_page_requests' => 'захтева за странице',
 	'wikistats_visits' => 'посета',
@@ -8499,7 +8522,7 @@ $messages['tr'] = array(
 	'wikistats_namespaces' => 'isim alanları',
 	'wikistats_redirects' => 'yönlendirmeler',
 	'wikistats_edited_in_namespace' => 'Alanadını değiştir',
-	'wikistats_main_namespace' => 'içerik<br />alanadı',
+	'wikistats_main_namespace' => 'içerik<br />alanadı', # Fuzzy
 	'wikistats_previous_month' => 'önceki<br />ay',
 	'wikistats_total' => 'toplam',
 	'wikistats_new' => 'yeni',
@@ -8622,7 +8645,8 @@ $messages['uk'] = array(
 	'wikistats_nbr_format' => 'Формат чисел:',
 );
 
-/** Urdu (اردو) */
+/** Urdu (اردو)
+ */
 $messages['ur'] = array(
 	'wikistats_xls_cancel' => 'منسوخ',
 );
@@ -8643,7 +8667,8 @@ $messages['vi'] = array(
 	'wikistats_current_month' => 'Tháng hiện tại',
 );
 
-/** Wu (吴语) */
+/** Wu (吴语)
+ */
 $messages['wuu'] = array(
 	'wikistats_xls_cancel' => '取消',
 );
@@ -8727,8 +8752,8 @@ $messages['zh-hant'] = array(
 	'wikistats_pageviews_percent' => '相較於前一個月，增加或減少的百分比',
 	'wikistats_distrib_article_subtext' => '只計入文章編輯數，不計入討論頁等的編輯',
 	'wikistats_namespace_records' => '每個命名空間的資料庫記錄',
-	'wikistats_page_edits' => '最多編輯的文章 （內容頁面） （大於 25 編輯)',
-	'wikistats_other_nspaces_edits' => '最多編輯頁面 （其他命名空間） （&gt; 25 編輯)',
+	'wikistats_page_edits' => '最多編輯的文章 （內容頁面） （大於 25 編輯)', # Fuzzy
+	'wikistats_other_nspaces_edits' => '最多編輯頁面 （其他命名空間） （&gt; 25 編輯)', # Fuzzy
 	'wikistats_active_day' => '天',
 	'wikistats_active_month' => '月',
 	'wikistats_active_year' => '年',
@@ -8774,11 +8799,11 @@ $messages['zh-hant'] = array(
 	'wikistats_namespaces' => '命名空間',
 	'wikistats_redirects' => '重定向',
 	'wikistats_edited_in_namespace' => '在命名空間中進行編輯',
-	'wikistats_main_namespace' => '內容<br>命名空間',
+	'wikistats_main_namespace' => '內容<br>命名空間', # Fuzzy
 	'wikistats_image_namespace' => '圖片',
 	'wikistats_page_requests' => '頁面請求',
 	'wikistats_visits' => '訪問',
-	'wikistats_new_per_day' => '新增<br>每日',
+	'wikistats_new_per_day' => '新增<br>每日', # Fuzzy
 	'wikistats_official' => '官方',
 	'wikistats_count' => '數量',
 	'wikistats_unique_users' => '個別的使用者',
@@ -8822,4 +8847,3 @@ $messages['zh-tw'] = array(
 	'wikistats_pagetitle' => 'Wikia統計',
 	'wikistats_hide' => '隱藏',
 );
-

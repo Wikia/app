@@ -505,6 +505,7 @@ class Masthead {
 	 * @return Integer -- error code of operation
 	 */
 	public function uploadByUrl($url){
+		wfProfileIn(__METHOD__);
 		$sTmpFile = '';
 
 		$errorNo = $this->uploadByUrlToTempFile($url, $sTmpFile);

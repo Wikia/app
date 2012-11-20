@@ -310,6 +310,7 @@ class FollowHelper {
 		if ( empty($user) || $user->getOption('hidefollowedpages') ) {
 			if( $user->getId() != $wgUser->getId() ) {
 				$response->addText( wfMsg('wikiafollowedpages-special-hidden') );
+				wfProfileOut(__METHOD__);
 				return $response;
 			}
 		}
@@ -579,6 +580,7 @@ class FollowHelper {
 		global $wgTitle, $wgRequest, $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgUser;
 		wfProfileIn(__METHOD__);
 		if( F::app()->checkSkin( 'wikiamobile' ) ){
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -593,11 +595,13 @@ class FollowHelper {
 			$user = User::newFromName($key);
 
 			if ($user == null) {
+				wfProfileOut(__METHOD__);
 				return true;
 			}
 
 			if($user->getId() == 0) {
 				//not a real user
+				wfProfileOut(__METHOD__);
 				return true;
 			}
 		} else {
@@ -606,10 +610,12 @@ class FollowHelper {
 
 		// do not show Followed box on diffs
 		if ( $wgRequest->getVal( 'diff', null ) != null ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
 		if( $user->getOption( "hidefollowedpages" ) ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 

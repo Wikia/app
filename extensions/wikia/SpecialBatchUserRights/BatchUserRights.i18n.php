@@ -49,7 +49,7 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'batchuserrights' => 'Gwirioù oberour dre strolladoù',
-	'batchuserrights-desc' => "Aotreañ a ra da ouzhpennañ unan pe meur a implijer d'ur strollad en un obererezh hepken",
+	'batchuserrights-desc' => "Aotreañ a ra da ouzhpennañ unan pe meur a implijer d'ur strollad en un obererezh hepken", # Fuzzy
 	'batchuserrights-names' => "Anvioù implijer da ouzhpennañ d'ar strollad-mañ (unan dre linenn) :",
 	'batchuserrights-single-progress-update' => '{{PLURAL:$1|Strollad|Strolladoù}} ouzhpennet da <strong>$2</strong>.',
 	'batchuserrights-add-groups' => "Ouzhpennañ {{PLURAL:$1|un implijer|$1 implijer}} d'ar {{PLURAL:$2|strollad|strolladoù}}-mañ : <strong>$3</strong>.",
@@ -60,7 +60,7 @@ $messages['br'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
-	'batchuserrights-desc' => 'Omogućava dodavanje jednog ili više korisnika u grupu putem jedne akcije',
+	'batchuserrights-desc' => 'Omogućava dodavanje jednog ili više korisnika u grupu putem jedne akcije', # Fuzzy
 	'batchuserrights-userload-error' => "Nisam mogao učitati korisnika \"'''\$1'''\".",
 );
 
@@ -102,6 +102,15 @@ Bitte wende dich an einen Systemadministrator, falls du andere Gruppen für das 
 	'batchuserrights-no-groups' => 'Du hast keine Gruppen ausgewählt.
 Dies wird nichts verändern.
 Der Rest der Seite wird nur geladen, sodass du einfach sehen kannst ob einer der Benutzer nicht geladen werden konnte.',
+);
+
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'batchuserrights' => 'Pêser heqê karberan',
+	'batchuserrights-single-progress-update' => '{{PLURAL:$1|Gruba|Grubê}} <strong>$2</strong> vıraziya.',
+	'batchuserrights-add-groups' => '{{PLURAL:$1|yew karber|$1 karberi}} debyay êyê {{PLURAL:$2|gruba|grubanê}}: <strong>$3</strong> pawenê.',
 );
 
 /** Spanish (español)
@@ -370,6 +379,7 @@ Será permitida a execução do resto da página apenas para que possa verificar
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
 	'batchuserrights' => 'Direitos de usuários em lote',
@@ -409,6 +419,7 @@ $messages['ru'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'batchuserrights' => 'Bearbeta användarrättigheter satsvis',
 	'batchuserrights-desc' => 'Gör det möjligt att lägga till en eller flera användare till en grupp i en handling',
 	'batchuserrights-names' => 'Användarnamn som ska läggas till denna grupp (en per rad):',
 	'batchuserrights-intro' => 'Denna sida låter dig lägga till en grupp till flera användare på en gång.
@@ -466,4 +477,3 @@ $messages['zh-hans'] = array(
 	'batchuserrights-names' => '添加至该组的用户（每行一个）：',
 	'batchuserrights-userload-error' => "无法加载用户\"'''\$1'''\"。",
 );
-

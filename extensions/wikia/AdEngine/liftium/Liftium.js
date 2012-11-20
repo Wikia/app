@@ -263,6 +263,8 @@ Liftium.callAd = function (sizeOrSlot, slotPlacement) {
 		Liftium.slotPlacements[slotname] = slotPlacement;
 	}
 
+	WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':'slot/' + sizeOrSlot, 'ga_action':slotPlacement, 'ga_label':'liftium js'}, 'ga');
+
 	document.write('<div id="' + slotname + '">');
 	Liftium._callAd(slotname);
 	document.write("</div>");
@@ -391,13 +393,6 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, slotPlacemen
 	// this is a(n ugly?) shortcut, the right name would be slotname's parent div
 	var placement = iframeElement.id.replace(/_iframe$/, "");
 	WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':'slot/' + sizeOrSlot, 'ga_action':placement, 'ga_label':'liftium'}, 'ga');
-
-	/* ???	
-	var track_string = Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", sizeOrSlot + "_" + placement]);
-	if (track_string.indexOf('unknown') != -1) {
-		_wtq.push([null, 'liftium.varia', ['error', 'fb_15045', track_string]]);
-	}
-	*/
 
 	var t = Liftium.getNextTag(slotname);
 	if (!t) {
@@ -1450,6 +1445,7 @@ Liftium.isNetworkInChain = function (network_name, slotname){
 	return found;
 };
 
+Liftium.isHighValueCountry = AdLogicHighValueCountry(window).isHighValueCountry;
 
 /* Check to see if the user from the right geography */
 Liftium.isValidCountry = function (countryList){
@@ -1459,7 +1455,7 @@ Liftium.isValidCountry = function (countryList){
 	Liftium.d("Checking if '" + ac + "' is in:", 8, countryList);
 
 	if (Liftium.in_array("row", countryList, true) &&
-		!AdConfig.isHighValueCountry(ac)){
+		!Liftium.isHighValueCountry(ac)){
 		Liftium.d("ROW targetted, and country not high-value", 8);
 		return true;
 	}

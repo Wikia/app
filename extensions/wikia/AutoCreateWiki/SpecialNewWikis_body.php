@@ -142,7 +142,7 @@ class NewWikisPage extends AlphabeticPager {
 
 		// founder info
 		if ($this->more_details) {
-			$query['tables'][] = 'user';
+			$query['tables'][] = '`user`';
 			$extra_fields = array('user.user_name', 'user.user_email', 'user.user_email_authenticated');
 			$query['fields'] = array_merge($query['fields'], $extra_fields);
 			$query['join_conds']['user'] = array('left join', 'city_list.city_founding_user=user.user_id');

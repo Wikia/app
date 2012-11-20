@@ -2,8 +2,17 @@
 	background: white;
 	color: black;
 }
+.ui-traceviewer table {
+	font-size: 12px;
+}
 .ui-traceviewer a {
 	color: #2B54B5;
+}
+
+.trace-nav-buttons {
+	position: absolute;
+	top: 0;
+	right: 0;
 }
 
 .php-trace-wrapper {

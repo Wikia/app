@@ -47,9 +47,9 @@ class {$this->mockClassName} extends {$this->className} {
 EOF;
 
 		// ... then create all required method overrides
-		foreach ($this->methods as $method) {
+		foreach ($this->methods as $method => $signature) {
 			$code .= <<<EOF
-	public function $method() {
+	public function $method($signature) {
 		\$args = func_get_args();
 		\$traceId = \$this->_mock_tracer->begin('$method',\$args);
 		\$retval = call_user_func_array(array('parent','$method'),\$args);

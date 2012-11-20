@@ -23,17 +23,30 @@ $.nirvana = {
 
 		var url = (typeof attr.scriptPath == 'undefined') ? wgScriptPath : attr.scriptPath;
 
+		var getUrl = { /* JSlint ignore */
+			//Iowa strips out POST parameters, Nirvana requires these to be set
+			//so we're passing them in the GET part of the request
+			controller: attr.controller.replace(/Controller$/, ''),
+			method: attr.method
+		};
+
+		(type == 'POST' ? getUrl : data).format = format;
+
+		var sortedKeys = [];
+		for(var key in data) {
+			sortedKeys[sortedKeys.length] = key;
+		}
+		sortedKeys.sort();
+		var sortedDict = {};
+		for(var i = 0; i < sortedKeys.length; i++) {
+			sortedDict[sortedKeys[i]] = data[sortedKeys[i]];
+		}
+
 		return $.ajax({
-			url: url + '/wikia.php?' + $.param({ /* JSlint ignore */
-				//Iowa strips out POST parameters, Nirvana requires these to be set
-				//so we're passing them in the GET part of the request
-				controller: attr.controller,
-				method: attr.method,
-				format: format
-			}),
+			url: url + '/wikia.php?' + $.param(getUrl),
 			dataType: format,
 			type: type,
-			data: data,
+			data: sortedDict,
 			success: callback,
 			error: onErrorCallback
 		});

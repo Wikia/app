@@ -228,6 +228,7 @@ $messages['de'] = array(
 $messages['diq'] = array(
 	'photopop-setup-category-label' => 'Kategoriye',
 	'photopop-setup-submit-label' => 'Noroc resn',
+	'photpop-category-none' => 'N/A',
 	'photopop-game-round' => 'Round',
 	'photopop-game-month-0' => 'Çel',
 	'photopop-game-month-1' => 'Şbt',
@@ -349,7 +350,7 @@ $messages['fi'] = array(
 	'photopop-game-progress' => 'valokuvaa',
 	'photopop-game-finished' => 'valmis!',
 	'photopop-game-image-load-error' => 'Kuvan lataus epäonnistui. Yritä uudelleen.',
-	'photopop-game-loading-image' => 'Ladataan kuvaa...<br>Odota',
+	'photopop-game-loading-image' => 'Ladataan kuvaa...<br>Odota', # Fuzzy
 	'photopop-game-month-0' => 'Tammikuu',
 	'photopop-game-month-1' => 'Helmikuu',
 	'photopop-game-month-2' => 'Maaliskuu',
@@ -1066,7 +1067,7 @@ $messages['pt'] = array(
 	'photopop-game-outof' => 'de',
 	'photopop-game-progress' => 'imagens',
 	'photopop-game-finished' => 'finalizado!',
-	'photopop-game-loading-image' => 'A carregar imagem...<br>Aguarde',
+	'photopop-game-loading-image' => 'A carregar imagem...<br>Aguarde', # Fuzzy
 	'photopop-game-paused' => 'Jogo pausado',
 	'photopop-game-month-0' => 'Jan',
 	'photopop-game-month-1' => 'Fev',
@@ -1119,6 +1120,7 @@ $messages['pt-br'] = array(
 
 /** Russian (русский)
  * @author Kuzura
+ * @author Volkov
  */
 $messages['ru'] = array(
 	'photopop-setup-title' => 'Настройка Фото-паззл',
@@ -1156,7 +1158,7 @@ $messages['ru'] = array(
 	'photopop-game-finished' => 'готово!',
 	'photopop-game-image-load-error' => 'Не удалось загрузить изображения. Извините, пожалуйста, попробуйте еще раз.',
 	'photopop-game-tutorial-intro' => 'Коснитесь экрана, чтобы заглянуть под таинственное изображение.',
-	'photopop-game-tutorial-continue' => 'После того, как ответ раскроется, нажмите кнопку «Далее», чтобы продолжать с новым изображением.',
+	'photopop-game-tutorial-continue' => 'После того как ответ раскроется, нажмите кнопку «Далее», чтобы продолжать с новым изображением.',
 	'photopop-game-tutorial-drawer' => 'Чем меньше кусочков вы откроете, меньше догадок сделаете и меньше времени потратите, тем больше получите очков!',
 	'photopop-game-tutorial-tile' => 'Нажмите кнопку «ответить», чтобы сделать предположение.',
 	'photopop-game-new-highscore' => 'Новый рекорд',
@@ -1381,9 +1383,23 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
+	'photopop-game-correct' => '正确',
+	'photopop-game-points' => '分数',
+	'photopop-game-total' => '总分',
+	'photopop-game-score' => '得分',
+	'photopop-game-wiki' => '维基',
+	'photopop-game-date' => '日期',
+	'photopop-game-timeup' => '时间到了！',
+	'photopop-game-please-wait' => '请稍等',
+	'photopop-game-loading' => '正在加载....',
+	'photopop-game-highscore' => '最高纪录',
+	'photopop-game-progress' => '图片',
+	'photopop-game-finished' => '完成！',
 	'photopop-game-new-highscore' => '新高比分',
+	'photopop-game-loading-image' => '正在加载图片...<br />请稍等片刻',
 	'photopop-game-paused' => '游戏暂停',
 	'photopop-game-loading-assets' => '载入游戏资产中',
 	'photopop-game-month-0' => '1月',
@@ -1400,4 +1416,3 @@ $messages['zh-hans'] = array(
 	'photopop-game-month-11' => '12月',
 	'photopop-game-no-highscore' => '没有高比分',
 );
-

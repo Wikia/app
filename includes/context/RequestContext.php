@@ -195,6 +195,12 @@ class RequestContext implements IContextSource {
 	 * @return User
 	 */
 	public function getUser() {
+		// Wikia change - begin - @author: wladek
+		global $wgUserForceAnon;
+		if ( $this->user === null && $wgUserForceAnon ) {
+			$this->user = new User();
+		}
+		// Wikia change - end
 		if ( $this->user === null ) {
 			$this->user = User::newFromSession( $this->getRequest() );
 		}

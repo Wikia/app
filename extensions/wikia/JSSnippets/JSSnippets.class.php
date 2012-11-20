@@ -94,6 +94,7 @@ class JSSnippets extends WikiaObject {
 		}
 
 		if ( empty( $entry['dependencies'] ) && empty( $entry['loaders'] ) ) {
+			$this->wf->profileOut( __METHOD__ );
 			return $js;
 		}
 

@@ -31,7 +31,8 @@ $messages['en'] = array(
 	'places-category-switch-off' => 'Enable geotagging'
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'places-in-category' => '$1 is a category name',
 	'places-on-map' => 'Counter of places on a map ($1 is number of places)',
@@ -264,6 +265,13 @@ $messages['it'] = array(
 	'places-geolocation-modal-error-title' => 'Errore',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'places-geolocation-modal-error-title' => 'Çewtî',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -486,6 +494,7 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'places' => 'Platser på denna wiki',
+	'places-desc' => 'Lägger till taggarna <nowiki><place> och <places></nowiki> för geotaggning av sidor och en [[Special:Places|karta över alla taggade sidor]]',
 	'places-in-category' => 'Platser i $1 kategori',
 	'places-on-map' => '{{PLURAL:$1|$1 ställe|$1 ställen}} på denna karta',
 	'places-modal-go-to-special' => 'Visar {{PLURAL:$1|$1 plats|$1 platser}} ([[Special:Places|se alla]])',
@@ -600,4 +609,3 @@ $messages['zh-hans'] = array(
 	'places-geolocation-button-label' => '添加位置',
 	'places-geolocation-modal-error-title' => '错误',
 );
-

@@ -9,7 +9,8 @@ $messages['en'] = array(
 	'performancestat-cpu' => 'CPU: $1s'
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'showperformancestats-desc' => '{{desc}}',
 	'performancestat-total' => 'Total time (in seconds) calculated from Varnish End time minus Varnish Start time.',
@@ -287,4 +288,3 @@ $messages['tl'] = array(
 $messages['zh-hans'] = array(
 	'performancestat-cpu' => 'CPU: $1秒',
 );
-

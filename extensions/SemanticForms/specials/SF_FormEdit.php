@@ -93,6 +93,7 @@ class SFFormEdit extends SpecialPage {
 
 	static function printForm( &$form_name, &$target_name, $alt_forms = array(), $redirectOnError = false ) {
 		global $wgOut, $wgRequest, $wgUser, $sfgFormPrinter;
+		wfProfileIn( __METHOD__ );
 
 		// initialize some variables
 		$target_title = null;
@@ -102,6 +103,7 @@ class SFFormEdit extends SpecialPage {
 
 		// If the given form is not a valid title, bail out.
 		if ( !$form_title ) {
+			wfProfileOut( __METHOD__ );
 			return 'sf_formedit_badurl';
 		}
 		$form_article = new Article( $form_title, 0 );
@@ -129,6 +131,7 @@ class SFFormEdit extends SpecialPage {
 				$page_name_elements = SFUtils::getFormTagComponents( $matches[1] );
 				$page_name_formula = $page_name_elements[0];
 			} elseif ( count( $alt_forms ) == 0 ) {
+				wfProfileOut( __METHOD__ );
 				return 'sf_formedit_badurl';
 			}
 		} else {
@@ -299,9 +302,11 @@ class SFFormEdit extends SpecialPage {
 
 				if ( is_null( $target_title ) ) {
 					if ( $target_name )	{
+						wfProfileOut( __METHOD__ );
 						return array ( 'sf_formstart_badtitle' , array( $target_name ) );
 					}
 					else {
+						wfProfileOut( __METHOD__ );
 						return 'sf_formedit_emptytitle';
 					}
 				}
@@ -311,6 +316,7 @@ class SFFormEdit extends SpecialPage {
 					$permErrors = $target_title->getUserPermissionsErrors( 'edit', $wgUser );
 					if ( $permErrors ) {
 						// just return the first error and let them fix it one by one
+						wfProfileOut( __METHOD__ );
 						return array_shift( $permErrors );
 					}
 					// Set up all the variables for the
@@ -364,6 +370,7 @@ class SFFormEdit extends SpecialPage {
 							$wgOut->redirect( $target_title->getFullURL() );
 						}
 
+						wfProfileOut( __METHOD__ );
 						return SFUtils::processEditErrors( $saveResultCode );
 					}
 					
@@ -404,6 +411,7 @@ class SFFormEdit extends SpecialPage {
 		}
 		$wgOut->addHTML( $text );
 
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 }

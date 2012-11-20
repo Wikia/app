@@ -21,7 +21,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'mostvisitedpageslatest' => 'Needs plural support.',
+	'mostvisitedpageslatest' => 'Needs plural support.', # Fuzzy
 );
 
 /** Afrikaans (Afrikaans)
@@ -138,6 +138,7 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'mostvisitedpagessearchtext' => 'Namey wesiqa:',
 	'mostvisitedpagessearchbtn' => 'cı geyre',
 );
 
@@ -340,7 +341,7 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'mostvisitedpages' => 'Најпосетени страници',
-	'mostvisitedpagessearchtext' => 'Име на статијата:',
+	'mostvisitedpagessearchtext' => 'Назив на статијата:',
 	'mostvisitedpagessearchbtn' => 'пребарај',
 	'mostvisitedpageslatest' => 'во последните $1 минути',
 	'mostvisitedpageslatestlink' => 'Најскоро посетени страници',
@@ -384,7 +385,7 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'mostvisitedpages' => "Meest bezochte pagina's",
-	'mostvisitedpagessearchtext' => 'Artikelnaam:',
+	'mostvisitedpagessearchtext' => 'Paginanaam:',
 	'mostvisitedpagessearchbtn' => 'zoeken',
 	'mostvisitedpageslatest' => 'in de laatste $1 minuten',
 	'mostvisitedpageslatestlink' => "Recent bezochte pagina's bekijken",
@@ -644,4 +645,3 @@ $messages['zh-hant'] = array(
 $messages['zh-tw'] = array(
 	'mostvisitedpages' => '訪問次數最多的頁面',
 );
-

@@ -85,6 +85,15 @@ $messages['bg'] = array(
 	'ajaxpoll-submit' => 'Гласуване!',
 );
 
+/** Tibetan (བོད་ཡིག)
+ * @author YeshiTuhden
+ */
+$messages['bo'] = array(
+	'ajaxpoll-thankyou' => 'ཁྱོད་ཀྱིས་འོས་ཤོག་འཕེན་པར་བཀའ་དྲིན་ཆེ་',
+	'ajaxpoll-error' => 'ཁྱོད་ཀྱི་འོས་ཤོག་མདུན་སྐྱོད་བྱེད་སྐབས་གནད་དོན་ཁ་ཤས་འདུག་  ཡང་བསྐྱར་ལྟ་ཚོད་གནང།',
+	'ajaxpoll-submit' => 'འཕེན་ཚར་',
+);
+
 /** Breton (brezhoneg)
  * @author Y-M D
  */
@@ -122,6 +131,13 @@ $messages['cy'] = array(
 	'ajaxpoll-submit' => 'Pleidleisiwch!',
 	'ajaxpoll-closed' => "Mae'r bleidlais bellach ar gau. Mwynhewch y canlyniadau.",
 	'ajaxpoll-submitting' => "Arhoswch os gwelwch yn dda, yn cyflwyno'ch pleidlais...",
+);
+
+/** Danish (dansk)
+ * @author Sarrus
+ */
+$messages['da'] = array(
+	'ajaxpoll-submit' => 'Stem!',
 );
 
 /** German (Deutsch)
@@ -369,12 +385,13 @@ $messages['ja'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 아라
  */
 $messages['ko'] = array(
 	'ajaxpoll-thankyou' => '투표해 주셔서 감사합니다!',
-	'ajaxpoll-error' => '투표를 처리하는 도중 문제가 발생했습니다. 다시 시도해 주세요.',
-	'ajaxpoll-summary' => '이 설문조사는 $2 $1에 생성되었으며 지금까지 모두 $3명이 참여했습니다.',
-	'ajaxpoll-closed' => '설문조사가 종료되었습니다. 결과를 비교해 보세요.',
+	'ajaxpoll-error' => '투표를 처리하는 도중 문제가 발생했습니다. 다시 시도하세요.',
+	'ajaxpoll-summary' => '이 설문 조사는 $2 $1에 만들어졌으며 지금까지 $3명이 투표했습니다.',
+	'ajaxpoll-closed' => '설문 조사가 지금 끝났습니다. 결과를 비교해 보세요.',
 );
 
 /** Colognian (Ripoarisch)
@@ -767,4 +784,3 @@ $messages['zh-hant'] = array(
 	'ajaxpoll-closed' => '投票現已封閉。享受結果。',
 	'ajaxpoll-submitting' => '請稍候，正提交您的投票...',
 );
-

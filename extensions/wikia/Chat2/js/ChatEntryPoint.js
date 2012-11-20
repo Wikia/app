@@ -16,15 +16,15 @@ var ChatEntryPoint = {
 
 	loadEntryPoint: function() {
 		// load the chat entry point content using Ajax
-		var currentTime = new Date();
-		var minuteTimestamp = currentTime.getFullYear() + currentTime.getMonth() + currentTime.getDate() + currentTime.getHours() + currentTime.getMinutes();
+		//var currentTime = new Date();
+		//var minuteTimestamp = currentTime.getFullYear() + currentTime.getMonth() + currentTime.getDate() + currentTime.getHours() + currentTime.getMinutes();
 		$.nirvana.sendRequest({
-			controller: 'ChatRail',
+			controller: 'ChatRailController',
 			method: 'Contents',
 			type: 'GET',
 			format: 'html',
 			data: {
-				cb: minuteTimestamp
+				//cb: minuteTimestamp
 			},
 			callback: ChatEntryPoint.entryPointLoaded
 		});

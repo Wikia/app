@@ -47,6 +47,8 @@ class ArticleComment {
 	 */
 	public $mFirstRevision;
 
+	protected $minRevIdFromSlave;
+
 	/**
 	 * @param $title Title
 	 */
@@ -190,7 +192,7 @@ class ArticleComment {
 				$this->mText = $acData['text'];
 				$this->mMetadata = empty($this->mMetadata) ? $acData['metadata']:$this->mMetadata;
 				$this->mRawtext = $acData['raw'];
-				$this->mHeadItems = empty($acData['head']) ? null:$acData['head'];  
+				$this->mHeadItems = empty($acData['head']) ? null:$acData['head'];
 				$this->mFirstRevision = $acData['first'];
 				$this->mLastRevision = $acData['last'];
 				$this->mUser = $acData['user'];
@@ -226,6 +228,7 @@ class ArticleComment {
 			}
 
 			if(empty($this->mFirstRevision) || empty($this->mLastRevision) ){
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
@@ -284,6 +287,11 @@ class ArticleComment {
 
 		$id = false;
 
+		if ( $db_conn == DB_SLAVE && isset($this->minRevIdFromSlave) ) {
+			wfProfileOut( __METHOD__ );
+			return $this->minRevIdFromSlave;
+		}
+
 		if ( $this->mTitle ) {
 			$db = wfGetDB($db_conn);
 			$id = $db->selectField(
@@ -298,6 +306,13 @@ class ArticleComment {
 
 		return $id;
 	}
+
+	public function setFirstRevId( $value, $db_conn ) {
+		if ( $db_conn == DB_SLAVE ) {
+			$this->minRevIdFromSlave = $value;
+		}
+	}
+
 	/**
 	 * getTitle -- getter/accessor
 	 *
@@ -651,6 +666,7 @@ class ArticleComment {
 			/**
 			 * because we save different title via Ajax request
 			 */
+			$origTitle = $wgTitle;
 			$wgTitle = $commentTitle;
 
 			/**
@@ -660,15 +676,12 @@ class ArticleComment {
 			$article = new Article( $commentTitle, intval($this->mLastRevId) );
 			$retval = self::doSaveAsArticle($text, $article, $user, $this->mMetadata, $summary );
 			if(!empty($title)) {
-				$key = $title->getPrefixedDBkey();
+				$purgeTarget = $title;
 			} else {
-				$key = $this->mTitle->getPrefixedDBkey();
-				$explode = $this->explode($key);
-				$key =  $explode['title'];
+				$purgeTarget = $origTitle;
 			}
 
-			$wgMemc->delete( wfMemcKey( 'articlecomment', 'comm', $key, 'v1' ) );
-
+			ArticleCommentList::purgeCache( $purgeTarget );
 			$res = array( $retval, $article );
 		} else {
 			$res = false;
@@ -698,7 +711,7 @@ class ArticleComment {
 		$editPage = new EditPage( $article );
 		$editPage->edittime = $article->getTimestamp();
 		$editPage->textbox1 = self::removeMetadataTag($text);
-		
+
 		$editPage->summary = $summary;
 
 		if(!empty($metadata)) {
@@ -800,6 +813,7 @@ class ArticleComment {
 		$wgTitle = $commentTitle;
 
 		if( !($commentTitle instanceof Title) ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -852,10 +866,9 @@ class ArticleComment {
 
 		global $wgMemc, $wgArticleCommentsLoadOnDemand;
 
-		$wgMemc->set( wfMemcKey( 'articlecomment', 'comm', $title->getDBkey(), 'v1' ), null );
-
 		// make sure our comment list is refreshed from the master RT#141861
 		$commentList = ArticleCommentList::newFromTitle($title);
+		$commentList->purge();
 		$commentList->getCommentList(true);
 
 		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
@@ -866,10 +879,14 @@ class ArticleComment {
 
 			for ( $page = 1; $page <= $pages; $page++ ) {
 				$params[ 'page' ] = $page;
-				$urls[] = ArticleCommentsController::getUrlToAjaxMethod(
+				$urls[] = ArticleCommentsController::getUrl(
 					'Content',
-					'html',
-					array( 'articleId' => $articleId, 'page' => $page, 'skin' => "true" )
+					array(
+						'format' => 'html',
+						'articleId' => $articleId,
+						'page' => $page,
+						'skin' => 'true'
+					)
 				);
 			}
 

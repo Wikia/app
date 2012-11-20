@@ -202,10 +202,33 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 	protected function getUrlContent($url) {
 		global $wgIgnApiConfig;
+		echo("Creating request\n");
+		$req = curl_init();
+		curl_setopt($req, CURLOPT_URL, $url);
+		curl_setopt($req, CURLOPT_HTTPHEADER,
+			array(
+				 "X-App-Id: ".$wgIgnApiConfig['AppId'],
+				 "X-App-Key: ".$wgIgnApiConfig['AppKey']
+			)
+		);
+		curl_setopt($req, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($req, CURLOPT_VERBOSE, 1);
+		$ret = curl_exec($req);
+		if(!curl_errno($req)){
+			$info = curl_getinfo($req);
+			echo 'Took ' . $info['total_time'] . ' seconds to send a request to ' . $info['url'] . "\n";
+		} else {
+			echo 'Curl error: ' . curl_error($req) . "\n";
+		}
+
+		curl_close($req);
+		echo "Data received:\n";
+		var_dump($ret);
+		return $ret;
+		/*
 		$options = array(
 			'timeout'=>'default'
 		);
-		echo("Creating request\n");
 		$req = HttpRequest::factory( $url, $options );
 		$req->setHeader('X-App-Id',$wgIgnApiConfig['AppId']);
 		$req->setHeader('X-App-Key', $wgIgnApiConfig['AppKey']);
@@ -221,7 +244,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			echo("No content\n".$errMsg);
 			$ret = false;
 		}
-		return $ret;
+		return $ret;*/
 	}
 
 	/*

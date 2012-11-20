@@ -1,9 +1,5 @@
-	<div id="SharingToolbar" class="hidden">
-<?php
-	foreach($shareButtons as $shareButton) {
-		echo '<div>';
-		echo $shareButton->getShareBox();
-		echo '</div>';
-	}
-?>
-	</div>
+<div id="SharingToolbar" class="SharingToolbar">
+	<? foreach( $shareButtons as $shareButton ): ?>
+		<div class="shareButton"><?= $shareButton->getShareBox() ?></div>
+	<? endforeach ?>
+</div>

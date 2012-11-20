@@ -276,6 +276,7 @@ class ConfigurationSettings {
 					$this->cache['editable'] += $ext->getSettings();
 				}
 			}
+			wfProfileOut( __METHOD__ );
 			return $this->cache['editable'];
 		}
 

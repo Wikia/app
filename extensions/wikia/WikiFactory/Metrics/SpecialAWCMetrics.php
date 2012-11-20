@@ -261,6 +261,7 @@ class WikiMetrics {
 				}
 			}
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	/*
@@ -278,31 +279,25 @@ class WikiMetrics {
 
 		#---
 		list ($AWCCities, $AWCCitiesCount) = $this->getNewWikis();
-
+		
 		if ( !empty( $AWCCities ) ) {
-			#--- page views
+			#--- page views 
 			$wikiList = array_keys( $AWCCities );
-
-			if ( !empty( $wgStatsDBEnabled ) ) {
-				$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-				$oRes = $db->select(
-					array( 'page_views' ),
-					array( 'pv_city_id, sum(pv_views) as cnt' ),
-					array( 'pv_city_id' => $wikiList ),
-					__METHOD__,
-					array( 'GROUP BY' => 'pv_city_id' )
-				);
-				while ( $oRow = $db->fetchObject( $oRes ) ) {
+			
+			$startDate = date( 'Y-m-01', strtotime('-3 month') );
+			$endDate = date( 'Y-m-01', strtotime('now') );
+			$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $wikiList );
+			if ( empty( $pageviews ) ) {
+				foreach ( $pageviews as $wiki_id => $wiki_data ) {
 					#---
-					$page_views = array_reduce (
+					$pviews = array_reduce (
 						array (" ", " K", " M", " G"), create_function (
 							'$a,$b', 'return is_numeric($a)?($a>=1000?$a/1000:number_format($a,1).$b):$a;'
-						), $oRow->cnt
+						), $wiki_data[ 'SUM' ]
 					);
-					$AWCCities[ $oRow->pv_city_id ][ "pageviews" ] = $oRow->cnt;
-					$AWCCities[ $oRow->pv_city_id ][ "pageviews_txt" ] = $page_views;
+					$AWCCities[ $wiki_id ][ "pageviews" ] = $wiki_data[ 'SUM' ];
+					$AWCCities[ $wiki_id ][ "pageviews_txt" ] = $pviews;
 				}
-				$db->freeResult( $oRes );
 			}
 		}
 
@@ -471,7 +466,7 @@ class WikiMetrics {
 			/* number records */
 			$options = array();
 
-			$tables = array("wikicities.city_list", "stats.wikia_monthly_stats"); #, "stats.page_views");
+			$tables = array("wikicities.city_list", "stats.wikia_monthly_stats"); 
 			$fields = array(
 				"city_id",
 				"city_dbname",
@@ -492,7 +487,6 @@ class WikiMetrics {
 
 			$join = array(
 				'stats.wikia_monthly_stats' => array( 'LEFT JOIN', 'wiki_id = city_id'),
-				//'stats.page_views' => array('LEFT JOIN', 'pv_city_id = city_id')
 			);
 
 			if ( $all == false ) {
@@ -574,6 +568,7 @@ class WikiMetrics {
 	 */
 	public function getCategoriesRecords() {
 		global $wgUser, $wgLang, $wgExternalSharedDB;
+		wfProfileIn( __METHOD__ );
 		/* db */
 		$dbr = wfGetDB( DB_SLAVE, "stats", $wgExternalSharedDB );
 		/* check params */
@@ -740,32 +735,21 @@ class WikiMetrics {
 			$pageViewsDays = self::DEF_DAYS_PVIEWS;
 		}
 
-		$days_ago = date('Ymd', strtotime('-90 days'));
-
-		$where = array( 'pv_use_date >= ' . $days_ago );
-		$cityList = "";
-		if ( !empty($this->cityIds) ) {
-			$cityList = implode(",", $this->cityIds);
-			$where[] = " pv_city_id in (" . $cityList . ") ";
-		}
-
 		$memkey = __METHOD__ . "v:" . $pageViews . "vd:" . $pageViewsDays . "vc:" . md5($cityList);
 		$cities = $wgMemc->get( $memkey );
 		if ( empty( $cities ) && !empty( $wgStatsDBEnabled ) ) {
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$oRes = $dbs->select(
-				"page_views",
-				array( 'pv_city_id', 'sum(pv_views) as cnt' ),
-				$where,
-				__METHOD__,
-				array( 'GROUP BY' => 'pv_city_id', 'HAVING' => 'cnt < '. intval($pageViews) )
-			);
-			$cities = array();
-			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
-				$this->mPageViews[$oRow->pv_city_id] = $oRow->cnt;
-				$cities[] = $oRow->pv_city_id;
+			$startDate = date( 'Y-m-01', strtotime('-3 month') );
+			$endDate = date( 'Y-m-01', strtotime('now') );
+			$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $this->cityIds );
+		
+			if ( empty( $pageviews ) ) {
+				foreach ( $pageviews as $wiki_id => $wiki_data ) {
+					#---
+					if ( $wiki_data['SUM'] > intval($pageViews) ) continue; 
+					$this->mPageViews[ $wiki_id ] = $wiki_data[ 'SUM' ];
+					$cities[] = $wiki_id;
+				}
 			}
-			$dbs->freeResult( $oRes );
 			$wgMemc->set( $memkey, $cities, 3600 );
 		}
 

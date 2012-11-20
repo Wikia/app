@@ -82,6 +82,15 @@ $messages['de-formal'] = array(
 	'imgplc-notinhistory' => 'Sie können keine Bilder im Verlaufsmodus hinzufügen.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Mirzali
+ */
+$messages['diq'] = array(
+	'imgplc-create' => 'Resım cı ke',
+	'imgplc-placeholder' => 'Tepıştoğê cay',
+	'imgplc-image' => 'Resım',
+);
+
 /** Spanish (español)
  * @author Translationista
  */
@@ -100,7 +109,8 @@ $messages['eu'] = array(
 	'imgplc-image' => 'Irudia',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ */
 $messages['fa'] = array(
 	'imgplc-create' => 'افزودن تصویر',
 	'imgplc-placeholder' => 'مکان نگه‏دار',
@@ -438,4 +448,3 @@ $messages['zh-hans'] = array(
 	'imgplc-create' => '添加照片',
 	'imgplc-image' => '照片',
 );
-

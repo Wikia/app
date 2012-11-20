@@ -149,7 +149,7 @@ $messages['qqq'] = array(
 	'swm-button-save' => '{{Identical|Save}}',
 	'swm-button-new' => '{{Identical|New}}',
 	'swm-msg-sent-task' => 'Message to display when a task is created in order to send a message. $1 is a link to the created task.',
-	'swm-expire-info' => 'If $1 is a time stamp, split date and time.',
+	'swm-expire-info' => 'If $1 is a time stamp, split date and time.', # Fuzzy
 	'swm-list-table-group' => '{{Identical|Group}}',
 	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.',
 	'swm-list-table-content' => '{{Identical|Content}}',
@@ -307,7 +307,7 @@ $messages['ar'] = array(
 	'swm-msg-sent-ok' => '<h3>تم إرسال الرسالة.</h3>',
 	'swm-msg-sent-err' => '<h3>لم يتم إرسال الرسالة.</h3>راجع سجل الأخطاء للمزيد من المعلومات.',
 	'swm-msg-remove' => 'هل أنت متأكد من أنك تريد إزالة هذه الرسالة؟ هذا أمر لا يمكن التراجع عنه!',
-	'swm-expire-info' => 'هذه الرسالة سوف تنتهي في SAR4 .',
+	'swm-expire-info' => 'هذه الرسالة سوف تنتهي في SAR4 .', # Fuzzy
 	'swm-link-dismiss' => 'استبعاد هذه الرسالة',
 	'swm-dismiss-content' => '<p>تم استبعاد الرسالة.</p><p>%s</p>',
 	'swm-list-no-messages' => 'لا توجد رسائل.',
@@ -545,7 +545,8 @@ $messages['br'] = array(
 	'swm-mode-users-registration-before' => 'Kent',
 );
 
-/** Bosnian (bosanski) */
+/** Bosnian (bosanski)
+ */
 $messages['bs'] = array(
 	'swm-yes' => 'Da',
 	'swm-no' => 'Ne',
@@ -776,6 +777,7 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'swm-label-preview' => 'Verqayt',
@@ -800,16 +802,26 @@ $messages['diq'] = array(
 	'swm-list-table-id' => 'ID',
 	'swm-list-table-sender' => 'Rıster',
 	'swm-list-table-wiki' => 'Wiki',
-	'swm-list-table-group' => 'Grub',
+	'swm-list-table-group' => 'Grube',
 	'swm-list-table-removed' => 'wedariya',
 	'swm-list-table-content' => 'Tede este',
 	'swm-list-table-tools' => 'Xecetî',
 	'swm-list-table-lang' => 'Zıwani',
 	'swm-yes' => 'E',
 	'swm-no' => 'Nê',
+	'swm-mode-users-registration-after' => 'Bahdo',
+	'swm-mode-users-registration-before' => 'Veri',
+	'swm-mode-users-registration-between' => 'Ared',
+	'swm-mode-users-editcount-more' => 'Dehana vêşi',
+	'swm-mode-users-editcount-less' => 'Dehana tayn',
+	'swm-mode-users-editcount-between' => 'Ared',
+	'swm-mode-wikis-created-after' => 'Bahdo',
+	'swm-mode-wikis-created-before' => 'Veri',
+	'swm-mode-wikis-created-between' => 'Ared',
 );
 
-/** Ewe (eʋegbe) */
+/** Ewe (eʋegbe)
+ */
 $messages['ee'] = array(
 	'swm-label-edit' => 'Trɔ asi le eŋu',
 );
@@ -830,7 +842,7 @@ $messages['el'] = array(
 	'swm-button-send' => '[ Αποστολή ]',
 	'swm-button-save' => '[ Αποθήκευση ]',
 	'swm-button-new' => '[ Νέο ]',
-	'swm-msg-sent-ok' => '<h3>Το μήνυμα εστάλη.</h3>',
+	'swm-msg-sent-ok' => '<h3>Το μήνυμα εστάλη.</h3>', # Fuzzy
 	'swm-msg-remove' => 'Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το μήνυμα; Αυτό δεν μπορεί να αναιρεθεί!',
 	'swm-list-table-wiki' => 'Βίκι',
 	'swm-yes' => 'Ναι',
@@ -1255,7 +1267,8 @@ $messages['grc'] = array(
 	'swm-label-language' => 'Γλῶττα',
 );
 
-/** Hausa (Hausa) */
+/** Hausa (Hausa)
+ */
 $messages['ha'] = array(
 	'swm-label-comment' => 'Bahasi',
 );
@@ -1622,6 +1635,7 @@ $messages['ku-latn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'swm-label-preview' => 'Kucken ouni ofzespäicheren',
 	'swm-label-edit' => 'Änneren',
 	'swm-label-remove' => 'Ewechhuelen',
 	'swm-label-sent' => 'Geschéckt',
@@ -1651,6 +1665,12 @@ $messages['lb'] = array(
 	'swm-error-no-such-user' => 'De spezifizéierte Benotzer gëtt et net.',
 	'swm-error-empty-group' => 'Gitt den Numm vum Grupp an.',
 	'swm-lang-other' => 'all weider Sproochen',
+	'swm-mode-users-registration-after' => 'Nom',
+	'swm-mode-users-registration-before' => 'Virum',
+	'swm-mode-users-editcount-more' => 'Méi',
+	'swm-mode-users-editcount-less' => 'Manner',
+	'swm-mode-wikis-created-after' => 'Nom',
+	'swm-mode-wikis-created-before' => 'Virum',
 );
 
 /** Macedonian (македонски)
@@ -1709,7 +1729,7 @@ $messages['mk'] = array(
 	'swm-link-dismiss' => 'отфрли ја пораката',
 	'swm-dismiss-content' => '<p>Пораката беше отфрлена.</p><p>%s</p>',
 	'swm-list-no-messages' => 'Нема пораки.',
-	'swm-list-table-id' => 'ID',
+	'swm-list-table-id' => 'Назнака',
 	'swm-list-table-sender' => 'Испраќач',
 	'swm-list-table-wiki' => 'Вики',
 	'swm-list-table-recipient' => 'Примач',
@@ -1949,6 +1969,7 @@ $messages['nb'] = array(
 	'swm-button-new' => '[ Ny ]',
 	'swm-msg-sent-ok' => '<h3>Meldingen ble sendt.</h3>',
 	'swm-msg-sent-err' => '<h3>Meldingen ble IKKE sendt.</h3>Se feilloggen for mer informasjon.',
+	'swm-msg-sent-task' => 'Oppgave for å sende melding opprettet: $1',
 	'swm-msg-remove' => 'Er du sikker på at du vil fjerne denne meldingen? Dette kan ikke gjøres om!',
 	'swm-expire-info' => 'Denne meldingen løper ut $1.',
 	'swm-link-dismiss' => 'skjul denne meldingen',
@@ -1994,6 +2015,8 @@ $messages['nb'] = array(
 	'swm-mode-wikis-created-after' => 'Etter',
 	'swm-mode-wikis-created-before' => 'Før',
 	'swm-mode-wikis-created-between' => 'Mellom',
+	'swm-label-mode-wikis-created-hint' => '<i>Datoer må være i formatet 2012-04-01 00:00:00</i>',
+	'swm-error-created-tobeforefrom' => 'Wikiens opprettelsessluttdato er før startdatoen.',
 );
 
 /** Nepali (नेपाली)
@@ -2129,7 +2152,8 @@ $messages['pdc'] = array(
 	'swm-no' => 'Nee',
 );
 
-/** Pälzisch (Pälzisch) */
+/** Pälzisch (Pälzisch)
+ */
 $messages['pfl'] = array(
 	'swm-label-edit' => 'Bearwaide',
 );
@@ -2724,6 +2748,7 @@ $messages['sv'] = array(
 	'swm-button-new' => '[ Ny ]',
 	'swm-msg-sent-ok' => '<h3>Meddelandet har skickats.</h3>',
 	'swm-msg-sent-err' => '<h3>Meddelandet har INTE skickats.</h3>Se felloggen för mer information.',
+	'swm-msg-sent-task' => 'Uppgift skapades för att skicka meddelande: $1',
 	'swm-msg-remove' => 'Är du säker på att du vill ta bort detta meddelande? Detta går inte att ångra!',
 	'swm-expire-info' => 'Detta meddelande kommer att upphöra den $1.',
 	'swm-link-dismiss' => 'avfärda detta meddelande',
@@ -2765,6 +2790,12 @@ $messages['sv'] = array(
 	'swm-mode-users-editcount-between' => 'Mellan',
 	'swm-error-editcount-tolessthanfrom' => 'Den övre gränsen för användarens redigeringsantal är mindre än den lägre gränsen.',
 	'swm-error-editcount-notnumber' => 'Antalet redigerar måste vara ett giltigt tal.',
+	'swm-label-mode-wikis-created' => 'Wikins skapelsedatum',
+	'swm-mode-wikis-created-after' => 'Efter',
+	'swm-mode-wikis-created-before' => 'Innan',
+	'swm-mode-wikis-created-between' => 'Mellan',
+	'swm-label-mode-wikis-created-hint' => '<i>Datum fyllas i enligt formatet 2012-04-01 00:00:00</i>',
+	'swm-error-created-tobeforefrom' => 'Wikins skapelseslutdatum är innan startdatumet.',
 );
 
 /** Swahili (Kiswahili)
@@ -3041,13 +3072,23 @@ $messages['yi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Sam Wang
  * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
+	'swm-label-preview' => '预览',
+	'swm-label-edit' => '编辑',
+	'swm-label-remove' => '删除',
 	'swm-label-sent' => '已发送',
+	'swm-label-list' => '列表',
+	'swm-label-recipient' => '收件人',
+	'swm-label-recipient-wikis' => '维基',
+	'swm-label-recipient-users' => '用户',
 	'swm-label-mode-wikis-all' => '所有维基',
 	'swm-label-mode-users-all' => '所有用户',
 	'swm-label-content' => '内容',
+	'swm-label-comment' => '评语',
+	'swm-label-language' => '语言',
 	'swm-button-save' => '[ 保存 ]',
 	'swm-button-new' => '[ 新 ]',
 	'swm-list-no-messages' => '没有信息。',
@@ -3056,8 +3097,17 @@ $messages['zh-hans'] = array(
 	'swm-list-table-wiki' => '维基',
 	'swm-list-table-recipient' => '受信者',
 	'swm-list-table-group' => '用户组',
+	'swm-list-table-content' => '内容',
 	'swm-yes' => '是',
 	'swm-no' => '不是',
 	'swm-error-no-such-wiki' => '没有这个维基！',
+	'swm-mode-users-registration-after' => '之后',
+	'swm-mode-users-registration-before' => '之前',
+	'swm-mode-users-registration-between' => '之间',
+	'swm-mode-users-editcount-more' => '更多',
+	'swm-mode-users-editcount-less' => '更少',
+	'swm-mode-users-editcount-between' => '之间',
+	'swm-mode-wikis-created-after' => '之后',
+	'swm-mode-wikis-created-before' => '之前',
+	'swm-mode-wikis-created-between' => '之间',
 );
-

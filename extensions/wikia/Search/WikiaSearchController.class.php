@@ -59,6 +59,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setIsInterWiki	( $this->request->getBool('crossWikia', false) || $this->isCorporateWiki() )
 			->setVideoSearch	( $this->getVal('videoSearch', false) )
 			->setGroupResults	( $searchConfig->isInterWiki() || $this->getVal('grouped', false) )
+			->setFilterQueriesFromCodes( $this->getVal( 'filters', array() ) )
 		 ;
 
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
@@ -310,15 +311,22 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$searchEngine = F::build( 'SearchEngine' );
 		$searchableNamespaces = $searchEngine->searchableNamespaces();
 		$namespaces = array();
-		foreach($searchableNamespaces as $i => $name) {
-		    if ( $this->getVal('ns'.$i, false) ) {
+		foreach( $searchableNamespaces as $i => $name ) {
+		    if ( $this->getVal( 'ns'.$i, false ) ) {
 		        $namespaces[] = $i;
 		    }
 		}
-		if ( empty($namespaces) && $user->getOption('searchAllNamespaces')) {
-		    $namespaces = array_keys($searchableNamespaces);
+		if ( empty($namespaces) ) {
+		    if ( $user->getOption( 'searchAllNamespaces' ) ) {
+			    $namespaces = array_keys($searchableNamespaces);
+		    } else {
+		    	$profiles = $searchConfig->getSearchProfiles();
+		    	// this is mostly needed for unit testing
+		    	$defaultProfile = !empty( $this->wg->DefaultSearchProfile ) ? $this->wg->DefaultSearchProfile : 'default';
+		    	$namespaces = $profiles[$defaultProfile]['namespaces'];
+		    }
+		    
 		}
-		
 		$searchConfig->setNamespaces( $namespaces );
 		
 		return true;

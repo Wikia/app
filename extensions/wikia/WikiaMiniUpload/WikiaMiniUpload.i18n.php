@@ -241,7 +241,7 @@ $messages['ang'] = array(
 	'wmu-success' => '<h1>Spēd</h1>Þīn biliþ hafaþ ȝeƿorden ȝeþēoded.',
 	'wmu-success-placeholder' => '<h1>Spēd</h1>',
 	'wmu-return' => 'Gān eft tō ādihtunge',
-	'wmu-back' => 'eft',
+	'wmu-back' => 'eft', # Fuzzy
 	'wmu-close' => 'betȳnan',
 	'wmu-warn1' => 'Þū þearft ǣr tōmearcian þīne ascunȝe!',
 	'wmu-warn2' => 'Þū þearft ǣr cēosan ȝeƿithord!',
@@ -287,6 +287,13 @@ $messages['az'] = array(
 	'wmu-gallery' => 'Qalereya',
 );
 
+/** تورکجه (تورکجه)
+ * @author Erdemaslancan
+ */
+$messages['azb'] = array(
+	'wmu-licensing' => 'لیسانس',
+);
+
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
@@ -327,7 +334,7 @@ $messages['be-tarask'] = array(
 	'wmu-success' => '<h1>Посьпех</h1>Вашая выява была ўстаўленая.',
 	'wmu-success-placeholder' => '<h1>Посьпех</h1>',
 	'wmu-return' => 'Вярнуцца да рэдагаваньня',
-	'wmu-back' => 'вярнуцца',
+	'wmu-back' => 'вярнуцца', # Fuzzy
 	'wmu-close' => 'закрыць',
 	'wmu-warn1' => 'Спачатку Вам неабходна пазначыць запыт!',
 	'wmu-warn2' => 'Спачатку Вам неабходна выбраць файл!',
@@ -389,7 +396,7 @@ $messages['bg'] = array(
  */
 $messages['bjn'] = array(
 	'wmu-flickr' => 'Flickr',
-	'wmu-back' => 'mantuk',
+	'wmu-back' => 'mantuk', # Fuzzy
 );
 
 /** Breton (brezhoneg)
@@ -436,7 +443,7 @@ $messages['br'] = array(
 	'wmu-success' => "<h1>Berzh</h1>Ensoc'het eo bet ho skeudenn.",
 	'wmu-success-placeholder' => '<h1>Berzh</h1>',
 	'wmu-return' => "Distreiñ d'ar c'hemm",
-	'wmu-back' => 'distreiñ',
+	'wmu-back' => 'distreiñ', # Fuzzy
 	'wmu-close' => 'serriñ',
 	'wmu-warn1' => "Ret eo deoc'h spisait ho reked da gentañ !",
 	'wmu-warn2' => 'Rankout a rit dibab ar restr da gentañ !',
@@ -877,6 +884,7 @@ $messages['diq'] = array(
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Barke',
 	'wmu-find-btn' => 'Bıvin',
+	'wmu-rename' => 'Resimi fına name ke',
 	'wmu-insert' => 'Têare ker',
 	'wmu-name' => 'Name',
 	'wmu-license' => 'Lisans',
@@ -888,8 +896,10 @@ $messages['diq'] = array(
 	'wmu-layout' => 'Ca gınayiş',
 	'wmu-caption' => 'Bınnuşte',
 	'wmu-link' => 'Link',
+	'wmu-optional' => '(opsiyonel)',
 	'wmu-prev' => "8'ê verêni",
 	'wmu-next' => "8'ê peyêni",
+	'wmu-success-placeholder' => '<h1>Muaffaq</h1>',
 	'wmu-back' => 'Peyser',
 	'wmu-close' => 'racnê',
 	'wmu-imagebutton' => 'Resım deke',
@@ -899,6 +909,8 @@ $messages['diq'] = array(
 	'wmu-gallery' => 'Galeri',
 	'wmu-columns' => '$1 {{PLURAL:$1|Estûn|Estûni}}',
 	'wmu-column' => 'Estûni',
+	'wmu-gallery-btn1' => 'Ju na dosya deke',
+	'wmu-alignment' => 'Hiza fi',
 );
 
 /** Esperanto (Esperanto)
@@ -1013,7 +1025,7 @@ $messages['eu'] = array(
 	'wmu-insert2' => 'Fitxategia txertatu',
 	'wmu-prev' => 'Aurreko 8',
 	'wmu-next' => 'Hurrengo 8',
-	'wmu-back' => 'atzera',
+	'wmu-back' => 'atzera', # Fuzzy
 	'wmu-close' => 'itxi',
 	'wmu-imagelink' => '<b>Berria!</b> Irudiak gehitu',
 	'wmu-imagebutton' => 'Irudiak gehitu',
@@ -1271,7 +1283,7 @@ $messages['he'] = array(
 	'wmu-success' => '<h1>הצלחה</h1>התמונה שלך נוספה.',
 	'wmu-success-placeholder' => '<h1>הצלחה</h1>',
 	'wmu-return' => 'חזרה לעריכה',
-	'wmu-back' => 'חזרה',
+	'wmu-back' => 'חזרה', # Fuzzy
 	'wmu-close' => 'סגירה',
 	'wmu-warn1' => 'עליך לציין שאילתה תחילה!',
 	'wmu-warn2' => 'צריך לבחור קובץ תחילה!',
@@ -1506,7 +1518,7 @@ $messages['id'] = array(
 	'wmu-success' => '<h1>Berhasil</h1> Gambar Anda telah disisipkan.',
 	'wmu-success-placeholder' => '<h1>Berhasil</h1>',
 	'wmu-return' => 'Kembali menyunting',
-	'wmu-back' => 'kembali',
+	'wmu-back' => 'kembali', # Fuzzy
 	'wmu-close' => 'tutup',
 	'wmu-warn1' => 'Anda perlu menentukan permintaan terlebih dahulu!',
 	'wmu-warn2' => 'Anda perlu memilih berkas terlebih dahulu!',
@@ -1676,7 +1688,7 @@ $messages['ku-latn'] = array(
 	'wmu-license' => 'Lîsans',
 	'wmu-thumbnail' => 'Thumbnail',
 	'wmu-link' => 'Girêdan',
-	'wmu-back' => 'paşve biçe',
+	'wmu-back' => 'paşve biçe', # Fuzzy
 	'wmu-imagebutton' => 'Wêneyan zêde bike',
 	'wmu-hide-license-msg' => 'lîsansa nivîsê veşêre',
 	'wmu-show-license-msg' => 'lîsansa nivîsê nîşan bide',
@@ -1911,7 +1923,7 @@ $messages['my'] = array(
 	'wmu-width' => 'အကျယ်',
 	'wmu-link' => 'လင့်',
 	'wmu-prev' => 'နောက် 8',
-	'wmu-back' => 'နောက်',
+	'wmu-back' => 'နောက်', # Fuzzy
 	'wmu-close' => 'ပိတ်ရန်',
 	'wmu-column' => 'ဒေါင်လိုက်တန်း -',
 );
@@ -2118,11 +2130,12 @@ Klik hieronder om meer afbeeldingen aan de galerij toe te voegen.',
 $messages['pdc'] = array(
 	'wmu-link' => 'Gleecher',
 	'wmu-next' => 'Neegschte 8',
-	'wmu-back' => 'zerrick',
+	'wmu-back' => 'zerrick', # Fuzzy
 	'wmu-close' => 'zumache',
 );
 
-/** Pälzisch (Pälzisch) */
+/** Pälzisch (Pälzisch)
+ */
 $messages['pfl'] = array(
 	'wmu-prev' => 'Voriche 8',
 	'wmu-next' => 'Negschte 8',
@@ -2442,7 +2455,7 @@ $messages['pt-br'] = array(
 	'wmu-success' => '<h1>Sucesso</h1>A sua imagem foi inserida.',
 	'wmu-success-placeholder' => '<h1>Sucesso</h1>',
 	'wmu-return' => 'Voltar à edição',
-	'wmu-back' => 'voltar',
+	'wmu-back' => 'voltar', # Fuzzy
 	'wmu-close' => 'fechar',
 	'wmu-warn1' => 'Antes tem de especificar a consulta!',
 	'wmu-warn2' => 'Antes tem de selecionar o ficheiro!',
@@ -2756,7 +2769,7 @@ $messages['te'] = array(
 	'wmu-optional' => '(ఐచ్చికం)',
 	'wmu-prev' => 'క్రితం 8',
 	'wmu-next' => 'తర్వాతి 8',
-	'wmu-back' => 'వెనక్కి',
+	'wmu-back' => 'వెనక్కి', # Fuzzy
 	'wmu-close' => 'మూసివేయి',
 );
 
@@ -2850,7 +2863,8 @@ $messages['tl'] = array(
  * @author Erdemaslancan
  */
 $messages['tr'] = array(
-	'wmu-alignment' => 'Hiza fi',
+	'wmu-optional' => '(isteğe bağlı)',
+	'wmu-alignment' => 'Hizalama',
 );
 
 /** Ukrainian (українська)
@@ -2889,7 +2903,7 @@ $messages['uk'] = array(
 	'wmu-flickr2' => 'Зображення Flickr ($1 {{PLURAL:$1|знахідка|знахідки|знахідок}})',
 	'wmu-insert3' => 'Вставити зображення',
 	'wmu-recent-inf' => 'Нещодавно завантажені зображення',
-	'wmu-back' => 'назад',
+	'wmu-back' => 'назад', # Fuzzy
 	'wmu-close' => 'закрити',
 	'wmu-imagebutton' => 'Додати зображення',
 	'wmu-gallery' => 'Галерея',
@@ -2999,4 +3013,3 @@ $messages['zh-hant'] = array(
 	'wmu-title' => '上傳圖片',
 	'wmu-upload' => '上傳',
 );
-

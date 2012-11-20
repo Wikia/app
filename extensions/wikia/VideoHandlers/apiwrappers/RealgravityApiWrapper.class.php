@@ -4,16 +4,15 @@ class RealgravityApiWrapper extends IngestionApiWrapper {
 
 	protected static $CACHE_KEY = 'realgravityapi';
 	protected static $aspectRatio = 1.7777778;
-	
-	public function getDescription() {
 
+	public function getDescription() {
 		wfProfileIn( __METHOD__ );
 
 		$description = $this->getOriginalDescription();
-		if ($category = $this->getVideoCategory()) {
+		if ( $category = $this->getVideoCategory() ) {
 			$description .= "\n\nCategory: $category";
 		}
-		if ($keywords = $this->getVideoKeywords()) {
+		if ( $keywords = $this->getVideoKeywords() ) {
 			$description .= "\n\nKeywords: $keywords";
 		}
 
@@ -23,61 +22,70 @@ class RealgravityApiWrapper extends IngestionApiWrapper {
 	}
 
 	public function getThumbnailUrl() {
-		if (!empty($this->metadata['thumbnail'])) {
+		if ( !empty($this->metadata['thumbnail']) ) {
 			return $this->metadata['thumbnail'];
 		}
-		elseif (!empty($this->interfaceObj[1])) {
-			return $this->interfaceObj[1];
-		}
+
 		return '';
 	}
 
 	protected function getOriginalDescription() {
-		if (!empty($this->interfaceObj[3])) {
-			return $this->interfaceObj[3];
+		if ( !empty($this->metadata['description']) ) {
+			return $this->metadata['description'];
 		}
+
 		return '';
 	}
 
 	protected function getVideoDuration() {
-		if (!empty($this->interfaceObj[2])) {
-			return $this->interfaceObj[2];
+		if ( !empty($this->metadata['duration']) ) {
+			return $this->metadata['duration'];
 		}
+
 		return '';
 	}
 
 	public function getAspectRatio() {
-		$ratio = parent::getAspectRatio();
-		if (!empty($this->interfaceObj[0])) {
-			list($width, $height) = explode('x', $this->interfaceObj[0]);
-		}
-		if(!empty($width) && !(empty($height))) {
-			$ratio = $width / $height;
-		}
-		return $ratio;
+		return self::$aspectRatio;
 	}
-	
+
+	protected function getAltVideoId() {
+		if ( !empty($this->metadata['altVideoId']) ) {
+			return $this->metadata['altVideoId'];
+		}
+
+		return '';
+	}
+
 	protected function getVideoPublished() {
-		if (!empty($this->metadata['published'])) {
+		if ( !empty($this->metadata['published']) ) {
 			return $this->metadata['published'];
 		}
-		
+
 		return '';
 	}
-	
+
 	protected function getVideoCategory() {
-		if (!empty($this->metadata['category'])) {
+		if ( !empty($this->metadata['category']) ) {
 			return $this->metadata['category'];
 		}
-		
+
 		return '';
 	}
-	
+
 	protected function getVideoKeywords() {
-		if (!empty($this->metadata['keywords'])) {
+		if ( !empty($this->metadata['keywords']) ) {
 			return $this->metadata['keywords'];
 		}
-		
+
+		return '';
+	}
+
+	protected function getVideoTags() {
+		if ( !empty($this->metadata['tags']) ) {
+			return $this->metadata['tags'];
+		}
+
 		return '';
 	}
 
