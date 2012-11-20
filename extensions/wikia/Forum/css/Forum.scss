@@ -92,6 +92,13 @@
 			display: none;
 			margin-top: 10px;
 		}
+		
+		.board-container {
+			margin-bottom: 10px;
+			.heading {
+				display: block;
+			}
+		}
 
 		.buttons {
 			float: right;

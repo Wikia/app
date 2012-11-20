@@ -13,7 +13,18 @@ Forum.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm,
 		this.notifyEveryone = this.message.find('.notify-everyone');
 		this.loading = this.message.find('.loadingAjax');
 		this.messageTitle.on('focus', this.proxy(this.messageTitleFocus));
-		this.messageTopic = this.message.find('.message-topic').messageTopic({});
+		this.boardList = $('#BoardList');
+		
+		var topicOptions = {};
+		
+		if(this.boardList.exists()) {
+			this.page = {
+				namespace: $('#Wall').data('board-namespace')
+			};
+			topicOptions['topics'] = [window.wgTitle];
+		}
+		this.messageTopic = this.message.find('.message-topic').messageTopic(topicOptions);
+
 	},
 	afterPost: function(newmsg) {
 		// TODO: this is a hack. We should just be getting the ID back
@@ -23,6 +34,15 @@ Forum.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm,
 		if (this.messageBodyContainer.is(':hidden')) {
 			this.messageBodyContainer.fadeIn();
 			this.messageTopic.fadeIn();
+		}
+	},
+	doPostNewMessage: function(title) {
+		var boardTitle = this.boardList.find('option:selected').val();
+		if(!this.boardList.exists()) {
+			Forum.NewMessageForm.superclass.doPostNewMessage.call(this, title);
+		} else if(this.boardList.exists() && boardTitle) {
+			this.page['title'] = boardTitle;
+			Forum.NewMessageForm.superclass.doPostNewMessage.call(this, title);
 		}
 	}
 });

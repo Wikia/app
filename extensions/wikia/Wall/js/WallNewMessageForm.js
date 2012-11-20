@@ -172,8 +172,7 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 	},
 
 	postNewMessage_ChangeText_handleContent: function() {
-		var content = !this.messageBody.hasClass('placeholder');
-		content =  content && this.messageBody.val().length > 0;
+		var content = this.canSubmit();
 		if(content) {
 			this.messageSubmit.removeAttr('disabled');
 			this.messagePreview.removeAttr('disabled');
@@ -181,6 +180,10 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 			this.messageSubmit.attr('disabled','disabled');
 			this.messagePreview.attr('disabled','disabled');
 		}
+	},
+	
+	canSubmit: function() {
+		return !this.messageBody.hasClass('placeholder') && this.messageBody.val().length > 0;
 	},
 
 	postNewMessage_focus: function(e) {
@@ -191,8 +194,7 @@ Wall.NewMessageForm = $.createClass(Wall.MessageForm, {
 	},
 
 	postNewMessage_blur: function() {
-		var content = !this.messageBody.hasClass('placeholder');
-		content = content && this.messageBody.val().length > 0;
+		var content = this.canSubmit();
 		if(!content) {
 			this.buttons.hide();
 			this.messageSubmit.attr('disabled', 'disabled');

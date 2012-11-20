@@ -34,6 +34,7 @@ $messages['en'] = array(
 	'forum-board-thread-replies' => '$1 Replies',
 	'forum-board-thread-unfollow' => 'Unfollow',
 	'forum-board-new-message-heading' => 'Start a Discussion',
+	'forum-board-select-board' => 'Select a Board',
 	
 	'forum-board-no-board-worning' => "The board you're looking for was not found",
 
@@ -285,4 +286,6 @@ $messages['qqq'] = array(
 	
 	'forum-related-discussion-heading' => 'Section heading for related discussion section.  $1 is article that this section will be on.',
 	'forum-related-discussion-total-replies' => 'Label showing total number of replies in a discussion.  $1 is number of replies',
+	
+	'forum-board-select-board' => 'A form label instructing someone to select a board from a drop down.',
 );

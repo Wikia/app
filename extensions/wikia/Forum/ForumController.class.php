@@ -49,6 +49,8 @@ class ForumController extends WallBaseController {
 			
 			$this->description = $board->getDescription();
 		}
+		
+		$this->response->setVal( 'boardNamespace', NS_WIKIA_FORUM_BOARD );
 
 		//TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( 0, 0 );
@@ -82,6 +84,18 @@ class ForumController extends WallBaseController {
 
 	public function boardNewThread() {
 		parent::newMessage();
+		$this->isTopicPage = $this->getVal('isTopicPage', false);
+		if($this->isTopicPage) {
+			$forum = new Forum();
+		
+			$list = $forum->getBoardList();
+
+			$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
+	
+			foreach ( $list as $value ) {
+				$this->destinationBoards[] = array( 'value' => htmlspecialchars( $value['name'] ), 'content' => htmlspecialchars( $value['name'] ) );
+			}
+		}
 	}
 
 	public function boardThread() {
