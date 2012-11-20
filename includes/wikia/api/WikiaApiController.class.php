@@ -20,21 +20,21 @@ abstract class WikiaApiController extends WikiaController {
 	}
 
 	private function checkParameters(){
-		$query = RequestContext::getMain()->getRequest()->getQueryValues();
+		$paramKeys = RequestContext::getMain()->getRequest()->getValueNames();
 
-		$keys = array_keys($query);
+		if ( array_shift( $paramKeys ) === 'controller' && array_shift( $paramKeys ) === 'method') {
 
-		if ( array_shift($keys) === 'controller' && array_shift($keys) === 'method') {
+			unset( $paramKeys['controller'] );
+			unset( $paramKeys['method'] );
 
-			unset($query['controller']);
-			unset($query['method']);
+			if ( !empty( $paramKeys ) ) {
+				$origQuery = $paramKeys = array_flip( $paramKeys );;
 
-			$origQuery = $query;
+				ksort( $paramKeys );
 
-			ksort($query);
-
-			if ( $query !== $origQuery ) {
-				throw new WikiaException();
+				if ( $paramKeys !== $origQuery ) {
+					throw new WikiaException();
+				}
 			}
 		} else {
 			throw new WikiaException();
