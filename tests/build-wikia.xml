@@ -65,6 +65,7 @@
     </target>
 
     <target name="js">
+		<mkdir dir="${basedir}/build" mode="777" />
         <exec executable="phantomjs" dir="${basedir}" failonerror="true">
             <env key="SERVER_ID" value="165" />
             <arg line="run-test.js
@@ -97,6 +98,7 @@
     </target>
 
 	<target name="codelint-php">
+		<mkdir dir="${basedir}/build" mode="777" />
 		<exec executable="php" dir="${basedir}/../maintenance/wikia" failonerror="true">
 			<env key="SERVER_ID" value="165" />
 			<arg line="codelint.php
@@ -111,6 +113,7 @@
 	</target>
 
 	<target name="codelint-js">
+		<mkdir dir="${basedir}/build" mode="777" />
 		<exec executable="php" dir="${basedir}/../maintenance/wikia" failonerror="true">
 			<env key="SERVER_ID" value="165" />
 			<arg line="codelint.php
