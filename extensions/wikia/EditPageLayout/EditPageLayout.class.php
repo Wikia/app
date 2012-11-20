@@ -643,7 +643,7 @@ class EditPageLayout extends EditPage {
 	 * @return bool
 	 */
 	protected function userDismissedEduNote() {
-		$RTEUserPropertiesHandler = F::build('RTEUserPropertiesHandler'); /** @var WikiaUserPropertiesController $wikiaUserPropertiesController */
+		$RTEUserPropertiesHandler = F::build('RTEUserPropertiesHandler');  /* @var RTEUserPropertiesHandler $RTEUserPropertiesHandler */
 
 		try {
 			$results = $RTEUserPropertiesHandler->getUserPropertyValue(
