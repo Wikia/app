@@ -8,7 +8,7 @@ class RelatedForumDiscussionController extends WikiaController {
 	public function index() {
 	
 		$messages = $this->getData($this->app->wg->Title->getArticleId());
-		
+
 		unset($messages['lastupdate']);
 	
 		// resources
@@ -92,9 +92,10 @@ class RelatedForumDiscussionController extends WikiaController {
 	}
 
 	private function getData($id) {
-		return WikiaDataAccess::cacheWithLock( wfMemcKey( __CLASS__, 'getData', $id ), 24*60*60, function($id) use ($id) {
+		return WikiaDataAccess::cacheWithLock( wfMemcKey( __CLASS__, 'getData', $id ), 24*60*60, function() use ($id) {
 			$wlp = new WallRelatedPages(); 
-			$messages = $wlp->getArticlesRelatedMessgesSnippet($id, 2, 2 );			
+			$messages = $wlp->getArticlesRelatedMessgesSnippet($id, 2, 2 );
+			return $messages;			
 		});
 	}
 	

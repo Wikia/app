@@ -54,6 +54,8 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			$this->showOldForumLink = false;
 		}
 
+		$this->parseBoardDescription();
+
 		//TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( 0, 0 );
 
@@ -75,7 +77,25 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$this->boards = F::build( 'Forum' )->getBoardList();
 
+		$this->parseBoardDescription();
+
 		$this->wf->profileOut( __METHOD__ );
+	}
+
+	protected function parseBoardDescription() {
+		foreach( $this->boards as $key => $board ) {
+//			$this->boards[$key]['description'] =  htmlspecialchars($board['description']);
+			$this->boards[$key]['description'] = preg_replace_callback('/(\[\[[^\[\]\r\n\t]*\]\])/i', function($match) {
+				$app = F::App();
+				$options = $app->wg->Out->parserOptions();
+				$parserOut = $app->wg->Parser->parse($match[0], $app->wg->Title, $options );
+				$desc = $parserOut->getText();
+				//TODO: maybe there is some parser option to not wrap everything in <p>
+				$desc = str_replace('<p>', '', $desc );
+				$desc = str_replace('</p>', '', $desc );
+				return $desc; 
+			}, $board['description'] );
+		}
 	}
 
 	public function createNewBoardModal() {

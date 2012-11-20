@@ -12,7 +12,6 @@
 	</section>
 </section>
 
-
 <? if($showOldForumLink): ?>
 	<a href="<?= $oldForumLink ?>"> <?= wfMsg('forum-specialpage-oldforum-link'); ?></a>
 <? endif; ?>

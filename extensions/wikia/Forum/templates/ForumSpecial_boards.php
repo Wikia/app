@@ -16,7 +16,7 @@
 				<? endif; ?>
 			</div>
 			<p class="description grid-3 alpha">
-				<?= htmlspecialchars($board['description']) ?>
+				<?= $board['description'] ?>
 			</p>
 			<div class="grid-1">
 				<!-- placeholder for future feature -->
