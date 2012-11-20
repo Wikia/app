@@ -1,5 +1,7 @@
 /*global LightboxLoader:true, RelatedVideosIds, LightboxTracker*/
 
+/* TDOO: We need to normalize all readable titles and dbKeys so that we always know which one is which. This includes updating the DOM for every image and video element site-wide */
+
 var Lightbox = {
 	eventTimers: {
 		lastMouseUpdated: 0
@@ -25,58 +27,42 @@ var Lightbox = {
 	includeLatestPhotos: !$('#LatestPhotosModule .carousel-container').length, // if we don't have latest photos in the DOM, request them from back end
 	
 	makeLightbox: function(params) {
+		// If file doesn't exist, show the error modal
+		if(!Lightbox.initialFileDetail['exists']) {
+			Lightbox.showErrorModal();
+			return;
+		}
+		
 		var trackingObj = this.getClickSource(params);
 
 		Lightbox.openModal = params.modal;
 		Lightbox.current.title = params.title.toString(); // Added toString() for edge cases where titles are numbers
+
 		Lightbox.current.carouselType = trackingObj.carouselType;
 		
+		// Set up tracking
 		var clickSource = trackingObj.clickSource,
 			trackingCarouselType = trackingObj.trackingCarouselType;
 		
+		Lightbox.openModal.aggregateViewCount = 0;
+		Lightbox.openModal.clickSource = clickSource;
+	
 		// Check screen height for future interactions
 		Lightbox.shortScreen = $(window).height() < LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset ? true : false;
 		
 		// Add template to modal
 		Lightbox.openModal.find(".modalContent").html(LightboxLoader.templateHtml);
+		
+		// Init ads in Lightbox
 		if ($('#MODAL_RECTANGLE').length) {
 			window.adslots2.push(['MODAL_RECTANGLE']);
 		}
 		
-		if(!Lightbox.initialFileDetail['exists']) {
-			// We're showing an error template
-			Lightbox.showErrorModal();
-			return;
-		}
-		
-		// Template cache
-		Lightbox.openModal.moreInfoTemplate = $('#LightboxMoreInfoTemplate');
-		Lightbox.openModal.shareTemplate = $('#LightboxShareTemplate');
-		Lightbox.openModal.progressTemplate = $('#LightboxCarouselProgressTemplate');
-		Lightbox.openModal.videoTemplate = $("#LightboxVideoTemplate");
-		Lightbox.openModal.headerTemplate = $("#LightboxHeaderTemplate");
-		Lightbox.openModal.headerAdTemplate = $("#LightboxHeaderAdTemplate");
-
-		// Cache error message
-		Lightbox.openModal.errorMessage = $("#LightboxErrorMessage").html();
-		
-		// pre-cache known doms
-		Lightbox.openModal.carousel = $('#LightboxCarouselContainer .carousel');
-		Lightbox.openModal.header = Lightbox.openModal.find('.LightboxHeader');
-		Lightbox.openModal.lightbox = Lightbox.openModal.find('.WikiaLightbox');
-		Lightbox.openModal.moreInfo = Lightbox.openModal.find('.more-info');
-		Lightbox.openModal.share = Lightbox.openModal.find('.share');
-		Lightbox.openModal.media = Lightbox.openModal.find('.media');
-		Lightbox.openModal.arrows = Lightbox.openModal.find('.lightbox-arrows');
-		Lightbox.openModal.closeButton = Lightbox.openModal.find('.close');
-		Lightbox.current.type = Lightbox.initialFileDetail.mediaType;
+		// cache re-used DOM elements and templates for this modal instance
+		Lightbox.cacheDOM();
 		
 		// Set up carousel
 		Lightbox.setUpCarousel();
-		
-		// Set up tracking
-		Lightbox.openModal.aggregateViewCount = 0;
-		Lightbox.openModal.clickSource = clickSource;
 		
 		// callback to finish lighbox loading
 		var updateCallback = function(json) {
@@ -101,6 +87,49 @@ var Lightbox = {
 		}
 		
 		// attach event handlers
+		Lightbox.bindEvents();
+		
+	},
+	cacheDOM: function() {
+		// Template cache
+		Lightbox.openModal.moreInfoTemplate = $('#LightboxMoreInfoTemplate');
+		Lightbox.openModal.shareTemplate = $('#LightboxShareTemplate');
+		Lightbox.openModal.progressTemplate = $('#LightboxCarouselProgressTemplate');
+		Lightbox.openModal.videoTemplate = $("#LightboxVideoTemplate");
+		Lightbox.openModal.headerTemplate = $("#LightboxHeaderTemplate");
+		Lightbox.openModal.headerAdTemplate = $("#LightboxHeaderAdTemplate");
+
+		// Cache error message
+		Lightbox.openModal.errorMessage = $("#LightboxErrorMessage").html();
+		
+		// pre-cache known doms
+		Lightbox.openModal.carousel = $('#LightboxCarouselContainer .carousel');
+		Lightbox.openModal.header = Lightbox.openModal.find('.LightboxHeader');
+		Lightbox.openModal.lightbox = Lightbox.openModal.find('.WikiaLightbox');
+		Lightbox.openModal.moreInfo = Lightbox.openModal.find('.more-info');
+		Lightbox.openModal.share = Lightbox.openModal.find('.share');
+		Lightbox.openModal.media = Lightbox.openModal.find('.media');
+		Lightbox.openModal.arrows = Lightbox.openModal.find('.lightbox-arrows');
+		Lightbox.openModal.closeButton = Lightbox.openModal.find('.close');
+		Lightbox.current.type = Lightbox.initialFileDetail.mediaType;
+		
+	},
+	bindEvents: function() {
+		// Bind to StateChange Event
+		History.Adapter.bind(window, 'statechange.Lightbox', function(e) { // Note: We are using statechange instead of popstate
+
+			if(e.target == window) { // back or forward button clicked
+				var state = History.getState(); // Note: We are using History.getState() instead of event.state
+				LightboxLoader.getMediaDetail(state.data, function(data) {
+					Lightbox.current.title = data.title;
+					Lightbox.current.type = data.mediaType;
+
+					Lightbox.setCarouselIndex();
+					Lightbox.openModal.carousel.find('li').eq(Lightbox.current.index).click();
+				});
+			}
+		});
+	
 		Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
 			var time = new Date().getTime();
 			if ( ( time - Lightbox.eventTimers.lastMouseUpdated ) > 100 ) { 
@@ -205,7 +234,7 @@ var Lightbox = {
 			Lightbox.openModal.find('.carousel li').eq(Lightbox.current.index).trigger('click');
 		}).on('click.Lightbox', '.LightboxHeader .close', function() {
 				$('#LightboxModal .video-media').children().remove();
-		});
+		});	
 	},
 	clearTrackingTimeouts: function() {
 		// Clear video tracking timeout
@@ -640,13 +669,25 @@ var Lightbox = {
 			next.removeClass('disabled');
 		}
 	},
-	updateUrlState: function() {
+	updateUrlState: function(clear) {
+		var History = window.History;
+		// Only support HTML5 browsers for now
+		if(!History.enabled) {
+			return false;
+		}
+		
 		var dbKey = Lightbox.getTitleDbKey(),
 			stateObj = {
-				title: dbKey
-			};
+				fileTitle: dbKey
+			},
+			stateUrl = window.location.pathname,
+			newSearch = "?file="+dbKey;
+			
+			stateUrl += clear ? "" : newSearch;
 
-		window.History.pushState(stateObj, document.title + ", " + Lightbox.current.title, window.location.pathname + "?file="+dbKey);
+		if(window.location.search != newSearch || clear) {
+			History.pushState(stateObj, History.options.initialTitle + ", " + Lightbox.current.title, stateUrl);
+		}
 	},
 	getShareCodes: function(mediaParams, callback) {
 		var title = mediaParams['fileTitle'];
@@ -714,37 +755,23 @@ var Lightbox = {
 		}
 
 		// Set current carousel index
-		var readableTitle = Lightbox.current.title.split('_').join(" ");
-		for(var i = 0; i < Lightbox.current.thumbs.length; i++) {
-			if(Lightbox.current.thumbs[i].title == readableTitle) {
-				Lightbox.current.index = i;
-				break;
-			}
-		}
+		Lightbox.setCarouselIndex();
 
 		// Cache progress template
 		Lightbox.openModal.progress = $('#LightboxCarouselProgress');
 		Lightbox.openModal.data('overlayactive', true);
 
 		$(document).off('keydown.Lightbox')
-			.on('keydown.Lightbox', function(e) {
+			.on('keydown.Lightbox', function(e) {				
 				if(e.keyCode == 37) {
+					e.preventDefault();
 					$('#LightboxPrevious').click();
 				} else if(e.keyCode == 39) {
+					e.preventDefault();
 					$('#LightboxNext').click();
 				}
 			});
 		
-		// Clicking on an image should advance you to the next one
-		Lightbox.openModal.media.on('click', 'img', function() {
-			var next = $('#LightboxNext');
-			if(next.hasClass('disabled')) {
-				Lightbox.openModal.carousel.find('li:first').click();
-			} else {
-				next.click();
-			}
-		});
-	
 		// Pass control functions to jquery.wikia.carousel.js
 		var itemClick = function(e) {
 			var $this = $(this);
@@ -860,7 +887,17 @@ var Lightbox = {
 			});
 		});
 	},
-
+	
+	setCarouselIndex: function() {
+		var readableTitle = Lightbox.current.title.split('_').join(" ");
+		for(var i = 0; i < Lightbox.current.thumbs.length; i++) {
+			if(Lightbox.current.thumbs[i].title == readableTitle) {
+				Lightbox.current.index = i;
+				break;
+			}
+		}
+	},
+	
 	setupShareEmail: function() {
 		var shareEmailForm = $('#shareEmailForm'),
 			wikiaForm = new WikiaForm(shareEmailForm),

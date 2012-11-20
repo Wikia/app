@@ -28,6 +28,8 @@ var LightboxLoader = {
 			// Reset lightbox
 			$(window).off('.Lightbox');
 			LightboxLoader.lightboxLoading = false;
+			// Update history api (remove "?file=" from URL)
+			Lightbox.updateUrlState(true);
 			// Reset carousel
 			Lightbox.current.thumbs = []; /* global Lightbox */
 			Lightbox.current.thumbTypesAdded = [];
@@ -369,7 +371,7 @@ $(function() {
 	var fileTitle = $.getUrlVar('file');
 	
 	// account for html4 browsers like IE < 10
-	if(typeof window.history.pushState == 'undefined') {
+	/*if(typeof window.history.pushState == 'undefined') {
 		var hash = window.location.hash,
 			rFile = /\?file=/;
 		matches = hash.match(rFile);
@@ -379,7 +381,7 @@ $(function() {
 				titleArr = tmpStr.split("&");
 			fileTitle = titleArr[0];
 		}
-	}
+	}*/
 	
 	if(fileTitle) {
 		var trackingInfo = {
