@@ -253,7 +253,10 @@ class CensusDataRetrieval {
 
 		// perform mapping each required property basing on typeMap array
                 foreach ( $this->typeMap[$this->type] as $name => $propertyStr ) {
-                        $this->data[$name] = $this->getPropValue($object, $propertyStr);
+                        $value = $this->getPropValue( $object, $propertyStr );
+                        if ( $value ) {
+                                $this->data[$name] = $value;
+                        }
                 }
                 wfProfileOut(__METHOD__);
 		return true;
@@ -289,12 +292,21 @@ class CensusDataRetrieval {
         private function doGetPropValue( $object, $fieldPath, $i ) {
                 wfProfileIn(__METHOD__);
                 if ( $i > 0) {
-                        $object_temp = $this->doGetPropValue( $object, $fieldPath, $i-1 )->{$fieldPath[$i]};
+                        $object_temp = $this->doGetPropValue( $object, $fieldPath, $i-1 );
+                        if ( is_object( $object_temp ) && isset( $object_temp->{$fieldPath[$i]} ) ) {
+                                wfProfileOut(__METHOD__);
+                                return $object_temp->{$fieldPath[$i]};
+                        } else {
+                                wfProfileOut(__METHOD__);
+                                return null;
+                        }
+                } else if ( is_object( $object ) && isset( $object->{$fieldPath[$i]} ) ) {
                         wfProfileOut(__METHOD__);
-                        return $object_temp;
+                        return $object->{$fieldPath[$i]};
+                } else {
+                        wfProfileOut(__METHOD__);
+                        return null;
                 }
-                wfProfileOut(__METHOD__);
-                return $object->{$fieldPath[$i]};
         }
         
         /**
