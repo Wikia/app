@@ -7,6 +7,7 @@ $color-toolbox-datepicker-border: #c1c1c1;
 $color-toolbox-datepicker-background: #fefefe;
 $color-toolbox-datepicker-publiched-background: #deedbd;
 $color-toolbox-datepicker-inprog-background: #d4ecf7;
+$color-toolbox-datepicker-curentdate-border: #000000;
 $color-toolbox-datepicker-font-color: #000000;
 $color-toolbox-datepicker-font-alternative-color: #bbbbbb;
 
@@ -51,52 +52,69 @@ $color-toolbox-datepicker-font-alternative-color: #bbbbbb;
 	&.WikiaGrid .grid-2 {
 		width: 320px;
 	}
+}
 
-	.ui-datepicker-inline {
-		border: 1px solid $color-toolbox-datepicker-border;
-		background-color: $color-toolbox-datepicker-background;
-		border-radius: 5px;
-		padding: 15px;
+.ui-datepicker.ui-datepicker-inline {
+	border: 1px solid $color-toolbox-datepicker-border;
+	background-color: $color-toolbox-datepicker-background;
+	border-radius: 5px;
+	padding: 15px;
+	margin: 0 auto;
+
+	.ui-datepicker-title {
+		font-size: 14px;
+	}
+
+	.ui-datepicker-next, .ui-datepicker-prev {
+		height: 0;
+		width: 0;
+		border-width: 5px;
+		border-style: solid;
+		top: 8px;
+		cursor: pointer;
+	}
+
+	.ui-datepicker-prev {
+		left: 2px;
+		border-color: transparent black transparent transparent;
+	}
+
+	.ui-datepicker-next {
+		right: 2px;
+		border-color: transparent transparent transparent black;
+	}
+
+	.ui-state-default {
+		color: $color-toolbox-datepicker-font-color;
+		text-align: center;
+	}
+
+	.ui-priority-secondary, .ui-datepicker-year {
+		color: $color-toolbox-datepicker-font-alternative-color;
+	}
+
+	.published a {
+		background-color: $color-toolbox-datepicker-publiched-background;
+	}
+
+	.inProg a {
+		background-color: $color-toolbox-datepicker-inprog-background;
+	}
+
+	.ui-datepicker-current-day a {
+		border: 1px solid $color-toolbox-datepicker-curentdate-border;
+	}
+
+	&.datepicker-example {
+		width: 600px;
 		margin: 0 auto;
+		display: block;
+		background-color: transparent;
+		border: none;
 
-		.ui-datepicker-title {
-			font-size: 14px;
-		}
-
-		.ui-datepicker-next, .ui-datepicker-prev {
-			height: 0;
-			width: 0;
-			border-width: 5px;
-			border-style: solid;
-			top: 8px;
-			cursor: pointer;
-		}
-
-		.ui-datepicker-prev {
-			left: 2px;
-			border-color: transparent black transparent transparent;
-		}
-
-		.ui-datepicker-next {
-			right: 2px;
-			border-color: transparent transparent transparent black;
-		}
-
-		.ui-state-default {
-			color: $color-toolbox-datepicker-font-color;
-			text-align: center;
-		}
-
-		.ui-priority-secondary, .ui-datepicker-year {
-			color: $color-toolbox-datepicker-font-alternative-color;
-		}
-
-		.published a {
-			background-color: $color-toolbox-datepicker-publiched-background;
-		}
-
-		.inProg a {
-			background-color: $color-toolbox-datepicker-inprog-background;
+		td a {
+			display: inline;
+			padding: 0.2em 0.5em;
 		}
 	}
 }
