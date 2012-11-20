@@ -9,17 +9,17 @@
 			<? endforeach ?>
 		</select>
 	</div>
-	<div class="grid-1">
+	<div class="grid-1 section">
 		<img class="chevron border" src="<?= $wg->BlankImgUrl; ?>">
 		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 		<div class="ml15">
 			<h2><?= wfMsg('marketing-toolbox-section-title'); ?></h2>
 			<? foreach ($sections as $sectionId => $section): ?>
-				<input class="big secondary" type="button" value="<?=$section?>" />
+				<input class="big" disabled="disabled" type="button" value="<?=$section?>" />
 			<? endforeach ?>
 		</div>
 	</div>
-	<div class="grid-1">
+	<div class="grid-1 vertical">
 		<img class="chevron border" src="<?= $wg->BlankImgUrl; ?>">
 		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 		<div class="ml15">
@@ -30,7 +30,7 @@
 			<? endforeach ?>
 		</div>
 	</div>
-	<div class="grid-2">
+	<div class="grid-2 data">
 		<img class="chevron border" src="<?= $wg->BlankImgUrl; ?>">
 		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 		<div class="ml15">
