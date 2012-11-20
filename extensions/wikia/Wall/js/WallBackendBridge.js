@@ -27,6 +27,10 @@ Wall.BackendBridge = $.createClass(Observable, {
 		});
 	},
 
+	/**
+	 * relatedTopics - nullable or empty array
+	 * boardId - nullable
+	 */
 	postNew: function(page, title, body, convertToFormat, notifyEveryone, relatedTopics, callback) {
 		$.nirvana.sendRequest({
 			controller: this.pageController,

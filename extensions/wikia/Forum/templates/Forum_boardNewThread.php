@@ -3,6 +3,16 @@
 		<?= AvatarService::renderAvatar($username, 50) ?>
 		<blockquote class="message">
 			<div class="message-container">
+				<? if($isTopicPage): ?>
+					<div class="board-container">
+						<label class="heading" for="boardList"><?= wfMsg('forum-board-select-board') ?></label>
+						<select class="board-list" id="BoardList">
+							<? foreach($destinationBoards as $board): ?>
+								<option name="boardList" value="<?= $board['value'] ?>"><?= $board['content'] ?></option>
+							<? endforeach; ?>
+						</select>
+					</div>
+				<? endif; ?>
 				<h4 class="heading"><?= wfMsg('forum-board-new-message-heading') ?></h4>
 				<? if ($wg->EnableMiniEditorExtForWall): ?>
 					<?= $app->getView('MiniEditorController', 'Header', array(
