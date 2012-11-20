@@ -3,17 +3,18 @@ var MarketingToolbox = function() {};
 // TODO mocked data
 var specialDates = {
 	'2012-11-20': 1,
+	'2012-11-21': 1,
 	'2012-11-12': 2
 };
 
-// TODO
-var tooltipMessages = {};
-tooltipMessages[window.wgMarketingToolboxConstants.DAY_EDITED_NOT_PUBLISHED] = 'In progress / Not published';
-tooltipMessages[window.wgMarketingToolboxConstants.DAY_PUBLISHED] = 'Saved / Published';
-
-
 MarketingToolbox.prototype = {
+	tooltipMessages: {},
 	init: function() {
+		var self = this;
+
+		self.tooltipMessages[window.wgMarketingToolboxConstants.DAY_EDITED_NOT_PUBLISHED] = $.msg('marketing-toolbox-tooltip-in-progress');
+		self.tooltipMessages[window.wgMarketingToolboxConstants.DAY_PUBLISHED] = $.msg('marketing-toolbox-tooltip-published');
+
 		$.when(
 			// jQuery UI datepicker plugin
 			mw.loader.use(['jquery.ui.datepicker'])
@@ -22,10 +23,9 @@ MarketingToolbox.prototype = {
 				showOtherMonths: true,
 				selectOtherMonths: true,
 				beforeShowDay: function (date) {
-					var tdClassName, tooltip;
-					var theday = date.getFullYear() + '-' +
-						(date.getMonth()+1) + '-' +
-						date.getDate();
+					var tdClassName = '',
+						tooltip = '',
+						theday = $.datepicker.formatDate('yy-mm-dd', date);
 
 					if (theday in specialDates) {
 						if (specialDates[theday] == window.wgMarketingToolboxConstants.DAY_EDITED_NOT_PUBLISHED) {
@@ -33,7 +33,7 @@ MarketingToolbox.prototype = {
 						} else if (specialDates[theday] == window.wgMarketingToolboxConstants.DAY_PUBLISHED) {
 							tdClassName = 'published';
 						}
-						tooltip = tooltipMessages[specialDates[theday]];
+						tooltip = self.tooltipMessages[specialDates[theday]];
 					}
 
 					return [true, tdClassName, tooltip];

@@ -39,3 +39,23 @@
 		</div>
 	</div>
 </div>
+
+
+<div class="ui-datepicker-inline ui-datepicker datepicker-example">
+	<table class="ui-datepicker-calendar">
+		<tr>
+			<td class="ui-datepicker-current-day">
+				<a>&nbsp;&nbsp;</a>
+				<?= wfMsg('marketing-toolbox-tooltip-current-date'); ?>
+			</td>
+			<td class="published">
+				<a>&nbsp;&nbsp;</a>
+				<?= wfMsg('marketing-toolbox-tooltip-published'); ?>
+			</td>
+			<td class="inProg">
+				<a>&nbsp;&nbsp;</a>
+				<?= wfMsg('marketing-toolbox-tooltip-in-progress'); ?>
+			</td>
+		</tr>
+	</table>
+</div>
