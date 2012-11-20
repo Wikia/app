@@ -20,7 +20,7 @@ abstract class WikiaApiController extends WikiaController {
 	}
 
 	private function checkParameters(){
-		$paramKeys = RequestContext::getMain()->getRequest()->getValueNames();
+		$paramKeys = F::app()->wg->Request->getValueNames();
 
 		if ( array_shift( $paramKeys ) === 'controller' && array_shift( $paramKeys ) === 'method') {
 
