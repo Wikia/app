@@ -300,8 +300,6 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 			wrapper.addEventListener('touchend', onEnd);
 			wrapper.addEventListener('touchcancel', onEnd);
 
-			window.scrollTo(0,0);
-
 			if(l == 1){
 				sx = dx * currentZoom || 0;
 				sy = dy * currentZoom || 0;

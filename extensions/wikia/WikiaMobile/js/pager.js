@@ -176,6 +176,14 @@ define('pager', function () {
 			},
 			onTouchStart = function(ev){
 				if (ev.touches.length == 1) {
+
+					//since this is internal tool for now
+					//and is used only in modal
+					//we can assume that this should always be at the top
+					//if need arises better place for this probably is onStart
+					//so fix it with this line in case:
+					window.scrollTo(0,0);
+
 					if ( isFunction ? !checkCancel() : true ) {
 						pos = ev.touches[0].pageX;
 
