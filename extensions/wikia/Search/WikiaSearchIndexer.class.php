@@ -464,20 +464,22 @@ class WikiaSearchIndexer extends WikiaObject {
 		$row = new stdClass();	
 		$row->weekly = 0;
 		$row->monthly = 0;
-			
+		
+		$datamart = F::build( 'DataMartService' );
+		
 		$startDate = date( 'Y-m-d', strtotime('-1 week') );
 		$endDate = date( 'Y-m-01', strtotime('now') );	
-		$pageviews_weekly = DataMartService::getPageviewsWeekly( $startDate, $endDate, (int) $this->wg->CityId );
+		$pageviews_weekly = $datamart->getPageviewsWeekly( $startDate, $endDate, (int) $this->wg->CityId );
 
-		if ( empty( $pageviews_weekly ) ) {
+		if (! empty( $pageviews_weekly ) ) {
 			foreach ( $pageviews_weekly as $pview ) {
 				$row->weekly += $pview;
 			}
 		}
 			
 		$startDate = date( 'Y-m-01', strtotime('-1 month') );
-		$pageviews_monthly = DataMartService::getPageviewsMonthly( $startDate, $endDate, (int) $this->wg->CityId );
-		if ( empty( $pageviews_monthly ) ) {
+		$pageviews_monthly = $datamart->getPageviewsMonthly( $startDate, $endDate, (int) $this->wg->CityId );
+		if (! empty( $pageviews_monthly ) ) {
 			foreach ( $pageviews_monthly as $pview ) {
 				$row->monthly += $pview;
 			}

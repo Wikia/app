@@ -22,11 +22,8 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 								->disableOriginalConstructor()
 								->setMethods( array( 'get', 'set' ) )
 								->getMock();
-		$mockResult		=	$this->getMock( 'stdClass' );
 		
-		$mockDb			=	$this->getMockBuilder( 'DatabaseMysql' )
-								->setMethods( array( 'selectRow' ) )
-								->getMock();
+		$mockResult		=	$this->getMock( 'stdClass' );
 		
 		$mockWikia		=	$this->getMock( 'Wikia' );
 		
@@ -37,42 +34,16 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method	( 'get' )
 			->will		( $this->returnValue( $mockResult ) )
 		;
-		$mockMemc
-			->expects	( $this->at( 1 ) )
-			->method	( 'get' )
-			->will		( $this->returnValue( null ) )
-		;
-		$mockMemc
-			->expects	( $this->at( 2 ) )
-			->method	( 'get' )
-			->will		( $this->returnValue( null ) )
-		;
-		$mockDb
-			->expects	( $this->at( 0 ) )
-			->method	( 'selectRow' )
-			->will		( $this->returnValue( $mockResult ) )
-		;
-		$mockDb
-			->expects	( $this->at( 1 ) )
-			->method	( 'selectRow' )
-			->will		( $this->throwException( $mockException ) )
-		;
-		$mockWikia
-			->staticExpects	( $this->any() )
-			->method		( 'log' )
-		;
+		
 		// need values greater than 1
 		$mockResult->weekly		= 1;
 		$mockResult->monthly	= 1;
-		$statsDb = 'stats';
-		$this->mockGlobalVariable( 'wgStatsDBEnabled', true );
 		$this->mockGlobalVariable( 'wgMemc', $mockMemc );
-		$this->mockGlobalVariable( 'wgStatsDB', $statsDb );
-		$this->mockGlobalFunction( 'getDB', $mockDb, 2, array( DB_SLAVE, array(), $statsDb ) );
 		$this->mockClass( 'Wikia', $mockWikia );
 		$this->mockApp();
 		
 		$indexer 	= F::build( 'WikiaSearchIndexer' );
+		
 		$method		= new ReflectionMethod( 'WikiaSearchIndexer', 'getWikiViews' );
 		$method->setAccessible( true );
 		
@@ -81,97 +52,51 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				$method->invoke( $indexer, $mockArticle ), 
 				'A cached value with weekly and monthly rows greater than 0 should get returned' 
 		);
-		$this->assertEquals( 
-				$mockResult, 
-				$method->invoke( $indexer, $mockArticle ), 
-				'An uncached value with weekly and monthly rows greater than 0 should get returned' 
-		);
-		$backoffResult = $method->invoke( $indexer, $mockArticle );
-		$this->assertEquals(
-				0,
-				$backoffResult->weekly + $backoffResult->monthly,
-				'In case of an error, a row with zeros for the expected values should be returned'
-		); 
 	}
 	
 	/**
 	 * @covers WikiaSearchIndexer::getWikiViews
 	 */
-	public function testGetWikiViewsNoCacheYesDb() {
+	public function testGetWikiViewsNoCache() {
 		$mockTitle		=	$this->getMock( 'Title' );
 		$mockArticle	=	$this->getMock( 'Article', array(), array( $mockTitle ) );
 		$mockMemc		=	$this->getMock( 'stdClass', array( 'get', 'set' ) );
 		$mockResult		=	$this->getMock( 'stdClass' );
-		$mockDbResult	=	$this->getMock( 'stdClass' );
-		$mockDb 		=	$this->getMock( 'stdClass', array( 'selectRow' ) );
-		
-		$mockResult->weekly		= 0;
-		$mockResult->monthly	= 0;
-		$mockDbResult->weekly	= 1234;
-		$mockDbResult->monthly	= 12345;
+		$mockDataMart	=	$this->getMock( 'DataMartService', array( 'getPageviewsWeekly', 'getPageviewsMonthly' ) );
 		
 		$mockMemc
 			->expects	( $this->any() )
 			->method	( 'get' )
-			->will		( $this->returnValue( $mockResult ) )
+			->will		( $this->returnValue( null ) )
 		;
 		$mockMemc
 			->expects	( $this->any() )
 			->method	( 'set' )
 		;
-		$mockDb
-			->expects	( $this->any() )
-			->method	( 'selectRow' )
-			->will		( $this->returnValue( $mockDbResult ) )
+		$mockDataMart
+			->staticExpects	( $this->any() )
+			->method		( 'getPageviewsWeekly' )
+			->will			( $this->returnValue( array( 1234 ) ) )
+		;
+		$mockDataMart
+			->staticExpects	( $this->any() )
+			->method		( 'getPageviewsMonthly' )
+			->will			( $this->returnValue( array( 12345 ) ) )
 		;
 		
-		$this->mockGlobalFunction( 'GetDB', $mockDb );
 		$this->mockGlobalVariable( 'wgMemc', $mockMemc );
+		$this->mockClass( 'DataMartService', $mockDataMart );
 		$this->mockApp();
 		
 		$indexer 	= F::build( 'WikiaSearchIndexer' );
 		$method		= new ReflectionMethod( 'WikiaSearchIndexer', 'getWikiViews' );
 		$method->setAccessible( true );
 		
-		$this->assertEquals( $mockDbResult, $method->invoke( $indexer, $mockArticle ), 'A cached result without weekly or monthly values should query the DB for a result' );
-	}
-	
-	/**
-	 * @covers WikiaSearchIndexer::getWikiViews
-	 */
-	public function testGetWikiViewsNoCacheNoDb() {
-	    $mockTitle		=	$this->getMock( 'Title' );
-	    $mockArticle	=	$this->getMock( 'Article', array(), array( $mockTitle ) );
-	    $mockMemc		=	$this->getMock( 'stdClass', array( 'get', 'set' ) );
-	    $mockDb 		=	$this->getMock( 'stdClass', array( 'selectRow' ) );
-	
-	    $mockMemc
-		    ->expects	( $this->any() )
-		    ->method	( 'get' )
-		    ->will		( $this->returnValue( null) )
-	    ;
-	    $mockMemc
-		    ->expects	( $this->any() )
-		    ->method	( 'set' )
-	    ;
-	    $mockDb
-		    ->expects	( $this->any() )
-		    ->method	( 'selectRow' )
-		    ->will		( $this->returnValue( null ) )
-	    ;
-	
-	    $this->mockGlobalFunction( 'GetDB', $mockDb );
-	    $this->mockGlobalVariable( 'wgMemc', $mockMemc );
-	    $this->mockApp();
-	
-	    $indexer 	= F::build( 'WikiaSearchIndexer' );
-	    $method		= new ReflectionMethod( 'WikiaSearchIndexer', 'getWikiViews' );
-	    $method->setAccessible( true );
-	
-	    $invocationResult = $method->invoke( $indexer, $mockArticle );
-	    $this->assertInstanceOf	( 'stdClass', $invocationResult,	'getWikiViews should have fallback result of type stdClass.' );
-	    $this->assertEquals		( 0, $invocationResult->weekly,		'getWikiViews fallback result should have a weekly property with a numerical value of 0.' );
-	    $this->assertEquals		( 0, $invocationResult->monthly,	'getWikiViews fallback result should have a monthly property with a numerical value of 0.' );
+		$this->assertEquals( 
+				(object) array( 'weekly' => 1234, 'monthly' => 12345 ), 
+				$method->invoke( $indexer, $mockArticle ), 
+				'A non-cached result should contain weekly and monthly values' 
+		);
 	}
 	
 	/**
