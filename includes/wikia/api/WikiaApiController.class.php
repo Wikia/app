@@ -22,10 +22,9 @@ abstract class WikiaApiController extends WikiaController {
 	private function checkParameters(){
 		$paramKeys = array_keys( F::app()->wg->Request->getQueryValues() );
 
-		if ( array_shift( $paramKeys ) === 'controller' && array_shift( $paramKeys ) === 'method') {
+		if ( $paramKeys[0] === 'controller' && $paramKeys[1] === 'method') {
 
-			unset( $paramKeys['controller'] );
-			unset( $paramKeys['method'] );
+			$paramKeys = array_slice( $paramKeys, 2 );
 
 			if ( !empty( $paramKeys ) ) {
 				$origQuery = $paramKeys = array_flip( $paramKeys );;
