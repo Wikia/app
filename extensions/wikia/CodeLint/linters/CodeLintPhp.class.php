@@ -54,8 +54,12 @@ class CodeLintPhp extends CodeLint {
 			// create a temporary directory for Code Inspect results
 			$resultsDir = wfTempDir() . '/phpstorm/' . uniqid('lint');
 			echo "Creating temporary directory for results <{$resultsDir}>...";
-			wfMkdirParents($resultsDir);
-			echo " [done]\n";
+			if (wfMkdirParents($resultsDir)) {
+				echo " [done]\n";
+			}
+			else {
+				echo " [err!]\n";
+			}
 
 			$cmd = sprintf('/bin/sh %s/inspect.sh %s %s %s -d %s -v2',
 				$wgPHPStormPath,
