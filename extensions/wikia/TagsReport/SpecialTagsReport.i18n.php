@@ -146,6 +146,7 @@ $messages['diq'] = array(
 	'tagsreporttitle' => 'Rapora etiketan',
 	'tagsreportselecttag' => 'Etiket weçinê:',
 	'tagsreportgo' => 'Bımocne',
+	'tagsreportnotspecify' => 'Xısusi etiketi nêweçinayışa şıma çıniya',
 	'tagsreportnoresults' => 'Netice nê vineya',
 	'tagsreportmainnspace' => 'Ser',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pele|peley}})',

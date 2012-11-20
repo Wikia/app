@@ -283,6 +283,17 @@ $messages['bg'] = array(
 	'article-comments-show-all' => 'Показване на всички коментари',
 );
 
+/** Tibetan (བོད་ཡིག)
+ * @author YeshiTuhden
+ */
+$messages['bo'] = array(
+	'article-comments-post' => 'དཔྱད་གཏམ་སྤེལ་བ་',
+	'article-comments-error' => 'དཔྱད་གཏམ་ཉར་ཚགས་མི་ཐབས།',
+	'article-comments-toc-item' => 'དཔྱད་གཏམ་',
+	'article-comments-reply' => 'ལན་སློག།',
+	'article-comments-show-all' => 'དཔྱད་གཏམ་ཚང་མ་སྟོན།',
+);
+
 /** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
@@ -351,6 +362,14 @@ Wikia
 <li>Ha c\'hoant hoc\'h eus da chom mestr war ar posteloù a resevit ? <a href="{{fullurl:Special:Preferences}}">Cheñchit ho penndibaboù<a>.</li>
 </ul>
 </p>', # Fuzzy
+);
+
+/** Sorani Kurdish (کوردی)
+ * @author Calak
+ */
+$messages['ckb'] = array(
+	'article-comments-edit' => 'دەستکاری',
+	'article-comments-history' => 'مێژوو',
 );
 
 /** Czech (česky)
@@ -1986,6 +2005,7 @@ Wikia
  * @author Aristóbulo
  * @author Caio1478
  * @author Luckas Blade
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
 	'article-comments-anonymous' => 'Usuário anônimo',
@@ -2006,6 +2026,7 @@ $messages['pt-br'] = array(
 	'article-comments-login' => 'Por favor, <a href="$1">efetue o login</a> para postar um comentário sobre este wiki.',
 	'article-comments-toc-item' => 'Comentários',
 	'article-comments-comment-cannot-add' => 'Você não pode adicionar um comentário ao artigo.',
+	'article-comments-vote' => 'Votar',
 	'article-comments-reply' => 'Responder',
 	'article-comments-show-all' => 'Mostrar todos os comentários',
 	'article-comments-prev-page' => 'Anterior',
@@ -2013,37 +2034,39 @@ $messages['pt-br'] = array(
 	'article-comments-page-spacer' => '& # 160... & # 160',
 	'article-comments-delete-reason' => '',
 	'article-comments-empty-comment' => 'Você não pode postar um comentário vazio. <a href="$1">Excluí-lo em vez disso?</a>',
+	'wikiamobile-article-comments-header' => 'Comentários (<span class=cnt id=wkArtCnt>$1</span>)',
+	'wikiamobile-article-comments-more' => 'Carregar mais',
+	'wikiamobile-article-comments-prev' => 'Carregar o anterior',
 	'wikiamobile-article-comments-none' => 'Sem comentários',
 	'wikiamobile-article-comments-view' => 'Ver respostas',
 	'wikiamobile-article-comments-replies' => 'respostas',
+	'wikiamobile-article-comments-post-reply' => 'Postar uma resposta',
 	'wikiamobile-article-comments-post' => 'Postar',
 	'wikiamobile-article-comments-placeholder' => 'Postar um comentário',
 	'wikiamobile-article-comments-show' => 'Mostrar',
+	'wikiamobile-article-comments-login-post' => 'Autentifique-se para postar um comentário.',
 	'enotif_subject_article_comment' => 'Comentou sobre "$ PAGETITLE" em {{SITENAME}} $PAGEEDITOR',
-	'enotif_body_article_comment' => 'Caro $ WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Olá $ WATCHINGUSERNAME,
 
- $ PAGEEDITOR fez um comentário sobre "$ PAGETITLE".
+Há um novo comentário em $PAGETITLE no {{SITENAME}}. Use esse link para ver todos os comentários: $PAGETITLE_URL#WikiaArticleComments
 
- Para ver a lista de discussão do comentário, clique no link abaixo:
- $ PAGETITLE_URL
+- Suporte da Comunidade Wikia
 
- Visite e edite muitas vezes ...
-
- Wikia', # Fuzzy
-	'enotif_body_article_comment-HTML' => '<p> Caro $ WATCHINGUSERNAME,
+___________________________________________
+* Encontre ajuda e conselhos na Central da Comunidade (em inglês): http://community.wikia.com
+* Quer receber menos mensagens de nós? Você pode desinscrever-se ou configurar suas preferências de email aqui: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Olá $ WATCHINGUSERNAME,
 <br /><br />
- $ PAGEEDITOR fez um comentário sobre "$ PAGETITLE".
+Há um novo comentário em $PAGETITLE no {{SITENAME}}. Use esse link para ver todos os comentários: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
- Para ver a lista de discussão do comentário, siga este link: <a href="$PAGETITLE_URL">$ PAGETITLE</a>
+- Suporte da Comunidade Wikia
 <br /><br />
- Visite e edite muitas vezes ...
-<br /><br />
- Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li> Quer controlar os emails que você recebe? <a href="{{fullurl:Special:Preferences}}">atualize suas preferências</a> <a>.</a> </li>
+<li>Encontre ajuda e conselhos na Central da Comunidade (em inglês): http://community.wikia.com</a><li>
+<li>Quer receber menos mensagens de nós? Você pode desinscrever-se ou configurar suas preferências de email aqui: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
-</p>', # Fuzzy
+</p>',
 );
 
 /** Romanian (română)

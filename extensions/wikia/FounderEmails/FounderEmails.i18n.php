@@ -7044,6 +7044,7 @@ Bạn luôn luôn có thể ghé qua hoạt động của wiki để xem tất c
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'founderemails-email-user-registered-subject' => '有新用户加入$WIKINAME',
@@ -7145,6 +7146,7 @@ Wikia团队',
 	'founderemails-email-complete-digest-button' => '前往 维基活动',
 	'founderemails-pref-joins' => '有人加入$1时邮件通知我。',
 	'founderemails-pref-edits' => '有人编辑$1时邮件通知我。',
+	'founderemails-pref-edits-v2' => '...他人编辑',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

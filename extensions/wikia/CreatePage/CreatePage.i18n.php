@@ -161,6 +161,22 @@ $messages['az'] = array(
 	'createpage_enter_text' => 'Mətn:',
 );
 
+/** تورکجه (تورکجه)
+ * @author Arjanizary
+ * @author E THP
+ */
+$messages['azb'] = array(
+	'createpage-sp-title' => 'یئنی یارپاق یارات',
+	'createpage_title' => 'یئنی صحیفه یارات',
+	'createpage_title_caption' => 'باشلیق',
+	'createpage_enter_text' => 'متن:',
+	'createpage_empty_title_error' => 'باشلیق گرکن‌دیر',
+	'createpage_invalid_title_error' => 'گئچرسیز آد',
+	'createpage-dialog-title' => 'یئنی یارپاق یارات',
+	'createpage-dialog-blank' => 'بوش یارپاق',
+	'createpage-error-empty-title' => 'لوطفا یارپاغیزا بیر آد یازین',
+);
+
 /** Bashkir (башҡортса)
  * @author Рустам Нурыев
  */
