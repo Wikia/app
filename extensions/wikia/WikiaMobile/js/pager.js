@@ -22,7 +22,7 @@ define('pager', function () {
 				function(){};
 		})(),
 		setTransform = function(prev, current, next, x){
-			var translate = 'translate3d(' + x + 'px,0,0)';
+			var translate = 'translate3d(' + (x * 1.1) + 'px,0,0)';
 
 			current.style.webkitTransform = translate;
 			if (prev) { prev.style.webkitTransform = (x > 0) ? translate : ''; }
@@ -229,7 +229,7 @@ define('pager', function () {
 			events = function(){
 				if(eventsNotAdded){
 					eventsNotAdded = false;
-					//wrapper.addEventListener('touchstart', onTouchStart);
+					wrapper.addEventListener('touchstart', onTouchStart);
 				}
 			},
 			onResize = function(){
