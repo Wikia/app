@@ -182,6 +182,7 @@ $wgAutoloadClasses[ 'WikiaDataAccess'                 ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'ImageReviewStatuses'             ] = "$IP/extensions/wikia/ImageReview/ImageReviewStatuses.class.php";
 $wgAutoloadClasses[ 'WikiaUserPropertiesController'   ] = "$IP/includes/wikia/WikiaUserPropertiesController.class.php";
 $wgAutoloadClasses[ 'TitleBatch'                      ] = "$IP/includes/wikia/cache/TitleBatch.php";
+$wgAutoloadClasses[ 'WikiaUserPropertiesHandlerBase'  ] = "$IP/includes/wikia/models/WikiaUserPropertiesHandlerBase.class.php";
 
 /**
  * Resource Loader enhancements
