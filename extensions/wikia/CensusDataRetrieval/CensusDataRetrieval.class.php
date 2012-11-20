@@ -254,7 +254,7 @@ class CensusDataRetrieval {
 		// perform mapping each required property basing on typeMap array
                 foreach ( $this->typeMap[$this->type] as $name => $propertyStr ) {
                         $value = $this->getPropValue( $object, $propertyStr );
-                        if ( $value ) {
+                        if ( !is_null($value) ) {
                                 $this->data[$name] = $value;
                         }
                 }
