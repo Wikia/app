@@ -27,7 +27,7 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 		'HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
 		'LEFT_SKYSCRAPER_2': {'size':'160x600,120x600', 'tile':3, 'loc':'middle'},
 		'LEFT_SKYSCRAPER_3': {'size': '160x600', 'tile':6, 'loc':'footer'},
-		'MODAL_INTERSTITIAL': {'size':'600x400','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL': {'size':'600x400,300x250','tile':2,'loc':'modal'},
 		'MODAL_RECTANGLE': {'size':'300x100','tile':2,'loc':'modal'},
 		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
