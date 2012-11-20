@@ -749,7 +749,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
-	 * @covers WikiaSearch::getSolrDocument
+	 * @covers WikiaSearchIndexer::getSolrDocument
 	 */
 	public function testGetSolrDocument() {
 		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
@@ -787,5 +787,122 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				$doc['html'],
 				'Language fields should be transformed during WikiaSearchIndexer::getSolrDocument'
 		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::getPages
+	 */
+	public function testGetPages() {
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getPage' ) )
+								->getMock();
+		
+		$mockException	=	$this->getMockBuilder( 'WikiaException' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockIndexer
+			->expects	( $this->at( 0 ) )
+			->method	( 'getPage' )
+			->with		( 123 )
+			->will		( $this->returnValue( array( 'here be my page data' ) ) )
+		;
+		$mockIndexer
+			->expects	( $this->at( 1 ) )
+			->method	( 'getPage' )
+			->with		( 234 )
+			->will		( $this->throwException( $mockException ) )
+		;
+		
+		$this->assertEquals(
+				array( 'pages' => array( 123 => array( 'here be my page data' ) ), 'missingPages' => array( 234 ) ),
+				$mockIndexer->getPages( array( 123, 234 ) ),
+				'WikiaSearchIndexer::getPages should set pagedata for each page it successfully grabs, and list each problematic page as missing.'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::getPage
+	 */
+	public function testGetPage() {
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getPageMetaData' ) )
+								->getMock();
+		
+		$mockArticle	=	$this->getMockBuilder( 'Article' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'isRedirect', 'getRedirectTarget', 'loadContent', 'render', 'getId', 'getTitle' ) )
+								->getMock();
+		
+		$mockApp		=	$this->getMockBuilder( 'WikiaApp' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'registerHook' ) )
+								->getMock();
+		
+		$mockTitle		=	$this->getMockBuilder( 'Title' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getPrefixedText', 'getNamespace', 'getText', 'getFullUrl', 'getTitle' ) )
+								->getMock();
+		
+		$mockRequest	=	$this->getMockBuilder( 'RequestContext' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'setVal' ) )
+								->getMock();
+		
+		$mockOutput		=	$this->getMockBuilder( 'OutputPage' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getHTML', 'clearHTML' ) )
+								->getMock();
+		
+		$mockContLang	=	$this->getMockBuilder( 'Language' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$reflectionApp = new ReflectionProperty( 'WikiaSearchIndexer', 'app' );
+		$reflectionApp->setAccessible( true );
+		$reflectionApp->setValue( $mockIndexer, $mockApp );
+		
+		$mockGlobals = array( 
+				'Title'				=>	$mockTitle, 
+				'Request'			=>	$mockRequest, 
+				'Out'				=>	$mockOutput, 
+				'ExternalSharedDB'	=>	true, 
+				'CityId'			=>	123, 
+				'Server'			=>	'http://foo.wikia.com', 
+				'ContLang'			=>	(object) array( 'mCode' => 'en' ),
+				'ContentNamespaces'	=>	array( NS_MAIN, NS_CATEGORY ) 
+				);
+		
+		$reflectionWg = new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
+		$reflectionWg->setAccessible( true );
+		$reflectionWg->setValue( $mockIndexer, (object) $mockGlobals );
+		
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockIndexer
+			->expects	( $this->any() )
+			->method	( 'getPageMetaData' )
+			->will		( $this->returnValue( array() ) )
+		;
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'isRedirect' )
+			->will		( $this->returnValue( true ) )
+		;
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getRedirectTarget' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		
+		$this->mockClass( 'Article', $mockArticle );
+		$this->mockApp();
+		
+		$mockIndexer->getPage( 123 );
 	}
 }

@@ -74,7 +74,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$page = F::build( 'Article', array( $pageId ), 'newFromID' );
 	
-		if(!($page instanceof Article)) {
+		if(! ( $page instanceof Article ) ) {
 			throw new WikiaException('Invalid Article ID');
 		}
 	
@@ -192,7 +192,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
 		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
-		$result['is_main_page']	= ($page->getId() == Title::newMainPage()->getArticleId() && $page->getId() != 0) ? 'true' : 'false';
+		$result['is_main_page']	= ( ( $page->getId() != 0 ) && ( $page->getId() == F::build( 'Title', array( 'newMainPage' ) )->getArticleId() ) ) ? 'true' : 'false';
 		$result['is_redirect']	= ($canonical == '') ? 'false' : 'true';
 		$result['is_video']		= $isVideo ? 'true' : 'false';
 		$result['is_image']		= $isImage ? 'true' : 'false';
