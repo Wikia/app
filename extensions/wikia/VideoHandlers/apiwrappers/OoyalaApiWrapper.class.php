@@ -87,7 +87,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 		$extra = array(
 			'api_key' => $wgOoyalaApiConfig['AppId'],
 			'expires' => strtotime("+1 hour"),
-			'include' => 'metadata',
+			'include' => 'metadata,labels',
 		);
 
 		$params = array_merge( $params, $extra );

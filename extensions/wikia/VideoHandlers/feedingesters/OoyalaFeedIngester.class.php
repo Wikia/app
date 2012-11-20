@@ -73,7 +73,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['ageGate'] = empty($video['metadata']['agegate']) ? 0 : 1;
 				$clipData['hd'] = empty($video['metadata']['hd']) ? 0 : 1;
 				$clipData['tags'] = empty($video['metadata']['tags']) ? '' : $video['metadata']['tags'];
-				$clipData['provider'] = 'Ooyala';
+				$clipData['provider'] = empty($video['labels']['name']) ? 'Wikia' : $video['labels']['name'];
 
 				$clipData['language'] =  empty($video['metadata']['lang']) ? '' : $video['metadata']['lang'];
 				$clipData['genres'] = empty($video['metadata']['genres']) ? '' : $video['metadata']['genres'];
@@ -113,8 +113,12 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		$categories = !empty($addlCategories) ? $addlCategories : array();
 		$categories[] = 'Ooyala';
 
-		if ( isset($data['keywords']) && !empty($data['keywords']) ) {
+		if ( !empty($data['keywords']) ) {
 			$categories[] = $data['keywords'];
+		}
+
+		if ( !empty($data['provider']) ) {
+			$categories[] = $data['provider'];
 		}
 
 		wfProfileOut( __METHOD__ );

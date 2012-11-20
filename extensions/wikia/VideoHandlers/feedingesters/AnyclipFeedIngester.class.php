@@ -165,7 +165,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$categories[] = 'Trailers';
 		}
 
-		if ( isset($data['keywords']) && !empty($data['keywords']) ) {
+		if ( !empty($data['keywords']) ) {
 			$categories[] = $data['keywords'];
 		}
 
@@ -222,11 +222,11 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$content = json_decode( $response, true );
 
 			$title = '';
-			if ( isset($content['title']['name']) && !empty($content['title']['name']) ) {
+			if ( !empty($content['title']['name']) ) {
 				$title = $content['title']['name'];
 			}
 
-			if ( isset($content['name']) && !empty($content['name']) ) {
+			if ( !empty($content['name']) ) {
 				if ( !empty($title) ) {
 					$title .= ' - ';
 				}
