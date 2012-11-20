@@ -10,7 +10,7 @@
 
 class VisualEditorHooks {
 	/** List of skins VisualEditor integration supports */
-	protected static $supportedSkins = array( 'vector', 'apex', 'monobook' );
+	protected static $supportedSkins = array( 'vector', 'apex', 'monobook', 'oasis' );
 
 	/**
 	 * Adds VisualEditor JS to the output if in the correct namespace.
@@ -22,10 +22,11 @@ class VisualEditorHooks {
 	 */
 	public static function onBeforePageDisplay( &$output, &$skin ) {
 		global $wgVisualEditorNamespaces;
+		/*
 		if (
 			// HACK ignoring hidden-ness so we can do dark launches
 			$skin->getUser()->getOption( 'visualeditor-enable',
-				/*default=*/ false, /*ignoreHidden=*/true
+				/*default=/ false, /*ignoreHidden=/true
 			) &&
 			in_array( $skin->getSkinName(), self::$supportedSkins ) &&
 			(
@@ -37,6 +38,8 @@ class VisualEditorHooks {
 		) {
 			$output->addModules( array( 'ext.visualEditor.viewPageTarget' ) );
 		}
+		*/
+		$output->addModules( array( 'ext.visualEditor.viewPageTarget' ) );
 		return true;
 	}
 
