@@ -96,21 +96,21 @@ class VideoEmbedTool {
 
 	function insertVideo() {
 		global $wgRequest, $wgUser, $wgContLang;
+		wfProfileIn(__METHOD__);
 
 		$url = $wgRequest->getVal( 'url' );
 
 		$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
 		$title = Title::makeTitle( NS_FILE, $tempname );
 		$nonPremiumException = null;
+
 		try {
 			$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
 			$apiwrapper = $awf->getApiWrapper( $url );
-
 		}
-		catch (WikiaException $e) {
+		catch ( Exception $e ) {
 			$nonPremiumException = $e;
 		}
-
 
 		if( !empty($apiwrapper) ) { // try ApiWrapper first - is it from partners?
 			$provider = $apiwrapper->getMimeType();
@@ -119,7 +119,6 @@ class VideoEmbedTool {
 			$file->forceMime( $provider );
 			$file->setVideoId( $apiwrapper->getVideoId() );
 			$file->setProps(array('mime'=>$provider ));
-
 
 			$props['id'] = $apiwrapper->getVideoId();
 			$props['vname'] = $apiwrapper->getTitle();
@@ -147,21 +146,26 @@ class VideoEmbedTool {
 				}
 			}
 			else {
+				header( 'X-screen-type: error' );
 				if ( $nonPremiumException ) {
-					header('X-screen-type: error');
-
-					if ( !empty(F::app()->wg->allowNonPremiumVideos) ) {
-						return $nonPremiumException->getMessage();
+					if ( empty(F::app()->wg->allowNonPremiumVideos) ) {
+						wfProfileOut( __METHOD__ );
+						return wfMessage( 'videohandler-non-premium' )->parse();
 					}
 
-					return wfMessage('videohandler-non-premium')->parse();
+					if ( $nonPremiumException->getMessage() != '' ) {
+						wfProfileOut( __METHOD__ );
+						return $nonPremiumException->getMessage();
+					}
 				}
-				header('X-screen-type: error');
+
+				wfProfileOut( __METHOD__ );
 				return wfMsg( 'vet-bad-url' );
 			}
 
 			if ( !$file ) {
 				header('X-screen-type: error');
+				wfProfileOut(__METHOD__);
 				return wfMsg( 'vet-non-existing' );
 			}
 
@@ -175,6 +179,7 @@ class VideoEmbedTool {
 			$props['oname'] = '';
 		}
 
+		wfProfileOut(__METHOD__);
 		return $this->detailsPage($props);
 	}
 

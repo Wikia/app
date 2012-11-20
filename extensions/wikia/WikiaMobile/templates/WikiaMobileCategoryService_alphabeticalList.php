@@ -10,7 +10,7 @@
  */
 ?>
 <section class="alphaSec noWrap">
-	<header><?= $wf->MsgExt( 'wikiamobile-categories-items-total', array( 'parsemag', 'content' ), $wg->ContLang->formatNum( $total ) ) ;?><button class=wkBtn id=expAll><span class=expand><?= $wf->MsgExt( 'wikiamobile-categories-expand', array( 'parsemag', 'content' )) ;?></span><span class=collapse><?= $wf->MsgExt( 'wikiamobile-categories-collapse', array( 'parsemag', 'content' )) ;?></span></button></header>
+	<header><?= $wf->MsgForContent( 'wikiamobile-categories-items-total', $wg->ContLang->formatNum( $total ) ) ;?><button class=wkBtn id=expAll><span class=expand><?= $wf->MsgForContent( 'wikiamobile-categories-expand' ) ;?></span><span class=collapse><?= $wf->MsgForContent( 'wikiamobile-categories-collapse' ) ;?></span></button></header>
 <? foreach ( $collections as $index => $collection) :?>
 	<?
 	$batch = ( $index == $requestedIndex ) ? $requestedBatch : 1;

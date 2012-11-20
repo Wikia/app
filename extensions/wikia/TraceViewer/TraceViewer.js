@@ -314,12 +314,12 @@
 		},
 		endNode: function( id, time, mem ) {
 			if ( this.stack.length < 2 ) {
-				err('trace error');
+				err('trace error ['+id+']: no nodes in the stack');
 				return;
 			}
 			var node = this.stack.pop();
 			if ( !node || node.id !== id ) {
-				err('trace error');
+				err('trace error ['+id+']: closing non-matching node ('+node.id+')');
 				return;
 			}
 

@@ -129,19 +129,37 @@ class ArticleCommentList {
 		$this->mCount = count($this->mComments);
 		$this->mCountNested = 0;
 
+		// grab list of required article IDs
+		$commentsQueue = array();
+		foreach($this->mComments as $id => &$levels) {
+			if(isset($levels['level1'])) {
+				$commentsQueue[] = $id;
+			}
+			if(isset($levels['level2'])) {
+				$commentsQueue = array_merge( $commentsQueue, array_keys( $levels['level2'] ) );
+			}
+		}
+
+		$titles = TitleBatch::newFromIds($commentsQueue,DB_SLAVE_BEFORE_MASTER);
+		$comments = array();
+		foreach ($commentsQueue as $id) {
+			$comments[$id] = !empty($titles[$id]) ? ArticleComment::newFromTitle($titles[$id]) : false;
+		}
+
 		// grab article contents for each comment
 		foreach($this->mComments as $id => &$levels) {
 			if(isset($levels['level1'])) {
-				$levels['level1'] = ArticleComment::newFromId($id);
+				$levels['level1'] = $comments[$id];
 				$this->mCountNested++;
 			}
 			if(isset($levels['level2'])) {
 				foreach($levels['level2'] as $subid => &$sublevel) {
-					$sublevel = ArticleComment::newFromId($subid);
+					$sublevel = $comments[$subid];
 					$this->mCountNested++;
 				}
 			}
 		}
+
 		return $this->mComments;
 	}
 
@@ -392,6 +410,7 @@ class ArticleCommentList {
 			$page = $pageRequest;
 		}
 		$comments = $this->getCommentPages(false, $page);
+		$this->preloadFirstRevId( $comments );
 		$pagination = $this->doPagination($countComments, count($comments), $page);
 
 		$commentListHTML = '';
@@ -553,6 +572,50 @@ class ArticleCommentList {
 		$this->mTitle->invalidateCache();
 		$this->mTitle->purgeSquid();
 
+		wfProfileOut( __METHOD__ );
+	}
+
+	protected function preloadFirstRevId( $comments ) {
+		wfProfileIn( __METHOD__ );
+		$articles = array();
+		foreach ($comments as $id => $levels) {
+			if ( isset($levels['level1']) ) {
+				if ( !empty( $levels['level1'] ) ) {
+					$articles[$levels['level1']->getTitle()->getArticleID()] = $levels['level1'];
+				}
+			}
+			if ( isset($levels['level2']) ) {
+				foreach ($levels['level2'] as $nested) {
+					if ( !empty( $nested ) ) {
+						$articles[$nested->getTitle()->getArticleID()] = $nested;
+					}
+				}
+			}
+		}
+
+		if ( !empty( $articles ) ) {
+			$db = wfGetDB( DB_SLAVE );
+			$res = $db->select(
+				'revision',
+				array( 'rev_page', 'min(rev_id) AS min_rev_id' ),
+				array( 'rev_page' => array_keys($articles) ),
+				__METHOD__,
+				array(
+					'GROUP BY' => 'rev_page',
+				)
+			);
+
+			foreach ($res as $row) {
+				if ( isset( $articles[$row->rev_page] ) ) {
+					$articles[$row->rev_page]->setFirstRevId( $row->min_rev_id, DB_SLAVE );
+					unset( $articles[$row->rev_page] );
+				}
+			}
+
+			foreach ($articles as $id => $comment) {
+				$comment->setFirstRevId( false, DB_SLAVE );
+			}
+		}
 		wfProfileOut( __METHOD__ );
 	}
 

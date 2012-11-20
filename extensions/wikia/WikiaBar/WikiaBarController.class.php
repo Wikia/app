@@ -45,7 +45,7 @@ class WikiaBarController extends WikiaController {
 
 	protected function isCorporateMainPageNonAnon() {
 		return (
-			HubService::isCorporatePage(F::app()->wg->cityId)
+			HubService::isCorporatePage()
 			&& Wikia::isMainPage()
 			&& !F::app()->wg->User->isAnon()
 		);

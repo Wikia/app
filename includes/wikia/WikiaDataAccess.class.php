@@ -24,7 +24,6 @@ class WikiaDataAccess {
 	const SKIP_CACHE = 1;
 	const REFRESH_CACHE = 2;
 
-
 	/***********************************
 	 * Public Interface
 	 **********************************/
@@ -44,13 +43,14 @@ class WikiaDataAccess {
 	/**
 	 * returns cached data if possible (up to $cacheTime old)
 	 * otherwise gets the data and saves the result in cache before returning it
-	 * @author Piotr Bablok <pbablok@wikia-inc.com>
 	 *
-	 * @param $key String
-	 * @param $cacheTime Integer
-	 * @param $getData Callable
+	 * @params String $key memcached key
+	 * @params Integer $cacheTime TTL of memcached data in seconds
+	 * @params Callback $getData function name (http://php.net/manual/en/language.types.callable.php)
 	 * @param $skipCache Integer
-	 *
+	 * 
+	 * @author Piotr Bablok <pbablok@wikia-inc.com>
+	 * @author Jakub Olek <jolek@wikia-inc.com>
 	 */
 	static function cache( $key, $cacheTime, $getData, $command = self::USE_CACHE ) {
 		$wg = F::app()->wg;
@@ -88,6 +88,8 @@ class WikiaDataAccess {
 	 * @param $result Mixed
 	 * @param $cacheTime Integer
 	 * @param $command Integer
+	 * 
+	 * @author Jakub Olek <jolek@wikia-inc.com>
 	 */
 	static private function setCache( $key, $result, $cacheTime, $command = self::USE_CACHE ) {
 		if ( $command == self::USE_CACHE || $command == self::REFRESH_CACHE ) {
@@ -108,7 +110,9 @@ class WikiaDataAccess {
 	*  - first thread to request it will start getting data
 	*  - other threads will wait for the first thread to finish, afterwards they will receive
 	*    the same data as the first thread
+	* 
 	* @author Piotr Bablok <pbablok@wikia-inc.com>
+	* @author Jakub Olek <jolek@wikia-inc.com>
 	*/
 	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE ) {
 		$app = F::app();
@@ -211,8 +215,7 @@ class WikiaDataAccess {
 	}
 
 	static private function unlock( $key ) {
-		$app = F::app();
-		$app->wg->Memc->delete( $key );
+		F::app()->wg->Memc->delete( $key );
 	}
 
 }

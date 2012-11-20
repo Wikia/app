@@ -47,6 +47,8 @@ class ArticleComment {
 	 */
 	public $mFirstRevision;
 
+	protected $minRevIdFromSlave;
+
 	/**
 	 * @param $title Title
 	 */
@@ -285,6 +287,11 @@ class ArticleComment {
 
 		$id = false;
 
+		if ( $db_conn == DB_SLAVE && isset($this->minRevIdFromSlave) ) {
+			wfProfileOut( __METHOD__ );
+			return $this->minRevIdFromSlave;
+		}
+
 		if ( $this->mTitle ) {
 			$db = wfGetDB($db_conn);
 			$id = $db->selectField(
@@ -299,6 +306,13 @@ class ArticleComment {
 
 		return $id;
 	}
+
+	public function setFirstRevId( $value, $db_conn ) {
+		if ( $db_conn == DB_SLAVE ) {
+			$this->minRevIdFromSlave = $value;
+		}
+	}
+
 	/**
 	 * getTitle -- getter/accessor
 	 *
