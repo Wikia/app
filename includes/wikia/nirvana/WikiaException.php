@@ -156,9 +156,15 @@ class WikiaDispatchedException extends WikiaException {
 abstract class WikiaHttpException extends WikiaException {
 	protected $code = null;
 	protected $message = null;
+	protected $details = null;
 
-	function __construct( Exception $previous = null ) {
+	function __construct( Exception $previous = null, $details = null ) {
+		$this->details = $details;
 		parent::__construct( $this->message, $this->code, $previous );
+	}
+
+	public function getDetails() {
+		return $this->details;
 	}
 }
 
