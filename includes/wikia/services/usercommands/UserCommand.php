@@ -181,14 +181,15 @@
 						'nav_urls' => $skinTemplateObj->get('nav_urls'),
 					);
 				} else {
-					global $wgSkin;
+					/* @var $skin WikiaSkin */
+					$skin = RequestContext::getMain()->getSkin();
+					$skin->getOutput()->setArticleRelated(false);
+
 					self::$skinData = array(
-						'content_actions' => $wgSkin->buildContentActionUrls(),
-						'nav_urls' => $wgSkin->buildNavUrls(),
+						'content_actions' => array(),
+						'nav_urls' => $skin->buildNavUrls(),
 					);
 				}
 			}
 		}
-
-
 	}
