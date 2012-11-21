@@ -96,7 +96,7 @@ class HubService extends Service {
 	private static function getCategoryIdForCity($cityId) {
 		$categoryId = null;
 
-		if( self::isCorporatePage() ) {
+		if( self::isCorporatePage() && $cityId == F::app()->wg->CityId ) { 
 			$categoryId = WikiFactoryHub::CATEGORY_ID_CORPORATE;
 		} else {
 			$category = WikiFactory::getCategory($cityId);
