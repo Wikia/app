@@ -32,7 +32,7 @@ var AdminDashboard = {
 		var addVideoButton = AdminDashboard.cc.find('.addVideoButton'),
 			addVideoButtonReturnUrl = addVideoButton.data('return-url');
 
-		if( typeof(addVideoButton.addVideoButton) === 'function' ) {
+		if( $.fn.addVideoButton ) {
 		//FB#68272
 			addVideoButton.addVideoButton({
 				callback: function() {
