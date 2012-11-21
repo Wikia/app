@@ -181,6 +181,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$this->setVal('sdsObject', $sdsObject);
 		$this->setVal('context', ( $action == 'edit' || $action == 'create' ) ? SD_CONTEXT_EDITING : SD_CONTEXT_SPECIAL );
 		$this->setVal('isEditAllowed', $isEditAllowed);
+		$this->setVal('isCreateMode', ( $action == 'create' ));
 	}
 
 	public function getObject() {
