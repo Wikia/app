@@ -1,5 +1,11 @@
 (function(window, $) {
 Forum.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm, {
+	constructor: function() {
+		Forum.NewMessageForm.superclass.constructor.apply(this, arguments);
+		if(new Wikia.Querystring(window.location + '').getVal('openEditor')) {
+			this.messageTitleFocus();
+		}
+	},
 	initElements: function() {	
 		this.wrapper = $('#ForumNewMessage');
 		this.buttons = this.wrapper.find('.buttons');

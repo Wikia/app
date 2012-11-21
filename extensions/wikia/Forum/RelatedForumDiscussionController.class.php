@@ -29,7 +29,7 @@ class RelatedForumDiscussionController extends WikiaController {
 		$this->sectionHeading = $this->wf->Msg('forum-related-discussion-heading', $this->wg->Title->getText());
 		$this->newPostButton = $this->wf->Msg('forum-related-discussion-new-post-button');
 		$topicTitle = Title::newFromText( $this->wg->Title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
-		$this->newPostUrl = $topicTitle->getFullUrl();
+		$this->newPostUrl = $topicTitle->getFullUrl('openEditor=1');
 		$this->newPostTooltip = $this->wf->Msg('forum-related-discussion-new-post-tooltip', $this->wg->Title->getText());
 		$this->blankImgUrl = $this->wf->BlankImgUrl();
 	}
