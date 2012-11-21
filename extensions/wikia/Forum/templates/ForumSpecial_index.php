@@ -1,5 +1,5 @@
 <section id="Forum" class="Forum">
-		<a class="button policies-link" href="#"><?= $wf->Msg('forum-specialpage-policies') ?></a>
+		<a class="secondary button policies-link" href="#"><?= $wf->Msg('forum-specialpage-policies') ?></a>
 	<!-- Admin Edit here -->
 	<?= $app->renderPartial('ForumSpecial', 'boards', array('boards' => $boards, 'lastPostByMsg' => $lastPostByMsg, 'isEditMode' => false ) ) ?>
 

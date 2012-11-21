@@ -25,11 +25,8 @@ $messages['en'] = array(
 	'forum-specialpage-board-posts' => '{{formatnum:$1}} {{PLURAL:$1|post|posts}}',
 	'forum-specialpage-board-lastpostby' => 'Last post by',
 	'forum-specialpage-policies-edit' => 'Edit',
-	'forum-specialpage-policies' => 'Policies/FAQ',
-	'forum-policies-and-faq' => 'some faq [[kermit]]
-* djkdksjkjsd skjdskj sdjkdskjds sd	
-	
-	',
+	'forum-specialpage-policies' => 'Forum Policies / FAQ',
+	'forum-policies-and-faq' => 'Please fill this up',
 
 	/* Forum Board */
 	'forum-board-title' => '$1 board',
@@ -226,6 +223,10 @@ $messages['qqq'] = array(
 	'forum-specialpage-board-threads' => 'The count of threads on a board. Parameters: * $1 - the number of threads.  Use formatnum for local formatting.',
 	'forum-specialpage-board-posts' => 'The count of posts on a board. Parameters: * $1 - the number of posts.  Use formatnum for local formatting.',
 	'forum-specialpage-board-lastpostby' => '',
+	
+	'forum-specialpage-policies-edit' => 'Edit button on modal with forum Policies',
+	'forum-specialpage-policies' => 'button label for forum policies',
+	'forum-policies-and-faq' => 'default policies and faq',
 
 	'forum-notification-user1-reply-to-your' => 'Notification when someone replies on your thread. Parameters:
 * $1 is a username (GENDER is supported in this message).',

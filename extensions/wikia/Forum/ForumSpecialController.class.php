@@ -20,7 +20,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->wf->profileIn( __METHOD__ );
 		
 		$policies = Title::newFromText( 'forum-policies-and-faq', NS_MEDIAWIKI);
-		$this->response->setJsVar( 'wgCanEditPolicies', $policies->getLatestRevID()  );
+		$this->response->setJsVar( 'wgCanEditPolicies', $this->wg->User->isAllowed('forumadmin'));
 		$this->response->setJsVar( 'wgPoliciesRev', $policies->getLatestRevID()  );
 		$this->response->setJsVar( 'wgPoliciesEditURL', $policies->getFullUrl( 'action=edit' )  );
 		

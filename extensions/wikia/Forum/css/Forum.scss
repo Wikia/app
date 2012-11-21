@@ -338,3 +338,29 @@
 		margin-left: 3px;		
 	}
 }
+
+
+.ForumPolicies {
+  overflow-y: scroll;
+  border: 1px solid $color-wall-border;
+  font-size: 13px;
+  height: 400px;
+  position: relative;
+  padding: 10px;
+  .WikiaArticle {
+    padding: 0;
+    .msg-title {
+      font-weight: bold;
+      font-size: 18px;
+      span {
+        color: $color-text;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.policies-link {
+  float: right;
+  margin: 10px;
+}
