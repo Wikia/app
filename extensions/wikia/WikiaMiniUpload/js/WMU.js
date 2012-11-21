@@ -63,7 +63,8 @@ var WMU_panel = null,
 	WMU_box = -1,
 	WMU_width_par = null,
 	WMU_height_par = null,
-	WMU_skipDetails = false;
+	WMU_skipDetails = false,
+	WMU_isOnSpecialPage = false;
 
 if (typeof WMU_box_filled == 'undefined') {
 	WMU_box_filled = [];
@@ -384,6 +385,16 @@ function WMU_loadMainFromView() {
 		user_blocked = data.user_blocked;
 		user_disallowed = data.user_disallowed;
 		user_protected = data.user_protected;
+
+		WMU_isOnSpecialPage = (wgNamespaceNumber === -1) ? true : false;
+
+		// Special Case for using WMU in on Special Pages - used for SDSObject Special Page
+		if (WMU_isOnSpecialPage) {
+			user_protected = false;
+			user_disallowed = false;
+			WMU_skipDetails = true;
+		}
+
 		if( user_blocked ) {
 			document.location = wgScriptPath + '/index.php?title=' + encodeURIComponent( wgTitle ) + '&action=edit';
 		} else {
@@ -980,8 +991,9 @@ function WMU_insertPlaceholder( box ) {
 }
 
 function WMU_insertImage(e, type) {
-	YAHOO.util.Event.preventDefault(e);
-
+	if (!WMU_isOnSpecialPage) {
+		YAHOO.util.Event.preventDefault(e);
+	}
 	var params = Array();
 	params.push('type='+type);
 	params.push('mwname='+$G('ImageUploadMWname').value);
@@ -1183,7 +1195,14 @@ function WMU_insertImage(e, type) {
 			WMU_indicator(1, false);
 		}
 	}
-
+	// Special Case for using WMU in SDSObject Special Page
+	if (WMU_isOnSpecialPage) {
+		var filePageUrl = 'File:';
+		filePageUrl += $('#ImageUploadMWname').val();
+		$(window).trigger('WMU_addFromSpecialPage', [filePageUrl]);
+		WMU_switchScreen('Summary');
+		return;
+	}
 	WMU_indicator(1, true);
 	YAHOO.util.Connect.abort(WMU_asyncTransaction);
 	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), callback);

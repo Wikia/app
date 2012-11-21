@@ -54,6 +54,19 @@ var StructureData = {
 				}
 			}
 		});
+		// Add WMU support for editing image objects
+		$('input[name="schema:thumbnailUrl"]').bind('focus', function(event) {
+			var $input = $(event.target);
+			$.loadYUI( function() {
+				$.getScript(wgExtensionsPath+'/wikia/WikiaMiniUpload/js/WMU.js', function() {
+					WMU_show($.getEvent(), -2);
+					mw.loader.load( wgExtensionsPath+'/wikia/WikiaMiniUpload/css/WMU.css', "text/css" );
+				});
+				$(window).bind('WMU_addFromSpecialPage', function(event, filePageUrl) {
+					$input.val(filePageUrl);
+				});
+			});
+		});
 		// Add widgets for date and date + time input types
 		$('input[name="schema:startDate"]').datetimepicker({
 			changeMonth: true,
