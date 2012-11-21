@@ -88,10 +88,6 @@ function VETSetup($editform) {
 	global $wgOut, $wgExtensionsPath, $wgHooks;
 	if( get_class(RequestContext::getMain()->getSkin()) === 'SkinOasis' ) {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
-		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js"></script>');
-		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/WikiaStyleGuide/js/Dropdown.js"></script>');
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'));
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaStyleGuide/css/Dropdown.scss'));
 	}
 	return true;
 }

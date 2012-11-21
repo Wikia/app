@@ -12,7 +12,7 @@
  */
 ( function( $ ) {
 
-$.widget( 'mw.linksuggest', {
+$.widget( 'wikia.linksuggest', {
 	options: {
 		minLength: 3,
 		delay: 300,
@@ -43,8 +43,11 @@ $.widget( 'mw.linksuggest', {
 		this.options = $.extend( opt, this.options );
 		this.element.autocomplete( this.options );
 		// Overwrite the keydown event of autocomplete to fix some undesired key events
-		if ( typeof( this.element.data( 'events' ).keydown[0] ) !== undefined ) {
-			this._legacyKeydown = this.element.data( 'events' ).keydown[0].handler;
+		// macbre: $._data used to get jQuery's internal data
+		// @see http://blog.jquery.com/2012/08/09/jquery-1-8-released/
+		var eventsData = $._data(this.element.get(0), 'events');
+		if ( typeof( eventsData && eventsData.keydown ) !== "undefined" ) {
+			this._jQueryUIKeydown = eventsData.keydown[0].handler;
 		}
 		this.element.unbind( 'keydown.autocomplete' )
 		.bind( eventType + '.linksuggest', function( thisInstance ) {
@@ -55,7 +58,7 @@ $.widget( 'mw.linksuggest', {
 		// deactivate some menu weird behavior
 		this.element.data( 'autocomplete' ).menu.options.blur = null;
 	},
-	_legacyKeydown: null,
+	_jQueryUIKeydown: null,
 	_keydown: function( event ) {
 		var keyCode = $.ui.keyCode;
 		switch( event.keyCode ) {
@@ -97,8 +100,8 @@ $.widget( 'mw.linksuggest', {
 				break;
 		}
 		// If we not already returned from this function, fire the old autocomplete handler
-		if ( $.isFunction( this._legacyKeydown ) ) {
-			this._legacyKeydown.apply( this.element.data( 'autocomplete' ), arguments );
+		if ( $.isFunction( this._jQueryUIKeydown ) ) {
+			this._jQueryUIKeydown.apply( this.element.data( 'autocomplete' ), arguments );
 		}
 	},
 	_sendQuery: function( request, response ) {
@@ -388,4 +391,3 @@ $( function() {
 	// Apply font-style for bug in IE. This should be done using a style sheet
 	$( '#wpTextbox1' ).css( 'font-family', 'monospace' ).linksuggest();
 });
-

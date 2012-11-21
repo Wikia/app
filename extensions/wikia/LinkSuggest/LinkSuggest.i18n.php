@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'linksuggest-desc' => 'Suggests links to editors on edit view',
 	'tog-disablelinksuggest' => 'Do not show link suggest in Source mode',
 	'tog-redirected-from' => '&ndash; redirected from $1'
 );
