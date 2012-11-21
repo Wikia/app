@@ -23,6 +23,10 @@ var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, 
 		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250'},
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250'},
 		'TOP_BUTTON': {'size':'242x90'},
+
+		// TOP_BUTTON after TOP_LEADERBOARD hack:
+		'TOP_BUTTON.force':'hack',
+
 		'TOP_LEADERBOARD':{'size':'728x90'},
 		'TOP_RIGHT_BOXAD':{'size':'300x250'},
 		'PREFOOTER_LEFT_BOXAD':{'size':'300x250'},
@@ -47,6 +51,25 @@ var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, 
 	fillInSlot = function(slot) {
 		log(['fillInSlot', slot], 5, logGroup);
 		log(slot, 5, logGroup);
+
+		// TOP_BUTTON after TOP_LEADERBOARD hack:
+		if (slot[0] === 'TOP_BUTTON') {
+			log('Tried TOP_BUTTON. Disabled (waiting for leaderboard ads)', 2, logGroup);
+			return;
+		}
+		if (slot[0] === 'TOP_BUTTON.force') {
+			log('Forced TOP_BUTTON call (this means leaderboard is ready and standard)', 2, logGroup);
+			slot[0] = 'TOP_BUTTON';
+		}
+		if (slot[0].indexOf('LEADERBOARD') !== -1) {
+			log('LEADERBOARD-ish slot handled by Liftium. Running the forced TOP_BUTTON now', 2, logGroup);
+			fillInSlot(['TOP_BUTTON.force']);
+		}
+		if (!document.getElementById(slot[0])) {
+			log('No such element in DOM: #' + slot[0], 2, logGroup);
+			return;
+		}
+		// END of hack
 
 		var slotname = slot[0]
 			, slotsize = slotMap[slotname].size
