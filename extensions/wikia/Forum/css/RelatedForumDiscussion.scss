@@ -24,9 +24,11 @@
 	
 	/* real stuff */
 	h2 {
-		padding-bottom: 3px;
+		padding-top: 3px;
 		.forum-new-post {
 			float: right;
+			position: relative;
+			top: -3px;
 		}
 	}
 	
