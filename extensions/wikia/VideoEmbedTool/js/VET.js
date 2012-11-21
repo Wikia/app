@@ -31,8 +31,8 @@ var VET_shownMax = false;
 var VET_inGalleryPosition = false;
 var VET_notificationTimout = 4000;
 
+// Returns the DOM element for the RTE textarea
 function VET_getTextarea() {
-	// return dom element, not jquery object
 	return WikiaEditor.getInstance().getEditbox()[0];
 }
 
@@ -223,56 +223,6 @@ function VET_moveBackButton(selector) {
 /*
  * Functions/methods
  */
-if(mwCustomEditButtons) {
-	if ( $("#siteSub").length == 0 ) {
-		mwCustomEditButtons.push({
-			"imageFile": wgExtensionsPath + '/wikia/VideoEmbedTool/images/button_vet.png',
-			"speedTip": vet_imagebutton,
-			"tagOpen": "",
-			"tagClose": "",
-			"sampleText": "",
-			"imageId": "mw-editbutton-vet",
-			'onclick': function(ev) {
-				VET_show(ev);
-			}
-		});
-	}
-}
-
-$(function() {
-	$.loadYUI(function(){
-		if(skin != 'monobook') {
-			if(document.forms.editform) {
-				VET_addHandler();
-			} else if ( $G( 'VideoEmbedCreate' ) && ( 400 == wgNamespaceNumber ) ) {
-				VET_addCreateHandler();
-			} else if ( $G( 'VideoEmbedReplace' ) && ( 400 == wgNamespaceNumber ) ) {
-				VET_addReplaceHandler();
-			}
-		}
-	});
-});
-
-function VET_addCreateHandler() {
-	var btn = $G( 'VideoEmbedCreate' );
-  	YAHOO.util.Event.addListener(['vetLink', 'vetHelpLink', btn], 'click',  VET_showReplace);
-}
-
-function VET_addReplaceHandler() {
-	var btn = $G( 'VideoEmbedReplace' );
-  	YAHOO.util.Event.addListener(['vetLink', 'vetHelpLink', btn], 'click',  VET_showReplace);
-}
-
-function VET_showReplace(e) {
-	YAHOO.util.Event.preventDefault(e);
-	VET_show(e);
-}
-
-function VET_addHandler() {
-	$.loadYUI(function(){
-		YAHOO.util.Event.addListener(['vetLink', 'vetHelpLink'], 'click',  VET_show);
-	});
-}
 
 function VET_toggleSizing( enable ) {
 	if( enable ) {
@@ -752,7 +702,6 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 
 	// wlee: responseText could include <script>. Use jQuery to parse
 	// and execute this script
-	//$G('VideoEmbed' + VET_curScreen).innerHTML = responseText;
 	$('#VideoEmbed' + VET_curScreen).html(responseText);
 
 	if($G('VideoEmbedThumb')) {

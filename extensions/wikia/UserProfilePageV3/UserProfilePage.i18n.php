@@ -254,6 +254,8 @@ $messages['ca'] = array(
 	'user-identity-box-avatar-save' => 'Desa, he acabat',
 	'user-identity-box-avatar-cancel' => 'Cancel·la',
 	'user-identity-box-avatar-anon-user-error' => "Has de d'iniciar sessió abans de canviar res",
+	'user-identity-box-hide-edits-wikis' => 'Amaga-ho tot',
+	'user-identity-box-banned-from-chat' => 'Bannejat del xat',
 	'user-identity-box-aka-label' => '<span>conegut com</span> $1',
 	'user-identity-box-my-twitter' => 'El meu Twitter',
 	'user-identity-box-my-website' => 'El meu web',
@@ -264,7 +266,7 @@ $messages['ca'] = array(
 	'user-identity-box-was-born-in' => '<span>Vaig néixer a</span> $1',
 	'user-identity-box-occupation' => '<span>La meva ocupació és</span> $1',
 	'user-identity-i-am' => '<span>Sóc</span> $1',
-	'user-identity-box-edits-since-joining' => 'Edicions des de que va començar a editar<br />$1',
+	'user-identity-box-edits-since-joining' => 'Edicions des de la unió al wiki<br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>EDICIONS</span>',
 	'user-identity-box-group-blocked' => 'Bloquejat',
 	'user-identity-box-group-chatmoderator' => 'Moderador del Xat',
@@ -274,6 +276,9 @@ $messages['ca'] = array(
 	'user-identity-box-group-staff' => 'Staff',
 	'user-identity-box-group-helper' => 'Helper',
 	'user-identity-box-group-vstf' => 'Voluntari Spam Task Force',
+	'user-identity-box-group-authenticated' => 'Autenticat',
+	'user-identity-box-group-council' => 'Conseller',
+	'user-identity-box-group-adminmentor' => 'Admin Mentor',
 	'user-identity-box-zero-state-location' => 'Localització',
 	'user-identity-box-zero-state-birthday' => 'Aniversari',
 	'user-identity-box-zero-state-gender' => 'Gènere',
@@ -546,20 +551,25 @@ $messages['diq'] = array(
 	'userprofilepage-lightbox-interview-save' => 'Star bı, Mı ke qeyd',
 	'user-identity-box-edit' => 'Timar ke',
 	'user-identity-box-edit-avatar' => 'Avatari bıvurnê',
+	'user-identity-box-delete-avatar' => 'Avatari esterne',
 	'user-identity-box-avatar-cancel' => 'Bıterkne',
 	'user-identity-box-hide-edits-wikis' => 'Pêron bınımne',
+	'user-identity-box-aka-label' => '<span>aka</span> $1',
 	'user-identity-box-my-twitter' => "Twitter'ê me",
 	'user-identity-box-my-website' => 'Websitey me',
 	'user-identity-box-my-fb-page' => "Facebook'ê me",
+	'user-identity-box-fav-wikis' => 'Favori Wikiy me',
 	'user-identity-box-group-blocked' => 'kilit biy',
 	'user-identity-box-group-sysop' => 'Admin',
 	'user-identity-box-group-bureaucrat' => 'Burokrati',
 	'user-identity-box-group-founder' => 'Weqıfdar',
 	'user-identity-box-group-staff' => 'Emegdar',
 	'user-identity-box-group-helper' => 'Peştidar',
+	'user-identity-box-group-council' => 'Ezay meclisi',
 	'user-identity-box-zero-state-location' => 'Lokasyon',
 	'user-identity-box-zero-state-birthday' => 'Roc biyayen',
 	'user-identity-box-zero-state-gender' => 'Cınsiyet',
+	'user-identity-box-zero-state-occupation' => 'Gurwayen',
 	'user-identity-box-zero-state-twitter' => "Twitter'ê me",
 	'user-identity-box-zero-state-website' => 'Websitey me',
 	'user-identity-box-about-me' => 'Heqtê me',
@@ -2565,10 +2575,14 @@ $messages['tly'] = array(
 
 /** Turkish (Türkçe)
  * @author Bilalokms
+ * @author Emperyan
+ * @author Erdemaslancan
  */
 $messages['tr'] = array(
 	'userprofilepage-edit-modal-header' => 'Profil Düzenle',
 	'user-identity-box-avatar-cancel' => 'İptal',
+	'user-identity-box-aka-label' => '$1 <span>olarak bilinir</span>',
+	'user-identity-box-fav-wikis' => 'Favori vikilerim',
 	'userprofilepage-closing-popup-cancel' => 'İptal',
 );
 
@@ -2728,6 +2742,7 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Hzy980512
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'userprofilepage-edit-modal-header' => '编辑个人资料',
@@ -2736,8 +2751,13 @@ $messages['zh-hans'] = array(
 	'userprofilepage-lightbox-interview-save' => '做完了，保存',
 	'userprofilepage-interview-section-title' => '用户采访',
 	'userprofilepage-invalid-user' => '无效用户！您未登入或者没有权限进行',
+	'user-identity-box-edit' => '编辑',
 	'user-identity-box-avatar-cancel' => '取消',
+	'user-identity-box-location' => '<span>我住在</span>$1',
+	'user-identity-box-was-born-on' => '<span>我在</span>$1 $2出生',
+	'user-identity-box-was-born-in' => '<span>我在</span>$1<span>出生</span>',
 	'user-identity-box-occupation' => '<span>我的工作是</span> $1',
+	'user-identity-i-am' => '<span>我是</span>$1',
 	'user-identity-box-group-blocked' => '封禁',
 	'user-identity-box-group-chatmoderator' => '聊天主持人',
 	'user-identity-box-group-sysop' => '管理员',
@@ -2751,12 +2771,15 @@ $messages['zh-hans'] = array(
 	'user-identity-box-zero-state-gender' => '性别',
 	'user-identity-box-zero-state-occupation' => '职业',
 	'user-identity-box-zero-state-website' => '我的网站',
+	'user-identity-box-about-fav-wikis-refresh' => '刷新',
 	'user-identity-box-connect-to-fb' => '使用 Facebook 连接',
+	'userprofilepage-lightbox-about-me-cancel' => '取消',
 	'userprofilepage-closing-popup-discard-and-quit' => '放弃更改并退出',
 	'userprofilepage-closing-popup-save-and-quit' => '保存并退出',
 	'userprofilepage-closing-popup-cancel' => '取消',
 	'user-action-menu-view-source' => '查看源代码',
 	'user-action-menu-protect' => '保护',
+	'user-action-menu-delete' => '删除',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

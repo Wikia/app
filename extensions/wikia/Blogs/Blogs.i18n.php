@@ -893,21 +893,36 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'createblogpage' => 'Blog vırazê',
+	'createbloglistingpage' => 'Lista blogi vıraziyê',
+	'create-blog-post-category' => 'Rıştenê blogi',
+	'create-blog-post-recent-listing' => 'Rıştenê peyêni',
+	'create-blog-post-recent-listing-title' => 'Rıştenê peyêni',
+	'create-blog-post-title' => 'Yew rıştanê blog de newi vıraze',
+	'create-blog-post-title-edit' => 'Rıştena blogi timar kerê',
+	'create-blog-form-title' => 'Rıştena blog çıçiya?',
+	'create-blog-form-post-text' => 'Metnê blogi',
+	'create-blog-categories-textinput' => 'Kategoriya newi deke',
 	'create-blog-categories-submit' => 'Bırşê',
 	'create-blog-save' => 'Ena pele qeyd ke',
 	'create-blog-preview' => 'Verasayışi bıvin',
+	'create-blog-listing-page-title' => 'Listeyê blog de pela sernami',
 	'create-blog-listing-preview' => 'Verqayt',
 	'create-blog-listing-matches' => 'Maçi',
 	'create-blog-listing-matches-calculate' => 'Hesab cihazi',
 	'create-blog-listing-sortby' => 'raten',
 	'create-blog-listing-sortby-author' => 'Nuskar',
 	'blog-defaulttitle' => 'Blogi',
+	'blog-readfullpost' => 'Zewbi buwane',
+	'blog-olderposts' => 'Rıştenê kehani',
+	'blog-newerposts' => 'Rıştenê newey',
 	'blog-nbrcomments' => '{{PLURAL:$1|yew vatış|$1 vatışi}}',
+	'blog-writeone' => 'Yew bınusne!',
 	'blog-added' => 'Debiya',
 	'blog-edited' => 'vurneya',
 	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Vatış nê vacya yo',
 	'blog-comments' => 'Vatışi',
+	'blog-comments-label' => 'Vatışkerden',
 	'blog-voting-label' => 'Deya',
 	'blog-comments-anonymous' => 'Karbero anonim',
 	'blog-comment-delete' => 'besterne',
@@ -954,6 +969,7 @@ $messages['el'] = array(
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Crazymadlover
+ * @author Dalton2
  * @author Danke7
  * @author Locos epraix
  * @author Peter17
@@ -1067,7 +1083,7 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
 	'right-blog-comments-toggle' => 'Aalternar comentarios en artículos del blog',
 	'right-blog-comments-delete' => 'Borrar comentarios en los artículos del blog',
 	'right-blog-articles-edit' => 'Editar artículos en el blog',
-	'right-blog-articles-move' => 'Mover artículos del blog',
+	'right-blog-articles-move' => 'Trasladar artículos del blog',
 	'blogs-undeleted-comment' => 'Comentario no borrado para la página del blog $1',
 	'blogs-recent-url-text' => 'Entradas de Blog recientes',
 	'blog-desc' => 'Artículos del blog',
@@ -1076,6 +1092,7 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
 	'blog-by' => '$1 por $2',
 	'blogs-searchprofile' => 'Blogs',
 	'blogs-searchprofile-tooltip' => 'Buscar en artículos de blog y listas de blog',
+	'user-blog-url-link' => 'Usuario blog:$1',
 );
 
 /** Basque (euskara)
@@ -1445,6 +1462,7 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'blog-by' => '$1 par $2',
 	'blogs-searchprofile' => 'Blogs',
 	'blogs-searchprofile-tooltip' => 'Rechercher dans les articles et les listes de blog',
+	'user-blog-url-link' => 'Blog utilisateur: $1',
 );
 
 /** Galician (galego)
@@ -1566,6 +1584,7 @@ Cree páxinas de listas de blogues para categorías como "Barack Obama", "Galici
 	'blog-by' => '$1 por $2',
 	'blogs-searchprofile' => 'Blogues',
 	'blogs-searchprofile-tooltip' => 'Procurar nos artigos e listas de blogue',
+	'user-blog-url-link' => 'Blogue de usuario:$1',
 );
 
 /** Hausa (Hausa)
@@ -2336,20 +2355,20 @@ $messages['kn'] = array(
 $messages['ko'] = array(
 	'createblogpage' => '블로그 만들기',
 	'createbloglistingpage' => '블로그 목록 만들기',
-	'create-blog-post-category' => '블로그 글',
-	'create-blog-post-title-edit' => '블로그 글 편집하기',
-	'create-blog-form-title' => '블로그 글이란?',
-	'create-blog-form-post-title' => '블로그 글 제목',
+	'create-blog-post-category' => '블로그 게시물',
+	'create-blog-post-title-edit' => '블로그 게시물 편집',
+	'create-blog-form-title' => '블로그 게시물이 무엇입니까?',
+	'create-blog-form-post-title' => '블로그 게시물 제목',
 	'blog-defaulttitle' => '블로그',
-	'blog-added' => '추가됨',
-	'blog-edited' => '편집됨',
+	'blog-added' => '추가했',
+	'blog-edited' => '편집했',
 	'blog-page' => '블로그',
-	'blog-comment-post' => '댓글 남기기',
+	'blog-comment-post' => '덧글 남기기',
 	'blog-comments' => '덧글',
-	'blog-rc-comments' => '블로그 댓글',
+	'blog-rc-comments' => '블로그 덧글',
 	'blog-avatar-preferences-title' => '아바타',
 	'blog-refresh-label' => '새로 고침',
-	'blogs-reportproblem' => '문제점 신고하기',
+	'blogs-reportproblem' => '문제 보고',
 );
 
 /** Colognian (Ripoarisch)
@@ -2681,6 +2700,7 @@ $messages['mk'] = array(
 	'blog-by' => '$1 од $2',
 	'blogs-searchprofile' => 'Блогови',
 	'blogs-searchprofile-tooltip' => 'Пребарување во Блоговски написи и Списоци на блогови',
+	'user-blog-url-link' => 'Кориснички блог:$1',
 );
 
 /** Malayalam (മലയാളം)
@@ -2824,6 +2844,7 @@ Cipta laman senarai blog untuk kategori-kategori seperti "Barack Obama", "Cereka
 	'blog-by' => '$1 daripada $2',
 	'blogs-searchprofile' => 'Blog',
 	'blogs-searchprofile-tooltip' => 'Cari dalam Rencana Blog dan Senarai Blog',
+	'user-blog-url-link' => 'Blog pengguna:$1',
 );
 
 /** Norwegian Bokmål (norsk (bokmål)‎)
@@ -2946,6 +2967,7 @@ Opprett bloggoppføringssider for å kategorier som «Barack Obama», «Fan Fict
 	'blog-by' => '$1 av $2',
 	'blogs-searchprofile' => 'Blogger',
 	'blogs-searchprofile-tooltip' => 'Søk i bloggartikler og blogglister',
+	'user-blog-url-link' => 'Brukerblogg:$1',
 );
 
 /** Nepali (नेपाली)
@@ -3253,6 +3275,7 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
 	'blog-by' => '$1 przez $2',
 	'blogs-searchprofile' => 'Blogi',
 	'blogs-searchprofile-tooltip' => 'Szukaj na blogach i listach blogów',
+	'user-blog-url-link' => 'Blog użytkownika:$1',
 );
 
 /** Piedmontese (Piemontèis)
@@ -3543,6 +3566,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
  * @author Giro720
  * @author Jesielt
  * @author Luckas Blade
+ * @author TheGabrielZaum
  * @author 555
  */
 $messages['pt-br'] = array(
@@ -3557,6 +3581,7 @@ $messages['pt-br'] = array(
 	'create-blog-post-recent-listing-title' => 'Posts recentes',
 	'create-blog-post-recent-listing-log' => 'Criado artigo para os posts de blog recentes',
 	'create-blog-post-title' => 'Criar um novo post de blog',
+	'create-blog-post-title-edit' => 'Editar um post de blog',
 	'create-blog-form-title' => 'O que é um post de blog?',
 	'create-blog-form-post-text' => 'Texto do blog',
 	'create-blog-form-info' => 'Posts de blog são uma ótima maneira de compartilhar novidades, opiniões e ideias criativas com a comunidade.',
@@ -3659,6 +3684,8 @@ Crie uma lista de blogs para categorias como "Barack Obama", "Humor" ou, até me
 	'blog-comment-sending' => 'Enviando...',
 	'blog-by' => '$1 de $2',
 	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'Pesquisar em Artigos de Blog e Listagens de Blog',
+	'user-blog-url-link' => 'Blog de usuário:$1',
 );
 
 /** Romanian (română)
@@ -3829,6 +3856,7 @@ $messages['ru'] = array(
 	'blog-by' => '$1 от $2',
 	'blogs-searchprofile' => 'Блоги',
 	'blogs-searchprofile-tooltip' => 'Поиск в блогах и в списках блогов',
+	'user-blog-url-link' => 'Блог участника:$1',
 );
 
 /** Slovenian (slovenščina)
@@ -4029,6 +4057,7 @@ Skapa blogglistor för kategorier som "Barack Obama", "Fan Fiction", eller kombi
 	'blog-by' => '$1 av $2',
 	'blogs-searchprofile' => 'Bloggar',
 	'blogs-searchprofile-tooltip' => 'Sök i bloggartiklar och blogglistor',
+	'user-blog-url-link' => 'Användarblogg: $1',
 );
 
 /** Swahili (Kiswahili)
@@ -4414,6 +4443,13 @@ $messages['tt-cyrl'] = array(
 	'blog-fromsitename' => '$1 дән',
 	'blogs-reportproblem' => 'Проблема турында хәбәр итәргә',
 	'blogs-comment-hidden' => 'Фикер яшерелгән',
+);
+
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'create-blog-listing-matches-calculate' => 'ⴰⵙⵍⴽⴰⵎ',
 );
 
 /** Ukrainian (українська)

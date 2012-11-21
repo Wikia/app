@@ -263,9 +263,10 @@ $messages['ja'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 아라
  */
 $messages['ko'] = array(
-	'unsubscribe-confirm-legend' => '인증하기',
+	'unsubscribe-confirm-legend' => '확인',
 );
 
 /** Colognian (Ripoarisch)

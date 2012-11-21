@@ -109,6 +109,7 @@ For example, you could:
  */
 $messages['qqq'] = array(
 	'myhome-activity-feed' => 'This the title of the list/summary of recent activity in "My home page" in Wikia. "Feed" here does not refer to an RSS/Atom-type feed.',
+	'tog-userlandingpage' => 'Label next to selectbox when user can choose her landing page will be one of: Main Page, WikiActivity, RecentChanges',
 	'myhome-feed-newpage' => '{{Identical|New page}}',
 	'myhome-feed-edit' => '{{Identical|Edit}}',
 	'myhome-feed-delete' => '{{Identical|Deleted}}',
@@ -122,7 +123,6 @@ $messages['qqq'] = array(
 The parameter $1 is replaced by either:
 * {{msg-wikia|Myhome-activity-feed}}, or:
 * {{msg-wikia|Myhome-watchlist-feed}}",
-	'tog-userlandingpage' => 'Label next to selectbox when user can choose her landing page will be one of: Main Page, WikiActivity, RecentChanges',
 	'accesskey-pt-myhome' => '{{doc-accesskey}}',
 );
 
@@ -136,7 +136,6 @@ $messages['af'] = array(
 	'myhome-user-contributions-feed' => 'Bydraes',
 	'myhome-hot-spots-feed-empty' => "Hierdie wiki wag vir jou om betrokke te raak. Kliek op '''[[Special:CreatePage|Nuwe bladsy]]''' om te begin skryf!",
 	'myhome-hot-spots-newest' => 'Nuwe bladsye op die wiki',
-	'tog-myhomedisableredirect' => 'Skakel aanstuur na My Tuisblad af', # Fuzzy
 	'myhome-feed-newpage' => 'nuwe bladsy',
 	'myhome-feed-edit' => 'wysig',
 	'myhome-feed-move' => 'bladsy geskuif',
@@ -196,7 +195,6 @@ $messages['ar'] = array(
 	'myhome-hot-spots-feed-empty' => "هذه الويكي تنتظر مشاركتك.
 أنقر على '''[[خاص:CreatePage|صفحة جديدة]]''' لبداية التعديل!",
 	'myhome-hot-spots-newest' => 'الصفحات الجديدة في الويكي',
-	'tog-myhomedisableredirect' => 'عدم توجيهي إلى "صفحتي الرئيسية" أوتوماتيكيا', # Fuzzy
 	'myhome-feed-newpage' => 'صفحة جديدة',
 	'myhome-feed-edit' => 'تعديل',
 	'myhome-feed-move' => 'نقلت الصفحة',
@@ -309,7 +307,6 @@ $messages['be-tarask'] = array(
 	'myhome-hot-spots-feed-empty' => "{{SITENAME}} чакае Вашага ўдзелу.
 Націсьніце спасылку '''[[Special:CreatePage|Новая старонка]]''', каб пачаць пісаць!",
 	'myhome-hot-spots-newest' => 'Новыя старонкі ў {{GRAMMAR:месны|{{SITENAME}}}}',
-	'tog-myhomedisableredirect' => 'Адключыць перанакіраваньне на маю хатнюю старонку', # Fuzzy
 	'myhome-feed-newpage' => 'новая старонка',
 	'myhome-feed-edit' => 'рэдагаваць',
 	'myhome-feed-move' => 'старонка перанесеная',
@@ -375,7 +372,6 @@ $messages['bo'] = array(
 	'myhome-watchlist-feed' => 'མཉམ་འཇོག་ཐོ།',
 	'myhome-user-contributions-feed' => 'བྱས་རྗེས།',
 	'myhome-hot-spots-newest' => 'ཝེ་ཁེ་སྟེང་གི་ཤོག་ངོས་གསར་བ།',
-	'tog-myhomedisableredirect' => 'ང་ཡི་ཁྱིམ་ལ་ཁ་ཕྱོགས་གསར་བ་ནུས་མེད་གཏོང་བ།', # Fuzzy
 	'prefs-myhome' => 'ང་ཡི་ཁྱིམ།',
 	'myhome-feed-newpage' => 'ཤོག་ངོས་གསར་བ།',
 	'myhome-feed-edit' => 'རྩོམ་སྒྲིག',
@@ -414,7 +410,6 @@ Gallout a rit implijout ho roll evezhiañ evit mirout ur roud eus eus ar cheñch
 	'myhome-hot-spots-feed-empty' => "Emañ ar wiki-mañ o gortoz e kemerfer perzh ennañ.
 Klikit war '''[[Special:CreatePage|Pajenn nevez]]''' evit kregiñ da skrivañ !",
 	'myhome-hot-spots-newest' => 'Pajennoù nevez war ar wiki',
-	'tog-myhomedisableredirect' => 'Diweredekaat an adkas davet Ma Degemer', # Fuzzy
 	'prefs-myhome' => 'Ma fajenn degemer',
 	'myhome-feed-newpage' => 'pajenn nevez',
 	'myhome-feed-edit' => 'kemmañ',
@@ -496,7 +491,6 @@ $messages['ca'] = array(
 	'myhome-hot-spots-feed' => 'Més Populars!',
 	'myhome-hot-spots-feed-empty' => "Aquest wiki està esperant a que t'uneixis. Fes clic a '''[[Special:CreatePage|nova pàgina]]''' per començar a escriure!",
 	'myhome-hot-spots-newest' => 'Pàgines noves al wiki',
-	'tog-myhomedisableredirect' => 'Desactivar la redirecció al Wiki Activity',
 	'prefs-myhome' => 'Inici',
 	'myhome-feed-newpage' => 'nova pàgina',
 	'myhome-feed-edit' => 'modifica',
@@ -569,7 +563,6 @@ Svůj seznam sledovaných stránek můžete použít pro zobrazení změn na str
 	'myhome-hot-spots-feed-empty' => "Tato wiki čeká, až se zapojíte.
 Klepněte na '''[[Special:CreatePage|Nová stránka]]''' a začněte psát!",
 	'myhome-hot-spots-newest' => 'Nové stránky na wiki',
-	'tog-myhomedisableredirect' => 'Zakázat mé přesměrování na činnost na Wiki',
 	'prefs-myhome' => 'Moje domovská stránka',
 	'myhome-feed-newpage' => 'nová stránka',
 	'myhome-feed-edit' => 'editovat',
@@ -653,6 +646,7 @@ $messages['cy'] = array(
  * @author Kghbln
  * @author Kjell
  * @author LWChris
+ * @author Metalhead64
  * @author The Evil IP address
  * @author Umherirrender
  */
@@ -672,7 +666,7 @@ Mit deiner Beobachtungsliste kannst du die letzten Änderungen an Seiten verfolg
 	'myhome-hot-spots-feed-empty' => "Dieses Wiki wartet auf deine Beteiligung.
 Klicke auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu beginnen!",
 	'myhome-hot-spots-newest' => 'Neue Seiten im Wiki',
-	'tog-myhomedisableredirect' => 'Weiterleitung zu Wiki Activity unterbinden',
+	'tog-userlandingpage' => 'Zielseite:',
 	'prefs-myhome' => 'Startseite',
 	'myhome-feed-newpage' => 'neue Seite',
 	'myhome-feed-edit' => 'bearbeiten',
@@ -828,7 +822,6 @@ $messages['el'] = array(
 	'myhome-hot-spots-feed-empty' => "Αυτό το wiki σας περιμένει να πάρετε μέρος.
 Κάντε κλικ στο'''[[Special:CreatePage|Νέα σελίδα]]''' και αρχίστε να γράφετε!",
 	'myhome-hot-spots-newest' => 'Νέες σελίδες στο wiki',
-	'tog-myhomedisableredirect' => 'Απενεργοποιήστε την ανακατεύθυνση στην "Αρχική μου σελίδα"', # Fuzzy
 	'prefs-myhome' => 'Η αρχική μου σελίδα',
 	'myhome-feed-newpage' => 'νέα σελίδα',
 	'myhome-feed-edit' => 'επεξεργασία',
@@ -916,7 +909,6 @@ $messages['es'] = array(
 	'myhome-hot-spots-feed' => 'Más populares',
 	'myhome-hot-spots-feed-empty' => "Este wiki está esperando a que te unas. ¡Haz clic en '''[[Special:CreatePage|nueva página]]''' para comenzar a escribir!",
 	'myhome-hot-spots-newest' => 'Páginas nuevas en el wiki',
-	'tog-myhomedisableredirect' => 'Desactivar la redirección a Wiki Actividad',
 	'prefs-myhome' => 'Inicio',
 	'myhome-feed-newpage' => 'nueva página',
 	'myhome-feed-edit' => 'modificar',
@@ -1031,7 +1023,6 @@ $messages['fa'] = array(
 	'myhome-hot-spots-feed-empty' => "این ویکی در انتظار مشارکت شماست.
 بر '''[[Special:CreatePage|صفحهٔ جدید]]''' برای شروع نوشتن کلیک کنید!",
 	'myhome-hot-spots-newest' => 'صفحات جدید بر ویکی',
-	'tog-myhomedisableredirect' => 'تغییر مسیر من را به فعالیت‌های ویکی غیرفعال کن',
 	'prefs-myhome' => 'خانه من',
 	'myhome-feed-newpage' => 'صفحهٔ جدید',
 	'myhome-feed-edit' => 'ویرایش',
@@ -1124,7 +1115,6 @@ Tarkkailulistan avulla pysyt ajan tasalla viimeisimmistä muutoksista välittäm
 	'myhome-hot-spots-feed-empty' => "Tämä wiki odottaa osallistumistasi.
 Aloita kirjoittaminen luomalla '''[[Special:CreatePage|uusi sivu]]'''.",
 	'myhome-hot-spots-newest' => 'Wikin uudet sivut',
-	'tog-myhomedisableredirect' => 'Poista käytöstä ohjaus Wikin viimeisimpiin tapahtumiin',
 	'prefs-myhome' => 'Kotisivu',
 	'myhome-feed-newpage' => 'uusi sivu',
 	'myhome-feed-edit' => 'muokkaa',
@@ -1215,7 +1205,6 @@ Vous pouvez vous servir de votre liste de suivi pour garder une trace des dernie
 	'myhome-hot-spots-feed-empty' => "Vous n'avez pas encore participé à ce wiki.
 Cliquez sur '''[[Special:CreatePage|Nouvelle page]]''' pour commencer à écrire !",
 	'myhome-hot-spots-newest' => 'Nouvelles pages du wiki',
-	'tog-myhomedisableredirect' => 'Désactiver la redirection vers l’activité du wiki',
 	'prefs-myhome' => 'Mon accueil',
 	'myhome-feed-newpage' => 'nouvelle page',
 	'myhome-feed-edit' => 'modifier',
@@ -1300,7 +1289,6 @@ Pode usar a súa lista de vixilancia para seguir as modificacións recentes nas 
 	'myhome-hot-spots-feed' => 'Páxinas máis populares',
 	'myhome-hot-spots-feed-empty' => "Este wiki está agardando a que se involucre. Prema sobre '''[[Special:CreatePage|páxina nova]]''' para comezar a escribir!",
 	'myhome-hot-spots-newest' => 'Novas páxinas do wiki',
-	'tog-myhomedisableredirect' => 'Desactivar a redirección cara á miña actividade no wiki',
 	'prefs-myhome' => 'Inicio',
 	'myhome-feed-newpage' => 'páxina nova',
 	'myhome-feed-edit' => 'editar',
@@ -1395,7 +1383,6 @@ $messages['he'] = array(
 	'myhome-hot-spots-feed-empty' => "אנחנו מחכים שתצטרף אלינו ותהיה מעורב.
 לחץ על '''[[Special:CreatePage|New page]]''' כדי להתחיל לכתוב!",
 	'myhome-hot-spots-newest' => 'דפים חדשים בויקי',
-	'tog-myhomedisableredirect' => 'הפסק את ההפניה האוטומאטית לדף הבית', # Fuzzy
 	'myhome-feed-newpage' => 'דף חדש',
 	'myhome-feed-edit' => 'עריכה',
 	'myhome-feed-move' => 'דף הועבר',
@@ -1475,7 +1462,6 @@ A figyelőlistádat a számodra fontos oldalak változásainak nyomon követés�
 	'myhome-hot-spots-feed-empty' => "Ez a wiki csak rád vár!.
 Kattints '''[[Special:CreatePage|ide]]''' a szerkesztés elkezdéséhez!",
 	'myhome-hot-spots-newest' => 'Új oldalak a wikin',
-	'tog-myhomedisableredirect' => 'A Wiki tevékenység oldalra történő átirányítás kikapcsolása',
 	'prefs-myhome' => 'Kezdőlapom',
 	'myhome-feed-newpage' => 'új lap',
 	'myhome-feed-edit' => 'szerkesztés',
@@ -1559,7 +1545,6 @@ $messages['ia'] = array(
 	'myhome-hot-spots-feed' => 'Paginas popular',
 	'myhome-hot-spots-feed-empty' => "Iste wiki attende tu participation. Clicca super '''[[Special:CreatePage|Nove pagina]]''' pro comenciar a scriber!",
 	'myhome-hot-spots-newest' => 'Nove paginas in le wiki',
-	'tog-myhomedisableredirect' => 'Disactivar mi redirection verso le activitate del wiki',
 	'prefs-myhome' => 'Mi pagina initial',
 	'myhome-feed-newpage' => 'nove pagina',
 	'myhome-feed-edit' => 'modificar',
@@ -1645,7 +1630,6 @@ Anda dapat menggunakan daftar pantauan Anda untuk melacak perubahan terbaru pada
 	'myhome-hot-spots-feed-empty' => "Wiki ini menunggu anda untuk ikut terlibat. 
 Klik '''[[Special:CreatePage|Halaman Baru]]''' untuk mulai menulis!",
 	'myhome-hot-spots-newest' => 'Halaman baru di wiki',
-	'tog-myhomedisableredirect' => 'Nonaktifkan pengarah ke aktivitas wiki.',
 	'prefs-myhome' => 'Rumah saya',
 	'myhome-feed-newpage' => 'halaman baru',
 	'myhome-feed-edit' => 'sunting',
@@ -1736,7 +1720,6 @@ $messages['it'] = array(
 	'myhome-hot-spots-feed' => 'In evidenza',
 	'myhome-hot-spots-feed-empty' => "Questo wiki attende il tuo operato. Clicca su '''[[Special:CreatePage|Nuova pagina]]''' per iniziare a scrivere!",
 	'myhome-hot-spots-newest' => 'Nuove pagine',
-	'tog-myhomedisableredirect' => 'Disabilita il reindirizzamento a My Home',
 	'prefs-myhome' => 'My Home',
 	'myhome-feed-newpage' => 'nuova pagina',
 	'myhome-feed-edit' => 'modifica',
@@ -1818,7 +1801,6 @@ $messages['ja'] = array(
 	'myhome-hot-spots-feed' => 'ホットスポット',
 	'myhome-hot-spots-feed-empty' => "このウィキはあなたの参加者を待っています。'''[[Special:CreatePage|編集に参加]]'''してみませんか？",
 	'myhome-hot-spots-newest' => 'このウィキの新しいページ',
-	'tog-myhomedisableredirect' => 'ウィキアクティビティへのリダイレクトを無効にする。',
 	'prefs-myhome' => 'ウィキアクティビティ',
 	'myhome-feed-newpage' => '新しいページ',
 	'myhome-feed-edit' => '編集',
@@ -1965,7 +1947,6 @@ $messages['mk'] = array(
 	'myhome-hot-spots-feed' => 'Најактивни места',
 	'myhome-hot-spots-feed-empty' => "Ова вики чека на вашето учество. Кликнете на '''[[Special:CreatePage|Нова страница]]''' за да почнете да пишувате!",
 	'myhome-hot-spots-newest' => 'Нови страници на викито',
-	'tog-myhomedisableredirect' => 'Оневозможи го моето пренасочување кон Викиактивност',
 	'prefs-myhome' => 'Моја домашна',
 	'myhome-feed-newpage' => 'нова страница',
 	'myhome-feed-edit' => 'уредување',
@@ -2087,7 +2068,6 @@ Anda boleh menggunakan senarai pantau anda untuk menjejaki perubahan terkini pad
 	'myhome-hot-spots-feed-empty' => "Wiki ini menanti-nanti penglibatan anda.
 Klik '''[[Special:CreatePage|New page]]''' untuk bermula menulis!",
 	'myhome-hot-spots-newest' => 'Laman baru di wiki ini',
-	'tog-myhomedisableredirect' => 'Matikan lencongan saya ke Kegiatan Wiki',
 	'prefs-myhome' => 'My Home',
 	'myhome-feed-newpage' => 'laman baru',
 	'myhome-feed-edit' => 'sunting',
@@ -2205,7 +2185,6 @@ Du kan bruke overvåkningslisten for å holde styr på siste endringer på sider
 	'myhome-hot-spots-feed-empty' => "Denne wikien venter på at du skal bli involvert.
 Klikk på '''[[Special:CreatePage|Ny side]]''' for å begynne å skrive.",
 	'myhome-hot-spots-newest' => 'Nye sider på wikien',
-	'tog-myhomedisableredirect' => 'Deaktiver omdirigering til Wiki-aktivitet',
 	'prefs-myhome' => 'Mitt hjem',
 	'myhome-feed-newpage' => 'ny side',
 	'myhome-feed-edit' => 'redigert',
@@ -2302,7 +2281,6 @@ U kunt uw volglijst gebruiken om de laatste wijzigingen aan pagina\'s waar u bij
 	'myhome-hot-spots-feed-empty' => "Werk nu mee aan deze wiki.
 Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!",
 	'myhome-hot-spots-newest' => "Nieuwe pagina's op de wiki",
-	'tog-myhomedisableredirect' => 'Doorverwijzing naar wikiactiviteit uitschakelen',
 	'prefs-myhome' => 'Mijn startpagina',
 	'myhome-feed-newpage' => 'nieuwe pagina',
 	'myhome-feed-edit' => 'bewerken',
@@ -2505,7 +2483,6 @@ Listy Obserwowanych można użyć, aby śledzić najnowsze zmiany do stron, na k
 	'myhome-hot-spots-feed-empty' => "Zaangażuj się w edytowanie na tej wiki.
 Kliknij na '''[[Special:CreatePage|Utwórz stronę]]''' aby zacząć pisać!",
 	'myhome-hot-spots-newest' => 'Nowe strony na wiki',
-	'tog-myhomedisableredirect' => 'Wyłącz przekierowanie do strony aktywności na wiki',
 	'prefs-myhome' => 'Moja strona domowa',
 	'myhome-feed-newpage' => 'nowa strona',
 	'myhome-feed-edit' => 'edytuj',
@@ -2590,7 +2567,6 @@ $messages['pms'] = array(
 	'myhome-hot-spots-feed' => 'Ròba Càuda',
 	'myhome-hot-spots-feed-empty' => "Sta wiki-sì a speta che chiel a ancamin-a. Ch'a sgnaca dzora a '''[[Special:CreatePage|Pàgina neuva]]''' për ancaminé a scrive!",
 	'myhome-hot-spots-newest' => 'Pàgine neuve an sla wiki',
-	'tog-myhomedisableredirect' => "Disabilité mia ridiression vers l'Atività dla Wiki",
 	'prefs-myhome' => 'Mia Intrada',
 	'myhome-feed-newpage' => 'pàgina neuva',
 	'myhome-feed-edit' => 'modifiché',
@@ -2736,7 +2712,6 @@ Use a lista de páginas vigiadas para monitorizar alterações das páginas que 
 	'myhome-hot-spots-feed-empty' => "Esta wiki está a aguardar a sua participação.
 Clique '''[[Special:CreatePage|Página nova]]''' para começar a escrever!",
 	'myhome-hot-spots-newest' => 'Páginas novas na wiki',
-	'tog-myhomedisableredirect' => 'Desativar o meu redirecionamento para a Atividade na Wikia',
 	'prefs-myhome' => 'A Minha Casa',
 	'myhome-feed-newpage' => 'página nova',
 	'myhome-feed-edit' => 'editar',
@@ -2825,7 +2800,6 @@ Use a lista de páginas vigiadas para monitorar alterações das páginas pelas 
 	'myhome-hot-spots-feed' => 'Mais populares',
 	'myhome-hot-spots-feed-empty' => "Esta wiki está esperando a sua participação. Clique em '''[[Special:CreatePage|nova página]]''' para começar a escrever.",
 	'myhome-hot-spots-newest' => 'Páginas novas na wiki',
-	'tog-myhomedisableredirect' => 'Desativar redirecionamento para Minha Página Inicial',
 	'prefs-myhome' => 'Minha página inicial',
 	'myhome-feed-newpage' => 'nova página',
 	'myhome-feed-edit' => 'editar',
@@ -2947,7 +2921,6 @@ $messages['ru'] = array(
 	'myhome-hot-spots-feed' => '«Горячие точки»',
 	'myhome-hot-spots-feed-empty' => "Эта вики ждёт от вас участия! Нажмите на ссылку '''[[Special:CreatePage|Новая страница]]''' и начните писать!",
 	'myhome-hot-spots-newest' => 'Новые страницы на вики',
-	'tog-myhomedisableredirect' => 'Отключить перенаправление на страницу Вики-деятельности',
 	'prefs-myhome' => 'Личный кабинет',
 	'myhome-feed-newpage' => 'новая страница',
 	'myhome-feed-edit' => 'правка',
@@ -3033,7 +3006,6 @@ $messages['si'] = array(
 	'myhome-watchlist-feed' => 'මුර-ලැයිස්තුව',
 	'myhome-user-contributions-feed' => 'දායකත්‍වයන්',
 	'myhome-hot-spots-newest' => 'විකියේ නව පිටු',
-	'tog-myhomedisableredirect' => 'විකී සක්‍රීයතා (Wiki Activity) වෙත මගේ යලියොමු අක්‍රීය කරන්න',
 	'myhome-feed-newpage' => 'නව පිටුව',
 	'myhome-feed-edit' => 'සංස්කරණය කරන්න',
 	'myhome-feed-move' => 'පිටුව ගෙනයන ලදී.',
@@ -3158,7 +3130,6 @@ Du kan använda din bevakningslista för att hålla koll på de senaste ändring
 	'myhome-hot-spots-feed' => 'Hotspot',
 	'myhome-hot-spots-feed-empty' => "Denna wiki väntar på dig att engagera. Klicka på '''[[Special:CreatePage|Ny sida]]''' för att börja skriva!",
 	'myhome-hot-spots-newest' => 'Nya sidor på wikin',
-	'tog-myhomedisableredirect' => 'Inaktivera mina omdirigeringar till Wiki-aktivitet',
 	'prefs-myhome' => 'Mitt hem',
 	'myhome-feed-newpage' => 'ny sida',
 	'myhome-feed-edit' => 'redigering',
@@ -3298,7 +3269,6 @@ Magagamit mo ang talaan ng binabantayan upang masubaybayan ang pinakabagong mga 
 	'myhome-hot-spots-feed-empty' => "Naghihintay ang wiking ito sa iyong pakikilahok.
 Pindutin ang '''[[Special:CreatePage|Bagong pahina]]''' upang magsimulang magsulat!",
 	'myhome-hot-spots-newest' => 'Bagong mga pahina sa wiki',
-	'tog-myhomedisableredirect' => 'Huwag paganahin ang pagpapalit ng pupuntahang patungo sa Gawain ng Wiki',
 	'prefs-myhome' => 'Tahanan Ko',
 	'myhome-feed-newpage' => 'bagong pahina',
 	'myhome-feed-edit' => 'baguhin',
@@ -3390,7 +3360,6 @@ $messages['tr'] = array(
 	'myhome-activity-feed' => 'Etkinlik beslemesi',
 	'myhome-watchlist-feed' => 'İzleme listesi',
 	'myhome-user-contributions-feed' => 'Katkılar',
-	'tog-myhomedisableredirect' => 'Evime yönlendirmemi devre dışı bırak', # Fuzzy
 	'myhome-feed-newpage' => 'yeni sayfa',
 	'myhome-feed-edit' => 'değiştir',
 	'myhome-feed-move' => 'sayfa taşındı',
@@ -3447,7 +3416,6 @@ $messages['tt-cyrl'] = array(
 	'myhome-hot-spots-feed' => '"Кайнар нокталар"',
 	'myhome-hot-spots-feed-empty' => "Бу вики сездән катнашуны көтә! '''[[Special:CreatePage|Яңа мәкалә]]''' сылтамасына басыгыз һәм язарга тотыныгыз!",
 	'myhome-hot-spots-newest' => 'Викидагы яңа битләр',
-	'tog-myhomedisableredirect' => 'Вики-эшчәнлек сәхифәсенә күчерүне сүндерү',
 	'prefs-myhome' => 'Шәхси кабинет',
 	'myhome-feed-newpage' => 'яңа бит',
 	'myhome-feed-edit' => 'үзгәртү',
@@ -3521,16 +3489,25 @@ $messages['tzm'] = array(
 
 /** Ukrainian (українська)
  * @author Prima klasy4na
+ * @author Wildream
  * @author Тест
  */
 $messages['uk'] = array(
+	'myhome-desc' => 'Особиста домашня сторінка для користувачів, що увійшли в систему',
 	'myhome' => 'Моя домашня сторінка',
 	'wikiactivity' => 'Вікі-діяльність',
+	'myhome-activity-more' => 'переглянути більше останніх змін',
 	'myhome-activity-feed' => 'Останні зміни',
+	'myhome-activity-feed-empty' => "Ця вікі чекає вашого внеску!
+Натисніть на кнопку '''[[Special:CreatePage|Нова сторінка]]''', щоб почати редагування!",
 	'myhome-watchlist-feed' => 'Список спостереження',
+	'myhome-watchlist-feed-empty' => 'Ви можете додавати сторінки до вашого списку спостереження, натиснувши на посилання "{{int:watch}}" на панелі у верхній частині сторінки.
+За допомогою вашого списку спостереження ви можете стежити за останніми змінами на сторінках, про які ви дбаєте.',
 	'myhome-user-contributions-feed' => 'Внесок',
+	'myhome-hot-spots-feed' => '"Гарячі точки"',
+	'myhome-hot-spots-feed-empty' => "Ця вікі чекає вашого внеску!
+Натисніть на кнопку '''[[Special:CreatePage|Нова сторінка]]''', щоб почати редагування!",
 	'myhome-hot-spots-newest' => 'Нові сторінки у вікі',
-	'tog-myhomedisableredirect' => 'Вимкнути перенаправлення мене на сторінку вікі-активності',
 	'prefs-myhome' => 'Моя домашня сторінка',
 	'myhome-feed-newpage' => 'нова сторінка',
 	'myhome-feed-edit' => 'редагування',
@@ -3584,7 +3561,6 @@ Bạn có thể sử dụng danh sách theo dõi để theo dõi các thay đổ
 	'myhome-hot-spots-feed-empty' => "Wiki này đang chờ bạn tham gia.
 Nhấp vào '''[[Special:CreatePage|Tạo trang]]''' để bắt đầu viết!",
 	'myhome-hot-spots-newest' => 'Trang mới trên wiki này',
-	'tog-myhomedisableredirect' => 'Vô hiệu hoá chuyển hướng đến Hoạt động của Wiki',
 	'myhome-feed-newpage' => 'Trang mới',
 	'myhome-feed-edit' => 'sửa đổi',
 	'myhome-feed-move' => 'trang di chuyển',
@@ -3654,7 +3630,6 @@ $messages['zh-hans'] = array(
 	'myhome-hot-spots-feed-empty' => "维基在等待您的参与。
 点击'''[[Special:CreatePage|新页面]]'''开始撰写！",
 	'myhome-hot-spots-newest' => '维基上的新页面',
-	'tog-myhomedisableredirect' => '禁用重定向到维基活动',
 	'prefs-myhome' => '我的主页',
 	'myhome-feed-newpage' => '新页面',
 	'myhome-feed-edit' => '编辑',
@@ -3738,7 +3713,6 @@ $messages['zh-hant'] = array(
 	'myhome-hot-spots-feed-empty' => "本wiki在等待您的參與。
 點擊'''[[Special:CreatePage|新頁面]]'''開始撰寫！",
 	'myhome-hot-spots-newest' => 'Wiki 上的新頁面',
-	'tog-myhomedisableredirect' => '禁用重定向到 Wiki 動作',
 	'prefs-myhome' => '我的首頁',
 	'myhome-feed-newpage' => '新頁面',
 	'myhome-feed-edit' => '編輯',

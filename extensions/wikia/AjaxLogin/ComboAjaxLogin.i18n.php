@@ -104,6 +104,13 @@ $messages['bg'] = array(
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Връщане',
 );
 
+/** Tibetan (བོད་ཡིག)
+ * @author YeshiTuhden
+ */
+$messages['bo'] = array(
+	'comboajaxlogin-createlog' => 'ནང་འཛུལ་འམ་འཐོ་བཀོད།',
+);
+
 /** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
@@ -549,9 +556,10 @@ $messages['ja'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 아라
  */
 $messages['ko'] = array(
-	'comboajaxlogin-createlog' => '로그인 혹은 회원가입',
+	'comboajaxlogin-createlog' => '로그인하거나 계정 만들기',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -856,6 +864,7 @@ Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
 	'comboajaxlogin-desc' => 'Caixa dinâmica que permite a autenticação e registo de usuários e relembrar a senha',
@@ -886,6 +895,7 @@ Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 <p>Para mais informações, verifique o <a href="http://twitter.com/wikia">Twitter</a> ou o <a href="http://facebook.com/wikia">Facebook</a>, por favor.
 <br />
 (Se já tem uma conta, pode <a href="#">autenticar-se</a> normalmente, mas não poderá editar.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia não responde. Por favor, cheque sua conexão.',
 );
 
 /** Romanian (română)

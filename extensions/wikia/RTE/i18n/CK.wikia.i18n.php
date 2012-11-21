@@ -805,6 +805,7 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'rte-ck-bucket-controls' => 'Qontroli',
+	'rte-ck-errorPopupTitle' => 'Xırab',
 	'rte-ck-hoverPreview-comment-title' => 'Vatış',
 	'rte-ck-hoverPreview-delete' => 'besterne',
 	'rte-ck-hoverPreview-edit' => 'bıvurne',

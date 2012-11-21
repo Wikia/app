@@ -353,6 +353,16 @@ $messages['qqq'] = array(
 	'usersignup-confirmation-reminder-email_body-HTML' => 'Stand-alone HTML version of confirmation email that is sent 7 days after user has started the signup process without confirming.  $1 is username, $2 is confirmation url.',
 );
 
+/** تورکجه (تورکجه)
+ * @author Arjanizary
+ */
+$messages['azb'] = array(
+	'usersignup-reconfirmation-email-greeting' => 'سلام $USERNAME,',
+	'usersignup-welcome-email-greeting' => 'سلام $USERNAME,',
+	'usersignup-marketing-global-heading' => 'یارات',
+	'usersignup-confirmation-reminder-email-greeting' => 'سلام $USERNAME,',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -666,7 +676,10 @@ Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}
  */
 $messages['diq'] = array(
 	'usersignup-page-title' => 'Dekew Wikia',
+	'usersignup-confirm-page-title' => 'Epostay xo araşt kerê',
+	'usersignup-confirm-email-new-email-label' => 'Epostaya newi',
 	'usersignup-confirm-email-update' => 'Noroc resn',
+	'usersignup-confirm-page-heading-confirmed-user' => 'Tebrik keme!',
 	'usersignup-confirmation-email-greeting' => 'Merheba $USERNAME,',
 	'usersignup-confirmation-email-signature' => 'Taxıma Wikia',
 	'usersignup-reconfirmation-email-greeting' => 'Merheba $USERNAME,',
@@ -674,9 +687,12 @@ $messages['diq'] = array(
 	'usersignup-welcome-email-greeting' => 'Merheba $USERNAME,',
 	'usersignup-welcome-email-edit-profile-heading' => 'Profilê xo bıvurne',
 	'usersignup-welcome-email-edit-profile-button' => 'Şo ri profil',
+	'usersignup-welcome-email-explore-wiki-button' => 'Şo wikia.com',
 	'usersignup-welcome-email-signature' => 'Taxıma Wikia',
 	'usersignup-heading' => 'Noroc dekewe Wikia',
+	'usersignup-marketing-community-heading' => 'Piyakarkerdış',
 	'usersignup-marketing-global-heading' => 'Vıraze',
+	'usersignup-marketing-creativity-heading' => 'Oricinal be',
 	'usersignup-account-creation-email-greeting' => 'Merheba,',
 	'usersignup-account-creation-email-signature' => 'Taxıma Wikia',
 	'usersignup-confirmation-reminder-email-greeting' => 'Merheba $USERNAME,',
@@ -3542,6 +3558,13 @@ ___________________________________________
 Upang makita ang pinaka huling mga kaganapan sa Wikia, dalawin ang http://community.wikia.com
 Nais mo bang tabanan ang kung anong mga e-liham ang matatanggap mo? Magpunta sa: {{fullurl:{{ns:special}}:Preferences}}",
 	'usersignup-facebook-problem' => 'Nagkaroon ng isang suliranin sa pakikipag-ugnayan sa Facebook. Paki subukan ulit mamaya.',
+);
+
+/** Turkish (Türkçe)
+ * @author Erdemaslancan
+ */
+$messages['tr'] = array(
+	'usersignup-marketing-creativity-heading' => 'Orijinal olmak',
 );
 
 /** Ukrainian (українська)

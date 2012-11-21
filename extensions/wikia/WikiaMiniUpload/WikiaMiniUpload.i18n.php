@@ -287,6 +287,13 @@ $messages['az'] = array(
 	'wmu-gallery' => 'Qalereya',
 );
 
+/** تورکجه (تورکجه)
+ * @author Erdemaslancan
+ */
+$messages['azb'] = array(
+	'wmu-licensing' => 'لیسانس',
+);
+
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by

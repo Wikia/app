@@ -379,10 +379,11 @@ Será permitida a execução do resto da página apenas para que possa verificar
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
 	'batchuserrights' => 'Direitos de usuários em lote',
-	'batchuserrights-desc' => 'Permite adicionar um ou mais usuários a um grupo de uma só vez', # Fuzzy
+	'batchuserrights-desc' => 'Permite adicionar um ou mais usuários a um grupo de uma só vez',
 	'batchuserrights-names' => 'Nomes de usuários a adicionar a este grupo (um por linha):',
 	'batchuserrights-intro' => 'Esta página permite atribuir um grupo a vários usuários ao mesmo tempo. 
 Por razões de segurança, a lista dos grupos assim atribuíveis é definida na configuração da extensão e não pode ser alterada dentro da wiki.

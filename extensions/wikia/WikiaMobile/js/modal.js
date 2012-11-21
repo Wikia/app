@@ -89,11 +89,6 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 			cap = options.caption,
 			classes = options.classes || '';
 
-		stopHiding = options.stopHiding || false;
-
-		onClose = options.onClose;
-		scrollable = options.scrollable;
-
 		if(!opened){
 			position = w.scrollY;
 
@@ -132,7 +127,19 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 
 			//handle hiding ui of modal on click
 			content.addEventListener('click', onContentClick);
+		} else {
+			//this means this is opening a modal from a modal
+			//lets fire an onClose callback
+			if(typeof onClose === 'function'){
+				onClose();
+			}
+			//and on open as well if needed
+			if(typeof options.onOpen === 'function') {options.onOpen(content);}
 		}
+
+		stopHiding = options.stopHiding;
+		scrollable = options.scrollable;
+		onClose = options.onClose;
 
 		//move topbar along with scroll manually for browsers with no support for position fixed
 		scrollable && !positionfixed && w.addEventListener('scroll', fixTopBar);
