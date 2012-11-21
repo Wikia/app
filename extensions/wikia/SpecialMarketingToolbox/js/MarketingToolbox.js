@@ -5,8 +5,11 @@ MarketingToolbox.prototype = {
 	isCalendarReady: false,
 	models: {},
 	vertical: undefined,
+	langId: undefined,
 	verticalInputs: undefined,
+	datepickerContainer: undefined,
 	init: function() {
+		this.datepickerContainer =  $("#date-picker");
 		this.verticalInputs = $('.vertical input');
 		this.initModels();
 
@@ -23,18 +26,22 @@ MarketingToolbox.prototype = {
 		this.interactionsHandler();
 	},
 	initModels: function() {
-		this.verticalInputs.each(
-			$.proxy(
-				function(i, elem){
-					var verticalName = $(elem).val();
-					this.models[verticalName] = new DatepickerModel(verticalName);
-				},
-				this
-			)
-		);
+		$('#marketingToolboxRegionSelect option').each($.proxy(function(i, opt){
+			var langId = $(opt).val();
+			this.models[langId] = {};
+			this.verticalInputs.each(
+				$.proxy(
+					function(i, elem){
+						var verticalName = $(elem).val();
+						this.models[langId][verticalName] = new DatepickerModel(langId, verticalName);
+					},
+					this
+				)
+			);
+		}, this));
 	},
 	getModel: function() {
-		return this.models[this.vertical];
+		return this.models[this.langId][this.vertical];
 	},
 	datePickerBeforeShowDay: function(date) {
 		var tdClassName = '';
@@ -53,20 +60,22 @@ MarketingToolbox.prototype = {
 		return [true, tdClassName, tooltip];
 	},
 	interactionsHandler: function() {
-		$('#marketingToolboxRegionSelect').change(function() {
+		$('#marketingToolboxRegionSelect').change($.proxy(function(e) {
+			this.langId = $(e.target).val();
 			$('.marketingToolbox input').removeAttr('disabled');
 			$('.section input').removeClass('secondary');
+			$('.vertical input').addClass('secondary');
 			$('.placeholder-option').remove();
-		});
+			this.destroyDatepicker();
+		}, this));
 
 		this.verticalInputs.click($.proxy(function(e) {
 			var target = $(e.target);
-			var datepickerContainer = $("#date-picker");
 			this.vertical = target.val();
 			this.verticalInputs.addClass('secondary');
 			target.removeClass('secondary');
 
-			datepickerContainer.datepicker('destroy');
+			this.destroyDatepicker();
 
 			$.when(
 				$.proxy(function(){
@@ -75,7 +84,7 @@ MarketingToolbox.prototype = {
 				}, this)()
 			).done($.proxy(function() {
 				if (this.isCalendarReady) {
-					datepickerContainer.text('').datepicker({
+					this.datepickerContainer.text('').datepicker({
 						showOtherMonths: true,
 						selectOtherMonths: true,
 						beforeShowDay: $.proxy(this.datePickerBeforeShowDay, this),
@@ -87,6 +96,9 @@ MarketingToolbox.prototype = {
 			}, this));
 
 		}, this));
+	},
+	destroyDatepicker: function() {
+		this.datepickerContainer.datepicker('destroy').text($.msg('marketing-toolbox-tooltip-calendar-placeholder'));
 	}
 };
 

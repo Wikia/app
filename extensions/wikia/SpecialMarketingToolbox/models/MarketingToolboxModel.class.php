@@ -30,11 +30,11 @@ class MarketingToolboxModel {
 		);
 	}
 
-	public function getData($vertical, $beginTimestamp, $endTimestamp) {
-		return $this->getMockData($vertical, $beginTimestamp, $endTimestamp);
+	public function getData($langId, $vertical, $beginTimestamp, $endTimestamp) {
+		return $this->getMockData($langId, $vertical, $beginTimestamp, $endTimestamp);
 	}
 
-	protected function getMockData($vertical, $beginTimestamp, $endTimestamp) {
+	protected function getMockData($langId, $vertical, $beginTimestamp, $endTimestamp) {
 		return array(
 			date('Y-m-d', $beginTimestamp - 13 * 24 * 60 * 60) => $this->statuses['DAY_EDITED_NOT_PUBLISHED'],
 			date('Y-m-d', $beginTimestamp - 11 * 24 * 60 * 60) => $this->statuses['DAY_EDITED_NOT_PUBLISHED'],
