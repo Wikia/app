@@ -128,7 +128,7 @@ class WikiaComWikisListImport {
 				} else {
 					$this->wikisNotAdded[] = $wikiDomain.' ('.$wikiId.') ';
 				}
-			} else {
+			}
 		}
 
 		$title = Title::newFromText($this->options->mediaWikiMessage, NS_MEDIAWIKI);
