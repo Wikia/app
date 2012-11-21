@@ -27,6 +27,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
 
 		$this->wf->ProfileOut(__METHOD__);
 		return true;
@@ -44,14 +45,16 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @param $timestamp (of start date)
+	 * Get calendar for actual and following 2 months
+	 *
+	 * @param $timestamp (actual timestamp)
 	 * @return array
 	 */
-	public function getCalendarData($timestamp = null) {
-		if(empty($timestamp)) {
-			$timestamp = time();
-		}
-		$this->calendarData = $this->toolboxModel->getData($timestamp);
+	public function getCalendarData() {
+		$vertical = $this->getVal('vertical');
+		$beginTimestamp = $this->getVal('beginTimestamp', time());
+		$endTimestamp = $this->getVal('endTimestamp', time());
+		$this->calendarData = $this->toolboxModel->getData($vertical, $beginTimestamp, $endTimestamp);
 	}
 
 	/**

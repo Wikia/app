@@ -30,22 +30,22 @@ class MarketingToolboxModel {
 		);
 	}
 
-	public function getData($timestamp) {
-		return $this->getMockData($timestamp);
+	public function getData($vertical, $beginTimestamp, $endTimestamp) {
+		return $this->getMockData($vertical, $beginTimestamp, $endTimestamp);
 	}
 
-	protected function getMockData($timestamp) {
+	protected function getMockData($vertical, $beginTimestamp, $endTimestamp) {
 		return array(
-			date('Y-m-d', $timestamp - 13 * 24 * 60 * 60) => $this->statuses['DAY_EDITED_NOT_PUBLISHED'],
-			date('Y-m-d', $timestamp - 11 * 24 * 60 * 60) => $this->statuses['DAY_EDITED_NOT_PUBLISHED'],
-			date('Y-m-d', $timestamp - 7 * 24 * 60 * 60) => $this->statuses['DAY_PUBLISHED'],
-			date('Y-m-d', $timestamp - 4 * 24 * 60 * 60) => $this->statuses['DAY_EDITED_NOT_PUBLISHED'],
-			date('Y-m-d', $timestamp + 4 * 24 * 60 * 60) => $this->statuses['DAY_EDITED_NOT_PUBLISHED'],
-			date('Y-m-d', $timestamp + 7 * 24 * 60 * 60) => $this->statuses['DAY_PUBLISHED'],
-			date('Y-m-d', $timestamp + 11 * 24 * 60 * 60) => $this->statuses['DAY_PUBLISHED'],
-			date('Y-m-d', $timestamp + 13 * 24 * 60 * 60) => $this->statuses['DAY_PUBLISHED'],
-			date('Y-m-d', $timestamp + 19 * 24 * 60 * 60) => $this->statuses['DAY_EDITED_NOT_PUBLISHED'],
-			date('Y-m-d', $timestamp + 23 * 24 * 60 * 60) => $this->statuses['DAY_PUBLISHED']
+			date('Y-m-d', $beginTimestamp - 13 * 24 * 60 * 60) => $this->statuses['DAY_EDITED_NOT_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp - 11 * 24 * 60 * 60) => $this->statuses['DAY_EDITED_NOT_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp - 7 * 24 * 60 * 60) => $this->statuses['DAY_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp - 4 * 24 * 60 * 60) => $this->statuses['DAY_EDITED_NOT_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp + 4 * 24 * 60 * 60) => $this->statuses['DAY_EDITED_NOT_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp + 7 * 24 * 60 * 60) => $this->statuses['DAY_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp + 11 * 24 * 60 * 60) => $this->statuses['DAY_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp + 13 * 24 * 60 * 60) => $this->statuses['DAY_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp + 19 * 24 * 60 * 60) => $this->statuses['DAY_EDITED_NOT_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp + 23 * 24 * 60 * 60) => $this->statuses['DAY_PUBLISHED']
 		);
 	}
 
