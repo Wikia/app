@@ -75,6 +75,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		$page = F::build( 'Article', array( $pageId ), 'newFromID' );
 	
 		if(! ( $page instanceof Article ) ) {
+			//@codeCoverageIgnore
 			throw new WikiaException('Invalid Article ID');
 		}
 	
@@ -114,8 +115,9 @@ class WikiaSearchIndexer extends WikiaObject {
 		$vidFields	= array();	
 		
 		if ( $namespace == NS_FILE && ($file = $this->wf->findFile( $this->wg->Title->getText() )) ) {
-			$detail		= WikiaFileHelper::getMediaDetail( $this->wg->Title );
-			$isVideo	= WikiaFileHelper::isVideoFile( $file );
+			$fileHelper	= F::build( 'WikiaFileHelper' );
+			$detail		= $fileHelper->getMediaDetail( $this->wg->Title );
+			$isVideo	= $fileHelper->isVideoFile( $file );
 			$isImage	= ($detail['mediaType'] == 'image') && !$isVideo;
 			$metadata	= $file->getMetadata();
 	
@@ -164,7 +166,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		$title = $page->getTitle()->getText();
 	
 		if ( in_array( $namespace, array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
-			$wm = WallMessage::newFromId($page->getId());
+			$wm = F::build( 'WallMessage', array( $page->getId() ), 'newFromId' );
 			$wm->load();
 			if ($wm->isMain()) {
 				$title = $wm->getMetaTitle();

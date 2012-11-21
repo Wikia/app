@@ -905,4 +905,411 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		
 		$mockIndexer->getPage( 123 );
 	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::getPage
+	 */
+	public function testGetPageVideo() {
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getPageMetaData' ) )
+								->getMock();
+		
+		$mockArticle	=	$this->getMockBuilder( 'Article' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'isRedirect', 'getRedirectTarget', 'loadContent', 'render', 'getId', 'getTitle' ) )
+								->getMock();
+		
+		$mockApp		=	$this->getMockBuilder( 'WikiaApp' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'registerHook' ) )
+								->getMock();
+		
+		$mockTitle		=	$this->getMockBuilder( 'Title' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getPrefixedText', 'getNamespace', 'getText', 'getFullUrl', 'getTitle' ) )
+								->getMock();
+		
+		$mockRequest	=	$this->getMockBuilder( 'RequestContext' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'setVal' ) )
+								->getMock();
+		
+		$mockOutput		=	$this->getMockBuilder( 'OutputPage' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getHTML', 'clearHTML' ) )
+								->getMock();
+		
+		$mockContLang	=	$this->getMockBuilder( 'Language' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockFile		=	$this->getMockBuilder( 'File' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getMetadata', 'getMediaDetail', 'isVideo' ) )
+								->getMock();
+		
+		$mockWfs		=	$this->getMock( 'stdClass', array( 'findFile' ) );
+		
+		$mockFileHelper	=	$this->getMock( 'WikiaFileHelper', array( 'getMediaDetail', 'isVideoFile' ) );
+		
+		$reflectionApp = new ReflectionProperty( 'WikiaSearchIndexer', 'app' );
+		$reflectionApp->setAccessible( true );
+		$reflectionApp->setValue( $mockIndexer, $mockApp );
+		
+		$mockGlobals = array( 
+				'Title'				=>	$mockTitle, 
+				'Request'			=>	$mockRequest, 
+				'Out'				=>	$mockOutput, 
+				'ExternalSharedDB'	=>	true, 
+				'CityId'			=>	123, 
+				'Server'			=>	'http://foo.wikia.com', 
+				'ContLang'			=>	(object) array( 'mCode' => 'en' ),
+				'ContentNamespaces'	=>	array( NS_MAIN, NS_CATEGORY ) 
+				);
+		
+		$mockWfs
+			->expects	( $this->any() )
+			->method	( 'findFile' )
+			->will		( $this->returnValue( $mockFile ) )
+		;
+		
+		$reflectionWg = new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
+		$reflectionWg->setAccessible( true );
+		$reflectionWg->setValue( $mockIndexer, (object) $mockGlobals );
+		
+		$reflectionWf = new ReflectionProperty( 'WikiaSearchIndexer', 'wf' );
+		$reflectionWf->setAccessible( true );
+		$reflectionWf->setValue( $mockIndexer, (object) $mockWfs );
+		
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockIndexer
+			->expects	( $this->any() )
+			->method	( 'getPageMetaData' )
+			->will		( $this->returnValue( array() ) )
+		;
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'isRedirect' )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getRedirectTarget' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+			->expects	( $this->any() )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_FILE ) )
+		;
+		$mockFileHelper
+			->staticExpects	( $this->once() )
+			->method		( 'getMediaDetail' )
+			->with			( $mockTitle )
+			->will			( $this->returnValue( array( 'mediaType' => 'video' ) ) )
+		;
+		$mockFileHelper
+			->staticExpects	( $this->once() )
+			->method		( 'isVideoFile' )
+			->with			( $mockFile )
+			->will			( $this->returnValue( 'true' ) )
+		;
+		
+		$videoMetadata = array(
+				'description'			=>	'Video of Usher Raymond kickin it',
+				'keywords'				=>	'R&B, awesome, amazing',
+				'movieTitleAndYear'		=>	'The Usher Movie (1999)',
+				'videoTitle'			=>	'Usher kickin it (usher movie)',
+				'title'					=>	'Usher kickin it',
+				'tags'					=>	'R&B, usher',
+				'category'				=>	'Entertainment',
+				'duration'				=>	110,
+				'provider'				=>	'FictionalClips',
+				'videoId'				=>	sha1('woot'),
+				'altVideoId'			=>	1234,
+				'aspectRatio'			=>	4/3,
+				'hd'					=>	1,
+				'genres'				=>	'R&B, Soul, Great music, 90s',
+				'actors'				=>	'Usher Raymond, Lil Jon, Justin Bieber'
+				);
+		
+		$mockFile
+			->expects	( $this->once() )
+			->method	( 'getMetadata' )
+			->will		( $this->returnValue( serialize( $videoMetadata ) ) )
+		;
+		
+		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
+		$this->mockClass( 'Article', $mockArticle );
+		$this->mockApp();
+		
+		$page = $mockIndexer->getPage( 123 );
+		
+		$this->assertEquals(
+				'true',
+				$page['video_hd_b'],
+				'An HD video should have a boolean HD field set to string "true" for indexing'
+		);
+		$this->assertEquals(
+				array( 'R&B', 'Soul', 'Great music', '90s' ),
+				$page['video_genres_txt'],
+				'A video with genres should be transformed into an array for a multivalued text field'
+		);
+		$this->assertEquals(
+				array( 'Usher Raymond', 'Lil Jon', 'Justin Bieber' ),
+				$page['video_actors_txt'],
+				'A video with actors should be transformed into an array for a multivalued text field'
+		);
+		$this->assertEquals(
+				110,
+				$page['video_duration_i'],
+				'Video fields that match values in the video metadata mapper array should be transformed into their appropriate document field'
+		);
+		foreach ( array( 'description', 'keywords', 'movieTitleAndYear', 'videoTitle', 'tags', 'title', 'category' ) as $dumpedField ) {
+			$this->assertContains(
+					$videoMetadata[$dumpedField],
+					$page['html'],
+					"The field {$dumpedField} should be dumped into the content body and treated as 'HTML' by the document response"
+			);
+		}
+	}
+	
+
+	/**
+	 * @covers WikiaSearchIndexer::getPage
+	 */
+	public function testGetPageCommentMain() {
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getPageMetaData' ) )
+								->getMock();
+		
+		$mockArticle	=	$this->getMockBuilder( 'Article' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'isRedirect', 'getRedirectTarget', 'loadContent', 'render', 'getId', 'getTitle' ) )
+								->getMock();
+		
+		$mockApp		=	$this->getMockBuilder( 'WikiaApp' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'registerHook' ) )
+								->getMock();
+		
+		$mockTitle		=	$this->getMockBuilder( 'Title' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getPrefixedText', 'getNamespace', 'getText', 'getFullUrl', 'getTitle' ) )
+								->getMock();
+		
+		$mockRequest	=	$this->getMockBuilder( 'RequestContext' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'setVal' ) )
+								->getMock();
+		
+		$mockOutput		=	$this->getMockBuilder( 'OutputPage' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getHTML', 'clearHTML' ) )
+								->getMock();
+		
+		$mockContLang	=	$this->getMockBuilder( 'Language' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockWallMsg	=	$this->getMockBuilder( 'WallMessage' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'load', 'isMain', 'getMetaTitle', 'getTopParentObj' ) )
+								->getMock();
+		
+		$reflectionApp = new ReflectionProperty( 'WikiaSearchIndexer', 'app' );
+		$reflectionApp->setAccessible( true );
+		$reflectionApp->setValue( $mockIndexer, $mockApp );
+		
+		$mockGlobals = array( 
+				'Title'				=>	$mockTitle, 
+				'Request'			=>	$mockRequest, 
+				'Out'				=>	$mockOutput, 
+				'ExternalSharedDB'	=>	true, 
+				'CityId'			=>	123, 
+				'Server'			=>	'http://foo.wikia.com', 
+				'ContLang'			=>	(object) array( 'mCode' => 'en' ),
+				'ContentNamespaces'	=>	array( NS_MAIN, NS_CATEGORY ) 
+				);
+		
+		$reflectionWg = new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
+		$reflectionWg->setAccessible( true );
+		$reflectionWg->setValue( $mockIndexer, (object) $mockGlobals );
+		
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockIndexer
+			->expects	( $this->any() )
+			->method	( 'getPageMetaData' )
+			->will		( $this->returnValue( array() ) )
+		;
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'isRedirect' )
+			->will		( $this->returnValue( true ) )
+		;
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getRedirectTarget' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+			->expects	( $this->any() )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_WIKIA_FORUM_BOARD_THREAD ) )
+		;
+		$commentTitle = "my comment title";
+		$mockWallMsg
+			->expects	( $this->any() )
+			->method	( 'getMetaTitle' )
+			->will		( $this->returnValue( $commentTitle ) )
+		;
+		$mockWallMsg
+			->expects	( $this->any() )
+			->method	( 'isMain' )
+			->will		( $this->returnValue( true ) )
+		;
+		
+		
+		$this->mockClass( 'Article', $mockArticle );
+		$this->mockClass( 'WallMessage', $mockWallMsg );
+		$this->mockApp();
+		
+		$page = $mockIndexer->getPage( 123 );
+		
+		$this->assertEquals(
+				$commentTitle,
+				$page['title'],
+				"WikiaSearchIndexer::getPage should index the main comment title as the title, not the main comment's page title"
+		);
+	}
+	
+
+	/**
+	 * @covers WikiaSearchIndexer::getPage
+	 */
+	public function testGetPageCommentNotMain() {
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getPageMetaData' ) )
+								->getMock();
+		
+		$mockArticle	=	$this->getMockBuilder( 'Article' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'isRedirect', 'getRedirectTarget', 'loadContent', 'render', 'getId', 'getTitle' ) )
+								->getMock();
+		
+		$mockApp		=	$this->getMockBuilder( 'WikiaApp' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'registerHook' ) )
+								->getMock();
+		
+		$mockTitle		=	$this->getMockBuilder( 'Title' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getPrefixedText', 'getNamespace', 'getText', 'getFullUrl', 'getTitle' ) )
+								->getMock();
+		
+		$mockRequest	=	$this->getMockBuilder( 'RequestContext' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'setVal' ) )
+								->getMock();
+		
+		$mockOutput		=	$this->getMockBuilder( 'OutputPage' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getHTML', 'clearHTML' ) )
+								->getMock();
+		
+		$mockContLang	=	$this->getMockBuilder( 'Language' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockWallMsg	=	$this->getMockBuilder( 'WallMessage' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'load', 'isMain', 'getMetaTitle', 'getTopParentObj' ) )
+								->getMock();
+		
+		$reflectionApp = new ReflectionProperty( 'WikiaSearchIndexer', 'app' );
+		$reflectionApp->setAccessible( true );
+		$reflectionApp->setValue( $mockIndexer, $mockApp );
+		
+		$mockGlobals = array( 
+				'Title'				=>	$mockTitle, 
+				'Request'			=>	$mockRequest, 
+				'Out'				=>	$mockOutput, 
+				'ExternalSharedDB'	=>	true, 
+				'CityId'			=>	123, 
+				'Server'			=>	'http://foo.wikia.com', 
+				'ContLang'			=>	(object) array( 'mCode' => 'en' ),
+				'ContentNamespaces'	=>	array( NS_MAIN, NS_CATEGORY ) 
+				);
+		
+		$reflectionWg = new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
+		$reflectionWg->setAccessible( true );
+		$reflectionWg->setValue( $mockIndexer, (object) $mockGlobals );
+		
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockIndexer
+			->expects	( $this->any() )
+			->method	( 'getPageMetaData' )
+			->will		( $this->returnValue( array() ) )
+		;
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'isRedirect' )
+			->will		( $this->returnValue( true ) )
+		;
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getRedirectTarget' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+			->expects	( $this->any() )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_WIKIA_FORUM_BOARD_THREAD ) )
+		;
+		$commentTitle = "my comment title";
+		$mockWallMsg
+			->expects	( $this->any() )
+			->method	( 'getMetaTitle' )
+			->will		( $this->returnValue( $commentTitle ) )
+		;
+		$mockWallMsg
+			->expects	( $this->any() )
+			->method	( 'isMain' )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockWallMsg
+			->expects	( $this->any() )
+			->method	( 'getTopParentObj' )
+			->will		( $this->returnValue( $mockWallMsg ) )
+		;
+		
+		
+		$this->mockClass( 'Article', $mockArticle );
+		$this->mockClass( 'WallMessage', $mockWallMsg );
+		$this->mockApp();
+		
+		$page = $mockIndexer->getPage( 123 );
+		
+		$this->assertEquals(
+				$commentTitle,
+				$page['title'],
+				"WikiaSearchIndexer::getPage should index the main comment title as the title, not the child comment's page title"
+		);
+	}
+	
 }
