@@ -42,19 +42,22 @@ class OoyalaApiWrapper extends ApiWrapper {
 			return $this->metadata['provider'];
 		}
 
-		return self::getProviderName( $this->interfaceObj['labels'] );
+		$provider = self::getProviderName( $this->interfaceObj['labels'] );
+		$provider = str_replace( ' ', '', $provider );
+
+		return strtolower( $provider );
 	}
 
 	public static function getProviderName( $labels ) {
 		$provider = 'Ooyala';
 		foreach( $labels as $label ) {
 			if ( empty($label['parent_id']) ) {
-				$provider = str_replace( ' ', '', $label['name'] );
+				$provider = $label['name'];
 				break;
 			}
 		}
 
-		return strtolower( $provider );
+		return $provider;
 	}
 
 	public function isIngestion() {
@@ -133,7 +136,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return rtrim( $sig, '=' );
 	}
 
-	protected function loadMetadata(array $overrideFields = array()) {
+	protected function loadMetadata( array $overrideFields = array() ) {
 		if ( !isset($overrideFields['genres']) ) {
 			$overrideFields['genres'] = $this->getGenres();
 		}
