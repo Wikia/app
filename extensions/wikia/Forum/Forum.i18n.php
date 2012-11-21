@@ -24,6 +24,12 @@ $messages['en'] = array(
 	'forum-specialpage-board-threads' => '{{formatnum:$1}} {{PLURAL:$1|thread|threads}}',
 	'forum-specialpage-board-posts' => '{{formatnum:$1}} {{PLURAL:$1|post|posts}}',
 	'forum-specialpage-board-lastpostby' => 'Last post by',
+	'forum-specialpage-policies-edit' => 'Edit',
+	'forum-specialpage-policies' => 'Policies/FAQ',
+	'forum-policies-and-faq' => 'some faq [[kermit]]
+* djkdksjkjsd skjdskj sdjkdskjds sd	
+	
+	',
 
 	/* Forum Board */
 	'forum-board-title' => '$1 board',

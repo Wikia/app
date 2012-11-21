@@ -150,6 +150,8 @@ class WallMessage {
 			}
 			// after successful posting invalidate Thread cache
 			$class->getThread()->invalidateCache();
+			$rp = new WallRelatedPages();
+			$rp->setLastUpdate($parent->getId());
 		}
 		//Build data for sweet url ? id#number_of_comment
 		//notify

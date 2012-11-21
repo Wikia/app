@@ -18,6 +18,16 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->wf->profileIn( __METHOD__ );
+		
+		$policies = Title::newFromText( 'forum-policies-and-faq', NS_MEDIAWIKI);
+		$this->response->setJsVar( 'wgCanEditPolicies', $policies->getLatestRevID()  );
+		$this->response->setJsVar( 'wgPoliciesRev', $policies->getLatestRevID()  );
+		$this->response->setJsVar( 'wgPoliciesEditURL', $policies->getFullUrl( 'action=edit' )  );
+		
+		//getLatestRevID
+		
+		F::build('JSMessages')->enqueuePackage('Forum', JSMessages::EXTERNAL);
+		$this->response->addAsset( 'extensions/wikia/Forum/js/Forum.js' );
 
 		if ( $this->request->getVal( 'showWarning', 0 ) == 1 ) {
 			NotificationsController::addConfirmation( wfMsg( 'forum-board-no-board-worning' ), NotificationsController::CONFIRMATION_WARN );
@@ -54,8 +64,6 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			$this->showOldForumLink = false;
 		}
 
-		$this->parseBoardDescription();
-
 		//TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( 0, 0 );
 
@@ -77,25 +85,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$this->boards = F::build( 'Forum' )->getBoardList();
 
-		$this->parseBoardDescription();
-
 		$this->wf->profileOut( __METHOD__ );
-	}
-
-	protected function parseBoardDescription() {
-		foreach( $this->boards as $key => $board ) {
-//			$this->boards[$key]['description'] =  htmlspecialchars($board['description']);
-			$this->boards[$key]['description'] = preg_replace_callback('/(\[\[[^\[\]\r\n\t]*\]\])/i', function($match) {
-				$app = F::App();
-				$options = $app->wg->Out->parserOptions();
-				$parserOut = $app->wg->Parser->parse($match[0], $app->wg->Title, $options );
-				$desc = $parserOut->getText();
-				//TODO: maybe there is some parser option to not wrap everything in <p>
-				$desc = str_replace('<p>', '', $desc );
-				$desc = str_replace('</p>', '', $desc );
-				return $desc; 
-			}, $board['description'] );
-		}
 	}
 
 	public function createNewBoardModal() {
@@ -126,7 +116,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		/* backend magic here */
 
 		$this->boardTitle = $board->getTitle()->getText();
-		$this->boardDescription = $board->getDescription();
+		$this->boardDescription = $board->getDescription(false);
 
 		$this->wf->profileOut( __METHOD__ );
 	}

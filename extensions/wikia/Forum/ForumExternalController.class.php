@@ -18,6 +18,10 @@ class ForumExternalController extends WallExternalController {
 		return '';
 	}
 
+	public function policies() {		
+		$this->body = wfMsgExt( 'forum-policies-and-faq', array( 'parseinline' ));
+	}
+
 	/**
 	 * Change order of the boards
 	 *

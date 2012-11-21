@@ -6,7 +6,7 @@ class RelatedForumDiscussionController extends WikiaController {
 	}
 	
 	public function index() {
-	
+
 		$messages = $this->getData($this->app->wg->Title->getArticleId());
 
 		unset($messages['lastupdate']);
@@ -79,12 +79,12 @@ class RelatedForumDiscussionController extends WikiaController {
 		$threadId = $this->getVal('threadId');
 		
 		$rm = new WallRelatedPages();
-		$ids = $rm->getMessagesRelatedArticleIds($threadId);
+		$ids = $rm->getMessagesRelatedArticleIds($threadId, 'order_index', DB_MASTER);
 		$requestsParams = array(); 
 		
 		foreach($ids as $id) {
 			$key = wfMemcKey( __CLASS__, 'getData', $id );
-			WikiaDataAccess::cachePurge($key);
+			WikiaDataAccess::cacheWithLockPurge($key);
 			$requestsParams[] = array('articleId' => $id);
 		}
 		
@@ -92,7 +92,8 @@ class RelatedForumDiscussionController extends WikiaController {
 	}
 
 	private function getData($id) {
-		return WikiaDataAccess::cacheWithLock( wfMemcKey( __CLASS__, 'getData', $id ), 24*60*60, function() use ($id) {
+		$key = wfMemcKey( __CLASS__, 'getData', $id );
+		return WikiaDataAccess::cacheWithLock( $key, 24*60*60, function() use ($id) {
 			$wlp = new WallRelatedPages(); 
 			$messages = $wlp->getArticlesRelatedMessgesSnippet($id, 2, 2 );
 			return $messages;			

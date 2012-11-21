@@ -61,7 +61,6 @@ $app->registerHook( 'ArticleViewHeader', 'ForumHooksHelper', 'onArticleViewHeade
 
 // forum discussion on article
 $app->registerHook( 'OutputPageBeforeHTML', 'ForumHooksHelper', 'onOutputPageBeforeHTML');
-
 $app->registerHook( 'WallAction', 'ForumHooksHelper', 'onWallAction');
 
 include ($dir . '/Forum.namespace.setup.php');
@@ -89,3 +88,11 @@ $wgGroupPermissions['bureaucrat']['forumoldedit'] = true;
 $wgGroupPermissions['*']['forumadmin'] = false;
 $wgGroupPermissions['staff']['forumadmin'] = true;
 $wgGroupPermissions['sysop']['forumadmin'] = true;
+
+
+F::build('JSMessages')->registerPackage('Forum', array(
+	'back',
+	'forum-specialpage-policies-edit',
+	'forum-specialpage-policies'
+));
+
