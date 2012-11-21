@@ -1,5 +1,4 @@
 <?php
-
 	if (!$sdsObject) {
 		die('Requested object doesn\'t exist!');
 	}
@@ -8,7 +7,6 @@
 	$properties = $sdsObject->getProperties();
 	$objectName = $sdsObject->getName();
 ?>
-
 <form class="WikiaForm SDObject" id="SDObject" method="POST">
 	<?php if(!empty($updateResult)): ?>
 		<div class="validation-main-message <?= (empty($updateResult->error)) ? 'success' : '' ?>"
@@ -21,10 +19,10 @@
 	<?php if($context == SD_CONTEXT_SPECIAL && $isEditAllowed): ?>
 		<?php
 			echo F::app()->renderView('MenuButton', 'Index', array(
-				'action' => array('text' => 'Edit', 'href' => '?action=edit'),
-				'name' => 'editSDObject',
+				'action' => $menuButtonAction,
+				'name' => $menuButtonName,
 				'dropdown' => $dropDownItems,
-				'image' => 2
+				'image' => $menuButtonImage
 			));
 		?>
 	<?php endif; ?>

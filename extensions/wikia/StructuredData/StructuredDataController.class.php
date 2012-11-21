@@ -151,6 +151,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		}
 
 		// Dropdown menu button values
+
 		$dropDownItems = array(
 			array(
 				'href' => '?action=delete',
@@ -159,8 +160,11 @@ class StructuredDataController extends WikiaSpecialPageController {
 				'title' => 'Delete SDS Object'
 			)
 		);
+		$menuButtonAction = array('text' => 'Edit', 'href' => '?action=edit');
 		$this->setVal('dropDownItems', $dropDownItems);
-
+		$this->setVal('menuButtonName', 'editSDObject');
+		$this->setVal('menuButtonAction', $menuButtonAction);
+		$this->setVal('menuButtonImage', MenuButtonController::EDIT_ICON);
 
 		$this->response->addAsset('extensions/wikia/StructuredData/css/StructuredData.scss');
 		$this->response->addAsset('resources/jquery.ui/themes/default/jquery.ui.core.css');
