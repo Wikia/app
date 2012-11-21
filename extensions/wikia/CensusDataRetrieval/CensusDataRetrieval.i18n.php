@@ -9,4 +9,5 @@ $messages['en'] = array(
 == Gallery ==
 
 == Tips ==',
+        'census-data-retrieval-notification' => 'We automatically pulled some data from SOE PlanetSide 2 database. Feel free to use it.',
 );
