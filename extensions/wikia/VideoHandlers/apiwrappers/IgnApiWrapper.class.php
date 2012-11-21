@@ -10,15 +10,6 @@ class IgnApiWrapper extends IngestionApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$description = $this->getOriginalDescription();
-		if ($category = $this->getVideoCategory()) {
-			$description .= "\n\nCategory: $category";
-		}
-		if ($keywords = $this->getVideoKeywords()) {
-			$description .= "\n\nKeywords: $keywords";
-		}
-		if ($tags = $this->getVideoTags()) {
-			$description .= "\n\nTags: $tags";
-		}
 
 		wfProfileOut( __METHOD__ );
 

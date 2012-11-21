@@ -202,6 +202,14 @@ $app->registerClass('TwitchtvVideoHandler', $dir . '/handlers/TwitchtvVideoHandl
 $app->registerClass('TwitchtvApiWrapper', $dir . '/apiwrappers/TwitchtvApiWrapper.class.php');
 $wgMediaHandlers['video/twitchtv'] = 'TwitchtvVideoHandler';
 
+$app->registerClass( 'OoyalaVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'OoyalaApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/ooyala'] = 'OoyalaVideoHandler';
+
+$app->registerClass( 'WikiawebinarsVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'WikiawebinarsApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/wikiawebinars'] = 'WikiawebinarsVideoHandler';
+
 /**
  * Feed ingesters
  */
@@ -210,6 +218,7 @@ $app->registerClass('RealgravityFeedIngester', $dir . '/feedingesters/Realgravit
 $app->registerClass('ScreenplayFeedIngester', $dir . '/feedingesters/ScreenplayFeedIngester.class.php');
 $app->registerClass('IgnFeedIngester', $dir . '/feedingesters/IgnFeedIngester.class.php');
 $app->registerClass('AnyclipFeedIngester', $dir . '/feedingesters/AnyclipFeedIngester.class.php');
+$app->registerClass('OoyalaFeedIngester', $dir . '/feedingesters/OoyalaFeedIngester.class.php');
 
 $wgVideoMigrationProviderMap = array(
 	4 => 'Fivemin',
@@ -232,6 +241,8 @@ $wgVideoMigrationProviderMap = array(
 	25 => 'Gamestar',
 	26 => 'Anyclip',
 	27 => 'Twitchtv',
+	28 => 'Ooyala',
+	29 => 'wikiawebinars',
 );
 
 

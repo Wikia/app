@@ -29,6 +29,10 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			'name' => 'VIDCAT Fashion TV',
 			'categories' => array()
 		),
+		586 => array(
+			'name' => 'Billboard',
+			'categories' => array()
+		),
 	);
 
 	const API_PAGE_SIZE = 100;

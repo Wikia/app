@@ -165,7 +165,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$categories[] = 'Trailers';
 		}
 
-		if ( isset($data['keywords']) && !empty($data['keywords']) ) {
+		if ( !empty($data['keywords']) ) {
 			$categories[] = $data['keywords'];
 		}
 
@@ -214,24 +214,14 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 	protected function getTitleName( &$titleName, $code ) {
 		wfProfileIn( __METHOD__ );
 
-		$url = $this->getApi( $code );
+		$url = AnyclipApiWrapper::getApi( $code );
 		$req = MWHttpRequest::factory( $url );
 		$status = $req->execute();
 		if( $status->isOK() ) {
 			$response = $req->getContent();
 			$content = json_decode( $response, true );
 
-			$title = '';
-			if ( isset($content['title']['name']) && !empty($content['title']['name']) ) {
-				$title = $content['title']['name'];
-			}
-
-			if ( isset($content['name']) && !empty($content['name']) ) {
-				if ( !empty($title) ) {
-					$title .= ' - ';
-				}
-				$title .= $content['name'];
-			}
+			$title = AnyclipApiWrapper::getVideoName( $content );
 
 			if ( !empty($title) ) {
 				$titleName = $title;
@@ -239,36 +229,6 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		}
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	protected function getApi( $code ) {
-		global $wgAnyclipApiConfig;
-
-		$params = array(
-			'cid' => $wgAnyclipApiConfig['AppId'],
-			'format' => 'JSON',
-		);
-		$url = str_replace( '$1', $code, 'http://apis.anyclip.com/api/clip/$1/' );
-		$params['sig'] = $this->getApiSig( $url, $params );
-		$url .= '?'.http_build_query( $params );
-
-		return $url;
-	}
-
-	protected function getApiSig( $url, $params ) {
-		global $wgAnyclipApiConfig;
-
-		$input = explode( '.com', $url );
-		if ( !is_array($input) ) {
-			return '';
-		}
-
-		$input = array_pop( $input );
-		$params['appKey'] = $wgAnyclipApiConfig['AppKey'];
-		ksort( $params );
-		$input .= '?'.http_build_query( $params );
-
-		return sha1( $input );
 	}
 
 }
