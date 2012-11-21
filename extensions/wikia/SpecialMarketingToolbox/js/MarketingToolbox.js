@@ -61,10 +61,12 @@ MarketingToolbox.prototype = {
 
 		this.verticalInputs.click($.proxy(function(e) {
 			var target = $(e.target);
+			var datepickerContainer = $("#date-picker");
 			this.vertical = target.val();
 			this.verticalInputs.addClass('secondary');
 			target.removeClass('secondary');
 
+			datepickerContainer.datepicker('destroy');
 
 			$.when(
 				$.proxy(function(){
@@ -73,7 +75,7 @@ MarketingToolbox.prototype = {
 				}, this)()
 			).done($.proxy(function() {
 				if (this.isCalendarReady) {
-					$("#date-picker").text('').datepicker({
+					datepickerContainer.text('').datepicker({
 						showOtherMonths: true,
 						selectOtherMonths: true,
 						beforeShowDay: $.proxy(this.datePickerBeforeShowDay, this),
@@ -81,7 +83,6 @@ MarketingToolbox.prototype = {
 							this.getModel().collectData(year, month);
 						}, this),
 					});
-					this.isCalendarReady = false;
 				}
 			}, this));
 
