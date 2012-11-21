@@ -86,7 +86,7 @@
 				
 				<?php // Render properties manually ?>
 				<tr>
-					<th>??<?= ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</th>
+					<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</th>
 					<td><p><?php echo $property->getValueObject()->render( $context, array( 'isCreateMode' => $isCreateMode ) ); ?></p></td>
 					<?php if($context == SD_CONTEXT_SPECIAL): ?>
 						<td><p class="example"><?= $sdsObject->getType() . '/' . $objectName . '/'. $propertyName;
