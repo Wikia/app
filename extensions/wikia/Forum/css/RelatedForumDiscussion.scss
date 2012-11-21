@@ -4,6 +4,9 @@
 
 
 .RelatedForumDiscussion {
+
+	line-height: 16px;
+
 	/* style resets */
 	h4 {
 		margin: 0;
@@ -17,6 +20,14 @@
 		}
 	}
 	
+	/* real stuff */
+	h2 {
+		padding-bottom: 3px;
+		.forum-new-post {
+			float: right;
+		}
+	}
+	
 	.forum-content {
 		&.forum-invisible {
 			@include opacity(0);
@@ -25,22 +36,27 @@
 	
 	.forum-discussions {
 		.forum-thread {
-			@include linear-gradient(false, top, rgba($color-module-shadow, 0), 50%, $color-module-shadow, 100%);
+			@include linear-gradient(false, top, rgba($color-module-shadow, 0), 80%, $color-module-shadow, 100%);
 			padding: 15px 0 15px 40px;
 			position: relative;
 			.forum-total-replies {
 				color: $color-alternate-text;
 			}
 			.talk {
-				left: 10px;
+				background-image: url('/extensions/wikia/Forum/images/thread-icon.png'); /* $base64 */
+				height: 26px;
+				left: 0;
 				position: absolute;
-				top: 20px;
+				top: 12px;
+				width: 27px;
 			}
 		}
 	}
 	
-	.forum-new-post {
-		float: right;
+	.forum-message-body {
+		p {
+			display: inline;
+		}
 	}
 	
 	.forum-replies {

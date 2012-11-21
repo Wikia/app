@@ -274,9 +274,9 @@ class ForumHooksHelper {
 	 * Display Related Discussion (Forum posts) in bottom of article
 	 */
 	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		global $wgRequest;
-		if ( $out->isArticle() && $wgRequest->getVal( 'diff' ) === null && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
-			$text .= F::App()->renderView( 'RelatedForumDiscussionController', 'index');
+		$app = F::App();
+		if ( $out->isArticle() && $app->wg->Title->exists() && $app->wg->Request->getVal( 'diff' ) === null && !( $app->checkSkin( 'wikiamobile' ) ) ) {
+			$text .= $app->renderView( 'RelatedForumDiscussionController', 'index');
 		}
 		return true;
 	}

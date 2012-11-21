@@ -1,7 +1,7 @@
 <ul class="forum-discussions">
 	<? foreach($messages as $message): ?>
 		<li class="forum-thread">
-			<img class="sprite talk" src="<?= $wg->BlankImgUrl ?>">
+			<img class="talk" src="<?= $wg->BlankImgUrl ?>">
 			<a href="<?= $message['threadUrl'] ?>">
 				<h4>
 					<?= $message['metaTitle'] ?>
