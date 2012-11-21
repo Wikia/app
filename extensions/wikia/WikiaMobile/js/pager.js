@@ -22,7 +22,7 @@ define('pager', function () {
 				function(){};
 		})(),
 		setTransform = function(prev, current, next, x){
-			var translate = 'translate3d(' + x + 'px,0,0)';
+			var translate = 'translate3d(' + ~~(x * 1.1) + 'px,0,0)';
 
 			current.style.webkitTransform = translate;
 			if (prev) { prev.style.webkitTransform = (x > 0) ? translate : ''; }
@@ -43,6 +43,9 @@ define('pager', function () {
 			isFunction,
 			container,
 			wrapper,
+			onStart,
+			onStartFired = false,
+			animating = false,
 			onEnd,
 			onOrientCallback,
 			checkCancel,
@@ -122,6 +125,7 @@ define('pager', function () {
 					}
 				}
 
+				onStartFired = animating = false;
 				onEnd && onEnd(currentPageNum);
 			},
 			loadCurrentPage = function(){
@@ -165,43 +169,69 @@ define('pager', function () {
 				if(prev) prev.style.webkitTransition = '-webkit-transform .3s';
 				if(next) next.style.webkitTransition = '-webkit-transform .3s';
 
+				animating = true;
 				addTransitionEnd(current, end, 300);
 
 				setTransform(prev, current, next, toX);
 			},
 			onTouchStart = function(ev){
-				if(ev.touches.length === 1) {
-					if(isFunction ? !checkCancel() : true)
+				if (ev.touches.length == 1) {
+
+					//since this is internal tool for now
+					//and is used only in modal
+					//we can assume that this should always be at the top
+					//if need arises better place for this probably is onStart
+					//so fix it with this line in case:
+					window.scrollTo(0,0);
+
+					if ( isFunction ? !checkCancel() : true ) {
 						pos = ev.touches[0].pageX;
+
+						wrapper.removeEventListener('touchstart', onTouchStart);
+						wrapper.addEventListener('touchmove', onTouchMove);
+						wrapper.addEventListener('touchend', onTouchEnd);
+						wrapper.addEventListener('touchcancel', onTouchEnd);
+					}
 				}
+
 			},
 			onTouchMove = function(ev){
-				ev.preventDefault();
-				if(isFunction ? !checkCancel() : true)
-					setTransform(prev, current, next, ev.touches[0].pageX - pos);
+				if ( ev.touches.length === 1 ) {
+					if( isFunction ? !checkCancel() : true ) {
+						ev.preventDefault();
+
+						var delta = ev.touches[0].pageX - pos;
+
+						onStart && !onStartFired && onStart();
+
+						onStartFired = true;
+
+						!animating && setTransform(prev, current, next, delta);
+					}
+				}
 			},
 			onTouchEnd = function(ev){
 				if(ev.touches.length === 0) {
-					var delta = ev.changedTouches[0].pageX - pos;
-					if((isFunction ? !checkCancel() : true) && delta !== 0)
-						goTo(delta);
+
+					if ( isFunction ? !checkCancel() : true ) {
+						onStartFired && goTo(ev.changedTouches[0].pageX - pos);
+					}
+
+					wrapper.addEventListener('touchstart', onTouchStart);
+					wrapper.removeEventListener('touchmove', onTouchMove);
+					wrapper.removeEventListener('touchend', onTouchEnd);
+					wrapper.removeEventListener('touchcancel', onTouchEnd);
 				}
 			},
 			cleanup = function(onePage){
 				eventsNotAdded = true;
 				!onePage && window.removeEventListener('viewportsize', onResize);
-				wrapper.removeEventListener('touchstart', onTouchStart, true);
-				wrapper.removeEventListener('touchmove', onTouchMove, true);
-				wrapper.removeEventListener('touchend', onTouchEnd, true);
-				wrapper.removeEventListener('touchcancel', onTouchEnd, true);
+				wrapper.removeEventListener('touchstart', onTouchStart);
 			},
 			events = function(){
 				if(eventsNotAdded){
 					eventsNotAdded = false;
-					wrapper.addEventListener('touchstart', onTouchStart, true);
-					wrapper.addEventListener('touchmove', onTouchMove, true);
-					wrapper.addEventListener('touchend', onTouchEnd, true);
-					wrapper.addEventListener('touchcancel', onTouchEnd, true);
+					wrapper.addEventListener('touchstart', onTouchStart);
 				}
 			},
 			onResize = function(){
@@ -214,6 +244,7 @@ define('pager', function () {
 		wrapper = options.wrapper || container;
 		currentPageNum = options.pageNumber || 0;
 		onEnd = (typeof options.onEnd === 'function') ? options.onEnd : false;
+		onStart = (typeof options.onStart === 'function') ? options.onStart : false;
 		onOrientCallback = (typeof options.onResize === 'function') ? options.onResize : false;
 		checkCancel = options.setCancel;
 		isFunction = (typeof checkCancel === 'function');
