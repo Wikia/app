@@ -173,6 +173,8 @@ class WallRelatedPages extends WikiaModel {
 		$out = array();
 		
 		$update = array(0);
+		$helper = new WallHelper();
+			
 		foreach($messages as $value) {
 			$wallThread = WallThread::newFromId($value['comment_id']);
 			
@@ -190,9 +192,14 @@ class WallRelatedPages extends WikiaModel {
 			$row['threadUrl'] = $wallMessage->getMessagePageUrl(); 
 			$row['totalReplies'] = $wallThread->getRepliesCount();
 			
+			$row['userName'] = $wallMessage->getUser()->getName();
+			$row['userUrl'] = $wallMessage->getUser()->getUserPage()->getFullUrl();
+			$row['messageBody'] = $helper->shortenText($helper->strip_wikitext($wallMessage->getRawText()));
+			$row['timeStamp'] = $wallMessage->getCreateTime();
+			
 			$row['replies'] = array();
 			
-			$replies = $wallThread->getRepliesWallMessages(2, "DESC");
+			$replies = array_reverse($wallThread->getRepliesWallMessages(2, "DESC"));
 			
 			foreach($replies as $reply) {
 				$reply->load();
@@ -200,7 +207,7 @@ class WallRelatedPages extends WikiaModel {
 				$replyRow = array(
 					'userName' =>  $reply->getUser()->getName(),
 					'userUrl' => $reply->getUser()->getUserPage()->getFullUrl(),
-					'messageBody' => $reply->getText(),
+					'messageBody' => $helper->shortenText($helper->strip_wikitext($reply->getRawText())),
 					'timeStamp' => $reply->getCreateTime()
 				);
 				$row['replies'][] = $replyRow;	
