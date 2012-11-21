@@ -73,6 +73,15 @@ $form-negative-side-padding: $form-side-padding*-1;
 				margin: 0;
 				padding: 14px 0;
 			}
+			&.hidden {
+				display: none;
+			}
+		}
+		.advanced-link {
+			float: right;
+			a {
+				font-weight: normal;
+			}
 		}
 	}
 	.result-count {
@@ -258,6 +267,9 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 		border-top: 1px solid $color-search-grid-border;
 		margin-top: 35px;
 	}
+	input[type="checkbox"] {
+		margin-right: 6px;
+	}
 	.search-tabs {
 		padding-right: 10px;
 		li {
@@ -266,22 +278,40 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 			line-height: 28px;
 			list-style: none;
 			margin: 0;
-			&:first-child {
-				margin-top: 10px;
-			}
+			padding-left: 10px;
 		}
+		> li:first-child {
+			margin-top: 10px;
+		}
+
 		a {
 			display: block;
 			min-height: 31px;
-			padding-left: 10px;
 			text-decoration: none;
 			&:hover {
 				background-color: $color-tabs-hover-background;
 			}
 		}
-		.selected a {
+		.selected {
 			background-color: $color-tabs-background;
-			color: $color-text;
+			a {
+				color: $color-text;
+			}
+		}
+		.search-filter-sort {
+			font-weight: normal;
+			p {
+				margin: 0;
+			}
+			ul {
+				margin: 0 0 0 5px;
+				padding: 0;
+			}
+			li {
+				font-weight: normal;
+				margin-left: 0;
+				padding-left: 0;
+			}
 		}
 
 	}

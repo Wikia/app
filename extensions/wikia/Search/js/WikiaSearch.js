@@ -5,4 +5,10 @@ jQuery(function( $ ) {
 	$('section.AdvancedSearch input[type="checkbox"]').change(function() {
 		hiddenInputs.remove();
 	});
+	
+	var advancedDiv = $('#AdvancedSearch');
+	$('#advanced-link').on('click', function(e) {
+		e.preventDefault();
+		advancedDiv.toggleClass('hidden');
+	});
 });

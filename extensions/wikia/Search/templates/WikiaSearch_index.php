@@ -1,5 +1,8 @@
 <section class="Search <?php if(!$isCorporateWiki) echo 'this-wiki WikiaGrid clearfix'; ?>">
 	<form class="WikiaSearch" id="search-v2-form" action="<?=$pageUrl;?>">
+		<?php if(!empty($advancedSearchBox)) : ?>
+			<p class="advanced-link"><a href="#" id="advanced-link"><?= wfMessage('searchprofile-advanced') ?></a>
+		<?php endif ?>
 		<?php foreach($namespaces as $ns): ?>
 			<input type="hidden" class="default-tab-value" name="ns<?=$ns;?>" value="1" />
 		<?php endforeach; ?>

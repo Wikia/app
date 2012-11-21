@@ -35,6 +35,8 @@ $messages['en'] = array(
 	'wikiasearch2-tabs-photos-and-videos' => 'Photos and Videos',
 	'wikiasearch2-users' => 'People',
 	'wikiasearch2-users-tooltip' => 'Search in Users',
+	'wikiasearch-filter-options-label' => 'Filtering Options',
+	'wikiasearch-sort-options-label' => 'Sorting Options',
 
 	'wikiamobile-wikiasearch2-next' => 'Next',
 	'wikiamobile-wikiasearch2-prev' => 'Previous',
