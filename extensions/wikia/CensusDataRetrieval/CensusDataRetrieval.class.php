@@ -18,16 +18,16 @@ class CensusDataRetrieval {
 	// note: a null value means a user-supplied parameter, not in Census
 	var $typeMap = array(
 		'vehicle' => array(
-			'name' => 'name',
+			'name' => 'name.en',
 			'type' => 'type',
 			'description' => 'description.en',
-			'factions' => 'collection:factions.name',
+			'factions' => 'collection:factions.name.en',
 			'cost' => 'ingame_costs.cost',
 			'cost_resource' => 'ingame_costs.resource.en',
                         'decay' => 'decay'
 		),
                 'item' => array(
-                        'name' => 'collection:name',
+                        'name' => 'collection:name.en',
                         'description' => 'description.en',
                         'activatable_recast_seconds' => 'activatable_recast_seconds',
                         'combat_only' => 'combat_only',
