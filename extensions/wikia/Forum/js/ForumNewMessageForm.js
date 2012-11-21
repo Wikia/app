@@ -14,6 +14,7 @@ Forum.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm,
 		this.loading = this.message.find('.loadingAjax');
 		this.messageTitle.on('focus', this.proxy(this.messageTitleFocus));
 		this.boardList = $('#BoardList');
+		this.boardListError = this.message.find('.board-list-error');
 		
 		var topicOptions = {};
 		
@@ -40,9 +41,11 @@ Forum.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm,
 		var boardTitle = this.boardList.find('option:selected').val();
 		if(!this.boardList.exists()) {
 			Forum.NewMessageForm.superclass.doPostNewMessage.call(this, title);
-		} else if(this.boardList.exists() && boardTitle) {
+		} else if(boardTitle) {
 			this.page['title'] = boardTitle;
 			Forum.NewMessageForm.superclass.doPostNewMessage.call(this, title);
+		} else if(!boardTitle) {
+			this.boardListError.fadeIn('slow');
 		}
 	}
 });

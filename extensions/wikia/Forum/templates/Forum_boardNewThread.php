@@ -11,6 +11,7 @@
 								<option name="boardList" value="<?= $board['value'] ?>"><?= $board['content'] ?></option>
 							<? endforeach; ?>
 						</select>
+						<span class="board-list-error"><?= wfMsg('forum-no-board-selection-error') ?></span>
 					</div>
 				<? endif; ?>
 				<? if ($wg->EnableMiniEditorExtForWall): ?>

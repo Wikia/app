@@ -40,6 +40,8 @@ $messages['en'] = array(
 	'forum-board-select-board' => 'Select a Board',
 	
 	'forum-board-no-board-worning' => "The board you're looking for was not found",
+	
+	'forum-no-board-selection-error' => '← Please select a board to post to',
 
 	/* Forum Thread */
 	'forum-thread-title' => '$1 board',

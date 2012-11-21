@@ -11,6 +11,16 @@
 @import "../../Wall/css/WallDimensions";
 @import "ForumColors";
 
+/* local mixin */
+@mixin forum-message-error() {
+	@include border-radius($wall-border-radius);
+	background-color: $color-wall-error;
+	display: none;
+	font-size: 12px;
+	line-height: 20px;
+	text-align: center;
+}
+
 .Forum {
 
 	textarea {
@@ -99,6 +109,11 @@
 				display: block;
 			}
 		}
+		
+		.board-list-error {
+			@include forum-message-error;
+			padding: 3px 20px;
+		}
 
 		.buttons {
 			float: right;
@@ -170,14 +185,9 @@
 			position: relative;
 
 			.no-title-warning {
-				@include border-radius($wall-border-radius);
-				background-color: $color-wall-error;
-				display: none;
-				font-size: 12px;
-				line-height: 20px;
+				@include forum-message-error;
 				position: absolute;
 				right: 5px;
-				text-align: center;
 				top: 5px;
 				width: 200px;
 				z-index: 1;
