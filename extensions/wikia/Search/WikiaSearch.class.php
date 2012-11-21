@@ -508,7 +508,7 @@ class WikiaSearch extends WikiaObject {
 					 ->setFragSize					( self::HL_FRAG_SIZE )      
 					 ->setSimplePrefix				( self::HL_MATCH_PREFIX )
 					 ->setSimplePostfix				( self::HL_MATCH_POSTFIX )
-					 ->setAlternateField			( 'html' )
+					 ->setAlternateField			( 'nolang_txt' )
 					 ->setMaxAlternateFieldLength	( 100 )
 		;
 		

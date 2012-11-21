@@ -578,7 +578,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		        'WikiaSearch::getSelectQuery should set the highlighting postfix according to its constant.'
 		);
 		$this->assertEquals(
-		        'html',
+		        'nolang_txt',
 		        $highlighting->getAlternateField(),
 		        'WikiaSearch::getSelectQuery should set the highlighting alternate field to be non-dynamic html.'
 		);
