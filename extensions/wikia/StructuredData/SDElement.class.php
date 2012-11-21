@@ -223,7 +223,9 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	public function toSDSJson() {
 		$data = new stdClass();
 
-		$data->id = $this->getId();
+		if( !empty( $this->id ) ) {
+			$data->id = $this->id;
+		}
 		$data->type = $this->getType();
 
 		/** @var $property SDElementProperty */

@@ -73,7 +73,7 @@ class StructuredDataAPIClient extends WikiaObject {
 
 	public function createObject( $body ) {
 		$response = json_decode( $this->call( rtrim( $this->getApiPath(), '/' ), HTTP_REQUEST_METHOD_POST, $body ) );
-		return $this->isValidResponse($response);
+		return $response;
 	}
 
 	public function getObject( $id ) {

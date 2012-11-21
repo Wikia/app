@@ -67,7 +67,14 @@ class StructuredData {
 		$element->update($params);
 //echo $element->toSDSJson();
 //exit;
-		return $this->APIClient->saveObject($element->getId(), $element->toSDSJson());
+		$elementId = $element->getId();
+
+		if( empty($elementId) ) {
+			return $this->APIClient->createObject($element->toSDSJson());
+		}
+		else {
+			return $this->APIClient->saveObject($element->getId(), $element->toSDSJson());
+		}
 	}
 
 	/**
