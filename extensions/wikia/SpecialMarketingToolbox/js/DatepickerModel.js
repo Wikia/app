@@ -1,4 +1,5 @@
-var DatepickerModel = function(vertical) {
+var DatepickerModel = function(langId, vertical) {
+	this.langId = langId;
 	this.vertical = vertical;
 	this.specialDates = {};
 	this.colectedMonths = {};
@@ -42,6 +43,7 @@ DatepickerModel.prototype = {
 			type: 'post',
 			data: {
 				'vertical': this.vertical,
+				'langId': this.langId,
 				'beginTimestamp': beginTimestamp,
 				'endTimestamp': endTimestamp
 			},
