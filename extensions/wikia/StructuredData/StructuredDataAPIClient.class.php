@@ -56,6 +56,16 @@ class StructuredDataAPIClient extends WikiaObject {
 		}
 	}
 
+	/**
+	 * Make a call to SDS to remove an object
+	 * @param $id - sds objectd identifier
+	 * @return SDS response in JSON format
+	 */
+	public function deleteObject( $id ) {
+		$response = json_decode( $this->call( $this->getApiPath() . $id, HTTP_REQUEST_METHOD_DELETE ) );
+		return $response;
+	}
+
 	public function saveObject( $id, $body ) {
 		$response = json_decode( $this->call( $this->getApiPath() . $id, HTTP_REQUEST_METHOD_PUT, $body ) );
 		return $response;

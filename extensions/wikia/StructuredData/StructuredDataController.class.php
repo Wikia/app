@@ -81,7 +81,9 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$action = $this->request->getVal( 'action', 'render' );
 
 		$isEditAllowed = $this->wg->User->isAllowed( 'sdsediting' );
-		if( ( $action == 'edit' ) && !$isEditAllowed ) {
+		$isDeleteAllowed = $this->wg->User->isAllowed( 'sdsdeleting' );
+
+		if ( ( ( $action == 'edit' ) && !$isEditAllowed ) || ( ( $action == 'delete' ) && !$isDeleteAllowed ) ) {
 			$this->displayRestrictionError($this->wg->User);
 			$this->skipRendering();
 			return false;
@@ -115,7 +117,19 @@ class StructuredDataController extends WikiaSpecialPageController {
 			$this->app->wg->Out->setStatusCode ( 400 );
 		}
 		else {
-			if($this->getRequest()->wasPosted()) {
+			if ( $action == 'delete' ) {
+				$result = $this->structuredData->deleteSDElement( $sdsObject );
+				if( isset( $result->error ) ) {
+					$updateResult = $result;
+					$action = 'render';
+					$this->setVal('updateResult', $updateResult);
+				} else {
+					// if we removed the object, just redirect to the special page
+					$this->skipRendering();
+					$this->wg->out->redirect( SpecialPage::getTitleFor( 'StructuredData' )->getFullUrl() );
+					return;
+				}
+			} else if($this->getRequest()->wasPosted()) {
 				$result = $this->structuredData->updateSDElement($sdsObject, $this->getRequest()->getParams());
 				if( isset($result->error) ) {
 					$updateResult = $result;

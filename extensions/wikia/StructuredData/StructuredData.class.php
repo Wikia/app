@@ -63,6 +63,15 @@ class StructuredData {
 		return $this->APIClient->saveObject($element->getId(), $element->toSDSJson());
 	}
 
+	/**
+	 * Removed a single sds object
+	 * @param SDElement $element - sds object to be removed
+	 * @return mixed - JSON response from sds
+	 */
+	public function deleteSDElement(SDElement $element) {
+		return $this->APIClient->deleteObject( $element->getId() );
+	}
+
 	private function getSDElement(stdClass $element, $elementDepth = 0) {
 		$template = $this->APIClient->getTemplate( $element->type );
 
