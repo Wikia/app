@@ -3,7 +3,7 @@
 	<li>
 		<a href="<?=SDElement::createSpecialPageUrl($obj)?>">
 		<?=$obj['name']?>
-	    </a>
+		</a>
 	</li>
 <? } ?>
 </ul>

@@ -56,6 +56,13 @@ class StructuredData {
 		return $this->APIClient->getCollection( $type, $extraFields );
 	}
 
+	public function createSDElement( $elementType ) {
+		$template = $this->APIClient->getTemplate( $elementType );
+
+		$SDElement = F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => null, 'depth' => 0 ), 'newFromTemplate' );
+		return $SDElement;
+	}
+
 	public function updateSDElement(SDElement $element, array $params) {
 		$element->update($params);
 //echo $element->toSDSJson();

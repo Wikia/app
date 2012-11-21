@@ -153,6 +153,10 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		if(!empty($data) && isset($data->id)) {
 			$elementId = $data->id;
 		}
+		else {
+			$elementId = 0;
+		}
+
 		/** @var $element SDElement */
 		$element = F::build( 'SDElement', array( $template->type, $context, $elementId, $depth ) );
 		$structuredData = F::build( 'StructuredData' );

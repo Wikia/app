@@ -46,6 +46,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		if(empty($par)) {
 			$this->response->addAsset('/extensions/wikia/StructuredData/js/StructuredData.js');
 			$this->response->addAsset('extensions/wikia/StructuredData/css/StructuredData.scss');
+			$this->setVal( "specialPageUrl", SpecialPage::getTitleFor( 'StructuredData' )->getFullUrl() );
 			$this->setVal( "mainObjects", $this->mainObjectList );
 		}
 		else {
@@ -83,7 +84,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$isEditAllowed = $this->wg->User->isAllowed( 'sdsediting' );
 		$isDeleteAllowed = $this->wg->User->isAllowed( 'sdsdeleting' );
 
-		if ( ( ( $action == 'edit' ) && !$isEditAllowed ) || ( ( $action == 'delete' ) && !$isDeleteAllowed ) ) {
+		if ( ( ( $action == 'edit' || $action == 'create' ) && !$isEditAllowed ) || ( ( $action == 'delete' ) && !$isDeleteAllowed ) ) {
 			$this->displayRestrictionError($this->wg->User);
 			$this->skipRendering();
 			return false;
@@ -111,6 +112,10 @@ class StructuredDataController extends WikiaSpecialPageController {
 			} catch( WikiaException $e ) {
 				$this->app->wg->Out->setStatusCode ( 404 );
 			}
+		}
+
+		if(empty($sdsObject) && ($action == 'create')) {
+			$sdsObject = $this->structuredData->createSDElement( $type );
 		}
 
 		if(empty($sdsObject)) {
@@ -174,7 +179,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$this->response->addAsset('resources/wikia/libraries/jquery-ui/jquery.ui.timepicker.js');
 		$this->response->addAsset('extensions/wikia/StructuredData/js/StructuredData.js');
 		$this->setVal('sdsObject', $sdsObject);
-		$this->setVal('context', ( $action == 'edit' ) ? SD_CONTEXT_EDITING : SD_CONTEXT_SPECIAL );
+		$this->setVal('context', ( $action == 'edit' || $action == 'create' ) ? SD_CONTEXT_EDITING : SD_CONTEXT_SPECIAL );
 		$this->setVal('isEditAllowed', $isEditAllowed);
 	}
 
