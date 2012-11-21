@@ -578,7 +578,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		        'WikiaSearch::getSelectQuery should set the highlighting postfix according to its constant.'
 		);
 		$this->assertEquals(
-		        'html',
+		        'nolang_txt',
 		        $highlighting->getAlternateField(),
 		        'WikiaSearch::getSelectQuery should set the highlighting alternate field to be non-dynamic html.'
 		);
@@ -764,7 +764,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$wikiaSearch		=	F::build( 'WikiaSearch', array( $mockClient ) );
 		$searchConfig		=	F::build( 'WikiaSearchConfig' ); /** @var WikiaSearchConfig $searchConfig  **/
 		$method				=	new ReflectionMethod( 'WikiaSearch', 'getQueryFieldsString' );
-		$defaultString		=	sprintf( '%s^5 %s^1.5 %s^4 %s^1', WikiaSearch::field( 'title' ), WikiaSearch::field( 'html' ), WikiaSearch::field( 'redirect_titles' ), WikiaSearch::field( 'categories' ) );
+		$defaultString		=	sprintf( '%s^5 %s^1.5 %s^4 %s^1 %s^7', WikiaSearch::field( 'title' ), WikiaSearch::field( 'html' ), WikiaSearch::field( 'redirect_titles' ), WikiaSearch::field( 'categories' ), WikiaSearch::field( 'nolang_txt' ) );
 		$interwikiString	=	$defaultString . sprintf( ' %s^7', WikiaSearch::field( 'wikititle' ) );
 		
 		$method->setAccessible( true );
@@ -798,11 +798,12 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		global $wgLanguageCode;
 		$wgLanguageCode = 'fr';
 		
-		$frVideoString		=	sprintf( '%s^5 %s^1.5 %s^4 %s^1 %s^5 %s^1.5 %s^4',
+		$frVideoString		=	sprintf( '%s^5 %s^1.5 %s^4 %s^1 %s^7 %s^5 %s^1.5 %s^4',
 						        WikiaSearch::field( 'title', 'fr' ),
 						        WikiaSearch::field( 'html', 'fr' ),
 						        WikiaSearch::field( 'redirect_titles', 'fr' ),
 								WikiaSearch::field( 'categories', 'fr' ),
+								WikiaSearch::field( 'nolang_txt' ),
 						        WikiaSearch::field( 'title', 'en' ),
 						        WikiaSearch::field( 'html', 'en' ),
 						        WikiaSearch::field( 'redirect_titles', 'en' )

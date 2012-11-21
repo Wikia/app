@@ -508,7 +508,7 @@ class WikiaSearch extends WikiaObject {
 					 ->setFragSize					( self::HL_FRAG_SIZE )      
 					 ->setSimplePrefix				( self::HL_MATCH_PREFIX )
 					 ->setSimplePostfix				( self::HL_MATCH_POSTFIX )
-					 ->setAlternateField			( 'html' )
+					 ->setAlternateField			( 'nolang_txt' )
 					 ->setMaxAlternateFieldLength	( 100 )
 		;
 		
@@ -592,7 +592,7 @@ class WikiaSearch extends WikiaObject {
 	 */
 	protected function getQueryFieldsString( WikiaSearchConfig $searchConfig ) {
 
-		$queryFieldsString = sprintf( '%s^5 %s^1.5 %s^4 %s^1', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ), self::field( 'categories' ) );
+		$queryFieldsString = sprintf( '%s^5 %s^1.5 %s^4 %s^1 %s^7', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ), self::field( 'categories' ), self::field( 'nolang_txt' ) );
 
 		if ( $searchConfig->getVideoSearch() && $this->wg->LanguageCode !== 'en' ) {
 		    // video wiki requires english field search
