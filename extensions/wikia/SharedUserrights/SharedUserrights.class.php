@@ -24,9 +24,13 @@ class UserRights {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function getGlobalGroups($user) {
-		if (!isset(self::$globalGroup[$user->mId])) {
+	static function getGlobalGroups(User $user) {
+		$userId = $user->getId();
+		if ( $userId == 0 ) {
+			return array();
+		} elseif (!isset(self::$globalGroup[$userId])) {
 			global $wgWikiaGlobalUserGroups, $wgExternalSharedDB;
+
 			$globalGroups = array();
 
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
@@ -34,7 +38,7 @@ class UserRights {
 			$res = $dbr->select(
 				'user_groups',
 				'ug_group',
-				array('ug_user' => $user->mId),
+				array('ug_user' => $userId),
 				__METHOD__
 			);
 
@@ -42,9 +46,9 @@ class UserRights {
 				$globalGroups[] = $row->ug_group;
 			}
 			$dbr->freeResult($res);
-			self::$globalGroup[$user->mId] = array_intersect($globalGroups, $wgWikiaGlobalUserGroups);
+			self::$globalGroup[$userId] = array_intersect($globalGroups, $wgWikiaGlobalUserGroups);
 		}
-		return self::$globalGroup[$user->mId];
+		return self::$globalGroup[$userId];
 	}
 
 	static function addGlobalGroup( $user, $group ) {
