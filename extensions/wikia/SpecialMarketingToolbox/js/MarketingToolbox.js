@@ -64,9 +64,11 @@ MarketingToolbox.prototype = {
 			this.langId = $(e.target).val();
 			$('.marketingToolbox input').removeAttr('disabled');
 			$('.section input').removeClass('secondary');
-			$('.vertical input').addClass('secondary');
 			$('.placeholder-option').remove();
 			this.destroyDatepicker();
+			if (this.vertical) {
+				this.initDatepicker();
+			}
 		}, this));
 
 		this.verticalInputs.click($.proxy(function(e) {
@@ -76,29 +78,31 @@ MarketingToolbox.prototype = {
 			target.removeClass('secondary');
 
 			this.destroyDatepicker();
-
-			$.when(
-				$.proxy(function(){
-					var tmpDate = new Date();
-					this.getModel().collectData(tmpDate.getFullYear(), tmpDate.getMonth() + 1);
-				}, this)()
-			).done($.proxy(function() {
-				if (this.isCalendarReady) {
-					this.datepickerContainer.text('').datepicker({
-						showOtherMonths: true,
-						selectOtherMonths: true,
-						beforeShowDay: $.proxy(this.datePickerBeforeShowDay, this),
-						onChangeMonthYear: $.proxy(function(year, month){
-							this.getModel().collectData(year, month);
-						}, this),
-					});
-				}
-			}, this));
+			this.initDatepicker();
 
 		}, this));
 	},
 	destroyDatepicker: function() {
 		this.datepickerContainer.datepicker('destroy').text($.msg('marketing-toolbox-tooltip-calendar-placeholder'));
+	},
+	initDatepicker: function() {
+		$.when(
+			$.proxy(function(){
+				var tmpDate = new Date();
+				this.getModel().collectData(tmpDate.getFullYear(), tmpDate.getMonth() + 1);
+			}, this)()
+		).done($.proxy(function() {
+			if (this.isCalendarReady) {
+				this.datepickerContainer.text('').datepicker({
+					showOtherMonths: true,
+					selectOtherMonths: true,
+					beforeShowDay: $.proxy(this.datePickerBeforeShowDay, this),
+					onChangeMonthYear: $.proxy(function(year, month){
+						this.getModel().collectData(year, month);
+					}, this),
+				});
+			}
+		}, this));
 	}
 };
 
