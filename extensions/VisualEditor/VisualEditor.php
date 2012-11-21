@@ -12,10 +12,10 @@
 
 // URL to the Parsoid instance
 // MUST NOT end in a slash due to Parsoid bug
-$wgVisualEditorParsoidURL = 'http://localhost:8000';
+$wgVisualEditorParsoidURL = 'http://dev-inez:8000';
 // Interwiki prefix to pass to the Parsoid instance
 // Parsoid will be called as $url/$prefix/$pagename
-$wgVisualEditorParsoidPrefix = 'localhost';
+$wgVisualEditorParsoidPrefix = 'communitycouncil';
 // Timeout for HTTP requests to Parsoid in seconds
 $wgVisualEditorParsoidTimeout = 100;
 // Namespaces to enable VisualEditor in
