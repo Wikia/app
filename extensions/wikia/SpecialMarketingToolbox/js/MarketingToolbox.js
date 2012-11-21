@@ -85,6 +85,15 @@ MarketingToolbox.prototype = {
 	destroyDatepicker: function() {
 		this.datepickerContainer.datepicker('destroy').text($.msg('marketing-toolbox-tooltip-calendar-placeholder'));
 	},
+	goToEditHub: function(date) {
+		if (window.wgEditHubUrl) {
+			(new Wikia.Querystring(window.wgEditHubUrl))
+				.setVal('date', date)
+				.setVal('region', $('#marketingToolboxRegionSelect').val())
+				.setVal('vertical', $('.vertical input:not(.secondary)').val())
+				.goTo();
+		}
+	},
 	initDatepicker: function() {
 		$.when(
 			$.proxy(function(){
@@ -100,6 +109,7 @@ MarketingToolbox.prototype = {
 					onChangeMonthYear: $.proxy(function(year, month){
 						this.getModel().collectData(year, month);
 					}, this),
+					onSelect: $.proxy(this.goToEditHub, this)
 				});
 			}
 		}, this));
