@@ -146,11 +146,15 @@ class WikiaDispatcher {
 				$app->runHook( ( "{$controllerName}{$hookMethod}AfterExecute" ), array( &$controller, &$params ) );
 
 				$app->wf->profileOut($profilename);
+
 			} catch ( WikiaHttpException $e ) {
 				$app->wf->profileOut($profilename);
 
 				if ( !$request->isInternal() ) {
 					$response->setFormat( 'json' );
+				} else {
+					//if it is internal call rethrow it so we can apply normal handling
+					throw $e;
 				}
 
 				$response->setHeader(
