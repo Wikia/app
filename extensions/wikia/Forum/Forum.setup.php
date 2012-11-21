@@ -60,7 +60,9 @@ $app->registerHook( 'PageHeaderIndexAfterActionButtonPrepared', 'ForumHooksHelpe
 $app->registerHook( 'ArticleViewHeader', 'ForumHooksHelper', 'onArticleViewHeader' );
 
 // forum discussion on article
-$app->registerHook( 'OutputPageBeforeHTML', 'ForumHooksHelper', 'onOutputPageBeforeHTML');
+//It need to be first one !!!
+array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'ForumHooksHelper::onOutputPageBeforeHTML' );
+
 $app->registerHook( 'WallAction', 'ForumHooksHelper', 'onWallAction');
 
 include ($dir . '/Forum.namespace.setup.php');
