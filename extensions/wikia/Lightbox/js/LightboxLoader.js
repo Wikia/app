@@ -28,6 +28,8 @@ var LightboxLoader = {
 			// Reset lightbox
 			$(window).off('.Lightbox');
 			LightboxLoader.lightboxLoading = false;
+			// Update history api (remove "?file=" from URL)
+			Lightbox.updateUrlState(true);
 			// Reset carousel
 			Lightbox.current.thumbs = []; /* global Lightbox */
 			Lightbox.current.thumbTypesAdded = [];
@@ -209,8 +211,14 @@ var LightboxLoader = {
 		var deferredList = [];
 		if(!LightboxLoader.assetsLoaded) {
 			deferredList.push($.loadMustache());
-			deferredList.push($.getResources([$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss')]));
-			deferredList.push($.getResources([window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js']));
+
+			var resources = [
+				$.getAssetManagerGroupUrl('history_polyfill_js'),
+				$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss'),
+				window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js'
+			];
+			
+			deferredList.push($.getResources(resources));
 			
 			var deferredTemplate = $.Deferred();
 			$.nirvana.sendRequest({
@@ -320,7 +328,38 @@ var LightboxLoader = {
 		} else {
 			callback(json);
 		}
+	},
+	loadFromURL: function() {
+		var fileTitle = $.getUrlVar('file'),
+			openModal = $('#LightboxModal');
+		
+		if(fileTitle) {
+			if(openModal.length) {
+				// Lightbox is already open, update it
+				LightboxLoader.getMediaDetail({fileTitle: fileTitle}, function(data) {
+					Lightbox.current.title = data.title;
+					Lightbox.current.type = data.mediaType;
+	
+					Lightbox.setCarouselIndex();
+					Lightbox.openModal.carousel.find('li').eq(Lightbox.current.index).click();
+				});
+				
+			} else {
+				// Open new Lightbox
+				// set a fake parent for carouselType
+				var trackingInfo = {
+					parent: $('#WikiaArticle'), 
+					clickSource: LightboxTracker.clickSource.SHARE
+				}
+				LightboxLoader.loadLightbox(fileTitle, trackingInfo);
+			}
+		} else {
+			if(openModal.length) {
+				openModal.closeModal();
+			}
+		}
 	}
+
 };
 
 LightboxTracker = {
@@ -350,7 +389,7 @@ LightboxTracker = {
 		LB: 'lightbox',
 		SHARE: 'share',
 		OTHER: 'other'
-	}	 
+	}
 };
 
 $(function() {
@@ -360,14 +399,5 @@ $(function() {
 
 	LightboxLoader.init();
 	
-	var fileTitle = $.getUrlVar('file');
-	
-	if(fileTitle) {
-		var trackingInfo = {
-			// set a fake parent for carouselType
-			parent: $('#WikiaArticle'), 
-			clickSource: LightboxTracker.clickSource.SHARE
-		}
-		LightboxLoader.loadLightbox(fileTitle, trackingInfo);
-	}
+	LightboxLoader.loadFromURL();
 });
