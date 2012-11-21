@@ -27,10 +27,10 @@ function wfRate() {
 			return true;
 		}
 
-		private static function setRate( array &$content_actions, $action ) 
+		private static function setRate( array &$content_actions, $action )
 		{
 			global $wgTitle;
-			
+
 			foreach ($content_actions as $key => $val) {
 			    if ($key == "talk")
 			    {
@@ -45,13 +45,13 @@ function wfRate() {
 			    }
 			}
 			$content_actions = $ca_array;
-			
+
 		}
 
-		public static function rateAction( $action, Article $article ) 
+		public static function rateAction( $action, Article $article )
 		{
 			global $wgOut, $wgUser, $wgRequest, $wgTitle;
-			
+
 			////////////////////////////////////////////////////////////////////
 			// Checking permissions. if now, lets quit.
 			////////////////////////////////////////////////////////////////////
@@ -72,20 +72,20 @@ function wfRate() {
 			     ( $wgTitle->getNamespace() !== NS_SPECIAL ) && ( $wgTitle->getNamespace() == 100 ) )
 			{
 				// page title
-				$wgOut->setPageTitle('Build rating');			
-				
-				// rating=delete|edit|rollback			
+				$wgOut->setPageTitle('Build rating');
+
+				// rating=delete|edit|rollback
 				$posted_action	=	$wgRequest->getText( 'rating' );
 				$posted_build	=	$wgRequest->getText( 'build' );
 				$posted_update	=	$wgRequest->getText( 'ratingid' );
-				$rate_input 	= 	self::rateGet(&$article); 
-				
+				$rate_input 	= 	self::rateGet($article);
+
 				$is_admin	= 	$wgUser->isAllowed('vote_rollback');
-				
+
 				$show_own	= true;
 				$show_all	= true;
 				$show_rate	= true;
-				
+
 				if ( ( $posted_action == 'edit') && ( self::rateCheckRights ( $article, $posted_build ) ) )
 				{
 					$wgOut->addHtml('<h2> Rate this build </h2>');
@@ -97,7 +97,7 @@ function wfRate() {
 				{
 				    $wgOut->addHtml( self::rateRollback( self::rateRead ( false, false, $posted_build ) ) );
 				}
-				
+
 				if ( ( $posted_action == 'restore') && ( $is_admin ) && ( $posted_build ))
 				{
 				    $wgOut->addHtml( self::rateRestore( self::rateRead ( false, false, $posted_build ) ) );
@@ -113,14 +113,14 @@ function wfRate() {
 				}
 
 				////////////////////////////////////////////////////////////////////
-				// Checking if we got a form submitted to us. if so lets store it. 
+				// Checking if we got a form submitted to us. if so lets store it.
 				////////////////////////////////////////////////////////////////////
-		 		
+
 				if ($wgRequest->wasPosted())
 				{
 				  if ($rate_input['error'])
 				  {
-				    // ERROR! Something went wrong. 
+				    // ERROR! Something went wrong.
 				    $wgOut->addHtml($rate_input['error_msg']);
 				  } else {
 				    if ( ( $posted_action == 'update') && ( self::rateCheckRights ( $article, $posted_update ) ) )
@@ -139,28 +139,28 @@ function wfRate() {
 				    }
 				  }
 				}
-				
+
 				# Lets print our standart output. Rate, list currents, yours.
 				self::ratePrintAll($article, $show_own, $show_rate, $show_all, false);
 				$wgOut->addHtml(self::rateOverLib());
 				return false;
 			} else {
-				return true;	
+				return true;
 			}
-			return true;	
+			return true;
 			# if no permission to rate: show list, but no form
 		    } else {
 			    self::ratePrintAll($article, true , false , true, true );
 			    $wgOut->addHtml(self::rateOverLib());
-			    return false;			
+			    return false;
 		    }
-		
+
 		}
-		
+
 		/////////////////////////////////////////////////////////////////////////////////////////////
 		//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 		/////////////////////////////////////////////////////////////////////////////////////////////
-		
+
 		public static function ratePrintAll($article, $show_own, $show_form, $show_all, $read_only)
 		{
 			global $wgOut, $wgUser;
@@ -202,26 +202,26 @@ function wfRate() {
 					}
 				    }
 				}
-				
+
 				# $out .=  ('<h2> Rating Totals </h2>'); # included in ratePrintResults now
 				$out .= self::ratePrintResults ($article->getID());
-				 
+
 				if (($out_own) && ($show_own)) {
 					$out .= ('<h2> Your Rating </h2>');
 					$out .= ($out_own);
-				} 
-				
+				}
+
 				if (($out_all) && ($show_all)) {
 					$out .= ('<h2> Current Ratings </h2>');
 					$out .= ($out_all);
 				}
-				
+
 				if ($out_rmv)
 				{
 					$out .= ('<h2> Removed Ratings </h2>');
 					$out .= $out_rmv;
 				}
-				
+
 			}
 
 			if (($show_form)) {
@@ -231,7 +231,7 @@ function wfRate() {
 
 			$wgOut->addHtml($out);
 		}
-				
+
 		// Creating form
 		public static function rateForm(array $rate_value)
 		{
@@ -240,14 +240,14 @@ function wfRate() {
 			1 => 'Effectiveness',
 			2 => 'Universality',
 			3 => 'Innovation');
-			
+
 			$rate_descr = array(
 			1 => 'How great is the idea behind this build and how innovative is it?',
 			2 => 'Does this build have potential to do more than what it was designed for?',
 			3 => 'How powerful is this build, how well does it what it was designed for and how user friendly is it?');
-			
+
 			// ---------- Loading form with values.
-			
+
 			if ($rate_value[0]) {
 				$input = $rate_value[0]['rating'];
 				$comment = $rate_value[0]['comment'];
@@ -261,19 +261,19 @@ function wfRate() {
 				$update = 0;
 				$action = '';
 			}
-						
+
 			// ---------- HEAD
 			$out = ('<div class="ratingform"><form method="post" action="'
 		             . $wgTitle->getFullURL('action=rate' . $action) . '"><table class="rating_table">');
-			
-			// ----------- Printing form. 
+
+			// ----------- Printing form.
 			foreach ($rate_names as $key => $value) {
-				$out .= ('<tr><td><span class="rating_cat" onmouseover="return overlib(div(\'load' 
+				$out .= ('<tr><td><span class="rating_cat" onmouseover="return overlib(div(\'load'
 				     . $rate_names[$key] . '\').innerHTML, WRAP, CENTER, WIDTH, 300, OFFSETY, -25,  VAUTO);"'
 				     . 'onmouseout="return nd();">' . $rate_names[$key] . '</span></td><td>');
 				if ($value=='Innovation') {
-					if (($input) && ($input[$key-1])) { 
-						$checked = ' checked '; 
+					if (($input) && ($input[$key-1])) {
+						$checked = ' checked ';
 					} else {
 						$checked = '';
 					}
@@ -283,8 +283,8 @@ function wfRate() {
 					$out .= ('</td></tr>');
 				} else {
 				   for ($i = 0; $i <= 5; $i++) {
-					if (($input) && ($input[$key-1] == $i)) { 
-						$checked = ' checked '; 
+					if (($input) && ($input[$key-1] == $i)) {
+						$checked = ' checked ';
 					} else {
 						$checked = '';
 					}
@@ -298,7 +298,7 @@ function wfRate() {
 				}
 				$out .= ('</td></tr>');
 			}
-			
+
 			$out .= ('<tr valign="top"><td><span class="rating_cat">Comments</span></td>'
 			        .'<td><textarea class="rating_text" name="comment" cols="10" rows="5">'.$comment.'</textarea>');
 			$out .= ('<input name="ratingid" type="hidden" value="' . $update . '" />');
@@ -313,8 +313,8 @@ function wfRate() {
 		  $submit = 'Remove';
 		  $update = $rate_value[0]['rate_id'];
 		  $action = '&rating=rollback';
-				
-		  $out = ('<div class="ratingform"><form method="post" action="' . 
+
+		  $out = ('<div class="ratingform"><form method="post" action="' .
 			  $wgTitle->getFullURL('action=rate' . $action) . '"><table class="rating_table">');
 		  $out .= ('<tr valign="top"><td><span class="rating_cat">Reason</span></td><td><textarea class="rating_text" name="reason" cols="10" rows="5">' . $comment . '</textarea>');
 		  $out .= ('<input name="rollback" type="hidden" value=1 /><input name="ratingid" type="hidden" value="' . $update . '" />');
@@ -329,8 +329,8 @@ function wfRate() {
 		  $submit = 'Restore';
 		  $update = $rate_value[0]['rate_id'];
 		  $action = '&rating=restore';
-				
-		  $out = ('<div class="ratingform"><form method="post" action="' . 
+
+		  $out = ('<div class="ratingform"><form method="post" action="' .
 			  $wgTitle->getFullURL('action=rate' . $action) . '"><table class="rating_table">');
 		  $out .= ('<tr valign="top"><td><span class="rating_cat">Reason</span></td><td><textarea class="rating_text" name="reason" cols="10" rows="5">' . $comment . '</textarea>');
 		  $out .= ('<input name="restore" type="hidden" value=1 /><input name="ratingid" type="hidden" value="' . $update . '" />');
@@ -338,7 +338,7 @@ function wfRate() {
 		  return $out;
 		}
 
-		
+
 		// Lets get POST vars
 		public static function rateGet(Article &$article)
 		{
@@ -353,7 +353,7 @@ function wfRate() {
 					    'rate_id' => $wgRequest->getText('ratingid'),
 					    'error' => false,
 					    'error_msg' => '');
-			
+
 			if ((( $rate_input['rollback'] == 1 ) || ( $rate_input['restore'] == 1 ))
 			    && ( strlen($rate_input['reason']) > 0 ) )
 			{
@@ -361,8 +361,8 @@ function wfRate() {
 			  {
 			    $rate_input['admin_id'] = $wgUser->getID();
 			  } else {
-			    $rate_input['error'] = true; 
-			    $rate_input['error_msg'] = 'You are not admin.'; 
+			    $rate_input['error'] = true;
+			    $rate_input['error_msg'] = 'You are not admin.';
 			  }
 			  return $rate_input;;
 			} else {
@@ -370,22 +370,22 @@ function wfRate() {
 			  if (!is_numeric($rate_input['rating'][2])) {
 			    $rate_input['rating'][2]=0;
 			  }
-			  # Check if what we got are numeric, > then 0 and < then 6.			
-			  if ((!is_numeric($rate_input['rating'][0])) || ($rate_input['rating'][0] > 5) || 
-			      ($rate_input['rating'][0] < 0)    || 
+			  # Check if what we got are numeric, > then 0 and < then 6.
+			  if ((!is_numeric($rate_input['rating'][0])) || ($rate_input['rating'][0] > 5) ||
+			      ($rate_input['rating'][0] < 0)    ||
 			      (!is_numeric($rate_input['rating'][1])) || ($rate_input['rating'][1] > 5) ||
 			      ($rate_input['rating'][1] < 0) )
 			  {
-			    $rate_input['error'] = true; 
-			    $rate_input['error_msg'] = 'Please try again.'; 
+			    $rate_input['error'] = true;
+			    $rate_input['error_msg'] = 'Please try again.';
 			  } elseif (strlen($rate_input['comment'])<12){
-			    $rate_input['error'] = true; 
-			    $rate_input['error_msg'] = 'Comment is too short..'; 
-			  } 
+			    $rate_input['error'] = true;
+			    $rate_input['error_msg'] = 'Comment is too short..';
+			  }
 			  return $rate_input;
 			}
 		}
-		
+
 		# Let's update
 		public static function rateUpdate(array $input)
 		{
@@ -394,27 +394,27 @@ function wfRate() {
 	    	  if ($input['rollback'] || $input['restore'])
 		  {
 		    $dbw->update( 'rating',
-				array('rollback' => $input['rollback'], 
-				      'reason' => $input['reason'], 
+				array('rollback' => $input['rollback'],
+				      'reason' => $input['reason'],
 				      'admin_id' => $input['admin_id']),
 				        array( 'rate_id' => $input['rate_id'] )
-			        );	
+			        );
 		  } else {
 		    $dbw->update( 'rating',
-				array('comment' => $input['comment'], 
+				array('comment' => $input['comment'],
 				      'rating1' => $input['rating'][0],
 				      'rating2' => $input['rating'][1],
 				      'rating3' => $input['rating'][2],
-				      'rollback' => $input['rollback'], 
-				      'reason' => $input['reason'], 
+				      'rollback' => $input['rollback'],
+				      'reason' => $input['reason'],
 				      'admin_id' => $input['admin_id']),
 				        array( 'rate_id' => $input['rate_id'])
-			        );	
+			        );
 	          }
 		  $dbw->commit();
-		  return;			
+		  return;
 		}
-		
+
 		// Lets delete from DB
 		public static function rateDelete( $rate_id, $page_id, $user_id )
 		{
@@ -423,7 +423,7 @@ function wfRate() {
 	    	$dbw->begin();
 	    	$dbw->delete( 'rating', array( 'rate_id' => $rate_id, 'page_id' => $page_id, 'user_id' => $user_id) );
 			$dbw->commit();
-			return true;			
+			return true;
 		}
 
 		// Lets store in DB
@@ -431,36 +431,36 @@ function wfRate() {
 		{
 			$dbw = &wfGetDB(DB_MASTER);
 	    	$dbw->begin();
-	    	$dbw->insert('rating', array(	'page_id' => $input['page_id'], 
-	    									'user_id' => $input['user_id'], 
-	    									'comment' => $input['comment'], 
-	    									'rollback' => $input['rollback'], 
-	    									'reason' => $input['reason'], 
+	    	$dbw->insert('rating', array(	'page_id' => $input['page_id'],
+	    									'user_id' => $input['user_id'],
+	    									'comment' => $input['comment'],
+	    									'rollback' => $input['rollback'],
+	    									'reason' => $input['reason'],
 	    									'rating1' => $input['rating'][0],
 	    									'rating2' => $input['rating'][1],
 	    									'rating3' => $input['rating'][2],
 	    									), __method__);
 			$dbw->commit();
-			return true;			
+			return true;
 		}
 
 
-#--- rateRead ---#	
+#--- rateRead ---#
 public static function rateRead($page_id, $user_id, $rate_id) {
 
    $dbr = &wfGetDB(DB_SLAVE);
-			
+
    if ((is_numeric($rate_id)) && ($rate_id > 1)) {
        $res = $dbr->query("SELECT * FROM `rating` WHERE `rate_id` =" . $rate_id . " LIMIT 0, 1");
    } else {
        if ($user_id) {
-	   $res = $dbr->query("SELECT * FROM `rating` WHERE `page_id` =" 
+	   $res = $dbr->query("SELECT * FROM `rating` WHERE `page_id` ="
 			      . $page_id . " AND `user_id` = " . $user_id . " LIMIT 0, 1");
        } else {
 	   $res = $dbr->query("SELECT * FROM `rating` WHERE `page_id` =" . $page_id . " LIMIT 0, 1000");
        }
-   }			
-   
+   }
+
    $count = $dbr->numRows( $res );
    if( $count > 0 ) {
        # Make list
@@ -483,13 +483,13 @@ public static function rateRead($page_id, $user_id, $rate_id) {
    }
    return $rate_out;
 }
-	
 
 
-#--- ratePermissions ---#	
+
+#--- ratePermissions ---#
 public static function ratePermissions() {
    global $wgUser, $wgOut, $perm_msg;
-	    
+
    # check if user allowed to rate this build
    # construct a message explaining the results
    if ($wgUser->isAnon()) {
@@ -524,11 +524,11 @@ public static function ratePermissions() {
 }
 
 
-#--- rateLink ---#	
+#--- rateLink ---#
 public static function rateLink(&$article, $name, $action, $id)	{
     global $wgUser;
-    return '<div class="aedit">[&nbsp;' . 
-	$wgUser->getSkin()->makeKnownLinkObj( $article->getTitle(), $name, 'action=rate&rating=' . 
+    return '<div class="aedit">[&nbsp;' .
+	$wgUser->getSkin()->makeKnownLinkObj( $article->getTitle(), $name, 'action=rate&rating=' .
 					      $action . '&build=' . $id ) . '&nbsp;]&nbsp;</div>';
 }
 
@@ -547,25 +547,25 @@ public static function ratePrint(array $rate_results, $link) {
     $parserOptions->setEditSection( false );
     $parserOptions->setTidy(true);
     $wgParser->mShowToc = false;
-    
-    $number_max = 5;			
+
+    $number_max = 5;
     $number_cat = 3;
-    $tables_max = 168;			
-    
+    $tables_max = 168;
+
     $cate = array(1 => .8, .2, .0);
     $rate = array(1 => $rate_results['rating'][0], 2 => $rate_results['rating'][1], 3 => $rate_results['rating'][2]);
     $cur_score = ($rate[1] * $cate[1] + $rate[2] * $cate[2] + $rate[3] * $cate[3]);
     $sze_table = array(1 => (( $rate[1] / $number_max ) * $tables_max ), 2 => (( $rate[2] / $number_max ) * $tables_max ), 3 => (( $rate[3] / $number_max ) * $tables_max ));
     $max_score = (( $number_max / 100 ) * $cate[1] ) + (( $number_max / 100 ) * $cate[2] ) + (( $number_max / 100 ) * $cate[3] );
-    #this is trivial! 
+    #this is trivial!
     #$max_score = $number_max;
     #$final_scr = ( $cur_score / $max_score ) * 100;
-    
+
     $final_tbl = ( $cur_score / $number_max ) * $tables_max;
-    
+
     $parsedComment = $wgParser->parse($rate_results['comment'], $wgTitle, $parserOptions)->mText;
-    
-    if ($rate_results['rollback'])	
+
+    if ($rate_results['rollback'])
     {
 	$comment = '<b>Removed: </b><s>' . $parsedComment . '</s><br> <b>Reason: </b>' . $rate_results['reason'] .
 	    '<br><b>Removed by: </b> ' . User::newFromId($rate_results['admin_id'])->getName();
@@ -574,10 +574,10 @@ public static function ratePrint(array $rate_results, $link) {
 	$comment = $parsedComment;
 	$tduser = $user_name;
     }
-    
-    $timestamp = strtotime($rate_results['timestamp']); 
+
+    $timestamp = strtotime($rate_results['timestamp']);
     $timestr = date('H:i, d M Y', $timestamp).' (EST)'; # GMT on test box, EST on main server
-    
+
     $tduser = $wgParser->parse('[[User:' . $user_name . '|' . $user_name . ']]', $wgTitle, $parserOptions)->mText;
     if ($is_bm) {
 	$bm_str='(Build Master)';
@@ -604,7 +604,7 @@ public static function ratePrint(array $rate_results, $link) {
 			        </table>
                              </td>
 			 </tr><tr>
-                             <td class="tdrating"><div style="width:' . $sze_table[1] . 
+                             <td class="tdrating"><div style="width:' . $sze_table[1] .
 			     'px; background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/r2.jpg);"><span>Effectiveness</span></div></td>
 			     <td class="tdresult">' . $rate[1] .'</td>
 			 </tr><tr>
@@ -618,19 +618,19 @@ public static function ratePrint(array $rate_results, $link) {
 			 </tr>
 			 </table>
 			 </div><br>';
-    
+
     return $out;
 }
 
 
-#--- ratePrintResults ---#		
+#--- ratePrintResults ---#
 public static function ratePrintResults ($page_id) {
 
     # names of criteria
     $rate_names = array(1 => 'Effectiveness',
 			2 => 'Universality',
 			3 => 'Innovation');
-                             
+
     # weighting of criteria
     $cate = array(1 => .8, .2, .0);
 
@@ -638,7 +638,7 @@ public static function ratePrintResults ($page_id) {
     $bm_weight = 1.0; # => 200%
 
     $dbr = &wfGetDB(DB_SLAVE);
-    
+
     # determine overall rating (equal weighting of all voters, not counting rolled back votes)
     $res = $dbr->query( "SELECT count(rating1) AS count, sum( rating1 ) AS r1, sum( rating2 ) AS r2, sum( rating3 ) AS r3
                          FROM rating WHERE rollback != 1 AND page_id = " . $page_id );
@@ -666,13 +666,13 @@ public static function ratePrintResults ($page_id) {
     # overall rating
     if ($count) {
 	$final = array(0 => ($r1*$cate[1] + $r2*$cate[2] + $r3*$cate[3]) / $wcount,
-		       $r1 / $wcount, 
-		       $r2 / $wcount, 
+		       $r1 / $wcount,
+		       $r2 / $wcount,
 		       $r3 / $wcount );
     } else {
-	$final = array( 0 => 0, 0, 0, 0 ); 
+	$final = array( 0 => 0, 0, 0, 0 );
     }
-    
+
     # fill histogram (NOT SCALED FOR BM ATM!!)
     # $rating[x][y] is number of 'y' ratings on criterion 'x'
     $rating = array();
@@ -682,7 +682,7 @@ public static function ratePrintResults ($page_id) {
                                       WHERE rating" . $y . " = " . $i . " AND rollback != 1 AND page_id = " . $page_id ))->count;
 	}
     }
-    
+
     # overall rating output
     global $wgExtensionsPath;
 
@@ -707,22 +707,22 @@ public static function ratePrintResults ($page_id) {
                      background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/r4.jpg);"><span>Innovation</span></div></td>
 	     <td class="tdresult">' . sprintf('%4.0f',round($final[3]*20)) . '%</td></tr>
 	     </table></div></td>';
-    
+
     # histograms
     # $rating[c][q] is number of 'q' ratings on criterion 'c'
     for ( $c = 1; $c <= 2; $c++) {
 
 	# normalize histo
-	for ( $q = 0; $q <= 5; $q++) { 
+	for ( $q = 0; $q <= 5; $q++) {
 	    if ($count) { $histo[$c][$q] = round($rating[$c][$q] / $count * 77); } else { $histo[$c][$q]=0; }
 	}
-	
+
 	# plot
 	$out .= '<td><div class="result"><table border="1" cellpadding="0" cellspacing="3"><tr>
                      <td colspan="6" class="tdresult"><span onmouseover="return overlib(div(\'load' . $rate_names[$c] .
                      '\').innerHTML, WRAP, CENTER, WIDTH, 300, OFFSETY, -25, OFFSETX, -247, VAUTO);" onmouseout="return nd();">' .
                      $rate_names[$c] . '</span></td></tr>
-                     <tr><td class="tdrating"><div style="height:' . ($histo[$c][0]) . 
+                     <tr><td class="tdrating"><div style="height:' . ($histo[$c][0]) .
 			  'px; width:13px; background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/v' . ($c + 1) . '.jpg);"></div></td>
               		 <td class="tdrating"><div style="height:' . ($histo[$c][1]) .
 			  'px; width:13px; background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/v' . ($c + 1) . '.jpg);"></div></td>
@@ -743,24 +743,24 @@ public static function ratePrintResults ($page_id) {
 			 <td class="tdresult">5</td>
 		     </tr></table></div></td><td>';
     }
-    
+
     $out .= '</tr></table><br>';
     return $out;
-       
+
 }
 
 
-		
-		public static function rateCheckRights ($article, $build_id) 
+
+		public static function rateCheckRights ($article, $build_id)
 		{
 			global $wgUser;
-			
+
 			$rating_posted = self::rateRead(false, false, $build_id);
 			if (($rating_posted[0]['page_id']) && ($rating_posted[0]['user_id']))
 			{
 				$rating_control = self::rateRead($rating_posted[0]['page_id'], $rating_posted[0]['user_id'], false);
 			}
-					
+
 			if ( ($rating_control[0]['page_id'] == $article->getID()) && ($rating_control[0]['user_id'] == $wgUser->getID()) )
 			{
 				return true;
@@ -768,7 +768,7 @@ public static function ratePrintResults ($page_id) {
 				return false;
 			}
 		}
-		
+
 		public static function rateOverLib ()
 		{
 			$out .= '<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>';
@@ -779,14 +779,14 @@ public static function ratePrintResults ($page_id) {
 			        <div style="width:300px; font-size:11px; font-family:Arial, Helvetica, sans-serif;">This criterion describes how effective the build does what it was designed for. That is, how much damage does a spiker build deal, a healer build heal or a protector build prevent? How good is the chance to get through the specified area with a running build or to reach and defeat the specified foes with a farming build?</div>
 			    </div>
 			</div>
-			
+
 			<div id="loadUniversality" style="display: none;">
 			    <div style="border:1px; border-color:#CCCCCC; border-collapse:collapse; border-style:solid; width:300px; background-color:#FFFFFF; padding:5px;">
 			        <div style="width:300px; font-size:12px; font-family:Arial, Helvetica, sans-serif; font-weight:bold;">Universality</div>
 			        <div style="width:300px; font-size:11px; font-family:Arial, Helvetica, sans-serif;">This criterion describes how flexible the build is when used in a situation slightly different from what the build was designed for. This includes the ability to change strategy in case a foe shows unexpected actions, in case an ally does not perform as expected, or when used in a different location than originally intended.</div>
 			    </div>
 			</div>
-			
+
 			<div id="loadInnovation" style="display: none;">
 			    <div style="border:1px; border-color:#CCCCCC; border-collapse:collapse; border-style:solid; width:300px; background-color:#FFFFFF; padding:5px;">
 			        <div style="width:300px; font-size:12px; font-family:Arial, Helvetica, sans-serif; font-weight:bold;">Innovation</div>
