@@ -1,4 +1,3 @@
-alert('ve.init.mw.ViewPageTarget.oasis.js');
 /*global mw, confirm, alert */
 
 /**
@@ -480,6 +479,7 @@ ve.init.mw.ViewPageTarget.prototype.setupSkinTabs = function () {
 	// Re-create instead of moving the original one since we don't want to copy
 	// over accesskey etc., access+e should trigger VE edit.
 	} else {
+		/*
 		mw.util.addPortletLink(
 			'p-cactions',
 			// Use original href to preserve oldid etc. (bug 38125)
@@ -488,6 +488,7 @@ ve.init.mw.ViewPageTarget.prototype.setupSkinTabs = function () {
 			'ca-editsource'
 		);
 		$( '#ca-edit' ).remove();
+		*/
 	}
 
 	// Whether we moved viewsource or transformed edit
@@ -510,7 +511,7 @@ ve.init.mw.ViewPageTarget.prototype.setupSkinTabs = function () {
 
 	if ( this.isViewPage ) {
 		// Allow instant switching to edit mode, without refresh
-		$( pVeEdit ).click( ve.bind( this.onEditTabClick, this ) );
+		$( '#ca-edit' ).click( ve.bind( this.onEditTabClick, this ) );
 		// Allow instant switching back to view mode, without refresh
 		$( '#ca-view a, #ca-nstab-visualeditor a' )
 			.click( ve.bind( this.onViewTabClick, this ) );
