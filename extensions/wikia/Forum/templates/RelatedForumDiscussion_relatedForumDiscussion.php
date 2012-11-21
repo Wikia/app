@@ -7,7 +7,9 @@
 					<?= $message['metaTitle'] ?>
 				</h4>
 			</a>
-			<div class="forum-total-replies"><?= wfMsg('forum-related-discussion-total-replies', $message['totalReplies']) ?></div>
+			<? if($message['totalReplies'] > 1): ?>
+				<div class="forum-total-replies"><?= wfMsg('forum-related-discussion-total-replies', $message['totalReplies']) ?></div>
+			<? endif; ?>
 			<ul class="forum-replies">
 				<? foreach($message['replies'] as $reply): ?>
 					<li class="forum-reply">

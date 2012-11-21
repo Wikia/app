@@ -209,8 +209,8 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-related-discussion-heading' => 'Discussions about $1',
 	'forum-related-discussion-new-post-button' => 'Start a Discussion',
 	'forum-related-discussion-new-post-tooltip' => 'Start a new discussion about $1',
-	'forum-related-discussion-total-replies' => '$1 replies',
-	'forum-related-discussion-zero-state-creative' => 'You can find discussions about every related to this wiki on [[Special:Forum|{{SITENAME}}]]',
+	'forum-related-discussion-total-replies' => '$1 messages',
+	'forum-related-discussion-zero-state-creative' => 'You can find discussions about everything related to this wiki on [[Special:Forum|{{SITENAME}} Forum!]]',
 	'forum-related-discussion-see-more' => 'See More',
 );
 
