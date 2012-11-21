@@ -48,11 +48,11 @@ abstract class WikiaApiController extends WikiaController {
 				ksort( $paramKeys );
 
 				if ( $paramKeys !== $origParam ) {
-					throw new ApiBadRequestException( null, 'Parameters should be sorted' );
+					throw new BadRequestApiException( 'The parameters\' order is incorrect' );
 				}
 			}
 		} else {
-			throw new ApiBadRequestException( null, 'Controller or method missing' );
+			throw new BadRequestApiException( 'Controller and/or method missing' );
 		}
 	}
 
@@ -113,4 +113,4 @@ abstract class WikiaApiController extends WikiaController {
 	}
 }
 
-class ApiBadRequestException extends BadRequestException {}
+class BadRequestApiException extends BadRequestException {}

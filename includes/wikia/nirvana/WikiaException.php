@@ -158,9 +158,9 @@ abstract class WikiaHttpException extends WikiaException {
 	protected $message = null;
 	protected $details = null;
 
-	function __construct( Exception $previous = null, $details = null ) {
-		$this->details = $details;
+	function __construct( $details = null, Exception $previous = null ) {
 		parent::__construct( $this->message, $this->code, $previous );
+		$this->details = $details;
 	}
 
 	public function getDetails() {
