@@ -25,23 +25,28 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
-		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
-		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
-
 		$this->wf->ProfileOut(__METHOD__);
 		return true;
 	}
 
 	public function index() {
 		$this->wf->ProfileIn(__METHOD__);
+
 		$this->wg->Out->setPageTitle(wfMsg('marketing-toolbox-title'));
 
 		if( $this->checkAccess() ) {
 			$this->corporateWikisLanguages = $this->toolboxModel->getCorporateWikisLanguages();
 			$this->sections = $this->toolboxModel->getAvailableSections();
 			$this->verticals = $this->getVerticals(MarketingToolboxModel::SECTION_HUBS);
+
+			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
+			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
+			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
+
+			F::build('JSMessages')->enqueuePackage('MarketingToolbox', JSMessages::EXTERNAL);
 		}
+
+		$this->wf->ProfileOut(__METHOD__);
 	}
 
 	/**
