@@ -31,12 +31,15 @@ var AdminDashboard = {
 		// init addVideo jQuery plugin
 		var addVideoButton = AdminDashboard.cc.find('.addVideoButton'),
 			addVideoButtonReturnUrl = addVideoButton.data('return-url');
-		
-		addVideoButton.addVideoButton({
-			callback: function() {
-				window.location = addVideoButtonReturnUrl;
-			}
-		});
+
+		if( typeof(addVideoButton.addVideoButton) === 'function' ) {
+		//FB#68272
+			addVideoButton.addVideoButton({
+				callback: function() {
+					window.location = addVideoButtonReturnUrl;
+				}
+			});
+		}
 
 		AdminDashboard.allTabs.click(function(e) {
 			e.preventDefault();
