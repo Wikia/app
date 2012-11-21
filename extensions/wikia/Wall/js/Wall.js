@@ -704,7 +704,7 @@ var Wall = $.createClass(Object, {
 						},
 						callback: function(json) {
 							if(json.status === 'ok') {
-								// redirect?
+								new Wikia.Querystring(window.location + '').addCb().goTo();
 							} else if(json.status === 'error') {
 								form.clearAllInputErrors();
 								if(json.errorfield) {
