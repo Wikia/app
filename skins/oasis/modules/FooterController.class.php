@@ -103,7 +103,135 @@ class FooterController extends WikiaController {
 	public function executeMenu( $params ) {
 		$items = (array)$params['items'];
 		wfRunHooks('BeforeToolbarMenu', array(&$items));
-		$this->items = $items;
+
+		MenuItemFactory::addSupportedItem('share','shareFeature');
+		MenuItemFactory::addSupportedItem('follow','followFeature');
+		MenuItemFactory::addSupportedItem('menu','menuFeature');
+		MenuItemFactory::addSupportedItem('link','linkFeature');
+		MenuItemFactory::addSupportedItem('html','htmlFeature');
+		MenuItemFactory::addSupportedItem('customize','customizeFeature');
+		MenuItemFactory::addSupportedItem('devinfo','devinfoFeature');
+		MenuItemFactory::addSupportedItem('disabled','disabledFeature');
+
+		$itemObjects = array();
+
+		foreach($items as $item) {
+			$itemObj = MenuItemFactory::buildItem($item['type']);
+			$itemObj->setRawData($item);
+			$itemObjects [] = $itemObj;
+		}
+		$this->items = $itemObjects;
+	}
+}
+
+class MenuItemFactory {
+	protected static $supportedItems = array();
+
+	static function buildItem($itemType) {
+		if(!empty(self::$supportedItems[$itemType])) {
+			return new self::$supportedItems[$itemType];
+		}
 	}
 
+	static function addSupportedItem($itemType, $itemClass) {
+		self::$supportedItems[$itemType] = $itemClass;
+	}
+}
+
+abstract class menuItem extends WikiaObject {
+	protected $rawData;
+
+	public abstract function render();
+	public function setRawData($data) {
+		$this->rawData = $data;
+	}
+
+}
+
+class shareFeature extends MenuItem {
+	public function render() {
+		echo '
+			<li id="ca-share_feature" class="overflow">
+        		<a id="control_share_feature" href="#"
+           		data-name="' . $this->rawData['tracker-name'] . '">' . $this->rawData['caption'] . '</a>
+    		</li>
+    	';
+	}
+}
+
+class followFeature extends MenuItem {
+	public function render() {
+		echo '
+			<li class="overflow">
+				<a accesskey="w" id="' . $this->rawData['link-id'] . '" href="' . $this->rawData['href'] . '"
+				   data-name="' . $this->rawData['tracker-name'] . '">' . $this->rawData['caption'] . '</a>
+			</li>
+    	';
+	}
+}
+
+class menuFeature extends MenuItem {
+	public function render() {
+		echo '
+			<li class="mytools menu">
+				<span class="arrow-icon-ctr"><span class="arrow-icon arrow-icon-single"></span></span>
+				<a href="#">' .  $this->rawData['caption'] . '</a>
+				<ul id="my-tools-menu" class="tools-menu">
+					' .  $this->app->renderView('Footer', 'Menu', array('format' => 'html', 'items' => $this->rawData['items'])) . '
+				</ul>
+			</li>
+    	';
+	}
+}
+
+class linkFeature extends MenuItem {
+	public function render() {
+		echo '
+			<li class="overflow">
+				<a href="' .  $this->rawData['href'] . '" data-name="' . $this->rawData['tracker-name'] . '">' . $this->rawData['caption'] . '</a>
+			</li>
+    	';
+	}
+}
+
+class htmlFeature extends MenuItem {
+	public function render() {
+		echo '
+			<li>
+				' . $this->rawData['html'] . '
+			</li>
+    	';
+	}
+}
+
+class customizeFeature extends MenuItem {
+	public function render() {
+		echo '
+			<li>
+				<img height="16" width="16" class="sprite gear" src="<?= $wg->BlankImgUrl; ?>">
+				<a class="tools-customize" href="#" data-name="customize">' . wfMsg('oasis-toolbar-customize') . '</a>
+			</li>
+    	';
+	}
+}
+
+class devinfoFeature extends MenuItem {
+	public function render() {
+		/* Temporary, BugId:5497; TODO: call getPerformanceStats in DevInfoUserCommand.php rather than here */
+		echo '
+			<li class="loadtime">
+				<span>' . $this->wf->getPerformanceStats() . '</span>
+			</li>
+    	';
+	}
+}
+
+class disabledFeature extends MenuItem {
+	public function render() {
+		echo '
+ 			<li class="overflow">
+	        	<span title="' . $this->rawData['error-message'] . '">' . $this->rawData['caption'] . '</span>
+    		</li>
+    	';
+	}
 }
