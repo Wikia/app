@@ -18,15 +18,16 @@ class CensusDataRetrieval {
 	// note: a null value means a user-supplied parameter, not in Census
 	var $typeMap = array(
 		'vehicle' => array(
-			'name' => 'name.en',
+			'name' => 'name',
 			'type' => 'type',
 			'description' => 'description.en',
+			'factions' => 'collection:factions.name',
 			'cost' => 'ingame_costs.cost',
 			'cost_resource' => 'ingame_costs.resource.en',
                         'decay' => 'decay'
 		),
                 'item' => array(
-                        'name' => 'name.en',
+                        'name' => 'collection:name',
                         'description' => 'description.en',
                         'activatable_recast_seconds' => 'activatable_recast_seconds',
                         'combat_only' => 'combat_only',
@@ -36,14 +37,7 @@ class CensusDataRetrieval {
                         'rarity' => 'rarity',
                         'type' => 'type',
                         'use_requirement' => 'use_requirement',
-                        'activatable_ability' => 'activatable_ability'
                 )
-//                'zone' => array(
-//                        'name' => 'name.en',
-//                        'description' => 'description.en',
-//                )
-                
-                
 	);
         
         /**
@@ -74,7 +68,7 @@ class CensusDataRetrieval {
                                 $editPage->addEditNotice(wfMsgForContent('census-data-retrieval-notification'));
                         }
                 }
-                
+
                 wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -101,7 +95,7 @@ class CensusDataRetrieval {
                 wfProfileOut(__METHOD__);
                 return $text;
 	}
-        
+
         /**
 	 * getInfoboxCode
          * Retrieves, prepares and returns infobox template code
@@ -200,7 +194,7 @@ class CensusDataRetrieval {
 	private function getType() {
 		return $this->type;
 	}
-        
+
 	/**
  	 * getType
 	 * determines type based on fetched data
@@ -234,7 +228,7 @@ class CensusDataRetrieval {
 			return '';
 		}
 	}
-        
+
 	/**
  	 * mapData
 	 * maps required data retrieved from Census to array
@@ -250,18 +244,18 @@ class CensusDataRetrieval {
 		} else {
 			//wfDebug( __METHOD__ . ": Found object of type {$object->type}" );
 		}
-
 		// perform mapping each required property basing on typeMap array
                 foreach ( $this->typeMap[$this->type] as $name => $propertyStr ) {
                         $value = $this->getPropValue( $object, $propertyStr );
-                        if ( !is_null($value) ) {
+                        if ( $value != '' ) {
                                 $this->data[$name] = $value;
                         }
                 }
+                //TODO return false if empty
                 wfProfileOut(__METHOD__);
 		return true;
 	}
-        
+
         /**
  	 * getPropValue
 	 * Returns value from object by provided path
@@ -277,37 +271,96 @@ class CensusDataRetrieval {
                 $fieldPath = explode('.', $propertyStr);
                 $i = sizeof($fieldPath) - 1;
                 wfProfileOut(__METHOD__);
-                return $this->doGetPropValue( $object, $fieldPath, $i );
+                return $this->doGetPropValue( $object, $fieldPath );
         }
-        
+
         /**
  	 * doGetPropValue
-	 * Recursive function returns value from object by provided path
+	 * Returns value from object by provided path
          * @param $object object to retrieve data form
          * @param array $fieldPath path to value in array
-         * @i current step counter
 	 *
 	 * @return array
 	 */
-        private function doGetPropValue( $object, $fieldPath, $i ) {
-                wfProfileIn(__METHOD__);
-                if ( $i > 0) {
-                        $object_temp = $this->doGetPropValue( $object, $fieldPath, $i-1 );
-                        if ( is_object( $object_temp ) && isset( $object_temp->{$fieldPath[$i]} ) ) {
-                                wfProfileOut(__METHOD__);
-                                return $object_temp->{$fieldPath[$i]};
-                        } else {
-                                wfProfileOut(__METHOD__);
-                                return null;
+        private function doGetPropValue( $object, $fieldPath ) {
+
+                $pathSize = sizeof($fieldPath);
+                for ( $i = 0; $i < $pathSize; $i++) {
+
+                        if ( is_object($object) ) {
+
+                                $propertyName = $fieldPath[$i];
+                                $expectedType = '';
+                                $this->checkNameAndType( $propertyName, $expectedType );
+                                //get property
+                                if ( isset($object->{$propertyName}) ) {
+                                        $property = $object->{$propertyName};
+                                } else {
+                                        return '';
+                                }
+                                //Return if is just value
+                                if ( is_string($property) || is_int($property) ) {
+                                        return $property;
+                                }
+
+                                //Retrieve a combined string for collection
+                                if ( $expectedType == 'collection' ) {
+                                        $string = $this->getStringFromCollection($property, array_slice( $fieldPath, $i+1 ) );
+
+                                        return $string;
+                                }
+                                //Retrieve a combined string for array
+                                if ( $expectedType == 'array' ) {
+                                        $string = $this->getStringFromCollection($property[0], array_slice( $fieldPath, $i+1 ) );
+
+                                        return $string;
+                                }
+
+                                //regular object - go for next property
+                                $object = $property;
+
+                        } elseif ( is_string($object) || is_int($object) ) {
+                                return $object;
                         }
-                } else if ( is_object( $object ) && isset( $object->{$fieldPath[$i]} ) ) {
-                        wfProfileOut(__METHOD__);
-                        return $object->{$fieldPath[$i]};
+
+                }
+                //if is string return 
+               if ( is_string($object) || is_int($object) ) {
+                        return $object;
+                }
+                //otherwise empty
+                return '';
+        }
+
+        function getStringFromCollection ($object, $fieldPath) {
+                $result = '';
+                if ( $object instanceof stdClass || is_array($object) ) {
+                        foreach ( $object as $element ) {
+                                //get property value each step
+                                $value = $this->doGetPropValue($element, $fieldPath);
+                                if ( $value != '' ) {
+                                        //and add to a result string
+                                        $result .= ', '.$value;
+                                }
+                        }
+                        if ( $result != '' ) {
+                                $result = substr($result, 2);
+                        }
+                }
+                return $result;
+        }
+
+        //get name
+        private function checkNameAndType( &$propertyName, &$expectedType ) {
+                if ( strpos($propertyName,':') !== false ) {
+                         $propertynNameArr = explode(':', $propertyName);
+                         $expectedType = $propertynNameArr[0];
+                         $propertyName = $propertynNameArr[1];
                 } else {
-                        wfProfileOut(__METHOD__);
-                        return null;
+                        $expectedType = '';
                 }
         }
+
         
         /**
 	 * getCacheCensusDataArr
