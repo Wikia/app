@@ -1,5 +1,4 @@
 <?php
-
 /**
  * API for MediaWiki 1.8+
  *
@@ -117,6 +116,9 @@ $wgTitle = Title::makeTitle( NS_MAIN, 'API' );
  * is some form of an ApiMain, possibly even one that produces an error message,
  * but we don't care here, as that is handled by the ctor.
  */
+//if ( $_SERVER && $_SERVER['REMOTE_ADDR'] /* && $_SERVER['REMOTE_ADDR'] === '127.0.0.1' */ ) {
+	$wgGroupPermissions['*']['read'] = true;
+//}
 $processor = new ApiMain( $wgRequest, $wgEnableWriteAPI );
 
 // Process data & print results
