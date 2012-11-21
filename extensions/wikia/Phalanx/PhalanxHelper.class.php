@@ -313,9 +313,9 @@ class PhalanxHelper {
 			$newDataShort = array(
 				$newData['id'],
 				$newData['text'],
-				  ($newData['exact'] ? self::FLAG_EXACT : 0)
-				+ ($newData['regex'] ? self::FLAG_REGEX : 0)
-				+ ($newData['case'] ? self::FLAG_CASE : 0)
+				  ($newData['exact'] ? Phalanx::FLAG_EXACT : 0)
+				+ ($newData['regex'] ? Phalanx::FLAG_REGEX : 0)
+				+ ($newData['case'] ? Phalanx::FLAG_CASE : 0)
 			);
 		}
 
