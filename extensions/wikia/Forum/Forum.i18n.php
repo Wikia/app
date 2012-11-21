@@ -211,7 +211,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-related-discussion-new-post-tooltip' => 'Start a new discussion about $1',
 	'forum-related-discussion-total-replies' => '$1 messages',
 	'forum-related-discussion-zero-state-creative' => 'You can find discussions about everything related to this wiki on [[Special:Forum|{{SITENAME}} Forum!]]',
-	'forum-related-discussion-see-more' => 'See More',
+	'forum-related-discussion-see-more' => 'See more discussions',
 );
 
 $messages['qqq'] = array(
