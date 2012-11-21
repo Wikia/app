@@ -58,10 +58,31 @@ var StructureData = {
 		// Attach handlers - add confirmation before deleting object
 		SDObjectWrapper.on('click', '.SDObject-delete', function(event) {
 			event.preventDefault();
-			var message = 'This action will permanently delete ' + $(this).data('name') + ' object from SDS.';
-			if (confirm(message)) {
-				window.location = $(this).attr('href');
-			}
+			var href = $(this).attr('href');
+			$.showCustomModal(
+				'Are you sure you want to delete Structure Data Object ?',
+				'<p>This action will permanently delete selected object from Structured Data Object database.</p>',
+				{
+					id: "SDObjectDelConfirm",
+					width: 600,
+					buttons: [
+						{
+							id:'ok',
+							defaultButton:true,
+							message:'OK',
+							handler:function() {
+								window.location = href;
+							}
+						},
+						{
+							id:'cancel',
+							message:'Cancel',
+							handler:function() {
+								$('#SDObjectDelConfirm').closeModal();
+							}
+						}
+				]}
+			);
 		});
 		// Add WMU support for editing image objects
 		$('input[name="schema:thumbnailUrl"]').bind('focus', function(event) {
