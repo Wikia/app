@@ -5,6 +5,8 @@
 		protected $defaultRenderType = 'follow';
 
 		protected function buildData() {
+			self::needSkinData();
+
 			$mode = '';
 			if(isset(self::$skinData['content_actions']['watch'])) {
 				$follow = self::$skinData['content_actions']['watch'];
