@@ -33,10 +33,16 @@ class Facebook3 extends BaseFacebook
    * @see BaseFacebook::__construct in facebook.php
    */
   public function __construct($config) {
-    if (!session_id()) {
-      //session_start();
-    }
-    parent::__construct($config);
+		// Wikia - change begin
+	  	//  - starting a session so early will cause all traffic to bypass Varnish
+	  	//  - MW's session handling is not initialized at this point
+		/**
+		if (!session_id()) {
+			session_start();
+		}
+		**/
+		// Wikia - change begin
+		parent::__construct($config);
   }
 
   protected static $kSupportedKeys =
