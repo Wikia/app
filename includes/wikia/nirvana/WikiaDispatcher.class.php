@@ -147,15 +147,16 @@ class WikiaDispatcher {
 
 				$app->wf->profileOut($profilename);
 			} catch ( WikiaHttpException $e ) {
+				$app->wf->profileOut($profilename);
 
 				if ( !$request->isInternal() ) {
 					$response->setFormat( 'json' );
 				}
 
-				header(
-					$e->getMessage(),
-					true,
-					$e->getCode()
+				$response->setHeader(
+					'HTTP/1.1',
+					$e->getCode(),
+					true
 				);
 
 				$response->setVal( 'error', get_class( $e ) );
