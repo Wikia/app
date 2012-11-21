@@ -7,7 +7,7 @@
 					<?= $message['metaTitle'] ?>
 				</h4>
 			</a>
-			<div class="forum-total-replies"><?= $message['totalReplies'] ?></div>
+			<div class="forum-total-replies"><?= wfMsg('forum-related-discussion-total-replies', $message['totalReplies']) ?></div>
 			<ul class="forum-replies">
 				<? foreach($message['replies'] as $reply): ?>
 					<li class="forum-reply">
@@ -17,9 +17,7 @@
 						</div>
 						<div class="forum-message-body">
 							<?= $reply['messageBody'] ?>
-							<span class="forum-timestamp">
-								<?= $reply['timeStamp'] ?>
-							</span>
+							<time class="forum-timestamp" datetime="<?= $reply['timeStamp'] ?>"><?= $reply['timeStamp'] ?></time>
 						</div>
 					</li>
 				<? endforeach; ?>

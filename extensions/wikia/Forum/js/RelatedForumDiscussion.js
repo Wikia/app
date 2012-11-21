@@ -11,6 +11,10 @@
 		return $section.offset().top > ($window.scrollTop() + ($window.height() * 3) );
 	};
 	
+	var timeAgo = function() {
+		$section.find('.forum-timestamp').timeago();
+	};
+	
 	// if user is not logged in, check for cache, and replace if needed
 	if(!window.wgUserName) {
 		function loadRelatedDiscussion() {
@@ -26,6 +30,7 @@
 						$content.html(json.html);
 					} 
 					$content.removeClass('forum-invisible');
+					timeAgo();
 				}
 			});
 		}
@@ -41,6 +46,8 @@
 			});
 		}
 
+	} else {
+		timeAgo();
 	}
 	
 })(jQuery, window);

@@ -211,6 +211,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-related-discussion-new-post-tooltip' => 'Start a new discussion about $1',
 	'forum-related-discussion-total-replies' => '$1 replies',
 	'forum-related-discussion-zero-state-creative' => 'You can find discussions about every related to this wiki on [[Special:Forum|{{SITENAME}}]]',
+	'forum-related-discussion-see-more' => 'See More',
 );
 
 $messages['qqq'] = array(
@@ -293,6 +294,7 @@ $messages['qqq'] = array(
 	
 	'forum-related-discussion-heading' => 'Section heading for related discussion section.  $1 is article that this section will be on.',
 	'forum-related-discussion-total-replies' => 'Label showing total number of replies in a discussion.  $1 is number of replies',
+	'forum-related-discussion-see-more' => 'See More link to topic page',
 	
 	'forum-board-select-board' => 'A form label instructing someone to select a board from a drop down.',
 );

@@ -38,8 +38,9 @@ class RelatedForumDiscussionController extends WikiaController {
 		$this->messages = $this->getVal('messages');
 
 		// set template data
-		$this->seeMoreUrl = "#";
-		$this->seeMoreText = "See more";
+		$topicTitle = Title::newFromText( $this->wg->Title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
+		$this->seeMoreUrl = $topicTitle->getFullUrl();
+		$this->seeMoreText = $this->wf->Msg('forum-related-discussion-see-more');
 	}
 	
 	public function zeroState() {
