@@ -592,7 +592,7 @@ class WikiaSearch extends WikiaObject {
 	 */
 	protected function getQueryFieldsString( WikiaSearchConfig $searchConfig ) {
 
-		$queryFieldsString = sprintf( '%s^5 %s^1.5 %s^4 %s^1', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ), self::field( 'categories' ) );
+		$queryFieldsString = sprintf( '%s^5 %s^1.5 %s^4 %s^1 %s^7', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ), self::field( 'categories' ), self::field( 'nolang_txt' ) );
 
 		if ( $searchConfig->getVideoSearch() && $this->wg->LanguageCode !== 'en' ) {
 		    // video wiki requires english field search
