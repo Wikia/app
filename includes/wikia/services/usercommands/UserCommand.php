@@ -181,12 +181,33 @@
 						'nav_urls' => $skinTemplateObj->get('nav_urls'),
 					);
 				} else {
-					/* @var $skin WikiaSkin */
-					$skin = RequestContext::getMain()->getSkin();
-					$skin->getOutput()->setArticleRelated(false);
+					/** @var $context RequestContext */
+					$context = RequestContext::getMain();
+					/** @var $skin WikiaSkin */
+					$skin = $context->getSkin();
+
+					if (!isset($skin->iscontent)) {
+						/* safe and slow version - possible side-effectes */
+						/*
+						global $wgForceSkin, $wgOut;
+
+						$wgForceSkin = 'oasis';
+						ob_start();
+						$skin->outputPage($wgOut);
+						ob_end_clean();
+						*/
+						/* unsafe but a lot faster version - hard trick */
+						$title = $skin->getTitle();
+
+						if ( in_array( $title->getNamespace(), array( NS_SPECIAL, NS_FILE ) ) ) {
+							$skin->getOutput()->setArticleRelated(false);
+						}
+						$skin->thispage = $title->getPrefixedDBkey();
+						$skin->loggedin = $context->getUser()->isLoggedIn();
+					}
 
 					self::$skinData = array(
-						'content_actions' => array(),
+						'content_actions' => $skin->buildContentActionUrls( $skin->buildContentNavigationUrls() ),
 						'nav_urls' => $skin->buildNavUrls(),
 					);
 				}
