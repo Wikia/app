@@ -164,7 +164,6 @@ class Phalanx {
 		} else {
 			$blocksData = $wgMemc->get($key);
 		}
-		$blocksData = null;
 
 		//cache miss (or we have expired blocks in cache), get from DB
 		if ( empty($blocksData) || (!is_null($blocksData['closestExpire']) && $blocksData['closestExpire'] < $timestampNow && $blocksData['closestExpire'])) {
