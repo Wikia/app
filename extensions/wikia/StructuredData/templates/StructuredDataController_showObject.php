@@ -19,7 +19,14 @@
 	<?php endif; ?>
 	<h1><strong><?= $objectName; ?></strong></h1>
 	<?php if($context == SD_CONTEXT_SPECIAL && $isEditAllowed): ?>
-		<a href="?action=edit" class="wikia-button" title="Edit SDS Object">Edit</a>
+		<?php
+			echo F::app()->renderView('MenuButton', 'Index', array(
+				'action' => array('text' => 'Edit', 'href' => '?action=edit'),
+				'name' => 'editSDObject',
+				'dropdown' => $dropDownItems,
+				'image' => 2
+			));
+		?>
 	<?php endif; ?>
 	<dl class="SDObjectDetails">
 		<dt>Type:</dt>

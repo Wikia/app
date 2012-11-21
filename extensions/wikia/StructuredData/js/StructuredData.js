@@ -8,6 +8,7 @@ var StructureData = {
 	init: function() {
 		// Cache selectors
 		var SDObjectWrapper = $('#SDObject'),
+			SDCollectionWrapper = $('#SDObjectCollection'),
 			that = this;
 		// Attach handlers - load dropdown with objects to add
 		SDObjectWrapper.on('click', 'td button.load-dropdown', function(event) {
@@ -37,7 +38,7 @@ var StructureData = {
 			event.preventDefault();
 			$(event.target).parents('li').remove();
 		});
-		// Attach hand;ers - Use 'ENTER' to go to the next input in list or add new if pressed on last one HACK SOLUTION
+		// Attach handlers - Use 'ENTER' to go to the next input in list or add new if pressed on last one HACK SOLUTION
 		SDObjectWrapper.on('keydown', 'td li input[type="text"]', function(event) {
 			if (event.which == 13) {
 				event.preventDefault();
@@ -54,6 +55,14 @@ var StructureData = {
 				}
 			}
 		});
+		// Attach handlers - add confirmation before deleting object
+		SDObjectWrapper.on('click', '.SDObject-delete', function(event) {
+			event.preventDefault();
+			var message = 'This action will permanently delete ' + $(this).data('name') + ' object from SDS.';
+			if (confirm(message)) {
+				window.location = $(this).attr('href');
+			}
+		});
 		// Add WMU support for editing image objects
 		$('input[name="schema:thumbnailUrl"]').bind('focus', function(event) {
 			var $input = $(event.target);
@@ -67,7 +76,15 @@ var StructureData = {
 				});
 			});
 		});
-		// Add widgets for date and date + time input types
+		// Add date/time pickers only for SD object page
+		if (SDObjectWrapper.lenght > 0) {
+			this.addDatePickers();
+		}
+
+
+	},
+	// METHOD for adding widgets for date and date + time input types
+	addDatePickers: function() {
 		$('input[name="schema:startDate"]').datetimepicker({
 			changeMonth: true,
 			changeYear: true,
@@ -85,7 +102,6 @@ var StructureData = {
 			dateFormat: 'yy-m-d'
 		});
 	},
-
 	// METHOD for fetching collection of SDS objects form a given class and rendering <select> element with them inside
 	getObjectsToAdd: function($eventTarget, classes) {
 		var that = this,

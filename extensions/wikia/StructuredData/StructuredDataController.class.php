@@ -145,6 +145,24 @@ class StructuredDataController extends WikiaSpecialPageController {
 			}
 		}
 
+		// Dropdown menu button values
+		$dropDownItems = array(
+			array(
+				'href' => '?action=edit',
+				'text' => 'Edit',
+				'class' => 'SDObject-edit',
+				'title' => 'Edit SDS Object'
+			),
+			array(
+				'href' => '?action=delete',
+				'text' => 'Delete',
+				'class' => 'SDObject-delete',
+				'title' => 'Delete SDS Object'
+			)
+		);
+		$this->setVal('dropDownItems', $dropDownItems);
+
+
 		$this->response->addAsset('extensions/wikia/StructuredData/css/StructuredData.scss');
 		$this->response->addAsset('resources/jquery.ui/themes/default/jquery.ui.core.css');
 		$this->response->addAsset('resources/jquery.ui/themes/default/jquery.ui.theme.css');
@@ -231,6 +249,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 			}
 			$this->response->setVal( "list", $resultCollection );
 		}
+		$this->response->addAsset('/extensions/wikia/StructuredData/js/StructuredData.js');
 	}
 
 	public function getTemplate() {
