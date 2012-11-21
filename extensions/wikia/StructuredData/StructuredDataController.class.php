@@ -153,12 +153,6 @@ class StructuredDataController extends WikiaSpecialPageController {
 		// Dropdown menu button values
 		$dropDownItems = array(
 			array(
-				'href' => '?action=edit',
-				'text' => 'Edit',
-				'class' => 'SDObject-edit',
-				'title' => 'Edit SDS Object'
-			),
-			array(
 				'href' => '?action=delete',
 				'text' => 'Delete',
 				'class' => 'SDObject-delete',
