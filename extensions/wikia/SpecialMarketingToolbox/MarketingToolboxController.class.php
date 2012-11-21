@@ -27,6 +27,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
 
 		$this->wf->ProfileOut(__METHOD__);
 		return true;
