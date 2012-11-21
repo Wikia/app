@@ -1,5 +1,7 @@
 /*global LightboxLoader:true, RelatedVideosIds, LightboxTracker*/
 
+/* TDOO: We need to normalize all readable titles and dbKeys so that we always know which one is which. This includes updating the DOM for every image and video element site-wide */
+
 var Lightbox = {
 	eventTimers: {
 		lastMouseUpdated: 0
@@ -25,30 +27,70 @@ var Lightbox = {
 	includeLatestPhotos: !$('#LatestPhotosModule .carousel-container').length, // if we don't have latest photos in the DOM, request them from back end
 	
 	makeLightbox: function(params) {
+		// If file doesn't exist, show the error modal
+		if(!Lightbox.initialFileDetail['exists']) {
+			Lightbox.showErrorModal();
+			return;
+		}
+		
 		var trackingObj = this.getClickSource(params);
 
 		Lightbox.openModal = params.modal;
 		Lightbox.current.title = params.title.toString(); // Added toString() for edge cases where titles are numbers
+
 		Lightbox.current.carouselType = trackingObj.carouselType;
 		
+		// Set up tracking
 		var clickSource = trackingObj.clickSource,
 			trackingCarouselType = trackingObj.trackingCarouselType;
 		
+		Lightbox.openModal.aggregateViewCount = 0;
+		Lightbox.openModal.clickSource = clickSource;
+	
 		// Check screen height for future interactions
 		Lightbox.shortScreen = $(window).height() < LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset ? true : false;
 		
 		// Add template to modal
 		Lightbox.openModal.find(".modalContent").html(LightboxLoader.templateHtml);
+		
+		// Init ads in Lightbox
 		if ($('#MODAL_RECTANGLE').length) {
 			window.adslots2.push(['MODAL_RECTANGLE']);
 		}
 		
-		if(!Lightbox.initialFileDetail['exists']) {
-			// We're showing an error template
-			Lightbox.showErrorModal();
-			return;
+		// cache re-used DOM elements and templates for this modal instance
+		Lightbox.cacheDOM();
+		
+		// Set up carousel
+		Lightbox.setUpCarousel();
+		
+		// callback to finish lighbox loading
+		var updateCallback = function(json) {
+			LightboxLoader.cache.details[Lightbox.current.title] = json;
+			Lightbox.updateMedia();
+			Lightbox.showOverlay();
+			Lightbox.hideOverlay(3000);
+
+			LightboxLoader.lightboxLoading = false;
+			
+			/* tracking after lightbox has fully loaded */
+			var trackingTitle = Lightbox.getTitleDbKey();
+			LightboxTracker.track(WikiaTracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': trackingCarouselType});
+		};
+
+		// Update modal with main image/video content								
+		if(Lightbox.current.type == 'image') {
+			updateCallback(Lightbox.initialFileDetail);
+		} else {
+			// normalize for jwplayer
+			LightboxLoader.normalizeMediaDetail(Lightbox.initialFileDetail, updateCallback);
 		}
 		
+		// attach event handlers
+		Lightbox.bindEvents();
+		
+	},
+	cacheDOM: function() {
 		// Template cache
 		Lightbox.openModal.moreInfoTemplate = $('#LightboxMoreInfoTemplate');
 		Lightbox.openModal.shareTemplate = $('#LightboxShareTemplate');
@@ -71,36 +113,10 @@ var Lightbox = {
 		Lightbox.openModal.closeButton = Lightbox.openModal.find('.close');
 		Lightbox.current.type = Lightbox.initialFileDetail.mediaType;
 		
-		// Set up carousel
-		Lightbox.setUpCarousel();
-		
-		// Set up tracking
-		Lightbox.openModal.aggregateViewCount = 0;
-		Lightbox.openModal.clickSource = clickSource;
-		
-		// callback to finish lighbox loading
-		var updateCallback = function(json) {
-			LightboxLoader.cache.details[Lightbox.current.title] = json;
-			Lightbox.updateMedia();
-			Lightbox.showOverlay();
-			Lightbox.hideOverlay(3000);
-
-			LightboxLoader.lightboxLoading = false;
-			
-			/* tracking after lightbox has fully loaded */
-			var trackingTitle = Lightbox.getTitleForTracking();
-			LightboxTracker.track(WikiaTracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': trackingCarouselType});
-		};
-
-		// Update modal with main image/video content								
-		if(Lightbox.current.type == 'image') {
-			updateCallback(Lightbox.initialFileDetail);
-		} else {
-			// normalize for jwplayer
-			LightboxLoader.normalizeMediaDetail(Lightbox.initialFileDetail, updateCallback);
-		}
-		
-		// attach event handlers
+	},
+	bindEvents: function() {
+		Lightbox.bindHistoryEvents();
+				
 		Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
 			var time = new Date().getTime();
 			if ( ( time - Lightbox.eventTimers.lastMouseUpdated ) > 100 ) { 
@@ -137,7 +153,7 @@ var Lightbox = {
 					.filter('.share-input')
 					.click();
 				
-				var trackingTitle = Lightbox.getTitleForTracking();
+				var trackingTitle = Lightbox.getTitleDbKey();
 				LightboxTracker.track(WikiaTracker.ACTIONS.CLICK, 'lightboxShare', null, {title: trackingTitle, type: Lightbox.current.type});
 				
 				Lightbox.openModal.share.shareUrl = json.shareUrl; // cache shareUrl for email share
@@ -205,7 +221,7 @@ var Lightbox = {
 			Lightbox.openModal.find('.carousel li').eq(Lightbox.current.index).trigger('click');
 		}).on('click.Lightbox', '.LightboxHeader .close', function() {
 				$('#LightboxModal .video-media').children().remove();
-		});
+		});	
 	},
 	clearTrackingTimeouts: function() {
 		// Clear video tracking timeout
@@ -250,6 +266,8 @@ var Lightbox = {
 				$(window).trigger('resize'); // firefox image loading hack (BugId:32477)
 
 				Lightbox.updateArrows();
+				
+				Lightbox.updateUrlState();
 
 				Lightbox.renderHeader();
 
@@ -257,7 +275,7 @@ var Lightbox = {
 
 				Lightbox.clearTrackingTimeouts();
 
-				var trackingTitle = Lightbox.getTitleForTracking(); // prevent race conditions from timeout
+				var trackingTitle = Lightbox.getTitleDbKey(); // prevent race conditions from timeout
 				Lightbox.image.trackingTimeout = setTimeout(function() {
 					Lightbox.openModal.aggregateViewCount++;
 					LightboxTracker.track(WikiaTracker.ACTIONS.VIEW, 'image', Lightbox.openModal.aggregateViewCount, {title: trackingTitle, clickSource: Lightbox.openModal.clickSource});
@@ -382,13 +400,15 @@ var Lightbox = {
 			
 			Lightbox.updateArrows();
 
+			Lightbox.updateUrlState();
+
 			Lightbox.renderHeader();
 
             Lightbox.updateMediaType();
 			
 			Lightbox.clearTrackingTimeouts();
 
-			var trackingTitle = Lightbox.getTitleForTracking(); // prevent race conditions from timeout
+			var trackingTitle = Lightbox.getTitleDbKey(); // prevent race conditions from timeout
 			Lightbox.video.trackingTimeout = setTimeout(function() {
 				Lightbox.openModal.aggregateViewCount++;
 				LightboxTracker.track(WikiaTracker.ACTIONS.VIEW, 'video', Lightbox.openModal.aggregateViewCount, {title: trackingTitle, provider: data.providerName, clickSource: Lightbox.openModal.clickSource});		
@@ -484,6 +504,9 @@ var Lightbox = {
 
 			// Ad's been shown, don't show it again. 
 			Lightbox.ads.adWasShown = true;
+
+			// remove "?file=" from URL
+			Lightbox.updateUrlState(true);
 		},
 		// Remove showing ad flag
 		reset: function() {
@@ -521,6 +544,9 @@ var Lightbox = {
 				})
 				.addClass('error-lightbox')
 				.html(Lightbox.openModal.errorMessage);
+
+			// remove "?file=" from URL
+			Lightbox.updateUrlState(true);
 		}
 	},
     updateMediaType: function() {
@@ -636,6 +662,45 @@ var Lightbox = {
 			next.removeClass('disabled');
 		}
 	},
+	
+	// Handle history API
+	bindHistoryEvents: function() {
+		var History = window.History;
+
+		// Handle forward and back buttons 
+		History.Adapter.bind(window, 'statechange.Lightbox', function(e) { // Note: History.js uses custom 'statechange' event instead of popstate
+			// History.replaceState will trigger the statechange event, if this is the case, ignore this event
+			if(Lightbox.stateChangedManually === true) {
+				Lightbox.stateChangedManually = false;
+				return;
+			}
+			LightboxLoader.loadFromURL();
+		});	
+	},
+	updateUrlState: function(clear) {
+		var History = window.History;
+		
+		// Only support HTML5 browsers for now
+		if(!History.enabled) {
+			return false;
+		}
+		
+		var dbKey = Lightbox.getTitleDbKey(),
+			newSearch = "?file="+dbKey;
+
+		if((window.location.search != newSearch) || clear) {
+			var stateObj = {
+					fileTitle: dbKey
+				},
+				stateUrl = window.location.pathname;
+			
+			stateUrl += clear ? "" : newSearch;
+
+			Lightbox.stateChangedManually = true;
+			History.replaceState(stateObj, History.options.initialTitle + ", " + Lightbox.current.title, stateUrl);
+		}
+	},
+	
 	getShareCodes: function(mediaParams, callback) {
 		var title = mediaParams['fileTitle'];
 		if(LightboxLoader.cache.share[title]) {
@@ -702,37 +767,23 @@ var Lightbox = {
 		}
 
 		// Set current carousel index
-		var readableTitle = Lightbox.current.title.split('_').join(" ");
-		for(var i = 0; i < Lightbox.current.thumbs.length; i++) {
-			if(Lightbox.current.thumbs[i].title == readableTitle) {
-				Lightbox.current.index = i;
-				break;
-			}
-		}
+		Lightbox.setCarouselIndex();
 
 		// Cache progress template
 		Lightbox.openModal.progress = $('#LightboxCarouselProgress');
 		Lightbox.openModal.data('overlayactive', true);
 
 		$(document).off('keydown.Lightbox')
-			.on('keydown.Lightbox', function(e) {
+			.on('keydown.Lightbox', function(e) {				
 				if(e.keyCode == 37) {
+					e.preventDefault();
 					$('#LightboxPrevious').click();
 				} else if(e.keyCode == 39) {
+					e.preventDefault();
 					$('#LightboxNext').click();
 				}
 			});
 		
-		// Clicking on an image should advance you to the next one
-		Lightbox.openModal.media.on('click', 'img', function() {
-			var next = $('#LightboxNext');
-			if(next.hasClass('disabled')) {
-				Lightbox.openModal.carousel.find('li:first').click();
-			} else {
-				next.click();
-			}
-		});
-	
 		// Pass control functions to jquery.wikia.carousel.js
 		var itemClick = function(e) {
 			var $this = $(this);
@@ -757,7 +808,36 @@ var Lightbox = {
 			
 			Lightbox.updateMedia();
 			
-		}
+		};
+		
+		var trackBackfillProgress = function(idx1, idx2) {
+			var originalCount = LightboxLoader.cache[Lightbox.current.carouselType].length;
+
+			idx1 = idx1 - originalCount - 1;
+			// (BugId:38546) Don't count placeholder thumb when it is first in the row 
+			if(idx1 == 0) {
+				idx1 = 1;
+			}
+			idx2 = idx2 - originalCount - 1;
+			
+			return {
+				idx1: idx1,
+				idx2: idx2,
+				total: Lightbox.backfillCountMessage
+			}
+		};
+		
+		var trackOriginalProgress = function(idx1, idx2) {
+			var originalCount = LightboxLoader.cache[Lightbox.current.carouselType].length;
+			
+			idx2 = Math.min(idx2, originalCount);
+			
+			return {
+				idx1: idx1,
+				idx2: idx2,
+				total: originalCount
+			};
+		};
 		
 		var trackProgressCallback = function(idx1, idx2, total) {
 			
@@ -775,41 +855,11 @@ var Lightbox = {
 				html = template.mustache(progress);
 			
 			Lightbox.openModal.progress.html(html);
-		}
-		
-		var trackBackfillProgress = function(idx1, idx2) {
-			var originalCount = LightboxLoader.cache[Lightbox.current.carouselType].length;
-
-			idx1 = idx1 - originalCount - 1;
-			// (BugId:38546) Don't count placeholder thumb when it is first in the row 
-			if(idx1 == 0) {
-				idx1 = 1;
-			}
-			idx2 = idx2 - originalCount - 1;
-			total = Lightbox.backfillCount;
-			
-			return {
-				idx1: idx1,
-				idx2: idx2,
-				total: Lightbox.backfillCountMessage
-			}
-		}
-		
-		var trackOriginalProgress = function(idx1, idx2) {
-			var originalCount = LightboxLoader.cache[Lightbox.current.carouselType].length;
-			
-			idx2 = Math.min(idx2, originalCount);
-			
-			return {
-				idx1: idx1,
-				idx2: idx2,
-				total: originalCount,
-			}			
-		}
+		};
 		
 		var beforeMove = function() {
 			Lightbox.openModal.carousel.find('.Wikia-video-play-button').hide();
-		}
+		};
 		
 		var afterMove = function(idx) {
 			Lightbox.openModal.carousel.find('.Wikia-video-play-button').show();
@@ -817,7 +867,7 @@ var Lightbox = {
 			if(Lightbox.current.thumbs.length - idx < Lightbox.thumbLoadCount) {
 				Lightbox.getMediaThumbs.wikiPhotos();
 			}
-		}
+		};
 		
 		var itemsShown = Lightbox.ads.showAds() ? 6 : 9;
 
@@ -848,7 +898,17 @@ var Lightbox = {
 			});
 		});
 	},
-
+	
+	setCarouselIndex: function() {
+		var readableTitle = Lightbox.current.title.split('_').join(" ");
+		for(var i = 0; i < Lightbox.current.thumbs.length; i++) {
+			if(Lightbox.current.thumbs[i].title == readableTitle) {
+				Lightbox.current.index = i;
+				break;
+			}
+		}
+	},
+	
 	setupShareEmail: function() {
 		var shareEmailForm = $('#shareEmailForm'),
 			wikiaForm = new WikiaForm(shareEmailForm),
@@ -887,7 +947,7 @@ var Lightbox = {
 					}
 					shareEmailForm.find('input[type=text]').val('');
 					
-					var trackingTitle = Lightbox.getTitleForTracking(); // prevent race conditions from timeout
+					var trackingTitle = Lightbox.getTitleDbKey(); // prevent race conditions from timeout
 					LightboxTracker.track(WikiaTracker.ACTIONS.SHARE, 'email', null, {title: trackingTitle, type: Lightbox.current.type});
 				}
 			});
@@ -1171,7 +1231,7 @@ var Lightbox = {
 
 	},
 
-	getTitleForTracking: function() {
+	getTitleDbKey: function() {
 		return LightboxLoader.cache.details[Lightbox.current.title].title; // get dbkey title for tracking (BugId:47644)	
 	},
 	
