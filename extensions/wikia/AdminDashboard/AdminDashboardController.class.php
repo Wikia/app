@@ -18,13 +18,17 @@ class AdminDashboardController extends WikiaController {
 			$this->tab = 'advanced';
 		}
 
-		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AdminDashboard/css/AdminDashboard.scss'));
-		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/AdminDashboard/js/AdminDashboard.js');
+		$this->response->addAsset('extensions/wikia/AdminDashboard/css/AdminDashboard.scss');
+		$this->response->addAsset('extensions/wikia/AdminDashboard/js/AdminDashboard.js');
+
+		if( $this->wg->EnableRelatedVideosExt ) {
+		//FB#68272
+			$this->response->addAsset('extensions/wikia/VideoHandlers/js/AddVideo.js');
+		}
 		
 		$this->adminDashboardUrl = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL("tab=$this->tab");
 		$this->adminDashboardUrlGeneral = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL("tab=general");
 		$this->adminDashboardUrlAdvanced = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL("tab=advanced");
-		
 	}
 	
 }
