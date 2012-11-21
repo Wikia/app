@@ -111,7 +111,6 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		$categories = !empty($addlCategories) ? $addlCategories : array();
-		$categories[] = 'Ooyala';
 
 		if ( !empty($data['keywords']) ) {
 			$categories[] = $data['keywords'];
@@ -119,6 +118,10 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 
 		if ( !empty($data['provider']) ) {
 			$categories[] = $data['provider'];
+		}
+
+		if ( !in_array( 'Ooyala', $categories) ) {
+			$categories[] = 'Ooyala';
 		}
 
 		wfProfileOut( __METHOD__ );
