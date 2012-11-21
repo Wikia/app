@@ -38,7 +38,7 @@
 	
 	.forum-discussions {
 		.forum-thread {
-			@include linear-gradient(false, top, rgba($color-module-shadow, 0), 80%, $color-module-shadow, 100%);
+			border-bottom: dotted 1px $color-page-border;
 			line-height: 16px;
 			padding: 15px 0 15px 40px;
 			position: relative;
