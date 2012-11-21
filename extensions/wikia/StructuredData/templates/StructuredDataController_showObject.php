@@ -14,7 +14,7 @@
 		<div class="validation-main-message <?= (empty($updateResult->error)) ? 'success' : '' ?>"
 				><?=$updateResult->message;?></div>
 		<?php if(isset($updateResult->errors)): ?>
-			<?php //var_dump($updateResult->errors); ?>
+			<?php var_dump($updateResult->errors); ?>
 		<?php endif; ?>
 	<?php endif; ?>
 	<h1><strong><?= $objectName; ?></strong></h1>
