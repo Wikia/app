@@ -12,3 +12,4 @@
 	<p class="empty">empty</p>
 <?php else: ?><?=$object->getValue();?><?php endif; ?>
 <?php endif; ?>
+<? // for K. Drogo: $params['isCreateMode']); ?>

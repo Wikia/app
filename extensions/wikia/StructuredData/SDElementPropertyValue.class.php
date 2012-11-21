@@ -50,8 +50,8 @@ class SDElementPropertyValue extends SDRenderableObject {
 		return $this->propertyName;
 	}
 
-	public function render( $context = SD_CONTEXT_DEFAULT ) {
-		$renderedContent = parent::render( $context );
+	public function render( $context = SD_CONTEXT_DEFAULT, array $params = array() ) {
+		$renderedContent = parent::render( $context, $params );
 		return ( $renderedContent !== false ) ? $renderedContent : $this->getValue();
 	}
 
