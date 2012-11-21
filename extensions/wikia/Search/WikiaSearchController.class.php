@@ -274,7 +274,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return boolean true (if not routed to search match page)
 	 */
-	private function handleArticleMatchTracking( WikiaSearchConfig $searchConfig ) {
+	protected function handleArticleMatchTracking( WikiaSearchConfig $searchConfig ) {
 		$articleMatch	=	$searchConfig->getArticleMatch();
 		$track			=	F::build( 'Track' );
 		
