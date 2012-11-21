@@ -98,7 +98,9 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
-		$duplicates = WikiaFileHelper::findVideoDuplicates(static::$PROVIDER,$id);
+		$provider = empty($params['provider']) ? static::$PROVIDER : $params['provider'];
+
+		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id );
 		$dup_count = count($duplicates);
 		$previousFile = null;
 		if ( $dup_count > 0 ) {
@@ -178,7 +180,7 @@ abstract class VideoFeedIngester {
 				}
 			}
 			$uploadedTitle = null;
-			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $id, $uploadedTitle, $body, false, $metadata );
+			$result = VideoFileUploader::uploadVideo( $provider, $id, $uploadedTitle, $body, false, $metadata );
 			if ($result->ok) {
 				$fullUrl = WikiFactory::getLocalEnvURL($uploadedTitle->getFullURL());
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n\n";

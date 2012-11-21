@@ -82,7 +82,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['actors'] = empty($video['metadata']['actors']) ? '' : $video['metadata']['actors'];
 
 				$msg = '';
-				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug );
+				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug, 'provider' => $clipData['provider'] );
 				$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
 				if ( $msg ) {
 					print "ERROR: $msg\n";
