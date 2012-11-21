@@ -146,6 +146,26 @@ class WikiaDispatcher {
 				$app->runHook( ( "{$controllerName}{$hookMethod}AfterExecute" ), array( &$controller, &$params ) );
 
 				$app->wf->profileOut($profilename);
+			} catch ( WikiaHttpException $e ) {
+
+				if ( !$request->isInternal() ) {
+					$response->setFormat( 'json' );
+				}
+
+				header(
+					$e->getMessage(),
+					true,
+					$e->getCode()
+				);
+
+				$response->setVal( 'error', get_class( $e ) );
+
+				$details = $e->getDetails();
+
+				if( !empty( $details ) ) {
+					$response->setVal( 'message', $details );
+				}
+
 			} catch ( Exception $e ) {
 				$app->wf->profileOut($profilename);
 
