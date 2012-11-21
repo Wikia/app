@@ -39,3 +39,6 @@ EOT;
 	}
 
 }
+
+class WikiawebinarsVideoHandler extends OoyalaVideoHandler {
+}

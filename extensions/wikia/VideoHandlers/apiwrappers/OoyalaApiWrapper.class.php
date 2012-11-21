@@ -37,6 +37,26 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return null;
 	}
 
+	public function getProvider() {
+		if ( !empty($this->metadata['provider']) ) {
+			return $this->metadata['provider'];
+		}
+
+		return self::getProviderName( $this->interfaceObj['labels'] );
+	}
+
+	public static function getProviderName( $labels ) {
+		$provider = 'Ooyala';
+		foreach( $labels as $label ) {
+			if ( empty($label['parent_id']) ) {
+				$provider = str_replace( ' ', '', $label['name'] );
+				break;
+			}
+		}
+
+		return strtolower( $provider );
+	}
+
 	public function isIngestion() {
 		return $this->ingestion;
 	}
@@ -262,4 +282,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+}
+
+class WikiawebinarsApiWrapper extends OoyalaApiWrapper {
 }

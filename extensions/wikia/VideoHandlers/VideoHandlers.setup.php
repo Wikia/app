@@ -202,9 +202,13 @@ $app->registerClass('TwitchtvVideoHandler', $dir . '/handlers/TwitchtvVideoHandl
 $app->registerClass('TwitchtvApiWrapper', $dir . '/apiwrappers/TwitchtvApiWrapper.class.php');
 $wgMediaHandlers['video/twitchtv'] = 'TwitchtvVideoHandler';
 
-$app->registerClass('OoyalaVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php');
-$app->registerClass('OoyalaApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php');
+$app->registerClass( 'OoyalaVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'OoyalaApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
 $wgMediaHandlers['video/ooyala'] = 'OoyalaVideoHandler';
+
+$app->registerClass( 'WikiawebinarsVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'WikiawebinarsApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/wikiawebinars'] = 'WikiawebinarsVideoHandler';
 
 /**
  * Feed ingesters
@@ -238,6 +242,7 @@ $wgVideoMigrationProviderMap = array(
 	26 => 'Anyclip',
 	27 => 'Twitchtv',
 	28 => 'Ooyala',
+	29 => 'wikiawebinars',
 );
 
 

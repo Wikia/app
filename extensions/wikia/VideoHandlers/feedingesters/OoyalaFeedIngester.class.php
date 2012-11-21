@@ -19,6 +19,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		$articlesCreated = 0;
 		$nextPage = '';
 
+		// ingest only live video
 		$cond = array( "status = 'live'" );
 		if ( !empty($params['startDate']) ) {
 			$cond[] = "created_at >= '$params[startDate]'";
@@ -60,7 +61,6 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			print("Found $numVideos videos...\n");
 
 			foreach( $videos as $video ) {
-				// ingest only live video
 				$clipData = array();
 				$clipData['titleName'] = trim($video['name']);
 				$clipData['videoId'] = $video['embed_code'];
@@ -73,7 +73,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['ageGate'] = empty($video['metadata']['agegate']) ? 0 : 1;
 				$clipData['hd'] = empty($video['metadata']['hd']) ? 0 : 1;
 				$clipData['tags'] = empty($video['metadata']['tags']) ? '' : $video['metadata']['tags'];
-				$clipData['provider'] = empty($video['labels']['name']) ? 'Wikia' : $video['labels']['name'];
+				$clipData['provider'] = OoyalaApiWrapper::getProviderName( $video['labels'] );
 
 				$clipData['language'] =  empty($video['metadata']['lang']) ? '' : $video['metadata']['lang'];
 				$clipData['genres'] = empty($video['metadata']['genres']) ? '' : $video['metadata']['genres'];
