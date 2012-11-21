@@ -10,6 +10,11 @@ class ForumSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
+		if( $this->app->checkSkin( 'monobook' ) ) {
+			$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Form.js' );
+			$this->response->addAsset( 'resources/wikia/modules/querystring.js' );
+		}
+	
 		$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumSpecial.scss' );
 		$this->response->setJsVar( 'wgIsForum', true );

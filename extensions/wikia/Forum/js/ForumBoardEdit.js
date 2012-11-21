@@ -38,7 +38,7 @@
 							$().log(json);
 							if(json) {
 								if(json.status === 'ok') {
-									UserLoginAjaxForm.prototype.reloadPage(); // reload, waiting on pull request
+									new Wikia.Querystring(window.location + '').addCb().goTo();
 								} else if(json.status === 'error') {
 									dialog.form.clearAllInputErrors();
 									if(json.errorfield) {
