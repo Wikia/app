@@ -458,8 +458,10 @@ class WallNotifications {
 							// notification
 
 		$memcSync = $this->getCache($userId, $wikiId);
-		$count = 0; //use to set priority of process
-		do {
+
+		// Try to update the data $count times before giving up
+		$count = 5;
+		while ($count--) {
 			if($memcSync->lock()) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 
@@ -484,13 +486,29 @@ class WallNotifications {
 						}
 					}
 				}
+
+				// Make sure we have data
+				if (isset($data)) {
+					// See if we can set it successfully
+					if ($this->setData($memcSync, $data)) {
+						break;
+					}
+				} else {
+					// If there's no data don't bother doing anything
+					break;
+				}
 			} else {
-				$this->sleep($count);
+				$this->random_msleep($count);
 			}
-			$count++;
-		} while(!isset($data) || !$this->setData($memcSync, $data));
+		}
 
 		$memcSync->unlock();
+
+		// If count is -1 it means we left the above loop failing to update
+		if ($count == -1) {
+			// Delete the cache if we were unable to update to force a rebuild
+			$memcSync->delete();
+		}
 
 		foreach($updateDBlist as $value) {
 			$this->getDB(true)->update('wall_notification' , array('is_read' =>  1 ), $value, __METHOD__ );
@@ -533,24 +551,40 @@ class WallNotifications {
 
 			if($this->isCachedData($uId, $wikiId)) {
 				$memcSync = $this->getCache($uId, $wikiId);
-				$count = 0; //use to set priority of process
-				do {
+
+				// Try to update the data $count times before giving up
+				$count = 5;
+				while ($count--) {
 					if($memcSync->lock()) {
 						$data = $this->getData($memcSync, $uId, $wikiId);
 						$this->remNotificationFromData($data, $uniqueId);
+
+						// Make sure we have data
+						if (isset($data)) {
+							// See if we can set it successfully
+							if ($this->setData($memcSync, $data)) {
+								break;
+							}
+						} else {
+							// If there's no data don't bother doing anything
+							break;
+						}
 					} else {
-						$this->sleep($count);
+						$this->random_msleep($count);
 					}
-					$count++;
-				} while(!isset($data) || !$this->setData($memcSync, $data));
+				}
 
 				$memcSync->unlock();
+
+				// If count is -1 it means we left the above loop failing to update
+				if ($count == -1) {
+					// Delete the cache if we were unable to update to force a rebuild
+					$memcSync->delete();
+				}
 			}
 
 			$this->remNotificationsForUniqueIDDB($uId, $wikiId, $uniqueId, $hide);
-
 		}
-
 	}
 
 	private function getUsersWithNotificationsForUniqueID( $wikiId, $uniqueId ) {
@@ -631,29 +665,43 @@ class WallNotifications {
 		//id use to prevent having of extra entry after memc fail.
 
 		$memcSync = $this->getCache($userId, $wikiId);
-		$count = 0; //use to set priority of process
-		do {
+
+		// Try to update the data $count times before giving up
+		$count = 5;
+		while ($count--) {
 			if($memcSync->lock()) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 				$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, false, $notifyeveryone );
+
+				// Make sure we have data
+				if (isset($data)) {
+					// See if we can set it successfully
+					if ($this->setData($memcSync, $data)) {
+						break;
+					}
+				} else {
+					// If there's no data don't bother doing anything
+					break;
+				}
 			} else {
-				$this->sleep($count);
+				$this->random_msleep($count);
 			}
 			$count++;
-		} while(!isset($data) || !$this->setData($memcSync, $data));
+		}
 
 		$memcSync->unlock();
+
+		// If count is -1 it means we left the above loop failing to update
+		if ($count == -1) {
+			// Delete the cache if we were unable to update to force a rebuild
+			$memcSync->delete();
+		}
 
 		$this->cleanEntitiesFromDB();
 	}
 
-
-	protected function sleep( $count ){
-		$time = 100000 - $count*1000; //change priority of process with access to resource
-		if( $time < 0 ) {
-			$time = 0;
-		}
-		usleep( 100000 + $time );
+	protected function random_msleep( $max = 20 ) {
+		usleep(rand(1, $max*1000));
 	}
 
 	protected function remNotificationFromData(&$data, $uniqueId) {
@@ -691,7 +739,9 @@ class WallNotifications {
 		}
 
 		// if there is no count for this Thread notification, create it
-		if(empty($data['relation'][ $uniqueId ]['count'])) $data['relation'][ $uniqueId ]['count'] = count($data['relation'][ $uniqueId ]['list']);
+		if(empty($data['relation'][ $uniqueId ]['count'])) {
+			$data['relation'][ $uniqueId ]['count'] = count($data['relation'][ $uniqueId ]['list']);
+		}
 
 		// keep track of where we are references in Notifications list, so that
 		// we can remove that entry and readd it at the end, should the new
