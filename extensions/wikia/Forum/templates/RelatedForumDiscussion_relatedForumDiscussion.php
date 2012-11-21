@@ -7,21 +7,16 @@
 					<?= $message['metaTitle'] ?>
 				</h4>
 			</a>
-			<? if($message['totalReplies'] > 1): ?>
-				<div class="forum-total-replies"><?= wfMsg('forum-related-discussion-total-replies', $message['totalReplies']) ?></div>
+			<? if($message['totalReplies'] > 0): ?>
+				<div class="forum-total-replies"><?= wfMsg('forum-related-discussion-total-replies', $message['totalReplies'] + 1) ?></div>
 			<? endif; ?>
 			<ul class="forum-replies">
+				<? if($message['totalReplies'] < 2): ?>
+					<?= $app->renderPartial('RelatedForumDiscussion', 'message', array('reply' => $message)); ?>
+				<? endif; ?>
+			
 				<? foreach($message['replies'] as $reply): ?>
-					<li class="forum-reply">
-						<img class="forum-user-avatar" src="<?= AvatarService::getAvatarUrl($reply['userName'], 50) ?>">
-						<div class="forum-user-name">
-							<a href="<?= $reply['userUrl'] ?>"><?= $reply['userName'] ?></a>
-						</div>
-						<div class="forum-message-body">
-							<?= $reply['messageBody'] ?>
-							<time class="forum-timestamp" datetime="<?= $reply['timeStamp'] ?>"><?= $reply['timeStamp'] ?></time>
-						</div>
-					</li>
+					<?= $app->renderPartial('RelatedForumDiscussion', 'message', array('reply' => $reply)); ?>
 				<? endforeach; ?>
 			</ul>
 		</li>
