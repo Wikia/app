@@ -137,7 +137,7 @@ class StructuredData {
 				elseif($property instanceof SDElementProperty ) {
 					if(!count($inputData['propertyChain']) && is_null($valueIndex)) {
 						// last element in chain, try to render it
-						$result = $property->render();
+						$result = $property->render( SD_CONTEXT_DEFAULT, (array)$args );
 						if($result !== false) {
 							$currentElement = null;
 							break;
@@ -154,7 +154,7 @@ class StructuredData {
 					}
 					elseif(!empty($result)) {
 						$currentElement = null;
-						$renderedResult = $property->render();
+						$renderedResult = $property->render( SD_CONTEXT_DEFAULT, (array)$args );
 						if($renderedResult !== false) {
 							$result = $renderedResult;
 						}
@@ -172,7 +172,7 @@ class StructuredData {
 			while( $currentElement instanceof SDElement );
 
 			if($currentElement instanceof SDElement) {
-				$result = $currentElement->render();
+				$result = $currentElement->render( SD_CONTEXT_DEFAULT, (array)$args );
 			}
 		}
 		else {

@@ -1,8 +1,11 @@
 <?php
 // list element (@set, @list) renderer
 /* @var SDElementProperty $object */
+
 $value = $object->getValue(true);
+
 if ( !count( $value ) ) {
+
 	if ($context != SD_CONTEXT_EDITING) {
 		echo '<p class="empty">empty</p>';
 	}
@@ -12,43 +15,32 @@ if ( !count( $value ) ) {
 			echo '<div class="input-group"><input type="text" name="'. $object->getName() . '[]" value="" /></div>';
 		}
 	}
+
 } else {
-	$renderList = ( count( $value ) > 1 || $context == SD_CONTEXT_EDITING) ? true : false;
-	if ( $renderList ) echo ($rendererName == '@list') ? '<ol data-field-name="'.$object->getName().'">' : '<ul data-field-name="'.$object->getName().'">';
-	foreach($value as $reference) {
-		if ( $renderList ) echo '<li>';
-		$referenceHTML = false;
-		if (is_object($reference) && (!is_null($reference->object))) {
-			$referenceHTML = $reference->object->render( $context, array( 'fieldName' => $object->getName() . '[]' ) );
-		}
-		if ($referenceHTML !== false) {
-			echo $referenceHTML;
-		}
-		else {
-			if(is_object($reference) && !isset($reference->object)) {
-				echo '<p class="empty">' . $reference->id . '</p>';
-			}
-			else {
-				if ($context == SD_CONTEXT_EDITING) {
-					if($object->getType()->hasRange()) {
-						echo '<div class="input-group"><input type="text" name="'. $object->getName() . '[]" value="'. $reference . '" /> <button class="secondary remove">Remove</button></div>';
-					} else {
-						echo '<div class="input-group"><input type="text" name="'. $object->getName() . '[]" value="'. $reference . '" /></div>';
-					}
 
-				}  else {
-					echo $reference;
-				}
-			}
-		}
-		if ( $renderList ) echo '</li>';
+	if ( $context == SD_CONTEXT_DEFAULT && !empty( $params['list-type'] ) && in_array( $params['list-type'], array('coma', 'newline') ) ) {
+
+	 	/*
+	 	 * in-article context with <data>'s list-type property set as 'coma' or 'newline'
+	 	 */
+		echo $renderer->renderTemplate( 'container_'.$params['list-type'], 'container_'.$params['list-type'], $object, $context, $params );
 	}
+	else {
 
-	if ( $renderList ) echo ($rendererName == '@list') ? '</ol>' : '</ul>';
+		/*
+		 * any other context uses default container list ( ul/ol elements )
+		 */
+		if ( empty( $params['list-type'] ) ) {
+			$params['list-type'] =  $rendererName == '@list' ? 'ordered' : 'unordered';
+		}
+		echo $renderer->renderTemplate( 'container_list', 'container_list', $object, $context, $params );
+	}
 }
 
-if ($context == SD_CONTEXT_EDITING) {
-	if($object->getType()->hasRange()) {
+if ( $context == SD_CONTEXT_EDITING ) {
+
+	if ( $object->getType()->hasRange() ) {
+
 		$types = $object->getType()->getAcceptedValues();
 		if (count($types['classes']) == 1 && in_array('rdfs:Literal', $types['classes'])) {
 			echo '<button class="add-input" data-range="' . join('', $types['classes']) . '">Add new</button>';
