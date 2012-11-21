@@ -3,13 +3,17 @@
 	<div class="input-group">
 		<?php if ($object->getPropertyName() == 'schema:description') : ?>
 			<textarea name="<?=$object->getPropertyName();?>"><?=$value;?></textarea>
+		<?php elseif ($object->getPropertyName() == 'schema:name' && empty($isCreateMode)) : ?>
+			<?= $object->getValue();?>
 		<?php else : ?>
 			<input type="text" value="<?=$value;?>" name="<?=$object->getPropertyName();?>" />
 		<?php endif; ?>
 	</div>
 <?php else: ?>
-<?php if(empty($value)): ?>
-	<p class="empty">empty</p>
-<?php else: ?><?=$object->getValue();?><?php endif; ?>
+	<?php if(empty($value)): ?>
+		<p class="empty">empty</p>
+	<?php else: ?>
+		<?=$object->getValue();?>
+	<?php endif; ?>
 <?php endif; ?>
 <? // for K. Drogo: $params['isCreateMode']); ?>
