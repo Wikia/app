@@ -37,7 +37,7 @@ $wgExtensionFunctions[] = 'TOCimprovementsInit';
  */
 function TOCimprovementsInit() {
 	global $wgHooks;
-	//$wgHooks['SkinGetPageClasses'][] = 'TOCimprovementsAddBodyClass';
+	$wgHooks['SkinGetPageClasses'][] = 'TOCimprovementsAddBodyClass';
 	$wgHooks['BeforePageDisplay'][] = 'TOCcssfornoscript';
 }
 
@@ -56,30 +56,14 @@ function TOCcssfornoscript( OutputPage &$out, &$skin ) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function TOCimprovementsAddBodyClass(&$classes) {
-	global $wgHooks, $wgUser;
-
-	// do not touch skins other than Oasis (this condition must not be in TOCimprovementsInit() as it expand stub object too fast and ?usetheme does not work)
-	// init only for anons
-	$skinName = get_class(RequestContext::getMain()->getSkin());
-	if ($skinName !== 'SkinOasis' || !$wgUser->isAnon()) {
-		return true;
-	}
-	$wgHooks['MakeGlobalVariablesScript'][] = 'TOCimprovementsSetupVars';
-
-	if (!isset($_COOKIE['hidetoc']) || $_COOKIE['hidetoc'] == '1') {
-		$classes .= ' TOCimprovements';
+	global $wgUser;
+	if( $wgUser->isLoggedIn() ) {
+		if (isset($_COOKIE['mw_hidetoc']) && $_COOKIE['mw_hidetoc'] === '1') {
+			$classes .= ' TOC_hide';
+		}
+	} else {
+		$classes .= ' TOC_hide';
 	}
 	return true;
 }
 
-/**
- * Set variables for JS usage
- *
- * @author Maciej Błaszkowski <marooned at wikia-inc.com>
- */
-function TOCimprovementsSetupVars(Array &$vars) {
-	//used in wikibits.js to enable anon handling
-	$vars['TOCimprovementsEnabled'] = '1';
-
-	return true;
-}

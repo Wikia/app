@@ -56,10 +56,11 @@
 
 		clickButtonHandler: function() {
 			var mode = this.editor.mode;
-			if (typeof this['click'+mode] == 'function')
+			if (typeof this['click'+mode] == 'function') {
 				return this['click'+mode].apply(this,arguments);
-			else
+			} else {
 				this.editor.warn('Mode "'+mode+'" not supported for button: '+this.name);
+			}
 		},
 
 		buildClickHandler: function() {
@@ -95,38 +96,14 @@
 		},
 
 		renderHtml: function() {
-			var html = '';
-
-			html += '<span class="' + this.buttonClass + ' ' + this.classes + '">';
-			html += '<a id="' + this.id + '" class="cke_off ' + this.classes + '"'
+			var html = '<span class="' + this.buttonClass + ' ' + this.classes + '">'
+				+ '<a id="' + this.id + '" class="cke_off ' + this.classes + '"'
 				+ ' title="' + this.title + '"'
 				+ ' tabindex="-1"'
 				+ ' hidefocus="true"'
 			    + ' role="button"'
-				+ ' aria-labelledby="' + this.id + '_label"';
-
-			// Some browsers don't cancel key events in the keydown but in the
-			// keypress.
-			// TODO: Check if really needed for Gecko+Mac.
-			/*
-			if ( env.opera || ( env.gecko && env.mac ) )
-			{
-				html += ' onkeypress="return false;"';
-			}
-			*/
-
-			// With Firefox, we need to force the button to redraw, otherwise it
-			// will remain in the focus state.
-			/*
-			if ( env.gecko )
-			{
-				html += ' onblur="this.style.cssText = this.style.cssText;"';
-			}
-			*/
-
-			//html +=	' onclick="WikiaEditor.callFunction(' + this.clickFn + ', this); return false;">';
-			//html += ' onclick="return false;"';
-			html += ' onmousedown="WikiaEditor.callFunction(' + this.clickFn + ', this); return false;">';
+				+ ' aria-labelledby="' + this.id + '_label"'
+				+ ' onmousedown="WikiaEditor.callFunction(' + this.clickFn + ', this); return false;">';
 
 			if ( this.hasIcon !== false ) {
 				html += '<span class="cke_icon">&nbsp;</span>';

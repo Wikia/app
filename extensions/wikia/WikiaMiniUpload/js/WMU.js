@@ -97,11 +97,10 @@ function WMU_setSkip(){
 	WMU_skipDetails = true;
 }
 
+// Returns the DOM element for the RTE textarea
 function WMU_getRTETxtarea(){
-	// return dom element, not jquery object
 	return WikiaEditor.getInstance().getEditbox()[0];
 }
-
 
 function WMU_loadDetails() {
 
@@ -193,40 +192,6 @@ function WMU_moveBackButton(selector) {
 /*
  * Functions/methods
  */
-if(mwCustomEditButtons) {
-	if ( $("#siteSub").length == 0 ) {
-		mwCustomEditButtons.push({
-			"imageFile": wgExtensionsPath + '/wikia/WikiaMiniUpload/images/button_wmu.png',
-			"speedTip": wmu_imagebutton,
-			"tagOpen": "",
-			"tagClose": "",
-			"sampleText": "",
-			"imageId": "mw-editbutton-wmu",
-			'onclick': function(ev) {
-				WMU_show(ev);
-			}
-		});
-	}
-}
-
-$(function() {
-	$.when(
-		$.loadYUI(),
-		$.loadJQueryAIM()
-	).then(function(){
-		if(skin != 'monobook') {
-			if(document.forms.editform) {
-				WMU_addHandler();
-			}
-		}
-	});
-});
-
-function WMU_addHandler() {
-	$.loadYUI(function(){
-		YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink'], 'click',  WMU_show);
-	});
-}
 
 function WMU_licenseSelectorCheck() {
 	var selector = document.getElementById( "ImageUploadLicense" );
@@ -616,17 +581,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	YAHOO.util.Event.addListener('ImageUploadClose', 'click', WMU_close);
 }
 
-
-$(function(){
-	if ( window.wgComboAjaxLogin ) {
-		if( (window.location.href.indexOf("openwindow=WMU") > 1)
-			&& (window.location.href.indexOf("action=submit") > 1)
-			&& (wgUserName !== null) ) {
-			WMU_show(-1);
-		}
-	}
-});
-
 function WMU_loadMain() {
 	var callback = {
 		success: function(o) {
@@ -925,10 +879,6 @@ function WMU_displayDetails(responseText) {
 		}
 	}
 
-	if( 0 < WMU_thumb ) {
-//                $G( 'ImageSizeRow' ).style.display = 'none';
-	}
-
 	if( 0 < WMU_size ) {
 		$G( 'ImageUploadWidthCheckbox' ).click();
 		$G( 'ImageUploadManualWidth' ).value = WMU_size;
@@ -954,13 +904,6 @@ function WMU_displayDetails(responseText) {
 			$G('ImageUploadLicenseLink').innerHTML = '[' + wmu_show_license_message  + ']';
 		}
 	}
-	//$G( 'ImageColumnRow' ).style.display = 'none';
-//	if( -1 != WMU_gallery ) {
-	// todo gallery stuff here
-//		if( -2 == WMU_gallery ) { // placeholder stuff, don't need that
-	//$G( 'WMU_LayoutGalleryBox' ).style.display = 'none';
-//		}
-//	}
 
 	if(typeof(WMU_Event_OnLoadDetails) == "function") {
 		setTimeout(function() {

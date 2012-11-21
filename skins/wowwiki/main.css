@@ -387,13 +387,15 @@ table.small {
 }
 #toc ul,
 .toc ul {
-	display: none;
 	list-style-type: none;
 	list-style-image: none;
 	margin-left: 0;
 	padding-left: 1em;
 	text-align: left;
         text-indent: -1em;
+}
+.TOC_hide #toc ul, .TOC_hide .toc ul {
+	display: none;
 }
 #toc ul ul,
 .toc ul ul {

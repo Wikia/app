@@ -2,7 +2,7 @@ CKEDITOR.plugins.add('rte-media',
 {
 	init: function(editor) {
 		var self = this;
-		
+
 		editor.on('wysiwygModeReady', function() {
 			// get all media (images / videos) - don't include placeholders
 			var media = RTE.tools.getMedia();
@@ -18,20 +18,24 @@ CKEDITOR.plugins.add('rte-media',
 		// handle clicks on WMU/VET buttons in source mode (RT #35276)
 		editor.on('toolbarReady', function(toolbar) {
 			$('#mw-toolbar').children('#mw-editbutton-wmu').click(function(ev) {
-				window.WMU_show(ev);
+				WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
+					window.WMU_show(ev);
+				});
 			});
 
 			$('#mw-toolbar').children('#mw-editbutton-vet').click(function(ev) {
-				window.VET_show(ev);
+				WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+					window.VET_show(ev);
+				});
 			});
 		});
 
-		//debugger;
 		// register "Add Image" command
 		editor.addCommand('addimage', {
 			exec: function(editor) {
-				// call WikiaMiniUpload
-				RTE.tools.callFunction(window.WMU_show);
+				WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
+					RTE.tools.callFunction(window.WMU_show);
+				});
 			}
 		});
 
@@ -49,8 +53,9 @@ CKEDITOR.plugins.add('rte-media',
 			// register "Add Video" command
 			editor.addCommand('addvideo', {
 				exec: function(editor) {
-					// call VideoEmbedTool
-					RTE.tools.callFunction(window.VET_show);
+					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+						RTE.tools.callFunction(window.VET_show);
+					});
 				}
 			});
 
@@ -112,7 +117,7 @@ CKEDITOR.plugins.add('rte-media',
 
 					RTE.tools.confirm(title, msg, function() {
 						RTE.tools.removeElement(node);
-						
+
 						var wikiaEditor = RTE.getInstanceEditor();
 
 						// Resize editor area
@@ -124,10 +129,10 @@ CKEDITOR.plugins.add('rte-media',
 					RTE.track(type, 'menu', 'delete');
 				}
 			}
-		]; 
-         
+		];
+
 		RTE.overlay.add(media, standardButtons);
-    
+
 
 		// unbind previous events
 		media.unbind('.media');
@@ -438,7 +443,7 @@ RTE.mediaEditor = {
 		// render an image and replace old one
 		RTE.tools.parseRTE(wikitext, function(html) {
 			var editor = RTE.getInstance();
-			
+
 			//RT#52431 - proper context
 			var newMedia = $(html, editor.document.$).children('img');
 
@@ -454,12 +459,12 @@ RTE.mediaEditor = {
 			// insert new media (don't reinitialize all placeholders)
 			RTE.tools.insertElement(newMedia, true);
 
-			// for MiniEditor, resize the editor after adding an image. 
+			// for MiniEditor, resize the editor after adding an image.
 			RTE.getInstanceEditor().fire('editorResize');
 
 			// setup added media
 			self.plugin.setupMedia(newMedia);
-			
+
 			editor.focus();
 
 			// tracking
@@ -477,7 +482,7 @@ RTE.mediaEditor = {
 
 			var newMedia = $(html).children('img');
 
-			// replace old one with new one                           Z
+			// replace old one with new one
 			newMedia.insertAfter(media);
 			newMedia.setData('wikitext', wikitext);
 			media.remove();
