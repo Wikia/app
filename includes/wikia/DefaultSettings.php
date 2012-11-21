@@ -150,6 +150,9 @@ $app->registerApiController( 'DiscoverApiController', "{$IP}/includes/wikia/api/
 $app->registerApiController( 'NavigationApiController', "{$IP}/includes/wikia/api/NavigationApiController.class.php" );
 $app->registerApiController( 'ArticlesApiController', "{$IP}/includes/wikia/api/ArticlesApiController.class.php" );
 
+//Wikia Api exceptions classes
+$app->registerClass( 'BadRequestApiException', "{$IP}/includes/wikia/api/WikiaApiController.class.php" );
+
 /**
  * Wikia API end
  */
