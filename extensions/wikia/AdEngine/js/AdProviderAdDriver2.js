@@ -27,7 +27,7 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 		'HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
 		'LEFT_SKYSCRAPER_2': {'size':'160x600,120x600', 'tile':3, 'loc':'middle'},
 		'LEFT_SKYSCRAPER_3': {'size': '160x600', 'tile':6, 'loc':'footer'},
-		'MODAL_INTERSTITIAL': {'size':'600x400','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL': {'size':'600x400,300x250','tile':2,'loc':'modal'},
 		'MODAL_RECTANGLE': {'size':'300x100','tile':2,'loc':'modal'},
 		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
@@ -84,10 +84,10 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 		return false;
 	};
 
-	fillInSlot = function(slotinfo) {
-		log(['fillInSlot', slotinfo], 5, logGroup);
+	fillInSlot = function(slot) {
+		log(['fillInSlot', slot], 5, logGroup);
 
-		var slotname = slotinfo[0]
+		var slotname = slot[0]
 
 			, slotsize = slotMap[slotname].size
 			, loc = slotMap[slotname].loc
@@ -95,8 +95,8 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 
 			// Do this when DART hops or doesn't handle
 			, error = function() {
-				slotinfo[2] = 'Liftium2';
-				window.adslots2.push(slotinfo);
+				slot[2] = 'Liftium2';
+				window.adslots2.push(slot);
 			}
 
 			// Do this when filling slot by DART
@@ -136,11 +136,7 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 			}
 		}
 
-		WikiaTracker.trackAdEvent('liftium.slot2', {
-			ga_category: 'slot2/' + slotsize,
-			ga_action: slotname,
-			ga_label: 'addriver2'
-		}, 'ga');
+		WikiaTracker.trackAdEvent('liftium.slot2', {ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''), ga_action: slotname, ga_label: 'addriver2'}, 'ga');
 
 		hopTimer = new Date().getTime();
 		log('hopTimer start for ' + slotname, 7, logGroup);

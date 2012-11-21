@@ -88,6 +88,11 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'editaccount-desc' => '{{desc}}',
+	'editaccount-label-toggleadopt' => 'Label for option to toggle whether or not the user is allowed to automatically adopt a wiki.',
+	'editaccount-label-toggleadopt-prevent' => 'Label for option to prevent user from automatically adopting a wiki.',
+	'editaccount-label-toggleadopt-allow' => 'Label for option to allow user to automatically adopting a wiki.',
+	'editaccount-label-reason' => 'Label for reason field.',
+	'editaccount-submit-button' => 'Text of the submission button.',
 	'editaccount-success-disable' => 'Parameters:
 * $1 is a username.',
 	'editaccount-success-toggleadopt' => 'Indicates that a user has been successfully verified as an adopter of a wiki. Parameters:
@@ -97,11 +102,6 @@ $messages['qqq'] = array(
 Per [[Thread:Support/About_Wikia:Editaccount-status-realuser/ms_and_Wikia:Editaccount-status-tempuser/ms/reply|user TOR on support]]',
 	'editaccount-status-tempuser' => 'This is the status of the account in the Wikia UserLogin system – a "real user" means an active account, while a "temp user" means it\'s an inactive account. Accounts are activated once the user clicks on a link in an e-mail we send them.',
 	'right-editaccount' => '{{doc-right|editaccount}}',
-	'editaccount-label-toggleadopt' => 'Label for option to toggle whether or not the user is allowed to automatically adopt a wiki.',
-	'editaccount-label-toggleadopt-prevent' => 'Label for option to prevent user from automatically adopting a wiki.',
-	'editaccount-label-toggleadopt-allow' => 'Label for option to allow user to automatically adopting a wiki.',
-	'editaccount-submit-button' => 'Text of the submission button.',
-	'editaccount-label-reason' => 'Label for reason field.',
 	'action-editaccount' => '{{doc-action|editaccount}}',
 );
 
@@ -335,6 +335,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Jan Luca
  * @author LWChris
+ * @author Metalhead64
  * @author PtM
  * @author Quedel
  * @author The Evil IP address
@@ -355,12 +356,16 @@ $messages['de'] = array(
 	'editaccount-label-pass' => 'Neues Passwort setzen',
 	'editaccount-label-realname' => 'Neuen tatsächlichen Namen setzen',
 	'editaccount-label-clearunsub' => 'Abbestellt',
+	'editaccount-label-toggleadopt-prevent' => 'Automatische Übernahme verhindern',
+	'editaccount-label-toggleadopt-allow' => 'Automatische Übernahme erlauben',
+	'editaccount-label-reason' => 'Grund:',
 	'editaccount-submit-email' => 'E-Mail-Adresse speichern',
 	'editaccount-submit-pass' => 'Passwort speichern',
 	'editaccount-submit-realname' => 'Tatsächlichen Namen speichern',
 	'editaccount-submit-clearunsub' => 'Abbestellen aufheben',
 	'editaccount-submit-cleardisable' => 'Deaktiviert-Markierung aufheben',
 	'editaccount-submit-close' => 'Konto schließen',
+	'editaccount-submit-button' => 'Speichern',
 	'editaccount-usage-close' => 'Du kannst ein Konto auch deaktivieren indem du das Passwort zerwürfelst und die E-Mail-Adresse löschst. Beachte, dass diese Daten verloren und nicht wiederherstellbar sind.',
 	'editaccount-warning-close' => '<b>Achtung!</b> Du bist dabei, das Konto von Benutzer <b>$1</b> dauerhaft zu deaktivieren. Dies kann nicht rückgängig gemacht werden. Bist du sicher, dass du das tun möchtest?',
 	'editaccount-status' => 'Statusmeldung',
@@ -397,6 +402,7 @@ $messages['de'] = array(
 	'editaccount-log-entry-close' => 'deaktivierte das Konto $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Dieses Benutzerkonto wurde global von Wikia deaktiviert.</div>',
 	'right-editaccount' => 'Bearbeite andere Benutzereinstellungen',
+	'action-editaccount' => 'Informationen anderer Benutzer zu bearbeiten',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -984,9 +990,10 @@ $messages['km'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 아라
  */
 $messages['ko'] = array(
-	'editaccount-submit-email' => '저장하고 이메일 주소 인증하기',
+	'editaccount-submit-email' => '저장하고 이메일 주소 확인',
 	'editaccount-status-confirmed' => '확인됨',
 	'editaccount-status-unconfirmed' => '확인되지 않음',
 );

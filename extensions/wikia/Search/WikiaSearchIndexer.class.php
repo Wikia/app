@@ -362,7 +362,8 @@ class WikiaSearchIndexer extends WikiaObject {
 		wfProfileIn(__METHOD__);
 		$result = array();
 	
-		$data = ApiService::call( array(
+		$apiService = F::build( 'ApiService' );
+		$data = $apiService->call( array(
 				'titles'	=> $page->getTitle(),
 				'bltitle'	=> $page->getTitle(),
 				'action'	=> 'query',
@@ -372,18 +373,20 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$result['backlinks'] = isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0;  
 	
+		$pageId = $page->getId();
+		
 		if (! empty( $this->wg->ExternalSharedDB ) ) {
-			$data = ApiService::call( array(
-					'pageids'	=> $page->getId(),
+			$data = $apiService->call( array(
+					'pageids'	=> $pageId,
 					'action'	=> 'query',
 					'prop'		=> 'info|categories',
 					'inprop'	=> 'url|created|views|revcount',
 					'meta'		=> 'siteinfo',
 					'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
 			));
-		
-			if( isset( $data['query']['pages'][$page->getId()] ) ) {
-				$pageData = $data['query']['pages'][$page->getId()];
+			
+			if( isset( $data['query']['pages'][$pageId] ) ) {
+				$pageData = $data['query']['pages'][$pageId];
 				$result['views']	= $pageData['views'];
 				$result['revcount']	= $pageData['revcount'];
 				$result['created']	= $pageData['created'];
@@ -406,7 +409,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$wikiViews = $this->getWikiViews($page);
 	
-		$wam = DataMartService::getCurrentWamScoreForWiki( $this->wg->CityId );
+		$wam = F::build( 'DataMartService' )->getCurrentWamScoreForWiki( $this->wg->CityId );
 		
 		$result['wikiviews_weekly']		= (int) $wikiViews->weekly;
 		$result['wikiviews_monthly']	= (int) $wikiViews->monthly;
@@ -457,28 +460,27 @@ class WikiaSearchIndexer extends WikiaObject {
 			wfProfileOut(__METHOD__);
 			return $result;
 		}
-	
-		if ( $this->wg->statsDBEnabled ) {
-			try {
-				$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->statsDB );
-				$row = $db->selectRow(
-						array( 'page_views' ),
-						array(	'SUM(pv_views) as "monthly"',
-								'SUM(CASE WHEN pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) THEN pv_views ELSE 0 END) as "weekly"' ),
-						array(	'pv_city_id' => (int) $this->wg->CityId,
-								'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)' ),
-						__METHOD__
-				);
-			} catch ( Exception $e ) {
-				F::build( 'Wikia' )->log( __METHOD__, '', $e );
+
+		$row = new stdClass();	
+		$row->weekly = 0;
+		$row->monthly = 0;
+			
+		$startDate = date( 'Y-m-d', strtotime('-1 week') );
+		$endDate = date( 'Y-m-01', strtotime('now') );	
+		$pageviews_weekly = DataMartService::getPageviewsWeekly( $startDate, $endDate, (int) $this->wg->CityId );
+
+		if ( empty( $pageviews_weekly ) ) {
+			foreach ( $pageviews_weekly as $pview ) {
+				$row->weekly += $pview;
 			}
 		}
-	
-		// a pinch of defensive programming
-		if ( ! isset( $row ) ) {
-			$row = new stdClass();
-			$row->weekly = 0;
-			$row->monthly = 0;
+			
+		$startDate = date( 'Y-m-01', strtotime('-1 month') );
+		$pageviews_monthly = DataMartService::getPageviewsMonthly( $startDate, $endDate, (int) $this->wg->CityId );
+		if ( empty( $pageviews_monthly ) ) {
+			foreach ( $pageviews_monthly as $pview ) {
+				$row->monthly += $pview;
+			}
 		}
 	
 		$this->wg->Memc->set( $key, $row, self::WIKIPAGES_CACHE_TTL );

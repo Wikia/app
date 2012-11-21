@@ -1963,6 +1963,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Geitost
+ * @author Grytolle
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1975,6 +1976,7 @@ $messages['sv'] = array(
 	'founderprogressbar-task-completed' => 'Färdigt',
 	'founderprogressbar-list-label' => '{{SITENAME}}s uppgifter',
 	'founderprogressbar-list-description1' => 'Är du redo att driva din wiki till framgång? Utför alla uppgifter som listas nedan för att få din förloppsmätare till 100 %! Vem som helst på din wiki kan hjälpa till och alla deras bidrag kommer att räknas in i uppgifterna på denna lista.',
+	'founderprogressbar-list-description2' => 'Uppgiftshubben visar en lista över alla uppgifter som du måste slutföra. Om du hoppar över en uppgift flyttas den till sektionen för överhoppade uppgifter, där den finns kvar så att du kan utföra den när du vill. Finns det en uppgift i listan som du känner att den aldrig kommer passa din wiki? Ingen fara -- när det bara finns överhoppade uppgifter kvar kommer vi att låsa upp dina bonusuppgifter. Bonusuppgifter kan du slutföra för att kompensera för de standarduppgifter som du aldrig tänker utföra, så uppnår du ändå dina eftertraktade 100%.',
 	'founderprogressbar-list-task-label' => 'Uppgifter',
 	'founderprogressbar-list-skipped-task-label' => 'Överhoppade uppgifter',
 	'founderprogressbar-list-skipped-task-desc' => 'Du kan slutföra dessa när som helst.',
@@ -2054,12 +2056,16 @@ $messages['sv'] = array(
 	'founderprogressbar-wordmark-edit-description' => 'Din wikis logotyp är flaggskeppet för din wiki, den är synlig på varje sida och kan verkligen ge användarna en försmak på ämnet. Ladda upp din egen grafiska logotyp är ett jättebra sätt att få din wikis märke att stå ut ännu mer.',
 	'founderprogressbar-mostvisited-visit-label' => 'Se dina mest besökta sidor',
 	'founderprogressbar-mostvisited-visit-action' => 'Gå till Special:MostVisitedPages',
+	'founderprogressbar-mostvisited-visit-description' => 'När din wiki verkligen tagit fart är det praktiskt att se vilka sidor som är populärast, så att du kan förbättra dem och lägga till länkar till mindre populära sidor. Se dina mest besökta sidor för att få en idé om vad som fungerar bäst på din wiki, så att du kan genomföra liknande förbättringar på andra sidor.',
 	'founderprogressbar-toptenlist-add-label' => 'Lägg till en "topp tio"-lista',
 	'founderprogressbar-toptenlist-add-action' => 'Lägg till en "topp tio"-lista',
+	'founderprogressbar-toptenlist-add-description' => 'Topp 10-listan uppmuntrar besökare som kanske är blyga till att delta på din wiki. Den skapar samhörighetskänsla och gör det lätt för folk att ge tummen upp eller ner åt vissa punkter, eller göra tillägg i listorna.',
 	'founderprogressbar-blogpost-add-label' => 'Skriv ett blogginlägg',
 	'founderprogressbar-blogpost-add-action' => 'Gå till din bloggsida',
+	'founderprogressbar-blogpost-add-description' => 'Bloggposter på din wiki är ett bra verktyg för att tillkännage information, beskriva vad som behövs på wikin, skriva åsiktsbaserade sidor och uppmuntra andra till att skriva egna bloggposter de med. Ge det en chans!',
 	'founderprogressbar-fb-likes3-label' => 'Nå $1 gilla-markeringar på Facebook',
 	'founderprogressbar-fb-likes3-action' => 'Gå till huvudsidan',
+	'founderprogressbar-fb-likes3-description' => 'Att dela är att bry sig, och delning kan verkligen hjälpa till att göra din wiki känd i resten av världen. Uppmuntra dina medlemmar och läsare att "gilla" din wikis förstasida på Facebook för att göra den mer känd.',
 	'founderprogressbar-uncategorized-visit-label' => 'Se okategoriserade sidor',
 	'founderprogressbar-uncategorized-visit-action' => 'Gå till Special:UncategorizedPages',
 	'founderprogressbar-uncategorized-visit-description' => 'När din wiki har mer innehåll kan det vara lätt att tappa taget om organiseringen. Håll koll genom att spåra sidor som inte har kategorier, och lägg till kategorier till dessa sidor för att hålla dem tillgängliga och organiserade.',
@@ -2256,6 +2262,7 @@ $messages['uk'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hzy980512
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'founderprogressbar-progress-see-full-list' => '查看完整列表',
@@ -2271,6 +2278,7 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-mainpage-edit-action' => '编辑主页',
 	'founderprogressbar-photo-add10-action' => '添加一张图片',
 	'founderprogressbar-category-add3-action' => '添加一个分类',
+	'founderprogressbar-commcentral-visit-label' => '访问创立者与管理人员在红心',
 	'founderprogressbar-wikiactivity-visit-label' => '访问维基动态',
 	'founderprogressbar-profile-edit-label' => '填写您的档案页',
 	'founderprogressbar-profile-edit-action' => '到达您的档案页',
@@ -2278,10 +2286,13 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-total-edit75-label' => '编辑数达到 75 次',
 	'founderprogressbar-total-edit75-action' => '添加一个页面',
 	'founderprogressbar-page-add20-action' => '添加一个页面',
+	'founderprogressbar-fb-connect-label' => 'Facebook链接',
+	'founderprogressbar-fb-connect-action' => 'Facebook链接',
 	'founderprogressbar-category-add5-action' => '添加一个分类',
 	'founderprogressbar-gallery-add-label' => '添加图片库',
 	'founderprogressbar-gallery-add-action' => '转到帮助页',
 	'founderprogressbar-topnav-edit-action' => '编辑导航',
+	'founderprogressbar-mainpage-addslider-action' => '编辑主页',
 	'founderprogressbar-video-add-label' => '添加一段视频',
 	'founderprogressbar-user-add5-label' => '查看5个用户的档案',
 	'founderprogressbar-user-add5-action' => '转到帮助页',

@@ -360,3 +360,11 @@ $messages['tl'] = array(
 $messages['tt-cyrl'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides мобиль кушымтасы өчен модульләр',
 );
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Sam Wang
+ */
+$messages['zh-hans'] = array(
+	'wikiagameguides-content-add' => '添加',
+	'wikiagameguides-content-save' => '保存',
+);

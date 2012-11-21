@@ -195,6 +195,7 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		$config = F::build( 'WikiaSearchConfig' );
 		$noNsQuery			= 'foo';
 		$nsQuery			= 'File:foo';
+		$phantomNsQuery		= 'file';
 		
 		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'DefaultNamespaces' ), array() );
 
@@ -365,6 +366,13 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				'WikiaSearch::getQuery() should strip the term "wiki" from the set query if the search is interwiki'
 		);
 		
+		$config->setQuery( $phantomNsQuery );
+		$this->assertEquals(
+				$phantomNsQuery,
+				$config->getQuery(),
+				'A query that initially matches a namespaces but does not end with a colon should not strip namespaces'
+		);
+		
 	}
 	
 	/**
@@ -395,6 +403,14 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 				array( 'created',	Solarium_Query_Select::SORT_DESC ),
 				$config->getSort(),
 				'A well-formed rank key should return the appropriate sort array.'
+		);
+		
+		$config->setSort( array( 'created', 'asc' ) );
+		
+		$this->assertEquals(
+				array( 'created', 'asc' ),
+				$config->getSort(),
+				'WikiaSearchConfig::getSort should return a value set by setSort if it has been invoked'
 		);
 	}
 	
@@ -792,6 +808,28 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		// needs resetting to get the testing environment back in shape
 		WikiaSearchConfig::$filterQueryIncrement = 0;
 	} 
+	
+	/**
+	 * @covers WikiaSearchConfig::getRequestedFields
+	 */
+	public function testGetRequestedFields() {
+		$config = F::build( 'WikiaSearchConfig' );
+		
+		$config->setRequestedFields( array( 'html' ) );
+		
+		$fields = $config->getRequestedFields();
+		
+		$this->assertContains(
+				WikiaSearch::field( 'html' ),
+				$fields,
+				'WikiaSearchConfig::getRequestedFields() should perform language field transformation'
+		);
+		$this->assertContains(
+				'id',
+				$fields,
+				'WikiaSearchConfig::getRequestedFields() should always include an id'
+		);
+	}
 	
 	
 }

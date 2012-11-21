@@ -215,13 +215,18 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		$query = html_entity_decode( Sanitizer::StripAllTags ( $query ), ENT_COMPAT, 'UTF-8');
 		
 		$this->params['originalQuery'] = $query;
-		$queryNamespace	= $this->wg->ContLang->getNsIndex( preg_replace( '/^(.*):.*$/', '$1', strtolower( $query ) ) );
-		if ( $queryNamespace ) {
-			$namespaces = $this->getNamespaces();
-		    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
-		        $this->params['queryNamespace'] = $queryNamespace;
-		    } 
-		    $query = implode( ':', array_slice( explode( ':', $query ), 1 ) );
+		
+		if ( strpos( $query, ':' ) !== false ) {
+			$queryNsExploded = explode( ':', $query );
+			$queryNamespaceStr = array_shift( $queryNsExploded );
+			$queryNamespace	= $this->wg->ContLang->getNsIndex( $queryNamespaceStr );
+			if ( $queryNamespace ) {
+				$namespaces = $this->getNamespaces();
+			    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
+			        $this->params['queryNamespace'] = $queryNamespace;
+			    } 
+			    $query = implode( ':', $queryNsExploded );
+			}
 		}
 		
 		$this->params['query'] = $query;
@@ -287,6 +292,11 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @return array where index 0 is the field name and index 1 is the constant used for ASC or DESC in solarium
 	 */
 	public function getSort() {
+		// Allows you to override our default keyword-based ranking functionality. Don't abuse this.
+		// I have aggressively validated this value to protect your query.
+		if ( isset( $this->params['sort'] ) && is_array( $this->params['sort'] ) && count( $this->params['sort'] ) == 2 ) {
+			return $this->params['sort'];
+		}
 		$rank = $this->getRank();
 		return isset($this->rankOptions[$rank]) ? $this->rankOptions[$rank] : $this->rankOptions['default']; 
 	}
@@ -349,9 +359,13 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	public function getRequestedFields()
 	{
 		$fieldsPrepped = array();
-		foreach ($this['requestedFields'] as $field) {
-			$fieldsPrepped[] = WikiaSearch::field($field);
+		foreach ( $this['requestedFields'] as $field ) {
+			$fieldsPrepped[] = WikiaSearch::field( $field );
 		}
+		
+		if (! ( in_array( 'id', $fieldsPrepped ) || in_array( '*', $fieldsPrepped ) ) ) {
+			$fieldsPrepped[] = 'id';
+		} 
 		
 		return $fieldsPrepped;
 	}

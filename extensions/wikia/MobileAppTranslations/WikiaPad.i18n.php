@@ -416,7 +416,7 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'main-tab-personal' => 'నా వికియా',
-	'main-tab-search' => 'అన్వేషణ',
+	'main-tab-search' => 'వెతుకు',
 	'tab-discover-no-network-dialog-close-button' => 'సరే',
 );
 
@@ -459,4 +459,11 @@ $messages['ug-arab'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'جەزملە',
 	'tab-search-loading-message' => 'ئىزدەۋاتىدۇ…',
 	'browser-loading-message' => 'يۈكلەۋاتىدۇ…',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Sam Wang
+ */
+$messages['zh-hans'] = array(
+	'tab-discover-no-network-dialog-close-button' => '确认',
 );

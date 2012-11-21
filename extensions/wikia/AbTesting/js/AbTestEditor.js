@@ -137,7 +137,7 @@
 
 			modal.find('.datepicker :input').datetimepicker({
 				dateFormat: 'yy-mm-dd',
-				timeFormat: 'hh:mm:ss',
+				timeFormat: 'HH:mm:ss',
 				showSecond: true
 			});
 		},

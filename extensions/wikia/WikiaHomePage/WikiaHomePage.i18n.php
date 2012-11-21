@@ -134,9 +134,6 @@ __NOEDITSECTION__',
 	'wikiahome-import-script-no-description' => 'No description given',
 
 	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
-
-	//fb#45624
-	'wikiahome-image-auto-uploaded-comment' => 'Auto-generated image to be used on http://wikia.com/ – stay tuned for more info on the Staff Blog: http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
 );
 
 $messages['de'] = array(
@@ -246,36 +243,7 @@ $messages['de'] = array(
 
 	'wikiahome-preview-error' => 'Fehler Zwischenseite',
 	'wikiahome-preview-user-member-since' => "Mitglied seit $1",
-
-	//fb#45624
-	'wikiahome-image-auto-uploaded-comment' => 'Automatisch erstelltes Bild für die Nutzung auf http://de.wikia.com – in Kürze dazu mehr Informationen im Wikia-Blog: http://de.community.wikia.com/wiki/Blog:Wikia_Deutschland_News',
 );
-
-$messages['qqq'] = array(
-	'wikia-home-parse-source-empty-exception' => 'Error message when MediaWiki message is empty',
-	'wikia-home-parse-source-first-line-not-a-vertical' => 'Error message when MediaWiki message is not starting with a vertical line',
-	'wikia-home-parse-vertical-invalid-data' => 'Error while parsing a vertical data',
-	'wikia-home-parse-source-invalid-percentage' => 'Error: vertical\'s percentage is invalid < or > than 100',
-	'wikia-home-parse-wiki-too-few-parameters' => 'Error while parsing a wiki data',
-
-	'wikiahome-hubs-videogames-heading' => 'Section header for Videogames section',
-
-	'wikiahome-preview-stats-page' => "Number of pages on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
-	'wikiahome-preview-stats-photos' => "Number of photos on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
-	'wikiahome-preview-stats-videos' => "Number of videos on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
-	'wikiahome-preview-user-edits' => "Number of edits for given user of wiki.  Could be singular or plural.",
-	'wikiahome-preview-description-heading' => "Welcome heading for the wiki description.  $1 is the name of the wiki.  Assume the word 'Wiki' is already attached to the $1.",
-	'wikiahome-preview-admins-heading' => 'Heading for admin list',
-	'wikiahome-preview-contributors-heading' => 'Heading for top contributors',
-	'wikiahome-preview-user-profile-link-label' => 'Generic link label that navigates to user profile page.',
-	'wikiahome-preview-user-contributions-link-label' => 'Generic link label that navigates to user contributions',
-	'wikiahome-preview-go-to-wiki-label' => 'Generic link label that navigates to a wiki.',
-	'wikiahome-preview-error' => 'Interstitial error',
-	'wikiahome-preview-user-member-since' => 'Member since date',
-	'wikiahome-import-script-no-description' => 'This message should be used only when an edge case occurs and there is no wiki description on wikis list used in importing process. This message will be place in wiki description in Interstitial if original description is not provided.',
-);
-
-
 
 $messages['es'] = array(
 	'wikiahome-page-header-heading' => 'Crea. Colabora. Sé original.',
@@ -404,9 +372,6 @@ __NOEDITSECTION__',
 	'wikiahome-import-script-no-description' => 'No se ha dado una descripción',
 
 	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
-
-	//fb#45624
-	'wikiahome-image-auto-uploaded-comment' => 'Imagen generada automáticamente para ser usada en http://es.wikia.com/ – estate atento al blog del Staff para más información: http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia',
 );
 
 $messages['fr'] = array(
@@ -414,13 +379,13 @@ $messages['fr'] = array(
 	'wikiahome-page-header-subheading' => 'Partagez ce que vous savez et aimez.',
 	'wikiahome-page-header-create-wiki-button' => 'Commencer un wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=fr',
-	'wikiahome-visualisation-remix-mixitup' => 'Mélanger&nbsp;!',
+	'wikiahome-visualisation-remix-mixitup' => 'Mélangez&nbsp;!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Des centaines de wikis à votre portée. Mélangez pour explorer encore plus de wikis.',
 	'wikiahome-visualisation-remix-button' => 'Mélanger',
-	'wikiahome-stats-heading' => 'Collaboration en action',
-	'wikiahome-stats-content' => 'Mesurer la révolution des médias.',
-	'wikiahome-stats-visitors' => 'Personnes en un mois',
-	'wikiahome-stats-edits' => 'Modifications à date',
+	'wikiahome-stats-heading' => 'La collaboration en action',
+	'wikiahome-stats-content' => 'La révolution des médias en chiffres',
+	'wikiahome-stats-visitors' => 'Personnes / mois',
+	'wikiahome-stats-edits' => 'Modifications / jour',
 	'wikiahome-stats-communities' => 'Communautés',
 	'wikiahome-stats-totalpages' => 'Pages totales',
 	'wikia-home-page-preview' => 'Aperçu',
@@ -431,7 +396,7 @@ $messages['fr'] = array(
 	'wikia-home-parse-wiki-too-few-parameters' => 'Données du wiki non valides - plus de paramètres sont nécessaires.',
 	'wikiahome-hubs-videogames-heading' => 'Jeux vidéo',
 	'wikiahome-hubs-videogames-url' => 'http://fr.wikia.com/Jeux_vidéo',
-	'wikiahome-hubs-videogames-creative' => 'Wikia est par là où il faut commencer en ce qui concerne le monde des jeux vidéo.',
+	'wikiahome-hubs-videogames-creative' => 'Wikia est l\'endroit par lequel passer pour commencer en ce qui concerne le monde des jeux vidéo, peu importe leur type (FPS, plates-formes, RPG, etc.).',
 	'wikiahome-hubs-videogames-more-heading' => '',
 	'wikiahome-hubs-videogames-more-list' => '',
 	'wikiahome-hubs-entertainment-heading' => 'Divertissement',
@@ -510,5 +475,28 @@ __NOEDITSECTION__',
 	'wikiahome-preview-user-member-since' => 'Membre depuis $1',
 	'wikiahome-import-script-no-description' => 'Aucune description renseignée',
 	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
-	'wikiahome-image-auto-uploaded-comment' => 'Image générée automatiquement pour être utilisée sur <a  class="free" href="http://fr.wikia.com/">http://fr.wikia.com/</a> &#8212; retrouvez plus d\'informations sur le blog dédié&nbsp;: <a  class="free" href="http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia">http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia</a>',
+);
+
+$messages['qqq'] = array(
+	'wikia-home-parse-source-empty-exception' => 'Error message when MediaWiki message is empty',
+	'wikia-home-parse-source-first-line-not-a-vertical' => 'Error message when MediaWiki message is not starting with a vertical line',
+	'wikia-home-parse-vertical-invalid-data' => 'Error while parsing a vertical data',
+	'wikia-home-parse-source-invalid-percentage' => 'Error: vertical\'s percentage is invalid < or > than 100',
+	'wikia-home-parse-wiki-too-few-parameters' => 'Error while parsing a wiki data',
+
+	'wikiahome-hubs-videogames-heading' => 'Section header for Videogames section',
+
+	'wikiahome-preview-stats-page' => "Number of pages on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
+	'wikiahome-preview-stats-photos' => "Number of photos on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
+	'wikiahome-preview-stats-videos' => "Number of videos on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
+	'wikiahome-preview-user-edits' => "Number of edits for given user of wiki.  Could be singular or plural.",
+	'wikiahome-preview-description-heading' => "Welcome heading for the wiki description.  $1 is the name of the wiki.  Assume the word 'Wiki' is already attached to the $1.",
+	'wikiahome-preview-admins-heading' => 'Heading for admin list',
+	'wikiahome-preview-contributors-heading' => 'Heading for top contributors',
+	'wikiahome-preview-user-profile-link-label' => 'Generic link label that navigates to user profile page.',
+	'wikiahome-preview-user-contributions-link-label' => 'Generic link label that navigates to user contributions',
+	'wikiahome-preview-go-to-wiki-label' => 'Generic link label that navigates to a wiki.',
+	'wikiahome-preview-error' => 'Interstitial error',
+	'wikiahome-preview-user-member-since' => 'Member since date',
+	'wikiahome-import-script-no-description' => 'This message should be used only when an edge case occurs and there is no wiki description on wikis list used in importing process. This message will be place in wiki description in Interstitial if original description is not provided.',
 );

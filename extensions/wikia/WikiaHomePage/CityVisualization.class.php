@@ -5,7 +5,7 @@
  * @todo refactor, the queries should be part of /includes/wikia/models/WikisModel.class.php
  */
 class CityVisualization extends WikiaModel {
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.77';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.78';
 	const WIKI_STANDARD_BATCH_SIZE_MULTIPLIER = 100;
 
 	const PROMOTED_SLOTS = 3;
@@ -795,6 +795,14 @@ class CityVisualization extends WikiaModel {
 		$corporateSites = $this->getCorporateSitesList();
 		$this->addLangToCorporateSites($corporateSites);
 		return $this->cleanVisualizationWikisArray($corporateSites);
+	}
+
+	/**
+	 * @desc Returns an array of wikis' ids
+	 * @return array
+	 */
+	public function getVisualizationWikisIds() {
+		return array_keys($this->getCorporateSitesList());
 	}
 
 	/**

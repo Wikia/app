@@ -290,6 +290,13 @@ $messages['li'] = array(
 	'wikifactoryreporter' => 'Wikifactoryrapportage',
 );
 
+/** Minangkabau (Baso Minangkabau)
+ * @author SpartacksCompatriot
+ */
+$messages['min'] = array(
+	'wikifactoryreporter' => 'WikiFactory Reporter',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

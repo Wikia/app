@@ -4,8 +4,7 @@
 		
 		protected $cache = array();
 		
-		public function __construct( $skinData ) {
-			UserCommand::setSkinData($skinData);
+		public function __construct() {
 		}
 		
 		public function clearCache() {

@@ -188,7 +188,7 @@ class WikiEvaluationDataSource {
 		global $wgExternalSharedDB;
 
 		$db = wfGetDB(DB_SLAVE,array(),$wgExternalSharedDB);
-		$set = $db->select('user','user_id',array(
+		$set = $db->select('`user`','user_id',array(
 			'user_name' => array( 'Default', 'CreateWiki' ),
 		),__METHOD__,array('DISTINCT'));
 

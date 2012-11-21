@@ -954,6 +954,9 @@ $messages['diq'] = array(
 	'autocreatewiki-empty-password' => 'Wa heruna parolayer veng nêbo.',
 	'autocreatewiki-category-label' => 'Kategoriye:',
 	'autocreatewiki-category-other' => 'Zewmi',
+	'autocreatewiki-set-username' => 'Veror namey karberi nışan kerê',
+	'autocreatewiki-invalid-birthday' => 'Xırab rocabiyayen',
+	'autocreatewiki-log-title' => 'Wikiaya şıma vıraziyê!',
 	'autocreatewiki-step1' => 'Rateya resimana vırazêna ...',
 	'autocreatewiki-step2' => 'Databaseo vırazêno ...',
 	'autocreatewiki-redirect' => 'Wikiya newi açarnê: $1 ...',
@@ -2676,20 +2679,21 @@ $messages['km'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 아라
  */
 $messages['ko'] = array(
 	'autocreatewiki' => '새 위키 만들기',
 	'autocreatewiki-page-title-default' => '새 위키 만들기',
 	'createwiki' => '새 위키 만들기',
 	'autocreatewiki-language-all' => '모든 언어',
-	'autocreatewiki-create-account' => '회원가입',
+	'autocreatewiki-create-account' => '계정 만들기',
 	'autocreatewiki-error' => '오류',
-	'autocreatewiki-haveaccount-question' => '위키아에 회원가입하시겠습니까?',
-	'autocreatewiki-success-title-default' => '위키가 생성되었습니다!',
-	'autocreatewiki-success-subtitle' => '다음 링크를 방문해 위키에서 활동을 시작할 수 있습니다.',
-	'autocreatewiki-success-has-been-created' => '생성되었습니다!',
+	'autocreatewiki-haveaccount-question' => '이미 위키아 계정이 있습니까?',
+	'autocreatewiki-success-title-default' => '위키를 만들었습니다!',
+	'autocreatewiki-success-subtitle' => '지금 위키에 방문해서 활동을 시작할 수 있습니다:',
+	'autocreatewiki-success-has-been-created' => '만들었습니다!',
 	'autocreatewiki-success-get-started' => '시작하기',
-	'newwikis' => '새로 만들어진 위키',
+	'newwikis' => '새 위키',
 );
 
 /** Colognian (Ripoarisch)
@@ -4193,6 +4197,7 @@ Este é um projecto acabado de estrear, por isso contacte-nos se tiver qualquer 
  * @author Giro720
  * @author Jesielt
  * @author Luckas Blade
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
 	'autocreatewiki' => 'Crie uma nova Wiki',
@@ -4285,23 +4290,33 @@ Selecione uma apropriada da lista.',
 	'autocreatewiki-step7-error' => 'Não foi possível copiar a base de dados inicial para a língua!',
 	'autocreatewiki-protect-reason' => 'Parte da interface oficial',
 	'autocreatewiki-welcomesubject' => '$1 foi criado!',
-	'autocreatewiki-welcomebody' => 'Olá, $2,
+	'autocreatewiki-welcomebody' => 'Olá, $2!
 
-O Wikia que você requisitou está agora disponível em <$1>. Nós esperamos vê-lo editando lá em breve!
+Sua wiki foi criada! Dê uma olhada: <$1>
 
-Nós adicionamos algumas informações e dicas na sua página de discussão de usuário <$5> pra ajudar-lhe a começar.
+Pronto para começar? Adicionamos alguns links para sua página de discussão (<$5>) para o ajudar à começar e o encorajar à explorar as variadas áreas úteis ao redor da Wikia. Caso tenha dúvidas ou sente-se um pouco perdido, responda a esse email ou confira nossas Páginas de Ajuda <http://help.wikia.com>.
 
-Se você tiver algum problema, você pode pedir a ajuda da comunidade na wiki em <http://www.wikia.com/wiki/Forum:Help_desk> ou via email para community@wikia.com . Você também pode visitar nosso canal de chat IRC #wikia IRC <http://irc.wikia.com>.
+Você também pode conferir o blog do Fundador & Administrador <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> e o blog do time da Wikia <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog>, onde você achará dicas e truques e informações sobre os novos recursos e novas coisas que estão acontecendo na Wikia.
 
-Eu posso ser contatado diretamente por email ou na minha página de discussão, caso você tenha alguma pergunta ou preocupação.
-
-Boa sorte com o projeto!
+Boa edição!
 
 $3
+Suporte da Comunidade Wikia
+<http://community.wikia.com/wiki/User:$4>
 
-Equipe da comunidade do Wikia (Wikia Community Team)
-
-<http://www.wikia.com/wiki/User:$4>', # Fuzzy
+___________________________________________
+* Quer receber menos mensagens de nós? Você pode desinscrever-se ou configurar suas preferências de email aqui: http://community.wikia.com/Special:Preferences',
+	'autocreatewiki-welcometalk-wall-title' => 'Bem-vindo!',
+	'autocreatewiki-welcometalk-wall' => 'Olá!
+Estamos felizes em ter {{subst:SITENAME}} como parte da comunidade Wikia! Ainda há muito à fazer, então aqui estão algumas dicas e links para fazer sua wiki avançar:
+*Não tem certeza de como começar? Dê uma parada na [[w:c:community:Admin_Central:Main_Page|Central do Administrador & Fundador]] e confira o [[w:c:community:Blog:Wikia_Founders_&_Admins|Blog]] para dicas em como começar sua wiki e fazê-la crescer!
+*Visite a [[w:c:community:main page|Central da Comunidade]] para fazer amigos via [[w:c:community:Special:Chat|chat]], aprender sobre os novos recursos e estar por dentro das notícias da Wikia e recursos futuros no [[w:c:community:Blog:Wikia_Staff_Blog|Blog do Time Wikia]].
+*Dê uma olhada nas nossas [[w:c:community:Webinars|séries de webconferências]] -- onde você pode de inscrever para interagir com o time da Wikia, além de assistir sessões passadas.
+*Tenha certeza de conferir os [[Special:WikiFeatures|Recursos da Wiki]] para ver os recursos que você pode ativar em sua wiki!
+*Explore nossos [[w:c:community:Admin_Central:Forum|fórums]] na Central do Fundador e Administrador para ver o que os outros admins de wikis perguntam.
+*E por último, visite nossas [[w:c:community:Help:Contents|Páginas de Ajuda]] para responder qualquer dúvida específica que você deva ter.
+Todos os links acima são bons lugares para começar explorando a Wikia. Se você se perder ou ter alguma dúvida que você não consiga achar a resposta -- por favor, contate-nos [[Special:Contact|aqui]]. Mas o mais importante, divirta-se! :)
+Boa edição!',
 	'autocreatewiki-welcometalk' => "== Boas-vindas! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Olá \$1 -- nós estamos felizes por ter '''\$4''' como parte da comunidade do Wikia!
 
@@ -5183,6 +5198,14 @@ ___________________________________________
 	'newwikis' => 'Яңа викилар',
 	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
 	'autocreatewiki-subname-answers' => 'Җаваплар',
+);
+
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'autocreatewiki-title-template' => '$1 ⵡⵉⴽⵉ',
+	'autocreatewiki-category-label' => 'ⵜⴰⴳⴳⴰⵢⵜ:',
 );
 
 /** Ukrainian (українська)

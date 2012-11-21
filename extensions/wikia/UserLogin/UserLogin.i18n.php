@@ -195,6 +195,29 @@ $messages['ar'] = array(
 	'wikiamobile-sendpassword-label' => 'أرسل كلمة المرور الجديدة',
 );
 
+/** تورکجه (تورکجه)
+ * @author Arjanizary
+ */
+$messages['azb'] = array(
+	'userlogin-login-heading' => 'گیریش',
+	'userlogin-forgot-password' => 'رمزیزی اونوتموسوز مو؟',
+	'userlogin-remembermypassword' => 'ایچری‌ده قال',
+	'userlogin-error-noname' => 'اوخخخ، لوطفا ایشلدن‌آدی یئرین دولدورون',
+	'userlogin-error-invalidemailaddress' => 'لوطفا بیر گئچرلی ایمیل تاپاناغین یازین.',
+	'userlogin-error-user-not-allowed' => 'بو ایشلدن‌آدی قویولمور.',
+	'userlogin-error-noemailtitle' => 'لوطفا بیر گئچرلی ایمیل تاپاناغین یازین.',
+	'userlogin-error-resetpass_forbidden' => 'رمزلر دَییشیلمز.',
+	'userlogin-oldpassword' => 'اسکی رمز',
+	'userlogin-newpassword' => 'یئنی رمز',
+	'userlogin-retypenew' => 'یئنی رمزی یئنی‌دن یازین',
+	'userlogin-password-email-subject' => 'اونوتولموش رمز ایستگی',
+	'userlogin-password-email-greeting' => 'سلام $USERNAME,',
+	'userlogin-provider-or' => 'یوخسا',
+	'userlogin-loginreqlink' => 'گیریش',
+	'userlogin-changepassword-needlogin' => 'رمز دَییشمه‌سینه گؤره $1 اولماغی گرک‌دیر.',
+	'wikiamobile-sendpassword-label' => 'یئنی رمزی گؤندر',
+);
+
 /** Bikol Central (Bikol Central)
  * @author Filipinayzd
  */

@@ -29,6 +29,11 @@ if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.
 	wfPHPVersionError( 'load.php' );
 }
 
+// Wikia change - begin - @author
+// don't load user from session
+$wgUserForceAnon = true;
+// Wikia change - end
+
 if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	require ( 'phase3/includes/WebStart.php' );
 } else {

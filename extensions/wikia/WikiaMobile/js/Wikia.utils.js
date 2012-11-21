@@ -184,10 +184,13 @@
 
 	Wikia.nirvana = {
 		sendRequest: function(attr){
-			var type = (attr.type && attr.type.toUpperCase()) || 'POST',
+			var sortedDict = {},
+				type = (attr.type && attr.type.toUpperCase()) || 'POST',
 				format = (attr.format && attr.format.toLowerCase()) || 'json',
 				formats = {'json':1, 'jsonp':1, 'html':1},
 				data = attr.data || {},
+				keys,
+				getUrl,
 				callback = attr.callback || function(){},
 				onErrorCallback = attr.onErrorCallback || function(){},
 				url = attr.scriptPath || wgScriptPath;
@@ -198,14 +201,23 @@
 			if(!(format in formats))
 				throw "Only Json, Jsonp and Html format are allowed";
 
+			getUrl = { /* JSlint ignore */
+				//Iowa strips out POST parameters, Nirvana requires these to be set
+				//so we're passing them in the GET part of the request
+				controller: attr.controller.replace(/Controller$/, ''),
+				method: attr.method
+			};
+
+			(type == 'POST' ? getUrl : data).format = format;
+
+			keys = Object.keys(data).sort();
+
+			for(var i = 0, l = keys.length; i < l; i++) {
+				sortedDict[keys[i]] = data[keys[i]];
+			}
+
 			Wikia.ajax({
-				url: url + '/wikia.php?' + Wikia.param({
-					//Iowa strips out POST parameters, Nirvana requires these to be set
-					//so we're passing them in the GET part of the request
-					controller: attr.controller,
-					method: attr.method,
-					format: format
-				}),
+				url: url + '/wikia.php?' + Wikia.param(getUrl),
 				dataType: format,
 				type: type,
 				data: data,

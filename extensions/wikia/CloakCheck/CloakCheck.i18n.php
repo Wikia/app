@@ -615,11 +615,16 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Grytolle
  * @author Tobulos1
  */
 $messages['sv'] = array(
+	'cloakcheck' => 'Kontroll av IRC-masksbehörighet',
+	'cloakcheck-desc' => 'Tillhandahåller ett allt i ett-gränssnitt för att pröva alla kriterier för en IRC-mask',
+	'right-cloakcheck' => 'Kan kontrollera IRC-masksrelaterad information om andra användare',
 	'cloakcheck-form-username' => 'Användarnamn:',
 	'cloakcheck-form-check' => 'Kontrollera användarnamn',
+	'cloakcheck-form-check-self' => 'Kontrollera IRC-masksbehörighet',
 	'cloakcheck-process-empty' => 'Användarnamnet får inte vara tomt.',
 	'cloakcheck-process-notexist' => 'Användarnamnet finns inte.',
 	'cloakcheck-process-username' => 'Användarnamn: $1',

@@ -115,7 +115,7 @@ function acMakeBox( $input, $argv, $parser ) {
 	$br = ( ( acGetOption( $input, 'break', 'no' ) == 'no' ) ? '' : '<br />' );
 	$label = acGetOption( $input, 'buttonlabel', wfMsgHtml( 'createbox-create' ) );
 	$output = <<<ENDFORM
-<div class="createbox" align="{$align}">
+<div class="createbox" style="margin-left: auto; margin-right: auto; text-align:{$align}">
 <form name="createbox" action="{$submit}" method="get" class="createboxForm">
 <input type='hidden' name="action" value="create">
 <input type="hidden" name="prefix" value="{$prefix}" />

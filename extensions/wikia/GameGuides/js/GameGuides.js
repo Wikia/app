@@ -68,15 +68,19 @@
 
 	require(['sections'], function(s){
 		function Sections(){
-			this.open = s.open;
+			this.open = function(id){
+				s.open(id, true);
+			}
 			this.close = s.close;
-			this.toggle = s.toggle;
+			this.toggle = function(id) {
+				s.toggle(id, true);
+			}
 		}
 
 		Ponto.PontoBaseHandler.derive(Sections);
 
 		Sections.getInstance = function(){
-			return s;
+			return new Sections();
 		};
 
 		w.Sections = Sections;

@@ -398,6 +398,9 @@ table.small {
 	padding-left: 0;
 	text-align: left;
 }
+.TOC_hide #toc ul, .TOC_hide .toc ul {
+	display: none;
+}
 #toc ul ul,
 .toc ul ul {
 	margin: 0 0 0 2em;
@@ -1714,7 +1717,7 @@ p.mw-ipb-conveniencelinks {
    font-size:   12px;
    color: #000000;
    white-space: normal;
-   overlow: auto;
+   overflow: auto;
 }
 
 /* macbre: dirty hack for &*%^* ie6 :) */

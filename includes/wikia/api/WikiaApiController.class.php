@@ -14,6 +14,49 @@ abstract class WikiaApiController extends WikiaController {
 	);
 
 	/**
+	 * In API we check if parameters are sorted
+	 * so it makes purging varnish easier and possible
+	 *
+	 * it happens in final __construct so we are sure
+	 * that this rule is obeyed
+	 */
+	public final function __construct() {
+		parent::__construct();
+
+		$this->checkParameters();
+	}
+
+	/**
+	 * Check if:
+	 * controller - is first parameter
+	 * method - is second parameter
+	 * rest of parameters - are sorted
+	 *
+	 * @author Jakub Olek <jolek@wikia-inc.com>
+	 *
+	 * @throws WikiaException
+	 */
+	private function checkParameters(){
+		$paramKeys = array_keys( F::app()->wg->Request->getQueryValues() );
+		$count = count( $paramKeys );
+
+		if ( $count >= 2 && $paramKeys[0] === 'controller' && $paramKeys[1] === 'method') {
+
+			if ( $count > 2 ) {
+				$origParam = $paramKeys = array_flip( array_slice( $paramKeys, 2 ) );;
+
+				ksort( $paramKeys );
+
+				if ( $paramKeys !== $origParam ) {
+					throw new WikiaException();
+				}
+			}
+		} else {
+			throw new WikiaException();
+		}
+	}
+
+	/**
 	 * Sets the WikiaResponse instance attached to the controller.
 	 * For API controllers force json as the output format
 	 * @param WikiaResponse $response

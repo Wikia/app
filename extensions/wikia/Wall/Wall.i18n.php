@@ -763,6 +763,20 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 	'wall-topic-edit-cancel' => 'Edit Topics - Cancel button',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Erdemaslancan
+ */
+$messages['az'] = array(
+	'wall-recentchanges-summary' => '($1)',
+);
+
+/** تورکجه (تورکجه)
+ * @author Erdemaslancan
+ */
+$messages['azb'] = array(
+	'wall-recentchanges-summary' => '($1)',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -857,6 +871,13 @@ $messages['br'] = array(
 	'wall-deleted-msg-view' => '(Gwelet/Adsevel)',
 	'wall-recentchanges-history-link' => 'istor ar voger',
 	'wall-recentchanges-thread-history-link' => 'istor ar gaoz',
+);
+
+/** Catalan (català)
+ * @author Erdemaslancan
+ */
+$messages['ca'] = array(
+	'wall-recentchanges-summary' => '($1)',
 );
 
 /** Czech (česky)
@@ -1243,6 +1264,9 @@ ___________________________________________<br />
 	'wall-topic-input-error-limit' => 'Ein Thread kann nur maximal $1 Themen haben.',
 	'wall-topic-heading' => 'Themen für diesen Thread:',
 	'wall-topic-edit' => 'Themen bearbeiten',
+	'wall-userdoesnotexist' => 'Das Benutzerkonto „$1“ ist nicht vorhanden oder hat sich noch nie auf diesem Wiki angemeldet.',
+	'wall-topic-edit-save' => 'Speichern',
+	'wall-topic-edit-cancel' => 'Abbrechen',
 );
 
 /** Zazaki (Zazaki)
@@ -1258,6 +1282,7 @@ $messages['diq'] = array(
 	'wall-message-undoremove' => 'peyser bia',
 	'wall-message-edited' => '<a href="$3" >Vurnerê</a> <a class="namey karberi" href="$1">$2</a>',
 	'wall-message-edited-summary' => '<a href="$4" >$1 by </a><a class="username" href="$2">$3</a>',
+	'wall-message-update-highlight-summary' => 'Xulaseya',
 	'wall-message-mywall' => 'Dêsê me',
 	'wall-toolbar-history' => 'Ravêrden',
 	'wall-message-remove' => 'Hewad',
@@ -1292,6 +1317,7 @@ $messages['diq'] = array(
 	'wall-notifications-markasread-this-wiki' => 'E na wiki',
 	'wall-sorting-archived' => 'Arşivya',
 	'wall-recentchanges-new-message' => '<a href="$1">dêsê $2\'i deyo</a>',
+	'wall-recentchanges-summary' => '($1)',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mesacê Dêsi',
 	'wall-recentchanges-thread-group' => '$1\'i dês dê<a href="$2"> ra kewt dês dê $3\'i</a>',
 	'wall-recentchanges-history-link' => 'tarixê dêsi',
@@ -1299,6 +1325,10 @@ $messages['diq'] = array(
 	'wall-wiki-activity-wall-owner' => "Dêsê $1'i",
 	'wall-history' => 'Ravêrden',
 	'wall-history-title' => 'tarixê dêsi',
+	'wall-history-thread-created' => "$2'i $1 vıraşt",
+	'wall-history-thread-removed' => "$2'i $1 wedarne",
+	'wall-history-thread-restored' => "$2'i $1 timar ke",
+	'wall-history-thread-admin-deleted' => "$2'i $1 besterne",
 	'wall-history-summary-label' => 'Xulasa',
 	'wall-history-rail-wall' => 'dês',
 	'wall-history-rail-contribs' => 'iştiraqi',
@@ -1308,6 +1338,16 @@ $messages['diq'] = array(
 	'mail-notification-html-greeting' => 'Merheba $1,',
 	'prefs-email-wall-v2' => 'Mesacê Dêsi',
 	'tog-enotifwallthread-v2' => 'E-postay me...',
+	'wall-notifications-notifyeveryone' => 'Xulasaya $1',
+	'wall-votes-modal-title' => 'Nam',
+	'wall-votes-number' => 'Namê $1',
+	'wall-quote-author' => 'Nusnayışê $1:',
+	'wall-quote-reply-to' => 'cewabê #$1',
+	'wall-preview-modal-title' => 'Verasayış',
+	'wall-preview-modal-button-back' => 'Peyser',
+	'wall-preview-modal-button-publish' => 'Vıla ke',
+	'wall-topic-input-heading' => 'Topik:',
+	'wall-topic-edit' => 'Topiki bıvurne',
 );
 
 /** Spanish (español)
@@ -3138,33 +3178,41 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 	'wall-preview-modal-button-publish' => '発行',
 );
 
+/** Kabardian (Адыгэбзэ)
+ * @author Erdemaslancan
+ */
+$messages['kbd'] = array(
+	'wall-recentchanges-summary' => '($1)',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 아라
  */
 $messages['ko'] = array(
 	'wall-no-title' => '제목 없음',
-	'wall-message-loadmore' => '<span class="count">$1개의</span> 댓글 보기',
+	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|덧글 $1개}}</span> 보기',
 	'wall-message-wall' => '메시지 담벼락',
 	'wall-message-wall-shorten' => '담벼락',
 	'wall-message-unfollow' => '주시 해제',
-	'wall-message-undoremove' => '실행 취소',
-	'wall-message-edited' => '<a class="username" href="$1">$2</a><a href="$3">에 의해 편집됨</a>',
+	'wall-message-undoremove' => '되돌리기',
+	'wall-message-edited' => '<a class="username" href="$1">$2</a><a href="$3">에 의해 편집함</a>',
 	'wall-message-mywall' => '내 담벼락',
 	'wall-toolbar-history' => '역사',
-	'wall-message-notify' => '관리자에게 전달',
+	'wall-message-notify' => '관리자에게 알림',
 	'wall-message-remove' => '제거',
 	'wall-message-rev-delete' => '판 삭제',
 	'wall-message-quote-button' => '인용',
 	'wall-message-elseswall' => '$1의 담벼락',
-	'wall-message-no-permission' => '메시지에 이 명령을 실행할 권한이 부족합니다.',
+	'wall-message-no-permission' => '메시지에 이 행동을 실행할 권한이 없습니다.',
 	'wall-thread-removed' => '제거됨',
 	'wall-thread-isnotifyeveryone' => '강조하기',
 	'wall-thread-deleted' => '삭제됨',
-	'wall-thread-closed' => '닫힘',
+	'wall-thread-closed' => '폐쇄됨',
 	'wall-recentchanges-namespace-selector-message-wall' => '메시지 담벼락',
 	'prefs-email-wall-v2' => '메시지 담벼락',
-	'wall-quote-author' => '$1의 원문 :',
-	'wall-quote-reply-to' => '$1에게 댓글', # Fuzzy
+	'wall-quote-author' => '$1의 말:',
+	'wall-quote-reply-to' => '#$1에 대한 덧글',
 );
 
 /** Colognian (Ripoarisch)
@@ -4391,6 +4439,13 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'wall-preview-modal-button-back' => 'Terug',
 	'wall-preview-modal-button-publish' => 'Publiceren',
 	'wall-topic-input-heading' => 'Onderwerp',
+);
+
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
+ * @author Erdemaslancan
+ */
+$messages['nn'] = array(
+	'wall-recentchanges-summary' => '($1)',
 );
 
 /** Pälzisch (Pälzisch)
@@ -6024,12 +6079,14 @@ ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/S
 );
 
 /** толышә зывон (толышә зывон)
+ * @author Erdemaslancan
  * @author Гусейн
  */
 $messages['tly'] = array(
 	'wall-no-title' => 'Бе ном',
 	'wall-button-to-cancel-preview' => 'Сәрост кардеј',
 	'wall-delete-error-title' => 'Сәһв',
+	'wall-recentchanges-summary' => '($1)',
 	'wall-history-rail-block' => 'бә гырд гәтеј',
 	'wall-history-action-view' => 'тәмшо кардеј',
 );
@@ -6039,6 +6096,7 @@ $messages['tly'] = array(
  */
 $messages['tr'] = array(
 	'wall-message-quote-button' => 'Alıntı',
+	'wall-recentchanges-summary' => '($1)',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -6671,6 +6729,7 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'wall-no-title' => '无标题',
@@ -6686,8 +6745,11 @@ $messages['zh-hans'] = array(
 	'wall-button-save-changes' => '保存更改',
 	'wall-button-cancel-changes' => '取消',
 	'wall-button-done-source' => '完成',
+	'wall-message-edit' => '编辑',
 	'wall-message-delete' => '删除',
 	'wall-action-all-confirm-cancel' => '取消',
+	'wall-delete-error-title' => '错误',
+	'wall-action-remove-confirm-ok' => '删除',
 	'wall-action-admin-confirm-ok' => '删除',
 	'wall-notifications' => '通知',
 	'wall-notifications-markasread-all-wikis' => '全部维基',

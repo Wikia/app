@@ -151,4 +151,15 @@ class EditPageLayoutAjax {
 			'result' => $res
 		);
 	}
+
+	static public function getTemplatesList() {
+		global $wgTitle;
+
+		$service = new EditPageService($wgTitle);
+		$html = $service->getTemplatesList();
+
+		return array(
+			'templates' => $html,
+		);
+	}
 }

@@ -4,6 +4,7 @@
  * ArticleCommentList is a listing, basicly it's an array of comments
  */
 class ArticleCommentList {
+	const CACHE_VERSION = 'v2';
 
 	private $mTitle;
 	private $mText;
@@ -129,19 +130,37 @@ class ArticleCommentList {
 		$this->mCount = count($this->mComments);
 		$this->mCountNested = 0;
 
+		// grab list of required article IDs
+		$commentsQueue = array();
+		foreach($this->mComments as $id => &$levels) {
+			if(isset($levels['level1'])) {
+				$commentsQueue[] = $id;
+			}
+			if(isset($levels['level2'])) {
+				$commentsQueue = array_merge( $commentsQueue, array_keys( $levels['level2'] ) );
+			}
+		}
+
+		$titles = TitleBatch::newFromIds($commentsQueue,DB_SLAVE_BEFORE_MASTER);
+		$comments = array();
+		foreach ($commentsQueue as $id) {
+			$comments[$id] = !empty($titles[$id]) ? ArticleComment::newFromTitle($titles[$id]) : false;
+		}
+
 		// grab article contents for each comment
 		foreach($this->mComments as $id => &$levels) {
 			if(isset($levels['level1'])) {
-				$levels['level1'] = ArticleComment::newFromId($id);
+				$levels['level1'] = $comments[$id];
 				$this->mCountNested++;
 			}
 			if(isset($levels['level2'])) {
 				foreach($levels['level2'] as $subid => &$sublevel) {
-					$sublevel = ArticleComment::newFromId($subid);
+					$sublevel = $comments[$subid];
 					$this->mCountNested++;
 				}
 			}
 		}
+
 		return $this->mComments;
 	}
 
@@ -161,7 +180,7 @@ class ArticleCommentList {
 
 		$action = $wgRequest->getText( 'action', false );
         $title = $this->getTitle();
-		$memckey = wfMemcKey( 'articlecomment', 'comm', $title->getDBkey(), $title->getNamespace(), 'v2' );
+		$memckey = self::getCacheKey( $title );
 
 		/**
 		 * skip cache if purging or using master connection or in case of single comment
@@ -392,6 +411,7 @@ class ArticleCommentList {
 			$page = $pageRequest;
 		}
 		$comments = $this->getCommentPages(false, $page);
+		$this->preloadFirstRevId( $comments );
 		$pagination = $this->doPagination($countComments, count($comments), $page);
 
 		$commentListHTML = '';
@@ -546,13 +566,50 @@ class ArticleCommentList {
 	 * remove lising from cache and mark title for squid as invalid
 	 */
 	public function purge() {
-		global $wgMemc;
+		self::purgeCache( $this->mTitle );
+	}
+
+	protected function preloadFirstRevId( $comments ) {
 		wfProfileIn( __METHOD__ );
+		$articles = array();
+		foreach ($comments as $id => $levels) {
+			if ( isset($levels['level1']) ) {
+				if ( !empty( $levels['level1'] ) ) {
+					$articles[$levels['level1']->getTitle()->getArticleID()] = $levels['level1'];
+				}
+			}
+			if ( isset($levels['level2']) ) {
+				foreach ($levels['level2'] as $nested) {
+					if ( !empty( $nested ) ) {
+						$articles[$nested->getTitle()->getArticleID()] = $nested;
+					}
+				}
+			}
+		}
 
-		$wgMemc->delete( wfMemcKey( 'articlecomment', 'comm', $this->mTitle->getDBkey(), 'v1' ) );
-		$this->mTitle->invalidateCache();
-		$this->mTitle->purgeSquid();
+		if ( !empty( $articles ) ) {
+			$db = wfGetDB( DB_SLAVE );
+			$res = $db->select(
+				'revision',
+				array( 'rev_page', 'min(rev_id) AS min_rev_id' ),
+				array( 'rev_page' => array_keys($articles) ),
+				__METHOD__,
+				array(
+					'GROUP BY' => 'rev_page',
+				)
+			);
 
+			foreach ($res as $row) {
+				if ( isset( $articles[$row->rev_page] ) ) {
+					$articles[$row->rev_page]->setFirstRevId( $row->min_rev_id, DB_SLAVE );
+					unset( $articles[$row->rev_page] );
+				}
+			}
+
+			foreach ($articles as $id => $comment) {
+				$comment->setFirstRevId( false, DB_SLAVE );
+			}
+		}
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -584,6 +641,36 @@ class ArticleCommentList {
 	}
 
 	/**
+	 * Generates a cache key give a Title instance
+	 *
+	 * @param Title $title
+	 *
+	 * @return string The cache key
+	 */
+	static private function getCacheKey( Title $title ) {
+		return wfMemcKey( 'articlecomment', 'comm', $title->getDBkey(), $title->getNamespace(), self::CACHE_VERSION );
+	}
+
+	/**
+	 * Centralized memcache purging to avoid getting the cache out of sync.
+	 *
+	 * @param Title $title [description]
+	 *
+	 * @return [type] [description]
+	 */
+	static public function purgeCache( Title $title ) {
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
+
+		$wgMemc->delete( self::getCacheKey( $title ) );
+		$title->invalidateCache();
+		$title->purgeSquid();
+
+		wfRunHooks( 'ArticleCommentListPurgeComplete', array( $title ) );
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
 	 * Hook
 	 *
 	 * @param Article $article -- instance of Article class
@@ -608,7 +695,7 @@ class ArticleCommentList {
 				return true;
 			}
 		}
-		
+
 		if(class_exists('WallHelper') && WallHelper::isWallNamespace( $title->getNamespace() )) {
 			wfProfileOut( __METHOD__ );
 			return true;
