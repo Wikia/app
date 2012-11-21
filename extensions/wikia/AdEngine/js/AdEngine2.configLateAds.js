@@ -22,7 +22,7 @@
 
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux);
-	slotTweaker = SlotTweaker(log, document);
+	slotTweaker = SlotTweaker(log, document, window);
 
 	// TODO: ad provider error
 	adProviderNull = AdProviderNull(log, slotTweaker);
