@@ -26,7 +26,20 @@ $messages['en'] = array(
 	'forum-specialpage-board-lastpostby' => 'Last post by',
 	'forum-specialpage-policies-edit' => 'Edit',
 	'forum-specialpage-policies' => 'Forum Policies / FAQ',
-	'forum-policies-and-faq' => 'Please fill this up',
+	'forum-policies-and-faq' => "==Forum policies==
+Before contributing to the {{SITENAME}} Forums, please keep in mind a couple of best practices for conduct:
+
+'''Be nice and treat people with respect.'''
+: People from all around the world read and edit this wiki and its forums. Like any other collaborative project, not everyone will agree all the time. Keep discussions civil and be open minded about differing opinions. We're all here because we love the same topic.
+
+'''Try to find existing discussions first, but don't be afraid to start a new thread.'''
+:Please take a moment to sift through the {{SITENAME}} Forum boards to see if a discussion already exists about something you want to talk about. If you can't find what you're looking for -- be sure to jump right in and start a new discussion!
+
+'''Ask for help.'''
+:Notice something that doesn't seem right? or do you have a question? Ask for help here on the forums! If you need help from Wikia staff, please reach out on [[w:c:community|Community Central]] or via [[Special:Contact]].
+
+'''Have fun!'''
+:The {{SITENAME}} community is happy to have you here. We look forward to seeing you around as we discuss this topic we all love.",
 
 	/* Forum Board */
 	'forum-board-title' => '$1 board',
