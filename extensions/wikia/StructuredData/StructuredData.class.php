@@ -64,7 +64,7 @@ class StructuredData {
 	}
 
 	/**
-	 * Removed a single sds object
+	 * Remove a single sds object
 	 * @param SDElement $element - sds object to be removed
 	 * @return mixed - JSON response from sds
 	 */
