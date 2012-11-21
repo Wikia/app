@@ -36,7 +36,7 @@ abstract class WikiaApiController extends WikiaController {
 	 *
 	 * @throws WikiaException
 	 */
-	private function checkParameters(){
+	private function checkParameters() {
 		$paramKeys = array_keys( F::app()->wg->Request->getQueryValues() );
 		$count = count( $paramKeys );
 
@@ -48,11 +48,11 @@ abstract class WikiaApiController extends WikiaController {
 				ksort( $paramKeys );
 
 				if ( $paramKeys !== $origParam ) {
-					throw new WikiaException();
+					throw new ApiBadRequestException( null, 'Parameters should be sorted' );
 				}
 			}
 		} else {
-			throw new WikiaException();
+			throw new ApiBadRequestException( null, 'Controller or method missing' );
 		}
 	}
 
@@ -112,3 +112,5 @@ abstract class WikiaApiController extends WikiaController {
 		$this->response->setHeader( $APIGATE_HEADER_REQUIRES_API, 1);
 	}
 }
+
+class ApiBadRequestException extends BadRequestException {}
