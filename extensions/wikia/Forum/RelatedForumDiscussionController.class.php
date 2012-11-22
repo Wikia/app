@@ -10,13 +10,11 @@ class RelatedForumDiscussionController extends WikiaController {
 		$messages = $this->getData($this->app->wg->Title->getArticleId());
 
 		unset($messages['lastupdate']);
-	
-		// resources
-		// load assets related to this if there is a discussions section
-		$this->response->addAsset( 'extensions/wikia/Forum/css/RelatedForumDiscussion.scss' );
 		
+		// loading assets in Monobook that would normally load in oasis
 		if($this->app->checkSkin('monobook')) {
 			$this->response->addAsset( 'skins/oasis/css/core/sprite.scss' );
+			$this->response->addAsset( 'extensions/wikia/Forum/css/RelatedForumDiscussion.scss' );
 			$this->response->addAsset( 'extensions/wikia/Forum/js/RelatedForumDiscussion.js' );
 		}
 		
