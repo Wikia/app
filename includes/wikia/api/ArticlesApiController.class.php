@@ -31,6 +31,31 @@ class ArticlesApiController extends WikiaApiController {
 		$namespaces = $this->request->getVal( 'namespaces', null );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
+		$category = $this->request->getVal( 'category' );
+		$ids = null;
+
+		if ( !empty($category) ){
+			$ids = ApiService::call(
+				array(
+					'action' => 'query',
+					'list' => 'categorymembers',
+					'cmtype' => 'page',
+					'cmprop' => 'ids',
+					'cmtitle' => 'Category:' . $category,
+					'cmlimit' => 500
+				)
+			);
+
+			if(!empty($ids)) {
+				$ids = $ids['query']['categorymembers'];
+				$help = array();
+				foreach($ids as $id) {
+					$help[] = $id['pageid'];
+				}
+
+				$ids = $help;
+			}
+		}
 
 		if ( !empty( $namespaces ) ) {
 			$namespaces = explode( ',', $namespaces );
@@ -40,7 +65,7 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		}
 
-		$articles = DataMartService::getTopArticlesByPageview( $this->wg->CityId, null, $namespaces, false, 250 );
+		$articles = DataMartService::getTopArticlesByPageview( $this->wg->CityId, $ids, $namespaces, false, 250 );
 		$batches = array();
 		$collection = array();
 
@@ -65,7 +90,7 @@ class ArticlesApiController extends WikiaApiController {
 				if ( !empty( $titles ) ) {
 					foreach ( $titles as $t ) {
 						$ns = $t->getNamespace();
-						$id =$t->getArticleID();
+						$id = $t->getArticleID();
 						$collection[$id] = array(
 							'title' => $t->getText(),
 							'url' => $t->getFullURL(),
