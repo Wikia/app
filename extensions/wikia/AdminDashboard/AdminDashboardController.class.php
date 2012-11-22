@@ -21,7 +21,7 @@ class AdminDashboardController extends WikiaController {
 		$this->response->addAsset('extensions/wikia/AdminDashboard/css/AdminDashboard.scss');
 		$this->response->addAsset('extensions/wikia/AdminDashboard/js/AdminDashboard.js');
 
-		if( $this->wg->EnableRelatedVideosExt ) {
+		if( $this->wg->EnableVideoToolExt && $this->wg->EnableSpecialVideosExt ) {
 		//FB#68272
 			$this->response->addAsset('extensions/wikia/VideoHandlers/js/AddVideo.js');
 		}
