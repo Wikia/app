@@ -117,7 +117,7 @@ The original post and your summary will still appear in the wiki's history.",
 	
 	'wall-action-move-thread-heading' => 'Move this thread',
 	'wall-action-move-validation-select-wall' => 'Please select a board',
-	'wall-action-move-topics-summary' => 'Thread moved from $1',
+	'wall-action-move-topics-summary' => 'Thread moved', // from $1
 	'wall-action-move-thread-ok' => 'Move thread',
 	'wall-action-move-board-label' => 'Select a board to move to',
 
