@@ -26,8 +26,7 @@ $messages['en'] = array(
 	'forum-specialpage-board-lastpostby' => 'Last post by',
 	'forum-specialpage-policies-edit' => 'Edit',
 	'forum-specialpage-policies' => 'Forum Policies / FAQ',
-	'forum-policies-and-faq' => "
-==Forum policies==
+	'forum-policies-and-faq' => "==Forum policies==
 Before contributing to the {{SITENAME}} Forums, please keep in mind a couple of best practices for conduct:
 
 '''Be nice and treat people with respect.'''
