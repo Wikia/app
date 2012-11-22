@@ -70,6 +70,8 @@
         <exec executable="phantomjs" dir="${basedir}" failonerror="true">
             <env key="SERVER_ID" value="165" />
             <arg line="run-test.js
+            		../extensions/wikia
+            		../resources/wikia/modules
 					--output=${basedir}/build
             	" />
         </exec>
