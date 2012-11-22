@@ -59,7 +59,7 @@
 	}
 
 	function resize() {
-		timer && clearTimeout(timer);
+		clearTimeout(timer);
 		timer = setTimeout(function() {
 			timer = 0;
 
@@ -80,7 +80,7 @@
 			}
 
 			w.dispatchEvent(ev);
-		}, 100);
+		}, 150);
 	}
 
 	function init() {

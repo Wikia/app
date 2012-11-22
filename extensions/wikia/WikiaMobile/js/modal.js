@@ -64,7 +64,7 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 		wrapper.style.minHeight = ev.height + 'px';
 		!w.pageYOffset && w.scrollTo(0, 1);
 
-		if(typeof onResize == 'function') onResize();
+		if(typeof onResize == 'function') onResize(ev);
 	}
 
 	function hideUI(){

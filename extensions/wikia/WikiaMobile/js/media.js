@@ -420,12 +420,17 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 				pager.cleanup();
 				removeZoom();
 			},
-			onResize: function(){
+			onResize: function(ev){
 				resetZoom();
+
+				widthFll = ev.width;
+				heightFll = ev.height;
 
 				var image = currentImage.getElementsByTagName('img')[0];
 				origW = image.width;
 				origH = image.height;
+
+				sx = sy = dx = dy = 0;
 
 				onZoom(false);
 			}
