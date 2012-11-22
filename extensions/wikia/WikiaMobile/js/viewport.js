@@ -31,7 +31,6 @@
 		html,
 		body,
 		ev,
-		orient,
 		portrait;
 
 	if(android){
@@ -42,16 +41,17 @@
 	}
 
 	function getDimensions(){
-		orient = w.orientation;
-		portrait = (orient === 0 || orient === 180);
+		var orient = w.orientation;
 
-		if(ios && (!width || !height)) {
+		portrait = (orient === 0 || orient === 180 || w.innerHeight >= w.innerWidth);
+
+		if(ios && !width) {
 			width = screen.width;
 			height = screen.height;
 		}else{
 			if(portrait && !width) {
 				width = w.innerWidth;
-			}else if(!height){
+			}else if(!portrait && !height){
 				//innerWidth is the only size that I can use and gives me meaningful measures
 				height = w.innerWidth;
 			}
@@ -68,6 +68,7 @@
 			ev = d[CREATE]("Event");
 			ev.initEvent('viewportsize', true, true);
 
+			ev.portrait = portrait;
 			ev.width = portrait ? width : height;
 
 			if(ios) {
