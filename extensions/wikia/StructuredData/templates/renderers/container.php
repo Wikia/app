@@ -2,7 +2,7 @@
 // list element (@set, @list) renderer
 /* @var SDElementProperty $object */
 
-$value = $object->getValue(true);
+$value = $object->getValue();
 
 if ( !count( $value ) ) {
 

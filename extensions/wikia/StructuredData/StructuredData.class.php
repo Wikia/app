@@ -19,32 +19,31 @@ class StructuredData {
 
 	/**
 	 * @param string $id
-	 * @param int $elementDepth
 	 * @return SDElement
 	 */
-	public function getSDElementById($id, $elementDepth = 0) {
+	public function getSDElementById($id) {
 		try {
 			$element = $this->APIClient->getObject( $id );
 		}
 		catch( WikiaException $exception ) {
 			return null;
 		}
-		return $this->getSDElement( $element, $elementDepth );
+		return $this->getSDElement( $element );
 	}
 
-	public function getSDElementByURL($url, $elementDepth = 0) {
+	public function getSDElementByURL($url) {
 		$element = $this->APIClient->getObjectByURL($url);
-		return $this->getSDElement( $element, $elementDepth );
+		return $this->getSDElement( $element );
 	}
 
-	public function getSDElementByTypeAndName($type, $name, $elementDepth = 0) {
+	public function getSDElementByTypeAndName($type, $name) {
 		try {
 			$element = $this->APIClient->getObjectByTypeAndName($type, $name);
 		}
 		catch( WikiaException $exception ) {
 			return null;
 		}
-		return $this->getSDElement( $element, $elementDepth );
+		return $this->getSDElement( $element );
 	}
 
 	/**
@@ -86,10 +85,10 @@ class StructuredData {
 		return $this->APIClient->deleteObject( $element->getId() );
 	}
 
-	private function getSDElement(stdClass $element, $elementDepth = 0) {
+	private function getSDElement(stdClass $element) {
 		$template = $this->APIClient->getTemplate( $element->type );
 
-		$SDElement = F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => $element, 'depth' => $elementDepth ), 'newFromTemplate');
+		$SDElement = F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => $element ), 'newFromTemplate');
 
 		return $SDElement;
 	}

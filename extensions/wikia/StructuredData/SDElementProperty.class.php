@@ -123,11 +123,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		$this->value = $value;
 	}
 
-	public function getValue( $expand = false ) {
-		if ( $expand ) {
-			$this->expandValue( F::build( 'StructuredData' ), 1);
-		}
-
+	public function getValue( ) {
 		if ( $this->isCollection() ) {
 			if (!is_array( $this->value )) {
 				if ( empty( $this->value ) ) return array();
@@ -163,7 +159,9 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		return ( empty($value) ) ? true : false;
 	}
 
-	public function expandValue(StructuredData $structuredData, $elementDepth) {
+	/*
+	 * This should be moved to ValueObject
+	public function expandValue(StructuredData $structuredData) {
 		$value = $this->value;
 		if(is_object($value) && isset($value->id)) {
 			$value = array( $value );
@@ -173,7 +171,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 			foreach($value as $v) {
 				if(isset($v->id) && empty($v->object)) {
 					try {
-						$SDElement = $structuredData->getSDElementById($v->id, $elementDepth+1);
+						$SDElement = $structuredData->getSDElementById($v->id);
 						$v->object = $SDElement;
 					}
 					catch(WikiaException $e) {
@@ -183,6 +181,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 			}
 		}
 	}
+	*/
 
 	public function setName($name) {
 		$this->name = $name;

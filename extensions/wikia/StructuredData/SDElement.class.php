@@ -4,7 +4,6 @@
  */
 class SDElement extends SDRenderableObject implements SplSubject {
 	private $id = 0;
-	private $depth = 0;
 	private static $excludedNames = array(
 		'@context',
 		'type',
@@ -24,13 +23,11 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	 * @param string $type
 	 * @param SDContext $context
 	 * @param int $id
-	 * @param int $depth
 	 */
-	public function __construct( $type, $context, $id = 0, $depth = 0) {
+	public function __construct( $type, $context, $id = 0) {
 		$this->type = $type;
 		$this->context = $context;
 		$this->id = $id;
-		$this->depth = $depth;
 
 		$this->properties = F::build( 'SplObjectStorage' );
 	}
@@ -45,14 +42,6 @@ class SDElement extends SDRenderableObject implements SplSubject {
 
 	public function getType() {
 		return $this->type;
-	}
-
-	public function setDepth($depth) {
-		$this->depth = $depth;
-	}
-
-	public function getDepth() {
-		return $this->depth;
 	}
 
 	public function getProperties() {
@@ -149,7 +138,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		$this->properties->attach( $property );
 	}
 
-	public static function newFromTemplate(stdClass $template, SDContext $context, stdClass $data = null, $depth = 0) {
+	public static function newFromTemplate(stdClass $template, SDContext $context, stdClass $data = null) {
 		if(!empty($data) && isset($data->id)) {
 			$elementId = $data->id;
 		}
@@ -158,7 +147,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		}
 
 		/** @var $element SDElement */
-		$element = F::build( 'SDElement', array( $template->type, $context, $elementId, $depth ) );
+		$element = F::build( 'SDElement', array( $template->type, $context, $elementId ) );
 		$structuredData = F::build( 'StructuredData' );
 
 		foreach($template as $propertyName => $propertyValue) {
@@ -172,9 +161,6 @@ class SDElement extends SDRenderableObject implements SplSubject {
 				}
 				/** @var $property SDElementProperty */
 				$property = F::build( 'SDElementProperty', array( $propertyName, $propertyValue ) );
-				if($depth == 0) {
-					$property->expandValue( $structuredData, $element->getDepth() );
-				}
 				$element->addProperty( $property );
 			}
 			elseif($propertyName == '@context') {
@@ -199,8 +185,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 			'type' => $this->getType(),
 			'name' => $this->getName(),
 			'url' => $this->getUrl(),
-			'properties' => $properties,
-			'depth' => $this->getDepth()
+			'properties' => $properties
 		);
 	}
 
