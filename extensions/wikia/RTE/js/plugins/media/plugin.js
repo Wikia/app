@@ -49,7 +49,7 @@ CKEDITOR.plugins.add('rte-media',
 
 
 		// check for existance of VideoEmbedTool
-		if (typeof window.VET_show == 'function') {
+		if (window.vet_enabled) {
 			// register "Add Video" command
 			editor.addCommand('addvideo', {
 				exec: function(editor) {
@@ -278,7 +278,12 @@ CKEDITOR.plugins.add('rte-media',
 			RTE.log('image clicked');
 
 			// call WikiaMiniUpload and provide WMU with image clicked
-			if (!UserLogin.isForceLogIn()) RTE.tools.callFunction(window.WMU_show,$(this));
+			if (!UserLogin.isForceLogIn()) {
+				var self = this;
+				WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
+					RTE.tools.callFunction(window.WMU_show,$(self));
+				});
+			}
 		});
 	},
 
@@ -297,7 +302,12 @@ CKEDITOR.plugins.add('rte-media',
 			RTE.log('video clicked');
 
 			// call VideoEmbedTool and provide VET with video clicked
-			if (!UserLogin.isForceLogIn()) RTE.tools.callFunction(window.VET_show,$(this));
+			if (!UserLogin.isForceLogIn()) {
+				var self = this;
+				WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+					RTE.tools.callFunction(window.VET_show,$(self));
+				});
+			}
 		});
 	},
 
@@ -345,14 +355,20 @@ CKEDITOR.plugins.add('rte-media',
 		images.attr('title', RTE.getInstance().lang.imagePlaceholder.tooltip);
 		images.bind('click.placeholder edit.placeholder', function(ev) {
 			// call WikiaMiniUpload and provide WMU with image clicked + inform it's placeholder
-			RTE.tools.callFunction(window.WMU_show,$(this), {isPlaceholder: true});
+			var self = this;
+			WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
+				RTE.tools.callFunction(window.WMU_show,$(self), {isPlaceholder: true});
+			});
 		});
 
 		var videos = placeholder.filter('.video-placeholder');
 		videos.attr('title', RTE.getInstance().lang.videoPlaceholder.tooltip);
 		videos.bind('edit.placeholder', function(ev) {
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
-			RTE.tools.callFunction(window.VET_show,$(this), {isPlaceholder: true});
+			var self = this;
+			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+				RTE.tools.callFunction(window.VET_show,$(self), {isPlaceholder: true});
+			});
 		});
 
 		// RT #69635
