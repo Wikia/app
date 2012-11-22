@@ -1,7 +1,7 @@
 <?php $value = $object->getValue(); ?>
 <?php if($context == SD_CONTEXT_EDITING): ?>
 	<div class="input-group">
-		<?php if ($object->getPropertyName() == 'schema:description') : ?>
+		<?php if ( in_array( $object->getPropertyName(), array('schema:description', 'schema:text') ) ) : ?>
 			<textarea name="<?=$object->getPropertyName();?>"><?=$value;?></textarea>
 		<?php elseif ($object->getPropertyName() == 'schema:name' && empty($isCreateMode)) : ?>
 			<?= $object->getValue();?>
