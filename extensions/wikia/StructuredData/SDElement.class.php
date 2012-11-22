@@ -172,32 +172,8 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		return $element;
 	}
 
-	public function toArray() {
-		$properties = array();
-
-		foreach($this->properties as $property) {
-			$properties[] = $property->toArray();
-		}
-
-		return array(
-			'id' => $this->getId(),
-			'type' => $this->getType(),
-			'name' => $this->getName(),
-			'url' => $this->getUrl(),
-			'properties' => $properties
-		);
-	}
-
 	public function __toString() {
 		return $this->toSDSJson();
-	}
-
-	/**
-	 * get json representation of this object
-	 * @return string
-	 */
-	public function toJson() {
-		return json_encode( $this->toArray() );
 	}
 
 	/**

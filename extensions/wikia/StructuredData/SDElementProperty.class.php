@@ -171,22 +171,6 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		return $this->label;
 	}
 
-	public function toArray() {
-		if($this->value instanceof SDElement) {
-			$array = $this->value->toArray();
-		}
-		else {
-			$array = array(
-				'type' => $this->getTypeName(),
-				'name' => $this->name,
-				'label' => $this->label,
-				'value' => $this->value //$this->getValues()
-			);
-		}
-
-		return $array;
-	}
-
 	/**
 	 * (PHP 5 &gt;= 5.1.0)<br/>
 	 * Receive update from subject
