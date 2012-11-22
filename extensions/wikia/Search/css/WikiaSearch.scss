@@ -19,7 +19,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 .Search {
 	// Search form
-	.WikiaSearch {
+	.SearchInput {
 		background: $color-search-form-background;
 		margin-bottom: 12px;
 		padding: $form-side-padding;
@@ -211,7 +211,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 	.WikiaTopAds {
 		margin-bottom: 15px;
 	}
-	.WikiaSearch {
+	.SearchInput {
 		padding-bottom: 12px;
 	}
 }
@@ -243,7 +243,7 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 	$color-search-ads-background: mix($color-buttons, $color-page, 12%);
 }
 .Search.this-wiki {
-	.WikiaSearch {
+	.SearchInput {
 		border-top: 1px solid $color-search-grid-border;
 		border-bottom: 1px solid $color-search-grid-border;
 		margin: 0;
@@ -300,6 +300,7 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 		}
 		.search-filter-sort {
 			font-weight: normal;
+			margin-bottom: 7px;
 			p {
 				margin: 0;
 			}
@@ -312,6 +313,9 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 				margin-left: 0;
 				padding-left: 0;
 			}
+		}
+		.disabled {
+			color: $color-alternate-text
 		}
 
 	}

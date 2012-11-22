@@ -17,12 +17,25 @@
 				<div class="search-filter-sort">
 					<p><?= wfMessage('wikiasearch-filter-options-label') ?>:</p>
 					<ul>
-						<? for($i = 0; $i < 5; $i++): ?>
-							<li><input type="checkbox" />Label</li>
-						<? endfor; ?>
+						<li><input type="checkbox" /><?= wfMessage('wikiasearch-filter-all') ?></li>
+						<li>
+							<input type="checkbox" /><?= wfMessage('wikiasearch-filter-category') ?>
+							<select name="filter[]">
+								<option value="cat_videogames"><?= wfMessage('hub-Gaming') ?></option>
+								<option value="cat_entertainment"><?= wfMessage('hub-Entertainment') ?></option>
+								<option value="cat_lifestyle"><?= wfMessage('hub-Lifestyle') ?></option>
+							</select>
+						</li>
+						<li><input type="checkbox" name="filter[]" value="is_hd" /><?= wfMessage('wikiasearch-filter-hd') ?></li>
+						<li><input type="checkbox" name="filter[]" value="is_photo" /><?= wfMessage('wikiasearch-filter-photos') ?></li>
+						<li><input type="checkbox" name="filter[]" value="is_video" /><?= wfMessage('wikiasearch-filter-videos') ?></li>
 					</ul>
 					<p><?= wfMessage('wikiasearch-sort-options-label') ?>:</p>
-					<select><option>Test</option></select>
+					<select>
+						<option><?= wfMessage('wikiasearch-sort-relevancy') ?></option>
+						<option><?= wfMessage('wikiasearch-sort-publish-date') ?></option>
+						<option><?= wfMessage('wikiasearch-sort-duration') ?></option>
+					</select>
 					
 				</div>
 			
