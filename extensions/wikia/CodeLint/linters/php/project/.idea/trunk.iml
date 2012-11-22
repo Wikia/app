@@ -6,6 +6,8 @@
 			<excludeFolder url="file://$MODULE_DIR$/extensions/wikia/JavascriptTestRunner" />
 			<excludeFolder url="file://$MODULE_DIR$/extensions/CreateAPage" />
 			<excludeFolder url="file://$MODULE_DIR$/lib/scribe" />
+			<excludeFolder url="file://$MODULE_DIR$/extensions/wikia/AdEngine/ghost" />
+			<excludeFolder url="file://$MODULE_DIR$/extensions/wikia/hacks" />
 		</content>
 		<orderEntry type="inheritedJdk" />
 		<orderEntry type="sourceFolder" forTests="false" />

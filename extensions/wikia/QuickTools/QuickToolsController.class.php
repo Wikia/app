@@ -221,7 +221,7 @@ class QuickToolsController extends WikiaController  {
 			$file = $title->getNamespace() == NS_FILE ? wfLocalFile( $title ) : false;
 			if ( $file ) {
 				$oldimage = null; // Must be passed by reference
-				$status = FileDeleteForm::doDelete( $title, $file, $oldimage, $reason, false )->isOK();
+				$status = FileDeleteForm::doDelete( $title, $file, $oldimage, $summary, false )->isOK();
 			} else {
 				$status = $article->doDeleteArticle( $summary );
 			}

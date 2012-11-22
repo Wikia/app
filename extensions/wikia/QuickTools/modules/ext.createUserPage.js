@@ -4,8 +4,8 @@
  *
  * @author Grunny
  */
-/*global jQuery, mediaWiki, GlobalNotification, window*/
-( function( $, mw, GlobalNotification ) {
+/*global jQuery, mediaWiki, window*/
+( function( $, mw ) {
 	'use strict';
 
 	var QuickCreateUserPage = {
@@ -77,7 +77,7 @@
 				);
 			} else {
 				var resultClass = ( result === 'error' ? 'error' : 'confirm' );
-				GlobalNotification.show( mw.msg( message ), resultClass );
+				window.GlobalNotification.show( mw.msg( message ), resultClass );
 			}
 		}
 	};
@@ -85,4 +85,4 @@
 	mw.QuickCreateUserPage = QuickCreateUserPage;
 
 	$( QuickCreateUserPage.init );
-}( jQuery, mediaWiki, GlobalNotification ) );
+}( jQuery, mediaWiki ) );
