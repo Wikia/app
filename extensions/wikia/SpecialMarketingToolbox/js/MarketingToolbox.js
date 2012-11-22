@@ -32,8 +32,8 @@ MarketingToolbox.prototype = {
 			this.verticalInputs.each(
 				$.proxy(
 					function(i, elem){
-						var verticalName = $(elem).val();
-						this.models[langId][verticalName] = new DatepickerModel(langId, verticalName);
+						var verticalId = $(elem).data('vertical-id');
+						this.models[langId][verticalId] = new DatepickerModel(langId, verticalId);
 					},
 					this
 				)
@@ -73,7 +73,7 @@ MarketingToolbox.prototype = {
 
 		this.verticalInputs.click($.proxy(function(e) {
 			var target = $(e.target);
-			this.vertical = target.val();
+			this.vertical = target.data('vertical-id');
 			this.verticalInputs.addClass('secondary');
 			target.removeClass('secondary');
 

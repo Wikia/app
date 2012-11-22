@@ -57,10 +57,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 */
 	public function getCalendarData() {
 		$langId = $this->getVal('langId');
-		$vertical = $this->getVal('vertical');
+		$verticalId = $this->getVal('verticalId');
 		$beginTimestamp = $this->getVal('beginTimestamp', time());
 		$endTimestamp = $this->getVal('endTimestamp', time());
-		$this->calendarData = $this->toolboxModel->getData($langId, $vertical, $beginTimestamp, $endTimestamp);
+		$this->calendarData = $this->toolboxModel->getData($langId, $verticalId, $beginTimestamp, $endTimestamp);
 	}
 
 	/**

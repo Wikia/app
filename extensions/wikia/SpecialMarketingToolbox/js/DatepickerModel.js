@@ -1,13 +1,13 @@
-var DatepickerModel = function(langId, vertical) {
+var DatepickerModel = function(langId, verticalId) {
 	this.langId = langId;
-	this.vertical = vertical;
+	this.verticalId = verticalId;
 	this.specialDates = {};
 	this.colectedMonths = {};
 };
 
 DatepickerModel.prototype = {
 	MONTH_COLLECT_RADIUS: 2,
-	vertical: undefined,
+	verticalId: undefined,
 
 	getStatus: function (day) {
 		var fullDay = $.datepicker.formatDate('yy-mm-dd', day);
@@ -42,7 +42,7 @@ DatepickerModel.prototype = {
 			method: 'getCalendarData',
 			type: 'post',
 			data: {
-				'vertical': this.vertical,
+				'verticalId': this.verticalId,
 				'langId': this.langId,
 				'beginTimestamp': beginTimestamp,
 				'endTimestamp': endTimestamp
