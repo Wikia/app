@@ -10,6 +10,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 	protected $name = null;
 	protected $value = null;
 	protected $label = '';
+	private $_value = null; // cached SDElementPropertyValue object(s)
 
 	function __construct($name, $value, SDElementPropertyType $type = null) {
 		$this->name = $name;
@@ -116,42 +117,36 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		} else {
 			$parsedValue = $this->parseRequestValue($value);
 		}
-		$this->value = $parsedValue;
+		$this->setValue( $parsedValue );
 	}
 
 	public function setValue($value) {
 		$this->value = $value;
-	}
-
-	public function getValue( ) {
-		if ( $this->isCollection() ) {
-			if (!is_array( $this->value )) {
-				if ( empty( $this->value ) ) return array();
-				return array( $this->value );
-			} else {
-				if ((count($this->value) == 1) && (empty($this->value[0]))) return array();
-			}
-		}
-
-		return $this->value;
+		$this->_value = null;
 	}
 
 	public function isCollection() {
 		return $this->getType()->isCollection();
 	}
 
-	public function getValueObject() {
-		$value = $this->getValue();
-		$type = $this->getType();
-		if ( !$this->isCollection()) {
-			return F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $value, 'propertyName' => $this->getName() ) );
+	public function getValue() {
+		if ( is_null( $this->_value ) ) {
+			if ( !$this->isCollection()) {
+				$this->_value = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $this->value, 'propertyName' => $this->getName() ) );
+			}
+		} else {
+			$this->_value = array();
+			if ( is_array( $this->value ) ) {
+				if ((count($this->value) == 1) && (empty($this->value[0]))) $values = array();
+				else $values = $this->value;
+			} else {
+				$values = ( empty( $this->value ) ) ? array() : array( $this->value );
+			}
+			foreach($values as $value) {
+				$this->_value[] = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $value, 'propertyName' => $this->getName() ) );
+			}
 		}
-		$result = array();
-		foreach($value as $v) {
-			$result[] = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $v, 'propertyName' => $this->getName() ) );
-		}
-		return $result;
-
+		return $this->_value;
 	}
 
 	public function hasNoValue() {
