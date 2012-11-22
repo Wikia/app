@@ -56,7 +56,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->wf->ProfileOut(__METHOD__);
 	}
 
-	public function dashboard() {
+	public function dashboardAction() {
 		$this->corporateWikisLanguages = $this->toolboxModel->getCorporateWikisLanguages();
 		$this->sections = $this->toolboxModel->getAvailableSections();
 		$this->verticals = $this->getVerticals(MarketingToolboxModel::SECTION_HUBS);
@@ -100,5 +100,17 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 */
 	public function getVerticals($sectionId) {
 		return $this->toolboxModel->getAvailableVerticals(MarketingToolboxModel::SECTION_HUBS);
+	}
+
+	public function leftMenu() {
+		// render left menu
+	}
+
+	public function topNav() {
+		// render top Nav
+	}
+
+	public function footer() {
+		// render footer
 	}
 }
