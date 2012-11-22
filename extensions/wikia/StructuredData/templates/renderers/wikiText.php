@@ -18,7 +18,8 @@ foreach ( $values as $i => $reference ) {
 	}
 
 	if ( $context == SD_CONTEXT_SPECIAL ) {
-
+		echo '<strong><a href="' . $reference->object->getSpecialPageUrl() . '">' . htmlspecialchars
+		($reference->object->getName() ) . '</a></strong>';
 		echo '<p>' . $text->getValue() . '</p>';
 	}
 
