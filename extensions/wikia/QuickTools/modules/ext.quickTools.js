@@ -65,12 +65,14 @@
 				userName = $quickToolsModal.attr( 'data-username' ),
 				time = $quickToolsModal.find( '#quicktools-time' ).val(),
 				summary = $quickToolsModal.find( '#quicktools-reason' ).val(),
+				botRevert = mw.util.getParamValue( 'bot' ),
 				data = {
 					target: userName,
 					time: time,
 					summary: summary,
 					dorollback: dorollback,
-					dodeletes: dodeletes
+					dodeletes: dodeletes,
+					markbot: botRevert
 				};
 			QuickTools.sendRequest( 'revertAll', data );
 		},
