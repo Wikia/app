@@ -15,6 +15,11 @@ class RelatedForumDiscussionController extends WikiaController {
 		// load assets related to this if there is a discussions section
 		$this->response->addAsset( 'extensions/wikia/Forum/css/RelatedForumDiscussion.scss' );
 		
+		if($this->app->checkSkin('monobook')) {
+			$this->response->addAsset( 'skins/oasis/css/core/sprite.scss' );
+			$this->response->addAsset( 'extensions/wikia/Forum/js/RelatedForumDiscussion.js' );
+		}
+		
 		$content = '';
 		
 		// don't render anything if there are no discussions for this article
