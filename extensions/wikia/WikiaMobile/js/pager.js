@@ -22,7 +22,7 @@ define('pager', function () {
 				function(){};
 		})(),
 		setTransform = function(prev, current, next, x){
-			var translate = 'translate3d(' + ~~(x * 1.1) + 'px,0,0)';
+			var translate = 'translate3d(' + ~~(x * 1.2) + 'px,0,0)';
 
 			current.style.webkitTransform = translate;
 			if (prev) { prev.style.webkitTransform = (x > 0) ? translate : ''; }
