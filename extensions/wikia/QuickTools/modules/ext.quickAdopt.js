@@ -5,8 +5,8 @@
  *
  * @author Grunny
  */
-/*global jQuery, mediaWiki, window*/
-( function( $, mw ) {
+/*global jQuery, mediaWiki, GlobalNotification, window*/
+( function( $, mw, GlobalNotification ) {
 	'use strict';
 
 	var QuickAdopt = {
@@ -59,14 +59,19 @@
 		},
 
 		showResult: function( result, message ) {
-			var $bodyContent = ( mw.config.get( 'skin' ) === 'oasis' ? $( '.WikiaPageContentWrapper' ) : mw.util.$content );
-			$bodyContent.prepend(
-				'<div class="WikiaConfirmation' + ( result === 'error' ? ' error' : '' ) + '"><p class="plainlinks"><img src="' +
-				mw.config.get( 'wgBlankImgUrl' ) + '" class="sprite ' + result + '"> ' + mw.msg( message ) + '</p></div>'
-			);
+			if ( mw.config.get( 'skin' ) === 'monobook' ) {
+				mw.util.$content.prepend(
+					'<div class="' + ( result === 'error' ? 'errorbox' : 'successbox' ) + '"><p class="plainlinks"><img src="' +
+					mw.config.get( 'wgBlankImgUrl' ) + '" class="sprite ' + result + '"> ' + mw.msg( message ) + '</p></div>' +
+					'<div class="visualClear"></div>'
+				);
+			} else {
+				var resultClass = ( result === 'error' ? 'error' : 'confirm' );
+				GlobalNotification.show( mw.msg( message ), resultClass );
+			}
 		}
 	};
 
 	$( QuickAdopt.init );
 
-}( jQuery, mediaWiki ) );
+}( jQuery, mediaWiki, GlobalNotification ) );
