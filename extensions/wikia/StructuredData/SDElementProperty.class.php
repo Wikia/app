@@ -43,21 +43,6 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 	}
 
 	/**
-	 * used by toSDSJson to convert a single value
-	 * @return string
-	 */
-	protected function convertValueToSDSJson($value) {
-		if ( is_object($value) ) {
-			$valueObject = new stdClass();
-			if(isset($value->id)) {
-				$valueObject->id = $value->id;
-			}
-			return $valueObject;
-		}
-		return $value;
-	}
-
-	/**
 	 * get SDS compatible json representation of this object
 	 * @return string
 	 */
@@ -66,11 +51,11 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		if ( $this->isCollection() ) {
 			$values = array();
 			foreach($value as $v) {
-				$values[] = $this->convertValueToSDSJson($v);
+				$values[] = $v->convertValueToSDSJson();
 			}
 			$value = $values;
 		} else {
-			$value = $this->convertValueToSDSJson($value);
+			$value = $value->convertValueToSDSJson();
 		}
 		return $value;
 	}

@@ -70,4 +70,19 @@ class SDElementPropertyValue extends SDRenderableObject {
 		return ( $renderedContent !== false ) ? $renderedContent : $this->getValue();
 	}
 
+	/**
+	 * used by toSDSJson to convert a single value
+	 * @return string
+	 */
+	public function convertValueToSDSJson() {
+		if ( is_object($this->value) ) {
+			$valueObject = new stdClass();
+			if(isset($this->value->id)) {
+				$valueObject->id = $this->value->id;
+			}
+			return $valueObject;
+		}
+		return $this->value;
+	}
+
 }
