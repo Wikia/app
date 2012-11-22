@@ -97,7 +97,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	 * get property value
 	 * @param string $name
 	 * @param mixed $default
-	 * @return mixed
+	 * @return SDElementPropertyValue
 	 */
 	public function getPropertyValue( $name, $default = null ) {
 		$property = $this->getProperty( $name );
@@ -109,7 +109,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	 * @return string
 	 */
 	public function getName() {
-		return $this->getPropertyValue( 'schema:name' );
+		return $this->getPropertyValue( 'schema:name' )->getValue();
 	}
 
 	/**
@@ -117,7 +117,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	 * @return string
 	 */
 	public function getUrl() {
-		return $this->getPropertyValue( 'schema:url' );
+		return $this->getPropertyValue( 'schema:url' )->getValue();
 	}
 
 	/**
