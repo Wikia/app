@@ -53,10 +53,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->wf->ProfileOut(__METHOD__);
 	}
 
-	public function dashboard() {
-		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
-		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
-		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
+	public function dashboardAction() {
+                $this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
+                $this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
+                $this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
 
 		$this->corporateWikisLanguages = $this->toolboxModel->getCorporateWikisLanguages();
 		$this->sections = $this->toolboxModel->getAvailableSections();
@@ -132,5 +132,17 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 */
 	public function getVerticals($sectionId) {
 		return $this->toolboxModel->getAvailableVerticals(MarketingToolboxModel::SECTION_HUBS);
+	}
+
+	public function leftMenu() {
+		// render left menu
+	}
+
+	public function topNav() {
+		// render top Nav
+	}
+
+	public function footer() {
+		// render footer
 	}
 }
