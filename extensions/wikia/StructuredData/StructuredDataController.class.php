@@ -212,8 +212,8 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 				$requestParams['schema:description'] = $string;
 			}
-			return $requestParams;
 		}
+		return $requestParams;
 	}
 
 	public function getObject() {
