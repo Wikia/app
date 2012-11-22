@@ -26,7 +26,8 @@ $messages['en'] = array(
 	'forum-specialpage-board-lastpostby' => 'Last post by',
 	'forum-specialpage-policies-edit' => 'Edit',
 	'forum-specialpage-policies' => 'Forum Policies / FAQ',
-	'forum-policies-and-faq' => "==Forum policies==
+	'forum-policies-and-faq' => "
+==Forum policies==
 Before contributing to the {{SITENAME}} Forums, please keep in mind a couple of best practices for conduct:
 
 '''Be nice and treat people with respect.'''
@@ -39,7 +40,20 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a couple of 
 :Notice something that doesn't seem right? or do you have a question? Ask for help here on the forums! If you need help from Wikia staff, please reach out on [[w:c:community|Community Central]] or via [[Special:Contact]].
 
 '''Have fun!'''
-:The {{SITENAME}} community is happy to have you here. We look forward to seeing you around as we discuss this topic we all love.",
+:The {{SITENAME}} community is happy to have you here. We look forward to seeing you around as we discuss this topic we all love.
+
+==Forum FAQ==
+'''How do I stay on top of discussions I'm interested in?'''
+: With a Wikia user account, you can follow specific conversations and receive notifications (either on-site or via email) if a discussion has more activity. Be sure to [[Special:UserSignup|sign up for a Wikia account]] if you don't already have one.
+
+'''How do I remove vandalism?'''
+: If you notice some spam or vandalism on a thread, hover your mouse over the offending text. You'll see a \"More\" button appear. Inside the \"More\" menu, you'll find \"Remove\". This will allow you to remove the vandalism and optionally inform an admin.
+
+'''What are Kudos?'''
+: If you find a particular discussion or reply interesting, well thought out, or amusing you can show direct appreciation by giving it Kudos. They can be helpful in voting situations, too.
+
+'''What are Topics?'''
+: Topics allow you to sync a forum discussion with a wiki article. It's another way to keep Forums organized and to help people find interesting discussions. For example, a Forum thread tagged with \"Lord Voldemort\" will appear at the bottom of the \"Lord Voldemort\" article.",
 
 	/* Forum Board */
 	'forum-board-title' => '$1 board',
