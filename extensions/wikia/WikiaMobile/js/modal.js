@@ -19,6 +19,7 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 		topBar,
 		position,
 		onClose,
+		onResize,
 		stopHiding,
 		positionfixed = Features.positionfixed,
 		scrollable;
@@ -61,7 +62,9 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 
 	function onOrientationChange(ev){
 		wrapper.style.minHeight = ev.height + 'px';
-		!w.pageYOffset && w.scrollTo(0, 0);
+		!w.pageYOffset && w.scrollTo(0, 1);
+
+		if(typeof onResize == 'function') onResize();
 	}
 
 	function hideUI(){
@@ -88,6 +91,10 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 			tool = options.toolbar,
 			cap = options.caption,
 			classes = options.classes || '';
+
+		stopHiding = options.stopHiding;
+		scrollable = options.scrollable;
+		onResize = options.onResize;
 
 		if(!opened){
 			position = w.scrollY;
@@ -137,8 +144,6 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 			if(typeof options.onOpen === 'function') {options.onOpen(content);}
 		}
 
-		stopHiding = options.stopHiding;
-		scrollable = options.scrollable;
 		onClose = options.onClose;
 
 		//move topbar along with scroll manually for browsers with no support for position fixed
