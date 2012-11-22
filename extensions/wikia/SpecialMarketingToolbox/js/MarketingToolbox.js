@@ -62,6 +62,7 @@ MarketingToolbox.prototype = {
 	interactionsHandler: function() {
 		$('#marketingToolboxRegionSelect').change($.proxy(function(e) {
 			this.langId = $(e.target).val();
+			this.saveLangId(this.langId);
 			$('.marketingToolbox input').removeAttr('disabled');
 			$('.section input').removeClass('secondary');
 			$('.placeholder-option').remove();
@@ -76,6 +77,7 @@ MarketingToolbox.prototype = {
 			this.vertical = target.data('vertical-id');
 			this.verticalInputs.addClass('secondary');
 			target.removeClass('secondary');
+			this.saveVertical(this.vertical);
 
 			this.destroyDatepicker();
 			this.initDatepicker();
@@ -114,6 +116,33 @@ MarketingToolbox.prototype = {
 				});
 			}
 		}, this));
+	},
+	saveUserProperties: function(data) {
+		$.nirvana.sendRequest({
+			controller: 'WikiaUserPropertiesController',
+			method: 'performPropertyOperation',
+			data: data,
+			type: 'post',
+			format: 'json'
+		});
+	},
+	saveLangId: function(id) {
+		this.saveUserProperties({
+			handlerName: 'MarketingToolboxUserPropertiesHandler',
+			methodName: 'saveMarketingToolboxRegion',
+			callParams: {
+				'marketing-toolbox-region': id
+			}
+		});
+	},
+	saveVertical: function(name) {
+		this.saveUserProperties({
+			handlerName: 'MarketingToolboxUserPropertiesHandler',
+			methodName: 'saveMarketingToolboxVertical',
+			callParams: {
+				'marketing-toolbox-vertical': name
+			}
+		});
 	}
 };
 

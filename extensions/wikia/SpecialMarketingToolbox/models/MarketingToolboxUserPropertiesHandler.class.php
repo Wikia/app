@@ -8,12 +8,30 @@ class MarketingToolboxUserPropertiesHandler extends WikiaUserPropertiesHandlerBa
 	const MARKETING_TOOLBOX_VERTICAL_PROPERTY_NAME = 'marketing-toolbox-vertical';
 	const MARKETING_TOOLBOX_REGION_PROPERTY_NAME = 'marketing-toolbox-region';
 
-	public function saveMarketingToolboxVertical($vertical) {
-		return $this->savePropertyValue(self::MARKETING_TOOLBOX_VERTICAL_PROPERTY_NAME, $vertical);
+	public function saveMarketingToolboxVertical($params) {
+		$newVertical = (!empty($params[self::MARKETING_TOOLBOX_VERTICAL_PROPERTY_NAME]) ? $params[self::MARKETING_TOOLBOX_VERTICAL_PROPERTY_NAME] : false);
+		$results = new stdClass();
+		if (!$newVertical) {
+			$results->success = false;
+		} else {
+			$this->savePropertyValue(self::MARKETING_TOOLBOX_VERTICAL_PROPERTY_NAME, $newVertical);
+			$results->vertical = $newVertical;
+			$results->success = true;
+		}
+		return $results;
 	}
 
-	public function saveMarketingToolboxRegion($region) {
-		return $this->savePropertyValue(self::MARKETING_TOOLBOX_REGION_PROPERTY_NAME, $region);
+	public function saveMarketingToolboxRegion($params) {
+		$newRegion = (!empty($params[self::MARKETING_TOOLBOX_REGION_PROPERTY_NAME]) ? $params[self::MARKETING_TOOLBOX_REGION_PROPERTY_NAME] : false);
+		$results = new stdClass();
+		if (!$newRegion) {
+			$results->success = false;
+		} else {
+			$this->savePropertyValue(self::MARKETING_TOOLBOX_REGION_PROPERTY_NAME, $newRegion);
+			$results->region = $newRegion;
+			$results->success = true;
+		}
+		return $results;
 	}
 
 	public function getMarketingToolboxVertical() {
