@@ -1,4 +1,4 @@
-var StructureData = {
+var StructuredData = {
 	// Mustache templates
 	selectTemplate: '<select class="objects-to-add"><option value="false">choose object...</option>{{#list}}<option data-value="{{id}}" data-url="{{url}}" data-type="{{type}}" data-name="{{name}}" {{#schema:contentURL}}data-image-url="{{schema:contentURL}}"{{/schema:contentURL}} >{{type}} - {{name}}</option>{{/list}}</select> ',
 	objectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}">{{name}}</a> <button class="secondary remove">Remove</button></li>',
@@ -83,6 +83,10 @@ var StructureData = {
 						}
 				]}
 			);
+		});
+		// Add support for adding new wiki-text objects directly to article
+		$('button.add-wikiText-SDObj-from-article').click(function(event) {
+			 that.addWikiTextObjFromArticle($(event.target))
 		});
 		// Add WMU support for editing image objects
 		$('input[name="schema:thumbnailUrl"]').bind('focus', function(event) {
@@ -188,8 +192,45 @@ var StructureData = {
 			}
 			placeToAdd.append(html);
 		}
+	},
+	// METHOD for adding new WikiText objects direclty from the article
+	addWikiTextObjFromArticle: function($target) {
+		$.nirvana.sendRequest({
+			controller: 'StructuredData',
+			method: 'showObject',
+			type: 'GET',
+			format: 'html',
+			data: {
+				type: 'wikia:WikiText',
+				action: 'create'
+			},
+			callback: function(data) {
+				$.showCustomModal(
+					'Add new WikiText Object',
+					data,
+					{
+						id: "AddWikiTextSDObject",
+						width: 600,
+						buttons: [
+							{
+								defaultButton:true,
+								message:'Add',
+								handler:function() {
+								}
+							},
+							{
+								message:'Cancel',
+								handler:function() {
+									$('#AddWikiTextSDObject').closeModal();
+								}
+							}
+						]}
+				);
+			}
+		});
 	}
+
 }
 $(function() {
-	StructureData.init();
+	StructuredData.init();
 });
