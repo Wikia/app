@@ -36,6 +36,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		if( $this->checkAccess() ) {
 			$action = $this->getRequestedAction();
+
 			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
 			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
 			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
@@ -60,6 +61,11 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->corporateWikisLanguages = $this->toolboxModel->getCorporateWikisLanguages();
 		$this->sections = $this->toolboxModel->getAvailableSections();
 		$this->verticals = $this->getVerticals(MarketingToolboxModel::SECTION_HUBS);
+
+		$userPreferendesHandler = new MarketingToolboxUserPropertiesHandler();
+		$this->selectedLanguage = $userPreferendesHandler->getMarketingToolboxRegion();
+		$this->selectedVertical = $userPreferendesHandler->getMarketingToolboxVertical();
+
 		$this->overrideTemplate('dashboard');
 	}
 

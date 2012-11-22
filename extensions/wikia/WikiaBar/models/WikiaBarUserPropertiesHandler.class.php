@@ -43,7 +43,7 @@ class WikiaBarUserPropertiesHandler extends WikiaUserPropertiesHandlerBase {
 	 * @desc Gets Wikia Bar display state from user_properties table. If it's not set will return default value WIKIA_BAR_SHOWN_STATE_VALUE
 	 */
 	public function getWikiaBarState($params) {
-		$results = $this->getPropertyValue(
+		$results = $this->getPropertyObject(
 			array(
 				'propertyName' => self::WIKIA_BAR_STATE_OPTION_NAME,
 				'defaultOption' => self::WIKIA_BAR_SHOWN_STATE_VALUE
