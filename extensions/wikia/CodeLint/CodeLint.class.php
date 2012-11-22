@@ -374,6 +374,8 @@ abstract class CodeLint {
 
 		if (!empty($files)) {
 			foreach($files as $fileName) {
+				$fileName = realpath($fileName);
+
 				// skip blacklisted ones
 				if ($this->isBlacklisted($fileName, $blacklist)) {
 					if (!empty($wgCommandLineMode)) {

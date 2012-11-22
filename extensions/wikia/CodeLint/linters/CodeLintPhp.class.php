@@ -264,9 +264,6 @@ class CodeLintPhp extends CodeLint {
 		// run PhpStorm for the whole directory
 		$output = $this->inspectDirectory(dirname($fileName));
 
-		// use the same directory structure as parseResults() method
-		$fileName = realpath($fileName);
-
 		// take issues for just the current file
 		$errors = isset($output['problems'][$fileName]) ? $output['problems'][$fileName] : array();
 
