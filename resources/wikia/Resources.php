@@ -19,7 +19,8 @@ return array(
 			'jquery.ui.sortable',
 			'jquery.ui.autocomplete',
 			'jquery.ui.slider',
-			'jquery.ui.tabs'
+			'jquery.ui.tabs',
+			'jquery.ui.datepicker',
 		),
 		'group' => 'jquery.ui',
 	),
