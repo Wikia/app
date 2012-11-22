@@ -1,6 +1,6 @@
 var StructureData = {
 	// Mustache templates
-	selectTemplate: '<select class="objects-to-add"><option value="false">choose object...</option>{{#list}}<option data-value="{{id}}" data-url="{{url}}" data-type="{{type}}" {{#schema:contentURL}}data-image-url="{{schema:contentURL}}"{{/schema:contentURL}} >{{name}}</option>{{/list}}</select> ',
+	selectTemplate: '<select class="objects-to-add"><option value="false">choose object...</option>{{#list}}<option data-value="{{id}}" data-url="{{url}}" data-type="{{type}}" data-name="{{name}}" {{#schema:contentURL}}data-image-url="{{schema:contentURL}}"{{/schema:contentURL}} >{{type}} - {{name}}</option>{{/list}}</select> ',
 	objectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}">{{name}}</a> <button class="secondary remove">Remove</button></li>',
 	imageObjectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}" title="{{name}}"><img src="{{imageUrl}}" alt="{{name}}" /></a> <button class="secondary remove">Remove</button></li>',
 	inputTemplate: '<li><div class="input-group"><input type="text" name="{{type}}[]" value="" /> <button class="secondary remove">Remove</button></div></li>',
@@ -173,7 +173,7 @@ var StructureData = {
 		});
 		if (!alreadyInList) {
 			var	objectData = {
-					name: selectedObject.text(),
+					name: selectedObject.data('name'),
 					url: selectedObject.data('url'),
 					id: selectedObject.data('value'),
 					type: placeToAdd.data('field-name')
