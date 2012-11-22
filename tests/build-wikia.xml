@@ -108,7 +108,7 @@
 					   --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
 					   --mode=php
 					   --dir=${basedir}/../extensions/wikia,${basedir}/../includes/wikia,${basedir}/../skins/oasis,${basedir}/../extensions/3rdparty/LyricWiki
-					   --blacklist=${basedir}/../extensions/wikia/hacks,${basedir}/../extensions/wikia/CodeLint/examples,/templates/,.tmpl.php
+					   --blacklist=extensions/wikia/hacks,extensions/wikia/CodeLint/examples,/templates/,.tmpl.php
 					   --format=html
 					   --output=${basedir}/build/phplint.html
 					   " />
