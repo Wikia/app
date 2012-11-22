@@ -367,8 +367,14 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-topic-heading' => 'Topics for this thread:',
 	'wall-topic-edit' => 'Edit Topics',
 
+<<<<<<< HEAD
 	'wall-topic-edit-save' => 'Save',
 	'wall-topic-edit-cancel' => 'Cancel',
+=======
+
+    'wall-userdoesnotexist' => 'User account "$1" does not exist or has never logged in on this wiki.'
+
+>>>>>>> parent of 1f45bb8... bugid-48583 | changed spaces into tabs
 );
 
 /** Message documentation (Message documentation)
@@ -4763,12 +4769,8 @@ ___________________________________________<br />
 	'wall-topic-input-error-limit' => 'Wątek może mieć nie więcej niż $1 tematów.',
 	'wall-topic-heading' => 'Tematy tego wątku:',
 	'wall-topic-edit' => 'Edytuj tematy',
-<<<<<<< HEAD
-	'wall-userdoesnotexist' => 'Konto użytkownika „$1” nie jest zarejestrowane.',
 	'wall-topic-edit-save' => 'Zapisz zmiany',
 	'wall-topic-edit-cancel' => 'Anuluj',
-=======
->>>>>>> parent of ac32b5c... bugid-48583 | fixes with Title and i18n after Sebastian's Code Review
 );
 
 /** Pashto (پښتو)
