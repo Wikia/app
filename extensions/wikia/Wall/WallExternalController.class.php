@@ -128,12 +128,8 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 		
-		$title = F::build('Title', array($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace')), 'newFromText');
-		  if (User::idFromName($title->getText()) !== null) {
-				$wallMessage = F::build('WallMessage', array($body, $title, $this->wg->User, $titleMeta, false, $relatedTopics, true, $notifyEveryone), 'buildNewMessageAndPost');
-		  } else {
-				$wallMessage = false;
-		  }
+		$title = F::build('Title', array($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace')), 'newFromText');  
+		$wallMessage = F::build('WallMessage', array($body, $title, $this->wg->User, $titleMeta, false, $relatedTopics, true, $notifyEveryone), 'buildNewMessageAndPost');
 		
 		if( $wallMessage === false ) {
 			error_log('WALL_NOAC_ON_POST');
