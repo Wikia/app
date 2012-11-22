@@ -17,11 +17,10 @@ class Walls extends WikiaModel {
 		// get board list
 		$result = $dbw->select(
 			array( 'page', 'page_wikia_props' ),
-			array( 'page.page_id as page_id, page.page_title as page_title, page_wikia_props.props as order_index' ),
+			array( 'page.page_id as page_id, page.page_title as page_title' ),
 			array(
 				'page.page_namespace' => $namespace,
-				'page_wikia_props.page_id = page.page_id',
-				'page_wikia_props.propname' => WPP_WALL_ORDER_INDEX
+				'page_wikia_props.page_id = page.page_id'
 			),
 			__METHOD__,
 			array( 'ORDER BY' => 'page_title' )
@@ -36,17 +35,10 @@ class Walls extends WikiaModel {
 				$title = Title::newFromID( $boardId );
 			}
 
-			if ( $title instanceof Title ) {
-				$boards[ wfUnserializeProp( $row->order_index ) ] = $boardId;				
+			if ( $title instanceof Title ) { 
+				$boards[] = $boardId;				
 			}
 		}
-
-		usort( $boards, function( $a, $b ) {
-			if ( $a == $b ) {
-				return 0;
-			}
-			return ($a < $b) ? -1 : 1;
-		} );
 
 		$this->wf->profileOut( __METHOD__ );
 

@@ -225,8 +225,10 @@ class WallMessage {
 	}
 
 	public function storeRelatedTopicsInDB($relatedTopicURLs) {
+		wfRunHooks('WallBeforeStoreRelatedTopicsInDB', array($this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ));
 		$rp = new WallRelatedPages();
 		$rp->setWithURLs($this->getId(), $relatedTopicURLs);
+		wfRunHooks('WallAfterStoreRelatedTopicsInDB', array($this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ));
 	}
 
 	public function getRelatedTopics() {
@@ -243,6 +245,7 @@ class WallMessage {
 
 	public function doSaveComment($body, $user, $summary = '') {
 		wfProfileIn( __METHOD__ );
+				
 		if($this->canEdit($user)){
 			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true, $summary );
 		}
@@ -395,8 +398,8 @@ class WallMessage {
 	public function setRelatedTopics($user, $relatedTopics) {
 		if($this->isMain()) {
 			$this->getArticleComment()->setMetaData('related_topics', implode('|', $relatedTopics));
-			$this->storeRelatedTopicsInDB($relatedTopics);
 			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-message-update-topics-summary' ) );
+			$this->storeRelatedTopicsInDB($relatedTopics);
 		}
 		return true;
 	}
@@ -404,7 +407,7 @@ class WallMessage {
 	public function markAsMove($user) {
 		if($this->isMain()) {
 			$this->getArticleComment()->setMetaData('lastmove', time());
-			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-action-move-topics-summary' ) );
+			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-action-move-topics-summary', $this->getWall()->getTitle()->getPrefixedText() ));
 		}
 		return true; 
 	}
@@ -574,7 +577,15 @@ class WallMessage {
 		$topObjectCache[$id] = WallMessage::newFromId($id);
 		return $topObjectCache[$id];
 	}
-
+	
+	public function	getTopParentId() {
+		$top = $this->getTopParentObj();
+		if(empty($top)) {
+			return null;
+		}
+		return $this->getId();
+	}
+	
 	public function isMain() {
 		$top = $this->getTopParentObj();
 		if(empty($top)) {

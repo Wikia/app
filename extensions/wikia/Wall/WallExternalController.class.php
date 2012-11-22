@@ -31,6 +31,16 @@ class WallExternalController extends WikiaController {
 	 * Move thread (TODO: Should this be in Forums?)
 	 */
 	public function moveModal() {
+		
+		$id = $this->getVal('id');
+		$wm = WallMessage::newFromId($id);
+		
+		if(empty($wm)) {
+			return true;
+		}
+		
+		$mainWall = $wm->getWall();
+
 		if ( !$this->wg->User->isAllowed( 'wallmessagemove' ) ) {
 			$this->displayRestrictionError();
 			return false;
@@ -42,10 +52,11 @@ class WallExternalController extends WikiaController {
 		$list = $forum->getList(DB_SLAVE, NS_WIKIA_FORUM_BOARD);
 
 		$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
-
 		foreach ( $list as $value ) {
-			$wall = Wall::newFromId($value);
-			$this->destinationBoards[] = array( 'value' => $value, 'content' => htmlspecialchars( $wall->getTitle()->getText() ) );
+			if($mainWall->getId() != $value) {
+				$wall = Wall::newFromId($value);
+				$this->destinationBoards[$value] = array( 'value' => $value, 'content' => htmlspecialchars( $wall->getTitle()->getText() ) );
+			}
 		}
 	}
 	

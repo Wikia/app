@@ -88,6 +88,7 @@
 					rs: 'getLinkSuggest',
 					format: 'json',
 					nospecial: 1,
+					nsfilter: 0,
 					query: q
 				},
 				method: 'post',
@@ -110,7 +111,7 @@
 				$.loadMustache()
 			).then(function() {
 				messageTopic.autocomplete = messageTopic.input.autocomplete({
-					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json&nospecial=1',
+					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json&nospecial=1&nsfilter=0',
 					onSelect: function(value, data) {
 						$().log("on select");
 						messageTopic.addSelection(value);
