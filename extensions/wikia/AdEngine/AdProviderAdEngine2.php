@@ -26,7 +26,7 @@ class AdProviderAdEngine2 extends AdProviderIframeFiller implements iAdProvider 
 	public function getAd($slotname, $slot, $params = null) {
 		$out = '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint default-height">';
 		//$out .= '<script>window.AdQueue.push(' . json_encode(array('name' => $slotname)) . ');</script>';
-		$out .= '<script>window.adslots2.push(' . json_encode(array($slotname)) . ');</script>';
+		$out .= '<script>window.adslots2.push(' . json_encode(array($slotname, null, $this->name)) . ');</script>';
 		$out .= '</div>';
 		return $out;
 	}
