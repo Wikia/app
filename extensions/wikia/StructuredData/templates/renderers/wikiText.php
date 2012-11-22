@@ -37,7 +37,7 @@ foreach ( $values as $i => $reference ) {
 if ( $context == SD_CONTEXT_DEFAULT ) {
 	echo '<button class="add-wikiText-SDObj-from-article">Add new WikiText object</button>';
 	echo F::build('JSSnippets')->addToStack(
-		array('/extensions/wikia/StructuredData/js/StructuredData.js')
+		array('/extensions/wikia/StructuredData/js/StructuredDataInArticle.js')
 	);
 }
 if ( $context == SD_CONTEXT_EDITING ) {
