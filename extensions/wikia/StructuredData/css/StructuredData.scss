@@ -47,7 +47,7 @@
 		padding: 15px;
 	}
 	img {
-		max-width: 500px;
+		max-width: 443px;
 		height: auto;
 	}
 	figcaption {
@@ -135,6 +135,8 @@
 	}
 	.example {
 		font-family: monospace;
+		word-wrap: break-word;
+		width: 300px
 	}
 }
 .ui-state-default {
