@@ -182,7 +182,7 @@ define('pager', function () {
 					//we can assume that this should always be at the top
 					//if need arises better place for this probably is onStart
 					//so fix it with this line in case:
-					window.scrollTo(0,0);
+					window.scrollTo(0,1);
 
 					if ( isFunction ? !checkCancel() : true ) {
 						pos = ev.touches[0].pageX;
