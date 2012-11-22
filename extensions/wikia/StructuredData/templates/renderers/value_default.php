@@ -3,8 +3,9 @@
 	<div class="input-group">
 		<?php if ( in_array( $object->getPropertyName(), array('schema:description', 'schema:text') ) ) : ?>
 			<textarea name="<?=$object->getPropertyName();?>"><?=$value;?></textarea>
-		<?php elseif ($object->getPropertyName() == 'schema:name' && empty($isCreateMode)) : ?>
+		<?php elseif ($object->getPropertyName() == 'schema:name' && $params['isCreateMode'] === false) : ?>
 			<?= $object->getValue();?>
+			<input type="hidden" value="<?=$value;?>" name="<?=$object->getPropertyName();?>" />
 		<?php else : ?>
 			<input type="text" value="<?=$value;?>" name="<?=$object->getPropertyName();?>" />
 		<?php endif; ?>
