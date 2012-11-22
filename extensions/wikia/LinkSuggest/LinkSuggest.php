@@ -151,7 +151,10 @@ function getLinkSuggest() {
 	// Autocomplete will stop making requests after it finds 0 results.  So if you start to type "Category" and there is no page beginning
 	// with "Cate", it will not even make the call to LinkSuggest.
 	$namespace = $wgRequest->getVal('ns');
-
+	
+	//limit the result only to this namespace
+	$namespaceFilter = $wgRequest->getVal('nsfilter');
+	
 	// explode passed query by ':' to get namespace and article title
 	$queryParts = explode(':', $query, 2);
 
@@ -189,6 +192,18 @@ function getLinkSuggest() {
 	else {
 		// search only within a given namespace
 		$namespaces = array($namespace);
+	}
+	
+	if(strlen($namespaceFilter) > 0) {
+		$namespaces = array($namespaceFilter);
+	}
+	
+	if (!empty($namespace) && $namespace != $namespaceFilter) {
+		$out = $wgRequest->getText('format') == 'json'
+			 ? json_encode(array('suggestions'=>array(),'redirects'=>array()))
+			 : '';
+
+		return linkSuggestAjaxResponse($out);
 	}
 
 	$query = addslashes($query);

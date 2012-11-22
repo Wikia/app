@@ -35,6 +35,8 @@ class ForumController extends WallBaseController {
 
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
 			$this->response->setVal( 'isTopicPage', true );
+			
+			$this->app->wg->Out->setPageTitle( wfMsg( 'forum-board-topic-title', $this->wg->title->getBaseText() ) );
 		} else {
 			$boardId = $this->wall->getId();
 			$board = F::build( 'ForumBoard', array( $boardId ), 'newFromId' );
@@ -48,6 +50,8 @@ class ForumController extends WallBaseController {
 			$this->response->setVal( 'isTopicPage', false );
 			
 			$this->description = $board->getDescription();
+			
+			$this->app->wg->Out->setPageTitle( wfMsg( 'forum-board-title', $this->wg->title->getBaseText() ) );
 		}
 		
 		$this->response->setVal( 'boardNamespace', NS_WIKIA_FORUM_BOARD );
@@ -56,7 +60,6 @@ class ForumController extends WallBaseController {
 		$this->response->setCacheValidity( 0, 0 );
 
 		$this->app->wg->SuppressPageHeader = true;
-		$this->app->wg->Out->setPageTitle( wfMsg( 'forum-board-title', $this->wg->title->getBaseText() ) );
 	}
 
 	protected function redirectToIndex() {
@@ -71,6 +74,7 @@ class ForumController extends WallBaseController {
 			if ( !empty( $topicTitle ) ) {
 				$wall = F::build( 'Wall', array( $title, $topicTitle->getArticleId() ), 'newFromRelatedPages' );
 				$this->response->setVal( 'topicText', $topicTitle->getPrefixedText() );
+				$this->response->setVal( 'topicURL', $topicTitle->getFullUrl() );
 				$wall->disableCache();
 			} else {
 				$wall = F::build( 'Wall', array( $title ), 'newFromTitle' );

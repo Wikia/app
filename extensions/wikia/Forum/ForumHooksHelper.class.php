@@ -283,6 +283,9 @@ class ForumHooksHelper {
 	
 	/**
 	 * purge memc and vernish cache for pages releated to this thread
+	 * 
+	 * in case of edit this hook is run two time before (WallBeforeEdit) edit and after edit (WallAction)
+	 * 
 	 */
 	
 	public static function onWallAction($action, $parent, $id, $namespace) {
@@ -295,4 +298,12 @@ class ForumHooksHelper {
 		return true;
 	}
 	
+	/**
+	 * just proxy to onWallStoreRelatedTopicsInDB
+	 */
+	 
+	public static function onWallStoreRelatedTopicsInDB($parent, $id, $namespace) {
+		self::onWallAction(null, $parent, $id, $namespace);
+		return true;	
+	}
 }

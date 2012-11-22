@@ -11,7 +11,7 @@
 		<?= $app->renderView('ForumController', 'boardNewThread', array('isTopicPage' => $isTopicPage)) ?>
 		<div class="ContentHeader <?php if($isTopicPage): ?> Topic<?php endif; ?>">
 			<?php if($isTopicPage): ?>
-				<div class="activity"><?= $wf->MsgExt(('forum-active-threads-on-topic'), array('parsemag'), $activeThreads, '<b>'.$topicText.'</b>') ?></div>
+				<div class="activity"><?= $wf->MsgExt(('forum-active-threads-on-topic'), array('parsemag'), $activeThreads, "<b><a href='$topicURL'>".$topicText."</a></b>") ?></div>
 			<?php else: ?>
 				<div class="activity"><?= $wf->MsgExt(('forum-active-threads'), array('parsemag'), $activeThreads) ?></div>
 			<?php endif; ?>

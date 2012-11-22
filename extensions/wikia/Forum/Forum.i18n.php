@@ -19,7 +19,7 @@ $messages['en'] = array(
 
 	/* Forum:Special (Index) */
 	'forum-specialpage-heading' => '{{SITENAME}} Forum',
-	'forum-specialpage-blurb-heading' => 'Welcome to {{SITENAME}} Forum!',
+	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading You can edit it<span>',
 	'forum-specialpage-blurb' => '',
 	'forum-specialpage-board-threads' => '{{formatnum:$1}} {{PLURAL:$1|thread|threads}}',
 	'forum-specialpage-board-posts' => '{{formatnum:$1}} {{PLURAL:$1|post|posts}}',
@@ -55,7 +55,9 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a couple of 
 : Topics allow you to sync a forum discussion with a wiki article. It's another way to keep Forums organized and to help people find interesting discussions. For example, a Forum thread tagged with \"Lord Voldemort\" will appear at the bottom of the \"Lord Voldemort\" article.",
 
 	/* Forum Board */
+	
 	'forum-board-title' => '$1 board',
+	'forum-board-topic-title' => 'Discussions about $1',
 	'forum-board-topics' => 'Topics',
 	'forum-board-thread-follow' => 'Follow',
 	'forum-board-thread-following' => 'Following',

@@ -25,9 +25,11 @@ class Forum extends Walls {
 			$boardInfo['name'] = $board->getTitle()->getText();
 			$boardInfo['description'] = $board->getDescription();
 			$boardInfo['url'] = $board->getTitle()->getFullURL();
-			$boardInfo['order_index'] = $key;
-			$boards[] = $boardInfo;
+			$orderIndex = wfGetWikiaPageProp(WPP_WALL_ORDER_INDEX, $id, DB_SLAVE);
+			$boards[$orderIndex] = $boardInfo;
 		}
+		
+		krsort($boards);
 		
 		return $boards;
 	}
