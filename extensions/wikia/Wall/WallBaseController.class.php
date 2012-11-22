@@ -78,19 +78,18 @@ class WallBaseController extends WikiaController{
 		$this->addAsset();
 
 		$title = $this->request->getVal('title', $this->app->wg->Title);
-
-		$userName = ($title instanceof Title) ? $title->getText() : $title;
+		$userName = $title->getText();
 		if (User::idFromName($userName) === null) {
-			wfRunHooks('ShowMissingArticle', array($this));
 
-			$this->app->wg->Out->setStatusCode(404);
+			wfRunHooks( 'ShowMissingArticle', array( $this ) );
+			$this->app->wg->Out->setStatusCode ( 404 );
 			$this->response->getView()->setTemplate('Wall', '404');
 
-			$showMissingArticle = wfRunHooks('BeforeDisplayNoArticleText', array($this));
+			$showMissingArticle = wfRunHooks( 'BeforeDisplayNoArticleText', array( $this ) );
 
 			$this->response->setVal('showMissingArticle', $showMissingArticle);
 			$this->response->setVal('userName', $userName);
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 

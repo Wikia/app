@@ -367,8 +367,6 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-topic-heading' => 'Topics for this thread:',
 	'wall-topic-edit' => 'Edit Topics',
 
-	'wall-userdoesnotexist' => 'User account "$1" does not exist or has never logged in on this wiki.',
-
 	'wall-topic-edit-save' => 'Save',
 	'wall-topic-edit-cancel' => 'Cancel',
 );
@@ -758,7 +756,6 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 	'wall-topic-input-error-limit' => 'Error message saying user has reached the maximum amount of topics.  $1 is the max such as 4',
 	'wall-topic-heading' => 'Related Topics section heading',
 	'wall-topic-edit' => 'Edit Topics call to action that brings up modal',
-	'wall-userdoesnotexist' => 'User account "$1" does not exist or has never logged in on this wiki.',
 	'wall-topic-edit-save' => 'Edit Topics - Save button',
 	'wall-topic-edit-cancel' => 'Edit Topics - Cancel button',
 );
@@ -4766,9 +4763,12 @@ ___________________________________________<br />
 	'wall-topic-input-error-limit' => 'Wątek może mieć nie więcej niż $1 tematów.',
 	'wall-topic-heading' => 'Tematy tego wątku:',
 	'wall-topic-edit' => 'Edytuj tematy',
+<<<<<<< HEAD
 	'wall-userdoesnotexist' => 'Konto użytkownika „$1” nie jest zarejestrowane.',
 	'wall-topic-edit-save' => 'Zapisz zmiany',
 	'wall-topic-edit-cancel' => 'Anuluj',
+=======
+>>>>>>> parent of ac32b5c... bugid-48583 | fixes with Title and i18n after Sebastian's Code Review
 );
 
 /** Pashto (پښتو)
