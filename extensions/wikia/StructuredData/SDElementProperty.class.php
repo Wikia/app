@@ -133,17 +133,18 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		if ( is_null( $this->_value ) ) {
 			if ( !$this->isCollection()) {
 				$this->_value = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $this->value, 'propertyName' => $this->getName() ) );
-			}
-		} else {
-			$this->_value = array();
-			if ( is_array( $this->value ) ) {
-				if ((count($this->value) == 1) && (empty($this->value[0]))) $values = array();
-				else $values = $this->value;
+
 			} else {
-				$values = ( empty( $this->value ) ) ? array() : array( $this->value );
-			}
-			foreach($values as $value) {
-				$this->_value[] = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $value, 'propertyName' => $this->getName() ) );
+				$this->_value = array();
+				if ( is_array( $this->value ) ) {
+					if ((count($this->value) == 1) && (empty($this->value[0]))) $values = array();
+					else $values = $this->value;
+				} else {
+					$values = ( empty( $this->value ) ) ? array() : array( $this->value );
+				}
+				foreach($values as $value) {
+					$this->_value[] = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $value, 'propertyName' => $this->getName() ) );
+				}
 			}
 		}
 		return $this->_value;
