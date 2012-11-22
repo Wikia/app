@@ -88,7 +88,7 @@ MarketingToolbox.prototype = {
 	goToEditHub: function(date) {
 		if (window.wgEditHubUrl) {
 			(new Wikia.Querystring(window.wgEditHubUrl))
-				.setVal('date', date)
+				.setVal('date', date / 1000)
 				.setVal('region', $('#marketingToolboxRegionSelect').val())
 				.setVal('vertical', $('.vertical input:not(.secondary)').val())
 				.goTo();
@@ -105,6 +105,7 @@ MarketingToolbox.prototype = {
 				this.datepickerContainer.text('').datepicker({
 					showOtherMonths: true,
 					selectOtherMonths: true,
+					dateFormat: '@',
 					beforeShowDay: $.proxy(this.datePickerBeforeShowDay, this),
 					onChangeMonthYear: $.proxy(function(year, month){
 						this.getModel().collectData(year, month);
