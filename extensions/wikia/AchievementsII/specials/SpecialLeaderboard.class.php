@@ -51,8 +51,8 @@ class SpecialLeaderboard extends SpecialPage {
 		foreach($ranking as $rankedUser) {
 			$topUserIDs[] = $rankedUser->getID();
 		}
-		$userService = new AchUserProfileService;
-		$topUserBadges = $userService->getMostRecentUserBadge($topUserIDs);
+		$usersService = new AchUsersService;
+		$topUserBadges = $usersService->getMostRecentUserBadge($topUserIDs);
 
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set_vars(array(

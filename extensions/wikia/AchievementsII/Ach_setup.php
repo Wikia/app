@@ -95,6 +95,7 @@ $wgAutoloadClasses['AchRankingService'] = $dir.'services/AchRankingService.class
 $wgAutoloadClasses['AchAjaxService'] = $dir.'services/AchAjaxService.class.php';
 $wgAutoloadClasses['AchUserProfileService'] = $dir.'services/AchUserProfileService.class.php';
 $wgAutoloadClasses['AchNotificationService'] = $dir.'services/AchNotificationService.class.php';
+$wgAutoloadClasses['AchUsersService'] = $dir.'services/AchUsersService.class.php';
 
 // models
 $wgAutoloadClasses['AchRankedUser'] = $dir.'AchRankedUser.class.php';
