@@ -88,7 +88,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 			    				'schema:photos',
 			    				'schema:video',
 			    				'wikia:restriction',
-			//    				'schema:description'
+			    				'schema:description'
 		    )
 		);
 

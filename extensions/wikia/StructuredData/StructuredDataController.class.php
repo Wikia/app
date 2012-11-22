@@ -134,7 +134,11 @@ class StructuredDataController extends WikiaSpecialPageController {
 					return;
 				}
 			} else if($this->getRequest()->wasPosted()) {
-				$result = $this->structuredData->updateSDElement($sdsObject, $this->getRequest()->getParams());
+
+				$requestParams = $this->getRequest()->getParams();
+				$requestParams = $this->alterRequestPerObject( $requestParams, $requestParams['type'] );
+
+				$result = $this->structuredData->updateSDElement($sdsObject, $requestParams);
 				if( isset($result->error) ) {
 					$updateResult = $result;
 					$action = 'edit';
@@ -179,6 +183,37 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$this->setVal('context', ( $action == 'edit' || $action == 'create' ) ? SD_CONTEXT_EDITING : SD_CONTEXT_SPECIAL );
 		$this->setVal('isEditAllowed', $isEditAllowed);
 		$this->setVal('isCreateMode', ( $action == 'create' ));
+	}
+
+	public function alterRequestPerObject( $requestParams, $objectType) {
+
+		if ( $objectType == "wikia:WikiText" ) {
+
+			if ( !empty( $requestParams['name'] ) && !empty( $requestParams['schema:text'] ) ) {
+
+				$parser = new Parser();
+				$title = Title::newFromText( "Data:".$requestParams['name'] );
+
+				/* @var $parserOutput ParserOutput */
+				$parserOutput = $parser->parse( $requestParams['schema:text'], $title, (new ParserOptions()) );
+
+				// ----- remove HTML TAGs -----
+				$string = $parserOutput->getText();
+				$string = preg_replace ('/<[^>]*>/', ' ', $string);
+
+				// ----- remove control characters -----
+				$string = str_replace("\r", '', $string);    // --- replace with empty space
+				$string = str_replace("\n", ' ', $string);   // --- replace with space
+				$string = str_replace("\t", ' ', $string);   // --- replace with space
+
+				// ----- remove multiple spaces -----
+				$string = trim(preg_replace('/ {2,}/', ' ', $string));
+				$string = trim(preg_replace('/([a-zA-Z0-9]) ([\.\,])/', '$1$2', $string));
+
+				$requestParams['schema:description'] = $string;
+			}
+			return $requestParams;
+		}
 	}
 
 	public function getObject() {
