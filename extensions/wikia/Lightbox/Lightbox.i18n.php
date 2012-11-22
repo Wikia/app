@@ -50,6 +50,20 @@ ___________________________________________
 * Find help and advice on Community Central: http://community.wikia.com
 * Want to receive fewer messages from us? You can unsubscribe or change
 your email preferences here: http://community.wikia.com/Special:Preferences',
+	'lightbox-share-description-video' => 'Video in $1 on $2',
+	'lightbox-share-email-subject-video' => '$1 has sent you a video on Wikia',
+	'lightbox-share-email-body-video' => 'Hi,
+
+Someone wanted to show you a video on Wikia. Check it out:
+
+$1
+
+- The Wikia team
+
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change
+your email preferences here: http://community.wikia.com/Special:Preferences',
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Share',
 	'lightbox-share-button-embed' => 'Embed',
@@ -102,6 +116,13 @@ $messages['qqq'] = array(
 	'lightbox-share-email-subject' => 'Parameters:
 * $1 is a username.',
 	'lightbox-share-email-body' => 'Parameters:
+* $1 is a link to the suggested image.',
+	'lightbox-share-description-video' => 'Parameters:
+* $1 is the current page,
+* $2 is the site name.',
+	'lightbox-share-email-subject-video' => 'Parameters:
+* $1 is a username.',
+	'lightbox-share-email-body-video' => 'Parameters:
 * $1 is a link to the suggested image.',
 	'lightbox-share-email-error-content' => 'Parameters:
 * $1 is the numer of sent e-mails

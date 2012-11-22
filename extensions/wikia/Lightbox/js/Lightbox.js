@@ -920,6 +920,7 @@ var Lightbox = {
 				method: 'shareFileMail',
 				type: 'POST',
 				data: {
+					type: Lightbox.current.type,
 					addresses: addresses,
 					shareUrl: Lightbox.openModal.share.shareUrl
 				}, 
