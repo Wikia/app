@@ -275,7 +275,7 @@ class ForumHooksHelper {
 	 */
 	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		$app = F::App();
-		if ( $out->isArticle() && $app->wg->Title->exists() && $app->wg->Title->getNamespace() == NS_MAIN && $app->wg->Request->getVal( 'diff' ) === null && !( $app->checkSkin( 'wikiamobile' ) ) ) {
+		if ( $out->isArticle() && $app->wg->Title->exists() && $app->wg->Title->getNamespace() == NS_MAIN && !Wikia::isMainPage() && $app->wg->Request->getVal( 'diff' ) === null && !( $app->checkSkin( 'wikiamobile' ) ) ) {
 			$text .= $app->renderView( 'RelatedForumDiscussionController', 'index');
 		}
 		return true;
