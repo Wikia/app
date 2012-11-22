@@ -40,10 +40,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$this->verticals = $this->getVerticals(MarketingToolboxModel::SECTION_HUBS);
 
 			$userPreferendesHandler = new MarketingToolboxUserPropertiesHandler();
-			$selectedLanguageObject = $userPreferendesHandler->getMarketingToolboxRegion();
-			$this->selectedLanguage = $selectedLanguageObject->propertyValue;
-			$selectedVerticalObject = $userPreferendesHandler->getMarketingToolboxVertical();
-			$this->selectedVertical = $selectedVerticalObject->propertyValue;
+			$this->selectedLanguage = $userPreferendesHandler->getMarketingToolboxRegion();
+			$this->selectedVertical = $userPreferendesHandler->getMarketingToolboxVertical();
 
 
 			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
