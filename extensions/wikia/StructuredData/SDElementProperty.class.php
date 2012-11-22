@@ -201,6 +201,8 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 					}
 				}
 				$this->getType()->setRange( F::build( 'SDElementPropertyTypeRange', array( 'data' => $propertyDescription->range ) ) );
+			} else {
+				if ($guessType) $this->getType()->setName('rdfs:Literal');
 			}
 		}
 	}
