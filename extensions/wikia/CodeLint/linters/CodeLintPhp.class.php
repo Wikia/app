@@ -64,7 +64,7 @@ class CodeLintPhp extends CodeLint {
 
 			$cmd = sprintf('/bin/sh %s/inspect.sh %s %s %s -d %s -v2',
 				$wgPHPStormPath,
-				$IP, // PHP Storm project directory
+				realpath($IP . '/includes/..'), // PHP Storm project directory (this needs to be a parent of $dirName)
 				$lintProfile, // XML file with linting profile
 				$resultsDir, // output directory
 				$dirName // directory to check
