@@ -4,90 +4,15 @@ var StructuredData = {
 	objectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}">{{name}}</a> <button class="secondary remove">Remove</button></li>',
 	imageObjectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}" title="{{name}}"><img src="{{imageUrl}}" alt="{{name}}" /></a> <button class="secondary remove">Remove</button></li>',
 	inputTemplate: '<li><div class="input-group"><input type="text" name="{{type}}[]" value="" /> <button class="secondary remove">Remove</button></div></li>',
-
+	// jQuery cached selectors
+	cachedSeletors: {},
 	init: function() {
+		var that = this;
 		// Cache selectors
-		var SDObjectWrapper = $('#SDObject'),
-			SDCollectionWrapper = $('#SDObjectCollection'),
-			that = this;
-		// Attach handlers - load dropdown with objects to add
-		SDObjectWrapper.on('click', 'td button.load-dropdown', function(event) {
-			event.preventDefault();
-			var $target = $(event.target);
-			$('<div class="throbber-wrapper"></div>').insertAfter($target).startThrobbing();
-			that.getObjectsToAdd($target, $target.data('range'));
-			$target.attr('disabled', 'disabled');
-		});
-		// Attach handlers - add empty input to the list
-		SDObjectWrapper.on('click', 'td button.add-input', function(event) {
-			event.preventDefault();
-			var $target = $(event.target);
-			that.addEmptyInput($target);
-		});
-		// Attach handlers - add object from dropdown to list
-		SDObjectWrapper.on('change', 'select.objects-to-add', function() {
-			// Check if the option containing proper object was selected
-			if ($(this).children(':selected').val() !== 'false') {
-				that.addObject($(this));
-			}
-			// Reset dropdown
-			$(this).children().first().attr('selected', 'selected');
-		});
-		// Attach handlers - remove object from list
-		SDObjectWrapper.on('click', 'td button.remove', function(event) {
-			event.preventDefault();
-			$(event.target).parents('li').remove();
-		});
-		// Attach handlers - Use 'ENTER' to go to the next input in list or add new if pressed on last one HACK SOLUTION
-		SDObjectWrapper.on('keydown', 'td li input[type="text"]', function(event) {
-			if (event.which == 13) {
-				event.preventDefault();
-			}
-		}).on('keyup', 'td li input[type="text"]', function(event) {
-			if (event.which == 13) {
-				event.preventDefault();
-				var $target = $(event.target),
-					$nextField = $target.parents('li').next().find('input');
-				if ($nextField.length > 0) {
-					$nextField.focus();
-				} else {
-					$target.parents('li').parent().siblings('button.add-input').click();
-				}
-			}
-		});
-		// Attach handlers - add confirmation before deleting object
-		SDObjectWrapper.on('click', '.SDObject-delete', function(event) {
-			event.preventDefault();
-			var href = $(this).attr('href');
-			$.showCustomModal(
-				'Are you sure you want to delete Structure Data Object ?',
-				'<p>This action will permanently delete selected object from Structured Data Object database.</p>',
-				{
-					id: "SDObjectDelConfirm",
-					width: 600,
-					buttons: [
-						{
-							id:'ok',
-							defaultButton:true,
-							message:'OK',
-							handler:function() {
-								window.location = href;
-							}
-						},
-						{
-							id:'cancel',
-							message:'Cancel',
-							handler:function() {
-								$('#SDObjectDelConfirm').closeModal();
-							}
-						}
-				]}
-			);
-		});
-		// Add support for adding new wiki-text objects directly to article
-		$('button.add-wikiText-SDObj-from-article').click(function(event) {
-			 that.addWikiTextObjFromArticle($(event.target))
-		});
+		this.cachedSeletors.SDObjectWrapper = $('#SDObject');
+		// Attach handlers
+		this.attachSpecialPageEditModeHandlers(this);
+		this.attachSpecialPageBrowsingModeHandlers(this);
 		// Add WMU support for editing image objects
 		$('input[name="schema:thumbnailUrl"]').bind('focus', function(event) {
 			var $input = $(event.target);
@@ -102,14 +27,6 @@ var StructuredData = {
 			});
 		});
 		// Add date/time pickers only for SD object page
-		if (SDObjectWrapper.lenght > 0) {
-			this.addDatePickers();
-		}
-
-
-	},
-	// METHOD for adding widgets for date and date + time input types
-	addDatePickers: function() {
 		$('input[name="schema:startDate"]').datetimepicker({
 			changeMonth: true,
 			changeYear: true,
@@ -125,6 +42,61 @@ var StructuredData = {
 			changeYear: true,
 			yearRange: '-150:+0',
 			dateFormat: 'yy-m-d'
+		});
+	},
+	attachSpecialPageEditModeHandlers: function(context) {
+		// Attach handlers - load dropdown with objects to add
+		this.cachedSeletors.SDObjectWrapper.on('click', 'td button.load-dropdown', function(event) {
+			event.preventDefault();
+			var $target = $(event.target);
+			$('<div class="throbber-wrapper"></div>').insertAfter($target).startThrobbing();
+			context.getObjectsToAdd($target, $target.data('range'));
+			$target.attr('disabled', 'disabled');
+		});
+		// Attach handlers - add empty input to the list
+		this.cachedSeletors.SDObjectWrapper.on('click', 'td button.add-input', function(event) {
+			event.preventDefault();
+			var $target = $(event.target);
+			context.addEmptyInput($target);
+		});
+		// Attach handlers - add object from dropdown to list
+		this.cachedSeletors.SDObjectWrapper.on('change', 'select.objects-to-add', function() {
+			// Check if the option containing proper object was selected
+			if ($(this).children(':selected').val() !== 'false') {
+				context.addObject($(this));
+			}
+			// Reset dropdown
+			$(this).children().first().attr('selected', 'selected');
+		});
+		// Attach handlers - remove object from list
+		this.cachedSeletors.SDObjectWrapper.on('click', 'td button.remove', function(event) {
+			event.preventDefault();
+			$(event.target).parents('li').remove();
+		});
+		// Attach handlers - Use 'ENTER' to go to the next input in list or add new if pressed on last one HACK SOLUTION
+		this.cachedSeletors.SDObjectWrapper.on('keydown', 'td li input[type="text"]', function(event) {
+			if (event.which == 13) {
+				event.preventDefault();
+			}
+		}).on('keyup', 'td li input[type="text"]', function(event) {
+			if (event.which == 13) {
+				event.preventDefault();
+				var $target = $(event.target),
+					$nextField = $target.parents('li').next().find('input');
+				if ($nextField.length > 0) {
+					$nextField.focus();
+				} else {
+					$target.parents('li').parent().siblings('button.add-input').click();
+				}
+			}
+		});
+	},
+	attachSpecialPageBrowsingModeHandlers: function(context) {
+		// Attach handlers - add confirmation before deleting object
+		this.cachedSeletors.SDObjectWrapper.on('click', '.SDObject-delete', function(event) {
+			event.preventDefault();
+			var href = $(this).attr('href');
+			context.confirmObjectDelete(href)
 		});
 	},
 	// METHOD for fetching collection of SDS objects form a given class and rendering <select> element with them inside
@@ -193,43 +165,34 @@ var StructuredData = {
 			placeToAdd.append(html);
 		}
 	},
-	// METHOD for adding new WikiText objects direclty from the article
-	addWikiTextObjFromArticle: function($target) {
-		$.nirvana.sendRequest({
-			controller: 'StructuredData',
-			method: 'showObject',
-			type: 'GET',
-			format: 'html',
-			data: {
-				type: 'wikia:WikiText',
-				action: 'create'
-			},
-			callback: function(data) {
-				$.showCustomModal(
-					'Add new WikiText Object',
-					data,
+	// METHOD - showing modal with confirmation question before deleting object
+	confirmObjectDelete: function(href) {
+		$.showCustomModal(
+			'Are you sure you want to delete Structure Data Object ?',
+			'<p>This action will permanently delete selected object from Structured Data Object database.</p>',
+			{
+				id: "SDObjectDelConfirm",
+				width: 600,
+				buttons: [
 					{
-						id: "AddWikiTextSDObject",
-						width: 600,
-						buttons: [
-							{
-								defaultButton:true,
-								message:'Add',
-								handler:function() {
-								}
-							},
-							{
-								message:'Cancel',
-								handler:function() {
-									$('#AddWikiTextSDObject').closeModal();
-								}
-							}
-						]}
-				);
+						id:'ok',
+						defaultButton:true,
+						message:'OK',
+						handler:function() {
+							window.location = href;
+						}
+					},
+					{
+						id:'cancel',
+						message:'Cancel',
+						handler:function() {
+							$('#SDObjectDelConfirm').closeModal();
+						}
+					}
+				]
 			}
-		});
+		);
 	}
-
 }
 $(function() {
 	StructuredData.init();
