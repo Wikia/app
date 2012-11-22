@@ -22,7 +22,7 @@
 
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, window, document, /* Geo */ null, /* Krux */ null); // TODO FIXME Geo and Krux are not needed for GamePro
-	slotTweaker = SlotTweaker(log, document);
+	slotTweaker = SlotTweaker(log, document, window);
 
 	// TODO: ad provider error
 	adProviderNull = AdProviderNull(log, slotTweaker);

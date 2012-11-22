@@ -21,7 +21,7 @@
 	adEngine = AdEngine2(log, LazyQueue);
 
 	// Construct Ad Providers
-	slotTweaker = SlotTweaker(log, document);
+	slotTweaker = SlotTweaker(log, document, window);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux);
 	evolveHelper = EvolveHelper(log, window);
