@@ -7,3 +7,5 @@
 	</li>
 <? } ?>
 </ul>
+<a href="<?=$specialPageUrl;?>/<?=$objectType;?>/?action=create" class="wikia-button" title="Create new SDS
+Object">Create new object</a>

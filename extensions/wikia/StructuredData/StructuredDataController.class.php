@@ -46,7 +46,6 @@ class StructuredDataController extends WikiaSpecialPageController {
 		if(empty($par)) {
 			$this->response->addAsset('/extensions/wikia/StructuredData/js/StructuredData.js');
 			$this->response->addAsset('extensions/wikia/StructuredData/css/StructuredData.scss');
-			$this->setVal( "specialPageUrl", SpecialPage::getTitleFor( 'StructuredData' )->getFullUrl() );
 			$this->setVal( "mainObjects", $this->mainObjectList );
 		}
 		else {
@@ -252,6 +251,8 @@ class StructuredDataController extends WikiaSpecialPageController {
 				}
 			}
 			$this->response->setVal( "list", $resultCollection );
+			$this->setVal( "specialPageUrl", SpecialPage::getTitleFor( 'StructuredData' )->getFullUrl() );
+			$this->setVal( "objectType", $objectType);
 		}
 		$this->response->addAsset('/extensions/wikia/StructuredData/js/StructuredData.js');
 	}

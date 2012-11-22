@@ -6,7 +6,6 @@ Hello Structured World!
 		<?=$objectName;?>
 		</a>
 		<small>( <?=$objectClass ?>)</small>
-		<a href="<?=$specialPageUrl;?>/<?=$objectClass;?>/?action=create" class="wikia-button" title="Create new SDS Object">Create new object</a>
 	</li>
 <?php endforeach; ?>
 </ul>
