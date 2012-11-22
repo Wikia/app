@@ -271,8 +271,8 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 		imgW = origW * currentZoom;
 		imgH = origH * currentZoom;
 
-		xMax = ((imgW + 40) / currentZoom - widthFll / currentZoom);
-		yMax = ((imgH + 40) / currentZoom - heightFll / currentZoom);
+		xMax = ((imgW + 40) / 2 - widthFll / 2);
+		yMax = ((imgH + 40) / 2 - heightFll / 2);
 
 		if(zoomed){
 			modal.hideUI();

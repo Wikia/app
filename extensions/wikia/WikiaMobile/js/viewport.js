@@ -43,7 +43,7 @@
 	function getDimensions(){
 		var orient = w.orientation;
 
-		portrait = (orient === 0 || orient === 180 || w.innerHeight >= w.innerWidth);
+		portrait = orient != undefined ? (orient === 0 || orient === 180) : (w.innerHeight >= w.innerWidth);
 
 		if(ios && !width) {
 			width = screen.width;
