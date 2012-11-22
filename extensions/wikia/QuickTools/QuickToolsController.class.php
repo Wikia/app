@@ -84,6 +84,7 @@ class QuickToolsController extends WikiaController  {
 		$summary = $this->request->getVal( 'summary' );
 		$rollback = $this->request->getBool( 'dorollback' );
 		$delete = $this->request->getBool( 'dodeletes' );
+		$markBot = $this->request->getBool( 'markbot' );
 
 		$time = $this->wf->Timestamp( TS_UNIX, $time );
 		if ( !$time ) {
@@ -105,7 +106,7 @@ class QuickToolsController extends WikiaController  {
 		}
 
 		foreach ( $titles as $title ) {
-			$status = $this->rollbackTitle( $title, $target, $time, $summary, $rollback, $delete );
+			$status = $this->rollbackTitle( $title, $target, $time, $summary, $rollback, $delete, $markBot );
 		}
 		$this->response->setVal( 'success', true );
 		$successMessage = 'quicktools-success' . ( $rollback ? '-rollback' : '' ) . ( $delete ? '-delete' : '' );
@@ -158,9 +159,13 @@ class QuickToolsController extends WikiaController  {
 	 * @param $summary String Edit summary to give for reverts and deleted
 	 * @param $rollback Boolean Whether or not to perform rollbacks (default: true)
 	 * @param $delete Boolean Whether or not to perform deletions (default: true)
+	 * @param $markBot Boolean Whether or not to mark rollbacks as bot edits through
+	 *        the bot=1 URL parameter (default: false)
 	 * @return true on success, false on failure
 	 */
-	private function rollbackTitle( $title, $user, $time, $summary, $rollback = true, $delete = true ) {
+	private function rollbackTitle(
+		$title, $user, $time, $summary, $rollback = true, $delete = true, $markBot = false
+	) {
 		$this->wf->ProfileIn( __METHOD__ );
 		// build article object and find article id
 		$article = new Article( $title );
@@ -200,7 +205,7 @@ class QuickToolsController extends WikiaController  {
 			$rev = Revision::newFromId( $revertRevId );
 			$text = $rev->getRawText();
 			$flags = EDIT_UPDATE|EDIT_MINOR;
-			if ( $this->wg->User->isAllowed( 'bot' ) ) {
+			if ( $this->wg->User->isAllowed( 'bot' ) || $markBot ) {
 				$flags |= EDIT_FORCE_BOT;
 			}
 			$status = $article->doEdit( $text, $summary, $flags );
