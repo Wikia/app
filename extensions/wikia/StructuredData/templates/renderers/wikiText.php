@@ -26,7 +26,7 @@ foreach ( $values as $i => $reference ) {
 
     	?>
 		<li>
-			<input type="hidden" name="" value="<?=$reference->object->getId();?>" />
+			<input type="hidden" name="wikia:wikiText[]" value="<?=$reference->object->getId();?>" />
 			<a href="<?=$reference->object->getSpecialPageUrl();?>"><?=htmlspecialchars( $reference->object->getName() );?></a>
 			<button class="secondary remove">Remove</button>
         </li>
