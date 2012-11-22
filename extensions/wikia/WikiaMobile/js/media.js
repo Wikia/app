@@ -428,7 +428,6 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 				origH = image.height;
 
 				onZoom(false);
-
 			}
 		});
 
