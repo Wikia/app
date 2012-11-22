@@ -6,7 +6,7 @@ class MarketingToolboxHooks {
 		if (F::app()->wg->title->isSpecial('MarketingToolbox')) {
 			$toolboxModel = new MarketingToolboxModel();
 			$vars['wgMarketingToolboxConstants'] = $toolboxModel->getAvailableStatuses();
-			$vars['wgEditHubUrl'] = SpecialPage::getTitleFor('EditHub')->getLocalURL();
+			$vars['wgEditHubUrl'] = SpecialPage::getTitleFor('MarketingToolbox','editHub')->getLocalURL();
 		}
 
 		return true;

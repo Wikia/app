@@ -35,18 +35,47 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle(wfMsg('marketing-toolbox-title'));
 
 		if( $this->checkAccess() ) {
-			$this->corporateWikisLanguages = $this->toolboxModel->getCorporateWikisLanguages();
-			$this->sections = $this->toolboxModel->getAvailableSections();
-			$this->verticals = $this->getVerticals(MarketingToolboxModel::SECTION_HUBS);
-
+			$action = $this->getRequestedAction();
 			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
 			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
 			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
 
 			F::build('JSMessages')->enqueuePackage('MarketingToolbox', JSMessages::EXTERNAL);
+
+			switch($action) {
+				case 'editHub':
+					$this->forward(__CLASS__, 'editHubAction');
+					break;
+				case 'index':
+				default:
+					$this->forward(__CLASS__, 'dashboardAction');
+					break;
+			}
 		}
 
 		$this->wf->ProfileOut(__METHOD__);
+	}
+
+	public function dashboard() {
+		$this->corporateWikisLanguages = $this->toolboxModel->getCorporateWikisLanguages();
+		$this->sections = $this->toolboxModel->getAvailableSections();
+		$this->verticals = $this->getVerticals(MarketingToolboxModel::SECTION_HUBS);
+		$this->overrideTemplate('dashboard');
+	}
+
+	public function editHubAction() {
+		$this->overrideTemplate('editHub');
+	}
+
+	protected function getRequestedAction() {
+		$urlParam = $this->getPar();
+		$urlElements = explode('/', $urlParam);
+		if (!empty($urlElements[0])) {
+			$action = $urlElements[0];
+		} else {
+			$action = 'index';
+		}
+		return $action;
 	}
 
 	/**
