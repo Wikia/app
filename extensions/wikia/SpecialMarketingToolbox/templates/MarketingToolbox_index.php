@@ -5,7 +5,12 @@
 			<option class="placeholder-option"><?= wfMsg('marketing-toolbox-region-select-default-value'); ?></option>
 			<? asort($corporateWikisLanguages); ?>
 			<? foreach ($corporateWikisLanguages as $corporateWikiId => $corporateWikiLanguage): ?>
-				<option value="<?=$corporateWikiId?>"><?=$corporateWikiLanguage?></option>
+				<option
+					value="<?=$corporateWikiId?>"
+					<? if ($selectedLanguage == $corporateWikiId): ?>selected="selected"<? endif ?>
+				>
+					<?=$corporateWikiLanguage?>
+				</option>
 			<? endforeach ?>
 		</select>
 	</div>
@@ -15,7 +20,13 @@
 		<div class="ml15">
 			<h2><?= wfMsg('marketing-toolbox-section-title'); ?></h2>
 			<? foreach ($sections as $sectionId => $section): ?>
-				<input class="big secondary" disabled="disabled" type="button" value="<?=$section?>" data-section-id="<?=$sectionId;?>"/>
+				<input
+					class="big <? if (!isset($selectedLanguage)): ?>secondary<? endif ?>"
+					<? if (!isset($selectedLanguage)): ?>disabled="disabled"<? endif ?>
+					type="button"
+					value="<?=$section?>"
+					data-section-id="<?=$sectionId;?>
+				"/>
 			<? endforeach ?>
 		</div>
 	</div>
@@ -26,7 +37,12 @@
 			<h2><?= wfMsg('marketing-toolbox-vertical-title'); ?></h2>
 
 			<? foreach ($verticals as $verticalId => $vertical): ?>
-				<input class="big secondary" disabled="disabled" type="button" value="<?=$vertical?>" data-vertical-id="<?=$verticalId;?>" />
+				<input
+					class="big<? if ($selectedVertical != $verticalId): ?> secondary<? endif ?>"
+					<? if (!isset($selectedLanguage)): ?>disabled="disabled"<? endif ?>
+					type="button" value="<?=$vertical?>"
+					data-vertical-id="<?=$verticalId;?>"
+				/>
 			<? endforeach ?>
 		</div>
 	</div>
