@@ -62,7 +62,7 @@ class CodeLintPhp extends CodeLint {
 				echo " [err!]\n";
 			}
 
-			$cmd = sprintf('/bin/sh %s/inspect.sh %s %s %s -d %s -v2',
+			$cmd = sprintf('/bin/sh %s/inspect.sh %s %s %s -d %s -v3',
 				$wgPHPStormPath,
 				realpath($IP . '/includes/..'), // PHP Storm project directory (this needs to be a parent of $dirName)
 				$lintProfile, // XML file with linting profile
