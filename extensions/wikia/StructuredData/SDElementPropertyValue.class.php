@@ -21,6 +21,17 @@ class SDElementPropertyValue extends SDRenderableObject {
 	}
 
 	public function getValue() {
+		if ( is_object( $this->value ) && ( !isset($this->value->object) ) ) {
+			$structuredData = F::build( 'StructuredData' );
+			try {
+				$SDElement = $structuredData->getSDElementById($this->value->id);
+				$this->value->object = $SDElement;
+			}
+			catch(WikiaException $e) {
+				$this->value->object = null;
+			}
+
+		}
 		return $this->value;
 	}
 
@@ -39,6 +50,10 @@ class SDElementPropertyValue extends SDRenderableObject {
 	}
 
 	public function getRendererNames() {
+		$value = $this->getValue();
+		if (is_object($value) && isset($value->object) && ( !is_null($value->object))) {
+			return array( array('renderingSubject'=>$value->object, 'rendererName' => 'sdelement') );
+		}
 		return array( 'value_'.$this->type->getName(), 'value_default' );
 	}
 

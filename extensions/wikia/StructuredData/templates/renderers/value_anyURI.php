@@ -1,4 +1,4 @@
-<?php 
+<?php
 	$value = $object->getValue();
 ?>
 <?php if($context == SD_CONTEXT_EDITING): ?>

@@ -51,7 +51,7 @@
 					if ( !$sdsObject->isPropertyVisible( $property ) ) {
 						continue;
 					}
-					$propertyValue = $property->getValue();
+					//$propertyValue = $property->getValue();
 					$propertyLabel = $property->getLabel();
 					$propertyName = $property->getName();
 					$propertyHTML = $property->render( $context );

@@ -12,9 +12,15 @@ class SDElementRendererFactory {
 	public function getRenderer(SDRenderableObject $object, $context = SD_CONTEXT_DEFAULT, array $params = array()) {
 
 		foreach( $object->getRendererNames() as $rendererName ) {
+			if (is_array($rendererName)) {
+				$renderingSubject = $rendererName['renderingSubject'];
+				$rendererName = $rendererName['rendererName'];
+			} else {
+				$renderingSubject = $object;
+			}
 			if(isset($this->config['renderers'][$rendererName])) {
 				$templateName = $this->config['renderers'][$rendererName];
-				return $this->renderTemplate( $templateName, $rendererName, $object, $context, $params );
+				return $this->renderTemplate( $templateName, $rendererName, $renderingSubject, $context, $params );
 			}
 		}
 		return null;

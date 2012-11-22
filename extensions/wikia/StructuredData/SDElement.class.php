@@ -148,7 +148,6 @@ class SDElement extends SDRenderableObject implements SplSubject {
 
 		/** @var $element SDElement */
 		$element = F::build( 'SDElement', array( $template->type, $context, $elementId ) );
-		$structuredData = F::build( 'StructuredData' );
 
 		foreach($template as $propertyName => $propertyValue) {
 			if(isset($data->{"$propertyName"})) {
@@ -273,7 +272,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	}
 
 	public function getRendererNames() {
-		return array( $this->type, 'default' );
+		return array( $this->type, 'sdelement' );
 	}
 
 	public function getSpecialPageUrl() {

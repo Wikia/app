@@ -155,30 +155,6 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		return ( empty($value) ) ? true : false;
 	}
 
-	/*
-	 * This should be moved to ValueObject
-	public function expandValue(StructuredData $structuredData) {
-		$value = $this->value;
-		if(is_object($value) && isset($value->id)) {
-			$value = array( $value );
-		}
-
-		if(is_array($value)) {
-			foreach($value as $v) {
-				if(isset($v->id) && empty($v->object)) {
-					try {
-						$SDElement = $structuredData->getSDElementById($v->id);
-						$v->object = $SDElement;
-					}
-					catch(WikiaException $e) {
-						$v->object = null;
-					}
-				}
-			}
-		}
-	}
-	*/
-
 	public function setName($name) {
 		$this->name = $name;
 	}
