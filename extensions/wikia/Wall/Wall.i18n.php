@@ -366,15 +366,8 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-topic-input-error-limit' => 'A thread can only have $1 Topics maximum.',
 	'wall-topic-heading' => 'Topics for this thread:',
 	'wall-topic-edit' => 'Edit Topics',
-
-<<<<<<< HEAD
 	'wall-topic-edit-save' => 'Save',
 	'wall-topic-edit-cancel' => 'Cancel',
-=======
-
-    'wall-userdoesnotexist' => 'User account "$1" does not exist or has never logged in on this wiki.'
-
->>>>>>> parent of 1f45bb8... bugid-48583 | changed spaces into tabs
 );
 
 /** Message documentation (Message documentation)

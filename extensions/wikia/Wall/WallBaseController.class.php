@@ -75,32 +75,17 @@ class WallBaseController extends WikiaController{
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-        $this->addAsset();
-
+		$this->addAsset();
+		
 		$title = $this->request->getVal('title', $this->app->wg->Title);
-        $userName = $title->getText();
-        if (User::idFromName($userName) === null) {
-
-            wfRunHooks( 'ShowMissingArticle', array( $this ) );
-            $this->app->wg->Out->setStatusCode ( 404 );
-            $this->response->getView()->setTemplate('Wall', '404');
-
-            $showMissingArticle = wfRunHooks( 'BeforeDisplayNoArticleText', array( $this ) );
-
-            $this->response->setVal('showMissingArticle', $showMissingArticle);
-            $this->response->setVal('userName', $userName);
-		    wfProfileOut( __METHOD__ );
-            return;
-        }
-
 		$page = $this->request->getVal('page', 1);
 
 		$wallMessagesPerPage = 10;
 		if( !empty($this->app->wg->WallMessagesPerPage) ){
 			$wallMessagesPerPage = $this->app->wg->WallMessagesPerPage;
 		};
-
-        $this->getThreads($title, $page, $wallMessagesPerPage);
+		
+		$this->getThreads($title, $page, $wallMessagesPerPage);
 
 		$this->response->setVal('type', 'Board');
 		$this->response->setVal('showNewMessage', true);
