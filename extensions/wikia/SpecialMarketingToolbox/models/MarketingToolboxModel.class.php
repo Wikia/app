@@ -102,7 +102,39 @@ class MarketingToolboxModel {
 		return null;
 	}
 
+	/**
+	 * Get list of modules for selected lang/vertical/date
+	 *
+	 * @param $langId
+	 * @param $verticalId
+	 * @param $timestamp
+	 * @return array
+	 */
 	public function getModuleList($langId, $verticalId, $timestamp) {
+		$moduleData = $this->getModuleData($langId, $verticalId, $timestamp);
+
+		foreach ($moduleData as &$module) {
+			$user = User::newFromId($module['lastEditorId']);
+			if($user instanceof User) {
+				$userName = $user->getName();
+			} else {
+				$userName = null;
+			}
+			$module['lastEditorName'] = $userName;
+		}
+
+		return $moduleData;
+	}
+
+	/**
+	 * Gets mocked data for modules
+	 *
+	 * @param $langId
+	 * @param $verticalId
+	 * @param $timestamp
+	 * @return array
+	 */
+	protected function getModuleData($langId, $verticalId, $timestamp) {
 		$mockEditorId = 4807210;
 
 		return array(
