@@ -984,10 +984,6 @@ $wgResourceLoaderCssMinifier = false;
  */
 $wgWikiaIsCentralWiki = false;
 
-/**
- * default LB section for database connection
- */
-$wgLBDefaultSection = 'DEFAULT';
 
 /**
  * Is bulk mode in Memcached routines enabled?
@@ -995,4 +991,3 @@ $wgLBDefaultSection = 'DEFAULT';
  * @var boolean
  */
 $wgEnableMemcachedBulkMode = false;
-
