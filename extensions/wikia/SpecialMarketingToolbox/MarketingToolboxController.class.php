@@ -35,6 +35,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle(wfMsg('marketing-toolbox-title'));
 
 		if( $this->checkAccess() ) {
+			$this->wg->SuppressSpotlights = true;
+			$this->wg->SuppressWikiHeader = true;
+			$this->wg->SuppressPageHeader = true;
+			$this->wg->SuppressFooter = true;
 			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
 
 			$action = $this->getRequestedAction();
@@ -72,6 +76,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function editHubAction() {
+		//var_dump($this->toolboxModel->getModuleList(1, 2, 1863997));
+
 		$this->headerData = array(
 			'date' => 'jest sobie testowa data',
 			'moduleName' => 'Slider',
@@ -146,8 +152,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	public function executeHeader($data) {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Header.scss');
 
-		$this->date = $data['date'];
-		$this->moduleName = $data['moduleName'];
+		$this->date = (isset($data['date'])) ? $data['date'] : null;
+		$this->moduleName = (isset($data['moduleName'])) ? $data['moduleName'] : null;
 		$this->lastEditor = (isset($data['lastEditor'])) ? $data['lastEditor']: null;
 		$this->lastEditTime = (isset($data['lastEditTime'])) ? $data['lastEditTime']: null;
 	}

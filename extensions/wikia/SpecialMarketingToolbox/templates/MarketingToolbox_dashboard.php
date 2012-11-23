@@ -1,3 +1,8 @@
+<?= F::app()->renderView(
+	'MarketingToolbox',
+	'Header'
+) ?>
+
 <div class="marketingToolbox WikiaGrid">
 	<div class="grid-2">
 		<h2><?= wfMsg('marketing-toolbox-region-title'); ?></h2>

@@ -1,21 +1,23 @@
 <header class="MarketingToolboxHeader">
 	<div class="MarketingToolboxTitle">
-		<h1><a href="#">Dashboad</a></h1>
-		<h2><?=$moduleName;?></h2>
+		<h1><a href="#"><?= wfMsg('marketing-toolbox-header-dashboard'); ?></a></h1>
+		<? if (isset($moduleName)): ?>
+			<h2><?=$moduleName;?></h2>
+		<? endif ?>
 
-		<p><strong><?=$date;?></strong></p>
+		<? if (isset($date)): ?>
+			<p><strong><?=$date;?></strong></p>
+		<? endif?>
 	</div>
 
 	<aside class="right">
 		<? if (isset($lastEditTime)): ?>
-		<p><strong>Last saved: </strong> <?=$lastEditTime?></p>
+		<p><strong><?= wfMsg('marketing-toolbox-header-right-last-saved'); ?></strong> <?=$lastEditTime?></p>
 		<? endif ?>
 
 		<? if (isset($lastEditor)): ?>
-		<p><strong>by: </strong> <?=$lastEditor?></p>
+		<p><strong><?= wfMsg('marketing-toolbox-header-right-by'); ?></strong> <?=$lastEditor?></p>
 		<? endif ?>
 	</aside>
 </header>
-<div class="MarketingToolboxHeaderGradient">
-
-</div>
+<div class="MarketingToolboxHeaderGradient"></div>

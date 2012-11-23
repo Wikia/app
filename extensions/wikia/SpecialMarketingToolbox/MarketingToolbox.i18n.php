@@ -29,6 +29,13 @@ $messages['en'] = array(
 	'marketing-toolbox-tooltip-published' => 'Published',
 	'marketing-toolbox-tooltip-in-progress' => 'Not published',
 	'marketing-toolbox-tooltip-calendar-placeholder' => 'To activate the calendar select Vertical first.',
+
+	'marketing-toolbox-header-dashboard' => 'Dashboard',
+	'marketing-toolbox-header-right-last-saved' => 'Last saved:',
+	'marketing-toolbox-header-right-by' => 'by:',
+
+	'marketing-toolbox-footer-button-preview' => 'Preview',
+	'marketing-toolbox-footer-button-publish' => 'Publish',
 );
 
 $messages['qqq'] = array(

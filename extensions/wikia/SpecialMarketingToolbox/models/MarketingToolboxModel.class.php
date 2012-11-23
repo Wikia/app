@@ -46,15 +46,15 @@ class MarketingToolboxModel {
 
 	protected function getMockData($langId, $verticalId, $beginTimestamp, $endTimestamp) {
 		return array(
-			date('Y-m-d', $beginTimestamp - 13 * 24 * 60 * 60) => $this->statuses['EDITED_NOT_PUBLISHED'],
-			date('Y-m-d', $beginTimestamp - 11 * 24 * 60 * 60) => $this->statuses['EDITED_NOT_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp - 13 * 24 * 60 * 60) => $this->statuses['NOT_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp - 11 * 24 * 60 * 60) => $this->statuses['NOT_PUBLISHED'],
 			date('Y-m-d', $beginTimestamp - 7 * 24 * 60 * 60) => $this->statuses['PUBLISHED'],
-			date('Y-m-d', $beginTimestamp - 4 * 24 * 60 * 60) => $this->statuses['EDITED_NOT_PUBLISHED'],
-			date('Y-m-d', $beginTimestamp + 4 * 24 * 60 * 60) => $this->statuses['EDITED_NOT_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp - 4 * 24 * 60 * 60) => $this->statuses['NOT_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp + 4 * 24 * 60 * 60) => $this->statuses['NOT_PUBLISHED'],
 			date('Y-m-d', $beginTimestamp + 7 * 24 * 60 * 60) => $this->statuses['PUBLISHED'],
 			date('Y-m-d', $beginTimestamp + 11 * 24 * 60 * 60) => $this->statuses['PUBLISHED'],
 			date('Y-m-d', $beginTimestamp + 13 * 24 * 60 * 60) => $this->statuses['PUBLISHED'],
-			date('Y-m-d', $beginTimestamp + 19 * 24 * 60 * 60) => $this->statuses['EDITED_NOT_PUBLISHED'],
+			date('Y-m-d', $beginTimestamp + 19 * 24 * 60 * 60) => $this->statuses['NOT_PUBLISHED'],
 			date('Y-m-d', $beginTimestamp + 23 * 24 * 60 * 60) => $this->statuses['PUBLISHED']
 		);
 	}
@@ -144,7 +144,7 @@ class MarketingToolboxModel {
 				'lastEditorId' => $mockEditorId
 			),
 			self::MODULE_PULSE => array(
-				'status' => $this->statuses['EDITED_NOT_PUBLISHED'],
+				'status' => $this->statuses['NOT_PUBLISHED'],
 				'lastEditTime' => $timestamp - 5 * 24 * 60 * 60,
 				'lastEditorId' => $mockEditorId
 			),
@@ -154,7 +154,7 @@ class MarketingToolboxModel {
 				'lastEditorId' => $mockEditorId
 			),
 			self::MODULE_FEATURED_VIDEO => array(
-				'status' => $this->statuses['EDITED_NOT_PUBLISHED'],
+				'status' => $this->statuses['NOT_PUBLISHED'],
 				'lastEditTime' => $timestamp - 7 * 24 * 60 * 60,
 				'lastEditorId' => $mockEditorId
 			),
@@ -169,7 +169,7 @@ class MarketingToolboxModel {
 				'lastEditorId' => $mockEditorId
 			),
 			self::MODULE_POLLS => array(
-				'status' => $this->statuses['EDITED_NOT_PUBLISHED'],
+				'status' => $this->statuses['NOT_PUBLISHED'],
 				'lastEditTime' => $timestamp - 10 * 24 * 60 * 60,
 				'lastEditorId' => $mockEditorId
 			),
