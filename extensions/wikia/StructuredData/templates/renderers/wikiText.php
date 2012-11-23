@@ -10,28 +10,34 @@ if ( $context == SD_CONTEXT_EDITING ) {
 foreach ( $values as $i => $propertyValue ) {
 	$value = $propertyValue->getValue();
 
-	//@todo - handle the case when $value->object is null because for some reason the referenced object couldn't be fetched
-	// in this case we should still have the object id in form fields, so this reference is not removed during form submit
-
-	$text = $value->object->getPropertyValue('schema:text');
+	if ($value->object !== null) {
+		$text = $value->object->getPropertyValue('schema:text');
+	}
 
 	if ( $context == SD_CONTEXT_DEFAULT ) {
-
-		echo '<p>' . $text->getValue() . '</p>';
+		if ($value->object !== null) {
+			echo '<p>' . $text->getValue() . '</p>';
+		}
 	}
 
 	if ( $context == SD_CONTEXT_SPECIAL ) {
-		echo '<strong><a href="' . $value->object->getSpecialPageUrl() . '">' . htmlspecialchars
-		($value->object->getName() ) . '</a></strong>';
-		echo '<p>' . $text->getValue() . '</p>';
+		if ($value->object !== null) {
+			echo '<strong><a href="' . $value->object->getSpecialPageUrl() . '">' . htmlspecialchars
+			($value->object->getName() ) . '</a></strong>';
+			echo '<p>' . $text->getValue() . '</p>';
+		}
 	}
 
 	if ( $context == SD_CONTEXT_EDITING ) {
 
     	?>
 		<li>
-			<input type="hidden" name="wikia:wikiText[]" value="<?=$value->object->getId();?>" />
-			<a href="<?=$value->object->getSpecialPageUrl();?>"><?=htmlspecialchars( $value->object->getName() );?></a>
+			<input type="hidden" name="wikia:wikiText[]" value="<?=$value->id;?>" />
+			<?php if ($value->object !== null) : ?>
+				<a href="<?=$value->object->getSpecialPageUrl();?>"><?=htmlspecialchars( $value->object->getName() );?></a>
+			<?php else : ?>
+				<?=$value->id;?>
+			<?php endif; ?>
 			<button class="secondary remove">Remove</button>
         </li>
 	<?php
