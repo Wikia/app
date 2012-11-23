@@ -36,6 +36,17 @@ $messages['en'] = array(
 
 	'marketing-toolbox-footer-button-preview' => 'Preview',
 	'marketing-toolbox-footer-button-publish' => 'Publish',
+
+	'marketing-toolbox-hub-module-slider' => 'Slider',
+	'marketing-toolbox-hub-module-pulse' => 'Pulse',
+	'marketing-toolbox-hub-module-wikias-picks' => 'Wikia\'s picks',
+	'marketing-toolbox-hub-module-featured-video' => 'Featured video',
+	'marketing-toolbox-hub-module-explore' => 'Explore',
+	'marketing-toolbox-hub-module-from-the-community' => 'From the community',
+	'marketing-toolbox-hub-module-polls' => 'Polls',
+	'marketing-toolbox-hub-module-top10-lists' => 'Top 10 lists',
+	'marketing-toolbox-hub-module-popular-videos' => 'Popular videos',
+
 );
 
 $messages['qqq'] = array(

@@ -1,6 +1,6 @@
 <?php
 
-class MarketingToolboxModel {
+class MarketingToolboxModel extends WikiaModel {
 	const SECTION_HUBS = 1;
 
 	const VERTICAL_VIDEOGAMES = 1;
@@ -15,9 +15,10 @@ class MarketingToolboxModel {
 	const MODULE_FROM_THE_COMMUNITY = 6;
 	const MODULE_POLLS = 7;
 	const MODULE_TOP_10_LISTS = 8;
-	const MODULE_POPULAR_VIDEO = 9;
+	const MODULE_POPULAR_VIDEOS = 9;
 
 	protected $statuses = array();
+	protected $modules = array();
 	protected $sections = array();
 	protected $verticals = array();
 
@@ -25,6 +26,18 @@ class MarketingToolboxModel {
 		$this->statuses = array(
 			'NOT_PUBLISHED' => 1,
 			'PUBLISHED' => 2
+		);
+
+		$this->modules = array(
+			self::MODULE_SLIDER => 'slider',
+			self::MODULE_PULSE => 'pulse',
+			self::MODULE_WIKIAS_PICKS => 'wikias-picks',
+			self::MODULE_FEATURED_VIDEO => 'featured-video',
+			self::MODULE_EXPLORE => 'explore',
+			self::MODULE_FROM_THE_COMMUNITY => 'from-the-community',
+			self::MODULE_POLLS => 'polls',
+			self::MODULE_TOP_10_LISTS => 'top10-lists',
+			self::MODULE_POPULAR_VIDEOS => 'popular-videos'
 		);
 
 		$this->sections = array(
@@ -104,26 +117,39 @@ class MarketingToolboxModel {
 
 	/**
 	 * Get list of modules for selected lang/vertical/date
+	 * applying translation for module name
 	 *
 	 * @param $langId
 	 * @param $verticalId
 	 * @param $timestamp
 	 * @return array
 	 */
-	public function getModuleList($langId, $verticalId, $timestamp) {
-		$moduleData = $this->getModuleData($langId, $verticalId, $timestamp);
+	public function getModulesData($langId, $verticalId, $timestamp, $activeModule = self::MODULE_SLIDER) {
+		$moduleList = $this->getModuleList($langId, $verticalId, $timestamp);
 
-		foreach ($moduleData as &$module) {
-			$user = User::newFromId($module['lastEditorId']);
-			if($user instanceof User) {
-				$userName = $user->getName();
-			} else {
-				$userName = null;
+		$modulesData = array(
+			'lastEditDate' => null,
+			'lastEditorName' => null,
+			'moduleList' => array()
+		);
+
+		foreach ($moduleList as $moduleId => &$module) {
+			if ($moduleId == $activeModule) {
+				$user = User::newFromId($module['lastEditorId']);
+				if ($user instanceof User) {
+					$userName = $user->getName();
+				} else {
+					$userName = null;
+				}
+				$modulesData['lastEditor'] = $userName;
+				$modulesData['lastEditTime'] = $module['lastEditTime'];
+				$modulesData['activeModuleName'] = wfMsg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
 			}
-			$module['lastEditorName'] = $userName;
+			$module['moduleName'] = wfMsg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
 		}
+		$modulesData['moduleList'] = $moduleList;
 
-		return $moduleData;
+		return $modulesData;
 	}
 
 	/**
@@ -134,7 +160,7 @@ class MarketingToolboxModel {
 	 * @param $timestamp
 	 * @return array
 	 */
-	protected function getModuleData($langId, $verticalId, $timestamp) {
+	protected function getModuleList($langId, $verticalId, $timestamp) {
 		$mockEditorId = 4807210;
 
 		return array(
@@ -178,7 +204,7 @@ class MarketingToolboxModel {
 				'lastEditTime' => $timestamp - 11 * 24 * 60 * 60,
 				'lastEditorId' => $mockEditorId
 			),
-			self::MODULE_POPULAR_VIDEO => array(
+			self::MODULE_POPULAR_VIDEOS => array(
 				'status' => $this->statuses['PUBLISHED'],
 				'lastEditTime' => $timestamp - 12 * 24 * 60 * 60,
 				'lastEditorId' => $mockEditorId
