@@ -75,7 +75,17 @@ class ArticlesApiController extends WikiaApiController {
 
 		$namespaces = $this->request->getVal( 'namespaces', null );
 		$category = $this->request->getVal( 'category' );
-		$ids = !empty( $category ) ? $this->getCategoryMembers( $category ) : null;
+		$ids = null;
+
+		if ( !empty( $category )) {
+			$cat = Title::newFromText( $category, NS_CATEGORY );
+
+			if ( !$cat->exists() ) {
+				throw new InvalidParameterApiException( 'Category does not exist' );
+			}
+
+			$ids = $this->getCategoryMembers( $category );
+		}
 
 		if ( !empty( $namespaces ) ) {
 			$namespaces = explode( ',', $namespaces );
@@ -256,7 +266,7 @@ class ArticlesApiController extends WikiaApiController {
 		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, 'details', $id );
 	}
 
-	static private function getCategoryCacheKey( $category ){
+	static private function getCategoryCacheKey( $category ) {
 		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, 'category', $category );
 	}
 
@@ -266,3 +276,5 @@ class ArticlesApiController extends WikiaApiController {
 		$memc->delete( self::getDetailsCacheKey( $id ) );
 	}
 }
+
+class InvalidParameterApiException extends BadRequestException {}
