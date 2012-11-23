@@ -37,10 +37,6 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		if( $this->checkAccess() ) {
 			$action = $this->getRequestedAction();
 
-			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
-			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
-			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
-
 			F::build('JSMessages')->enqueuePackage('MarketingToolbox', JSMessages::EXTERNAL);
 
 			switch($action) {
@@ -58,6 +54,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function dashboard() {
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
+
 		$this->corporateWikisLanguages = $this->toolboxModel->getCorporateWikisLanguages();
 		$this->sections = $this->toolboxModel->getAvailableSections();
 		$this->verticals = $this->getVerticals(MarketingToolboxModel::SECTION_HUBS);
@@ -70,6 +70,32 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function editHubAction() {
+		$this->leftMenuItems = array(
+			array(
+				'href' => 'asd',
+				'selected' => false,
+				'title' => 'title',
+				'anchor' => 'anchor'
+			),
+			array(
+				'href' => 'asd',
+				'selected' => true,
+				'title' => 'title',
+				'anchor' => 'anchor'
+			),
+			array(
+				'href' => 'asd',
+				'selected' => false,
+				'title' => 'title',
+				'anchor' => 'anchor'
+			),
+			array(
+				'href' => 'asd',
+				'selected' => false,
+				'title' => 'title',
+				'anchor' => 'anchor'
+			),
+		);
 		$this->overrideTemplate('editHub');
 	}
 
