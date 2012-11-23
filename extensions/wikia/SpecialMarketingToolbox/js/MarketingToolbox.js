@@ -15,8 +15,16 @@ MarketingToolbox.prototype = {
 		this.verticalInputs = $('.vertical input');
 		this.initModels();
 
-		this.tooltipMessages[window.wgMarketingToolboxConstants.DAY_EDITED_NOT_PUBLISHED] = $.msg('marketing-toolbox-tooltip-in-progress');
-		this.tooltipMessages[window.wgMarketingToolboxConstants.DAY_PUBLISHED] = $.msg('marketing-toolbox-tooltip-published');
+		this.tooltipMessages[window.wgMarketingToolboxConstants.EDITED_NOT_PUBLISHED] = $.msg('marketing-toolbox-tooltip-in-progress');
+		this.tooltipMessages[window.wgMarketingToolboxConstants.PUBLISHED] = $.msg('marketing-toolbox-tooltip-published');
+
+		this.interactionsHandler();
+
+		this.langId = this.regionSelect.val();
+		var selectedVertical = this.verticalInputs.filter(':not(.secondary)');
+		if (selectedVertical.length) {
+			this.verticalId = selectedVertical.data('vertical-id');
+		}
 
 		this.interactionsHandler();
 
