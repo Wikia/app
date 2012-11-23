@@ -1,16 +1,17 @@
 <?php
 
-$values = $object->getValue(true);
+$values = $object->getWrappedValue();
 
 if ( $context == SD_CONTEXT_EDITING ) {
 	echo '<ol data-field-name="'.$object->getName().'">';
 }
 
-foreach ( $values as $i => $reference ) {
+/* @var SDElementPropertyValue $propertyValue */
+foreach ( $values as $i => $propertyValue ) {
+	$value = $propertyValue->getValue();
 
-	$text = $reference->object->getProperty('schema:text');
-	$name = $reference->object->getProperty('schema:name');
-	$description = $reference->object->getProperty('schema:name');
+
+	$text = $value->object->getPropertyValue('schema:text');
 
 	if ( $context == SD_CONTEXT_DEFAULT ) {
 
@@ -18,8 +19,8 @@ foreach ( $values as $i => $reference ) {
 	}
 
 	if ( $context == SD_CONTEXT_SPECIAL ) {
-		echo '<strong><a href="' . $reference->object->getSpecialPageUrl() . '">' . htmlspecialchars
-		($reference->object->getName() ) . '</a></strong>';
+		echo '<strong><a href="' . $value->object->getSpecialPageUrl() . '">' . htmlspecialchars
+		($value->object->getName() ) . '</a></strong>';
 		echo '<p>' . $text->getValue() . '</p>';
 	}
 
@@ -27,8 +28,8 @@ foreach ( $values as $i => $reference ) {
 
     	?>
 		<li>
-			<input type="hidden" name="wikia:wikiText[]" value="<?=$reference->object->getId();?>" />
-			<a href="<?=$reference->object->getSpecialPageUrl();?>"><?=htmlspecialchars( $reference->object->getName() );?></a>
+			<input type="hidden" name="wikia:wikiText[]" value="<?=$value->object->getId();?>" />
+			<a href="<?=$value->object->getSpecialPageUrl();?>"><?=htmlspecialchars( $value->object->getName() );?></a>
 			<button class="secondary remove">Remove</button>
         </li>
 	<?php
