@@ -14,6 +14,13 @@ class ArticlesApiController extends WikiaApiController {
 	static function onArticleUpdateCategoryCounts( $this, $added, $deleted ) {
 		foreach ( $added + $deleted as $cat) {
 			WikiaDataAccess::cachePurge( self::getCategoryCacheKey( $cat ) );
+
+			self::purgeMethod(
+				'getList',
+				array(
+					'category' => $cat
+				)
+			);
 		}
 
 		return true;
@@ -35,7 +42,7 @@ class ArticlesApiController extends WikiaApiController {
 						'cmprop' => 'ids',
 						'cmsort' => 'timestamp',
 						'cmdir' => 'desc',
-						'cmtitle' => 'Category:' . $category,
+						'cmtitle' => $category,
 						'cmlimit' => 5000
 					)
 				);
@@ -50,8 +57,6 @@ class ArticlesApiController extends WikiaApiController {
 
 				return $ids;
 			}
-			//,WikiaDataAccess::REFRESH_CACHE
-			//,WikiaDataAccess::SKIP_CACHE
 		);
 	}
 
@@ -84,7 +89,7 @@ class ArticlesApiController extends WikiaApiController {
 				throw new InvalidParameterApiException( 'category' );
 			}
 
-			$ids = $this->getCategoryMembers( $category );
+			$ids = $this->getCategoryMembers( $cat->getFullText() );
 		}
 
 		if ( !empty( $namespaces ) ) {
