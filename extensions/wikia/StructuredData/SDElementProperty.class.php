@@ -42,34 +42,19 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 	}
 
 	/**
-	 * used by toSDSJson to convert a single value
-	 * @return string
-	 */
-	protected function convertValueToSDSJson($value) {
-		if ( is_object($value) ) {
-			$valueObject = new stdClass();
-			if(isset($value->id)) {
-				$valueObject->id = $value->id;
-			}
-			return $valueObject;
-		}
-		return $value;
-	}
-
-	/**
 	 * get SDS compatible json representation of this object
 	 * @return string
 	 */
 	public function toSDSJson() {
-		$value = $this->getValue();
+		$value = $this->getWrappedValue();
 		if ( $this->isCollection() ) {
 			$values = array();
 			foreach($value as $v) {
-				$values[] = $this->convertValueToSDSJson($v);
+				$values[] = $v->convertValueToSDSJson();
 			}
 			$value = $values;
 		} else {
-			$value = $this->convertValueToSDSJson($value);
+			$value = $value->convertValueToSDSJson();
 		}
 		return $value;
 	}
@@ -116,72 +101,43 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		} else {
 			$parsedValue = $this->parseRequestValue($value);
 		}
-		$this->value = $parsedValue;
+		$this->setValue( $parsedValue );
 	}
 
 	public function setValue($value) {
 		$this->value = $value;
-	}
-
-	public function getValue( $expand = false ) {
-		if ( $expand ) {
-			$this->expandValue( F::build( 'StructuredData' ), 1);
-		}
-
-		if ( $this->isCollection() ) {
-			if (!is_array( $this->value )) {
-				if ( empty( $this->value ) ) return array();
-				return array( $this->value );
-			} else {
-				if ((count($this->value) == 1) && (empty($this->value[0]))) return array();
-			}
-		}
-
-		return $this->value;
+		$this->_value = null;
 	}
 
 	public function isCollection() {
 		return $this->getType()->isCollection();
 	}
 
-	public function getValueObject() {
-		$value = $this->getValue();
-		$type = $this->getType();
-		if ( !$this->isCollection()) {
-			return F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $value, 'propertyName' => $this->getName() ) );
-		}
-		$result = array();
-		foreach($value as $v) {
-			$result[] = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $v, 'propertyName' => $this->getName() ) );
-		}
-		return $result;
+	private $_value = null; // cached SDElementPropertyValue object(s), used by getWrappedValue
 
-	}
+	/**
+	 * Return property value(s) wrapped in SDElementPropertyValue instance(s)
+	 * @return SDElementPropertyValue instance or array of SDElementPropertyValue instances in case of collection
+	 */
+	public function getWrappedValue() {
+		if ( is_null( $this->_value ) ) {
+			if ( !$this->isCollection()) {
+				$this->_value = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $this->value, 'propertyName' => $this->getName() ) );
 
-	public function hasNoValue() {
-		$value = $this->getValue();
-		return ( empty($value) ) ? true : false;
-	}
-
-	public function expandValue(StructuredData $structuredData, $elementDepth) {
-		$value = $this->value;
-		if(is_object($value) && isset($value->id)) {
-			$value = array( $value );
-		}
-
-		if(is_array($value)) {
-			foreach($value as $v) {
-				if(isset($v->id) && empty($v->object)) {
-					try {
-						$SDElement = $structuredData->getSDElementById($v->id, $elementDepth+1);
-						$v->object = $SDElement;
-					}
-					catch(WikiaException $e) {
-						$v->object = null;
-					}
+			} else {
+				$this->_value = array();
+				if ( is_array( $this->value ) ) {
+					if ((count($this->value) == 1) && (empty($this->value[0]))) $values = array();
+					else $values = $this->value;
+				} else {
+					$values = ( empty( $this->value ) ) ? array() : array( $this->value );
+				}
+				foreach($values as $value) {
+					$this->_value[] = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $value, 'propertyName' => $this->getName() ) );
 				}
 			}
 		}
+		return $this->_value;
 	}
 
 	public function setName($name) {
@@ -198,22 +154,6 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 
 	public function getLabel() {
 		return $this->label;
-	}
-
-	public function toArray() {
-		if($this->value instanceof SDElement) {
-			$array = $this->value->toArray();
-		}
-		else {
-			$array = array(
-				'type' => $this->getTypeName(),
-				'name' => $this->name,
-				'label' => $this->label,
-				'value' => $this->value //$this->getValues()
-			);
-		}
-
-		return $array;
 	}
 
 	/**
@@ -246,6 +186,8 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 					}
 				}
 				$this->getType()->setRange( F::build( 'SDElementPropertyTypeRange', array( 'data' => $propertyDescription->range ) ) );
+			} else {
+				if ($guessType) $this->getType()->setName('rdfs:Literal');
 			}
 		}
 	}

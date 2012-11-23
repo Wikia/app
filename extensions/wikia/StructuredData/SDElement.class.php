@@ -4,7 +4,6 @@
  */
 class SDElement extends SDRenderableObject implements SplSubject {
 	private $id = 0;
-	private $depth = 0;
 	private static $excludedNames = array(
 		'@context',
 		'type',
@@ -24,13 +23,11 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	 * @param string $type
 	 * @param SDContext $context
 	 * @param int $id
-	 * @param int $depth
 	 */
-	public function __construct( $type, $context, $id = 0, $depth = 0) {
+	public function __construct( $type, $context, $id = 0) {
 		$this->type = $type;
 		$this->context = $context;
 		$this->id = $id;
-		$this->depth = $depth;
 
 		$this->properties = F::build( 'SplObjectStorage' );
 	}
@@ -45,14 +42,6 @@ class SDElement extends SDRenderableObject implements SplSubject {
 
 	public function getType() {
 		return $this->type;
-	}
-
-	public function setDepth($depth) {
-		$this->depth = $depth;
-	}
-
-	public function getDepth() {
-		return $this->depth;
 	}
 
 	public function getProperties() {
@@ -120,11 +109,11 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	 * get property value
 	 * @param string $name
 	 * @param mixed $default
-	 * @return mixed
+	 * @return SDElementPropertyValue
 	 */
 	public function getPropertyValue( $name, $default = null ) {
 		$property = $this->getProperty( $name );
-		return ($property instanceof SDElementProperty) ? $property->getValue() : $default;
+		return ($property instanceof SDElementProperty) ? $property->getWrappedValue() : $default;
 	}
 
 	/**
@@ -132,7 +121,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	 * @return string
 	 */
 	public function getName() {
-		return $this->getPropertyValue( 'schema:name' );
+		return $this->getPropertyValue( 'schema:name' )->getValue();
 	}
 
 	/**
@@ -140,7 +129,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	 * @return string
 	 */
 	public function getUrl() {
-		return $this->getPropertyValue( 'schema:url' );
+		return $this->getPropertyValue( 'schema:url' )->getValue();
 	}
 
 	/**
@@ -161,7 +150,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		$this->properties->attach( $property );
 	}
 
-	public static function newFromTemplate(stdClass $template, SDContext $context, stdClass $data = null, $depth = 0) {
+	public static function newFromTemplate(stdClass $template, SDContext $context, stdClass $data = null) {
 		if(!empty($data) && isset($data->id)) {
 			$elementId = $data->id;
 		}
@@ -170,8 +159,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		}
 
 		/** @var $element SDElement */
-		$element = F::build( 'SDElement', array( $template->type, $context, $elementId, $depth ) );
-		$structuredData = F::build( 'StructuredData' );
+		$element = F::build( 'SDElement', array( $template->type, $context, $elementId ) );
 
 		foreach($template as $propertyName => $propertyValue) {
 			if(isset($data->{"$propertyName"})) {
@@ -184,9 +172,6 @@ class SDElement extends SDRenderableObject implements SplSubject {
 				}
 				/** @var $property SDElementProperty */
 				$property = F::build( 'SDElementProperty', array( $propertyName, $propertyValue ) );
-				if($depth == 0) {
-					$property->expandValue( $structuredData, $element->getDepth() );
-				}
 				$element->addProperty( $property );
 			}
 			elseif($propertyName == '@context') {
@@ -199,33 +184,8 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		return $element;
 	}
 
-	public function toArray() {
-		$properties = array();
-
-		foreach($this->properties as $property) {
-			$properties[] = $property->toArray();
-		}
-
-		return array(
-			'id' => $this->getId(),
-			'type' => $this->getType(),
-			'name' => $this->getName(),
-			'url' => $this->getUrl(),
-			'properties' => $properties,
-			'depth' => $this->getDepth()
-		);
-	}
-
 	public function __toString() {
 		return $this->toSDSJson();
-	}
-
-	/**
-	 * get json representation of this object
-	 * @return string
-	 */
-	public function toJson() {
-		return json_encode( $this->toArray() );
 	}
 
 	/**
@@ -300,7 +260,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	}
 
 	public function getRendererNames() {
-		return array( $this->type, 'default' );
+		return array( $this->type, 'sdelement' );
 	}
 
 	public function getSpecialPageUrl() {

@@ -20,7 +20,23 @@ class SDElementPropertyValue extends SDRenderableObject {
 		$this->value = $value;
 	}
 
+	/**
+	 * return the actual value of this property. In case the value is a reference to another
+	 * SDElement instance, this method returns an object with id and object attributes
+	 * (and object attribute is lazy-loaded, but can be null in case this load fails)
+	 */
 	public function getValue() {
+		if ( is_object( $this->value ) && ( !isset($this->value->object) ) ) {
+			$structuredData = F::build( 'StructuredData' );
+			try {
+				$SDElement = $structuredData->getSDElementById($this->value->id);
+				$this->value->object = $SDElement;
+			}
+			catch(WikiaException $e) {
+				$this->value->object = null;
+			}
+
+		}
 		return $this->value;
 	}
 
@@ -39,6 +55,10 @@ class SDElementPropertyValue extends SDRenderableObject {
 	}
 
 	public function getRendererNames() {
+		$value = $this->getValue();
+		if (is_object($value) && isset($value->object) && ( !is_null($value->object))) {
+			return array( array('renderingSubject'=>$value->object, 'rendererName' => 'sdelement') );
+		}
 		return array( 'value_'.$this->type->getName(), 'value_default' );
 	}
 
@@ -53,6 +73,21 @@ class SDElementPropertyValue extends SDRenderableObject {
 	public function render( $context = SD_CONTEXT_DEFAULT, array $params = array() ) {
 		$renderedContent = parent::render( $context, $params );
 		return ( $renderedContent !== false ) ? $renderedContent : $this->getValue();
+	}
+
+	/**
+	 * used by toSDSJson to convert a single value
+	 * @return string
+	 */
+	public function convertValueToSDSJson() {
+		if ( is_object($this->value) ) {
+			$valueObject = new stdClass();
+			if(isset($this->value->id)) {
+				$valueObject->id = $this->value->id;
+			}
+			return $valueObject;
+		}
+		return $this->value;
 	}
 
 }

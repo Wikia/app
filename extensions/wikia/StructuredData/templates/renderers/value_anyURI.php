@@ -1,9 +1,10 @@
-<?php 
+<?php
+	/* @var SDElementPropertyValue $object */
 	$value = $object->getValue();
 ?>
 <?php if($context == SD_CONTEXT_EDITING): ?>
 	<div class="input-group">
-		<input type="text" value="<?=$value;?>" name="<?=$object->getName();?>" />
+		<input type="text" value="<?=$value;?>" name="<?=$object->getPropertyName();?>" />
 	</div>
 <?php else: ?>
 	<?php if (empty($value)) :?>

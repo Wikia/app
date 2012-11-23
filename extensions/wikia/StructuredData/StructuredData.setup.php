@@ -43,13 +43,13 @@ $wgStructuredDataConfig = array(
 	'renderersPath' => $dir . 'templates/renderers/',
 	'renderers' => array(
 		'schema:ImageObject' => 'ImageObject',
-		'xsd:anyURI' => 'anyURI',
+		'value_xsd:anyURI' => 'value_anyURI',
 		'wikia:wikiText' => 'wikiText',
 		'value_xsd:boolean' => 'value_boolean',
 		'@set' => 'container',
 		'@list' => 'container',
 		'value_default' => 'value_default',
-		'default' => 'default',
+		'sdelement' => 'sdelement',
 		'value_enum' => 'value_enum'
 	)
 );
