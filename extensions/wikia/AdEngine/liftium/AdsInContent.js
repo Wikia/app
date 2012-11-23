@@ -183,7 +183,7 @@ if (
 	&& !window.wgIsMainpage
 	&& (window.wgIsContentNamespace || window.wikiaPageType === 'search')
 ) {
-	$(window).on('load', function() {
+	wgAfterContentAndJS.push(function() {
 		if (!AIC2.called) {
 			AIC2.called = true;
 			AIC2.init();
