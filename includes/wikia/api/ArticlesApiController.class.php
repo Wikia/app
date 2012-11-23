@@ -13,7 +13,7 @@ class ArticlesApiController extends WikiaApiController {
 
 	static function onArticleUpdateCategoryCounts( $this, $added, $deleted ) {
 		foreach ( $added + $deleted as $cat) {
-			WikiaDataAccess::cachePurge( self::getCategoryCacheKey( $cat ) );
+			WikiaDataAccess::cachePurge( self::getCacheKey( $cat, 'category' ) );
 
 			self::purgeMethod(
 				'getList',
@@ -32,7 +32,7 @@ class ArticlesApiController extends WikiaApiController {
 	 */
 	private function getCategoryMembers( $category ){
 		return WikiaDataAccess::cache(
-			self::getCategoryCacheKey( $category ),
+			self::getCacheKey( $category, 'category' ),
 			self::CLIENT_CACHE_VALIDITY,
 			function() use ( $category ) {
 				$ids = ApiService::call(
@@ -107,7 +107,7 @@ class ArticlesApiController extends WikiaApiController {
 			$ids = array();
 
 			foreach ( array_keys( $articles ) as $i ) {
-				$cache = $this->wg->Memc->get( self::getArticleCacheKey( $i ) );
+				$cache = $this->wg->Memc->get( self::getCacheKey( $i, 'article' ) );
 
 				if ( !is_array( $cache ) ) {
 					$ids[] = $i;
@@ -134,7 +134,7 @@ class ArticlesApiController extends WikiaApiController {
 							)
 						);
 
-						$this->wg->Memc->set( self::getArticleCacheKey( $id ), $collection[$id], 86400 );
+						$this->wg->Memc->set( self::getCacheKey( $id, 'article' ), $collection[$id], 86400 );
 					}
 				}
 
@@ -184,7 +184,7 @@ class ArticlesApiController extends WikiaApiController {
 
 
 			foreach ( $articles as $i ) {
-				$cache = $this->wg->Memc->get( self::getDetailsCacheKey( $i ) );
+				$cache = $this->wg->Memc->get( self::getCacheKey( $i, 'details' ) );
 
 				if ( !is_array( $cache ) ) {
 					$ids[] = $i;
@@ -211,7 +211,7 @@ class ArticlesApiController extends WikiaApiController {
 
 						$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
 
-						$this->wg->Memc->set( self::getDetailsCacheKey( $id ), $collection[$id], 86400 );
+						$this->wg->Memc->set( self::getCacheKey( $id, 'details' ), $collection[$id], 86400 );
 					}
 				}
 
@@ -263,21 +263,13 @@ class ArticlesApiController extends WikiaApiController {
 		$this->wf->ProfileOut( __METHOD__ );
 	}
 
-	static private function getArticleCacheKey( $id ) {
-		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, 'article', $id );
-	}
-
-	static private function getDetailsCacheKey( $id ) {
-		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, 'details', $id );
-	}
-
-	static private function getCategoryCacheKey( $category ) {
-		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, 'category', $category );
+	static private function getCacheKey( $name, $type ) {
+		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, $type, $name );
 	}
 
 	static public function purgeCache( $id ) {
 		$memc = F::app()->wg->Memc;
-		$memc->delete( self::getArticleCacheKey( $id ) );
-		$memc->delete( self::getDetailsCacheKey( $id ) );
+		$memc->delete( self::getCacheKey( $id, 'article' ) );
+		$memc->delete( self::getCacheKey( $id, 'details' ) );
 	}
 }
