@@ -4,26 +4,39 @@ MarketingToolbox.prototype = {
 	tooltipMessages: {},
 	isCalendarReady: false,
 	models: {},
-	vertical: undefined,
+	verticalId: undefined,
 	langId: undefined,
 	verticalInputs: undefined,
 	datepickerContainer: undefined,
+	regionSelect: undefined,
 	init: function() {
 		this.datepickerContainer =  $("#date-picker");
+		this.regionSelect = $('#marketingToolboxRegionSelect');
 		this.verticalInputs = $('.vertical input');
 		this.initModels();
 
-		this.tooltipMessages[window.wgMarketingToolboxConstants.DAY_EDITED_NOT_PUBLISHED] = $.msg('marketing-toolbox-tooltip-in-progress');
-		this.tooltipMessages[window.wgMarketingToolboxConstants.DAY_PUBLISHED] = $.msg('marketing-toolbox-tooltip-published');
+		this.tooltipMessages[window.wgMarketingToolboxConstants.EDITED_NOT_PUBLISHED] = $.msg('marketing-toolbox-tooltip-in-progress');
+		this.tooltipMessages[window.wgMarketingToolboxConstants.PUBLISHED] = $.msg('marketing-toolbox-tooltip-published');
+
+		this.interactionsHandler();
+
+		this.langId = this.regionSelect.val();
+		var selectedVertical = this.verticalInputs.filter(':not(.secondary)');
+		if (selectedVertical.length) {
+			this.verticalId = selectedVertical.data('vertical-id');
+		}
 
 		$.when(
 			// jQuery UI datepicker plugin
 			mw.loader.use(['jquery.ui.datepicker'])
 		).done($.proxy(function(getResourcesData) {
 			this.isCalendarReady = true;
+
+			if (this.langId && this.verticalId) {
+				this.initDatepicker();
+			}
 		}, this));
 
-		this.interactionsHandler();
 	},
 	initModels: function() {
 		$('#marketingToolboxRegionSelect option').each($.proxy(function(i, opt){
@@ -32,8 +45,8 @@ MarketingToolbox.prototype = {
 			this.verticalInputs.each(
 				$.proxy(
 					function(i, elem){
-						var verticalName = $(elem).val();
-						this.models[langId][verticalName] = new DatepickerModel(langId, verticalName);
+						var verticalId = $(elem).data('vertical-id');
+						this.models[langId][verticalId] = new DatepickerModel(langId, verticalId);
 					},
 					this
 				)
@@ -41,7 +54,7 @@ MarketingToolbox.prototype = {
 		}, this));
 	},
 	getModel: function() {
-		return this.models[this.langId][this.vertical];
+		return this.models[this.langId][this.verticalId];
 	},
 	datePickerBeforeShowDay: function(date) {
 		var tdClassName = '';
@@ -60,22 +73,24 @@ MarketingToolbox.prototype = {
 		return [true, tdClassName, tooltip];
 	},
 	interactionsHandler: function() {
-		$('#marketingToolboxRegionSelect').change($.proxy(function(e) {
+		this.regionSelect.change($.proxy(function(e) {
 			this.langId = $(e.target).val();
+			this.saveLangId(this.langId);
 			$('.marketingToolbox input').removeAttr('disabled');
 			$('.section input').removeClass('secondary');
 			$('.placeholder-option').remove();
 			this.destroyDatepicker();
-			if (this.vertical) {
+			if (this.verticalId) {
 				this.initDatepicker();
 			}
 		}, this));
 
 		this.verticalInputs.click($.proxy(function(e) {
 			var target = $(e.target);
-			this.vertical = target.val();
+			this.verticalId = target.data('vertical-id');
 			this.verticalInputs.addClass('secondary');
 			target.removeClass('secondary');
+			this.saveVertical(this.verticalId);
 
 			this.destroyDatepicker();
 			this.initDatepicker();
@@ -114,6 +129,33 @@ MarketingToolbox.prototype = {
 				});
 			}
 		}, this));
+	},
+	saveUserProperties: function(data) {
+		$.nirvana.sendRequest({
+			controller: 'WikiaUserPropertiesController',
+			method: 'performPropertyOperation',
+			data: data,
+			type: 'post',
+			format: 'json'
+		});
+	},
+	saveLangId: function(id) {
+		this.saveUserProperties({
+			handlerName: 'MarketingToolboxUserPropertiesHandler',
+			methodName: 'saveMarketingToolboxRegion',
+			callParams: {
+				'marketing-toolbox-region': id
+			}
+		});
+	},
+	saveVertical: function(name) {
+		this.saveUserProperties({
+			handlerName: 'MarketingToolboxUserPropertiesHandler',
+			methodName: 'saveMarketingToolboxVertical',
+			callParams: {
+				'marketing-toolbox-vertical': name
+			}
+		});
 	}
 };
 
