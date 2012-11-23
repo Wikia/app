@@ -81,7 +81,7 @@ class ArticlesApiController extends WikiaApiController {
 			$cat = Title::newFromText( $category, NS_CATEGORY );
 
 			if ( !$cat->exists() ) {
-				throw new InvalidParameterApiException( 'Category does not exist' );
+				throw new InvalidParameterApiException( 'category' );
 			}
 
 			$ids = $this->getCategoryMembers( $category );
@@ -276,5 +276,3 @@ class ArticlesApiController extends WikiaApiController {
 		$memc->delete( self::getDetailsCacheKey( $id ) );
 	}
 }
-
-class InvalidParameterApiException extends BadRequestException {}

@@ -118,5 +118,3 @@ abstract class WikiaApiController extends WikiaController {
 		$this->response->setHeader( $APIGATE_HEADER_REQUIRES_API, 1);
 	}
 }
-
-class BadRequestApiException extends BadRequestException {}
