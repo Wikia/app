@@ -1,22 +1,75 @@
 <?php
 
 /**
- * Nirvana Framework - Wikia exception
- *
- * Base class for Wikia codebase exceptions. PHP 5.3 compatible
+ * Base exception class for the Nirvana framework
  *
  * @ingroup nirvana
  *
  * @author Wojciech Szela <wojtek@wikia-inc.com>
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  * @link http://pl2.php.net/manual/en/class.exception.php
  */
 class WikiaException extends MWException {
 	/**
-	 * Previous exception
+	 * Constructor
+	 *
+	 * @param string $message The exception message
+	 * @param int $code The error code
+	 * @param Exception $previous The previous exception in the chain if any
+	 *
+	 * @link  http://www.php.net/manual/en/class.exception.php
+	 * @see MWException
+	 */
+	public function __construct($message = '', $code = 0, Exception $previous = null) {
+		parent::__construct( $message, $code, $previous );
+
+		// log more details (macbre)
+		Wikia::logBacktrace( __METHOD__ );
+	}
+
+	/**
+	 * Overrides MWException::report to also write exceptions to error_log
+	 *
+	 * @see  MWException::report
+	 */
+	function report() {
+		$file = $this->getFile();
+		$line = $this->getLine();
+		$message = $this->getMessage();
+		$request = RequestContext::getMain()->getRequest();
+		$url = '[no URL]';
+
+		if ( isset( $request ) ) {
+			$url = $request->getFullRequestURL();
+		}
+
+		trigger_error( "Exception from line {$line} of {$file}: {$message} ({$url})", E_USER_ERROR );
+
+		/*
+		bust the headers_sent check in MWException::report()
+		Uncomment to override normal MWException headers
+		in order to display an error page instead of a 500 error
+		WARNING: Varnish doesn't like those
+		flush();
+		*/
+		parent::report();
+	}
+}
+
+/**
+ * Exception thrown by WikiaDispatcher::dispatch
+ *
+ * @ingroup nirvana
+ *
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ */
+class WikiaDispatchedException extends WikiaException {
+	/**
+	 * Original exception
 	 *
 	 * @var Exception|null
 	 */
-	private $_previous;
+	private $_original;
 
 	/**
 	 * Constructor
@@ -24,34 +77,21 @@ class WikiaException extends MWException {
 	 * @link  http://pl2.php.net/manual/en/exception.construct.php
 	 * @param string $message
 	 * @param int $code
-	 * @param Exception $exception
+	 * @param Exception $original
 	 */
-	public function __construct($message = '', $code = 0, Exception $previous = null) {
-		if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-			parent::__construct($message, $code);
-			$this->_previous = $previous;
-		} else {
-			parent::__construct($message, $code, $previous);
-		}
-
-		// log more details (macbre)
-		Wikia::logBacktrace(__METHOD__);
+	public function __construct($message = '',  Exception $original = null) {
+			parent::__construct( $message );
+			$this->_original = $original;
 	}
 
-	/**
-	 * Simulates getPrevious() introduced in PHP 5.3
-	 *
-	 * @link   http://pl2.php.net/manual/en/exception.getprevious.php
-	 * @param  string $method
-	 * @param  array $args
-	 * @return mixed
-	 */
-	public function __call($method, array $args) {
-		if ('getprevious' == strtolower($method)) {
-			return $this->_getPrevious();
-		}
 
-		return null;
+	/**
+	 * Original exception getter
+	 *
+	 * @return Exception|null
+	 */
+	protected function getOriginal() {
+		return $this->_original;
 	}
 
 	/**
@@ -61,46 +101,99 @@ class WikiaException extends MWException {
 	 * @return string
 	 */
 	public function __toString() {
-		if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-			if (null !== ($e = $this->_getPrevious())) {
-				return $e->__toString() . "\n\nNext " . parent::__toString();
-			}
+		$ret = '';
+
+		if ( null !== ( $e = $this->getOriginal() ) ) {
+			$ret .= $e->__toString() . "\n\n";
 		}
 
-		return parent::__toString();
+		$ret .= 'Reported by ' . parent::__toString();
+
+		return $ret;
 	}
 
 	/**
-	 * Previous exception getter
-	 *
-	 * To simulate getPrevious() method introduced in PHP 5.3
-	 *
-	 * @return Exception|null
-	 */
-	protected function _getPrevious() {
-		return $this->_previous;
-	}
-
-	/**
-	 * Override MWException report() and write exceptions to error_log
-	 *
-	 * Uncomment the flush() line to override normal MWException headers
-	 * so we can display an error page instead of a 500 error (varnish doesn't like those)
-	 *
-	 * TODO: display a nice walter?
+	 * Override WikiaException report() and write exceptions to error_log
 	 */
 	function report() {
 		global $wgRequest;
-		$file = $this->getFile();
-		$line = $this->getLine();
-		$message = $this->getMessage();
+		$info = '';
+
+		if ( !empty( $this->_original ) ) {
+			$file = $this->_original->getFile();
+			$line = $this->_original->getLine();
+			$message = $this->_original->getMessage();
+
+			$info = "exception has occurred at line {$line} of {$file}: {$message}";
+		} else {
+			$info = "unknown exception has occurred";
+		}
+
 		$url = '[no URL]';
+
 		if ( isset( $wgRequest ) ) {
 			$url = $wgRequest->getFullRequestURL();
 		}
-		trigger_error("Exception from line $line of $file: $message ($url)", E_USER_ERROR);
 
-		//flush();   // bust the headers_sent check in MWException::report()
-		parent::report();
+		// Display normal mediawiki eror page for mediawiki exceptions
+		if ( $this->_original instanceof MWException ) {
+			$this->_original->report();
+		}
+
+		else {
+			trigger_error("[REPORT: {$this->getMessage()}] WikiaDispatcher reports an {$info}  (URL: {$url}) [REPORT: End]", E_USER_ERROR);
+		}
 	}
+}
+
+/**
+ * Base class for exceptions that match HTTP status codes,
+ * mainly meant for Wikia's API modules but could be used
+ * in any Nirvana-based code.
+ *
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ */
+abstract class WikiaHttpException extends WikiaException {
+	protected $code = null;
+	protected $message = null;
+	protected $details = null;
+
+	function __construct( $details = null, Exception $previous = null ) {
+		parent::__construct( $this->message, $this->code, $previous );
+		$this->details = $details;
+	}
+
+	public function getDetails() {
+		return $this->details;
+	}
+}
+
+/**
+ * The following is a collection of WikiaHttpException
+ * subclasses each matching a specific HTTP status code
+ */
+
+abstract class BadRequestException extends WikiaHttpException {
+	protected $code = 400;
+	protected $message = 'Bad request';
+}
+
+abstract class ForbiddenException extends WikiaHttpException {
+	protected $code = 403;
+	protected $message = 'Forbidden';
+}
+
+abstract class NotFoundException extends WikiaHttpException {
+	protected $code = 404;
+	protected $message = 'Not found';
+}
+
+abstract class MethodNotAllowedException extends WikiaHttpException {
+	protected $code = 405;
+	protected $message = 'Method not allowed';
+}
+
+abstract class NotImplementedException extends WikiaHttpException {
+	protected $code = 501;
+	protected $message = 'Not implemented';
 }
