@@ -4,6 +4,8 @@
  */
 class SDParserTag {
 
+	const RENDER_MODE_DEFAULT = 0;
+	const RENDER_MODE_OBJECT = 1;
 	/**
 	 * @var SDParser
 	 */
@@ -16,11 +18,18 @@ class SDParserTag {
 	 * @var SDParserTagPropertyPath
 	 */
 	protected $path;
+	protected $renderMode = 0;
 
 	public function __construct( SDParser $parser, $tagRawContent, array $args = array() ) {
 		$this->parser = $parser;
-		$this->path = F::build( 'SDParserTagPropertyPath', array( 'pathString' => $tagRawContent ) );
+		$this->path = F::build( 'SDParserTagPropertyPath', array( 'pathString' => trim( $tagRawContent ) ) );
 		$this->args = $args;
+		if(isset($args['renderMode'])) {
+			$this->renderMode = $args['renderMode'];
+		}
+		else {
+			$this->renderMode = self::RENDER_MODE_DEFAULT;
+		}
 	}
 
 	public function render() {
@@ -44,8 +53,14 @@ class SDParserTag {
 							// last element in chain, try to render it
 							$result = $elementProperty->render( SD_CONTEXT_DEFAULT, (array) $this->args );
 							if( $result !== false ) {
-								$currentElement = null;
-								break;
+
+								if( $this->renderMode == self::RENDER_MODE_OBJECT ) {
+									return $elementProperty->getWrappedValue();
+								}
+								else {
+									$currentElement = null;
+									break;
+								}
 							}
 						}
 

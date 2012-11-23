@@ -13,7 +13,7 @@ class SDParser {
 	}
 
 	public function onParserFirstCallInit( Parser &$parser ) {
-		$parser->setHook( 'dl', array( $this, 'dlParserHook' ) );
+		$parser->setHook( 'datalist', array( $this, 'datalistParserHook' ) );
 		$parser->setHook( 'data', array( $this, 'dataParserHook' ) );
 		return true;
 	}
@@ -23,33 +23,34 @@ class SDParser {
 		return true;
 	}
 
-	public function getListForStringPath( $path ) {
+	public function getListFromStringPath( $path ) {
+		$result = array();
 
-		if ( $path == 'mock-characters' ) {
-			$arr = array(
-				"callofduty:Character/Fidel Castro",
-				"callofduty:Character/Terrance ",
-				"callofduty:Character/Nikita Dragovich"
-			);
-		}
-		if ( $path == 'mock-weapon' ) {
-			$arr = array(
-				"callofduty:Weapon/Weapon_KS-23",
-				//"callofduty:Weapon/kałasz"
-			);
+		$dataTag = F::build( 'SDParserTag', array( 'parser' => $this, 'tagRawContent' => $path, 'args' => array( 'renderMode' => SDParserTag::RENDER_MODE_OBJECT ) ));
+		$values = $dataTag->render();
+
+		if( !is_array( $values ) ) {
+			return $result;
 		}
 
-		return $arr;
+		foreach( $values as $value ) {
+			if( $value->isObject() ) {
+				$result[] = '#' . $value->getValue()->id;
+			}
+		}
+
+		return $result;
 	}
 
-	public function dlParserHook( $input, $args, Parser $parser, PPFrame $frame = null ) {
-
-		$list = $this->getListForStringPath( $args['src'] );
+	public function datalistParserHook( $input, $args, Parser $parser, PPFrame $frame = null ) {
 		$output = "";
-		foreach ( $list as $i => $element ) {
-			$output .= str_replace('$'.$args['var'], $element, $input);
+		$list = $this->getListFromStringPath( $args['src'] );
+
+		foreach ( $list as $elementHash ) {
+			$output .= str_replace('$'.$args['var'], $elementHash, $input);
 		}
-		$output = $parser->recursiveTagParse($output, $frame);
+		$output = $parser->recursiveTagParse( ( !empty($output) ? $output : $input ), $frame);
+
 		return $output;
 	}
 

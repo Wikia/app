@@ -40,6 +40,10 @@ class SDElementPropertyValue extends SDRenderableObject {
 		return $this->value;
 	}
 
+	public function isObject() {
+		return ( $this->value instanceof stdClass );
+	}
+
 	/**
 	 * @param \SDElementPropertyType $type
 	 */
