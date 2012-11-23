@@ -1,5 +1,5 @@
 <?php
-                print "Hi updatePages in/n";
+                print "Hi updatePages in\n";
 /**
  * class CensusEnabledPagesUpdate
  * Updates Census data on Pages with specified enable update category tag
@@ -31,12 +31,20 @@ class CensusEnabledPagesUpdate {
         public function execute(  ) {
                 wfProfileIn(__METHOD__);
                 //get all pages from cat
-                $pagesList = getPagesWithCategory( CensusDataRetrieval::getFlagCategoryTitle(), true );
-                //foreach page
-                foreach ( $pagesList as $titlePrefixedText) {
-                        $oTitle = Title::newFromText( $titlePrefixedText );
+		$aReturn = ApiService::call(
+			array(
+				'action' => 'query',
+				'list' => 'categorymembers',//pages with category
+				'cmtitle' => CensusDataRetrieval::getFlagCategoryTitle()->getPrefixedDBkey(),//category name
+				'cmlimit' => '1',
+				'cmnamespace' => '0'
+			)
+		);
+		//foreach page
+                foreach ( $aReturn['query']['categorymembers'] as $cm) {
+                        $oTitle = Title::newFromText( $cm['title'] );
                         $oArticle = new Article($oTitle);
-                        $newText = getUpdatedContent( $oArticle->getContent(), $oTitle->getText() );
+                        $newText = $this->getUpdatedContent( $oArticle->getContent(), $oTitle->getText() );
 //                        $oArticle->doEdit( $newText, 'Updating infobox with data from Sony DB', EDIT_UPDATE );
                         break;
                 }
