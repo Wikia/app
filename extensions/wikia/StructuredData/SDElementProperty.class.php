@@ -187,7 +187,10 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 				}
 				$this->getType()->setRange( F::build( 'SDElementPropertyTypeRange', array( 'data' => $propertyDescription->range ) ) );
 			} else {
-				if ($guessType) $this->getType()->setName('rdfs:Literal');
+
+				if ( $guessType && ( !in_array( $this->getName(), array( 'schema:relatedTo', 'callofduty:team') ) ) )  {
+					$this->getType()->setName('rdfs:Literal');
+				}
 			}
 		}
 	}
@@ -197,6 +200,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 	}
 
 	public function getRendererNames() {
+		//echo "SDElementProperty - returning renderers ".json_encode(array($this->getName(), $this->getTypeName()))." for property " .$this->getName(). "<br/>\n";
 		return array( $this->getName(), $this->getTypeName() );
 	}
 }
