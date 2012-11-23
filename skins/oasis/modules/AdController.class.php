@@ -159,6 +159,7 @@ class AdController extends WikiaController {
 			}
 		}
 
+		// TODO remove unused providers
 		if(isset(self::$config[$this->slotname])) {
 			if (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdDriver') {
 				$this->ad = AdEngine::getInstance()->getAd($this->slotname, $params);
@@ -168,6 +169,7 @@ class AdController extends WikiaController {
 			}
 			elseif (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'DARTGP' ||
 					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdEngine2' ||
+					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'Liftium2' ||
 					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'GamePro') {
 				$this->ad = AdEngine::getInstance()->getAd($this->slotname);
 			}

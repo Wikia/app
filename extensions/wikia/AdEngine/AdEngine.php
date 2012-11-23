@@ -203,6 +203,7 @@ class AdEngine {
 		'12' => 'DARTGP',
 		'13' => 'AdEngine2',
 		'14' => 'GamePro',
+		'15' => 'Liftium2',
  		'-1' => 'Null'
 	);
 
@@ -533,6 +534,7 @@ class AdEngine {
 			case 'dartgp': return AdProviderDARTGP::getInstance();
 			case 'adengine2': return AdProviderAdEngine2::getInstance();
 			case 'gamepro': return AdProviderGamePro::getInstance();
+			case 'liftium2': return AdProviderLiftium2::getInstance();
 			case 'null': return new AdProviderNull('Slot disabled in WF', false);
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
