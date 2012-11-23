@@ -13,6 +13,7 @@
  * @method setHeaders
  * @method checkPermissions
  * @method displayRestrictionError
+ * @method msg
  */
 class WikiaSpecialPageController extends WikiaController {
 	protected $specialPage = null;
