@@ -29,6 +29,11 @@ class SDParserTagPropertyPath {
 		}
 	}
 
+	/**
+	 * get next property from path
+	 * @param SDElement $element
+	 * @return SDParserTagProperty
+	 */
 	public function next(SDElement $element) {
 		if( $this->hasNext() ) {
 			$this->position++;
@@ -42,7 +47,7 @@ class SDParserTagPropertyPath {
 				$valueIndex = $matches[2];
 			}
 
-			return array( 'name' => $propName, 'value' => $element->getProperty( $propName ), 'valueIndex' => $valueIndex );
+			return F::build( 'SDParserTagProperty', array( 'name' => $propName, 'elementProperty' => $element->getProperty( $propName ), 'valueIndex' => $valueIndex ) );
 		}
 		return false;
 	}

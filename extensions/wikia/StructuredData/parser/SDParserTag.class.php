@@ -32,15 +32,15 @@ class SDParserTag {
 			$currentElement = $SDElement;
 			do {
 				if( $this->path->hasNext() ) {
-					$property = $this->path->next( $currentElement );
+					$tagProperty = $this->path->next( $currentElement );
 
-					if( $property['value'] instanceof SDElement ) {
-						$currentElement = $property['value'];
+					if( $tagProperty->isSDElement() ) {
+						$currentElement = $tagProperty->get();
 					}
-					elseif( $property['value'] instanceof SDElementProperty ) {
-						$elementProperty = $property['value'];
+					elseif( $tagProperty->isSDElementProperty() ) {
+						$elementProperty = $tagProperty->get();
 
-						if( !$this->path->hasNext() && is_null( $property['valueIndex'] ) ) {
+						if( !$this->path->hasNext() && !$tagProperty->hasValueIndex() ) {
 							// last element in chain, try to render it
 							$result = $elementProperty->render( SD_CONTEXT_DEFAULT, (array) $this->args );
 							if( $result !== false ) {
@@ -50,9 +50,11 @@ class SDParserTag {
 						}
 
 						$wrappedValue = $elementProperty->getWrappedValue();
-
 						if( $elementProperty->isCollection() ) {
-							$result =  $wrappedValue[ !is_null( $property['valueIndex'] ) ? $property['valueIndex'] : 0 ]->getValue();
+							$result = $wrappedValue[ $tagProperty->getValueIndex() ]->getValue();
+						}
+						else {
+							$result = $wrappedValue->getValue();
 						}
 
 						if( is_object( $result ) && ( $result->object instanceof SDElement ) ) {
@@ -66,13 +68,12 @@ class SDParserTag {
 							}
 						}
 						else {
-							$result = "Unknown value: " . $property['name'] . ( !empty($property['valueIndex']) ? "[" . $property['valueIndex'] . "]" : "" );
+							$result = "Unknown value: " . $tagProperty->getName() . ( !$tagProperty->hasValueIndex() ? "[" . $tagProperty->getValueIndex() . "]" : "" );
 							$currentElement = null;
 						}
-
 					}
 					else {
-						$result = "Unknown property: " . $property['name'];
+						$result = "Unknown property: " . $tagProperty->getName();
 						$currentElement = null;
 					}
 
@@ -86,7 +87,6 @@ class SDParserTag {
 			if($currentElement instanceof SDElement) {
 				$result = $currentElement->render( SD_CONTEXT_DEFAULT, (array) $this->args );
 			}
-
 		}
 		else {
 			$result = 'Unknown element: ' . $this->path->getElementId();

@@ -17,6 +17,7 @@ $app->registerClass('SDElementRendererFactory', $dir . 'SDElementRendererFactory
 $app->registerClass('SDContext', $dir . 'SDContext.class.php');
 $app->registerClass('SDParser', $dir . 'parser/SDParser.class.php');
 $app->registerClass('SDParserTag', $dir . 'parser/SDParserTag.class.php');
+$app->registerClass('SDParserTagProperty', $dir . 'parser/SDParserTagProperty.class.php');
 $app->registerClass('SDParserTagPropertyPath', $dir . 'parser/SDParserTagPropertyPath.class.php');
 
 require_once( $dir . '../../../lib/HTTP/Request.php');

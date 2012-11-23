@@ -7,22 +7,12 @@ $listOfValues = array();
 
 /* @var SDElementPropertyValue $propertyValue */
 foreach($values as $propertyValue) {
-	//@todo - use $propertyValue->render
-	$value = $propertyValue->getValue();
-
-	if (is_object($value) && (!is_null($value->object))) {
-		$referenceHTML = $value->object->render( $context, array( 'fieldName' => $object->getName() . '[]' ) );
-	}
+	$referenceHTML = $propertyValue->render( $context, array( 'fieldName' => $object->getName() . '[]' ) );
 	if ($referenceHTML !== false) {
 		$listOfValues[] = $referenceHTML;
 	}
 	else {
-		if(is_object($value) && !isset($value->object)) {
-			$listOfValues[] = $value->id;
-		}
-		else {
-			$listOfValues[] = $value;
-		}
+		$listOfValues[] = 'property value render failed!';
 	}
 }
 
