@@ -20,6 +20,11 @@ class SDElementPropertyValue extends SDRenderableObject {
 		$this->value = $value;
 	}
 
+	/**
+	 * return the actual value of this property. In case the value is a reference to another
+	 * SDElement instance, this method returns an object with id and object attributes
+	 * (and object attribute is lazy-loaded, but can be null in case this load fails)
+	 */
 	public function getValue() {
 		if ( is_object( $this->value ) && ( !isset($this->value->object) ) ) {
 			$structuredData = F::build( 'StructuredData' );

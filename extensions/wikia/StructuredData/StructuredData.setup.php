@@ -48,7 +48,7 @@ $wgStructuredDataConfig = array(
 		'@set' => 'container',
 		'@list' => 'container',
 		'value_default' => 'value_default',
-		'sdelement' => 'sdelement',     // default template for SDElement (reference)
+		'sdelement' => 'sdelement',
 		'value_enum' => 'value_enum'
 	)
 );
