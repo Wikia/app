@@ -166,6 +166,7 @@ class WikiaHomePageController extends WikiaController {
 		} else {
 			try {
 				Wikia::log(__METHOD__, false, ' pulling failover visualization data from message');
+
 				$status = 'false';
 				$this->source = $this->getMediaWikiMessage();
 
@@ -178,6 +179,7 @@ class WikiaHomePageController extends WikiaController {
 				$this->response->setVal('initialWikiBatchesForVisualization', json_encode($failoverBatches));
 			} catch (Exception $e) {
 				Wikia::log(__METHOD__, false, ' pulling failover visualization data from file');
+
 				$status = 'false';
 
 				$failoverData = $this->getFailoverWikiList();
@@ -193,6 +195,12 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	public function getMediaWikiMessage() {
+		$failoverArticle = Title::newFromText(self::$mwMsgWikiList, NS_MEDIAWIKI);
+
+		if( !$failoverArticle->exists() ) {
+			throw new Exception('MediaWiki failover message does NOT exist');
+		}
+
 		return wfMsgForContent(self::$mwMsgWikiList);
 	}
 
