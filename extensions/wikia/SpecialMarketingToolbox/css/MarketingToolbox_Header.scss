@@ -1,6 +1,9 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/core/color";
 
 .MarketingToolboxHeader {
+	@include clearfix;
 
 	.MarketingToolboxTitle {
 		&, h1 {
@@ -29,5 +32,10 @@
 			margin: 0.2em 0 0;
 		}
 	}
-	@include clearfix;
+}
+
+.MarketingToolboxHeaderGradient {
+	height: 5px;
+	margin: 10px 0;
+	@include linear-gradient(null, top, $color-page, 0, mix($color-page, $color-page-opposite, 80%), 100%);
 }

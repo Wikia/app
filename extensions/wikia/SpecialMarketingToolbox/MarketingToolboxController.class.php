@@ -35,6 +35,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle(wfMsg('marketing-toolbox-title'));
 
 		if( $this->checkAccess() ) {
+			$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
+
 			$action = $this->getRequestedAction();
 
 			F::build('JSMessages')->enqueuePackage('MarketingToolbox', JSMessages::EXTERNAL);
@@ -54,9 +56,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function dashboardAction() {
-                $this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox.scss');
-                $this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
-                $this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Dashboard.scss');
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
 
 		$this->corporateWikisLanguages = $this->toolboxModel->getCorporateWikisLanguages();
 		$this->sections = $this->toolboxModel->getAvailableSections();
@@ -142,12 +144,15 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function executeHeader($data) {
-
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Header.scss');
 
 		$this->date = $data['date'];
 		$this->moduleName = $data['moduleName'];
 		$this->lastEditor = (isset($data['lastEditor'])) ? $data['lastEditor']: null;
 		$this->lastEditTime = (isset($data['lastEditTime'])) ? $data['lastEditTime']: null;
+	}
+
+	public function executeFooter($data) {
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Footer.scss');
 	}
 }

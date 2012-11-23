@@ -8,4 +8,11 @@
 	'Index',
 	array('menuItems' => $leftMenuItems)
 ) ?>
-editHub
+<section class="MarketingToolboxMain">
+edithub
+</section>
+
+<?= F::app()->renderView(
+	'MarketingToolbox',
+	'Footer'
+) ?>

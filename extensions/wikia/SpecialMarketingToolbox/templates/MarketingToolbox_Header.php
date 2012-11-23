@@ -16,3 +16,6 @@
 		<? endif ?>
 	</aside>
 </header>
+<div class="MarketingToolboxHeaderGradient">
+
+</div>
