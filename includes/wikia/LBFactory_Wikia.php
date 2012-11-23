@@ -45,6 +45,7 @@ class LBFactory_Wikia extends LBFactory_Multi {
 			// this is a local db so use global variables
 			if ( isset( $wgDBcluster ) ) {
 				$section = $wgDBcluster;
+			}
 		}
 		else {
 			// this is a foreign db that either has a cluster defined in WikiFactory...
