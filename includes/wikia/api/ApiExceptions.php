@@ -13,3 +13,10 @@ class MissingParameterApiException extends BadRequestException {
 		parent::__construct( "{$paramName} is required" );
 	}
 }
+
+
+class InvalidParameterApiException extends BadRequestException {
+	function __construct( $paramName ) {
+		parent::__construct( "{$paramName} is invalid" );
+	}
+}
