@@ -76,46 +76,41 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function editHubAction() {
+		$this->prepareLayoutData($this->getVal('moduleId', 1));
+
+		$this->overrideTemplate('editHub');
+	}
+
+	protected function prepareLayoutData($selectedModuleId) {
 		$langId = $this->getVal('region');
 		$verticalId = $this->getVal('verticalId');
 		$date = $this->getVal('date');
 
 		$modulesData = $this->toolboxModel->getModulesData($langId, $verticalId, $date);
+		$this->prepareHeaderData($modulesData, $date);
+		$this->prepareLeftMenuData($modulesData, $selectedModuleId);
+	}
 
+	protected function prepareHeaderData($modulesData, $date) {
 		$this->headerData = array(
-			'date' => $this->getVal('date'),
+			'date' => $date,
 			'moduleName' => $modulesData['activeModuleName'],
 			'lastEditor' => $modulesData['lastEditor'],
 			'lastEditTime' => $modulesData['lastEditTime'],
 		);
+	}
 
-		$this->leftMenuItems = array(
-			array(
-				'href' => 'asd',
-				'selected' => false,
-				'title' => 'title',
-				'anchor' => 'anchor'
-			),
-			array(
-				'href' => 'asd',
-				'selected' => true,
-				'title' => 'title',
-				'anchor' => 'anchor'
-			),
-			array(
-				'href' => 'asd',
-				'selected' => false,
-				'title' => 'title',
-				'anchor' => 'anchor'
-			),
-			array(
-				'href' => 'asd',
-				'selected' => false,
-				'title' => 'title',
-				'anchor' => 'anchor'
-			),
-		);
-		$this->overrideTemplate('editHub');
+	protected function prepareLeftMenuData($modulesData, $selectedModuleId) {
+		$this->leftMenuItems = array();
+
+		foreach ($modulesData['moduleList'] as $moduleId => $moduleData) {
+			$this->leftMenuItems[] = array(
+				'href' => $moduleData['href'],
+				'selected' => ($moduleId == $selectedModuleId),
+				'title' => $moduleData['name'],
+				'anchor' => $moduleData['name'],
+			);
+		}
 	}
 
 	protected function getRequestedAction() {

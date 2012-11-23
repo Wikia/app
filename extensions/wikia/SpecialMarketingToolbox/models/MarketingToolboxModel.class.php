@@ -145,7 +145,13 @@ class MarketingToolboxModel extends WikiaModel {
 				$modulesData['lastEditTime'] = $module['lastEditTime'];
 				$modulesData['activeModuleName'] = wfMsg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
 			}
-			$module['moduleName'] = wfMsg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
+			$module['name'] = wfMsg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
+			$module['href'] = SpecialPage::getTitleFor('MarketingToolbox', 'editHub')->getLocalURL(array(
+				'moduleId' => $moduleId,
+				'date' => $timestamp,
+				'region' => $langId,
+				'verticalId' => $verticalId
+			));
 		}
 		$modulesData['moduleList'] = $moduleList;
 

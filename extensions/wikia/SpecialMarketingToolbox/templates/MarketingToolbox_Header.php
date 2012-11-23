@@ -12,7 +12,7 @@
 
 	<aside class="right">
 		<? if (isset($lastEditTime)): ?>
-		<p><strong><?= wfMsg('marketing-toolbox-header-right-last-saved'); ?></strong> <?=$lastEditTime?></p>
+		<p><strong><?= wfMsg('marketing-toolbox-header-right-last-saved'); ?></strong> <?=$wg->lang->timeanddate($lastEditTime);?></p>
 		<? endif ?>
 
 		<? if (isset($lastEditor)): ?>
