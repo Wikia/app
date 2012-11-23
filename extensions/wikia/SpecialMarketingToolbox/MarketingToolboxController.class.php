@@ -78,8 +78,11 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	public function editHubAction() {
 		//var_dump($this->toolboxModel->getModuleList(1, 2, 1863997));
 
+		$langId = $this->getVal('region');
+		$verticalId = $this->getVal('verticalId');
+
 		$this->headerData = array(
-			'date' => 'jest sobie testowa data',
+			'date' => $this->getVal('date'),
 			'moduleName' => 'Slider',
 			'lastEditor' => 'Matt Daemon',
 			'lastEditTime' => 'kolejna testowa datka'

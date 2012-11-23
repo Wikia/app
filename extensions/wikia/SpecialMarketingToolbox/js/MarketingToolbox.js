@@ -113,7 +113,7 @@ MarketingToolbox.prototype = {
 			(new Wikia.Querystring(window.wgEditHubUrl))
 				.setVal('date', date / 1000)
 				.setVal('region', $('#marketingToolboxRegionSelect').val())
-				.setVal('vertical', $('.vertical input:not(.secondary)').val())
+				.setVal('verticalId', $('.vertical input:not(.secondary)').data('vertical-id'))
 				.goTo();
 		}
 	},

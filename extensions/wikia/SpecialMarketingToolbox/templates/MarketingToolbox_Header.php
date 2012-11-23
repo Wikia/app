@@ -6,7 +6,7 @@
 		<? endif ?>
 
 		<? if (isset($date)): ?>
-			<p><strong><?=$date;?></strong></p>
+			<p><strong><?=$wg->lang->date($date);?></strong></p>
 		<? endif?>
 	</div>
 
