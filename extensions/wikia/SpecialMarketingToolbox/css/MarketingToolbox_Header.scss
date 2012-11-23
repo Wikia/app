@@ -1,0 +1,33 @@
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+.MarketingToolboxHeader {
+
+	.MarketingToolboxTitle {
+		&, h1 {
+			float: left;
+			margin-bottom: 0;
+		}
+		h2 {
+			float:left;
+			margin: 12px 10px 0;
+			border: none;
+
+			&:before {
+				content: '> ';
+			}
+		}
+		p {
+			margin: 0;
+		}
+	}
+	.right {
+		float: right;
+		padding-right: 20px;
+		text-align: right;
+
+		p {
+			margin: 0.2em 0 0;
+		}
+	}
+	@include clearfix;
+}

@@ -70,6 +70,13 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function editHubAction() {
+		$this->headerData = array(
+			'date' => 'jest sobie testowa data',
+			'moduleName' => 'Slider',
+			'lastEditor' => 'Matt Daemon',
+			'lastEditTime' => 'kolejna testowa datka'
+		);
+
 		$this->leftMenuItems = array(
 			array(
 				'href' => 'asd',
@@ -134,15 +141,13 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		return $this->toolboxModel->getAvailableVerticals(MarketingToolboxModel::SECTION_HUBS);
 	}
 
-	public function leftMenu() {
-		// render left menu
-	}
+	public function executeHeader($data) {
 
-	public function topNav() {
-		// render top Nav
-	}
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Header.scss');
 
-	public function footer() {
-		// render footer
+		$this->date = $data['date'];
+		$this->moduleName = $data['moduleName'];
+		$this->lastEditor = (isset($data['lastEditor'])) ? $data['lastEditor']: null;
+		$this->lastEditTime = (isset($data['lastEditTime'])) ? $data['lastEditTime']: null;
 	}
 }
