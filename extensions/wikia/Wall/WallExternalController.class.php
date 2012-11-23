@@ -107,7 +107,11 @@ class WallExternalController extends WikiaController {
 		
 		$this->response->setVal('status', true);
 
-		$titleMeta = $this->request->getVal('messagetitle', null);
+		/**
+		 * BugId:68629 XSS vulnerable. We DO NOT want to have any HTML here.
+		 * Hence the strip_tags call.
+		 */
+		$titleMeta = strip_tags( $this->request->getVal('messagetitle', null) );
 		$titleMeta = substr($titleMeta, 0, 200);
 		$notifyEveryone = $this->request->getVal('notifyeveryone', false) == 1;
 		
