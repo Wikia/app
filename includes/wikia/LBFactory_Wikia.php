@@ -31,6 +31,7 @@ class LBFactory_Wikia extends LBFactory_Multi {
 				wfDebugLog( "connect", __METHOD__ . ": smw+ cluster is active, dbname changed to $dbName\n", true );
 			}
 		}
+		$section = 'central';
 
 		if ( isset( $this->sectionsByDB[$dbName] ) ) {
 			// this is a db that has a cluster defined in the config file (DB.php)
