@@ -13,6 +13,7 @@ class SDParser {
 	}
 
 	public function onParserFirstCallInit( Parser &$parser ) {
+		$parser->setHook( 'dl', array( $this, 'dlParserHook' ) );
 		$parser->setHook( 'data', array( $this, 'dataParserHook' ) );
 		return true;
 	}
@@ -20,6 +21,36 @@ class SDParser {
 	public function onParserFirstCallInitParserFunctionHook( Parser &$parser ) {
 		$parser->setFunctionHook('data', array( $this, 'dataParserFunction') );
 		return true;
+	}
+
+	public function getListForStringPath( $path ) {
+
+		if ( $path == 'mock-characters' ) {
+			$arr = array(
+				"callofduty:Character/Fidel Castro",
+				"callofduty:Character/Terrance ",
+				"callofduty:Character/Nikita Dragovich"
+			);
+		}
+		if ( $path == 'mock-weapon' ) {
+			$arr = array(
+				"callofduty:Weapon/Weapon_KS-23",
+				//"callofduty:Weapon/kałasz"
+			);
+		}
+
+		return $arr;
+	}
+
+	public function dlParserHook( $input, $args, Parser $parser, PPFrame $frame = null ) {
+
+		$list = $this->getListForStringPath( $args['src'] );
+		$output = "";
+		foreach ( $list as $i => $element ) {
+			$output .= str_replace('$'.$args['var'], $element, $input);
+		}
+		$output = $parser->recursiveTagParse($output, $frame);
+		return $output;
 	}
 
 	public function dataParserHook( $input, $args, Parser $parser, PPFrame $frame = null ) {
