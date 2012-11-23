@@ -8,6 +8,7 @@ class SDParserTagPropertyPath {
 	private $elementType = null;
 	private $elementName = null;
 	private $chain = array();
+	private $position = -1;
 
 	public function __construct( $pathString ) {
 		$this->processPathString( $pathString );
@@ -26,6 +27,32 @@ class SDParserTagPropertyPath {
 				$this->chain = array_slice( $pathParts, 2, count($pathParts) );
 			}
 		}
+	}
+
+	public function next(SDElement $element) {
+		if( $this->hasNext() ) {
+			$this->position++;
+			$propName = $this->chain[$this->position];
+			$valueIndex = null;
+
+			$matches = array();
+			preg_match('/([a-z,0-9,:,_]{1,})\[(\d{1,})\]/i', $propName, $matches);
+			if(count($matches) == 3) {
+				$propName = $matches[1];
+				$valueIndex = $matches[2];
+			}
+
+			return array( 'name' => $propName, 'value' => $element->getProperty( $propName ), 'valueIndex' => $valueIndex );
+		}
+		return false;
+	}
+
+	public function hasNext() {
+		return isset($this->chain[$this->position+1]);
+	}
+
+	public function rewind() {
+		$this->position = -1;
 	}
 
 	public function getElementId() {

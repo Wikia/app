@@ -9,6 +9,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 	protected $type = null;
 	protected $name = null;
 	protected $value = null;
+	private $_value = null; // cached SDElementPropertyValue object(s), used by getWrappedValue
 	protected $label = '';
 
 	function __construct($name, $value, SDElementPropertyType $type = null) {
@@ -112,8 +113,6 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 	public function isCollection() {
 		return $this->getType()->isCollection();
 	}
-
-	private $_value = null; // cached SDElementPropertyValue object(s), used by getWrappedValue
 
 	/**
 	 * Return property value(s) wrapped in SDElementPropertyValue instance(s)

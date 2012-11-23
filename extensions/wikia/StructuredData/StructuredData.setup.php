@@ -15,15 +15,18 @@ $app->registerClass('SDElementPropertyType', $dir . 'SDElementPropertyType.class
 $app->registerClass('SDElementPropertyTypeRange', $dir . 'SDElementPropertyTypeRange.class.php');
 $app->registerClass('SDElementRendererFactory', $dir . 'SDElementRendererFactory.class.php');
 $app->registerClass('SDContext', $dir . 'SDContext.class.php');
+$app->registerClass('SDParser', $dir . 'parser/SDParser.class.php');
+$app->registerClass('SDParserTag', $dir . 'parser/SDParserTag.class.php');
+$app->registerClass('SDParserTagPropertyPath', $dir . 'parser/SDParserTagPropertyPath.class.php');
 
 require_once( $dir . '../../../lib/HTTP/Request.php');
 
 /**
  * hooks
  */
-//$app->registerHook('ParserBeforeInternalParse', 'StructuredData', 'onBeforeInternalParse');
-$app->registerHook('ParserFirstCallInit', 'StructuredData', 'onParserFirstCallInit');
-$app->registerHook('ParserFirstCallInit', 'StructuredData', 'onParserFirstCallInitParserFunctionHook');
+//$app->registerHook('ParserBeforeInternalParse', 'SDParser', 'onBeforeInternalParse');
+$app->registerHook('ParserFirstCallInit', 'SDParser', 'onParserFirstCallInit');
+$app->registerHook('ParserFirstCallInit', 'SDParser', 'onParserFirstCallInitParserFunctionHook');
 
 /**
  * controllers
@@ -76,6 +79,7 @@ define('SD_CONTEXT_EDITING', 2);
 F::addClassConstructor( 'StructuredDataAPIClient', array( 'baseUrl' => $wgStructuredDataConfig['baseUrl'], 'apiPath' => $wgStructuredDataConfig['apiPath'], 'schemaPath' => $wgStructuredDataConfig['schemaPath'] ) );
 F::addClassConstructor( 'StructuredData', array( 'apiClient' => F::build( 'StructuredDataAPIClient' )));
 F::addClassConstructor( 'SDElementRendererFactory', array( 'config' => $wgStructuredDataConfig ) );
+F::addClassConstructor( 'SDParser', array( 'structuredData' => F::build( 'StructuredData' ) ) );
 
 /**
  * message files

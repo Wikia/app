@@ -17,12 +17,23 @@ class SDParser {
 		return true;
 	}
 
-	public function dataParserHook( $input, $args, Parser $parser, PPFrame $frame ) {
-		$input = $parser->recursiveTagParse($input, $frame);
+	public function onParserFirstCallInitParserFunctionHook( Parser &$parser ) {
+		$parser->setFunctionHook('data', array( $this, 'dataParserFunction') );
+		return true;
+	}
+
+	public function dataParserHook( $input, $args, Parser $parser, PPFrame $frame = null ) {
+		if ( !empty( $frame ) ) {
+			$input = $parser->recursiveTagParse($input, $frame);
+		}
 
 		$tag = F::build( 'SDParserTag', array( 'parser' => $this, 'tagRawContent' => $input, 'args' => $args ) );
 
 		return $tag->render();
+	}
+
+	public function dataParserFunction( $parser, $param1 = '', $param2 = '' ) {
+		return $this->dataParserHook( $param1, null, $parser );
 	}
 
 	public function getSDElementByPath(SDParserTagPropertyPath $path) {
