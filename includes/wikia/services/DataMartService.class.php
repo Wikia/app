@@ -158,7 +158,6 @@
 							array("sum(pageviews) as cnt"),
 							array(
 								'period_id' => $periodId,
-								'wiki_id'   => $wikiId,
 								'time_id'	=> $date
 							),
 							__METHOD__
