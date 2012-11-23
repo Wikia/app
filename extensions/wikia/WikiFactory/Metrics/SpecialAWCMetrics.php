@@ -735,7 +735,7 @@ class WikiMetrics {
 			$pageViewsDays = self::DEF_DAYS_PVIEWS;
 		}
 
-		$memkey = __METHOD__ . "v:" . $pageViews . "vd:" . $pageViewsDays . "vc:" . md5($cityList);
+		$memkey = __METHOD__ . "v:" . $pageViews . "vd:" . $pageViewsDays . "vc:" . md5(implode(",", $this->cityIds));
 		$cities = $wgMemc->get( $memkey );
 		if ( empty( $cities ) && !empty( $wgStatsDBEnabled ) ) {
 			$startDate = date( 'Y-m-01', strtotime('-3 month') );
