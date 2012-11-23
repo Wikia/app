@@ -168,7 +168,7 @@ class GlobalTitle extends Title {
 		$text = $this->getText();
 
 		if ( empty( $ns ) ) {
-			return $text;	
+			return $text;
 		} else {
 			return $ns . ':' . $text;
 		}
@@ -410,9 +410,11 @@ class GlobalTitle extends Title {
 	/**
 	 * Is this title a redirect?
 	 *
+	 * @param Integer $flags -- flags for query, not used but needed for PHP Strict Standards
+	 *
 	 * @return bool
 	 */
-	public function isRedirect() {
+	public function isRedirect( $flags = 0 ) {
 		$this->loadAll();
 
 		if ( !is_null( $this->mIsRedirect ) ) {
@@ -511,7 +513,7 @@ class GlobalTitle extends Title {
 
 		return $this->mExists;
 	}
-	
+
 	/**
 	 * loadServer
 	 *
