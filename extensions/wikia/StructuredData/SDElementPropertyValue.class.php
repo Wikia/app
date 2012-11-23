@@ -57,7 +57,16 @@ class SDElementPropertyValue extends SDRenderableObject {
 	public function getRendererNames() {
 		$value = $this->getValue();
 		if (is_object($value) && isset($value->object) && ( !is_null($value->object))) {
-			return array( array('renderingSubject'=>$value->object, 'rendererName' => 'sdelement') );
+			$result = array();
+			$range = $this->getType()->getRange();
+			if ($range) {
+				foreach($range->getClasses() as $c) {
+					$result[] = array('renderingSubject'=>$value->object, 'rendererName' => 'value_'.$c);
+				}
+			}
+			//$result[] = 'value_'.$this->type->getName();
+			$result[] = array('renderingSubject'=>$value->object, 'rendererName' => 'sdelement');
+			return $result;
 		}
 		return array( 'value_'.$this->type->getName(), 'value_default' );
 	}
