@@ -9,11 +9,14 @@
 
 class WikisApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
+	const PARAMETER_KEYWORD = 'string';
+	const PARAMETER_WIKI_IDS = 'ids';
 
-	private $model = null;
+	private static $model = null;
 
-	public function init() {
-		$this->model = new WikisModel();
+	public function __construct() {
+		parent::__construct();
+		self::$model = new WikisModel();
 	}
 
 	/**
@@ -37,7 +40,7 @@ class WikisApiController extends WikiaApiController {
 		$lang = trim( $this->getVal( 'lang', null ) );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
-		$results = $this->model->getTop( $lang, $hub );
+		$results = self::$model->getTop( $lang, $hub );
 		$batches = $this->wf->PaginateArray( $results, $limit, $batch );
 
 		foreach ( $batches as $name => $value ) {
@@ -75,12 +78,17 @@ class WikisApiController extends WikiaApiController {
 	public function getByString() {
 		$this->wf->profileIn( __METHOD__ );
 
-		$keyword = trim( $this->request->getVal( 'string', '' ) );
+		$keyword = trim( $this->request->getVal( self::PARAMETER_KEYWORD, null ) );
 		$hub = trim( $this->request->getVal( 'hub', null ) );
 		$lang = trim( $this->getVal( 'lang', null ) );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
-		$results = $this->model->getByString($keyword, $lang, $hub );
+
+		if ( empty( $keyword ) ) {
+			throw new MissingParameterApiException( self::PARAMETER_KEYWORD );
+		}
+
+		$results = self::$model->getByString($keyword, $lang, $hub );
 		$batches = $this->wf->PaginateArray( $results, $limit, $batch );
 
 		foreach ( $batches as $name => $value ) {
@@ -114,13 +122,15 @@ class WikisApiController extends WikiaApiController {
 	public function getDetails() {
 		$this->wf->profileIn( __METHOD__ );
 
-		$ids = $this->request->getVal( 'ids', null );
+		$ids = $this->request->getVal( self::PARAMETER_WIKI_IDS, null );
 
 		if ( !empty( $ids ) ) {
 			$ids = explode( ',', $ids );
+		} else {
+			throw new MissingParameterApiException( self::PARAMETER_WIKI_IDS );
 		}
 
-		$results = $this->model->getDetails( $ids );
+		$results = self::$model->getDetails( $ids );
 
 		foreach ( $results as &$res ) {
 			//image data transformation

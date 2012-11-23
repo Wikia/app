@@ -33,6 +33,9 @@ class NavigationModel extends WikiaModel {
 	const NOLINK = '__NOLINK__';
 	const ALLOWABLE_TAGS = '';
 
+	//errors
+	const ERR_MAGIC_WORD_IN_LEVEL_1 = 'Magic word at level 1';
+
 	private $biggestCategories;
 	private $lastExtraIndex = 1000;
 	private $extraWordsMap = array(
@@ -48,8 +51,6 @@ class NavigationModel extends WikiaModel {
 
 	// list of errors encountered when parsing the wikitext
 	private $errors = array();
-
-	const ERR_MAGIC_WORD_IN_LEVEL_1 = 1;
 
 	public function __construct( $useSharedMemcKey = false ) {
 		parent::__construct();

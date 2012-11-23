@@ -290,7 +290,7 @@ class NavigationModelTest extends WikiaBaseTest {
 
 		// magic words are not allowed on level #1
 		$nodes = $model->parseText("*#category1");
-		$this->assertTrue(count($model->getErrors()) == 1);
+		$this->assertTrue( $model->getErrors()[NavigationModel::ERR_MAGIC_WORD_IN_LEVEL_1] );
 
 		// magic words are  allowed on level #2
 		$nodes = $model->parseText("*foo\n**#category1");
