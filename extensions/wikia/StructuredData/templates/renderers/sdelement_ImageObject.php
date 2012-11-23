@@ -1,4 +1,5 @@
-<?php if($context == SD_CONTEXT_SPECIAL): ?>
+<?php /* @var SDElement $object */
+    if($context == SD_CONTEXT_SPECIAL): ?>
 	<?php $imgSrc = $object->getPropertyValue('schema:contentURL', false); ?>
 	<figure>
 		<?php if ($imgSrc != false) : ?>

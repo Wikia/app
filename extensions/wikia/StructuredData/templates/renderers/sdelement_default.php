@@ -1,4 +1,5 @@
-<?php if($context == SD_CONTEXT_EDITING): ?>
+<?php /* @var SDElement $object */
+    if($context == SD_CONTEXT_EDITING): ?>
 	<!-- default object (SDElement) renderer -->
 	<input type="hidden" name="<?=$params['fieldName'];?>" value="<?=$object->getId();?>" />
 <?php endif; ?>

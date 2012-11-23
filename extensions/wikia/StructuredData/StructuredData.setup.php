@@ -45,14 +45,14 @@ $wgStructuredDataConfig = array(
 	'schemaPath' => 'callofduty',
 	'renderersPath' => $dir . 'templates/renderers/',
 	'renderers' => array(
-		'value_schema:ImageObject' => 'value_ImageObject',
+		'sdelement_schema:ImageObject' => 'sdelement_ImageObject',
 		'value_xsd:anyURI' => 'value_anyURI',
 		'wikia:wikiText' => 'wikiText',
 		'value_xsd:boolean' => 'value_boolean',
 		'@set' => 'container',
 		'@list' => 'container',
 		'value_default' => 'value_default',
-		'sdelement' => 'sdelement',
+		'sdelement_default' => 'sdelement_default',
 		'value_enum' => 'value_enum'
 	)
 );
