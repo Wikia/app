@@ -66,6 +66,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 	 * @return anyType
 	 */
 	protected function parseRequestValue( $value ) {
+		$value = trim( $value );
 		$range = $this->getType()->getRange();
 		$rangeClasses = ($range) ? $this->getType()->getRange()->getClasses() : array('rdfs:Literal');
 		if ( $range && $range->isEnum() ) {
