@@ -86,7 +86,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$verticalId = $this->getVal('verticalId');
 		$date = $this->getVal('date');
 
-		$modulesData = $this->toolboxModel->getModulesData($langId, $verticalId, $date);
+		$modulesData = $this->toolboxModel->getModulesData($langId, $verticalId, $date, $selectedModuleId);
 		$this->prepareHeaderData($modulesData, $date);
 		$this->prepareLeftMenuData($modulesData, $selectedModuleId);
 	}
@@ -125,7 +125,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Get calendar for actual and following 2 months
+	 * Get calendar selected date range
 	 *
 	 * @param $timestamp (actual timestamp)
 	 * @return array
