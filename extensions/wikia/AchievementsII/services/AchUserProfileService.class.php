@@ -62,7 +62,9 @@ class AchUserProfileService {
 				// other than the owner user
 				&& $this->viewerUser->getId() == $this->ownerUser->getId()
 				// and can earn badges
-				&& AchAwardingService::canEarnBadges( $this->viewerUser );
+				&& AchAwardingService::canEarnBadges( $this->viewerUser )
+				// and didn't hide his achievements
+				&& !$this->viewerUser->getOption('hidepersonalachievements');
 		}
 		return $this->hasPersonalAnnotations;
 	}
