@@ -10,7 +10,6 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 	protected $name = null;
 	protected $value = null;
 	protected $label = '';
-	private $_value = null; // cached SDElementPropertyValue object(s)
 
 	function __construct($name, $value, SDElementPropertyType $type = null) {
 		$this->name = $name;
@@ -47,7 +46,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 	 * @return string
 	 */
 	public function toSDSJson() {
-		$value = $this->getValue();
+		$value = $this->getWrappedValue();
 		if ( $this->isCollection() ) {
 			$values = array();
 			foreach($value as $v) {
@@ -114,7 +113,13 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		return $this->getType()->isCollection();
 	}
 
-	public function getValue() {
+	private $_value = null; // cached SDElementPropertyValue object(s), used by getWrappedValue
+
+	/**
+	 * Return property value(s) wrapped in SDElementPropertyValue instance(s)
+	 * @return SDElementPropertyValue instance or array of SDElementPropertyValue instances in case of collection
+	 */
+	public function getWrappedValue() {
 		if ( is_null( $this->_value ) ) {
 			if ( !$this->isCollection()) {
 				$this->_value = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $this->value, 'propertyName' => $this->getName() ) );
@@ -133,11 +138,6 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 			}
 		}
 		return $this->_value;
-	}
-
-	public function hasNoValue() {
-		$value = $this->getValue();
-		return ( empty($value) ) ? true : false;
 	}
 
 	public function setName($name) {

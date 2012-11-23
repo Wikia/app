@@ -2,23 +2,26 @@
 // list element (@set, @list) renderer
 /* @var SDElementProperty $object */
 
-$value = $object->getValue(true);
+$values = $object->getWrappedValue();
 $listOfValues = array();
 
-foreach($value as $reference) {
+/* @var SDElementPropertyValue $propertyValue */
+foreach($values as $propertyValue) {
+	//@todo - use $propertyValue->render
+	$value = $propertyValue->getValue();
 
-	if (is_object($reference) && (!is_null($reference->object))) {
-		$referenceHTML = $reference->object->render( $context, array( 'fieldName' => $object->getName() . '[]' ) );
+	if (is_object($value) && (!is_null($value->object))) {
+		$referenceHTML = $value->object->render( $context, array( 'fieldName' => $object->getName() . '[]' ) );
 	}
 	if ($referenceHTML !== false) {
 		$listOfValues[] = $referenceHTML;
 	}
 	else {
-		if(is_object($reference) && !isset($reference->object)) {
-			$listOfValues[] = $reference->id;
+		if(is_object($value) && !isset($value->object)) {
+			$listOfValues[] = $value->id;
 		}
 		else {
-			$listOfValues[] = $reference;
+			$listOfValues[] = $value;
 		}
 	}
 }

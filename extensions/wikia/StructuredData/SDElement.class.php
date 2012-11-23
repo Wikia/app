@@ -101,7 +101,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	 */
 	public function getPropertyValue( $name, $default = null ) {
 		$property = $this->getProperty( $name );
-		return ($property instanceof SDElementProperty) ? $property->getValue() : $default;
+		return ($property instanceof SDElementProperty) ? $property->getWrappedValue() : $default;
 	}
 
 	/**

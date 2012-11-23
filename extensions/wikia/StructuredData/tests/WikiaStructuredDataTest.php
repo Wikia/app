@@ -138,7 +138,7 @@ class WikiaStructuredDataTest extends WikiaBaseTest {
 
 		$characterIn = $sdElement->getProperty( 'wikia:characterIn' );
 		$this->assertTrue( $characterIn->isCollection() );
-		$this->assertTrue( is_array( $characterIn->getValue() ) );
+		$this->assertTrue( is_array( $characterIn->getWrappedValue() ) );
 		$this->assertEquals( $characterIn->getType()->getName(), '@set' );
 
 	}

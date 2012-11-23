@@ -51,7 +51,6 @@
 					if ( !$sdsObject->isPropertyVisible( $property ) ) {
 						continue;
 					}
-					//$propertyValue = $property->getValue();
 					$propertyLabel = $property->getLabel();
 					$propertyName = $property->getName();
 					$propertyHTML = $property->render( $context );
@@ -85,7 +84,7 @@
 				<?php // Render properties manually ?>
 				<tr>
 					<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</th>
-					<td><p><?php echo $property->getValue()->render( $context, array( 'isCreateMode' => $isCreateMode ) ); ?></p></td>
+					<td><p><?php echo $property->getWrappedValue()->render( $context, array( 'isCreateMode' => $isCreateMode ) ); ?></p></td>
 					<?php if($context == SD_CONTEXT_SPECIAL): ?>
 						<td><p class="example"><?= $sdsObject->getType() . '/' . $objectName . '/'. $propertyName;
 							?></p></td>

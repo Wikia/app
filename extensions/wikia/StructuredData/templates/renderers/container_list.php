@@ -2,7 +2,7 @@
 // list element (@set, @list) renderer
 /* @var SDElementProperty $object */
 
-$values = $object->getValue();
+$values = $object->getWrappedValue();
 
 $renderList = ( count( $values ) > 1 || $context == SD_CONTEXT_EDITING) ? true : false;
 
@@ -15,6 +15,7 @@ if ( $renderList ) {
 }
 
 foreach( $values as $propertyValue ) {
+	//@todo - use $propertyValue->render
 
 	if ( $renderList ) echo '<li>';
 	$propertyHTML = $propertyValue->render( $context, array( 'fieldName' => $object->getName() . '[]' ) );

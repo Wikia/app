@@ -1,4 +1,5 @@
 <?php
+/* @var SDElementPropertyValue $object */
 if ($context == SD_CONTEXT_EDITING):
 	echo '<select name="' . $object->getPropertyName() .  '" >';
 	echo '<option value="">choose...</option>';
