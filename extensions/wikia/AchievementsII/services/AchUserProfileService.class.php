@@ -47,11 +47,9 @@ class AchUserProfileService {
 				// the subject user is a registered user that can earn badges
 				&& $this->ownerUser && !$this->ownerUser->isAnon()
 				&& AchAwardingService::canEarnBadges( $this->ownerUser )
-				// and the user is not looking at his own page
-				//     while having set the option 'hidepersonalachievements'
-//				&& !($this->viewerUser->getId() == $this->ownerUser->getId()
-//					&& $this->viewerUser->getOption('hidepersonalachievements'))
-			;
+				// and the subject user didn't hide his achievements
+				//     by setting the option 'hidepersonalachievements'
+				&& !$this->ownerUser->getOption('hidepersonalachievements');
 		}
 		return $this->visible;
 	}

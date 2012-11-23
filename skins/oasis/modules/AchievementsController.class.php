@@ -18,9 +18,13 @@ class AchievementsController extends WikiaController {
 	}
 
 	public function executeIndex() {
+		global $wgContLang;
+		wfProfileIn(__METHOD__);
+
 		$userProfileService = new AchUserProfileService();
 		if ( !$userProfileService->isVisible() ) {
 			$this->skipRendering();
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
@@ -28,18 +32,9 @@ class AchievementsController extends WikiaController {
 		$this->response->addAsset( 'achievements_css' );
 		$this->response->addAsset( 'achievements_js' );
 
-		$this->getBadgesData();
-	}
-
-	private function getBadgesData() {
-		global $wgContLang;
-
-		wfProfileIn(__METHOD__);
+		$rankingService = new AchRankingService();
 
 		// get achievement lists
-		$rankingService = new AchRankingService();
-		$userProfileService = new AchUserProfileService();
-
 		$this->ownerName = $userProfileService->getOwnerUser()->getName();
 		$this->ownerBadgesCount = $userProfileService->getBadgesCount();
 		$this->ownerBadges = $userProfileService->getBadgesAnnotated(0);
