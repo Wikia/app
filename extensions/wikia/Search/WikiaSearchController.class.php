@@ -277,9 +277,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected function handleArticleMatchTracking( WikiaSearchConfig $searchConfig ) {
 		$articleMatch	=	$searchConfig->getArticleMatch();
 		$track			=	F::build( 'Track' );
-		
-		if ( !empty($articleMatch) && $this->getVal('fulltext', '0') === '0') {
-		
+
+		if ( (! empty($articleMatch) ) && $this->getVal('fulltext', '0') === '0') {
 		    $article = $articleMatch->getArticle();
 		    
 		    $title = $article->getTitle();
@@ -372,7 +371,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	public function advancedBox() {
 		$config = $this->getVal('config', false);
-		if (! $config ) {
+		if (! $config instanceof WikiaSearchConfig ) {
 			throw new Exception("This should not be called outside of self-request context.");
 		}
 
