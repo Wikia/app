@@ -16,7 +16,7 @@ class WikiaMobileCategoryService extends WikiaService {
 
 	private function initModel(){
 		if ( !isset( $this->model ) ){
-			$this->model = F::build( 'WikiaMobileCategoryModel' );
+			$this->model = new WikiaMobileCategoryModel;
 		}
 	}
 
@@ -69,13 +69,13 @@ class WikiaMobileCategoryService extends WikiaService {
 		 * @var $categoryPage CategoryPage
 		 */
 
-		$categoryPage = $this->getVal( 'categoryPage' );
+		$categoryPage = $this->request->getVal( 'categoryPage' );
 
 		if ( $categoryPage instanceof CategoryPage ) {
 			$this->initModel();
 
 			$title = $categoryPage->getTitle();
-			$category = F::build( 'Category', array( $title ),  'newFromTitle' );
+			$category = Category::newFromTitle( $title );
 			/**
 			 * @var $data WikiaMobileCategoryContents
 			 */
@@ -102,13 +102,13 @@ class WikiaMobileCategoryService extends WikiaService {
 		$err = false;
 
 		if ( !empty( $categoryName ) && isset( $index ) && !empty( $batch ) ){
-			$category = F::build( 'Category', array ( F::build( 'Title' , array ( $categoryName, NS_CATEGORY ), 'newFromText' ) ), 'newFromTitle' );
+			$category = Category::newFromTitle( Title::newFromText( $categoryName, NS_CATEGORY ) );
 
 			if ( $category instanceof Category ) {
 				/**
 				 * @var $categoryModel WikiaMobileCategoryModel
 				 */
-				$categoryModel = F::build( 'WikiaMobileCategoryModel' );
+				$categoryModel = new WikiaMobileCategoryModel;
 				$data = $categoryModel->getItemsCollection( $category );
 				
 				if ( !empty( $data[$index] ) && $batch > 0) {
