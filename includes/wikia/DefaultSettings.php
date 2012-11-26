@@ -677,7 +677,7 @@ $wgUseExternalEditor = false;
  * libmemcached related stuff
  */
 define( "CACHE_LIBMEMCACHED", 11 );
-$wgObjectCaches[ CACHE_LIBMEMCACHED ] = array( 'class', 'LibmemcachedBagOStuff' );
+$wgObjectCaches[ CACHE_LIBMEMCACHED ] = array( 'factory' => 'LibmemcachedBagOStuff::newFromGlobals' );
 $wgSessionsInLibmemcached = false;
 
 
