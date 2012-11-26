@@ -17,6 +17,7 @@
  *    $this->setupFile = dirname(__FILE__) . '/../MyExtension_setup.php';
  * }
  */
+
 class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected $setupFile = null;
@@ -42,11 +43,34 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			F::setInstance('App', $this->appOrig);
 		}
 		$this->unsetClassInstances();
+		unset_new_overload();
 	}
 
+	// TODO: remove mockClass after fixing remaining unit tests
 	protected function mockClass($className, $mock) {
+		// Allow the old tests to run
 		F::setInstance( $className, $mock );
 		$this->mockedClasses[] = $className;
+	}
+
+	/**
+	 * This helper function will let you override new ClassName or ClassName::newFromID
+	 * See the description in WikiaMockProxy.class.php for more details
+	 * Example call:
+	 * 	$this->proxyClass('Article', $mockArticle);
+	 *  $this->proxyClass('Title', $mockTitle, 'newFromText');
+	 * TODO: make override_static_constructor an array so you can override both newFromText and newFromID (for example)
+	 * @param $className String
+	 * @param $mock Object instance of Mock
+	 * @param $override_static_constructor String name of static constructor
+	 * @return void
+	 */
+	protected function proxyClass($className, $mock, $override_static_constructor = null) {
+		$mockClassName = get_class($mock);
+		WikiaMockProxy::proxy($className, $mockClassName, $mock);
+		if ($override_static_constructor) {
+			runkit_method_redefine("$className", "$override_static_constructor", '', 'return WikiaMockProxy::$instances["'.$className.'"];', RUNKIT_ACC_PUBLIC | RUNKIT_ACC_STATIC );
+		}
 	}
 
 	protected function mockGlobalVariable( $globalName, $returnValue ) {
@@ -67,6 +91,9 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	protected function mockApp() {
 		$this->appMock->init();
 		$this->app = F::app();
+
+		// php-test-helpers provides this function
+		set_new_overload('WikiaMockProxy::overload');
 	}
 
 	private function unsetClassInstances() {
