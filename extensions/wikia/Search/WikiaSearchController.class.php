@@ -120,33 +120,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 	
 	/**
-	 * Called by a view script to generate the advanced tab link in search.
-	 */
-	public function advancedTabLink() {
-	    $term = $this->getVal('term');
-	    $namespaces = $this->getVal('namespaces');
-	    $label = $this->getVal('label');
-	    $tooltip = $this->getVal('tooltip');
-	    $params = $this->getVal('params');
-	    $redirs = $this->getVal('redirs');
-	
-	    $opt = $params;
-	    foreach( $namespaces as $n ) {
-	        $opt['ns' . $n] = 1;
-	    }
-	
-	    $opt['redirs'] = !empty($redirs) ? 1 : 0;
-	    $stParams = array_merge( array( 'search' => $term ), $opt );
-	
-	    $title = F::build('SpecialPage', array( 'WikiaSearch' ), 'getTitleFor');
-	
-	    $this->setVal( 'href',		$title->getLocalURL( $stParams ) );
-	    $this->setVal( 'title',		$tooltip );
-	    $this->setVal( 'label',		$label );
-	    $this->setVal( 'tooltip',	$tooltip );
-	}
-	
-	/**
 	 * Service-level actions -- no view templates, just JSON responses.
 	 *---------------------------------------------------------------------------------*/
 	
@@ -394,11 +367,54 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if (! $config || (! $config instanceOf WikiaSearchConfig ) ) {
 		    throw new Exception("This should not be called outside of self-request context.");
 		}
-		
-		$this->setVal( 'bareterm', 			$config->getQuery( WikiaSearchConfig::QUERY_RAW ) );
-		$this->setVal( 'searchProfiles', 	$config->getSearchProfiles() );
-		$this->setVal( 'redirs', 			$config->getIncludeRedirects() );
-		$this->setVal( 'activeTab', 		$config->getActiveTab() );
+
+		$searchProfiles = $config->getSearchProfiles();
+		$activeTab = $config->getActiveTab();
+		$leftMenuItems = array();
+
+		foreach ($searchProfiles as $profileId => $profile) {
+			$leftMenuItems[] = array(
+				'href' => $this->getLeftMenuItemHref(
+					$profile,
+					$config->getQuery(WikiaSearchConfig::QUERY_RAW),
+					$config->getIncludeRedirects()
+				),
+				'selected' => ($profileId == $activeTab),
+				'title' => $this->wf->msg(
+					$profile['tooltip'],
+					isset($profile['namespace-messages'])
+						? $this->wg->Lang->commaList($profile['namespace-messages'])
+						: null
+				),
+				'anchor' => $this->wf->msg($profile['message']),
+			);
+		}
+		$this->setVal('leftMenuItems', $leftMenuItems);
+	}
+
+	/**
+	 * Generate advanced link for search left menu item
+	 *
+	 * @param array  $profile     search profile config
+	 * @param string $searchQuery string that user typed in search
+	 * @param bool   $redirs      flag are redirects enabled
+	 *
+	 */
+	private function getLeftMenuItemHref($profile, $searchQuery, $redirs) {
+		$params = isset($profile['parameters']) ? $profile['parameters'] : array();
+		$params['fulltext'] = 'Search';
+
+		foreach($profile['namespaces'] as $n) {
+			$params['ns' . $n] = 1;
+		}
+
+		$params['redirs'] = !empty($redirs) ? 1 : 0;
+
+		$params = array_merge(array('search' => $searchQuery), $params);
+
+		$title = F::build('SpecialPage', array('WikiaSearch'), 'getTitleFor');
+
+		return $title->getLocalURL( $params );
 	}
 
 	/**
