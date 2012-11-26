@@ -65,11 +65,11 @@ var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, 
 			log('LEADERBOARD-ish slot handled by Liftium. Running the forced TOP_BUTTON now', 2, logGroup);
 			fillInSlot(['TOP_BUTTON.force']);
 		}
+		// END of hack
 		if (!document.getElementById(slot[0])) {
 			log('No such element in DOM: #' + slot[0], 2, logGroup);
 			return;
 		}
-		// END of hack
 
 		var slotname = slot[0]
 			, slotsize = slotMap[slotname].size
