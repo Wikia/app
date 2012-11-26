@@ -777,7 +777,7 @@ Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachri
  */
 $messages['diq'] = array(
 	'myhome' => 'Keyey me',
-	'myhome-watchlist-feed' => 'Lista seyr-kerdışi',
+	'myhome-watchlist-feed' => 'Lista seyrkerdışi',
 	'myhome-user-contributions-feed' => 'İştıraqi',
 	'prefs-myhome' => 'Keyey me',
 	'myhome-feed-edit' => 'bıvurne',
@@ -909,6 +909,7 @@ $messages['es'] = array(
 	'myhome-hot-spots-feed' => 'Más populares',
 	'myhome-hot-spots-feed-empty' => "Este wiki está esperando a que te unas. ¡Haz clic en '''[[Special:CreatePage|nueva página]]''' para comenzar a escribir!",
 	'myhome-hot-spots-newest' => 'Páginas nuevas en el wiki',
+	'tog-userlandingpage' => 'Página de inicio:',
 	'prefs-myhome' => 'Inicio',
 	'myhome-feed-newpage' => 'nueva página',
 	'myhome-feed-edit' => 'modificar',
@@ -1184,6 +1185,7 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
 
 /** French (français)
  * @author Crochet.david
+ * @author Gomoko
  * @author IAlex
  * @author Peter17
  * @author Slamduck
@@ -1205,6 +1207,7 @@ Vous pouvez vous servir de votre liste de suivi pour garder une trace des dernie
 	'myhome-hot-spots-feed-empty' => "Vous n'avez pas encore participé à ce wiki.
 Cliquez sur '''[[Special:CreatePage|Nouvelle page]]''' pour commencer à écrire !",
 	'myhome-hot-spots-newest' => 'Nouvelles pages du wiki',
+	'tog-userlandingpage' => "Page d'accueil:",
 	'prefs-myhome' => 'Mon accueil',
 	'myhome-feed-newpage' => 'nouvelle page',
 	'myhome-feed-edit' => 'modifier',
@@ -1289,6 +1292,7 @@ Pode usar a súa lista de vixilancia para seguir as modificacións recentes nas 
 	'myhome-hot-spots-feed' => 'Páxinas máis populares',
 	'myhome-hot-spots-feed-empty' => "Este wiki está agardando a que se involucre. Prema sobre '''[[Special:CreatePage|páxina nova]]''' para comezar a escribir!",
 	'myhome-hot-spots-newest' => 'Novas páxinas do wiki',
+	'tog-userlandingpage' => 'Páxina de destino:',
 	'prefs-myhome' => 'Inicio',
 	'myhome-feed-newpage' => 'páxina nova',
 	'myhome-feed-edit' => 'editar',
@@ -1947,6 +1951,7 @@ $messages['mk'] = array(
 	'myhome-hot-spots-feed' => 'Најактивни места',
 	'myhome-hot-spots-feed-empty' => "Ова вики чека на вашето учество. Кликнете на '''[[Special:CreatePage|Нова страница]]''' за да почнете да пишувате!",
 	'myhome-hot-spots-newest' => 'Нови страници на викито',
+	'tog-userlandingpage' => 'Целна страница:',
 	'prefs-myhome' => 'Моја домашна',
 	'myhome-feed-newpage' => 'нова страница',
 	'myhome-feed-edit' => 'уредување',
@@ -2068,6 +2073,7 @@ Anda boleh menggunakan senarai pantau anda untuk menjejaki perubahan terkini pad
 	'myhome-hot-spots-feed-empty' => "Wiki ini menanti-nanti penglibatan anda.
 Klik '''[[Special:CreatePage|New page]]''' untuk bermula menulis!",
 	'myhome-hot-spots-newest' => 'Laman baru di wiki ini',
+	'tog-userlandingpage' => 'Laman pendaratan:',
 	'prefs-myhome' => 'My Home',
 	'myhome-feed-newpage' => 'laman baru',
 	'myhome-feed-edit' => 'sunting',
@@ -2483,6 +2489,7 @@ Listy Obserwowanych można użyć, aby śledzić najnowsze zmiany do stron, na k
 	'myhome-hot-spots-feed-empty' => "Zaangażuj się w edytowanie na tej wiki.
 Kliknij na '''[[Special:CreatePage|Utwórz stronę]]''' aby zacząć pisać!",
 	'myhome-hot-spots-newest' => 'Nowe strony na wiki',
+	'tog-userlandingpage' => 'Strona startowa',
 	'prefs-myhome' => 'Moja strona domowa',
 	'myhome-feed-newpage' => 'nowa strona',
 	'myhome-feed-edit' => 'edytuj',
@@ -3130,6 +3137,7 @@ Du kan använda din bevakningslista för att hålla koll på de senaste ändring
 	'myhome-hot-spots-feed' => 'Hotspot',
 	'myhome-hot-spots-feed-empty' => "Denna wiki väntar på dig att engagera. Klicka på '''[[Special:CreatePage|Ny sida]]''' för att börja skriva!",
 	'myhome-hot-spots-newest' => 'Nya sidor på wikin',
+	'tog-userlandingpage' => 'Destinationssida:',
 	'prefs-myhome' => 'Mitt hem',
 	'myhome-feed-newpage' => 'ny sida',
 	'myhome-feed-edit' => 'redigering',
@@ -3482,9 +3490,13 @@ $messages['tt-cyrl'] = array(
  * @author Tifinaghes
  */
 $messages['tzm'] = array(
+	'myhome' => 'ⴰⵅⵅⴰⵎ ⵉⵏⵡ',
+	'prefs-myhome' => 'ⴰⵅⵅⴰⵎ ⵉⵏⵡ',
 	'myhome-feed-newpage' => 'ⵜⴰⵙⵏⴰ ⵜⴰⵎⴰⵢⵏⵓⵜ',
 	'myhome-feed-by' => 'ⵖⵓⵔ $1',
 	'myhome-feed-new-page-details' => 'ⵜⴰⵙⵏⴰ ⵜⴰⵎⴰⵢⵏⵓⵜ',
+	'myhome-feed-new-blog-post-details' => 'ⴰⴱⵍⵓⴳ ⴰⵎⴰⵢⵏⵓ',
+	'myhome-community-corner-edit' => 'ⴱⴷⴷⴻⵍ ⵜⴰⴱⵔⴰⵜ',
 );
 
 /** Ukrainian (українська)

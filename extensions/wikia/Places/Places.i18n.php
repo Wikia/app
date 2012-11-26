@@ -280,6 +280,7 @@ $messages['lb'] = array(
 	'places-in-category' => 'Plazen an der Kategorie $1',
 	'places-editor-search' => 'Sichen',
 	'places-geolocation-modal-error-title' => 'Feeler',
+	'places-error-no-article' => 'Dir musst eng Säit uginn',
 );
 
 /** Macedonian (македонски)

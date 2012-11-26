@@ -887,7 +887,7 @@ $messages['pt-br'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'Começar &raquo;',
 	'comboajaxlogin-connectdirections' => 'Introduza aqui o seu nome de usuário e senha - nós magicamente conectaremos as suas contas Wikia e Facebook nos bastidores.
 
-Quando acabar, poderá autenticar-se usando qualquer botão Ligação Facebook.',
+Quando acabar, poderá autenticar-se usando qualquer botão Conexão Facebook.',
 	'comboajaxlogin-post-not-understood' => 'Foi detectado um erro na forma como este formulário foi construído.
 Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 	'comboajaxlogin-readonlytext' => '<h2>Desculpe!</h2>

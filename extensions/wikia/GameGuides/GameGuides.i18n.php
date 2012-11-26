@@ -185,6 +185,15 @@ $messages['ksh'] = array(
 	'wikiagameguides-desc' => 'Module för de Wikia Spellaanleidonge (<i lang="en">Wikia Game Guides</i>) ier mobile Aanwändong.',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wikiagameguides-content-category' => 'Kategorie',
+	'wikiagameguides-content-save' => 'Späicheren',
+	'wikiagameguides-content-category-error' => 'Kategorie gëtt et net',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

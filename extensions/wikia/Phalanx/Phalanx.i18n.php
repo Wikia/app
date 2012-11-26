@@ -1560,7 +1560,7 @@ $messages['nl'] = array(
 	'phalanx-view-blocks' => 'Filters doorzoeken',
 	'phalanx-view-id' => 'Filter op nummer zoeken:',
 	'phalanx-view-id-submit' => 'Filter zoeken',
-	'phalanx-format-text' => 'platte tekst',
+	'phalanx-format-text' => 'tekst zonder opmaak',
 	'phalanx-format-regex' => 'reguliere expressie',
 	'phalanx-format-case' => 'hoofdlettergevoelig',
 	'phalanx-format-exact' => 'precies',
@@ -2141,6 +2141,9 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'phalanx-desc' => 'Phalanx är en integrerad försvarsmekanism mot spam',
+	'phalanx' => 'Phalanx',
+	'phalanx-title' => 'Phalanx - Integrerad försvarsmekanism mot spam',
 	'phalanx-type-content' => 'sidinnehåll',
 	'phalanx-type-summary' => 'sidsammanfattning',
 	'phalanx-type-title' => 'sidtitel',
@@ -2183,9 +2186,12 @@ Klicka på "{{int:phalanx-edit-block}}" för att spara dina ändringar!',
 	'phalanx-legend-input' => 'Skapa eller ändra filter',
 	'phalanx-legend-listing' => 'För närvarande tillämpade filter',
 	'phalanx-unblock-message' => 'Block-ID #$1 har tagits bort',
+	'phalanx-help-type-content' => 'Detta filter förhindrar en wiki från att skapas om dess namn matchar någon svartlistad fras.',
+	'phalanx-help-type-summary' => 'Detta filter förhindrar en redigering från att sparas om sammanfattningen matchar någon svartlistad fras.',
 	'phalanx-help-type-title' => 'Detta filter förhindrar en sida från att skapas, om dess titel matchar någon av de svartlistade fraserna.
 
 Filtret förhindrar inte möjligheten att redigera en tidigare skapad sida.',
+	'phalanx-help-type-user' => 'Detta filter blockerar en användare (precis samma som en lokal MediaWiki-blockering) om namnet eller IP-adressen matchar en av de svartlistade namnen eller IP-adresserna.',
 	'phalanx-help-type-wiki-creation' => 'Detta filter förhindrar en wiki från att skapas om dess namn eller URL-adress matchar någon svartlistad fras.',
 	'phalanx-help-type-answers-question-title' => 'Detta filter förhindrar att en fråga (sida) skapas, om dess titel matchar någon av de svartlistade fraserna.
 Anmärkning: fungerar endast på Svar-typ wikier.',

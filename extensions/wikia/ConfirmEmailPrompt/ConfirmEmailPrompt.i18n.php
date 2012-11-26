@@ -154,6 +154,14 @@ $messages['pt'] = array(
 	'confirmemailprompt-error' => 'Este é o seu endereço de e-mail: <strong>$1</strong>? [[$2|Confirmar]] ou [[$3|modifica-lo]].',
 );
 
+/** Brazilian Portuguese (português do Brasil)
+ * @author TheGabrielZaum
+ */
+$messages['pt-br'] = array(
+	'confirmemailprompt-desc' => 'Mostra uma mensagem de aviso caso um usuário tem um endereço de e-mail não confirmado',
+	'confirmemailprompt-error' => 'É este o seu endereço de e-mail: <strong>$1</strong>? [[$2|Confirme-o]] ou [[$3|mude-o]].',
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura

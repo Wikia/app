@@ -1202,11 +1202,14 @@ $messages['lb'] = array(
 	'scavengerhunt-label-article-hidden-image' => 'Verstopptent Bild:',
 	'scavengerhunt-button-add' => 'E Spill derbäisetzen',
 	'scavengerhunt-button-save' => 'Späicheren',
+	'scavengerhunt-button-disable' => 'Ausschalten',
 	'scavengerhunt-button-delete' => 'Läschen',
 	'scavengerhunt-button-export' => 'Als CSV exportéieren',
 	'scavengerhunt-form-error' => 'Verbessert w.e.g. dës Feeler:',
 	'scavengerhunt-entry-form-name' => 'Ären Numm:',
 	'scavengerhunt-entry-form-email' => 'Är Mailadress:',
+	'scavengerhunt-quit-game-button-cancel' => 'Ofbriechen',
+	'scavengerhunt-label-entry-form-username' => 'Benotzernumm',
 );
 
 /** Macedonian (македонски)
@@ -2361,6 +2364,7 @@ $messages['sv'] = array(
 	'scavengerhunt-form-error-article-hidden-image' => 'Var god ange alla adresser för dolda bilder.',
 	'scavengerhunt-form-error-article-clue' => 'Var god fyll i alla information om artikelledtrådarna.',
 	'scavengerhunt-form-error-clue' => 'Var god fyll i all information  om artikelns gratulationsmeddelande.',
+	'scavengerhunt-form-error-progressBarHintLabel-sprite-empty' => 'Var god välj passande dimensioner för ledtrådsetikettens sprite.',
 	'scavengerhunt-form-error-progressBarBackgroundSprite-sprite-empty' => 'Spritedimensionerna för förloppsmätaren är ogiltig',
 	'scavengerhunt-form-error-progressBarExitSprite-sprite-empty' => 'Dimensionerna för förloppsmätarens avslutningsknapp är ogiltiga.',
 	'scavengerhunt-form-error-article-spriteNotFound-sprite-empty' => 'Var god välj passande dimensioner för skattjaktens objektsbild',

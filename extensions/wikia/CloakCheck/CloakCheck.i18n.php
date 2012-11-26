@@ -540,10 +540,12 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
 	'cloakcheck' => 'Verificação de eligibilidade para um cloak IRC',
 	'cloakcheck-desc' => 'Fornece uma interface única para verificação dos requisitos de um cloak IRC',
+	'right-cloakcheck' => 'Pode checar informações relacionadas aos cloaks de IRC de outros usuários',
 	'cloakcheck-form-username' => 'Nome de usuário:',
 	'cloakcheck-form-check' => 'Verificar nome de usuário',
 	'cloakcheck-form-check-self' => 'Verificar a eligibilidade para um cloak IRC',

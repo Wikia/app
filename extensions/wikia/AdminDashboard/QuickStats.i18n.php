@@ -488,11 +488,14 @@ $messages['ku-latn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'quickstats-header-label' => 'Ministatistik',
 	'quickstats-header-date' => 'Datum',
+	'quickstats-header-views' => 'Säitenofruffer',
 	'quickstats-header-edits' => 'Ännerungen',
 	'quickstats-header-photos' => 'Fotoen',
 	'quickstats-header-likes' => 'Hunn ech gär',
 	'quickstats-totals-label' => 'Total',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Méi Statistiken]]',
 );
 
 /** Lithuanian (lietuvių)

@@ -3419,6 +3419,7 @@ Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spør
 );
 
 /** Dutch (Nederlands)
+ * @author Kippenvlees1
  * @author McDutchie
  * @author Siebrand
  */
@@ -3530,6 +3531,7 @@ Succes met uw project!
 $3
 Wikia Gemeenschapsondersteuning
 <http://community.wikia.com/wiki/User:$4>",
+	'autocreatewiki-welcometalk-wall-title' => 'Welkom!',
 	'autocreatewiki-welcometalk' => "== Welkom! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Hallo \$1. We zijn erg blij dat '''\$4''' onderdeel is geworden van de Wikiagemeenschap!
 
@@ -5204,8 +5206,16 @@ ___________________________________________
  * @author Tifinaghes
  */
 $messages['tzm'] = array(
+	'autocreatewiki' => 'ⵔⵏⵓ ⵡⵉⴽⵉ ⵜⴰⵎⴰⵢⵏⵓⵜ',
+	'autocreatewiki-page-title-default' => 'ⵔⵏⵓ ⵡⵉⴽⵉ ⵜⴰⵎⴰⵢⵏⵓⵜ',
+	'autocreatewiki-category-select' => 'ⵙⵜⵉ ⵢⴰⵜ',
+	'autocreatewiki-language-top' => '10 ⵏ ⵜⵓⵜⵍⴰⵢⵉⵏ ⴰⴽⴽ ⵢⵓⴼⵏ', # Fuzzy
+	'autocreatewiki-language-all' => 'ⵎⴰⵕⵕⴰ ⵜⵓⵜⵍⴰⵢⵉⵏ',
+	'autocreatewiki-birthdate' => 'ⴰⴽⵓⴷ ⵏ ⵜⴰⵍⴰⵍⵉⵜ:',
 	'autocreatewiki-title-template' => '$1 ⵡⵉⴽⵉ',
 	'autocreatewiki-category-label' => 'ⵜⴰⴳⴳⴰⵢⵜ:',
+	'autocreatewiki-welcometalk-wall-title' => 'ⴰⵏⵙⵓⴼ!',
+	'newwikis' => 'ⵉⴷ ⵡⵉⴽⵉ ⵉⵎⴰⵢⵏⵓⵜⵏ',
 );
 
 /** Ukrainian (українська)
