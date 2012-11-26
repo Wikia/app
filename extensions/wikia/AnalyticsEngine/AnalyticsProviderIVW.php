@@ -59,6 +59,7 @@ class AnalyticsProviderIVW implements iAnalyticsProvider {
 		}
 
 		if (HubService::getComscoreCategory(F::app()->wg->CityId)->cat_name == 'Entertainment') return 'RC_WIKIA_UGCENT';
+		if (HubService::getComscoreCategory(F::app()->wg->CityId)->cat_name == 'Gaming') return 'RC_WIKIA_UGCGAMES';
 
 		return 'RC_WIKIA_UGC';
 	}

@@ -5,7 +5,7 @@
  * Date: 8/14/12
  * Time: 1:33 PM
  */
-class AnalyticsProviderTest extends WikiaBaseTest {
+class AnalyticsProviderIVWTest extends WikiaBaseTest {
 
 	/**
 	 * Check the page source for analytics tracking and return used tag
@@ -14,7 +14,7 @@ class AnalyticsProviderTest extends WikiaBaseTest {
 	 * @return string|null analytics parameter used in this page
 	 *
 	 */
-	private function getAnalyticsProviderTag($url) {
+	private function getAnalyticsProviderIVWTag($url) {
 		$page = Http::get($url);
 		if (preg_match('/<img src="([^">]+)" [^>]+ alt="szmtag"/', $page, $m)) {
 			$path = parse_url($m[1], PHP_URL_PATH);
@@ -64,6 +64,9 @@ class AnalyticsProviderTest extends WikiaBaseTest {
 
 			array('http://shaun.wikia.com/wiki/Shaun', 'RC_WIKIA_UGCENT'),
 			array('http://de.marvel-filme.wikia.com/wiki/Marvel-Filme', 'RC_WIKIA_UGCENT'),
+
+			// uncomment when fb#68664 goes live
+			//array('http://de.gta.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCGAMES'),
 		);
 	}
 
@@ -75,7 +78,7 @@ class AnalyticsProviderTest extends WikiaBaseTest {
 	 * @dataProvider analyticsDataProvider
 	 */
 	public function testAnalyticsProviderIVW($url, $result) {
-		$this->assertEquals($this->getAnalyticsProviderTag($url), $result);
+		$this->assertEquals($this->getAnalyticsProviderIVWTag($url), $result);
 	}
 }
 
