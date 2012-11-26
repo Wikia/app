@@ -267,10 +267,11 @@
 
       var me, len, div, f, suggestion;
       me = this;
-      len = this.options.maxSuggestions || this.suggestions.length;
+      len = this.options.maxSuggestions && this.options.maxSuggestions < this.suggestions.length ? this.options.maxSuggestions : this.suggestions.length;
       f = this.options.fnFormatResult;
       v = this.getQuery(this.currentValue);
       this.container.hide().empty();
+      
       for (var i = 0; i < len; i++) {
       	// wikia change - start
       	suggestion = this.suggestions[i];
@@ -284,6 +285,7 @@
         // wikia change - end
         this.container.append(div);
       }
+      
       this.enabled = true;
       this.container.show();
 
