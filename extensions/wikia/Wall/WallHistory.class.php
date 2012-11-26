@@ -135,11 +135,11 @@ class WallHistory extends WikiaModel {
 			array(
 				'parent_page_id' => $parentPageId,
 				'post_user_id' => $postUserId,
-				'post_ns' => $ns,
+				'post_ns' => MWNamespace::getSubject( $ns ),
 				'post_user_ip' => ( intval($postUserId) === 0 ? $this->ip2long($postUserName) : null),
 				'is_reply' => $isReply,
 				'comment_id' => $commentId,
-				'parent_comment_id' => ( empty($parentPageId) ? $commentId : $parentCommentId),
+				'parent_comment_id' => ( $isReply ? $parentCommentId:$commentId),
 				'metatitle' => $metatitle,
 				'reason' => empty($reason) ? null:$reason,
 				'action' => $action,
@@ -151,7 +151,7 @@ class WallHistory extends WikiaModel {
 	public function  getLastPosts($ns, $count = 5) {
 		$where = array(
 			'action' => WH_NEW,
-			'post_ns' => $ns,
+			'post_ns' => MWNamespace::getSubject( $ns ),
 			'deleted_or_removed' => 0
 		);
 		
@@ -177,6 +177,7 @@ class WallHistory extends WikiaModel {
 				}
 			}
 		}
+		
 		return $out;
 	}
 	
