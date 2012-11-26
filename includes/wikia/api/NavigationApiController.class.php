@@ -38,7 +38,7 @@ class NavigationApiController extends WikiaApiController {
 		$errors = $model->getErrors();
 
 		if ( !empty( $errors ) ) {
-			throw new InvalidDataApiException( implode(', ', array_keys( $erros ) ) );
+			throw new InvalidDataApiException( implode(', ', array_keys( $errors ) ) );
 		}
 	}
 
