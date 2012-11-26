@@ -1478,6 +1478,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$mockQuery		=	$this->getMockBuilder( 'Solarium_Query_Select' )
 								->disableOriginalConstructor()
 								->getMock();
+		$mockTrack		=	$this->getMock( 'Track', array( 'event' ) );
 		
 		$mockConfig
 			->expects	( $this->at( 0 ) )
@@ -1543,8 +1544,12 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->with		( $mockQuery )
 			->will		( $this->returnValue( $mockSolResult ) )
 		;
-		
+		$mockTrack
+			->expects	( $this->once() )
+			->method	( 'event' );
+		;
 		$this->mockClass( 'WikiaSearchResultSet', $mockResultSet );
+		$this->mockClass( 'Track', $mockTrack );
 		$this->mockApp();
 		
 		$this->assertEquals(
