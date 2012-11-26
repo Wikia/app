@@ -155,6 +155,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->moduleName = (isset($data['moduleName'])) ? $data['moduleName'] : null;
 		$this->lastEditor = (isset($data['lastEditor'])) ? $data['lastEditor']: null;
 		$this->lastEditTime = (isset($data['lastEditTime'])) ? $data['lastEditTime']: null;
+		$this->dashboardHref = SpecialPage::getTitleFor('MarketingToolbox')->getLocalURL();
 	}
 
 	public function executeFooter($data) {

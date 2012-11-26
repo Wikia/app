@@ -1,6 +1,6 @@
 <header class="MarketingToolboxHeader">
 	<div class="MarketingToolboxTitle">
-		<h1><a href="#"><?= wfMsg('marketing-toolbox-header-dashboard'); ?></a></h1>
+		<h1><a href="<?=$dashboardHref;?>"><?= wfMsg('marketing-toolbox-header-dashboard'); ?></a></h1>
 		<? if (isset($moduleName)): ?>
 			<h2><?=$moduleName;?></h2>
 		<? endif ?>
