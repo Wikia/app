@@ -435,7 +435,7 @@ var Lightbox = {
 
 		// should user see ads?
 		showAds: function() {
-			if (Geo.getCountryCode() === 'US') {
+			if (Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB') {
 				return $('#MODAL_INTERSTITIAL').length;
 			}
 			return false;
