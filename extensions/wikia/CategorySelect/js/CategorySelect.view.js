@@ -13,8 +13,7 @@
 			$categories = $wrapper.find( '.categories' ),
 			categoryPrefix = wgCategorySelect.defaultNamespace + wgCategorySelect.defaultSeparator;
 
-		// Lazy loads required resources and initializes $.fn.categorySelect on wrapper
-		function lazyLoadResources( event ) {
+		function initialize( event ) {
 			var dfd = new $.Deferred();
 
 			$.when(
@@ -38,6 +37,9 @@
 
 						category.link = mw.util.wikiGetlink( categoryPrefix + category.name );
 						data.element.append( Mustache.render( data.template.content, data.template.data ) );
+
+					}).on( 'remove.categorySelect', function( event, data ) {
+						data.element.remove();
 					});
 
 				dfd.resolve();
@@ -50,8 +52,6 @@
 
 		}
 
-		$wrapper
-			.on( 'update.categorySelect', saveCategories )
-			.one( 'focus', '.addCategory', lazyLoadResources );
+		$wrapper.one( 'focus', '.addCategory', initialize );
 	});
 })( this, jQuery );

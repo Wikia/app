@@ -58,11 +58,8 @@ $categoryselect-width: $width-epl-module-input - 10;
 		width: 100%;
 	}
 
-	.sprite-small {
-		cursor: pointer;
-	}
-
 	.tool {
+		cursor: pointer;
 		display: inline-block;
 		margin: 0 0 0 5px;
 	}
@@ -76,19 +73,6 @@ $categoryselect-width: $width-epl-module-input - 10;
 
 	.ui-autocomplete {
 		width: $categoryselect-width;
-	}
-}
-
-// Need to use ID here for specificity
-#CategorySelectEditModal {
-	.WikiaForm {
-		@include clearfix;
-
-		input,
-		.input-group {
-			@include box-sizing( border-box );
-			width: 100%;
-		}
 	}
 }
 

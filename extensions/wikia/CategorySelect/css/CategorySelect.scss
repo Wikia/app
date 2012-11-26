@@ -52,6 +52,12 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 		&.hidden {
 			display: none;
 		}
+
+		&.new {
+			.toolbar {
+				display: inline-block;
+			}
+		}
 	}
 
 	.container {
@@ -59,7 +65,26 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 		margin-left: 75px;
 	}
 
+	.tool {
+		cursor: pointer;
+		display: inline-block;
+		margin-left: 5px;
+	}
+
 	.toolbar {
 		display: none;
+	}
+}
+
+// Need to use ID here for specificity
+#CategorySelectEditModal {
+	.WikiaForm {
+		@include clearfix;
+
+		input,
+		.input-group {
+			@include box-sizing( border-box );
+			width: 100%;
+		}
 	}
 }
