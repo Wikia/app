@@ -75,7 +75,9 @@ return array(
 	/* jQuery */
 
 	'jquery' => array(
-		'scripts' => 'resources/jquery/jquery-1.7.2.js',
+		// Wikia change - begin
+		'scripts' => 'resources/jquery/jquery-1.8.2.js',
+		// Wikia change - end
 		'debugRaw' => false,
 	),
 
