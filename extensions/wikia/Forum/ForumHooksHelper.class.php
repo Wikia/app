@@ -306,4 +306,5 @@ class ForumHooksHelper {
 		self::onWallAction(null, $parent, $id, $namespace);
 		return true;	
 	}
+
 }

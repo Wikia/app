@@ -67,6 +67,7 @@ $app->registerHook( 'WallAction', 'ForumHooksHelper', 'onWallAction');
 $app->registerHook( 'WallBeforeStoreRelatedTopicsInDB', 'ForumHooksHelper', 'onWallStoreRelatedTopicsInDB');
 $app->registerHook( 'WallAfterStoreRelatedTopicsInDB', 'ForumHooksHelper', 'onWallStoreRelatedTopicsInDB');
 
+
 include ($dir . '/Forum.namespace.setup.php');
 
 // permissions

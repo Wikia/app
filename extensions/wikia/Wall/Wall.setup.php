@@ -139,6 +139,8 @@ $app->registerHook('ListredirectsPage::getQueryInfo', 'WallHooksHelper', 'onList
 $app->registerHook('BeforeInitialize', 'WallHooksHelper', 'onBeforeInitialize');
 // lazy loaded by the previous hook
 
+$app->registerHook( 'WikiFeatures::afterToggleFeature', 'WallHooksHelper', 'onAfterToggleFeature');
+
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',
 	'wall-notifications-reminder',
