@@ -27,7 +27,7 @@ class CensusDataRetrieval {
                         'decay' => 'decay'
 		),
                 'item' => array(
-                        'name' => 'collection:name.en',
+                        'name' => 'name.en',
                         'description' => 'description.en',
                         'activatable_recast_seconds' => 'activatable_recast_seconds',
                         'combat_only' => 'combat_only',
@@ -258,7 +258,11 @@ class CensusDataRetrieval {
                                 $this->data[$name] = $value;
                         }
                 }
-                //TODO return false if empty
+                //return false if empty
+		if ( empty($this->data) ) {
+			wfProfileOut(__METHOD__);
+			return false;
+		}
                 wfProfileOut(__METHOD__);
 		return true;
 	}
