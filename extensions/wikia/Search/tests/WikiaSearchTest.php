@@ -1544,10 +1544,6 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->with		( $mockQuery )
 			->will		( $this->returnValue( $mockSolResult ) )
 		;
-		$mockTrack
-			->expects	( $this->any() )
-			->method	( 'event' );
-		;
 		$this->mockClass( 'WikiaSearchResultSet', $mockResultSet );
 		$this->mockClass( 'Track', $mockTrack );
 		$this->mockApp();
@@ -1677,10 +1673,6 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->method	( 'select' )
 			->with		( $mockQuery )
 			->will		( $this->returnValue( $mockSolResult ) )
-		;
-		$mockTrack
-			->staticExpects	( $this->never() )
-			->method		( 'event' )
 		;
 		
 		$this->mockClass( 'WikiaSearchResultSet', $mockResultSet );
