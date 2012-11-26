@@ -263,7 +263,25 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		return array( $this->type, 'sdelement' );
 	}
 
-	public function getSpecialPageUrl() {
+	/**
+	 * Return current object's page url. For the default rendering context this method returns the address defined in schema:url
+	 * property when it is not empty. In any other case address of the SDS special page with object details is returned.
+	 * @param $context - SDS rendering context
+	 * @return String
+	 */
+	public function getObjectPageUrl($context) {
+		if ( $context == SD_CONTEXT_DEFAULT ) {
+			$url = $this->getUrl();
+			if ( !empty( $url ) ) {
+				if ( preg_match( '/^http(s)?:/', $url, $matches ) > 0 ) {
+					$title = F::build( 'Title', array( $url ), 'newFromText');
+					if( $title instanceof Title ) {
+						return $title->getFullUrl();
+					}
+				}
+				return $url;
+			}
+		}
 		return self::createSpecialPageUrl($this);
 	}
 

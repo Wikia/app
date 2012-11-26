@@ -15,7 +15,7 @@
 	</dl>
 <?php elseif ($context == SD_CONTEXT_EDITING): ?>
 	<input type="hidden" name="<?=$params['fieldName'];?>" value="<?=$object->getId();?>" />
-	<a href="<?=$object->getSpecialPageUrl();?>" title="<?=htmlspecialchars( $object->getName() ); ?>"><img src="<?php
+	<a href="<?=$object->getObjectPageUrl($context);?>" title="<?=htmlspecialchars( $object->getName() ); ?>"><img src="<?php
 		$imgSrc = $object->getPropertyValue('schema:contentURL', false);
 		echo ($imgSrc !== false) ? $imgSrc->getValue() : '#';?>" alt="<?=htmlspecialchars( $object->getName() ); ?>" /></a>
 	<button class="secondary remove">Remove</button>

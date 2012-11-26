@@ -22,7 +22,7 @@ foreach ( $values as $i => $propertyValue ) {
 
 	if ( $context == SD_CONTEXT_SPECIAL ) {
 		if ($value->object !== null) {
-			echo '<strong><a href="' . $value->object->getSpecialPageUrl() . '">' . htmlspecialchars
+			echo '<strong><a href="' . $value->object->getObjectPageUrl($context) . '">' . htmlspecialchars
 			($value->object->getName() ) . '</a></strong>';
 			echo '<p>' . $text->getValue() . '</p>';
 		}
@@ -34,7 +34,7 @@ foreach ( $values as $i => $propertyValue ) {
 		<li>
 			<input type="hidden" name="wikia:wikiText[]" value="<?=$value->id;?>" />
 			<?php if ($value->object !== null) : ?>
-				<a href="<?=$value->object->getSpecialPageUrl();?>"><?=htmlspecialchars( $value->object->getName() );?></a>
+				<a href="<?=$value->object->getObjectPageUrl($context);?>"><?=htmlspecialchars( $value->object->getName() );?></a>
 			<?php else : ?>
 				<?=$value->id;?>
 			<?php endif; ?>
