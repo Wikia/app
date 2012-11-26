@@ -72,7 +72,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$articleMatch = null;
 			$this->wikiaSearch->getArticleMatch( $searchConfig );
 			if ( $searchConfig->getPage() == 1 ) {
-				$this->handleArticleMatchTracking( $searchConfig );
+				$this->handleArticleMatchTracking( $searchConfig, F::build( 'Track' ) );
 			}
 
 			$this->wikiaSearch->doSearch( $searchConfig );
@@ -274,10 +274,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return boolean true (if not routed to search match page)
 	 */
-	protected function handleArticleMatchTracking( WikiaSearchConfig $searchConfig ) {
+	protected function handleArticleMatchTracking( WikiaSearchConfig $searchConfig, Track $track ) {
 		$articleMatch	=	$searchConfig->getArticleMatch();
-		$track			=	F::build( 'Track' );
-
+		
 		if ( (! empty($articleMatch) ) && $this->getVal('fulltext', '0') === '0') {
 		    $article = $articleMatch->getArticle();
 		    

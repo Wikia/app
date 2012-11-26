@@ -80,7 +80,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$wfrefl->setAccessible( true );
 		$wfrefl->setValue( $mockController, $mockWrapper );
 		
-		$this->mockClass( 'Track', $mockTrack );
 		$this->mockClass( 'Title', $mockTitle );
 		$this->mockApp();
 		
@@ -88,7 +87,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$method->setAccessible( true );
 		
 		$this->assertTrue(
-				$method->invoke( $mockController, $searchConfig ),
+				$method->invoke( $mockController, $searchConfig, $mockTrack ),
 				'WikiaSearchController::handleArticleMatchTracking should return true.'
 		);
 	}
@@ -105,8 +104,8 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockArticle		=	$this->getMock( 'Article', array( 'getTitle' ), array( $mockTitle ) );
 		$mockArticleMatch	=	$this->getMock( 'WikiaSearchArticleMatch', array( 'getArticle' ), array( $mockArticle ) );
 		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect' ), array( 'html' ) );
-		$mockTrack			=	$this->getMock( 'Track', array( 'event' ) );
 		$mockWrapper		=	$this->getMock( 'WikiaFunctionWrapper', array( 'RunHooks' ) );
+		$mockTrack			=	$this->getMock( 'Track' );
 
 		$searchConfig
 			->expects	( $this->any() )
@@ -145,67 +144,37 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
 		$method->setAccessible( true );
 		
-		$this->assertTrue(
-				$method->invoke( $mockController, $searchConfig ),
-				'WikiaSearchController::handleArticleMatchTracking should return true.'
-		);
 		
-		$this->mockClass( 'Track', $mockTrack );
 		$this->mockClass( 'Title', $mockTitle );
 		$this->mockApp();
 		
-		$method->invoke( $mockController, $searchConfig );
+		$this->assertTrue(
+				$method->invoke( $mockController, $searchConfig, $mockTrack ),
+				'WikiaSearchController::handleArticleMatchTracking should return true.'
+		);
 	}
 	
 	/**
 	 * @covers WikiaSearchController::handleArticleMatchTracking
 	 */
-	public function handleArticleMatchTrackingWithoutGoSearch() {
+	public function testHandleArticleMatchTrackingWithoutGoSearch() {
 		
 		$mockController		=	$this->searchController->setMethods( array( 'getVal' ) )->getMock();
 		
 		$searchConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'getOriginalQuery', 'getArticleMatch' ) );
-		$mockTitle			=	$this->getMock( 'Title',  array( 'newFromText', 'getFullUrl' ) );
-		$mockArticle		=	$this->getMock( 'Article', array( 'getTitle' ), array( $mockTitle ) );
-		$mockArticleMatch	=	$this->getMock( 'WikiaSearchArticleMatch', array( 'getArticle' ), array( $mockArticle ) );
-		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect' ), array( 'html' ) );
+		$mockArticleMatch	=	$this->getMockBuilder( 'WikiaSearchArticleMatch' )->disableOriginalConstructor()->getMock();
 		$mockTrack			=	$this->getMock( 'Track', array( 'event' ) );
 		$mockWrapper		=	$this->getMock( 'WikiaFunctionWrapper', array( 'RunHooks' ) );
 
 		$searchConfig
-			->expects	( $this->any() )
+			->expects	( $this->once() )
 			->method	( 'getArticleMatch' )
 			->will		( $this->returnValue( $mockArticleMatch ) )
 		;
 		$searchConfig
-			->expects	( $this->any() )
+			->expects	( $this->once() )
 			->method	( 'getOriginalQuery' )
 			->will		( $this->returnValue( 'unittestfoo' ) )
-		;
-		$mockTitle
-			->expects	( $this->any() )
-			->method	( 'newFromTitle' )
-			->will		( $this->returnValue( $mockTitle ) )
-		;
-		$mockTitle
-			->expects	( $this->any() )
-			->method	( 'getFullURL' )
-			->will		( $this->returnValue( 'http://foo.wikia.com/Wiki/foo' ) )
-		;
-		$mockResponse
-			->expects	( $this->once() )
-			->method	( 'redirect' )
-			->will		( $this->returnValue( true ) )
-		;
-		$mockArticleMatch
-			->expects	( $this->once() )
-			->method	( 'getArticle' )
-			->will		( $this->returnValue( $mockArticle ) )
-		;
-		$mockArticle
-			->expects	( $this->any() )
-			->method	( 'getTitle' )
-			->will		( $this->returnValue( $mockTitle ) )
 		;
 		$mockController
 			->expects	( $this->once() )
@@ -213,29 +182,18 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->with		( 'fulltext', '0' )
 			->will		( $this->returnValue( 'Search' ) )
 		;
-		$mockTrack
-			->expects	( $this->once() )
-			->method	( 'event' )
-			->with		( 'search_start_match', array( 'sterm' => 'unittestfoo', 'rver' => 0 ) )
-		;
-
-		$responserefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
-		$responserefl->setAccessible( true );
-		$responserefl->setValue( $mockController, $mockResponse );
 		
 		$wfrefl = new ReflectionProperty( 'WikiaSearchController', 'wf' );
 		$wfrefl->setAccessible( true );
 		$wfrefl->setValue( $mockController, $mockWrapper );
 		
-		$this->mockClass( 'Track', $mockTrack );
-		$this->mockClass( 'Title', $mockTitle );
 		$this->mockApp();
 		
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
 		$method->setAccessible( true );
 		
 		$this->assertTrue(
-				$method->invoke( $this->searchController->getMock(), $searchConfig ),
+				$method->invoke( $mockController, $searchConfig, $mockTrack ),
 				'WikiaSearchController::handleArticleMatchTracking should return true.'
 		);
 	}
