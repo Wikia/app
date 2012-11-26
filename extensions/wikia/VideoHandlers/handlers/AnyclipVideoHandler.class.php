@@ -23,20 +23,27 @@ class AnyclipVideoHandler extends VideoHandler {
 <div id="AnyClipPlayer-{$this->videoId}-{$ajaxStr}" style="width: {$width}px; height: {$height}px;"></div>
 EOT;
 
+		/* Notes on AnyClipPlayer.load():
+		 * Each parameter passed to load() is an array that represents a new player instance
+		 * Array[0] = DOM element and player id
+		 * Array[1] = flash vars to be added
+		 * Array[2] = params for object tag
+		 */
+		
 		if ( $isAjax || $postOnload ) {
 			$html .= <<<EOT
 <script type="text/javascript">
 	$.when(
 		$.getScript('http://player.anyclip.com/embed/AnyClipPlayer.js')
 	).done(function() {
-		AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}"{$autoPlayStr}}]);
+		AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}"{$autoPlayStr}}, {wmode: "opaque"}]);
 	});
 </script>
 EOT;
 		} else {
 			$html .= <<<EOT
 <script type="text/javascript" src="http://player.anyclip.com/embed/AnyClipPlayer.js"></script>
-<script type="text/javascript">AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}{$autoPlayStr}"}]);</script>
+<script type="text/javascript">AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}{$autoPlayStr}"}, {wmode: "opaque"}]);</script>
 EOT;
 		}
 
