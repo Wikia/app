@@ -91,7 +91,8 @@ class RTEReverseParser {
 
 				// fix nbsp to be a valid UTF space
 				// don't break UTF characters (à - \xC3\xA0 / 誠 - \xE8\xAA / ム - \xE3\x83)
-				$out = preg_replace('%(?<=[\x00-\x7F]|^|\xA0|\xC2)\xA0%', ' ', $out);
+				// don't break hardspace (BugId:68668)
+				$out = preg_replace('%(?<=[\x00-\x7F]|^|\xA0)\xA0%', ' ', $out);
 
 				//RTE::hex(__METHOD__, $out); // debug
 
@@ -882,7 +883,7 @@ class RTEReverseParser {
 						// if there are matches, and there are no trailing characters
 						// fbId::45461 - [[Tower|Towers of Wizardry]] should not convert to [[Tower]]s of Wizardry
 						preg_match(self::getTrailRegex(), $possibleTrail, $matches);
-						$trail = $matches && empty($matches[2]) ? $matches[1] : $trail;						
+						$trail = $matches && empty($matches[2]) ? $matches[1] : $trail;
 					}
 				}
 
