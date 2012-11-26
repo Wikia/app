@@ -160,12 +160,12 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 		//to avoid refresh the contents (it triggers a full
 		//reload of iframe contents for videos)
 		if(image.isVideo) {// video
-			if(!pager.getCurrent().innerHTML) {
+			if(!pager.getCurrent().querySelector('table.wkVi')) {
 				var imgTitle = image.name;
 				currentImageStyle.backgroundImage = '';
 
 				if(videoCache[imgTitle]){
-					currentImage.innerHTML = '<table id=wkVi><tr><td>'+videoCache[imgTitle]+'</td></tr></table>';
+					currentImage.innerHTML = '<table class=wkVi><tr><td>'+videoCache[imgTitle]+'</td></tr></table>';
 				}else{
 					loader.show(currentImage, {
 						center: true
@@ -174,7 +174,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 					Wikia.nirvana.sendRequest({
 						type: 'get',
 						format: 'json',
-						controller: 'VideoHandlerController',
+						controller: 'VideoHandler',
 						method: 'getEmbedCode',
 						data: {
 							articleId: wgArticleId,
@@ -188,7 +188,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 								handleError(data.error);
 							}else{
 								videoCache[imgTitle] = data.embedCode;
-								currentImage.innerHTML = '<table id=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
+								currentImage.innerHTML = '<table class=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
 							}
 						}
 					});
