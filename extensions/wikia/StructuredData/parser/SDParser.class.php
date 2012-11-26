@@ -45,12 +45,19 @@ class SDParser {
 	public function datalistParserHook( $input, $args, Parser $parser, PPFrame $frame = null ) {
 		$output = "";
 		$list = $this->getListFromStringPath( $args['src'] );
-
-		foreach ( $list as $elementHash ) {
-			$output .= str_replace('$'.$args['var'], $elementHash, $input);
+		if(count($list) > 0) {
+			foreach ( $list as $elementHash ) {
+				$tmpOutput = str_replace( '<$'.$args['var'], '<datalist', $input);
+				$tmpOutput = str_replace( '</$'.$args['var'], '</datalist', $tmpOutput);
+				$tmpOutput = preg_replace( '/(foreach="([a-z,0-9,:,_]{1,})")/i', 'src="'.$elementHash.'/$2"', $tmpOutput );
+				$output .= str_replace( '$'.$args['var'], $elementHash, $tmpOutput );
+			}
 		}
-		$output = $parser->recursiveTagParse( ( !empty($output) ? $output : $input ), $frame);
+		else {
+			return '';
+		}
 
+		$output = $parser->recursiveTagParse( ( $output ), $frame);
 		return $output;
 	}
 
