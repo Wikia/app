@@ -17,6 +17,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 	protected $structuredData = null;
 
 	protected $mainObjectList = null;
+	protected $advObjectList = null;
 
 	public function __construct() {
 
@@ -25,9 +26,19 @@ class StructuredDataController extends WikiaSpecialPageController {
 			"callofduty:Faction" => "Factions",
 			"callofduty:Timeline" => "Timelines",
 			"callofduty:Weapon" => "Weapons",
-			"callofduty:WeaponClass" => "Weapon Class",
-			"callofduty:Mission" => "Missions"
+			"callofduty:WeaponClass" => "Weapon Classes",
+			"callofduty:Mission" => "Missions",
+			"wikia:Objective" => "Objectives"
 		);
+
+		$this->advObjectList = array(
+			'schema:AudioObject' => 'Audio Objects',
+			'wikia:GameEvent' => 'Game Events',
+			'wikia:GameLocation' => 'Game Locations',
+			'wikia:WikiText' => 'WikiText objects',
+			'schema:VideoObject' => 'Video Objects'
+		);
+
 
 		// parent SpecialPage constructor call MUST be done
 		parent::__construct( 'StructuredData', '', false );
@@ -46,6 +57,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		if(empty($par)) {
 			$this->response->addAsset('extensions/wikia/StructuredData/css/StructuredData.scss');
 			$this->setVal( "mainObjects", $this->mainObjectList );
+			$this->setVal( 'advObjects', $this->advObjectList );
 		}
 		else {
 			$pos = strpos($par, '/');

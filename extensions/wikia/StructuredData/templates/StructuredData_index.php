@@ -8,4 +8,13 @@ Hello Structured World!
 		<small>( <?=$objectClass ?>)</small>
 	</li>
 <?php endforeach; ?>
+	<li></li>
+<?php foreach ( $advObjects as $objectClass => $objectName ): ?>
+    <li>
+        <a href="?method=getCollection&objectType=<?=$objectClass?>">
+			<?=$objectName;?>
+        </a>
+        <small>( <?=$objectClass ?>)</small>
+    </li>
+<?php endforeach; ?>
 </ul>
