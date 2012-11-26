@@ -171,6 +171,30 @@ ve.init.mw.ViewPageTarget.saveDialogTemplate = '\
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.activate = function () {
+	var $spinnerWrapper = $('<div></div>');
+	$spinnerWrapper.css( {
+		'border-bottom' : 'solid 1px #CCC',
+		/*'border-top' : 'solid 1px #CCC',*/
+		'height' : '37px',
+		'background-image' : 'url(http://communitycouncil.inez.wikia-dev.com/extensions/VisualEditor/modules/ve/ui/styles/images/fade-up.png)',
+		'background-position' : 'left bottom',
+		'background-repeat' : 'repeat-x',
+		/*'width' : '1010px',*/
+		'display' : 'none',
+		'margin-top': '-11px'
+	} );
+
+	/*
+	$('#WikiaPageHeader').css( {
+		'padding-bottom' : '0px',
+		'margin-bottom' : '7px',
+		'border-bottom' : 'none'
+	} );
+	*/
+	$('#WikiaArticle').prepend($spinnerWrapper);
+	$spinnerWrapper.slideDown();
+	/*$('#WikiaRecentActivity').animate({'margin-top': '+=47'});*/
+
 	if ( !this.active && !this.activating ) {
 		this.activating = true;
 		// User interface changes
@@ -402,9 +426,9 @@ ve.init.mw.ViewPageTarget.prototype.onSaveDialogCloseButtonClick = function () {
  */
 ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( dom ) {
 	var $contentText = $( '#mw-content-text' );
-
 	// Initialize surface
-	this.surface = new ve.Surface( $( '#content' ), dom, this.surfaceOptions );
+	//this.surface = new ve.Surface( $( '#content' ), dom, this.surfaceOptions );
+	this.surface = new ve.Surface( $( '#WikiaArticle' ), dom, this.surfaceOptions );
 	this.$document = this.surface.$.find( '.ve-ce-documentNode' );
 	this.surface.getModel().on( 'transact', this.proxiedOnSurfaceModelTransact );
 	// Transplant the toolbar
