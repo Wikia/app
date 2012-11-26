@@ -5,7 +5,7 @@ class WallNotificationAdminEntity {
 	public function __construct($wikiId, $parentPageId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentId, $isReply, $reason) {
 		$app = F::App();
 		
-		$this->data = null;
+		$this->data = new stdClass;
 		
 		$this->data->type = 'ADMIN';
 		
