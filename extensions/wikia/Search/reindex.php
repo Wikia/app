@@ -29,9 +29,12 @@ foreach ( $select as $row ) {
 	$ids[] = $row->id;
 }
 
-for ( $i = 0; $i < count($ids); $i += 10 ) {
+$idCount = count($ids);
+for ( $i = 0; $i < $idCount; $i += 10 ) {
 	$idSlice = array_slice( $ids, $i, $i + 10 );
-	$indexer->reindexBatch( $idSlice, WikiaSearchIndexer::REINDEX_VERBOSE );
+	$sliceCount = count( $idSlice );
+	$indexer->reindexBatch( $idSlice );
+	echo "Reindexed {$sliceCount}/{$idCount} docs\n";
 }
 
-echo "Indexing process complete.";
+echo "Indexing process complete.\n";
