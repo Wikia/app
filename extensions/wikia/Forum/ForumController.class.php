@@ -54,7 +54,6 @@ class ForumController extends WallBaseController {
 			$this->app->wg->Out->setPageTitle( wfMsg( 'forum-board-title', $this->wg->title->getBaseText() ) );
 		}
 		
-		$this->description = $board->getDescription();
 		$this->response->setVal( 'boardNamespace', NS_WIKIA_FORUM_BOARD );
 
 		//TODO: keep the varnish cache and do purging on post
