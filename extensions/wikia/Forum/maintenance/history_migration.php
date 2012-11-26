@@ -119,7 +119,7 @@ while ($row = $dbw->fetchRow($res)) {
 			'post_user_id' => $row['post_user_id'],
 			'post_user_ip' => $row['post_user_ip'],
 			
-			'post_ns' => $row['post_ns'],
+			'post_ns' => MWNamespace::getSubject( $row['post_ns'] ),
 			'is_reply' => $row['is_reply'],
 			'metatitle' => $row['metatitle'],
 			'reason' => $row['reason'],
