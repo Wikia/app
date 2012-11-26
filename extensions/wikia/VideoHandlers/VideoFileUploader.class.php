@@ -154,7 +154,7 @@ class VideoFileUploader {
 		/* real upload */
 		$result = $file->upload(
 			$upload->getTempPath(),
-			'created video',
+			wfMsgForContent( 'videos-initial-upload-edit-summary' ),
 			$this->getDescription(),
 			File::DELETE_SOURCE
 		);
