@@ -16,8 +16,7 @@ class AdController extends WikiaController {
 		}
 
 		if(WikiaPageType::isWikiaHub() && AdEngine::isAdsEnabledOnWikiaHub()) {
-			self::$config['HOME_TOP_LEADERBOARD'] = true;
-			self::$config['TOP_BUTTON'] = true;
+			self::$config['HUB_TOP_LEADERBOARD'] = true;
 			return;
 		}
 		// Ads on corporate hub pages only
