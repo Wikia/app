@@ -14,12 +14,12 @@ class WallHistory extends WikiaModel {
 	}
 	
 	public function add( $type, $feed, $user ) {
-		//wall the wall action goes through this point.  
-		wfRunHooks('WallAction', array($type, $feed->data->parent_id, $feed->data->title_id, $feed->data->article_title_ns));
 		
 		switch($type) {
 			case WH_EDIT: 
 			case WH_NEW:
+				//wall the wall action goes through this point.  
+				wfRunHooks('WallAction', array($type, $feed->data->parent_id, $feed->data->title_id));
 				$this->addNewOrEdit( $type, $feed, $user );
 			break;
 			case WH_ARCHIVE:
@@ -27,6 +27,8 @@ class WallHistory extends WikiaModel {
 			case WH_REOPEN:
 			case WH_REMOVE:
 			case WH_RESTORE:
+				//wall the wall action goes through this point.  
+				wfRunHooks('WallAction', array($type, $feed->data->parent_id, $feed->data->message_id));
 				$this->addStatChangeAction( $type, $feed, $user );
 			break;	
 		}
@@ -113,10 +115,10 @@ class WallHistory extends WikiaModel {
 			null
 		);
 		
-		$this->getDB(DB_MASTER)->set(
+		
+		$this->getDB(DB_MASTER)->update(
 			'wall_history',
-			'deleted_or_removed',
-			(($action == WH_DELETE || $action == WH_REMOVE) ? 1:0),
+			array( 'deleted_or_removed' => ($action == WH_DELETE || $action == WH_REMOVE) ? 1:0),
 			array(
 				'comment_id' => $feed->data->message_id 
 			),
