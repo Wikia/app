@@ -67,6 +67,7 @@ class AnalyticsProviderIVWTest extends WikiaBaseTest {
 
 			// uncomment when fb#68664 goes live
 			//array('http://de.gta.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCGAMES'),
+			//array('http://de.green.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCLIFESTYLE'),
 		);
 	}
 
