@@ -1109,7 +1109,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	 */
 	public function testGetKeywordsWorks() {
 		$mockController	=	$this->searchController->setMethods( array( 'getVal' ) )->getMock();
-		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )->disableOriginalConstructor()->getMock();
+		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )->setMethods( array( 'getKeywords' ) )->disableOriginalConstructor()->getMock();
 		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'setPageId' ) );
 		$mockResponse	=	$this->getMockBuilder( 'WikiaResponse' )
 								->setMethods( array( 'setData', 'setFormat' ) )
@@ -1159,5 +1159,285 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$searchRefl->setValue( $mockController, $mockSearch );
 		
 		$mockController->getKeywords();
+	}
+	
+	/**
+	 * @covers WikiaSearchController::getSimilarPagesExternal
+	 */
+	public function testGetSimilarPagesExternalWithQuery() {
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'setQuery', 'setStreamUrl', 'setStreamBody' ) );
+		$mockController	=	$this->searchController
+								->setMethods( array( 'getVal' ) )
+								->getMock();
+		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )
+								->setMethods( array( 'getSimilarPages' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		$mockResponse	=	$this->getMockBuilder( 'WikiaResponse' )
+								->setMethods( array( 'setData', 'setFormat' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$responseArr = array( 'foo' => 'bar' );
+		
+		$mockController
+			->expects	( $this->at( 0 ) )
+			->method	( 'getVal' )
+			->with		( 'q', null )
+			->will		( $this->returnValue( 'foo' ) ) 
+		;
+		$mockController
+			->expects	( $this->at( 1 ) )
+			->method	( 'getVal' )
+			->with		( 'url', null )
+			->will		( $this->returnValue( 'foo.com' ) ) 
+		;
+		$mockController
+			->expects	( $this->at( 2 ) )
+			->method	( 'getVal' )
+			->with		( 'contents', null )
+			->will		( $this->returnValue( 'the contents are foo' ) ) 
+		;
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'setQuery' )
+			->with		( 'foo' ) 
+		;
+		$mockSearch
+			->expects	( $this->at( 0 ) ) 
+			->method	( 'getSimilarPages' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $responseArr ) ) 
+		;
+		$mockResponse
+			->expects	( $this->at( 0 ) )
+			->method	( 'setData' )
+			->with		( $responseArr )
+		;
+		$mockResponse
+			->expects	( $this->at( 1 ) )
+			->method	( 'setFormat' )
+			->with		( 'json' )
+		;
+		
+		$respRefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
+		$respRefl->setAccessible( true );
+		$respRefl->setValue( $mockController, $mockResponse );
+		
+		$searchRefl = new ReflectionProperty( 'WikiaSearchController', 'wikiaSearch' );
+		$searchRefl->setAccessible( true );
+		$searchRefl->setValue( $mockController, $mockSearch );
+		
+		$this->mockClass( 'WikiaSearchConfig', $mockConfig );
+		$this->mockApp();
+		
+		$mockController->getSimilarPagesExternal();
+		
+	}
+	
+	/**
+	 * @covers WikiaSearchController::getSimilarPagesExternal
+	 */
+	public function testGetSimilarPagesExternalWithStreamUrl() {
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'setQuery', 'setStreamUrl', 'setStreamBody' ) );
+		$mockController	=	$this->searchController
+								->setMethods( array( 'getVal' ) )
+								->getMock();
+		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )
+								->setMethods( array( 'getSimilarPages' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		$mockResponse	=	$this->getMockBuilder( 'WikiaResponse' )
+								->setMethods( array( 'setData', 'setFormat' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$responseArr = array( 'foo' => 'bar' );
+		
+		$mockController
+			->expects	( $this->at( 0 ) )
+			->method	( 'getVal' )
+			->with		( 'q', null )
+			->will		( $this->returnValue( null ) ) 
+		;
+		$mockController
+			->expects	( $this->at( 1 ) )
+			->method	( 'getVal' )
+			->with		( 'url', null )
+			->will		( $this->returnValue( 'foo.com' ) ) 
+		;
+		$mockController
+			->expects	( $this->at( 2 ) )
+			->method	( 'getVal' )
+			->with		( 'contents', null )
+			->will		( $this->returnValue( 'the contents are foo' ) ) 
+		;
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'setStreamUrl' )
+			->with		( 'foo.com' ) 
+		;
+		$mockSearch
+			->expects	( $this->at( 0 ) ) 
+			->method	( 'getSimilarPages' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $responseArr ) ) 
+		;
+		$mockResponse
+			->expects	( $this->at( 0 ) )
+			->method	( 'setData' )
+			->with		( $responseArr )
+		;
+		$mockResponse
+			->expects	( $this->at( 1 ) )
+			->method	( 'setFormat' )
+			->with		( 'json' )
+		;
+		
+		$this->mockClass( 'WikiaSearchConfig', $mockConfig );
+		$this->mockApp();
+		
+		$respRefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
+		$respRefl->setAccessible( true );
+		$respRefl->setValue( $mockController, $mockResponse );
+		
+		$searchRefl = new ReflectionProperty( 'WikiaSearchController', 'wikiaSearch' );
+		$searchRefl->setAccessible( true );
+		$searchRefl->setValue( $mockController, $mockSearch );
+		
+		$mockController->getSimilarPagesExternal();
+	}
+	
+	/**
+	 * @covers WikiaSearchController::getSimilarPagesExternal
+	 */
+	public function testGetSimilarPagesExternalWithStreamBody() {
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'setQuery', 'setStreamUrl', 'setStreamBody' ) );
+		$mockController	=	$this->searchController
+								->setMethods( array( 'getVal' ) )
+								->getMock();
+		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )
+								->setMethods( array( 'getSimilarPages' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		$mockResponse	=	$this->getMockBuilder( 'WikiaResponse' )
+								->setMethods( array( 'setData', 'setFormat' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$responseArr = array( 'foo' => 'bar' );
+		
+		$mockController
+			->expects	( $this->at( 0 ) )
+			->method	( 'getVal' )
+			->with		( 'q', null )
+			->will		( $this->returnValue( null ) ) 
+		;
+		$mockController
+			->expects	( $this->at( 1 ) )
+			->method	( 'getVal' )
+			->with		( 'url', null )
+			->will		( $this->returnValue( null ) ) 
+		;
+		$mockController
+			->expects	( $this->at( 2 ) )
+			->method	( 'getVal' )
+			->with		( 'contents', null )
+			->will		( $this->returnValue( 'the contents are foo' ) ) 
+		;
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'setStreamBody' )
+			->with		( 'the contents are foo' ) 
+		;
+		$mockSearch
+			->expects	( $this->at( 0 ) ) 
+			->method	( 'getSimilarPages' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $responseArr ) ) 
+		;
+		$mockResponse
+			->expects	( $this->at( 0 ) )
+			->method	( 'setData' )
+			->with		( $responseArr )
+		;
+		$mockResponse
+			->expects	( $this->at( 1 ) )
+			->method	( 'setFormat' )
+			->with		( 'json' )
+		;
+		
+		$this->mockClass( 'WikiaSearchConfig', $mockConfig );
+		$this->mockApp();
+		
+		$respRefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
+		$respRefl->setAccessible( true );
+		$respRefl->setValue( $mockController, $mockResponse );
+		
+		$searchRefl = new ReflectionProperty( 'WikiaSearchController', 'wikiaSearch' );
+		$searchRefl->setAccessible( true );
+		$searchRefl->setValue( $mockController, $mockSearch );
+		
+		$mockController->getSimilarPagesExternal();
+	}
+	
+	/**
+	 * @covers WikiaSearchController::getSimilarPagesExternal
+	 */
+	public function testGetSimilarPagesExternalWithNothing() {
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'setQuery', 'setStreamUrl', 'setStreamBody' ) );
+		$mockController	=	$this->searchController
+								->setMethods( array( 'getVal' ) )
+								->getMock();
+		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )
+								->setMethods( array( 'getSimilarPages' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		$mockResponse	=	$this->getMockBuilder( 'WikiaResponse' )
+								->setMethods( array( 'setData', 'setFormat' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$responseArr = array( 'foo' => 'bar' );
+		
+		$mockController
+			->expects	( $this->at( 0 ) )
+			->method	( 'getVal' )
+			->with		( 'q', null )
+			->will		( $this->returnValue( null ) ) 
+		;
+		$mockController
+			->expects	( $this->at( 1 ) )
+			->method	( 'getVal' )
+			->with		( 'url', null )
+			->will		( $this->returnValue( null ) ) 
+		;
+		$mockController
+			->expects	( $this->at( 2 ) )
+			->method	( 'getVal' )
+			->with		( 'contents', null )
+			->will		( $this->returnValue( null ) ) 
+		;
+		
+		$this->mockClass( 'WikiaSearchConfig', $mockConfig );
+		$this->mockApp();
+		
+		$respRefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
+		$respRefl->setAccessible( true );
+		$respRefl->setValue( $mockController, $mockResponse );
+		
+		$searchRefl = new ReflectionProperty( 'WikiaSearchController', 'wikiaSearch' );
+		$searchRefl->setAccessible( true );
+		$searchRefl->setValue( $mockController, $mockSearch );
+		
+		try {
+			$mockController->getSimilarPagesExternal();
+		} catch ( Exception $e ) { }
+		
+		$this->assertInstanceOf(
+				'Exception',
+				$e,
+				'WikiaSearchController::getSimilarPagesExternal should throw an exception if a query, url, or stream body is not set'
+		);
 	}
 }
