@@ -42,7 +42,7 @@ if ( $context == SD_CONTEXT_EDITING ) {
 	if ( $object->getType()->hasRange() ) {
 
 		$types = $object->getType()->getAcceptedValues();
-		if (count($types['classes']) == 1 && in_array('rdfs:Literal', $types['classes'])) {
+		if (count($types['classes']) == 1 && ( in_array('rdfs:Literal', $types['classes'] ) || in_array('xsd:hexBinary', $types['classes'] ) ) ) {
 			echo '<button class="add-input" data-range="' . join('', $types['classes']) . '">Add new</button>';
 		} else {
 			echo '<button class="load-dropdown" data-range="' . join(' ', $types['classes']) . '">Add</button>';
