@@ -290,7 +290,7 @@ class ForumHooksHelper {
 	
 	public static function onWallAction($action, $parent, $comment_id) {
 		$app = F::App();
-		$title = Title::newFromId($comment_id);
+		$title = Title::newFromId($comment_id, Title::GAID_FOR_UPDATE);
 
 		if ( !empty($title) && MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
 			$app->sendRequest( "RelatedForumDiscussion", "purgeCache", array('threadId' => empty($parent) ? $comment_id:$parent ) );
