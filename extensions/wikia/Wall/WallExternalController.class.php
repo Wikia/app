@@ -27,6 +27,74 @@ class WallExternalController extends WikiaController {
 		
 	}
 	
+	/**
+	 * Move thread (TODO: Should this be in Forums?)
+	 */
+	public function moveModal() {
+		
+		$id = $this->getVal('id');
+		$wm = WallMessage::newFromId($id);
+		
+		if(empty($wm)) {
+			return true;
+		}
+		
+		$mainWall = $wm->getWall();
+
+		if ( !$this->wg->User->isAllowed( 'wallmessagemove' ) ) {
+			$this->displayRestrictionError();
+			return false;
+			// skip rendering
+		}
+			
+		$forum = new Forum();
+
+		$list = $forum->getList(DB_SLAVE, NS_WIKIA_FORUM_BOARD);
+
+		$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
+		foreach ( $list as $value ) {
+			if($mainWall->getId() != $value) {
+				$wall = Wall::newFromId($value);
+				$this->destinationBoards[$value] = array( 'value' => $value, 'content' => htmlspecialchars( $wall->getTitle()->getText() ) );
+			}
+		}
+	}
+	
+	/**
+	 * Moves thread
+	 * @request destinationBoardId - id of destination board
+	 * @request rootMessageId - thread id
+	 */
+	public function moveThread() {
+		// permission check needed here
+		if ( !$this->wg->User->isAllowed( 'wallmessagemove' ) ) {
+			$this->displayRestrictionError();
+			return false;
+			// skip rendering
+		}
+		
+		$this->status = 'error';
+
+		$destinationId = $this->getVal('destinationBoardId', '');
+		$threadId = $this->getVal('rootMessageId', ''); 
+		
+		if(empty($destinationId)) {
+			$this->errormsg = wfMsg('wall-action-move-validation-select-wall');
+			return true;
+		}
+		
+		$wall = Wall::newFromId( $destinationId );
+		$thread = WallThread::newFromId( $threadId );
+		
+		if(empty($wall)) {
+			$this->errormsg = 'unknown';
+		}
+		
+		
+		$thread->move($wall, $this->wg->User);
+		$this->status = 'ok';
+	}
+	
 	public function votersModal() {
 		/**
 		 * @var $mw WallMessage

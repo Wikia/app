@@ -89,7 +89,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 		
-		$enabled = ($enabled=='true');
+		$enabled = ($enabled == 'true');
 		
 		$logMsg = "set extension option: $feature = ".var_export($enabled, TRUE);
 		$log = WF::build( 'LogPage', array( 'wikifeatures' ) );
@@ -102,6 +102,9 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		// clear cache for active wikis
         WikiFactory::clearCache( $this->wg->CityId );		
 		$this->wg->Memc->delete(WikiFeaturesHelper::getInstance()->getMemcKeyNumActiveWikis($feature));
+			
+			
+		$this->wf->runHooks( 'WikiFeatures::afterToggleFeature', array($feature, $enabled) );
 			
 		$this->setVal('result', 'ok');
 	}

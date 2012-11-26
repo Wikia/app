@@ -153,6 +153,8 @@ class WallMessage {
 			}
 			// after successful posting invalidate Thread cache
 			$class->getThread()->invalidateCache();
+			$rp = new WallRelatedPages();
+			$rp->setLastUpdate($parent->getId());
 		}
 		//Build data for sweet url ? id#number_of_comment
 		//notify
@@ -226,8 +228,10 @@ class WallMessage {
 	}
 
 	public function storeRelatedTopicsInDB($relatedTopicURLs) {
+		wfRunHooks('WallBeforeStoreRelatedTopicsInDB', array($this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ));
 		$rp = new WallRelatedPages();
 		$rp->setWithURLs($this->getId(), $relatedTopicURLs);
+		wfRunHooks('WallAfterStoreRelatedTopicsInDB', array($this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ));
 	}
 
 	public function getRelatedTopics() {
@@ -244,6 +248,7 @@ class WallMessage {
 
 	public function doSaveComment($body, $user, $summary = '') {
 		wfProfileIn( __METHOD__ );
+				
 		if($this->canEdit($user)){
 			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true, $summary );
 		}
@@ -390,16 +395,24 @@ class WallMessage {
 		if($this->isMain()) {
 			$this->getArticleComment()->setMetaData('title', $title);
 		}
-		return false;
+		return true;
 	}
 
 	public function setRelatedTopics($user, $relatedTopics) {
 		if($this->isMain()) {
 			$this->getArticleComment()->setMetaData('related_topics', implode('|', $relatedTopics));
-			$this->storeRelatedTopicsInDB($relatedTopics);
 			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-message-update-topics-summary' ) );
+			$this->storeRelatedTopicsInDB($relatedTopics);
 		}
-		return false;
+		return true;
+	}
+
+	public function markAsMove($user) {
+		if($this->isMain()) {
+			$this->getArticleComment()->setMetaData('lastmove', time());
+			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-action-move-topics-summary', $this->getWall()->getTitle()->getPrefixedText() ));
+		}
+		return true; 
 	}
 
 
@@ -567,7 +580,15 @@ class WallMessage {
 		$topObjectCache[$id] = WallMessage::newFromId($id);
 		return $topObjectCache[$id];
 	}
-
+	
+	public function	getTopParentId() {
+		$top = $this->getTopParentObj();
+		if(empty($top)) {
+			return null;
+		}
+		return $this->getId();
+	}
+	
 	public function isMain() {
 		$top = $this->getTopParentObj();
 		if(empty($top)) {
@@ -838,18 +859,20 @@ class WallMessage {
 		$wikiId = $this->cityId;
 		$userIdRemoving = $user->getId();
 		$userIdWallOwner = $this->getWallOwner()->getId();
+		$parentPageId = $this->getArticleTitle()->getArticleId();
+		
 		$url = $this->getMessagePageUrl();
 		$title = $this->getMetaTitle();
 		$messageId = $this->getId();
 
 		if( $this->isMain() ) {
-			$wnae = new WallNotificationAdminEntity($wikiId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, 0, false, $reason);
+			$wnae = new WallNotificationAdminEntity($wikiId, $parentPageId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, 0, false, $reason);
 		} else {
 			$parent = $this->getTopParentObj();
 			$parent->load();
 			$parentMessageId = $parent->getId();
 			$title = $parent->getMetaTitle();
-			$wnae = new WallNotificationAdminEntity($wikiId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentMessageId, true, $reason);
+			$wnae = new WallNotificationAdminEntity($wikiId, $parentPageId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentMessageId, true, $reason);
 		}
 
 		return $wnae;
@@ -1331,5 +1354,9 @@ class WallMessage {
 	public function isAllowedNotifyEveryone() {
 		$app = F::App();
 		return $this->helper->isAllowedNotifyEveryone($this->title->getNamespace(), $app->wg->User);
+	}
+	
+	public function canMove(User $user) {
+		return ( $this->isMain() && !$this->isRemove() && $this->can($user, 'wallmessagemove'));
 	}
 }

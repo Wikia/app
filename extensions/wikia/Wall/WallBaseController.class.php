@@ -142,6 +142,7 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal( 'isAnon', $this->wg->User->isAnon() );
 		$this->response->setVal( 'canNotifyeveryone', $wallMessage->canNotifyeveryone() );
 		$this->response->setVal( 'canUnnotifyeveryone', $wallMessage->canUnnotifyeveryone() );
+		$this->response->setVal( 'canMove', $wallMessage->canMove($this->wg->User) );
 	}
 	
 	public function message() {

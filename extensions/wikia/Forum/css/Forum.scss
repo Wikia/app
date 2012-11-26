@@ -11,6 +11,16 @@
 @import "../../Wall/css/WallDimensions";
 @import "ForumColors";
 
+/* local mixin */
+@mixin forum-message-error() {
+	@include border-radius($wall-border-radius);
+	background-color: $color-wall-error;
+	display: none;
+	font-size: 12px;
+	line-height: 20px;
+	text-align: center;
+}
+
 .Forum {
 
 	textarea {
@@ -92,6 +102,18 @@
 			display: none;
 			margin-top: 10px;
 		}
+		
+		.board-container {
+			margin-bottom: 10px;
+			.heading {
+				display: block;
+			}
+		}
+		
+		.board-list-error {
+			@include forum-message-error;
+			padding: 3px 20px;
+		}
 
 		.buttons {
 			float: right;
@@ -163,14 +185,9 @@
 			position: relative;
 
 			.no-title-warning {
-				@include border-radius($wall-border-radius);
-				background-color: $color-wall-error;
-				display: none;
-				font-size: 12px;
-				line-height: 20px;
+				@include forum-message-error;
 				position: absolute;
 				right: 5px;
-				text-align: center;
 				top: 5px;
 				width: 200px;
 				z-index: 1;
@@ -330,4 +347,30 @@
 		font-size: 11px;
 		margin-left: 3px;		
 	}
+}
+
+
+.ForumPolicies {
+  overflow-y: scroll;
+  border: 1px solid $color-wall-border;
+  font-size: 13px;
+  height: 400px;
+  position: relative;
+  padding: 10px;
+  .WikiaArticle {
+    padding: 0;
+    .msg-title {
+      font-weight: bold;
+      font-size: 18px;
+      span {
+        color: $color-text;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.policies-link {
+  float: right;
+  margin: 10px;
 }

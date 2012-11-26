@@ -53,9 +53,23 @@ class Wall extends WikiaModel {
 		return $this->mTitle;
 	}
 	
-	public function getDescription() {
+	public function getDescription($parse = true) {
 		$article = new Article($this->getTitle());
-		return $article->getText();
+		if(!$parse) {
+			return $article->getText();
+		}
+
+		return preg_replace_callback('/(\[\[[^\[\]\r\n\t]*\]\])/i', function($match) {
+			$app = F::App();
+			$options = $app->wg->Out->parserOptions();
+			$desc = str_replace('[[', '[[:', $match[0] );
+			$parserOut = $app->wg->Parser->parse($desc, $app->wg->Title, $options );
+			$desc = $parserOut->getText();
+			//TODO: maybe there is some parser option to not wrap everything in <p>
+			$desc = str_replace('<p>', '', $desc );
+			$desc = str_replace('</p>', '', $desc );
+			return $desc; 			
+		}, $article->getText() );
 	}
 
 	public function getRelatedPageId() {
@@ -224,9 +238,9 @@ class Wall extends WikiaModel {
 
 	public function moveAllThread(Wall $dest) {
 		CommentsIndex::changeParent( $this->getId(), $dest->getId() );
-		
+
 		$wallHistory = new WallHistory( $this->mCityId );
-		$wallHistory->moveThread( $this->getId(), $dest->getId() );
+		$wallHistory->moveThreads( $this->getId(), $dest->getId() );
 	}
 	
 	public function setMaxPerPage( $val ) {

@@ -26,6 +26,7 @@ $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 $app = F::app();
 
 $app->registerClass('Wall', $dir . '/Wall.class.php');
+$app->registerClass('Walls', $dir . '/Walls.class.php');
 $app->registerClass('WallThread', $dir . '/WallThread.class.php');
 
 $app->registerClass('WallMessage', $dir . '/WallMessage.class.php');
@@ -139,7 +140,8 @@ $app->registerHook('ListredirectsPage::getQueryInfo', 'WallHooksHelper', 'onList
 
 $app->registerHook('BeforeInitialize', 'WallHooksHelper', 'onBeforeInitialize');
 // lazy loaded by the previous hook
-//$app->registerHook('AfterLanguageGetNamespaces', 'WallHooksHelper', 'onAfterLanguageGetNamespaces');
+
+$app->registerHook( 'WikiFeatures::afterToggleFeature', 'WallHooksHelper', 'onAfterToggleFeature');
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',
@@ -246,3 +248,6 @@ $wgGroupPermissions['*']['wallfastadmindelete'] = false;
 $wgGroupPermissions['sysop']['wallfastadmindelete'] = false;
 $wgGroupPermissions['vstf']['wallfastadmindelete'] = true;
 $wgGroupPermissions['staff']['wallfastadmindelete'] = true;
+
+$wgGroupPermissions['*']['wallmessagemove'] = false;
+$wgGroupPermissions['user']['wallmessagemove'] = true;

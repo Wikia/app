@@ -269,5 +269,42 @@ class ForumHooksHelper {
 		}
 		return true;
 	}
+	
+	/**
+	 * Display Related Discussion (Forum posts) in bottom of article
+	 */
+	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
+		$app = F::App();
+		if ( $out->isArticle() && $app->wg->Title->exists() && $app->wg->Title->getNamespace() == NS_MAIN && !Wikia::isMainPage() && $app->wg->Request->getVal( 'diff' ) === null && !( $app->checkSkin( 'wikiamobile' ) ) ) {
+			$text .= $app->renderView( 'RelatedForumDiscussionController', 'index');
+		}
+		return true;
+	}
+	
+	/**
+	 * purge memc and vernish cache for pages releated to this thread
+	 * 
+	 * in case of edit this hook is run two time before (WallBeforeEdit) edit and after edit (WallAction)
+	 * 
+	 */
+	
+	public static function onWallAction($action, $parent, $id, $namespace) {
+		$app = F::App();
+		
+		if ( MWNamespace::getSubject( $namespace ) == NS_WIKIA_FORUM_BOARD ) {
+			$app->sendRequest( "RelatedForumDiscussion", "purgeCache", array('threadId' => empty($parent) ? $id:$parent ) );
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * just proxy to onWallStoreRelatedTopicsInDB
+	 */
+	 
+	public static function onWallStoreRelatedTopicsInDB($parent, $id, $namespace) {
+		self::onWallAction(null, $parent, $id, $namespace);
+		return true;	
+	}
 
 }

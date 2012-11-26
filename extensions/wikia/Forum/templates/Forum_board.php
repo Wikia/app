@@ -1,19 +1,17 @@
 <? if ($wg->EnableMiniEditorExtForWall): ?>
 	<?= $app->renderView('MiniEditorController', 'Setup') ?>
 <? endif ?>
-<div id="Wall">
+<div id="Wall" data-board-namespace="<?= $boardNamespace ?>">
 	<section id="Forum" class="Forum Board .comments">
 		<?= $app->renderView('ForumController', 'breadCrumbs') ?>
 		<div class="board-description">
 			<?= $description ?>
 		</div>
 		<div class="greeting"><?= $greeting ?></div>
-		<? if( !$isTopicPage): ?>
-			<?= $app->renderView('ForumController', 'boardNewThread') ?>
-		<? endif ?>
+		<?= $app->renderView('ForumController', 'boardNewThread', array('isTopicPage' => $isTopicPage)) ?>
 		<div class="ContentHeader <?php if($isTopicPage): ?> Topic<?php endif; ?>">
 			<?php if($isTopicPage): ?>
-				<div class="activity"><?= $wf->MsgExt(('forum-active-threads-on-topic'), array('parsemag'), $activeThreads, '<b>'.$topicText.'</b>') ?></div>
+				<div class="activity"><?= $wf->MsgExt(('forum-active-threads-on-topic'), array('parsemag'), $activeThreads, "<b><a href='$topicURL'>".$topicText."</a></b>") ?></div>
 			<?php else: ?>
 				<div class="activity"><?= $wf->MsgExt(('forum-active-threads'), array('parsemag'), $activeThreads) ?></div>
 			<?php endif; ?>

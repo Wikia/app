@@ -20,24 +20,23 @@ class ForumController extends WallBaseController {
 	public function board() {
 		parent::index();
 		$this->setIsForum();
+		
 		F::build( 'JSMessages' )->enqueuePackage( 'Wall', JSMessages::EXTERNAL );
-
 		$this->response->addAsset( 'forum_js' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoard.scss' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/MessageTopic.scss' );
 
 		$this->addMiniEditorAssets();
 
-		if ( $this->wall->getTitle()->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			$board = F::build( 'ForumBoard', array( 0 ), 'newFromId' );
+		$this->description = ''; 
 
-			if ( empty( $board ) ) {
-				$this->redirectToIndex();
-				return true;
-			}
+		if ( $this->wall->getTitle()->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
+			$board = F::build( 'ForumBoard', array( ), 'getEmpty' );
 
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
 			$this->response->setVal( 'isTopicPage', true );
+			
+			$this->app->wg->Out->setPageTitle( wfMsg( 'forum-board-topic-title', $this->wg->title->getBaseText() ) );
 		} else {
 			$boardId = $this->wall->getId();
 			$board = F::build( 'ForumBoard', array( $boardId ), 'newFromId' );
@@ -49,15 +48,19 @@ class ForumController extends WallBaseController {
 
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads() );
 			$this->response->setVal( 'isTopicPage', false );
+			
+			$this->description = $board->getDescription();
+			
+			$this->app->wg->Out->setPageTitle( wfMsg( 'forum-board-title', $this->wg->title->getBaseText() ) );
 		}
 		
 		$this->description = $board->getDescription();
+		$this->response->setVal( 'boardNamespace', NS_WIKIA_FORUM_BOARD );
 
 		//TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( 0, 0 );
 
 		$this->app->wg->SuppressPageHeader = true;
-		$this->app->wg->Out->setPageTitle( wfMsg( 'forum-board-title', $this->wg->title->getBaseText() ) );
 	}
 
 	protected function redirectToIndex() {
@@ -72,6 +75,7 @@ class ForumController extends WallBaseController {
 			if ( !empty( $topicTitle ) ) {
 				$wall = F::build( 'Wall', array( $title, $topicTitle->getArticleId() ), 'newFromRelatedPages' );
 				$this->response->setVal( 'topicText', $topicTitle->getPrefixedText() );
+				$this->response->setVal( 'topicURL', $topicTitle->getFullUrl() );
 				$wall->disableCache();
 			} else {
 				$wall = F::build( 'Wall', array( $title ), 'newFromTitle' );
@@ -85,6 +89,18 @@ class ForumController extends WallBaseController {
 
 	public function boardNewThread() {
 		parent::newMessage();
+		$this->isTopicPage = $this->getVal('isTopicPage', false);
+		if($this->isTopicPage) {
+			$forum = new Forum();
+		
+			$list = $forum->getBoardList();
+
+			$this->destinationBoards = array( array( 'value' => '', 'content' => wfMsg( 'forum-board-destination-empty' ) ) );
+	
+			foreach ( $list as $value ) {
+				$this->destinationBoards[] = array( 'value' => htmlspecialchars( $value['name'] ), 'content' => htmlspecialchars( $value['name'] ) );
+			}
+		}
 	}
 
 	public function boardThread() {
@@ -279,13 +295,6 @@ class ForumController extends WallBaseController {
 		$wallHistory = F::build( 'WallHistory', array( $this->app->wg->CityId ) );
 		$out = $wallHistory->getLastPosts( NS_WIKIA_FORUM_BOARD );
 		$this->response->setVal( 'posts', $out );
-	}
-
-	public function forumParticipationModule() {
-		$wallHistory = F::build( 'WallHistory', array( $this->app->wg->CityId ) );
-		$out = $wallHistory->getLastUsers( NS_WIKIA_FORUM_BOARD );
-
-		$this->response->setVal( 'participants', $out );
 	}
 
 	public function forumRelatedThreads() {
