@@ -16,6 +16,22 @@ $('button.add-wikiText-SDObj-from-article').click(function() {
 						defaultButton:true,
 						message:'Add',
 						handler:function() {
+							var $modalSelector = $('#AddWikiTextSDObject');
+							console.log($modalSelector.find('input[name="schema:name"]').val());
+							$.nirvana.sendRequest({
+								controller: 'StructuredDataController',
+								method: 'createWikiTextObjFromArticle',
+								type: 'POST',
+								format: 'json',
+								data: {
+									type: 'wikia:WikiText',
+									name: $modalSelector.find('input[name="schema:name"]').val(),
+									'schema:name': $modalSelector.find('textarea').val()
+								},
+								callback: function(data) {
+									console.log(data);
+								}
+							});
 						}
 					},
 					{

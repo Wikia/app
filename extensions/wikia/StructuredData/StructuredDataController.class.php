@@ -303,4 +303,25 @@ class StructuredDataController extends WikiaSpecialPageController {
 		}
 	}
 
+	public function createWikiTextObjFromArticle() {
+
+		$this->getResponse()->setFormat( 'json' );
+		$objectName = $this->request->getVal('name', false);
+		$type = $this->request->getVal('type', false);
+		if (!empty($objectName)) {
+				$sdsObject = $this->structuredData->createSDElement($type);
+			if($this->getRequest()->wasPosted()) {
+				$requestParams = $this->getRequest()->getParams();
+				$requestParams = $this->alterRequestPerObject( $requestParams, $type);
+
+				$result = $this->structuredData->updateSDElement($sdsObject, $requestParams);
+				if( isset($result->error) ) {
+					$this->response->setVal('error', $result->error);
+				} else {
+					$this->response->setVal('success', 'Object created successfully');
+				}
+			}
+		}
+	}
+
 }
