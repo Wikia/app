@@ -71,10 +71,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->with		( 'fulltext', '0' )
 			->will		( $this->returnValue( '0' ) )
 		;
-		$mockTrack
-			->staticExpects	( $this->once() )
-			->method	( 'event' )
-		;
 
 		$responserefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
 		$responserefl->setAccessible( true );
@@ -218,7 +214,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( 'Search' ) )
 		;
 		$mockTrack
-			->staticExpects	( $this->once() )
+			->expects	( $this->once() )
 			->method	( 'event' )
 			->with		( 'search_start_match', array( 'sterm' => 'unittestfoo', 'rver' => 0 ) )
 		;

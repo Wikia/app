@@ -1545,7 +1545,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( $mockSolResult ) )
 		;
 		$mockTrack
-			->expects	( $this->once() )
+			->expects	( $this->any() )
 			->method	( 'event' );
 		;
 		$this->mockClass( 'WikiaSearchResultSet', $mockResultSet );
@@ -1665,10 +1665,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( $mockQuery ) )
 		;
 		
-		$exception = null;
-		try {
-			$exception = new Solarium_Exception('foo');
-		} catch ( Exception $exception ) {};
+		$exception = $this->getMock( 'Solarium_Exception' );
 		
 		$mockClient
 			->expects	( $this->at( 0 ) )
@@ -1803,17 +1800,17 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( $mockQuery ) )
 		;
 		
-		$exception = null;
-		try {
-			$exception = new Solarium_Exception('foo');
-		} catch ( Exception $exception ) {};
+		$exception = $this->getMock( 'Solarium_Exception' );
 		
 		$mockClient
 			->expects	( $this->any() )
 			->method	( 'select' )
 			->will		( $this->throwException( $exception ) )
 		;
-		
+		$mockTrack
+			->expects	( $this->any() )
+			->method		( 'event' )
+		;
 		$this->mockClass( 'WikiaSearchResultSet', $mockResultSet );
 		$this->mockClass( 'Track', $mockTrack );
 		$this->mockClass( 'Wikia', $mockWikia );
