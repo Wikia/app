@@ -126,7 +126,7 @@ class AchUserProfileService {
 				$lap = $badge->getLap();
 				if ( $badge->isInTrack() ) {
 					// in track
-					if ( !isset($viewerByType[$typeId]) || $lap < $viewerByType[$typeId]->max ) {
+					if ( !isset($viewerByType[$typeId]) || $lap < $viewerByType[$typeId]['max_lap'] ) {
 						if( !isset($viewerByType[$typeId]) ) {
 							$eventsCounter = 0;
 						} else if ( $typeId == BADGE_LOVE ) {
@@ -186,14 +186,14 @@ class AchUserProfileService {
 
 			if ( $badgeType == BADGE_TYPE_INTRACKEDITPLUSCATEGORY ) {
 				if ( $achConfig->isEnabled( $badge_type_id ) ) {
-					$challenges[$badge_type_id] = $typeData->count;
+					$challenges[$badge_type_id] = $typeData['count'];
 				}
 			} else if ( $badgeType == BADGE_TYPE_INTRACKSTATIC ) {
 				if ( $inTrackStatic[$badge_type_id]['infinite'] ) {
-					$challenges[$badge_type_id] = $typeData->count;
+					$challenges[$badge_type_id] = $typeData['count'];
 				} else {
-					if ( $typeData->count < count( $inTrackStatic[$badge_type_id]['laps'] ) ) {
-						$challenges[$badge_type_id] = $typeData->count;
+					if ( $typeData['count'] < count( $inTrackStatic[$badge_type_id]['laps'] ) ) {
+						$challenges[$badge_type_id] = $typeData['count'];
 					}
 				}
 			}

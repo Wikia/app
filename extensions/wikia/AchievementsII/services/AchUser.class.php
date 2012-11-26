@@ -121,7 +121,7 @@ class AchUser {
 		// execute a query
 		$res = $dbr->select(
 			'ach_user_badges',
-			'badge_type_id, count(*) as count, max(badge_lap) as max',
+			'badge_type_id, count(*) as count, max(badge_lap) as max_lap',
 			$where,
 			__METHOD__,
 			array(
@@ -131,10 +131,10 @@ class AchUser {
 
 		$badgesByType = array();
 		foreach ($res as $row) {
-			$item = new stdClass();
-			$item->count = $row->count;
-			$item->max = $row->max;
-			$badgesByType[$row->badge_type_id] = $item;
+			$badgesByType[$row->badge_type_id] = array(
+				'count' => $row->count,
+				'max_lap' => $row->max_lap,
+			);
 		}
 
 		wfProfileOut(__METHOD__);
@@ -149,15 +149,15 @@ class AchUser {
 			$typeId = $badge->getTypeId();
 			$lap = $badge->getLap();
 			if ( !isset( $badgesByType[$typeId] ) ) {
-				$item = new stdClass();
-				$item->count = 1;
-				$item->max = $lap;
-				$badgesByType[$typeId] = $item;
+				$badgesByType[$typeId] = array(
+					'count' => 1,
+					'max_lap' => $lap,
+				);
 			} else {
 				$item = &$badgesByType[$typeId];
-				$item->count++;
-				if ( $item->max < $lap ) {
-					$item->max = $lap;
+				$item['count']++;
+				if ( $item['max_lap'] < $lap ) {
+					$item['max_lap'] = $lap;
 				}
 				unset($item);
 			}
