@@ -113,11 +113,6 @@ $wgResourceModules += array(
 			),
 			'monobook' => array(
 				've/init/mw/styles/ve.init.mw.ViewPageTarget-monobook.css',
-			),
-			'oasis' => array(
-				've/init/mw/styles/ve.init.mw.ViewPageTarget-oasis.css' => array(
-					'media' => 'all'
-				)
 			)
 		),
 		'dependencies' => array(

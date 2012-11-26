@@ -198,6 +198,7 @@ ve.init.mw.ViewPageTarget.prototype.activate = function () {
 	if ( !this.active && !this.activating ) {
 		this.activating = true;
 		// User interface changes
+		$.getResources($.getSassCommonURL('/extensions/VisualEditor/modules/ve/init/mw/styles/ve.init.mw.ViewPageTarget-oasis.scss'));
 		this.transformSkinTabs();
 		this.hideSiteNotice();
 		this.showSpinner();
