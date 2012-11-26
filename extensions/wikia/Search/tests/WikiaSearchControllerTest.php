@@ -1078,4 +1078,86 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 				'WikiaSearchController::setNamespacesFromRequest should return true.'
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearchController::getKeywords
+	 */
+	public function testGetKeywordsBreaks() {
+		$mockController	=	$this->searchController->setMethods( array( 'getVal' ) )->getMock();
+		
+		$mockController
+			->expects	( $this->once() )
+			->method	( 'getVal' )
+			->with		( 'id' )
+			->will		( $this->returnValue( null ) )
+		;
+		
+		try {
+			$mockController->getKeywords();
+		} catch ( Exception $e ) { }
+		
+		$this->assertInstanceOf(
+				'Exception',
+				$e,
+				'WikiaSearchController::getKeywords should throw an exception if not passed an id via request'
+		);
+		
+	}
+	
+	/**
+	 * @covers WikiaSearchController::getKeywords
+	 */
+	public function testGetKeywordsWorks() {
+		$mockController	=	$this->searchController->setMethods( array( 'getVal' ) )->getMock();
+		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )->disableOriginalConstructor()->getMock();
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'setPageId' ) );
+		$mockResponse	=	$this->getMockBuilder( 'WikiaResponse' )
+								->setMethods( array( 'setData', 'setFormat' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$responseArray = array( 'foo' => 'bar' );
+		$id = 123;
+		
+		$mockController
+			->expects	( $this->once() )
+			->method	( 'getVal' )
+			->with		( 'id' )
+			->will		( $this->returnValue( $id ) )
+		;
+		$mockConfig
+			->expects	( $this->once() )
+			->method	( 'setPageId' )
+			->with		( $id )
+		;
+		$mockSearch
+			->expects	( $this->once() )
+			->method	( 'getKeywords' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $responseArray ) )
+		;
+		$mockResponse
+			->expects	( $this->at( 0 ) )
+			->method	( 'setData' )
+			->with		( $responseArray )
+		;
+		$mockResponse
+			->expects	( $this->at( 1 ) )
+			->method	( 'setFormat' )
+			->with		( 'json' )
+		;
+		
+		$this->mockClass( 'WikiaSearchConfig', $mockConfig );
+		$this->mockApp();
+		
+		$respRefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
+		$respRefl->setAccessible( true );
+		$respRefl->setValue( $mockController, $mockResponse );
+		
+		$searchRefl = new ReflectionProperty( 'WikiaSearchController', 'wikiaSearch' );
+		$searchRefl->setAccessible( true );
+		$searchRefl->setValue( $mockController, $mockSearch );
+		
+		$mockController->getKeywords();
+	}
 }
