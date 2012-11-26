@@ -30,13 +30,14 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 	}
 
 	.categories {
-		display: block;
-		margin-left: 75px;
+		margin: 0;
+		padding: 0;
 	}
 
 	.categoriesLink {
 		display: block;
 		float: left;
+		padding: 5px 0;
 		width: 75px;
 
 		&:after {
@@ -55,6 +56,7 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 
 	.container {
 		@include clearfix;
+		margin-left: 75px;
 	}
 
 	.toolbar {

@@ -1,4 +1,4 @@
-<li class="category {{category.type}}" data-index="{{index}}" data-name="{{category.name}}" data-namespace="{{category.namespace}}" data-sortKey="{{category.sortKey}}">
+<li class="category {{className}}" data-index="{{index}}" data-name="{{category.name}}" data-namespace="{{category.namespace}}" data-sortKey="{{category.sortKey}}">
 	{{#category.link}}
 		<a class="name" href="{{category.link}}" title="{{category.name}}">{{category.name}}</a>
 	{{/category.link}}
@@ -6,7 +6,7 @@
 		<span class="name">{{category.name}}</span>
 	{{/category.link}}
 	<ul class="toolbar">
-		<li class="tool editCategory"><img src="{{blankImageUrl}}" class="sprite-small edit" title="{{edit}}"></li>
-		<li class="tool removeCategory"><img src="{{blankImageUrl}}" class="sprite-small delete" title="{{remove}}"></li>
+		<li class="tool editCategory"><img src="{{blankImageUrl}}" class="sprite-small edit" title="{{messages.edit}}"></li>
+		<li class="tool removeCategory"><img src="{{blankImageUrl}}" class="sprite-small delete" title="{{messages.remove}}"></li>
 	</ul>
 </li>

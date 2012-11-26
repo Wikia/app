@@ -1,6 +1,7 @@
 (function( window, $, undefined ) {
 
-var wgCategorySelect = window.wgCategorySelect,
+var action = window.wgAction,
+	wgCategorySelect = window.wgCategorySelect,
 	Wikia = window.Wikia || {};
 
 /**
@@ -171,24 +172,58 @@ CategorySelect.prototype.removeCategory = function( category ) {
  *			The settings to configure the instance with.
  */
 $.fn.categorySelect = (function() {
-	var blankImageUrl = window.wgBlankImgUrl,
-		cache = {
-			messages: {
-				categoryEdit: $.msg( 'categoryselect-category-edit' ),
-				categoryNameLabel: $.msg( 'categoryselect-modal-category-name' ),
-				categoryRemove: $.msg( 'categoryselect-category-remove' ),
-				modalButtonSave: $.msg( 'categoryselect-modal-button-save' ),
-				modalEmptyCategoryName: $.msg( 'categoryselect-modal-category-name-empty' )
-			}
-		},
+	var cache = {},
 		namespace = 'categorySelect';
 
+	// Build static method cache
+	cache.messages = {
+		categoryEdit: $.msg( 'categoryselect-category-edit' ),
+		categoryNameLabel: $.msg( 'categoryselect-modal-category-name' ),
+		categoryRemove: $.msg( 'categoryselect-category-remove' ),
+		modalButtonSave: $.msg( 'categoryselect-modal-button-save' ),
+		modalEmptyCategoryName: $.msg( 'categoryselect-modal-category-name-empty' )
+	};
+
+	// Build static template cache (content is lazy loaded)
+	cache.templates = {
+		category: {
+			content: '',
+			data: {
+				blankImageUrl: window.wgBlankImgUrl,
+				className: 'normal new',
+				messages: {
+					edit: cache.messages.categoryEdit,
+					remove: cache.messages.categoryRemove
+				}
+			}
+		},
+		categoryEdit: {
+			content: '',
+			data: {
+				messages: {
+					name: cache.messages.categoryNameLabel
+				}
+			}
+		}
+	};
+
+	function error( message ) {
+		throw namespace + ': ' + message;
+	}
+
 	function getTemplate( name ) {
-		return cache[ name ] || $.Deferred(function( dfd ) {
+		var template = cache.templates[ name ];
+
+		if ( !template ) {
+			error( 'Template "' + name + '" is not defined' );
+		}
+
+		return template.content && template || $.Deferred(function( dfd ) {
 			Wikia.getMultiTypePackage({
 				mustache: 'extensions/wikia/CategorySelect/templates/CategorySelectController_' + name + '.mustache',
 				callback: function( pkg ) {
-					dfd.resolve( cache[ name ] = pkg.mustache[ 0 ] );
+					template.content = pkg.mustache[ 0 ];
+					dfd.resolve( template );
 				}
 			});
 
@@ -216,7 +251,7 @@ $.fn.categorySelect = (function() {
 				categorySelect = new CategorySelect( options.data );
 
 			function addCategory( event, ui ) {
-				var category, index,
+				var data = {},
 					$input = $( this ),
 					value = ui != undefined ? ui.item.value : $input.val();
 
@@ -231,25 +266,19 @@ $.fn.categorySelect = (function() {
 
 					// Make sure value isn't empty
 					if ( value != undefined && value != '' ) {
-						category = categorySelect.makeCategory( value ),
-						index = categorySelect.addCategory( category );
+						data.category = categorySelect.makeCategory( value );
+						data.index = categorySelect.addCategory( data.category );
 
-						// Add the category to the DOM
 						$.when( getTemplate( 'category' ) ).done(function( template ) {
-							$categories[ options.categoryInsertMethod ]( Mustache.render( template, {
-								blankImageUrl: blankImageUrl,
-								category: category,
-								edit: cache.messages.categoryEdit,
-								index: index,
-								remove: cache.messages.categoryRemove
-							}));
+
+							// Let the implementation handle it from here
+							notifyListeners( 'add', {
+								element: $( options.categories ),
+								template: $.extend( true, template, { data: data } )
+							});
 						});
 
-						notifyListeners( 'update', {
-							index: index,
-							category: category,
-							categories: categorySelect.categories
-						});
+						notifyListeners( 'update', data );
 
 						// Clear out the input
 						$input.val( '' );
@@ -264,15 +293,13 @@ $.fn.categorySelect = (function() {
 					category = categorySelect.getCategory( index );
 
 				$.when( getTemplate( 'categoryEdit' ) ).done(function( template ) {
-					$modal = $.showCustomModal( cache.messages.categoryEdit, Mustache.render( template, {
+					$modal = $.showCustomModal( cache.messages.categoryEdit, Mustache.render( template.content, $.extend( true, template.data, {
 						category: category,
-						label: {
-							name: cache.messages.categoryNameLabel,
+						index: index,
+						messages: {
 							sortKey: $.msg( 'categoryselect-modal-category-sortkey', category.name )
 						}
-
-					// Modal options
-					}), {
+					})), {
 						buttons: [
 							{
 								id: 'CategorySelectEditModalSave',
@@ -319,21 +346,15 @@ $.fn.categorySelect = (function() {
 			function removeCategory( event ) {
 				var $category = $( this ).closest( options.category ),
 					index = $category.data( 'index' ),
-					category = categorySelect.removeCategory( index );
+					category = categorySelect.removeCategory( index ),
+					data = {
+						category: category,
+						categories: categorySelect.categories,
+						index: index
+					};
 
-				// Remove the category from the DOM
-				$category.animate({
-					opacity: 0,
-					height: 0
-				}, 400, function() {
-					$category.remove();
-				});
-
-				notifyListeners( 'update', {
-					index: index,
-					category: category,
-					categories: categorySelect.categories
-				});
+				notifyListeners( 'remove', $.extend( true, data, { element: $category } ) );
+				notifyListeners( 'update', data );
 			}
 
 			function setupAutocomplete( event ) {
@@ -352,8 +373,15 @@ $.fn.categorySelect = (function() {
 				.off( '.' + namespace )
 				.on( 'click.' + namespace, options.editCategory, editCategory )
 				.on( 'click.' + namespace, options.removeCategory, removeCategory )
-				.on( 'keypress.' + namespace, options.addCategory, addCategory )
-				.one( 'focus.' + namespace, options.addCategory, setupAutocomplete );
+				.on( 'keypress.' + namespace, options.addCategory, addCategory );
+
+			// Setup autocomplete immediately if initialization was from focus on addCategory
+			if ( options.event && options.event.type == 'focusin' && $( options.event.currentTarget ).is( options.addCategory ) ) {
+				setupAutocomplete.call( options.event.currentTarget, event );
+
+			} else {
+				$element.one( 'focus.' + namespace, options.addCategory, setupAutocomplete );
+			}
 		});
 	}
 })();
@@ -365,7 +393,6 @@ $.fn.categorySelect.options = {
 	},
 	categories: '.categories',
 	category: '.category',
-	categoryInsertMethod: 'prepend',
 	data: [],
 	addCategory: '.addCategory',
 	editCategory: '.editCategory',

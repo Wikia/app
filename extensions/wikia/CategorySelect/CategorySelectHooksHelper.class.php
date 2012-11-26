@@ -202,9 +202,10 @@ class CategorySelectHooksHelper {
 
 		$vars[ 'wgCategorySelect' ] = array(
 			'categories' => $categories,
-			'defaultSortKey' => $app->wg->Parser->getDefaultSort() ?: $app->wg->Title->getText(),
 			'defaultNamespace' => $app->wg->ContLang->getNsText( NS_CATEGORY ),
 			'defaultNamespaces' => CategorySelect::getDefaultNamespaces(),
+			'defaultSeparator' => trim( $app->wf->Message( 'colon-separator' )->escaped() ),
+			'defaultSortKey' => $app->wg->Parser->getDefaultSort() ?: $app->wg->Title->getText(),
 		);
 
 		return true;

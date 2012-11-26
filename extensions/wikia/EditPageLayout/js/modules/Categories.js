@@ -28,7 +28,18 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 		$categorySelect.categorySelect({
 			data: JSON.parse( $categories.val() )
 
-		// Update categories metadata when categories change
+		}).on( 'add.categorySelect', function( event, data ) {
+			data.element.prepend( Mustache.render( data.template.content, data.template.data ) );
+
+		}).on( 'remove.categorySelect', function( event, data ) {
+			data.element.animate({
+				opacity: 0,
+				height: 0
+
+			}, 400, function() {
+				data.element.remove();
+			});
+
 		}).on( 'update.categorySelect', function( event, data ) {
 			$categories.val( JSON.stringify( data.categories ) );
 		});

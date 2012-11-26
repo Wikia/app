@@ -3,7 +3,8 @@
 		<? foreach( $categories as $index => $category ): ?>
 			<?= $app->renderView( 'CategorySelectController', 'category', array(
 				'index' => $index,
-				'category' => $category
+				'category' => $category,
+				'className' => $category[ 'type' ]
 			)) ?>
 		<? endforeach ?>
 	<? endif ?>
