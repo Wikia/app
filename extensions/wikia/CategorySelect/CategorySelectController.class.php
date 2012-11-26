@@ -70,6 +70,7 @@ class CategorySelectController extends WikiaController {
 	public function category() {
 		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'category', $this->request->getVal( 'category', array() ) );
+		$this->response->setVal( 'className', $this->request->getVal( 'className', 'normal' ) );
 		$this->response->setVal( 'edit', $this->wf->Msg( 'categoryselect-category-edit' ) );
 		$this->response->setVal( 'index', $this->request->getVal( 'index', 0 ) );
 		$this->response->setVal( 'remove', $this->wf->Msg( 'categoryselect-category-remove' ) );
