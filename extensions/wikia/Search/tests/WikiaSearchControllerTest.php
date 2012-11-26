@@ -5,9 +5,8 @@ require_once( 'WikiaSearchBaseTest.php' );
 class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	
 	public function setUp() {
-		global $wgWikiaSearchIsDefault;
-		$wgWikiaSearchIsDefault = true;
-		$this->searchController = F::build( 'WikiaSearchController' );
+		$this->searchController = $this->getMockBuilder( 'WikiaSearchController' )
+										->disableOriginalConstructor();
 		parent::setUp();
 	}
 	
@@ -17,12 +16,19 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	 */
 	public function testArticleMatchTrackingWithMatch() {
 		
+		$this->searchController->setMethods( array( 'getVal' ) );
+		$mockController = $this->searchController->getMock();
+		
 		$searchConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'getOriginalQuery', 'getArticleMatch' ) );
 		$mockTitle			=	$this->getMock( 'Title',  array( 'newFromText', 'getFullUrl' ) );
 		$mockArticle		=	$this->getMock( 'Article', array( 'getTitle' ), array( $mockTitle ) );
 		$mockArticleMatch	=	$this->getMock( 'WikiaSearchArticleMatch', array( 'getArticle' ), array( $mockArticle ) );
 		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect' ), array( 'html' ) );
-		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal', 'setVal' ), array( array() ) );
+		$mockTrack			=	$this->getMock( 'Track', array( 'event' ) );
+		$mockWrapper		=	$this->getMockBuilder( 'WikiaFunctionWrapper' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'RunHoooks' ) )
+									->getMock();
 
 		$searchConfig
 			->expects	( $this->any() )
@@ -59,21 +65,30 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->method	( 'getTitle' )
 			->will		( $this->returnValue( $mockTitle ) )
 		;
-		$mockRequest
+		$mockController
 			->expects	( $this->once() )
 			->method	( 'getVal' )
 			->with		( 'fulltext', '0' )
 			->will		( $this->returnValue( '0' ) )
 		;
 
-		$this->searchController->setRequest( $mockRequest );
-		$this->searchController->setResponse( $mockResponse );
+		$responserefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
+		$responserefl->setAccessible( true );
+		$responserefl->setValue( $mockController, $mockResponse );
+		
+		$wfrefl = new ReflectionProperty( 'WikiaSearchController', 'wf' );
+		$wfrefl->setAccessible( true );
+		$wfrefl->setValue( $mockController, $mockWrapper );
+		
+		$this->mockClass( 'Track', $mockTrack );
+		$this->mockClass( 'Title', $mockTitle );
+		$this->mockApp();
 		
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
 		$method->setAccessible( true );
 		
 		$this->assertTrue(
-				$method->invoke( $this->searchController, $searchConfig ),
+				$method->invoke( $mockController, $searchConfig ),
 				'WikiaSearchController::handleArticleMatchTracking should return true.'
 		);
 	}
@@ -83,12 +98,15 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	 */
 	public function testArticleMatchTrackingWithoutMatch() {
 		
+		$mockController = $this->searchController->setMethods( array( 'getVal' ) )->getMock();
+		
 		$searchConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'getOriginalQuery', 'getArticleMatch' ) );
 		$mockTitle			=	$this->getMock( 'Title',  array( 'newFromText', 'getFullUrl' ) );
 		$mockArticle		=	$this->getMock( 'Article', array( 'getTitle' ), array( $mockTitle ) );
 		$mockArticleMatch	=	$this->getMock( 'WikiaSearchArticleMatch', array( 'getArticle' ), array( $mockArticle ) );
 		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect' ), array( 'html' ) );
-		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal', 'setVal' ), array( array() ) );
+		$mockTrack			=	$this->getMock( 'Track', array( 'event' ) );
+		$mockWrapper		=	$this->getMock( 'WikiaFunctionWrapper', array( 'RunHooks' ) );
 
 		$searchConfig
 			->expects	( $this->any() )
@@ -99,11 +117,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->expects	( $this->any() )
 			->method	( 'getOriginalQuery' )
 			->will		( $this->returnValue( 'unittestfoo' ) )
-		;
-		$mockTitle
-			->expects	( $this->any() )
-			->method	( 'newFromTitle' )
-			->will		( $this->returnValue( $mockTitle ) )
 		;
 		$mockTitle
 			->expects	( $this->any() )
@@ -121,19 +134,110 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( $mockTitle ) )
 		;
 
-		$this->searchController->setRequest( $mockRequest );
-		$this->searchController->setResponse( $mockResponse );
+		$responserefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
+		$responserefl->setAccessible( true );
+		$responserefl->setValue( $mockController, $mockResponse );
 		
-		$searchConfig->setArticleMatch( $mockArticleMatch );
+		$wfrefl = new ReflectionProperty( 'WikiaSearchController', 'wf' );
+		$wfrefl->setAccessible( true );
+		$wfrefl->setValue( $mockController, $mockWrapper );
 		
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
 		$method->setAccessible( true );
 		
 		$this->assertTrue(
-				$method->invoke( $this->searchController, $searchConfig ),
+				$method->invoke( $mockController, $searchConfig ),
 				'WikiaSearchController::handleArticleMatchTracking should return true.'
 		);
-		$method->invoke( $this->searchController, $searchConfig );
+		
+		$this->mockClass( 'Track', $mockTrack );
+		$this->mockClass( 'Title', $mockTitle );
+		$this->mockApp();
+		
+		$method->invoke( $mockController, $searchConfig );
+	}
+	
+	/**
+	 * @covers WikiaSearchController::handleArticleMatchTracking
+	 */
+	public function handleArticleMatchTrackingWithoutGoSearch() {
+		
+		$mockController		=	$this->searchController->setMethods( array( 'getVal' ) )->getMock();
+		
+		$searchConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'getOriginalQuery', 'getArticleMatch' ) );
+		$mockTitle			=	$this->getMock( 'Title',  array( 'newFromText', 'getFullUrl' ) );
+		$mockArticle		=	$this->getMock( 'Article', array( 'getTitle' ), array( $mockTitle ) );
+		$mockArticleMatch	=	$this->getMock( 'WikiaSearchArticleMatch', array( 'getArticle' ), array( $mockArticle ) );
+		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect' ), array( 'html' ) );
+		$mockTrack			=	$this->getMock( 'Track', array( 'event' ) );
+		$mockWrapper		=	$this->getMock( 'WikiaFunctionWrapper', array( 'RunHooks' ) );
+
+		$searchConfig
+			->expects	( $this->any() )
+			->method	( 'getArticleMatch' )
+			->will		( $this->returnValue( $mockArticleMatch ) )
+		;
+		$searchConfig
+			->expects	( $this->any() )
+			->method	( 'getOriginalQuery' )
+			->will		( $this->returnValue( 'unittestfoo' ) )
+		;
+		$mockTitle
+			->expects	( $this->any() )
+			->method	( 'newFromTitle' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+			->expects	( $this->any() )
+			->method	( 'getFullURL' )
+			->will		( $this->returnValue( 'http://foo.wikia.com/Wiki/foo' ) )
+		;
+		$mockResponse
+			->expects	( $this->once() )
+			->method	( 'redirect' )
+			->will		( $this->returnValue( true ) )
+		;
+		$mockArticleMatch
+			->expects	( $this->once() )
+			->method	( 'getArticle' )
+			->will		( $this->returnValue( $mockArticle ) )
+		;
+		$mockArticle
+			->expects	( $this->any() )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockController
+			->expects	( $this->once() )
+			->method	( 'getVal' )
+			->with		( 'fulltext', '0' )
+			->will		( $this->returnValue( 'Search' ) )
+		;
+		$mockTrack
+			->expects	( $this->once() )
+			->method	( 'event' )
+			->with		( 'search_start_match', array( 'sterm' => 'unittestfoo', 'rver' => 0 ) )
+		;
+
+		$responserefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
+		$responserefl->setAccessible( true );
+		$responserefl->setValue( $mockController, $mockResponse );
+		
+		$wfrefl = new ReflectionProperty( 'WikiaSearchController', 'wf' );
+		$wfrefl->setAccessible( true );
+		$wfrefl->setValue( $mockController, $mockWrapper );
+		
+		$this->mockClass( 'Track', $mockTrack );
+		$this->mockClass( 'Title', $mockTitle );
+		$this->mockApp();
+		
+		$method = new ReflectionMethod( 'WikiaSearchController', 'handleArticleMatchTracking' );
+		$method->setAccessible( true );
+		
+		$this->assertTrue(
+				$method->invoke( $this->searchController->getMock(), $searchConfig ),
+				'WikiaSearchController::handleArticleMatchTracking should return true.'
+		);
 	}
 	
 	
@@ -141,6 +245,10 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	 * @covers WikiaSearchController
 	 */
 	public function testOnWikiaMobileAssetsPackages() {
+		
+		$mockSearch		= $this->getMockBuilder( 'WikiaSearch' )->disableOriginalConstructor()->getMock();
+		$mockIndexer	= $this->getMockBuilder( 'WikiaSearchIndexer' )->disableOriginalConstructor()->getMock();
+		$controller		= F::build( 'WikiaSearchController', array( $mockSearch, $mockIndexer ) );
 		
 		$mockTitle	= $this->getMock( 'Title', array( 'isSpecial' ) );	
 		$jsHead		= array();
@@ -162,9 +270,8 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		
 		$this->mockGlobalVariable( 'wgTitle', $mockTitle );
 		$this->mockApp();
-		
 		$this->assertTrue( 
-				$this->searchController->onWikiaMobileAssetsPackages( $jsHead, $jsBody, $cssPkg ),
+				$controller->onWikiaMobileAssetsPackages( $jsHead, $jsBody, $cssPkg ),
 				'As a hook, WikiaSearchController::onWikiaMobileAssetsPackages must return true.'
 		);
 		$this->assertEmpty(
@@ -176,7 +283,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		        'WikiaSearchController::onWikiaMobileAssetsPackages should not append the value "wikiasearch_scss_wikiamobile" to the jsBodyPackages array  if the title is not special search.'
 		);
 		$this->assertTrue(
-		        $this->searchController->onWikiaMobileAssetsPackages( $jsHead, $jsBody, $cssPkg ),
+		        $controller->onWikiaMobileAssetsPackages( $jsHead, $jsBody, $cssPkg ),
 		        'As a hook, WikiaSearchController::onWikiaMobileAssetsPackages must return true.'
 		);
 		$this->assertContains(
@@ -195,138 +302,380 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	/**
 	 * @covers WikiaSearchController::pagination
 	 */
-	public function testPagination() {
+	public function testPaginationWithoutConfig() {
+		
+		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
+		$mockTitle			=	$this->getMockBuilder( 'Title' )->disableOriginalConstructor()->getMock();
 		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect', 'setVal' ), array( 'html' ) );
 		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
-		$searchConfig		=	F::build( 'WikiaSearchConfig' );
+		$configMethods		=	array( 'getResultsFound', 'getPage', 'getQuery', 'getNumPages', 'getIsInterWiki', 
+										'getSkipCache', 'getDebug', 'getNamespaces', 'getAdvanced', 'getIncludeRedirects', 'getLimit' );
+		$mockConfig			=	$this->getMock( 'WikiaSearchConfig', $configMethods );
 		
+		$mockWgRefl = new ReflectionProperty( 'WikiaSearchController', 'wg' );
+		$mockWgRefl->setAccessible( true );
+		$mockWgRefl->setValue( $mockController, (object) array( 'Title' => $mockTitle ) );
+		
+		$mockController
+			->expects	( $this->any() )
+			->method	( 'getVal' )
+			->with		( 'config', false )
+			->will		( $this->returnValue( false ) )
+		;
+		$e = null;
 		try {
-			$this->searchController->pagination();
+			$mockController->pagination();
 			$this->assertFalse( 
 					true, 
 					'WikiaSearchController::pagination should throw an exception if the "config" is not set in the request.'
 			);
 		} catch ( Exception $e ) { }
-		$this->searchController->getRequest()->setVal( 'config', 'foo' );
-		try {
-			$this->searchController->pagination();
-			$this->assertFalse( 
-					true, 
-					'WikiaSearchController::pagination should throw an exception if the "config" is set in the request, but is not an instance of WikiaSearchConfig.'
-			);
-		} catch ( Exception $e ) { }
 		
-		$mockRequest
+		$this->assertInstanceOf(
+				'Exception',
+				$e,
+				'WikiaSearchController::pagination should throw an exception if an instance of WikiaSearchConfig is not set in the request'
+		);
+	}
+		
+	public function testPaginationMalformedConfig() {
+	
+		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
+		$mockTitle			=	$this->getMockBuilder( 'Title' )->disableOriginalConstructor()->getMock();
+		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect', 'setVal' ), array( 'html' ) );
+		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
+		$configMethods		=	array( 'getResultsFound', 'getPage', 'getQuery', 'getNumPages', 'getIsInterWiki', 
+										'getSkipCache', 'getDebug', 'getNamespaces', 'getAdvanced', 'getIncludeRedirects', 'getLimit' );
+		$mockConfig			=	$this->getMock( 'WikiaSearchConfig', $configMethods );
+		
+		$mockWgRefl = new ReflectionProperty( 'WikiaSearchController', 'wg' );
+		$mockWgRefl->setAccessible( true );
+		$mockWgRefl->setValue( $mockController, (object) array( 'Title' => $mockTitle ) );
+		
+		$mockController
 			->expects	( $this->any() )
 			->method	( 'getVal' )
 			->with		( 'config', false )
-			->will		( $this->returnValue( $searchConfig ) )
+			->will		( $this->returnValue( 'foo' ) )
 		;
+		$e = null;
+		try {
+			$mockController->pagination();
+			$this->assertFalse( 
+					true, 
+					'WikiaSearchController::pagination should throw an exception if the "config" is not set in the request.'
+			);
+		} catch ( Exception $e ) { }
 		
-		$this->searchController->setRequest( $mockRequest );
+		$this->assertInstanceOf(
+				'Exception',
+				$e,
+				'WikiaSearchController::pagination should throw an exception if an instance of WikiaSearchConfig is not set in the request'
+		);
+	}
+	
+	
+	/**
+	 * @covers WikiaSearchController::pagination
+	 */
+	public function testPaginationWithConfigNoResults1() {
+		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
+		$mockTitle			=	$this->getMockBuilder( 'Title' )->disableOriginalConstructor()->getMock();
+		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect', 'setVal' ), array( 'html' ) );
+		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
+		$configMethods		=	array( 'getResultsFound', 'getPage', 'getQuery', 'getNumPages', 'getIsInterWiki', 
+										'getSkipCache', 'getDebug', 'getNamespaces', 'getAdvanced', 'getIncludeRedirects', 'getLimit' );
+		$mockConfig			=	$this->getMock( 'WikiaSearchConfig', $configMethods );
+		
+		$mockWgRefl = new ReflectionProperty( 'WikiaSearchController', 'wg' );
+		$mockWgRefl->setAccessible( true );
+		$mockWgRefl->setValue( $mockController, (object) array( 'Title' => $mockTitle ) );
+		
+		$mockController
+			->expects	( $this->at( 0 ) )
+			->method	( 'getVal' )
+			->with		( 'config', false )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResultsFound' )
+			->will		( $this->returnValue( false ) )
+		;
 		$this->assertFalse(
-				$this->searchController->pagination(),
+				$mockController->pagination(),
 				'WikiaSearchController::pagination should return false if search config set in the request does not have its resultsFound value set, or that value is 0.'
 		);
-		$searchConfig->setResultFound( 0 );
-		$this->assertFalse(
-		        $this->searchController->pagination(),
-		        'WikiaSearchController::pagination should return false if search config set in the request does not have its resultsFound value set, or that value is 0.'
-		);
+	}
+	
+/**
+	 * @covers WikiaSearchController::pagination
+	 */
+	public function testPaginationWithConfigNoResults2() {
+		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
+		$mockTitle			=	$this->getMockBuilder( 'Title' )->disableOriginalConstructor()->getMock();
+		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect', 'setVal' ), array( 'html' ) );
+		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
+		$configMethods		=	array( 'getResultsFound', 'getPage', 'getQuery', 'getNumPages', 'getIsInterWiki', 
+										'getSkipCache', 'getDebug', 'getNamespaces', 'getAdvanced', 'getIncludeRedirects', 'getLimit' );
+		$mockConfig			=	$this->getMock( 'WikiaSearchConfig', $configMethods );
 		
-		$searchConfig
-			->setResultsFound	( 200 )
-			->setPage			( 2 )
-		;
+		$mockWgRefl = new ReflectionProperty( 'WikiaSearchController', 'wg' );
+		$mockWgRefl->setAccessible( true );
+		$mockWgRefl->setValue( $mockController, (object) array( 'Title' => $mockTitle ) );
 		
-		$mockResponse
+		$mockController
 			->expects	( $this->at( 0 ) )
-			->method	( 'setVal' )
-			->with		( 'query', $searchConfig->getQuery( WikiaSearchConfig::QUERY_RAW ) )
+			->method	( 'getVal' )
+			->with		( 'config', false )
+			->will		( $this->returnValue( $mockConfig ) )
 		;
-		$mockResponse
-			->expects	( $this->at( 1 ) )
-			->method	( 'setVal' )
-			->with		( 'pagesNum', $searchConfig->getNumPages() )
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResultsFound' )
+			->will		( $this->returnValue( 0 ) )
 		;
-		$mockResponse
-			->expects	( $this->at( 2 ) )
-			->method	( 'setVal' )
-			->with		( 'currentPage', $searchConfig->getPage() )
+		$this->assertFalse(
+				$mockController->pagination(),
+				'WikiaSearchController::pagination should return false if search config set in the request does not have its resultsFound value set, or that value is 0.'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchController::pagination
+	 */
+	public function testPaginationWithConfig() {
+		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
+		$mockTitle			=	$this->getMockBuilder( 'Title' )->disableOriginalConstructor()->getMock();
+		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect', 'setVal' ), array( 'html' ) );
+		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
+		$configMethods		=	array( 'getResultsFound', 'getPage', 'getQuery', 'getNumPages', 'getIsInterWiki', 
+										'getSkipCache', 'getDebug', 'getNamespaces', 'getAdvanced', 'getIncludeRedirects', 'getLimit' );
+		$mockConfig			=	$this->getMock( 'WikiaSearchConfig', $configMethods );
+		
+		$mockWgRefl = new ReflectionProperty( 'WikiaSearchController', 'wg' );
+		$mockWgRefl->setAccessible( true );
+		$mockWgRefl->setValue( $mockController, (object) array( 'Title' => $mockTitle ) );
+		
+		$mockController
+			->expects	( $this->at( 0 ) )
+			->method	( 'getVal' )
+			->with		( 'config', false )
+			->will		( $this->returnValue( $mockConfig ) )
 		;
-		$mockResponse
-			->expects	( $this->at( 6 ) )
-			->method	( 'setVal' )
-			->with		( 'crossWikia', $searchConfig->isInterWiki() )
+		$incr = 0;
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getResultsFound' )
+			->will		( $this->returnValue( 200 ) )
 		;
-		$mockResponse
-			->expects	( $this->at( 7 ) )
-			->method	( 'setVal' )
-			->with		( 'resultsCount', $searchConfig->getResultsFound() )
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getPage' )
+			->will		( $this->returnValue( 2 ) )
 		;
-		$mockResponse
-			->expects	( $this->at( 8 ) )
-			->method	( 'setVal' )
-			->with		( 'skipCache', $searchConfig->getSkipCache() )
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getNumPages' )
+			->will		( $this->returnValue( 10 ) )
 		;
-		$mockResponse
-			->expects	( $this->at( 9 ) )
-			->method	( 'setVal' )
-			->with		( 'debug', $searchConfig->getDebug() )
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getQuery' )
+			->with		( WikiaSearchConfig::QUERY_RAW )
+			->will		( $this->returnValue( 'foo' ) )
 		;
-		$mockResponse
-			->expects	( $this->at( 10 ) )
-			->method	( 'setVal' )
-			->with		( 'namespaces', $searchConfig->getNamespaces() )
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getNumPages' )
+			->will		( $this->returnValue( 10 ) )
 		;
-		$mockResponse
-			->expects	( $this->at( 11 ) )
-			->method	( 'setVal' )
-			->with		( 'advanced', $searchConfig->getAdvanced() )
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getIsInterWiki' )
+			->will		( $this->returnValue( false ) )
 		;
-		$mockResponse
-			->expects	( $this->at( 12 ) )
-			->method	( 'setVal' )
-			->with		( 'redirs', $searchConfig->getIncludeRedirects() )
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getResultsFound' )
+			->will		( $this->returnValue( 200 ) )
 		;
-		$mockResponse
-			->expects	( $this->at( 13 ) )
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getSkipCache' )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getDebug' )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getNamespaces' )
+			->will		( $this->returnValue( array( NS_MAIN ) ) )
+		;
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getAdvanced' )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getIncludeRedirects' )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getLimit' )
+			->will		( $this->returnValue( 20 ) )
+		;
+		$incr2 = 1;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
 			->method	( 'setVal' )
-			->with		( 'limit', $searchConfig->getLimit() )
+			->with		( 'query', 'foo' )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'pagesNum', '10' )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'currentPage', 2 )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'windowFirstPage', 1 )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'windowLastPage', 7 )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'pageTitle', $mockTitle )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'crossWikia', false )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'resultsCount', 200 )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'skipCache', false )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'debug', false )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'namespaces', array( NS_MAIN ) )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'advanced', false )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'redirs', false )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'limit', 20 )
 		;
 		
-		$this->searchController->setResponse( $mockResponse );
-		
-		$this->searchController->pagination();
-		
-		//@todo it would be radical if a front-endian could do some assertions about what the markup should look like in the templates.
+		$mockController->pagination();
+	}
+	
+	/**
+	 * @covers WikiaSearchController::tabs
+	 */
+	public function testTabsWithoutConfig() {
+		$mockController		=	$this->searchController->setMethods( array( 'getVal' ) )->getMock();
+		$mockController
+			->expects	( $this->any() )
+			->method	( 'getVal' )
+			->with		( 'config', false )
+			->will		( $this->returnValue( false ) )
+		;
+		$e = null;
+		$this->mockApp();
+		try {
+		    $mockController->tabs();
+		    $this->assertFalse(
+		            true,
+		            'WikiaSearchController::tabs should throw an exception if the "config" is not set in the request.'
+		    );
+		} catch ( Exception $e ) { }
+		$this->assertInstanceOf(
+				'Exception', 
+				$e,
+				'WikiaSearchController::tabs should throw an exception if search config is not set'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchController::tabs
+	 */
+	public function testTabsWithBadConfig() {
+		$mockController		=	$this->searchController->setMethods( array( 'getVal' ) )->getMock();
+		$mockController
+			->expects	( $this->any() )
+			->method	( 'getVal' )
+			->with		( 'config', false )
+			->will		( $this->returnValue( 'foo' ) )
+		;
+		$e = null;
+		$this->mockApp();
+		try {
+		    $mockController->tabs();
+		    $this->assertFalse(
+		            true,
+		            'WikiaSearchController::tabs should throw an exception if the "config" is not set in the request.'
+		    );
+		} catch ( Exception $e ) { }
+		$this->assertInstanceOf(
+				'Exception', 
+				$e,
+				'WikiaSearchController::tabs should throw an exception if search config is set incorrectly'
+		);
 	}
 	
 	/**
 	 * @covers WikiaSearchController::tabs
 	 */
 	public function testTabs() {
-		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect', 'setVal' ), array( 'html' ) );
-		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
-		$mockSearchConfig	=	$this->getMock( 'WikiaSearchConfig', array( 'getNamespaces', 'getQuery' ) );
-		$mockSearchEngine   =   $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'namespacesAsText', 'searchableNamespaces' ) );
-		
-		$mockSearchEngine->staticExpects( $this->any() )->method( 'defaultNamespaces' )->will( $this->returnValue( array( NS_MAIN, NS_CATEGORY ) ) );
-		$mockSearchEngine->staticExpects( $this->any() )->method( 'namespacesAsText' )->will( $this->returnValue( array( 'Article', 'Category' ) ) );
-		$mockSearchEngine->staticExpects( $this->any() )->method( 'searchableNamespaces' )->will( $this->returnValue( array( NS_MAIN, NS_CATEGORY, NS_FILE, NS_USER ) ) );
-		$mockSearchConfig->expects( $this->any() )->method( 'getNamespaces' )->will( $this->returnValue( array( NS_MAIN, NS_CATEGORY, NS_FILE, NS_USER ) ) );
-		$defaultNamespaces = $mockSearchEngine->defaultNamespaces();
-		
-		$nsAllSet = $mockSearchEngine->searchableNamespaces();
+		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
+		$mockSearchConfig	=	$this->getMock( 'WikiaSearchConfig', array( 'getNamespaces', 'getQuery', 'getSearchProfiles', 'getIncludeRedirects', 'getActiveTab' ) );
 		
 		$this->mockGlobalVariable( 'wgDefaultSearchProfile', SEARCH_PROFILE_DEFAULT );
+		
+		$defaultNamespaces = array( NS_MAIN, NS_CATEGORY );
 		
 		$searchProfileArray = array(
 	            SEARCH_PROFILE_DEFAULT => array(
 	                    'message' => 'wikiasearch2-tabs-articles',
 	                    'tooltip' => 'searchprofile-articles-tooltip',
 	                    'namespaces' => $defaultNamespaces,
-	                    'namespace-messages' => $mockSearchEngine->namespacesAsText( $defaultNamespaces ),
+	                    'namespace-messages' => SearchEngine::namespacesAsText( $defaultNamespaces ),
 	            ),
 	            SEARCH_PROFILE_IMAGES => array(
 	                    'message' => 'wikiasearch2-tabs-photos-and-videos',
@@ -341,152 +690,164 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	            SEARCH_PROFILE_ALL => array(
 	                    'message' => 'searchprofile-everything',
 	                    'tooltip' => 'searchprofile-everything-tooltip',
-	                    'namespaces' => $nsAllSet,
+	                    'namespaces' => array( NS_MAIN, NS_TALK, NS_CATEGORY, NS_CATEGORY_TALK, NS_FILE, NS_USER ),
 	            ),
 	            SEARCH_PROFILE_ADVANCED => array(
 	                    'message' => 'searchprofile-advanced',
 	                    'tooltip' => 'searchprofile-advanced-tooltip',
-	                    'namespaces' => $mockSearchConfig->getNamespaces(),
+	                    'namespaces' => array( NS_MAIN, NS_CATEGORY ),
 	                    'parameters' => array( 'advanced' => 1 ),
 	            )
 		);
 		
-		try {
-		    $this->searchController->tabs();
-		    $this->assertFalse(
-		            true,
-		            'WikiaSearchController::tabs should throw an exception if the "config" is not set in the request.'
-		    );
-		} catch ( Exception $e ) { }
-		$this->searchController->getRequest()->setVal( 'config', 'foo' );
-		try {
-		    $this->searchController->tabs();
-		    $this->assertFalse(
-		            true,
-		            'WikiaSearchController::tabs should throw an exception if the "config" is set in the request, but is not an instance of WikiaSearchConfig.'
-		    );
-		} catch ( Exception $e ) { }
-		
-		$mockRequest
+		$mockController
 			->expects	( $this->any() )
 			->method	( 'getVal' )
 			->with		( 'config', false )
 			->will		( $this->returnValue( $mockSearchConfig ) )
 		;
-		
-		$this->searchController->setRequest( $mockRequest );
-		
 		$mockSearchConfig
-			->expects	( $this->any() )
+			->expects	( $this->once() )
 			->method	( 'getQuery' )
 			->with		( WikiaSearchConfig::QUERY_RAW )
 			->will		( $this->returnValue( 'foo' ) )
 		;
 		$mockSearchConfig
-			->expects	( $this->any() )
+			->expects	( $this->once() )
 			->method	( 'getSearchProfiles' )
 			->will		( $this->returnValue( $searchProfileArray ) )
 		;
 		$mockSearchConfig
-			->expects	( $this->any() )
+			->expects	( $this->once() )
 			->method	( 'getIncludeRedirects' )
 			->will		( $this->returnValue( false ) )
 		;
 		$mockSearchConfig
-			->expects	( $this->any() )
+			->expects	( $this->once() )
 			->method	( 'getActiveTab' )
 			->will		( $this->returnValue( 'default' ) )
 		;
-		
-		$mockResponse
-			->expects	( $this->at( 0 ) )
-			->method	( 'setVal' )
-			->with		( 'bareterm' )
-		;
-		$mockResponse
+		$mockController
 			->expects	( $this->at( 1 ) )
 			->method	( 'setVal' )
-			->with		( 'searchProfiles' )
+			->with		( 'bareterm', 'foo' )
 		;
-		$mockResponse
+		$mockController
 			->expects	( $this->at( 2 ) )
 			->method	( 'setVal' )
-			->with		( 'redirs' )
+			->with		( 'searchProfiles', $searchProfileArray )
 		;
-		$mockResponse
+		$mockController
 			->expects	( $this->at( 3 ) )
 			->method	( 'setVal' )
-			->with		( 'activeTab' )
+			->with		( 'redirs', false )
 		;
-		
-		$this->searchController->setResponse( $mockResponse );
+		$mockController
+			->expects	( $this->at( 4 ) )
+			->method	( 'setVal' )
+			->with		( 'activeTab', 'default' )
+		;
 		
 		$this->mockApp();
 		
-		$this->searchController->tabs();
-		/**
-		 * @todo need front-end help unit-testing template evaluation
-		 * We need to make sure, for instance, that the appropriate tab is bolded.
-		 */
+		$mockController->tabs();
+	}
+	
+	/**
+	 * @covers WikiaSearchController::advancedBox
+	 */
+	public function testAdvancedBoxWithoutConfig() {
+		$mockController			=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
+		
+		$mockController
+			->expects	( $this->any() )
+			->method	( 'getVal' )
+			->with		( 'config', false )
+			->will		( $this->returnValue( false ) )
+		;
+		$e = null;
+		try {
+		    $mockController->advancedBox();
+		    $this->assertFalse(
+		            true,
+		            'WikiaSearchController::advancedBox should throw an exception if the "config" is not set in the request.'
+		    );
+		} catch ( Exception $e ) { }
+		$this->assertInstanceOf(
+				'Exception',
+				$e,
+				'WikiaSearchController::advancedBox should throw an exception if there is no search config set'
+		);
+		
+	}
+	
+	/**
+	 * @covers WikiaSearchController::advancedBox
+	 */
+	public function testAdvancedBoxWithBadConfig() {
+		$mockController			=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
+		
+		$mockController
+			->expects	( $this->any() )
+			->method	( 'getVal' )
+			->with		( 'config', false )
+			->will		( $this->returnValue( 'foo' ) )
+		;
+		$e = null;
+		try {
+		    $mockController->advancedBox();
+		    $this->assertFalse(
+		            true,
+		            'WikiaSearchController::advancedBox should throw an exception if the "config" is set incorrectly in the request.'
+		    );
+		} catch ( Exception $e ) { }
+		$this->assertInstanceOf(
+				'Exception',
+				$e,
+				'WikiaSearchController::advancedBox should throw an exception if there is an improper search config set'
+		);
+		
 	}
 	
 	/**
 	 * @covers WikiaSearchController::advancedBox
 	 */
 	public function testAdvancedBox() {
+		$mockController			=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
 		$mockResponse			=	$this->getMock( 'WikiaResponse', array( 'redirect', 'setVal' ), array( 'html' ) );
 		$mockRequest			=	$this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
 		$mockSearchConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'getNamespaces', 'getIncludeRedirects', 'getAdvanced' ) );
 		$mockSearchEngine		=	$this->getMock( 'SearchEngine', array( 'searchableNamespaces' ) );
 		$searchableNamespaces	=	array( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
 		
-		try {
-		    $this->searchController->advancedBox();
-		    $this->assertFalse(
-		            true,
-		            'WikiaSearchController::advancedBox should throw an exception if the "config" is not set in the request.'
-		    );
-		} catch ( Exception $e ) { }
-		$this->searchController->getRequest()->setVal( 'config', 'foo' );
-		try {
-		    $this->searchController->advancedBox();
-		    $this->assertFalse(
-		            true,
-		            'WikiaSearchController::advancedBox should throw an exception if the "config" is set in the request, but is not an instance of WikiaSearchConfig.'
-		    );
-		} catch ( Exception $e ) { }
-		
-		$mockRequest
+		$mockController
 			->expects	( $this->any() )
 			->method	( 'getVal' )
 			->with		( 'config', false )
 			->will		( $this->returnValue( $mockSearchConfig ) )
 		;
-		
-		$this->searchController->setRequest( $mockRequest );
-		
 		$mockSearchEngine
 			->staticExpects	( $this->any() )
 			->method		( 'searchableNamespaces' )
 			->will			( $this->returnValue( $searchableNamespaces ) )
 		;
-		$mockResponse
-			->expects	( $this->at( 0 ) )
+		$mockController
+			->expects	( $this->at( 1 ) )
 			->method	( 'setVal' )
 			->with		( 'namespaces', array( 0, 14 ) )
 		;
-		$mockResponse
-			->expects	( $this->at( 1 ) )
+		$mockController
+			->expects	( $this->at( 2 ) )
 			->method	( 'setVal' )
 			->with		( 'searchableNamespaces', $searchableNamespaces )
 		;
-		$mockResponse
-			->expects	( $this->at( 2 ) )
+		$mockController
+			->expects	( $this->at( 3 ) )
 			->method	( 'setVal' )
 			->with		( 'redirs', true )
 		;
-		$mockResponse
-			->expects	( $this->at( 3 ) )
+		$mockController
+			->expects	( $this->at( 4 ) )
 			->method	( 'setVal' )
 			->with		( 'advanced', true )
 		;
@@ -512,13 +873,8 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		
 		F::setInstance( 'SearchEngine', $mockSearchEngine );
 		
-		$this->searchController->setResponse( $mockResponse );
-		
-		$this->searchController->advancedBox();
-		
-		/**
-		 * @todo write tests for template evaluation
-		 */
+		$mockController->advancedBox();
+
 	}
 	
 	/**
@@ -533,7 +889,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$this->mockApp();
 		
 		$this->assertFalse(
-				$method->invoke( $this->searchController ),
+				$method->invoke( $this->searchController->getMock() ),
 				'WikiaSearchController::isCorporateWiki should return false if wgEnableWikiaHomePageExt is empty.'
 		);
 		
@@ -541,17 +897,17 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$this->mockApp();
 		
 		$this->assertFalse(
-		        $method->invoke( $this->searchController ),
+		        $method->invoke( $this->searchController->getMock() ),
 		        'WikiaSearchController::isCorporateWiki should return false if wgEnableWikiaHomePageExt is empty.'
 		);
 		
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', true );
 		$this->mockApp();
 
-		$this->searchController->setApp( F::app() );
+		$this->searchController->getMock()->setApp( F::app() );
 		
-		$this->assertTrue(
-		        $method->invoke( $this->searchController ),
+		$this->assertFalse(
+		        $method->invoke( $this->searchController->getMock() ),
 		        'WikiaSearchController::isCorporateWiki should return false if wgEnableWikiaHomePageExt is not empty.'
 		);
 		
@@ -562,14 +918,28 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	 */
 	public function testSkinSettings() {
 		
-		//@todo  fix skin mocking
-		return true;
+		$mockSearchController	=	$this->getMockBuilder( 'WikiaSearchController' )
+										->disableOriginalConstructor()
+										->setMethods( array( 'overrideTemplate' ) )
+										->getMock();
 		
-		$mockSkinMonoBook		=	$this->getMock( 'stdClass', array(), array(), 'SkinMonoBook' );
-		$mockSkinOasis			=	$this->getMock( 'stdClass', array(), array(), 'SkinOasis' );
-		$mockSkinWikiaMobile	=	$this->getMock( 'stdClass', array(), array(), 'SkinWikiaMobile' );
-		$mockResponse			=	$this->getMock( 'WikiaResponse', array( 'addAsset' ), array( 'html' ) );
-		$mockRequestContext		=	$this->getMock( 'RequestContext', array( 'getSkin' ) );
+		$mockSkinMonoBook		=	$this->getMockBuilder( 'SkinMonoBook' )
+										->disableOriginalConstructor()
+										->getMock();
+		$mockSkinOasis			=	$this->getMockBuilder( 'SkinOasis' )
+										->disableOriginalConstructor()
+										->getMock();
+		$mockSkinWikiaMobile	=	$this->getMockBuilder( 'SkinWikiaMobile' )
+										->disableOriginalConstructor()
+										->getMock();
+		$mockResponse			=	$this->getMockBuilder( 'WikiaResponse' )
+										->disableOriginalConstructor()
+										->setMethods( array( 'addAsset' ) )
+										->getMock();
+		$mockRequestContext		=	$this->getMockBuilder( 'RequestContext' )
+										->setMethods( array( 'getSkin' ) )
+										->disableOriginalConstructor()
+										->getMock();
 		
 		$mockResponse
 			->expects	( $this->at( 0 ) )
@@ -581,22 +951,27 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->method	( 'addAsset' )
 			->with		( 'extensions/wikia/Search/css/WikiaSearch.scss' )
 		;
+		$mockSearchController
+			->expects	( $this->once() )
+			->method	( 'overrideTemplate' )
+			->with		( 'WikiaMobileIndex' )
+		;
 		
 		$method = new ReflectionMethod( 'WikiaSearchController', 'handleSkinSettings' );
 		$method->setAccessible( true );
 		
-		$this->searchController->setResponse( $mockResponse );
+		$mockSearchController->setResponse( $mockResponse );
 		
 		$this->assertTrue(
-				$method->invoke( $this->searchController, $mockSkinMonoBook ),
+				$method->invoke( $mockSearchController, $mockSkinMonoBook ),
 				'WikiaSearchController::handleSkinSettings should always return true.' 
 		);
 		$this->assertTrue(
-		        $method->invoke( $this->searchController, $mockSkinOasis ),
+		        $method->invoke( $mockSearchController, $mockSkinOasis ),
 		        'WikiaSearchController::handleSkinSettings should always return true.'
 		);
 		$this->assertTrue(
-		        $method->invoke( $this->searchController, $mockSkinWikiaMobile ),
+		        $method->invoke( $mockSearchController, $mockSkinWikiaMobile ),
 		        'WikiaSearchController::handleSkinSettings should always return true.'
 		);
 	}
@@ -604,24 +979,114 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	/**
 	 * @covers WikiaSearchController::setNamespacesFromRequest
 	 */
-	public function testSetNamespacesFromRequest() {
+	public function testSetNamespacesFromRequestHasNamespaces() {
+		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
 		$mockSearchEngine	=	$this->getMock( 'SearchEngine', array( 'searchableNamespaces', 'DefaultNamespaces' ) );
 		$searchableArray	=	array( 0 => 'Article', 14 => 'Category', 6 => 'File' );
 		$defaultArray		=	array( 0, 14 );
 		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
 		$mockUser			=	$this->getMock( 'User', array( 'getOption' ) );
+		$mockSearchConfig	=	$this->getMock( 'WikiaSearchConfig', array( 'setNamespaces', 'getSearchProfiles' ) );
 		
 		$mockSearchEngine
 			->staticExpects	( $this->any() )
 			->method		( 'searchableNamespaces' )
 			->will			( $this->returnValue( $searchableArray ) )
 		;
+		$incr = 0;
+		foreach ( $searchableArray as $ns => $name ) {
+			$bool = $ns == 14;
+			$mockController
+				->expects		( $this->at( $incr++ ) )
+				->method		( 'getVal' )
+				->with			( 'ns'.$ns, false )
+				->will			( $this->returnValue( $bool ) )
+			;
+		}
+		$mockSearchConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'setNamespaces' )
+			->with		( array( 14 ) )
+		;
+		
+		$this->mockClass( 'SearchEngine', $mockSearchEngine );
+		$this->mockApp();
+		
+		
+		$method = new ReflectionMethod( 'WikiaSearchController', 'setNamespacesFromRequest' );
+		$method->setAccessible( true );
+		
+		$this->assertTrue(
+				$method->invoke( $mockController, $mockSearchConfig, $mockUser ),
+				'WikiaSearchController::setNamespacesFromRequest should return true.'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchController::setNamespacesFromRequest
+	 */
+	public function testSetNamespacesFromRequestAllNamespaces() {
+		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
+		$mockSearchEngine	=	$this->getMock( 'SearchEngine', array( 'searchableNamespaces', 'DefaultNamespaces' ) );
+		$searchableArray	=	array( 0 => 'Article', 14 => 'Category', 6 => 'File' );
+		$defaultArray		=	array( 0, 14 );
+		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
+		$mockUser			=	$this->getMock( 'User', array( 'getOption' ) );
+		$mockSearchConfig	=	$this->getMock( 'WikiaSearchConfig', array( 'setNamespaces', 'getSearchProfiles' ) );
+		
 		$mockSearchEngine
 			->staticExpects	( $this->any() )
-			->method		( 'DefaultNamespaces' )
-			->will			( $this->returnValue( $defaultArray ) )
+			->method		( 'searchableNamespaces' )
+			->will			( $this->returnValue( $searchableArray ) )
 		;
-		$mockRequest
+		$mockController
+			->expects		( $this->any() )
+			->method		( 'getVal' )
+			->will			( $this->returnValue( false ) )
+		;
+		$mockUser
+			->expects		( $this->at( 0 ) )
+			->method		( 'getOption' )
+			->with			( 'searchAllNamespaces' )
+			->will			( $this->returnValue( true ) )
+		;
+		$mockSearchConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'setNamespaces' )
+			->with		( array_keys($searchableArray) )
+		;
+		
+		$this->mockClass( 'SearchEngine', $mockSearchEngine );
+		$this->mockApp();
+		
+		
+		$method = new ReflectionMethod( 'WikiaSearchController', 'setNamespacesFromRequest' );
+		$method->setAccessible( true );
+		
+		$this->assertTrue(
+				$method->invoke( $mockController, $mockSearchConfig, $mockUser ),
+				'WikiaSearchController::setNamespacesFromRequest should return true.'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchController::setNamespacesFromRequest
+	 */
+	public function testSetNamespacesFromRequestDefaultNamespaces() {
+		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
+		$mockSearchEngine	=	$this->getMock( 'SearchEngine', array( 'searchableNamespaces', 'DefaultNamespaces' ) );
+		$searchableArray	=	array( 0 => 'Article', 14 => 'Category', 6 => 'File' );
+		$defaultArray		=	array( 0, 14 );
+		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
+		$mockUser			=	$this->getMock( 'User', array( 'getOption' ) );
+		$mockSearchConfig	=	$this->getMock( 'WikiaSearchConfig', array( 'setNamespaces', 'getSearchProfiles' ) );
+		
+		$mockSearchEngine
+			->staticExpects	( $this->any() )
+			->method		( 'searchableNamespaces' )
+			->will			( $this->returnValue( $searchableArray ) )
+		;
+		$mockController
 			->expects		( $this->any() )
 			->method		( 'getVal' )
 			->will			( $this->returnValue( false ) )
@@ -632,85 +1097,27 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->with			( 'searchAllNamespaces' )
 			->will			( $this->returnValue( false ) )
 		;
-		$mockUser
-			->expects		( $this->at( 1 ) )
-			->method		( 'getOption' )
-			->with			( 'searchAllNamespaces' )
-			->will			( $this->returnValue( true ) )
+		$mockSearchConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'getSearchProfiles' )
+			->will		( $this->returnValue( array( 'default' => array( 'namespaces' => $defaultArray ) ) ) )
+		;
+		$mockSearchConfig
+			->expects	( $this->at( 1 ) )
+			->method	( 'setNamespaces' )
+			->with		( $defaultArray )
 		;
 		
 		$this->mockClass( 'SearchEngine', $mockSearchEngine );
 		$this->mockApp();
-		$searchConfig = F::build( 'WikiaSearchConfig' );
+		
 		
 		$method = new ReflectionMethod( 'WikiaSearchController', 'setNamespacesFromRequest' );
 		$method->setAccessible( true );
 		
-		$this->searchController->setRequest( $mockRequest );
-		
 		$this->assertTrue(
-				$method->invoke( $this->searchController, $searchConfig, $mockUser ),
+				$method->invoke( $mockController, $mockSearchConfig, $mockUser ),
 				'WikiaSearchController::setNamespacesFromRequest should return true.'
 		);
-		$this->assertEquals(
-		        $defaultArray,
-		        $searchConfig->getNamespaces(),
-		        'WikiaSearchController::setNamespacesFromRequest should set an empty array that causes WikiaSearchConfig::getNamespaces ' . 
-				'to populate namespaces with SearchEngine::DefaultNamespaces if no namespaces are set in the request, and the user has not chosen to search all namespaces..'
-		);
-		$this->assertTrue(
-		        $method->invoke( $this->searchController, $searchConfig, $mockUser ),
-		        'WikiaSearchController::setNamespacesFromRequest should return true.'
-		);
-		$this->assertEquals(
-		        array_keys( $searchableArray ),
-		        $searchConfig->getNamespaces(),
-		        'WikiaSearchController::setNamespacesFromRequest should set namespaces to all namespaces if the user has chosen to search all namespaces, and no namespaces are passed in the request.'
-		);
-		$mockRequest = $this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
-		$mockRequest
-			->expects	( $this->at( 1 ) )
-			->method	( 'getVal' )
-			->with		( 'ns14', false )
-			->will		( $this->returnValue( true ) )
-		;
-		$this->searchController->setRequest( $mockRequest );
-		$this->assertTrue(
-		        $method->invoke( $this->searchController, $searchConfig, $mockUser ),
-		        'WikiaSearchController::setNamespacesFromRequest should return true.'
-		);
-		$this->assertEquals(
-				array( 14 ),
-				$searchConfig->getNamespaces(),
-				'WikiaSearchController::setNamespacesFromRequest should set namespaces in WikiaSearchConfig if they are passed in the request.'
-		);
 	}
-	
-	/**
-	 * Helper hook for testing article match
-	 */
-	public static function gomatch() {
-		global $hookGoMatch;
-		$hookGoMatch = true;
-		return true;
-	}
-	
-	/**
-	 * Helper hook for testing article match
-	 */
-	public static function nogomatch() {
-		global $hookNoGoMatch;
-		$hookNoGoMatch = true;
-		return true;
-	}
-	
-	/**
-	 * Helper hook for testing skins
-	 */
-	public static function requestContextCreateSkin( RequestContext $context, &$skin = null ) {
-		
-		var_dump($skin);
-		
-	}
-	
 }
