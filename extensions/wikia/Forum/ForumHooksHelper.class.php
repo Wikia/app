@@ -304,8 +304,7 @@ class ForumHooksHelper {
 	 */
 	 
 	public static function onWallStoreRelatedTopicsInDB($parent, $id, $namespace) {
-		self::onWallAction(null, $parent);
+		self::onWallAction(null, $parent, $id);
 		return true;	
 	}
-
 }
