@@ -206,14 +206,16 @@ class WallRelatedPages extends WikiaModel {
 			foreach($replies as $reply) {
 				$reply->load();
 				$update[] = $reply->getCreateTime(TS_UNIX);
-				$replyRow = array(
-					'userName' =>  $reply->getUserDisplayName(),
-					'userUrl' => $reply->getUserWallUrl(),
-					'messageBody' => $helper->shortenText($helper->strip_wikitext($reply->getRawText())),
-					'timeStamp' => $reply->getCreateTime()
-				);
-				$row['replies'][] = $replyRow;	
-			}	
+				if(!$reply->isRemove() && !$reply->isAdminDelete()) {
+					$replyRow = array(
+						'userName' =>  $reply->getUserDisplayName(),
+						'userUrl' => $reply->getUser()->getUserPage()->getFullUrl(),
+						'messageBody' => $helper->shortenText($helper->strip_wikitext($reply->getRawText())),
+						'timeStamp' => $reply->getCreateTime()
+					);
+					$row['replies'][] = $replyRow;
+				}
+			}
 			
 			$out[] = $row;
 		}
