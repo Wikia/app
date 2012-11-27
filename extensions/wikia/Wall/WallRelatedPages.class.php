@@ -208,7 +208,7 @@ class WallRelatedPages extends WikiaModel {
 				$update[] = $reply->getCreateTime(TS_UNIX);
 				$replyRow = array(
 					'userName' =>  $reply->getUserDisplayName(),
-					'userUrl' => $reply->getUser()->getUserPage()->getFullUrl(),
+					'userUrl' => $reply->getUserWallUrl(),
 					'messageBody' => $helper->shortenText($helper->strip_wikitext($reply->getRawText())),
 					'timeStamp' => $reply->getCreateTime()
 				);
