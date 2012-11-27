@@ -217,6 +217,8 @@ ve.init.mw.ViewPageTarget.prototype.activate = function () {
 	if ( !this.active && !this.activating ) {
 		this.activating = true;
 
+		GlobalNotification.hide();
+
 		this.$fakeToolbar = $( '<div class="ve-init-mw-viewPageTarget-fakeToolbar"></div>' );
 		this.$fakeToolbar.prependTo( '#WikiaArticle' );
 		this.$fakeToolbar.slideDown();
@@ -289,6 +291,8 @@ ve.init.mw.ViewPageTarget.prototype.onLoad = function ( dom ) {
 	this.attachSaveDialog();
 	this.restoreScrollPosition();
 	this.restoreEditSection();
+	this.$document.focus();
+	this.activating = false;
 };
 
 /**
