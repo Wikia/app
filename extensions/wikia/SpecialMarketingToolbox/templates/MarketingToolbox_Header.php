@@ -9,7 +9,7 @@
 			<p><strong><?=$wg->lang->date($date);?></strong></p>
 		<? endif?>
 		<? if (isset($regionName) && isset($sectionName) && isset($verticalName)): ?>
-			<p><strong><?=$regionName?></strong> > <strong><?=$sectionName ?></strong> > <strong><?=$verticalName?></strong></p>
+			<p class="alternative"><strong><?=$regionName?></strong> / <strong><?=$sectionName ?></strong> / <strong><?=$verticalName?></strong></p>
 		<? endif ?>
 		</p>
 	</div>
