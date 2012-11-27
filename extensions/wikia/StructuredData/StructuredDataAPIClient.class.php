@@ -21,8 +21,53 @@ class StructuredDataAPIClient extends WikiaObject {
 		parent::__construct();
 	}
 
+	private $logfile = FALSE;
+
+	/**
+	 * Make sure the log file is open. Return true when logging is enabled
+	 * @return bool
+	 */
+	private function initLog() {
+		if ( $this->wg->StructuredDataConfig['debug'] ) {
+			if ( !$this->logfile ) {
+				$tempDir = F::app()->wf->tempDir();
+				$this->logfile = fopen( $tempDir.'/structured_data.log', 'a+' );
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Logs a single string - only when the log file is open
+	 */
+	private function log($text) {
+		if ( $this->logfile ) {
+			fwrite($this->logfile, date("Y-m-d H:i:s") . ': ' . $text . "\n");
+			fflush($this->logfile);
+		}
+	}
+
+	/**
+	 * Closes the log file if it's open
+	 */
+	private function closeLog() {
+		if ( $this->logfile ) {
+			try { fclose($this->logfile); } catch(Exception $e) {};
+			$this->logfile = FALSE;
+		}
+	}
+
 	protected function call( $url, $method = null, $body = null ) {
 		$this->httpRequest->setURL( $url );
+
+		if ($this->initLog()) {
+			$this->log('====================================');
+			$m = array(HTTP_REQUEST_METHOD_DELETE => 'DELeting', HTTP_REQUEST_METHOD_POST => 'POSTing', HTTP_REQUEST_METHOD_PUT=>'PUTting');
+			$m = array_key_exists($method, $m) ? $m[$method] : 'GETting';
+			$b = $body ? ' with body ' . $body : '';
+			$this->log($m . ' ' . $url . $b);
+		}
 
 		if ( $method ) $this->httpRequest->setMethod( $method );
 		if ( $body ) $this->httpRequest->setBody( $body );
@@ -30,12 +75,22 @@ class StructuredDataAPIClient extends WikiaObject {
 		$this->httpRequest->addHeader( 'Accept', 'application/ld+json' );
 		$this->httpRequest->sendRequest();
 
-		$decodedResponse = json_decode ( $this->httpRequest->getResponseBody() );
-		if ( empty($decodedResponse) && in_array( $this->httpRequest->getResponseCode(), array( 500, 501 ) ) ) {
-			return '{"error":"Internal Server Error","message":""}';
-		}
-		else {
-			return $this->httpRequest->getResponseBody();
+		try {
+			$response = $this->httpRequest->getResponseBody();
+			$this->log('Response (' . $this->httpRequest->getResponseCode() .') is ' . $response);
+			$decodedResponse = json_decode ( $response );
+			if ( empty($decodedResponse) && in_array( $this->httpRequest->getResponseCode(), array( 500, 501 ) ) ) {
+				return '{"error":"Internal Server Error","message":""}';
+			}
+			else {
+				return $response;
+			}
+			$this->closeLog();
+
+		} catch (Exception $e) {
+			$this->log('Error: ' . $e);
+			$this->closeLog();
+			throw $e;
 		}
 	}
 
