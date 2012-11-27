@@ -104,7 +104,7 @@ class EditPageLayoutHelper {
 		$this->app->registerHook('MakeGlobalVariablesScript', 'EditPageLayoutHelper', 'onMakeGlobalVariablesScript', array(), false, $this);
 		$this->app->registerHook('SkinGetPageClasses', 'EditPageLayoutHelper', 'onSkinGetPageClasses', array(), false, $this);
 
-		WF::setInstance('EditPageLayoutHelper', $this );
+		F::setInstance('EditPageLayoutHelper', $this );
 
 		$this->editPage->setHelper( $this );
 
