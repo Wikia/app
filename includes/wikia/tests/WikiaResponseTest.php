@@ -18,7 +18,7 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 	protected $object = null;
 
 	protected function setUp() {
-		$this->app = F::build( 'App' );
+		$this->app = F::app();
 		$this->object = $this->getMock( 'WikiaResponse', array( 'sendHeader' ), array( 'html' ) );
 	}
 
