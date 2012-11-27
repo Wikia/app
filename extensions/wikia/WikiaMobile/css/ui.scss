@@ -18,6 +18,10 @@ html {
 	word-wrap: break-word;
 
 	font-family: Helvetica, Roboto, "Lucida Grande", arial, sans-serif;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	font-smoothing: antialiased;
 }
 
 html, body {
