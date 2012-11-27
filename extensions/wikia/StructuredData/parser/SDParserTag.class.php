@@ -23,13 +23,16 @@ class SDParserTag {
 	public function __construct( SDParser $parser, $tagRawContent, array $args = array() ) {
 		$this->parser = $parser;
 		$this->path = F::build( 'SDParserTagPropertyPath', array( 'pathString' => trim( $tagRawContent ) ) );
-		$this->args = $args;
+
 		if(isset($args['renderMode'])) {
 			$this->renderMode = $args['renderMode'];
+			unset($args['renderMode']);
 		}
 		else {
 			$this->renderMode = self::RENDER_MODE_DEFAULT;
 		}
+
+		$this->args = $args;
 	}
 
 	public function render() {
@@ -66,7 +69,7 @@ class SDParserTag {
 
 						$wrappedValue = $elementProperty->getWrappedValue();
 						if( $elementProperty->isCollection() ) {
-							$result = $wrappedValue[ $tagProperty->getValueIndex() ]->getValue();
+							$result = isset( $wrappedValue[ $tagProperty->getValueIndex() ] ) ? $wrappedValue[ $tagProperty->getValueIndex() ]->getValue() : '';
 						}
 						else {
 							$result = $wrappedValue->getValue();
@@ -83,12 +86,12 @@ class SDParserTag {
 							}
 						}
 						else {
-							$result = "Unknown value: " . $tagProperty->getName() . ( !$tagProperty->hasValueIndex() ? "[" . $tagProperty->getValueIndex() . "]" : "" );
+							$result = $this->isDebugMode() ? ( "Unknown value: " . $tagProperty->getName() . ( $tagProperty->hasValueIndex() ? "[" . $tagProperty->getValueIndex() . "]" : "" ) ) : '';
 							$currentElement = null;
 						}
 					}
 					else {
-						$result = "Unknown property: " . $tagProperty->getName();
+						$result = $this->isDebugMode() ? ( "Unknown property: " . $tagProperty->getName() ) : '';
 						$currentElement = null;
 					}
 
@@ -104,10 +107,14 @@ class SDParserTag {
 			}
 		}
 		else {
-			$result = 'Unknown element: ' . $this->path->getElementId();
+			$result = $this->isDebugMode() ? ( "Unknown element: " . $this->path->getElementId() ) : '';
 		}
 
 		return trim($result);
+	}
+
+	private function isDebugMode() {
+		return isset( $this->args['debug'] ) ? (bool) $this->args['debug'] : false;
 	}
 
 	private function getSDElement() {
