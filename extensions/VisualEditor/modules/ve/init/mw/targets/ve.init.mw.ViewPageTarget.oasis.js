@@ -256,15 +256,9 @@ ve.init.mw.ViewPageTarget.prototype.mutePageContent = function () {
 	// TODO: Decide if we need to addClass here - it is also done in hidePageContent()
 	$( '#mw-content-text' )
 		.addClass( 've-init-mw-viewPageTarget-content' )
-		.fadeTo( 'fast', 0.6 );
-	$( '#WikiHeader, #WikiaPageHeader, #WikiaRail' ).fadeTo( 'fast', 0.6 ).each(function() {
-		var shield = $('<div class="oasis-interface-shield"></div>');
-		shield.offset( $(this).offset() );
-		shield.css({
-			'height': $(this).outerHeight(),
-			'width': $(this).outerWidth()
-		});
-		$('body').append(shield);
+		.fadeTo( 'fast', 0.35 );
+	$( '#WikiHeader, #WikiaPageHeader, #WikiaRail' ).fadeTo( 'fast', 0.35 ).each(function() {
+		$(this).append( '<div class="oasis-interface-shield"></div>' );
 	});
 };
 
