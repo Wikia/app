@@ -12,7 +12,7 @@
 
 // URL to the Parsoid instance
 // MUST NOT end in a slash due to Parsoid bug
-$wgVisualEditorParsoidURL = 'http://parsoid-s1:8000';
+$wgVisualEditorParsoidURL = 'http://dev-inez:8000';
 // Interwiki prefix to pass to the Parsoid instance
 // Parsoid will be called as $url/$prefix/$pagename
 $wgVisualEditorParsoidPrefix = 'communitycouncil';
@@ -98,20 +98,20 @@ $wgResourceModules += array(
 				've/init/mw/targets/ve.init.mw.ViewPageTarget.oasis.js'
 			)
 		),
-		'styles' => array(
-			've/init/mw/styles/ve.init.mw.ViewPageTarget.css',
-		),
 		'skinStyles' => array(
 			'vector' => array(
+				've/init/mw/styles/ve.init.mw.ViewPageTarget.css',
 				've/init/mw/styles/ve.init.mw.ViewPageTarget-vector.css',
 				've/init/mw/styles/ve.init.mw.ViewPageTarget-vector-hd.css' => array(
 					'media' => 'screen and (min-width: 982px)'
 				),
 			),
 			'apex' => array(
+				've/init/mw/styles/ve.init.mw.ViewPageTarget.css',
 				've/init/mw/styles/ve.init.mw.ViewPageTarget-apex.css',
 			),
 			'monobook' => array(
+				've/init/mw/styles/ve.init.mw.ViewPageTarget.css',
 				've/init/mw/styles/ve.init.mw.ViewPageTarget-monobook.css',
 			)
 		),
