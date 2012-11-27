@@ -110,7 +110,7 @@ class ArticlesApiController extends WikiaApiController {
 		//separate caching
 		$articles = DataMartService::getTopArticlesByPageview(
 			$this->wg->CityId,
-			null,
+			$ids,
 			$namespaces,
 			false,
 			self::MAX_ITEMS
