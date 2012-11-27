@@ -35,7 +35,8 @@ class StructuredDataController extends WikiaSpecialPageController {
 			'wikia:VideoGame' => 'Video Games',
 			'schema:ImageObject' => 'Image Objects',
 			'schema:AudioObject' => 'Audio Objects',
-			'wikia:GameLocation' => 'Game Locations'
+			'wikia:GameLocation' => 'Game Locations',
+			'wikia:WikiText' => 'WikiText Objects'
 		);
 
 
