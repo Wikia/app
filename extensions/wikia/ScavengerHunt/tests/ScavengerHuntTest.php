@@ -36,7 +36,7 @@ class ScavengerHuntTest extends WikiaBaseTest {
 
 	public function getFakeRow() {
 
-		$article = WF::build('ScavengerHuntGames')->newGameArticle();
+		$article = F::build('ScavengerHuntGames')->newGameArticle();
 
 		$article->setArticleName( self::MOCK_TEXT );
 		$article->setWikiId( self::LANDING_WIKI_ID );
@@ -59,7 +59,7 @@ class ScavengerHuntTest extends WikiaBaseTest {
 			'clueFont' => 'bold',
 			'clueSize' => '14',
 			'facebookImg' => '',
-			'facebookDescription' => '',			
+			'facebookDescription' => '',
 			'name' => self::MOCK_TEXT,
 			'hash' => self::MOCK_TEXT,
 			'landingTitle' => self::MOCK_TEXT,
@@ -110,11 +110,11 @@ class ScavengerHuntTest extends WikiaBaseTest {
 			->will( $this->returnValue( $db ) );
 
 		$this->mockClass( 'ScavengerHuntGames', $games );
-		
+
 		// This is necessary because Game->setLandingTitle is called during construction
 		// and it resets the landingArticleWikiId and landingArticleName to bogus values otherwise
 		F::setInstance('GlobalTitle', array('wikiId' => self::LANDING_WIKI_ID, 'articleName' => self::MOCK_TEXT ));
-		
+
 		return $games;
 	}
 

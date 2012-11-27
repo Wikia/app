@@ -193,7 +193,7 @@ class WikiFeaturesHelper extends WikiaModel {
 
 	public function getFogbugzService() {
 		if( $this->fogbugzService == null ) {
-			$this->fogbugzService = WF::build(
+			$this->fogbugzService = F::build(
 					'FogbugzService', array(
 						$this->wg->fogbugzAPIConfig['apiUrl'],
 						$this->wg->fogbugzAPIConfig['username'],

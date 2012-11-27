@@ -84,8 +84,8 @@ class ScavengerHuntController extends WikiaController {
 	}
 
 	public function pushEntry() {
-		$app = WF::build( 'App' );
-		$helper = WF::build( 'ScavengerHunt' );
+		$app = F::build( 'App' );
+		$helper = F::build( 'ScavengerHunt' );
 		$this->setVal(
 			'result',
 			$helper->pushEntry(
@@ -97,8 +97,8 @@ class ScavengerHuntController extends WikiaController {
 	}
 
 	public function getGameCacheValue() {
-		$app = WF::build( 'App' );
-		$factory = WF::build( 'ScavengerHuntGames' );
+		$app = F::build( 'App' );
+		$factory = F::build( 'ScavengerHuntGames' );
 		$gameId =  $this->getVal( 'gameId', '' );
 		$readWrite =  $this->getVal( 'readwrite', 0 );
 		$key = wfSharedMemcKey( 'ScavengerHuntGameIndex', $gameId, ( $readWrite ? 1 : 0 ), ScavengerHuntGames::CACHE_VERSION );
