@@ -31,6 +31,11 @@ class WallBaseController extends WikiaController{
 					'extensions/wikia/MiniEditor/css/Wall/Wall.scss'
 				)
 			));
+		}
+		
+		if( $this->app->checkSkin( 'monobook' ) ) {
+			$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Form.js' );
+			$this->response->addAsset( 'resources/wikia/modules/querystring.js' );
 		}		
 	}
 	
