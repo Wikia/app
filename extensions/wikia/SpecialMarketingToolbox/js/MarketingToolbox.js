@@ -70,9 +70,9 @@ MarketingToolbox.prototype = {
 		var dayStatus = this.getModel().getStatus(date);
 
 		if (dayStatus) {
-			if (dayStatus == window.wgMarketingToolboxConstants.DAY_EDITED_NOT_PUBLISHED) {
+			if (dayStatus == window.wgMarketingToolboxConstants.NOT_PUBLISHED) {
 				tdClassName = 'inProg';
-			} else if (dayStatus == window.wgMarketingToolboxConstants.DAY_PUBLISHED) {
+			} else if (dayStatus == window.wgMarketingToolboxConstants.PUBLISHED) {
 				tdClassName = 'published';
 			}
 			tooltip = this.tooltipMessages[dayStatus];
