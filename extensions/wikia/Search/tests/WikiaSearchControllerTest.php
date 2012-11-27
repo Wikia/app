@@ -1440,4 +1440,111 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 				'WikiaSearchController::getSimilarPagesExternal should throw an exception if a query, url, or stream body is not set'
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearchController::videoSearch
+	 */
+	public function testVideoSearch() {
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'setCityId', 'setQuery', 'setNamespaces', 'setVideoSearch', 'getResults' ) );
+		$mockController	=	$this->searchController->setMethods( array( 'getResponse', 'getVal' ) )->getMock();
+		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )
+								->setMethods( array( 'doSearch' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		$mockResults	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'toNestedArray' ) )
+								->getMock();
+		$mockResponse	=	$this->getMockBuilder( 'WikiaResponse' )
+								->setMethods( array( 'setData', 'setFormat' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockWgRefl = new ReflectionProperty( 'WikiaSearchController', 'wg' );
+		$mockWgRefl->setAccessible( true );
+		$mockWgRefl->setValue( $mockController, (object) array( 'cityId' => 123 ) );
+		
+		$responseArr = array( 'foo' => 'bar' );
+		
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'setCityId' )
+			->with		( 123 )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockController
+			->expects	( $this->at( 0 ) )
+			->method	( 'getVal' )
+			->with		( 'q' )
+			->will		( $this->returnValue( 'query' ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 1 ) )
+			->method	( 'setQuery' )
+			->with		( 'query' )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 2 ) )
+			->method	( 'setNamespaces' )
+			->with		( array( NS_FILE ) )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 3 ) )
+			->method	( 'setVideoSearch' )
+			->with		( true )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockSearch
+			->expects	( $this->at( 0 ) )
+			->method	( 'doSearch' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $mockResults ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 4 ) )
+			->method	( 'getResults' )
+			->will		( $this->returnValue( $mockResults ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 5 ) )
+			->method	( 'getResults' )
+			->will		( $this->returnValue( $mockResults ) )
+		;
+		$mockResults
+			->expects	( $this->at( 0 ) )
+			->method	( 'toNestedArray' )
+			->will		( $this->returnValue( $responseArr ) )
+		;
+		$mockController
+			->expects	( $this->any() )
+			->method	( 'getResponse' )
+			->will		( $this->returnValue( $mockResponse ) )
+		;
+		$mockResponse
+			->expects	( $this->at( 0 ) )
+			->method	( 'setFormat' )
+			->with		( 'json' )
+		;
+		$mockResponse
+			->expects	( $this->at( 1 ) )
+			->method	( 'setData' )
+			->with		( $responseArr )
+		;
+		
+		
+		$respRefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
+		$respRefl->setAccessible( true );
+		$respRefl->setValue( $mockController, $mockResponse );
+		
+		$searchRefl = new ReflectionProperty( 'WikiaSearchController', 'wikiaSearch' );
+		$searchRefl->setAccessible( true );
+		$searchRefl->setValue( $mockController, $mockSearch );
+		
+		$this->mockClass( 'WikiaSearchConfig', $mockConfig );
+		$this->mockApp();
+		
+		$mockController->videoSearch();
+	}
 }
