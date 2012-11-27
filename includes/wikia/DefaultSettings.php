@@ -135,13 +135,17 @@ $wgWikiaAPIControllers = array();
 include_once( "$IP/lib/ApiGate/config.php" );
 
 //Wikia API Hooks
+$app->registerHook( 'ArticleUpdateCategoryCounts', 'ArticlesApiController', 'onArticleUpdateCategoryCounts' );
+
 $app->registerClass( 'ApiHooks', "{$IP}/includes/wikia/api/ApiHooks.class.php" );
+
 $app->registerHook( 'WikiFactoryChanged', 'ApiHooks', 'onWikiFactoryChanged' );
 $app->registerHook( 'MessageCacheReplace', 'ApiHooks', 'onMessageCacheReplace' );
 $app->registerHook( 'ArticleDeleteComplete', 'ApiHooks', 'onArticleDeleteComplete' );
 $app->registerHook( 'ArticleSaveComplete', 'ApiHooks', 'onArticleSaveComplete' );
 $app->registerHook( 'ArticleRollbackComplete', 'ApiHooks', 'onArticleRollbackComplete' );
 $app->registerHook( 'ArticleCommentListPurgeComplete', 'ApiHooks', 'ArticleCommentListPurgeComplete' );
+
 
 //Wikia API base controller, all the others extend this class
 $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiController.class.php" );
@@ -155,6 +159,7 @@ $app->registerApiController( 'ArticlesApiController', "{$IP}/includes/wikia/api/
 $app->registerClass( 'BadRequestApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
 $app->registerClass( 'OutOfRangeApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
 $app->registerClass( 'MissingParameterApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
+$app->registerClass( 'InvalidParameterApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
 
 /**
  * Wikia API end

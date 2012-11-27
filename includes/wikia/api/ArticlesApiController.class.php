@@ -13,6 +13,59 @@ class ArticlesApiController extends WikiaApiController {
 	const PARAMETER_ARTICLES = 'ids';
 	const PARAMETER_ABSTRACT = 'abstract';
 
+	const CATEGORY_CACHE_ID = 'category';
+	const ARTICLE_CACHE_ID = 'article';
+	const DETAILS_CACHE_ID = 'details';
+
+	static function onArticleUpdateCategoryCounts( $this, $added, $deleted ) {
+		foreach ( $added + $deleted as $cat) {
+			WikiaDataAccess::cachePurge( self::getCacheKey( $cat, self::CATEGORY_CACHE_ID ) );
+
+			self::purgeMethod(
+				'getList',
+				array(
+					'category' => $cat
+				)
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param $category
+	 * @return array|null|string
+	 */
+	private function getCategoryMembers( $category ){
+		return WikiaDataAccess::cache(
+			self::getCacheKey( $category, self::CATEGORY_CACHE_ID ),
+			self::CLIENT_CACHE_VALIDITY,
+			function() use ( $category ) {
+				$ids = ApiService::call(
+					array(
+						'action' => 'query',
+						'list' => 'categorymembers',
+						'cmprop' => 'ids',
+						'cmsort' => 'timestamp',
+						'cmdir' => 'desc',
+						'cmtitle' => $category,
+						'cmlimit' => 5000
+					)
+				);
+
+				if ( !empty( $ids ) ) {
+					$ids = $ids['query']['categorymembers'];
+
+					foreach( $ids as &$id ) {
+						$id = $id['pageid'];
+					}
+				}
+
+				return $ids;
+			}
+		);
+	}
+
 	/**
 	 * Get the top articles by pageviews optionally filtering by vertical namespace
 	 *
@@ -32,8 +85,18 @@ class ArticlesApiController extends WikiaApiController {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$namespaces = $this->request->getVal( 'namespaces', null );
-		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
-		$batch = $this->request->getInt( 'batch', 1 );
+		$category = $this->request->getVal( 'category' );
+		$ids = null;
+
+		if ( !empty( $category )) {
+			$cat = Title::newFromText( $category, NS_CATEGORY );
+
+			if ( !$cat->exists() ) {
+				throw new InvalidParameterApiException( 'category' );
+			}
+
+			$ids = $this->getCategoryMembers( $cat->getFullText() );
+		}
 
 		if ( !empty( $namespaces ) ) {
 			$namespaces = explode( ',', $namespaces );
@@ -52,7 +115,7 @@ class ArticlesApiController extends WikiaApiController {
 			false,
 			self::MAX_ITEMS
 		);
-		$batches = array();
+
 		$collection = array();
 
 		if ( !empty( $articles ) ) {
@@ -62,7 +125,7 @@ class ArticlesApiController extends WikiaApiController {
 				//data is cached on a per-article basis
 				//to avoid one article requiring purging
 				//the whole collection
-				$cache = $this->wg->Memc->get( self::getArticleCacheKey( $i ) );
+				$cache = $this->wg->Memc->get( self::getCacheKey( $i, self::ARTICLE_CACHE_ID ) );
 
 				if ( !is_array( $cache ) ) {
 					$ids[] = $i;
@@ -79,7 +142,7 @@ class ArticlesApiController extends WikiaApiController {
 				if ( !empty( $titles ) ) {
 					foreach ( $titles as $t ) {
 						$ns = $t->getNamespace();
-						$id =$t->getArticleID();
+						$id = $t->getArticleID();
 						$collection[$id] = array(
 							'title' => $t->getText(),
 							'url' => $t->getFullURL(),
@@ -89,15 +152,12 @@ class ArticlesApiController extends WikiaApiController {
 							)
 						);
 
-						$this->wg->Memc->set( self::getArticleCacheKey( $id ), $collection[$id], 86400 );
+						$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $collection[$id], 86400 );
 					}
 				}
 
 				$titles = null;
 			}
-
-			$batches = $this->wf->PaginateArray( $collection, $limit, $batch );
-			$collection = null;
 		}
 
 		$this->response->setCacheValidity(
@@ -109,9 +169,7 @@ class ArticlesApiController extends WikiaApiController {
 			)
 		);
 
-		foreach ( $batches as $name => $value ) {
-			$this->response->setVal( $name, $value );
-		}
+		$this->response->setVal( 'items', $collection );
 
 		$batches = null;
 		$this->wf->ProfileOut( __METHOD__ );
@@ -154,7 +212,7 @@ class ArticlesApiController extends WikiaApiController {
 				//data is cached on a per-article basis
 				//to avoid one article requiring purging
 				//the whole collection
-				$cache = $this->wg->Memc->get( self::getDetailsCacheKey( $i ) );
+				$cache = $this->wg->Memc->get( self::getCacheKey( $i, self::DETAILS_CACHE_ID ) );
 
 				if ( !is_array( $cache ) ) {
 					$ids[] = $i;
@@ -181,7 +239,7 @@ class ArticlesApiController extends WikiaApiController {
 
 						$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
 
-						$this->wg->Memc->set( self::getDetailsCacheKey( $id ), $collection[$id], 86400 );
+						$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
 					}
 				}
 
@@ -235,17 +293,13 @@ class ArticlesApiController extends WikiaApiController {
 		$this->wf->ProfileOut( __METHOD__ );
 	}
 
-	static private function getArticleCacheKey( $id ) {
-		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, 'article', $id );
-	}
-
-	static private function getDetailsCacheKey( $id ) {
-		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, 'details', $id );
+	static private function getCacheKey( $name, $type ) {
+		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, $type, $name );
 	}
 
 	static public function purgeCache( $id ) {
 		$memc = F::app()->wg->Memc;
-		$memc->delete( self::getArticleCacheKey( $id ) );
-		$memc->delete( self::getDetailsCacheKey( $id ) );
+		$memc->delete( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ) );
+		$memc->delete( self::getCacheKey( $id, self::DETAILS_CACHE_ID ) );
 	}
 }
