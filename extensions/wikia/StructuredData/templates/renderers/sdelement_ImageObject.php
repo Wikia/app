@@ -12,12 +12,20 @@
 		<dd>
 			<a href="<?php $url = $object->getPropertyValue('schema:url', false); echo ($url !== false) ? $url->getValue() : ''; ?>" title=""><?php echo($url !== false) ? $url->getValue() : ''; ?></a>
 		</dd>
+		<dt>WikiText link:</dt>
+		<dd>
+			<pre><?= $object->getType() . '/' . $object->getName()?></pre>
+		</dd>
+
 	</dl>
 <?php elseif ($context == SD_CONTEXT_EDITING): ?>
 	<input type="hidden" name="<?=$params['fieldName'];?>" value="<?=$object->getId();?>" />
-	<a href="<?=$object->getObjectPageUrl($context);?>" title="<?=htmlspecialchars( $object->getName() ); ?>"><img src="<?php
-		$imgSrc = $object->getPropertyValue('schema:contentURL', false);
-		echo ($imgSrc !== false) ? $imgSrc->getValue() : '#';?>" alt="<?=htmlspecialchars( $object->getName() ); ?>" /></a>
+
+    <a href="<?=$object->getObjectPageUrl($context);?>" title="<?=htmlspecialchars( $object->getName() );
+	    ?>"><?=htmlspecialchars( $object->getName() ); ?></a></br>
+		<img class="edit-mode" src="<?php $imgSrc = $object->getPropertyValue('schema:contentURL',
+			false); echo ($imgSrc !== false) ?
+			$imgSrc->getValue() : '#';?>" alt="<?=htmlspecialchars( $object->getName() ); ?>" />
 	<button class="secondary remove">Remove</button>
 <?php else : ?>
 	<img src="<?php $imgSrc = $object->getPropertyValue('schema:contentURL', false); echo ($imgSrc !== false) ? $imgSrc->getValue() : '#'; ?>" />
