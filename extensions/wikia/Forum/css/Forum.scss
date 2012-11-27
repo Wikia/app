@@ -349,7 +349,6 @@
 	}
 }
 
-
 .ForumPolicies {
   overflow-y: scroll;
   border: 1px solid $color-wall-border;
@@ -367,6 +366,9 @@
         text-decoration: none;
       }
     }
+  }
+  .editsection{
+    display: none;
   }
 }
 
