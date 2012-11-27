@@ -213,4 +213,14 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	public function executeFooter($data) {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Footer.scss');
 	}
+
+	public function getImageDetails() {
+		$fileName = $this->getVal('fileHandler', false);
+		if ($fileName) {
+			$this->fileName = $fileName;
+			$title = Title::newFromText($fileName);
+			$findFile = F::App()->wf->FindFile($title);
+			$this->fileInfo = $findFile;
+		}
+	}
 }

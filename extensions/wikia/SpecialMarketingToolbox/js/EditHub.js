@@ -8,8 +8,18 @@ EditHub.prototype = {
 					WMU_show($.getEvent(), -2);
 					mw.loader.load( wgExtensionsPath+'/wikia/WikiaMiniUpload/css/WMU.css', "text/css" );
 				});
-				$(window).bind('WMU_addFromSpecialPage', function(event, filePageUrl) {
-					$().log('file name: ' + filePageUrl);
+				$(window).bind('WMU_addFromSpecialPage', function(event, fileHandler) {
+					$.nirvana.sendRequest({
+						controller: 'MarketingToolbox',
+						method: 'getImageDetails',
+						type: 'get',
+						data: {
+							'fileHandler': fileHandler
+						},
+						callback: function(response) {
+							$().log(response);
+						}
+					});
 				});
 			});
 		});
