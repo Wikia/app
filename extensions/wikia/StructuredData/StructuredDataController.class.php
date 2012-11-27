@@ -147,19 +147,28 @@ class StructuredDataController extends WikiaSpecialPageController {
 			} else if($this->getRequest()->wasPosted()) {
 
 				$requestParams = $this->getRequest()->getParams();
-				$requestParams = $this->alterRequestPerObject( $requestParams, $requestParams['type'] );
+				$handlerResult = $this->alterRequestPerObject( $requestParams, $requestParams['type'] );
 
-				$result = $this->structuredData->updateSDElement($sdsObject, $requestParams);
-				if( isset($result->error) ) {
-					$updateResult = $result;
-					$action = 'edit';
+				if ( $handlerResult instanceof stdClass ) {
+
+					$updateResult = $handlerResult;
+
+				} else {
+
+					$requestParams = $handlerResult;
+					$result = $this->structuredData->updateSDElement($sdsObject, $requestParams);
+					if( isset($result->error) ) {
+						$updateResult = $result;
+						$action = 'edit';
+					}
+					else {
+						$updateResult = new stdClass();
+						$updateResult->error = false;
+						$updateResult->message = wfMsg( 'structureddata-object-updated' );
+						$action = 'render';
+					}
 				}
-				else {
-					$updateResult = new stdClass();
-					$updateResult->error = false;
-					$updateResult->message = wfMsg( 'structureddata-object-updated' );
-					$action = 'render';
-				}
+
 				$this->setVal('updateResult', $updateResult);
 			}
 		}
@@ -196,34 +205,24 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$this->setVal('isCreateMode', ( $action == 'create' ));
 	}
 
-	public function alterRequestPerObject( $requestParams, $objectType) {
+	protected function alterRequestPerObject( $requestParams, $objectType) {
 
-		if ( $objectType == "wikia:WikiText" ) {
+		if ( isset( $this->config['typeHandlers'][$objectType] ) ) {
 
-			if ( !empty( $requestParams['name'] ) && !empty( $requestParams['schema:text'] ) ) {
+			$handlerName = $this->config['typeHandlers'][$objectType];
 
-				$parser = new Parser();
-				$title = Title::newFromText( "Data:".$requestParams['name'] );
+			/* @var $handler SDTypeHandler */
+			$handler = new $handlerName( $this->config );
+			$params = $handler->handleSaveData( $requestParams );
+			$result = $handler->getErrors();
 
-				/* @var $parserOutput ParserOutput */
-				$parserOutput = $parser->parse( $requestParams['schema:text'], $title, (new ParserOptions()) );
-
-				// ----- remove HTML TAGs -----
-				$string = $parserOutput->getText();
-				$string = preg_replace ('/<[^>]*>/', ' ', $string);
-
-				// ----- remove control characters -----
-				$string = str_replace("\r", '', $string);    // --- replace with empty space
-				$string = str_replace("\n", ' ', $string);   // --- replace with space
-				$string = str_replace("\t", ' ', $string);   // --- replace with space
-
-				// ----- remove multiple spaces -----
-				$string = trim(preg_replace('/ {2,}/', ' ', $string));
-				$string = trim(preg_replace('/([a-zA-Z0-9]) ([\.\,])/', '$1$2', $string));
-
-				$requestParams['schema:description'] = $string;
+			if ( !empty( $result->error ) ) {
+				return $result;
+			} else {
+				return $params;
 			}
 		}
+
 		return $requestParams;
 	}
 

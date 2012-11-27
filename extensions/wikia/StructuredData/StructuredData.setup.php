@@ -20,6 +20,11 @@ $app->registerClass('SDParserTag', $dir . 'parser/SDParserTag.class.php');
 $app->registerClass('SDParserTagProperty', $dir . 'parser/SDParserTagProperty.class.php');
 $app->registerClass('SDParserTagPropertyPath', $dir . 'parser/SDParserTagPropertyPath.class.php');
 
+$app->registerClass('SDTypeHandler', $dir . 'typehandlers/SDTypeHandler.class.php');
+$app->registerClass('SDTypeImageObject', $dir . 'typehandlers/SDTypeImageObject.php');
+$app->registerClass('SDTypeWikiText', $dir . 'typehandlers/SDTypeWikiText.php');
+
+
 require_once( $dir . '../../../lib/HTTP/Request.php');
 
 /**
@@ -39,6 +44,8 @@ $app->registerClass('StructuredDataController', $dir . 'StructuredDataController
  */
 $app->registerSpecialPage('StructuredData', 'StructuredDataController');
 
+
+
 $wgStructuredDataConfig = array(
 	//'baseUrl' => 'http://data.wikia.net/',
 	'debug' => !empty($wgDevelEnvironment),
@@ -56,8 +63,14 @@ $wgStructuredDataConfig = array(
 		'value_default' => 'value_default',
 		'sdelement_default' => 'sdelement_default',
 		'value_enum' => 'value_enum'
-	)
+	),
+	'typeHandlers' => array(
+		'wikia:WikiText' => 'SDTypeWikiText',
+		'schema:ImageObject' => 'SDTypeImageObject'
+	),
+	'ImageObjectThumbnailMaxWidth' => 600,
 );
+
 
 /**
  * access rights

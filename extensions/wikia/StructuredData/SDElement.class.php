@@ -78,6 +78,16 @@ class SDElement extends SDRenderableObject implements SplSubject {
 			    				'schema:video',
 			    				'wikia:restriction',
 			    				'schema:description'
+		    ),
+		    'schema:ImageObject' => array(
+			    				'schema:keywords',
+			    				'schema:thumbnailUrl',
+			    				'schema:description',
+			    				'wikia:restriction',
+			    				'wikia:includeWith',
+			    				'schema:contentURL',
+			    				'schema:width',
+			    				'schema:height'
 		    )
 		);
 
