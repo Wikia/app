@@ -645,8 +645,6 @@ class WallMessage {
 	public function getUserDisplayName() {
 		$displayName = '';
 		
-		hyunbug($this->getUser()->getId());
-		
 		if($this->getUser()->getId() == 0) {
 			$displayName = wfMsg('oasis-anon-user');
 		} else {
