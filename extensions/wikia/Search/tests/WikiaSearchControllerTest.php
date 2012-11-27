@@ -1533,7 +1533,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->with		( $responseArr )
 		;
 		
-		
 		$respRefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
 		$respRefl->setAccessible( true );
 		$respRefl->setValue( $mockController, $mockResponse );
@@ -1548,6 +1547,9 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController->videoSearch();
 	}
 	
+	/**
+	 * @covers WikiaSearchController::getRelatedVideos
+	 */
 	public function testGetRelatedVideos() {
 		$mockController	=	$this->searchController->setMethods( array( 'getVal' ) )->getMock();
 		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'setPageId', 'setStart', 'setSize' ) );
@@ -1632,7 +1634,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$searchRefl->setAccessible( true );
 		$searchRefl->setValue( $mockController, $mockSearch );
 		
-		
 		$mockSearch
 			->expects	( $this->at( 0 ) )
 			->method	( 'getRelatedVideos' )
@@ -1644,6 +1645,66 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$this->mockApp();
 		
 		$mockController->getRelatedVideos();
+		
+	}
+	
+	/**
+	 * @covers WikiaSearchController::getPages
+	 */
+	public function testGetPages() {
+		$mockController	=	$this->searchController->setMethods( array( 'getVal' ) )->getMock();
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->setMethods( array( 'getPages' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		$mockResponse	=	$this->getMockBuilder( 'WikiaResponse' )
+								->setMethods( array( 'setData', 'setFormat' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockRetVal = array( 'foo' => 'bar' );
+		
+		$mockController
+			->expects	( $this->once() )
+			->method	( 'getVal' )
+			->with		( 'ids' )
+			->will		( $this->returnValue( '123|321' ) )
+		;
+		$mockIndexer
+			->expects	( $this->once() )
+			->method	( 'getPages' )
+			->with		( array( '123', '321' ) )
+			->will		( $this->returnValue( $mockRetVal ) )
+		;
+		$mockResponse
+			->expects	( $this->at( 0 ) )
+			->method	( 'setData' )
+			->with		( $mockRetVal )
+		;
+		$mockResponse
+			->expects	( $this->at( 1 ) )
+			->method	( 'setFormat' )
+			->with		( 'json' )
+		;
+		
+		$searchRefl = new ReflectionProperty( 'WikiaSearchController', 'wikiaSearchIndexer' );
+		$searchRefl->setAccessible( true );
+		$searchRefl->setValue( $mockController, $mockIndexer );
+		
+		$mockWgRefl = new ReflectionProperty( 'WikiaSearchController', 'wg' );
+		$mockWgRefl->setAccessible( true );
+		$mockWgRefl->setValue( $mockController, (object) array( 'AllowMemcacheWrites' => true ) );
+		
+		$respRefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
+		$respRefl->setAccessible( true );
+		$respRefl->setValue( $mockController, $mockResponse );
+		
+		$mockController->getPages();
+		
+		$this->assertFalse(
+				$mockController->wg->AllowMemcacheWrites,
+				'WikiaSearchController::getPages should set wgAllowMemcacheWrites to false'
+		);
 		
 	}
 }
