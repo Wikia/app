@@ -1707,4 +1707,55 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		);
 		
 	}
+	
+/**
+	 * @covers WikiaSearchController::getPage
+	 */
+	public function testGetPage() {
+		$mockController	=	$this->searchController->setMethods( array( 'getVal' ) )->getMock();
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->setMethods( array( 'getPage' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		$mockResponse	=	$this->getMockBuilder( 'WikiaResponse' )
+								->setMethods( array( 'setData', 'setFormat' ) )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockRetVal = array( 'foo' => 'bar' );
+		
+		$mockController
+			->expects	( $this->once() )
+			->method	( 'getVal' )
+			->with		( 'id' )
+			->will		( $this->returnValue( 123 ) )
+		;
+		$mockIndexer
+			->expects	( $this->once() )
+			->method	( 'getPage' )
+			->with		( '123' )
+			->will		( $this->returnValue( $mockRetVal ) )
+		;
+		$mockResponse
+			->expects	( $this->at( 0 ) )
+			->method	( 'setData' )
+			->with		( $mockRetVal )
+		;
+		$mockResponse
+			->expects	( $this->at( 1 ) )
+			->method	( 'setFormat' )
+			->with		( 'json' )
+		;
+		
+		$searchRefl = new ReflectionProperty( 'WikiaSearchController', 'wikiaSearchIndexer' );
+		$searchRefl->setAccessible( true );
+		$searchRefl->setValue( $mockController, $mockIndexer );
+		
+		$respRefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
+		$respRefl->setAccessible( true );
+		$respRefl->setValue( $mockController, $mockResponse );
+		
+		$mockController->getPage();
+		
+	}
 }
