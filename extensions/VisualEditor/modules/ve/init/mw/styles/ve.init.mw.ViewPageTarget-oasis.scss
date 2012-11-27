@@ -1,3 +1,6 @@
-body {
-	background-color: red !important;
+@import "skins/oasis/css/core/color";
+
+.ve-ce-phantom {
+	background-image: -webkit-repeating-linear-gradient(-45deg, $color-page 0px, $color-page 5px, $color-buttons 5px, $color-buttons 10px );
+	background-image: -moz-repeating-linear-gradient(-45deg, $color-page 0px, $color-page 5px, $color-buttons 5px, $color-buttons 10px);
 }
