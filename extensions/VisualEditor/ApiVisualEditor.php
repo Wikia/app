@@ -28,9 +28,9 @@ class ApiVisualEditor extends ApiBase {
 	}
 
 	protected function postHTML( $title, $html ) {
-		global $wgVisualEditorParsoidURL, $wgVisualEditorParsoidTimeout;
+		global $wgVisualEditorParsoidURL, $wgVisualEditorParsoidTimeout, $wgVisualEditorParsoidPrefix;	
 		return Http::post(
-			$wgVisualEditorParsoidURL . '/' . urlencode( $title->getPrefixedDBkey() ),
+			$wgVisualEditorParsoidURL . '/' . $wgVisualEditorParsoidPrefix . '/' .urlencode( $title->getPrefixedDBkey() ),
 			array(
 				'postData' => array( 'content' => $html ),
 				'timeout' => $wgVisualEditorParsoidTimeout
