@@ -80,7 +80,7 @@ class AnalyticsProviderIVWTest extends WikiaBaseTest {
 	 * @dataProvider analyticsDataProvider
 	 */
 	public function testAnalyticsProviderIVW($url, $result) {
-		$this->assertEquals($this->getAnalyticsProviderIVWTag($url), $result);
+		$this->assertEquals($result, $this->getAnalyticsProviderIVWTag($url));
 	}
 }
 
