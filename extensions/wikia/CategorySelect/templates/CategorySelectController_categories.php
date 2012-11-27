@@ -4,7 +4,7 @@
 			<?= $app->renderView( 'CategorySelectController', 'category', array(
 				'index' => $index,
 				'category' => $category,
-				'className' => $category[ 'type' ]
+				'className' => !empty( $category[ 'type' ] ) ? $category[ 'type' ] : 'normal'
 			)) ?>
 		<? endforeach ?>
 	<? endif ?>

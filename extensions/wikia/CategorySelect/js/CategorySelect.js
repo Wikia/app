@@ -268,6 +268,7 @@ $.fn.categorySelect = (function() {
 					if ( value != undefined && value != '' ) {
 						data.category = categorySelect.makeCategory( value );
 						data.index = categorySelect.addCategory( data.category );
+						data.categories = categorySelect.categories;
 
 						$.when( getTemplate( 'category' ) ).done(function( template ) {
 
