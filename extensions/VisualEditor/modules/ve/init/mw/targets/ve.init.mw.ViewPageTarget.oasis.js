@@ -201,10 +201,19 @@ ve.init.mw.ViewPageTarget.prototype.hideTableOfContents = function () {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.mutePageContent = function () {
+	// TODO: Decide if we need to addClass here - it is also done in hidePageContent()
 	$( '#mw-content-text' )
-		.children()
 		.addClass( 've-init-mw-viewPageTarget-content' )
 		.fadeTo( 'fast', 0.6 );
+	$( '#WikiHeader, #WikiaPageHeader, #WikiaRail' ).fadeTo( 'fast', 0.6 ).each(function() {
+		var shield = $('<div class="oasis-interface-shield"></div>');
+		shield.offset( $(this).offset() );
+		shield.css({
+			'height': $(this).outerHeight(),
+			'width': $(this).outerWidth()
+		});
+		$('body').append(shield);
+	});
 };
 
 /**
@@ -260,8 +269,8 @@ ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( dom ) {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.hidePageContent = function () {
+	// TODO: Decide if we need to addClass here - it is also done in mutePageContent()
 	$( '#mw-content-text' )
-		.children()
 		.addClass( 've-init-mw-viewPageTarget-content' )
 		.hide();
 };
