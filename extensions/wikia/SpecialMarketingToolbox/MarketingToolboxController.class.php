@@ -16,6 +16,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
         $this->toolboxModel = new MarketingToolboxModel();
 	}
 
+	/**
+	 * Check access to this page
+	 */
 	protected function checkAccess() {
 		$this->wf->ProfileIn(__METHOD__);
 
@@ -29,6 +32,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		return true;
 	}
 
+	/**
+	 * Main action for this special page
+	 */
 	public function index() {
 		$this->wf->ProfileIn(__METHOD__);
 
@@ -59,6 +65,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->wf->ProfileOut(__METHOD__);
 	}
 
+	/**
+	 * dashboard action
+	 * Here curator can select language, section, vertical and date
+	 */
 	public function dashboardAction() {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Dashboard.scss');
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/MarketingToolbox.js');
@@ -75,6 +85,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->overrideTemplate('dashboard');
 	}
 
+	/**
+	 * Main action for editing hub modules
+	 */
 	public function editHubAction() {
 		$this->prepareLayoutData($this->getVal('moduleId', 1));
 
@@ -83,6 +96,11 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->overrideTemplate('editHub');
 	}
 
+	/**
+	 * Get data from url and it for header and left menu
+	 *
+	 * @param int $selectedModuleId selected module id
+	 */
 	protected function prepareLayoutData($selectedModuleId) {
 		$this->langCode = $this->getVal('region');
 		$this->verticalId = $this->getVal('verticalId');
@@ -99,6 +117,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->prepareLeftMenuData($modulesData, $selectedModuleId);
 	}
 
+	/**
+	 * Prepare data for header
+	 */
 	protected function prepareHeaderData($modulesData, $date) {
 		$this->headerData = array(
 			'date' => $date,
@@ -111,6 +132,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		);
 	}
 
+	/**
+	 * Prepare date for left menu
+	 */
 	protected function prepareLeftMenuData($modulesData, $selectedModuleId) {
 		$this->leftMenuItems = array();
 
@@ -124,6 +148,11 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		}
 	}
 
+	/**
+	 * Small routing for this special page
+	 *
+	 * @return string request action
+	 */
 	protected function getRequestedAction() {
 		$urlParam = $this->getPar();
 		$urlElements = explode('/', $urlParam);
@@ -159,6 +188,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		return $this->toolboxModel->getAvailableVerticals(MarketingToolboxModel::SECTION_HUBS);
 	}
 
+	/**
+	 * Render header module
+	 */
 	public function executeHeader($data) {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Header.scss');
 
@@ -174,6 +206,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->dashboardHref = SpecialPage::getTitleFor('MarketingToolbox')->getLocalURL();
 	}
 
+	/**
+	 * Render footer module
+	 */
 	public function executeFooter($data) {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Footer.scss');
 	}
