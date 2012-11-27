@@ -17,6 +17,8 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 
 	.addCategory {
 		@include border-radius( 4px );
+		background-color: transparent;
+		color: $color-text;
 		outline: none;
 		width: 100px;
 
