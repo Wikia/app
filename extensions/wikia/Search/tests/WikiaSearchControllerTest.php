@@ -1708,7 +1708,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		
 	}
 	
-/**
+	/**
 	 * @covers WikiaSearchController::getPage
 	 */
 	public function testGetPage() {
@@ -1757,5 +1757,101 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		
 		$mockController->getPage();
 		
+	}
+	
+	/**
+	 * @covers WikiaSearchController::advancedTabLink
+	 */
+	public function testAdvancedTabLink() {
+		
+		$term = 'foo';
+		$namespaces = array( 0, 14 );
+		$label = 'bar';
+		$tooltip = 'tooltip';
+		$params = array( 'filters' => array('is_video') );
+		$redirs = false;
+		$href = 'foo.com';
+		
+		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
+		$mockSpecialPage	=	$this->getMockBuilder( 'SpecialPage' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getLocalURL' ) )
+									->getMock();
+		
+		$stParams = array(
+				'search'	=>	$term,
+				'filters'	=>	array( 'is_video' ),
+				'ns0'		=>	1,
+				'ns14'		=>	1,
+				'redirs'	=>	0
+		);
+		
+		$incr = 0;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getVal' )
+			->with		( 'term' )
+			->will		( $this->returnValue( $term ) )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getVal' )
+			->with		( 'namespaces' )
+			->will		( $this->returnValue( $namespaces ) )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getVal' )
+			->with		( 'label' )
+			->will		( $this->returnValue( $label ) )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getVal' )
+			->with		( 'tooltip' )
+			->will		( $this->returnValue( $tooltip ) )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getVal' )
+			->with		( 'params' )
+			->will		( $this->returnValue( $params ) )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getVal' )
+			->with		( 'redirs' )
+			->will		( $this->returnValue( $redirs ) )
+		;
+		$mockSpecialPage
+			->expects	( $this->once() )
+			->method	( 'getLocalURL' )
+			->with		( $stParams )
+			->will		( $this->returnValue( $href ) );
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'setVal' )
+			->with		( 'href', $href )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'setVal' )
+			->with		( 'title', $tooltip )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'setVal' )
+			->with		( 'label', $label )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'setVal' )
+			->with		( 'tooltip', $tooltip )
+		;
+		$this->mockClass( 'SpecialPage', $mockSpecialPage );
+		$this->mockApp();
+		
+		$mockController->advancedTabLink();
 	}
 }
