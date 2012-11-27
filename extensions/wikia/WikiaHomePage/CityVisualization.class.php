@@ -293,7 +293,7 @@ class CityVisualization extends WikiaModel {
 			//UPDATE
 			$cond = array(
 				'city_id' => $wikiId,
-				'city_lang_code' => $this->wg->contLang->getCode()
+				'city_lang_code' => $langCode
 			);
 			$mdb->update($table, $data, $cond, __METHOD__);
 			$data['city_flags'] = $row->city_flags;
