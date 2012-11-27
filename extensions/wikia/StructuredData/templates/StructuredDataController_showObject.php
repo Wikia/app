@@ -6,6 +6,7 @@
 	// Array of SD object properties 
 	$properties = $sdsObject->getProperties();
 	$objectName = $sdsObject->getName();
+	$objectId = $sdsObject->getId();
 ?>
 <form class="WikiaForm SDObject" id="SDObject" method="POST">
 	<?php if(!empty($updateResult)): ?>
@@ -53,7 +54,7 @@
 					}
 					$propertyLabel = $property->getLabel();
 					$propertyName = $property->getName();
-					$propertyHTML = $property->render( $context );
+					$propertyHTML = $property->render( $context, array( 'objectId' => $objectId) );
 					$validationError = (isset($updateResult->errors) && array_key_exists($propertyName,
 						$updateResult->errors)) ? true : false;
 				    if (!empty($validationError)) {
@@ -84,7 +85,7 @@
 				<?php // Render properties manually ?>
 				<tr>
 					<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</th>
-					<td><p><?php echo $property->getWrappedValue()->render( $context, array( 'isCreateMode' => $isCreateMode ) ); ?></p></td>
+					<td><p><?php echo $property->getWrappedValue()->render( $context, array( 'isCreateMode' => $isCreateMode, 'objectId' => $objectId ) ); ?></p></td>
 					<?php if($context == SD_CONTEXT_SPECIAL): ?>
 						<td><p class="example"><?= $sdsObject->getType() . '/' . $objectName . '/'. $propertyName;
 							?></p></td>

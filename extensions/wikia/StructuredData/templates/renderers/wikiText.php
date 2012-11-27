@@ -1,5 +1,4 @@
 <?php
-
 $values = $object->getWrappedValue();
 
 if ( $context == SD_CONTEXT_EDITING ) {
@@ -45,7 +44,7 @@ foreach ( $values as $i => $propertyValue ) {
 }
 if ( $context == SD_CONTEXT_DEFAULT ) {
 	echo '<button class="add-wikiText-SDObj-from-article" data-displayed-object="' . $object->getName() .
-		'">Add new WikiText object</button>';
+		'" data-object-id="'.$params['objectId'].'">Add new WikiText object</button>';
 	echo F::build('JSSnippets')->addToStack(
 		array('/extensions/wikia/StructuredData/js/StructuredDataInArticle.js')
 	);
