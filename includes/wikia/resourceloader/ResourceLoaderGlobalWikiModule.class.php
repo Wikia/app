@@ -9,6 +9,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	protected function parseTitle( $titleText ) {
 		global $wgCanonicalNamespaceNames;
 
+		wfProfileIn(__METHOD__);
 		$text = $titleText;
 		$namespace = NS_MAIN;
 		foreach ($wgCanonicalNamespaceNames as $namespaceId => $namespacePrefix) {
@@ -30,6 +31,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			$text = false;
 		}
 
+		wfProfileOut(__METHOD__);
 		return array( $text, $namespace );
 	}
 
@@ -41,6 +43,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	 * @return Title|GlobalTitle
 	 */
 	protected function resolveRedirect( $title ) {
+		wfProfileIn(__METHOD__);
 		$origTitle = $title;
 		if ( $title instanceof GlobalTitle ) {
 			if ( $title->isRedirect() ) {
@@ -58,11 +61,13 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 				}
 			}
 		}
+		wfProfileOut(__METHOD__);
 		return $title;
 	}
 
 	protected function createTitle( $titleText, $options = array() ) {
 		global $wgCityId;
+		wfProfileIn(__METHOD__);
 		$title = null;
 		$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
 		if ( !empty( $options['city_id'] ) && $wgCityId != $options['city_id'] ) {
@@ -76,6 +81,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			$title = $this->resolveRedirect($title);
 		}
 
+		wfProfileOut(__METHOD__);
 		return $title;
 	}
 
@@ -83,6 +89,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		global $wgCityId;
 		$content = null;
 
+		wfProfileIn(__METHOD__);
 		if ( $title instanceof GlobalTitle ) {
 			// todo: think of pages like NS_MAIN:Test/code.js that are pulled
 			// from dev.wikia.com
@@ -124,13 +131,16 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return $content;
 	}
 
 	protected function reallyGetTitleMtimes( ResourceLoaderContext $context ) {
+		wfProfileIn(__METHOD__);
 		$dbr = $this->getDB();
 		if ( !$dbr ) {
 			// We're dealing with a subclass that doesn't have a DB
+			wfProfileOut(__METHOD__);
 			return array();
 		}
 
@@ -138,7 +148,8 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		$local = array();
 		$byWiki = array();
 
-		foreach ( $this->getPages( $context ) as $titleText => $options ) {
+		$pages = $this->getPages( $context );
+		foreach ( $pages as $titleText => $options ) {
 			$title = $this->createTitle($titleText,$options);
 			if ($title instanceof GlobalTitle) {
 				$byWiki[$title->getCityId()][] = array( $title, $titleText, $options );
@@ -191,6 +202,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return $mtimes;
 	}
 

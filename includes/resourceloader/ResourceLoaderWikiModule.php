@@ -192,13 +192,16 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 	 * @return array( prefixed DB key => UNIX timestamp ), nonexistent titles are dropped
 	 */
 	protected function getTitleMtimes( ResourceLoaderContext $context ) {
+		wfProfileIn(__METHOD__);
 		$hash = $context->getHash();
 		if ( isset( $this->titleMtimes[$hash] ) ) {
+			wfProfileOut(__METHOD__);
 			return $this->titleMtimes[$hash];
 		}
 
 		$this->titleMtimes[$hash] = $this->reallyGetTitleMtimes( $context );
 
+		wfProfileOut(__METHOD__);
 		return $this->titleMtimes[$hash];
 	}
 
