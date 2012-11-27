@@ -57,12 +57,16 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	this.proxiedOnSurfaceModelTransact = ve.bind( this.onSurfaceModelTransact, this );
 	this.$toolbarSaveButton =
 		$( '<div class="ve-init-mw-viewPageTarget-toolbar-saveButton"></div>' );
+	this.$saveDialog =
+		$( '<div class="ve-init-mw-viewPageTarget-saveDialog"></div>' );
+	this.editSummaryByteLimit = 255;
 
 	// Initialization
 	if ( this.canBeActivated ) {
 		this.setupEditLinks();
 		if ( this.isViewPage ) {
 			this.setupToolbarSaveButton();
+			this.setupSaveDialog();
 		}
 	}
 };
@@ -101,6 +105,39 @@ ve.init.mw.ViewPageTarget.compatibility = {
 		blackberry: false
 	}
 };
+
+/*jshint multistr: true*/
+ve.init.mw.ViewPageTarget.saveDialogTemplate = '\
+	<div class="ve-init-mw-viewPageTarget-saveDialog-title"></div>\
+	<div class="ve-init-mw-viewPageTarget-saveDialog-closeButton"></div>\
+	<div class="ve-init-mw-viewPageTarget-saveDialog-body">\
+		<div class="ve-init-mw-viewPageTarget-saveDialog-summary">\
+			<label class="ve-init-mw-viewPageTarget-saveDialog-editSummary-label"\
+				for="ve-init-mw-viewPageTarget-saveDialog-editSummary"></label>\
+			<textarea name="editSummary" class="ve-init-mw-viewPageTarget-saveDialog-editSummary"\
+				id="ve-init-mw-viewPageTarget-saveDialog-editSummary" type="text"\
+				rows="4"></textarea>\
+		</div>\
+		<div class="ve-init-mw-viewPageTarget-saveDialog-options">\
+			<input type="checkbox" name="minorEdit" \
+				id="ve-init-mw-viewPageTarget-saveDialog-minorEdit">\
+			<label class="ve-init-mw-viewPageTarget-saveDialog-minorEdit-label" \
+				for="ve-init-mw-viewPageTarget-saveDialog-minorEdit"></label>\
+			<input type="checkbox" name="watchList" \
+				id="ve-init-mw-viewPageTarget-saveDialog-watchList">\
+			<label class="ve-init-mw-viewPageTarget-saveDialog-watchList-label" \
+				for="ve-init-mw-viewPageTarget-saveDialog-watchList"></label>\
+			<label class="ve-init-mw-viewPageTarget-saveDialog-editSummaryCount"></label>\
+		</div>\
+		<button class="ve-init-mw-viewPageTarget-saveDialog-saveButton">\
+			<span class="ve-init-mw-viewPageTarget-saveDialog-saveButton-label"></span>\
+		</button>\
+		<div class="ve-init-mw-viewPageTarget-saveDialog-saving"></div>\
+		<div style="clear: both;"></div>\
+	</div>\
+	<div class="ve-init-mw-viewPageTarget-saveDialog-foot">\
+		<p class="ve-init-mw-viewPageTarget-saveDialog-license"></p>\
+	</div>';
 
 /* Methods */
 
@@ -189,6 +226,8 @@ ve.init.mw.ViewPageTarget.prototype.onLoad = function ( dom ) {
 	this.edited = false;
 	this.setUpSurface( dom );
 	this.attachToolbarSaveButton();
+	this.$toolbarWrapper = $( '.ve-ui-toolbar-wrapper' );
+	this.attachSaveDialog();
 };
 
 /**
@@ -205,6 +244,9 @@ ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( dom ) {
 	this.hidePageContent();
 	this.$fakeToolbar.remove();
 	this.$fakeToolbar = null;
+	if ( !this.currentUri.query.oldid ) {
+		this.disableToolbarSaveButton();
+	}
 	this.active = true;
 	this.$document.attr( {
 		'lang': $contentText.attr( 'lang' ),
@@ -279,6 +321,188 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbarSaveButton = function () {
 ve.init.mw.ViewPageTarget.prototype.enableToolbarSaveButton = function () {
 	this.$toolbarSaveButton
 		.removeClass( 've-init-mw-viewPageTarget-toolbar-saveButton-disabled' );
+};
+
+
+/**
+ * Handles clicks on the save button in the toolbar.
+ *
+ * @method
+ * @param {jQuery.Event} e
+ */
+ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
+	if ( this.edited ) {
+		this.showSaveDialog();
+	}
+};
+
+/**
+ * Shows the save dialog.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.showSaveDialog = function () {
+	var viewPage = this;
+	this.unlockSaveDialogSaveButton();
+	//this.$saveDialogLoadingIcon.hide();
+	this.$saveDialog.fadeIn( 'fast' ).find( 'textarea' ).eq( 0 ).focus();
+	/*$( document ).on( 'keydown', function ( e ) {
+		if ( e.which === 27 ) {
+			viewPage.onSaveDialogCloseButtonClick();
+		}
+	});*/
+};
+
+/**
+ * Adds the save dialog to the user interface.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.attachSaveDialog = function () {
+	// Update the minoredit and watchthis messages (which came through the message module)
+	this.$saveDialog.find( '.ve-init-mw-viewPageTarget-saveDialog-minorEdit-label' )
+		.html( ve.msg( 'minoredit' ) );
+	this.$saveDialog.find( '.ve-init-mw-viewPageTarget-saveDialog-watchList-label' )
+		.html( ve.msg( 'watchthis' ) );
+	this.$toolbarWrapper.find( '.ve-ui-toolbar' ).append( this.$saveDialog );
+};
+
+/**
+ * Adds content and event bindings to the save dialog.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
+	var viewPage = this;
+	viewPage.$saveDialog
+		.html( ve.init.mw.ViewPageTarget.saveDialogTemplate )
+		.find( '.ve-init-mw-viewPageTarget-saveDialog-title' )
+			.text( ve.msg( 'tooltip-save' ) )
+			.end()
+		.find( '.ve-init-mw-viewPageTarget-saveDialog-closeButton' )
+			.click( ve.bind( viewPage.onSaveDialogCloseButtonClick, viewPage ) )
+			.end()
+		.find( '#ve-init-mw-viewPageTarget-saveDialog-editSummary' )
+			.attr( {
+				'placeholder': ve.msg( 'visualeditor-editsummary' )
+			} )
+			.placeholder()
+			.byteLimit( viewPage.editSummaryByteLimit )
+			.on( 'keydown mouseup cut paste change focus blur', function () {
+				var $textarea = $(this),
+					$editSummaryCount = $textarea
+						.closest( '.ve-init-mw-viewPageTarget-saveDialog-body' )
+							.find( '.ve-init-mw-viewPageTarget-saveDialog-editSummaryCount' );
+				// TODO: This looks a bit weird, there is no unit in the UI, just numbers
+				// Users likely assume characters but then it seems to count down quicker
+				// than expected. Facing users with the word "byte" is bad? (bug 40035)
+				setTimeout( function () {
+					$editSummaryCount.text(
+						viewPage.editSummaryByteLimit - $.byteLength( $textarea.val() )
+					);
+				}, 0 );
+			} )
+			.end()
+		.find( '.ve-init-mw-viewPageTarget-saveDialog-editSummaryCount' )
+			.text( viewPage.editSummaryByteLimit )
+			.end()
+		.find( '.ve-init-mw-viewPageTarget-saveDialog-minorEdit-label' )
+			.text( ve.msg( 'minoredit' ) )
+			.end()
+		.find( '#ve-init-mw-viewPageTarget-saveDialog-watchList' )
+			.prop( 'checked', mw.config.get( 'wgVisualEditor' ).isPageWatched )
+			.end()
+		.find( '.ve-init-mw-viewPageTarget-saveDialog-saveButton' )
+			.on( {
+				'mousedown': function () {
+					$(this).addClass( 've-init-mw-viewPageTarget-saveDialog-saveButton-down' );
+				},
+				'mouseleave mouseup': function () {
+					$(this).removeClass( 've-init-mw-viewPageTarget-saveDialog-saveButton-down' );
+				},
+				'click': ve.bind( viewPage.onSaveDialogSaveButtonClick, viewPage )
+			} )
+			.end()
+		.find( '.ve-init-mw-viewPageTarget-saveDialog-saveButton-label' )
+			.text( ve.msg( 'savearticle' ) )
+			.end()
+		.find( '.ve-init-mw-viewPageTarget-saveDialog-license' )
+			// FIXME license text is hardcoded English
+			.html(
+				'By editing this page, you agree to irrevocably release your \
+				contributions under the CC-BY-SA 3.0 License. If you don\'t want your \
+				writing to be edited mercilessly and redistrubuted at will, then \
+				don\'t submit it here.<br/><br/>You are also confirming that you \
+				wrote this yourself, or copied it from a public domain or similar free \
+				resource. See Project:Copyright for full details of the licenses \
+				used on this site.\
+				<b>DO NOT SUBMIT COPYRIGHTED WORK WITHOUT PERMISSION!</b>'
+			);
+	viewPage.$saveDialogSaveButton = viewPage.$saveDialog
+		.find( '.ve-init-mw-viewPageTarget-saveDialog-saveButton' );
+	viewPage.$saveDialogLoadingIcon = viewPage.$saveDialog
+		.find( '.ve-init-mw-viewPageTarget-saveDialog-saving' );
+	// Hook onto the 'watch' event on by mediawiki.page.watch.ajax.js
+	// Triggered when mw.page.watch.updateWatchLink(link, action) is called
+	$( '#ca-watch, #ca-unwatch' )
+		.on(
+			'watchpage.mw',
+			function ( e, action ) {
+				viewPage.$saveDialog
+					.find( '#ve-init-mw-viewPageTarget-saveDialog-watchList' )
+					.prop( 'checked', ( action === 'watch' ) );
+			}
+		);
+};
+
+/**
+ * Disables the toolbar save button.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.disableToolbarSaveButton = function () {
+	this.$toolbarSaveButton
+		.addClass( 've-init-mw-viewPageTarget-toolbar-saveButton-disabled' );
+};
+
+/**
+ * Handles clicks on the save button in the save dialog.
+ *
+ * @method
+ * @param {jQuery.Event} e
+ */
+ve.init.mw.ViewPageTarget.prototype.onSaveDialogSaveButtonClick = function () {
+	this.lockSaveDialogSaveButton();
+	//this.$saveDialogLoadingIcon.show();
+	this.save(
+		ve.dm.converter.getDomFromData( this.surface.getDocumentModel().getFullData() ),
+		{
+			'summary': $( '#ve-init-mw-viewPageTarget-saveDialog-editSummary' ).val(),
+			'minor': $( '#ve-init-mw-viewPageTarget-saveDialog-minorEdit' ).prop( 'checked' ),
+			'watch': $( '#ve-init-mw-viewPageTarget-saveDialog-watchList' ).prop( 'checked' )
+		},
+		ve.bind( this.onSave, this )
+	);
+};
+
+/**
+ * Enables the save dialog save button.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.unlockSaveDialogSaveButton = function () {
+	this.$saveDialogSaveButton
+		.removeClass( 've-init-mw-viewPageTarget-saveDialog-saveButton-saving' );
+};
+
+/**
+ * Disables the save dialog save button.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.lockSaveDialogSaveButton = function () {
+	this.$saveDialogSaveButton
+		.addClass( 've-init-mw-viewPageTarget-saveDialog-saveButton-saving' );
 };
 
 /* Initialization */
