@@ -60,6 +60,7 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	this.$saveDialog =
 		$( '<div class="ve-init-mw-viewPageTarget-saveDialog"></div>' );
 	this.editSummaryByteLimit = 255;
+	this.section = currentUri.query.vesection || null;
 
 	// Initialization
 	if ( this.canBeActivated ) {
@@ -145,7 +146,14 @@ ve.init.mw.ViewPageTarget.saveDialogTemplate = '\
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.setupEditLinks = function () {
+	// Edit button
 	$( '#ca-edit' ).click( ve.bind( this.onEditButtonClick, this ) );
+
+	// Section edit links
+	$( '#mw-content-text .editsection a' ).click( ve.bind( this.onEditSectionLinkClick, this ) );
+
+
+
 };
 
 /**
@@ -158,6 +166,48 @@ ve.init.mw.ViewPageTarget.prototype.onEditButtonClick = function ( e ) {
 	this.activate();
 	// Prevent the edit button's normal behavior
 	e.preventDefault();
+};
+
+/**
+ * Handles clicks on a section edit link.
+ *
+ * @method
+ * @param {jQuery.Event} e
+ */
+ve.init.mw.ViewPageTarget.prototype.onEditSectionLinkClick = function ( e ) {
+	this.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
+	this.activate();
+	// Prevent the edit tab's normal behavior
+	e.preventDefault();
+};
+
+
+/**
+ * Gets the numeric index of a section in the page.
+ *
+ * @method
+ * @param {HTMLElement} heading Heading element of section
+ */
+ve.init.mw.ViewPageTarget.prototype.saveEditSection = function ( heading ) {
+	this.section = this.getEditSection( heading );
+};
+
+/**
+ * Gets the numeric index of a section in the page.
+ *
+ * @method
+ * @param {HTMLElement} heading Heading element of section
+ */
+ve.init.mw.ViewPageTarget.prototype.getEditSection = function ( heading ) {
+	var $page = $( '#mw-content-text' ),
+		section = 0;
+	$page.find( 'h1, h2, h3, h4, h5, h6' ).not( '#toc h2' ).each( function () {
+		section++;
+		if ( this === heading ) {
+			return false;
+		}
+	} );
+	return section;
 };
 
 /**
@@ -237,6 +287,8 @@ ve.init.mw.ViewPageTarget.prototype.onLoad = function ( dom ) {
 	this.attachToolbarSaveButton();
 	this.$toolbarWrapper = $( '.ve-ui-toolbar-wrapper' );
 	this.attachSaveDialog();
+	this.restoreScrollPosition();
+	this.restoreEditSection();
 };
 
 /**
@@ -547,7 +599,7 @@ ve.init.mw.ViewPageTarget.prototype.onSave = function ( html ) {
 		this.replacePageContent( html );
 		this.teardownBeforeUnloadHandler();
 		this.deactivate( true );
-		mw.util.jsMessage( ve.msg( 'visualeditor-notification-saved', this.pageName ) );
+		GlobalNotification.show( ve.msg( 'visualeditor-notification-saved', this.pageName ), "confirm" );
 	}
 };
 
@@ -695,6 +747,43 @@ ve.init.mw.ViewPageTarget.prototype.showTableOfContents = function () {
 		$wrap.slideDown(function () {
 			$toc.unwrap();
 		});
+	}
+};
+
+/**
+ * Moves the cursor in the editor to a given section.
+ *
+ * @method
+ * @param {Number} section Section to move cursor to
+ */
+ve.init.mw.ViewPageTarget.prototype.restoreEditSection = function () {
+	if ( this.section !== null ) {
+		var offset,
+			surfaceView = this.surface.getView(),
+			surfaceModel = surfaceView.getModel();
+		this.$document.find( 'h1, h2, h3, h4, h5, h6' ).eq( this.section - 1 ).each( function () {
+			var headingNode = $(this).data( 'node' );
+			if ( headingNode ) {
+				offset = surfaceModel.getDocument().getNearestContentOffset(
+					headingNode.getModel().getOffset()
+				);
+				surfaceModel.change( null, new ve.Range( offset, offset ) );
+				surfaceView.showSelection( surfaceModel.getSelection() );
+			}
+		} );
+		this.section = null;
+	}
+};
+
+/**
+ * Restores the window's scroll position.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.restoreScrollPosition = function () {
+	if ( this.scrollTop ) {
+		$( window ).scrollTop( this.scrollTop );
+		this.scrollTop = null;
 	}
 };
 
