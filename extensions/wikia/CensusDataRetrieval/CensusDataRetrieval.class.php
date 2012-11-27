@@ -11,6 +11,7 @@ class CensusDataRetrieval {
         var $app;
 	var $query = '';
 	var $data = array();
+	var $type = null;
         
 	var $supportedTypes = array( 'vehicle', 'item' );
 
@@ -72,6 +73,29 @@ class CensusDataRetrieval {
 		return true;
 	}
 
+        /**
+	 * retrieveForUpdate
+         * Retrieves, prepares and returns infobox template code
+         * 
+         * @param Title $title is used to form a query to Census
+         * @param String $type is used to make sure retrieved data is the same type
+         * @return String $templateCode
+	 */
+        public static function retrieveForUpdate($title, $type = null) {
+		wfProfileIn(__METHOD__);
+		$cdr = new self( $title );
+		if ( !$cdr->fetchData() ) {
+			// no data in Census or something went wrong, quit
+                        wfProfileOut(__METHOD__);
+			return false;
+		}
+		if ( $type && $type != $this->type) {
+			wfProfileOut(__METHOD__);
+			return null;
+		}
+		wfProfileOut(__METHOD__);
+                return $cdr->getData();
+        }
 
 	public function __construct( Title $title ) {
 		$this->app = F::App();
@@ -109,7 +133,7 @@ class CensusDataRetrieval {
          * @param $title Title is used to form a query to Census
          * @return $templateCode String
 	 */
-        public function getInfobox() {
+        public function getInfobox( $title ) {
                 if ( !$this->fetchData() ) {
 			// no data in Census or something went wrong, quit
                         wfProfileOut(__METHOD__);
@@ -124,7 +148,7 @@ class CensusDataRetrieval {
 	 * Requires censusDataArr and query fields be initiated
 	 * @return boolean true on success, false on failed connection or empty result
 	 */
-	private function fetchData() {
+	public function fetchData() {
                 wfProfileIn(__METHOD__);
 		// fetch data from API based on $this->query
                 $http = new Http();
@@ -170,7 +194,7 @@ class CensusDataRetrieval {
 	 * constructs the infobox text based on type and data
 	 * @return string
 	 */
-	private function getInfoboxCode() {
+	public function getInfoboxCode() {
                 wfProfileIn(__METHOD__);
 		$type = $this->getType();
 
@@ -198,7 +222,7 @@ class CensusDataRetrieval {
 	 *
 	 * @return string
 	 */
-	private function getType() {
+	public function getType() {
 		return $this->type;
 	}
 
@@ -444,5 +468,18 @@ class CensusDataRetrieval {
         public function getFlagCategoryTitle () {
                 return Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY );
         }
-        
+	
+	/**
+	 * getData
+	 */
+        public function getData() {
+		return $this->data;
+	}
+	
+	/**
+	 * setData
+	 */
+        public function setData( $data ) {
+		$this->data = $data;
+	}
 }
