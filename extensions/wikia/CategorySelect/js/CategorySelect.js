@@ -364,7 +364,11 @@ $.fn.categorySelect = (function() {
 				$.when( getWikiCategories() ).done(function( wikiCategories ) {
 					$input.autocomplete( $.extend( options.autocomplete, {
 						select: addCategory,
-						source: wikiCategories
+						source: function( request, response ) {
+
+							// Limit the response to 10 results
+							response( $.ui.autocomplete.filter( wikiCategories, request.term ).slice( 0, 10 ) );
+						}
 					}));
 				});
 			}
@@ -389,8 +393,7 @@ $.fn.categorySelect = (function() {
 
 $.fn.categorySelect.options = {
 	autocomplete: {
-		appendTo: '.CategorySelect',
-		minLength: 3
+		appendTo: '.CategorySelect'
 	},
 	categories: '.categories',
 	category: '.category',

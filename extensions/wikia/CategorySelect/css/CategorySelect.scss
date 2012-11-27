@@ -16,13 +16,20 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 	}
 
 	.addCategory {
+		@include border-radius( 4px );
 		outline: none;
 		width: 100px;
+
+		&:focus {
+			background-color: $categoryselect-color-category;
+			border: 1px solid $color-page-border;
+			width: 245px;
+		}
 	}
 
 	.addCategory,
 	.category {
-		border: 0;
+		border: 1px solid transparent;
 		display: block;
 		float: left;
 		margin: 0 5px 5px 0;
@@ -38,7 +45,6 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 		display: block;
 		float: left;
 		padding: 5px 0;
-		width: 75px;
 
 		&:after {
 			content: ":";
@@ -62,7 +68,7 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 
 	.container {
 		@include clearfix;
-		margin-left: 75px;
+		margin-left: 65px;
 	}
 
 	.tool {
