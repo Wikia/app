@@ -128,6 +128,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/AdEngine/js/Krux.run.js', // Needs to load after Krux.js, jQuery and AdEngine2.run.js
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js', // WikiaBar is enabled sitewide
 		'//extensions/wikia/Chat2/js/ChatEntryPoint.js', // Chat is enabled sitewide
+		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js', // Related Forum Discussion is on all article pages
 	)
 );
 
@@ -328,6 +329,8 @@ $config['gameguides_js'] = array(
 
 		//core modules
 		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
 
 		//tracker
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',

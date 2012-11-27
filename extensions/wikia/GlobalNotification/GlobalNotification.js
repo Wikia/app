@@ -1,3 +1,5 @@
+/*global WikiaFooterApp*/
+
 /* 
  * GlobalNotification.show()
  * @param string content - message to be displayed
@@ -48,7 +50,7 @@ var GlobalNotification = {
 			if(typeof timeout == 'number') {
 				setTimeout(function() {
 					GlobalNotification.hide();
-				}, timeout)
+				}, timeout);
 			}
 		};
 		GlobalNotification.hide( callback );
@@ -58,7 +60,7 @@ var GlobalNotification = {
 			GlobalNotification.dom.animate({
 				'height': 0,
 				'padding': 0,
-				'opacity': 0,
+				'opacity': 0
 			}, 400, function() {
 				GlobalNotification.dom.remove();
 				GlobalNotification.dom = [];

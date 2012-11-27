@@ -256,3 +256,11 @@ $messages['tl'] = array(
 	'minieditor-reply' => 'Tumugon',
 	'minieditor-placeholder-reply' => 'Tumugon sa mensahe rito',
 );
+
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'minieditor-new-heading' => 'ⴰⵔⴰ ⵜⴰⴱⵔⴰⵜ ⵜⴰⵎⴰⵢⵏⵓⵜ',
+	'minieditor-reply' => 'ⵔⴰⵔ',
+);

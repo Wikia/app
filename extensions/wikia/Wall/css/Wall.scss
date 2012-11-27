@@ -665,6 +665,9 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 		.buttons-monobook{
 			display: block;
+			a {
+				margin-right: 10px;
+			}
 		}
 		.buttons {
 			display: none;

@@ -761,6 +761,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				'id'	=>	'234_123',
 				'title'	=>	'my crappy test',
 				'html'	=>	'foo bar baz yes i am skipping testing regexes that is a trap',
+				'lang'	=>	'en',
 				);
 		
 		$mockIndexer

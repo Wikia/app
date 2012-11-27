@@ -19,14 +19,45 @@ $messages['en'] = array(
 
 	/* Forum:Special (Index) */
 	'forum-specialpage-heading' => '{{SITENAME}} Forum',
-	'forum-specialpage-blurb-heading' => 'Welcome to {{SITENAME}} Forum!',
+	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading You can edit it<span>',
 	'forum-specialpage-blurb' => '',
 	'forum-specialpage-board-threads' => '{{formatnum:$1}} {{PLURAL:$1|thread|threads}}',
 	'forum-specialpage-board-posts' => '{{formatnum:$1}} {{PLURAL:$1|post|posts}}',
 	'forum-specialpage-board-lastpostby' => 'Last post by',
+	'forum-specialpage-policies-edit' => 'Edit',
+	'forum-specialpage-policies' => 'Forum Policies / FAQ',
+	'forum-policies-and-faq' => "==Forum policies==
+Before contributing to the {{SITENAME}} Forums, please keep in mind a couple of best practices for conduct:
+
+'''Be nice and treat people with respect.'''
+: People from all around the world read and edit this wiki and its forums. Like any other collaborative project, not everyone will agree all the time. Keep discussions civil and be open minded about differing opinions. We're all here because we love the same topic.
+
+'''Try to find existing discussions first, but don't be afraid to start a new thread.'''
+:Please take a moment to sift through the {{SITENAME}} Forum boards to see if a discussion already exists about something you want to talk about. If you can't find what you're looking for -- be sure to jump right in and start a new discussion!
+
+'''Ask for help.'''
+:Notice something that doesn't seem right? or do you have a question? Ask for help here on the forums! If you need help from Wikia staff, please reach out on [[w:c:community|Community Central]] or via [[Special:Contact]].
+
+'''Have fun!'''
+:The {{SITENAME}} community is happy to have you here. We look forward to seeing you around as we discuss this topic we all love.
+
+==Forum FAQ==
+'''How do I stay on top of discussions I'm interested in?'''
+: With a Wikia user account, you can follow specific conversations and receive notifications (either on-site or via email) if a discussion has more activity. Be sure to [[Special:UserSignup|sign up for a Wikia account]] if you don't already have one.
+
+'''How do I remove vandalism?'''
+: If you notice some spam or vandalism on a thread, hover your mouse over the offending text. You'll see a \"More\" button appear. Inside the \"More\" menu, you'll find \"Remove\". This will allow you to remove the vandalism and optionally inform an admin.
+
+'''What are Kudos?'''
+: If you find a particular discussion or reply interesting, well thought out, or amusing you can show direct appreciation by giving it Kudos. They can be helpful in voting situations, too.
+
+'''What are Topics?'''
+: Topics allow you to sync a forum discussion with a wiki article. It's another way to keep Forums organized and to help people find interesting discussions. For example, a Forum thread tagged with \"Lord Voldemort\" will appear at the bottom of the \"Lord Voldemort\" article.",
 
 	/* Forum Board */
+	
 	'forum-board-title' => '$1 board',
+	'forum-board-topic-title' => 'Discussions about $1',
 	'forum-board-topics' => 'Topics',
 	'forum-board-thread-follow' => 'Follow',
 	'forum-board-thread-following' => 'Following',
@@ -34,8 +65,11 @@ $messages['en'] = array(
 	'forum-board-thread-replies' => '$1 Replies',
 	'forum-board-thread-unfollow' => 'Unfollow',
 	'forum-board-new-message-heading' => 'Start a Discussion',
+	'forum-board-select-board' => 'Select a Board',
 	
 	'forum-board-no-board-worning' => "The board you're looking for was not found",
+	
+	'forum-no-board-selection-error' => '← Please select a board to post to',
 
 	/* Forum Thread */
 	'forum-thread-title' => '$1 board',
@@ -68,6 +102,7 @@ $messages['en'] = array(
 	'forum-mail-notification-new-someone' => '$AUTHOR_NAME wrote a new thread on $WIKI\'s $BOARDNAME board.',
 	'forum-mail-notification-new-your' => '$AUTHOR_NAME wrote a new thread on $WIKI\'s $BOARDNAME board.',
 	'forum-mail-notification-reply-your' => '$AUTHOR_NAME replied to your thread on $WIKI\'s $BOARDNAME board',
+	'forum-mail-notification-reply-his' => '$AUTHOR_NAME replied on $WIKI\'s $BOARDNAME board',
 	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME replied on $WIKI\'s $BOARDNAME board',
 	'forum-mail-notification-html-greeting' => 'Hi $1,',
 	'forum-mail-notification-html-button' => 'See the conversation',
@@ -172,7 +207,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
  	'forum-autoboard-body-2' => 'Breaking news and information!',
 
  	'forum-autoboard-title-3' => 'New on $WIKINAME',
-	'forum-autoboard-body-3' => "Want to share something that's just been posted on the wiki, or congratulate somebody for an outstanding contribution?",
+	'forum-autoboard-body-3' => "Want to share something that's just been posted on this wiki, or congratulate somebody for an outstanding contribution? This is the place!",
 
 	'forum-autoboard-title-4' => 'Questions and Answers',
 	'forum-autoboard-body-4' => 'Got a question about the wiki, or the topic? Ask your questions here!',
@@ -200,6 +235,14 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	/* old forum notification */
 	'forum-old-notification-message' => 'This Forum has been archived',
 	'forum-old-notification-navigation-button' => 'Visit the new Forums',
+	
+	/* messages for Related Discussions Module on Article page */
+	'forum-related-discussion-heading' => 'Discussions about $1',
+	'forum-related-discussion-new-post-button' => 'Start a Discussion',
+	'forum-related-discussion-new-post-tooltip' => 'Start a new discussion about $1',
+	'forum-related-discussion-total-replies' => '$1 messages',
+	'forum-related-discussion-zero-state-creative' => 'You can find discussions about everything related to this wiki on [[Special:Forum|{{SITENAME}} Forum!]]',
+	'forum-related-discussion-see-more' => 'See more discussions',
 );
 
 $messages['qqq'] = array(
@@ -212,6 +255,10 @@ $messages['qqq'] = array(
 	'forum-specialpage-board-threads' => 'The count of threads on a board. Parameters: * $1 - the number of threads.  Use formatnum for local formatting.',
 	'forum-specialpage-board-posts' => 'The count of posts on a board. Parameters: * $1 - the number of posts.  Use formatnum for local formatting.',
 	'forum-specialpage-board-lastpostby' => '',
+	
+	'forum-specialpage-policies-edit' => 'Edit button on modal with forum Policies',
+	'forum-specialpage-policies' => 'button label for forum policies',
+	'forum-policies-and-faq' => 'default policies and faq',
 
 	'forum-notification-user1-reply-to-your' => 'Notification when someone replies on your thread. Parameters:
 * $1 is a username (GENDER is supported in this message).',
@@ -276,4 +323,9 @@ $messages['qqq'] = array(
 	'forum-board-destination-validation-missing' => 'Display on board create in case of validation error ',
 	'forum-board-id-validation-missing' => 'User should not see this message unless they hack the wiki.  Nevertheless, it is a validation error when it is not provided.',
 	
+	'forum-related-discussion-heading' => 'Section heading for related discussion section.  $1 is article that this section will be on.',
+	'forum-related-discussion-total-replies' => 'Label showing total number of replies in a discussion.  $1 is number of replies',
+	'forum-related-discussion-see-more' => 'See More link to topic page',
+	
+	'forum-board-select-board' => 'A form label instructing someone to select a board from a drop down.',
 );

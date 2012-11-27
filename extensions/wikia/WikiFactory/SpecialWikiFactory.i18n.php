@@ -1250,6 +1250,7 @@ $messages['cy'] = array(
 );
 
 /** Danish (dansk)
+ * @author Christian List
  * @author Emilkris33
  */
 $messages['da'] = array(
@@ -1261,7 +1262,7 @@ $messages['da'] = array(
 	'wf_city_title' => 'Titel',
 	'wf_city_created' => 'Oprettet',
 	'wf_city_founding_user' => 'Grundlægger',
-	'wf_city_founding_email' => 'Grundlæggerrens email',
+	'wf_city_founding_email' => 'Grundlæggerens e-mail',
 	'wf_city_public' => 'Status',
 	'wf_city_lang' => 'Sprog',
 	'wf_cc_name' => 'Kategori',

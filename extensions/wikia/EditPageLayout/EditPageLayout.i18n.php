@@ -1890,16 +1890,19 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
  * @author Luckas Blade
+ * @author TheGabrielZaum
  * @author 555
  */
 $messages['pt-br'] = array(
 	'editpagelayout-more' => 'mais',
 	'editpagelayout-less' => 'menos',
+	'editpagelayout-helpLink-url' => 'Help:Editando',
 	'editpagelayout-helpLink' => 'Precisa de [[{{MediaWiki:Editpagelayout-helpLink-url}}|ajuda?]]',
 	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Notificação|Notificações}}',
 	'editpagelayout-notificationsLink-none' => 'Notificações',
 	'editpagelayout-edit-title' => 'Editar título',
 	'editpagelayout-edit-info' => 'Editar informação',
+	'editpagelayout-diff-header-url' => 'Help:Dif',
 	'editpagelayout-diff-header' => 'As diferenças ([[{{MediaWiki:Editpagelayout-diff-header-url}}|ajuda]])',
 	'editpagelayout-myedit-header' => 'Esta é a sua edição. Copie as alterações para a caixa acima!',
 	'editpagelayout-captcha-title' => 'Captcha',
@@ -1914,10 +1917,14 @@ $messages['pt-br'] = array(
 	'editpagelayout-subject-headline-label' => 'Assunto/cabeçalho:',
 	'wikia-editor-media-image' => 'Foto',
 	'wikia-editor-media-gallery' => 'Galeria',
+	'wikia-editor-media-slideshow' => 'Apresentação de Slides',
+	'wikia-editor-media-slider' => 'Slider',
 	'wikia-editor-media-video' => 'Vídeo',
 	'wikia-editor-media-mut' => 'Vídeo',
 	'wikia-editor-media-image-tooltip' => 'Adicionar foto',
 	'wikia-editor-media-gallery-tooltip' => 'Adicionar galeria',
+	'wikia-editor-media-slideshow-tooltip' => 'Adicionar Apresen. de Slides',
+	'wikia-editor-media-slider-tooltip' => 'Adicionar Slider',
 	'wikia-editor-media-video-tooltip' => 'Adicionar vídeo',
 	'wikia-editor-media-mut-tooltip' => 'Adicionar vídeo (beta)',
 	'wikia-editor-source-bold-tooltip' => 'Negrito',
@@ -1933,6 +1940,9 @@ $messages['pt-br'] = array(
 	'wikia-editor-loadingStates-saving' => 'Publicando sua edição',
 	'wikia-editor-edittools-caption' => 'mais',
 	'wikia-editor-preview-editSummary' => 'Editar sumário: $1',
+	'rev-deleted-text-notice' => "Aviso: Essa revisão da página foi '''deletada'''. [Mais informação]",
+	'readonlywarning-notice' => "'''Atenção: O banco de dados foi trancado para manutenção.''' Edição deve voltar quando isso ser completo. [Mais informação]",
+	'userinvalidcssjstitle-notice' => "'''Atenção:''' Não há a pele \"\$1\". [Mais informação]",
 	'restore-edits-notice' => "Bem-vindo(a) de volta! Nós restauramos algumas alterações que você ainda não tinha publicado. <a class='notice-action restoreeditlink'>Excluir minhas alterações e iniciar uma nova edição</a>",
 	'prefs-general' => 'Geral',
 	'prefs-starting-an-edit' => 'Começar uma edição',

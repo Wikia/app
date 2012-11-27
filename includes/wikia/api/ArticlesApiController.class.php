@@ -6,14 +6,20 @@
  */
 
 class ArticlesApiController extends WikiaApiController {
+	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
 	const CACHE_VERSION = 6;
 	const CLIENT_CACHE_VALIDITY = 86400;//24h
-	const MAX_ITEMS = 250;
+	const PARAMETER_ARTICLES = 'ids';
+	const PARAMETER_ABSTRACT = 'abstract';
+
+	const CATEGORY_CACHE_ID = 'category';
+	const ARTICLE_CACHE_ID = 'article';
+	const DETAILS_CACHE_ID = 'details';
 
 	static function onArticleUpdateCategoryCounts( $this, $added, $deleted ) {
 		foreach ( $added + $deleted as $cat) {
-			WikiaDataAccess::cachePurge( self::getCacheKey( $cat, 'category' ) );
+			WikiaDataAccess::cachePurge( self::getCacheKey( $cat, self::CATEGORY_CACHE_ID ) );
 
 			self::purgeMethod(
 				'getList',
@@ -32,7 +38,7 @@ class ArticlesApiController extends WikiaApiController {
 	 */
 	private function getCategoryMembers( $category ){
 		return WikiaDataAccess::cache(
-			self::getCacheKey( $category, 'category' ),
+			self::getCacheKey( $category, self::CATEGORY_CACHE_ID ),
 			self::CLIENT_CACHE_VALIDITY,
 			function() use ( $category ) {
 				$ids = ApiService::call(
@@ -100,14 +106,26 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		}
 
-		$articles = DataMartService::getTopArticlesByPageview( $this->wg->CityId, $ids, $namespaces, false, self::MAX_ITEMS );
+		//This DataMartService method has
+		//separate caching
+		$articles = DataMartService::getTopArticlesByPageview(
+			$this->wg->CityId,
+			null,
+			$namespaces,
+			false,
+			self::MAX_ITEMS
+		);
+
 		$collection = array();
 
 		if ( !empty( $articles ) ) {
 			$ids = array();
 
 			foreach ( array_keys( $articles ) as $i ) {
-				$cache = $this->wg->Memc->get( self::getCacheKey( $i, 'article' ) );
+				//data is cached on a per-article basis
+				//to avoid one article requiring purging
+				//the whole collection
+				$cache = $this->wg->Memc->get( self::getCacheKey( $i, self::ARTICLE_CACHE_ID ) );
 
 				if ( !is_array( $cache ) ) {
 					$ids[] = $i;
@@ -134,7 +152,7 @@ class ArticlesApiController extends WikiaApiController {
 							)
 						);
 
-						$this->wg->Memc->set( self::getCacheKey( $id, 'article' ), $collection[$id], 86400 );
+						$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $collection[$id], 86400 );
 					}
 				}
 
@@ -172,11 +190,18 @@ class ArticlesApiController extends WikiaApiController {
 	public function getDetails() {
 		$this->wf->profileIn( __METHOD__ );
 
-		$articles = $this->request->getVal( 'ids', null );
-		$abstractLen = $this->request->getInt( 'abstract', 100 );
+		$articles = $this->request->getVal( self::PARAMETER_ARTICLES, null );
+		$abstractLen = $this->request->getInt( self::PARAMETER_ABSTRACT, 100 );
 		$width = $this->request->getInt( 'width', 200 );
 		$height = $this->request->getInt( 'height', 200 );
 		$collection = array();
+
+		//avoid going through the whole routine
+		//if the requested length is out of range
+		//as ArticleService::getTextSnippet would fail anyways
+		if ( $abstractLen > ArticleService::MAX_LENGTH ) {
+			throw new OutOfRangeApiException( self::PARAMETER_ABSTRACT, 0, ArticleService::MAX_LENGTH );
+		}
 
 		if ( !empty( $articles ) ) {
 			$articles = explode( ',', $articles );
@@ -184,7 +209,10 @@ class ArticlesApiController extends WikiaApiController {
 
 
 			foreach ( $articles as $i ) {
-				$cache = $this->wg->Memc->get( self::getCacheKey( $i, 'details' ) );
+				//data is cached on a per-article basis
+				//to avoid one article requiring purging
+				//the whole collection
+				$cache = $this->wg->Memc->get( self::getCacheKey( $i, self::DETAILS_CACHE_ID ) );
 
 				if ( !is_array( $cache ) ) {
 					$ids[] = $i;
@@ -211,7 +239,7 @@ class ArticlesApiController extends WikiaApiController {
 
 						$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
 
-						$this->wg->Memc->set( self::getCacheKey( $id, 'details' ), $collection[$id], 86400 );
+						$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
 					}
 				}
 
@@ -250,6 +278,8 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			$thumbnails = null;
+		} else {
+			throw new MissingParameterApiException( self::PARAMETER_ARTICLES );
 		}
 
 		/*
@@ -269,7 +299,7 @@ class ArticlesApiController extends WikiaApiController {
 
 	static public function purgeCache( $id ) {
 		$memc = F::app()->wg->Memc;
-		$memc->delete( self::getCacheKey( $id, 'article' ) );
-		$memc->delete( self::getCacheKey( $id, 'details' ) );
+		$memc->delete( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ) );
+		$memc->delete( self::getCacheKey( $id, self::DETAILS_CACHE_ID ) );
 	}
 }

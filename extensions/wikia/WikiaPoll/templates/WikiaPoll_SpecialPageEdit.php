@@ -1,7 +1,7 @@
 <?php if (! isset($poll)) {
 	echo F::app()->renderView('Error', 'Index', array('Poll does not exist'));
 } else { ?>
-<section class="CreateWikiaPoll" id="CreateWikiaPoll" data-pollId="<?=$poll->getID()?>">
+<section class="CreateWikiaPoll" id="CreateWikiaPoll" data-pollid="<?=$poll->getID()?>">
 
 	<h1><?= wfMsg('wikiapoll-editpoll-headline') ?></h1>
 

@@ -101,6 +101,7 @@ $wgAutoloadClasses['WikiaBaseTemplate'] = $IP . '/includes/wikia/nirvana/WikiaBa
 $wgAutoloadClasses['WikiaFunctionWrapper'] = $IP . '/includes/wikia/nirvana/WikiaFunctionWrapper.class.php';
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/WikiaBaseTest.class.php';
 $wgAutoloadClasses['WikiaAppMock'] = $IP . '/includes/wikia/tests/WikiaAppMock.class.php';
+$wgAutoloadClasses['WikiaMockProxy'] = $IP . '/includes/wikia/tests/WikiaMockProxy.class.php';
 
 /**
  * Exceptions
@@ -697,7 +698,7 @@ $wgUseExternalEditor = false;
  * libmemcached related stuff
  */
 define( "CACHE_LIBMEMCACHED", 11 );
-$wgObjectCaches[ CACHE_LIBMEMCACHED ] = array( 'class', 'LibmemcachedBagOStuff' );
+$wgObjectCaches[ CACHE_LIBMEMCACHED ] = array( 'factory' => 'LibmemcachedBagOStuff::newFromGlobals' );
 $wgSessionsInLibmemcached = false;
 
 
@@ -1004,10 +1005,6 @@ $wgResourceLoaderCssMinifier = false;
  */
 $wgWikiaIsCentralWiki = false;
 
-/**
- * default LB section for database connection
- */
-$wgLBDefaultSection = 'DEFAULT';
 
 /**
  * Is bulk mode in Memcached routines enabled?
@@ -1015,4 +1012,3 @@ $wgLBDefaultSection = 'DEFAULT';
  * @var boolean
  */
 $wgEnableMemcachedBulkMode = false;
-

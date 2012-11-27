@@ -3023,6 +3023,26 @@ $messages['tt-cyrl'] = array(
 	'swm-lang-other' => 'башка телләр',
 );
 
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'swm-label-recipient-users' => 'ⵉⵎⴷⴰⵏⵏ',
+	'swm-label-mode-wikis-all' => 'ⴰⴽⴽ ⵉⴷ ⵡⵉⴽⵉ',
+	'swm-button-send' => '[ ⴰⵣⵏ ]',
+	'swm-button-save' => '[ ⵣⵎⵎⴻⵎ ]',
+	'swm-button-new' => '[ ⴰⵎⴰⵢⵏⵓ ]',
+	'swm-msg-sent-ok' => '<h3>ⵜⴰⴱⵔⴰⵜ ⵜⵍⴽⴻⵎ.</h3>',
+	'swm-list-no-messages' => 'ⵡⴰⵔ ⵜⵉⴱⵔⴰⵜⵉⵏ.',
+	'swm-list-table-id' => 'ⵓⵟⵟⵓⵏ',
+	'swm-list-table-sender' => 'ⴰⵎⴰⵣⴰⵏ',
+	'swm-list-table-wiki' => 'ⵡⵉⴽⵉ',
+	'swm-list-table-group' => 'ⵜⴰⵔⴰⴱⴱⵓⵜ',
+	'swm-list-table-tools' => 'ⵉⵎⴰⵙⵙⵏ',
+	'swm-list-table-lang' => 'ⵜⵓⵜⵍⴰⵢⵉⵏ',
+	'swm-mode-users-editcount-more' => 'ⵓⴳⴰⵔ',
+);
+
 /** Ukrainian (українська)
  * @author Тест
  */

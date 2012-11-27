@@ -42,6 +42,11 @@ var WikiHeader = {
 			this.subnav2LI.hover(this.mouseoverL2, this.mouseoutL2);
 		}
 
+		// BugID: 64318 - hiding publish button on nav edit
+		if ( (window.wgIsWikiNavMessage) && (wgAction == "edit") ) {
+			$('#wpSave').hide();
+		}
+
 		//Accessibility Events
 		//Show when any inner anchors are in focus
 

@@ -8571,6 +8571,19 @@ $messages['tyv'] = array(
 	'wikistats_show' => 'Көргүзери',
 );
 
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'wikistats_wikia' => 'ⵡⵉⴽⵢⴰ',
+	'wikistats_panel_close_btn' => 'ⵇⵇⵏ',
+	'wikistats_daterange_from' => 'ⵙⴳ:',
+	'wikistats_daterange_to' => 'ⵖⵔ:',
+	'wikistats_active_day' => 'ⴰⵙⵙ',
+	'wikistats_images' => 'ⵜⵉⵡⵍⴰⴼⵉⵏ',
+	'wikistats_image_namespace' => 'ⵜⴰⵡⵍⴰⴼⵜ',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author NickK

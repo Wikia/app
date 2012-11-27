@@ -14,17 +14,6 @@ abstract class WikiaApiController extends WikiaController {
 	);
 
 	/**
-	 * In API we check if parameters are sorted
-	 * so it makes purging varnish easier and possible
-	 *
-	 * it happens in final __construct so we are sure
-	 * that this rule is obeyed
-	 */
-	public final function __construct() {
-		parent::__construct();
-	}
-
-	/**
 	 * block throiwng WikiaException for WikiaApi
 	 * if no method is passed
 	 */
@@ -40,7 +29,7 @@ abstract class WikiaApiController extends WikiaController {
 	 *
 	 * @throws WikiaException
 	 */
-	public function init() {
+	final public function init() {
 		if ( !$this->request->isInternal() ) {
 			$paramKeys = array_keys( F::app()->wg->Request->getQueryValues() );
 			$count = count( $paramKeys );
@@ -118,3 +107,5 @@ abstract class WikiaApiController extends WikiaController {
 		$this->response->setHeader( $APIGATE_HEADER_REQUIRES_API, 1);
 	}
 }
+
+class BadRequestApiException extends BadRequestException {}

@@ -246,7 +246,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		
 		foreach ( WikiaSearch::$languageFields as $field ) {
 			if ( isset( $pageData[$field] ) ) {
-				$pageData[WikiaSearch::field( $field )] = $pageData[$field];
+				$pageData[WikiaSearch::field( $field, $pageData['lang'] )] = $pageData[$field];
 			}
 		}
 

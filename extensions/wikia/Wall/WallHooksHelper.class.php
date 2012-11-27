@@ -1666,6 +1666,7 @@ class WallHooksHelper {
 			'isThread' => $wm->isMain(),
 			'isNew' => $isNew,
 		);
+
 		wfProfileOut(__METHOD__);
 
 		return $out;
@@ -1993,6 +1994,24 @@ class WallHooksHelper {
 			}
 		}
 		wfProfileOut(__METHOD__);
+		return true;
+	}
+		
+	/**
+	 * create needed tables
+	 */
+	 
+	public static function onAfterToggleFeature($name, $val) {
+		if($name == 'wgEnableWallExt' || $name == 'wgEnableForumExt') {
+			$db = wfGetDB(DB_MASTER);
+			if(!$db->tableExists('wall_history')) {
+				$db->sourceFile($IP."/extensions/wikia/Wall/sql/wall_history_local.sql");
+			}
+	
+			if(!$db->tableExists('wall_related_pages')) {
+				$db->sourceFile($IP."/extensions/wikia/Wall/sql/wall_related_pages.sql");
+			}
+		}
 		return true;
 	}
 	

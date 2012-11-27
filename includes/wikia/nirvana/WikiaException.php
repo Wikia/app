@@ -197,3 +197,8 @@ abstract class NotImplementedException extends WikiaHttpException {
 	protected $code = 501;
 	protected $message = 'Not implemented';
 }
+
+abstract class InvalidDataException extends WikiaHttpException {
+	protected $code = 555;//custom HTTP status, 500 cannot be used as it makes us fallback to IOWA
+	protected $message = 'Invalid data';
+}

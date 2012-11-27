@@ -239,8 +239,7 @@ class LightboxController extends WikiaController {
 			$articleTitleObj = F::build('Title', array($articleTitle), 'newFromText');
 
 			if(!empty($articleTitleObj) && $articleTitleObj->exists()) {
-
-				$fileParam = $fileTitleObj->getDBKey();
+				$fileParam = $this->wf->Urlencode( $fileTitleObj->getDBKey() );
 				$articleUrl = $articleTitleObj->getFullURL("file=$fileParam");
 				$articleNS = $articleTitleObj->getNamespace();
 				$articleTitleText = $articleTitleObj->getText();

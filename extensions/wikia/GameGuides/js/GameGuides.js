@@ -56,6 +56,18 @@
 
 			return size;
 		};
+
+		this.toggleAlignment = function(){
+			if(html.className.indexOf('full') > -1) {
+				html.className = html.className.replace(' full', '');
+
+				return 'left';
+			}else{
+				html.className += ' full';
+
+				return 'full';
+			}
+		};
 	}
 
 	Ponto.PontoBaseHandler.derive(Font);

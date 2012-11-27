@@ -55,25 +55,6 @@ var WikiaPhotoGallery = {
 		$().log(msg, 'WikiaPhotoGallery');
 	},
 
-	// add MW toolbar button (don't add it when using Monobook)
-	addToolbarButton: function() {
-		if ( (skin != 'monobook') && (typeof mwCustomEditButtons != 'undefined') ) {
-			mwCustomEditButtons.push({
-				'imageFile': window.wgExtensionsPath + '/wikia/WikiaPhotoGallery/images/gallery_add.png',
-				'speedTip': window.WikiaPhotoGalleryAddGallery,
-				'tagOpen': '',
-				'tagClose': '',
-				'sampleText': '',
-				'imageId': 'mw-editbutton-wpg',
-				'onclick': function() {
-					WikiaPhotoGallery.showEditor({
-						from: 'source'
-					});
-				}
-			});
-		}
-	},
-
 	// useful shortcut :)
 	isSlideshow: function() {
 		return (this.editor.gallery.type == this.TYPE_SLIDESHOW);
@@ -2569,6 +2550,3 @@ var WikiaPhotoGallery = {
 		return caretPos;
 	}
 };
-
-// add toolbar button
-WikiaPhotoGallery.addToolbarButton();

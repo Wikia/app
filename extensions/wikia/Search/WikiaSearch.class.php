@@ -418,7 +418,7 @@ class WikiaSearch extends WikiaObject {
 	public static function valueForField ( $field, $value, array $params = array() )
 	{
 		wfProfileIn( __METHOD__ );
-		$lang 		= isset( $params['lang']   ) && $params['lang']   !== false ? $lang : null;
+		$lang 		= isset( $params['lang']   ) && $params['lang']   !== false ? $params['lang'] : null;
 		$negate		= isset( $params['negate'] ) && $params['negate'] !== false ? '-' : '';
 	    $boostVal	= isset( $params['boost']  ) && $params['boost']  !== false ? '^'.$params['boost'] : '';
 	    $evaluate	= isset( $params['quote']  ) && $params['quote']  !== false ? "%s(%s:{$params['quote']}%s{$params['quote']})%s" : '%s(%s:%s)%s';

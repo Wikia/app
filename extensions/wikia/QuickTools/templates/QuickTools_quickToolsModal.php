@@ -14,13 +14,13 @@
 	</div>
 	<div class="spacer"></div>
 	<div class="button-column">
-		<button class="wikia-button" id="quicktools-rollback-all"><?= wfMessage( 'quicktools-rollback-all' )->escaped() ?></a>
-		<button class="wikia-button" id="quicktools-revert-all"><?= wfMessage( 'quicktools-revert-all' )->escaped() ?></a>
-		<button class="wikia-button" id="quicktools-block-and-revert"><?= wfMessage( 'quicktools-block-and-revert' )->escaped() ?></a>
+		<button class="wikia-button" id="quicktools-rollback-all"><?= wfMessage( 'quicktools-rollback-all' )->escaped() ?></button>
+		<button class="wikia-button" id="quicktools-revert-all"><?= wfMessage( 'quicktools-revert-all' )->escaped() ?></button>
+		<button class="wikia-button" id="quicktools-block-and-revert"><?= wfMessage( 'quicktools-block-and-revert' )->escaped() ?></button>
 	</div>
 	<div class="button-column">
-		<button class="wikia-button" id="quicktools-delete-all"><?= wfMessage( 'quicktools-delete-all' )->escaped() ?></a>
-		<button class="wikia-button" id="quicktools-block"><?= wfMessage( 'quicktools-block' )->escaped() ?></a>
-		<button class="wikia-button" id="quicktools-bot" data-bot="<?= htmlspecialchars( $botflag ) ?>"><?= wfMessage( 'quicktools-botflag-' . $botflag )->escaped() ?></a>
+		<button class="wikia-button" id="quicktools-delete-all"><?= wfMessage( 'quicktools-delete-all' )->escaped() ?></button>
+		<button class="wikia-button" id="quicktools-block"><?= wfMessage( 'quicktools-block' )->escaped() ?></button>
+		<button class="wikia-button" id="quicktools-bot" data-bot="<?= htmlspecialchars( $botflag ) ?>"><?= wfMessage( 'quicktools-botflag-' . $botflag )->escaped() ?></button>
 	</div>
 </div>
