@@ -38,21 +38,10 @@
 		color: $color-error;
 		font-style: italic;
 	}
-	figure {
-		border: 1px solid $color-page-border;
-		background-color: darken($color-page, 5%);
-		clear: both;
-		float: left;
-		margin-bottom: 10px;
-		padding: 15px;
-	}
 	img {
-		max-width: 443px;
+		max-width: 250px;
 		height: auto;
-	}
-	figcaption {
-		padding-top: 10px;
-		text-align: center;
+		padding: 10px 0 30px;
 	}
 	ul {
 		margin: 0;
@@ -137,9 +126,6 @@
 		font-family: monospace;
 		word-wrap: break-word;
 		width: 300px
-	}
-	img.edit-mode {
-		padding-bottom: 20px;
 	}
 }
 .SDClass-list {

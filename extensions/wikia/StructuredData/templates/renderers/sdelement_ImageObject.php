@@ -1,32 +1,18 @@
-<?php /* @var SDElement $object */
-    if($context == SD_CONTEXT_SPECIAL): ?>
-	<?php $imgSrc = $object->getPropertyValue('schema:contentURL', false); ?>
-	<figure>
-		<?php if ($imgSrc != false) : ?>
-			<img src="<?= $imgSrc->getValue() ?>" />
-		<?php endif; ?>
-		<figcaption><?php echo $object->getName('schema:name'); ?></figcaption>
-	</figure>
-	<dl>
-		<dt>Link to file page:</dt>
-		<dd>
-			<a href="<?php $url = $object->getPropertyValue('schema:url', false); echo ($url !== false) ? $url->getValue() : ''; ?>" title=""><?php echo($url !== false) ? $url->getValue() : ''; ?></a>
-		</dd>
-		<dt>WikiText link:</dt>
-		<dd>
-			<pre><?= $object->getType() . '/' . $object->getName()?></pre>
-		</dd>
-
-	</dl>
-<?php elseif ($context == SD_CONTEXT_EDITING): ?>
+<?php /* @var SDElement $object */?>
+<?php if ($context == SD_CONTEXT_EDITING): ?>
 	<input type="hidden" name="<?=$params['fieldName'];?>" value="<?=$object->getId();?>" />
-
-    <a href="<?=$object->getObjectPageUrl($context);?>" title="<?=htmlspecialchars( $object->getName() );
-	    ?>"><?=htmlspecialchars( $object->getName() ); ?></a></br>
-		<img class="edit-mode" src="<?php $imgSrc = $object->getPropertyValue('schema:contentURL',
-			false); echo ($imgSrc !== false) ?
-			$imgSrc->getValue() : '#';?>" alt="<?=htmlspecialchars( $object->getName() ); ?>" />
+<?php endif; ?>
+<?php if($context == SD_CONTEXT_SPECIAL || $context == SD_CONTEXT_EDITING): ?>
+	<?php $imgSrc = $object->getPropertyValue('schema:contentURL', false); ?>
+	<strong><a href="<?=$object->getObjectPageUrl($context);?>" title="<?=htmlspecialchars( $object->getName() );
+		?>"><?=htmlspecialchars( $object->getName() ); ?></a></strong></br>
+    <img src="<?php $imgSrc = $object->getPropertyValue('schema:contentURL',
+	    false); echo ($imgSrc !== false) ?
+	    $imgSrc->getValue() : '#';?>" alt="<?=htmlspecialchars( $object->getName() ); ?>" />
+<?php endif; ?>
+<?php if ($context == SD_CONTEXT_EDITING): ?>
 	<button class="secondary remove">Remove</button>
-<?php else : ?>
+<?php endif; ?>
+<?php  if($context != SD_CONTEXT_SPECIAL && $context != SD_CONTEXT_EDITING): ?>
 	<img src="<?php $imgSrc = $object->getPropertyValue('schema:contentURL', false); echo ($imgSrc !== false) ? $imgSrc->getValue() : '#'; ?>" />
 <?php endif; ?>

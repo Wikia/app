@@ -2,7 +2,7 @@ var StructuredData = {
 	// Mustache templates
 	selectTemplate: '<select class="objects-to-add"><option value="false">choose object...</option>{{#list}}<option data-value="{{id}}" data-url="{{url}}" data-type="{{type}}" data-name="{{name}}" {{#schema:contentURL}}data-image-url="{{schema:contentURL}}"{{/schema:contentURL}} >{{type}} - {{name}}</option>{{/list}}</select> ',
 	objectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}">{{name}}</a> <button class="secondary remove">Remove</button></li>',
-	imageObjectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}" title="{{name}}"><img src="{{imageUrl}}" alt="{{name}}" /></a> <button class="secondary remove">Remove</button></li>',
+	imageObjectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><strong><a href="{{url}}" title="{{name}}">{{name}}</a></strong></br><img src="{{imageUrl}}" alt="{{name}}" /> <button class="secondary remove">Remove</button></li>',
 	inputTemplate: '<li><div class="input-group"><input type="text" name="{{type}}[]" value="" /> <button class="secondary remove">Remove</button></div></li>',
 	// jQuery cached selectors
 	cachedSeletors: {},
