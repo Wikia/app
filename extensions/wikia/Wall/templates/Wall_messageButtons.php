@@ -157,6 +157,9 @@
 		 <? if( $canUnnotifyeveryone ): ?>
 		 	<a href="#" class="edit-notifyeveryone" data-mode="0"> <?= wfMsg('wall-message-unnotifyeveryone'); ?> </a>
 		 <? endif; ?>
+		 <? if( $canMove ): ?>
+		 	<a href="#" class="move-thread"> <?= wfMsg('wall-message-move-thread'); ?> </a>
+		 <? endif; ?>
 
 	</span>
 </div>
