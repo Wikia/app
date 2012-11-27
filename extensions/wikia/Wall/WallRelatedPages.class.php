@@ -193,8 +193,8 @@ class WallRelatedPages extends WikiaModel {
 			$row['threadUrl'] = $wallMessage->getMessagePageUrl(); 
 			$row['totalReplies'] = $wallThread->getRepliesCount();
 			
-			$row['userName'] = $wallMessage->getUser()->getName();
-			$row['userUrl'] = $wallMessage->getUser()->getUserPage()->getFullUrl();
+			$row['userName'] = $wallMessage->getUserDisplayName();
+			$row['userUrl'] = $wallMessage->getUserWallUrl();
 			$row['messageBody'] = $helper->shortenText($helper->strip_wikitext($wallMessage->getRawText()));
 			$row['timeStamp'] = $wallMessage->getCreateTime();
 			
@@ -206,7 +206,7 @@ class WallRelatedPages extends WikiaModel {
 				$reply->load();
 				$update[] = $reply->getCreateTime(TS_UNIX);
 				$replyRow = array(
-					'userName' =>  $reply->getUser()->getName(),
+					'userName' =>  $reply->getUserDisplayName(),
 					'userUrl' => $reply->getUser()->getUserPage()->getFullUrl(),
 					'messageBody' => $helper->shortenText($helper->strip_wikitext($reply->getRawText())),
 					'timeStamp' => $reply->getCreateTime()

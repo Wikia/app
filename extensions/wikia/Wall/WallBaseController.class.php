@@ -291,23 +291,14 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal( 'isStaff', $wallMessage->showWikiaEmblem() );
 		$this->response->setVal( 'username', $name );
 		
-		
-		$displayname  = "";
-		$displayname2 = $name;
-		
-		if( empty($displayname) ) {
-			$displayname = $name;
-			$displayname2 = '';
-		}
+		$displayname = $wallMessage->getUserDisplayName();
+		$displayname2 = '';
 
 		$url = $wallMessage->getUserWallUrl();
 		
 		if($wallMessage->getUser()->getId() == 0) { // anynymous contributor
-			$url = Skin::makeSpecialUrl('Contributions').'/'.$wallMessage->getUser()->getName();
-			
-			$displayname = wfMsg('oasis-anon-user');
 			$displayname2 = $wallMessage->getUser()->getName();
-		} 
+		}
 		
 		$this->response->setVal( 'displayname',  $displayname );
 		$this->response->setVal( 'displayname2', $displayname2 );
