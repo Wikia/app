@@ -190,6 +190,7 @@ class StructuredDataAPIClient extends WikiaObject {
 		$templateCacheKey = $this->wf->SharedMemcKey( __METHOD__, $templateUrl );
 
 		$rawResponse = $this->wg->Memc->get( $templateCacheKey );
+		$rawResponse = null;
 		if( empty( $rawResponse ) ) {
 			$rawResponse = $this->call( $templateUrl );
 			$response = json_decode( $rawResponse );
