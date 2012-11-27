@@ -41,16 +41,16 @@ class CrunchyrollRSS {
 			$this->feed->init();
 			$this->saveToCache( $url, $this->feed );
 		}
-		$this->blacklistedSeries = WF::build( 'App' )->getGlobal( 'wgCrunchyrollBlacklistedSeries' );
+		$this->blacklistedSeries = F::build( 'App' )->getGlobal( 'wgCrunchyrollBlacklistedSeries' );
 	}
 
 	public static function newFromUrl( $url ){
-		
+
 		return new CrunchyrollRSS( $url );
 	}
 
 	public function getTitle(){
-		
+
 		return $this->feed->get_title();
 	}
 
@@ -61,7 +61,7 @@ class CrunchyrollRSS {
 
 			$link = SpecialPage::getTitleFor('Crunchyroll')->getInternalURL();
 			$link .= '/0';
-			
+
 			$episodeId = 0;
 
 			// look for serie in link params
@@ -94,7 +94,7 @@ class CrunchyrollRSS {
 					$link.= '/'.$episodeId;
 				}
 			}
-			
+
 			$cat = $item->get_category();
 			if ( is_object( $cat ) && in_array( $cat->term, $this->allowedCategories ) ){
 

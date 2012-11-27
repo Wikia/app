@@ -172,7 +172,7 @@ class EditPageLayout extends EditPage {
 
 		$this->out->clearHTML();
 
-		$bridge = WF::build('EditPageOutputBridge',array($this,$this->mCoreEditNotices)); /* @var $bridge EditPageOutputBridge */
+		$bridge = F::build('EditPageOutputBridge',array($this,$this->mCoreEditNotices)); /* @var $bridge EditPageOutputBridge */
 		parent::showHeader();
 
 		// handle notices related to edit undo
@@ -622,7 +622,7 @@ class EditPageLayout extends EditPage {
 		} elseif ( $this->mTitle->isMainPage() && !$this->mTitle->isProtected() && !$this->userDismissedEduNote() ) {
 		//if this is an unprotected main page and user hasn't seen the main page educational notice -- show it :)
 			/** @var $notice EditPageNotice */
-			$notice = WF::build( 'EditPageNotice',array($this->app->wf->msgExt('mainpagewarning-notice', array('parse')), 'MainPageEduNote') );
+			$notice = F::build( 'EditPageNotice',array($this->app->wf->msgExt('mainpagewarning-notice', array('parse')), 'MainPageEduNote') );
 			$this->helper->addJsVariable('mainPageEduNoteHash', $notice->getHash());
 			$this->addEditNotice($notice);
 		}
