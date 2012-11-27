@@ -8,7 +8,7 @@ class SDParserTagProperty {
 	private $elementProperty = null;
 	private $valueIndex = null;
 
-	public function __construct( $name, SDElementProperty $elementProperty, $valueIndex = null ) {
+	public function __construct( $name, SDElementProperty $elementProperty = null, $valueIndex = null ) {
 		$this->name = $name;
 		$this->elementProperty = $elementProperty;
 		$this->valueIndex = $valueIndex;
