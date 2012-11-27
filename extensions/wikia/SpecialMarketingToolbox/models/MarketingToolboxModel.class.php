@@ -143,7 +143,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @param $timestamp
 	 * @return array
 	 */
-	public function getModulesData($langCode, $verticalId, $timestamp, $activeModule = self::MODULE_SLIDER) {
+	public function getModulesData($langCode, $sectionId, $verticalId, $timestamp, $activeModule = self::MODULE_SLIDER) {
 		$moduleList = $this->getModuleList($langCode, $verticalId, $timestamp);
 
 		$modulesData = array(
@@ -169,7 +169,8 @@ class MarketingToolboxModel extends WikiaModel {
 				'moduleId' => $moduleId,
 				'date' => $timestamp,
 				'region' => $langCode,
-				'verticalId' => $verticalId
+				'verticalId' => $verticalId,
+				'sectionId' => $sectionId
 			));
 		}
 		$modulesData['moduleList'] = $moduleList;

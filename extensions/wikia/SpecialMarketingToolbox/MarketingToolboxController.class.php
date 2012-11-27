@@ -109,6 +109,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$modulesData = $this->toolboxModel->getModulesData(
 			$this->langCode,
+			$this->sectionId,
 			$this->verticalId,
 			$this->date,
 			$selectedModuleId
