@@ -78,6 +78,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	public function editHubAction() {
 		$this->prepareLayoutData($this->getVal('moduleId', 1));
 
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHub.js');
+
 		$this->overrideTemplate('editHub');
 	}
 

@@ -10,6 +10,7 @@
 ) ?>
 <section class="MarketingToolboxMain">
 edithub
+<input type="button" class="wmu-show" value="WMU test" />
 </section>
 
 <?= F::app()->renderView(
