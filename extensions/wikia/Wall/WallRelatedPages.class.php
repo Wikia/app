@@ -193,7 +193,8 @@ class WallRelatedPages extends WikiaModel {
 			$row['threadUrl'] = $wallMessage->getMessagePageUrl(); 
 			$row['totalReplies'] = $wallThread->getRepliesCount();
 			
-			$row['userName'] = $wallMessage->getUserDisplayName();
+			$row['displayName'] = $wallMessage->getUserDisplayName();
+			$row['userName'] = $wallMessage->getUser()->getName();
 			$row['userUrl'] = $wallMessage->getUserWallUrl();
 			$row['messageBody'] = $helper->shortenText($helper->strip_wikitext($wallMessage->getRawText()));
 			$row['timeStamp'] = $wallMessage->getCreateTime();
