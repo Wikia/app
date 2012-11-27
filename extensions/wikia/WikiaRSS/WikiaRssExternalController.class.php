@@ -98,7 +98,7 @@ class WikiaRssExternalController extends WikiaController {
 
 		$headcnt = 0;
 		$outputEncoding = $app->wg->OutputEncoding;
-		
+
 		foreach( $items as $i => $item ) {
 			$d_text = true;
 			$d_title = true;
