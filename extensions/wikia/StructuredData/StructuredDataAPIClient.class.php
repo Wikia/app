@@ -7,7 +7,6 @@ class StructuredDataAPIClient extends WikiaObject {
 	const VOCABS_PATH = 'vocabs';
 	const TEMPLATE_CACHE_TTL = 180;
 
-	private $httpRequest = null;
 	protected $baseUrl = null;
 	protected $apiPath = null;
 	protected $schemaPath = null;
@@ -17,7 +16,6 @@ class StructuredDataAPIClient extends WikiaObject {
 		$this->apiPath = $apiPath;
 		$this->schemaPath = $schemaPath;
 
-		$this->httpRequest = new HTTP_Request();
 		parent::__construct();
 	}
 
@@ -59,7 +57,8 @@ class StructuredDataAPIClient extends WikiaObject {
 	}
 
 	protected function call( $url, $method = null, $body = null ) {
-		$this->httpRequest->setURL( $url );
+		$httpRequest = new HTTP_Request();
+		$httpRequest->setURL( $url );
 
 		if ($this->initLog()) {
 			$this->log('====================================');
@@ -69,17 +68,17 @@ class StructuredDataAPIClient extends WikiaObject {
 			$this->log($m . ' ' . $url . $b);
 		}
 
-		if ( $method ) $this->httpRequest->setMethod( $method );
-		if ( $body ) $this->httpRequest->setBody( $body );
+		if ( $method ) $httpRequest->setMethod( $method );
+		if ( $body ) $httpRequest->setBody( $body );
 
-		$this->httpRequest->addHeader( 'Accept', 'application/ld+json' );
-		$this->httpRequest->sendRequest();
+		$httpRequest->addHeader( 'Accept', 'application/ld+json' );
+		$httpRequest->sendRequest();
 
 		try {
-			$response = $this->httpRequest->getResponseBody();
-			$this->log('Response (' . $this->httpRequest->getResponseCode() .') is ' . $response);
+			$response = $httpRequest->getResponseBody();
+			$this->log('Response (' . $httpRequest->getResponseCode() .') is ' . $response);
 			$decodedResponse = json_decode ( $response );
-			if ( empty($decodedResponse) && in_array( $this->httpRequest->getResponseCode(), array( 500, 501 ) ) ) {
+			if ( empty($decodedResponse) && in_array( $httpRequest->getResponseCode(), array( 500, 501 ) ) ) {
 				return '{"error":"Internal Server Error","message":""}';
 			}
 			else {
@@ -161,7 +160,7 @@ class StructuredDataAPIClient extends WikiaObject {
 	}
 
 	public function getCollection( $type, $extraFields=array() ) {
-		$rawResponse = $this->call( rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) );
+		$rawResponse = $this->call( rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) . '&cb=' . time() );
 		$response = json_decode( $rawResponse );
 		$response = $this->isValidResponse($response);
 
@@ -190,7 +189,6 @@ class StructuredDataAPIClient extends WikiaObject {
 		$templateCacheKey = $this->wf->SharedMemcKey( __METHOD__, $templateUrl );
 
 		$rawResponse = $this->wg->Memc->get( $templateCacheKey );
-		$rawResponse = null;
 		if( empty( $rawResponse ) ) {
 			$rawResponse = $this->call( $templateUrl );
 			$response = json_decode( $rawResponse );
