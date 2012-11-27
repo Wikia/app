@@ -82,12 +82,18 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	protected function prepareLayoutData($selectedModuleId) {
-		$langId = $this->getVal('region');
-		$verticalId = $this->getVal('verticalId');
-		$date = $this->getVal('date');
+		$this->langId = $this->getVal('region');
+		$this->verticalId = $this->getVal('verticalId');
+		$this->sectionId = $this->getVal('sectionId');
+		$this->date = $this->getVal('date');
 
-		$modulesData = $this->toolboxModel->getModulesData($langId, $verticalId, $date, $selectedModuleId);
-		$this->prepareHeaderData($modulesData, $date);
+		$modulesData = $this->toolboxModel->getModulesData(
+			$this->langId,
+			$this->verticalId,
+			$this->date,
+			$selectedModuleId
+		);
+		$this->prepareHeaderData($modulesData, $this->date);
 		$this->prepareLeftMenuData($modulesData, $selectedModuleId);
 	}
 
@@ -97,6 +103,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			'moduleName' => $modulesData['activeModuleName'],
 			'lastEditor' => $modulesData['lastEditor'],
 			'lastEditTime' => $modulesData['lastEditTime'],
+			'sectionName' => $this->toolboxModel->getSectionName($this->sectionId),
+			'verticalName' => $this->toolboxModel->getVerticalName($this->sectionId, $this->verticalId),
+			'regionName' => $this->toolboxModel->getLanguageName($this->langId),
 		);
 	}
 
@@ -151,10 +160,15 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	public function executeHeader($data) {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Header.scss');
 
-		$this->date = (isset($data['date'])) ? $data['date'] : null;
-		$this->moduleName = (isset($data['moduleName'])) ? $data['moduleName'] : null;
-		$this->lastEditor = (isset($data['lastEditor'])) ? $data['lastEditor']: null;
-		$this->lastEditTime = (isset($data['lastEditTime'])) ? $data['lastEditTime']: null;
+		$optionalDataKeys = array('date', 'moduleName', 'sectionName', 'verticalName',
+			'regionName', 'lastEditor', 'lastEditTime');
+
+		foreach ($optionalDataKeys as $key) {
+			if (isset($data[$key])) {
+				$this->$key = $data[$key];
+			}
+		}
+
 		$this->dashboardHref = SpecialPage::getTitleFor('MarketingToolbox')->getLocalURL();
 	}
 

@@ -3,10 +3,6 @@
 class MarketingToolboxModel extends WikiaModel {
 	const SECTION_HUBS = 1;
 
-	const VERTICAL_VIDEOGAMES = 1;
-	const VERTICAL_ENTERTAINMENT = 2;
-	const VERTICAL_LIFESTYLE = 3;
-
 	const MODULE_SLIDER = 1;
 	const MODULE_PULSE = 2;
 	const MODULE_WIKIAS_PICKS = 3;
@@ -46,9 +42,9 @@ class MarketingToolboxModel extends WikiaModel {
 
 		$this->verticals = array(
 			self::SECTION_HUBS => array(
-				self::VERTICAL_VIDEOGAMES => wfMsg('marketing-toolbox-section-games-button'),
-				self::VERTICAL_ENTERTAINMENT => wfMsg('marketing-toolbox-section-entertainment-button'),
-				self::VERTICAL_LIFESTYLE => wfMsg('marketing-toolbox-section-lifestyle-button'),
+				WikiFactoryHub::CATEGORY_ID_GAMING => wfMsg('marketing-toolbox-section-games-button'),
+				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMsg('marketing-toolbox-section-entertainment-button'),
+				WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMsg('marketing-toolbox-section-lifestyle-button'),
 			)
 		);
 	}
@@ -93,6 +89,12 @@ class MarketingToolboxModel extends WikiaModel {
 		return $regions;
 	}
 
+	public function getLanguageName($wikiId) {
+		$lang = WikiFactory::getVarByName('wgLanguageCode', $wikiId);
+		$lang = unserialize($lang->cv_value);
+		return Language::getLanguageName($lang);
+	}
+
 	/**
 	 * Get avalable sections
 	 *
@@ -100,6 +102,29 @@ class MarketingToolboxModel extends WikiaModel {
 	 */
 	public function getAvailableSections() {
 		return $this->sections;
+	}
+
+	/**
+	 * Get section name
+	 *
+	 * @param int $sectionId sectioId
+	 *
+	 * @return string section name
+	 */
+	public function getSectionName($sectionId) {
+		return $this->sections[$sectionId];
+	}
+
+	/**
+	 * Get vertical name
+	 *
+	 * @param int $sectionId section id
+	 * @param int $verticalId vertical id
+	 *
+	 * @return string vertical name
+	 */
+	public function getVerticalName($sectionId, $verticalId) {
+		return $this->verticals[$sectionId][$verticalId];
 	}
 
 	/**

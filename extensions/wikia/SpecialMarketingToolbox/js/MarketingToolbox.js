@@ -114,6 +114,7 @@ MarketingToolbox.prototype = {
 				.setVal('date', date / 1000)
 				.setVal('region', $('#marketingToolboxRegionSelect').val())
 				.setVal('verticalId', $('.vertical input:not(.secondary)').data('vertical-id'))
+				.setVal('sectionId', $('.section input:not(.secondary)').data('section-id'))
 				.goTo();
 		}
 	},

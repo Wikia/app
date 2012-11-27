@@ -30,8 +30,8 @@
 					<? if (!isset($selectedLanguage)): ?>disabled="disabled"<? endif ?>
 					type="button"
 					value="<?=$section?>"
-					data-section-id="<?=$sectionId;?>
-				"/>
+					data-section-id="<?=$sectionId;?>"
+				/>
 			<? endforeach ?>
 		</div>
 	</div>
