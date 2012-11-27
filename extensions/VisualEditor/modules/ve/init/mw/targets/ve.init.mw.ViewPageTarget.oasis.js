@@ -514,6 +514,190 @@ ve.init.mw.ViewPageTarget.prototype.lockSaveDialogSaveButton = function () {
 		.addClass( 've-init-mw-viewPageTarget-saveDialog-saveButton-saving' );
 };
 
+
+/**
+ * Handles successful DOM save event.
+ *
+ * @method
+ * @param {HTMLElement} html Rendered HTML from server
+ */
+ve.init.mw.ViewPageTarget.prototype.onSave = function ( html ) {
+	if ( Number( mw.config.get( 'wgArticleId', 0 ) ) === 0 || this.oldId ) {
+		// This is a page creation, refresh the page
+		this.teardownBeforeUnloadHandler();
+		window.location.href = this.viewUri.extend( {
+			'venotify': this.oldId ? 'saved' : 'created'
+		} );
+	} else {
+		// Update watch link to match 'watch checkbox' in save dialog.
+		// User logged in if module loaded.
+		// Just checking for mw.page.watch is not enough because in Firefox
+		// there is Object.prototype.watch...
+		if ( mw.page.watch && mw.page.watch.updateWatchLink ) {
+			var watchChecked = this.$saveDialog
+				.find( '#ve-init-mw-viewPageTarget-saveDialog-watchList')
+				.prop( 'checked' );
+			mw.page.watch.updateWatchLink(
+				$( '#ca-watch a, #ca-unwatch a' ),
+				watchChecked ? 'unwatch': 'watch'
+			);
+		}
+		this.hideSaveDialog();
+		this.resetSaveDialog();
+		this.replacePageContent( html );
+		this.teardownBeforeUnloadHandler();
+		this.deactivate( true );
+		mw.util.jsMessage( ve.msg( 'visualeditor-notification-saved', this.pageName ) );
+	}
+};
+
+/**
+ * Hides the save dialog
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.hideSaveDialog = function () {
+	this.$saveDialog.fadeOut( 'fast' );
+	this.$document.focus();
+	$( document ).off( 'keydown' );
+};
+
+/**
+ * Resets the fields of the save dialog
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.resetSaveDialog = function () {
+	this.$saveDialog
+		.find( '#ve-init-mw-viewPageTarget-saveDialog-editSummary' )
+			.val( '' )
+			.end()
+		.find( '#ve-init-mw-viewPageTarget-saveDialog-minorEdit' )
+			.prop( 'checked', false );
+};
+
+/**
+ * Replaces the page content with new HTML.
+ *
+ * @method
+ * @param {HTMLElement} html Rendered HTML from server
+ */
+ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html ) {
+	$( '#mw-content-text' ).html( html );
+};
+
+/**
+ * Removes onbeforunload handler.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.teardownBeforeUnloadHandler = function () {
+	// Restore whatever previous onbeforeload hook existed
+	window.onbeforeunload = this.onBeforeUnloadFallback;
+};
+
+/**
+ * Switches to view mode.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.deactivate = function ( override ) {
+	if ( this.active && !this.deactivating ) {
+		if (
+			override ||
+			!this.surface.getModel().getHistory().length ||
+			confirm( ve.msg( 'visualeditor-viewpage-savewarning' ) )
+		) {
+			this.deactivating = true;
+			// User interface changes
+			this.detachToolbarSaveButton();
+			this.detachSaveDialog();
+			this.tearDownSurface();
+			this.showTableOfContents();
+			this.deactivating = false;
+		}
+	}
+};
+
+/**
+ * Removes the save button from the user interface.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.detachToolbarSaveButton = function () {
+	this.$toolbarSaveButton.detach();
+};
+
+/*
+ * Removes the save dialog from the user interface.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.detachSaveDialog = function () {
+	this.$saveDialog.detach();
+};
+
+/**
+ * Switches to viewing mode.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function () {
+	// Update UI
+	this.$document.blur();
+	this.$document = null;
+	this.surface.$.empty().detach();
+	$( '.ve-ui-context' ).remove();
+	this.detachToolbar();
+	this.showPageContent();
+	this.showTableOfContents();
+	$('.oasis-interface-shield').remove();
+	$( '#WikiHeader, #WikiaPageHeader, #WikiaRail' ).fadeTo( 'fast', 1 );
+	// Remove handler if it's still active
+	this.surface.getModel().removeListener( 'transact', this.proxiedOnSurfaceModelTransact );
+	// Destroy editor
+	this.surface = null;
+	this.active = false;
+};
+
+/**
+ * Hides the toolbar.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.detachToolbar = function () {
+	$( '.ve-ui-toolbar' ).slideUp( 'fast', function () {
+		$(this).parent().remove();
+	} );
+};
+
+/**
+ * Shows the page content.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.showPageContent = function () {
+	$( '.ve-init-mw-viewPageTarget-content' )
+		.removeClass( 've-init-mw-viewPageTarget-content' )
+		.show()
+		.fadeTo( 0, 1 );
+};
+
+/**
+ * Shows the table of contents in the view mode.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.showTableOfContents = function () {
+	var $toc = $( '#toc' ),
+		$wrap = $toc.parent();
+	if ( $wrap.data( 've.hideTableOfContents' ) ) {
+		$wrap.slideDown(function () {
+			$toc.unwrap();
+		});
+	}
+};
+
 /* Initialization */
 
 ve.init.mw.targets.push( new ve.init.mw.ViewPageTarget() );
