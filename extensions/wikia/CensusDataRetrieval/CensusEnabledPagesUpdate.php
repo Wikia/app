@@ -54,6 +54,10 @@ class CensusEnabledPagesUpdate {
 	 */
         private function getUpdatedContent( $currentText, Title $oTitle ) {
 		
+		$templateCode = null;
+		$type = null;
+		$templateParams = null;
+		$templateParamsArr = array();
 		//cut pieces requred for update
 		$templateMatches = $this->matchTemplate( $currentText );
 		//set current template code
@@ -67,10 +71,9 @@ class CensusEnabledPagesUpdate {
 		//set string of template params without line breaks
 		if ( isset($templateMatches[2]) ) {
 			$templateParams = str_replace("\n",' ',$templateMatches[2]);
+			//parse params to assoc array compatibile to CensusDataRetrieval::data
+			$templateParamsArr = $this->parseTemplateFields( $templateParams );
 		}
-		
-		//parse params to assoc array compatibile to CensusDataRetrieval::data
-		$templateParamsArr = $this->parseTemplateFields( $templateParams );
 		
 		//get data from Census
 		$oCensusRetrieval = new CensusDataRetrieval( $oTitle );
@@ -87,14 +90,20 @@ class CensusEnabledPagesUpdate {
 		}
 		
 		//combine results and override old ones
-                $newTemplateParamsArr = array_merge( $templateParamsArr, $oCensusRetrieval->getData() );
+		if ( $templateParamsArr ) {
+			$newTemplateParamsArr = array_merge( $templateParamsArr, $oCensusRetrieval->getData() );
+			$oCensusRetrieval->setData( $newTemplateParamsArr );
+		}
 		
 		//get new template code
-		$oCensusRetrieval->setData( $newTemplateParamsArr );
 		$newTemplateCode = $oCensusRetrieval->getInfoboxCode();
 		
 		//replace template
-		$newText = str_replace($templateCode, $newTemplateCode, $currentText);
+		if ( $templateCode ) {
+			$newText = str_replace($templateCode, $newTemplateCode, $currentText);
+		} else {
+			$newText = $newTemplateCode.$currentText;
+		}
 		
 		//TODO insert templ if no template yet
 		wfProfileOut(__METHOD__);
