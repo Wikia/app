@@ -6,10 +6,6 @@
  */
 
 class DiscoverApiController extends WikiaApiController {
-	public function index() {
-		$this->forward( __CLASS__, 'getList');
-	}
-
 	/**
 	 * Lists all the registered API controllers
 	 *

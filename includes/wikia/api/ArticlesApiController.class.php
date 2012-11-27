@@ -6,9 +6,12 @@
  */
 
 class ArticlesApiController extends WikiaApiController {
+	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
 	const CACHE_VERSION = 6;
 	const CLIENT_CACHE_VALIDITY = 86400;//24h
+	const PARAMETER_ARTICLES = 'ids';
+	const PARAMETER_ABSTRACT = 'abstract';
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by vertical namespace
@@ -40,7 +43,15 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		}
 
-		$articles = DataMartService::getTopArticlesByPageview( $this->wg->CityId, null, $namespaces, false, 250 );
+		//This DataMartService method has
+		//separate caching
+		$articles = DataMartService::getTopArticlesByPageview(
+			$this->wg->CityId,
+			null,
+			$namespaces,
+			false,
+			self::MAX_ITEMS
+		);
 		$batches = array();
 		$collection = array();
 
@@ -48,6 +59,9 @@ class ArticlesApiController extends WikiaApiController {
 			$ids = array();
 
 			foreach ( array_keys( $articles ) as $i ) {
+				//data is cached on a per-article basis
+				//to avoid one article requiring purging
+				//the whole collection
 				$cache = $this->wg->Memc->get( self::getArticleCacheKey( $i ) );
 
 				if ( !is_array( $cache ) ) {
@@ -118,11 +132,18 @@ class ArticlesApiController extends WikiaApiController {
 	public function getDetails() {
 		$this->wf->profileIn( __METHOD__ );
 
-		$articles = $this->request->getVal( 'ids', null );
-		$abstractLen = $this->request->getInt( 'abstract', 100 );
+		$articles = $this->request->getVal( self::PARAMETER_ARTICLES, null );
+		$abstractLen = $this->request->getInt( self::PARAMETER_ABSTRACT, 100 );
 		$width = $this->request->getInt( 'width', 200 );
 		$height = $this->request->getInt( 'height', 200 );
 		$collection = array();
+
+		//avoid going through the whole routine
+		//if the requested length is out of range
+		//as ArticleService::getTextSnippet would fail anyways
+		if ( $abstractLen > ArticleService::MAX_LENGTH ) {
+			throw new OutOfRangeApiException( self::PARAMETER_ABSTRACT, 0, ArticleService::MAX_LENGTH );
+		}
 
 		if ( !empty( $articles ) ) {
 			$articles = explode( ',', $articles );
@@ -130,6 +151,9 @@ class ArticlesApiController extends WikiaApiController {
 
 
 			foreach ( $articles as $i ) {
+				//data is cached on a per-article basis
+				//to avoid one article requiring purging
+				//the whole collection
 				$cache = $this->wg->Memc->get( self::getDetailsCacheKey( $i ) );
 
 				if ( !is_array( $cache ) ) {
@@ -196,6 +220,8 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			$thumbnails = null;
+		} else {
+			throw new MissingParameterApiException( self::PARAMETER_ARTICLES );
 		}
 
 		/*
