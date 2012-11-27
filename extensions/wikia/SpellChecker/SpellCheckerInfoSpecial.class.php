@@ -11,7 +11,7 @@ class SpellCheckerInfoSpecial extends SpecialPage {
 	function __construct() {
 		parent::__construct('SpellCheckerInfo');
 
-		$this->app = WF::build( 'App' );
+		$this->app = F::build( 'App' );
 
 		$this->out = $this->app->getGlobal('wgOut');
 		$this->request = $this->app->getGlobal('wgRequest');
