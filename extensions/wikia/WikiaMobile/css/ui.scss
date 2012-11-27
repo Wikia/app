@@ -27,6 +27,11 @@ html, body {
 	padding: 0;
 }
 
+object {
+	width: 100%;
+	height: auto;
+}
+
 // Error Box
 .wkErr {
 	background-color: $error-bg-color;
