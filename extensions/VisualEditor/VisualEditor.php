@@ -12,7 +12,7 @@
 
 // URL to the Parsoid instance
 // MUST NOT end in a slash due to Parsoid bug
-$wgVisualEditorParsoidURL = 'http://dev-inez:8000';
+$wgVisualEditorParsoidURL = 'http://parsoid-s1:8000';
 // Interwiki prefix to pass to the Parsoid instance
 // Parsoid will be called as $url/$prefix/$pagename
 $wgVisualEditorParsoidPrefix = 'communitycouncil';
