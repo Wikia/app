@@ -5,7 +5,7 @@ MarketingToolbox.prototype = {
 	isCalendarReady: false,
 	models: {},
 	verticalId: undefined,
-	langId: undefined,
+	langCode: undefined,
 	verticalInputs: undefined,
 	datepickerContainer: undefined,
 	regionSelect: undefined,
@@ -20,7 +20,7 @@ MarketingToolbox.prototype = {
 
 		this.interactionsHandler();
 
-		this.langId = this.regionSelect.val();
+		this.langCode = this.regionSelect.val();
 		var selectedVertical = this.verticalInputs.filter(':not(.secondary)');
 		if (selectedVertical.length) {
 			this.verticalId = selectedVertical.data('vertical-id');
@@ -28,7 +28,7 @@ MarketingToolbox.prototype = {
 
 		this.interactionsHandler();
 
-		this.langId = this.regionSelect.val();
+		this.langCode = this.regionSelect.val();
 		var selectedVertical = this.verticalInputs.filter(':not(.secondary)');
 		if (selectedVertical.length) {
 			this.verticalId = selectedVertical.data('vertical-id');
@@ -40,7 +40,7 @@ MarketingToolbox.prototype = {
 		).done($.proxy(function(getResourcesData) {
 			this.isCalendarReady = true;
 
-			if (this.langId && this.verticalId) {
+			if (this.langCode && this.verticalId) {
 				this.initDatepicker();
 			}
 		}, this));
@@ -48,13 +48,13 @@ MarketingToolbox.prototype = {
 	},
 	initModels: function() {
 		$('#marketingToolboxRegionSelect option').each($.proxy(function(i, opt){
-			var langId = $(opt).val();
-			this.models[langId] = {};
+			var langCode = $(opt).val();
+			this.models[langCode] = {};
 			this.verticalInputs.each(
 				$.proxy(
 					function(i, elem){
 						var verticalId = $(elem).data('vertical-id');
-						this.models[langId][verticalId] = new DatepickerModel(langId, verticalId);
+						this.models[langCode][verticalId] = new DatepickerModel(langCode, verticalId);
 					},
 					this
 				)
@@ -62,7 +62,7 @@ MarketingToolbox.prototype = {
 		}, this));
 	},
 	getModel: function() {
-		return this.models[this.langId][this.verticalId];
+		return this.models[this.langCode][this.verticalId];
 	},
 	datePickerBeforeShowDay: function(date) {
 		var tdClassName = '';
@@ -82,8 +82,8 @@ MarketingToolbox.prototype = {
 	},
 	interactionsHandler: function() {
 		this.regionSelect.change($.proxy(function(e) {
-			this.langId = $(e.target).val();
-			this.saveLangId(this.langId);
+			this.langCode = $(e.target).val();
+			this.savelangCode(this.langCode);
 			$('.marketingToolbox input').removeAttr('disabled');
 			$('.section input').removeClass('secondary');
 			$('.placeholder-option').remove();
@@ -148,7 +148,7 @@ MarketingToolbox.prototype = {
 			format: 'json'
 		});
 	},
-	saveLangId: function(id) {
+	savelangCode: function(id) {
 		this.saveUserProperties({
 			handlerName: 'MarketingToolboxUserPropertiesHandler',
 			methodName: 'saveMarketingToolboxRegion',

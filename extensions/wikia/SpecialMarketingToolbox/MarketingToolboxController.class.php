@@ -82,13 +82,13 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	protected function prepareLayoutData($selectedModuleId) {
-		$this->langId = $this->getVal('region');
+		$this->langCode = $this->getVal('region');
 		$this->verticalId = $this->getVal('verticalId');
 		$this->sectionId = $this->getVal('sectionId');
 		$this->date = $this->getVal('date');
 
 		$modulesData = $this->toolboxModel->getModulesData(
-			$this->langId,
+			$this->langCode,
 			$this->verticalId,
 			$this->date,
 			$selectedModuleId
@@ -105,7 +105,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			'lastEditTime' => $modulesData['lastEditTime'],
 			'sectionName' => $this->toolboxModel->getSectionName($this->sectionId),
 			'verticalName' => $this->toolboxModel->getVerticalName($this->sectionId, $this->verticalId),
-			'regionName' => $this->toolboxModel->getLanguageName($this->langId),
+			'regionName' => Language::getLanguageName($this->langCode),
 		);
 	}
 
@@ -140,11 +140,11 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getCalendarData() {
-		$langId = $this->getVal('langId');
+		$langCode = $this->getVal('langCode');
 		$verticalId = $this->getVal('verticalId');
 		$beginTimestamp = $this->getVal('beginTimestamp', time());
 		$endTimestamp = $this->getVal('endTimestamp', time());
-		$this->calendarData = $this->toolboxModel->getData($langId, $verticalId, $beginTimestamp, $endTimestamp);
+		$this->calendarData = $this->toolboxModel->getData($langCode, $verticalId, $beginTimestamp, $endTimestamp);
 	}
 
 	/**

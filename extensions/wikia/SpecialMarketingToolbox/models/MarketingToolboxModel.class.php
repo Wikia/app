@@ -49,11 +49,11 @@ class MarketingToolboxModel extends WikiaModel {
 		);
 	}
 
-	public function getData($langId, $verticalId, $beginTimestamp, $endTimestamp) {
-		return $this->getMockData($langId, $verticalId, $beginTimestamp, $endTimestamp);
+	public function getData($langCode, $verticalId, $beginTimestamp, $endTimestamp) {
+		return $this->getMockData($langCode, $verticalId, $beginTimestamp, $endTimestamp);
 	}
 
-	protected function getMockData($langId, $verticalId, $beginTimestamp, $endTimestamp) {
+	protected function getMockData($langCode, $verticalId, $beginTimestamp, $endTimestamp) {
 		return array(
 			date('Y-m-d', $beginTimestamp - 13 * 24 * 60 * 60) => $this->statuses['NOT_PUBLISHED'],
 			date('Y-m-d', $beginTimestamp - 11 * 24 * 60 * 60) => $this->statuses['NOT_PUBLISHED'],
@@ -84,15 +84,9 @@ class MarketingToolboxModel extends WikiaModel {
 		$regions = array();
 
 		foreach ($wikisData as $wikiData) {
-			$regions[$wikiData['wikiId']] = Language::getLanguageName($wikiData['lang']);
+			$regions[$wikiData['lang']] = Language::getLanguageName($wikiData['lang']);
 		}
 		return $regions;
-	}
-
-	public function getLanguageName($wikiId) {
-		$lang = WikiFactory::getVarByName('wgLanguageCode', $wikiId);
-		$lang = unserialize($lang->cv_value);
-		return Language::getLanguageName($lang);
 	}
 
 	/**
@@ -144,13 +138,13 @@ class MarketingToolboxModel extends WikiaModel {
 	 * Get list of modules for selected lang/vertical/date
 	 * applying translation for module name
 	 *
-	 * @param $langId
+	 * @param $langCode
 	 * @param $verticalId
 	 * @param $timestamp
 	 * @return array
 	 */
-	public function getModulesData($langId, $verticalId, $timestamp, $activeModule = self::MODULE_SLIDER) {
-		$moduleList = $this->getModuleList($langId, $verticalId, $timestamp);
+	public function getModulesData($langCode, $verticalId, $timestamp, $activeModule = self::MODULE_SLIDER) {
+		$moduleList = $this->getModuleList($langCode, $verticalId, $timestamp);
 
 		$modulesData = array(
 			'lastEditDate' => null,
@@ -174,7 +168,7 @@ class MarketingToolboxModel extends WikiaModel {
 			$module['href'] = SpecialPage::getTitleFor('MarketingToolbox', 'editHub')->getLocalURL(array(
 				'moduleId' => $moduleId,
 				'date' => $timestamp,
-				'region' => $langId,
+				'region' => $langCode,
 				'verticalId' => $verticalId
 			));
 		}
@@ -186,12 +180,12 @@ class MarketingToolboxModel extends WikiaModel {
 	/**
 	 * Gets mocked data for modules
 	 *
-	 * @param $langId
+	 * @param $langCode
 	 * @param $verticalId
 	 * @param $timestamp
 	 * @return array
 	 */
-	protected function getModuleList($langId, $verticalId, $timestamp) {
+	protected function getModuleList($langCode, $verticalId, $timestamp) {
 		$mockEditorId = 4807210;
 
 		return array(
