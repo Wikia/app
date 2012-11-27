@@ -638,12 +638,40 @@ class WallMessage {
 			return User::newFromName('0.0.0.0', false);
 		}
 	}
+	
+	/**
+	 * Will return either username if user exists, or it will return "A Wikia Contributor" (i18n translated) if user is an anon
+	 */
+	public function getUserDisplayName() {
+		$displayName = '';
+		
+		hyunbug($this->getUser()->getId());
+		
+		if($this->getUser()->getId() == 0) {
+			$displayName = wfMsg('oasis-anon-user');
+		} else {
+			$displayName = $this->getUser()->getName();
+		}
+		
+		return $displayName;
+	}
 
+	/**
+	 * Returns wall url if user exists.  Returns url to contributions if anonymous.
+	 * If wall is disabled and user exists, it should return link to user talk page
+	 */
 	public function getUserWallUrl() {
 		$name = $this->getUser()->getName();
 
 		if(empty(self::$wallURLCache[$name])) {
-			self::$wallURLCache[$name] = F::build( 'Title', array( $name, NS_USER_WALL ), 'newFromText' )->getFullUrl();
+			if($this->getUser()->getId() == 0) { // anynymous contributor
+				$url = Skin::makeSpecialUrl('Contributions').'/'.$this->getUser()->getName();
+			} else if(empty(F::app()->wg->EnableWallExt)) {
+				$url = F::build( 'Title', array( $name, NS_USER_TALK ), 'newFromText' )->getFullUrl();
+			} else {
+				$url = F::build( 'Title', array( $name, NS_USER_WALL ), 'newFromText' )->getFullUrl();
+			}
+			self::$wallURLCache[$name] = $url;
 		}
 
 		return self::$wallURLCache[$name];
