@@ -24,19 +24,18 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$this->mainObjectList = array(
 			"callofduty:Character" => "Characters",
 			"callofduty:Faction" => "Factions",
-			"callofduty:Timeline" => "Timelines",
 			"callofduty:Weapon" => "Weapons",
-			"callofduty:WeaponClass" => "Weapon Classes",
 			"callofduty:Mission" => "Missions",
+			"callofduty:WeaponClass" => "Weapon Classes",
 			"wikia:Objective" => "Objectives"
 		);
 
 		$this->advObjectList = array(
+			'callofduty:Timeline' => 'Timelines',
+			'wikia:VideoGame' => 'Video Games',
+			'schema:ImageObject' => 'Image Objects',
 			'schema:AudioObject' => 'Audio Objects',
-			'wikia:GameEvent' => 'Game Events',
-			'wikia:GameLocation' => 'Game Locations',
-			'wikia:WikiText' => 'WikiText objects',
-			'schema:VideoObject' => 'Video Objects'
+			'wikia:GameLocation' => 'Game Locations'
 		);
 
 
