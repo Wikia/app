@@ -400,10 +400,8 @@ class WallMessage {
 
 	public function setRelatedTopics($user, $relatedTopics) {
 		if($this->isMain()) {
-			WallHooksHelper::$allowEveryoneToEditMessage = true;
 			$this->getArticleComment()->setMetaData('related_topics', implode('|', $relatedTopics));
 			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-message-update-topics-summary' ), true );
-			WallHooksHelper::$allowEveryoneToEditMessage = false;
 			$this->storeRelatedTopicsInDB($relatedTopics);
 		}
 		return true;
@@ -412,7 +410,7 @@ class WallMessage {
 	public function markAsMove($user) {
 		if($this->isMain()) {
 			$this->getArticleComment()->setMetaData('lastmove', time(), true);
-			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-action-move-topics-summary', $this->getWall()->getTitle()->getPrefixedText() ));
+			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-action-move-topics-summary', $this->getWall()->getTitle()->getPrefixedText() ), true );
 		}
 		return true; 
 	}
