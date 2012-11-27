@@ -246,10 +246,10 @@ class WallMessage {
 		return $out;
 	}
 
-	public function doSaveComment($body, $user, $summary = '') {
+	public function doSaveComment($body, $user, $summary = '', $force = false) {
 		wfProfileIn( __METHOD__ );
 				
-		if($this->canEdit($user)){
+		if($this->canEdit($user) || $force){
 			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true, $summary );
 		}
 		if( !$this->isMain() ) {
@@ -267,10 +267,10 @@ class WallMessage {
 		return $out;
 	}
 
-	public function doSaveMetadata($user, $summary = '') {
+	public function doSaveMetadata($user, $summary = '', $force = false) {
 		wfProfileIn( __METHOD__ );
 		$body = $this->getRawText(true);
-		$out = $this->doSaveComment($body, $user, $summary);
+		$out = $this->doSaveComment($body, $user, $summary, $force);
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -400,8 +400,10 @@ class WallMessage {
 
 	public function setRelatedTopics($user, $relatedTopics) {
 		if($this->isMain()) {
+			WallHooksHelper::$allowEveryoneToEditMessage = true;
 			$this->getArticleComment()->setMetaData('related_topics', implode('|', $relatedTopics));
-			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-message-update-topics-summary' ) );
+			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-message-update-topics-summary' ), true );
+			WallHooksHelper::$allowEveryoneToEditMessage = false;
 			$this->storeRelatedTopicsInDB($relatedTopics);
 		}
 		return true;
@@ -409,7 +411,7 @@ class WallMessage {
 
 	public function markAsMove($user) {
 		if($this->isMain()) {
-			$this->getArticleComment()->setMetaData('lastmove', time());
+			$this->getArticleComment()->setMetaData('lastmove', time(), true);
 			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-action-move-topics-summary', $this->getWall()->getTitle()->getPrefixedText() ));
 		}
 		return true; 
