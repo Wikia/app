@@ -29,7 +29,12 @@
 	<?php endif; ?>
 	<dl class="SDObjectDetails">
 		<dt>Type:</dt>
-		<dd><?= $sdsObject->getType(); ?></dd>
+		<dd><a href="<?= SpecialPage::getTitleFor('StructuredData')->getLocalURL();
+		?>?method=getCollection&objectType=<?=
+		$sdsObject->getType(); ?>" title="<?=
+		$sdsObject->getType
+		(); ?>"><?= $sdsObject->getType
+		(); ?></a></dd>
 	</dl>
 	<?/*<pre>ID: <?=$sdsObject->getId();?></pre>*/?>
 
