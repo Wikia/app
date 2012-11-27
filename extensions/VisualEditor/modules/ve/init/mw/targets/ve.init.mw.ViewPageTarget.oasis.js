@@ -43,10 +43,27 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	this.active = false;
 	this.activating = false;
 	this.scrollTop = null;
+	this.edited = false;
+	this.surfaceOptions = {
+		'toolbars': {
+			'top': {
+				'float': !this.isMobileDevice
+			}
+		}
+	};
+	this.$fakeToolbar = null;
+	this.$document = null;
+	this.surface = null;
+	this.proxiedOnSurfaceModelTransact = ve.bind( this.onSurfaceModelTransact, this );
+	this.$toolbarSaveButton =
+		$( '<div class="ve-init-mw-viewPageTarget-toolbar-saveButton"></div>' );
 
 	// Initialization
 	if ( this.canBeActivated ) {
 		this.setupEditLinks();
+		if ( this.isViewPage ) {
+			this.setupToolbarSaveButton();
+		}
 	}
 };
 
@@ -113,9 +130,11 @@ ve.init.mw.ViewPageTarget.prototype.activate = function () {
 	if ( !this.active && !this.activating ) {
 		this.activating = true;
 
-		var $fakeToolbar = $( '<div class="ve-init-mw-viewPageTarget-fakeToolbar"></div>' );
-		$fakeToolbar.prependTo( '#WikiaArticle' );
-		$fakeToolbar.slideDown();
+		this.$fakeToolbar = $( '<div class="ve-init-mw-viewPageTarget-fakeToolbar"></div>' );
+		this.$fakeToolbar.prependTo( '#WikiaArticle' );
+		this.$fakeToolbar.slideDown();
+
+		$.getResources($.getSassCommonURL('/extensions/VisualEditor/modules/ve/init/mw/styles/ve.init.mw.ViewPageTarget-oasis.scss'));
 
 		// TODO: show spinner
 
@@ -145,7 +164,8 @@ ve.init.mw.ViewPageTarget.prototype.hideTableOfContents = function () {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.mutePageContent = function () {
-	$( '#WikiaArticle > :visible:not(#siteSub, #contentSub)' )
+	$( '#mw-content-text' )
+		.children()
 		.addClass( 've-init-mw-viewPageTarget-content' )
 		.fadeTo( 'fast', 0.6 );
 };
@@ -166,7 +186,99 @@ ve.init.mw.ViewPageTarget.prototype.saveScrollPosition = function () {
  * @param {HTMLElement} dom Parsed DOM from server
  */
 ve.init.mw.ViewPageTarget.prototype.onLoad = function ( dom ) {
-	alert(123);
+	this.edited = false;
+	this.setUpSurface( dom );
+	this.attachToolbarSaveButton();
+};
+
+/**
+ * Switches to editing mode.
+ *
+ * @method
+ * @param {HTMLElement} dom HTML DOM to edit
+ */
+ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( dom ) {
+	var $contentText = $( '#mw-content-text' );
+	this.surface = new ve.Surface( $( '#WikiaArticle' ), dom, this.surfaceOptions );
+	this.$document = this.surface.$.find( '.ve-ce-documentNode' );
+	this.surface.getModel().on( 'transact', this.proxiedOnSurfaceModelTransact );
+	this.hidePageContent();
+	this.$fakeToolbar.remove();
+	this.$fakeToolbar = null;
+	this.active = true;
+	this.$document.attr( {
+		'lang': $contentText.attr( 'lang' ),
+		'dir': $contentText.attr( 'dir' )
+	} );
+};
+
+/**
+ * Hides the page content.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.hidePageContent = function () {
+	$( '#mw-content-text' )
+		.children()
+		.addClass( 've-init-mw-viewPageTarget-content' )
+		.hide();
+};
+
+/**
+ * Handles the first transaction in the surface model.
+ *
+ * This handler is removed the first time it's used, but added each time the surface is setup.
+ *
+ * @method
+ * @param {ve.Transaction} tx Processed transaction
+ */
+ve.init.mw.ViewPageTarget.prototype.onSurfaceModelTransact = function () {
+	this.edited = true;
+	this.enableToolbarSaveButton();
+	this.surface.getModel().removeListener( 'transact', this.proxiedOnSurfaceModelTransact );
+};
+
+/**
+ * Adds the save button to the user interface.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.attachToolbarSaveButton = function () {
+	$( '.ve-ui-toolbar .ve-ui-actions' ).append( this.$toolbarSaveButton );
+};
+
+/**
+ * Adds content and event bindings to the save button.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.setupToolbarSaveButton = function () {
+	this.$toolbarSaveButton
+		.append(
+			$( '<span class="ve-init-mw-viewPageTarget-toolbar-saveButton-label"></span>' )
+				.text( ve.msg( 'savearticle' ) )
+		)
+		.on( {
+			'mousedown': function ( e ) {
+				$(this).addClass( 've-init-mw-viewPageTarget-toolbar-saveButton-down' );
+				e.preventDefault();
+			},
+			'mouseleave mouseup': function ( e ) {
+				$(this).removeClass( 've-init-mw-viewPageTarget-toolbar-saveButton-down' );
+				e.preventDefault();
+			},
+			'click': ve.bind( this.onToolbarSaveButtonClick, this )
+		} );
+};
+
+/**
+ * Enables the toolbar save button.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.enableToolbarSaveButton = function () {
+	this.$toolbarSaveButton
+		.removeClass( 've-init-mw-viewPageTarget-toolbar-saveButton-disabled' );
 };
 
 /* Initialization */
