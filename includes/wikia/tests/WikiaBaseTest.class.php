@@ -21,6 +21,7 @@
 class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected $setupFile = null;
+	/* @var WikiaApp */
 	protected $app = null;
 	protected $appOrig = null;
 	/* @var WikiaAppMock */
