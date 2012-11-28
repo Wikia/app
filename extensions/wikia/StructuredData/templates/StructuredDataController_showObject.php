@@ -10,8 +10,9 @@
 ?>
 <form class="WikiaForm SDObject" id="SDObject" method="POST">
 	<?php if(!empty($updateResult)): ?>
-		<div class="validation-main-message <?= (empty($updateResult->error)) ? 'success' : '' ?>"
-				><?=$updateResult->message;?></div>
+		<div class="validation-main-message <?= (empty($updateResult->error)) ? 'success' : '' ?>">
+			<?=$updateResult->message;?>
+		</div>
 		<?php if(isset($updateResult->errors)): ?>
 			<?php var_dump($updateResult->errors); ?>
 		<?php endif; ?>
@@ -90,10 +91,16 @@
 				<?php // Render properties manually ?>
 				<tr>
 					<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</th>
-					<td><p><?php echo $property->getWrappedValue()->render( $context, array( 'isCreateMode' => $isCreateMode, 'objectId' => $objectId ) ); ?></p></td>
+					<td <?= (!empty($validationError)) ? 'class="validation-error"' : '' ?>>
+						<p><?php echo $property->getWrappedValue()->render( $context, array( 'isCreateMode' => $isCreateMode, 'objectId' => $objectId ) ); ?></p>
+						<?php if (!empty($validationError)): ?>
+							<div class="validation-message"><?= $validationErrorMsg; ?></div>
+						<?php endif; ?>
+					</td>
 					<?php if($context == SD_CONTEXT_SPECIAL): ?>
 						<td><p class="example"><?= $sdsObject->getType() . '/' . $objectName . '/'. $propertyName;
-							?></p></td>
+							?></p>
+						</td>
 					<?php endif; ?>
 				</tr>
 			<?php endforeach; ?>

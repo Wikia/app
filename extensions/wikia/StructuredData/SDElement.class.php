@@ -276,7 +276,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	 * @param $context - SDS rendering context
 	 * @return String
 	 */
-	public function getObjectPageUrl($context) {
+	public function getObjectPageUrl( $context ) {
 		if ( $context == SD_CONTEXT_DEFAULT ) {
 			$url = $this->getUrl();
 			if ( !empty( $url ) ) {

@@ -90,6 +90,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$type = $this->request->getVal( 'type', false );
 		$name = $this->request->getVal( 'name', false );
 		$action = $this->request->getVal( 'action', 'render' );
+		$success = $this->request->getVal( 'success', false );
 
 		$isEditAllowed = $this->wg->User->isAllowed( 'sdsediting' );
 		$isDeleteAllowed = $this->wg->User->isAllowed( 'sdsdeleting' );
@@ -150,24 +151,26 @@ class StructuredDataController extends WikiaSpecialPageController {
 				$handlerResult = $this->alterRequestPerObject( $requestParams, $requestParams['type'] );
 
 				if ( $handlerResult instanceof stdClass ) {
-
 					$updateResult = $handlerResult;
-
-				} else {
-
+				}
+				else {
 					$requestParams = $handlerResult;
 					$result = $this->structuredData->updateSDElement($sdsObject, $requestParams);
-					if( isset($result->error) ) {
+					if( isset( $result->error ) ) {
 						$updateResult = $result;
 						$action = 'edit';
 					}
 					else {
-						$updateResult = new stdClass();
-						$updateResult->error = false;
-						$updateResult->message = wfMsg( 'structureddata-object-updated' );
-						$action = 'render';
+						$this->wg->out->redirect( $sdsObject->getObjectPageUrl( SD_CONTEXT_SPECIAL ) . '?success=true' );
 					}
 				}
+
+				$this->setVal('updateResult', $updateResult);
+			}
+
+			if( !empty( $success ) ) {
+				$updateResult = new stdClass();
+				$updateResult->message = wfMsg( 'structureddata-object-updated' );
 
 				$this->setVal('updateResult', $updateResult);
 			}
