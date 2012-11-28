@@ -38,7 +38,7 @@
 	</dl>
 	<?/*<pre>ID: <?=$sdsObject->getId();?></pre>*/?>
 
-	<table class="article-table SDObjectProperties WikiaGrid">
+	<table class="article-table SDObjectProperties WikiaGrid" data-object-type="<?=$sdsObject->getType()?>">
 		<caption>Object properties:</caption>
 		<thead>
 			<tr>
@@ -59,7 +59,7 @@
 					}
 					$propertyLabel = $property->getLabel();
 					$propertyName = $property->getName();
-					$propertyHTML = $property->render( $context, array( 'objectId' => $objectId) );
+					$propertyHTML = $property->render( $context, array( 'objectId' => $objectId ) );
 					$validationError = (isset($updateResult->errors) && array_key_exists($propertyName,
 						$updateResult->errors)) ? true : false;
 				    if (!empty($validationError)) {
