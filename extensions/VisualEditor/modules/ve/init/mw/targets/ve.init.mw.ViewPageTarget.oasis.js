@@ -147,13 +147,10 @@ ve.init.mw.ViewPageTarget.saveDialogTemplate = '\
  */
 ve.init.mw.ViewPageTarget.prototype.setupEditLinks = function () {
 	// Edit button
-	$( '#ca-edit' ).click( ve.bind( this.onEditButtonClick, this ) );
+	$( '#ca-edit' ).unbind('.ve').bind( 'click.ve', ve.bind( this.onEditButtonClick, this ) );
 
 	// Section edit links
-	$( '#mw-content-text .editsection a' ).click( ve.bind( this.onEditSectionLinkClick, this ) );
-
-
-
+	$( '#mw-content-text .editsection a' ).unbind('.ve').bind( 'click.ve', ve.bind( this.onEditSectionLinkClick, this ) );
 };
 
 /**
@@ -708,6 +705,7 @@ ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function () {
 	// Destroy editor
 	this.surface = null;
 	this.active = false;
+	this.setupEditLinks();
 };
 
 /**
