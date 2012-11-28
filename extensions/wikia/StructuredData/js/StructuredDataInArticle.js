@@ -1,5 +1,6 @@
 $('button.add-wikiText-SDObj-from-article').click(function() {
 	var objectId = $(this).data('object-id');
+	var objectType = $(this).data('object-type');
 		modalTitle = 'Add new WikiText Object',
 		modalHtml = '<form class="WikiaForm"><div class="input-group"><label>Name:</label><input type="text" value="" name="schema:name"></div><div class="input-group"><label>WikiText:</label><textarea name="schema:text"></textarea></div></form>',
 		modalId = 'AddWikiTextSDObject',
@@ -28,7 +29,8 @@ $('button.add-wikiText-SDObj-from-article').click(function() {
 									type: 'wikia:WikiText',
 									'schema:name': $modalSelector.find('input[name="schema:name"]').val(),
 									'schema:text': $modalSelector.find('textarea').val(),
-									objectId: objectId
+									objectId: objectId,
+									objectType: objectType
 								},
 								callback: function(data) {
 									console.log(data);

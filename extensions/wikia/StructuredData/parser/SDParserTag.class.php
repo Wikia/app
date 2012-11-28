@@ -54,7 +54,7 @@ class SDParserTag {
 
 						if( !$this->path->hasNext() && !$tagProperty->hasValueIndex() ) {
 							// last element in chain, try to render it
-							$result = $elementProperty->render( SD_CONTEXT_DEFAULT, $this->getArgs( $currentElement->getId() ) );
+							$result = $elementProperty->render( SD_CONTEXT_DEFAULT, $this->getArgs( $currentElement->getId(), $tagProperty->getName() ) );
 							if( $result !== false ) {
 
 								if( $this->renderMode == self::RENDER_MODE_OBJECT ) {
@@ -79,7 +79,7 @@ class SDParserTag {
 							$currentElement = $result->object;
 						}
 						elseif( !empty($result) ) {
-							$renderedResult = $elementProperty->render( SD_CONTEXT_DEFAULT, $this->getArgs( $currentElement->getId() ) );
+							$renderedResult = $elementProperty->render( SD_CONTEXT_DEFAULT, $this->getArgs() );
 							if( $renderedResult !== false ) {
 								$result = $renderedResult;
 							}
@@ -103,7 +103,7 @@ class SDParserTag {
 			while( $currentElement instanceof SDElement );
 
 			if($currentElement instanceof SDElement) {
-				$result = $currentElement->render( SD_CONTEXT_DEFAULT, $this->getArgs( $currentElement->getId() ) );
+				$result = $currentElement->render( SD_CONTEXT_DEFAULT, $this->getArgs() );
 			}
 		}
 		else {
@@ -117,8 +117,18 @@ class SDParserTag {
 		return isset( $this->args['debug'] ) ? (bool) $this->args['debug'] : false;
 	}
 
-	private function getArgs( $objectId = '' ) {
-		return empty( $objectId ) ? $this->args : array_merge( $this->args, array( 'objectId' => $objectId ) );
+	private function getArgs( $objectId = '', $objectType = '' ) {
+		$extraArgs = array();
+
+		if( !empty( $objectId ) ) {
+			$extraArgs['objectId'] = $objectId;
+		}
+
+		if( !empty( $objectType ) ) {
+			$extraArgs['objectType'] = $objectType;
+		}
+
+		return ( count( $extraArgs ) > 0 ) ? array_merge( $this->args, $extraArgs ) : $this->args;
 	}
 
 	private function getSDElement() {
