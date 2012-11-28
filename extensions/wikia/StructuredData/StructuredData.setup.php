@@ -23,6 +23,7 @@ $app->registerClass('SDParserTagPropertyPath', $dir . 'parser/SDParserTagPropert
 $app->registerClass('SDTypeHandler', $dir . 'typehandlers/SDTypeHandler.class.php');
 $app->registerClass('SDTypeImageObject', $dir . 'typehandlers/SDTypeImageObject.php');
 $app->registerClass('SDTypeWikiText', $dir . 'typehandlers/SDTypeWikiText.php');
+$app->registerClass('SDTypeHandlerAnyType', $dir . 'typehandlers/SDTypeHandlerAnyType.php');
 
 
 require_once( $dir . '../../../lib/HTTP/Request.php');

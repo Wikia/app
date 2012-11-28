@@ -2,9 +2,11 @@
 /**
  * @author: Jacek Jursza
  */
-class SDTypeImageObject extends  SDTypeHandler {
+class SDTypeImageObject extends SDTypeHandlerAnyType {
 
 	public function handleSaveData( array $data ) {
+
+		$data = parent::handleSaveData( $data );
 
 		if ( !empty( $data['schema:url'] ) ) {
 			$pattern = '/(File:)(.+)$/';

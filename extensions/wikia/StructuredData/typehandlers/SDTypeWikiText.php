@@ -2,9 +2,12 @@
 /**
  * @author: Jacek Jursza
  */
-class SDTypeWikiText extends SDTypeHandler {
+class SDTypeWikiText extends SDTypeHandlerAnyType {
 
 	public function handleSaveData( array $data ) {
+
+		$data = parent::handleSaveData( $data );
+
 		if ( !empty( $data['name'] ) && !empty( $data['schema:text'] ) ) {
 
 			$parser = new Parser();

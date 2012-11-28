@@ -210,17 +210,19 @@ class StructuredDataController extends WikiaSpecialPageController {
 		if ( isset( $this->config['typeHandlers'][$objectType] ) ) {
 
 			$handlerName = $this->config['typeHandlers'][$objectType];
+		} else {
+			$handlerName = 'SDTypeHandlerAnyType';
+		}
 
-			/* @var $handler SDTypeHandler */
-			$handler = new $handlerName( $this->config );
-			$params = $handler->handleSaveData( $requestParams );
-			$result = $handler->getErrors();
+		/* @var $handler SDTypeHandler */
+		$handler = new $handlerName( $this->config );
+		$params = $handler->handleSaveData( $requestParams );
+		$result = $handler->getErrors();
 
-			if ( !empty( $result->error ) ) {
-				return $result;
-			} else {
-				return $params;
-			}
+		if ( !empty( $result->error ) ) {
+			return $result;
+		} else {
+			return $params;
 		}
 
 		return $requestParams;
