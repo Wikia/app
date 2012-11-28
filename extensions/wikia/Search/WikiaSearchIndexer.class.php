@@ -283,6 +283,23 @@ class WikiaSearchIndexer extends WikiaObject {
 	}
 	
 	/**
+	 * Emits scribe events for each page to be reindexed by the search backend
+	 * @param int $wid
+	 */
+	public function reindexWiki( $wid ) {
+		try {
+			$dataSource = F::build( 'WikiDataSource', array( $wid ) );
+			$dbHandler = $dataSource->getDB();
+			$rows = $dbHandler->query( "SELECT page_id FROM page" );
+			while ( $page = $dbHandler->fetchObject( $rows ) ) {
+				$sp = F::build( 'ScribeProducer', array( 'reindex', $page->page_id ) );
+				$sp->reindexPage();
+			}
+		} catch ( Exception $e ) {
+			F::build( 'Wikia' )->Log( __METHOD__, '', $e );
+		}
+	}
+	
 	 * Given a set of page IDs, deletes by query
 	 * @param  array $documentIds
 	 * @return bool true
