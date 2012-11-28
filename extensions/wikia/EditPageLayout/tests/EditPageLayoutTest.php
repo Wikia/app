@@ -103,9 +103,6 @@ class EditPageLayoutTest extends WikiaBaseTest {
 	}
 
 	public function testPreloadText() {
-		# FIXME
-		$this->markTestSkipped(__METHOD__ . ' throws a fatal');
-
 		$title = F::build('Title', array('NewArticle'), 'newFromText');
 		$editPage = $this->editPageFactory($title);
 		// This test has a dependency on the global title
