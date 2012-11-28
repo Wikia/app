@@ -1339,5 +1339,130 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				"WikiaSearchIndexer::getPage should index the main comment title as the title, not the child comment's page title"
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::reindexWiki
+	 * 
+	 */
+	public function testReindexWiki()
+	{
+		$mockClient		=	$this->getMockBuilder( 'Solarium_Client' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockDbHandler	=	$this->getMockBuilder( 'DatabaseMysql' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'fetchObject', 'query' ) )
+								->getMock();
+		
+		$mockScribeProd	=	$this->getMockBuilder( 'ScribeProducer' )
+								->disableOriginalConstructor()
+								->setMethods( array( '__construct', 'reindexPage' ) )
+								->getMock();
+		$mockDataSource	=	$this->getMockbuilder( 'WikiDataSource' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getDB' ) )
+								->getMock();
+		$mockDbResult	=	$this->getMockBuilder( 'ResultWrapper' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockDataSource
+			->expects	( $this->once() )
+			->method	( 'getDB' )
+			->will		( $this->returnValue( $mockDbHandler ) )
+		;
+		$mockDbHandler
+			->expects	( $this->at( 0 ) )
+			->method	( 'query' )
+			->with		( "SELECT page_id FROM page" )
+			->will		( $this->returnValue( $mockDbResult ) ) 
+		;
+		$mockDbHandler
+			->expects	( $this->at( 1 ) )
+			->method	( 'fetchObject' )
+			->with		( $mockDbResult )
+			->will		( $this->returnValue( (object) array( 'page_id' => 123 ) ) ) 
+		;
+		$mockDbHandler
+			->expects	( $this->at( 2 ) )
+			->method	( 'fetchObject' )
+			->with		( $mockDbResult )
+			->will		( $this->returnValue( null ) ) 
+		;
+		$mockScribeProd
+			->expects	( $this->once() )
+			->method	( 'reindexPage' )
+		;
+		
+		$this->mockClass( 'WikiDataSource', $mockDataSource );
+		$this->mockClass( 'ScribeProducer', $mockScribeProd );
+		$this->mockApp();
 
+		$indexer = new WikiaSearchIndexer( $mockClient );
+		$indexer->reindexWiki( 321 );
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::reindexWiki
+	 * 
+	 */
+	public function testReindexWikiBadWid()
+	{
+		$mockClient		=	$this->getMockBuilder( 'Solarium_Client' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockDbHandler	=	$this->getMockBuilder( 'DatabaseMysql' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'fetchObject', 'query' ) )
+								->getMock();
+		
+		$mockScribeProd	=	$this->getMockBuilder( 'ScribeProducer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'reindexPage' ) )
+								->getMock();
+		$mockDataSource	=	$this->getMockbuilder( 'WikiDataSource' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getDB' ) )
+								->getMock();
+		$mockDbResult	=	$this->getMockBuilder( 'ResultWrapper' )
+								->disableOriginalConstructor()
+								->getMock();
+		$mockWikia		=	$this->getMock( 'Wikia', array( 'log' ) );
+		$mockException	=	$this->getMock( 'Exception' );
+
+		$mockDataSource
+			->expects	( $this->once() )
+			->method	( 'getDB' )
+			->will		( $this->returnValue( $mockDbHandler ) )
+		;
+		$mockDbHandler
+			->expects	( $this->at( 0 ) )
+			->method	( 'query' )
+			->with		( 'SELECT page_id FROM page' )
+			->will		( $this->returnValue( $mockDbResult ) ) 
+		;
+		$mockDbHandler
+			->expects	( $this->at( 1 ) )
+			->method	( 'fetchObject' )
+			->with		( $mockDbResult )
+			->will		( $this->returnValue( (object) array( 'page_id' => 123 ) ) ) 
+		;
+		$mockScribeProd
+			->expects	( $this->once() )
+			->method	( 'reindexPage' )
+			->will		( $this->throwException( $mockException ) )
+		;
+		
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockClass( 'WikiDataSource', $mockDataSource );
+		$this->mockClass( 'ScribeProducer', $mockScribeProd );
+		$this->mockApp();
+		
+		$indexer = new WikiaSearchIndexer( $mockClient );
+		$indexer->reindexWiki( 321 );
+		
+	}
+	
 }
