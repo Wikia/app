@@ -41,7 +41,7 @@ class CrunchyrollRSS {
 			$this->feed->init();
 			$this->saveToCache( $url, $this->feed );
 		}
-		$this->blacklistedSeries = F::build( 'App' )->getGlobal( 'wgCrunchyrollBlacklistedSeries' );
+		$this->blacklistedSeries = F::app()->getGlobal( 'wgCrunchyrollBlacklistedSeries' );
 	}
 
 	public static function newFromUrl( $url ){

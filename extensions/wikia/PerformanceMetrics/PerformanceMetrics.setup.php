@@ -11,7 +11,7 @@
 $dir = dirname(__FILE__);
 
 // WikiaApp
-$app = F::build('App');
+$app = F::app();
 
 // generic classes
 $app->registerClass('PerformanceMetrics', $dir . '/PerformanceMetrics.class.php');

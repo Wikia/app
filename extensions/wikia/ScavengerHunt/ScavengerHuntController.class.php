@@ -84,7 +84,7 @@ class ScavengerHuntController extends WikiaController {
 	}
 
 	public function pushEntry() {
-		$app = F::build( 'App' );
+		$app = F::app();
 		$helper = F::build( 'ScavengerHunt' );
 		$this->setVal(
 			'result',
@@ -97,7 +97,7 @@ class ScavengerHuntController extends WikiaController {
 	}
 
 	public function getGameCacheValue() {
-		$app = F::build( 'App' );
+		$app = F::app();
 		$factory = F::build( 'ScavengerHuntGames' );
 		$gameId =  $this->getVal( 'gameId', '' );
 		$readWrite =  $this->getVal( 'readwrite', 0 );
