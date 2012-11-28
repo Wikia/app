@@ -42,3 +42,6 @@ EOT;
 
 class WikiawebinarsVideoHandler extends OoyalaVideoHandler {
 }
+
+class FunimationVideoHandler extends OoyalaVideoHandler {
+}

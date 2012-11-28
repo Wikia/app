@@ -210,6 +210,10 @@ $app->registerClass( 'WikiawebinarsVideoHandler', $dir . '/handlers/OoyalaVideoH
 $app->registerClass( 'WikiawebinarsApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
 $wgMediaHandlers['video/wikiawebinars'] = 'WikiawebinarsVideoHandler';
 
+$app->registerClass( 'FunimationVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'FunimationApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/funimation'] = 'FunimationVideoHandler';
+
 /**
  * Feed ingesters
  */
@@ -242,7 +246,8 @@ $wgVideoMigrationProviderMap = array(
 	26 => 'Anyclip',
 	27 => 'Twitchtv',
 	28 => 'Ooyala',
-	29 => 'wikiawebinars',
+	29 => 'Wikiawebinars',
+	30 => 'Funimation',
 );
 
 
