@@ -857,6 +857,7 @@ class AdEngine {
 		 * See http://staff.wikia-inc.com/wiki/DART_Implementation#When_to_show_ads */
 		$mandatoryAds = array(
 			'HOME_TOP_LEADERBOARD',
+			'HUB_TOP_LEADERBOARD',
 			'HOME_TOP_RIGHT_BOXAD',
 			'LEFT_NAV_205x400'
 		);
