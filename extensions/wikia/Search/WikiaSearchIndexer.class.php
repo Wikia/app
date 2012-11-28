@@ -300,6 +300,25 @@ class WikiaSearchIndexer extends WikiaObject {
 		}
 	}
 	
+	/**
+	 * Deletes all documents containing the provided wiki ID
+	 * Careful, this will alter our index!
+	 * @param int $wid
+	 * @return Solarium_Result|null
+	 */
+	public function deleteWikiDocs( $wid ) {
+		$updateHandler = $this->client->createUpdate();
+		$query = WikiaSearch::valueForField( 'wid', $wid );
+		$updateHandler->addDeleteQuery( $query );
+		$updateHandler->addCommit();
+		try {
+			return $this->client->update( $updateHandler );
+		} catch ( Exception $e ) {
+			F::build( 'Wikia' )->Log( __METHOD__, 'Delete: '.$query, $e);
+		}
+	}
+	
+	/**
 	 * Given a set of page IDs, deletes by query
 	 * @param  array $documentIds
 	 * @return bool true
@@ -312,7 +331,6 @@ class WikiaSearchIndexer extends WikiaObject {
 		$updateHandler->addCommit();
 	    try {
 	        $this->client->update( $updateHandler );
-	        $confirmationString = implode(' ', $documentIds). ' ' . count( $documentIds ) . " document(s) deleted\n";
 	    } catch ( Exception $e ) {
 	        F::build( 'Wikia' )->Log( __METHOD__, implode( ',', $documentIds ), $e);
 		}
