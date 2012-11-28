@@ -116,6 +116,8 @@ class WikiaPhotoGalleryHelper {
 	/* temp transition code until grid is fully rolled out, remove and integrate after transition */
 	static public function makeGlobalVariablesScriptForWikiaGrid(Array &$vars) {
 		global $wgOasisGrid;
+
+		$vars['wgEnableWikiaPhotoGalleryExt'] = true;
 		$vars['wgOasisGrid'] = $wgOasisGrid;
 
 		return true;
