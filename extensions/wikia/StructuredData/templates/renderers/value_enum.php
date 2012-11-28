@@ -12,8 +12,10 @@ if ($context == SD_CONTEXT_EDITING):
 echo '</select>';
 else:
 	$value = $object->getValue();
-	if(empty($value)): ?>
-	<p class="empty">empty</p>
+	if(empty($value)):
+		if($context == SD_CONTEXT_SPECIAL): ?>
+			<p class="empty">empty</p>
+		<? endif; ?>
 	<?php else: ?><?=$value;?><?php endif; ?>
 <?php endif; ?>
 

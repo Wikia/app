@@ -13,8 +13,10 @@
 		<?php endif; ?>
 	</div>
 <?php else: ?>
-	<?php if(empty($value)): ?>
-		<p class="empty">empty</p>
+	<?php if(empty($value)):
+		if($context == SD_CONTEXT_SPECIAL): ?>
+			<p class="empty">empty</p>
+		<?php endif; ?>
 	<?php else: ?>
 		<?=( is_object( $value ) && isset( $value->id ) ) ? $value->id : $value; ?>
 	<?php endif; ?>

@@ -6,7 +6,7 @@ $value = $object->getWrappedValue();
 
 if ( !count( $value ) ) {
 
-	if ($context != SD_CONTEXT_EDITING) {
+	if ($context == SD_CONTEXT_SPECIAL) {
 		echo '<p class="empty">empty</p>';
 	}
 	if ($context == SD_CONTEXT_EDITING) {
