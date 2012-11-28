@@ -4,7 +4,7 @@
  * Generic data source class with database connection validation
  * @author Robert Elwell
  */
-class WikiDataSource {
+class WikiDataSource extends WikiaObject {
 
 	protected $id;
 	/**
@@ -14,16 +14,16 @@ class WikiDataSource {
 	protected $dbname = null;
 	
 	public function __construct( $id = null ) {
-		global $wgCityId, $wgDBname;
+		parent::__construct();
 		
 		if (is_null($id)) {
-			$id = $wgCityId;
+			$id = $this->wg->CityId;
 		}
 		$this->id = $id;
 
-		if ($wgCityId == $id) {
-			$this->db = wfGetDB(DB_SLAVE);
-			$this->dbname = $wgDBname;
+		if ($this->wg->CityId == $id) {
+			$this->db = $this->wf->GetDB(DB_SLAVE);
+			$this->dbname = $this->wg->DBname;
 		} else {
 			// find db name
 			$dbname = WikiFactory::IDtoDB($this->id);
@@ -32,7 +32,7 @@ class WikiDataSource {
 			}
 	
 			// open db connection (and check if db really exists)
-			$db = wfGetDB(DB_SLAVE, array(), $dbname);
+			$db = $this->wf->GetDB(DB_SLAVE, array(), $dbname);
 			if ( !is_object($db) ) {
 				throw new Exception("Could not connect to wiki database {$dbname}");
 			}
