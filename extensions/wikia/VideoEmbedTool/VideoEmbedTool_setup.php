@@ -99,6 +99,8 @@ function VETSetup($editform) {
 function VETSetupVars(Array &$vars) {
 	global $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgFileExtensions;
 
+	$vars['wgEnableVideoToolExt'] = true;
+
 	$vars['vet_back'] = wfMsg('vet-back');
 	$vars['vet_imagebutton'] = wfMsg('vet-imagebutton') ;
 	$vars['vet_close'] = wfMsg('vet-close');
@@ -118,9 +120,6 @@ function VETSetupVars(Array &$vars) {
 	$vars['vet_max_thumb'] = wfMsg('vet-max-thumb');
 	$vars['vet_title'] = wfMsg('vet-title');
 	$vars['vet_no_preview'] = wfMsg( 'vet-no-preview' );
-
-	// macbre: for FCK
-	$vars['vet_enabled'] = true;
 
 	return true;
 }
