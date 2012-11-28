@@ -1562,4 +1562,63 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 
 	}
 	
+	/**
+	 * @covers WikiaSearchIndexer::onWikiFactoryPublicStatusChange
+	 * @todo update this when we move to solr 4.0 to atomically set all documents in that wiki to is_closed_wiki:false
+	 */
+	public function testOnWikiFactoryPublicStatusChangeOpened()
+	{
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'reindexWiki', 'deleteWikiDocs' ) )
+								->getMock();
+		
+		$cityId = 123;
+		$status = 1;
+		
+		$mockIndexer
+			->expects	( $this->once() )
+			->method	( 'reindexWiki' )
+		;
+		$mockIndexer
+			->expects	( $this->never() )
+			->method	( 'deleteWikiDocs' )
+		;
+		
+		$this->assertTrue(
+				$mockIndexer->onWikiFactoryPublicStatusChange( $status, $cityId, 'opening it cause i said so' ),
+				'WikiaSearchIndexer::onWikiFactoryPublicStatusChange should return true'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::onWikiFactoryPublicStatusChange
+	 * @todo update this when we move to solr 4.0 to atomically set all documents in that wiki to is_closed_wiki:true
+	 */
+	public function testOnWikiFactoryPublicStatusChangeClosed()
+	{
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'reindexWiki', 'deleteWikiDocs' ) )
+								->getMock();
+		
+		$cityId = 123;
+		$status = 0;
+		
+		$mockIndexer
+			->expects	( $this->once() )
+			->method	( 'deleteWikiDocs' )
+			->with		( $cityId )
+		;
+		$mockIndexer
+			->expects	( $this->never() )
+			->method	( 'reindexWiki' )
+		;
+		
+		$this->assertTrue(
+				$mockIndexer->onWikiFactoryPublicStatusChange( $status, $cityId, 'closing it cause i said so' ),
+				'WikiaSearchIndexer::onWikiFactoryPublicStatusChange should return true'
+		);
+	}
+	
 }
