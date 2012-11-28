@@ -271,13 +271,13 @@ $messages['es'] = array(
 	'wikia-home-parse-wiki-too-few-parameters' => 'Datos del wiki incorrectos - se requieren más parámetros',
 
 	'wikiahome-hubs-videogames-heading' => 'Videojuegos',
-	'wikiahome-hubs-videogames-url' => 'http://es.wikia.com/wiki/Videojuegos',
+	'wikiahome-hubs-videogames-url' => 'http://es.wikia.com/Videojuegos',
 	'wikiahome-hubs-videogames-creative' => '"Wikia es donde todo comienza cuando llegas al mundo de los videojuegos. Prepárate para perderte en un mundo más real de lo que imaginas.',
 	'wikiahome-hubs-videogames-more-heading' => 'Más en Videojuegos',
 	'wikiahome-hubs-videogames-more-list' => '
-*[http://es.wikia.com/wiki/Videojuegos Guías de juegos]
+*[http://es.wikia.com/Videojuegos Guías de juegos]
 *[http://videojuego.wikia.com/wiki/Wikijuegos:Portada Portal de videojuegos]
-*[http://es.wikia.com/wiki/Videojuegos Las últimas noticias]',
+*[http://es.wikia.com/Videojuegos Las últimas noticias]',
 
 	'wikiahome-hubs-entertainment-heading' => 'Entretenimiento',
 	'wikiahome-hubs-entertainment-url' => 'http://es.wikia.com/Entretenimiento',
@@ -307,7 +307,7 @@ $messages['es'] = array(
 	'wikiahome-community-column2-creative' => 'Mira como Wikia se abre hueco en el universo de los teléfonos con su nueva web para móviles y aplicaciones como Guías de videojuegos o Letras de canciones de LyricWiki.',
 	'wikiahome-community-column3-heading' => 'Síguenos',
 	'wikiahome-community-social-wikia-blog' => 'Blog de Wikia',
-	'wikiahome-community-social-wikia-blog-link' => 'http://es.wikia.com/wiki/Blog:Noticias_de_Wikia',
+	'wikiahome-community-social-wikia-blog-link' => 'http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia',
 	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-twitter-link' => 'https://twitter.com/#!/wikia_es',
 	'wikiahome-community-social-facebook' => 'Facebook',
@@ -326,7 +326,7 @@ __NOEDITSECTION__',
 	'wikiahome-footer-get-started-creative' => 'Encuentra tu comunidad,<br />comienza algo épico.',
 	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateWiki?uselang=es', // FIXME: why is this in a message?!
 	'wikiahome-footer-follow-us' => '===Síguenos===
-*[http://es.wikia.com/wiki/Blog:Noticias_de_Wikia Blog de Wikia]
+*[http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia Blog de Wikia]
 *[http://www.facebook.com/wikia.es Facebook]
 *[https://twitter.com/wikia_es Twitter]
 __NOEDITSECTION__',
