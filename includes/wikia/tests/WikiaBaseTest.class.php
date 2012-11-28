@@ -106,7 +106,10 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public static function markTestSkipped($message = '') {
-		Wikia::log(__METHOD__, '', $message);
+		$backtrace = wfDebugBacktrace(3);
+		$entry = $backtrace[1];
+
+		Wikia::log(wfFormatStackFrame($entry), false, "marked as skipped - $message");
         parent::markTestSkipped($message);
     }
 
