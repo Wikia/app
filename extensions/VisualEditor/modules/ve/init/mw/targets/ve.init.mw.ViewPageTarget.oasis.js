@@ -254,7 +254,7 @@ ve.init.mw.ViewPageTarget.prototype.mutePageContent = function () {
 	$( '#mw-content-text' )
 		.addClass( 've-init-mw-viewPageTarget-content' )
 		.fadeTo( 'fast', 0.35 );
-	$( '#WikiHeader, #WikiaPageHeader, #WikiaRail' ).fadeTo( 'fast', 0.35 ).each(function() {
+	$( '#WikiHeader, #WikiaPageHeader, #WikiaRail, #WikiaArticleCategories' ).fadeTo( 'fast', 0.35 ).each(function() {
 		$(this).append( '<div class="oasis-interface-shield"></div>' );
 	});
 };
