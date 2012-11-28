@@ -40,10 +40,10 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	protected function tearDown() {
+		$this->unsetClassInstances();
 		if (is_object($this->appOrig)) {
 			F::setInstance('App', $this->appOrig);
 		}
-		$this->unsetClassInstances();
 		unset_new_overload();
 		WikiaMockProxy::cleanup();
 	}
