@@ -60,8 +60,6 @@ class PlacesTest extends WikiaBaseTest {
 	}
 
 	function testRenderMarkers() {
-		$this->markTestSkipped('Markers are empty');
-
 		$resp = $this->app->sendRequest('Places', 'renderMarkers', array('markers' => array($this->model)));
 		$html = $resp->toString();
 
