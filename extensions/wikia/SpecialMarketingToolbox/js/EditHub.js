@@ -17,7 +17,9 @@ EditHub.prototype = {
 							'fileHandler': fileHandler
 						},
 						callback: function(response) {
-							$().log(response);
+							var tempImg = new Image();
+							tempImg.src = response.fileUrl;
+							$('.MarketingToolboxMain').append(tempImg);
 						}
 					});
 				});
