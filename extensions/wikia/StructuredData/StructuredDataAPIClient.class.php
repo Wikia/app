@@ -56,7 +56,12 @@ class StructuredDataAPIClient extends WikiaObject {
 		}
 	}
 
-	protected function call( $url, $method = null, $body = null ) {
+	/**
+	 * Call the specified url and return the answer
+	 * @param bool $nocache - when set to true, try to bypass the caching layer
+	 * @throws Exception
+	 */
+	protected function call( $url, $nocache = true, $method = null, $body = null ) {
 		$httpRequest = new HTTP_Request();
 		$httpRequest->setURL( $url );
 
@@ -70,13 +75,17 @@ class StructuredDataAPIClient extends WikiaObject {
 
 		if ( $method ) $httpRequest->setMethod( $method );
 		if ( $body ) $httpRequest->setBody( $body );
-
+		if ( $nocache ) {
+			$httpRequest->addHeader('Cache-Control', 'no-cache');
+			$httpRequest->addHeader('If-Modified-Since', 'Sat, 29 Oct 1994 19:43:31 GMT'); // probably not needed
+		}
 		$httpRequest->addHeader( 'Accept', 'application/ld+json' );
 		$httpRequest->sendRequest();
 
 		try {
 			$response = $httpRequest->getResponseBody();
-			$this->log('Response (' . $httpRequest->getResponseCode() .') is ' . $response);
+			$this->log( 'Headers are ' . json_encode( $httpRequest->getResponseHeader() ) );
+			$this->log( 'Response (' . $httpRequest->getResponseCode() .') is ' . $response);
 			$decodedResponse = json_decode ( $response );
 			if ( empty($decodedResponse) && in_array( $httpRequest->getResponseCode(), array( 500, 501 ) ) ) {
 				return '{"error":"Internal Server Error","message":""}';
@@ -116,17 +125,17 @@ class StructuredDataAPIClient extends WikiaObject {
 	 * @return SDS response in JSON format
 	 */
 	public function deleteObject( $id ) {
-		$response = json_decode( $this->call( $this->getApiPath() . $id, HTTP_REQUEST_METHOD_DELETE ) );
+		$response = json_decode( $this->call( $this->getApiPath() . $id, true, HTTP_REQUEST_METHOD_DELETE ) );
 		return $response;
 	}
 
 	public function saveObject( $id, $body ) {
-		$response = json_decode( $this->call( $this->getApiPath() . $id, HTTP_REQUEST_METHOD_PUT, $body ) );
+		$response = json_decode( $this->call( $this->getApiPath() . $id, true, HTTP_REQUEST_METHOD_PUT, $body ) );
 		return $response;
 	}
 
 	public function createObject( $body ) {
-		$response = json_decode( $this->call( rtrim( $this->getApiPath(), '/' ), HTTP_REQUEST_METHOD_POST, $body ) );
+		$response = json_decode( $this->call( rtrim( $this->getApiPath(), '/' ), true, HTTP_REQUEST_METHOD_POST, $body ) );
 		return $response;
 	}
 
@@ -148,7 +157,7 @@ class StructuredDataAPIClient extends WikiaObject {
 	}
 
 	public function getObjectByTypeAndName($type, $name) {
-		$url = rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) . '&withProperty='.urlencode('schema:name').'&withValue=' .urlencode($name).'&cache=false&cb=' . time();
+		$url = rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) . '&withProperty='.urlencode('schema:name').'&withValue=' .urlencode($name).'&cache=false';
 		$response = json_decode( $this->call( $url ) );
 		if(isset($response->{"@graph"})) {
 			$object = array_shift( $response->{"@graph"} );
@@ -160,7 +169,7 @@ class StructuredDataAPIClient extends WikiaObject {
 	}
 
 	public function getCollection( $type, $extraFields=array() ) {
-		$rawResponse = $this->call( rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) . '&cb=' . time() );
+		$rawResponse = $this->call( rtrim( $this->getApiPath(), '/' ) . '?withType=' . urlencode($type) . '&cache=false' );
 		$response = json_decode( $rawResponse );
 		$response = $this->isValidResponse($response);
 
@@ -190,7 +199,7 @@ class StructuredDataAPIClient extends WikiaObject {
 
 		$rawResponse = $this->wg->Memc->get( $templateCacheKey );
 		if( empty( $rawResponse ) ) {
-			$rawResponse = $this->call( $templateUrl );
+			$rawResponse = $this->call( $templateUrl, false );
 			$response = json_decode( $rawResponse );
 			if($this->isValidResponse($response)) {
 				// cache only valid responses
@@ -210,12 +219,12 @@ class StructuredDataAPIClient extends WikiaObject {
 		$contextUrl = str_replace('cod.jsonld', 'callofduty.jsonld', $contextUrl);
 		$contextUrl = str_replace('schema.jsonld', 'callofduty.jsonld', $contextUrl);
 
-		$response = json_decode( $this->call( ( $relative ? $this->baseUrl : '' ) . $contextUrl ) );
+		$response = json_decode( $this->call( ( $relative ? $this->baseUrl : '' ) . $contextUrl, false ) );
 		return $this->isValidResponse($response);
 	}
 
 	public function getObjectDescription( $objectType, $asJson = false ) {
-		$rawResponse = $this->call( $this->getVocabsPath() . str_replace(':', '/', $objectType) );
+		$rawResponse = $this->call( $this->getVocabsPath() . str_replace(':', '/', $objectType), false );
 		$response = json_decode( $rawResponse );
 
 		return $asJson ? $rawResponse : $this->isValidResponse($response);

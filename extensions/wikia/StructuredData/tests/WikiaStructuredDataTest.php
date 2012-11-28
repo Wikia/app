@@ -96,69 +96,14 @@ class WikiaStructuredDataTest extends WikiaBaseTest {
 		}
 		return null;
 	}
+
 	/**
 	 * Check the basic SDElement features
-	 */
-	/*
-	public function testSDElement() {
-		$mock_cache = $this->getMock('stdClass', array('get', 'set'));
-		$mock_cache->expects($this->any())
-			->method('get')
-			->will($this->returnValue(null));
-		$mock_cache->expects($this->any())
-			->method('set');
-		$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
-		$this->mockApp();
-
-		$apiClient =  $this->getMock( 'StructuredDataAPIClient', array('getTemplate', 'getContext', 'getObject'), array('http://localhost/', 'api/v0.1/', 'callofduty') );
-		$apiClient->expects( $this->any() )
-			->method( 'getTemplate' )
-			->will( $this->returnValue( json_decode( $this->codCharacterTemplate ) ) );
-
-		$apiClient->expects( $this->any() )
-			->method( 'getContext' )
-			->will( $this->returnValue( json_decode( $this->codContext ) ) );
-
-		$apiClient->expects( $this->any() )
-			->method( 'getObject' )
-			->will( $this->returnValue( json_decode( $this->codCharacterManson ) ) );
-
-		$structuredData = F::build( 'StructuredData', array( 'apiClient' => $apiClient ));
-		$id = '501849c96e7f187909000001';
-
-		$sdElement = $structuredData->getSDElementById( $id );
-		$this->isInstanceOf( 'SDElement', $sdElement );
-		$this->assertEquals( $sdElement->getId(), $id );
-		$this->assertEquals( $sdElement->getType(), 'cod:Character' );
-		$this->assertEquals( $sdElement->getName(), 'Alex Mason' );
-
-		$description = $sdElement->getProperty( 'schema:description' );
-
-		$this->assertEquals( $description->getType()->getName(), 'rdf:Literal' );
-		$this->assertEquals( $description->getLabel(), 'description' );
-
-		$characterIn = $sdElement->getProperty( 'wikia:characterIn' );
-		$this->assertTrue( $characterIn->isCollection() );
-		$this->assertTrue( is_array( $characterIn->getWrappedValue() ) );
-		$this->assertEquals( $characterIn->getType()->getName(), '@set' );
-
-	}
-	*/
-
-	private function isElementOnTheList($structuredData, $col, $name) {
-		foreach($col as $sdsObject) {
-			try {
-				$sdsObject = $structuredData->getSDElementById($sdsObject['id']);
-				if ($sdsObject->getName() == $name) return true;
-			} catch (Exception $e) {}
-		}
-		return false;
-	}
-	/**
-	 *
 	 * @group Infrastructure
 	 */
-	public function testCaching() {
+
+	public function testSDElement() {
+		$existingCharacterName = 'Frank Woods';
 		$mock_cache = $this->getMock('stdClass', array('get', 'set'));
 		$mock_cache->expects($this->any())
 			->method('get')
@@ -170,30 +115,87 @@ class WikiaStructuredDataTest extends WikiaBaseTest {
 
 		$apiClient = F::build( 'StructuredDataAPIClient' );
 		$structuredData = F::build( 'StructuredData', array( 'apiClient' => $apiClient ));
-		try { // cleanup - remove the test element if it exists
-			$sdsObject = $structuredData->getSDElementByTypeAndName('callofduty:Character', 'unit test mock');
+
+		$sdElement = $structuredData->getSDElementByTypeAndName( 'callofduty:Character', $existingCharacterName );
+
+		$this->isInstanceOf( 'SDElement', $sdElement );
+		$this->assertEquals( $sdElement->getType(), 'callofduty:Character' );
+		$this->assertEquals( $sdElement->getName(), $existingCharacterName );
+
+		$description = $sdElement->getProperty( 'schema:description' );
+
+		$this->assertEquals( $description->getType()->getName(), 'rdfs:Literal' );
+		$this->assertEquals( $description->getLabel(), 'description' );
+
+		$characterIn = $sdElement->getProperty( 'wikia:characterIn' );
+		$this->assertTrue( $characterIn->isCollection() );
+		$this->assertTrue( is_array( $characterIn->getWrappedValue() ) );
+		$this->assertEquals( $characterIn->getType()->getName(), '@set' );
+	}
+
+	private function isElementOnTheList($structuredData, $col, $name) {
+		foreach($col as $sdsObject) {
+			try {
+				$sdsObject = $structuredData->getSDElementById($sdsObject['id']);
+				if ($sdsObject instanceof SDElement) {
+					//echo "Object name is ".$sdsObject->getName()."\n";
+					if ($sdsObject->getName() == $name) return true;
+				}
+			} catch (Exception $e) {}
+		}
+		return false;
+	}
+	/**
+	 * Test if we can get the fresh version of an object object and updated list of objects
+	 * @group Infrastructure
+	 */
+	public function testCaching() {
+		$objName = 'unit test object';
+
+		$mock_cache = $this->getMock('stdClass', array('get', 'set'));
+		$mock_cache->expects($this->any())
+			->method('get')
+			->will($this->returnValue(null));
+		$mock_cache->expects($this->any())
+			->method('set');
+		$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
+		$this->mockApp();
+
+		$apiClient = F::build( 'StructuredDataAPIClient' );
+		$structuredData = F::build( 'StructuredData', array( 'apiClient' => $apiClient ));
+
+		// cleanup - our test object cannot exist before the test, because we want to create it
+		try {
+			$sdsObject = $structuredData->getSDElementByTypeAndName('callofduty:Character', $objName);
 			if ($sdsObject) $structuredData->deleteSDElement($sdsObject);
 		} catch(Exception $e) {}
 
+		// make sure the object is not listed
 		$col = $structuredData->getCollectionByType('callofduty:Character');
-		$this->assertFalse($this->isElementOnTheList($structuredData, $col, 'unit test mock'), 'Element "unit test mock" should not exist at the beginning of the test');
+		$this->assertFalse($this->isElementOnTheList($structuredData, $col, $objName), 'Element "unit test mock" should not exist at the beginning of the test');
 
+		// create the test object
 		$sdsObject = $structuredData->createSDElement('callofduty:Character');
-		$structuredData->updateSDElement($sdsObject, array('schema:name' => 'unit test mock', 'schema:description' => 'description 1'));
+		$structuredData->updateSDElement($sdsObject, array('schema:name' => $objName, 'schema:description' => 'description 1'));
 
+		// make sure the new object is listed
 		$col = $structuredData->getCollectionByType('callofduty:Character');
-		$this->assertTrue($this->isElementOnTheList($structuredData, $col, 'unit test mock'), 'Element "unit test mock" should be listed after being created');
+		$this->assertTrue($this->isElementOnTheList($structuredData, $col, $objName), 'Element "unit test mock" should be listed after being created');
 
-		$sdsObject = $structuredData->getSDElementByTypeAndName('callofduty:Character', 'unit test mock');
+		// modify the object and try to fetch the fresh version
+		$sdsObject = $structuredData->getSDElementByTypeAndName('callofduty:Character', $objName);
 		$this->assertEquals('description 1', $sdsObject->getPropertyValue('schema:description')->getValue());
-		$structuredData->updateSDElement($sdsObject, array('schema:description' => 'description 2'));
-		$sdsObject = $structuredData->getSDElementByTypeAndName('callofduty:Character', 'unit test mock');
+		$structuredData->updateSDElement($sdsObject, array('schema:name' => $objName, 'schema:description' => 'description 2'));
+		$sdsObject = $structuredData->getSDElementByTypeAndName('callofduty:Character', $objName);
 		$this->assertEquals('description 2', $sdsObject->getPropertyValue('schema:description')->getValue());
 
-		$sdsObject = $structuredData->getSDElementByTypeAndName('callofduty:Character', 'unit test mock');
+		// remove the object
+		$sdsObject = $structuredData->getSDElementByTypeAndName('callofduty:Character', $objName);
 		$structuredData->deleteSDElement($sdsObject);
 
+		// make sure the object is not listed after the delete
 		$col = $structuredData->getCollectionByType('callofduty:Character');
-		$this->assertFalse($this->isElementOnTheList($structuredData, $col, 'unit test mock'), 'Element "unit test mock" should not be listed after being removed');
+		$this->assertFalse($this->isElementOnTheList($structuredData, $col, $objName), 'Element "unit test mock" should not be listed after being removed');
 	}
+
 }
