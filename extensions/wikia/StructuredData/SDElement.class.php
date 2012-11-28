@@ -54,12 +54,10 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		// fields to hide
 		$mockData = array(
 		    'callofduty:Character' => array( 	'wikia:includeWith',
-		    				     	'wikia:elementIn',
 			    				'wikia:namespace',
 			    				'schema:audio',
 			    				'wikia:element',
 			    				'schema:video',
-			    				'callofduty:timeline',
 		    ) ,
 		    'callofduty:Weapon' => array(
 			    				'wikia:includeWith',
@@ -80,7 +78,6 @@ class SDElement extends SDRenderableObject implements SplSubject {
 			    				'schema:description'
 		    ),
 		    'schema:ImageObject' => array(
-			    				'schema:keywords',
 			    				'schema:thumbnailUrl',
 			    				'schema:description',
 			    				'wikia:restriction',
