@@ -14,14 +14,17 @@ var StructuredData = {
 		this.attachSpecialPageEditModeHandlers(this);
 		this.attachSpecialPageBrowsingModeHandlers(this);
 		// Add WMU support for editing image objects
-		$('input[name="schema:thumbnailUrl"]').bind('focus', function(event) {
-			var $input = $(event.target);
+		this.cachedSeletors.SDObjectWrapper.find('table[data-object-type="schema:ImageObject"] input[name="schema:url"]').after(' <button id="useWMU">Use WMU</button>');
+		$('#useWMU').click(function(event){
+			event.preventDefault();
+			var $input = $(this).prev();
 			$.loadYUI( function() {
 				$.getScript(wgExtensionsPath+'/wikia/WikiaMiniUpload/js/WMU.js', function() {
 					WMU_show($.getEvent(), -2);
 					mw.loader.load( wgExtensionsPath+'/wikia/WikiaMiniUpload/css/WMU.css', "text/css" );
 				});
 				$(window).bind('WMU_addFromSpecialPage', function(event, filePageUrl) {
+					var filePageUrl = window.location.protocol + '//' + window.location.host + '/' + filePageUrl;
 					$input.val(filePageUrl);
 				});
 			});
