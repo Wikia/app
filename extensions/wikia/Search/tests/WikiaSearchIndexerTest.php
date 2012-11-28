@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once( 'WikiaSearchBaseTest.php' );
 
@@ -7,12 +7,12 @@ require_once( 'WikiaSearchBaseTest.php' );
  * @author Robert Elwell <robert@wikia-inc.com>
  */
 class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::getWikiViews
 	 */
 	public function testGetWikiViewsWithCache() {
-		
+
 		/**
 		 * A cached value with weekly and monthly rows greater than 0 should get returned
 		 */
@@ -22,38 +22,38 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 								->disableOriginalConstructor()
 								->setMethods( array( 'get', 'set' ) )
 								->getMock();
-		
+
 		$mockResult		=	$this->getMock( 'stdClass' );
-		
+
 		$mockWikia		=	$this->getMock( 'Wikia' );
-		
+
 		$mockException	=	$this->getMock( 'Exception' );
-		
+
 		$mockMemc
 			->expects	( $this->at( 0 ) )
 			->method	( 'get' )
 			->will		( $this->returnValue( $mockResult ) )
 		;
-		
+
 		// need values greater than 1
 		$mockResult->weekly		= 1;
 		$mockResult->monthly	= 1;
 		$this->mockGlobalVariable( 'wgMemc', $mockMemc );
 		$this->mockClass( 'Wikia', $mockWikia );
 		$this->mockApp();
-		
+
 		$indexer 	= F::build( 'WikiaSearchIndexer' );
-		
+
 		$method		= new ReflectionMethod( 'WikiaSearchIndexer', 'getWikiViews' );
 		$method->setAccessible( true );
-		
-		$this->assertEquals( 
-				$mockResult, 
-				$method->invoke( $indexer, $mockArticle ), 
-				'A cached value with weekly and monthly rows greater than 0 should get returned' 
+
+		$this->assertEquals(
+				$mockResult,
+				$method->invoke( $indexer, $mockArticle ),
+				'A cached value with weekly and monthly rows greater than 0 should get returned'
 		);
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::getWikiViews
 	 */
@@ -63,7 +63,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$mockMemc		=	$this->getMock( 'stdClass', array( 'get', 'set' ) );
 		$mockResult		=	$this->getMock( 'stdClass' );
 		$mockDataMart	=	$this->getMock( 'DataMartService', array( 'getPageviewsWeekly', 'getPageviewsMonthly' ) );
-		
+
 		$mockMemc
 			->expects	( $this->any() )
 			->method	( 'get' )
@@ -83,22 +83,22 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method		( 'getPageviewsMonthly' )
 			->will			( $this->returnValue( array( 12345 ) ) )
 		;
-		
+
 		$this->mockGlobalVariable( 'wgMemc', $mockMemc );
 		$this->mockClass( 'DataMartService', $mockDataMart );
 		$this->mockApp();
-		
+
 		$indexer 	= F::build( 'WikiaSearchIndexer' );
 		$method		= new ReflectionMethod( 'WikiaSearchIndexer', 'getWikiViews' );
 		$method->setAccessible( true );
-		
-		$this->assertEquals( 
-				(object) array( 'weekly' => 1234, 'monthly' => 12345 ), 
-				$method->invoke( $indexer, $mockArticle ), 
-				'A non-cached result should contain weekly and monthly values' 
+
+		$this->assertEquals(
+				(object) array( 'weekly' => 1234, 'monthly' => 12345 ),
+				$method->invoke( $indexer, $mockArticle ),
+				'A non-cached result should contain weekly and monthly values'
 		);
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::getRedirectTitles
 	 */
@@ -114,29 +114,29 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method	( 'getTitle')
 			->will		( $this->returnValue( $mockTitle ) )
 		;
-		
+
 		$mockTitle
 			->expects	( $this->any() )
 			->method	( 'getDbKey' )
 			->will		( $this->returnValue( 'foo' ) )
 		;
-		
+
 		$mockDb
 			->expects	( $this->any() )
 			->method	( 'selectRow' )
 			->will		( $this->returnValue( null ) )
 		;
-		
+
 		$this->mockGlobalFunction( 'GetDB', $mockDb );
 		$this->mockApp();
-		
+
 		$indexer 	= F::build( 'WikiaSearchIndexer' );
 		$method		= new ReflectionMethod( 'WikiaSearchIndexer', 'getRedirectTitles' );
 		$method->setAccessible( true );
-		
+
 		$this->assertEmpty( $method->invoke( $indexer, $mockArticle ), 'A query for redirect titles without a result should return an empty string.' );
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::getRedirectTitles
 	 */
@@ -146,38 +146,38 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$mockMemc		=	$this->getMock( 'stdClass', array( 'get', 'set' ) );
 		$mockDb 		=	$this->getMock( 'stdClass', array( 'selectRow' ) );
 		$mockResultRow	=	$this->getMock( 'stdClass' );
-		
+
 		$mockResultRow->redirect_titles = 'Foo_Bar | Baz_Qux';
-		
+
 		// couldn't get the constructor stuff to work right for mock article
 		$mockArticle
 			->expects	( $this->any() )
 			->method	( 'getTitle')
 			->will		( $this->returnValue( $mockTitle ) )
 		;
-		
+
 		$mockTitle
 			->expects	( $this->any() )
 			->method	( 'getDbKey' )
 			->will		( $this->returnValue( 'foo' ) )
 		;
-		
+
 		$mockDb
 			->expects	( $this->any() )
 			->method	( 'selectRow' )
 			->will		( $this->returnValue( $mockResultRow ) )
 		;
-		
+
 		$this->mockGlobalFunction( 'GetDB', $mockDb );
 		$this->mockApp();
-		
+
 		$indexer 	= F::build( 'WikiaSearchIndexer' );
 		$method		= new ReflectionMethod( 'WikiaSearchIndexer', 'getRedirectTitles' );
 		$method->setAccessible( true );
-		
+
 		$this->assertEquals( 'Foo Bar | Baz Qux', $method->invoke( $indexer, $mockArticle ), 'A query for redirect titles with result rows should be pipe-joined with underscores replaced with spaces.' );
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::onArticleUndelete
 	 */
@@ -186,10 +186,10 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 									->disableOriginalConstructor()
 									->setMethods( array( 'reindexBatch' ) )
 									->getMock();
-		
+
 		$mockTitle			= $this->getMock( 'Title', array( 'getArticleID' ) );
 		$mockWikia			= $this->getMock( 'Wikia', array( 'log' ) );
-		
+
 		$mockWikia
 			->staticExpects	( $this->any() )
 			->method		( 'log' )
@@ -201,22 +201,22 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		;
 		$mockSearchIndexer
 			->expects	( $this->at( 0 ) )
-			->method	( 'reindexBatch' ) 
+			->method	( 'reindexBatch' )
 			->with		( array( 1234 ) )
 			->will		( $this->returnValue( true ) )
 		;
-		
+
 		$mockException = $this->getMock( 'Exception' );
-		
+
 		$mockSearchIndexer
 			->expects	( $this->at( 1 ) )
 			->method	( 'reindexBatch' )
 			->will		( $this->throwException ( $mockException ) )
 		;
-		
+
 		$this->mockClass( 'Wikia', $mockWikia );
 		$this->mockApp();
-		
+
 		$this->assertTrue(
 				$mockSearchIndexer->onArticleUndelete( $mockTitle, true ),
 				'WikiaSearchIndexer::onArticleUndelete should always return true'
@@ -226,7 +226,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				'WikiaSearchIndexer::onArticleUndelete should always return true'
 		);
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::onArticleSaveComplete
 	 */
@@ -235,23 +235,23 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 									->disableOriginalConstructor()
 									->setMethods( array( 'reindexBatch' ) )
 									->getMock();
-		
+
 		$mockArticle		= $this->getMockBuilder( 'Article' )
 									->disableOriginalConstructor()
 									->setMethods( array( 'getTitle' ) )
 									->getMock();
-		
+
 		$mockTitle			= $this->getMock( 'Title', array( 'getArticleID' ) );
 		$mockWikia			= $this->getMock( 'Wikia', array( 'log' ) );
-		
+
 		$mockUser 			= $this->getMockBuilder( 'User' )
 									->disableOriginalConstructor()
 									->getMock();
-		
+
 		$mockRevision		= $this->getMockBuilder( 'Revision' )
 									->disableOriginalConstructor()
 									->getMock();
-		
+
 		$mockArticle
 			->expects	( $this->any() )
 			->method	( 'getTitle' )
@@ -268,22 +268,22 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		;
 		$mockSearchIndexer
 			->expects	( $this->at( 0 ) )
-			->method	( 'reindexBatch' ) 
+			->method	( 'reindexBatch' )
 			->with		( array( 1234 ) )
 			->will		( $this->returnValue( true ) )
 		;
-		
+
 		$mockException = $this->getMock( 'Exception' );
-		
+
 		$mockSearchIndexer
 			->expects	( $this->at( 1 ) )
 			->method	( 'reindexBatch' )
 			->will		( $this->throwException ( $mockException ) )
 		;
-		
+
 		$this->mockClass( 'Wikia', $mockWikia );
 		$this->mockApp();
-		
+
 		//stupid pass by reference params
 		$array = array();
 		$int = 1;
@@ -295,7 +295,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				$mockSearchIndexer->onArticleSaveComplete( $mockArticle, $mockUser, '', '', true, true, '', $array, $mockRevision, $int, $int ),
 				'WikiaSearchIndexer::onArticleSaveComplete should always return true'
 		);
-		
+
 	}
 
 	/**
@@ -306,43 +306,43 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 									->disableOriginalConstructor()
 									->setMethods( array( 'deleteArticle' ) )
 									->getMock();
-		
+
 		$mockArticle		= $this->getMockBuilder( 'Article' )
 									->disableOriginalConstructor()
 									->setMethods( array( 'getTitle' ) )
 									->getMock();
-		
+
 		$mockTitle			= $this->getMock( 'Title', array( 'getArticleID' ) );
 		$mockWikia			= $this->getMock( 'Wikia', array( 'log' ) );
-		
+
 		$mockUser 			= $this->getMockBuilder( 'User' )
 									->disableOriginalConstructor()
 									->getMock();
-		
+
 		$mockId = 1235;
-		
+
 		$mockWikia
 			->staticExpects	( $this->any() )
 			->method		( 'log' )
 		;
 		$mockSearchIndexer
 			->expects	( $this->at( 0 ) )
-			->method	( 'deleteArticle' ) 
+			->method	( 'deleteArticle' )
 			->with		( $mockId )
 			->will		( $this->returnValue( true ) )
 		;
-		
+
 		$mockException = $this->getMock( 'Exception' );
-		
+
 		$mockSearchIndexer
 			->expects	( $this->at( 1 ) )
 			->method	( 'deleteArticle' )
 			->will		( $this->throwException ( $mockException ) )
 		;
-		
+
 		$this->mockClass( 'Wikia', $mockWikia );
 		$this->mockApp();
-		
+
 		$this->assertTrue(
 				$mockSearchIndexer->onArticleDeleteComplete( $mockArticle, $mockUser, 123, $mockId ),
 				'WikiaSearchIndexer::onArticleDeleteComplete should always return true'
@@ -352,7 +352,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				'WikiaSearchIndexer::onArticleDeleteComplete should always return true'
 		);
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::onParserClearState
 	 */
@@ -361,12 +361,12 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 									->disableOriginalConstructor()
 									->setMethods( array( 'getOutput' ) )
 									->getMock();
-		
+
 		$mockParserOutput	= $this->getMockBuilder( 'Parser' )
 									->disableOriginalConstructor()
 									->setMethods( array( 'setCacheTime' ) )
 									->getMock();
-		
+
 		$mockParser
 			->expects	( $this->once() )
 			->method	( 'getOutput' )
@@ -377,13 +377,13 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method	( 'setCacheTime' )
 			->with		( -1 )
 		;
-		
+
 		$this->assertTrue(
 				WikiaSearchIndexer::onParserClearState( $mockParser ),
 				'WikiaSearchIndexer::onParserClearState should always return true'
 		);
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::getPageMetaData
 	 */
@@ -392,18 +392,18 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 									->disableOriginalConstructor()
 									->setMethods( array( 'getRedirectTitles', 'getWikiViews' ) )
 									->getMock();
-		
+
 		$mockArticle		= $this->getMockBuilder( 'Article' )
 									->disableOriginalConstructor()
 									->setMethods( array( 'getTitle', 'getId' ) )
 									->getMock();
-		
+
 		$mockApiService		= $this->getMock( 'ApiService', array( 'call' ) );
 		$mockDataMart		= $this->getMock( 'DataMartServie', array( 'getCurrentWamScoreForWiki' ) );
-		
+
 		$mockTitle			= 'PHPUnit/Being_Awesome';
 		$mockId				= 123;
-		
+
 		$mockArticle
 			->expects	( $this->any() )
 			->method	( 'getTitle' )
@@ -420,12 +420,12 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method		( 'call' )
 			->will			( $this->returnValue( $mockBacklinks ) )
 		;
-		$mockPageData = array( 'query' => array( 'pages' => array( $mockId => 
-				array( 'views' => 100, 
-						'revcount' => 20, 
-						'created' => date( 'Y-m-d' ), 
+		$mockPageData = array( 'query' => array( 'pages' => array( $mockId =>
+				array( 'views' => 100,
+						'revcount' => 20,
+						'created' => date( 'Y-m-d' ),
 						'touched' => date( 'Y-m-d' ),
-						'categories' => array( array( 'title' => 'Category:Stuff' ), array( 'title' => 'Category:Things' ), array( 'title' => 'Category:Miscellany' ) ) 
+						'categories' => array( array( 'title' => 'Category:Stuff' ), array( 'title' => 'Category:Things' ), array( 'title' => 'Category:Miscellany' ) )
 						) ) ) );
 		$mockApiService
 			->staticExpects	( $this->at( 1 ) )
@@ -449,23 +449,22 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->expects	( $this->once() )
 			->method	( 'getCurrentWamScoreForWiki' )
 		;
-		
+
 		$wgProperty = new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
 		$wgProperty->setAccessible( true );
 		$wgProperty->setValue( $mockSearchIndexer, (object) array( 'CityId' => 123, 'ExternalSharedDB' => true ) );
-		
+
 		$method = new ReflectionMethod( 'WikiaSearchIndexer', 'getPageMetaData' );
 		$method->setAccessible( true );
-		
+
 		$this->mockClass( 'ApiService', $mockApiService );
 		$this->mockClass( 'DataMartService', $mockDataMart );
 		$this->mockApp();
 
 		$result = $method->invoke( $mockSearchIndexer, $mockArticle );
-		
-		$this->tearDown();
+
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::deleteArticle
 	 */
@@ -478,19 +477,19 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$reflectionWg	=	new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
 		$reflectionWg->setAccessible( true );
 		$reflectionWg->setValue( $mockIndexer, (object) array( 'CityId' => 123 ) );
-		
+
 		$mockIndexer
 			->expects	( $this->once() )
 			->method	( 'deleteBatch' )
 			->with		( array( '123_234' ) )
 		;
-		
-		$this->assertTrue( 
+
+		$this->assertTrue(
 				$mockIndexer->deleteArticle( 234 ),
 				'WikiaSearchIndexer::deleteArticle should always return true'
 		);
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::deleteArticle
 	 */
@@ -503,19 +502,19 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$reflectionWg	=	new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
 		$reflectionWg->setAccessible( true );
 		$reflectionWg->setValue( $mockIndexer, (object) array( 'CityId' => null, 'SearchWikiId' => 123 ) );
-		
+
 		$mockIndexer
 			->expects	( $this->once() )
 			->method	( 'deleteBatch' )
 			->with		( array( '123_234' ) )
 		;
-		
-		$this->assertTrue( 
+
+		$this->assertTrue(
 				$mockIndexer->deleteArticle( 234 ),
 				'WikiaSearchIndexer::deleteArticle should always return true'
 		);
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::reindexPage
 	 */
@@ -524,9 +523,9 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 								->disableOriginalConstructor()
 								->setMethods( array( 'getSolrDocument', 'reindexBatch' ) )
 								->getMock();
-		
+
 		$mockDocument	=	$this->getMock( 'Solarium_Document_ReadWrite' );
-		
+
 		$mockWikia		= $this->getMock( 'Wikia', array( 'log' ) );
 
 		$mockIndexer
@@ -544,17 +543,17 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->expects	( $this->any() )
 			->method	( 'log' )
 		;
-		
+
 		$this->mockClass( 'Wikia', $mockWikia );
 		$this->mockApp();
-		
+
 		$this->assertTrue(
 				$mockIndexer->reindexPage( 123 ),
 				'WikiaSearchIndexer::reindexPage should always return true'
 				);
 
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::deleteBatch
 	 */
@@ -564,9 +563,9 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 								->setConstructorArgs( array( $mockClient ) )
 								->setMethods( array( 'getSolrDocument', 'reindexBatch' ) )
 								->getMock();
-		
+
 		$mockHandler	=	$this->getMock( 'Solarium_Query_Update', array( 'addDeleteQuery', 'addCommit' ) );
-		
+
 		$mockClient
 			->expects	( $this->at( 0 ) )
 			->method	( 'createUpdate' )
@@ -586,14 +585,14 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method	( 'update' )
 			->with		( $mockHandler )
 		;
-		
+
 		$this->assertTrue(
 				$mockIndexer->deleteBatch( array( 123 ) ),
 				'WikiaSearchIndexer::deleteBatch should always return true'
 		);
-		
+
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::deleteBatch
 	 */
@@ -603,13 +602,13 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 								->setConstructorArgs( array( $mockClient ) )
 								->setMethods( array( 'getSolrDocument', 'reindexBatch' ) )
 								->getMock();
-		
+
 		$mockHandler	=	$this->getMock( 'Solarium_Query_Update', array( 'addDeleteQuery', 'addCommit' ) );
-		
+
 		$mockException	=	$this->getMock( 'Exception' );
-		
+
 		$mockWikia		=	$this->getMock( 'Wikia', array( 'log' ) );
-		
+
 		$mockClient
 			->expects	( $this->at( 0 ) )
 			->method	( 'createUpdate' )
@@ -634,16 +633,16 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->expects	( $this->any() )
 			->method	( 'log' )
 		;
-		
+
 		$this->mockClass( 'Wikia', $mockWikia );
 		$this->mockApp();
-		
+
 		$this->assertTrue(
 				$mockIndexer->deleteBatch( array( 123 ) ),
 				'WikiaSearchIndexer::deleteBatch should always return true'
 		);
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::reindexBatch
 	 */
@@ -653,11 +652,11 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 								->setConstructorArgs( array( $mockClient ) )
 								->setMethods( array( 'getSolrDocument' ) )
 								->getMock();
-		
+
 		$mockDocument	=	$this->getMock( 'Solarium_Document_ReadWrite' );
-		
+
 		$mockHandler	=	$this->getMock( 'Solarium_Query_Update', array( 'addDocuments', 'addCommit' ) );
-		
+
 		$mockClient
 			->expects	( $this->at( 0 ) )
 			->method	( 'createUpdate' )
@@ -683,13 +682,13 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method	( 'update' )
 			->with		( $mockHandler )
 		;
-		
+
 		$this->assertTrue(
 				$mockIndexer->reindexBatch( array( 123 ) ),
 				'WikiaSearchIndexer::reindexBatch should always return true'
 		);
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::reindexBatch
 	 */
@@ -699,15 +698,15 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 								->setConstructorArgs( array( $mockClient ) )
 								->setMethods( array( 'getSolrDocument' ) )
 								->getMock();
-		
+
 		$mockDocument	=	$this->getMock( 'Solarium_Document_ReadWrite' );
-		
+
 		$mockException	=	$this->getMock( 'Exception' );
-		
+
 		$mockHandler	=	$this->getMock( 'Solarium_Query_Update', array( 'addDocuments', 'addCommit' ) );
-		
+
 		$mockWikia		=	$this->getMock( 'Wikia', array( 'log' ) );
-		
+
 		$mockClient
 			->expects	( $this->at( 0 ) )
 			->method	( 'createUpdate' )
@@ -738,16 +737,16 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->expects	( $this->any() )
 			->method	( 'log' )
 		;
-		
+
 		$this->mockClass( 'Wikia', $mockWikia );
 		$this->mockApp();
-		
+
 		$this->assertTrue(
 				$mockIndexer->reindexBatch( array( 123 ) ),
 				'WikiaSearchIndexer::reindexBatch should always return true'
 		);
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::getSolrDocument
 	 */
@@ -756,23 +755,23 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 								->disableOriginalConstructor()
 								->setMethods( array( 'getPage' ) )
 								->getMock();
-		
+
 		$pageData = array(
 				'id'	=>	'234_123',
 				'title'	=>	'my crappy test',
 				'html'	=>	'foo bar baz yes i am skipping testing regexes that is a trap',
 				'lang'	=>	'en',
 				);
-		
+
 		$mockIndexer
 			->expects	( $this->once() )
 			->method	( 'getPage' )
 			->with		( 123 )
 			->will		( $this->returnValue( $pageData ) )
 		;
-		
+
 		$doc = $mockIndexer->getSolrDocument( 123 );
-		
+
 		$this->assertInstanceOf(
 				'Solarium_Document_ReadWrite',
 				$doc,
@@ -789,7 +788,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				'Language fields should be transformed during WikiaSearchIndexer::getSolrDocument'
 		);
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::getPages
 	 */
@@ -798,11 +797,11 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 								->disableOriginalConstructor()
 								->setMethods( array( 'getPage' ) )
 								->getMock();
-		
+
 		$mockException	=	$this->getMockBuilder( 'WikiaException' )
 								->disableOriginalConstructor()
 								->getMock();
-		
+
 		$mockIndexer
 			->expects	( $this->at( 0 ) )
 			->method	( 'getPage' )
@@ -815,14 +814,14 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->with		( 234 )
 			->will		( $this->throwException( $mockException ) )
 		;
-		
+
 		$this->assertEquals(
 				array( 'pages' => array( 123 => array( 'here be my page data' ) ), 'missingPages' => array( 234 ) ),
 				$mockIndexer->getPages( array( 123, 234 ) ),
 				'WikiaSearchIndexer::getPages should set pagedata for each page it successfully grabs, and list each problematic page as missing.'
 		);
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::getPage
 	 */
@@ -831,55 +830,55 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 								->disableOriginalConstructor()
 								->setMethods( array( 'getPageMetaData' ) )
 								->getMock();
-		
+
 		$mockArticle	=	$this->getMockBuilder( 'Article' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'isRedirect', 'getRedirectTarget', 'loadContent', 'render', 'getId', 'getTitle' ) )
 								->getMock();
-		
+
 		$mockApp		=	$this->getMockBuilder( 'WikiaApp' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'registerHook' ) )
 								->getMock();
-		
+
 		$mockTitle		=	$this->getMockBuilder( 'Title' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'getPrefixedText', 'getNamespace', 'getText', 'getFullUrl', 'getTitle' ) )
 								->getMock();
-		
+
 		$mockRequest	=	$this->getMockBuilder( 'RequestContext' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'setVal' ) )
 								->getMock();
-		
+
 		$mockOutput		=	$this->getMockBuilder( 'OutputPage' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'getHTML', 'clearHTML' ) )
 								->getMock();
-		
+
 		$mockContLang	=	$this->getMockBuilder( 'Language' )
 								->disableOriginalConstructor()
 								->getMock();
-		
+
 		$reflectionApp = new ReflectionProperty( 'WikiaSearchIndexer', 'app' );
 		$reflectionApp->setAccessible( true );
 		$reflectionApp->setValue( $mockIndexer, $mockApp );
-		
-		$mockGlobals = array( 
-				'Title'				=>	$mockTitle, 
-				'Request'			=>	$mockRequest, 
-				'Out'				=>	$mockOutput, 
-				'ExternalSharedDB'	=>	true, 
-				'CityId'			=>	123, 
-				'Server'			=>	'http://foo.wikia.com', 
+
+		$mockGlobals = array(
+				'Title'				=>	$mockTitle,
+				'Request'			=>	$mockRequest,
+				'Out'				=>	$mockOutput,
+				'ExternalSharedDB'	=>	true,
+				'CityId'			=>	123,
+				'Server'			=>	'http://foo.wikia.com',
 				'ContLang'			=>	(object) array( 'mCode' => 'en' ),
-				'ContentNamespaces'	=>	array( NS_MAIN, NS_CATEGORY ) 
+				'ContentNamespaces'	=>	array( NS_MAIN, NS_CATEGORY )
 				);
-		
+
 		$reflectionWg = new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
 		$reflectionWg->setAccessible( true );
 		$reflectionWg->setValue( $mockIndexer, (object) $mockGlobals );
-		
+
 		$mockArticle
 			->expects	( $this->any() )
 			->method	( 'getTitle' )
@@ -900,13 +899,13 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method	( 'getRedirectTarget' )
 			->will		( $this->returnValue( $mockTitle ) )
 		;
-		
+
 		$this->mockClass( 'Article', $mockArticle );
 		$this->mockApp();
-		
+
 		$mockIndexer->getPage( 123 );
 	}
-	
+
 	/**
 	 * @covers WikiaSearchIndexer::getPage
 	 */
@@ -915,74 +914,74 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 								->disableOriginalConstructor()
 								->setMethods( array( 'getPageMetaData' ) )
 								->getMock();
-		
+
 		$mockArticle	=	$this->getMockBuilder( 'Article' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'isRedirect', 'getRedirectTarget', 'loadContent', 'render', 'getId', 'getTitle' ) )
 								->getMock();
-		
+
 		$mockApp		=	$this->getMockBuilder( 'WikiaApp' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'registerHook' ) )
 								->getMock();
-		
+
 		$mockTitle		=	$this->getMockBuilder( 'Title' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'getPrefixedText', 'getNamespace', 'getText', 'getFullUrl', 'getTitle' ) )
 								->getMock();
-		
+
 		$mockRequest	=	$this->getMockBuilder( 'RequestContext' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'setVal' ) )
 								->getMock();
-		
+
 		$mockOutput		=	$this->getMockBuilder( 'OutputPage' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'getHTML', 'clearHTML' ) )
 								->getMock();
-		
+
 		$mockContLang	=	$this->getMockBuilder( 'Language' )
 								->disableOriginalConstructor()
 								->getMock();
-		
+
 		$mockFile		=	$this->getMockBuilder( 'File' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'getMetadata', 'getMediaDetail', 'isVideo' ) )
 								->getMock();
-		
+
 		$mockWfs		=	$this->getMock( 'stdClass', array( 'findFile' ) );
-		
+
 		$mockFileHelper	=	$this->getMock( 'WikiaFileHelper', array( 'getMediaDetail', 'isVideoFile' ) );
-		
+
 		$reflectionApp = new ReflectionProperty( 'WikiaSearchIndexer', 'app' );
 		$reflectionApp->setAccessible( true );
 		$reflectionApp->setValue( $mockIndexer, $mockApp );
-		
-		$mockGlobals = array( 
-				'Title'				=>	$mockTitle, 
-				'Request'			=>	$mockRequest, 
-				'Out'				=>	$mockOutput, 
-				'ExternalSharedDB'	=>	true, 
-				'CityId'			=>	123, 
-				'Server'			=>	'http://foo.wikia.com', 
+
+		$mockGlobals = array(
+				'Title'				=>	$mockTitle,
+				'Request'			=>	$mockRequest,
+				'Out'				=>	$mockOutput,
+				'ExternalSharedDB'	=>	true,
+				'CityId'			=>	123,
+				'Server'			=>	'http://foo.wikia.com',
 				'ContLang'			=>	(object) array( 'mCode' => 'en' ),
-				'ContentNamespaces'	=>	array( NS_MAIN, NS_CATEGORY ) 
+				'ContentNamespaces'	=>	array( NS_MAIN, NS_CATEGORY )
 				);
-		
+
 		$mockWfs
 			->expects	( $this->any() )
 			->method	( 'findFile' )
 			->will		( $this->returnValue( $mockFile ) )
 		;
-		
+
 		$reflectionWg = new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
 		$reflectionWg->setAccessible( true );
 		$reflectionWg->setValue( $mockIndexer, (object) $mockGlobals );
-		
+
 		$reflectionWf = new ReflectionProperty( 'WikiaSearchIndexer', 'wf' );
 		$reflectionWf->setAccessible( true );
 		$reflectionWf->setValue( $mockIndexer, (object) $mockWfs );
-		
+
 		$mockArticle
 			->expects	( $this->any() )
 			->method	( 'getTitle' )
@@ -1020,7 +1019,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->with			( $mockFile )
 			->will			( $this->returnValue( 'true' ) )
 		;
-		
+
 		$videoMetadata = array(
 				'description'			=>	'Video of Usher Raymond kickin it',
 				'keywords'				=>	'R&B, awesome, amazing',
@@ -1038,19 +1037,19 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				'genres'				=>	'R&B, Soul, Great music, 90s',
 				'actors'				=>	'Usher Raymond, Lil Jon, Justin Bieber'
 				);
-		
+
 		$mockFile
 			->expects	( $this->once() )
 			->method	( 'getMetadata' )
 			->will		( $this->returnValue( serialize( $videoMetadata ) ) )
 		;
-		
+
 		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
 		$this->mockClass( 'Article', $mockArticle );
 		$this->mockApp();
-		
+
 		$page = $mockIndexer->getPage( 123 );
-		
+
 		$this->assertEquals(
 				'true',
 				$page['video_hd_b'],
@@ -1079,7 +1078,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			);
 		}
 	}
-	
+
 
 	/**
 	 * @covers WikiaSearchIndexer::getPage
@@ -1089,60 +1088,60 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 								->disableOriginalConstructor()
 								->setMethods( array( 'getPageMetaData' ) )
 								->getMock();
-		
+
 		$mockArticle	=	$this->getMockBuilder( 'Article' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'isRedirect', 'getRedirectTarget', 'loadContent', 'render', 'getId', 'getTitle' ) )
 								->getMock();
-		
+
 		$mockApp		=	$this->getMockBuilder( 'WikiaApp' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'registerHook' ) )
 								->getMock();
-		
+
 		$mockTitle		=	$this->getMockBuilder( 'Title' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'getPrefixedText', 'getNamespace', 'getText', 'getFullUrl', 'getTitle' ) )
 								->getMock();
-		
+
 		$mockRequest	=	$this->getMockBuilder( 'RequestContext' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'setVal' ) )
 								->getMock();
-		
+
 		$mockOutput		=	$this->getMockBuilder( 'OutputPage' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'getHTML', 'clearHTML' ) )
 								->getMock();
-		
+
 		$mockContLang	=	$this->getMockBuilder( 'Language' )
 								->disableOriginalConstructor()
 								->getMock();
-		
+
 		$mockWallMsg	=	$this->getMockBuilder( 'WallMessage' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'load', 'isMain', 'getMetaTitle', 'getTopParentObj' ) )
 								->getMock();
-		
+
 		$reflectionApp = new ReflectionProperty( 'WikiaSearchIndexer', 'app' );
 		$reflectionApp->setAccessible( true );
 		$reflectionApp->setValue( $mockIndexer, $mockApp );
-		
-		$mockGlobals = array( 
-				'Title'				=>	$mockTitle, 
-				'Request'			=>	$mockRequest, 
-				'Out'				=>	$mockOutput, 
-				'ExternalSharedDB'	=>	true, 
-				'CityId'			=>	123, 
-				'Server'			=>	'http://foo.wikia.com', 
+
+		$mockGlobals = array(
+				'Title'				=>	$mockTitle,
+				'Request'			=>	$mockRequest,
+				'Out'				=>	$mockOutput,
+				'ExternalSharedDB'	=>	true,
+				'CityId'			=>	123,
+				'Server'			=>	'http://foo.wikia.com',
 				'ContLang'			=>	(object) array( 'mCode' => 'en' ),
-				'ContentNamespaces'	=>	array( NS_MAIN, NS_CATEGORY ) 
+				'ContentNamespaces'	=>	array( NS_MAIN, NS_CATEGORY )
 				);
-		
+
 		$reflectionWg = new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
 		$reflectionWg->setAccessible( true );
 		$reflectionWg->setValue( $mockIndexer, (object) $mockGlobals );
-		
+
 		$mockArticle
 			->expects	( $this->any() )
 			->method	( 'getTitle' )
@@ -1179,21 +1178,21 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method	( 'isMain' )
 			->will		( $this->returnValue( true ) )
 		;
-		
-		
+
+
 		$this->mockClass( 'Article', $mockArticle );
 		$this->mockClass( 'WallMessage', $mockWallMsg );
 		$this->mockApp();
-		
+
 		$page = $mockIndexer->getPage( 123 );
-		
+
 		$this->assertEquals(
 				$commentTitle,
 				$page['title'],
 				"WikiaSearchIndexer::getPage should index the main comment title as the title, not the main comment's page title"
 		);
 	}
-	
+
 
 	/**
 	 * @covers WikiaSearchIndexer::getPage
@@ -1203,60 +1202,60 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 								->disableOriginalConstructor()
 								->setMethods( array( 'getPageMetaData' ) )
 								->getMock();
-		
+
 		$mockArticle	=	$this->getMockBuilder( 'Article' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'isRedirect', 'getRedirectTarget', 'loadContent', 'render', 'getId', 'getTitle' ) )
 								->getMock();
-		
+
 		$mockApp		=	$this->getMockBuilder( 'WikiaApp' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'registerHook' ) )
 								->getMock();
-		
+
 		$mockTitle		=	$this->getMockBuilder( 'Title' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'getPrefixedText', 'getNamespace', 'getText', 'getFullUrl', 'getTitle' ) )
 								->getMock();
-		
+
 		$mockRequest	=	$this->getMockBuilder( 'RequestContext' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'setVal' ) )
 								->getMock();
-		
+
 		$mockOutput		=	$this->getMockBuilder( 'OutputPage' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'getHTML', 'clearHTML' ) )
 								->getMock();
-		
+
 		$mockContLang	=	$this->getMockBuilder( 'Language' )
 								->disableOriginalConstructor()
 								->getMock();
-		
+
 		$mockWallMsg	=	$this->getMockBuilder( 'WallMessage' )
 								->disableOriginalConstructor()
 								->setMethods( array( 'load', 'isMain', 'getMetaTitle', 'getTopParentObj' ) )
 								->getMock();
-		
+
 		$reflectionApp = new ReflectionProperty( 'WikiaSearchIndexer', 'app' );
 		$reflectionApp->setAccessible( true );
 		$reflectionApp->setValue( $mockIndexer, $mockApp );
-		
-		$mockGlobals = array( 
-				'Title'				=>	$mockTitle, 
-				'Request'			=>	$mockRequest, 
-				'Out'				=>	$mockOutput, 
-				'ExternalSharedDB'	=>	true, 
-				'CityId'			=>	123, 
-				'Server'			=>	'http://foo.wikia.com', 
+
+		$mockGlobals = array(
+				'Title'				=>	$mockTitle,
+				'Request'			=>	$mockRequest,
+				'Out'				=>	$mockOutput,
+				'ExternalSharedDB'	=>	true,
+				'CityId'			=>	123,
+				'Server'			=>	'http://foo.wikia.com',
 				'ContLang'			=>	(object) array( 'mCode' => 'en' ),
-				'ContentNamespaces'	=>	array( NS_MAIN, NS_CATEGORY ) 
+				'ContentNamespaces'	=>	array( NS_MAIN, NS_CATEGORY )
 				);
-		
+
 		$reflectionWg = new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
 		$reflectionWg->setAccessible( true );
 		$reflectionWg->setValue( $mockIndexer, (object) $mockGlobals );
-		
+
 		$mockArticle
 			->expects	( $this->any() )
 			->method	( 'getTitle' )
@@ -1298,19 +1297,19 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method	( 'getTopParentObj' )
 			->will		( $this->returnValue( $mockWallMsg ) )
 		;
-		
-		
+
+
 		$this->mockClass( 'Article', $mockArticle );
 		$this->mockClass( 'WallMessage', $mockWallMsg );
 		$this->mockApp();
-		
+
 		$page = $mockIndexer->getPage( 123 );
-		
+
 		$this->assertEquals(
 				$commentTitle,
 				$page['title'],
 				"WikiaSearchIndexer::getPage should index the main comment title as the title, not the child comment's page title"
 		);
 	}
-	
+
 }
