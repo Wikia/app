@@ -1563,7 +1563,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
-	 * @covers WikiaSearchIndexer::deleteWikiDocs
+	 * @covers WikiaSearchIndexer::deleteManyWikiDocs
 	 */
 	public function testDeleteManyWikiDocsWorks()
 	{
@@ -1612,7 +1612,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
-	 * @covers WikiaSearchIndexer::deleteWikiDocs
+	 * @covers WikiaSearchIndexer::deleteManyWikiDocs
 	 */
 	public function testDeleteManyWikiDocsBreaks()
 	{
