@@ -1,6 +1,10 @@
 <?php
 $values = $object->getWrappedValue();
 
+if ( !count( $values ) && ( $context == SD_CONTEXT_SPECIAL ) ):
+	echo '<p class="empty">empty</p>';
+else:
+
 if ( $context == SD_CONTEXT_EDITING ) {
 	echo '<ol data-field-name="'.$object->getName().'">';
 }
@@ -60,3 +64,5 @@ if ( $context == SD_CONTEXT_EDITING ) {
 		}
 	}
 }
+
+endif;
