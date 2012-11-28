@@ -840,17 +840,18 @@ class WallHooksHelper {
 				$wm->load();
 
 				if( !$wm->isMain() ) {
+					$link = $wm->getMessagePageUrl(); 
 					$wm = $wm->getTopParentObj();
-
 					if( is_null($wm) ) {
 						Wikia::log(__METHOD__, false, "WALL_NO_PARENT_MSG_OBJECT " . print_r($rc, true));
 						return true;
 					} else {
 						$wm->load();
 					}
+				} else {
+					$link = $wm->getMessagePageUrl();
 				}
 
-				$link = $wm->getMessagePageUrl();
 				$title = $wm->getMetaTitle();
 				$wallUrl = $wm->getWallPageUrl();
 				$wallOwner = $wm->getWallOwnerName();
@@ -1528,7 +1529,7 @@ class WallHooksHelper {
 			$isThread = $wfMsgOptsBase['isThread'];
 			$isNew = $wfMsgOptsBase['isNew'];
 
-			$wfMsgOptsBase['createdAt'] = Xml::element('a', array('href' => $wfMsgOptsBase['articleUrl']), $app->wg->Lang->timeanddate( $app->wf->Timestamp(TS_MW, $row->rev_timestamp), true) );
+			$wfMsgOptsBase['createdAt'] = Xml::element('a', array('href' => $wfMsgOptsBase['articleFullUrl']), $app->wg->Lang->timeanddate( $app->wf->Timestamp(TS_MW, $row->rev_timestamp), true) );
 
 			if( $isNew ) {
 				$wfMsgOptsBase['DiffLink'] = $app->wf->Msg('diff');
@@ -1568,7 +1569,7 @@ class WallHooksHelper {
 			$ret = $del;
 			if(wfRunHooks('WallContributionsLine', array(MWNamespace::getSubject($row->page_namespace), $wallMessage, $wfMsgOptsBase, &$ret) )) {
 				$wfMsgOpts = array(
-					$wfMsgOptsBase['articleUrl'],
+					$wfMsgOptsBase['articleFullUrl'],
 					$wfMsgOptsBase['articleTitleTxt'],
 					$wfMsgOptsBase['wallPageUrl'],
 					$wfMsgOptsBase['wallPageName'],
@@ -1643,24 +1644,39 @@ class WallHooksHelper {
 		}
 
 		$wm = WallMessage::newFromId( $objTitle->getArticleId() );
-		$wm->load();
-		
 		if( empty($wm) ) {
 			//it can be media wiki deletion of an article -- we ignore them
 			Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r(array($rc, $row), true));
 			wfProfileOut(__METHOD__);
 			return true;
 		}
-		
+
+		$wm->load();
+		if(!$wm->isMain()) {
+			$wmw = $wm->getTopParentObj();
+			$wmw->load();
+
+		}
+
 		$articleId = $wm->getId();
 		$wallOwnerName = $wm->getArticleTitle()->getText();
-		$articleTitleTxt =  $wm->getMetaTitle();
+		
+		if(!empty($wmw)) {
+			$articleTitleTxt =  $wmw->getMetaTitle();
+			$articleId = $wmw->getId();
+		} else {
+			$articleTitleTxt = $wm->getMetaTitle();
+			$articleId = $wm->getId();
+		}
+		
+		$title = Title::newFromText($articleId, NS_USER_WALL_MESSAGE);
 
 		$out = array(
-			'articleUrl' => $wm->getMessagePageUrl(),
+			'articleUrl' => $title->getPrefixedText(),
+			'articleFullUrl' => $wm->getMessagePageUrl(),
 			'articleTitleVal' => $articleTitleTxt,
 			'articleTitleTxt' => empty($articleTitleTxt) ? wfMsg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
-			'wallPageUrl' => $wm->getArticleTitle()->getFullUrl(),
+			'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
 			'wallPageName' => $wm->getArticleTitle()->getText(),
 			'actionUser' => $userText,
 			'isThread' => $wm->isMain(),
