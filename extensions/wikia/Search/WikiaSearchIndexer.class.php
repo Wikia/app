@@ -21,6 +21,12 @@ class WikiaSearchIndexer extends WikiaObject {
 	protected $parserHookActive	= false;
 	
 	/**
+	 * Used for querying Solr
+	 * @var Solarium_Client
+	 */
+	protected $client;
+	
+	/**
 	 * Handles dependency injection for solarium client
 	 * @param Solarium_Client $client
 	 */
