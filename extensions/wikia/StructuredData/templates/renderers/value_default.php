@@ -5,9 +5,9 @@
 			<textarea name="<?=$object->getPropertyName();?>"><?=$value;?></textarea>
 		<?php elseif ($object->getPropertyName() == 'schema:name' && $params['isCreateMode'] === false) : ?>
 			<?= $object->getValue();?>
-			<input type="hidden" value="<?=$value;?>" name="<?=$object->getPropertyName();?>" />
+			<input type="hidden" value="<?=$value;?>" name="<?php echo isset($params['fieldName']) ? $params['fieldName'] : $object->getPropertyName() ;?>" />
 		<?php elseif ( !is_object( $value ) ) : ?>
-			<input type="text" value="<?=$value;?>" name="<?=$object->getPropertyName();?>" />
+			<input type="text" value="<?=$value;?>" name="<?php echo isset($params['fieldName']) ? $params['fieldName'] : $object->getPropertyName() ;?>" />
 		<?php elseif ( isset( $value->id ) && ( !empty( $value->id ) ) ) : ?>
 			<input type="hidden" name="<?=$params['fieldName'];?>" value="<?=$value->id;?>" />
 		<?php endif; ?>
