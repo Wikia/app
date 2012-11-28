@@ -6,7 +6,7 @@ class SDTypeHandlerAnyType extends SDTypeHandler {
 
 	public function handleSaveData( array $data ) {
 
-		if ( empty( $data['schema:url'] ) ) {
+		if ( empty( $data['schema:name'] ) ) {
 			$this->addError( 'schema:name', wfMsg('name-can-not-be-empty') );
 		}
 
