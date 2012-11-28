@@ -47,7 +47,7 @@ $app->registerSpecialPage('Search',			'WikiaSearchController');
  */
 $app->registerApiController( 'SearchApiController', "{$dir}SearchApiController.class.php" );
 
-global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB, $wgEnableRelatedVideoSearch;
+global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB, $wgEnableRelatedVideoSearch, $wgSolrMaster;
 
 if (! empty( $wgEnableRelatedVideoSearch ) ) {
 	$app->registerSpecialPage('VideoSearch',	'WikiaVideoSearchController');
@@ -76,12 +76,9 @@ $solariumConfig = array(
 		)
 );
 
-//@todo configs for this?
-$searchMaster = $wgExternalSharedDB ? 'search-s6' : 'staff-search-s1';
-
 $indexerSolariumConfig = array(
 		'adapteroptions'	=> array(
-			'host' => $searchMaster,
+			'host' => $wgSolrMaster,
 			'port' => 8983,
 			'path' => '/solr/',
 		)
