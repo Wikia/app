@@ -1643,24 +1643,38 @@ class WallHooksHelper {
 		}
 
 		$wm = WallMessage::newFromId( $objTitle->getArticleId() );
-		$wm->load();
-		
 		if( empty($wm) ) {
 			//it can be media wiki deletion of an article -- we ignore them
 			Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r(array($rc, $row), true));
 			wfProfileOut(__METHOD__);
 			return true;
 		}
-		
+
+		$wm->load();
+		if(!$wm->isMain()) {
+			$wmw = $wm->getTopParentObj();
+			$wmw->load();
+
+		}
+
 		$articleId = $wm->getId();
 		$wallOwnerName = $wm->getArticleTitle()->getText();
-		$articleTitleTxt =  $wm->getMetaTitle();
+		
+		if(!empty($wmw)) {
+			$articleTitleTxt =  $wmw->getMetaTitle();
+			$articleId = $wmw->getId();
+		} else { 
+			$articleTitleTxt = $wm->getMetaTitle();
+			$articleId = $wm->getId();	
+		}
+		
+		$title = Title::newFromText($articleId, NS_USER_WALL_MESSAGE);
 
 		$out = array(
-			'articleUrl' => $wm->getMessagePageUrl(),
+			'articleUrl' => $title->getPrefixedText(),
 			'articleTitleVal' => $articleTitleTxt,
 			'articleTitleTxt' => empty($articleTitleTxt) ? wfMsg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
-			'wallPageUrl' => $wm->getArticleTitle()->getFullUrl(),
+			'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
 			'wallPageName' => $wm->getArticleTitle()->getText(),
 			'actionUser' => $userText,
 			'isThread' => $wm->isMain(),

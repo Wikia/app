@@ -1383,6 +1383,6 @@ class WallMessage {
 	}
 	
 	public function canMove(User $user) {
-		return ( $this->isMain() && !$this->isRemove() && $this->can($user, 'wallmessagemove'));
+		return ( $this->isMain() && !$this->isRemove() && $this->can($user, 'wallmessagemove') && in_array(MWNamespace::getSubject($this->title->getNamespace()), F::App()->wg->WallTopicsNS) );
 	}
 }
