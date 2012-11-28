@@ -7,10 +7,13 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 .CategorySelect.articlePage {
 	@include clear-linear-gradient();
 	line-height: normal;
-	padding-bottom: 5px;
+	padding: 0;
 	position: relative;
 
-	// Show hidden categories if user chooses to see them
+	&.modified .toolbar {
+		display: block;
+	}
+
 	&.showHidden .category.hidden {
 		display: block;
 	}
@@ -20,12 +23,10 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 		background-color: transparent;
 		color: $color-text;
 		outline: none;
-		width: 100px;
+		width: 245px;
 
 		&:focus {
 			background-color: $categoryselect-color-category;
-			border: 1px solid $color-page-border;
-			width: 245px;
 		}
 	}
 
@@ -66,9 +67,17 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 				display: inline-block;
 			}
 		}
+
+		.toolbar {
+			display: none;
+		}
 	}
 
-	.container {
+	.padded {
+		padding: 10px 10px 5px 10px;
+	}
+
+	.shifted {
 		@include clearfix;
 		margin-left: 72px;
 	}
@@ -79,8 +88,16 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 		margin-left: 5px;
 	}
 
-	.toolbar {
+	> .toolbar {
+		background-color: $categoryselect-color-category;
+		border-top: 1px solid $color-page-border;
 		display: none;
+		padding: 5px 10px;
+		text-align: right;
+
+		.wikia-button {
+			margin-left: 5px;
+		}
 	}
 }
 

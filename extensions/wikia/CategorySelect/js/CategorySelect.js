@@ -14,13 +14,32 @@ var action = window.wgAction,
 var CategorySelect = function( categories ) {
 	var i, length;
 
-	this.categories = [];
+	// Protect against calling without the 'new' operator
+	if ( !( this instanceof CategorySelect ) ) {
+		return new CategorySelect( categories );
+	}
+
+	this.state = {};
+	this.state.categories = [];
 
 	if ( $.isArray( categories ) ) {
 		for ( i = 0, length = categories.length; i < length; i++ ) {
-			this.categories.push( this.makeCategory( categories[ i ] ) );
+			this.state.categories.push( this.makeCategory( categories[ i ] ) );
 		}
 	}
+
+	this.state.length = this.state.categories.length;
+
+	/**
+	 * Resets categories back to what they were on instantiation.
+	 *
+	 * @returns	{Number}
+	 *			The new length of the categories array.
+	 */
+	this.reset = function() {
+		this.state.categories = categories;
+		return this.state.length = categories.length;
+	};
 };
 
 /**
@@ -29,10 +48,20 @@ var CategorySelect = function( categories ) {
  * @param	{String|Object} category
  *			The name of a category or an object with category properties.
  * @returns	{Number}
- *			The index of the added category.
+ *			The index of the added category, or -1 if the category could not be added.
  */
 CategorySelect.prototype.addCategory = function( category ) {
-	return ( this.categories.push( this.makeCategory( category ) ) - 1 );
+	var index = -1;
+
+	category = this.makeCategory( category );
+
+	// TODO: add duplicate checking here
+	if ( category != null ) {
+		index = this.state.categories.push( category ) - 1;
+		this.state.length++;
+	}
+
+	return index;
 };
 
 /**
@@ -46,7 +75,13 @@ CategorySelect.prototype.addCategory = function( category ) {
 CategorySelect.prototype.editCategory = function( category, value ) {
 	var index = this.indexOf( category );
 
-	return index >= 0 ? ( this.categories[ index ] = this.makeCategory( value ) ) : null;
+	category = null;
+
+	if ( index >= 0 ) {
+		category = this.state.categories[ index ] = this.makeCategory( value );
+	}
+
+	return category;
 };
 
 /**
@@ -60,7 +95,13 @@ CategorySelect.prototype.editCategory = function( category, value ) {
 CategorySelect.prototype.getCategory = function( category ) {
 	var index = this.indexOf( category );
 
-	return index >= 0 ? this.categories[ index ] : null;
+	category = null;
+
+	if ( index >= 0 ) {
+		category = this.state.categories[ index ];
+	}
+
+	return category;
 };
 
 /**
@@ -75,11 +116,11 @@ CategorySelect.prototype.indexOf = function( category ) {
 	var i, length, obj,
 		index = parseInt( category );
 
-	if ( isNaN( index ) || this.categories[ index ] === undefined ) {
+	if ( isNaN( index ) || this.state.categories[ index ] === undefined ) {
 		index = -1;
 
-		for ( i = 0, length = this.categories.length; i < length; i++ ) {
-			if ( ( obj = categories[ i ] ) && obj.name == category ) {
+		for ( i = 0, length = this.state.categories.length; i < length; i++ ) {
+			if ( ( obj = this.state.categories[ i ] ) && obj.name == category ) {
 				index = i;
 				break;
 			}
@@ -99,7 +140,7 @@ CategorySelect.prototype.isDuplicate = function( category ) {
  * @param	{Object|String} category
  *			The name of a category or an object with category properties.
  * @returns {Object}
- *			The normalized category.
+ *			The normalized category, or null if an invalid category was provided.
  */
 CategorySelect.prototype.makeCategory = (function() {
 	var properties = [ 'name', 'namespace', 'sortKey' ],
@@ -127,21 +168,28 @@ CategorySelect.prototype.makeCategory = (function() {
 			category = base;
 		}
 
-		// Get rid of unecessary properties
-		for ( prop in category ) {
-			if ( $.inArray( prop, properties ) < 0 ) {
-				delete category[ prop ];
+		// Must have a name to be valid
+		if ( !category.name ) {
+			category = null;
+
+		} else {
+
+			// Get rid of unecessary properties
+			for ( prop in category ) {
+				if ( $.inArray( prop, properties ) < 0 ) {
+					delete category[ prop ];
+				}
 			}
-		}
 
-		// Extract more information if name is a wikilink
-		if ( ( pieces = rCategory.exec( category.name ) ) ) {
-			category.namespace = pieces[ 1 ];
-			category.name = pieces[ 2 ];
+			// Extract more information if name is a wikilink
+			if ( ( pieces = rCategory.exec( category.name ) ) ) {
+				category.namespace = pieces[ 1 ];
+				category.name = pieces[ 2 ];
 
-			// SortKey is optional
-			if ( pieces[ 3 ] != undefined ) {
-				category.sortKey = pieces[ 3 ];
+				// SortKey is optional
+				if ( pieces[ 3 ] != undefined ) {
+					category.sortKey = pieces[ 3 ];
+				}
 			}
 		}
 
@@ -161,7 +209,14 @@ CategorySelect.prototype.makeCategory = (function() {
 CategorySelect.prototype.removeCategory = function( category ) {
 	var index = this.indexOf( category );
 
-	return index >= 0 ? this.categories.splice( index, 1, null ) : null;
+	category = null;
+
+	if ( index >= 0 ) {
+		category = this.state.categories.splice( index, 1, null );
+		this.state.length--;
+	}
+
+	return category;
 };
 
 /**
@@ -251,7 +306,7 @@ $.fn.categorySelect = (function() {
 				categorySelect = new CategorySelect( options.data );
 
 			function addCategory( event, ui ) {
-				var data = {},
+				var category, index,
 					$input = $( this ),
 					value = ui != undefined ? ui.item.value : $input.val();
 
@@ -266,20 +321,22 @@ $.fn.categorySelect = (function() {
 
 					// Make sure value isn't empty
 					if ( value != undefined && value != '' ) {
-						data.category = categorySelect.makeCategory( value );
-						data.index = categorySelect.addCategory( data.category );
-						data.categories = categorySelect.categories;
+						category = categorySelect.makeCategory( value );
+						index = categorySelect.addCategory( category );
 
 						$.when( getTemplate( 'category' ) ).done(function( template ) {
+							template.data.category = category;
+							template.data.index = index;
 
-							// Let the implementation handle it from here
 							notifyListeners( 'add', {
-								element: $( options.categories ),
-								template: $.extend( true, template, { data: data } )
+								category: category,
+								element: $categories,
+								index: index,
+								template: template
 							});
-						});
 
-						notifyListeners( 'update', data );
+							notifyListeners( 'update' );
+						});
 
 						// Clear out the input
 						$input.val( '' );
@@ -294,13 +351,11 @@ $.fn.categorySelect = (function() {
 					category = categorySelect.getCategory( index );
 
 				$.when( getTemplate( 'categoryEdit' ) ).done(function( template ) {
-					$modal = $.showCustomModal( cache.messages.categoryEdit, Mustache.render( template.content, $.extend( true, template.data, {
-						category: category,
-						index: index,
-						messages: {
-							sortKey: $.msg( 'categoryselect-modal-category-sortkey', category.name )
-						}
-					})), {
+					template.data.category = category;
+					template.data.index = index;
+					template.data.messages.sortKey = $.msg( 'categoryselect-modal-category-sortkey', category.name );
+
+					$modal = $.showCustomModal( cache.messages.categoryEdit, Mustache.render( template.content, template.data ), {
 						buttons: [
 							{
 								id: 'CategorySelectEditModalSave',
@@ -324,11 +379,13 @@ $.fn.categorySelect = (function() {
 									// Update DOM
 									$category.find( '.name' ).text( category.name );
 
-									notifyListeners( 'update', {
-										index: index,
+									notifyListeners( 'edit', {
 										category: category,
-										categories: categorySelect.categories
+										element: $category,
+										index: index
 									});
+
+									notifyListeners( 'update' );
 
 									$modal.closeModal();
 								}
@@ -341,21 +398,26 @@ $.fn.categorySelect = (function() {
 			}
 
 			function notifyListeners( eventType, data ) {
-				$element.trigger( eventType + '.' + namespace , data );
+				$element.triggerHandler( eventType + '.' + namespace , [ categorySelect.state ].concat( data ) );
 			}
 
 			function removeCategory( event ) {
 				var $category = $( this ).closest( options.category ),
-					index = $category.data( 'index' ),
-					category = categorySelect.removeCategory( index ),
-					data = {
-						category: category,
-						categories: categorySelect.categories,
-						index: index
-					};
+					index = $category.data( 'index' );
 
-				notifyListeners( 'remove', $.extend( true, data, { element: $category } ) );
-				notifyListeners( 'update', data );
+				notifyListeners( 'remove', {
+					category: categorySelect.removeCategory( index ),
+					element: $category,
+					index: index
+				});
+
+				notifyListeners( 'update' );
+			}
+
+			function reset( event ) {
+				categorySelect.reset();
+
+				notifyListeners( 'update' );
 			}
 
 			function setupAutocomplete( event ) {
@@ -378,7 +440,8 @@ $.fn.categorySelect = (function() {
 				.off( '.' + namespace )
 				.on( 'click.' + namespace, options.editCategory, editCategory )
 				.on( 'click.' + namespace, options.removeCategory, removeCategory )
-				.on( 'keypress.' + namespace, options.addCategory, addCategory );
+				.on( 'keypress.' + namespace, options.addCategory, addCategory )
+				.on( 'reset.' + namespace, reset );
 
 			// Setup autocomplete immediately if initialization was from focus on addCategory
 			if ( options.event && options.event.type == 'focusin' && $( options.event.currentTarget ).is( options.addCategory ) ) {

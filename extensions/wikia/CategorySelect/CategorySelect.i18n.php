@@ -21,6 +21,8 @@ $messages = array();
 
 $messages[ 'en' ] = array(
 	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article',
+	'categoryselect-button-cancel' => 'Cancel',
+	'categoryselect-button-save' => 'Save',
 	'categoryselect-category-add' => 'Add category...',
 	'categoryselect-category-edit' => 'Edit category',
 	'categoryselect-category-remove' => 'Remove category',
@@ -31,14 +33,10 @@ $messages[ 'en' ] = array(
 	'categoryselect-modal-button-save' => 'Save',
 	'categoryselect-modal-category-name-empty' => 'Please provide a category name.',
 
-/*
-	'categoryselect-addcategory-button' => 'Add category',
-	'categoryselect-suggest-hint' => 'Press Enter when done',
-	'categoryselect-tooltip' => "'''New!''' Category tagging toolbar. Try it out or see [[Help:CategorySelect|help]] to learn more",
+/*	UNUSED
 	'categoryselect-unhandled-syntax' => 'Unhandled syntax detected - switching back to visual mode impossible.',
 	'categoryselect-edit-summary' => 'Adding categories',
 	'categoryselect-empty-name' => 'Provide category name (part before |)',
-	'categoryselect-button-cancel' => 'Cancel',
 	'categoryselect-error-user-rights' => 'User rights error.',
 	'categoryselect-edit-abort' => 'The modification you tried to make was aborted by an extension hook',
 */

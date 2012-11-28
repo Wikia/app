@@ -9,49 +9,53 @@
 
 	$(function() {
 		var articleId = window.wgArticleId,
+			categoryPrefix = wgCategorySelect.defaultNamespace + wgCategorySelect.defaultSeparator,
+			namespace = 'categorySelect',
+			originalLength = wgCategorySelect.categories.length,
 			$wrapper = $( '#WikiaArticleCategories' ),
-			$categories = $wrapper.find( '.categories' ),
-			categoryPrefix = wgCategorySelect.defaultNamespace + wgCategorySelect.defaultSeparator;
+			$categories = $wrapper.find( '.categories' );
+
+		function cancel( event ) {
+			$wrapper.removeClass( 'modified' ).trigger( 'reset' );
+			$categories.find( '.new' ).remove();
+		}
 
 		function initialize( event ) {
-			var dfd = new $.Deferred();
-
 			$.when(
 				mw.loader.use( 'jquery.ui.autocomplete' ),
 				$.getResources([
 					wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js',
 					wgResourceBasePath + '/resources/wikia/libraries/mustache/mustache.js'
 				])
+
 			).done(function() {
-				var options = {
-					data: wgCategorySelect.categories
-				};
+				$wrapper.categorySelect({
+					data: wgCategorySelect.categories,
+					event: event
+				})
+				.on( 'add.' + namespace, function( event, state, data ) {
+					var category = data.template.data.category;
 
-				if ( event ) {
-					options.event = event;
-				}
+					category.link = mw.util.wikiGetlink( categoryPrefix + category.name );
+					data.element.append( Mustache.render( data.template.content, data.template.data ) );
 
-				$wrapper.categorySelect( options )
-					.on( 'add.categorySelect', function( event, data ) {
-						var category = data.template.data.category;
+				}).on( 'remove.' + namespace, function( event, state, data ) {
+					data.element.remove();
 
-						category.link = mw.util.wikiGetlink( categoryPrefix + category.name );
-						data.element.append( Mustache.render( data.template.content, data.template.data ) );
-
-					}).on( 'remove.categorySelect', function( event, data ) {
-						data.element.remove();
-					});
-
-				dfd.resolve();
+				}).on( 'update.' + namespace, function( event, state ) {
+					$wrapper.toggleClass( 'modified', state.length != originalLength );
+				});
 			});
-
-			return dfd.promise();
 		}
 
-		function saveCategories( event, data ) {
+		function save( event, data ) {
 
 		}
 
-		$wrapper.one( 'focus', '.addCategory', initialize );
+		// Listeners
+		$wrapper
+			.on( 'click', '.cancel', cancel )
+			.on( 'click', '.save', save )
+			.one( 'focus', '.addCategory', initialize );
 	});
 })( this, jQuery );

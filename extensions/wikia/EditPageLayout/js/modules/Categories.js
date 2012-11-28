@@ -16,7 +16,8 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 
 	afterAttach: function() {
 		var $categories = $( '#categories' ),
-			$categorySelect = $( '#CategorySelect' );
+			$categorySelect = $( '#CategorySelect' ),
+			namespace = 'categorySelect';
 
 		// Move #CategorySelect to the right rail
 		this.el.replaceWith( $categorySelect );
@@ -28,10 +29,10 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 		$categorySelect.categorySelect({
 			data: JSON.parse( $categories.val() )
 
-		}).on( 'add.categorySelect', function( event, data ) {
+		}).on( 'add.' + namespace, function( event, state, data ) {
 			data.element.prepend( Mustache.render( data.template.content, data.template.data ) );
 
-		}).on( 'remove.categorySelect', function( event, data ) {
+		}).on( 'remove.' + namespace, function( event, state, data ) {
 			data.element.animate({
 				opacity: 0,
 				height: 0
@@ -40,8 +41,9 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 				data.element.remove();
 			});
 
-		}).on( 'update.categorySelect', function( event, data ) {
-			$categories.val( JSON.stringify( data.categories ) );
+		}).on( 'update.' + namespace, function( event, state ) {
+			$categories.val( JSON.stringify( state.categories ) );
+
 		});
 	}
 });
