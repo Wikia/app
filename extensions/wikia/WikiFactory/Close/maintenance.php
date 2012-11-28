@@ -49,7 +49,7 @@ class CloseWikiMaintenance {
 	 * @access public
 	 */
 	public function execute() {
-		global $wgUploadDirectory, $wgDBname, $wgSolrIndexer, $IP;
+		global $wgUploadDirectory, $wgDBname, $IP;
 
 		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
 		$sleep     = isset( $this->mOptions[ "sleep" ] ) ? $this->mOptions[ "sleep" ] : 1;
@@ -285,12 +285,9 @@ class CloseWikiMaintenance {
 					/**
 					 * update search index
 					 */
-					$cmd = sprintf(
-						"curl %s -H \"Content-Type: text/xml\" --data-binary '<delete><query>wid:%d</query></delete>' > /dev/null 2> /dev/null",
-						$wgSolrIndexer, $row->city_id
-					);
-					wfShellExec( $cmd, $retval );
-					$this->log( "search index removed from {$wgSolrIndexer}" );
+					$indexer = F::build( 'WikiaSearchIndexer' );
+					$indexer->deleteWikiDocs( $row->city_id );
+					$this->log( "Wiki documents removed from index" );
 
 					/**
 					 * there is nothing to set because row in city_list doesn't
