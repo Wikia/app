@@ -7,7 +7,7 @@
 
 $dir = dirname(__FILE__) . '/';
 /* @var $app WikiaApp */
-$app = F::build('App');
+$app = F::app();
 
 /**
  * classes
