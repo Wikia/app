@@ -317,6 +317,27 @@ class WikiaSearchIndexer extends WikiaObject {
 			F::build( 'Wikia' )->Log( __METHOD__, 'Delete: '.$query, $e);
 		}
 	}
+
+	/**
+	 * Deletes all documents containing one of the provided wiki IDs
+	 * Used in the handle-closed-wikis maintenance script
+	 * Careful, this will alter our index!
+	 * @param  array $wids
+	 * @return Solarium_Result|null
+	 */
+	public function deleteManyWikiDocs( $wids ) {
+		$updateHandler = $this->client->createUpdate();
+		foreach ( $wids as $wid ) {
+			$query = WikiaSearch::valueForField( 'wid', $wid );
+			$updateHandler->addDeleteQuery( $query );
+		}
+		$updateHandler->addCommit();
+		try {
+			return $this->client->update( $updateHandler );
+		} catch ( Exception $e ) {
+			F::build( 'Wikia' )->Log( __METHOD__, 'Delete: '.$query, $e);
+		}
+	}
 	
 	/**
 	 * Given a set of page IDs, deletes by query
