@@ -785,6 +785,38 @@ ve.init.mw.ViewPageTarget.prototype.restoreScrollPosition = function () {
 	}
 };
 
+/**
+ * Handles failed DOM load event.
+ *
+ * @method
+ * @param {Object} data HTTP Response object
+ * @param {String} status Text status message
+ * @param {Mixed} error Thrown exception or HTTP error string
+ */
+ve.init.mw.ViewPageTarget.prototype.onLoadError = function ( response, status ) {
+	if ( confirm( ve.msg( 'visualeditor-loadwarning', status ) ) ) {
+		this.load();
+	} else {
+		this.activating = false;
+		this.hideSpinner();
+		this.showTableOfContents();
+		this.showPageContent();
+		$('.oasis-interface-shield').remove();
+		$( '#WikiHeader, #WikiaPageHeader, #WikiaRail' ).fadeTo( 'fast', 1 );
+		this.$fakeToolbar.remove();
+		this.$fakeToolbar = null;
+	}
+};
+
+/**
+ * Hides the loading spinner.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.hideSpinner = function () {
+	// Not implemented yet
+};
+
 /* Initialization */
 
 ve.init.mw.targets.push( new ve.init.mw.ViewPageTarget() );
