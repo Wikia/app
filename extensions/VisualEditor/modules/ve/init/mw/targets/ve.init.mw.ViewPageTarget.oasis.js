@@ -220,6 +220,7 @@ ve.init.mw.ViewPageTarget.prototype.activate = function () {
 		this.$fakeToolbar = $( '<div class="ve-init-mw-viewPageTarget-fakeToolbar"></div>' );
 		this.$fakeToolbar.prependTo( '#WikiaArticle' );
 		this.$fakeToolbar.slideDown();
+		this.$fakeToolbar.startThrobbing();
 
 		$.getResources($.getSassCommonURL('/extensions/VisualEditor/modules/ve/init/mw/styles/ve.init.mw.ViewPageTarget-oasis.scss'));
 
@@ -531,6 +532,7 @@ ve.init.mw.ViewPageTarget.prototype.disableToolbarSaveButton = function () {
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogSaveButtonClick = function () {
 	this.lockSaveDialogSaveButton();
 	//this.$saveDialogLoadingIcon.show();
+	this.$saveDialog.startThrobbing();
 	this.save(
 		ve.dm.converter.getDomFromData( this.surface.getDocumentModel().getFullData() ),
 		{
@@ -605,7 +607,7 @@ ve.init.mw.ViewPageTarget.prototype.onSave = function ( html ) {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.hideSaveDialog = function () {
-	this.$saveDialog.fadeOut( 'fast' );
+	this.$saveDialog.fadeOut( 'fast' ).stopThrobbing();
 	this.$document.focus();
 	$( document ).off( 'keydown' );
 };
