@@ -96,6 +96,34 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$searchConfig->setResults( $searchConfig->getResults()->toNestedArray() );
 		}
 		
+		$filters = $this->getVal('filters');
+
+		if(!is_array($filters)) {
+			$filters = array();
+		}
+		
+		$tabsTemplateVars = array(
+			'config' => 		$searchConfig,
+			'is_video_wiki' => 	$this->wg->cityId == WikiaSearch::VIDEO_WIKI_ID,
+			'form' => 			array(
+				'no_filter' => 			$this->getVal('no_filter', false),
+				'by_category' => 		$this->getVal('by_category', false),
+				'cat_videogames' => 	in_array('cat_videogames', $filters) ? true : false,
+				'cat_entertainment' => 	in_array('cat_entertainment', $filters) ? true : false,
+				'cat_lifestyle' => 		in_array('cat_lifestyle', $filters) ? true : false,
+				'is_hd' => 				in_array('is_hd', $filters) ? true : false,
+				'is_image' => 			in_array('is_image', $filters) ? true : false,
+				'is_video' => 			in_array('is_video', $filters) ? true : false,
+				'sort_default' => 		$this->getVal('rank') == 'default',
+				'sort_longest' => 		$this->getVal('rank') == 'longest',
+				'sort_newest' => 		$this->getVal('rank') == 'newest',
+			)
+		);
+		
+		if( empty( $tabsTemplateVars['form']['is_image'] ) && empty( $tabsTemplateVars['form']['is_video'] ) ) {
+			$tabsTemplateVars['form']['no_filter'] = true;
+		}
+
 		$this->setVal( 'results',				$searchConfig->getResults() );
 		$this->setVal( 'resultsFound',			$searchConfig->getResultsFound() );
 		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $searchConfig->getTruncatedResultsNum() ) );
@@ -103,7 +131,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'pagesCount', 			$searchConfig->getNumPages() );
 		$this->setVal( 'currentPage', 			$searchConfig->getPage() ); 
 		$this->setVal( 'paginationLinks',		$this->sendSelfRequest( 'pagination',  array('config' => $searchConfig) ) ); 
-		$this->setVal( 'tabs', 					$this->sendSelfRequest( 'tabs', array( 'config' => $searchConfig ) ) );
+		$this->setVal( 'tabs', 					$this->sendSelfRequest( 'tabs', $tabsTemplateVars ) );
 		$this->setVal( 'query',					$searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED ) );
 		$this->setVal( 'resultsPerPage',		$searchConfig->getLimit() );
 		$this->setVal( 'pageUrl',				$this->wg->Title->getFullUrl() );
@@ -388,14 +416,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	public function tabs() {
 		$config = $this->getVal('config', false);
+		
 		if (! $config || (! $config instanceOf WikiaSearchConfig ) ) {
 		    throw new Exception("This should not be called outside of self-request context.");
 		}
-		
+
 		$this->setVal( 'bareterm', 			$config->getQuery( WikiaSearchConfig::QUERY_RAW ) );
 		$this->setVal( 'searchProfiles', 	$config->getSearchProfiles() );
 		$this->setVal( 'redirs', 			$config->getIncludeRedirects() );
 		$this->setVal( 'activeTab', 		$config->getActiveTab() );
+		$this->setVal( 'form',				$this->getVal('form') );
+		$this->setVal( 'is_video_wiki',		$this->getVal('is_video_wiki') );
 	}
 
 	/**

@@ -14,27 +14,41 @@
 				'params' => isset( $profile['parameters'] ) ? $profile['parameters'] + array('fulltext'=>'Search') : array('fulltext'=>'Search') ) );
 			?>
 			<? if( $activeTab == $profileId && $profile['namespaces'][0] == '6' ) { ?>
-				<div class="search-filter-sort">
+<!-- TODO: Move below to new template ? -->
+
+				<div class="search-filter-sort" id="file-search-filter-sort">
 					<p><?= wfMessage('wikiasearch-filter-options-label') ?>:</p>
-					<ul>
-						<li><input type="checkbox" /><?= wfMessage('wikiasearch-filter-all') ?></li>
+					<ul class="search-sort">
 						<li>
-							<input type="checkbox" /><?= wfMessage('wikiasearch-filter-category') ?>
-							<select name="filter[]">
-								<option value="cat_videogames"><?= wfMessage('hub-Gaming') ?></option>
-								<option value="cat_entertainment"><?= wfMessage('hub-Entertainment') ?></option>
-								<option value="cat_lifestyle"><?= wfMessage('hub-Lifestyle') ?></option>
-							</select>
+							<label><input type="radio" name="filters[]" value="no_filter" <? if($form['no_filter']){ ?>checked<? } ?> /><?= wfMessage('wikiasearch-filter-all') ?></label>
 						</li>
-						<li><input type="checkbox" name="filter[]" value="is_hd" /><?= wfMessage('wikiasearch-filter-hd') ?></li>
-						<li><input type="checkbox" name="filter[]" value="is_photo" /><?= wfMessage('wikiasearch-filter-photos') ?></li>
-						<li><input type="checkbox" name="filter[]" value="is_video" /><?= wfMessage('wikiasearch-filter-videos') ?></li>
+						<li>
+							<label><input type="radio" name="filters[]" value="is_image" <? if($form['is_image']){ ?>checked<? } ?> /><?= wfMessage('wikiasearch-filter-photos') ?></label>
+						</li>
+						<li>
+							<label><input type="radio" name="filters[]" value="is_video" <? if($form['is_video']){ ?>checked<? } ?> id="filter-is-video" /><?= wfMessage('wikiasearch-filter-videos') ?></label>
+							<ul class="video-filters <? if(!$form['is_video']){ ?>hidden <? } ?>">
+								<li>
+									<label><input type="checkbox" name="filters[]" value="is_hd" <? if($form['is_hd']){ ?>checked<? } ?> /><?= wfMessage('wikiasearch-filter-hd') ?></label>
+								</li>
+								<? if($is_video_wiki) { ?>
+									<li>
+										<label><input type="checkbox" name="by_category" value="1" <? if($form['by_category']){ ?>checked<? } ?> id="filter-by-category" /><?= wfMessage('wikiasearch-filter-category') ?></label>
+										<select name="filters[]" <? if(!$form['by_category']){ ?>disabled<? } ?>>
+											<option value="cat_videogames" <? if($form['cat_videogames']){ ?>selected<? } ?>><?= wfMessage('hub-Gaming') ?></option>
+											<option value="cat_entertainment" <? if($form['cat_entertainment']){ ?>selected<? } ?>><?= wfMessage('hub-Entertainment') ?></option>
+											<option value="cat_lifestyle" <? if($form['cat_lifestyle']){ ?>selected<? } ?>><?= wfMessage('hub-Lifestyle') ?></option>
+										</select>
+									</li>
+								<? } ?>
+							</ul>
+						</li>
 					</ul>
 					<p><?= wfMessage('wikiasearch-sort-options-label') ?>:</p>
-					<select>
-						<option><?= wfMessage('wikiasearch-sort-relevancy') ?></option>
-						<option><?= wfMessage('wikiasearch-sort-publish-date') ?></option>
-						<option><?= wfMessage('wikiasearch-sort-duration') ?></option>
+					<select name="rank">
+						<option value="default" <? if($form['sort_default']){ ?>selected<? } ?>><?= wfMessage('wikiasearch-sort-relevancy') ?></option>
+						<option value="newest" <? if($form['sort_newest']){ ?>selected<? } ?>><?= wfMessage('wikiasearch-sort-publish-date') ?></option>
+						<option value="longest" <? if($form['sort_longest']){ ?>selected<? } ?>><?= wfMessage('wikiasearch-sort-duration') ?></option>
 					</select>
 					
 				</div>
