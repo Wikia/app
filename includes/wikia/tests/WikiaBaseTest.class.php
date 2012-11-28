@@ -45,6 +45,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		}
 		$this->unsetClassInstances();
 		unset_new_overload();
+		WikiaMockProxy::cleanup();
 	}
 
 	// TODO: remove mockClass after fixing remaining unit tests
@@ -60,17 +61,17 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * Example call:
 	 * 	$this->proxyClass('Article', $mockArticle);
 	 *  $this->proxyClass('Title', $mockTitle, 'newFromText');
-	 * TODO: make override_static_constructor an array so you can override both newFromText and newFromID (for example)
+	 * TODO: make param for functionName an array so you can override both newFromText and newFromID (for example)
 	 * @param $className String
 	 * @param $mock Object instance of Mock
-	 * @param $override_static_constructor String name of static constructor
+	 * @param $functionName String name of static constructor
 	 * @return void
 	 */
-	protected function proxyClass($className, $mock, $override_static_constructor = null) {
+	protected function proxyClass($className, $mock, $functionName = null) {
 		$mockClassName = get_class($mock);
 		WikiaMockProxy::proxy($className, $mockClassName, $mock);
-		if ($override_static_constructor) {
-			runkit_method_redefine("$className", "$override_static_constructor", '', 'return WikiaMockProxy::$instances["'.$className.'"];', RUNKIT_ACC_PUBLIC | RUNKIT_ACC_STATIC );
+		if ($functionName) {
+			WikiaMockProxy::redefineStaticConstructor($className, $functionName);
 		}
 	}
 

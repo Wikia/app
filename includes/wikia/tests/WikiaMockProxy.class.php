@@ -15,6 +15,7 @@ class WikiaMockProxy {
 
 	public $_mockClassName = null;
 	public static $instances = array();
+	public static $redefined_functions = array();
 	public static $instance = null;  // temporary holder for instance reference during construction
 
 	// proxy takes the name of the class and the mock object classname and the mock object instance
@@ -22,6 +23,14 @@ class WikiaMockProxy {
 	static public function proxy($className, $mockClassName, $mockInstance) {
 		self::$instances[$className] = $mockInstance;
 		self::$instances[$mockClassName] = $mockInstance;
+	}
+
+	// save the old function as _saved_functionName
+	// restore in WikiaBaseTest::tearDown
+	static public function redefineStaticConstructor($className, $functionName) {
+		self::$redefined_functions[$className]["_saved_".$functionName] = $functionName;
+		runkit_method_rename("$className", "$functionName", "_saved_".$functionName);  // save the original method
+		runkit_method_add("$className", "$functionName", '', 'return WikiaMockProxy::$instances["'.$className.'"];', RUNKIT_ACC_PUBLIC | RUNKIT_ACC_STATIC );
 	}
 
 	// Because overload is called _immediately_ before the __construct function
@@ -36,6 +45,17 @@ class WikiaMockProxy {
 			return $className;
 		}
 
+	}
+
+	// Restore all the redefined static constructor methods to their original methods
+	static public function cleanup() {
+		foreach(WikiaMockProxy::$redefined_functions as $className => $function_map) {
+			foreach ($function_map as $savedName => $originalName) {
+				runkit_method_remove($className, $originalName);  // remove the redefined instance
+				runkit_method_rename($className, $savedName, $originalName); // restore the original
+			}
+			unset (WikiaMockProxy::$redefined_functions[$className]);
+		}
 	}
 
 	// If something calls new on a MockProxy object, we return our mock object instance
