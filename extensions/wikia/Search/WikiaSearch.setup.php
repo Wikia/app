@@ -117,6 +117,8 @@ if (! $wgExternalSharedDB ) {
 	$app->registerHook('ArticleDeleteComplete', 'WikiaSearchIndexer', 'onArticleDeleteComplete');
 	$app->registerHook('ArticleSaveComplete', 'WikiaSearchIndexer', 'onArticleSaveComplete');
 	$app->registerHook('ArticleUndelete', 'WikiaSearchIndexer', 'onArticleUndelete');
+} else {
+	$app->registerHook('WikiFactoryPublicStatusChange', 'WikiaSearchIndexer', 'onWikiFactoryPublicStatusChange');
 }
 
 $wgExtensionCredits['other'][] = array(
