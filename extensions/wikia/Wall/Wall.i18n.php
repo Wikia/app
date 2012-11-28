@@ -254,6 +254,7 @@ The original post and your summary will still appear in the wiki's history.",
 
 	'wall-thread-history-thread-removed' => '$1 $2 removed this thread',
 	'wall-thread-history-reply-removed' => "$1 $2 removed $3's reply $5",
+	'wall-thread-history-reply-deleted' => "$1 $2 deleted $3's reply",
 	'wall-thread-history-thread-restored' => '$1 $2 restored this thread',
 	'wall-thread-history-reply-restored' => "$1 $2 restored $3's reply $5",
 	'wall-thread-history-thread-deleted' => '$1 $2 deleted this thread',
@@ -684,6 +685,10 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 * $2 is username
 * $3 is username
 * $5 is number of the reply.',
+	'wall-thread-history-reply-deleted' => 'thread history page item. GENDER is supported in this message. Parameters:
+* $1 is preferred name
+* $2 is username
+* $3 is username.',
 	'wall-thread-history-thread-restored' => 'thread history page item. GENDER is supported in this message. Parameters:
 * $1 is preferred name
 * $2 is username',
