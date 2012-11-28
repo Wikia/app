@@ -246,7 +246,7 @@ class UserLoginForm extends LoginForm {
 		$this->mainLoginForm( wfMsg( 'userlogin-error-user-not-allowed' ) );
 	}
 
-	public function userBlockedMessage() {
+	public function userBlockedMessage(Block $block) {
 		$this->mainLoginForm( wfMsg( 'userlogin-error-cantcreateaccount-text' ) );
 	}
 
