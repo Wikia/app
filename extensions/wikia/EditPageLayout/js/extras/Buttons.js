@@ -134,38 +134,44 @@
 	 */
 
 	if ( skin == 'oasis' && mediawikiButtons ) {
-		mediawikiButtons.push({
-			imageFile: extensionsPath + '/wikia/WikiaMiniUpload/images/button_wmu.png',
-			speedTip: wmu_imagebutton,
-			imageId: 'mw-editbutton-wmu',
-			onclick: function( event ) {
-				WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
-					WMU_show( event );
-				});
-			}
-		});
+		if ( window.wgEnableWikiaMiniUploadExt ) {
+			mediawikiButtons.push({
+				imageFile: extensionsPath + '/wikia/WikiaMiniUpload/images/button_wmu.png',
+				speedTip: wmu_imagebutton,
+				imageId: 'mw-editbutton-wmu',
+				onclick: function( event ) {
+					WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
+						WMU_show( event );
+					});
+				}
+			});
+		}
 
-		mediawikiButtons.push({
-			imageFile: extensionsPath + '/wikia/WikiaPhotoGallery/images/gallery_add.png',
-			speedTip: window.WikiaPhotoGalleryAddGallery,
-			imageId: 'mw-editbutton-wpg',
-			onclick: function() {
-				WikiaPhotoGallery.showEditor({
-					from: 'source'
-				});
-			}
-		});
+		if ( window.wgEnableWikiaPhotoGalleryExt ) {
+			mediawikiButtons.push({
+				imageFile: extensionsPath + '/wikia/WikiaPhotoGallery/images/gallery_add.png',
+				speedTip: window.WikiaPhotoGalleryAddGallery,
+				imageId: 'mw-editbutton-wpg',
+				onclick: function() {
+					WikiaPhotoGallery.showEditor({
+						from: 'source'
+					});
+				}
+			});
+		}
 
-		mediawikiButtons.push({
-			imageFile: extensionsPath + '/wikia/VideoEmbedTool/images/button_vet.png',
-			speedTip: vet_imagebutton,
-			imageId: 'mw-editbutton-vet',
-			onclick: function( event ) {
-				WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-					VET_show( event );
-				});
-			}
-		});
+		if ( window.wgEnableVideoToolExt ) {
+			mediawikiButtons.push({
+				imageFile: extensionsPath + '/wikia/VideoEmbedTool/images/button_vet.png',
+				speedTip: vet_imagebutton,
+				imageId: 'mw-editbutton-vet',
+				onclick: function( event ) {
+					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+						VET_show( event );
+					});
+				}
+			});
+		}
 	}
 
 })(this, jQuery);
