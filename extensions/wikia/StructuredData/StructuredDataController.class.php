@@ -317,22 +317,24 @@ class StructuredDataController extends WikiaSpecialPageController {
 	}
 
 	public function createWikiTextObjFromArticle() {
-
 		$this->getResponse()->setFormat( 'json' );
-		$objectName = $this->request->getVal('name', false);
-		$type = $this->request->getVal('type', false);
-		if (!empty($objectName)) {
-				$sdsObject = $this->structuredData->createSDElement($type);
-			if($this->getRequest()->wasPosted()) {
-				$requestParams = $this->getRequest()->getParams();
-				$requestParams = $this->alterRequestPerObject( $requestParams, $type);
 
-				$result = $this->structuredData->updateSDElement($sdsObject, $requestParams);
-				if( isset($result->error) ) {
-					$this->response->setVal('error', $result->error);
-				} else {
-					$this->response->setVal('success', 'Object created successfully');
-				}
+		$objectName = $this->request->getVal('schema:name', false);
+		$parentId = $this->request->getVal('objectId');
+		$type = $this->request->getVal('type', false);
+
+		if( !empty( $objectName ) && !empty( $parentObjectId ) ) {
+			$alteredParams = $this->alterRequestPerObject( $this->getRequest()->getParams(), $type);
+			$SDElement = $this->structuredData->createSDElement( $type, $alteredParams );
+
+			if( $SDElement instanceof SDElement ) {
+				$this->response->setVal( 'success', 'Object created successfully' );
+
+				// @todo update referencing object
+				// $parentSDElement = $this->structuredData->getSDElementById( $parentId );
+			}
+			else {
+				$this->response->setVal( 'error', $SDElement->error );
 			}
 		}
 	}

@@ -51,15 +51,20 @@ class StructuredData {
 	 * @param $type
 	 * @return array
 	 */
-	public function getCollectionByType( $type, $extraFields=array() ) {
+	public function getCollectionByType( $type, $extraFields = array() ) {
 		return $this->APIClient->getCollection( $type, $extraFields );
 	}
 
-	public function createSDElement( $elementType ) {
+	public function createSDElement( $elementType, array $params = array() ) {
 		$template = $this->APIClient->getTemplate( $elementType );
 
 		$SDElement = F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => null, 'depth' => 0 ), 'newFromTemplate' );
-		return $SDElement;
+
+		if( count( $params ) ) {
+			$result = $this->updateSDElement( $SDElement, $params );
+		}
+
+		return isset( $result->error ) ? $result : $SDElement;
 	}
 
 	public function updateSDElement(SDElement $element, array $params) {

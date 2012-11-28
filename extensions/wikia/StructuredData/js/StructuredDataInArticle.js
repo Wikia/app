@@ -26,7 +26,7 @@ $('button.add-wikiText-SDObj-from-article').click(function() {
 								format: 'json',
 								data: {
 									type: 'wikia:WikiText',
-									name: $modalSelector.find('input[name="schema:name"]').val(),
+									'schema:name': $modalSelector.find('input[name="schema:name"]').val(),
 									'schema:text': $modalSelector.find('textarea').val(),
 									objectId: objectId
 								},
