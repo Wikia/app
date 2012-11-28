@@ -569,4 +569,25 @@ class WikiaSearchIndexer extends WikiaObject {
 			return true;
 		}
 	}
+	
+	/**
+	 * Issues a reindex event or deletes all docs, depending on whether a wiki is being closed or reopened
+	 * @see    WikiaSearchIndexerTest::testOnWikiFactoryPublicStatusChangeClosed
+	 * @see    WikiaSearchIndexerTest::testOnWikiFactoryPublicStatusChangeOpened
+	 * @todo   Rewrite this to use is_closed_wiki when we can utilize atomic updates
+	 * @param  int    $city_public
+	 * @param  int    $city_id
+	 * @param  string $reason
+	 * @return bool
+	 */
+	public function onWikiFactoryPublicStatusChange( &$city_public, &$city_id, $reason ) {
+		
+		if ( $city_public < 1 ) {
+			$this->deleteWikiDocs( $city_id );
+		} else {
+			$this->reindexWiki( $city_id );
+		}
+		
+		return true;
+	}
 }
