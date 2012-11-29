@@ -73,7 +73,7 @@
 
 			// BugId: 68871 force document to reflow (Safari 6 on OSX 10.8 bug - impossible to scroll iframe content)
 			if (CKEDITOR.env.webkit) {
-				this.editbox.css('overflow', 'scroll');
+				this.editbox.css('visibility', 'visible');
 			}
 		},
 
