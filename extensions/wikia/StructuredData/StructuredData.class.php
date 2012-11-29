@@ -58,17 +58,22 @@ class StructuredData {
 	public function createSDElement( $elementType, array $params = array() ) {
 		$template = $this->APIClient->getTemplate( $elementType );
 
-		$SDElement = F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => null, 'depth' => 0 ), 'newFromTemplate' );
+		$newSDElement = F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => null, 'depth' => 0 ), 'newFromTemplate' );
 
-		if( count( $params ) ) {
-			$result = $this->updateSDElement( $SDElement, $params );
+		$result = $this->updateSDElement( $newSDElement, $params );
+
+		if( isset( $result->error ) ) {
+			return $result;
 		}
-
-		return isset( $result->error ) ? $result : $SDElement;
+		else {
+			return F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => $result ), 'newFromTemplate' );
+		}
 	}
 
-	public function updateSDElement(SDElement $element, array $params) {
-		$element->update($params);
+	public function updateSDElement(SDElement $element, array $params = array()) {
+		if( count($params) ) {
+			$element->update($params);
+		}
 //echo $element->toSDSJson();
 //exit;
 		$elementId = $element->getId();

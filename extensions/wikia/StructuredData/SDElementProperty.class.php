@@ -111,6 +111,30 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		$this->_value = null;
 	}
 
+	public function appendValue( $value ) {
+		if($this->isCollection()) {
+			$values = $this->getCurrentValue();
+			$values[] = $value;
+			$this->setValue( $values );
+		}
+		else {
+			throw new WikiaException('appendValue called for non-collection property');
+		}
+	}
+
+	private function getCurrentValue() {
+		if($this->isCollection()) {
+			if ( is_array( $this->value ) ) {
+				if ((count($this->value) == 1) && (empty($this->value[0]))) $values = array();
+				else $values = $this->value;
+			} else {
+				$values = ( empty( $this->value ) ) ? array() : array( $this->value );
+			}
+			return $values;
+		}
+		return $this->value;
+	}
+
 	public function isCollection() {
 		return $this->getType()->isCollection();
 	}
@@ -126,13 +150,7 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 
 			} else {
 				$this->_value = array();
-				if ( is_array( $this->value ) ) {
-					if ((count($this->value) == 1) && (empty($this->value[0]))) $values = array();
-					else $values = $this->value;
-				} else {
-					$values = ( empty( $this->value ) ) ? array() : array( $this->value );
-				}
-				foreach($values as $value) {
+				foreach($this->getCurrentValue() as $value) {
 					$this->_value[] = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $value, 'propertyName' => $this->getName() ) );
 				}
 			}

@@ -323,18 +323,37 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$this->getResponse()->setFormat( 'json' );
 
 		$objectName = $this->request->getVal('schema:name', false);
-		$parentId = $this->request->getVal('objectId');
+		$parentObjectId = $this->request->getVal('objectId');
+		$parentPropertyName = $this->request->getVal('objectPropName');
 		$type = $this->request->getVal('type', false);
 
-		if( !empty( $objectName ) && !empty( $parentObjectId ) ) {
+		if( !empty( $objectName ) && !empty( $parentObjectId ) && !empty( $parentPropertyName ) ) {
 			$alteredParams = $this->alterRequestPerObject( $this->getRequest()->getParams(), $type);
 			$SDElement = $this->structuredData->createSDElement( $type, $alteredParams );
 
 			if( $SDElement instanceof SDElement ) {
 				$this->response->setVal( 'success', 'Object created successfully' );
 
-				// @todo update referencing object
-				// $parentSDElement = $this->structuredData->getSDElementById( $parentId );
+				$parentSDElement = $this->structuredData->getSDElementById( $parentObjectId );
+				$parentProperty = $parentSDElement->getProperty( $parentPropertyName );
+				if( $parentProperty instanceof SDElementProperty ) {
+					$newReference = new stdClass;
+					$newReference->id = $SDElement->getId();
+
+					$parentProperty->appendValue( $newReference );
+					var_dump($parentProperty);
+					exit;
+					$result = $this->structuredData->updateSDElement($parentSDElement);
+					if( isset( $result->error ) ) {
+						$this->response->setVal( 'error', $result->error );
+					}
+					else {
+						$this->response->setVal( 'updateResult', wfMsg( 'structureddata-object-updated' ) );
+					}
+				}
+				else {
+					$this->response->setVal( 'error', 'Saving reference failed');
+				}
 			}
 			else {
 				$this->response->setVal( 'error', $SDElement->error );

@@ -117,15 +117,15 @@ class SDParserTag {
 		return isset( $this->args['debug'] ) ? (bool) $this->args['debug'] : false;
 	}
 
-	private function getArgs( $objectId = '', $objectType = '' ) {
+	private function getArgs( $objectId = '', $propName = '' ) {
 		$extraArgs = array();
 
 		if( !empty( $objectId ) ) {
 			$extraArgs['objectId'] = $objectId;
 		}
 
-		if( !empty( $objectType ) ) {
-			$extraArgs['objectType'] = $objectType;
+		if( !empty( $propName ) ) {
+			$extraArgs['propName'] = $propName;
 		}
 
 		return ( count( $extraArgs ) > 0 ) ? array_merge( $this->args, $extraArgs ) : $this->args;

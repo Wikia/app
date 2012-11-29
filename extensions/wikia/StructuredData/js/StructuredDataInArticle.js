@@ -1,6 +1,6 @@
 $('button.add-wikiText-SDObj-from-article').click(function() {
 	var objectId = $(this).data('object-id');
-	var objectType = $(this).data('object-type');
+	var objectPropName = $(this).data('object-prop-name');
 		modalTitle = 'Add new WikiText Object',
 		modalHtml = '<form class="WikiaForm"><div class="input-group"><label>Name:</label><input type="text" value="" name="schema:name"></div><div class="input-group"><label>WikiText:</label><textarea name="schema:text"></textarea></div></form>',
 		modalId = 'AddWikiTextSDObject',
@@ -19,7 +19,7 @@ $('button.add-wikiText-SDObj-from-article').click(function() {
 						message:'Add',
 						handler:function() {
 							var $modalSelector = $('#AddWikiTextSDObject');
-							console.log($modalSelector.find('input[name="schema:name"]').val());
+							//console.log($modalSelector.find('input[name="schema:name"]').val());
 							$.nirvana.sendRequest({
 								controller: 'StructuredDataController',
 								method: 'createWikiTextObjFromArticle',
@@ -30,7 +30,7 @@ $('button.add-wikiText-SDObj-from-article').click(function() {
 									'schema:name': $modalSelector.find('input[name="schema:name"]').val(),
 									'schema:text': $modalSelector.find('textarea').val(),
 									objectId: objectId,
-									objectType: objectType
+									objectPropName: objectPropName
 								},
 								callback: function(data) {
 									console.log(data);
