@@ -85,7 +85,10 @@ class SDElement extends SDRenderableObject implements SplSubject {
 			    				'schema:contentURL',
 			    				'schema:width',
 			    				'schema:height'
-		    )
+		    ),
+			'wikia:VideoGame' => array(
+				'wikia:platform'
+			)
 		);
 
 		if ( $property instanceof SDElementProperty ) {
