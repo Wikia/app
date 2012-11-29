@@ -49,7 +49,7 @@ CKEDITOR.plugins.add('rte-media',
 
 
 		// check for existance of VideoEmbedTool
-		if (window.vet_enabled) {
+		if (window.wgEnableVideoToolExt) {
 			// register "Add Video" command
 			editor.addCommand('addvideo', {
 				exec: function(editor) {
