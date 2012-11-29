@@ -31,6 +31,11 @@ class WallBaseController extends WikiaController{
 					'extensions/wikia/MiniEditor/css/Wall/Wall.scss'
 				)
 			));
+		}
+		
+		if( $this->app->checkSkin( 'monobook' ) ) {
+			$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Form.js' );
+			$this->response->addAsset( 'resources/wikia/modules/querystring.js' );
 		}		
 	}
 	
@@ -76,31 +81,15 @@ class WallBaseController extends WikiaController{
 		wfProfileIn( __METHOD__ );
 
 		$this->addAsset();
-
+		
 		$title = $this->request->getVal('title', $this->app->wg->Title);
-
-		$userName = ($title instanceof Title) ? $title->getText() : $title;
-		if (User::idFromName($userName) === null) {
-			wfRunHooks('ShowMissingArticle', array($this));
-
-			$this->app->wg->Out->setStatusCode(404);
-			$this->response->getView()->setTemplate('Wall', '404');
-
-			$showMissingArticle = wfRunHooks('BeforeDisplayNoArticleText', array($this));
-
-			$this->response->setVal('showMissingArticle', $showMissingArticle);
-			$this->response->setVal('userName', $userName);
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
 		$page = $this->request->getVal('page', 1);
 
 		$wallMessagesPerPage = 10;
 		if( !empty($this->app->wg->WallMessagesPerPage) ){
 			$wallMessagesPerPage = $this->app->wg->WallMessagesPerPage;
 		};
-
+		
 		$this->getThreads($title, $page, $wallMessagesPerPage);
 
 		$this->response->setVal('type', 'Board');
@@ -158,6 +147,7 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal( 'isAnon', $this->wg->User->isAnon() );
 		$this->response->setVal( 'canNotifyeveryone', $wallMessage->canNotifyeveryone() );
 		$this->response->setVal( 'canUnnotifyeveryone', $wallMessage->canUnnotifyeveryone() );
+		$this->response->setVal( 'canMove', $wallMessage->canMove($this->wg->User) );
 	}
 	
 	public function message() {
@@ -306,23 +296,14 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal( 'isStaff', $wallMessage->showWikiaEmblem() );
 		$this->response->setVal( 'username', $name );
 		
-		
-		$displayname  = "";
-		$displayname2 = $name;
-		
-		if( empty($displayname) ) {
-			$displayname = $name;
-			$displayname2 = '';
-		}
+		$displayname = $wallMessage->getUserDisplayName();
+		$displayname2 = '';
 
 		$url = $wallMessage->getUserWallUrl();
 		
 		if($wallMessage->getUser()->getId() == 0) { // anynymous contributor
-			$url = Skin::makeSpecialUrl('Contributions').'/'.$wallMessage->getUser()->getName();
-			
-			$displayname = wfMsg('oasis-anon-user');
 			$displayname2 = $wallMessage->getUser()->getName();
-		} 
+		}
 		
 		$this->response->setVal( 'displayname',  $displayname );
 		$this->response->setVal( 'displayname2', $displayname2 );

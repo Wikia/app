@@ -665,6 +665,9 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 		.buttons-monobook{
 			display: block;
+			a {
+				margin-right: 10px;
+			}
 		}
 		.buttons {
 			display: none;
@@ -779,6 +782,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 	}
 	.deleteorremove-container {
+		margin-left: 5px;
 		td {
 			vertical-align: bottom;
 		}
@@ -861,8 +865,4 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 // Vote tooltip styles
 .tooltip-text {
 	padding: $tooltip-padding;
-}
-
-.wall-userpage-userdoesnotexist {
-	margin: 20px 0 0;
 }

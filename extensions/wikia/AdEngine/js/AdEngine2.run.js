@@ -24,7 +24,7 @@
 	// Construct various helpers
 	adLogicShortPage = AdLogicShortPage(document);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
-	slotTweaker = SlotTweaker(log, document);
+	slotTweaker = SlotTweaker(log, document, window);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux, adLogicShortPage);
 	evolveHelper = EvolveHelper(log, window);

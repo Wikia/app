@@ -52,7 +52,7 @@ Wall.MessageForm = $.createClass(Observable, {
 		// use loading indicator before real content will be fetched	
 		var content = $('<div class="WallPreview"><div class="WikiaArticle"></div></div>');
 		content.find('.WikiaArticle').css('width', width);
-		var modal = $.showCustomModal($.msg('wall-preview-modal-title'), content, options);
+		var modal = $.showCustomModal("$.msg('forum-specialpage-policies')", content, options);
 		$('.WallPreview').startThrobbing();
 		
 		return false;

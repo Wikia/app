@@ -12,7 +12,7 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 	protected $app = null;
 
 	protected function setUp() {
-		$this->app = F::build( 'App' );
+		$this->app = F::app();
 		$this->object = F::build( 'WikiaView' );
 	}
 

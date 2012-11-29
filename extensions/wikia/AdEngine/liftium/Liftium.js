@@ -1685,8 +1685,9 @@ Liftium.onLoadHandler = function () {
 		Liftium.loadDelay += Liftium.loadDelay;
 		window.setTimeout(Liftium.onLoadHandler, Liftium.loadDelay);
 	} else {
-		Liftium.d("Gave up waiting for ads to load, sending beacon now");
-		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/gave_up_waiting_for_ads', 'ga_action':'gave_up_waiting_for_ads'}, 'ga');
+		var config_status = Liftium.e(Liftium.config) ? 'no config' : 'config loaded';
+		Liftium.d("Gave up waiting for ads to load (" + config_status + "), sending beacon now", 1);
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/gave_up_waiting_for_ads', 'ga_action':config_status}, 'ga');
 		Liftium.sendBeacon();
 	}
 };

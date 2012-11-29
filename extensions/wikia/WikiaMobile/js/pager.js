@@ -22,7 +22,7 @@ define('pager', function () {
 				function(){};
 		})(),
 		setTransform = function(prev, current, next, x){
-			var translate = 'translate3d(' + ~~(x * 1.1) + 'px,0,0)';
+			var translate = 'translate3d(' + ~~(x * 1.2) + 'px,0,0)';
 
 			current.style.webkitTransform = translate;
 			if (prev) { prev.style.webkitTransform = (x > 0) ? translate : ''; }
@@ -182,7 +182,7 @@ define('pager', function () {
 					//we can assume that this should always be at the top
 					//if need arises better place for this probably is onStart
 					//so fix it with this line in case:
-					window.scrollTo(0,0);
+					window.scrollTo(0,1);
 
 					if ( isFunction ? !checkCancel() : true ) {
 						pos = ev.touches[0].pageX;

@@ -354,12 +354,13 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author ZxxZxxZ
  */
 $messages['fa'] = array(
 	'categoryselect-addcategory-button' => 'افزودن رده',
 	'categoryselect-suggest-hint' => 'پس از اتمام دکمه اینتر را فشار دهید',
 	'categoryselect-edit-summary' => 'افزودن رده',
-	'categoryselect-button-save' => 'ذخیره رده',
+	'categoryselect-button-save' => 'ذخیره کردن',
 	'categoryselect-button-cancel' => 'لغو',
 );
 
@@ -503,7 +504,7 @@ $messages['hu'] = array(
 $messages['ia'] = array(
 	'categoryselect-desc' => 'Provide un interfacie pro gerer le categorias in un articulo sin modificar tote le articulo.',
 	'categoryselect-code-view' => 'Vista de codice',
-	'categoryselect-code-view-placeholder' => 'Adder categorias hic, p.ex. [[Category:Nomine]]',
+	'categoryselect-code-view-placeholder' => 'Adde categorias hic, p.ex. [[Category:Nomine]]',
 	'categoryselect-visual-view' => 'Vista graphic',
 	'categoryselect-infobox-caption' => 'Optiones de categoria',
 	'categoryselect-infobox-category' => 'Entra le nomine del categoria:',

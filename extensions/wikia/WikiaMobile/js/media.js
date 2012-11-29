@@ -36,7 +36,6 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 		zoomed,
 		zooming,
 		zoomable = true,
-		img,
 		imgW,
 		imgH,
 		origW,
@@ -161,12 +160,12 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 		//to avoid refresh the contents (it triggers a full
 		//reload of iframe contents for videos)
 		if(image.isVideo) {// video
-			if(!pager.getCurrent().innerHTML) {
+			if(!pager.getCurrent().querySelector('table.wkVi')) {
 				var imgTitle = image.name;
 				currentImageStyle.backgroundImage = '';
 
 				if(videoCache[imgTitle]){
-					currentImage.innerHTML = '<table id=wkVi><tr><td>'+videoCache[imgTitle]+'</td></tr></table>';
+					currentImage.innerHTML = '<table class=wkVi><tr><td>'+videoCache[imgTitle]+'</td></tr></table>';
 				}else{
 					loader.show(currentImage, {
 						center: true
@@ -175,7 +174,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 					Wikia.nirvana.sendRequest({
 						type: 'get',
 						format: 'json',
-						controller: 'VideoHandlerController',
+						controller: 'VideoHandler',
 						method: 'getEmbedCode',
 						data: {
 							articleId: wgArticleId,
@@ -189,7 +188,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 								handleError(data.error);
 							}else{
 								videoCache[imgTitle] = data.embedCode;
-								currentImage.innerHTML = '<table id=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
+								currentImage.innerHTML = '<table class=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
 							}
 						}
 					});
@@ -203,9 +202,9 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 				img.onload = function(){
 					loader.hide(currentImage);
 
-					var img = currentImage.getElementsByTagName('img')[0];
-					origW = img.width;
-					origH = img.height;
+					var image = currentImage.getElementsByTagName('img')[0];
+					origW = image.width;
+					origH = image.height;
 				};
 
 				img.onerror = function(){
@@ -272,8 +271,8 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 		imgW = origW * currentZoom;
 		imgH = origH * currentZoom;
 
-		xMax = imgW / 2 - widthFll / 2 + 10;
-		yMax = imgH / 2 - heightFll / 2 + 10;
+		xMax = ((imgW + 40) / 2 - widthFll / 2);
+		yMax = ((imgH + 40) / 2 - heightFll / 2);
 
 		if(zoomed){
 			modal.hideUI();
@@ -386,7 +385,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 
 	function resetZoom(){
 		currentZoom = 1;
-		currentImageStyle && (currentImageStyle[transform] = 'scale(1)');
+		currentImageStyle && (currentImageStyle[transform] = '');
 	}
 
 	function addZoom(){
@@ -420,6 +419,20 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 			onClose: function(){
 				pager.cleanup();
 				removeZoom();
+			},
+			onResize: function(ev){
+				resetZoom();
+
+				widthFll = ev.width;
+				heightFll = ev.height;
+
+				var image = currentImage.getElementsByTagName('img')[0];
+				origW = image.width;
+				origH = image.height;
+
+				sx = sy = dx = dy = 0;
+
+				onZoom(false);
 			}
 		});
 

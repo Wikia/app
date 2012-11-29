@@ -1,13 +1,23 @@
 (function(window, $) {
-	var buttons = window.wgEditorExtraButtons = window.wgEditorExtraButtons || {};
+	var buttons = window.wgEditorExtraButtons,
+		extensionsPath = window.wgExtensionsPath,
+		mediawikiButtons = window.mwCustomEditButtons;
 
-	var checkGallery = function() {
+	if ( !buttons ) {
+		buttons = window.wgEditorExtraButtons = {};
+	}
+
+	function checkGallery() {
 		return typeof window.WikiaPhotoGallery != 'undefined';
-	};
+	}
 
-	var getTextarea = function() {
+	function getTextarea() {
 		return WikiaEditor.getInstance().getEditbox()[0];
-	};
+	}
+
+	/**
+	 * Editor right rail buttons
+	 */
 
 	buttons['InsertImage'] = {
 		type: 'button',
@@ -118,5 +128,50 @@
 			insertTags( "[[", "]]", "Link title", getTextarea());
 		}
 	};
+
+	/**
+	 * Mediawiki toolbar buttons (Oasis skin only)
+	 */
+
+	if ( skin == 'oasis' && mediawikiButtons ) {
+		if ( window.wgEnableWikiaMiniUploadExt ) {
+			mediawikiButtons.push({
+				imageFile: extensionsPath + '/wikia/WikiaMiniUpload/images/button_wmu.png',
+				speedTip: wmu_imagebutton,
+				imageId: 'mw-editbutton-wmu',
+				onclick: function( event ) {
+					WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
+						WMU_show( event );
+					});
+				}
+			});
+		}
+
+		if ( window.wgEnableWikiaPhotoGalleryExt ) {
+			mediawikiButtons.push({
+				imageFile: extensionsPath + '/wikia/WikiaPhotoGallery/images/gallery_add.png',
+				speedTip: window.WikiaPhotoGalleryAddGallery,
+				imageId: 'mw-editbutton-wpg',
+				onclick: function() {
+					WikiaPhotoGallery.showEditor({
+						from: 'source'
+					});
+				}
+			});
+		}
+
+		if ( window.wgEnableVideoToolExt ) {
+			mediawikiButtons.push({
+				imageFile: extensionsPath + '/wikia/VideoEmbedTool/images/button_vet.png',
+				speedTip: vet_imagebutton,
+				imageId: 'mw-editbutton-vet',
+				onclick: function( event ) {
+					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+						VET_show( event );
+					});
+				}
+			});
+		}
+	}
 
 })(this, jQuery);

@@ -44,7 +44,7 @@ abstract class CodeLintReport {
 	 * @param string $fileName file to generate link for
 	 * @return string trac link
 	 *
-	 * @see https://github.com/Wikia/app/blame/master/INSTALL
+	 * @see https://github.com/Wikia/app/blame/dev/INSTALL
 	 */
 	protected function getBlameUrl($fileName) {
 		$root = realpath('../../');
@@ -55,7 +55,7 @@ abstract class CodeLintReport {
 		}
 
 		// GitHub
-		$url = CodeLint::GITHUB_ROOT . '/blame/master' . substr($file, strlen($root));
+		$url = CodeLint::GITHUB_ROOT . '/blame/dev' . substr($file, strlen($root));
 		return $url;
 	}
 }

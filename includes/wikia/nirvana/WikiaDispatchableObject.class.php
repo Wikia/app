@@ -225,7 +225,6 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 		);
 	}
 
-
 	/**
 	 * purge external method call from caches
 	 */
@@ -237,7 +236,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 		);
 		$squidUpdate->doUpdate();
 	}
-	
+
 	/**
 	 *  purge external method with multiple sets of parameters 
 	 * 
@@ -259,5 +258,4 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 		$squidUpdate = new SquidUpdate( $urls );
 		$squidUpdate->doUpdate();		
 	}
-
 }

@@ -17,9 +17,11 @@
  *    $this->setupFile = dirname(__FILE__) . '/../MyExtension_setup.php';
  * }
  */
+
 class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected $setupFile = null;
+	/* @var WikiaApp */
 	protected $app = null;
 	protected $appOrig = null;
 	/* @var WikiaAppMock */
@@ -38,15 +40,39 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	protected function tearDown() {
+		$this->unsetClassInstances();
 		if (is_object($this->appOrig)) {
 			F::setInstance('App', $this->appOrig);
 		}
-		$this->unsetClassInstances();
+		unset_new_overload();
+		WikiaMockProxy::cleanup();
 	}
 
+	// TODO: remove mockClass after fixing remaining unit tests
 	protected function mockClass($className, $mock) {
+		// Allow the old tests to run
 		F::setInstance( $className, $mock );
 		$this->mockedClasses[] = $className;
+	}
+
+	/**
+	 * This helper function will let you override new ClassName or ClassName::newFromID
+	 * See the description in WikiaMockProxy.class.php for more details
+	 * Example call:
+	 * 	$this->proxyClass('Article', $mockArticle);
+	 *  $this->proxyClass('Title', $mockTitle, 'newFromText');
+	 * TODO: make param for functionName an array so you can override both newFromText and newFromID (for example)
+	 * @param $className String
+	 * @param $mock Object instance of Mock
+	 * @param $functionName String name of static constructor
+	 * @return void
+	 */
+	protected function proxyClass($className, $mock, $functionName = null) {
+		$mockClassName = get_class($mock);
+		WikiaMockProxy::proxy($className, $mockClassName, $mock);
+		if ($functionName) {
+			WikiaMockProxy::redefineStaticConstructor($className, $functionName);
+		}
 	}
 
 	protected function mockGlobalVariable( $globalName, $returnValue ) {
@@ -67,6 +93,9 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	protected function mockApp() {
 		$this->appMock->init();
 		$this->app = F::app();
+
+		// php-test-helpers provides this function
+		set_new_overload('WikiaMockProxy::overload');
 	}
 
 	private function unsetClassInstances() {
@@ -77,7 +106,10 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public static function markTestSkipped($message = '') {
-		Wikia::log(__METHOD__, '', $message);
+		$backtrace = wfDebugBacktrace(3);
+		$entry = $backtrace[1];
+
+		Wikia::log(wfFormatStackFrame($entry), false, "marked as skipped - $message");
         parent::markTestSkipped($message);
     }
 

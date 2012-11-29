@@ -1,6 +1,8 @@
 <section id="Forum" class="Forum">
+		<a class="secondary button policies-link" href="#"><?= $wf->Msg('forum-specialpage-policies') ?></a>
 	<!-- Admin Edit here -->
 	<?= $app->renderPartial('ForumSpecial', 'boards', array('boards' => $boards, 'lastPostByMsg' => $lastPostByMsg, 'isEditMode' => false ) ) ?>
+
 	<? if($canEdit): ?>
 		<a class="button admin-link" href="<?= $editUrl ?>"><?= $wf->Msg('forum-admin-link-label') ?></a>
 	<? endif; ?>
@@ -11,7 +13,6 @@
 		<?= $blurb ?>
 	</section>
 </section>
-
 
 <? if($showOldForumLink): ?>
 	<a href="<?= $oldForumLink ?>"> <?= wfMsg('forum-specialpage-oldforum-link'); ?></a>

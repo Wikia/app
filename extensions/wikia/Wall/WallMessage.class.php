@@ -153,6 +153,8 @@ class WallMessage {
 			}
 			// after successful posting invalidate Thread cache
 			$class->getThread()->invalidateCache();
+			$rp = new WallRelatedPages();
+			$rp->setLastUpdate($parent->getId());
 		}
 		//Build data for sweet url ? id#number_of_comment
 		//notify
@@ -226,8 +228,10 @@ class WallMessage {
 	}
 
 	public function storeRelatedTopicsInDB($relatedTopicURLs) {
+		wfRunHooks('WallBeforeStoreRelatedTopicsInDB', array($this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ));
 		$rp = new WallRelatedPages();
 		$rp->setWithURLs($this->getId(), $relatedTopicURLs);
+		wfRunHooks('WallAfterStoreRelatedTopicsInDB', array($this->getTopParentId(), $this->getTitle()->getArticleId(), $this->getTitle()->getNamespace() ));
 	}
 
 	public function getRelatedTopics() {
@@ -242,9 +246,10 @@ class WallMessage {
 		return $out;
 	}
 
-	public function doSaveComment($body, $user, $summary = '') {
+	public function doSaveComment($body, $user, $summary = '', $force = false) {
 		wfProfileIn( __METHOD__ );
-		if($this->canEdit($user)){
+				
+		if($this->canEdit($user) || $force){
 			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true, $summary );
 		}
 		if( !$this->isMain() ) {
@@ -262,10 +267,10 @@ class WallMessage {
 		return $out;
 	}
 
-	public function doSaveMetadata($user, $summary = '') {
+	public function doSaveMetadata($user, $summary = '', $force = false) {
 		wfProfileIn( __METHOD__ );
 		$body = $this->getRawText(true);
-		$out = $this->doSaveComment($body, $user, $summary);
+		$out = $this->doSaveComment($body, $user, $summary, $force);
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
@@ -390,16 +395,24 @@ class WallMessage {
 		if($this->isMain()) {
 			$this->getArticleComment()->setMetaData('title', $title);
 		}
-		return false;
+		return true;
 	}
 
 	public function setRelatedTopics($user, $relatedTopics) {
 		if($this->isMain()) {
 			$this->getArticleComment()->setMetaData('related_topics', implode('|', $relatedTopics));
+			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-message-update-topics-summary' ), true );
 			$this->storeRelatedTopicsInDB($relatedTopics);
-			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-message-update-topics-summary' ) );
 		}
-		return false;
+		return true;
+	}
+
+	public function markAsMove($user) {
+		if($this->isMain()) {
+			$this->getArticleComment()->setMetaData('lastmove', time(), true);
+			$this->doSaveMetadata( $user, wfMsgForContent( 'wall-action-move-topics-summary', $this->getWall()->getTitle()->getPrefixedText() ), true );
+		}
+		return true; 
 	}
 
 
@@ -567,7 +580,15 @@ class WallMessage {
 		$topObjectCache[$id] = WallMessage::newFromId($id);
 		return $topObjectCache[$id];
 	}
-
+	
+	public function	getTopParentId() {
+		$top = $this->getTopParentObj();
+		if(empty($top)) {
+			return null;
+		}
+		return $this->getId();
+	}
+	
 	public function isMain() {
 		$top = $this->getTopParentObj();
 		if(empty($top)) {
@@ -615,12 +636,38 @@ class WallMessage {
 			return User::newFromName('0.0.0.0', false);
 		}
 	}
+	
+	/**
+	 * Will return either username if user exists, or it will return "A Wikia Contributor" (i18n translated) if user is an anon
+	 */
+	public function getUserDisplayName() {
+		$displayName = '';
+		
+		if($this->getUser()->getId() == 0) {
+			$displayName = wfMsg('oasis-anon-user');
+		} else {
+			$displayName = $this->getUser()->getName();
+		}
+		
+		return $displayName;
+	}
 
+	/**
+	 * Returns wall url if user exists.  Returns url to contributions if anonymous.
+	 * If wall is disabled and user exists, it should return link to user talk page
+	 */
 	public function getUserWallUrl() {
 		$name = $this->getUser()->getName();
 
 		if(empty(self::$wallURLCache[$name])) {
-			self::$wallURLCache[$name] = F::build( 'Title', array( $name, NS_USER_WALL ), 'newFromText' )->getFullUrl();
+			if($this->getUser()->getId() == 0) { // anynymous contributor
+				$url = Skin::makeSpecialUrl('Contributions').'/'.$this->getUser()->getName();
+			} else if(empty(F::app()->wg->EnableWallExt)) {
+				$url = F::build( 'Title', array( $name, NS_USER_TALK ), 'newFromText' )->getFullUrl();
+			} else {
+				$url = F::build( 'Title', array( $name, NS_USER_WALL ), 'newFromText' )->getFullUrl();
+			}
+			self::$wallURLCache[$name] = $url;
 		}
 
 		return self::$wallURLCache[$name];
@@ -838,18 +885,20 @@ class WallMessage {
 		$wikiId = $this->cityId;
 		$userIdRemoving = $user->getId();
 		$userIdWallOwner = $this->getWallOwner()->getId();
+		$parentPageId = $this->getArticleTitle()->getArticleId();
+		
 		$url = $this->getMessagePageUrl();
 		$title = $this->getMetaTitle();
 		$messageId = $this->getId();
 
 		if( $this->isMain() ) {
-			$wnae = new WallNotificationAdminEntity($wikiId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, 0, false, $reason);
+			$wnae = new WallNotificationAdminEntity($wikiId, $parentPageId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, 0, false, $reason);
 		} else {
 			$parent = $this->getTopParentObj();
 			$parent->load();
 			$parentMessageId = $parent->getId();
 			$title = $parent->getMetaTitle();
-			$wnae = new WallNotificationAdminEntity($wikiId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentMessageId, true, $reason);
+			$wnae = new WallNotificationAdminEntity($wikiId, $parentPageId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentMessageId, true, $reason);
 		}
 
 		return $wnae;
@@ -1331,5 +1380,9 @@ class WallMessage {
 	public function isAllowedNotifyEveryone() {
 		$app = F::App();
 		return $this->helper->isAllowedNotifyEveryone($this->title->getNamespace(), $app->wg->User);
+	}
+	
+	public function canMove(User $user) {
+		return ( $this->isMain() && !$this->isRemove() && $this->can($user, 'wallmessagemove') && in_array(MWNamespace::getSubject($this->title->getNamespace()), F::App()->wg->WallTopicsNS) );
 	}
 }

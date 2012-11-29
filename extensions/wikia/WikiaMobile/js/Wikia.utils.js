@@ -220,7 +220,7 @@
 				url: url + '/wikia.php?' + Wikia.param(getUrl),
 				dataType: format,
 				type: type,
-				data: data,
+				data: sortedDict,
 				success: callback,
 				error: onErrorCallback
 			});

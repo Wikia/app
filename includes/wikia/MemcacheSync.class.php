@@ -24,24 +24,20 @@ class MemcacheSync{
 	}
 
 	function lock($time = 5) {
-		$lock = $this->getLockStatus();
-
-		if(empty($lock) || $lock == $this->instance ) {
-			if(empty($lock)) {
-				$this->memc->set($this->lockKey, $this->instance, $time);
-			}
+		if ($this->memc->add($this->lockKey, $this->instance, $time)) {
 			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
-	function unlock($time = 60) {
-		$this->memc->set($this->lockKey, false, $time);
+	function unlock() {
+		$this->memc->delete($this->lockKey);
 	}
 
 	function isMy() {
 		$lock = $this->getLockStatus();
-		if($lock == $this->instance ) {
+		if($lock == $this->instance) {
 			return true;
 		} else {
 			return false;

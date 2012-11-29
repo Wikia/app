@@ -114,17 +114,17 @@ class CloseWikiMaintenance {
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP ) {
 				$this->log( "Dumping database on remote host" );
 				list ( $remote  ) = explode( ":", $this->mTarget, 2 );
+
+				$script = ( $hide )
+					? "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$row->city_id}'"
+					: "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$row->city_id} --hide'";
+
 				$cmd  = array(
-					"SERVER_ID=177",
-					"php",
-					"$IP/extensions/wikia/WikiFactory/Dumps/runBackups.php",
-					"--conf /usr/wikia/conf/current/iowa.wiki.factory/LocalSettings.php",
-					"--both",
-					"--id={$row->city_id}"
+					"/usr/wikia/backend/bin/run_maintenance",
+					"--id=177",
+					$script
 				);
-				if( $hide ) {
-					$cmd[] = "--hide";
-				}
+
 				$dump = wfEscapeShellArg(
 					"/usr/bin/ssh",
 					$remote,

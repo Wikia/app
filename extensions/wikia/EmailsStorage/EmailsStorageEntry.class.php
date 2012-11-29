@@ -1,8 +1,23 @@
 <?php
 
+/**
+ * @method getSourceId
+ * @method getCityId
+ * @method getUserId
+ * @method getEmail
+ * @method getFeedback
+ * @method setSourceId
+ * @method setCityId
+ * @method setUserId
+ * @method setEmail
+ * @method setFeedback
+ * @method setBeaconId
+ */
 class EmailsStorageEntry {
 
 	private $app;
+
+	/* @var EmailsStorage */
 	private $storage;
 
 	private $data = array(

@@ -1,14 +1,15 @@
 <?php
-
 class MyHomeTest extends WikiaBaseTest {
+
 	function setUp() {
-		global $IP, $wgParser;
-		require_once("$IP/extensions/wikia/MyHome/MyHome.class.php");
+		global $wgParser;
+
+		$this->setupFile = __DIR__ . "/../MyHome.php";
+		parent::setUp();
 
 		if ( empty($wgParser->mOptions) ) {
 			$wgParser->Options(new ParserOptions());
 		}
-
 	}
 
 	function doEdit($edit) {

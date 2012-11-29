@@ -72,19 +72,21 @@ class ForumBoard extends Wall {
 	public function getTotalActiveThreads($relatedPageId = 0, $db = DB_SLAVE) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$memKey = $this->wf->MemcKey( 'forum_board_active_threads', $this->getId() );
-
-		if ( $db == DB_SLAVE ) {
-			$activeThreads = $this->wg->Memc->get( $memKey );
+		if(empty($relatedPageId)) {
+			$memKey = $this->wf->MemcKey( 'forum_board_active_threads', $this->getId() );
+	
+			if ( $db == DB_SLAVE ) {
+				$activeThreads = $this->wg->Memc->get( $memKey );
+			}
 		}
-
+		
 		if ( !empty( $relatedPageId ) || $activeThreads === false ) {
 			$db = $this->wf->GetDB( $db );
 
-			$filter = 'parent_page_id =' . ((int)$this->getId());
-
 			if ( !empty( $relatedPageId ) ) {
 				$filter = "comment_id in (select comment_id from wall_related_pages where page_id = {$relatedPageId})";
+			} else {
+				$filter = 'parent_page_id =' . ((int)$this->getId());				
 			}
 
 			$activeThreads = $db->selectField( 
@@ -100,7 +102,9 @@ class ForumBoard extends Wall {
 			);
 
 			$activeThreads = intval( $activeThreads );
-			$this->wg->Memc->set( $memKey, $activeThreads, 60 * 60 * 12 );
+			if(empty($relatedPageId)) {
+				$this->wg->Memc->set( $memKey, $activeThreads, 60 * 60 * 12 );
+			}
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );

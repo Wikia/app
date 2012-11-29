@@ -1353,6 +1353,15 @@ $messages['tly'] = array(
 	'photopop-game-month-11' => 'Дек',
 );
 
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'photopop-setup-category-label' => 'ⵜⴰⴳⴳⴰⵢⵜ',
+	'photopop-game-month-0' => 'ⵢⵏⵏⴰⵢⵔ',
+	'photopop-game-month-1' => 'ⴱⵕⴰⵢⵔ',
+);
+
 /** Ukrainian (українська)
  * @author A1
  */

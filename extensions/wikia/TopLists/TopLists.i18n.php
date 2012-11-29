@@ -2239,7 +2239,7 @@ Tumungo sa Wikia upang suriin ang mga pagbabago! $1
  * @author Emperyan
  */
 $messages['tr'] = array(
-	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />oy|$1<br />oy}}}}', # Fuzzy
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />oy|$1<br />oy}}',
 );
 
 /** Ukrainian (українська)

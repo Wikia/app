@@ -34,6 +34,20 @@ class WallThread {
 		}
 		return $this->mCached;
 	}
+	
+	public function move(Wall $dest, $user) {
+		CommentsIndex::changeParent( 0, $dest->getId(), $this->mThreadId);
+		
+		$wallHistory = new WallHistory( $this->mCityId );
+		$wallHistory->moveThread( $this->mThreadId, $dest->getId() );
+		
+		$main = $this->getThreadMainMsg();
+		$main->load();
+		//this is use to build a history in contribiution page
+		$main->markAsMove($user);
+		$this->invalidateCache();
+	}
+	
 
 	public function setReplies( $ids ) {
 		// set and cache replies of this thread
@@ -58,7 +72,7 @@ class WallThread {
 		foreach( $this->data->threadReplyIds as $id ) {
 			$wm = WallMessage::newFromId( $id, $this->mForceMaster );
 			if($wm instanceof WallMessage && !$wm->isAdminDelete()) {
-				$this->data->threadReplyObjs[ $id ] = $wm;
+				$this->data->threadReplyObjs[] = $wm;
 			}
 		}
 	}
@@ -137,11 +151,32 @@ class WallThread {
 	public function getThreadMainMsg() {
 		return WallMessage::newFromId( $this->mThreadId );
 	}
+	
+	public function getRepliesCount() {
+		if($this->data->threadReplyObjs === false) {
+			$this->loadReplyObjs();	
+		}
+		
+		return count($this->data->threadReplyObjs);
+	}
+	//TODO: fix the performace of Replies Wall
 
-	public function getRepliesWallMessages() {
-		if($this->data->threadReplyObjs === false)
-			$this->loadReplyObjs();
-		return $this->data->threadReplyObjs;
+	public function getRepliesWallMessages($limit = 0, $order = "ASC" ) {
+		if($this->data->threadReplyObjs === false) {
+			$this->loadReplyObjs();	
+		}
+		
+		$out = $this->data->threadReplyObjs;
+		
+		if($order == "DESC") {
+			$out = array_reverse($out);	
+		}
+				
+		if($limit > 0) {
+			$out = array_slice($out, 0, $limit);
+		}
+		
+		return $out;
 	}
 
 }

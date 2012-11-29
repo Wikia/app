@@ -133,7 +133,7 @@
 		 * @param array $dates ( YYYY-MM-DD, YYYY-MM-DD ... )
 		 * @return array $pageviews [ array( 'YYYY-MM-DD' => pageviews ) ]
 		 */
-		protected static function getSumPageviewsMonthly( $dates = array() ) {
+		public static function getSumPageviewsMonthly( $dates = array() ) {
 			$app = F::app();
 
 			$app->wf->ProfileIn( __METHOD__ );
@@ -158,7 +158,6 @@
 							array("sum(pageviews) as cnt"),
 							array(
 								'period_id' => $periodId,
-								'wiki_id'   => $wikiId,
 								'time_id'	=> $date
 							),
 							__METHOD__

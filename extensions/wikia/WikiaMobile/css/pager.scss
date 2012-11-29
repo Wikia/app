@@ -4,16 +4,12 @@
 	position: absolute;
 	top: 0;
 
-	-webkit-transition: padding .2s;
-
-	padding: 0;
-
 	&.next{
-		left: 110%;
+		left: 120%;
 	}
 
 	&.prev {
-		left: -110%;
+		left: -120%;
 	}
 }
 

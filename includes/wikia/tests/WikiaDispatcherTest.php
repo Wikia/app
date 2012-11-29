@@ -49,7 +49,7 @@ class WikiaDispatcherTest extends PHPUnit_Framework_TestCase {
 	public function testDispatchInternal() {
 		//$app = $this->getMock( 'WikiaApp' );
 
-		$response = $this->object->dispatch( F::build('App'), new WikiaRequest( array( 'controller' => 'Test', 'method' => 'sendTest' ) ) );
+		$response = $this->object->dispatch( F::app(), new WikiaRequest( array( 'controller' => 'Test', 'method' => 'sendTest' ) ) );
 
 		$this->assertTrue($response->hasException());
 		$this->assertInstanceOf( 'WikiaException', $response->getException());

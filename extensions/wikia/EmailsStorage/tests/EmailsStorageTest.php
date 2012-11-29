@@ -1,9 +1,14 @@
 <?php
-require_once dirname(__FILE__) . '/../EmailsStorage.setup.php';
 
 class EmailsStorageTest extends WikiaBaseTest {
 
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../EmailsStorage.setup.php';
+		parent::setUp();
+	}
+
 	public function testCreateNewEntry() {
+		/* @var $entry EmailsStorageEntry */
 		$entry = F::build('EmailsStorage')->newEntry(EmailsStorage::SCAVENGER_HUNT);
 
 		$this->assertInstanceOf('EmailsStorageEntry', $entry);
@@ -19,9 +24,6 @@ class EmailsStorageTest extends WikiaBaseTest {
 		$email = 'foo@bar.net';
 		$entry->setEmail($email);
 		$this->assertEquals($email, $entry->getEmail());
-
-		// store it in database
-		//var_dump( $entry->store() );
 	}
 
 }

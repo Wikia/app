@@ -184,6 +184,7 @@ class WallHelper {
 	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
+	  
 	private function mapParentData(&$item, $parent, $title) {
 		$app = F::app();
 		$app->wf->ProfileIn(__METHOD__);

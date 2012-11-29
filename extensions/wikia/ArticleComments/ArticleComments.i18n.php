@@ -2507,6 +2507,14 @@ Wikia
 </p>', # Fuzzy
 );
 
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'article-comments-history' => 'ⴰⵎⵣⵔⵓⵢ',
+	'article-comments-reply' => 'ⵔⴰⵔ',
+);
+
 /** Ukrainian (українська)
  * @author A1
  */

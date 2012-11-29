@@ -162,18 +162,19 @@ function runBackups( $from, $to, $full, $options ) {
 		 * open dir and read info about files
 		 */
 		if( is_dir( $basedir ) ) {
-			$dh = opendir( $basedir );
-			while( ( $file = readdir( $dh ) ) !== false ) {
-				$fullpath = $basedir . "/" . $file;
-				if( is_file( $fullpath ) ) {
-					$json[ $file ] = array(
-						"name" => $file,
-						"timestamp" => filectime( $fullpath ),
-						"mwtimestamp" => wfTimestamp( TS_MW, filectime( $fullpath ) )
-					);
+			if ( $dh = opendir( $basedir ) ) {
+				while( ( $file = readdir( $dh ) ) !== false ) {
+					$fullpath = $basedir . "/" . $file;
+					if( is_file( $fullpath ) ) {
+						$json[ $file ] = array(
+							"name" => $file,
+							"timestamp" => filectime( $fullpath ),
+							"mwtimestamp" => wfTimestamp( TS_MW, filectime( $fullpath ) )
+						);
+					}
 				}
+				closedir( $dh ); 
 			}
-			closedir( $dh );
 		}
 		if( count( $json ) ) {
 			file_put_contents( $jsonfile, json_encode( $json ) );
