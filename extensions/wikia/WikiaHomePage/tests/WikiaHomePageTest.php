@@ -10,11 +10,6 @@ class WikiaHomePageTest extends WikiaBaseTest {
 
 	protected $wgServerOrg = null;
 
-	public function setUp() {
-		$this->setupFile = dirname(__FILE__) . '/../WikiaHomePage.setup.php';
-		parent::setUp();
-	}
-
 	protected function setUpMock($cacheParams = null) {
 		// mock cache
 		$memcParams = array(

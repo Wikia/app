@@ -1,12 +1,15 @@
 <?php
 
-require_once( dirname( __FILE__ ) . '/../HelloWorld.class.php');
-
 class HelloWorldTest extends WikiaBaseTest {
 
 	const TEST_WIKI_ID = 1;
 	const TEST_TITLE = 'Test Title';
 	const TEST_URL = 'http://test.wikia.com';
+
+	public function setUp() {
+		$this->setupFile =  __DIR__ . '/../HelloWorld.class.php';
+		parent::setUp();
+	}
 
 	public function testGettingWikiData() {
 

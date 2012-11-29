@@ -1,10 +1,13 @@
 <?php
-require_once dirname(__FILE__) . '/../UserProfilePage.setup.php';
 
 class UserProfilePageTest extends WikiaBaseTest {
 	const TEST_WIKI_ID = 111;
 	const TEST_CAPTION = 'Test caption';
 
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../UserProfilePage.class.php';
+		parent::setUp();
+	}
 
 	/**
 	 * @param User $user
