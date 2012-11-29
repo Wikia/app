@@ -120,9 +120,9 @@ class ForumHooksHelper {
 		}
 
 		$wfMsgOpts = array(
-			$wfMsgOptsBase['articleUrl'],
+			$wfMsgOptsBase['articleFullUrl'],
 			$wfMsgOptsBase['articleTitleTxt'],
-			$wfMsgOptsBase['wallPageUrl'],
+			$wfMsgOptsBase['wallPageFullUrl'],
 			$wfMsgOptsBase['wallPageName'],
 			$wfMsgOptsBase['createdAt'],
 			$wfMsgOptsBase['DiffLink'],
