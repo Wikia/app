@@ -22,24 +22,15 @@ class VisualEditorHooks {
 	 */
 	public static function onBeforePageDisplay( &$output, &$skin ) {
 		global $wgVisualEditorNamespaces;
-		/*
 		if (
-			// HACK ignoring hidden-ness so we can do dark launches
-			$skin->getUser()->getOption( 'visualeditor-enable',
-				/*default=/ false, /*ignoreHidden=/true
-			) &&
-			in_array( $skin->getSkinName(), self::$supportedSkins ) &&
-			(
-				// Article in the VisualEditor namespace
-				in_array( $skin->getTitle()->getNamespace(), $wgVisualEditorNamespaces ) ||
-				// Special page action for an article in the VisualEditor namespace
-				in_array( $skin->getRelevantTitle()->getNamespace(), $wgVisualEditorNamespaces )
-			)
+				in_array( $skin->getSkinName(), self::$supportedSkins ) &&
+				(
+					// Article in the VisualEditor namespace
+					in_array( $skin->getTitle()->getNamespace(), $wgVisualEditorNamespaces ) ||
+					// Special page action for an article in the VisualEditor namespace
+					in_array( $skin->getRelevantTitle()->getNamespace(), $wgVisualEditorNamespaces )
+				)
 		) {
-			$output->addModules( array( 'ext.visualEditor.viewPageTarget' ) );
-		}
-		*/
-		if ( in_array( $skin->getSkinName(), self::$supportedSkins ) ) {
 			$output->addModules( array( 'ext.visualEditor.viewPageTarget' ) );
 		}
 		return true;

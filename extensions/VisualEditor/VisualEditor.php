@@ -10,6 +10,13 @@
 
 /* Configuration */
 
+define( 'NS_VISUALEDITOR', 2500 );
+define( 'NS_VISUALEDITOR_TALK', 2501 );
+$wgExtraNamespaces[NS_VISUALEDITOR] = 'VisualEditor';
+$wgExtraNamespaces[NS_VISUALEDITOR_TALK] = 'VisualEditor_talk';
+$wgContentNamespaces[] = NS_VISUALEDITOR;
+$wgContentNamespaces[] = NS_VISUALEDITOR_TALK;
+
 // URL to the Parsoid instance
 // MUST NOT end in a slash due to Parsoid bug
 $wgVisualEditorParsoidURL = 'http://parsoid-s1:8000';
@@ -19,7 +26,7 @@ $wgVisualEditorParsoidPrefix = 'communitycouncil';
 // Timeout for HTTP requests to Parsoid in seconds
 $wgVisualEditorParsoidTimeout = 100;
 // Namespaces to enable VisualEditor in
-$wgVisualEditorNamespaces = array( NS_MAIN );
+$wgVisualEditorNamespaces = array( NS_VISUALEDITOR );
 /* Setup */
 
 $wgExtensionCredits['other'][] = array(
