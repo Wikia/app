@@ -69,7 +69,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		if( $searchConfig->getQueryNoQuotes( true ) ) {
-			$articleMatch = null;
 			$this->wikiaSearch->getArticleMatch( $searchConfig );
 			if ( $searchConfig->getPage() == 1 ) {
 				$this->handleArticleMatchTracking( $searchConfig, F::build( 'Track' ) );
@@ -77,13 +76,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			$this->wikiaSearch->doSearch( $searchConfig );
 
-			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', 
+			$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', 
 												array( ucwords( $searchConfig->getQuery( WikiaSearchConfig::QUERY_RAW ) ), $this->wg->Sitename) )  );
 		} else {
 			if( $searchConfig->getIsInterWiki() ) {
-				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
+				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
 			} else {
-				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki', 
+				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki', 
 													array($this->wg->Sitename) )  );
 			}
 		}
