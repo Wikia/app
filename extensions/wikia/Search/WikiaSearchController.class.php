@@ -8,13 +8,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Responsible for search queries
 	 * @var WikiaSearch
 	 */
-	private $wikiaSearch;
+	protected $wikiaSearch;
 	
 	/**
 	 * Responsible for building data used in indexing
 	 * @var WikiaSearchIndexer
 	 */
-	private $wikiaSearchIndexer;
+	protected $wikiaSearchIndexer;
 
 	/**
 	 * Handles dependency-building and special page routing before calling controller actions 
@@ -305,7 +305,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return boolean true
 	 */
-	private function setNamespacesFromRequest( WikiaSearchConfig $searchConfig, User $user ) {
+	protected function setNamespacesFromRequest( WikiaSearchConfig $searchConfig, User $user ) {
 		$searchEngine = F::build( 'SearchEngine' );
 		$searchableNamespaces = $searchEngine->searchableNamespaces();
 		$namespaces = array();
@@ -336,7 +336,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param  SkinTemplate $skin
 	 * @return boolean true
 	 */
-	private function handleSkinSettings( $skin ) {
+	protected function handleSkinSettings( $skin ) {
 	
 		if ( $skin instanceof SkinMonoBook ) {
 		    $this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
@@ -355,7 +355,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Determines whether we are on the corporate wiki
 	 * @see WikiaSearchControllerTest::testIsCorporateWiki
 	 */
-	private function  isCorporateWiki() {
+	protected function  isCorporateWiki() {
 	    return !empty($this->wg->EnableWikiaHomePageExt);
 	}
 	
