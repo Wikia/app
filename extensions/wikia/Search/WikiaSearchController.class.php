@@ -103,20 +103,20 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		
 		$tabsTemplateVars = array(
-			'config' => 		$searchConfig,
-			'is_video_wiki' => 	$this->wg->cityId == WikiaSearch::VIDEO_WIKI_ID,
-			'form' => 			array(
-				'no_filter' => 			$this->getVal('no_filter', false),
-				'by_category' => 		$this->getVal('by_category', false),
-				'cat_videogames' => 	in_array('cat_videogames', $filters) ? true : false,
-				'cat_entertainment' => 	in_array('cat_entertainment', $filters) ? true : false,
-				'cat_lifestyle' => 		in_array('cat_lifestyle', $filters) ? true : false,
-				'is_hd' => 				in_array('is_hd', $filters) ? true : false,
-				'is_image' => 			in_array('is_image', $filters) ? true : false,
-				'is_video' => 			in_array('is_video', $filters) ? true : false,
-				'sort_default' => 		$this->getVal('rank') == 'default',
-				'sort_longest' => 		$this->getVal('rank') == 'longest',
-				'sort_newest' => 		$this->getVal('rank') == 'newest',
+			'config' =>         $searchConfig,
+			'is_video_wiki' =>  $this->wg->cityId == WikiaSearch::VIDEO_WIKI_ID,
+			'form' =>           array(
+				'no_filter' =>          $this->getVal('no_filter', false),
+				'by_category' =>        $this->getVal('by_category', false),
+				'cat_videogames' =>     in_array('cat_videogames', $filters) ? true : false,
+				'cat_entertainment' =>  in_array('cat_entertainment', $filters) ? true : false,
+				'cat_lifestyle' =>      in_array('cat_lifestyle', $filters) ? true : false,
+				'is_hd' =>              in_array('is_hd', $filters) ? true : false,
+				'is_image' =>           in_array('is_image', $filters) ? true : false,
+				'is_video' =>           in_array('is_video', $filters) ? true : false,
+				'sort_default' =>       $this->getVal('rank') == 'default',
+				'sort_longest' =>       $this->getVal('rank') == 'longest',
+				'sort_newest' =>        $this->getVal('rank') == 'newest',
 			)
 		);
 		
