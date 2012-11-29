@@ -175,6 +175,7 @@ $config['oasis_jquery'] = array(
 	'assets' => array(
 		// AMD modules
 		'//resources/wikia/modules/jquery.js',
+		'//resources/wikia/modules/nirvana.js',
 
 		// polyfills
 		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
@@ -189,7 +190,6 @@ $config['oasis_jquery'] = array(
 
 		// Wikia plugins
 		'//resources/wikia/jquery.wikia.js',
-		'//resources/wikia/libraries/jquery/nirvana/jquery.wikia.nirvana.js',
 		'//resources/wikia/libraries/jquery/carousel/jquery.wikia.carousel.js',
 		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
 		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
