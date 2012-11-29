@@ -75,6 +75,10 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 			if ( currentUri.query.veaction === 'edit' ) {
 				$( ve.bind( this.activate, this ) );
 			}
+		} else {
+			if ( !$.inArray( 'staff', wgUserGroups ) ) {
+				$('#wpSave').hide();
+			}
 		}
 	}
 };

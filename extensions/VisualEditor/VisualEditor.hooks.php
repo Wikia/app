@@ -23,7 +23,7 @@ class VisualEditorHooks {
 					in_array( $skin->getRelevantTitle()->getNamespace(), $wgVisualEditorNamespaces )
 				)
 		) {
-			if ( $links['views'] && $links['views']['edit'] ) {
+			if ( isset($links['views']) && isset($links['views']['edit']) ) {
 				$links['views']['edit']['href'] = $wgTitle->getLocalURL( array( 'veaction' => 'edit' ) );
 			}
 		}
