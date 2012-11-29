@@ -227,8 +227,6 @@ ve.init.mw.ViewPageTarget.prototype.activate = function () {
 
 		$.getResources($.getSassCommonURL('/extensions/VisualEditor/modules/ve/init/mw/styles/ve.init.mw.ViewPageTarget-oasis.scss'));
 
-		// TODO: show spinner
-
 		this.hideTableOfContents();
 		this.mutePageContent();
 		this.saveScrollPosition();
@@ -256,9 +254,7 @@ ve.init.mw.ViewPageTarget.prototype.hideTableOfContents = function () {
  */
 ve.init.mw.ViewPageTarget.prototype.mutePageContent = function () {
 	// TODO: Decide if we need to addClass here - it is also done in hidePageContent()
-	$( '#mw-content-text' )
-		.addClass( 've-init-mw-viewPageTarget-content' )
-		.fadeTo( 'fast', 0.35 );
+	$( '#mw-content-text' ).fadeTo( 'fast', 0.35 );
 	this.$disabledElements.fadeTo( 'fast', 0.35 ).each(function() {
 		$(this).append( '<div class="oasis-interface-shield"></div>' );
 	});
@@ -321,10 +317,7 @@ ve.init.mw.ViewPageTarget.prototype.setUpSurface = function ( dom ) {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.hidePageContent = function () {
-	// TODO: Decide if we need to addClass here - it is also done in mutePageContent()
-	$( '#mw-content-text' )
-		.addClass( 've-init-mw-viewPageTarget-content' )
-		.hide();
+	$( '#mw-content-text' ).hide();
 };
 
 /**
@@ -733,10 +726,7 @@ ve.init.mw.ViewPageTarget.prototype.detachToolbar = function () {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.showPageContent = function () {
-	$( '.ve-init-mw-viewPageTarget-content' )
-		.removeClass( 've-init-mw-viewPageTarget-content' )
-		.show()
-		.fadeTo( 0, 1 );
+	$( '#mw-content-text' ).show().fadeTo( 0, 1 );
 };
 
 /**
