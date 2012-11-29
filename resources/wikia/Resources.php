@@ -5,6 +5,10 @@
  */
 
 return array(
+	'wikia.amd' => array(
+		'scripts' => 'resources/wikia/libraries/modil/modil.js',
+	),
+
 	// module loaded via $.loadjQuery UI and is a wrapper for MediaWiki jQuery UI modules
 	// this used to be static file located in /skins/common/jquery/jquery-ui-1.8.14.custom.js
 	'wikia.jquery.ui' => array(
