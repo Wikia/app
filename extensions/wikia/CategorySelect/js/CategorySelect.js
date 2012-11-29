@@ -8,8 +8,8 @@ var action = window.wgAction,
  * CategorySelect
  * Low-level category tracking.
  *
- * @param	{Array} (categories)
- *			The initial list of categories.
+ * @param {Array} (categories)
+ *        The initial list of categories.
  */
 var CategorySelect = function( categories ) {
 	var i, length;
@@ -34,7 +34,7 @@ var CategorySelect = function( categories ) {
 	 * Resets categories back to what they were on instantiation.
 	 *
 	 * @returns	{Number}
-	 *			The new length of the categories array.
+	 *          The new length of the categories array.
 	 */
 	this.reset = function() {
 		this.state.categories = categories;
@@ -45,10 +45,11 @@ var CategorySelect = function( categories ) {
 /**
  * Adds a category to the categories array.
  *
- * @param	{String|Object} category
- *			The name of a category or an object with category properties.
+ * @param {String|Object} category
+ *        The name of a category or an object with category properties.
+ *
  * @returns	{Number}
- *			The index of the added category, or -1 if the category could not be added.
+ *          The index of the added category, or -1 if the category could not be added.
  */
 CategorySelect.prototype.addCategory = function( category ) {
 	var index = -1;
@@ -67,10 +68,14 @@ CategorySelect.prototype.addCategory = function( category ) {
 /**
  * Edits a category from the categories array.
  *
- * @param	{Number|String} category
- *			The index or name of a category.
- * @param	{Object} value
- *			The new category object or null if the category does not exist.
+ * @param {Number|String} category
+ *        The index or name of a category.
+ *
+ * @param {Object} value
+ *        The new category object or null if the category does not exist.
+ *
+ * @returns	{Object}
+ *          The category object or null if the category does not exist.
  */
 CategorySelect.prototype.editCategory = function( category, value ) {
 	var index = this.indexOf( category );
@@ -87,8 +92,9 @@ CategorySelect.prototype.editCategory = function( category, value ) {
 /**
  * Gets a category from the categories array.
  *
- * @param	{Number|String} category
- *			The index or name of a category.
+ * @param {Number|String} category
+ *        The index or name of a category.
+ *
  * @returns	{Object}
  *			The category object or null if the category does not exist.
  */
@@ -107,10 +113,11 @@ CategorySelect.prototype.getCategory = function( category ) {
 /**
  * Gets the index of a category from the category array.
  *
- * @param	{Number|String} category
- *			The index or name of a category.
+ * @param {Number|String} category
+ *        The index or name of a category.
+ *
  * @returns	{Number}
- *			The index of the category, or -1 if the category does not exist.
+ *          The index of the category, or -1 if the category does not exist.
  */
 CategorySelect.prototype.indexOf = function( category ) {
 	var i, length, obj,
@@ -137,10 +144,11 @@ CategorySelect.prototype.isDuplicate = function( category ) {
 /**
  * Generates a normalized category object.
  *
- * @param	{Object|String} category
- *			The name of a category or an object with category properties.
+ * @param {Object|String} category
+ *        The name of a category or an object with category properties.
+ *
  * @returns {Object}
- *			The normalized category, or null if an invalid category was provided.
+ *          The normalized category, or null if an invalid category was provided.
  */
 CategorySelect.prototype.makeCategory = (function() {
 	var properties = [ 'name', 'namespace', 'sortKey' ],
@@ -198,13 +206,57 @@ CategorySelect.prototype.makeCategory = (function() {
 })();
 
 /**
+ * Move a category from one position in the array to another.
+ *
+ * @param {Number|String} fromCategory
+ *        The index of a category in the categories array or a string matching a
+ *        category in the array where the category will be moved from.
+ *
+ * @param {Number|String} toCategory
+ *        The index of a category in the categories array or a string matching a
+ *        category in the array where the category will be moved to.
+ *
+ * @returns {Object}
+ *          The re-ordered categories array.
+ */
+CategorySelect.prototype.moveCategory = function( fromCategory, toCategory ) {
+	var category, categoryToMove, i,
+		categories = [],
+		fromIndex = this.indexOf( fromCategory ),
+		length = this.state.categories.length,
+		toIndex = this.indexOf( toCategory );
+
+	// Make sure indexes are valid
+	if ( fromIndex != toIndex && fromIndex >= 0 && toIndex >= 0 ) {
+		categoryToMove = this.state.categories[ fromIndex ];
+
+		for ( i = 0; i < length; i++ ) {
+			if ( i == toIndex ) {
+				categories.push( categoryToMove );
+			}
+
+			// Throw out null values
+			if ( i != fromIndex && ( category = this.state.categories[ i ] ) != null ) {
+				categories.push( category );
+			}
+		}
+
+		this.state.categories = categories;
+		this.state.length = categories.length;
+	}
+
+	return this.state.categories;
+};
+
+/**
  * Removes a category from the categories array.
  *
- * @param	{Number|String} category
- *			The index of a category in the categories array or a string matching a
- *			category in the array.
+ * @param {Number|String} category
+ *        The index of a category in the categories array or a string matching a
+ *        category in the array.
+ *
  * @returns {Object}
- *			The category object or null if the category does not exist.
+ *          The category object or null if the category does not exist.
  */
 CategorySelect.prototype.removeCategory = function( category ) {
 	var index = this.indexOf( category );
@@ -223,8 +275,8 @@ CategorySelect.prototype.removeCategory = function( category ) {
  * jQuery.fn.categorySelect
  * Sits on top of CategorySelect and provides user interface components.
  *
- * @param	{Object} options
- *			The settings to configure the instance with.
+ * @param {Object} options
+ *        The settings to configure the instance with.
  */
 $.fn.categorySelect = (function() {
 	var cache = {},
@@ -301,7 +353,8 @@ $.fn.categorySelect = (function() {
 		options = $.extend( {}, $.fn.categorySelect.options, options );
 
 		return this.each(function() {
-			var $element = $( this ),
+			var categories = [],
+				$element = $( this ),
 				$categories = $element.find( options.categories ),
 				categorySelect = new CategorySelect( options.data );
 
@@ -426,10 +479,11 @@ $.fn.categorySelect = (function() {
 				$.when( getWikiCategories() ).done(function( wikiCategories ) {
 					$input.autocomplete( $.extend( options.autocomplete, {
 						select: addCategory,
-						source: function( request, response ) {
 
-							// Limit the response to 10 results
-							response( $.ui.autocomplete.filter( wikiCategories, request.term ).slice( 0, 10 ) );
+						// Handle source ourselves so we can limit the number of suggestions
+						source: function( request, response ) {
+							var suggestions = $.ui.autocomplete.filter( wikiCategories, request.term );
+							response( suggestions.slice( 0, options.autocomplete.maxSuggestions ) );
 						}
 					}));
 				});
@@ -442,6 +496,42 @@ $.fn.categorySelect = (function() {
 				.on( 'click.' + namespace, options.removeCategory, removeCategory )
 				.on( 'keypress.' + namespace, options.addCategory, addCategory )
 				.on( 'reset.' + namespace, reset );
+
+			// Setup sortable
+			if ( options.sortable ) {
+				$categories.sortable( $.extend( options.sortable, {
+					update: function ( event, ui ) {
+						var categories = categorySelect.state.categories,
+							fromIndex = ui.item.data( 'index' ),
+							category = categories[ fromIndex ],
+							toIndex = ui.item.next( '.category' );
+
+						if ( toIndex.length ) {
+							toIndex = toIndex.data( 'index' );
+
+						} else {
+							toIndex = categories.length - 1;
+						}
+
+						// Update categories array
+						categorySelect.moveCategory( fromIndex, toIndex );
+
+						// Update list item indexes
+						$categories.find( options.category ).each(function( i ) {
+							$( this ).data( 'index', i );
+						});
+
+						notifyListeners( 'sort', {
+							category: category,
+							element: ui.item,
+							fromIndex: fromIndex,
+							toIndex: toIndex
+						});
+
+						notifyListeners( 'update' );
+					}
+				}));
+			}
 
 			// Setup autocomplete immediately if initialization was from focus on addCategory
 			if ( options.event && options.event.type == 'focusin' && $( options.event.currentTarget ).is( options.addCategory ) ) {
@@ -456,14 +546,23 @@ $.fn.categorySelect = (function() {
 
 $.fn.categorySelect.options = {
 	autocomplete: {
-		appendTo: '.CategorySelect'
+		appendTo: '.CategorySelect',
+		maxSuggestions: 10
 	},
 	categories: '.categories',
 	category: '.category',
 	data: [],
 	addCategory: '.addCategory',
 	editCategory: '.editCategory',
-	removeCategory: '.removeCategory'
+	removeCategory: '.removeCategory',
+	sortable: {
+		axis: 'y',
+		containment: 'parent',
+		handle: '.name',
+		items: '.category',
+		placeholder: 'placeholder',
+		tolerance: 'pointer'
+	}
 };
 
 /**

@@ -12,6 +12,8 @@
 // Width of the content inside of the right rail module
 $categoryselect-width: $width-epl-module-input - 10;
 
+$categoryselect-color-placeholder: darken( $color-epl-input, 2% );
+
 .CategorySelect {
 	.addCategory,
 	.categories {
@@ -30,18 +32,25 @@ $categoryselect-width: $width-epl-module-input - 10;
 		overflow: auto;
 	}
 
-	.category {
+	.category,
+	.placeholder {
 		@include border-radius( 4px );
-		color: $color-text;
 		display: block;
+		padding: 0 5px;
+	}
+
+	.category {
+		color: $color-text;
 		line-height: 25px;
 		margin: 0;
-		padding: 0 5px;
 		position: relative;
 
-		&:hover {
+		&:hover,
+		&.ui-sortable-helper {
 			background-color: $color-epl-hover;
+		}
 
+		&:hover {
 			.name {
 				width: $categoryselect-width - 60;
 			}
@@ -54,8 +63,14 @@ $categoryselect-width: $width-epl-module-input - 10;
 
 	.name {
 		@include ellipses;
+		cursor: move;
 		display: inline-block;
 		width: 100%;
+	}
+
+	.placeholder {
+		height: 25px;
+		background-color: $categoryselect-color-placeholder;
 	}
 
 	.tool {

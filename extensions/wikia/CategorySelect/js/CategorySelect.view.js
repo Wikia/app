@@ -23,6 +23,7 @@
 		function initialize( event ) {
 			$.when(
 				mw.loader.use( 'jquery.ui.autocomplete' ),
+				mw.loader.use( 'jquery.ui.sortable' ),
 				$.getResources([
 					wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js',
 					wgResourceBasePath + '/resources/wikia/libraries/mustache/mustache.js'

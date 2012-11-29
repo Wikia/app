@@ -43,7 +43,6 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 
 		}).on( 'update.' + namespace, function( event, state ) {
 			$categories.val( JSON.stringify( state.categories ) );
-
 		});
 	}
 });

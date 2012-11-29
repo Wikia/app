@@ -91,8 +91,8 @@ class CategorySelectController extends WikiaController {
 
 		$this->response->setVal( 'categories', $categories );
 
+		$this->response->addAsset( 'categoryselect_edit_js' );
 		$this->response->addAsset( 'extensions/wikia/CategorySelect/css/CategorySelect.edit.scss' );
-		$this->response->addAsset( 'extensions/wikia/CategorySelect/js/CategorySelect.js' );
 	}
 
 	/**
