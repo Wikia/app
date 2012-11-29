@@ -1,5 +1,6 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/buttons";
+@import "skins/oasis/css/wikiagrid";
 
 .ve-ce-phantom {
 	background-image: -webkit-repeating-linear-gradient(-45deg, $color-page 0px, $color-page 5px, $color-buttons 5px, $color-buttons 10px );
@@ -24,12 +25,11 @@
 
 
 /* Save dialog styles */
-
 .ve-init-mw-viewPageTarget-saveDialog {
 	display: none;
-	top: 0.25em;
-	right: 0.5em;
-	width: 29em;
+	top: 0;
+	right: 0;
+	width: ( $width-grid-column * 2 ) + $width-grid-gutter;
 	font-family: sans-serif;
 	position: absolute;
 	border: solid 1px #ccc;

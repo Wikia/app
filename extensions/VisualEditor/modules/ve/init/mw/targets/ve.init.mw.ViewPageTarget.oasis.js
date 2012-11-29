@@ -63,6 +63,8 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	this.section = currentUri.query.vesection || null;
 	this.viewUri = new mw.Uri( mw.util.wikiGetlink( this.pageName ) );
 
+	this.$disabledElements = $( '#WikiHeader, #WikiaPageHeader, #WikiaRail, #WikiaArticleCategories' );
+
 	// Initialization
 	if ( this.canBeActivated ) {
 		this.setupEditLinks();
@@ -136,9 +138,6 @@ ve.init.mw.ViewPageTarget.saveDialogTemplate = '\
 		</button>\
 		<div class="ve-init-mw-viewPageTarget-saveDialog-saving"></div>\
 		<div style="clear: both;"></div>\
-	</div>\
-	<div class="ve-init-mw-viewPageTarget-saveDialog-foot">\
-		<p class="ve-init-mw-viewPageTarget-saveDialog-license"></p>\
 	</div>';
 
 /* Methods */
@@ -256,7 +255,7 @@ ve.init.mw.ViewPageTarget.prototype.mutePageContent = function () {
 	$( '#mw-content-text' )
 		.addClass( 've-init-mw-viewPageTarget-content' )
 		.fadeTo( 'fast', 0.35 );
-	$( '#WikiHeader, #WikiaPageHeader, #WikiaRail, #WikiaArticleCategories' ).fadeTo( 'fast', 0.35 ).each(function() {
+	this.$disabledElements.fadeTo( 'fast', 0.35 ).each(function() {
 		$(this).append( '<div class="oasis-interface-shield"></div>' );
 	});
 };
@@ -483,7 +482,8 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 			.end()
 		.find( '.ve-init-mw-viewPageTarget-saveDialog-saveButton-label' )
 			.text( ve.msg( 'savearticle' ) )
-			.end()
+			.end();
+		/*
 		.find( '.ve-init-mw-viewPageTarget-saveDialog-license' )
 			// FIXME license text is hardcoded English
 			.html(
@@ -496,6 +496,7 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 				used on this site.\
 				<b>DO NOT SUBMIT COPYRIGHTED WORK WITHOUT PERMISSION!</b>'
 			);
+		*/
 	viewPage.$saveDialogSaveButton = viewPage.$saveDialog
 		.find( '.ve-init-mw-viewPageTarget-saveDialog-saveButton' );
 	viewPage.$saveDialogLoadingIcon = viewPage.$saveDialog
@@ -702,7 +703,7 @@ ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function () {
 	this.showPageContent();
 	this.showTableOfContents();
 	$('.oasis-interface-shield').remove();
-	$( '#WikiHeader, #WikiaPageHeader, #WikiaRail' ).fadeTo( 'fast', 1 );
+	this.$disabledElements.fadeTo( 'fast', 1 );
 	// Remove handler if it's still active
 	this.surface.getModel().removeListener( 'transact', this.proxiedOnSurfaceModelTransact );
 	// Destroy editor
@@ -803,7 +804,7 @@ ve.init.mw.ViewPageTarget.prototype.onLoadError = function ( response, status ) 
 		this.showTableOfContents();
 		this.showPageContent();
 		$('.oasis-interface-shield').remove();
-		$( '#WikiHeader, #WikiaPageHeader, #WikiaRail' ).fadeTo( 'fast', 1 );
+		this.$disabledElements.fadeTo( 'fast', 1 );
 		this.$fakeToolbar.remove();
 		this.$fakeToolbar = null;
 	}
