@@ -44,7 +44,6 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	 */
 	protected function resolveRedirect( $title ) {
 		wfProfileIn(__METHOD__);
-		$origTitle = $title;
 		if ( $title instanceof GlobalTitle ) {
 			if ( $title->isRedirect() ) {
 				$target = $title->getRedirectTarget();

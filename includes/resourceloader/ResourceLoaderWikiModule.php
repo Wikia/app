@@ -31,6 +31,9 @@ defined( 'MEDIAWIKI' ) || die( 1 );
  */
 abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 
+	// Wikia change - added - @author: wladek
+	const MTIMES_CACHE_TTL = 60;
+
 	/* Protected Members */
 
 	# Origin is user-supplied code
@@ -192,6 +195,7 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 	 * @return array( prefixed DB key => UNIX timestamp ), nonexistent titles are dropped
 	 */
 	protected function getTitleMtimes( ResourceLoaderContext $context ) {
+		global $wgMemc;
 		wfProfileIn(__METHOD__);
 		$hash = $context->getHash();
 		if ( isset( $this->titleMtimes[$hash] ) ) {
@@ -199,7 +203,25 @@ abstract class ResourceLoaderWikiModule extends ResourceLoaderModule {
 			return $this->titleMtimes[$hash];
 		}
 
+		// Wikia change - begin - @author: wladek
+		$memcKey = null; // silence PHPStorm
+		if ( !$context->getDebug() ) {
+			$memcKey = wfMemcKey('ResourceLoaderWikiModule','mtimes',$this->getName(),md5($hash));
+			$mtimes = $wgMemc->get($memcKey);
+			if ( is_array($mtimes) ) {
+				wfProfileOut(__METHOD__);
+				return $mtimes;
+			}
+		}
+		// Wikia change - end
+
 		$this->titleMtimes[$hash] = $this->reallyGetTitleMtimes( $context );
+
+		// Wikia change - begin - @author: wladek
+		if ( !$context->getDebug() ) {
+			$wgMemc->set($memcKey,$this->titleMtimes[$hash],self::MTIMES_CACHE_TTL);
+		}
+		// Wikia change - end
 
 		wfProfileOut(__METHOD__);
 		return $this->titleMtimes[$hash];
