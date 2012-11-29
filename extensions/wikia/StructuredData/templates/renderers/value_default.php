@@ -8,6 +8,9 @@
 			<input type="hidden" value="<?=$value;?>" name="<?php echo isset($params['fieldName']) ? $params['fieldName'] : $object->getPropertyName() ;?>" />
 		<?php elseif ( !is_object( $value ) ) : ?>
 			<input type="text" value="<?=$value;?>" name="<?php echo isset($params['fieldName']) ? $params['fieldName'] : $object->getPropertyName() ;?>" />
+			<?php if ($object->getType()->isCollection()) : ?>
+				<button class="secondary remove">Remove</button>
+			<?php endif; ?>
 		<?php elseif ( isset( $value->id ) && ( !empty( $value->id ) ) ) : ?>
 			<input type="hidden" name="<?=$params['fieldName'];?>" value="<?=$value->id;?>" />
 		<?php endif; ?>
