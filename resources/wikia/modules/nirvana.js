@@ -8,13 +8,15 @@
 
 	function nirvana($) {
 		function sendRequest(attr) {
-			var type = (typeof attr.type == 'undefined') ? 'POST' : attr.type.toUpperCase();
-			var format = (typeof attr.format == 'undefined') ?  'json' : attr.format.toLowerCase();
-			var data = (typeof attr.data == 'undefined') ? {} : attr.data;
-			var callback = (typeof attr.callback == 'undefined') ? function(){} : attr.callback;
-			var onErrorCallback = (typeof attr.onErrorCallback == 'undefined') ? function(){} : attr.onErrorCallback;
+			var type = (typeof attr.type === 'undefined') ? 'POST' : attr.type.toUpperCase(),
+				format = (typeof attr.format === 'undefined') ?  'json' : attr.format.toLowerCase(),
+				data = (typeof attr.data === 'undefined') ? {} : attr.data,
+				callback = (typeof attr.callback === 'undefined') ? function(){} : attr.callback,
+				onErrorCallback = (typeof attr.onErrorCallback === 'undefined') ? function(){} : attr.onErrorCallback,
+				url,
+				getUrl;
 
-			if((typeof attr.controller == 'undefined') || (typeof attr.method == 'undefined')) {
+			if((typeof attr.controller === 'undefined') || (typeof attr.method === 'undefined')) {
 				throw "controller and method are required";
 			}
 
@@ -22,9 +24,9 @@
 				throw "Only Json,Jsonp and Html format are allowed";
 			}
 
-			var url = (typeof attr.scriptPath == 'undefined') ? wgScriptPath : attr.scriptPath;
+			url = (typeof attr.scriptPath === 'undefined') ? context.wgScriptPath : attr.scriptPath;
 
-			var getUrl = {
+			getUrl = {
 				//Iowa strips out POST parameters, Nirvana requires these to be set
 				//so we're passing them in the GET part of the request
 				controller: attr.controller.replace(/Controller$/, ''),
@@ -53,31 +55,10 @@
 			});
 		}
 
-		function getJson(controller, method, data, callback, onErrorCallback) {
-			return ajaxJson(
-				controller,
-				method,
-				data,
-				callback,
-				onErrorCallback,
-				'GET'
-			);
-		}
-
-		function postJson(controller, method, data, callback, onErrorCallback) {
-			return ajaxJson(
-				controller,
-				method,
-				data,
-				callback,
-				onErrorCallback,
-				'POST'
-			);
-		}
-
+		// "private" (used by getJson and postJson)
 		function ajaxJson(controller, method, data, callback, onErrorCallback, requestType) {
 			// data parameter can be omitted
-			if ( typeof data == 'function' ) {
+			if ( typeof data === 'function' ) {
 				callback = data;
 				data = {};
 			}
@@ -93,11 +74,31 @@
 			});
 		}
 
+		function getJson(controller, method, data, callback, onErrorCallback) {
+			return ajaxJson(
+				controller,
+				method,
+				data,
+				callback,
+				onErrorCallback,
+				'GET'
+			);
+		}
+		function postJson(controller, method, data, callback, onErrorCallback) {
+			return ajaxJson(
+				controller,
+				method,
+				data,
+				callback,
+				onErrorCallback,
+				'POST'
+			);
+		}
+
 		return {
 			sendRequest: sendRequest,
 			getJson: getJson,
-			postJson: postJson,
-			ajaxJson: ajaxJson
+			postJson: postJson
 		};
 	}
 
