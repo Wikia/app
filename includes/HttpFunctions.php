@@ -171,7 +171,15 @@ class MWHttpRequest {
 	protected $postData = null;
 	protected $proxy = null;
 	protected $noProxy = false;
-	protected $sslVerifyHost = true;
+	/**
+	 * Parameter passed to Curl that specifies whether
+	 * to validate SSL certificates.
+	 *
+	 * Setting to 0 disables entirely. Setting to 1 checks
+	 * the existence of a CN, but doesn't verify it. Setting
+	 * to 2 (the default) actually verifies the host.
+	 */
+	protected $sslVerifyHost = 2;
 	protected $sslVerifyCert = true;
 	protected $caInfo = null;
 	protected $method = "GET";
