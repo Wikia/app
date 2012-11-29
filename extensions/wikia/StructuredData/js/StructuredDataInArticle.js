@@ -1,6 +1,6 @@
 $('button.add-wikiText-SDObj-from-article').click(function() {
 	var objectId = $(this).data('object-id'),
-		objectPropName = $(this).data('object-prop-name'),
+		objectPropName = $(this).data('prop-name'),
 		modalTitle = 'Add new WikiText Object',
 		modalHtml = '<form class="WikiaForm"><div class="input-group"><label>Name:</label><input type="text" value="" name="schema:name"></div><div class="input-group"><label>WikiText:</label><textarea name="schema:text"></textarea></div></form>',
 		modalId = 'AddWikiTextSDObject',
