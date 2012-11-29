@@ -173,6 +173,9 @@ $config['jquery'] = array(
 $config['oasis_jquery'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		// AMD modules
+		'//resources/wikia/modules/jquery.js',
+
 		// polyfills
 		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
 		'//resources/wikia/polyfills/array.js',
