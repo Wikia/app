@@ -22,7 +22,7 @@ $('button.add-wikiText-SDObj-from-article').click(function() {
 							//console.log($modalSelector.find('input[name="schema:name"]').val());
 							$.nirvana.sendRequest({
 								controller: 'StructuredDataController',
-								method: 'createWikiTextObjFromArticle',
+								method: 'createReferencedObject',
 								type: 'POST',
 								format: 'json',
 								data: {

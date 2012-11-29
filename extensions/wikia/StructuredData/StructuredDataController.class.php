@@ -319,7 +319,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		}
 	}
 
-	public function createWikiTextObjFromArticle() {
+	public function createReferencedObject() {
 		$this->getResponse()->setFormat( 'json' );
 
 		$objectName = $this->request->getVal('schema:name', false);
