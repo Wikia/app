@@ -13,8 +13,8 @@
 				'redirs' => $redirs,
 				'params' => isset( $profile['parameters'] ) ? $profile['parameters'] + array('fulltext'=>'Search') : array('fulltext'=>'Search') ) );
 			?>
+			<? // Image/Video tab options ?>
 			<? if( $activeTab == $profileId && $profile['namespaces'][0] == '6' ) { ?>
-<!-- TODO: Move below to new template ? -->
 
 				<div class="search-filter-sort" id="file-search-filter-sort">
 					<p><?= wfMessage('wikiasearch-filter-options-label') ?>:</p>

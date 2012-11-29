@@ -9,10 +9,24 @@ var WikiaSearch = {
 			hiddenInputs.remove();
 		});
 		
-		var advancedDiv = $('#AdvancedSearch');
+		var advancedDiv = $('#AdvancedSearch'),
+			advancedInput = advancedDiv.find('input[name="advanced"]'),
+			advancedCheckboxes = advancedDiv.find('input[type="checkbox"]');
+			
 		$('#advanced-link').on('click', function(e) {
 			e.preventDefault();
-			advancedDiv.toggleClass('hidden');
+			advancedDiv.slideToggle('fast', function() {
+				var $this = $(this),
+					isVisible = $this.is(':visible');
+				
+				// update hidden input
+				advancedInput.val(Number(isVisible));
+				
+				if(!isVisible) {
+					advancedCheckboxes.attr('checked', false);
+				}
+				
+			});
 		});
 		
 		this.initVideoTabEvents();
