@@ -31,8 +31,9 @@ $app->registerController('MarketingToolboxController', $dir.'MarketingToolboxCon
 $app->registerClass('MarketingToolboxModel', $dir.'models/MarketingToolboxModel.class.php');
 $app->registerClass('MarketingToolboxUserPropertiesHandler', $dir.'models/MarketingToolboxUserPropertiesHandler.class.php');
 
-$app->registerClass('MarketingToolboxModule', $dir.'modules/MarketingToolboxModule.class.php');
-$app->registerClass('MarketingToolboxModulePulse', $dir.'modules/MarketingToolboxModulePulse.class.php');
+$app->registerClass('MarketingToolboxModuleService', $dir.'modules/MarketingToolboxModuleService.class.php');
+$app->registerClass('MarketingToolboxModuleSliderService', $dir.'modules/MarketingToolboxModuleSliderService.class.php');
+$app->registerClass('MarketingToolboxModulePulseService', $dir.'modules/MarketingToolboxModulePulseService.class.php');
 
 WikiaUserPropertiesController::registerHandler('MarketingToolboxUserPropertiesHandler');
 

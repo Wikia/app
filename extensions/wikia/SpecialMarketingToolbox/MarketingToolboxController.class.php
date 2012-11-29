@@ -102,7 +102,15 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHub.js');
 
 		$data = array();
-		$module = MarketingToolboxModule::getModuleByName($modulesData['activeModuleName']);
+		$module = MarketingToolboxModuleService::getModuleByName($modulesData['activeModuleName']);
+
+		if ($this->request->wasPosted()) {
+			if ($module->validate($data)) {
+				// TODO save & redirect to next module
+			} else {
+				// set error message
+			}
+		}
 
 		$this->moduleContent = $module->renderEditor($data);
 
