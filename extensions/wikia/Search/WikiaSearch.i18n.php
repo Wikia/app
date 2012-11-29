@@ -35,6 +35,18 @@ $messages['en'] = array(
 	'wikiasearch2-tabs-photos-and-videos' => 'Photos and Videos',
 	'wikiasearch2-users' => 'People',
 	'wikiasearch2-users-tooltip' => 'Search in Users',
+	'wikiasearch-filter-options-label' => 'Filtering Options',
+	'wikiasearch-sort-options-label' => 'Sorting Options',
+	'wikiasearch-filter-all' => 'All Files',
+	'wikiasearch-filter-category' => 'Category',
+	'wikiasearch-filter-hd' => 'HD Only',
+	'wikiasearch-filter-photos' => 'Photos Only',
+	'wikiasearch-filter-videos' => 'Videos Only',
+	'wikiasearch-sort-relevancy' => 'Relevancy',
+	'wikiasearch-sort-publish-date' => 'Publish Date',
+	'wikiasearch-sort-duration' => 'Duration',
+	
+	
 
 	'wikiamobile-wikiasearch2-next' => 'Next',
 	'wikiamobile-wikiasearch2-prev' => 'Previous',
