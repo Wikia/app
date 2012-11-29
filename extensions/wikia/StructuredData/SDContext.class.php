@@ -50,6 +50,8 @@ class SDContext extends WikiaObject {
 					// @todo - error handling
 					return false;
 				}
+			} else {
+				$this->objectDescriptions[$elementType] = $objectDescriptionData;
 			}
 		}
 
