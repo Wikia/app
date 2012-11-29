@@ -4,8 +4,10 @@ class UserProfilePageTest extends WikiaBaseTest {
 	const TEST_WIKI_ID = 111;
 	const TEST_CAPTION = 'Test caption';
 
+	private $skinOrg;
+
 	public function setUp() {
-		$this->setupFile = __DIR__ . '/../UserProfilePage.class.php';
+		$this->setupFile = __DIR__ . '/../UserProfilePage.setup.php';
 		parent::setUp();
 	}
 

@@ -1,13 +1,11 @@
 <?php
-// TODO: move to /extensions/wikia/RTE/tests
 class ReverseParserTest extends WikiaBaseTest {
 
 	/* @var RTEReverseParser */
-	var $reverseParser;
+	private $reverseParser;
 
 	function setUp() {
-		global $IP;
-		$this->setupFile = "$IP/extensions/wikia/RTE/RTE.class.php";
+		$this->setupFile = __DIR__ . "/..//RTE_setup.php";
 		parent::setUp();
 
 		$this->reverseParser = new RTEReverseParser();

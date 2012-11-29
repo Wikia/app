@@ -7,7 +7,7 @@ class HelloWorldTest extends WikiaBaseTest {
 	const TEST_URL = 'http://test.wikia.com';
 
 	public function setUp() {
-		$this->setupFile =  __DIR__ . '/../HelloWorld.class.php';
+		$this->setupFile =  __DIR__ . '/../HelloWorld.setup.php';
 		parent::setUp();
 	}
 

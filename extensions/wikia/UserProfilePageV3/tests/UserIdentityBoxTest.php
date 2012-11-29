@@ -4,7 +4,7 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	const TOP_WIKI_LIMIT = 5;
 
 	public function setUp() {
-		$this->setupFile = __DIR__ . '/../UserIdentityBox.class.php';
+		$this->setupFile = __DIR__ . '/../UserProfilePage.setup.php';
 		parent::setUp();
 	}
 

@@ -1,10 +1,8 @@
 <?php
-// TODO: move to /extensions/wikia/ImageServing/tests
-class ImageServingUnitTest extends WikiaBaseTest {
+class ImageServingTest extends WikiaBaseTest {
 
 	public function setUp() {
-		global $IP;
-		$this->setupFile ="$IP/extensions/wikia/ImageServing/imageServing.class.php";
+		$this->setupFile = __DIR__ . "/../imageServing.setup.php";
 		parent::setUp();
 	}
 
