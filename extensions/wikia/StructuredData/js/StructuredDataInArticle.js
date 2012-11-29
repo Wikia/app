@@ -15,9 +15,12 @@ $('button.add-wikiText-SDObj-from-article').click(function() {
 				width: modalWidth,
 				buttons: [
 					{
-						defaultButton:true,
-						message:'Add',
+						defaultButton: true,
+						message: 'Add',
+						id: 'addObject',
 						handler:function() {
+							$('#addObject').attr('disabled','disabled');
+
 							var $modalSelector = $('#AddWikiTextSDObject');
 							//console.log($modalSelector.find('input[name="schema:name"]').val());
 							$.nirvana.sendRequest({
@@ -33,7 +36,15 @@ $('button.add-wikiText-SDObj-from-article').click(function() {
 									objectPropName: objectPropName
 								},
 								callback: function(data) {
-									console.log(data);
+									if(data.error) {
+										alert(data.error);
+										$('#addObject').attr('disabled','');
+									}
+									else {
+										var url = window.location.protocol + '//' + window.location.host + window.location.pathname + '?action=purge';
+										$('#AddWikiTextSDObject').closeModal();
+										window.location = url;
+									}
 								}
 							});
 						}
