@@ -19,7 +19,8 @@ class PromoteImageReviewTask extends BatchTask {
 	protected $helper;
 	protected $model; /** @var CityVisualization $model */
 	protected $corporatePagesIds = array();
-	protected $dbNamesToBeSkipped = array('wikiaglobal', 'dewiki');
+	// FIXME: pull dynamic list of visualization pages
+	protected $dbNamesToBeSkipped = array('wikiaglobal', 'dewiki', 'fraccueil', 'corporatespanish');
 
 	function __construct($params = array()) {
 		$this->mType = 'promoteimagereview';
