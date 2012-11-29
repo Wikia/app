@@ -8,11 +8,11 @@
 
 	function nirvana($) {
 		function sendRequest(attr) {
-			var type = (typeof attr.type === 'undefined') ? 'POST' : attr.type.toUpperCase(),
-				format = (typeof attr.format === 'undefined') ?  'json' : attr.format.toLowerCase(),
-				data = (typeof attr.data === 'undefined') ? {} : attr.data,
-				callback = (typeof attr.callback === 'undefined') ? function(){} : attr.callback,
-				onErrorCallback = (typeof attr.onErrorCallback === 'undefined') ? function(){} : attr.onErrorCallback,
+			var type = (attr.type || 'POST').toUpperCase(),
+				format = (attr.format || 'json').toLowerCase(),
+				data = attr.data || {},
+				callback = attr.callback || function() {},
+				onErrorCallback = attr.onErrorCallback || function() {},
 				url,
 				getUrl;
 
@@ -20,11 +20,11 @@
 				throw "controller and method are required";
 			}
 
-			if( !(format === 'json' || format === 'html'  || format === 'jsonp' ) ) {
+			if( !(format === 'json' || format === 'html' || format === 'jsonp' ) ) {
 				throw "Only Json,Jsonp and Html format are allowed";
 			}
 
-			url = (typeof attr.scriptPath === 'undefined') ? context.wgScriptPath : attr.scriptPath;
+			url = attr.scriptPath || context.wgScriptPath;
 
 			getUrl = {
 				//Iowa strips out POST parameters, Nirvana requires these to be set
