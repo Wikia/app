@@ -89,11 +89,32 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 * Main action for editing hub modules
 	 */
 	public function editHubAction() {
-		$this->prepareLayoutData($this->getVal('moduleId', 1));
+		$this->retriveDataFromUrl();
+		$modulesData = $this->toolboxModel->getModulesData(
+			$this->langCode,
+			$this->sectionId,
+			$this->verticalId,
+			$this->date,
+			$this->selectedModuleId
+		);
+		$this->prepareLayoutData($this->selectedModuleId, $modulesData);
 
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHub.js');
 
+		$data = array();
+		$module = MarketingToolboxModule::getModuleByName($modulesData['activeModuleName']);
+
+		$this->moduleContent = $module->renderEditor($data);
+
 		$this->overrideTemplate('editHub');
+	}
+
+	protected function retriveDataFromUrl() {
+		$this->langCode = $this->getVal('region');
+		$this->verticalId = $this->getVal('verticalId');
+		$this->sectionId = $this->getVal('sectionId');
+		$this->date = $this->getVal('date');
+		$this->selectedModuleId = $this->getVal('moduleId', 1);
 	}
 
 	/**
@@ -101,19 +122,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 *
 	 * @param int $selectedModuleId selected module id
 	 */
-	protected function prepareLayoutData($selectedModuleId) {
-		$this->langCode = $this->getVal('region');
-		$this->verticalId = $this->getVal('verticalId');
-		$this->sectionId = $this->getVal('sectionId');
-		$this->date = $this->getVal('date');
-
-		$modulesData = $this->toolboxModel->getModulesData(
-			$this->langCode,
-			$this->sectionId,
-			$this->verticalId,
-			$this->date,
-			$selectedModuleId
-		);
+	protected function prepareLayoutData($selectedModuleId, $modulesData) {
 		$this->prepareHeaderData($modulesData, $this->date);
 		$this->prepareLeftMenuData($modulesData, $selectedModuleId);
 	}

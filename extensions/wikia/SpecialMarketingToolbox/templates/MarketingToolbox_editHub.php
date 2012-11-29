@@ -9,7 +9,7 @@
 	array('menuItems' => $leftMenuItems)
 ) ?>
 <section class="MarketingToolboxMain">
-edithub
+<?=$moduleContent?>
 <input type="button" class="wmu-show" value="WMU test" />
 </section>
 
