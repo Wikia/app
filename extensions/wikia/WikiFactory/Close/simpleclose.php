@@ -40,7 +40,7 @@ class SimpleCloseWikiMaintenance {
 	 * @access public
 	 */
 	public function execute() {
-		global $wgUploadDirectory, $wgDBname, $wgSolrIndexer;
+		global $wgUploadDirectory, $wgDBname;
 
 		if ( !isset( $this->mOptions['wiki_id'] ) ) {
 			echo "Wiki Id is not valid";

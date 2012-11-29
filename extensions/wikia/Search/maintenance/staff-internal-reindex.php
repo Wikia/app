@@ -5,7 +5,7 @@
  * @addtopackage maintenance
  */
 
-ini_set( "include_path", dirname(__FILE__)."/../../../maintenance/" );
+ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
 require_once( "commandLine.inc" );
 
 include("$IP/extensions/wikia/Search/WikiaSearch.setup.php");

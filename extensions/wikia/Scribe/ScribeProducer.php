@@ -30,13 +30,15 @@ class ScribeProducer {
 		EDIT_CATEGORY 		= 'log_edit',
 		CREATEPAGE_CATEGORY	= 'log_create',
 		UNDELETE_CATEGORY	= 'log_undelete',
-		DELETE_CATEGORY		= 'log_delete';
+		DELETE_CATEGORY		= 'log_delete',
+		REINDEX_CATEGORY	= 'log_reindex';
 
 	const
 		EDIT_CATEGORY_INT 		= 1,
 		CREATEPAGE_CATEGORY_INT	= 2,
 		DELETE_CATEGORY_INT		= 3,
-		UNDELETE_CATEGORY_INT	= 4;
+		UNDELETE_CATEGORY_INT	= 4,
+		REINDEX_CATEGORY_INT	= 5;
 
 	/**
 	 * constructor
@@ -51,6 +53,7 @@ class ScribeProducer {
 			case 'create' 		: $this->mKey = self::CREATEPAGE_CATEGORY; break;
 			case 'delete' 		: $this->mKey = self::DELETE_CATEGORY; break;
 			case 'undelete'		: $this->mKey = self::UNDELETE_CATEGORY; break;
+			case 'reindex'		: $this->mKey = self::REINDEX_CATEGORY; break;
 		}
 
 		$this->mCityId		= $wgCityId;
@@ -447,6 +450,20 @@ class ScribeProducer {
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+	
+	/**
+	 * @see WikiaSearchIndexer::reindexWiki
+	 */
+	public function reindexPage()
+	{
+		wfProfileIn( __METHOD__ );
+		if ( $this->mKey !== self::REINDEX_CATEGORY ) {
+			$this->send_log();
+		} else {
+			throw new Exception( 'This method should only be called by ScribeProducer instances keyed for reindexing' );
+		}
+		wfProfileOut( __METHOD__ );
 	}
 }
 

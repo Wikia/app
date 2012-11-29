@@ -21,6 +21,12 @@ class WikiaSearchIndexer extends WikiaObject {
 	protected $parserHookActive	= false;
 	
 	/**
+	 * Used for querying Solr
+	 * @var Solarium_Client
+	 */
+	protected $client;
+	
+	/**
 	 * Handles dependency injection for solarium client
 	 * @param Solarium_Client $client
 	 */
@@ -277,6 +283,63 @@ class WikiaSearchIndexer extends WikiaObject {
 	}
 	
 	/**
+	 * Emits scribe events for each page to be reindexed by the search backend
+	 * @param int $wid
+	 */
+	public function reindexWiki( $wid ) {
+		try {
+			$dataSource = F::build( 'WikiDataSource', array( $wid ) );
+			$dbHandler = $dataSource->getDB();
+			$rows = $dbHandler->query( "SELECT page_id FROM page" );
+			while ( $page = $dbHandler->fetchObject( $rows ) ) {
+				$sp = F::build( 'ScribeProducer', array( 'reindex', $page->page_id ) );
+				$sp->reindexPage();
+			}
+		} catch ( Exception $e ) {
+			F::build( 'Wikia' )->Log( __METHOD__, '', $e );
+		}
+	}
+	
+	/**
+	 * Deletes all documents containing the provided wiki ID
+	 * Careful, this will alter our index!
+	 * @param int $wid
+	 * @return Solarium_Result|null
+	 */
+	public function deleteWikiDocs( $wid ) {
+		$updateHandler = $this->client->createUpdate();
+		$query = WikiaSearch::valueForField( 'wid', $wid );
+		$updateHandler->addDeleteQuery( $query );
+		$updateHandler->addCommit();
+		try {
+			return $this->client->update( $updateHandler );
+		} catch ( Exception $e ) {
+			F::build( 'Wikia' )->Log( __METHOD__, 'Delete: '.$query, $e);
+		}
+	}
+
+	/**
+	 * Deletes all documents containing one of the provided wiki IDs
+	 * Used in the handle-closed-wikis maintenance script
+	 * Careful, this will alter our index!
+	 * @param  array $wids
+	 * @return Solarium_Result|null
+	 */
+	public function deleteManyWikiDocs( $wids ) {
+		$updateHandler = $this->client->createUpdate();
+		foreach ( $wids as $wid ) {
+			$query = WikiaSearch::valueForField( 'wid', $wid );
+			$updateHandler->addDeleteQuery( $query );
+		}
+		$updateHandler->addCommit();
+		try {
+			return $this->client->update( $updateHandler );
+		} catch ( Exception $e ) {
+			F::build( 'Wikia' )->Log( __METHOD__, 'Delete: '.$query, $e);
+		}
+	}
+	
+	/**
 	 * Given a set of page IDs, deletes by query
 	 * @param  array $documentIds
 	 * @return bool true
@@ -289,7 +352,6 @@ class WikiaSearchIndexer extends WikiaObject {
 		$updateHandler->addCommit();
 	    try {
 	        $this->client->update( $updateHandler );
-	        $confirmationString = implode(' ', $documentIds). ' ' . count( $documentIds ) . " document(s) deleted\n";
 	    } catch ( Exception $e ) {
 	        F::build( 'Wikia' )->Log( __METHOD__, implode( ',', $documentIds ), $e);
 		}
@@ -527,5 +589,26 @@ class WikiaSearchIndexer extends WikiaObject {
 			F::build( 'Wikia' )->log( __METHOD__, '', $e );
 			return true;
 		}
+	}
+	
+	/**
+	 * Issues a reindex event or deletes all docs, depending on whether a wiki is being closed or reopened
+	 * @see    WikiaSearchIndexerTest::testOnWikiFactoryPublicStatusChangeClosed
+	 * @see    WikiaSearchIndexerTest::testOnWikiFactoryPublicStatusChangeOpened
+	 * @todo   Rewrite this to use is_closed_wiki when we can utilize atomic updates
+	 * @param  int    $city_public
+	 * @param  int    $city_id
+	 * @param  string $reason
+	 * @return bool
+	 */
+	public function onWikiFactoryPublicStatusChange( &$city_public, &$city_id, $reason ) {
+		
+		if ( $city_public < 1 ) {
+			$this->deleteWikiDocs( $city_id );
+		} else {
+			$this->reindexWiki( $city_id );
+		}
+		
+		return true;
 	}
 }
