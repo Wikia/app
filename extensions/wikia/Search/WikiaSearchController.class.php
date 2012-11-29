@@ -95,6 +95,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if( ($format == 'json' || $format == 'jsonp') && ($searchConfig->getResultsFound() > 0) ){
 			$searchConfig->setResults( $searchConfig->getResults()->toNestedArray() );
 		}
+
+		$tabsArgs = array( 
+				'config'		=> $searchConfig, 
+				'no_filter'		=> $this->getVal('no_filter', false), 
+				'by_category'	=> $this->getVal('by_category', false) 
+				);
 		
 		$this->setVal( 'results',				$searchConfig->getResults() );
 		$this->setVal( 'resultsFound',			$searchConfig->getResultsFound() );
@@ -103,7 +109,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'pagesCount', 			$searchConfig->getNumPages() );
 		$this->setVal( 'currentPage', 			$searchConfig->getPage() ); 
 		$this->setVal( 'paginationLinks',		$this->sendSelfRequest( 'pagination',  array('config' => $searchConfig) ) ); 
-		$this->setVal( 'tabs', 					$this->sendSelfRequest( 'tabs', array( 'config' => $searchConfig ) ) );
+		$this->setVal( 'tabs', 					$this->sendSelfRequest( 'tabs', $tabsArgs ) );
 		$this->setVal( 'query',					$searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED ) );
 		$this->setVal( 'resultsPerPage',		$searchConfig->getLimit() );
 		$this->setVal( 'pageUrl',				$this->wg->Title->getFullUrl() );
@@ -388,14 +394,35 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	public function tabs() {
 		$config = $this->getVal('config', false);
+		
 		if (! $config || (! $config instanceOf WikiaSearchConfig ) ) {
 		    throw new Exception("This should not be called outside of self-request context.");
 		}
 		
+		$filters = $config->getFilters();
+		$rank = $config->getRank();
+		
+		$form = array(
+				'no_filter' =>          $this->getVal('no_filter', false),
+				'by_category' =>        $this->getVal('by_category', false),
+				'cat_videogames' =>     isset( $filters['cat_videogames'] ),
+				'cat_entertainment' =>  isset( $filters['cat_entertainment'] ),
+				'cat_lifestyle' =>      isset( $filters['cat_lifestyle'] ),
+				'is_hd' =>              isset( $filters['is_hd'] ),
+				'is_image' =>           isset( $filters['is_image'] ),
+				'is_video' =>           isset( $filters['is_video'] ),
+				'sort_default' =>       $rank == 'default',
+				'sort_longest' =>       $rank == 'longest',
+				'sort_newest' =>        $rank == 'newest',
+				'no_filter' =>          !( isset( $filters['is_image'] ) || isset( $filters['is_video'] ) ),
+			);
+
 		$this->setVal( 'bareterm', 			$config->getQuery( WikiaSearchConfig::QUERY_RAW ) );
 		$this->setVal( 'searchProfiles', 	$config->getSearchProfiles() );
 		$this->setVal( 'redirs', 			$config->getIncludeRedirects() );
 		$this->setVal( 'activeTab', 		$config->getActiveTab() );
+		$this->setVal( 'form',				$form );
+		$this->setVal( 'is_video_wiki',		$this->wg->CityId == WikiaSearch::VIDEO_WIKI_ID );
 	}
 
 	/**
