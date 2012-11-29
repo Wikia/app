@@ -44,24 +44,25 @@ ve.ce.AlienBlockNode.rules = {
 
 /* Methods */
 ve.ce.AlienBlockNode.prototype.onMouseEnter = function () {
-	var	$phantoms = $( [] ),
-		$phantomTemplate = ve.ce.Surface.static.$phantomTemplate,
+	var	$phantomTemplate = ve.ce.Surface.static.$phantomTemplate,
 		surface = this.root.getSurface();
+
+	surface.$phantoms.empty();
 
 	this.$.find( '.ve-ce-node-shield' ).each( function () {
 		var	$shield = $( this ),
-			offset = $shield.offset();
-		$phantoms = $phantoms.add(
-			$phantomTemplate.clone().css( {
-				'top': offset.top,
-				'left': offset.left,
+			offset = $shield.offset(),
+			$phantom = $phantomTemplate.clone().css( {
 				'height': $shield.height(),
 				'width': $shield.width(),
 				'background-position': -offset.left + 'px ' + -offset.top + 'px'
-			} )
-		);
+			} );
+		surface.$phantoms.append( $phantom );
+		// Setting offset() traverses through offsetParents.
+		// Must be done after the phantom is added to the DOM.
+		$phantom.offset( offset );
 	} );
-	surface.$phantoms.empty().append( $phantoms );
+
 	surface.$.on( 'mousemove.phantoms', ve.bind( this.onSurfaceMouseMove, this ) );
 };
 
