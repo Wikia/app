@@ -22,8 +22,6 @@ abstract class WikiaApiController extends WikiaController {
 	 */
 	public final function __construct() {
 		parent::__construct();
-
-		$this->checkParameters();
 	}
 
 	/**
