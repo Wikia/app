@@ -14,7 +14,7 @@
 				'params' => isset( $profile['parameters'] ) ? $profile['parameters'] + array('fulltext'=>'Search') : array('fulltext'=>'Search') ) );
 			?>
 			<? // Image/Video tab options ?>
-			<? if( $activeTab == $profileId && $profile['namespaces'][0] == '6' ) { ?>
+			<? if( $activeTab == $profileId && $profile['namespaces'][0] == '6' ): ?>
 
 				<div class="search-filter-sort" id="file-search-filter-sort">
 					<p><?= wfMessage('wikiasearch-filter-options-label') ?>:</p>
@@ -53,7 +53,7 @@
 					
 				</div>
 			
-			<? } ?>
+			<? endif; ?>
 		</li>
 	<?php endforeach; ?>
 </ul>
