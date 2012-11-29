@@ -1,5 +1,5 @@
 <?
-abstract class MarketingToolboxModule {
+abstract class MarketingToolboxModule extends WikiaService {
 	const CLASS_NAME_PREFIX = 'MarketingToolboxModule';
 
 	abstract protected function getValidationRules();
@@ -10,7 +10,7 @@ abstract class MarketingToolboxModule {
 	}
 
 	public function renderEditor($data) {
-		return $this->getView(__METHOD__, $data);
+		return $this->getView('editor', $data);
 	}
 
 	public function save($data) {
@@ -22,9 +22,20 @@ abstract class MarketingToolboxModule {
 		return true;
 	}
 
-	// TODO fix this
-	protected function getView($viewName, $data) {
-		return 'test edit';//$this->app->getView(get_class($this), $viewName, array('data'=> $data));
+	protected function getView($viewName, $data, $viewType = WikiaResponse::FORMAT_HTML) {
+		$request = new WikiaResponse($viewType);
+		$request->setData(array('data' => $data));
+		$request->getView()->setTemplatePath($this->getTemplatePath($viewName));
+
+		return $request->getView();
+	}
+
+	protected function getTemplatePath($viewName) {
+		return __DIR__. DIRECTORY_SEPARATOR .
+			'..' . DIRECTORY_SEPARATOR .
+			'templates' . DIRECTORY_SEPARATOR .
+			'modules' . DIRECTORY_SEPARATOR .
+			get_class($this) . '_' . $viewName . '.php';
 	}
 }
 ?>
