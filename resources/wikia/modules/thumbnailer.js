@@ -13,7 +13,7 @@
 
 	function thumbnailer() {
 		//targets the image file extension
-		var extRegExp = new RegExp('\\.(jpg|jpeg|gif|bmp|png|svg)$', 'i'),
+		var extRegExp = /\\.(jpg|jpeg|gif|bmp|png|svg)$/i,
 			imagePath = '/images/',
 			thumbPath = '/images/thumb/';
 
