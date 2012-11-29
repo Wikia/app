@@ -47,6 +47,14 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-top10-lists' => 'Top 10 lists',
 	'marketing-toolbox-hub-module-popular-videos' => 'Popular videos',
 
+	'marketing-toolbox-hub-module-pulse-wikiurl' => 'Wiki\'s URL',
+	'marketing-toolbox-hub-module-pulse-topic' => 'Topic',
+	'marketing-toolbox-hub-module-pulse-stat1' => 'Stat 1.',
+	'marketing-toolbox-hub-module-pulse-stat2' => 'Stat 2.',
+	'marketing-toolbox-hub-module-pulse-stat3' => 'Stat 3.',
+	'marketing-toolbox-hub-module-pulse-number1' => 'Number 1.',
+	'marketing-toolbox-hub-module-pulse-number2' => 'Number 2.',
+	'marketing-toolbox-hub-module-pulse-number3' => 'Number 3.',
 );
 
 $messages['qqq'] = array(

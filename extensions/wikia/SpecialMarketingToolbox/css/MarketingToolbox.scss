@@ -2,4 +2,18 @@
 
 .MarketingToolboxMain {
 	@include clearfix;
+	.input-group {
+		label {
+			clear: both;
+			float: left;
+			margin-top: 10px;
+			width: 145px;
+		}
+		.headline-wrapper {
+			float: right;
+		}
+		&.url-and-topic input[type="text"] {
+			width: 480px;
+		}
+	}
 }
