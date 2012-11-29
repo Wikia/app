@@ -47,8 +47,10 @@ class WikiaMockProxy {
 
 	}
 
+	// Forget about all the overloaded instances
 	// Restore all the redefined static constructor methods to their original methods
 	static public function cleanup() {
+		WikiaMockProxy::$instances = array();
 		foreach(WikiaMockProxy::$redefined_functions as $className => $function_map) {
 			foreach ($function_map as $savedName => $originalName) {
 				runkit_method_remove($className, $originalName);  // remove the redefined instance
