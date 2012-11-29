@@ -12,6 +12,24 @@ class VisualEditorHooks {
 	/** List of skins VisualEditor integration supports */
 	protected static $supportedSkins = array( /*'vector', 'apex', 'monobook'*/ 'oasis' );
 
+	public static function onSkinTemplateNavigation( &$skin, &$links ) {
+		global $wgVisualEditorNamespaces, $wgTitle;
+		if (
+				in_array( $skin->getSkinName(), self::$supportedSkins ) &&
+				(
+					// Article in the VisualEditor namespace
+					in_array( $skin->getTitle()->getNamespace(), $wgVisualEditorNamespaces ) ||
+					// Special page action for an article in the VisualEditor namespace
+					in_array( $skin->getRelevantTitle()->getNamespace(), $wgVisualEditorNamespaces )
+				)
+		) {
+			if ( $links['views'] && $links['views']['edit'] ) {
+				$links['views']['edit']['href'] = $wgTitle->getLocalURL( array( 'veaction' => 'edit' ) );
+			}
+		}
+		return true;
+	}
+
 	/**
 	 * Adds VisualEditor JS to the output if in the correct namespace.
 	 *

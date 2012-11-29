@@ -62,6 +62,7 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	this.editSummaryByteLimit = 255;
 	this.section = currentUri.query.vesection || null;
 	this.viewUri = new mw.Uri( mw.util.wikiGetlink( this.pageName ) );
+	this.veEditUri = this.viewUri.clone().extend( { 'veaction': 'edit' } );
 
 	this.$disabledElements = $( '#WikiHeader, #WikiaPageHeader, #WikiaRail, #WikiaArticleCategories' );
 
@@ -71,6 +72,9 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 		if ( this.isViewPage ) {
 			this.setupToolbarSaveButton();
 			this.setupSaveDialog();
+			if ( currentUri.query.veaction === 'edit' ) {
+				$( ve.bind( this.activate, this ) );
+			}
 		}
 	}
 };
