@@ -39,16 +39,17 @@ class SDContext extends WikiaObject {
 		}
 
 		if(!empty($elementType)) {
-			$descriptionCacheKey = $this->wf->SharedMemcKey( 'SDContextDescription', $resourceUrl );
+			$descriptionCacheKey = $this->wf->SharedMemcKey( 'SDContextDescription', $elementType );
 			$objectDescriptionData = $this->wg->Memc->get( $descriptionCacheKey );
 			if(empty($objectDescriptionData)) {
 				$objectDescriptionData = $this->APIClient->getObjectDescription( $elementType );
-				$this->objectDescriptions[$elementType] = $objectDescriptionData;
-
-				$this->wg->Memc->set( $descriptionCacheKey, $this->objectDescriptions[$elementType], self::DESCRIPTION_CACHE_TTL );
-			}
-			else {
-				$this->objectDescriptions[$elementType] = $objectDescriptionData;
+				if(!empty($objectDescriptionData)) {
+					$this->objectDescriptions[$elementType] = $objectDescriptionData;
+					$this->wg->Memc->set( $descriptionCacheKey, $this->objectDescriptions[$elementType], self::DESCRIPTION_CACHE_TTL );
+				} else {
+					// @todo - error handling
+					return false;
+				}
 			}
 		}
 
