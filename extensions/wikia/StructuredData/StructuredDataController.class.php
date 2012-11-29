@@ -341,8 +341,6 @@ class StructuredDataController extends WikiaSpecialPageController {
 					$newReference->id = $SDElement->getId();
 
 					$parentProperty->appendValue( $newReference );
-					var_dump($parentProperty);
-					exit;
 					$result = $this->structuredData->updateSDElement($parentSDElement);
 					if( isset( $result->error ) ) {
 						$this->response->setVal( 'error', $result->error );
