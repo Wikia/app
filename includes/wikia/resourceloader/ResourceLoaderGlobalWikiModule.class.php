@@ -73,7 +73,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		if ( !empty( $options['city_id'] ) && $wgCityId != $options['city_id'] ) {
 			list( $text, $namespace ) = $this->parseTitle($realTitleText);
 			if ( $text !== false ) {
-				$title = GlobalTitle::newFromText($text, $namespace, $options['city_id']);
+				$title = GlobalTitle::newFromTextCached($text, $namespace, $options['city_id']);
 			}
 			$title = $this->resolveRedirect($title);
 		} else {
@@ -187,6 +187,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			$pagesData = array();
 			foreach ($pages as $page) {
 				list( $title, $titleText, $options ) = $page;
+				/** @var $title GlobalTitle */
 				$pagesData[$title->getNamespace()][$title->getDBkey()] = true;
 			}
 
@@ -196,7 +197,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 				__METHOD__
 			);
 			foreach ( $res as $row ) {
-				$title = GlobalTitle::newFromText( $row->page_title, $row->page_namespace, $cityId );
+				$title = GlobalTitle::newFromTextCached( $row->page_title, $row->page_namespace, $cityId );
 				$mtimes[$dbName.'::'.$title->getPrefixedDBkey()] =
 					wfTimestamp( TS_UNIX, $row->page_touched );
 			}
