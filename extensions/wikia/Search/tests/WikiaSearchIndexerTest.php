@@ -1339,5 +1339,383 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				"WikiaSearchIndexer::getPage should index the main comment title as the title, not the child comment's page title"
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::reindexWiki
+	 * 
+	 */
+	public function testReindexWiki()
+	{
+		$mockClient		=	$this->getMockBuilder( 'Solarium_Client' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockDbHandler	=	$this->getMockBuilder( 'DatabaseMysql' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'fetchObject', 'query' ) )
+								->getMock();
+		
+		$mockScribeProd	=	$this->getMockBuilder( 'ScribeProducer' )
+								->disableOriginalConstructor()
+								->setMethods( array( '__construct', 'reindexPage' ) )
+								->getMock();
+		$mockDataSource	=	$this->getMockbuilder( 'WikiDataSource' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getDB' ) )
+								->getMock();
+		$mockDbResult	=	$this->getMockBuilder( 'ResultWrapper' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockDataSource
+			->expects	( $this->once() )
+			->method	( 'getDB' )
+			->will		( $this->returnValue( $mockDbHandler ) )
+		;
+		$mockDbHandler
+			->expects	( $this->at( 0 ) )
+			->method	( 'query' )
+			->with		( "SELECT page_id FROM page" )
+			->will		( $this->returnValue( $mockDbResult ) ) 
+		;
+		$mockDbHandler
+			->expects	( $this->at( 1 ) )
+			->method	( 'fetchObject' )
+			->with		( $mockDbResult )
+			->will		( $this->returnValue( (object) array( 'page_id' => 123 ) ) ) 
+		;
+		$mockDbHandler
+			->expects	( $this->at( 2 ) )
+			->method	( 'fetchObject' )
+			->with		( $mockDbResult )
+			->will		( $this->returnValue( null ) ) 
+		;
+		$mockScribeProd
+			->expects	( $this->once() )
+			->method	( 'reindexPage' )
+		;
+		
+		$this->mockClass( 'WikiDataSource', $mockDataSource );
+		$this->mockClass( 'ScribeProducer', $mockScribeProd );
+		$this->mockApp();
 
+		$indexer = new WikiaSearchIndexer( $mockClient );
+		$indexer->reindexWiki( 321 );
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::reindexWiki
+	 * 
+	 */
+	public function testReindexWikiBadWid()
+	{
+		$mockClient		=	$this->getMockBuilder( 'Solarium_Client' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockDbHandler	=	$this->getMockBuilder( 'DatabaseMysql' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'fetchObject', 'query' ) )
+								->getMock();
+		
+		$mockScribeProd	=	$this->getMockBuilder( 'ScribeProducer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'reindexPage' ) )
+								->getMock();
+		$mockDataSource	=	$this->getMockbuilder( 'WikiDataSource' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getDB' ) )
+								->getMock();
+		$mockDbResult	=	$this->getMockBuilder( 'ResultWrapper' )
+								->disableOriginalConstructor()
+								->getMock();
+		$mockWikia		=	$this->getMock( 'Wikia', array( 'log' ) );
+		$mockException	=	$this->getMock( 'Exception' );
+
+		$mockDataSource
+			->expects	( $this->once() )
+			->method	( 'getDB' )
+			->will		( $this->returnValue( $mockDbHandler ) )
+		;
+		$mockDbHandler
+			->expects	( $this->at( 0 ) )
+			->method	( 'query' )
+			->with		( 'SELECT page_id FROM page' )
+			->will		( $this->returnValue( $mockDbResult ) ) 
+		;
+		$mockDbHandler
+			->expects	( $this->at( 1 ) )
+			->method	( 'fetchObject' )
+			->with		( $mockDbResult )
+			->will		( $this->returnValue( (object) array( 'page_id' => 123 ) ) ) 
+		;
+		$mockScribeProd
+			->expects	( $this->once() )
+			->method	( 'reindexPage' )
+			->will		( $this->throwException( $mockException ) )
+		;
+		
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockClass( 'WikiDataSource', $mockDataSource );
+		$this->mockClass( 'ScribeProducer', $mockScribeProd );
+		$this->mockApp();
+		
+		$indexer = new WikiaSearchIndexer( $mockClient );
+		$indexer->reindexWiki( 321 );
+		
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::deleteWikiDocs
+	 */
+	public function testDeleteWikiDocsWorks()
+	{
+		$mockClient		=	$this->getMockBuilder( 'Solarium_Client' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'createUpdate', 'update' ) )
+								->getMock();
+		$mockUpdate		=	$this->getMockBuilder( 'Solarium_Query_Update' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'addDeleteQuery', 'addCommit' ) )
+								->getMock();
+		$mockResult		=	$this->getMockBuilder( 'Solarium_Result' )
+								->disableOriginalConstructor()
+								->getMock(); 
+		
+		$wid = 123;
+		
+		$mockClient
+			->expects	( $this->at( 0 ) )
+			->method	( 'createUpdate' )
+			->will		( $this->returnValue( $mockUpdate ) )
+		;
+		$mockUpdate
+			->expects	( $this->at( 0 ) )
+			->method	( 'addDeleteQuery' )
+			->with		( "(wid:{$wid})" )
+		;
+		$mockUpdate
+			->expects	( $this->at( 1 ) )
+			->method	( 'addCommit' )
+		;
+		$mockClient
+			->expects	( $this->at( 1 ) )
+			->method	( 'update' )
+			->with		( $mockUpdate )
+			->will		( $this->returnValue( $mockResult ) )
+		;
+		
+		$indexer = new WikiaSearchIndexer( $mockClient );
+		
+		$this->assertEquals(
+				$mockResult,
+				$indexer->deleteWikiDocs( $wid ),
+				'WikiaSearchIndexer::deleteWikiDocs should return an instance of Solarium_Result'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::deleteWikiDocs
+	 */
+	public function testDeleteWikiDocsBreaks()
+	{
+		$mockClient		=	$this->getMockBuilder( 'Solarium_Client' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'createUpdate', 'update' ) )
+								->getMock();
+		$mockUpdate		=	$this->getMockBuilder( 'Solarium_Query_Update' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'addDeleteQuery', 'addCommit' ) )
+								->getMock();
+		$mockException	=	$this->getMock( 'Exception' );
+		$mockWikia		=	$this->getMock( 'Wikia' );
+		
+		$wid = 123;
+		
+		$mockClient
+			->expects	( $this->at( 0 ) )
+			->method	( 'createUpdate' )
+			->will		( $this->returnValue( $mockUpdate ) )
+		;
+		$mockUpdate
+			->expects	( $this->at( 0 ) )
+			->method	( 'addDeleteQuery' )
+			->with		( "(wid:{$wid})" )
+		;
+		$mockUpdate
+			->expects	( $this->at( 1 ) )
+			->method	( 'addCommit' )
+		;
+		$mockClient
+			->expects	( $this->at( 1 ) )
+			->method	( 'update' )
+			->with		( $mockUpdate )
+			->will		( $this->throwException( $mockException ) )
+		;
+		
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockApp();
+		
+		$indexer = new WikiaSearchIndexer( $mockClient );
+		
+		$indexer->deleteWikiDocs( $wid );
+
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::deleteManyWikiDocs
+	 */
+	public function testDeleteManyWikiDocsWorks()
+	{
+		$mockClient		=	$this->getMockBuilder( 'Solarium_Client' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'createUpdate', 'update' ) )
+								->getMock();
+		$mockUpdate		=	$this->getMockBuilder( 'Solarium_Query_Update' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'addDeleteQuery', 'addCommit' ) )
+								->getMock();
+		$mockResult		=	$this->getMockBuilder( 'Solarium_Result' )
+								->disableOriginalConstructor()
+								->getMock(); 
+		
+		$wid = 123;
+		
+		$mockClient
+			->expects	( $this->at( 0 ) )
+			->method	( 'createUpdate' )
+			->will		( $this->returnValue( $mockUpdate ) )
+		;
+		$mockUpdate
+			->expects	( $this->at( 0 ) )
+			->method	( 'addDeleteQuery' )
+			->with		( "(wid:{$wid})" )
+		;
+		$mockUpdate
+			->expects	( $this->at( 1 ) )
+			->method	( 'addCommit' )
+		;
+		$mockClient
+			->expects	( $this->at( 1 ) )
+			->method	( 'update' )
+			->with		( $mockUpdate )
+			->will		( $this->returnValue( $mockResult ) )
+		;
+		
+		$indexer = new WikiaSearchIndexer( $mockClient );
+		
+		$this->assertEquals(
+				$mockResult,
+				$indexer->deleteManyWikiDocs( array( $wid ) ),
+				'WikiaSearchIndexer::deleteWikiDocs should return an instance of Solarium_Result'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::deleteManyWikiDocs
+	 */
+	public function testDeleteManyWikiDocsBreaks()
+	{
+		$mockClient		=	$this->getMockBuilder( 'Solarium_Client' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'createUpdate', 'update' ) )
+								->getMock();
+		$mockUpdate		=	$this->getMockBuilder( 'Solarium_Query_Update' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'addDeleteQuery', 'addCommit' ) )
+								->getMock();
+		$mockException	=	$this->getMock( 'Exception' );
+		$mockWikia		=	$this->getMock( 'Wikia' );
+		
+		$wid = 123;
+		
+		$mockClient
+			->expects	( $this->at( 0 ) )
+			->method	( 'createUpdate' )
+			->will		( $this->returnValue( $mockUpdate ) )
+		;
+		$mockUpdate
+			->expects	( $this->at( 0 ) )
+			->method	( 'addDeleteQuery' )
+			->with		( "(wid:{$wid})" )
+		;
+		$mockUpdate
+			->expects	( $this->at( 1 ) )
+			->method	( 'addCommit' )
+		;
+		$mockClient
+			->expects	( $this->at( 1 ) )
+			->method	( 'update' )
+			->with		( $mockUpdate )
+			->will		( $this->throwException( $mockException ) )
+		;
+		
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockApp();
+		
+		$indexer = new WikiaSearchIndexer( $mockClient );
+		
+		$indexer->deleteManyWikiDocs( array( $wid ) );
+
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::onWikiFactoryPublicStatusChange
+	 * @todo update this when we move to solr 4.0 to atomically set all documents in that wiki to is_closed_wiki:false
+	 */
+	public function testOnWikiFactoryPublicStatusChangeOpened()
+	{
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'reindexWiki', 'deleteWikiDocs' ) )
+								->getMock();
+		
+		$cityId = 123;
+		$status = 1;
+		
+		$mockIndexer
+			->expects	( $this->once() )
+			->method	( 'reindexWiki' )
+		;
+		$mockIndexer
+			->expects	( $this->never() )
+			->method	( 'deleteWikiDocs' )
+		;
+		
+		$this->assertTrue(
+				$mockIndexer->onWikiFactoryPublicStatusChange( $status, $cityId, 'opening it cause i said so' ),
+				'WikiaSearchIndexer::onWikiFactoryPublicStatusChange should return true'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::onWikiFactoryPublicStatusChange
+	 * @todo update this when we move to solr 4.0 to atomically set all documents in that wiki to is_closed_wiki:true
+	 */
+	public function testOnWikiFactoryPublicStatusChangeClosed()
+	{
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'reindexWiki', 'deleteWikiDocs' ) )
+								->getMock();
+		
+		$cityId = 123;
+		$status = 0;
+		
+		$mockIndexer
+			->expects	( $this->once() )
+			->method	( 'deleteWikiDocs' )
+			->with		( $cityId )
+		;
+		$mockIndexer
+			->expects	( $this->never() )
+			->method	( 'reindexWiki' )
+		;
+		
+		$this->assertTrue(
+				$mockIndexer->onWikiFactoryPublicStatusChange( $status, $cityId, 'closing it cause i said so' ),
+				'WikiaSearchIndexer::onWikiFactoryPublicStatusChange should return true'
+		);
+	}
+	
 }
