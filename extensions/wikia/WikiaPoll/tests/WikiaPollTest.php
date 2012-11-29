@@ -7,7 +7,6 @@ class WikiaPollTest extends WikiaBaseTest {
 	}
 
 	public function testWikiaPollAjaxCreate() {
-$this->markTestSkipped("proxyClass is not working");
 		$poll = new WikiaPollAjax;
 
 		$mockTitle = $this->getMock('Title', array('exists'));
@@ -53,7 +52,6 @@ $this->markTestSkipped("proxyClass is not working");
 	}
 
 	public function testWikiaPollAjaxGet() {
-$this->markTestSkipped("proxyClass is not working");
 
 		// Second part of test is to see if we can "get" the same poll we created
 		$poll = new WikiaPollAjax;
@@ -90,7 +88,6 @@ $this->markTestSkipped("proxyClass is not working");
 
 	public function testWikiaPollAjaxUpdate() {
 		// Third part of test is to update the poll we've got and see if that works too
-$this->markTestSkipped("proxyClass is not working");
 
 		$wgRequest = $this->getMock('WebRequest', array('getInt', 'getArray'));
 		$wgRequest->expects($this->any())
@@ -135,7 +132,6 @@ $this->markTestSkipped("proxyClass is not working");
 
 	public function testWikiaPollAjaxVote() {
 		// Fourth part of test is to register a vote for an item
-$this->markTestSkipped("proxyClass is not working");
 
 		$wgRequest = $this->getMock('WebRequest', array('getVal'));
 		$wgRequest->expects($this->at(0))
@@ -190,7 +186,6 @@ $this->markTestSkipped("proxyClass is not working");
 	}
 
 	function testDuplicateCreate() {
-$this->markTestSkipped("proxyClass is not working");
 		$poll = new WikiaPollAjax();
 
 		$mockTitle = $this->getMock('Title', array('exists'));
