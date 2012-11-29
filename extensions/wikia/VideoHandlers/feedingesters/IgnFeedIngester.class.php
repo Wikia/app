@@ -3,7 +3,6 @@
 class IgnFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'IgnApiWrapper';
 	protected static $PROVIDER = 'ign';
-	//protected static $FEED_URL = 'http://apis.ign.com/partners/wikia/video/v3/videos?fromDate=$1&toDate=$2';
 	protected static $FEED_URL = 'http://apis.ign.com/partners/v3/wikia?fromDate=$1&toDate=$2';
 	protected static $CLIP_TYPE_BLACKLIST = array();
 
@@ -213,6 +212,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 		);
 		curl_setopt($req, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($req, CURLOPT_VERBOSE, 1);
+		curl_setopt($req, CURLOPT_STDERR, STDOUT);
 		$ret = curl_exec($req);
 		if(!curl_errno($req)){
 			$info = curl_getinfo($req);
@@ -222,8 +222,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 		}
 
 		curl_close($req);
-		echo "Data received:\n";
-		var_dump($ret);
 		return $ret;
 		/*
 		$options = array(
