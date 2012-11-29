@@ -61,6 +61,7 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 		$( '<div class="ve-init-mw-viewPageTarget-saveDialog"></div>' );
 	this.editSummaryByteLimit = 255;
 	this.section = currentUri.query.vesection || null;
+	this.viewUri = new mw.Uri( mw.util.wikiGetlink( this.pageName ) );
 
 	// Initialization
 	if ( this.canBeActivated ) {
