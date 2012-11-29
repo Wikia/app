@@ -1677,6 +1677,7 @@ class WallHooksHelper {
 			'articleTitleVal' => $articleTitleTxt,
 			'articleTitleTxt' => empty($articleTitleTxt) ? wfMsg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
 			'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
+			'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
 			'wallPageName' => $wm->getArticleTitle()->getText(),
 			'actionUser' => $userText,
 			'isThread' => $wm->isMain(),
