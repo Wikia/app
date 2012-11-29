@@ -33,7 +33,7 @@
 	padding: 0;
 	text-align: left;
 }
-.TOC_hide #toc ul, .TOC_hide .toc ul {
+.TOC_hide #toctitle + ul {
 	display: none;
 }
 #toc ul ul,

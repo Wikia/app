@@ -502,7 +502,7 @@ table.wikitable {
 	}
 }
 
-.TOC_hide .toc ul {
+.TOC_hide #toctitle + ul {
 	display: none;
 }
 
