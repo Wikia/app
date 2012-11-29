@@ -2027,6 +2027,9 @@ class WallHooksHelper {
 			if(!$db->tableExists('wall_related_pages')) {
 				$db->sourceFile($IP."/extensions/wikia/Wall/sql/wall_related_pages.sql");
 			}
+			
+			$nm = new NavigationModel();
+			$nm->clearMemc( NavigationModel::WIKIA_GLOBAL_VARIABLE );
 		}
 		return true;
 	}
