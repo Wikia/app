@@ -355,8 +355,62 @@ $.fn.categorySelect = (function() {
 		return this.each(function() {
 			var categories = [],
 				$element = $( this ),
+				$addCategory = $element.find( options.addCategory ),
 				$categories = $element.find( options.categories ),
 				categorySelect = new CategorySelect( options.data );
+
+			$element
+				.data( namespace, categorySelect )
+				.off( '.' + namespace )
+				.on( 'reset.' + namespace, reset )
+				.on( 'click.' + namespace, options.editCategory, editCategory )
+				.on( 'click.' + namespace, options.removeCategory, removeCategory );
+
+			$addCategory.on( 'keypress.' + namespace, addCategory );
+
+			// Setup sortable
+			if ( options.sortable ) {
+				$categories.sortable( $.extend( options.sortable, {
+					update: function ( event, ui ) {
+						var categories = categorySelect.state.categories,
+							fromIndex = ui.item.data( 'index' ),
+							category = categories[ fromIndex ],
+							toIndex = ui.item.next( '.category' );
+
+						if ( toIndex.length ) {
+							toIndex = toIndex.data( 'index' );
+
+						} else {
+							toIndex = categories.length - 1;
+						}
+
+						// Update categories array
+						categorySelect.moveCategory( fromIndex, toIndex );
+
+						// Update list item indexes
+						$categories.find( options.category ).each(function( i ) {
+							$( this ).data( 'index', i );
+						});
+
+						notifyListeners( 'sort', {
+							category: category,
+							element: ui.item,
+							fromIndex: fromIndex,
+							toIndex: toIndex
+						});
+
+						notifyListeners( 'update' );
+					}
+				}));
+			}
+
+			// Setup autocomplete immediately if addCategory contains a value
+			if ( $addCategory.val() != '' ) {
+				setupAutocomplete.call( $addCategory );
+
+			} else {
+				$element.one( 'focus.' + namespace, options.addCategory, setupAutocomplete );
+			}
 
 			function addCategory( event, ui ) {
 				var category, index,
@@ -486,59 +540,12 @@ $.fn.categorySelect = (function() {
 							response( suggestions.slice( 0, options.autocomplete.maxSuggestions ) );
 						}
 					}));
-				});
-			}
 
-			$element
-				.data( namespace, categorySelect )
-				.off( '.' + namespace )
-				.on( 'click.' + namespace, options.editCategory, editCategory )
-				.on( 'click.' + namespace, options.removeCategory, removeCategory )
-				.on( 'keypress.' + namespace, options.addCategory, addCategory )
-				.on( 'reset.' + namespace, reset );
-
-			// Setup sortable
-			if ( options.sortable ) {
-				$categories.sortable( $.extend( options.sortable, {
-					update: function ( event, ui ) {
-						var categories = categorySelect.state.categories,
-							fromIndex = ui.item.data( 'index' ),
-							category = categories[ fromIndex ],
-							toIndex = ui.item.next( '.category' );
-
-						if ( toIndex.length ) {
-							toIndex = toIndex.data( 'index' );
-
-						} else {
-							toIndex = categories.length - 1;
-						}
-
-						// Update categories array
-						categorySelect.moveCategory( fromIndex, toIndex );
-
-						// Update list item indexes
-						$categories.find( options.category ).each(function( i ) {
-							$( this ).data( 'index', i );
-						});
-
-						notifyListeners( 'sort', {
-							category: category,
-							element: ui.item,
-							fromIndex: fromIndex,
-							toIndex: toIndex
-						});
-
-						notifyListeners( 'update' );
+					// Open suggestion menu immediately if not initiated by event
+					if ( !event ) {
+						$input.autocomplete( 'search' );
 					}
-				}));
-			}
-
-			// Setup autocomplete immediately if initialization was from focus on addCategory
-			if ( options.event && options.event.type == 'focusin' && $( options.event.currentTarget ).is( options.addCategory ) ) {
-				setupAutocomplete.call( options.event.currentTarget, event );
-
-			} else {
-				$element.one( 'focus.' + namespace, options.addCategory, setupAutocomplete );
+				});
 			}
 		});
 	}

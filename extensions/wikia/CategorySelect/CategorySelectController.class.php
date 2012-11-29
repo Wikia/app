@@ -150,7 +150,7 @@ class CategorySelectController extends WikiaController {
 	/**
 	 * Save categories sent via AJAX into article
 	 */
-	public function saveCategories( $articleId, $categories ) {
+	public function save( $articleId, $categories ) {
 		global $wgUser;
 
 		if (wfReadOnly()) {

@@ -13,12 +13,8 @@
 			namespace = 'categorySelect',
 			originalLength = wgCategorySelect.categories.length,
 			$wrapper = $( '#WikiaArticleCategories' ),
+			$addCategory = $wrapper.find( '.addCategory' ),
 			$categories = $wrapper.find( '.categories' );
-
-		function cancel( event ) {
-			$wrapper.removeClass( 'modified' ).trigger( 'reset' );
-			$categories.find( '.new' ).remove();
-		}
 
 		function initialize( event ) {
 			$.when(
@@ -32,7 +28,12 @@
 			).done(function() {
 				$wrapper.categorySelect({
 					data: wgCategorySelect.categories,
-					event: event
+					event: event,
+					sortable: {
+						axis: false,
+						cursor: 'move',
+						tolerance: 'intersect'
+					}
 				})
 				.on( 'add.' + namespace, function( event, state, data ) {
 					var category = data.template.data.category;
@@ -49,14 +50,21 @@
 			});
 		}
 
-		function save( event, data ) {
+		$wrapper.find( '.cancel' ).on( 'click', function( event ) {
+			$wrapper.removeClass( 'modified' ).trigger( 'reset' );
+			$categories.find( '.new' ).remove();
+		});
 
+		$wrapper.find( '.save' ).on( 'click', function( event, data ) {
+			// TODO
+		});
+
+		// Initialize immediately if addCategory is already in focus
+		if ( $addCategory.is( ':focus' ) ) {
+			initialize();
+
+		} else {
+			$addCategory.one( 'focus', initialize );
 		}
-
-		// Listeners
-		$wrapper
-			.on( 'click', '.cancel', cancel )
-			.on( 'click', '.save', save )
-			.one( 'focus', '.addCategory', initialize );
 	});
 })( this, jQuery );
