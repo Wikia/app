@@ -8,13 +8,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Responsible for search queries
 	 * @var WikiaSearch
 	 */
-	private $wikiaSearch;
+	protected $wikiaSearch;
 	
 	/**
 	 * Responsible for building data used in indexing
 	 * @var WikiaSearchIndexer
 	 */
-	private $wikiaSearchIndexer;
+	protected $wikiaSearchIndexer;
 
 	/**
 	 * Handles dependency-building and special page routing before calling controller actions 
@@ -69,7 +69,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		if( $searchConfig->getQueryNoQuotes( true ) ) {
-			$articleMatch = null;
 			$this->wikiaSearch->getArticleMatch( $searchConfig );
 			if ( $searchConfig->getPage() == 1 ) {
 				$this->handleArticleMatchTracking( $searchConfig, F::build( 'Track' ) );
@@ -77,13 +76,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			$this->wikiaSearch->doSearch( $searchConfig );
 
-			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', 
+			$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', 
 												array( ucwords( $searchConfig->getQuery( WikiaSearchConfig::QUERY_RAW ) ), $this->wg->Sitename) )  );
 		} else {
 			if( $searchConfig->getIsInterWiki() ) {
-				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
+				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
 			} else {
-				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki', 
+				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki', 
 													array($this->wg->Sitename) )  );
 			}
 		}
@@ -305,7 +304,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param  WikiaSearchConfig $searchConfig
 	 * @return boolean true
 	 */
-	private function setNamespacesFromRequest( WikiaSearchConfig $searchConfig, User $user ) {
+	protected function setNamespacesFromRequest( WikiaSearchConfig $searchConfig, User $user ) {
 		$searchEngine = F::build( 'SearchEngine' );
 		$searchableNamespaces = $searchEngine->searchableNamespaces();
 		$namespaces = array();
@@ -336,7 +335,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param  SkinTemplate $skin
 	 * @return boolean true
 	 */
-	private function handleSkinSettings( $skin ) {
+	protected function handleSkinSettings( $skin ) {
 	
 		if ( $skin instanceof SkinMonoBook ) {
 		    $this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
@@ -355,7 +354,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Determines whether we are on the corporate wiki
 	 * @see WikiaSearchControllerTest::testIsCorporateWiki
 	 */
-	private function  isCorporateWiki() {
+	protected function  isCorporateWiki() {
 	    return !empty($this->wg->EnableWikiaHomePageExt);
 	}
 	
