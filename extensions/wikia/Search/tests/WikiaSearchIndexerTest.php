@@ -905,6 +905,34 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 
 		$mockIndexer->getPage( 123 );
 	}
+	
+	public function testGetPageBreaks() {
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getPageMetaData' ) )
+								->getMock();
+		
+		$mockException	=	$this->getMockBuilder( 'WikiaException' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockWikia		=	$this->getMock( 'Wikia', array ( 'log', 'logBacktrace' ) );
+		
+		$this->proxyClass( 'Article', null, 'newFromID' );
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockClass( 'WikiaException', $mockException );
+		$this->mockApp();
+		
+		try {
+			$mockIndexer->getPage( 123 );
+		} catch ( Exception $e ) { };
+		
+		$this->assertInstanceOf(
+				'Exception',
+				$e,
+				'WikiaSearchIndexer::getPage should throw an exception if an instance of Article cannot be built from the provided ID'
+		);
+	}
 
 	/**
 	 * @covers WikiaSearchIndexer::getPage

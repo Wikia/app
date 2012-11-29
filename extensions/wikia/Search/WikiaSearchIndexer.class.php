@@ -75,8 +75,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		$page = F::build( 'Article', array( $pageId ), 'newFromID' );
 	
 		if(! ( $page instanceof Article ) ) {
-			//@codeCoverageIgnore
-			throw new WikiaException('Invalid Article ID');
+			throw F::build( 'WikiaException', array('Invalid Article ID') );
 		}
 	
 		if(! $this->parserHookActive ) {
