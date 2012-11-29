@@ -55,15 +55,17 @@ class StructuredData {
 		return $this->APIClient->getCollection( $type, $extraFields );
 	}
 
-	public function createSDElementByType( $elementType ) {
-		$template = $this->APIClient->getTemplate( $elementType );
+	public function createSDElementByType( $elementType, stdClass $template = null ) {
+		if( empty( $template ) ) {
+			$template = $this->APIClient->getTemplate( $elementType );
+		}
 
 		return F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => null, 'depth' => 0 ), 'newFromTemplate' );
 	}
 
 	public function createSDElement( $elementType, array $params = array() ) {
-
-		$result = $this->updateSDElement( $this->createSDElementByType( $elementType ), $params );
+		$template = $this->APIClient->getTemplate( $elementType );
+		$result = $this->updateSDElement( $this->createSDElementByType( $elementType, $template ), $params );
 
 		if( isset( $result->error ) ) {
 			return $result;
