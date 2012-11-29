@@ -126,7 +126,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		}
 
 		if(empty($sdsObject) && ($action == 'create')) {
-			$sdsObject = $this->structuredData->createSDElement( $type );
+			$sdsObject = $this->structuredData->createSDElementByType( $type );
 		}
 
 		if(empty($sdsObject)) {
@@ -356,6 +356,9 @@ class StructuredDataController extends WikiaSpecialPageController {
 			else {
 				$this->response->setVal( 'error', $SDElement->error );
 			}
+		}
+		else {
+			$this->response->setVal( 'error', 'Invalid arguments' );
 		}
 	}
 

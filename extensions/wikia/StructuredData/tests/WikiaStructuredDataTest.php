@@ -175,7 +175,7 @@ class WikiaStructuredDataTest extends WikiaBaseTest {
 		$this->assertFalse($this->isElementOnTheList($structuredData, $col, $objName), 'Element "unit test mock" should not exist at the beginning of the test');
 
 		// create the test object
-		$sdsObject = $structuredData->createSDElement('callofduty:Character');
+		$sdsObject = $structuredData->createSDElementByType('callofduty:Character');
 		$structuredData->updateSDElement($sdsObject, array('schema:name' => $objName, 'schema:description' => 'description 1'));
 
 		// make sure the new object is listed
