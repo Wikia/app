@@ -45,12 +45,9 @@ $app->registerClass('StructuredDataController', $dir . 'StructuredDataController
  */
 $app->registerSpecialPage('StructuredData', 'StructuredDataController');
 
-
-
 $wgStructuredDataConfig = array(
-	//'baseUrl' => 'http://data.wikia.net/',
-	'debug' => !empty($wgDevelEnvironment),
-	'baseUrl' => 'http://data-stage.wikia.net/',
+	'debug' => !empty( $wgDevelEnvironment ),
+	'baseUrl' => ( !empty( $wgDevelEnvironment ) ) ? 'http://data-stage.wikia.net/' : $wgStructuredDataServer,
 	'apiPath' => 'api/v0.1/',
 	'schemaPath' => 'callofduty',
 	'renderersPath' => $dir . 'templates/renderers/',
