@@ -2027,6 +2027,13 @@ class WallHooksHelper {
 	
 			if(!$db->tableExists('wall_related_pages')) {
 				$db->sourceFile($IP."/extensions/wikia/Wall/sql/wall_related_pages.sql");
+			} else {
+				//this is hack for release time only
+				try {
+					$db->query('alter table wall_related_pages add last_update timestamp;');	
+				} catch(Exception $e) {
+					//nothing	
+				}
 			}
 		}
 		return true;
