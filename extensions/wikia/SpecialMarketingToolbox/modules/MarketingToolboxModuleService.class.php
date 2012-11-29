@@ -1,11 +1,12 @@
 <?
 abstract class MarketingToolboxModuleService extends WikiaService {
 	const CLASS_NAME_PREFIX = 'MarketingToolboxModule';
+	const CLASS_NAME_SUFFIX = 'Service';
 
 	abstract protected function getValidationRules();
 
 	static public function getModuleByName($name) {
-		$moduleClassName = self::CLASS_NAME_PREFIX . $name . 'Service';
+		$moduleClassName = self::CLASS_NAME_PREFIX . $name . self::CLASS_NAME_SUFFIX;
 		return new $moduleClassName();
 	}
 
@@ -13,12 +14,9 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return $this->getView('editor', $data);
 	}
 
-	public function save($data) {
-		// TODO saving data
-	}
-
 	public function validate($data) {
 		$rules = $this->getValidationRules();
+		// TODO validation here
 		return true;
 	}
 
