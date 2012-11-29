@@ -3671,7 +3671,10 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	 */
 	public function testTabs() {
 		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
-		$mockSearchConfig	=	$this->getMock( 'WikiaSearchConfig', array( 'getNamespaces', 'getQuery', 'getSearchProfiles', 'getIncludeRedirects', 'getActiveTab' ) );
+		$mockSearchConfig	=	$this->getMockBuilder( 'WikiaSearchConfig' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getNamespaces', 'getQuery', 'getSearchProfiles', 'getIncludeRedirects', 'getActiveTab', 'getFilters', 'getRank' ) )
+									->getMock();
 		
 		$this->mockGlobalVariable( 'wgDefaultSearchProfile', SEARCH_PROFILE_DEFAULT );
 		
@@ -3707,11 +3710,52 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	            )
 		);
 		
+		$form = array(
+				'no_filter' =>          false,
+				'by_category' =>        false,
+				'cat_videogames' =>     false,
+				'cat_entertainment' =>  false,
+				'cat_lifestyle' =>      false,
+				'is_hd' =>              false,
+				'is_image' =>           false,
+				'is_video' =>           false,
+				'sort_default' =>       true,
+				'sort_longest' =>       false,
+				'sort_newest' =>        false,
+				'no_filter' =>          true,
+		);
+		
+		$incr = 0;
+		
+		$wg = (object) array( 'CityId' => 123 ); 
+		
 		$mockController
-			->expects	( $this->any() )
+			->expects	( $this->at( $incr++ ) )
 			->method	( 'getVal' )
 			->with		( 'config', false )
 			->will		( $this->returnValue( $mockSearchConfig ) )
+		;
+		$mockSearchConfig
+			->expects	( $this->once() )
+			->method	( 'getFilters' )
+			->will		( $this->returnValue( array() ) )
+		;
+		$mockSearchConfig
+			->expects	( $this->once() )
+			->method	( 'getRank' )
+			->will		( $this->returnValue( 'default' ) )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getVal' )
+			->with		( 'no_filter', false )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getVal' )
+			->with		( 'by_category', false )
+			->will		( $this->returnValue( false ) )
 		;
 		$mockSearchConfig
 			->expects	( $this->once() )
@@ -3735,27 +3779,41 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( 'default' ) )
 		;
 		$mockController
-			->expects	( $this->at( 1 ) )
+			->expects	( $this->at( $incr++ ) )
 			->method	( 'setVal' )
 			->with		( 'bareterm', 'foo' )
 		;
 		$mockController
-			->expects	( $this->at( 2 ) )
+			->expects	( $this->at( $incr++ ) )
 			->method	( 'setVal' )
 			->with		( 'searchProfiles', $searchProfileArray )
 		;
 		$mockController
-			->expects	( $this->at( 3 ) )
+			->expects	( $this->at( $incr++ ) )
 			->method	( 'setVal' )
 			->with		( 'redirs', false )
 		;
 		$mockController
-			->expects	( $this->at( 4 ) )
+			->expects	( $this->at( $incr++ ) )
 			->method	( 'setVal' )
 			->with		( 'activeTab', 'default' )
 		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'setVal' )
+			->with		( 'form', $form )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'setVal' )
+			->with		( 'is_video_wiki', false )
+		;
 		
 		$this->mockApp();
+		
+		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
+		$reflWg->setAccessible( true );
+		$reflWg->setValue( $mockController, $wg );
 		
 		$mockController->tabs();
 	}
