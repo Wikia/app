@@ -37,6 +37,9 @@ MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMe
 						wikiaEditor.getEditbox()
 							.placeholder()
 							.triggerHandler('focus.placeholder');
+						self.messageBody.autoResize({
+							min: 200
+						});
 					}
 					if ($.browser.msie) {
 						self.messageTitle.keydown(function(e) {
