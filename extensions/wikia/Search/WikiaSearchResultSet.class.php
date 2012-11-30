@@ -180,8 +180,6 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 
 	/**
 	 * We use this to iterate over groupings and created nested search result sets.
-	 * @param  Solarium_Result_Select $result
-	 * @param  WikiaSearchConfig $searchConfig
 	 * @return WikiaSearchResultSet provides fluent interface
 	 */
 	protected function setResultGroupings() {

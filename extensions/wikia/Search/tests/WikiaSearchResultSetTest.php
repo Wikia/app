@@ -526,5 +526,105 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 		);
 	}
 	
+	/**
+	 * @covers WikiaSearchResultSet::getHostGrouping
+	 */
+	public function testGetHostGroupingWithoutGrouping() {
+		$this->prepareMocks( array(), array(), array( 'getGrouping' ) );
+		
+		$this->searchResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'getGrouping' )
+			->will		( $this->returnValue( null ) )
+		;
+		
+		$method = new ReflectionMethod( 'WikiaSearchResultSet', 'getHostGrouping' );
+		$method->setAccessible( true );
+		
+		try {
+			$method->invoke( $this->resultSet );
+		} catch ( Exception $e ) { }
+		
+		$this->assertInstanceOf( 
+				'Exception', 
+				$e,
+				'WikiaSearchResultSet::getHostGrouping should throw an exception if called in a situation where we are not grouping results'
+		);
+	}
 	
+	/**
+	 * @covers WikiaSearchResultSet::getHostGrouping
+	 */
+	public function testGetHostGroupingWithoutHostGrouping() {
+		$this->prepareMocks( array(), array(), array( 'getGrouping' ) );
+		
+		$mockGrouping = $this->getMockBuilder( 'Solarium_Result_Select_Grouping' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getGroup' ) )
+							->getMock();
+		
+		$this->searchResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'getGrouping' )
+			->will		( $this->returnValue( $mockGrouping ) )
+		;
+		$mockGrouping
+			->expects	( $this->at( 0 ) )
+			->method	( 'getGroup' )
+			->with		( 'host' )
+			->will		( $this->returnValue( null ) )
+		;
+		
+		$method = new ReflectionMethod( 'WikiaSearchResultSet', 'getHostGrouping' );
+		$method->setAccessible( true );
+		
+		try {
+			$method->invoke( $this->resultSet );
+		} catch ( Exception $e ) { }
+		
+		$this->assertInstanceOf( 
+				'Exception', 
+				$e,
+				'WikiaSearchResultSet::getHostGrouping should throw an exception if called in a situation where we are not grouping results by host'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::getHostGrouping
+	 */
+	public function testGetHostGroupingWorks() {
+		
+		$this->prepareMocks( array(), array(), array( 'getGrouping' ) );
+		
+		$mockGrouping = $this->getMockBuilder( 'Solarium_Result_Select_Grouping' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getGroup' ) )
+							->getMock();
+		
+		$mockFieldGroup = $this->getMockBuilder( 'Solarium_Result_Select_Grouping_FieldGroup' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getValueGroups' ) )
+							->getMock();
+		
+		$this->searchResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'getGrouping' )
+			->will		( $this->returnValue( $mockGrouping ) )
+		;
+		$mockGrouping
+			->expects	( $this->at( 0 ) )
+			->method	( 'getGroup' )
+			->with		( 'host' )
+			->will		( $this->returnValue( $mockFieldGroup ) )
+		;
+		
+		$method = new ReflectionMethod( 'WikiaSearchResultSet', 'getHostGrouping' );
+		$method->setAccessible( true );
+		
+		$this->assertEquals(
+				$mockFieldGroup,
+				$method->invoke( $this->resultSet ),
+				'WikiaSearchResultSet::getHostGrouping should return an instance of Solarium_Result_Select_Grouping_FieldGroup'
+		);
+	}
 }
