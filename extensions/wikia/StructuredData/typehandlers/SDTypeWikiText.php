@@ -8,10 +8,10 @@ class SDTypeWikiText extends SDTypeHandlerAnyType {
 
 		$data = parent::handleSaveData( $data );
 
-		if ( !empty( $data['name'] ) && !empty( $data['schema:text'] ) ) {
+		if ( !empty( $data['schema:text'] ) ) {
 
 			$parser = new Parser();
-			$title = Title::newFromText( "Data:".$data['name'] );
+			$title = Title::newFromText( "Data:".$data['schema:name'] );
 
 			/* @var $parserOutput ParserOutput */
 			$parserOutput = $parser->parse( $data['schema:text'], $title, (new ParserOptions()) );
