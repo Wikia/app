@@ -18,8 +18,10 @@ describe("AIM", function () {
 		jasmine.Clock.useMock();
 	});
 
-	async.it('should be defined', function(done){
-		require(['aim'], function(aim){
+	async.it('should be defined', function(done) {
+		expect(typeof jQuery.AIM).toBe('object');
+
+		require(['aim'], function(aim) {
 			expect(aim).toBeDefined();
 			expect(typeof aim.submit).toBe('function');
 
@@ -29,7 +31,7 @@ describe("AIM", function () {
 		jasmine.Clock.tick(1);
 	});
 
-	async.it('onStart() should be called', function(done){
+	async.it('onStart() should be called', function(done) {
 		require(['aim'], function(aim) {
 			var form = document.createElement('form');
 			document.body.appendChild(form);
