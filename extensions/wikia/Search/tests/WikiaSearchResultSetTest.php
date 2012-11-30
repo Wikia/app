@@ -37,7 +37,7 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 		
 		$reflConfig = new ReflectionProperty( 'WikiaSearchResultSet', 'searchConfig' );
 		$reflConfig->setAccessible( true );
-		$reflResult->setValue( $this->resultSet, $this->config );
+		$reflConfig->setValue( $this->resultSet, $this->config );
 	}
 	
 	/**
@@ -227,4 +227,255 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 				'WikiaSearchResultSet::configure should always return true' 
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::configureGroupedSetAsRootNode
+	 */
+	public function testConfigureGroupedSetAsRootNodeSatisfied() {
+		$resultSetMethods = array(
+				'setResultGroupings',
+				'setResultsFound',
+				'getHostGrouping'
+				);
+		$configMethods = array( 'getGroupResults' );
+		$this->prepareMocks( $resultSetMethods, $configMethods );
+		
+		$mockGrouping = $this->getMockBuilder( 'Solarium_Result_Select_Grouping' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockFieldGroup = $this->getMockBuilder( 'Solarium_Result_Select_Grouping_FieldGroup' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getMatches' ) )
+							->getMock();
+		
+		$matchesCount = 2000;
+		
+		$this->config
+			->expects	( $this->at( 0 ) )
+			->method	( 'getGroupResults' )
+			->will		( $this->returnValue ( $mockGrouping ) )
+		;
+		$this->resultSet
+			->expects	( $this->at( 0 ) )
+			->method	( 'setResultGroupings' )
+		;
+		$this->resultSet
+			->expects	( $this->at( 1 ) )
+			->method	( 'getHostGrouping' )
+			->will		( $this->returnValue( $mockFieldGroup ) )
+		;
+		$mockFieldGroup
+			->expects	( $this->at( 0 ) )
+			->method	( 'getMatches' )
+			->will		( $this->returnValue( $matchesCount ) )
+		;
+		$this->resultSet
+			->expects	( $this->at( 2 ) )
+			->method	( 'setResultsFound' )
+			->with		( $matchesCount )
+		;
+		
+		$configureRefl = new ReflectionMethod( 'WikiaSearchResultSet', 'configureGroupedSetAsRootNode' );
+		$configureRefl->setAccessible( true );
+		
+		$this->assertTrue(
+				$configureRefl->invoke( $this->resultSet ),
+				'WikiaSearchResultSet::configureGroupedSetAsRootNode should return true if the constructed result set satisfies its necessary criteria' 
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::configureGroupedSetAsRootNode
+	 */
+	public function testConfigureGroupedSetAsRootNodeUnsatisfied() {
+		$resultSetMethods = array(
+				);
+		$configMethods = array( 'getGroupResults' );
+		$this->prepareMocks( $resultSetMethods );
+		
+		$this->config
+			->expects	( $this->at( 0 ) )
+			->method	( 'getGroupResults' )
+			->will		( $this->returnValue ( false ) )
+		;
+		
+		$configureRefl = new ReflectionMethod( 'WikiaSearchResultSet', 'configureGroupedSetAsRootNode' );
+		$configureRefl->setAccessible( true );
+		
+		$this->assertFalse(
+				$configureRefl->invoke( $this->resultSet ),
+				'WikiaSearchResultSet::configureGroupedSetAsRootNode should return true if the constructed result set satisfies its necessary criteria' 
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::configureGroupedSetAsLeafNode
+	 */
+	public function testConfigureGroupedSetAsLeafNodeUnsatisfied() {
+		$this->prepareMocks();
+		
+		$configureRefl = new ReflectionMethod( 'WikiaSearchResultSet', 'configureGroupedSetAsLeafNode' );
+		$configureRefl->setAccessible( true );
+		
+		// this works because the parent and metaposition values need to be set to satisfy
+		
+		$this->assertFalse(
+				$configureRefl->invoke( $this->resultSet ),
+				'WikiaSearchResultSet::configureGroupedSetAsLeafNode should return false if the constructed result set doesn\'t satisfy its necessary criteria' 
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::configureGroupedSetAsLeafNode
+	 */
+	public function testConfigureGroupedSetAsLeafNodeSatisfied() {
+		$resultSetMethods = array(
+				'setHeader',
+				'gethostGrouping',
+				'setResults',
+				'setResultsFound'
+				);
+		
+		$this->prepareMocks( $resultSetMethods );
+		
+		$mockFieldGroup = $this->getMockBuilder( 'Solarium_Result_Select_Grouping_FieldGroup' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getValueGroups' ) )
+							->getMock();
+		
+		$mockValueGroup = $this->getMockBuilder( 'Solarium_Result_Select_Grouping_ValueGroup' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getNumFound', 'getValue', 'getDocuments' ) )
+							->getMock();
+		/* @todo figure out why wikifactory isn't behaving with staticexpects
+		$mockWikiFactory = $this->getMockBuilder( 'WikiFactory' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getVarValueByName' ) )
+							->getMock();
+							*/
+		
+		$wid = 123;
+		$wikiarticles = 12345;
+		$cityTitle = "This Wiki";
+		
+		$mockDocument = $this->getMockBuilder( 'Solarium_Document_ReadOnly' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getCityId', 'offsetGet' ) )
+							->getMock(); 
+		
+		$parentRefl = new ReflectionProperty( 'WikiaSearchResultSet', 'parent' );
+		$parentRefl->setAccessible( true );
+		$parentRefl->setValue( $this->resultSet, $this->resultSet ); // doesn't matter what it is, so long as valuated
+		
+		$metaposRefl = new ReflectionProperty( 'WikiaSearchResultSet', 'metaposition' );
+		$metaposRefl->setAccessible( true );
+		$metaposRefl->setValue( $this->resultSet, 0 );
+		
+		$host = 'foo.wikia.com';
+		$cityUrl = "http://{$host}";
+		
+		$mockDocs = array( $mockDocument );
+		
+		$this->resultSet
+			->expects	( $this->at( 0 ) )
+			->method	( 'getHostGrouping' )
+			->will		( $this->returnValue( $mockFieldGroup ) )
+		;
+		$mockFieldGroup
+			->expects	( $this->at( 0 ) )
+			->method	( 'getValueGroups' )
+			->will		( $this->returnValue( array( $mockValueGroup ) ) )
+		;
+		$mockValueGroup
+			->expects	( $this->at( 0 ) )
+			->method	( 'getValue' )
+			->will		( $this->returnValue( $host ) )
+		;
+		$mockValueGroup
+			->expects	( $this->at( 1 ) )
+			->method	( 'getDocuments' )
+			->will		( $this->returnValue( $mockDocs ) )
+		;
+		$this->resultSet
+			->expects	( $this->at( 1 ) )
+			->method	( 'setResults' )
+			->with		( $mockDocs )
+			->will		( $this->returnValue( $this->resultSet ) )
+		;
+		$mockValueGroup
+			->expects	( $this->at( 2 ) )
+			->method	( 'getNumFound' )
+			->will		( $this->returnValue( 1 ) )
+		;
+		$this->resultSet
+			->expects	( $this->at( 2 ) )
+			->method	( 'setResultsFound' )
+			->with		( 1 )
+		;
+		$mockDocument
+			->expects	( $this->at( 0 ) )
+			->method	( 'getCityId' )
+			->will		( $this->returnValue( $wid ) )
+		;
+		$this->resultSet
+			->expects	( $this->at( 3 ) )
+			->method	( 'setHeader' )
+			->with		( 'cityId', $wid )
+		;/*
+		$mockWikiFactory
+			->staticExpects	( $this->at( 0 ) )
+			->method		( 'getVarValueByName' )
+			->with			( 'wgSitename', $wid )
+			->will			( $this->returnValue( $cityTitle ) );
+		;*/
+		$this->resultSet
+			->expects	( $this->at( 4 ) )
+			->method	( 'setHeader' )
+			//->with		( 'cityTitle', $cityTitle )
+		;/*
+		$mockWikiFactory
+			->staticExpects	( $this->at( 1 ) )
+			->method		( 'getVarValueByName' )
+			->with			( 'wgServer', $wid )
+			->will			( $this->returnValue( $cityUrl ) );
+		;*/
+		$this->resultSet
+			->expects	( $this->at( 5 ) )
+			->method	( 'setHeader' )
+			//->with		( 'cityUrl', $cityUrl )
+		;
+		$mockDocument
+			->expects	( $this->at( 1 ) )
+			->method	( 'offsetGet' )
+			->with		( 'wikiarticles' )
+			->will		( $this->returnValue( $wikiarticles ) )
+		;
+		$this->resultSet
+			->expects	( $this->at( 6 ) )
+			->method	( 'setHeader' )
+			->with		( 'cityArticlesNum', $wikiarticles )
+		;
+		
+		$configureRefl = new ReflectionMethod( 'WikiaSearchResultSet', 'configureGroupedSetAsLeafNode' );
+		$configureRefl->setAccessible( true );
+		
+		//$this->mockClass( 'WikiFactory', $mockWikiFactory );
+		$this->mockApp();
+		
+		$this->assertTrue(
+				$configureRefl->invoke( $this->resultSet ),
+				'WikiaSearchResultSet::configureGroupedSetAsLeafNode should return true if the constructed result set satisfies its necessary criteria' 
+		);
+		
+		$hostRefl = new ReflectionProperty( 'WikiaSearchResultSet', 'host' );
+		$hostRefl->setAccessible( true );
+		$this->assertEquals( 
+				$host,
+				$hostRefl->getValue( $this->resultSet ),
+				'WikiaSearchResultSet::configureGroupedSetAsLeafNode should set its host variable'
+		);
+	}
+	
+	
 }
