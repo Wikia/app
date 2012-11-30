@@ -98,7 +98,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$tabsArgs = array( 
 				'config'		=> $searchConfig, 
-				'no_filter'		=> $this->getVal('no_filter', false), 
 				'by_category'	=> $this->getVal('by_category', false) 
 				);
 		
@@ -399,11 +398,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		    throw new Exception("This should not be called outside of self-request context.");
 		}
 		
-		$filters = $config->getFilters();
+		$filters = $config->getFilterQueries();
 		$rank = $config->getRank();
 		
 		$form = array(
-				'no_filter' =>          $this->getVal('no_filter', false),
 				'by_category' =>        $this->getVal('by_category', false),
 				'cat_videogames' =>     isset( $filters['cat_videogames'] ),
 				'cat_entertainment' =>  isset( $filters['cat_entertainment'] ),
