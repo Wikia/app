@@ -77,8 +77,10 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	public function __construct( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig, $parent = null, $metaposition = null) {
 		wfProfileIn(__METHOD__);
 		parent::__construct();
-		$this->searchResultObject = $result;
-		$this->searchConfig = $searchConfig;
+		$this->searchResultObject	= $result;
+		$this->searchConfig			= $searchConfig;
+		$this->parent				= $parent;
+		$this->metaposition			= $metaposition;
 		$this->configure( $parent, $metaposition );
 		wfProfileOut(__METHOD__);
 	}
@@ -86,26 +88,14 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	/**
 	 * Called by the constructor to handle constructing nested and non-nested result sets and pass values
 	 * from search result object to result set. Sort of a take on the strategy pattern. 
-	 * @param WikiaSearchResultSet|null $parent
-	 * @param int|null $metaposition
+	 * @return bool
 	 */
-	protected function configure( $parent = null, $metaposition = null ) {
-		wfProfileIn(__METHOD__);
-		
-		if ( $this->searchResultObject instanceof Solarium_Result_Select_Empty ) {
-			wfProfileOut(__METHOD__);
-			return;
-		}
-		
-		$this->parent				= $parent;
-		$this->metaposition			= $metaposition;
-		
-		/**
-		 * This uses short-circuiting to handle three different configuration scenarios
-		 * @todo Create some class inheritance and decide which class to instantiate using a factory
-		 */
-		$this->configureGroupedSetAsRootNode() || $this->configureGroupedSetAsLeafNode() || $this->configureUngroupedSet();
-		wfProfileOut(__METHOD__);
+	protected function configure() {
+		return ( $this->searchResultObject instanceof Solarium_Result_Select_Empty )
+			|| $this->configureGroupedSetAsRootNode() 
+			|| $this->configureGroupedSetAsLeafNode() 
+			|| $this->configureUngroupedSet()
+		;  
 	}
 	
 	/**

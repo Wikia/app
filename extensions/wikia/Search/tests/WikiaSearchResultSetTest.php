@@ -68,7 +68,10 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 		$configureRefl = new ReflectionMethod( 'WikiaSearchResultSet', 'configure' );
 		$configureRefl->setAccessible( true );
 		
-		$configureRefl->invoke( $this->resultSet, array( null, null ) );
+		$this->assertTrue(
+				$configureRefl->invoke( $this->resultSet ),
+				'WikiaSearchResultSet::configure should always return true' 
+		);
 	}
 	
 	/**
@@ -106,7 +109,10 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 		$configureRefl = new ReflectionMethod( 'WikiaSearchResultSet', 'configure' );
 		$configureRefl->setAccessible( true );
 		
-		$configureRefl->invoke( $this->resultSet, array( null, null ) );
+		$this->assertTrue(
+				$configureRefl->invoke( $this->resultSet ),
+				'WikiaSearchResultSet::configure should always return true' 
+		);
 		
 	}
 	
@@ -145,8 +151,10 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 		$configureRefl = new ReflectionMethod( 'WikiaSearchResultSet', 'configure' );
 		$configureRefl->setAccessible( true );
 		
-		$configureRefl->invoke( $this->resultSet, array( $this->searchResult, 1 ) );
-		
+		$this->assertTrue(
+				$configureRefl->invoke( $this->resultSet ),
+				'WikiaSearchResultSet::configure should always return true' 
+		);
 	}
 	
 	/**
@@ -182,7 +190,9 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 		$configureRefl = new ReflectionMethod( 'WikiaSearchResultSet', 'configure' );
 		$configureRefl->setAccessible( true );
 		
-		$configureRefl->invoke( $this->resultSet, array( null, null ) );
-		
+		$this->assertTrue(
+				$configureRefl->invoke( $this->resultSet ),
+				'WikiaSearchResultSet::configure should always return true' 
+		);
 	}
 }
