@@ -186,6 +186,10 @@ class WallRelatedPages extends WikiaModel {
 			$wallMessage = $wallThread->getThreadMainMsg();
 			$wallMessage->load();
 			
+			if(empty($wallMessage)) {
+				continue;
+			}
+			
 			$update[] = $wallMessage->getCreateTime(TS_UNIX);
 			
 			$row = array();
