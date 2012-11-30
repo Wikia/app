@@ -294,7 +294,7 @@ ve.init.mw.ViewPageTarget.prototype.onLoad = function ( dom ) {
 	this.activating = false;
 
 	var _this = this;
-	$('.ve-ui-buttonTool, .ve-ui-dropdownTool').unbind( '.ve' ).bind( 'click.ve', function() {
+	$('.ve-ui-buttonTool, .ve-ui-dropdownTool').unbind( '.ve-tracking' ).bind( 'click.ve-tracking', function() {
 		var	$button = $( this ),
 			buttonTitle = $button.attr( 'title' );
 		if ( buttonTitle ) {
