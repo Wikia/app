@@ -95,6 +95,8 @@ $wgAutoloadClasses['AchRankingService'] = $dir.'services/AchRankingService.class
 $wgAutoloadClasses['AchAjaxService'] = $dir.'services/AchAjaxService.class.php';
 $wgAutoloadClasses['AchUserProfileService'] = $dir.'services/AchUserProfileService.class.php';
 $wgAutoloadClasses['AchNotificationService'] = $dir.'services/AchNotificationService.class.php';
+$wgAutoloadClasses['AchUsersService'] = $dir.'services/AchUsersService.class.php';
+$wgAutoloadClasses['AchUser'] = $dir.'services/AchUser.class.php';
 
 // models
 $wgAutoloadClasses['AchRankedUser'] = $dir.'AchRankedUser.class.php';
@@ -127,7 +129,6 @@ function Ach_Setup() {
 	global $wgHooks;
 	$wgHooks['ArticleSaveComplete'][] = 'Ach_ArticleSaveComplete';
 	$wgHooks['GetHTMLAfterBody'][] = 'Ach_GetHTMLAfterBody';
-	$wgHooks['AddToUserProfile'][] = 'Ach_AddToUserProfile';
 	$wgHooks['UploadVerification'][] = 'Ach_UploadVerification';
 	$wgHooks['Masthead::editCounter'][] = 'Ach_MastheadEditCounter';
 
@@ -230,21 +231,6 @@ function Ach_GetHTMLAfterBody($skin, &$html) {
 	}
 
 	wfProfileOut(__METHOD__);
-	return true;
-}
-
-function Ach_AddToUserProfile(&$out) {
-	global $wgOut, $wgScriptPath;
-
-	$userProfileService = new AchUserProfileService();
-	$html = $userProfileService->getHTML();
-
-	if($html) {
-		$out['achievementsII'] = $html;
-		// TODO: use CDN path
-		$wgOut->addStyle('../..' . $wgScriptPath . '/extensions/wikia/AchievementsII/css/achievements_sidebar.css');
-	}
-
 	return true;
 }
 
