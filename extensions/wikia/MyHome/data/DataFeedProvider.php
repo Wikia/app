@@ -309,14 +309,16 @@ class DataFeedProvider {
 
 		$item = array('type' => 'edit');
 
+		$hidecategories = !empty( $this->parameters['flags'] ) && in_array( 'hidecategories', $this->parameters['flags'] );
+
 		if (in_array($res['ns'], $wgContentNamespaces)
 		|| $res['ns'] == 110
 		|| $res['ns'] == NS_PROJECT
-		|| $res['ns'] == NS_CATEGORY
+		|| ( $res['ns'] == NS_CATEGORY && !$hidecategories )
 		|| in_array(($res['ns']-1), $wgContentNamespaces)
 		|| ($res['ns']-1) == 110
 		|| ($res['ns']-1) == NS_PROJECT
-		|| ($res['ns']-1) == NS_CATEGORY
+		|| ( ($res['ns']-1) == NS_CATEGORY && !$hidecategories )
 		|| $res['ns'] == NS_USER
 		|| $res['ns'] == NS_USER_TALK
 		|| (defined('NS_BLOG_ARTICLE') && $res['ns'] == NS_BLOG_ARTICLE)
@@ -367,14 +369,16 @@ class DataFeedProvider {
 		
 		$item = array('type' => 'new');
 
+		$hidecategories = !empty( $this->parameters['flags'] ) && in_array( 'hidecategories', $this->parameters['flags'] );
+
 		if (in_array($res['ns'], $wgContentNamespaces)
 		|| $res['ns'] == 110
 		|| $res['ns'] == NS_PROJECT
-		|| $res['ns'] == NS_CATEGORY
+		|| ( $res['ns'] == NS_CATEGORY && !$hidecategories )
 		|| in_array(($res['ns']-1), $wgContentNamespaces)
 		|| ($res['ns']-1) == 110
 		|| ($res['ns']-1) == NS_PROJECT
-		|| ($res['ns']-1) == NS_CATEGORY ) {
+		|| ( ($res['ns']-1) == NS_CATEGORY && !$hidecategories ) ) {
 
 			$item['title'] = $res['title'];
 			$item['url'] = $title->getLocalUrl();
