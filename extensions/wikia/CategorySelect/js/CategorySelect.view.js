@@ -8,13 +8,14 @@
 	}
 
 	$(function() {
-		var articleId = window.wgArticleId,
-			categoryPrefix = wgCategorySelect.defaultNamespace + wgCategorySelect.defaultSeparator,
-			namespace = 'categorySelect',
-			originalLength = wgCategorySelect.categories.length,
+		var categorySelect,
 			$wrapper = $( '#WikiaArticleCategories' ),
 			$addCategory = $wrapper.find( '.addCategory' ),
-			$categories = $wrapper.find( '.categories' );
+			$categories = $wrapper.find( '.categories' ),
+			articleId = window.wgArticleId,
+			categoryPrefix = wgCategorySelect.defaultNamespace + wgCategorySelect.defaultSeparator,
+			namespace = 'categorySelect',
+			originalLength = wgCategorySelect.categories.length;
 
 		function initialize( event ) {
 			$.when(
@@ -28,7 +29,6 @@
 			).done(function() {
 				$wrapper.categorySelect({
 					data: wgCategorySelect.categories,
-					event: event,
 					sortable: {
 						axis: false,
 						cursor: 'move',
@@ -47,6 +47,8 @@
 				}).on( 'update.' + namespace, function( event, state ) {
 					$wrapper.toggleClass( 'modified', state.length != originalLength );
 				});
+
+				categorySelect = $wrapper.data( namespace );
 			});
 		}
 
@@ -55,8 +57,26 @@
 			$categories.find( '.new' ).remove();
 		});
 
-		$wrapper.find( '.save' ).on( 'click', function( event, data ) {
-			// TODO
+		$wrapper.find( '.save' ).on( 'click', function( event ) {
+			$.nirvana.sendRequest({
+				controller: 'CategorySelectController',
+				data: {
+					articleId: articleId,
+					categories: categorySelect.state.categories
+				},
+				method: 'save'
+
+			}).done(function( response ) {
+
+				// TODO: don't use alert
+				if ( response.error ) {
+					alert( response.error );
+
+				} else {
+					$wrapper.removeClass( 'modified' );
+					$categories.find( '.category' ).removeClass( 'new' );
+				}
+			});
 		});
 
 		// Initialize immediately if addCategory is already in focus

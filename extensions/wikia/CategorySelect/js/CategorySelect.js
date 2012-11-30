@@ -52,12 +52,13 @@ var CategorySelect = function( categories ) {
  *          The index of the added category, or -1 if the category could not be added.
  */
 CategorySelect.prototype.addCategory = function( category ) {
-	var index = -1;
+	var index;
 
 	category = this.makeCategory( category );
+	index = this.indexOf( category.name );
 
-	// TODO: add duplicate checking here
-	if ( category != null ) {
+	// Don't add invalid or duplicate categories
+	if ( category != null && index < 0 ) {
 		index = this.state.categories.push( category ) - 1;
 		this.state.length++;
 	}
@@ -135,10 +136,6 @@ CategorySelect.prototype.indexOf = function( category ) {
 	}
 
 	return index;
-};
-
-CategorySelect.prototype.isDuplicate = function( category ) {
-	// TODO
 };
 
 /**
@@ -287,7 +284,7 @@ $.fn.categorySelect = (function() {
 		categoryEdit: $.msg( 'categoryselect-category-edit' ),
 		categoryNameLabel: $.msg( 'categoryselect-modal-category-name' ),
 		categoryRemove: $.msg( 'categoryselect-category-remove' ),
-		modalButtonSave: $.msg( 'categoryselect-modal-button-save' ),
+		modalButtonSave: $.msg( 'categoryselect-button-save' ),
 		modalEmptyCategoryName: $.msg( 'categoryselect-modal-category-name-empty' )
 	};
 
@@ -353,7 +350,8 @@ $.fn.categorySelect = (function() {
 		options = $.extend( {}, $.fn.categorySelect.options, options );
 
 		return this.each(function() {
-			var categories = [],
+			var popover,
+				categories = [],
 				$element = $( this ),
 				$addCategory = $element.find( options.addCategory ),
 				$categories = $element.find( options.categories ),
@@ -366,7 +364,16 @@ $.fn.categorySelect = (function() {
 				.on( 'click.' + namespace, options.editCategory, editCategory )
 				.on( 'click.' + namespace, options.removeCategory, removeCategory );
 
-			$addCategory.on( 'keypress.' + namespace, addCategory );
+			$addCategory
+				.on( 'keypress.' + namespace, addCategory )
+				.on( 'blur.' + namespace, function( event ) {
+					$addCategory.popover( 'hide' );
+				})
+				.popover( $.extend( options.popover, {
+					trigger: 'manual'
+				}));
+
+			popover = $addCategory.data( 'popover' );
 
 			// Setup sortable
 			if ( options.sortable ) {
@@ -413,7 +420,7 @@ $.fn.categorySelect = (function() {
 			}
 
 			function addCategory( event, ui ) {
-				var category, index,
+				var category, index, length,
 					$input = $( this ),
 					value = ui != undefined ? ui.item.value : $input.val();
 
@@ -428,25 +435,33 @@ $.fn.categorySelect = (function() {
 
 					// Make sure value isn't empty
 					if ( value != undefined && value != '' ) {
+						length = categorySelect.state.length;
 						category = categorySelect.makeCategory( value );
 						index = categorySelect.addCategory( category );
 
-						$.when( getTemplate( 'category' ) ).done(function( template ) {
-							template.data.category = category;
-							template.data.index = index;
+						// Category is a duplicate
+						if ( length == categorySelect.state.length ) {
+							popover.options.content = $.msg( 'categoryselect-error-duplicate-category', category.name );
+							$input.popover( 'show' ).val( value );
 
-							notifyListeners( 'add', {
-								category: category,
-								element: $categories,
-								index: index,
-								template: template
+						} else {
+							$.when( getTemplate( 'category' ) ).done(function( template ) {
+								template.data.category = category;
+								template.data.index = index;
+
+								notifyListeners( 'add', {
+									category: category,
+									element: $categories,
+									index: index,
+									template: template
+								});
+
+								notifyListeners( 'update' );
 							});
 
-							notifyListeners( 'update' );
-						});
-
-						// Clear out the input
-						$input.val( '' );
+							// Clear out the input
+							$input.popover( 'hide' ).val( '' );
+						}
 					}
 				}
 			}
@@ -561,6 +576,9 @@ $.fn.categorySelect.options = {
 	data: [],
 	addCategory: '.addCategory',
 	editCategory: '.editCategory',
+	popover: {
+
+	},
 	removeCategory: '.removeCategory',
 	sortable: {
 		axis: 'y',

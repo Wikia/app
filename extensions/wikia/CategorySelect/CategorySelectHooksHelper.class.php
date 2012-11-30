@@ -69,7 +69,7 @@ class CategorySelectHooksHelper {
 
 		if ( $request->wasPosted() ) {
 			$categories = $editPage->safeUnicodeInput( $request, 'categories' );
-			$categories = CategorySelect::changeFormat( $categories, 'json', 'wikitext' );
+			$categories = CategorySelect::getUniqueCategories( $categories, 'json', 'wikitext' );
 
 			// Prevents whitespace being added when no categories are present
 			if ( trim( $categories ) == '' ) {

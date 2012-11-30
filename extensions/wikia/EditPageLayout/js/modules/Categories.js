@@ -27,7 +27,10 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 
 		// Initialize categorySelect
 		$categorySelect.categorySelect({
-			data: JSON.parse( $categories.val() )
+			data: JSON.parse( $categories.val() ),
+			popover: {
+				placement: 'top'
+			}
 
 		}).on( 'add.' + namespace, function( event, state, data ) {
 			data.element.prepend( Mustache.render( data.template.content, data.template.data ) );

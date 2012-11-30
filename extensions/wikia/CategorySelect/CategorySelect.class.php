@@ -153,6 +153,32 @@ class CategorySelect {
 	}
 
 	/**
+	 * Removes duplicate categories, optionally converting to/from different formats.
+	 */
+	public static function getUniqueCategories( $categories, $format = 'array', $toFormat = 'array' ) {
+		$categoryNames = array();
+		$uniqueCategories = array();
+
+		if ( $format != 'array' ) {
+			$categories = self::changeFormat( $categories, $format, 'array' );
+		}
+
+		// Remove duplicates by category name
+		foreach( $categories as $category ) {
+			if ( !is_null( $category ) && !in_array( $category[ 'name' ], $categoryNames ) ) {
+				$categoryNames[] = $category[ 'name '];
+				$uniqueCategories[] = $category;
+			}
+		}
+
+		if ( $toFormat != 'array' ) {
+			$uniqueCategories = self::changeFormat( $uniqueCategories, 'array', $toFormat );
+		}
+
+		return $uniqueCategories;
+	}
+
+	/**
 	 * Sets the type associated with categories (either "normal" or "hidden").
 	 * This function is called from a hook for view pages only.
 	 */

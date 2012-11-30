@@ -26,19 +26,19 @@ $messages[ 'en' ] = array(
 	'categoryselect-category-add' => 'Add category...',
 	'categoryselect-category-edit' => 'Edit category',
 	'categoryselect-category-remove' => 'Remove category',
+	'categoryselect-edit-summary' => 'Adding categories',
+	'categoryselect-error-article-doesnt-exist' => 'Article [id=$1] does not exist.',
 	'categoryselect-error-db-locked' => 'Database is locked.',
-	'categoryselect-error-not-exist' => 'Article [id=$1] does not exist.',
+	'categoryselect-error-edit-abort' => 'The modifications you tried to make were aborted by an extension hook.',
+	'categoryselect-error-duplicate-category' => 'Category "$1" already exists.',
+	'categoryselect-error-user-rights' => 'User does not have permission to perform this action.',
 	'categoryselect-modal-category-name' => 'Provide the name of the category:',
 	'categoryselect-modal-category-sortkey' => 'Alphabetize this article on the "$1" category page under the name:',
-	'categoryselect-modal-button-save' => 'Save',
 	'categoryselect-modal-category-name-empty' => 'Please provide a category name.',
 
 /*	UNUSED
 	'categoryselect-unhandled-syntax' => 'Unhandled syntax detected - switching back to visual mode impossible.',
-	'categoryselect-edit-summary' => 'Adding categories',
 	'categoryselect-empty-name' => 'Provide category name (part before |)',
-	'categoryselect-error-user-rights' => 'User rights error.',
-	'categoryselect-edit-abort' => 'The modification you tried to make was aborted by an extension hook',
 */
 	'tog-disablecategoryselect' => 'Disable Category module (only applies if editing in visual mode has been disabled)',
 	'tog-disablecategoryselect-v2' => 'Disable Category module (only applies if visual mode editing is disabled)'

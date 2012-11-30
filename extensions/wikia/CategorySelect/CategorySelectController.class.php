@@ -116,11 +116,11 @@ class CategorySelectController extends WikiaController {
 	public function getWikiCategories() {
 		wfProfileIn( __METHOD__ );
 
-		$key = wfMemcKey( 'CategorySelectGetWikiCategories', self::VERSION );
+		$key = $this->wf->MemcKey( 'CategorySelectGetWikiCategories', self::VERSION );
 		$data = $this->wg->Memc->get( $key );
 
 		if ( empty( $data ) ) {
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = $this->wf->GetDB( DB_SLAVE );
 			$res = $dbr->select(
 				'category',
 				'cat_title',
@@ -150,83 +150,70 @@ class CategorySelectController extends WikiaController {
 	/**
 	 * Save categories sent via AJAX into article
 	 */
-	public function save( $articleId, $categories ) {
-		global $wgUser;
+	public function save() {
+		$this->wf->ProfileIn( __METHOD__ );
 
-		if (wfReadOnly()) {
-			$result['error'] = wfMsg('categoryselect-error-db-locked');
-			return json_encode($result);
-		}
+		$articleId = $this->request->getVal( 'articleId', 0 );
+		$categories = $this->request->getVal( 'categories', array() );
 
-		wfProfileIn(__METHOD__);
+		$response = array();
+		$title = Title::newFromID( $articleId );
 
-		Wikia::setVar('EditFromViewMode', 'CategorySelect');
+		if ( $this->wf->ReadOnly() ) {
+			$response[ 'error' ] = $this->wf->Message( 'categoryselect-error-db-locked' );
 
-		$categories = CategorySelect::changeFormat($categories, 'json', 'wikitext');
-		if ($categories == '') {
-			$result['info'] = 'Nothing to add.';
-		} else {
-			$title = Title::newFromID($articleId);
-			if (is_null($title)) {
-				$result['error'] = wfMsg('categoryselect-error-not-exist', $articleId);
-			} else {
-				if ($title->userCan('edit') && !$wgUser->isBlocked()) {
-					$result = null;
-					$article = new Article($title);
-					$article_text = $article->fetchContent();
-					$article_text .= $categories;
+		} else if ( is_null( $title ) ) {
+			$response[ 'error' ] = $this->wf->Message( 'categoryselect-error-article-doesnt-exist', $articleId );
 
-					$dbw = wfGetDB( DB_MASTER );
-					$dbw->begin();
-					$editPage = new EditPage( $article );
-					$editPage->edittime = $article->getTimestamp();
-					$editPage->recreate = true;
-					$editPage->textbox1 = $article_text;
-					$editPage->summary = wfMsgForContent('categoryselect-edit-summary');
-					$editPage->watchthis = $editPage->mTitle->userIsWatching();
-					$bot = $wgUser->isAllowed('bot');
-					$status = $editPage->internalAttemptSave( $result, $bot );
-					$retval = $status->value;
-					Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
+		} else if ( !$title->userCan( 'edit' ) || $this->wg->User->isBlocked() ) {
+			$response[ 'error' ] = $this->wf->Message( 'categoryselect-error-user-rights' );
 
-					switch($retval) {
-						case EditPage::AS_SUCCESS_UPDATE:
-						case EditPage::AS_SUCCESS_NEW_ARTICLE:
-							$dbw->commit();
-							$title->invalidateCache();
-							Article::onArticleEdit($title);
+		} else if ( !empty( $categories ) && is_array( $categories ) ) {
+			Wikia::setVar( 'EditFromViewMode', 'CategorySelect' );
 
-							$skin = RequestContext::getMain()->getSkin();
+			$article = new Article( $title );
+			$wikitext = $article->fetchContent();
 
-							// return HTML with new categories
-							// OutputPage::tryParserCache become deprecated in MW1.17 and removed in MW1.18 (BugId:30443)
-							$parserOutput = ParserCache::singleton()->get( $article, $article->getParserOptions() );
-							if ($parserOutput !== false) {
-								$skin->getOutput()->addParserOutput($parserOutput);
-							}
+			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
+			$categories = CategorySelect::getUniqueCategories( $categories, 'array', 'wikitext' );
+			$wikitext = $data[ 'wikitext' ] . $categories;
 
-							$cats = $skin->getCategoryLinks();
+			$dbw = $this->wf->GetDB( DB_MASTER );
+			$dbw->begin();
 
-							$result['info'] = 'ok';
-							$result['html'] = $cats;
-							break;
+			$editPage = new EditPage( $article );
+			$editPage->edittime = $article->getTimestamp();
+			$editPage->recreate = true;
+			$editPage->textbox1 = $wikitext;
+			$editPage->summary = $this->wf->MsgForContent( 'categoryselect-edit-summary' );
+			$editPage->watchthis = $editPage->mTitle->userIsWatching();
 
-						case EditPage::AS_SPAM_ERROR:
-							$dbw->rollback();
-							$result['error'] = wfMsg('spamprotectiontext') . '<p>( Case #8 )</p>';
-							break;
+			$bot = $this->wg->User->isAllowed( 'bot' );
+			$status = $editPage->internalAttemptSave( $result, $bot )->value;
 
-						default:
-							$dbw->rollback();
-							$result['error'] = wfMsg('categoryselect-edit-abort');
-					}
-				} else {
-					$result['error'] = wfMsg('categoryselect-error-user-rights');
-				}
+			$response[ 'status' ] = $status;
+
+			switch( $status ) {
+				case EditPage::AS_SUCCESS_UPDATE:
+				case EditPage::AS_SUCCESS_NEW_ARTICLE:
+					$dbw->commit();
+					$title->invalidateCache();
+					Article::onArticleEdit( $title );
+					break;
+
+				case EditPage::AS_SPAM_ERROR:
+					$dbw->rollback();
+					$response[ 'error' ] = $this->wf->Message( 'spamprotectiontext' ) . '<p>( Case #8 )</p>';
+					break;
+
+				default:
+					$dbw->rollback();
+					$response[ 'error' ] = $this->wf->Message( 'categoryselect-edit-abort' );
 			}
 		}
 
-		wfProfileOut(__METHOD__);
-		return json_encode($result);
+		$this->response->setData( $response );
+
+		$this->wf->ProfileOut( __METHOD__ );
 	}
 }
