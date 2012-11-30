@@ -1,508 +1,569 @@
 /**
- * Creates an ve.dm.TransactionProcessor object.
- * 
+ * VisualEditor data model TransactionProcessor class.
+ *
+ * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/**
+ * DataModel transaction processor.
+ *
+ * This class reads operations from a transaction and applies them one by one. It's not intended
+ * to be used directly; use the static functions ve.dm.TransactionProcessor.commit() and .rollback()
+ * instead.
+ *
+ * NOTE: Instances of this class are not recyclable: you can only call .process() on them once.
+ *
  * @class
  * @constructor
  */
-ve.dm.TransactionProcessor = function( model, transaction ) {
-	this.model = model;
+ve.dm.TransactionProcessor = function VeDmTransactionProcessor( doc, transaction, reversed ) {
+	// Properties
+	this.document = doc;
 	this.transaction = transaction;
+	this.operations = transaction.getOperations();
+	this.synchronizer = new ve.dm.DocumentSynchronizer( doc );
+	this.reversed = reversed;
+	// Linear model offset that we're currently at. Operations in the transaction are ordered, so
+	// the cursor only ever moves forward.
 	this.cursor = 0;
-	this.set = [];
-	this.clear = [];
+	// Adjustment used to convert between linear model offsets in the original linear model and
+	// in the half-updated linear model.
+	this.adjustment = 0;
+	// Set and clear are sets of annotations which should be added or removed to content being
+	// inserted or retained.
+	this.set = new ve.AnnotationSet();
+	this.clear = new ve.AnnotationSet();
 };
 
 /* Static Members */
 
-ve.dm.TransactionProcessor.operationMap = {
-	// Retain
-	'retain': {
-		'commit': function( op ) {
-			this.retain( op );
-		},
-		'rollback': function( op ) {
-			this.retain( op );
-		}
-	},
-	// Insert
-	'insert': {
-		'commit': function( op ) {
-			this.insert( op );
-		},
-		'rollback': function( op ) {
-			this.remove( op );
-		}
-	},
-	// Remove
-	'remove': {
-		'commit': function( op ) {
-			this.remove( op );
-		},
-		'rollback': function( op ) {
-			this.insert( op );
-		}
-	},
-	// Change element attributes
-	'attribute': {
-		'commit': function( op ) {
-			this.attribute( op, false );
-		},
-		'rollback': function( op ) {
-			this.attribute( op, true );
-		}
-	},
-	// Change content annotations
-	'annotate': {
-		'commit': function( op ) {
-			this.mark( op, false );
-		},
-		'rollback': function( op ) {
-			this.mark( op, true );
-		}
+/**
+ * Processing methods.
+ *
+ * Each method is specific to a type of action. Methods are called in the context of a transaction
+ * processor, so they work similar to normal methods on the object.
+ *
+ * @static
+ * @member
+ */
+ve.dm.TransactionProcessor.processors = {};
+
+/* Static methods */
+
+/**
+ * Commit a transaction to a document.
+ *
+ * @static
+ * @method
+ * @param {ve.dm.Document} doc Document object to apply the transaction to
+ * @param {ve.dm.Transaction} transaction Transaction to apply
+ */
+ve.dm.TransactionProcessor.commit = function ( doc, transaction ) {
+	if ( transaction.hasBeenApplied() ) {
+		throw new Error( 'Cannot commit a transaction that has already been committed' );
 	}
-};
-
-/* Static Methods */
-
-ve.dm.TransactionProcessor.commit = function( doc, transaction ) {
-	var tp = new ve.dm.TransactionProcessor( doc, transaction );
-	tp.process( 'commit' );
-};
-
-ve.dm.TransactionProcessor.rollback = function( doc, transaction ) {
-	var tp = new ve.dm.TransactionProcessor( doc, transaction );
-	tp.process( 'rollback' );
-};
-
-/* Methods */
-
-ve.dm.TransactionProcessor.prototype.process = function( method ) {
-	var operations = this.transaction.getOperations();
-	for ( var i = 0, length = operations.length; i < length; i++ ) {
-		var operation = operations[i];
-		if ( operation.type in ve.dm.TransactionProcessor.operationMap ) {
-			ve.dm.TransactionProcessor.operationMap[operation.type][method].call( this, operation );
-		} else {
-			throw 'Invalid operation error. Operation type is not supported: ' + operation.type;
-		}
-	}
-};
-
-// TODO: document this. Various arguments are optional or nonoptional in different cases, that's
-// confusing so it needs to be documented well.
-ve.dm.TransactionProcessor.prototype.rebuildNodes = function( newData, oldNodes, parent, index ) {
-	var newNodes = ve.dm.DocumentNode.createNodesFromData( newData ),
-		remove = 0;
-	if ( oldNodes ) {
-		// Determine parent and index if not given
-		if ( oldNodes[0] === oldNodes[0].getRoot() ) {
-			// We know the values for parent and index in this case
-			// and don't have to compute them. Override any parent
-			// or index parameter passed.
-			parent = oldNodes[0];
-			index = 0;
-			remove = parent.getChildren().length;
-		} else {
-			parent = parent || oldNodes[0].getParent();
-			index = index || parent.indexOf( oldNodes[0] );
-			remove = oldNodes.length;
-		}
-		// Try to preserve the first node
-		if (
-			// There must be an old and new node to preserve
-			newNodes.length &&
-			oldNodes.length &&
-			// Node types need to match
-			newNodes[0].type === oldNodes[0].type &&
-			// Only for leaf nodes
-			!newNodes[0].hasChildren()
-		) {
-			var newNode = newNodes.shift(),
-				oldNode = oldNodes.shift();
-			// Let's just leave this first node in place and adjust it's length
-			var newAttributes = newNode.getElement().attributes,
-				oldAttributes = oldNode.getElement().attributes;
-			if ( oldAttributes || newAttributes ) {
-				oldNode.getElement().attributes = newAttributes;
-			}
-			oldNode.adjustContentLength( newNode.getContentLength() - oldNode.getContentLength() );
-			index++;
-			remove--;
-		}
-	}
-	// Try to perform this in a single operation if possible, this reduces the number of UI updates
-	// TODO: Introduce a global for max argument length - 1024 is also assumed in ve.insertIntoArray
-	if ( newNodes.length < 1024 ) {
-		parent.splice.apply( parent, [index, remove].concat( newNodes ) );
-	} else if ( newNodes.length ) {
-		parent.splice.apply( parent, [index, remove] );
-		// Safe to call with arbitrary length of newNodes
-		ve.insertIntoArray( parent, index, newNodes );
-	}
+	new ve.dm.TransactionProcessor( doc, transaction, false ).process();
 };
 
 /**
- * Get the parent node that would be affected by inserting given data into it's child.
- * 
- * This is used when inserting data that closes and reopens one or more parent nodes into a child
- * node, which requires rebuilding at a higher level.
- * 
+ * Roll back a transaction; this applies the transaction to the document in reverse.
+ *
+ * @static
  * @method
- * @param {ve.Node} node Child node to start from
- * @param {Array} data Data to inspect for closings
- * @returns {ve.Node} Lowest level parent node being affected
+ * @param {ve.dm.Document} doc Document object to apply the transaction to
+ * @param {ve.dm.Transaction} transaction Transaction to apply
  */
-ve.dm.TransactionProcessor.prototype.getScope = function( node, data ) {
-	var i,
-		length,
-		level = 0,
-		max = 0;
-	for ( i = 0, length = data.length; i < length; i++ ) {
-		if ( typeof data[i].type === 'string' ) {
-			level += data[i].type.charAt( 0 ) === '/' ? 1 : -1;
-			max = Math.max( max, level );
-		}
+ve.dm.TransactionProcessor.rollback = function ( doc, transaction ) {
+	if ( !transaction.hasBeenApplied() ) {
+		throw new Error( 'Cannot roll back a transaction that has not been committed' );
 	}
-	if ( max > 0 ) {
-		for ( i = 0; i < max; i++ ) {
-			node = node.getParent() || node;
-		}
-	}
-	return node;
+	new ve.dm.TransactionProcessor( doc, transaction, true ).process();
 };
 
-ve.dm.TransactionProcessor.prototype.applyAnnotations = function( to, update ) {
-	var i,
-		j,
-		k,
-		length,
-		annotation,
-		changes = 0,
-		index;
-	// Handle annotations
-	if ( this.set.length ) {
-		for ( i = 0, length = this.set.length; i < length; i++ ) {
-			annotation = this.set[i];
-			// Auto-build annotation hash
-			if ( annotation.hash === undefined ) {
-				annotation.hash = ve.dm.DocumentNode.getHash( annotation );
-			}
-			for ( j = this.cursor; j < to; j++ ) {
-				// Auto-convert to array
-				if ( ve.isArray( this.model.data[j] ) ) {
-					this.model.data[j].push( annotation );
-				} else {
-					this.model.data[j] = [this.model.data[j], annotation];
-				}
-			}
-		}
-		changes++;
-	}
-	if ( this.clear.length ) {
-		for ( i = 0, length = this.clear.length; i < length; i++ ) {
-			annotation = this.clear[i];
-			if ( annotation instanceof RegExp ) {
-				for ( j = this.cursor; j < to; j++ ) {
-					var matches = ve.dm.DocumentNode.getMatchingAnnotations(
-						this.model.data[j], annotation
-					);
-					for ( k = 0; k < matches.length; k++ ) {
-						index = this.model.data[j].indexOf( matches[k] );
-						if ( index !== -1 ) {
-							this.model.data[j].splice( index, 1 );
-						}
-					}
-					// Auto-convert to string
-					if ( this.model.data[j].length === 1 ) {
-						this.model.data[j] = this.model.data[j][0];
-					}
-				}
-			} else {
-				// Auto-build annotation hash
-				if ( annotation.hash === undefined ) {
-					annotation.hash = ve.dm.DocumentNode.getHash( annotation );
-				}
-				for ( j = this.cursor; j < to; j++ ) {
-					index = ve.dm.DocumentNode.getIndexOfAnnotation(
-						this.model.data[j], annotation
-					);
-					if ( index !== -1 ) {
-						this.model.data[j].splice( index, 1 );
-					}
-					// Auto-convert to string
-					if ( this.model.data[j].length === 1 ) {
-						this.model.data[j] = this.model.data[j][0];
-					}
-				}
-			}
-		}
-		changes++;
-	}
-	if ( update && changes ) {
-		var fromNode = this.model.getNodeFromOffset( this.cursor ),
-			toNode = this.model.getNodeFromOffset( to );
-		this.model.traverseLeafNodes( function( node ) {
-			node.emit( 'update' );
-			if ( node === toNode ) {
-				return false;
-			}
-		}, fromNode );
-	}
-};
-
-ve.dm.TransactionProcessor.prototype.retain = function( op ) {
-	this.applyAnnotations( this.cursor + op.length, true );
+/**
+ * Execute a retain operation.
+ *
+ * This method is called within the context of a document synchronizer instance.
+ *
+ * This moves the cursor by op.length and applies annotations to the characters that the cursor
+ * moved over.
+ *
+ * @static
+ * @method
+ * @param {Object} op Operation object:
+ * @param {Number} op.length Number of elements to retain
+ */
+ve.dm.TransactionProcessor.processors.retain = function ( op ) {
+	this.applyAnnotations( this.cursor + op.length );
 	this.cursor += op.length;
 };
 
-ve.dm.TransactionProcessor.prototype.insert = function( op ) {
-	var node,
-		index,
-		offset,
-		scope;
-
-	node = this.model.getNodeFromOffset( this.cursor );
-	
-	// Shortcut 1: we're inserting content. We don't need to bother with any structural stuff
-	if ( !ve.dm.DocumentNode.containsElementData( op.data ) ) {
-		// TODO should we check whether we're at a structural offset, and throw an exception
-		// if that's the case? Or can we assume that the transaction is valid at this point?
-		
-		// Insert data into linear model
-		ve.insertIntoArray( this.model.data, this.cursor, op.data );
-		this.applyAnnotations( this.cursor + op.data.length );
-		// Update the length of the containing node
-		node.adjustContentLength( op.data.length, true );
-		node.emit( 'update', this.cursor - offset );
-		// Move the cursor
-		this.cursor += op.data.length;
-		// All done
-		return;
-	}
-	
-	// Determine the scope of the inserted data. If the data is an enclosed piece of structure,
-	// this will return node. Otherwise, the data closes one or more nodes, and this will return
-	// the first ancestor of node that isn't closed, which is the node that will contain the
-	// inserted data entirely.
-	scope = this.getScope( node, op.data );
-	
-	// Shortcut 2: we're inserting an enclosed piece of structural data at a structural offset
-	// that isn't the end of the document.
-	if (
-		ve.dm.DocumentNode.isStructuralOffset( this.model.data, this.cursor ) &&
-		this.cursor != this.model.data.length &&
-		scope == node
-	) {
-		// We're inserting an enclosed element into something else, so we don't have to rebuild
-		// the parent node. Just build a node from the inserted data and stick it in
-		ve.insertIntoArray( this.model.data, this.cursor, op.data );
-		this.applyAnnotations( this.cursor + op.data.length );
-		offset = this.model.getOffsetFromNode( node );
-		index = node.getIndexFromOffset( this.cursor - offset );
-		this.rebuildNodes( op.data, null, node, index );
+/**
+ * Execute an annotate operation.
+ *
+ * This method is called within the context of a document synchronizer instance.
+ *
+ * This will add an annotation to or remove an annotation from {this.set} or {this.clear}.
+ *
+ * @static
+ * @method
+ * @param {Object} op Operation object
+ * @param {String} op.method Annotation method, either 'set' to add or 'clear' to remove
+ * @param {String} op.bias End point of marker, either 'start' to begin or 'stop' to end
+ * @param {String} op.annotation Annotation object to set or clear from content
+ * @throws 'Invalid annotation method'
+ */
+ve.dm.TransactionProcessor.processors.annotate = function ( op ) {
+	var target;
+	if ( op.method === 'set' ) {
+		target = this.reversed ? this.clear : this.set;
+	} else if ( op.method === 'clear' ) {
+		target = this.reversed ? this.set : this.clear;
 	} else {
-		// This is the non-shortcut case
-		
-		// Rebuild scope, which is the node that encloses everything we might have to rebuild
-		node = scope;
-		offset = this.model.getOffsetFromNode( node );
-		if ( offset === -1 ) {
-			throw 'Invalid offset error. Node is not in model tree';
-		}
-		// Perform insert on linear data model
-		ve.insertIntoArray( this.model.data, this.cursor, op.data );
-		this.applyAnnotations( this.cursor + op.data.length );
-		// Synchronize model tree
-		this.rebuildNodes(
-			this.model.data.slice( offset, offset + node.getElementLength() + op.data.length ),
-			[node]
-		);
+		throw new Error( 'Invalid annotation method ' + op.method );
 	}
-	this.cursor += op.data.length;
+	if ( op.bias === 'start' ) {
+		target.push( op.annotation );
+	} else {
+		target.remove( op.annotation );
+	}
+	// Tree sync is done by applyAnnotations()
 };
 
-ve.dm.TransactionProcessor.prototype.remove = function( op ) {
-	if ( ve.dm.DocumentNode.containsElementData( op.data ) ) {
-		// Figure out which nodes are covered by the removal
-		var ranges = this.model.selectNodes(
-			new ve.Range( this.cursor, this.cursor + op.data.length )
-		);
-		
-		// Build the list of nodes to rebuild and the data to keep
-		var oldNodes = [],
-			newData = [],
-			parent = null,
-			index = null,
-			firstKeptNode,
-			lastKeptNode,
-			i;
-		for ( i = 0; i < ranges.length; i++ ) {
-			oldNodes.push( ranges[i].node );
-			if ( ranges[i].range !== undefined ) {
-				// We have to keep part of this node
-				if ( firstKeptNode === undefined ) {
-					// This is the first node we're keeping
-					firstKeptNode = ranges[i].node;
-				}
-				// Compute the start and end offset of this node
-				// We could do that with getOffsetFromNode() but
-				// we already have all the numbers we need so why would we
-				var	startOffset = ranges[i].globalRange.start - ranges[i].range.start,
-					endOffset = startOffset + ranges[i].node.getContentLength(),
-					// Get this node's data
-					nodeData = this.model.data.slice( startOffset, endOffset );
-				// Remove data covered by the range from nodeData
-				nodeData.splice(
-					ranges[i].range.start, ranges[i].range.end - ranges[i].range.start
-				);
-				// What remains in nodeData is the data we need to keep
-				// Append it to newData
-				newData = newData.concat( nodeData );
-				
-				lastKeptNode = ranges[i].node;
-			}
-		}
-		
-		// Surround newData with the right openings and closings if needed
-		if ( firstKeptNode !== undefined ) {
-			// There are a number of conceptually different cases here,
-			// but the algorithm for dealing with them is the same.
-			// 1. Removal within one node: firstKeptNode === lastKeptNode
-			// 2. Merge of siblings: firstKeptNode.getParent() === lastKeptNode.getParent()
-			// 3. Merge of arbitrary depth: firstKeptNode and lastKeptNode have a common ancestor
-			// Because #1 and #2 are special cases of #3 (merges with depth=0 and depth=1,
-			// respectively), the code below that deals with the general case (#3) and automatically
-			// covers #1 and #2 that way as well.
-			
-			// Simultaneously traverse upwards from firstKeptNode and lastKeptNode
-			// to find the common ancestor. On our way up, keep the element of each
-			// node we visit and verify that the transaction is a valid merge (i.e. it satisfies
-			// the merge criteria in prepareRemoval()'s canMerge()).
-			// FIXME: The code is essentially the same as canMerge(), merge these algorithms
-			var	openings = [],
-				closings = [],
-				paths = ve.Node.getCommonAncestorPaths( firstKeptNode, lastKeptNode ),
-				prevN1,
-				prevN2;
-			
-			if ( !paths ) {
-				throw 'Removal is not a valid merge: ' +
-					'nodes do not have a common ancestor or are not at the same depth';
-			}
-			for ( i = 0; i < paths.node1Path.length; i++ ) { 
-				// Verify the element types are equal
-				if ( paths.node1Path[i].getElementType() !== paths.node2Path[i].getElementType() ) {
-					throw 'Removal is not a valid merge: ' +
-						'corresponding parents have different types ( ' +
-						paths.node1Path[i].getElementType() + ' vs ' +
-						paths.node2Path[i].getElementType() + ' )';
-				}
-				// Record the opening of n1 and the closing of n2
-				openings.push( paths.node1Path[i].getElement() );
-				closings.push( { 'type': '/' + paths.node2Path[i].getElementType() } );
-			}
-			
-			// Surround newData with the openings and closings
-			newData = openings.reverse().concat( newData, closings );
-			
-			// Rebuild oldNodes if needed
-			// This only happens for merges with depth > 1
-			prevN1 = paths.node1Path.length ? paths.node1Path[paths.node1Path.length - 1] : null;
-			prevN2 = paths.node2Path.length ? paths.node2Path[paths.node2Path.length - 1] : null;
-			if ( prevN1 && prevN1 !== oldNodes[0] ) {
-				oldNodes = [ prevN1 ];
-				parent = paths.commonAncestor;
-				index = parent.indexOf( prevN1 ); // Pass to rebuildNodes() so it's not recomputed
-				if ( index === -1 ) {
-					throw "Tree corruption detected: node isn't in its parent's children array";
-				}
-				var foundPrevN2 = false;
-				for ( var j = index + 1; !foundPrevN2 && j < parent.getChildren().length; j++ ) {
-					oldNodes.push( parent.getChildren()[j] );
-					foundPrevN2 = parent.getChildren()[j] === prevN2;
-				}
-				if ( !foundPrevN2 ) {
-					throw "Tree corruption detected: node isn't in its parent's children array";
-				}
-			}
-		}
-		
-		// Update the linear model
-		this.model.data.splice( this.cursor, op.data.length );
-		// Perform the rebuild. This updates the model tree
-		this.rebuildNodes( newData, oldNodes, parent, index );
-	} else {
-		// We're removing content only. Take a shortcut
-		// Get the node we are removing content from
-		var node = this.model.getNodeFromOffset( this.cursor );
-		// Update model tree
-		node.adjustContentLength( -op.data.length, true );
-		// Update the linear model
-		this.model.data.splice( this.cursor, op.data.length );
-		// Emit an update so things sync up
-		var offset = this.model.getOffsetFromNode( node );
-		node.emit( 'update', this.cursor - offset );
-	}
-};
-
-ve.dm.TransactionProcessor.prototype.attribute = function( op, invert ) {
-	var element = this.model.data[this.cursor];
+/**
+ * Execute an attribute operation.
+ *
+ * This method is called within the context of a document synchronizer instance.
+ *
+ * This sets the attribute named op.key on the element at this.cursor to op.to , or unsets it if
+ * op.to === undefined . op.from is not checked against the old value, but is used instead of op.to
+ * in reverse mode. So if op.from is incorrect, the transaction will commit fine, but won't roll
+ * back correctly.
+ *
+ * @static
+ * @method
+ * @param {Object} op Operation object
+ * @param {String} op.key: Attribute name
+ * @param {Mixed} op.from: Old attribute value, or undefined if not previously set
+ * @param {Mixed} op.to: New attribute value, or undefined to unset
+ */
+ve.dm.TransactionProcessor.processors.attribute = function ( op ) {
+	var element = this.document.data[this.cursor],
+		to = this.reversed ? op.from : op.to,
+		from = this.reversed ? op.to : op.from;
 	if ( element.type === undefined ) {
-		throw 'Invalid element error. Can not set attributes on non-element data.';
+		throw new Error( 'Invalid element error, can not set attributes on non-element data' );
 	}
-	if ( ( op.method === 'set' && !invert ) || ( op.method === 'clear' && invert ) ) {
+	if ( to === undefined ) {
+		// Clear
+		if ( element.attributes ) {
+			delete element.attributes[op.key];
+		}
+	} else {
 		// Automatically initialize attributes object
 		if ( !element.attributes ) {
 			element.attributes = {};
 		}
-		element.attributes[op.key] = op.value;
-	} else if ( ( op.method === 'clear' && !invert ) || ( op.method === 'set' && invert ) ) {
-		if ( element.attributes ) {
-			delete element.attributes[op.key];
-		}
-		// Automatically clean up attributes object
-		var empty = true;
-		for ( var key in element.attributes ) {
-			empty = false;
-			break;
-		}
-		if ( empty ) {
-			delete element.attributes;
-		}
-	} else {
-		throw 'Invalid method error. Can not operate attributes this way: ' + method;
+		// Set
+		element.attributes[op.key] = to;
 	}
-	var node = this.model.getNodeFromOffset( this.cursor + 1 );
-	if ( node.hasChildren() ) {
-		node.traverseLeafNodes( function( leafNode ) {
-			leafNode.emit( 'update' );
-		} );
+
+	this.synchronizer.pushAttributeChange(
+		this.document.getNodeFromOffset( this.cursor + 1 ),
+		op.key,
+		from, to
+	);
+	this.setChangeMarker( this.cursor, 'attributes' );
+};
+
+/**
+ * Execute a replace operation.
+ *
+ * This method is called within the context of a document synchronizer instance.
+ *
+ * This replaces a range of linear model data with another at this.cursor, figures out how the model
+ * tree needs to be synchronized, and queues this in the DocumentSynchronizer.
+ *
+ * op.remove isn't checked against the actual data (instead op.remove.length things are removed
+ * starting at this.cursor), but it's used instead of op.insert in reverse mode. So if
+ * op.remove is incorrect but of the right length, the transaction will commit fine, but won't roll
+ * back correctly.
+ *
+ * @static
+ * @method
+ * @param {Object} op Operation object
+ * @param {Array} op.remove Linear model data to remove
+ * @param {Array} op.insert Linear model data to insert
+ */
+ve.dm.TransactionProcessor.processors.replace = function ( op ) {
+	var node, selection, range, parentOffset,
+		remove = this.reversed ? op.insert : op.remove,
+		insert = this.reversed ? op.remove : op.insert,
+		removeIsContent = ve.dm.Document.isContentData( remove ),
+		insertIsContent = ve.dm.Document.isContentData( insert ),
+		removeHasStructure = ve.dm.Document.containsElementData( remove ),
+		insertHasStructure = ve.dm.Document.containsElementData( insert ),
+		operation = op,
+		removeLevel = 0,
+		insertLevel = 0,
+		i,
+		type,
+		prevCursor,
+		affectedRanges = [],
+		scope,
+		minInsertLevel = 0,
+		coveringRange,
+		scopeStart,
+		scopeEnd,
+		opAdjustment = 0,
+		opRemove,
+		opInsert;
+	if ( removeIsContent && insertIsContent ) {
+		// Content replacement
+		// Update the linear model
+		this.document.spliceData( this.cursor, remove.length, insert );
+		this.applyAnnotations( this.cursor + insert.length );
+		// Get the node containing the replaced content
+		selection = this.document.selectNodes(
+			new ve.Range(
+				this.cursor - this.adjustment,
+				this.cursor - this.adjustment + remove.length
+			),
+			'leaves'
+		);
+		node = selection[0].node;
+		if (
+			!removeHasStructure && !insertHasStructure &&
+			selection.length === 1 &&
+			node && node.getType() === 'text'
+		) {
+			// Text-only replacement
+			// Queue a resize for the text node
+			this.synchronizer.pushResize( node, insert.length - remove.length );
+		} else {
+			// Replacement is not exclusively text
+			// Rebuild all covered nodes
+			range = new ve.Range(
+				selection[0].nodeRange.start,
+				selection[selection.length - 1].nodeRange.end
+			);
+			this.synchronizer.pushRebuild( range,
+				new ve.Range( range.start + this.adjustment,
+					range.end + this.adjustment + insert.length - remove.length )
+			);
+		}
+		// Set change markers on the parents of the affected nodes
+		for ( i = 0; i < selection.length; i++ ) {
+			this.setChangeMarker(
+				selection[i].parentOuterRange.start + this.adjustment,
+				'content'
+			);
+		}
+		// Advance the cursor
+		this.cursor += insert.length;
+		this.adjustment += insert.length - remove.length;
 	} else {
-		node.emit( 'update' );
+		// Structural replacement
+		// It's possible that multiple replace operations are needed before the
+		// model is back in a consistent state. This loop applies the current
+		// replace operation to the linear model, then keeps applying subsequent
+		// operations until the model is consistent. We keep track of the changes
+		// and queue a single rebuild after the loop finishes.
+		while ( true ) {
+			if ( operation.type === 'replace' ) {
+				opRemove = this.reversed ? operation.insert : operation.remove;
+				opInsert = this.reversed ? operation.remove : operation.insert;
+				// Update the linear model for this insert
+				this.document.spliceData( this.cursor, opRemove.length, opInsert );
+				affectedRanges.push( new ve.Range(
+					this.cursor - this.adjustment,
+					this.cursor - this.adjustment + opRemove.length
+				) );
+				prevCursor = this.cursor;
+				this.cursor += opInsert.length;
+				// Paint the removed selection, figure out which nodes were
+				// covered, and add their ranges to the affected ranges list
+				if ( opRemove.length > 0 ) {
+					selection = this.document.selectNodes( new ve.Range(
+						prevCursor - this.adjustment,
+						prevCursor + opRemove.length - this.adjustment
+					), 'siblings' );
+					for ( i = 0; i < selection.length; i++ ) {
+						affectedRanges.push( selection[i].nodeOuterRange );
+						if (
+							selection[i].nodeOuterRange.start < prevCursor - this.adjustment &&
+							selection[i].node.canContainContent()
+						) {
+							// The opening element survives, so this
+							// node will have some of its content
+							// removed and/or have another node merged
+							// into it. Mark the node.
+							// TODO detect special case where closing is replaced
+							parentOffset = selection[i].nodeOuterRange.start + this.adjustment;
+							this.setChangeMarker( parentOffset, 'content' );
+						}
+					}
+				}
+				// Walk through the remove and insert data
+				// and keep track of the element depth change (level)
+				// for each of these two separately. The model is
+				// only consistent if both levels are zero.
+				for ( i = 0; i < opRemove.length; i++ ) {
+					type = opRemove[i].type;
+					if ( type !== undefined ) {
+						if ( type.charAt( 0 ) === '/' ) {
+							// Closing element
+							removeLevel--;
+						} else {
+							// Opening element
+							removeLevel++;
+						}
+					}
+				}
+				// Keep track of the scope of the insertion
+				// Normally this is the node we're inserting into, except if the
+				// insertion closes elements it doesn't open (i.e. splits elements),
+				// in which case it's the affected ancestor
+				for ( i = 0; i < opInsert.length; i++ ) {
+					type = opInsert[i].type;
+					if ( type !== undefined ) {
+						if ( type.charAt( 0 ) === '/' ) {
+							// Closing element
+							insertLevel--;
+							if ( insertLevel < minInsertLevel ) {
+								// Closing an unopened element at a higher
+								// (more negative) level than before
+								// Lazy-initialize scope
+								scope = scope || this.document.getNodeFromOffset( prevCursor );
+								// Push the full range of the old scope as an affected range
+								scopeStart = this.document.getDocumentNode().getOffsetFromNode( scope );
+								scopeEnd = scopeStart + scope.getOuterLength();
+								affectedRanges.push( new ve.Range( scopeStart, scopeEnd ) );
+								// Update scope
+								scope = scope.getParent() || scope;
+								// Set change marker
+								this.transaction.setChangeMarker(
+									scopeStart + this.adjustment,
+									'rebuilt'
+								);
+							}
+
+						} else {
+							// Opening element
+							insertLevel++;
+							// Mark as 'created'
+							this.setChangeMarker( prevCursor + i, 'created' );
+						}
+					}
+				}
+				// Update adjustment
+				this.adjustment += opInsert.length - opRemove.length;
+				opAdjustment += opInsert.length - opRemove.length;
+			} else {
+				// We know that other operations won't cause adjustments, so we
+				// don't have to update adjustment
+				this.executeOperation( operation );
+			}
+			if ( removeLevel === 0 && insertLevel === 0 ) {
+				// The model is back in a consistent state, so we're done
+				break;
+			}
+			// Get the next operation
+			operation = this.nextOperation();
+			if ( !operation ) {
+				throw new Error( 'Unbalanced set of replace operations found' );
+			}
+		}
+		// From all the affected ranges we have gathered, compute a range that covers all
+		// of them, and rebuild that
+		coveringRange = ve.Range.newCoveringRange( affectedRanges );
+		this.synchronizer.pushRebuild(
+			coveringRange,
+			new ve.Range(
+				coveringRange.start + this.adjustment - opAdjustment,
+				coveringRange.end + this.adjustment
+			)
+		);
 	}
 };
 
-ve.dm.TransactionProcessor.prototype.mark = function( op, invert ) {
-	var target;
-	if ( ( op.method === 'set' && !invert ) || ( op.method === 'clear' && invert ) ) {
-		target = this.set;
-	} else if ( ( op.method === 'clear' && !invert ) || ( op.method === 'set' && invert ) ) {
-		target = this.clear;
+/* Methods */
+
+/**
+ * Gets the next operation.
+ *
+ * @method
+ */
+ve.dm.TransactionProcessor.prototype.nextOperation = function () {
+	return this.operations[this.operationIndex++] || false;
+};
+
+/**
+ * Executes an operation.
+ *
+ * @method
+ * @param {Object} op Operation object to execute
+ * @throws 'Invalid operation error. Operation type is not supported'
+ */
+ve.dm.TransactionProcessor.prototype.executeOperation = function ( op ) {
+	if ( op.type in ve.dm.TransactionProcessor.processors ) {
+		ve.dm.TransactionProcessor.processors[op.type].call( this, op );
 	} else {
-		throw 'Invalid method error. Can not operate attributes this way: ' + method;
+		throw new Error( 'Invalid operation error. Operation type is not supported: ' + op.type );
 	}
-	if ( op.bias === 'start' ) {
-		target.push( op.annotation );
-	} else if ( op.bias === 'stop' ) {
-		var index;
-		if ( op.annotation instanceof RegExp ) {
-			index = target.indexOf( op.annotation );
+};
+
+/**
+ * Processes all operations.
+ *
+ * When all operations are done being processed, the document will be synchronized.
+ *
+ * @method
+ */
+ve.dm.TransactionProcessor.prototype.process = function () {
+	var op;
+	if ( this.reversed ) {
+		// Undo change markers before rolling back the transaction, because the offsets
+		// are relevant to the post-commit state
+		this.applyChangeMarkers();
+		// Unset the change markers we've just undone
+		this.transaction.clearChangeMarkers();
+	}
+
+	// This loop is factored this way to allow operations to be skipped over or executed
+	// from within other operations
+	this.operationIndex = 0;
+	while ( ( op = this.nextOperation() ) ) {
+		this.executeOperation( op );
+	}
+	this.synchronizer.synchronize();
+
+	if ( !this.reversed ) {
+		// Apply the change markers we've accumulated while processing the transaction
+		this.applyChangeMarkers();
+	}
+	// Mark the transaction as committed or rolled back, as appropriate
+	this.transaction.toggleApplied();
+};
+
+/**
+ * Apply the current annotation stacks. This will set all annotations in this.set and clear all
+ * annotations in this.clear on the data between the offsets this.cursor and this.cursor + to
+ *
+ * @method
+ * @param {Number} to Offset to stop annotating at. Annotating starts at this.cursor
+ * @throws 'Invalid transaction, can not annotate a branch element'
+ * @throws 'Invalid transaction, annotation to be set is already set'
+ * @throws 'Invalid transaction, annotation to be cleared is not set'
+ */
+ve.dm.TransactionProcessor.prototype.applyAnnotations = function ( to ) {
+	var item, element, annotated, annotations, i, range, selection, offset;
+	if ( this.set.isEmpty() && this.clear.isEmpty() ) {
+		return;
+	}
+	for ( i = this.cursor; i < to; i++ ) {
+		item = this.document.data[i];
+		element = item.type !== undefined;
+		if ( element ) {
+			if ( item.type.charAt( 0 ) === '/' ) {
+				throw new Error( 'Invalid transaction, cannot annotate a branch closing element' );
+			} else if ( ve.dm.nodeFactory.canNodeHaveChildren( item.type ) ) {
+				throw new Error( 'Invalid transaction, cannot annotate a branch opening element' );
+			}
+		}
+		annotated = element ? 'annotations' in item : ve.isArray( item );
+		annotations = annotated ? ( element ? item.annotations : item[1] ) :
+			new ve.AnnotationSet();
+		// Set and clear annotations
+		if ( annotations.containsAnyOf( this.set ) ) {
+			throw new Error( 'Invalid transaction, annotation to be set is already set' );
 		} else {
-			index = ve.dm.DocumentNode.getIndexOfAnnotation( target, op.annotation );
+			annotations.addSet( this.set );
 		}
-		if ( index === -1 ) {
-			throw 'Annotation stack error. Annotation is missing.';
+		if ( !annotations.containsAllOf( this.clear ) ) {
+			throw new Error( 'Invalid transaction, annotation to be cleared is not set' );
+		} else {
+			annotations.removeSet( this.clear );
 		}
-		target.splice( index, 1 );
+		// Auto initialize/cleanup
+		if ( !annotations.isEmpty() && !annotated ) {
+			if ( element ) {
+				// Initialize new element annotation
+				item.annotations = new ve.AnnotationSet( annotations );
+			} else {
+				// Initialize new character annotation
+				this.document.data[i] = [item, new ve.AnnotationSet( annotations )];
+			}
+		} else if ( annotations.isEmpty() && annotated ) {
+			if ( element ) {
+				// Cleanup empty element annotation
+				delete item.annotations;
+			} else {
+				// Cleanup empty character annotation
+				this.document.data[i] = item[0];
+			}
+		}
+	}
+	if ( this.cursor < to ) {
+		range = new ve.Range( this.cursor, to );
+		selection = this.document.selectNodes(
+			new ve.Range(
+				this.cursor - this.adjustment,
+				to - this.adjustment
+			),
+			'leaves'
+		);
+		for ( i = 0; i < selection.length; i++ ) {
+			offset = selection[i].node.isWrapped() ?
+				selection[i].nodeOuterRange.start :
+				selection[i].parentOuterRange.start;
+			this.setChangeMarker( offset + this.adjustment, 'annotations' );
+		}
+		this.synchronizer.pushAnnotation( new ve.Range( this.cursor, to ) );
+	}
+};
+
+/**
+ * Set a change marker on our transaction, if we are in commit mode. This function is a no-op in
+ * rollback mode.
+ * @see {ve.dm.Transaction.setChangeMarker}
+ */
+ve.dm.TransactionProcessor.prototype.setChangeMarker = function ( offset, type, increment ) {
+	// Refuse to set any new change markers while reversing transactions
+	if ( !this.reversed ) {
+		this.transaction.setChangeMarker( offset, type, increment );
+	}
+}
+
+/**
+ * Apply the change markers on this.transaction to this.document . Change markers are set
+ * (incremented) in commit mode, and unset (decremented) in rollback mode.
+ */
+ve.dm.TransactionProcessor.prototype.applyChangeMarkers = function () {
+	var offset, type, previousValue, newValue, element,
+		markers = this.transaction.getChangeMarkers(),
+		m = this.reversed ? -1 : 1;
+	for ( offset in markers ) {
+		for ( type in markers[offset] ) {
+			offset = Number( offset );
+			element = this.document.data[offset];
+			previousValue = ve.getProp( element, 'internal', 'changed', type );
+			newValue = ( previousValue || 0 ) + m*markers[offset][type];
+			if ( newValue != 0 ) {
+				ve.setProp( element, 'internal', 'changed', type, newValue );
+			} else if ( previousValue !== undefined ) {
+				// Value was set but becomes zero, delete the key
+				delete element.internal.changed[type];
+				// If that made .changed empty, delete it
+				if ( ve.isEmptyObject( element.internal.changed ) ) {
+					delete element.internal.changed;
+				}
+				// If that made .internal empty, delete it
+				if ( ve.isEmptyObject( element.internal ) ) {
+					delete element.internal;
+				}
+			}
+		}
 	}
 };

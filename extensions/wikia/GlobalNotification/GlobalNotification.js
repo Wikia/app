@@ -56,6 +56,9 @@ var GlobalNotification = {
 		GlobalNotification.hide( callback );
 	},
 	hide: function( callback ) {
+		if ( !GlobalNotification.dom ) {
+			return;
+		}
 		if ( GlobalNotification.dom.length ){
 			GlobalNotification.dom.animate({
 				'height': 0,

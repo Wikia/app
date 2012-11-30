@@ -1,66 +1,97 @@
-// ToolbarView
-ve.ui.Toolbar = function( $container, surfaceView, config ) {
-	// Inheritance TODO: Do we still need it?
-	ve.EventEmitter.call( this );
-	if ( !surfaceView ) {
-		return;
-	}
+/**
+ * VisualEditor user interface Toolbar class.
+ *
+ * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
 
-	// References for use in closures
-	var	_this = this,
-		$window = $( window );	
+/**
+ * Editing toolbar.
+ *
+ * @class
+ * @constructor
+ * @extends {ve.EventEmitter}
+ * @param {jQuery} $container
+ * @param {ve.Surface} surface
+ * @param {Array} config
+ */
+ve.ui.Toolbar = function VeUiToolbar( $container, surface, config ) {
+	// Parent constructor
+	ve.EventEmitter.call( this );
 
 	// Properties
-	this.surfaceView = surfaceView;
+	this.surface = surface;
 	this.$ = $container;
-	this.$groups = $( '<div class="es-toolbarGroups"></div>' ).prependTo( this.$ );
-	this.tools = [];
+	this.$groups = $( '<div class="ve-ui-toolbarGroups"></div>' );
+	this.config = config || {};
 
-	this.surfaceView.on( 'cursor', function( annotations, nodes ) {
-		for( var i = 0; i < _this.tools.length; i++ ) {
-			_this.tools[i].updateState( annotations, nodes );
-		}
-	} );
+	// Events
+	this.surface.getModel().on( 'annotationChange', ve.bind( this.onAnnotationChange, this ) );
 
-	this.config = config || [
-		{ 'name': 'history', 'items' : ['undo', 'redo'] },
-		{ 'name': 'textStyle', 'items' : ['format'] },
-		{ 'name': 'textStyle', 'items' : ['bold', 'italic', 'link', 'clear'] },
-		{ 'name': 'list', 'items' : ['number', 'bullet', 'outdent', 'indent'] }
-	];
+	// Initialization
+	this.$.prepend( this.$groups );
 	this.setup();
 };
 
+/* Inheritance */
+
+ve.inheritClass( ve.ui.Toolbar, ve.EventEmitter );
+
 /* Methods */
 
-ve.ui.Toolbar.prototype.getSurfaceView = function() {
-	return this.surfaceView;
+/**
+ * Gets the surface the toolbar controls.
+ *
+ * @method
+ * @returns {ve.Surface} Surface being controlled
+ */
+ve.ui.Toolbar.prototype.getSurface = function () {
+	return this.surface;
 };
 
-ve.ui.Toolbar.prototype.setup = function() {
-	for ( var i = 0; i < this.config.length; i++ ) {
-		var	$group = $( '<div>' )
-			.addClass( 'es-toolbarGroup' )
-			.addClass( 'es-toolbarGroup-' + this.config[i].name );
-		if ( this.config[i].label ) {
-			$group.append(
-				$( '<div>' ).addClass( 'es-toolbarLabel' ).html( this.config[i].label )
-			);
-		}
+/**
+ * Responds to annotation changes on the surface.
+ *
+ * @method
+ * @emits "updateState" (nodes, full, partial)
+ * @emits "clearState"
+ */
+ve.ui.Toolbar.prototype.onAnnotationChange = function () {
+	var i, len, leafNodes,
+		fragment = this.surface.getModel().getFragment(),
+		nodes = [];
 
-		for ( var j = 0; j < this.config[i].items.length; j++ ) {
-			var toolDefintion = ve.ui.Tool.tools[ this.config[i].items[j] ];
-			if ( toolDefintion ) {
-				var tool = new toolDefintion.constructor(
-					this, toolDefintion.name, toolDefintion.title, toolDefintion.data
-				);
-				this.tools.push( tool );
-				$group.append( tool.$ );
+	leafNodes = fragment.getLeafNodes();
+	for ( i = 0, len = leafNodes.length; i < len; i++ ) {
+		nodes.push( leafNodes[i].node );
+	}
+	this.emit( 'updateState', nodes, fragment.getAnnotations(), fragment.getAnnotations( true ) );
+};
+
+/**
+ * Initializes all tools and groups.
+ *
+ * @method
+ */
+ve.ui.Toolbar.prototype.setup = function () {
+	var i, j, group, $group, tool;
+	for ( i = 0; i < this.config.length; i++ ) {
+		group = this.config[i];
+		// Create group
+		$group = $( '<div class="ve-ui-toolbarGroup"></div>' )
+			.addClass( 've-ui-toolbarGroup-' + group.name );
+		if ( group.label ) {
+			$group.append( $( '<div class="ve-ui-toolbarLabel"></div>' ).html( group.label ) );
+		}
+		// Add tools
+		for ( j = 0; j < group.items.length; j++ ) {
+			tool = ve.ui.toolFactory.create( group.items[j], this );
+			if ( !tool ) {
+				throw new Error( 'Unknown tool: ' + group.items[j] );
 			}
+			$group.append( tool.$ );
 		}
-
-		this.$groups.append( $group ); 
+		// Append group
+		this.$groups.append( $group );
 	}
 };
-
-ve.extendClass( ve.ui.Toolbar, ve.EventEmitter );

@@ -1,73 +1,42 @@
 $oasisWidthType: get_command_line_param("widthType", 0);
 
-@if $oasisWidthType == 3 {
-	/* this grid assumes 1030px width, 160px columns */
-	.WikiaGrid {
-		.grid-1,
-		.grid-2,
-		.grid-3,
-		.grid-4,
-		.grid-5,
-		.grid-6 {
-			display: inline;
-			float: left;
-			margin: 0 0 0 10px;
-			&.alpha {
-				margin: 0;
-			}
-		}
-		.grid-1 {
-			width: 160px;
-		}
-		.grid-2 {
-			width: 330px;
-		}
-		.grid-3 {
-			width: 500px;
-		}
-		.grid-4 {
-			width: 670px;
-		}
-		.grid-5 {
-			width: 840px;
-		}
-		.grid-6 {
-			width: 1010px;
+$width-grid-column: 160px;
+$width-grid-gutter: 10px;
+
+@if $oasisWidthType != 3 {
+	$width-grid-column: 155px;
+}
+
+.WikiaGrid {
+	.grid-1,
+	.grid-2,
+	.grid-3,
+	.grid-4,
+	.grid-5,
+	.grid-6 {
+		display: inline;
+		float: left;
+		margin: 0 0 0 $width-grid-gutter;
+		&.alpha {
+			margin: 0;
 		}
 	}
-} @else {
-	/* this grid assumes 1000px width, 155px columns */
-	.WikiaGrid {
-		.grid-1,
-		.grid-2,
-		.grid-3,
-		.grid-4,
-		.grid-5,
-		.grid-6 {
-			display: inline;
-			float: left;
-			margin: 0 0 0 10px;
-			&.alpha {
-				margin: 0;
-			}
-		}
-		.grid-1 {
-			width: 155px;
-		}
-		.grid-2 {
-			width: 320px;
-		}
-		.grid-3 {
-			width: 485px;
-		}
-		.grid-4 {
-			width: 650px;
-		}
-		.grid-5 {
-			width: 815px;
-		}
-		.grid-6 {
-			width: 980px;
-		}
-	}	
+	.grid-1 {
+		width: $width-grid-column;
+	}
+	.grid-2 {
+		width: ( $width-grid-column * 2 ) + $width-grid-gutter;
+	}
+	.grid-3 {
+		width: ( $width-grid-column * 3 ) + ( $width-grid-gutter * 2 );
+	}
+	.grid-4 {
+		width: ( $width-grid-column * 4 ) + ( $width-grid-gutter * 3 );
+	}
+	.grid-5 {
+		width: ( $width-grid-column * 5 ) + ( $width-grid-gutter * 4 );
+	}
+	.grid-6 {
+		width: ( $width-grid-column * 6 ) + ( $width-grid-gutter * 5 );
+	}
 }
