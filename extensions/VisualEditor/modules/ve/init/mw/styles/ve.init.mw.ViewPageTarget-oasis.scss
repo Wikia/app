@@ -12,7 +12,6 @@
 }
 
 
-
 /* Button styles */
 .ve-init-mw-viewPageTarget-toolbar-saveButton, .ve-init-mw-viewPageTarget-toolbar-cancelButton {
 	@extend .button;
@@ -126,6 +125,7 @@
 	resize: none;
 	font-size: 0.8em;
 	font-family: sans-serif;
+	width: 100%;
 }
 
 .ve-init-mw-viewPageTarget-saveDialog-editSummary:focus {
