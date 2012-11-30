@@ -19,7 +19,11 @@ foreach ( $values as $i => $propertyValue ) {
 
 	if ( $context == SD_CONTEXT_DEFAULT ) {
 		if (isset($value->object) && ($value->object !== null)) {
-			echo '<p>' . $text->getValue() . '</p>';
+			if (isset($params['parser'])) {
+				echo '<p>' . $params['parser']->recursiveTagParse($text->getValue(), isset( $params['frame'] ) ? $params['frame'] : null ) . '</p>';
+			} else {
+				echo '<p>' . $text->getValue() . '</p>';
+			}
 		}
 	}
 

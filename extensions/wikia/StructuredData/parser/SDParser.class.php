@@ -65,6 +65,8 @@ class SDParser {
 		if ( !empty( $frame ) ) {
 			$input = $parser->recursiveTagParse($input, $frame);
 		}
+		$args['parser'] = $parser;
+		$args['frame'] = $frame;
 
 		$tag = F::build( 'SDParserTag', array( 'parser' => $this, 'tagRawContent' => $input, 'args' => $args ) );
 
