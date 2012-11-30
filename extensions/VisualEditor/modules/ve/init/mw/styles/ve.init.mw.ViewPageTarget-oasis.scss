@@ -14,9 +14,10 @@
 
 
 /* Button styles */
-.ve-init-mw-viewPageTarget-toolbar-saveButton {
+.ve-init-mw-viewPageTarget-toolbar-saveButton, .ve-init-mw-viewPageTarget-toolbar-cancelButton {
 	@extend .button;
 	margin-top: 4px;
+	margin-left: 4px;
 }
 
 .ve-init-mw-viewPageTarget-toolbar-saveButton-disabled {

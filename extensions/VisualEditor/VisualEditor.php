@@ -136,6 +136,7 @@ $wgResourceModules += array(
 		'messages' => array(
 			'minoredit',
 			'savearticle',
+			'cancel',
 			'watchthis',
 			'tooltip-save',
 			'copyrightwarning',

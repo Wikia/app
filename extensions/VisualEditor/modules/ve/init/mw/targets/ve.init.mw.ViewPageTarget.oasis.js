@@ -57,6 +57,8 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	this.proxiedOnSurfaceModelTransact = ve.bind( this.onSurfaceModelTransact, this );
 	this.$toolbarSaveButton =
 		$( '<div class="ve-init-mw-viewPageTarget-toolbar-saveButton"></div>' );
+	this.$toolbarCancelButton =
+		$( '<div class="ve-init-mw-viewPageTarget-toolbar-cancelButton secondary"></div>' );
 	this.$saveDialog =
 		$( '<div class="ve-init-mw-viewPageTarget-saveDialog"></div>' );
 	this.editSummaryByteLimit = 255;
@@ -70,6 +72,7 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	if ( this.canBeActivated ) {
 		this.setupEditLinks();
 		if ( this.isViewPage ) {
+			this.setupToolbarCancelButton();
 			this.setupToolbarSaveButton();
 			this.setupSaveDialog();
 			if ( currentUri.query.veaction === 'edit' ) {
@@ -141,6 +144,9 @@ ve.init.mw.ViewPageTarget.saveDialogTemplate = '\
 				for="ve-init-mw-viewPageTarget-saveDialog-watchList"></label>\
 			<label class="ve-init-mw-viewPageTarget-saveDialog-editSummaryCount"></label>\
 		</div>\
+		<button class="ve-init-mw-viewPageTarget-saveDialog-cancelButton secondary">\
+			<span class="ve-init-mw-viewPageTarget-saveDialog-cancelButton-label"></span>\
+		</button>\
 		<button class="ve-init-mw-viewPageTarget-saveDialog-saveButton">\
 			<span class="ve-init-mw-viewPageTarget-saveDialog-saveButton-label"></span>\
 		</button>\
@@ -285,6 +291,7 @@ ve.init.mw.ViewPageTarget.prototype.onLoad = function ( dom ) {
 	this.track( WikiaTracker.ACTIONS.IMPRESSION, 'onLoad' );
 	this.edited = false;
 	this.setUpSurface( dom );
+	this.attachToolbarCancelButton();
 	this.attachToolbarSaveButton();
 	this.$toolbarWrapper = $( '.ve-ui-toolbar-wrapper' );
 	this.attachSaveDialog();
@@ -362,6 +369,15 @@ ve.init.mw.ViewPageTarget.prototype.attachToolbarSaveButton = function () {
 };
 
 /**
+ * Adds the cancel button to the user interface.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.attachToolbarCancelButton = function () {
+	$( '.ve-ui-toolbar .ve-ui-actions' ).append( this.$toolbarCancelButton );
+};
+
+/**
  * Adds content and event bindings to the save button.
  *
  * @method
@@ -382,6 +398,30 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbarSaveButton = function () {
 				e.preventDefault();
 			},
 			'click': ve.bind( this.onToolbarSaveButtonClick, this )
+		} );
+};
+
+/**
+ * Adds content and event bindings to the cancel button.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.setupToolbarCancelButton = function () {
+	this.$toolbarCancelButton
+		.append(
+			$( '<span class="ve-init-mw-viewPageTarget-toolbar-cancelButton-label"></span>' )
+				.text( ve.msg( 'cancel' ) )
+		)
+		.on( {
+			'mousedown': function ( e ) {
+				$(this).addClass( 've-init-mw-viewPageTarget-toolbar-cancelButton-down' );
+				e.preventDefault();
+			},
+			'mouseleave mouseup': function ( e ) {
+				$(this).removeClass( 've-init-mw-viewPageTarget-toolbar-cancelButton-down' );
+				e.preventDefault();
+			},
+			'click': ve.bind( this.onToolbarCancelButtonClick, this )
 		} );
 };
 
@@ -407,6 +447,16 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
 	if ( this.edited ) {
 		this.showSaveDialog();
 	}
+};
+
+/**
+ * Handles clicks on the cancel button in the toolbar.
+ *
+ * @method
+ * @param {jQuery.Event} e
+ */
+ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
+	this.deactivate();
 };
 
 /**
@@ -485,6 +535,17 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 		.find( '#ve-init-mw-viewPageTarget-saveDialog-watchList' )
 			.prop( 'checked', mw.config.get( 'wgVisualEditor' ).isPageWatched )
 			.end()
+		.find( '.ve-init-mw-viewPageTarget-saveDialog-cancelButton' )
+			.on( {
+				'mousedown': function () {
+					$(this).addClass( 've-init-mw-viewPageTarget-saveDialog-cancelButton-down' );
+				},
+				'mouseleave mouseup': function () {
+					$(this).removeClass( 've-init-mw-viewPageTarget-saveDialog-cancelButton-down' );
+				},
+				'click': ve.bind( viewPage.onSaveDialogCancelButtonClick, viewPage )
+			} )
+			.end()
 		.find( '.ve-init-mw-viewPageTarget-saveDialog-saveButton' )
 			.on( {
 				'mousedown': function () {
@@ -495,6 +556,9 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 				},
 				'click': ve.bind( viewPage.onSaveDialogSaveButtonClick, viewPage )
 			} )
+			.end()
+		.find( '.ve-init-mw-viewPageTarget-saveDialog-cancelButton-label' )
+			.text( ve.msg( 'cancel' ) )
 			.end()
 		.find( '.ve-init-mw-viewPageTarget-saveDialog-saveButton-label' )
 			.text( ve.msg( 'savearticle' ) )
@@ -560,6 +624,16 @@ ve.init.mw.ViewPageTarget.prototype.onSaveDialogSaveButtonClick = function () {
 		},
 		ve.bind( this.onSave, this )
 	);
+};
+
+/**
+ * Handles clicks on the cancel button in the save dialog.
+ *
+ * @method
+ * @param {jQuery.Event} e
+ */
+ve.init.mw.ViewPageTarget.prototype.onSaveDialogCancelButtonClick = function () {
+	this.hideSaveDialog();
 };
 
 /**
@@ -679,6 +753,7 @@ ve.init.mw.ViewPageTarget.prototype.deactivate = function ( override ) {
 		) {
 			this.deactivating = true;
 			// User interface changes
+			this.detachToolbarCancelButton();
 			this.detachToolbarSaveButton();
 			this.detachSaveDialog();
 			this.tearDownSurface();
@@ -695,6 +770,15 @@ ve.init.mw.ViewPageTarget.prototype.deactivate = function ( override ) {
  */
 ve.init.mw.ViewPageTarget.prototype.detachToolbarSaveButton = function () {
 	this.$toolbarSaveButton.detach();
+};
+
+/**
+ * Removes the cancel button from the user interface.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.detachToolbarCancelButton = function () {
+	this.$toolbarCancelButton.detach();
 };
 
 /*
