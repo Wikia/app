@@ -3673,7 +3673,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
 		$mockSearchConfig	=	$this->getMockBuilder( 'WikiaSearchConfig' )
 									->disableOriginalConstructor()
-									->setMethods( array( 'getNamespaces', 'getQuery', 'getSearchProfiles', 'getIncludeRedirects', 'getActiveTab', 'getFilters', 'getRank' ) )
+									->setMethods( array( 'getNamespaces', 'getQuery', 'getSearchProfiles', 'getIncludeRedirects', 'getActiveTab', 'getFilterQueries', 'getRank' ) )
 									->getMock();
 		
 		$this->mockGlobalVariable( 'wgDefaultSearchProfile', SEARCH_PROFILE_DEFAULT );
@@ -3737,7 +3737,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		;
 		$mockSearchConfig
 			->expects	( $this->once() )
-			->method	( 'getFilters' )
+			->method	( 'getFilterQueries' )
 			->will		( $this->returnValue( array() ) )
 		;
 		$mockSearchConfig
