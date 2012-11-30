@@ -2,6 +2,8 @@
 
 class MarketingToolboxController extends WikiaSpecialPageController {
 
+	const FLASH_MESSAGE_SESSION_KEY = 'flash_message';
+
 	protected $toolboxModel;
 
 	public function __construct() {
@@ -89,6 +91,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 * Main action for editing hub modules
 	 */
 	public function editHubAction() {
+
+		$this->flashMessage = $this->getFlashMessage();
+
 		$this->retriveDataFromUrl();
 		$modulesData = $this->toolboxModel->getModulesData(
 			$this->langCode,
@@ -101,14 +106,33 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHub.js');
 
-		$data = array();
-		$module = MarketingToolboxModuleService::getModuleByName($modulesData['activeModuleName']);
+		$data = array(
+			'test' => 123490,
+			'halo2' => 'pozn',
+			'alo' => 1
+		);
+		$module = MarketingToolboxModuleService::getModuleByName(
+			$this->toolboxModel->getNotTranslatedModuleName($this->selectedModuleId)
+		);
 
 		if ($this->request->wasPosted()) {
+			$data = $this->context->getRequest()->getValues();
+			$data = $module->filterData($data);
 			if ($module->validate($data)) {
-				// TODO save & redirect to next module
+				// TODO save
+
+				$this->putFlashMessage(wfMsg('marketing-toolbox-module-save-ok'));
+				// TODO last module (when we will know what to do after last module, maybe preview?)
+				$nextUrl =  $this->toolboxModel->getModuleUrl(
+					$this->date,
+					$this->langCode,
+					$this->verticalId,
+					$this->sectionId,
+					$this->selectedModuleId + 1
+				);
+				$this->response->redirect($nextUrl);
 			} else {
-				// set error message
+				$this->errorMessage = wfMsg('marketing-toolbox-module-save-error');
 			}
 		}
 
@@ -238,5 +262,18 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$findFile = F::App()->wf->FindFile($title);
 			$this->fileUrl = $findFile->getUrl();
 		}
+	}
+
+
+
+	// TODO extract this code somewhere
+	protected function getFLashMessage() {
+		$message = $this->request->getSessionData(self::FLASH_MESSAGE_SESSION_KEY);
+		$this->request->setSessionData(self::FLASH_MESSAGE_SESSION_KEY, null);
+		return $message;
+	}
+
+	protected function putFlashMessage($message) {
+		$this->request->setSessionData(self::FLASH_MESSAGE_SESSION_KEY, $message);
 	}
 }

@@ -49,6 +49,14 @@ class MarketingToolboxModel extends WikiaModel {
 		);
 	}
 
+	public function getModuleName($moduleId) {
+		return wfMsg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
+	}
+
+	public function getNotTranslatedModuleName($moduleId) {
+		return ucfirst(str_replace('-', '', $this->modules[$moduleId]));
+	}
+
 	public function getData($langCode, $verticalId, $beginTimestamp, $endTimestamp) {
 		return $this->getMockData($langCode, $verticalId, $beginTimestamp, $endTimestamp);
 	}
@@ -162,20 +170,26 @@ class MarketingToolboxModel extends WikiaModel {
 				}
 				$modulesData['lastEditor'] = $userName;
 				$modulesData['lastEditTime'] = $module['lastEditTime'];
-				$modulesData['activeModuleName'] = wfMsg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
+				$modulesData['activeModuleName'] = $this->getModuleName($moduleId);
 			}
-			$module['name'] = wfMsg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
-			$module['href'] = SpecialPage::getTitleFor('MarketingToolbox', 'editHub')->getLocalURL(array(
+			$module['name'] = $this->getModuleName($moduleId);
+			$module['href'] = $this->getModuleUrl($timestamp, $langCode, $verticalId, $sectionId, $moduleId);
+		}
+		$modulesData['moduleList'] = $moduleList;
+
+		return $modulesData;
+	}
+
+	public function getModuleUrl($timestamp, $langCode, $verticalId, $sectionId, $moduleId) {
+		return SpecialPage::getTitleFor('MarketingToolbox', 'editHub')->getLocalURL(
+			array(
 				'moduleId' => $moduleId,
 				'date' => $timestamp,
 				'region' => $langCode,
 				'verticalId' => $verticalId,
 				'sectionId' => $sectionId
-			));
-		}
-		$modulesData['moduleList'] = $moduleList;
-
-		return $modulesData;
+			)
+		);
 	}
 
 	/**

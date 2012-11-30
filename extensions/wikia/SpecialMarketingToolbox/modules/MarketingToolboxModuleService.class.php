@@ -20,6 +20,10 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return true;
 	}
 
+	public function filterData($data) {
+		return array_intersect_key($data, $this->getValidationRules());
+	}
+
 	protected function getView($viewName, $data, $viewType = WikiaResponse::FORMAT_HTML) {
 		return $this->app->getView(get_class($this), $viewName, array('data'=> $data));
 	}
