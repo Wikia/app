@@ -1,15 +1,10 @@
 /*global showComboAjaxForPlaceHolder, UserLoginModal*/
 
 /*
- * Function for adding a video via video modal 
+ * Function for adding a video via video modal
  *
  */
-(function($, window) {
-	// could be loaded by more than one extension
-	if(typeof window.AddVideo == 'function') {
-		return;
-	}
-
+require(['jquery', 'nirvana'], function($, nirvana) { 
 	// temporary video survey code bugid-68723
 	var addSurveyLink = function() {
 		var surveyLink = $('#video-survey');
@@ -29,7 +24,7 @@
 	$(addSurveyLink);
 
 	var AddVideo = function(element, options) {
-		
+
 		var self = this,
 			alreadyLoggedIn = false,
 			assetsLoaded = false;
@@ -45,7 +40,7 @@
 		settings = $.extend(settings, options);
 
 		var controllerName = 'VideosController';
-		
+
 		if ( wgIsArticle == true ) {
 			controllerName = 'RelatedVideosController';
 		}
@@ -78,7 +73,7 @@
 				onClose: function() {
 					UserLogin.refreshIfAfterForceLogin();
 				}
-			});		
+			});
 		};
 
 		var getVideoModal = function(){
@@ -91,14 +86,14 @@
 				},
 				'both'
 			);
-			
+
 			if(assetsLoaded) {
 				showVideoModal();
 			} else {
 				$.when(
-					$.nirvana.sendRequest({
-						controller: controllerName, 
-						method: 'getAddVideoModal', 
+					nirvana.sendRequest({
+						controller: controllerName,
+						method: 'getAddVideoModal',
 						type: 'GET',
 						format: 'json',
 						data: {
@@ -120,7 +115,7 @@
 				.fail(showError);
 			}
 		};
-		
+
 		var initModalScroll = function( modal ) {
 			self.addPos = 1;
 			self.addMax = Math.ceil(($('.item',self.addModal).length)/3);
@@ -132,39 +127,39 @@
 		};
 
 		var updateModalScrollButtons = function() {
-	
+
 	        if ( self.addPos == 1 ) {
 	            $('.scrollleft', self.addModal).addClass("inactive");
 	        } else {
 	            $('.scrollleft', self.addModal).removeClass("inactive");
 	        }
-	
+
 	        if ( self.addPos == self.addMax ) {
 	            $('.scrollright', self.addModal).addClass("inactive");
 	        } else {
 	            $('.scrollright', self.addModal).removeClass("inactive");
 	        }
 	    };
-	
+
 		var modalScrollLeft = function() {
 			modalScroll(-1);
 	        updateModalScrollButtons();
 		};
-	
+
 		var modalScrollRight = function() {
 			modalScroll(1);
 	        updateModalScrollButtons();
 		};
-	
+
 		var modalScroll = function( param, callback ) {
 			//setup variables
-	
+
 			var scroll_by = parseInt( $('.item', self.addModal).outerWidth(true) * 3 );
 			var anim_time = 500;
-	
+
 			// button vertical secondary left
 			var futureState = self.addPos + param;
-	
+
 			if( futureState >= 1 && futureState <= self.addMax ) {
 				var scroll_to = (futureState-1) * scroll_by;
 				self.addPos = futureState;
@@ -203,7 +198,7 @@
 			e.preventDefault();
 			GlobalNotification.show( self.addModal.find('.notifyHolder').html(), 'notify' );
 			preventVideoSubmit();
-			$.nirvana.postJson(
+			nirvana.postJson(
 				controllerName,
 				'addVideo',
 				{
@@ -244,7 +239,7 @@
 	    // Only used on article pages in related videos module
 	    var previewVideo = function() {
 	        var videoTitle = $(this).siblings(".item-title").eq(0).attr("data-dbkey");
-	        $.nirvana.postJson(
+	        nirvana.postJson(
 	            'RelatedVideosController',
 	            'getVideoPreview',
 	            {
@@ -263,50 +258,43 @@
 	        );
 	        return false;
 	    };
-	
+
 	    var bindPreviewActions = function() {
-	
+
 	        self.addModal.delegate( '.preview_back', 'click', function() {
-	
+
 	            $("div.RVSuggestPreviewVideo .preview_container", self.addModal).remove();
 	            $("div.RVSuggestionCont", self.addModal).show();
 	            return false;
 	        } );
 	        self.addModal.delegate( '.insert', 'click', modalAddVideo );
-	
+
 	    };
-	
+
 		var modalAddVideo = function(ev) {
 			var video = 'File:'+$(ev.target).closest('.item').children('.item-title').attr('data-dbkey');
 			$('.videoUrl', self.addModal).val(video);
 			addVideoConfirm(ev);
 		};
-		
+
 		var showError = function(error) {
 			// check if error is a string because it could be xhr response or undefined
 			error = typeof error == 'string' ? error : $('.errorWhileLoading').html();
 			GlobalNotification.dom.stop(true, true);
 			GlobalNotification.show(error, 'error');
 		};
-	
+
 		var handleClick = function(e) {
 			e.preventDefault();
 			loginWrapper(getVideoModal);
-		};	
+		};
 
 		element.on('click', handleClick);
-
 	};
 
 	$.fn.addVideoButton = function(options) {
-	
 		return this.each(function() {
 			$(this).data('plugin_AddVideo', new AddVideo($(this), options));
 		});
-	
-	};
-	
-	window.AddVideo = AddVideo;
-
-})(jQuery, this);
-
+	}
+});
