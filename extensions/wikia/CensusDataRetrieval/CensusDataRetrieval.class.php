@@ -48,6 +48,12 @@ class CensusDataRetrieval {
          * @var Array
          */
         var $censusDataArr = array();
+	/**
+         * Same like censusDataArr, but contains English phrases
+	 * Used when $censusDataArr is non english.
+	 * @var Array
+         */
+        var $censusDataArrDefault = array();
 
 	const QUERY_URL = 'http://data.soe.com/s:wikia/json/get/ps2/%s/%s';
 	const FLAG_CATEGORY = 'census-data-retrieval-flag-category';
@@ -102,7 +108,10 @@ class CensusDataRetrieval {
 		if ( $title ) {
 			$this->query = $this->prepareCode( $title->getText() );
 		}
-                $this->censusDataArr = $this->getCacheCensusDataArr();
+                $this->censusDataArr = $this->getCacheCensusDataArr( $this->app->wg->LanguageCode, true );
+		if ( $this->app->wg->LanguageCode != 'en' ) {
+			$this->censusDataArrDefault = $this->getCacheCensusDataArr( 'en', true );
+		}
 	}
 
 	/**
@@ -154,8 +163,14 @@ class CensusDataRetrieval {
                 $http = new Http();
 
                 $censusData = null;
+		
                 //Check censusDataArr to find out if relevant data exists in Census
                 $key = array_search($this->query, $this->censusDataArr);
+		//look through default (English) array if there's no results for internationalized language
+		if ( !$key && $this->app->wg->LanguageCode != 'en' ) {
+			$key = array_search($this->query, $this->censusDataArrDefault);
+		}
+		
                 //fetch using key
                 if ( $key ) {
                         $key = explode('.', $key);
@@ -435,9 +450,9 @@ class CensusDataRetrieval {
          * @param Boolean $skipCache Set true to skip cache
          * 
 	 */
-	private function getCacheCensusDataArr($skipCache = false) {
+	private function getCacheCensusDataArr($wikilang = 'en', $skipCache = false) {
                 wfProfileIn(__METHOD__);
-                $key = wfMemcKey('census-data');
+                $key = wfMemcKey('census-data-'.$wikilang);
                 $data = $this->app->wg->Memc->get($key);
 
                 if( !empty($data) && !$skipCache ) {
@@ -448,7 +463,7 @@ class CensusDataRetrieval {
                 $http = new Http();
                 $data = array();
                 foreach ($this->supportedTypes as $type) {
-                        $censusData = $http->get( sprintf(self::QUERY_URL, $type, '?c:show=id,name.en&c:limit=0') );
+                        $censusData = $http->get( sprintf(self::QUERY_URL, $type, '?c:show=id,name.'.$wikilang.'&c:limit=0') );
                         $map = json_decode($censusData);
                         $this->mergeResult( $data, $map, $type );
                 }
