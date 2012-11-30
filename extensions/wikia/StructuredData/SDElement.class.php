@@ -57,11 +57,13 @@ class SDElement extends SDRenderableObject implements SplSubject {
 			    				'schema:audio',
 			    				'wikia:element',
 			    				'schema:video',
+			                    'wikia:elementIn'
 		    ) ,
 		    'callofduty:Weapon' => array(
 			    				'wikia:namespace',
 			    				'schema:audio',
-			    				'schema:video'
+			    				'schema:video',
+			                    'wikia:elementIn'
 		    ),
 		    'wikia:WikiText' => array(
 							'wikia:elementIn',
@@ -84,7 +86,8 @@ class SDElement extends SDRenderableObject implements SplSubject {
 			    				'schema:height'
 		    ),
 			'wikia:VideoGame' => array(
-				'wikia:platform'
+				'wikia:platform',
+				'wikia:elementIn'
 			)
 		);
 
