@@ -87,7 +87,8 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		    ),
 			'wikia:VideoGame' => array(
 				'wikia:platform',
-				'wikia:elementIn'
+				'wikia:elementIn',
+				'schema:publisher'
 			)
 		);
 
