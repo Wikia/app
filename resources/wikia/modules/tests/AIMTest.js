@@ -19,8 +19,11 @@ describe("AIM", function () {
 	});
 
 	async.it('should be defined', function(done) {
-		expect(typeof jQuery.AIM).toBe('object');
+		// jQuery "namespace" API
+		expect(jQuery.AIM).toBeDefined();
+		expect(typeof jQuery.AIM.submit).toBe('function');
 
+		// AMD API
 		require(['aim'], function(aim) {
 			expect(aim).toBeDefined();
 			expect(typeof aim.submit).toBe('function');
