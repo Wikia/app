@@ -13,6 +13,10 @@
 			<?php endif; ?>
 		<?php elseif ( isset( $value->id ) && ( !empty( $value->id ) ) ) : ?>
 			<input type="hidden" name="<?=$params['fieldName'];?>" value="<?=$value->id;?>" />
+			<?php if ($object->getType()->isCollection()) : ?>
+				<?=$value->id;?>
+				<button class="secondary remove"><?= wfMsg('structureddata-object-edit-remove-reference') ?></button>
+			<?php endif; ?>
 		<?php endif; ?>
 	</div>
 <?php else: ?>
