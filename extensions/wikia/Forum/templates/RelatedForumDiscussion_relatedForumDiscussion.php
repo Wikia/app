@@ -3,7 +3,7 @@
 		<li class="forum-thread">
 			<img class="sprite talk-two" src="<?= $wg->BlankImgUrl ?>">
 			<h4>
-				<a href="<?= $message['threadUrl'] ?>">
+				<a href="<?= $message['threadUrl'] ?>" class="forum-thread-title">
 					<?= $message['metaTitle'] ?>
 				</a>
 			</h4>
