@@ -465,34 +465,46 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		return ( ( $result instanceof WikiaSearchResult ) || ( $result instanceof WikiaSearchResultSet ) );
 	}
 
+	/**
+	 * Returns the query used to get these results
+	 * @return string
+	 */
 	public function getQuery() {
 		return $this->query;
 	}
 
+	/**
+	 * Sets the query used to get the result
+	 * @param string $query
+	 * @return WikiaSearchResultSet
+	 */
 	public function setQuery($query) {
 		$this->query = $query;
 		return $this;
 	}
 
+	/**
+	 * Returns query time
+	 * @return number
+	 */
 	public function getQueryTime() {
 		return $this->queryTime;
 	}
 
+	/**
+	 * Sets time to query
+	 * @param int $val
+	 * @return WikiaSearchResultSet
+	 */
 	public function setQueryTime($val) {
 		$this->queryTime = $val;
 		return $this;
 	}
 
-	public function __sleep() {
-		return array( 'header', 'results', 'resultsFound', 'resultsStart');
-	}
-
-	public function __wakeup() {
-		$this->position = 0;
-		$this->resultsPerPage = 25;
-		$this->currentPage = false;
-	}
-
+	/**
+	 * Determines whether the result set is empty except for an article match
+	 * @return boolean
+	 */
 	public function isOnlyArticleMatchFound() {
 		return $this->getResultsNum() == 1 && $this->results[0]->getVar( 'isArticleMatch' ) == true;
 	}
