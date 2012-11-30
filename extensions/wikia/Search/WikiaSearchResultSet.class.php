@@ -85,7 +85,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	
 	/**
 	 * Called by the constructor to handle constructing nested and non-nested result sets and pass values
-	 * from search result object to result set 
+	 * from search result object to result set. Sort of a take on the strategy pattern. 
 	 * @param WikiaSearchResultSet|null $parent
 	 * @param int|null $metaposition
 	 */
@@ -100,55 +100,73 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$this->parent				= $parent;
 		$this->metaposition			= $metaposition;
 		
-		if ( ( $this->parent === null ) && $this->searchConfig->getGroupResults() ) {
-			// this is the "root node" of multiple grouped result sets
+		/**
+		 * This uses short-circuiting to handle three different configuration scenarios
+		 * @todo Create some class inheritance and decide which class to instantiate using a factory
+		 */
+		$this->configureGroupedSetAsRootNode() || $this->configureGroupedSetAsLeafNode() || $this->configureUngroupedSet();
+		wfProfileOut(__METHOD__);
+	}
+	
+	/**
+	 * Performs configuration actions required just for grouped results
+	 * @return boolean
+	 */
+	protected function configureGroupedSetAsRootNode() {
+		wfProfileIn(__METHOD__);
+		$satisfies = ( $this->parent === null ) && $this->searchConfig->getGroupResults();
+		if ( $satisfies ) {
 			$this->setResultGroupings();
 			$this->setResultsFound( $this->getHostGrouping()->getMatches() );
-
-		} else {
-			// this is either a "leaf node" of a grouped search or a regular search result set
-
-			if ( ( $this->parent !== null ) && ( $this->metaposition !==  null ) ) {
-				// leaf node of grouped search
-				$this->prepareChildResultSet();
-			} else {
-				// default behavior for an ungrouped search result set
-				$this
-					->prependArticleMatchIfExists	()
-					->setResults					( $this->searchResultObject->getDocuments() )
-					->setResultsFound				( $this->resultsFound + $this->searchResultObject->getNumFound() )
-				;
-			}
 		}
 		wfProfileOut(__METHOD__);
+		return $satisfies;
 	}
 
 	/**
 	 * This is the subroutine used to prepare a search result set instance with a parent.
 	 * @return WikiaSearchResultSet provides for fluent interface
 	 */
-	protected function prepareChildResultSet() {
+	protected function configureGroupedSetAsLeafNode() {
 		wfProfileIn(__METHOD__);
-		$valueGroups	= $this->getHostGrouping()->getValueGroups();
-		$valueGroup		= $valueGroups[$this->metaposition];
-		$this->host		= $valueGroup->getValue();
-		$documents		= $valueGroup->getDocuments();
-
-		$this	->setResults		( $documents )
-				->setResultsFound	( $valueGroup->getNumFound() );
-
-		if ( count( $documents ) > 0 ) {
-			$exampleDoc		= $documents[0];
-			$cityId			= $exampleDoc->getCityId();
-
-			$this->setHeader( 'cityId',				$cityId );
-			$this->setHeader( 'cityTitle',			WikiFactory::getVarValueByName( 'wgSitename', $cityId ) );
-			$this->setHeader( 'cityUrl',			WikiFactory::getVarValueByName( 'wgServer', $cityId ) );
-			$this->setHeader( 'cityArticlesNum',	$exampleDoc['wikiarticles'] );
+		$satisfies = ( $this->parent !== null ) && ( $this->metaposition !==  null );
+		if ( $satisfies ) {
+			$valueGroups	= $this->getHostGrouping()->getValueGroups();
+			$valueGroup		= $valueGroups[$this->metaposition];
+			$this->host		= $valueGroup->getValue();
+			$documents		= $valueGroup->getDocuments();
+	
+			$this	->setResults		( $documents )
+					->setResultsFound	( $valueGroup->getNumFound() );
+	
+			if ( count( $documents ) > 0 ) {
+				$exampleDoc		= $documents[0];
+				$cityId			= $exampleDoc->getCityId();
+	
+				$this->setHeader( 'cityId',				$cityId );
+				$this->setHeader( 'cityTitle',			WikiFactory::getVarValueByName( 'wgSitename', $cityId ) );
+				$this->setHeader( 'cityUrl',			WikiFactory::getVarValueByName( 'wgServer', $cityId ) );
+				$this->setHeader( 'cityArticlesNum',	$exampleDoc['wikiarticles'] );
+			}
 		}
 
 		wfProfileOut(__METHOD__);
-		return $this;
+		return $satisfies;
+	}
+	
+	/**
+	 * This is the default behavior of a search result set
+	 * @return bool
+	 */
+	protected function configureUngroupedSet() {
+		wfProfileIn(__METHOD__);
+		$this
+			->prependArticleMatchIfExists	()
+			->setResults					( $this->searchResultObject->getDocuments() )
+			->setResultsFound				( $this->resultsFound + $this->searchResultObject->getNumFound() )
+		;
+		wfProfileOut(__METHOD__);
+		return true;
 	}
 
 	/**
