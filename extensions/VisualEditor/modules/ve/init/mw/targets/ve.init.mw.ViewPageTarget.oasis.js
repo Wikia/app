@@ -168,6 +168,7 @@ ve.init.mw.ViewPageTarget.prototype.setupEditLinks = function () {
  * @param {jQuery.Event} e
  */
 ve.init.mw.ViewPageTarget.prototype.onEditButtonClick = function ( e ) {
+	this.track( WikiaTracker.ACTIONS.CLICK, 'edit-button' );
 	this.activate();
 	// Prevent the edit button's normal behavior
 	e.preventDefault();
@@ -180,6 +181,7 @@ ve.init.mw.ViewPageTarget.prototype.onEditButtonClick = function ( e ) {
  * @param {jQuery.Event} e
  */
 ve.init.mw.ViewPageTarget.prototype.onEditSectionLinkClick = function ( e ) {
+	this.track( WikiaTracker.ACTIONS.CLICK, 'edit-section-button' );
 	this.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
 	this.activate();
 	// Prevent the edit tab's normal behavior
@@ -280,6 +282,7 @@ ve.init.mw.ViewPageTarget.prototype.saveScrollPosition = function () {
  * @param {HTMLElement} dom Parsed DOM from server
  */
 ve.init.mw.ViewPageTarget.prototype.onLoad = function ( dom ) {
+	this.track( WikiaTracker.ACTIONS.IMPRESSION, 'onLoad' );
 	this.edited = false;
 	this.setUpSurface( dom );
 	this.attachToolbarSaveButton();
@@ -289,6 +292,17 @@ ve.init.mw.ViewPageTarget.prototype.onLoad = function ( dom ) {
 	this.restoreEditSection();
 	this.$document.focus();
 	this.activating = false;
+
+	var _this = this;
+	$('.ve-ui-buttonTool, .ve-ui-dropdownTool').unbind( '.ve' ).bind( 'click.ve', function() {
+		var	$button = $( this ),
+			buttonTitle = $button.attr( 'title' );
+		if ( buttonTitle ) {
+			_this.track( WikiaTracker.ACTIONS.CLICK, 'button-' + buttonTitle );
+		} else {
+			_this.track( WikiaTracker.ACTIONS.IMPRESSION, 'buttonTrackingProblem' );
+		}
+	} );
 };
 
 /**
@@ -389,6 +403,7 @@ ve.init.mw.ViewPageTarget.prototype.enableToolbarSaveButton = function () {
  * @param {jQuery.Event} e
  */
 ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
+	this.track( WikiaTracker.ACTIONS.CLICK, 'toolbar-save-button' );
 	if ( this.edited ) {
 		this.showSaveDialog();
 	}
@@ -532,6 +547,7 @@ ve.init.mw.ViewPageTarget.prototype.disableToolbarSaveButton = function () {
  * @param {jQuery.Event} e
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogSaveButtonClick = function () {
+	this.track( WikiaTracker.ACTIONS.CLICK, 'dialog-save-button' );
 	this.lockSaveDialogSaveButton();
 	//this.$saveDialogLoadingIcon.show();
 	this.$saveDialog.startThrobbing();
@@ -574,6 +590,7 @@ ve.init.mw.ViewPageTarget.prototype.lockSaveDialogSaveButton = function () {
  * @param {HTMLElement} html Rendered HTML from server
  */
 ve.init.mw.ViewPageTarget.prototype.onSave = function ( html ) {
+	this.track( WikiaTracker.ACTIONS.IMPRESSION, 'onSave' );
 	if ( Number( mw.config.get( 'wgArticleId', 0 ) ) === 0 || this.oldId ) {
 		// This is a page creation, refresh the page
 		this.teardownBeforeUnloadHandler();
@@ -794,6 +811,7 @@ ve.init.mw.ViewPageTarget.prototype.restoreScrollPosition = function () {
  * @param {Mixed} error Thrown exception or HTTP error string
  */
 ve.init.mw.ViewPageTarget.prototype.onLoadError = function ( response, status ) {
+	this.track( WikiaTracker.ACTIONS.IMPRESSION, 'onLoadError' );
 	if ( confirm( ve.msg( 'visualeditor-loadwarning', status ) ) ) {
 		this.load();
 	} else {
@@ -815,6 +833,19 @@ ve.init.mw.ViewPageTarget.prototype.onLoadError = function ( response, status ) 
  */
 ve.init.mw.ViewPageTarget.prototype.hideSpinner = function () {
 	// Not implemented yet
+};
+
+ve.init.mw.ViewPageTarget.prototype.track = function ( action, label ) {
+	WikiaTracker.trackEvent(
+		null,
+		{
+			'ga_category': 'visual-editor',
+			'ga_action': action,
+			'ga_label': label,
+			'ga_value': null,
+		},
+		'both'
+	);
 };
 
 /* Initialization */
