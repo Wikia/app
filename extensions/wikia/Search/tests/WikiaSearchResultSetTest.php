@@ -477,5 +477,54 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 		);
 	}
 	
+	/**
+	 * @covers WikiaSearchResultSet::configureUngroupedSet
+	 */
+	public function testConfigureUngroupedSet() {
+		$this->prepareMocks( array( 'prependArticleMatchIfExists', 'setResults', 'setResultsFound' ), array(), array( 'getDocuments', 'getNumFound' ) );
+		
+		$documents = array( 'foo' ); // doesn't really matter
+		
+		$this->resultSet
+			->expects	( $this->at( 0 ) )
+			->method	( 'prependArticleMatchIfExists' )
+			->will		( $this->returnValue( $this->resultSet ) )
+		;
+		$this->searchResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'getDocuments' )
+			->will		( $this->returnValue( $documents ) )
+		;
+		$this->resultSet
+			->expects	( $this->at( 1 ) )
+			->method	( 'setResults' )
+			->with		( $documents )
+			->will		( $this->returnValue( $this->resultSet ) )
+		;
+		$this->searchResult
+			->expects	( $this->at( 1 ) )
+			->method	( 'getNumFound' )
+			->will		( $this->returnValue( 1 ) )
+		;
+		$this->resultSet
+			->expects	( $this->at( 2 ) )
+			->method	( 'setResultsFound' )
+			->with		( 2 )
+		;
+		
+		// this mocks an article match, which will increment this property
+		$resRefl = new ReflectionProperty( 'WikiaSearchResultSet', 'resultsFound' );
+		$resRefl->setAccessible( true );
+		$resRefl->setValue( $this->resultSet, 1 );
+		
+		$configureRefl = new ReflectionMethod( 'WikiaSearchResultSet', 'configureUngroupedSet' );
+		$configureRefl->setAccessible( true );
+		
+		$this->assertTrue(
+				$configureRefl->invoke( $this->resultSet ),
+				'WikiaSearchResultSet::configureUngroupedSet should always return true' 
+		);
+	}
+	
 	
 }
