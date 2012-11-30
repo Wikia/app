@@ -84,6 +84,7 @@
 				'GET'
 			);
 		}
+
 		function postJson(controller, method, data, callback, onErrorCallback) {
 			return ajaxJson(
 				controller,
@@ -103,9 +104,7 @@
 	}
 
 	if (context.define && context.define.amd) {
-		context.require(['jquery'], function (jQuery) {
-			context.define('nirvana', nirvana(jQuery));
-		});
+		context.define('nirvana', ['jquery'], nirvana(jQuery));
 	}
 
 	if (context.jQuery) {
