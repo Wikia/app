@@ -12,8 +12,14 @@
 		.headline-wrapper {
 			float: right;
 		}
-		&.url-and-topic input[type="text"] {
-			width: 480px;
+		input[type="text"] {
+			width: 149px;
 		}
+	}
+	.url-and-topic input[type="text"] {
+		width: 480px;
+	}
+	.WikiaForm fieldset {
+		border: 0;
 	}
 }
