@@ -182,7 +182,7 @@ class WikiaMobileHooks extends WikiaObject{
 	 */
 	public function onLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret ){
 		$this->wf->profileIn( __METHOD__ );
-		if ( $this->app->checkSkin( 'wikiamobile', $skin ) && in_array( 'broken', $options ) ) {
+		if ( in_array( 'broken', $options ) && $this->app->checkSkin( 'wikiamobile', $skin ) ) {
 			$ret = $text;
 			$this->wf->profileOut( __METHOD__ );
 			return false;
