@@ -53,20 +53,17 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		//TODO: it should be SDS API dependent (object template?)
 		// fields to hide
 		$mockData = array(
-		    'callofduty:Character' => array( 	'wikia:includeWith',
-			    				'wikia:namespace',
+		    'callofduty:Character' => array( 	'wikia:namespace',
 			    				'schema:audio',
 			    				'wikia:element',
 			    				'schema:video',
 		    ) ,
 		    'callofduty:Weapon' => array(
-			    				'wikia:includeWith',
 			    				'wikia:namespace',
 			    				'schema:audio',
 			    				'schema:video'
 		    ),
 		    'wikia:WikiText' => array(
-							'wikia:includeWith',
 							'wikia:elementIn',
 							'wikia:namespace',
 							'schema:audio',
