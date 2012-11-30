@@ -3,8 +3,8 @@
  * @author ADi
  */
 class SDContext extends WikiaObject {
-	const RESOURCE_CACHE_TTL = 60;
-	const DESCRIPTION_CACHE_TTL = 60;
+	const RESOURCE_CACHE_TTL = 300;
+	const DESCRIPTION_CACHE_TTL = 300;
 
 	protected $resources = array();
 	protected $objectDescriptions = array();
@@ -25,35 +25,46 @@ class SDContext extends WikiaObject {
 		$resourceData = $this->wg->Memc->get( $resourceCacheKey );
 		if(empty($resourceData)) {
 			$resourceData = $this->APIClient->getContext( $resourceUrl, $relative );
-			$this->resources[$resourceUrl] = $resourceData->{"@context"};
-
-			$this->wg->Memc->set( $resourceCacheKey, $this->resources[$resourceUrl], self::RESOURCE_CACHE_TTL );
+			if(!empty($resourceData)) {
+				$this->resources[$resourceUrl] = $resourceData->{"@context"};
+				$this->wg->Memc->set( $resourceCacheKey, $this->resources[$resourceUrl], self::RESOURCE_CACHE_TTL );
+			}
+			else {
+				// @todo fetching context failed, possible error that need to be fixed on SDS side or escalated here.
+				return false;
+			}
 		}
 		else {
 			$this->resources[$resourceUrl] = $resourceData;
 		}
 
-		// @todo tmp hack! remove when API will be fixed back
-		$elementType = null;
 		if(!empty($elementType)) {
-			$descriptionCacheKey = $this->wf->SharedMemcKey( 'SDContextDescription', $resourceUrl );
+			$descriptionCacheKey = $this->wf->SharedMemcKey( 'SDContextDescription', $elementType );
 			$objectDescriptionData = $this->wg->Memc->get( $descriptionCacheKey );
 			if(empty($objectDescriptionData)) {
 				$objectDescriptionData = $this->APIClient->getObjectDescription( $elementType );
-				$this->objectDescriptions[$elementType] = $objectDescriptionData;
-
-				$this->wg->Memc->set( $descriptionCacheKey, $this->objectDescriptions[$elementType], self::DESCRIPTION_CACHE_TTL );
-			}
-			else {
+				if(!empty($objectDescriptionData)) {
+					$this->objectDescriptions[$elementType] = $objectDescriptionData;
+					$this->wg->Memc->set( $descriptionCacheKey, $this->objectDescriptions[$elementType], self::DESCRIPTION_CACHE_TTL );
+				} else {
+					// @todo - error handling
+					return false;
+				}
+			} else {
 				$this->objectDescriptions[$elementType] = $objectDescriptionData;
 			}
 		}
 
 		$this->processResource($resourceUrl, $elementType);
+		return true;
 	}
 
 	public function getType($name) {
 		return isset($this->types[$name]) ? $this->types[$name] : false;
+	}
+
+	public function getTypes() {
+		return $this->types;
 	}
 
 	private function processResource($resourceUrl, $elementType = null) {
@@ -77,11 +88,12 @@ class SDContext extends WikiaObject {
 		}
 	}
 
-	private function getPropertyDescription( $objectType, $propertyName ) {
-		// @todo re-check after term definition will be fixed (?)
-		foreach($this->objectDescriptions[$objectType]->{"properties"} as $propertyDescription) {
-			if($propertyDescription->id == $propertyName) {
-				return $propertyDescription;
+	public function getPropertyDescription( $objectType, $propertyName ) {
+		if ( isset( $this->objectDescriptions[$objectType]->{"properties"} ) ) {
+			foreach($this->objectDescriptions[$objectType]->{"properties"} as $propertyDescription) {
+				if($propertyDescription->id == $propertyName) {
+					return $propertyDescription;
+				}
 			}
 		}
 		return null;

@@ -1,3 +1,5 @@
+/*global AdDriverDelayedLoader: true */
+
 //Modal
 $.fn.extend({
 
