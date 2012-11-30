@@ -383,12 +383,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'getVal' )
-			->with		( 'no_filter', false )
-			->will		( $this->returnValue( true ) )
-		;
-		$mockController
-			->expects	( $this->at( $controllerIncr++ ) )
-			->method	( 'getVal' )
 			->with		( 'by_category', false )
 			->will		( $this->returnValue( false ) )
 		;
@@ -472,7 +466,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'sendSelfRequest' )
-			->with		( 'tabs', array( 'config' => $mockConfig, 'no_filter' => true, 'by_category' => false ) )
+			->with		( 'tabs', array( 'config' => $mockConfig, 'by_category' => false ) )
 			->will		( $this->returnValue( 'ssr_tabs' ) )
 		;
 		$mockController
@@ -1016,12 +1010,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'getVal' )
-			->with		( 'no_filter', false )
-			->will		( $this->returnValue( true ) )
-		;
-		$mockController
-			->expects	( $this->at( $controllerIncr++ ) )
-			->method	( 'getVal' )
 			->with		( 'by_category', false )
 			->will		( $this->returnValue( false ) )
 		;
@@ -1105,7 +1093,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'sendSelfRequest' )
-			->with		( 'tabs', array( 'config' => $mockConfig, 'no_filter' => true, 'by_category' => false ) )
+			->with		( 'tabs', array( 'config' => $mockConfig, 'by_category' => false ) )
 			->will		( $this->returnValue( 'ssr_tabs' ) )
 		;
 		$mockController
@@ -1607,12 +1595,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'getVal' )
-			->with		( 'no_filter', false )
-			->will		( $this->returnValue( true ) )
-		;
-		$mockController
-			->expects	( $this->at( $controllerIncr++ ) )
-			->method	( 'getVal' )
 			->with		( 'by_category', false )
 			->will		( $this->returnValue( false ) )
 		;
@@ -1696,7 +1678,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'sendSelfRequest' )
-			->with		( 'tabs', array( 'config' => $mockConfig, 'no_filter' => true, 'by_category' => false ) )
+			->with		( 'tabs', array( 'config' => $mockConfig, 'by_category' => false ) )
 			->will		( $this->returnValue( 'ssr_tabs' ) )
 		;
 		$mockController
@@ -2223,12 +2205,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'getVal' )
-			->with		( 'no_filter', false )
-			->will		( $this->returnValue( true ) )
-		;
-		$mockController
-			->expects	( $this->at( $controllerIncr++ ) )
-			->method	( 'getVal' )
 			->with		( 'by_category', false )
 			->will		( $this->returnValue( false ) )
 		;
@@ -2312,7 +2288,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'sendSelfRequest' )
-			->with		( 'tabs', array( 'config' => $mockConfig, 'no_filter' => true, 'by_category' => false ) )
+			->with		( 'tabs', array( 'config' => $mockConfig, 'by_category' => false ) )
 			->will		( $this->returnValue( 'ssr_tabs' ) )
 		;
 		$mockController
@@ -2819,12 +2795,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'getVal' )
-			->with		( 'no_filter', false )
-			->will		( $this->returnValue( true ) )
-		;
-		$mockController
-			->expects	( $this->at( $controllerIncr++ ) )
-			->method	( 'getVal' )
 			->with		( 'by_category', false )
 			->will		( $this->returnValue( false ) )
 		;
@@ -2908,7 +2878,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'sendSelfRequest' )
-			->with		( 'tabs', array( 'config' => $mockConfig, 'no_filter' => true, 'by_category' => false ) )
+			->with		( 'tabs', array( 'config' => $mockConfig, 'by_category' => false ) )
 			->will		( $this->returnValue( 'ssr_tabs' ) )
 		;
 		$mockController
@@ -3744,12 +3714,6 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->expects	( $this->once() )
 			->method	( 'getRank' )
 			->will		( $this->returnValue( 'default' ) )
-		;
-		$mockController
-			->expects	( $this->at( $incr++ ) )
-			->method	( 'getVal' )
-			->with		( 'no_filter', false )
-			->will		( $this->returnValue( false ) )
 		;
 		$mockController
 			->expects	( $this->at( $incr++ ) )
