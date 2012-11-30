@@ -41,6 +41,38 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 	}
 	
 	/**
+	 * @covers WikiaSearchResultSet::__construct
+	 */
+	public function testConstructor() {
+		$this->prepareMocks();
+		
+		$metapos = 2;
+		
+		$set = $this->getMockBuilder( 'WikiaSearchResultSet' )
+					->setMethods( array( 'configure' ) )
+					->setConstructorArgs( array( $this->searchResult, $this->config, $this->resultSet, $metapos ) )
+					->getMock();
+		
+		$expectedMemberVars = array(
+				'searchResultObject'	=>	$this->searchResult,
+				'searchConfig'			=>	$this->config,
+				'parent'				=>	$this->resultSet,
+				'metaposition'			=>	$metapos
+				);
+		
+		foreach ( $expectedMemberVars as $name => $val ) {
+			$refl = new ReflectionProperty( 'WikiaSearchResultSet', $name );
+			$refl->setAccessible( true );
+			$this->assertEquals(
+					$val,
+					$refl->getValue( $set ),
+					"WikiaSearchResultSet->{$name} should be set during __construct"
+			);
+		}
+	
+	}
+	
+	/**
 	 * @covers WikiaSearchResultSet::configure
 	 */
 	public function testResultSetWithEmpty() {
