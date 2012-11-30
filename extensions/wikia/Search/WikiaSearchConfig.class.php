@@ -599,7 +599,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @return array
 	 */
 
-	public function getFilterKeys() {
+	public function getPublicFilterKeys() {
 		
 		$publicKeys = $this->publicFilterKeys;
 		$filterKeys = array_keys($this->filterQueries);

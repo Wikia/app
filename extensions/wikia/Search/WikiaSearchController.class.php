@@ -463,8 +463,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'advanced', 			$config->getAdvanced() );
 		$this->setVal( 'redirs', 			$config->getIncludeRedirects() );
 		$this->setVal( 'limit', 			$config->getLimit() );
-		$this->setVal( 'filters',			$config->getFilterKeys() );
-		$this->setVal( 'rank', 				$config->getRank() ); //TODO: add this to template
+		$this->setVal( 'filters',			$config->getPublicFilterKeys() );
+		$this->setVal( 'rank', 				$config->getRank() );
 		$this->setVal( 'by_category', 		$this->getVal('by_category', false) );
 
 	}
