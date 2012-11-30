@@ -97,7 +97,7 @@ class CensusDataRetrieval {
                 return $cdr->getData();
         }
 
-	public function __construct( Title $title ) {
+	public function __construct( Title $title = null ) {
 		$this->app = F::App();
 		if ( $title ) {
 			$this->query = $this->prepareCode( $title->getText() );
