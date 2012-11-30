@@ -29,12 +29,6 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	protected $resultsFound = 0;
 
 	/**
-	 * Offset of entire search result set we are starting from
-	 * @var int
-	 */
-	protected $resultsStart = 0;
-
-	/**
 	 * Header values are used for search result grouping metadata
 	 * @var array
 	 */
@@ -48,13 +42,6 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	protected $results = array();
 
 	/**
-	 * Time it took for the query to complete on the Solr side.
-	 * Mostly used for debugging.
-	 * @var int
-	 */
-	protected $queryTime = 0;
-
-	/**
 	 * Used primarily for search groupings.
 	 * This is the hostname of the wiki all the results belong to.
 	 * @var string
@@ -66,12 +53,6 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @var Solarium_Result_Select
 	 */
 	protected $searchResultObject;
-
-	/**
-	 * The subcomponent handling snippeting
-	 * @var Solarium_Result_Select_Highlighting
-	 */
-	protected $highlightingObject;
 
 	/**
 	 * The configuration used in handling searhes
@@ -116,19 +97,16 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 			return;
 		}
 		
-		if ( ( $parent === null ) && $this->searchConfig->getGroupResults() ) {
+		$this->parent				= $parent;
+		$this->metaposition			= $metaposition;
+		
+		if ( ( $this->parent === null ) && $this->searchConfig->getGroupResults() ) {
 			// this is the "root node" of multiple grouped result sets
 			$this->setResultGroupings();
 			$this->setResultsFound( $this->getHostGrouping()->getMatches() );
 
 		} else {
 			// this is either a "leaf node" of a grouped search or a regular search result set
-			$this->parent				= $parent;
-			$this->metaposition			= $metaposition;
-			$this->highlightingObject	= $this->searchResultObject->getHighlighting();
-
-			$this	->setResultsStart	( $this->searchResultObject->getStart() )
-					->setQueryTime		( $this->searchResultObject->getQueryTime() );
 
 			if ( ( $this->parent !== null ) && ( $this->metaposition !==  null ) ) {
 				// leaf node of grouped search
@@ -308,8 +286,9 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	protected function addResult( WikiaSearchResult $result ) {
 		if( $this->isValidResult( $result ) ) {
 			$id = $result['id'];
-			if ( 		( $this->highlightingObject !==	null )
-					&&  ( $hlResult 				=	$this->highlightingObject->getResult( $id ) )
+			$highlighting = $this->searchResultObject->getHighlighting();
+			if ( 		( $highlighting				!==	null )
+					&&  ( $hlResult 				=	$highlighting->getResult( $id ) )
 					&&  ( $field					=	$hlResult->getField( WikiaSearch::field( 'html' ) ) ) ) {
 				$result->setText( $field[0] );
 			}
@@ -348,17 +327,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @return int
 	 */
 	public function getResultsStart() {
-		return $this->resultsStart;
-	}
-
-	/**
-	 * Sets the protected $resultsStart value
-	 * @param int $value
-	 * @return WikiaSearchResultSet provides fluent interface
-	 */
-	public function setResultsStart( $value ) {
-		$this->resultsStart = $value;
-		return $this;
+		return $this->searchResultObject->getStart();
 	}
 
 	/**
@@ -470,17 +439,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @return number
 	 */
 	public function getQueryTime() {
-		return $this->queryTime;
-	}
-
-	/**
-	 * Sets time to query
-	 * @param int $val
-	 * @return WikiaSearchResultSet
-	 */
-	public function setQueryTime($val) {
-		$this->queryTime = $val;
-		return $this;
+		return $this->searchResultObject->getQueryTime();
 	}
 
 	/**
