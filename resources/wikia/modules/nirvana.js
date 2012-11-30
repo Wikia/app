@@ -104,6 +104,7 @@
 	}
 
 	if (context.define && context.define.amd) {
+		// TODO: use "ajax" module here
 		context.define('nirvana', ['jquery'], nirvana);
 	}
 
