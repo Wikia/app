@@ -104,7 +104,7 @@
 	}
 
 	if (context.define && context.define.amd) {
-		context.define('nirvana', ['jquery'], nirvana(jQuery));
+		context.define('nirvana', ['jquery'], nirvana);
 	}
 
 	if (context.jQuery) {

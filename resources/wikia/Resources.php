@@ -5,8 +5,15 @@
  */
 
 return array(
-	'wikia.amd' => array(
+	// AMD library
+	'amd' => array(
 		'scripts' => 'resources/wikia/libraries/modil/modil.js',
+	),
+
+	// AMD modules
+	'wikia.amd.aim' => array(
+		'scripts' => 'resources/wikia/modules/aim.js',
+		'dependencies' => 'amd',
 	),
 
 	// module loaded via $.loadjQuery UI and is a wrapper for MediaWiki jQuery UI modules
@@ -30,10 +37,6 @@ return array(
 	),
 
 	// libraries and jQuery plugins
-	'jquery.aim' => array(
-		'scripts' => 'resources/wikia/libraries/aim/jquery.aim.js'
-	),
-
 	'jquery.mustache' => array(
 		'scripts' => 'resources/wikia/libraries/mustache/jquery.mustache.js'
 	),

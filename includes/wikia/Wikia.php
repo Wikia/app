@@ -1908,7 +1908,7 @@ class Wikia {
 	 * @return bool
 	 */
 	public static function onResourceLoaderGetStartupModules(&$modules) {
-		array_unshift($modules, 'wikia.amd');
+		array_unshift($modules, 'amd');
 		return true;
 	}
 

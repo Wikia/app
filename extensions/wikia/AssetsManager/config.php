@@ -789,9 +789,9 @@ $config['theme_designer_js'] = array(
 		'//resources/jquery.ui/jquery.ui.mouse.js',
 		'//resources/jquery.ui/jquery.ui.slider.js',
 		'//resources/jquery.ui/jquery.ui.core.js',
+		'//resources/wikia/modules/aim.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
-		'//resources/wikia/libraries/aim/jquery.aim.js',
 		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
 	)
 );
