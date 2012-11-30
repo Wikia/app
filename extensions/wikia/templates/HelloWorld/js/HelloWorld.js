@@ -1,8 +1,8 @@
-var HelloWorld = {
-	init: function() {
+require(['jquery', 'nirvana'], function($, nirvana) {
+	function init() {
 		// Bind click to button
 		$('#HelloWorldAjax button').click(function() {
-			$.nirvana.sendRequest({
+			nirvana.sendRequest({
 				controller: 'HelloWorld',
 				method: 'index',
 				format: 'html',
@@ -13,8 +13,8 @@ var HelloWorld = {
 			});
 		});
 	}
-};
 
-$(function() {
-	HelloWorld.init();
+	$(function() {
+		init();
+	});
 });
