@@ -176,5 +176,23 @@ $(function(){
 			track('edit', WikiaTracker.ACTIONS.CLICK, 'publish');
 		});
 	}
+
+	$('#RelatedForumDiscussion').on('click', '.forum-thread-title, .forum-new-post, .forum-see-more a', function(e) {
+		var el = $(e.target);
+		
+		if(el.length === 0) {
+			return true;
+		}
+		
+		var category = 'thread-module';
+		
+		if(el.hasClass('forum-thread-title')) {
+			track(category, WikiaTracking.ACTIONS.CLICK, 'title');
+		} else if(el.hasClass('forum-new-post')) {
+			track(category, WikiaTracking.ACTIONS.CLICK, 'start-discussion');
+		} else if(el.closest('forum-see-more').length > 0) {
+			track(category, WikiaTracking.ACTIONS.CLICK, 'see-more');
+		}
+	});
 	
 });
