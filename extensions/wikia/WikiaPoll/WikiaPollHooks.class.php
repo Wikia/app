@@ -117,6 +117,7 @@ class WikiaPollHooks {
 					$ret = str_replace("\n", ' ', "{$css} {$ret} {$jsFile}");
 				}
 			}
+			wfProfileOut(__METHOD__);
 			return $ret;
 		}
 		

@@ -13,6 +13,7 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 		'LEFT_SKYSCRAPER_2':{'tile':3, 'size':'160x600'},
 		'TOP_LEADERBOARD':{'tile':1, 'size':'728x90', 'dcopt':'ist'},
 		'TOP_RIGHT_BOXAD':{'tile':2, 'size':'300x250,300x600'}
+		, 'INVISIBLE_1':{'size':'0x0'}
 	};
 
 	function canHandleSlot(slot) {
@@ -37,12 +38,10 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 		log(slot, 5, 'AdProviderEvolve');
 
 		var slotname = slot[0]
-			, slotsize = slot[1]
+			, slotsize = slot[1] || slotMap[slotname].size
 		;
 
-		WikiaTracker.trackAdEvent('liftium.slot2', {
-			'ga_category': 'slot2/' + slotsize, 'ga_action': slotname, 'ga_label': 'evolve'
-		}, 'ga');
+		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category': 'slot2/' + slotsize.replace(/,.*$/, ''), 'ga_action': slotname, 'ga_label': 'evolve'}, 'ga');
 
 		slotTimer2[slotname] = new Date().getTime();
 		log('slotTimer2 start for ' + slotname, 7, 'AdProviderEvolve');

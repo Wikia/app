@@ -997,20 +997,4 @@ class SpecialConnect extends SpecialPage {
 		return $response;
 	}
 
-	function ajaxModalChooseName() {
-		global $wgRequest;
-		$response = new AjaxResponse();
-
-		$specialConnect = new SpecialConnect();
-		$form = new ChooseNameForm($wgRequest,'signup');
-		$form->mainLoginForm( $specialConnect, '' );
-		$tmpl = $form->getAjaxTemplate();
-		$tmpl->set('isajax',true);
-		ob_start();
-		$tmpl->execute();
-		$html = ob_get_clean();
-
-		$response->addText( $html );
-		return $response;
-	}
 }

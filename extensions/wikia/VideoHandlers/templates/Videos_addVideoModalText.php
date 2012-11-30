@@ -6,7 +6,7 @@
 		<a class="remove" href="<?
 			$oTitle = F::build( 'Title', array( 'Video_Embed_Tool', NS_HELP ), 'newFromText' );
 			echo $oTitle->getFullURL();
-		?>"><?= wfMsg('videod-add-video-label-all') ?></a>
+		?>"><?= wfMsg('videos-add-video-label-all') ?></a>
 		<br>
 		<input type="text" name="videoUrl" class="videoUrl" value="">
 		<button type="submit" class="button relatedVideosConfirm"><?= wfMsg('videos-add-video-ok') ?></button>

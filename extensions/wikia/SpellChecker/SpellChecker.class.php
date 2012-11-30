@@ -23,6 +23,7 @@ class SpellChecker extends WikiaObject {
 		// check user preferences (enabled by default)
 		if ($this->user->getOption('disablespellchecker')) {
 			wfDebug(__METHOD__ . ": spell checker disabled in user preferences\n");
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 

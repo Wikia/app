@@ -15,22 +15,16 @@ class WikiaSearchIndexer extends WikiaObject {
 	const WIKIPAGES_CACHE_TTL	= 604800;
 	
 	/**
-	 * Don't dump anything out during a full reindex
-	 * @var int
-	 */
-	const REINDEX_DEFAULT		= 0;
-	
-	/**
-	 * Be verbose during reindexing
-	 * @var int
-	 */
-	const REINDEX_VERBOSE		= 1;
-	
-	/**
 	 * Used to determine whether we have registered the onParserClearState hook
 	 * @var boolean
 	 */
 	protected $parserHookActive	= false;
+	
+	/**
+	 * Used for querying Solr
+	 * @var Solarium_Client
+	 */
+	protected $client;
 	
 	/**
 	 * Handles dependency injection for solarium client
@@ -86,8 +80,8 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$page = F::build( 'Article', array( $pageId ), 'newFromID' );
 	
-		if(!($page instanceof Article)) {
-			throw new WikiaException('Invalid Article ID');
+		if( $page === null ) {
+			throw new WikiaException( 'Invalid Article ID' );
 		}
 	
 		if(! $this->parserHookActive ) {
@@ -123,29 +117,61 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$isVideo	= false;
 		$isImage	= false;
+		$vidFields	= array();	
 		
 		if ( $namespace == NS_FILE && ($file = $this->wf->findFile( $this->wg->Title->getText() )) ) {
-			$detail		= WikiaFileHelper::getMediaDetail( $this->wg->Title );
-			$isVideo	= WikiaFileHelper::isVideoFile( $file );
+			$fileHelper	= F::build( 'WikiaFileHelper' );
+			$detail		= $fileHelper->getMediaDetail( $this->wg->Title );
+			$isVideo	= $fileHelper->isVideoFile( $file );
 			$isImage	= ($detail['mediaType'] == 'image') && !$isVideo;
 			$metadata	= $file->getMetadata();
 	
 			if ( $metadata !== "0" ) {
 				$metadata = unserialize( $metadata );
-	
-				$fileParams = array('description', 'keywords')
-				+ ($isVideo ? array('movieTitleAndYear', 'videoTitle') : array());
+				$fileParams = array( 'description', 'keywords' );
+				$videoParams = array( 'movieTitleAndYear', 'videoTitle', 'title', 'tags', 'category' );
+				if ( $isVideo ) {
+					$fileParams = array_merge( $fileParams, $videoParams );
+					
+					/**
+					 * This maps video metadata field keys to dynamic fields
+					 */
+					$videoMetadataMapper = array(
+							'duration'		=>	'video_duration_i',
+							'provider'		=>	'video_provider_s',
+							'videoId'		=>	'video_id_s',
+							'altVideoId'	=>	'video_altid_s',
+							'aspectRatio'	=>	'video_aspectratio_s'
+							);
+					
+					foreach ( $videoMetadataMapper as $key => $field ) {
+						if ( isset( $metadata[$key] ) ) {
+							$vidFields[$field] = $metadata[$key];
+						}
+					}
+					// special cases
+					if ( isset( $metadata['hd'] ) ) {
+						$vidFields['video_hd_b'] = empty( $metadata['hd'] ) ? 'false' : 'true';
+					}
+					if ( isset( $metadata['genres'] ) ) {
+						$vidFields['video_genres_txt'] = preg_split( '/, ?/', $metadata['genres'] );
+					}
+					if ( isset( $metadata['actors'] ) ) {
+						$vidFields['video_actors_txt'] = preg_split( '/, ?/', $metadata['actors'] );
+					}
+				}
 	
 				foreach ($fileParams as $datum) {
 					$html .= isset( $metadata[$datum] ) ? ' ' . $metadata[$datum] : '';
 				}
+				
 			}
 		}
 	
 		$title = $page->getTitle()->getText();
 	
 		if ( in_array( $namespace, array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
-			$wm = WallMessage::newFromId($page->getId());
+			$wm = F::build( 'WallMessage', array( $page->getId() ), 'newFromId' );
 			$wm->load();
 			if ($wm->isMain()) {
 				$title = $wm->getMetaTitle();
@@ -169,17 +195,17 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['url']			= $page->getTitle()->getFullUrl();
 		$result['ns']			= $page->getTitle()->getNamespace();
 		$result['host']			= substr($this->wg->Server, 7);
-		$result['lang']			= $this->wg->Lang->mCode;
+		$result['lang']			= $this->wg->ContLang->mCode;
 	
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
 		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
-		$result['is_main_page']	= ($page->getId() == Title::newMainPage()->getArticleId() && $page->getId() != 0) ? 'true' : 'false';
+		$result['is_main_page']	= ( ( $page->getId() != 0 ) && ( $page->getId() == F::build( 'Title', array( 'newMainPage' ) )->getArticleId() ) ) ? 'true' : 'false';
 		$result['is_redirect']	= ($canonical == '') ? 'false' : 'true';
 		$result['is_video']		= $isVideo ? 'true' : 'false';
 		$result['is_image']		= $isImage ? 'true' : 'false';
 	
-		if ( $this->wg->EnableBacklinksExt && $this->wg->IndexBacklinks ) {
-			$result['backlink_text'] = Backlinks::getForArticle($page);
+		foreach ( $vidFields as $fieldName => $fieldValue ) {
+			$result[$fieldName] = $fieldValue;
 		}
 		
 		$result = array_merge($result, $this->getPageMetaData($page));
@@ -225,7 +251,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		
 		foreach ( WikiaSearch::$languageFields as $field ) {
 			if ( isset( $pageData[$field] ) ) {
-				$pageData[WikiaSearch::field( $field )] = $pageData[$field];
+				$pageData[WikiaSearch::field( $field, $pageData['lang'] )] = $pageData[$field];
 			}
 		}
 
@@ -237,7 +263,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param  array $documentIds
 	 * @return bool true
 	 */
-	public function reindexBatch( array $documentIds = array(), $verbosity = self::REINDEX_DEFAULT ) {
+	public function reindexBatch( array $documentIds = array() ) {
 		$updateHandler = $this->client->createUpdate();
 		
 		$documents = array();
@@ -249,19 +275,68 @@ class WikiaSearchIndexer extends WikiaObject {
 		$updateHandler->addCommit();
 		try {
 			$this->client->update( $updateHandler );
-			$confirmationString = count( $documents ) . " document(s) updated\n";
-			if ( $verbosity == self::REINDEX_VERBOSE ) {
-				echo $confirmationString;
-			}
 		} catch ( Exception $e ) {
-			$id = rand(1000, 9999);
-			Wikia::Log( __METHOD__, $id, $e);
-			if ( $verbosity == self::REINDEX_VERBOSE ) {
-				echo "There was an error updating the index. Please search for {$id} in the logs.\n";
-			}
+			F::build( 'Wikia' )->Log( __METHOD__, implode( ',', $documentIds ), $e);
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Emits scribe events for each page to be reindexed by the search backend
+	 * @param int $wid
+	 */
+	public function reindexWiki( $wid ) {
+		try {
+			$dataSource = F::build( 'WikiDataSource', array( $wid ) );
+			$dbHandler = $dataSource->getDB();
+			$rows = $dbHandler->query( "SELECT page_id FROM page" );
+			while ( $page = $dbHandler->fetchObject( $rows ) ) {
+				$sp = F::build( 'ScribeProducer', array( 'reindex', $page->page_id ) );
+				$sp->reindexPage();
+			}
+		} catch ( Exception $e ) {
+			F::build( 'Wikia' )->Log( __METHOD__, '', $e );
+		}
+	}
+	
+	/**
+	 * Deletes all documents containing the provided wiki ID
+	 * Careful, this will alter our index!
+	 * @param int $wid
+	 * @return Solarium_Result|null
+	 */
+	public function deleteWikiDocs( $wid ) {
+		$updateHandler = $this->client->createUpdate();
+		$query = WikiaSearch::valueForField( 'wid', $wid );
+		$updateHandler->addDeleteQuery( $query );
+		$updateHandler->addCommit();
+		try {
+			return $this->client->update( $updateHandler );
+		} catch ( Exception $e ) {
+			F::build( 'Wikia' )->Log( __METHOD__, 'Delete: '.$query, $e);
+		}
+	}
+
+	/**
+	 * Deletes all documents containing one of the provided wiki IDs
+	 * Used in the handle-closed-wikis maintenance script
+	 * Careful, this will alter our index!
+	 * @param  array $wids
+	 * @return Solarium_Result|null
+	 */
+	public function deleteManyWikiDocs( $wids ) {
+		$updateHandler = $this->client->createUpdate();
+		foreach ( $wids as $wid ) {
+			$query = WikiaSearch::valueForField( 'wid', $wid );
+			$updateHandler->addDeleteQuery( $query );
+		}
+		$updateHandler->addCommit();
+		try {
+			return $this->client->update( $updateHandler );
+		} catch ( Exception $e ) {
+			F::build( 'Wikia' )->Log( __METHOD__, 'Delete: '.$query, $e);
+		}
 	}
 	
 	/**
@@ -269,7 +344,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param  array $documentIds
 	 * @return bool true
 	 */
-	public function deleteBatch( array $documentIds = array(), $verbosity = self::REINDEX_DEFAULT ) {
+	public function deleteBatch( array $documentIds = array() ) {
 	    $updateHandler = $this->client->createUpdate();
 	    foreach ( $documentIds as $id ) {
 		    $updateHandler->addDeleteQuery( WikiaSearch::valueForField( 'id', $id ) );
@@ -277,16 +352,8 @@ class WikiaSearchIndexer extends WikiaObject {
 		$updateHandler->addCommit();
 	    try {
 	        $this->client->update( $updateHandler );
-	        $confirmationString = implode(' ', $documentIds). ' ' . count( $documentIds ) . " document(s) deleted\n";
-	        if ( $verbosity == self::REINDEX_VERBOSE ) {
-	            echo $confirmationString;
-	        }
 	    } catch ( Exception $e ) {
-	        $id = rand(1000, 9999);
-	        Wikia::Log( __METHOD__, $id, $e);
-	        if ( $verbosity == self::REINDEX_VERBOSE ) {
-	            echo "There was an error deleting from the index. Please search for {$id} in the logs.\n";
-			}
+	        F::build( 'Wikia' )->Log( __METHOD__, implode( ',', $documentIds ), $e);
 		}
 
 		return true;
@@ -297,7 +364,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param int $pageId
 	 */
 	public function reindexPage( $pageId ) {
-		Wikia::log( __METHOD__, '', $pageId );
+		F::build( 'Wikia' )->log( __METHOD__, '', $pageId );
 		$document = $this->getSolrDocument( $pageId );
 		$this->reindexBatch( array( $document ) );
 		
@@ -310,7 +377,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 */
 	public function deleteArticle( $pageId) {
 		
-		$cityId	= $this->wg->cityId ?: $this->wg->SearchWikiId;
+		$cityId	= $this->wg->CityId ?: $this->wg->SearchWikiId;
 		$id		= sprintf( '%s_%s', $cityId, $pageId );
 		
 		$this->deleteBatch( array( $id ) );
@@ -323,32 +390,33 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @see WikiaSearchIndexer::getPage()
 	 * @param Article $page
 	 */
-	private function getPageMetaData( Article $page ) {
+	protected function getPageMetaData( Article $page ) {
 		wfProfileIn(__METHOD__);
 		$result = array();
 	
-		$data = $this->callMediaWikiAPI( array(
+		$apiService = F::build( 'ApiService' );
+		$data = $apiService->call( array(
 				'titles'	=> $page->getTitle(),
 				'bltitle'	=> $page->getTitle(),
 				'action'	=> 'query',
 				'list'		=> 'backlinks',
 				'blcount'	=> 1
 		));
-	
 		$result['backlinks'] = isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0;  
 	
+		$pageId = $page->getId();
+		
 		if (! empty( $this->wg->ExternalSharedDB ) ) {
-			$data = $this->callMediaWikiAPI( array(
-					'pageids'	=> $page->getId(),
+			$data = $apiService->call( array(
+					'pageids'	=> $pageId,
 					'action'	=> 'query',
 					'prop'		=> 'info|categories',
 					'inprop'	=> 'url|created|views|revcount',
 					'meta'		=> 'siteinfo',
 					'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
 			));
-		
-			if( isset( $data['query']['pages'][$page->getId()] ) ) {
-				$pageData = $data['query']['pages'][$page->getId()];
+			if( isset( $data['query']['pages'][$pageId] ) ) {
+				$pageData = $data['query']['pages'][$pageId];
 				$result['views']	= $pageData['views'];
 				$result['revcount']	= $pageData['revcount'];
 				$result['created']	= $pageData['created'];
@@ -371,8 +439,11 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$wikiViews = $this->getWikiViews($page);
 	
+		$wam = F::build( 'DataMartService' )->getCurrentWamScoreForWiki( $this->wg->CityId );
+		
 		$result['wikiviews_weekly']		= (int) $wikiViews->weekly;
 		$result['wikiviews_monthly']	= (int) $wikiViews->monthly;
+		$result['wam']					= $wam > 0 ? ceil( $wam ) : 1; //mapped here for computational cheapness
 	
 		wfProfileOut(__METHOD__);
 		return $result;
@@ -385,7 +456,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param  Article $page
 	 * @return string the pipe-joined redirect titles with underscores replaced with spaces
 	 */
-	private function getRedirectTitles( Article $page ) {
+	protected function getRedirectTitles( Article $page ) {
 		wfProfileIn(__METHOD__);
 	
 		$dbr = $this->wf->GetDB(DB_SLAVE);
@@ -410,57 +481,44 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @see   WikiaSearchIndexerTest::testGetWikiViewsNoCacheNoDb
 	 * @param Article $page
 	 */
-	private function getWikiViews( Article $page ) {
+	protected function getWikiViews( Article $page ) {
 		wfProfileIn(__METHOD__);
 		$key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
 
 		// should probably re-poll for wikis without much love
 		if ( ( $result = $this->wg->Memc->get( $key ) ) && ( $result->weekly > 0 || $result->monthly > 0 ) ) {
+			wfProfileOut(__METHOD__);
 			return $result;
 		}
-	
-		if ( $this->wg->statsDBEnabled ) {
-			try {
-				$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->statsDB );
-				$row = $db->selectRow(
-						array( 'page_views' ),
-						array(	'SUM(pv_views) as "monthly"',
-								'SUM(CASE WHEN pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) THEN pv_views ELSE 0 END) as "weekly"' ),
-						array(	'pv_city_id' => (int) $this->wg->CityId,
-								'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)' ),
-						__METHOD__
-				);
-			} catch ( Exception $e ) { 
-				Wikia::log( __METHOD__, '', $e );
+
+		$row = new stdClass();	
+		$row->weekly = 0;
+		$row->monthly = 0;
+		
+		$datamart = F::build( 'DataMartService' );
+		
+		$startDate = date( 'Y-m-d', strtotime('-1 week') );
+		$endDate = date( 'Y-m-01', strtotime('now') );	
+		$pageviews_weekly = $datamart->getPageviewsWeekly( $startDate, $endDate, (int) $this->wg->CityId );
+
+		if (! empty( $pageviews_weekly ) ) {
+			foreach ( $pageviews_weekly as $pview ) {
+				$row->weekly += $pview;
 			}
 		}
-	
-		// a pinch of defensive programming
-		if ( ! isset( $row ) ) {
-			$row = new stdClass();
-			$row->weekly = 0;
-			$row->monthly = 0;
+			
+		$startDate = date( 'Y-m-01', strtotime('-1 month') );
+		$pageviews_monthly = $datamart->getPageviewsMonthly( $startDate, $endDate, (int) $this->wg->CityId );
+		if (! empty( $pageviews_monthly ) ) {
+			foreach ( $pageviews_monthly as $pview ) {
+				$row->monthly += $pview;
+			}
 		}
 	
 		$this->wg->Memc->set( $key, $row, self::WIKIPAGES_CACHE_TTL );
 	
 		wfProfileOut(__METHOD__);
 		return $row;
-	}
-
-	/**
-	 * Used to access API data from various MediaWiki services
-	 * @param  array $params
-	 * @return array result data
-	 **/
-	private function callMediaWikiAPI( Array $params ) {
-	    wfProfileIn(__METHOD__);
-	
-	    $api = F::build( 'ApiMain', array( 'request' => new FauxRequest($params) ) );
-	    $api->execute();
-	
-	    wfProfileOut(__METHOD__);
-	    return  $api->getResultData();
 	}
 	
 	/**
@@ -490,7 +548,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		try {
 			return $this->deleteArticle( $id );
 		} catch ( Exception $e ) {
-		    Wikia::log( __METHOD__, '', $e );
+		    F::build( 'Wikia' )->log( __METHOD__, '', $e );
 		    return true;
 		}
 	}
@@ -514,7 +572,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		try {
 			return $this->reindexBatch( array( $article->getTitle()->getArticleID() ) );
 		} catch ( Exception $e ) {
-		    Wikia::log( __METHOD__, '', $e );
+		    F::build( 'Wikia' )->log( __METHOD__, '', $e );
 		    return true;
 		}
 	}
@@ -528,8 +586,29 @@ class WikiaSearchIndexer extends WikiaObject {
 		try {
 			return $this->reindexBatch( array( $title->getArticleID() ) );
 		} catch ( Exception $e ) {
-			Wikia::log( __METHOD__, '', $e );
+			F::build( 'Wikia' )->log( __METHOD__, '', $e );
 			return true;
 		}
+	}
+	
+	/**
+	 * Issues a reindex event or deletes all docs, depending on whether a wiki is being closed or reopened
+	 * @see    WikiaSearchIndexerTest::testOnWikiFactoryPublicStatusChangeClosed
+	 * @see    WikiaSearchIndexerTest::testOnWikiFactoryPublicStatusChangeOpened
+	 * @todo   Rewrite this to use is_closed_wiki when we can utilize atomic updates
+	 * @param  int    $city_public
+	 * @param  int    $city_id
+	 * @param  string $reason
+	 * @return bool
+	 */
+	public function onWikiFactoryPublicStatusChange( &$city_public, &$city_id, $reason ) {
+		
+		if ( $city_public < 1 ) {
+			$this->deleteWikiDocs( $city_id );
+		} else {
+			$this->reindexWiki( $city_id );
+		}
+		
+		return true;
 	}
 }

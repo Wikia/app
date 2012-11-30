@@ -239,6 +239,7 @@ class WikiFactoryLoader {
 		 * @author Sean Colombo
 		 */
 		if( !wfRunHooks( 'WikiFactory::execute', array( &$this ) ) ) {
+			wfProfileOut(__METHOD__);
 			return $this->mWikiID;
 		}
 
@@ -742,6 +743,10 @@ class WikiFactoryLoader {
 					case "wgTrustedMediaFormatsLocal":
 						$this->LocalToGlobalArray( $tValue, $GLOBALS["wgTrustedMediaFormats"] );
 						break;
+
+					case "wgFileBlacklistLocal":
+						$this->LocalToGlobalArray( $tValue, $GLOBALS["wgFileBlacklist"] );
+						break;
 				}
 
 				if ($key == 'wgServer') {
@@ -959,6 +964,7 @@ class WikiFactoryLoader {
 				$ret = false;
 			}
 			ob_end_flush();
+			wfProfileOut( __METHOD__ . "-upgradedb" );
 			return $ret;
 		}
 

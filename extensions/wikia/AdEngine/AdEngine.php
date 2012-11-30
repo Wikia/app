@@ -203,6 +203,7 @@ class AdEngine {
 		'12' => 'DARTGP',
 		'13' => 'AdEngine2',
 		'14' => 'GamePro',
+		'15' => 'Liftium2',
  		'-1' => 'Null'
 	);
 
@@ -533,6 +534,7 @@ class AdEngine {
 			case 'dartgp': return AdProviderDARTGP::getInstance();
 			case 'adengine2': return AdProviderAdEngine2::getInstance();
 			case 'gamepro': return AdProviderGamePro::getInstance();
+			case 'liftium2': return AdProviderLiftium2::getInstance();
 			case 'null': return new AdProviderNull('Slot disabled in WF', false);
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
@@ -855,6 +857,7 @@ class AdEngine {
 		 * See http://staff.wikia-inc.com/wiki/DART_Implementation#When_to_show_ads */
 		$mandatoryAds = array(
 			'HOME_TOP_LEADERBOARD',
+			'HUB_TOP_LEADERBOARD',
 			'HOME_TOP_RIGHT_BOXAD',
 			'LEFT_NAV_205x400'
 		);
@@ -891,30 +894,14 @@ class AdEngine {
 		if (!empty($wgDartCustomKeyValues)) {
 			$options['kv_dart'] = $wgDartCustomKeyValues;
 		}
+
 		$options['kv_domain'] = $_SERVER['HTTP_HOST'];
+		$options['hasMoreCalls'] = true;
+		$options['isCalledAfterOnload'] = true;
+		$options['maxLoadDelay'] = 6000;
 
 		$js = "LiftiumOptions = " . json_encode($options) . ";\n";
-		if (WikiaPageType::isSearch() || (!$wgTitle->getNamespace() == NS_SPECIAL && !BodyController::isEditPage())) {
-			$js .= <<<EOT
-				if ( !window.wgLoadAdDriverOnLiftiumInit && ( !window.Wikia.AbTest || !Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "ONLOAD" ) ) ) {
-					LiftiumOptions['hasMoreCalls'] = true;
-					LiftiumOptions['isCalledAfterOnload'] = true;
-					LiftiumOptions['maxLoadDelay'] = 6000;
-				}
-				else {
-					LiftiumOptions['autoInit'] = false;
-				}
-EOT;
-		}
-		else {
-			$js .= <<<EOT
-				LiftiumOptions['hasMoreCalls'] = true;
-				LiftiumOptions['isCalledAfterOnload'] = true;
-				LiftiumOptions['maxLoadDelay'] = 6000;
-EOT;
-		}
 
-		$js = AssetsManagerBaseBuilder::minifyJs( $js );
 		$out = "\n<!-- Liftium options -->\n";
 		$out .= Html::inlineScript( $js )."\n";
 

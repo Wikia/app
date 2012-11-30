@@ -446,7 +446,7 @@ Hizivait dre PayPal evit kaout ur wiki nevez ouzhpenn evit $4.95 ar miz nemetken
 	'cnw-error-database' => 'Fazi en diaz roadennoù : $1',
 	'cnw-badword-msg' => "Ac'hanta, mar plij chomit hep implijout gerioù vil pe difennet e deskrivadur ho wiki : $1",
 	'cnw-error-wiki-limit-header' => 'Bevenn ar wikioù bet tizhet',
-	'cnw-error-wiki-limit' => "Ac'hanta, bevennet eo ar c'hrouiñ wikioù da $1 wiki dre zen ha dre zevezh. Gortozit 24 eurvezh a-benn gellout krouiñ unan all.",
+	'cnw-error-wiki-limit' => "Ac'hanta, bevennet eo ar c'hrouiñ wikioù da $1 wiki dre zen ha dre zevezh. Gortozit 24 eurvezh a-benn gellout krouiñ unan all.", # Fuzzy
 	'cnw-error-blocked-header' => 'Kont stanket',
 );
 
@@ -601,14 +601,36 @@ $messages['diq'] = array(
 	'cnw-name-wiki-wiki' => 'Wiki',
 	'cnw-login' => 'Qeyd be',
 	'cnw-signup' => 'Hesab Vıraze',
+	'cnw-signup-prompt' => 'Hesabê şıma çıniyo?',
+	'cnw-call-to-signup' => 'Tiya qeyd bê',
+	'cnw-login-prompt' => 'Xora yew hesabê şıma esto?',
+	'cnw-call-to-login' => 'Tiya cı kewê',
 	'cnw-auth-headline' => 'Qeyd vıraze',
 	'cnw-auth-headline2' => 'Deqew de',
+	'cnw-auth-facebook-signup' => 'Ebe Facebook cı kewê',
+	'cnw-auth-facebook-login' => "Facebook'a cıkewtış",
+	'cnw-userauth-headline' => 'Yew hesabê şıma esto?',
 	'cnw-userauth-creative' => 'Ronıştış akerê',
 	'cnw-userauth-signup-button' => 'Hesabo Newe Ake',
 	'cnw-desc-tip2' => 'Psst',
+	'cnw-desc-select-one' => 'Yewi weçine',
 	'cnw-desc-change-lang' => 'bıvurne',
 	'cnw-desc-lang' => 'Zıwan',
+	'cnw-desc-wiki-submit-error' => 'Reca kenime, yew kategoriye weçine',
+	'cnw-theme-headline' => 'tema weçinê',
+	'cnw-upgrade-headline' => 'Şıma qayılê ke berz kerê?',
+	'cnw-upgrade-marketing' => 'Qandê Wikia Plusi rê tewr zaf aguznayış:<ul>
+<li>Wikiyê Profesyoneli</li>
+<li>Nê-kari</li>
+<li>Kufleti</li>
+<li>Mektebi</li>
+<li>Proceyê şexsiy</li>
+</ul>
+Aşme de tenya 4,95 $ gırewtışê wikiyê bêreklami be PayPali berz ke!',
+	'cnw-upgrade-now' => 'Nıka berz ke',
 	'cnw-error-database' => 'Datay $1 qedya',
+	'cnw-badword-header' => 'Oha',
+	'cnw-error-wiki-limit-header' => 'Reşt sinorê wikiy',
 	'cnw-error-blocked-header' => 'Hesab biyo kılit',
 );
 
@@ -2093,6 +2115,7 @@ Adopte esta versão através do PayPal para ter uma wiki livre de anúncios por 
  * @author Aristóbulo
  * @author Caio1478
  * @author Luckas Blade
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistente de criação de wikis]]',
@@ -2118,6 +2141,11 @@ $messages['pt-br'] = array(
 	'cnw-auth-signup-creative' => 'Precisa de ter uma conta para continuar a construir a sua wiki.<br />Só leva um minuto para registrar-se!',
 	'cnw-auth-facebook-signup' => 'Registre-se pelo Facebook',
 	'cnw-auth-facebook-login' => 'Entrar pelo Facebook',
+	'cnw-userauth-headline' => 'Você tem uma conta?',
+	'cnw-userauth-creative' => 'Autenticar-se',
+	'cnw-userauth-marketing-heading' => 'Não tem uma conta?',
+	'cnw-userauth-marketing-body' => 'Você precisa criar uma conta para criar uma wiki na WIkia. Leva apenas um minuto para [[Special:UserSignup|se registrar]]!',
+	'cnw-userauth-signup-button' => 'Registrar-se',
 	'cnw-desc-headline' => 'Qual é o assunto da sua wiki?',
 	'cnw-desc-creative' => 'Descreva o seu assunto',
 	'cnw-desc-placeholder' => 'Isto irá aparecer na página principal da sua wiki.',
@@ -2154,9 +2182,16 @@ Adote esta versão através do PayPal para ter uma wiki livre de anúncios por a
 	'cnw-welcome-help' => 'Encontrará respostas, conselhos e mais na <a href="http://pt.wikia.com">Comunidade Central</a>.',
 	'cnw-error-general' => 'Algo deu errado ao criar a sua wiki. Por favor, tente novamente mais tarde.',
 	'cnw-error-general-heading' => 'Erro ao Criar uma Wiki Nova',
+	'cnw-error-database' => 'Erro do Banco de Dados: $1',
 	'cnw-badword-header' => 'Atenção',
-	'cnw-badword-msg' => 'Não use palavras impróprias ou proibidas na Descrição da Wiki, por favor',
+	'cnw-badword-msg' => 'Olá, por favor não use estas palavras grosseiras ou banidas na sua Descrição da Wiki: $1',
+	'cnw-error-wiki-limit-header' => 'Limite de Wikis atingido',
+	'cnw-error-wiki-limit' => 'Olá, você está limitado à {{PLURAL:$1|criar $1 wiki|criar $1 wikis}} por dia. Espere 24 horas antes de criar outra wiki.',
 	'cnw-error-blocked-header' => 'Conta bloqueada',
+	'cnw-error-blocked' => 'Você foi bloqueado por $1. O motivo dado foi: $2. (ID de Bloqueio para referência: $3)',
+	'cnw-error-torblock' => 'Criar wikis usando a rede Tor não é permitido.',
+	'cnw-error-bot' => 'Detectamos que você pode ser um robô. Se cometemos um engano, por favor descriva que você foi falsamente detectado como um robô, e te ajudaremos em criar sua wiki: [http://www.wikia.com/Special:Contact/Contate-nos geral]',
+	'cnw-error-bot-header' => 'Você foi detectado como um robô',
 );
 
 /** Romanian (română)
@@ -2352,7 +2387,7 @@ $messages['sr-ec'] = array(
 	'cnw-badword-header' => 'Упозорење',
 	'cnw-badword-msg' => 'Здраво. Молимо вас да се уздржите од употребе непристојних и забрањених речи које се налазе у опису викија: $1',
 	'cnw-error-wiki-limit-header' => 'Достигнуто је ограничење направљених викија',
-	'cnw-error-wiki-limit' => 'Здраво. Можете да направите само по $1 вики дневно. Сачекајте 24 часа, па потом направите други.',
+	'cnw-error-wiki-limit' => 'Здраво. Можете да направите само по $1 вики дневно. Сачекајте 24 часа, па потом направите други.', # Fuzzy
 	'cnw-error-blocked-header' => 'Налог је блокиран',
 	'cnw-error-blocked' => '{{GENDER:$1|Блокирао вас је корисник|Блокирала вас је корисница|Блокирао вас је корисник}} $1. Наведени разлог гласи: $2 (назнака блокаде: $3).',
 	'cnw-error-torblock' => 'Није дозвољено стварање викија преко Тор мреже.',
@@ -2457,14 +2492,14 @@ $messages['te'] = array(
 	'cnw-call-to-signup' => 'ఇక్కడ నమోదు చేసుకోండి',
 	'cnw-login-prompt' => 'ఇప్పటికే మీకు ఖాతా ఉందా?',
 	'cnw-call-to-login' => 'ఇక్కడ ప్రవేశించండి',
-	'cnw-auth-headline' => 'వికీని మొదలుపెట్టడం',
+	'cnw-auth-headline' => 'వికీని మొదలుపెట్టడం', # Fuzzy
 	'cnw-desc-headline' => 'మీ వికీ దేని గురించి?',
 	'cnw-desc-tip1' => 'చిట్కా',
-	'cnw-desc-tip1-creative' => 'మీ వికీ దేని గురించో ప్రజలకు చెప్పండి',
-	'cnw-desc-tip2' => 'చిట్కా 2',
-	'cnw-desc-tip2-creative' => 'వివరాలను చేర్చడం మర్చిపోకండి',
-	'cnw-desc-tip3' => 'చిట్కా 3',
-	'cnw-desc-tip3-creative' => 'తోడ్పడమని ప్రజలని ఆహ్వానించండి',
+	'cnw-desc-tip1-creative' => 'మీ వికీ దేని గురించో ప్రజలకు చెప్పండి', # Fuzzy
+	'cnw-desc-tip2' => 'చిట్కా 2', # Fuzzy
+	'cnw-desc-tip2-creative' => 'వివరాలను చేర్చడం మర్చిపోకండి', # Fuzzy
+	'cnw-desc-tip3' => 'చిట్కా 3', # Fuzzy
+	'cnw-desc-tip3-creative' => 'తోడ్పడమని ప్రజలని ఆహ్వానించండి', # Fuzzy
 	'cnw-desc-choose' => 'వర్గాన్ని ఎంచుకోండి',
 	'cnw-desc-default-lang' => 'మీ వికీ $1 లో ఉంటుంది',
 	'cnw-desc-change-lang' => 'మార్చండి',
@@ -2569,6 +2604,7 @@ $messages['tly'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Emperyan
  * @author Erdemaslancan
  * @author Suelnur
  */
@@ -2577,6 +2613,7 @@ $messages['tr'] = array(
 	'cnw-signup' => 'Hesap Oluştur',
 	'cnw-desc-change-lang' => 'değiştir',
 	'cnw-desc-lang' => 'Dil',
+	'cnw-badword-header' => 'Oops!',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -2698,7 +2735,7 @@ $messages['uk'] = array(
 	'cnw-badword-header' => 'Шо за фігня?',
 	'cnw-badword-msg' => 'Будь ласка, не вживайте русизмів на $1 !',
 	'cnw-error-wiki-limit-header' => 'Ліміт створення вікі',
-	'cnw-error-wiki-limit' => 'Ви досягли обмеження $1 на створення вікі в день. Чекайте 24 години.',
+	'cnw-error-wiki-limit' => 'Ви досягли обмеження $1 на створення вікі в день. Чекайте 24 години.', # Fuzzy
 	'cnw-error-blocked-header' => 'Облікований запис заблоковано',
 	'cnw-error-blocked' => 'Ви заблоковані $1. Причиною було: $2. (Для довідки: $3)',
 	'cnw-error-bot' => 'Нам здається, що ви - бот.  Якщо це не так, звертайтеся [http://www.wikia.com/Special:Contact/general сюди].',
@@ -2797,7 +2834,8 @@ Nâng cấp thông qua PayPal để có được một quảng cáo wiki miễn 
 	'cnw-error-bot-header' => 'Bạn đã được phát hiện là một bot',
 );
 
-/** Chinese (中文) */
+/** Chinese (中文)
+ */
 $messages['zh'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki creation wizard]]',
 	'cnw-next' => 'Next',
@@ -2862,6 +2900,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
+ * @author Sam Wang
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -2883,6 +2922,7 @@ $messages['zh-hans'] = array(
 	'cnw-userauth-headline' => '已拥有帐户？',
 	'cnw-userauth-creative' => '登录',
 	'cnw-userauth-marketing-heading' => '没有帐户？',
+	'cnw-userauth-signup-button' => '注册',
 	'cnw-desc-creative' => '描述您的主题',
 	'cnw-desc-tip1' => '暗示',
 	'cnw-desc-tip1-creative' => '在这里用一两句话向大家介绍您的维基',
@@ -2973,4 +3013,3 @@ $messages['zh-hant'] = array(
 	'cnw-error-torblock' => '不允許通過 Tor 網路創建 wiki 。',
 	'cnw-error-bot-header' => '你已被檢測到是機器人',
 );
-

@@ -841,7 +841,7 @@ class EditPage {
 
 							# If we just undid one rev, use an autosummary
 							$firstrev = $oldrev->getNext();
-							if ( $firstrev->getId() == $undo ) {
+							if ( ($firstrev instanceof Revision) && ($firstrev->getId() == $undo) ) {
 								$undoSummary = wfMsgForContent( 'undo-summary', $undo, $undorev->getUserText() );
 								if ( $this->summary === '' ) {
 									$this->summary = $undoSummary;
@@ -1633,13 +1633,6 @@ class EditPage {
 			$wgOut->addModules( 'mediawiki.legacy.preview' );
 		}
 
-		/* Wikia change begin - @author: Marcin, #BugId: 7845 */
-		/* Move with MW 1.19 merge */
-		if ( !Wikia::isOasis() ) {
-			$wgOut->addScriptFile( 'edit.js' );
-		}
-		/* Wikia change end */
-
 		// Bug #19334: textarea jumps when editing articles in IE8
 		$wgOut->addStyle( 'common/IE80Fixes.css', 'screen', 'IE 8' );
 
@@ -1914,8 +1907,12 @@ class EditPage {
 
 		$wgOut->addHTML( $this->editFormTextAfterTools . "\n" );
 
-		$wgOut->addHTML( Html::rawElement( 'div', array( 'class' => 'templatesUsed' ),
-			Linker::formatTemplates( $this->getTemplates(), $this->preview, $this->section != '' ) ) );
+		# <Wikia>
+		if ( empty( $this->preventRenderingTemplatesList ) ) {
+			$wgOut->addHTML( Html::rawElement( 'div', array( 'class' => 'templatesUsed' ),
+				Linker::formatTemplates( $this->getTemplates(), $this->preview, $this->section != '' ) ) );
+		}
+		# </Wikia>
 
 		# <Wikia>
 		if ( wfRunHooks( 'EditPage::CategoryBox', array( &$this ) ) ) {
@@ -2446,9 +2443,22 @@ HTML
 
 	protected function showEditTools() {
 		global $wgOut;
+
+		// Wikia change - begin - @author: wladek
+		global $wgMemc, $wgContLang;
+		$cacheTtl = 86400;
+		$message = wfMessage( 'edittools' )->inContentLanguage();
+		$key = wfMemcKey(__METHOD__,$wgContLang->getCode(),md5($message->plain()));
+		$editToolsText = $wgMemc->get($key);
+		if ( empty( $editToolsText ) ) {
+			$editToolsText = $message->parse();
+			$wgMemc->set($key,$editToolsText,$cacheTtl);
+		}
 		$wgOut->addHTML( '<div class="mw-editTools">' .
-			wfMessage( 'edittools' )->inContentLanguage()->parse() .
+//			wfMessage( 'edittools' )->inContentLanguage()->parse() .
+			$editToolsText .
 			'</div>' );
+		// Wikia change - end
 	}
 
 	protected function getCopywarn() {

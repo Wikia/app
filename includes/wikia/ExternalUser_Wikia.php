@@ -252,6 +252,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->mRow ) ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 

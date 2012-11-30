@@ -1196,7 +1196,9 @@ class BlogTemplateClass {
 
 			/* build query */
 			if ( $returnPlainData ){
-				return self::__getResults();
+				$res = self::__getResults();
+				wfProfileOut( __METHOD__ );
+				return $res;
 			}else{
 				if ( self::$aOptions['type'] == 'count' ) {
 					/* get results count */

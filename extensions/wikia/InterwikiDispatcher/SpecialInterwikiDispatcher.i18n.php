@@ -289,4 +289,3 @@ $messages['uk'] = array(
 	'interwikidispatcher' => 'Диспетчер інтервікі',
 	'interwikidispatcher-desc' => 'Виправлення інтервікі з метою зменшення посилань на перенаправлення',
 );
-

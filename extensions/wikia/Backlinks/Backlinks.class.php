@@ -131,8 +131,8 @@ class Backlinks
 
 		if (! $dbr->tableExists(self::TABLE_NAME) ) {
 			try {
-				$source = dirname(__FILE__) . "patch-create-wikia_page_backlinks.sql";
-				$db->sourceFile( $source );
+				$source = dirname(__FILE__) . "/patch-create-wikia_page_backlinks.sql";
+				$dbr->sourceFile( $source );
 			}
 			catch (Exception $e) {
 				wfProfileOut(__METHOD__);
@@ -154,11 +154,10 @@ class Backlinks
 	 * @return bool
 	 */
 	static function onLoadExtensionSchemaUpdates( $updater = null ) {
+		wfProfileIn( __METHOD__ );
 		$map = array(
 			'mysql' => 'patch-create-wikia_page_backlinks.sql',
 		);
-
-		wfProfileIn( __METHOD__ );
 
 		$type = $updater->getDB()->getType();
 		if( isset( $map[$type] ) ) {
@@ -167,8 +166,8 @@ class Backlinks
 		} else {
 			throw new MWException( "Backlinks extension does not currently support $type database." );
 		}
-		wfProfileIn( __METHOD__ );
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 }

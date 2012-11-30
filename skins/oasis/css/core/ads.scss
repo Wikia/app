@@ -149,7 +149,7 @@
 }
 
 /** Invisible ads **/
-#HOME_INVISIBLE_TOP, #INVISIBLE_TOP, #INVISIBLE_1, #INVISIBLE_2 {
+#INVISIBLE_1, #INVISIBLE_2 {
 	position: absolute;
 }
 
@@ -198,5 +198,16 @@ body >a >img[src$="noad.gif"] {
 		> div {
 			display: inline-block;
 		}
+	}
+}
+
+// Right rail ads centering
+#LEFT_SKYSCRAPER_2, #INCONTENT_BOXAD_1 {
+	font-size: 0;
+	margin-left: 15px;
+	margin-right: 15px;
+	text-align: center;
+	> div, > iframe {
+		display: inline-block;
 	}
 }

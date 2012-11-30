@@ -19,8 +19,10 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 		topBar,
 		position,
 		onClose,
+		onResize,
 		stopHiding,
-		positionfixed = Features.positionfixed;
+		positionfixed = Features.positionfixed,
+		scrollable;
 
 	/* private */
 	function setup(){
@@ -61,6 +63,8 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 	function onOrientationChange(ev){
 		wrapper.style.minHeight = ev.height + 'px';
 		!w.pageYOffset && w.scrollTo(0, 1);
+
+		if(typeof onResize == 'function') onResize(ev);
 	}
 
 	function hideUI(){
@@ -88,9 +92,9 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 			cap = options.caption,
 			classes = options.classes || '';
 
-		stopHiding = options.stopHiding || false;
-
-		onClose = options.onClose;
+		stopHiding = options.stopHiding;
+		scrollable = options.scrollable;
+		onResize = options.onResize;
 
 		if(!opened){
 			position = w.scrollY;
@@ -130,10 +134,20 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 
 			//handle hiding ui of modal on click
 			content.addEventListener('click', onContentClick);
+		} else {
+			//this means this is opening a modal from a modal
+			//lets fire an onClose callback
+			if(typeof onClose === 'function'){
+				onClose();
+			}
+			//and on open as well if needed
+			if(typeof options.onOpen === 'function') {options.onOpen(content);}
 		}
 
+		onClose = options.onClose;
+
 		//move topbar along with scroll manually for browsers with no support for position fixed
-		!positionfixed && w.addEventListener('scroll', fixTopBar);
+		scrollable && !positionfixed && w.addEventListener('scroll', fixTopBar);
 
 		loader.show(content, {center: true});
 
@@ -186,14 +200,14 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 					closeButton.removeEventListener('click', onCloseClick);
 					content.removeEventListener('click', onContentClick);
 
-					if(typeof onClose === 'function'){
-						onClose();
-					}
-
 					//remove event listners since they are not needed outside modal
-					if(!positionfixed){
+					if(scrollable && !positionfixed){
 						w.removeEventListener('scroll', fixTopBar);
 						topBar.style.top = '';
+					}
+
+					if(typeof onClose === 'function'){
+						onClose();
 					}
 				},310);
 

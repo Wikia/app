@@ -45,6 +45,7 @@ function WidgetWikiPage($id, $params) {
 	//stopgap for 67038
 	$source = Title::newFromText( $params['source'] );
 	if( is_object( $source ) && !$source->userCan( 'read' ) ) {
+		wfProfileOut(__METHOD__);
 		return array('body' => '', 'title' => $params['name'] );
 	}
 

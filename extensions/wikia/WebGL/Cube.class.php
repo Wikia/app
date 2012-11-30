@@ -32,11 +32,11 @@ class Cube {
 			} break;
 		case 1: for($i=1;$i<7;$i++){
 				if($i>1)$pics .=",";
-				$pics .= "'http://aurbanski.wikia-dev.com/wikia.php?controller=CubeController&method=getData&format=html&url=".$pics_urls[1]."'";
+				$pics .= "'http://aurbanski.wikia-dev.com/wikia.php?controller=Cube&method=getData&format=html&url=".$pics_urls[1]."'";
 			} break;
 		case 2: for($i=1;$i<7;$i++){
 				if($i>1)$pics .=",";
-				$pics .= "'http://aurbanski.wikia-dev.com/wikia.php?controller=CubeController&method=getData&format=html&url=";
+				$pics .= "'http://aurbanski.wikia-dev.com/wikia.php?controller=Cube&method=getData&format=html&url=";
 				switch($i){
 					case 1: $pics .= $pics_urls[1]; break;
 					case 2: $pics .= $pics_urls[1]; break;
@@ -49,7 +49,7 @@ class Cube {
 			} break;
 		case 3: for($i=1;$i<7;$i++){
 				if($i>1)$pics .=",";
-				$pics .= "'http://aurbanski.wikia-dev.com/wikia.php?controller=CubeController&method=getData&format=html&url=";
+				$pics .= "'http://aurbanski.wikia-dev.com/wikia.php?controller=Cube&method=getData&format=html&url=";
 				switch($i){
 					case 1: $pics .= $pics_urls[1]; break;
 					case 2: $pics .= $pics_urls[2]; break;
@@ -62,7 +62,7 @@ class Cube {
 			} break;
 		case 4: for($i=1;$i<7;$i++){
 				if($i>1)$pics .=",";
-				$pics .= "'http://aurbanski.wikia-dev.com/wikia.php?controller=CubeController&method=getData&format=html&url=";
+				$pics .= "'http://aurbanski.wikia-dev.com/wikia.php?controller=Cube&method=getData&format=html&url=";
 				switch($i){
 					case 1: $pics .= $pics_urls[1]; break;
 					case 2: $pics .= $pics_urls[2]; break;
@@ -75,7 +75,7 @@ class Cube {
 			} break;
 		case 5: for($i=1;$i<7;$i++){
 				if($i>1)$pics .=",";
-				$pics .= "'http://aurbanski.wikia-dev.com/wikia.php?controller=CubeController&method=getData&format=html&url=";
+				$pics .= "'http://aurbanski.wikia-dev.com/wikia.php?controller=Cube&method=getData&format=html&url=";
 				switch($i){
 					case 1: $pics .= $pics_urls[1]; break;
 					case 2: $pics .= $pics_urls[1]; break;
@@ -88,7 +88,7 @@ class Cube {
 			} break;
 		case 6: for($i=1;$i<7;$i++){
 				if($i>1)$pics .=",";
-				$pics .= "'http://aurbanski.wikia-dev.com/wikia.php?controller=CubeController&method=getData&format=html&url=";
+				$pics .= "'http://aurbanski.wikia-dev.com/wikia.php?controller=Cube&method=getData&format=html&url=";
 				$pics .= $pics_urls[$i]; 
 				$pics .= "'";
 			} break;

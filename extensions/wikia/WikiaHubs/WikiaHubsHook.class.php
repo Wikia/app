@@ -51,13 +51,13 @@ class WikiaHubsPopularVideos {
 					'data-message' => $input,
 			), trim($returnString)), 'element');
 			
-			wfProfileOut(__METHOD__);
-			return $html;
+			$res = $html;
 		} else {
 			//page-view html
-			wfProfileOut(__METHOD__);
-			return '<nowiki>'.trim($returnString).'</nowiki>';
+			$res = '<nowiki>'.trim($returnString).'</nowiki>';
 		}
+		wfProfileOut(__METHOD__);
+		return $res;
 	}
 	
 	/**

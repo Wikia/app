@@ -30,7 +30,7 @@ window.Wikia = window.Wikia || {};
  *		templates: [{
  *			controllerName: 'MyController',
  *			methodName: 'getPage',
- *			param: {
+ *			params: {
  *				page: 1
  *			}
  *		}],

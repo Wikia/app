@@ -1,6 +1,7 @@
 <?php
 
 $messages = array();
+
 $messages['en'] = array(
 	'wikiawidget' => 'Wikia widgets',
 );
@@ -127,7 +128,8 @@ $messages['gl'] = array(
 	'wikiawidget' => 'Widgets de Wikia',
 );
 
-/** Hebrew (עברית) */
+/** Hebrew (עברית)
+ */
 $messages['he'] = array(
 	'wikiawidget' => 'וידג׳טים של Wikia',
 );
@@ -394,4 +396,3 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'wikiawidget' => 'Wikia部件',
 );
-

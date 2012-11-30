@@ -74,6 +74,11 @@ class WikiFactory {
 		"hash"
 	);
 
+	/**
+	 * list of valid database clusters used for creating wikis
+	 */
+	static public $clusters = array( "c1", "c2", "c3", "c4" );
+
 	static public $levels = array(
 		1 => "read only",
 		2 => "editable by staff",
@@ -81,6 +86,8 @@ class WikiFactory {
 	);
 
 	static public $mIsUsed = false;
+
+	static protected $variablesCache = array();
 
 	/**
 	 * simple accessor and toggle flag method which shows if WikiFactory is used
@@ -811,6 +818,30 @@ class WikiFactory {
 	 */
 	static public function getVarByName( $cv_name, $wiki, $master = false ) {
 		return self::loadVariableFromDB( false, $cv_name, $wiki, $master );
+	}
+
+	/**
+	 * getVarIdByName
+	 *
+	 * gets variable id using cv_name field
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param string	$cv_name	variable name in city_variables_pool
+	 * @param boolean	$master		choose between master & slave connection
+	 *
+	 * @return mixed 	variable id or false if not found city_variables & city_variables_pool
+	 */
+	static public function getVarIdByName( $cv_name, $master = false ) {
+		$varId = 0;
+		$varData = self::loadVariableFromDB( false, $cv_name, false, $master );
+
+		if( $varData ) {
+			$varId = (int) $varData->cv_id;
+		}
+
+		return ($varId > 0) ? $varId : false;
 	}
 
 	/**
@@ -1805,27 +1836,37 @@ class WikiFactory {
 		 */
 		if( $cv_id ) {
 			$condition = array( "cv_id" => $cv_id );
+			$cacheKey = "id:$cv_id";
 		}
 		else {
 			$condition = array( "cv_name" => $cv_name );
+			$cacheKey = "name:$cv_name";
 		}
 
 		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
 
-		$oRow = $dbr->selectRow(
-			array( "city_variables_pool" ),
-			array(
-				"cv_id",
-				"cv_name",
-				"cv_description",
-				"cv_variable_type",
-				"cv_variable_group",
-				"cv_access_level",
-				"cv_is_unique"
-			),
-			$condition,
-			__METHOD__
-		);
+
+		if ( $master || !isset( self::$variablesCache[$cacheKey] ) ) {
+			$oRow = $dbr->selectRow(
+				array( "city_variables_pool" ),
+				array(
+					"cv_id",
+					"cv_name",
+					"cv_description",
+					"cv_variable_type",
+					"cv_variable_group",
+					"cv_access_level",
+					"cv_is_unique"
+				),
+				$condition,
+				__METHOD__
+			);
+			self::$variablesCache[$cacheKey] = $oRow;
+		}
+		$oRow = self::$variablesCache[$cacheKey];
+		if ( is_object( $oRow ) ) {
+			$oRow = clone $oRow;
+		}
 
 		if( !isset( $oRow->cv_id ) ) {
 			/**
@@ -2843,6 +2884,19 @@ class WikiFactory {
 	}
 
 	/**
+	 * isValidCluster -- check if name is valid cluster (c1, c2, c3, ... )
+	 *
+	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+	 * @access public
+	 * @static
+	 *
+	 * @param string $cluster cluster name
+	 */
+	static public function isValidCluster( $cluster ) {
+		return in_array( $cluster. self::$clusters );
+	}
+
+	/**
 	 * fetching wiki list with selected variable set to $val
 	 * @param unknown_type $varId
 	 * @param unknown_type $type
@@ -2885,14 +2939,14 @@ class WikiFactory {
 
 		$oRes = $dbr->select(
 			$aTables,
-			array('city_id', 'city_title', 'city_url', 'city_public'),
+			array('city_id', 'city_title', 'city_url', 'city_public', 'city_dbname'),
 			$aWhere,
 			__METHOD__,
 			$aOptions
 		);
 
 		while ($oRow = $dbr->fetchObject($oRes)) {
-			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ) );
+			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ), 'd' => $oRow->city_dbname );
 		}
 		$dbr->freeResult( $oRes );
 

@@ -179,7 +179,7 @@ abstract class BatchTask {
             $oObject->mData = $oTask;
             $retval =  $oObject;
         }
-        wfProfileIn( __METHOD__ );
+        wfProfileOut( __METHOD__ );
 
         return $retval;
     }

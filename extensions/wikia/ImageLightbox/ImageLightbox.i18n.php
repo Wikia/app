@@ -423,11 +423,11 @@ $1
 	'lightbox-share-email-page-label' => '友達にメールでこのページを送信',
 	'lightbox-share-email-page-label-address' => 'メールアドレス',
 	'lightbox-share-email-ok-caption' => '確認',
-	'lightbox-share-email-ok-content' => 'メールを送信しました。',
+	'lightbox-share-email-ok-content' => 'メールを送信しました。', # Fuzzy
 	'lightbox-share-email-error-caption' => 'エラー',
 	'lightbox-share-email-error-content' => 'メールの送信でエラーが発生しました。
 
-詳細: $2',
+詳細: $2', # Fuzzy
 	'lightbox-share-email-error-login' => 'メールを送信するにはログインする必要があります',
 	'lightbox-share-email-error-noaddress' => 'メールアドレスが指定されていません',
 	'lightbox-visit-the-wiki' => 'ウィキに移動:',
@@ -788,10 +788,11 @@ $messages['tr'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'lightbox_details_tooltip' => '查看图片细节',
 	'lightbox-forum' => '论坛',
+	'lightbox-share-button-email' => '电子邮件',
 	'lightbox-share-button-www' => '分享',
 );
-

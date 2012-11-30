@@ -71,4 +71,8 @@ class EditPageNotice {
 		return $snippet;
 	}
 
+	public function __toString() {
+		return $this->html;
+	}
+
 }

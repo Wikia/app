@@ -10,13 +10,13 @@ $wgExtensionCredits['parserhook'][] = array(
 
 $wgHooks['ParserFirstCallInit'][] = 'ActivityFeedTag_setup';
 
-function ActivityFeedTag_setup(&$parser) {
+function ActivityFeedTag_setup(Parser $parser) {
 	$parser->setHook('activityfeed', 'ActivityFeedTag_render');
 	return true;
 }
 
 function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
-	global $wgExtensionsPath, $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
+	global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
 
 	if (!class_exists('ActivityFeedHelper')) {
 		return '';
@@ -40,7 +40,6 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 
 	if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
 		array_push($snippetsDependencies, '/extensions/wikia/AchievementsII/css/achievements_sidebar.css');
-
 	}
 
 	$snippets = F::build('JSSnippets')->addToStack(

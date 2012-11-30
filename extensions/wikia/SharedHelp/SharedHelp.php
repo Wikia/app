@@ -281,6 +281,7 @@ function SharedHelpHook(&$out, &$text) {
 					$skipNamespaces[] = MWNamespace::getCanonicalName(NS_VIDEO);
 				}
 			}
+			$skipNamespaces[] = 'Special:Search'; // Stop hard coded Search on Community Central being removed
 
 			# replace help wiki links with local links, except for special namespaces defined above
 			$content = preg_replace("|{$sharedServer}{$sharedArticlePathClean}(?!" . implode(")(?!", $skipNamespaces) . ")|", $localArticlePathClean, $content);

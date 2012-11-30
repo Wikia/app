@@ -174,6 +174,16 @@ Wikia
 * Um alle Seiten dieses wöchentlichen Überblicks als besucht zu markieren, verwenden Sie die Option unter „Beobachtungsliste“ in Ihren Einstellungen',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ * @author Mirzali
+ */
+$messages['diq'] = array(
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|vatış|vatışi}})',
+	'globalwatchlist-no-page-found' => 'Pele çıniya.',
+	'globalwatchlist-no-blog-page-found' => 'Qet qeydê pele nêvêniya.',
+);
+
 /** Spanish (español)
  * @author Translationista
  */
@@ -418,7 +428,7 @@ $messages['ksh'] = array(
 	'globalwatchlist-digest-email-subject' => 'Zosammefassong vun der Woch',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|Aanmerkong|Aanmerkonge|Aanmerkonge}})',
 	'globalwatchlist-no-page-found' => 'Kein Sigg jefonge',
-	'globalwatchlist-no-blog-page-found' => 'Kein Sigg vun enem <i lang="en">blog</i> jefonge.',
+	'globalwatchlist-no-blog-page-found' => 'Kein Sigg vun enem <i lang="en">blog</i> jefonge.', # Fuzzy
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -874,4 +884,3 @@ $messages['zh-hans'] = array(
 	'globalwatchlist-digest-email-subject' => '每周文摘',
 	'globalwatchlist-no-page-found' => '未找到页面。',
 );
-

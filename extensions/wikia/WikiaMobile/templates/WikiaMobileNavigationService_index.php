@@ -9,10 +9,10 @@
  * @var $userName String
  */
 
-$loggedIn = $wg->User->getId() > 0;
+	$loggedIn = $wg->User->isLoggedIn();
     $searchPage = $wg->Title->isSpecial( 'Search' );
 
-	if($loggedIn){
+	if ( $loggedIn ) {
 		$userName = $wg->User->getName();
 	}
 ?>
@@ -37,7 +37,7 @@ $loggedIn = $wg->User->getId() > 0;
 	}	?>
 	</div>
 	<div id=wkSrh>
-		<form id=wkSrhFrm action="<?= SpecialPage::getSafeTitleFor( 'Search' )->getLocalURL()?>" method=get>
+		<form id=wkSrhFrm action="<?= SpecialPage::getSafeTitleFor( 'Search' )->getLocalURL(); ?>" method=get>
 			<input type=hidden name=fulltext value=Search>
 			<input class=wkInp id=wkSrhInp type=text name=search placeholder="<?= $wf->Msg( 'wikiamobile-search-this-wiki' ); ?>" value="<?= $wg->request->getVal( 'search', '' ); ?>" required=required autocomplete=off autofocus>
 			<div id=wkClear class='clsIco hide'></div>

@@ -253,6 +253,7 @@ class AchConfig {
 				}
 				else {
 					wfDebug("Unknown badge type for {$badgeTypeId}");
+					wfProfileOut(__METHOD__);
 					return false;
 				}
 

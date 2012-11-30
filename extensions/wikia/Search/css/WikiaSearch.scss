@@ -1,17 +1,8 @@
-// Inter-wiki search - currently for the SearchV2 extension
-// Mixins
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/bodytext";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-
-// Oasis Page Modules //
-@import "../../../../skins/oasis/css/core/color";
-
-$use-dark-icons: false;
-@if lightness($color-buttons) > 50 {
-	$use-dark-icons: true;
-}
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/bodytext";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/gradient";
 
 $color-search-form-background: darken($color-page, 5%);
 @if $is-dark-wiki {
@@ -28,7 +19,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 .Search {
 	// Search form
-	.WikiaSearch {
+	.SearchInput {
 		background: $color-search-form-background;
 		margin-bottom: 12px;
 		padding: $form-side-padding;
@@ -63,15 +54,17 @@ $form-negative-side-padding: $form-side-padding*-1;
 		}
 
 		.AdvancedSearch {
-			// temporary disablead - part of search redesign project 
-			// to be restyled when new mockup approved 
+			// temporary disablead - part of search redesign project
+			// to be restyled when new mockup approved
 			// (https://internal.wikia-inc.com/wiki/Search/Redesign/Story_3)
-			
+
 			//background: $color-page;
 			//border-bottom: 1px solid $color-page-border;
 			//margin: 0px $form-negative-side-padding 0;
 			//padding-bottom: 18px;
 
+			width: 100%;
+			
 			label {
 				display: inline-block;
 				width: 25%;
@@ -81,6 +74,15 @@ $form-negative-side-padding: $form-side-padding*-1;
 				font-size: inherit;
 				margin: 0;
 				padding: 14px 0;
+			}
+			&.hidden {
+				display: none;
+			}
+		}
+		.advanced-link {
+			float: right;
+			a {
+				font-weight: normal;
 			}
 		}
 	}
@@ -211,7 +213,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 	.WikiaTopAds {
 		margin-bottom: 15px;
 	}
-	.WikiaSearch {
+	.SearchInput {
 		padding-bottom: 12px;
 	}
 }
@@ -243,11 +245,11 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 	$color-search-ads-background: mix($color-buttons, $color-page, 12%);
 }
 .Search.this-wiki {
-	.WikiaSearch {
+	.SearchInput {
 		border-top: 1px solid $color-search-grid-border;
 		border-bottom: 1px solid $color-search-grid-border;
 		margin: 0;
-		padding: 9px 10px;	
+		padding: 9px 10px;
 		p {
 			font-size: 15px;
 			font-weight: bold;
@@ -262,11 +264,16 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 			width: 64px;
 		}
 	}
-	.search-tabs, 
+	.search-tabs,
 	.SearchAdsTopWrapper {
 		border-top: 1px solid $color-search-grid-border;
 		margin-top: 35px;
-	} 
+		overflow: hidden;
+	}
+	input[type="checkbox"], input[type="radio"] {
+		margin: 0 6px 0 0;
+		padding: 0;
+	}
 	.search-tabs {
 		padding-right: 10px;
 		li {
@@ -275,24 +282,60 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 			line-height: 28px;
 			list-style: none;
 			margin: 0;
-			&:first-child {
-				margin-top: 10px;
-			}
+			padding-left: 10px;
 		}
+		> li:first-child {
+			margin-top: 10px;
+		}
+
 		a {
 			display: block;
 			min-height: 31px;
-			padding-left: 10px;
 			text-decoration: none;
 			&:hover {
 				background-color: $color-tabs-hover-background;
 			}
 		}
-		.selected a {
+		.selected {
 			background-color: $color-tabs-background;
-			color: $color-text;
+			a {
+				color: $color-text;
+			}
 		}
-		
+		.search-filter-sort {
+			font-weight: normal;
+			margin-bottom: 7px;
+			p {
+				margin: 0;
+			}
+			ul {
+				margin: 0;
+				padding: 0;
+			}
+			li {
+				font-weight: normal;
+				margin-left: 0;
+				padding-left: 0;
+			}
+			select {
+				margin: 0;
+				max-width: 145px;
+			}
+			.video-filters {
+				margin-left: 13px;
+				select {
+					margin-left: 13px;
+					max-width: 120px;
+				}
+			}
+			.hidden {
+				display: none;
+			}
+		}
+		.disabled {
+			color: $color-alternate-text
+		}
+
 	}
 	.results-wrapper > p {
 		border-bottom: 1px solid $color-search-grid-border;
@@ -300,11 +343,11 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 		line-height: 13px;
 		margin: 0;
 		margin-bottom: 10px;
-		overflow: hidden; 
+		overflow: hidden;
 		padding: 11px 0;
 		text-align: left;
 		text-overflow: ellipsis;
-		white-space: nowrap; 
+		white-space: nowrap;
 	}
 	.result {
 		margin-bottom: 13px;
@@ -318,9 +361,9 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 			float: none;
 			overflow: hidden;
 			text-overflow: ellipsis;
-			white-space: nowrap; 
+			white-space: nowrap;
 		}
-		.redirect-title .result-link, 
+		.redirect-title .result-link,
 		ul .result-link {
 			color: $color-alternate-text;
 		}

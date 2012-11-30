@@ -11,7 +11,6 @@
 
 $messages = array();
 
-// Lang: en
 $messages['en'] = array(
 	'activityindicator-message' => 'Loading...',
 	
@@ -161,7 +160,19 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'activityindicator-message' => 'Bar beno...',
+	'window-wikis-title' => 'Wikia Kay Şınasnayış',
 	'window-category-load-batch' => 'Zewbi',
+	'window-article-button-close' => 'Racnê',
+	'window-article-button-back' => 'Peyser',
+	'window-article-menu-search-label' => 'Cı geyre',
+	'window-article-menu-dashboard-label' => 'Zerreki şınasnayş',
+	'window-article-menu-cancel-label' => 'Bıterkne',
+	'searchview-no-results' => 'Qandê "%s" neticey çıniyê',
+	'searchview-button-back-list' => 'Peyser şo lista',
+	'searchview-button-back-article' => 'Peyd şo wesiqa',
+	'searchbar-hint' => 'Geyreno %s...',
+	'alert-download-updated-wikis-button-ok' => 'Temam',
 );
 
 /** Spanish (español)
@@ -336,28 +347,29 @@ $messages['km'] = array(
 );
 
 /** Korean (한국어)
+ * @author Infinity
  * @author 아라
  */
 $messages['ko'] = array(
-	'activityindicator-message' => '로드 중...',
-	'window-wikis-title' => 'Wikia 게임 가이드',
-	'window-wikis-wikilist-search-hint' => '찾기 우리의 탑 게임들',
-	'window-category-load-batch' => '더',
+	'activityindicator-message' => '불러오는 중...',
+	'window-wikis-title' => '위키아 게임 가이드',
+	'window-wikis-wikilist-search-hint' => '상위 게임 찾기...',
+	'window-category-load-batch' => '더 보기',
 	'window-article-button-close' => '닫기',
-	'window-article-button-back' => '뒤',
+	'window-article-button-back' => '뒤로',
 	'window-article-menu-search-label' => '찾기',
 	'window-article-menu-dashboard-label' => '도움말 목차',
 	'window-article-menu-cancel-label' => '취소',
-	'searchview-no-results' => '에 관한 결과물 없음 "%s"',
-	'searchview-button-back-list' => '다시 리스트로 돌아감',
-	'searchview-button-back-article' => '다시 글로 돌아감',
-	'searchbar-hint' => '찾기 %s...',
+	'searchview-no-results' => '"%s"에 대한 결과가 없습니다',
+	'searchview-button-back-list' => '목록으로 돌아가기',
+	'searchview-button-back-article' => '문서로 돌아가기',
+	'searchbar-hint' => '%s 찾기...',
 	'alert-download-updated-wikis-message' => '이용 가능한 도움말 리스트는 업데이트 될것입니다.',
-	'alert-download-updated-wikis-button-ok' => '예',
-	'error-update-required' => '이 앱의 업데이트는 이용가능하며 꼭 필요합니다.',
-	'error-no-connection' => '인터넷 사용이 불가능합니다.\\n나중에 다시 시도하시기 바랍니다.',
-	'error-server' => '죄송합니다. 저희 서버에 문제가 생겼으니.\\n나중에 다시 시도하시기 바랍니다.',
-	'error-json-parse' => '죄송합니다. 저희 서버로 돌아오는 자료에 문제가 생겼으니.\\n나중에 다시 시도하시기 바랍니다.',
+	'alert-download-updated-wikis-button-ok' => '확인',
+	'error-update-required' => '이 앱에 필요한 업데이트가 있습니다.',
+	'error-no-connection' => '사용 가능한 인터넷 연결이 없습니다.\\n다시 시도하세요.',
+	'error-server' => '저희 서버에 오류가 발생해서 죄송합니다.\\n다시 시도하세요.',
+	'error-json-parse' => '저희 서버로 돌아온 자료에 문제가 있습니다.\\n다시 시도하세요.',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -658,6 +670,7 @@ $messages['tly'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'activityindicator-message' => '载入中……',
@@ -665,5 +678,5 @@ $messages['zh-hans'] = array(
 	'window-article-button-close' => '关闭',
 	'window-article-button-back' => '返回',
 	'searchview-button-back-article' => '返回条目',
+	'alert-download-updated-wikis-button-ok' => '确认',
 );
-

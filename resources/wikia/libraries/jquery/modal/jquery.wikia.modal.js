@@ -100,6 +100,7 @@ $.fn.extend({
 				height: options.height,
 				zIndex: zIndex + 1
 			}).css("margin-left", -wrapper.outerWidth(false)/2);
+
 		} else {
 			wrapper
 				.width(settings.width)
@@ -220,12 +221,6 @@ $.fn.extend({
 
 		if (typeof settings.onCreate == 'function') {
 			settings.onCreate(this,wrapper);
-		}
-
-		// call AdDriver if necessary
-		if (window.loadAd) {
-			AdDriverDelayedLoader.load();
-			window.loadAd = false;
 		}
 
 		// BugId:7498

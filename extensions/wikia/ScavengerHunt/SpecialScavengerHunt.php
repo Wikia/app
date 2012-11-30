@@ -43,13 +43,14 @@ class SpecialScavengerHunt extends SpecialPage {
 	public function execute( $subpage ) {
 		wfProfileIn(__METHOD__);
 
-		$this->games = WF::build('ScavengerHuntGames');
+		$this->games = F::build('ScavengerHuntGames');
 
 		$this->setHeaders();
 		$this->mTitle = SpecialPage::getTitleFor('scavengerhunt');
 
 		if ($this->isRestricted() && !$this->userCanExecute($this->user)) {
 			$this->displayRestrictionError();
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
@@ -66,13 +67,14 @@ class SpecialScavengerHunt extends SpecialPage {
 				NotificationsController::CONFIRMATION_ERROR
 			);
 			$this->out->redirect( $this->mTitle->getFullUrl() );
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
 		$this->out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/ScavengerHunt/css/scavenger-special.scss'));
 		$this->out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/ScavengerHunt/css/scavenger-game.scss'));
 		$this->out->addScriptFile($this->app->getGlobal('wgExtensionsPath') . '/wikia/ScavengerHunt/js/scavenger-special.js');
-		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
+		$template = F::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/'));
 
 		$errors = array();
 		switch ($action) {
@@ -84,7 +86,7 @@ class SpecialScavengerHunt extends SpecialPage {
 				$this->out->mPageLinkTitle = true;
 
 				// Games list
-				$pager = WF::build('ScavengerHuntGamesPager', array($this->games, $this->mTitle->getFullUrl(), $template));
+				$pager = F::build('ScavengerHuntGamesPager', array($this->games, $this->mTitle->getFullUrl(), $template));
 				$this->out->addHTML(
 					$pager->getBody() .
 					$pager->getNavigationBar()
@@ -108,6 +110,7 @@ class SpecialScavengerHunt extends SpecialPage {
 
 					//success! go to the list
 					$this->out->redirect( $this->mTitle->getFullUrl() );
+					wfProfileOut(__METHOD__);
 					return;
 				} else {
 					//failure - display errors
@@ -133,6 +136,7 @@ class SpecialScavengerHunt extends SpecialPage {
 							);
 
 							$this->out->redirect( $this->mTitle->getFullUrl() . "/edit/$id" );
+							wfProfileOut(__METHOD__);
 							return;
 						} else {
 							$game->setEnabled( false );
@@ -145,6 +149,7 @@ class SpecialScavengerHunt extends SpecialPage {
 							wfMsg('scavengerhunt-game-has-been-deleted')
 						);
 						$this->out->redirect( $this->mTitle->getFullUrl() );
+						wfProfileOut(__METHOD__);
 						return;
 					}
 				}
@@ -165,6 +170,7 @@ class SpecialScavengerHunt extends SpecialPage {
 							);
 
 							$this->out->redirect( $this->mTitle->getFullUrl() );
+							wfProfileOut(__METHOD__);
 							return;
 						} else {
 							NotificationsController::addConfirmation(
@@ -323,6 +329,7 @@ class SpecialScavengerHunt extends SpecialPage {
 		}
 
 		if (!$game->isEnabled()) {
+			wfProfileOut(__METHOD__);
 			return array(
 				'errors' => $errors,
 				'highlight' => $highlight

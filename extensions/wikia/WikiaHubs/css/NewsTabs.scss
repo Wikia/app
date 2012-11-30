@@ -1,6 +1,9 @@
 @import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/bodytext";
 
 .wikiahubs-newstabs {
+	@include bodytext;
+
 	.title-wrapper {
 		width: 100%;
 		@include clearfix;

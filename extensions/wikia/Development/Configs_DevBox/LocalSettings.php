@@ -103,7 +103,7 @@ $wgRemoveGroups['staff'] = true;
 
 if ( is_null( $wgDBcluster ) ) {
 	$wgDBcluster = 'c1';
-} 
+}
 // default LB section for database connection
 $wgLBDefaultSection = 'c1';
 
@@ -157,3 +157,7 @@ $fbAppId = '116800565037587';
 // reCAPTCHA for devboxes
 $recaptcha_public_key = '6LehHs0SAAAAALuvvzioNdf8_xBXmc6_xW8rWw0d';
 $recaptcha_private_key = '6LehHs0SAAAAABYaeCiC0ockp0NsY-H7wEiPZk7i';
+
+$wgConf->localVHosts = array(
+	'wikia-dev.com'
+);

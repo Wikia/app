@@ -381,7 +381,11 @@ class Wikia {
 		/**
 		 * and use wfDebug as well
 		 */
-		wfDebug( $method . ": " . $message . "\n" );
+		if (function_exists("wfDebug")) {
+			wfDebug( $method . ": " . $message . "\n" );
+		} else {
+			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . "wfDebug is not defined");			
+		}
 	}
 
 	/**
@@ -1014,10 +1018,12 @@ class Wikia {
 	 */
 
 	static public function getProps( $page_id, $oneProp = null ) {
-
 		wfProfileIn( __METHOD__ );
 		$return = array();
-		if (empty($page_id)) return null;
+		if (empty($page_id)) {
+			wfProfileOut( __METHOD__ );
+			return null;
+		}
 
 		$where = array( "pp_page" => $page_id );
 		if ($oneProp != null) {

@@ -66,7 +66,7 @@ Check given username for possible typos.</p>',
  */
 $messages['qqq'] = array(
 	'right-lookupcontribs' => '{{doc-right|lookupcontribs}}',
-	'lookupcontribsshowpages' => 'If $1 is a number, this should support plural.',
+	'lookupcontribsshowpages' => 'If $1 is a number, this should support plural.', # Fuzzy
 	'lookupcontribscontent' => '{{Identical|Content}}',
 );
 
@@ -1485,7 +1485,8 @@ Kolla efter möjliga stavfel i det angivna användarnamnet.</p>',
 	'lookupcontribsall' => 'alla',
 );
 
-/** Swahili (Kiswahili) */
+/** Swahili (Kiswahili)
+ */
 $messages['sw'] = array(
 	'lookupcontribswikititle' => 'Cheo',
 	'lookupcontribsnext' => 'linalofuata',
@@ -1635,4 +1636,3 @@ $messages['zh-hans'] = array(
 	'lookupcontribsfinal' => '最后',
 	'lookupcontribsall' => '全部',
 );
-

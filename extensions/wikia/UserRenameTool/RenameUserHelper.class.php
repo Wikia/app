@@ -8,7 +8,7 @@
  */
 class RenameUserHelper {
 
-	const CLUSTER_DEFAULT = 'c1';
+	const CLUSTER_DEFAULT = '';
 
 	public static $excludedWikis = array(
 		425, /* uncyclopedia */

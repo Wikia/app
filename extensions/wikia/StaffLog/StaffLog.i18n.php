@@ -61,7 +61,8 @@ $messages['br'] = array(
 	'stafflog-filter-type-block' => 'Stankadennoù',
 );
 
-/** Bosnian (bosanski) */
+/** Bosnian (bosanski)
+ */
 $messages['bs'] = array(
 	'stafflog-desc' => 'Centralizirani zapisnik za osoblje',
 	'stafflog' => 'ZapisnikOsoblja',
@@ -239,7 +240,8 @@ $messages['id'] = array(
 	'right-stafflog' => 'Dapat melihat stafflog',
 );
 
-/** Luxembourgish (Lëtzebuergesch) */
+/** Luxembourgish (Lëtzebuergesch)
+ */
 $messages['lb'] = array(
 	'stafflog-desc' => 'Zentraliséiert Logge vun de Staff-Mataarbechter',
 	'stafflog-blockmsg' => '$1 $2 huet versicht de Staff-Mataarbechter $3 op der Wiki $4 ze spären: Grond: $5',
@@ -494,4 +496,3 @@ $messages['uk'] = array(
 $messages['zh-hans'] = array(
 	'stafflog-filter-user' => '用户：',
 );
-

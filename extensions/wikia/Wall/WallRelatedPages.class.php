@@ -13,12 +13,27 @@ class WallRelatedPages extends WikiaModel {
 			$db = $this->wf->GetDB( DB_MASTER );
 			if ( !$db->tableExists('wall_related_pages') ) {
 				$db->sourceFile( $dir . '/sql/wall_related_pages.sql' );
+				wfProfileOut( __METHOD__ );
 				return true;
 			}
 		}
 		
 		wfProfileOut( __METHOD__ );
 		return false;
+	}
+	
+	/**
+	 * set last update use for ordering on aritcle page 
+	 * 
+	 */
+	
+	function setLastUpdate($messageId) {	 
+	 	wfProfileIn( __METHOD__ );
+		$db = $this->wf->GetDB( DB_MASTER );
+		$db->begin();
+		$db->query( "update `wall_related_pages` set last_update = NOW() where comment_id = $messageId ", __METHOD__ );
+		$db->commit();
+		wfProfileOut( __METHOD__ );
 	}
 	
 	/**
@@ -40,12 +55,9 @@ class WallRelatedPages extends WikiaModel {
 		), __METHOD__);
 
 		foreach($pages as $key => $val) {
-			$db->insert( 'wall_related_pages', array(
-				'comment_id' => $messageId,
-				'page_id' => $val,
-				'order_index' => $key
-			), __METHOD__ ); 
+			$db->query( "INSERT  INTO `wall_related_pages` (comment_id,page_id,last_update,order_index) VALUES ('$messageId','$val',NOW(), $key)",  __METHOD__ ); 
 		}
+		
 		$db->commit();
 		wfProfileOut( __METHOD__ );
 	}
@@ -103,15 +115,15 @@ class WallRelatedPages extends WikiaModel {
 	 * @param array $messageId
 	 */
 	
-	function getMessagesRelatedArticleIds($messageIds, $orderBy = 'order_index') {
+	function getMessagesRelatedArticleIds($messageIds, $orderBy = 'order_index', $db = DB_SLAVE) {
 		wfProfileIn( __METHOD__ );
 		$pageIds = array();
 		
 		//Loading from cache 
-		$db = $this->wf->GetDB( DB_SLAVE );
+		$db = $this->wf->GetDB( $db );
 		
 		if($this->createTable()) {
-			$db = $this->wf->GetDB( DB_MASTER );	
+			$db = $this->wf->GetDB( $db );	
 		}
 		
 		$result = $db->select(
@@ -155,6 +167,71 @@ class WallRelatedPages extends WikiaModel {
 		return $titles;
 	}
 	
+	
+	public function getArticlesRelatedMessgesSnippet($pageId, $messageCount, $replyCount) {
+		$messages = $this->getArticlesRelatedMessgesIds($pageId, 'last_update desc', $messageCount);
+			
+		$out = array();
+		
+		$update = array(0);
+		$helper = new WallHelper();
+			
+		foreach($messages as $value) {
+			$wallThread = WallThread::newFromId($value['comment_id']);
+			
+			if(empty($wallThread)) {
+				continue;
+			}
+			
+			$wallMessage = $wallThread->getThreadMainMsg();
+			$wallMessage->load();
+			
+			$update[] = $wallMessage->getCreateTime(TS_UNIX);
+			
+			$row = array();
+			$row['metaTitle'] = $wallMessage->getMetaTitle();
+			$row['threadUrl'] = $wallMessage->getMessagePageUrl(); 
+			$row['totalReplies'] = $wallThread->getRepliesCount();
+			
+			$row['displayName'] = $wallMessage->getUserDisplayName();
+			$row['userName'] = $wallMessage->getUser()->getName();
+			$row['userUrl'] = $wallMessage->getUserWallUrl();
+			$row['messageBody'] = $helper->shortenText($helper->strip_wikitext($wallMessage->getRawText()));
+			$row['timeStamp'] = $wallMessage->getCreateTime();
+			
+			$row['replies'] = array();
+			
+			$replies = array_reverse($wallThread->getRepliesWallMessages(2, "DESC"));
+			
+			foreach($replies as $reply) {
+				$reply->load();
+				$update[] = $reply->getCreateTime(TS_UNIX);
+				
+				if(!$reply->isRemove() && !$reply->isAdminDelete()) {
+					$replyRow = array(
+						'displayName' =>  $reply->getUserDisplayName(),
+						'userName' => $reply->getUser()->getName(),
+						'userUrl' => $reply->getUserWallUrl(),
+						'messageBody' => $helper->shortenText($helper->strip_wikitext($reply->getRawText())),
+						'timeStamp' => $reply->getCreateTime()
+					);
+					$row['replies'][] = $replyRow;
+				}
+			}
+			
+			$out[] = $row;
+		}
+
+
+		$out['lastupdate'] = max($update);
+		
+		return $out;
+	}
+
+	public function invalidateData( $threads, $replies ) {
+		
+	}
+
 	
 	/**
 	 * 

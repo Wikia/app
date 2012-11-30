@@ -15,7 +15,7 @@ abstract class SponsorshipDashboardOutputFormatter {
 	public $App = null;
 
 	public function  __construct() {
-		$this->App = F::build( 'App' );
+		$this->App = F::app();
 	}
 
 	public function set( $report ){

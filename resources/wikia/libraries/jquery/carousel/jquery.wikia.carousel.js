@@ -51,7 +51,7 @@
 
 		var constants = {
 			viewPortWidth: $this.outerWidth(),
-			itemWidth: dom.items.first().outerWidth(true), // item width including margin
+			itemWidth: getItemWidth(), // item width including margin
 			carouselWidth: 0, // updated on init
 			minLeft: 0 // updated on init
 		};
@@ -224,8 +224,13 @@
 			});
 		}
 
-		// run this once on init
+		// run this once on init and whenever items are added to the carousel
 		function setCarouselWidth() {
+			// bugid-51094 - Make it possible to create a carousel with no items in it and add items later
+			if(!constants.itemWidth) {
+				constants.itemWidth = getItemWidth();
+			}
+
 			var width = constants.itemWidth * dom.items.length;
 
 			// expand carousel width so all li's are in one line
@@ -267,9 +272,14 @@
 			states.enable_previous = false;
 			dom.previous.addClass('disabled');
 		}
+		
 		function enablePrevious() {
 			states.enable_previous = true;
 			dom.previous.removeClass('disabled');
+		}
+		
+		function getItemWidth() {
+			return dom.items.first().outerWidth(true);
 		}
 
 		// public functions

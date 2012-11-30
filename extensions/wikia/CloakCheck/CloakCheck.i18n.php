@@ -141,6 +141,7 @@ $messages['de'] = array(
  */
 $messages['diq'] = array(
 	'cloakcheck-form-username' => 'Namey Karberi:',
+	'cloakcheck-process-username' => 'Namey karberi: $1',
 );
 
 /** Spanish (español)
@@ -539,10 +540,12 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
 	'cloakcheck' => 'Verificação de eligibilidade para um cloak IRC',
 	'cloakcheck-desc' => 'Fornece uma interface única para verificação dos requisitos de um cloak IRC',
+	'right-cloakcheck' => 'Pode checar informações relacionadas aos cloaks de IRC de outros usuários',
 	'cloakcheck-form-username' => 'Nome de usuário:',
 	'cloakcheck-form-check' => 'Verificar nome de usuário',
 	'cloakcheck-form-check-self' => 'Verificar a eligibilidade para um cloak IRC',
@@ -614,11 +617,16 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Grytolle
  * @author Tobulos1
  */
 $messages['sv'] = array(
+	'cloakcheck' => 'Kontroll av IRC-masksbehörighet',
+	'cloakcheck-desc' => 'Tillhandahåller ett allt i ett-gränssnitt för att pröva alla kriterier för en IRC-mask',
+	'right-cloakcheck' => 'Kan kontrollera IRC-masksrelaterad information om andra användare',
 	'cloakcheck-form-username' => 'Användarnamn:',
 	'cloakcheck-form-check' => 'Kontrollera användarnamn',
+	'cloakcheck-form-check-self' => 'Kontrollera IRC-masksbehörighet',
 	'cloakcheck-process-empty' => 'Användarnamnet får inte vara tomt.',
 	'cloakcheck-process-notexist' => 'Användarnamnet finns inte.',
 	'cloakcheck-process-username' => 'Användarnamn: $1',
@@ -717,4 +725,3 @@ $messages['zh-hans'] = array(
 	'cloakcheck-process-emailconf-yes' => '电子邮件地址已确认。',
 	'cloakcheck-process-edits-no' => '用户编辑数不足。',
 );
-

@@ -8,7 +8,7 @@
 	}
 	$(function(){
 		var loc = '' + document.location;
-		if ( /forcetrace=1/.test(loc)) {
+		if ( /forcetrace=\d/.test(loc)) {
 			var btn = $('<a>',{
 				style: "display: inline-block; position:fixed; bottom: 0; right:0; z-index: 2000000000; "
 					+ "font-weight: bold; color: red; background-color: blue;",

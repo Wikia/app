@@ -3,7 +3,7 @@ echo '<div class="WikiaTopAds'.$topAdsExtraClasses.'" id="WikiaTopAds">';
 echo '<div class="WikiaTopAdsInner">';
 
 if (WikiaPageType::isWikiaHub()) {
-	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
+	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'HUB_TOP_LEADERBOARD'));
 }
 elseif ($wg->EnableCorporatePageExt) {
 	if (WikiaPageType::isSearch()) {

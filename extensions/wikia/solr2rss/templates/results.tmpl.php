@@ -9,11 +9,11 @@
   <generator><?php echo htmlspecialchars($url); ?></generator>
   <?php foreach ($docs as $doc): ?>
    <item>
-    <title><?php echo htmlspecialchars($doc->title); ?></title>
-    <link><?php echo htmlspecialchars($doc->url); ?></link>
-    <description><?php echo htmlspecialchars($doc->html); ?></description>
-    <pubDate><?php echo date($dateFormat, strtotime($doc->created)); ?></pubDate>
-    <guid isPermaLink="true"><?php echo htmlspecialchars($doc->url); ?></guid>
+    <title><?php echo htmlspecialchars($doc[WikiaSearch::field( 'title', $lang )]); ?></title>
+    <link><?php echo htmlspecialchars($doc['url']); ?></link>
+    <description><?php echo htmlspecialchars($doc[WikiaSearch::field( 'html', $lang )]); ?></description>
+    <pubDate><?php echo date($dateFormat, strtotime($doc['created'])); ?></pubDate>
+    <guid isPermaLink="true"><?php echo htmlspecialchars($doc['url']); ?></guid>
    </item>
   <?php endforeach; ?>
  </channel>

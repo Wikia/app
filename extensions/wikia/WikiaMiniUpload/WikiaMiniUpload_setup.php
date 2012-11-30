@@ -22,8 +22,6 @@ function WMUSetup($editform) {
 
 	if( get_class(RequestContext::getMain()->getSkin()) === 'SkinOasis' ) {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'WMUSetupVars';
-		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/WikiaMiniUpload/js/WMU.js?"></script>');
-		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/WikiaMiniUpload/css/WMU.css" />');
 		if (isset ($editform->ImageSeparator)) {
 			$sep = $editform->ImageSeparator ;
 			$marg = 'margin-left:5px;' ;
@@ -38,6 +36,8 @@ function WMUSetup($editform) {
 
 function WMUSetupVars(Array &$vars) {
 	global $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgFileExtensions;
+
+	$vars['wgEnableWikiaMiniUploadExt'] = true;
 
 	$vars['wmu_back'] = wfMsg('wmu-back');
 	$vars['wmu_imagebutton'] = wfMsg('wmu-imagebutton') ;

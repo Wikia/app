@@ -5,11 +5,6 @@ class ScavengerHuntTest extends WikiaBaseTest {
 		$this->setupFile = dirname(__FILE__) . '/../ScavengerHunt_setup.php';
 		parent::setUp();
 	}
-	
-	public function tearDown() {
-		F::unsetInstance('GlobalTitle');
-		F::unsetInstance('ScavengerHuntGames');
-	}
 
 	public function getFakeSprite() {
 		return array( 'X' => 50, 'Y' => 50, 'X1' => 0, 'Y1' => 0, 'X2' => 10, 'Y2' => 20 );
@@ -41,7 +36,7 @@ class ScavengerHuntTest extends WikiaBaseTest {
 
 	public function getFakeRow() {
 
-		$article = WF::build('ScavengerHuntGames')->newGameArticle();
+		$article = F::build('ScavengerHuntGames')->newGameArticle();
 
 		$article->setArticleName( self::MOCK_TEXT );
 		$article->setWikiId( self::LANDING_WIKI_ID );
@@ -64,7 +59,7 @@ class ScavengerHuntTest extends WikiaBaseTest {
 			'clueFont' => 'bold',
 			'clueSize' => '14',
 			'facebookImg' => '',
-			'facebookDescription' => '',			
+			'facebookDescription' => '',
 			'name' => self::MOCK_TEXT,
 			'hash' => self::MOCK_TEXT,
 			'landingTitle' => self::MOCK_TEXT,
@@ -115,11 +110,11 @@ class ScavengerHuntTest extends WikiaBaseTest {
 			->will( $this->returnValue( $db ) );
 
 		$this->mockClass( 'ScavengerHuntGames', $games );
-		
+
 		// This is necessary because Game->setLandingTitle is called during construction
 		// and it resets the landingArticleWikiId and landingArticleName to bogus values otherwise
 		F::setInstance('GlobalTitle', array('wikiId' => self::LANDING_WIKI_ID, 'articleName' => self::MOCK_TEXT ));
-		
+
 		return $games;
 	}
 

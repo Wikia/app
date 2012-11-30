@@ -154,7 +154,7 @@ class VideoFileUploader {
 		/* real upload */
 		$result = $file->upload(
 			$upload->getTempPath(),
-			'created video',
+			wfMsgForContent( 'videos-initial-upload-edit-summary' ),
 			$this->getDescription(),
 			File::DELETE_SOURCE
 		);
@@ -202,15 +202,20 @@ class VideoFileUploader {
 	}
 
 	protected function getApiWrapper(){
-
 		wfProfileIn( __METHOD__ );
-		if( !empty( $this->oApiWrapper ) ) return $this->oApiWrapper;
+		if( !empty( $this->oApiWrapper ) ) {
+			wfProfileOut( __METHOD__ );
+			return $this->oApiWrapper;
+		}
 
 		if( !empty( $this->sExternalUrl ) ){
 			$apiWF = ApiWrapperFactory::getInstance();
 			$this->oApiWrapper = $apiWF->getApiWrapper( $this->sExternalUrl );
 
-			if ( !empty( $this->oApiWrapper ) ) return $this->oApiWrapper;
+			if ( !empty( $this->oApiWrapper ) ) {
+				wfProfileOut( __METHOD__ );
+				return $this->oApiWrapper;
+			}
 		}
 
 		if ( !empty($this->sProvider ) ) {
@@ -353,7 +358,7 @@ class VideoFileUploader {
 			wfProfileOut( __METHOD__ );
 			return $oTitle;
 		}
-		wfProfileIn( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 

@@ -202,12 +202,12 @@ class VoteHelper {
 	protected function getUserCacheKey() {
 		wfProfileIn(__METHOD__);
 		if($this->userId == 0) {
-			wfProfileOut(__METHOD__);
-			return wfMemcKey(__CLASS__, __METHOD__, $this->pageId, 0, $this->userIP, 'VER1');
+			$res = wfMemcKey(__CLASS__, __METHOD__, $this->pageId, 0, $this->userIP, 'VER1');
 		} else {
-			wfProfileOut(__METHOD__);
-			return wfMemcKey(__CLASS__, __METHOD__, $this->pageId,  $this->userId, '', 'VER1');
+			$res = wfMemcKey(__CLASS__, __METHOD__, $this->pageId,  $this->userId, '', 'VER1');
 		}
+		wfProfileOut(__METHOD__);
+		return $res;
 	}
 
 	protected function getPageCacheKey($page = false) {

@@ -58,7 +58,7 @@
 		function get(name) {
 			var val = fetchCookies()[name];
 
-			return (typeof val != 'undefined') ? val : null;
+			return (typeof val !== 'undefined') ? val : null;
 		}
 
 		/**
@@ -85,7 +85,7 @@
 
 			options = options || {};
 
-			if (typeof value == 'undefined' && value === null) {
+			if (typeof value === 'undefined' || value === null) {
 				value = '';
 				options.expires = -1;
 			}

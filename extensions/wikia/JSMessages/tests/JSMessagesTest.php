@@ -3,6 +3,7 @@
 class JSMessagesTest extends WikiaBaseTest {
 	const PACKAGE = 'JSMessagesTest';
 
+	/* @var JSMessages */
 	protected $instance;
 
 	public function setUp() {

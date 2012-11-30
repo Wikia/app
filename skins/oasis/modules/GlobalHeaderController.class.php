@@ -18,8 +18,13 @@ class GlobalHeaderController extends WikiaController {
 			}
 		}
 
-		$navigation = new NavigationService(true /* useSharedMemcKey */);
-		$menuNodes = $navigation->parseMessage($messageName, array(3, 4, 5), 10800 /* 3 hours */);
+		$navigation = new NavigationModel(true /* useSharedMemcKey */);
+		$menuNodes = $navigation->parse(
+			NavigationModel::TYPE_MESSAGE,
+			$messageName,
+			array(3, 4, 5),
+			10800 /* 3 hours */
+		);
 
 		wfRunHooks('AfterGlobalHeader', array(&$menuNodes, $category, $messageName));
 

@@ -45,15 +45,6 @@ class AnyclipApiWrapper extends ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$description = $this->getOriginalDescription();
-		if ( $category = $this->getVideoCategory() ) {
-			$description .= "\n\nCategory: $category";
-		}
-		if ( $keywords = $this->getVideoKeywords() ) {
-			$description .= "\n\nKeywords: $keywords";
-		}
-		if ( $tags = $this->getVideoTags() ) {
-			$description .= "\n\nTags: $tags";
-		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -77,10 +68,10 @@ class AnyclipApiWrapper extends ApiWrapper {
 			return $this->videoName;
 		}
 
-		return $this->getVideoName( $this->interfaceObj );
+		return self::getVideoName( $this->interfaceObj );
 	}
 
-	protected function getVideoName( $content ) {
+	public static function getVideoName( $content ) {
 		$videoName = '';
 		if ( !empty($content['title']['name']) ) {
 			$videoName = $content['title']['name'];
@@ -97,35 +88,39 @@ class AnyclipApiWrapper extends ApiWrapper {
 	}
 
 	protected function getApiUrl() {
-		return $this->getApi( $this->videoId );
-	}
-
-	protected function getApi( $code ) {
-		global $wgAnyclipApiConfig;
-
 		$params = array(
 			'tf' => 524,	// 4(plot)+8(Release_date,Duration)+512(genres)
 			'filter' => 2063,	//2(URL)+4(actors)+8(Restrictions)+2048(tags)
+		);
+
+		return self::getApi( $this->videoId, $params );
+	}
+
+	public static function getApi( $code, $params = array() ) {
+		global $wgAnyclipApiConfig;
+
+		$extra = array(
 			'cid' => $wgAnyclipApiConfig['AppId'],
 			'format' => 'JSON',
 		);
+
+		$params = array_merge( $params, $extra );
+
 		$url = str_replace( '$1', $code, static::$API_URL );
-		$params['sig'] = $this->getApiSig( $url, $params );
+		$params['sig'] = self::getApiSig( $wgAnyclipApiConfig['AppKey'], $url, $params );
 		$url .= '?'.http_build_query( $params );
 
 		return $url;
 	}
 
-	protected function getApiSig( $url, $params ) {
-		global $wgAnyclipApiConfig;
-
+	protected static function getApiSig( $appKey, $url, $params ) {
 		$input = explode( '.com', $url );
 		if ( !is_array($input) ) {
 			return '';
 		}
 
 		$input = array_pop( $input );
-		$params['appKey'] = $wgAnyclipApiConfig['AppKey'];
+		$params['appKey'] = $appKey;
 		ksort( $params );
 		$input .= '?'.http_build_query( $params );
 

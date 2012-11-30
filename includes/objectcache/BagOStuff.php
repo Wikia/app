@@ -163,6 +163,20 @@ abstract class BagOStuff {
 			return $exptime;
 		}
 	}
+
+	/**
+	 * Gets multiple items. Non-existent items get "false" as value.
+	 *
+	 * @param $keys array List of keys
+	 */
+	public function getMulti( $keys ) {
+		$data = array();
+		foreach ($keys as $key) {
+			$data[$key] = $this->get($key);
+		}
+		return $data;
+	}
+
 }
 
 

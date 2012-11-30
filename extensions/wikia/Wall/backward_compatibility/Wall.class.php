@@ -39,7 +39,10 @@ class Wall {
 	static function getParentTitleFromReplyTitle( $titleText ) {
 		wfProfileIn(__METHOD__);
 		$parts = explode('/@', $titleText);
-		if(count($parts) < 3) return null;
+		if(count($parts) < 3) {
+			wfProfileOut(__METHOD__);
+			return null;
+		}
 		wfProfileOut(__METHOD__);	
 		return $parts[0] . '/@' . $parts[1];
 	}

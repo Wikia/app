@@ -350,9 +350,9 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @param $html  String: additional HTML text to be shown. The name and size of the image are always shown.
 	 * @param $link  String: value of link= parameter
 	 */
-	function add($title, $html='', $link='') {
+	function add($title, $html='', $link='', $wikitext='') {
 		if ($title instanceof Title) {
-			$this->mImages[] = array($title, $html, $link);
+			$this->mImages[] = array( $title, $html, $link, $wikitext );
 			wfDebug( __METHOD__ . ' - ' . $title->getText() . "\n" );
 		}
 	}
@@ -421,10 +421,15 @@ class WikiaPhotoGallery extends ImageGallery {
 			// store list of images actually shown (to be used by front-end)
 			$this->mData['imagesShown'][] = $imageItem;
 
-			// use global instance of parser (RT #44689 / RT #44712)
-			$caption = $this->mParser->recursiveTagParse($caption);
 
-			$this->add($nt, $caption, $link);
+
+			$this->add(
+				$nt,
+				// use global instance of parser (RT #44689 / RT #44712)
+				$this->mParser->recursiveTagParse( $caption ),
+				$link,
+				$caption
+			);
 
 			// Only add real images (bug #5586)
 			if ($nt->getNamespace() == NS_FILE) {
@@ -1906,7 +1911,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			if( !empty( $item ) ) {
 				$media[] = array(
 					'title' => $val[0],
-					'caption' => $val[1],
+					'caption' => $val[3],
 					'link' => $val[2]
 				);
 			}

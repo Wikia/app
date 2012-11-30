@@ -63,6 +63,14 @@ $messages['de'] = array(
 	'tog-watchlistsubpages' => 'Unterseiten beobachten',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wikia-watchsubpages-desc' => 'Qandê bınpera otomatik pawıtış',
+	'tog-watchlistsubpages' => 'Bınper bıpawe',
+);
+
 /** Spanish (español)
  * @author Absay
  * @author Danke7
@@ -272,4 +280,3 @@ $messages['vi'] = array(
 	'wikia-watchsubpages-desc' => 'Tự động theo dõi các trang con',
 	'tog-watchlistsubpages' => 'Theo dõi các trang con',
 );
-

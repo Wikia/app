@@ -115,6 +115,7 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'unsubscribe' => 'Abonin ra bıvıci',
 	'unsubscribe-confirm-legend' => 'Testiq ke',
 	'unsubscribe-confirm-button' => 'E, Me emel ke',
 	'unsubscribe-working-done' => 'Temamyayo',
@@ -262,9 +263,10 @@ $messages['ja'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 아라
  */
 $messages['ko'] = array(
-	'unsubscribe-confirm-legend' => '인증하기',
+	'unsubscribe-confirm-legend' => '확인',
 );
 
 /** Colognian (Ripoarisch)
@@ -588,4 +590,3 @@ $messages['zh-hans'] = array(
 	'unsubscribe-working-done' => '完成。',
 	'unsubscribe-preferences-toggle' => '不订阅Wikia的所有邮件（取消选定这个方块才能进入下列选项）',
 );
-

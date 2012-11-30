@@ -269,7 +269,8 @@ $messages['id'] = array(
 	'iwedit-success' => '<p>Membuat pranala berhasil. </p>',
 );
 
-/** Italian (italiano) */
+/** Italian (italiano)
+ */
 $messages['it'] = array(
 	'iwedit-update' => 'Aggiorna',
 );
@@ -532,4 +533,3 @@ $messages['zh-hans'] = array(
 	'iwedit-update' => '更新',
 	'iwedit-error' => '<p>发生错误。</p>',
 );
-

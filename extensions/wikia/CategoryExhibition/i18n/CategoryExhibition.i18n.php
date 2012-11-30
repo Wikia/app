@@ -83,7 +83,8 @@ $messages['cs'] = array(
 	'category-exhibition-display-new' => 'Zobrazení výstavy kategorií',
 );
 
-/** Welsh (Cymraeg) */
+/** Welsh (Cymraeg)
+ */
 $messages['cy'] = array(
 	'category-exhibition-sorttype' => 'Trefnu yn ôl:',
 	'category-exhibition-alphabetical' => 'yr wyddor',
@@ -123,7 +124,8 @@ $messages['diq'] = array(
 	'category-exhibition-subcategories-header' => 'Kategoriyê bınêni',
 );
 
-/** Spanish (español) */
+/** Spanish (español)
+ */
 $messages['es'] = array(
 	'category-exhibition-sorttype' => 'Clasificando tipo:',
 	'category-exhibition-alphabetical' => 'Alfabético',
@@ -135,6 +137,15 @@ $messages['es'] = array(
 	'category-exhibition-blogs-header' => 'Entradas de blog',
 	'category-exhibition-display-old' => 'Vista de la lista de categorías',
 	'category-exhibition-display-new' => 'Vista de exposición de la categoría',
+);
+
+/** Persian (فارسی)
+ * @author پاناروما
+ */
+$messages['fa'] = array(
+	'category-exhibition-sorttype' => 'دسته بندی بر اساس نوع',
+	'category-exhibition-recentedits' => 'ویرایش‌های اخیر',
+	'category-exhibition-page-header' => 'صفحه‌های موجود در این رده «$1»',
 );
 
 /** Finnish (suomi)
@@ -156,7 +167,8 @@ $messages['fi'] = array(
 	'category-exhibition-display-new' => 'Luokkanäyttelynäkymä',
 );
 
-/** French (français) */
+/** French (français)
+ */
 $messages['fr'] = array(
 	'category-exhibition-sorttype' => 'Type de tri :',
 	'category-exhibition-alphabetical' => 'Alphabétique',
@@ -276,7 +288,8 @@ $messages['kn'] = array(
 	'category-exhibition-subcategories-header' => 'ಉಪವರ್ಗಗಳು',
 );
 
-/** Luxembourgish (Lëtzebuergesch) */
+/** Luxembourgish (Lëtzebuergesch)
+ */
 $messages['lb'] = array(
 	'category-exhibition-alphabetical' => 'Alphabetesch',
 	'category-exhibition-mostvisited' => 'Am dackste besicht',
@@ -399,7 +412,8 @@ $messages['ps'] = array(
 	'category-exhibition-subcategories-header' => 'څېرمه وېشنيزې',
 );
 
-/** Portuguese (português) */
+/** Portuguese (português)
+ */
 $messages['pt'] = array(
 	'category-exhibition-sorttype' => 'Tipo de ordenação:',
 	'category-exhibition-alphabetical' => 'Alfabética',
@@ -517,7 +531,8 @@ $messages['tr'] = array(
 	'category-exhibition-subcategories-header' => 'Alt kategoriler',
 );
 
-/** Ukrainian (українська) */
+/** Ukrainian (українська)
+ */
 $messages['uk'] = array(
 	'category-exhibition-sorttype' => 'Тип сортування:',
 	'category-exhibition-alphabetical' => 'Алфавітний',
@@ -541,4 +556,3 @@ $messages['zh-hans'] = array(
 	'category-exhibition-display-old' => '分类（列表视图）',
 	'category-exhibition-display-new' => '分类展示视图',
 );
-

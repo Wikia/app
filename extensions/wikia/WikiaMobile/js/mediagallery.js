@@ -70,8 +70,8 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 	}
 
 	function goBackToImgModal(img){
-		mod.removeClass('wkMedGal');
 		pager.cleanup();
+		mod.removeClass('wkMedGal');
 		//I am not using here ontransitionEnd as it was finishing too early
 		//when trying to go to an image by clicking on thumbnail
 		setTimeout(function(){
@@ -153,11 +153,17 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 
 	function open(){
 		goToImg = med.getCurrent();
-		med.hideShare();
+
 		med.cleanup();
-		mod.setStopHiding(true);
-		mod.setContent('<div id=wkGal></div><div id=wkGalPag></div>');
-		mod.setCaption('');
+		mod.open({
+			content: '<div id=wkGal></div><div id=wkGalPag></div>',
+			toolbar: '<div id=wkGalTgl></div>',
+			stopHiding: true,
+			classes: 'wkMedGal',
+			onClose: function(){
+				pager.cleanup();
+			}
+		});
 
 		gal = d.getElementById('wkGal');
 		pagination = d.getElementById('wkGalPag');
@@ -192,7 +198,6 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 		});
 
 		loadImages();
-		mod.addClass('wkMedGal');
 
 		track.event('gallery', track.CLICK, {label: 'open'});
 	}

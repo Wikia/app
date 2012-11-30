@@ -15,9 +15,9 @@ var WikiHeader = {
 	init: function(isValidator) {
 		//Variables
 		this.nav = $('#WikiHeader > nav');
-		this.navLI = this.nav.children('ul').children('li');
+		this.navLI = this.nav.find('.nav-item');
 		this.subnav2 = this.nav.find('.subnav-2');
-		this.subnav2LI = this.subnav2.children('li');
+		this.subnav2LI = this.subnav2.find('.subnav-2-item');
 		this.subnav3 = this.nav.find('.subnav-3');
 
 		this.positionNav();
@@ -40,6 +40,11 @@ var WikiHeader = {
 		if(!$().isTouchscreen()) {
 			this.navLI.hover(this.mouseoverL1, this.mouseoutL1);
 			this.subnav2LI.hover(this.mouseoverL2, this.mouseoutL2);
+		}
+
+		// BugID: 64318 - hiding publish button on nav edit
+		if ( (window.wgIsWikiNavMessage) && (wgAction == "edit") ) {
+			$('#wpSave').hide();
 		}
 
 		//Accessibility Events
@@ -77,10 +82,14 @@ var WikiHeader = {
 
 		// remove level 2 items not fitting into one row
 		if (!isValidator) {
-			var itemsRemoved = 0;
+			var menu, items,
+				itemHeight = this.subnav2LI.height(),
+				itemsRemoved = 0;
 
 			this.subnav2.each(function(i) {
-				var menu = $(this),
+				menu = $(this);
+
+				if ( menu.height() > itemHeight ) {
 					items = menu.children('li').reverse();
 
 					if (i > 0 ) {
@@ -105,6 +114,7 @@ var WikiHeader = {
 					if (i > 0 ) {
 						menu.css('visibility', 'visible').hide();
 					}
+				}
 			});
 
 			if (itemsRemoved > 0) {
@@ -316,7 +326,7 @@ var WikiHeader = {
 	}
 };
 
-$(function() {
+jQuery(function($) {
 	WikiHeader.init();
 
 	// modify preview dialog

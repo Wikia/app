@@ -109,8 +109,14 @@ class WikiaApp {
 		if(is_object($this->wg)) {
 			$this->wg->append('wgAjaxExportList', 'WikiaApp::ajax');
 		} else {
-			Wikia::log( __METHOD__, false, 'WikiaGlobalRegistry not set in ' . __CLASS__ . ' ' . __METHOD__ );
-			Wikia::logBacktrace(__METHOD__);
+			// can't use Wikia::log or wfDebug or wfBacktrace at this point (not defined yet)
+			error_log( __METHOD__ . ': WikiaGlobalRegistry not set in ' . __CLASS__ . ' ' . __METHOD__ );
+			$message = "";
+			$bt = debug_backtrace();
+			foreach ($bt as $t) {
+ 				$message .= $t['function'] . "() in " . basename($t['file']) . ":" . $t['line'] . " / ";
+			}
+			error_log( __METHOD__ . ': ' . $message );
 		}
 	}
 
@@ -132,13 +138,13 @@ class WikiaApp {
 		return ( is_object( $controllerClass ) ) ? is_a( $controllerClass, 'WikiaController' ) : ( ( strrpos( $controllerClass, 'Controller' ) === ( strlen( $controllerClass ) - 10 ) ) );
 	}
 
-	/** 
-	 * This helper gets the "base" controller name from the request object built by sendRequest 
+	/**
+	 * This helper gets the "base" controller name from the request object built by sendRequest
 	 * unfortunately, this needs to handle calls which also append "Controller" or "Service"
-	 * So: sendRequest("Foo") and sendRequest("FooController") can both work. 
+	 * So: sendRequest("Foo") and sendRequest("FooController") can both work.
 	 *  @param String name
 	 *  @return String name
-	 */ 
+	 */
 	public function getBaseName( $controllerName ) {
 		// case-insensitive
 		if ( empty($controllerName) ) {
@@ -152,8 +158,8 @@ class WikiaApp {
 		}
 	}
 
-	/** 
-	 * This helper gets the full controller class name from the request object built by sendRequest 
+	/**
+	 * This helper gets the full controller class name from the request object built by sendRequest
 	 * @param String $baseName
 	 * This does some extra defensive work, otherwise you can end up trying to dispatch FooControllerController
 	 */
@@ -167,8 +173,8 @@ class WikiaApp {
 		}
 	}
 
-	/** 
-	 * This helper gets the full controller class name from the request object built by sendRequest 
+	/**
+	 * This helper gets the full controller class name from the request object built by sendRequest
 	 * @param String $baseName
 	 * This does some extra defensive work, otherwise you can end up trying to dispatch FooServiceService
 	 */
@@ -660,6 +666,11 @@ class WikiaApp {
 	 */
 
 	public function renderPartialCached( $controllerName, $method, $key, Array $params = array() ) {
+		if(is_array($key)) {
+			$key = implode("_", $key);
+		}
+		
+		
 		if(empty(self::$viewCache["P_". $controllerName . $method . $key])) {
 			self::$viewCache["P_". $controllerName . $method . $key] =  $this->renderPartial($controllerName, $method, $params);
 		}

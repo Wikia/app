@@ -60,8 +60,6 @@
 
 		/**
 		 * Returns page views count in last month.
-		 * Uses stats.specials.page_views_summary_articles on production, page_visited on dev-boxes (inaccurate but testable).
-		 *
 		 * @param $pageIds array|int Array of article ids (or single integer to check one article)
 		 * @return array|int
 		 */

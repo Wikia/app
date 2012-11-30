@@ -5,7 +5,7 @@ class WallNotificationOwnerEntity {
 	public function __construct($wikiId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentId, $isReply, $reason) {
 		$app = F::App();
 		
-		$this->data = null;
+		$this->data = new stdClass;
 		
 		$this->data->type = 'OWNER';
 		

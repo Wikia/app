@@ -5,6 +5,11 @@ if( !empty( $_GET['forceprofile'] ) ) {
 	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleText.php' );
 	$wgProfiler = new ProfilerSimpleText(array());
 	$wgProfiler->setProfileID( 'forced' );
+// Wikia change - begin - @author: wladek
+} elseif( !empty( $_GET['forcetrace'] ) && $_GET['forcetrace'] == 2 ) {
+	require_once( dirname(__FILE__).'/includes/wikia/profiler/ProfilerWikiaTrace.php' );
+	$wgProfiler = new ProfilerWikiaTrace(array());
+// Wikia change - end
 } elseif( !empty( $_GET['forcetrace'] ) ) {
 	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleTrace.php' );
 	$wgProfiler = new ProfilerSimpleTrace(array());

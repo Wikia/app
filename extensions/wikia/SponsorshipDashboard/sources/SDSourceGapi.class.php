@@ -12,13 +12,13 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 	const SD_FROM_INDEX = 1;
 	const SD_MAX_RESULTS = 365;
 	const SD_DATE_CELL = 'date';
-	
+
 	const SD_GAPI_RETRIES = 50;
 	const SD_GAPI_RESULT_EMPTY = '';
 	const SD_MC_KEY_PREFIX_GAPI = 'Gapi';
 
 	const SD_SOURCE_TYPE = 'Gapi';
-	
+
 	const SD_SOURCE_URL = 'URL';
 	const SD_PARAMS_REP_URL = 'repURL';
 	const SD_PARAMS_REP_FORCE_ACCOUNT = 'forceUser';
@@ -127,7 +127,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 				}
 			}
 		}
-		$this->GAPImetrics = $finalMetrics;		
+		$this->GAPImetrics = $finalMetrics;
 	}
 
 	public function setMetricName ( $metric, $metricName ) {
@@ -137,7 +137,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 			$this->GAPImetricNames[ $metric ] = $metricName;
 		}
 	}
-	
+
 	public function setOnEmpty ( $string ) {
 
 		if ( !empty( $string ) ) {
@@ -151,7 +151,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 			$this->extraDimension = trim( $dimension );
 		}
 	}
-	
+
 	protected function recalculateDateVariables() {
 
 		$this->endDate = $this->frequency->getGapiEndDate();
@@ -242,7 +242,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 			$sortBy[] = $this->extraDimension;
 		}
 
-		$ga = WF::build('gapi', array( $wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy ) );
+		$ga = F::build('gapi', array( $wgWikiaGALogin, $wgWikiaGAPassword, null, 'curl', $wgHTTPProxy ) );
 
 		while ( ( $retries > 0 ) && empty( $results ) ) {
 			try {
@@ -360,7 +360,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 		)->getData();
 		$iSampling = 100/$aSampling[ GoogleAnalyticsSamplingController::SAMPLING_RATE ];
 		$sName = 'get'.ucfirst( $metric );
-		
+
 		// hack for displaying hours insteed of seconds
 		if ( in_array( $metric, array( 'timeOnSite', 'avgTimeOnSite', 'avgTimeOnPage' ) ) ){
 			return floor( $res->$sName() / 360 );
@@ -425,9 +425,9 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 	 */
 
 	protected function getLocalParamsArray() {
-		
+
 		$aData = array();
-		
+
 		$aData[ self::SD_PARAMS_LASTUNITDATE ] = $this->lastDateUnits;
 		$aData[ self::SD_PARAMS_CITYID ] = $this->cityId;
 		$aData[ self::SD_PARAMS_CITYIDFORCED ] = $this->cityIdForced;
@@ -454,7 +454,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 	const SD_PARAMS_GAPI_EMPTYRES = 'inCaseOfEmptyResult';
 	const SD_PARAMS_GAPI_EXTRADIM = 'extraDimension';
 	const SD_PARAMS_GAPI_MAX_ADDITIONAL_DIMENSIONS = 'maxAddDimensions';
-	
+
 	/*
 	 * Fills object from array. Used when creating object from form results.
 	 *
@@ -499,7 +499,7 @@ class SponsorshipDashboardSourceGapi extends SponsorshipDashboardSource {
 					$this->setMetricName( $key, $val );
 				}
 			}
-	
+
 		}
 
 		if ( isset( $aParams[ self::SD_PARAMS_GAPI_EMPTYRES ] ) ) {

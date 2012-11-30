@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -27,25 +26,25 @@ class ContentBlock {
 		$summary = $editpage->summary;
 		if ( !empty($blocksData) && $summary != '' ) {
 			$summary = self::applyWhitelist($summary);
-			foreach( $blocksData as $blockData ) {
-				$result = Phalanx::isBlocked($summary, $blockData);
-				if ( $result['blocked'] ) {
 
-					$wgOut->setPageTitle( wfMsg( 'spamprotectiontitle' ) );
-					$wgOut->setRobotPolicy( 'noindex,nofollow' );
-					$wgOut->setArticleRelated( false );
-					$wgOut->addHTML( '<div id="spamprotected_summary">' );
-					$wgOut->addWikiMsg( 'spamprotectiontext' );
-					$wgOut->addHTML( '<p>( Call #3 )</p>' );
-					$wgOut->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$result['msg']}</nowiki>" );
-					$wgOut->addWikiMsg( 'phalanx-content-spam-summary' );
+			$blockData = null;
+			$result = Phalanx::findBlocked($summary, $blocksData, true, $blockData);
+			if ( $result['blocked'] ) {
 
-					$wgOut->returnToMain( false, $wgTitle );
-					$wgOut->addHTML( '</div>' );
-					Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$summary'.");
-					wfProfileOut( __METHOD__ );
-					return false;
-				}
+				$wgOut->setPageTitle( wfMsg( 'spamprotectiontitle' ) );
+				$wgOut->setRobotPolicy( 'noindex,nofollow' );
+				$wgOut->setArticleRelated( false );
+				$wgOut->addHTML( '<div id="spamprotected_summary">' );
+				$wgOut->addWikiMsg( 'spamprotectiontext' );
+				$wgOut->addHTML( '<p>( Call #3 )</p>' );
+				$wgOut->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$result['msg']}</nowiki>" );
+				$wgOut->addWikiMsg( 'phalanx-content-spam-summary' );
+
+				$wgOut->returnToMain( false, $wgTitle );
+				$wgOut->addHTML( '</div>' );
+				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$summary'.");
+				wfProfileOut( __METHOD__ );
+				return false;
 			}
 		}
 
@@ -53,14 +52,14 @@ class ContentBlock {
 		$textbox = $editpage->textbox1;
 		if ( !empty($blocksData) && $textbox != '' ) {
 			$textbox = self::applyWhitelist($textbox);
-			foreach( $blocksData as $blockData ) {
-				$result = Phalanx::isBlocked($textbox, $blockData);
-				if ( $result['blocked'] ) {
-					$editpage->spamPageWithContent( $result['msg'] );
-					Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$textbox'.");
-					wfProfileOut( __METHOD__ );
-					return false;
-				}
+
+			$blockData = null;
+			$result = Phalanx::findBlocked($textbox, $blocksData, true, $blockData);
+			if ( $result['blocked'] ) {
+				$editpage->spamPageWithContent( $result['msg'] );
+				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$textbox'.");
+				wfProfileOut( __METHOD__ );
+				return false;
 			}
 		}
 
@@ -83,16 +82,15 @@ class ContentBlock {
 		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_SUMMARY );
 		if ( !empty($blocksData) && $reason != '' ) {
 			$reason = self::applyWhitelist($reason);
-			foreach( $blocksData as $blockData ) {
-				$result = Phalanx::isBlocked($reason, $blockData);
-				if ( $result['blocked'] ) {
 
-					$error .= wfMsgExt( 'phalanx-title-move-summary', 'parseinline' );
-					$error .= wfMsgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$result['msg']}</nowiki>" );
-					Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$reason'.");
-					wfProfileOut( __METHOD__ );
-					return false;
-				}
+			$blockData = null;
+			$result = Phalanx::findBlocked($reason, $blocksData, true, $blockData);
+			if ( $result['blocked'] ) {
+				$error .= wfMsgExt( 'phalanx-title-move-summary', 'parseinline' );
+				$error .= wfMsgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$result['msg']}</nowiki>" );
+				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$reason'.");
+				wfProfileOut( __METHOD__ );
+				return false;
 			}
 		}
 
@@ -113,13 +111,13 @@ class ContentBlock {
 		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_CONTENT );
 		if ( !empty($blocksData) && $content != '' ) {
 			$content = self::applyWhitelist($content);
-			foreach( $blocksData as $blockData ) {
-				$result = Phalanx::isBlocked($content, $blockData);
-				if ( $result['blocked'] ) {
-					Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$content'.");
-					wfProfileOut( __METHOD__ );
-					return false;
-				}
+
+			$blockData = null;
+			$result = Phalanx::findBlocked($content, $blocksData, true, $blockData);
+			if ( $result['blocked'] ) {
+				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$content'.");
+				wfProfileOut( __METHOD__ );
+				return false;
 			}
 		}
 

@@ -13,14 +13,16 @@ $messages['en'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Page body is required'
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'contentfeeds-desc' => "Description of extension as listed on [[Special:Version]].
 
 For an explanation of 'rich information' see [[:w:en:Media richness theory|Wikipedia]].",
 );
 
-/** Afrikaans (Afrikaans) */
+/** Afrikaans (Afrikaans)
+ */
 $messages['af'] = array(
 	'contentfeeds-desc' => 'Bied ryk en op-datum inligting vanaf verskeie etikette of "voere"',
 	'contentfeeds-newimages-rss-title' => 'RSS-voer vir {{#Special:NewFiles}}',
@@ -67,7 +69,8 @@ $messages['cs'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Chyba: Tělo stránky je požadováno',
 );
 
-/** Welsh (Cymraeg) */
+/** Welsh (Cymraeg)
+ */
 $messages['cy'] = array(
 	'contentfeeds-desc' => 'Yn darparu gwybodaeth gyfoethog gyfamserol drwy dagiau neu "borthiant" gwahanol',
 	'contentfeeds-newimages-rss-title' => 'Porthiant RSS o {{#Special:NewFiles}}',
@@ -94,7 +97,15 @@ $messages['de'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fehler: Seiteninhalt ist erforderlich',
 );
 
-/** Spanish (español) */
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Sername',
+);
+
+/** Spanish (español)
+ */
 $messages['es'] = array(
 	'contentfeeds-desc' => 'Proporciona información enriquecida y actualizada a través de varias etiquetas o "feeds"',
 	'contentfeeds-newimages-rss-title' => 'Fuente RSS para {{#Special:NewFiles}}',
@@ -124,7 +135,8 @@ $messages['fi'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Virhe: Sivun runko on pakollinen',
 );
 
-/** French (français) */
+/** French (français)
+ */
 $messages['fr'] = array(
 	'contentfeeds-desc' => 'Fournit de l’information riche et à jour grâce à de nombreuses balises ou « flux ».',
 	'contentfeeds-newimages-rss-title' => 'Flux RSS pour {{#Special:NewFiles}}',
@@ -165,7 +177,8 @@ $messages['hu'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Hiba: a lap szövegét kötelező megadni',
 );
 
-/** Interlingua (interlingua) */
+/** Interlingua (interlingua)
+ */
 $messages['ia'] = array(
 	'contentfeeds-desc' => 'Forni informationes ric e actual per medio de varie etiquettas o "syndicationes"',
 	'contentfeeds-newimages-rss-title' => 'Syndication RSS pro {{#Special:NewFiles}}',
@@ -225,7 +238,8 @@ $messages['lt'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Kitas',
 );
 
-/** Macedonian (македонски) */
+/** Macedonian (македонски)
+ */
 $messages['mk'] = array(
 	'contentfeeds-desc' => 'Овозможува богати тековни информации преку разни ознаки или „канали“',
 	'contentfeeds-newimages-rss-title' => 'RSS-канал за {{#Special:NewFiles}}',
@@ -259,7 +273,8 @@ $messages['ms'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Perhatian: Isi kandungan laman diperlukan',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎) */
+/** Norwegian Bokmål (norsk (bokmål)‎)
+ */
 $messages['nb'] = array(
 	'contentfeeds-desc' => 'Gir utdypende og oppdatert informasjon gjennom ulike tagger eller «feeds»',
 	'contentfeeds-newimages-rss-title' => 'RSS Feed for {{#Special:NewFiles}}',
@@ -336,7 +351,8 @@ $messages['ps'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'راتلونکی',
 );
 
-/** Portuguese (português) */
+/** Portuguese (português)
+ */
 $messages['pt'] = array(
 	'contentfeeds-desc' => 'Fornece informação actualizada através de vários elementos ou "feeds"',
 	'contentfeeds-newimages-rss-title' => 'Feed RSS para {{#Special:NewFiles}}',
@@ -415,7 +431,8 @@ $messages['sw'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Ijayo',
 );
 
-/** Telugu (తెలుగు) */
+/** Telugu (తెలుగు)
+ */
 $messages['te'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'శీర్షిక',
 );
@@ -487,4 +504,3 @@ $messages['zh-hans'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => '错误：需要页面标题',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => '错误：需要页面内容',
 );
-

@@ -46,6 +46,7 @@ class WikiaApiQueryLastEditors extends ApiQueryBase {
 
 		$db = $this->getDB();
 		if ( is_null ( $db  ) ) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 		

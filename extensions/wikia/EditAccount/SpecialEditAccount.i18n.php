@@ -26,12 +26,17 @@ $messages['en'] = array(
 	'editaccount-label-pass' => 'Set new password',
 	'editaccount-label-realname' => 'Set new real name',
 	'editaccount-label-clearunsub' => 'Unsubscribed',
+	'editaccount-label-toggleadopt' => 'Modify adopter status (for AutomaticWikiAdopt):',
+	'editaccount-label-toggleadopt-prevent' => 'Prevent auto adoption',
+	'editaccount-label-toggleadopt-allow' => 'Allow auto adoption',
+	'editaccount-label-reason' => 'Reason:',
 	'editaccount-submit-email' => 'Save and confirm email address',
 	'editaccount-submit-pass' => 'Save password',
 	'editaccount-submit-realname' => 'Save real name',
 	'editaccount-submit-clearunsub' => 'Clear unsubscribe',
 	'editaccount-submit-cleardisable' => 'Clear disable flag',
 	'editaccount-submit-close' => 'Close account',
+	'editaccount-submit-button' => 'Save',
 	'editaccount-usage-close' => 'You can also disable a user account by scrambling its password and removing the e-mail address. Note that this data is lost and will not be recoverable.',
 	'editaccount-warning-close' => '<b>Caution!</b> You are about to permanently disable the account of user <b>$1</b>. This cannot be reverted. Are you sure that is what you want to do?',
 	'editaccount-status' => 'Status message',
@@ -71,6 +76,7 @@ $messages['en'] = array(
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">This account has been disabled globally by Wikia.</div>',
 	// For Special:ListGroupRights
 	'right-editaccount' => "Edit other users' information",
+	'action-editaccount' => "edit other users' information",
 );
 
 /** Message documentation (Message documentation)
@@ -82,6 +88,11 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'editaccount-desc' => '{{desc}}',
+	'editaccount-label-toggleadopt' => 'Label for option to toggle whether or not the user is allowed to automatically adopt a wiki.',
+	'editaccount-label-toggleadopt-prevent' => 'Label for option to prevent user from automatically adopting a wiki.',
+	'editaccount-label-toggleadopt-allow' => 'Label for option to allow user to automatically adopting a wiki.',
+	'editaccount-label-reason' => 'Label for reason field.',
+	'editaccount-submit-button' => 'Text of the submission button.',
 	'editaccount-success-disable' => 'Parameters:
 * $1 is a username.',
 	'editaccount-success-toggleadopt' => 'Indicates that a user has been successfully verified as an adopter of a wiki. Parameters:
@@ -91,6 +102,7 @@ $messages['qqq'] = array(
 Per [[Thread:Support/About_Wikia:Editaccount-status-realuser/ms_and_Wikia:Editaccount-status-tempuser/ms/reply|user TOR on support]]',
 	'editaccount-status-tempuser' => 'This is the status of the account in the Wikia UserLogin system – a "real user" means an active account, while a "temp user" means it\'s an inactive account. Accounts are activated once the user clicks on a link in an e-mail we send them.',
 	'right-editaccount' => '{{doc-right|editaccount}}',
+	'action-editaccount' => '{{doc-action|editaccount}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -180,7 +192,8 @@ $messages['bh'] = array(
 	'editaccount-title' => 'विशेष: खाता सम्पादन',
 );
 
-/** Bhojpuri (भोजपुरी) */
+/** Bhojpuri (भोजपुरी)
+ */
 $messages['bho'] = array(
 	'editaccount' => 'खाता सम्पादन',
 	'editaccount-title' => 'विशेष: खाता सम्पादन',
@@ -227,11 +240,15 @@ $messages['br'] = array(
 	'editaccount-error-close' => 'Ur gudenn a zo bet pa vezer o serriñ ar gont. Klaskit adarre pe kit a darempred gant ar skipailh teknikel.',
 	'editaccount-invalid-email' => 'N\'eo ket "$1" ur chomlec\'h postel reizh !',
 	'editaccount-nouser' => 'N\'eus ket eus ar gont "$1" !',
+	'editaccount-requested' => 'Notenn : an implijer en deus goulennet ma vo serret e gont',
+	'editaccount-not-requested' => "DIWALLIT : n'en deus ket goulennet ma vo serret e gont.",
 	'editaccount-labal-account-status' => 'Stad ar gont',
 	'editaccount-labal-email-status' => 'Stad ar postel',
 	'editaccount-status-confirmed' => 'Kadarnaet',
 	'editaccount-status-unconfirmed' => "N'eo ket kadarnaet",
 	'editaccount-status-realuser' => 'Implijer gwirion',
+	'editaccount-status-tempuser' => 'Implijer amzeriat',
+	'editaccount-error-tempuser-email' => "Ne c'hall ket chomlec'h postel animplijerien amzeriat bezañ goullo. Ebarzhit ur chomlec'h postel, mar plij.",
 	'editaccount-log' => "Marilh ar c'hontoù implijer",
 	'editaccount-log-header' => "Rollet e vez er pajenn-mañ ar c'hemmoù graet gant staff Wikia er penndibaboù implijer.",
 	'editaccount-log-entry-email' => "en deus kemmet chmolec'h postel an implijer $2",
@@ -249,7 +266,7 @@ $messages['ca'] = array(
 	'editaccount-log-entry-pass' => "contrasenya canviada de l'usuari $2",
 	'editaccount-log-entry-realname' => "canviat el nom real de l'usuari $2",
 	'editaccount-log-entry-close' => 'compte desactivat $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Aquest compte ha estat desactivat.</div>',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Aquest compte ha estat desactivat.</div>', # Fuzzy
 	'right-editaccount' => 'Edita les preferències dels altres usuaris',
 );
 
@@ -318,6 +335,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Jan Luca
  * @author LWChris
+ * @author Metalhead64
  * @author PtM
  * @author Quedel
  * @author The Evil IP address
@@ -338,12 +356,17 @@ $messages['de'] = array(
 	'editaccount-label-pass' => 'Neues Passwort setzen',
 	'editaccount-label-realname' => 'Neuen tatsächlichen Namen setzen',
 	'editaccount-label-clearunsub' => 'Abbestellt',
+	'editaccount-label-toggleadopt' => 'Übernommenenstatus ändern (für AutomaticWikiAdopt):',
+	'editaccount-label-toggleadopt-prevent' => 'Automatische Übernahme verhindern',
+	'editaccount-label-toggleadopt-allow' => 'Automatische Übernahme erlauben',
+	'editaccount-label-reason' => 'Grund:',
 	'editaccount-submit-email' => 'E-Mail-Adresse speichern',
 	'editaccount-submit-pass' => 'Passwort speichern',
 	'editaccount-submit-realname' => 'Tatsächlichen Namen speichern',
 	'editaccount-submit-clearunsub' => 'Abbestellen aufheben',
 	'editaccount-submit-cleardisable' => 'Deaktiviert-Markierung aufheben',
 	'editaccount-submit-close' => 'Konto schließen',
+	'editaccount-submit-button' => 'Speichern',
 	'editaccount-usage-close' => 'Du kannst ein Konto auch deaktivieren indem du das Passwort zerwürfelst und die E-Mail-Adresse löschst. Beachte, dass diese Daten verloren und nicht wiederherstellbar sind.',
 	'editaccount-warning-close' => '<b>Achtung!</b> Du bist dabei, das Konto von Benutzer <b>$1</b> dauerhaft zu deaktivieren. Dies kann nicht rückgängig gemacht werden. Bist du sicher, dass du das tun möchtest?',
 	'editaccount-status' => 'Statusmeldung',
@@ -380,6 +403,7 @@ $messages['de'] = array(
 	'editaccount-log-entry-close' => 'deaktivierte das Konto $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Dieses Benutzerkonto wurde global von Wikia deaktiviert.</div>',
 	'right-editaccount' => 'Bearbeite andere Benutzereinstellungen',
+	'action-editaccount' => 'Informationen anderer Benutzer zu bearbeiten',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -395,6 +419,13 @@ $messages['de-formal'] = array(
 	'editaccount-error-realname' => 'Der tatsächliche Name wurde nicht geändert. Versuchen Sie es erneut oder kontaktieren Sie das Tech Team.',
 	'editaccount-error-close' => 'Beim Schließen des Kontos trat ein Fehler auf. Versuchen Sie es erneut oder kontaktieren Sie das Tech Team.',
 	'right-editaccount' => 'Bearbeiten Sie andere Benutzereinstellungen',
+);
+
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'editaccount-frame-usage' => 'Not',
 );
 
 /** Greek (Ελληνικά)
@@ -444,12 +475,17 @@ $messages['es'] = array(
 	'editaccount-label-pass' => 'Fijar una nueva contraseña',
 	'editaccount-label-realname' => 'Fijar un nuevo nombre real',
 	'editaccount-label-clearunsub' => 'Desuscrito',
+	'editaccount-label-toggleadopt' => 'Cambiar el estado del adoptante (para Adopción Automática de Wikis):',
+	'editaccount-label-toggleadopt-prevent' => 'Prevenir adopción automática',
+	'editaccount-label-toggleadopt-allow' => 'Permitir adopción automática',
+	'editaccount-label-reason' => 'Motivo:',
 	'editaccount-submit-email' => 'Guardar correo electrónico',
 	'editaccount-submit-pass' => 'Guardar contraseña',
 	'editaccount-submit-realname' => 'Guardar nombre verdadero',
 	'editaccount-submit-clearunsub' => 'Borrar desuscripción',
 	'editaccount-submit-cleardisable' => 'Retirar la marca de desactivado',
 	'editaccount-submit-close' => 'Cerrar cuenta',
+	'editaccount-submit-button' => 'Guardar',
 	'editaccount-usage-close' => 'También puedes desactivar una cuenta de usuario desordenando su contraseña y eliminando la dirección de correo electrónico. Ten en cuenta que estos datos se perderán y no se podrán recuperar.',
 	'editaccount-warning-close' => '<b>Atención:</b> Estás a punto de desactivar permanentemente la cuenta del usuario <b>$1</b>. Esta acción es irreversible. ¿Seguro que eso es lo que deseas?',
 	'editaccount-status' => 'Mensaje de estado',
@@ -486,6 +522,7 @@ $messages['es'] = array(
 	'editaccount-log-entry-close' => 'inhabilitado cuenta $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Esta cuenta ha sido deshabilitada globalmente en Wikia.</div>',
 	'right-editaccount' => 'Editar las preferencias de otros usuarios',
+	'action-editaccount' => 'editar la información de otros usuarios',
 );
 
 /** Persian (فارسی)
@@ -495,7 +532,9 @@ $messages['es'] = array(
 $messages['fa'] = array(
 	'editaccount' => 'ویرایش حساب کاربری',
 	'editaccount-label-realname' => 'تعیین نام واقعی جدید',
+	'editaccount-label-reason' => 'دلیل:',
 	'editaccount-submit-close' => 'بستن حساب کاربری',
+	'editaccount-submit-button' => 'ذخیره',
 );
 
 /** Finnish (suomi)
@@ -577,12 +616,17 @@ $messages['fr'] = array(
 	'editaccount-label-pass' => 'Définir un nouveau mot de passe',
 	'editaccount-label-realname' => 'Définir un nouveau nom complet',
 	'editaccount-label-clearunsub' => 'Désabonné',
+	'editaccount-label-toggleadopt' => "Modifier l'état de l'adoptant (pour AutomaticWikiAdopt):",
+	'editaccount-label-toggleadopt-prevent' => "Éviter l'adoption automatique",
+	'editaccount-label-toggleadopt-allow' => "Permettre l'adoption automatique",
+	'editaccount-label-reason' => 'Motif:',
 	'editaccount-submit-email' => "Sauvegarder l'adresse électronique",
 	'editaccount-submit-pass' => 'Sauvegarder le mot de passe',
 	'editaccount-submit-realname' => 'Sauvegarder le nom complet',
 	'editaccount-submit-clearunsub' => 'Effacer le désabonnement',
 	'editaccount-submit-cleardisable' => 'Retirer le flag « désactivé »',
 	'editaccount-submit-close' => 'Clore le compte',
+	'editaccount-submit-button' => 'Enregistrer',
 	'editaccount-usage-close' => 'Vous pouvez également désactiver un compte utilisateur en cryptant son mot de passe et en supprimant son adresse électronique. Veuillez notez que les données seront perdues et ne seront pas récupérables.',
 	'editaccount-warning-close' => '<b>Attention !</b> Vous êtes sur le point de désactiver le compte utilisateur <b>$1</b> de manière permanente. Ceci ne peut pas être défait. Êtes-vous certain de vouloir effectuer cette opération ?',
 	'editaccount-status' => 'Message de statut',
@@ -619,6 +663,7 @@ $messages['fr'] = array(
 	'editaccount-log-entry-close' => 'a désactivé le compte $2§',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Ce compte a été désactivé globalement par Wikia.</div>',
 	'right-editaccount' => "Modifier les préférences d'autres utilisateurs",
+	'action-editaccount' => "modifier l'information des autres utilisateurs",
 );
 
 /** Galician (galego)
@@ -639,12 +684,17 @@ $messages['gl'] = array(
 	'editaccount-label-pass' => 'Establecer un novo contrasinal',
 	'editaccount-label-realname' => 'Establecer un novo nome real',
 	'editaccount-label-clearunsub' => 'Cancelouse a subscrición',
+	'editaccount-label-toggleadopt' => 'Modificar o estado de adopción (para AutomaticWikiAdopt):',
+	'editaccount-label-toggleadopt-prevent' => 'Impedir a adopción automática',
+	'editaccount-label-toggleadopt-allow' => 'Permitir a adopción automática',
+	'editaccount-label-reason' => 'Motivo:',
 	'editaccount-submit-email' => 'Gardar o correo electrónico',
 	'editaccount-submit-pass' => 'Gardar o contrasinal',
 	'editaccount-submit-realname' => 'Gardar o nome real',
 	'editaccount-submit-clearunsub' => 'Desfacer a cancelación da subscrición',
 	'editaccount-submit-cleardisable' => 'Retirar a marca de desactivado',
 	'editaccount-submit-close' => 'Pechar a conta',
+	'editaccount-submit-button' => 'Gardar',
 	'editaccount-usage-close' => 'Tamén pode desactivar unha conta de usuario codificando o seu contrasinal e eliminando o enderezo de correo electrónico. Teña en conta que se perderá esa información e non se poderá recuperar.',
 	'editaccount-warning-close' => '<b>Coidado!</b> Está a piques de desactivar permanentemente a conta do usuario <b>$1</b>. Isto non se pode reverter. Está seguro de que é o que quere facer?',
 	'editaccount-status' => 'Mensaxe de estado',
@@ -680,7 +730,8 @@ $messages['gl'] = array(
 	'editaccount-log-entry-realname' => 'cambiou o nome real do usuario $2',
 	'editaccount-log-entry-close' => 'desactivou a conta $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Wikia desactivou esta conta globalmente.</div>',
-	'right-editaccount' => 'Editar as preferencias doutros usuarios',
+	'right-editaccount' => 'Editar a información doutros usuarios',
+	'action-editaccount' => 'editar a información doutros usuarios',
 );
 
 /** Hebrew (עברית)
@@ -954,15 +1005,16 @@ $messages['km'] = array(
 	'editaccount-log-entry-pass' => 'បានប្ដូរពាក្យសំងាត់សំរាប់អ្នកប្រើប្រាស់ $2',
 	'editaccount-log-entry-realname' => 'បានប្ដូរឈ្មោះពិតសំរាប់អ្នកប្រើប្រាស់ $2',
 	'editaccount-log-entry-close' => 'បានបិទគណនី $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">គណនីនេះត្រូវបានបិទហើយ។</div>',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">គណនីនេះត្រូវបានបិទហើយ។</div>', # Fuzzy
 	'right-editaccount' => 'កែប្រែចំណង់ចំណូលចិត្តរបស់អ្នកប្រើប្រាស់ដទៃ',
 );
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 아라
  */
 $messages['ko'] = array(
-	'editaccount-submit-email' => '저장하고 이메일 주소 인증하기',
+	'editaccount-submit-email' => '저장하고 이메일 주소 확인',
 	'editaccount-status-confirmed' => '확인됨',
 	'editaccount-status-unconfirmed' => '확인되지 않음',
 );
@@ -976,14 +1028,19 @@ $messages['lb'] = array(
 	'editaccount-frame-manage' => 'E Kont änneren',
 	'editaccount-frame-usage' => 'Notiz',
 	'editaccount-label-select' => 'E Benotzerkont eraussichen',
+	'editaccount-frame-account' => 'Benotzerkont $1 änneren',
 	'editaccount-label-email' => 'Nei E-Mailadress festleeën',
 	'editaccount-label-pass' => 'Neit Passwuert festleeën',
+	'editaccount-label-reason' => 'Grond:',
 	'editaccount-submit-email' => 'E-Mailadress späicheren',
 	'editaccount-submit-pass' => 'Passwuert späicheren',
 	'editaccount-submit-realname' => 'Richtegen Numm späicheren',
 	'editaccount-submit-close' => 'Kont zoumaachen',
+	'editaccount-submit-button' => 'Späicheren',
 	'editaccount-invalid-email' => '"$1" ass keng valabel E-Mailadress!',
 	'editaccount-nouser' => 'De Kont "$1" gëtt et net!',
+	'editaccount-status-confirmed' => 'Confirméiert',
+	'editaccount-status-unconfirmed' => 'Net confirméiert',
 	'editaccount-status-realuser' => 'Richtege Benotzer',
 	'editaccount-status-tempuser' => 'Temporäre Benotzer',
 	'editaccount-log' => 'Logbuch vun de Benotzerkonten',
@@ -1032,12 +1089,17 @@ $messages['mk'] = array(
 	'editaccount-label-pass' => 'Нова лозинка',
 	'editaccount-label-realname' => 'Ново вистинско име',
 	'editaccount-label-clearunsub' => 'Откажани претплати',
+	'editaccount-label-toggleadopt' => 'Измена на статусот на посвојување (за AutomaticWikiAdopt):',
+	'editaccount-label-toggleadopt-prevent' => 'Спречи автопосвојување',
+	'editaccount-label-toggleadopt-allow' => 'Допушти автопосвојување',
+	'editaccount-label-reason' => 'Причина:',
 	'editaccount-submit-email' => 'Зачувај е-пошта',
 	'editaccount-submit-pass' => 'Зачувај лозинка',
 	'editaccount-submit-realname' => 'Зачувај вистинско име',
 	'editaccount-submit-clearunsub' => 'Исчисти откажани',
 	'editaccount-submit-cleardisable' => 'Исчисти оневозмож. знаме',
 	'editaccount-submit-close' => 'Затвори сметка',
+	'editaccount-submit-button' => 'Зачувај',
 	'editaccount-usage-close' => 'Можете да оневозможите корисничка сметка со тоа што ќе ја претворите лозинката во нечитлива и ќе ја отстраните е-поштенската адреса. Имајте на ум дека овие податоци ќе се изгубат и нема да можат да се вратат.',
 	'editaccount-warning-close' => '<b>Внимание!</b> На пат сте засекогаш да ја оневозможите сметката на корисникот <b>$1</b>. Оваа постапка не може да се врати. Дали сте сигурни дека сакате да го направите ова?',
 	'editaccount-status' => 'Статусна порака',
@@ -1074,6 +1136,7 @@ $messages['mk'] = array(
 	'editaccount-log-entry-close' => 'оневозможена сметка $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Оваа сметка е глобално оневозможена од Викија.</div>',
 	'right-editaccount' => 'Уредување на нагодувања на други корисници',
+	'action-editaccount' => 'измена на информациите на други корисници',
 );
 
 /** Malay (Bahasa Melayu)
@@ -1094,12 +1157,17 @@ $messages['ms'] = array(
 	'editaccount-label-pass' => 'Tetapkan kata laluan baru',
 	'editaccount-label-realname' => 'Tetapkan nama sebenar baru',
 	'editaccount-label-clearunsub' => 'Langganan dihentikan',
+	'editaccount-label-toggleadopt' => 'Ubah suai status pengambil alih (untuk AutomaticWikiAdopt):',
+	'editaccount-label-toggleadopt-prevent' => 'Larang pengambilalihan automatik',
+	'editaccount-label-toggleadopt-allow' => 'Benarkan pengambilalihan automatik',
+	'editaccount-label-reason' => 'Sebab:',
 	'editaccount-submit-email' => 'Simpan dan terima alamat e-mel',
 	'editaccount-submit-pass' => 'Simpan kata laluan',
 	'editaccount-submit-realname' => 'Simpan nama sebenar',
 	'editaccount-submit-clearunsub' => 'Padamkan penghentian melanggan',
 	'editaccount-submit-cleardisable' => 'Bersihkan bendera matikan',
 	'editaccount-submit-close' => 'Tutup akaun',
+	'editaccount-submit-button' => 'Simpan',
 	'editaccount-usage-close' => 'Anda juga boleh mematikan akaun pengguna dengan mengarau kata laluannya serta menggugurkan alamat e-melnya. Ingat, data ini akan hilang dan tidak boleh dipulihkan.',
 	'editaccount-warning-close' => '<b>Perhatian!</b> Anda akan mematikan akaun pengguna <b>$1</b> buat selamanya. Tindakan ini tidak boleh diterbalikkan. Adakah anda pasti mahu berbuat demikian?',
 	'editaccount-status' => 'Mesej status',
@@ -1136,11 +1204,13 @@ $messages['ms'] = array(
 	'editaccount-log-entry-close' => 'mematikan akaun $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Akaun ini telah dimatikan secara global oleh Wikia.</div>',
 	'right-editaccount' => 'Sunting keutamaan pengguna lain',
+	'action-editaccount' => 'menyunting keutamaan pengguna lain',
 );
 
 /** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
+ * @author Wouterkoch
  */
 $messages['nb'] = array(
 	'editaccount' => 'Rediger konto',
@@ -1163,6 +1233,7 @@ $messages['nb'] = array(
 	'editaccount-submit-clearunsub' => 'Tøm avslutt abonnement',
 	'editaccount-submit-cleardisable' => 'Fjern deaktiveringsflagget',
 	'editaccount-submit-close' => 'Lukk konto',
+	'editaccount-submit-button' => 'Lagre',
 	'editaccount-usage-close' => 'Du kan også deaktivere en brukerkonto ved å tilfeldiggjøre passordet og fjerne e-postadressen. Legg merke til at denne dataen går tapt og ikke vil kunne gjenopprettes.',
 	'editaccount-warning-close' => '<b>Forsiktig!</b> Du er i ferd med å permanent deaktivere kontoen til bruker <b>$1</b>. Dette kan ikke gjenopprettes. Er du sikker på at det er det du vil gjøre?',
 	'editaccount-status' => 'Statusmelding',
@@ -1329,12 +1400,17 @@ $messages['pl'] = array(
 	'editaccount-label-pass' => 'Ustaw nowe hasło',
 	'editaccount-label-realname' => 'Ustaw nowe nazwisko',
 	'editaccount-label-clearunsub' => 'Zakończono subskrypcję',
+	'editaccount-label-toggleadopt' => 'Uprawnienia do adopcji wiki (dla zautomatyzowanej adopcji)',
+	'editaccount-label-toggleadopt-prevent' => 'Wyłącz możliwość auto adopcji',
+	'editaccount-label-toggleadopt-allow' => 'Włącz możliwość auto adopcji',
+	'editaccount-label-reason' => 'Powód:',
 	'editaccount-submit-email' => 'Zapisz adres e-mail',
 	'editaccount-submit-pass' => 'Zapisz hasło',
 	'editaccount-submit-realname' => 'Zapisz nazwisko',
 	'editaccount-submit-clearunsub' => 'Wyczyść subskrypcję',
 	'editaccount-submit-cleardisable' => 'Wyczyść wyłączenie konta',
 	'editaccount-submit-close' => 'Zamknij konto',
+	'editaccount-submit-button' => 'Zapisz',
 	'editaccount-usage-close' => 'Możesz także wyłączyć konto użytkownika poprzez zmianę jego hasła i usunięcie adresu e-mail. Dane zostaną utracone bez możliwości ich odzyskania.',
 	'editaccount-warning-close' => '<b>Uwaga!</b> Zamierzasz trwale wyłączyć konto użytkownika <b>$1</b>. Tej zmiany nie można cofnąć. Jesteś pewien?',
 	'editaccount-status' => 'Komunikat o postępie',
@@ -1371,6 +1447,7 @@ $messages['pl'] = array(
 	'editaccount-log-entry-close' => 'wyłączono konto $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">To konto zostało wyłączone globalnie przez Wikię.</div>',
 	'right-editaccount' => 'Edycja informacji innych użytkowników',
+	'action-editaccount' => 'edycji danych innych użytkowników',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1514,6 +1591,7 @@ $messages['pt'] = array(
  * @author Giro720
  * @author Jesielt
  * @author Luckas Blade
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
 	'editaccount' => 'Editar conta',
@@ -1529,10 +1607,18 @@ $messages['pt-br'] = array(
 	'editaccount-label-email' => 'Definir novo endereço de email',
 	'editaccount-label-pass' => 'Definir nova senha',
 	'editaccount-label-realname' => 'Definir novo nome real',
+	'editaccount-label-clearunsub' => 'Desinscrito',
+	'editaccount-label-toggleadopt' => 'Modificar status de adotante (para AutomaticWikiAdopt):',
+	'editaccount-label-toggleadopt-prevent' => 'Prevenir auto-adoção',
+	'editaccount-label-toggleadopt-allow' => 'Permitir auto-adoção',
+	'editaccount-label-reason' => 'Motivo:',
 	'editaccount-submit-email' => 'Salvar Email',
 	'editaccount-submit-pass' => 'Salvar Senha',
 	'editaccount-submit-realname' => 'Salvar Nome Real',
+	'editaccount-submit-clearunsub' => 'Limpar desinscrição',
+	'editaccount-submit-cleardisable' => 'Limpar marca de desativação',
 	'editaccount-submit-close' => 'Fechar Conta',
+	'editaccount-submit-button' => 'Salvar',
 	'editaccount-usage-close' => 'Você também pode desabilitar uma conta de usuário mudando sua senha e removendo o endereço de email. Note que esses dados serão perdidos e nunca mais poderão ser recuperados.',
 	'editaccount-warning-close' => '<b>Atenção!</b> Você está prestes a desativar permanentemente a conta de usuário <b>$1</b>. Essa ação não poderá ser revertida. Estando ciente disto, você tem certeza de que é isso que deseja fazer?',
 	'editaccount-status' => 'Mensagem de status',
@@ -1540,6 +1626,9 @@ $messages['pt-br'] = array(
 	'editaccount-success-email-blank' => 'Removeu com sucesso o e-mail da conta $1.',
 	'editaccount-success-pass' => 'Senha alterada com sucesso para a conta $1.',
 	'editaccount-success-realname' => 'Nome real alterado com sucesso para a conta $1.',
+	'editaccount-success-unsub' => 'Removida com sucesso a desinscrição para a conta $1.',
+	'editaccount-success-disable' => 'Removida com sucesso a marca de desativado para a conta $1.',
+	'editaccount-success-toggleadopt' => 'Alternado com sucesso o status da elegibilidade de adoção para a conta $1.',
 	'editaccount-success-close' => 'Conta $1 desabilitada com sucesso.',
 	'editaccount-error-email' => 'O email não foi alterado. Tente novamente ou contate a equipe de apoio (Tech Team).',
 	'editaccount-error-pass' => 'A senha não foi alterada. Tente novamente ou contate a equipe de apoio (Tech Team).',
@@ -1547,16 +1636,26 @@ $messages['pt-br'] = array(
 	'editaccount-error-close' => 'Ocorreu um problema ao fechar a conta. Tente novamente ou contate a equipe de apoio (Tech Team).',
 	'editaccount-invalid-email' => '"$1" não é um endereço de email válido!',
 	'editaccount-nouser' => 'A conta "$1" não existe!',
+	'editaccount-remove-avatar-fail' => 'Problema durante a auto-remoção do avatar.',
+	'editaccount-requested' => 'Nota: Usuário solicitou o fechamento da conta',
+	'editaccount-not-requested' => 'ATENÇÃO: Usuário não solicitou o fechamento da conta',
+	'editaccount-labal-account-status' => 'Status da Conta',
+	'editaccount-labal-email-status' => 'Status do Email',
 	'editaccount-status-confirmed' => 'Confirmado',
+	'editaccount-status-unconfirmed' => 'Não Confirmado',
 	'editaccount-status-realuser' => 'Usuário real',
+	'editaccount-status-tempuser' => 'Usuário Temporário',
+	'editaccount-error-tempuser-email' => 'Usuários temp. não podem ter um campo de endereço de email vazio, por favor digite um endereço de email.',
+	'editaccount-email-change-requested' => 'Usuário solicitou a troca de email via Preferências para $1. Para confirmar a solicitação de troca de email para o usuário, digite o endereço de email solicitado no campo abaixo e clique em "Salvar e Confirmar."',
 	'editaccount-log' => 'Use o log de contas',
 	'editaccount-log-header' => 'Essa página lista mudanças feitas nas preferências de usuário pela equipe do Wikia (Wikia Staff).',
 	'editaccount-log-entry-email' => 'email alterado para o usuário $2',
 	'editaccount-log-entry-pass' => 'senha alterada para o usuário $2',
 	'editaccount-log-entry-realname' => 'nome real alterado para o usuário $2',
 	'editaccount-log-entry-close' => 'desabilitada a conta $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Essa conta foi desabilitada.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Essa conta foi desativada globalmente pela Wikia.</div>',
 	'right-editaccount' => 'Editar outras preferências de usuário',
+	'action-editaccount' => 'editar informação de outros usuários',
 );
 
 /** Romanian (română)
@@ -1677,7 +1776,7 @@ $messages['sah'] = array(
 	'editaccount-log-entry-pass' => '$2 кыттааччы кирии тылын уларыппыт',
 	'editaccount-log-entry-realname' => '$2 кыттааччы дьиҥнээх аатын уларыппыт',
 	'editaccount-log-entry-close' => '$2 кыттааччы бэлиэтэниитин араарбыт',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Бу аат араарыллыбыт.</div>',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Бу аат араарыллыбыт.</div>', # Fuzzy
 	'right-editaccount' => 'Атын кыттааччылар туруорууларын уларытыы',
 );
 
@@ -1741,6 +1840,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Cybjit
  * @author Lokal Profil
  * @author Tobulos1
  * @author VickyC
@@ -1761,12 +1861,17 @@ $messages['sv'] = array(
 	'editaccount-label-pass' => 'Ange nytt lösenord',
 	'editaccount-label-realname' => 'Ange ett nytt riktigt namn',
 	'editaccount-label-clearunsub' => 'Prenumeration avslutad',
+	'editaccount-label-toggleadopt' => 'Ändra adoptionsstatus (för AutomaticWikiAdopt):',
+	'editaccount-label-toggleadopt-prevent' => 'Förhindra automatisk adoptering',
+	'editaccount-label-toggleadopt-allow' => 'Tillåt automatisk adoption',
+	'editaccount-label-reason' => 'Anledning:',
 	'editaccount-submit-email' => 'Spara e-postadress',
 	'editaccount-submit-pass' => 'Spara lösenord',
 	'editaccount-submit-realname' => 'Spara riktigt namn',
 	'editaccount-submit-clearunsub' => 'Rensa avprenumerering',
 	'editaccount-submit-cleardisable' => 'Rensa inaktiveringsflagga',
 	'editaccount-submit-close' => 'Stäng konto',
+	'editaccount-submit-button' => 'Spara',
 	'editaccount-usage-close' => 'Du kan också inaktivera ett användarkonto genom att förvränga lösenordet och ta bort e-postadressen. Observera att på detta sätt gåt data förlorad och kommer inte att återvinnas.',
 	'editaccount-warning-close' => '<b>Varning!</b> Du håller på att permanent inaktivera kontot för användare <b>$1</b>. Detta kan inte återställas. Är du säker på att det är vad du vill göra?',
 	'editaccount-status' => 'Statusmeddelande',
@@ -1774,6 +1879,9 @@ $messages['sv'] = array(
 	'editaccount-success-email-blank' => 'Tog bort e-postadressen för kontot $1.',
 	'editaccount-success-pass' => 'Ändrade lösenordet för kontot $1.',
 	'editaccount-success-realname' => 'Ändrade riktigt namn för kontot $1.',
+	'editaccount-success-unsub' => 'Lyckades ta bort avprenumerationsbiten för kontot $1.',
+	'editaccount-success-disable' => 'Inaktiverade delen för kontot $1 har tagits bort.',
+	'editaccount-success-toggleadopt' => 'Ändring av statusen för adoptionsbehörigheter för kontot $1 lyckades.',
 	'editaccount-success-close' => 'Konto $1 har avaktiverats.',
 	'editaccount-error-email' => 'E-postadressen ändrades inte. Försök igen eller kontakta Tech Teamet.',
 	'editaccount-error-pass' => 'Lösenordet ändrades inte. Försök igen eller kontakta Tech Teamet.',
@@ -1800,6 +1908,7 @@ $messages['sv'] = array(
 	'editaccount-log-entry-close' => 'inaktiverade kontot $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Detta konto har inaktiverat globalt av Wikia.</div>',
 	'right-editaccount' => 'Redigera andra användares inställningar',
+	'action-editaccount' => 'redigera andra användares information',
 );
 
 /** Tamil (தமிழ்)
@@ -1854,7 +1963,7 @@ $messages['te'] = array(
 	'editaccount-nouser' => '"$1" అనే ఖాతా లేనే లేదు!',
 	'editaccount-labal-account-status' => 'ఖాతా స్థితి',
 	'editaccount-log' => 'వాడుకరి ఖాతాల చిట్టా',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">ఈ ఖాతాని అచేతనం చేసారు.</div>',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">ఈ ఖాతాని అచేతనం చేసారు.</div>', # Fuzzy
 );
 
 /** Tagalog (Tagalog)
@@ -1924,7 +2033,7 @@ $messages['tl'] = array(
  */
 $messages['tr'] = array(
 	'editaccount-submit-close' => 'Hesabı kapat',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Bu hesap devre dışı bırakıldı.</div>',
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Bu hesap devre dışı bırakıldı.</div>', # Fuzzy
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -2083,4 +2192,3 @@ $messages['zh-hant'] = array(
 	'editaccount' => '編輯帳戶',
 	'editaccount-submit-account' => '管理帳戶',
 );
-

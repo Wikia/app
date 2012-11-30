@@ -118,9 +118,18 @@ class WikiStatsAjax {
 			'aaData' => array()
 		);
 				
-		if ( empty($wgUser) ) { return ""; }
-		if ( $wgUser->isBlocked() ) { return ""; }
-		if ( !$wgUser->isLoggedIn() ) { return ""; }
+		if ( empty($wgUser) ) {
+			wfProfileOut( __METHOD__ );
+			return "";
+		}
+		if ( $wgUser->isBlocked() ) {
+			wfProfileOut( __METHOD__ );
+			return "";
+		}
+		if ( !$wgUser->isLoggedIn() ) {
+			wfProfileOut( __METHOD__ );
+			return "";
+		}
 	
 		$params = array(
 			'year' 		=> $year, 

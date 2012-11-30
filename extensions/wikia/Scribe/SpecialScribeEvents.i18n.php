@@ -21,7 +21,8 @@ $messages['qqq'] = array(
 	'scribe-desc' => '{{desc}}',
 );
 
-/** Breton (brezhoneg) */
+/** Breton (brezhoneg)
+ */
 $messages['br'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Ostilh]] da glask titl ur bajenn resis e-touez wikioù',
 	'scribeevents' => 'Darvoudoù diwezhañ',
@@ -46,14 +47,16 @@ $messages['de'] = array(
 	'scribeeventsrecords' => 'Datensätze',
 );
 
-/** Spanish (español) */
+/** Spanish (español)
+ */
 $messages['es'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Herramienta]] para buscar el título de una página específica a través de las wikis',
 	'scribeevents' => 'Eventos recientes',
 	'scribeeventsrecords' => 'Registros',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ */
 $messages['fa'] = array(
 	'scribeevents' => 'رویدادهای اخیر',
 );
@@ -67,7 +70,8 @@ $messages['fi'] = array(
 	'scribeeventsrecords' => 'Tiedotteet',
 );
 
-/** French (français) */
+/** French (français)
+ */
 $messages['fr'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Outil]] pour chercher un titre de page spécifique à travers les wikis',
 	'scribeevents' => 'Événements récents',
@@ -92,7 +96,8 @@ $messages['hu'] = array(
 	'scribeeventsrecords' => 'Feljegyzések',
 );
 
-/** Interlingua (interlingua) */
+/** Interlingua (interlingua)
+ */
 $messages['ia'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Instrumento]] pro cerar un titulo de pagina specific trans wikis',
 	'scribeevents' => 'Eventos recente',
@@ -126,7 +131,8 @@ $messages['ksh'] = array(
 	'scribeeventsrecords' => 'Daatesäz',
 );
 
-/** Macedonian (македонски) */
+/** Macedonian (македонски)
+ */
 $messages['mk'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Алатка]] за пребарување на поединечен наслов на страница по повеќе викија',
 	'scribeevents' => 'Скорешни настани',
@@ -142,14 +148,16 @@ $messages['ms'] = array(
 	'scribeeventsrecords' => 'Rekod',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎) */
+/** Norwegian Bokmål (norsk (bokmål)‎)
+ */
 $messages['nb'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Verktøyl]] for å søke etter en bestemt sidetittel på tvers av wikier',
 	'scribeevents' => 'Nylige hendelser',
 	'scribeeventsrecords' => 'Oppføringer',
 );
 
-/** Dutch (Nederlands) */
+/** Dutch (Nederlands)
+ */
 $messages['nl'] = array(
 	'scribe-desc' => "[[Special:Scribeevents|Hulpmiddel]] om een paginanaam te zoeken in meerdere wiki's",
 	'scribeevents' => 'Recente gebeurtenissen',
@@ -175,21 +183,24 @@ $messages['pms'] = array(
 	'scribeeventsrecords' => 'Argistrassion',
 );
 
-/** Portuguese (português) */
+/** Portuguese (português)
+ */
 $messages['pt'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Ferramenta]] para procurar um título específico de página em todas as wikis',
 	'scribeevents' => 'Acontecimentos recentes',
 	'scribeeventsrecords' => 'Registos',
 );
 
-/** Brazilian Portuguese (português do Brasil) */
+/** Brazilian Portuguese (português do Brasil)
+ */
 $messages['pt-br'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Ferramenta]] para procurar um título específico de página em todas as wikis',
 	'scribeevents' => 'Acontecimentos recentes',
 	'scribeeventsrecords' => 'Registros',
 );
 
-/** Russian (русский) */
+/** Russian (русский)
+ */
 $messages['ru'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Инструмент]] для поиска определённых страниц по заголовку в вики',
 	'scribeevents' => 'Недавние события',
@@ -247,4 +258,3 @@ $messages['vi'] = array(
 	'scribeevents' => 'Sự kiện gần đây',
 	'scribeeventsrecords' => 'Bản ghi',
 );
-

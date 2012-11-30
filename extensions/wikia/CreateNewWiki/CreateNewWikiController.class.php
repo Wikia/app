@@ -156,6 +156,7 @@ class CreateNewWikiController extends WikiaController {
 				$this->status = 'error';
 				$this->statusMsg = $this->app->wf->msg( 'cnw-error-blocked', $wgUser->blockedBy(), $wgUser->blockedFor(), $wgUser->getBlockId() );
 				$this->statusHeader = $this->app->wf->msg( 'cnw-error-blocked-header' );
+				wfProfileOut(__METHOD__);
 				return;
 			}
 
@@ -164,6 +165,7 @@ class CreateNewWikiController extends WikiaController {
 				$this->status = 'error';
 				$this->statusMsg = $this->app->wf->msg( 'cnw-error-torblock' );
 				$this->statusHeader = $this->app->wf->msg( 'cnw-error-blocked-header' );
+				wfProfileOut(__METHOD__);
 				return;
 			}
 
@@ -173,6 +175,7 @@ class CreateNewWikiController extends WikiaController {
 				$this->status = 'wikilimit';
 				$this->statusMsg = $this->app->runFunction('wfMsgExt', 'cnw-error-wiki-limit', array( 'parsemag' ), self::DAILY_USER_LIMIT);
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-wiki-limit-header');
+				wfProfileOut(__METHOD__);
 				return;
 			}
 

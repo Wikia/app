@@ -15,8 +15,7 @@
 
 var _AbTest = Wikia.AbTest || {},
 	serverTimeString = window.varnishTime,
-	serverTime = new Date( serverTimeString ).getTime() / 1000,
-	tracker = window.WikiaTracker;
+	serverTime = new Date( serverTimeString ).getTime() / 1000;
 
 var log = function( methodName, message ) {
 	// Internal logging, becomes a no-op if window.console isn't present
@@ -163,7 +162,7 @@ AbTest.getTreatmentGroup = function( experimentKey ) {
 
 				} else {
 					// TODO: when we start tracking through GA, we will need to add the slot here.
-					tracker.trackEvent( 'ab_treatment', {
+					window.WikiaTracker.trackEvent( 'ab_treatment', {
 						time: serverTimeString,
 						experiment: experimentKey,
 						treatmentGroup: treatmentGroupKey

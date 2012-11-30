@@ -29,10 +29,10 @@ $wgAjaxExportList[] = 'SponsorshipDashboardAjax';
 
 function SponsorshipDashboardAjax() {
 	global $wgRequest;
+	wfProfileIn(__METHOD__);
 	$method = $wgRequest->getVal('method', false);
 	if ( method_exists('SponsorshipDashboardAjax', $method) ) {
 		$data = SponsorshipDashboardAjax::$method();
-		wfProfileIn(__METHOD__);
 		if (is_array($data)) {
 			// send array as JSON
 			$json = json_encode($data);

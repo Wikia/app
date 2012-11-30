@@ -11,7 +11,8 @@ $messages['en'] = array(
 	'minieditor-placeholder-reply' => 'Reply to the message here',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'minieditor-specialpage-title' => 'Browser title for the page',
 	'minieditor-new-heading' => 'Heading of a form area',
@@ -256,3 +257,10 @@ $messages['tl'] = array(
 	'minieditor-placeholder-reply' => 'Tumugon sa mensahe rito',
 );
 
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'minieditor-new-heading' => 'ⴰⵔⴰ ⵜⴰⴱⵔⴰⵜ ⵜⴰⵎⴰⵢⵏⵓⵜ',
+	'minieditor-reply' => 'ⵔⴰⵔ',
+);

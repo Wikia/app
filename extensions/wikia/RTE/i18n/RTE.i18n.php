@@ -34,7 +34,7 @@ $messages['qqq'] = array(
  * @author Naudefj
  */
 $messages['af'] = array(
-	'enablerichtexteditor' => 'Aktiveer uitgebreide teksverwerker',
+	'enablerichtexteditor' => 'Aktiveer uitgebreide teksverwerker', # Fuzzy
 );
 
 /** Arabic (العربية)
@@ -63,7 +63,7 @@ $messages['be-tarask'] = array(
 	'rte-edgecase-redirect' => 'перанакіраваньне',
 	'rte-edgecase-templateintable' => 'табліца з выклікам шаблёну ў вызначэньні',
 	'rte-edgecase-unclosed-tags' => 'незакрытыя HTML-тэгі',
-	'enablerichtexteditor' => 'Уключыць палепшаны тэкставы рэдактар',
+	'enablerichtexteditor' => 'Уключыць палепшаны тэкставы рэдактар', # Fuzzy
 	'rte-enablerichtexteditormessage' => 'Палепшаны тэкставы рэдактар уключаны!',
 	'rte-first-run-notice' => 'Мы зрабілі некаторыя паляпшэньні ў рэдактары. Каб даведацца болей, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news пачытайце апісаньне зьменаў].',
 );
@@ -72,7 +72,7 @@ $messages['be-tarask'] = array(
  * @author Stanqo
  */
 $messages['bg'] = array(
-	'enablerichtexteditor' => 'Възможно е ползването на Rich Text редактор',
+	'enablerichtexteditor' => 'Възможно е ползването на Rich Text редактор', # Fuzzy
 );
 
 /** Breton (brezhoneg)
@@ -95,7 +95,7 @@ $messages['br'] = array(
 	'rte-edgecase-redirect' => 'adkas',
 	'rte-edgecase-templateintable' => 'un daolenn gant ur galv patrom en e dermenadur',
 	'rte-edgecase-unclosed-tags' => 'balizenn HTML nann-serret',
-	'enablerichtexteditor' => 'Gweredekaat an embanner nevez',
+	'enablerichtexteditor' => 'Gweredekaat an embanner nevez', # Fuzzy
 	'rte-enablerichtexteditormessage' => 'Gweredekaet eo bet an aozer testennoù araokaet (Rich Text Editor)',
 	'rte-first-run-notice' => "Degaset hon eus un nebeut gwelladennoù d'an embanner. Evit gouzout hiroc'h, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lennit ar c'hemenn].",
 );
@@ -105,7 +105,7 @@ $messages['br'] = array(
  */
 $messages['ca'] = array(
 	'rte-desc' => 'CKeditor integrat per MediaWiki',
-	'rte-no-js-fallback' => "L'editor de text enriquit no funciona si JavaScript està desactivat. Si us plau, deixeu-lo activitat a les opcions del vostre navegador, o visita les teves [[Especial:Preferències|preferències]] per canviar l'antic editor de MediaWiki",
+	'rte-no-js-fallback' => "L'editor de text enriquit no funciona si JavaScript està desactivat. Si us plau, deixeu-lo activitat a les opcions del vostre navegador, o visita les teves [[Especial:Preferències|preferències]] per canviar l'antic editor de MediaWiki", # Fuzzy
 	'rte-edgecase-info-title' => 'Requereix mode font',
 	'rte-edgecase-info' => "L'editor de text enriquit s'ha desactivat perquè la pàgina conté un codi complex.",
 	'rte-edgecase-comment' => 'Comentaris HTML',
@@ -191,7 +191,7 @@ $messages['diq'] = array(
  * @author Περίεργος
  */
 $messages['el'] = array(
-	'enablerichtexteditor' => 'Ενεργοποίηση εμπλουτισμένου συντάκτη κειμένου',
+	'enablerichtexteditor' => 'Ενεργοποίηση εμπλουτισμένου συντάκτη κειμένου', # Fuzzy
 );
 
 /** Spanish (español)
@@ -555,7 +555,7 @@ $messages['pt'] = array(
 	'rte-edgecase-redirect' => 'redireccionamento',
 	'rte-edgecase-templateintable' => 'uma tabela cuja definição chama uma predefinição',
 	'rte-edgecase-unclosed-tags' => 'elemento HTML não foi fechado',
-	'enablerichtexteditor' => 'Activar o Editor de Texto Enriquecido ("Rich Text Editor")',
+	'enablerichtexteditor' => 'Activar o Editor de Texto Enriquecido ("Rich Text Editor")', # Fuzzy
 	'rte-enablerichtexteditormessage' => 'O Editor de Texto Enriquecido foi activado!',
 	'rte-first-run-notice' => 'Fizemos algumas melhorias no editor. Para saber mais, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news leia o anúncio].',
 	'prefs-rte' => 'Editor de Texto Enriquecido',
@@ -581,7 +581,7 @@ $messages['pt-br'] = array(
 	'rte-edgecase-redirect' => 'redirecionamento',
 	'rte-edgecase-templateintable' => 'uma tabela cuja definição chama uma predefinição',
 	'rte-edgecase-unclosed-tags' => 'elemento HTML não foi fechado',
-	'enablerichtexteditor' => 'Ativar Editor de Texto Rico',
+	'enablerichtexteditor' => 'Ativar Editor de Texto Rico', # Fuzzy
 	'rte-enablerichtexteditormessage' => 'O Editor de Texto Enriquecido foi ativado!',
 	'rte-first-run-notice' => 'Fizemos algumas melhorias no editor. Para saber mais, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news leia o anúncio].',
 	'prefs-rte' => 'Editor de Texto Enriquecido',
@@ -696,7 +696,7 @@ $messages['tr'] = array(
 	'rte-edgecase-redirect' => 'yönlendirme',
 	'rte-edgecase-templateintable' => 'şablon tanımlı tablo',
 	'rte-edgecase-unclosed-tags' => 'Kapatılmış HTML etiketi',
-	'enablerichtexteditor' => 'Zengin Metin Düzenleyicisi etkinleştir',
+	'enablerichtexteditor' => 'Zengin Metin Düzenleyicisi etkinleştir', # Fuzzy
 	'rte-enablerichtexteditormessage' => 'Zengin Metin Düzenleyicisi etkin!',
 	'rte-first-run-notice' => 'Düzenleyicide birkaç geliştirme yaptık.Daha fazlasını öğrenmek için, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the announcement].',
 );
@@ -712,7 +712,8 @@ $messages['uk'] = array(
 	'rte-edgecase-unclosed-tags' => 'незакритий HTML-тег',
 );
 
-/** Chinese (中文) */
+/** Chinese (中文)
+ */
 $messages['zh'] = array(
 	'rte-edgecase-comment' => 'HTML 註解',
 	'rte-edgecase-triplecurls' => '模板變數',
@@ -739,4 +740,3 @@ $messages['zh-hans'] = array(
 	'rte-enablerichtexteditormessage' => 'RTF编辑器启用！',
 	'prefs-rte' => 'RTF编辑器',
 );
-

@@ -63,6 +63,7 @@ function getRandomUser( $input, $args, $parser ) {
 
 	$period = ( isset( $args['period'] ) ) ? $args['period'] : '';
 	if( $period != 'weekly' && $period != 'monthly' ) {
+		wfProfileOut( __METHOD__ );
 		return '';
 	}
 
@@ -115,6 +116,7 @@ function getRandomUser( $input, $args, $parser ) {
 
 	// Make sure we have some data
 	if( !is_array( $user_list ) || count( $user_list ) == 0 ) {
+		wfProfileOut( __METHOD__ );
 		return '';
 	}
 
@@ -122,6 +124,7 @@ function getRandomUser( $input, $args, $parser ) {
 
 	// Make sure we have a user
 	if( !$random_user['user_id'] ) {
+		wfProfileOut( __METHOD__ );
 		return '';
 	}
 

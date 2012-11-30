@@ -20,13 +20,12 @@ class RecentQuestionsBlock {
 
 		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_ANSWERS_RECENT_QUESTIONS );
 		if ( !empty($blocksData) && !empty($text) ) {
-			foreach ($blocksData as $blockData) {
-				$result = Phalanx::isBlocked( $text, $blockData );
-				if ( $result['blocked'] ) {
-					Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
-					wfProfileOut( __METHOD__ );
-					return false;
-				}
+			$blockData = null;
+			$result = Phalanx::findBlocked( $text, $blocksData, true, $blockData );
+			if ( $result['blocked'] ) {
+				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
+				wfProfileOut( __METHOD__ );
+				return false;
 			}
 		}
 

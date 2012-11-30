@@ -221,6 +221,10 @@ CKEDITOR.plugins.add('rte-overlay',
 			// image / video placeholder
 			position.top += 2;
 			position.left += 2;
+
+			if (node.hasClass('alignCenter')) {
+				position.left += 150;
+			}
 		}
 		else {
 			// take image margins into consideration

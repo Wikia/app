@@ -65,12 +65,14 @@
 				userName = $quickToolsModal.attr( 'data-username' ),
 				time = $quickToolsModal.find( '#quicktools-time' ).val(),
 				summary = $quickToolsModal.find( '#quicktools-reason' ).val(),
+				botRevert = mw.util.getParamValue( 'bot' ),
 				data = {
 					target: userName,
 					time: time,
 					summary: summary,
 					dorollback: dorollback,
-					dodeletes: dodeletes
+					dodeletes: dodeletes,
+					markbot: botRevert
 				};
 			QuickTools.sendRequest( 'revertAll', data );
 		},
@@ -107,8 +109,9 @@
 		botFlag: function( e ) {
 			var	$quickToolsModal = $( '#QuickToolsModal' ),
 				userName = mw.config.get( 'wgUserName' ),
-				addRights = ( $( e.target ).attr( 'data-bot' ) === 'add' ? 'bot' : '' ),
-				removeRights = ( $( e.target ).attr( 'data-bot' ) === 'remove' ? 'bot' : '' );
+				addOrRemove = $( e.target ).attr( 'data-bot' ),
+				addRights = ( addOrRemove === 'add' ? 'bot' : '' ),
+				removeRights = ( addOrRemove === 'remove' ? 'bot' : '' );
 			$.getJSON( mw.util.wikiScript( 'api' ), {
 				action: 'query',
 				list: 'users',

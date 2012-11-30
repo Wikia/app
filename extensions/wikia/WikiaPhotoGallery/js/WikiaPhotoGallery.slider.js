@@ -13,6 +13,7 @@ var WikiaPhotoGallerySlider = {
 	},
 
 	init: function(sliderId) {
+		var that = this;
 		this.sliderId = sliderId;
 		$().log('Slider');
 		$().log(this.sliderId);
@@ -41,6 +42,10 @@ var WikiaPhotoGallerySlider = {
 		$('.wikiaPhotoGallery-slider-body ul li a').click(function() {
 			WikiaPhotoGallerySlider.sliderEnable = false;
 		});
+		// kill slider while closing preview in edit mode
+		$(window).bind('EditPagePreviewClosed', function() {
+			that.killSlider();
+		});
 
 		$('#wikiaPhotoGallery-slider-body-' + sliderId).show();
 
@@ -48,6 +53,15 @@ var WikiaPhotoGallerySlider = {
 		if ($('#wikiaPhotoGallery-slider-body-' + sliderId).find('ul').children().length > 1) {
 			this.timer = setInterval(this.slideshow, 7000);
 		}
+	},
+
+	// kill slider instance - exp. when closing preview in editor
+	killSlider: function() {
+		clearInterval(this.timer);
+		this.timer = null;
+		this.sliderEnable = true;
+		this.initialImageId = 0;
+		this.sliderId = null;
 	},
 
 	scroll: function(nav) {

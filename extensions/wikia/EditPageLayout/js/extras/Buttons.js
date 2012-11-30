@@ -1,17 +1,23 @@
 (function(window, $) {
-	var buttons = window.wgEditorExtraButtons = window.wgEditorExtraButtons || {};
+	var buttons = window.wgEditorExtraButtons,
+		extensionsPath = window.wgExtensionsPath,
+		mediawikiButtons = window.mwCustomEditButtons;
 
-	var checkGallery = function() {
+	if ( !buttons ) {
+		buttons = window.wgEditorExtraButtons = {};
+	}
+
+	function checkGallery() {
 		return typeof window.WikiaPhotoGallery != 'undefined';
-	};
+	}
 
-	var checkVET = function() {
-		return typeof window.VET_show == 'function';
-	};
-
-	var getTextarea = function() {
+	function getTextarea() {
 		return WikiaEditor.getInstance().getEditbox()[0];
-	};
+	}
+
+	/**
+	 * Editor right rail buttons
+	 */
 
 	buttons['InsertImage'] = {
 		type: 'button',
@@ -19,9 +25,10 @@
 		titleId: 'wikia-editor-media-image-tooltip',
 		className: 'RTEImageButton',
 		forceLogin: true,
-		clicksource: function() { 
-			//debugger;
-			WMU_show({}); 
+		clicksource: function() {
+			WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
+				WMU_show({});
+			});
 		},
 		ckcommand: 'addimage'
 	};
@@ -80,9 +87,16 @@
 		titleId: 'wikia-editor-media-video-tooltip',
 		className: 'RTEVideoButton',
 		forceLogin: true,
-		clicksource: function() { VET_show({target: {id:"mw-editbutton-vet"}}); },
-		ckcommand: 'addvideo',
-		precondition: checkVET
+		clicksource: function() {
+			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+				VET_show({
+					target: {
+						id: 'mw-editbutton-vet'
+					}
+				});
+			});
+		},
+		ckcommand: 'addvideo'
 	};
 
 	buttons['SourceBold'] = {
@@ -114,5 +128,50 @@
 			insertTags( "[[", "]]", "Link title", getTextarea());
 		}
 	};
+
+	/**
+	 * Mediawiki toolbar buttons (Oasis skin only)
+	 */
+
+	if ( skin == 'oasis' && mediawikiButtons ) {
+		if ( window.wgEnableWikiaMiniUploadExt ) {
+			mediawikiButtons.push({
+				imageFile: extensionsPath + '/wikia/WikiaMiniUpload/images/button_wmu.png',
+				speedTip: wmu_imagebutton,
+				imageId: 'mw-editbutton-wmu',
+				onclick: function( event ) {
+					WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
+						WMU_show( event );
+					});
+				}
+			});
+		}
+
+		if ( window.wgEnableWikiaPhotoGalleryExt ) {
+			mediawikiButtons.push({
+				imageFile: extensionsPath + '/wikia/WikiaPhotoGallery/images/gallery_add.png',
+				speedTip: window.WikiaPhotoGalleryAddGallery,
+				imageId: 'mw-editbutton-wpg',
+				onclick: function() {
+					WikiaPhotoGallery.showEditor({
+						from: 'source'
+					});
+				}
+			});
+		}
+
+		if ( window.wgEnableVideoToolExt ) {
+			mediawikiButtons.push({
+				imageFile: extensionsPath + '/wikia/VideoEmbedTool/images/button_vet.png',
+				speedTip: vet_imagebutton,
+				imageId: 'mw-editbutton-vet',
+				onclick: function( event ) {
+					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+						VET_show( event );
+					});
+				}
+			});
+		}
+	}
 
 })(this, jQuery);

@@ -66,7 +66,7 @@ if('' == $props['oname']) {
 			</div>
 		</div>
 	</div>
-	<div class="input-group VideoEmbedNoBorder">
+	<div class="input-group VideoEmbedNoBorder addVideoDetailsFormControls">
 		<input class="wikia-button" type="submit" style="float:right" value="<?= wfMsg('vet-insert2') ?>" />
 	</div>
 	<input id="VideoEmbedId" type="hidden" value="<?= isset($props['id']) ? urlencode($props['id']) : '' ?>" />

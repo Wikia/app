@@ -68,9 +68,9 @@ class WikiaMobileMediaService extends WikiaService {
 			if ( $file instanceof File ) {
 				if ( !empty( $item['link'] ) ) {
 					//build wikitext for linked images to render separately
-					$wikiText .= '[[' . $item['title']->getPrefixedDBkey() . '|link=' . $item['link'];
+					$wikiText .= "[[" . $item['title']->getPrefixedDBkey() . "|link=" . $item['link'];
 
-					if ( $item['caption'] ) {
+					if ( !empty( $item['caption'] ) ) {
 						$wikiText .= "|{$item['caption']}";
 					}
 
@@ -150,8 +150,7 @@ class WikiaMobileMediaService extends WikiaService {
 			//avoid wikitext recursion
 			$this->wg->WikiaMobileDisableMediaGrouping = true;
 
-			$tmpParser = new Parser();
-			$result .= $tmpParser->parse( $wikiText,  $this->wg->Title, new ParserOptions() )->getText();
+			$result .= $this->wg->Parser->recursiveTagParse( $wikiText );
 
 			//restoring to previous value
 			$this->wg->WikiaMobileDisableMediaGrouping = $origVal;

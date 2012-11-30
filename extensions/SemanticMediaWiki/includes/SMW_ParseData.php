@@ -106,6 +106,7 @@ class SMWParseData {
 		$propertyDv = SMWPropertyValue::makeUserProperty( $propertyName );
 		
 		if ( !$propertyDv->isValid() ) {
+			wfProfileOut( 'SMWParseData::addProperty (SMW)' );
 			return $propertyDv;
 		}
 		
@@ -113,6 +114,7 @@ class SMWParseData {
 		
 		// FIXME: this solves the issue of bug 29438, but is probably not what we want to do.
 		if ( $propertyDi instanceof SMWDIError ) {
+			wfProfileOut( 'SMWParseData::addProperty (SMW)' );
 			return $propertyDv;
 		}
 		

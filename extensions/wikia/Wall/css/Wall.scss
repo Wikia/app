@@ -5,6 +5,7 @@
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/opacity";
 
+@import "BreadCrumbs";
 @import "WallColors";
 @import "WallDimensions";
 @import "WallSortingBar";
@@ -624,26 +625,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	cursor: pointer;
 }
 
-.BreadCrumbs {
-	@include clearfix;
-	font-size: 14px;
-	border-bottom: 1px solid $color-wall-border;
-	line-height: 20px;
-	padding: 3px 0 5px;
-	.removed {
-		color: $color-alternate-text;
-		padding-left: 7px;
-	}
-	.separator {
-		padding: 0 3px;
-		position: relative;
-		top: -1px;
-	}
-	& + #WikiaArticle .comments > .SpeechBubble {
-		padding-top: 30px;
-	}
-}
-
 .skin-monobook {
 	#WallBrickHeader {
 		padding-left: 0;
@@ -684,6 +665,9 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 		.buttons-monobook{
 			display: block;
+			a {
+				margin-right: 10px;
+			}
 		}
 		.buttons {
 			display: none;
@@ -798,6 +782,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 	}
 	.deleteorremove-container {
+		margin-left: 5px;
 		td {
 			vertical-align: bottom;
 		}

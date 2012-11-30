@@ -11,7 +11,6 @@
 
 $messages = array();
 
-// Lang: en
 $messages['en'] = array(
 	//  Tabs 
 	'main-tab-discover' => 'Discover',
@@ -230,7 +229,8 @@ $messages['inh'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'ХӀаа',
 );
 
-/** Italian (italiano) */
+/** Italian (italiano)
+ */
 $messages['it'] = array(
 	'main-tab-discover' => 'Scopri',
 	'main-tab-personal' => 'My Wikia',
@@ -416,7 +416,7 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'main-tab-personal' => 'నా వికియా',
-	'main-tab-search' => 'అన్వేషణ',
+	'main-tab-search' => 'వెతుకు',
 	'tab-discover-no-network-dialog-close-button' => 'సరే',
 );
 
@@ -461,3 +461,9 @@ $messages['ug-arab'] = array(
 	'browser-loading-message' => 'يۈكلەۋاتىدۇ…',
 );
 
+/** Simplified Chinese (中文（简体）‎)
+ * @author Sam Wang
+ */
+$messages['zh-hans'] = array(
+	'tab-discover-no-network-dialog-close-button' => '确认',
+);

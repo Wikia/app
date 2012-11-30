@@ -188,6 +188,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		wfProfileIn(__METHOD__);
 
 		if (!file_exists($fileName)) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
@@ -206,6 +207,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 			// not supported image type provided
 			default:
+				wfProfileOut(__METHOD__);
 				return false;
 		}
 

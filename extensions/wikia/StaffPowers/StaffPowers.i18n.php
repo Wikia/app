@@ -159,4 +159,3 @@ $messages['tl'] = array(
 $messages['vi'] = array(
 	'staffpowers-ipblock-abort' => 'Cấm Nhân viên Wikia, Hỗ trợ viên Wikia, hoặc thành viên trong nhóm tình nguyện viên chống phá hoại của chúng tôi (VSTF) là không thể. Xin vui lòng sử dụng [[Special:Contact|mẫu liên hệ này]] để báo cáo bất kỳ vấn đề hoặc sự cố về nhân viên của chúng tôi.',
 );
-

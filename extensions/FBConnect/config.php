@@ -10,11 +10,6 @@ include $currDir.'wikia/fbconnect_customizations.php';
 
 $wgExtensionFunctions[] = 'wikia_fbconnect_init';
 
-// Set up this deployment to use our custom account-creation form instead of the one built into the extension.
-$wgHooks['SpecialConnect::chooseNameForm'][] = 'wikia_fbconnect_chooseNameForm'; // callbacks are in wikia/fbconnect_customizations.php
-$wgHooks['SpecialConnect::createUser::validateForm'][] = 'wikia_fbconnect_validateChooseNameForm';
-$wgHooks['SpecialConnect::createUser::postProcessForm'][] = 'wikia_fbconnect_postProcessForm';
-
 // If the user is created or attached, apply their Facebook Profile Pic as their Wikia Avatar (unless they already have one).
 $wgHooks['SpecialConnect::createUser::postProcessForm'][] = 'wikia_fbconnect_considerProfilePic';
 $wgHooks['SpecialConnect::userAttached'][] = 'wikia_fbconnect_considerProfilePic';

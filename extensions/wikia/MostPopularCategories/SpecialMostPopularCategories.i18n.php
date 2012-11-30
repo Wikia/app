@@ -82,9 +82,17 @@ $messages['cs'] = array(
 	'mostpopularcategories' => 'Nejpopulárnější kategorie',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ */
 $messages['de'] = array(
 	'mostpopularcategories' => 'Beliebteste Kategorien',
+);
+
+/** Zazaki (Zazaki)
+ * @author Mirzali
+ */
+$messages['diq'] = array(
+	'mostpopularcategories' => 'Kategoriyê tewr sinayoği',
 );
 
 /** Greek (Ελληνικά)
@@ -94,7 +102,8 @@ $messages['el'] = array(
 	'mostpopularcategories' => 'Περισσότερο δημοφιλείς κατηγορίες',
 );
 
-/** Spanish (español) */
+/** Spanish (español)
+ */
 $messages['es'] = array(
 	'mostpopularcategories' => 'Categorías más populares',
 );
@@ -106,7 +115,8 @@ $messages['eu'] = array(
 	'mostpopularcategories' => 'Kategoria ezagunenak',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ */
 $messages['fa'] = array(
 	'mostpopularcategories' => 'رده‌های محبوب',
 );
@@ -251,7 +261,8 @@ $messages['ms'] = array(
 	'mostpopularcategories' => 'Kategori paling popular',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎) */
+/** Norwegian Bokmål (norsk (bokmål)‎)
+ */
 $messages['nb'] = array(
 	'mostpopularcategories' => 'Mest populære kategorier',
 );
@@ -326,7 +337,8 @@ $messages['ru'] = array(
 	'mostpopularcategories' => 'Самые популярные категории',
 );
 
-/** Tachelhit (Tašlḥiyt/ⵜⴰⵛⵍⵃⵉⵜ) */
+/** Tachelhit (Tašlḥiyt/ⵜⴰⵛⵍⵃⵉⵜ)
+ */
 $messages['shi'] = array(
 	'mostpopularcategories' => 'Taggayyin lli bahra ttuyssanin',
 );
@@ -428,4 +440,3 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'mostpopularcategories' => '最受歡迎的類別',
 );
-

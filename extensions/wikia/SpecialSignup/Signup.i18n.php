@@ -7,7 +7,8 @@ $messages['en'] = array(
 	'signup' => 'Signup',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'signup-desc' => 'The Special:Userlogin/signup page is displayed if a user chooses login, but is not signed up for the wiki.',
 	'signup' => 'The Special:Userlogin/signup page is displayed if a user chooses login, but is not signed up for the wiki.',
@@ -34,12 +35,14 @@ $messages['bn'] = array(
 	'signup' => 'নিবন্ধিত হউন',
 );
 
-/** Breton (brezhoneg) */
+/** Breton (brezhoneg)
+ */
 $messages['br'] = array(
 	'signup' => 'En em enskrivañ',
 );
 
-/** Bosnian (bosanski) */
+/** Bosnian (bosanski)
+ */
 $messages['bs'] = array(
 	'signup-desc' => 'Dodaje nadimak [[{{#Special:Signup}}]] za [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Prijava',
@@ -61,7 +64,8 @@ $messages['cs'] = array(
 	'signup' => 'Registrace',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ */
 $messages['de'] = array(
 	'signup-desc' => 'Fügt einen Alias [[{{#Special:Signup}}]] für die Seite [[{{#Special:UserLogin}}/signup]] hinzu.',
 	'signup' => 'Benutzerkonto erstellen',
@@ -75,7 +79,8 @@ $messages['el'] = array(
 	'signup' => 'Εγγραφή',
 );
 
-/** Spanish (español) */
+/** Spanish (español)
+ */
 $messages['es'] = array(
 	'signup-desc' => 'Añade el alias [[{{#Special:Signup}}]] para [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Registrarse',
@@ -115,7 +120,8 @@ $messages['hu'] = array(
 	'signup' => 'Regisztráció',
 );
 
-/** Interlingua (interlingua) */
+/** Interlingua (interlingua)
+ */
 $messages['ia'] = array(
 	'signup-desc' => 'Adde le alias [[{{#Special:Signup}}]] pro [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Crear conto',
@@ -137,7 +143,8 @@ $messages['ja'] = array(
 	'signup' => 'Signup',
 );
 
-/** Macedonian (македонски) */
+/** Macedonian (македонски)
+ */
 $messages['mk'] = array(
 	'signup-desc' => 'Додава алијас на [[{{#Special:Signup}}]] за [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Зачленување',
@@ -151,13 +158,15 @@ $messages['ms'] = array(
 	'signup' => 'Daftar Diri',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎) */
+/** Norwegian Bokmål (norsk (bokmål)‎)
+ */
 $messages['nb'] = array(
 	'signup-desc' => 'Legger til aliaset [[{{#Special:Signup}}]] for [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Registrer',
 );
 
-/** Dutch (Nederlands) */
+/** Dutch (Nederlands)
+ */
 $messages['nl'] = array(
 	'signup-desc' => 'Voegt de alias [[{{#Special:Signup}}]] toe voor [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Registreren',
@@ -196,25 +205,29 @@ $messages['ps'] = array(
 	'signup' => 'نومليکل',
 );
 
-/** Portuguese (português) */
+/** Portuguese (português)
+ */
 $messages['pt'] = array(
 	'signup-desc' => 'Acrescenta o nome alternativo [[{{#Special:Signup}}]] para [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Registar-se',
 );
 
-/** Brazilian Portuguese (português do Brasil) */
+/** Brazilian Portuguese (português do Brasil)
+ */
 $messages['pt-br'] = array(
 	'signup-desc' => 'Acrescenta o nome alternativo [[{{#Special:Signup}}]] para [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Registar-se',
 );
 
-/** Russian (русский) */
+/** Russian (русский)
+ */
 $messages['ru'] = array(
 	'signup-desc' => 'Добавляет псевдоним [[{{#Special:Signup}}]] для  [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Регистрация',
 );
 
-/** Tachelhit (Tašlḥiyt/ⵜⴰⵛⵍⵃⵉⵜ) */
+/** Tachelhit (Tašlḥiyt/ⵜⴰⵛⵍⵃⵉⵜ)
+ */
 $messages['shi'] = array(
 	'signup-desc' => 'Zayd alias [[{{#Special:Signup}}]] i [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Aqqiyd (akcum)',
@@ -235,7 +248,8 @@ $messages['ta'] = array(
 	'signup' => 'பதிவுசெய்',
 );
 
-/** Telugu (తెలుగు) */
+/** Telugu (తెలుగు)
+ */
 $messages['te'] = array(
 	'signup-desc' => '[[{{#Special:UserLogin}}/signup]]కి [[{{#Special:Signup}}]] అనే మారుపేరుని చేరుస్తుంది',
 	'signup' => 'నమోదవ్వండి',
@@ -255,6 +269,14 @@ $messages['tl'] = array(
 $messages['tt-cyrl'] = array(
 	'signup-desc' => '[[{{#Special:UserLogin}}/signup]] өчен [[{{#Special:Signup}}]] псевдонимын өсти',
 	'signup' => 'Теркәлү',
+);
+
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'signup-desc' => 'Adds alias [[{{#Special:Signup}}]] for [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'ⵙⴽⵔ ⴰⵙⴷⴰⵡ',
 );
 
 /** Ukrainian (українська)
@@ -281,4 +303,3 @@ $messages['zh-hans'] = array(
 	'signup-desc' => '为[[{{#Special:UserLogin}}/signup]]添加别名[[{{#Special:Signup}}]]',
 	'signup' => '注册',
 );
-

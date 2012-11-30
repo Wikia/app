@@ -6,6 +6,11 @@ class ShareButtonGooglePlus extends ShareButton {
 		parent::__construct($app);
 	}
 
+	// AssetsManager compliant path to assets
+	public function getAssets() {
+		return array( '//extensions/wikia/ShareButtons/js/ShareButtonGooglePlus.js' );
+	}
+
 	/**
 	 * Return HTML rendering share box (with votes count)
 	 *
@@ -17,13 +22,6 @@ class ShareButtonGooglePlus extends ShareButton {
 			'data-size' => 'tall',
 			'data-href' => $this->getUrl(),
 		), ' ');
-
-		$html .= F::build('JSSnippets')->addToStack(
-			array(),
-			array(
-				'$.loadGooglePlusAPI'
-			)
-		);
 
 		return $html;
 	}

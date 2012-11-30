@@ -175,13 +175,8 @@ class LightboxController extends WikiaController {
 		$data = WikiaFileHelper::getMediaDetail( $title, $config );
 
 		$articles = $data['articles'];
-		$isPostedIn = false; // Bool to tell mustache to print "posted in" section
-
-		if( !empty($articles) ) {
-			$isPostedIn = true;
-		}
-
-		list( $smallerArticleList, $articleListIsSmaller ) = F::build( 'WikiaFileHelper', array( $articles, self::POSTED_IN_ARTICLES ), 'truncateArticleList' );
+		list( $smallerArticleList, $articleListIsSmaller ) = WikiaFileHelper::truncateArticleList( $articles, self::POSTED_IN_ARTICLES );
+		$isPostedIn = empty( $smallerArticleList ) ? false : true;	// Bool to tell mustache to print "posted in" section
 
 		// file details
 		$this->views = $this->wf->Msg( 'lightbox-video-views', $this->wg->Lang->formatNum($data['videoViews']) );
@@ -239,8 +234,7 @@ class LightboxController extends WikiaController {
 			$articleTitleObj = F::build('Title', array($articleTitle), 'newFromText');
 
 			if(!empty($articleTitleObj) && $articleTitleObj->exists()) {
-
-				$fileParam = $fileTitleObj->getDBKey();
+				$fileParam = $this->wf->Urlencode( $fileTitleObj->getDBKey() );
 				$articleUrl = $articleTitleObj->getFullURL("file=$fileParam");
 				$articleNS = $articleTitleObj->getNamespace();
 				$articleTitleText = $articleTitleObj->getText();
@@ -256,12 +250,16 @@ class LightboxController extends WikiaController {
 			$shareUrl = !empty($articleUrl) && in_array($articleNS, $sharingNamespaces) ? $articleUrl : $fileUrl;
 			$thumb = $file->transform(array('width'=>300, 'height'=>250));
 			$thumbUrl = $thumb->getUrl();
-			$linkDescription = wfMsg('lightbox-share-description', empty($articleUrl) ? $fileTitle : $articleTitleText, $this->wg->Sitename);
+
 			if(WikiaFileHelper::isFileTypeVideo( $file )) {
 				$embedMarkup = $file->getEmbedCode(300, true, false);
+				$msgSuffix = '-video';
 			} else {
 				$embedMarkup = "<a href=\"$shareUrl\"><img width=\"" . $thumb->getWidth() . "\" height=\"" . $thumb->getHeight() . "\" src=\"$thumbUrl\"/></a>";
+				$msgSuffix = '';
 			}
+
+			$linkDescription = wfMsg( 'lightbox-share-description'.$msgSuffix, empty($articleUrl) ? $fileTitle : $articleTitleText, $this->wg->Sitename );
 
 			$shareNetworks = F::build( 'SocialSharingService' )->getNetworks( array(
 				'facebook',
@@ -307,11 +305,15 @@ class LightboxController extends WikiaController {
 		$sent = array();
 		$notsent = array();
 
-		if (!$user->isLoggedIn()) {
+		if ( !$user->isLoggedIn() ) {
 			$errors[] = 'notloggedin';
 		} else {
-			$addresses = $this->request->getVal('addresses', '');
-			$shareUrl = $this->request->getVal('shareUrl', '');
+			$addresses = $this->request->getVal( 'addresses', '' );
+			$shareUrl = $this->request->getVal( 'shareUrl', '' );
+			$type = $this->request->getVal( 'type', '' );
+
+			$msgSuffix = ( $type == 'video' ) ? '-video' : '';
+
 			if (!empty($addresses) && !empty($shareUrl) && !$user->isBlockedFromEmailuser() ) {
 				$addresses = explode(',', $addresses);
 
@@ -322,8 +324,8 @@ class LightboxController extends WikiaController {
 					$result = UserMailer::send(
 						$to,
 						$sender,
-						wfMsg('lightbox-share-email-subject', array("$1" => $user->getName())),
-						wfMsg('lightbox-share-email-body', $shareUrl),
+						wfMsg( 'lightbox-share-email-subject'.$msgSuffix, array("$1" => $user->getName()) ),
+						wfMsg( 'lightbox-share-email-body'.$msgSuffix, $shareUrl ),
 						null,
 						null,
 						'ImageLightboxShare'

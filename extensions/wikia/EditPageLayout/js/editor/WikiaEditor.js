@@ -12,8 +12,57 @@
 	// instance tracking
 	WE.instanceId = '';
 	WE.instanceCount = 0;
-	
+
 	WE.debounce = false;
+
+	// Lazy loaded components manager
+	// Would be nice to use resource loader for this, but we can't load Sass files there :(
+	WE.load = (function() {
+		var components = {
+			VideoEmbedTool: {
+				loaded: false,
+				requires: [
+					$.loadYUI,
+					$.getSassCommonURL( 'extensions/wikia/VideoEmbedTool/css/VET.scss' ),
+					$.getSassCommonURL( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' ),
+					wgResourceBasePath + '/extensions/wikia/VideoEmbedTool/js/VET.js',
+					wgResourceBasePath + '/extensions/wikia/WikiaStyleGuide/js/Dropdown.js'
+				]
+			},
+			WikiaMiniUpload: {
+				loaded: false,
+				requires: [
+					$.loadYUI,
+					$.loadJQueryAIM,
+					wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/css/WMU.css',
+					wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
+				]
+			}
+		};
+
+		return function( name ) {
+			var component = components[ name ],
+				deferred = new $.Deferred();
+
+			if ( component ) {
+				if ( component.loaded ) {
+					deferred.resolve();
+
+				} else {
+
+					component.loaded = true;
+					deferred = $.when( $.getResources( component.requires ) );
+				}
+
+			} else {
+				deferred.reject({
+					error: 'WikiaEditor.load: invalid component name "' + name + '"'
+				});
+			}
+
+			return deferred.promise();
+		}
+	})();
 
 	// Update the current instance
 	WE.setInstanceId = function(instanceId, event, forceEvents) {
@@ -99,13 +148,13 @@
 
 	WE.callFunction = function( id ) {
 		// Bugid 17716 - Don't fire twice if button is double-clicked
-		if (WE.debounce) return;	
+		if (WE.debounce) return;
 		setTimeout(function() { WE.debounce = false; }, 500);
 		WE.debounce = true;
-		
+
 		var args = Array.prototype.slice.call(arguments,1);
 		var conf = WE.functions[id];
-		return conf.fn.apply(conf.scope,args);	
+		return conf.fn.apply(conf.scope,args);
 	};
 
 	WE.initAddons = (function(){

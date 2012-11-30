@@ -128,13 +128,15 @@ EOT;
 				$jwplayerAdMessage = F::app()->wf->Msg('jwplayer-ad-message');
 				$script = <<<EOT
 if (!window.wgUserName || window.wgUserShowAds) {
+	var wikiaDartHelper = WikiaDartHelper(Wikia.log, window, document, Geo, Krux, AdLogicShortPage(document));
+	var jwplayer_ad_tag = wikiaDartHelper.getUrl({slotname:'JWPLAYER', slotsize:'320x240', adType:'pfadx', src:'jwplayer'});
 	$googimaDataVariable = {
         'ad.position': 'pre',
         'ad.bandwidth': 'high',
         'admessagedynamic': '$jwplayerAdMessage',
         'admessagedynamickey': 'XX',
         'scaled_ads': 'false',
-        'ad.tag': window.AdConfig.DART.getUrl('JWPLAYER', '320x240', 'jwplayer', 'DART')
+        'ad.tag': jwplayer_ad_tag
     };
 }
 else {

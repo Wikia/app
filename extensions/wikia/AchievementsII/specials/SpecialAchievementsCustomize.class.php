@@ -15,13 +15,14 @@ class SpecialAchievementsCustomize extends SpecialPage {
 		$this->setHeaders();
 
 		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
 			wfProfileOut( __METHOD__ );
+			$wgOut->readOnlyPage();
 			return;
 		}
 
 		if(!$this->userCanExecute($wgUser)) {
 			$this->displayRestrictionError();
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 

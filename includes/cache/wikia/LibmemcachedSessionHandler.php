@@ -57,9 +57,9 @@ class LibmemcachedSessionHandler {
 	static protected function getMemcached() {
 		static $memcached;
 		if ( empty($memcached) ) {
-			global $wgSessionMemCachedServers, $wgMemCachedPersistent, $wgMemCachedTimeout;
+			global $wgSessionMemCachedServers, $wgMemCachedPersistent;
 			
-			$memcached = new LibmemcachedBagOStuff(array(
+			$memcached = LibmemcachedBagOStuff::newFromGlobals(array(
 				'servers' => $wgSessionMemCachedServers,
 				'persistent' => $wgMemCachedPersistent,
 			));

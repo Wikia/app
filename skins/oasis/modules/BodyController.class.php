@@ -140,9 +140,9 @@ class BodyController extends WikiaController {
 				1500 => array('Search', 'Index', null),
 				1002 => array('Forum', 'forumRelatedThreads', null),
 				1001 => array('Forum', 'forumActivityModule', null),
-				1000 => array('Forum', 'forumParticipationModule', null),
 				1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')),
 			);
+			wfProfileOut(__METHOD__);
 			return $railModuleList;
 		}
 
@@ -336,14 +336,7 @@ class BodyController extends WikiaController {
 			$railModuleList[1430] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BUTTON'));
 		}
 
-		// WikiNav v2 - begin
-		// TODO: remove once it's enabled sitewide
-		global $wgOasisNavV2;
-		if (!empty($wgOasisNavV2)) {
-			// remove PagesOnWiki module
-			unset($railModuleList[1450]);
-		}
-		// WikiNav v2 - end
+		unset($railModuleList[1450]);
 
 		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
 

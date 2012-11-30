@@ -1,13 +1,14 @@
 <?php
 
-require_once dirname(__FILE__) . '/../Places.setup.php';
-
 class PlacesTest extends WikiaBaseTest {
 
 	private $attribs;
+
+	/* @var PlaceModel */
 	private $model;
 
 	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../Places.setup.php';
 		parent::setUp();
 
 		$this->attribs = array(

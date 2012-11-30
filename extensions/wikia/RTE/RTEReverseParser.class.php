@@ -91,7 +91,8 @@ class RTEReverseParser {
 
 				// fix nbsp to be a valid UTF space
 				// don't break UTF characters (à - \xC3\xA0 / 誠 - \xE8\xAA / ム - \xE3\x83)
-				$out = preg_replace('%(?<=[\x00-\x7F]|^|\xA0|\xC2)\xA0%', ' ', $out);
+				// don't break hardspace (BugId:68668)
+				$out = preg_replace('%(?<=[\x00-\x7F]|^|\xA0)\xA0%', ' ', $out);
 
 				//RTE::hex(__METHOD__, $out); // debug
 
@@ -583,6 +584,7 @@ class RTEReverseParser {
 		$comment = self::parseComment($node);
 
 		if (empty($comment)) {
+			wfProfileOut(__METHOD__);
 			return '';
 		}
 
@@ -881,7 +883,7 @@ class RTEReverseParser {
 						// if there are matches, and there are no trailing characters
 						// fbId::45461 - [[Tower|Towers of Wizardry]] should not convert to [[Tower]]s of Wizardry
 						preg_match(self::getTrailRegex(), $possibleTrail, $matches);
-						$trail = $matches && empty($matches[2]) ? $matches[1] : $trail;						
+						$trail = $matches && empty($matches[2]) ? $matches[1] : $trail;
 					}
 				}
 
@@ -985,6 +987,7 @@ class RTEReverseParser {
 				$attributes = self::getAttributesStr($node);
 
 				$out = "<{$node->nodeName}{$attributes}>{$textContent}</{$node->nodeName}>";
+				wfProfileOut(__METHOD__);
 				return $out;
 
 			// 1 '</b><i><b>' => '<i>'
@@ -1229,6 +1232,7 @@ class RTEReverseParser {
 		wfProfileIn(__METHOD__);
 
 		if (self::wasHtml($node)) {
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
@@ -1264,6 +1268,7 @@ class RTEReverseParser {
 		wfProfileIn(__METHOD__);
 
 		if (self::wasHtml($node)) {
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
@@ -1905,6 +1910,7 @@ class RTEReverseParser {
 
 		// validate comment
 		if ( (count($fields) != 2) || ($fields[0] != 'RTE') ) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 

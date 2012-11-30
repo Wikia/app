@@ -5,8 +5,21 @@ abstract class VideoFeedIngester {
 	const PROVIDER_REALGRAVITY = 'realgravity';
 	const PROVIDER_IGN = 'ign';
 	const PROVIDER_ANYCLIP = 'anyclip';
-	public static $PROVIDERS = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_IGN, self::PROVIDER_ANYCLIP);
-	public static $PROVIDERS_DEFAULT = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_IGN, self::PROVIDER_ANYCLIP);
+	const PROVIDER_OOYALA = 'ooyala';
+	public static $PROVIDERS = array(
+		self::PROVIDER_SCREENPLAY,
+		self::PROVIDER_IGN,
+		self::PROVIDER_ANYCLIP,
+		self::PROVIDER_REALGRAVITY,
+		self::PROVIDER_OOYALA,
+	);
+	public static $PROVIDERS_DEFAULT = array(
+		self::PROVIDER_SCREENPLAY,
+		self::PROVIDER_IGN,
+		self::PROVIDER_ANYCLIP,
+		self::PROVIDER_REALGRAVITY,
+		self::PROVIDER_OOYALA,
+	);
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
 	protected static $FEED_URL;
@@ -64,8 +77,16 @@ abstract class VideoFeedIngester {
 	}
 
 	public function createVideo(array $data, &$msg, $params=array()) {
-
 		wfProfileIn( __METHOD__ );
+
+		// blacklist video
+		if ( $this->isBlacklistVideo($data) ) {
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
+		$this->filterKeywords( $data['tags'] );
+
 		$debug = !empty($params['debug']);
 		$ignoreRecent = !empty($params['ignorerecent']) ? $params['ignorerecent'] : 0;
 		if($debug) {
@@ -75,7 +96,7 @@ abstract class VideoFeedIngester {
 			}
 		}
 		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
-		
+
 		$id = $data['videoId'];
 		$name = $this->generateName($data);
 		$metadata = $this->generateMetadata($data, $msg);
@@ -86,7 +107,9 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
-		$duplicates = WikiaFileHelper::findVideoDuplicates(static::$PROVIDER,$id);
+		$provider = empty($params['provider']) ? static::$PROVIDER : $params['provider'];
+
+		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id );
 		$dup_count = count($duplicates);
 		$previousFile = null;
 		if ( $dup_count > 0 ) {
@@ -95,6 +118,7 @@ abstract class VideoFeedIngester {
 				if($debug) {
 					print "Not uploading - video already exists and reupload is disabled\n";
 				}
+				wfProfileOut( __METHOD__ );
 				return 0;
 			}
 
@@ -160,11 +184,12 @@ abstract class VideoFeedIngester {
 				$timeNow = intval(wfTimestamp( TS_UNIX, time() ) );
 				if($timeUnix + $ignoreRecent >= $timeNow) {
 					print "Recently uploaded, ignoring\n";
+					wfProfileOut( __METHOD__ );
 					return 0;
 				}
 			}
 			$uploadedTitle = null;
-			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $id, $uploadedTitle, $body, false, $metadata );
+			$result = VideoFileUploader::uploadVideo( $provider, $id, $uploadedTitle, $body, false, $metadata );
 			if ($result->ok) {
 				$fullUrl = WikiFactory::getLocalEnvURL($uploadedTitle->getFullURL());
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n\n";
@@ -248,6 +273,7 @@ abstract class VideoFeedIngester {
 		$memcKey = wfMemcKey( self::CACHE_KEY );
 		$aWikis = $wgMemc->get( $memcKey );
 		if ( !empty( $aWikis ) ) {
+			wfProfileOut( __METHOD__ );
 			return $aWikis;
 		}
 
@@ -334,5 +360,82 @@ abstract class VideoFeedIngester {
 		
 		return false;
 	}
-	
+
+	/**
+	 * get regex
+	 * @param $keywords string with comma-separated keywords
+	 * @return string regexp or null if no valid keywords were specified
+	 */
+	protected function getBlacklistRegex( $keywords ) {
+		$regex = null;
+		if ( $keywords ) {
+			$keywords = explode( ',', $keywords );
+			$blacklist = array();
+			foreach( $keywords as $word ) {
+				$word = preg_replace( "/[^A-Za-z0-9' ]/", "", trim($word) );
+				if ( $word ) {
+					$blacklist[] = $word;
+				}
+			}
+
+			if ( !empty($blacklist) ) {
+				$regex = '/\b('.implode('|', $blacklist).')\b/i';
+			}
+		}
+
+		return $regex;
+	}
+
+	/**
+	 * check if video is blacklisted ( titleName, description, keywords, tags )
+	 * @param array $data
+	 * @return boolean
+	 */
+	protected function isBlacklistVideo( $data ) {
+		$regex = $this->getBlacklistRegex( F::app()->wg->VideoBlacklist );
+		if ( !empty($regex) ) {
+			$keys = array( 'titleName', 'description' );
+			if ( array_key_exists('keywords', $data) ) {
+				$keys[] = 'keywords';
+			}
+			if ( array_key_exists('tags', $data) ) {
+				$keys[] = 'tags';
+			}
+			foreach( $keys as $key ) {
+				if ( preg_match($regex, str_replace('-', ' ', $data[$key])) ) {
+					echo "Blacklisting video: ".$data['titleName'].", videoId ".$data['videoId']." (reason $key: ".$data[$key].")\n";
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * filter keywords
+	 * @param string $keywords (comma-separated string)
+	 */
+	protected function filterKeywords( &$keywords ) {
+		if ( !empty($keywords) ) {
+			$regex = $this->getBlacklistRegex( F::app()->wg->VideoKeywordsBlacklist );
+			$new = array();
+			if ( !empty($regex) ) {
+				$old = explode( ',', $keywords );
+				foreach( $old as $word ) {
+					if ( preg_match($regex, str_replace('-', ' ', $word)) ) {
+						echo "Skipping blacklisted keyword $word.\n";
+						continue;
+					}
+
+					$new[] = $word;
+				}
+			}
+
+			if ( !empty($new) ) {
+				$keywords = implode( ',', $new );
+			}
+		}
+	}
+
 }

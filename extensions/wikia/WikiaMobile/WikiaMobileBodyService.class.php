@@ -11,7 +11,7 @@ class WikiaMobileBodyService extends WikiaService {
 		$categoryLinks = $this->request->getVal( 'categoryLinks', '' );
 		$afterBodyHtml = '';
 		$afterContentHookText = null;
-		
+
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
 		// (taken from Monaco skin)
