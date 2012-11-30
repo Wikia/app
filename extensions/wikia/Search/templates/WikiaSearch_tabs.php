@@ -35,6 +35,7 @@
 									<li>
 										<label><input type="checkbox" name="by_category" value="1" <? if($form['by_category']){ ?>checked<? } ?> id="filter-by-category" /><?= wfMessage('wikiasearch-filter-category') ?></label>
 										<select name="filters[]" <? if(!$form['by_category']){ ?>disabled<? } ?>>
+											<option value="" ><?= wfMessage('wikiasearch-choose-category') ?></option>
 											<option value="cat_videogames" <? if($form['cat_videogames']){ ?>selected<? } ?>><?= wfMessage('hub-Gaming') ?></option>
 											<option value="cat_entertainment" <? if($form['cat_entertainment']){ ?>selected<? } ?>><?= wfMessage('hub-Entertainment') ?></option>
 											<option value="cat_lifestyle" <? if($form['cat_lifestyle']){ ?>selected<? } ?>><?= wfMessage('hub-Lifestyle') ?></option>

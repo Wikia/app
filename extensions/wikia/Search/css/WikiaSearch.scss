@@ -303,6 +303,7 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 			}
 		}
 		.search-filter-sort {
+			display: none; // get's shown with JS on DOM ready
 			font-weight: normal;
 			margin-bottom: 7px;
 			p {
