@@ -185,6 +185,10 @@ class AchBadge {
 		return AchConfig::getInstance()->isSponsored( $this->mBadgeTypeId );
 	}
 
+	public function isInTrack() {
+		return AchConfig::getInstance()->isInTrack( $this->mBadgeTypeId );
+	}
+
 	/**
 	 * Outputs the HTML for the the badge. If 'compact' is set to true, displays a version with less info
 	 * that is used on the ActivityFeed (since the user's name, etc. are already on the associated RecentChange).
@@ -193,7 +197,6 @@ class AchBadge {
 	 */
 	public static function renderForActivityFeed($badgeWrapper, $compact=true){
 		wfProfileIn( __METHOD__ );
-
 
 		$badge_name = htmlspecialchars($badgeWrapper['badge']->getName());
 		$badge_url = $badgeWrapper['badge']->getPictureUrl(82);

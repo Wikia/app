@@ -2977,7 +2977,7 @@ class User {
 			$this->mPassword = '';
 		}
 
-                // wikia change begin
+		// wikia change begin
 		/**
 		 * @author Krzysztof Krzyżaniak (eloy)
 		 * trap for BugId: 4013

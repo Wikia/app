@@ -240,11 +240,11 @@ class BodyController extends WikiaController {
 			$page_owner = User::newFromName($wgTitle->getText());
 
 			if($page_owner) {
-				if( !$page_owner->getOption('hidefollowedpages') ) {
+				if ( !$page_owner->getOption('hidefollowedpages') ) {
 					$railModuleList[1101] = array('FollowedPages', 'Index', null);
 				}
 
-				if($wgEnableAchievementsExt && !(($wgUser->getId() == $page_owner->getId()) && $page_owner->getOption('hidepersonalachievements'))){
+				if ( $wgEnableAchievementsExt ) {
 					$railModuleList[1102] = array('Achievements', 'Index', null);
 				}
 			}
