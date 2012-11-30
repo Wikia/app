@@ -183,7 +183,7 @@ class GameGuidesController extends WikiaController {
 				$this->response->setVal(
 					'html',
 					$this->sendSelfRequest( 'renderPage', array(
-							'title' => $titleName
+							'page' => $titleName
 						)
 					)->toString() );
 
@@ -206,7 +206,7 @@ class GameGuidesController extends WikiaController {
 	 */
 	static function onTitleGetSquidURLs( $title, &$urls ){
 		$urls[] = GameGuidesController::getUrl( 'getPage', array(
-			'title' => $title->getPartialURL()
+			'page' => $title->getPartialURL()
 		));
 
 		return true;
@@ -220,7 +220,7 @@ class GameGuidesController extends WikiaController {
 	public function renderPage(){
 		$this->wf->profileIn( __METHOD__ );
 
-		$titleName = $this->request->getVal( 'title' );
+		$titleName = $this->request->getVal( 'page' );
 
 		$html = ApiService::call(
 			array(
@@ -264,7 +264,7 @@ class GameGuidesController extends WikiaController {
 		$styles = $resources->getVal( 'styles', '' );
 
 		$page = $this->sendSelfRequest( 'getPage', array(
-			'title' => $this->getVal( 'title')
+			'page' => $this->getVal( 'page')
 		) );
 
 		$this->response->setVal( 'html', $page->getVal( 'html' ) );
