@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Nirvana Framework - Dispatcher class, this is where all magic happens
  *
@@ -51,7 +50,7 @@ class WikiaDispatcher {
 
 				// Determine the "base" name for the controller, stripping off Controller/Service/Module
 				$controllerName = $app->getBaseName( $request->getVal( 'controller' ) );
-				
+
 				// Service classes must be dispatched by full name otherwise we look for a controller.
 				if ($app->isService($request->getVal('controller'))) {
 					$controllerClassName = $app->getServiceClassName( $controllerName );
@@ -66,7 +65,7 @@ class WikiaDispatcher {
 				}
 
 				if ( empty( $autoloadClasses[$controllerClassName] ) ) {
-					throw new WikiaException( "Controller class does not exist: {$controllerClassName}" );
+					throw new WikiaException( "Controller class does not exist: {$controllerClassName} method: {$method}" );
 				}
 
 				$app->wf->profileIn($profilename);
