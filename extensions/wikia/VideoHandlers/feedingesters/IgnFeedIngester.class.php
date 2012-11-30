@@ -30,25 +30,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 		return $content;
 	}
 
-	/**
-	 * @param $keywords string with comma-separated keywords
-	 * @return string regexp or null if no valid keywords were specified
-	 */
-	private function prepare_blacklist_regexp($keywords) {
-		if ($keywords) {
-			$keywords = explode(',', $keywords);
-			$blacklist = array();
-			foreach($keywords as $word) {
-				$word = preg_replace("/[^A-Za-z0-9' ]/", "", trim($word) );
-				if ($word) $blacklist[] = $word;
-			}
-			if (!empty($blacklist)) {
-				return '/\b('.implode('|', $blacklist).')\b/i';
-			}
-		}
-		return null;
-	}
-
 	public function import($content='', $params=array()) {
 
 		wfProfileIn( __METHOD__ );
@@ -106,24 +87,9 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$addlCategories = array_merge( $addlCategories, $keywords );
 			$clipData['keywords'] = implode(", ", $keywords );
 
-			$blacklist_regexp = $this->prepare_blacklist_regexp(F::app()->wg->IgnVideoBlacklist);
-			if ($blacklist_regexp) {
-				foreach(array('keywords', 'titleName', 'description') as $key) {
-					if (preg_match($blacklist_regexp, $clipData[$key])) {
-						echo "Blacklisting video ! ".$clipData['titleName'].", videoId ".$clipData['videoId']." (reason $key: ".$clipData[$key].")\n";
-						continue;
-					}
-				}
-			}
-
 			$tags = array();
-			$blacklist_regexp = $this->prepare_blacklist_regexp(F::app()->wg->IgnKeywordsBlacklist);
 			foreach( $video['tags'] as $obj ) {
-				if (array_key_exists('slug', $obj)) {
-					if ($blacklist_regexp && preg_match($blacklist_regexp, $obj['slug'])) {
-						echo "Skipping blacklisted keyword ".$obj['slug']."\n";
-						continue;
-					}
+				if ( array_key_exists('slug', $obj) ) {
 					$tags[$obj['slug']] = true;
 				}
 			}
