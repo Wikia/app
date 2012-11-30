@@ -439,33 +439,41 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 		wrapper = modal.getWrapper();
 
 		if(imagesLength > 1 && !galleryInited) {
-			galleryData = cache && cache.get(cacheKey);
-
-			if(galleryData){
-				Wikia.processStyle(galleryData[0]);
-				Wikia.processScript(galleryData[1]);
+			//in GG all assets are loaded upfront
+			if(Features.gameguides) {
 				require(['mediagallery'], function(mg){
 					mg.init();
 				});
-			}else{
-				Wikia.getMultiTypePackage({
-					styles: '/extensions/wikia/WikiaMobile/css/mediagallery.scss',
-					scripts: 'wikiamobile_mediagallery_js',
-					ttl: ttl,
-					callback: function(res){
-						var script = res.scripts[0],
-							style = res.styles;
+			} else {
+				galleryData = cache && cache.get(cacheKey);
 
-						Wikia.processStyle(style);
-						Wikia.processScript(script);
+				if(galleryData){
+					Wikia.processStyle(galleryData[0]);
+					Wikia.processScript(galleryData[1]);
+					require(['mediagallery'], function(mg){
+						mg.init();
+					});
+				}else{
+					Wikia.getMultiTypePackage({
+						styles: '/extensions/wikia/WikiaMobile/css/mediagallery.scss',
+						scripts: 'wikiamobile_mediagallery_js',
+						ttl: ttl,
+						callback: function(res){
+							var script = res.scripts[0],
+								style = res.styles;
 
-						cache && cache.set(cacheKey, [style, script], ttl);
-						require(['mediagallery'], function(mg){
-							mg.init();
-						});
-					}
-				});
+							Wikia.processStyle(style);
+							Wikia.processScript(script);
+
+							cache && cache.set(cacheKey, [style, script], ttl);
+							require(['mediagallery'], function(mg){
+								mg.init();
+							});
+						}
+					});
+				}
 			}
+
 			galleryInited = true;
 		}
 
