@@ -1,116 +1,67 @@
 /**
+ * VisualEditor user interface IndentationButtonTool class.
+ *
+ * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/**
  * Creates an ve.ui.IndentationButtonTool object.
- * 
+ *
+ * @abstract
  * @class
  * @constructor
  * @extends {ve.ui.ButtonTool}
  * @param {ve.ui.Toolbar} toolbar
- * @param {String} name
  */
- ve.ui.IndentationButtonTool = function( toolbar, name, title, data ) {
-	ve.ui.ButtonTool.call( this, toolbar, name, title );
-	this.data = data;
-};
-
-/* Methods */
-
-ve.ui.IndentationButtonTool.prototype.onClick = function() {
-	if ( !this.$.hasClass( 'es-toolbarButtonTool-disabled' ) ) {
-		var	listItems = [],
-			listItem,
-			i;
-		for ( i = 0; i < this.nodes.length; i++ ) {
-			listItem = this.nodes[i].getParent();
-			if ( listItems.length > 0 ) {
-				if (listItem != listItems[listItems.length - 1]) {
-					listItems.push( listItem );
-				}
-			} else {
-				listItems.push( listItem );
-			}
-		}
-		if ( this.name === 'indent' ) {
-			this.indent( listItems );
-		} else if ( this.name === 'outdent' ) {
-			this.outdent( listItems );
-		}
-	}
-};
-
-ve.ui.IndentationButtonTool.prototype.indent = function( listItems ) {
-	var	surface = this.toolbar.surfaceView,
-		styles,
-		i;
-
-	for ( i = 0; i < listItems.length; i++ ) {
-		styles = listItems[i].getElementAttribute( 'styles' );
-		if ( styles.length < 6 ) {
-			styles.push( styles[styles.length - 1] );
-			tx = surface.model.getDocument().prepareElementAttributeChange(
-				surface.documentView.model.getOffsetFromNode( listItems[i], false ),
-				'set',
-				'styles',
-				styles
-			);
-			surface.model.transact( tx );
-		}
-	}
-	surface.emitCursor();
-};
-
-ve.ui.IndentationButtonTool.prototype.outdent = function( listItems ) {
-	var	surface = this.toolbar.surfaceView,
-		styles,
-		i;
-
-	for ( i = 0; i < listItems.length; i++ ) {
-		styles = listItems[i].getElementAttribute( 'styles' );
-		if ( styles.length > 1 ) {
-			styles.splice( styles.length - 1, 1);
-			tx = surface.model.getDocument().prepareElementAttributeChange(
-				surface.documentView.model.getOffsetFromNode( listItems[i], false ),
-				'set',
-				'styles',
-				styles
-			);
-			surface.model.transact( tx );
-		}
-	}
-	surface.emitCursor();
-};
-
-ve.ui.IndentationButtonTool.prototype.updateState = function( annotations, nodes ) {
-	function areListItems( nodes ) {
-		for( var i = 0; i < nodes.length; i++ ) {
-			if ( nodes[i].getParent().getElementType() !== 'listItem' ) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	this.nodes = nodes;
-	if ( areListItems( this.nodes ) ) {
-		this.$.removeClass( 'es-toolbarButtonTool-disabled' );
-	} else {
-		this.$.addClass( 'es-toolbarButtonTool-disabled' );
-	}
-};
-
-/* Registration */
-
-ve.ui.Tool.tools.indent = {
-	'constructor': ve.ui.IndentationButtonTool,
-	'name': 'indent',
-	'title': 'Increase indentation'
-};
-
-ve.ui.Tool.tools.outdent = {
-	'constructor': ve.ui.IndentationButtonTool,
-	'name': 'outdent',
-	'title': 'Reduce indentation'
+ve.ui.IndentationButtonTool = function VeUiIndentationButtonTool( toolbar ) {
+	// Parent constructor
+	ve.ui.ButtonTool.call( this, toolbar );
 };
 
 /* Inheritance */
 
-ve.extendClass( ve.ui.IndentationButtonTool, ve.ui.ButtonTool );
+ve.inheritClass( ve.ui.IndentationButtonTool, ve.ui.ButtonTool );
+
+/* Static Members */
+
+/**
+ * Indentation method this button applies.
+ *
+ * @abstract
+ * @static
+ * @member
+ * @type {String}
+ */
+ve.ui.IndentationButtonTool.static.method = '';
+
+/* Methods */
+
+/**
+ * Responds to the button being clicked.
+ *
+ * @method
+ */
+ve.ui.IndentationButtonTool.prototype.onClick = function () {
+	this.toolbar.getSurface().execute( 'indentation', this.constructor.static.method );
+};
+
+/**
+ * Responds to the toolbar state being updated.
+ *
+ * @method
+ * @param {ve.dm.Node[]} nodes List of nodes covered by the current selection
+ * @param {ve.dm.AnnotationSet} full Annotations that cover all of the current selection
+ * @param {ve.dm.AnnotationSet} partial Annotations that cover some or all of the current selection
+ */
+ve.ui.IndentationButtonTool.prototype.onUpdateState = function ( nodes ) {
+	var i, len,
+		any = false;
+	for ( i = 0, len = nodes.length; i < len; i++ ) {
+		if ( nodes[i].hasMatchingAncestor( 'listItem' ) ) {
+			any = true;
+			break;
+		}
+	}
+	this.setDisabled( !any );
+};

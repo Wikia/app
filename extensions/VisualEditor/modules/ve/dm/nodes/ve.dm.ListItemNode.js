@@ -1,38 +1,65 @@
 /**
- * Creates an ve.dm.ListItemNode object.
- * 
- * @class
- * @constructor
- * @extends {ve.dm.LeafNode}
- * @param {Object} element Document data element of this node
- * @param {Integer} length Length of document data element
+ * VisualEditor data model ListItemNode class.
+ *
+ * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
  */
-ve.dm.ListItemNode = function( element, contents ) {
-	// Inheritance
-	ve.dm.BranchNode.call( this, 'listItem', element, contents );
-};
-
-/* Methods */
 
 /**
- * Creates a list item view for this model.
- * 
- * @method
- * @returns {ve.es.ListItemNode}
+ * DataModel node for a list item.
+ *
+ * @class
+ * @constructor
+ * @extends {ve.dm.BranchNode}
+ * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
+ * @param {Object} [attributes] Reference to map of attribute key/value pairs
  */
-ve.dm.ListItemNode.prototype.createView = function() {
-	return new ve.es.ListItemNode( this );
-};
-
-/* Registration */
-
-ve.dm.DocumentNode.nodeModels.listItem = ve.dm.ListItemNode;
-
-ve.dm.DocumentNode.nodeRules.listItem = {
-	'parents': ['list'],
-	'children': null
+ve.dm.ListItemNode = function VeDmListItemNode( children, attributes ) {
+	// Parent constructor
+	ve.dm.BranchNode.call( this, 'listItem', children, attributes );
 };
 
 /* Inheritance */
 
-ve.extendClass( ve.dm.ListItemNode, ve.dm.BranchNode );
+ve.inheritClass( ve.dm.ListItemNode, ve.dm.BranchNode );
+
+/* Static Members */
+
+/**
+ * Node rules.
+ *
+ * @see ve.dm.NodeFactory
+ * @static
+ * @member
+ */
+ve.dm.ListItemNode.rules = {
+	'isWrapped': true,
+	'isContent': false,
+	'canContainContent': false,
+	'hasSignificantWhitespace': false,
+	'childNodeTypes': null,
+	'parentNodeTypes': ['list']
+};
+
+/**
+ * Node converters.
+ *
+ * @see {ve.dm.Converter}
+ * @static
+ * @member
+ */
+ve.dm.ListItemNode.converters = {
+	'domElementTypes': ['li'],
+	'toDomElement': function () {
+		return document.createElement( 'li' );
+	},
+	'toDataElement': function () {
+		return {
+			'type': 'listItem'
+		};
+	}
+};
+
+/* Registration */
+
+ve.dm.nodeFactory.register( 'listItem', ve.dm.ListItemNode );

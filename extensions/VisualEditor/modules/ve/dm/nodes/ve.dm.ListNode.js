@@ -1,38 +1,69 @@
 /**
- * Creates an ve.dm.ListNode object.
- * 
+ * VisualEditor data model ListNode class.
+ *
+ * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/**
+ * DataModel node for a list.
+ *
  * @class
  * @constructor
  * @extends {ve.dm.BranchNode}
- * @param {Object} element Document data element of this node
- * @param {ve.dm.ListItemNode[]} contents List of child nodes to initially add
+ * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
+ * @param {Object} [attributes] Reference to map of attribute key/value pairs
  */
-ve.dm.ListNode = function( element, contents ) {
-	// Inheritance
-	ve.dm.BranchNode.call( this, 'list', element, contents );
-};
-
-/* Methods */
-
-/**
- * Creates a list view for this model.
- * 
- * @method
- * @returns {ve.es.ListNode}
- */
-ve.dm.ListNode.prototype.createView = function() {
-	return new ve.es.ListNode( this );
-};
-
-/* Registration */
-
-ve.dm.DocumentNode.nodeModels.list = ve.dm.ListNode;
-
-ve.dm.DocumentNode.nodeRules.list = {
-	'parents': null,
-	'children': ['listItem']
+ve.dm.ListNode = function VeDmListNode( children, attributes ) {
+	// Parent constructor
+	ve.dm.BranchNode.call( this, 'list', children, attributes );
 };
 
 /* Inheritance */
 
-ve.extendClass( ve.dm.ListNode, ve.dm.BranchNode );
+ve.inheritClass( ve.dm.ListNode, ve.dm.BranchNode );
+
+/* Static Members */
+
+/**
+ * Node rules.
+ *
+ * @see ve.dm.NodeFactory
+ * @static
+ * @member
+ */
+ve.dm.ListNode.rules = {
+	'isWrapped': true,
+	'isContent': false,
+	'canContainContent': false,
+	'hasSignificantWhitespace': false,
+	'childNodeTypes': ['listItem'],
+	'parentNodeTypes': null
+};
+
+/**
+ * Node converters.
+ *
+ * @see {ve.dm.Converter}
+ * @static
+ * @member
+ */
+ve.dm.ListNode.converters = {
+	'domElementTypes': ['ul', 'ol'],
+	'toDomElement': function ( type, element ) {
+		return element.attributes && ( {
+			'bullet': document.createElement( 'ul' ),
+			'number': document.createElement( 'ol' )
+		} )[element.attributes.style];
+	},
+	'toDataElement': function ( tag ) {
+		return ( {
+			'ul': { 'type': 'list', 'attributes': { 'style': 'bullet' } },
+			'ol': { 'type': 'list', 'attributes': { 'style': 'number' } }
+		} )[tag];
+	}
+};
+
+/* Registration */
+
+ve.dm.nodeFactory.register( 'list', ve.dm.ListNode );
