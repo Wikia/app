@@ -48,13 +48,6 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	protected $results = array();
 
 	/**
-	 * The query string provided by the user for the search
-	 * (not the complex query we create from it)
-	 * @var string
-	 */
-	protected $query;
-
-	/**
 	 * Time it took for the query to complete on the Solr side.
 	 * Mostly used for debugging.
 	 * @var int
@@ -117,7 +110,6 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 */
 	protected function configure( $parent = null, $metaposition = null ) {
 		wfProfileIn(__METHOD__);
-		$this->setQuery( $this->searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED ) );
 		
 		if ( $this->searchResultObject instanceof Solarium_Result_Select_Empty ) {
 			wfProfileOut(__METHOD__);
@@ -470,17 +462,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @return string
 	 */
 	public function getQuery() {
-		return $this->query;
-	}
-
-	/**
-	 * Sets the query used to get the result
-	 * @param string $query
-	 * @return WikiaSearchResultSet
-	 */
-	public function setQuery($query) {
-		$this->query = $query;
-		return $this;
+		return $this->searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED );
 	}
 
 	/**
