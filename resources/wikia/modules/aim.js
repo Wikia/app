@@ -28,8 +28,6 @@
 			if (typeof(i.onComplete) == 'function') {
 				var response = null;
 
-				$().log('upload into "' + id + '" completed', 'AIM');
-
 				if(typeof(d.responseContent) != "undefined") {
 					response = d.responseContent;
 				} else {
@@ -68,9 +66,7 @@
 			var iframeName = createIFrame(options);
 
 			// upload "into" iframe
-			$(form).
-				attr('target', iframeName).
-				log('uploading into "' + iframeName + '"', 'AIM');
+			$(form).attr('target', iframeName);
 
 			return (options && (typeof options.onStart === 'function')) ? options.onStart() : true;
 		}
