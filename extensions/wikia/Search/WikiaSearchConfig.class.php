@@ -595,7 +595,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	}
 
 	/**
-	 * Returns filter query keys array
+	 * Returns public filter query keys
 	 * @return array
 	 */
 
