@@ -206,7 +206,7 @@ class DataFeedProvider {
 					$item['Badge'] = $res['rc_params']['Badge'];
 				}
 			}
-			
+
 			if( class_exists('Wall') && !empty($item['wall']) ) {
 
 				$wh = F::build('WallHelper', array());
@@ -239,7 +239,7 @@ class DataFeedProvider {
 			} else {
 				$title = Title::newFromID($res['pageid']);
 			}
-			
+
 			if( $title && $title->exists() ) {
 				if ($title->isRedirect()) {
 					if ($this->proxyType == self::WL) {
@@ -249,7 +249,7 @@ class DataFeedProvider {
 					$res['rc_params'] = MyHome::unpackData($res['rc_params']);
 					if (isset($res['rc_params']['rollback'])) {
 						$this->invisibleRevisions[] = $res['rc_params']['revId'];
-					} else if (!in_array($res['revid'], $this->invisibleRevisions)) {
+					} elseif (!in_array($res['revid'], $this->invisibleRevisions)) {
 						$hidenewpages = !empty($this->parameters['flags']) && in_array('hidenewpages', $this->parameters['flags']);
 						//do not show hidden categories (see RT#32015)
 						if (isset($res['rc_params']['categoryInserts'])) {
@@ -257,7 +257,7 @@ class DataFeedProvider {
 						}
 						if ($res['type'] == 'new' && !$hidenewpages) {
 							$this->filterNew($res, $title);
-						} else if ($res['type'] == 'edit') {
+						} elseif ($res['type'] == 'edit') {
 							$this->filterEdit($res, $title);
 						}
 					}
@@ -336,7 +336,7 @@ class DataFeedProvider {
 				if (isset($res['rc_params']['summary'])) {
 					$item['comment'] = $res['rc_params']['summary'];
 				}
-			} else if ($res['comment'] != '' && (defined('NS_TOPLIST') ? $res['ns'] != NS_TOPLIST : true) ) {
+			} elseif ($res['comment'] != '' && (defined('NS_TOPLIST') ? $res['ns'] != NS_TOPLIST : true) ) {
 				$item['comment'] = $res['comment'];
 			}
 
@@ -346,7 +346,7 @@ class DataFeedProvider {
 				$item['title'] = $parts['title'];
 			}
 
-		} else if (defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ) {
+		} elseif (defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ) {
 			if ( class_exists( 'RelatedVideosService' ) ){
 				$oRVService = F::build( 'RelatedVideosService' );
 				$item = $oRVService->editWikiActivityParams( $title, $res, $item );
@@ -366,7 +366,7 @@ class DataFeedProvider {
 	private function filterNew($res, $title) {
 		wfProfileIn(__METHOD__);
 		global $wgContentNamespaces, $wgWallNS;
-		
+
 		$item = array('type' => 'new');
 
 		$hidecategories = !empty( $this->parameters['flags'] ) && in_array( 'hidecategories', $this->parameters['flags'] );
@@ -387,38 +387,38 @@ class DataFeedProvider {
 				$parts = ArticleComment::explode($res['title']);
 				$item['title'] = $parts['title'];
 			}
-                } else if ( $res['ns'] == NS_USER_TALK ) {  // BugId:15648
-                    $item['title'] = $res['title'];
-                    $item['url'] = $title->getLocalUrl();
-		} else if (defined('NS_BLOG_ARTICLE') && $res['ns'] == NS_BLOG_ARTICLE && class_exists('ArticleComment')) {
+		} elseif ( $res['ns'] == NS_USER_TALK ) {  // BugId:15648
+			$item['title'] = $res['title'];
+			$item['url'] = $title->getLocalUrl();
+		} elseif (defined('NS_BLOG_ARTICLE') && $res['ns'] == NS_BLOG_ARTICLE && class_exists('ArticleComment')) {
 
 			$parts = ArticleComment::explode($res['title']);
 			$item['title'] = $parts['title'];
 			$item['url'] = $title->getLocalUrl();
 
-		} else if (defined('NS_BLOG_ARTICLE_TALK') && $res['ns'] == NS_BLOG_ARTICLE_TALK && class_exists('ArticleComment')) {
-			
+		} elseif (defined('NS_BLOG_ARTICLE_TALK') && $res['ns'] == NS_BLOG_ARTICLE_TALK && class_exists('ArticleComment')) {
+
 			$parts = ArticleComment::explode($res['title'], $title );
 			$item['title'] = $parts['title'];
 			$item['url'] = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE_TALK)->getLocalUrl();
 
- 		} else if (defined('NS_BLOG_LISTING') && $res['ns'] == NS_BLOG_LISTING) {
+ 		} elseif (defined('NS_BLOG_LISTING') && $res['ns'] == NS_BLOG_LISTING) {
 
 			if ($this->proxyType == self::WL) {
 				$item['title'] = $res['title'];
 				$item['url'] = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE)->getLocalUrl();
 			}
-		} else if (defined('NS_TOPLIST') && $res['ns'] == NS_TOPLIST ) {
+		} elseif (defined('NS_TOPLIST') && $res['ns'] == NS_TOPLIST ) {
 			if ($this->proxyType == self::AF && !stripos($res['title'], 'toplist-item') ) {
 				$item['title'] = $res['title'];
 				$item['url'] = Title::newFromText($title->getBaseText(), NS_TOPLIST)->getLocalUrl();
 				$res['comment'] = ''; // suppressing needless details
 				$res['rc_params'] = '';
 			}
-		} else if( !empty($wgWallNS) && in_array(MWNamespace::getSubject($res['ns']), $wgWallNS) && $this->proxyType == self::AF ) {
+		} elseif ( !empty($wgWallNS) && in_array(MWNamespace::getSubject($res['ns']), $wgWallNS) && $this->proxyType == self::AF ) {
 			$wh = F::build( 'WallHelper' );
 			$item = $wh->wikiActivityFilterMessageWall($title, $res);
-		} else if ( defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ){
+		} elseif ( defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ){
 			$oRVService = F::build( 'RelatedVideosService' );
 			$item = $oRVService->createWikiActivityParams($title, $res, $item);
 		}
@@ -488,7 +488,7 @@ class DataFeedProvider {
 				wfProfileOut(__METHOD__);
 				return true;
 
-			} else if ($res['logtype'] == 'upload') {
+			} elseif ($res['logtype'] == 'upload') {
 
 				$title = Title::newFromText($res['title']);
 				if ($title && $title->exists()) {
