@@ -144,11 +144,11 @@ ve.init.mw.ViewPageTarget.saveDialogTemplate = '\
 				for="ve-init-mw-viewPageTarget-saveDialog-watchList"></label>\
 			<label class="ve-init-mw-viewPageTarget-saveDialog-editSummaryCount"></label>\
 		</div>\
-		<button class="ve-init-mw-viewPageTarget-saveDialog-cancelButton secondary">\
-			<span class="ve-init-mw-viewPageTarget-saveDialog-cancelButton-label"></span>\
-		</button>\
 		<button class="ve-init-mw-viewPageTarget-saveDialog-saveButton">\
 			<span class="ve-init-mw-viewPageTarget-saveDialog-saveButton-label"></span>\
+		</button>\
+		<button class="ve-init-mw-viewPageTarget-saveDialog-cancelButton secondary">\
+			<span class="ve-init-mw-viewPageTarget-saveDialog-cancelButton-label"></span>\
 		</button>\
 		<div class="ve-init-mw-viewPageTarget-saveDialog-saving"></div>\
 		<div style="clear: both;"></div>\

@@ -131,3 +131,8 @@
 .ve-init-mw-viewPageTarget-saveDialog-editSummary:focus {
 	outline: none;
 }
+
+.ve-init-mw-viewPageTarget-saveDialog-saveButton, .ve-init-mw-viewPageTarget-saveDialog-cancelButton {
+	float: right;
+	margin-left: 4px;
+}
