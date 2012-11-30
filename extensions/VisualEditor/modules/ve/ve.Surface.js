@@ -40,7 +40,7 @@ ve.Surface = function VeSurface( parent, dom, options ) {
 
 	// Initialization
 	// Propagate to each node information that it is live (attached to the live DOM)
-	this.view.getDocument().getDocumentNode().setLive( true ); 
+	this.view.getDocument().getDocumentNode().setLive( true );
 	this.setupToolbars();
 	this.setupCommands();
 	ve.instances.push( this );
@@ -247,7 +247,10 @@ ve.Surface.prototype.floatTopToolbar = function () {
 				left = toolbarsOffset.left;
 				right = $window.width() - $wrapper.outerWidth() - left;
 				// If not floating, set float
-				if ( !$wrapper.hasClass( 've-ui-toolbar-wrapper-floating' ) ) {
+				if (
+					!$wrapper.hasClass( 've-ui-toolbar-wrapper-floating' ) &&
+					!$wrapper.hasClass( 've-ui-toolbar-wrapper-bottom' )
+				) {
 					$wrapper
 						.css( 'height', $wrapper.height() )
 						.addClass( 've-ui-toolbar-wrapper-floating' );
@@ -267,10 +270,9 @@ ve.Surface.prototype.floatTopToolbar = function () {
 							$wrapper
 								.removeClass( 've-ui-toolbar-wrapper-floating' )
 								.addClass( 've-ui-toolbar-wrapper-bottom' );
-							$toolbar.css({
-								'top': $window.scrollTop() + 'px',
-								'left': left,
-								'right': right
+							$toolbar.offset( { top: $window.scrollTop(), left: toolbarsOffset.left } ).css({
+								'right': 'auto',
+								'width': $wrapper.width()
 							});
 						}
 					} else { // Unattach toolbar
