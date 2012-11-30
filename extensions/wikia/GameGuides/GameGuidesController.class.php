@@ -142,7 +142,7 @@ class GameGuidesController extends WikiaController {
 	/**
 	 * @brief Api entry point to get a page and globals and messages that are relevant to the page
 	 *
-	 * @example wikia.php?controller=GameGuides&method=getPage&title={Title}
+	 * @example wikia.php?controller=GameGuides&method=getPage&page={Title}
 	 */
 	public function getPage(){
 		//This will always return json
@@ -155,7 +155,7 @@ class GameGuidesController extends WikiaController {
 			Skin::newFromKey( 'wikiamobile' )
 		);
 
-		$titleName = $this->getVal( 'title' );
+		$titleName = $this->getVal( 'page' );
 
 		$title = Title::newFromText( $titleName );
 
@@ -173,7 +173,7 @@ class GameGuidesController extends WikiaController {
 					) : null;
 
 				if ( !is_null( $relatedPages ) ) {
-					$relatedPages = $relatedPages->getVal('pages');
+					$relatedPages = $relatedPages->getVal( 'pages' );
 
 					if ( !empty ( $relatedPages ) ) {
 						$this->response->setVal( 'relatedPages', $relatedPages );
@@ -189,7 +189,7 @@ class GameGuidesController extends WikiaController {
 
 				$this->response->setVal(
 					'revisionid',
-					$title->getLatestRevID()
+					$revId
 				);
 			} else {
 				$this->response->setVal( 'error', 'Revision ID = 0' );
