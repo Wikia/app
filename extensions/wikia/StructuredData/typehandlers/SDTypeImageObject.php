@@ -36,7 +36,7 @@ class SDTypeImageObject extends SDTypeHandlerAnyType {
 			//var_dump( $data );			die;
 
 		} else {
-			$this->addError('schema:url', wfMsg('file-page-doesnt-exist'));
+			$this->addError('schema:url', wfMsg('structureddata-file-page-doesnt-exist'));
 		}
 
 		return $data;

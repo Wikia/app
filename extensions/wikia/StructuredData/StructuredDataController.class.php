@@ -22,23 +22,22 @@ class StructuredDataController extends WikiaSpecialPageController {
 	public function __construct() {
 
 		$this->mainObjectList = array(
-			"callofduty:Character" => "Characters",
-			"callofduty:Faction" => "Factions",
-			"callofduty:Weapon" => "Weapons",
-			"callofduty:Mission" => "Missions",
-			"callofduty:WeaponClass" => "Weapon Classes",
-			"wikia:Objective" => "Objectives"
+			"callofduty:Character" => 'structureddata-class-characters',
+			"callofduty:Faction" => 'structureddata-class-factions',
+			"callofduty:Weapon" => 'structureddata-class-weapons',
+			"callofduty:Mission" => 'structureddata-class-missions',
+			"callofduty:WeaponClass" => 'structureddata-class-weapon-classes',
+			"wikia:Objective" => 'structureddata-class-objectives'
 		);
 
 		$this->advObjectList = array(
-			'callofduty:Timeline' => 'Timelines',
-			'wikia:VideoGame' => 'Video Games',
-			'schema:ImageObject' => 'Image Objects',
-			'schema:AudioObject' => 'Audio Objects',
-			'wikia:GameLocation' => 'Game Locations',
-			'wikia:WikiText' => 'WikiText Objects'
+			'callofduty:Timeline' => 'structureddata-class-timelines',
+			'wikia:VideoGame' => 'structureddata-class-video-games',
+			'schema:ImageObject' => 'structureddata-class-image-objects',
+			'schema:AudioObject' => 'structureddata-class-audio-objects',
+			'wikia:GameLocation' => 'structureddata-class-game-location',
+			'wikia:WikiText' => 'structureddata-class-wikitext-objects'
 		);
-
 
 		// parent SpecialPage constructor call MUST be done
 		parent::__construct( 'StructuredData', '', false );
@@ -323,7 +322,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setCacheValidity( 0, 0, array( WikiaResponse::CACHE_TARGET_BROWSER ) );
 		if ( !$this->wg->User->isAllowed( 'sdsediting' ) ) {
-			$this->response->setVal( 'error', "You're not allowed to add new WikiText objects");
+			$this->response->setVal( 'error', wfMsg( 'structureddata-no-rights-to-add-wikitext-object' ) );
 			return;
 		}
 
@@ -337,7 +336,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 			$SDElement = $this->structuredData->createSDElement( $type, $alteredParams );
 
 			if( $SDElement instanceof SDElement ) {
-				$this->response->setVal( 'success', 'Object created successfully' );
+				$this->response->setVal( 'success', wfMsg( 'structureddata-created-wikitext-object' ) );
 
 				$parentSDElement = $this->structuredData->getSDElementById( $parentObjectId );
 				$parentProperty = $parentSDElement->getProperty( $parentPropertyName );
@@ -355,7 +354,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 					}
 				}
 				else {
-					$this->response->setVal( 'error', 'Saving reference failed');
+					$this->response->setVal( 'error', wfMsg( 'structureddata-saving-reference-failed' ) );
 				}
 			}
 			else {
@@ -363,7 +362,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 			}
 		}
 		else {
-			$this->response->setVal( 'error', 'Invalid arguments' );
+			$this->response->setVal( 'error', wfMsg( 'structureddata-invalid-arguments' ) );
 		}
 	}
 
