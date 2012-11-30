@@ -1,6 +1,6 @@
-<h1>Hello Structured World!</h1>
+<h1><?= wfMsg('structureddata-special-page-main-header') ?></h1>
 <div class="SDClass-list main">
-	<h3>Main Structure Data Classes</h3>
+	<h3><?= wfMsg('structureddata-main-classes-list-header') ?></h3>
 	<ul>
 		<?php foreach ( $mainObjects as $objectClass => $objectName ): ?>
 		<li>
@@ -13,7 +13,7 @@
 	</ul>
 </div>
 <div class="SDClass-list">
-	<h3>Secondary Structure Data Classes</h3>
+	<h3><?= wfMsg('structureddata-secondary-classes-list-header') ?></h3>
 	<ul class="SDClass-list">
 		<?php foreach ( $advObjects as $objectClass => $objectName ): ?>
 		<li>

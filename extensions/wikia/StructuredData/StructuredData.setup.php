@@ -98,3 +98,6 @@ F::addClassConstructor( 'SDParser', array( 'structuredData' => F::build( 'Struct
  * message files
  */
 $app->registerExtensionMessageFile('StructuredData', $dir . 'StructuredData.i18n.php' );
+
+F::build('JSMessages')->registerPackage('StructuredData', array('structureddata-*'));
+F::build('JSMessages')->enqueuePackage('StructuredData', JSMessages::EXTERNAL);

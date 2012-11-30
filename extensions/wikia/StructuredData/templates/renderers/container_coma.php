@@ -12,7 +12,7 @@ foreach($values as $propertyValue) {
 		$listOfValues[] = $referenceHTML;
 	}
 	else {
-		$listOfValues[] = 'property value render failed!';
+		$listOfValues[] = wfMsg('structureddata-container-render-failed');
 	}
 }
 

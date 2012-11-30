@@ -30,7 +30,8 @@ foreach( $values as $propertyValue ) {
 		else {
 			if ($context == SD_CONTEXT_EDITING) {
 				if($object->getType()->hasRange()) {
-					echo '<div class="input-group"><input type="text" name="'. $object->getName() . '[]" value="'. $value . '" /> <button class="secondary remove">Remove</button></div>';
+					echo '<div class="input-group"><input type="text" name="'. $object->getName() . '[]" value="'.
+						$value . '" /> <button class="secondary remove">' . wfMsg('structureddata-object-edit-remove-reference') . '</button></div>';
 				} else {
 					echo '<div class="input-group"><input type="text" name="'. $object->getName() . '[]" value="'. $value . '" /></div>';
 				}

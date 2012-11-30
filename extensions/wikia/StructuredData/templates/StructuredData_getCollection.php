@@ -7,5 +7,4 @@
 	</li>
 <? } ?>
 </ul>
-<a href="<?=$specialPageUrl;?>/<?=$objectType;?>/?action=create" class="wikia-button" title="Create new SDS
-Object">Create new object</a>
+<a href="<?=$specialPageUrl;?>/<?=$objectType;?>/?action=create" class="wikia-button" title="<?= wfMsg('structureddata-create-new-object-button') ?>"><?= wfMsg('SDCreateNewObjectButton') ?></a>

@@ -2,7 +2,7 @@
 $values = $object->getWrappedValue();
 
 if ( !count( $values ) && ( $context == SD_CONTEXT_SPECIAL ) ):
-	echo '<p class="empty">empty</p>';
+	echo '<p class="empty">' . wfMsg('structureddata-object-empty-property') . '</p>';
 else:
 
 if ( $context == SD_CONTEXT_EDITING ) {
@@ -48,14 +48,14 @@ foreach ( $values as $i => $propertyValue ) {
 			<?php else : ?>
 				<?=$value->id;?>
 			<?php endif; ?>
-			<button class="secondary remove">Remove</button>
+			<button class="secondary remove"><?= wfMsg('structureddata-object-edit-remove-reference') ?></button>
         </li>
 	<?php
 	}
 }
 if ( $context == SD_CONTEXT_DEFAULT ) {
 	echo '<button class="add-wikiText-SDObj-from-article" data-displayed-object="' . $object->getName() .
-		'" data-object-id="'.$params['objectId'].'" data-prop-name="'.$params['propName'].'">Add new WikiText object</button>';
+		'" data-object-id="'.$params['objectId'].'" data-prop-name="'.$params['propName'].'">' . wfMsg('structureddata-add-trivia-from-article-btn') . '</button>';
 	echo F::build('JSSnippets')->addToStack(
 		array('/extensions/wikia/StructuredData/js/StructuredDataInArticle.js')
 	);
@@ -65,9 +65,10 @@ if ( $context == SD_CONTEXT_EDITING ) {
 	if ( $object->getType()->hasRange() ) {
 		$types = $object->getType()->getAcceptedValues();
 		if (count($types['classes']) == 1 && in_array('rdfs:Literal', $types['classes'])) {
-			echo '<button class="add-input" data-range="' . join('', $types['classes']) . '">Add new</button>';
+			echo '<button class="add-input" data-range="' . join('', $types['classes']) . '">'. wfMsg('structureddata-object-edit-add-blank-input-to-collection-btn') . '</button>';
 		} else {
-			echo '<button class="load-dropdown" data-range="' . join(' ', $types['classes']) . '">Add</button>';
+			echo '<button class="load-dropdown" data-range="' . join(' ', $types['classes']) . '">' . wfMsg('structureddata-object-edit-add-new-reference-btn') .
+				'</button>';
 		}
 	}
 }

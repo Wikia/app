@@ -1,8 +1,8 @@
 $('button.add-wikiText-SDObj-from-article').click(function() {
 	var objectId = $(this).data('object-id'),
 		objectPropName = $(this).data('prop-name'),
-		modalTitle = 'Add new WikiText Object',
-		modalHtml = '<form class="WikiaForm"><div class="input-group"><label>Name:</label><input type="text" value="" name="schema:name"></div><div class="input-group"><label>WikiText:</label><textarea name="schema:text"></textarea></div></form>',
+		modalTitle = $.msg('structureddata-add-trivia-header'),
+		modalHtml = '<form class="WikiaForm"><div class="input-group"><label>' + $.msg('structureddata-add-trivia-label-name') + ':</label><input type="text" value="" name="schema:name"></div><div class="input-group"><label>' + $.msg('structureddata-add-trivia-label-wiki-text') + ':</label><textarea name="schema:text"></textarea></div></form>',
 		modalId = 'AddWikiTextSDObject',
 		modalWidth = 505;
 	$.getResources([$.getSassCommonURL('extensions/wikia/StructuredData/css/StructuredDataInArticle.scss')]).done(function() {
@@ -16,7 +16,7 @@ $('button.add-wikiText-SDObj-from-article').click(function() {
 				buttons: [
 					{
 						defaultButton: true,
-						message: 'Add',
+						message: $.msg('structureddata-add-trivia-add-button'),
 						id: 'addObject',
 						handler:function() {
 							$('#addObject').attr('disabled','disabled');
@@ -50,7 +50,7 @@ $('button.add-wikiText-SDObj-from-article').click(function() {
 						}
 					},
 					{
-						message:'Cancel',
+						message: $.msg('structureddata-object-delete-confirm-cancel-button'),
 						handler:function() {
 							$('#AddWikiTextSDObject').closeModal();
 						}

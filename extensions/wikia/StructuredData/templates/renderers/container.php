@@ -7,7 +7,7 @@ $value = $object->getWrappedValue();
 if ( !count( $value ) ) {
 
 	if ($context == SD_CONTEXT_SPECIAL) {
-		echo '<p class="empty">empty</p>';
+		echo '<p class="empty">' . wfMsg('structureddata-object-empty-property') . '</p>';
 	}
 	if ($context == SD_CONTEXT_EDITING) {
 		echo ($rendererName == '@list') ? '<ol data-field-name="'.$object->getName().'"></ol>' : '<ul data-field-name="'.$object->getName().'"></ul>';
@@ -43,9 +43,11 @@ if ( $context == SD_CONTEXT_EDITING ) {
 
 		$types = $object->getType()->getAcceptedValues();
 		if (count($types['classes']) == 1 && ( in_array('rdfs:Literal', $types['classes'] ) || in_array('xsd:hexBinary', $types['classes'] ) ) ) {
-			echo '<button class="add-input" data-range="' . join('', $types['classes']) . '">Add new</button>';
+			echo '<button class="add-input" data-range="' . join('', $types['classes']) . '">' . wfMsg
+			('structureddata-object-edit-add-blank-input-to-collection-btn') . '</button>';
 		} else {
-			echo '<button class="load-dropdown" data-range="' . join(' ', $types['classes']) . '">Add</button>';
+			echo '<button class="load-dropdown" data-range="' . join(' ', $types['classes']) . '">' . wfMsg
+			('structureddata-object-edit-add-new-reference-btn') . '</button>';
 		}
 		//var_dump($object->getType()->getAcceptedValues());
 	}

@@ -1,6 +1,6 @@
 <?php
 	if (!$sdsObject) {
-		die('Requested object doesn\'t exist!');
+		die(wfMsg('structureddata-object-doesnt-exist'));
 	}
 
 	// Array of SD object properties 
@@ -29,7 +29,7 @@
 		?>
 	<?php endif; ?>
 	<dl class="SDObjectDetails">
-		<dt>Type:</dt>
+		<dt><?= wfMsg('structureddata-object-type-label') ?>:</dt>
 		<dd><a href="<?= SpecialPage::getTitleFor('StructuredData')->getLocalURL();
 		?>?method=getCollection&objectType=<?=
 		$sdsObject->getType(); ?>" title="<?=
@@ -40,15 +40,15 @@
 	<?/*<pre>ID: <?=$sdsObject->getId();?></pre>*/?>
 
 	<table class="article-table SDObjectProperties WikiaGrid" data-object-type="<?=$sdsObject->getType()?>">
-		<caption>Object properties:</caption>
+		<caption><?= wfMsg('structureddata-object-properties-table-caption') ?>:</caption>
 		<thead>
 			<tr>
-				<th class="grid-1">Property label:</th>
+				<th class="grid-1"><?= wfMsg('structureddata-object-table-th-prop-label') ?>:</th>
 				<?php if($context == SD_CONTEXT_EDITING): ?>
-					<th class="grid-5">Property value:</th>
+					<th class="grid-5"><?= wfMsg('structureddata-object-table-th-prop-value') ?>:</th>
 				<?php else : ?>
-					<th class="grid-3">Property value:</th>
-					<th class="grid-2">Wiki text sample:</th>
+					<th class="grid-3"><?= wfMsg('structureddata-object-table-th-prop-value') ?>:</th>
+					<th class="grid-2"><?= wfMsg('structureddata-object-table-th-wiki-text') ?>:</th>
 				<?php endif; ?>
 			</tr>
 		</thead>
@@ -107,6 +107,6 @@
 		</tbody>
 	</table>
 	<?php if($context == SD_CONTEXT_EDITING): ?>
-		<input type="submit" value="Save Changes to the SDS Object" class="wikia-button SDObjectSave" />
+		<input type="submit" value="<?= wfMsg('structureddata-save-object-button') ?>" class="wikia-button SDObjectSave" />
 	<?php endif; ?>
 </form>

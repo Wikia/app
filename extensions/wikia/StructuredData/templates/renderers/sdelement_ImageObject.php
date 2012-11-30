@@ -11,7 +11,7 @@
 	    $imgSrc->getValue() : '#';?>" alt="<?=htmlspecialchars( $object->getName() ); ?>" />
 <?php endif; ?>
 <?php if ($context == SD_CONTEXT_EDITING): ?>
-	<button class="secondary remove">Remove</button>
+	<button class="secondary remove"><?= wfMsg('structureddata-object-edit-remove-reference') ?></button>
 <?php endif; ?>
 <?php  if($context != SD_CONTEXT_SPECIAL && $context != SD_CONTEXT_EDITING): ?>
 	<img src="<?php $imgSrc = $object->getPropertyValue('schema:contentURL', false); echo ($imgSrc !== false) ? $imgSrc->getValue() : '#'; ?>" />

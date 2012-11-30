@@ -9,7 +9,7 @@
 		<?php elseif ( !is_object( $value ) ) : ?>
 			<input type="text" value="<?=$value;?>" name="<?php echo isset($params['fieldName']) ? $params['fieldName'] : $object->getPropertyName() ;?>" />
 			<?php if ($object->getType()->isCollection()) : ?>
-				<button class="secondary remove">Remove</button>
+				<button class="secondary remove"><?= wfMsg('structureddata-object-edit-remove-reference') ?></button>
 			<?php endif; ?>
 		<?php elseif ( isset( $value->id ) && ( !empty( $value->id ) ) ) : ?>
 			<input type="hidden" name="<?=$params['fieldName'];?>" value="<?=$value->id;?>" />
@@ -18,10 +18,9 @@
 <?php else: ?>
 	<?php if(empty($value)):
 		if($context == SD_CONTEXT_SPECIAL): ?>
-			<p class="empty">empty</p>
+			<p class="empty"><?= wfMsg('structureddata-object-empty-property') ?></p>
 		<?php endif; ?>
 	<?php else: ?>
 		<?=( is_object( $value ) && isset( $value->id ) ) ? $value->id : $value; ?>
 	<?php endif; ?>
 <?php endif; ?>
-<? // for K. Drogo: $params['isCreateMode']); ?>

@@ -1,9 +1,9 @@
 var StructuredData = {
 	// Mustache templates
-	selectTemplate: '<select class="objects-to-add"><option value="false">choose object...</option>{{#list}}<option data-value="{{id}}" data-url="{{url}}" data-type="{{type}}" data-name="{{name}}" {{#schema:contentURL}}data-image-url="{{schema:contentURL}}"{{/schema:contentURL}} >{{type}} - {{name}}</option>{{/list}}</select> ',
-	objectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}">{{name}}</a> <button class="secondary remove">Remove</button></li>',
-	imageObjectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><strong><a href="{{url}}" title="{{name}}">{{name}}</a></strong></br><img src="{{imageUrl}}" alt="{{name}}" /> <button class="secondary remove">Remove</button></li>',
-	inputTemplate: '<li><div class="input-group"><input type="text" name="{{type}}[]" value="" /> <button class="secondary remove">Remove</button></div></li>',
+	selectTemplate: '<select class="objects-to-add"><option value="false">{{defaultOption}}</option>{{#list}}<option data-value="{{id}}" data-url="{{url}}" data-type="{{type}}" data-name="{{name}}" {{#schema:contentURL}}data-image-url="{{schema:contentURL}}"{{/schema:contentURL}} >{{type}} - {{name}}</option>{{/list}}</select> ',
+	objectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><a href="{{url}}">{{name}}</a> <button class="secondary remove">{{removeText}}</button></li>',
+	imageObjectTemplate: '<li><input type="hidden" name="{{type}}[]" value="{{id}}"><strong><a href="{{url}}" title="{{name}}">{{name}}</a></strong></br><img src="{{imageUrl}}" alt="{{name}}" /> <button class="secondary remove">{{removeText}}</button></li>',
+	inputTemplate: '<li><div class="input-group"><input type="text" name="{{type}}[]" value="" /> <button class="secondary remove">{{removeText}}</button></div></li>',
 	// jQuery cached selectors
 	cachedSeletors: {},
 	init: function() {
@@ -116,11 +116,12 @@ var StructuredData = {
 				objectType: classesStr
 			},
 			callback: function(data) {
+				data.defaultOption = $.msg('structureddata-dropdown-template-default-value');
 				var html;
 				if (data.list.length > 0) {
 					html = Mustache.render(that.selectTemplate, data);
 				} else {
-					html = '<span> No objects found !</span>';
+					html = '<span> ' + $.msg('structureddata-dropdown-template-no-results') + '</span>';
 				}
 				$eventTarget.next().stopThrobbing();
 				$eventTarget.after(html);
@@ -132,7 +133,8 @@ var StructuredData = {
 	addEmptyInput: function($eventTarget) {
 		var placeToAdd = ($eventTarget.siblings('ol').length > 0) ? $eventTarget.siblings('ol') : $eventTarget.siblings('ul'),
 			inputData = {
-			type: placeToAdd.data('field-name')
+			type: placeToAdd.data('field-name'),
+			removeText:	$.msg('structureddata-object-edit-remove-reference')
 			},
 			html = Mustache.render(this.inputTemplate, inputData);
 		$(html).appendTo(placeToAdd).find('input').focus();
@@ -146,7 +148,7 @@ var StructuredData = {
 		// Check if the object is already in the list
 		placeToAdd.find('input[type="hidden"]').each(function(){
 			if ($(this).val() === selectedObject.data('value')) {
-				alert('Object already in the list!');
+				alert($.msg('structureddata-object-already-in-list'));
 				alreadyInList = true;
 			}
 		});
@@ -155,7 +157,8 @@ var StructuredData = {
 					name: selectedObject.data('name'),
 					url: selectedObject.data('url'),
 					id: selectedObject.data('value'),
-					type: placeToAdd.data('field-name')
+					type: placeToAdd.data('field-name'),
+					removeText:	$.msg('structureddata-object-edit-remove-reference')
 				},
 				html;
 			// Special case for photo property
@@ -171,8 +174,8 @@ var StructuredData = {
 	// METHOD - showing modal with confirmation question before deleting object
 	confirmObjectDelete: function(href) {
 		$.showCustomModal(
-			'Are you sure you want to delete Structure Data Object ?',
-			'<p>This action will permanently delete selected object from Structured Data Object database.</p>',
+			$.msg('structureddata-object-delete-confirm-header'),
+			'<p>' + $.msg('structureddata-object-delete-confirm-message') + '</p>',
 			{
 				id: "SDObjectDelConfirm",
 				width: 600,
@@ -180,14 +183,14 @@ var StructuredData = {
 					{
 						id:'ok',
 						defaultButton:true,
-						message:'OK',
+						message: $.msg('structureddata-object-delete-confirm-ok-button'),
 						handler:function() {
 							window.location = href;
 						}
 					},
 					{
 						id:'cancel',
-						message:'Cancel',
+						message: $.msg('structureddata-object-delete-confirm-cancel-button'),
 						handler:function() {
 							$('#SDObjectDelConfirm').closeModal();
 						}

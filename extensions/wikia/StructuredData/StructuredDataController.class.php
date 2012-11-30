@@ -181,12 +181,12 @@ class StructuredDataController extends WikiaSpecialPageController {
 		$dropDownItems = array(
 			array(
 				'href' => '?action=delete',
-				'text' => 'Delete',
+				'text' => wfMsg('structureddata-dropdown-button-delete'),
 				'class' => 'SDObject-delete',
 				'title' => 'Delete SDS Object'
 			)
 		);
-		$menuButtonAction = array('text' => 'Edit', 'href' => '?action=edit');
+		$menuButtonAction = array('text' => wfMsg('structureddata-dropdown-button-edit'), 'href' => '?action=edit');
 		$this->setVal('dropDownItems', $dropDownItems);
 		$this->setVal('menuButtonName', 'editSDObject');
 		$this->setVal('menuButtonAction', $menuButtonAction);

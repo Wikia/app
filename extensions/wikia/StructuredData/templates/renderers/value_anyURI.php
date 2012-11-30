@@ -8,7 +8,7 @@
 	</div>
 <?php else: ?>
 	<?php if (empty($value)) :?>
-		<p class="empty">empty</p>
+		<p class="empty"><?= wfMsg('structureddata-object-empty-property') ?></p>
 	<?php else : ?>
 		<a href="<?php echo $value; ?>"><?php echo $value; ?></a>
 	<?php endif; ?>
