@@ -391,7 +391,7 @@ abstract class VideoFeedIngester {
 	 * @param array $data
 	 * @return boolean
 	 */
-	protected function isBlacklistVideo( $data ) {
+	public function isBlacklistVideo( $data ) {
 		$regex = $this->getBlacklistRegex( F::app()->wg->VideoBlacklist );
 		if ( !empty($regex) ) {
 			$keys = array( 'titleName', 'description' );
