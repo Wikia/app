@@ -78,6 +78,16 @@ $messages['az'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** South Azerbaijani (تورکجه)
+ * @author E THP
+ */
+$messages['azb'] = array(
+	'quickstats-header-date' => 'تاریخ',
+	'quickstats-header-views' => 'گؤرونوش‌لر',
+	'quickstats-header-edits' => 'دَییشدیرمه‌لر',
+	'quickstats-header-photos' => 'شکیل‌لر',
+);
+
 /** Bashkir (башҡортса)
  * @author ҒатаУлла
  */
@@ -229,6 +239,7 @@ $messages['diq'] = array(
  * @author Glavkos
  */
 $messages['el'] = array(
+	'quickstats-header-label' => 'Γρήγορα Στατιστικά',
 	'quickstats-header-date' => 'Ημερομηνία',
 	'quickstats-header-views' => 'Επισκέψεις',
 	'quickstats-header-edits' => 'Επεξεργασίες',

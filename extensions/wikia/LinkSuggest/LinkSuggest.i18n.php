@@ -56,9 +56,11 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author DaSch
+ * @author Metalhead64
  * @author PtM
  */
 $messages['de'] = array(
+	'linksuggest-desc' => 'Schlägt Autoren Links in der Bearbeitungsansicht vor',
 	'tog-disablelinksuggest' => 'Keine Link-Vorschläge im Quellcodemodus anzeigen',
 	'tog-redirected-from' => '&ndash; Weitergeleitet von $1',
 );
@@ -67,16 +69,20 @@ $messages['de'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'linksuggest-desc' => 'Sugiere enlaces a los editores en modo de edición',
 	'tog-disablelinksuggest' => 'No mostrar sugerencias de vínculos en modo fuente.',
 	'tog-redirected-from' => '&ndash; redirigido desde $1',
 );
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  * @author VezonThunder
  */
 $messages['fi'] = array(
+	'linksuggest-desc' => 'Ehdottaa linkkejä muokkaajille muokkausikkunassa',
 	'tog-disablelinksuggest' => 'Älä näytä linkkiehdotusta lähdekooditilassa',
+	'tog-redirected-from' => '&ndash; ohjaus sivulta $1',
 );
 
 /** French (français)
@@ -84,6 +90,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'linksuggest-desc' => 'Propose des liens aux éditeurs dans la vue de modification',
 	'tog-disablelinksuggest' => 'Ne pas afficher la suggestion de lien en mode source',
 	'tog-redirected-from' => '&ndash; Redirigé depuis $1',
 );
@@ -92,8 +99,9 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
+	'linksuggest-desc' => 'Suxire ligazóns aos editores no modo de edición',
 	'tog-disablelinksuggest' => 'Non mostrar as ligazón suxeridas no modo fonte',
-	'tog-redirected-from' => '&ndash; Redirixido desde "$1"',
+	'tog-redirected-from' => '&ndash; redirixido desde "$1"',
 );
 
 /** Manx (Gaelg)
@@ -198,6 +206,7 @@ $messages['lv'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'linksuggest-desc' => 'Предлага врски на уредниците при уредување',
 	'tog-disablelinksuggest' => 'Не прикажувај предложени врски во Изворен режим',
 	'tog-redirected-from' => '&ndash; Пренасочено од $1',
 );
@@ -206,6 +215,7 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'linksuggest-desc' => 'Mencadangkan pautan kepada editor dalam paparan penyuntingan',
 	'tog-disablelinksuggest' => 'Jangan paparkan cadangan pautan dalam mod Sumber',
 	'tog-redirected-from' => '&ndash; Dilencongkan dari $1',
 );
@@ -246,6 +256,7 @@ $messages['oc'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'linksuggest-desc' => 'Sugeruje linki w trakcie edycji',
 	'tog-disablelinksuggest' => 'Nie pokazuj sugestii linków w trybie źródłowym.',
 	'tog-redirected-from' => '&ndash; przekierowano z $1',
 );
@@ -317,6 +328,7 @@ $messages['su'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'linksuggest-desc' => 'Föreslår länkar till redigerarna i redigeringsvyn',
 	'tog-disablelinksuggest' => 'Visa inte länkförslag i källäge',
 	'tog-redirected-from' => '&ndash; omdirigerad från $1',
 );

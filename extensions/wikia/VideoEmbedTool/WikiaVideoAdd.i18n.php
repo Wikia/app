@@ -247,6 +247,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Nedergard
  * @author Silvonen
  * @author Tofu II
  */
@@ -261,6 +262,7 @@ $messages['fi'] = array(
 	'wva-notlogged' => 'Sinun täytyy kirjautua sisään tai rekisteröityä, jotta voit lisätä videoita.',
 	'wva-notallowed' => 'Et voi lisätä videoita tälle wikisivulle.',
 	'wva-protected' => 'Tämä video on suojattu.',
+	'wva-thumbnail-upload-failed' => 'Videon upottaminen epäonnistui, kunnollista pikkukuvaa ei voitu luoda',
 );
 
 /** French (français)

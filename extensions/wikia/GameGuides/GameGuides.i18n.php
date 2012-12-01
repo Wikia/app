@@ -113,9 +113,14 @@ $messages['eu'] = array(
 
 /** Finnish (suomi)
  * @author Ilkea
+ * @author Nedergard
  */
 $messages['fi'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides mobiilisovellus moduulit',
+	'wikiagameguides-content-category' => 'Luokka',
+	'wikiagameguides-content-add' => 'Lisää',
+	'wikiagameguides-content-save' => 'Tallenna',
+	'wikiagameguides-content-category-error' => 'Luokkaa ei ole',
 );
 
 /** French (français)

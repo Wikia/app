@@ -1095,6 +1095,7 @@ $messages['fa'] = array(
  * @author Centerlink
  * @author Crt
  * @author Ilkea
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  * @author Varusmies
@@ -1116,6 +1117,7 @@ Tarkkailulistan avulla pysyt ajan tasalla viimeisimmistä muutoksista välittäm
 	'myhome-hot-spots-feed-empty' => "Tämä wiki odottaa osallistumistasi.
 Aloita kirjoittaminen luomalla '''[[Special:CreatePage|uusi sivu]]'''.",
 	'myhome-hot-spots-newest' => 'Wikin uudet sivut',
+	'tog-userlandingpage' => 'Aloitussivu',
 	'prefs-myhome' => 'Kotisivu',
 	'myhome-feed-newpage' => 'uusi sivu',
 	'myhome-feed-edit' => 'muokkaa',
@@ -1944,7 +1946,7 @@ $messages['mk'] = array(
 	'myhome-activity-more' => 'понови активности',
 	'myhome-activity-feed' => 'Канал со најнови активности',
 	'myhome-activity-feed-empty' => "Ова вики чека на вашето учество. Кликнете на '''[[Special:CreatePage|Нова страница]]''' за да почнете да пишувате!",
-	'myhome-watchlist-feed' => 'Список на набљудувања',
+	'myhome-watchlist-feed' => 'Набљудувања',
 	'myhome-watchlist-feed-empty' => 'Можете да додавате страници во списокот на набљудувања со притискање на врската „{{int:watch}}“ во лентата на врвот од страницата. 
 Со списокот можете да ги следите најновите промени во страниците за кои сте заинтересирани.',
 	'myhome-user-contributions-feed' => 'Придонеси',
@@ -2287,6 +2289,7 @@ U kunt uw volglijst gebruiken om de laatste wijzigingen aan pagina\'s waar u bij
 	'myhome-hot-spots-feed-empty' => "Werk nu mee aan deze wiki.
 Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!",
 	'myhome-hot-spots-newest' => "Nieuwe pagina's op de wiki",
+	'tog-userlandingpage' => 'Ingangspagina:',
 	'prefs-myhome' => 'Mijn startpagina',
 	'myhome-feed-newpage' => 'nieuwe pagina',
 	'myhome-feed-edit' => 'bewerken',

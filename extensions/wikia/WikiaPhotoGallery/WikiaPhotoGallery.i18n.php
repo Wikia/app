@@ -1782,6 +1782,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
@@ -1855,7 +1856,7 @@ Vaihtoehtoisesti voit napsauttaa "$2" ja nähdä sivun päivitetyssä muodossa.'
 	'wikiaPhotoGallery-choice-gallery' => 'Luo galleria',
 	'wikiaPhotoGallery-slideshowpreview-optionstitle' => 'Diaesityksen asetukset',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Lähetä',
-	'wikiaPhotoGallery-upload-uploadbutton' => 'Lähetä', # Fuzzy
+	'wikiaPhotoGallery-upload-uploadbutton' => 'Lähetä kuva',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Valitse',
 	'wikiaPhotoGallery-photooptions-captiontitle' => 'Kuvateksti',
 	'wikiaPhotoGallery-photooptions-captionsub' => "'''Valinnainen.'''

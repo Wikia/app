@@ -196,6 +196,7 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
@@ -209,6 +210,8 @@ $messages['fi'] = array(
 	'cloakcheck-process-accountage-no' => 'Käyttäjätunnus on liian uusi.',
 	'cloakcheck-process-emailconf-yes' => 'Sähköpostiosoite on vahvistettu.',
 	'cloakcheck-process-emailconf-no' => 'Sähköpostiosoitetta ei ole vahvistettu.',
+	'cloakcheck-process-edits-yes' => 'Käyttäjällä on riittävästi muokkauksia.',
+	'cloakcheck-process-edits-no' => 'Käyttäjällä ei ole tarpeeksi muokkauksia.',
 );
 
 /** French (français)

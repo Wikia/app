@@ -879,9 +879,10 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Malafaya
  * @author SandroHc
+ * @author Waldir
  */
 $messages['pt'] = array(
-	'app-loading' => 'A carregar...',
+	'app-loading' => 'A carregar…',
 	'app-tab-search' => 'Pesquisar',
 	'app-tab-about' => 'Sobre',
 	'app-tab-browse' => 'A..Z',

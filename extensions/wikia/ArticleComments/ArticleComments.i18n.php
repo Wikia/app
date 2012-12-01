@@ -211,6 +211,18 @@ $messages['az'] = array(
 	'article-comments-next-page' => 'Növbəti',
 );
 
+/** South Azerbaijani (تورکجه)
+ * @author E THP
+ */
+$messages['azb'] = array(
+	'article-comments-delete' => 'سیل',
+	'article-comments-edit' => 'دَییشدیر',
+	'article-comments-reply' => 'یئنیدن',
+	'article-comments-prev-page' => 'اؤنجه‌کی',
+	'article-comments-next-page' => 'سونراکی',
+	'wikiamobile-article-comments-show' => 'گؤستر',
+);
+
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
@@ -600,23 +612,35 @@ Wikia
  * @author Glavkos
  */
 $messages['el'] = array(
+	'article-comments-anonymous' => 'Ανώνυμος χρήστης',
 	'article-comments-comments' => 'Σχόλια ($1)',
 	'article-comments-post' => 'Δημοσίευση σχολίου',
+	'article-comments-cancel' => 'Ακύρωση',
 	'article-comments-delete' => 'διαγραφή',
 	'article-comments-edit' => 'επεξεργασία',
 	'article-comments-history' => 'ιστορικό',
 	'article-comments-error' => 'Δεν ήταν δυνατή η αποθήκευση του σχολίου',
 	'article-comments-rc-comment' => 'Σχόλιο άρθρου (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Σχόλια άρθρου ([[$1]])',
+	'article-comments-rc-blog-comments' => 'Σχόλια blog ([[$1]])',
 	'article-comments-toc-item' => 'Σχόλια',
 	'article-comments-comment-cannot-add' => 'Δεν μπορείτε να προσθέσετε σχόλιο για το άρθρο.',
+	'article-comments-vote' => 'Ψηφοφορία μέχρι',
 	'article-comments-reply' => 'Απάντηση',
 	'article-comments-show-all' => 'Εμφάνιση όλων των σχολίων',
 	'article-comments-prev-page' => 'Προηγ',
 	'article-comments-next-page' => 'Επόμενο',
 	'article-comments-page-spacer' => '&#160...&#160',
-	'article-comments-empty-comment' => "Δεν μπορείτε να δημοσιεύσετε ένα κενό σχόλιο. <a href='$1'>Θέλετε να το διαγράψτε αυτό αντ' αυτού;</a>", # Fuzzy
+	'article-comments-empty-comment' => "Δεν μπορείτε να δημοσιεύσετε ένα κενό σχόλιο. <a href='$1'>Αντ'αυτού να το διαγράψετε;</a>",
+	'wikiamobile-article-comments-more' => 'Φορτώστε περισσότερα',
+	'wikiamobile-article-comments-prev' => 'Φορτώστε τα προηγούμενα',
+	'wikiamobile-article-comments-none' => 'Δεν υπάρχουν σχόλια',
+	'wikiamobile-article-comments-view' => 'Προβολή απαντήσεων',
 	'wikiamobile-article-comments-replies' => 'απαντήσεις',
+	'wikiamobile-article-comments-post-reply' => 'Δημοσιεύσατε μια απάντηση',
+	'wikiamobile-article-comments-post' => 'Δημοσιεύστε',
+	'wikiamobile-article-comments-placeholder' => 'Δημοσίευση σχολίου',
+	'wikiamobile-article-comments-show' => 'Παρουσίαση',
 );
 
 /** Esperanto (Esperanto)
@@ -2517,6 +2541,7 @@ $messages['tzm'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Base
  */
 $messages['uk'] = array(
 	'article-comments-delete' => 'вилучити',
@@ -2526,6 +2551,7 @@ $messages['uk'] = array(
 	'article-comments-undeleted-comment' => 'Відновити коментар на сторінці блогу $1',
 	'article-comments-rc-comment' => 'Коментар до статті (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Коментарі до статті ([[$1]])',
+	'article-comments-page-spacer' => '&#160...&#160',
 	'wikiamobile-article-comments-more' => 'Завантажити більше',
 	'wikiamobile-article-comments-prev' => 'Завантажити попередні',
 	'wikiamobile-article-comments-none' => 'немає коментарів',

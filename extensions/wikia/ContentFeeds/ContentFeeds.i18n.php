@@ -127,8 +127,10 @@ $messages['eu'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  */
 $messages['fi'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => 'Luo ensimmäiset sivusi!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Otsikko',
 	'contentfeeds-firstfewarticles-tag-next' => 'Seuraava',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Virhe: Sivun otsikko on pakollinen',
