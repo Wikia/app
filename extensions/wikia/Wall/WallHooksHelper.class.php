@@ -1654,8 +1654,10 @@ class WallHooksHelper {
 		$wm->load();
 		if(!$wm->isMain()) {
 			$wmw = $wm->getTopParentObj();
+			if( empty($wmw) ) {
+				return true;
+			}
 			$wmw->load();
-
 		}
 
 		$articleId = $wm->getId();
