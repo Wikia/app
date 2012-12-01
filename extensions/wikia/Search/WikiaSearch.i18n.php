@@ -45,6 +45,7 @@ $messages['en'] = array(
 	'wikiasearch-sort-relevancy' => 'Relevancy',
 	'wikiasearch-sort-publish-date' => 'Publish Date',
 	'wikiasearch-sort-duration' => 'Duration',
+	'wikiasearch-choose-category' => 'Choose Category',
 	
 	
 

@@ -3,6 +3,7 @@
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/opacity";
 
 $color-search-form-background: darken($color-page, 5%);
 @if $is-dark-wiki {
@@ -271,7 +272,7 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 		overflow: hidden;
 	}
 	input[type="checkbox"], input[type="radio"] {
-		margin: 0 6px 0 0;
+		margin: 0 6px 0 1px;
 		padding: 0;
 	}
 	.search-tabs {
@@ -305,6 +306,7 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 		.search-filter-sort {
 			font-weight: normal;
 			margin-bottom: 7px;
+			position: relative;
 			p {
 				margin: 0;
 			}
@@ -330,6 +332,14 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 			}
 			.hidden {
 				display: none;
+			}
+			.search-filter-sort-overlay {
+				@include opacity(50);
+				background: $color-page;
+				height: 100%;
+				position: absolute;
+				width: 100%;
+				z-index: 100;
 			}
 		}
 		.disabled {

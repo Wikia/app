@@ -44,7 +44,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->handleSkinSettings( $this->wg->User->getSkin() );
 
 		$searchConfig = F::build('WikiaSearchConfig');
-		
+
 		$searchConfig
 			->setQuery			( $this->getVal('query', $this->getVal('search') ) )
 			->setCityId			( $this->wg->CityId )
@@ -107,7 +107,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isOneResultsPageOnly',	$searchConfig->getNumPages() < 2 );
 		$this->setVal( 'pagesCount', 			$searchConfig->getNumPages() );
 		$this->setVal( 'currentPage', 			$searchConfig->getPage() ); 
-		$this->setVal( 'paginationLinks',		$this->sendSelfRequest( 'pagination',  array('config' => $searchConfig) ) ); 
+		$this->setVal( 'paginationLinks',		$this->sendSelfRequest( 'pagination', $tabsArgs ) ); 
 		$this->setVal( 'tabs', 					$this->sendSelfRequest( 'tabs', $tabsArgs ) );
 		$this->setVal( 'query',					$searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED ) );
 		$this->setVal( 'resultsPerPage',		$searchConfig->getLimit() );
@@ -463,6 +463,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'advanced', 			$config->getAdvanced() );
 		$this->setVal( 'redirs', 			$config->getIncludeRedirects() );
 		$this->setVal( 'limit', 			$config->getLimit() );
+		$this->setVal( 'filters',			$config->getPublicFilterKeys() );
+		$this->setVal( 'rank', 				$config->getRank() );
+		$this->setVal( 'by_category', 		$this->getVal('by_category', false) );
+
 	}
 
 	/**

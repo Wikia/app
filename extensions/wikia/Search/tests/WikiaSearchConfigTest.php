@@ -847,5 +847,19 @@ class WikiaSearchConfigTest extends WikiaSearchBaseTest {
 		);
 	}
 
-
+	/**
+	 * @covers WikiaSearchConfig::getPublicFilterKeys
+	 */
+	public function testGetPublicFilterKeys() {
+		$config = F::build( 'WikiaSearchConfig' );
+		
+		$config->setFilterQueryByCode( 'is_image' );
+		
+		$this->assertContains(
+				'is_image',
+				$config->getPublicFilterKeys(),
+				'A public filter key registered in WikiaSearchConfig::publicFilterKeys should be returned by WikiaSearchConfig::getPublicFilterKeys'
+		);
+		
+	}
 }
