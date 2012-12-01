@@ -2,8 +2,6 @@
 
 var WikiaSearch = {
 	init: function() {
-		this.videoFilterOptions = $('.search-filter-sort');
-
 		$('form#powersearch input[name=title]').val('Special:WikiaSearch');
 	
 		var hiddenInputs = $('input.default-tab-value');
@@ -34,11 +32,13 @@ var WikiaSearch = {
 		this.initVideoTabEvents();
 	},
 	initVideoTabEvents: function() {
-		if(!this.videoFilterOptions.length) {
+		var videoFilterOptions = $('.search-filter-sort');
+
+		if(!videoFilterOptions.length) {
 			return;
 		}
 		
-		this.videoFilterOptions.find('.search-filter-sort-overlay').remove();
+		videoFilterOptions.find('.search-filter-sort-overlay').remove();
 		
 		var searchForm = $('#search-v2-form'),
 			videoRadio = $('#filter-is-video'),
@@ -75,7 +75,7 @@ var WikiaSearch = {
 		});
 		
 		// If the input isn't handled above, do a form submit
-		this.videoFilterOptions.find('input, select').not(categoryInput.add(filterInputs)).on('change', function() {
+		videoFilterOptions.find('input, select').not(categoryInput.add(filterInputs)).on('change', function() {
 			// Refresh search results
 			searchForm.submit();		
 		});
