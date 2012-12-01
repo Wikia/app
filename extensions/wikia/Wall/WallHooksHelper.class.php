@@ -2035,6 +2035,9 @@ class WallHooksHelper {
 					//nothing	
 				}
 			}
+			
+			$nm = new NavigationModel();
+			$nm->clearMemc( NavigationModel::WIKIA_GLOBAL_VARIABLE );
 		}
 		return true;
 	}
