@@ -5,7 +5,7 @@
  * @subpackage BatchTask
  * @author Maciej Błaszkowski <marooned at wikia-inc.com> for Wikia.com
  * @copyright (C) 2008, Wikia Inc.
- * @licence GNU General Public Licence 2.0 or later
+ * @license GNU General Public Licence 2.0 or later
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -423,6 +423,15 @@ class SWMSendToGroupTask extends BatchTask {
 									$args['senderId']
 								);
 								break;
+
+							case 'ANONS':
+								$desc = sprintf('SiteWideMessages :: Send to all anonymous users on %s wikis<br/>' .
+									'Sender: %s [id: %d]',
+									count( $args['wikiNames'] ),
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
 						}
 						break;
 
@@ -465,6 +474,18 @@ class SWMSendToGroupTask extends BatchTask {
 									$args['editCountOption'],
 									$args['editCountStart'],
 									( $args['editCountEnd'] === false ? '' : $args['editCountEnd'] ),
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
+
+							case 'ANONS':
+								$desc = sprintf('SiteWideMessages :: Send to all anonymous users on wikis by creation date:<br/>' .
+									'Option: %s; Start date: %s; End date: %s<br />' .
+									'Sender: %s [id: %d]',
+									$args['wcOption'],
+									$args['wcStartDate'],
+									$args['wcEndDate'],
 									$args['senderName'],
 									$args['senderId']
 								);
@@ -1046,6 +1067,7 @@ class SWMSendToGroupTask extends BatchTask {
 	private function sendMessageToHub($params) {
 		global $wgExternalSharedDB;
 		$result = true;
+		$sqlValues = array();
 
 		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
