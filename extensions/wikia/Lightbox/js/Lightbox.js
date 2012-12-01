@@ -1033,7 +1033,7 @@ var Lightbox = {
 							thumbUrl: Lightbox.thumbParams($thisThumb.data('src') || $thisThumb.attr('src'), type),
 							title: title,
 							type: type,
-							playButtonSpan: playButtonSpan,
+							playButtonSpan: playButtonSpan
 							//caption: caption
 						});
 					}
