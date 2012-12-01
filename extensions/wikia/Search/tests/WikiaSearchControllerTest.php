@@ -455,7 +455,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'sendSelfRequest' )
-			->with		( 'pagination', array( 'config' => $mockConfig ) )
+			->with		( 'pagination', array( 'config' => $mockConfig, 'by_category' => false ) )
 			->will		( $this->returnValue( 'ssr_pagination' ) )
 		;
 		$mockController
@@ -1082,7 +1082,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'sendSelfRequest' )
-			->with		( 'pagination', array( 'config' => $mockConfig ) )
+			->with		( 'pagination', array( 'config' => $mockConfig, 'by_category' => false ) )
 			->will		( $this->returnValue( 'ssr_pagination' ) )
 		;
 		$mockController
@@ -1667,7 +1667,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'sendSelfRequest' )
-			->with		( 'pagination', array( 'config' => $mockConfig ) )
+			->with		( 'pagination', array( 'config' => $mockConfig, 'by_category' => false ) )
 			->will		( $this->returnValue( 'ssr_pagination' ) )
 		;
 		$mockController
@@ -2277,7 +2277,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'sendSelfRequest' )
-			->with		( 'pagination', array( 'config' => $mockConfig ) )
+			->with		( 'pagination', array( 'config' => $mockConfig, 'by_category' => false ) )
 			->will		( $this->returnValue( 'ssr_pagination' ) )
 		;
 		$mockController
@@ -2867,7 +2867,7 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockController
 			->expects	( $this->at( $controllerIncr++ ) )
 			->method	( 'sendSelfRequest' )
-			->with		( 'pagination', array( 'config' => $mockConfig ) )
+			->with		( 'pagination', array( 'config' => $mockConfig, 'by_category' => false ) )
 			->will		( $this->returnValue( 'ssr_pagination' ) )
 		;
 		$mockController
@@ -3427,7 +3427,8 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 		$mockResponse		=	$this->getMock( 'WikiaResponse', array( 'redirect', 'setVal' ), array( 'html' ) );
 		$mockRequest		=	$this->getMock( 'WikiaRequest', array( 'getVal' ), array( array() ) );
 		$configMethods		=	array( 'getResultsFound', 'getPage', 'getQuery', 'getNumPages', 'getIsInterWiki', 
-										'getSkipCache', 'getDebug', 'getNamespaces', 'getAdvanced', 'getIncludeRedirects', 'getLimit' );
+										'getSkipCache', 'getDebug', 'getNamespaces', 'getAdvanced', 'getIncludeRedirects', 
+										'getLimit', 'getPublicFilterKeys', 'getRank' );
 		$mockConfig			=	$this->getMock( 'WikiaSearchConfig', $configMethods );
 		
 		$mockWgRefl = new ReflectionProperty( 'WikiaSearchController', 'wg' );
@@ -3507,6 +3508,16 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->method	( 'getLimit' )
 			->will		( $this->returnValue( 20 ) )
 		;
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getPublicFilterKeys' )
+			->will		( $this->returnValue( array( 'is_image' ) ) )
+		;
+		$mockConfig
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getRank' )
+			->will		( $this->returnValue( 'default' ) )
+		;
 		$incr2 = 1;
 		$mockController
 			->expects	( $this->at( $incr2++ ) )
@@ -3578,6 +3589,28 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 			->method	( 'setVal' )
 			->with		( 'limit', 20 )
 		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'filters', array( 'is_image' ) )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'rank', 'default' )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'getVal' )
+			->with		( 'by_category', false )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockController
+			->expects	( $this->at( $incr2++ ) )
+			->method	( 'setVal' )
+			->with		( 'by_category', false )
+		;
+		
 		
 		$mockController->pagination();
 	}
