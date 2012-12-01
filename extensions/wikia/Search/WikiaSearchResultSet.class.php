@@ -229,7 +229,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	public function prependArticleMatchIfExists() {
 		wfProfileIn(__METHOD__);
 
-		if (! ( $this->searchConfig->hasArticleMatch() && $this->resultsStart == 0 ) ) {
+		if (! ( $this->searchConfig->hasArticleMatch() && $this->getResultsStart() == 0 ) ) {
 			wfProfileOut(__METHOD__);
 			return $this;
 		}
