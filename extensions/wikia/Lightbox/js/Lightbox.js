@@ -426,30 +426,40 @@ var Lightbox = {
 		adMediaCount: 2,
 		// array of media titles shown for tracking unique views
 		adMediaProgress: [],
+		// how many items where shown since showing last ad
+		adMediaShownSinceLastAd: 0,
 		// is an ad already loaded?
 		adWasPreloaded: false,
-		// has an ad already been shown?
-		adWasShown: false,
 		// are we showing an ad right now?
 		adIsShowing: false,
+		// how many times an ad have already been shown?
+		adWasShownTimes: 0,
+		// how many times at maximum ad should be shown?
+		adShowMaxTimes: window.wgShowAdModalInterstitialTimes,
 
+		getSlotName: function() {
+			if (this.adWasShownTimes) {
+				return 'MODAL_INTERSTITIAL_' +  this.adWasShownTimes;
+			}
+			return 'MODAL_INTERSTITIAL';
+		},
 		// should user see ads?
 		showAds: function() {
 			if (Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB') {
-				return $('#MODAL_INTERSTITIAL').length;
+				return $('#' + this.getSlotName()).length;
 			}
 			return false;
 		},
 		preloadAds: function() {
 			if (!this.adWasPreloaded) {
 				this.adWasPreloaded = true;
-				window.adslots2.push(['MODAL_INTERSTITIAL']);
+				window.adslots2.push([this.getSlotName()]);
 			}
 		},
 		// Determine if we should show an ad
 		showAd: function(title, type) {
 			// Already shown?
-			if(!this.showAds() || this.adWasShown) {
+			if(!this.showAds() || this.adWasShownTimes >= this.adShowMaxTimes) {
 				return false;
 			}
 			
@@ -458,14 +468,15 @@ var Lightbox = {
 				progress = this.adMediaProgress;
 			
 			if(progress.indexOf(title) < 0) {
-				if(progress.length >= countToLoad) {
+				if(this.adMediaShownSinceLastAd >= countToLoad) {
 					this.preloadAds();
 				}
-				if(progress.length >= countToShow && type != 'video') {
+				if(this.adMediaShownSinceLastAd >= countToShow && type != 'video') {
 					this.updateLightbox();
 					return true;
 				}
 				progress.push(title);
+				this.adMediaShownSinceLastAd += 1;
 			}
 	
 			// Not showing an ad. 
@@ -479,8 +490,8 @@ var Lightbox = {
 			Lightbox.renderAdHeader();
 
 			// Show the ad
-			$('#MODAL_INTERSTITIAL').show();
-			
+			$('#' + this.getSlotName()).show();
+
 			Lightbox.openModal.progress.addClass('invisible');
 			
 			// Don't show active thumbnail
@@ -500,18 +511,22 @@ var Lightbox = {
 			Lightbox.openModal.css(css);
 
 			// Set flag to indicate we're showing an ad (for arrow click handler)
-			Lightbox.ads.adIsShowing = true;
-
-			// Ad's been shown, don't show it again. 
-			Lightbox.ads.adWasShown = true;
+			this.adIsShowing = true;
 
 			// remove "?file=" from URL
 			Lightbox.updateUrlState(true);
 		},
 		// Remove showing ad flag
 		reset: function() {
-			Lightbox.ads.adIsShowing = false;
-			$('#MODAL_INTERSTITIAL').hide();	
+			var $oldSlot = $('#' + this.getSlotName()).html('').hide();
+
+			this.adIsShowing = false;
+			this.adWasPreloaded = false;
+			this.adWasShownTimes += 1;
+			this.adMediaShownSinceLastAd = 0;
+
+			$oldSlot.attr('id', this.getSlotName());
+
 			Lightbox.openModal.media.show();
 			Lightbox.openModal.progress.removeClass('invisible');
 		}
@@ -521,7 +536,7 @@ var Lightbox = {
 			// Set lightbox css
 			var css = {
 				height: LightboxLoader.defaults.height
-			}
+			};
 			
 			// don't change top offset if the screen is shorter than the min modal height
 			if(!Lightbox.shortScreen) {

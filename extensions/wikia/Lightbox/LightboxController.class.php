@@ -14,9 +14,6 @@ class LightboxController extends WikiaController {
 	const POSTED_IN_ARTICLES = 7;
 	static $imageserving;
 
-	public function __construct() {
-	}
-
 	/**
 	 * get lightbox madal content
 	 */
@@ -513,4 +510,20 @@ class LightboxController extends WikiaController {
 		return $timestamp;
 	}
 
+	/**
+	 * @param array $vars
+	 * @return bool
+	 */
+	public function onMakeGlobalVariablesScript(&$vars) {
+		// How many ads to show while browsing Lightbox
+		$wgShowAdModalInterstitialTimes = $this->wg->ShowAdModalInterstitialTimes;
+		if (!$wgShowAdModalInterstitialTimes) {
+			$wgShowAdModalInterstitialTimes = 1; // default: 1
+		}
+
+		$vars['wgEnableLightboxExt'] = true;
+		$vars['wgShowAdModalInterstitialTimes'] = $wgShowAdModalInterstitialTimes;
+
+		return true;
+	}
 }
