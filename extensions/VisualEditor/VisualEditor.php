@@ -17,9 +17,6 @@ $wgExtraNamespaces[NS_VISUALEDITOR_TALK] = 'VisualEditor_talk';
 $wgContentNamespaces[] = NS_VISUALEDITOR;
 $wgContentNamespaces[] = NS_VISUALEDITOR_TALK;
 
-// URL to the Parsoid instance
-// MUST NOT end in a slash due to Parsoid bug
-$wgVisualEditorParsoidURL = 'http://parsoid-s1:8000';
 // Interwiki prefix to pass to the Parsoid instance
 // Parsoid will be called as $url/$prefix/$pagename
 $wgVisualEditorParsoidPrefix = 'communitycouncil';
