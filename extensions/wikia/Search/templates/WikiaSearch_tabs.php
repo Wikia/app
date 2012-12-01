@@ -1,3 +1,5 @@
+<?php global $wgLanguageCode; ?>
+
 <ul class="search-tabs grid-1 alpha">
 	<?php foreach($searchProfiles as $profileId => $profile): ?>
 		<? if( $profileId == SEARCH_PROFILE_ADVANCED) {
@@ -14,9 +16,11 @@
 				'params' => isset( $profile['parameters'] ) ? $profile['parameters'] + array('fulltext'=>'Search') : array('fulltext'=>'Search') ) );
 			?>
 			<? // Image/Video tab options ?>
-			<? if( $activeTab == $profileId && $profile['namespaces'][0] == '6' ): ?>
+			<? // Only enabled for EN wikis now, will add i18n later ?>
+			<? if( $wgLanguageCode == 'en' && $activeTab == $profileId && $profile['namespaces'][0] == '6' ): ?>
 
 				<div class="search-filter-sort" id="file-search-filter-sort">
+					<div class="search-filter-sort-overlay"></div>
 					<p><?= wfMessage('wikiasearch-filter-options-label') ?>:</p>
 					<ul class="search-sort">
 						<li>

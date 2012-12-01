@@ -2,8 +2,8 @@
 
 var WikiaSearch = {
 	init: function() {
-		this.videoFilterOptions = $('.search-filter-sort').slideDown();
-	
+		this.videoFilterOptions = $('.search-filter-sort');
+
 		$('form#powersearch input[name=title]').val('Special:WikiaSearch');
 	
 		var hiddenInputs = $('input.default-tab-value');
@@ -38,6 +38,8 @@ var WikiaSearch = {
 			return;
 		}
 		
+		this.videoFilterOptions.find('.search-filter-sort-overlay').remove();
+		
 		var searchForm = $('#search-v2-form'),
 			videoRadio = $('#filter-is-video'),
 			videoOptions = videoRadio.parent().next(),
@@ -49,13 +51,10 @@ var WikiaSearch = {
 		filterInputs.on('change', function() {
 			if(videoRadio.is(':checked')) {
 				videoOptions
-					.slideDown()
-					.removeClass('hidden')
 					.find('input') // only re-enable inputs, we'll handle the select input separately
 					.attr('disabled', false);
 			} else {
 				videoOptions
-					.slideUp()
 					.find('input, select') 
 					.attr('disabled', true)
 					.attr('checked', false);
