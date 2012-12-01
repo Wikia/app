@@ -627,4 +627,63 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 				'WikiaSearchResultSet::getHostGrouping should return an instance of Solarium_Result_Select_Grouping_FieldGroup'
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::setResultGroupings
+	 */
+	public function testSetResultGroupings() {
+		$this->prepareMocks( array( 'getHostGrouping', 'getHeader' ) );
+		
+		$mockFieldGroup = $this->getMockBuilder( 'Solarium_Result_Select_Grouping_FieldGroup' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getValueGroups' ) )
+							->getMock();
+		
+		$mockValueGroup = $this->getMockBuilder( 'Solarium_Result_Select_Grouping_ValueGroup' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getNumFound', 'getValue', 'getDocuments' ) )
+							->getMock();
+		
+		$resultSet2 = clone $this->resultSet;
+		
+		$url = 'http://foo.wikia.com';
+		
+		$this->resultSet
+			->expects	( $this->at( 0 ) )
+			->method	( 'getHostGrouping' )
+			->will		( $this->returnValue( $mockFieldGroup ) )
+		;
+		$mockFieldGroup
+			->expects	( $this->at( 0 ) )
+			->method	( 'getValueGroups' )
+			->will		( $this->returnValue( array( 'foo' ) ) ) // value doesn't matter
+		;
+		$resultSet2
+			->expects	( $this->at( 0 ) )
+			->method	( 'getHeader' )
+			->will		( $this->returnValue( $url ) )
+		;
+		
+		$this->mockClass( 'WikiaSearchResultSet', $resultSet2 );
+		$this->mockApp();
+		
+		$method = new ReflectionMethod( 'WikiaSearchResultSet', 'setResultGroupings' );
+		$method->setAccessible( true );
+		
+		$this->assertEquals(
+				$this->resultSet,
+				$method->invoke( $this->resultSet ),
+				'WikiaSearchResultSet::setResultGrouping should provide a fluent interface'
+		);
+		
+		$results = new ReflectionProperty( 'WikiaSearchResultSet', 'results' );
+		$results->setAccessible( true );
+		
+		$this->assertArrayHasKey(
+				$url,
+				$results->getValue( $this->resultSet ),
+				'WikiaSearchResultSet::setResultGroupings should set instances of WikiaSearchResultSet as values keyed by their URL in the parent\'s $result attribute'
+		);
+		
+	}
 }
