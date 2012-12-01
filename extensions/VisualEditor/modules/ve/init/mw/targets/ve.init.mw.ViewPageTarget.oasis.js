@@ -288,7 +288,7 @@ ve.init.mw.ViewPageTarget.prototype.saveScrollPosition = function () {
  * @param {HTMLElement} dom Parsed DOM from server
  */
 ve.init.mw.ViewPageTarget.prototype.onLoad = function ( dom ) {
-	this.track( WikiaTracker.ACTIONS.IMPRESSION, 'onLoad' );
+	this.track( WikiaTracker.ACTIONS.IMPRESSION, 'on-load' );
 	this.edited = false;
 	this.setUpSurface( dom );
 	this.attachToolbarCancelButton();
@@ -307,7 +307,7 @@ ve.init.mw.ViewPageTarget.prototype.onLoad = function ( dom ) {
 		if ( buttonTitle ) {
 			_this.track( WikiaTracker.ACTIONS.CLICK, 'button-' + buttonTitle );
 		} else {
-			_this.track( WikiaTracker.ACTIONS.IMPRESSION, 'buttonTrackingProblem' );
+			_this.track( WikiaTracker.ACTIONS.IMPRESSION, 'button-tracking-problem' );
 		}
 	} );
 };
@@ -456,6 +456,7 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
  * @param {jQuery.Event} e
  */
 ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
+	this.track( WikiaTracker.ACTIONS.CLICK, 'toolbar-cancel-button' );
 	this.deactivate();
 };
 
@@ -633,6 +634,7 @@ ve.init.mw.ViewPageTarget.prototype.onSaveDialogSaveButtonClick = function () {
  * @param {jQuery.Event} e
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogCancelButtonClick = function () {
+	this.track( WikiaTracker.ACTIONS.CLICK, 'dialog-cancel-button' );
 	this.hideSaveDialog();
 };
 
@@ -664,7 +666,7 @@ ve.init.mw.ViewPageTarget.prototype.lockSaveDialogSaveButton = function () {
  * @param {HTMLElement} html Rendered HTML from server
  */
 ve.init.mw.ViewPageTarget.prototype.onSave = function ( html ) {
-	this.track( WikiaTracker.ACTIONS.IMPRESSION, 'onSave' );
+	this.track( WikiaTracker.ACTIONS.IMPRESSION, 'on-save' );
 	if ( Number( mw.config.get( 'wgArticleId', 0 ) ) === 0 || this.oldId ) {
 		// This is a page creation, refresh the page
 		this.teardownBeforeUnloadHandler();
@@ -895,7 +897,7 @@ ve.init.mw.ViewPageTarget.prototype.restoreScrollPosition = function () {
  * @param {Mixed} error Thrown exception or HTTP error string
  */
 ve.init.mw.ViewPageTarget.prototype.onLoadError = function ( response, status ) {
-	this.track( WikiaTracker.ACTIONS.IMPRESSION, 'onLoadError' );
+	this.track( WikiaTracker.ACTIONS.IMPRESSION, 'on-load-error' );
 	if ( confirm( ve.msg( 'visualeditor-loadwarning', status ) ) ) {
 		this.load();
 	} else {
