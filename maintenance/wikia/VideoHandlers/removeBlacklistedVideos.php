@@ -76,14 +76,15 @@ while( $row = $db->fetchObject($result) ) {
 		$feedIngester = VideoFeedIngester::getInstance( $file->getProviderName() );
 		if ( $feedIngester->isBlacklistVideo( $metadata ) ) {
 			$file = dirname( __FILE__ ).'/../deleteOn.php';
-			$cmd = "SERVER_ID={$wgCityId} php {$file} --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php -t 'File:{$name}'";
+			$arg = $title->getPrefixedDbKey();
+			$cmd = "SERVER_ID={$wgCityId} php {$file} --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php -t ".escapeshellarg($arg);
 			printText ( "\tCommand: $cmd\n" );
 			if ( !$dryRun ) {
-				$result = wfShellExec( $cmd, $retval );
+				$ret = wfShellExec( $cmd, $retval );
 				if ( $retval ) {
-					echo "Error code $retval: $result \n";
+					echo "Error code $retval: $ret \n";
 				} else {
-					echo "$result \n";
+					echo "$ret \n";
 				}
 			}
 
