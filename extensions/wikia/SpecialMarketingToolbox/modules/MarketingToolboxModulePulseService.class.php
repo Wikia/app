@@ -17,7 +17,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					'type' => 'text',
 					'name' => 'boardTitle',
 					'isRequired' => true,
-					'label' => wfMsg('marketing-toolbox-hub-module-pulse-wikiurl'),
+					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-wikiurl'),
 					'attributes' => array(
 						'maxlength' => '40'
 					),
@@ -26,7 +26,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					'type' => 'text',
 					'name' => 'boardDescription',
 					'isRequired' => true,
-					'label' => wfMsg('marketing-toolbox-hub-module-pulse-topic'),
+					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-topic'),
 					'attributes' => array(
 						'maxlength' => '255'
 					),
@@ -43,7 +43,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					'type' => 'text',
 					'name' => 'boardTitle',
 					'isRequired' => true,
-					'label' => wfMsg('marketing-toolbox-hub-module-pulse-stat1'),
+					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-stat1'),
 					'attributes' => array(
 						'maxlength' => '40'
 					),
@@ -52,7 +52,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					'type' => 'text',
 					'name' => 'boardDescription',
 					'isRequired' => true,
-					'label' => wfMsg('marketing-toolbox-hub-module-pulse-stat2'),
+					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-stat2'),
 					'attributes' => array(
 						'maxlength' => '255'
 					),
@@ -61,7 +61,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					'type' => 'text',
 					'name' => 'boardDescription',
 					'isRequired' => true,
-					'label' => wfMsg('marketing-toolbox-hub-module-pulse-stat3'),
+					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-stat3'),
 					'attributes' => array(
 						'maxlength' => '255'
 					),
@@ -74,7 +74,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					'type' => 'text',
 					'name' => 'boardTitle',
 					'isRequired' => true,
-					'label' => wfMsg('marketing-toolbox-hub-module-pulse-number1'),
+					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-number1'),
 					'attributes' => array(
 						'maxlength' => '40'
 					),
@@ -83,7 +83,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					'type' => 'text',
 					'name' => 'boardDescription',
 					'isRequired' => true,
-					'label' => wfMsg('marketing-toolbox-hub-module-pulse-number2'),
+					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-number2'),
 					'attributes' => array(
 						'maxlength' => '255'
 					),
@@ -92,7 +92,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					'type' => 'text',
 					'name' => 'boardDescription',
 					'isRequired' => true,
-					'label' => wfMsg('marketing-toolbox-hub-module-pulse-number3'),
+					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-number3'),
 					'attributes' => array(
 						'maxlength' => '255'
 					),
@@ -101,6 +101,11 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					'type' => 'raw',
 					'output' => '</div>',
 				),
+			),
+			'submits' => array(
+				array(
+					'value' => F::app()->wf->msg('marketing-toolbox-edithub-save-button')
+				)
 			),
 			'method' => 'post',
 			'action' => '',

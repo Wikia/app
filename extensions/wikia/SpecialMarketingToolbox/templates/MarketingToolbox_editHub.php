@@ -21,11 +21,7 @@
 		<? endif ?>
 
 		<input type="button" class="wmu-show" value="WMU test" />
-		<form method="post" name="upload-tool" class="WikiaForm" enctype="multipart/form-data">
-			<?=$moduleContent?>
-
-			<input type="submit" value="<?= wfMsg('marketing-toolbox-edithub-save-button'); ?>" />
-		</form>
+		<?=$moduleContent?>
 	</div>
 </section>
 

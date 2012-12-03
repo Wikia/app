@@ -1,5 +1,9 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 
+.WikiaGrid .WikiaArticle {
+	border: none;
+}
+
 .MarketingToolboxMain {
 	@include clearfix;
 	.input-group {
