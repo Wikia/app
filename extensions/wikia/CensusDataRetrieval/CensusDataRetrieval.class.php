@@ -19,17 +19,17 @@ class CensusDataRetrieval {
 	// note: a null value means a user-supplied parameter, not in Census
 	var $typeMap = array(
 		'vehicle' => array(
-			'name' => 'name.en',
+			'name' => 'name.wikilang',
 			'type' => 'type',
-			'description' => 'description.en',
+			'description' => 'description.wikilang',
 			'factions' => 'collection:factions.name',
 			'cost' => 'ingame_costs.cost',
-			'cost_resource' => 'ingame_costs.resource.en',
+			'cost_resource' => 'ingame_costs.resource.wikilang',
                         'decay' => 'decay'
 		),
                 'item' => array(
-                        'name' => 'name.en',
-                        'description' => 'description.en',
+                        'name' => 'name.wikilang',
+                        'description' => 'description.wikilang',
                         'activatable_recast_seconds' => 'activatable_recast_seconds',
                         'combat_only' => 'combat_only',
                         'max_stack_size' => 'max_stack_size',
@@ -48,6 +48,12 @@ class CensusDataRetrieval {
          * @var Array
          */
         var $censusDataArr = array();
+	/**
+         * Same like censusDataArr, but contains English phrases
+	 * Used when $censusDataArr is non english.
+	 * @var Array
+         */
+        var $censusDataArrDefault = array();
 
 	const QUERY_URL = 'http://data.soe.com/s:wikia/json/get/ps2/%s/%s';
 	const FLAG_CATEGORY = 'census-data-retrieval-flag-category';
@@ -97,12 +103,15 @@ class CensusDataRetrieval {
                 return $cdr->getData();
         }
 
-	public function __construct( Title $title ) {
+	public function __construct( Title $title = null ) {
 		$this->app = F::App();
 		if ( $title ) {
 			$this->query = $this->prepareCode( $title->getText() );
 		}
-                $this->censusDataArr = $this->getCacheCensusDataArr();
+                $this->censusDataArr = $this->getCacheCensusDataArr( $this->app->wg->LanguageCode, true );
+		if ( $this->app->wg->LanguageCode != 'en' ) {
+			$this->censusDataArrDefault = $this->getCacheCensusDataArr( 'en', true );
+		}
 	}
 
 	/**
@@ -154,8 +163,14 @@ class CensusDataRetrieval {
                 $http = new Http();
 
                 $censusData = null;
+		
                 //Check censusDataArr to find out if relevant data exists in Census
                 $key = array_search($this->query, $this->censusDataArr);
+		//look through default (English) array if there's no results for internationalized language
+		if ( !$key && $this->app->wg->LanguageCode != 'en' ) {
+			$key = array_search($this->query, $this->censusDataArrDefault);
+		}
+		
                 //fetch using key
                 if ( $key ) {
                         $key = explode('.', $key);
@@ -324,7 +339,7 @@ class CensusDataRetrieval {
 
                         if ( is_object($object) ) {
 
-                                $propertyName = $fieldPath[$i];
+				$propertyName = $this->prepareLangPropertyName( $fieldPath[$i], $object );
                                 $expectedType = '';
                                 $this->checkNameAndType( $propertyName, $expectedType );
                                 //get property
@@ -385,7 +400,15 @@ class CensusDataRetrieval {
                 return $result;
         }
 
-        //get name
+        /*
+	 * checkNameAndType
+	 * Seperate name from type. If $propertyName is in form type:property_name
+	 * it will assign property_name to $propertyName
+	 * and type to $expectedType
+	 * 
+	 * @param String &$propertyName can be a simple property name or in form containing type, type:property_name
+	 * @param String &$expectedType will be set with type if provided
+	 */
         private function checkNameAndType( &$propertyName, &$expectedType ) {
                 if ( strpos($propertyName,':') !== false ) {
                          $propertynNameArr = explode(':', $propertyName);
@@ -395,6 +418,25 @@ class CensusDataRetrieval {
                         $expectedType = '';
                 }
         }
+	
+	/*
+	 * prepareLangPropertyName
+	 * Replaces propertyName with wiki language code if its name is 'wikilang'
+	 * 
+	 * @param String $propertyName
+	 * @param String $object used just to make sure if field in object exists
+	 */
+	private function prepareLangPropertyName( $propertyName, $object ) {
+		if ( $propertyName == 'wikilang' ) {
+			//check whether field exists or set English language
+			if ( isset($object->{$this->app->wg->LanguageCode}) ) {
+				$propertyName = $this->app->wg->LanguageCode;
+			} else {
+				$propertyName = 'en';
+			}
+		}
+		return $propertyName;
+	}
 
         
         /**
@@ -408,9 +450,9 @@ class CensusDataRetrieval {
          * @param Boolean $skipCache Set true to skip cache
          * 
 	 */
-	private function getCacheCensusDataArr($skipCache = false) {
+	private function getCacheCensusDataArr($wikilang = 'en', $skipCache = false) {
                 wfProfileIn(__METHOD__);
-                $key = wfMemcKey('census-data');
+                $key = wfMemcKey('census-data-'.$wikilang);
                 $data = $this->app->wg->Memc->get($key);
 
                 if( !empty($data) && !$skipCache ) {
@@ -421,7 +463,7 @@ class CensusDataRetrieval {
                 $http = new Http();
                 $data = array();
                 foreach ($this->supportedTypes as $type) {
-                        $censusData = $http->get( sprintf(self::QUERY_URL, $type, '?c:show=id,name.en&c:limit=0') );
+                        $censusData = $http->get( sprintf(self::QUERY_URL, $type, '?c:show=id,name.'.$wikilang.'&c:limit=0') );
                         $map = json_decode($censusData);
                         $this->mergeResult( $data, $map, $type );
                 }
