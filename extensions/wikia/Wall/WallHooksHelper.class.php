@@ -1,5 +1,11 @@
 <?php
 
+function wyvlog($x) {
+        foreach( explode("\n",var_export($x,1)) as $line) {
+                error_log('tomek'.$line);
+        }
+}
+
 class WallHooksHelper {
 	const RC_WALL_COMMENTS_MAX_LEN = 50;
 	const RC_WALL_SECURENAME_PREFIX = 'WallMessage_';
@@ -1874,12 +1880,6 @@ class WallHooksHelper {
 
 		$app = F::app();
 		static $cache = array();
-
-function wyvlog($x) {
-        foreach( explode("\n",var_export($x,1)) as $line) {
-                error_log('tomek'.$line);
-        }
-}
 
 if(!is_string($userText) ) {
         wyvlog($userText);
