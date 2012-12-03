@@ -54,13 +54,13 @@ echo $app->renderView(
 	<?=F::app()->renderView(
 		'MarketingToolbox',
 		'FormField',
-		array('inputData' => $fields['number1'])
+		array('inputData' => $fields['number2'])
 	);
 	?>
 	<?=F::app()->renderView(
 		'MarketingToolbox',
 		'FormField',
-		array('inputData' => $fields['number1'])
+		array('inputData' => $fields['number3'])
 	);
 	?>
 </div>
