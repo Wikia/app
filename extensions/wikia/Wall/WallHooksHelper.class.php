@@ -1874,7 +1874,18 @@ class WallHooksHelper {
 
 		$app = F::app();
 		static $cache = array();
-		
+
+$userText = array();
+
+function wyvlog($x) {
+        foreach( explode("\n",var_export($x,1)) as $line) {
+                'tomek'.error_log($line);
+        }
+}
+
+if(!is_string($userText) ) {
+        wyvlog($userText);
+}
 		if( !empty($app->wg->EnableWallExt) ) {
 			if(empty($cache[$userText])) {
 				$messageWallPage = Title::makeTitle(NS_USER_WALL, $userText);
