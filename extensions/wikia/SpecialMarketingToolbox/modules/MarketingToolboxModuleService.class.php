@@ -15,9 +15,18 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	public function validate($data) {
+		$out = array();
+
 		$rules = $this->getValidationRules();
-		// TODO validation here
-		return true;
+
+		foreach ($rules as $fieldName => $validator) {
+			$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
+			if (!$validator->isValid($fieldData)) {
+				$out[$fieldName] = $validator->getError()->getMsg();
+			}
+		}
+
+		return $out;
 	}
 
 	public function filterData($data) {

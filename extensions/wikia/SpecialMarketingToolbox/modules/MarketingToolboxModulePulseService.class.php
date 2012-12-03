@@ -2,8 +2,62 @@
 class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 	protected function getValidationRules() {
 		return array(
-			'test' => 1,
-			'halo' => 2
+			'boardTitle' => new WikiaValidatorString(
+				array(
+					'required' => true,
+					'min' => 10,
+					'max' => 20
+				)
+			),
+			'boardDescription' => new WikiaValidatorString(
+				array(
+					'required' => true,
+					'min' => 10,
+					'max' => 20
+				)
+			),
+			'stat1' => new WikiaValidatorString(
+				array(
+					'required' => true,
+					'min' => 10,
+					'max' => 20
+				)
+			),
+			'stat2' => new WikiaValidatorString(
+				array(
+					'required' => true,
+					'min' => 10,
+					'max' => 20
+				)
+			),
+			'stat3' => new WikiaValidatorString(
+				array(
+					'required' => true,
+					'min' => 10,
+					'max' => 20
+				)
+			),
+			'number1' => new WikiaValidatorString(
+				array(
+					'required' => true,
+					'min' => 10,
+					'max' => 20
+				)
+			),
+			'number2' => new WikiaValidatorString(
+				array(
+					'required' => true,
+					'min' => 10,
+					'max' => 20
+				)
+			),
+			'number3' => new WikiaValidatorString(
+				array(
+					'required' => true,
+					'min' => 10,
+					'max' => 20
+				)
+			),
 		);
 	}
 	public function renderEditor($data) {
@@ -41,7 +95,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 				array(
 					'type' => 'text',
-					'name' => 'boardTitle',
+					'name' => 'stat1',
 					'isRequired' => true,
 					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-stat1'),
 					'attributes' => array(
@@ -50,7 +104,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 				array(
 					'type' => 'text',
-					'name' => 'boardDescription',
+					'name' => 'stat2',
 					'isRequired' => true,
 					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-stat2'),
 					'attributes' => array(
@@ -59,7 +113,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 				array(
 					'type' => 'text',
-					'name' => 'boardDescription',
+					'name' => 'stat3',
 					'isRequired' => true,
 					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-stat3'),
 					'attributes' => array(
@@ -72,7 +126,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 				array(
 					'type' => 'text',
-					'name' => 'boardTitle',
+					'name' => 'number1',
 					'isRequired' => true,
 					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-number1'),
 					'attributes' => array(
@@ -81,7 +135,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 				array(
 					'type' => 'text',
-					'name' => 'boardDescription',
+					'name' => 'number2',
 					'isRequired' => true,
 					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-number2'),
 					'attributes' => array(
@@ -90,7 +144,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 				array(
 					'type' => 'text',
-					'name' => 'boardDescription',
+					'name' => 'number3',
 					'isRequired' => true,
 					'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-number3'),
 					'attributes' => array(

@@ -105,16 +105,22 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHub.js');
 
-		$selectedModuleData = $modulesData['moduleList'][$this->selectedModuleId]['data'];
+		$selectedModuleData = array(
+			'values' => $modulesData['moduleList'][$this->selectedModuleId]['data']
+		);
 
 		$module = MarketingToolboxModuleService::getModuleByName(
 			$this->toolboxModel->getNotTranslatedModuleName($this->selectedModuleId)
 		);
 
+		$selectedModuleData['validationErrors'] = array();
+
 		if ($this->request->wasPosted()) {
 			$selectedModuleData = $this->request->getParams();
+
 			$selectedModuleData = $module->filterData($selectedModuleData);
-			if ($module->validate($selectedModuleData)) {
+			$selectedModuleData['validationErrors'] = $module->validate($selectedModuleData);
+			if (empty($selectedModuleData['validationErrors'])) {
 				$this->toolboxModel->saveModule(
 					$this->langCode,
 					$this->sectionId,
