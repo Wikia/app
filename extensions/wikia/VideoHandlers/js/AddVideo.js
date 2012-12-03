@@ -5,6 +5,31 @@
  *
  */
 (function($, window) {
+	// could be loaded by more than one extension
+	if(typeof window.AddVideo == 'function') {
+		return;
+	}
+
+	// temporary video survey code bugid-68723
+	if(wgContentLanguage == 'en') {
+		var addSurveyLink = function() {
+			$.nirvana.sendRequest({
+				controller: 'Videos', 
+				method: 'videoSurvey', 
+				type: 'GET',
+				format: 'html',
+				callback: function(html) {
+					$('#video-survey').prepend(html);
+					
+					var messages = $('#video-survey').find('span'),
+						count = messages.length,
+						chosen = Math.floor(Math.random() * 2);
+
+					messages.eq(chosen).fadeIn();
+				}
+			});
+		}();
+	}
 
 	var AddVideo = function(element, options) {
 		
@@ -292,6 +317,8 @@
 		});
 	
 	}
+	
+	window.AddVideo = AddVideo;
 
 })(jQuery, this);
 
