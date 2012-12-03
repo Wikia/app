@@ -34,6 +34,7 @@ function wfAdEngineInit() {
 		// Disable right rail ads and AdMeld ads for logged in users not willing to see ads
 		$wgEnableAdsInContent = false;
 		$wgEnableAdMeldAPIClient = false;
+		$wgEnableKruxTargeting = false;
 	}
 
 	// Canonical value for wgLoadAdsInHead
