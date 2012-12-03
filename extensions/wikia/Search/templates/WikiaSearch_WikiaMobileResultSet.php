@@ -1,7 +1,12 @@
 <?php if( $resultSet->getResultsFound() > 1 ): ?>
 <li class=group>
 <?php
-	$trackingData = 'class=ResultLink data-wid="'.$resultSet->getHeader('cityId').'" data-gpos="'.$pos.'" data-pos=0 data-sterm="'.addslashes($query).'" data-stype="'.( $isInterWiki ? 'inter' : 'intra' ).'" data-rver="'.$relevancyFunctionId.'" data-event=search_click_wiki';
+	$trackingData = 'class=ResultLink data-wid="'.$resultSet->getHeader('cityId').
+		'" data-gpos="' . $pos .
+		'" data-pos=0 data-sterm="' . addslashes($query).
+		'" data-stype="' . ( $isInterWiki ? 'inter' : 'intra' ).
+		'" data-rver="' . $relevancyFunctionId.
+		'" data-event=search_click_wiki';
 ?>
 	<p>
 		<a class=groupTitle href="<?= $resultSet->getHeader( 'cityUrl' );?>" <?= $trackingData; ?> ><?= $resultSet->getHeader( 'cityTitle' );?></a>
