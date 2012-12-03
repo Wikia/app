@@ -1,5 +1,4 @@
 <?php
-                print "Hi updatePages in/n";
 /**
  * class CensusEnabledPagesUpdate
  * Updates Census data on Pages with specified enable update category tag
@@ -13,52 +12,146 @@ class CensusEnabledPagesUpdate {
 
         /**
 	 * updatePages
-         * 
+	 * updates infoboxes on all census enabled pages
 	 */
-        public static function updatePages(  ) {
+        public function updatePages() {
                 wfProfileIn(__METHOD__);
-                
-                $cepu = new self();
-                $cepu->execute(  );
-                
-                wfProfileOut(__METHOD__);
-		return true;
-        }
-        
-        /**
-	 * main method, handles flow and sequence, decides when to give up
-	 */
-        public function execute(  ) {
-                wfProfileIn(__METHOD__);
-                //get all pages from cat
-                $pagesList = getPagesWithCategory( CensusDataRetrieval::getFlagCategoryTitle(), true );
-                //foreach page
-                foreach ( $pagesList as $titlePrefixedText) {
-                        $oTitle = Title::newFromText( $titlePrefixedText );
+                //get all pages from category
+		$aReturn = ApiService::call(
+			array(
+				'action' => 'query',
+				'list' => 'categorymembers',//pages with category
+				'cmtitle' => CensusDataRetrieval::getFlagCategoryTitle()->getPrefixedDBkey(),//category name
+				'cmlimit' => '1',
+				'cmnamespace' => '0'
+			)
+		);
+		
+		//perform update foreach page from category
+                foreach ( $aReturn['query']['categorymembers'] as $cm) {
+			
+                        $oTitle = Title::newFromText( $cm['title'] );
                         $oArticle = new Article($oTitle);
-                        $newText = getUpdatedContent( $oArticle->getContent(), $oTitle->getText() );
-//                        $oArticle->doEdit( $newText, 'Updating infobox with data from Sony DB', EDIT_UPDATE );
-                        break;
+			
+                        $newText = $this->getUpdatedContent( $oArticle->getContent(), $oTitle );
+			
+			//save updated content
+                        $oArticle->doEdit( $newText, 'Updating infobox with data from Sony DB', EDIT_UPDATE );
+			
                 }
-                //pull census data
-                //get infobox tpl code
-                //override infobox
+		
                 wfProfileOut(__METHOD__);
         }
         
         /**
 	 * getUpdatedContent
-         * Retrieves new infobox code and replaces in provided article text
+         * Retrieves new infobox code and replaces it in provided article text
          * 
          * @param String $currentText Current article text
-         * @param String $title Title of page being edited
+         * @param Title $oTitle Title of page being edited
          * 
-         * @return String Description
+         * @return String $newText Content with replaced infobox template
 	 */
-        private function getUpdatedContent( $currentText, $title ) {
-                $newText = '';
-                //run retrieval from Census
+        private function getUpdatedContent( $currentText, Title $oTitle ) {
+		
+		$templateCode = null;
+		$type = null;
+		$templateParams = null;
+		$templateParamsArr = array();
+		//cut pieces requred for update
+		$templateMatches = $this->matchTemplate( $currentText );
+		//set current template code
+		if ( isset($templateMatches[0]) ) {
+			$templateCode = $templateMatches[0];
+		}
+		//set type of infobox
+		if ( isset($templateMatches[1]) ) {
+			$type = $templateMatches[1];
+		}
+		//set string of template params without line breaks
+		if ( isset($templateMatches[2]) ) {
+			$templateParams = str_replace("\n",' ',$templateMatches[2]);
+			//parse params to assoc array compatibile to CensusDataRetrieval::data
+			$templateParamsArr = $this->parseTemplateFields( $templateParams );
+		}
+		
+		//get data from Census
+		$oCensusRetrieval = new CensusDataRetrieval( $oTitle );
+		if ( !$oCensusRetrieval->fetchData() ) {
+			// no data in Census or something went wrong, quit
+                        wfProfileOut(__METHOD__);
+			return null;
+		}
+		
+		//if retrieved infobox type is inconsistent with the current infobox quit
+		if ( $type && $type != $oCensusRetrieval->getType() ) {
+			wfProfileOut(__METHOD__);
+			return null;
+		}
+		
+		//combine results and override old ones
+		if ( $templateParamsArr ) {
+			$newTemplateParamsArr = array_merge( $templateParamsArr, $oCensusRetrieval->getData() );
+			$oCensusRetrieval->setData( $newTemplateParamsArr );
+		}
+		
+		//get new template code
+		$newTemplateCode = $oCensusRetrieval->getInfoboxCode();
+		
+		//replace template
+		if ( $templateCode ) {
+			$newText = str_replace($templateCode, $newTemplateCode, $currentText);
+		} else {
+			$newText = $newTemplateCode.$currentText;
+		}
+		
+		//TODO insert templ if no template yet
+		wfProfileOut(__METHOD__);
                 return $newText;
+        }
+        
+        /**
+	 * matchTemplate
+         * Retrieves matches reqiured to perse infobox template
+         * 
+         * @param String $wikiText Article content
+l         * 
+         * @return Array $matches
+	 * Matches should look like:
+	 * $matches[0] Infobox template i.e. {{type infobox |param ... }}
+	 * $matches[1] Infobox type i.e. vehicle
+	 * $matches[2] Infobox params i.e. |param1 = val1 |param2 = val2
+	 */
+        private function matchTemplate( $wikiText ) {
+		$regex = '/{{([a-zA-Z]*) infobox([^{{2}]*)}}/';
+		preg_match( $regex, $wikiText, $matches );
+		return $matches;
+	}
+	
+        /**
+	 * parseTemplateFields
+         * Retrieves template parameters and creates array of values
+         * 
+         * @param String $paramsCode Template parameters cutted from template code
+         * 
+         * @return Array $paramsAssocArr Associative array compatibile with CensusDataRetrieval::data array
+	 */
+        private function parseTemplateFields( $paramsCode ) {
+		
+		//get params in seperate array
+		$paramsArr = explode ('|', $paramsCode);
+		
+		$paramsAssocArr = array();
+		//fill assoc array: param_name => param_value
+		$size = sizeof( $paramsArr );
+		for ( $i = 1; $i < $size; $i++ ) {
+			$paramArr = array_map( 'trim', explode('=', $paramsArr[$i]) );
+			if ( isset( $paramArr[0] ) && isset( $paramArr[1] ) ) {
+				$paramsAssocArr[$paramArr[0]] = $paramArr[1];
+			}
+		}
+		
+                return $paramsAssocArr;
         }
         
         
