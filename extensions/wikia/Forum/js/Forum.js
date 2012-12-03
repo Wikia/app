@@ -47,8 +47,6 @@
 			content.find('.WikiaArticle').css('width', 800);
 			var modal = $.showCustomModal($.msg('forum-specialpage-policies'), content, options);
 			$('.ForumPolicies').startThrobbing();
-			$('.ForumPolicies').stopThrobbing();
-			
 			return false;
 		};
 		
