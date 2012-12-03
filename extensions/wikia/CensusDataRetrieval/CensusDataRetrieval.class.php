@@ -11,6 +11,7 @@ class CensusDataRetrieval {
         var $app;
 	var $query = '';
 	var $data = array();
+	var $type = null;
         
 	var $supportedTypes = array( 'vehicle', 'item' );
 
@@ -18,7 +19,7 @@ class CensusDataRetrieval {
 	// note: a null value means a user-supplied parameter, not in Census
 	var $typeMap = array(
 		'vehicle' => array(
-			'name' => 'name',
+			'name' => 'name.en',
 			'type' => 'type',
 			'description' => 'description.en',
 			'factions' => 'collection:factions.name',
@@ -27,7 +28,7 @@ class CensusDataRetrieval {
                         'decay' => 'decay'
 		),
                 'item' => array(
-                        'name' => 'collection:name',
+                        'name' => 'name.en',
                         'description' => 'description.en',
                         'activatable_recast_seconds' => 'activatable_recast_seconds',
                         'combat_only' => 'combat_only',
@@ -59,10 +60,9 @@ class CensusDataRetrieval {
 	public static function retrieveFromName( &$editPage ) {
                 wfProfileIn(__METHOD__);
 		// @TODO check if namespace is correct, quit if not
-
                 if ( !$editPage->mTitle->getArticleId() ) {//only on creating new article
-                        $cdr = new self();
-                        $result = $cdr->execute( $editPage->mTitle );
+                        $cdr = new self($editPage->mTitle);
+                        $result = $cdr->getPreformattedContent();
                         if ( $result ) {
                                 $editPage->textbox1 = $result;
                                 $editPage->addEditNotice(wfMsgForContent('census-data-retrieval-notification'));
@@ -73,25 +73,55 @@ class CensusDataRetrieval {
 		return true;
 	}
 
-	/**
-	 * main method, handles flow and sequence, decides when to give up
+        /**
+	 * retrieveForUpdate
+         * Retrieves, prepares and returns infobox template code
+         * 
+         * @param Title $title is used to form a query to Census
+         * @param String $type is used to make sure retrieved data is the same type
+         * @return String $templateCode
 	 */
-	public function execute( $title ) {
-                wfProfileIn(__METHOD__);
-                $this->app = F::App();
-		$this->query = $this->prepareCode( $title->getText() );
+        public static function retrieveForUpdate($title, $type = null) {
+		wfProfileIn(__METHOD__);
+		$cdr = new self( $title );
+		if ( !$cdr->fetchData() ) {
+			// no data in Census or something went wrong, quit
+                        wfProfileOut(__METHOD__);
+			return false;
+		}
+		if ( $type && $type != $this->type) {
+			wfProfileOut(__METHOD__);
+			return null;
+		}
+		wfProfileOut(__METHOD__);
+                return $cdr->getData();
+        }
+
+	public function __construct( Title $title ) {
+		$this->app = F::App();
+		if ( $title ) {
+			$this->query = $this->prepareCode( $title->getText() );
+		}
                 $this->censusDataArr = $this->getCacheCensusDataArr();
+	}
+
+	/**
+	 * Returns string of infobox and content for new page
+	 * False on no data
+	 */
+	public function getPreformattedContent() {
+                wfProfileIn(__METHOD__);
 		if ( !$this->fetchData() ) {
 			// no data in Census or something went wrong, quit
                         wfProfileOut(__METHOD__);
 			return false;
 		}
 
-		$text = $this->parseData();
+		$text = $this->getInfoboxCode();
 
 		$text .= $this->getLayout();
 
-		$text .= "\n[[" . Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY )->getPrefixedText() . ']]';
+		$text .= "\n[[" . $this->getFlagCategoryTitle()->getPrefixedText() . ']]';
                 wfProfileOut(__METHOD__);
                 return $text;
 	}
@@ -103,24 +133,22 @@ class CensusDataRetrieval {
          * @param $title Title is used to form a query to Census
          * @return $templateCode String
 	 */
-        public function getInfoboxCode( Title $title ) {
-                $this->app = F::App();
-		$this->query = $this->prepareCode( $title->getText() );
-                $this->censusDataArr = $this->getCacheCensusDataArr();
+        public function getInfobox( $title ) {
                 if ( !$this->fetchData() ) {
 			// no data in Census or something went wrong, quit
                         wfProfileOut(__METHOD__);
 			return false;
 		}
-                $templateCode = $this->parseData();
+                $templateCode = $this->getInfoboxCode();
                 return $templateCode;
         }
 
 	/**
 	 * Retrieves data from the Census API and filters the part we care about
+	 * Requires censusDataArr and query fields be initiated
 	 * @return boolean true on success, false on failed connection or empty result
 	 */
-	private function fetchData() {
+	public function fetchData() {
                 wfProfileIn(__METHOD__);
 		// fetch data from API based on $this->query
                 $http = new Http();
@@ -147,6 +175,7 @@ class CensusDataRetrieval {
                         wfProfileOut(__METHOD__);
                         return false;
                 }
+		
                 // error handling
 		if ( empty( $censusData ) ) {
 			wfDebug( __METHOD__ . 'Connection problem or no data' );
@@ -156,14 +185,16 @@ class CensusDataRetrieval {
  
                 wfProfileOut(__METHOD__);
                 // use data map to filter out unneeded data
-		return $this->mapData( $censusData );
+		// the mapData method returns a bool, dependin on whether the
+		// mapping succeeded or not.
+		return ( $this->mapData( $censusData ) );
 	}
 
 	/**
 	 * constructs the infobox text based on type and data
 	 * @return string
 	 */
-	private function parseData() {
+	public function getInfoboxCode() {
                 wfProfileIn(__METHOD__);
 		$type = $this->getType();
 
@@ -191,7 +222,7 @@ class CensusDataRetrieval {
 	 *
 	 * @return string
 	 */
-	private function getType() {
+	public function getType() {
 		return $this->type;
 	}
 
@@ -251,7 +282,11 @@ class CensusDataRetrieval {
                                 $this->data[$name] = $value;
                         }
                 }
-                //TODO return false if empty
+                //return false if empty
+		if ( empty($this->data) ) {
+			wfProfileOut(__METHOD__);
+			return false;
+		}
                 wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -433,5 +468,18 @@ class CensusDataRetrieval {
         public function getFlagCategoryTitle () {
                 return Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY );
         }
-        
+	
+	/**
+	 * getData
+	 */
+        public function getData() {
+		return $this->data;
+	}
+	
+	/**
+	 * setData
+	 */
+        public function setData( $data ) {
+		$this->data = $data;
+	}
 }
