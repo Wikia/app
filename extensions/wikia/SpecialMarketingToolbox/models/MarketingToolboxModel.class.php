@@ -13,6 +13,8 @@ class MarketingToolboxModel extends WikiaModel {
 	const MODULE_TOP_10_LISTS = 8;
 	const MODULE_POPULAR_VIDEOS = 9;
 
+	const HUBS_TABLE_NAME = '`wikia_hub_modules`';
+
 	protected $statuses = array();
 	protected $modules = array();
 	protected $sections = array();
@@ -227,6 +229,8 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @param int $sectionId
 	 * @param int $verticalId
 	 * @param int $timestamp
+	 *
+	 * @return array
 	 */
 	protected function getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp) {
 		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
@@ -254,6 +258,8 @@ class MarketingToolboxModel extends WikiaModel {
 
 	/**
 	 * Get default data for module list if not data is specified in DB
+	 *
+	 * @return array
 	 */
 	protected function getDefaultModuleList() {
 		$out = array();
@@ -301,7 +307,7 @@ class MarketingToolboxModel extends WikiaModel {
 			'hub_date' => $mdb->timestamp($timestamp)
 		);
 
-		$result = $mdb->selectField($table, 'count(1)', $conds, __METHOD__);
+		$result = $sdb->selectField($table, 'count(1)', $conds, __METHOD__);
 
 		if ($result) {
 			$mdb->update($table, $updateData, $conds, __METHOD__);
@@ -314,6 +320,15 @@ class MarketingToolboxModel extends WikiaModel {
 		$mdb->commit();
 	}
 
+	/**
+	 * Get last timestamp when vertical was published
+	 *
+	 * @param string $langCode
+	 * @param int $sectionId
+	 * @param int $verticalId
+	 *
+	 * @return int timestamp
+	 */
 	protected function getLastPublishedTimestamp($langCode, $sectionId, $verticalId) {
 		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$table = $this->getTablesBySectionId($sectionId);
@@ -336,11 +351,13 @@ class MarketingToolboxModel extends WikiaModel {
 	 * Get table name by section Id
 	 *
 	 * @param int $sectionId
+	 *
+	 * @return string
 	 */
 	protected function getTablesBySectionId($sectionId) {
 		switch ($sectionId) {
 			case self::SECTION_HUBS:
-				$table = '`wikia_hub_modules`';
+				$table = self::HUBS_TABLE_NAME;
 				break;
 		}
 
