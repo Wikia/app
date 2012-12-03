@@ -1137,7 +1137,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				// add link overlay
 				$linkOverlay = Xml::openElement('span', array('class' => 'wikia-slideshow-link-overlay'))
-					. wfMsg('wikiaPhotoGallery-slideshow-view-link-overlay', $linkText)
+					. wfMsg('wikiaPhotoGallery-slideshow-view-link-overlay', htmlspecialchars($linkText))
 					. Xml::closeElement('span');
 			}
 
@@ -1380,10 +1380,10 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				$data = array(
 					'imageUrl' => $imageUrl,
-					'imageTitle' => $text,
+					'imageTitle' => htmlspecialchars($text),
 					'imageShortTitle' => $shortText,
 					'imageLink' => !empty($link) ? $linkAttribs['href'] : '',
-					'imageDescription' => $linkText,
+					'imageDescription' => htmlspecialchars($linkText),
 					'imageThumbnail' => $thumbUrl,
 				);
 
