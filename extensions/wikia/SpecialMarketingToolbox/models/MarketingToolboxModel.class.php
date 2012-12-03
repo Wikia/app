@@ -47,6 +47,8 @@ class MarketingToolboxModel extends WikiaModel {
 				WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMsg('marketing-toolbox-section-lifestyle-button'),
 			)
 		);
+
+		parent::__construct();
 	}
 
 	public function getModuleName($moduleId) {
@@ -152,7 +154,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @return array
 	 */
 	public function getModulesData($langCode, $sectionId, $verticalId, $timestamp, $activeModule = self::MODULE_SLIDER) {
-		$moduleList = $this->getModuleList($langCode, $verticalId, $timestamp);
+		$moduleList = $this->getModuleList($langCode, $sectionId, $verticalId, $timestamp);
 
 		$modulesData = array(
 			'lastEditDate' => null,
@@ -162,25 +164,26 @@ class MarketingToolboxModel extends WikiaModel {
 
 		foreach ($moduleList as $moduleId => &$module) {
 			if ($moduleId == $activeModule) {
-				$user = User::newFromId($module['lastEditorId']);
-				if ($user instanceof User) {
-					$userName = $user->getName();
-				} else {
-					$userName = null;
+				$userName = null;
+				if ($module['lastEditorId']) {
+					$user = User::newFromId($module['lastEditorId']);
+					if ($user instanceof User) {
+						$userName = $user->getName();
+					}
 				}
 				$modulesData['lastEditor'] = $userName;
 				$modulesData['lastEditTime'] = $module['lastEditTime'];
 				$modulesData['activeModuleName'] = $this->getModuleName($moduleId);
 			}
 			$module['name'] = $this->getModuleName($moduleId);
-			$module['href'] = $this->getModuleUrl($timestamp, $langCode, $verticalId, $sectionId, $moduleId);
+			$module['href'] = $this->getModuleUrl($langCode, $sectionId, $verticalId, $timestamp, $moduleId);
 		}
 		$modulesData['moduleList'] = $moduleList;
 
 		return $modulesData;
 	}
 
-	public function getModuleUrl($timestamp, $langCode, $verticalId, $sectionId, $moduleId) {
+	public function getModuleUrl($langCode, $sectionId, $verticalId, $timestamp, $moduleId) {
 		return SpecialPage::getTitleFor('MarketingToolbox', 'editHub')->getLocalURL(
 			array(
 				'moduleId' => $moduleId,
@@ -193,63 +196,154 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
-	 * Gets mocked data for modules
+	 * Get list of modules for selected lang/vertical/timestamp
 	 *
 	 * @param $langCode
 	 * @param $verticalId
 	 * @param $timestamp
 	 * @return array
 	 */
-	protected function getModuleList($langCode, $verticalId, $timestamp) {
-		$mockEditorId = 4807210;
+	protected function getModuleList($langCode, $sectionId, $verticalId, $timestamp) {
+		$lastPublishTimestamp = $this->getLastPublishedTimestamp($langCode, $sectionId, $verticalId);
 
-		return array(
-			self::MODULE_SLIDER => array(
-				'status' => $this->statuses['PUBLISHED'],
-				'lastEditTime' => $timestamp - 4 * 24 * 60 * 60,
-				'lastEditorId' => $mockEditorId
-			),
-			self::MODULE_PULSE => array(
+		if ($lastPublishTimestamp) {
+			$out = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $lastPublishTimestamp);
+		} else {
+			$out = $this->getDefaultModuleList();
+		}
+
+		$actualData = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp);
+		$out = $actualData + $out;
+
+		ksort($out);
+
+		return $out;
+	}
+
+	/**
+	 * Get data for module list from DB
+	 *
+	 * @param string $langCode
+	 * @param int $sectionId
+	 * @param int $verticalId
+	 * @param int $timestamp
+	 */
+	protected function getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp) {
+		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$conds = array(
+			'lang_code' => $langCode,
+			'vertical_id' => $verticalId,
+			'hub_date' => $sdb->timestamp($timestamp),
+	);
+		$table = $this->getTablesBySectionId($sectionId);
+		$fields = array('module_id', 'module_status', 'module_data', 'last_edit_timestamp', 'last_editor_id');
+
+		$results = $sdb->select($table, $fields, $conds, __METHOD__);
+
+		$out = array();
+		while( $row = $sdb->fetchRow($results) ) {
+			$out[$row['module_id']] = array(
+				'status' => $row['module_status'],
+				'lastEditTime' => $row['last_edit_timestamp'],
+				'lastEditorId' => $row['last_editor_id'],
+				'data' => json_decode($row['module_data'], true)
+			);
+		}
+		return $out;
+	}
+
+	/**
+	 * Get default data for module list if not data is specified in DB
+	 */
+	protected function getDefaultModuleList() {
+		$out = array();
+
+		foreach ($this->modules as $moduleId => $moduleName) {
+			$out[$moduleId] = array(
 				'status' => $this->statuses['NOT_PUBLISHED'],
-				'lastEditTime' => $timestamp - 5 * 24 * 60 * 60,
-				'lastEditorId' => $mockEditorId
-			),
-			self::MODULE_WIKIAS_PICKS => array(
-				'status' => $this->statuses['PUBLISHED'],
-				'lastEditTime' => $timestamp - 6 * 24 * 60 * 60,
-				'lastEditorId' => $mockEditorId
-			),
-			self::MODULE_FEATURED_VIDEO => array(
-				'status' => $this->statuses['NOT_PUBLISHED'],
-				'lastEditTime' => $timestamp - 7 * 24 * 60 * 60,
-				'lastEditorId' => $mockEditorId
-			),
-			self::MODULE_EXPLORE => array(
-				'status' => $this->statuses['PUBLISHED'],
-				'lastEditTime' => $timestamp - 8 * 24 * 60 * 60,
-				'lastEditorId' => $mockEditorId
-			),
-			self::MODULE_FROM_THE_COMMUNITY => array(
-				'status' => $this->statuses['PUBLISHED'],
-				'lastEditTime' => $timestamp - 9 * 24 * 60 * 60,
-				'lastEditorId' => $mockEditorId
-			),
-			self::MODULE_POLLS => array(
-				'status' => $this->statuses['NOT_PUBLISHED'],
-				'lastEditTime' => $timestamp - 10 * 24 * 60 * 60,
-				'lastEditorId' => $mockEditorId
-			),
-			self::MODULE_TOP_10_LISTS => array(
-				'status' => $this->statuses['PUBLISHED'],
-				'lastEditTime' => $timestamp - 11 * 24 * 60 * 60,
-				'lastEditorId' => $mockEditorId
-			),
-			self::MODULE_POPULAR_VIDEOS => array(
-				'status' => $this->statuses['PUBLISHED'],
-				'lastEditTime' => $timestamp - 12 * 24 * 60 * 60,
-				'lastEditorId' => $mockEditorId
-			),
+				'lastEditTime' => null,
+				'lastEditorId' => null,
+				'data' => array()
+			);
+		}
+
+		return $out;
+	}
+
+	/**
+	 * Save module
+	 *
+	 * @param string $langCode
+	 * @param int $sectionId
+	 * @param int $verticalId
+	 * @param int $timestamp
+	 * @param int $moduleId
+	 * @param array $data
+	 * @param int $editorId
+	 *
+	 */
+	public function saveModule($langCode, $sectionId, $verticalId, $timestamp, $moduleId, $data, $editorId) {
+
+		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+
+		$updateData = array(
+			'module_data' => json_encode($data),
+			'last_editor_id' => $editorId + 1,
 		);
+
+		$table = $this->getTablesBySectionId($sectionId);
+
+		$conds = array(
+			'lang_code' => $langCode,
+			'vertical_id' => $verticalId,
+			'module_id' => $moduleId,
+			'hub_date' => $mdb->timestamp($timestamp)
+		);
+
+		$result = $mdb->selectField($table, 'count(1)', $conds, __METHOD__);
+
+		if ($result) {
+			$mdb->update($table, $updateData, $conds, __METHOD__);
+		} else {
+			$insertData = array_merge($updateData, $conds);
+
+			$mdb->insert($table, $insertData, __METHOD__);
+		}
+
+		$mdb->commit();
+	}
+
+	protected function getLastPublishedTimestamp($langCode, $sectionId, $verticalId) {
+		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$table = $this->getTablesBySectionId($sectionId);
+
+		$conds = array(
+			'lang_code' => $langCode,
+			'vertical_id' => $verticalId,
+			'module_status' => $this->statuses['PUBLISHED']
+		);
+
+		$conds = $sdb->makeList($conds, LIST_AND);
+		$conds .= ' AND hub_date <= CURDATE()';
+
+		$result = $sdb->selectField($table, 'unix_timestamp(max(hub_date))', $conds, __METHOD__);
+
+		return $result;
+	}
+
+	/**
+	 * Get table name by section Id
+	 *
+	 * @param int $sectionId
+	 */
+	protected function getTablesBySectionId($sectionId) {
+		switch ($sectionId) {
+			case self::SECTION_HUBS:
+				$table = '`wikia_hub_modules`';
+				break;
+		}
+
+		return $table;
 	}
 }
-

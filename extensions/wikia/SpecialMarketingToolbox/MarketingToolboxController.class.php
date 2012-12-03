@@ -91,7 +91,6 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	 * Main action for editing hub modules
 	 */
 	public function editHubAction() {
-
 		$this->flashMessage = $this->getFlashMessage();
 
 		$this->retriveDataFromUrl();
@@ -106,28 +105,33 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHub.js');
 
-		$data = array(
-			'test' => 123490,
-			'halo2' => 'pozn',
-			'alo' => 1
-		);
+		$selectedModuleData = $modulesData['moduleList'][$this->selectedModuleId]['data'];
+
 		$module = MarketingToolboxModuleService::getModuleByName(
 			$this->toolboxModel->getNotTranslatedModuleName($this->selectedModuleId)
 		);
 
 		if ($this->request->wasPosted()) {
-			$data = $this->context->getRequest()->getValues();
-			$data = $module->filterData($data);
-			if ($module->validate($data)) {
-				// TODO save
+			$selectedModuleData = $this->request->getParams();
+			$selectedModuleData = $module->filterData($selectedModuleData);
+			if ($module->validate($selectedModuleData)) {
+				$this->toolboxModel->saveModule(
+					$this->langCode,
+					$this->sectionId,
+					$this->verticalId,
+					$this->date,
+					$this->selectedModuleId,
+					$selectedModuleData,
+					$this->wg->user->getId()
+				);
 
 				$this->putFlashMessage(wfMsg('marketing-toolbox-module-save-ok'));
 				// TODO last module (when we will know what to do after last module, maybe preview?)
 				$nextUrl =  $this->toolboxModel->getModuleUrl(
-					$this->date,
 					$this->langCode,
-					$this->verticalId,
 					$this->sectionId,
+					$this->verticalId,
+					$this->date,
 					$this->selectedModuleId + 1
 				);
 				$this->response->redirect($nextUrl);
@@ -136,7 +140,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			}
 		}
 
-		$this->moduleContent = $module->renderEditor($data);
+		$this->moduleContent = $module->renderEditor($selectedModuleData);
 
 		$this->overrideTemplate('editHub');
 	}
