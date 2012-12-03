@@ -1879,7 +1879,7 @@ $userText = array();
 
 function wyvlog($x) {
         foreach( explode("\n",var_export($x,1)) as $line) {
-                'tomek'.error_log($line);
+                error_log('tomek'.$line);
         }
 }
 
