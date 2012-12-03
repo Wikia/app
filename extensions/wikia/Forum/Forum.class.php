@@ -17,9 +17,14 @@ class Forum extends Walls {
 		$boardsIds = $this->getList( $db, NS_WIKIA_FORUM_BOARD );
 
 		$boards = array();
-		
+
 		foreach($boardsIds as $key => $id) {
 			$board = ForumBoard::newFromId( $id );
+
+			if(empty($board)) {
+				continue;
+			}
+
 			$boardInfo = $board->getBoardInfo();
 			$boardInfo['id'] = $id;
 			$boardInfo['name'] = $board->getTitle()->getText();
@@ -28,9 +33,9 @@ class Forum extends Walls {
 			$orderIndex = wfGetWikiaPageProp(WPP_WALL_ORDER_INDEX, $id, DB_SLAVE);
 			$boards[$orderIndex] = $boardInfo;
 		}
-		
+
 		krsort($boards);
-		
+
 		return $boards;
 	}
 

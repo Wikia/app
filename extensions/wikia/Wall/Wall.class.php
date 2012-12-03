@@ -19,7 +19,6 @@ class Wall extends WikiaModel {
 
 	static public function newFromTitle( Title $title ) {
 		wfProfileIn(__METHOD__);
-
 		$wall = self::getEmpty();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
@@ -33,7 +32,6 @@ class Wall extends WikiaModel {
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
 		$wall->mRelatedPageId = (int) $relatedPageId;
-
 		wfProfileOut(__METHOD__);
 		return $wall;
 	}
