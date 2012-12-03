@@ -58,7 +58,7 @@
 		<span class="WikiaPhotoGalleryPreviewSliderCaptionWrapper">
 			<p class="WikiaPhotoGalleryPreviewSliderCaption WikiaPhotoGalleryPreviewItemCaption SliderTitle"><?= htmlspecialchars($caption) ?></p>
 			<p class="WikiaPhotoGalleryPreviewSliderCaption WikiaPhotoGalleryPreviewItemCaption SliderDescription"><?= htmlspecialchars($linktext) ?></p>
-			<p class="WikiaPhotoGalleryPreviewSliderCaption WikiaPhotoGalleryPreviewItemCaption SliderLink"><?= $linkMsg ?></p>
+			<p class="WikiaPhotoGalleryPreviewSliderCaption WikiaPhotoGalleryPreviewItemCaption SliderLink"><?= htmlspecialchars($linkMsg) ?></p>
 		</span>
 	</span>
 <?php
