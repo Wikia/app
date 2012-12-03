@@ -1381,7 +1381,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$data = array(
 					'imageUrl' => $imageUrl,
 					'imageTitle' => htmlspecialchars($text),
-					'imageShortTitle' => $shortText,
+					'imageShortTitle' => htmlspecialchars($shortText),
 					'imageLink' => !empty($link) ? $linkAttribs['href'] : '',
 					'imageDescription' => htmlspecialchars($linkText),
 					'imageThumbnail' => $thumbUrl,
