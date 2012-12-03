@@ -1,4 +1,4 @@
-<?php if( $resultSet->getResultsFound() > 1 ): ?>
+<?php if($resultSet->getResultsFound() > 1 ): ?>
 <li class=group>
 <?php
 	$trackingData = 'class=ResultLink data-wid="'.$resultSet->getHeader('cityId').
@@ -29,9 +29,9 @@
 		<?php else: break; endif; ?>
 	<?php }; ?>
 </li>
-<?php else: ?>
+<?php elseif ($nextResult = $resultSet->next()): ?>
 	<?= $app->getView( 'WikiaSearch', 'WikiaMobileResult', array(
-		'result' => $resultSet->next(),
+		'result' => $nextResult,
 		'gpos' => 0,
 		'pos' => $pos,
 		'query' => $query,
