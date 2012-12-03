@@ -1875,8 +1875,6 @@ class WallHooksHelper {
 		$app = F::app();
 		static $cache = array();
 
-$userText = array();
-
 function wyvlog($x) {
         foreach( explode("\n",var_export($x,1)) as $line) {
                 error_log('tomek'.$line);
