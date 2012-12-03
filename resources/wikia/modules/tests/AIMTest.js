@@ -54,17 +54,19 @@ describe("AIM", function () {
 		jasmine.Clock.tick(1);
 	});
 
-	/**
-	async.it('onComplete should be called', function(done){
+	async.it('onComplete() should be called', function(done) {
 		require(['aim'], function(aim) {
 			var form = document.createElement('form');
 			document.body.appendChild(form);
 
 			aim.submit(form, {
 				onStart: function() {
-					$('iframe#' + form.getAttribute('target')).trigger('load');
+					$(form).
+						attr('action', 'about:').
+						submit();
 				},
 				onComplete: function(resp) {
+					expect(typeof resp).toBe('string');
 					done();
 				}
 			});
@@ -72,6 +74,4 @@ describe("AIM", function () {
 
 		jasmine.Clock.tick(1);
 	});
-	**/
-
 });

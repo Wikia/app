@@ -21,14 +21,14 @@
 				d = window.frames[id].document;
 			}
 
-			if (d.location.href == "about:blank") {
+			if (d.location.href === "about:blank") {
 				return;
 			}
 
-			if (typeof(i.onComplete) == 'function') {
+			if (typeof i.onComplete === 'function') {
 				var response = null;
 
-				if(typeof(d.responseContent) != "undefined") {
+				if(typeof d.responseContent !== "undefined") {
 					response = d.responseContent;
 				} else {
 					response = d.body.innerHTML;
@@ -40,13 +40,17 @@
 
 		// create iframe to handle uploads and return value of its "name" attribute
 		function createIFrame(options) {
-			var self = this,
-				name = 'aim' + Math.floor(Math.random() * 99999),
+			var name = 'aim' + Math.floor(Math.random() * 99999),
 				iframe = $('<iframe id="' + name + '" name="' + name + '" src="about:blank" style="display:none" />');
+
+			// add custom callback to be fired when upload is completed
+			if (options && typeof(options.onComplete) === 'function') {
+				iframe[0].onComplete = options.onComplete;
+			}
 
 			// function to be fired when upload is done
 			iframe.bind('load', function() {
-				onIFrameLoaded($(this).attr('name'));
+				onIFrameLoaded(name);
 			});
 
 			// wrap iframe inside <div> and it to <body>
@@ -54,10 +58,6 @@
 				append(iframe).
 				appendTo('body');
 
-			// add custom callback to be fired when upload is completed
-			if (options && typeof(options.onComplete) == 'function') {
-				iframe[0].onComplete = options.onComplete;
-			}
 			return name;
 		}
 
