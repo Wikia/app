@@ -18,5 +18,6 @@ error_reporting(E_ALL | E_STRICT );
 require __DIR__ . '/../../../../maintenance/commandLine.inc';
 $wgUser = User::newFromName('Wikia');
 
-CensusEnabledPagesUpdate::updatePages();
+$updatePages = new CensusEnabledPagesUpdate();
+$updatePages->updatePages();
 exit( 0 );
