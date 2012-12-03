@@ -684,6 +684,593 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 				$results->getValue( $this->resultSet ),
 				'WikiaSearchResultSet::setResultGroupings should set instances of WikiaSearchResultSet as values keyed by their URL in the parent\'s $result attribute'
 		);
-		
 	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::setResults
+	 */
+	public function testSetResults() {
+		$this->prepareMocks( array( 'addResult' ) );
+		
+		$mockResult = $this->getMockBuilder( 'WikiaSearchResult' )
+							->disableOriginalConstructor()
+							->getMock(); 
+		
+		$this->resultSet
+			->expects	( $this->once() )
+			->method	( 'addResult' )
+			->with		( $mockResult )
+		;
+		
+		$this->assertEquals(
+				$this->resultSet,
+				$this->resultSet->setResults( array( $mockResult ) ),
+				'WikiaSearchResultSet::setResults should provide a fluent interface'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::setResultsFound
+	 */
+	public function testSetResultsFound() {
+		$this->prepareMocks( array( 'prependArticleMatchIfExists' ) ); // not providing a method to mock makes our mock result set cranky
+		
+		$this->assertEquals(
+				$this->resultSet,
+				$this->resultSet->setResultsFound( 10 ),
+				'WikiaSearchResultSet::setResultsFound should provide a fluent interface'
+		);
+		
+		$property = new ReflectionProperty( 'WikiaSearchResultSet', 'resultsFound' );
+		$property->setAccessible( true );
+		
+		$this->assertEquals(
+				10,
+				$property->getValue( $this->resultSet ),
+				'WikiaSearchResultSet::setResultsFound should set the resultsFound variable'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::prependArticleMatchIfExists
+	 */
+	public function testPrependArticleMatchIfExistsNoMatch() {
+		$this->prepareMocks( array( 'getResultsStart' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
+		
+		$this->config
+			->expects	( $this->at( 0 ) )
+			->method	( 'hasArticleMatch' )
+			->will		( $this->returnValue( false ) )
+		;
+		$this->resultSet
+			->expects	( $this->never() )		//should be short-circuited
+			->method	( 'getResultsStart' )
+		;
+		$this->assertEquals(
+				$this->resultSet,
+				$this->resultSet->prependArticleMatchIfExists(),
+				'WikiaSearchResultSet::prependArticleMatchIfExists should provide a fluent interface'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::prependArticleMatchIfExists
+	 */
+	public function testPrependArticleMatchIfExistsMatchWithPagination() {
+		$this->prepareMocks( array( 'getResultsStart' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
+		
+		$this->config
+			->expects	( $this->at( 0 ) )
+			->method	( 'hasArticleMatch' )
+			->will		( $this->returnValue( true ) )
+		;
+		$this->resultSet
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResultsStart' )
+			->will		( $this->returnValue( 20 ) )
+		;
+		$this->config
+			->expects	( $this->never() )
+			->method	( 'getArticleMatch' )
+		;
+		$this->assertEquals(
+				$this->resultSet,
+				$this->resultSet->prependArticleMatchIfExists(),
+				'WikiaSearchResultSet::prependArticleMatchIfExists should provide a fluent interface'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::prependArticleMatchIfExists
+	 */
+	public function testPrependArticleMatchIfExistsMatchWrongNamespace() {
+		$this->prepareMocks( array( 'getResultsStart' ), array( 'hasArticleMatch', 'getArticleMatch', 'getNamespaces' ) );
+		
+		$mockArticleMatch	= $this->getMockBuilder( 'WikiaSearchArticleMatch' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getCanonicalArticle' ) )
+									->getMock();
+		
+		$mockArticle		= $this->getMockBuilder( 'Article' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getTitle', 'getID' ) )
+									->getMock();
+		
+		$mockTitle			= $this->getMockBuilder( 'Title' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getNamespace', 'getFirstRevision' ) )
+									->getMock();
+		
+		$mockId = 123;
+		
+		$this->config
+			->expects	( $this->at( 0 ) )
+			->method	( 'hasArticleMatch' )
+			->will		( $this->returnValue( true ) )
+		;
+		$this->resultSet
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResultsStart' )
+			->will		( $this->returnValue( 0 ) )
+		;
+		$this->config
+			->expects	( $this->at( 1 ) )
+			->method	( 'getArticleMatch' )
+			->will		( $this->returnValue( $mockArticleMatch ) )
+		;
+		$mockArticleMatch
+			->expects	( $this->at( 0 ) )
+			->method	( 'getCanonicalArticle' )
+			->will		( $this->returnValue( $mockArticle ) )
+		;
+		$mockArticle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockArticle
+			->expects	( $this->at( 1 ) )
+			->method	( 'getID' )
+			->will		( $this->returnValue( $mockId ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_CATEGORY ) )
+		;
+		$this->config
+			->expects	( $this->at( 2 ) )
+			->method	( 'getNamespaces' )
+			->will		( $this->returnValue( array( NS_MAIN ) ) )
+		;
+		$mockTitle
+			->expects	( $this->never() )
+			->method	( 'getFirstRevision' )
+		;
+		$this->assertEquals(
+				$this->resultSet,
+				$this->resultSet->prependArticleMatchIfExists(),
+				'WikiaSearchResultSet::prependArticleMatchIfExists should provide a fluent interface'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::prependArticleMatchIfExists
+	 */
+	public function testPrependArticleMatchIfExistsMatchIsGood() {
+		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch', 'getNamespaces' ) );
+		
+		$mockArticleMatch	= $this->getMockBuilder( 'WikiaSearchArticleMatch' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getCanonicalArticle', 'getArticle', 'hasRedirect' ) )
+									->getMock();
+		
+		$mockArticle		= $this->getMockBuilder( 'Article' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getTitle', 'getID' ) )
+									->getMock();
+		
+		$mockTitle			= $this->getMockBuilder( 'Title' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getNamespace', 'getFirstRevision', 'getLatestRevID', '__toString', 'getFullUrl' ) )
+									->getMock();
+		
+		$mockArticleService	= $this->getMockbuilder( 'ArticleService' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getTextSnippet' ) )
+									->getMock();
+		
+		$mockFirstRevision		= $this->getMockBuilder( 'Revision' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getTimestamp' ) )
+									->getMock();
+		
+		$mockLastRevision		= $this->getMockBuilder( 'Revision' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getTimestamp' ) )
+									->getMock();
+		
+		$mockWf					= $this->getMockBuilder( 'WikiaFunctionWrapper' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'Timestamp' ) )
+									->getMock();
+		
+		$mockSearchResult		= $this->getMockBuilder( 'WikiaSearchResult' )
+									->setMethods( array( 'setText', 'setVar' ) )
+									->getMock();
+		
+		$mockId = 123;
+		$mockSnippet = 'This is my mock snippet.';
+		$mockTitleString = 'Title of Article';
+		$mockUrl = urlencode( 'http://foo.wikia.com/wiki/Title_of_Article' );
+		
+		$firstTimestamp = date( 'Y-m-d H:m:s', time() - 123456 );
+		$lastTimestamp = date( 'Y-m-d H:m:s', time() ); 
+		
+		$this->config
+			->expects	( $this->at( 0 ) )
+			->method	( 'hasArticleMatch' )
+			->will		( $this->returnValue( true ) )
+		;
+		$this->resultSet
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResultsStart' )
+			->will		( $this->returnValue( 0 ) )
+		;
+		$this->config
+			->expects	( $this->at( 1 ) )
+			->method	( 'getArticleMatch' )
+			->will		( $this->returnValue( $mockArticleMatch ) )
+		;
+		$mockArticleMatch
+			->expects	( $this->at( 0 ) )
+			->method	( 'getCanonicalArticle' )
+			->will		( $this->returnValue( $mockArticle ) )
+		;
+		$mockArticle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockArticle
+			->expects	( $this->at( 1 ) )
+			->method	( 'getID' )
+			->will		( $this->returnValue( $mockId ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_MAIN ) )
+		;
+		$this->config
+			->expects	( $this->at( 2 ) )
+			->method	( 'getNamespaces' )
+			->will		( $this->returnValue( array( NS_MAIN ) ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 1 ) )
+			->method	( 'getFirstRevision' )
+			->will		( $this->returnValue( $mockFirstRevision ) )
+		;
+		$mockFirstRevision
+			->expects	( $this->at( 0 ) )
+			->method	( 'getTimestamp' )
+			->will		( $this->returnValue( $firstTimestamp ) )
+		;
+		$mockWf
+			->expects	( $this->at( 0 ) )
+			->method	( 'Timestamp' )
+			->with		( TS_ISO_8601, $firstTimestamp )
+			->will		( $this->returnValue( '2009-11-01' ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 2 ) )
+			->method	( 'getLatestRevID' )
+			->will		( $this->returnValue( 'bfd3f' ) ) // value doesn't matter
+		;
+		$mockLastRevision
+			->expects	( $this->at( 0 ) )
+			->method	( 'getTimestamp' )
+			->will		( $this->returnValue( $lastTimestamp ) )
+		;
+		$mockWf
+			->expects	( $this->at( 1 ) )
+			->method	( 'Timestamp' )
+			->with		( TS_ISO_8601, $lastTimestamp )
+			->will		( $this->returnValue( "Today" ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 3 ) )
+			->method	( '__toString' )
+			->will		( $this->returnValue( $mockTitleString ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 4 ) )
+			->method	( 'getFullUrl' )
+			->will		( $this->returnValue( $mockUrl ) )
+		;
+		$mockArticleService
+			->expects	( $this->at( 0 ) )
+			->method	( 'getTextSnippet' )
+			->with		( 250 ) 
+			->will		( $this->returnValue( $mockSnippet ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'setText' )
+			->with		( $mockSnippet )
+		;
+		$mockArticleMatch
+			->expects	( $this->at( 1 ) )
+			->method	( 'hasRedirect' )
+			->will		( $this->returnValue( true ) )
+		;
+		$mockArticleMatch
+			->expects	( $this->at( 2 ) )
+			->method	( 'getArticle' )
+			->will		( $this->returnValue( $mockArticle ) )
+		;
+		$mockArticle
+			->expects	( $this->at( 2 ) )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 1 ) )
+			->method	( 'setVar' )
+			->with		( 'redirectTitle', $mockTitle )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 2 ) )
+			->method	( 'setVar' )
+			->with		( 'id', '456_123' ) // wgcityid_pageid
+		;
+		$this->resultSet
+			->expects	( $this->at( 1 ) )
+			->method	( 'addResult' )
+			->with		( $mockSearchResult )
+		;
+		
+		$mockWg = (object) array(
+				'CityId'	=>	456,
+				);
+		
+		$wrapper = new ReflectionProperty( 'WikiaSearchResultSet', 'wf' );
+		$wrapper->setAccessible( true );
+		$wrapper->setValue( $this->resultSet, $mockWf );
+		
+		$global = new ReflectionProperty( 'WikiaSearchResultSet', 'wg' );
+		$global->setAccessible( true );
+		$global->setValue( $this->resultSet, $mockWg );
+		
+		$this->proxyClass( 'Revision', $mockLastRevision, 'newFromId' );
+		$this->mockClass( 'ArticleService', $mockArticleService );
+		$this->mockClass( 'WikiaSearchResult', $mockSearchResult );
+		$this->mockApp();
+		
+		$resultsFound = new ReflectionProperty( 'WikiaSearchResultSet', 'resultsFound' );
+		$resultsFound->setAccessible( true );
+		$origResultsFound = $resultsFound->getValue( $this->resultSet );
+		
+		$this->assertEquals(
+				$this->resultSet,
+				$this->resultSet->prependArticleMatchIfExists(),
+				'WikiaSearchResultSet::prependArticleMatchIfExists should provide a fluent interface'
+		);
+		
+		$this->assertEquals(
+				$origResultsFound + 1,
+				$resultsFound->getValue( $this->resultSet ),
+				'WikiaSearchResultSet::prependArticleMatchIfExists should increment the resultsFound property if an article match exists in the right namespace'
+		);
+	}
+	
+	/**
+	 * This one is so we can inspect the fields in 
+	 * @covers WikiaSearchResultSet::prependArticleMatchIfExists
+	 */
+	public function testPrependArticleMatchIfExistsMatchIsGoodDataValidation() {
+		$this->prepareMocks( array( 'getResultsStart' ), array( 'hasArticleMatch', 'getArticleMatch', 'getNamespaces' ) );
+		
+		$mockArticleMatch	= $this->getMockBuilder( 'WikiaSearchArticleMatch' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getCanonicalArticle', 'getArticle', 'hasRedirect' ) )
+									->getMock();
+		
+		$mockArticle		= $this->getMockBuilder( 'Article' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getTitle', 'getID' ) )
+									->getMock();
+		
+		$mockTitle			= $this->getMockBuilder( 'Title' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getNamespace', 'getFirstRevision', 'getLatestRevID', '__toString', 'getFullUrl' ) )
+									->getMock();
+		
+		$mockArticleService	= $this->getMockbuilder( 'ArticleService' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getTextSnippet' ) )
+									->getMock();
+		
+		$mockFirstRevision		= $this->getMockBuilder( 'Revision' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getTimestamp' ) )
+									->getMock();
+		
+		$mockLastRevision		= $this->getMockBuilder( 'Revision' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getTimestamp' ) )
+									->getMock();
+		
+		$mockWf					= $this->getMockBuilder( 'WikiaFunctionWrapper' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'Timestamp' ) )
+									->getMock();
+		
+		$mockId = 123;
+		$mockSnippet = 'This is my mock snippet.';
+		$mockTitleString = 'Title of Article';
+		$mockUrl = urlencode( 'http://foo.wikia.com/wiki/Title_of_Article' );
+		
+		$firstTimestamp = date( 'Y-m-d H:m:s', time() - 123456 );
+		$lastTimestamp = date( 'Y-m-d H:m:s', time() ); 
+		
+		$this->config
+			->expects	( $this->at( 0 ) )
+			->method	( 'hasArticleMatch' )
+			->will		( $this->returnValue( true ) )
+		;
+		$this->resultSet
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResultsStart' )
+			->will		( $this->returnValue( 0 ) )
+		;
+		$this->config
+			->expects	( $this->at( 1 ) )
+			->method	( 'getArticleMatch' )
+			->will		( $this->returnValue( $mockArticleMatch ) )
+		;
+		$mockArticleMatch
+			->expects	( $this->at( 0 ) )
+			->method	( 'getCanonicalArticle' )
+			->will		( $this->returnValue( $mockArticle ) )
+		;
+		$mockArticle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockArticle
+			->expects	( $this->at( 1 ) )
+			->method	( 'getID' )
+			->will		( $this->returnValue( $mockId ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_MAIN ) )
+		;
+		$this->config
+			->expects	( $this->at( 2 ) )
+			->method	( 'getNamespaces' )
+			->will		( $this->returnValue( array( NS_MAIN ) ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 1 ) )
+			->method	( 'getFirstRevision' )
+			->will		( $this->returnValue( $mockFirstRevision ) )
+		;
+		$mockFirstRevision
+			->expects	( $this->at( 0 ) )
+			->method	( 'getTimestamp' )
+			->will		( $this->returnValue( $firstTimestamp ) )
+		;
+		$mockWf
+			->expects	( $this->at( 0 ) )
+			->method	( 'Timestamp' )
+			->with		( TS_ISO_8601, $firstTimestamp )
+			->will		( $this->returnValue( '2009-11-01' ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 2 ) )
+			->method	( 'getLatestRevID' )
+			->will		( $this->returnValue( 'bfd3f' ) ) // value doesn't matter
+		;
+		$mockLastRevision
+			->expects	( $this->at( 0 ) )
+			->method	( 'getTimestamp' )
+			->will		( $this->returnValue( $lastTimestamp ) )
+		;
+		$mockWf
+			->expects	( $this->at( 1 ) )
+			->method	( 'Timestamp' )
+			->with		( TS_ISO_8601, $lastTimestamp )
+			->will		( $this->returnValue( "Today" ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 3 ) )
+			->method	( '__toString' )
+			->will		( $this->returnValue( $mockTitleString ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 4 ) )
+			->method	( 'getFullUrl' )
+			->will		( $this->returnValue( $mockUrl ) )
+		;
+		$mockArticleService
+			->expects	( $this->at( 0 ) )
+			->method	( 'getTextSnippet' )
+			->with		( 250 ) 
+			->will		( $this->returnValue( $mockSnippet ) )
+		;
+		$mockArticleMatch
+			->expects	( $this->at( 1 ) )
+			->method	( 'hasRedirect' )
+			->will		( $this->returnValue( true ) )
+		;
+		$mockArticleMatch
+			->expects	( $this->at( 2 ) )
+			->method	( 'getArticle' )
+			->will		( $this->returnValue( $mockArticle ) )
+		;
+		$mockArticle
+			->expects	( $this->at( 2 ) )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		
+		$mockWg = (object) array(
+				'CityId'	=>	456,
+				);
+		
+		$wrapper = new ReflectionProperty( 'WikiaSearchResultSet', 'wf' );
+		$wrapper->setAccessible( true );
+		$wrapper->setValue( $this->resultSet, $mockWf );
+		
+		$global = new ReflectionProperty( 'WikiaSearchResultSet', 'wg' );
+		$global->setAccessible( true );
+		$global->setValue( $this->resultSet, $mockWg );
+		
+		$this->proxyClass( 'Revision', $mockLastRevision, 'newFromId' );
+		$this->mockClass( 'ArticleService', $mockArticleService );
+		$this->mockApp();
+		
+		$resultsFound = new ReflectionProperty( 'WikiaSearchResultSet', 'resultsFound' );
+		$resultsFound->setAccessible( true );
+		$origResultsFound = $resultsFound->getValue( $this->resultSet );
+		
+		$this->assertEquals(
+				$this->resultSet,
+				$this->resultSet->prependArticleMatchIfExists(),
+				'WikiaSearchResultSet::prependArticleMatchIfExists should provide a fluent interface'
+		);
+		
+		$this->assertEquals(
+				$origResultsFound + 1,
+				$resultsFound->getValue( $this->resultSet ),
+				'WikiaSearchResultSet::prependArticleMatchIfExists should increment the resultsFound property if an article match exists in the right namespace'
+		);
+		
+		$results = $this->resultSet->getResults();
+		$match = array_shift( $results );
+
+		$expectedFieldValues = array(
+				'wid'			=>	$mockWg->CityId,
+				'title'			=>	$mockTitleString,
+				'url'			=>	urldecode( $mockUrl ),
+				'score'			=>	'PTT',
+				'isArticleMatch'=>	true,
+				'ns'			=>	NS_MAIN,
+				'pageId'		=>	$mockId,
+				);
+		
+		foreach ( $expectedFieldValues as $key => $val ) {
+			$this->assertEquals(
+					$val,
+					$match[$key],
+					"WikiaSearchResultSet::setArticleMatch should prepopulate a search result instance with `{$val}` for `{$key}`"
+			);
+		}
+	}
+	
 }

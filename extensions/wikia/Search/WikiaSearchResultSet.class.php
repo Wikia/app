@@ -238,8 +238,9 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$article		= $articleMatch->getCanonicalArticle();
 		$title			= $article->getTitle();
 		$articleId		= $article->getID();
+		$titleNs		= $title->getNamespace();
 
-		if (! in_array( $title->getNamespace(), $this->searchConfig->getNamespaces() ) ) {
+		if (! in_array( $titleNs, $this->searchConfig->getNamespaces() ) ) {
 			// we had an article match by name, but not in our desired namespaces
 			wfProfileOut(__METHOD__);
 			return $this;
@@ -248,18 +249,18 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$articleMatchId	= sprintf( '%s_%s', $this->wg->CityId, $articleId );
 		$articleService	= F::build('ArticleService', array( $articleId ) );
 		$firstRev		= $title->getFirstRevision();
-		$created		= $firstRev ? wfTimestamp(TS_ISO_8601, $firstRev->getTimestamp()) : '';
+		$created		= $firstRev ? $this->wf->Timestamp(TS_ISO_8601, $firstRev->getTimestamp()) : '';
 		$lastRev		= Revision::newFromId($title->getLatestRevID());
-		$touched		= $lastRev ? wfTimeStamp(TS_ISO_8601, $lastRev->getTimestamp()) : '';
-
+		$touched		= $lastRev ? $this->wf->Timestamp(TS_ISO_8601, $lastRev->getTimestamp()) : '';
+		
 		$fieldsArray = array(
 				'wid'			=>	$this->wg->CityId,
-				'title'			=>	$article->mTitle,
+				'title'			=>	(string) $title,
 				'url'			=>	urldecode( $title->getFullUrl() ),
 				'score'			=>	'PTT',
 				'isArticleMatch'=>	true,
-				'ns'			=>	$title->getNamespace(),
-				'pageId'		=>	$article->getID(),
+				'ns'			=>	$titleNs,
+				'pageId'		=>	$articleId,
 				'created'		=>	$created,
 				'touched'		=>	$touched,
 				);
