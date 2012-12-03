@@ -286,4 +286,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	protected function putFlashMessage($message) {
 		$this->request->setSessionData(self::FLASH_MESSAGE_SESSION_KEY, $message);
 	}
+
+	public function executeFormField() {
+
+	}
 }
