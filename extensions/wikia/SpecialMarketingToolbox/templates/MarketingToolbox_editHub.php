@@ -20,8 +20,11 @@
 			<p class="error"><?=$errorMessage ?></p>
 		<? endif ?>
 
-		<input type="button" class="wmu-show" value="WMU test" />
-		<?=$moduleContent?>
+		<form method="post" name="upload-tool" class="WikiaForm" enctype="multipart/form-data">
+			<?=$moduleContent?>
+
+			<input type="submit" value="<?= wfMsg('marketing-toolbox-edithub-save-button'); ?>" />
+		</form>
 	</div>
 </section>
 

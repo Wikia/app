@@ -118,7 +118,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		if ($this->request->wasPosted()) {
 			$selectedModuleData = $this->request->getParams();
 
-			$selectedModuleData = $module->filterData($selectedModuleData);
+			$selectedModuleData['values'] = $module->filterData($selectedModuleData);
 			$selectedModuleData['validationErrors'] = $module->validate($selectedModuleData);
 			if (empty($selectedModuleData['validationErrors'])) {
 				$this->toolboxModel->saveModule(
@@ -288,6 +288,6 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function executeFormField() {
-
+		$this->inputData = $this->getVal('inputData');
 	}
 }

@@ -36,6 +36,7 @@ $messages['en'] = array(
 
 	'marketing-toolbox-footer-button-preview' => 'Preview',
 	'marketing-toolbox-footer-button-publish' => 'Publish',
+	'marketing-toolbox-edithub-save-button' => 'Save',
 
 	'marketing-toolbox-hub-module-slider' => 'Slider',
 	'marketing-toolbox-hub-module-pulse' => 'Pulse',
