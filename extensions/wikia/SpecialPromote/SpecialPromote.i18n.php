@@ -195,7 +195,7 @@ $messages['fr'] = array(
 	'promote-error-oasis-only' => 'Cette page n\'est pas supportée avec cette apparence. Veuillez [[Special:Preferences|passer à l\'apparence Wikia]] pour accéder à cette fonctionnalité.',
 
 	//message included in auto-uploaded image's description fb#45624
-	'wikiahome-image-auto-uploaded-comment' => 'Image générée automatiquement pour être utilisée sur <a  class="free" href="http://fr.wikia.com/">http://fr.wikia.com/</a> &#8212; retrouvez plus d\'informations sur le blog dédié&nbsp;: <a  class="free" href="http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia">http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia</a>',
+	'wikiahome-image-auto-uploaded-comment' => 'Image générée automatiquement pour être utilisée sur http://fr.wikia.com/ &#8212; retrouvez plus d\'informations sur le blog dédié&nbsp;: http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia',
 );
 
 $messages['es'] = array(
