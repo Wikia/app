@@ -108,8 +108,9 @@ class Hooks {
 		if ( !is_array( $handlers ) ) {
 			throw new MWException( "Hooks array for event '$event' is not an array!\n" );
 		}
+		// Wikia change - end
 
-		foreach ( $handlers as $hook ) {
+		foreach ( $handlers as $hook ) { # Wikia
 			$object = null;
 			$method = null;
 			$func = null;
@@ -127,7 +128,7 @@ class Hooks {
 				if ( count( $hook ) < 1 ) {
 					throw new MWException( 'Empty array in hooks for ' . $event . "\n" );
 				} elseif ( is_object( $hook[0] ) ) {
-					$object = $hook[0];
+					$object = $hook[0]; # Wikia
 					if ( $object instanceof Closure ) {
 						$closure = true;
 						if ( count( $hook ) > 1 ) {
@@ -157,7 +158,7 @@ class Hooks {
 			} elseif ( is_string( $hook ) ) { # functions look like strings, too
 				$func = $hook;
 			} elseif ( is_object( $hook ) ) {
-				$object = $hook;
+				$object = $hook; # Wikia
 				if ( $object instanceof Closure ) {
 					$closure = true;
 				} else {
