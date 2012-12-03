@@ -65,7 +65,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['titleName'] = trim($video['name']);
 				$clipData['videoId'] = $video['embed_code'];
 				$clipData['thumbnail'] = $video['preview_image_url'];
-				$clipData['duration'] = $video['duration'];
+				$clipData['duration'] = $video['duration'] / 1000;
 				$clipData['published'] = empty($video['metadata']['published']) ? '' : $video['metadata']['published'];
 				$clipData['category'] = empty($video['metadata']['category']) ? '' : $video['metadata']['category'];
 				$clipData['keywords'] = empty($video['metadata']['keywords']) ? '' : $video['metadata']['keywords'];
