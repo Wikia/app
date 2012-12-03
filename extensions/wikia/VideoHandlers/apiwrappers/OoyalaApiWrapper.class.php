@@ -165,7 +165,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 		}
 
 		if ( !empty($this->interfaceObj['duration']) ) {
-			return $this->interfaceObj['duration'];
+			return ( $this->interfaceObj['duration']/1000 );
 		}
 
 		return '';
