@@ -11,6 +11,7 @@ class CensusDataRetrieval {
         var $app;
 	var $query = '';
 	var $data = array();
+	var $type = null;
         
 	var $supportedTypes = array( 'vehicle', 'item' );
 
@@ -18,17 +19,17 @@ class CensusDataRetrieval {
 	// note: a null value means a user-supplied parameter, not in Census
 	var $typeMap = array(
 		'vehicle' => array(
-			'name' => 'name.en',
+			'name' => 'name.wikilang',
 			'type' => 'type',
-			'description' => 'description.en',
-			'factions' => 'collection:factions.name.en',
+			'description' => 'description.wikilang',
+			'factions' => 'collection:factions.name',
 			'cost' => 'ingame_costs.cost',
-			'cost_resource' => 'ingame_costs.resource.en',
+			'cost_resource' => 'ingame_costs.resource.wikilang',
                         'decay' => 'decay'
 		),
                 'item' => array(
-                        'name' => 'collection:name.en',
-                        'description' => 'description.en',
+                        'name' => 'name.wikilang',
+                        'description' => 'description.wikilang',
                         'activatable_recast_seconds' => 'activatable_recast_seconds',
                         'combat_only' => 'combat_only',
                         'max_stack_size' => 'max_stack_size',
@@ -47,6 +48,12 @@ class CensusDataRetrieval {
          * @var Array
          */
         var $censusDataArr = array();
+	/**
+         * Same like censusDataArr, but contains English phrases
+	 * Used when $censusDataArr is non english.
+	 * @var Array
+         */
+        var $censusDataArrDefault = array();
 
 	const QUERY_URL = 'http://data.soe.com/s:wikia/json/get/ps2/%s/%s';
 	const FLAG_CATEGORY = 'census-data-retrieval-flag-category';
@@ -59,10 +66,9 @@ class CensusDataRetrieval {
 	public static function retrieveFromName( &$editPage ) {
                 wfProfileIn(__METHOD__);
 		// @TODO check if namespace is correct, quit if not
-
                 if ( !$editPage->mTitle->getArticleId() ) {//only on creating new article
-                        $cdr = new self();
-                        $result = $cdr->execute( $editPage->mTitle );
+                        $cdr = new self($editPage->mTitle);
+                        $result = $cdr->getPreformattedContent();
                         if ( $result ) {
                                 $editPage->textbox1 = $result;
                                 $editPage->addEditNotice(wfMsgForContent('census-data-retrieval-notification'));
@@ -73,25 +79,58 @@ class CensusDataRetrieval {
 		return true;
 	}
 
-	/**
-	 * main method, handles flow and sequence, decides when to give up
+        /**
+	 * retrieveForUpdate
+         * Retrieves, prepares and returns infobox template code
+         * 
+         * @param Title $title is used to form a query to Census
+         * @param String $type is used to make sure retrieved data is the same type
+         * @return String $templateCode
 	 */
-	public function execute( $title ) {
+        public static function retrieveForUpdate($title, $type = null) {
+		wfProfileIn(__METHOD__);
+		$cdr = new self( $title );
+		if ( !$cdr->fetchData() ) {
+			// no data in Census or something went wrong, quit
+                        wfProfileOut(__METHOD__);
+			return false;
+		}
+		if ( $type && $type != $this->type) {
+			wfProfileOut(__METHOD__);
+			return null;
+		}
+		wfProfileOut(__METHOD__);
+                return $cdr->getData();
+        }
+
+	public function __construct( Title $title = null ) {
+		$this->app = F::App();
+		if ( $title ) {
+			$this->query = $this->prepareCode( $title->getText() );
+		}
+                $this->censusDataArr = $this->getCacheCensusDataArr( $this->app->wg->LanguageCode, true );
+		if ( $this->app->wg->LanguageCode != 'en' ) {
+			$this->censusDataArrDefault = $this->getCacheCensusDataArr( 'en', true );
+		}
+	}
+
+	/**
+	 * Returns string of infobox and content for new page
+	 * False on no data
+	 */
+	public function getPreformattedContent() {
                 wfProfileIn(__METHOD__);
-                $this->app = F::App();
-		$this->query = $this->prepareCode( $title->getText() );
-                $this->censusDataArr = $this->getCacheCensusDataArr();
 		if ( !$this->fetchData() ) {
 			// no data in Census or something went wrong, quit
                         wfProfileOut(__METHOD__);
 			return false;
 		}
 
-		$text = $this->parseData();
+		$text = $this->getInfoboxCode();
 
 		$text .= $this->getLayout();
 
-		$text .= "\n[[" . Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY )->getPrefixedText() . ']]';
+		$text .= "\n[[" . $this->getFlagCategoryTitle()->getPrefixedText() . ']]';
                 wfProfileOut(__METHOD__);
                 return $text;
 	}
@@ -103,31 +142,35 @@ class CensusDataRetrieval {
          * @param $title Title is used to form a query to Census
          * @return $templateCode String
 	 */
-        public function getInfoboxCode( Title $title ) {
-                $this->app = F::App();
-		$this->query = $this->prepareCode( $title->getText() );
-                $this->censusDataArr = $this->getCacheCensusDataArr();
+        public function getInfobox( $title ) {
                 if ( !$this->fetchData() ) {
 			// no data in Census or something went wrong, quit
                         wfProfileOut(__METHOD__);
 			return false;
 		}
-                $templateCode = $this->parseData();
+                $templateCode = $this->getInfoboxCode();
                 return $templateCode;
         }
 
 	/**
 	 * Retrieves data from the Census API and filters the part we care about
+	 * Requires censusDataArr and query fields be initiated
 	 * @return boolean true on success, false on failed connection or empty result
 	 */
-	private function fetchData() {
+	public function fetchData() {
                 wfProfileIn(__METHOD__);
 		// fetch data from API based on $this->query
                 $http = new Http();
 
                 $censusData = null;
+		
                 //Check censusDataArr to find out if relevant data exists in Census
                 $key = array_search($this->query, $this->censusDataArr);
+		//look through default (English) array if there's no results for internationalized language
+		if ( !$key && $this->app->wg->LanguageCode != 'en' ) {
+			$key = array_search($this->query, $this->censusDataArrDefault);
+		}
+		
                 //fetch using key
                 if ( $key ) {
                         $key = explode('.', $key);
@@ -147,6 +190,7 @@ class CensusDataRetrieval {
                         wfProfileOut(__METHOD__);
                         return false;
                 }
+		
                 // error handling
 		if ( empty( $censusData ) ) {
 			wfDebug( __METHOD__ . 'Connection problem or no data' );
@@ -156,14 +200,16 @@ class CensusDataRetrieval {
  
                 wfProfileOut(__METHOD__);
                 // use data map to filter out unneeded data
-		return $this->mapData( $censusData );
+		// the mapData method returns a bool, dependin on whether the
+		// mapping succeeded or not.
+		return ( $this->mapData( $censusData ) );
 	}
 
 	/**
 	 * constructs the infobox text based on type and data
 	 * @return string
 	 */
-	private function parseData() {
+	public function getInfoboxCode() {
                 wfProfileIn(__METHOD__);
 		$type = $this->getType();
 
@@ -191,7 +237,7 @@ class CensusDataRetrieval {
 	 *
 	 * @return string
 	 */
-	private function getType() {
+	public function getType() {
 		return $this->type;
 	}
 
@@ -251,7 +297,11 @@ class CensusDataRetrieval {
                                 $this->data[$name] = $value;
                         }
                 }
-                //TODO return false if empty
+                //return false if empty
+		if ( empty($this->data) ) {
+			wfProfileOut(__METHOD__);
+			return false;
+		}
                 wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -289,7 +339,7 @@ class CensusDataRetrieval {
 
                         if ( is_object($object) ) {
 
-                                $propertyName = $fieldPath[$i];
+				$propertyName = $this->prepareLangPropertyName( $fieldPath[$i], $object );
                                 $expectedType = '';
                                 $this->checkNameAndType( $propertyName, $expectedType );
                                 //get property
@@ -350,7 +400,15 @@ class CensusDataRetrieval {
                 return $result;
         }
 
-        //get name
+        /*
+	 * checkNameAndType
+	 * Seperate name from type. If $propertyName is in form type:property_name
+	 * it will assign property_name to $propertyName
+	 * and type to $expectedType
+	 * 
+	 * @param String &$propertyName can be a simple property name or in form containing type, type:property_name
+	 * @param String &$expectedType will be set with type if provided
+	 */
         private function checkNameAndType( &$propertyName, &$expectedType ) {
                 if ( strpos($propertyName,':') !== false ) {
                          $propertynNameArr = explode(':', $propertyName);
@@ -360,6 +418,25 @@ class CensusDataRetrieval {
                         $expectedType = '';
                 }
         }
+	
+	/*
+	 * prepareLangPropertyName
+	 * Replaces propertyName with wiki language code if its name is 'wikilang'
+	 * 
+	 * @param String $propertyName
+	 * @param String $object used just to make sure if field in object exists
+	 */
+	private function prepareLangPropertyName( $propertyName, $object ) {
+		if ( $propertyName == 'wikilang' ) {
+			//check whether field exists or set English language
+			if ( isset($object->{$this->app->wg->LanguageCode}) ) {
+				$propertyName = $this->app->wg->LanguageCode;
+			} else {
+				$propertyName = 'en';
+			}
+		}
+		return $propertyName;
+	}
 
         
         /**
@@ -373,9 +450,9 @@ class CensusDataRetrieval {
          * @param Boolean $skipCache Set true to skip cache
          * 
 	 */
-	private function getCacheCensusDataArr($skipCache = false) {
+	private function getCacheCensusDataArr($wikilang = 'en', $skipCache = false) {
                 wfProfileIn(__METHOD__);
-                $key = wfMemcKey('census-data');
+                $key = wfMemcKey('census-data-'.$wikilang);
                 $data = $this->app->wg->Memc->get($key);
 
                 if( !empty($data) && !$skipCache ) {
@@ -386,7 +463,7 @@ class CensusDataRetrieval {
                 $http = new Http();
                 $data = array();
                 foreach ($this->supportedTypes as $type) {
-                        $censusData = $http->get( sprintf(self::QUERY_URL, $type, '?c:show=id,name.en&c:limit=0') );
+                        $censusData = $http->get( sprintf(self::QUERY_URL, $type, '?c:show=id,name.'.$wikilang.'&c:limit=0') );
                         $map = json_decode($censusData);
                         $this->mergeResult( $data, $map, $type );
                 }
@@ -433,5 +510,18 @@ class CensusDataRetrieval {
         public function getFlagCategoryTitle () {
                 return Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY );
         }
-        
+	
+	/**
+	 * getData
+	 */
+        public function getData() {
+		return $this->data;
+	}
+	
+	/**
+	 * setData
+	 */
+        public function setData( $data ) {
+		$this->data = $data;
+	}
 }
