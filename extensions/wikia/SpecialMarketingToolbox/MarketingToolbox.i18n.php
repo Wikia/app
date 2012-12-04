@@ -63,8 +63,8 @@ $messages['en'] = array(
 	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
 	'marketing-toolbox-module-save-ok' => '$1 module saved successfully',
 
-	'wikia-validator-string-short' => 'Your text is too short, please write more',
-	'wikia-validator-string-long' => 'Your text is too long, please make it shorter',
+	'marketing-toolbox-validator-string-short' => 'Your text is too short, please write more',
+	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',
 );
 
 $messages['qqq'] = array(

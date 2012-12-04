@@ -13,7 +13,8 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					array(
 						'required' => true,
 						'min' => 1
-					)
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
 			),
 			'boardDescription' => array(
@@ -21,7 +22,10 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				'isRequired' => true,
 				'attributes' => array(
 				),
-				'validator' => new WikiaValidatorString(),
+				'validator' => new WikiaValidatorString(
+					array(),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
+				),
 			),
 			'stat1' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-stat1'),
@@ -33,7 +37,8 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					array(
 						'required' => true,
 						'min' => 1
-					)
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
 			),
 			'stat2' => array(
@@ -46,7 +51,8 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					array(
 						'required' => true,
 						'min' => 1
-					)
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
 			),
 			'stat3' => array(
@@ -59,7 +65,8 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					array(
 						'required' => true,
 						'min' => 1
-					)
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
 			),
 			'number1' => array(
@@ -72,7 +79,8 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					array(
 						'required' => true,
 						'min' => 1
-					)
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
 			),
 			'number2' => array(
@@ -85,7 +93,8 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					array(
 						'required' => true,
 						'min' => 1
-					)
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
 			),
 			'number3' => array(
@@ -98,7 +107,8 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					array(
 						'required' => true,
 						'min' => 1
-					)
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
 			),
 
