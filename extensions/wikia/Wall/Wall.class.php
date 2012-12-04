@@ -33,10 +33,10 @@ class Wall extends WikiaModel {
 
 	static public function newFromRelatedPages( Title $title, $relatedPageId ) {
 		wfProfileIn(__METHOD__);
-                if(!($title instanceof Title)) {
-                        wfProfileOut(__METHOD__);
-                        return null;
-                }
+		if(!($title instanceof Title)) {
+			wfProfileOut(__METHOD__);
+			return null;
+		}
 		$wall = self::getEmpty();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
