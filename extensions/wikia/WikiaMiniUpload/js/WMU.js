@@ -72,36 +72,37 @@ if (typeof WMU_box_filled == 'undefined') {
 
 if( 'view' == wgAction ) {
 	window.wmu_back = '',
-	window.wmu_imagebutton = '',
-	window.wmu_close = '',
-	window.wmu_warn1 = '',
-	window.wmu_warn2 = '',
-	window.wmu_warn3 = '',
-	window.wmu_bad_extension = '',
-	window.wmu_show_message = '',
-	window.wmu_hide_message = '',
-	window.wmu_title = '',
-	window.wmu_max_thumb = '',
-	window.wmu_no_protect = '',
-	window.wmu_no_rights = '',
-	window.badfilename = '',
-	window.file_extensions = '',
-	window.file_blacklist = '',
-	window.check_file_extensions = '',
-	window.strict_file_extensions = '',
-	window.user_blocked = false,
-	window.user_disallowed = false,
-	window.user_protected = false;
+		window.wmu_imagebutton = '',
+		window.wmu_close = '',
+		window.wmu_warn1 = '',
+		window.wmu_warn2 = '',
+		window.wmu_warn3 = '',
+		window.wmu_bad_extension = '',
+		window.wmu_show_message = '',
+		window.wmu_hide_message = '',
+		window.wmu_title = '',
+		window.wmu_max_thumb = '',
+		window.wmu_no_protect = '',
+		window.wmu_no_rights = '',
+		window.badfilename = '',
+		window.file_extensions = '',
+		window.file_blacklist = '',
+		window.check_file_extensions = '',
+		window.strict_file_extensions = '',
+		window.user_blocked = false,
+		window.user_disallowed = false,
+		window.user_protected = false;
 }
 
 function WMU_setSkip(){
 	WMU_skipDetails = true;
 }
 
-// Returns the DOM element for the RTE textarea
 function WMU_getRTETxtarea(){
+	// return dom element, not jquery object
 	return WikiaEditor.getInstance().getEditbox()[0];
 }
+
 
 function WMU_loadDetails() {
 
@@ -193,6 +194,40 @@ function WMU_moveBackButton(selector) {
 /*
  * Functions/methods
  */
+if(mwCustomEditButtons) {
+	if ( $("#siteSub").length == 0 ) {
+		mwCustomEditButtons.push({
+			"imageFile": wgExtensionsPath + '/wikia/WikiaMiniUpload/images/button_wmu.png',
+			"speedTip": wmu_imagebutton,
+			"tagOpen": "",
+			"tagClose": "",
+			"sampleText": "",
+			"imageId": "mw-editbutton-wmu",
+			'onclick': function(ev) {
+				WMU_show(ev);
+			}
+		});
+	}
+}
+
+$(function() {
+	$.when(
+		$.loadYUI(),
+		$.loadJQueryAIM()
+	).then(function(){
+			if(skin != 'monobook') {
+				if(document.forms.editform) {
+					WMU_addHandler();
+				}
+			}
+		});
+});
+
+function WMU_addHandler() {
+	$.loadYUI(function(){
+		YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink'], 'click',  WMU_show);
+	});
+}
 
 function WMU_licenseSelectorCheck() {
 	var selector = document.getElementById( "ImageUploadLicense" );
@@ -315,7 +350,7 @@ function WMU_loadMainFromView() {
 		UserLogin.rteForceLogin();
 		return;
 	}
-	
+
 	var callback = function(data) {
 		// first, check if this is a special case for anonymous disabled...
 		if( data.wmu_init_login ) {
@@ -350,15 +385,6 @@ function WMU_loadMainFromView() {
 		user_blocked = data.user_blocked;
 		user_disallowed = data.user_disallowed;
 		user_protected = data.user_protected;
-
-		WMU_isOnSpecialPage = (wgNamespaceNumber === -1) ? true : false;
-
-		// Special Case for using WMU in on Special Pages - used for SDSObject Special Page
-		if (WMU_isOnSpecialPage) {
-			user_protected = false;
-			user_disallowed = false;
-			WMU_skipDetails = true;
-		}
 
 		if( user_blocked ) {
 			document.location = wgScriptPath + '/index.php?title=' + encodeURIComponent( wgTitle ) + '&action=edit';
@@ -424,6 +450,9 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			wikiaEditor.plugins.MiniEditor.hasFocus = true;
 		}
 	}
+
+	// Special Case for using WMU in on Special Pages
+	WMU_isOnSpecialPage = (wgNamespaceNumber === -1) ? true : false;
 
 	if(gallery === -2){
 		//	if (showComboAjaxForPlaceHolder("WikiaImagePlaceholderInner" + box,true)) return false;
@@ -591,6 +620,17 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	YAHOO.util.Event.addListener('ImageUploadBack', 'click', WMU_back);
 	YAHOO.util.Event.addListener('ImageUploadClose', 'click', WMU_close);
 }
+
+
+$(function(){
+	if ( window.wgComboAjaxLogin ) {
+		if( (window.location.href.indexOf("openwindow=WMU") > 1)
+			&& (window.location.href.indexOf("action=submit") > 1)
+			&& (wgUserName !== null) ) {
+			WMU_show(-1);
+		}
+	}
+});
 
 function WMU_loadMain() {
 	var callback = {
@@ -890,6 +930,10 @@ function WMU_displayDetails(responseText) {
 		}
 	}
 
+	if( 0 < WMU_thumb ) {
+//                $G( 'ImageSizeRow' ).style.display = 'none';
+	}
+
 	if( 0 < WMU_size ) {
 		$G( 'ImageUploadWidthCheckbox' ).click();
 		$G( 'ImageUploadManualWidth' ).value = WMU_size;
@@ -915,6 +959,13 @@ function WMU_displayDetails(responseText) {
 			$G('ImageUploadLicenseLink').innerHTML = '[' + wmu_show_license_message  + ']';
 		}
 	}
+	//$G( 'ImageColumnRow' ).style.display = 'none';
+//	if( -1 != WMU_gallery ) {
+	// todo gallery stuff here
+//		if( -2 == WMU_gallery ) { // placeholder stuff, don't need that
+	//$G( 'WMU_LayoutGalleryBox' ).style.display = 'none';
+//		}
+//	}
 
 	if(typeof(WMU_Event_OnLoadDetails) == "function") {
 		setTimeout(function() {
@@ -934,9 +985,6 @@ function WMU_insertPlaceholder( box ) {
 }
 
 function WMU_insertImage(e, type) {
-	if (!WMU_isOnSpecialPage) {
-		YAHOO.util.Event.preventDefault(e);
-	}
 	var params = Array();
 	params.push('type='+type);
 	params.push('mwname='+$G('ImageUploadMWname').value);
@@ -1063,6 +1111,13 @@ function WMU_insertImage(e, type) {
 						return false;
 					}
 
+					// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
+					if (WMU_isOnSpecialPage) {
+						var filePageUrl = $(o.responseText).find('#ImageUploadFileName').val();
+						$(window).trigger('WMU_addFromSpecialPage', [filePageUrl]);
+						return false;
+					}
+
 					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
 						if( -2 == WMU_gallery) {
 							WMU_insertPlaceholder( WMU_box );
@@ -1137,14 +1192,6 @@ function WMU_insertImage(e, type) {
 			}
 			WMU_indicator(1, false);
 		}
-	}
-	// Special Case for using WMU in SDSObject Special Page
-	if (WMU_isOnSpecialPage) {
-		var filePageUrl = 'File:';
-		filePageUrl += $('#ImageUploadMWname').val();
-		$(window).trigger('WMU_addFromSpecialPage', [filePageUrl]);
-		WMU_switchScreen('Summary');
-		return;
 	}
 	WMU_indicator(1, true);
 	YAHOO.util.Connect.abort(WMU_asyncTransaction);
