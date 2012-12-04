@@ -1037,6 +1037,7 @@
 			this.refresh();
 		},
 		showAll: function() {
+			this.changed = true;
 			this.shownLimit = false;
 			this.refresh();
 		},
@@ -1059,7 +1060,8 @@
 
 			var html = '',
 				path, stack,
-				limit = this.shownLimit || paths.length;
+				limit = this.shownLimit
+					? Math.min(this.shownLimit,paths.length) : paths.length;
 			for (i=0;i<limit;i++) {
 				path = paths[i];
 				html += '<b>Stack #'+(i+1)+'</b><br />';
@@ -1377,8 +1379,6 @@
 					if ( i >= 0 ) {
 						text = text.substr(i);
 						text = text.replace(/<!--|-->/g,'');
-						console.log(text.substr(0,250));
-						console.log(text.substr(-250));
 						self.data.initFromText(text);
 						self.dialog.setTitle(origUrl);
 					} else {
