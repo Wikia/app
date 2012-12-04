@@ -21,6 +21,8 @@ class MarketingToolboxModel extends WikiaModel {
 	protected $verticals = array();
 
 	public function __construct() {
+		parent::__construct();
+
 		$this->statuses = array(
 			'NOT_PUBLISHED' => 1,
 			'PUBLISHED' => 2
@@ -39,22 +41,21 @@ class MarketingToolboxModel extends WikiaModel {
 		);
 
 		$this->sections = array(
-			self::SECTION_HUBS => wfMsg('marketing-toolbox-section-hubs-button')
+			self::SECTION_HUBS => $this->wf->msg('marketing-toolbox-section-hubs-button')
 		);
 
 		$this->verticals = array(
 			self::SECTION_HUBS => array(
-				WikiFactoryHub::CATEGORY_ID_GAMING => wfMsg('marketing-toolbox-section-games-button'),
-				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMsg('marketing-toolbox-section-entertainment-button'),
-				WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMsg('marketing-toolbox-section-lifestyle-button'),
+				WikiFactoryHub::CATEGORY_ID_GAMING => $this->wf->msg('marketing-toolbox-section-games-button'),
+				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => $this->wf->msg('marketing-toolbox-section-entertainment-button'),
+				WikiFactoryHub::CATEGORY_ID_LIFESTYLE => $this->wf->msg('marketing-toolbox-section-lifestyle-button'),
 			)
 		);
 
-		parent::__construct();
 	}
 
 	public function getModuleName($moduleId) {
-		return wfMsg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
+		return $this->wf->msg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
 	}
 
 	public function getNotTranslatedModuleName($moduleId) {

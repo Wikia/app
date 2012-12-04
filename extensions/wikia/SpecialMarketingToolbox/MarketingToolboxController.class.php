@@ -40,7 +40,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	public function index() {
 		$this->wf->ProfileIn(__METHOD__);
 
-		$this->wg->Out->setPageTitle(wfMsg('marketing-toolbox-title'));
+		$this->wg->Out->setPageTitle($this->wf->msg('marketing-toolbox-title'));
 
 		if( $this->checkAccess() ) {
 			$this->wg->SuppressSpotlights = true;
@@ -131,7 +131,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 					$this->wg->user->getId()
 				);
 
-				$this->putFlashMessage(wfMsg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
+				$this->putFlashMessage($this->wf->msg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
 				// TODO last module (when we will know what to do after last module, maybe preview?)
 				$nextUrl =  $this->toolboxModel->getModuleUrl(
 					$this->langCode,
@@ -142,7 +142,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				);
 				$this->response->redirect($nextUrl);
 			} else {
-				$this->errorMessage = wfMsg('marketing-toolbox-module-save-error');
+				$this->errorMessage = $this->wf->msg('marketing-toolbox-module-save-error');
 			}
 		}
 

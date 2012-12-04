@@ -3,7 +3,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 	protected function getFormFields() {
 		return array(
 			'boardTitle' => array(
-				'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-wikiurl'),
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-wikiurl'),
 				'isRequired' => true,
 				'attributes' => array(
 					'data-min' => 1,
@@ -17,14 +17,14 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 			),
 			'boardDescription' => array(
-				'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-topic'),
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-topic'),
 				'isRequired' => true,
 				'attributes' => array(
 				),
 				'validator' => new WikiaValidatorString(),
 			),
 			'stat1' => array(
-				'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-stat1'),
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-stat1'),
 				'isRequired' => true,
 				'attributes' => array(
 					'data-min' => 1,
@@ -37,7 +37,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 			),
 			'stat2' => array(
-				'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-stat2'),
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-stat2'),
 				'isRequired' => true,
 				'attributes' => array(
 					'data-min' => 1,
@@ -50,7 +50,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 			),
 			'stat3' => array(
-				'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-stat3'),
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-stat3'),
 				'isRequired' => true,
 				'attributes' => array(
 					'data-min' => 1,
@@ -63,7 +63,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 			),
 			'number1' => array(
-				'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-number1'),
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-number1'),
 				'isRequired' => true,
 				'attributes' => array(
 					'data-min' => 1,
@@ -76,7 +76,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 			),
 			'number2' => array(
-				'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-number2'),
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-number2'),
 				'isRequired' => true,
 				'attributes' => array(
 					'data-min' => 1,
@@ -89,7 +89,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 			),
 			'number3' => array(
-				'label' => F::app()->wf->msg('marketing-toolbox-hub-module-pulse-number3'),
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-number3'),
 				'isRequired' => true,
 				'attributes' => array(
 					'data-min' => 1,

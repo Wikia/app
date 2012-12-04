@@ -24,8 +24,8 @@
 			<?=$moduleContent?>
 
 			<div class="submits">
-				<input id="marketing-toolbox-clearall" class="secondary" type="button" value="<?= wfMsg('marketing-toolbox-edithub-clearall-button'); ?>" />
-				<input type="submit" value="<?= wfMsg('marketing-toolbox-edithub-save-button'); ?>" />
+				<input id="marketing-toolbox-clearall" class="secondary" type="button" value="<?= $wf->msg('marketing-toolbox-edithub-clearall-button'); ?>" />
+				<input type="submit" value="<?= $wf->msg('marketing-toolbox-edithub-save-button'); ?>" />
 			</div>
 		</form>
 	</div>
