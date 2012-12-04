@@ -18,15 +18,22 @@ var StructuredData = {
 		$('#useWMU').click(function(event){
 			event.preventDefault();
 			var $input = $(this).prev();
-			$.loadYUI( function() {
-				$.getScript(wgExtensionsPath+'/wikia/WikiaMiniUpload/js/WMU.js', function() {
-					WMU_show($.getEvent(), -2);
-					mw.loader.load( wgExtensionsPath+'/wikia/WikiaMiniUpload/css/WMU.css', "text/css" );
+			if (typeof WMU_show === 'function') {
+				WMU_show();
+			} else {
+				$.loadYUI( function() {
+					$.getScript(wgExtensionsPath+'/wikia/WikiaMiniUpload/js/WMU.js', function() {
+						WMU_skipDetails = true;
+						WMU_show();
+						mw.loader.load(wgExtensionsPath+'/wikia/WikiaMiniUpload/css/WMU.css', "text/css" );
+					});
+
 				});
-				$(window).bind('WMU_addFromSpecialPage', function(event, filePageUrl) {
-					var filePageUrl = window.location.protocol + '//' + window.location.host + '/' + filePageUrl;
-					$input.val(filePageUrl);
-				});
+			}
+
+			$(window).bind('WMU_addFromSpecialPage', function(event, filePageUrl) {
+				var filePageUrl = window.location.protocol + '//' + window.location.host + '/' + filePageUrl;
+				$input.val(filePageUrl);
 			});
 		});
 		// Add date/time pickers only for SD object page
@@ -82,17 +89,17 @@ var StructuredData = {
 				event.preventDefault();
 			}
 		}).on('keyup', 'td li input[type="text"]', function(event) {
-			if (event.which == 13) {
-				event.preventDefault();
-				var $target = $(event.target),
-					$nextField = $target.parents('li').next().find('input');
-				if ($nextField.length > 0) {
-					$nextField.focus();
-				} else {
-					$target.parents('li').parent().siblings('button.add-input').click();
+				if (event.which == 13) {
+					event.preventDefault();
+					var $target = $(event.target),
+						$nextField = $target.parents('li').next().find('input');
+					if ($nextField.length > 0) {
+						$nextField.focus();
+					} else {
+						$target.parents('li').parent().siblings('button.add-input').click();
+					}
 				}
-			}
-		});
+			});
 	},
 	attachSpecialPageBrowsingModeHandlers: function(context) {
 		// Attach handlers - add confirmation before deleting object
@@ -105,7 +112,7 @@ var StructuredData = {
 	// METHOD for fetching collection of SDS objects form a given class and rendering <select> element with them inside
 	getObjectsToAdd: function($eventTarget, classes) {
 		var that = this,
-			// Create a proper formatted string with classes for the request
+		// Create a proper formatted string with classes for the request
 			classesStr = classes.split(' '),
 			classesStr = classesStr.join(',');
 		$.nirvana.sendRequest( {
@@ -133,8 +140,8 @@ var StructuredData = {
 	addEmptyInput: function($eventTarget) {
 		var placeToAdd = ($eventTarget.siblings('ol').length > 0) ? $eventTarget.siblings('ol') : $eventTarget.siblings('ul'),
 			inputData = {
-			type: placeToAdd.data('field-name'),
-			removeText:	$.msg('structureddata-object-edit-remove-reference')
+				type: placeToAdd.data('field-name'),
+				removeText:	$.msg('structureddata-object-edit-remove-reference')
 			},
 			html = Mustache.render(this.inputTemplate, inputData);
 		$(html).appendTo(placeToAdd).find('input').focus();
