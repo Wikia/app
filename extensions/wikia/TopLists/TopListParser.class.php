@@ -62,6 +62,7 @@ class TopListParser {
 			}
 		}
 
+	self::$mAttributes[ TOPLIST_ATTRIBUTE_DESCRIPTION ] = '';
         if ( !empty( $args[ TOPLIST_ATTRIBUTE_DESCRIPTION ] ) ) {
             self::$mAttributes[ TOPLIST_ATTRIBUTE_DESCRIPTION ] = $args[ TOPLIST_ATTRIBUTE_DESCRIPTION ];
         }
@@ -92,7 +93,11 @@ class TopListParser {
 					'relatedTitleData' => $relatedTitleData,
 					'relatedImage' => $relatedImage,
 					'attribs' => self::$mAttributes,
-					'relatedUrl' => $relatedUrl
+					'relatedUrl' => $relatedUrl,
+					//Probably better idea would be to use $list->getDescription() but it causes:
+					//Fatal error: Maximum function nesting level of '200' reached, aborting! 
+					//This class/function is being called somehow while using getDesciption
+					'description' => self::$mAttributes[ TOPLIST_ATTRIBUTE_DESCRIPTION ]
 				)
 			);
 
