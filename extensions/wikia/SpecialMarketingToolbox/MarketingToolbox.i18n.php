@@ -56,6 +56,12 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-pulse-number1' => 'Number 1.',
 	'marketing-toolbox-hub-module-pulse-number2' => 'Number 2.',
 	'marketing-toolbox-hub-module-pulse-number3' => 'Number 3.',
+
+	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
+	'marketing-toolbox-module-save-ok' => '$1 module saved successfully',
+
+	'wikia-validator-string-short' => 'Your text is too short, please write more',
+	'wikia-validator-string-long' => 'Your text is too long, please make it shorter',
 );
 
 $messages['qqq'] = array(

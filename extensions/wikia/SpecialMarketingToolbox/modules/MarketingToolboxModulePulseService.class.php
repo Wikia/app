@@ -5,57 +5,44 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 			'boardTitle' => new WikiaValidatorString(
 				array(
 					'required' => true,
-					'min' => 10,
-					'max' => 20
+					'min' => 1
 				)
 			),
-			'boardDescription' => new WikiaValidatorString(
-				array(
-					'required' => true,
-					'min' => 10,
-					'max' => 20
-				)
-			),
+			'boardDescription' => new WikiaValidatorString(),
 			'stat1' => new WikiaValidatorString(
 				array(
 					'required' => true,
-					'min' => 10,
-					'max' => 20
+					'min' => 1
 				)
 			),
 			'stat2' => new WikiaValidatorString(
 				array(
 					'required' => true,
-					'min' => 10,
-					'max' => 20
+					'min' => 1
 				)
 			),
 			'stat3' => new WikiaValidatorString(
 				array(
 					'required' => true,
-					'min' => 10,
-					'max' => 20
+					'min' => 1
 				)
 			),
 			'number1' => new WikiaValidatorString(
 				array(
 					'required' => true,
-					'min' => 10,
-					'max' => 20
+					'min' => 1
 				)
 			),
 			'number2' => new WikiaValidatorString(
 				array(
 					'required' => true,
-					'min' => 10,
-					'max' => 20
+					'min' => 1
 				)
 			),
 			'number3' => new WikiaValidatorString(
 				array(
 					'required' => true,
-					'min' => 10,
-					'max' => 20
+					'min' => 1
 				)
 			),
 		);

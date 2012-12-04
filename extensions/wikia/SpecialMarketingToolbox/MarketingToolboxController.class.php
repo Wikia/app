@@ -131,7 +131,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 					$this->wg->user->getId()
 				);
 
-				$this->putFlashMessage(wfMsg('marketing-toolbox-module-save-ok'));
+				$this->putFlashMessage(wfMsg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
 				// TODO last module (when we will know what to do after last module, maybe preview?)
 				$nextUrl =  $this->toolboxModel->getModuleUrl(
 					$this->langCode,
