@@ -12,7 +12,7 @@
 
 	// temporary video survey code bugid-68723
 	if(wgContentLanguage == 'en') {
-		var addSurveyLink = function() {
+		var addSurveyLink = (function() {
 			$.nirvana.sendRequest({
 				controller: 'Videos', 
 				method: 'videoSurvey', 
@@ -28,15 +28,16 @@
 					messages.eq(chosen).fadeIn();
 				}
 			});
-		}();
+		})();
 	}
 
 	var AddVideo = function(element, options) {
 		
 		var self = this,
 			alreadyLoggedIn = false,
-			assetsLoaded = false,
-			options = options || {};
+			assetsLoaded = false;
+		
+		options = options || {};
 
 		var settings = {
 			modalWidth: 666,
@@ -316,7 +317,7 @@
 			$(this).data('plugin_AddVideo', new AddVideo($(this), options));
 		});
 	
-	}
+	};
 	
 	window.AddVideo = AddVideo;
 
