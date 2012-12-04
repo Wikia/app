@@ -1,11 +1,5 @@
 <?php
 
-function wyvlog($x) {
-        foreach( explode("\n",var_export($x,1)) as $line) {
-                error_log('PHP Warning: tomek'.$line);
-        }
-}
-
 class WallHooksHelper {
 	const RC_WALL_COMMENTS_MAX_LEN = 50;
 	const RC_WALL_SECURENAME_PREFIX = 'WallMessage_';
@@ -1881,9 +1875,6 @@ class WallHooksHelper {
 		$app = F::app();
 		static $cache = array();
 
-if(!is_string($userText) ) {
-        wyvlog($userText);
-}
 		if( !empty($app->wg->EnableWallExt) ) {
 			if(empty($cache[$userText])) {
 				$messageWallPage = Title::makeTitle(NS_USER_WALL, $userText);
