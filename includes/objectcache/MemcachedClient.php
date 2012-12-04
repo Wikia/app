@@ -416,12 +416,14 @@ class MWMemcached {
 	 */
 	public function get( $key ) {
 		wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ . "::$key" );
 
 		# start wikia change
 		# Memoize duplicate memcache requests for the same key in the same request
 		if( isset( $this->_dupe_cache[ $key ] ) ) {
 			wfProfileIn ( __METHOD__ . "::$key !DUPE" );
 			wfProfileOut ( __METHOD__ . "::$key !DUPE" );
+			wfProfileOut( __METHOD__ . "::$key" );
 			wfProfileOut( __METHOD__ );
 			return $this->_dupe_cache[ $key ];
 		}
@@ -432,6 +434,7 @@ class MWMemcached {
 		}
 
 		if ( !$this->_active ) {
+			wfProfileOut( __METHOD__ . "::$key" );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -441,6 +444,7 @@ class MWMemcached {
 		# @author owen
 		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads;
 		if( $wgAllowMemcacheDisable && ( $wgAllowMemcacheReads == false ) ) {
+			wfProfileOut( __METHOD__ . "::$key" );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -449,6 +453,7 @@ class MWMemcached {
 		$sock = $this->get_sock( $key );
 
 		if ( !is_resource( $sock ) ) {
+			wfProfileOut( __METHOD__ . "::$key" );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -463,6 +468,7 @@ class MWMemcached {
 		$cmd = "get $key\r\n";
 		if ( !$this->_safe_fwrite( $sock, $cmd, strlen( $cmd ) ) ) {
 			$this->_dead_sock( $sock );
+			wfProfileOut( __METHOD__ . "::$key" );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -493,6 +499,7 @@ class MWMemcached {
 		if ( isset( $val[$key] ) ) {
 			$value = $val[$key];
 		}
+		wfProfileOut( __METHOD__ . "::$key" );
 		wfProfileOut( __METHOD__ );
 		return $value;
 	}
