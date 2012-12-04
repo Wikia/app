@@ -34,6 +34,10 @@ class Hooks {
 
 	protected static $handlers = array();
 
+	public static function &getHandlersArray() {
+		return self::$handlers;
+	}
+
 	/**
 	 * Attach an event handler to a given hook
 	 *
@@ -89,45 +93,26 @@ class Hooks {
 	 * @return Boolean True if no handler aborted the hook
 	 */
 	public static function run( $event, $args = array() ) {
-		global $wgHooks;
+		wfProfileIn(__METHOD__.'-hook-'.$event);
+		wfProfileIn(__METHOD__);
+		// Wikia change - begin - @author: wladek
+		// optimized hooks execution
 
 		// Return quickly in the most common case
-		if ( !isset( self::$handlers[$event] ) && !isset( $wgHooks[$event] ) ) {
+		if ( !isset( self::$handlers[$event] ) ) {
+			wfProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__.'-hook-'.$event);
 			return true;
 		}
 
-		if ( !is_array( self::$handlers ) ) {
-			throw new MWException( "Local hooks array is not an array!\n" );
-		}
+		$handlers = self::$handlers[$event];
 
-		if ( !is_array( $wgHooks ) ) {
-			throw new MWException( "Global hooks array is not an array!\n" );
-		}
-
-		$new_handlers = (array) self::$handlers;
-		$old_handlers = (array) $wgHooks;
-
-		// Wikia change - begin - @author: wladek
-		// optimized merging handlers list
-		$hook_array = array(
-			$event => empty($new_handlers[$event])
-				? $old_handlers[$event]
-				: array_merge(
-					isset( $new_handlers[$event] ) && is_array( $new_handlers[$event] ) ? $new_handlers[$event] : array(),
-					isset( $old_handlers[$event] ) && is_array( $old_handlers[$event] ) ? $old_handlers[$event] : array()
-				),
-		);
-		/*
-		// original upstream version
-		$hook_array = array_merge( $new_handlers, $old_handlers );
-		*/
-		// Wikia change - end - @author: wladek
-
-		if ( !is_array( $hook_array[$event] ) ) {
+		if ( !is_array( $handlers ) ) {
 			throw new MWException( "Hooks array for event '$event' is not an array!\n" );
 		}
+		// Wikia change - end
 
-		foreach ( $hook_array[$event] as $index => $hook ) {
+		foreach ( $handlers as $hook ) { # Wikia
 			$object = null;
 			$method = null;
 			$func = null;
@@ -145,7 +130,7 @@ class Hooks {
 				if ( count( $hook ) < 1 ) {
 					throw new MWException( 'Empty array in hooks for ' . $event . "\n" );
 				} elseif ( is_object( $hook[0] ) ) {
-					$object = $hook_array[$event][$index][0];
+					$object = $hook[0]; # Wikia
 					if ( $object instanceof Closure ) {
 						$closure = true;
 						if ( count( $hook ) > 1 ) {
@@ -175,7 +160,7 @@ class Hooks {
 			} elseif ( is_string( $hook ) ) { # functions look like strings, too
 				$func = $hook;
 			} elseif ( is_object( $hook ) ) {
-				$object = $hook_array[$event][$index];
+				$object = $hook; # Wikia
 				if ( $object instanceof Closure ) {
 					$closure = true;
 				} else {
@@ -225,6 +210,7 @@ class Hooks {
 			 */
 			$retval = null;
 			set_error_handler( 'Hooks::hookErrorHandler' );
+			wfProfileOut(__METHOD__);
 			wfProfileIn( $func );
 			try {
 				$retval = call_user_func_array( $callback, $hook_args );
@@ -232,6 +218,7 @@ class Hooks {
 				$badhookmsg = $e->getMessage();
 			}
 			wfProfileOut( $func );
+			wfProfileIn(__METHOD__);
 			restore_error_handler();
 
 			/* String return is an error; false return means stop processing. */
@@ -263,10 +250,14 @@ class Hooks {
 					);
 				}
 			} elseif ( !$retval ) {
+				wfProfileOut(__METHOD__);
+				wfProfileOut(__METHOD__.'-hook-'.$event);
 				return false;
 			}
 		}
 
+		wfProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__.'-hook-'.$event);
 		return true;
 	}
 

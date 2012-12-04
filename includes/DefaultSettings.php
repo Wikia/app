@@ -4916,7 +4916,10 @@ $wgAuth = null;
  * or:
  *     $wgHooks['event_name'][] = array($object, 'method');
  */
-$wgHooks = array();
+// Wikia change - begin - @author: wladek
+//$wgHooks = array();
+$wgHooks = &Hooks::getHandlersArray();
+// Wikia change - end
 
 /**
  * Maps jobs to their handling classes; extensions
