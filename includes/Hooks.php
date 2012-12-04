@@ -93,6 +93,7 @@ class Hooks {
 	 * @return Boolean True if no handler aborted the hook
 	 */
 	public static function run( $event, $args = array() ) {
+		wfProfileIn(__METHOD__.'-hook-'.$event);
 		wfProfileIn(__METHOD__);
 		// Wikia change - begin - @author: wladek
 		// optimized hooks execution
@@ -100,6 +101,7 @@ class Hooks {
 		// Return quickly in the most common case
 		if ( !isset( self::$handlers[$event] ) ) {
 			wfProfileOut(__METHOD__);
+			wfProfileOut(__METHOD__.'-hook-'.$event);
 			return true;
 		}
 
@@ -249,11 +251,13 @@ class Hooks {
 				}
 			} elseif ( !$retval ) {
 				wfProfileOut(__METHOD__);
+				wfProfileOut(__METHOD__.'-hook-'.$event);
 				return false;
 			}
 		}
 
 		wfProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__.'-hook-'.$event);
 		return true;
 	}
 
