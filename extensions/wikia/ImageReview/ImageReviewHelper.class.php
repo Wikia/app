@@ -314,11 +314,20 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			if (count($imageList) < self::LIMIT_IMAGES) {
 				$img = ImagesService::getImageSrc( $row->wiki_id, $row->page_id );
 
+				$extension = pathinfo( strtolower( $img['src'] ), PATHINFO_EXTENSION );
+
 				if ( empty( $img['src'] ) ) {
 					$invalidImages[] = $record;
-				} elseif ( 'ico' == pathinfo( strtolower( $img['src'] ), PATHINFO_EXTENSION ) ) {
+				} elseif ( 'ico' == $extension ) {
 					$iconsWhere[] = $record;
 				} else {
+					$isThumb = true;
+
+					if  ( in_array( $extension, array( 'gif', 'svg' ) ) ) {
+						$img = ImageService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
+						$isThumb = false;
+					}
+					
 					$imageList[] = array(
 						'wikiId' => $row->wiki_id,
 						'pageId' => $row->page_id,
@@ -327,6 +336,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 						'url' => $img['page'],
 						'priority' => $row->priority,
 						'flags' => $row->flags,
+						'isthumb' => $isThumb,
 					);
 				}
 			} else {
