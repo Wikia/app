@@ -11,25 +11,22 @@
 	}
 
 	// temporary video survey code bugid-68723
-	if(wgContentLanguage == 'en') {
-		var addSurveyLink = (function() {
-			$.nirvana.sendRequest({
-				controller: 'Videos', 
-				method: 'videoSurvey', 
-				type: 'GET',
-				format: 'html',
-				callback: function(html) {
-					$('#video-survey').prepend(html);
-					
-					var messages = $('#video-survey').find('span'),
-						count = messages.length,
-						chosen = Math.floor(Math.random() * 2);
+	var addSurveyLink = function() {
+		var surveyLink = $('#video-survey');
+		
+		if(!surveyLink.length){
+			return;
+		}
+		
+		var messages = surveyLink.find('span'),
+			count = messages.length,
+			chosen = Math.floor(Math.random() * count);
 
-					messages.eq(chosen).fadeIn();
-				}
-			});
-		})();
-	}
+		messages.eq(chosen).fadeIn();
+	};
+	
+	// run on dom ready
+	$(addSurveyLink);
 
 	var AddVideo = function(element, options) {
 		

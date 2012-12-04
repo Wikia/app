@@ -7,5 +7,5 @@
 	?>
 
 	<? // temporary video survey code bugid-68723 ?>
-	<div id="video-survey" class="video-survey"></div>
+	<?= $surveyLink ?>
 </section>
