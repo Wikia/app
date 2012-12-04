@@ -1,325 +1,474 @@
 (function( window, $, undefined ) {
 
-var action = window.wgAction,
+/* global Mustache:true */
+'use strict';
+
+var cached = {},
+	namespace = 'categorySelect',
+	slice = Array.prototype.slice,
 	wgCategorySelect = window.wgCategorySelect,
 	Wikia = window.Wikia || {};
 
+// Static message cache
+cached.messages = {
+	buttonSave: $.msg( 'categoryselect-button-save' ),
+	categoryEdit: $.msg( 'categoryselect-category-edit' ),
+	errorEmptyCategoryName: $.msg( 'categoryselect-error-empty-category-name' )
+};
+
+// Static template cache
+cached.templates = {
+	category: {
+		data: {
+			blankImageUrl: window.wgBlankImgUrl,
+			className: 'normal',
+			messages: {
+				edit: cached.messages.categoryEdit,
+				remove: $.msg( 'categoryselect-category-remove' )
+			}
+		}
+	},
+	categoryEdit: {
+		data: {
+			messages: {
+				name: $.msg( 'categoryselect-modal-category-name' )
+			}
+		}
+	}
+};
+
 /**
- * CategorySelect
- * Low-level category tracking.
+ * CategorySelect Class
  *
- * @param {Array} (categories)
- *        The initial list of categories.
+ * @param { Element | jQuery | String } element
+ *        The element to initialize the class on, acts as a wrapper for all the
+ *        necessary elements.
+ *
+ * @param { Object } options
+ *        The settings to configure the instance with.
  */
-var CategorySelect = function( categories ) {
-	var i, length;
+var CategorySelect = function( element, options ) {
+	var limit,
+		elements = {},
+		self = this;
 
 	// Protect against calling without the 'new' operator
-	if ( !( this instanceof CategorySelect ) ) {
-		return new CategorySelect( categories );
+	if ( !( self instanceof CategorySelect ) ) {
+		return new CategorySelect( element, options );
 	}
 
-	this.state = {};
-	this.state.categories = [];
+	self.options = options = $.extend( true, {}, CategorySelect.options, options );
 
-	if ( $.isArray( categories ) ) {
-		for ( i = 0, length = categories.length; i < length; i++ ) {
-			this.state.categories.push( this.makeCategory( categories[ i ] ) );
+	// Store a reference to this class in the element
+	self.element = element = $( element )
+		.off( '.' + namespace )
+		.data( namespace, self );
+
+	// How to insert new categories into the DOM
+	self.insertionMethod =
+		( options.placement === 'bottom' || options.placement === 'right' ) ?
+			'appendTo' : 'prependTo';
+
+	self.dirty = true;
+	self.elements = elements;
+
+	// Attach listeners
+	element
+		.on( 'click.' + namespace, options.selectors.editCategory, function( event ) {
+			self.editCategory( $( event.currentTarget ).closest( options.selectors.category ) );
+		})
+		.on( 'click.' + namespace, options.selectors.removeCategory, function( event ) {
+			self.removeCategory( $( event.currentTarget ).closest( options.selectors.category ) );
+		})
+		.on( 'reset.' + namespace, $.proxy( self.resetCategories, self ) );
+
+	// Handle keypresses on the input element
+	elements.input = element.find( options.selectors.input )
+		.on( 'keypress.' + namespace, function( event ) {
+			if ( event.which === 13 ) {
+				event.preventDefault();
+				self.addCategory( elements.input.val() );
+			}
+		});
+
+	elements.list = element.find( options.selectors.categories );
+
+	// Store category data in categories
+	elements.categories = elements.list
+		.find( options.selectors.category )
+		.each(function( i ) {
+			$( this ).data( 'category',
+				CategorySelect.normalize( options.categories[ i ] ) );
+		});
+
+	if ( typeof options.autocomplete === 'object' ) {
+		limit = self.options.autocomplete.limit;
+
+		elements.input.autocomplete( $.extend( options.autocomplete, {
+			select: function( event, ui ) {
+				event.preventDefault();
+				self.addCategory( ui.item.value );
+			},
+			source: function( request, response ) {
+				$.when( CategorySelect.getWikiCategories() ).done(function( categories ) {
+					response( $.ui.autocomplete.filter( categories, request.term ).slice( 0, limit ) );
+				});
+			}
+		}));
+
+		// If there is already a value present, search for it now
+		if ( elements.input.val() !== '' ) {
+			elements.input.autocomplete( 'search' );
 		}
 	}
 
-	this.state.length = this.state.categories.length;
+	if ( typeof options.popover === 'object' ) {
+		self.popover = elements.input
+			.on( 'blur.' + namespace, function() {
+				elements.input.popover( 'hide' );
+			})
+			.popover( options.popover ).data( 'popover' );
+	}
+
+	if ( typeof options.sortable === 'object' ) {
+		elements.list.sortable( $.extend( options.sortable, {
+			update: function( event, ui ) {
+				self.dirty = true;
+				self.updateCategories();
+
+				self.trigger( 'sort', {
+					element: ui.item
+				});
+
+				self.trigger( 'update' );
+			}
+		}));
+	}
+};
+
+/**
+ * Public instance
+ */
+$.extend( CategorySelect.prototype, {
 
 	/**
-	 * Resets categories back to what they were on instantiation.
+	 * Adds a category.
 	 *
-	 * @returns	{Number}
-	 *          The new length of the categories array.
+	 * @param { Element | jQuery | Number | String } category
+	 *        The index of a category relative to the list of categories, the
+	 *        name of a category or the jQuery or DOM Element for a category.
+	 *
+	 * @returns	{ Object }
+	 *          The normalized category object, or undefined if the category is
+	 *          invalid.
 	 */
-	this.reset = function() {
-		this.state.categories = categories;
-		return this.state.length = categories.length;
-	};
-};
+	addCategory: function( category ) {
+		var data,
+			self = this,
+			input = self.elements.input,
+			options = self.options;
 
-/**
- * Adds a category to the categories array.
- *
- * @param {String|Object} category
- *        The name of a category or an object with category properties.
- *
- * @returns	{Number}
- *          The index of the added category, or -1 if the category could not be added.
- */
-CategorySelect.prototype.addCategory = function( category ) {
-	var index;
+		category = CategorySelect.normalize( category );
 
-	category = this.makeCategory( category );
-	index = this.indexOf( category.name );
+		if ( category ) {
+			data = self.getData( category.name );
 
-	// Don't add invalid or duplicate categories
-	if ( category != null && index < 0 ) {
-		index = this.state.categories.push( category ) - 1;
-		this.state.length++;
-	}
+			if ( data ) {
+				category = data;
 
-	return index;
-};
+				input.val( category.name );
 
-/**
- * Edits a category from the categories array.
- *
- * @param {Number|String} category
- *        The index or name of a category.
- *
- * @param {Object} value
- *        The new category object or null if the category does not exist.
- *
- * @returns	{Object}
- *          The category object or null if the category does not exist.
- */
-CategorySelect.prototype.editCategory = function( category, value ) {
-	var index = this.indexOf( category );
+				if ( options.popover ) {
+					self.popover.options.content = $.msg(
+						'categoryselect-error-duplicate-category', category.name );
 
-	category = null;
-
-	if ( index >= 0 ) {
-		category = this.state.categories[ index ] = this.makeCategory( value );
-	}
-
-	return category;
-};
-
-/**
- * Gets a category from the categories array.
- *
- * @param {Number|String} category
- *        The index or name of a category.
- *
- * @returns	{Object}
- *			The category object or null if the category does not exist.
- */
-CategorySelect.prototype.getCategory = function( category ) {
-	var index = this.indexOf( category );
-
-	category = null;
-
-	if ( index >= 0 ) {
-		category = this.state.categories[ index ];
-	}
-
-	return category;
-};
-
-/**
- * Gets the index of a category from the category array.
- *
- * @param {Number|String} category
- *        The index or name of a category.
- *
- * @returns	{Number}
- *          The index of the category, or -1 if the category does not exist.
- */
-CategorySelect.prototype.indexOf = function( category ) {
-	var i, length, obj,
-		index = parseInt( category );
-
-	if ( isNaN( index ) || this.state.categories[ index ] === undefined ) {
-		index = -1;
-
-		for ( i = 0, length = this.state.categories.length; i < length; i++ ) {
-			if ( ( obj = this.state.categories[ i ] ) && obj.name == category ) {
-				index = i;
-				break;
-			}
-		}
-	}
-
-	return index;
-};
-
-/**
- * Generates a normalized category object.
- *
- * @param {Object|String} category
- *        The name of a category or an object with category properties.
- *
- * @returns {Object}
- *          The normalized category, or null if an invalid category was provided.
- */
-CategorySelect.prototype.makeCategory = (function() {
-	var properties = [ 'name', 'namespace', 'sortKey' ],
-		rCategory = new RegExp( '\\[\\[' +
-			// Category namespace
-			'(' + wgCategorySelect.defaultNamespaces + '):' +
-			// Category name
-			'([^\\]|]+)' +
-			// Category sortKey (optional)
-			'\\|?([^\\]]+)?' +
-		']]', 'i' );
-
-	return function( category ) {
-		var pieces, prop,
-			base = {
-				namespace: wgCategorySelect.defaultNamespace,
-				sortKey: wgCategorySelect.defaultSortKey
-			};
-
-		if ( typeof category == 'object' ) {
-			category = $.extend( base, category );
-
-		} else {
-			base.name = category;
-			category = base;
-		}
-
-		// Must have a name to be valid
-		if ( !category.name ) {
-			category = null;
-
-		} else {
-
-			// Get rid of unecessary properties
-			for ( prop in category ) {
-				if ( $.inArray( prop, properties ) < 0 ) {
-					delete category[ prop ];
+					input.popover( 'show' );
 				}
-			}
 
-			// Extract more information if name is a wikilink
-			if ( ( pieces = rCategory.exec( category.name ) ) ) {
-				category.namespace = pieces[ 1 ];
-				category.name = pieces[ 2 ];
+			} else {
+				$.when( CategorySelect.getTemplate( 'category' ) ).done(function( template ) {
+					var element;
 
-				// SortKey is optional
-				if ( pieces[ 3 ] != undefined ) {
-					category.sortKey = pieces[ 3 ];
+					template.data.category = category;
+
+					// Add the new category to the DOM
+					element = $( Mustache.render( template.content, template.data ) ).addClass( 'new' )
+						.data( 'category', category )[ self.insertionMethod ]( self.elements.list );
+
+					self.dirty = true;
+					self.updateCategories();
+
+					self.trigger( 'add', {
+						category: category,
+						element: element
+					});
+
+					self.trigger( 'update' );
+				});
+
+				input.val( '' );
+
+				if ( options.autocomplete ) {
+					input.autocomplete( 'close' );
+				}
+
+				if ( options.popover ) {
+					input.popover( 'hide' );
 				}
 			}
 		}
 
 		return category;
-	}
-})();
+	},
 
-/**
- * Move a category from one position in the array to another.
- *
- * @param {Number|String} fromCategory
- *        The index of a category in the categories array or a string matching a
- *        category in the array where the category will be moved from.
- *
- * @param {Number|String} toCategory
- *        The index of a category in the categories array or a string matching a
- *        category in the array where the category will be moved to.
- *
- * @returns {Object}
- *          The re-ordered categories array.
- */
-CategorySelect.prototype.moveCategory = function( fromCategory, toCategory ) {
-	var category, categoryToMove, i,
-		categories = [],
-		fromIndex = this.indexOf( fromCategory ),
-		length = this.state.categories.length,
-		toIndex = this.indexOf( toCategory );
+	/**
+	 * Edits a category.
+	 *
+	 * @param { Element | jQuery | Number | String } category
+	 *        The index of a category relative to the list of categories, the
+	 *        name of a category or the jQuery or DOM Element for a category.
+	 */
+	editCategory: function( category ) {
+		var modal, error,
+			self = this,
+			element = self.getCategory( category );
 
-	// Make sure indexes are valid
-	if ( fromIndex != toIndex && fromIndex >= 0 && toIndex >= 0 ) {
-		categoryToMove = this.state.categories[ fromIndex ];
+		if ( element.length ) {
+			category = element.data( 'category' );
 
-		for ( i = 0; i < length; i++ ) {
-			if ( i == toIndex ) {
-				categories.push( categoryToMove );
+			$.when( CategorySelect.getTemplate( 'categoryEdit' ) ).done(function( template ) {
+				template.data.category = category;
+				template.data.messages.sortKey = $.msg( 'categoryselect-modal-category-sortkey', category.name );
+
+				modal = $.showCustomModal( cached.messages.categoryEdit, Mustache.render( template.content, template.data ), {
+					buttons: [
+						{
+							id: 'CategorySelectEditModalSave',
+							defaultButton: true,
+							message: cached.messages.buttonSave,
+							handler: function() {
+								var name = modal.find( '[name="categoryName"]' ).val(),
+									sortKey = modal.find( '[name="categorySortKey"]' ).val();
+
+								if ( name === '' ) {
+									error = cached.messages.errorEmptyCategoryName;
+
+								} else if ( name !== category.name && self.getData( name ) ) {
+									error = $.msg( 'categoryselect-error-duplicate-category', name );
+								}
+
+								if ( error ) {
+									modal
+										.find( '.categoryName' ).addClass( 'error' )
+										.find( '.error-msg' ).text( error );
+
+								} else {
+									$.extend( category, {
+										name: name,
+										sortKey: sortKey
+									});
+
+									element
+										.data( 'category', category )
+										.find( '.name' )
+										.text( name );
+
+									self.trigger( 'edit', {
+										category: category,
+										element: element
+									});
+
+									self.trigger( 'update' );
+
+									modal.closeModal();
+								}
+							}
+						}
+					],
+					id: 'CategorySelectEditModal',
+					width: 500
+				});
+			});
+		}
+	},
+
+	/**
+	 * Gets the data associated with a category, or the data for all categories.
+	 *
+	 * @param { Element | jQuery | Number | String } [ category ]
+	 *        The index of a category relative to the list of categories, the
+	 *        name of a category or the jQuery or DOM Element for a category.
+	 *
+	 * @returns	{ Object }
+	 *			The data associated with the category, an array of category data
+	 *          for all categories, or undefined if not found.
+	 */
+	getData: (function() {
+		var categories = [];
+
+		return function( category ) {
+			var data;
+
+			// Get the data for one category
+			if ( category ) {
+				return this.getCategory( category ).data( 'category' );
 			}
 
-			// Throw out null values
-			if ( i != fromIndex && ( category = this.state.categories[ i ] ) != null ) {
-				categories.push( category );
+			// Cache is stale, rebuild it
+			if ( this.dirty ) {
+				data = [];
+
+				this.dirty = false;
+				this.updateCategories().each(function() {
+					data.push( $( this ).data( 'category' ) );
+				});
+
+				categories = data;
 			}
+
+			return categories;
+		};
+	}()),
+
+	/**
+	 * Gets a category from the list of categories.
+	 *
+	 * @param { Element | jQuery | Number | String } category
+	 *        The index of a category relative to the list of categories, the
+	 *        name of a category or the jQuery or DOM Element for a category.
+	 *
+	 * @returns	{ jQuery }
+	 *			The category, or an empty jQuery object if not found.
+	 */
+	getCategory: function( category ) {
+		var data;
+
+		// By index (relative to other categories)
+		if ( !isNaN( parseInt( category, 10 ) ) ) {
+			category = this.elements.categories.eq( category );
+
+		// By category name
+		} else if ( typeof category === 'string' ) {
+			category = this.elements.categories.filter(function() {
+				data = $( this ).data( 'category' );
+				return data && data.name === category;
+			});
+
+		// By jQuery object or DOM Element
+		} else {
+			category = this.elements.list.find( category );
 		}
 
-		this.state.categories = categories;
-		this.state.length = categories.length;
+		return category;
+	},
+
+	/**
+	 * Removes one or more categories from the list of categories.
+	 *
+	 * @param { Element | jQuery | Number | String } category
+	 *        The index of a category relative to the list of categories, the
+	 *        name of a category or the jQuery or DOM Element for a category.
+	 *
+	 * @returns { Deferred }
+	 *          The promise that will be resolved when the categories are
+	 *          removed.
+	 */
+	removeCategory: function( category ) {
+		var dfd = $.Deferred(),
+			self = this,
+			animation = self.options.animations.remove,
+			element = self.getCategory( category );
+
+		element
+			.animate( animation.properties, animation.options )
+			.promise()
+			.done(function() {
+				dfd.resolve( element.detach() );
+
+				self.dirty = true;
+				self.updateCategories();
+
+				self.trigger( 'remove', {
+					element: element
+				});
+
+				self.trigger( 'update' );
+			});
+
+		return dfd.promise();
+	},
+
+	/**
+	 * Resets categories to what they were on initialization.
+	 *
+	 * @returns { Deferred }
+	 *          The promise that will be resolved when the categories are
+	 *          removed.
+	 */
+	resetCategories: function() {
+		return this.removeCategory( this.elements.categories.filter( '.new' ) );
+	},
+
+	/**
+	 * Triggers an event on the wrapper element. The CategorySelect class is
+	 * always passed as the second argument to handlers, further arguments are
+	 * optional.
+	 *
+	 * @param { String } eventType
+	 *        The type of event to trigger.
+	 *
+	 * @returns { Mixed }
+	 *          The result returned from the last handler that was triggered.
+	 */
+	trigger: function( eventType ) {
+		var args = [ this ].concat( slice.call( arguments, 1 ) );
+		return this.element.triggerHandler( eventType + '.' + namespace, args );
+	},
+
+	/**
+	 * Updates the cached categories object.
+	 *
+	 * @returns { jQuery }
+	 *          The updated categories object.
+	 */
+	updateCategories: function() {
+		return this.elements.categories = this.elements.list
+			.find( this.options.selectors.category );
 	}
+});
 
-	return this.state.categories;
-};
+// Public static properties/methods
+$.extend( CategorySelect, {
 
-/**
- * Removes a category from the categories array.
- *
- * @param {Number|String} category
- *        The index of a category in the categories array or a string matching a
- *        category in the array.
- *
- * @returns {Object}
- *          The category object or null if the category does not exist.
- */
-CategorySelect.prototype.removeCategory = function( category ) {
-	var index = this.indexOf( category );
-
-	category = null;
-
-	if ( index >= 0 ) {
-		category = this.state.categories.splice( index, 1, null );
-		this.state.length--;
-	}
-
-	return category;
-};
-
-/**
- * jQuery.fn.categorySelect
- * Sits on top of CategorySelect and provides user interface components.
- *
- * @param {Object} options
- *        The settings to configure the instance with.
- */
-$.fn.categorySelect = (function() {
-	var cache = {},
-		namespace = 'categorySelect';
-
-	// Build static method cache
-	cache.messages = {
-		categoryEdit: $.msg( 'categoryselect-category-edit' ),
-		categoryNameLabel: $.msg( 'categoryselect-modal-category-name' ),
-		categoryRemove: $.msg( 'categoryselect-category-remove' ),
-		modalButtonSave: $.msg( 'categoryselect-button-save' ),
-		modalEmptyCategoryName: $.msg( 'categoryselect-modal-category-name-empty' )
-	};
-
-	// Build static template cache (content is lazy loaded)
-	cache.templates = {
-		category: {
-			content: '',
-			data: {
-				blankImageUrl: window.wgBlankImgUrl,
-				className: 'normal new',
-				messages: {
-					edit: cache.messages.categoryEdit,
-					remove: cache.messages.categoryRemove
-				}
-			}
-		},
-		categoryEdit: {
-			content: '',
-			data: {
-				messages: {
-					name: cache.messages.categoryNameLabel
-				}
-			}
-		}
-	};
-
-	function error( message ) {
+	/**
+	 * Throws error messages.
+	 *
+	 * @param { String } message
+	 *        The message to throw.
+	 *
+	 * @returns { Exception }
+	 *          The namespaced exception message.
+	 */
+	error: function( message ) {
 		throw namespace + ': ' + message;
-	}
+	},
 
-	function getTemplate( name ) {
-		var template = cache.templates[ name ];
+	/**
+	 * Gets a mustache template and caches it.
+	 *
+	 * @param { String } name
+	 *        The name of a mustache template. Make sure this name exists in the
+	 *        template cache (cached.templates).
+	 *
+	 * @returns { Deferred }
+	 *          The promise that will be resolved with the template object once
+	 *          it is loaded.
+	 */
+	getTemplate: function( name ) {
+		var template = cached.templates[ name ];
 
 		if ( !template ) {
-			error( 'Template "' + name + '" is not defined' );
+			this.error( 'Template "' + name + '" is not defined' );
 		}
 
 		return template.content && template || $.Deferred(function( dfd ) {
@@ -333,267 +482,151 @@ $.fn.categorySelect = (function() {
 
 			return dfd.promise();
 		});
-	}
+	},
 
-	function getWikiCategories() {
-		return cache.wikiCategories || $.nirvana.sendRequest({
+	/**
+	 * Gets the categories for a wiki and caches it.
+	 *
+	 * @returns { Deferred }
+	 *          The promise that will be resolved with the categories array once
+	 *          it is loaded.
+	 */
+	getWikiCategories: function() {
+		return cached.wikiCategories || $.nirvana.sendRequest({
 			controller: 'CategorySelectController',
 			method: 'getWikiCategories',
 			type: 'GET',
-			callback: function( wikiCategories ) {
-				cache.wikiCategories = wikiCategories;
+			callback: function( categories ) {
+				cached.wikiCategories = categories;
 			}
 		});
-	}
+	},
 
-	return function( options ) {
-		options = $.extend( {}, $.fn.categorySelect.options, options );
+	/**
+	 * Normalizes and validates a category object.
+	 *
+	 * @param { Object | String } category
+	 *        The name of a category or an object with category properties.
+	 *
+	 * @returns { Object }
+	 *          The normalized category object or undefined if the category is
+	 *          invalid.
+	 */
+	normalize: (function() {
+		var properties = [ 'name', 'namespace', 'sortKey' ],
+			rCategory = new RegExp( '\\[\\[' +
+				// Category namespace
+				'(' + wgCategorySelect.defaultNamespaces + '):' +
+				// Category name
+				'([^\\]|]+)' +
+				// Category sortKey (optional)
+				'\\|?([^\\]]+)?' +
+			']]', 'i' );
 
-		return this.each(function() {
-			var popover,
-				categories = [],
-				$element = $( this ),
-				$addCategory = $element.find( options.addCategory ),
-				$categories = $element.find( options.categories ),
-				categorySelect = new CategorySelect( options.data );
+		return function( category ) {
+			var pieces, prop,
+				base = {
+					namespace: wgCategorySelect.defaultNamespace,
+					sortKey: wgCategorySelect.defaultSortKey
+				};
 
-			$element
-				.data( namespace, categorySelect )
-				.off( '.' + namespace )
-				.on( 'reset.' + namespace, reset )
-				.on( 'click.' + namespace, options.editCategory, editCategory )
-				.on( 'click.' + namespace, options.removeCategory, removeCategory );
-
-			$addCategory
-				.on( 'keypress.' + namespace, addCategory )
-				.on( 'blur.' + namespace, function( event ) {
-					$addCategory.popover( 'hide' );
-				})
-				.popover( $.extend( options.popover, {
-					trigger: 'manual'
-				}));
-
-			popover = $addCategory.data( 'popover' );
-
-			// Setup sortable
-			if ( options.sortable ) {
-				$categories.sortable( $.extend( options.sortable, {
-					update: function ( event, ui ) {
-						var categories = categorySelect.state.categories,
-							fromIndex = ui.item.data( 'index' ),
-							category = categories[ fromIndex ],
-							toIndex = ui.item.next( '.category' );
-
-						if ( toIndex.length ) {
-							toIndex = toIndex.data( 'index' );
-
-						} else {
-							toIndex = categories.length - 1;
-						}
-
-						// Update categories array
-						categorySelect.moveCategory( fromIndex, toIndex );
-
-						// Update list item indexes
-						$categories.find( options.category ).each(function( i ) {
-							$( this ).data( 'index', i );
-						});
-
-						notifyListeners( 'sort', {
-							category: category,
-							element: ui.item,
-							fromIndex: fromIndex,
-							toIndex: toIndex
-						});
-
-						notifyListeners( 'update' );
-					}
-				}));
-			}
-
-			// Setup autocomplete immediately if addCategory contains a value
-			if ( $addCategory.val() != '' ) {
-				setupAutocomplete.call( $addCategory );
+			if ( typeof category === 'object' ) {
+				category = $.extend( base, category );
 
 			} else {
-				$element.one( 'focus.' + namespace, options.addCategory, setupAutocomplete );
+				base.name = category;
+				category = base;
 			}
 
-			function addCategory( event, ui ) {
-				var category, index, length,
-					$input = $( this ),
-					value = ui != undefined ? ui.item.value : $input.val();
+			// Must have a name to be valid
+			if ( !category.name ) {
+				category = undefined;
 
-				// User selected a suggested item from the autocomplete list
-				if ( event.type == 'autocompleteselect'
+			} else {
 
-					// User pressed the enter key in the input field
-					|| ( event.type == 'keypress' && event.which == 13 ) ) {
+				// Get rid of unecessary properties
+				for ( prop in category ) {
+					if ( $.inArray( prop, properties ) < 0 ) {
+						delete category[ prop ];
+					}
+				}
 
-					// Prevent the edit form from submitting
-					event.preventDefault();
+				// Extract more information if name is a wikilink
+				if ( ( pieces = rCategory.exec( category.name ) ) ) {
+					category.namespace = pieces[ 1 ];
+					category.name = pieces[ 2 ];
 
-					// Make sure value isn't empty
-					if ( value != undefined && value != '' ) {
-						length = categorySelect.state.length;
-						category = categorySelect.makeCategory( value );
-						index = categorySelect.addCategory( category );
-
-						// Category is a duplicate
-						if ( length == categorySelect.state.length ) {
-							popover.options.content = $.msg( 'categoryselect-error-duplicate-category', category.name );
-							$input.popover( 'show' ).val( value );
-
-						} else {
-							$.when( getTemplate( 'category' ) ).done(function( template ) {
-								template.data.category = category;
-								template.data.index = index;
-
-								notifyListeners( 'add', {
-									category: category,
-									element: $categories,
-									index: index,
-									template: template
-								});
-
-								notifyListeners( 'update' );
-							});
-
-							// Clear out the input
-							$input.popover( 'hide' ).val( '' );
-						}
+					// SortKey is optional
+					if ( pieces[ 3 ] !== undefined ) {
+						category.sortKey = pieces[ 3 ];
 					}
 				}
 			}
 
-			function editCategory( event ) {
-				var $modal,
-					$category = $( this ).closest( options.category ),
-					index = $category.data( 'index' ),
-					category = categorySelect.getCategory( index );
+			return category;
+		};
+	}()),
 
-				$.when( getTemplate( 'categoryEdit' ) ).done(function( template ) {
-					template.data.category = category;
-					template.data.index = index;
-					template.data.messages.sortKey = $.msg( 'categoryselect-modal-category-sortkey', category.name );
-
-					$modal = $.showCustomModal( cache.messages.categoryEdit, Mustache.render( template.content, template.data ), {
-						buttons: [
-							{
-								id: 'CategorySelectEditModalSave',
-								defaultButton: true,
-								message: cache.messages.modalButtonSave,
-								handler: function( event ) {
-									category.name = $modal.find( '[name="categoryName"]' ).val();
-									category.sortKey = $modal.find( '[name="categorySortKey"]' ).val();
-
-									// Don't allow saving with empty category name
-									if ( category.name == '' ) {
-										$modal
-											.find( '.categoryName' ).addClass( 'error' )
-											.find( '.error-msg' ).text( cache.messages.modalEmptyCategoryName );
-										return;
-									}
-
-									// Update data
-									category = categorySelect.editCategory( index, category );
-
-									// Update DOM
-									$category.find( '.name' ).text( category.name );
-
-									notifyListeners( 'edit', {
-										category: category,
-										element: $category,
-										index: index
-									});
-
-									notifyListeners( 'update' );
-
-									$modal.closeModal();
-								}
-							}
-						],
-						id: 'CategorySelectEditModal',
-						width: 500
-					});
-				});
+	/**
+	 * Default options
+	 */
+	options: {
+		animations: {
+			remove: {
+				options: {
+					duration: 0
+				},
+				properties: {
+					opacity: 'hide'
+				}
 			}
+		},
+		autocomplete: {
+			appendTo: '.CategorySelect',
 
-			function notifyListeners( eventType, data ) {
-				$element.triggerHandler( eventType + '.' + namespace , [ categorySelect.state ].concat( data ) );
-			}
-
-			function removeCategory( event ) {
-				var $category = $( this ).closest( options.category ),
-					index = $category.data( 'index' );
-
-				notifyListeners( 'remove', {
-					category: categorySelect.removeCategory( index ),
-					element: $category,
-					index: index
-				});
-
-				notifyListeners( 'update' );
-			}
-
-			function reset( event ) {
-				categorySelect.reset();
-
-				notifyListeners( 'update' );
-			}
-
-			function setupAutocomplete( event ) {
-				var $input = $( this );
-
-				$.when( getWikiCategories() ).done(function( wikiCategories ) {
-					$input.autocomplete( $.extend( options.autocomplete, {
-						select: addCategory,
-
-						// Handle source ourselves so we can limit the number of suggestions
-						source: function( request, response ) {
-							var suggestions = $.ui.autocomplete.filter( wikiCategories, request.term );
-							response( suggestions.slice( 0, options.autocomplete.maxSuggestions ) );
-						}
-					}));
-
-					// Open suggestion menu immediately if not initiated by event
-					if ( !event ) {
-						$input.autocomplete( 'search' );
-					}
-				});
-			}
-		});
+			// Non-standard
+			limit: 10
+		},
+		categories: [],
+		placement: 'top',
+		popover: {
+			trigger: 'manual'
+		},
+		selectors: {
+			categories: '.categories',
+			category: '.category',
+			editCategory: '.editCategory',
+			input: '.addCategory',
+			removeCategory: '.removeCategory'
+		},
+		sortable: {
+			axis: 'y',
+			containment: 'parent',
+			handle: '.name',
+			items: '.category',
+			placeholder: 'placeholder',
+			tolerance: 'pointer'
+		}
 	}
-})();
-
-$.fn.categorySelect.options = {
-	autocomplete: {
-		appendTo: '.CategorySelect',
-		maxSuggestions: 10
-	},
-	categories: '.categories',
-	category: '.category',
-	data: [],
-	addCategory: '.addCategory',
-	editCategory: '.editCategory',
-	popover: {
-
-	},
-	removeCategory: '.removeCategory',
-	sortable: {
-		axis: 'y',
-		containment: 'parent',
-		handle: '.name',
-		items: '.category',
-		placeholder: 'placeholder',
-		tolerance: 'pointer'
-	}
-};
+});
 
 /**
- * Exports
+ * jQuery.fn.categorySelect
+ * The bridge between jQuery and the CategorySelect class.
+ *
+ * @param { Object } options
+ *        The settings to configure the instances with.
  */
+$.fn.categorySelect = function( options ) {
+	options = $.extend( true, {}, CategorySelect.options, options );
+
+	return this.each(function() {
+		new CategorySelect( this, options );
+	});
+};
+
+// Exports
 Wikia.CategorySelect = CategorySelect;
 window.Wikia = Wikia;
 
-})( window, jQuery );
+})( window, window.jQuery );

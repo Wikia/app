@@ -39,8 +39,8 @@ F::build( 'JSMessages' )->registerPackage( 'CategorySelect', array(
 	'categoryselect-category-add',
 	'categoryselect-category-edit',
 	'categoryselect-category-remove',
+	'categoryselect-error-empty-category-name',
 	'categoryselect-error-duplicate-category',
 	'categoryselect-modal-category-name',
-	'categoryselect-modal-category-name-empty',
 	'categoryselect-modal-category-sortkey',
 ));

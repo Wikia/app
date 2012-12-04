@@ -30,16 +30,11 @@ $messages[ 'en' ] = array(
 	'categoryselect-error-article-doesnt-exist' => 'Article [id=$1] does not exist.',
 	'categoryselect-error-db-locked' => 'Database is locked.',
 	'categoryselect-error-edit-abort' => 'The modifications you tried to make were aborted by an extension hook.',
+	'categoryselect-error-empty-category-name' => 'Please provide a category name.',
 	'categoryselect-error-duplicate-category' => 'Category "$1" already exists.',
 	'categoryselect-error-user-rights' => 'User does not have permission to perform this action.',
 	'categoryselect-modal-category-name' => 'Provide the name of the category:',
 	'categoryselect-modal-category-sortkey' => 'Alphabetize this article on the "$1" category page under the name:',
-	'categoryselect-modal-category-name-empty' => 'Please provide a category name.',
-
-/*	UNUSED
-	'categoryselect-unhandled-syntax' => 'Unhandled syntax detected - switching back to visual mode impossible.',
-	'categoryselect-empty-name' => 'Provide category name (part before |)',
-*/
 	'tog-disablecategoryselect' => 'Disable Category module (only applies if editing in visual mode has been disabled)',
 	'tog-disablecategoryselect-v2' => 'Disable Category module (only applies if visual mode editing is disabled)'
 );

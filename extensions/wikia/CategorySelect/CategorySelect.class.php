@@ -166,7 +166,7 @@ class CategorySelect {
 		// Remove duplicates by category name
 		foreach( $categories as $category ) {
 			if ( !is_null( $category ) && !in_array( $category[ 'name' ], $categoryNames ) ) {
-				$categoryNames[] = $category[ 'name '];
+				$categoryNames[] = $category[ 'name' ];
 				$uniqueCategories[] = $category;
 			}
 		}

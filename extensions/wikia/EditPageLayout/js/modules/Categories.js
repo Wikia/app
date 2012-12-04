@@ -1,6 +1,7 @@
 (function( window ) {
 
-var WikiaEditor = window.WikiaEditor;
+var WikiaEditor = window.WikiaEditor,
+	wgCategorySelect = window.wgCategorySelect;
 
 WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 	modes: true,
@@ -19,7 +20,7 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 			$categorySelect = $( '#CategorySelect' ),
 			namespace = 'categorySelect';
 
-		// Move #CategorySelect to the right rail
+		// Move to the right rail
 		this.el.replaceWith( $categorySelect );
 
 		// Update the reference
@@ -27,25 +28,25 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 
 		// Initialize categorySelect
 		$categorySelect.categorySelect({
-			data: JSON.parse( $categories.val() ),
+			animations: {
+				remove: {
+					options: {
+						duration: 400
+					},
+					properties: {
+						opacity: 0,
+						height: 0
+					}
+				}
+			},
+			categories: wgCategorySelect.categories,
 			popover: {
 				placement: 'top'
 			}
 
-		}).on( 'add.' + namespace, function( event, state, data ) {
-			data.element.prepend( Mustache.render( data.template.content, data.template.data ) );
-
-		}).on( 'remove.' + namespace, function( event, state, data ) {
-			data.element.animate({
-				opacity: 0,
-				height: 0
-
-			}, 400, function() {
-				data.element.remove();
-			});
-
-		}).on( 'update.' + namespace, function( event, state ) {
-			$categories.val( JSON.stringify( state.categories ) );
+		}).on( 'update.' + namespace, function( event ) {
+			$categories.val( JSON.stringify(
+				$categorySelect.data( 'categorySelect' ).getData() ) );
 		});
 	}
 });

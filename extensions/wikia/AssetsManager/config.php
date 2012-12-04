@@ -1181,10 +1181,10 @@ $config['sharingtoolbar_js'] = array(
 $config['categoryselect_edit_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
 		'//resources/jquery.ui/jquery.ui.core.js',
 		'//resources/jquery.ui/jquery.ui.widget.js',
 		'//resources/jquery.ui/jquery.ui.mouse.js',
 		'//resources/jquery.ui/jquery.ui.sortable.js',
+		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
 	)
 );

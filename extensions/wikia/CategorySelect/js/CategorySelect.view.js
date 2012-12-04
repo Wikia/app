@@ -1,4 +1,4 @@
-(function( window, $ ) {
+(function( window, $, mw ) {
 	var action = window.wgAction,
 		wgCategorySelect = window.wgCategorySelect;
 
@@ -8,53 +8,40 @@
 	}
 
 	$(function() {
-		var categorySelect,
-			$wrapper = $( '#WikiaArticleCategories' ),
+		var $wrapper = $( '#WikiaArticleCategories' ),
 			$addCategory = $wrapper.find( '.addCategory' ),
 			$categories = $wrapper.find( '.categories' ),
 			articleId = window.wgArticleId,
-			categoryPrefix = wgCategorySelect.defaultNamespace + wgCategorySelect.defaultSeparator,
-			namespace = 'categorySelect',
-			originalLength = wgCategorySelect.categories.length;
+			categoryLinkPrefix = wgCategorySelect.defaultNamespace +
+				wgCategorySelect.defaultSeparator;
 
 		function initialize( event ) {
 			$.when(
 				mw.loader.use( 'jquery.ui.autocomplete' ),
 				mw.loader.use( 'jquery.ui.sortable' ),
 				$.getResources([
-					wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js',
-					wgResourceBasePath + '/resources/wikia/libraries/mustache/mustache.js'
+					wgResourceBasePath + '/resources/wikia/libraries/mustache/mustache.js',
+					wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js'
 				])
 
 			).done(function() {
 				$wrapper.categorySelect({
-					data: wgCategorySelect.categories,
+					categories: wgCategorySelect.categories,
+					placement: 'right',
 					sortable: {
 						axis: false,
 						cursor: 'move',
 						tolerance: 'intersect'
 					}
-				})
-				.on( 'add.' + namespace, function( event, state, data ) {
-					var category = data.template.data.category;
 
-					category.link = mw.util.wikiGetlink( categoryPrefix + category.name );
-					data.element.append( Mustache.render( data.template.content, data.template.data ) );
-
-				}).on( 'remove.' + namespace, function( event, state, data ) {
-					data.element.remove();
-
-				}).on( 'update.' + namespace, function( event, state ) {
-					$wrapper.toggleClass( 'modified', state.length != originalLength );
+				}).on( 'update.categorySelect', function( event ) {
+					$wrapper.toggleClass( 'modified', $categories.find( '.new' ).length > 0 );
 				});
-
-				categorySelect = $wrapper.data( namespace );
 			});
 		}
 
 		$wrapper.find( '.cancel' ).on( 'click', function( event ) {
 			$wrapper.removeClass( 'modified' ).trigger( 'reset' );
-			$categories.find( '.new' ).remove();
 		});
 
 		$wrapper.find( '.save' ).on( 'click', function( event ) {
@@ -62,7 +49,7 @@
 				controller: 'CategorySelectController',
 				data: {
 					articleId: articleId,
-					categories: categorySelect.state.categories
+					categories: $wrapper.data( 'categorySelect' ).getData()
 				},
 				method: 'save'
 
@@ -74,17 +61,32 @@
 
 				} else {
 					$wrapper.removeClass( 'modified' );
-					$categories.find( '.category' ).removeClass( 'new' );
+
+					// Linkify the new categories
+					$categories.find( '.new' ).each(function( i ) {
+						var $category = $( this ),
+							category = $category.data( 'category' ),
+							link = mw.util.wikiGetlink( categoryLinkPrefix + category.name ),
+							$link = $( '<a>' )
+								.addClass( 'name' )
+								.attr( 'href', link )
+								.text( category.name );
+
+						$category
+							.removeClass( 'new' )
+							.find( '.name' )
+							.replaceWith( $link );
+					});
 				}
 			});
 		});
 
-		// Initialize immediately if addCategory is already in focus
-		if ( $addCategory.is( ':focus' ) ) {
+		// Initialize immediately if addCategory has a value or is in focus
+		if ( $addCategory.is( ':focus' ) || $addCategory.val() != '' ) {
 			initialize();
 
 		} else {
 			$addCategory.one( 'focus', initialize );
 		}
 	});
-})( this, jQuery );
+})( window, window.jQuery, window.mw );
