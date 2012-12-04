@@ -162,7 +162,7 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 	public function getTitleObject() {
 		$title = $this->getTitle();
 		
-		if ( empty( $title ) ) {
+		if ( $title === null || $title === '' ) {
 			// this will likely be null
 			return $this->titleObject;
 		}
