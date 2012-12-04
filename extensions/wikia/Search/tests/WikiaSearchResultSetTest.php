@@ -735,7 +735,7 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 	 * @covers WikiaSearchResultSet::prependArticleMatchIfExists
 	 */
 	public function testPrependArticleMatchIfExistsNoMatch() {
-		$this->prepareMocks( array( 'getResultsStart' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
+		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
 		
 		$this->config
 			->expects	( $this->at( 0 ) )
@@ -757,7 +757,7 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 	 * @covers WikiaSearchResultSet::prependArticleMatchIfExists
 	 */
 	public function testPrependArticleMatchIfExistsMatchWithPagination() {
-		$this->prepareMocks( array( 'getResultsStart' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
+		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch' ) );
 		
 		$this->config
 			->expects	( $this->at( 0 ) )
@@ -784,7 +784,7 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 	 * @covers WikiaSearchResultSet::prependArticleMatchIfExists
 	 */
 	public function testPrependArticleMatchIfExistsMatchWrongNamespace() {
-		$this->prepareMocks( array( 'getResultsStart' ), array( 'hasArticleMatch', 'getArticleMatch', 'getNamespaces' ) );
+		$this->prepareMocks( array( 'getResultsStart', 'addResult' ), array( 'hasArticleMatch', 'getArticleMatch', 'getNamespaces' ) );
 		
 		$mockArticleMatch	= $this->getMockBuilder( 'WikiaSearchArticleMatch' )
 									->disableOriginalConstructor()
@@ -1221,6 +1221,7 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 		
 		$mockWg = (object) array(
 				'CityId'	=>	456,
+				'Lang'		=>	null,
 				);
 		
 		$wrapper = new ReflectionProperty( 'WikiaSearchResultSet', 'wf' );
@@ -1272,5 +1273,219 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 			);
 		}
 	}
+
+	/**
+	 * @covers WikiaSearchResultSet::addResult
+	 */
+	public function testAddResultInvalid() {
+		$this->prepareMocks( array( 'isValidResult' ) );
+		
+		$mockSearchResult		= $this->getMockBuilder( 'WikiaSearchResult' )
+									->disableOriginalConstructor()
+									->getMock();
+		
+		$this->resultSet
+			->expects	( $this->at( 0 ) )
+			->method	( 'isValidResult' )
+			->with		( $mockSearchResult )
+			->will		( $this->returnValue( false ) )
+		;
+		
+		$addResult = new ReflectionMethod( 'WikiaSearchResultSet', 'addResult' );
+		$addResult->setAccessible( true );
+		
+		try {
+			$addResult->invoke( $this->resultSet, $mockSearchResult );
+		} catch ( Exception $e ) { }
+		
+		$this->assertInstanceOf(
+				'WikiaException',
+				$e,
+				'WikiaSearchResultSet::addResult should throw an exception if attempting to add an invalid result'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::addResult
+	 */
+	public function testAddResultValid() {
+		$this->prepareMocks( array( 'isValidResult' ), array(), array( 'getHighlighting' ) );
+		
+		$mockSearchResult		= $this->getMockBuilder( 'WikiaSearchResult' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'offsetGet', 'setText', 'setVar', 'getVar' ) )
+									->getMock();
+		
+		$mockHighlighting		= $this->getMockBuilder( 'Solarium_Result_Select_Highlighting' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getResult' ) )
+									->getMock();
+		
+		$mockHighlightingResult	= $this->getMockBuilder( 'Solarium_Result_Select_Highlighting_Result' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getField' ) )
+									->getMock();
+		
+		$mockLang				= $this->getMockBuilder( 'Language' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'date' ) )
+									->getMock();
+		
+		$mockWf					= $this->getMockBuilder( 'WikiaFunctionWrapper' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'Timestamp' ) )
+									->getMock();
+		
+		$mockId = "123_456";
+		$mockHlSnippet = "I can't believe it's not <em>butter</em>!";
+		$mockTimestamp = date( 'Y-m-d' ).'T00:00:00Z'; // always today
+		$wfts = wfTimestamp( TS_MW, $mockTimestamp );
+		
+		$this->resultSet
+			->expects	( $this->at( 0 ) )
+			->method	( 'isValidResult' )
+			//->with		( $mockSearchResult )
+			->will		( $this->returnValue( true ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'offsetGet' )
+			->with		( 'id' )
+			->will		( $this->returnValue( $mockId ) )
+		;
+		$this->searchResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'getHighlighting' )
+			->will		( $this->returnValue( $mockHighlighting ) )
+		;
+		$mockHighlighting
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResult' )
+			->with		( $mockId )
+			->will		( $this->returnValue( $mockHighlightingResult ) )
+		;
+		$mockHighlightingResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'getField' )
+			->with		( WikiaSearch::field( 'html' ) )
+			->will		( $this->returnValue( array( $mockHlSnippet ) ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 1 ) )
+			->method	( 'setText' )
+			->with		( $mockHlSnippet )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 2 ) )
+			->method	( 'offsetGet' )
+			->with		( 'created' )
+			->will		( $this->returnValue( $mockTimestamp ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 3 ) )
+			->method	( 'setVar' )
+			->with		( 'created', $mockTimestamp )
+			->will		( $this->returnValue( $mockSearchResult ) )
+		;
+		$mockWf
+			->expects	( $this->at( 0 ) )
+			->method	( 'Timestamp' )
+			->with		( TS_MW, $mockTimestamp )
+			->will		( $this->returnValue( $wfts ) )
+		;
+		$mockLang
+			->expects	( $this->at( 0 ) )
+			->method	( 'date' )
+			->with		( $wfts )
+			->will		( $this->returnValue( 'Today' ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 4 ) )
+			->method	( 'setVar' )
+			->with		( 'fmt_timestamp', 'Today' )
+			->will		( $this->returnValue( $mockSearchResult ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 5 ) )
+			->method	( 'getVar' )
+			->with		( 'fmt_timestamp' )
+			->will		( $this->returnValue( 'Today' ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 6 ) )
+			->method	( 'setVar' )
+			->with		( 'created_30daysago', false )
+			->will		( $this->returnValue( $mockSearchResult ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 7 ) )
+			->method	( 'offsetGet' )
+			->with		( WikiaSearch::field( 'categories' ) )
+			->will		( $this->returnValue( null ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 8 ) )
+			->method	( 'setVar' )
+			->with		( 'categories', 'NONE' )
+			->will		( $this->returnValue( $mockSearchResult ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 9 ) )
+			->method	( 'offsetGet' )
+			->with		( 'wikiarticles' )
+			->will		( $this->returnValue( 12345 ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 10 ) )
+			->method	( 'setVar' )
+			->with		( 'cityArticlesNum', 12345 )
+			->will		( $this->returnValue( $mockSearchResult ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 11 ) )
+			->method	( 'offsetGet' )
+			->with		( WikiaSearch::field( 'wikititle' ) )
+			->will		( $this->returnValue( "My Wiki" ) )
+		;
+		$mockSearchResult
+			->expects	( $this->at( 12 ) )
+			->method	( 'setVar' )
+			->with		( 'wikititle', "My Wiki" )
+			->will		( $this->returnValue( $mockSearchResult ) )
+		;
+		
+		
+		$mockWg = (object) array(
+				'Lang'	=>	$mockLang,
+				);
+		
+		$wrapper = new ReflectionProperty( 'WikiaSearchResultSet', 'wf' );
+		$wrapper->setAccessible( true );
+		$wrapper->setValue( $this->resultSet, $mockWf );
+		
+		$global = new ReflectionProperty( 'WikiaSearchResultSet', 'wg' );
+		$global->setAccessible( true );
+		$global->setValue( $this->resultSet, $mockWg );
+		
+		$addResult = new ReflectionMethod( 'WikiaSearchResultSet', 'addResult' );
+		$addResult->setAccessible( true );
+
+		$this->assertEquals(
+				$this->resultSet,
+				$addResult->invoke( $this->resultSet, $mockSearchResult ),
+				'WikiaSearchResultSet::addResult should provide a fluent interface'
+		);
+		
+		$results = new ReflectionProperty( 'WikiaSearchResultSet', 'results' );
+		$results->setAccessible( true );
+		
+		$this->assertArrayHasKey(
+				$mockId,
+				$results->getValue( $this->resultSet ),
+				'WikiaSearchResultSet::addResult should add a result to the results array keyed by the ID of the document'
+		);
+		
+	}
+	
 	
 }

@@ -300,12 +300,13 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 				$result->setText( $field[0] );
 			}
 
-			if ( ( $result['created'] !== null ) && $this->wg->Lang ) {
-				$result	->setVar( 'created',		$result['created'] )
-						->setVar( 'fmt_timestamp',	$this->wg->Lang->date( wfTimestamp( TS_MW, $result['created'] ) ) );
+			$created = $result['created'];
+			if ( ( $created !== null ) && $this->wg->Lang ) {
+				$result	->setVar( 'created',		$created )
+						->setVar( 'fmt_timestamp',	$this->wg->Lang->date( $this->wf->Timestamp( TS_MW, $created ) ) );
 
 				if ( $result->getVar( 'fmt_timestamp' ) ) {
-				    $result->setVar( 'created_30daysago', time() - strtotime( $result['created'] ) > 2592000 );
+				    $result->setVar( 'created_30daysago', time() - strtotime( $created ) > 2592000 );
 				}
 			}
 
