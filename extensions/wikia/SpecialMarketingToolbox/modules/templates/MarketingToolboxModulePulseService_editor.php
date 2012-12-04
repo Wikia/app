@@ -57,6 +57,7 @@ echo $app->renderView(
 		array('inputData' => $fields['number2'])
 	);
 	?>
+	<? $fields['number3']['class'] = 'test'; ?>
 	<?=F::app()->renderView(
 		'MarketingToolbox',
 		'FormField',

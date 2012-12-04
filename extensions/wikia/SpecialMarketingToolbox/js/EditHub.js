@@ -32,14 +32,28 @@ EditHub.prototype = {
 
 		$('#marketing-toolbox-clearall').click($.proxy(function(){
 			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation')) == true) {
-				this.resetForm();
+				this.formReset();
 			}
 		}, this));
+
+		$('.WikiaForm .submits input[type=submit]').click(this.formValidate);
 	},
 
-	resetForm: function() {
+	formReset: function() {
 		this.form.find('input:text, input:password, input:file, select, textarea').val('');
 		this.form.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+	},
+
+	formValidate: function(e) {
+		$('.WikiaForm .error').text('');
+		$('.WikiaForm input[type=text]').each(function() {
+			if ($(this).val() == '') {
+				$(this).siblings('.error').text(
+					$.msg('marketing-toolbox-validator-string-short')
+				);
+				e.preventDefault();
+			}
+		});
 	}
 }
 
