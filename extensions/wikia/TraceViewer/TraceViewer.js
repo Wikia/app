@@ -1022,6 +1022,10 @@
 	});
 
 	TraceDialogStackTracesPanel = createClass(TraceDialogPanel,{
+		init: function() {
+			this.el.unbind('.stacktracespanel');
+			this.el.on('click.stacktracespanel','a.show-all', proxy(this.showAll,this));
+		},
 		setSource: function( data ) {
 			this.source = true;
 			this.data = data;
@@ -1029,6 +1033,11 @@
 		},
 		notifySourceChanged: function() {
 			this.changed = true;
+			this.shownLimit = 50;
+			this.refresh();
+		},
+		showAll: function() {
+			this.shownLimit = false;
 			this.refresh();
 		},
 		render: function() {
@@ -1049,8 +1058,9 @@
 			}
 
 			var html = '',
-				path, stack;
-			for (i=0;i<paths.length;i++) {
+				path, stack,
+				limit = this.shownLimit || paths.length;
+			for (i=0;i<limit;i++) {
 				path = paths[i];
 				html += '<b>Stack #'+(i+1)+'</b><br />';
 				for (j=0;j<path.length;j++) {
@@ -1069,6 +1079,9 @@
 						+ ' SelfTime: '  + path[path.length-1].selfTime.toFixed(5);
 				}
 				html += '<br />';
+			}
+			if (paths.length>limit) {
+				html += '<br /><a href="#" class="show-all">Show all...</a><br />';
 			}
 			this.el.html(html);
 		}
