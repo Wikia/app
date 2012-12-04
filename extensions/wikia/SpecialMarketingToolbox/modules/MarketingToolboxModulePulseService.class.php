@@ -10,10 +10,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					// Placeholder can be put here
 				),
 				'validator' => new WikiaValidatorString(
-					array(
-						'required' => true,
-						'min' => 1
-					),
+					array(),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
 			),
@@ -23,7 +20,10 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				'attributes' => array(
 				),
 				'validator' => new WikiaValidatorString(
-					array(),
+					array(
+						'required' => true,
+						'min' => 1
+					),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
 			),
