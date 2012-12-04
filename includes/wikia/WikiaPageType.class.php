@@ -52,9 +52,10 @@ class WikiaPageType {
 		$title = F::app()->wg->Title;
 
 		$searchPageNames = array('Search', 'WikiaSearch');
+		$pageNames = SpecialPageFactory::resolveAlias($title->getDBkey());
 
 		return !empty($title) && -1 == $title->getNamespace()
-			&& in_array(array_shift(SpecialPageFactory::resolveAlias($title->getDBkey())), $searchPageNames);
+			&& in_array(array_shift($pageNames), $searchPageNames);
 	}
 
 	/**
