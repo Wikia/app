@@ -68,6 +68,9 @@ class CreateNewWikiController extends WikiaController {
 			$signupTitle = Title::newFromText('UserSignup', NS_SPECIAL);
 			$this->signupUrl = $signupTitle->getFullURL();
 		}
+		
+		// theme designer application theme settings
+		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
 		wfProfileOut( __METHOD__ );
 	}
