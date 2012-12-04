@@ -1170,6 +1170,11 @@ class Linker {
 		$userTalkLink = self::link( $userTalkPage, wfMsgHtml( 'talkpagelinktext' ) );
 
 		/** Wikia change @author nAndy */
+
+		if ($userText instanceof User) {
+			$userText = $userText->getName();
+		}
+
 		wfRunHooks('LinkerUserTalkLinkAfter', array($userId, $userText, &$userTalkLink));
 		/** End of Wikia change */
 
