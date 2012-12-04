@@ -36,7 +36,7 @@ class LinkSuggest {
 		wfProfileOut(__METHOD__);
 		return $out;
 	}
-
+	
 	/**
 	 * Get a list of suggested titles
 	 *
@@ -46,6 +46,7 @@ class LinkSuggest {
 	 * @author Inez Korczyński <inez@wikia-inc.com>
 	 * @author Robert Elwell <robert@wikia-inc.com>
 	 */
+	 
 	static function getLinkSuggest(WebRequest $request) {
 		global $wgContLang, $wgContentNamespaces, $wgMemc, $wgLinkSuggestLimit;
 		wfProfileIn(__METHOD__);
@@ -64,9 +65,7 @@ class LinkSuggest {
 
 		if (strlen($query) < 3) {
 			// enforce minimum character limit on server side
-			$out = $request->getText('format') == 'json'
-				? json_encode(array('suggestions'=>array(),'redirects'=>array()))
-				: '';
+			$out = self::getEmptyResponse($request->getText('format'));
 		} else if (false && $cached = $wgMemc->get($key)) {
 			$out = $cached;
 		}
@@ -102,10 +101,7 @@ class LinkSuggest {
 			}
 
 			if ($namespace !== null && $query === '') {
-				$out = $request->getText('format') == 'json'
-					? json_encode(array('suggestions'=>array(),'redirects'=>array()))
-					: '';
-
+				$out = self::getEmptyResponse($request->getText('format'));
 				wfProfileOut(__METHOD__);
 				return $out;
 			}
@@ -120,6 +116,19 @@ class LinkSuggest {
 			// search only within a given namespace
 			$namespaces = array($namespace);
 		}
+
+		//limit the result only to this namespace
+		$namespaceFilter = $request->getVal('nsfilter');
+
+		if(strlen($namespaceFilter) > 0) {
+			$namespaces = array($namespaceFilter);	
+		}
+	
+		if (!empty($namespace) && $namespace != $namespaceFilter) {
+			$out = self::getEmptyResponse($request->getText('format'));	
+			return linkSuggestAjaxResponse($out);	
+		}
+		
 
 		$query = addslashes($query);
 
@@ -252,6 +261,23 @@ class LinkSuggest {
 	}
 
 	/**
+	 * 
+	 * helper function for return empty response
+	 * 
+	 * @param String $format json or html(default)
+	 * 
+	 * @return string
+	 * 
+	 * @author Tomasz Odrobny <tomek@wikia-inc.com>
+	 * 
+	 */
+
+	static function getEmptyResponse($format) {
+		return $format == 'json' ? json_encode(array('suggestions'=>array(),'redirects'=>array())) : '';
+	}
+
+
+	/**
 	 * @param DatabaseBase $db
 	 * @param $res
 	 * @param $query
@@ -261,6 +287,7 @@ class LinkSuggest {
 	 *
 	 * @author dymsza
 	 */
+	 
 	static private function formatResults($db, $res, $query, &$redirects, &$results, &$exactMatchRow) {
 		global $wgLinkSuggestLimit;
 		while(($row = $db->fetchObject($res)) && count($results) < $wgLinkSuggestLimit ) {
