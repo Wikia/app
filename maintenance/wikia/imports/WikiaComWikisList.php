@@ -329,18 +329,17 @@ class WikiaComWikisListImport {
 			$statusArrayKey = 'main-images';
 		}
 
-		if( $result['status'] === true ) {
+		if( $result['status'] === true || (
+			$result['status'] !== true
+			&& !empty($result['errors'][0]['message'])
+			&& $result['errors'][0]['message'] === 'backend-fail-alreadyexists'
+		) ) {
 			$this->okuploads[$statusArrayKey][] = array('city_id' => $wikiId, 'id' => $result['page_id'], 'name' => $imageName);
 			echo '.';
 			$success = true;
 		} else {
-			if (!empty($result['errors'][0]['message']) && $result['errors'][0]['message'] === 'filerenameerror') {
-				$this->fileexists[$statusArrayKey][] = $imageName;
-				echo '!';
-			} else {
-				$this->faileduploads[$statusArrayKey][] = $imageName;
-				echo '.';
-			}
+			$this->faileduploads[$statusArrayKey][] = $imageName;
+			echo '!';
 		}
 
 		wfProfileOut(__METHOD__);
@@ -447,7 +446,7 @@ class WikiaComWikisListImport {
 		global $wgCityId;
 		wfProfileIn(__METHOD__);
 
-		if( !$this->options->skipUpload && $this->options->addImageUploadTask ) {
+		if( !$this->options->skipUpload && $this->options->addImageUploadTask && $this->wereAnyFilesUploaded() ) {
 			$taskAdditionList = array();
 			foreach($this->okuploads['main-images'] as $image) {
 				$targetWikiId = $image['city_id'];
@@ -473,6 +472,14 @@ class WikiaComWikisListImport {
 		}
 
 		wfProfileOut(__METHOD__);
+	}
+
+	protected function wereAnyFilesUploaded() {
+		if( empty($this->okuploads['main-images']) || empty($this->okuploads['main-images']) ) {
+			return false;
+		}
+
+		return true;
 	}
 
 }
