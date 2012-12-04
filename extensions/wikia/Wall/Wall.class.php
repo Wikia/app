@@ -8,7 +8,7 @@ class Wall extends WikiaModel {
 	protected $mSorting = false;
 	protected $mRelatedPageId = false;
 	protected $cacheable = true;
-	
+
 	static public function newFromId( $id ) {
 		$title = Title::newFromId($id);
 		if( empty($title) ) {
@@ -19,6 +19,11 @@ class Wall extends WikiaModel {
 
 	static public function newFromTitle( Title $title ) {
 		wfProfileIn(__METHOD__);
+		if(!($title instanceof Title)) {
+			wfProfileOut(__METHOD__);
+			return null;
+		}
+
 		$wall = self::getEmpty();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
@@ -28,6 +33,10 @@ class Wall extends WikiaModel {
 
 	static public function newFromRelatedPages( Title $title, $relatedPageId ) {
 		wfProfileIn(__METHOD__);
+                if(!($title instanceof Title)) {
+                        wfProfileOut(__METHOD__);
+                        return null;
+                }
 		$wall = self::getEmpty();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
