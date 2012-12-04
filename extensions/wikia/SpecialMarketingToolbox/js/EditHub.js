@@ -37,11 +37,36 @@ EditHub.prototype = {
 		}, this));
 
 		$('.WikiaForm .submits input[type=submit]').click(this.formValidate);
+		$('.WikiaForm input[type=text]').keyup(this.formValidateRealTime);
 	},
 
 	formReset: function() {
 		this.form.find('input:text, input:password, input:file, select, textarea').val('');
 		this.form.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+	},
+
+	formValidateRealTime: function(e) {
+		$().log('formValidateRealTime');
+		var closestError = $(this).siblings('.error');
+		closestError.text('');
+		if ($(this).val() == '') {
+			closestError.text(
+				$.msg('marketing-toolbox-validator-string-short')
+			);
+		}
+		var validated = true;
+		var submitButton = $('.WikiaForm .submits input[type=submit]');
+		$('.WikiaForm input[type=text]').each(function() {
+			if ($(this).val() == '') {
+				validated = false;
+			}
+		});
+		if (validated) {
+			submitButton.removeAttr('disabled');
+		}
+		else {
+			submitButton.attr('disabled', true);
+		}
 	},
 
 	formValidate: function(e) {

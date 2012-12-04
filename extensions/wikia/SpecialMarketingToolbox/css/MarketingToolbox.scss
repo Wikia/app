@@ -7,7 +7,6 @@
 .MarketingToolboxMain {
 	@include clearfix;
 	.input-group {
-		border-bottom: 1px solid #e5e5e5;
 		label {
 			clear: both;
 			float: left;
@@ -20,6 +19,12 @@
 		input[type="text"] {
 			width: 149px;
 		}
+		.error-msg {
+			font-size: 12px;
+		}
+	}
+	.input-group:not(.borderNone) {
+		border-bottom: 1px solid #e5e5e5;
 	}
 	.url-and-topic input[type="text"] {
 		width: 480px;

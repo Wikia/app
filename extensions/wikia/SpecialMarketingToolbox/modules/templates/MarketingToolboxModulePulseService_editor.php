@@ -36,6 +36,7 @@ echo $app->renderView(
 		array('inputData' => $fields['stat2'])
 	);
 	?>
+	<? $fields['stat3']['class'] = 'borderNone'; ?>
 	<?=F::app()->renderView(
 		'MarketingToolbox',
 		'FormField',
@@ -57,7 +58,7 @@ echo $app->renderView(
 		array('inputData' => $fields['number2'])
 	);
 	?>
-	<? $fields['number3']['class'] = 'test'; ?>
+	<? $fields['number3']['class'] = 'borderNone'; ?>
 	<?=F::app()->renderView(
 		'MarketingToolbox',
 		'FormField',
