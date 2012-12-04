@@ -152,7 +152,6 @@ class CategorySelectHooksHelper {
 		$app = F::app();
 		$request = $app->wg->Request;
 
-		// Don't use CategorySelect for undo edits
 		$undoafter = $request->getVal( 'undoafter' );
 		$undo = $request->getVal( 'undo' );
 		$diff = $request->getVal( 'diff' );
@@ -164,6 +163,8 @@ class CategorySelectHooksHelper {
 			$request->getVal( 'usecatsel', '' ) != 'no'
 			// User is allowed to edit or we are forcing init
 			&& ( $forceInit || $app->wg->User->isAllowed( 'edit' ) )
+			// Not a history page
+			&& $action != 'history'
 			// Not an undo edit
 			&& !( ( $undo > 0 && $undoafter > 0) || $diff || ( $oldid && $action != 'edit' && $action != 'submit' ) )
 		) {
@@ -182,6 +183,8 @@ class CategorySelectHooksHelper {
 	 * Set global variables for javascript
 	 */
 	function onMakeGlobalVariablesScript( Array &$vars ) {
+		wfProfileIn( __METHOD__ );
+
 		$app = F::app();
 		$action = $app->wg->Request->getVal( 'action', 'view' );
 
@@ -192,11 +195,13 @@ class CategorySelectHooksHelper {
 			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext );
 
 		} else {
+		kylebug('here');
 			$data = CategorySelect::getExtractedCategoryData();
 		}
 
 		$catgories = array();
 		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
+
 			$categories = $data[ 'categories' ];
 		}
 
@@ -207,6 +212,8 @@ class CategorySelectHooksHelper {
 			'defaultSeparator' => trim( $app->wf->Message( 'colon-separator' )->escaped() ),
 			'defaultSortKey' => $app->wg->Parser->getDefaultSort() ?: $app->wg->Title->getText(),
 		);
+
+		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
@@ -244,7 +251,7 @@ class CategorySelectHooksHelper {
 			&& !( $action == 'purge' && $app->wg->User->isAnon() && !$app->wg->Request->wasPosted() )
 		) {
 			F::build( 'JSMessages' )->enqueuePackage( 'CategorySelect', JSMessages::INLINE );
-
+kylebug('here');
 			$app->registerHook( 'MakeGlobalVariablesScript', 'CategorySelectHooksHelper', 'onMakeGlobalVariablesScript' );
 
 			// Add hooks for view pages
