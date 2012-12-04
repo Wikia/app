@@ -59,11 +59,16 @@
 		},
 
 		showResult: function( result, message ) {
-			var $bodyContent = ( mw.config.get( 'skin' ) === 'oasis' ? $( '.WikiaPageContentWrapper' ) : mw.util.$content );
-			$bodyContent.prepend(
-				'<div class="WikiaConfirmation' + ( result === 'error' ? ' error' : '' ) + '"><p class="plainlinks"><img src="' +
-				mw.config.get( 'wgBlankImgUrl' ) + '" class="sprite ' + result + '"> ' + mw.msg( message ) + '</p></div>'
-			);
+			if ( mw.config.get( 'skin' ) === 'monobook' ) {
+				mw.util.$content.prepend(
+					'<div class="' + ( result === 'error' ? 'errorbox' : 'successbox' ) + '"><p class="plainlinks"><img src="' +
+					mw.config.get( 'wgBlankImgUrl' ) + '" class="sprite ' + result + '"> ' + mw.msg( message ) + '</p></div>' +
+					'<div class="visualClear"></div>'
+				);
+			} else {
+				var resultClass = ( result === 'error' ? 'error' : 'confirm' );
+				window.GlobalNotification.show( mw.msg( message ), resultClass );
+			}
 		}
 	};
 

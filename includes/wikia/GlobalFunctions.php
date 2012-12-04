@@ -1030,7 +1030,7 @@ function wfTimeFormatAgo($stamp){
 
 	$currenttime = time();
 	$stamptime = strtotime($stamp);
-	$ago = time() - strtotime($stamp) + 1;
+	$ago = $currenttime - $stamptime + 1;
 	$sameyear = date('Y',$currenttime) == date('Y',$stamptime);
 
 	$res = '';

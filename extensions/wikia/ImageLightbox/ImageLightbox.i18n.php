@@ -788,9 +788,11 @@ $messages['tr'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'lightbox_details_tooltip' => '查看图片细节',
 	'lightbox-forum' => '论坛',
+	'lightbox-share-button-email' => '电子邮件',
 	'lightbox-share-button-www' => '分享',
 );

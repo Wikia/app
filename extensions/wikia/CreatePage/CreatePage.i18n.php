@@ -161,6 +161,22 @@ $messages['az'] = array(
 	'createpage_enter_text' => 'Mətn:',
 );
 
+/** South Azerbaijani (تورکجه)
+ * @author Arjanizary
+ * @author E THP
+ */
+$messages['azb'] = array(
+	'createpage-sp-title' => 'یئنی یارپاق یارات',
+	'createpage_title' => 'یئنی صحیفه یارات',
+	'createpage_title_caption' => 'باشلیق',
+	'createpage_enter_text' => 'متن:',
+	'createpage_empty_title_error' => 'باشلیق گرکن‌دیر',
+	'createpage_invalid_title_error' => 'گئچرسیز آد',
+	'createpage-dialog-title' => 'یئنی یارپاق یارات',
+	'createpage-dialog-blank' => 'بوش یارپاق',
+	'createpage-error-empty-title' => 'لوطفا یارپاغیزا بیر آد یازین',
+);
+
 /** Bashkir (башҡортса)
  * @author Рустам Нурыев
  */
@@ -628,7 +644,7 @@ $messages['gl'] = array(
 	'createpage_enter_text' => 'Texto:',
 	'createpage_empty_title_error' => 'O título é obrigatorio',
 	'createpage_empty_article_body_error' => 'O texto do artigo é obrigatorio',
-	'createpage_invalid_title_error' => 'O título non é válido',
+	'createpage_invalid_title_error' => 'Título non válido',
 	'createpage_article_already_exists' => 'Xa existe un artigo con ese nome.
 Por favor, seleccione un nome diferente.',
 	'createpage_spam' => 'Sentímolo, non se pode gardar a súa edición',

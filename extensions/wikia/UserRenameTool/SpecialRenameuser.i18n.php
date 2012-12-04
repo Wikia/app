@@ -2823,7 +2823,7 @@ $messages['nds'] = array(
 	'right-renameuser' => 'Brukers ne’en Naam geven',
 );
 
-/** Nedersaksisch (Nedersaksisch)
+/** Nedersaksies (Nedersaksies)
  */
 $messages['nds-nl'] = array(
 	'renameuser' => 'Gebruker herneumen',

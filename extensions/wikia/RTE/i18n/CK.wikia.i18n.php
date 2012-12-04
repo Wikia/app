@@ -805,6 +805,7 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'rte-ck-bucket-controls' => 'Qontroli',
+	'rte-ck-errorPopupTitle' => 'Xırab',
 	'rte-ck-hoverPreview-comment-title' => 'Vatış',
 	'rte-ck-hoverPreview-delete' => 'besterne',
 	'rte-ck-hoverPreview-edit' => 'bıvurne',
@@ -980,11 +981,18 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'rte-ck-errorPopupTitle' => 'Virhe!',
+	'rte-ck-link-external-tab' => 'Ulkoinen linkki',
+	'rte-ck-link-external-url' => 'URL',
+	'rte-ck-link-internal-linkText' => 'Linkin teksti',
+	'rte-ck-link-internal-pageName' => 'Sivun nimi',
+	'rte-ck-link-internal-tab' => 'Sisäinen linkki',
+	'rte-ck-link-title' => 'Luo tai muokkaa linkkiä',
 	'rte-ck-media-delete' => 'poista',
 	'rte-ck-photoGallery-slideshow' => 'Kuvaesitys',
 	'rte-ck-photoGallery-slider' => 'Liukusäädin',
@@ -1534,7 +1542,7 @@ $messages['it'] = array(
 	'rte-ck-link-internal-pageName' => 'Titolo della pagina',
 	'rte-ck-link-internal-tab' => 'Link interno',
 	'rte-ck-link-title' => 'Crea o modifica un link',
-	'rte-ck-link-label-target' => 'Pagina da linkare o URL',
+	'rte-ck-link-label-target' => 'Pagina di destinazione o URL',
 	'rte-ck-link-label-display' => 'Testo da visualizzare',
 	'rte-ck-link-label-internal' => 'A una pagina della wiki',
 	'rte-ck-link-label-external' => 'A un link esterno',
@@ -2206,7 +2214,7 @@ $messages['nl'] = array(
 	'rte-ck-hoverPreview-edit' => 'bewerken',
 	'rte-ck-hoverPreview-media-notExisting' => 'Deze afbeelding of dit bestand bestaat niet.',
 	'rte-ck-hoverPreview-template-intro' => 'Dit is een sjabloon',
-	'rte-ck-hoverPreview-template-notExisting' => 'Dit sjabloon bestaat niet!',
+	'rte-ck-hoverPreview-template-notExisting' => 'Deze sjabloon bestaat niet!',
 	'rte-ck-hoverPreview-video-notExisting' => 'Deze video bestaat niet.',
 	'rte-ck-image-add' => 'Afbeelding toevoegen',
 	'rte-ck-image-photo' => 'Afbeelding',

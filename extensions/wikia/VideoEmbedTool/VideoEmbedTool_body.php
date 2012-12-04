@@ -108,12 +108,8 @@ class VideoEmbedTool {
 			$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
 			$apiwrapper = $awf->getApiWrapper( $url );
 		}
-		catch (WikiaException $e) {
+		catch ( Exception $e ) {
 			$nonPremiumException = $e;
-		}
-		catch (EmptyResponseException $e) {
-			// response from video API was empty
-			// TODO: handle it
 		}
 
 		if( !empty($apiwrapper) ) { // try ApiWrapper first - is it from partners?
@@ -150,19 +146,20 @@ class VideoEmbedTool {
 				}
 			}
 			else {
+				header( 'X-screen-type: error' );
 				if ( $nonPremiumException ) {
-					header('X-screen-type: error');
-
-					if ( !empty(F::app()->wg->allowNonPremiumVideos) ) {
-						wfProfileOut(__METHOD__);
-						return $nonPremiumException->getMessage();
+					if ( empty(F::app()->wg->allowNonPremiumVideos) ) {
+						wfProfileOut( __METHOD__ );
+						return wfMessage( 'videohandler-non-premium' )->parse();
 					}
 
-					wfProfileOut(__METHOD__);
-					return wfMessage('videohandler-non-premium')->parse();
+					if ( $nonPremiumException->getMessage() != '' ) {
+						wfProfileOut( __METHOD__ );
+						return $nonPremiumException->getMessage();
+					}
 				}
-				header('X-screen-type: error');
-				wfProfileOut(__METHOD__);
+
+				wfProfileOut( __METHOD__ );
 				return wfMsg( 'vet-bad-url' );
 			}
 

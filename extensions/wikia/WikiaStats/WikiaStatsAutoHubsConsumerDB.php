@@ -360,42 +360,9 @@ class WikiaStatsAutoHubsConsumerDB {
 			return array("value" => array(), "age" => time());
 		}
 
-		$tag_id = (int) $tag_id;
-		$limit = 40;
-		$lang_id = WikiFactory::LangCodeToId($lang);
-		$conditions = array(
-			"tag_id" 	=> $tag_id,
-			"city_lang" => $lang_id
-		);
-
-		$res = $this->dbs->select(
-			array( 'specials.page_views_summary_tags' ),
-			array( 'tag_id as tag_id, city_id as city_id, pv_views as count '),
-			$conditions,
-			__METHOD__,
-			array(
-				'ORDER BY' 	=> 'count DESC',
-				'LIMIT'		=> $limit
-			)
-		);
-
-		if ( $this->dbs->numRows( $res ) == 0 && !empty($wgDotDisplay) ) {
-			$date = date('Ymd', time() - 7 * 24 * 60 * 60);
-			$conditions = array("pv_use_date > $date", 'ct.city_id = pv.pv_city_id');
-			$res = $this->dbs->select(
-				array( 'stats.page_views as pv', 'wikicities.city_tag_map as ct' ),
-				array( 'ct.tag_id as tag_id,
-						pv_city_id as city_id,
-						sum(pv_views) as count ' ),
-				$conditions,
-				__METHOD__,
-				array(
-					'GROUP BY' 	=> ' ct.tag_id,pv_city_id ',
-					'ORDER BY' 	=> ' count DESC ',
-					'LIMIT'		=> $limit
-				)
-			);
-		}
+		$startDate = date( 'Y-m-01', strtotime('-1 month') );
+		$endDate = date( 'Y-m-01', strtotime('now') );
+		$tagsViews = DataMartService::getTopTagsWikisByPageviews( $tag_id, $startDate, $endDate, $lang, DataMartService::PERIOD_ID_MONTHLY, $limit );
 
 		$limits = $this->loadHideLimits("city");
 		$limits_array = array();
@@ -412,25 +379,26 @@ class WikiaStatsAutoHubsConsumerDB {
 		$count = 0;
 		$city_array = array();
 		$numberOne = 1;
+		if ( !empty( $tagsViews ) ) {
+			foreach ( $tagsViews as $wiki_id => $pviews ) {
+				$in_limits = in_array($wiki_id, $limits_array);
+				if( (!$in_limits) || $show_hide ) {
+					$row = array('count' => $pviews );
 
-		while ( $value = $this->dbs->fetchRow($res) ) {
-			$in_limits = in_array($value['city_id'], $limits_array);
-			if( (!$in_limits) || $show_hide ) {
-				$row = array('count' => $value['count']);
+					if ($in_limits) {
+						$row['hide'] = true;
+					}
 
-				if ($in_limits) {
-					$row['hide'] = true;
-				}
+					$city_array[ $wiki_id ] = $row;
 
-				$city_array[$value['city_id']] = $row;
+					$count ++;
+					if ( $count == $limit ) {
+						break;
+					}
 
-				$count ++;
-				if ( $count == $limit ) {
-					break;
-				}
-
-				if ($count == 1) {
-					$numberOne = $value['city_id'];
+					if ($count == 1) {
+						$numberOne = $wiki_id;
+					}
 				}
 			}
 		}

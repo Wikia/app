@@ -287,6 +287,13 @@ $messages['az'] = array(
 	'wmu-gallery' => 'Qalereya',
 );
 
+/** South Azerbaijani (تورکجه)
+ * @author Erdemaslancan
+ */
+$messages['azb'] = array(
+	'wmu-licensing' => 'لیسانس',
+);
+
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
@@ -1784,7 +1791,7 @@ $messages['mk'] = array(
 	'wmu-warn3' => 'Најпрвин треба да назначите име на податотеката!',
 	'wmu-imagelink' => '<b>Ново!</b> Додавање на слики',
 	'wmu-imagebutton' => 'Додај слики',
-	'wmu-license-cc' => 'Лиценцарано со Creative Commons Наведи извор-Сподели под исти услови 3.0',
+	'wmu-license-cc' => 'Лиценцарано со Криејтив комонс Наведи извор-Сподели под исти услови 3.0',
 	'wmu-bad-extension' => 'Се обидовте да подигнете недозволен тип на податотека. Обидете се повторно.',
 	'wmu-filetype-missing' => 'На подигнатата податотека ѝ недостасува наставка',
 	'wmu-filetype-incorrect' => 'Оваа подигната податотека има неправилна наставка',

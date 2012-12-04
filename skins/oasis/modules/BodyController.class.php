@@ -140,7 +140,6 @@ class BodyController extends WikiaController {
 				1500 => array('Search', 'Index', null),
 				1002 => array('Forum', 'forumRelatedThreads', null),
 				1001 => array('Forum', 'forumActivityModule', null),
-				1000 => array('Forum', 'forumParticipationModule', null),
 				1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')),
 			);
 			wfProfileOut(__METHOD__);
@@ -241,11 +240,11 @@ class BodyController extends WikiaController {
 			$page_owner = User::newFromName($wgTitle->getText());
 
 			if($page_owner) {
-				if( !$page_owner->getOption('hidefollowedpages') ) {
+				if ( !$page_owner->getOption('hidefollowedpages') ) {
 					$railModuleList[1101] = array('FollowedPages', 'Index', null);
 				}
 
-				if($wgEnableAchievementsExt && !(($wgUser->getId() == $page_owner->getId()) && $page_owner->getOption('hidepersonalachievements'))){
+				if ( $wgEnableAchievementsExt ) {
 					$railModuleList[1102] = array('Achievements', 'Index', null);
 				}
 			}

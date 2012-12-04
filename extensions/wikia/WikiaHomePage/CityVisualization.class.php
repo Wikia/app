@@ -5,7 +5,8 @@
  * @todo refactor, the queries should be part of /includes/wikia/models/WikisModel.class.php
  */
 class CityVisualization extends WikiaModel {
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.77';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.78';
+	const CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION = 'v1.08';
 	const WIKI_STANDARD_BATCH_SIZE_MULTIPLIER = 100;
 
 	const PROMOTED_SLOTS = 3;
@@ -293,7 +294,7 @@ class CityVisualization extends WikiaModel {
 			//UPDATE
 			$cond = array(
 				'city_id' => $wikiId,
-				'city_lang_code' => $this->wg->contLang->getCode()
+				'city_lang_code' => $langCode
 			);
 			$mdb->update($table, $data, $cond, __METHOD__);
 			$data['city_flags'] = $row->city_flags;
@@ -798,6 +799,14 @@ class CityVisualization extends WikiaModel {
 	}
 
 	/**
+	 * @desc Returns an array of wikis' ids
+	 * @return array
+	 */
+	public function getVisualizationWikisIds() {
+		return array_keys($this->getCorporateSitesList());
+	}
+
+	/**
 	 * @param Array $sites reference to an array with lists from WikiFactory::getListOfWikisWithVar()
 	 */
 	protected function addLangToCorporateSites(&$sites) {
@@ -824,6 +833,7 @@ class CityVisualization extends WikiaModel {
 				'wikiId' => $wikiId,
 				'wikiTitle' => $wiki['t'],
 				'url' => $wiki['u'],
+				'db' => $wiki['d'],
 				'lang' => $lang
 			);
 		}
@@ -919,7 +929,7 @@ class CityVisualization extends WikiaModel {
 
 		if( is_int(self::$wikiFactoryVarId) ) {
 			$wikiFactoryList = WikiaDataAccess::cache(
-				F::app()->wf->MemcKey('corporate_pages_list', 'v1.07', __METHOD__),
+				F::app()->wf->MemcKey('corporate_pages_list', self::CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION, __METHOD__),
 				24 * 60 * 60,
 				array($this, 'loadCorporateSitesList')
 			);

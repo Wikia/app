@@ -70,6 +70,10 @@
 			this.editboxOffsetHeight = (offsetHeight + footerHeight);
 
 			this.delayedResize();
+
+			// BugId: 68871 force document to reflow (Safari 6 on OSX 10.8 bug - impossible to scroll iframe content)
+			this.editbox.css('visibility', 'visible');
+
 		},
 
 		delayedResize: function() {

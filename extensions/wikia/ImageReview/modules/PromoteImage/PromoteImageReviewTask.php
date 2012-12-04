@@ -18,8 +18,8 @@ class PromoteImageReviewTask extends BatchTask {
 
 	protected $helper;
 	protected $model; /** @var CityVisualization $model */
-	protected $corporatePagesIds = array(80433, 111264);
-	protected $dbNamesToBeSkipped = array('wikiaglobal', 'dewiki');
+	protected $corporatePagesIds = array();
+	protected $dbNamesToBeSkipped = array();
 
 	function __construct($params = array()) {
 		$this->mType = 'promoteimagereview';
@@ -27,7 +27,21 @@ class PromoteImageReviewTask extends BatchTask {
 		$this->mParams = $params;
 		$this->mTTL = 86400; // 24 hours
 		$this->records = 1000; // TODO: needed?
+		$this->initializeSkippedWikiList();
+
 		parent::__construct();
+	}
+
+	protected function initializeSkippedWikiList() {
+		$cityVisualization = new CityVisualization();
+		$corporateSites = $cityVisualization->getVisualizationWikisData();
+
+		$dbNames = array();
+		foreach ($corporateSites as $site) {
+			$dbNames[] = $site['db'];
+		}
+
+		$this->dbNamesToBeSkipped = $dbNames;
 	}
 
 	function execute($params = null) {
@@ -56,6 +70,7 @@ class PromoteImageReviewTask extends BatchTask {
 		$this->helper = F::build('WikiGetDataForVisualizationHelper');
 		/** @var WikiGetDataForVisualizationHelper $this->model  */
 		$this->model = F::build('CityVisualization');
+		$this->corporatePagesIds = $this->model->getVisualizationWikisIds();
 
 		$data = unserialize($params->task_arguments);
 		if( isset($data['upload_list']) ) {
@@ -143,7 +158,7 @@ class PromoteImageReviewTask extends BatchTask {
 		$retval = "";
 
 		$dbname = WikiFactory::IDtoDB($sourceWikiId);
-		$imageTitle = F::build('GlobalTitle',array($imageId,$sourceWikiId),'newFromId');
+		$imageTitle = F::build('GlobalTitle', array($imageId, $sourceWikiId), 'newFromId');
 
 		$sourceImageUrl = null;
 		if($imageTitle instanceof GlobalTitle) {
@@ -156,20 +171,20 @@ class PromoteImageReviewTask extends BatchTask {
 
 			$response = ApiService::foreignCall($dbname, $param);
 
-			if(!empty($response["query"]["pages"][$imageId])
-				&&(!empty($response["query"]["pages"][$imageId]["imageinfo"][0]["url"]))) {
+			if( !empty($response["query"]["pages"][$imageId])
+				&&( !empty($response["query"]["pages"][$imageId]["imageinfo"][0]["url"])) ) {
 				$sourceImageUrl = wfReplaceImageServer($response["query"]["pages"][$imageId]["imageinfo"][0]["url"]);
 			}
 		}
 
 		if( empty($sourceImageUrl) ) {
-			$this->log('Apparently the image is unaccessible');
+			$this->log('Apparently the image ' . $dbname . '/' . $param['titles'] . ' is unaccessible');
 			return array('status' => 1);
 		}
 
 		$city_url = WikiFactory::getVarValueByName("wgServer", $targetWikiId);
 		if( empty($city_url) ) {
-			$this->log('Apparently the server is not available via WikiFactory');
+			$this->log('Apparently the server for ' . $targetWikiId . ' is not available via WikiFactory');
 			return array('status' => 1);
 		}
 

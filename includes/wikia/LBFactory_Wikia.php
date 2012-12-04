@@ -13,12 +13,20 @@
 class LBFactory_Wikia extends LBFactory_Multi {
 
 	function getSectionForWiki( $wiki = false ) {
-		global $wgDBname, $wgDBcluster, $smwgUseExternalDB, $wgLBDefaultSection;
+		global $wgDBname, $wgDBcluster, $smwgUseExternalDB;
 
 		if ( $this->lastWiki === $wiki ) {
 			return $this->lastSection;
 		}
 		list( $dbName, $prefix ) = $this->getDBNameAndPrefix( $wiki );
+
+		/**
+		 * actually we should not have any fallback because it will end with
+		 * fatal anyway.
+		 *
+		 * But it makes PHP happy
+		 */
+		$section = 'central';
 
 		$this->isSMWClusterActive = false;
 		if( $smwgUseExternalDB ) {
@@ -45,16 +53,13 @@ class LBFactory_Wikia extends LBFactory_Multi {
 			// this is a local db so use global variables
 			if ( isset( $wgDBcluster ) ) {
 				$section = $wgDBcluster;
-			} else {
-				$section = $wgLBDefaultSection;
 			}
 		}
 		else {
 			// this is a foreign db that either has a cluster defined in WikiFactory...
 			$section = WikiFactory::getVarValueByName( 'wgDBcluster', WikiFactory::DBtoID( $wiki ) );
 			if ( empty( $section ) ) {
-				// ...or not
-				$section = $wgLBDefaultSection;
+				$section = 'central';
 			}
 		}
 		$this->lastSection = $section;

@@ -1715,6 +1715,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Kalakuh
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
@@ -1725,14 +1726,39 @@ $messages['fi'] = array(
 Näyttää siltä, että $EDITORNAME on rekisteröitynyt wikiisi! Miksi et sano hänen keskustelusivullaan $EDITORTALKPAGEURL hei?
 
 -- The Wikia Team', # Fuzzy
+	'founderemails-email-user-registered-greeting' => 'Hei $USERNAME,',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Uusi $WIKINAME -muokkaus!',
+	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Hei $USERNAME,
+
+Hienoa! $EDITORNAME teki juuri ensimmäinen muokkauksensa $WIKINAME-wikissä.
+
+Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.
+
+$PAGEURL
+
+Wikia-ryhmä',
+	'founderemails-email-first-edit-greeting' => 'Hei $USERNAME,',
+	'founderemails-email-first-edit-headline' => 'Hienoa! $EDITORNAME teki juuri ensimmäinen muokkauksensa $WIKINAME-wikissä.',
+	'founderemails-email-first-edit-content' => 'Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.',
+	'founderemails-email-first-edit-signature' => 'Wikia-ryhmä',
+	'founderemails-email-page-edited-reg-user-subject' => 'Uusi $WIKINAME -muokkaus!',
 	'founderemails-email-page-edited-reg-user-body' => 'Hei $USERNAME,
 
-Näyttää siltä, että rekisteröitynyt käyttäjä $EDITORNAME on muokannut wikiäsi! Miksi et sano hänelle ($EDITORTALKPAGEURL) hei?
+$EDITORNAME muokkasi juuri $WIKINAME-wikin sivua $PAGETITLE.
 
--- The Wikia Team', # Fuzzy
+Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.
+
+$PAGEURL
+
+Wikia-ryhmä',
+	'founderemails-email-general-edit-greeting' => 'Hei $USERNAME,',
+	'founderemails-email-general-edit-headline' => '$EDITORNAME muokkasi juuri $WIKINAME-wikin sivua $PAGETITLE.',
+	'founderemails-email-general-edit-content' => 'Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.',
+	'founderemails-email-general-edit-signature' => 'Wikia-ryhmä',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hei $USERNAME,<br /><br />
 Näyttää siltä, että rekisteröitynyt käyttäjä $EDITORNAME on muokannut wikiäsi! Miksi et sano hänen <a href="$EDITORTALKPAGEURL">keskustelusivullaan</a> hei?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
+	'founderemails-email-anon-edit-signature' => 'Wikia-ryhmä',
 	'founderemails-answers-email-page-edited-reg-user-body' => 'Hei $USERNAME,
 
 Näyttää siltä, että rekisteröitynyt käyttäjä $EDITORNAME on muokannut wikiäsi! Miksi et kävisi hänen keskustelusivullaan ($EDITORTALKPAGEURL) ja sanoisi hei?
@@ -7044,6 +7070,7 @@ Bạn luôn luôn có thể ghé qua hoạt động của wiki để xem tất c
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'founderemails-email-user-registered-subject' => '有新用户加入$WIKINAME',
@@ -7145,6 +7172,7 @@ Wikia团队',
 	'founderemails-email-complete-digest-button' => '前往 维基活动',
 	'founderemails-pref-joins' => '有人加入$1时邮件通知我。',
 	'founderemails-pref-edits' => '有人编辑$1时邮件通知我。',
+	'founderemails-pref-edits-v2' => '...他人编辑',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

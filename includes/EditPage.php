@@ -1907,8 +1907,12 @@ class EditPage {
 
 		$wgOut->addHTML( $this->editFormTextAfterTools . "\n" );
 
-		$wgOut->addHTML( Html::rawElement( 'div', array( 'class' => 'templatesUsed' ),
-			Linker::formatTemplates( $this->getTemplates(), $this->preview, $this->section != '' ) ) );
+		# <Wikia>
+		if ( empty( $this->preventRenderingTemplatesList ) ) {
+			$wgOut->addHTML( Html::rawElement( 'div', array( 'class' => 'templatesUsed' ),
+				Linker::formatTemplates( $this->getTemplates(), $this->preview, $this->section != '' ) ) );
+		}
+		# </Wikia>
 
 		# <Wikia>
 		if ( wfRunHooks( 'EditPage::CategoryBox', array( &$this ) ) ) {
@@ -2439,9 +2443,22 @@ HTML
 
 	protected function showEditTools() {
 		global $wgOut;
+
+		// Wikia change - begin - @author: wladek
+		global $wgMemc, $wgContLang;
+		$cacheTtl = 86400;
+		$message = wfMessage( 'edittools' )->inContentLanguage();
+		$key = wfMemcKey(__METHOD__,$wgContLang->getCode(),md5($message->plain()));
+		$editToolsText = $wgMemc->get($key);
+		if ( empty( $editToolsText ) ) {
+			$editToolsText = $message->parse();
+			$wgMemc->set($key,$editToolsText,$cacheTtl);
+		}
 		$wgOut->addHTML( '<div class="mw-editTools">' .
-			wfMessage( 'edittools' )->inContentLanguage()->parse() .
+//			wfMessage( 'edittools' )->inContentLanguage()->parse() .
+			$editToolsText .
 			'</div>' );
+		// Wikia change - end
 	}
 
 	protected function getCopywarn() {

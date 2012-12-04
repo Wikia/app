@@ -1486,6 +1486,7 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-preview-px' => 'px',
 	'wikiaPhotoGallery-preview-position-left' => 'Çep',
 	'wikiaPhotoGallery-preview-position-center' => 'Merkez',
+	'wikiaPhotoGallery-preview-position-right' => 'Raşt',
 	'wikiaPhotoGallery-preview-spacing-small' => 'Werdı',
 	'wikiaPhotoGallery-preview-spacing-medium' => 'Medyum',
 	'wikiaPhotoGallery-preview-spacing-large' => 'Larc',
@@ -1499,6 +1500,7 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-preview-bordersize-small' => 'Werdı',
 	'wikiaPhotoGallery-preview-bordersize-medium' => 'Medyum',
 	'wikiaPhotoGallery-preview-bordersize-large' => 'Larc',
+	'wikiaPhotoGallery-preview-captions' => 'Bınnuşte',
 	'wikiaPhotoGallery-preview-captions-left' => 'Çep',
 	'wikiaPhotoGallery-preview-captions-center' => 'Merkez',
 	'wikiaPhotoGallery-preview-captions-right' => 'Raşt',
@@ -1780,6 +1782,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
@@ -1853,7 +1856,7 @@ Vaihtoehtoisesti voit napsauttaa "$2" ja nähdä sivun päivitetyssä muodossa.'
 	'wikiaPhotoGallery-choice-gallery' => 'Luo galleria',
 	'wikiaPhotoGallery-slideshowpreview-optionstitle' => 'Diaesityksen asetukset',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Lähetä',
-	'wikiaPhotoGallery-upload-uploadbutton' => 'Lähetä', # Fuzzy
+	'wikiaPhotoGallery-upload-uploadbutton' => 'Lähetä kuva',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Valitse',
 	'wikiaPhotoGallery-photooptions-captiontitle' => 'Kuvateksti',
 	'wikiaPhotoGallery-photooptions-captionsub' => "'''Valinnainen.'''

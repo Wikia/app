@@ -40,6 +40,7 @@
 
     public function __phpunit_cleanup()
     {
+        self::$staticInvocationMocker = NULL;
         $this->invocationMocker = NULL;
     }
 }

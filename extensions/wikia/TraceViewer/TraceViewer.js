@@ -314,12 +314,12 @@
 		},
 		endNode: function( id, time, mem ) {
 			if ( this.stack.length < 2 ) {
-				err('trace error');
+				err('trace error ['+id+']: no nodes in the stack');
 				return;
 			}
 			var node = this.stack.pop();
 			if ( !node || node.id !== id ) {
-				err('trace error');
+				err('trace error ['+id+']: closing non-matching node ('+node.id+')');
 				return;
 			}
 
@@ -1203,7 +1203,10 @@
 				},
 				defaultTab = 1;
 
-			html += '<div class="trace-load-button"><a href="#">Load other URL...</a></div>';
+			html += '<div class="trace-nav-buttons">';
+			html += '<span class="trace-reload-button"><a href="#">Reload</a></span> &bull; ';
+			html += '<span class="trace-load-button"><a href="#">Load other URL...</a></span>';
+			html += '</div>';
 			html += '<div id="trace-summary"></div>';
 			html += '<div id="trace-context-list"></div>';
 			html += '<div id="trace-tabs-wrapper"><ul>';
@@ -1250,6 +1253,7 @@
 			this.contextListPanel.activate();
 			this.tabsPanels[defaultTab] && this.tabsPanels[defaultTab].activate();
 
+			$('.trace-reload-button a',this.el).click(this.proxy(this.reloadButtonClicked));
 			$('.trace-load-button a',this.el).click(this.proxy(this.loadButtonClicked));
 		},
 		setup: function() {
@@ -1284,6 +1288,9 @@
 		},
 		loadButtonClicked: function() {
 			this.fire('loadClicked');
+		},
+		reloadButtonClicked: function() {
+			this.fire('reloadClicked');
 		}
 	});
 
@@ -1307,6 +1314,7 @@
 			this.dialog.on('drilldown',proxy(this.drilldown,this));
 			this.dialog.on('switchContext',proxy(this.switchContext,this));
 			this.dialog.on('loadClicked',proxy(this.loadUrlRequest,this));
+			this.dialog.on('reloadClicked',proxy(this.reloadRequest,this));
 
 			this.loadFromDom();
 		},
@@ -1331,6 +1339,7 @@
 			data.setCurrent(contextId);
 		},
 		loadFromDom: function() {
+			this.url = document.location.href;
 			this.data.initFromDom();
 			this.dialog.setTitle(document.location.href);
 		},
@@ -1350,6 +1359,7 @@
 				data: data,
 				dataType: 'html',
 				success: function( text ) {
+					self.url = origUrl;
 					var i = text.lastIndexOf('<!'+'--');
 					if ( i >= 0 ) {
 						text = text.substr(i);
@@ -1366,6 +1376,9 @@
 					err('Could not load response text');
 				}
 			});
+		},
+		reloadRequest: function() {
+			this.loadFromUrl(this.url);
 		}
 	});
 

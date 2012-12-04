@@ -34,6 +34,7 @@ function wfAdEngineInit() {
 		// Disable right rail ads and AdMeld ads for logged in users not willing to see ads
 		$wgEnableAdsInContent = false;
 		$wgEnableAdMeldAPIClient = false;
+		$wgEnableKruxTargeting = false;
 	}
 
 	// Canonical value for wgLoadAdsInHead
@@ -203,6 +204,7 @@ class AdEngine {
 		'12' => 'DARTGP',
 		'13' => 'AdEngine2',
 		'14' => 'GamePro',
+		'15' => 'Liftium2',
  		'-1' => 'Null'
 	);
 
@@ -533,6 +535,7 @@ class AdEngine {
 			case 'dartgp': return AdProviderDARTGP::getInstance();
 			case 'adengine2': return AdProviderAdEngine2::getInstance();
 			case 'gamepro': return AdProviderGamePro::getInstance();
+			case 'liftium2': return AdProviderLiftium2::getInstance();
 			case 'null': return new AdProviderNull('Slot disabled in WF', false);
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
@@ -855,6 +858,7 @@ class AdEngine {
 		 * See http://staff.wikia-inc.com/wiki/DART_Implementation#When_to_show_ads */
 		$mandatoryAds = array(
 			'HOME_TOP_LEADERBOARD',
+			'HUB_TOP_LEADERBOARD',
 			'HOME_TOP_RIGHT_BOXAD',
 			'LEFT_NAV_205x400'
 		);

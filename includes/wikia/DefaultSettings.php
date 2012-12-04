@@ -99,11 +99,21 @@ $wgAutoloadClasses['WikiaView'] = $IP . '/includes/wikia/nirvana/WikiaView.class
 $wgAutoloadClasses['WikiaSkin'] = $IP . '/includes/wikia/nirvana/WikiaSkin.class.php';
 $wgAutoloadClasses['WikiaBaseTemplate'] = $IP . '/includes/wikia/nirvana/WikiaBaseTemplate.class.php';
 $wgAutoloadClasses['WikiaFunctionWrapper'] = $IP . '/includes/wikia/nirvana/WikiaFunctionWrapper.class.php';
-$wgAutoloadClasses['WikiaException'] = $IP . '/includes/wikia/nirvana/WikiaException.php';
-$wgAutoloadClasses['WikiaDispatchedException'] = $IP . '/includes/wikia/nirvana/WikiaDispatchedException.class.php';
-
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/WikiaBaseTest.class.php';
 $wgAutoloadClasses['WikiaAppMock'] = $IP . '/includes/wikia/tests/WikiaAppMock.class.php';
+$wgAutoloadClasses['WikiaMockProxy'] = $IP . '/includes/wikia/tests/WikiaMockProxy.class.php';
+
+/**
+ * Exceptions
+ */
+$wgAutoloadClasses['WikiaException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+$wgAutoloadClasses['WikiaDispatchedException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+$wgAutoloadClasses['WikiaHttpException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+$wgAutoloadClasses['BadRequestException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+$wgAutoloadClasses['ForbiddenException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+$wgAutoloadClasses['NotFoundException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+$wgAutoloadClasses['MethodNotAllowedException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+$wgAutoloadClasses['NotImplementedException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
 
 // Since we use this everywhere, we will just set up a global app reference now.
 F::setInstance( 'App', new WikiaApp() );
@@ -125,10 +135,17 @@ $wgWikiaAPIControllers = array();
 include_once( "$IP/lib/ApiGate/config.php" );
 
 //Wikia API Hooks
+$app->registerHook( 'ArticleUpdateCategoryCounts', 'ArticlesApiController', 'onArticleUpdateCategoryCounts' );
+
 $app->registerClass( 'ApiHooks', "{$IP}/includes/wikia/api/ApiHooks.class.php" );
 
 $app->registerHook( 'WikiFactoryChanged', 'ApiHooks', 'onWikiFactoryChanged' );
 $app->registerHook( 'MessageCacheReplace', 'ApiHooks', 'onMessageCacheReplace' );
+$app->registerHook( 'ArticleDeleteComplete', 'ApiHooks', 'onArticleDeleteComplete' );
+$app->registerHook( 'ArticleSaveComplete', 'ApiHooks', 'onArticleSaveComplete' );
+$app->registerHook( 'ArticleRollbackComplete', 'ApiHooks', 'onArticleRollbackComplete' );
+$app->registerHook( 'ArticleCommentListPurgeComplete', 'ApiHooks', 'ArticleCommentListPurgeComplete' );
+
 
 //Wikia API base controller, all the others extend this class
 $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiController.class.php" );
@@ -136,6 +153,13 @@ $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiCon
 //Wikia API controllers
 $app->registerApiController( 'DiscoverApiController', "{$IP}/includes/wikia/api/DiscoverApiController.class.php" );
 $app->registerApiController( 'NavigationApiController', "{$IP}/includes/wikia/api/NavigationApiController.class.php" );
+$app->registerApiController( 'ArticlesApiController', "{$IP}/includes/wikia/api/ArticlesApiController.class.php" );
+
+//Wikia Api exceptions classes
+$app->registerClass( 'BadRequestApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
+$app->registerClass( 'OutOfRangeApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
+$app->registerClass( 'MissingParameterApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
+$app->registerClass( 'InvalidParameterApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
 
 /**
  * Wikia API end
@@ -147,8 +171,9 @@ $wgAutoloadClasses['SpamRegexBatch'] = $IP . '/extensions/SpamBlacklist/SpamRege
 $wgAutoloadClasses['WikiaSpamRegexBatch'] = $IP . '/extensions/wikia/WikiaSpamRegexBatch/WikiaSpamRegexBatch.php';
 
 /**
- * custom wikia classes
+ * Custom wikia classes
  */
+
 $wgAutoloadClasses[ "EasyTemplate"                    ] = "$IP/includes/wikia/EasyTemplate.php";
 $wgAutoloadClasses[ "GlobalTitle"                     ] = "$IP/includes/wikia/GlobalTitle.php";
 $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/WikiFactory/WikiFactory.php";
@@ -177,6 +202,7 @@ $wgAutoloadClasses[ 'phpFlickr'                       ] = "$IP/lib/phpFlickr/php
 $wgAutoloadClasses[ 'WikiaDataAccess'                 ] = "$IP/includes/wikia/WikiaDataAccess.class.php";
 $wgAutoloadClasses[ 'ImageReviewStatuses'             ] = "$IP/extensions/wikia/ImageReview/ImageReviewStatuses.class.php";
 $wgAutoloadClasses[ 'WikiaUserPropertiesController'   ] = "$IP/includes/wikia/WikiaUserPropertiesController.class.php";
+$wgAutoloadClasses[ 'TitleBatch'                      ] = "$IP/includes/wikia/cache/TitleBatch.php";
 
 /**
  * Resource Loader enhancements
@@ -672,7 +698,7 @@ $wgUseExternalEditor = false;
  * libmemcached related stuff
  */
 define( "CACHE_LIBMEMCACHED", 11 );
-$wgObjectCaches[ CACHE_LIBMEMCACHED ] = array( 'class', 'LibmemcachedBagOStuff' );
+$wgObjectCaches[ CACHE_LIBMEMCACHED ] = array( 'factory' => 'LibmemcachedBagOStuff::newFromGlobals' );
 $wgSessionsInLibmemcached = false;
 
 
@@ -979,10 +1005,6 @@ $wgResourceLoaderCssMinifier = false;
  */
 $wgWikiaIsCentralWiki = false;
 
-/**
- * default LB section for database connection
- */
-$wgLBDefaultSection = 'DEFAULT';
 
 /**
  * Is bulk mode in Memcached routines enabled?
@@ -990,4 +1012,3 @@ $wgLBDefaultSection = 'DEFAULT';
  * @var boolean
  */
 $wgEnableMemcachedBulkMode = false;
-

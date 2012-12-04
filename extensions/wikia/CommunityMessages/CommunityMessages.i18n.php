@@ -30,7 +30,7 @@ $messages['qqq'] = array(
 	'communitymessages-notice-msg' => 'A message about updating Community Messages',
 );
 
-/**    زَوُن (   زَوُن)
+/** Tunisian Spoken Arabic (   زَوُن)
  * @author Csisc
  */
 $messages['aeb'] = array(

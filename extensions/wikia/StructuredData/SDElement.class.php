@@ -2,9 +2,8 @@
 /**
  * @author ADi
  */
-class SDElement extends SDObject implements SplSubject {
+class SDElement extends SDRenderableObject implements SplSubject {
 	private $id = 0;
-	private $depth = 0;
 	private static $excludedNames = array(
 		'@context',
 		'type',
@@ -24,13 +23,11 @@ class SDElement extends SDObject implements SplSubject {
 	 * @param string $type
 	 * @param SDContext $context
 	 * @param int $id
-	 * @param int $depth
 	 */
-	public function __construct( $type, $context, $id = 0, $depth = 0) {
+	public function __construct( $type, $context, $id = 0) {
 		$this->type = $type;
 		$this->context = $context;
 		$this->id = $id;
-		$this->depth = $depth;
 
 		$this->properties = F::build( 'SplObjectStorage' );
 	}
@@ -47,16 +44,64 @@ class SDElement extends SDObject implements SplSubject {
 		return $this->type;
 	}
 
-	public function setDepth($depth) {
-		$this->depth = $depth;
-	}
-
-	public function getDepth() {
-		return $this->depth;
-	}
-
 	public function getProperties() {
 		return $this->properties;
+	}
+
+	public function isPropertyVisible( $property ) {
+
+		//TODO: it should be SDS API dependent (object template?)
+		// fields to hide
+		$mockData = array(
+		    'callofduty:Character' => array( 	'wikia:namespace',
+			    				'schema:audio',
+			    				'wikia:element',
+			    				'schema:video',
+			                    'wikia:elementIn'
+		    ) ,
+		    'callofduty:Weapon' => array(
+			    				'wikia:namespace',
+			    				'schema:audio',
+			    				'schema:video',
+			                    'wikia:elementIn'
+		    ),
+		    'wikia:WikiText' => array(
+							'wikia:elementIn',
+							'wikia:namespace',
+							'schema:audio',
+			    				'schema:url',
+			    				'schema:keywords',
+			    				'schema:photos',
+			    				'schema:video',
+			    				'wikia:restriction',
+			    				'schema:description'
+		    ),
+		    'schema:ImageObject' => array(
+			    				'schema:thumbnailUrl',
+			    				'schema:description',
+			    				'wikia:restriction',
+			    				'wikia:includeWith',
+			    				'schema:contentURL',
+			    				'schema:width',
+			    				'schema:height'
+		    ),
+			'wikia:VideoGame' => array(
+				'wikia:platform',
+				'wikia:elementIn',
+				'schema:publisher'
+			)
+		);
+
+		if ( $property instanceof SDElementProperty ) {
+			$property = $property->getName();
+		}
+		if ( isset($mockData[ $this->type ])) {
+			if ( in_array( $property, $mockData[ $this->type ]) ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -75,11 +120,11 @@ class SDElement extends SDObject implements SplSubject {
 	 * get property value
 	 * @param string $name
 	 * @param mixed $default
-	 * @return mixed
+	 * @return SDElementPropertyValue
 	 */
 	public function getPropertyValue( $name, $default = null ) {
 		$property = $this->getProperty( $name );
-		return ($property instanceof SDElementProperty) ? $property->getValue() : $default;
+		return ($property instanceof SDElementProperty) ? $property->getWrappedValue() : $default;
 	}
 
 	/**
@@ -87,7 +132,7 @@ class SDElement extends SDObject implements SplSubject {
 	 * @return string
 	 */
 	public function getName() {
-		return $this->getPropertyValue( 'schema:name' );
+		return $this->getPropertyValue( 'schema:name' )->getValue();
 	}
 
 	/**
@@ -95,7 +140,7 @@ class SDElement extends SDObject implements SplSubject {
 	 * @return string
 	 */
 	public function getUrl() {
-		return $this->getPropertyValue( 'schema:url' );
+		return $this->getPropertyValue( 'schema:url' )->getValue();
 	}
 
 	/**
@@ -116,27 +161,28 @@ class SDElement extends SDObject implements SplSubject {
 		$this->properties->attach( $property );
 	}
 
-	public static function newFromTemplate(stdClass $template, SDContext $context, stdClass $data = null, $depth = 0) {
+	public static function newFromTemplate(stdClass $template, SDContext $context, stdClass $data = null) {
 		if(!empty($data) && isset($data->id)) {
 			$elementId = $data->id;
 		}
+		else {
+			$elementId = 0;
+		}
+
 		/** @var $element SDElement */
-		$element = F::build( 'SDElement', array( $template->type, $context, $elementId, $depth ) );
-		$structuredData = F::build( 'StructuredData' );
+		$element = F::build( 'SDElement', array( $template->type, $context, $elementId ) );
 
 		foreach($template as $propertyName => $propertyValue) {
-			$propertyType = false;
-
 			if(isset($data->{"$propertyName"})) {
 				$propertyValue = $data->{"$propertyName"};
 			}
 
 			if(!in_array( $propertyName, self::$excludedNames )) {
-				/** @var $property SDElementProperty */
-				$property = F::build( 'SDElementProperty', array( $propertyName, $propertyValue, $propertyType) );
-				if($depth == 0) {
-					$property->expandValue( $structuredData, $element->getDepth() );
+				if(is_object($propertyValue) && isset($propertyValue->{"@value"})) {
+					$propertyValue = $propertyValue->{"@value"};
 				}
+				/** @var $property SDElementProperty */
+				$property = F::build( 'SDElementProperty', array( $propertyName, $propertyValue ) );
 				$element->addProperty( $property );
 			}
 			elseif($propertyName == '@context') {
@@ -149,27 +195,38 @@ class SDElement extends SDObject implements SplSubject {
 		return $element;
 	}
 
-	//public function
-
-	public function toArray() {
-		$properties = array();
-
-		foreach($this->properties as $property) {
-			$properties[] = $property->toArray();
-		}
-
-		return array(
-			'id' => $this->getId(),
-			'type' => $this->getType(),
-			'name' => $this->getName(),
-			'url' => $this->getUrl(),
-			'properties' => $properties,
-			'depth' => $this->getDepth()
-		);
+	public function __toString() {
+		return $this->toSDSJson();
 	}
 
-	public function __toString() {
-		return json_encode( $this->toArray() );
+	/**
+	 * get SDS compatible json representation of this object
+	 * @return string
+	 */
+	public function toSDSJson() {
+		$data = new stdClass();
+
+		if( !empty( $this->id ) ) {
+			$data->id = $this->id;
+		}
+		$data->type = $this->getType();
+
+		/** @var $property SDElementProperty */
+		foreach($this->properties as $property) {
+
+			if ( $this->isPropertyVisible($this->type, $property) )
+				$data->{$property->getName()} = $property->toSDSJson();
+		}
+
+		return json_encode( $data );
+	}
+
+	public function update(array $params) {
+		/** @var $property SDElementProperty */
+		foreach($this->properties as $property) {
+			$value = (isset($params[$property->getName()])) ? $params[$property->getName()] : null;
+			$property->setValueFromRequest($value);
+		}
 	}
 
 	/**
@@ -213,18 +270,41 @@ class SDElement extends SDObject implements SplSubject {
 		}
 	}
 
-	public function getTypeName() {
-		return $this->type;
-	}
-
 	public function getRendererNames() {
-		return array($this->getTypeName());
+		return array( $this->type, 'sdelement_default' );
 	}
 
-	public function render( $context = SD_CONTEXT_DEFAULT ) {
-		// @todo render link in a proper way here, or move to renderers factory
-		$result = parent::render( $context );
-		return ( $result !== false ) ? $result : '<a href="/wiki/Special:StructuredData?method=showObject&id='.$this->getId().'">'. htmlspecialchars( $this->getName() ) . '</a>';
+	/**
+	 * Return current object's page url. For the default rendering context this method returns the address defined in schema:url
+	 * property when it is not empty. In any other case address of the SDS special page with object details is returned.
+	 * @param $context - SDS rendering context
+	 * @return String
+	 */
+	public function getObjectPageUrl( $context ) {
+		if ( $context == SD_CONTEXT_DEFAULT ) {
+			$url = $this->getUrl();
+			if ( !empty( $url ) ) {
+				if ( preg_match( '/^http(s)?:/', $url, $matches ) > 0 ) {
+					$title = F::build( 'Title', array( $url ), 'newFromText');
+					if( $title instanceof Title ) {
+						return $title->getFullUrl();
+					}
+				}
+				return $url;
+			}
+		}
+		return self::createSpecialPageUrl($this);
 	}
 
+	public static function createSpecialPageUrl($o) {
+		if (is_array($o)) {
+			$type = $o['type'];
+			$name = $o['name'];
+		} else {
+			$type = $o->getType();
+			$name = $o->getName();
+		}
+		$title = SpecialPage::getTitleFor( 'StructuredData', str_replace(' ', '+', $type) . '/' . str_replace(' ', '+', $name) );
+		return $title->getFullUrl();
+	}
 }

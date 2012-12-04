@@ -280,6 +280,7 @@ $messages['lb'] = array(
 	'places-in-category' => 'Plazen an der Kategorie $1',
 	'places-editor-search' => 'Sichen',
 	'places-geolocation-modal-error-title' => 'Feeler',
+	'places-error-no-article' => 'Dir musst eng Säit uginn',
 );
 
 /** Macedonian (македонски)
@@ -494,6 +495,7 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'places' => 'Platser på denna wiki',
+	'places-desc' => 'Lägger till taggarna <nowiki><place> och <places></nowiki> för geotaggning av sidor och en [[Special:Places|karta över alla taggade sidor]]',
 	'places-in-category' => 'Platser i $1 kategori',
 	'places-on-map' => '{{PLURAL:$1|$1 ställe|$1 ställen}} på denna karta',
 	'places-modal-go-to-special' => 'Visar {{PLURAL:$1|$1 plats|$1 platser}} ([[Special:Places|se alla]])',

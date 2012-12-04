@@ -7,7 +7,7 @@
 					(<?= $item['date']; ?>)
 				<?php endif; ?>
 			</dt>
-			
+
 			<?php if( $item['text'] ): ?>
 				<dd>
 					<?= $item['text']; ?>

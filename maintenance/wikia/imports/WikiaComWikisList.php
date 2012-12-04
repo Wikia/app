@@ -51,7 +51,7 @@ class WikiaComWikisListImport {
 	const SPREADSHEET_LAST_ADD_IMG_IDX = 5;
 
 	protected $options = null;
-	protected $verticalsNames = array('Video Games', 'Entertainment', 'Lifestyle');
+	protected $verticalsNames = array(2 => 'video games', 3 => 'entertainment', 9 => 'lifestyle'); //keep it lower-cased
 	protected $wikisAdded = array();
 	protected $wikisNotAdded = array();
 	protected $wikisUpdated = array();
@@ -68,7 +68,7 @@ class WikiaComWikisListImport {
 	protected function areAllRequiredWikiDataForMediaWikiMessageSet($data) {
 		wfProfileIn(__METHOD__);
 
-		if( !empty($data[2]) && !empty($data[4]) && in_array($data[3], $this->verticalsNames) ) {
+		if( !empty($data[2]) && !empty($data[4]) && in_array(strtolower(trim($data[3])), $this->verticalsNames) ) {
 			$res = true;
 		} else {
 			$res = false;
@@ -93,9 +93,9 @@ class WikiaComWikisListImport {
 		wfProfileIn(__METHOD__);
 
 		$verticals = array(
-			$this->verticalsNames[0] => array(),
-			$this->verticalsNames[1] => array(),
-			$this->verticalsNames[2] => array()
+			$this->verticalsNames[2] => array(),
+			$this->verticalsNames[3] => array(),
+			$this->verticalsNames[9] => array()
 		);
 
 		foreach($this->options->csvContent as $line) {
@@ -106,29 +106,34 @@ class WikiaComWikisListImport {
 				$wikiDomain = trim( str_replace('http://', '', $wikiUrl), '/');
 				$wikiId = WikiFactory::DomainToID($wikiDomain);
 
-				$wikiHeadline = $element[1];
-				$wikiVertical = $element[3];
-				$wikiMainImageUrl = $element[4];
-				$wikiDesc = $element[5];
-				$spreadSheetImageName = basename($element[4]);
-				$wikiImageName = $this->getCorpDestImageName($wikiUrl, $spreadSheetImageName);
+				if( $wikiId > 0 ) {
+					$wikiHeadline = $element[1];
+					$wikiVerticalId = HubService::getComscoreCategory($wikiId)->cat_id;
 
-				if( !$this->options->skipUpload ) {
-					$this->uploadImage($wikiMainImageUrl, $wikiImageName, $wikiId);
+					$wikiMainImageUrl = $element[4];
+					$wikiDesc = $element[5];
+					$spreadSheetImageName = basename($element[4]);
+					$wikiImageName = $this->getCorpDestImageName($wikiUrl, $spreadSheetImageName);
+
+					if( !$this->options->skipUpload ) {
+						$this->uploadImage($wikiMainImageUrl, $wikiImageName, $wikiId);
+					}
+
+					$wikiUrl = (
+						(stripos($wikiUrl, 'http://') === false)
+							&& (stripos($wikiUrl, 'https://') === false)
+					) ? ('http://' . $wikiUrl) : $wikiUrl;
+
+					$verticals[$this->verticalsNames[$wikiVerticalId]][] = '**' . $wikiHeadline . '|' . $wikiUrl . '|' . $wikiImageName . '|' . $wikiDesc;
+				} else {
+					$this->wikisNotAdded[] = $wikiDomain.' ('.$wikiId.') ';
 				}
-
-				$wikiUrl = (
-					(stripos($wikiUrl, 'http://') === false)
-						&& (stripos($wikiUrl, 'https://') === false)
-				) ? ('http://' . $wikiUrl) : $wikiUrl;
-
-				$verticals[$wikiVertical][] = '**' . $wikiHeadline . '|' . $wikiUrl . '|' . $wikiImageName . '|' . $wikiDesc;
 			}
 		}
 
 		$title = Title::newFromText($this->options->mediaWikiMessage, NS_MEDIAWIKI);
 		$article = new Article($title);
-		$content = $this->parseWikisList(0, $verticals) . $this->parseWikisList(1, $verticals) . $this->parseWikisList(2, $verticals);
+		$content = $this->parseWikisList(2, $verticals) . $this->parseWikisList(3, $verticals) . $this->parseWikisList(9, $verticals);
 		$summary = "automated import";
 		$article->doEdit($content, $summary);
 
@@ -193,7 +198,6 @@ class WikiaComWikisListImport {
 				} else {
 					$this->wikisNotAdded[] = $wikiDomain.' ('.$wikiId.') ';
 				}
-
 			}
 		}
 
@@ -325,18 +329,17 @@ class WikiaComWikisListImport {
 			$statusArrayKey = 'main-images';
 		}
 
-		if( $result['status'] === true ) {
+		if( $result['status'] === true || (
+			$result['status'] !== true
+			&& !empty($result['errors'][0]['message'])
+			&& $result['errors'][0]['message'] === 'backend-fail-alreadyexists'
+		) ) {
 			$this->okuploads[$statusArrayKey][] = array('city_id' => $wikiId, 'id' => $result['page_id'], 'name' => $imageName);
 			echo '.';
 			$success = true;
 		} else {
-			if (!empty($result['errors'][0]['message']) && $result['errors'][0]['message'] === 'filerenameerror') {
-				$this->fileexists[$statusArrayKey][] = $imageName;
-				echo '!';
-			} else {
-				$this->faileduploads[$statusArrayKey][] = $imageName;
-				echo '.';
-			}
+			$this->faileduploads[$statusArrayKey][] = $imageName;
+			echo '!';
 		}
 
 		wfProfileOut(__METHOD__);
@@ -443,7 +446,7 @@ class WikiaComWikisListImport {
 		global $wgCityId;
 		wfProfileIn(__METHOD__);
 
-		if( !$this->options->skipUpload && $this->options->addImageUploadTask ) {
+		if( !$this->options->skipUpload && $this->options->addImageUploadTask && $this->wereAnyFilesUploaded() ) {
 			$taskAdditionList = array();
 			foreach($this->okuploads['main-images'] as $image) {
 				$targetWikiId = $image['city_id'];
@@ -469,6 +472,14 @@ class WikiaComWikisListImport {
 		}
 
 		wfProfileOut(__METHOD__);
+	}
+
+	protected function wereAnyFilesUploaded() {
+		if( empty($this->okuploads['main-images']) || empty($this->okuploads['main-images']) ) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

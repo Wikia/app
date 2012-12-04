@@ -35,6 +35,17 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	const QUERY_ENCODED		=	3;
 	
 	/**
+	 * Constants for public filter queries
+	 *
+	 */
+	const FILTER_VIDEO				= 	'is_video';
+	const FILTER_IMAGE				=	'is_image';
+	const FILTER_HD					=	'is_hd';
+	const FILTER_CAT_VIDEOGAMES 	=	'cat_videogames';
+	const FILTER_CAT_ENTERTAINMENT	=	'cat_entertainment';
+	const FILTER_CAT_LIFESTYLE		=	'cat_lifestyle';
+	
+	/**
 	 * Default parameters for a number of values that come up regularly in search
 	 * @var array
 	 */
@@ -86,6 +97,15 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 			'longest'			=>	array( 'video_duration_i', Solarium_Query_Select::SORT_DESC ),
 	);
 	
+	private $publicFilterKeys = array(
+			self::FILTER_VIDEO,
+			self::FILTER_IMAGE,
+			self::FILTER_HD,
+			self::FILTER_CAT_VIDEOGAMES,
+			self::FILTER_CAT_ENTERTAINMENT,
+			self::FILTER_CAT_LIFESTYLE,
+	);
+	
 	/**
 	 * Associates short key names with filter queries.
 	 * This approach doesn't support on-the-fly language fields.
@@ -93,9 +113,9 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @var array
 	 */
 	private $filterCodes = array(
-			'is_video'			=>	'is_video:true',
-			'is_image'			=>	'is_image:true',
-			'is_hd'				=>	'video_hd_b:true',
+			self::FILTER_VIDEO	=>	'is_video:true',
+			self::FILTER_IMAGE	=>	'is_image:true',
+			self::FILTER_HD		=>	'video_hd_b:true',
 	);
 	
 	/**
@@ -120,9 +140,9 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		parent::__construct();
 		
 		$dynamicFilterCodes = array(
-				'cat_videogames'	=>	WikiaSearch::valueForField( 'categories', 'Video Games', array( 'quote'=>'"' )  ),
-				'cat_entertainment'	=>	WikiaSearch::valueForField( 'categories', 'Entertainment' ),
-				'cat_lifestyle'		=>	WikiaSearch::valueForField( 'categories', 'Lifestyle'),
+				self::FILTER_CAT_VIDEOGAMES		=>	WikiaSearch::valueForField( 'categories', 'Video Games', array( 'quote'=>'"' )  ),
+				self::FILTER_CAT_ENTERTAINMENT	=>	WikiaSearch::valueForField( 'categories', 'Entertainment' ),
+				self::FILTER_CAT_LIFESTYLE		=>	WikiaSearch::valueForField( 'categories', 'Lifestyle'),
 				);
 		
 		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
@@ -215,13 +235,18 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		$query = html_entity_decode( Sanitizer::StripAllTags ( $query ), ENT_COMPAT, 'UTF-8');
 		
 		$this->params['originalQuery'] = $query;
-		$queryNamespace	= $this->wg->ContLang->getNsIndex( preg_replace( '/^(.*):.*$/', '$1', strtolower( $query ) ) );
-		if ( $queryNamespace ) {
-			$namespaces = $this->getNamespaces();
-		    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
-		        $this->params['queryNamespace'] = $queryNamespace;
-		    } 
-		    $query = implode( ':', array_slice( explode( ':', $query ), 1 ) );
+		
+		if ( strpos( $query, ':' ) !== false ) {
+			$queryNsExploded = explode( ':', $query );
+			$queryNamespaceStr = array_shift( $queryNsExploded );
+			$queryNamespace	= $this->wg->ContLang->getNsIndex( $queryNamespaceStr );
+			if ( $queryNamespace ) {
+				$namespaces = $this->getNamespaces();
+			    if ( empty( $namespaces ) || (! in_array( $queryNamespace, $namespaces ) ) ) {
+			        $this->params['queryNamespace'] = $queryNamespace;
+			    } 
+			    $query = implode( ':', $queryNsExploded );
+			}
 		}
 		
 		$this->params['query'] = $query;
@@ -287,6 +312,11 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @return array where index 0 is the field name and index 1 is the constant used for ASC or DESC in solarium
 	 */
 	public function getSort() {
+		// Allows you to override our default keyword-based ranking functionality. Don't abuse this.
+		// I have aggressively validated this value to protect your query.
+		if ( isset( $this->params['sort'] ) && is_array( $this->params['sort'] ) && count( $this->params['sort'] ) == 2 ) {
+			return $this->params['sort'];
+		}
 		$rank = $this->getRank();
 		return isset($this->rankOptions[$rank]) ? $this->rankOptions[$rank] : $this->rankOptions['default']; 
 	}
@@ -349,9 +379,13 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	public function getRequestedFields()
 	{
 		$fieldsPrepped = array();
-		foreach ($this['requestedFields'] as $field) {
-			$fieldsPrepped[] = WikiaSearch::field($field);
+		foreach ( $this['requestedFields'] as $field ) {
+			$fieldsPrepped[] = WikiaSearch::field( $field );
 		}
+		
+		if (! ( in_array( 'id', $fieldsPrepped ) || in_array( '*', $fieldsPrepped ) ) ) {
+			$fieldsPrepped[] = 'id';
+		} 
 		
 		return $fieldsPrepped;
 	}
@@ -559,6 +593,19 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	public function getFilterQueries() {
 		return $this->filterQueries;
 	}
+
+	/**
+	 * Returns public filter query keys
+	 * @return array
+	 */
+
+	public function getPublicFilterKeys() {
+		
+		$publicKeys = $this->publicFilterKeys;
+		$filterKeys = array_keys($this->filterQueries);
+
+		return array_filter($filterKeys, function ($key) use ($publicKeys) { return in_array($key, $publicKeys); } );
+	}
 	
 	/**
 	 * Returns true or false depending on whether we've got filter queries set
@@ -574,6 +621,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @return WikiaSearchConfig
 	 */
 	public function setFilterQueryByCode( $code ) {
+
 		if ( isset( $this->filterCodes[$code] ) ) {
 			$this->setFilterQuery( $this->filterCodes[$code], $code );
 		} else {

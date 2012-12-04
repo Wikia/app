@@ -510,6 +510,7 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
@@ -532,14 +533,19 @@ $messages['fi'] = array(
 	'phalanx-label-lang' => 'Kieli:',
 	'phalanx-view-type' => 'Eston tyyppi...',
 	'phalanx-view-blocks' => 'Hakusuodattimet',
+	'phalanx-view-id' => 'Hae suodatinta tunnisteella:',
 	'phalanx-view-id-submit' => 'Nouda suodatin',
 	'phalanx-format-text' => 'muotoilematon teksti',
 	'phalanx-format-case' => 'kirjainkoko on merkitsevä',
 	'phalanx-format-exact' => 'tarkka',
 	'phalanx-tab-main' => 'Suodattimien hallinta',
+	'phalanx-tab-secondary' => 'Kokeile suodatinta',
+	'phalanx-modify-warning' => 'Muokkaat estoa, jonka tunniste on $1.
+Tallenna muutoksesi napsauttamalla {{int:phalanx-edit-block}}.',
 	'phalanx-test-submit' => 'Testi',
 	'phalanx-test-results-legend' => 'Testitulokset',
 	'phalanx-display-row-blocks' => 'estot: $1',
+	'phalanx-link-unblock' => 'poista esto',
 	'phalanx-link-modify' => 'muokkaa',
 	'phalanx-link-stats' => 'tilastot',
 	'phalanx-reset-form' => 'Tyhjennä lomake',
@@ -548,6 +554,15 @@ $messages['fi'] = array(
 	'phalanx-unblock-message' => 'Estotunnisteen #$1 poisto onnistui',
 	'phalanx-user-block-reason-exact' => 'Tämä käyttäjätunnus tai IP-osoite on estetty ilkivallan tai muunlaisen häiriköinnin vuoksi.
 Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wikiaan]].', # Fuzzy
+	'phalanx-stats-table-user' => 'Lisääjä',
+	'phalanx-stats-table-type' => 'Tyyppi',
+	'phalanx-stats-table-create' => 'Luotu',
+	'phalanx-stats-table-language' => 'Kieli',
+	'phalanx-stats-table-text' => 'Teksti',
+	'phalanx-stats-table-reason' => 'Syy',
+	'phalanx-stats-table-wiki-id' => 'Wikin tunniste',
+	'phalanx-stats-table-wiki-name' => 'Wikin nimi',
+	'phalanx-stats-table-wiki-url' => 'Wikin verkko-osoite',
 );
 
 /** French (français)
@@ -1560,7 +1575,7 @@ $messages['nl'] = array(
 	'phalanx-view-blocks' => 'Filters doorzoeken',
 	'phalanx-view-id' => 'Filter op nummer zoeken:',
 	'phalanx-view-id-submit' => 'Filter zoeken',
-	'phalanx-format-text' => 'platte tekst',
+	'phalanx-format-text' => 'tekst zonder opmaak',
 	'phalanx-format-regex' => 'reguliere expressie',
 	'phalanx-format-case' => 'hoofdlettergevoelig',
 	'phalanx-format-exact' => 'precies',
@@ -2141,6 +2156,9 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'phalanx-desc' => 'Phalanx är en integrerad försvarsmekanism mot spam',
+	'phalanx' => 'Phalanx',
+	'phalanx-title' => 'Phalanx - Integrerad försvarsmekanism mot spam',
 	'phalanx-type-content' => 'sidinnehåll',
 	'phalanx-type-summary' => 'sidsammanfattning',
 	'phalanx-type-title' => 'sidtitel',
@@ -2183,9 +2201,12 @@ Klicka på "{{int:phalanx-edit-block}}" för att spara dina ändringar!',
 	'phalanx-legend-input' => 'Skapa eller ändra filter',
 	'phalanx-legend-listing' => 'För närvarande tillämpade filter',
 	'phalanx-unblock-message' => 'Block-ID #$1 har tagits bort',
+	'phalanx-help-type-content' => 'Detta filter förhindrar en wiki från att skapas om dess namn matchar någon svartlistad fras.',
+	'phalanx-help-type-summary' => 'Detta filter förhindrar en redigering från att sparas om sammanfattningen matchar någon svartlistad fras.',
 	'phalanx-help-type-title' => 'Detta filter förhindrar en sida från att skapas, om dess titel matchar någon av de svartlistade fraserna.
 
 Filtret förhindrar inte möjligheten att redigera en tidigare skapad sida.',
+	'phalanx-help-type-user' => 'Detta filter blockerar en användare (precis samma som en lokal MediaWiki-blockering) om namnet eller IP-adressen matchar en av de svartlistade namnen eller IP-adresserna.',
 	'phalanx-help-type-wiki-creation' => 'Detta filter förhindrar en wiki från att skapas om dess namn eller URL-adress matchar någon svartlistad fras.',
 	'phalanx-help-type-answers-question-title' => 'Detta filter förhindrar att en fråga (sida) skapas, om dess titel matchar någon av de svartlistade fraserna.
 Anmärkning: fungerar endast på Svar-typ wikier.',
@@ -2209,6 +2230,7 @@ Om du tror att detta är ett fel, var god [[Special:Contact|kontakta Wikia]].<br
 Var god [[Special:Contact|kontakta Wikia]] om problemet.<br />Blockeringen gav också denna tilläggande anledning: $1.',
 	'phalanx-title-move-summary' => 'Anledningen du skrev in innehöll en blockerad fras.',
 	'phalanx-content-spam-summary' => 'Texten hittades i sidans sammanfattning.',
+	'phalanx-stats-title' => 'Phalanx-statistik',
 	'phalanx-stats-block-notfound' => 'blockerings-ID hittades inte',
 	'phalanx-stats-table-id' => 'Blockerings-ID',
 	'phalanx-stats-table-user' => 'Lades till av',
@@ -2221,6 +2243,10 @@ Var god [[Special:Contact|kontakta Wikia]] om problemet.<br />Blockeringen gav o
 	'phalanx-stats-table-reason' => 'Anledning',
 	'phalanx-stats-row' => "på $4, filtertyp '''$1''' blockerade '''$2''' den $3",
 	'phalanx-stats-row-per-wiki' => "användaren '''$2''' blockerades den '''$4''' av filter-ID '''$3''' ($5) (typ: '''$1''')",
+	'phalanx-rule-log-name' => 'Logg över regler i Phalanx',
+	'phalanx-rule-log-header' => 'Detta är en logg över ändringar i phalanxreglerna.',
+	'phalanx-email-rule-log-name' => 'Logg över e-postregler i Phalanx',
+	'phalanx-email-rule-log-header' => 'Detta är en logg över ändringar i Phalanxreglerna för typen e-post.',
 	'phalanx-rule-log-add' => 'Phalanx-regel lades till: $1',
 	'phalanx-rule-log-edit' => 'Phalanx-regel redigerades: $1',
 	'phalanx-rule-log-delete' => 'Phalanx-regel raderades: $1',
@@ -2230,7 +2256,9 @@ Var god [[Special:Contact|kontakta Wikia]] om problemet.<br />Blockeringen gav o
 	'phalanx-stats-table-wiki-url' => 'Wiki-URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Senast redigerad',
 	'phalanx-email-filter-hidden' => 'E-postfilter dolt. Du har inte behörighet att visa texten.',
+	'action-phalanx' => 'använd den integrerade försvarsmekanismen mot spam',
 	'right-phalanx' => 'Kan hantera globala blockeringar och spamfilter',
+	'right-phalanxexempt' => 'Förutom Phalanx-regler',
 	'right-phalanxemailblock' => 'Kan ordna, visa och hantera e-postbaserade blockeringar',
 );
 

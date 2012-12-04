@@ -179,7 +179,7 @@ class Linker {
 		// Create a unique key from the arguments and cache the results of this
 		// method call for the rest of this request
 		static $linkCache = array();
-		$key = serialize( array( $target->getDBkey(), $target->getNamespace(), $html, $customAttribs, $query, $options ) );
+		$key = serialize( array( $target->getDBkey(), $target->getNamespace(), $target->getFragment(), $html, $customAttribs, $query, $options ) );
 
 		if ( array_key_exists($key, $linkCache) ) {
 			wfProfileOut( __METHOD__ );
@@ -1170,6 +1170,11 @@ class Linker {
 		$userTalkLink = self::link( $userTalkPage, wfMsgHtml( 'talkpagelinktext' ) );
 
 		/** Wikia change @author nAndy */
+
+		if ($userText instanceof User) {
+			$userText = $userText->getName();
+		}
+
 		wfRunHooks('LinkerUserTalkLinkAfter', array($userId, $userText, &$userTalkLink));
 		/** End of Wikia change */
 
@@ -1821,6 +1826,12 @@ class Linker {
 				$outText .= wfMsgExt( 'templatesused', array( 'parse' ), count( $templates ) );
 			}
 			$outText .= "</div><ul>\n";
+
+			// Wikia change - begin - @author: wladek
+			// preload restrictions
+			$titleBatch = new TitleBatch($templates);
+			$titleBatch->loadRestrictions();
+			// Wikia change - end
 
 			usort( $templates, array( 'Title', 'compare' ) );
 			foreach ( $templates as $titleObj ) {

@@ -29,6 +29,10 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			'name' => 'VIDCAT Fashion TV',
 			'categories' => array()
 		),
+		586 => array(
+			'name' => 'Billboard',
+			'categories' => array()
+		),
 	);
 
 	const API_PAGE_SIZE = 100;
@@ -103,7 +107,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 				$clipData['ageGate'] = 0;
 				$clipData['hd'] = 0;
 				$clipData['tags'] = $video['tag_list'];
-				$clipData['provider'] = 'RealGravity';
+				$clipData['provider'] = 'realgravity';
 
 				$clipData['marketplaceName'] = $video['video_catalog']['name'];
 				$clipData['marketplaceId'] = $video['video_catalog']['id'];

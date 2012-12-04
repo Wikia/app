@@ -6,9 +6,9 @@ class WikiaPollAjax {
 	 * Create a new poll
 	 * @param wgRequest question
 	 * @param wgRequest answer   (expects PHP array style in the form <input name=answer[]>)
-		// Page Content should be of a different style so we have to translate
-		//  *question 1\n
-		//  *question 2\n
+	 * Page Content should be of a different style so we have to translate
+	 *	  *question 1\n
+	 *	  *question 2\n
 	 */
 	static public function create() {
 		wfProfileIn(__METHOD__);
@@ -19,7 +19,7 @@ class WikiaPollAjax {
 		$title = $wgRequest->getVal ('question');
 		$answers = $wgRequest->getArray ('answer');  // array
 
-		$title_object = F::build('Title', array($title, NS_WIKIA_POLL), 'newFromText');
+		$title_object = Title::newFromText($title, NS_WIKIA_POLL);
 
 		if (is_object ($title_object) && $title_object->exists() ) {
 			$res = array (
@@ -32,13 +32,11 @@ class WikiaPollAjax {
 				'error' => F::app()->renderView('Error', 'Index', array(wfMsg('wikiapoll-error-invalid-title')))
 				);
 		} else {
-
 			$content = "";
 			foreach ($answers as $answer) {
 				$content .= "*$answer\n";
 			}
-
-			$article = F::build('Article', array($title_object, NS_WIKIA_POLL));
+			$article = new Article($title_object, NS_WIKIA_POLL);
 			$status = $article->doEdit($content, 'Poll Created', EDIT_NEW, false, $wgUser);
 			$title_object = $article->getTitle();
 
@@ -46,7 +44,7 @@ class WikiaPollAjax {
 			$res = array (
 				'success' => true,
 				'pollId' => $article->getID(),
-				'url'  => $title_object->getLocalUrl() ,
+				'url'  => $title_object->getLocalUrl(),
 				'question' => $title_object->getPrefixedText()
 				);
 		}
@@ -65,8 +63,10 @@ class WikiaPollAjax {
 
 		$pollId = $wgRequest->getInt ('pollId');
 		$answers = $wgRequest->getArray ('answer');  // array
+
 		$res = array();
-		$poll = F::build('WikiaPoll', array($pollId), 'newFromId');
+
+		$poll = WikiaPoll::newFromId($pollId);
 
 		if (!empty($poll) && $poll->exists()) {
 
@@ -108,8 +108,9 @@ class WikiaPollAjax {
 				'exists' => false ,
 		);
 		$id = $wgRequest->getInt ('pollId', 0);
+
 		if ($id != 0) {
-			$article_object = F::build('Article', array($id), 'newFromID');
+			$article_object = Article::newFromID($id);
 			$title_object = $article_object instanceof Article ? $article_object->getTitle() : false;
 		}
 
@@ -137,7 +138,7 @@ class WikiaPollAjax {
 		$wgTitle = F::app()->getGlobal('wgTitle');
 
 		$pollId = $wgRequest->getInt('pollId');
-		$poll = F::build('WikiaPoll', array($pollId), 'newFromId');
+		$poll = WikiaPoll::newFromId($pollId);
 
 		$html = '';
 		if (!empty($poll) && $poll->exists()) {
@@ -172,7 +173,7 @@ class WikiaPollAjax {
 		wfProfileIn(__METHOD__);
 
 		$pollId = F::app()->getGlobal('wgRequest')->getInt('pollId');
-		$poll = F::build('WikiaPoll', array($pollId), 'newFromId');
+		$poll = WikiaPoll::newFromId($pollId);
 
 		$ret = array();
 

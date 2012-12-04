@@ -9,12 +9,6 @@ class RealgravityApiWrapper extends IngestionApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$description = $this->getOriginalDescription();
-		if ( $category = $this->getVideoCategory() ) {
-			$description .= "\n\nCategory: $category";
-		}
-		if ( $keywords = $this->getVideoKeywords() ) {
-			$description .= "\n\nKeywords: $keywords";
-		}
 
 		wfProfileOut( __METHOD__ );
 

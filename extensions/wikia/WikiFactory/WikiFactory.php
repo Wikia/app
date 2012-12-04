@@ -87,6 +87,8 @@ class WikiFactory {
 
 	static public $mIsUsed = false;
 
+	static protected $variablesCache = array();
+
 	/**
 	 * simple accessor and toggle flag method which shows if WikiFactory is used
 	 * at all. set in WikiFactoryLoader constructor to true, default false.
@@ -1834,27 +1836,37 @@ class WikiFactory {
 		 */
 		if( $cv_id ) {
 			$condition = array( "cv_id" => $cv_id );
+			$cacheKey = "id:$cv_id";
 		}
 		else {
 			$condition = array( "cv_name" => $cv_name );
+			$cacheKey = "name:$cv_name";
 		}
 
 		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
 
-		$oRow = $dbr->selectRow(
-			array( "city_variables_pool" ),
-			array(
-				"cv_id",
-				"cv_name",
-				"cv_description",
-				"cv_variable_type",
-				"cv_variable_group",
-				"cv_access_level",
-				"cv_is_unique"
-			),
-			$condition,
-			__METHOD__
-		);
+
+		if ( $master || !isset( self::$variablesCache[$cacheKey] ) ) {
+			$oRow = $dbr->selectRow(
+				array( "city_variables_pool" ),
+				array(
+					"cv_id",
+					"cv_name",
+					"cv_description",
+					"cv_variable_type",
+					"cv_variable_group",
+					"cv_access_level",
+					"cv_is_unique"
+				),
+				$condition,
+				__METHOD__
+			);
+			self::$variablesCache[$cacheKey] = $oRow;
+		}
+		$oRow = self::$variablesCache[$cacheKey];
+		if ( is_object( $oRow ) ) {
+			$oRow = clone $oRow;
+		}
 
 		if( !isset( $oRow->cv_id ) ) {
 			/**
@@ -2927,14 +2939,14 @@ class WikiFactory {
 
 		$oRes = $dbr->select(
 			$aTables,
-			array('city_id', 'city_title', 'city_url', 'city_public'),
+			array('city_id', 'city_title', 'city_url', 'city_public', 'city_dbname'),
 			$aWhere,
 			__METHOD__,
 			$aOptions
 		);
 
 		while ($oRow = $dbr->fetchObject($oRes)) {
-			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ) );
+			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ), 'd' => $oRow->city_dbname );
 		}
 		$dbr->freeResult( $oRes );
 

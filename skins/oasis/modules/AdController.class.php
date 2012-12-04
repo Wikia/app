@@ -16,8 +16,7 @@ class AdController extends WikiaController {
 		}
 
 		if(WikiaPageType::isWikiaHub() && AdEngine::isAdsEnabledOnWikiaHub()) {
-			self::$config['HOME_TOP_LEADERBOARD'] = true;
-			self::$config['TOP_BUTTON'] = true;
+			self::$config['HUB_TOP_LEADERBOARD'] = true;
 			return;
 		}
 		// Ads on corporate hub pages only
@@ -89,7 +88,6 @@ class AdController extends WikiaController {
 					self::$config['TOP_RIGHT_BOXAD'] = true;
 					self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 					self::$config['TOP_BUTTON'] = true;
-					self::$config['LEFT_SKYSCRAPER_3'] = true;
 					self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 					self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				}
@@ -159,6 +157,7 @@ class AdController extends WikiaController {
 			}
 		}
 
+		// TODO remove unused providers
 		if(isset(self::$config[$this->slotname])) {
 			if (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdDriver') {
 				$this->ad = AdEngine::getInstance()->getAd($this->slotname, $params);
@@ -168,6 +167,7 @@ class AdController extends WikiaController {
 			}
 			elseif (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'DARTGP' ||
 					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdEngine2' ||
+					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'Liftium2' ||
 					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'GamePro') {
 				$this->ad = AdEngine::getInstance()->getAd($this->slotname);
 			}

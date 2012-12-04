@@ -482,7 +482,7 @@ abstract class SponsorshipDashboardSource {
 	protected function getKey( $prefix, $cityId = false ) {
 
 		if ( empty( $cityId ) ) {
-			$cityId = WF::build( 'App' )->getGlobal( 'wgCityId' );
+			$cityId = F::app()->getGlobal( 'wgCityId' );
 		}
 		return wfSharedMemcKey( 'WikiaMetrics2', $prefix, $cityId );
 	}

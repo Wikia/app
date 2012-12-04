@@ -1,6 +1,6 @@
 <?php
 /**
- * Renders page header (title, subtitle, comments chicklet button, history dropdown, top categories)
+ * Renders page header (title, subtitle, comments chicklet button, history dropdown)
  *
  * @author Maciej Brencz
  */
@@ -115,38 +115,6 @@ class PageHeaderController extends WikiaController {
 		return $ret;
 	}
 
-	/**
-	 * Get recent revisions of current article and format them
-	 */
-	protected function getRecentRevisions() {
-		global $wgTitle, $wgMemc;
-
-		// use service to get data
-		$service = new PageStatsService($wgTitle->getArticleId());
-
-		// get info about current revision and list of authors of recent five edits
-		// This key is refreshed by the onArticleSaveComplete() hook
-		$mKey = wfMemcKey('mOasisRecentRevisions2', $wgTitle->getArticleId());
-		$revisions = $wgMemc->get($mKey);
-
-		if (empty($revisions)) {
-			$revisions = $service->getCurrentRevision();
-
-			// format timestamps, render avatars and user links
-			if (is_array($revisions)) {
-				foreach($revisions as &$revision) {
-					if (isset($revision['user'])) {
-						$revision['avatarUrl'] = AvatarService::getAvatarUrl($revision['user']);
-						$revision['link'] = AvatarService::renderLink($revision['user']);
-					}
-				}
-			}
-			$wgMemc->set($mKey, $revisions);
-		}
-
-		return $revisions;
-	}
-
 	public static function formatTimestamp($stamp) {
 
 		$diff = time() - strtotime($stamp);
@@ -228,31 +196,6 @@ class PageHeaderController extends WikiaController {
 			// show likes
 			$this->likes = true;
 
-			// get two popular categories this article is in
-			$categories = array();
-
-			// FIXME: Might want to make a WikiFactory variable for controlling this feature if we aren't
-			// comfortable with its performance.
-			// NOTE: Skip getMostLinkedCategories() on Lyrics and Marvel because we're not sure yet that it's fast enough.
-			$LYRICS_CITY_ID = "43339";
-			$MARVEL_CITY_ID = "2233";
-			if(($wgCityId != $LYRICS_CITY_ID)  && ($wgCityId != $MARVEL_CITY_ID)){
-				$categories = $service->getMostLinkedCategories();
-			}
-
-			// render links to most linked category page
-			$categoriesVar = array();
-			foreach($categories as $category => $cnt) {
-				$title = Title::newFromText($category, NS_CATEGORY);
-				if($title) {
-					$categoriesVar[] = Wikia::link($title, $title->getText());
-				}
-			}
-			$this->categories = $categoriesVar;
-
-			// get info about current revision and list of authors of recent five edits
-			$this->revisions = $this->getRecentRevisions();
-
 			// mainpage?
 			if (WikiaPageType::isMainPage()) {
 				$this->isMainPage = true;
@@ -308,13 +251,6 @@ class PageHeaderController extends WikiaController {
 			$this->pageTalkSubject = Wikia::link($wgTitle->getSubjectPage(), wfMsg($msgKey), array('accesskey' => 'c'));
 		}
 
-		// category pages
-		if ($ns == NS_CATEGORY) {
-			// hide revisions / categories bar
-			$this->categories = false;
-			$this->revisions = false;
-		}
-
 		// forum namespace
 		if ($ns == NS_FORUM) {
 			// remove comments button
@@ -329,9 +265,6 @@ class PageHeaderController extends WikiaController {
 		if (WikiaPageType::isMainPage()) {
 			// change page title to just "Home"
 			$this->title = wfMsg('oasis-home');
-			// hide revisions / categories bar
-			$this->categories = false;
-			$this->revisions = false;
 		}
 
 		// render page type info

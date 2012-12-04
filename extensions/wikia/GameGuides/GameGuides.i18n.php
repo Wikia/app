@@ -113,9 +113,14 @@ $messages['eu'] = array(
 
 /** Finnish (suomi)
  * @author Ilkea
+ * @author Nedergard
  */
 $messages['fi'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides mobiilisovellus moduulit',
+	'wikiagameguides-content-category' => 'Luokka',
+	'wikiagameguides-content-add' => 'Lisää',
+	'wikiagameguides-content-save' => 'Tallenna',
+	'wikiagameguides-content-category-error' => 'Luokkaa ei ole',
 );
 
 /** French (français)
@@ -183,6 +188,15 @@ $messages['it'] = array(
  */
 $messages['ksh'] = array(
 	'wikiagameguides-desc' => 'Module för de Wikia Spellaanleidonge (<i lang="en">Wikia Game Guides</i>) ier mobile Aanwändong.',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wikiagameguides-content-category' => 'Kategorie',
+	'wikiagameguides-content-save' => 'Späicheren',
+	'wikiagameguides-content-category-error' => 'Kategorie gëtt et net',
 );
 
 /** Macedonian (македонски)
@@ -359,4 +373,12 @@ $messages['tl'] = array(
  */
 $messages['tt-cyrl'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides мобиль кушымтасы өчен модульләр',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Sam Wang
+ */
+$messages['zh-hans'] = array(
+	'wikiagameguides-content-add' => '添加',
+	'wikiagameguides-content-save' => '保存',
 );

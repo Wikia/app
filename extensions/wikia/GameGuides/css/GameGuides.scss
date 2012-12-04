@@ -21,6 +21,7 @@
 @import "../../WikiaMobile/css/image_stack";
 @import '../../WikiaMobile/css/modal';
 @import '../../WikiaMobile/css/media_modal';
+@import "../../WikiaMobile/css/mediagallery";
 @import '../../WikiaMobile/css/image_placeholder';
 @import '../../WikiaMobile/css/loader';
 
@@ -43,6 +44,10 @@ html {
 
 	&.serif {
 		font-family: 'Droid Serif', serif;
+	}
+
+	&.full {
+		text-align: justify;
 	}
 }
 

@@ -69,6 +69,9 @@ class WallNotificationEntity {
 
 		$app = F::app();
 
+		$this->data = new stdClass;
+		$this->data_noncached = new stdClass;
+
 		$walluser = $ac->getWallOwner();
 		$authoruser = User::newFromId($rev->getUser());
 
@@ -103,6 +106,8 @@ class WallNotificationEntity {
 		$this->data->timestamp = $rev->getTimestamp();
 
 		$this->data->parent_id = null;
+		
+		$this->data->parent_page_id = $ac->getWallTitle()->getArticleId();
 
 		if( $authoruser instanceof User ) {
 			$this->data->msg_author_id = $authoruser->getId();
@@ -125,14 +130,14 @@ class WallNotificationEntity {
 		//TODO: double ?
 		$this->data->title_id = $ac->getTitle()->getArticleId();
 
-		$this->data_non_cached->title = $ac->getTitle();
+		$this->data_noncached->title = $ac->getTitle();
 
 		$acParent = $ac->getTopParentObj();
 		$this->data->parent_username = '';
 		$this->data->thread_title = '';
-		$this->data_non_cached->parent_title_dbkey = '';
+		$this->data_noncached->parent_title_dbkey = '';
 
-		$this->data_non_cached->msg_text = $ac->getText();
+		$this->data_noncached->msg_text = $ac->getText();
 		$this->data->notifyeveryone = $ac->getNotifyeveryone();
 
 		if($ac->isEdited()) {
@@ -162,17 +167,17 @@ class WallNotificationEntity {
 				$this->data->parent_username = $this->data->parent_displayname = $app->wf->Msg('oasis-anon-user');
 				$this->data->parent_user_id = 0;
 			}
-
-			$this->data_non_cached->thread_title_full = $acParent->getMetaTitle();
+			$title = $acParent->getTitle();
+			$this->data_noncached->thread_title_full = $acParent->getMetaTitle();
 			$this->data->thread_title = $acParent->getMetaTitle();
-			$this->data_noncached->parent_title_dbkey = $acParent->getTitle()->getDBkey();
-			$this->data->parent_id = $acParent->getTitle()->getArticleId();
+			$this->data_noncached->parent_title_dbkey = $title->getDBkey();
+			$this->data->parent_id = $acParent->getId();
 			$this->data->url = $ac->getMessagePageUrl();
 
 		} else {
 			$this->data->url = $ac->getMessagePageUrl();
 			$this->data->parent_username = $walluser->getName();
-			$this->data_non_cached->thread_title_full = $ac->getMetaTitle();
+			$this->data_noncached->thread_title_full = $ac->getMetaTitle();
 			$this->data->thread_title = $ac->getMetaTitle();
 		}
 

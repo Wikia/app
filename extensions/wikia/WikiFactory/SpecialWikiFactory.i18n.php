@@ -1250,6 +1250,7 @@ $messages['cy'] = array(
 );
 
 /** Danish (dansk)
+ * @author Christian List
  * @author Emilkris33
  */
 $messages['da'] = array(
@@ -1261,7 +1262,7 @@ $messages['da'] = array(
 	'wf_city_title' => 'Titel',
 	'wf_city_created' => 'Oprettet',
 	'wf_city_founding_user' => 'Grundlægger',
-	'wf_city_founding_email' => 'Grundlæggerrens email',
+	'wf_city_founding_email' => 'Grundlæggerens e-mail',
 	'wf_city_public' => 'Status',
 	'wf_city_lang' => 'Sprog',
 	'wf_cc_name' => 'Kategori',
@@ -1466,8 +1467,10 @@ $messages['diq'] = array(
 	'wikifactory-label-close' => 'Racnê',
 	'wikifactory-label-tags' => 'Etiketi',
 	'wikifactory-label-tags2' => 'Etiketi',
+	'closewiki-redirect-to' => 'Hetanayışê cı',
 	'closewiki-nbr-wiki' => 'Wikiyê $1',
 	'closewiki-unknown' => 'Nêzanayen',
+	'closewiki-return' => 'Peyser şo $1',
 	'wikifactory-button-save' => 'Vurnayîşa qeyd ke',
 	'awc-metrics-wikis' => 'Wikiya Vinayış',
 	'awc-metrics-select' => 'Wiki bımocne:',
@@ -1485,6 +1488,7 @@ $messages['diq'] = array(
 	'awc-metrics-half-year' => 'vıraziya < verdê 6 menga',
 	'awc-metrics-nbr-result' => 'Neticey:',
 	'awc-metrics-articles' => 'Wesiqey',
+	'awc-metrics-articles-per-day' => 'Wesiqey<br />(avg. herg rocer)',
 	'awc-metrics-edits' => 'Vurnayışi',
 	'awc-metrics-images' => 'Resımi',
 	'awc-metrics-close' => 'Racnê',
@@ -1492,7 +1496,10 @@ $messages['diq'] = array(
 	'awc-metrics-active' => 'aktiv',
 	'awc-metrics-closed' => 'racnê',
 	'awc-metrics-removed' => 'wedariya',
+	'awc-metrics-edits-label' => '$2 ra {{PLURAL:$1|$1 vurnayış|$1 vurnayışi}}',
 	'awc-metrics-this-month' => 'ena aşmi',
+	'awc-metrics-last-month' => 'peyni {{PLURAL:$1|aşmer|$1 aşman}}',
+	'awc-metrics-close-listed' => 'Listey pêro racneyaye',
 	'closed-wiki' => 'Wiki racnê',
 	'closed-wiki-create-wiki' => 'Wikiya newi vıraze',
 	'closed-reason' => 'Sebeb:',

@@ -12,6 +12,7 @@
 	overflow: hidden;
 	position: relative;
 	width: 660px;
+	margin: 0 auto;
 }
 .wikiaPhotoGallery-slider-body ul{
 	margin-left: 0;

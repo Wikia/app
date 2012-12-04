@@ -10,6 +10,11 @@ class ForumSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
+		if( $this->app->checkSkin( 'monobook' ) ) {
+			$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Form.js' );
+			$this->response->addAsset( 'resources/wikia/modules/querystring.js' );
+		}
+	
 		$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumSpecial.scss' );
 		$this->response->setJsVar( 'wgIsForum', true );
@@ -18,6 +23,16 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->wf->profileIn( __METHOD__ );
+		
+		$policies = Title::newFromText( 'forum-policies-and-faq', NS_MEDIAWIKI);
+		$this->response->setJsVar( 'wgCanEditPolicies', $this->wg->User->isAllowed('forumadmin'));
+		$this->response->setJsVar( 'wgPoliciesRev', $policies->getLatestRevID()  );
+		$this->response->setJsVar( 'wgPoliciesEditURL', $policies->getFullUrl( 'action=edit' )  );
+		
+		//getLatestRevID
+		
+		F::build('JSMessages')->enqueuePackage('Forum', JSMessages::EXTERNAL);
+		$this->response->addAsset( 'extensions/wikia/Forum/js/Forum.js' );
 
 		if ( $this->request->getVal( 'showWarning', 0 ) == 1 ) {
 			NotificationsController::addConfirmation( wfMsg( 'forum-board-no-board-worning' ), NotificationsController::CONFIRMATION_WARN );
@@ -41,12 +56,10 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$forum = F::build( 'Forum' );
 
-		/* if the Board is empty we will create defult board */
-		//TODO: move create to wikilabs hook
 		if ( $forum->createDefaultBoard() ) {
-			$this->boards = $forum->getBoardList( DB_MASTER );
+			$this->boards = $forum->getBoardList( DB_MASTER, NS_WIKIA_FORUM_BOARD );
 		} else {
-			$this->boards = $forum->getBoardList();
+			$this->boards = $forum->getBoardList( DB_SLAVE, NS_WIKIA_FORUM_BOARD );
 		}
 
 		if ( $forum->haveOldForums() ) {
@@ -111,7 +124,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		/* backend magic here */
 
 		$this->boardTitle = $board->getTitle()->getText();
-		$this->boardDescription = $board->getDescription();
+		$this->boardDescription = $board->getDescription(false);
 
 		$this->wf->profileOut( __METHOD__ );
 	}

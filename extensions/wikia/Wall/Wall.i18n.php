@@ -60,6 +60,7 @@ $messages['en'] = array(
 	'wall-message-removed-thread-because' => "$1 removed this thread because:",
 	'wall-message-deleted-thread-because' => "$1 deleted this thread because:",
 	'wall-message-restore-thread' => "Restore Thread",
+	'wall-message-move-thread' => 'Move this thread',
 	'wall-message-removed-reply-because' => "$1 removed this reply because:",
 	'wall-message-deleted-reply-because' => "$1 deleted this reply because:",
 	'wall-message-closed-by' => "[[$2|$1]] closed this thread",
@@ -113,6 +114,12 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-action-rev-reply-confirm' => 'Are you sure you want to delete this message?',
 	'wall-action-rev-thread-confirm' => 'Are you sure you want to revision delete this thread and all of its history from the wiki? This cannot be undone.',
 	'wall-action-rev-confirm-ok' => 'Yes, delete',
+	
+	'wall-action-move-thread-heading' => 'Move this thread',
+	'wall-action-move-validation-select-wall' => 'Please select a board',
+	'wall-action-move-topics-summary' => 'Thread moved', // from $1
+	'wall-action-move-thread-ok' => 'Move thread',
+	'wall-action-move-board-label' => 'Select a board to move to',
 
 	'wall-notifications' => 'Notifications',
 	'wall-notifications-all' => 'All Notifications',
@@ -247,6 +254,7 @@ The original post and your summary will still appear in the wiki's history.",
 
 	'wall-thread-history-thread-removed' => '$1 $2 removed this thread',
 	'wall-thread-history-reply-removed' => "$1 $2 removed $3's reply $5",
+	'wall-thread-history-reply-deleted' => "$1 $2 deleted $3's reply",
 	'wall-thread-history-thread-restored' => '$1 $2 restored this thread',
 	'wall-thread-history-reply-restored' => "$1 $2 restored $3's reply $5",
 	'wall-thread-history-thread-deleted' => '$1 $2 deleted this thread',
@@ -366,9 +374,6 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-topic-input-error-limit' => 'A thread can only have $1 Topics maximum.',
 	'wall-topic-heading' => 'Topics for this thread:',
 	'wall-topic-edit' => 'Edit Topics',
-
-	'wall-userdoesnotexist' => 'User account "$1" does not exist or has never logged in on this wiki.',
-
 	'wall-topic-edit-save' => 'Save',
 	'wall-topic-edit-cancel' => 'Cancel',
 );
@@ -440,6 +445,7 @@ $messages['qqq'] = array(
 	'wall-message-deleted-thread-because' => 'Summary at the top of a deleted thread page. Parameters:
 * $1 is the user who deleted the thread (GENDER is supported in this message).',
 	'wall-message-restore-thread' => 'Button to restore a thread on a removed thread page',
+	'wall-message-move-thread' => 'Menu time to move a message',
 	'wall-message-removed-reply-because' => 'Summary at the top of a removed reply page. Parameters:
 * $1 is the user who removed the reply (GENDER is supported in this message).',
 	'wall-message-deleted-reply-because' => 'Summary at the top of a deleted reply page. Parameters:
@@ -479,6 +485,11 @@ $messages['qqq'] = array(
 	'wall-action-rev-reply-confirm' => 'Confirmation for revision delete reply modal',
 	'wall-action-rev-thread-confirm' => 'Confirmation for revision delete thread modal',
 	'wall-action-rev-confirm-ok' => 'Button for confirming revision delete',
+	'wall-action-move-thread-heading' => 'Heading for thread moving modal dialog',
+	'wall-action-move-validation-select-wall' => 'validation error when the wall is not select',
+	'wall-action-move-topics-summary' => 'Summery for change in user contribution',
+	'wall-action-move-thread-ok' => 'Confirmation button for moving thread',
+	'wall-action-move-board-label' => 'Label for list of board dropdown',
 	'wall-notifications' => 'Title of notification dropdown',
 	'wall-notifications-all' => 'Text in notification dropdown menu',
 	'wall-notifications-markasread' => 'Option in notification dropdown menu to mark all threads as read',
@@ -674,6 +685,10 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 * $2 is username
 * $3 is username
 * $5 is number of the reply.',
+	'wall-thread-history-reply-deleted' => 'thread history page item. GENDER is supported in this message. Parameters:
+* $1 is preferred name
+* $2 is username
+* $3 is username.',
 	'wall-thread-history-thread-restored' => 'thread history page item. GENDER is supported in this message. Parameters:
 * $1 is preferred name
 * $2 is username',
@@ -758,9 +773,22 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 	'wall-topic-input-error-limit' => 'Error message saying user has reached the maximum amount of topics.  $1 is the max such as 4',
 	'wall-topic-heading' => 'Related Topics section heading',
 	'wall-topic-edit' => 'Edit Topics call to action that brings up modal',
-	'wall-userdoesnotexist' => 'User account "$1" does not exist or has never logged in on this wiki.',
 	'wall-topic-edit-save' => 'Edit Topics - Save button',
 	'wall-topic-edit-cancel' => 'Edit Topics - Cancel button',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author Erdemaslancan
+ */
+$messages['az'] = array(
+	'wall-recentchanges-summary' => '($1)',
+);
+
+/** South Azerbaijani (تورکجه)
+ * @author Erdemaslancan
+ */
+$messages['azb'] = array(
+	'wall-recentchanges-summary' => '($1)',
 );
 
 /** Bulgarian (български)
@@ -857,6 +885,13 @@ $messages['br'] = array(
 	'wall-deleted-msg-view' => '(Gwelet/Adsevel)',
 	'wall-recentchanges-history-link' => 'istor ar voger',
 	'wall-recentchanges-thread-history-link' => 'istor ar gaoz',
+);
+
+/** Catalan (català)
+ * @author Erdemaslancan
+ */
+$messages['ca'] = array(
+	'wall-recentchanges-summary' => '($1)',
 );
 
 /** Czech (česky)
@@ -1017,6 +1052,7 @@ $messages['de'] = array(
 	'wall-message-removed-thread-because' => '$1 entfernte diesen Thread, weil:',
 	'wall-message-deleted-thread-because' => '$1 löschte diesen Thread, weil:',
 	'wall-message-restore-thread' => 'Thread wiederherstellen',
+	'wall-message-move-thread' => 'Diesen Thread verschieben',
 	'wall-message-removed-reply-because' => '$1 entfernte diese Antwort, weil:',
 	'wall-message-deleted-reply-because' => '$1 löschte diese Antwort, weil:',
 	'wall-message-closed-by' => '[[$2|$1]] schloss den Thread',
@@ -1058,6 +1094,11 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
 	'wall-action-rev-reply-confirm' => 'Soll diese Nachricht tatsächlich gelöscht werden?',
 	'wall-action-rev-thread-confirm' => 'Willst du wirklich den Thread und seinen gesamten Verlauf aus dem Wiki versionslöschen? Dies kann nicht rückgängig gemacht werden.',
 	'wall-action-rev-confirm-ok' => 'Ja, löschen',
+	'wall-action-move-thread-heading' => 'Diesen Thread verschieben',
+	'wall-action-move-validation-select-wall' => 'Bitte wähle ein Brett aus',
+	'wall-action-move-topics-summary' => 'Thread verschoben',
+	'wall-action-move-thread-ok' => 'Thread verschieben',
+	'wall-action-move-board-label' => 'Wähle ein Brett aus, um es zu verschieben',
 	'wall-notifications' => 'Benachrichtigungen',
 	'wall-notifications-all' => 'Alle Benachrichtigungen',
 	'wall-notifications-markasread' => 'Alle als gelesen markieren',
@@ -1243,6 +1284,8 @@ ___________________________________________<br />
 	'wall-topic-input-error-limit' => 'Ein Thread kann nur maximal $1 Themen haben.',
 	'wall-topic-heading' => 'Themen für diesen Thread:',
 	'wall-topic-edit' => 'Themen bearbeiten',
+	'wall-topic-edit-save' => 'Speichern',
+	'wall-topic-edit-cancel' => 'Abbrechen',
 );
 
 /** Zazaki (Zazaki)
@@ -1258,6 +1301,7 @@ $messages['diq'] = array(
 	'wall-message-undoremove' => 'peyser bia',
 	'wall-message-edited' => '<a href="$3" >Vurnerê</a> <a class="namey karberi" href="$1">$2</a>',
 	'wall-message-edited-summary' => '<a href="$4" >$1 by </a><a class="username" href="$2">$3</a>',
+	'wall-message-update-highlight-summary' => 'Xulaseya',
 	'wall-message-mywall' => 'Dêsê me',
 	'wall-toolbar-history' => 'Ravêrden',
 	'wall-message-remove' => 'Hewad',
@@ -1292,6 +1336,7 @@ $messages['diq'] = array(
 	'wall-notifications-markasread-this-wiki' => 'E na wiki',
 	'wall-sorting-archived' => 'Arşivya',
 	'wall-recentchanges-new-message' => '<a href="$1">dêsê $2\'i deyo</a>',
+	'wall-recentchanges-summary' => '($1)',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mesacê Dêsi',
 	'wall-recentchanges-thread-group' => '$1\'i dês dê<a href="$2"> ra kewt dês dê $3\'i</a>',
 	'wall-recentchanges-history-link' => 'tarixê dêsi',
@@ -1299,6 +1344,10 @@ $messages['diq'] = array(
 	'wall-wiki-activity-wall-owner' => "Dêsê $1'i",
 	'wall-history' => 'Ravêrden',
 	'wall-history-title' => 'tarixê dêsi',
+	'wall-history-thread-created' => "$2'i $1 vıraşt",
+	'wall-history-thread-removed' => "$2'i $1 wedarne",
+	'wall-history-thread-restored' => "$2'i $1 timar ke",
+	'wall-history-thread-admin-deleted' => "$2'i $1 besterne",
 	'wall-history-summary-label' => 'Xulasa',
 	'wall-history-rail-wall' => 'dês',
 	'wall-history-rail-contribs' => 'iştiraqi',
@@ -1308,6 +1357,16 @@ $messages['diq'] = array(
 	'mail-notification-html-greeting' => 'Merheba $1,',
 	'prefs-email-wall-v2' => 'Mesacê Dêsi',
 	'tog-enotifwallthread-v2' => 'E-postay me...',
+	'wall-notifications-notifyeveryone' => 'Xulasaya $1',
+	'wall-votes-modal-title' => 'Nam',
+	'wall-votes-number' => 'Namê $1',
+	'wall-quote-author' => 'Nusnayışê $1:',
+	'wall-quote-reply-to' => 'cewabê #$1',
+	'wall-preview-modal-title' => 'Verasayış',
+	'wall-preview-modal-button-back' => 'Peyser',
+	'wall-preview-modal-button-publish' => 'Vıla ke',
+	'wall-topic-input-heading' => 'Topik:',
+	'wall-topic-edit' => 'Topiki bıvurne',
 );
 
 /** Spanish (español)
@@ -1366,6 +1425,7 @@ $messages['es'] = array(
 	'wall-message-removed-thread-because' => '$1 retiró este tema porque:',
 	'wall-message-deleted-thread-because' => '$1 eliminó este tema porque:',
 	'wall-message-restore-thread' => 'Restaurar tema',
+	'wall-message-move-thread' => 'Renombrar este tema',
 	'wall-message-removed-reply-because' => '$1 retiró esta respuesta porque:',
 	'wall-message-deleted-reply-because' => '$1 eliminó esta respuesta porque:',
 	'wall-message-closed-by' => '[[$2|$1]] cerró este tema',
@@ -1407,6 +1467,11 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-action-rev-reply-confirm' => '¿Estás seguro que quieres borrar este mensaje?',
 	'wall-action-rev-thread-confirm' => '¿Estás seguro que quieres eliminar este tema y todo su historial en el wiki? Esto no puede revertirse.',
 	'wall-action-rev-confirm-ok' => 'Sí, bórralo',
+	'wall-action-move-thread-heading' => 'Renombrar este tema',
+	'wall-action-move-validation-select-wall' => 'Por favor selecciona un subforo',
+	'wall-action-move-topics-summary' => 'Tema renombrado',
+	'wall-action-move-thread-ok' => 'Renombrar tema',
+	'wall-action-move-board-label' => 'Selecciona un subforo a mover',
 	'wall-notifications' => 'Notificaciones',
 	'wall-notifications-all' => 'Todas las notificaciones',
 	'wall-notifications-markasread' => 'Marcar como leído',
@@ -1606,6 +1671,16 @@ ___________________________________________<br />
 	'wall-topic-input-error-limit' => 'Un hilo solo puede tener $1 temas como máximo.',
 	'wall-topic-heading' => 'Temas para este hilo:',
 	'wall-topic-edit' => 'Editar temas',
+	'wall-topic-edit-save' => 'Guardar',
+	'wall-topic-edit-cancel' => 'Cancelar',
+);
+
+/** Persian (فارسی)
+ * @author ZxxZxxZ
+ */
+$messages['fa'] = array(
+	'wall-topic-edit-save' => 'ذخیره',
+	'wall-topic-edit-cancel' => 'لغو',
 );
 
 /** Finnish (suomi)
@@ -1810,6 +1885,7 @@ $messages['fr'] = array(
 	'wall-message-removed-thread-because' => '$1 a retiré ce fil pour la raison :',
 	'wall-message-deleted-thread-because' => '$1 a supprimé ce fil pour la raison :',
 	'wall-message-restore-thread' => 'Restaurer le fil',
+	'wall-message-move-thread' => 'Déplacer ce fil',
 	'wall-message-removed-reply-because' => '$1 a retiré cette réponse pour la raison :',
 	'wall-message-deleted-reply-because' => '$1 a supprimé cette réponse pour la raison :',
 	'wall-message-closed-by' => '[[$2|$1]] a fermé ce fil',
@@ -1851,6 +1927,11 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-action-rev-reply-confirm' => 'Êtes-vous sûr(e) de vouloir supprimer ce message ?',
 	'wall-action-rev-thread-confirm' => 'Êtes-vous sûr(e) de vouloir supprimer les versions de ce fil et toute son historique de ce wiki ? Ce ne peut pas être annulé.',
 	'wall-action-rev-confirm-ok' => 'Oui, supprimer',
+	'wall-action-move-thread-heading' => 'Déplacer ce fil',
+	'wall-action-move-validation-select-wall' => 'Veuillez choisir un tableau',
+	'wall-action-move-topics-summary' => 'Fil de discussion déplacé',
+	'wall-action-move-thread-ok' => 'Déplacer le fil de discussion',
+	'wall-action-move-board-label' => 'Sélectionner un tableau vers où le déplacer',
 	'wall-notifications' => 'Notifications',
 	'wall-notifications-all' => 'Notifications',
 	'wall-notifications-markasread' => 'Marquer toutes lues',
@@ -2049,6 +2130,8 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'wall-topic-input-error-limit' => 'Un fil ne peut avoir que $1 rubriques au maximum.',
 	'wall-topic-heading' => 'Rubriques pour ce fil :',
 	'wall-topic-edit' => 'Modifier les rubriques',
+	'wall-topic-edit-save' => 'Enregistrer',
+	'wall-topic-edit-cancel' => 'Annuler',
 );
 
 /** Galician (galego)
@@ -2103,6 +2186,7 @@ $messages['gl'] = array(
 	'wall-message-removed-thread-because' => '$1 eliminou este fío porque:',
 	'wall-message-deleted-thread-because' => '$1 borrou este fío porque:',
 	'wall-message-restore-thread' => 'Restaurar o fío',
+	'wall-message-move-thread' => 'Trasladar este fío',
 	'wall-message-removed-reply-because' => '$1 eliminou esta resposta porque:',
 	'wall-message-deleted-reply-because' => '$1 borrou esta resposta porque:',
 	'wall-message-closed-by' => '[[$2|$1]] pechou este fío',
@@ -2144,6 +2228,11 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-action-rev-reply-confirm' => 'Está seguro de querer borrar esta mensaxe?',
 	'wall-action-rev-thread-confirm' => 'Está seguro de querer borrar revisións deste fío e todo o seu historial do wiki? Esta acción non se pode desfacer.',
 	'wall-action-rev-confirm-ok' => 'Si, borrar',
+	'wall-action-move-thread-heading' => 'Trasladar este fío',
+	'wall-action-move-validation-select-wall' => 'Selecciona unha táboa',
+	'wall-action-move-topics-summary' => 'Fío trasladado',
+	'wall-action-move-thread-ok' => 'Mover o fío',
+	'wall-action-move-board-label' => 'Seleccione a táboa á que mover',
 	'wall-notifications' => 'Notificacións',
 	'wall-notifications-all' => 'Todas as notificacións',
 	'wall-notifications-markasread' => 'Marcar todo como lido',
@@ -2345,6 +2434,8 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'wall-topic-input-error-limit' => 'Un fío pode ter un máximo de $1 temas.',
 	'wall-topic-heading' => 'Temas deste fío:',
 	'wall-topic-edit' => 'Editar os temas',
+	'wall-topic-edit-save' => 'Gardar',
+	'wall-topic-edit-cancel' => 'Cancelar',
 );
 
 /** Hungarian (magyar)
@@ -3138,33 +3229,41 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 	'wall-preview-modal-button-publish' => '発行',
 );
 
+/** Kabardian (Адыгэбзэ)
+ * @author Erdemaslancan
+ */
+$messages['kbd'] = array(
+	'wall-recentchanges-summary' => '($1)',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 아라
  */
 $messages['ko'] = array(
 	'wall-no-title' => '제목 없음',
-	'wall-message-loadmore' => '<span class="count">$1개의</span> 댓글 보기',
+	'wall-message-loadmore' => '<span class="count">{{PLURAL:$1|덧글 $1개}}</span> 보기',
 	'wall-message-wall' => '메시지 담벼락',
 	'wall-message-wall-shorten' => '담벼락',
 	'wall-message-unfollow' => '주시 해제',
-	'wall-message-undoremove' => '실행 취소',
-	'wall-message-edited' => '<a class="username" href="$1">$2</a><a href="$3">에 의해 편집됨</a>',
+	'wall-message-undoremove' => '되돌리기',
+	'wall-message-edited' => '<a class="username" href="$1">$2</a><a href="$3">에 의해 편집함</a>',
 	'wall-message-mywall' => '내 담벼락',
 	'wall-toolbar-history' => '역사',
-	'wall-message-notify' => '관리자에게 전달',
+	'wall-message-notify' => '관리자에게 알림',
 	'wall-message-remove' => '제거',
 	'wall-message-rev-delete' => '판 삭제',
 	'wall-message-quote-button' => '인용',
 	'wall-message-elseswall' => '$1의 담벼락',
-	'wall-message-no-permission' => '메시지에 이 명령을 실행할 권한이 부족합니다.',
+	'wall-message-no-permission' => '메시지에 이 행동을 실행할 권한이 없습니다.',
 	'wall-thread-removed' => '제거됨',
 	'wall-thread-isnotifyeveryone' => '강조하기',
 	'wall-thread-deleted' => '삭제됨',
-	'wall-thread-closed' => '닫힘',
+	'wall-thread-closed' => '폐쇄됨',
 	'wall-recentchanges-namespace-selector-message-wall' => '메시지 담벼락',
 	'prefs-email-wall-v2' => '메시지 담벼락',
-	'wall-quote-author' => '$1의 원문 :',
-	'wall-quote-reply-to' => '$1에게 댓글', # Fuzzy
+	'wall-quote-author' => '$1의 말:',
+	'wall-quote-reply-to' => '#$1에 대한 덧글',
 );
 
 /** Colognian (Ripoarisch)
@@ -3231,6 +3330,7 @@ $messages['lb'] = array(
 	'wall-thread-deleted' => 'Geläscht',
 	'wall-default-title' => 'Message vum $1',
 	'wall-button-to-cancel-preview' => 'Änneren',
+	'wall-button-to-submit-reply' => 'Äntwerten',
 	'wall-button-save-changes' => 'Ännerunge späicheren',
 	'wall-button-cancel-changes' => 'Ofbriechen',
 	'wall-button-done-source' => 'Fäerdeg',
@@ -3250,6 +3350,11 @@ $messages['lb'] = array(
 	'wall-notifications-markasread-this-wiki' => 'Dës Wiki',
 	'wall-history-summary-label' => 'Resumé',
 	'wall-preview-modal-button-back' => 'Zréck',
+	'wall-preview-modal-button-publish' => 'Verëffentlechen',
+	'wall-topic-input-heading' => 'Thema',
+	'wall-topic-input-placeholder' => 'En Thema derbäisetzen (fakultativ)',
+	'wall-topic-edit-save' => 'Späicheren',
+	'wall-topic-edit-cancel' => 'Ofbriechen',
 );
 
 /** Macedonian (македонски)
@@ -3304,6 +3409,7 @@ $messages['mk'] = array(
 	'wall-message-removed-thread-because' => '$1 ја отстрани нишкава бидејќи:',
 	'wall-message-deleted-thread-because' => '$1 ја избриша нишкава бидејќи:',
 	'wall-message-restore-thread' => 'Врати нишка',
+	'wall-message-move-thread' => 'Премести ја нишкава',
 	'wall-message-removed-reply-because' => '$1 го отстрани одговоров бидејќи:',
 	'wall-message-deleted-reply-because' => '$1 го избриша одговоров бидејќи:',
 	'wall-message-closed-by' => '[[$2|$1]] ја затвори нишкава',
@@ -3345,6 +3451,11 @@ $messages['mk'] = array(
 	'wall-action-rev-reply-confirm' => 'Дали сте сигурни дека сакате да ја избришете поракава?',
 	'wall-action-rev-thread-confirm' => 'Дали сте сигурни дека сакате да го избришете ревизиите на оваа нишка со сета нејзина историја? Ова дејство е неповратно.',
 	'wall-action-rev-confirm-ok' => 'Да, бриши',
+	'wall-action-move-thread-heading' => 'Премести ја нишкава',
+	'wall-action-move-validation-select-wall' => 'Одберете табла',
+	'wall-action-move-topics-summary' => 'Нишката е преместена',
+	'wall-action-move-thread-ok' => 'Премести нишка',
+	'wall-action-move-board-label' => 'Одберете на која табла ќе преместите',
 	'wall-notifications' => 'Известувања',
 	'wall-notifications-all' => 'Сите известувања',
 	'wall-notifications-markasread' => 'Означи ги сите како прочитани',
@@ -3546,6 +3657,8 @@ ___________________________________________<br />
 	'wall-topic-input-error-limit' => 'Нишката може да има највеќе $1 теми.',
 	'wall-topic-heading' => 'Теми во оваа нишка:',
 	'wall-topic-edit' => 'Уреди теми',
+	'wall-topic-edit-save' => 'Зачувај',
+	'wall-topic-edit-cancel' => 'Откажи',
 );
 
 /** Malay (Bahasa Melayu)
@@ -3600,6 +3713,7 @@ $messages['ms'] = array(
 	'wall-message-removed-thread-because' => '$1 membuang tred ini kerana:',
 	'wall-message-deleted-thread-because' => '$1 menghapuskan tred ini kerana:',
 	'wall-message-restore-thread' => 'Pulihkan Tred',
+	'wall-message-move-thread' => 'Pindahkan tred ini',
 	'wall-message-removed-reply-because' => '$1 membuang balasan ini kerana:',
 	'wall-message-deleted-reply-because' => '$1 menghapuskan balasan ini kerana:',
 	'wall-message-closed-by' => '[[$2|$1]] menutup tred ini',
@@ -3641,6 +3755,11 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-action-rev-reply-confirm' => 'Adakah anda benar-benar ingin menghapuskan pesanan ini?',
 	'wall-action-rev-thread-confirm' => 'Adakah anda benar-benar ingin menghapuskan semakan pada tred ini dan segala sejarahnya dari wiki ini? Selepas dihapuskan, ia tidak boleh dipulihkan.',
 	'wall-action-rev-confirm-ok' => 'Ya, Hapuskan',
+	'wall-action-move-thread-heading' => 'Pindahkan tred ini',
+	'wall-action-move-validation-select-wall' => 'Sila pilih papan',
+	'wall-action-move-topics-summary' => 'Tred dipindahkan',
+	'wall-action-move-thread-ok' => 'Pindahkan tred',
+	'wall-action-move-board-label' => 'Pilih papan yang mana untuk memindahkan tred',
 	'wall-notifications' => 'Pemberitahuan',
 	'wall-notifications-all' => 'Semua Pemberitahuan',
 	'wall-notifications-markasread' => 'Tanda semua sebagai sudah dibaca',
@@ -3842,10 +3961,13 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wall-topic-input-error-limit' => 'Tred tidak boleh melebihi $1 Topik.',
 	'wall-topic-heading' => 'Topik untuk tred ini:',
 	'wall-topic-edit' => 'Ubah Topik',
+	'wall-topic-edit-save' => 'Simpan',
+	'wall-topic-edit-cancel' => 'Batalkan',
 );
 
 /** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
+ * @author Wouterkoch
  */
 $messages['nb'] = array(
 	'wall-no-title' => 'Ingen tittel',
@@ -4121,10 +4243,13 @@ endre e-post-innstillingene dine her: http://community.wikia.com/Special:Prefere
 	'wall-topic-input-error-limit' => 'En tråd kan maksimalt ha $1 emner.',
 	'wall-topic-heading' => 'Emner i denne tråden:',
 	'wall-topic-edit' => 'Rediger emner',
+	'wall-topic-edit-save' => 'Lagre',
+	'wall-topic-edit-cancel' => 'Avbryt',
 );
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
+ * @author Randykitty
  * @author SPQRobin
  * @author Saruman
  * @author Siebrand
@@ -4215,6 +4340,11 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-action-rev-reply-confirm' => 'Weet u zeker dat u dit bericht wilt verwijderen?',
 	'wall-action-rev-thread-confirm' => 'Weet u zeker dat u deze draad en alle geschiedenis volledig wilt verwijderen uit deze wiki? Deze handeling kan niet ongedaan gemaakt worden.',
 	'wall-action-rev-confirm-ok' => 'Ja, verwijderen',
+	'wall-action-move-thread-heading' => 'Draad hernoemen',
+	'wall-action-move-validation-select-wall' => 'Selecteer een board',
+	'wall-action-move-topics-summary' => 'Draad hernoemd',
+	'wall-action-move-thread-ok' => 'Draad hernoemen',
+	'wall-action-move-board-label' => 'Selecteer een board voor de draad',
 	'wall-notifications' => 'Meldingen',
 	'wall-notifications-all' => 'Alle meldingen',
 	'wall-notifications-markasread' => 'Alles als gelezen markeren',
@@ -4271,6 +4401,7 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-deleted-msg-view' => '(Bekijken/terugplaatsen)',
 	'wall-recentchanges-new-message' => 'op het <a href="$1">prikbord van $2</a>',
 	'wall-recentchanges-edit' => '(bericht bewerkt)',
+	'wall-recentchanges-summary' => '($1)',
 	'wall-recentchanges-removed-thread' => 'heeft de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] verwijderd',
 	'wall-recentchanges-removed-reply' => 'heeft een antwoord uit de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] verwijderd',
 	'wall-recentchanges-restored-thread' => 'heeft de draad "[[$1|$2]]" op het [[$3|prikbord van $4]] teruggeplaatst',
@@ -4318,6 +4449,7 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-thread-history-reply-created' => '$1 $2 heeft een antwoord achtergelaten.',
 	'wall-thread-history-thread-removed' => '$1 $2 heeft deze draad verwijderd',
 	'wall-thread-history-reply-removed' => '$1 $2 heeft het antwoord $5 van $3 verwijderd',
+	'wall-thread-history-reply-deleted' => '$1 $2 heeft de reactie van $3 verwijderd',
 	'wall-thread-history-thread-restored' => '$1 $2 heeft deze draad teruggeplaatst',
 	'wall-thread-history-reply-restored' => '$1 $2 heeft het antwoord $5 van $3 teruggeplaatst',
 	'wall-thread-history-thread-deleted' => '$1 $2 heeft deze draad verwijderd',
@@ -4391,6 +4523,20 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'wall-preview-modal-button-back' => 'Terug',
 	'wall-preview-modal-button-publish' => 'Publiceren',
 	'wall-topic-input-heading' => 'Onderwerp',
+	'wall-topic-input-placeholder' => 'Onderwerp toevoegen (optioneel)',
+	'wall-topic-input-error' => 'Er is geen pagina met de naam "$1". Kies de naam van een bestaande pagina als onderwerp.',
+	'wall-topic-input-error-limit' => 'Een draad kan maximaal {{PLURAL:$1|één onderwerp|$1 onderwerpen}} hebben.',
+	'wall-topic-heading' => 'Onderwerpen voor deze draad:',
+	'wall-topic-edit' => 'Onderwerpen bewerken',
+	'wall-topic-edit-save' => 'Opslaan',
+	'wall-topic-edit-cancel' => 'Annuleren',
+);
+
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
+ * @author Erdemaslancan
+ */
+$messages['nn'] = array(
+	'wall-recentchanges-summary' => '($1)',
 );
 
 /** Pälzisch (Pälzisch)
@@ -4471,6 +4617,7 @@ $messages['pl'] = array(
 	'wall-message-removed-thread-because' => '$1 usunął ten wątek ponieważ:',
 	'wall-message-deleted-thread-because' => '$1 skasował ten wątek ponieważ:',
 	'wall-message-restore-thread' => 'Przywróć Wątek',
+	'wall-message-move-thread' => 'Przenieś wątek',
 	'wall-message-removed-reply-because' => '$1 usunął tę odpowiedź ponieważ:',
 	'wall-message-deleted-reply-because' => '$1 skasował tę odpowiedź ponieważ:',
 	'wall-message-closed-by' => '[[$2|$1]] zamknął/zamknęła ten wątek',
@@ -4512,6 +4659,11 @@ Ten wątek i jego historia nadal będą dostępne w historii wiki.',
 	'wall-action-rev-reply-confirm' => 'Na pewno usunąć tę wiadomość?',
 	'wall-action-rev-thread-confirm' => 'Na pewno chcesz usunąć pełną wersję tego wątku i całą historię? Tej operacji nie można cofnąć.',
 	'wall-action-rev-confirm-ok' => 'Tak, Usuń',
+	'wall-action-move-thread-heading' => 'Przenieś wątek',
+	'wall-action-move-validation-select-wall' => 'Wybierz subforum',
+	'wall-action-move-topics-summary' => 'Wątek przeniesiono',
+	'wall-action-move-thread-ok' => 'Przenieś wątek',
+	'wall-action-move-board-label' => 'Wybierz subforum, do którego przenieść wątek',
 	'wall-notifications' => 'Powiadomienia',
 	'wall-notifications-all' => 'Wszystkie powiadomienia',
 	'wall-notifications-markasread' => 'Oznacz wszystkie jako przeczytane',
@@ -4711,7 +4863,6 @@ ___________________________________________<br />
 	'wall-topic-input-error-limit' => 'Wątek może mieć nie więcej niż $1 tematów.',
 	'wall-topic-heading' => 'Tematy tego wątku:',
 	'wall-topic-edit' => 'Edytuj tematy',
-	'wall-userdoesnotexist' => 'Konto użytkownika „$1” nie jest zarejestrowane.',
 	'wall-topic-edit-save' => 'Zapisz zmiany',
 	'wall-topic-edit-cancel' => 'Anuluj',
 );
@@ -5471,6 +5622,7 @@ $messages['sv'] = array(
 	'wall-message-removed-thread-because' => '$1 tog bort denna tråd eftersom:',
 	'wall-message-deleted-thread-because' => '$1 raderade denna tråd eftersom:',
 	'wall-message-restore-thread' => 'Återställ tråd',
+	'wall-message-move-thread' => 'Flytta denna tråd',
 	'wall-message-removed-reply-because' => '$1 tog bort detta svar eftersom:',
 	'wall-message-deleted-reply-because' => '$1 raderade detta svar eftersom:',
 	'wall-message-closed-by' => '[[$2|$1]] stängde denna tråd',
@@ -5512,6 +5664,11 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'wall-action-rev-reply-confirm' => 'Är du säker på att du vill ta bort detta meddelande?',
 	'wall-action-rev-thread-confirm' => 'Är du säker på att du vill revisionsradera denna tråd och all dess historik från wikin? Detta kan inte ångras.',
 	'wall-action-rev-confirm-ok' => 'Ja, radera',
+	'wall-action-move-thread-heading' => 'Flytta denna tråd',
+	'wall-action-move-validation-select-wall' => 'Var god välj en tavla',
+	'wall-action-move-topics-summary' => 'Tråd har flyttats',
+	'wall-action-move-thread-ok' => 'Flytta tråden',
+	'wall-action-move-board-label' => 'Välj en tavla att flytta till',
 	'wall-notifications' => 'Meddelanden',
 	'wall-notifications-all' => 'Alla meddelanden',
 	'wall-notifications-markasread' => 'Markera alla som lästa',
@@ -5713,6 +5870,8 @@ dina e-postinställningar här: http://community.wikia.com/Special:Preferences',
 	'wall-topic-input-error-limit' => 'En tråd kan bara maximalt ha $1 ämnen.',
 	'wall-topic-heading' => 'Ämnen för denna tråd:',
 	'wall-topic-edit' => 'Redigera ämnen',
+	'wall-topic-edit-save' => 'Spara',
+	'wall-topic-edit-cancel' => 'Avbryt',
 );
 
 /** Tamil (தமிழ்)
@@ -6024,12 +6183,14 @@ ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/S
 );
 
 /** толышә зывон (толышә зывон)
+ * @author Erdemaslancan
  * @author Гусейн
  */
 $messages['tly'] = array(
 	'wall-no-title' => 'Бе ном',
 	'wall-button-to-cancel-preview' => 'Сәрост кардеј',
 	'wall-delete-error-title' => 'Сәһв',
+	'wall-recentchanges-summary' => '($1)',
 	'wall-history-rail-block' => 'бә гырд гәтеј',
 	'wall-history-action-view' => 'тәмшо кардеј',
 );
@@ -6039,6 +6200,7 @@ $messages['tly'] = array(
  */
 $messages['tr'] = array(
 	'wall-message-quote-button' => 'Alıntı',
+	'wall-recentchanges-summary' => '($1)',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -6063,6 +6225,13 @@ $messages['tt-cyrl'] = array(
 <a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
+);
+
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'wall-no-title' => 'ⵡⴰⵔ ⴰⵣⵡⵉⵍ',
 );
 
 /** Ukrainian (українська)
@@ -6671,6 +6840,7 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'wall-no-title' => '无标题',
@@ -6686,8 +6856,11 @@ $messages['zh-hans'] = array(
 	'wall-button-save-changes' => '保存更改',
 	'wall-button-cancel-changes' => '取消',
 	'wall-button-done-source' => '完成',
+	'wall-message-edit' => '编辑',
 	'wall-message-delete' => '删除',
 	'wall-action-all-confirm-cancel' => '取消',
+	'wall-delete-error-title' => '错误',
+	'wall-action-remove-confirm-ok' => '删除',
 	'wall-action-admin-confirm-ok' => '删除',
 	'wall-notifications' => '通知',
 	'wall-notifications-markasread-all-wikis' => '全部维基',

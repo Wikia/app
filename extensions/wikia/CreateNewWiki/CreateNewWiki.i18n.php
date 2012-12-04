@@ -602,35 +602,35 @@ $messages['diq'] = array(
 	'cnw-login' => 'Qeyd be',
 	'cnw-signup' => 'Hesab Vıraze',
 	'cnw-signup-prompt' => 'Hesabê şıma çıniyo?',
-	'cnw-call-to-signup' => 'Tiya ra tewr bê',
+	'cnw-call-to-signup' => 'Tiya qeyd bê',
 	'cnw-login-prompt' => 'Xora yew hesabê şıma esto?',
-	'cnw-call-to-login' => 'Şırê cı kewê',
+	'cnw-call-to-login' => 'Tiya cı kewê',
 	'cnw-auth-headline' => 'Qeyd vıraze',
 	'cnw-auth-headline2' => 'Deqew de',
-	'cnw-auth-facebook-signup' => 'Facebook ra de kewê de',
-	'cnw-auth-facebook-login' => "Facebook'a ronıştış ake",
+	'cnw-auth-facebook-signup' => 'Ebe Facebook cı kewê',
+	'cnw-auth-facebook-login' => "Facebook'a cıkewtış",
 	'cnw-userauth-headline' => 'Yew hesabê şıma esto?',
 	'cnw-userauth-creative' => 'Ronıştış akerê',
 	'cnw-userauth-signup-button' => 'Hesabo Newe Ake',
 	'cnw-desc-tip2' => 'Psst',
-	'cnw-desc-select-one' => 'Yeweri weçine',
+	'cnw-desc-select-one' => 'Yewi weçine',
 	'cnw-desc-change-lang' => 'bıvurne',
 	'cnw-desc-lang' => 'Zıwan',
-	'cnw-desc-wiki-submit-error' => 'Reca keme yew kategoriye weçine',
+	'cnw-desc-wiki-submit-error' => 'Reca kenime, yew kategoriye weçine',
 	'cnw-theme-headline' => 'tema weçinê',
-	'cnw-upgrade-headline' => 'Şıma qayıle berz kerê?',
-	'cnw-upgrade-marketing' => "Qandê Wikia Plus tewr zaf agozne:<ul>
-<li>Profesyonel Wikiy</li>
-<li>Non-profits</li>
+	'cnw-upgrade-headline' => 'Şıma qayılê ke berz kerê?',
+	'cnw-upgrade-marketing' => 'Qandê Wikia Plusi rê tewr zaf aguznayış:<ul>
+<li>Wikiyê Profesyoneli</li>
+<li>Nê-kari</li>
 <li>Kufleti</li>
 <li>Mektebi</li>
-<li>Şexsi procey</li>
+<li>Proceyê şexsiy</li>
 </ul>
-Bêreklam herg meng $4.95 bıde u PayPal'a wikiya bıresne.",
-	'cnw-upgrade-now' => 'Enewke Berz ke',
+Aşme de tenya 4,95 $ gırewtışê wikiyê bêreklami be PayPali berz ke!',
+	'cnw-upgrade-now' => 'Nıka berz ke',
 	'cnw-error-database' => 'Datay $1 qedya',
-	'cnw-badword-header' => 'ohaaa, itad vınde',
-	'cnw-error-wiki-limit-header' => 'Resa limit da Wiki',
+	'cnw-badword-header' => 'Oha',
+	'cnw-error-wiki-limit-header' => 'Reşt sinorê wikiy',
 	'cnw-error-blocked-header' => 'Hesab biyo kılit',
 );
 
@@ -2115,6 +2115,7 @@ Adopte esta versão através do PayPal para ter uma wiki livre de anúncios por 
  * @author Aristóbulo
  * @author Caio1478
  * @author Luckas Blade
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistente de criação de wikis]]',
@@ -2140,6 +2141,11 @@ $messages['pt-br'] = array(
 	'cnw-auth-signup-creative' => 'Precisa de ter uma conta para continuar a construir a sua wiki.<br />Só leva um minuto para registrar-se!',
 	'cnw-auth-facebook-signup' => 'Registre-se pelo Facebook',
 	'cnw-auth-facebook-login' => 'Entrar pelo Facebook',
+	'cnw-userauth-headline' => 'Você tem uma conta?',
+	'cnw-userauth-creative' => 'Autenticar-se',
+	'cnw-userauth-marketing-heading' => 'Não tem uma conta?',
+	'cnw-userauth-marketing-body' => 'Você precisa criar uma conta para criar uma wiki na WIkia. Leva apenas um minuto para [[Special:UserSignup|se registrar]]!',
+	'cnw-userauth-signup-button' => 'Registrar-se',
 	'cnw-desc-headline' => 'Qual é o assunto da sua wiki?',
 	'cnw-desc-creative' => 'Descreva o seu assunto',
 	'cnw-desc-placeholder' => 'Isto irá aparecer na página principal da sua wiki.',
@@ -2176,9 +2182,16 @@ Adote esta versão através do PayPal para ter uma wiki livre de anúncios por a
 	'cnw-welcome-help' => 'Encontrará respostas, conselhos e mais na <a href="http://pt.wikia.com">Comunidade Central</a>.',
 	'cnw-error-general' => 'Algo deu errado ao criar a sua wiki. Por favor, tente novamente mais tarde.',
 	'cnw-error-general-heading' => 'Erro ao Criar uma Wiki Nova',
+	'cnw-error-database' => 'Erro do Banco de Dados: $1',
 	'cnw-badword-header' => 'Atenção',
-	'cnw-badword-msg' => 'Não use palavras impróprias ou proibidas na Descrição da Wiki, por favor', # Fuzzy
+	'cnw-badword-msg' => 'Olá, por favor não use estas palavras grosseiras ou banidas na sua Descrição da Wiki: $1',
+	'cnw-error-wiki-limit-header' => 'Limite de Wikis atingido',
+	'cnw-error-wiki-limit' => 'Olá, você está limitado à {{PLURAL:$1|criar $1 wiki|criar $1 wikis}} por dia. Espere 24 horas antes de criar outra wiki.',
 	'cnw-error-blocked-header' => 'Conta bloqueada',
+	'cnw-error-blocked' => 'Você foi bloqueado por $1. O motivo dado foi: $2. (ID de Bloqueio para referência: $3)',
+	'cnw-error-torblock' => 'Criar wikis usando a rede Tor não é permitido.',
+	'cnw-error-bot' => 'Detectamos que você pode ser um robô. Se cometemos um engano, por favor descriva que você foi falsamente detectado como um robô, e te ajudaremos em criar sua wiki: [http://www.wikia.com/Special:Contact/Contate-nos geral]',
+	'cnw-error-bot-header' => 'Você foi detectado como um robô',
 );
 
 /** Romanian (română)
@@ -2591,6 +2604,7 @@ $messages['tly'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Emperyan
  * @author Erdemaslancan
  * @author Suelnur
  */
@@ -2599,6 +2613,7 @@ $messages['tr'] = array(
 	'cnw-signup' => 'Hesap Oluştur',
 	'cnw-desc-change-lang' => 'değiştir',
 	'cnw-desc-lang' => 'Dil',
+	'cnw-badword-header' => 'Oops!',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -2885,6 +2900,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
+ * @author Sam Wang
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -2906,6 +2922,7 @@ $messages['zh-hans'] = array(
 	'cnw-userauth-headline' => '已拥有帐户？',
 	'cnw-userauth-creative' => '登录',
 	'cnw-userauth-marketing-heading' => '没有帐户？',
+	'cnw-userauth-signup-button' => '注册',
 	'cnw-desc-creative' => '描述您的主题',
 	'cnw-desc-tip1' => '暗示',
 	'cnw-desc-tip1-creative' => '在这里用一两句话向大家介绍您的维基',

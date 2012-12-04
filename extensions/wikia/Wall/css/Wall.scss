@@ -665,6 +665,9 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 		.buttons-monobook{
 			display: block;
+			a {
+				margin-right: 10px;
+			}
 		}
 		.buttons {
 			display: none;
@@ -779,6 +782,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 	}
 	.deleteorremove-container {
+		margin-left: 5px;
 		td {
 			vertical-align: bottom;
 		}
@@ -786,45 +790,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			position: relative;
 			z-index: 1;
 			margin: 0 0 10px 10px;
-		}
-	}
-}
-
-.replies .message-removed {
-	.deleteorremove-infobox {
-		position: static;
-		background: none;
-		margin: -10px 0px 0px -20px;
-		border: none;
-		table {
-			background-color: transparent;
-		}
-		.message-restore {
-			margin-right: 0;
-		}
-		&:before {
-			position: absolute;
-			content: '';
-			background: $color-wall-infobox;
-			height: 100%;
-			width: 100%;
-			padding-right: 30px;
-			padding-bottom: 5px;
-			border-top: 1px dashed $color-page-border;
-			border-left: 5px solid $color-buttons;
-			z-index: -1;
-		}
-		&:after {
-			position: absolute;
-			bottom: -1px;
-			left: -15px;
-			content: '';
-			background: $color-wall-infobox;
-			height: 0;
-			width: 100%;
-			padding-right: 30px;
-			border-bottom: 1px dashed $color-page-border;
-			z-index: 2;
 		}
 	}
 }
@@ -861,8 +826,4 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 // Vote tooltip styles
 .tooltip-text {
 	padding: $tooltip-padding;
-}
-
-.wall-userpage-userdoesnotexist {
-	margin: 20px 0 0;
 }

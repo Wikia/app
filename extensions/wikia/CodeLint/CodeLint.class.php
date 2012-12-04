@@ -211,7 +211,7 @@ abstract class CodeLint {
 			$cache['lines'] = $lines;
 		}
 
-		$blameLine = $cache['lines'][$line];
+		$blameLine = $cache['lines'][$line-1];
 
 		// parse blame line
 		if ($blameLine != '') {
@@ -374,6 +374,8 @@ abstract class CodeLint {
 
 		if (!empty($files)) {
 			foreach($files as $fileName) {
+				$fileName = realpath($fileName);
+
 				// skip blacklisted ones
 				if ($this->isBlacklisted($fileName, $blacklist)) {
 					if (!empty($wgCommandLineMode)) {

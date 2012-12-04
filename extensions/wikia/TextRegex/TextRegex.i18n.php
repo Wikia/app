@@ -251,6 +251,7 @@ Versuchen Sie es noch einmal.',
  * @author Mirzali
  */
 $messages['diq'] = array(
+	'textregex' => 'Regex nuşte',
 	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 wedarnê]',
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 istatistiki]',
 	'textregex-nodata-found' => 'Melumat nêvineya',

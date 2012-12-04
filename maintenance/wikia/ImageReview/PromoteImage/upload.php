@@ -3,7 +3,7 @@
  * How to run this script:
  * $ cd maintenance/wikia/ImageReview/PromoteImage/upload.php
  * To upload an image on wikia.com (from wookiepedia [wikiid=147]) as a WikiaBot:
- * $ SERVER_ID=80433 php upload.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --originalimageurl="http://images.nandy.wikia-dev.com/__cb20120524124212/starwars/images/6/6b/Wikia-Visualization-Add-3.jpg" --destimagename="Wikia-Visualization-Add-3,starwars.jpg" --userid=4663069 --wikiid=147
+ * $ SERVER_ID=80433 php upload.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --originalimageurl="http://images.nandy.wikia-dev.com/__cb20120524124212/starwars/images/6/6b/Wikia-Visualization-Add-3.jpg" --destimagename="Wikia-Visualization-Add-3,starwars.jpg" --wikiid=147
  */
 $dir = dirname(__FILE__) . '/';
 $cmdLineScript = realpath($dir . '../../../commandLine.inc');
@@ -43,7 +43,16 @@ $imageData->description = $imageData->comment = wfMsg('wikiahome-image-auto-uplo
 $result = ImagesService::uploadImageFromUrl($imageUrl, $imageData, $user);
 
 if( $result['status'] === true ) {
+//was it successful upload
 	echo json_encode(array('id' => $result['page_id'], 'name' => $destImageName));
+	exit(0);
+} else if(
+	$result['status'] !== true
+	&& !empty($result['errors'][0]['message'])
+	&& $result['errors'][0]['message'] === 'backend-fail-alreadyexists'
+) {
+//did backend return error about the file that it existed
+	echo json_encode(array('id' => $result['page_id'], 'name' => $destImageName, 'notice' => 'The file already existed. It was replaced.'));
 	exit(0);
 } else {
 	echo 'ERROR: Something went wrong with uploading the image.'."\n";

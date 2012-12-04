@@ -1,6 +1,6 @@
 <? if ($checkAccess): ?>
 <form class="WikiaForm SpecialUploadForm"
-	  action="<?= $wg->ScriptPath ?>/wikia.php?controller=SpecialPromoteController&method=uploadImage&format=html"
+	  action="<?= $wg->ScriptPath ?>/wikia.php?controller=SpecialPromote&method=uploadImage&format=html"
 	  id="ImageUploadForm" method="POST" enctype="multipart/form-data">
 	<p class="error"></p>
 

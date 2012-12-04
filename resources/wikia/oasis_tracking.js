@@ -11,7 +11,9 @@ $(function(){
 					ga_label: label
 				}, 
 				'ga');
-		};
+		},
+		clickAction = WikiaTracker.ACTIONS.CLICK,
+		viewAction = WikiaTracker.ACTIONS.VIEW;
 	
 	$('#WikiaHeader').on('click', 'a', function(e) {
 		var el = $(e.target);
@@ -23,24 +25,24 @@ $(function(){
 		var category = 'top-nav';
 		
 		if(el.hasClass('logo')) {
-			track(category, WikiaTracker.ACTIONS.CLICK, 'wikia-logo');
+			track(category, clickAction, 'wikia-logo');
 		} else if(el.parent().hasClass('start-a-wiki')) {
-			track(category, WikiaTracker.ACTIONS.CLICK, 'start-a-wiki');
+			track(category, clickAction, 'start-a-wiki');
 		} else if(el.closest('.topNav').length > 0) {
-			track(category, WikiaTracker.ACTIONS.CLICK, 'hub-item');
+			track(category, clickAction, 'hub-item');
 		} else if(el.data('id') == 'mytalk') {
 			if(el.hasClass('message-wall-item')) {
-				track(category, WikiaTracker.ACTIONS.CLICK, 'user-menu-message-wall');
+				track(category, clickAction, 'user-menu-message-wall');
 			} else {
-				track(category, WikiaTracker.ACTIONS.CLICK, 'user-menu-talk');
+				track(category, clickAction, 'user-menu-talk');
 			}
 		} else if(el.attr('accesskey') == '.') {
-			track(category, WikiaTracker.ACTIONS.CLICK, 'user-menu-profile');
+			track(category, clickAction, 'user-menu-profile');
 		} else if(el.closest('.notifications-for-wiki').length > 0) {
 			if($(el.closest('.notifications-for-wiki')).data('wiki-id') == window.wgCityId) {
-				track(category, WikiaTracker.ACTIONS.CLICK, 'notification-item-local');
+				track(category, clickAction, 'notification-item-local');
 			} else {
-				track(category, WikiaTracker.ACTIONS.CLICK, 'notification-item-cross-wiki');
+				track(category, clickAction, 'notification-item-cross-wiki');
 			}
 		}
 	});
@@ -55,33 +57,33 @@ $(function(){
 		var category = 'wiki-nav';
 		
 		if(el.closest('.wordmark').length > 0) {
-			track(category, WikiaTracker.ACTIONS.CLICK, 'wordmark');
+			track(category, clickAction, 'wordmark');
 		} else if(el.data('canonical')) {
 			var canonical = el.data('canonical');
 			switch(canonical) {
 				case 'wikiactivity':
-					track(category, WikiaTracker.ACTIONS.CLICK, 'on-the-wiki-activity');
+					track(category, clickAction, 'on-the-wiki-activity');
 					break;
 				case 'random':
-					track(category, WikiaTracker.ACTIONS.CLICK, 'on-the-wiki-random');
+					track(category, clickAction, 'on-the-wiki-random');
 					break;
 				case 'newfiles':
-					track(category, WikiaTracker.ACTIONS.CLICK, 'on-the-wiki-new-photos');
+					track(category, clickAction, 'on-the-wiki-new-photos');
 					break;
 				case 'chat':
-					track(category, WikiaTracker.ACTIONS.CLICK, 'on-the-wiki-chat');
+					track(category, clickAction, 'on-the-wiki-chat');
 					break;
 				case 'forum':
-					track(category, WikiaTracker.ACTIONS.CLICK, 'on-the-wiki-forum');
+					track(category, clickAction, 'on-the-wiki-forum');
 					break;
 				case 'videos':
-					track(category, WikiaTracker.ACTIONS.CLICK, 'on-the-wiki-videos');
+					track(category, clickAction, 'on-the-wiki-videos');
 					break;
 				default:
 					break;
 			}
 		} else if(el.closest('.WikiNav').length > 0) {
-			track(category, WikiaTracker.ACTIONS.CLICK, 'custom');
+			track(category, clickAction, 'custom');
 		}
 	});
 	
@@ -95,12 +97,12 @@ $(function(){
 		var category = 'article';
 		
 		if((el.data('id') || el.parent().data('id')) == 'edit') {
-			track(category, WikiaTracker.ACTIONS.CLICK, 'edit');
+			track(category, clickAction, 'edit');
 		} else if((el.data('id') || el.parent().data('id')) == 'comment') {
 			if(el.hasClass('talk') || el.parent().hasClass('talk')) {
-				track(category, WikiaTracker.ACTIONS.CLICK, 'talk');
+				track(category, clickAction, 'talk');
 			} else {
-				track(category, WikiaTracker.ACTIONS.CLICK, 'comment');
+				track(category, clickAction, 'comment');
 			}
 		}
 	});
@@ -115,7 +117,7 @@ $(function(){
 		var category = 'article';
 		
 		if(el.closest('.editsection').length > 0) {
-			track(category, WikiaTracker.ACTIONS.CLICK, 'section-edit');
+			track(category, clickAction, 'section-edit');
 		}
 	});
 	
@@ -130,19 +132,19 @@ $(function(){
 		
 		if(el.parent().hasClass('image')) {
 			if(el.parent().hasClass('video')) {
-				track(category, WikiaTracker.ACTIONS.CLICK, 'video');
+				track(category, clickAction, 'video');
 			} else {
-				track(category, WikiaTracker.ACTIONS.CLICK, 'image');
+				track(category, clickAction, 'image');
 			}
 		} else if(el.closest('.RelatedPagesModule').length > 0) {
-			track(category, WikiaTracker.ACTIONS.CLICK, 'related-pages');
+			track(category, clickAction, 'related-pages');
 		} else if(el.closest('.category-gallery').length > 0) {
-			track('category', WikiaTracker.ACTIONS.CLICK, 'category-gallery');
+			track('category', clickAction, 'category-gallery');
 		}
 	});
 	
 	$('#WikiaArticleCategories').on('click', 'a', function(e) {
-		track('article', WikiaTracker.ACTIONS.CLICK, 'category-name');
+		track('article', clickAction, 'category-name');
 	});
 	
 	$('#WikiaRail').on('click', '.WikiaActivityModule a, .LatestPhotosModule a, .ChatModule button', function(e) {
@@ -153,28 +155,46 @@ $(function(){
 		}
 		
 		if(el.closest('.edited-by').length > 0) {
-			track('recent-wiki-activity', WikiaTracker.ACTIONS.CLICK, 'activity-username');
+			track('recent-wiki-activity', clickAction, 'activity-username');
 		} else if(el.closest('.WikiaActivityModule').length > 0) {
-			track('recent-wiki-activity', WikiaTracker.ACTIONS.CLICK, 'activity-title');
+			track('recent-wiki-activity', clickAction, 'activity-title');
 		} else if(el.hasClass('thumbimage')) {
-			track('photos-module', WikiaTracker.ACTIONS.CLICK, 'photos-module-thumbnail');
+			track('photos-module', clickAction, 'photos-module-thumbnail');
 		} else if(el.closest('.chat-join').length > 0) {
-			track('chat-module', WikiaTracker.ACTIONS.CLICK, 'chat-join');
+			track('chat-module', clickAction, 'chat-join');
 		}
 	});
 	
 	$('#WikiaSearch').on('click', '.autocomplete', function(e) {
-		track('search', WikiaTracker.ACTIONS.CLICK, 'search-suggest');
+		track('search', clickAction, 'search-suggest');
 	}).on('submit', '', function(e) {
-		track('search', WikiaTracker.ACTIONS.CLICK, 'search-enter');
+		track('search', clickAction, 'search-enter');
 	});
 	
 	if($('body.editor').length > 0) {
 		// edit page view event
-		track('edit', WikiaTracker.ACTIONS.VIEW, 'edit-page');
+		track('edit', viewAction, 'edit-page');
 		$('#wpSave').on('click', '', function(e) {
-			track('edit', WikiaTracker.ACTIONS.CLICK, 'publish');
+			track('edit', clickAction, 'publish');
 		});
 	}
+
+	$('#RelatedForumDiscussion').on('click', '.forum-thread-title, .forum-new-post, .forum-see-more a', function(e) {
+		var el = $(e.target);
+		
+		if(el.length === 0) {
+			return true;
+		}
+		
+		var category = 'thread-module';
+		
+		if(el.hasClass('forum-thread-title')) {
+			track(category, clickAction, 'title');
+		} else if(el.hasClass('forum-new-post')) {
+			track(category, clickAction, 'start-discussion');
+		} else if(el.closest('.forum-see-more').length > 0) {
+			track(category, clickAction, 'see-more');
+		}
+	});
 	
 });

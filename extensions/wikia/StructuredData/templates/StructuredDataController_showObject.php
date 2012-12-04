@@ -1,49 +1,88 @@
 <?php
-
 	if (!$sdsObject) {
-		die('Requested object doesn\'t exist!');
+		die(wfMsg('structureddata-object-doesnt-exist'));
 	}
 
 	// Array of SD object properties 
-	$properties = $sdsObject->getProperties(); 
-	
+	$properties = $sdsObject->getProperties();
+	$objectName = $sdsObject->getName();
+	$objectId = $sdsObject->getId();
 ?>
-
-<div class="SDObject" id="SDObject">
-
-	<h1><strong><?php echo $sdsObject->getName(); ?></strong></h1>
+<form class="WikiaForm SDObject" id="SDObject" method="POST">
+	<?php if(!empty($updateResult)): ?>
+		<div class="validation-main-message <?= (empty($updateResult->error)) ? 'success' : '' ?>">
+			<?=$updateResult->message;?>
+		</div>
+		<?php if(isset($updateResult->errors)): ?>
+			<?php var_dump($updateResult->errors); ?>
+		<?php endif; ?>
+	<?php endif; ?>
+	<h1><strong><?= $objectName; ?></strong></h1>
+	<?php if($context == SD_CONTEXT_SPECIAL && $isEditAllowed): ?>
+		<?php
+			echo F::app()->renderView('MenuButton', 'Index', array(
+				'action' => $menuButtonAction,
+				'name' => $menuButtonName,
+				'dropdown' => $dropDownItems,
+				'image' => $menuButtonImage
+			));
+		?>
+	<?php endif; ?>
 	<dl class="SDObjectDetails">
-		<dt>Type:</dt>
-		<dd><?php echo $sdsObject->getType(); ?></dd>
+		<dt><?= wfMsg('structureddata-object-type-label') ?>:</dt>
+		<dd><a href="<?= SpecialPage::getTitleFor('StructuredData')->getLocalURL();
+		?>?method=getCollection&objectType=<?=
+		$sdsObject->getType(); ?>" title="<?=
+		$sdsObject->getType
+		(); ?>"><?= $sdsObject->getType
+		(); ?></a></dd>
 	</dl>
-	
-	<table class="article-table SDObjectProperties WikiaGrid">
-		<caption>Object properties:</caption>
+	<?/*<pre>ID: <?=$sdsObject->getId();?></pre>*/?>
+
+	<table class="article-table SDObjectProperties WikiaGrid" data-object-type="<?=$sdsObject->getType()?>">
+		<caption><?= wfMsg('structureddata-object-properties-table-caption') ?>:</caption>
 		<thead>
 			<tr>
-				<th class="grid-1">Property label:</th>
-				<th class="grid-3">Property value:</th>
-				<th class="grid-2">Wiki text sample:</th>
+				<th class="grid-1"><?= wfMsg('structureddata-object-table-th-prop-label') ?>:</th>
+				<?php if($context == SD_CONTEXT_EDITING): ?>
+					<th class="grid-5"><?= wfMsg('structureddata-object-table-th-prop-value') ?>:</th>
+				<?php else : ?>
+					<th class="grid-3"><?= wfMsg('structureddata-object-table-th-prop-value') ?>:</th>
+					<th class="grid-2"><?= wfMsg('structureddata-object-table-th-wiki-text') ?>:</th>
+				<?php endif; ?>
 			</tr>
 		</thead>
 		<tbody>
 			<?php foreach ( $properties as $property ) : ?>
-				<?php 
-					$propertyType = $property->getType();
-					$propertyValue = $property->getValue();
+				<?php
+					if ( !$sdsObject->isPropertyVisible( $property ) ) {
+						continue;
+					}
 					$propertyLabel = $property->getLabel();
 					$propertyName = $property->getName();
-					$proprtyHTML = $property->render( SD_CONTEXT_SPECIAL );
+					$propertyHTML = $property->render( $context, array( 'objectId' => $objectId ) );
+					$validationError = (isset($updateResult->errors) && array_key_exists($propertyName,
+						$updateResult->errors)) ? true : false;
+				    if (!empty($validationError)) {
+					    $validationErrorMsg = $error = $updateResult->errors->{$propertyName}[0];
+				    }
 				?>
-				
-				
+
 				<?php // Render HTML using renderers  ?>
 				
-				<?php if($proprtyHTML !== false) : ?>
+				<?php if($propertyHTML !== false) : ?>
 					<tr>
-						<th><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}',$propertyLabel)); ?>:</th>
-						<td><?php echo $proprtyHTML;?></td>
-						<td><pre><?php echo $propertyName; ?></pre></td>
+						<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}',$propertyLabel)); ?>:</th>
+						<td <?= (!empty($validationError)) ? 'class="validation-error"' : '' ?>>
+							<?= $propertyHTML;?>
+							<?php if (!empty($validationError)): ?>
+							    <div class="validation-message"><?= $validationErrorMsg; ?></div>
+							<?php endif; ?>
+						</td>
+						<?php if($context == SD_CONTEXT_SPECIAL): ?>
+							<td><p class="example"><?= $sdsObject->getType() . '/' . $objectName . '/' .
+								$propertyName; ?></p></td>
+						<?php endif; ?>
 					</tr>
 					<?php continue; ?>
 				<?php endif; ?>
@@ -51,21 +90,23 @@
 				
 				<?php // Render properties manually ?>
 				<tr>
-					<th><?php echo ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</th>
-				
-					<?php // display 'empty' for empty object properties ?>
-					<?php if (empty($propertyValue)) : ?>
-						<td><p class="empty">empty</p></td>
-				
-						<td><pre><?php echo $propertyName; ?></pre></td>
-				</tr>
-						<?php continue; ?>
-					<? endif ?>
-		
-					<td><p><?php echo $propertyValue; ?></p></td>
-					<td><pre><?php echo $propertyName; ?></pre></td>
+					<th><?= ucfirst(preg_replace('/([A-Z])/', ' ${1}', $propertyLabel)); ?>:</th>
+					<td <?= (!empty($validationError)) ? 'class="validation-error"' : '' ?>>
+						<p><?php echo $property->getWrappedValue()->render( $context, array( 'isCreateMode' => $isCreateMode, 'objectId' => $objectId ) ); ?></p>
+						<?php if (!empty($validationError)): ?>
+							<div class="validation-message"><?= $validationErrorMsg; ?></div>
+						<?php endif; ?>
+					</td>
+					<?php if($context == SD_CONTEXT_SPECIAL): ?>
+						<td><p class="example"><?= $sdsObject->getType() . '/' . $objectName . '/'. $propertyName;
+							?></p>
+						</td>
+					<?php endif; ?>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-</div>
+	<?php if($context == SD_CONTEXT_EDITING): ?>
+		<input type="submit" value="<?= wfMsg('structureddata-save-object-button') ?>" class="wikia-button SDObjectSave" />
+	<?php endif; ?>
+</form>

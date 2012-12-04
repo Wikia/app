@@ -24,6 +24,7 @@ $app->registerClass( 'Forum', $dir . 'Forum.class.php' );
 $app->registerClass( 'ForumBoard', $dir . 'ForumBoard.class.php' );
 $app->registerClass( 'ForumHelper', $dir . 'ForumHelper.class.php' );
 $app->registerClass( 'ForumExternalController', $dir . 'ForumExternalController.class.php' );
+$app->registerClass( 'RelatedForumDiscussionController', $dir . 'RelatedForumDiscussionController.class.php' );
 
 // i18n mapping
 $app->registerExtensionMessageFile( 'Forum', $dir . 'Forum.i18n.php' );
@@ -58,7 +59,19 @@ $app->registerHook( 'getUserPermissionsErrors', 'ForumHooksHelper', 'onGetUserPe
 $app->registerHook( 'PageHeaderIndexAfterActionButtonPrepared', 'ForumHooksHelper', 'onPageHeaderIndexAfterActionButtonPrepared' );
 $app->registerHook( 'ArticleViewHeader', 'ForumHooksHelper', 'onArticleViewHeader' );
 
+// forum discussion on article
+//It need to be first one !!!
+array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'ForumHooksHelper::onOutputPageBeforeHTML' );
+
+$app->registerHook( 'WallAction', 'ForumHooksHelper', 'onWallAction');
+$app->registerHook( 'WallBeforeStoreRelatedTopicsInDB', 'ForumHooksHelper', 'onWallStoreRelatedTopicsInDB');
+$app->registerHook( 'WallAfterStoreRelatedTopicsInDB', 'ForumHooksHelper', 'onWallStoreRelatedTopicsInDB');
+
 include ($dir . '/Forum.namespace.setup.php');
+
+//add this namespace to list of wall namespaces
+$app->registerNamespaceControler( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
+$app->registerNamespaceControler( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board', true );
 
 // permissions
 $wgAvailableRights[] = 'forum';
@@ -83,3 +96,11 @@ $wgGroupPermissions['bureaucrat']['forumoldedit'] = true;
 $wgGroupPermissions['*']['forumadmin'] = false;
 $wgGroupPermissions['staff']['forumadmin'] = true;
 $wgGroupPermissions['sysop']['forumadmin'] = true;
+
+
+F::build('JSMessages')->registerPackage('Forum', array(
+	'back',
+	'forum-specialpage-policies-edit',
+	'forum-specialpage-policies'
+));
+

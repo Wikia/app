@@ -61,6 +61,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Sam Wang
  * @author Siebrand
  * @author The Evil IP address
  */
@@ -75,6 +76,7 @@ $messages['qqq'] = array(
 	'themedesigner-small' => '{{Identical|Small}}',
 	'themedesigner-medium' => '{{Identical|Medium}}',
 	'themedesigner-large' => '{{Identical|Large}}',
+	'themedesigner-tile-background' => 'Used in Theme Designer, and can be triggered to allow the current background graphic to tile, repeating itself around the page.',
 	'themedesigner-tab-theme' => '{{Identical|Theme}}',
 	'themedesigner-rules-favicon-learn-more-link' => 'Learn more about favicons (link)',
 	'themedesigner-history-item' => 'Parameters:
@@ -475,8 +477,15 @@ $messages['diq'] = array(
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-button-cancel' => 'Bıterkne',
 	'themedesigner-button-ok' => 'Temam',
+	'themedesigner-button-upload' => 'Barke',
 	'themedesigner-button-upload-wordmark' => 'Barke',
+	'themedesigner-rules-background' => 'jpg, gif yana png. limita cı {{PLURAL:$1|$1 kilobayt bo|$1 kilobayti bê}}',
 	'themedesigner-default' => 'Hesıbyaye',
+	'themedesigner-size' => 'gırdiye',
+	'themedesigner-button-save' => 'Star ke',
+	'themedesigner-dont-use-a-graphic' => 'wedarne',
+	'themedesigner-history-item' => '$1 ra $2',
+	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Verqayt',
 );
 
@@ -1003,7 +1012,7 @@ $messages['km'] = array(
  */
 $messages['ko'] = array(
 	'themedesigner-or' => '또는',
-	'themedesigner-desc' => '위키 관리자가 스킨을 디자인할 수 있게 해 줍니다.',
+	'themedesigner-desc' => '위키 관리자가 테마를 디자인하도록 허용',
 	'themedesigner-title' => '위키아 테마 디자이너',
 	'themedesigner-background' => '배경',
 	'themedesigner-page' => '문서',
@@ -1011,7 +1020,7 @@ $messages['ko'] = array(
 	'themedesigner-graphic' => '그림',
 	'themedesigner-buttons' => '버튼',
 	'themedesigner-links' => '링크',
-	'themedesigner-header' => '상단부',
+	'themedesigner-header' => '머리말',
 	'themedesigner-text-wordmark' => '글자 로고',
 	'themedesigner-graphic-wordmark' => '그림 로고',
 	'themedesigner-small' => '작게',
@@ -1021,11 +1030,11 @@ $messages['ko'] = array(
 	'themedesigner-fix-background' => '고정',
 	'themedesigner-transparency' => '투명도',
 	'themedesigner-tab-theme' => '테마',
-	'themedesigner-tab-customize' => '커스터마이징',
+	'themedesigner-tab-customize' => '사용자 설정',
 	'themedesigner-tab-wordmark' => '로고',
-	'themedesigner-preview-mode' => '미리 보기...',
+	'themedesigner-preview-mode' => '미리 보기 모드...',
 	'themedesigner-previous-versions' => '이전 버전',
-	'themedesigner-button-save-im-done' => '변경한 테마를 저장하기',
+	'themedesigner-button-save-im-done' => '저장하고 완료',
 	'themedesigner-button-cancel' => '취소',
 );
 
@@ -1954,19 +1963,36 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Sam Wang
  */
 $messages['zh-hans'] = array(
+	'themedesigner-or' => '或',
+	'themedesigner-background' => '背景',
 	'themedesigner-page' => '页面',
 	'themedesigner-color' => '颜色',
+	'themedesigner-graphic' => '图案',
+	'themedesigner-buttons' => '按钮',
+	'themedesigner-links' => '链接',
 	'themedesigner-small' => '小',
 	'themedesigner-medium' => '中',
 	'themedesigner-large' => '大',
+	'themedesigner-tab-customize' => '自定义',
+	'themedesigner-preview-mode' => '预览模式',
 	'themedesigner-button-save-im-done' => '保存，我做好了',
 	'themedesigner-button-cancel' => '取消',
 	'themedesigner-pick-a-color' => '选一个颜色',
 	'themedesigner-button-ok' => '好',
+	'themedesigner-pick-an-image' => '选择图片',
+	'themedesigner-dont-use-a-background' => '不用背景',
 	'themedesigner-button-upload' => '上载',
+	'themedesigner-button-upload-wordmark' => '上传',
+	'themedesigner-rules-background' => 'jpg，gif或png。{{PLURAL:$1|$1 kilobyte|$1 kilobytes}}限制',
+	'themedesigner-default' => '磨人',
+	'themedesigner-font' => '字体',
+	'themedesigner-size' => '大小',
 	'themedesigner-button-save' => '保存',
+	'themedesigner-upload-a-graphic' => '上传图案',
+	'themedesigner-wodmark-preview' => '预览',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

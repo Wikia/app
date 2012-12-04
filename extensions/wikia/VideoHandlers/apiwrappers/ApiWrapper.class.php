@@ -262,37 +262,58 @@ abstract class ApiWrapper {
 		$this->metadata = $metadata;	// must do this to facilitate getters below
 						// $this->metadata will be reset at end of this function
 
-		if (!isset($metadata['videoId']))
-			$metadata['videoId']		= $this->videoId;
-		if (!isset($metadata['title']))
-			$metadata['title']		= $this->getTitle();
-		if (!isset($metadata['published']))
-			$metadata['published']		= $this->getVideoPublished();
-		if (!isset($metadata['category']))
-			$metadata['category']		= $this->getVideoCategory();
-		if (!isset($metadata['canEmbed']))
-			$metadata['canEmbed']		= $this->canEmbed();
-		if (!isset($metadata['hd']))
-			$metadata['hd']			= $this->isHdAvailable();
-		if (!isset($metadata['keywords']))
-			$metadata['keywords']		= $this->getVideoKeywords();
-		if (!isset($metadata['duration']))
-			$metadata['duration']		= $this->getVideoDuration();
-		if (!isset($metadata['aspectRatio']))
-			$metadata['aspectRatio']	= $this->getAspectRatio();
-		if (!isset($metadata['description']))
-			$metadata['description']	= $this->getOriginalDescription();
+		if ( !isset($metadata['videoId']) ) {
+			$metadata['videoId'] = $this->videoId;
+		}
+		if ( !isset($metadata['title']) ) {
+			$metadata['title'] = $this->getTitle();
+		}
+		if ( !isset($metadata['published']) ) {
+			$metadata['published'] = $this->getVideoPublished();
+		}
+		if ( !isset($metadata['category']) ) {
+			$metadata['category'] = $this->getVideoCategory();
+		}
+		if ( !isset($metadata['canEmbed']) ) {
+			$metadata['canEmbed'] = $this->canEmbed();
+		}
+		if ( !isset($metadata['hd']) ) {
+			$metadata['hd'] = $this->isHdAvailable();
+		}
+		if ( !isset($metadata['keywords']) ) {
+			$metadata['keywords'] = $this->getVideoKeywords();
+		}
+		if ( !isset($metadata['duration']) ) {
+			$metadata['duration'] = $this->getVideoDuration();
+		}
+		if ( !isset($metadata['aspectRatio']) ) {
+			$metadata['aspectRatio'] = $this->getAspectRatio();
+		}
+		if ( !isset($metadata['description']) ) {
+			$metadata['description'] = $this->getOriginalDescription();
+		}
 		// for providers that use diffrent video id for embeded code
-		if (!isset($metadata['altVideoId']))
-			$metadata['altVideoId']		= $this->getAltVideoId();
-		if (!isset($metadata['trailerRating']))
-			$metadata['trailerRating']	= $this->getTrailerRating();
-		if (!isset($metadata['industryRating']))
-			$metadata['industryRating']	= $this->getIndustryRating();
-		if (!isset($metadata['ageGate']))
-			$metadata['ageGate']		= $this->isAgeGate();
-		if (!isset($metadata['language']))
-			$metadata['language']		= $this->getLanguage();
+		if ( !isset($metadata['altVideoId']) ) {
+			$metadata['altVideoId'] = $this->getAltVideoId();
+		}
+		if ( !isset($metadata['trailerRating']) ) {
+			$metadata['trailerRating'] = $this->getTrailerRating();
+		}
+		if ( !isset($metadata['industryRating']) ) {
+			$metadata['industryRating'] = $this->getIndustryRating();
+		}
+		if ( !isset($metadata['ageGate']) ) {
+			$metadata['ageGate'] = $this->isAgeGate();
+		}
+		if ( !isset($metadata['language']) ) {
+			$metadata['language'] = $this->getLanguage();
+		}
+		if ( !isset($metadata['tags']) ) {
+			$metadata['tags'] = $this->getVideoTags();
+		}
+		if ( !isset($metadata['provider']) ) {
+			$metadata['provider'] = $this->getProvider();
+		}
 
 		$this->metadata = $metadata;
 
@@ -366,6 +387,18 @@ abstract class ApiWrapper {
 	}
 
 	protected function getLanguage() {
+		return '';
+	}
+
+	protected function getVideoTags() {
+		return '';
+	}
+
+	protected function getGenres() {
+		return '';
+	}
+
+	protected function getActors() {
 		return '';
 	}
 }

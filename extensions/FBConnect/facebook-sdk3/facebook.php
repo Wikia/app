@@ -33,17 +33,16 @@ class Facebook3 extends BaseFacebook
    * @see BaseFacebook::__construct in facebook.php
    */
   public function __construct($config) {
-	if (!session_id()) {
-		// Wikia change - begin
-		wfSuppressWarnings();
-		if (!session_start()) {
-			Wikia::log(__METHOD__, '', 'session creation failed');
-			Wikia::logBacktrace(__METHOD__);
+		// Wikia - change begin
+	  	//  - starting a session so early will cause all traffic to bypass Varnish
+	  	//  - MW's session handling is not initialized at this point
+		/**
+		if (!session_id()) {
+			session_start();
 		}
-		wfRestoreWarnings();
-		// Wikia change - end
-	}
-	parent::__construct($config);
+		**/
+		// Wikia - change begin
+		parent::__construct($config);
   }
 
   protected static $kSupportedKeys =

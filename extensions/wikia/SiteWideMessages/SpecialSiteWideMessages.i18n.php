@@ -809,6 +809,15 @@ $messages['diq'] = array(
 	'swm-list-table-lang' => 'Zıwani',
 	'swm-yes' => 'E',
 	'swm-no' => 'Nê',
+	'swm-mode-users-registration-after' => 'Bahdo',
+	'swm-mode-users-registration-before' => 'Veri',
+	'swm-mode-users-registration-between' => 'Ared',
+	'swm-mode-users-editcount-more' => 'Dehana vêşi',
+	'swm-mode-users-editcount-less' => 'Dehana tayn',
+	'swm-mode-users-editcount-between' => 'Ared',
+	'swm-mode-wikis-created-after' => 'Bahdo',
+	'swm-mode-wikis-created-before' => 'Veri',
+	'swm-mode-wikis-created-between' => 'Ared',
 );
 
 /** Ewe (eʋegbe)
@@ -2110,6 +2119,9 @@ Dit kan niet ongedaan gemaakt worden.',
 	'swm-mode-users-editcount-more' => 'Meer',
 	'swm-mode-users-editcount-less' => 'Minder',
 	'swm-mode-users-editcount-between' => 'Tussen',
+	'swm-mode-wikis-created-after' => 'Na',
+	'swm-mode-wikis-created-before' => 'Voor',
+	'swm-mode-wikis-created-between' => 'Tussen',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -3014,6 +3026,26 @@ $messages['tt-cyrl'] = array(
 	'swm-lang-other' => 'башка телләр',
 );
 
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'swm-label-recipient-users' => 'ⵉⵎⴷⴰⵏⵏ',
+	'swm-label-mode-wikis-all' => 'ⴰⴽⴽ ⵉⴷ ⵡⵉⴽⵉ',
+	'swm-button-send' => '[ ⴰⵣⵏ ]',
+	'swm-button-save' => '[ ⵣⵎⵎⴻⵎ ]',
+	'swm-button-new' => '[ ⴰⵎⴰⵢⵏⵓ ]',
+	'swm-msg-sent-ok' => '<h3>ⵜⴰⴱⵔⴰⵜ ⵜⵍⴽⴻⵎ.</h3>',
+	'swm-list-no-messages' => 'ⵡⴰⵔ ⵜⵉⴱⵔⴰⵜⵉⵏ.',
+	'swm-list-table-id' => 'ⵓⵟⵟⵓⵏ',
+	'swm-list-table-sender' => 'ⴰⵎⴰⵣⴰⵏ',
+	'swm-list-table-wiki' => 'ⵡⵉⴽⵉ',
+	'swm-list-table-group' => 'ⵜⴰⵔⴰⴱⴱⵓⵜ',
+	'swm-list-table-tools' => 'ⵉⵎⴰⵙⵙⵏ',
+	'swm-list-table-lang' => 'ⵜⵓⵜⵍⴰⵢⵉⵏ',
+	'swm-mode-users-editcount-more' => 'ⵓⴳⴰⵔ',
+);
+
 /** Ukrainian (українська)
  * @author Тест
  */
@@ -3063,13 +3095,23 @@ $messages['yi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Sam Wang
  * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
+	'swm-label-preview' => '预览',
+	'swm-label-edit' => '编辑',
+	'swm-label-remove' => '删除',
 	'swm-label-sent' => '已发送',
+	'swm-label-list' => '列表',
+	'swm-label-recipient' => '收件人',
+	'swm-label-recipient-wikis' => '维基',
+	'swm-label-recipient-users' => '用户',
 	'swm-label-mode-wikis-all' => '所有维基',
 	'swm-label-mode-users-all' => '所有用户',
 	'swm-label-content' => '内容',
+	'swm-label-comment' => '评语',
+	'swm-label-language' => '语言',
 	'swm-button-save' => '[ 保存 ]',
 	'swm-button-new' => '[ 新 ]',
 	'swm-list-no-messages' => '没有信息。',
@@ -3078,7 +3120,17 @@ $messages['zh-hans'] = array(
 	'swm-list-table-wiki' => '维基',
 	'swm-list-table-recipient' => '受信者',
 	'swm-list-table-group' => '用户组',
+	'swm-list-table-content' => '内容',
 	'swm-yes' => '是',
 	'swm-no' => '不是',
 	'swm-error-no-such-wiki' => '没有这个维基！',
+	'swm-mode-users-registration-after' => '之后',
+	'swm-mode-users-registration-before' => '之前',
+	'swm-mode-users-registration-between' => '之间',
+	'swm-mode-users-editcount-more' => '更多',
+	'swm-mode-users-editcount-less' => '更少',
+	'swm-mode-users-editcount-between' => '之间',
+	'swm-mode-wikis-created-after' => '之后',
+	'swm-mode-wikis-created-before' => '之前',
+	'swm-mode-wikis-created-between' => '之间',
 );

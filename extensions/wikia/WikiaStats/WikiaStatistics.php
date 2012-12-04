@@ -430,31 +430,22 @@ class WikiaHubStats {
 		$cities = $this->getCities();
 
 		if ( is_array($cities) && !empty($cities) ) {
-			$memkey = wfMemcKey( __METHOD__, $this->mName, $limit );
+			$wkey = md5( implode(":", $cities) );
+			$memkey = wfMemcKey( __METHOD__, $this->mName, $wkey, $limit );
 			$data = $wgMemc->get( $memkey );
 
-			if ( empty($data) && !empty( $wgStatsDBEnabled ) ) {
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-				$oRes = $dbr->select(
-					array( 'page_views' ),
-					array( 'pv_city_id, sum(pv_views) as views' ),
-					array(
-						sprintf( ' pv_use_date >= last_day(now() - interval %d day) ', self::PV_MONTHS * 30 ),
-						'pv_namespace' => 0,
-						' pv_city_id in (' . $dbr->makeList($cities) . ') '
-					),
-					__METHOD__,
-					array(
-						'GROUP BY' => 'pv_city_id'
-					)
-				);
-
-				$order = $data = array();
-				while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-					$order[$oRow->pv_city_id] = $oRow->views;
+			if ( empty($data) && !empty( $wgStatsDBEnabled ) ) {	
+				$order = array();
+				$startDate = date( 'Y-m-01', strtotime('-6 month') );
+				$endDate = date( 'Y-m-01', strtotime('now') );	
+				$pageviews_monthly = DataMartService::getPageviewsMonthly( $startDate, $endDate, $cities );
+				if ( empty( $pageviews_monthly ) ) {
+					foreach ( $pageviews_monthly as $wiki_id => $data ) {
+						$order[ $wiki_id ] = $data[ 'SUM' ];
+					}
 				}
-				$dbr->freeResult( $oRes );
 
+				$data = array();
 				if ( !empty($order) ) {
 					arsort($order);
 					$loop = 0; foreach ( $order as $city_id => $views ) {

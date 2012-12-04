@@ -153,4 +153,14 @@ class EditPageService extends Service {
 		wfProfileOut(__METHOD__);
 		return $langbox;
 	}
+
+	public function getTemplatesList() {
+		wfProfileIn(__METHOD__);
+
+		$templates = $this->mTitle->getTemplateLinksFrom();
+		$html = Linker::formatTemplates( $templates );
+
+		wfProfileOut(__METHOD__);
+		return $html;
+	}
 }

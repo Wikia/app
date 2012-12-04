@@ -22,6 +22,7 @@
 		font-size: 18px;
 		margin-top: 30px;
 		overflow: hidden;
+		padding-bottom: 3px;
 	}
 	h3 {
 		font-size: 16px;
@@ -461,7 +462,7 @@ table.wikitable {
 }
 
 .article-table { // This parallels WikiaTable in _table.scss
-	@extend .WikiaTable
+	@extend .WikiaTable;
 }
 
 // /** Interlang Links **/
@@ -501,6 +502,9 @@ table.wikitable {
 	}
 }
 
+.TOC_hide #toctitle + ul {
+	display: none;
+}
 
 // /** WikiaWideTables **/
 .WikiaWideTablesWrapper {

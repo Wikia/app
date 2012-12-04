@@ -8,7 +8,7 @@ class Wall extends WikiaModel {
 	protected $mSorting = false;
 	protected $mRelatedPageId = false;
 	protected $cacheable = true;
-	
+
 	static public function newFromId( $id ) {
 		$title = Title::newFromId($id);
 		if( empty($title) ) {
@@ -19,6 +19,10 @@ class Wall extends WikiaModel {
 
 	static public function newFromTitle( Title $title ) {
 		wfProfileIn(__METHOD__);
+		if(!($title instanceof Title)) {
+			wfProfileOut(__METHOD__);
+			return null;
+		}
 
 		$wall = self::getEmpty();
 		$wall->mTitle = $title;
@@ -29,11 +33,14 @@ class Wall extends WikiaModel {
 
 	static public function newFromRelatedPages( Title $title, $relatedPageId ) {
 		wfProfileIn(__METHOD__);
+		if(!($title instanceof Title)) {
+			wfProfileOut(__METHOD__);
+			return null;
+		}
 		$wall = self::getEmpty();
 		$wall->mTitle = $title;
 		$wall->mCityId = F::app()->wg->CityId;
 		$wall->mRelatedPageId = (int) $relatedPageId;
-
 		wfProfileOut(__METHOD__);
 		return $wall;
 	}
@@ -53,9 +60,23 @@ class Wall extends WikiaModel {
 		return $this->mTitle;
 	}
 	
-	public function getDescription() {
+	public function getDescription($parse = true) {
 		$article = new Article($this->getTitle());
-		return $article->getText();
+		if(!$parse) {
+			return $article->getText();
+		}
+
+		return preg_replace_callback('/(\[\[[^\[\]\r\n\t]*\]\])/i', function($match) {
+			$app = F::App();
+			$options = $app->wg->Out->parserOptions();
+			$desc = str_replace('[[', '[[:', $match[0] );
+			$parserOut = $app->wg->Parser->parse($desc, $app->wg->Title, $options );
+			$desc = $parserOut->getText();
+			//TODO: maybe there is some parser option to not wrap everything in <p>
+			$desc = str_replace('<p>', '', $desc );
+			$desc = str_replace('</p>', '', $desc );
+			return $desc; 			
+		}, $article->getText() );
 	}
 
 	public function getRelatedPageId() {
@@ -224,9 +245,9 @@ class Wall extends WikiaModel {
 
 	public function moveAllThread(Wall $dest) {
 		CommentsIndex::changeParent( $this->getId(), $dest->getId() );
-		
+
 		$wallHistory = new WallHistory( $this->mCityId );
-		$wallHistory->moveThread( $this->getId(), $dest->getId() );
+		$wallHistory->moveThreads( $this->getId(), $dest->getId() );
 	}
 	
 	public function setMaxPerPage( $val ) {

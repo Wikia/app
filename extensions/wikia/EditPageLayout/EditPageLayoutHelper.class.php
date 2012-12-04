@@ -104,7 +104,7 @@ class EditPageLayoutHelper {
 		$this->app->registerHook('MakeGlobalVariablesScript', 'EditPageLayoutHelper', 'onMakeGlobalVariablesScript', array(), false, $this);
 		$this->app->registerHook('SkinGetPageClasses', 'EditPageLayoutHelper', 'onSkinGetPageClasses', array(), false, $this);
 
-		WF::setInstance('EditPageLayoutHelper', $this );
+		F::setInstance('EditPageLayoutHelper', $this );
 
 		$this->editPage->setHelper( $this );
 
@@ -126,7 +126,7 @@ class EditPageLayoutHelper {
 		// on edit page so it will make proper list of modules
 		$action = $this->request->setVal('action',null);
 		$diff = $this->request->setVal('diff',null);
-		$railModuleList = WF::build('BodyController')->getRailModuleList();
+		$railModuleList = F::build('BodyController')->getRailModuleList();
 		$this->request->setVal('action',$action);
 		$this->request->setVal('diff',$diff);
 

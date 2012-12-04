@@ -263,6 +263,8 @@ Liftium.callAd = function (sizeOrSlot, slotPlacement) {
 		Liftium.slotPlacements[slotname] = slotPlacement;
 	}
 
+	WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':'slot/' + sizeOrSlot, 'ga_action':slotPlacement, 'ga_label':'liftium js'}, 'ga');
+
 	document.write('<div id="' + slotname + '">');
 	Liftium._callAd(slotname);
 	document.write("</div>");
@@ -391,13 +393,6 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, slotPlacemen
 	// this is a(n ugly?) shortcut, the right name would be slotname's parent div
 	var placement = iframeElement.id.replace(/_iframe$/, "");
 	WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':'slot/' + sizeOrSlot, 'ga_action':placement, 'ga_label':'liftium'}, 'ga');
-
-	/* ???	
-	var track_string = Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", sizeOrSlot + "_" + placement]);
-	if (track_string.indexOf('unknown') != -1) {
-		_wtq.push([null, 'liftium.varia', ['error', 'fb_15045', track_string]]);
-	}
-	*/
 
 	var t = Liftium.getNextTag(slotname);
 	if (!t) {
@@ -1690,8 +1685,9 @@ Liftium.onLoadHandler = function () {
 		Liftium.loadDelay += Liftium.loadDelay;
 		window.setTimeout(Liftium.onLoadHandler, Liftium.loadDelay);
 	} else {
-		Liftium.d("Gave up waiting for ads to load, sending beacon now");
-		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/gave_up_waiting_for_ads', 'ga_action':'gave_up_waiting_for_ads'}, 'ga');
+		var config_status = Liftium.e(Liftium.config) ? 'no config' : 'config loaded';
+		Liftium.d("Gave up waiting for ads to load (" + config_status + "), sending beacon now", 1);
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/gave_up_waiting_for_ads', 'ga_action':config_status}, 'ga');
 		Liftium.sendBeacon();
 	}
 };

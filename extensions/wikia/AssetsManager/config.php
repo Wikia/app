@@ -128,6 +128,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/AdEngine/js/Krux.run.js', // Needs to load after Krux.js, jQuery and AdEngine2.run.js
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js', // WikiaBar is enabled sitewide
 		'//extensions/wikia/Chat2/js/ChatEntryPoint.js', // Chat is enabled sitewide
+		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js', // Related Forum Discussion is on all article pages
 	)
 );
 
@@ -286,7 +287,6 @@ $config['oasis_anon_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//skins/oasis/js/LatestActivity.js',
-		'//skins/oasis/js/AnonTOC.js',
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
@@ -329,6 +329,8 @@ $config['gameguides_js'] = array(
 
 		//core modules
 		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
 
 		//tracker
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
@@ -356,6 +358,7 @@ $config['gameguides_js'] = array(
 		//groups
 		'#group_wikiamobile_tables_js',
 		'#group_wikiamobile_scroll_js',
+		'#group_wikiamobile_mediagallery_js',
 
 		//modules
 		'//extensions/wikia/WikiaMobile/js/toc.js',
@@ -1186,5 +1189,14 @@ $config['categoryselect_edit_js'] = array(
 		'//resources/jquery.ui/jquery.ui.mouse.js',
 		'//resources/jquery.ui/jquery.ui.sortable.js',
 		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
+	)
+);
+
+$config['history_polyfill_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/wikia/polyfills/history/history.adapter.jquery.js',
+		//'//resources/wikia/polyfills/history/history.html4.js', // add this back in when we're ready to support IE
+		'//resources/wikia/polyfills/history/history.js',
 	)
 );

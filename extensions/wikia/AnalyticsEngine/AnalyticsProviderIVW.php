@@ -58,7 +58,12 @@ class AnalyticsProviderIVW implements iAnalyticsProvider {
 			return 'RC_WIKIA_COMMUNITY';
 		}
 
-		if (HubService::getComscoreCategory(F::app()->wg->CityId)->cat_name == 'Entertainment') return 'RC_WIKIA_UGCENT';
+		if (strpos(F::app()->wg->DartCustomKeyValues, 'anime') !== false) return 'RC_WIKIA_UGCANIME';
+
+		$cat_name = HubService::getComscoreCategory(F::app()->wg->CityId)->cat_name;
+		if ($cat_name == 'Entertainment') return 'RC_WIKIA_UGCENT';
+		if ($cat_name == 'Gaming') return 'RC_WIKIA_UGCGAMES';
+		if ($cat_name == 'Lifestyle') return 'RC_WIKIA_UGCLIFESTYLE';
 
 		return 'RC_WIKIA_UGC';
 	}

@@ -389,5 +389,6 @@ $.widget( 'wikia.linksuggest', {
 // in this JS file
 $( function() {
 	// Apply font-style for bug in IE. This should be done using a style sheet
-	$( '#wpTextbox1' ).css( 'font-family', 'monospace' ).linksuggest();
+	// BugId:68869 removed unnecessary inline style. Seems to work fine in IE anyway
+	$( '#wpTextbox1' ).linksuggest();
 });

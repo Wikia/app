@@ -78,6 +78,16 @@ $messages['az'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** South Azerbaijani (تورکجه)
+ * @author E THP
+ */
+$messages['azb'] = array(
+	'quickstats-header-date' => 'تاریخ',
+	'quickstats-header-views' => 'گؤرونوش‌لر',
+	'quickstats-header-edits' => 'دَییشدیرمه‌لر',
+	'quickstats-header-photos' => 'شکیل‌لر',
+);
+
 /** Bashkir (башҡортса)
  * @author ҒатаУлла
  */
@@ -105,6 +115,18 @@ $messages['bg'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
+);
+
+/** Tibetan (བོད་ཡིག)
+ * @author YeshiTuhden
+ */
+$messages['bo'] = array(
+	'quickstats-header-label' => 'མགྱོགས་མྱུར་སྡོམ་རྩིས་',
+	'quickstats-header-date' => 'ཟླ་ཚེས་',
+	'quickstats-header-edits' => 'རྩོམ་སྒྲིག་',
+	'quickstats-header-photos' => 'འདྲ་པར་',
+	'quickstats-header-likes' => 'དགའ་',
+	'quickstats-totals-label' => 'ཡོངས་བགྲང་',
 );
 
 /** Breton (brezhoneg)
@@ -138,6 +160,15 @@ $messages['ca'] = array(
 	'quickstats-totals-label' => 'Totals',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Veure més estadístiques]]',
 	'quickstats-number-shortening' => '$1K',
+);
+
+/** Sorani Kurdish (کوردی)
+ * @author Calak
+ */
+$messages['ckb'] = array(
+	'quickstats-header-date' => 'ڕێکەوت',
+	'quickstats-header-edits' => 'دەستکارییەکان',
+	'quickstats-header-photos' => 'وێنەکان',
 );
 
 /** Czech (česky)
@@ -208,6 +239,7 @@ $messages['diq'] = array(
  * @author Glavkos
  */
 $messages['el'] = array(
+	'quickstats-header-label' => 'Γρήγορα Στατιστικά',
 	'quickstats-header-date' => 'Ημερομηνία',
 	'quickstats-header-views' => 'Επισκέψεις',
 	'quickstats-header-edits' => 'Επεξεργασίες',
@@ -467,11 +499,14 @@ $messages['ku-latn'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'quickstats-header-label' => 'Ministatistik',
 	'quickstats-header-date' => 'Datum',
+	'quickstats-header-views' => 'Säitenofruffer',
 	'quickstats-header-edits' => 'Ännerungen',
 	'quickstats-header-photos' => 'Fotoen',
 	'quickstats-header-likes' => 'Hunn ech gär',
 	'quickstats-totals-label' => 'Total',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Méi Statistiken]]',
 );
 
 /** Lithuanian (lietuvių)
@@ -653,6 +688,7 @@ $messages['pt'] = array(
  * @author Giro720
  * @author Luckas Blade
  * @author Pedroca cerebral
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
 	'quickstats-header-label' => 'Estatísticas rápidas',
@@ -660,6 +696,7 @@ $messages['pt-br'] = array(
 	'quickstats-header-views' => 'Visualizações',
 	'quickstats-header-edits' => 'Edições',
 	'quickstats-header-photos' => 'Fotos',
+	'quickstats-header-likes' => 'Eu Gosto',
 	'quickstats-totals-label' => 'Totais',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ver mais estatísticas]]',
 	'quickstats-number-shortening' => '$1K',
@@ -835,6 +872,15 @@ $messages['tt-cyrl'] = array(
  */
 $messages['ttt'] = array(
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|istatistikan diyin]]',
+);
+
+/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
+ * @author Tifinaghes
+ */
+$messages['tzm'] = array(
+	'quickstats-header-date' => 'ⴰⴽⵓⴷ',
+	'quickstats-header-photos' => 'ⵜⵉⵡⵍⴰⴼⵉⵏ',
+	'quickstats-totals-label' => 'ⵎⴰⵕⵕⴰ',
 );
 
 /** Ukrainian (українська)

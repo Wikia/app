@@ -207,29 +207,36 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 * primary intended use is for Purging those URLs in Varnish
 	 * @return String url
 	 */
-	public static function getUrl($method, $format = 'html', $params = array() ) {
+	public static function getUrl( $method, $params = array() ) {
 		$app = F::app();
-		$basePath = $app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
-		$baseParams = array(
-			'controller' => get_called_class(),
-			'method' => $method,
-			'format' => $format,
-		);
-		ksort($params);
-		$params = array_merge( $baseParams, $params );
-		return $app->wf->AppendQuery( $basePath, $params );
-	}
 
+		$basePath = $app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
+
+		$baseParams = array(
+			'controller' => preg_replace( "/Controller$/", '', get_called_class() ),
+			'method' => $method
+		);
+
+		ksort( $params );
+
+		return $app->wf->AppendQuery(
+			$basePath,
+			array_merge( $baseParams, $params ) // all params
+		);
+	}
 
 	/**
 	 * purge external method call from caches
 	 */
-	public static function purgeMethod($method, $format = 'html', $params = array() ) {
-		$url = call_user_func(get_called_class()."::getUrl", $method, $format, $params );
-		$squidUpdate = new SquidUpdate( array($url) );
+	public static function purgeMethod( $method, $params = array() ) {
+		$squidUpdate = new SquidUpdate(
+			array(
+				self::getUrl( $method, $params )
+			)
+		);
 		$squidUpdate->doUpdate();
 	}
-	
+
 	/**
 	 *  purge external method with multiple sets of parameters 
 	 * 
@@ -241,15 +248,14 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 *  we can call somectr::purgeMethodWithMultipleInputs('getSomeData', 'html', array( array('articleId' => 1), array('articleId' => 2) ) );
 	 *   
 	 */
-	public static function purgeMethodWithMultipleInputs($method, $format = 'html', $paramsArray = array() ) {
+	public static function purgeMethodWithMultipleInputs($method, $paramsArray = array() ) {
 		$urls = array();
 		foreach($paramsArray as $params) {
-			$url = call_user_func(get_called_class()."::getUrl", $method, $format, $params );
+			$url = self::getUrl( $method, $params );
 			$urls[] = $url;			
 		}
 
 		$squidUpdate = new SquidUpdate( $urls );
 		$squidUpdate->doUpdate();		
 	}
-
 }

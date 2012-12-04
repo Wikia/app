@@ -53,6 +53,7 @@ var Wall = $.createClass(Object, {
 			.on('mouseleave', '.follow', this.proxy(this.unhoverFollow))
 			.on('click', '.load-more a', this.proxy(this.loadMore))
 			.on('click', '.related-topics .edit-topic-link', this.proxy(this.handleEditTopics))
+			.on('click', '.move-thread', this.proxy(this.moveThread))
 			// Fix FireFox bug where textareas remain disabled on page reload
 			.find('textarea').removeAttr('disabled');
 
@@ -672,6 +673,52 @@ var Wall = $.createClass(Object, {
 		
 		messageTopic.input.focus();
 		
+	},
+	
+	moveThread: function(e) {
+		var id = $(e.target).closest('.message').data('id');
+		$.nirvana.sendRequest({
+			controller: 'WallExternalController',
+			method: 'moveModal',
+			format: 'html',
+			data: {
+				id: id
+			},
+			callback: function(html) {
+				var dialog = $(html).makeModal({
+					'width': 500
+				});
+				var buttons = $('.modalToolbar button'),
+					form = new WikiaForm(dialog.find('.WikiaForm'));
+				dialog.on('click.Wall', '.cancel', function(e) {
+					dialog.closeModal();
+				}).on('click.Wall', '.submit', function(e) {
+					buttons.attr('disabled', true);
+					$.nirvana.sendRequest({
+						controller: 'WallExternalController',
+						method: 'moveThread',
+						format: 'json',
+						data: {
+							destinationBoardId: dialog.find('.destinationBoardId option:selected').val(),
+							rootMessageId: id
+						},
+						callback: function(json) {
+							if(json.status === 'ok') {
+								new Wikia.Querystring(window.location + '').addCb().goTo();
+							} else if(json.status === 'error') {
+								form.clearAllInputErrors();
+								if(json.errorfield) {
+									form.showInputError(json.errorfield, json.errormsg);
+								} else {
+									form.showGenericError(json.errormsg);
+								}
+								buttons.removeAttr('disabled');
+							}
+						}
+					});
+				});
+			}
+		});
 	},
 
 	proxy: function(func) {

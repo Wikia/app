@@ -523,7 +523,7 @@ class SitemapPage extends UnlistedSpecialPage {
 			$type = $updater->getDB()->getType();
 			if( isset( $map[$type] ) ) {
 				$sql = dirname( __FILE__ ) . "/" . $map[ $type ];
-				$updater->addExtensionTable( 'wikia_page_backlinks', $sql );
+				$updater->addExtensionTable( SitemapPage::BLOBS_TABLE_NAME, $sql );
 			}
 			else {
 				throw new MWException( "Sitemap extension does not currently support $type database." );

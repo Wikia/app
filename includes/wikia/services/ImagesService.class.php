@@ -33,28 +33,6 @@ class ImagesService extends Service {
 		return array('src' => $imageSrc, 'page' => $imagePage);
 	}
 
-	public static function getImageOriginalUrl( $wikiId, $pageId ) {
-		$app = F::app();
-
-		$app->wf->ProfileIn(__METHOD__);
-
-		$dbname = WikiFactory::IDtoDB($wikiId);
-
-		$title = GlobalTitle::newFromId( $pageId, $wikiId );
-
-		$param = array(
-			'action' => 'query',
-			'prop' => 'imageinfo',
-			'iiprop' => 'url',
-			'titles' => $title->getPrefixedText(),
-		);
-
-		$response = ApiService::foreignCall($dbname, $param);
-
-		$app->wf->ProfileOut(__METHOD__);
-		return array( 'src' => $imageSrc, 'page' => $imagePage );
-	}
-
 	/**
 	 * get image page url
 	 * @param integer $wikiId

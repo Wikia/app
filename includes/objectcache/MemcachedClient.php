@@ -1016,13 +1016,17 @@ class MWMemcached {
 				}
 
 				if ( $this->_have_zlib && $flags & self::COMPRESSED ) {
+					wfProfileIn( __METHOD__ . '::uncompress' );
 					$ret[$rkey] = gzuncompress( $ret[$rkey] );
+					wfProfileOut( __METHOD__ . '::uncompress' );
 				}
 
 				$ret[$rkey] = rtrim( $ret[$rkey] );
 
 				if ( $flags & self::SERIALIZED ) {
+					wfProfileIn( __METHOD__ . '::unserialize' );
 					$ret[$rkey] = unserialize( $ret[$rkey] );
+					wfProfileOut( __METHOD__ . '::unserialize' );
 				}
 
 			} else {

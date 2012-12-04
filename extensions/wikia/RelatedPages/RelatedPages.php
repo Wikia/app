@@ -19,6 +19,7 @@ $wgExtensionCredits['parserhook'][] = array(
 $dir = dirname(__FILE__) . '/';
 
 // hooks
+
 $wgHooks['OutputPageMakeCategoryLinks'][] = 'RelatedPages::onOutputPageMakeCategoryLinks';
 array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedPages::onOutputPageBeforeHTML' );
 $wgHooks['ArticleSaveComplete'][] = 'RelatedPagesController::onArticleSaveComplete';

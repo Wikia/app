@@ -201,4 +201,5 @@
 		'cnw-keys': <?= json_encode($keys) ?>
 	};
 	var themes = <?= json_encode($wg->OasisThemes) ?>;
+	var applicationThemeSettings = <?= json_encode($applicationThemeSettings) ?>;
 </script>

@@ -40,6 +40,7 @@ $messages['en'] = array(
 	'videos-error-unknown' => 'An unknown error occurred. Code: $1.',
 	'videos-error-old-type-video' => 'Old type of videos no longer supported (VideoPage)',
 	'videos-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refesh the page.',
+	'videos-initial-upload-edit-summary' => 'created video',
 );
 
 /** Message documentation (Message documentation) */

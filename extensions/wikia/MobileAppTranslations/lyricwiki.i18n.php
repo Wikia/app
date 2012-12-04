@@ -581,7 +581,7 @@ $messages['km'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
-	'app-loading' => '로드 중...',
+	'app-loading' => '불러오는 중...',
 	'app-tab-search' => '찾기',
 	'app-tab-about' => '소개',
 	'app-tab-browse' => 'A..Z',
@@ -879,9 +879,10 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Malafaya
  * @author SandroHc
+ * @author Waldir
  */
 $messages['pt'] = array(
-	'app-loading' => 'A carregar...',
+	'app-loading' => 'A carregar…',
 	'app-tab-search' => 'Pesquisar',
 	'app-tab-about' => 'Sobre',
 	'app-tab-browse' => 'A..Z',

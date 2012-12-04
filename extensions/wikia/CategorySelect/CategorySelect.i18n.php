@@ -302,8 +302,13 @@ $messages['diq'] = array(
 
 /** Greek (Ελληνικά)
  * @author Crazymadlover
+ * @author Glavkos
  */
 $messages['el'] = array(
+	'categoryselect-addcategory-button' => 'Προσθήκη κατηγορίας',
+	'categoryselect-addcategory-edit' => 'Προσθήκη μιας κατηγορίας',
+	'categoryselect-suggest-hint' => 'Πατήστε Enter όταν γίνει',
+	'categoryselect-button-save' => 'Αποθήκευση',
 	'categoryselect-button-cancel' => 'Ακύρωση',
 );
 
@@ -348,12 +353,13 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author ZxxZxxZ
  */
 $messages['fa'] = array(
 	'categoryselect-addcategory-button' => 'افزودن رده',
 	'categoryselect-suggest-hint' => 'پس از اتمام دکمه اینتر را فشار دهید',
 	'categoryselect-edit-summary' => 'افزودن رده',
-	'categoryselect-button-save' => 'ذخیره رده',
+	'categoryselect-button-save' => 'ذخیره کردن',
 	'categoryselect-button-cancel' => 'لغو',
 );
 
@@ -497,7 +503,7 @@ $messages['hu'] = array(
 $messages['ia'] = array(
 	'categoryselect-desc' => 'Provide un interfacie pro gerer le categorias in un articulo sin modificar tote le articulo.',
 	'categoryselect-code-view' => 'Vista de codice',
-	'categoryselect-code-view-placeholder' => 'Adder categorias hic, p.ex. [[Category:Nomine]]',
+	'categoryselect-code-view-placeholder' => 'Adde categorias hic, p.ex. [[Category:Nomine]]',
 	'categoryselect-visual-view' => 'Vista graphic',
 	'categoryselect-infobox-caption' => 'Optiones de categoria',
 	'categoryselect-infobox-category' => 'Entra le nomine del categoria:',
@@ -952,11 +958,13 @@ $messages['pt'] = array(
  * @author Aristóbulo
  * @author Giro720
  * @author Jesielt
+ * @author TheGabrielZaum
  * @author 555
  */
 $messages['pt-br'] = array(
 	'categoryselect-desc' => 'Disponibiliza uma interface para a administração de categorias de uma página sem que seja necessário editá-lo por inteiro',
 	'categoryselect-code-view' => 'Ver em modo de código',
+	'categoryselect-code-view-placeholder' => 'Adicione categorias aqui, ex. [[Category:Nome]]',
 	'categoryselect-visual-view' => 'Exibição visual',
 	'categoryselect-infobox-caption' => 'Opções de categoria',
 	'categoryselect-infobox-category' => 'Dê o nome da categoria:',
@@ -974,7 +982,8 @@ $messages['pt-br'] = array(
 	'categoryselect-error-user-rights' => 'Erro nos direitos de usuário.',
 	'categoryselect-error-db-locked' => 'O banco de dados está bloqueado.',
 	'categoryselect-edit-abort' => "A alteração que você tentou fazer foi abortada pelo ''hook'' de uma extensão",
-	'tog-disablecategoryselect' => 'Desabilitar os botões de aplicação de categoria', # Fuzzy
+	'tog-disablecategoryselect' => 'Desabilitar o módulo de categorias (apenas aplicado caso a edição em modo visual foi desabilitada)',
+	'tog-disablecategoryselect-v2' => 'Desativar o módulo de Categorias (aplicado apenas se o Modo Visual está desativado)',
 );
 
 /** Romanian (română)

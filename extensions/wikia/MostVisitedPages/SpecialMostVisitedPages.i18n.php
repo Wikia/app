@@ -138,6 +138,7 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'mostvisitedpagessearchtext' => 'Namey wesiqa:',
 	'mostvisitedpagessearchbtn' => 'cı geyre',
 );
 

@@ -165,10 +165,12 @@ class WikiaSearch extends WikiaObject {
 			
 		} catch ( Exception $e ) {
 			F::build('Wikia')->log(__METHOD__, 'Querying Solr First Time', $e);
-			$searchConfig->setSkipBoostFunctions( true );
+			$searchConfig	->setSkipBoostFunctions( true )
+							->setError( $e );
 			try {
 				$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
 			} catch ( Exception $e ) {
+				$searchConfig->setError( $e );
 				F::build('Wikia')->log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
 				$result = F::build('Solarium_Result_Select_Empty');
 			}
@@ -193,6 +195,52 @@ class WikiaSearch extends WikiaObject {
 		wfProfileOut(__METHOD__);
 		return $results;
 	}
+	
+	/**
+	 * Searches using strict lucene query syntax -- no dismax here. 
+	 * What you set in the query value of the searchconfig is what we search for.
+	 * Please note the risk of not getting results 
+	 * @param  WikiaSearchConfig $searchConfig
+	 * @return WikiaSearchResultSet
+	 */
+	public function searchByLuceneQuery( WikiaSearchConfig $searchConfig ) {
+		$this->wf->ProfileIn( __METHOD__ );
+		
+		$query = $this->client->createSelect();
+		$query->setDocumentClass( 'WikiaSearchResult' );
+		
+		$sort = $searchConfig->getSort();
+		
+		$query	->addFields		( $searchConfig->getRequestedFields() )
+				->removeField	('*')
+			  	->setStart		( $searchConfig->getStart() )
+				->setRows		( $searchConfig->getLength() )
+				->addSort		( $sort[0], $sort[1] )
+				->addParam		( 'timeAllowed', 5000 )
+				->setQuery		( $searchConfig->getQuery( WikiaSearchConfig::QUERY_RAW ) )
+		;
+		
+		try {
+			
+			$result = $this->client->select( $query );
+			
+		} catch ( Exception $e ) {
+			F::build('Wikia')->log(__METHOD__, 'Querying Solr First Time', $e);
+			$searchConfig->setError( $e );
+			$result = F::build('Solarium_Result_Select_Empty');
+		}
+		
+		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
+		
+		$searchConfig->setResults		( $results )
+					 ->setResultsFound	( $results->getResultsFound() )
+		;		
+		
+		$this->wf->ProfileOut( __METHOD__ );
+		
+		return $results;
+	}
+	
 	
 	/**
 	 * Retrives interesting terms from a MoreLikeThis search
@@ -370,7 +418,7 @@ class WikiaSearch extends WikiaObject {
 	public static function valueForField ( $field, $value, array $params = array() )
 	{
 		wfProfileIn( __METHOD__ );
-		$lang 		= isset( $params['lang']   ) && $params['lang']   !== false ? $lang : null;
+		$lang 		= isset( $params['lang']   ) && $params['lang']   !== false ? $params['lang'] : null;
 		$negate		= isset( $params['negate'] ) && $params['negate'] !== false ? '-' : '';
 	    $boostVal	= isset( $params['boost']  ) && $params['boost']  !== false ? '^'.$params['boost'] : '';
 	    $evaluate	= isset( $params['quote']  ) && $params['quote']  !== false ? "%s(%s:{$params['quote']}%s{$params['quote']})%s" : '%s(%s:%s)%s';
@@ -460,7 +508,7 @@ class WikiaSearch extends WikiaObject {
 					 ->setFragSize					( self::HL_FRAG_SIZE )      
 					 ->setSimplePrefix				( self::HL_MATCH_PREFIX )
 					 ->setSimplePostfix				( self::HL_MATCH_POSTFIX )
-					 ->setAlternateField			( 'html' )
+					 ->setAlternateField			( 'nolang_txt' )
 					 ->setMaxAlternateFieldLength	( 100 )
 		;
 		
@@ -544,7 +592,7 @@ class WikiaSearch extends WikiaObject {
 	 */
 	protected function getQueryFieldsString( WikiaSearchConfig $searchConfig ) {
 
-		$queryFieldsString = sprintf( '%s^5 %s^1.5 %s^4 %s^1', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ), self::field( 'categories' ) );
+		$queryFieldsString = sprintf( '%s^5 %s^1.5 %s^4 %s^1 %s^7', self::field( 'title' ), self::field( 'html' ), self::field( 'redirect_titles' ), self::field( 'categories' ), self::field( 'nolang_txt' ) );
 
 		if ( $searchConfig->getVideoSearch() && $this->wg->LanguageCode !== 'en' ) {
 		    // video wiki requires english field search
