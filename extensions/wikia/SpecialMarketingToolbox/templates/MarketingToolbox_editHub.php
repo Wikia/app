@@ -20,10 +20,13 @@
 			<p class="error"><?=$errorMessage ?></p>
 		<? endif ?>
 
-		<form method="post" name="upload-tool" class="WikiaForm" enctype="multipart/form-data">
+		<form id="marketing-toolbox-form" method="post" name="upload-tool" class="WikiaForm" enctype="multipart/form-data">
 			<?=$moduleContent?>
 
-			<input type="submit" value="<?= wfMsg('marketing-toolbox-edithub-save-button'); ?>" />
+			<div class="submits">
+				<input id="marketing-toolbox-clearall" class="secondary" type="button" value="<?= wfMsg('marketing-toolbox-edithub-clearall-button'); ?>" />
+				<input type="submit" value="<?= wfMsg('marketing-toolbox-edithub-save-button'); ?>" />
+			</div>
 		</form>
 	</div>
 </section>
