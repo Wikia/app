@@ -2,7 +2,7 @@
 
 function wyvlog($x) {
         foreach( explode("\n",var_export($x,1)) as $line) {
-                error_log('tomek'.$line);
+                error_log('PHP Warning: tomek'.$line);
         }
 }
 
