@@ -1,4 +1,4 @@
-<div class="input-group<? if ($inputData['label']): ?> required<? endif ?>">
+<div class="input-group<? if ($inputData['isRequired']): ?> required<? endif ?>">
 	<? if (!empty($inputData['label'])): ?>
 		<label for="<?=$inputData['name']?>"><?=$inputData['label']?></label>
 	<? endif ?>

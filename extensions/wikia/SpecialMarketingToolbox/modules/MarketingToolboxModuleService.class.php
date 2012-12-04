@@ -3,7 +3,6 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	const CLASS_NAME_PREFIX = 'MarketingToolboxModule';
 	const CLASS_NAME_SUFFIX = 'Service';
 
-	abstract protected function getValidationRules();
 	abstract protected function getFormFields();
 
 	static public function getModuleByName($name) {
@@ -19,12 +18,12 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	public function validate($data) {
 		$out = array();
 
-		$rules = $this->getValidationRules();
+		$fields = $this->getFormFields();
 
-		foreach ($rules as $fieldName => $validator) {
+		foreach ($fields as $fieldName => $field) {
 			$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
-			if (!$validator->isValid($fieldData)) {
-				$out[$fieldName] = $validator->getError()->getMsg();
+			if (!$field['validator']->isValid($fieldData)) {
+				$out[$fieldName] = $field['validator']->getError()->getMsg();
 			}
 		}
 
@@ -32,7 +31,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	public function filterData($data) {
-		return array_intersect_key($data, $this->getValidationRules());
+		return array_intersect_key($data, $this->getFormFields());
 	}
 
 	protected function getView($viewName, $data, $viewType = WikiaResponse::FORMAT_HTML) {

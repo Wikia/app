@@ -1,6 +1,6 @@
 <?
 class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService {
-	protected function getValidationRules() {
+	protected function getFormFields() {
 		return array();
 	}
 }
