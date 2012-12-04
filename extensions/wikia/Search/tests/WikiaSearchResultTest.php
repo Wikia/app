@@ -373,4 +373,55 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 		);
 
 	}
+	
+	/**
+	 * bugid: 69027
+	 * @covers WikiaSearchResult::getTitleObject
+	 */
+	public function testGetTitleObjectForEmptyButNonNullTitles() {
+		
+		$result = $this->getMockBuilder( 'WikiaSearchResult' )
+						->setMethods( array( 'getTitle' ) )
+						->getMock();
+		
+		$result
+			->expects	( $this->at( 0 ) )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( '' ) ) // this is not a valid title
+		;
+		
+		$titleObjectPlaceholder = (object) array( 'foo' => 'bar' );
+		
+		$titleObject = new ReflectionProperty( 'WikiaSearchResult', 'titleObject' );
+		$titleObject->setAccessible( true );
+		$titleObject->setValue( $result, $titleObjectPlaceholder );
+		
+		$this->assertEquals(
+				$titleObjectPlaceholder,
+				$result->getTitleObject(),
+				'WikiaSearchResult::getTitleObject should return whatever value is presently set in the titleObject property if there is no title string available from WikiaSearchResult::getTitle'
+		);
+		
+		$titleObject->setValue( $result, null );
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$result
+			->expects	( $this->at( 0 ) )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( '0' ) ) // this is a valid title, but empty() returns true
+		;
+		
+		$this->proxyClass( 'Title', $mockTitle, 'MakeTitle' );
+		$this->mockApp();
+		
+		$this->assertEquals(
+				$mockTitle,
+				$result->getTitleObject(),
+				'WikiaSearchResult::getTitleObject should set the titleObject property if a title string can be found and a title object instantiated'
+		);
+		
+	}
 }
