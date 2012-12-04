@@ -39,6 +39,8 @@ $messages['en'] = array(
 	'marketing-toolbox-edithub-save-button' => 'Save',
 	'marketing-toolbox-edithub-clearall-button' => 'Clear all',
 
+	'marketing-toolbox-edithub-clearall-confirmation' => 'Are you sure you want to clear the entire pulse?',
+
 	'marketing-toolbox-hub-module-slider' => 'Slider',
 	'marketing-toolbox-hub-module-pulse' => 'Pulse',
 	'marketing-toolbox-hub-module-wikias-picks' => 'Wikia\'s picks',
