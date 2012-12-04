@@ -455,7 +455,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @return boolean
 	 */
 	public function isOnlyArticleMatchFound() {
-		return $this->getResultsNum() == 1 && $this->results[0]->getVar( 'isArticleMatch' ) == true;
+		return $this->getResultsNum() == 1 && $this->results[0]->getVar( 'isArticleMatch' );
 	}
 
 	/* (non-PHPdoc)

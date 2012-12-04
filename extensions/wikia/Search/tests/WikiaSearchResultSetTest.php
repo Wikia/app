@@ -1484,8 +1484,434 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 				$results->getValue( $this->resultSet ),
 				'WikiaSearchResultSet::addResult should add a result to the results array keyed by the ID of the document'
 		);
-		
 	}
 	
+	/**
+	 * @covers WikiaSearchResultSet::getResultsFound
+	 */
+	public function testGetResultsFound() {
+		$this->prepareMocks( array( 'getResultsStart' ) );
+		
+		$rf = new ReflectionProperty( 'WikiaSearchResultSet', 'resultsFound' );
+		$rf->setAccessible( true );
+		$rf->setValue( $this->resultSet, 20 );
+		
+		$this->assertEquals(
+				20,
+				$this->resultSet->getResultsFound(),
+				'WikiaSearchResultSet::getResultsFound should return the value set in the "resultFound" property'
+		);
+	}
 	
+	/**
+	 * @covers WikiaSearchResultSet::getResultsStart
+	 */
+	public function testGetResultsStart() {
+		$this->prepareMocks( array( 'getResultsFound' ), array(), array( 'getStart' ) );
+		
+		$this->searchResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'getStart' )
+			->will		( $this->returnValue( 0 ) )
+		;
+		$this->assertEquals(
+				0,
+				$this->resultSet->getResultsStart(),
+				'WikiaSearchResultSet::getResultsStart should pass the return value of the search result object\'s getStart() method'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::getResultsNum
+	 * @covers WikiaSearchResultSet::hasResults
+	 */
+	public function testResultCountMethods() {
+		$this->prepareMocks( array( 'getResultsFound' ) );
+		
+		$this->assertEquals(
+				0,
+				$this->resultSet->getResultsNum(),
+				'WikiaSearchResultSet::getResultsNum should return 0 if there are no results'
+		);
+		$this->assertFalse(
+				$this->resultSet->hasResults(),
+				'WikiaSearchResultSet::hasResults should return false if there are no results'
+		);
+		
+		$mockResult = $this->getMockBuilder( 'WikiaSearchResult' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$results = new ReflectionProperty( 'WikiaSearchResultSet', 'results' );
+		$results->setAccessible( true );
+		$results->setValue( $this->resultSet, array( '123_234' => $mockResult ) );
+		
+		$this->assertEquals(
+				1,
+				$this->resultSet->getResultsNum(),
+				'WikiaSearchResultSet::getResultsNum should return the count of the result array'
+		);
+		$this->assertTrue(
+				$this->resultSet->hasResults(),
+				'WikiaSearchResultSet::hasResults should return false if there are any results'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::next
+	 * @covers WikiaSearchResultSet::rewind
+	 * @covers WikiaSearchResultSet::current
+	 * @covers WikiaSearchResultSet::key
+	 * @covers WikiaSearchResultSet::valid
+	 */
+	public function testIteratorMethods() {
+		$this->prepareMocks( array( 'hasArticleMatch' ) );
+		
+		$mockResult = $this->getMockBuilder( 'WikiaSearchResult' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getID' ) )
+							->getMock();
+		
+		$mockResult2 = $this->getMockBuilder( 'WikiaSearchResult' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getTitle' ) )
+							->getMock();
+		
+		$resultArray = array( '123_234' => $mockResult, '345_456' => $mockResult2 );
+		
+		$results = new ReflectionProperty( 'WikiaSearchResultSet', 'results' );
+		$results->setAccessible( true );
+		$results->setValue( $this->resultSet, $resultArray );
+		
+		$this->resultSet->rewind();
+		$this->assertEquals(
+				$mockResult,
+				$this->resultSet->next()
+		);
+		$this->assertEquals(
+				$mockResult2,
+				$this->resultSet->current()
+		);
+		$this->assertEquals(
+				1,
+				$this->resultSet->key()
+		);
+		$this->assertTrue(
+				$this->resultSet->valid()
+		);
+		$this->resultSet->rewind();
+		$this->assertEquals(
+				$mockResult,
+				$this->resultSet->current()
+		);
+		
+		$this->prepareMocks( array( 'valid' ) );
+		
+		$this->resultSet
+			->expects	( $this->once() )
+			->method	( 'valid' )
+			->will		( $this->returnValue( false ) )
+		;
+		$this->assertFalse(
+				$this->resultSet->current()
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::setHeader
+	 * @covers WikiaSearchResultSet::getHeader
+	 */
+	public function testSetHeader() {
+		$this->prepareMocks( array( 'hasArticleMatch' ) );
+		
+		$this->assertEquals(
+				'foo',
+				$this->resultSet->setHeader( 'bar', 'foo' )->getHeader( 'bar' ),
+				'WikiaSearchResultSet::setHeader should provide a fluent interface and set the value for the key in the headers array. ' .
+				'Calling getHeader() should return the value for the provided key.'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::isValidResult
+	 */
+	public function testIsValidResult() {
+		$this->prepareMocks( array( 'hasArticleMatch' ) );
+		
+		$mockResult = $this->getMockBuilder( 'WikiaSearchResult' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$isValid = new ReflectionMethod( 'WikiaSearchResultSet', 'isValidResult' );
+		$isValid->setAccessible( true );
+		
+		$this->assertTrue(
+				$isValid->invoke( $this->resultSet, $mockResult ),
+				'WikiaSearchResult::isValidResult should return true if the provided argument is an instance of WikiaSearchResult'
+		);
+		$this->assertTrue(
+				$isValid->invoke( $this->resultSet, $this->resultSet ),
+				'WikiaSearchResult::isValidResult should return true if the provided argument is an instance of WikiaSearchResultSet'
+		);
+		$this->assertFalse(
+				$isValid->invoke( $this->resultSet, $this->searchResult ),
+				'WikiaSearchResult::isValidResult should return false for items that are not WikiaSearchResult or WikiaSearchResultSet'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::getQuery
+	 */
+	public function testGetQuery() {
+		$this->prepareMocks( array( 'hasArticleMatch' ), array( 'getQuery' ) );
+		
+		$this->config
+			->expects	( $this->at( 0 ) )
+			->method	( 'getQuery' )
+			->with		( WikiaSearchConfig::QUERY_ENCODED )
+			->will		( $this->returnValue( 'query' ) )
+		;
+		$this->assertEquals(
+				'query',
+				$this->resultSet->getQuery( WikiaSearchConfig::QUERY_ENCODED ),
+				'WikiaSearchResultSet::getQuery should return the value of WikiaSearchConfig::getQuery, encoded'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::getQueryTime
+	 */
+	public function testGetQueryTime() {
+		$this->prepareMocks( array( 'hasArticleMatch' ), array(), array( 'getQueryTime' ) );
+		
+		$this->searchResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'getQueryTime' )
+			->will		( $this->returnValue( 750 ) )
+		;
+		$this->assertEquals(
+				750,
+				$this->resultSet->getQueryTime(),
+				'WikiaSearchResultSet::getQueryTime should return the value of WikiaSearchConfig::getQueryTime'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::isOnlyArticleMatchFound
+	 */
+	public function testIsOnlyArticleMatchFoundWrongResultNum() {
+		$this->prepareMocks( array( 'getResultsNum' ) );
+		
+		$this->resultSet
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResultsNum' )
+			->will		( $this->returnValue( 0 ) )
+		;
+		
+		$this->assertFalse(
+				$this->resultSet->isOnlyArticleMatchFound(),
+				'WikiaSearchResultSet::isOnlyArticleMatchFound should return false unless there is only one result, and it is marked as an article match'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::isOnlyArticleMatchFound
+	 */
+	public function testIsOnlyArticleMatchFoundNotArticleMatch() {
+		$this->prepareMocks( array( 'getResultsNum' ) );
+		
+		$mockResult = $this->getMockBuilder( 'WikiaSearchResult' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getVar' ) )
+							->getMock();
+		
+		$this->resultSet
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResultsNum' )
+			->will		( $this->returnValue( 1 ) )
+		;
+		
+		$mockResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'getVar' )
+			->with		( 'isArticleMatch' )
+			->will		( $this->returnValue( false ) )
+		;
+
+		$results = new ReflectionProperty( 'WikiaSearchResultSet', 'results' );
+		$results->setAccessible( true );
+		$results->setValue( $this->resultSet, array( $mockResult ) );
+		
+		$this->assertFalse(
+				$this->resultSet->isOnlyArticleMatchFound(),
+				'WikiaSearchResultSet::isOnlyArticleMatchFound should return false unless there is only one result, and it is marked as an article match'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::isOnlyArticleMatchFound
+	 */
+	public function testIsOnlyArticleMatchFoundCorrect() {
+		$this->prepareMocks( array( 'getResultsNum' ) );
+		
+		$mockResult = $this->getMockBuilder( 'WikiaSearchResult' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getVar' ) )
+							->getMock();
+		
+		$this->resultSet
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResultsNum' )
+			->will		( $this->returnValue( 1 ) )
+		;
+		
+		$mockResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'getVar' )
+			->with		( 'isArticleMatch' )
+			->will		( $this->returnValue( true ) )
+		;
+
+		$results = new ReflectionProperty( 'WikiaSearchResultSet', 'results' );
+		$results->setAccessible( true );
+		$results->setValue( $this->resultSet, array( $mockResult ) );
+		
+		$this->assertTrue(
+				$this->resultSet->isOnlyArticleMatchFound(),
+				'WikiaSearchResultSet::isOnlyArticleMatchFound should return true when there is only one result, and it is marked as an article match'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::offsetExists
+	 * @covers WikiaSearchResultSet::offsetGet
+	 * @covers WikiaSearchResultSet::offsetSet
+	 * @covers WikiaSearchResultSet::offsetUnset
+	 */
+	public function testArrayAccess() {
+		$this->prepareMocks( array( 'getResultsNum' ) );
+		
+		$mockResult = $this->getMockBuilder( 'WikiaSearchResult' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getVar' ) )
+							->getMock();
+		
+		$results = new ReflectionProperty( 'WikiaSearchResultSet', 'results' );
+		$results->setAccessible( true );
+		$results->setValue( $this->resultSet, array( $mockResult ) );
+		
+		$this->assertTrue(
+				$this->resultSet->offsetExists( 0 )
+		);
+		$this->assertFalse(
+				$this->resultSet->offsetExists( 1 )
+		);
+		$this->assertEquals(
+				$mockResult,
+				$this->resultSet[0]
+		);
+		$this->assertFalse(
+				$this->resultSet[1]
+		);
+		$this->resultSet[1] = clone $mockResult;
+		$this->assertNotEmpty(
+				$this->resultSet[1]
+		);
+		unset( $this->resultSet[1] );
+		$this->assertFalse(
+				$this->resultSet[1]
+		); 
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::getParent
+	 */
+	public function testGetParent() {
+		$this->prepareMocks( array( 'getId' ) );
+		
+		$resultSet2 = clone $this->resultSet;
+		
+		$parent = new ReflectionProperty( 'WikiaSearchResultSet', 'parent' );
+		$parent->setAccessible( true );
+		$parent->setValue( $this->resultSet, $resultSet2 );
+		
+		$this->assertEquals(
+				$resultSet2,
+				$this->resultSet->getParent(),
+				'WikiaSearchResultSet::getParent() should return the value set in the parent attribute'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::getId
+	 */
+	public function testGetId() {
+		$this->prepareMocks( array( 'getResultsNum' ) );
+		
+		$host = new ReflectionProperty( 'WikiaSearchResultSet', 'host' );
+		$host->setAccessible( true );
+		$host->setValue( $this->resultSet, 'foo.wikia.com' );
+		
+		$this->assertEquals(
+				'foo.wikia.com',
+				$this->resultSet->getId(),
+				'WikiaSearchResultSet::getId() should return the value of the host property if it is set'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::getResults
+	 */
+	public function testGetResults() {
+		$this->prepareMocks( array( 'prependArticleMatchIfExists' ) );
+		
+		$mockResult = $this->getMockBuilder( 'WikiaSearchResult' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockResults = array( $mockResult );
+		
+		$results = new ReflectionProperty( 'WikiaSearchResultSet', 'results' );
+		$results->setAccessible( true );
+		$results->setValue( $this->resultSet, $mockResults );
+		
+		$this->assertEquals(
+				$mockResults,
+				$this->resultSet->getResults(),
+				'WikiaSearchResultSet::getResults should return the value of the results property'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::toNestedArray
+	 */
+	public function testToNestedArray() {
+		$this->prepareMocks( array( 'getResults' ) );
+		
+		$mockResult = $this->getMockBuilder( 'WikiaSearchResult' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'toArray' ) )
+							->getMock();
+		
+		$resultArray = array( 'title' => "mytitle", 'url' => 'myurl' );
+		
+		$mockResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'toArray' )
+			->with		( array( 'title', 'url' ) )
+			->will		( $this->returnValue( $resultArray ) )
+		;
+		
+		$mockResults = array( $mockResult );
+		
+		$results = new ReflectionProperty( 'WikiaSearchResultSet', 'results' );
+		$results->setAccessible( true );
+		$results->setValue( $this->resultSet, $mockResults );
+		
+		$this->assertEquals(
+				array( $resultArray ),
+				$this->resultSet->toNestedArray(),
+				'WikiaSearchResultSet should return an array of results that have been transformed to array'
+		);
+	}
 }
