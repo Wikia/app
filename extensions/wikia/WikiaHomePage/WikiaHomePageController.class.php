@@ -127,17 +127,20 @@ class WikiaHomePageController extends WikiaController {
 		$stats = $this->wg->Memc->get($memKey);
 		if (empty($stats)) {
 			$stats['visitors'] = $this->helper->getStatsFromArticle('StatsVisitors');
+			$stats['mobileVisitors'] = $this->helper->getStatsFromArticle('StatsMobileVisitors');
 
 			$stats['edits'] = $this->helper->getEdits();
 			if (empty($stats['edits'])) {
 				$stats['editsDefault'] = $this->helper->getStatsFromArticle('StatsEdits');
 			}
 
-			$stats['communities'] = $this->helper->getStatsFromArticle('StatsCommunities');
+			$stats['communities'] = $this->helper->getTotalCommunities();
 
 			$defaultTotalPages = $this->helper->getStatsFromArticle('StatsTotalPages');
 			$totalPages = intval(Wikia::get_content_pages());
 			$stats['totalPages'] = ($totalPages > $defaultTotalPages) ? $totalPages : $defaultTotalPages;
+
+			$stats['newCommunities'] = $this->helper->getLastDaysNewCommunities();
 
 			$this->wg->Memc->set($memKey, $stats, 60 * 60 * 1);
 		}
@@ -146,7 +149,6 @@ class WikiaHomePageController extends WikiaController {
 			$this->$key = $this->wg->Lang->formatNum($value);
 		}
 
-		$this->communities = $this->communities . '+';
 		if (empty($stats['edits']) && in_array('editsDefault', $stats)) {
 			$this->edits = $this->editsDefault . '+';
 		}
