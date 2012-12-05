@@ -2,15 +2,12 @@
 class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 	protected function getFormFields() {
 		return array(
-			'boardTitle' => array(
+			'boardUrl' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-wikiurl'),
 				'isRequired' => false,
-				'validator' => new WikiaValidatorString(
-					array(),
-					array('too_short' => 'marketing-toolbox-validator-string-short')
-				),
+				'validator' => new WikiaValidatorString(),
 			),
-			'boardDescription' => array(
+			'boardTitle' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-topic'),
 				'isRequired' => true,
 				'validator' => new WikiaValidatorString(
