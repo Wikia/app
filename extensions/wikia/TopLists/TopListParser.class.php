@@ -94,9 +94,6 @@ class TopListParser {
 					'relatedImage' => $relatedImage,
 					'attribs' => self::$mAttributes,
 					'relatedUrl' => $relatedUrl,
-					//Probably better idea would be to use $list->getDescription() but it causes:
-					//Fatal error: Maximum function nesting level of '200' reached, aborting! 
-					//This class/function is being called somehow while using getDesciption
 					'description' => self::$mAttributes[ TOPLIST_ATTRIBUTE_DESCRIPTION ]
 				)
 			);
