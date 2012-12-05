@@ -213,7 +213,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 		/** @var $property SDElementProperty */
 		foreach($this->properties as $property) {
 
-			if ( $this->isPropertyVisible($this->type, $property) )
+			if ( $this->isPropertyVisible( $property ) )
 				$data->{$property->getName()} = $property->toSDSJson();
 		}
 
