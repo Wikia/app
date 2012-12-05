@@ -289,10 +289,12 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 			margin-top: 10px;
 		}
 
-		a {
+		> li a {
 			display: block;
 			min-height: 31px;
 			text-decoration: none;
+			margin-left: -10px;
+			padding-left: 10px;
 			&:hover {
 				background-color: $color-tabs-hover-background;
 			}
@@ -305,7 +307,7 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 		}
 		.search-filter-sort {
 			font-weight: normal;
-			margin-bottom: 7px;
+			padding-bottom: 7px;
 			position: relative;
 			p {
 				margin: 0;
@@ -338,6 +340,8 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 				background: $color-page;
 				height: 100%;
 				position: absolute;
+				margin-left: -10px;
+				padding-left: 10px;
 				width: 100%;
 				z-index: 100;
 			}
