@@ -192,6 +192,9 @@ class TopList extends TopListBase {
     /**
      * Returns a string with description of the list
      *
+     * Warning: do not use it within TopListParser class because _loadData reuses 
+     * this TopListParser class to prepare data and that will lead to infinite loop
+     *
      * @param bool $forceReload if set to true the local cache will be refreshed
      *
      * @return String
