@@ -51,7 +51,7 @@ $app->registerClass('WikiaHomePageHelper', $wikiaHomePageExtDir . 'WikiaHomePage
 $app->registerClass('CityVisualization', $wikiaHomePageExtDir . 'CityVisualization.class.php');
 
 // hooks
-$app->registerHook('UploadVerification','UploadVisualizationImageFromFile','UploadVerification');
+$app->registerHook('UploadVerification', 'UploadVisualizationImageFromFile', 'UploadVerification');
 $app->registerHook('CityVisualization::wikiDataInserted', 'CityVisualization', 'onWikiDataUpdated');
 
 // i18n mapping
