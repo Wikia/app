@@ -22,7 +22,6 @@ class CensusEnabledPagesUpdate {
 				'action' => 'query',
 				'list' => 'categorymembers',//pages with category
 				'cmtitle' => CensusDataRetrieval::getFlagCategoryTitle()->getPrefixedDBkey(),//category name
-				'cmlimit' => '1',
 				'cmnamespace' => '0'
 			)
 		);
