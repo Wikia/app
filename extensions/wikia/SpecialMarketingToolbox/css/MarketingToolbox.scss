@@ -1,4 +1,5 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/core/color";
 
 .WikiaGrid .WikiaArticle {
 	border: none;
@@ -57,5 +58,20 @@
 				margin-right: 10px;
 			}
 		}
+	}
+
+	ol {
+		font-weight: bold;
+
+		li {
+			line-height: 25px;;
+		}
+		span {
+			font-weight: normal;
+		}
+	}
+
+	.alternative {
+		color: $color-alternate-text;
 	}
 }
