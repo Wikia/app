@@ -418,7 +418,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		}
 	} else {
 		// macbre: CK support
-		if (typeof e.type != 'undefined' && e.type == 'rte') {
+		if (e && e.type === 'rte') {
 			// get video from event data
 			window.VET_RTEVideo = e.data.element;
 			if (window.VET_RTEVideo) {

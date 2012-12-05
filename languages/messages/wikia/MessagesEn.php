@@ -1053,5 +1053,11 @@ Text should be placed on this page if you wish to explain usage, style and polic
 '#popular#' => 'Most popular articles',
 '#visited#' => 'Most visited articles',
 '#newlychanged#' => 'Newly changed articles',
-'#topusers#' => 'Top users'
+'#topusers#' => 'Top users',
+
+//WikiaUserPropertiesController error messages
+'user-properties-handler-not-registered' => 'Handler not registered',
+'user-properties-method-nonexistent' => 'Handler method non-existent',
+'user-properties-handler-nonexistent' => 'Handler class non-existent',
+
 ));

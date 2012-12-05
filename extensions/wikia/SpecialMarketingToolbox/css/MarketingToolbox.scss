@@ -1,0 +1,39 @@
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+.WikiaGrid .WikiaArticle {
+	border: none;
+}
+
+.MarketingToolboxMain {
+	@include clearfix;
+	.input-group {
+		label {
+			clear: both;
+			float: left;
+			margin-top: 10px;
+			width: 145px;
+		}
+		.headline-wrapper {
+			float: right;
+		}
+		input[type="text"] {
+			width: 149px;
+		}
+		.error-msg {
+			font-size: 12px;
+		}
+	}
+	.input-group:not(.borderNone) {
+		border-bottom: 1px solid #e5e5e5;
+	}
+	.url-and-topic input[type="text"] {
+		width: 480px;
+	}
+	.WikiaForm fieldset {
+		border: 0;
+	}
+
+	.WikiaForm .submits {
+		float: right;
+	}
+}

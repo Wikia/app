@@ -260,6 +260,65 @@ $messages['es'] = array(
 	'wikiahome-image-auto-uploaded-comment' => 'Imagen generada automáticamente para ser usada en http://es.wikia.com/ – estate atento al blog del Staff para más información: http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia',
 );
 
+$messages['es'] = array(
+	'promote' => 'Promocionar',
+
+	'promote-title' => 'Promocionar',
+	'promote-introduction-header' => '¡Promociona tu wiki en es.wikia.com!',
+
+	'promote-introduction-copy' => "¡Esta página te permite promocionar tu wiki haciendo posible que aparezca en [http://es.wikia.com es.wikia.com]! Añade imágenes y un resumen para presentar tu wiki a los visitantes en la página principal de Wikia en español. Encuentra algunos consejos en [http://ayuda.wikia.com/wiki/Ayuda:Promocionar esta página]",
+
+	'promote-description' => 'Descripción',
+	'promote-description-header' => 'Encabezado',
+	'promote-description-header-explanation' => '¡Algo tan simple como "Aprende más en el Wiki de los sombreros" o "Bienvenidos al wiki de los sombreros" suena bien!',
+
+	'promote-description-about' => "¿Sobre qué trata tu wiki?",
+	'promote-description-about-explanation' => "Escribe un resumen sobre el tema de tu wiki. No te preocupes por hacerla demasiado detallada, si quieres conseguir más visitantes tienes que asegurarte de que tengan una idea muy clara de todo lo que se trata en tu wiki.",
+
+	'promote-upload' => 'Añadir imágenes',
+	'promote-upload-main-photo-header' => 'Imagen principal',
+	'promote-upload-main-photo-explanation' => "Esta imagen define tu wiki. Será la imagen principal que usaremos para representar tu wiki en es.wikia.com, ¡así que asegúrate de que sea la mejor! No olvides que siempre puedes actualizar la imagen para que sea más actual y represente mejor tu wiki.",
+	'promote-upload-additional-photos-header' => 'Imágenes adicionales',
+	'promote-upload-additional-photos-explanation' => 'Añadiendo más imágenes haces que tu wiki parezca más interesante y atraiga a visitantes potenciales. Puedes añadir hasta 9 imágenes desde aquí, y de hecho ¡te recomendamos que llegues al límite!',
+
+	'promote-publish' => 'Publicar',
+
+	'promote-upload-tool' => 'Herramienta de subida para administradores',
+	'promote-add-photo' => 'Añadir una imagen',
+	'promote-remove-photo' => 'Borrar',
+	'promote-modify-photo' => 'Modificar',
+
+	'promote-upload-main-image-form-modal-title' => 'Imagen principal',
+	'promote-upload-main-image-form-modal-copy' => "Sube una imagen que represente el tema de tu wiki. Asegúrate de que sea un archivo \".png\" con un tamaño mínimo de 480x320.",
+	'promote-upload-additional-image-form-modal-title' => 'Más imágenes',
+	'promote-upload-additional-image-form-modal-copy' => "Sube imágenes adicionales para mostrar a la gente más cosas sobre tu wiki. Asegúrate de que las imágenes sean archivos \".png\" con un tamaño mínimo de 480x320.",
+	'promote-upload-form-modal-cancel' => 'Cancelar',
+
+	'promote-upload-submit-button' => 'Adelante',
+
+	'promote-error-less-characters-than-minimum' => '¡Diantres! Tu texto necesita al menos $2 caracteres.',
+	'promote-error-more-characters-than-maximum' => '¡Casi! Tu texto tiene que ser de $2 caracteres o menos.',
+	'promote-error-upload-unknown-error' => 'Error de subida desconocido',
+	'promote-error-upload-filetype-error' => 'Asegúrate de que el archivo se guarda como ".png".',
+	'promote-error-upload-dimensions-error' => 'Dimensiones del archivo incorrectas - el archivo debe ser al menos de 480x320px',
+	'promote-error-too-many-images' => '¡Eh! Ya tienes 9 imágenes. Borra alguna si quieres añadir una nueva.',
+	'promote-error-upload-type' => "¡Rayos! El tipo de subida es incorrecto.",
+	'promote-error-upload-form' => "Tipo de subida incorrecta en getUploadForm.",
+
+	'promote-manual-file-size-error' => 'La imagen principal tiene un tamaño mínimo de 480x320px.',
+	'promote-manual-upload-error' => 'Este archivo no puede ser subido manualmente. Por favor, usa la Herramienta de subida para administradores.',
+	'promote-wrong-rights' => "¡Maldición! Parece que no tienes permiso para acceder a esta página. ¡Asegúrate de que estás identificado!",
+
+	'promote-image-rejected' => 'Rechazada',
+	'promote-image-accepted' => 'Aceptada',
+	'promote-image-in-review' => 'En revisión',
+
+	'promote-statusbar-icon' => 'Estado',
+	'promote-statusbar-inreview' => 'Algunas de tus imágenes están actualmente bajo revisión y aparecerán en [http://es.wikia.com es.wikia.com] una vez se aprueben. Normalmente esto puede llevar unos 2 o 4 días laborables, así que te mantendremos informado por aquí cuando lo hayamos hecho.',
+	'promote-statusbar-approved' => '¡Yuju! $1 se está promocionando en [http://es.wikia.com es.wikia.com]!',
+	'promote-statusbar-rejected' => 'Una o más de tus imágenes no fue aprobada. [[Special:Contact|Pregunta por qué]].',
+);
+
 $messages['qqq'] = array(
 	'promote' => 'Promote page heading',
 
