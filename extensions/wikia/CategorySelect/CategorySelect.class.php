@@ -29,6 +29,8 @@ class CategorySelect {
 	 * array -> json, array -> wikitext, json -> wikitext, json -> array
 	 */
 	public static function changeFormat( $categories, $from, $to ) {
+		wfProfileIn( __METHOD__ );
+
 		if ( $from == 'json' ) {
 			$categories = $categories == '' ? array() : json_decode( $categories, true );
 		}
@@ -63,6 +65,8 @@ class CategorySelect {
 		} else if ( $to == 'json' ) {
 			$changed = json_encode( $categories );
 		}
+
+		wfProfileOut( __METHOD__ );
 
 		return $changed;
 	}
@@ -147,25 +151,25 @@ class CategorySelect {
 	}
 
 	public static function getDefaultNamespaces() {
-		if ( !empty( self::$namespaces ) ) {
-			return self::$namespaces;
+		if ( !isset( self::$namespaces ) ) {
+			$namespaces = F::app()->wg->ContLang->getNsText( NS_CATEGORY );
+
+			if ( strpos( $namespaces, 'Category' ) === false ) {
+				$namespaces = 'Category|' . $namespaces;
+			}
+
+			self::$namespaces = $namespaces;
 		}
 
-		$namespaces = F::app()->wg->ContLang->getNsText( NS_CATEGORY );
-
-		if ( strpos( $namespaces, 'Category' ) === false ) {
-			$namespaces = 'Category|' . $namespaces;
-		}
-
-		self::$namespaces = $namespaces;
-
-		return $namespaces;
+		return self::$namespaces;
 	}
 
 	/**
 	 * Removes duplicate categories, optionally converting to/from different formats.
 	 */
 	public static function getUniqueCategories( $categories, $format = 'array', $toFormat = 'array' ) {
+		wfProfileIn( __METHOD__ );
+
 		$categoryNames = array();
 		$uniqueCategories = array();
 
@@ -184,6 +188,8 @@ class CategorySelect {
 		if ( $toFormat != 'array' ) {
 			$uniqueCategories = self::changeFormat( $uniqueCategories, 'array', $toFormat );
 		}
+
+		wfProfileOut( __METHOD__ );
 
 		return $uniqueCategories;
 	}
