@@ -27,10 +27,8 @@ var StructuredData = {
 						WMU_show();
 						mw.loader.load(wgExtensionsPath+'/wikia/WikiaMiniUpload/css/WMU.css', "text/css" );
 					});
-
 				});
 			}
-
 			$(window).bind('WMU_addFromSpecialPage', function(event, filePageUrl) {
 				var filePageUrl = window.location.protocol + '//' + window.location.host + '/' + filePageUrl;
 				$input.val(filePageUrl);
@@ -89,17 +87,17 @@ var StructuredData = {
 				event.preventDefault();
 			}
 		}).on('keyup', 'td li input[type="text"]', function(event) {
-				if (event.which == 13) {
-					event.preventDefault();
-					var $target = $(event.target),
-						$nextField = $target.parents('li').next().find('input');
-					if ($nextField.length > 0) {
-						$nextField.focus();
-					} else {
-						$target.parents('li').parent().siblings('button.add-input').click();
-					}
+			if (event.which == 13) {
+				event.preventDefault();
+				var $target = $(event.target),
+					$nextField = $target.parents('li').next().find('input');
+				if ($nextField.length > 0) {
+					$nextField.focus();
+				} else {
+					$target.parents('li').parent().siblings('button.add-input').click();
 				}
-			});
+			}
+		});
 	},
 	attachSpecialPageBrowsingModeHandlers: function(context) {
 		// Attach handlers - add confirmation before deleting object
