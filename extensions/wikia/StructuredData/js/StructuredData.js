@@ -21,7 +21,7 @@ var StructuredData = {
 			if (typeof WMU_show === 'function') {
 				WMU_show();
 			} else {
-				$.loadYUI( function() {
+				$.when($.loadYUI(), $.loadJQueryAIM()).then(function() {
 					$.getScript(wgExtensionsPath+'/wikia/WikiaMiniUpload/js/WMU.js', function() {
 						WMU_skipDetails = true;
 						WMU_show();
