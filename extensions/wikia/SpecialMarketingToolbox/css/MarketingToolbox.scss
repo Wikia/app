@@ -6,7 +6,17 @@
 
 .MarketingToolboxMain {
 	@include clearfix;
+
+	margin-top: 15px;
+
+	form {
+		margin-top: 5px;
+	}
+
 	.input-group {
+		margin: 5px 7px;
+		padding: 0;
+
 		label {
 			clear: both;
 			float: left;
@@ -26,14 +36,26 @@
 	.input-group:not(.borderNone) {
 		border-bottom: 1px solid #e5e5e5;
 	}
-	.url-and-topic input[type="text"] {
-		width: 480px;
-	}
-	.WikiaForm fieldset {
-		border: 0;
+	.grid-4.url-and-topic {
+		margin-bottom: 28px;
+		input[type="text"] {
+			width: 480px;
+		}
 	}
 
-	.WikiaForm .submits {
-		float: right;
+	.WikiaForm {
+		fieldset {
+			border: 0;
+		}
+
+		.submits {
+			float: right;
+			margin: 40px 0;
+			padding: 0;
+
+			input {
+				margin-right: 10px;
+			}
+		}
 	}
 }
