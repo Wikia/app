@@ -148,7 +148,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	wfProfileIn(__METHOD__);
 
-        global $wgRequest, $wgWikiaImagePlaceholderId, $wgContLang;
+        global $wgRequest, $wgWikiaImagePlaceholderId, $wgWikiaVideoPlaceholderId, $wgContLang;
 	// Shortcuts
 	$fp =& $frameParams;
 	$hp =& $handlerParams;
@@ -172,7 +172,11 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$iscaption = 0;
 	$islink = 0;
 	$isvideo = 0;
-	
+
+	if( !empty( $hp['isvideo'] ) ) {
+		$isvideo = 1;
+	}
+
 	if( isset( $hp['width'] ) && ( 0 != $hp['width'] ) ) { // FCK takes 0
 		$width = $hp['width'];
 		// if too small, the box will end up looking... extremely silly
@@ -232,7 +236,11 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	// TODO: use JSSnippets to load dependencies
 	if (empty($wgRTEParserEnabled)) {
 		if( ($wgRequest->getVal('diff',0) == 0) && ($wgRequest->getVal('oldid',0) == 0) ) {
-			$onclick = '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js\', function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); mw.loader.load( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css\', "text/css" ) } ) } )';
+			if( $isvideo ) {
+				$onclick = 'alert("Add VET here"); return false;'; /*'$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js\', function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); mw.loader.load( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css\', "text/css" ) } ) } )';*/
+			} else {
+				$onclick = '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js\', function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); mw.loader.load( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css\', "text/css" ); } ) } ); return false;';
+			}
 		} else {
 			$onclick = 'alert('.escapeshellarg(wfMsg('imgplc-notinhistory')).'); return false;';
 		}
@@ -256,7 +264,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$out = '';
 
 	$wrapperAttribs = array(
-		'id' => "WikiaImagePlaceholder{$wgWikiaImagePlaceholderId}",
+		'id' => $isvideo ? "WikiaVideoPlaceholder{$wgWikiaVideoPlaceholderId}" : "WikiaImagePlaceholder{$wgWikiaImagePlaceholderId}",
 		'class' => "gallerybox wikiaPlaceholder{$additionalClass}",
 		'style' => 'vertical-align: bottom', // TODO: move to static CSS file
 	);
@@ -280,7 +288,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		'onclick' => !empty($onclick) ? $onclick : '',
 	));
 
-	$out .= wfMsg('imgplc-create');
+	$out .= $isvideo ? wfMsg('imgplc-add-video') : wfMsg('imgplc-add-image');
 	$out .= Xml::closeElement('a');
 
 	// caption (RT #47460)
@@ -297,7 +305,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	global $wgRTEParserEnabled;
 	if (!empty($wgRTEParserEnabled)) {
 		$out = RTEParser::renderMediaPlaceholder(array(
-			'type' => !empty($hp['isvideo']) ? 'video-placeholder' : 'image-placeholder',
+			'type' => $isvideo ? 'video-placeholder' : 'image-placeholder',
 			'params' => array(
 				'width' => $width,
 				'height' => $height,
