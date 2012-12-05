@@ -17,6 +17,10 @@ class MarketingToolboxModuleTop10listsService extends MarketingToolboxModuleServ
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-top10lists-desc'),
 				'isRequired' => false,
 				'validator' => new WikiaValidatorString(),
+				'type' => 'textarea',
+				'attributes' => array(
+					'rows' => 4
+				)
 			),
 		);
 	}
