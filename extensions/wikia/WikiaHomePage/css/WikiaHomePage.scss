@@ -294,7 +294,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				width: 300px;
 				h2 {
 					border-bottom: none;
-					margin-top: 5px;
+					margin-top: 3px;
 					padding: 0;
 					text-align: left;
 				}
@@ -306,15 +306,16 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					text-align: left;
 				}
 				.statisticdata {
-					margin-top: 5px;
+					margin-top: 1px;
 					.datasection {
 						float: left;
-						height: 50px;
+						height: 45px;
 						margin-top: 2px;
-						padding-left: 15px;
-						width: 127px;
+						margin-bottom: 5px;
+						padding-left: 17px;
+						width: 136px;
 						h4 {
-							font-size: 14px;
+							font-size: 13px;
 						}
 						strong {
 							display: block;
@@ -323,9 +324,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 						}
 					}
 					.firstrowcell {
-						padding-left: 0px;
+						padding-left: 1px;
 						border-right: 1px dotted #B9B9B9;
-						width: 142px;
+						width: 145px;
 					}
 				}
 			}
