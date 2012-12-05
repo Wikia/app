@@ -71,9 +71,10 @@ class EditPageService extends Service {
 		$section = intval($section);
 
 		// create "fake" EditPage
-		if( function_exists('CategorySelectInitializeHooks') ) {
-			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null, null, true);
+		if( class_exists( 'CategorySelectHooksHelper' ) ) {
+			CategorySelectHooksHelper::onMediaWikiPerformAction(null, null, $this->mTitle, null, null, null, true);
 		}
+
 		$article = new Article($this->mTitle);
 
 		$editPage = new EditPage($article);

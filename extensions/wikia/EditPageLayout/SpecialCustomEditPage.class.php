@@ -318,10 +318,15 @@ class SpecialCustomEditPage extends SpecialPage {
 			'required' => true
 		));
 
-		// TODO: call appriopriate hook instead of a function
-		if( function_exists('CategorySelectInitializeHooks') ) {
-			CategorySelectInitializeHooks($this->out, $this->getEditedArticle(), $this->getEditedArticle()->getTitle(), $this->user, $this->request, null, true );
-		}
+		$this->wf->RunHooks( 'MediaWikiPerformAction', array(
+			$this->out,
+			$this->getEditedArticle(),
+			$this->getEditedArticle()->getTitle(),
+			$this->user,
+			$this->request,
+			null,
+			true // force
+		));
 
 		$pageTitle = $this->getPageTitle();
 		if( !empty($pageTitle) ) {
