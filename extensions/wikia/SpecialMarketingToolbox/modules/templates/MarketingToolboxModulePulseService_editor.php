@@ -8,17 +8,17 @@ echo $app->renderView(
 );*/
 ?>
 
-<div class="grid-4 alpha url-and-topic">
+<div class="grid-4 alpha wide">
 	<?=F::app()->renderView(
 		'MarketingToolbox',
 		'FormField',
-		array('inputData' => $fields['boardTitle'])
+		array('inputData' => $fields['boardUrl'])
 	);
 	?>
 	<?=F::app()->renderView(
 		'MarketingToolbox',
 		'FormField',
-		array('inputData' => $fields['boardDescription'])
+		array('inputData' => $fields['boardTitle'])
 	);
 	?>
 </div>

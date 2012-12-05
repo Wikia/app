@@ -15,7 +15,7 @@
 
 	<aside class="right">
 		<? if (isset($lastEditTime)): ?>
-		<p><strong><?= $wf->msg('marketing-toolbox-header-right-last-saved'); ?></strong> <?=$wg->lang->timeanddate($lastEditTime);?></p>
+		<p><strong><?= $wf->msg('marketing-toolbox-header-right-last-saved'); ?></strong> <?=$wg->lang->timeanddate($lastEditTime, true);?></p>
 		<? endif ?>
 
 		<? if (isset($lastEditor)): ?>
