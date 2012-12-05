@@ -3,4 +3,4 @@
 -- Replace /*$wgDBprefix*/ with the proper prefix
 
 ALTER TABLE /*$wgDBprefix*/poll 
-ADD `starttimestamp` INT( 30 ) NOT NULL ;
+ADD `starttime` INT( 30 ) NOT NULL ;
