@@ -4,6 +4,7 @@ $messages = array();
 $magicWords = array();
 
 $messages['en'] = array(
+	'structureddata-desc' => 'Extension for manipulating Structured Data objects',
 	'structureddata-special-page-main-header' => 'Available Structure Data Classes',
 	'structureddata-main-classes-list-header' => 'Main Structure Data Classes',
 	'structureddata-secondary-classes-list-header' => 'Secondary Structure Data Classes',
