@@ -60,6 +60,9 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-pulse-number2' => 'Number 2.',
 	'marketing-toolbox-hub-module-pulse-number3' => 'Number 3.',
 
+	'marketing-toolbox-hub-module-top10lists-title' => 'Title',
+	'marketing-toolbox-hub-module-top10lists-desc' => 'Description',
+
 	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
 	'marketing-toolbox-module-save-ok' => '$1 module saved successfully',
 
