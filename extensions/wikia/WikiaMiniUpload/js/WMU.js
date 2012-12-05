@@ -315,7 +315,7 @@ function WMU_loadMainFromView() {
 		UserLogin.rteForceLogin();
 		return;
 	}
-
+	
 	var callback = function(data) {
 		// first, check if this is a special case for anonymous disabled...
 		if( data.wmu_init_login ) {
@@ -350,6 +350,15 @@ function WMU_loadMainFromView() {
 		user_blocked = data.user_blocked;
 		user_disallowed = data.user_disallowed;
 		user_protected = data.user_protected;
+
+		WMU_isOnSpecialPage = (wgNamespaceNumber === -1) ? true : false;
+
+		// Special Case for using WMU in on Special Pages - used for SDSObject Special Page
+		if (WMU_isOnSpecialPage) {
+			user_protected = false;
+			user_disallowed = false;
+			WMU_skipDetails = true;
+		}
 
 		if( user_blocked ) {
 			document.location = wgScriptPath + '/index.php?title=' + encodeURIComponent( wgTitle ) + '&action=edit';
@@ -415,9 +424,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			wikiaEditor.plugins.MiniEditor.hasFocus = true;
 		}
 	}
-
-	// Special Case for using WMU in on Special Pages
-	WMU_isOnSpecialPage = (wgNamespaceNumber === -1) ? true : false;
 
 	if(gallery === -2){
 		//	if (showComboAjaxForPlaceHolder("WikiaImagePlaceholderInner" + box,true)) return false;
@@ -928,6 +934,9 @@ function WMU_insertPlaceholder( box ) {
 }
 
 function WMU_insertImage(e, type) {
+	if (!WMU_isOnSpecialPage) {
+		YAHOO.util.Event.preventDefault(e);
+	}
 	var params = Array();
 	params.push('type='+type);
 	params.push('mwname='+$G('ImageUploadMWname').value);
@@ -1054,13 +1063,6 @@ function WMU_insertImage(e, type) {
 						return false;
 					}
 
-					// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
-					if (WMU_isOnSpecialPage) {
-						var filePageUrl = $(o.responseText).find('#ImageUploadFileName').val();
-						$(window).trigger('WMU_addFromSpecialPage', [filePageUrl]);
-						return false;
-					}
-
 					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
 						if( -2 == WMU_gallery) {
 							WMU_insertPlaceholder( WMU_box );
@@ -1135,6 +1137,14 @@ function WMU_insertImage(e, type) {
 			}
 			WMU_indicator(1, false);
 		}
+	}
+	// Special Case for using WMU in SDSObject Special Page
+	if (WMU_isOnSpecialPage) {
+		var filePageUrl = 'File:';
+		filePageUrl += $('#ImageUploadMWname').val();
+		$(window).trigger('WMU_addFromSpecialPage', [filePageUrl]);
+		WMU_switchScreen('Summary');
+		return;
 	}
 	WMU_indicator(1, true);
 	YAHOO.util.Connect.abort(WMU_asyncTransaction);

@@ -18,20 +18,15 @@ var StructuredData = {
 		$('#useWMU').click(function(event){
 			event.preventDefault();
 			var $input = $(this).prev();
-			if (typeof WMU_show === 'function') {
-				WMU_show();
-			} else {
-				$.when($.loadYUI(), $.loadJQueryAIM()).then(function() {
-					$.getScript(wgExtensionsPath+'/wikia/WikiaMiniUpload/js/WMU.js', function() {
-						WMU_skipDetails = true;
-						WMU_show();
-						mw.loader.load(wgExtensionsPath+'/wikia/WikiaMiniUpload/css/WMU.css', "text/css" );
-					});
+			$.loadYUI( function() {
+				$.getScript(wgExtensionsPath+'/wikia/WikiaMiniUpload/js/WMU.js', function() {
+					WMU_show($.getEvent(), -2);
+					mw.loader.load( wgExtensionsPath+'/wikia/WikiaMiniUpload/css/WMU.css', "text/css" );
 				});
-			}
-			$(window).bind('WMU_addFromSpecialPage', function(event, filePageUrl) {
-				var filePageUrl = window.location.protocol + '//' + window.location.host + '/' + filePageUrl;
-				$input.val(filePageUrl);
+				$(window).bind('WMU_addFromSpecialPage', function(event, filePageUrl) {
+					var filePageUrl = window.location.protocol + '//' + window.location.host + '/' + filePageUrl;
+					$input.val(filePageUrl);
+				});
 			});
 		});
 		// Add date/time pickers only for SD object page
