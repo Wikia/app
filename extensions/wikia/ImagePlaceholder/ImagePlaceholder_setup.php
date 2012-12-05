@@ -107,6 +107,8 @@ function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( Parser $parser, Ti
 			$params['horizAlign'][$part] = '';
 		} elseif( 0 === strpos( $part, 'link=' ) ) {
 			$params['frame']['link'] = substr( $part, 5 );
+		} elseif( 'video' == $part ) {
+			$params['handler']['isvideo'] = 1;
 		} elseif( preg_match( '/^([0-9]*)x([0-9]*)\s*(?:px)?\s*$/', $part, $m ) ) { // width we have
 			$params['handler']['width'] = intval( $m[1] ) ;
 		} elseif ( preg_match( '/^[0-9]*\s*(?:px)?\s*$/', $part ) ) {
@@ -171,6 +173,8 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$iswidth = 0;
 	$iscaption = 0;
 	$islink = 0;
+	$isvideo = 0;
+	
 	if( isset( $hp['width'] ) && ( 0 != $hp['width'] ) ) { // FCK takes 0
 		$width = $hp['width'];
 		// if too small, the box will end up looking... extremely silly
@@ -295,7 +299,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	global $wgRTEParserEnabled;
 	if (!empty($wgRTEParserEnabled)) {
 		$out = RTEParser::renderMediaPlaceholder(array(
-			'type' => 'image-placeholder',
+			'type' => !empty($hp['isvideo']) ? 'video-placeholder' : 'image-placeholder',
 			'params' => array(
 				'width' => $width,
 				'height' => $height,
