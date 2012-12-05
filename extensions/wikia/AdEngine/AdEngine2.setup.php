@@ -11,8 +11,6 @@ $app->registerHook('LinkerMakeExternalLink', 'AdEngine2Controller', 'onLinkerMak
 
 $app->registerExtensionMessageFile('AdEngine', __DIR__ . '/AdEngine.i18n.php');
 
-// TODO: how to do it better?
-$wgExtensionFunctions[] = 'wfAdEngineInitJSMessages';
-function wfAdEngineInitJSMessages() {
+$wgExtensionFunctions[] = function() {
 	F::build('JSMessages')->registerPackage('AdEngine', array('adengine-*'));
-}
+};
