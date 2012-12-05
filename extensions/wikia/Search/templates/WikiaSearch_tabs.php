@@ -15,7 +15,7 @@
 			?>
 			<? // Image/Video tab options ?>
 			<? // Only enabled for EN wikis now, will add i18n later ?>
-			<? if( $app->wg->LanguageCode == 'en' && $activeTab == $profileId && $profile['namespaces'][0] == '6' ): ?>
+			<? if( $app->wg->LanguageCode == 'en' && $activeTab == $profileId && $profile['namespaces'][0] == NS_FILE ): ?>
 
 				<div class="search-filter-sort" id="file-search-filter-sort">
 					<div class="search-filter-sort-overlay"></div>
