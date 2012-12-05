@@ -69,7 +69,7 @@ li.mw-abusefilter-changeslist-nomatch,
 li.mw-abusefilter-changeslist-match {
 	/* Do not consolidate these into a "background:" rule; it will override the background-image: settings in above rulesets */
 	background-repeat: no-repeat;
-	padding-left: 25px;
+	padding: 0px 0px 0px 25px;
 	background-position: left center;
 }
 
