@@ -43,22 +43,22 @@
 			}
 		// image caption
 			if ($image['caption'] != '') {
-				$caption = $image['caption'];
+				$caption = Sanitizer::removeHTMLtags( $image['caption'] );
 			} else {
 				$caption = wfMsg('wikiaPhotoGallery-preview-add-caption');
 			}
 
 		// image description
 			if ($image['linktext'] != '') {
-				$linktext = $image['linktext'];
+				$linktext = Sanitizer::removeHTMLtags( $image['linktext'] );
 			} else {
 				$linktext = wfMsg('wikiaPhotoGallery-preview-add-description');
 			}
 ?>
 		<span class="WikiaPhotoGalleryPreviewSliderCaptionWrapper">
-			<p class="WikiaPhotoGalleryPreviewSliderCaption WikiaPhotoGalleryPreviewItemCaption SliderTitle"><?= htmlspecialchars($caption) ?></p>
-			<p class="WikiaPhotoGalleryPreviewSliderCaption WikiaPhotoGalleryPreviewItemCaption SliderDescription"><?= htmlspecialchars($linktext) ?></p>
-			<p class="WikiaPhotoGalleryPreviewSliderCaption WikiaPhotoGalleryPreviewItemCaption SliderLink"><?= htmlspecialchars($linkMsg) ?></p>
+			<p class="WikiaPhotoGalleryPreviewSliderCaption WikiaPhotoGalleryPreviewItemCaption SliderTitle"><?= $caption ?></p>
+			<p class="WikiaPhotoGalleryPreviewSliderCaption WikiaPhotoGalleryPreviewItemCaption SliderDescription"><?= $linktext ?></p>
+			<p class="WikiaPhotoGalleryPreviewSliderCaption WikiaPhotoGalleryPreviewItemCaption SliderLink"><?= $linkMsg ?></p>
 		</span>
 	</span>
 <?php
