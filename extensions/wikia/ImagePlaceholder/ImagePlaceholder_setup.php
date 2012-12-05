@@ -122,8 +122,9 @@ function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( Parser $parser, Ti
 }
 
 function ImagePlaceholderParserBeforeStrip($parser, $text, $strip_state) {
-	global $wgWikiaImagePlaceholderId;
+	global $wgWikiaImagePlaceholderId, $wgWikiaVideoPlaceholderId;
 
+	$wgWikiaVideoPlaceholderId = 0;
 	$wgWikiaImagePlaceholderId = 0;
 	return true;
 }
@@ -237,7 +238,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	if (empty($wgRTEParserEnabled)) {
 		if( ($wgRequest->getVal('diff',0) == 0) && ($wgRequest->getVal('oldid',0) == 0) ) {
 			if( $isvideo ) {
-				$onclick = 'alert("Add VET here"); return false;'; /*'$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js\', function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); mw.loader.load( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css\', "text/css" ) } ) } )';*/
+				$onclick = '$.loadYUI( function() {$.getScript(wgExtensionsPath + "/wikia/VideoEmbedTool/js/VET.js", function() { VET_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaVideoPlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', "'. htmlspecialchars($caption) .'" ); $.getResources([ $.getSassCommonURL("/extensions/wikia/VideoEmbedTool/css/VET.scss" ), window.wgExtensionsPath + "/wikia/WikiaStyleGuide/js/Dropdown.js", $.getSassCommonURL("/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss" ) ]); } ); } ); return false;';
 			} else {
 				$onclick = '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js\', function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); mw.loader.load( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css\', "text/css" ); } ) } ); return false;';
 			}
@@ -299,7 +300,11 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$out .= Xml::closeElement('div') . Xml::closeElement('div') . Xml::closeElement('td');
 
 	// increase counter
-        $wgWikiaImagePlaceholderId++;
+	if($isvideo) {
+		$wgWikiaVideoPlaceholderId++;	
+	} else {
+		$wgWikiaImagePlaceholderId++;
+	}
 
 	// dirty hack for CK support
 	global $wgRTEParserEnabled;

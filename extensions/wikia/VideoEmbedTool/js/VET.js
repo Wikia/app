@@ -2,6 +2,37 @@
  * Author: Inez Korczynski, Bartek Lapinski
  */
 
+/**
+ * Finds the event in the window object, the caller's arguments, or
+ * in the arguments of another method in the callstack.  This is
+ * executed automatically for events registered through the event
+ * manager, so the implementer should not normally need to execute
+ * this function at all.
+ * @method getEvent
+ * @param {Event} e the event parameter from the handler
+ * @param {HTMLElement} boundEl the element the listener is attached to
+ * @return {Event} the event
+ * @static
+ *
+ * @deprecated - used by WMU and VET only
+ */
+$.getEvent = function(e, boundEl) {
+	var ev = e || window.event;
+
+	if (!ev) {
+		var c = this.getEvent.caller;
+		while (c) {
+			ev = c.arguments[0];
+			if (ev && Event == ev.constructor) {
+				break;
+			}
+			c = c.caller;
+		}
+	}
+
+	return ev;
+};
+
 /*
  * Variables
  */
@@ -353,6 +384,22 @@ function VET_getFirstFree( gallery, box ) {
 	return box;
 }
 
+
+/*$.loadYUI( function() {
+	$.getScript(wgExtensionsPath + "/wikia/VideoEmbedTool/js/VET.js", function() { 
+		VET_show( $.getEvent(), -2, 0,2,0 ,300, "" ); 
+		mw.loader.load( $.getSassCommonURL("/extensions/wikia/VideoEmbedTool/css/VET.scss" ) );
+	 }); 
+}); 
+
+$.loadYUI( function() {
+	$.getScript(wgExtensionsPath + "/wikia/VideoEmbedTool/js/VET.js", function() { 
+		VET_show( $.getEvent(), -2, 0,2,0 ,300, "" ); 
+		mw.loader.load( $.getSassCommonURL("/extensions/wikia/VideoEmbedTool/css/VET.scss" ) ); 
+	} ); 
+} );
+*/
+
 // some parameters are
 function VET_show( e, gallery, box, align, thumb, size, caption ) {
 	var errorDiv = $('#VideoEmbedError')
@@ -473,6 +520,9 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 
 	// for gallery and placeholder, load differently...
 	if( -1 != VET_gallery  ) {
+$().log("----------");
+$().log("load from view");
+$().log("----------");
 		VET_loadMainFromView();
 	} else {
 		var html = '';
@@ -519,6 +569,10 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		VET_panel.render();
 		VET_panel.show();
 		VET_panel.center();
+$().log("----------");
+$().log(VET_refid);
+$().log(VET_wysiwygStart);
+$().log("----------");
 		if(VET_refid != null && VET_wysiwygStart == 2) {
 			VET_editVideo();
 		} else {
@@ -594,6 +648,7 @@ function VET_loadMainFromView() {
 			if ( window.wgEnableAjaxLogin == true && $('#VideoEmbedLoginMsg').exists() ) {
 				$('#VideoEmbedLoginMsg').click(openLogin).css('cursor', 'pointer').log('VET: ajax login enabled');
 			}
+			VETExtended.init();
 		}
 	}
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=loadMainFromView', callback);
@@ -1227,6 +1282,7 @@ var VETExtended = {
             that.isCarouselCheck();
 		});
 		
+alert('bind submit event');
 		// attach handlers - search
 		this.cachedSelectors.searchForm.submit(function(event) {
 			event.preventDefault();

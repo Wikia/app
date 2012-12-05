@@ -15,7 +15,7 @@
  * @return {Event} the event
  * @static
  *
- * @deprecated - used by WMU only
+ * @deprecated - used by WMU and VET only
  */
 $.getEvent = function(e, boundEl) {
 	var ev = e || window.event;
