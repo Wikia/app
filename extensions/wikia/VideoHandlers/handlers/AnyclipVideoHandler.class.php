@@ -18,7 +18,7 @@ class AnyclipVideoHandler extends VideoHandler {
 		$height =  $this->getHeight( $width );
 		$autoPlayStr = ( $autoplay ) ? ', autoPlay:true' : '';
 		$ajaxStr = (bool) $isAjax;
-		$jsFile = 'http://player.anyclip.com/embed/AnyClipPlayerLite.min.js';
+		$jsFile = 'http://player.anyclip.com/embed/AnyClipPlayerLite.min.js'; // Note: This file depends on jQuery
 
 		$html = <<<EOT
 <div id="AnyClipPlayer-{$this->videoId}-{$ajaxStr}" style="width: {$width}px; height: {$height}px;"></div>
