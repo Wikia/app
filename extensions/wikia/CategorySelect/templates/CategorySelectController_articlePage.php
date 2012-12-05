@@ -3,7 +3,9 @@
 		<?= $categoriesLink ?>
 		<div class="shifted">
 			<?= $app->getView( 'CategorySelect', 'categories', array( 'categories' => $categories ) ) ?>
-			<?= $app->getView( 'CategorySelect', 'addCategory' ) ?>
+			<? if ( $userCanEdit ): ?>
+				<?= $app->getView( 'CategorySelect', 'addCategory' ) ?>
+			<? endif ?>
 		</div>
 	</div>
 	<div class="toolbar">

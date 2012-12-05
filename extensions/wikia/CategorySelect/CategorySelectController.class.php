@@ -19,6 +19,12 @@ class CategorySelectController extends WikiaController {
 	public function articlePage() {
 		$this->wf->ProfileIn( __METHOD__ );
 
+		// Template rendering cancelled by hook
+		if ( !$this->wf->RunHooks( 'CategorySelectArticlePage' ) ) {
+			$this->wf->ProfileOut( __METHOD__ );
+			return false;
+		}
+
 		$categoryTypes = CategorySelect::getCategoryTypes();
 		$categories = array();
 		$data = CategorySelect::getExtractedCategoryData();
@@ -46,6 +52,14 @@ class CategorySelectController extends WikiaController {
 			unset( $category );
 		}
 
+		$userCanEdit = CategorySelect::isEditable();
+
+		// There are no categories present and user can't edit, skip rendering
+		if ( !$userCanEdit && empty( $categories ) ) {
+			$this->wf->ProfileOut( __METHOD__ );
+			return false;
+		}
+
 		// Categories link
 		$categoriesLinkAttributes = array( 'class' => 'categoriesLink' );
 		$categoriesLinkPage = $this->wf->Message( 'pagecategorieslink' )->inContentLanguage()->text();
@@ -60,6 +74,7 @@ class CategorySelectController extends WikiaController {
 		$this->response->setVal( 'categories', $categories );
 		$this->response->setVal( 'categoriesLink', $categoriesLink );
 		$this->response->setVal( 'showHidden', $this->wg->User->getBoolOption( 'showhiddencats' ) );
+		$this->response->setVal( 'userCanEdit', $userCanEdit );
 
 		$this->wf->ProfileOut( __METHOD__ );
 	}

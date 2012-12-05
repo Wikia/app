@@ -29,7 +29,8 @@ $app->registerClass( 'CategorySelectController', $dir . 'CategorySelectControlle
 $app->registerClass( 'CategorySelectHooksHelper', $dir . 'CategorySelectHooksHelper.class.php' );
 
 // Hooks
-$app->registerExtensionFunction( 'CategorySelectHooksHelper::onInit' );
+$app->registerHook( 'GetPreferences', 'CategorySelectHooksHelper', 'onGetPreferences' );
+$app->registerHook( 'MediaWikiPerformAction', 'CategorySelectHooksHelper', 'onMediaWikiPerformAction' );
 
 // Messages
 $app->registerExtensionMessageFile( 'CategorySelect', $dir . 'CategorySelect.i18n.php' );

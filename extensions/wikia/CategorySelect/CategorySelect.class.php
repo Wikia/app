@@ -15,6 +15,8 @@ class CategorySelect {
 	private static $categoryTypes;
 	private static $data;
 	private static $frame;
+	private static $isEditable;
+	private static $isEnabled;
 	private static $maybeCategory;
 	private static $maybeCategoryBegin;
 	private static $namespaces;
@@ -132,7 +134,15 @@ class CategorySelect {
 		return self::$categoryTypes;
 	}
 
-	public static function getExtractedCategoryData() {
+	public static function getExtractedCategoryData( $wikitext = '', $force = false ) {
+		if ( !isset( self::$data ) ) {
+			if ( empty( $wikitext ) ) {
+				$wikitext = F::app()->wg->Article->fetchContent();
+			}
+
+			self::$data = self::extractCategoriesFromWikitext( $wikitext, $force );
+		}
+
 		return self::$data;
 	}
 
@@ -179,10 +189,104 @@ class CategorySelect {
 	}
 
 	/**
+	 * Whether the current user can edit categories for the current request.
+	 */
+	public static function isEditable() {
+		wfProfileIn( __METHOD__ );
+
+		if ( !isset( self::$isEditable ) ) {
+			$app = F::app();
+
+			$request = $app->wg->Request;
+			$title = $app->wg->Title;
+			$user = $app->wg->User;
+
+			$isEditable = true;
+
+			if (
+				// Disabled if user is not allowed to edit
+				!$user->isAllowed( 'edit' )
+				// Disabled on pages the user can't edit, see RT#25246
+				|| ( $title->mNamespace != NS_SPECIAL && !$title->quickUserCan( 'edit' ) )
+				// Disabled for diff pages
+				|| $request->getVal( 'diff' )
+				// Disabled for older revisions of articles
+				|| $request->getVal( 'oldid' )
+			) {
+				$isEditable = false;
+			}
+
+			self::$isEditable = $isEditable;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return self::$isEditable;
+	}
+
+	/**
+	 * Whether CategorySelect should be used for the current request.
+	 */
+	public static function isEnabled() {
+		wfProfileIn( __METHOD__ );
+
+		if ( !isset( self::$isEnabled ) ) {
+			$app = F::app();
+
+			$request = $app->wg->Request;
+			$title = $app->wg->Title;
+			$user = $app->wg->User;
+
+			$action = $request->getVal( 'action', 'view' );
+			$undo = $request->getVal( 'undo' );
+			$undoafter = $request->getVal( 'undoafter' );
+
+			$supportedActions = array( 'edit', 'purge', 'submit', 'view' );
+			$supportedSkins = array( 'SkinAnswers', 'SkinOasis' );
+
+			$isEnabled = true;
+
+			if (
+				// Disabled if usecatsel=no is present
+				$request->getVal( 'usecatsel', '' ) == 'no'
+				// Disabled by user preferences
+				|| $user->getOption( 'disablecategoryselect' )
+				// Disabled for unsupported skin
+				|| !in_array( get_class( RequestContext::getMain()->getSkin() ), $supportedSkins )
+				// Disabled for unsupported action
+				|| !in_array( $action, $supportedActions )
+				// Disabled on CSS or JavaScript pages
+				|| $title->isCssJsSubpage()
+				// Disabled on non-existant article pages
+				|| ( $action == 'view' && !$title->exists() )
+				// Disabled on 'confirm purge' page for anon users
+				|| ( $action == 'purge' && $user->isAnon() && !$request->wasPosted() )
+				// Disabled for undo edits
+				|| ( $undo > 0 && $undoafter > 0 )
+				// Disabled for unsupported namespace
+				|| ( ( $title->mNamespace != NS_TEMPLATE )
+					&& ( ( $action == 'view' || $action == 'purge' )
+						&& !in_array( $title->mNamespace, array_merge( $app->wg->ContentNamespaces, array( NS_FILE, NS_CATEGORY, NS_VIDEO ) ) ) )
+					&& ( ( $action == 'edit' || $action == 'submit' )
+						&& !in_array( $title->mNamespace, array_merge( $app->wg->ContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) ) )
+				)
+			) {
+				$isEnabled = false;
+			}
+
+			self::$isEnabled = $isEnabled;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return self::$isEnabled;
+	}
+
+	/**
 	 * Sets the type associated with categories (either "normal" or "hidden").
 	 * This function is called from a hook for view pages only.
 	 */
-	public function setCategoryTypes( $categoryTypes ) {
+	public static function setCategoryTypes( $categoryTypes ) {
 		self::$categoryTypes = $categoryTypes;
 	}
 

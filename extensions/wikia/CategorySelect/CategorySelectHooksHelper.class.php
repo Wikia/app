@@ -122,16 +122,18 @@ class CategorySelectHooksHelper {
 	}
 
 	/**
-	 * Toggle CS in user preferences
+	 * Allow toggling CategorySelect in user preferences
 	 */
 	function onGetPreferences( $user, &$preferences ) {
-		if ( F::app()->wg->EnableUserPreferencesV2Ext ) {
+		$app = F::app();
+
+		if ( $app->wg->EnableUserPreferencesV2Ext ) {
 			$section = 'editing/starting-an-edit';
-			$message = wfMsg( 'tog-disablecategoryselect-v2' );
+			$message = $app->wf->Message( 'tog-disablecategoryselect-v2' );
 
 		} else {
 			$section = 'editing/editing-experience';
-			$message = wfMsg( 'tog-disablecategoryselect' );
+			$message = $app->wf->Message( 'tog-disablecategoryselect' );
 		}
 
 		$preferences[ 'disablecategoryselect' ] = array(
@@ -144,64 +146,15 @@ class CategorySelectHooksHelper {
 	}
 
 	/**
-	 * Determine whether or not to enable the extension
-	 */
-	public static function onInit( $forceInit = false ) {
-		wfProfileIn( __METHOD__ );
-
-		$app = F::app();
-		$request = $app->wg->Request;
-
-		$undoafter = $request->getVal( 'undoafter' );
-		$undo = $request->getVal( 'undo' );
-		$diff = $request->getVal( 'diff' );
-		$oldid = $request->getVal( 'oldid' );
-		$action = $request->getVal( 'action', 'view' );
-
-		if (
-			// Param usecatsel=no is not present
-			$request->getVal( 'usecatsel', '' ) != 'no'
-			// User is allowed to edit or we are forcing init
-			&& ( $forceInit || $app->wg->User->isAllowed( 'edit' ) )
-			// Not a history page
-			&& $action != 'history'
-			// Not an undo edit
-			&& !( ( $undo > 0 && $undoafter > 0) || $diff || ( $oldid && $action != 'edit' && $action != 'submit' ) )
-		) {
-			$app->registerHook( 'GetPreferences', 'CategorySelectHooksHelper', 'onGetPreferences' );
-			$app->registerHook( 'MediaWikiPerformAction', 'CategorySelectHooksHelper', 'onMediaWikiPerformAction' );
-
-		} else {
-			$app->wg->EnableCategorySelectExt = false;
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-	/**
 	 * Set global variables for javascript
 	 */
 	function onMakeGlobalVariablesScript( Array &$vars ) {
-		wfProfileIn( __METHOD__ );
-
 		$app = F::app();
 		$action = $app->wg->Request->getVal( 'action', 'view' );
-
-		// On article pages, we haven't parsed the article wikitext yet
-		if ( $action == 'view' ) {
-			// TODO: does this need to be cached?
-			$wikitext = $app->wg->Article->fetchContent();
-			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext );
-
-		} else {
-		kylebug('here');
-			$data = CategorySelect::getExtractedCategoryData();
-		}
+		$data = CategorySelect::getExtractedCategoryData();
 
 		$catgories = array();
 		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
-
 			$categories = $data[ 'categories' ];
 		}
 
@@ -210,10 +163,8 @@ class CategorySelectHooksHelper {
 			'defaultNamespace' => $app->wg->ContLang->getNsText( NS_CATEGORY ),
 			'defaultNamespaces' => CategorySelect::getDefaultNamespaces(),
 			'defaultSeparator' => trim( $app->wf->Message( 'colon-separator' )->escaped() ),
-			'defaultSortKey' => $app->wg->Parser->getDefaultSort() ?: $app->wg->Title->getText(),
+			'defaultSortKey' => $app->wg->Parser->getDefaultSort() ?: $app->wg->Title->getText()
 		);
-
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
@@ -224,34 +175,12 @@ class CategorySelectHooksHelper {
 	public static function onMediaWikiPerformAction( $output, $article, $title, $user, $request, $mediawiki, $force = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$app = F::app();
-		$action = $app->wg->Request->getVal( 'action', 'view' );
+		if ( $force || CategorySelect::isEnabled() ) {
+			$app = F::app();
+			$action = $app->wg->Request->getVal( 'action', 'view' );
 
-		// TODO: Do we still support SkinAnswers?
-		$supportedSkins = array( 'SkinAnswers', 'SkinOasis' );
-
-		if (
-			// Not disabled by user preferences
-			!$app->wg->User->getOption( 'disablecategoryselect' )
-			// Skin is supported
-			&& in_array( get_class( RequestContext::getMain()->getSkin() ), $supportedSkins )
-			// Namespace is supported
-			&& ( $force || (
-				( ( $action == 'view' || $action == 'purge' ) && in_array( $title->mNamespace, array_merge( $app->wg->ContentNamespaces, array( NS_FILE, NS_CATEGORY, NS_VIDEO ) ) ) )
-				|| in_array( $title->mNamespace, array_merge( $app->wg->ContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) )
-				|| ( $title->mNamespace == NS_TEMPLATE )
-			) )
-			// Not a CSS or JavaScript page
-			&& !$title->isCssJsSubpage()
-			// Is an article page and the article exists
-			&& !( $action == 'view' && !$title->exists() )
-			// Is a page the user can edit, see RT#25246
-			&& ( $title->mNamespace != NS_SPECIAL && $title->quickUserCan( 'edit' ) )
-			// Is not a 'confirm purge' page for anon users
-			&& !( $action == 'purge' && $app->wg->User->isAnon() && !$app->wg->Request->wasPosted() )
-		) {
 			F::build( 'JSMessages' )->enqueuePackage( 'CategorySelect', JSMessages::INLINE );
-kylebug('here');
+
 			$app->registerHook( 'MakeGlobalVariablesScript', 'CategorySelectHooksHelper', 'onMakeGlobalVariablesScript' );
 
 			// Add hooks for view pages
@@ -259,7 +188,7 @@ kylebug('here');
 				$app->registerHook( 'OutputPageMakeCategoryLinks', 'CategorySelectHooksHelper', 'onOutputPageMakeCategoryLinks' );
 
 			// Add hooks for edit pages
-			} else if ( $force || $action == 'edit' || $action == 'submit' ) {
+			} else if ( $action == 'edit' || $action == 'submit' || $force ) {
 				$app->registerHook( 'EditForm::MultiEdit:Form', 'CategorySelectHooksHelper', 'onEditFormMultiEditForm' );
 				$app->registerHook( 'EditPage::CategoryBox', 'CategorySelectHooksHelper', 'onEditPageCategoryBox' );
 				$app->registerHook( 'EditPage::getContent::end', 'CategorySelectHooksHelper', 'onEditPageGetContentEnd' );
@@ -267,9 +196,6 @@ kylebug('here');
 				$app->registerHook( 'EditPage::showEditForm:fields', 'CategorySelectHooksHelper', 'onEditPageShowEditFormFields' );
 				$app->registerHook( 'EditPageGetDiffText', 'CategorySelectHooksHelper', 'onEditPageGetDiffText' );
 			}
-
-		} else {
-			$app->wg->EnableCategorySelectExt = false;
 		}
 
 		wfProfileOut( __METHOD__ );

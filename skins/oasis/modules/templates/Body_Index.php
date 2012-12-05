@@ -100,7 +100,11 @@
 			</div>
 
 			<? if ( empty( $wg->SuppressArticleCategories ) ): ?>
-				<?= $app->renderView( 'ArticleCategories', 'Index' ) ?>
+				<? if ( !empty( $wg->EnableCategorySelectExt ) && CategorySelect::isEnabled() ): ?>
+					<?= $app->renderView( 'CategorySelect', 'articlePage' ) ?>
+				<? else: ?>
+					<?= $app->renderView( 'ArticleCategories', 'Index' ) ?>
+				<? endif ?>
 			<? endif ?>
 
 			<?php
