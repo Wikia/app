@@ -19,9 +19,15 @@ class AdEngine2Controller extends WikiaController {
 	 * @return bool
 	 */
 	public static function areAdsShowableOnPage() {
+		// Don't show ads on:
+		if (WikiaPageType::isActionPage()) {
+			return false;
+		}
+
 		$wg = F::app()->wg;
 		$title = $wg->Title;
 
+		// Show ads only on the following page types:
 		$runAds = $wg->Out->isArticle()
 			|| WikiaPageType::isSearch()
 			|| WikiaPageType::isForum()
