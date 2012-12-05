@@ -15,7 +15,7 @@ class CategorySelectHooksHelper {
 	 * Embed CategorySelect on edit pages. It will be moved later via JavaScript
 	 * into the right rail. See: /extensions/wikia/EditPageLayout/modules/Categories.js
 	 */
-	function onEditFormMultiEditForm( $rows, $cols, $ew, $textbox ) {
+	public static function onEditFormMultiEditForm( $rows, $cols, $ew, $textbox ) {
 		$app = F::app();
 		$action = $app->wg->Request->getVal( 'action', 'view' );
 
@@ -30,14 +30,14 @@ class CategorySelectHooksHelper {
 	 * Remove hidden category box from edit page.
 	 * Returning false ensures formatHiddenCategories will not be called.
 	 */
-	function onEditPageCategoryBox( &$editform ) {
+	public static function onEditPageCategoryBox( &$editform ) {
 		return false;
 	}
 
 	/**
 	 * Replace content of edited article [with cut out categories]
 	 */
-	function onEditPageGetContentEnd( $editPage, &$wikitext ) {
+	public static function onEditPageGetContentEnd( $editPage, &$wikitext ) {
 		if ( !$editPage->isConflict ) {
 			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext );
 			$wikitext = $data[ 'wikitext' ];
@@ -49,7 +49,7 @@ class CategorySelectHooksHelper {
 	/**
 	 * Add categories to article for DiffEngine (when editing entire article)
 	 */
-	function onEditPageGetDiffText( $editPage, &$newtext ) {
+	public static function onEditPageGetDiffText( $editPage, &$newtext ) {
 		if ( $editPage->section == '' && isset( self::$categoriesWikitext ) ) {
 			$newtext .= self::$categoriesWikitext;
 		}
@@ -64,7 +64,7 @@ class CategorySelectHooksHelper {
 	 * @param WebRequest $request
 	 *
 	 */
-	function onEditPageImportFormData( $editPage, $request ) {
+	public static function onEditPageImportFormData( $editPage, $request ) {
 		$app = F::app();
 
 		if ( $request->wasPosted() ) {
@@ -116,7 +116,7 @@ class CategorySelectHooksHelper {
 	 * @param EditPage $editPage
 	 * @param OutputPage $out
 	 */
-	function onEditPageShowEditFormFields( $editPage, $out ) {
+	public static function onEditPageShowEditFormFields( $editPage, $out ) {
 		$out->addHTML( F::app()->renderView( 'CategorySelect', 'editPageMetadata' ) );
 		return true;
 	}
@@ -124,7 +124,7 @@ class CategorySelectHooksHelper {
 	/**
 	 * Allow toggling CategorySelect in user preferences
 	 */
-	function onGetPreferences( $user, &$preferences ) {
+	public static function onGetPreferences( $user, &$preferences ) {
 		$app = F::app();
 
 		if ( $app->wg->EnableUserPreferencesV2Ext ) {
@@ -148,7 +148,7 @@ class CategorySelectHooksHelper {
 	/**
 	 * Set global variables for javascript
 	 */
-	function onMakeGlobalVariablesScript( Array &$vars ) {
+	public static function onMakeGlobalVariablesScript( Array &$vars ) {
 		$app = F::app();
 		$action = $app->wg->Request->getVal( 'action', 'view' );
 		$data = CategorySelect::getExtractedCategoryData();
