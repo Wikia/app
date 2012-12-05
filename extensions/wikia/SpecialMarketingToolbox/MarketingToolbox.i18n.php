@@ -51,7 +51,7 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-top10-lists' => 'Top 10 lists',
 	'marketing-toolbox-hub-module-popular-videos' => 'Popular videos',
 
-	'marketing-toolbox-hub-module-pulse-wikiurl' => 'Wiki\'s URL',
+	'marketing-toolbox-hub-module-pulse-wikiurl' => 'Wiki URL',
 	'marketing-toolbox-hub-module-pulse-topic' => 'Topic',
 	'marketing-toolbox-hub-module-pulse-stat1' => 'Stat 1.',
 	'marketing-toolbox-hub-module-pulse-stat2' => 'Stat 2.',

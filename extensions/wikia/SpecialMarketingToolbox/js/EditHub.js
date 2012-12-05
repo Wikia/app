@@ -2,6 +2,7 @@ var EditHub = function() {};
 
 EditHub.prototype = {
 	form: undefined,
+	validatedInputs: undefined,
 
 	init: function () {
 		$('.MarketingToolboxMain .wmu-show').click(function() {
@@ -29,6 +30,7 @@ EditHub.prototype = {
 		});
 
 		this.form = $('#marketing-toolbox-form');
+		this.validatedInputs = $('.WikiaForm .required');
 
 		$('#marketing-toolbox-clearall').click($.proxy(function(){
 			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation')) == true) {
@@ -37,7 +39,7 @@ EditHub.prototype = {
 		}, this));
 
 		$('.WikiaForm .submits input[type=submit]').click(this.formValidate);
-		$('.WikiaForm input[type=text]').keyup(this.formValidateRealTime);
+		this.validatedInputs.keyup(this.formValidateRealTime);
 	},
 
 	formReset: function() {
@@ -46,7 +48,6 @@ EditHub.prototype = {
 	},
 
 	formValidateRealTime: function(e) {
-		$().log('formValidateRealTime');
 		var closestError = $(this).siblings('.error');
 		closestError.text('');
 		if ($(this).val() == '') {
@@ -56,7 +57,7 @@ EditHub.prototype = {
 		}
 		var validated = true;
 		var submitButton = $('.WikiaForm .submits input[type=submit]');
-		$('.WikiaForm input[type=text]').each(function() {
+		$('.WikiaForm .required').each(function() {
 			if ($(this).val() == '') {
 				validated = false;
 			}
