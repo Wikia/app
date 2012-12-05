@@ -572,14 +572,16 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				$res = $dbr->query( $sql, __METHOD__ );
 						
 				while ( $row = $dbr->fetchObject( $res ) ) {
-					$data[ $reviewer ][ $row->review_state ] = $row->cnt;
-					$data[ $reviewer ][ 'total' ] += $row->cnt;
-					
-					# total
-					$total += $row->cnt;
-					
-					# index in summary
-					$summary[ $row->review_state ] += $row->cnt;
+					if ( !empty( $row->review_state ) ) {
+						$data[ $reviewer ][ $row->review_state ] = $row->cnt;
+						$data[ $reviewer ][ 'total' ] += $row->cnt;
+
+						# total
+						$total += $row->cnt;
+
+						# index in summary
+						$summary[ $row->review_state ] += $row->cnt;
+					}
 				}
 				
 			}
@@ -649,9 +651,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			);
 
 			while( $row = $db->fetchObject($result) ) {
-				$reviewers[] = $row->review_state;
+				$reviewers[] = $row->reviewer_id;
 			}
-			$this->wg->memc->set( $key, $states, 60 * 60 * 8 );
+			$this->wg->memc->set( $key, $reviewers, 60 * 60 * 8 );
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
