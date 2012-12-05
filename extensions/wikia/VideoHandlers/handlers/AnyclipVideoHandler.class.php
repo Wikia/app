@@ -27,7 +27,7 @@ EOT;
 			$html .= <<<EOT
 <script type="text/javascript">
 	$.when(
-		$.getScript('http://player.anyclip.com/embed/AnyClipPlayer.js')
+		$.getScript('http://player.anyclip.com/embed/AnyClipPlayerLite.min.js')
 	).done(function() {
 		AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}"{$autoPlayStr}}]);
 	});
