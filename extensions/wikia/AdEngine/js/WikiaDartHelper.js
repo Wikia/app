@@ -27,8 +27,6 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		getLanguage,
 		getResolution,
 		getPrefooterStatus,
-		getImpressionCount,
-		getPartnerKeywords,
 		getCategories,
 
 		site,
@@ -208,46 +206,6 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		return 'hasp=no;';
 	};
 
-	// TODO FIXME? remove?
-	getImpressionCount = function (slotname) {
-		/*
-		 // return key-value only if impression cookie exists
-
-		 if (AdConfig.DART.adDriverNumCall == null) {
-		 var cookie = AdConfig.cookie('adDriverNumAllCall');
-		 if (typeof cookie != 'undefined' && cookie) {
-		 AdConfig.DART.adDriverNumCall = eval('(' + cookie + ')');
-		 }
-		 }
-
-		 if (AdConfig.DART.adDriverNumCall != null) {
-		 for (var i=0; i < AdConfig.DART.adDriverNumCall.length; i++) {
-		 if (AdConfig.DART.adDriverNumCall[i].slotname == slotname) {
-		 // check cookie expiration
-		 if (parseInt(AdConfig.DART.adDriverNumCall[i].ts) + 1*3600000 > wgNow.getTime()) {  // wgAdDriverCookieLifetime in hours, convert to msec
-		 var num = parseInt(AdConfig.DART.adDriverNumCall[i].num);
-		 return 'impct=' + num + ';';
-		 }
-		 }
-		 }
-		 }
-		 */
-
-		return '';
-	};
-
-	// TODO remove?
-	getPartnerKeywords = function () {
-		var kw = '';
-		if (!window.partnerKeywords) {
-			return kw;
-		}
-
-		kw = 'pkw=' + encodeURIComponent(window.partnerKeywords) + ';';
-
-		return kw;
-	};
-
 	getCategories = function () {
 		var i, categories = '';
 
@@ -346,11 +304,9 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			getTitle() + // TODO FIXME missing in adsinhead
 			getLanguage() +
 			getResolution() +
-			getPrefooterStatus() + // TODO FIXME just height
+			getPrefooterStatus() +
 			decorateAsKv('positionfixed', params.positionfixed) +
 			kruxKV +
-			// getImpressionCount(slotname) + // TODO remove missing
-			// getPartnerKeywords() + // TODO remove missing
 			getCategories() + // TODO FIXME missing in adsinhead
 			loc +
 			dcopt +
