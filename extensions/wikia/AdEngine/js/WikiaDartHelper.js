@@ -2,30 +2,44 @@
 var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPage) {
 	'use strict';
 
-	var logGroup = 'WikiaDartHelper'
-		, getUrl
-		, ord = Math.round(Math.random() * 23456787654)
-		, tile = 1
-		, initSiteAndZones
+	var logGroup = 'WikiaDartHelper',
+		getUrl,
+		ord = Math.round(Math.random() * 23456787654),
+		tile = 1,
+		initSiteAndZones,
 
-		, kvStrMaxLength = 500
-		, categoryStrMaxLength = 300
+		kvStrMaxLength = 500,
+		categoryStrMaxLength = 300,
 
-		, decorateAsKv, trimKvs
-		, isWikiaHub, isAutoHub, getSite, getZone1, getZone2
-		, getSubdomain, getCustomKeyValues, getArticleKV
-		, getDomainKV, getHostnamePrefix, getTitle, getLanguage
-		, getResolution, getPrefooterStatus, getImpressionCount
-		, getPartnerKeywords, getCategories
+		decorateAsKv,
+		trimKvs,
+		isWikiaHub,
+		isAutoHub,
+		getSite,
+		getZone1,
+		getZone2,
+		getSubdomain,
+		getCustomKeyValues,
+		getArticleKV,
+		getDomainKV,
+		getHostnamePrefix,
+		getTitle,
+		getLanguage,
+		getResolution,
+		getPrefooterStatus,
+		getImpressionCount,
+		getPartnerKeywords,
+		getCategories,
 
-		, site, zone1, zone2
-	;
+		site,
+		zone1,
+		zone2;
 
-	trimKvs = function(kvs, limit) {
+	trimKvs = function (kvs, limit) {
 		return kvs.substr(0, limit).replace(/;[^;]*$/, ';');
 	};
 
-	decorateAsKv = function(key, value) {
+	decorateAsKv = function (key, value) {
 		if (value) {
 			return key + '=' + value + ';';
 		}
@@ -33,13 +47,13 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 	};
 
 	// TODO @rychu refactor out?
-	isWikiaHub = function() {
+	isWikiaHub = function () {
 		return !!window.wgWikiaHubType;	// defined in source of hub article
 	};
 
 	// TODO @rychu refactor out?
 	// TODO: this function doesn't really work
-	isAutoHub = function() {
+	isAutoHub = function () {
 		var key;
 
 		if (window.wgDBname !== 'wikiaglobal') {
@@ -61,12 +75,12 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		return false;
 	};
 
-	getSite = function(hub) {
+	getSite = function (hub) {
 		return 'wka.' + hub;
 	};
 
 	// Effectively the dbname, defaulting to wikia.
-	getZone1 = function(dbname){
+	getZone1 = function (dbname) {
 		// Zone1 is prefixed with "_" because zone's can't start with a number, and some dbnames do.
 		if (dbname) {
 			return '_' + dbname.replace('/[^0-9A-Z_a-z]/', '_');
@@ -75,88 +89,88 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 	};
 
 	// Page type, ie, "home" or "article"
-	getZone2 = function(pageType){
+	getZone2 = function (pageType) {
 		if (pageType) {
 			return pageType;
 		}
 		return 'article';
 	};
 
-	getSubdomain = function() {
+	getSubdomain = function () {
 		var subdomain;
 
 		switch (Geo.getContinentCode()) {
-			case 'AF':
-			case 'EU':
+		case 'AF':
+		case 'EU':
+			subdomain = 'ad-emea';
+			break;
+		case 'AS':
+			switch (Geo.getCountryCode()) {
+				// Middle East
+			case 'AE':
+			case 'CY':
+			case 'BH':
+			case 'IL':
+			case 'IQ':
+			case 'IR':
+			case 'JO':
+			case 'KW':
+			case 'LB':
+			case 'OM':
+			case 'PS':
+			case 'QA':
+			case 'SA':
+			case 'SY':
+			case 'TR':
+			case 'YE':
 				subdomain = 'ad-emea';
 				break;
-			case 'AS':
-				switch (Geo.getCountryCode()) {
-					// Middle East
-					case 'AE':
-					case 'CY':
-					case 'BH':
-					case 'IL':
-					case 'IQ':
-					case 'IR':
-					case 'JO':
-					case 'KW':
-					case 'LB':
-					case 'OM':
-					case 'PS':
-					case 'QA':
-					case 'SA':
-					case 'SY':
-					case 'TR':
-					case 'YE':
-						subdomain = 'ad-emea';
-						break;
-					default:
-						subdomain = 'ad-apac';
-				}
-				break;
-			case 'OC':
+			default:
 				subdomain = 'ad-apac';
-				break;
-			default: // NA, SA
-				subdomain = 'ad';
+			}
+			break;
+		case 'OC':
+			subdomain = 'ad-apac';
+			break;
+		default: // NA, SA
+			subdomain = 'ad';
 		}
 
 		return subdomain;
 	};
 
-	getCustomKeyValues = function() {
+	getCustomKeyValues = function () {
 		if (window.wgDartCustomKeyValues) {
 			return trimKvs(window.wgDartCustomKeyValues + ';', kvStrMaxLength);
 		}
 		return '';
 	};
 
-	getArticleKV = function() {
+	getArticleKV = function () {
 		return decorateAsKv('artid', window.wgArticleId);
 	};
 
-	getDomainKV = function(hostname) {
-		var lhost, pieces, sld='', np;
+	getDomainKV = function (hostname) {
+		var lhost, pieces, sld = '', np;
 		lhost = hostname.toLowerCase();
 
 		pieces = lhost.split(".");
 		np = pieces.length;
 
-		if (pieces[np-2] === 'co'){
+		if (pieces[np - 2] === 'co') {
 			// .co.uk or .co.jp
-			sld = pieces[np-3] + '.' + pieces[np-2] + '.' + pieces[np-1];
+			sld = pieces[np - 3] + '.' + pieces[np - 2] + '.' + pieces[np - 1];
 		} else {
-			sld = pieces[np-2] + '.' + pieces[np-1];
+			sld = pieces[np - 2] + '.' + pieces[np - 1];
 		}
 
 		return decorateAsKv('dmn', sld.replace(/\./g, ''));
 	};
 
-	getHostnamePrefix = function(hostname) {
-		var lhost = hostname.toLowerCase()
-			, pieces = lhost.split('.')
-			;
+	getHostnamePrefix = function (hostname) {
+		var lhost = hostname.toLowerCase(),
+			pieces = lhost.split('.');
+
 		if (pieces.length) {
 			return decorateAsKv('hostpre', pieces[0]);
 		}
@@ -179,7 +193,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		return 'lang=' + lang + ';';
 	};
 
-	getResolution = function() {
+	getResolution = function () {
 		var width = document.documentElement.clientWidth || document.body.clientWidth;
 		if (width > 1024) {
 			return 'dis=large;';
@@ -187,7 +201,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		return '';
 	};
 
-	getPrefooterStatus = function() {
+	getPrefooterStatus = function () {
 		if (adLogicShortPage && adLogicShortPage.hasPreFooters()) {
 			return 'hasp=yes;';
 		}
@@ -195,7 +209,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 	};
 
 	// TODO FIXME? remove?
-	getImpressionCount = function(slotname) {
+	getImpressionCount = function (slotname) {
 		/*
 		 // return key-value only if impression cookie exists
 
@@ -223,7 +237,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 	};
 
 	// TODO remove?
-	getPartnerKeywords = function() {
+	getPartnerKeywords = function () {
 		var kw = '';
 		if (!window.partnerKeywords) {
 			return kw;
@@ -234,7 +248,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		return kw;
 	};
 
-	getCategories = function() {
+	getCategories = function () {
 		var i, categories = '';
 
 		if (!window.wgCategories) {
@@ -263,7 +277,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 	 * }
 	 * @return {String} URL of DART script
 	 */
-	getUrl = function(params) {
+	getUrl = function (params) {
 		var slotname = params.slotname,
 			size = params.slotsize,
 			adType = params.adType || 'adj',
@@ -352,13 +366,12 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		return url;
 	};
 
-	initSiteAndZones = function() {
+	initSiteAndZones = function () {
 		if (isWikiaHub()) {
 			site = getSite('hub');
-			zone1 = getZone1(window.wgWikiaHubType+'_hub');
+			zone1 = getZone1(window.wgWikiaHubType + '_hub');
 			zone2 = 'hub';
-		}
-		else if (isAutoHub()) {
+		} else if (isAutoHub()) {
 			var hubsPages = window.wgHubsPages[window.wgPageName.toLowerCase()];
 			site = getSite(hubsPages.site);
 			zone1 = getZone1(hubsPages.name);
@@ -382,7 +395,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 	};
 };
 
-var WikiaDartMobileHelper = function(log, window, document) {
+var WikiaDartMobileHelper = function (log, window, document) {
 	'use strict';
 
 	var wikiaDartHelper = WikiaDartHelper(log, window, document);
@@ -394,7 +407,7 @@ var WikiaDartMobileHelper = function(log, window, document) {
 		 * @param params (slotname, positionfixed, uniqueId)
 		 * @return {String} URL of DART script
 		 */
-		getMobileUrl: function(params) {
+		getMobileUrl: function (params) {
 			return wikiaDartHelper.getUrl({
 				slotname: params.slotname,
 				positionfixed: params.positionfixed,
