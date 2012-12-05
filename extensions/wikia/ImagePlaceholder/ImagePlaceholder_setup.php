@@ -139,8 +139,6 @@ function ImagePlaceholderImageBeforeProduceHTML( $skin, Title $title, $file, $fr
 
 // return empty string, this is for placeholders in templates
 function ImagePlaceholder_makeDullImage( $title, $options, $holders = false ) {
-	global $wgWikiaVideoPlaceholderId, $wgContLang;
-
 	// return none, null, zero
 	return '';
 }
