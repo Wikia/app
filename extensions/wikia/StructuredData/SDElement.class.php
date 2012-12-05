@@ -80,7 +80,6 @@ class SDElement extends SDRenderableObject implements SplSubject {
 			    				'schema:thumbnailUrl',
 			    				'schema:description',
 			    				'wikia:restriction',
-			    				'wikia:includeWith',
 			    				'schema:contentURL',
 			    				'schema:width',
 			    				'schema:height'
