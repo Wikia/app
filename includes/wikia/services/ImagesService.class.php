@@ -51,7 +51,7 @@ class ImagesService extends Service {
 	}
 
 	/**
-	 * @desc Uploads an image on a wki
+	 * @desc Uploads an image on a wiki
 	 *
 	 * @static
 	 * @param string $imageUrl url address to original file
@@ -70,7 +70,8 @@ class ImagesService extends Service {
 		$data = array(
 			'wpUpload' => 1,
 			'wpSourceType' => 'web',
-			'wpUploadFileURL' => $imageUrl
+			'wpUploadFileURL' => $imageUrl,
+			'wpDestFile' => $oImageData->name,
 		);
 
 		//validate of optional image data
@@ -82,34 +83,76 @@ class ImagesService extends Service {
 
 		$upload = F::build('UploadFromUrl'); /* @var $upload UploadFromUrl */
 		$upload->initializeFromRequest(F::build('FauxRequest', array($data, true)));
-		$upload->fetchFile();
-		$upload->verifyUpload();
+		$fetchStatus = $upload->fetchFile();
 
+		if( $fetchStatus->isGood() ) {
+			$status = $upload->verifyUpload();
+
+			if( isset($status['status']) && ($status['status'] == UploadBase::SUCCESS) ) {
+				$file = self::createImagePage($oImageData->name); /** @var $file WikiaLocalFile */
+				$result = self::updateImageInfoInDb( $file, $upload->getTempPath(), $oImageData, $user); /** @var $result */
+
+				return self::buildStatus($result->ok, $file->getTitle()->getArticleID(), $result->errors);
+			} else {
+				$errorMsg = 'Upload verification faild ';
+				$errorMsg .= ( isset($status['status']) ? print_r($status, true) : '');
+
+				return self::buildStatus(false, null, $errorMsg);
+			}
+		} else {
+			return self::buildStatus($fetchStatus->ok, null, $fetchStatus->errors);
+		}
+	}
+
+	/**
+	 * @param String $name destination file name
+	 *
+	 * @return WikiaLocalFile
+	 */
+	public static function createImagePage($name) {
 		// create destination file
-		$title = Title::newFromText($oImageData->name, NS_FILE);
-		$file = F::build(
+		$title = Title::newFromText($name, NS_FILE); /** @var $title Title */
+		return F::build(
 			'WikiaLocalFile',
 			array(
 				$title,
 				RepoGroup::singleton()->getLocalRepo()
 			)
-		); /* @var $file WikiaLocalFile */
+		); /** @var $file WikiaLocalFile */
+	}
 
-		/* real upload */
-		$result = $file->upload(
-			$upload->getTempPath(),
-			$oImageData->comment,
-			$oImageData->description,
+	/**
+	 * @param File $file
+	 * @param String $tmpPath
+	 * @param StdClass $imageData
+	 * @param User|null $user
+	 *
+	 * @return mixed
+	 */
+	public static function updateImageInfoInDb(File $file, $tmpPath, $imageData, $user = null) {
+		return $file->upload(
+			$tmpPath,
+			$imageData->comment,
+			$imageData->description,
 			File::DELETE_SOURCE,
 			false,
 			false,
 			$user
 		);
+	}
 
+	/**
+	 * @param bool $status
+	 * @param Integer|null $page_id
+	 * @param null $errors
+	 *
+	 * @return array
+	 */
+	public static function buildStatus($status = false, $page_id = null, $errors = null) {
 		return array(
-			'status' => $result->ok,
-			'page_id' => $title->getArticleID(),
-			'errors' => $result->errors,
+			'status' => $status,
+			'page_id' => $page_id,
+			'errors' => $errors,
 		);
 	}
 }
