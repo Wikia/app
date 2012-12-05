@@ -1135,6 +1135,14 @@ var VETExtended = {
 		fetchedResoultsCount: 0,
 		searchType: 'premium'
 	},
+	
+	track: function(action, label, data) {
+		window.WikiaTracker.trackEvent('trackingevent', $.extend({
+			ga_category: 'vet',
+			ga_action: action,
+			ga_label: label
+		}, data || {}), 'internal');
+	},
 
 	init: function() {
 
@@ -1177,6 +1185,10 @@ var VETExtended = {
 		this.cachedSelectors.carousel.on('click', 'li > a', function(event) {
 			event.preventDefault();
 			VET_sendQueryEmbed($(this).attr('href'));
+			
+			// track event
+			var label = that.carouselMode === 'search' ? 'add-video' : 'add-video-suggested';
+			that.track(window.WikiaTracker.ACTIONS.CLICK, label);
 		});
 
 		// attach handlers - play button (open video preview)
@@ -1250,12 +1262,14 @@ var VETExtended = {
 				that.cachedSelectors.closePreviewBtn.click();
 				that.cachedSelectors.carousel.find('li').remove();
 				that.cachedSelectors.carousel.find('p').removeClass('show');
-	
-				
 				
 				that.cachedSelectors.suggestionsWrapper.startThrobbing();
 				
 				that.fetchSearch();
+				
+				// tracking
+				var label = that.searchCachedStuff.searchType === 'local' ? 'find-local' : 'find-wikia-library';
+				that.track(window.WikiaTracker.ACTIONS.CLICK, label);
 			}
 		});
 		
@@ -1404,7 +1418,6 @@ var VETExtended = {
 
 	// METHOD: show preview of the selected video
 	showVideoPreview: function(data) {
-	
 		var previewWrapper = this.cachedSelectors.previewWrapper,
 			videoWrapper = this.cachedSelectors.videoWrapper;
 		if ( data.playerAsset && data.playerAsset.length > 0 ) { // screenplay special case
@@ -1437,6 +1450,16 @@ var VETExtended = {
 			},
 			callback: function(data) {
 				that.showVideoPreview(data);
+				
+				// video play tracking
+				window.WikiaTracker.trackEvent('trackingevent', {
+					ga_category: 'Lightbox',	// yeah, Lightbox so we can roll up all the data
+					ga_action: window.WikiaTracker.ACTIONS.VIEW,
+					ga_label: 'video-inline',
+					title: title,
+					provider: data.providerName,
+					clickSource: (that.carouselMode === 'suggestion' ? 'VET-Suggestion' : 'VET-Search')
+				}, 'internal');
 			}
 		});
 
@@ -1458,6 +1481,8 @@ var VETExtended = {
 			
 		if (this.canFatch === true) {
 			this.canFatch = false; // fetching in progress
+			
+			this.carouselMode = 'suggestion';
 		
 			this.requestInProgress = $.nirvana.sendRequest({
 				controller: 'VideoEmbedToolController',
@@ -1505,6 +1530,8 @@ var VETExtended = {
 			
 		if (this.canFatch === true) {
 			this.canFatch = false; // fetching in progress
+			
+			this.carouselMode = 'search';
 		
 			this.requestInProgress = $.nirvana.sendRequest({
 				controller: 'VideoEmbedToolController',
