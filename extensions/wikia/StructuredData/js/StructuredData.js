@@ -110,7 +110,7 @@ var StructuredData = {
 	// METHOD for fetching collection of SDS objects form a given class and rendering <select> element with them inside
 	getObjectsToAdd: function($eventTarget, classes) {
 		var that = this,
-		// Create a proper formatted string with classes for the request
+			// Create a proper formatted string with classes for the request
 			classesStr = classes.split(' '),
 			classesStr = classesStr.join(',');
 		$.nirvana.sendRequest( {
@@ -138,8 +138,8 @@ var StructuredData = {
 	addEmptyInput: function($eventTarget) {
 		var placeToAdd = ($eventTarget.siblings('ol').length > 0) ? $eventTarget.siblings('ol') : $eventTarget.siblings('ul'),
 			inputData = {
-				type: placeToAdd.data('field-name'),
-				removeText:	$.msg('structureddata-object-edit-remove-reference')
+			type: placeToAdd.data('field-name'),
+			removeText:	$.msg('structureddata-object-edit-remove-reference')
 			},
 			html = Mustache.render(this.inputTemplate, inputData);
 		$(html).appendTo(placeToAdd).find('input').focus();
