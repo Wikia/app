@@ -80,10 +80,20 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 		return false;
 	}
 
+	/**
+	 * @desc A file upload verification hook; if it returns false UploadBase::verifyUpload() will return UploadBase::HOOK_ABORTED error; we return it here when somebody tries to upload visualization files manually not on development environment
+	 *
+	 * @param string $destName
+	 * @param string $tempPath
+	 * @param $error
+	 *
+	 * @return bool true because it's a hook
+	 */
 	public function UploadVerification($destName, $tempPath, &$error) {
+		global $wgDevelEnvironment;
 		$result = $this->isVisualizationImageName($destName);
 
-		if($result) {
+		if( $result && !$wgDevelEnvironment ) {
 			$error = wfMsg('promote-manual-upload-error');
 			return false;
 		}

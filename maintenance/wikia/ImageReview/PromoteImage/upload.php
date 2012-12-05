@@ -43,7 +43,7 @@ $imageData->description = $imageData->comment = wfMsg('wikiahome-image-auto-uplo
 $result = ImagesService::uploadImageFromUrl($imageUrl, $imageData, $user);
 
 if( $result['status'] === true ) {
-//was it successful upload
+//successful upload
 	echo json_encode(array('id' => $result['page_id'], 'name' => $destImageName));
 	exit(0);
 } else if(
@@ -51,7 +51,7 @@ if( $result['status'] === true ) {
 	&& !empty($result['errors'][0]['message'])
 	&& $result['errors'][0]['message'] === 'backend-fail-alreadyexists'
 ) {
-//did backend return error about the file that it existed
+//backend returned error about the file that it existed (happens on devboxes if the destination image name file exists on production)
 	echo json_encode(array('id' => $result['page_id'], 'name' => $destImageName, 'notice' => 'The file already existed. It was replaced.'));
 	exit(0);
 } else {
