@@ -46,6 +46,8 @@ $messages['en'] = array(
 	'structureddata-created-wikitext-object' => 'Object created successfully',
 	'structureddata-saving-reference-failed' => 'Saving reference failed',
 	'structureddata-invalid-arguments' => 'Invalid arguments',
+	'structureddata-listing-objects-caption' => 'Structured Data objects in $1 class',
+	'structureddata-back-to-list-of-classes' => 'Back to the list of classes',
 
 	// JS only messages
 	'structureddata-dropdown-template-default-value' => 'choose object...',
