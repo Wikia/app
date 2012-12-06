@@ -51,6 +51,23 @@ class UserRights {
 		return self::$globalGroup[$userId];
 	}
 
+	/**
+	 * Get group data for the user object. Needed for removing global group rights.
+	 *
+	 * @author grunny
+	 */
+	public static function onUserLoadGroups( User $user ) {
+		$userId = $user->getId();
+		if ( $userId == 0 ) {
+			return true;
+		} elseif ( !isset( self::$globalGroup[$userId] ) ) {
+			// Load the global groups into the class variable
+			self::getGlobalGroups( $user );
+		}
+		$user->mGroups = array_merge( $user->mGroups, array_diff( self::$globalGroup[$userId], $user->mGroups ) );
+		return true;
+	}
+
 	static function addGlobalGroup( $user, $group ) {
 		global $wgExternalSharedDB, $wgWikiaGlobalUserGroups;
 
@@ -113,7 +130,7 @@ class UserRights {
 	/**
 	 * hook handler
 	 *
-		 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function userEffectiveGroups(&$user, &$groups) {
 		$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
