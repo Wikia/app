@@ -3,6 +3,7 @@ var EditHub = function() {};
 EditHub.prototype = {
 	form: undefined,
 	validatedInputs: undefined,
+	submitButton: undefined,
 
 	init: function () {
 		$('.MarketingToolboxMain .wmu-show').click(function() {
@@ -31,6 +32,7 @@ EditHub.prototype = {
 
 		this.form = $('#marketing-toolbox-form');
 		this.validatedInputs = $('.WikiaForm .required');
+		this.submitButton = $('.WikiaForm .submits input[type=submit]');
 
 		$('#marketing-toolbox-clearall').click($.proxy(function(){
 			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation')) == true) {
@@ -38,8 +40,8 @@ EditHub.prototype = {
 			}
 		}, this));
 
-		$('.WikiaForm .submits input[type=submit]').click(this.formValidate);
-		this.validatedInputs.keyup(this.formValidateRealTime);
+		this.formValidate();
+		this.validatedInputs.keyup($.proxy(this.formValidateRealTime, this));
 	},
 
 	formReset: function() {
@@ -48,38 +50,33 @@ EditHub.prototype = {
 	},
 
 	formValidateRealTime: function(e) {
-		var closestError = $(this).siblings('.error');
+		var closestError = $(e.target).siblings('.error');
 		closestError.text('');
-		if ($(this).val() == '') {
+		if ($(e.target).val() == '') {
 			closestError.text(
 				$.msg('marketing-toolbox-validator-string-short')
 			);
 		}
 		var validated = true;
-		var submitButton = $('.WikiaForm .submits input[type=submit]');
-		$('.WikiaForm .required').each(function() {
+		this.validatedInputs.each(function() {
 			if ($(this).val() == '') {
 				validated = false;
 			}
 		});
 		if (validated) {
-			submitButton.removeAttr('disabled');
+			this.submitButton.removeAttr('disabled');
 		}
 		else {
-			submitButton.attr('disabled', true);
+			this.submitButton.attr('disabled', true);
 		}
 	},
 
 	formValidate: function(e) {
-		$('.WikiaForm .error').text('');
-		$('.WikiaForm input[type=text]').each(function() {
-			if ($(this).val() == '') {
-				$(this).siblings('.error').text(
-					$.msg('marketing-toolbox-validator-string-short')
-				);
-				e.preventDefault();
+		this.validatedInputs.each($.proxy(function(i, element) {
+			if ($(element).val() == '') {
+				this.submitButton.attr('disabled', true);
 			}
-		});
+		}, this));
 	}
 }
 
