@@ -176,6 +176,8 @@ $config['oasis_jquery'] = array(
 		// AMD modules
 		'//resources/wikia/modules/jquery.js',
 		'//resources/wikia/modules/nirvana.js',
+		'//resources/wikia/modules/mw.js',
+		'//resources/wikia/modules/loader.js',
 
 		// polyfills
 		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
@@ -327,7 +329,6 @@ $config['gameguides_js'] = array(
 		//libraries/frameworks
 		'//resources/wikia/libraries/Ponto/ponto.js',
 		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
-		'//extensions/wikia/WikiaMobile/js/Wikia.getcss.js',
 		'//resources/wikia/libraries/modil/modil.js',
 
 		//core modules
