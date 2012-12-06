@@ -3,6 +3,7 @@ var EditHub = function() {};
 EditHub.prototype = {
 	form: undefined,
 	validatedInputs: undefined,
+	urlInput: undefined,
 	submitButton: undefined,
 
 	init: function () {
@@ -33,6 +34,7 @@ EditHub.prototype = {
 		this.form = $('#marketing-toolbox-form');
 		this.validatedInputs = $('.WikiaForm .required');
 		this.submitButton = $('.WikiaForm .submits input[type=submit]');
+		this.urlInput = $('.WikiaForm input[type=text]:not(.required)');
 
 		$('#marketing-toolbox-clearall').click($.proxy(function(){
 			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation')) == true) {
@@ -42,6 +44,25 @@ EditHub.prototype = {
 
 		this.formValidate();
 		this.validatedInputs.keyup($.proxy(this.formValidateRealTime, this));
+		this.urlInput.keyup($.proxy(this.urlValidate, this));
+	},
+
+	isUrl: function(url) {
+		var reg = new RegExp(/((ftp|https?):\/\/)?(www\.)?[a-z0-9\-\.]{3,}\.[a-z]{2}$/);
+		return (reg.test(url));
+	},
+
+	urlValidate: function(e) {
+		var closestError = $(e.target).siblings('.error');
+		closestError.text('');
+		if(this.isUrl($(e.target).val())) {
+
+		}
+		else {
+			closestError.text(
+				$.msg('marketing-toolbox-validator-wrong-url')
+			);
+		}
 	},
 
 	formReset: function() {
