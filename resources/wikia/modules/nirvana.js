@@ -108,7 +108,7 @@
 		context.define('nirvana', ['jquery'], nirvana);
 	}
 
-	if (context.jQuery) {
-		context.jQuery.nirvana = nirvana(context.jQuery);
-	}
+	context.Nirvana = nirvana();
+
+	if(context.jQuery) context.jQuery.nirvana = context.Nirvana;
 }(this));
