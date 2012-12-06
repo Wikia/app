@@ -417,7 +417,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	}
 
 	// Special Case for using WMU in on Special Pages
-	WMU_isOnSpecialPage = (wgNamespaceNumber === -1) ? true : false;
+	WMU_isOnSpecialPage = wgNamespaceNumber === -1;
 
 	if(gallery === -2){
 		//	if (showComboAjaxForPlaceHolder("WikiaImagePlaceholderInner" + box,true)) return false;
@@ -1056,9 +1056,10 @@ function WMU_insertImage(e, type) {
 
 					// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
 					if (WMU_isOnSpecialPage) {
-						var wmuData = {
-							imageTitle: $(o.responseText).find('#ImageUploadFileName').val(),
-							imageWikiText: $(o.responseText).find('#ImageUploadTag').val()
+						var $responseHTML = $(o.responseText),
+							wmuData = {
+							imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
+							imageWikiText: $responseHTML.find('#ImageUploadTag').val()
 						};
 						$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
 						return false;
