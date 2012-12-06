@@ -70,7 +70,7 @@ class ArticleInterlangController extends WikiaController {
 		if (!empty($langSortBy)) {
 			$this->language_list = $langSortBy;
 
-			if (count($this->language_list) >= $this->max_visible) {
+			if (count($this->language_list) > $this->max_visible) {
 				$this->enable_more = true;
 			}
 		}
