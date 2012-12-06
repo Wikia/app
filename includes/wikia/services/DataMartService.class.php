@@ -707,7 +707,7 @@
 		 * @param integer $tagId A valid tag_id from city_tag_map table
 		 * @param string $startDate [YYYY-MM-DD]
 		 * @param string $endDate [YYYY-MM-DD]
-		 * @param integer $langCode A valid Wiki's language code
+		 * @param string $langCode A valid Wiki's language code
 		 * @param integer $periodId
 		 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
 		 *
@@ -778,12 +778,12 @@
 		}
 
 		/**
-		 * Gets the list of top wikis for tag_id and language on a monthly pageviews basis
+		 * Gets the list of top wikis for category_id and language on a monthly pageviews basis
 		 *
-		 * @param integer $tagId A valid tag_id from city_tag_map table
+		 * @param integer $categoryId A valid category_id from city_cat_mapping table
 		 * @param string $startDate [YYYY-MM-DD]
 		 * @param string $endDate [YYYY-MM-DD]
-		 * @param integer $langCode A valid Wiki's language code
+		 * @param string $langCode A valid Wiki's language code
 		 * @param integer $periodId
 		 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
 		 *
@@ -806,47 +806,49 @@
 				$periodId = self::PERIOD_ID_MONTHLY;
 			}
 
-			$memKey = $app->wf->SharedMemcKey( 'datamart', 'categories_top_wikis', $categoryId, $periodId, $startDate, $endDate, $langCode, $limit );
-			$categoryViews = $app->wg->Memc->get( $memKey );
-			if ( !is_array($categoryViews) ) {
-				$categoryViews = array();
-				if ( !empty($app->wg->StatsDBEnabled) ) {
-					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+			$categoryViews = WikiaDataAccess::cache(
+				$app->wf->SharedMemcKey( 'datamar2t', 'categories_top_wikis', $categoryId, $periodId, $startDate, $endDate, $langCode, $limit ),
+				12 * 60 * 60,
+				function() use($app, $categoryId, $startDate, $endDate, $langCode, $periodId, $limit) {
+					$categoryViews = array();
+					if ( !empty($app->wg->StatsDBEnabled) ) {
+						$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 
-					$tables = array(
-						'r' => 'rollup_wiki_pageviews',
-						'c' => 'wikicities.city_cat_mapping',
-						'd' => 'dimension_wikis'
-					);
-					$fields = array(
-						'c.cat_id as cat_id',
-						'r.wiki_id',
-						'sum(r.pageviews) as pviews'
-					);
-					$cond = array(
-						'period_id' => $periodId,
-						'cat_id'	=> $categoryId,
-						"time_id between '{$startDate}' AND '{$endDate}'",
-					);
-					$opts = array(
-						'GROUP BY'	=> 'c.cat_id, r.wiki_id',
-						'ORDER BY'	=> 'pviews DESC',
-						'LIMIT'		=> $limit
-					);
-					$join_conds = array(
-						'c' => array( 'INNER JOIN', array( 'c.city_id = r.wiki_id' ) ),
-						'd' => array( 'INNER JOIN', array( 'd.wiki_id = r.wiki_id', 'd.public = 1', "d.lang = '{$langCode}'" ) )
-					);
+						$tables = array(
+							'r' => 'rollup_wiki_pageviews',
+							'c' => 'wikicities.city_cat_mapping',
+							'd' => 'dimension_wikis'
+						);
+						$fields = array(
+							'c.cat_id as cat_id',
+							'r.wiki_id',
+							'sum(r.pageviews) as pviews'
+						);
+						$cond = array(
+							'period_id' => $periodId,
+							'cat_id'	=> $categoryId,
+							"time_id between '{$startDate}' AND '{$endDate}'",
+						);
+						$opts = array(
+							'GROUP BY'	=> 'c.cat_id, r.wiki_id',
+							'ORDER BY'	=> 'pviews DESC',
+							'LIMIT'		=> $limit
+						);
+						$join_conds = array(
+							'c' => array( 'INNER JOIN', array( 'c.city_id = r.wiki_id' ) ),
+							'd' => array( 'INNER JOIN', array( 'd.wiki_id = r.wiki_id', 'd.public = 1', "d.lang = '{$langCode}'" ) )
+						);
 
-					$result = $db->select( $tables, $fields, $cond, __METHOD__, $opts, $join_conds );
+						$result = $db->select( $tables, $fields, $cond, __METHOD__, $opts, $join_conds );
 
-					while ( $row = $db->fetchObject($result) ) {
-						$categoryViews[ $row->wiki_id ] = $row->pviews;
+						while ( $row = $db->fetchObject($result) ) {
+							$categoryViews[ $row->wiki_id ] = $row->pviews;
+						}
 					}
-
-					$app->wg->Memc->set( $memKey, $categoryViews, 60*60*12 );
+					return $categoryViews;
 				}
-			}
+			);
+
 
 			$app->wf->ProfileOut( __METHOD__ );
 
