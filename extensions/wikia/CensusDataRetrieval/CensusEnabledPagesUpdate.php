@@ -100,11 +100,10 @@ class CensusEnabledPagesUpdate {
 		//replace template
 		if ( $templateCode ) {
 			$newText = str_replace($templateCode, $newTemplateCode, $currentText);
-		} else {
+		} else {//or add if doesn't exists
 			$newText = $newTemplateCode.$currentText;
 		}
 		
-		//TODO insert templ if no template yet
 		wfProfileOut(__METHOD__);
                 return $newText;
         }
@@ -122,7 +121,7 @@ l         *
 	 * $matches[2] Infobox params i.e. |param1 = val1 |param2 = val2
 	 */
         private function matchTemplate( $wikiText ) {
-		$regex = '/{{([a-zA-Z]*) infobox([^{{2}]*)}}/';
+		$regex = '/{{([a-zA-Z]*) infobox([^}}]*)}}/sm';
 		preg_match( $regex, $wikiText, $matches );
 		return $matches;
 	}
