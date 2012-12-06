@@ -21,6 +21,19 @@ return array(
 		'dependencies' => 'amd',
 	),
 
+	'wikia.amd.modernizr' => array(
+		'scripts' => 'resources/wikia/modules/modernizr.js',
+		'dependencies' => array(
+			'amd',
+			'modernizr'
+		)
+	),
+
+	'wikia.amd.mustache' => array(
+		'scripts' => 'resources/wikia/libraries/mustache/mustache.js',
+		'dependencies' => 'amd'
+	),
+
 	// module loaded via $.loadjQuery UI and is a wrapper for MediaWiki jQuery UI modules
 	// this used to be static file located in /skins/common/jquery/jquery-ui-1.8.14.custom.js
 	'wikia.jquery.ui' => array(
@@ -38,12 +51,13 @@ return array(
 			'jquery.ui.tabs',
 			'jquery.ui.datepicker',
 		),
-		'group' => 'jquery.ui',
+		'group' => 'jquery.ui'
 	),
 
 	// libraries and jQuery plugins
 	'jquery.mustache' => array(
-		'scripts' => 'resources/wikia/libraries/mustache/jquery.mustache.js'
+		'scripts' => 'resources/wikia/libraries/mustache/jquery.mustache.js',
+		'dependencies' => 'wikia.amd.mustache'
 	),
 
 	'jquery.autocomplete' => array(

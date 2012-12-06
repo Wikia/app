@@ -534,3 +534,14 @@ var Mustache = (typeof module !== "undefined" && module.exports) || {};
   }
 
 })(Mustache);
+
+// Wikia change - begin
+// register AMD module
+(function (context) {
+	context.Mustache = Mustache;
+
+	if (context.define && context.define.amd) {
+		context.define('mustache', Mustache);
+	}
+}(window));
+// Wikia change - end
