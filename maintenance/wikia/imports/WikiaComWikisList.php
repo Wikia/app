@@ -6,16 +6,18 @@
  * $ SERVER_ID=80433 php WikiaComWikisList.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --file='../../../extensions/wikia/WikiaHomePage/text_files/Top wikis for wikia.com - Ready for upload.csv'
  * for German version:
  * $ SERVER_ID=111264 php WikiaComWikisList.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --file='../../../extensions/wikia/WikiaHomePage/text_files/Top wikis for de.wikia.com.csv'
- * Optional parameter
+ * Optional parameters:
  * --message='TestMessageForVisualisation_test'
  * --overwritelang=en
  * --skipupload
  * --addimageuploadtask
+ * --check-city-id
  */
 require_once("../../commandLine.inc");
 global $wgEnableSpecialPromoteExt, $wgEnablePromoteImageReviewExt;
 
 $putItToAmessage = isset($options['message']) ? true : false;
+$ifCheckingCityIdInTheFile = isset($options['check-city-id']) ? true : false;
 
 $params = new stdClass();
 $params->csvContent = explode("\n", file_get_contents($options['file']));
@@ -35,7 +37,11 @@ if( true === $params->addImageUploadTask && empty($wgEnablePromoteImageReviewExt
 	include_once('../../../extensions/wikia/ImageReview/modules/PromoteImage/PromoteImageReviewTask.php');
 }
 
-if( $putItToAmessage ) {
+if( $ifCheckingCityIdInTheFile ) {
+	echo 'Checking if provided city id/city id list exists in the message...'."\n";
+	$import = new WikiaComWikisListImport($params);
+	$import->checkCityIdList($options['check-city-id']);
+} else if( $putItToAmessage ) {
 	echo 'Importing wikis to a MediaWiki message...'."\n";
 	$params->mediaWikiMessage = $options['message'];
 	$import = new WikiaComWikisListImport($params);
@@ -266,16 +272,20 @@ class WikiaComWikisListImport {
 			echo 'OK uploads: ' . $okSliderImagesUpload . '/' . $totalSliderImages;
 			echo "\n";
 
-			if( !empty($this->faileduploads['slider-images']) || !empty($this->faileduploads['slider-images']) ) {
+			if( !empty($this->faileduploads['main-images']) || !empty($this->faileduploads['slider-images']) ) {
 				echo 'Failed uploads: ' . ($failedMainUploads + $failedSliderUploads) . '/' . ($totalMainImages + $totalSliderImages);
 				echo "\n";
 				echo 'Failed uploads list:';
 				echo "\n";
-				foreach( $this->faileduploads['main-images'] as $filename ) {
-					echo $filename . "\n";
+				foreach( $this->faileduploads['main-images'] as $data ) {
+					echo 'File: ' . $data['name'] . "\n" . 'Upload result: ' . "\n";
+					print_r($data['result']);
+					echo "\n\n";
 				}
-				foreach( $this->faileduploads['slider-images'] as $filename ) {
-					echo $filename . "\n";
+				foreach( $this->faileduploads['slider-images'] as $data ) {
+					echo 'File: ' . $data['name'] . "\n" . 'Upload result: ' . "\n";
+					print_r($data['result']);
+					echo "\n\n";
 				}
 			}
 
@@ -338,7 +348,7 @@ class WikiaComWikisListImport {
 			echo '.';
 			$success = true;
 		} else {
-			$this->faileduploads[$statusArrayKey][] = $imageName;
+			$this->faileduploads[$statusArrayKey][] = array('name' => $imageName, 'result' => $result);
 			echo '!';
 		}
 
@@ -480,6 +490,37 @@ class WikiaComWikisListImport {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @desc Parses the source file, retrives city_ids of wikis from the file and checks if given city_id is on the list
+	 * @param String $params city_id or comma-separated city_id list
+	 */
+	public function checkCityIdList($params) {
+		if( !is_string($params) ) {
+			echo 'Invalid city id or city id list' . "\n";
+			return false;
+		}
+
+		$isList = strpos($params, ',');
+		if( $isList ) {
+			$cityIdList = explode(',', $params);
+		} else {
+			$cityIdList = array(intval($params));
+		}
+
+		foreach( $this->options->csvContent as $line ) {
+			$element = str_getcsv($line, ',', '"');
+
+			if( $this->areAllRequiredWikiDataForDatabaseSet($element) ) {
+				$wikiDomain = trim( str_replace('http://', '', $element[2]), '/');
+				$wikiId = WikiFactory::DomainToID($wikiDomain);
+
+				if( in_array($wikiId, $cityIdList) ) {
+					echo 'Found: ' . $wikiId . ' in the file (' . $wikiDomain . ')' . "\n";
+				}
+			}
+		}
 	}
 
 }
