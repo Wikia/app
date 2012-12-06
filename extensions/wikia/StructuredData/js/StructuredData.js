@@ -31,8 +31,8 @@ var StructuredData = {
 			} else {
 				 return false;
 			}
-			$(window).bind('WMU_addFromSpecialPage', function(event, filePageUrl) {
-				var filePageUrl = window.location.protocol + '//' + window.location.host + '/' + filePageUrl;
+			$(window).bind('WMU_addFromSpecialPage', function(event, wmuData) {
+				var filePageUrl = window.location.protocol + '//' + window.location.host + '/' + wmuData.imageTitle;
 				$input.val(filePageUrl);
 			});
 		});
