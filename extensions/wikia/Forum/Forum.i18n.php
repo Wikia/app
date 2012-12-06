@@ -117,7 +117,7 @@ $MESSAGE_NO_HTML
 
 -- $AUTHOR
 
-See the conversation($MESSAGE_LINK)
+See the conversation: ($MESSAGE_LINK)
 
 The Wikia Team
 
