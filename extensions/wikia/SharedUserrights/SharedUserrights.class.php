@@ -58,7 +58,7 @@ class UserRights {
 	 */
 	public static function onUserLoadGroups( User $user ) {
 		$userId = $user->getId();
-		if ( $userId == 0 ) {
+		if ( !self::isCentralWiki() || $userId == 0 ) {
 			return true;
 		} elseif ( !isset( self::$globalGroup[$userId] ) ) {
 			// Load the global groups into the class variable
