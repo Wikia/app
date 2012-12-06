@@ -296,7 +296,7 @@ class MarketingToolboxModel extends WikiaModel {
 
 		$updateData = array(
 			'module_data' => json_encode($data),
-			'last_editor_id' => $editorId + 1,
+			'last_editor_id' => $editorId,
 		);
 
 		$table = $this->getTablesBySectionId($sectionId);
