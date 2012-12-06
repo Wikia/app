@@ -14,7 +14,8 @@ $categoryselect-width: $width-epl-module-input - 10;
 
 $categoryselect-color-placeholder: darken( $color-epl-input, 2% );
 
-.CategorySelect {
+// Needs editPage class so these styles won't apply to preview modal
+.CategorySelect.editPage {
 	.addCategory,
 	.categories {
 		@include epl-textfield;

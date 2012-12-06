@@ -139,7 +139,7 @@
 					RTE.config.startupFocus = false;
 				}
 			}
-			
+
 			this.isGridLayout = $('.WikiaGrid').length > 0;	// remove this after grid transition
 		},
 
@@ -299,11 +299,11 @@
 
 					// set focus on the first field
 					$('#HiddenFieldsDialog label').children().focus();
-					
+
 					//add press "Enter" = submit form functionality - BugId: 38480
-					$('#HiddenFieldsDialog input[name="wpTitle"]').keyup(function(event) { 
-						if (event.keyCode == 13) { 
-							$('#ok').click(); 
+					$('#HiddenFieldsDialog input[name="wpTitle"]').keyup(function(event) {
+						if (event.keyCode == 13) {
+							$('#ok').click();
 						}
 					});
 				},
@@ -440,44 +440,41 @@
 			$(window).trigger('EditPageRenderPreview', [options]);
 
 			this.renderDialog($.msg('preview'), options, function(contentNode) {
-				self.getContent(function(content) {
-					var summary = $('#wpSummary').val();
+				var summary = $('#wpSummary').val();
 
-					// add section name when adding new section (BugId:7658)
-					if (window.wgEditPageSection == 'new') {
-						content = '== ' + summary + ' ==\n\n' + content;
+				// add section name when adding new section (BugId:7658)
+				if (window.wgEditPageSection == 'new') {
+					content = '== ' + summary + ' ==\n\n' + content;
+				}
+				else {
+					extraData.summary = summary;
+				}
+
+				extraData.content = self.getContent();
+				extraData.categories = self.getCategories();
+
+				if (window.wgEditPageSection !== null) {
+					extraData.section = window.wgEditPageSection;
+				}
+
+				self.ajax('preview', extraData, function(data) {
+					contentNode.html(data.html + data.catbox);
+
+					// move "edit" link to the right side of heading names
+					contentNode.find('.editsection').each(function() {
+						$(this).appendTo($(this).next());
+					});
+
+					// add summary
+					if (typeof data.summary != 'undefined') {
+						$('<div>', {id: "EditPagePreviewEditSummary"}).
+							width(width - 150).
+							appendTo(contentNode.parent()).
+							html(data.summary);
 					}
-					else {
-						extraData.summary = summary;
-					}
 
-					extraData.content = content;
-
-					if (window.wgEditPageSection !== null) {
-						extraData.section = window.wgEditPageSection;
-					}
-
-					self.ajax('preview',
-						extraData,
-						function(data) {
-							contentNode.html(data.html + data.catbox);
-
-							// move "edit" link to the right side of heading names
-							contentNode.find('.editsection').each(function() {
-								$(this).appendTo($(this).next());
-							});
-
-							// add summary
-							if (typeof data.summary != 'undefined') {
-								$('<div>', {id: "EditPagePreviewEditSummary"}).
-									width(width - 150).
-									appendTo(contentNode.parent()).
-									html(data.summary);
-							}
-
-							// fire an event once preview is rendered
-							$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
-						});
+					// fire an event once preview is rendered
+					$(window).trigger('EditPageAfterRenderPreview', [contentNode]);
 				});
 			});
 		},
@@ -486,50 +483,32 @@
 		renderChanges: function(extraData) {
 			var self = this;
 			this.renderDialog($.msg('editpagelayout-pageControls-changes'), {}, function(contentNode) {
-				self.getContent(function(content) {
-					extraData.content = extraData.content || content;
-					extraData.section = parseInt($.getUrlVar('section') || 0);
+				extraData.content = self.getContent();
+				extraData.categories = self.getCategories();
+				extraData.section = parseInt($.getUrlVar('section') || 0);
 
-					$.when(
-						// get wikitext diff
-						self.ajax('diff', extraData),
-						// load CSS for diff
-						mw.loader.use('mediawiki.action.history.diff')
-					).done(function(ajaxData) {
-							var data = ajaxData[0],
-								html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
+				$.when(
+					// get wikitext diff
+					self.ajax('diff', extraData),
+					// load CSS for diff
+					mw.loader.use('mediawiki.action.history.diff')
+				).done(function(ajaxData) {
+					var data = ajaxData[0],
+						html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
 
-							contentNode.html(html);
-					});
+					contentNode.html(html);
 				});
 			});
 		},
 
 		// get editor's content (either wikitext or HTML)
-		// and call provided callback with wikitext as its parameter
-		getContent: function(callback) {
-			var editor = typeof RTE == 'object'? RTE.getInstance() : false,
-				mode = editor ? editor.mode : 'mw';
+		getContent: function() {
+			return typeof RTE == 'object' ? RTE.getInstance().getData() : $('#wpTextbox1').val();
+		},
 
-			callback = callback || function() {};
-
-			var csCategoryText = '';
-			if($('#csWikitext').exists()) {
-			    if(mode=='source') {
-			        csCategoryText += "\n";
-			    }
-			    csCategoryText += $('#csWikitext').val();
-			}
-
-			switch(mode) {
-				case 'mw':
-					callback($('#wpTextbox1').val() + csCategoryText);
-					return;
-				case 'source':
-				case 'wysiwyg':
-					callback(editor.getData() + csCategoryText);
-					return;
-			}
+		// get categories (JSON)
+		getCategories: function() {
+			return $('#categories').val();
 		}
 	});
 

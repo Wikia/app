@@ -15,6 +15,7 @@ class CategorySelectController extends WikiaController {
 
 	/**
 	 * The template used for article pages.
+	 * Also used by EditPage for previewing edits.
 	 */
 	public function articlePage() {
 		$this->wf->ProfileIn( __METHOD__ );
@@ -25,12 +26,17 @@ class CategorySelectController extends WikiaController {
 			return false;
 		}
 
-		$categoryTypes = CategorySelect::getCategoryTypes();
-		$categories = array();
-		$data = CategorySelect::getExtractedCategoryData();
+		$categories = $this->request->getVal( 'categories', array() );
+		$userCanEdit = $this->request->getVal( 'userCanEdit', CategorySelect::isEditable() );
 
-		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
+		// Get categories from article
+		if ( empty( $categories ) ) {
+			$data = CategorySelect::getExtractedCategoryData();
 			$categories = $data[ 'categories' ];
+		}
+
+		if ( !empty( $categories ) ) {
+			$categoryTypes = CategorySelect::getCategoryTypes();
 
 			foreach( $categories as $index => &$category ) {
 				$title = Title::newFromText( $category[ 'name' ], NS_CATEGORY );
@@ -43,7 +49,7 @@ class CategorySelectController extends WikiaController {
 
 					// Category type ("normal" or "hidden")
 					$key = $title->getDBKey();
-					if ( array_key_exists( $key, $categoryTypes ) ) {
+					if ( is_array( $categoryTypes ) && array_key_exists( $key, $categoryTypes ) ) {
 						$category[ 'type' ] = $categoryTypes[ $key ];
 					}
 				}
@@ -51,8 +57,6 @@ class CategorySelectController extends WikiaController {
 
 			unset( $category );
 		}
-
-		$userCanEdit = CategorySelect::isEditable();
 
 		// There are no categories present and user can't edit, skip rendering
 		if ( !$userCanEdit && empty( $categories ) ) {
@@ -97,14 +101,9 @@ class CategorySelectController extends WikiaController {
 	 * The template used for edit pages.
 	 */
 	public function editPage() {
-		$categories = array();
 		$data = CategorySelect::getExtractedCategoryData();
 
-		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
-			$categories = $data[ 'categories' ];
-		}
-
-		$this->response->setVal( 'categories', $categories );
+		$this->response->setVal( 'categories', $data[ 'categories' ] );
 
 		$this->response->addAsset( 'categoryselect_edit_js' );
 		$this->response->addAsset( 'extensions/wikia/CategorySelect/css/CategorySelect.edit.scss' );
@@ -115,10 +114,10 @@ class CategorySelectController extends WikiaController {
 	 * for an article.
 	 */
 	public function editPageMetadata() {
-		$data = CategorySelect::getExtractedCategoryData();
 		$categories = '';
+		$data = CategorySelect::getExtractedCategoryData();
 
-		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
+		if ( !empty( $data[ 'categories' ] ) ) {
 			$categories = htmlspecialchars( CategorySelect::changeFormat( $data[ 'categories' ], 'array', 'json' ) );
 		}
 

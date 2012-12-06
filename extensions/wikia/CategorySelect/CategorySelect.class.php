@@ -140,11 +140,19 @@ class CategorySelect {
 
 	public static function getExtractedCategoryData( $wikitext = '', $force = false ) {
 		if ( !isset( self::$data ) ) {
+
+			// Try to extract wikitext from the article
 			if ( empty( $wikitext ) ) {
-				$wikitext = F::app()->wg->Article->fetchContent();
+				$article = F::app()->wg->Article;
+
+				if ( isset( $article ) ) {
+					$wikitext = $article->fetchContent();
+				}
 			}
 
-			self::$data = self::extractCategoriesFromWikitext( $wikitext, $force );
+			if ( !empty( $wikitext ) ) {
+				self::$data = self::extractCategoriesFromWikitext( $wikitext, $force );
+			}
 		}
 
 		return self::$data;

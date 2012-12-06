@@ -9,7 +9,6 @@
  */
 
 class CategorySelectHooksHelper {
-	private static $categoriesWikitext;
 
 	/**
 	 * Embed CategorySelect on edit pages. It will be moved later via JavaScript
@@ -47,17 +46,6 @@ class CategorySelectHooksHelper {
 	}
 
 	/**
-	 * Add categories to article for DiffEngine (when editing entire article)
-	 */
-	public static function onEditPageGetDiffText( $editPage, &$newtext ) {
-		if ( $editPage->section == '' && isset( self::$categoriesWikitext ) ) {
-			$newtext .= self::$categoriesWikitext;
-		}
-
-		return true;
-	}
-
-	/**
 	 * Concatenate categories on EditPage POST
 	 *
 	 * @param EditPage $editPage
@@ -76,13 +64,7 @@ class CategorySelectHooksHelper {
 				$categories = '';
 			}
 
-			if ( $editPage->preview || $editPage->diff ) {
-				$data = CategorySelect::extractCategoriesFromWikitext( $editPage->textbox1 . $categories );
-				$editPage->textbox1 = $data[ 'wikitext' ];
-				$categories = CategorySelect::changeFormat( $data[ 'categories' ], 'array', 'wikitext' );
-
-			// Saving article
-			} else if ( !empty( $categories ) ) {
+			if ( !empty( $categories ) ) {
 				// TODO: still necessary?
 				if ( !empty( $app->wg->EnableAnswers ) ) {
 					// don't add categories if the page is a redirect
@@ -103,8 +85,6 @@ class CategorySelectHooksHelper {
 				// rtrim needed because of BugId:11238
 				$editPage->textbox1 .= rtrim( $categories );
 			}
-
-			self::$categoriesWikitext = $categories;
 		}
 
 		return true;
@@ -150,16 +130,11 @@ class CategorySelectHooksHelper {
 	 */
 	public static function onMakeGlobalVariablesScript( Array &$vars ) {
 		$app = F::app();
-		$action = $app->wg->Request->getVal( 'action', 'view' );
+
 		$data = CategorySelect::getExtractedCategoryData();
 
-		$catgories = array();
-		if ( !empty( $data ) && is_array( $data[ 'categories' ] ) ) {
-			$categories = $data[ 'categories' ];
-		}
-
 		$vars[ 'wgCategorySelect' ] = array(
-			'categories' => $categories,
+			'categories' => $data[ 'categories' ],
 			'defaultNamespace' => $app->wg->ContLang->getNsText( NS_CATEGORY ),
 			'defaultNamespaces' => CategorySelect::getDefaultNamespaces(),
 			'defaultSeparator' => trim( $app->wf->Message( 'colon-separator' )->escaped() ),
@@ -207,6 +182,8 @@ class CategorySelectHooksHelper {
 	 */
 	public static function onOutputPageMakeCategoryLinks( &$out, $categories, &$categoryLinks ) {
 		CategorySelect::setCategoryTypes( $categories );
-		return true;
+
+		// No need to add categories to skin
+		return false;
 	}
 }

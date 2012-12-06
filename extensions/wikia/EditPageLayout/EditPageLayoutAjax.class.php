@@ -37,9 +37,9 @@ class EditPageLayoutAjax {
 						$html = $service->getDiff($wikitext, intval($section));
 					}
 				}
-				
+
 				$html = '<div class="WikiaArticle">'. $html .'</div>';
-				
+
 				$res = array(
 					'html' => $html,
 					'catbox' => $catbox,
