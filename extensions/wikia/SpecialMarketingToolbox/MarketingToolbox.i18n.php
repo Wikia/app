@@ -65,7 +65,7 @@ $messages['en'] = array(
 
 	'marketing-toolbox-validator-string-short' => 'Your text is too short, please write more',
 	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',
-	'marketing-toolbox-validator-wrong-url' => 'Wrong url',
+	'marketing-toolbox-validator-wrong-url' => 'The URL you entered is not valid, please try again',
 );
 
 $messages['qqq'] = array(
