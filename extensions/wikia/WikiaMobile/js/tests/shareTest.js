@@ -72,24 +72,6 @@ describe("Share module", function () {
 		});
 	});
 
-	async.it('should throw', function(done){
-		document.body.innerHTML = '<div id="sharePlace"></div>';
-
-		require(['share'], function(share){
-
-			expect(function(){
-				share('TESTTEST')();
-			}).toThrow();
-
-			expect(function(){
-				share('TESTTEST')(document.getElementById('nope'));
-			}).toThrow();
-
-
-			done();
-		});
-	});
-
 	async.it('should create sharing list', function(done){
 		document.body.innerHTML = '<div id="sharePlace"></div>';
 
