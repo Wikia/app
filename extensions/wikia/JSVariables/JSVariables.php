@@ -11,35 +11,39 @@ $wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';
  * @return bool return true - it's a hook
  */
 function wfJSVariablesTopScripts(Array &$vars) {
-	global $wgWikiFactoryTags, $wgDBname, $wgCityId, $wgMedusaSlot, $wgCdnRootUrl;
+	$wg = F::app()->wg;
+
+	$title = $wg->Title;
+	$out = $wg->Out;
 
 	// ads need it
 	$vars['wgAfterContentAndJS'] = array();
-	if(isset($wgWikiFactoryTags) && is_array($wgWikiFactoryTags)) {
-		$vars['wgWikiFactoryTagIds'] = array_keys( $wgWikiFactoryTags );
-		$vars['wgWikiFactoryTagNames'] = array_values( $wgWikiFactoryTags );
+	if (is_array($wg->WikiFactoryTags)) {
+		$vars['wgWikiFactoryTagIds'] = array_keys( $wg->WikiFactoryTags );
+		$vars['wgWikiFactoryTagNames'] = array_values( $wg->WikiFactoryTags );
 	}
-	$vars['wgCdnRootUrl'] = $wgCdnRootUrl;
+	$vars['wgCdnRootUrl'] = $wg->CdnRootUrl;
 
 	// analytics needs it (from here till the end of the function)
-	$vars['wgDBname'] = $wgDBname;
-	$vars['wgCityId'] = $wgCityId;
-	if (!empty($wgMedusaSlot)) {
-		$vars['wgMedusaSlot'] = 'slot' . $wgMedusaSlot;
+	$vars['wgDBname'] = $wg->DBname;
+	$vars['wgCityId'] = $wg->CityId;
+	if (!empty($wg->MedusaSlot)) {
+		$vars['wgMedusaSlot'] = 'slot' . $wg->MedusaSlot;
 	}
 
 	// c&p from OutputPage::getJSVars with an old 1.16 name
-	$title = F::app()->wg->Title; /** @var $title Title */
-	$lang = $title->getPageLanguage(); /** @var $lang Language */
-	$vars['wgContentLanguage'] = $lang->getCode();
+	$vars['wgContentLanguage'] = $title->getPageLanguage()->getCode();
 
 	// c&p from OutputPage::getJSVars, it's needed earlier
-	$user = F::app()->wg->User; /** @var $user User */
+	$user = $wg->User; /** @var $user User */
 	if ($user->isAnon()) {
 		$vars['wgUserName'] = null;
 	} else {
 		$vars['wgUserName'] = $user->getName();
 	}
+	$vars['wgArticleId'] = $out->getWikiPage()->getId();
+	$vars['wgCategories'] = $out->getCategories();
+	$vars['wgPageName'] = $title->getPrefixedDBKey();
 
 	// missing in 1.19
 	$skin = RequestContext::getMain()->getSkin();
