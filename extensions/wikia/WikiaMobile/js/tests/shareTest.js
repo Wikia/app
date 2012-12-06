@@ -2,6 +2,7 @@
  @test-framework Jasmine
  @test-require-asset /resources/wikia/libraries/modil/modil.js
  @test-require-asset /resources/wikia/libraries/zepto/zepto-0.8.js
+ @test-require-asset /extensions/wikia/WikiaMobile/js/Wikia.utils.js
  @test-require-asset /resources/wikia/libraries/deferred/deferred.js
  @test-require-asset /resources/wikia/libraries/deferred/deferred.api.js
  @test-require-asset /resources/wikia/modules/window.js
