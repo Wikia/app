@@ -110,7 +110,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		);
 
 		$module = MarketingToolboxModuleService::getModuleByName(
-			$this->toolboxModel->getNotTranslatedModuleName($this->selectedModuleId)
+			$this->toolboxModel->getNotTranslatedModuleName($this->selectedModuleId),
+			$this->langCode,
+			$this->sectionId,
+			$this->verticalId
 		);
 
 		$selectedModuleData['validationErrors'] = array();

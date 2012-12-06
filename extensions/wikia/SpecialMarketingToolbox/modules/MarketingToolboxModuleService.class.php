@@ -3,11 +3,23 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	const CLASS_NAME_PREFIX = 'MarketingToolboxModule';
 	const CLASS_NAME_SUFFIX = 'Service';
 
+	protected $langCode;
+	protected $sectionId;
+	protected $verticalId;
+
 	abstract protected function getFormFields();
 
-	static public function getModuleByName($name) {
+	public function __construct($langCode, $sectionId, $verticalId) {
+		parent::__construct();
+
+		$this->langCode = $langCode;
+		$this->sectionId = $sectionId;
+		$this->verticalId = $verticalId;
+	}
+
+	static public function getModuleByName($name, $langCode, $sectionId, $verticalId) {
 		$moduleClassName = self::CLASS_NAME_PREFIX . $name . self::CLASS_NAME_SUFFIX;
-		return new $moduleClassName();
+		return new $moduleClassName($langCode, $sectionId, $verticalId);
 	}
 
 	public function renderEditor($data) {
@@ -34,7 +46,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return array_intersect_key($data, $this->getFormFields());
 	}
 
-	protected function getView($viewName, $data, $viewType = WikiaResponse::FORMAT_HTML) {
+	protected function getView($viewName, $data) {
 		return $this->app->getView(get_class($this), $viewName, $data);
 	}
 
