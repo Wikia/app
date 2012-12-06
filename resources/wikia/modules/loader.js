@@ -118,7 +118,21 @@
 
 		getScript = function( resource, success, failure ){
 			var scriptElement = doc.createElement('script');
-			scriptElement.onload = success;
+
+
+			if (scriptElement.readyState) {
+				scriptElement.onreadystatechange = function () {
+					if (loadedCompleteRegExp.test(scriptElement.readyState)) {
+						success();
+						scriptElement.onreadystatechange = null;
+					}
+				};
+
+				// If onload is available, use it
+			}else {
+				scriptElement.onload = success;
+			}
+
 			scriptElement.onerror = failure;
 			scriptElement.src = resource;
 			head.appendChild( scriptElement );
