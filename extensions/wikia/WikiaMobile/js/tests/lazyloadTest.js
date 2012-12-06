@@ -3,6 +3,9 @@
  @test-require-asset /resources/wikia/libraries/modil/modil.js
  @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js
  @test-require-asset /resources/wikia/modules/thumbnailer.js
+ @test-require-asset /resources/wikia/modules/window.js
+ @test-require-asset /resources/wikia/modules/nirvana.js
+ @test-require-asset /resources/wikia/modules/loader.js
  @test-require-asset /resources/wikia/modules/querystring.js
  @test-require-asset /extensions/wikia/WikiaTracker/js/WikiaTracker.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/track.js

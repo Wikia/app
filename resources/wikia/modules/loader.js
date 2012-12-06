@@ -478,7 +478,9 @@
 		})();
 	}
 
-	context.Loader = loader(context, context.mw, context.Nirvana);
+	if (context.jQuery) {
+		context.Loader = loader(context, context.mw, jQuery.nirvana);
+	}
 
 	if (context.define && context.define.amd) {
 		//there is no mw module in WikiaMobile
