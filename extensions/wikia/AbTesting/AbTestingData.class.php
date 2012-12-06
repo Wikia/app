@@ -148,7 +148,7 @@ class AbTestingData extends WikiaObject {
 		return $this->loadFromDb();
 	}
 
-	public function getById( $id, $use_master ) {
+	public function getById( $id, $use_master = false ) {
 		$list = $this->loadFromDb(array(
 			'e.id' => $id,
 		), $use_master);
@@ -237,7 +237,7 @@ class AbTestingData extends WikiaObject {
 		$this->deleteRow(self::TABLE_GROUPS,$grp,__METHOD__);
 	}
 
-	public function saveVersion( &$ver, $no_checks ) {
+	public function saveVersion( &$ver, $no_checks = false ) {
 		$this->saveRow(self::TABLE_VERSIONS,$ver,__METHOD__, $no_checks);
 	}
 
