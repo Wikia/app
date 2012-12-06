@@ -62,7 +62,7 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a couple of 
 	'forum-board-thread-follow' => 'Follow',
 	'forum-board-thread-following' => 'Following',
 	'forum-board-thread-kudos' => '$1 Kudos',
-	'forum-board-thread-replies' => '$1 Replies',
+	'forum-board-thread-replies' => '$1 Messages',
 	'forum-board-thread-unfollow' => 'Unfollow',
 	'forum-board-new-message-heading' => 'Start a Discussion',
 	'forum-board-select-board' => 'Select a Board',
