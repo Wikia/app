@@ -1056,8 +1056,11 @@ function WMU_insertImage(e, type) {
 
 					// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
 					if (WMU_isOnSpecialPage) {
-						var filePageUrl = $(o.responseText).find('#ImageUploadFileName').val();
-						$(window).trigger('WMU_addFromSpecialPage', [filePageUrl]);
+						var wmuData = {
+							imageTitle: $(o.responseText).find('#ImageUploadFileName').val(),
+							imageWikiText: $(o.responseText).find('#ImageUploadTag').val()
+						};
+						$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
 						return false;
 					}
 
