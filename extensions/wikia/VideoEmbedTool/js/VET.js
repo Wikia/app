@@ -59,7 +59,7 @@ var VET_refid = null;
 var VET_wysiwygStart = 1;
 var VET_ratio = 1;
 var VET_shownMax = false;
-var VET_inGalleryPosition = false;
+var VET_inGalleryPosition = false; // lizbug - Looks like this is never set to true
 var VET_notificationTimout = 4000;
 
 // Returns the DOM element for the RTE textarea
@@ -520,9 +520,6 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 
 	// for gallery and placeholder, load differently...
 	if( -1 != VET_gallery  ) {
-$().log("----------");
-$().log("load from view");
-$().log("----------");
 		VET_loadMainFromView();
 	} else {
 		var html = '';
@@ -569,10 +566,6 @@ $().log("----------");
 		VET_panel.render();
 		VET_panel.show();
 		VET_panel.center();
-$().log("----------");
-$().log(VET_refid);
-$().log(VET_wysiwygStart);
-$().log("----------");
 		if(VET_refid != null && VET_wysiwygStart == 2) {
 			VET_editVideo();
 		} else {
@@ -748,6 +741,31 @@ function VET_insertTag( target, tag, position ) {
 	}
 }
 
+// Handle video placeholders already saved into articles
+/*if (typeof VET_box_filled == 'undefined') {
+	VET_box_filled = [];
+}
+function VET_insertPlaceholder( box ) {
+	VET_box_filled.push(box); // add VET_box_filled
+	var to_update = $G( 'WikiaVideoPlaceholder' + box );
+	to_update.innerHTML = $G( 'ImageUploadCode' ).innerHTML;
+	//the class would need to be different if we had here the full-size...
+	to_update.className = '';
+	YAHOO.util.Connect.asyncRequest('POST', wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
+}
+function VET_box_in_article() {
+	var box = VET_box;
+	for (var i=0;i<VET_box_filled.length;i++) {
+		if (VET_box>VET_box_filled[i])
+			box--;
+	}
+	return box;
+}*/
+
+
+
+
+
 function VET_displayDetails(responseText, dataFromEditMode) {
 	var errorDiv = $('#VideoEmbedError');
 
@@ -847,6 +865,7 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 }
 
 function VET_insertFinalVideo(e, type) {
+$().log("insert final video");
 	var errorDiv = $('#VideoEmbedError');
 
 	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);
@@ -888,11 +907,11 @@ function VET_insertFinalVideo(e, type) {
 		params.push( 'ns='+wgNamespaceNumber );
 	}
 
-	if( '-1' != VET_gallery ) {
+	if( '-1' != VET_gallery ) { // Video placeholder (in view mode only?)
 		params.push( 'gallery=' + VET_gallery );
 		params.push( 'box=' + VET_box );
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
-		params.push( 'ns='+wgNamespaceNumber );
+		params.push( 'ns='+wgNamespaceNumber ); // lizbug - set to 0 - why?
 		if( VET_refid != null ) {
 			params.push( 'fck=true' );
 		}
@@ -1282,7 +1301,7 @@ var VETExtended = {
             that.isCarouselCheck();
 		});
 		
-alert('bind submit event');
+//alert('bind submit event');
 		// attach handlers - search
 		this.cachedSelectors.searchForm.submit(function(event) {
 			event.preventDefault();
@@ -1344,6 +1363,7 @@ alert('bind submit event');
 		});
 		
 		// attach handler - submit display options tab
+$().log("bind submit event");
 		$('#VideoEmbedDetails').on('submit', '#VET-display-options', function(event) {
 			event.preventDefault();
 			VET_insertFinalVideo(event, 'details');

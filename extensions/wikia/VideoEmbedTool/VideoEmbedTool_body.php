@@ -195,6 +195,9 @@ class VideoEmbedTool {
 
 		$id = $wgRequest->getVal('id');
 		$provider = $wgRequest->getVal('provider');
+		$gallery = $wgRequest->getVal( 'gallery', '' ); // 'gallery' is old termonology.  Now it means placeholders saved in articles
+		$title_main = urldecode( $wgRequest->getVal( 'article', '' ) );
+		$ns = $wgRequest->getVal( 'ns', '' );
 
 		$name = urldecode( $wgRequest->getVal('name') );
 		$oname = urldecode( $wgRequest->getVal('oname') );
@@ -213,6 +216,10 @@ class VideoEmbedTool {
 				return wfMsg ( 'vet-name-incorrect' );
 			}
 			wfRunHooks( 'AddPremiumVideo', array( $title ) );
+			if ($gallery != '') { // insert video html into article outside editor
+				$file = wfFindFile( $oTitle );
+				$embed_code = $file->getEmbedCode( 300 ); // lizbug - check on what 300 means... hard coded width?
+			}						
 		} else { // needs to upload
 			// sanitize name and init title objects
 			$name = VideoFileUploader::sanitizeTitle($name);
@@ -255,6 +262,63 @@ class VideoEmbedTool {
 		$size = $wgRequest->getVal('size');
 		$width = $wgRequest->getVal('width');
 		$layout = $wgRequest->getVal('layout');
+
+		if ( $gallery == -2 ) {
+			Wikia::setVar('EditFromViewMode', true); 
+// LEFT OFF HERE
+
+			$title_obj = Title::newFromText( $title_main, $ns );
+			$article_obj = new Article( $title_obj );
+			$text = $article_obj->getContent();
+
+			$box = $wgRequest->getVal( 'box', '' );
+lizbug('$box = ' . $box);
+lizbug('PREG_OFFSET_CAPTURE = ' . PREG_OFFSET_CAPTURE);
+			// todo change that to take care of parameters
+			preg_match_all( '/\[\[' . $ns_vid . ':Placeholder[^\]]*\]\]/s', $text, $matches, PREG_OFFSET_CAPTURE );
+lizbug('$matches = ');
+lizbug($matches);
+			if( is_array( $matches ) ) {
+				$our_gallery = $matches[0][$box][0];
+lizbug('$our_gallery = ' . $our_gallery);
+				$gallery_split = explode( ':', $our_gallery );
+				$thumb = false;
+				
+				$tag = $gallery_split[0] . ":" . $name;	
+lizbug('$tag = ' . $tag);
+				if($size != 'full') {
+					$tag .= '|thumb';
+					$thumb = true;
+				}
+
+				$tag .= '|'.$width;
+				$tag .= '|'.$layout;
+
+				if( $caption != '' ) {
+					$tag .= '|' . $caption;
+				}				
+
+				$tag .= "]]";
+lizbug('$tag = ' . $tag);
+				$text = substr_replace( $text, $tag, $matches[0][$box][1], strlen( $our_gallery ) );
+				// return the proper embed code with all fancies around it
+lizbug('$text = ' . $text);
+				$embed_code = $video->generateWindow( $layout, $width, $caption, $thumb, false );
+lizbug('$embed_code = ' . $embed_code);
+				$message = wfMsg( 'vet-single-success' );
+			}
+
+			$summary = wfMsg( 'vet-added-from-gallery' ) ;
+			$success = $article_obj->doEdit( $text, $summary);
+lizbug('$success = ' . $success);
+			if ( $success ) {
+				header('X-screen-type: summary');				
+				$tag = $our_gallery_modified . "\n</videogallery>";
+			} else {
+				// todo well, communicate failure
+			}
+		}
+
 
 		header('X-screen-type: summary');
 		$tag = $ns_vid . ":" . $oTitle->getText();
