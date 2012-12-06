@@ -79,3 +79,11 @@ function WMU() {
 	$ar->setContentType('text/html; charset=utf-8');
 	return $ar;
 }
+
+$wgResourceModules['ext.wikia.WMU'] = array(
+	'scripts' => 'js/WMU.js',
+	'styles' => 'css/WMU.css',
+	'dependencies' => array( 'wikia.yui', 'jquery.aim' ),
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/WikiaMiniUpload'
+);
