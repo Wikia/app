@@ -229,7 +229,7 @@ $.extend( CategorySelect.prototype, {
 	 *        name of a category or the jQuery or DOM Element for a category.
 	 */
 	editCategory: function( category ) {
-		var modal, error,
+		var modal,
 			self = this,
 			element = self.getCategory( category );
 
@@ -247,14 +247,15 @@ $.extend( CategorySelect.prototype, {
 							defaultButton: true,
 							message: cached.messages.buttonSave,
 							handler: function() {
-								var name = modal.find( '[name="categoryName"]' ).val(),
+								var error,
+									name = modal.find( '[name="categoryName"]' ).val(),
 									sortKey = modal.find( '[name="categorySortKey"]' ).val();
 
 								if ( name === '' ) {
 									error = cached.messages.errorEmptyCategoryName;
 
 								} else if ( name !== category.name && self.getData( name ) ) {
-									error = $.msg( 'categoryselect-error-duplicate-category', name );
+									error = $.msg( 'categoryselect-error-duplicate-category-name', name );
 								}
 
 								if ( error ) {
@@ -263,22 +264,24 @@ $.extend( CategorySelect.prototype, {
 										.find( '.error-msg' ).text( error );
 
 								} else {
-									$.extend( category, {
-										name: name,
-										sortKey: sortKey
-									});
+									if ( name !== category.name || sortKey !== category.sortKey ) {
+										$.extend( category, {
+											name: name,
+											sortKey: sortKey
+										});
 
-									element
-										.data( 'category', category )
-										.find( '.name' )
-										.text( name );
+										element
+											.data( 'category', category )
+											.find( '.name' )
+											.text( name );
 
-									self.trigger( 'edit', {
-										category: category,
-										element: element
-									});
+										self.trigger( 'edit', {
+											category: category,
+											element: element
+										});
 
-									self.trigger( 'update' );
+										self.trigger( 'update' );
+									}
 
 									modal.closeModal();
 								}
