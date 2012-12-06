@@ -69,6 +69,7 @@
 .home-top-right-ads {
 	float: right;
 }
+
 #HOME_TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	position: relative;
@@ -166,7 +167,7 @@ body >a >img[src$="noad.gif"] {
 	text-align: center;
 }
 
-.home-top-right-ads .SelfServeUrl {
+#HOME_TOP_RIGHT_BOXAD + .SelfServeUrl {
 	position: relative;
 	z-index: 100;
 }
