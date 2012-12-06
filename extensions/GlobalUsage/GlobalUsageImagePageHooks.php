@@ -46,6 +46,9 @@ class GlobalUsageImagePageHooks {
 		foreach ( $query->getSingleImageResult() as $wiki => $result ) {
 			$wikiName = WikiMap::getWikiName( $wiki );
 			$escWikiName = Sanitizer::escapeClass( $wikiName );
+			/* Wikia change begin */
+			$wikiName = "[[w:c:$wikiName|$wikiName]]";
+			/* Wikia change end */
 			$guHtml .= "<li class='mw-gu-onwiki-$escWikiName'>" . wfMsgExt(
 					'globalusage-on-wiki', 'parseinline',
 					$targetName, $wikiName ) . "\n<ul>";
