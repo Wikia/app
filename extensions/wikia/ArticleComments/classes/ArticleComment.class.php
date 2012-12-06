@@ -158,58 +158,47 @@ class ArticleComment {
 		$result = true;
 
 		if ( $this->mTitle ) {
- 			// get revision ids
-			if ( $master ) {
+			// get revision ids
+			if ($master) {
+				$this->mFirstRevId = $this->getFirstRevID( DB_MASTER );
 				$this->mLastRevId = $this->mTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
 			} else {
-				$this->mLastRevId = $this->mTitle->getLatestRevID( );
+				$this->mFirstRevId = $this->getFirstRevID( DB_SLAVE );
+				$this->mLastRevId = $this->mTitle->getLatestRevID();
+				// if first rev does not exist on slave then fall back to master anyway
+				if ( !$this->mFirstRevId ) {
+					$this->mFirstRevId = $this->getFirstRevID( DB_MASTER );
+				}
 				// if last rev does not exist on slave then fall back to master anyway
 				if ( !$this->mLastRevId ) {
 					$this->mLastRevId = $this->mTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
 				}
 				// if last rev STILL does not exist, give up and set it to first rev
 				if ( !$this->mLastRevId ) {
-					$this->mLastRevId = $this->getFirstRevID( DB_MASTER );
+					$this->mLastRevId = $this->mFirstRevId;
 				}
 			}
 
-			if ( empty( $this->mLastRevId ) ) {
-				// assume article is bogus, threat as if it doesn't exist
+			if( empty($this->mFirstRevId) || empty($this->mLastRevId) ) {
+			// assume article is bogus, threat as if it doesn't exist
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
 			$memckey = wfMemcKey( 'articlecomment', 'basedata', $this->mLastRevId );
-			$acData = $wgMemc->get( $memckey );
+			$acData = $wgMemc->get($memckey);
 
-			if ( !empty( $acData ) && is_array( $acData ) ) {
+			if (!empty($acData) && is_array($acData)) {
 				$this->mText = $acData['text'];
-				$this->mMetadata = empty( $this->mMetadata ) ? $acData['metadata'] : $this->mMetadata;
+				$this->mMetadata = empty($this->mMetadata) ? $acData['metadata']:$this->mMetadata;
 				$this->mRawtext = $acData['raw'];
-				$this->mHeadItems = empty( $acData['head'] ) ? null : $acData['head'];
+				$this->mHeadItems = empty($acData['head']) ? null:$acData['head'];
 				$this->mFirstRevision = $acData['first'];
 				$this->mLastRevision = $acData['last'];
 				$this->mUser = $acData['user'];
 				wfProfileOut( __METHOD__ );
 				return true;
 			}
-
-			if ( $master ) {
-				$this->mFirstRevId = $this->getFirstRevID( DB_MASTER );
-			} else {
-				$this->mFirstRevId = $this->getFirstRevID( DB_SLAVE );
-				// if first rev does not exist on slave then fall back to master anyway
-				if ( !$this->mFirstRevId ) {
-					$this->mFirstRevId = $this->getFirstRevID( DB_MASTER );
-				}
-			}
-
-			if ( empty( $this->mFirstRevId ) ) {
-				// assume article is bogus, threat as if it doesn't exist
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
-			
 			// get revision objects
 			if ( $this->mFirstRevId ) {
 				$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );

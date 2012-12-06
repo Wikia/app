@@ -35,6 +35,8 @@ class WallNotificationsEveryone extends WallNotifications {
 			'page_id' => $pageId
 		), __METHOD__);
 
+		//TODO: clear old one
+
 		$this->getDB(true)->commit();
 		wfProfileOut(__METHOD__);
 	}
