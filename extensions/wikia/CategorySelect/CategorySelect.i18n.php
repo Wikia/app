@@ -31,7 +31,7 @@ $messages[ 'en' ] = array(
 	'categoryselect-error-db-locked' => 'Database is locked.',
 	'categoryselect-error-edit-abort' => 'The modifications you tried to make were aborted by an extension hook.',
 	'categoryselect-error-empty-category-name' => 'Please provide a category name.',
-	'categoryselect-error-duplicate-category' => 'Category "$1" already exists.',
+	'categoryselect-error-duplicate-category-name' => 'Category "$1" already exists.',
 	'categoryselect-error-user-rights' => 'User does not have permission to perform this action.',
 	'categoryselect-modal-category-name' => 'Provide the name of the category:',
 	'categoryselect-modal-category-sortkey' => 'Alphabetize this article on the "$1" category page under the name:',
@@ -46,8 +46,24 @@ $messages[ 'en' ] = array(
  */
 $messages[ 'qqq' ] = array(
 	'categoryselect-desc' => '{{desc}}',
-	'categoryselect-button-save' => '{{Identical|Save}}',
-	'categoryselect-button-cancel' => '{{Identical|Cancel}}',
+	'categoryselect-button-save' => 'The text displayed for the save button on article pages.',
+	'categoryselect-button-cancel' => 'The text displayed for the cancel button on article pages.',
+	'categoryselect-category-add' => 'The placeholder text displayed in the category input field when it is empty.',
+	'categoryselect-category-edit' => 'Title text for the edit icon and the heading for category edit modals.',
+	'categoryselect-category-remove' => 'Title text for the remove icon.',
+	'categoryselect-edit-summary' => 'The summary used for revisions created when saving category updates on view pages.',
+	'categoryselect-error-article-doesnt-exist' => 'The error message shown when trying to add categories to an article that doesn\'t exist. Parameters:
+* $1: The ID of the article.',
+	'categoryselect-error-db-locked' => 'The error message shown when saving changes when the site is in read only mode.',
+	'categoryselect-error-edit-abort' => 'The error message shown when saving changes is cancelled by an extension hook.',
+	'categoryselect-error-empty-category-name' => 'The error message shown when trying to add a category without a category name.',
+	'categoryselect-error-duplicate-category-name' => 'The error message shown when trying to add a category with the same name as an existing category. Parameters:
+* $1: The name of the category the user is trying to add.',
+	'categoryselect-error-user-rights' => 'The error message shown when trying to save changes without proper user permissions.',
+	'categoryselect-modal-category-name' => 'The text shown above the category input field in the modal dialog.',
+	'categoryselect-modal-category-sortkey' => 'The text shown above the sortkey input field in the modal dialog.',
+	'tog-disablecategoryselect' => 'The text displayed in user preferences for disabling the CategorySelect extension',
+	'tog-disablecategoryselect-v2' => 'The text displayed in user preferences for disabling the CategorySelect extension when the UserPreferencesV2 extension is enabled.'
 );
 
 /** Afrikaans (Afrikaans)
