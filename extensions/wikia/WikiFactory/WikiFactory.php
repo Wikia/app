@@ -3018,4 +3018,21 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
+
+	/**
+	 * get url from dbname
+	 * @param string $dbname	name of database
+	 * @param boolean $master	use master or slave connection
+	 * @return url in city_list
+	 */
+	static public function DBtoUrl( $dbname, $master = false ) {
+		if( !self::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		$oRow = self::getWikiByDB( $dbname, $master );
+
+		return isset( $oRow->city_url ) ? $oRow->city_url : false;
+	}
 };
