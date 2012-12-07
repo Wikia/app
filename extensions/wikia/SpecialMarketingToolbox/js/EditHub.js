@@ -63,20 +63,24 @@ EditHub.prototype = {
 	},
 
 	isUrl: function(url) {
-		var reg = new RegExp(/((ftp|https?):\/\/)?(www\.)?[a-z0-9\-\.]{3,}\.[a-z]{2}$/);
+		var reg = new RegExp(window.wgMarketingToolboxUrlRegex);
 		return (reg.test(url));
 	},
 
 	urlValidate: function(e) {
 		var closestError = $(e.target).siblings('.error');
 		closestError.text('');
-		if(this.isUrl($(e.target).val())) {
-
+		if ($(e.target).val() == '') {
+			this.submitButton.removeAttr('disabled');
+		}
+		else if(this.isUrl($(e.target).val())) {
+			this.submitButton.removeAttr('disabled');
 		}
 		else {
 			closestError.text(
 				$.msg('marketing-toolbox-validator-wrong-url')
 			);
+			this.submitButton.attr('disabled', true);
 		}
 	},
 
