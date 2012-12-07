@@ -35,6 +35,7 @@ class WikiHeaderController extends WikiaController {
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
 		$this->displaySearch = !empty($this->wg->EnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this, $this->wg->Title);
+		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 	}
 
 	public function executeWordmark() {
