@@ -2,6 +2,8 @@
  * Single place to call when you want to load something from server
  *
  * Think of it as a replacment for ResourceLoader and AssetsManager
+ *
+ * @author Jakub Olek <jolek@wikia-inc.com>
  */
 (function(context){
 	'use strict';
@@ -14,7 +16,7 @@
 			style = 'stylesheet',
 			styleType = 'text/css',
 			multiAllowedOptions = ['templates', 'scripts', 'styles', 'messages', 'mustache'],
-			slashRegex = new RegExp('^\\/'),
+			slashRegex = /^\\/,
 			rExtension = /(js|s?css)$/,
 			getURL = function(path, type, params){
 				if(~path.indexOf('__am')) {
@@ -108,6 +110,12 @@
 
 			/**
 			 * Loads library file if it's not already loaded and fires callback
+			 *
+			 * @example:
+			 * loader({
+			 * 		type: loader.LIBRARY,
+			 * 		resources: ['facebook', 'googlemaps']
+			 * });
 			 */
 			getLibrary =  function(libs, callback, failure) {
 				if(!(libs instanceof Array)) {
@@ -187,21 +195,24 @@
 			 *
 			 *  Returns object with all requested resources
 			 *
-			 *  Example: Wikia.getMultiTypePackage({
-			 *		messages: 'EditPageLayout',
-			 *		scripts: 'oasis_jquery,yui',
-			 *		styles: 'path/to/style/file'
-			 *		mustache: 'extensions/wikia/MyExy/templates/index.mustache',
-			 *		templates: [{
-			 *			controllerName: 'MyController',
-			 *			methodName: 'getPage',
+			 *  Example: loader({
+			 *  	type: loader.MULTI,
+			 *  	resources: {
+			 *  	    messages: 'EditPageLayout',
+			 *			scripts: 'oasis_jquery,yui',
+			 *			styles: 'path/to/style/file'
+			 *			mustache: 'extensions/wikia/MyExy/templates/index.mustache',
+			 *			templates: [{
+			 *				controller: 'MyController',
+			 *				method: 'getPage',
+			 *				params: {
+			 *					page: 1
+			 *				}
+			 *			}],
 			 *			params: {
-			 *				page: 1
+			 *				useskin: 'skinname'
 			 *			}
-			 *		}],
-			 *		params: {
-			 *			useskin: 'skinname'
-			 *		}
+			 *  	}
 			 *	});
 			 */
 			getMultiTypePackage = function(options, complete, failure){
@@ -250,8 +261,19 @@
 
 		return (function(){
 			/**
-			 * Fetches a list of resources and fires a callback when they have all finished
-			 * loading. Supports CSS, JavaScript, Sass and AssetManager groups.
+			 * Fetches a list of resources and fires a callback when they have all finished loading.
+			 *
+			 * If it failes it'll call onFail callback passing you packages that it couldn't load (in IE8 only onSuccess works :()
+			 *
+			 * @supports JS, CSS, SASS, AM Groups, Libraries, Multi type packages
+			 *
+			 * @example: loader('/path/to/file.js').done(onSucess).fail(onFail);
+			 * @example: loader({
+			 *     type: loader.JS,
+			 *     resources: 'path/to/file.js'
+			 *	},
+			 * '/path/to/file.scss'
+			 * ).then(onSuccess, onFail);
 			 *
 			 * @author macbre
 			 * @author kflorence
