@@ -12,10 +12,14 @@
 	<?php if(!empty($updateResult)): ?>
 		<div class="validation-main-message <?= (empty($updateResult->error)) ? 'success' : '' ?>">
 			<?=$updateResult->message;?>
-		</div>
 		<?php if(isset($updateResult->errors)): ?>
-			<?php var_dump($updateResult->errors); ?>
+			<?php foreach ( $updateResult->errors as $errKey => $errVal ) { ?>
+			<ul class="error-list">
+			    <li><strong><?=$errKey?>:</strong><br /> <?php echo implode("<br />", $errVal); ?> </li>
+			</ul>
+			<?php } ?>
 		<?php endif; ?>
+                </div>
 	<?php endif; ?>
 	<h1><strong><?= $objectName; ?></strong></h1>
 	<?php if($context == SD_CONTEXT_SPECIAL && $isEditAllowed): ?>

@@ -5,31 +5,10 @@ EditHub.prototype = {
 	validatedInputs: undefined,
 	urlInput: undefined,
 	submitButton: undefined,
+	wmuDeffered: undefined,
 
 	init: function () {
-		$('.MarketingToolboxMain .wmu-show').click(function() {
-			$.loadYUI( function() {
-				$.getScript(wgExtensionsPath+'/wikia/WikiaMiniUpload/js/WMU.js', function() {
-					WMU_show($.getEvent(), -2);
-					mw.loader.load( wgExtensionsPath+'/wikia/WikiaMiniUpload/css/WMU.css', "text/css" );
-				});
-				$(window).bind('WMU_addFromSpecialPage', function(event, fileHandler) {
-					$.nirvana.sendRequest({
-						controller: 'MarketingToolbox',
-						method: 'getImageDetails',
-						type: 'get',
-						data: {
-							'fileHandler': fileHandler
-						},
-						callback: function(response) {
-							var tempImg = new Image();
-							tempImg.src = response.fileUrl;
-							$('.MarketingToolboxMain').append(tempImg);
-						}
-					});
-				});
-			});
-		});
+		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
 
 		this.form = $('#marketing-toolbox-form');
 		this.validatedInputs = $('.WikiaForm .required');
@@ -45,6 +24,42 @@ EditHub.prototype = {
 		this.formValidate();
 		this.validatedInputs.keyup($.proxy(this.formValidateRealTime, this));
 		this.urlInput.keyup($.proxy(this.urlValidate, this));
+	},
+
+	wmuInit: function(event) {
+		event.preventDefault();
+		var $input = $(this).prev();
+		if (!this.wmuDeffered) {
+			this.wmuDeffered = mw.loader.use(
+				'ext.wikia.WMU'
+			).then(function() {
+					WMU_skipDetails = true;
+					WMU_show();
+				});
+		} else if (this.wmuDeffered.state() === 'resolved') {
+			WMU_show();
+		} else {
+			return false;
+		}
+		$(window).bind('WMU_addFromSpecialPage', $.proxy(function(event, wmuData) {
+			this.addImage(wmuData);
+		}, this));
+	},
+
+	addImage: function(wmuData) {
+		$.nirvana.sendRequest({
+			controller: 'MarketingToolbox',
+			method: 'getImageDetails',
+			type: 'get',
+			data: {
+				'fileHandler': wmuData.imageTitle
+			},
+			callback: function(response) {
+				var tempImg = new Image();
+				tempImg.src = response.fileUrl;
+				$('.MarketingToolboxMain').append(tempImg);
+			}
+		});
 	},
 
 	isUrl: function(url) {

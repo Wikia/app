@@ -116,6 +116,11 @@
 			background-color: #006400;
 			border-color: mix(#006400, #000, 50%); ;
 		}
+        ul.error-list {
+          font-size:11px;
+          background:#000000;
+          padding:10px;
+        }
 	}
 	.validation-message {
 		margin-top: 10px;

@@ -157,7 +157,6 @@ class StructuredDataController extends WikiaSpecialPageController {
 					$result = $this->structuredData->updateSDElement($sdsObject, $requestParams);
 					if( isset( $result->error ) ) {
 						$updateResult = $result;
-						$action = 'edit';
 					}
 					else {
 						$this->wg->out->redirect( $sdsObject->getObjectPageUrl( SD_CONTEXT_SPECIAL ) . '?success=true' );

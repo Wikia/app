@@ -135,6 +135,29 @@ class WikiaRequest {
 	}
 
 	/**
+	 * Returns the value as an array,
+	 * if it's not set it will return the default if specified;
+	 * if the value is a comma-separate list of elements as a string
+	 * (e.g. 1,2,3,4,5) it will be split and returned as an array
+	 *
+	 * @param string $name The name of the value to retrieve
+	 * @param mixed $default The default to return if the value is not set
+	 *
+	 * @return  Array The value as an array
+	 */
+	public function getArray( $name, $default = array() ) {
+		$val = $this->getVal( $name, $default );
+
+		if ( is_string( $val ) && strpos( $val, ',') !== false ) {
+			$val = explode( ',', $val );
+		} elseif ( !is_array( $val ) ) {
+			$val = array( $val );
+		}
+
+		return $val;
+	}
+
+	/**
 	 * Returns true if the present request was reached by a POST operation,
 	 * false otherwise (GET, HEAD, or command-line).
 	 *

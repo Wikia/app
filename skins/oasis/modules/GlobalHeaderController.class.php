@@ -34,14 +34,13 @@ class GlobalHeaderController extends WikiaController {
 	}
 
 	public function index() {
-		global $wgLangToCentralMap, $wgLang;
 
-		$userLang = $wgLang->getCode();
+		$userLang = $this->wg->Lang->getCode();
 
 		// Link to Wikia home page
 		$centralUrl = 'http://www.wikia.com/Wikia';
-		if (!empty($wgLangToCentralMap[$userLang])) {
-			$centralUrl = $wgLangToCentralMap[$userLang];
+		if (!empty($this->wg->LangToCentralMap[$userLang])) {
+			$centralUrl = $this->wg->LangToCentralMap[$userLang];
 		}
 
 		$createWikiUrl = 'http://www.wikia.com/Special:CreateNewWiki';
@@ -59,7 +58,7 @@ class GlobalHeaderController extends WikiaController {
 		if($isGameStarLogoEnabled) {
 			$this->response->addAsset('skins/oasis/css/modules/GameStarLogo.scss');
 		}
-
+		$this->response->setVal( 'altMessage', $this->wg->CityId % 5 == 1 ? '-alt' : '' );
 	}
 
 	public function menuItems() {

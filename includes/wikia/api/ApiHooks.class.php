@@ -48,7 +48,7 @@ class ApiHooks {
 		return true;
 	}
 
-	public static function onArticleRollbackComplete( &$article, $user, $revision, $current ) {
+	public static function onArticleRollbackComplete( $article, $user, $revision, $current ) {
 		ArticlesApiController::purgeCache( $article->getTitle()->getArticleID() );
 
 		ArticlesApiController::purgeMethod( 'getList' );

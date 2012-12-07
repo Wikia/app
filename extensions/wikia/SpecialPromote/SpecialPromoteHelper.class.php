@@ -403,11 +403,11 @@ class SpecialPromoteHelper extends WikiaObject {
 
 
 	protected function moveTmpFile($fileName, $dstFileName) {
-		$temp_file_title = F::build('Title', array($fileName, NS_FILE), 'newFromText');
-		$dst_file_title = F::build('Title', array($dstFileName, NS_FILE), 'newFromText');
+		$temp_file_title = F::build('Title', array($fileName, NS_FILE), 'newFromText'); /** @var $temp_file_title Title */
+		$dst_file_title = F::build('Title', array($dstFileName, NS_FILE), 'newFromText'); /** @var $dst_file_title Title */
 
-		$temp_file = F::build('LocalFile', array($temp_file_title, RepoGroup::singleton()->getLocalRepo()));
-		$file = F::build('LocalFile', array($dst_file_title, RepoGroup::singleton()->getLocalRepo()));
+		$temp_file = F::build('LocalFile', array($temp_file_title, RepoGroup::singleton()->getLocalRepo())); /** @var $temp_file LocalFile */
+		$file = F::build('LocalFile', array($dst_file_title, RepoGroup::singleton()->getLocalRepo())); /** @var $file LocalFile */
 
 		$file->upload($temp_file->getPath(), '', '');
 		$temp_file->delete('');

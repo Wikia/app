@@ -174,6 +174,7 @@ class WikiaFileHelper extends Service {
 				// info
 				$attribs = array(
 					"class" => "info-overlay",
+					"style" => "width: {$width}px;"
 				);
 
 				$html = Xml::tags( 'span', $attribs, $content );

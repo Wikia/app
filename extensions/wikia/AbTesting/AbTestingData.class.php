@@ -103,9 +103,13 @@ class AbTestingData extends WikiaObject {
 		return $ret;
 	}
 
-	protected function loadFromDb( $where = array() ) {
+	protected function loadFromDb( $where = array(), $use_master = false ) {
+		// Some calls to this method want to load from the master so that they
+		// don't race with replication lag
+		$db_type = $use_master ? DB_MASTER : DB_SLAVE;
+
 		/** @var $dbr DatabaseMysql */
-		$dbr = $this->getDb();
+		$dbr = $this->getDb( $db_type );
 		$res = $dbr->select(
 			array( // tables
 				'e' => 'ab_experiments',
@@ -144,10 +148,11 @@ class AbTestingData extends WikiaObject {
 		return $this->loadFromDb();
 	}
 
-	public function getById( $id ) {
+	public function getById( $id, $use_master = false ) {
 		$list = $this->loadFromDb(array(
 			'e.id' => $id,
-		));
+		), $use_master);
+
 		return @$list[$id];
 	}
 
@@ -163,7 +168,7 @@ class AbTestingData extends WikiaObject {
 		return $row;
 	}
 
-	protected function saveRow( $table, &$row, $fname ) {
+	protected function saveRow( $table, &$row, $fname, $no_checks=false ) {
 		$dbw = $this->getDb(DB_MASTER);
 		$copy = $this->filterRow($table,$row);
 		if ( !empty($row['id']) ) {
@@ -173,9 +178,19 @@ class AbTestingData extends WikiaObject {
 			unset($copy['id']);
 			$dbw->update($table,$copy,$where,$fname);
 		} else {
+			// If this is set, relax foriegn key checks so that we can insert
+			// circular references
+			if ($no_checks) {
+				$dbw->query("SET foreign_key_checks = 0");
+			}
+
 			unset($row['id']);
 			$dbw->insert($table,$copy,$fname);
 			$row['id'] = $dbw->insertId();
+
+			if ($no_checks) {
+				$dbw->query("SET foreign_key_checks = 1");
+			}
 		}
 	}
 
@@ -222,8 +237,8 @@ class AbTestingData extends WikiaObject {
 		$this->deleteRow(self::TABLE_GROUPS,$grp,__METHOD__);
 	}
 
-	public function saveVersion( &$ver ) {
-		$this->saveRow(self::TABLE_VERSIONS,$ver,__METHOD__);
+	public function saveVersion( &$ver, $no_checks = false ) {
+		$this->saveRow(self::TABLE_VERSIONS,$ver,__METHOD__, $no_checks);
 	}
 
 	public function deleteVersion( &$ver ) {

@@ -15,8 +15,8 @@ $messages['en'] = array(
 	'abtesting-heading-name' => 'Name',
 	'abtesting-heading-description' => 'Description',
 
-	'abtesting-heading-start-time' => 'Start Time',
-	'abtesting-heading-end-time' => 'End Time',
+	'abtesting-heading-start-time' => 'Start Time (UTC)',
+	'abtesting-heading-end-time' => 'End Time (UTC)',
 	'abtesting-heading-ga-slot' => 'GA Slot',
 	'abtesting-heading-group' => 'Group',
 	'abtesting-heading-control-group' => 'Control Group',
@@ -37,5 +37,26 @@ $messages['en'] = array(
  * qqq - Documentation for the messages.
  */
 $messages['qqq'] = array(
+	'abtesting' => 'Page title',
+	'abtesting-desc' => 'Description of the A/B Testing extension',
 
+	'abtesting-heading-id' => 'Label for the ID field',
+	'abtesting-heading-name' => 'Label for the Name field',
+	'abtesting-heading-description' => 'Label for the Description field',
+
+	'abtesting-heading-start-time' => 'Label for the experiment start time',
+	'abtesting-heading-end-time' => 'Label for the experiement end time',
+	'abtesting-heading-ga-slot' => 'Label for the GA Slot field',
+	'abtesting-heading-group' => 'Group',
+	'abtesting-heading-control-group' => 'Label for the control group pulldown',
+	'abtesting-heading-ranges' => 'Ranges (0-99)',
+	'abtesting-heading-treatment-groups' => 'Heading for the Treatment Groups section',
+
+	'abtesting-create-experiment' => 'Button for creating a new experiment',
+	'abtesting-add-experiment-title' => 'Add Experiment',
+	'abtesting-edit-experiment-title' => 'Edit Experiment',
+	'abtesting-add-treatment-group' => 'Button for adding a new treatment group',
+
+	'abtesting-edit-button' => 'Edit button',
+	'abtesting-save-button' => 'Save button',
 );
