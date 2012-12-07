@@ -119,12 +119,13 @@ class Solarium_Client_RequestBuilder_Update extends Solarium_Client_RequestBuild
 
             foreach ($doc->getFields() AS $name => $value) {
                 $boost = $doc->getFieldBoost($name);
+                $modifier = $doc instanceof Solarium_Document_AtomicUpdate ? $doc->getFieldModifier() : null;
                 if (is_array($value)) {
                     foreach ($value AS $multival) {
-                        $xml .= $this->_buildFieldXml($name, $boost, $multival);
+                        $xml .= $this->_buildFieldXml($name, $boost, $multival, $modifier);
                     }
                 } else {
-                    $xml .= $this->_buildFieldXml($name, $boost, $value);
+                    $xml .= $this->_buildFieldXml($name, $boost, $value, $modifier);
                 }
             }
 
@@ -146,10 +147,13 @@ class Solarium_Client_RequestBuilder_Update extends Solarium_Client_RequestBuild
      * @param mixed $value
      * @return string
      */
-    protected function _buildFieldXml($name, $boost, $value)
+    protected function _buildFieldXml($name, $boost, $value, $modifier = null)
     {
         $xml = '<field name="' . $name . '"';
         $xml .= $this->attrib('boost', $boost);
+        if ( $modifier !== null ) {
+            $xml .= $this->attrib('update', $modifier);
+        }
         $xml .= '>' . htmlspecialchars($value, ENT_NOQUOTES, 'UTF-8');
         $xml .= '</field>';
 
