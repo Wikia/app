@@ -1,111 +1,143 @@
-/**
- * @test-framework QUnit
- * @test-require-asset resources/wikia/modules/cache.js
+/*
+ @test-framework Jasmine
+ @test-require-asset /resources/wikia/libraries/modil/modil.js
+ @test-require-asset /resources/wikia/modules/window.js
+ @test-require-asset /resources/wikia/modules/cache.js
  */
 
-module('Wikia.Cache');
+/*global describe, it, runs, waitsFor, expect, require*/
+describe("Cache", function () {
+	'use strict';
 
-test('Set then get', function() {
+	var async = new AsyncSpec(this);
 
-	Wikia.Cache.set('a1', 'some-value');
-	equal(Wikia.Cache.get('a1'), 'some-value', 'string');
+	async.it('Set then get', function(done) {
+		require(['cache'], function(cache) {
+			cache.set('a1', 'some-value');
+			expect(cache.get('a1')).toBe('some-value');
 
-	Wikia.Cache.set('a2', {'x': 'y', '123': 456});
-	deepEqual(Wikia.Cache.get('a2'), {'x': 'y', '123': 456}, 'object');
+			cache.set('a2', {'x': 'y', '123': 456});
+			expect(cache.get('a2').x).toBe('y');
+			expect(cache.get('a2')['123']).toBe(456);
 
-	Wikia.Cache.set('a3', false);
-	equal(Wikia.Cache.get('a3'), false, 'false');
+			cache.set('a3', false);
+			expect(cache.get('a3')).toBe(false);
 
-	Wikia.Cache.set('a4', null);
-	equal(Wikia.Cache.get('a4'), null, 'null');
+			cache.set('a4', null);
+			expect(cache.get('a4')).toBe(null);
 
-	Wikia.Cache.set('a5', 0);
-	equal(Wikia.Cache.get('a5'), 0, '0');
+			cache.set('a5', 0);
+			expect(cache.get('a5')).toBe(0);
 
-	Wikia.Cache.set('a6', '');
-	equal(Wikia.Cache.get('a6'), '', 'empty string');
+			cache.set('a6', '');
+			expect(cache.get('a6')).toBe('');
 
-	Wikia.Cache.set('a7', {});
-	deepEqual(Wikia.Cache.get('a7'), {}, 'empty object');
+			cache.set('a7', {});
+			expect(JSON.stringify(cache.get('a7'))).toBe('{}');
 
-	Wikia.Cache.set('a8', []);
-	deepEqual(Wikia.Cache.get('a8'), [], 'empty array');
-});
+			cache.set('a8', []);
+			expect(JSON.stringify(cache.get('a8'))).toBe('[]');
 
-test('Gets from localStorage', function() {
-	localStorage.setItem('wkch_val_b1', JSON.stringify('some-value'));
-	equal(Wikia.Cache.get('b1'), 'some-value', 'string');
+			done();
+		});
+	});
 
-	localStorage.setItem('wkch_val_b2', JSON.stringify({'x': 'y', '123': 456}));
-	deepEqual(Wikia.Cache.get('b2'), {'x': 'y', '123': 456}, 'object');
+	async.it('Gets from localStoragey', function(done) {
+		require(['cache'], function(cache) {
+			localStorage.setItem('wkch_val_b1', JSON.stringify('some-value'));
+			expect(cache.get('b1')).toBe('some-value');
 
-	localStorage.setItem('wkch_val_b3', JSON.stringify(false));
-	equal(Wikia.Cache.get('b3'), false, 'false');
+			localStorage.setItem('wkch_val_b2', JSON.stringify({'x': 'y', '123': 456}));
+			expect(cache.get('b2').x).toBe('y');
+			expect(cache.get('b2')['123']).toBe(456);
 
-	localStorage.setItem('wkch_val_b4', JSON.stringify(null));
-	equal(Wikia.Cache.get('b4'), null, 'null');
+			localStorage.setItem('wkch_val_b3', JSON.stringify(false));
+			expect(cache.get('b3')).toBe(false);
 
-	localStorage.setItem('wkch_val_b5', JSON.stringify(0));
-	equal(Wikia.Cache.get('b5'), 0, '0');
+			localStorage.setItem('wkch_val_b4', JSON.stringify(null));
+			expect(cache.get('b4')).toBe(null);
 
-	localStorage.setItem('wkch_val_b6', JSON.stringify(''));
-	equal(Wikia.Cache.get('b6'), '', 'empty string');
+			localStorage.setItem('wkch_val_b5', JSON.stringify(0));
+			expect(cache.get('b5')).toBe(0);
 
-	localStorage.setItem('wkch_val_b7', JSON.stringify({}));
-	deepEqual(Wikia.Cache.get('b7'), {}, 'empty object');
+			localStorage.setItem('wkch_val_b6', JSON.stringify(''));
+			expect(cache.get('b6')).toBe('');
 
-	localStorage.setItem('wkch_val_b8', JSON.stringify([]));
-	deepEqual(Wikia.Cache.get('b8'), [], 'empty array');
-});
+			localStorage.setItem('wkch_val_b7', JSON.stringify({}));
+			expect(JSON.stringify(cache.get('b7'))).toBe('{}');
 
-test('Sets to localStorage', function() {
+			localStorage.setItem('wkch_val_b8', JSON.stringify([]));
+			expect(JSON.stringify(cache.get('b8'))).toBe('[]');
 
-	Wikia.Cache.set('c1', 'some-value');
-	equal(localStorage.getItem('wkch_val_c1'), JSON.stringify('some-value'), 'string');
+			done();
+		});
+	});
 
-	Wikia.Cache.set('c2', {'x': 'y', '123': 456});
-	equal(localStorage.getItem('wkch_val_c2'), JSON.stringify({'x': 'y', '123': 456}), 'object');
+	async.it('Sets to localStorage', function(done) {
+		require(['cache'], function(cache) {
+			cache.set('c1', 'some-value');
+			expect(localStorage.getItem('wkch_val_c1')).toBe(JSON.stringify('some-value'));
 
-	Wikia.Cache.set('c3', false);
-	equal(localStorage.getItem('wkch_val_c3'), JSON.stringify(false), 'false');
+			cache.set('c2', {'x': 'y', '123': 456});
+			expect(localStorage.getItem('wkch_val_c2')).toBe(JSON.stringify({'x': 'y', '123': 456}));
 
-	Wikia.Cache.set('c4', null);
-	equal(localStorage.getItem('wkch_val_c4'), JSON.stringify(null), 'null');
+			cache.set('c3', false);
+			expect(localStorage.getItem('wkch_val_c3')).toBe(JSON.stringify(false));
 
-	Wikia.Cache.set('c5', 0);
-	equal(localStorage.getItem('wkch_val_c5'), JSON.stringify(0), '0');
+			cache.set('c4', null);
+			expect(localStorage.getItem('wkch_val_c4')).toBe(JSON.stringify(null));
 
-	Wikia.Cache.set('c6', '');
-	equal(localStorage.getItem('wkch_val_c6'), JSON.stringify(''), 'empty string');
+			cache.set('c5', 0);
+			expect(localStorage.getItem('wkch_val_c5')).toBe(JSON.stringify(0));
 
-	Wikia.Cache.set('c7', {});
-	equal(localStorage.getItem('wkch_val_c7'), JSON.stringify({}), 'empty object');
+			cache.set('c6', '');
+			expect(localStorage.getItem('wkch_val_c6')).toBe(JSON.stringify(''));
 
-	Wikia.Cache.set('c8', []);
-	equal(localStorage.getItem('wkch_val_c8'), JSON.stringify([]), 'empty array');
-});
+			cache.set('c7', {});
+			expect(localStorage.getItem('wkch_val_c7')).toBe(JSON.stringify({}));
 
-test('Get from localStorage then set', function() {
-	localStorage.setItem('wkch_val_d', JSON.stringify('some-value'));
-	equal(Wikia.Cache.get('d'), 'some-value', 'get from localStorage');
-	Wikia.Cache.set('d', 'new-value');
-	equal(Wikia.Cache.get('d'), 'new-value', 'get after set');
-	equal(localStorage.getItem('wkch_val_d'), JSON.stringify('new-value'), 'set to localStorage');
-});
+			cache.set('c8', []);
+			expect(localStorage.getItem('wkch_val_c8')).toBe(JSON.stringify([]));
 
-test('Get returns the value that was set last', function() {
-	Wikia.Cache.set('e', 'some-value');
-	Wikia.Cache.set('e', 'other-value');
-	equal(Wikia.Cache.get('e'), 'other-value');
-});
+			done();
+		});
+	});
 
-test('Value expires after given TTL', function() {
-	var fakeNowTimestamp = 8723687632
-		, fakeNow = {getTime: function() {return fakeNowTimestamp;}}
-		, anHourLater = {getTime: function() {return fakeNowTimestamp + 3600 * 1000;}}
-		, twoHoursLater = {getTime: function() {return fakeNowTimestamp + 2 * 3600 * 1000;}};
+	async.it('Get from localStorage then set', function(done) {
+		require(['cache'], function(cache) {
+			localStorage.setItem('wkch_val_d', JSON.stringify('some-value'));
+			expect(cache.get('d')).toBe('some-value');
 
-	Wikia.Cache.set('f', 'some-value', 3601, fakeNow);
-	equal(Wikia.Cache.get('f', anHourLater), 'some-value');
-	equal(Wikia.Cache.get('f', twoHoursLater), null);
+			cache.set('d', 'new-value');
+			expect(cache.get('d')).toBe('new-value');
+			expect(localStorage.getItem('wkch_val_d')).toBe(JSON.stringify('new-value'));
+
+			done();
+		});
+	});
+
+	async.it('Get returns the value that was set last', function(done) {
+		require(['cache'], function(cache) {
+			cache.set('e', 'some-value');
+			cache.set('e', 'other-value');
+			expect(cache.get('e')).toBe('other-value');
+
+			done();
+		});
+	});
+
+	async.it('Value expires after given TTL', function(done) {
+		require(['cache'], function(cache) {
+			var fakeNowTimestamp = 8723687632
+				, fakeNow = {getTime: function() {return fakeNowTimestamp;}}
+				, anHourLater = {getTime: function() {return fakeNowTimestamp + 3600 * 1000;}}
+				, twoHoursLater = {getTime: function() {return fakeNowTimestamp + 2 * 3600 * 1000;}};
+
+			cache.set('f', 'some-value', 3601, fakeNow);
+			expect(cache.get('f', anHourLater)).toBe('some-value');
+			expect(cache.get('f', twoHoursLater)).toBe(null);
+
+			done();
+		});
+	});
 });

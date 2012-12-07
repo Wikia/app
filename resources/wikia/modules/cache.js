@@ -136,6 +136,4 @@
 	if (context.define && context.define.amd) {
 		context.define('cache', ['localStorage'], cache);
 	}
-	context.Wikia = context.Wikia || {};
-	context.Wikia.Cache = cache(context.localStorage);
 }(this));
