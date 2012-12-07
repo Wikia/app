@@ -195,7 +195,7 @@
 			 *
 			 *  Returns object with all requested resources
 			 *
-			 *  Example: loader({
+			 *  @example: loader({
 			 *  	type: loader.MULTI,
 			 *  	resources: {
 			 *  	    messages: 'EditPageLayout',
