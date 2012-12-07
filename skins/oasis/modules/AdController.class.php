@@ -210,8 +210,4 @@ class AdController extends WikiaController {
 		}
 	}
 
-	public function executeMainPageRightColumn() {
-		// this method only renders view
-	}
-
 }
