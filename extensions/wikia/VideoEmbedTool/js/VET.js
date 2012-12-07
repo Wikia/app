@@ -829,7 +829,7 @@ function VET_insertFinalVideo(e, type) {
 		}
 	}
 
-	if( VET_inGalleryPosition ) {
+	if( VET_inGalleryPosition ) { // lizbug - I think we can remove this
 		params.push( 'mwgalpos=' + VET_inGalleryPosition );
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
 		params.push( 'ns='+wgNamespaceNumber );
@@ -922,8 +922,13 @@ function VET_insertFinalVideo(e, type) {
 									VET_insertTag( VET_getTextarea(), $G('VideoEmbedTag').value, VET_inGalleryPosition );
 								}
 							} else if( '-2' == VET_gallery) {
-								var to_update = $G( 'WikiaVideoPlaceholder' + VET_box );
-								to_update.innerHTML = $G( 'VideoEmbedCode' ).innerHTML;
+								var placeholders = $('#WikiaArticle').find('.wikiaVideoPlaceholder'),
+									to_update = placeholders.find('a').filter('[data-id='+VET_box+']'),
+									// get thumbnail code from hidden div in success modal
+									html = $('#VideoEmbedCode').html();
+								
+								to_update.parent().replaceWith(html);
+								
 								YAHOO.util.Connect.asyncRequest('POST', wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 							} else {
 								// insert into first free "add video" node
