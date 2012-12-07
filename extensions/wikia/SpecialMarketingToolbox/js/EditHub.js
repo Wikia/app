@@ -60,7 +60,6 @@ EditHub.prototype = {
 			}
 		});
 	},
-
 	formReset: function() {
 		this.form.find('input:text, input:password, input:file, select, textarea').val('');
 		this.form.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
