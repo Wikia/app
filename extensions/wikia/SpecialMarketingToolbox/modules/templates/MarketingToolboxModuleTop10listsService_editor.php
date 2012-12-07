@@ -12,12 +12,11 @@
 );
 	?>
 </div>
+
 <div class="grid-4 alpha wide">
 	<ol class="alternative">
-		<li><span>jeden</span></li>
-		<li><span>dwa</span></li>
-		<li><span>czy</span></li>
-		<li><span>cztery</span></li>
+		<? foreach ($list as $wikiTitle): ?>
+			<li><span><?=$wikiTitle?></span></li>
+		<? endforeach ?>
 	</ol>
 </div>
-

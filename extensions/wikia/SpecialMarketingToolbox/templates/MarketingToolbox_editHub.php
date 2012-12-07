@@ -13,7 +13,7 @@
 	</div>
 	<div class="grid-4 alpha">
 		<? if (!empty($flashMessage)): ?>
-			<p><?=$flashMessage ?></p>
+			<p class="success"><?=$flashMessage ?></p>
 		<? endif ?>
 
 		<? if (!empty($errorMessage)): ?>
