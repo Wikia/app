@@ -37,43 +37,38 @@ describe("Nirvana", function () {
 
 	async.it('controller name is required', function(done) {
 		require(['nirvana'], function(nirvana) {
-			try {
-				nirvana.sendRequest();
-			}
-			catch(e) {
-				expect(e).toBe('controller and method are required');
-				done();
-			}
+
+			expect(nirvana.sendRequest).toThrow('controller and method are required');
+
+			done();
 		});
 	});
 
 	async.it('method name is required', function(done) {
 		require(['nirvana'], function(nirvana) {
-			try {
+
+			expect(function(){
 				nirvana.sendRequest({
 					controller: controllerName
 				});
-			}
-			catch(e) {
-				expect(e).toBe('controller and method are required');
-				done();
-			}
+			}).toThrow('controller and method are required');
+
+			done();
 		});
 	});
 
 	async.it('correct format is required', function(done) {
 		require(['nirvana'], function(nirvana) {
-			try {
+
+			expect(function(){
 				nirvana.sendRequest({
 					controller: controllerName,
 					method: methodName,
 					format: 'foo'
 				});
-			}
-			catch(e) {
-				expect(e).toBe('Only Json,Jsonp and Html format are allowed');
-				done();
-			}
+			}).toThrow('Only Json,Jsonp and Html format are allowed');
+
+			done();
 		});
 	});
 
