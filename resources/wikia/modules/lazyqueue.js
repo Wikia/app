@@ -84,11 +84,7 @@
 
 	if (context.define && context.define.amd) {
 		context.define('lazyqueue', lazyQueue);
-	} else {
-		if (!context.Wikia) {
-			context.Wikia = {};
-		}
-
-		context.Wikia.LazyQueue = lazyQueue();
 	}
+	context.Wikia = context.Wikia || {};
+	context.Wikia.LazyQueue = lazyQueue();
 }(this));

@@ -133,11 +133,9 @@
 		};
 	}
 
-	//UMD exclusive
 	if (context.define && context.define.amd) {
-		context.define('cache', cache);
-	} else {
-		context.Wikia = context.Wikia || {};
-		context.Wikia.Cache = cache();
+		context.define('cache', ['localStorage'], cache);
 	}
+	context.Wikia = context.Wikia || {};
+	context.Wikia.Cache = cache(context.localStorage);
 }(this));

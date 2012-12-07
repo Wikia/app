@@ -259,14 +259,9 @@
 		return Querystring;
 	}
 
-	//UMD exclusive
 	if (context.define && context.define.amd) {
-		context.define('querystring', querystring);
-	} else {
-		if (!context.Wikia) {
-			context.Wikia = {};
-		}
-
-		context.Wikia.Querystring = querystring();
+		context.define('querystring', ['location'], querystring);
 	}
+	context.Wikia = context.Wikia || {};
+	context.Wikia.Querystring = querystring(context.location);
 }(this));

@@ -131,14 +131,9 @@
 		};
 	}
 
-	//UMD exclusive
 	if (context.define && context.define.amd) {
 		context.define('thumbnailer', thumbnailer);
-	} else {
-		if (!context.Wikia) {
-			context.Wikia = {};
-		}
-
-		context.Wikia.Thumbnailer = thumbnailer();
 	}
+	context.Wikia = context.Wikia || {};
+	context.Wikia.Thumbnailer = thumbnailer();
 }(this));
