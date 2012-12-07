@@ -513,6 +513,9 @@ class BodyController extends WikiaController {
 					break;
 			}
 		}
+		
+		// bugid-70243: optionally hide navigation h1s for SEO
+		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 
 		wfProfileOut(__METHOD__);
 	}
