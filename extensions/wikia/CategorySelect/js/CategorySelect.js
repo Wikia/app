@@ -604,8 +604,7 @@ $.extend( CategorySelect, {
 			forcePlaceholderSize: true,
 			handle: '.name',
 			items: '.category',
-			placeholder: 'placeholder',
-			scroll: true
+			placeholder: 'placeholder'
 		}
 	}
 });
