@@ -834,7 +834,6 @@ class BlogTemplateClass {
 		if ( (!empty($oRev)) && (!empty($titleObj)) && (!empty(self::$aOptions['summary'])) ) {
 			$sBlogText = $oRev->getText( Revision::FOR_THIS_USER );
 			/* parse or not parse - this is a good question */
-			$localParser = new Parser();
 			if ( !in_array(self::$aOptions['type'], array('array', 'noparse')) ) {
 				/* macbre - remove parser hooks (RT #67074) */
 				global $wgParser;
@@ -861,7 +860,7 @@ class BlogTemplateClass {
 					}
 				}
 				/* parse truncated text */
-				$parserOutput = $localParser->parse($sBlogText, $titleObj, ParserOptions::newFromUser($wgUser));
+				$parserOutput = ParserPool::parse($sBlogText, $titleObj, ParserOptions::newFromUser($wgUser));
 				/* replace unused HTML tags */
 				$sBlogText = preg_replace(self::$search, self::$replace, $parserOutput->getText());
 				/* skip HTML tags */
@@ -878,7 +877,7 @@ class BlogTemplateClass {
 				}
 			} else {
 				/* parse revision text */
-				$parserOutput = $localParser->parse($sBlogText, $titleObj, ParserOptions::newFromUser($wgUser));
+				$parserOutput = ParserPool::parse($sBlogText, $titleObj, ParserOptions::newFromUser($wgUser));
 				$sResult = $parserOutput->getText();
 			}
 		}

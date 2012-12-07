@@ -413,11 +413,10 @@ class WallHelper {
 			return $cachedText;
 		}
 
-		//local parser to fix the issue fb#17907
-		$parser = F::build('Parser', array());
 
 		$text = str_replace('*', '&asterix;', $text);
-		$text = $parser->parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
+		//local parser to fix the issue fb#17907
+		$text = ParserPool::parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
 		// BugId:31034 - I had to give ENT_COMPAT and UTF-8 explicitly.
 		// Prior PHP 5.4 the defaults are ENT_COMPAT and ISO-8859-1 (not UTF-8)
 		// and cause HTML entities in an actual UTF-8 string to be decoded incorrectly
