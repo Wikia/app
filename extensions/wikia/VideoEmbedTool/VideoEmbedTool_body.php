@@ -266,6 +266,7 @@ class VideoEmbedTool {
 		if($caption != '')		$tag .= "|".$caption;
 
 		$tag = "[[$tag]]";
+		$button_message = wfMessage('vet-return');
 
 		// Adding a video from article view page
 		$editingFromView = $wgRequest->getVal( 'gallery' );
@@ -303,7 +304,8 @@ class VideoEmbedTool {
 			$summary = wfMsg( 'vet-added-from-gallery' ); // lizbug - update this text to be from article view instead of gallery
 
 			$text = substr_replace( $text, $tag, $matches[0][$box][1], strlen( $placeholder_tag ) );
-
+			
+			$button_message = wfMessage('vet-placeholder-return');
 			$success = $article_obj->doEdit( $text, $summary);
 			if ( !$success ) {
 				return "something went wrong"; //lizbug - fix this
@@ -315,6 +317,7 @@ class VideoEmbedTool {
 			'tag' => $tag,
 			'message' => $message,
 			'code' => $embed_code,
+			'button_message' => $button_message,
 			));
 		return $tmpl->render('summary');
 	}

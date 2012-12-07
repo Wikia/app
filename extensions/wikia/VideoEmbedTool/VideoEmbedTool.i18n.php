@@ -42,6 +42,7 @@ $messages['en'] = array(
 	'vet-thiswiki2' => 'This wiki videos ($1 {{PLURAL:$1|result|results}})', // @todo FIXME: is template 'results_thiswiki' missing? Cannot find this message being used.
 	'vet-success' => 'Success',
 	'vet-return' => 'Return to editing',
+	'vet-placeholder-return' => 'Return to article',
 	'vet-back' => 'Back',
 	'vet-close' => 'Close',
 	'vet-warn1' => 'You need to specify query first!',

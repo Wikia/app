@@ -355,6 +355,10 @@ function VET_getFirstFree( gallery, box ) {
 }
 
 function VET_show( e, gallery, box, align, thumb, size, caption ) {
+	if (UserLogin.isForceLogIn()) {
+		return;
+	}
+
 	var errorDiv = $('#VideoEmbedError')
 	// Handle MiniEditor focus
 	// (BugId:18713)
@@ -926,8 +930,8 @@ function VET_insertFinalVideo(e, type) {
 									to_update = placeholders.filter('[data-id='+VET_box+']'),
 									// get thumbnail code from hidden div in success modal
 									html = $('#VideoEmbedCode').html();
-								
-								to_update.parent().replaceWith(html);
+
+								to_update.parent().parent().replaceWith(html);
 								
 								// update data id so we can match DOM placeholders to parsed wikitext placeholders
 								placeholders.each(function() {
