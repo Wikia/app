@@ -152,7 +152,7 @@ $messages['de'] = array(
 	'wikiahome-stats-communities' => 'Anzahl Communities',
 	'wikiahome-stats-totalpages' => 'Seiten gesamt',
 	'wikiahome-stats-mobile-visitors' => 'Von mobilen Geräten',
-	'wikiahome-stats-new-communities' => 'Communities heute',
+	'wikiahome-stats-new-communities' => 'Neue Wikis heute',
 
 	'wikia-home-page-preview' => 'Vorschau',
 	'wikia-home-page-visit' => 'Aufrufen',
