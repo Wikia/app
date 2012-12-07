@@ -95,7 +95,7 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 	public function filterData($data) {
 		$data = parent::filterData($data);
 
-		if (strpos($data['boardUrl'], 'http://') === false) {
+		if (!empty($data['boardUrl']) && strpos($data['boardUrl'], 'http://') === false) {
 			$data['boardUrl'] = 'http://' . $data['boardUrl'];
 		}
 
