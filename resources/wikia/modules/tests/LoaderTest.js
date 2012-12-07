@@ -45,4 +45,27 @@ describe("Loader Module", function () {
 			done();
 		});
 	});
+
+	async.it('style should be processed', function(done) {
+		document.body.innerHTML = '<div class=test></div>';
+
+		require(['loader'], function(loader) {
+			var div = document.getElementsByClassName('test')[0];
+
+			expect(div.style.width).toBe('');
+			loader.processStyle('.test{width:100px}');
+			expect(getComputedStyle(div).width).toBe('100px');
+
+			done();
+		});
+	});
+
+	async.it('scripts should be processed', function(done) {
+		require(['loader'], function(loader) {
+			loader.processScript('window.run = true');
+			expect(window.run).toBe(true);
+
+			done();
+		});
+	});
 });
