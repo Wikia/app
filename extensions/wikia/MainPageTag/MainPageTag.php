@@ -40,9 +40,8 @@ function wfMainPageTag_rcs( $input, $args, $parser ) {
 	if(!$wfMainPageTag_lcs_called) {
 		$wfMainPageTag_rcs_called = true;
 	}
-
 	$html = '<div class="main-page-tag-rcs'.(empty($wgOasisGrid) ? '' : ' grid-2').'"><div>';
-	$html .= F::app()->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
+	$html .= F::app()->renderView('Ad', 'MainPageRightColumn');
 
 	return $html;
 }

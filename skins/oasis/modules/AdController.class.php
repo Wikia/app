@@ -209,4 +209,9 @@ class AdController extends WikiaController {
 			$this->topAdsExtraClasses = '';
 		}
 	}
+
+	public function executeMainPageRightColumn() {
+		// this method only renders view
+	}
+
 }
