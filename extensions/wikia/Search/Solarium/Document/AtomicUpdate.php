@@ -9,6 +9,11 @@ class Solarium_Document_AtomicUpdate extends Solarium_Document_ReadWrite
     protected $_modifiers = array();
     
     /**
+     * This field needs to be explicitly set to observe the rules of atomic updates
+     */
+    protected $key;
+    
+    /**
      * Directive to set a value using atomic updates
      * @var string
      */
@@ -40,12 +45,22 @@ class Solarium_Document_AtomicUpdate extends Solarium_Document_ReadWrite
     }
     
     /**
+     * Sets the uniquely identifying key for use in atomic updating
+     * @param string $key
+     */
+    public function setKey($key, $value)
+    {
+    	$this->key = $key;
+    	return parent::addField($key, $value);
+    }
+    
+    /**
      * (non-PHPdoc)
      * @see Solarium_Document_ReadWrite::addField()
      */
     public function addField($key, $value, $boost = null, $modifier = self::MODIFIER_SET)
     {
-        return parent::__addField($key, $value, $boost)->setModifierForField($key, $modifier);
+        return parent::addField($key, $value, $boost)->setModifierForField($key, $modifier);
     }
     
     /**
@@ -82,5 +97,17 @@ class Solarium_Document_AtomicUpdate extends Solarium_Document_ReadWrite
     public function getModifierForField($key)
     {
         return isset($this->_modifiers[$key]) ? $this->_modifiers[$key] : null; 
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see Solarium_Document_ReadOnly::getFields()
+     */
+    public function getFields()
+    {
+    	if ($this->key == null || !isset($this->_fields[$this->key])) {
+    		throw new Exception('Solarium_Document_ReadOnly must have a unique-ID\'d key registered before it can be used to build update commands');
+    	}
+    	return parent::getFields();
     }
 }
