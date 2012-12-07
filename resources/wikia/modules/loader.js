@@ -59,7 +59,7 @@
 				// If onload is available, use it
 				if(element.onload === null) {
 					element.onload = success;
-					element.onerror = failure;
+					element.onerror = function(){failure()};
 				}else{
 					element.onreadystatechange = function () {
 						if (loadedCompleteRegExp.test(element.readyState)) {
@@ -305,9 +305,9 @@
 
 						}
 					},
-					failure = function(resource){
+					failure = function(res){
 						return function(override){
-							failed.push(override || resource);
+							failed.push(override || res);
 							onEnd();
 						}
 					},
@@ -361,11 +361,11 @@
 									break;
 								case loader.UNKNOWN:
 								default:
-									failure(resource)();
+									failure({type: type, resources: files})();
 									continue;
 							}
 
-						remaining += ~~func(files, complete, failure(resource), type);
+						remaining += ~~func(files, complete, failure({type: type, resources: files}), type);
 					} else {
 						dfd.reject({
 							error: loader.CORRUPT_FORMAT,
