@@ -282,7 +282,7 @@ class VideoEmbedTool {
 
 			// match [[File:Placeholder|video]]
 			preg_match_all( '/\[\[' . $ns_file . ':Placeholder[^\]]*\|video[^\]]*\]\]/s', $text, $matches, PREG_OFFSET_CAPTURE );
-lizbug($matches);
+
 			$placeholder_tag = $matches[0][$box][0];
 			$file = wfFindFile( $title );
 			$thumb = $file->transform( array('width'=>$width) );

@@ -922,12 +922,22 @@ function VET_insertFinalVideo(e, type) {
 									VET_insertTag( VET_getTextarea(), $G('VideoEmbedTag').value, VET_inGalleryPosition );
 								}
 							} else if( '-2' == VET_gallery) {
-								var placeholders = $('#WikiaArticle').find('.wikiaVideoPlaceholder'),
-									to_update = placeholders.find('a').filter('[data-id='+VET_box+']'),
+								var placeholders = $('#WikiaArticle').find('.wikiaVideoPlaceholder a'),
+									to_update = placeholders.filter('[data-id='+VET_box+']'),
 									// get thumbnail code from hidden div in success modal
 									html = $('#VideoEmbedCode').html();
 								
 								to_update.parent().replaceWith(html);
+								
+								// update data id so we can match DOM placeholders to parsed wikitext placeholders
+								placeholders.each(function() {
+									var $this = $(this),
+										id = $this.attr('data-id');
+									
+									if(id > VET_box) {
+										$this.attr('data-id', id-1);
+									}
+								});
 								
 								YAHOO.util.Connect.asyncRequest('POST', wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 							} else {

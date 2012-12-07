@@ -268,10 +268,14 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$out = '';
 
 	$wrapperAttribs = array(
-		'id' => $isvideo ? "WikiaVideoPlaceholder{$wgWikiaVideoPlaceholderId}" : "WikiaImagePlaceholder{$wgWikiaImagePlaceholderId}",
 		'class' => "gallerybox wikiaPlaceholder{$additionalClass}",
 		'style' => 'vertical-align: bottom', // TODO: move to static CSS file
 	);
+	
+	// ImagePlaceholders still use id attribute, videos use data-id attribute. Images should be updated to match videos at some point
+	if(!$isvideo) {
+		$wrapperAttribs['id'] = "WikiaImagePlaceholder{$wgWikiaImagePlaceholderId}";	
+	}
 
 	if (isset($refid)) {
 		$wrapperAttribs['refid'] = $refid;
