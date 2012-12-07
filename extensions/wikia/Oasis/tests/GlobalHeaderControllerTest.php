@@ -80,7 +80,7 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 		$mockResponse
 			->expects	( $this->at( 8 ) )
 			->method	( 'setVal' )
-			->with		( 'displayHeaders', true )
+			->with		( 'displayHeader', true )
 		;
 		
 		$resp = new ReflectionProperty( 'GlobalHeaderController', 'response' );
@@ -177,7 +177,7 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 		
 		$wg = new ReflectionProperty( 'GlobalHeaderController', 'wg' );
 		$wg->setAccessible( true );
-		$wg->setValue( $controller, (object) array( 'CityId' => 380, 'Lang' => $mockLang, 'LangToCentralMap' => array( 'fr' => "http://wikia.fr" ) ) );
+		$wg->setValue( $controller, (object) array( 'CityId' => 380, 'Lang' => $mockLang, 'LangToCentralMap' => array( 'fr' => "http://wikia.fr" ), 'HideNavigationHeaders' => false ) );
 		
 		$this->mockGlobalVariable( 'wgLang', $mockLang );
 		
@@ -261,7 +261,7 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 		$mockResponse
 			->expects	( $this->at( 8 ) )
 			->method	( 'setVal' )
-			->with		( 'displayHeaders', false )
+			->with		( 'displayHeader', false )
 		;
 		
 		$resp = new ReflectionProperty( 'GlobalHeaderController', 'response' );
