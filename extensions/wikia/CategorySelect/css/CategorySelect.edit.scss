@@ -31,6 +31,7 @@ $categoryselect-color-placeholder: darken( $color-epl-input, 2% );
 		height: 100px;
 		margin: 10px 0 0 0;
 		overflow: auto;
+		position: relative;
 	}
 
 	.category,
@@ -67,11 +68,6 @@ $categoryselect-color-placeholder: darken( $color-epl-input, 2% );
 		cursor: move;
 		display: inline-block;
 		width: 100%;
-	}
-
-	.placeholder {
-		height: 25px;
-		background-color: $categoryselect-color-placeholder;
 	}
 
 	.tool {

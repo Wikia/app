@@ -135,11 +135,6 @@ var CategorySelect = function( element, options ) {
 			update: function( event, ui ) {
 				self.dirty = true;
 				self.updateCategories();
-
-				self.trigger( 'sort', {
-					element: ui.item
-				});
-
 				self.trigger( 'update' );
 			}
 		}));
@@ -603,12 +598,14 @@ $.extend( CategorySelect, {
 			removeCategory: '.removeCategory'
 		},
 		sortable: {
+			appendTo: 'parent',
 			axis: 'y',
 			containment: 'parent',
+			forcePlaceholderSize: true,
 			handle: '.name',
 			items: '.category',
 			placeholder: 'placeholder',
-			tolerance: 'pointer'
+			scroll: true
 		}
 	}
 });

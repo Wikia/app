@@ -2,6 +2,7 @@
 @import "skins/oasis/css/mixins/transition";
 
 $categoryselect-color-category: mix( $color-text, $color-page, 5% );
+$categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% );
 
 // These styles are for view pages only
 .CategorySelect.articlePage {
@@ -31,15 +32,18 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 	}
 
 	.addCategory,
-	.category {
+	.category,
+	.placeholder {
 		border: 1px solid transparent;
 		display: block;
 		float: left;
+		line-height: 25px;
 		margin: 0 5px 5px 0;
-		padding: 5px;
+		padding: 0 5px;
 	}
 
 	.categories {
+		float: left;
 		margin: 0;
 		padding: 0;
 	}
@@ -63,6 +67,10 @@ $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 		}
 
 		&.new {
+			.name {
+				cursor: move;
+			}
+
 			.toolbar {
 				display: inline-block;
 			}

@@ -30,8 +30,9 @@
 					placement: 'right',
 					sortable: {
 						axis: false,
-						cursor: 'move',
-						tolerance: 'intersect'
+						forcePlaceholderSize: true,
+						items: '.new',
+						revert: 200
 					}
 
 				}).on( 'update.categorySelect', function( event ) {
