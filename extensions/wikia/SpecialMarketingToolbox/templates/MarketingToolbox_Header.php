@@ -9,14 +9,13 @@
 			<p><strong><?=$wg->lang->date($date);?></strong></p>
 		<? endif?>
 		<? if (isset($regionName) && isset($sectionName) && isset($verticalName)): ?>
-			<p class="alternative"><strong><?=$regionName?></strong> / <strong><?=$sectionName ?></strong> / <strong><?=$verticalName?></strong></p>
+			<p class="alternative"><?=$regionName?> / <?=$sectionName ?> / <?=$verticalName?></p>
 		<? endif ?>
-		</p>
 	</div>
 
 	<aside class="right">
 		<? if (isset($lastEditTime)): ?>
-		<p><strong><?= $wf->msg('marketing-toolbox-header-right-last-saved'); ?></strong> <?=$wg->lang->timeanddate($lastEditTime);?></p>
+		<p><strong><?= $wf->msg('marketing-toolbox-header-right-last-saved'); ?></strong> <?=$wg->lang->timeanddate($lastEditTime, true);?></p>
 		<? endif ?>
 
 		<? if (isset($lastEditor)): ?>

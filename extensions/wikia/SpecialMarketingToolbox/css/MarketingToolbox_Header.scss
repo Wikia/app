@@ -28,6 +28,10 @@
 		padding-right: 20px;
 		text-align: right;
 
+		p:first-child {
+			margin-top: 12px;
+		}
+
 		p {
 			margin: 0.2em 0 0;
 		}
@@ -41,5 +45,5 @@
 .MarketingToolboxHeaderGradient {
 	height: 5px;
 	margin: 10px 0;
-	@include linear-gradient(null, top, $color-page, 0, mix($color-page, $color-page-opposite, 80%), 100%);
+	@include linear-gradient(null, top, $color-page, 0, mix($color-page, $color-page-opposite, 94%), 100%);
 }
