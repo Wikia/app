@@ -84,17 +84,18 @@
 				<? if($displayAdminDashboardChromedArticle) { ?>
 					<?= (string)$app->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array('headerText' => $wg->Title->getText() )) ?>
 				<? } ?>
+				<div class="home-top-right-ads">
 				<?php
-					global $wfMainPageTag_rcs_called, $wfMainPageTag_lcs_called;
-
-					if(empty($wfMainPageTag_rcs_called) && empty($wfMainPageTag_lcs_called)) {
-						?>
-							<div class="home-top-right-ads">
-								<?= $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD')); ?>
-							</div>
-						<?php
+					if (in_array('leaderboard', $wg->ABTests)) {
+						echo $app->renderView('Ad', 'Index', array('slotname' => 'TEST_HOME_TOP_RIGHT_BOXAD'));
+					} else {
+						echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
 					}
+
+					echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BUTTON'));
 				?>
+				</div>
+
 
 				<?php
 				// for InfoBox-Testing

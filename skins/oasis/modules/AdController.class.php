@@ -209,4 +209,5 @@ class AdController extends WikiaController {
 			$this->topAdsExtraClasses = '';
 		}
 	}
+
 }
