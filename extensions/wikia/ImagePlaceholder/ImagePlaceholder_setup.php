@@ -237,9 +237,8 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	// TODO: use JSSnippets to load dependencies
 	if (empty($wgRTEParserEnabled)) {
 		if( ($wgRequest->getVal('diff',0) == 0) && ($wgRequest->getVal('oldid',0) == 0) ) {
-			if( $isvideo ) {
-				$onclick = '$.loadYUI( function() {$.getScript(wgExtensionsPath + "/wikia/VideoEmbedTool/js/VET.js", function() { VET_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaVideoPlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', "'. htmlspecialchars($caption) .'" ); $.getResources([ $.getSassCommonURL("/extensions/wikia/VideoEmbedTool/css/VET.scss" ), window.wgExtensionsPath + "/wikia/WikiaStyleGuide/js/Dropdown.js", $.getSassCommonURL("/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss" ) ]); } ); } ); return false;';
-			} else {
+			if( !$isvideo ) {
+				// image placeholder still uses inline js.  We should clean this up at some point
 				$onclick = '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js\', function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); mw.loader.load( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css\', "text/css" ); } ) } ); return false;';
 			}
 		} else {
@@ -259,6 +258,10 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		} else {
 			$margin = 'margin: 0.5em 1.4em 1.2em 0;';
 		}
+	}
+	
+	if( $isvideo ) {
+		$additionalClass .= ' wikiaVideoPlaceholder';
 	}
 
 	// render HTML (RT #21087)
@@ -280,14 +283,26 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		'style' => "height: {$height}px; width: {$width}px; {$margin}",
 	));
 
-	// "Add video" green button
-	$out .= Xml::openElement('a', array(
+	$linkAttrs = array(
 		'id' => "WikiaImagePlaceholderInner{$wgWikiaImagePlaceholderId}",
 		'class' => 'wikia-button',
 		'style' => "top: {$tmarg}px;position:relative;",
 		'href' => '#',
-		'onclick' => !empty($onclick) ? $onclick : '',
-	));
+	);
+	
+	if( $isvideo ) { // video placeholder
+		$linkAttrs = array_merge($linkAttrs, array(
+			'data-id' => $wgWikiaVideoPlaceholderId,
+			'data-align' => $isalign,
+			'data-thumb' => $isthumb,
+			'data-caption' => htmlspecialchars($caption),		
+		));
+	} else { // image placeholder
+		$linkAttrs = array_merge($linkAttrs, array(
+			'onclick' => !empty($onclick) ? $onclick : '',
+		));
+	}
+	$out .= Xml::openElement('a', $linkAttrs);
 
 	$out .= $isvideo ? wfMsg('imgplc-add-video') : wfMsg('imgplc-add-image');
 	$out .= Xml::closeElement('a');
@@ -322,6 +337,12 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 				'isThumb' => $isthumb,
 			)
 		));
+	} else if($isvideo) {
+		$out .= F::build('JSSnippets')->addToStack(
+			array( '/extensions/wikia/VideoEmbedTool/js/VideoPlaceholder.js' ),
+			array(),
+			'VideoPlaceholder.init'
+		);
 	}
 
 	wfProfileOut(__METHOD__);

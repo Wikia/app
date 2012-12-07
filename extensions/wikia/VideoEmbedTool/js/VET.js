@@ -2,36 +2,6 @@
  * Author: Inez Korczynski, Bartek Lapinski
  */
 
-/**
- * Finds the event in the window object, the caller's arguments, or
- * in the arguments of another method in the callstack.  This is
- * executed automatically for events registered through the event
- * manager, so the implementer should not normally need to execute
- * this function at all.
- * @method getEvent
- * @param {Event} e the event parameter from the handler
- * @param {HTMLElement} boundEl the element the listener is attached to
- * @return {Event} the event
- * @static
- *
- * @deprecated - used by WMU and VET only
- */
-$.getEvent = function(e, boundEl) {
-	var ev = e || window.event;
-
-	if (!ev) {
-		var c = this.getEvent.caller;
-		while (c) {
-			ev = c.arguments[0];
-			if (ev && Event == ev.constructor) {
-				break;
-			}
-			c = c.caller;
-		}
-	}
-
-	return ev;
-};
 
 /*
  * Variables
@@ -384,23 +354,6 @@ function VET_getFirstFree( gallery, box ) {
 	return box;
 }
 
-
-/*$.loadYUI( function() {
-	$.getScript(wgExtensionsPath + "/wikia/VideoEmbedTool/js/VET.js", function() { 
-		VET_show( $.getEvent(), -2, 0,2,0 ,300, "" ); 
-		mw.loader.load( $.getSassCommonURL("/extensions/wikia/VideoEmbedTool/css/VET.scss" ) );
-	 }); 
-}); 
-
-$.loadYUI( function() {
-	$.getScript(wgExtensionsPath + "/wikia/VideoEmbedTool/js/VET.js", function() { 
-		VET_show( $.getEvent(), -2, 0,2,0 ,300, "" ); 
-		mw.loader.load( $.getSassCommonURL("/extensions/wikia/VideoEmbedTool/css/VET.scss" ) ); 
-	} ); 
-} );
-*/
-
-// some parameters are
 function VET_show( e, gallery, box, align, thumb, size, caption ) {
 	var errorDiv = $('#VideoEmbedError')
 	// Handle MiniEditor focus
@@ -442,7 +395,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		}
 
 		if(typeof size != "undefined") {
-			//VET_size = size; lizbug - let's ignore pre-given size for now
+			VET_size = size;
 		}
 
 		if(typeof caption != "undefined") {
@@ -741,31 +694,6 @@ function VET_insertTag( target, tag, position ) {
 	}
 }
 
-// Handle video placeholders already saved into articles
-/*if (typeof VET_box_filled == 'undefined') {
-	VET_box_filled = [];
-}
-function VET_insertPlaceholder( box ) {
-	VET_box_filled.push(box); // add VET_box_filled
-	var to_update = $G( 'WikiaVideoPlaceholder' + box );
-	to_update.innerHTML = $G( 'ImageUploadCode' ).innerHTML;
-	//the class would need to be different if we had here the full-size...
-	to_update.className = '';
-	YAHOO.util.Connect.asyncRequest('POST', wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
-}
-function VET_box_in_article() {
-	var box = VET_box;
-	for (var i=0;i<VET_box_filled.length;i++) {
-		if (VET_box>VET_box_filled[i])
-			box--;
-	}
-	return box;
-}*/
-
-
-
-
-
 function VET_displayDetails(responseText, dataFromEditMode) {
 	var errorDiv = $('#VideoEmbedError');
 
@@ -838,11 +766,12 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 		$G('VideoEmbedCaptionRow').style.display = 'none';
 	}
 
-	if ( ( '-1' < VET_gallery ) || VET_inGalleryPosition ) {
-		//$G( 'VideoEmbedWidthRow' ).style.display = 'none';
-		//$G( 'VideoEmbedLayoutRow' ).style.display = 'none';
-		//$G( 'VideoEmbedSizeRow' ).style.display = 'none';
-	}
+	// lizbug - remove this because we want to show layout controlls
+	/*if ( ( '-1' < VET_gallery ) || VET_inGalleryPosition ) {
+		$G( 'VideoEmbedWidthRow' ).style.display = 'none';
+		$G( 'VideoEmbedLayoutRow' ).style.display = 'none';
+		$G( 'VideoEmbedSizeRow' ).style.display = 'none';
+	}*/
 
 	if ( '-2' == VET_gallery) {
 		$G( 'VET_LayoutGalleryBox' ).style.display = 'none';
@@ -943,6 +872,7 @@ function VET_insertFinalVideo(e, type) {
 		params.push('caption=' + encodeURIComponent( $G('VideoEmbedCaption').value ) );
 	}
 
+	// lizbug - remove this, we can use code above 
 	/*if( '-2' == VET_gallery ) { // placeholder magic
 		if( 0 < VET_align ) {
 			( '1' == VET_align ) ? params.push( 'layout=left' ) : params.push( 'layout=right' ) ;
