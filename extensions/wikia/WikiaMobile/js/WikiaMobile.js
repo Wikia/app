@@ -1,14 +1,3 @@
-//image Lazyloading
-//needs to run ASAP (before onload actually happens)
-//so it's processed separately from the rest
-//to avoid delays
-
-window.addEventListener('load', function(){
-	require(['lazyload'], function(lazy){
-		lazy(document.getElementsByClassName('noSect'));
-	})
-});
-
 //init
 window.addEventListener('DOMContentLoaded', function () {
 	'use strict';
@@ -29,6 +18,9 @@ window.addEventListener('DOMContentLoaded', function () {
 				categoryLinks = d.getElementById('catlinks'),
 				wordmark,
 				processedSections = {};
+
+			//image Lazyloading	(load images outside any section)
+			lazyload(d.getElementsByClassName('noSect'));
 
 			while (i--) {
 				addChevs[i].insertAdjacentHTML('beforeend', '<span class=chev></span>');
