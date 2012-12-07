@@ -57,8 +57,12 @@ class ForumHooksHelper {
 	}
 
 	public function onWallNewMessage($title, &$response) {
-		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD ) {
+		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD) {
 			$response->setVal( 'wall_message', wfMsg( 'forum-discussion-placeholder-message', $title->getText() ) );
+		}
+		
+		if ( $title->getNamespace() === NS_WIKIA_FORUM_TOPIC_BOARD ) {
+			$response->setVal( 'wall_message', wfMsg( 'forum-discussion-placeholder-message-short' ) );
 		}
 		return true;
 	}
