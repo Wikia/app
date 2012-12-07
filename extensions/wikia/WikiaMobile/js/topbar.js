@@ -253,21 +253,21 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 
     function initAutocomplete(){
         if(!searchInit){
-            Wikia.getMultiTypePackage({
-                scripts: 'wikiamobile_autocomplete_js',
-                ttl: 604800,
-                callback: function(res){
-                    Wikia.processScript(res.scripts[0]);
-                    require(['autocomplete'], function(sug){
-                        sug({
-                            url: wgServer + '/api.php' + '?action=opensearch',
-                            input: searchInput,
-                            list: searchSug,
-                            clear: d.getElementById('wkClear')
-                        });
-                    });
-                }
-            });
+            loader({
+				type: loader.AM_GROUPS,
+				resources: 'wikiamobile_autocomplete_js'
+            }).done(
+				function(){
+					require(['autocomplete'], function(sug){
+						sug({
+							url: wgServer + '/api.php?action=opensearch',
+							input: searchInput,
+							list: searchSug,
+							clear: d.getElementById('wkClear')
+						});
+					});
+				}
+			);
             searchInit = true;
         }
     }
