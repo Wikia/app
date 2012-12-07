@@ -1,6 +1,6 @@
 <?
 
-class WikiaSearchArticleMatchTest extends WikiaBaseTest {
+class MarketingToolboxModelTest extends WikiaBaseTest {
 
 	/**
 	 * (non-PHPdoc)
