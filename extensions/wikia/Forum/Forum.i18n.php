@@ -87,6 +87,7 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a couple of 
 	'forum-discussion-highlight' => 'Highlight this discussion',
 	'forum-discussion-placeholder-title' => 'What do you want to talk about?',
 	'forum-discussion-placeholder-message' => 'Post a new message to the $1 board',
+	'forum-discussion-placeholder-message-short' => 'Post a new message',
 
 	/* Notification */
 	'forum-notification-user1-reply-to-your' => '$1 replied to your thread on the $3 board',
@@ -328,4 +329,7 @@ $messages['qqq'] = array(
 	'forum-related-discussion-see-more' => 'See More link to topic page',
 	
 	'forum-board-select-board' => 'A form label instructing someone to select a board from a drop down.',
+	
+	
+	'forum-discussion-placeholder-message-short' => 'Display on topic page inside new discussion body testarea',
 );
