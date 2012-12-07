@@ -77,6 +77,11 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 			->method	( 'setVal' )
 			->with		( 'altMessage', '' )
 		;
+		$mockResponse
+			->expects	( $this->at( 8 ) )
+			->method	( 'setVal' )
+			->with		( 'displayHeaders', true )
+		;
 		
 		$resp = new ReflectionProperty( 'GlobalHeaderController', 'response' );
 		$resp->setAccessible( true );
@@ -84,7 +89,7 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 		
 		$wg = new ReflectionProperty( 'GlobalHeaderController', 'wg' );
 		$wg->setAccessible( true );
-		$wg->setValue( $controller, (object) array( 'CityId' => 380, 'Lang' => $mockLang ) );
+		$wg->setValue( $controller, (object) array( 'CityId' => 380, 'Lang' => $mockLang, 'HideNavigationHeaders' => false ) );
 		
 		$this->mockGlobalVariable( 'wgLang', $mockLang );
 		
@@ -253,6 +258,11 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 			->method	( 'setVal' )
 			->with		( 'altMessage', '-alt' )
 		;
+		$mockResponse
+			->expects	( $this->at( 8 ) )
+			->method	( 'setVal' )
+			->with		( 'displayHeaders', false )
+		;
 		
 		$resp = new ReflectionProperty( 'GlobalHeaderController', 'response' );
 		$resp->setAccessible( true );
@@ -260,7 +270,7 @@ class GlobalHeaderControllerTest extends WikiaBaseTest
 		
 		$wg = new ReflectionProperty( 'GlobalHeaderController', 'wg' );
 		$wg->setAccessible( true );
-		$wg->setValue( $controller, (object) array( 'CityId' => 381, 'Lang' => $mockLang ) );
+		$wg->setValue( $controller, (object) array( 'CityId' => 381, 'Lang' => $mockLang, 'HideNavigationHeaders' => true ) );
 		
 		$this->mockGlobalVariable( 'wgLang', $mockLang );
 		
