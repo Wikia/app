@@ -325,14 +325,14 @@ $config['gameguides_js'] = array(
 	'assets' => array(
 		'#group_wikiamobile_js_head',
 
-		// deferred.js - jQuery-free implementation (BugId:34943)
-		'//resources/wikia/libraries/deferred/deferred.js',
-		'//resources/wikia/libraries/deferred/deferred.api.js',
-
 		//libraries/frameworks
 		'//resources/wikia/libraries/Ponto/ponto.js',
 		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
 		'//resources/wikia/libraries/modil/modil.js',
+
+		// deferred.js - jQuery-free implementation (BugId:34943)
+		'//resources/wikia/libraries/deferred/deferred.js',
+		'//resources/wikia/libraries/deferred/deferred.api.js',
 
 		//core modules
 		'//resources/wikia/modules/window.js',
@@ -425,14 +425,14 @@ $config['wikiamobile_js_body_minimal'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		// deferred.js - jQuery-free implementation (BugId:34943)
-		'//resources/wikia/libraries/deferred/deferred.js',
-		'//resources/wikia/libraries/deferred/deferred.api.js',
-
 		//libraries/frameworks
 		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
 		'//extensions/wikia/WikiaMobile/js/Wikia.getcss.js',
 		'//resources/wikia/libraries/modil/modil.js',
+
+		// deferred.js - jQuery-free implementation (BugId:34943)
+		'//resources/wikia/libraries/deferred/deferred.js',
+		'//resources/wikia/libraries/deferred/deferred.api.js',
 
 		//core modules
 		'//resources/wikia/modules/querystring.js',
