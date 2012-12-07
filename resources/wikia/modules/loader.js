@@ -11,9 +11,6 @@
 			doc = w.document,
 			head = doc.head || doc.getElementsByTagName('head')[0],
 			loadedCompleteRegExp = /loaded|complete/,
-			callbacks = {},
-			callbacksNb = 0,
-			timer,
 			style = 'stylesheet',
 			styleType = 'text/css',
 			multiAllowedOptions = ['templates', 'scripts', 'styles', 'messages', 'mustache'],
@@ -24,13 +21,14 @@
 					//most definatelly you already have proper url to asset
 					return path;
 				} else {
-					//we might convert links to assets to go through AssetManager
-					//so we can minify them!! YAY!
+					//we might convert links to go through AssetManager
+					//so we can minify them all!! YAY!
 					path = path.replace(wgCdnRootUrl, '').replace(/__cb\d*/, '');
 
 					if (type == 'groups' && path instanceof Array) {
 						path = path.join(',');
 					}
+
 					if (type == 'sass') {
 						params = params || w.wgSassParams;
 					}
@@ -42,279 +40,213 @@
 						replace('%4$d', wgStyleVersion);
 				}
 			},
-			getCSS = function (url, complete, failure) {
-				var link = doc.createElement('link');
-				link.rel   = style;
-				link.type  = styleType;
-				link.href  = url;
 
-				// onreadystatechange
-				if (link.readyState) {
-					link.onreadystatechange = function () {
-						if (loadedCompleteRegExp.test(link.readyState)) {
-							complete();
-							link.onreadystatechange = null;
-						}
-					};
-					// If onload is available, use it
-				} else if (link.onload === null) {
-					link.onload = complete;
-					link.onerror = failure;
+			get = function(url, success, failure, type){
+				var element;
 
-					// In any other browser, we poll
-				} else {
-					callbacks[link.href] = complete;
-
-					if (!callbacksNb++) {
-						// poll(cssPollFunction);
-
-						timer = setInterval(function () {
-
-							var callback,
-								stylesheet,
-								stylesheets = doc.styleSheets,
-								href,
-								i = stylesheets.length;
-
-							while (i--) {
-								stylesheet = stylesheets[i];
-								if ((href = stylesheet.href) && (callback = callbacks[href])) {
-									try {
-										// We store so that minifiers don't remove the code
-										callback.r = stylesheet.cssRules;
-										// Webkit:
-										// Webkit browsers don't create the stylesheet object
-										// before the link has been loaded.
-										// When requesting rules for crossDomain links
-										// they simply return nothing (no exception thrown)
-										// Gecko:
-										// NS_ERROR_DOM_INVALID_ACCESS_ERR thrown if the stylesheet is not loaded
-										// If the stylesheet is loaded:
-										//  * no error thrown for same-domain
-										//  * NS_ERROR_DOM_SECURITY_ERR thrown for cross-domain
-										throw 'SECURITY';
-									} catch(e) {
-										// Gecko: catch NS_ERROR_DOM_SECURITY_ERR
-										// Webkit: catch SECURITY
-										if (/SECURITY/.test(e) || /SECURITY/i.test(e.name)) {
-											// setTimeout(callback, 0);
-											failure();
-
-											delete callbacks[href];
-
-											if (!--callbacksNb) {
-												timer = clearInterval(timer);
-											}
-										}
-									}
-								}
-							}
-						}, 13);
-					}
+				if(type == loader.CSS || type == loader.SCSS){
+					element = doc.createElement('link');
+					element.rel   = style;
+					element.type  = styleType;
+					element.href  = url;
+				}else{
+					element = doc.createElement('script');
+					element.src = url;
 				}
-
-			head.appendChild(link);
-		},
-
-		getScript = function( resource, success, failure ){
-			var scriptElement = doc.createElement('script');
-
-
-			if (scriptElement.readyState) {
-				scriptElement.onreadystatechange = function () {
-					if (loadedCompleteRegExp.test(scriptElement.readyState)) {
-						success();
-						scriptElement.onreadystatechange = null;
-					}
-				};
 
 				// If onload is available, use it
-			}else {
-				scriptElement.onload = success;
-			}
+				if(element.onload === null) {
+					element.onload = success;
+					element.onerror = failure;
+				}else{
+					element.onreadystatechange = function () {
+						if (loadedCompleteRegExp.test(element.readyState)) {
+							success();
+							element.onreadystatechange = null;
+						}
+					};
+				}
 
-			scriptElement.onerror = failure;
-			scriptElement.src = resource;
-			head.appendChild( scriptElement );
-		},
+				head.appendChild(element);
+			},
 
-		librariesMap = {
-			jqueryUI: 'wikia.jquery.ui',
-			yui: 'wikia.yui',
-			mustache: 'jquery.mustache',
-			jqueryAutocomplete: 'jquery.autocomplete',
-			jqueryAIM: 'wikia.amd.aim',
-			twitter: {
-				file: '//platform.twitter.com/widgets.js',
-				check: function(){ return typeof (w.twttr && w.twttr.widgets) }
+			librariesMap = {
+				jqueryUI: 'wikia.jquery.ui',
+				yui: 'wikia.yui',
+				mustache: 'jquery.mustache',
+				jqueryAutocomplete: 'jquery.autocomplete',
+				jqueryAIM: 'wikia.amd.aim',
+				twitter: {
+					file: '//platform.twitter.com/widgets.js',
+					check: function(){ return typeof (w.twttr && w.twttr.widgets) }
+				},
+				googleplus: {
+					file: '//apis.google.com/js/plusone.js',
+					check: function(){ return typeof (w.gapi && w.gapi.plusone) }
+				},
+				facebook: {
+					file: w.fbScript || '//connect.facebook.net/en_US/all.js',
+					check: function(){ return typeof w.FB }
+				},
+				googlemaps: {
+					file: 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
+					check: function(){ return typeof (w.google && w.google.maps) },
+					addition: function(callbacks){
+						w.onGoogleMapsLoaded = (function(callback) {
+							return function(){
+								delete w.onGoogleMapsLoaded;
+
+								callback();
+							}
+						})(callbacks.success);
+
+						callbacks.success = null;
+						return callbacks;
+					}
+				}
 			},
-			googleplus: {
-				file: '//apis.google.com/js/plusone.js',
-				check: function(){ return typeof (w.gapi && w.gapi.plusone) }
-			},
-			facebook: {
-				file: w.fbScript || '//connect.facebook.net/en_US/all.js',
-				check: function(){ return typeof w.FB }
-			},
-			googlemaps: {
-				file: 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
-				check: function(){ return typeof (w.google && w.google.maps) },
-				addition: function(callbacks){
-					w.onGoogleMapsLoaded = (function(callback) {
+
+			/**
+			 * Loads library file if it's not already loaded and fires callback
+			 */
+			getLibrary =  function(libs, callback, failure) {
+				if(!(libs instanceof Array)) {
+					libs = [libs];
+				}
+
+				var use = [],
+					useNames = [],
+					internal = [],
+					lib,
+					l = libs.length,
+					load = 0,
+					fail = function(f, failed){
 						return function(){
-							delete w.onGoogleMapsLoaded;
+							f(failed);
+						}
+					};
 
+				//find libraries to be loaded
+				//from libraryMap
+				while(l--) {
+					var name = libs[l],
+						n = librariesMap[name];
+
+					if(!n) throw "Library not known " + name;
+
+					if(typeof n == 'string'){
+						use.push(n);
+						useNames.push(name)
+					}else{
+						n.name = name;
+						internal.push(n);
+					}
+				}
+
+				if(mw && use.length) {
+					mw.loader.use(use).done(callback).fail(fail(failure, {type: loader.LIBRARY, resources: useNames}));
+					load += use.length;
+				}
+
+				if(internal.length){
+					l = internal.length;
+					load += l;
+
+					while(l--) {
+						lib = internal[l];
+
+						if(lib.check() == 'undefined') {
+							if(lib.addition) {
+								var callbacks = lib.addition({success: callback, failure: failure});
+								get(lib.file, callbacks.success, fail(callbacks.failure, {type: loader.LIBRARY, resources: [lib.name]}));
+							}else{
+								get(lib.file, callback, fail(failure, {type: loader.LIBRARY, resources: [lib.name]}));
+							}
+						} else {
 							callback();
 						}
-					})(callbacks.success);
-
-					callbacks.success = null;
-					return callbacks;
-				}
-			}
-		},
-
-		/**
-		 * Loads library file if it's not already loaded and fires callback
-		 */
-		getLibrary =  function(libs, callback, failure) {
-			if(!(libs instanceof Array)) {
-				libs = [libs];
-			}
-
-			var use = [],
-				useNames = [],
-				internal = [],
-				lib,
-				l = libs.length,
-				load = 0,
-				fail = function(f, failed){
-					return function(){
-						f(failed);
 					}
-				};
+				}
 
-			//find libraries to be loaded
-			//from libraryMap
-			while(l--) {
-				var name = libs[l],
-					n = librariesMap[name];
+				return --load;
+			},
 
-				if(!n) throw "Library not known " + name;
+			/**
+			 *	request - json of key value pairs
+			 *  keys:
+			 *		templates - an array of objects with the following fields: controllerName, methodName and an optional params (parameters for the controller method)
+			 *		styles - comma-separated list of SASS files
+			 *		scripts - comma-separated list of AssetsManager groups
+			 *		messages - comma-separated list of JSMessages packages (messages are registered automagically)
+			 * 		mustache - comma-separated list of paths to Mustache-powered templates
+			 *		ttl - cache period for both Varnish and Browser (in seconds), is overridden by varnishTTL and BrowserTTL
+			 *		varnishTTL - cache period for varnish and browser (in seconds)
+			 *		browserTTL - cache period for browser (in seconds)
+			 *		params - an object with all the additional parameters for the request (e.g. useskin, forceprofile, etc.)
+			 *		callback - function to be called with fetched JSON object
+			 *
+			 *  Returns object with all requested resources
+			 *
+			 *  Example: Wikia.getMultiTypePackage({
+			 *		messages: 'EditPageLayout',
+			 *		scripts: 'oasis_jquery,yui',
+			 *		styles: 'path/to/style/file'
+			 *		mustache: 'extensions/wikia/MyExy/templates/index.mustache',
+			 *		templates: [{
+			 *			controllerName: 'MyController',
+			 *			methodName: 'getPage',
+			 *			params: {
+			 *				page: 1
+			 *			}
+			 *		}],
+			 *		params: {
+			 *			useskin: 'skinname'
+			 *		}
+			 *	});
+			 */
+			getMultiTypePackage = function(options, complete, failure){
+				var templates = options.templates,
+					send = false;
 
-				if(typeof n == 'string'){
-					use.push(n);
-					useNames.push(name)
+				if(typeof templates != 'undefined'){
+					// JSON encode templates entry
+					options.templates = (typeof templates === 'object') ? JSON.stringify(templates) : templates;
+				}
+
+				for(var prop in options) {
+					if(options.hasOwnProperty(prop) && ~multiAllowedOptions.indexOf(prop)) {
+						send = true;
+						break;
+					}
+				}
+
+				if(send){
+					if(typeof options.params == 'object'){
+						options = $.extend(options, options.params);
+						delete options.params;
+					}
+
+					// add a cache buster
+					options.cb = wgStyleVersion;
+
+					nirvana.getJson(
+						'AssetsManager',
+						'getMultiTypePackage',
+						options
+					).done(
+						function(resources, event) {
+							// "register" JS messages
+							if (resources.messages) {
+								w.wgMessages = $.extend(wgMessages, resources.messages);
+							}
+
+							complete(event, resources);
+						}
+					).fail(failure);
 				}else{
-					n.name = name;
-					internal.push(n);
+					failure()
 				}
-			}
-
-			if(mw && use.length) {
-				mw.loader.use(use).done(callback).fail(fail(failure, {type: loader.LIBRARY, resources: useNames}));
-				load += use.length;
-			}
-
-			if(internal.length){
-				l = internal.length;
-				load += l;
-
-				while(l--) {
-					lib = internal[l];
-
-					if(lib.check() == 'undefined') {
-						if(lib.addition) {
-							var callbacks = lib.addition({success: callback, failure: failure});
-							getScript(lib.file, callbacks.success, fail(callbacks.failure, {type: loader.LIBRARY, resources: [lib.name]}));
-						}else{
-							getScript(lib.file, callback, fail(failure, {type: loader.LIBRARY, resources: [lib.name]}));
-						}
-					} else {
-						callback();
-					}
-				}
-			}
-
-			return --load;
-		},
-
-		/**
-		 *	request - json of key value pairs
-		 *  keys:
-		 *		templates - an array of objects with the following fields: controllerName, methodName and an optional params (parameters for the controller method)
-		 *		styles - comma-separated list of SASS files
-		 *		scripts - comma-separated list of AssetsManager groups
-		 *		messages - comma-separated list of JSMessages packages (messages are registered automagically)
-		 * 		mustache - comma-separated list of paths to Mustache-powered templates
-		 *		ttl - cache period for both Varnish and Browser (in seconds), is overridden by varnishTTL and BrowserTTL
-		 *		varnishTTL - cache period for varnish and browser (in seconds)
-		 *		browserTTL - cache period for browser (in seconds)
-		 *		params - an object with all the additional parameters for the request (e.g. useskin, forceprofile, etc.)
-		 *		callback - function to be called with fetched JSON object
-		 *
-		 *  Returns object with all requested resources
-		 *
-		 *  Example: Wikia.getMultiTypePackage({
-		 *		messages: 'EditPageLayout',
-		 *		scripts: 'oasis_jquery,yui',
-		 *		styles: 'path/to/style/file'
-		 *		mustache: 'extensions/wikia/MyExy/templates/index.mustache',
-		 *		templates: [{
-		 *			controllerName: 'MyController',
-		 *			methodName: 'getPage',
-		 *			params: {
-		 *				page: 1
-		 *			}
-		 *		}],
-		 *		params: {
-		 *			useskin: 'skinname'
-		 *		}
-		 *	});
-		 */
-		getMultiTypePackage = function(options, complete, failure){
-			var templates = options.templates,
-				send = false;
-
-			if(typeof templates != 'undefined'){
-				// JSON encode templates entry
-				options.templates = (typeof templates === 'object') ? JSON.stringify(templates) : templates;
-			}
-
-			for(var prop in options) {
-				if(options.hasOwnProperty(prop) && ~multiAllowedOptions.indexOf(prop)) {
-					send = true;
-					break;
-				}
-			}
-
-			if(send){
-				if(typeof options.params == 'object'){
-					options = $.extend(options, options.params);
-					delete options.params;
-				}
-
-				// add a cache buster
-				options.cb = wgStyleVersion;
-
-				nirvana.getJson(
-					'AssetsManager',
-					'getMultiTypePackage',
-					options
-				).done(
-					function(resources, event) {
-						// "register" JS messages
-						if (resources.messages) {
-							w.wgMessages = $.extend(wgMessages, resources.messages);
-						}
-
-						complete(event, resources);
-					}
-				).fail(failure);
-			}else{
-				failure()
-			}
-		};
+			};
 
 		return (function(){
 			/**
@@ -383,6 +315,8 @@
 							files  = resource.resources || resource.url
 						}
 
+						func = get;
+
 						if (type && files) {
 							switch(type) {
 								case loader.MULTI:
@@ -393,19 +327,15 @@
 									break;
 								case loader.JS:
 									files = getURL(files, 'one');
-									func = getScript;
-									break;
-								case loader.CSS:
-									files = getURL(files, 'one');
-									func = getCSS;
-									break;
-								case loader.SCSS:
-									files = getURL(files, 'sass');
-									func = getCSS;
 									break;
 								case loader.AM_GROUPS:
 									files = getURL(files, 'groups');
-									func = getScript;
+									break;
+								case loader.CSS:
+									files = getURL(files, 'one');
+									break;
+								case loader.SCSS:
+									files = getURL(files, 'sass');
 									break;
 								case loader.UNKNOWN:
 								default:
@@ -413,7 +343,7 @@
 									continue;
 							}
 
-						remaining += ~~func(files, complete, failure(resource));
+						remaining += ~~func(files, complete, failure(resource), type);
 					} else {
 						dfd.reject({
 							error: loader.CORRUPT_FORMAT,
