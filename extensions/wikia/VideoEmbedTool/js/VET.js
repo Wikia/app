@@ -299,7 +299,7 @@ function VET_readjustSlider( value ) {
 		}
 }
 
-function VET_showPreview(e) {
+function VET_showPreview(e) { // lizbug - doesn't seem to be getting called anywhere
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
 
 	var html = '';
@@ -331,7 +331,7 @@ function VET_showPreview(e) {
 	VET_previewPanel.render();
 	VET_previewPanel.show();
 	VET_panel.center();
-	if(VET_refid != null && VET_wysiwygStart == 2) {
+	if(VET_refid != null && ( VET_wysiwygStart == 2 || VET_gallery == -2 ) ) {
 		VET_editVideo();
 	} else {
 		VET_loadMain();
@@ -442,7 +442,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		}
 
 		if(typeof size != "undefined") {
-			VET_size = size;
+			//VET_size = size; lizbug - let's ignore pre-given size for now
 		}
 
 		if(typeof caption != "undefined") {
@@ -510,7 +510,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		VET_panel.show();
 		// Recenter each time for different instances of RTE. (BugId:15589)
 		VET_panel.center();
-		if(VET_refid != null && VET_wysiwygStart == 2) {
+			if(VET_refid != null && VET_wysiwygStart == 2) {
 			VET_editVideo();
 		} else if($G('VideoEmbedUrl')) {
 			$G('VideoEmbedUrl').focus();
@@ -839,9 +839,9 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 	}
 
 	if ( ( '-1' < VET_gallery ) || VET_inGalleryPosition ) {
-		$G( 'VideoEmbedWidthRow' ).style.display = 'none';
-		$G( 'VideoEmbedLayoutRow' ).style.display = 'none';
-		$G( 'VideoEmbedSizeRow' ).style.display = 'none';
+		//$G( 'VideoEmbedWidthRow' ).style.display = 'none';
+		//$G( 'VideoEmbedLayoutRow' ).style.display = 'none';
+		//$G( 'VideoEmbedSizeRow' ).style.display = 'none';
 	}
 
 	if ( '-2' == VET_gallery) {
@@ -865,7 +865,6 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 }
 
 function VET_insertFinalVideo(e, type) {
-$().log("insert final video");
 	var errorDiv = $('#VideoEmbedError');
 
 	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);
@@ -911,7 +910,7 @@ $().log("insert final video");
 		params.push( 'gallery=' + VET_gallery );
 		params.push( 'box=' + VET_box );
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
-		params.push( 'ns='+wgNamespaceNumber ); // lizbug - set to 0 - why?
+		params.push( 'ns='+wgNamespaceNumber );
 		if( VET_refid != null ) {
 			params.push( 'fck=true' );
 		}
@@ -931,7 +930,7 @@ $().log("insert final video");
 
 	if($G('VideoEmbedThumb')) {
 		params.push('size=' + ($G('VideoEmbedThumbOption').checked ? 'thumb' : 'full'));
-		params.push( 'width=' + $G( 'VideoEmbedManualWidth' ).value + 'px' );
+		params.push( 'width=' + $G( 'VideoEmbedManualWidth' ).value );
 		if( $G('VideoEmbedLayoutLeft').checked ) {
 			params.push( 'layout=left' );
 		} else if( $G('VideoEmbedLayoutGallery').checked ) {
@@ -944,7 +943,7 @@ $().log("insert final video");
 		params.push('caption=' + encodeURIComponent( $G('VideoEmbedCaption').value ) );
 	}
 
-	if( '-2' == VET_gallery ) { // placeholder magic
+	/*if( '-2' == VET_gallery ) { // placeholder magic
 		if( 0 < VET_align ) {
 			( '1' == VET_align ) ? params.push( 'layout=left' ) : params.push( 'layout=right' ) ;
 		}
@@ -954,12 +953,12 @@ $().log("insert final video");
 		}
 
 		if( 0 < VET_size ) {
-			params.push( 'width=' + VET_size + 'px' );
+			params.push( 'width=' + VET_size );
 		}
 		if( '' != VET_caption ) {
 			params.push( 'caption=' + VET_caption );
 		}
-	}
+	}*/
 
 	var callback = {
 		success: function(o) {
@@ -1363,7 +1362,6 @@ var VETExtended = {
 		});
 		
 		// attach handler - submit display options tab
-$().log("bind submit event");
 		$('#VideoEmbedDetails').on('submit', '#VET-display-options', function(event) {
 			event.preventDefault();
 			VET_insertFinalVideo(event, 'details');
