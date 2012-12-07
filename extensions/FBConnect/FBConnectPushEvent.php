@@ -361,10 +361,8 @@ class FBConnectPushEvent {
 			$articleText = $text;
 		}
 		$title = $qArticle->getTitle();
-		$tmpParser = new Parser();
-		$tmpParser->setOutputType(OT_HTML);
 		$tmpParserOptions = new ParserOptions();
-		$html = $tmpParser->parse( $articleText, $title, $tmpParserOptions)->getText();
+		$html = ParserPool::parse( $articleText, $title, $tmpParserOptions)->getText();
 		return $html;
 	}
 

@@ -726,8 +726,7 @@ class EditPageLayout extends EditPage {
 		$text = $wgMemc->get($key);
 		if ( empty($text) ) {
 			wfProfileIn( __METHOD__ . '-parse');
-			$parser = new Parser();
-			$text = $parser->parse($wikitext, $this->app->wg->Title, new ParserOptions())->getText();
+			$text = ParserPool::parse($wikitext, $this->app->wg->Title, new ParserOptions())->getText();
 			wfProfileOut( __METHOD__ . '-parse');
 			$wgMemc->set($key,$text,self::COPYRIGHT_CACHE_TTL);
 		}
