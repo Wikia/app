@@ -32,32 +32,53 @@ var WikiaSearch = {
 		this.initVideoTabEvents();
 	},
 	initVideoTabEvents: function() {
-		var videoRadio = $('#filter-is-video'),
+		var videoFilterOptions = $('.search-filter-sort');
+
+		if(!videoFilterOptions.length) {
+			return;
+		}
+		
+		videoFilterOptions.find('.search-filter-sort-overlay').remove();
+		
+		var searchForm = $('#search-v2-form'),
+			videoRadio = $('#filter-is-video'),
 			videoOptions = videoRadio.parent().next(),
 			categoryInput = $('#filter-by-category'),
-			categoryOptions = categoryInput.parent().next();
+			categoryOptions = categoryInput.parent().next(),
+			filterInputs = $('input[type="radio"][name="filters[]"]');
 			
-		$('input[type="radio"][name="filters[]"]').on('change', function() {
+		// Show and hide video filter options when radio buttons change. 
+		filterInputs.on('change', function() {
 			if(videoRadio.is(':checked')) {
 				videoOptions
-					.slideDown()
-					.removeClass('hidden')
 					.find('input') // only re-enable inputs, we'll handle the select input separately
 					.attr('disabled', false);
 			} else {
 				videoOptions
-					.slideUp()
 					.find('input, select') 
 					.attr('disabled', true)
 					.attr('checked', false);
 			}
-		}).change();
-		
+			// Refresh search results
+			searchForm.submit();
+		});
 
-		
+		// Video wiki categories only
 		categoryInput.on('change', function() {
-			categoryOptions.attr('disabled', !$(this).is(':checked'));
-		}).change();
+			var isDisabled = !$(this).is(':checked');
+			categoryOptions.attr('disabled', isDisabled);
+			
+			if(isDisabled) {
+				// Refresh search results
+				searchForm.submit();
+			}
+		});
+		
+		// If the input isn't handled above, do a form submit
+		videoFilterOptions.find('input, select').not(categoryInput.add(filterInputs)).on('change', function() {
+			// Refresh search results
+			searchForm.submit();		
+		});
 		
 	}
 }

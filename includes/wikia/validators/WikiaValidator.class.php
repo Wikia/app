@@ -40,7 +40,7 @@ abstract class WikiaValidator {
 	}
 
 	public function isValid($value = null) {
-		if(!is_array($value) && !$this->getOption("required") && strlen($value) == 0 ) {
+		if(!is_array($value) && !$this->getOption("required") && mb_strlen($value) == 0 ) {
 			return true;
 		}
 		$this->error = null;

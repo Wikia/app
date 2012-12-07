@@ -2939,14 +2939,14 @@ class WikiFactory {
 
 		$oRes = $dbr->select(
 			$aTables,
-			array('city_id', 'city_title', 'city_url', 'city_public'),
+			array('city_id', 'city_title', 'city_url', 'city_public', 'city_dbname'),
 			$aWhere,
 			__METHOD__,
 			$aOptions
 		);
 
 		while ($oRow = $dbr->fetchObject($oRes)) {
-			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ) );
+			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ), 'd' => $oRow->city_dbname );
 		}
 		$dbr->freeResult( $oRes );
 
@@ -3017,5 +3017,22 @@ class WikiFactory {
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
+	}
+
+	/**
+	 * get url from dbname
+	 * @param string $dbname	name of database
+	 * @param boolean $master	use master or slave connection
+	 * @return url in city_list
+	 */
+	static public function DBtoUrl( $dbname, $master = false ) {
+		if( !self::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		$oRow = self::getWikiByDB( $dbname, $master );
+
+		return isset( $oRow->city_url ) ? $oRow->city_url : false;
 	}
 };

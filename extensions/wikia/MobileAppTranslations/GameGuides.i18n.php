@@ -202,6 +202,7 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  */
 $messages['fi'] = array(
 	'activityindicator-message' => 'Ladataan...',
@@ -210,6 +211,8 @@ $messages['fi'] = array(
 	'window-article-button-back' => 'Takaisin',
 	'window-article-menu-search-label' => 'Etsi',
 	'window-article-menu-cancel-label' => 'Peruuta',
+	'searchview-button-back-list' => 'Palaa luetteloon',
+	'alert-download-updated-wikis-button-ok' => 'Ok',
 );
 
 /** French (français)

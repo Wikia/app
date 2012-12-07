@@ -607,7 +607,7 @@ $messages['az'] = array(
 	'wikistats_title' => 'Başlıq',
 );
 
-/** تورکجه (تورکجه)
+/** South Azerbaijani (تورکجه)
  * @author Erdemaslancan
  */
 $messages['azb'] = array(
@@ -2399,7 +2399,7 @@ $messages['fi'] = array(
 	'wikistats_pageviews_counting' => 'x% = muutos verrattuna edelliseen päivään/kuukauteen',
 	'wikistats_pageviews_percent' => 'Prosentuaalinen lisäys tai vähennys verrattuna edelliseen kuukauteen',
 	'wikistats_distrib_article_subtext' => 'vain artikkelimuokkaukset lasketaan, ei muokkauksia keskustelusivuille jne.',
-	'wikistats_page_edits' => 'Muokatuimmat artikkelit (sisältönimiavaruuksissa) (&gt; 25 muokkausta)', # Fuzzy
+	'wikistats_page_edits' => 'Muokatuimmat artikkelit (sisältönimiavaruuksissa) (yli 25 muokkausta)',
 	'wikistats_other_nspaces_edits' => 'Muokatuimmat sivut (muut nimiavaruudet) (&gt; 25 muokkausta)',
 	'wikistats_page_edits_count' => '$1 {{PLURAL:$1|muokattu artikkeli|muokatuinta artikkelia}} löytyi',
 	'wikistats_other_nspaces_edits_count' => '$1 {{PLURAL:$1|muokattu sivu|muokatuinta sivua}} löytyi',

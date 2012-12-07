@@ -14,25 +14,19 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * Used to keep track of index in array access
 	 * @var int
 	 */
-	private $position = 0;
+	protected $position = 0;
 
 	/**
 	 * Used to to access the documents for a given search result grouping
 	 * @var int
 	 */
-	private $metaposition = 0;
+	protected $metaposition = 0;
 
 	/**
 	 * Number of results found by the search; NOT the number of results in the set
 	 * @var int
 	 */
 	protected $resultsFound = 0;
-
-	/**
-	 * Offset of entire search result set we are starting from
-	 * @var int
-	 */
-	protected $resultsStart = 0;
 
 	/**
 	 * Header values are used for search result grouping metadata
@@ -48,20 +42,6 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	protected $results = array();
 
 	/**
-	 * The query string provided by the user for the search
-	 * (not the complex query we create from it)
-	 * @var string
-	 */
-	protected $query;
-
-	/**
-	 * Time it took for the query to complete on the Solr side.
-	 * Mostly used for debugging.
-	 * @var int
-	 */
-	protected $queryTime = 0;
-
-	/**
 	 * Used primarily for search groupings.
 	 * This is the hostname of the wiki all the results belong to.
 	 * @var string
@@ -73,12 +53,6 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @var Solarium_Result_Select
 	 */
 	protected $searchResultObject;
-
-	/**
-	 * The subcomponent handling snippeting
-	 * @var Solarium_Result_Select_Highlighting
-	 */
-	protected $highlightingObject;
 
 	/**
 	 * The configuration used in handling searhes
@@ -103,68 +77,86 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	public function __construct( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig, $parent = null, $metaposition = null) {
 		wfProfileIn(__METHOD__);
 		parent::__construct();
-		$this->searchResultObject = $result;
-		$this->searchConfig = $searchConfig;
-		$this->setQuery( $searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED ) );
-
-		if ( $result instanceof Solarium_Result_Select_Empty ) {
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
-		if ( ( $parent === null ) && $this->searchConfig->getGroupResults() ) {
-
-			$this->setResultGroupings( $result, $searchConfig );
+		$this->searchResultObject	= $result;
+		$this->searchConfig			= $searchConfig;
+		$this->parent				= $parent;
+		$this->metaposition			= $metaposition;
+		$this->configure( $parent, $metaposition );
+		wfProfileOut(__METHOD__);
+	}
+	
+	/**
+	 * Called by the constructor to handle constructing nested and non-nested result sets and pass values
+	 * from search result object to result set. Sort of a take on the strategy pattern. 
+	 * @return bool
+	 */
+	protected function configure() {
+		return ( $this->searchResultObject instanceof Solarium_Result_Select_Empty )
+			|| $this->configureGroupedSetAsRootNode() 
+			|| $this->configureGroupedSetAsLeafNode() 
+			|| $this->configureUngroupedSet()
+		;  
+	}
+	
+	/**
+	 * Performs configuration actions required just for grouped results
+	 * @return boolean
+	 */
+	protected function configureGroupedSetAsRootNode() {
+		wfProfileIn(__METHOD__);
+		$satisfies = ( $this->parent === null ) && $this->searchConfig->getGroupResults();
+		if ( $satisfies ) {
+			$this->setResultGroupings();
 			$this->setResultsFound( $this->getHostGrouping()->getMatches() );
-
-		} else {
-			$this->parent				= $parent;
-			$this->metaposition			= $metaposition;
-			$this->highlightingObject	= $result->getHighlighting();
-
-			$this	->setResultsStart	( $result->getStart() )
-					->setQueryTime		( $result->getQueryTime() );
-
-			if ( ( $this->parent !== null ) && ( $this->metaposition !==  null ) ) {
-				$this->prepareChildResultSet();
-			} else {
-				// default behavior for an ungrouped search result set
-				$this
-					->prependArticleMatchIfExists	()
-					->setResults					( $this->searchResultObject->getDocuments() )
-					->setResultsFound				( $this->resultsFound + $this->searchResultObject->getNumFound() )
-				;
-			}
 		}
 		wfProfileOut(__METHOD__);
+		return $satisfies;
 	}
 
 	/**
 	 * This is the subroutine used to prepare a search result set instance with a parent.
 	 * @return WikiaSearchResultSet provides for fluent interface
 	 */
-	private function prepareChildResultSet() {
+	protected function configureGroupedSetAsLeafNode() {
 		wfProfileIn(__METHOD__);
-		$valueGroups	= $this->getHostGrouping()->getValueGroups();
-		$valueGroup		= $valueGroups[$this->metaposition];
-		$this->host		= $valueGroup->getValue();
-		$documents		= $valueGroup->getDocuments();
-
-		$this	->setResults		( $documents )
-				->setResultsFound	( $valueGroup->getNumFound() );
-
-		if ( count( $documents ) > 0 ) {
-			$exampleDoc		= $documents[0];
-			$cityId			= $exampleDoc->getCityId();
-
-			$this->setHeader( 'cityId',				$cityId );
-			$this->setHeader( 'cityTitle',			WikiFactory::getVarValueByName( 'wgSitename', $cityId ) );
-			$this->setHeader( 'cityUrl',			WikiFactory::getVarValueByName( 'wgServer', $cityId ) );
-			$this->setHeader( 'cityArticlesNum',	$exampleDoc['wikiarticles'] );
+		$satisfies = ( $this->parent !== null ) && ( $this->metaposition !==  null );
+		if ( $satisfies ) {
+			$valueGroups	= $this->getHostGrouping()->getValueGroups();
+			$valueGroup		= $valueGroups[$this->metaposition];
+			$this->host		= $valueGroup->getValue();
+			$documents		= $valueGroup->getDocuments();
+	
+			$this	->setResults		( $documents )
+					->setResultsFound	( $valueGroup->getNumFound() );
+	
+			if ( count( $documents ) > 0 ) {
+				$exampleDoc		= $documents[0];
+				$cityId			= $exampleDoc->getCityId();
+	
+				$this->setHeader( 'cityId',				$cityId );
+				$this->setHeader( 'cityTitle',			WikiFactory::getVarValueByName( 'wgSitename', $cityId ) );
+				$this->setHeader( 'cityUrl',			WikiFactory::getVarValueByName( 'wgServer', $cityId ) );
+				$this->setHeader( 'cityArticlesNum',	$exampleDoc['wikiarticles'] );
+			}
 		}
 
 		wfProfileOut(__METHOD__);
-		return $this;
+		return $satisfies;
+	}
+	
+	/**
+	 * This is the default behavior of a search result set
+	 * @return bool
+	 */
+	protected function configureUngroupedSet() {
+		wfProfileIn(__METHOD__);
+		$this
+			->prependArticleMatchIfExists	()
+			->setResults					( $this->searchResultObject->getDocuments() )
+			->setResultsFound				( $this->resultsFound + $this->searchResultObject->getNumFound() )
+		;
+		wfProfileOut(__METHOD__);
+		return true;
 	}
 
 	/**
@@ -172,7 +164,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @throws Exception
 	 * @return Solarium_Result_Select_Grouping_FieldGroup
 	 */
-	private function getHostGrouping() {
+	protected function getHostGrouping() {
 		wfProfileIn(__METHOD__);
 		$grouping = $this->searchResultObject->getGrouping();
 		if (! $grouping ) {
@@ -188,16 +180,14 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 
 	/**
 	 * We use this to iterate over groupings and created nested search result sets.
-	 * @param  Solarium_Result_Select $result
-	 * @param  WikiaSearchConfig $searchConfig
 	 * @return WikiaSearchResultSet provides fluent interface
 	 */
-	private function setResultGroupings( Solarium_Result_Select $result, WikiaSearchConfig $searchConfig ) {
+	protected function setResultGroupings() {
 		wfProfileIn(__METHOD__);
-		$fieldGroup = $result->getGrouping()->getGroup('host');
+		$fieldGroup = $this->getHostGrouping();
 		$metaposition = 0;
 		foreach ($fieldGroup->getValueGroups() as $valueGroup) {
-			$resultSet = F::build('WikiaSearchResultSet', array($result, $searchConfig, $this, $metaposition++));
+			$resultSet = F::build('WikiaSearchResultSet', array($this->searchResultObject, $this->searchConfig, $this, $metaposition++));
 			$this->results[$resultSet->getHeader('cityUrl')] = $resultSet;
 		}
 		wfProfileOut(__METHOD__);
@@ -239,7 +229,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	public function prependArticleMatchIfExists() {
 		wfProfileIn(__METHOD__);
 
-		if (! ( $this->searchConfig->hasArticleMatch() && $this->resultsStart == 0 ) ) {
+		if (! ( $this->searchConfig->hasArticleMatch() && $this->getResultsStart() == 0 ) ) {
 			wfProfileOut(__METHOD__);
 			return $this;
 		}
@@ -248,8 +238,9 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$article		= $articleMatch->getCanonicalArticle();
 		$title			= $article->getTitle();
 		$articleId		= $article->getID();
+		$titleNs		= $title->getNamespace();
 
-		if (! in_array( $title->getNamespace(), $this->searchConfig->getNamespaces() ) ) {
+		if (! in_array( $titleNs, $this->searchConfig->getNamespaces() ) ) {
 			// we had an article match by name, but not in our desired namespaces
 			wfProfileOut(__METHOD__);
 			return $this;
@@ -258,18 +249,18 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		$articleMatchId	= sprintf( '%s_%s', $this->wg->CityId, $articleId );
 		$articleService	= F::build('ArticleService', array( $articleId ) );
 		$firstRev		= $title->getFirstRevision();
-		$created		= $firstRev ? wfTimestamp(TS_ISO_8601, $firstRev->getTimestamp()) : '';
+		$created		= $firstRev ? $this->wf->Timestamp(TS_ISO_8601, $firstRev->getTimestamp()) : '';
 		$lastRev		= Revision::newFromId($title->getLatestRevID());
-		$touched		= $lastRev ? wfTimeStamp(TS_ISO_8601, $lastRev->getTimestamp()) : '';
-
+		$touched		= $lastRev ? $this->wf->Timestamp(TS_ISO_8601, $lastRev->getTimestamp()) : '';
+		
 		$fieldsArray = array(
 				'wid'			=>	$this->wg->CityId,
-				'title'			=>	$article->mTitle,
+				'title'			=>	(string) $title,
 				'url'			=>	urldecode( $title->getFullUrl() ),
 				'score'			=>	'PTT',
 				'isArticleMatch'=>	true,
-				'ns'			=>	$title->getNamespace(),
-				'pageId'		=>	$article->getID(),
+				'ns'			=>	$titleNs,
+				'pageId'		=>	$articleId,
 				'created'		=>	$created,
 				'touched'		=>	$touched,
 				);
@@ -299,21 +290,23 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @throws WikiaException
 	 * @return WikiaSearchResultSet provides fluent interface
 	 */
-	private function addResult( WikiaSearchResult $result ) {
+	protected function addResult( WikiaSearchResult $result ) {
 		if( $this->isValidResult( $result ) ) {
 			$id = $result['id'];
-			if ( 		( $this->highlightingObject !==	null )
-					&&  ( $hlResult 				=	$this->highlightingObject->getResult( $id ) )
+			$highlighting = $this->searchResultObject->getHighlighting();
+			if ( 		( $highlighting				!==	null )
+					&&  ( $hlResult 				=	$highlighting->getResult( $id ) )
 					&&  ( $field					=	$hlResult->getField( WikiaSearch::field( 'html' ) ) ) ) {
 				$result->setText( $field[0] );
 			}
 
-			if ( ( $result['created'] !== null ) && $this->wg->Lang ) {
-				$result	->setVar( 'created',		$result['created'] )
-						->setVar( 'fmt_timestamp',	$this->wg->Lang->date( wfTimestamp( TS_MW, $result['created'] ) ) );
+			$created = $result['created'];
+			if ( ( $created !== null ) && $this->wg->Lang ) {
+				$result	->setVar( 'created',		$created )
+						->setVar( 'fmt_timestamp',	$this->wg->Lang->date( $this->wf->Timestamp( TS_MW, $created ) ) );
 
 				if ( $result->getVar( 'fmt_timestamp' ) ) {
-				    $result->setVar( 'created_30daysago', time() - strtotime( $result['created'] ) > 2592000 );
+				    $result->setVar( 'created_30daysago', time() - strtotime( $created ) > 2592000 );
 				}
 			}
 
@@ -342,17 +335,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @return int
 	 */
 	public function getResultsStart() {
-		return $this->resultsStart;
-	}
-
-	/**
-	 * Sets the protected $resultsStart value
-	 * @param int $value
-	 * @return WikiaSearchResultSet provides fluent interface
-	 */
-	public function setResultsStart( $value ) {
-		$this->resultsStart = $value;
-		return $this;
+		return $this->searchResultObject->getStart();
 	}
 
 	/**
@@ -447,40 +430,32 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 	 * @param  mixed $result
 	 * @return boolean
 	 */
-	private function isValidResult( $result ) {
+	protected function isValidResult( $result ) {
 		return ( ( $result instanceof WikiaSearchResult ) || ( $result instanceof WikiaSearchResultSet ) );
 	}
 
+	/**
+	 * Returns the query used to get these results
+	 * @return string
+	 */
 	public function getQuery() {
-		return $this->query;
+		return $this->searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED );
 	}
 
-	public function setQuery($query) {
-		$this->query = $query;
-		return $this;
-	}
-
+	/**
+	 * Returns query time
+	 * @return number
+	 */
 	public function getQueryTime() {
-		return $this->queryTime;
+		return $this->searchResultObject->getQueryTime();
 	}
 
-	public function setQueryTime($val) {
-		$this->queryTime = $val;
-		return $this;
-	}
-
-	public function __sleep() {
-		return array( 'header', 'results', 'resultsFound', 'resultsStart');
-	}
-
-	public function __wakeup() {
-		$this->position = 0;
-		$this->resultsPerPage = 25;
-		$this->currentPage = false;
-	}
-
+	/**
+	 * Determines whether the result set is empty except for an article match
+	 * @return boolean
+	 */
 	public function isOnlyArticleMatchFound() {
-		return $this->getResultsNum() == 1 && $this->results[0]->getVar( 'isArticleMatch' ) == true;
+		return $this->getResultsNum() == 1 && $this->results[0]->getVar( 'isArticleMatch' );
 	}
 
 	/* (non-PHPdoc)

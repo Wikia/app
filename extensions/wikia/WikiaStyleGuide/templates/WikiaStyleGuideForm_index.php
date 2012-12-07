@@ -49,6 +49,9 @@
 				<? if ( $type === 'hidden' ): ?>
 					<input type="hidden" <?= $inputAttributes ?>>
 
+				<? elseif ( $type === 'raw' ): ?>
+					<?= $input[ 'output' ] ?>
+
 				<? else: ?>
 					<div class="<?= WikiaStyleGuideFormHelper::getClassNamesString( array( 'input-group', $class, $error, $required ) ) ?>">
 						<? if ( $label ): ?>

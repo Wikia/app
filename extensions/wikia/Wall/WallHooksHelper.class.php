@@ -1654,8 +1654,10 @@ class WallHooksHelper {
 		$wm->load();
 		if(!$wm->isMain()) {
 			$wmw = $wm->getTopParentObj();
+			if( empty($wmw) ) {
+				return true;
+			}
 			$wmw->load();
-
 		}
 
 		$articleId = $wm->getId();
@@ -1677,6 +1679,7 @@ class WallHooksHelper {
 			'articleTitleVal' => $articleTitleTxt,
 			'articleTitleTxt' => empty($articleTitleTxt) ? wfMsg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
 			'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
+			'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
 			'wallPageName' => $wm->getArticleTitle()->getText(),
 			'actionUser' => $userText,
 			'isThread' => $wm->isMain(),
@@ -2027,6 +2030,9 @@ class WallHooksHelper {
 			if(!$db->tableExists('wall_related_pages')) {
 				$db->sourceFile($IP."/extensions/wikia/Wall/sql/wall_related_pages.sql");
 			}
+			
+			$nm = new NavigationModel();
+			$nm->clearMemc( NavigationModel::WIKIA_GLOBAL_VARIABLE );
 		}
 		return true;
 	}

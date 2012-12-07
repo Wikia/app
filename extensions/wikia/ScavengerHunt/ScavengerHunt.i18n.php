@@ -228,7 +228,7 @@ $messages['az'] = array(
 	'scavengerhunt-entry-form-email' => 'Sizin e-poçt ünvanınız:',
 );
 
-/** تورکجه (تورکجه)
+/** South Azerbaijani (تورکجه)
  * @author Erdemaslancan
  */
 $messages['azb'] = array(

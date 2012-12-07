@@ -54,7 +54,8 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		.lightbox-arrows,
 		.LightboxHeader,
 		.LightboxCarousel,
-		.media {
+		.media,
+		.modal_interstitial {
 			display: none;
 		}
 	}

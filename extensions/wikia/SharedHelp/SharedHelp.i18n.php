@@ -187,6 +187,13 @@ $messages['mk'] = array(
 	'sharedhelp-searchprofile-tooltip' => 'Пребарување на страниците за помош',
 );
 
+/** Marathi (मराठी)
+ * @author Ydyashad
+ */
+$messages['mr'] = array(
+	'sharedhelp-searchprofile' => 'साहाय्यक पाने',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -214,6 +221,7 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'sharedhelp-desc' => "Haalt pagina's op van [[w:c:Help|Wikia-help]] en voegt ze toe aan de naamruimte {{ns:help}} in deze wiki",
 	'sharedhelp-autotalkcreate-summary' => 'Overlegpagina automatisch aangemaakt',
+	'sharedhelp-searchprofile' => "Hulppagina's",
 );
 
 /** Polish (polski)

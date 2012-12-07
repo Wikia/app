@@ -37,6 +37,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableCategoryExhibitionExt' => 201,	// Category Exhibition
 		'wgEnableChat' => 258,					// Chat
 		'wgEnableWallExt' => 258,				// Wall
+		'wgEnableForumExt' => 259,				// Forum
 	);
 
 	// no need to add feature to $release_date if not require "new" flag
@@ -44,6 +45,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableChat' => '2011-08-01',					// Chat
 		'wgShowTopListsInCreatePage' => '2012-02-12',	// Top 10 Lists
 		'wgEnableAchievementsExt' => '2012-02-12',		// Achievements
+		'wgEnableForumExt' => '2012-11-29',				// Forum
 	);
 
 	/**

@@ -71,6 +71,13 @@ $messages['de'] = array(
 	'signup' => 'Benutzerkonto erstellen',
 );
 
+/** Divehi (ދިވެހިބަސް)
+ * @author Ushau97
+ */
+$messages['dv'] = array(
+	'signup' => 'މެމްބަރަކަށް ވެވަޑައިގަންނަވާ',
+);
+
 /** Greek (Ελληνικά)
  * @author Evropi
  */

@@ -14,11 +14,27 @@
 		$extraParams['advanced'] = 1;
 		$extraParams['redirs'] = ($redirs ? 1 : 0);
 	}
+	
+	if(!empty($filters)) {
+		foreach($filters as $filter) {
+			$extraParams['filters'][] = $filter;			
+		}
+	}
+	
 	if(count($namespaces)) {
 		foreach($namespaces as $ns) {
 			$extraParams['ns'.$ns] = 1;
 		}
 	}
+	
+	if(!empty($by_category)) {
+		$extraParams['by_category'] = 1;
+	}
+	
+	if(!empty($rank)) {
+		$extraParams['rank'] = $rank;	
+	}
+	
 	if ($limit !== WikiaSearchController::RESULTS_PER_PAGE) {
 		$extraParams['limit'] = $limit;
 	}

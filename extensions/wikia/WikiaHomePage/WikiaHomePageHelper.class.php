@@ -37,6 +37,9 @@ class WikiaHomePageHelper extends WikiaModel {
 	const INTERSTITIAL_SMALL_IMAGE_WIDTH = 115;
 	const INTERSTITIAL_SMALL_IMAGE_HEIGHT = 65;
 
+	const FAILSAFE_COMMUNITIES_COUNT = 280000;
+	const FAILSAFE_NEW_COMMUNITIES_COUNT = 200;
+
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
 	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.7';
 
@@ -144,10 +147,10 @@ class WikiaHomePageHelper extends WikiaModel {
 		$this->wf->ProfileIn(__METHOD__);
 
 		$visitors = 0;
-		$dates = array( date( 'Y-m-01', strtotime('-1 month') ), date( 'Y-m-01', strtotime('now') ) );
-		$pageviews = DataMartService::getSumPageviewsMonthly( $dates );
-		if ( empty( $pageviews ) ) {
-			foreach ( $pageviews as $date => $pviews ) {
+		$dates = array(date('Y-m-01', strtotime('-1 month')), date('Y-m-01', strtotime('now')));
+		$pageviews = DataMartService::getSumPageviewsMonthly($dates);
+		if (empty($pageviews)) {
+			foreach ($pageviews as $date => $pviews) {
 				$visitors += $pviews;
 			}
 		}
@@ -184,6 +187,73 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		return $edits;
 	}
+
+	public function getTotalCommunities() {
+		return WikiaDataAccess::cache(
+			F::app()->wf->MemcKey('total_communities_count', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION, __METHOD__),
+			24 * 60 * 60,
+			array($this, 'getTotalCommunitiesFromDB')
+		);
+	}
+
+
+	public function getTotalCommunitiesFromDB() {
+		$this->wf->profileIn(__METHOD__);
+		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
+		$row = $db->selectRow(
+			array('city_list'),
+			array('count(1) cnt'),
+			array('city_public = 1 AND city_created < DATE(NOW())'),
+			__METHOD__
+		);
+
+		$communities = self::FAILSAFE_COMMUNITIES_COUNT;
+		if ($row) {
+			$communities = intval($row->cnt);
+		}
+		$this->wf->profileOut(__METHOD__);
+		return $communities;
+	}
+
+	public function getLastDaysNewCommunities() {
+		return WikiaDataAccess::cache(
+			F::app()->wf->MemcKey('communities_created_in_range', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION, __METHOD__),
+			24 * 60 * 60,
+			array($this, 'getLastDaysNewCommunitiesFromDB')
+		);
+	}
+
+	public function getLastDaysNewCommunitiesFromDB() {
+		$today = strtotime('00:00:00');
+		$yesterday = strtotime('-1 day', $today);
+		return $this->getNewCommunitiesInRangeFromDB($yesterday, $today);
+	}
+
+	protected function getNewCommunitiesInRangeFromDB($starttimestamp, $endtimestamp) {
+		$this->wf->profileIn(__METHOD__);
+		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
+		$row = $db->selectRow(
+			array('city_list'),
+			array('count(1) cnt'),
+			array(
+				'city_public' => 1,
+				'city_created >= FROM_UNIXTIME(' . $starttimestamp . ')',
+				'city_created < FROM_UNIXTIME(' . $endtimestamp . ')'
+			),
+			__METHOD__
+		);
+
+		$newCommunities = 0;
+		if ($row) {
+			$newCommunities = intval($row->cnt);
+		}
+		if ($newCommunities < self::FAILSAFE_NEW_COMMUNITIES_COUNT) {
+			$newCommunities = self::FAILSAFE_NEW_COMMUNITIES_COUNT;
+		}
+		$this->wf->profileOut(__METHOD__);
+		return $newCommunities;
+	}
+
 
 	/**
 	 * get stats from article
@@ -597,21 +667,21 @@ class WikiaHomePageHelper extends WikiaModel {
 			// result should have more 'vertical' orientation, cropping left and right from original image;
 			$requestedCropHeight = $originalHeight;
 			$requestedCropWidth = ceil($requestedCropHeight * $requestedRatio);
-			if($requestedWidth >= $originalWidth && $requestedCropHeight == $originalHeight && $requestedRatio >= 1) {
+			if ($requestedWidth >= $originalWidth && $requestedCropHeight == $originalHeight && $requestedRatio >= 1) {
 				$requestedWidth = $requestedCropWidth;
 			}
 		}
 
 		if ($originalWidth < $requestedWidth && $originalRatio < $requestedRatio) {
 			// result should have more 'horizontal' orientation, cropping top and bottom from original image;
-			$requestedWidth =  $originalWidth;
-			$requestedCropWidth =  $originalWidth;
+			$requestedWidth = $originalWidth;
+			$requestedCropWidth = $originalWidth;
 			$requestedCropHeight = ceil($requestedCropWidth / $requestedRatio);
 		}
 
 		$imageServingParams = array(
 			null,
-			ceil(min($originalWidth,$requestedWidth)),
+			ceil(min($originalWidth, $requestedWidth)),
 			array(
 				'w' => floor($requestedCropWidth),
 				'h' => floor($requestedCropHeight)

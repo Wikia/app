@@ -862,6 +862,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
@@ -873,6 +874,7 @@ $messages['fi'] = array(
 	'multiwikiedit_or' => '<b>TAI</b>',
 	'multiwikiedit_page_text' => 'Tallennettava teksti',
 	'multiwikiedit_list_caption' => 'Wiki-luettelo',
+	'multiwikiedit_summary_text' => 'Yhteenvetokenttä',
 	'multiwikiedit_select_yourself' => 'Sinä',
 	'multiwikiedit_edit_options' => 'Muokkausvalitsimet',
 	'multidelete_button' => 'Poista',
@@ -2975,6 +2977,7 @@ $messages['sv'] = array(
 	'multidelete_omitting_invalid' => 'Utelämna ogiltig sida $1.',
 	'multidelete_file_bad_format' => 'Filen ska innehålla ren text',
 	'multidelete_file_missing' => 'Kan inte läsa filen',
+	'multidelete_select_script' => 'utvalt skriptkonto',
 	'multidelete_no_page' => 'Var god specificera minst en sida för att radera ELLER välj en fil som innehåller en sidlista.',
 	'multidelete_split_results' => "Ditt artikelantal var för högt för att utföras som en enda uppgift. Den har istället delats upp i '''$1''' uppgifter med en maximal segmentstorlek på '''$2''' artiklar.",
 	'multidelete_brazilian_portuguese_wikis' => 'alla brasilianska portugisiska wikis',

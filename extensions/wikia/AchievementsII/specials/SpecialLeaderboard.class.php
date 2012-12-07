@@ -32,15 +32,6 @@ class SpecialLeaderboard extends SpecialPage {
 			foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
 				$wgOut->addScript( "<script src=\"{$url}\"></script>" );
 			}
-		} else {
-			// FIXME: use AM group here
-			$wgOut->addStyle( "common/article_sidebar.css" );
-			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css");
-			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js\"></script>\n");
-
-			if ($skinName == 'SkinMonoBook') {
-				$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/leaderboard_monobook.css");
-			}
 		}
 
 		// ranking
@@ -51,8 +42,8 @@ class SpecialLeaderboard extends SpecialPage {
 		foreach($ranking as $rankedUser) {
 			$topUserIDs[] = $rankedUser->getID();
 		}
-		$userService = new AchUserProfileService;
-		$topUserBadges = $userService->getMostRecentUserBadge($topUserIDs);
+		$usersService = new AchUsersService;
+		$topUserBadges = $usersService->getMostRecentUserBadge($topUserIDs);
 
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set_vars(array(

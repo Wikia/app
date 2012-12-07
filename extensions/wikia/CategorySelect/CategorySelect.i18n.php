@@ -308,8 +308,13 @@ $messages['diq'] = array(
 
 /** Greek (Ελληνικά)
  * @author Crazymadlover
+ * @author Glavkos
  */
 $messages['el'] = array(
+	'categoryselect-addcategory-button' => 'Προσθήκη κατηγορίας',
+	'categoryselect-addcategory-edit' => 'Προσθήκη μιας κατηγορίας',
+	'categoryselect-suggest-hint' => 'Πατήστε Enter όταν γίνει',
+	'categoryselect-button-save' => 'Αποθήκευση',
 	'categoryselect-button-cancel' => 'Ακύρωση',
 );
 

@@ -16,9 +16,6 @@ if ( !empty( $wgEnableForumExt ) ) {
 	) );
 }
 
-//add this namespace to list of wall namespaces
-$app->registerNamespaceControler( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
-$app->registerNamespaceControler( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board', true );
 
 $wgWallNS[] = NS_WIKIA_FORUM_BOARD;
 $wgWallNotifyEveryoneNS[] = NS_WIKIA_FORUM_BOARD;

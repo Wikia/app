@@ -25,8 +25,9 @@ var WikiaButtons = {
 		e.unbind('.wikiabutton')
 			.one("mouseover.wikiabutton", WikiaButtons.setup)
 			.bind('mouseenter.wikiabutton',WikiaButtons.mouseover)
-			.bind('mouseleave.wikiabutton',WikiaButtons.mouseout)
-			.bind('click.wikiabutton',s.click);
+			.bind('mouseleave.wikiabutton',WikiaButtons.mouseout);
+		e.filter( '.combined' ).bind('click.wikiabutton',s.click);
+		e.not( '.combined' ).find( '.drop' ).bind('click.wikiabutton',s.click);
 	},
 
 	setup: function() {
@@ -35,8 +36,7 @@ var WikiaButtons = {
 	},
 
 	click: function(event) {
-		var button = $(this);
-
+		var button = $(this).closest('.wikia-menu-button');
 		if(!button.attr('disabled')){
 			if(event.target.tagName !== 'A'){
 				var width = button.outerWidth();

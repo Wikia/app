@@ -60,6 +60,8 @@ class OasisController extends WikiaController {
 	 * at the bottom for performance reasons, but there are some exceptions for engineering reasons).
 	 *
 	 * TODO: make sure JavaScripts can be always loaded on bottom
+	 * 
+	 * Note: NS_FILE pages need JS at top because AnyClips relies on jQuery.
 	 */
 	public static function JsAtBottom(){
 		global $wgTitle;
@@ -70,7 +72,7 @@ class OasisController extends WikiaController {
 
 			$jsAtBottom = true;	// Liftium.js (part of AssetsManager) must be loaded after LiftiumOptions variable is set in page source
 		}
-		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
+		elseif ($wgTitle->getNamespace() == NS_SPECIAL || $wgTitle->getNamespace() == NS_FILE || BodyController::isEditPage()) {
 			$jsAtBottom = false;
 		}
 		else {

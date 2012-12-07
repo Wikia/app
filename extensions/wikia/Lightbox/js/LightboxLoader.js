@@ -27,6 +27,8 @@ var LightboxLoader = {
 		onClose: function() {
 			// Reset lightbox
 			$(window).off('.Lightbox');
+			// bugid-64334 and bugid-69047
+			Lightbox.openModal.find('.video-media').children().remove();
 			LightboxLoader.lightboxLoading = false;
 			// Update history api (remove "?file=" from URL)
 			Lightbox.updateUrlState(true);
@@ -36,7 +38,8 @@ var LightboxLoader = {
 			Lightbox.to = LightboxLoader.cache.to;
 			// Reset Ad Flags
 			Lightbox.ads.adMediaProgress = [];
-			Lightbox.ads.adWasShown = false;
+			Lightbox.ads.adMediaShown = 0;
+			Lightbox.ads.adMediaShownSinceLastAd = 0;
 			Lightbox.ads.adIsShowing = false;
 			// Re-show box ad
 			LightboxLoader.pageAds.css('visibility','visible');

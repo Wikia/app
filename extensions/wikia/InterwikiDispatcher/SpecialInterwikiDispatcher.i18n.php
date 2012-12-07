@@ -78,9 +78,11 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  */
 $messages['fi'] = array(
 	'interwikidispatcher' => 'Interwiki-lähettäjä',
+	'interwikidispatcher-desc' => 'Ratkaisee kieltenvälisiä linkkejä, jota Apache-ohjauksia olisi vähemmän',
 );
 
 /** French (français)

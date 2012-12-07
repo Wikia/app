@@ -60,12 +60,13 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Crt
+ * @author Nedergard
  * @author Tm T
  * @author VezonThunder
  */
 $messages['fi'] = array(
 	'skinchooser-desc' => 'Mahdollistaa ulkoasun valinnan käyttäjän asetuksissa',
-	'new-look' => 'Wikian uusi ulkoasu', # Fuzzy
+	'new-look' => 'Wikia',
 	'site-layout' => 'Sivuston ulkoasut',
 );
 

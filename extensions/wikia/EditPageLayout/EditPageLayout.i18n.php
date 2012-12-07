@@ -658,6 +658,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Ilkea
+ * @author Nedergard
  * @author Nike
  */
 $messages['fi'] = array(
@@ -709,6 +710,9 @@ $messages['fi'] = array(
 	'wikia-editor-loadingStates-saving' => 'Muokkaustesi julkistaminen',
 	'wikia-editor-edittools-caption' => 'lisää',
 	'nonunicodebrowser-notice' => "'''Varoitus: Selaimesi ei ole Unicode-yhteensopiva.'''",
+	'prefs-starting-an-edit' => 'Muokkauksen aloittaminen',
+	'tog-editsection' => 'Näytä osion muokkauslinkit',
+	'tog-minordefault' => 'Muutokset ovat oletuksena pieniä',
 );
 
 /** French (français)

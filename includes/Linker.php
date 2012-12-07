@@ -1170,6 +1170,11 @@ class Linker {
 		$userTalkLink = self::link( $userTalkPage, wfMsgHtml( 'talkpagelinktext' ) );
 
 		/** Wikia change @author nAndy */
+
+		if ($userText instanceof User) {
+			$userText = $userText->getName();
+		}
+
 		wfRunHooks('LinkerUserTalkLinkAfter', array($userId, $userText, &$userTalkLink));
 		/** End of Wikia change */
 
@@ -1375,7 +1380,18 @@ class Linker {
 		self::$commentContextTitle = $title;
 		self::$commentLocal = $local;
 		$html = preg_replace_callback(
-			'/\[\[:?(.*?)(\|(.*?))*\]\]([^[]*)/',
+			'/
+				\[\[
+				:? # ignore optional leading colon
+				([^\]|]+) # 1. link target; page names cannot include ] or |
+				(?:\|
+					# 2. a pipe-separated substring; only the last is captured
+					# Stop matching at | and ]] without relying on backtracking.
+					((?:]?[^\]|])*+)
+				)*
+				\]\]
+				([^[]*) # 3. link trail (the text up until the next link)
+			/x',
 			array( 'Linker', 'formatLinksInCommentCallback' ),
 			$comment );
 		self::$commentContextTitle = null;
@@ -1401,8 +1417,8 @@ class Linker {
 		}
 
 		# Handle link renaming [[foo|text]] will show link as "text"
-		if ( $match[3] != "" ) {
-			$text = $match[3];
+		if ( $match[2] != "" ) {
+			$text = $match[2];
 		} else {
 			$text = $match[1];
 		}
@@ -1417,7 +1433,7 @@ class Linker {
 			}
 		} else {
 			# Other kind of link
-			if ( preg_match( $wgContLang->linkTrail(), $match[4], $submatch ) ) {
+			if ( preg_match( $wgContLang->linkTrail(), $match[3], $submatch ) ) {
 				$trail = $submatch[1];
 			} else {
 				$trail = "";

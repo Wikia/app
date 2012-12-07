@@ -144,16 +144,23 @@ $messages['ar'] = array(
 $messages['as'] = array(
 	'editaccount' => 'একাউণ্ট সম্পাদনা কৰক',
 	'editaccount-title' => 'বিশেষ:একাউন্ট সম্পাদনা',
+	'editaccount-frame-manage' => 'একাউণ্ট সম্পাদনা কৰক',
 	'editaccount-frame-usage' => 'টোকা',
 	'editaccount-submit-account' => 'একাউণ্ট ব্যৱ্স্থাপনা',
 	'editaccount-label-email' => 'নতুন ই-মেইল ঠিকনা সাঁচি ৰাখক',
 	'editaccount-label-pass' => 'নতুন গুপ্তশব্দ লিখক',
+	'editaccount-label-reason' => 'কাৰণ:',
 	'editaccount-submit-pass' => 'গুপ্তশব্দ সাঁচক',
+	'editaccount-submit-realname' => 'প্ৰকৃত নাম সাঁচি থওক',
 	'editaccount-submit-close' => 'একাউন্ট বন্ধ কৰক',
+	'editaccount-submit-button' => 'সাঁচি থওক',
 	'editaccount-status' => 'বাৰ্তাৰ স্থিতি',
 	'editaccount-labal-account-status' => 'একাউণ্টৰ স্থিতি',
 	'editaccount-labal-email-status' => 'ই-মেইলৰ স্থিতি:',
+	'editaccount-status-confirmed' => 'স্বয়ংনিশ্চিত',
+	'editaccount-status-unconfirmed' => 'অনিশ্চিত',
 	'editaccount-status-realuser' => 'প্ৰকৃত সদস্য',
+	'editaccount-status-tempuser' => 'অস্থায়ী সদস্য',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -541,6 +548,7 @@ $messages['fa'] = array(
  * @author Centerlink
  * @author Crt
  * @author Jack Phoenix <jack@countervandalism.net>
+ * @author Nedergard
  * @author Nike
  * @author Tm T
  */
@@ -559,11 +567,13 @@ $messages['fi'] = array(
 	'editaccount-label-pass' => 'Aseta uusi salasana',
 	'editaccount-label-realname' => 'Aseta uusi oikea nimi',
 	'editaccount-label-clearunsub' => 'Tilaus lopetettu',
+	'editaccount-label-reason' => 'Syy',
 	'editaccount-submit-email' => 'Tallenna sähköpostiosoite',
 	'editaccount-submit-pass' => 'Tallenna salasana',
 	'editaccount-submit-realname' => 'Tallenna oikea nimi',
 	'editaccount-submit-cleardisable' => 'Nollaa poista käytöstä -lippu',
 	'editaccount-submit-close' => 'Sulje tunnus',
+	'editaccount-submit-button' => 'Tallenna',
 	'editaccount-usage-close' => 'Käyttäjätunnuksen voi poistaa käytöstä myös sekoittamalla sen salasanan ja poistamalla sen sähköpostiosoitteen. Huomioi, että nämä tiedot katoavat eikä niitä voi palauttaa.',
 	'editaccount-warning-close' => '<b>Varoitus!</b> Olet poistamassa pysyvästi käytöstä käyttäjän <b>$1</b> tilin. Tämä ei voi palauttaa. Oletko varma, että haluat tehdä tämän?',
 	'editaccount-status' => 'Tilaviesti',
@@ -592,6 +602,7 @@ $messages['fi'] = array(
 	'editaccount-log-entry-close' => 'poisti käytöstä tunnuksen $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Wikia on poistanut tämän tilin käytöstä kaikkialta.</div>',
 	'right-editaccount' => 'Muokata toisten käyttäjien asetuksia',
+	'action-editaccount' => 'muokata toisten käyttäjien tietoja',
 );
 
 /** French (français)
@@ -1294,12 +1305,16 @@ Laat de gebruiker bij deze wiki aanmelden met een nieuw wachtwoord om problemen 
 	'editaccount-label-pass' => 'Nieuw wachtwoord instellen',
 	'editaccount-label-realname' => 'Nieuwe echte naam instellen',
 	'editaccount-label-clearunsub' => 'Uitgeschreven',
+	'editaccount-label-toggleadopt-prevent' => 'Automatische adoptie voorkomen',
+	'editaccount-label-toggleadopt-allow' => 'Automatische adoptie toestaan',
+	'editaccount-label-reason' => 'Reden:',
 	'editaccount-submit-email' => 'E-mailadres opslaan',
 	'editaccount-submit-pass' => 'Wachtwoord opslaan',
 	'editaccount-submit-realname' => 'Echte naam opslaan',
 	'editaccount-submit-clearunsub' => 'Uitschrijven leegmaken',
 	'editaccount-submit-cleardisable' => 'Gebruiker weer vrijgeven',
 	'editaccount-submit-close' => 'Gebruiker afsluiten',
+	'editaccount-submit-button' => 'Opslaan',
 	'editaccount-usage-close' => 'U kunt een gebruiker ook uitschakelen door een onbekend wachtwoord in te stellen en het e-mailadres te verwijderen.
 De huidige gegevens gaan dan verloren en zijn niet te herstellen.',
 	'editaccount-warning-close' => '<b>Let op!</b>
@@ -1344,6 +1359,7 @@ Probeer het opnieuw of neem contact op met het Tech Team.',
 	'editaccount-log-entry-close' => 'heeft gebruiker $2 uitgeschakeld',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Deze gebruiker is globaal uitgeschakeld door Wikia.</div>',
 	'right-editaccount' => 'Voorkeuren van gebruikers bewerken',
+	'action-editaccount' => 'gegevens van andere gebruikers bewerken',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)

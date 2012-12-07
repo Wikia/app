@@ -6,25 +6,29 @@
 
 class ImageLazyLoad extends WikiaObject {
 	static private $isWikiaMobile = null;
-	static private $enabled = false;
+	static private $enabled = null;
 	const LAZY_IMAGE_CLASSES = 'lzy lzyPlcHld';
 
-	function __construct(){
-		parent::__construct();
+	public function isEnabled() {
+		if ( is_null( self::$enabled ) ) {
+			self::$enabled = false;
 
-		if ( self::$isWikiaMobile === null ) {
-			self::$isWikiaMobile = $this->app->checkSkin( 'wikiamobile' );
+			if ( self::$isWikiaMobile === null ) {
+				self::$isWikiaMobile = $this->app->checkSkin( 'wikiamobile' );
+			}
+
+			if ( !self::$isWikiaMobile && empty( $this->app->wg->RTEParserEnabled ) ) {
+				self::$enabled = true;
+			}
 		}
 
-		if ( !self::$isWikiaMobile && empty( $this->app->wg->RTEParserEnabled ) ) {
-			self::$enabled = true;
-		}
+		return self::$enabled;
 	}
 
 	public function onThumbnailImageHTML( $options, $linkAttribs, $attribs, $file, &$html ) {
 		global $wgRTEParserEnabled;
 
-		if ( self::$enabled && empty( $wgRTEParserEnabled ) ) {
+		if ( $this->isEnabled() && empty( $wgRTEParserEnabled ) ) {
 
 			// Don't lazy-load data elements
 			if ( startsWith( $attribs[ 'src' ], 'data:' ) ) {
@@ -73,7 +77,7 @@ class ImageLazyLoad extends WikiaObject {
 	function onGalleryBeforeRenderImage( &$image ) {
 		global $wgRTEParserEnabled;
 
-		if ( self::$enabled && empty( $wgRTEParserEnabled ) ) {
+		if ( $this->isEnabled() && empty( $wgRTEParserEnabled ) ) {
 
 			// Don't lazy-load data elements
 			if ( startsWith( $image[ 'thumbnail' ], 'data:' ) ) {
@@ -109,7 +113,7 @@ class ImageLazyLoad extends WikiaObject {
 	}
 
 	function onBeforePageDisplay( OutputPage &$out, &$skin ) {
-		if ( self::$enabled ) {
+		if ( $this->isEnabled() ) {
 			$out->addHtml( '<noscript><link rel="stylesheet" href="' . $this->app->wg->ExtensionsPath . '/wikia/ImageLazyLoad/css/ImageLazyLoadNoScript.css" /></noscript>' );
 		}
 		return true;

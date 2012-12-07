@@ -195,7 +195,7 @@ $messages['ar'] = array(
 	'wikiamobile-sendpassword-label' => 'أرسل كلمة المرور الجديدة',
 );
 
-/** تورکجه (تورکجه)
+/** South Azerbaijani (تورکجه)
  * @author Arjanizary
  */
 $messages['azb'] = array(

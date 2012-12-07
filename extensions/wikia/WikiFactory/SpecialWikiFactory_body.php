@@ -1004,6 +1004,9 @@ class ChangeLogPager extends TablePager {
 		}
 		$this->mDefaultDirection = true;
 		parent::__construct();
+		// BugId: 69197 - override parent behaviour to use database with correct data instead
+		global $wgExternalSharedDB;
+		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB);
 	}
 
 	/**

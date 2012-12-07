@@ -559,6 +559,7 @@ $messages['et'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  * @author Nike
  */
 $messages['fi'] = array(
@@ -584,6 +585,10 @@ $messages['fi'] = array(
 	'founderprogressbar-video-add-action' => 'Lisää video',
 	'founderprogressbar-toptenlist-add-label' => 'Lisää 10-kärjessä -luetteloon',
 	'founderprogressbar-toptenlist-add-action' => 'Lisää 10-kärjessä -luetteloon',
+	'founderprogressbar-uncategorized-visit-label' => 'Näytä luokittelemattomat sivut',
+	'founderprogressbar-total-edit300-action' => 'Lisää sivu',
+	'founderprogressbar-bonus-page-add5-action' => 'Lisää sivu',
+	'founderprogressbar-browse-page-name' => 'Selaa',
 );
 
 /** French (français)

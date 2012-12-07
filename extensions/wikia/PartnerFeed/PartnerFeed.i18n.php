@@ -148,6 +148,7 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
@@ -157,6 +158,7 @@ $messages['fi'] = array(
 	'feed-title-recent-badges' => 'Viimeaikaiset rintanapit',
 	'feed-title-recent-images' => 'Viimeaikaiset kuvat',
 	'all-blog-posts' => 'kaikki kategoriat',
+	'feed-title-recentchanges' => 'Tuoreet muutokset',
 );
 
 /** French (français)

@@ -80,7 +80,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$page = F::build( 'Article', array( $pageId ), 'newFromID' );
 	
-		if(! ( $page instanceof Article ) ) {
+		if( $page === null ) {
 			throw new WikiaException( 'Invalid Article ID' );
 		}
 	

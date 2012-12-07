@@ -181,6 +181,22 @@ Verifica le orthographia.',
 	'log-description-piggyback' => 'Iste registro es un historia de personificationes autorisate per le Portacontos.',
 );
 
+/** Italian (italiano)
+ * @author Sannita
+ */
+$messages['it'] = array(
+	'piggybac-desc' => 'Permette di accedere come un altro utente',
+	'piggyback' => 'Piggyback',
+	'piggyback-otherusername' => 'Altro nome utente:',
+	'piggyback-nosuchuser' => 'Non c\'è nessun utente che si chiama "$1".
+Il software fa distinzione fra maiuscole e minuscole.
+Controlla se ci sono errori.',
+	'piggyback-wronguser' => '$1 non è il tuo nome utente.',
+	'piggyback-loginprompt' => 'Per favore, inserisci nuovamente il tuo nome utente e la password.',
+	'piggyback-firstlogout' => 'Per favore, esegui il logout sul tuo account.',
+	'action-piggyback' => 'Entra come altro utente.',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
