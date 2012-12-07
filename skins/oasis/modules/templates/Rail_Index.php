@@ -1,3 +1,6 @@
+<? if ( $isAside ): ?>
+<aside>
+<? endif; ?>
 <div id="WikiaRail" class="WikiaRail<?= !empty($isGridLayoutEnabled) ? ' grid-2' : '' ?>">
 
 	<?php
@@ -12,3 +15,6 @@
 	<div id="WikiaAdInContentPlaceHolder"></div>
 
 </div>
+<? if ( $isAside ): ?>
+</aside>
+<? endif; ?>
