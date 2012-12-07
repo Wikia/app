@@ -336,7 +336,7 @@ ___________________________________________<br />
 your email preferences here: http://community.wikia.com/Special:Preferences',
 
 	/* Preferences */
-	'prefs-email-wall-v2' => 'Message Wall',
+	'prefs-email-wall-v2' => 'Message Wall and Forum',
 
 	'tog-enotifwallthread-v2' => 'Email me…',
 
