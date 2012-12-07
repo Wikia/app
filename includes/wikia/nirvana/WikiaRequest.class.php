@@ -145,7 +145,7 @@ class WikiaRequest {
 	 *
 	 * @return  Array The value as an array
 	 */
-	public function getArray( $name, default = array() ) {
+	public function getArray( $name, $default = array() ) {
 		$val = $this->getVal( $name, $default );
 
 		if ( is_string( $val ) && strpos( $val, ',') !== false ) {
