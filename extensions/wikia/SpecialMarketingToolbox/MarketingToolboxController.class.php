@@ -116,10 +116,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$selectedModuleData['validationErrors'] = array();
 
 		if ($this->request->wasPosted()) {
-			$selectedModuleData = $this->request->getParams();
+			$selectedModuleData['values'] = $this->request->getParams();
 
-			$selectedModuleData['values'] = $module->filterData($selectedModuleData);
-			$selectedModuleData['validationErrors'] = $module->validate($selectedModuleData);
+			$selectedModuleData['values'] = $module->filterData($selectedModuleData['values']);
+			$selectedModuleData['validationErrors'] = $module->validate($selectedModuleData['values']);
 			if (empty($selectedModuleData['validationErrors'])) {
 				$this->toolboxModel->saveModule(
 					$this->langCode,
@@ -127,7 +127,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 					$this->verticalId,
 					$this->date,
 					$this->selectedModuleId,
-					$selectedModuleData,
+					$selectedModuleData['values'],
 					$this->wg->user->getId()
 				);
 

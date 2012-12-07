@@ -91,5 +91,15 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 	public function renderEditor($data) {
 		return parent::renderEditor($data);
 	}
+
+	public function filterData($data) {
+		$data = parent::filterData($data);
+
+		if (strpos($data['boardUrl'], 'http://') === false) {
+			$data['boardUrl'] = 'http://' . $data['boardUrl'];
+		}
+
+		return $data;
+	}
 }
 ?>
