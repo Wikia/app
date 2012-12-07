@@ -20,8 +20,15 @@ class MarketingToolboxModel extends WikiaModel {
 	protected $sections = array();
 	protected $verticals = array();
 
-	public function __construct() {
+	protected $specialPageClass = 'SpecialPage';
+	protected $userClass = 'User';
+
+	public function __construct($app = null) {
 		parent::__construct();
+
+		if (!empty($app)) {
+			$this->setApp($app);
+		}
 
 		$this->statuses = array(
 			'NOT_PUBLISHED' => 1,
@@ -151,25 +158,28 @@ class MarketingToolboxModel extends WikiaModel {
 	 * Get list of modules for selected lang/vertical/date
 	 * applying translation for module name
 	 *
-	 * @param $langCode
-	 * @param $verticalId
-	 * @param $timestamp
+	 * @param string $langCode
+	 * @param int $sectionId
+	 * @param int $verticalId
+	 * @param int $timestamp
+	 * @param int $activeModule
+	 *
 	 * @return array
 	 */
 	public function getModulesData($langCode, $sectionId, $verticalId, $timestamp, $activeModule = self::MODULE_SLIDER) {
 		$moduleList = $this->getModuleList($langCode, $sectionId, $verticalId, $timestamp);
 
 		$modulesData = array(
-			'lastEditDate' => null,
-			'lastEditorName' => null,
+			'lastEditor' => null,
 			'moduleList' => array()
 		);
 
+		$userClass = $this->getUserClass();
 		foreach ($moduleList as $moduleId => &$module) {
 			if ($moduleId == $activeModule) {
 				$userName = null;
 				if ($module['lastEditorId']) {
-					$user = User::newFromId($module['lastEditorId']);
+					$user = $userClass::newFromId($module['lastEditorId']);
 					if ($user instanceof User) {
 						$userName = $user->getName();
 					}
@@ -187,7 +197,8 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	public function getModuleUrl($langCode, $sectionId, $verticalId, $timestamp, $moduleId) {
-		return SpecialPage::getTitleFor('MarketingToolbox', 'editHub')->getLocalURL(
+		$specialPage = $this->getSpecialPageClass();
+		return $specialPage::getTitleFor('MarketingToolbox', 'editHub')->getLocalURL(
 			array(
 				'moduleId' => $moduleId,
 				'date' => $timestamp,
@@ -201,9 +212,11 @@ class MarketingToolboxModel extends WikiaModel {
 	/**
 	 * Get list of modules for selected lang/vertical/timestamp
 	 *
-	 * @param $langCode
-	 * @param $verticalId
-	 * @param $timestamp
+	 * @param string $langCode
+	 * @param int $sectionId
+	 * @param int $verticalId
+	 * @param int $timestamp
+	 *
 	 * @return array
 	 */
 	protected function getModuleList($langCode, $sectionId, $verticalId, $timestamp) {
@@ -363,5 +376,21 @@ class MarketingToolboxModel extends WikiaModel {
 		}
 
 		return $table;
+	}
+
+	protected function getSpecialPageClass() {
+		return $this->specialPageClass;
+	}
+
+	public function setSpecialPageClass($specialPageClass) {
+		$this->specialPageClass = $specialPageClass;
+	}
+
+	protected function getUserClass() {
+		return $this->userClass;
+	}
+
+	public function setUserClass($userClass) {
+		$this->userClass = $userClass;
 	}
 }

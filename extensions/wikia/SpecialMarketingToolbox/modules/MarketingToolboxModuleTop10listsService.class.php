@@ -24,4 +24,11 @@ class MarketingToolboxModuleTop10listsService extends MarketingToolboxModuleServ
 			),
 		);
 	}
+
+	public function renderEditor($data) {
+		$model = new MarketingToolboxTop10listsModel();
+		$data['list'] = $model->getWikiListByCategoryId($this->langCode, $this->verticalId);
+
+		return parent::renderEditor($data);
+	}
 }

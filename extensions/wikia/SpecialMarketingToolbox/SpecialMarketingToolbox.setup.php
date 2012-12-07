@@ -30,6 +30,7 @@ $app->registerController('MarketingToolboxController', $dir.'MarketingToolboxCon
 
 $app->registerClass('MarketingToolboxModel', $dir.'models/MarketingToolboxModel.class.php');
 $app->registerClass('MarketingToolboxUserPropertiesHandler', $dir.'models/MarketingToolboxUserPropertiesHandler.class.php');
+$app->registerClass('MarketingToolboxTop10listsModel', $dir.'models/MarketingToolboxTop10listsModel.class.php');
 
 $app->registerClass('MarketingToolboxModuleService', $dir.'modules/MarketingToolboxModuleService.class.php');
 $app->registerClass('MarketingToolboxModuleSliderService', $dir.'modules/MarketingToolboxModuleSliderService.class.php');
