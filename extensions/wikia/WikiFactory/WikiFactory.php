@@ -2843,18 +2843,10 @@ class WikiFactory {
 	}
 
 	/**
-	 * getClusters
-	 *
-	 * Gets list of all database clusters
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @param
-	 *
+	 * Gets a list of all secondary database clusters, i.e. wikicities_c1, etc.
 	 */
 
-	static public function getClusters() {
+	static public function getSecondaryClusters() {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
