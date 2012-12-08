@@ -419,10 +419,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	// Special Case for using WMU in on Special Pages
 	WMU_isOnSpecialPage = wgNamespaceNumber === -1;
 
-	if(gallery === -2){
-		//	if (showComboAjaxForPlaceHolder("WikiaImagePlaceholderInner" + box,true)) return false;
-	}
-
 	if(typeof gallery == "undefined") {
 		if (typeof showComboAjaxForPlaceHolder == 'function') {
 			if (showComboAjaxForPlaceHolder("",false, "", false, true)) return false; // show the 'login required for this action' message.

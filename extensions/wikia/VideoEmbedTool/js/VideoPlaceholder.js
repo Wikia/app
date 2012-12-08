@@ -4,10 +4,12 @@
  * Handle video placeholders that are saved in articles
  *
  */
+
+/*global VET_show */
  
 (function($, window) {
 
-VideoPlaceholder = {
+var VideoPlaceholder = {
 	init: function() {
 		// Don't run more than once
 		if(this.loaded) {
@@ -59,8 +61,8 @@ VideoPlaceholder = {
 		if (!ev) {
 			var c = this.getEvent.caller;
 			while (c) {
-				ev = c.arguments[0];
-				if (ev && Event == ev.constructor) {
+				ev = c.arguments[0]; /* JSlint ignore */
+				if (ev && Event == ev.constructor) { /* JSlint ignore */
 					break;
 				}
 				c = c.caller;
@@ -70,6 +72,8 @@ VideoPlaceholder = {
 		return ev;
 	}
 
-}	
+};
+
+window.VideoPlaceholder = VideoPlaceholder;
 
 })(jQuery, this);
