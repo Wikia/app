@@ -294,6 +294,15 @@ $messages['pms'] = array(
 	'wikiagameguides-desc' => "Mòdoj ëd l'aplicassion mòbil Wikia Games Guides",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikiagameguides-content-category' => 'وېشنيزه',
+	'wikiagameguides-content-add' => 'ورګډول',
+	'wikiagameguides-content-save' => 'خوندي کول',
+);
+
 /** Portuguese (português)
  * @author Hamilton Abreu
  */

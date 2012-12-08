@@ -186,6 +186,13 @@ $messages['pms'] = array(
 	'site-layout' => 'Presentassion dël sit',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'new-look' => 'ويکيا',
+);
+
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author SandroHc

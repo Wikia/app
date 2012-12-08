@@ -486,6 +486,7 @@ Escribe aquí la segunda sección de tu artículo.',
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Xabier Armendaritz
  */
 $messages['eu'] = array(
 	'createpage-desc' => 'Wikiako WYSIWYG editatzailea erabiliz orrialde berriak sortzea ahalbidetzen du',
@@ -505,7 +506,7 @@ Mesedez beste izen bat aukeratu.',
 	'createpage-dialog-message2' => 'Nola deitu nahi diozu?',
 	'createpage-dialog-choose' => 'Aukeratu orrialderako diseinua:',
 	'createpage-dialog-format' => 'Disenu estandarra',
-	'createpage-dialog-blank' => 'Orrialde txuria',
+	'createpage-dialog-blank' => 'Orri zuria',
 	'createpage-error-empty-title' => 'Msedez idatzi zure artikuluarentzako izenburua',
 	'createpage-error-invalid-title' => 'Barkatu, izenburu hori okerra da.
 Mesedez erabiki izenburu desberdina.',
@@ -767,6 +768,15 @@ Kérünk, használj más címet.',
 ==Címsor==
 
 Írd az oldalad második szakaszát ide.',
+);
+
+/** Armenian (Հայերեն)
+ * @author Vadgt
+ */
+$messages['hy'] = array(
+	'createpage-sp-title' => 'Ստեղծել նոր էջ',
+	'createpage_title' => 'Ստեղծել նոր էջ',
+	'createpage_title_caption' => 'Վերնագիր',
 );
 
 /** Interlingua (interlingua)

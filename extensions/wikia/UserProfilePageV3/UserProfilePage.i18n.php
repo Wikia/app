@@ -1982,6 +1982,7 @@ $messages['ps'] = array(
 	'user-identity-box-my-fb-page' => 'زما فېسبوک',
 	'user-identity-box-group-sysop' => 'پازوال',
 	'user-identity-box-group-founder' => 'بنسټګر',
+	'user-identity-box-group-staff' => 'امله',
 	'user-identity-box-group-helper' => 'مرستيال',
 	'user-identity-box-zero-state-location' => 'استوګنځای',
 	'user-identity-box-zero-state-birthday' => 'زېږکليزه',

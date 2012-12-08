@@ -41,6 +41,13 @@ $messages['az'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Növbəti',
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Заглавие',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
