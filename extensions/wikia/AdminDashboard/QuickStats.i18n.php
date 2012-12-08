@@ -80,10 +80,11 @@ $messages['az'] = array(
 
 /** South Azerbaijani (تورکجه)
  * @author E THP
+ * @author Mousa
  */
 $messages['azb'] = array(
 	'quickstats-header-date' => 'تاریخ',
-	'quickstats-header-views' => 'گؤرونوش‌لر',
+	'quickstats-header-views' => 'گؤرونوشلر',
 	'quickstats-header-edits' => 'دَییشدیرمه‌لر',
 	'quickstats-header-photos' => 'شکیل‌لر',
 );
@@ -103,6 +104,14 @@ $messages['ba'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1милл.',
 	'quickstats-number-shortening-billions' => '$1миллиард',
+);
+
+/** Bavarian (Boarisch)
+ * @author Bua333
+ */
+$messages['bar'] = array(
+	'quickstats-header-label' => 'Ministatistik',
+	'quickstats-header-date' => 'Datum',
 );
 
 /** Bulgarian (български)

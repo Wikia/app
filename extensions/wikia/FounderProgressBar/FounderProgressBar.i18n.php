@@ -1736,6 +1736,7 @@ $messages['pl'] = array(
 $messages['ps'] = array(
 	'founderprogressbar-progress-see-full-list' => 'بشپړ لړليک کتل',
 	'founderprogressbar-progress-hide-full-list' => 'بشپړ لړليک پټول',
+	'founderprogressbar-task-completed' => 'بشپړ شو',
 	'founderprogressbar-page-add10-action' => 'يو مخ ورګډول',
 	'founderprogressbar-photo-add10-action' => 'يو انځور ورګډول',
 	'founderprogressbar-category-add3-action' => 'يوه وېشنيزه ورګډول',

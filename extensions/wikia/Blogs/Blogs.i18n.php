@@ -3444,6 +3444,7 @@ $messages['ps'] = array(
 	'create-blog-preview' => 'مخليدنه',
 	'create-blog-listing-preview' => 'مخليدنه',
 	'create-blog-listing-matches-calculate' => 'شمېرل',
+	'create-blog-listing-sortby' => 'اوډنه له مخې د',
 	'create-blog-listing-sortby-author' => 'ليکوال',
 	'blog-defaulttitle' => 'بلاګونه',
 	'blog-readfullpost' => 'نور لوستل',
@@ -3461,6 +3462,7 @@ $messages['ps'] = array(
 	'blog-create-next-label' => 'د بلاګ نوې ليکنه ليکل',
 	'blog-desc' => 'د بلاګ ليکنې',
 	'blog-comment-sending' => 'د لېږلو په حال کې ...',
+	'blogs-searchprofile' => 'بلاګونه',
 );
 
 /** Portuguese (português)

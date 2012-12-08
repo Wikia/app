@@ -304,7 +304,7 @@ $messages['lb'] = array(
  * @author Moyogo
  */
 $messages['ln'] = array(
-	'ircgate-username' => 'Nkómbó ya mosáleli :',
+	'ircgate-username' => 'Nkómbó ya mosáleli:',
 	'ircgate-channel' => 'Lileko:',
 );
 
