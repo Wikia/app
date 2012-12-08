@@ -450,7 +450,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		}
 	}
 
-	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);
+	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'open');
 
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
 	if(VET_panel != null) {
@@ -794,7 +794,7 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 function VET_insertFinalVideo(e, type) {
 	var errorDiv = $('#VideoEmbedError');
 
-	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);
+	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'complete');
 
 	YAHOO.util.Event.preventDefault(e);
 
@@ -1076,8 +1076,7 @@ function VET_tracking(action, label, value) {
 	WikiaTracker.trackEvent(null, {
 		ga_category: 'vet',
 		ga_action: action,
-		ga_label: label || '',
-		ga_value: value || 0
+		ga_label: label || ''
 	}, 'internal');
 }
 
