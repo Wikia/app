@@ -390,8 +390,10 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 	};
 
 	return {
-		getUrl: getUrl,
-		getCustomKeyValues: getCustomKeyValues
+		getUrl: getUrl
+		, getCustomKeyValues: getCustomKeyValues
+		, getDomainKV: getDomainKV
+		, getHostnamePrefix: getHostnamePrefix
 	};
 };
 

@@ -1,4 +1,4 @@
-var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker) {
+var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker) {
 	var slotMap
 		, logGroup = 'AdProviderEvolve'
 		, ord = Math.round(Math.random() * 23456787654)
@@ -126,6 +126,8 @@ var AdProviderEvolve = function (ScriptWriter, WikiaTracker, log, window, docume
 			'adj' + '/' +
 			'gn.wikia4.com' + '/' +
 			getKv(slotname) +
+			wikiaDart.getDomainKV(window.location.hostname) + // TODO inconsistent, most func just read window.*
+			wikiaDart.getHostnamePrefix(window.location.hostname) + // TODO inconsistent, most func just read window.*
 			'sz=' + size + ';' +
 			(dcopt ? 'dcopt=' + dcopt + ';' : '') +
 			'type=pop;type=int;' + // TODO remove?
