@@ -1,13 +1,3 @@
-<?
-
-/*
-echo $app->renderView(
-	'WikiaStyleGuideForm',
-	'index',
-	array('form' => $data['form'])
-);*/
-?>
-
 <div class="grid-4 alpha wide">
 	<?=F::app()->renderView(
 		'MarketingToolbox',
