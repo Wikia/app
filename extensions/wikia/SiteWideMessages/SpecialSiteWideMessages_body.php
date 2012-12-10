@@ -1118,6 +1118,10 @@ class SiteWideMessages extends SpecialPage {
 		global $wgMemc, $wgCityId, $wgLanguageCode;
 		global $wgExternalSharedDB;
 
+		if ( !$user->isLoggedIn() ) {
+			return false;
+		}
+
 		wfProfileIn(__METHOD__);
 
 		$localCityId = isset($wgCityId) ? $wgCityId : 0;
