@@ -55,7 +55,7 @@ class SEOTweaksHooksHelper extends WikiaModel {
 
 		if ( !empty( $file ) && !empty( $title ) ) {
 
-			if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
+			if ( F::build( 'WikiaFileHelper' )->isFileTypeVideo( $file ) ) {
 
 				$newTitle = $this->wf->Msg('seotweaks-video') . ' - ' . $title->getBaseText();
 			} else {
@@ -68,7 +68,7 @@ class SEOTweaksHooksHelper extends WikiaModel {
 			}
 
 			if ( !empty( $newTitle ) ) {
-				$this->wg->out->setPageTitle( $newTitle );
+				$this->wg->Out->setPageTitle( $newTitle );
 			}
 		}
 		return true;
