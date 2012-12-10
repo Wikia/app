@@ -122,52 +122,27 @@ class Backlinks
 
 	/**
 	 * Called by maintenance script.
+	 * @todo remove this method once we've ran it against all wikis
 	 */
-	static function initTable() {
+	static function dropTable() {
 		wfProfileIn(__METHOD__);
 
 		// create db handler
 		$dbr = wfGetDb( DB_MASTER );
 
-		if (! $dbr->tableExists(self::TABLE_NAME) ) {
+		if ( $dbr->tableExists(self::TABLE_NAME) ) {
 			try {
-				$source = dirname(__FILE__) . "/patch-create-wikia_page_backlinks.sql";
-				$dbr->sourceFile( $source );
+				$dbr->query( 'DROP TABLE '.self::TABLE_NAME );
 			}
 			catch (Exception $e) {
 				wfProfileOut(__METHOD__);
 				return $e;
 			}
 			wfProfileOut(__METHOD__);
-			return "Table ".self::TABLE_NAME." created.";
+			return "Dropped table ".self::TABLE_NAME;
 		}
 
 		wfProfileOut(__METHOD__);
-		return "Table ".self::TABLE_NAME." already exists.";
-	}
-
-	/**
-	 * LoadExtensionSchemaUpdates handler; set up wikia_page_backlinks table on install/upgrade.
-	 *
-	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
-	 * @param $updater DatabaseUpdater
-	 * @return bool
-	 */
-	static function onLoadExtensionSchemaUpdates( $updater = null ) {
-		wfProfileIn( __METHOD__ );
-		$map = array(
-			'mysql' => 'patch-create-wikia_page_backlinks.sql',
-		);
-
-		$type = $updater->getDB()->getType();
-		if( isset( $map[$type] ) ) {
-			$sql = dirname( __FILE__ ) . "/" . $map[ $type ];
-			$updater->addExtensionTable( 'wikia_page_backlinks', $sql );
-		} else {
-			throw new MWException( "Backlinks extension does not currently support $type database." );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
+		return "Table ".self::TABLE_NAME." doesn't exists.";
 	}
 }
