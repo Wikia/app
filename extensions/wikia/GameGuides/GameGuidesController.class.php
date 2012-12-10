@@ -379,8 +379,10 @@ class GameGuidesController extends WikiaController {
 					array(
 						'action' => 'query',
 						'list' => 'allcategories',
+						'redirects' => true,
 						'aclimit' => $limit,
-						'acfrom' => $offset
+						'acfrom' => $offset,
+						'acmin' => 1
 					)
 				);
 			}
