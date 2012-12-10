@@ -132,7 +132,7 @@ class ApiQueryAllCategories extends ApiQueryGeneratorBase {
 					$item['hidden'] = '';
 				}
 				//Wikia Change - add id for a Category
-				if(isset($prop['id'])) {
+				if ( isset( $prop['id'] ) ) {
 					$item['pageid'] = $row->page_id;
 				}
 				//Wikia Change end
