@@ -920,7 +920,7 @@
 						(100.0*method.totalTime/total).toFixed(2),
 						method.calls,
 						'<a href="#" class="method-drilldown" data-drilldown-type="cut" data-method-id="'+method.id+'">[X]</a> '
-							+ '<a href="#" class="method-drilldown" data-drilldown-type="nullity" data-method-id="'+method.id+'">[N]</a> '
+							+ '<a href="#" class="method-drilldown" data-drilldown-type="nullify" data-method-id="'+method.id+'">[N]</a> '
 							+ '<a href="#" class="method-drilldown" data-drilldown-type="select" data-method-id="'+method.id+'">'+method.id+'</a>',
 					];
 				html += '<tr>';
