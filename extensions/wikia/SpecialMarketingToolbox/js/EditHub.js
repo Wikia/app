@@ -24,7 +24,8 @@ EditHub.prototype = {
 		}, $.validator.messages.url);
 
 		this.form.validate({
-			errorElement: 'p'
+			errorElement: 'p',
+			onkeyup: false
 		});
 	},
 
