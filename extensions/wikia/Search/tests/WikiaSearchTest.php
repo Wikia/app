@@ -58,13 +58,6 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$this->assertEquals( $dynamicOutput, $expectedDynamicOutput,
 		        'An unsupported language field parameter should result in the default field name during WikiaSearch::field()' );
 
-		// A field that is dynamic unstored should have '_us' and the language code appended
-		$dynamicUnstoredField			= 'first500';
-		$dynamicUnstoredOutput			= WikiaSearch::field( $dynamicUnstoredField );
-		$expectedDynamicUnstoredOutput	= 'first500_us_en';
-		$this->assertEquals( $dynamicUnstoredOutput, $expectedDynamicUnstoredOutput,
-							'An unstored dynamic field did not have the appropriate suffixes appended during WikiaSearch::field()' );
-
 		// A field that is dynamic and multivalued should have '_mv' and the language code appended
 		$dynamicMultiValuedField			= 'categories';
 		$dynamicMultiValuedOutput			= WikiaSearch::field( $dynamicMultiValuedField );
