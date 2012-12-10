@@ -13,15 +13,11 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 
 		decorateAsKv,
 		trimKvs,
-		isWikiaHub,
-		isAutoHub,
-		getSite,
-		getZone1,
-		getZone2,
 		getSubdomain,
 		getCustomKeyValues,
 		getArticleKV,
 		getDomainKV,
+		getDartHubName,
 		getHostnamePrefix,
 		getTitle,
 		getLanguage,
@@ -44,54 +40,14 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		return '';
 	};
 
-	// TODO @rychu refactor out?
-	isWikiaHub = function () {
-		return !!window.wgWikiaHubType;	// defined in source of hub article
-	};
-
-	// TODO @rychu refactor out?
-	// TODO: this function doesn't really work
-	isAutoHub = function () {
-		var key;
-
-		if (window.wgDBname !== 'wikiaglobal') {
-			return false;
+	getDartHubName = function () {
+		if (window.cscoreCat === 'Entertainment') {
+			return 'ent';
 		}
-
-		if (!window.wgHubsPages) {
-			return false;
+		if (window.cscoreCat === 'Gaming') {
+			return 'gaming';
 		}
-
-		for (key in window.wgHubsPages) {
-			if (window.wgHubsPages.hasOwnProperty(key)) {
-				if (window.wgPageName.toLowerCase() === key.toLowerCase()) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	};
-
-	getSite = function (hub) {
-		return 'wka.' + hub;
-	};
-
-	// Effectively the dbname, defaulting to wikia.
-	getZone1 = function (dbname) {
-		// Zone1 is prefixed with "_" because zone's can't start with a number, and some dbnames do.
-		if (dbname) {
-			return '_' + dbname.replace('/[^0-9A-Z_a-z]/', '_');
-		}
-		return '_wikia';
-	};
-
-	// Page type, ie, "home" or "article"
-	getZone2 = function (pageType) {
-		if (pageType) {
-			return pageType;
-		}
-		return 'article';
+		return 'life';
 	};
 
 	getSubdomain = function () {
@@ -324,24 +280,23 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 	};
 
 	initSiteAndZones = function () {
-		if (isWikiaHub()) {
-			site = getSite('hub');
-			zone1 = getZone1(window.wgWikiaHubType + '_hub');
-			zone2 = 'hub';
-		} else if (isAutoHub()) {
-			var hubsPages = window.wgHubsPages[window.wgPageName.toLowerCase()];
-			site = getSite(hubsPages.site);
-			zone1 = getZone1(hubsPages.name);
-			zone2 = 'hub';
-		}
+		var getZone2;
 
-		if (!site) {
-			site = getSite(window.cityShort);
-		}
-		if (!zone1) {
-			zone1 = getZone1(window.wgDBname);
-		}
-		if (!zone2) {
+		// Page type, ie, "home" or "article"
+		getZone2 = function (pageType) {
+			if (pageType) {
+				return pageType;
+			}
+			return 'article';
+		};
+
+		if (window.wikiaPageIsHub) {
+			site = 'wka.hub';
+			zone1 = '_' + getDartHubName() + '_hub';
+			zone2 = 'hub';
+		} else {
+			site = 'wka.' + window.cityShort;
+			zone1 = '_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
 			zone2 = getZone2(window.wikiaPageType);
 		}
 	};
