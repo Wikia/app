@@ -1,6 +1,11 @@
 <?php
 class FooterController extends WikiaController {
 
+	public function __construct() {
+		parent::__construct();
+		$this->registerDefaultFooterItems();
+	}
+
 	public function executeIndex() {
 		global $wgShowMyToolsOnly,
 			   $wgEnableWikiaBarExt,
@@ -105,16 +110,14 @@ class FooterController extends WikiaController {
 		$items = (array)$params['items'];
 		wfRunHooks('BeforeToolbarMenu', array(&$items));
 
-		$this->registerDefaultFooterItems();
-
 		$itemObjects = array();
-
 		foreach($items as $item) {
 			$itemObj = FooterMenuItemFactory::buildItem($item['type']);
 			$itemObj->setRawData($item);
 			$itemObjects [] = $itemObj;
 		}
 		$this->items = $itemObjects;
+
 		$this->wf->profileOut(__METHOD__);
 	}
 
