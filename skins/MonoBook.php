@@ -189,7 +189,9 @@ class MonoBookTemplate extends WikiaMonoBookTemplate {
 		// Generate additional footer links
 		$footerlinks = array(
 			'lastmod', 'viewcount', 'numberofwatchingusers',
+            /* Wikia change begin - @author: Kamil Koterba */
 			'footerlinks'
+            /* Wikia change end */
 		);
 		$validFooterLinks = array();
 		foreach( $footerlinks as $aLink ) {
