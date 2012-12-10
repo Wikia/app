@@ -39,7 +39,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		$fieldName = self::SECTION_FIELD_PREFIX . $sectionIdx;
 		return array(
 			$fieldName => array(
-				'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array($sectionIdx)),
+				'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $sectionIdx),
 				'validator' => new WikiaValidatorString(
 					array(
 						'min' => 1
@@ -56,7 +56,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		$linkUrlFieldName = self::LINK_URL . $sectionIdx . $this->lettersMap[$linkIdx];
 		return array(
 			$linkHeaderFieldName => array(
-				'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array($this->lettersMap[$linkIdx])),
+				'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $this->lettersMap[$linkIdx]),
 				'validator' => new WikiaValidatorString(
 					array(
 						'min' => 1
