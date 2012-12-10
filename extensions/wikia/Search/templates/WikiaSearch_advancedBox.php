@@ -28,7 +28,8 @@
 		
 		<?php for( $i = 0; $i < $numRows; $i++ ) {
 			echo $rows[$i];
-		} ?>
+		}
+		?><label for="mw-search-select-all"><input type="checkbox" id="mw-search-select-all" /><?=wfMsg('wikiasearch2-advanced-select-all')?></label>
 		<?= $hidden; ?>
 	</section>
 
