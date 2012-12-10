@@ -64,7 +64,8 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 				} else if ( empty( $err ) ) {
 
 					$category = array(
-						'name' => $categoryName
+						'name' => $categoryName,
+						'pageid' => $category->getTitle()->getArticleID()
 					);
 
 					if ( !empty( $values['name'] ) ) {
