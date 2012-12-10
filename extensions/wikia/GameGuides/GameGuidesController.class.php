@@ -452,7 +452,13 @@ class GameGuidesController extends WikiaController {
 			array_reduce(
 				$content,
 				function( $ret, $item ) {
-					$ret[] = array( 'name' => $item['name'] );
+					if( $item['name'] != '' ) {
+						$ret[] = array(
+							'name' => $item['name'],
+							'pageid' => $item['categories'][0]['pageid'] // for now lets use first category in tag, then we'll see
+						);
+					}
+
 					return $ret;
 				}
 			)
