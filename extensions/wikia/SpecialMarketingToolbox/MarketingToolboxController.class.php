@@ -15,7 +15,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-        $this->toolboxModel = new MarketingToolboxModel();
+		$this->toolboxModel = new MarketingToolboxModel();
 	}
 
 	/**
