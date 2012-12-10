@@ -57,8 +57,12 @@ class ForumHooksHelper {
 	}
 
 	public function onWallNewMessage($title, &$response) {
-		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD ) {
+		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD) {
 			$response->setVal( 'wall_message', wfMsg( 'forum-discussion-placeholder-message', $title->getText() ) );
+		}
+		
+		if ( $title->getNamespace() === NS_WIKIA_FORUM_TOPIC_BOARD ) {
+			$response->setVal( 'wall_message', wfMsg( 'forum-discussion-placeholder-message-short' ) );
 		}
 		return true;
 	}
@@ -269,7 +273,7 @@ class ForumHooksHelper {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Display Related Discussion (Forum posts) in bottom of article
 	 */
@@ -280,31 +284,48 @@ class ForumHooksHelper {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * purge memc and vernish cache for pages releated to this thread
-	 * 
+	 *
 	 * in case of edit this hook is run two time before (WallBeforeEdit) edit and after edit (WallAction)
-	 * 
+	 *
 	 */
-	
+
 	public static function onWallAction($action, $parent, $comment_id) {
 		$app = F::App();
 		$title = Title::newFromId($comment_id, Title::GAID_FOR_UPDATE);
 
 		if ( !empty($title) && MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
-			$app->sendRequest( "RelatedForumDiscussion", "purgeCache", array('threadId' => empty($parent) ? $comment_id:$parent ) );
+			$threadId = empty($parent) ? $comment_id:$parent;
+			$app->sendRequest( "RelatedForumDiscussion", "purgeCache", array('threadId' => $threadId ));
+
+			//cleare board info
+			$commentsIndex = F::build( 'CommentsIndex', array( $comment_id ), 'newFromId' );
+			if(empty($commentsIndex)) {
+				return true;	
+			}
+			$board = F::build( 'ForumBoard', array( $commentsIndex->getParentPageId() ), 'newFromId' );
+			if(empty($board)) {
+				return true;	
+			}
+			
+			$board->clearCacheBoardInfo();
+			
+			$thread = WallThread::newFromId($threadId);
+			if(!empty($thread)) {
+				$thread->purgeLastMessage();
+			}
 		}
-		
 		return true;
 	}
-	
+
 	/**
 	 * just proxy to onWallStoreRelatedTopicsInDB
 	 */
-	 
+
 	public static function onWallStoreRelatedTopicsInDB($parent, $id, $namespace) {
 		self::onWallAction(null, $parent, $id);
-		return true;	
+		return true;
 	}
 }

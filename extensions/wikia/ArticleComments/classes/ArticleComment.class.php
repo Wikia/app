@@ -180,9 +180,7 @@ class ArticleComment {
 			}
 
 			$memckey = wfMemcKey( 'articlecomment', 'basedata', $this->mLastRevId );
-			if(empty($master)) {
-				$acData = $wgMemc->get( $memckey );	
-			}
+			$acData = $wgMemc->get( $memckey );	
 			
 			if (!empty( $acData ) && is_array( $acData ) ) {
 				$this->mText = $acData['text'];

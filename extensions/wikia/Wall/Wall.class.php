@@ -75,7 +75,7 @@ class Wall extends WikiaModel {
 			//TODO: maybe there is some parser option to not wrap everything in <p>
 			$desc = str_replace('<p>', '', $desc );
 			$desc = str_replace('</p>', '', $desc );
-			return $desc; 			
+			return trim($desc); 			
 		}, $article->getText() );
 	}
 
