@@ -264,21 +264,22 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @return bool true
 	 */
 	public function reindexBatch( array $documentIds = array() ) {
-		$updateHandler = $this->client->createUpdate();
-		
 		$documents = array();
 		foreach ($documentIds as $id ) {
 			$documents[] = $this->getSolrDocument( $id );
 		}
-		
+		return $this->updateDocuments( $documents );
+	}
+	
+	public function updateDocuments( array $documents = array() ) {
+		$updateHandler = $this->client->createUpdate();
 		$updateHandler->addDocuments( $documents );
 		$updateHandler->addCommit();
 		try {
 			$this->client->update( $updateHandler );
 		} catch ( Exception $e ) {
-			F::build( 'Wikia' )->Log( __METHOD__, implode( ',', $documentIds ), $e);
+			F::build( 'Wikia' )->Log( __METHOD__, '', $e);
 		}
-		
 		return true;
 	}
 	
