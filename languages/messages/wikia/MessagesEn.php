@@ -1038,7 +1038,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
 * [http://www.wikia.com/wiki/Wikia:About About Wikia]
 * [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
-* [http://communaute.kamilk.wikia-dev.com/wiki/Sp%C3%A9cial:Contact Contact Wikia]
+* [Special:Contact|Contact]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 # "editing" preferences sections
 'prefs-general' => 'General',
