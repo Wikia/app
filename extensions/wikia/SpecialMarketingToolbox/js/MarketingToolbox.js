@@ -111,10 +111,9 @@ MarketingToolbox.prototype = {
 	goToEditHub: function(date) {
 		if (window.wgEditHubUrl) {
 			var tmpDate = new Date();
-			var timstamp = date / 1000;
-			timstamp -= tmpDate.getTimezoneOffset() * 60;
+			tmpDate.setTime(date);
 			(new Wikia.Querystring(window.wgEditHubUrl))
-				.setVal('date', timstamp)
+				.setVal('date', tmpDate.getTime() / 1000 - tmpDate.getTimezoneOffset() * 60)
 				.setVal('region', $('#marketingToolboxRegionSelect').val())
 				.setVal('verticalId', $('.vertical input:not(.secondary)').data('vertical-id'))
 				.setVal('sectionId', $('.section input:not(.secondary)').data('section-id'))
