@@ -466,15 +466,18 @@ var Lightbox = {
 				progress = this.adMediaProgress;
 			
 			if(progress.indexOf(title) < 0) {
-				if(this.adMediaShownSinceLastAd >= countToLoad) {
-					this.preloadAds();
-				}
-				if(this.adMediaShownSinceLastAd >= countToShow && type != 'video') {
-					this.updateLightbox();
-					return true;
+				if (type !== 'video') {
+					// No ads for video content
+					if(this.adMediaShownSinceLastAd >= countToLoad) {
+						this.preloadAds();
+					}
+					if(this.adMediaShownSinceLastAd >= countToShow) {
+						this.updateLightbox();
+						return true;
+					}
+					this.adMediaShownSinceLastAd += 1;
 				}
 				progress.push(title);
-				this.adMediaShownSinceLastAd += 1;
 			}
 	
 			// Not showing an ad. 
