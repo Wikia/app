@@ -73,5 +73,25 @@ class SEOTweaksHooksHelper extends WikiaModel {
 		}
 		return true;
 	}
+	
+	/**
+	 * Prepends alt text for an image if that image does not have that option set
+	 * @param  Parser $parser
+	 * @param  Title  $title
+	 * @param  Array  $options
+	 * @param  bool   $descQuery
+	 * @return bool
+	 */
+	public function onBeforeParserMakeImageLinkObjOptions( $parser, $title, &$parts, &$params, &$time, &$descQuery, $options ) {
+		$grepped = preg_grep( '/^alt=/', $parts);
+		if ( $title->getNamespace() == NS_FILE && empty( $grepped ) ) {
+			$text = $title->getText();
+			$alt = implode( '.', array_slice( explode( '.', $text ), 0, -1 ) ); // lop off text after the ultimate dot (e.g. JPG)
+			$parts[] = "alt={$alt}";
+		}
+		
+		return true;
+		
+	}
 
 }

@@ -438,4 +438,94 @@ class SEOTweaksTest extends WikiaBaseTest
 		);
 	}
 	
+	/**
+	 * If the file already has alt text, do nothing
+	 * @covers SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions
+	 */
+	public function testBeforeParserMakeImageLinkObjOptionsAltIsset() {
+		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
+										->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getNamespace' ) )
+							->getMock();
+		
+		$mockParser = $this->getMockBuilder( 'Parser' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$parts = array( 'alt=This is my alt text' );
+		$descQuery = false;
+		$time = time();
+		$options = array();
+		$descQuery = false;
+		$params = array();
+		
+		$mockTitle
+			->expects( $this->at( 0 ) )
+			->method ( 'getNamespace' )
+			->will   ( $this->returnValue( NS_FILE ) )
+		;
+		
+		$this->assertTrue(
+				$mockHelper->onBeforeParserMakeImageLinkObjOptions( $mockParser, $mockTitle, $parts, $params, $time, $descQuery, $options ),
+				'SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions should always return true'
+		);
+		$this->assertEquals(
+				1,
+				count( $parts ),
+				'SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions should not add alt text if the option has already been set'
+		);
+		$this->assertContains(
+				"alt=This is my alt text",
+				$parts,
+				'SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions should not change the alt text if the option has already been set'
+		);
+	}
+	
+	/**
+	 * If the file already has alt text, do nothing
+	 * @covers SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions
+	 */
+	public function testOnBeforeParserMakeImageLinkObjOptionsNoAlt() {
+		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
+										->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getNamespace', 'getText' ) )
+							->getMock();
+		
+		$mockParser = $this->getMockBuilder( 'Parser' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$parts = array();
+		$descQuery = false;
+		$time = time();
+		$options = array();
+		$params = array();
+		
+		$mockTitle
+			->expects( $this->at( 0 ) )
+			->method ( 'getNamespace' )
+			->will   ( $this->returnValue( NS_FILE ) )
+		;
+		$mockTitle
+			->expects( $this->at( 1 ) )
+			->method ( 'getText' )
+			->will   ( $this->returnValue( 'James Bond - Dr. No.JPG' ) )
+		;
+		$this->assertTrue(
+				$mockHelper->onBeforeParserMakeImageLinkObjOptions( $mockParser, $mockTitle, $parts, $params, $time, $descQuery, $options ),
+				'SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions should always return true'
+		);
+		$this->assertContains(
+				"alt=James Bond - Dr. No",
+				$parts,
+				'SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions should add an alt tag stripping out the file extension if no alt tag has been set'
+		);
+	}
+	
 }
