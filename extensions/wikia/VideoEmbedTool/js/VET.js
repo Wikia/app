@@ -30,6 +30,7 @@ var VET_ratio = 1;
 var VET_shownMax = false;
 var VET_inGalleryPosition = false;
 var VET_notificationTimout = 4000;
+var VET_isOnSpecialPage = false;
 
 // Returns the DOM element for the RTE textarea
 function VET_getTextarea() {
@@ -364,6 +365,8 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 			wikiaEditor.plugins.MiniEditor.hasFocus = true;
 		}
 	}
+
+	VET_isOnSpecialPage = wgNamespaceNumber === -1;
 
 	if(typeof gallery == "undefined") {
 		if (typeof showComboAjaxForPlaceHolder == 'function') {
@@ -906,6 +909,18 @@ function VET_insertFinalVideo(e, type) {
 					VET_switchScreen('Summary');
 					$G('VideoEmbedBack').style.display = 'none';
 					$G('VideoEmbed' + VET_curScreen).innerHTML = o.responseText;
+
+					if (VET_isOnSpecialPage) {
+						var vet_back,vet_close;
+						var $responseHTML = $(o.responseText),
+							vetData = {
+								videoTitle: 'missing',
+								videoWikiText: $responseHTML.find('#VideoEmbedTag').val()
+							};
+						$(window).trigger('VET_addFromSpecialPage', [vetData]);
+						return false;
+					}
+
 					if ( !$G( 'VideoEmbedCreate'  ) && !$G( 'VideoEmbedReplace' ) ) {
 						if(VET_refid == null) { // not FCK
 							if (typeof RTE !== 'undefined') {
