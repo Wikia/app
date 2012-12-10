@@ -39,6 +39,9 @@ $app->registerClass('MarketingToolboxModuleWikiaspicksService', $dir.'modules/Ma
 $app->registerClass('MarketingToolboxModuleTop10listsService', $dir.'modules/MarketingToolboxModuleTop10listsService.class.php');
 $app->registerClass('MarketingToolboxModulePopularvideosService', $dir.'modules/MarketingToolboxModulePopularvideosService.class.php');
 $app->registerClass('MarketingToolboxModuleExploreService', $dir.'modules/MarketingToolboxModuleExploreService.class.php');
+$app->registerClass('MarketingToolboxModuleFeaturedvideoService', $dir.'modules/MarketingToolboxModuleFeaturedvideoService.class.php');
+$app->registerClass('MarketingToolboxModuleFromthecommunityService', $dir.'modules/MarketingToolboxModuleFromthecommunityService.class.php');
+$app->registerClass('MarketingToolboxModulePollsService', $dir.'modules/MarketingToolboxModulePollsService.class.php');
 
 WikiaUserPropertiesController::registerHandler('MarketingToolboxUserPropertiesHandler');
 
