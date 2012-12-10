@@ -1,7 +1,17 @@
 <?php
 
 class FooterMenuItemFactory {
-	protected static $supportedItems = array();
+
+	protected static $supportedItems = array(
+		'share' => 'FooterShareItemService',
+		'follow' => 'FooterFollowItemService',
+		'menu' => 'FooterMenuItemService',
+		'link' => 'FooterLinkItemService',
+		'html' => 'FooterHtmlItemService',
+		'customize' => 'FooterCustomizeItemService',
+		'devinfo' => 'FooterDevinfoItemService',
+		'disabled' => 'FooterDisabledItemService'
+	);
 
 	/**
 	 * @param $itemType

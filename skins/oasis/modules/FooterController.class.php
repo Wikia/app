@@ -1,11 +1,6 @@
 <?php
 class FooterController extends WikiaController {
 
-	public function __construct() {
-		parent::__construct();
-		$this->registerDefaultFooterItems();
-	}
-
 	public function executeIndex() {
 		global $wgShowMyToolsOnly,
 			   $wgEnableWikiaBarExt,
@@ -119,17 +114,6 @@ class FooterController extends WikiaController {
 		$this->items = $itemObjects;
 
 		$this->wf->profileOut(__METHOD__);
-	}
-
-	protected function registerDefaultFooterItems() {
-		FooterMenuItemFactory::addSupportedItem('share', 'FooterShareItemService');
-		FooterMenuItemFactory::addSupportedItem('follow', 'FooterFollowItemService');
-		FooterMenuItemFactory::addSupportedItem('menu', 'FooterMenuItemService');
-		FooterMenuItemFactory::addSupportedItem('link', 'FooterLinkItemService');
-		FooterMenuItemFactory::addSupportedItem('html', 'FooterHtmlItemService');
-		FooterMenuItemFactory::addSupportedItem('customize', 'FooterCustomizeItemService');
-		FooterMenuItemFactory::addSupportedItem('devinfo', 'FooterDevinfoItemService');
-		FooterMenuItemFactory::addSupportedItem('disabled', 'FooterDisabledItemService');
 	}
 }
 
