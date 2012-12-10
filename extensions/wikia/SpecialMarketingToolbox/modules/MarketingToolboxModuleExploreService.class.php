@@ -4,6 +4,8 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 	const LINKS_PER_SECTION = 4;
 
 	const SECTION_FIELD_PREFIX = 'exploreSectionHeader';
+	const LINK_HEADER = 'exploreLinkHeader';
+	const LINK_URL = 'exploreLinkUrl';
 
 	protected $lettersMap = array('a', 'b', 'c', 'd');
 
@@ -37,7 +39,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		$fieldName = self::SECTION_FIELD_PREFIX . $sectionIdx;
 		return array(
 			$fieldName => array(
-				'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-section-header', array($sectionIdx)),
+				'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array($sectionIdx)),
 				'validator' => new WikiaValidatorString(
 					array(
 						'min' => 1
@@ -50,10 +52,20 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 
 	protected function generateSectionLinkFields($sectionIdx, $linkIdx) {
 	//todo: header a. depends on URL a and the other way around
-		$fieldName = self::SECTION_FIELD_PREFIX . $sectionIdx . $this->lettersMap[$linkIdx];
+		$linkHeaderFieldName = self::LINK_HEADER . $sectionIdx . $this->lettersMap[$linkIdx];
+		$linkUrlFieldName = self::LINK_URL . $sectionIdx . $this->lettersMap[$linkIdx];
 		return array(
-			$fieldName => array(
-				'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-section-header', array($this->lettersMap[$linkIdx])),
+			$linkHeaderFieldName => array(
+				'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array($this->lettersMap[$linkIdx])),
+				'validator' => new WikiaValidatorString(
+					array(
+						'min' => 1
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
+				),
+			),
+			$linkUrlFieldName => array(
+				'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'min' => 1
