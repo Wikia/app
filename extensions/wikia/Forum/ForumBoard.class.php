@@ -28,11 +28,16 @@ class ForumBoard extends Wall {
 		if ( empty( $info ) ) {
 			$db = $this->wf->GetDB( $db );
 
-			$row = $db->selectRow( 
-				array( 'comments_index' ), 
-				array( 'count(if(parent_comment_id=0,1,null)) threads, count(*) posts, max(first_rev_id) rev_id' ), 
-				array( 'parent_page_id' => $this->getId() ),
-				__METHOD__ 
+			$row = $db->selectRow(
+				array( 'comments_index' ),
+				array( 'count(if(parent_comment_id=0,1,null)) threads, count(*) posts, max(first_rev_id) rev_id' ),
+				array(
+						'parent_page_id' => $this->getId(),
+						'archived' => 0,
+						'deleted' => 0,
+						'removed' => 0
+				),
+				__METHOD__
 			);
 
 			$info = array( 'postCount' => 0, 'threadCount' => 0 );
@@ -50,10 +55,10 @@ class ForumBoard extends Wall {
 
 					$userprofile = Title::makeTitle( $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK, $username )->getFullURL();
 
-					$info['lastPost'] = array( 
+					$info['lastPost'] = array(
 						'username' => $username,
 						'userprofile' => $userprofile,
-						'timestamp' => $revision->getTimestamp() 
+						'timestamp' => $revision->getTimestamp()
 					);
 				}
 			}
@@ -74,22 +79,22 @@ class ForumBoard extends Wall {
 
 		if(empty($relatedPageId)) {
 			$memKey = $this->wf->MemcKey( 'forum_board_active_threads', $this->getId() );
-	
+
 			if ( $db == DB_SLAVE ) {
 				$activeThreads = $this->wg->Memc->get( $memKey );
 			}
 		}
-		
+
 		if ( !empty( $relatedPageId ) || $activeThreads === false ) {
 			$db = $this->wf->GetDB( $db );
 
 			if ( !empty( $relatedPageId ) ) {
 				$filter = "comment_id in (select comment_id from wall_related_pages where page_id = {$relatedPageId})";
 			} else {
-				$filter = 'parent_page_id =' . ((int)$this->getId());				
+				$filter = 'parent_page_id =' . ((int)$this->getId());
 			}
 
-			$activeThreads = $db->selectField( 
+			$activeThreads = $db->selectField(
 				array( 'comments_index' ),
 				array( 'count(*) cnt' ),
 				array( $filter,

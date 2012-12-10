@@ -178,5 +178,42 @@ class WallThread {
 		
 		return $out;
 	}
-
+	
+	public function purgeLastMessage() {
+		$key = wfMemcKey(__CLASS__, '-thread-lastreply-key', $this->mThreadId);
+		WikiaDataAccess::cachePurge($key);
+	}
+	
+	public function getLastMessage() {
+		$key = wfMemcKey(__CLASS__, '-thread-lastreply-key', $this->mThreadId);
+		$threadId = $this->mThreadId;
+		$data = WikiaDataAccess::cache( $key, 30*24*60*60, function() use ($threadId) {
+			$db = wfGetDB(DB_SLAVE);
+			$row = $db->selectRow(
+				array( 'comments_index' ),
+				array( 'max(first_rev_id) rev_id' ),
+				array(
+						'parent_comment_id' => $threadId,
+						'archived' => 0,
+						'deleted' => 0,
+						'removed' => 0
+				),
+				__METHOD__
+			);
+			return $row;
+		});
+		
+		// get last post info
+		$revision = F::build( 'Revision', array( $data->rev_id ), 'newFromId' );
+		if ( $revision instanceof Revision ) {
+			$title = $revision->getTitle();
+			$wallMessage = WallMessage::newFromId($title->getArticleId());
+			if(!empty($wallMessage)) {
+				$wallMessage->load();
+				return $wallMessage;
+			} 
+		}
+		
+		return null;
+	}
 }
