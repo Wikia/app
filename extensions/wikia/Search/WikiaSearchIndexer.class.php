@@ -271,6 +271,11 @@ class WikiaSearchIndexer extends WikiaObject {
 		return $this->updateDocuments( $documents );
 	}
 	
+	/**
+	 * Sends an update query to the client, provided a document set
+	 * @param array $documents
+	 * @return boolean
+	 */
 	public function updateDocuments( array $documents = array() ) {
 		$updateHandler = $this->client->createUpdate();
 		$updateHandler->addDocuments( $documents );
