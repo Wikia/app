@@ -14,7 +14,7 @@ class WikiaValidatorUrlTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testUrls($string, $isUrl) {
 		$result = $this->validator->isValid($string);
-		$this->assertEquals($result, $isUrl);
+		$this->assertEquals($isUrl, $result);
 	}
 
 	public function testUrlsDataProvider() {
@@ -22,9 +22,13 @@ class WikiaValidatorUrlTest extends PHPUnit_Framework_TestCase {
 			array('http://www.wikia.com',true),
 			array('www.wikia.com',true),
 			array('wikia.com',true),
-			array('wikia',false),
 			array('http://www.wikia.com/?action=purge',true),
 			array('http://www.wikia.com/#wiki',true),
+			array('http://pl.callofduty.wikia.com/wiki/Call_of_Duty:_Black_Ops',true),
+			array('https://www.wikia.com/Wikia',true),
+			array('www.aol',true), // this is ok for regexp validation
+			array('wikia',false),
+			array('http://wikia',false),
 		);
 	}
 }
