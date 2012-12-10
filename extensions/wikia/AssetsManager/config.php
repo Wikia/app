@@ -585,6 +585,7 @@ $config['wikiaapp_js'] = array(
 $config['monobook_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'#group_oasis_wikia_js',
 		'#group_oasis_jquery',
 		'#group_articlecomments_js',
 
@@ -1186,5 +1187,5 @@ $config['history_polyfill_js'] = array(
 		'//resources/wikia/polyfills/history/history.adapter.jquery.js',
 		//'//resources/wikia/polyfills/history/history.html4.js', // add this back in when we're ready to support IE
 		'//resources/wikia/polyfills/history/history.js',
-	)	
+	)
 );
