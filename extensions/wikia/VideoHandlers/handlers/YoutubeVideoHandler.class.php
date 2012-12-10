@@ -22,7 +22,7 @@ class YoutubeVideoHandler extends VideoHandler {
 		$qs = http_build_query($params);
 
 		$code = <<<EOT
-<iframe width="$width" height="$height" src="{$url}?$qs" frameborder="0" allowfullscreen></iframe>
+<iframe width="$width" height="$height" src="{$url}?$qs&wmode=opaque" frameborder="0" allowfullscreen></iframe>
 EOT;
 		return $code;
 	}
