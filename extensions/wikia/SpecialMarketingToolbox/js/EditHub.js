@@ -1,5 +1,7 @@
 var EditHub = function() {};
 
+var vet_back,vet_close; //hack for VET, please remove this line after VET refactoring
+
 EditHub.prototype = {
 	form: undefined,
 	validatedInputs: undefined,
@@ -9,6 +11,7 @@ EditHub.prototype = {
 
 	init: function () {
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
+		$('.MarketingToolboxMain .vet-show').click($.proxy(this.vetInit, this));
 
 		this.form = $('#marketing-toolbox-form');
 		this.validatedInputs = $('.WikiaForm .required');
@@ -44,6 +47,23 @@ EditHub.prototype = {
 		$(window).bind('WMU_addFromSpecialPage', $.proxy(function(event, wmuData) {
 			this.addImage(wmuData);
 		}, this));
+	},
+
+	vetInit: function(event) {
+		var vet_back,vet_close;
+		$.when(
+			$.loadYUI(),
+			$.getScript(wgResourceBasePath + '/resources/wikia/libraries/mustache/jquery.mustache.js'),
+			$.getResources($.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss')),
+			$.getScript(wgExtensionsPath + '/wikia/WikiaStyleGuide/js/Dropdown.js'),
+			$.getResources($.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')),
+			$.getScript(wgExtensionsPath + '/wikia/VideoEmbedTool/js/VET.js')
+		).then(function() {
+			VET_show();
+			$(window).bind('VET_addFromSpecialPage', $.proxy(function(event, vetData) {
+				$().log(vetData);
+			}, this));
+		});
 	},
 
 	addImage: function(wmuData) {
