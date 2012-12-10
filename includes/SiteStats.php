@@ -414,7 +414,7 @@ class SiteStatsInit {
 		 * cache number of users for 12hours
 		 * it's not important to have exact numbers there
 		 */
-		$cache = WF::build( "App" )->getGlobal( "wgMemc" );
+		$cache = F::app()->getGlobal( "wgMemc" );
 		$this->mUsers = $cache->get( wfSharedMemcKey( "registered-users-number" ) );
 		if( empty( $this->mUsers ) ) {
 			$this->mUsers = $this->dbshared->selectField( '`user`', 'COUNT(*)', '', __METHOD__ );

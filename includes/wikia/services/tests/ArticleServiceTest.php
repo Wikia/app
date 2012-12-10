@@ -3,10 +3,6 @@
 class ArticleServiceTest extends WikiaBaseTest {
 	const TEST_CITY_ID = 79860;
 
-	public function setUp() {
-		parent::setUp();
-	}
-
 	/**
 	 * @dataProvider getTextSnippetDataProvider
 	 * @param $snippetLength maximum length of text snippet to be pulled

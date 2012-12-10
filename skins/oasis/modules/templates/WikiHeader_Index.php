@@ -1,7 +1,9 @@
 <header id="WikiHeader" class="WikiHeader">
 	<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
     <nav class="WikiNav">
+    	<? if ( $displayHeader ): ?>
         <h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ) ?></h1>
+        <? endif; ?>
 		<?= $app->renderView( 'WikiNavigation', 'Index' ) ?>
     </nav>
     <div class="buttons">

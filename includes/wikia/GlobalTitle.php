@@ -41,6 +41,8 @@ class GlobalTitle extends Title {
 	private $mRedirectTarget = null;
 	private $mDbName = null;
 
+	static protected $cachedObjects = array();
+
 	/**
 	 * static constructor, Create new Title from name of page
 	 */
@@ -93,6 +95,14 @@ class GlobalTitle extends Title {
 		}
 
 		return $title;
+	}
+
+	public static function newFromTextCached( $text, $namespace, $city_id ) {
+		if ( !isset( self::$cachedObjects[$city_id][$namespace][$text] ) ) {
+			self::$cachedObjects[$city_id][$namespace][$text] =
+				GlobalTitle::newFromText( $text, $namespace, $city_id );
+		}
+		return self::$cachedObjects[$city_id][$namespace][$text];
 	}
 
 	/**

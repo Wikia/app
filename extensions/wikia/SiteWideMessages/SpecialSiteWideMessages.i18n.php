@@ -2119,6 +2119,9 @@ Dit kan niet ongedaan gemaakt worden.',
 	'swm-mode-users-editcount-more' => 'Meer',
 	'swm-mode-users-editcount-less' => 'Minder',
 	'swm-mode-users-editcount-between' => 'Tussen',
+	'swm-mode-wikis-created-after' => 'Na',
+	'swm-mode-wikis-created-before' => 'Voor',
+	'swm-mode-wikis-created-between' => 'Tussen',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)

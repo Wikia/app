@@ -142,7 +142,7 @@ class GameGuidesController extends WikiaController {
 	/**
 	 * @brief Api entry point to get a page and globals and messages that are relevant to the page
 	 *
-	 * @example wikia.php?controller=GameGuides&method=getPage&title={Title}
+	 * @example wikia.php?controller=GameGuides&method=getPage&page={Title}
 	 */
 	public function getPage(){
 		//This will always return json
@@ -155,7 +155,7 @@ class GameGuidesController extends WikiaController {
 			Skin::newFromKey( 'wikiamobile' )
 		);
 
-		$titleName = $this->getVal( 'title' );
+		$titleName = $this->getVal( 'page' );
 
 		$title = Title::newFromText( $titleName );
 
@@ -173,7 +173,7 @@ class GameGuidesController extends WikiaController {
 					) : null;
 
 				if ( !is_null( $relatedPages ) ) {
-					$relatedPages = $relatedPages->getVal('pages');
+					$relatedPages = $relatedPages->getVal( 'pages' );
 
 					if ( !empty ( $relatedPages ) ) {
 						$this->response->setVal( 'relatedPages', $relatedPages );
@@ -183,13 +183,13 @@ class GameGuidesController extends WikiaController {
 				$this->response->setVal(
 					'html',
 					$this->sendSelfRequest( 'renderPage', array(
-							'title' => $titleName
+							'page' => $titleName
 						)
 					)->toString() );
 
 				$this->response->setVal(
 					'revisionid',
-					$title->getLatestRevID()
+					$revId
 				);
 			} else {
 				$this->response->setVal( 'error', 'Revision ID = 0' );
@@ -206,7 +206,7 @@ class GameGuidesController extends WikiaController {
 	 */
 	static function onTitleGetSquidURLs( $title, &$urls ){
 		$urls[] = GameGuidesController::getUrl( 'getPage', array(
-			'title' => $title->getPartialURL()
+			'page' => $title->getPartialURL()
 		));
 
 		return true;
@@ -220,7 +220,7 @@ class GameGuidesController extends WikiaController {
 	public function renderPage(){
 		$this->wf->profileIn( __METHOD__ );
 
-		$titleName = $this->request->getVal( 'title' );
+		$titleName = $this->request->getVal( 'page' );
 
 		$html = ApiService::call(
 			array(
@@ -264,7 +264,7 @@ class GameGuidesController extends WikiaController {
 		$styles = $resources->getVal( 'styles', '' );
 
 		$page = $this->sendSelfRequest( 'getPage', array(
-			'title' => $this->getVal( 'title')
+			'page' => $this->getVal( 'page')
 		) );
 
 		$this->response->setVal( 'html', $page->getVal( 'html' ) );
@@ -379,8 +379,11 @@ class GameGuidesController extends WikiaController {
 					array(
 						'action' => 'query',
 						'list' => 'allcategories',
+						'redirects' => true,
 						'aclimit' => $limit,
-						'acfrom' => $offset
+						'acfrom' => $offset,
+						'acprop' => 'id',
+						'acmin' => 1
 					)
 				);
 			}
@@ -391,7 +394,10 @@ class GameGuidesController extends WikiaController {
 		if ( !empty( $allCategories ) ) {
 
 			foreach( $allCategories as $key => $value ) {
-				$allCategories[$key] = array( 'name' => $value['*'] );
+				$allCategories[$key] = array(
+					'name' => $value['*'],
+					'pageid'=> $value['pageid']
+				);
 			}
 
 			$this->response->setVal( 'categories', $allCategories );
@@ -446,7 +452,13 @@ class GameGuidesController extends WikiaController {
 			array_reduce(
 				$content,
 				function( $ret, $item ) {
-					$ret[] = array( 'name' => $item['name'] );
+					if( $item['name'] != '' ) {
+						$ret[] = array(
+							'name' => $item['name'],
+							'pageid' => $item['categories'][0]['pageid'] // for now lets use first category in tag, then we'll see
+						);
+					}
+
 					return $ret;
 				}
 			)

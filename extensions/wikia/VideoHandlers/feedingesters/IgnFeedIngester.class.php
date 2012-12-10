@@ -3,7 +3,6 @@
 class IgnFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'IgnApiWrapper';
 	protected static $PROVIDER = 'ign';
-	//protected static $FEED_URL = 'http://apis.ign.com/partners/wikia/video/v3/videos?fromDate=$1&toDate=$2';
 	protected static $FEED_URL = 'http://apis.ign.com/partners/v3/wikia?fromDate=$1&toDate=$2';
 	protected static $CLIP_TYPE_BLACKLIST = array();
 
@@ -28,25 +27,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		wfProfileOut( __METHOD__ );
 		return $content;
-	}
-
-	/**
-	 * @param $keywords string with comma-separated keywords
-	 * @return string regexp or null if no valid keywords were specified
-	 */
-	private function prepare_blacklist_regexp($keywords) {
-		if ($keywords) {
-			$keywords = explode(',', $keywords);
-			$blacklist = array();
-			foreach($keywords as $word) {
-				$word = preg_replace("/[^A-Za-z0-9' ]/", "", trim($word) );
-				if ($word) $blacklist[] = $word;
-			}
-			if (!empty($blacklist)) {
-				return '/\b('.implode('|', $blacklist).')\b/i';
-			}
-		}
-		return null;
 	}
 
 	public function import($content='', $params=array()) {
@@ -106,24 +86,9 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$addlCategories = array_merge( $addlCategories, $keywords );
 			$clipData['keywords'] = implode(", ", $keywords );
 
-			$blacklist_regexp = $this->prepare_blacklist_regexp(F::app()->wg->IgnVideoBlacklist);
-			if ($blacklist_regexp) {
-				foreach(array('keywords', 'titleName', 'description') as $key) {
-					if (preg_match($blacklist_regexp, $clipData[$key])) {
-						echo "Blacklisting video ! ".$clipData['titleName'].", videoId ".$clipData['videoId']." (reason $key: ".$clipData[$key].")\n";
-						continue;
-					}
-				}
-			}
-
 			$tags = array();
-			$blacklist_regexp = $this->prepare_blacklist_regexp(F::app()->wg->IgnKeywordsBlacklist);
 			foreach( $video['tags'] as $obj ) {
-				if (array_key_exists('slug', $obj)) {
-					if ($blacklist_regexp && preg_match($blacklist_regexp, $obj['slug'])) {
-						echo "Skipping blacklisted keyword ".$obj['slug']."\n";
-						continue;
-					}
+				if ( array_key_exists('slug', $obj) ) {
 					$tags[$obj['slug']] = true;
 				}
 			}
@@ -213,6 +178,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 		);
 		curl_setopt($req, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($req, CURLOPT_VERBOSE, 1);
+		curl_setopt($req, CURLOPT_STDERR, STDOUT);
 		$ret = curl_exec($req);
 		if(!curl_errno($req)){
 			$info = curl_getinfo($req);
@@ -222,8 +188,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 		}
 
 		curl_close($req);
-		echo "Data received:\n";
-		var_dump($ret);
 		return $ret;
 		/*
 		$options = array(

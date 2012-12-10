@@ -312,6 +312,13 @@ $messages['diq'] = array(
 	'wikiadoption-welcome-header' => 'Çımê şıma roşni bê! {{SITENAME}} a şıma biya qebul!',
 );
 
+/** Greek (Ελληνικά)
+ * @author Glavkos
+ */
+$messages['el'] = array(
+	'wikiadoption-welcome-header' => 'Συγχαρητήρια! Έχετε πάρει το {{SITENAME}}!',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Dalton2

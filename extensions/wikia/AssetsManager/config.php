@@ -358,6 +358,7 @@ $config['gameguides_js'] = array(
 		//groups
 		'#group_wikiamobile_tables_js',
 		'#group_wikiamobile_scroll_js',
+		'#group_wikiamobile_mediagallery_js',
 
 		//modules
 		'//extensions/wikia/WikiaMobile/js/toc.js',

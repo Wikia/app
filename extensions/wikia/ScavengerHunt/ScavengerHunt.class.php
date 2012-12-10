@@ -70,7 +70,7 @@ class ScavengerHunt {
 			if ( empty( $huntId ) ) {
 				return 0;
 			}
-			$games = WF::build('ScavengerHuntGames'); /* @var $games ScavengerHuntGames */
+			$games = F::build('ScavengerHuntGames'); /* @var $games ScavengerHuntGames */
 			$this->game = $games->findEnabledById((int)$huntId);
 		}
 		return $this->game;
@@ -94,7 +94,7 @@ class ScavengerHunt {
 		$oTitle = F::build( 'Title', array( $articleTitle ), 'newFromText' );
 		$huntId = $this->getHuntId();
 		if ( $oTitle->exists() && !empty( $huntId ) ){
-			$games = WF::build('ScavengerHuntGames'); /* @var $games ScavengerHuntGames */
+			$games = F::build('ScavengerHuntGames'); /* @var $games ScavengerHuntGames */
 			$game = $games->findEnabledById((int)$huntId);
 			if ( empty($game) ){
 				return false;
@@ -210,7 +210,7 @@ class ScavengerHunt {
 		$game = $this->getActiveGame();
 
 		if ( $this->isGameCompleated() ){
-			$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/')); /** @var $template EasyTemplate  */
+			$template = F::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/')); /** @var $template EasyTemplate  */
 			$template->set_vars( array(
 				'game' => $game
 			));
@@ -362,7 +362,7 @@ class ScavengerHunt {
 	}
 
 	public function pushEntry( $name, $email, $answer ){
-		$games = WF::build( 'ScavengerHuntGames' );
+		$games = F::build( 'ScavengerHuntGames' );
 		$game = $this->getActiveGame();
 		if ( !empty( $game ) ) {
 			if ( $this->isGameCompleated() ) {
@@ -431,10 +431,10 @@ class ScavengerHunt {
 
 	public function parse( $text ) {
 		if (empty($this->parser)) {
-			$this->parser = WF::build('Parser');
+			$this->parser = F::build('Parser');
 			$this->parser->setOutputType(OT_HTML);
-			$this->parserOptions = WF::build('ParserOptions');
-			$this->fakeTitle = WF::build('Title', array('FakeTitle'));
+			$this->parserOptions = F::build('ParserOptions');
+			$this->fakeTitle = F::build('Title', array('FakeTitle'));
 		}
 		return $this->parser->parse($text, $this->fakeTitle, $this->parserOptions, false)->getText();
 	}
@@ -453,7 +453,7 @@ class ScavengerHunt {
 
 	public function getGoodbyeHtml( ScavengerHuntGame $game ) {
 		// build entry form html
-		$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/')); /* @var $template EasyTemplate */
+		$template = F::build('EasyTemplate', array(dirname( __FILE__ ) . '/templates/')); /* @var $template EasyTemplate */
 		$template->set_vars(array(
 			'title' => $game->getGoodbyeTitle(),
 			'text' => $this->parseCached( $game->getGoodbyeText() ),

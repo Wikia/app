@@ -29,6 +29,10 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 		'LEFT_SKYSCRAPER_2': {'size':'160x600,120x600', 'tile':3, 'loc':'middle'},
 		'LEFT_SKYSCRAPER_3': {'size': '160x600', 'tile':6, 'loc':'footer'},
 		'MODAL_INTERSTITIAL': {'size':'600x400,300x250','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL_1': {'size':'600x400,300x250','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL_2': {'size':'600x400,300x250','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL_3': {'size':'600x400,300x250','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL_4': {'size':'600x400,300x250','tile':2,'loc':'modal'},
 		'MODAL_RECTANGLE': {'size':'300x100','tile':2,'loc':'modal'},
 		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
@@ -93,6 +97,7 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 			, slotsize = slotMap[slotname].size
 			, loc = slotMap[slotname].loc
 			, dcopt = slotMap[slotname].dcopt
+			, ord
 
 			// Do this when DART hops or doesn't handle
 			, error = function() {
@@ -125,8 +130,14 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 			dcopt = false;
 		}
 
+		// Random ord for MODAL_INTERSTITIAL
+		// This disables synchronisation of Lightbox ads, but allows ads to repeat
+		if (slotname.match(/^MODAL_INTERSTITIAL/)) {
+			ord = Math.floor(Math.random() * 100000000000);
+		}
+
 		// Always have an ad for MODAL_INTERSTITIAL
-		if (slotname !== 'MODAL_INTERSTITIAL') {
+		if (!slotname.match(/^MODAL_INTERSTITIAL/)) {
 			// Otherwise check if there was ad last time
 			// If not, check if desired number of DART calls were made
 			if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
@@ -149,7 +160,8 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 			slotname: slotname,
 			slotsize: slotsize,
 			dcopt: dcopt,
-			loc: loc
+			loc: loc,
+			ord: ord
 		});
 
 		scriptWriter.injectScriptByUrl(slotname, url, function() {

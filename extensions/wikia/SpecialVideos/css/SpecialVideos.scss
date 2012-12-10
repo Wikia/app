@@ -98,3 +98,13 @@ $placeholder-bg-color: darken($color-page, 10%);
 .messageHolder {
 	display: none;
 }
+
+// temporary video survey code bugid-68723
+.video-survey {
+	float: left;
+	margin-left: 15px;
+	span {
+		display: none;
+	}
+}
+

@@ -31,7 +31,7 @@
 
 	// Construct Ad Providers
 	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry);
-	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker);
+	adProviderEvolve = AdProviderEvolve(wikiaDart, scriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderGamePro = AdProviderGamePro(wikiaDart, scriptWriter, WikiaTracker, log, window, document);
 	adProviderNull = AdProviderNull(log, slotTweaker);
 

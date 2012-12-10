@@ -14,7 +14,7 @@ class WikiaPoll {
 	const CACHE_TTL = 86400;
 	const CACHE_VER = 5;
 
-	private function __construct($pollId) {
+	public function __construct($pollId) {
 		$this->mData = null;
 		$this->mExists = false;
 		$this->mMemcacheKey = wfMemcKey('poll', 'data', $pollId, self::CACHE_VER);

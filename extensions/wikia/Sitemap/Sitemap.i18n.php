@@ -76,6 +76,13 @@ $messages['es'] = array(
 	'sitemap-desc' => 'Generar mapas del sitio sobre la marcha',
 );
 
+/** Finnish (suomi)
+ * @author Nedergard
+ */
+$messages['fi'] = array(
+	'sitemap-desc' => 'Generoi wikin sivustokartan',
+);
+
 /** French (français)
  * @author Peter17
  */

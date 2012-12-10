@@ -14,12 +14,12 @@ class WallHistory extends WikiaModel {
 	}
 	
 	public function add( $type, $feed, $user ) {
-		//wall the wall action goes through this point.  
-		wfRunHooks('WallAction', array($type, $feed->data->parent_id, $feed->data->title_id, $feed->data->article_title_ns));
 		
 		switch($type) {
 			case WH_EDIT: 
 			case WH_NEW:
+				//wall the wall action goes through this point.  
+				wfRunHooks('WallAction', array($type, $feed->data->parent_id, $feed->data->title_id));
 				$this->addNewOrEdit( $type, $feed, $user );
 			break;
 			case WH_ARCHIVE:
@@ -27,6 +27,8 @@ class WallHistory extends WikiaModel {
 			case WH_REOPEN:
 			case WH_REMOVE:
 			case WH_RESTORE:
+				//wall the wall action goes through this point.  
+				wfRunHooks('WallAction', array($type, $feed->data->parent_id, $feed->data->message_id));
 				$this->addStatChangeAction( $type, $feed, $user );
 			break;	
 		}
@@ -113,10 +115,10 @@ class WallHistory extends WikiaModel {
 			null
 		);
 		
-		$this->getDB(DB_MASTER)->set(
+		
+		$this->getDB(DB_MASTER)->update(
 			'wall_history',
-			'deleted_or_removed',
-			(($action == WH_DELETE || $action == WH_REMOVE) ? 1:0),
+			array( 'deleted_or_removed' => ($action == WH_DELETE || $action == WH_REMOVE) ? 1:0),
 			array(
 				'comment_id' => $feed->data->message_id 
 			),
@@ -133,11 +135,11 @@ class WallHistory extends WikiaModel {
 			array(
 				'parent_page_id' => $parentPageId,
 				'post_user_id' => $postUserId,
-				'post_ns' => $ns,
+				'post_ns' => MWNamespace::getSubject( $ns ),
 				'post_user_ip' => ( intval($postUserId) === 0 ? $this->ip2long($postUserName) : null),
 				'is_reply' => $isReply,
 				'comment_id' => $commentId,
-				'parent_comment_id' => ( empty($parentPageId) ? $commentId : $parentCommentId),
+				'parent_comment_id' => ( $isReply ? $parentCommentId:$commentId),
 				'metatitle' => $metatitle,
 				'reason' => empty($reason) ? null:$reason,
 				'action' => $action,
@@ -149,7 +151,7 @@ class WallHistory extends WikiaModel {
 	public function  getLastPosts($ns, $count = 5) {
 		$where = array(
 			'action' => WH_NEW,
-			'post_ns' => $ns,
+			'post_ns' => MWNamespace::getSubject( $ns ),
 			'deleted_or_removed' => 0
 		);
 		
@@ -175,6 +177,7 @@ class WallHistory extends WikiaModel {
 				}
 			}
 		}
+		
 		return $out;
 	}
 	

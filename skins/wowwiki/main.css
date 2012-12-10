@@ -394,7 +394,7 @@ table.small {
 	text-align: left;
         text-indent: -1em;
 }
-.TOC_hide #toc ul, .TOC_hide .toc ul {
+.TOC_hide #toctitle + ul {
 	display: none;
 }
 #toc ul ul,

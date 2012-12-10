@@ -3,23 +3,27 @@
 	<label><?= wfMsg('specialvideos-sort-by') ?></label>
 	
 	
-<div class="WikiaDropdown MultiSelect" id="sorting-dropdown">
-	<div class="selected-items">
-		<span class="selected-items-list"><?= $sortMsg ?></span>
-		<img class="arrow" src="<?= $wg->BlankImgUrl ?>" />
-	</div>
-	<div class="dropdown">
-		<ul class="dropdown-list">
-			<? foreach($sortingOptions as $sortBy => $option): ?>
-				<? if($sortMsg != $option): ?>
-					<li class="dropdown-item">
-						<label data-sort="<?= $sortBy ?>"><?= $option ?></label>
-					</li>
-				<? endif; ?>
-			<? endforeach; ?>
-		</ul>
-	</div>
-</div>	
+	<div class="WikiaDropdown MultiSelect" id="sorting-dropdown">
+		<div class="selected-items">
+			<span class="selected-items-list"><?= $sortMsg ?></span>
+			<img class="arrow" src="<?= $wg->BlankImgUrl ?>" />
+		</div>
+		<div class="dropdown">
+			<ul class="dropdown-list">
+				<? foreach($sortingOptions as $sortBy => $option): ?>
+					<? if($sortMsg != $option): ?>
+						<li class="dropdown-item">
+							<label data-sort="<?= $sortBy ?>"><?= $option ?></label>
+						</li>
+					<? endif; ?>
+				<? endforeach; ?>
+			</ul>
+		</div>
+	</div>	
+
+	<? // temporary video survey code bugid-68723 ?>
+	<?= $surveyLink ?>
+
 </div>
 
 

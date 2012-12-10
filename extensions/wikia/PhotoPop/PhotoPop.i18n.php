@@ -315,6 +315,7 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  * @author Nike
  */
 $messages['fi'] = array(
@@ -350,7 +351,7 @@ $messages['fi'] = array(
 	'photopop-game-progress' => 'valokuvaa',
 	'photopop-game-finished' => 'valmis!',
 	'photopop-game-image-load-error' => 'Kuvan lataus epäonnistui. Yritä uudelleen.',
-	'photopop-game-loading-image' => 'Ladataan kuvaa...<br>Odota', # Fuzzy
+	'photopop-game-loading-image' => 'Ladataan kuvaa... <br />Odota',
 	'photopop-game-month-0' => 'Tammikuu',
 	'photopop-game-month-1' => 'Helmikuu',
 	'photopop-game-month-2' => 'Maaliskuu',
@@ -1042,6 +1043,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Malafaya
  * @author SandroHc
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'photopop-setup-title' => 'Configurações do Photo Pop',
@@ -1062,7 +1064,7 @@ $messages['pt'] = array(
 	'photopop-game-date' => 'data',
 	'photopop-game-timeup' => 'o tempo acabou!',
 	'photopop-game-please-wait' => 'Aguarde',
-	'photopop-game-loading' => 'A carregar...',
+	'photopop-game-loading' => 'A carregar…',
 	'photopop-game-yougot' => 'Você conseguiu',
 	'photopop-game-outof' => 'de',
 	'photopop-game-progress' => 'imagens',

@@ -14,17 +14,10 @@ abstract class WikiaApiController extends WikiaController {
 	);
 
 	/**
-	 * In API we check if parameters are sorted
-	 * so it makes purging varnish easier and possible
-	 *
-	 * it happens in final __construct so we are sure
-	 * that this rule is obeyed
+	 * block throiwng WikiaException for WikiaApi
+	 * if no method is passed
 	 */
-	public final function __construct() {
-		parent::__construct();
-
-		$this->checkParameters();
-	}
+	public final function index(){}
 
 	/**
 	 * Check if:
@@ -36,23 +29,25 @@ abstract class WikiaApiController extends WikiaController {
 	 *
 	 * @throws WikiaException
 	 */
-	private function checkParameters(){
-		$paramKeys = array_keys( F::app()->wg->Request->getQueryValues() );
-		$count = count( $paramKeys );
+	final public function init() {
+		if ( !$this->request->isInternal() ) {
+			$paramKeys = array_keys( F::app()->wg->Request->getQueryValues() );
+			$count = count( $paramKeys );
 
-		if ( $count >= 2 && $paramKeys[0] === 'controller' && $paramKeys[1] === 'method') {
+			if ( $count >= 2 && $paramKeys[0] === 'controller' && $paramKeys[1] === 'method') {
 
-			if ( $count > 2 ) {
-				$origParam = $paramKeys = array_flip( array_slice( $paramKeys, 2 ) );;
+				if ( $count > 2 ) {
+					$origParam = $paramKeys = array_flip( array_slice( $paramKeys, 2 ) );;
 
-				ksort( $paramKeys );
+					ksort( $paramKeys );
 
-				if ( $paramKeys !== $origParam ) {
-					throw new WikiaException();
+					if ( $paramKeys !== $origParam ) {
+						throw new BadRequestApiException( 'The parameters\' order is incorrect' );
+					}
 				}
+			} else {
+				throw new BadRequestApiException( 'Controller and/or method missing' );
 			}
-		} else {
-			throw new WikiaException();
 		}
 	}
 

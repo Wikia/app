@@ -78,6 +78,17 @@ $messages['az'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** South Azerbaijani (تورکجه)
+ * @author E THP
+ * @author Mousa
+ */
+$messages['azb'] = array(
+	'quickstats-header-date' => 'تاریخ',
+	'quickstats-header-views' => 'گؤرونوشلر',
+	'quickstats-header-edits' => 'دَییشدیرمه‌لر',
+	'quickstats-header-photos' => 'شکیل‌لر',
+);
+
 /** Bashkir (башҡортса)
  * @author ҒатаУлла
  */
@@ -93,6 +104,14 @@ $messages['ba'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1милл.',
 	'quickstats-number-shortening-billions' => '$1миллиард',
+);
+
+/** Bavarian (Boarisch)
+ * @author Bua333
+ */
+$messages['bar'] = array(
+	'quickstats-header-label' => 'Ministatistik',
+	'quickstats-header-date' => 'Datum',
 );
 
 /** Bulgarian (български)
@@ -229,6 +248,7 @@ $messages['diq'] = array(
  * @author Glavkos
  */
 $messages['el'] = array(
+	'quickstats-header-label' => 'Γρήγορα Στατιστικά',
 	'quickstats-header-date' => 'Ημερομηνία',
 	'quickstats-header-views' => 'Επισκέψεις',
 	'quickstats-header-edits' => 'Επεξεργασίες',

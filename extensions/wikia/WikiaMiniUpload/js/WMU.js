@@ -63,7 +63,8 @@ var WMU_panel = null,
 	WMU_box = -1,
 	WMU_width_par = null,
 	WMU_height_par = null,
-	WMU_skipDetails = false;
+	WMU_skipDetails = false,
+	WMU_isOnSpecialPage = false;
 
 if (typeof WMU_box_filled == 'undefined') {
 	WMU_box_filled = [];
@@ -314,7 +315,7 @@ function WMU_loadMainFromView() {
 		UserLogin.rteForceLogin();
 		return;
 	}
-	
+
 	var callback = function(data) {
 		// first, check if this is a special case for anonymous disabled...
 		if( data.wmu_init_login ) {
@@ -349,6 +350,7 @@ function WMU_loadMainFromView() {
 		user_blocked = data.user_blocked;
 		user_disallowed = data.user_disallowed;
 		user_protected = data.user_protected;
+
 		if( user_blocked ) {
 			document.location = wgScriptPath + '/index.php?title=' + encodeURIComponent( wgTitle ) + '&action=edit';
 		} else {
@@ -413,6 +415,9 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			wikiaEditor.plugins.MiniEditor.hasFocus = true;
 		}
 	}
+
+	// Special Case for using WMU in on Special Pages
+	WMU_isOnSpecialPage = wgNamespaceNumber === -1;
 
 	if(gallery === -2){
 		//	if (showComboAjaxForPlaceHolder("WikiaImagePlaceholderInner" + box,true)) return false;
@@ -923,8 +928,6 @@ function WMU_insertPlaceholder( box ) {
 }
 
 function WMU_insertImage(e, type) {
-	YAHOO.util.Event.preventDefault(e);
-
 	var params = Array();
 	params.push('type='+type);
 	params.push('mwname='+$G('ImageUploadMWname').value);
@@ -1051,6 +1054,17 @@ function WMU_insertImage(e, type) {
 						return false;
 					}
 
+					// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
+					if (WMU_isOnSpecialPage) {
+						var $responseHTML = $(o.responseText),
+							wmuData = {
+							imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
+							imageWikiText: $responseHTML.find('#ImageUploadTag').val()
+						};
+						$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
+						return false;
+					}
+
 					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
 						if( -2 == WMU_gallery) {
 							WMU_insertPlaceholder( WMU_box );
@@ -1126,7 +1140,6 @@ function WMU_insertImage(e, type) {
 			WMU_indicator(1, false);
 		}
 	}
-
 	WMU_indicator(1, true);
 	YAHOO.util.Connect.abort(WMU_asyncTransaction);
 	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), callback);

@@ -981,11 +981,18 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'rte-ck-errorPopupTitle' => 'Virhe!',
+	'rte-ck-link-external-tab' => 'Ulkoinen linkki',
+	'rte-ck-link-external-url' => 'URL',
+	'rte-ck-link-internal-linkText' => 'Linkin teksti',
+	'rte-ck-link-internal-pageName' => 'Sivun nimi',
+	'rte-ck-link-internal-tab' => 'Sisäinen linkki',
+	'rte-ck-link-title' => 'Luo tai muokkaa linkkiä',
 	'rte-ck-media-delete' => 'poista',
 	'rte-ck-photoGallery-slideshow' => 'Kuvaesitys',
 	'rte-ck-photoGallery-slider' => 'Liukusäädin',
@@ -1535,7 +1542,7 @@ $messages['it'] = array(
 	'rte-ck-link-internal-pageName' => 'Titolo della pagina',
 	'rte-ck-link-internal-tab' => 'Link interno',
 	'rte-ck-link-title' => 'Crea o modifica un link',
-	'rte-ck-link-label-target' => 'Pagina da linkare o URL',
+	'rte-ck-link-label-target' => 'Pagina di destinazione o URL',
 	'rte-ck-link-label-display' => 'Testo da visualizzare',
 	'rte-ck-link-label-internal' => 'A una pagina della wiki',
 	'rte-ck-link-label-external' => 'A un link esterno',
@@ -2577,6 +2584,10 @@ $messages['ps'] = array(
 	'rte-ck-templateEditor-editor-previewTitle' => 'مخليدنه',
 	'rte-ck-video-add' => 'يوه ويډيو ورګډول',
 	'rte-ck-video-video' => 'ويډيو',
+	'rte-ck-format-tag_h2' => 'سرليک 2',
+	'rte-ck-format-tag_h3' => 'سرليک 3',
+	'rte-ck-format-tag_h4' => 'سرليک 4',
+	'rte-ck-format-tag_h5' => 'سرليک 5',
 );
 
 /** Portuguese (português)

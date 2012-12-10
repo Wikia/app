@@ -18,10 +18,11 @@ $messages['en'] = array(
 	'wikiahome-visualisation-remix-button' => 'Remix',
 
 	'wikiahome-stats-heading' => 'Collaboration in action',
-	'wikiahome-stats-content' => 'Measuring the revolution of media.',
-	'wikiahome-stats-visitors' => 'People in a month',
+	'wikiahome-stats-visitors' => 'Visits last month',
+	'wikiahome-stats-mobile-visitors' => 'Mobile visits last month',
 	'wikiahome-stats-edits' => 'Changes today',
-	'wikiahome-stats-communities' => 'Communities',
+	'wikiahome-stats-communities' => 'Total Communities',
+	'wikiahome-stats-new-communities' => 'Communities today',
 	'wikiahome-stats-totalpages' => 'Total Pages',
 
 	'wikia-home-page-preview' => 'Preview',
@@ -144,12 +145,14 @@ $messages['de'] = array(
 	'wikiahome-visualisation-remix-mixitup' => 'Tauche ein!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Tausende von Wikis auf einen Klick. Drücke auf Remix, um noch viel mehr Wikis zu erkunden.',
 	'wikiahome-visualisation-remix-button' => 'Remix',
+
 	'wikiahome-stats-heading' => 'Interaktive Zusammenarbeit',
-	'wikiahome-stats-content' => 'Wir messen die Medienrevolution.',
 	'wikiahome-stats-visitors' => 'Monatliche Besucher',
 	'wikiahome-stats-edits' => 'Änderungen heute',
-	'wikiahome-stats-communities' => 'Communities',
+	'wikiahome-stats-communities' => 'Anzahl Communities',
 	'wikiahome-stats-totalpages' => 'Seiten gesamt',
+	'wikiahome-stats-mobile-visitors' => 'Von mobilen Geräten',
+	'wikiahome-stats-new-communities' => 'Neue Wikis heute',
 
 	'wikia-home-page-preview' => 'Vorschau',
 	'wikia-home-page-visit' => 'Aufrufen',
@@ -256,11 +259,12 @@ $messages['es'] = array(
 	'wikiahome-visualisation-remix-button' => 'Mover',
 
 	'wikiahome-stats-heading' => 'La colaboración en acción',
-	'wikiahome-stats-content' => 'Midiendo la revolución de los medios',
-	'wikiahome-stats-visitors' => 'Personas al mes',
-	'wikiahome-stats-edits' => 'Ediciones de hoy',
-	'wikiahome-stats-communities' => 'Comunidades',
-	'wikiahome-stats-totalpages' => 'Páginas totales',
+	'wikiahome-stats-visitors' => 'Visitas este mes',
+	'wikiahome-stats-edits' => 'Cambios hechos hoy',
+	'wikiahome-stats-communities' => 'Comunidades en total',
+	'wikiahome-stats-totalpages' => 'Páginas en total',
+	'wikiahome-stats-mobile-visitors' => 'Visitas desde móviles',
+	'wikiahome-stats-new-communities' => 'Nuevas comunidades',
 
 	'wikia-home-page-preview' => 'Previsualizar',
 	'wikia-home-page-visit' => 'Visitar',
@@ -271,13 +275,13 @@ $messages['es'] = array(
 	'wikia-home-parse-wiki-too-few-parameters' => 'Datos del wiki incorrectos - se requieren más parámetros',
 
 	'wikiahome-hubs-videogames-heading' => 'Videojuegos',
-	'wikiahome-hubs-videogames-url' => 'http://es.wikia.com/wiki/Videojuegos',
+	'wikiahome-hubs-videogames-url' => 'http://es.wikia.com/Videojuegos',
 	'wikiahome-hubs-videogames-creative' => '"Wikia es donde todo comienza cuando llegas al mundo de los videojuegos. Prepárate para perderte en un mundo más real de lo que imaginas.',
 	'wikiahome-hubs-videogames-more-heading' => 'Más en Videojuegos',
 	'wikiahome-hubs-videogames-more-list' => '
-*[http://es.wikia.com/wiki/Videojuegos Guías de juegos]
+*[http://es.wikia.com/Videojuegos Guías de juegos]
 *[http://videojuego.wikia.com/wiki/Wikijuegos:Portada Portal de videojuegos]
-*[http://es.wikia.com/wiki/Videojuegos Las últimas noticias]',
+*[http://es.wikia.com/Videojuegos Las últimas noticias]',
 
 	'wikiahome-hubs-entertainment-heading' => 'Entretenimiento',
 	'wikiahome-hubs-entertainment-url' => 'http://es.wikia.com/Entretenimiento',
@@ -307,7 +311,7 @@ $messages['es'] = array(
 	'wikiahome-community-column2-creative' => 'Mira como Wikia se abre hueco en el universo de los teléfonos con su nueva web para móviles y aplicaciones como Guías de videojuegos o Letras de canciones de LyricWiki.',
 	'wikiahome-community-column3-heading' => 'Síguenos',
 	'wikiahome-community-social-wikia-blog' => 'Blog de Wikia',
-	'wikiahome-community-social-wikia-blog-link' => 'http://es.wikia.com/wiki/Blog:Noticias_de_Wikia',
+	'wikiahome-community-social-wikia-blog-link' => 'http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia',
 	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-twitter-link' => 'https://twitter.com/#!/wikia_es',
 	'wikiahome-community-social-facebook' => 'Facebook',
@@ -326,7 +330,7 @@ __NOEDITSECTION__',
 	'wikiahome-footer-get-started-creative' => 'Encuentra tu comunidad,<br />comienza algo épico.',
 	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateWiki?uselang=es', // FIXME: why is this in a message?!
 	'wikiahome-footer-follow-us' => '===Síguenos===
-*[http://es.wikia.com/wiki/Blog:Noticias_de_Wikia Blog de Wikia]
+*[http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia Blog de Wikia]
 *[http://www.facebook.com/wikia.es Facebook]
 *[https://twitter.com/wikia_es Twitter]
 __NOEDITSECTION__',
@@ -382,12 +386,15 @@ $messages['fr'] = array(
 	'wikiahome-visualisation-remix-mixitup' => 'Mélangez&nbsp;!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Des centaines de wikis à votre portée. Mélangez pour explorer encore plus de wikis.',
 	'wikiahome-visualisation-remix-button' => 'Mélanger',
+
 	'wikiahome-stats-heading' => 'La collaboration en action',
-	'wikiahome-stats-content' => 'La révolution des médias en chiffres',
-	'wikiahome-stats-visitors' => 'Personnes / mois',
+	'wikiahome-stats-visitors' => 'Visites / mois',
 	'wikiahome-stats-edits' => 'Modifications / jour',
-	'wikiahome-stats-communities' => 'Communautés',
+	'wikiahome-stats-communities' => 'Communautés totales',
 	'wikiahome-stats-totalpages' => 'Pages totales',
+	'wikiahome-stats-mobile-visitors' => 'Visites mobiles / mois',
+	'wikiahome-stats-new-communities' => 'Communautés / jour',
+
 	'wikia-home-page-preview' => 'Aperçu',
 	'wikia-home-page-visit' => 'Visiter',
 	'wikia-home-parse-source-empty-exception' => 'Le message MediaWiki est vide.',

@@ -120,9 +120,9 @@ class ForumHooksHelper {
 		}
 
 		$wfMsgOpts = array(
-			$wfMsgOptsBase['articleUrl'],
+			$wfMsgOptsBase['articleFullUrl'],
 			$wfMsgOptsBase['articleTitleTxt'],
-			$wfMsgOptsBase['wallPageUrl'],
+			$wfMsgOptsBase['wallPageFullUrl'],
 			$wfMsgOptsBase['wallPageName'],
 			$wfMsgOptsBase['createdAt'],
 			$wfMsgOptsBase['DiffLink'],
@@ -288,11 +288,12 @@ class ForumHooksHelper {
 	 * 
 	 */
 	
-	public static function onWallAction($action, $parent, $id, $namespace) {
+	public static function onWallAction($action, $parent, $comment_id) {
 		$app = F::App();
-		
-		if ( MWNamespace::getSubject( $namespace ) == NS_WIKIA_FORUM_BOARD ) {
-			$app->sendRequest( "RelatedForumDiscussion", "purgeCache", array('threadId' => empty($parent) ? $id:$parent ) );
+		$title = Title::newFromId($comment_id, Title::GAID_FOR_UPDATE);
+
+		if ( !empty($title) && MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
+			$app->sendRequest( "RelatedForumDiscussion", "purgeCache", array('threadId' => empty($parent) ? $comment_id:$parent ) );
 		}
 		
 		return true;
@@ -303,8 +304,7 @@ class ForumHooksHelper {
 	 */
 	 
 	public static function onWallStoreRelatedTopicsInDB($parent, $id, $namespace) {
-		self::onWallAction(null, $parent, $id, $namespace);
+		self::onWallAction(null, $parent, $id);
 		return true;	
 	}
-
 }

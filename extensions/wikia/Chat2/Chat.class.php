@@ -417,7 +417,7 @@ class Chat {
 		wfProfileIn(__METHOD__);
 
 		self::addConnectionLogEntry();
-		
+
 		if( $wgDevelEnvironment ) {
 		//devbox
 			wfProfileOut( __METHOD__ );
@@ -454,7 +454,7 @@ class Chat {
 	public static function addConnectionLogEntry() {
 		global $wgMemc, $wgUser;
 		wfProfileIn(__METHOD__);
-		
+
 		// record the IP of the connecting user.
 		// use memcache so we order only one (user, ip) pair 3 min to avoide flooding the log
 		$ip = wfGetIP();
@@ -462,8 +462,8 @@ class Chat {
 		$entry = $wgMemc->get( $memcKey, false );
 
 		if ( empty($entry) ) {
-			$wgMemc->set($memcKey, true, 60*3 /*3 min*/);  
-			$log = WF::build( 'LogPage', array( 'chatconnect', false, false ) );
+			$wgMemc->set($memcKey, true, 60*3 /*3 min*/);
+			$log = F::build( 'LogPage', array( 'chatconnect', false, false ) );
 			$log->addEntry( 'chatconnect', SpecialPage::getTitleFor('Chat'), '', array($ip), $wgUser);
 
 			$dbw = wfGetDB( DB_MASTER );
@@ -492,7 +492,7 @@ class Chat {
 		}
 
 		wfProfileOut(__METHOD__);
-	} 
+	}
 
 
 	static protected function getUserIPMemcKey($userId, $address) {

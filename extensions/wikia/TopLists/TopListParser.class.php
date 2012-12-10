@@ -62,6 +62,7 @@ class TopListParser {
 			}
 		}
 
+	self::$mAttributes[ TOPLIST_ATTRIBUTE_DESCRIPTION ] = '';
         if ( !empty( $args[ TOPLIST_ATTRIBUTE_DESCRIPTION ] ) ) {
             self::$mAttributes[ TOPLIST_ATTRIBUTE_DESCRIPTION ] = $args[ TOPLIST_ATTRIBUTE_DESCRIPTION ];
         }
@@ -92,7 +93,8 @@ class TopListParser {
 					'relatedTitleData' => $relatedTitleData,
 					'relatedImage' => $relatedImage,
 					'attribs' => self::$mAttributes,
-					'relatedUrl' => $relatedUrl
+					'relatedUrl' => $relatedUrl,
+					'description' => self::$mAttributes[ TOPLIST_ATTRIBUTE_DESCRIPTION ]
 				)
 			);
 

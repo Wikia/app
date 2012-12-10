@@ -1035,6 +1035,11 @@ Text should be placed on this page if you wish to explain usage, style and polic
 *http://www.wikia.com/Privacy_Policy|Privacy Policy
 *_LICENSE_
 *http://www.wikia.com/Special:CreateWiki|Create a wiki",
+'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
+* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
+* [Special:Contact|Contact]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 # "editing" preferences sections
 'prefs-general' => 'General',
 'prefs-starting-an-edit' => 'Starting an edit',
@@ -1053,5 +1058,11 @@ Text should be placed on this page if you wish to explain usage, style and polic
 '#popular#' => 'Most popular articles',
 '#visited#' => 'Most visited articles',
 '#newlychanged#' => 'Newly changed articles',
-'#topusers#' => 'Top users'
+'#topusers#' => 'Top users',
+
+//WikiaUserPropertiesController error messages
+'user-properties-handler-not-registered' => 'Handler not registered',
+'user-properties-method-nonexistent' => 'Handler method non-existent',
+'user-properties-handler-nonexistent' => 'Handler class non-existent',
+
 ));

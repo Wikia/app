@@ -41,6 +41,13 @@ $messages['az'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Növbəti',
 );
 
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Заглавие',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -127,8 +134,10 @@ $messages['eu'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  */
 $messages['fi'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => 'Luo ensimmäiset sivusi!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Otsikko',
 	'contentfeeds-firstfewarticles-tag-next' => 'Seuraava',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Virhe: Sivun otsikko on pakollinen',

@@ -137,8 +137,14 @@ class SpecialGlobalUsage extends SpecialPage {
 			$page = "{$item['namespace']}:{$item['title']}";
 		}
 
-		$link = WikiMap::makeForeignLink( $item['wiki'], $page,
-				str_replace( '_', ' ', $page ) );
+		/* Wikia change begin */
+		$link = WikiFactory::DBtoUrl( $item['wiki'] );
+		if ( $link ) {
+			$link .= 'wiki/'.$page;
+			$link = Xml::element( 'a', array( 'href' => $link ), str_replace('_',' ', $page) );
+		}
+		/* Wikia change end */
+
 		// Return only the title if no link can be constructed
 		return $link === false ? $page : $link;
 	}

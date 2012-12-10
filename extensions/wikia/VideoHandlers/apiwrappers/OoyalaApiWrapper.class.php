@@ -51,8 +51,8 @@ class OoyalaApiWrapper extends ApiWrapper {
 	public static function getProviderName( $labels ) {
 		$provider = 'Ooyala';
 		foreach( $labels as $label ) {
-			if ( empty($label['parent_id']) ) {
-				$provider = $label['name'];
+			if ( !empty($label['full_name']) && preg_match('/\/Providers\/([\w\s]+)/', $label['full_name'], $matches) ) {
+				$provider = $matches[1];
 				break;
 			}
 		}
@@ -165,7 +165,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 		}
 
 		if ( !empty($this->interfaceObj['duration']) ) {
-			return $this->interfaceObj['duration'];
+			return ( $this->interfaceObj['duration']/1000 );
 		}
 
 		return '';
@@ -286,4 +286,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 }
 
 class WikiawebinarsApiWrapper extends OoyalaApiWrapper {
+}
+
+class FunimationApiWrapper extends OoyalaApiWrapper {
 }

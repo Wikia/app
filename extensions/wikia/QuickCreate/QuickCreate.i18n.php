@@ -92,10 +92,11 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  * @author Nike
  */
 $messages['fi'] = array(
-	'quickcreate-desc' => 'Lisää "luo uusi sivu" -painikkeen, jolla anonyymit käyttäjät voivat kirjautua sisään.', # Fuzzy
+	'quickcreate-desc' => 'Lisää "Luo uusi sivu" -painikkeen ja sisäänkirjautumiskehotteen anonyymeille käyttäjäjille',
 	'quickcreate' => 'reseptin lähetys',
 );
 

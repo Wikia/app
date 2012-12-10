@@ -34,6 +34,7 @@ function wfAdEngineInit() {
 		// Disable right rail ads and AdMeld ads for logged in users not willing to see ads
 		$wgEnableAdsInContent = false;
 		$wgEnableAdMeldAPIClient = false;
+		$wgEnableKruxTargeting = false;
 	}
 
 	// Canonical value for wgLoadAdsInHead
@@ -857,6 +858,7 @@ class AdEngine {
 		 * See http://staff.wikia-inc.com/wiki/DART_Implementation#When_to_show_ads */
 		$mandatoryAds = array(
 			'HOME_TOP_LEADERBOARD',
+			'HUB_TOP_LEADERBOARD',
 			'HOME_TOP_RIGHT_BOXAD',
 			'LEFT_NAV_205x400'
 		);

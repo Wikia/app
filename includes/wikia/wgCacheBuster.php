@@ -11,7 +11,7 @@ $cbFilePath = "/usr/wikia/deploy/$slot_name/src/wgCacheBuster.php";
 
 if ($wgDevelEnvironment) {
 	global $wgCacheBuster;
-	$wgCacheBuster = 12345;
+	$wgCacheBuster = time();
 } else {
 	include_once($cbFilePath);
 }

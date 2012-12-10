@@ -145,13 +145,17 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
+ * @author Nike
  */
 $messages['fi'] = array(
 	'main-tab-discover' => 'Tutustu',
+	'main-tab-personal' => 'Oma Wikia',
 	'main-tab-search' => 'Etsi',
 	'main-tab-offline' => 'Ei kirjautuneena',
 	'tab-discover-loading-message' => 'Ladataan...',
 	'tab-discover-no-network-dialog-title' => 'Verkko ei ole käytettävissä',
+	'tab-discover-no-network-dialog-message' => 'Verkkoyhteyttä ei havaittu.',
 	'tab-discover-no-network-dialog-close-button' => 'Valmis',
 	'tab-search-loading-message' => 'Etsitään...',
 	'browser-loading-message' => 'Ladataan...',
@@ -354,13 +358,14 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'main-tab-discover' => 'Descobrir',
 	'main-tab-personal' => 'A minha Wikia',
 	'main-tab-search' => 'Pesquisar',
 	'main-tab-offline' => 'Desligado',
-	'tab-discover-loading-message' => 'A carregar...',
+	'tab-discover-loading-message' => 'A carregar…',
 	'tab-discover-no-network-dialog-title' => 'Rede indisponível',
 	'tab-discover-no-network-dialog-message' => 'Não foi detectada uma ligação de rede',
 	'tab-discover-no-network-dialog-close-button' => 'OK',

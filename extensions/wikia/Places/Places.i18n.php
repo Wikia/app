@@ -279,6 +279,8 @@ $messages['lb'] = array(
 	'places' => 'Plazen an dëser Wiki',
 	'places-in-category' => 'Plazen an der Kategorie $1',
 	'places-editor-search' => 'Sichen',
+	'places-geolocation-button-label' => 'Plaz derbäisetzen',
+	'places-geolocation-modal-add-title' => 'Plaz derbäisetzen',
 	'places-geolocation-modal-error-title' => 'Feeler',
 	'places-error-no-article' => 'Dir musst eng Säit uginn',
 );

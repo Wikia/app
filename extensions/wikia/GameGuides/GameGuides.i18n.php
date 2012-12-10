@@ -113,9 +113,14 @@ $messages['eu'] = array(
 
 /** Finnish (suomi)
  * @author Ilkea
+ * @author Nedergard
  */
 $messages['fi'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides mobiilisovellus moduulit',
+	'wikiagameguides-content-category' => 'Luokka',
+	'wikiagameguides-content-add' => 'Lisää',
+	'wikiagameguides-content-save' => 'Tallenna',
+	'wikiagameguides-content-category-error' => 'Luokkaa ei ole',
 );
 
 /** French (français)
@@ -287,6 +292,15 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'wikiagameguides-desc' => "Mòdoj ëd l'aplicassion mòbil Wikia Games Guides",
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikiagameguides-content-category' => 'وېشنيزه',
+	'wikiagameguides-content-add' => 'ورګډول',
+	'wikiagameguides-content-save' => 'خوندي کول',
 );
 
 /** Portuguese (português)

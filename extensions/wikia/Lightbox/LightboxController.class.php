@@ -14,9 +14,6 @@ class LightboxController extends WikiaController {
 	const POSTED_IN_ARTICLES = 7;
 	static $imageserving;
 
-	public function __construct() {
-	}
-
 	/**
 	 * get lightbox madal content
 	 */
@@ -175,13 +172,8 @@ class LightboxController extends WikiaController {
 		$data = WikiaFileHelper::getMediaDetail( $title, $config );
 
 		$articles = $data['articles'];
-		$isPostedIn = false; // Bool to tell mustache to print "posted in" section
-
-		if( !empty($articles) ) {
-			$isPostedIn = true;
-		}
-
-		list( $smallerArticleList, $articleListIsSmaller ) = F::build( 'WikiaFileHelper', array( $articles, self::POSTED_IN_ARTICLES ), 'truncateArticleList' );
+		list( $smallerArticleList, $articleListIsSmaller ) = WikiaFileHelper::truncateArticleList( $articles, self::POSTED_IN_ARTICLES );
+		$isPostedIn = empty( $smallerArticleList ) ? false : true;	// Bool to tell mustache to print "posted in" section
 
 		// file details
 		$this->views = $this->wf->Msg( 'lightbox-video-views', $this->wg->Lang->formatNum($data['videoViews']) );
@@ -239,8 +231,7 @@ class LightboxController extends WikiaController {
 			$articleTitleObj = F::build('Title', array($articleTitle), 'newFromText');
 
 			if(!empty($articleTitleObj) && $articleTitleObj->exists()) {
-
-				$fileParam = $fileTitleObj->getDBKey();
+				$fileParam = $this->wf->Urlencode( $fileTitleObj->getDBKey() );
 				$articleUrl = $articleTitleObj->getFullURL("file=$fileParam");
 				$articleNS = $articleTitleObj->getNamespace();
 				$articleTitleText = $articleTitleObj->getText();
@@ -519,4 +510,20 @@ class LightboxController extends WikiaController {
 		return $timestamp;
 	}
 
+	/**
+	 * @param array $vars
+	 * @return bool
+	 */
+	public function onMakeGlobalVariablesScript(&$vars) {
+		// How many ads to show while browsing Lightbox
+		$wgShowAdModalInterstitialTimes = $this->wg->ShowAdModalInterstitialTimes;
+		if (!$wgShowAdModalInterstitialTimes) {
+			$wgShowAdModalInterstitialTimes = 1; // default: 1
+		}
+
+		$vars['wgEnableLightboxExt'] = true;
+		$vars['wgShowAdModalInterstitialTimes'] = $wgShowAdModalInterstitialTimes;
+
+		return true;
+	}
 }

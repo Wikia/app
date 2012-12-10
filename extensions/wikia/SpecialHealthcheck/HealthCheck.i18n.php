@@ -27,6 +27,13 @@ $messages['ast'] = array(
 	'healthcheck-desc' => "Una [[Special:HealthCheck|páxina especial]] pa comprobar l'estáu del sirvidor",
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Khan27
+ */
+$messages['az'] = array(
+	'healthcheck-desc' => 'Server vəziyyətinin yoxlaması üçün [[Special:HealthCheck|xüsusi səhifə]].',
+);
+
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */

@@ -1,6 +1,7 @@
 <?php
 
 class MultiwikifinderSpecialPage extends SpecialPage {
+	/* @var MultiwikifinderPage */
     private $mfp = null;
     var $mName = 'Multiwikifinder';
     var $mRights = 'multiwikifinder';
@@ -36,7 +37,7 @@ class MultiwikifinderSpecialPage extends SpecialPage {
         $this->mfp->showForm();
     }
 
-    function getResult() { return $this->mpp->getResult(); }
+    function getResult() { return $this->mfp->getResult(); }
 }
 
 class MultiwikifinderPage {

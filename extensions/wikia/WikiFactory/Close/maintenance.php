@@ -49,7 +49,7 @@ class CloseWikiMaintenance {
 	 * @access public
 	 */
 	public function execute() {
-		global $wgUploadDirectory, $wgDBname, $wgSolrIndexer, $IP;
+		global $wgUploadDirectory, $wgDBname, $IP;
 
 		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
 		$sleep     = isset( $this->mOptions[ "sleep" ] ) ? $this->mOptions[ "sleep" ] : 1;
@@ -114,17 +114,17 @@ class CloseWikiMaintenance {
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP ) {
 				$this->log( "Dumping database on remote host" );
 				list ( $remote  ) = explode( ":", $this->mTarget, 2 );
+
+				$script = ( $hide )
+					? "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$row->city_id}'"
+					: "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$row->city_id} --hide'";
+
 				$cmd  = array(
-					"SERVER_ID=177",
-					"php",
-					"$IP/extensions/wikia/WikiFactory/Dumps/runBackups.php",
-					"--conf /usr/wikia/conf/current/iowa.wiki.factory/LocalSettings.php",
-					"--both",
-					"--id={$row->city_id}"
+					"/usr/wikia/backend/bin/run_maintenance",
+					"--id=177",
+					$script
 				);
-				if( $hide ) {
-					$cmd[] = "--hide";
-				}
+
 				$dump = wfEscapeShellArg(
 					"/usr/bin/ssh",
 					$remote,
@@ -285,12 +285,9 @@ class CloseWikiMaintenance {
 					/**
 					 * update search index
 					 */
-					$cmd = sprintf(
-						"curl %s -H \"Content-Type: text/xml\" --data-binary '<delete><query>wid:%d</query></delete>' > /dev/null 2> /dev/null",
-						$wgSolrIndexer, $row->city_id
-					);
-					wfShellExec( $cmd, $retval );
-					$this->log( "search index removed from {$wgSolrIndexer}" );
+					$indexer = F::build( 'WikiaSearchIndexer' );
+					$indexer->deleteWikiDocs( $row->city_id );
+					$this->log( "Wiki documents removed from index" );
 
 					/**
 					 * there is nothing to set because row in city_list doesn't

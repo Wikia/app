@@ -19,6 +19,9 @@ class SEOTweaksHooksHelper extends WikiaModel {
 		if ( !empty( F::app()->wg->SEOGoogleSiteVerification ) ) {
 			$out->addMeta( 'google-site-verification', F::app()->wg->SEOGoogleSiteVerification );
 		}
+		if ( !empty( F::app()->wg->SEOBingValidate ) ) {
+			$out->addMeta( 'msvalidate.01', F::app()->wg->SEOBingValidate );
+		}
 		if ( !empty( F::app()->wg->SEOGooglePlusLink ) ) {
 			$out->addLink( array( 'href' => F::app()->wg->SEOGooglePlusLink, 'rel' => 'publisher' ) );
 		}

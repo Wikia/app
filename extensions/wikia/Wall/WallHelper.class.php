@@ -5,6 +5,8 @@ class WallHelper {
 	const WA_WALL_COMMENTS_MAX_LEN = 150;
 	const WA_WALL_COMMENTS_EXPIRED_TIME = 259200; // = (3 * 24 * 60 * 60) = 3 days
 
+	const PARSER_CACHE_TTL = 3600; // 60 * 60
+
 	public function __construct() {
 		$this->urls = array();
 	}
@@ -403,17 +405,26 @@ class WallHelper {
 	public function strip_wikitext($text) {
 		$app = F::app();
 
-		//local parser to fix the issue fb#17907
-		$parser = F::build('Parser', array());
+		// use memcached on top of Parser
+		$textHash = md5($text);
+		$key = $app->wf->memcKey(__METHOD__,$textHash);
+		$cachedText = $app->wg->memc->get($key);
+		if ( !empty($cachedText) ) {
+			return $cachedText;
+		}
+
 
 		$text = str_replace('*', '&asterix;', $text);
-		$text = $parser->parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
+		//local parser to fix the issue fb#17907
+		$text = ParserPool::parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
 		// BugId:31034 - I had to give ENT_COMPAT and UTF-8 explicitly.
 		// Prior PHP 5.4 the defaults are ENT_COMPAT and ISO-8859-1 (not UTF-8)
 		// and cause HTML entities in an actual UTF-8 string to be decoded incorrectly
 		// and displayed in... an ugly way.
 		$text = trim( strip_tags( html_entity_decode( $text, ENT_COMPAT, 'UTF-8' ) ) );
 		$text = str_replace('&asterix;', '*', $text);
+
+		$app->wg->memc->set($key,$text,self::PARSER_CACHE_TTL);
 
 		return $text;
 	}

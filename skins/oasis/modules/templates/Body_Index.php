@@ -1,4 +1,6 @@
+<? if ( $displayHeader ): ?>
 <h1><?= wfMsg('oasis-global-page-header'); ?></h1>
+<? endif; ?>
 <div class="skiplinkcontainer">
 <a class="skiplink" rel="nofollow" href="#WikiaArticle"><?= wfMsg( 'oasis-skip-to-content' ); ?></a>
 <a class="skiplink wikinav" rel="nofollow" href="#WikiHeader"><?= wfMsg( 'oasis-skip-to-wiki-navigation' ); ?></a>
@@ -84,6 +86,18 @@
 				<? if($displayAdminDashboardChromedArticle) { ?>
 					<?= (string)$app->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array('headerText' => $wg->Title->getText() )) ?>
 				<? } ?>
+				
+				<div class="home-top-right-ads">
+				<?php
+					if (in_array('leaderboard', $wg->ABTests)) {
+						echo $app->renderView('Ad', 'Index', array('slotname' => 'TEST_HOME_TOP_RIGHT_BOXAD'));
+					} else {
+						echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
+					}
+
+					echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BUTTON'));
+				?>
+				</div>
 
 				<?php
 				// for InfoBox-Testing

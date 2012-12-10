@@ -19,17 +19,26 @@ class AdEngine2Controller extends WikiaController {
 	 * @return bool
 	 */
 	public static function areAdsShowableOnPage() {
-		$wg = F::app()->wg;
+		// Don't show ads on:
+		if (WikiaPageType::isActionPage()) {
+			return false;
+		}
 
+		$wg = F::app()->wg;
 		$title = $wg->Title;
 
+		// Show ads only on the following page types:
 		$runAds = $wg->Out->isArticle()
 			|| WikiaPageType::isSearch()
 			|| WikiaPageType::isForum()
-			|| WikiaPageType::isWikiaHub()
-			|| (defined('NS_WIKIA_PLAYQUIZ') && $title->inNamespace(NS_WIKIA_PLAYQUIZ))
-			|| $title->isSpecial('Videos')
-			|| $title->isSpecial('Leaderboard');
+			|| WikiaPageType::isWikiaHub();
+
+		if ($title) {
+			$runAds = $runAds
+				|| (defined('NS_WIKIA_PLAYQUIZ') && $title->inNamespace(NS_WIKIA_PLAYQUIZ))
+				|| $title->isSpecial('Videos')
+				|| $title->isSpecial('Leaderboard');
+		}
 
 		return $runAds;
 	}

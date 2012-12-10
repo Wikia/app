@@ -182,8 +182,12 @@
 					this.setNoticeAreaStatus(noticeareaStatus);
 				} else if( hash && isMainPageEduNote && window.wgUserName ) {
 					$.nirvana.sendRequest({
-						controller: 'WikiaUserProperties',
-						method: 'dismissRTEMainPageNotice',
+						controller: 'WikiaUserPropertiesController',
+						method: 'performPropertyOperation',
+						data: {
+							handlerName: 'RTEUserPropertiesHandler',
+							methodName: 'dismissRTEMainPageNotice'
+						},
 						type: 'post',
 						format: 'json',
 						callback: $.proxy(this.onDismissRTEMainPageNotice, this)

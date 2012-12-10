@@ -80,9 +80,6 @@ class PageStatsService extends Service {
 
 		wfDebug(__METHOD__ . ": page #{$this->pageId}\n");
 
-		// invalidate cached data from getMostLinkedCategories()
-		$wgMemc->delete($this->getKey('mostlinkedcategories'));
-
 		// invalidate cached data from getCurrentRevision()
 		$wgMemc->delete($this->getKey('current-revision'));
 
@@ -137,67 +134,6 @@ class PageStatsService extends Service {
 	 */
 	private static function isArticleCommentsEnabled() {
 		return class_exists('ArticleCommentInit');
-	}
-
-	/**
-	 * Get list of two most linked categories current article is in
-	 */
-	public function getMostLinkedCategories() {
-		wfProfileIn(__METHOD__);
-
-		global $wgOut, $wgMemc;
-
-		// check whether current article belongs to any category
-		$categoryLinks = $wgOut->getCategoryLinks();
-		if (empty($categoryLinks)) {
-			wfProfileOut(__METHOD__);
-			return array();
-		}
-
-		// try to get cached data
-		$key = $this->getKey('mostlinkedcategories');
-
-		$categories = $wgMemc->get($key);
-		if (!is_array($categories)) {
-			wfProfileIn(__METHOD__ . '::miss');
-			$limit = 2;
-
-			// get list of articles categories with number of articles "linked" to them
-			$dbr = wfGetDB(DB_SLAVE);
-
-			// check querycache first
-			$res = $dbr->select(
-				array('querycache', 'categorylinks'),
-				array('qc_title as cl_to, qc_value as cnt'),
-				array(
-					'qc_title = cl_to',
-					'qc_type' => 'Mostpopularcategories',
-					'cl_from' => $this->pageId
-				),
-				__METHOD__,
-				array(
-					'ORDER BY' => 'qc_value DESC',
-					'LIMIT'    => $limit
-				)
-			);
-
-			// order and filter out blacklisted categories
-			$service = new CategoriesService();
-			$categories = array();
-
-			while($obj = $dbr->fetchObject($res)) {
-				if (!$service->isCategoryBlacklisted($obj->cl_to) && !$service->isCategoryHidden($obj->cl_to)) {
-					$categories[$obj->cl_to] = $obj->cnt;
-				}
-			}
-
-			$wgMemc->set($key, $categories, self::CACHE_TTL);
-
-			wfProfileOut(__METHOD__ . '::miss');
-		}
-
-		wfProfileOut(__METHOD__);
-		return $categories;
 	}
 
 	/**

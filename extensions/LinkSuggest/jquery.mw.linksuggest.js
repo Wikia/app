@@ -386,6 +386,7 @@ $.widget( 'mw.linksuggest', {
 // in this JS file
 $( function() {
 	// Apply font-style for bug in IE. This should be done using a style sheet
-	$( '#wpTextbox1' ).css( 'font-family', 'monospace' ).linksuggest();
+	// Wikia change. MediaWiki 1.19 BugId:68869 removed unnecessary inline style. Seems to work fine in IE anyway
+        $( '#wpTextbox1' ).linksuggest();
 });
 

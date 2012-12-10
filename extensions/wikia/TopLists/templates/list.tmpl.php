@@ -1,3 +1,4 @@
+<p><?= $description ?></p>
 <div id="toplists-list-body">
 	<input type="hidden" id="top-list-title" value="<?= htmlspecialchars( $listTitle ) ?>">
 	<? if ( !empty( $relatedImage ) ) :?>

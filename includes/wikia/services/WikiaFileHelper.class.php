@@ -146,9 +146,9 @@ class WikiaFileHelper extends Service {
 			$file = wfFindFile( $media );
 			if ( !empty($file) ) {
 				// video title
-				$width = $width - 60;
+				$contentWidth = $width - 60;
 				$videoTitle = $media->getText();
-				$content = self::videoOverlayTitle( $videoTitle, $width );
+				$content = self::videoOverlayTitle( $videoTitle, $contentWidth );
 
 				// video duration
 				$duration = '';
@@ -174,6 +174,7 @@ class WikiaFileHelper extends Service {
 				// info
 				$attribs = array(
 					"class" => "info-overlay",
+					"style" => "width: {$width}px;"
 				);
 
 				$html = Xml::tags( 'span', $attribs, $content );

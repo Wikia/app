@@ -412,6 +412,15 @@ $messages['bg'] = array(
 
 -- Екипът на Wikia', # Fuzzy
 	'founderemails-email-page-edited-anon-subject' => 'Тайнствен приятел редактира $WIKINAME',
+	'founderemails-email-page-edited-anon-body' => 'Здрасти, $USERNAME,
+
+Редактор на Уикия току що направи редакция на страницата $PAGETITLE в $WIKINAME.
+
+Уикия редакторите са хора, които допринасят без да са влезли със сметката си в Wikia. Можете да отидете и да видите как е допринесъл за уикито този тайнствен приятел!
+
+$PAGEURL
+
+Екипът на Уикия',
 	'founderemails-email-anon-edit-signature' => 'Екипът на Wikia',
 	'founderemails-email-lot-happening-signature' => 'Екипът на Wikia',
 	'founderemails-email-0-day-addpages-heading' => 'Добавяне на страници.',
@@ -1715,6 +1724,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Kalakuh
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
@@ -1725,14 +1735,39 @@ $messages['fi'] = array(
 Näyttää siltä, että $EDITORNAME on rekisteröitynyt wikiisi! Miksi et sano hänen keskustelusivullaan $EDITORTALKPAGEURL hei?
 
 -- The Wikia Team', # Fuzzy
+	'founderemails-email-user-registered-greeting' => 'Hei $USERNAME,',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Uusi $WIKINAME -muokkaus!',
+	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Hei $USERNAME,
+
+Hienoa! $EDITORNAME teki juuri ensimmäinen muokkauksensa $WIKINAME-wikissä.
+
+Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.
+
+$PAGEURL
+
+Wikia-ryhmä',
+	'founderemails-email-first-edit-greeting' => 'Hei $USERNAME,',
+	'founderemails-email-first-edit-headline' => 'Hienoa! $EDITORNAME teki juuri ensimmäinen muokkauksensa $WIKINAME-wikissä.',
+	'founderemails-email-first-edit-content' => 'Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.',
+	'founderemails-email-first-edit-signature' => 'Wikia-ryhmä',
+	'founderemails-email-page-edited-reg-user-subject' => 'Uusi $WIKINAME -muokkaus!',
 	'founderemails-email-page-edited-reg-user-body' => 'Hei $USERNAME,
 
-Näyttää siltä, että rekisteröitynyt käyttäjä $EDITORNAME on muokannut wikiäsi! Miksi et sano hänelle ($EDITORTALKPAGEURL) hei?
+$EDITORNAME muokkasi juuri $WIKINAME-wikin sivua $PAGETITLE.
 
--- The Wikia Team', # Fuzzy
+Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.
+
+$PAGEURL
+
+Wikia-ryhmä',
+	'founderemails-email-general-edit-greeting' => 'Hei $USERNAME,',
+	'founderemails-email-general-edit-headline' => '$EDITORNAME muokkasi juuri $WIKINAME-wikin sivua $PAGETITLE.',
+	'founderemails-email-general-edit-content' => 'Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.',
+	'founderemails-email-general-edit-signature' => 'Wikia-ryhmä',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hei $USERNAME,<br /><br />
 Näyttää siltä, että rekisteröitynyt käyttäjä $EDITORNAME on muokannut wikiäsi! Miksi et sano hänen <a href="$EDITORTALKPAGEURL">keskustelusivullaan</a> hei?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
+	'founderemails-email-anon-edit-signature' => 'Wikia-ryhmä',
 	'founderemails-answers-email-page-edited-reg-user-body' => 'Hei $USERNAME,
 
 Näyttää siltä, että rekisteröitynyt käyttäjä $EDITORNAME on muokannut wikiäsi! Miksi et kävisi hänen keskustelusivullaan ($EDITORTALKPAGEURL) ja sanoisi hei?
@@ -5386,6 +5421,8 @@ $messages['ps'] = array(
 	'founderemails-email-0-day-addphotos-heading' => 'انځورونه ورګډول.',
 	'founderemails-email-0-day-addphotos-button' => 'يو انځور ورګډول',
 	'founderemails-email-3-day-addphotos-button' => 'انځورونه ورګډول',
+	'founderemails-email-views-digest-greeting' => 'سلامونه $USERNAME،',
+	'founderemails-email-views-digest-signature' => 'د ويکيا ډله',
 	'founderemails-email-complete-digest-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-complete-digest-signature' => 'د ويکيا ډله',
 );

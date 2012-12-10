@@ -11,6 +11,8 @@ class RelatedVideosRailController extends WikiaController {
 		
 		#$this->realResponse->addAsset('extensions/wikia/Wall/css/WallHistoryRail.scss');
 		
+		$this->surveyLink = $this->wg->LanguageCode == 'en' ? $this->app->renderView('VideosController', 'videoSurvey') : ''; // temporary video survey code bugid-68723
+		
 		$app->wf->ProfileOut(__METHOD__);
 	}
 	

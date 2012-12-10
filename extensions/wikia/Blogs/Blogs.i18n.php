@@ -950,19 +950,45 @@ $messages['ee'] = array(
 /** Greek (Ελληνικά)
  * @author Dada
  * @author Evropi
+ * @author Glavkos
  */
 $messages['el'] = array(
 	'createblogpage' => 'Δημιουργία ιστολογίου',
+	'create-blog-spam' => 'Φαίνεται σαν spam',
+	'create-blog-cant-edit' => 'Δεν ήταν δυνατή η εκτέλεση επεξεργασίας',
+	'create-blog-post-category' => 'Καταχωρήσεις ιστολογίου',
+	'create-blog-post-category-body' => 'Αυτός είναι ένας αυτόματα παραχθείς κατάλογος με καταχωρήσεις ιστολογίου',
 	'create-blog-post-recent-listing' => 'Πρόσφατες δημοσιεύσεις',
 	'create-blog-post-recent-listing-title' => 'Πρόσφατες δημοσιεύσεις',
 	'create-blog-post-recent-listing-log' => 'Δημιουργήθηκε άρθρο για πρόσφατες δημοσιεύσεις σε blog',
 	'create-blog-post-title' => 'Δημιουργήστε καινούργια δημοσίευση στο blog',
 	'create-blog-form-title' => 'Τι είναι μια καταχώρηση blog;',
 	'create-blog-form-post-text' => 'Κείμενο blog',
+	'create-blog-empty-title-error' => 'Απαιτείται τίτλος',
+	'create-blog-no-login' => 'Δεν έχετε συνδεθεί',
 	'create-blog-categories-submit' => 'Καταχώρηση',
 	'create-blog-save' => 'Αποθήκευση σελίδας',
 	'create-blog-preview' => 'Προεπισκόπηση',
 	'create-blog-updated' => 'Η καταχώρηση blog δημιουργήθηκε ή ενημερώθηκε.',
+	'create-blog-listing-sortby' => 'Ταξινόμηση κατά',
+	'create-blog-listing-sortby-date' => 'Πιο πρόσφατα',
+	'create-blog-listing-sortby-author' => 'Συγγραφέας',
+	'create-blog-listing-sortby-comments' => 'Σύνολο Σχολίων',
+	'blog-added' => 'προστέθηκε',
+	'blog-edited' => 'επεξεργάστηκε',
+	'blog-page' => 'Blog',
+	'blog-zero-comments' => 'Κανένα σχόλιο ακόμα!',
+	'blog-comment-post' => 'Δημοσίευση σχολίου',
+	'blog-comments' => 'Σχόλια',
+	'blog-comment-delete' => 'διαγραφή',
+	'blog-comment-hide' => 'απόκρυψη',
+	'blog-comment-unhide' => 'επανεμφάνιση',
+	'blog-comment-history' => 'ιστορικό',
+	'blog-comment-edit' => 'επεξεργασία',
+	'blog-comment-error' => 'Δεν ήταν δυνατή η αποθήκευση του σχολίου',
+	'blog-comment-cannot-add' => 'Δεν μπορείτε να προσθέσετε σχόλιο στο blog.',
+	'blog-avatar-preferences-title' => 'Αβατάρ',
+	'blog-page-rate' => 'Βαθμολογήστε αυτό το άρθρο:',
 );
 
 /** Spanish (español)
@@ -1219,6 +1245,7 @@ $messages['fa'] = array(
  * @author Crt
  * @author Ilkea
  * @author Lukkipoika
+ * @author Nedergard
  * @author VezonThunder
  */
 $messages['fi'] = array(
@@ -1336,6 +1363,8 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
 	'blog-movepage-badtitle' => 'Virheellinen blogi-postitusotsikko',
 	'blog-comment-sending' => 'Lähetetään...',
 	'blog-by' => '$1, kirjoittanut $2',
+	'blogs-searchprofile' => 'Blogit',
+	'user-blog-url-link' => 'Käyttäjän blogi: $1',
 );
 
 /** French (français)
@@ -1535,8 +1564,8 @@ Cree páxinas de listas de blogues para categorías como "Barack Obama", "Galici
 	'blog-writeone' => 'Escriba unha!',
 	'blog-empty-user-blog' => 'Este usuario aínda non escribiu ningunha entrada de blogue!',
 	'blog-last-edited' => '<strong>Última edición:</strong> $1',
-	'blog-added' => 'engadido',
-	'blog-edited' => 'editado',
+	'blog-added' => 'engadida',
+	'blog-edited' => 'editada',
 	'blog-page' => 'Blogue',
 	'blog-zero-comments' => 'Aínda non hai comentarios!',
 	'blog-comment-post' => 'Publicar un comentario',
@@ -3415,6 +3444,7 @@ $messages['ps'] = array(
 	'create-blog-preview' => 'مخليدنه',
 	'create-blog-listing-preview' => 'مخليدنه',
 	'create-blog-listing-matches-calculate' => 'شمېرل',
+	'create-blog-listing-sortby' => 'اوډنه له مخې د',
 	'create-blog-listing-sortby-author' => 'ليکوال',
 	'blog-defaulttitle' => 'بلاګونه',
 	'blog-readfullpost' => 'نور لوستل',
@@ -3432,6 +3462,7 @@ $messages['ps'] = array(
 	'blog-create-next-label' => 'د بلاګ نوې ليکنه ليکل',
 	'blog-desc' => 'د بلاګ ليکنې',
 	'blog-comment-sending' => 'د لېږلو په حال کې ...',
+	'blogs-searchprofile' => 'بلاګونه',
 );
 
 /** Portuguese (português)

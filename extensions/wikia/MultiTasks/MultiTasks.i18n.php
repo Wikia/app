@@ -862,6 +862,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
@@ -873,6 +874,7 @@ $messages['fi'] = array(
 	'multiwikiedit_or' => '<b>TAI</b>',
 	'multiwikiedit_page_text' => 'Tallennettava teksti',
 	'multiwikiedit_list_caption' => 'Wiki-luettelo',
+	'multiwikiedit_summary_text' => 'Yhteenvetokenttä',
 	'multiwikiedit_select_yourself' => 'Sinä',
 	'multiwikiedit_edit_options' => 'Muokkausvalitsimet',
 	'multidelete_button' => 'Poista',
@@ -2913,6 +2915,7 @@ $messages['sv'] = array(
 	'multiwikiedit_both_modes' => 'Var god välj antingen en specificerad sida eller en lista över sidor.',
 	'multiwikiedit_or' => '<b>ELLER</b>',
 	'multiwikiedit_task_added' => 'Redigeringsuppgiften #$1 för flera wikis lades till.',
+	'multiwikiedit_task_error' => 'Ett fel uppstod när uppgiften för multiwiki-redigeringsuppgiften skulle läggas till.',
 	'multiwikiedit_task_none_selected' => 'Du valde inte några artiklar. Uppgiften lades inte till.',
 	'multiwikiedit_task_link' => 'Du kan kontrollera din uppgift',
 	'multiwikiedit_on' => 'på',
@@ -2935,11 +2938,14 @@ $messages['sv'] = array(
 	'multiwikiedit_all_wikis' => 'alla wikis',
 	'multiwikiedit_selected_wikis' => 'valda wikis',
 	'multiwikiedit_success_subtitle' => 'för $1',
+	'multiwikiedit_link_back' => 'Du kan gå tillbaka till Multiwiki-redigeringsformuläret $1.',
+	'multiwikiedit_omitting_nonexistant' => 'Utelämna den icke-existerande sidan $1.',
 	'multiwikiedit_omitting_invalid' => 'Utelämna ogiltig sida $1.',
 	'multiwikiedit_file_bad_format' => 'Filen ska innehålla ren text',
 	'multiwikiedit_file_missing' => 'Kunde inte läsa filen',
 	'multiwikiedit_select_script' => 'redigera sidskript',
 	'multiwikiedit_select_yourself' => 'du',
+	'multiwikiedit_no_page' => 'Var god specificera minst en sida för att redigera ELLER välj en fil som innehåller en sidlista.',
 	'multiwikiedit_split_results' => "Ditt artikelantal var för högt för att utföras som en enda uppgift. Den har istället delats upp i '''$1''' uppgifter med en maximal segmentstorlek på '''$2''' artiklar.",
 	'multiwikiedit_add_text' => 'Ange artikeltext först',
 	'multiwikiedit_supply_wikis' => 'Var god lägg till listan över valda wikis',
@@ -2949,6 +2955,7 @@ $messages['sv'] = array(
 	'action-multiwikiedit' => 'redigera en serie av sidor',
 	'multidelete' => 'Radera serie av sidor',
 	'multidelete_button' => 'RADERA',
+	'multidelete_help' => 'Radera en grupp sidor via en bakgrundsaktivitet. Du kan göra det för denna wiki, alla wikis från delade databaser, valda wikis eller valda språk. Du kan välja att radera som DIG, eller ett förinställt skriptkonto.',
 	'multidelete_caption' => 'Sidlista',
 	'multidelete_title' => 'Multiradering',
 	'multidelete_both_modes' => 'Var god välj antingen en specificerad sida eller en lista över sidor.',
@@ -2972,11 +2979,15 @@ $messages['sv'] = array(
 	'multidelete_all_wikis' => 'alla wikis',
 	'multidelete_selected_wikis' => 'valda wikis',
 	'multidelete_success_subtitle' => 'för $1',
+	'multidelete_link_back' => 'Du kan gå tillbaka till Multiradering-formuläret $1.',
+	'multidelete_omitting_nonexistant' => 'Utelämna den icke-existerande sidan $1.',
 	'multidelete_omitting_invalid' => 'Utelämna ogiltig sida $1.',
 	'multidelete_file_bad_format' => 'Filen ska innehålla ren text',
 	'multidelete_file_missing' => 'Kan inte läsa filen',
+	'multidelete_select_script' => 'utvalt skriptkonto',
 	'multidelete_no_page' => 'Var god specificera minst en sida för att radera ELLER välj en fil som innehåller en sidlista.',
 	'multidelete_split_results' => "Ditt artikelantal var för högt för att utföras som en enda uppgift. Den har istället delats upp i '''$1''' uppgifter med en maximal segmentstorlek på '''$2''' artiklar.",
+	'multidelete_max_display_size' => "Multiradering har för tillfället en maximalt antal artiklar i bekräftelsefrasen. Din förfrågan avslutades efter '''$1''' artiklar. Välj dina artiklar och spara uppgiften. Efter det bör du överväga att kör igen för att fånga upp alla återstående artiklar.",
 	'multidelete_brazilian_portuguese_wikis' => 'alla brasilianska portugisiska wikis',
 	'multidelete_hebrew_wikis' => 'alla hebreiska wikis',
 	'multidelete_chinese_wikis' => 'alla kinesiska wikis',
@@ -2994,6 +3005,7 @@ $messages['sv'] = array(
 	'multidelete_swedish_wikis' => 'alla svenska wikis',
 	'multidelete_german_wikis' => 'alla tyska wikis',
 	'action-multidelete' => 'radera en grupp sidor',
+	'multiwikifinder' => 'Multiwiki-titelhittare',
 	'multiwikifindpagenames' => 'Hitta sidnamn',
 	'multiwikienterpagename' => 'Ange ett sidnamn:',
 	'multiwikirecords' => '$1 wiki hittades',

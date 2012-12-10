@@ -1,13 +1,5 @@
 (function(window, $) {
 
-$.getSassCommonURL = function(scssFilePath, params) {
-	return $.getSassURL(wgCdnRootUrl, scssFilePath, params);
-};
-
-$.getSassLocalURL = function(scssFilePath, params) {
-	return $.getSassURL(wgServer, scssFilePath, params);
-};
-
 $.getSassURL = function(rootURL, scssFilePath, params) {
 	return rootURL + wgAssetsManagerQuery.
 		replace('%1$s', 'sass').
@@ -16,12 +8,12 @@ $.getSassURL = function(rootURL, scssFilePath, params) {
 		replace('%4$d', wgStyleVersion);
 };
 
+$.getSassCommonURL = function(scssFilePath, params) {
+	return $.getSassURL(wgCdnRootUrl, scssFilePath, params);
+};
+
 $.getSassLocalURL = function(scssFilePath, params) {
-	return wgAssetsManagerQuery.
-		replace('%1$s', 'sass').
-		replace('%2$s', scssFilePath).
-		replace('%3$s', encodeURIComponent($.param(params || window.sassParams))).
-		replace('%4$d', wgStyleVersion);
+	return $.getSassURL(wgServer, scssFilePath, params);
 };
 
 $.getAssetManagerGroupUrl = function( groups, params ) {
@@ -135,11 +127,11 @@ $.confirm = function(options) {
 	options.id = 'WikiaConfirm';
 
 	var html = '';
-	
+
 	if(options.title) {
 		html += '<h1>' + options.title + '</h1>';
 	}
-	
+
 	html += '<p>' + (options.content || '') + '</p>' +
 		'<div class="neutral modalToolbar">' +
 		'<button id="WikiaConfirmCancel" class="wikia-button secondary">' + (options.cancelMsg || 'Cancel') + '</button>' +

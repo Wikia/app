@@ -510,6 +510,7 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
@@ -532,14 +533,19 @@ $messages['fi'] = array(
 	'phalanx-label-lang' => 'Kieli:',
 	'phalanx-view-type' => 'Eston tyyppi...',
 	'phalanx-view-blocks' => 'Hakusuodattimet',
+	'phalanx-view-id' => 'Hae suodatinta tunnisteella:',
 	'phalanx-view-id-submit' => 'Nouda suodatin',
 	'phalanx-format-text' => 'muotoilematon teksti',
 	'phalanx-format-case' => 'kirjainkoko on merkitsevä',
 	'phalanx-format-exact' => 'tarkka',
 	'phalanx-tab-main' => 'Suodattimien hallinta',
+	'phalanx-tab-secondary' => 'Kokeile suodatinta',
+	'phalanx-modify-warning' => 'Muokkaat estoa, jonka tunniste on $1.
+Tallenna muutoksesi napsauttamalla {{int:phalanx-edit-block}}.',
 	'phalanx-test-submit' => 'Testi',
 	'phalanx-test-results-legend' => 'Testitulokset',
 	'phalanx-display-row-blocks' => 'estot: $1',
+	'phalanx-link-unblock' => 'poista esto',
 	'phalanx-link-modify' => 'muokkaa',
 	'phalanx-link-stats' => 'tilastot',
 	'phalanx-reset-form' => 'Tyhjennä lomake',
@@ -548,6 +554,15 @@ $messages['fi'] = array(
 	'phalanx-unblock-message' => 'Estotunnisteen #$1 poisto onnistui',
 	'phalanx-user-block-reason-exact' => 'Tämä käyttäjätunnus tai IP-osoite on estetty ilkivallan tai muunlaisen häiriköinnin vuoksi.
 Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wikiaan]].', # Fuzzy
+	'phalanx-stats-table-user' => 'Lisääjä',
+	'phalanx-stats-table-type' => 'Tyyppi',
+	'phalanx-stats-table-create' => 'Luotu',
+	'phalanx-stats-table-language' => 'Kieli',
+	'phalanx-stats-table-text' => 'Teksti',
+	'phalanx-stats-table-reason' => 'Syy',
+	'phalanx-stats-table-wiki-id' => 'Wikin tunniste',
+	'phalanx-stats-table-wiki-name' => 'Wikin nimi',
+	'phalanx-stats-table-wiki-url' => 'Wikin verkko-osoite',
 );
 
 /** French (français)
@@ -2165,6 +2180,7 @@ $messages['sv'] = array(
 	'phalanx-view-id' => 'Få filter efter ID:',
 	'phalanx-view-id-submit' => 'Hämta filter',
 	'phalanx-format-text' => 'oformaterad text',
+	'phalanx-format-regex' => 'reguljärt uttryck',
 	'phalanx-format-case' => 'skiftlägeskänslig',
 	'phalanx-format-exact' => 'exakt',
 	'phalanx-tab-main' => 'Hantera filter',
@@ -2223,11 +2239,16 @@ Var god [[Special:Contact|kontakta Wikia]] om problemet.<br />Blockeringen gav o
 	'phalanx-stats-table-create' => 'Skapades',
 	'phalanx-stats-table-expire' => 'Upphör',
 	'phalanx-stats-table-exact' => 'Exakt',
+	'phalanx-stats-table-regex' => 'Reguljärt uttryck',
 	'phalanx-stats-table-language' => 'Språk',
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Anledning',
 	'phalanx-stats-row' => "på $4, filtertyp '''$1''' blockerade '''$2''' den $3",
 	'phalanx-stats-row-per-wiki' => "användaren '''$2''' blockerades den '''$4''' av filter-ID '''$3''' ($5) (typ: '''$1''')",
+	'phalanx-rule-log-name' => 'Logg över regler i Phalanx',
+	'phalanx-rule-log-header' => 'Detta är en logg över ändringar i phalanxreglerna.',
+	'phalanx-email-rule-log-name' => 'Logg över e-postregler i Phalanx',
+	'phalanx-email-rule-log-header' => 'Detta är en logg över ändringar i Phalanxreglerna för typen e-post.',
 	'phalanx-rule-log-add' => 'Phalanx-regel lades till: $1',
 	'phalanx-rule-log-edit' => 'Phalanx-regel redigerades: $1',
 	'phalanx-rule-log-delete' => 'Phalanx-regel raderades: $1',

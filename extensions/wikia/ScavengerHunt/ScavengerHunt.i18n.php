@@ -228,7 +228,7 @@ $messages['az'] = array(
 	'scavengerhunt-entry-form-email' => 'Sizin e-poçt ünvanınız:',
 );
 
-/** تورکجه (تورکجه)
+/** South Azerbaijani (تورکجه)
  * @author Erdemaslancan
  */
 $messages['azb'] = array(
@@ -2359,16 +2359,24 @@ $messages['sv'] = array(
 	'scavengerhunt-form-error-invalid-title' => 'Följande sidrubrik hittades inte: "$1".',
 	'scavengerhunt-form-error-landing-button-text' => 'Var god ange knapptexten för destinationssidan.',
 	'scavengerhunt-form-error-landing-button-position' => 'Var god ange knappositionen för destinationssidan.',
+	'scavengerhunt-form-error-starting-clue' => 'Var god fyll i alla fält i sektionen för den första ledtråden.',
+	'scavengerhunt-form-error-entry-form' => 'Var god fyll i alla fält i sektionen för anmälningsblanketten.',
+	'scavengerhunt-form-error-goodbye' => 'Var god fyll i alla fält i sektionen för slutpopup-fönstret.',
 	'scavengerhunt-form-error-no-article-title' => 'Var god ange alla artikelrubriker (som giltiga URLs).',
 	'scavengerhunt-form-error-duplicated-article-title' => 'Jaktstegen kan inte ha dubblerade titlar',
 	'scavengerhunt-form-error-article-hidden-image' => 'Var god ange alla adresser för dolda bilder.',
 	'scavengerhunt-form-error-article-clue' => 'Var god fyll i alla information om artikelledtrådarna.',
 	'scavengerhunt-form-error-clue' => 'Var god fyll i all information  om artikelns gratulationsmeddelande.',
 	'scavengerhunt-form-error-progressBarHintLabel-sprite-empty' => 'Var god välj passande dimensioner för ledtrådsetikettens sprite.',
+	'scavengerhunt-form-error-startPopupSprite-sprite-empty' => 'Spritedimensionerna för startpopup-fönstret är ogiltiga',
+	'scavengerhunt-form-error-finishPopupSprite-sprite-empty' => 'Spritedimensionerna för slutpopup-fönstret är ogiltiga',
 	'scavengerhunt-form-error-progressBarBackgroundSprite-sprite-empty' => 'Spritedimensionerna för förloppsmätaren är ogiltig',
 	'scavengerhunt-form-error-progressBarExitSprite-sprite-empty' => 'Dimensionerna för förloppsmätarens avslutningsknapp är ogiltiga.',
 	'scavengerhunt-form-error-article-spriteNotFound-sprite-empty' => 'Var god välj passande dimensioner för skattjaktens objektsbild',
+	'scavengerhunt-form-error-article-spriteInProgressBar-sprite-empty' => 'Var god välj passande dimensioner för skattjaktens objektsbild i förloppsmätaren',
+	'scavengerhunt-form-error-article-spriteInProgressBarHover-sprite-empty' => 'Var god välj passande dimensioner för skattjaktens objektsbild i förloppsmätaren när muspekaren vilar ovanpå',
 	'scavengerhunt-form-error-no-sprite-image' => 'Var god ange fullständig sökväg till bildfilen',
+	'scavengerhunt-form-error-article-spriteInProgressBarNotFound-sprite-empty' => 'Var god välj passande dimensioner för skattjaktens förloppsmätare, eftersom den inte hittades i objektsbilden',
 	'scavengerhunt-form-error-no-articles' => 'Jakten måste åtminstone har en ledtråd/artikel.',
 	'scavengerhunt-form-error-invalid-url' => 'Ange en giltig URL.',
 	'scavengerhunt-form-error-clueColor' => 'Ange en giltig färg i #XXX-formatet',
@@ -2412,14 +2420,19 @@ $messages['sv'] = array(
 	'scavengerhunt-editor-tip-name' => 'Detta är namnet som dyker upp i listan över alla jakter.',
 	'scavengerhunt-editor-tip-landing-title' => 'Detta är sidan där användare går till för att börja jakten.',
 	'scavengerhunt-editor-tip-landing-button-text' => 'Detta är textetiketten på \'start\'-knappen (t.ex., "Klicka här för att starta jakten!")',
+	'scavengerhunt-editor-tip-sprite-img' => 'Detta är en länk till spritefilen som innehåller alla bilder för jakten. För att undvika att bilden avslöjas för andra wikianvändare kan du lägga upp den på en extern webbadress.',
 	'scavengerhunt-editor-tip-progressBarBackgroundSprite' => 'Använd dessa koordinater för att ange: <br />
 (1) var du vill placera spritefilen<br />
 (2) vilken del av spritefilen som är det aktiva bildobjektet.',
 	'scavengerhunt-editor-tip-progressBarExitSprite' => 'OBS: Alla koordinater är relativa till referenspunkten i det nedre högra hörnet på sidan',
+	'scavengerhunt-editor-tip-starting-clue-title' => 'Detta är titeln på den formella dialogrutan som startar jakten.',
 	'scavengerhunt-editor-tip-starting-clue-text' => 'Detta är texten som orienterar spelaren och startar jakten.',
+	'scavengerhunt-editor-tip-starting-clue-button-text' => 'Denna text är etiketten på knappen som tar användaren till sidan med det första objektet.',
 	'scavengerhunt-editor-tip-starting-clue-button-target' => 'Detta är adressen till sidan med det första objektet.',
+	'scavengerhunt-editor-tip-startPopupSprite' => 'Om en bild önskas på dialogrutan för den första ledtråden, var god ange koordinaterna här.',
 	'scavengerhunt-editor-tip-articleTitle' => 'Detta är sidan med nästa objekt.',
 	'scavengerhunt-editor-tip-spriteNotFound' => 'Detta avsnitt definierar bilden som ska vara ledtråden.',
+	'scavengerhunt-editor-tip-spriteInProgressBar' => 'Detta avsnitt definierar ikonen som dyker upp i förloppsmätaren när objektet har hittats.',
 	'scavengerhunt-editor-tip-spriteInProgressBarHover' => 'Detta avsnitt definierar ikonen som dyker upp i förloppsmätaren när muspekaren vilar på den.',
 	'scavengerhunt-editor-tip-spriteInProgressBarNotFound' => 'Detta avsnitt definierar ikonen som dyker upp i förloppsmätaren när objektet inte har hittats ännu.',
 	'scavengerhunt-editor-tip-article-title' => 'Detta är platsen för sidan med nästa objekt.',

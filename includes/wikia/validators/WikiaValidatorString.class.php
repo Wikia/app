@@ -13,12 +13,12 @@ class WikiaValidatorString extends WikiaValidator {
 	}
 	
 	public function isValidInternal($value = null) {		
-		if(strlen($value) < $this->getOption('min') ) {
+		if(mb_strlen($value) < $this->getOption('min') ) {
 			$this->createError( 'too_short' );
 			return false;
 		}
 		
-		if(( $this->getOption('max') != 0 ) && (strlen($value) >  $this->getOption('max') )) {
+		if(( $this->getOption('max') != 0 ) && (mb_strlen($value) >  $this->getOption('max') )) {
 			$this->createError( 'too_long' );
 			return false;
 		}

@@ -2,11 +2,11 @@
 	<? foreach($messages as $message): ?>
 		<li class="forum-thread">
 			<img class="sprite talk-two" src="<?= $wg->BlankImgUrl ?>">
-			<a href="<?= $message['threadUrl'] ?>">
-				<h4>
+			<h4>
+				<a href="<?= $message['threadUrl'] ?>" class="forum-thread-title">
 					<?= $message['metaTitle'] ?>
-				</h4>
-			</a>
+				</a>
+			</h4>
 			<? if($message['totalReplies'] > 0): ?>
 				<div class="forum-total-replies"><?= wfMsg('forum-related-discussion-total-replies', $message['totalReplies'] + 1) ?></div>
 			<? endif; ?>

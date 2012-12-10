@@ -107,7 +107,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 				$clipData['ageGate'] = 0;
 				$clipData['hd'] = 0;
 				$clipData['tags'] = $video['tag_list'];
-				$clipData['provider'] = 'RealGravity';
+				$clipData['provider'] = 'realgravity';
 
 				$clipData['marketplaceName'] = $video['video_catalog']['name'];
 				$clipData['marketplaceId'] = $video['video_catalog']['id'];

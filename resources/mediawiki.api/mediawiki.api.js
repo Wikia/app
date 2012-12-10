@@ -83,13 +83,15 @@
 		 * @return {Object} Normalized ajax options.
 		 */
 		normalizeAjaxOptions: function( arg ) {
-			var opt = arg;
+			var opt = arg || {};
 			if ( typeof arg === 'function' ) {
 				opt = { 'ok': arg };
 			}
+			/*
 			if ( !opt.ok ) {
 				throw new Error( 'ajax options must include ok callback' );
 			}
+			*/
 			return opt;
 		},
 

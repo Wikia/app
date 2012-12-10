@@ -361,6 +361,15 @@ $messages['az'] = array(
 	'autocreatewiki-subname-answers' => 'Cavablar',
 );
 
+/** South Azerbaijani (تورکجه)
+ * @author E THP
+ */
+$messages['azb'] = array(
+	'autocreatewiki-done' => 'گوتولدو',
+	'autocreatewiki-success-has-been-created' => 'یارادیلیب دیر',
+	'autocreatewiki-success-get-started' => 'باشلا',
+);
+
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author Wizardist
  */
@@ -979,6 +988,7 @@ $messages['ee'] = array(
  * @author Crazymadlover
  * @author Evropi
  * @author Geraki
+ * @author Glavkos
  * @author Περίεργος
  */
 $messages['el'] = array(
@@ -993,6 +1003,7 @@ $messages['el'] = array(
 	'autocreatewiki-language-top' => 'Οι $1 πιο δημοφιλείς γλώσσες',
 	'autocreatewiki-language-all' => 'Όλες οι γλώσσες',
 	'autocreatewiki-birthdate' => 'Ημερομηνία γέννησης:',
+	'autocreatewiki-blurry-word' => 'Ασαφής λέξη:',
 	'autocreatewiki-remember' => 'Αποθήκευση',
 	'autocreatewiki-create-account' => 'Δημιουργία λογαριασμού',
 	'autocreatewiki-done' => 'έγινε',
@@ -1009,9 +1020,19 @@ $messages['el'] = array(
 	'autocreatewiki-info-realname' => 'Αν το δώσετε, αυτό θα χρησιμοποιηθεί για να σας αποδωθεί η δουλειά σας.',
 	'autocreatewiki-info-birthdate' => 'Η Wikia απαιτεί από όλους τους χρήστες να δώσουν την πραγματική ημερομηνία γέννησής τους ως μέτρο ασφάλειας και ως μέσο διατήρησης της ακεραιότητας του ιστότοπου ενόσω συμμορφώνεται με κανονισμούς των Ηνωμένων Πολιτειών Αμερικής.',
 	'autocreatewiki-info-blurry-word' => 'Για αποφυγή αυτόματης δημιουργίας λογαριασμού, παρακαλώ πληκτρολογίστε τη θολή λέξη που βλέπετε στο πεδίο.',
-	'autocreatewiki-name-too-short' => 'Αυτό το όνομα είναι πολύ μικρό, παρακαλώ διαλέξτε ένα όνομα με τουλάχιστον τρεις χαρακτήρες.', # Fuzzy
+	'autocreatewiki-title-template' => '$1Wiki',
+	'autocreatewiki-limit-day' => 'Wikia έχει υπερβεί το μέγιστο αριθμό δημιουργίας wiki σήμερα ( $1 ).',
+	'autocreatewiki-name-too-short' => 'Αυτό η διεύθυνση είναι πολύ μικρή, παρακαλώ διαλέξτε μια διεύθυνση με τουλάχιστον 3 χαρακτήρες.',
 	'autocreatewiki-invalid-username' => 'Αυτό το όνομα χρήστη δεν είναι έγκυρο.',
 	'autocreatewiki-busy-username' => 'Αυτό το όνομα χρήστη υπάρχει ήδη.',
+	'autocreatewiki-blocked-username' => 'Δεν μπορείτε να δημιουργήσετε λογαριασμό.',
+	'autocreatewiki-empty-language' => 'Παρακαλώ επιλέξτε τη γλώσσα για το wiki.',
+	'autocreatewiki-empty-category' => 'Παρακαλούμε επιλέξτε μια κατηγορία.',
+	'autocreatewiki-empty-wikiname' => 'Το όνομα του wiki δεν μπορεί να είναι κενό.',
+	'autocreatewiki-empty-username' => 'Όνομα χρήστη δεν μπορεί να είναι κενό.',
+	'autocreatewiki-category-label' => 'Κατηγορία:',
+	'autocreatewiki-category-other' => 'Άλλο',
+	'autocreatewiki-set-username' => 'Πρώτα ορίστε όνομα χρήστη.',
 	'autocreatewiki-congratulation' => 'Συγχαρητήρια!',
 	'autocreatewiki-welcometalk-log' => 'Χαιρετιστήριο Μήνυμα',
 	'newwikis' => 'Νέα wiki',
@@ -1400,6 +1421,7 @@ $3
  * @author Centerlink
  * @author Crt
  * @author Lukkipoika
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  * @author VezonThunder
@@ -1510,6 +1532,7 @@ Wikia-yhteisön tukihenkilökunta
 
 ___________________________________________
  * haluatko saada meiltä vähemmän viestejä? Voit peruuttaa tilauksen tai muuttaa sähköpostin asetukset tässä: http://community.wikia.com/Special:Preferences</http:> </http:>',
+	'autocreatewiki-welcometalk-wall-title' => 'Tervetuloa!',
 	'autocreatewiki-welcometalk' => "== Tervetuloa! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- olemme innostuneita saamaan '''\$4''' osaksi Wikia-yhteisöämme!
 
@@ -4017,7 +4040,7 @@ $messages['ps'] = array(
 	'autocreatewiki-category-select' => 'يو وټاکۍ',
 	'autocreatewiki-language-top' => 'د سر $1 ژبې',
 	'autocreatewiki-language-all' => 'ټولې ژبې',
-	'autocreatewiki-birthdate' => 'د زېږون نېټه:',
+	'autocreatewiki-birthdate' => 'زېږون نېټه:',
 	'autocreatewiki-blurry-word' => 'تته ويکه:',
 	'autocreatewiki-remember' => 'ما په ياد لره',
 	'autocreatewiki-create-account' => 'يو ګڼون جوړول',

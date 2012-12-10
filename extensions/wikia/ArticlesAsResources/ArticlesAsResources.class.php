@@ -55,6 +55,7 @@ class ArticlesAsResources extends WikiaObject {
 	 * @return int Wiki ID (or null)
 	 */
 	protected function getCityIdByDbName( $dbName ) {
+		wfProfileIn(__METHOD__);
 		$id = null;
 		if ( $dbName === 'c' ) {
 			$id = self::COMMUNITY_WIKI_ID;
@@ -62,6 +63,7 @@ class ArticlesAsResources extends WikiaObject {
 		if ( $id === null ) {
 			$id = WikiFactory::DBtoID($dbName);
 		}
+		wfProfileOut(__METHOD__);
 		return $id;
 	}
 
@@ -73,6 +75,7 @@ class ArticlesAsResources extends WikiaObject {
 	 * @return int Wiki ID (or null)
 	 */
 	protected function getCityIdByUrl( $url ) {
+		wfProfileIn(__METHOD__);
 		$id = null;
 		if ( $url === 'dev' ) {
 			$id = self::DEV_WIKI_ID;
@@ -83,7 +86,7 @@ class ArticlesAsResources extends WikiaObject {
 		if ( $id === null ) {
 			$id = WikiFactory::DomainToID($url . self::WIKIA_DEFAULT_DOMAIN_SUFFIX );
 		}
-
+		wfProfileOut(__METHOD__);
 		return $id;
 	}
 
@@ -105,6 +108,7 @@ class ArticlesAsResources extends WikiaObject {
 	 * @return array
 	 */
 	protected function parseArticleNames( $list ) {
+		wfProfileIn(__METHOD__);
 		$articles = array();
 		foreach ($list as $k => $name) {
 			$matches = array();
@@ -144,7 +148,7 @@ class ArticlesAsResources extends WikiaObject {
 				);
 			}
 		}
-
+		wfProfileOut(__METHOD__);
 		return $articles;
 	}
 
@@ -159,21 +163,25 @@ class ArticlesAsResources extends WikiaObject {
 	 * @return bool
 	 */
 	public function onResourceLoaderBeforeRespond( $resourceLoader, ResourceLoaderContext &$context ) {
+		wfProfileIn(__METHOD__);
 		/* @var $request WebRequest */
 		$request = $context->getRequest();
 		if ( $request->getVal( 'mode' ) !== 'articles' ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
 		$only = $context->getOnly();
 		$type = $this->getTypeByOnly($only);
 		if ( empty( $type ) ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
 		$articles = $request->getVal('articles');
 		$articles = explode('|',$articles);
 		if ( empty( $articles ) ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -192,7 +200,7 @@ class ArticlesAsResources extends WikiaObject {
 		// reinitialize ResourceLoader context
 		$request->setVal('modules',$moduleFullName);
 		$context = new ResourceLoaderContext( $resourceLoader, $request );
-
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 }

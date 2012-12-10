@@ -144,16 +144,23 @@ $messages['ar'] = array(
 $messages['as'] = array(
 	'editaccount' => 'একাউণ্ট সম্পাদনা কৰক',
 	'editaccount-title' => 'বিশেষ:একাউন্ট সম্পাদনা',
+	'editaccount-frame-manage' => 'একাউণ্ট সম্পাদনা কৰক',
 	'editaccount-frame-usage' => 'টোকা',
 	'editaccount-submit-account' => 'একাউণ্ট ব্যৱ্স্থাপনা',
 	'editaccount-label-email' => 'নতুন ই-মেইল ঠিকনা সাঁচি ৰাখক',
 	'editaccount-label-pass' => 'নতুন গুপ্তশব্দ লিখক',
+	'editaccount-label-reason' => 'কাৰণ:',
 	'editaccount-submit-pass' => 'গুপ্তশব্দ সাঁচক',
+	'editaccount-submit-realname' => 'প্ৰকৃত নাম সাঁচি থওক',
 	'editaccount-submit-close' => 'একাউন্ট বন্ধ কৰক',
+	'editaccount-submit-button' => 'সাঁচি থওক',
 	'editaccount-status' => 'বাৰ্তাৰ স্থিতি',
 	'editaccount-labal-account-status' => 'একাউণ্টৰ স্থিতি',
 	'editaccount-labal-email-status' => 'ই-মেইলৰ স্থিতি:',
+	'editaccount-status-confirmed' => 'স্বয়ংনিশ্চিত',
+	'editaccount-status-unconfirmed' => 'অনিশ্চিত',
 	'editaccount-status-realuser' => 'প্ৰকৃত সদস্য',
+	'editaccount-status-tempuser' => 'অস্থায়ী সদস্য',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -541,6 +548,7 @@ $messages['fa'] = array(
  * @author Centerlink
  * @author Crt
  * @author Jack Phoenix <jack@countervandalism.net>
+ * @author Nedergard
  * @author Nike
  * @author Tm T
  */
@@ -559,11 +567,13 @@ $messages['fi'] = array(
 	'editaccount-label-pass' => 'Aseta uusi salasana',
 	'editaccount-label-realname' => 'Aseta uusi oikea nimi',
 	'editaccount-label-clearunsub' => 'Tilaus lopetettu',
+	'editaccount-label-reason' => 'Syy',
 	'editaccount-submit-email' => 'Tallenna sähköpostiosoite',
 	'editaccount-submit-pass' => 'Tallenna salasana',
 	'editaccount-submit-realname' => 'Tallenna oikea nimi',
 	'editaccount-submit-cleardisable' => 'Nollaa poista käytöstä -lippu',
 	'editaccount-submit-close' => 'Sulje tunnus',
+	'editaccount-submit-button' => 'Tallenna',
 	'editaccount-usage-close' => 'Käyttäjätunnuksen voi poistaa käytöstä myös sekoittamalla sen salasanan ja poistamalla sen sähköpostiosoitteen. Huomioi, että nämä tiedot katoavat eikä niitä voi palauttaa.',
 	'editaccount-warning-close' => '<b>Varoitus!</b> Olet poistamassa pysyvästi käytöstä käyttäjän <b>$1</b> tilin. Tämä ei voi palauttaa. Oletko varma, että haluat tehdä tämän?',
 	'editaccount-status' => 'Tilaviesti',
@@ -592,6 +602,7 @@ $messages['fi'] = array(
 	'editaccount-log-entry-close' => 'poisti käytöstä tunnuksen $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Wikia on poistanut tämän tilin käytöstä kaikkialta.</div>',
 	'right-editaccount' => 'Muokata toisten käyttäjien asetuksia',
+	'action-editaccount' => 'muokata toisten käyttäjien tietoja',
 );
 
 /** French (français)
@@ -915,6 +926,7 @@ $messages['id'] = array(
  * @author Leviathan 89
  * @author Lexaeus 94
  * @author Pietrodn
+ * @author Viscontino
  */
 $messages['it'] = array(
 	'editaccount' => 'Modifica account',
@@ -930,10 +942,13 @@ $messages['it'] = array(
 	'editaccount-label-email' => 'Imposta un nuovo indirizzo e-mail',
 	'editaccount-label-pass' => 'Riscrivi la nuova password',
 	'editaccount-label-realname' => 'Imposta il nuovo nome reale',
+	'editaccount-label-clearunsub' => 'Disiscritto',
+	'editaccount-label-reason' => 'Motivo:',
 	'editaccount-submit-email' => 'Salva e-mail',
 	'editaccount-submit-pass' => 'Salva password',
 	'editaccount-submit-realname' => 'Salva il nome reale',
 	'editaccount-submit-close' => 'Chiudi account',
+	'editaccount-submit-button' => 'Salva',
 	'editaccount-usage-close' => "È anche possibile disattivare un account utente rimescolando la relativa password e rimuovendo l'indirizzo di posta elettronica. Si noti che questi dati saranno persi e non saranno recuperabili.",
 	'editaccount-warning-close' => "<b>Attenzione:</b> Si sta per disabilitare permanentemente l'account dell'utente <b>$1.</b> Ciò non può essere annullato. Sicuro che sia quello che vuoi fare?",
 	'editaccount-status' => 'Messaggio di stato',
@@ -956,6 +971,8 @@ $messages['it'] = array(
 	'editaccount-status-confirmed' => 'Confermato',
 	'editaccount-status-unconfirmed' => 'Non confermato',
 	'editaccount-status-realuser' => 'Utente attivo',
+	'editaccount-status-tempuser' => 'Utente inattivo',
+	'editaccount-error-tempuser-email' => "Gli utenti temporanei non possono lasciare vuoto il campo dell'indirizzo email, per favore inseriscine uno.",
 	'editaccount-log' => 'Registro account utente',
 	'editaccount-log-header' => 'Questa pagina elenca le modifiche alle preferenze utente effettuate dallo Staff Wikia.',
 	'editaccount-log-entry-email' => "E-mail dell'utente $2 cambiata",
@@ -964,6 +981,7 @@ $messages['it'] = array(
 	'editaccount-log-entry-close' => 'Account $2 disabilitato',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Questo account è stato globalmente disattivato da Wikia.</div>',
 	'right-editaccount' => 'Modifica le preferenze degli altri utenti',
+	'action-editaccount' => 'modificare le informazioni di altri utenti',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1294,12 +1312,16 @@ Laat de gebruiker bij deze wiki aanmelden met een nieuw wachtwoord om problemen 
 	'editaccount-label-pass' => 'Nieuw wachtwoord instellen',
 	'editaccount-label-realname' => 'Nieuwe echte naam instellen',
 	'editaccount-label-clearunsub' => 'Uitgeschreven',
+	'editaccount-label-toggleadopt-prevent' => 'Automatische adoptie voorkomen',
+	'editaccount-label-toggleadopt-allow' => 'Automatische adoptie toestaan',
+	'editaccount-label-reason' => 'Reden:',
 	'editaccount-submit-email' => 'E-mailadres opslaan',
 	'editaccount-submit-pass' => 'Wachtwoord opslaan',
 	'editaccount-submit-realname' => 'Echte naam opslaan',
 	'editaccount-submit-clearunsub' => 'Uitschrijven leegmaken',
 	'editaccount-submit-cleardisable' => 'Gebruiker weer vrijgeven',
 	'editaccount-submit-close' => 'Gebruiker afsluiten',
+	'editaccount-submit-button' => 'Opslaan',
 	'editaccount-usage-close' => 'U kunt een gebruiker ook uitschakelen door een onbekend wachtwoord in te stellen en het e-mailadres te verwijderen.
 De huidige gegevens gaan dan verloren en zijn niet te herstellen.',
 	'editaccount-warning-close' => '<b>Let op!</b>
@@ -1344,6 +1366,7 @@ Probeer het opnieuw of neem contact op met het Tech Team.',
 	'editaccount-log-entry-close' => 'heeft gebruiker $2 uitgeschakeld',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Deze gebruiker is globaal uitgeschakeld door Wikia.</div>',
 	'right-editaccount' => 'Voorkeuren van gebruikers bewerken',
+	'action-editaccount' => 'gegevens van andere gebruikers bewerken',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -1524,9 +1547,11 @@ $messages['ps'] = array(
 	'editaccount-label-email' => 'نوې برېښليک پته ټاکل',
 	'editaccount-label-pass' => 'نوی پټنوم ټاکل',
 	'editaccount-label-realname' => 'نوی اصلي نوم ټاکل',
+	'editaccount-label-reason' => 'سبب:',
 	'editaccount-submit-email' => 'برېښليک خوندي کول',
 	'editaccount-submit-pass' => 'پټنوم خوندي کول',
 	'editaccount-submit-close' => 'کارن حساب تړل',
+	'editaccount-submit-button' => 'خوندي کول',
 	'editaccount-status' => 'د پيغام دريځ',
 	'editaccount-labal-account-status' => 'د ګڼون دريځ',
 	'editaccount-labal-email-status' => 'د برېښليک دريځ',

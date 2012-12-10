@@ -3,6 +3,7 @@
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/opacity";
 
 $color-search-form-background: darken($color-page, 5%);
 @if $is-dark-wiki {
@@ -19,7 +20,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 .Search {
 	// Search form
-	.WikiaSearch {
+	.SearchInput {
 		background: $color-search-form-background;
 		margin-bottom: 12px;
 		padding: $form-side-padding;
@@ -63,6 +64,8 @@ $form-negative-side-padding: $form-side-padding*-1;
 			//margin: 0px $form-negative-side-padding 0;
 			//padding-bottom: 18px;
 
+			width: 100%;
+			
 			label {
 				display: inline-block;
 				width: 25%;
@@ -72,6 +75,18 @@ $form-negative-side-padding: $form-side-padding*-1;
 				font-size: inherit;
 				margin: 0;
 				padding: 14px 0;
+			}
+			&.hidden {
+				display: none;
+			}
+			.selectAll {
+				margin: 10px 0 15px;
+			}
+		}
+		.advanced-link {
+			float: right;
+			a {
+				font-weight: normal;
 			}
 		}
 	}
@@ -202,7 +217,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 	.WikiaTopAds {
 		margin-bottom: 15px;
 	}
-	.WikiaSearch {
+	.SearchInput {
 		padding-bottom: 12px;
 	}
 }
@@ -234,7 +249,7 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 	$color-search-ads-background: mix($color-buttons, $color-page, 12%);
 }
 .Search.this-wiki {
-	.WikiaSearch {
+	.SearchInput {
 		border-top: 1px solid $color-search-grid-border;
 		border-bottom: 1px solid $color-search-grid-border;
 		margin: 0;
@@ -257,6 +272,11 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 	.SearchAdsTopWrapper {
 		border-top: 1px solid $color-search-grid-border;
 		margin-top: 35px;
+		overflow: hidden;
+	}
+	input[type="checkbox"], input[type="radio"] {
+		margin: 0 6px 0 1px;
+		padding: 0;
 	}
 	.search-tabs {
 		padding-right: 10px;
@@ -266,22 +286,71 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 			line-height: 28px;
 			list-style: none;
 			margin: 0;
-			&:first-child {
-				margin-top: 10px;
-			}
+			padding-left: 10px;
 		}
-		a {
+		> li:first-child {
+			margin-top: 10px;
+		}
+
+		> li a {
 			display: block;
 			min-height: 31px;
-			padding-left: 10px;
 			text-decoration: none;
+			margin-left: -10px;
+			padding-left: 10px;
 			&:hover {
 				background-color: $color-tabs-hover-background;
 			}
 		}
-		.selected a {
+		.selected {
 			background-color: $color-tabs-background;
-			color: $color-text;
+			a {
+				color: $color-text;
+			}
+		}
+		.search-filter-sort {
+			font-weight: normal;
+			padding-bottom: 7px;
+			position: relative;
+			p {
+				margin: 0;
+			}
+			ul {
+				margin: 0;
+				padding: 0;
+			}
+			li {
+				font-weight: normal;
+				margin-left: 0;
+				padding-left: 0;
+			}
+			select {
+				margin: 0;
+				max-width: 145px;
+			}
+			.video-filters {
+				margin-left: 13px;
+				select {
+					margin-left: 13px;
+					max-width: 120px;
+				}
+			}
+			.hidden {
+				display: none;
+			}
+			.search-filter-sort-overlay {
+				@include opacity(50);
+				background: $color-page;
+				height: 100%;
+				position: absolute;
+				margin-left: -10px;
+				padding-left: 10px;
+				width: 100%;
+				z-index: 100;
+			}
+		}
+		.disabled {
+			color: $color-alternate-text
 		}
 
 	}

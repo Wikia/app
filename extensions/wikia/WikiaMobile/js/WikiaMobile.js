@@ -3,34 +3,17 @@
 //so it's processed separately from the rest
 //to avoid delays
 
-(function (w) {
-	'use strict';
-	var onload = function onload() {
-		require(['lazyload', 'sections'], function (lazyLoad, sections) {
-			var processedSections = {};
-
-			lazyLoad(document.getElementsByClassName('noSect'));
-
-			sections.addEventListener('open', function () {
-				var id = this.getAttribute('data-index');
-
-				if (id && !processedSections[id]) {
-					lazyLoad(this.getElementsByClassName('lazy'));
-
-					processedSections[id] = true;
-				}
-			});
-		});
-	};
-
-	w.addEventListener ? w.addEventListener('load', onload) : w.attachEvent('onload', onload);
-})(window);
+window.addEventListener('load', function(){
+	require(['lazyload'], function(lazy){
+		lazy(document.getElementsByClassName('noSect'));
+	})
+});
 
 //init
 window.addEventListener('DOMContentLoaded', function () {
 	'use strict';
-	require(['layout', 'querystring', require.optional('topbar'), require.optional('toc'), 'events', require.optional('share'), require.optional('popover'), require.optional('cookies'), 'track'],
-		function (layout, qs, topbar, toc, events, share, popover, cookies, track) {
+	require(['querystring', require.optional('topbar'), require.optional('toc'), 'events', require.optional('share'), require.optional('popover'), require.optional('cookies'), 'track', 'lazyload', 'sections'],
+		function (qs, topbar, toc, events, share, popover, cookies, track, lazyload, sections) {
 			var d = document,
 				clickEvent = events.click,
 				//add chevrons to elements that need it
@@ -44,7 +27,8 @@ window.addEventListener('DOMContentLoaded', function () {
 				topBar = d.getElementById('wkTopBar'),
 				fllSite = d.getElementById('wkFllSite'),
 				categoryLinks = d.getElementById('catlinks'),
-				wordmark;
+				wordmark,
+				processedSections = {};
 
 			while (i--) {
 				addChevs[i].insertAdjacentHTML('beforeend', '<span class=chev></span>');
@@ -140,6 +124,16 @@ window.addEventListener('DOMContentLoaded', function () {
 					}
 				});
 			}
+
+			sections.addEventListener('open', function () {
+				var id = this.getAttribute('data-index');
+
+				if (id && !processedSections[id]) {
+					lazyload(this.getElementsByClassName('lazy'));
+
+					processedSections[id] = true;
+				}
+			});
 		}
 	);
 });

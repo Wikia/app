@@ -195,7 +195,7 @@ $messages['ar'] = array(
 	'wikiamobile-sendpassword-label' => 'أرسل كلمة المرور الجديدة',
 );
 
-/** تورکجه (تورکجه)
+/** South Azerbaijani (تورکجه)
  * @author Arjanizary
  */
 $messages['azb'] = array(
@@ -698,6 +698,14 @@ Szeretnéd módosítani a kapott e-mailekre vonatkozó beállításaidat? Ugrás
 	'userlogin-loginreqlink' => 'bejelentkezés',
 	'wikiamobile-sendpassword-label' => 'Új jelszó küldése',
 	'wikiamobile-facebook-connect-fail' => 'Sajnos a Facebook fiókod nincs összekötve egy Wikia fiókkal sem.',
+);
+
+/** Armenian (Հայերեն)
+ * @author Vadgt
+ */
+$messages['hy'] = array(
+	'userlogin-forgot-password' => 'Մոռացե՞լ եք ձեր գաղտնաբառը',
+	'userlogin-password-email-greeting' => 'Բարև $USERNAME',
 );
 
 /** Interlingua (interlingua)

@@ -60,12 +60,13 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Crt
+ * @author Nedergard
  * @author Tm T
  * @author VezonThunder
  */
 $messages['fi'] = array(
 	'skinchooser-desc' => 'Mahdollistaa ulkoasun valinnan käyttäjän asetuksissa',
-	'new-look' => 'Wikian uusi ulkoasu', # Fuzzy
+	'new-look' => 'Wikia',
 	'site-layout' => 'Sivuston ulkoasut',
 );
 
@@ -183,6 +184,13 @@ $messages['pms'] = array(
 	'skinchooser-desc' => "A përmët a j'utent ëd serne dle pel ant ij Sò Gust",
 	'new-look' => 'Wikia',
 	'site-layout' => 'Presentassion dël sit',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'new-look' => 'ويکيا',
 );
 
 /** Portuguese (português)

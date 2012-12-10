@@ -625,8 +625,9 @@ class AchAwardingService {
 						//#60032: forcing IP for bot since this code is run in a real user session and not from a maintenance script
 						$origIP = $wgIP;
 						$wgIP = '127.0.0.1';
-
-						$userPageArticle->doEdit( wfMsgForContent('welcome-user-page', $userPageTitle->getText() ), '', $userWikia->isAllowed('bot') ? EDIT_FORCE_BOT : 0, false, $userWikia );
+						
+						//fixme. following functionality is done by HAWelcome extension...
+						$userPageArticle->doEdit( wfMsgForContentNoTrans('welcome-user-page', $userPageTitle->getText() ), '', $userWikia->isAllowed('bot') ? EDIT_FORCE_BOT : 0, false, $userWikia );
 
 						//restore original IP from user session
 						$wgIP = $origIP;

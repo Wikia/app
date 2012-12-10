@@ -184,17 +184,23 @@ class WallRelatedPages extends WikiaModel {
 			}
 			
 			$wallMessage = $wallThread->getThreadMainMsg();
+
+			if(empty($wallMessage)) {
+				continue;
+			}
+
 			$wallMessage->load();
-			
+
 			$update[] = $wallMessage->getCreateTime(TS_UNIX);
-			
+
 			$row = array();
 			$row['metaTitle'] = $wallMessage->getMetaTitle();
 			$row['threadUrl'] = $wallMessage->getMessagePageUrl(); 
 			$row['totalReplies'] = $wallThread->getRepliesCount();
 			
+			$row['displayName'] = $wallMessage->getUserDisplayName();
 			$row['userName'] = $wallMessage->getUser()->getName();
-			$row['userUrl'] = $wallMessage->getUser()->getUserPage()->getFullUrl();
+			$row['userUrl'] = $wallMessage->getUserWallUrl();
 			$row['messageBody'] = $helper->shortenText($helper->strip_wikitext($wallMessage->getRawText()));
 			$row['timeStamp'] = $wallMessage->getCreateTime();
 			
@@ -205,14 +211,18 @@ class WallRelatedPages extends WikiaModel {
 			foreach($replies as $reply) {
 				$reply->load();
 				$update[] = $reply->getCreateTime(TS_UNIX);
-				$replyRow = array(
-					'userName' =>  $reply->getUser()->getName(),
-					'userUrl' => $reply->getUser()->getUserPage()->getFullUrl(),
-					'messageBody' => $helper->shortenText($helper->strip_wikitext($reply->getRawText())),
-					'timeStamp' => $reply->getCreateTime()
-				);
-				$row['replies'][] = $replyRow;	
-			}	
+				
+				if(!$reply->isRemove() && !$reply->isAdminDelete()) {
+					$replyRow = array(
+						'displayName' =>  $reply->getUserDisplayName(),
+						'userName' => $reply->getUser()->getName(),
+						'userUrl' => $reply->getUserWallUrl(),
+						'messageBody' => $helper->shortenText($helper->strip_wikitext($reply->getRawText())),
+						'timeStamp' => $reply->getCreateTime()
+					);
+					$row['replies'][] = $replyRow;
+				}
+			}
 			
 			$out[] = $row;
 		}

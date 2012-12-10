@@ -35,6 +35,7 @@ F::build('JSMessages')->registerPackage('ManageWikiaHome', array('manage-wikia-h
 //add wikia staff tool rights to staff users
 $wgGroupPermissions['*']['managewikiahome'] = false;
 $wgGroupPermissions['staff']['managewikiahome'] = true;
+$wgGroupPermissions['util']['managewikiahome'] = true;
 $wgGroupPermissions['vstf']['managewikiahome'] = false;
 $wgGroupPermissions['helper']['managewikiahome'] = false;
 $wgGroupPermissions['sysop']['managewikiahome'] = false;

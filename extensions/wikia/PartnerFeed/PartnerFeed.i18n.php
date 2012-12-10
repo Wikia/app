@@ -148,6 +148,7 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
@@ -157,6 +158,7 @@ $messages['fi'] = array(
 	'feed-title-recent-badges' => 'Viimeaikaiset rintanapit',
 	'feed-title-recent-images' => 'Viimeaikaiset kuvat',
 	'all-blog-posts' => 'kaikki kategoriat',
+	'feed-title-recentchanges' => 'Tuoreet muutokset',
 );
 
 /** French (français)
@@ -545,6 +547,7 @@ $messages['sv'] = array(
 	'partner-feed-earned-badges' => 'Nyligen tjänade emblem för en viss Wiki',
 	'partner-feed-recent-blog-posts' => 'Senaste blogginläggen med anknytning till en befordran',
 	'partner-feed-latest-images' => 'Galleri med de senaste bilderna som har laddats upp',
+	'partner-feed-hotcontent' => 'Hub / vertikalt "Hett innehåll" som rangordnas efter antalet redigerare',
 	'partner-feed-recent-blog-comments' => 'Senaste kommentarer som anknyter till specifika blogginlägg.',
 	'partner-feed-recent-changes' => 'Senaste ändringar',
 	'partnerfeed' => 'Partnerflöde',

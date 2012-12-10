@@ -207,7 +207,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
  	'forum-autoboard-body-2' => 'Breaking news and information!',
 
  	'forum-autoboard-title-3' => 'New on $WIKINAME',
-	'forum-autoboard-body-3' => "Want to share something that's just been posted on the wiki, or congratulate somebody for an outstanding contribution?",
+	'forum-autoboard-body-3' => "Want to share something that's just been posted on this wiki, or congratulate somebody for an outstanding contribution? This is the place!",
 
 	'forum-autoboard-title-4' => 'Questions and Answers',
 	'forum-autoboard-body-4' => 'Got a question about the wiki, or the topic? Ask your questions here!',
