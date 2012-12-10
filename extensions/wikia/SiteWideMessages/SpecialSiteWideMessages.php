@@ -112,10 +112,11 @@ function SiteWideMessagesGetUserMessagesContent($dismissLink = true, $parse = tr
 		}
 
 		$content = SiteWideMessages::getAllUserMessages($wgUser, $dismissLink);
-		return $parse ? $wgOut->Parse($content) : $content;
-	} else {
-		return '';
+		if ( !empty( $content ) ) {
+			return $parse ? $wgOut->Parse($content) : $content;
+		}
 	}
+	return '';
 }
 
 /**
