@@ -60,6 +60,9 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 					),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
+				'attributes' => array(
+					'class' => "{required: '#MarketingToolbox{$linkUrlFieldName}:filled'}"
+				)
 			),
 			$linkUrlFieldName => array(
 				'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
@@ -68,9 +71,6 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 						'min' => 1
 					),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
-				),
-				'attributes' => array(
-					'class' => "{required: '#MarketingToolbox{$linkHeaderFieldName}:filled'}"
 				)
 			),
 		);
