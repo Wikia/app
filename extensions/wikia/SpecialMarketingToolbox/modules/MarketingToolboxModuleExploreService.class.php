@@ -13,7 +13,6 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		$formFields = array(
 			'exploreTitle' => array(
 				'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-title'),
-				'isRequired' => true,
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -21,6 +20,9 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 					),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
+				'attributes' => array(
+					'class' => 'required'
+				)
 			),
 		);
 
@@ -40,12 +42,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		return array(
 			$fieldName => array(
 				'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $sectionIdx),
-				'validator' => new WikiaValidatorString(
-					array(
-						'min' => 1
-					),
-					array('too_short' => 'marketing-toolbox-validator-string-short')
-				),
+				'validator' => new WikiaValidatorString(),
 			),
 		);
 	}
@@ -72,6 +69,9 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 					),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
+				'attributes' => array(
+					'class' => "{required: '#MarketingToolbox{$linkHeaderFieldName}:filled'}"
+				)
 			),
 		);
 	}
