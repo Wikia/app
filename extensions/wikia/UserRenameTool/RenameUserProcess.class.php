@@ -563,6 +563,7 @@ class RenameUserProcess {
 			// This is a classic double-check. I do not want to delete the record from the primary cluster.
 			// No, really! I do not.
 			if ( RenameUserHelper::CLUSTER_DEFAULT != $clusterName ) {
+				$clusterName = 'wikicities_' . $clusterName;
 				$oDB = wfGetDB( DB_MASTER, array(), $clusterName );
 				$oDB->delete( 'user', array( 'user_id' => $this->mUserId ) );
 				if ( $oDB->affectedRows() ) {
