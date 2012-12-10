@@ -63,6 +63,10 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-top10lists-title' => 'Title',
 	'marketing-toolbox-hub-module-top10lists-desc' => 'Description',
 
+	'marketing-toolbox-hub-module-explore-title' => 'Main Title',
+	'marketing-toolbox-hub-module-explore-section-header' => 'Header $1',
+	'marketing-toolbox-hub-module-explore-link-url' => 'URL',
+
 	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
 	'marketing-toolbox-module-save-ok' => '$1 module saved successfully',
 
@@ -74,4 +78,5 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'action-marketingtoolbox' => 'Marketing Toolbox Special Page Name',
 	'marketing-toolbox-title' => 'Marketing Toolbox Special Page title',
+	'marketing-toolbox-hub-module-explore-section-header' => 'The parameter here is alphanumeric: for sections it reads "Header 1." for links in section "Header a." in example',
 );
