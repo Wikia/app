@@ -12,6 +12,9 @@ class MarketingToolboxModuleTop10listsService extends MarketingToolboxModuleServ
 					),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
+				'attributes' => array(
+					'class' => 'required'
+				)
 			),
 			'boardDescription' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-top10lists-desc'),
