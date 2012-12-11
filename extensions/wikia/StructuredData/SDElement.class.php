@@ -79,9 +79,9 @@ class SDElement extends SDRenderableObject implements SplSubject {
 			    				'schema:thumbnailUrl',
 			    				'schema:description',
 			    				'wikia:restriction',
-			    				'schema:contentURL',
-			    				'schema:width',
-			    				'schema:height'
+			    				//'schema:contentURL',
+			    				//'schema:width',
+			    				//'schema:height'
 		    ),
 			'wikia:VideoGame' => array(
 				'wikia:platform',
