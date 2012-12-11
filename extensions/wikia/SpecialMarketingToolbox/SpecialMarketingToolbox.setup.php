@@ -30,13 +30,13 @@ $app->registerController('MarketingToolboxController', $dir.'MarketingToolboxCon
 
 $app->registerClass('MarketingToolboxModel', $dir.'models/MarketingToolboxModel.class.php');
 $app->registerClass('MarketingToolboxUserPropertiesHandler', $dir.'models/MarketingToolboxUserPropertiesHandler.class.php');
-$app->registerClass('MarketingToolboxTop10listsModel', $dir.'models/MarketingToolboxTop10listsModel.class.php');
+$app->registerClass('MarketingToolboxTop10listModel', $dir.'models/MarketingToolboxTop10listModel.class.php');
 
 $app->registerClass('MarketingToolboxModuleService', $dir.'modules/MarketingToolboxModuleService.class.php');
 $app->registerClass('MarketingToolboxModuleSliderService', $dir.'modules/MarketingToolboxModuleSliderService.class.php');
 $app->registerClass('MarketingToolboxModulePulseService', $dir.'modules/MarketingToolboxModulePulseService.class.php');
 $app->registerClass('MarketingToolboxModuleWikiaspicksService', $dir.'modules/MarketingToolboxModuleWikiaspicksService.class.php');
-$app->registerClass('MarketingToolboxModuleTop10listsService', $dir.'modules/MarketingToolboxModuleTop10listsService.class.php');
+$app->registerClass('MarketingToolboxModuleTop10listService', $dir.'modules/MarketingToolboxModuleTop10listService.class.php');
 $app->registerClass('MarketingToolboxModulePopularvideosService', $dir.'modules/MarketingToolboxModulePopularvideosService.class.php');
 $app->registerClass('MarketingToolboxModuleExploreService', $dir.'modules/MarketingToolboxModuleExploreService.class.php');
 $app->registerClass('MarketingToolboxModuleFeaturedvideoService', $dir.'modules/MarketingToolboxModuleFeaturedvideoService.class.php');

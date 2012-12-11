@@ -49,7 +49,7 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-explore' => 'Explore',
 	'marketing-toolbox-hub-module-from-the-community' => 'From the community',
 	'marketing-toolbox-hub-module-polls' => 'Polls',
-	'marketing-toolbox-hub-module-top10-lists' => 'Top 10 lists',
+	'marketing-toolbox-hub-module-top10-list' => 'Top 10 list',
 	'marketing-toolbox-hub-module-popular-videos' => 'Popular videos',
 
 	'marketing-toolbox-hub-module-pulse-wikiurl' => 'Wiki URL',
@@ -61,8 +61,8 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-pulse-number2' => 'Number 2.',
 	'marketing-toolbox-hub-module-pulse-number3' => 'Number 3.',
 
-	'marketing-toolbox-hub-module-top10lists-title' => 'Title',
-	'marketing-toolbox-hub-module-top10lists-desc' => 'Description',
+	'marketing-toolbox-hub-module-top10list-title' => 'Title',
+	'marketing-toolbox-hub-module-top10list-desc' => 'Description',
 
 	'marketing-toolbox-hub-module-explore-title' => 'Main Title',
 	'marketing-toolbox-hub-module-explore-header' => 'Header $1',
