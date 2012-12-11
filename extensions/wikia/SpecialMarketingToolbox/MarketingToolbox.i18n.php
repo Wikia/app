@@ -69,7 +69,7 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-explore-link-url' => 'URL',
 
 	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
-	'marketing-toolbox-module-save-ok' => '$1 module saved successfully',
+	'marketing-toolbox-module-save-ok' => '$1 saved successfully',
 
 	'marketing-toolbox-validator-string-short' => 'Your text is too short, please write more',
 	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',
