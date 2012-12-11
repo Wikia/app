@@ -1233,35 +1233,6 @@ class SiteWideMessages extends SpecialPage {
 		//isset - fix for RT#48187
 		$tmpMsg = array_filter($tmpMsg, create_function('$row', 'return !isset($row["status"]) || $row["status"] == 0;'));
 		if (count($tmpMsg) && !wfReadOnly()) {
-
-			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			$dbResult = (boolean)$DB->Query (
-				  'REPLACE INTO ' . MSG_STATUS_DB
-				. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
-				. ' SELECT msg_wiki_id, msg_recipient_id, msg_id, ' . MSG_STATUS_SEEN
-				. ' FROM ' . MSG_STATUS_DB
-				. ' WHERE msg_id IN (' . implode(',', array_keys($tmpMsg)) . ')'
-				. ' AND msg_recipient_id = ' . $DB->AddQuotes($userID)
-				. ' LOCK IN SHARE MODE;'
-				, __METHOD__
-			);
-
-			foreach($tmpMsg as $tmpMsgId => $tmpMsgData) {
-				if (!is_null($tmpMsgData['wiki_id'])) {
-					continue;	//skip messages with specified wikis - those were updated in the previous query
-				}
-				$dbResult &= (boolean)$DB->Query (
-					  'REPLACE INTO ' . MSG_STATUS_DB
-					. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
-					. ' VALUES ('
-					. '0 , '
-					. $DB->AddQuotes($userID) . ', '
-					. $DB->AddQuotes($tmpMsgId) . ', '
-					. MSG_STATUS_SEEN
-					. ');'
-					, __METHOD__
-				);
-			}
 			//purge browser cache
 			$user->invalidateCache();
 			wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || userID=$userID, result=" . ($dbResult ? 'true':'false') . "\n");

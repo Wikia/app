@@ -15,7 +15,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-        $this->toolboxModel = new MarketingToolboxModel();
+		$this->toolboxModel = new MarketingToolboxModel();
 	}
 
 	/**
@@ -104,6 +104,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->prepareLayoutData($this->selectedModuleId, $modulesData);
 
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHub.js');
+		$this->response->addAsset('/resources/jquery/jquery.validate.js');
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/jquery.MetaData.js');
 
 		$selectedModuleData = array(
 			'values' => $modulesData['moduleList'][$this->selectedModuleId]['data']

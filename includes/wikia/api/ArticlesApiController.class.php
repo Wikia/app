@@ -8,10 +8,12 @@
 class ArticlesApiController extends WikiaApiController {
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
-	const CACHE_VERSION = 6;
+	const CACHE_VERSION = 7;
 	const CLIENT_CACHE_VALIDITY = 86400;//24h
 	const PARAMETER_ARTICLES = 'ids';
 	const PARAMETER_ABSTRACT = 'abstract';
+	const PARAMETER_NAMESPACES = 'namespaces';
+	const PARAMETER_CATEGORY = 'category';
 
 	const CATEGORY_CACHE_ID = 'category';
 	const ARTICLE_CACHE_ID = 'article';
@@ -67,9 +69,10 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Get the top articles by pageviews optionally filtering by vertical namespace
+	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
 	 *
 	 * @requestParam string $namespaces [OPTIONAL] The name of the namespaces (e.g. Main, Category, File, etc.) to use as a filter, comma separated
+	 * @requestParam string $category [OPTIONAL] The name of a category (e.g. Characters) to use as a filter
 	 * @requestParam integer $limit [OPTIONAL] The maximum number of results to fetch, defaults to 25
 	 * @requestParam integer $batch [OPTIONAL] The batch/page index to retrieve, defaults to 1
 	 *
@@ -84,15 +87,15 @@ class ArticlesApiController extends WikiaApiController {
 	public function getList() {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$namespaces = $this->request->getVal( 'namespaces', null );
-		$category = $this->request->getVal( 'category' );
+		$namespaces = $this->request->getVal( self::PARAMETER_NAMESPACES, null );
+		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
 		$ids = null;
 
 		if ( !empty( $category )) {
 			$cat = Title::newFromText( $category, NS_CATEGORY );
 
 			if ( !$cat->exists() ) {
-				throw new InvalidParameterApiException( 'category' );
+				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
 			}
 
 			$ids = $this->getCategoryMembers( $cat->getFullText() );
@@ -103,6 +106,10 @@ class ArticlesApiController extends WikiaApiController {
 
 			foreach ( $namespaces as &$n ) {
 				$n = ( strtolower( $n ) === 'main' ) ? 0 : $this->wg->ContLang->getNsIndex( $n );
+
+				if ( $n === false ) {
+					throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
+				}
 			}
 		}
 
