@@ -23,6 +23,7 @@
 }
 
 // Legacy styles that need to be kept around for articles with stale cache
+// TODO: should be removed once all the cache with the old HTML expires - kflorence
 span.Wikia-video-play-button {
 	display: block;
 	background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_50x50.png); /* wgCdnStylePath */
