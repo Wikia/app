@@ -28,8 +28,6 @@
 		width = 0,
 		height = 0,
 		timer = 0,
-		html,
-		body,
 		ev,
 		portrait;
 
@@ -41,9 +39,7 @@
 	}
 
 	function getDimensions(){
-		var orient = w.orientation;
-
-		portrait = orient != undefined ? (orient === 0 || orient === 180) : (w.innerHeight >= w.innerWidth);
+		portrait = w.innerHeight >= w.innerWidth;
 
 		if(ios && !width) {
 			width = screen.width;
@@ -61,12 +57,10 @@
 	function resize() {
 		clearTimeout(timer);
 		timer = setTimeout(function() {
-			timer = 0;
-
 			getDimensions();
 
-			ev = d[CREATE]("Event");
-			ev.initEvent('viewportsize', true, true);
+			ev = d[CREATE]('Event');
+			ev.initEvent('rotate', true, true);
 
 			ev.portrait = portrait;
 			ev.width = portrait ? width : height;
@@ -80,17 +74,14 @@
 			}
 
 			w.dispatchEvent(ev);
-		}, 150);
+		}, 100);
 	}
 
 	function init() {
 		w[REMOVE](LOAD, init);
-		body = d.body;
-		html = d.documentElement;
 
 		getDimensions();
 
-		w[ADD]('orientationchange', resize);
 		w[ADD]('resize', resize);
 	}
 
