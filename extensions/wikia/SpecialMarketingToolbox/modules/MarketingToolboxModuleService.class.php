@@ -62,6 +62,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 				'label' => isset($field['label']) ? $field['label'] : null,
 				'attributes' => isset($field['attributes'])  ? $this->prepareFieldAttributes($field['attributes']) : '',
 				'type' => isset($field['type']) ? $field['type'] : 'text',
+				'isRequired' => isset($field['isRequired']) ? $field['isRequired'] : false,
 			);
 		}
 
