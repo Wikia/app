@@ -50,7 +50,6 @@ EditHub.prototype = {
 	},
 
 	vetInit: function(event) {
-		var vet_back,vet_close;
 		$.when(
 			$.loadYUI(),
 			$.getScript(wgResourceBasePath + '/resources/wikia/libraries/mustache/jquery.mustache.js'),
