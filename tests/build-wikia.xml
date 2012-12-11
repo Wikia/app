@@ -78,6 +78,7 @@
     </target>
 
     <target name="phpunit-coverage" depends="setup">
+		<mkdir dir="${basedir}/build/coverage" />
         <exec executable="php" dir="${basedir}" failonerror="true">
             <env key="SERVER_ID" value="165" />
             <arg line="run-test.php
