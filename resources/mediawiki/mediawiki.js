@@ -1003,7 +1003,6 @@ var mw = ( function ( $, undefined ) {
 
 								// Wikia - change begin - @author: wladek
 								wikiaReqSass = $.inArray('sass',registry[modules[i]].flags || []) != -1;
-								mw.log('ResourceLoader',modules[i],wikiaReqSass);
 								if ( wikiaReqSass && !wikiaSassParamsAdded ) {
 									bytesAdded += wikiaSassParamsLength;
 								}
