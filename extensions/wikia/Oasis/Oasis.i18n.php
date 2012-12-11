@@ -1090,6 +1090,12 @@ $1 te ha enviado esta página de {{SITENAME}} en Wikia:
      $2
 
 -El Equipo de Wikia',
+	'hub-Entertainment' => 'Entretenimiento',
+	'hub-Gaming' => 'Videojuegos',
+	'hub-Lifestyle' => 'Estilo de vida',
+	'oasis-corporatefooter-hub-Entertainment-link' => 'http://es.wikia.com/Entretenimiento',
+	'oasis-corporatefooter-hub-Gaming-link' => 'http://es.wikia.com/Videojuegos',
+	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://es.wikia.com/Estilo_de_vida'
 );
 
 /** Persian (فارسی)
@@ -5025,4 +5031,3 @@ $messages['zh-tw'] = array(
 	'oasis-interlang-languages' => '其他語言連結',
 	'oasis-upload-photos-title' => '上傳一張圖片',
 );
-
