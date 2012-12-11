@@ -18,6 +18,18 @@ class ForumController extends WallBaseController {
 	}
 
 	public function board() {
+		$ns = $this->wg->Title->getNamespace();
+
+		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
+			$topicTitle = $this->getTopicTitle();
+			if ( empty($topicTitle) || !$topicTitle->exists() ) {
+				if(!$topicTitle->exists()) {
+					$this->redirectToIndex();
+					return null;
+				}
+			}
+		}
+
 		parent::index();
 		$this->setIsForum();
 		
@@ -30,7 +42,7 @@ class ForumController extends WallBaseController {
 
 		$this->description = ''; 
 
-		if ( $this->wall->getTitle()->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
+		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$board = F::build( 'ForumBoard', array( ), 'getEmpty' );
 
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
@@ -67,10 +79,15 @@ class ForumController extends WallBaseController {
 		$this->response->redirect( $title->getFullURL() . '?showWarning=1' );
 	}
 
+	protected function getTopicTitle() {
+		$text = $this->wg->Title->getText();
+		$topicTitle =  Title::newFromURL($text);
+		return $topicTitle;
+	}
+
 	public function getWallForIndexPage($title) {
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			$topicTitle = F::build( 'Title', array( $title->getText() ), 'newFromURL' );
-
+			$topicTitle = $this->getTopicTitle();
 			if ( !empty( $topicTitle ) ) {
 				$wall = F::build( 'Wall', array( $title, $topicTitle->getArticleId() ), 'newFromRelatedPages' );
 				$this->response->setVal( 'topicText', $topicTitle->getPrefixedText() );
