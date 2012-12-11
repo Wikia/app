@@ -166,6 +166,14 @@ class MediaQueryService extends WikiaService {
 		return true;
 	}
 
+	/**
+	 * get essential information about media
+	 * @param Title $media
+	 */
+	public function getMediaData( Title $media ) {
+		return $this->getMediaDataFromCache( $media );
+	}
+
 	private function getMediaDataFromCache( Title $media ) {
 		wfProfileIn(__METHOD__);
 
