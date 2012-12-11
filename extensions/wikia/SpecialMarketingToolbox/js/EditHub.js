@@ -25,7 +25,12 @@ EditHub.prototype = {
 
 		this.form.validate({
 			errorElement: 'p',
-			onkeyup: false
+			onkeyup: false,
+			onfocusout: function(element, event) {
+				if ( !this.checkable(element) && (element.name in this.submitted || !this.optional(element) || element === this.lastActive) ) {
+					this.element(element);
+				}
+			}
 		});
 	},
 
