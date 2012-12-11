@@ -74,4 +74,13 @@
 	.alternative {
 		color: $color-alternate-text;
 	}
+
+	.module-explore {
+		.header-group {
+			background-color: #fafafa;
+			.url-group .input-group:nth-child(1) {
+				margin-top: 45px;
+			}
+		}
+	}
 }
