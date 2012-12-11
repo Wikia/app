@@ -52,7 +52,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 					$langCode = $user->getOption( 'language' );
 					// force loading messages for given languege, to make maintenance script works properly
-					$wgContLang = wfGetLangObj($langCode);
+					$wgContLang = Language::factory($langCode);
 
 					$mailSubject = strtr(wfMsgExt('founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-subject', array('content')), $emailParams);
 					$mailBody = strtr(wfMsgForContent('founderemails' . $wikiType . '-email-' . $activateDays . '-days-passed-body'), $emailParams);
