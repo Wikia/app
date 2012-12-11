@@ -19,6 +19,7 @@ class WallRailController extends WikiaController {
 		
 		$app->wf->ProfileOut(__METHOD__);
 	}
+
 	
 	private function getUsersData($usersObjects) {
 		$key = 0;

@@ -500,10 +500,10 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		top: -5px;
 		img {
 			@include opacity(20);
-			@if ($direction == 'down') {
-				background-image: url("/extensions/wikia/Wall/images/kudo_20x20.png");	/* $wgCdnStylePath */
-			} @else {
+			@if $is-dark-wiki {
 				background-image: url("/extensions/wikia/Wall/images/kudo_20x20_white.png");	/* $wgCdnStylePath */
+			} @else {
+				background-image: url("/extensions/wikia/Wall/images/kudo_20x20.png");	/* $wgCdnStylePath */
 			}
 			cursor: pointer;
 		}
