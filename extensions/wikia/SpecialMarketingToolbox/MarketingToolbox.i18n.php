@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'marketingtoolbox' => 'Marketing Toolbox',
 	'action-marketingtoolbox' => 'Marketing Toolbox',
 	'marketing-toolbox-title' => 'Marketing Toolbox',
 
