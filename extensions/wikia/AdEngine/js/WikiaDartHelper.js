@@ -286,6 +286,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			dcopt = decorateAsKv('dcopt', params.dcopt),
 			src = params.src || 'driver',
 			localTile,
+			localOrd = params.ord || ord,
 			kruxKV = '',
 			url,
 			subdomain = params.subdomain || getSubdomain(),
@@ -360,7 +361,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			'mtfInline=true;' +	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
 			'tile=' + localTile + ';' +
 			endTag +
-			'ord=' + ord + '?';
+			'ord=' + localOrd + '?';
 
 		log(url, /* 7 */ 5, logGroup);
 		return url;
@@ -390,8 +391,10 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 	};
 
 	return {
-		getUrl: getUrl,
-		getCustomKeyValues: getCustomKeyValues
+		getUrl: getUrl
+		, getCustomKeyValues: getCustomKeyValues
+		, getDomainKV: getDomainKV
+		, getHostnamePrefix: getHostnamePrefix
 	};
 };
 

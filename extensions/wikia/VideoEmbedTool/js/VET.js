@@ -31,6 +31,7 @@ var VET_ratio = 1;
 var VET_shownMax = false;
 var VET_inGalleryPosition = false; // lizbug - Looks like this is never set to true
 var VET_notificationTimout = 4000;
+var VET_isOnSpecialPage = false;
 
 // Returns the DOM element for the RTE textarea
 function VET_getTextarea() {
@@ -369,6 +370,8 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		}
 	}
 
+	VET_isOnSpecialPage = wgNamespaceNumber === -1;
+
 	if(typeof gallery == "undefined") {
 		if (typeof showComboAjaxForPlaceHolder == 'function') {
 			if (showComboAjaxForPlaceHolder("",false)) {
@@ -454,7 +457,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		}
 	}
 
-	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);
+	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'open');
 
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
 	if(VET_panel != null) {
@@ -800,7 +803,7 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 function VET_insertFinalVideo(e, type) {
 	var errorDiv = $('#VideoEmbedError');
 
-	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);
+	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'complete');
 
 	YAHOO.util.Event.preventDefault(e);
 
@@ -913,6 +916,18 @@ function VET_insertFinalVideo(e, type) {
 					VET_switchScreen('Summary');
 					$G('VideoEmbedBack').style.display = 'none';
 					$G('VideoEmbed' + VET_curScreen).innerHTML = o.responseText;
+
+					if (VET_isOnSpecialPage) {
+						var vet_back,vet_close;
+						var $responseHTML = $(o.responseText),
+							vetData = {
+								videoTitle: 'missing',
+								videoWikiText: $responseHTML.find('#VideoEmbedTag').val()
+							};
+						$(window).trigger('VET_addFromSpecialPage', [vetData]);
+						return false;
+					}
+
 					if ( !$G( 'VideoEmbedCreate'  ) && !$G( 'VideoEmbedReplace' ) ) {
 						if(VET_refid == null) { // not FCK
 							if (typeof RTE !== 'undefined') {
@@ -1098,8 +1113,7 @@ function VET_tracking(action, label, value) {
 	WikiaTracker.trackEvent(null, {
 		ga_category: 'vet',
 		ga_action: action,
-		ga_label: label || '',
-		ga_value: value || 0
+		ga_label: label || ''
 	}, 'internal');
 }
 

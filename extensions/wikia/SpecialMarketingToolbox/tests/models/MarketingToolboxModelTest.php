@@ -16,8 +16,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 
 		$functionWrapperMock->expects($this->once())
 			->method('msg')
-			->with('marketing-toolbox-hub-module-top10-lists')
-			->will($this->returnValue('testNameFor Top 10 lists'));
+			->with('marketing-toolbox-hub-module-top10-list')
+			->will($this->returnValue('testNameFor Top 10 list'));
 
 		$app = new WikiaApp(null, null, null, $functionWrapperMock);
 
@@ -26,8 +26,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$model->setApp($app);
 
 		$this->assertEquals(
-			'testNameFor Top 10 lists',
-			$model->getModuleName(MarketingToolboxModel::MODULE_TOP_10_LISTS)
+			'testNameFor Top 10 list',
+			$model->getModuleName(MarketingToolboxModel::MODULE_TOP_10_LIST)
 		);
 	}
 
@@ -40,7 +40,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			MarketingToolboxModel::MODULE_EXPLORE => 'Explore',
 			MarketingToolboxModel::MODULE_FROM_THE_COMMUNITY => 'Fromthecommunity',
 			MarketingToolboxModel::MODULE_POLLS => 'Polls',
-			MarketingToolboxModel::MODULE_TOP_10_LISTS => 'Top10lists',
+			MarketingToolboxModel::MODULE_TOP_10_LIST => 'Top10list',
 			MarketingToolboxModel::MODULE_POPULAR_VIDEOS => 'Popularvideos'
 		);
 

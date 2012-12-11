@@ -79,6 +79,9 @@ $form-negative-side-padding: $form-side-padding*-1;
 			&.hidden {
 				display: none;
 			}
+			.selectAll {
+				margin: 10px 0 15px;
+			}
 		}
 		.advanced-link {
 			float: right;

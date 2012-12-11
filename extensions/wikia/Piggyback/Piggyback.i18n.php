@@ -182,13 +182,14 @@ Verifica le orthographia.',
 );
 
 /** Italian (italiano)
+ * @author Nemo bis
  * @author Sannita
  */
 $messages['it'] = array(
 	'piggybac-desc' => 'Permette di accedere come un altro utente',
 	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Altro nome utente:',
-	'piggyback-nosuchuser' => 'Non c\'è nessun utente che si chiama "$1".
+	'piggyback-nosuchuser' => 'Non c\'è nessun utente che si chiami "$1".
 Il software fa distinzione fra maiuscole e minuscole.
 Controlla se ci sono errori.',
 	'piggyback-wronguser' => '$1 non è il tuo nome utente.',

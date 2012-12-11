@@ -829,12 +829,16 @@ class WallHooksHelper {
 				return true;
 			} else {
 				$rcTitle = $rc->getTitle();
-
+				
 				if( !($rcTitle instanceof Title) ) {
 					//it can be media wiki deletion of an article -- we ignore them
 					Wikia::log(__METHOD__, false, "WALL_NOTITLE_FROM_RC " . print_r($rc, true));
 					return true;
 				}
+			
+				if(!$rcTitle->isTalkPage()) {
+					return true;
+				}	
 
 				$wm = F::build('WallMessage', array($rcTitle));
 				$wm->load();

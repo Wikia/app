@@ -12,6 +12,7 @@ module('AdProviderEvolve');
 test('sanitizeSlotname', function() {
 	var wikiaTrackerMock
 		, logMock = function() {}
+		, wikiaDartMock
 		, scriptWriterMock
 		, windowMock = {wgInsideUnitTest: true}
 		, documentMock
@@ -20,7 +21,7 @@ test('sanitizeSlotname', function() {
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+		wikiaDartMock, scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
 	);
 
     equal(adProviderEvolve.sanitizeSlotname('foo'), '', 'foo');
@@ -31,8 +32,9 @@ test('sanitizeSlotname', function() {
 test('getUrl', function() {
 	var wikiaTrackerMock
 		, logMock = function() {}
+		, wikiaDartMock = {getDomainKV: function() {return 'dmn=mock;';}, getHostnamePrefix: function() {return 'hostpre=mock;';}}
 		, scriptWriterMock
-		, windowMock = {wgInsideUnitTest: true}
+		, windowMock = {wgInsideUnitTest: true, location: {hostname: 'mock'}}
 		, documentMock
 		, kruxMock = {}
 		, evolveHelperMock = {getSect: function() {return 'randomsection';}}
@@ -42,20 +44,22 @@ test('getUrl', function() {
 	;
 
 	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+		wikiaDartMock, scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
 	);
 
 	windowMock.wgDBname = null;
 	windowMock.wgDartCustomKeyValues = null;
 	windowMock.cscoreCat = null;
 
-	expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_LEADERBOARD;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
+	expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_LEADERBOARD;dmn=mock;hostpre=mock;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
 	expected = expected.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
 	actual = adProviderEvolve.getUrl('TOP_LEADERBOARD');
 	actual = actual.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
-	expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_RIGHT_BOXAD;sz=300x250,300x600;type=pop;type=int;tile=2;ord=1234567890?';
+	equal(actual, expected, 'TOP_LEADERBOARD');
+
+	expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_RIGHT_BOXAD;dmn=mock;hostpre=mock;sz=300x250,300x600;type=pop;type=int;tile=2;ord=1234567890?';
 	expected = expected.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
 	actual = adProviderEvolve.getUrl('TOP_RIGHT_BOXAD');
@@ -67,6 +71,7 @@ test('getUrl', function() {
 test('Evolve canHandleSlot AU', function() {
 	var wikiaTrackerMock
 		, logMock = function() {}
+		, wikiaDartMock
 		, scriptWriterMock
 		, documentMock
 		, windowMock = {wgInsideUnitTest: true}
@@ -75,7 +80,7 @@ test('Evolve canHandleSlot AU', function() {
 		, adProviderEvolve;
 
 	adProviderEvolve = AdProviderEvolve(
-		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+		wikiaDartMock, scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
 	);
 
 	equal(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD']), true, 'TOP_LEADERBOARD');

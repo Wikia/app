@@ -4,12 +4,13 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 		return array(
 			'boardUrl' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-wikiurl'),
-				'isRequired' => false,
 				'validator' => new WikiaValidatorUrl(),
+				'attributes' => array(
+					'class' => 'wikiaUrl'
+				)
 			),
 			'boardTitle' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-topic'),
-				'isRequired' => true,
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -17,10 +18,12 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
+				'attributes' => array(
+					'class' => 'required'
+				)
 			),
 			'stat1' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-stat1'),
-				'isRequired' => true,
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -28,10 +31,12 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
+				'attributes' => array(
+					'class' => 'required'
+				)
 			),
 			'stat2' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-stat2'),
-				'isRequired' => true,
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -39,10 +44,12 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
+				'attributes' => array(
+					'class' => 'required'
+				)
 			),
 			'stat3' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-stat3'),
-				'isRequired' => true,
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -50,10 +57,12 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
+				'attributes' => array(
+					'class' => 'required'
+				)
 			),
 			'number1' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-number1'),
-				'isRequired' => true,
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -61,10 +70,13 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
+				'attributes' => array(
+					'class' => 'required'
+					//'{required: \'#MarketingToolboxstat1:filled\'}'
+				)
 			),
 			'number2' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-number2'),
-				'isRequired' => true,
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -72,10 +84,12 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
+				'attributes' => array(
+					'class' => 'required'
+				)
 			),
 			'number3' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-number3'),
-				'isRequired' => true,
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -83,6 +97,9 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 					),
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
+				'attributes' => array(
+					'class' => 'required'
+				)
 			),
 
 		);

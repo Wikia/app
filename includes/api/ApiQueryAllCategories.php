@@ -76,6 +76,18 @@ class ApiQueryAllCategories extends ApiQueryGeneratorBase {
 
 		$prop = array_flip( $params['prop'] );
 		$this->addFieldsIf( array( 'cat_pages', 'cat_subcats', 'cat_files' ), isset( $prop['size'] ) );
+		//Wikia Change - add id for a Category
+		//@author Jakub Olek <jolek@wikia-inc.com>
+		if ( isset( $prop['id'] ) ) {
+			$this->addTables( array( 'page' ) );
+			$this->addJoinConds( array(
+				'page' => array( 'LEFT JOIN', array(
+					'page_namespace' => NS_CATEGORY,
+					'page_title=cat_title' ) ),
+			) );
+			$this->addFields( 'page_id' );
+		}
+		//Wikia Change end
 		if ( isset( $prop['hidden'] ) ) {
 			$this->addTables( array( 'page', 'page_props' ) );
 			$this->addJoinConds( array(
@@ -119,6 +131,11 @@ class ApiQueryAllCategories extends ApiQueryGeneratorBase {
 				if ( isset( $prop['hidden'] ) && $row->cat_hidden ) {
 					$item['hidden'] = '';
 				}
+				//Wikia Change - add id for a Category
+				if ( isset( $prop['id'] ) ) {
+					$item['pageid'] = $row->page_id;
+				}
+				//Wikia Change end
 				$fit = $result->addValue( array( 'query', $this->getModuleName() ), null, $item );
 				if ( !$fit ) {
 					$this->setContinueEnumParameter( 'from', $this->keyToTitle( $row->cat_title ) );
@@ -162,7 +179,9 @@ class ApiQueryAllCategories extends ApiQueryGeneratorBase {
 				ApiBase::PARAM_MAX2 => ApiBase::LIMIT_BIG2
 			),
 			'prop' => array(
-				ApiBase::PARAM_TYPE => array( 'size', 'hidden' ),
+				//Wikia Change - add id for a Category
+				ApiBase::PARAM_TYPE => array( 'size', 'hidden', 'id' ),
+				//Wikia Change end
 				ApiBase::PARAM_DFLT => '',
 				ApiBase::PARAM_ISMULTI => true
 			),
@@ -182,6 +201,9 @@ class ApiQueryAllCategories extends ApiQueryGeneratorBase {
 				'Which properties to get',
 				' size    - Adds number of pages in the category',
 				' hidden  - Tags categories that are hidden with __HIDDENCAT__',
+				//Wikia Change - add id for a Category
+				' id      - Adds Id of the category'
+				//Wikia Change end
 			),
 		);
 	}

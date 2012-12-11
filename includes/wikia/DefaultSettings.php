@@ -204,6 +204,7 @@ $wgAutoloadClasses[ 'ImageReviewStatuses'             ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ 'WikiaUserPropertiesController'   ] = "$IP/includes/wikia/WikiaUserPropertiesController.class.php";
 $wgAutoloadClasses[ 'TitleBatch'                      ] = "$IP/includes/wikia/cache/TitleBatch.php";
 $wgAutoloadClasses[ 'WikiaUserPropertiesHandlerBase'  ] = "$IP/includes/wikia/models/WikiaUserPropertiesHandlerBase.class.php";
+$wgAutoloadClasses[ 'ParserPool'                      ] = "$IP/includes/wikia/parser/ParserPool.class.php";
 
 /**
  * Resource Loader enhancements
@@ -384,6 +385,7 @@ $wgAutoloadClasses[ "WikiaValidatorListValue"       ] = "$IP/includes/wikia/vali
 $wgAutoloadClasses[ "WikiaValidatorCompare"         ] = "$IP/includes/wikia/validators/WikiaValidatorCompare.class.php";
 $wgAutoloadClasses[ "WikiaValidatorCompareValueIF"  ] = "$IP/includes/wikia/validators/WikiaValidatorCompareValueIF.class.php";
 $wgAutoloadClasses[ "WikiaValidatorCompareEmptyIF"  ] = "$IP/includes/wikia/validators/WikiaValidatorCompareEmptyIF.class.php";
+$wgAutoloadClasses[ "WikiaValidatorDepend"          ] = "$IP/includes/wikia/validators/WikiaValidatorDepend.class.php";
 
 
 /**
@@ -1027,3 +1029,16 @@ $wgWikiaIsCentralWiki = false;
  * @var boolean
  */
 $wgEnableMemcachedBulkMode = false;
+
+/**
+ * WikiaSeasons flags
+ */
+$wgWikiaSeasonsGlobalHeader = false;
+$wgWikiaSeasonsWikiaBar = true;
+$wgWikiaSeasonsPencilUnit = false;
+
+/**
+ * @name $wgEnableQuickToolsExt
+ * Enables QuickTools extension
+ */
+$wgEnableQuickToolsExt = true;

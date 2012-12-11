@@ -412,6 +412,15 @@ $messages['bg'] = array(
 
 -- Екипът на Wikia', # Fuzzy
 	'founderemails-email-page-edited-anon-subject' => 'Тайнствен приятел редактира $WIKINAME',
+	'founderemails-email-page-edited-anon-body' => 'Здрасти, $USERNAME,
+
+Редактор на Уикия току що направи редакция на страницата $PAGETITLE в $WIKINAME.
+
+Уикия редакторите са хора, които допринасят без да са влезли със сметката си в Wikia. Можете да отидете и да видите как е допринесъл за уикито този тайнствен приятел!
+
+$PAGEURL
+
+Екипът на Уикия',
 	'founderemails-email-anon-edit-signature' => 'Екипът на Wikia',
 	'founderemails-email-lot-happening-signature' => 'Екипът на Wikia',
 	'founderemails-email-0-day-addpages-heading' => 'Добавяне на страници.',
@@ -5412,6 +5421,8 @@ $messages['ps'] = array(
 	'founderemails-email-0-day-addphotos-heading' => 'انځورونه ورګډول.',
 	'founderemails-email-0-day-addphotos-button' => 'يو انځور ورګډول',
 	'founderemails-email-3-day-addphotos-button' => 'انځورونه ورګډول',
+	'founderemails-email-views-digest-greeting' => 'سلامونه $USERNAME،',
+	'founderemails-email-views-digest-signature' => 'د ويکيا ډله',
 	'founderemails-email-complete-digest-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-complete-digest-signature' => 'د ويکيا ډله',
 );

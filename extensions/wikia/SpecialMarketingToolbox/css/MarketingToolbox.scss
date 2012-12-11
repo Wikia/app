@@ -15,8 +15,8 @@
 	}
 
 	.input-group {
-		margin: 5px 7px;
-		padding: 0;
+		margin: 0px 7px;
+		padding: 5px 0;
 
 		label {
 			clear: both;
@@ -30,7 +30,7 @@
 		input[type="text"] {
 			width: 149px;
 		}
-		.error-msg {
+		.error {
 			font-size: 12px;
 		}
 	}
@@ -73,5 +73,27 @@
 
 	.alternative {
 		color: $color-alternate-text;
+	}
+
+	.module-explore {
+		.grid-4 {
+			background-color: #fafafa;
+			border: 1px solid #eee;
+			border-top: 1px solid #cdcdcd;
+			margin-bottom: 30px;
+		}
+		.header-group {
+			.url-group {
+				.input-group:nth-child(1) {
+					margin-top: 45px;
+				}
+				.input-group:nth-child(4) {
+					border: none;
+				}
+			}
+			.input-group:nth-child(5) {
+				border: none;
+			}
+		}
 	}
 }

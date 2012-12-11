@@ -65,10 +65,12 @@ class AnalyticsProviderIVWTest extends WikiaBaseTest {
 			array('http://shaun.wikia.com/wiki/Shaun', 'RC_WIKIA_UGCENT'),
 			array('http://de.marvel-filme.wikia.com/wiki/Marvel-Filme', 'RC_WIKIA_UGCENT'),
 
-			// uncomment when fb#68664 goes live
-			//array('http://de.gta.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCGAMES'),
-			//array('http://de.green.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCLIFESTYLE'),
-			//array('http://de.naruto.wikia.com/wiki/Narutopedia', 'RC_WIKIA_UGCANIME'),
+			array('http://de.gta.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCGAMES'),
+			array('http://de.green.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCLIFESTYLE'),
+			array('http://de.naruto.wikia.com/wiki/Narutopedia', 'RC_WIKIA_UGCANIME'),
+
+			// uncomment when fb#69148 goes live
+			//array('http://de.wikia.com/Entertainment/Anime', 'RC_WIKIA_START'),
 		);
 	}
 

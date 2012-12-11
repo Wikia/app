@@ -153,9 +153,11 @@ $messages['id'] = array(
 /** Italian (italiano)
  * @author Civvì
  * @author Leviathan 89
+ * @author Viscontino
  * @author Ximo17
  */
 $messages['it'] = array(
+	'linksuggest-desc' => "Propone collegamenti ai contributori nell'interfaccia di modifica",
 	'tog-disablelinksuggest' => 'Non mostrare i link suggeriti nel codice sorgente',
 	'tog-redirected-from' => '&ndash; reindirizzamento da $1',
 );

@@ -84,7 +84,7 @@ class WikiaSearch extends WikiaObject {
 	 * @see WikiaSearch::field
 	 * @staticvar array
 	 */
-	private static $dynamicUnstoredFields = array('headings', 'first500', 'beginningText');
+	private static $dynamicUnstoredFields = array();
 	
 	/**
 	 * Used for dynamically composing multivalued language fields

@@ -877,6 +877,20 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Walang natagpuang pahina ng blog.',
 );
 
+/** Ukrainian (українська)
+ * @author Ата
+ */
+$messages['uk'] = array(
+	'globalwatchlist-desc' => 'Надсилає на електронну пошту щотижневий дайджест списків спостереження з усіх вікі.',
+	'tog-watchlistdigest' => 'Надсилати мені щотижневий дайджест списку спостереження',
+	'tog-watchlistdigestclear' => 'Позначити усі сторінки з тижневого дайджесту списку спостереження як відвідані',
+	'globalwatchlist-see-more' => 'Для додаткових змін перевірте, будь ласка, Ваші місцеві списки спостереження',
+	'globalwatchlist-digest-email-subject' => 'Щотижневий дайджест',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|коментар|коментарі|коментарів}})',
+	'globalwatchlist-no-page-found' => 'Сторінки не знайдено.',
+	'globalwatchlist-no-blog-page-found' => 'Сторінки блогу не знайдено.',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
