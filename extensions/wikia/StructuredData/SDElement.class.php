@@ -87,7 +87,11 @@ class SDElement extends SDRenderableObject implements SplSubject {
 				'wikia:platform',
 				'wikia:elementIn',
 				'schema:publisher'
+			),
+			'*' => array(
+				'wikia:namespace'
 			)
+
 		);
 
 		if ( $property instanceof SDElementProperty ) {
@@ -97,6 +101,10 @@ class SDElement extends SDRenderableObject implements SplSubject {
 			if ( in_array( $property, $mockData[ $this->type ]) ) {
 				return false;
 			}
+		}
+
+		if ( in_array( $property, $mockData[ '*' ]) ) {
+			return false;
 		}
 
 		return true;
