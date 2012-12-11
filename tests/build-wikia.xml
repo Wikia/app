@@ -85,6 +85,7 @@
                        --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
                        --configuration ${basedir}/phpunit.xml
                        --coverage-html ${basedir}/build/coverage
+                       --exclude-group ${phpunitexcludegroups}
                        " />
         </exec>
     </target>
