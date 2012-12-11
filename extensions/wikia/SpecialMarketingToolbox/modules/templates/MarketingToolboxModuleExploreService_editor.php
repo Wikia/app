@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <div class="grid-4 alpha wide">
 	<?= F::app()->renderView(
 			'MarketingToolbox',
@@ -58,73 +57,6 @@
 		'MarketingToolbox',
 		'FormField',
 		array('inputData' => $fields['exploreLinkUrl1d'])
-=======
-<? $mockedInputData = array('label' => 'test', 'errorMessage' => '', 'type' => 'text', 'attributes' => '', 'isRequired' => false, 'name' => '', 'value' => ''); ?>
-
-<div class="grid-2 alpha">
-	<?=F::app()->renderView(
-		'MarketingToolbox',
-		'FormField',
-		array('inputData' => $mockedInputData)
-	);
-	?>
-	<?=F::app()->renderView(
-		'MarketingToolbox',
-		'FormField',
-		array('inputData' => $mockedInputData)
-	);
-	?>
-	<?=F::app()->renderView(
-	'MarketingToolbox',
-	'FormField',
-	array('inputData' => $mockedInputData)
-);
-	?>
-	<?=F::app()->renderView(
-		'MarketingToolbox',
-		'FormField',
-		array('inputData' => $mockedInputData)
-	);
-	?>
-	<?=F::app()->renderView(
-		'MarketingToolbox',
-		'FormField',
-		array('inputData' => $mockedInputData)
-	);
-	?>
-</div>
-
-<div class="grid-2 alpha">
-	<?=F::app()->renderView(
-		'MarketingToolbox',
-		'FormField',
-		array('inputData' => $mockedInputData)
-	);
-	?>
-		<?=F::app()->renderView(
-		'MarketingToolbox',
-		'FormField',
-		array('inputData' => $mockedInputData)
-	);
-	?>
-		<? $fields['number3']['class'] = 'borderNone'; ?>
-		<?=F::app()->renderView(
-		'MarketingToolbox',
-		'FormField',
-		array('inputData' => $mockedInputData)
-	);
-	?>
-	<?=F::app()->renderView(
-		'MarketingToolbox',
-		'FormField',
-		array('inputData' => $mockedInputData)
-	);
-	?>
-	<?=F::app()->renderView(
-		'MarketingToolbox',
-		'FormField',
-		array('inputData' => $mockedInputData)
->>>>>>> bugid-84692: explore module: Templating / CSS
 	);
 	?>
 </div>
