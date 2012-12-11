@@ -85,7 +85,7 @@ $wgStructuredDataConfig = array(
 	),
 	'typeHandlers' => array(
 		'wikia:WikiText' => 'SDTypeWikiText',
-		'sdelement_schema:ImageObject' => 'SDTypeImageObject'
+		'schema:ImageObject' => 'SDTypeImageObject'
 	),
 	'ImageObjectThumbnailMaxWidth' => 600,
 );
