@@ -20,8 +20,16 @@ var StructuredData = {
 			event.preventDefault();
 			var $input = $(this).prev();
 			if (!wmuDeffered) {
-				wmuDeffered = mw.loader.use(
-					'ext.wikia.WMU'
+				// *** WMU is not ready for resource loader
+				// ***
+				// wmuDeffered = mw.loader.use(
+				//	'ext.wikia.WMU'
+				// ***
+				// *** so for the moment all assets need to be loaded separately
+				wmuDeffered = $.when(
+					$.loadYUI(),
+					$.loadJQueryAIM(),
+					$.getResource([wgExtensionsPath + '/wikia/WikiaMiniUpload/css/WMU.css', wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js'])
 				).then(function() {
 					WMU_skipDetails = true;
 					WMU_show();
