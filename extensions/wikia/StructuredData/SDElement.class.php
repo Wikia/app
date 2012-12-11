@@ -269,7 +269,7 @@ class SDElement extends SDRenderableObject implements SplSubject {
 	}
 
 	public function getRendererNames() {
-		return array( $this->type, 'sdelement_default' );
+		return array( 'sdelement_'.$this->type, 'sdelement_default' );
 	}
 
 	/**
