@@ -8,15 +8,15 @@
  * Usage:
  *
  * In the JavaScript test include this file before including the module to test.
- * The module definition will then be available throughout the test via define.getModule().
- * This will initialize the module every time the "getModule" is called.
+ * The module definition will then be available throughout the test via define.getModule(),
+ * this will initialize the module every time the method is called.
  *
  * It allows multiple instances of the module to be tested in different cases inside the same
- * test scenario, and makes mocking define-time dependencies inline.
+ * test scenario, and allows mocking define-time dependencies inline.
  *
  * WARNING: Don't use any other AMD module loader (such as Require.js and modil.js) at the
- * same time, as two implementations of the define function will clash (or at least will
- * makes no sense).
+ * same time, as the implementations of the define function will clash (or at least it will
+ * make no sense).
  *
  * @example
  *
@@ -25,7 +25,7 @@
  *
  * // testedModuleWithMockedDeps will contain a reference to an isolated instance of the module to test
  * // passing in mockedDep1 and mockedDep2 as the define-time dependencies
- * // matching module definition like: define('myMod', ['dep1', 'dep2'], function (dep1, dep2) { ... });
+ * // matching a module definition like: define('myMod', ['dep1', 'dep2'], function (dep1, dep2) { ... });
  * var testedModuleWithMockedDeps = define.getModule(mockedDep1, mockedDep2);
  *
  * @see  LazyQueueTest.js
