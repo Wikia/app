@@ -10,7 +10,7 @@
 		<input type="text" <?=$inputData['attributes']?> id="MarketingToolbox<?=$inputData['name']?>" name="<?=$inputData['name']?>" value="<?= htmlspecialchars($inputData['value'])?>" />
 			<? break ?>
 		<? case 'textarea': ?>
-			<textarea <?=$inputData['attributes']?> <?= ($inputData['isRequired'])? ' class="required"' : '' ?> name="<?=$inputData['name']?>"><?= htmlspecialchars($inputData['value'])?></textarea>
+			<textarea <?=$inputData['attributes']?> name="<?=$inputData['name']?>"><?= htmlspecialchars($inputData['value'])?></textarea>
 			<? break ?>
 
 	<? endswitch ?>

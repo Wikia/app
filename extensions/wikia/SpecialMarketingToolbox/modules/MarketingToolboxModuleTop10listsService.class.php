@@ -4,7 +4,6 @@ class MarketingToolboxModuleTop10listsService extends MarketingToolboxModuleServ
 		return array(
 			'boardTitle' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-top10lists-title'),
-				'isRequired' => true,
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -18,7 +17,6 @@ class MarketingToolboxModuleTop10listsService extends MarketingToolboxModuleServ
 			),
 			'boardDescription' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-top10lists-desc'),
-				'isRequired' => false,
 				'validator' => new WikiaValidatorString(),
 				'type' => 'textarea',
 				'attributes' => array(

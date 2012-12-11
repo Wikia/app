@@ -27,9 +27,12 @@ EditHub.prototype = {
 			errorElement: 'p',
 			onkeyup: false,
 			onfocusout: function(element, event) {
-				if ( !this.checkable(element) && (element.name in this.submitted || !this.optional(element) || element === this.lastActive) ) {
+				if ( $.proxy(this.settings.isValidatable, this)(element) ) {
 					this.element(element);
 				}
+			},
+			isValidatable: function(element) {
+				return !this.checkable(element) && (element.name in this.submitted || !this.optional(element) || element === this.lastActive);
 			}
 		});
 	},
