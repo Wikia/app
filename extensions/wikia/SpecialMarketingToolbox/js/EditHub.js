@@ -19,7 +19,7 @@ EditHub.prototype = {
 		}, this));
 
 		$.validator.addMethod("wikiaUrl", function(value, element) {
-			var reg = new RegExp(window.wgMarketingToolboxUrlRegex);
+			var reg = new RegExp(window.wgMarketingToolboxUrlRegex, 'i');
 			return this.optional(element) || reg.test(value);
 		}, $.validator.messages.url);
 
