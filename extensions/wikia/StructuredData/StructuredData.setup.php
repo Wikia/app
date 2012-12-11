@@ -67,7 +67,7 @@ $app->registerClass('StructuredDataController', $dir . 'StructuredDataController
 $app->registerSpecialPage('StructuredData', 'StructuredDataController');
 
 $wgStructuredDataConfig = array(
-	'debug' => false, //!empty( $wgDevelEnvironment ),
+	'debug' => true, //!empty( $wgDevelEnvironment ),
 	'baseUrl' => ( !empty( $wgDevelEnvironment ) ) ? 'http://data-stage.wikia.net/' : $wgStructuredDataServer,
 	'apiPath' => 'api/v0.1/',
 	'schemaPath' => 'callofduty',
@@ -85,7 +85,7 @@ $wgStructuredDataConfig = array(
 	),
 	'typeHandlers' => array(
 		'wikia:WikiText' => 'SDTypeWikiText',
-		'schema:ImageObject' => 'SDTypeImageObject'
+		'sdelement_schema:ImageObject' => 'SDTypeImageObject'
 	),
 	'ImageObjectThumbnailMaxWidth' => 600,
 );
