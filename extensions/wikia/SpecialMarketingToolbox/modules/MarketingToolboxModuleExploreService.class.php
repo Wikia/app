@@ -48,29 +48,42 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 	}
 
 	protected function generateSectionLinkFields($sectionIdx, $linkIdx) {
-	//todo: header a. depends on URL a and the other way around
-		$linkHeaderFieldName = self::LINK_HEADER . $sectionIdx . $this->lettersMap[$linkIdx];
 		$linkUrlFieldName = self::LINK_URL . $sectionIdx . $this->lettersMap[$linkIdx];
-		return array(
-			$linkHeaderFieldName => array(
-				'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $this->lettersMap[$linkIdx]),
-				'validator' => new WikiaValidatorString(
-					array(
-						'min' => 1
+
+		$linkUrlField = array(
+			'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
+			'validator' => new WikiaValidatorUrl(),
+			'attributes' => array(
+				'class' => "wikiaUrl"
+			)
+		);
+
+		$linkHeaderFieldName = self::LINK_HEADER . $sectionIdx . $this->lettersMap[$linkIdx];
+		$linkHeaderField = array(
+			'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $this->lettersMap[$linkIdx]),
+			'validator' => new WikiaValidatorDepend(
+				array(
+					'required' => false,
+					'ownValidator' => new WikiaValidatorString(
+						array(
+							'required' => true,
+							'min' => 1
+						),
+						array(
+							'too_short' => 'marketing-toolbox-hub-module-explore-header-too-short-error'
+						)
 					),
-					array('too_short' => 'marketing-toolbox-validator-string-short')
-				),
-				'attributes' => array(
-					'class' => "{required: '#MarketingToolbox{$linkUrlFieldName}:filled'}"
+					'dependencyField' => $linkUrlFieldName
 				)
 			),
-			$linkUrlFieldName => array(
-				'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
-				'validator' => new WikiaValidatorUrl(),
-				'attributes' => array(
-					'class' => "wikiaUrl"
-				)
-			),
+			'attributes' => array(
+				'class' => "{required: '#MarketingToolbox{$linkUrlFieldName}:filled'}"
+			)
+		);
+
+		return array(
+			$linkHeaderFieldName => $linkHeaderField,
+			$linkUrlFieldName => $linkUrlField,
 		);
 	}
 

@@ -67,6 +67,7 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-explore-title' => 'Main Title',
 	'marketing-toolbox-hub-module-explore-header' => 'Header $1',
 	'marketing-toolbox-hub-module-explore-link-url' => 'URL',
+	'marketing-toolbox-hub-module-explore-header-too-short-error' => 'URL header text is too short fill or remove the URL field',
 
 	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
 	'marketing-toolbox-module-save-ok' => '$1 saved successfully!',
