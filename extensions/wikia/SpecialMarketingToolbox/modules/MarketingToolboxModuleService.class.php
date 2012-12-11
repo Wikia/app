@@ -32,9 +32,18 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 
 		$fields = $this->getFormFields();
 
-		foreach ($fields as $fieldName => $field) {
+		foreach( $fields as $fieldName => &$field ) {
 			$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
-			if (!$field['validator']->isValid($fieldData)) {
+			$field['formValue'] = $fieldData;
+
+			if( !($field['validator'] instanceof WikiaValidatorDepend) && !$field['validator']->isValid($fieldData) ) {
+				$out[$fieldName] = $field['validator']->getError()->getMsg();
+			}
+		}
+
+		foreach( $fields as $fieldName => $field ) {
+			$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
+			if( ($field['validator'] instanceof WikiaValidatorDepend) && !$field['validator']->isValid($fieldData, $fields) ) {
 				$out[$fieldName] = $field['validator']->getError()->getMsg();
 			}
 		}
