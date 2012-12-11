@@ -60,8 +60,8 @@ EditHub.prototype = {
 	vetInit: function(event) {
 		$.when(
 			$.loadYUI(),
+			$.loadMustache(),
 			$.getResources([
-				wgResourceBasePath + '/resources/wikia/libraries/mustache/jquery.mustache.js',
 				wgExtensionsPath + '/wikia/WikiaStyleGuide/js/Dropdown.js',
 				wgExtensionsPath + '/wikia/VideoEmbedTool/js/VET.js',
 				$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
@@ -69,10 +69,8 @@ EditHub.prototype = {
 			])
 		).then(function() {
 			VET_show();
-			$(window).bind('VET_addFromSpecialPage', $.proxy(function(event, vetData) {
-				$().log(vetData);
-			}, this));
 		});
+		$(window).bind('VET_addFromSpecialPage', $.proxy(this.addVideo, this));
 	},
 
 	addImage: function(wmuData) {
@@ -90,6 +88,21 @@ EditHub.prototype = {
 			}
 		});
 	},
+
+	addVideo: function(event, vetData) {
+		$.nirvana.sendRequest({
+			controller: 'MarketingToolbox',
+			method: 'getVideoDetails',
+			type: 'get',
+			data: {
+				'wikiText': vetData.videoWikiText
+			},
+			callback: function(response) {
+				$('.MarketingToolboxMain').append(response.fileName);
+			}
+		});
+	},
+
 	formReset: function() {
 		this.form.find('input:text, input:password, input:file, select, textarea').val('');
 		this.form.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
