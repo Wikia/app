@@ -488,7 +488,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		ul {
 			list-style: none; margin: 0; padding: 0;
 			li { padding: 0; margin: 0; }
-			li a { padding: 12px; font-size: 11px; }
+			li a { padding: 12px 6px; font-size: 11px; }
 		}
 	}
 
@@ -500,7 +500,11 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		top: -5px;
 		img {
 			@include opacity(20);
-			background-image: url("/extensions/wikia/Forum/imageGenerator/kudo_20x20.png");	/* $wgCdnStylePath */
+			@if ($direction == 'down') {
+				background-image: url("/extensions/wikia/Wall/images/kudo_20x20.png");	/* $wgCdnStylePath */
+			} @else {
+				background-image: url("/extensions/wikia/Wall/images/kudo_20x20_white.png");	/* $wgCdnStylePath */
+			}
 			cursor: pointer;
 		}
 		&.inprogress,
