@@ -308,7 +308,8 @@ class VideoEmbedTool {
 			$button_message = wfMessage('vet-placeholder-return');
 			$success = $article_obj->doEdit( $text, $summary);
 			if ( !$success ) {
-				return "something went wrong"; //lizbug - fix this
+				header('X-screen-type: error');
+				return wfMsg ( 'vet-insert-error' );
 			}
 		}
 
