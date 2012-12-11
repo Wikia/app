@@ -1,9 +1,9 @@
 /* VideoHandlers.scss */
 
-@import "../../../../skins/oasis/css/mixins/opacity";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-sizing";
-@import "../../../../skins/oasis/css/mixins/background-opacity";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/box-sizing";
+@import "skins/oasis/css/mixins/background-opacity";
 
 .WikiaPage a.image.video,
 .WikiaPage .Wikia-video-play-button .sprite {
@@ -19,6 +19,26 @@
 
 	.sprite {
 		vertical-align: middle;
+	}
+}
+
+// Legacy styles that need to be kept around for articles with stale cache
+span.Wikia-video-play-button {
+	display: block;
+	background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_50x50.png); /* wgCdnStylePath */
+	background-position: center center;
+	background-repeat: no-repeat;
+
+	&.min {
+		background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_35x35.png); /* wgCdnStylePath */
+	}
+
+	&.mid {
+		background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_50x50.png); /* wgCdnStylePath */
+	}
+
+	&.max {
+		background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_85x85.png); /* wgCdnStylePath */
 	}
 }
 
