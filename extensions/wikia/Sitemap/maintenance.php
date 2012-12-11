@@ -24,7 +24,7 @@ foreach( $namespaces as $namespace ) {
 	echo " done\n";
 
 	$includeVideo = (bool) F::app()->wg->EnableVideoSitemaps;
-	if( $includeVideo && !in_array( $namespace, $sitemap->getVideoNamespacesList() ) ) {
+	if( $includeVideo && ( $namespace !=  NS_FILE ) ) {
 		$includeVideo = false;
 	}
 
