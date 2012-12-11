@@ -165,7 +165,9 @@ AbTest.getTreatmentGroup = function( experimentKey ) {
 					window.WikiaTracker.trackEvent( 'ab_treatment', {
 						time: serverTimeString,
 						experiment: experimentKey,
-						treatmentGroup: treatmentGroupKey
+						experimentId: experiment.id,
+						treatmentGroup: treatmentGroupKey,
+						treatmentGroupId: treatmentGroup.id
 					}, 'internal' );
 
 					// Mark this experiment as tracked for this page view.
