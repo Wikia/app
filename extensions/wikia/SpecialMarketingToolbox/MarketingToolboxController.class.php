@@ -279,7 +279,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		}
 	}
 
-
+	public function getVideoDetails() {
+		$html = $this->wf->MsgExt($this->getVal('wikiText', false), array('parse'));
+		$this->fileName = $html;
+	}
 
 	// TODO extract this code somewhere
 	protected function getFLashMessage() {
