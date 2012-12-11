@@ -52,11 +52,13 @@ EditHub.prototype = {
 	vetInit: function(event) {
 		$.when(
 			$.loadYUI(),
-			$.getScript(wgResourceBasePath + '/resources/wikia/libraries/mustache/jquery.mustache.js'),
-			$.getResources($.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss')),
-			$.getScript(wgExtensionsPath + '/wikia/WikiaStyleGuide/js/Dropdown.js'),
-			$.getResources($.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')),
-			$.getScript(wgExtensionsPath + '/wikia/VideoEmbedTool/js/VET.js')
+			$.getResources([
+				wgResourceBasePath + '/resources/wikia/libraries/mustache/jquery.mustache.js',
+				wgExtensionsPath + '/wikia/WikiaStyleGuide/js/Dropdown.js',
+				wgExtensionsPath + '/wikia/VideoEmbedTool/js/VET.js',
+				$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
+				$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
+			])
 		).then(function() {
 			VET_show();
 			$(window).bind('VET_addFromSpecialPage', $.proxy(function(event, vetData) {
