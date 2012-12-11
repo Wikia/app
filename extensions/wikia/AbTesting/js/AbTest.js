@@ -7,7 +7,7 @@
  *
  * This file should be loaded very early in page execution so that these methods
  * will be accessible to javascript files loaded afterward. Be aware that this
- * file is loaded in a blocking manor so care should be taken to keep it small
+ * file is loaded in a blocking manner so care should be taken to keep it small
  * and fast (comments will be removed during minification, so please use them).
  */
 
