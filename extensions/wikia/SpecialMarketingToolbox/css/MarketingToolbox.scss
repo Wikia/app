@@ -76,10 +76,23 @@
 	}
 
 	.module-explore {
-		.header-group {
+		.grid-4 {
 			background-color: #fafafa;
-			.url-group .input-group:nth-child(1) {
-				margin-top: 45px;
+			border: 1px solid #eee;
+			border-top: 1px solid #cdcdcd;
+			margin-bottom: 30px;
+		}
+		.header-group {
+			.url-group {
+				.input-group:nth-child(1) {
+					margin-top: 45px;
+				}
+				.input-group:nth-child(4) {
+					border: none;
+				}
+			}
+			.input-group:nth-child(5) {
+				border: none;
 			}
 		}
 	}
