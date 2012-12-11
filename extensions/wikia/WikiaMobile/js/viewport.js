@@ -74,16 +74,9 @@
 			}
 
 			w.dispatchEvent(ev);
-		}, 100);
+		}, 50);
 	}
 
-	function init() {
-		w[REMOVE](LOAD, init);
-
-		getDimensions();
-
-		w[ADD]('resize', resize);
-	}
-
-	w[ADD](LOAD, init);
+	getDimensions();
+	w[ADD]('resize', resize);
 })(window, window.document);
