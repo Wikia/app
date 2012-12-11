@@ -382,6 +382,7 @@ class GameGuidesController extends WikiaController {
 						'redirects' => true,
 						'aclimit' => $limit,
 						'acfrom' => $offset,
+						'acprop' => 'id',
 						'acmin' => 1
 					)
 				);
@@ -393,7 +394,10 @@ class GameGuidesController extends WikiaController {
 		if ( !empty( $allCategories ) ) {
 
 			foreach( $allCategories as $key => $value ) {
-				$allCategories[$key] = array( 'name' => $value['*'] );
+				$allCategories[$key] = array(
+					'name' => $value['*'],
+					'pageid'=> $value['pageid']
+				);
 			}
 
 			$this->response->setVal( 'categories', $allCategories );
@@ -448,7 +452,13 @@ class GameGuidesController extends WikiaController {
 			array_reduce(
 				$content,
 				function( $ret, $item ) {
-					$ret[] = array( 'name' => $item['name'] );
+					if( $item['name'] != '' ) {
+						$ret[] = array(
+							'name' => $item['name'],
+							'pageid' => $item['categories'][0]['pageid'] // for now lets use first category in tag, then we'll see
+						);
+					}
+
 					return $ret;
 				}
 			)

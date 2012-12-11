@@ -120,11 +120,13 @@ class ForumController extends WallBaseController {
 		$this->response->setVal( 'kudosNumber', $wallMessage->getVoteCount() );
 
 		$replies = $this->getVal( 'replies', array() );
-		$repliesCount = count( $replies );
+		$repliesCount = count( $replies ) + 1;
 		$this->response->setVal( 'repliesNumber', $repliesCount );
 
-		$lastReply = $this->getLastReply( $replies );
-		if ( $lastReply === false ) {
+		$thread = WallThread::newFromId($wallMessage->getId());
+
+		$lastReply = $thread->getLastMessage( $replies );
+		if ( $lastReply === null ) {
 			$lastReply = $wallMessage;
 		}
 
@@ -271,23 +273,6 @@ class ForumController extends WallBaseController {
 		}
 
 		return $selected;
-	}
-
-	/**
-	 * get last reply object
-	 * @param array $replies
-	 * @return false or WallMessage
-	 */
-	protected function getLastReply($replies = array()) {
-		if ( count( $replies ) > 0 ) {
-			$last = end( $replies );
-			if ( $last instanceof WallMessage ) {
-				$last->load();
-				return $last;
-			}
-		}
-
-		return false;
 	}
 
 	public function forumActivityModule() {

@@ -1,5 +1,5 @@
 <?
-class MarketingToolboxTop10listsModel extends WikiaModel {
+class MarketingToolboxTop10listModel extends WikiaModel {
 	public function getWikiListByCategoryId($langCode, $categoryId, $limit = 10) {
 		$date = new DateTime();
 		$maxDate = $date->format('Y-m-d');

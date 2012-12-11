@@ -320,7 +320,7 @@ Keep editing!',
 	 */
 	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
 	'achievements-badge-hover-desc-edit' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}}<br />
-on {{PLURAL:$1|an article|article}}!',
+on {{PLURAL:$1|an article|articles}}!',
 	'achievements-badge-hover-desc-edit-plus-category' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}}<br />
 on {{PLURAL:$1|a $2 article|$2 articles}}!',
 	'achievements-badge-hover-desc-picture' => 'Awarded for adding $1 {{PLURAL:$1|picture|pictures}}<br />
@@ -347,7 +347,7 @@ on someone else\'s talk page!',
 	 */
 	'achievements-badge-your-desc-sharing' => 'Awarded {{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
 	'achievements-badge-your-desc-edit' => 'Awarded for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|an article|articles}}!',
-	'achievements-badge-your-desc-edit-plus-category' => 'Awarded for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|a $2 article|$2 article}}!',
+	'achievements-badge-your-desc-edit-plus-category' => 'Awarded for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|a $2 article|$2 articles}}!',
 	'achievements-badge-your-desc-picture' => 'Awarded for adding {{PLURAL:$1|your first picture|$1 pictures}} to {{PLURAL:$1|an article|articles}}!',
 	'achievements-badge-your-desc-category' => 'Awarded for adding {{PLURAL:$1|your first article|$1 articles}} to {{PLURAL:$1|a category|categories}}!',
 	'achievements-badge-your-desc-blogpost' => 'Awarded for writing {{PLURAL:$1|your first blog post|$1 blog posts}}!',
@@ -367,7 +367,7 @@ on someone else\'s talk page!',
 	'achievements-badge-desc-sharing' => 'Awarded {{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
 	'achievements-badge-desc-edit' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|an article|articles}}!',
 	'achievements-badge-desc-edit-plus-category' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a $2 article|$2 articles}}!',
-	'achievements-badge-desc-picture' => 'Awarded for adding $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|an article|article}}!',
+	'achievements-badge-desc-picture' => 'Awarded for adding $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|an article|articles}}!',
 	'achievements-badge-desc-category' => 'Awarded for adding $1 {{PLURAL:$1|article|articles}} to {{PLURAL:$1|a category|categories}}!',
 	'achievements-badge-desc-blogpost' => 'Awarded for writing $1 {{PLURAL:$1|blog post|blog posts}}!',
 	'achievements-badge-desc-blogcomment' => 'Awarded for writing a comment on {{PLURAL:$1|a blog post|$1 different blog posts}}!',

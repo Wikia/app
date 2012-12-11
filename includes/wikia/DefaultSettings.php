@@ -385,6 +385,7 @@ $wgAutoloadClasses[ "WikiaValidatorListValue"       ] = "$IP/includes/wikia/vali
 $wgAutoloadClasses[ "WikiaValidatorCompare"         ] = "$IP/includes/wikia/validators/WikiaValidatorCompare.class.php";
 $wgAutoloadClasses[ "WikiaValidatorCompareValueIF"  ] = "$IP/includes/wikia/validators/WikiaValidatorCompareValueIF.class.php";
 $wgAutoloadClasses[ "WikiaValidatorCompareEmptyIF"  ] = "$IP/includes/wikia/validators/WikiaValidatorCompareEmptyIF.class.php";
+$wgAutoloadClasses[ "WikiaValidatorDepend"          ] = "$IP/includes/wikia/validators/WikiaValidatorDepend.class.php";
 
 
 /**
@@ -1028,3 +1029,16 @@ $wgWikiaIsCentralWiki = false;
  * @var boolean
  */
 $wgEnableMemcachedBulkMode = false;
+
+/**
+ * WikiaSeasons flags
+ */
+$wgWikiaSeasonsGlobalHeader = false;
+$wgWikiaSeasonsWikiaBar = true;
+$wgWikiaSeasonsPencilUnit = false;
+
+/**
+ * @name $wgEnableQuickToolsExt
+ * Enables QuickTools extension
+ */
+$wgEnableQuickToolsExt = true;

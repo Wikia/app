@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	"devboxpanel"                 => "Dev-Box Panel",
 	"devbox-title"                => "Dev-Box Panel",
 	"devbox-panel-not-enabled"    => "The Dev Box Panel is currently <strong>disabled</strong>. It is only available on development environments.<br /><br />".
 	                                 "To enable this panel please add this line to LocalSettings.php:<br /><strong><code>\$wgDevelEnvironment = true;</code></strong>",
