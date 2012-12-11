@@ -68,7 +68,7 @@
 		if(params) {
 			for(var param in params){
 				if(params.hasOwnProperty(param)){
-					ret[ret.length] = (param + '=' + params[param]);
+					ret[ret.length] = encodeURIComponent(param) + '=' + encodeURIComponent(params[param]);
 				}
 			}
 		}
