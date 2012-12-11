@@ -1028,3 +1028,16 @@ $wgWikiaIsCentralWiki = false;
  * @var boolean
  */
 $wgEnableMemcachedBulkMode = false;
+
+/**
+ * WikiaSeasons flags
+ */
+$wgWikiaSeasonsGlobalHeader = false;
+$wgWikiaSeasonsWikiaBar = true;
+$wgWikiaSeasonsPencilUnit = false;
+
+/**
+ * @name $wgEnableQuickToolsExt
+ * Enables QuickTools extension
+ */
+$wgEnableQuickToolsExt = true;
