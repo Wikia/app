@@ -60,7 +60,7 @@
 			getDimensions();
 
 			ev = d[CREATE]('Event');
-			ev.initEvent('rotate', true, true);
+			ev.initEvent('viewportsize', true, true);
 
 			ev.portrait = portrait;
 			ev.width = portrait ? width : height;
