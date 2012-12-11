@@ -73,5 +73,10 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 			),
 		);
 	}
+
+	public function renderEditor($data) {
+		$data['sectionLimit'] = self::SECTION_NUMBERS;
+		return parent::renderEditor($data);
+	}
 }
 ?>
