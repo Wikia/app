@@ -24,9 +24,12 @@ class RecentChangesController extends WikiaController {
 	}
 	
 	public function dropdownNamespaces() {
-		$all = $this->getVal( 'all',  null );
 		$selected = $this->getVal( 'selected', array() );
 		$namespaces = $this->wf->GetNamespaces();
+
+		if(!empty($this->wg->EnableWallEngine)) {
+			$namespaces = WallHelper::clearNamespaceList($namespaces);
+		}
 
 		$options = array();
 		foreach( $namespaces as $index => $name ) {
@@ -39,7 +42,7 @@ class RecentChangesController extends WikiaController {
 				'label' => $index === 0 ? $this->wf->Msg( 'blanknamespace' ) : $name
 			);
 		}
-		
+
 		if ( empty( $selected ) ) {
 			$rcfs = new RecentChangesFiltersStorage($this->wg->User);
 			$selected = $rcfs->get();

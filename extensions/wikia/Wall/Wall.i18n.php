@@ -181,6 +181,8 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-deleted-msg-return-to' => 'Return to $1\'s wall.',
 	'wall-deleted-msg-view' => '(View/Restore)',
 
+
+	'wall-recentchanges-wall-thread' => 'Wall thread',
 	'wall-recentchanges-new-message' => 'on <a href="$1">$2\'s wall</a>',
 	'wall-recentchanges-edit' => '(edited message)',
 	'wall-recentchanges-summary' => '($1)',
@@ -577,6 +579,7 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 	'wall-deleted-msg-text' => 'Error message when a user follows a link to a deleted thread',
 	'wall-deleted-msg-return-to' => "Link to return to user's wall when you try to follow a link to a deleted thread, $1 is wall owner",
 	'wall-deleted-msg-view' => 'Option for admins and staff to view and restore a deleted thread',
+	'wall-recentchanges-wall-thread' => 'label for recent changes filter',
 	'wall-recentchanges-new-message' => 'Recent changes item, $2 is wall owner',
 	'wall-recentchanges-edit' => 'Recent changes item, default summary for editing a message',
 	'wall-recentchanges-summary' => 'Recent changes item, summary for editing a message',
