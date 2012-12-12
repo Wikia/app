@@ -20,7 +20,7 @@
 			<p class="error"><?=$errorMessage ?></p>
 		<? endif ?>
 
-		<form id="marketing-toolbox-form" method="post" name="upload-tool" class="WikiaForm" enctype="multipart/form-data">
+		<form id="marketing-toolbox-form" data-module-name="<?= $moduleName ?>" method="post" name="upload-tool" class="WikiaForm" enctype="multipart/form-data">
 			<?=$moduleContent?>
 
 			<div class="submits">

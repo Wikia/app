@@ -16,7 +16,7 @@
 		?>
     </div>
 
-    <div class="grid-4 alpha">
+    <div class="grid-3 alpha wide">
 		<? for ($i = 1; $i <= $optionsLimit; $i++): ?>
 		<?= $app->renderView(
 			'MarketingToolbox',
@@ -26,6 +26,4 @@
 		?>
 		<? endfor; ?>
     </div>
-
 </div>
-

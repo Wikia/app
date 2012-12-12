@@ -151,6 +151,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			}
 		}
 
+		$this->moduleName = $modulesData['activeModuleName'];
 		$this->moduleContent = $module->renderEditor($selectedModuleData);
 
 		$this->overrideTemplate('editHub');

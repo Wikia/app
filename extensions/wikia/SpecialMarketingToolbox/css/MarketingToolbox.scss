@@ -44,6 +44,12 @@
 		}
 	}
 
+	.grid-3.wide {
+		input[type="text"], textarea {
+			width: 250px;
+		}
+	}
+
 	.WikiaForm {
 		fieldset {
 			border: 0;
@@ -95,5 +101,10 @@
 				border: none;
 			}
 		}
+	}
+
+	.module-polls {
+		overflow: hidden;
+		clear: both;
 	}
 }
