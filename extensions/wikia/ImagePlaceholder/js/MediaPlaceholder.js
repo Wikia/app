@@ -5,7 +5,7 @@
  *
  */
 
-/*global VET_show */
+/*global VET_show, WMU_show */
  
 (function($, window) {
 var MediaPlaceholder = {
