@@ -97,11 +97,11 @@ $wgStructuredDataConfig = array(
 $wgAvailableRights[] = 'sdsediting';
 $wgGroupPermissions['*']['sdsediting'] = false;
 $wgGroupPermissions['staff']['sdsediting'] = true;
-$wgGroupPermissions['admin']['sdsediting'] = true;
+$wgGroupPermissions['sysop']['sdsediting'] = true;
 $wgAvailableRights[] = 'sdsdeleting';
 $wgGroupPermissions['*']['sdsdeleting'] = false;
 $wgGroupPermissions['staff']['sdsdeleting'] = true;
-$wgGroupPermissions['admin']['sdsdeleting'] = true;
+$wgGroupPermissions['sysop']['sdsdeleting'] = true;
 
 define('SD_CONTEXT_DEFAULT', 0);
 define('SD_CONTEXT_SPECIAL', 1);
