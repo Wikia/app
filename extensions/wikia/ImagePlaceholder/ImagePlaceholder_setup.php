@@ -292,20 +292,26 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		'class' => 'wikia-button',
 		'style' => "top: {$tmarg}px;position:relative;",
 		'href' => $wgTitle->getLocalUrl( array( 'action' => 'edit') ),
+		'data-id' => $wgWikiaVideoPlaceholderId,
+		'data-align' => $isalign,
+		'data-thumb' => $isthumb,
+		'data-caption' => htmlspecialchars($caption),
+		'data-width' => $isvideo ? '' : $width, // let VET slider determine width for video
 	);
 	
-	if( $isvideo ) { // video placeholder
+	if( !$isvideo ) { // image placeholder
 		$linkAttrs = array_merge($linkAttrs, array(
-			'data-id' => $wgWikiaVideoPlaceholderId,
-			'data-align' => $isalign,
-			'data-thumb' => $isthumb,
-			'data-caption' => htmlspecialchars($caption),		
-		));
-	} else { // image placeholder
-		$linkAttrs = array_merge($linkAttrs, array(
-			'onclick' => !empty($onclick) ? $onclick : '',
+			'data-link' => htmlspecialchars($link),
+			'data-width' => $width, // set only for images, let VET slider determine width for video
 		));
 	}
+	
+	if( !empty($onclick) ) { // error event
+		$linkAttrs = array_merge($linkAttrs, array(
+			'onclick' =>  $onclick,
+		));
+	}
+	
 	$out .= Xml::openElement('a', $linkAttrs);
 
 	$out .= $isvideo ? wfMsg('imgplc-add-video') : wfMsg('imgplc-add-image');
@@ -341,11 +347,11 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 				'isThumb' => $isthumb,
 			)
 		));
-	} else if($isvideo) {
+	} else {
 		$out .= F::build('JSSnippets')->addToStack(
-			array( '/extensions/wikia/VideoEmbedTool/js/VideoPlaceholder.js' ),
+			array( '/extensions/wikia/ImagePlaceholder/js/MediaPlaceholder.js' ),
 			array(),
-			'VideoPlaceholder.init'
+			'MediaPlaceholder.init'
 		);
 	}
 
