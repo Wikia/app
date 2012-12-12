@@ -19,7 +19,7 @@ var getResources = (function() {
 			// Replace the first parameter to match group or groups
 			.replace( '%1\\$s', 'groups?' )
 			// Replace remaining parameters with wildcard matches
-			.replace( /%\d\\\$(?:s|d)/g, '(?:.*)' )
+			.replace( /%\d\\\$(?:s|d)/g, '(.*)' )
 		),
 		rAssetManagerGroupType = /(js|s?css)/,
 		rExtension = /\.(js|s?css)$/;
@@ -67,7 +67,7 @@ var getResources = (function() {
 			// URI string
 			} else if ( type == 'string' ) {
 				matches = resource.match( rAssetManagerGroup );
-				matches = matches ? matches[ 1 ].match( rAssetManagerGroupType ) : resource.match( rExtension );
+				matches = matches ? matches[ 3 ].match( rAssetManagerGroupType ) : resource.match( rExtension );
 				type = matches ? matches[ 1 ] : 'unknown';
 			}
 
