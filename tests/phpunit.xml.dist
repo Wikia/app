@@ -53,6 +53,8 @@
 			<directory suffix=".i18n.php">../extensions</directory>
 			<directory suffix=".alias.php">../extensions</directory>
 			<directory suffix=".aliases.php">../extensions</directory>
+			<directory suffix=".setup.php">../extensions</directory>
+			<directory suffix="_setup.php">../extensions</directory>
 		</blacklist>
 	</filter>
 </phpunit>

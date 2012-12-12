@@ -1,11 +1,11 @@
 <div class="grid-4 alpha wide">
-	<?=F::app()->renderView(
+	<?=$app->renderView(
 	'MarketingToolbox',
 	'FormField',
 	array('inputData' => $fields['boardTitle'])
 );
 	?>
-	<?=F::app()->renderView(
+	<?=$app->renderView(
 	'MarketingToolbox',
 	'FormField',
 	array('inputData' => $fields['boardDescription'])

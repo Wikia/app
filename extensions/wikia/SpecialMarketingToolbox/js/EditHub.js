@@ -13,7 +13,7 @@ EditHub.prototype = {
 		this.form = $('#marketing-toolbox-form');
 
 		$('#marketing-toolbox-clearall').click($.proxy(function(){
-			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation')) == true) {
+			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation',this.form.data('module-name'))) == true) {
 				this.formReset();
 			}
 		}, this));

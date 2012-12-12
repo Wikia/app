@@ -6,13 +6,13 @@
 	<? endif ?>
 
 	<? switch ($inputData['type']):
-		case 'text': ?>
-		<input type="text" <?=$inputData['attributes']?> id="MarketingToolbox<?=$inputData['name']?>" name="<?=$inputData['name']?>" value="<?= htmlspecialchars($inputData['value'])?>" />
+		case 'text':
+		case 'hidden': ?>
+		<input type="<?=$inputData['type']?>" <?=$inputData['attributes']?> id="MarketingToolbox<?=$inputData['name']?>" name="<?=$inputData['name']?>" value="<?= htmlspecialchars($inputData['value'])?>" />
 			<? break ?>
 		<? case 'textarea': ?>
 			<textarea <?=$inputData['attributes']?> name="<?=$inputData['name']?>"><?= htmlspecialchars($inputData['value'])?></textarea>
 			<? break ?>
-
 	<? endswitch ?>
 
 	<? if (!empty($inputData['errorMessage'])): ?>

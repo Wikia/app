@@ -79,7 +79,7 @@
 		 * @return array $pageviews [ array( 'WIKI_ID' => array( 'YYYY-MM-DD' => pageviews, 'SUM' => sum(pageviews) ) ) ]
 		 */
 		protected static function getPageviewsForWikis( $periodId, $wikis, $startDate, $endDate = null ) {
-			$app = F::app(); 
+			$app = F::app();
 
 			$app->wf->ProfileIn( __METHOD__ );
 
@@ -127,7 +127,7 @@
 
 			return $pageviews;
 		}
-		
+
 		/**
 		 * get pageviews
 		 * @param array $dates ( YYYY-MM-DD, YYYY-MM-DD ... )
@@ -176,7 +176,7 @@
 
 			return $pageviews;
 		}
-		
+
 		// get daily pageviews
 		public static function getPageviewsDaily( $startDate, $endDate = null, $wiki = null ) {
 			if ( is_array( $wiki ) ) {
@@ -209,7 +209,7 @@
 
 			return $pageviews;
 		}
-		
+
 		/**
 		 * Get top wikis by pageviews over a specified span of time, optionally filtering by
 		 * public status, language and vertical (hub)
@@ -583,12 +583,16 @@
 
 			$keyToken = '';
 
-			if ( is_array( $namespaces ) ) {
+			if ( !empty( $namespaces ) && is_array( $namespaces ) ) {
 				$keyToken .= implode( ':', $namespaces );
+			} else {
+				$namespaces = null;
 			}
 
-			if ( is_array( $articleIds ) ) {
+			if ( !empty( $articleIds ) && is_array( $articleIds ) ) {
 				$keyToken .= implode( ':', $articleIds );
+			} else {
+				$articleIds = null;
 			}
 
 			$memKey = $app->wf->SharedMemcKey(
@@ -613,7 +617,7 @@
 						'wiki_id' => $wikiId
 					);
 
-					if ( is_array( $namespaces ) ) {
+					if ( !empty( $namespaces ) ) {
 						$namespaces = array_filter( $namespaces, function( $val ) {
 							return is_integer( $val );
 						} );
@@ -621,7 +625,7 @@
 						$where[] = 'namespace_id ' . ( ( !empty( $excludeNamespaces ) ) ? 'NOT ' : null ) . ' IN (' . implode( ',' , $namespaces ) . ')';
 					}
 
-					if ( is_array( $articleIds ) ) {
+					if ( !empty( $articleIds ) ) {
 						$articleIds = array_filter( $articleIds, function( $val ) {
 							return is_integer( $val );
 						} );
@@ -663,7 +667,7 @@
 			$app->wf->ProfileOut( __METHOD__ );
 			return $topArticles;
 		}
-		
+
 		/**
 		 * Returns the latest WAM score provided a wiki ID
 		 * @param int $wikiId
@@ -672,12 +676,12 @@
 		public static function getCurrentWamScoreForWiki( $wikiId ) {
 			$app = F::app();
 			$app->wf->ProfileIn( __METHOD__ );
-			
+
 			$memKey = $app->wf->SharedMemcKey( 'datamart', 'wam', $wikiId );
-			
+
 			$getData = function() use ( $app, $wikiId ) {
 				$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
-				
+
 				$result = $db->select(
 							array( 'fact_wam_scores' ),
 							array(
@@ -692,10 +696,10 @@
 								'LIMIT' => 1
 							)
 						);
-				
+
 				return ( $row = $db->fetchObject( $result ) ) ? $row->wam : 0;
 			};
-			
+
 			$wamScore = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData );
 			$app->wf->ProfileOut( __METHOD__ );
 			return $wamScore;

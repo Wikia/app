@@ -32,19 +32,23 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 
 		$fields = $this->getFormFields();
 
-		foreach( $fields as $fieldName => &$field ) {
-			$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
-			$field['formValue'] = $fieldData;
+		foreach ($fields as $fieldName => &$field) {
+			if (!empty($field['validator'])) {
+				$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
+				$field['formValue'] = $fieldData;
 
-			if( !($field['validator'] instanceof WikiaValidatorDepend) && !$field['validator']->isValid($fieldData) ) {
-				$out[$fieldName] = $field['validator']->getError()->getMsg();
+				if (!($field['validator'] instanceof WikiaValidatorDepend) && !$field['validator']->isValid($fieldData)) {
+					$out[$fieldName] = $field['validator']->getError()->getMsg();
+				}
 			}
 		}
 
-		foreach( $fields as $fieldName => $field ) {
-			$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
-			if( ($field['validator'] instanceof WikiaValidatorDepend) && !$field['validator']->isValid($fieldData, $fields) ) {
-				$out[$fieldName] = $field['validator']->getError()->getMsg();
+		foreach ($fields as $fieldName => $field) {
+			if (!empty($field['validator'])) {
+				$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
+				if (($field['validator'] instanceof WikiaValidatorDepend) && !$field['validator']->isValid($fieldData, $fields)) {
+					$out[$fieldName] = $field['validator']->getError()->getMsg();
+				}
 			}
 		}
 
@@ -69,7 +73,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 				'value' => isset($values[$fieldName]) ? $values[$fieldName] : '',
 				'errorMessage' => isset($errorMessages[$fieldName]) ? $errorMessages[$fieldName] : '',
 				'label' => isset($field['label']) ? $field['label'] : null,
-				'attributes' => isset($field['attributes'])  ? $this->prepareFieldAttributes($field['attributes']) : '',
+				'attributes' => isset($field['attributes']) ? $this->prepareFieldAttributes($field['attributes']) : '',
 				'type' => isset($field['type']) ? $field['type'] : 'text'
 			);
 		}
@@ -88,4 +92,5 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 }
+
 ?>
