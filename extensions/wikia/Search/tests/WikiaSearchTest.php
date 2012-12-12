@@ -1970,6 +1970,216 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		);
 	}
 
+	/**
+	 * @covers WikiaSearch::search
+	 */
+	public function testSearchWorksFirst() {
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getSelectQuery' ) )
+							->getMock();
+		
+		$mockClient = $this->getMockBuilder( 'Solarium_Client' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'select' ) )
+							->getMock();
+		
+		$mockConfig = $this->getMockBuilder( 'WikiaSearchConfig' )
+							->disableOriginalConstructor()
+							->setMethods( array() )
+							->getMock();
+		
+		$mockResult = $this->getMockBuilder( 'Solarium_Result_Select' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockSearch
+			->expects	( $this->at( 0 ) )
+			->method	( 'getSelectQuery' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $mockQuery ) )
+		;
+		$mockClient
+			->expects	( $this->at( 0 ) )
+			->method	( 'select' )
+			->with		( $mockQuery )
+			->will		( $this->returnValue( $mockResult ) )
+		;
+		
+		$reflClient = new ReflectionProperty( 'WikiaSearch', 'client' );
+		$reflClient->setAccessible( true );
+		$reflClient->setValue( $mockSearch, $mockClient );
+		
+		$reflSearch = new ReflectionMethod( 'WikiaSearch', 'search' );
+		$reflSearch->setAccessible( true );
+		$this->assertEquals(
+				$mockResult,
+				$reflSearch->invoke( $mockSearch, $mockConfig ),
+				'WikiaSearch::search should accept an instance of WikiaSearchConfig and return an instance of Solarium_Result_Select'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearch::search
+	 */
+	public function testSearchWithoutBoost() {
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getSelectQuery', 'search' ) )
+							->getMock();
+		
+		$mockClient = $this->getMockBuilder( 'Solarium_Client' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'select' ) )
+							->getMock();
+		
+		$mockConfig = $this->getMockBuilder( 'WikiaSearchConfig' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getError', 'setError', 'setSkipBoostFunctions' ) )
+							->getMock();
+		
+		$mockResult = $this->getMockBuilder( 'Solarium_Result_Select' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockException = $this->getMockBuilder( 'Exception' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockWikia = $this->getMock( 'Wikia', array( 'log' ) );
+		
+		$mockSearch
+			->expects	( $this->at( 0 ) )
+			->method	( 'getSelectQuery' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $mockQuery ) )
+		;
+		$mockClient
+			->expects	( $this->at( 0 ) )
+			->method	( 'select' )
+			->with		( $mockQuery )
+			->will		( $this->throwException( $mockException ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'getError' )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 1 ) )
+			->method	( 'setSkipBoostFunctions' )
+			->with		( true )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 2 ) )
+			->method	( 'setError' )
+			->with		( $mockException )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockSearch
+			->expects	( $this->at( 1 ) )
+			->method	( 'search' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $mockResult ) )
+		;
+		
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockApp();
+		
+		$reflClient = new ReflectionProperty( 'WikiaSearch', 'client' );
+		$reflClient->setAccessible( true );
+		$reflClient->setValue( $mockSearch, $mockClient );
+		
+		$reflSearch = new ReflectionMethod( 'WikiaSearch', 'search' );
+		$reflSearch->setAccessible( true );
+		$this->assertEquals(
+				$mockResult,
+				$reflSearch->invoke( $mockSearch, $mockConfig ),
+				'WikiaSearch::search should accept an instance of WikiaSearchConfig and return an instance of Solarium_Result_Select'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearch::search
+	 */
+	public function testSearchGivesUp() {
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getSelectQuery', 'search' ) )
+							->getMock();
+		
+		$mockClient = $this->getMockBuilder( 'Solarium_Client' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'select' ) )
+							->getMock();
+		
+		$mockConfig = $this->getMockBuilder( 'WikiaSearchConfig' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getError', 'setError', 'setSkipBoostFunctions' ) )
+							->getMock();
+		
+		$mockResult = $this->getMockBuilder( 'Solarium_Result_Select' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockException = $this->getMockBuilder( 'Exception' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockWikia = $this->getMock( 'Wikia', array( 'log' ) );
+		
+		$mockSearch
+			->expects	( $this->at( 0 ) )
+			->method	( 'getSelectQuery' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $mockQuery ) )
+		;
+		$mockClient
+			->expects	( $this->at( 0 ) )
+			->method	( 'select' )
+			->with		( $mockQuery )
+			->will		( $this->throwException( $mockException ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'getError' )
+			->will		( $this->returnValue( $mockException ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 1 ) )
+			->method	( 'setError' )
+			->with		( $mockException )
+		;
+		
+		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockApp();
+		
+		$reflClient = new ReflectionProperty( 'WikiaSearch', 'client' );
+		$reflClient->setAccessible( true );
+		$reflClient->setValue( $mockSearch, $mockClient );
+		
+		$reflSearch = new ReflectionMethod( 'WikiaSearch', 'search' );
+		$reflSearch->setAccessible( true );
+		$this->assertInstanceOf(
+				'Solarium_Result_Select_Empty',
+				$reflSearch->invoke( $mockSearch, $mockConfig ),
+				'WikiaSearch::search should accept an instance of WikiaSearchConfig and return an instance of Solarium_Result_Select_Empty if a retry does not work'
+		);
+	}
+	
 
 	/**
 	 * @covers WikiaSearch::searchByLuceneQuery

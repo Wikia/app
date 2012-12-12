@@ -538,21 +538,21 @@ class WikiaSearch extends WikiaObject {
 	 */
 	protected function search( WikiaSearchConfig $searchConfig ) {
 		try {
-			$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
-			
+			return $this->client->select( $this->getSelectQuery( $searchConfig ) );
 		} catch ( Exception $e ) {
-			F::build('Wikia')->log(__METHOD__, 'Querying Solr First Time', $e);
-			$searchConfig	->setSkipBoostFunctions( true )
-							->setError( $e );
-			try {
-				$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
-			} catch ( Exception $e ) {
+			if ( $searchConfig->getError() !== false ) {
 				$searchConfig->setError( $e );
 				F::build('Wikia')->log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
-				$result = F::build('Solarium_Result_Select_Empty');
+				return F::build('Solarium_Result_Select_Empty');
+			} else {
+				F::build('Wikia')->log(__METHOD__, 'Querying Solr First Time', $e);
+				
+				$searchConfig	->setSkipBoostFunctions( true )
+								->setError( $e );
+
+				return $this->search( $searchConfig );
 			}
 		}
-		return $result;
 	}
 	
 	/**
