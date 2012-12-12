@@ -28,6 +28,11 @@ var MediaPlaceholder = {
 				thumb = $this.data('thumb'),
 				link = $this.data('link'),
 				caption = $this.data('caption');
+			
+			// For now, make this backwards compatible with unpurged saved placholders
+			if($this.attr('onclick') != 'undefined') {
+				return;
+			}
 				
 			if($this.parent().parent().hasClass('wikiaVideoPlaceholder')) {
 				// video - open VET

@@ -1,6 +1,8 @@
 <?php
 /*
  * @author Bartek Łapiński
+ * 
+ * Note: This includes video and image placeholders
  */
 
 if(!defined('MEDIAWIKI')) {
@@ -234,14 +236,8 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$tmarg = ceil( ( $height - 30 ) / 2 );
 
 	// macbre: RTE support for video placeholder
-	// TODO: use JSSnippets to load dependencies
 	if (empty($wgRTEParserEnabled)) {
-		if( ($wgRequest->getVal('diff',0) == 0) && ($wgRequest->getVal('oldid',0) == 0) ) {
-			if( !$isvideo ) {
-				// image placeholder still uses inline js.  We should clean this up at some point
-				$onclick = '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js\', function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); mw.loader.load( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css\', "text/css" ); } ) } ); return false;';
-			}
-		} else {
+		if( ($wgRequest->getVal('diff',0) != 0) || ($wgRequest->getVal('oldid',0) != 0) ) {
 			$onclick = 'alert('.escapeshellarg(wfMsg('imgplc-notinhistory')).'); return false;';
 		}
 	}

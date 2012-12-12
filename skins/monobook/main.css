@@ -1182,4 +1182,9 @@ div.mw-lag-warn-high {
 	right: 10px;
 	top: 10px;
 }
+
+.wikiaPlaceholder .wikia-button {
+	display: block;
+	text-align: center;
+}
 /* end Wikia monobook modification */
