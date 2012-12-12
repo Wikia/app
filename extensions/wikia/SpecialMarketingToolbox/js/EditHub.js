@@ -47,9 +47,9 @@ EditHub.prototype = {
 			this.wmuDeffered = mw.loader.use(
 				'ext.wikia.WMU'
 			).then(function() {
-					WMU_skipDetails = true;
-					WMU_show();
-				});
+				WMU_skipDetails = true;
+				WMU_show();
+			});
 		} else if (this.wmuDeffered.state() === 'resolved') {
 			WMU_show();
 		} else {
