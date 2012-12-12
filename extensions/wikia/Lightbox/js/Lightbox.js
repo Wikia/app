@@ -19,7 +19,7 @@ var Lightbox = {
 	shortScreen: false, // flag if the screen is shorter than LightboxLoader.defaults.height
 
 	// Carousel vars
-	thumbPlayButton: '<div class="Wikia-video-play-button" style="line-height:55px;width:90px;"><img class="sprite play small" src="' + window.wgBlankImgUrl + '></div>', // overlay for thumb images
+	thumbPlayButton: '<div class="Wikia-video-play-button" style="line-height:55px;width:90px;"><img class="sprite play small" src="' + window.wgBlankImgUrl + '"></div>', // overlay for thumb images
 	thumbLoadCount: 20, // Number of thumbs to load at a time.  Must be at least 9 (i.e. number of items in carousel)
 	backfillCount: 0,
 	backfillCountMessage: false,
