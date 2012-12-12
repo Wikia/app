@@ -5,6 +5,7 @@ var vet_back,vet_close; //hack for VET, please remove this line after VET refact
 EditHub.prototype = {
 	form: undefined,
 	wmuDeffered: undefined,
+	vetReady: undefined,
 
 	init: function () {
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
@@ -35,6 +36,8 @@ EditHub.prototype = {
 				return !this.checkable(element) && (element.name in this.submitted || !this.optional(element) || element === this.lastActive);
 			}
 		});
+
+		this.vetReady = false;
 	},
 
 	wmuInit: function(event) {
@@ -58,19 +61,25 @@ EditHub.prototype = {
 	},
 
 	vetInit: function(event) {
-		$.when(
-			$.loadYUI(),
-			$.loadMustache(),
-			$.getResources([
-				wgExtensionsPath + '/wikia/WikiaStyleGuide/js/Dropdown.js',
-				wgExtensionsPath + '/wikia/VideoEmbedTool/js/VET.js',
-				$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
-				$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
-			])
-		).then(function() {
+		if (!this.vetReady) {
+			$.when(
+				$.loadYUI(),
+				$.loadMustache(),
+				$.getResources([
+					wgExtensionsPath + '/wikia/WikiaStyleGuide/js/Dropdown.js',
+					wgExtensionsPath + '/wikia/VideoEmbedTool/js/VET.js',
+					$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
+					$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
+				])
+			).then(function() {
+				VET_show();
+			});
+			$(window).bind('VET_addFromSpecialPage', $.proxy(this.addVideo, this));
+			this.vetReady = true;
+		}
+		else {
 			VET_show();
-		});
-		$(window).bind('VET_addFromSpecialPage', $.proxy(this.addVideo, this));
+		}
 	},
 
 	addImage: function(wmuData) {
