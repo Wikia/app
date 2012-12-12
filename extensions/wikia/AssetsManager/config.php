@@ -1083,15 +1083,6 @@ $config['imagedrop_scss'] = array(
 	)
 );
 
-// AbTesting
-$config['abtesting'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => array( 'monobook', 'oasis', 'wikiamobile' ),
-	'assets' => array(
-		'//extensions/wikia/AbTesting/js/AbTest.js',
-	)
-);
-
 /** AnalyticsEngine **/
 $config['analytics_gas_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
