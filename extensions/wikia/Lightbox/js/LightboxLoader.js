@@ -1,7 +1,7 @@
 /*global Lightbox:true, LightboxTracker:true*/
 
 var LightboxLoader = {
-	// cached thumbnail arrays and detailed info 
+	// cached thumbnail arrays and detailed info
 	cache: {
 		articleMedia: [], // Article Media
 		relatedVideos: [], // Related Video
@@ -77,7 +77,7 @@ var LightboxLoader = {
 				parent: parent
 			}
 
-		// Expand Slideshow button functionality 
+		// Expand Slideshow button functionality
 		// TODO LightboxLoader.js and WikiPhotoGallery.js needs refactoring, the conditional bellow is just a quick fix for lunching lightbox after clicking expand slideshow button
 		if (target.hasClass('wikia-slideshow-popout')) {
 			var currentSlideMediaTitle = target.parents('.wikia-slideshow-toolbar').siblings('.wikia-slideshow-images-wrapper').find('li:visible').attr('data-image-name');
@@ -97,29 +97,28 @@ var LightboxLoader = {
 				target = next;
 			} else {
 				target = target.parent();
-				if ( target.hasClass('Wikia-video-play-button') || target.hasClass('Wikia-video-thumb') ) {
+				if ( target.hasClass('play') || target.hasClass('Wikia-video-thumb') ) {
 					target.addClass('image');
 				}
 			}
-
 		}
-        // move to parent of an playButton (relatedVideos)
-        if (target.is('div') && target.hasClass('playButton')) {
+
+        // move to parent of a play button
+        if (target.is('div') && (target.hasClass('playButton') || target.hasClass('Wikia-video-play-button'))) {
             target = target.parent();
         }
-        
+
 		/* handle click ignore cases */
-		
+
 		// handle clicks on links only
 		if (!target.is('a')) {
 			return;
 		}
-		
+
 		// handle clicks on "a.lightbox, a.image" only
 		if (!target.hasClass('lightbox') && !target.hasClass('image')) {
 			return;
 		}
-
 
 		// don't show thumbs for gallery images linking to a page
 		if (target.hasClass('link-internal')) {
@@ -130,18 +129,18 @@ var LightboxLoader = {
 		if (ev.ctrlKey) {
 			return;
 		}
-		
-		// TODO: Find out how we want to handle external images 
+
+		// TODO: Find out how we want to handle external images
 		/* handle shared help images and external images (ask someone who knows about this, probably Macbre) */
 		/* sample: http://lizlux.wikia.com/wiki/Help:Start_a_new_Wikia_wiki */
 		/* (BugId:981) */
-		/* note - let's not implement this for now, let normal lightbox handle it normally, and get back to it after new lightbox is complete - hyun */		
+		/* note - let's not implement this for now, let normal lightbox handle it normally, and get back to it after new lightbox is complete - hyun */
 		if (target.attr('data-shared-help') || target.hasClass('link-external')) {
 			return false;
 		}
 
 		ev.preventDefault();
-		
+
 		// get file name
 		var mediaTitle = false;
 
@@ -163,7 +162,7 @@ var LightboxLoader = {
 			}
 
 		}
-		
+
 		// for Video Thumbnails:
 		var targetChildImg = target.find('img').eq(0);
 		if ( targetChildImg.hasClass('Wikia-video-thumb') || target.hasClass('video') ) {
@@ -172,7 +171,7 @@ var LightboxLoader = {
 			} else if (targetChildImg.data('video')) {
 				mediaTitle = targetChildImg.data('video');
 			}
-			
+
 			// check if we need to play video inline, and stop lightbox execution
 			if (mediaTitle && targetChildImg.width() >= LightboxLoader.videoThumbWidthThreshold) {
 				LightboxLoader.displayInlineVideo(target, targetChildImg, mediaTitle, LightboxTracker.clickSource.EMBED);
@@ -180,13 +179,13 @@ var LightboxLoader = {
 				return false;	// stop modal dialog execution
 			}
 		}
-		
+
 		// load modal
 		if(mediaTitle != false) {
 			LightboxLoader.loadLightbox(mediaTitle, trackingInfo);
 		}
 	},
-	
+
 	/**
 	 * @param {String} mediaTitle The name of the file to be loaded in the Lightbox
 	 * @param {Object} trackingInfo Any info we've already gathered for tracking purposes.  Will be fed to Lightbox.getClickSource for processing
@@ -199,16 +198,16 @@ var LightboxLoader = {
 
 		// Hide box ad so there's no z-index issues
 		LightboxLoader.pageAds.css('visibility','hidden');
-		
+
 		// Display modal with default dimensions
 		var openModal = $("<div>").makeModal(LightboxLoader.defaults);
 		openModal.find(".modalContent").startThrobbing();
-		
+
 		var lightboxParams = {
 			title: mediaTitle,
 			modal: openModal
 		};
-		
+
 		$.extend(lightboxParams, trackingInfo);
 
 		var deferredList = [];
@@ -220,9 +219,9 @@ var LightboxLoader = {
 				$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss'),
 				window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js'
 			];
-			
+
 			deferredList.push($.getResources(resources));
-			
+
 			var deferredTemplate = $.Deferred();
 			$.nirvana.sendRequest({
 				controller:	'Lightbox',
@@ -230,7 +229,7 @@ var LightboxLoader = {
 				type:		'GET',
 				format: 'html',
 				data: {
-					lightboxVersion: 5 // update this when we change the template Lightbox_lightboxModalContent.php
+					lightboxVersion: 6 // update this when we change the template Lightbox_lightboxModalContent.php
 				},
 				callback: function(html) {
 					LightboxLoader.templateHtml = html;
@@ -240,12 +239,12 @@ var LightboxLoader = {
 
 			deferredList.push( deferredTemplate );
 		}
-		
+
 		deferredList.push(LightboxLoader.getMediaDetailDeferred({fileTitle: mediaTitle}));	// NOTE: be careful with this, look below where it says LASTINDEX
-		
+
 		$.when.apply(this, deferredList).done(function() {
 			LightboxLoader.assetsLoaded = true;
-			Lightbox.initialFileDetail = arguments[arguments.length - 1];	// LASTINDEX: index is last-index due to how deferred resolve works in mulitiple deferred objects 
+			Lightbox.initialFileDetail = arguments[arguments.length - 1];	// LASTINDEX: index is last-index due to how deferred resolve works in mulitiple deferred objects
 			Lightbox.makeLightbox(lightboxParams);
 		});
 
@@ -254,9 +253,9 @@ var LightboxLoader = {
 		if($.inArray(mediaTitle, LightboxLoader.inlineVideoLoading) > -1) {
 			return;
 		}
-		
+
 		LightboxLoader.inlineVideoLoading.push(mediaTitle);
-		
+
 		LightboxLoader.getMediaDetail({
 			fileTitle: mediaTitle,
 			height: targetChildImg.height(),
@@ -319,7 +318,7 @@ var LightboxLoader = {
 	normalizeMediaDetail: function(json, callback) {
 		/* normalize JWPlayer instances */
 		var embedCode = json['videoEmbedCode'];
-		
+
 		/* embedCode can be a json object, not a html.  It is implied that only JWPlayer (Screenplay) items do this. */
 		if(typeof embedCode === 'object') {
 			var playerJson = embedCode;	// renaming to keep my sanity
@@ -327,7 +326,7 @@ var LightboxLoader = {
 				json['videoEmbedCode'] = '<div id="' + playerJson['id'] + '"></div>';
 				json['playerScript'] = playerJson['script'] + ' loadJWPlayer();';
 				callback(json);
-			});	
+			});
 		} else {
 			callback(json);
 		}
@@ -335,23 +334,23 @@ var LightboxLoader = {
 	loadFromURL: function() {
 		var fileTitle = $.getUrlVar('file'),
 			openModal = $('#LightboxModal');
-		
+
 		if(fileTitle) {
 			if(openModal.length) {
 				// Lightbox is already open, update it
 				LightboxLoader.getMediaDetail({fileTitle: fileTitle}, function(data) {
 					Lightbox.current.title = data.title;
 					Lightbox.current.type = data.mediaType;
-	
+
 					Lightbox.setCarouselIndex();
 					Lightbox.openModal.carousel.find('li').eq(Lightbox.current.index).click();
 				});
-				
+
 			} else {
 				// Open new Lightbox
 				// set a fake parent for carouselType
 				var trackingInfo = {
-					parent: $('#WikiaArticle'), 
+					parent: $('#WikiaArticle'),
 					clickSource: LightboxTracker.clickSource.SHARE
 				}
 				LightboxLoader.loadLightbox(fileTitle, trackingInfo);
@@ -369,8 +368,8 @@ LightboxTracker = {
 	inlineVideoTrackingTimeout: 0,
 	track: function(action, label, value, data) {
 		// @param data - any extra params we want to pass to internal tracking
-		// Don't add willy nilly though... check with Jonathan.  
-		var ga_params  = {		
+		// Don't add willy nilly though... check with Jonathan.
+		var ga_params  = {
 			ga_category: 'lightbox',
 			ga_action: action,
 			ga_label: label || '',
@@ -401,6 +400,6 @@ $(function() {
 	}
 
 	LightboxLoader.init();
-	
+
 	LightboxLoader.loadFromURL();
 });
