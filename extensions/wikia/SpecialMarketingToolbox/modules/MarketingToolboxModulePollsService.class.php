@@ -31,7 +31,13 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleService {
 		for ($i = 1; $i <= $mandatoryOptionsLimit; $i++) {
 			$fields['pollsOption' . $i] = array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-polls-option-mandatory',$i),
-				'validator' => new WikiaValidatorString(),
+				'validator' => new WikiaValidatorString(
+					array(
+						'required' => true,
+						'min' => 1
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
+				),
 				'attributes' => array(
 					'class' => 'required'
 				)
