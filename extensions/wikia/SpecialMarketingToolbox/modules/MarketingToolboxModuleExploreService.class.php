@@ -62,7 +62,12 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 
 		$linkUrlField = array(
 			'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
-			'validator' => new WikiaValidatorUrl(),
+			'validator' => new WikiaValidatorUrl(
+				array(),
+				array(
+					'wrong' => 'marketing-toolbox-hub-module-explore-link-url-invalid'
+				)
+			),
 			'attributes' => array(
 				'class' => "wikiaUrl"
 			)
@@ -76,11 +81,10 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 					'required' => false,
 					'ownValidator' => new WikiaValidatorString(
 						array(
-							'required' => true,
 							'min' => 1
 						),
 						array(
-							'too_short' => 'marketing-toolbox-hub-module-explore-header-too-short-error'
+							'too_short' => 'marketing-toolbox-hub-module-explore-link-text-too-short-error'
 						)
 					),
 					'dependencyField' => $linkUrlFieldName
