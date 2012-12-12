@@ -2180,6 +2180,123 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		);
 	}
 	
+	/**
+	 * @covers WikiaSearch::handleSpellcheck
+	 */
+	public function testHandleSpellcheck() {
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockConfig = $this->getMockBuilder( 'WikiaSearchConfig' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getQueryNoQuotes', 'getCityId' ) )
+							->getMock();
+		
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getSpellcheck' ) )
+							->getMock();
+		
+		$spellcheckMethods = array( 'setQuery', 'setCollate', 'setCount', 'setMaxCollationTries', 'setMaxCollations', 'setExtendedResults', 
+									'setCollateParam', 'setOnlyMorePopular', 'setDictionary', 'setCollateExtendedResults' );
+		
+		$mockSpellcheck = $this->getMockBuilder( 'Solarium_Query_Select_Component_Spellcheck' )
+								->disableOriginalConstructor()
+								->setMethods( $spellcheckMethods )
+								->getMock();
+		
+		$query = 'foo';
+		
+		$mockQuery
+			->expects	( $this->at( 0 ) )
+			->method	( 'getSpellcheck' )
+			->will		( $this->returnValue( $mockSpellcheck ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'getQueryNoQuotes' )
+			->with		( true )
+			->will		( $this->returnValue( $query ) )			
+		;
+		$mockSpellcheck
+			->expects	( $this->at( 0 ) )
+			->method	( 'setQuery' )
+			->with		( $query )
+			->will		( $this->returnValue( $mockSpellcheck ) )
+		;
+		$mockSpellcheck
+			->expects	( $this->at( 1 ) )
+			->method	( 'setCollate' )
+			->with		( true )
+			->will		( $this->returnValue( $mockSpellcheck ) )
+		;
+		$mockSpellcheck
+			->expects	( $this->at( 2 ) )
+			->method	( 'setCount' )
+			->with		( WikiaSearch::SPELLING_RESULT_COUNT )
+			->will		( $this->returnValue( $mockSpellcheck ) )
+		;
+		$mockSpellcheck
+			->expects	( $this->at( 3 ) )
+			->method	( 'setMaxCollationTries' )
+			->with		( WikiaSearch::SPELLING_MAX_COLLATION_TRIES )
+			->will		( $this->returnValue( $mockSpellcheck ) )
+		;
+		$mockSpellcheck
+			->expects	( $this->at( 4 ) )
+			->method	( 'setMaxCollations' )
+			->with		( WikiaSearch::SPELLING_MAX_COLLATIONS )
+			->will		( $this->returnValue( $mockSpellcheck ) )
+		;
+		$mockSpellcheck
+			->expects	( $this->at( 5 ) )
+			->method	( 'setExtendedResults' )
+			->with		( true )
+			->will		( $this->returnValue( $mockSpellcheck ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 1 ) )
+			->method	( 'getCityId' )
+			->will		( $this->returnValue( '123' ) )			
+		;
+		$mockSpellcheck
+			->expects	( $this->at( 6 ) )
+			->method	( 'setCollateParam' )
+			->with		( 'fq', 'is_content:true AND wid:123' )
+			->will		( $this->returnValue( $mockSpellcheck ) )
+		;
+		$mockSpellcheck
+			->expects	( $this->at( 7 ) )
+			->method	( 'setOnlyMorePopular' )
+			->with		( true )
+			->will		( $this->returnValue( $mockSpellcheck ) )
+		;
+		$mockSpellcheck
+			->expects	( $this->at( 8 ) )
+			->method	( 'setDictionary' )
+			->with		( 'en' )
+			->will		( $this->returnValue( $mockSpellcheck ) )
+		;
+		$mockSpellcheck
+			->expects	( $this->at( 9 ) )
+			->method	( 'setCollateExtendedResults' )
+			->with		( true )
+			->will		( $this->returnValue( $mockSpellcheck ) )
+		;
+		
+		$wg = new ReflectionProperty( 'WikiaSearch', 'wg' );
+		$wg->setAccessible( true );
+		$wg->setValue( $mockSearch, (object) array( 'WikiaSearchSpellcheckActivated' => true, 'LanguageCode' => 'en', 'WikiaSearchSupportedLanguages' => array( 'en' ) ) );
+		
+		$handle = new ReflectionMethod( 'WikiaSearch', 'handleSpellcheck' );
+		$handle->setAccessible( true );
+		$this->assertEquals(
+				$mockSearch,
+				$handle->invoke( $mockSearch, $mockQuery, $mockConfig )
+		);
+	}
+	
 
 	/**
 	 * @covers WikiaSearch::searchByLuceneQuery

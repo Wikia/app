@@ -67,13 +67,19 @@ class WikiaSearch extends WikiaObject {
 	 * Sets max collation tries when spellchecking
 	 * @var int
 	 */
-	const SPELLING_MAX_COLLATION_TRIES = 20;
+	const SPELLING_MAX_COLLATION_TRIES		= 20;
+	
+	/**
+	 * Sets max collations when spellchecking
+	 * @var int
+	 */
+	const SPELLING_MAX_COLLATIONS			= 5;
 	
 	/**
 	 * Sets the max number of results to return when spellchecking
 	 * @var int
 	 */
-	const SPELLING_RESULT_COUNT = 20;
+	const SPELLING_RESULT_COUNT				= 20;
 	
 	/**
 	 * These fields are actually dynamic language fields supported in 36 different languages
@@ -515,20 +521,28 @@ class WikiaSearch extends WikiaObject {
 		return $query;
 	}
 	
-	protected function handleSpellcheck( Solarium_Query $query, WikiaSearchConfig $searchConfig ) {
+	/**
+	 * Configures spellcheck per our desired settings
+	 * @param Solarium_Query_Select $query
+	 * @param WikiaSearchConfig $searchConfig
+	 * @return WikiaSearch
+	 */
+	protected function handleSpellcheck( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig ) {
 		if ( $this->wg->WikiaSearchSpellcheckActivated ) {
-			$spellcheck = $query->getSpellcheck();
-			$spellcheck->setQuery( $searchConfig->getQueryNoQuotes( true ) );
-			$spellcheck->setCollate( true );
-			$spellcheck->setCount( self::SPELLING_RESULT_COUNT );
-			$spellcheck->setMaxCollationTries( self::SPELLING_MAX_COLLATION_TRIES );
-			$spellcheck->setMaxCollations( 5 );
-			$spellcheck->setExtendedResults( true );
-			$spellcheck->setCollateParam( 'fq', 'is_content:true AND wid:'.$searchConfig->getCityId() );
-			$spellcheck->setOnlyMorePopular( true );
-			$spellcheck->setDictionary( in_array( $this->wg->LanguageCode, $this->wg->WikiaSearchSupportedLanguages ) ? $this->wg->LanguageCode : 'default'   );
-			$spellcheck->setCollateExtendedResults( true );
+			$query	->getSpellcheck()
+					->setQuery( $searchConfig->getQueryNoQuotes( true ) )
+					->setCollate( true )
+					->setCount( self::SPELLING_RESULT_COUNT )
+					->setMaxCollationTries( self::SPELLING_MAX_COLLATION_TRIES )
+					->setMaxCollations( self::SPELLING_MAX_COLLATIONS )
+					->setExtendedResults( true )
+					->setCollateParam( 'fq', 'is_content:true AND wid:'.$searchConfig->getCityId() )
+					->setOnlyMorePopular( true )
+					->setDictionary( in_array( $this->wg->LanguageCode, $this->wg->WikiaSearchSupportedLanguages ) ? $this->wg->LanguageCode : 'default'   )
+					->setCollateExtendedResults( true )
+			;
 		}
+		return $this;
 	}
 	
 	/**
