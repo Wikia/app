@@ -400,6 +400,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		
 		$filters = $config->getFilterQueries();
 		$rank = $config->getRank();
+		$is_video_wiki = $this->wg->CityId == WikiaSearch::VIDEO_WIKI_ID;
 		
 		$form = array(
 				'by_category' =>        $this->getVal('by_category', false),
@@ -415,12 +416,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				'no_filter' =>          !( isset( $filters['is_image'] ) || isset( $filters['is_video'] ) ),
 			);
 
+		// Set video wiki to display only videos by default
+		if( $is_video_wiki && $form['no_filter'] == 1 ) {
+			$form['is_video'] = 1;
+			$form['no_filter'] = 0;
+		}
+
 		$this->setVal( 'bareterm', 			$config->getQuery( WikiaSearchConfig::QUERY_RAW ) );
 		$this->setVal( 'searchProfiles', 	$config->getSearchProfiles() );
 		$this->setVal( 'redirs', 			$config->getIncludeRedirects() );
 		$this->setVal( 'activeTab', 		$config->getActiveTab() );
 		$this->setVal( 'form',				$form );
-		$this->setVal( 'is_video_wiki',		$this->wg->CityId == WikiaSearch::VIDEO_WIKI_ID );
+		$this->setVal( 'is_video_wiki',		$is_video_wiki );
 	}
 
 	/**
