@@ -1,4 +1,4 @@
-<?= F::app()->renderView(
+<?= $app->renderView(
 	'MarketingToolbox',
 	'Header',
 	$headerData
@@ -6,7 +6,7 @@
 
 <section class="MarketingToolboxMain WikiaGrid">
 	<div class="grid-2">
-		<?= F::app()->renderView('LeftMenu',
+		<?= $app->renderView('LeftMenu',
 			'Index',
 			array('menuItems' => $leftMenuItems)
 		) ?>
@@ -31,7 +31,7 @@
 	</div>
 </section>
 
-<?= F::app()->renderView(
+<?= $app->renderView(
 	'MarketingToolbox',
 	'Footer'
 ) ?>
