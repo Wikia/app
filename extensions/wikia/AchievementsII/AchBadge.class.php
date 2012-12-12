@@ -138,9 +138,11 @@ class AchBadge {
                 'badge_type_id' => $this->mBadgeTypeId,
                 'badge_lap' => $this->mBadgeLap
             );
+			$options = array();
             if(empty($wgEnableAchievementsStoreLocalData)) {
                 $dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
                 $where[ 'wiki_id' ] = $wgCityId;
+				$options[ 'USE INDEX' ] = 'user_wiki_badge';
             } else {
                 $dbr = wfGetDB(DB_SLAVE);
             }
@@ -149,9 +151,7 @@ class AchBadge {
 				'count(distinct(user_id))',
                 $where,
 				__METHOD__,
-				array(
-					'USE INDEX' => 'user_wiki_badge'
-				)
+				$options
 			);
 			$wgMemc->set($memkey, $value, 60*30);
 		}
@@ -185,6 +185,10 @@ class AchBadge {
 		return AchConfig::getInstance()->isSponsored( $this->mBadgeTypeId );
 	}
 
+	public function isInTrack() {
+		return AchConfig::getInstance()->isInTrack( $this->mBadgeTypeId );
+	}
+
 	/**
 	 * Outputs the HTML for the the badge. If 'compact' is set to true, displays a version with less info
 	 * that is used on the ActivityFeed (since the user's name, etc. are already on the associated RecentChange).
@@ -193,7 +197,6 @@ class AchBadge {
 	 */
 	public static function renderForActivityFeed($badgeWrapper, $compact=true){
 		wfProfileIn( __METHOD__ );
-
 
 		$badge_name = htmlspecialchars($badgeWrapper['badge']->getName());
 		$badge_url = $badgeWrapper['badge']->getPictureUrl(82);

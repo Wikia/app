@@ -61,8 +61,7 @@ class ContentFeeds {
 		}
 
 		// parse all "magic words" in the phrase
-		$tmpParser = new Parser();
-		$phrase = trim( strip_tags( $tmpParser->parse( $phrase, $wgTitle, $parser->mOptions )->getText() ) );
+		$phrase = trim( strip_tags( ParserPool::parse( $phrase, $wgTitle, $parser->mOptions )->getText() ) );
 
 		$phrase = urlencode($phrase);
 		self::$wikiTweetsTagCount++;

@@ -337,7 +337,7 @@ class BlogTemplateClass {
 	 * @author macbre
 	 */
 	public static function parseTagForParser($input, $params, $parser, $frame = null, $returnPlainData = false) {
-		
+
 		$res = self::parseTag($input, $params, $parser, $frame, $returnPlainData);
 
 		/* Parser in MW1.16 allows to change the way of parsing custom tags */
@@ -834,7 +834,6 @@ class BlogTemplateClass {
 		if ( (!empty($oRev)) && (!empty($titleObj)) && (!empty(self::$aOptions['summary'])) ) {
 			$sBlogText = $oRev->getText( Revision::FOR_THIS_USER );
 			/* parse or not parse - this is a good question */
-			$localParser = new Parser();
 			if ( !in_array(self::$aOptions['type'], array('array', 'noparse')) ) {
 				/* macbre - remove parser hooks (RT #67074) */
 				global $wgParser;
@@ -861,7 +860,7 @@ class BlogTemplateClass {
 					}
 				}
 				/* parse truncated text */
-				$parserOutput = $localParser->parse($sBlogText, $titleObj, ParserOptions::newFromUser($wgUser));
+				$parserOutput = ParserPool::parse($sBlogText, $titleObj, ParserOptions::newFromUser($wgUser));
 				/* replace unused HTML tags */
 				$sBlogText = preg_replace(self::$search, self::$replace, $parserOutput->getText());
 				/* skip HTML tags */
@@ -878,7 +877,7 @@ class BlogTemplateClass {
 				}
 			} else {
 				/* parse revision text */
-				$parserOutput = $localParser->parse($sBlogText, $titleObj, ParserOptions::newFromUser($wgUser));
+				$parserOutput = ParserPool::parse($sBlogText, $titleObj, ParserOptions::newFromUser($wgUser));
 				$sResult = $parserOutput->getText();
 			}
 		}
@@ -1007,15 +1006,17 @@ class BlogTemplateClass {
 		global $wgExtensionsPath, $wgStylePath, $wgRequest;
 
 		wfProfileIn( __METHOD__ );
-		
-		if ( $parser->mOutput !== null ) {
-			/** 
-			 * because this parser tag contains elements of interface we need to 
-			 * inform parser to vary parser cache key by user lang option
-			 **/
+
+		/**
+		 * because this parser tag contains elements of interface we need to
+		 * inform parser to vary parser cache key by user lang option
+		 **/
+
+		/* @var $parser Parser */
+		if ( ($parser instanceof Parser) && ($parser->mOutput instanceof ParserOutput) ) {
 			$parser->mOutput->recordOption('userlang');
 		}
-		
+
 		$result = "";
 
 		self::$aTables = self::$aWhere = self::$aOptions = array();
@@ -1194,7 +1195,9 @@ class BlogTemplateClass {
 
 			/* build query */
 			if ( $returnPlainData ){
-				return self::__getResults();
+				$res = self::__getResults();
+				wfProfileOut( __METHOD__ );
+				return $res;
 			}else{
 				if ( self::$aOptions['type'] == 'count' ) {
 					/* get results count */

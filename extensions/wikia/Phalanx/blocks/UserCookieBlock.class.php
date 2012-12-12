@@ -54,7 +54,7 @@ class UserCookieBlock extends UserBlock {
 
 		if ( !empty( $blocksData ) && !empty( $hashes ) ) {
 			foreach ( $hashes as $hash ) {
-				$ret = self::blockCheckInternal( $user, $blocksData, $hash, false, $isCurrentUser );
+				$ret = self::blockCheckInternal( $user, $blocksData, $hash, $isCurrentUser );
 				if ( !$ret ) {
 					// only check until we get first blocking match
 					break;

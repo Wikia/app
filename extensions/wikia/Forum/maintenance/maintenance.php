@@ -43,7 +43,6 @@ $db = $app->wf->GetDB( DB_MASTER );
 if ( !$isDryrun && !$insertDataOnly ) {
 	// create table or patch table schema
 	$commentsIndex = F::build( 'CommentsIndex' );
-	$commentsIndex->patchTableCommentsIndexV1();
 
 	echo "Updated database schema for comment_index table.\n";
 

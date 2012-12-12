@@ -5,6 +5,8 @@ class WallHelper {
 	const WA_WALL_COMMENTS_MAX_LEN = 150;
 	const WA_WALL_COMMENTS_EXPIRED_TIME = 259200; // = (3 * 24 * 60 * 60) = 3 days
 
+	const PARSER_CACHE_TTL = 3600; // 60 * 60
+
 	public function __construct() {
 		$this->urls = array();
 	}
@@ -69,6 +71,7 @@ class WallHelper {
         $user = null;
 
         if( $ns == NS_USER_WALL ) {
+
 			/**
 			 * @var $w Wall
 			 */
@@ -78,6 +81,7 @@ class WallHelper {
 			/**
 			 * @var $wm WallMessage
 			 */
+			 
 			$wm = F::build( 'WallMessage', array( $title ), 'newFromTitle' );
             $user = $wm->getWallOwner();
 		}
@@ -182,6 +186,7 @@ class WallHelper {
 	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
+	  
 	private function mapParentData(&$item, $parent, $title) {
 		$app = F::app();
 		$app->wf->ProfileIn(__METHOD__);
@@ -226,6 +231,7 @@ class WallHelper {
 			//this should never happen
 				Wikia::log(__METHOD__, false, 'No WallMessage instance article id: '.$parentId);
 
+				$app->wf->ProfileOut(__METHOD__);
 				return array(
 					'count' => $commentsCount,
 					'comments' => $comments,
@@ -388,101 +394,6 @@ class WallHelper {
 		return $wgParser->parse( $rawtext, $title, $wgOut->parserOptions())->getText();
 	}
 
-	/**
-	 * @brief Returns id of a deleted article
-	 *
-	 * @brief Returns id of deleted article from table archive. If an article was restored then it returns false.
-	 *
-	 * @param string $dbkey
-	 * @param array $optFields a referance with other data we'd like to recieve
-	 *
-	 * @return int | boolean
-	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
-	 */
-	public function getArticleId_forDeleted($dbkey, &$optFields) {
-		$dbr = wfGetDB( DB_SLAVE );
-
-		$fields = array('ar_page_id');
-
-		if( is_array($optFields) ) {
-			if( isset($optFields['text_id']) ) {
-				$fields[] = 'ar_text_id';
-			}
-		}
-
-		$row = $dbr->selectRow(
-			'archive',
-			$fields,
-			array( 'ar_title' => str_replace(' ', '_', $dbkey) ),
-			__METHOD__
-		);
-
-		if( is_array($optFields) ) {
-			if( isset($optFields['text_id']) && !empty($row->ar_text_id) ) {
-				$optFields['text_id'] = $row->ar_text_id;
-			}
-		}
-
-		return isset($row->ar_page_id) ? $row->ar_page_id : false;
-	}
-
-	public function getDbkeyFromArticleId_forDeleted($articleId) {
-		$dbkey = null;
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$row = $dbr->selectRow( 'archive',
-			array( 'ar_title' ),
-			array( 'ar_page_id' => $articleId ),
-			__METHOD__ );
-
-		if(!empty($row)) $dbkey = $row->ar_title;
-
-		if(empty($dbkey)) {
-			// try again from master
-			$dbr = wfGetDB( DB_MASTER );
-			$row = $dbr->selectRow( 'archive',
-				array( 'ar_title' ),
-				array( 'ar_page_id' => $articleId ),
-				__METHOD__ );
-
-			if(!empty($row)) $dbkey = $row->ar_title;
-		}
-
-		return $dbkey;
-	}
-
-	public function getUserFromArticleId_forDeleted($articleId) {
-		/*
-		 * This is ugly way of doing that
-		 * but for removed threads that we only have ArticleId for
-		 * there is no other way (can't create WallMessage object
-		 * for deleted threads)
-		 */
-		$user_id = null;
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$row = $dbr->selectRow( 'archive',
-			array( 'ar_user' ),
-			array( 'ar_page_id' => $articleId ),
-			__METHOD__ );
-
-		if(!empty($row)) $user_id = $row->ar_user;
-
-		if(empty($dbkey)) {
-			// try again from master
-			$dbr = wfGetDB( DB_MASTER );
-			$row = $dbr->selectRow( 'archive',
-				array( 'ar_user' ),
-				array( 'ar_page_id' => $articleId ),
-				__METHOD__ );
-
-			if(!empty($row)) $user_id = $row->ar_user;
-		}
-
-		return User::newFromId( $user_id );
-	}
-
 	public function isDbkeyFromWall($dbkey) {
 		$lookFor = explode( '/@' ,$dbkey);
 		if (count($lookFor) > 1){
@@ -494,17 +405,26 @@ class WallHelper {
 	public function strip_wikitext($text) {
 		$app = F::app();
 
-		//local parser to fix the issue fb#17907
-		$parser = F::build('Parser', array());
+		// use memcached on top of Parser
+		$textHash = md5($text);
+		$key = $app->wf->memcKey(__METHOD__,$textHash);
+		$cachedText = $app->wg->memc->get($key);
+		if ( !empty($cachedText) ) {
+			return $cachedText;
+		}
+
 
 		$text = str_replace('*', '&asterix;', $text);
-		$text = $parser->parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
+		//local parser to fix the issue fb#17907
+		$text = ParserPool::parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
 		// BugId:31034 - I had to give ENT_COMPAT and UTF-8 explicitly.
 		// Prior PHP 5.4 the defaults are ENT_COMPAT and ISO-8859-1 (not UTF-8)
 		// and cause HTML entities in an actual UTF-8 string to be decoded incorrectly
 		// and displayed in... an ugly way.
 		$text = trim( strip_tags( html_entity_decode( $text, ENT_COMPAT, 'UTF-8' ) ) );
 		$text = str_replace('&asterix;', '*', $text);
+
+		$app->wg->memc->set($key,$text,self::PARSER_CACHE_TTL);
 
 		return $text;
 	}

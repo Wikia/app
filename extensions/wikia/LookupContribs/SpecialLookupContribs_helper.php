@@ -99,9 +99,11 @@ class LookupContribsCore {
 
 		/* for all those anonymous users out there */
 		if ( $wgUser->isIP($this->mUsername) ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 

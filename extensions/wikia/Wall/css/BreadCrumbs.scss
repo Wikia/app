@@ -1,0 +1,24 @@
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/clearfix";
+
+@import "WallColors";
+
+.BreadCrumbs {
+	@include clearfix;
+	font-size: 14px;
+	border-bottom: 1px solid $color-wall-border;
+	line-height: 20px;
+	padding: 3px 0 5px;
+	.removed {
+		color: $color-alternate-text;
+		padding-left: 7px;
+	}
+	.separator {
+		padding: 0 3px;
+		position: relative;
+		top: -1px;
+	}
+	& + #WikiaArticle .comments > .SpeechBubble {
+		padding-top: 30px;
+	}
+}

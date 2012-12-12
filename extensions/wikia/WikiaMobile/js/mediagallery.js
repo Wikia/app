@@ -70,8 +70,8 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 	}
 
 	function goBackToImgModal(img){
-		mod.removeClass('wkMedGal');
 		pager.cleanup();
+		mod.removeClass('wkMedGal');
 		//I am not using here ontransitionEnd as it was finishing too early
 		//when trying to go to an image by clicking on thumbnail
 		setTimeout(function(){
@@ -95,9 +95,12 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 			thumb,
 			isVideo;
 
-		imgsPerPage = cols * ~~((gal.offsetHeight - 50)/imagesize);
+		current *= imgsPerPage;
+		imgsPerPage = cols * ~~((gal.offsetHeight - 50) / imagesize);
+
+		current = ~~(current / imgsPerPage);
 		pagesNum = 0;
-		dots = '<div class="dot' + ((current === 0) ? ' curr':'') + '" id=dot0><div></div></div>';
+		dots = '<div class="dot' + ((current === 0) ? ' curr' : '') + '" id=dot0><div></div></div>';
 		pages.length = 0;
 		pages[pagesNum] = '<div>';
 
@@ -105,7 +108,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 			if(i > 0 && (i%imgsPerPage) === 0){
 				pages[pagesNum++] += '</div>';
 				pages[pagesNum] = '<div>';
-				dots += '<div class="dot'+((current === pagesNum) ? ' curr':'')+'" id=dot'+pagesNum+'><div></div></div>';
+				dots += '<div class="dot'+ ((current === pagesNum) ? ' curr':'') + '" id=dot' + pagesNum + '><div></div></div>';
 			}
 
 			img = images[i];
@@ -129,13 +132,12 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 		pages[pagesNum] += '</div>';
 
 		if(pagesNum) {
-			pagination.innerHTML = dots;
-
 			//18 is a width of a single dot
-			paginationWidth = (pagesNum * 18);
+			paginationWidth = ((pagesNum + 1) * 18);
 			dotsPerWidth = ~~(width / 18);
 
 			paginationStyle.width = (paginationWidth > width ? paginationWidth + 'px' : '');
+			pagination.innerHTML = dots;
 		}else{
 			pagination.innerHTML = '';
 		}
@@ -151,11 +153,17 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 
 	function open(){
 		goToImg = med.getCurrent();
-		med.hideShare();
+
 		med.cleanup();
-		mod.setStopHiding(true);
-		mod.setContent('<div id=wkGal></div><div id=wkGalPag></div>');
-		mod.setCaption('');
+		mod.open({
+			content: '<div id=wkGal></div><div id=wkGalPag></div>',
+			toolbar: '<div id=wkGalTgl></div>',
+			stopHiding: true,
+			classes: 'wkMedGal',
+			onClose: function(){
+				pager.cleanup();
+			}
+		});
 
 		gal = d.getElementById('wkGal');
 		pagination = d.getElementById('wkGalPag');
@@ -179,18 +187,17 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 't
 				}
 			},
 			onResize: function(){
-				current = ~~((current * imgsPerPage) / imgsPerPage);
 				prepareGallery();
 				pager.reset({
 					pages: pages,
 					pageNumber: current
 				});
 				loadImages();
+				updateDots();
 			}
 		});
 
 		loadImages();
-		mod.addClass('wkMedGal');
 
 		track.event('gallery', track.CLICK, {label: 'open'});
 	}

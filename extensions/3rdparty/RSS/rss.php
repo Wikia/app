@@ -40,7 +40,12 @@ require_once(dirname(__FILE__) . '/magpierss/rss_fetch.inc');
 // Avoid unstubbing $wgParser too early on modern (1.12+) MW versions, as per r35980
 $wgHooks['ParserFirstCallInit'][] = 'wfRssExtension';
 
-#Extension hook callback function
+/**
+ * Extension hook callback function
+ *
+ * @param Parser $parser
+ * @return bool
+ */
 function wfRssExtension( $parser ) {
 	#Install parser hook for <rss> tags
 	$parser->setHook( 'rss', 'renderRss' );
@@ -49,7 +54,7 @@ function wfRssExtension( $parser ) {
 
 #Parser hook callback function
 function renderRss( $input ) {
-	global $wgOutputEncoding, $wgParser;
+	global $wgOutputEncoding;
 
 	// Kill parser cache
 	#$wgParser->disableCache();

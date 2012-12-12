@@ -4,7 +4,7 @@ require_once dirname(__FILE__) . '/../tests/ScavengerHuntTest.php';
 class ScavengerHuntGetActiveGameTest extends ScavengerHuntTest {
 
 	public function testLoadingHunt() {
-		
+
 		$fakeRow = $this->getFakeRow();
 		$game = $this->getFakeGame();
 		$this->assertNotEmpty( $game );
@@ -17,11 +17,11 @@ class ScavengerHuntGetActiveGameTest extends ScavengerHuntTest {
 	}
 
 	// getActiveGame
-	
+
 	public function testGameAlreadyLoaded() {
 
 		// starting conditions
-		$scavengerHunt = WF::build('ScavengerHunt');
+		$scavengerHunt = F::build('ScavengerHunt');
 		$oFakeGame = $this->getFakeGame();
 		$scavengerHunt->setGame( $oFakeGame );
 
@@ -46,7 +46,7 @@ class ScavengerHuntGetActiveGameTest extends ScavengerHuntTest {
 	public function testGameNotLoaded( $isUserAnon, $cookieValue ) {
 
 		// starting conditions
-		$scavengerHunt = WF::build('ScavengerHunt');
+		$scavengerHunt = F::build('ScavengerHunt');
 		$scavengerHunt->setGame( null );
 
 		$mockedUser = $this->getMock( 'User', array('isAnon', 'getName') );
@@ -67,7 +67,7 @@ class ScavengerHuntGetActiveGameTest extends ScavengerHuntTest {
 		$oFakeGame = $this->getFakeGame();
 		// test
 		$oFinalGame = $scavengerHunt->getActiveGame();
-		
+
 		if ( empty( $cookieValue ) ){
 			$this->assertEmpty( $oFinalGame );
 		} else {

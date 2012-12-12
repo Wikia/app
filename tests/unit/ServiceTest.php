@@ -43,7 +43,6 @@ class ServiceTest extends WikiaBaseTest {
 
 		$service = new PageStatsService($articleId);
 
-		$this->assertType('array', $service->getMostLinkedCategories());
 		$this->assertType('int', $service->getCommentsCount());
 		$this->assertType('int', $service->getLikesCount());
 		$this->assertType('array', $service->getCurrentRevision());

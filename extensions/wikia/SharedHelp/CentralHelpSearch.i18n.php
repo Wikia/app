@@ -20,6 +20,13 @@ $messages['ar'] = array(
 	'centralhelpsearch-placeholder' => 'مساعدة على البحث...',
 );
 
+/** Breton (brezhoneg)
+ * @author Gwenn-Ael
+ */
+$messages['br'] = array(
+	'centralhelpsearch-placeholder' => 'Klask er skoazell...',
+);
+
 /** Czech (česky)
  * @author Chmee2
  */
@@ -171,6 +178,14 @@ $messages['pt'] = array(
 	'centralhelpsearch-placeholder' => 'Procurar Ajuda...',
 );
 
+/** Brazilian Portuguese (português do Brasil)
+ * @author TheGabrielZaum
+ */
+$messages['pt-br'] = array(
+	'centralhelpsearch-desc' => 'Permitir a inclusão de um formulário para pesquisar ajuda na Central da Comunidade',
+	'centralhelpsearch-placeholder' => 'Procurar em Ajuda...',
+);
+
 /** Russian (русский)
  * @author Kuzura
  */
@@ -209,4 +224,3 @@ $messages['tt-cyrl'] = array(
 $messages['zh-hans'] = array(
 	'centralhelpsearch-placeholder' => '搜索帮助……',
 );
-

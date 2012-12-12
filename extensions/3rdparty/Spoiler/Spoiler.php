@@ -15,6 +15,10 @@ $wgHooks['ParserFirstCallInit'][] = "wfSpoilerExtension";
 $wgExtensionMessagesFiles['SpoilerExtension'] = dirname(__FILE__) . '/Spoiler.i18n.php';
 $wgHooks['OutputPageBeforeHTML'][] = 'spoilerParserHook' ;
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfSpoilerExtension( $parser ) {
 	# register the extension with the WikiText parser
 	# the first parameter is the name of the new tag.
@@ -82,7 +86,14 @@ function wfMakeSpoilerId() {
 	return $result;
 }
 
-# The callback function for converting the input text to HTML output
+/**
+ * The callback function for converting the input text to HTML output
+ *
+ * @param string $input
+ * @param array $argv
+ * @param Parser $parser
+ * @return string
+ */
 function renderSpoiler( $input, $argv, $parser ) {
 	# $argv is an array containing any arguments passed to the
 	# extension like <example argument="foo" bar>..
@@ -121,5 +132,3 @@ function renderSpoiler( $input, $argv, $parser ) {
 
 	return $output;
 }
-
-?>

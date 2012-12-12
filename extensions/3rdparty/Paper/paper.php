@@ -1,7 +1,11 @@
 <?php
 $wgHooks['ParserFirstCallInit'][] = "wfPaper";
 
- function wfPaper( $parser ) {
+/**
+ * @param Parser $parser
+ * @return bool
+ */
+function wfPaper( $parser ) {
      $parser->setHook( "paper", "renderPaper" );
      return true;
  }

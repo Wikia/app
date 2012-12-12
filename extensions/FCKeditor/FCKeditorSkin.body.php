@@ -131,7 +131,11 @@ class FCKeditorSkin {
 			return $t;
 		}
 
-		return Linker::makeLinkObj( $nt, $text, $query, $trail, $prefix );
+		$res = Linker::makeLinkObj( $nt, $text, $query, $trail, $prefix );
+
+		wfProfileOut( __METHOD__ );
+
+		return $res;
 	}
 
 	function makeColouredLinkObj( $nt, $colour, $text = '', $query = '', $trail = '', $prefix = '' ) {

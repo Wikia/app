@@ -6,13 +6,13 @@
 	var corporateFooter = $('footer.CorporateFooter');
 
 	if(Wikia.Cookies.get('mobilefullsite')){
-	 	var linksWrapper = corporateFooter.find('nav ul').first();
+		var linksWrapper = corporateFooter.find('nav ul').first();
 
-	 	if(linksWrapper.exists()){
-	 		$.getMessages('Oasis-mobile-switch').then(function(resp){
-		 		var mobileSwitch = $('<li><a href="#">' + $.msg('oasis-mobile-site') + '</a></li>');
+		if(linksWrapper.exists()){
+			$.getMessages('Oasis-mobile-switch').then(function(resp){
+				var mobileSwitch = $('<li><a href="#">' + $.msg('oasis-mobile-site') + '</a></li>');
 
-		 		mobileSwitch.on('click', function(ev){
+				mobileSwitch.on('click', function(ev){
 					ev.preventDefault();
 					ev.stopPropagation();
 
@@ -27,14 +27,11 @@
 						'both'
 					);
 
-					var url = new Wikia.Querystring();
-					url.setVal('useskin', 'wikiamobile');
-					url.addCb();
-					url.goTo();
+					(new Wikia.Querystring()).setVal('useskin', 'wikiamobile').addCb().goTo();
 				});
 
-		 		linksWrapper.prepend(mobileSwitch.wrap('<li></li>'));
-		 	});
-	 	}
-	 }
+				linksWrapper.prepend(mobileSwitch.wrap('<li></li>'));
+			});
+		}
+	}
 })();

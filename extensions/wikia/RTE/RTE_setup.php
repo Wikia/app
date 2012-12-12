@@ -21,6 +21,9 @@ $wgAutoloadClasses['RTEParser'] = "$dir/RTEParser.class.php";
 $wgAutoloadClasses['RTEReverseParser'] = "$dir/RTEReverseParser.class.php";
 $wgAutoloadClasses['RTEController'] = "$dir/RTEController.class.php";
 
+$wgAutoloadClasses['RTEUserPropertiesHandler'] = "$dir/models/RTEUserPropertiesHandler.class.php";
+WikiaUserPropertiesController::registerHandler('RTEUserPropertiesHandler');
+
 // hooks
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';
 $wgHooks['ParserMakeImageParams'][] = 'RTEParser::makeImageParams';

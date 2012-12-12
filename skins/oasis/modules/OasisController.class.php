@@ -60,6 +60,8 @@ class OasisController extends WikiaController {
 	 * at the bottom for performance reasons, but there are some exceptions for engineering reasons).
 	 *
 	 * TODO: make sure JavaScripts can be always loaded on bottom
+	 * 
+	 * Note: NS_FILE pages need JS at top because AnyClips relies on jQuery.
 	 */
 	public static function JsAtBottom(){
 		global $wgTitle;
@@ -70,7 +72,7 @@ class OasisController extends WikiaController {
 
 			$jsAtBottom = true;	// Liftium.js (part of AssetsManager) must be loaded after LiftiumOptions variable is set in page source
 		}
-		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
+		elseif ($wgTitle->getNamespace() == NS_SPECIAL || $wgTitle->getNamespace() == NS_FILE || BodyController::isEditPage()) {
 			$jsAtBottom = false;
 		}
 		else {
@@ -366,6 +368,7 @@ class OasisController extends WikiaController {
 
 		// load WikiaScriptLoader, AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
 		$this->wikiaScriptLoader = '';
+		$jsReferences = array();
 
 		$jsAssetGroups = array( 'oasis_blocking' );
 		wfRunHooks('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
@@ -439,6 +442,7 @@ class OasisController extends WikiaController {
 	var wsl_assets = {$assets};
 EOT;
 
+// TODO: sort this out
 		if ($this->jsAtBottom) {
 			$jsLoader .= <<<EOT
 if ( window.Wikia.AbTest && ( window.wgLoadAdDriverOnLiftiumInit || Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "AS_WRAPPERS_ARE_RENDERED" ) ) ) {
@@ -476,26 +480,7 @@ EOT;
 			$this->jsFiles = $jsFiles;
 		}
 
-		$this->adsABtesting = '';
-		if ($this->jsAtBottom) {
-			$jquery_ads = $this->assetsManager->getURL( 'oasis_jquery_ads_js' );
-			if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-				for( $j = 0; $j < count( $jquery_ads ); $j++ ) {
-					$jquery_ads[$j] = $this->rewriteJSlinks( $jquery_ads[$j] );
-				}
-			}
-
-			$jquery_ads = json_encode($jquery_ads);
-			$this->adsABtesting = <<<EOT
-				<script type="text/javascript">/*<![CDATA[*/
-					(function(){
-						if ( window.Wikia.AbTest && ( window.wgLoadAdDriverOnLiftiumInit || Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "AS_WRAPPERS_ARE_RENDERED" ) ) ) {
-							wsl.loadScript([].concat( window.getJqueryUrl() ).concat( $jquery_ads ));
-						}
-					})();
-				/*]]>*/</script>
-EOT;
-		}
+		$this->jsFiles = AdEngine::getLiftiumOptionsScript() . $this->jsFiles;
 
 		wfProfileOut(__METHOD__);
 	}

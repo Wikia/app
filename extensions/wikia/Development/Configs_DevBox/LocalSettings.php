@@ -47,7 +47,7 @@ $wgMemCachedServers = array(
 	# You can take a server for the spare list
 
 	# SLOT	HOST
-	0 => "10.8.36.106:11000", # dev-memcached1
+	0 => "10.8.44.110:11000", # dev-memcached1
 	1 => "10.8.36.107:11000", # dev-memcached2
 
 /**** DOWN *****
@@ -63,7 +63,7 @@ $wgMemCachedServers = array(
 
 $wgSessionMemCachedServers = array(
 	# SLOT	HOST
-	0 => "10.8.36.106:11000", # dev-memcached1
+	0 => "10.8.44.110:11000", # dev-memcached1
 	1 => "10.8.36.107:11000", # dev-memcached2
 );
 
@@ -103,13 +103,15 @@ $wgRemoveGroups['staff'] = true;
 
 if ( is_null( $wgDBcluster ) ) {
 	$wgDBcluster = 'c1';
-} 
+}
 // default LB section for database connection
 $wgLBDefaultSection = 'c1';
 
 ##### /MAKE ANY CHANGES _BEFORE_ HERE THAT YOU  WANT TO SHOW UP ON DEVBOXES BY DEFAULT BUT STILL BE OVERRIDABLE #####
-
-require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxSettings.php' );
+// don't include DevBoxSettings when running unit tests (BugId:93186)
+if (empty($wgRunningUnitTests)) {
+	require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxSettings.php' );
+}
 
 # Overwrite some variables, load extensions, etc.
 # Former CustomSettings.php
@@ -135,9 +137,6 @@ $wgLocalisationCacheConf[ "manualRecache" ] = false;
 // disable irc feed
 $wgRC2UDPEnabled = false;
 
-// macbre: set proper proxy for dev boxes
-$wgHTTPProxy = "squid-proxy.local:3128";
-
 // fetch SASS files from devboxes (BugId:8545)
 $wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
 
@@ -157,3 +156,7 @@ $fbAppId = '116800565037587';
 // reCAPTCHA for devboxes
 $recaptcha_public_key = '6LehHs0SAAAAALuvvzioNdf8_xBXmc6_xW8rWw0d';
 $recaptcha_private_key = '6LehHs0SAAAAABYaeCiC0ockp0NsY-H7wEiPZk7i';
+
+$wgConf->localVHosts = array(
+	'wikia-dev.com'
+);

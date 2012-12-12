@@ -970,7 +970,7 @@ class ExtDynamicPageList2
          * Initialization
          */
          // Local parser created. See http://meta.wikimedia.org/wiki/MediaWiki_extensions_FAQ#How_do_I_render_wikitext_in_my_extension.3F
-        $localParser = new Parser();
+        $localParser = ParserPool::create();
         $pOptions = $parser->mOptions;
         $pTitle = $parser->mTitle;
 
@@ -3772,7 +3772,7 @@ class DPL2 {
 			$this->mParserOptions->setInterfaceMessage(false);
 			//$string = $parserOutput->getText();
 		} elseif ( in_array('parsemag', $options) ) {
-			$parser = new Parser();
+			$parser = ParserPool::create(); # Wikia
 			$parserOptions = new ParserOptions();
 			$parserOptions->setInterfaceMessage( true );
 			$parser->startExternalParse( $this->mParserTitle, $parserOptions, OT_MSG );

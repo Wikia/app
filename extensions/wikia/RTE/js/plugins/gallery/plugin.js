@@ -6,8 +6,17 @@ CKEDITOR.plugins.add('rte-gallery',
 		editor.on('wysiwygModeReady', function() {
 			// get all gallery placeholders
 			var gallery = RTE.getEditor().find('.image-gallery');
-
 			self.setupGallery(gallery);
+
+			if ($.browser.msie ) {
+				// bugid-47959 and bugid-68705 - Check if the first item on the page is a centered gallery. If it is, add a some white space before it in IE
+				var firstGallery = gallery.eq(0),
+					firstGalleryParent = firstGallery.parent();
+
+				if(firstGallery.hasClass('alignCenter') && firstGalleryParent.parent().is('body') && firstGalleryParent.is(':first-child')) {
+					firstGallery.parent().prepend("&nbsp;");
+				}
+			}
 		});
 
 		// check existance of WikiaPhotoGallery extension

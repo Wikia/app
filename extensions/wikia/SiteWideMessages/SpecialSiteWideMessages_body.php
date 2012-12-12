@@ -529,20 +529,6 @@ class SiteWideMessages extends SpecialPage {
 						);
 						$dbInsertResult &= $dbResult;
 					}
-				} elseif ( $mSendModeWikis != 'WIKIS' && $mSendModeWikis != 'CREATED' && $mSendModeUsers == 'ANONS' ) {
-					if ( !is_null( $result['msgId'] ) ) {
-						$dbResult = (boolean)$DB->query(
-							'INSERT INTO ' . MSG_STATUS_DB .
-							' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)' .
-							' VALUES (' .
-							$DB->addQuotes( $mWikiId ). ', 0, ' .
-							$DB->addQuotes( $result['msgId'] ) . ', ' .
-							MSG_STATUS_UNSEEN .
-							');'
-							, __METHOD__
-						);
-						$dbInsertResult &= $dbResult;
-					}
 				} elseif ( $mSendModeUsers == 'USERS' ) {
 					$oTask = new SWMSendToGroupTask();
 					$oTask->createTask(
@@ -567,6 +553,22 @@ class SiteWideMessages extends SpecialPage {
 						case 'ALL':
 							switch ($mSendModeUsers) {
 								case 'ALL':
+									break;
+
+								case 'ANONS':
+									if ( !is_null( $result['msgId'] ) ) {
+										$dbResult = (boolean)$DB->query(
+											'INSERT INTO ' . MSG_STATUS_DB .
+											' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)' .
+											' VALUES (' .
+											$DB->addQuotes( $mWikiId ). ', 0, ' .
+											$DB->addQuotes( $result['msgId'] ) . ', ' .
+											MSG_STATUS_UNSEEN .
+											');'
+											, __METHOD__
+										);
+										$dbInsertResult &= $dbResult;
+									}
 									break;
 
 								case 'ACTIVE':
@@ -646,6 +648,7 @@ class SiteWideMessages extends SpecialPage {
 								case 'ALL':
 								case 'ACTIVE':
 								case 'GROUP':
+								case 'ANONS':
 									//add task to TaskManager
 									$oTask = new SWMSendToGroupTask();
 									$oTask->createTask(
@@ -730,6 +733,22 @@ class SiteWideMessages extends SpecialPage {
 											. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
 											. ' VALUES ' . implode(',', $sqlValues)
 											. ';'
+											, __METHOD__
+										);
+										$dbInsertResult &= $dbResult;
+									}
+									break;
+
+								case 'ANONS':
+									if ( !is_null( $result['msgId'] ) ) {
+										$dbResult = (boolean)$DB->query(
+											'INSERT INTO ' . MSG_STATUS_DB .
+											' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)' .
+											' VALUES (' .
+											$DB->addQuotes( $mWikiId ). ', 0, ' .
+											$DB->addQuotes( $result['msgId'] ) . ', ' .
+											MSG_STATUS_UNSEEN .
+											');'
 											, __METHOD__
 										);
 										$dbInsertResult &= $dbResult;
@@ -1060,7 +1079,7 @@ class SiteWideMessages extends SpecialPage {
 		$dbResult = $DB->Query (
 			  'SELECT msg_wiki_id, msg_id AS id, msg_lang as lang'
 			. ' FROM ' . MSG_TEXT_DB
-			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USE INDEX(PRIMARY) USING (msg_id)'
+			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
 			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
 			. ' AND msg_status IN (' . join(',', $status) . ')'
@@ -1098,6 +1117,10 @@ class SiteWideMessages extends SpecialPage {
 	static function getAllUserMessages($user, $dismissLink = true, $formatted = true) {
 		global $wgMemc, $wgCityId, $wgLanguageCode;
 		global $wgExternalSharedDB;
+
+		if ( !$user->isLoggedIn() ) {
+			return false;
+		}
 
 		wfProfileIn(__METHOD__);
 
@@ -1158,8 +1181,8 @@ class SiteWideMessages extends SpecialPage {
 		//step 3 of 3: add undismissed messages sent to *this* user (on *all* wikis or *this* wiki)
 		$dbResult = $DB->Query (
 			  'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status'
-			. ' FROM ' . MSG_TEXT_DB . ' USE INDEX(removed_mode_expire_date)'
-			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USE INDEX(PRIMARY) USING (msg_id)'
+			. ' FROM ' . MSG_TEXT_DB
+			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
 			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
 			. ' AND msg_status IN (' . MSG_STATUS_UNSEEN . ', ' . MSG_STATUS_SEEN . ')'
@@ -1210,35 +1233,6 @@ class SiteWideMessages extends SpecialPage {
 		//isset - fix for RT#48187
 		$tmpMsg = array_filter($tmpMsg, create_function('$row', 'return !isset($row["status"]) || $row["status"] == 0;'));
 		if (count($tmpMsg) && !wfReadOnly()) {
-
-			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			$dbResult = (boolean)$DB->Query (
-				  'REPLACE INTO ' . MSG_STATUS_DB
-				. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
-				. ' SELECT msg_wiki_id, msg_recipient_id, msg_id, ' . MSG_STATUS_SEEN
-				. ' FROM ' . MSG_STATUS_DB
-				. ' WHERE msg_id IN (' . implode(',', array_keys($tmpMsg)) . ')'
-				. ' AND msg_recipient_id = ' . $DB->AddQuotes($userID)
-				. ' LOCK IN SHARE MODE;'
-				, __METHOD__
-			);
-
-			foreach($tmpMsg as $tmpMsgId => $tmpMsgData) {
-				if (!is_null($tmpMsgData['wiki_id'])) {
-					continue;	//skip messages with specified wikis - those were updated in the previous query
-				}
-				$dbResult &= (boolean)$DB->Query (
-					  'REPLACE INTO ' . MSG_STATUS_DB
-					. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
-					. ' VALUES ('
-					. '0 , '
-					. $DB->AddQuotes($userID) . ', '
-					. $DB->AddQuotes($tmpMsgId) . ', '
-					. MSG_STATUS_SEEN
-					. ');'
-					, __METHOD__
-				);
-			}
 			//purge browser cache
 			$user->invalidateCache();
 			wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || userID=$userID, result=" . ($dbResult ? 'true':'false') . "\n");
@@ -1274,8 +1268,8 @@ class SiteWideMessages extends SpecialPage {
 
 		$dbResult = $dbr->query(
 			'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status' .
-			' FROM ' . MSG_TEXT_DB . ' USE INDEX(removed_mode_expire_date)' .
-			' LEFT JOIN ' . MSG_STATUS_DB . ' USE INDEX(PRIMARY) USING (msg_id)' .
+			' FROM ' . MSG_TEXT_DB .
+			' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)' .
 			' WHERE msg_mode = ' . MSG_MODE_SELECTED .
 			' AND msg_recipient_id = 0' .
 			' AND msg_recipient_name = ' . $dbr->addQuotes( MSG_RECIPIENT_ANON ) .

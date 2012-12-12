@@ -99,7 +99,10 @@ function lw_soapStats_term($resultsFound, $term, $type){
 	wfProfileIn(__METHOD__);
 
 	$termValue = lw_soapStats_currentTermValue($term);
-	if($termValue === null){return;} // can't do anything useful if there is an invalid term-type.
+	if($termValue === null){
+		wfProfileOut(__METHOD__);
+		return; // can't do anything useful if there is an invalid term-type.
+	}
 
 	$memcKey = wfMemcKey(LW_API_STATS_MEMKEY, $type, ($resultsFound ? LW_API_FOUND : LW_API_NOT_FOUND), $term, $termValue);
 

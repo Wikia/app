@@ -45,6 +45,10 @@ $wgExtensionCredits['parserhook'][] = array(
 	'url'     => 'http://www.mcmilk.de/wiki/Category:Wiki-EmailTag'
 );
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfEmailTag( $parser ) {
   $parser->setHook( "email", "wfEmailTagDoit" );
   return true;

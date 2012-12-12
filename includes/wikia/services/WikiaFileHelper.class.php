@@ -89,12 +89,21 @@ class WikiaFileHelper extends Service {
 		//print "Looking for duplicaes of $provider $videoId\n";
 		$dbr = wfGetDB(DB_MASTER); // has to be master otherwise there's a chance of getting duplicates
 
-		$videoStr = (string)$videoId;
+		if ( is_numeric($videoId) ) {
+			$videoStr = 'i:'.$videoId;
+		} else {
+			$videoId = (string) $videoId;
+			$videoStr = 's:'.strlen($videoId).':"'.$videoId.'"';
+		}
+
 		$rows = $dbr->select(
 			'image',
 			'*',
-			"img_media_type='VIDEO' AND img_minor_mime='$provider' " .
-			"AND img_metadata LIKE '%s:7:\"videoId\";s:".strlen($videoStr).':"'.$videoStr."\";%'"
+			array(
+				'img_media_type' => 'VIDEO',
+				'img_minor_mime' => $provider,
+				"img_metadata LIKE '%s:7:\"videoId\";".$videoStr.";%'",
+			)
 		);
 
 		$result = array();
@@ -137,9 +146,9 @@ class WikiaFileHelper extends Service {
 			$file = wfFindFile( $media );
 			if ( !empty($file) ) {
 				// video title
-				$width = $width - 60;
+				$contentWidth = $width - 60;
 				$videoTitle = $media->getText();
-				$content = self::videoOverlayTitle( $videoTitle, $width );
+				$content = self::videoOverlayTitle( $videoTitle, $contentWidth );
 
 				// video duration
 				$duration = '';
@@ -165,6 +174,7 @@ class WikiaFileHelper extends Service {
 				// info
 				$attribs = array(
 					"class" => "info-overlay",
+					"style" => "width: {$width}px;"
 				);
 
 				$html = Xml::tags( 'span', $attribs, $content );

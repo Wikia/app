@@ -4,6 +4,10 @@
 
 $wgHooks['ParserFirstCallInit'][] = "wfVerbatimExtension";
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfVerbatimExtension( $parser ) {
     // register the extension with the WikiText parser
     // the first parameter is the name of the new tag. In this case it defines the tag <example> ... </example>
@@ -13,7 +17,6 @@ function wfVerbatimExtension( $parser ) {
 }
 
 // The callback function for converting the input text to HTML output
-function renderVerbatim( $input )
-{
+function renderVerbatim( $input ) {
     return str_replace("\n",'',wfMsg(trim($input)));
 }

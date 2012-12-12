@@ -1,6 +1,6 @@
-<div id="VideoEmbedSuccess">
-<?= wfMsg( 'vet-success' ) ?>
-<?= $message ?>
+<div id="VideoEmbedSuccess" class="VideoEmbedSuccess">
+<h1><?= wfMsg( 'vet-success' ) ?></h1>
+<p><?= $message ?></p>
 </div>
 <div style="float:right;">
 	<div id="VideoEmbedPageSuccess" style="display:none;"><?= $message ?></br><br/></div>

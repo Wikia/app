@@ -39,9 +39,18 @@ class MultiLookupAjax {
 
 		//$dbname, $username, $mode, $limit = 25, $offset = 0, $nspace = -1
 
-		if ( empty($wgUser) ) { return ""; }
-		if ( $wgUser->isBlocked() ) { return ""; }
-		if ( !$wgUser->isLoggedIn() ) { return ""; }
+		if ( empty($wgUser) ) {
+			wfProfileOut( __METHOD__ );
+			return "";
+		}
+		if ( $wgUser->isBlocked() ) {
+			wfProfileOut( __METHOD__ );
+			return "";
+		}
+		if ( !$wgUser->isLoggedIn() ) {
+			wfProfileOut( __METHOD__ );
+			return "";
+		}
 		if ( !$wgUser->isAllowed( 'lookupcontribs' ) ) {
 			wfProfileOut( __METHOD__ );
 			return json_encode($result);

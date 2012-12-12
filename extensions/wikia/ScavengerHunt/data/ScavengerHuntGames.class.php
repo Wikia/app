@@ -26,14 +26,14 @@ class ScavengerHuntGames {
 	 * @return ScavengerHuntGameArticle
 	 */
 	public function newGameArticle() {
-		return WF::build('ScavengerHuntGameArticle');
+		return F::build('ScavengerHuntGameArticle');
 	}
 
 	/**
 	 * @return ScavengerHuntGame
 	 */
 	public function newGame() {
-		$game = WF::build('ScavengerHuntGame'); /* @var $game ScavengerHuntGame */
+		$game = F::build('ScavengerHuntGame'); /* @var $game ScavengerHuntGame */
 		$game->setGames($this);
 		return $game;
 	}
@@ -256,7 +256,7 @@ class ScavengerHuntGames {
 	 * @return bool|String
 	 */
 	protected function getTitleDbKey( $text ) {
-		$title = WF::build('Title', array($text), 'newFromText');
+		$title = F::build('Title', array($text), 'newFromText');
 		return $title ? $title->getPrefixedDBkey() : false;
 	}
 
@@ -305,7 +305,7 @@ class ScavengerHuntGames {
 			$enabledGames = $this->getEnabledGames();
 			$value = array();
 			foreach( $enabledGames as $game /** @var $game ScavengerHuntGame */ ){
-				$template = WF::build('EasyTemplate', array(dirname( __FILE__ ) . '/../templates/')); /* @var $template EasyTemplate */
+				$template = F::build('EasyTemplate', array(dirname( __FILE__ ) . '/../templates/')); /* @var $template EasyTemplate */
 				$template->set_vars(array(
 					'game' => $game
 				));

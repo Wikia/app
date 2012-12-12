@@ -32,17 +32,18 @@ var WikiaMosaicSliderMasterControl = {
 
 	clickTrackingHandler: function(e) {
 		var node = $(e.target);
+		var mouseButton = e.button;
 		var startTime = new Date();
 
 		if (node.closest('.wikia-mosaic-slider-region').length > 0 && node.closest('a').length > 0) {
 			var url = node.closest('a').attr('href');
-			WikiaMosaicSliderMasterControl.trackClick('MosaicSlider', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'hero', null, {href:url});
+			WikiaMosaicSliderMasterControl.trackClick('MosaicSlider', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'hero', null, {href:url, button: mouseButton});
 		} else if (node.closest('.wikia-mosaic-slide').length > 0) {
 			var liNode = node.closest('.wikia-mosaic-slide');
 			var allLiNode = node.closest('.wikia-mosaic-thumb-region').find('.wikia-mosaic-slide');
 			var imageIndex = allLiNode.index(liNode) + 1;
 			var url = node.closest('a').attr('href');
-			WikiaMosaicSliderMasterControl.trackClick('MosaicSlider', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'thumbnail', imageIndex, {href:url});
+			WikiaMosaicSliderMasterControl.trackClick('MosaicSlider', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'thumbnail', imageIndex, {href:url, button: mouseButton});
 		}
 		$().log('tracking took ' + (new Date() - startTime) + ' ms');
 	}

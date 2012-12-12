@@ -380,7 +380,10 @@ class GlobalWatchlistHook {
 		wfProfileIn( __METHOD__ );		
 
 		$oUser = User::newFromId( $user_id );
-		
-		return self::clearGlobalWatch( $oUser );
+		$result = self::clearGlobalWatch( $oUser );
+
+		wfProfileOut(__METHOD__);
+
+		return $result;
 	}	
 }

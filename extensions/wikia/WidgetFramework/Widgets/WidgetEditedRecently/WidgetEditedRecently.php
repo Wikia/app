@@ -27,6 +27,7 @@ function WidgetEditedRecently($id, $params) {
 	
 	if ( (!is_object($wgTitle) || ($wgTitle->mArticleID == -1)) && ($wgRequest->getVal('actionType') == 'add') ) {
 		// ask for page refresh
+		wfProfileOut( __METHOD__ );
 		return wfMsg('refreshpage') . '<br /><br /><button onclick="window.location.reload()">' . wfMsg('go') . '</button>';
 	}
 

@@ -91,6 +91,10 @@ $wgExtensionCredits['parserhook'][] = array(
                                       'description' => 'Extension to counting of working article on a user',
                                       'version'=>'1.1.2');
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfUserStatistics( $parser ) {
   $parser->setHook( "useredit" , 'counting_useredit' ) ;
   $parser->setHook( "useredittopten" , 'counting_useredit_topten' ) ;
@@ -106,10 +110,7 @@ function wfUserStatistics( $parser ) {
 }
 
 function counting_useredit( $text ) {
-  global $wgVersion, $wgOut;
-  global $wgParser;
-
-  $ret = "" ;
+  global $wgVersion;
 
   if ( version_compare( $wgVersion, '1.5beta4', '<' ) ) {
     $ret = "1.5.x  of MediaWiki required";
@@ -131,8 +132,6 @@ function counting_useredit( $text ) {
     $uid = User::idFromName( $username );
 
     if ($uid != 0) {
-      global $wgLang;
-
       $total = editsByNumber( $uid );
       $totalall = $totalall + $total;
     } else {
@@ -150,6 +149,7 @@ function counting_useredit( $text ) {
   if ($totalall != -1) {
     global $wgLang;
 
+	  /* @var Language $wgLang */
     $ret = $wgLang->formatNum( $totalall );
   } else {
     $ret = "Benutzer nicht bekannt";
@@ -159,10 +159,7 @@ function counting_useredit( $text ) {
 }
 
 function counting_useredit_topten( $text ) {
-  global $wgVersion, $wgOut, $wgUser, $wgLang;
-  global $wgParser;
-
-  $ret = "" ;
+  global $wgVersion, $wgUser, $wgLang;
 
   if ( version_compare( $wgVersion, '1.5beta4', '<' ) ) {
     $ret = "1.5.x  of MediaWiki required";
@@ -211,8 +208,7 @@ function counting_useredit_topten( $text ) {
 }
 
 function first_useredit( $text ) {
-  global $wgVersion, $wgOut;
-  global $wgParser;
+  global $wgVersion;
 
   $ret = "hallo" ;
 
@@ -236,8 +232,7 @@ function first_useredit( $text ) {
 }
 
 function last_useredit( $text ) {
-  global $wgVersion, $wgOut;
-  global $wgParser;
+  global $wgVersion;
 
   $ret = "" ;
 
@@ -264,10 +259,7 @@ function last_useredit( $text ) {
 
 
 function counting_usercreate( $text, $params = array() ) {
-  global $wgVersion, $wgOut;
-  global $wgParser;
-
-  $ret = "" ;
+  global $wgVersion, $wgMySQL40Userright;
 
   if ( version_compare( $wgVersion, '1.5beta4', '<' ) ) {
     $ret = "1.5.x  of MediaWiki required";
@@ -282,7 +274,7 @@ function counting_usercreate( $text, $params = array() ) {
       return $ret;
     }
     else {
-      if ($wgMySQL40Userright) {
+      if (!empty($wgMySQL40Userright)) {
 //        return counting_usercreate_4_0_x ( $text, $params );
       }
       else {
@@ -309,6 +301,7 @@ function counting_usercreate( $text, $params = array() ) {
       $total = createsByUser( $uid );
     }
 
+	  /* @var Language $wgLang */
     $ret = $wgLang->formatNum( $total );
   } else {
     $ret = "Benutzer nicht bekannt";
@@ -387,6 +380,7 @@ function editFirstDate( $uid ) {
    $stats = $service->getStats();
 
    if ( !empty( $stats ) ) {
+	   /* @var Language $wgLang */
 	$ret = $wgLang->timeanddate( wfTimestamp(TS_MW, $stats['date']), true);
    }
 
@@ -404,18 +398,17 @@ function editLastDate( $uid ) {
 
   $ret = "";
 
-  $fname = 'UserStatistics::editLastDate';
-
   $dbr = wfGetDB( DB_SLAVE );
-  $timestamp = $dbr->selectField( 
-	'revision', 
+  $timestamp = $dbr->selectField(
+	'revision',
 	'rev_timestamp',
 	array( 'rev_user' => $uid ),
 	__METHOD__,
-	array( 'ORDER BY' => 'rev_timestamp DESC', 'LIMIT' => 1 ) 
+	array( 'ORDER BY' => 'rev_timestamp DESC', 'LIMIT' => 1 )
   );
 
   if ($timestamp)  {
+	  /* @var Language $wgLang */
     $ret = $wgLang->timeanddate( wfTimestamp(TS_MW, $timestamp), true);
   }
 
@@ -447,9 +440,7 @@ function editsByName( $usName ) {
  * @return array
  */
 function createsByUser( $uid ) {
-  $fname = 'UserStatistics::createsByUser';
-
-  $db =& wfGetDB( DB_SLAVE );
+  $db = wfGetDB( DB_SLAVE );
   $revision = $db->tableName( 'revision' );
   $page = $db->tableName( 'page' );
 
@@ -476,9 +467,7 @@ function createsByUser( $uid ) {
  * @return array
  */
 function createsByUserAll( $uid ) {
-  $fname = 'UserStatistics::createsByUser';
-
-  $db =& wfGetDB( DB_SLAVE );
+  $db = wfGetDB( DB_SLAVE );
   $revision = $db->tableName( 'revision' );
   $page = $db->tableName( 'page' );
 

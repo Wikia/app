@@ -36,7 +36,12 @@ $wgRSHiscoreCache = array();
 # Initialise the parser function
 $wgHooks['LanguageGetMagic'][] = 'wfHiscores_Magic';
 
-# Setup parser function 
+/**
+ * Setup parser function
+ *
+ * @param Parser $parser
+ * @return bool
+ */
 function wfHiscores( &$parser ) {
     $parser->setFunctionHook( 'hs', 'wfHiscores_Render' );
      return true;

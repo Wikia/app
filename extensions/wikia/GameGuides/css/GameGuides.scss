@@ -21,6 +21,7 @@
 @import "../../WikiaMobile/css/image_stack";
 @import '../../WikiaMobile/css/modal';
 @import '../../WikiaMobile/css/media_modal';
+@import "../../WikiaMobile/css/mediagallery";
 @import '../../WikiaMobile/css/image_placeholder';
 @import '../../WikiaMobile/css/loader';
 
@@ -39,8 +40,14 @@ html {
 
 	font-size: 1em;
 
+	font-family: 'Helvetica-Light', Helvetica, 'Roboto-Thin', 'Lucida Grande';
+
 	&.serif {
 		font-family: 'Droid Serif', serif;
+	}
+
+	&.full {
+		text-align: justify;
 	}
 }
 
@@ -50,8 +57,6 @@ body {
 	padding: 10px 20px;
 
 	color: $textColor;
-
-	font-family: 'Helvetica-Light', Helvetica, 'Roboto-Thin', 'Lucida Grande';
 
 	line-height: 1.7em;
 }

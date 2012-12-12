@@ -154,7 +154,7 @@ class VideoFileUploader {
 		/* real upload */
 		$result = $file->upload(
 			$upload->getTempPath(),
-			'created video',
+			wfMsgForContent( 'videos-initial-upload-edit-summary' ),
 			$this->getDescription(),
 			File::DELETE_SOURCE
 		);
@@ -202,15 +202,20 @@ class VideoFileUploader {
 	}
 
 	protected function getApiWrapper(){
-
 		wfProfileIn( __METHOD__ );
-		if( !empty( $this->oApiWrapper ) ) return $this->oApiWrapper;
+		if( !empty( $this->oApiWrapper ) ) {
+			wfProfileOut( __METHOD__ );
+			return $this->oApiWrapper;
+		}
 
 		if( !empty( $this->sExternalUrl ) ){
 			$apiWF = ApiWrapperFactory::getInstance();
 			$this->oApiWrapper = $apiWF->getApiWrapper( $this->sExternalUrl );
 
-			if ( !empty( $this->oApiWrapper ) ) return $this->oApiWrapper;
+			if ( !empty( $this->oApiWrapper ) ) {
+				wfProfileOut( __METHOD__ );
+				return $this->oApiWrapper;
+			}
 		}
 
 		if ( !empty($this->sProvider ) ) {
@@ -266,18 +271,37 @@ class VideoFileUploader {
 	}
 
 	/*
-	 * Geberates unique Title for new video
+	 * Generates unique Title for new video
 	 * the function checks if given title exists
-	 * and if so, it's adding a postfix recursively
+	 * and if so, it's adding a postfix
 	 * @param string $title
 	 * @return Title $oTitle
 	 */
 	public function getUniqueTitle( $title, $level=0 ) {
 
+		$numRetry = 3;
+
 		$oTitle = Title::newFromText( $title, NS_FILE );
+
 		if ( !empty( $oTitle ) && $oTitle->exists() ) {
-			$newTitleObject = $oTitle->getBaseText() . '-' . $level;
-			return VideoFileUploader::getUniqueTitle( $newTitleObject, ($level+1) );
+
+			for ( $r = 0; $r <= $numRetry; $r++ ) {
+				$newTitleText = $oTitle->getBaseText() . '-' . $r;
+				$newTitleObject = Title::newFromText( $newTitleText, NS_FILE );
+				if ( !empty( $newTitleObject ) && $newTitleObject->exists() ) {
+
+					if ( $r == $numRetry ) { // stop checking and fallback to timestamp
+						$newTitleText = $oTitle->getBaseText() . '-' . time();
+						$newTitleObject = Title::newFromText( $newTitleText, NS_FILE );
+					}
+					continue;
+
+				} else {
+					break;
+				}
+			}
+
+			return $newTitleObject;
 		}
 		return $oTitle;
 	}
@@ -334,7 +358,7 @@ class VideoFileUploader {
 			wfProfileOut( __METHOD__ );
 			return $oTitle;
 		}
-		wfProfileIn( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 

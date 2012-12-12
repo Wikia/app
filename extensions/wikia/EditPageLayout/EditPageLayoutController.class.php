@@ -107,7 +107,7 @@ class EditPageLayoutController extends WikiaController {
 		$this->wpSummaryLabelText = wfMsg($wpSummaryLabelText);
 
 		// render help link and point the link to new tab
-		$this->helpLink = $this->app->runFunction('wfMsgExt', 'editpagelayout-helpLink', array('parseinline'));
+		$this->helpLink = $this->app->wf->MsgExt( 'editpagelayout-helpLink', array('parseinline') );
 		$this->helpLink = str_replace('<a ', '<a target="_blank" ', $this->helpLink);
 
 		// action for edit form

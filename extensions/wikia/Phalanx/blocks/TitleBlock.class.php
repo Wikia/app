@@ -92,13 +92,11 @@ class TitleBlock {
 		$result = array('blocked' => false);
 
 		if ( !empty(self::$blocksData) ) {
-			foreach ( self::$blocksData as $blockData ) {
-				$result = Phalanx::isBlocked( $fullText, $blockData );
-				if ( $result['blocked'] ) {
-					self::spamPage( $result['msg'], $title );
-					Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$fullText'.");
-					break;
-				}
+			$blockData = null;
+			$result = Phalanx::findBlocked( $fullText, self::$blocksData, true, $blockData );
+			if ( $result['blocked'] ) {
+				self::spamPage( $result['msg'], $title );
+				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$fullText'.");
 			}
 		}
 

@@ -43,7 +43,7 @@ function efCategoryBlueLinks( $skin, $target, &$text, &$customAttribs, &$query, 
 	}
 
 	// only affects non-existing Category pages that has content
-	if ( $target->exists() || $target->getNamespace() != NS_CATEGORY || Category::newFromTitle( $target )->getPageCount() == 0 ) {
+	if ( $target->getNamespace() != NS_CATEGORY || $target->exists() || Category::newFromTitle( $target )->getPageCount() == 0 ) {
 		return true;
 	}
 

@@ -26,11 +26,21 @@ $wgExtensionCredits['parserhook'][] = array(
 	'description' => 'Displays a random option from the given set.'
 );
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfRandomSelection( $parser ) {
 	$parser->setHook( 'choose', 'renderChosen' );
 	return true;
 }
 
+/**
+ * @param $input
+ * @param $argv
+ * @param Parser $parser
+ * @return mixed|string
+ */
 function renderChosen( $input, $argv, $parser ) {
 	# Prevent caching
 	#$parser->disableCache();

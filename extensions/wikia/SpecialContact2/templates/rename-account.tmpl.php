@@ -30,7 +30,7 @@ echo wfMsgExt( 'specialcontact-intro-rename-account', array( 'parse' ) );
 
 <p>
 <input type="checkbox" name="wpReadHelp" required />
-<label for="wpReadHelp"><?= wfMsgExt( 'specialcontact-lable-rename-account-read-help', array( 'parseinline' ) ) ?></label>
+<label for="wpReadHelp"><?= wfMsgExt( 'specialcontact-label-rename-account-read-help', array( 'parseinline' ) ) ?></label>
 </p>
 
 <input type="submit" value="<?= wfMsg( 'specialcontact-mail' ) ?>" />

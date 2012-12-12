@@ -1,3 +1,5 @@
+/*global WikiaFooterApp*/
+
 /* 
  * GlobalNotification.show()
  * @param string content - message to be displayed
@@ -34,7 +36,7 @@ var GlobalNotification = {
 		}
 		GlobalNotification.msg = GlobalNotification.dom.find( '.msg' );
 	},
-	show: function(content, type, element) {
+	show: function(content, type, element, timeout) {
 		GlobalNotification.content = content;
 		var callback = function() {
 			GlobalNotification.createDom(element);
@@ -45,12 +47,24 @@ var GlobalNotification = {
 				WikiaFooterApp.addScrollEvent();
 			}
 			GlobalNotification.dom.fadeIn('slow');
+			if(typeof timeout == 'number') {
+				setTimeout(function() {
+					GlobalNotification.hide();
+				}, timeout);
+			}
 		};
 		GlobalNotification.hide( callback );
 	},
 	hide: function( callback ) {
+		if ( !GlobalNotification.dom ) {
+			return;
+		}
 		if ( GlobalNotification.dom.length ){
-			GlobalNotification.dom.fadeOut( 400, function() {
+			GlobalNotification.dom.animate({
+				'height': 0,
+				'padding': 0,
+				'opacity': 0
+			}, 400, function() {
 				GlobalNotification.dom.remove();
 				GlobalNotification.dom = [];
 				if( jQuery.isFunction( callback ) ) {
@@ -75,6 +89,7 @@ var GlobalNotification = {
 	},
 	// Float notification (BugId:33365) 
 	wikiaHeaderHeight: $('#WikiaHeader').height(),
+	// Called from WikiaFooter.js
 	onScroll: function(scrollTop) {
 		if(GlobalNotification.dom && GlobalNotification.dom.length) {
 			var minTop = GlobalNotification.wikiaHeaderHeight;

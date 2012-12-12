@@ -24,7 +24,7 @@
 		<a class="today wikia-button secondary"><?= wfMsg('gamingcalendar-today') ?></a>
 	</div>
 
-   <script type="text/template" id="GamingCalendarWeekTemplate">
+	<script type="text/template" id="GamingCalendarWeekTemplate">
 			<h1>
 				<span>##week-caption##</span>
 				##startmonth## ##start## &ndash; ##endmonth## ##end##
@@ -34,11 +34,7 @@
 				<ul>##items##</ul>
 			</div>
 			<div class="scroll-down"><img src="<?= $wgBlankImgUrl ?>" height="0" width="0"></div>
-   </script>
-  
-   <div id="INVISIBLE_MODAL" class="wikia-ad noprint">
-<?= AdEngine::getInstance()->getAd('INVISIBLE_MODAL', array('ghostwriter'=>true)); ?>
-   </div>
+	</script>
 </div>
 <div id="GamingCalendarSkinLeft" class="GamingCalendarSkin GamingCalendarSkinLeft"><a href="" target="_blank"></a></div>
 <div id="GamingCalendarSkinRight" class="GamingCalendarSkin GamingCalendarSkinRight"><a href="" target="_blank"></a></div>

@@ -32,7 +32,8 @@ $messages['ast'] = array(
 	'paginator-back' => 'Anterior',
 );
 
-/** Azerbaijani (azərbaycanca) */
+/** Azerbaijani (azərbaycanca)
+ */
 $messages['az'] = array(
 	'paginator-next' => 'Sonrakı',
 	'paginator-back' => 'Əvvəlki',
@@ -62,19 +63,30 @@ $messages['cs'] = array(
 	'paginator-back' => 'Zpět',
 );
 
-/** Welsh (Cymraeg) */
+/** Welsh (Cymraeg)
+ */
 $messages['cy'] = array(
 	'paginator-next' => 'Nesaf',
 	'paginator-back' => 'Yn ôl',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ */
 $messages['de'] = array(
 	'paginator-next' => 'Vor',
 	'paginator-back' => 'Zurück',
 );
 
-/** Spanish (español) */
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'paginator-next' => 'Bahdoyên',
+	'paginator-back' => 'Peyser',
+);
+
+/** Spanish (español)
+ */
 $messages['es'] = array(
 	'paginator-next' => 'Siguiente',
 	'paginator-back' => 'Atrás',
@@ -104,7 +116,8 @@ $messages['gl'] = array(
 	'paginator-back' => 'Volver',
 );
 
-/** Hebrew (עברית) */
+/** Hebrew (עברית)
+ */
 $messages['he'] = array(
 	'paginator-next' => 'הבא',
 	'paginator-back' => 'הקודם',
@@ -142,7 +155,8 @@ $messages['ksh'] = array(
 	'paginator-back' => 'Zeröck',
 );
 
-/** Luxembourgish (Lëtzebuergesch) */
+/** Luxembourgish (Lëtzebuergesch)
+ */
 $messages['lb'] = array(
 	'paginator-next' => 'Weider',
 	'paginator-back' => 'Zréck',
@@ -212,25 +226,29 @@ $messages['pl'] = array(
 	'paginator-back' => 'Wstecz',
 );
 
-/** Piedmontese (Piemontèis) */
+/** Piedmontese (Piemontèis)
+ */
 $messages['pms'] = array(
 	'paginator-next' => 'Anans',
 	'paginator-back' => 'André',
 );
 
-/** Portuguese (português) */
+/** Portuguese (português)
+ */
 $messages['pt'] = array(
 	'paginator-next' => 'Seguinte',
 	'paginator-back' => 'Voltar',
 );
 
-/** Brazilian Portuguese (português do Brasil) */
+/** Brazilian Portuguese (português do Brasil)
+ */
 $messages['pt-br'] = array(
 	'paginator-next' => 'Seguinte',
 	'paginator-back' => 'Voltar',
 );
 
-/** Russian (русский) */
+/** Russian (русский)
+ */
 $messages['ru'] = array(
 	'paginator-next' => 'Далее',
 	'paginator-back' => 'Назад',
@@ -252,7 +270,8 @@ $messages['sv'] = array(
 	'paginator-back' => 'Tillbaka',
 );
 
-/** Swahili (Kiswahili) */
+/** Swahili (Kiswahili)
+ */
 $messages['sw'] = array(
 	'paginator-next' => 'Ijayo',
 	'paginator-back' => 'Rudi',
@@ -321,4 +340,3 @@ $messages['zh-hant'] = array(
 	'paginator-next' => '下一頁',
 	'paginator-back' => '上一頁',
 );
-

@@ -433,6 +433,10 @@ div.main-page-tag-rcs {
 	clear: right;
 }
 
+.WikiaGrid .main-page-tag-rcs.grid-2 {
+    float:right;
+}
+
 div.main-page-tag-lcs-collapsed {
 	overflow: hidden;
 	height: 1%; 

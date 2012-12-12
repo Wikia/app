@@ -1,0 +1,16 @@
+@import 'skins/oasis/css/core/color';
+
+.OldForumNotification {
+	background: $color-buttons;
+	border: 1px solid $color-page-border;
+	color: $color-button-text;
+	margin: 10px 0;
+	padding: 10px;
+	h1 {
+		font-size: 20px;
+		margin: 0 0 10px;
+	}
+	p {
+		margin: 0 0 10px;
+	}
+}

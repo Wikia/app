@@ -654,7 +654,7 @@ class AssetsManager {
 
 		if ( !empty( $request ) ) {
 			$url = ( empty( $local ) ) ? $wgServer : '';
-			$url .= "/wikia.php?controller=AssetsManagerController&method=getMultiTypePackage&format=json";
+			$url .= "/wikia.php?controller=AssetsManager&method=getMultiTypePackage&format=json";
 
 			foreach ( $request as $key => $item ) {
 				$url .= "&{$key}=" . urlencode( $item );

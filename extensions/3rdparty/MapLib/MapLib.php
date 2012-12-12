@@ -14,6 +14,10 @@ $wgExtensionCredits['parserhook'][] = array(
 	'url' => 'http://help.wikia.com/wiki/MapLib'
 );
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function callmaplib( $parser ) {
 	$parser->setHook('MapLib', 'renderMaplib');
 	return true;

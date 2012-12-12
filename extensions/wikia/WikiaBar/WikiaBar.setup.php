@@ -23,6 +23,9 @@ $app->registerClass('WikiaBarDataValidator', $dir . 'models/WikiaBarDataValidato
 $app->registerClass('WikiaBarMessageDataValidator', $dir . 'models/WikiaBarMessageDataValidator.class.php');
 $app->registerClass('WikiaBarFailsafeDataValidator', $dir . 'models/WikiaBarFailsafeDataValidator.class.php');
 
+$app->registerClass('WikiaBarUserPropertiesHandler', $dir . 'models/WikiaBarUserPropertiesHandler.class.php');
+WikiaUserPropertiesController::registerHandler('WikiaBarUserPropertiesHandler');
+
 /**
  * hooks
  */

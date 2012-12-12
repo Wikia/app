@@ -228,6 +228,7 @@ class EditcountHTML extends Editcount {
 	 */
 	function outputHTML( $username, $uid, $nscount, $total, $nscountall, $totalall ) {
 		global $wgTitle, $wgOut, $wgLang;
+		wfProfileIn( __METHOD__ );
 
 		/* current wiki */
 		$this->nscount = $nscount;

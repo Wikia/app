@@ -479,6 +479,12 @@ class DifferenceEngine extends ContextSource {
 		# Add "current version as of X" title
 		$out->addHTML( "<hr class='diff-hr' />
 		<h2 class='diff-currentversion-title'>{$revHeader}</h2>\n" );
+
+		// Wikia change - begin
+		// wrap article content on diff pages (BugId:9262)
+		$out->addHTML( "<div class='diff-article-content'>\n" );
+		// Wikia change - end
+
 		# Page content may be handled by a hooked call instead...
 		if ( wfRunHooks( 'ArticleContentOnDiff', array( $this, $out ) ) ) {
 			$this->loadNewText();
@@ -528,6 +534,12 @@ class DifferenceEngine extends ContextSource {
 				}
 			}
 		}
+
+		// Wikia change - begin
+		// wrap article content on diff pages (BugId:9262)
+		$out->addHTML( "</div>\n" );
+		// Wikia change - end
+
 		# Add redundant patrol link on bottom...
 		$out->addHTML( $this->markPatrolledLink() );
 
@@ -598,7 +610,7 @@ class DifferenceEngine extends ContextSource {
 			return false;
 		}
 		// Short-circuit
-		// If mOldRev is false, it means that the 
+		// If mOldRev is false, it means that the
 		if ( $this->mOldRev === false || ( $this->mOldRev && $this->mNewRev
 			&& $this->mOldRev->getID() == $this->mNewRev->getID() ) )
 		{
@@ -1069,9 +1081,9 @@ class DifferenceEngine extends ContextSource {
 				return false;
 			}
 		}
-		
+
 		wfRunHooks( 'DiffLoadText', array( $this, &$this->mOldtext, &$this->mNewtext ) );
-		
+
 		return true;
 	}
 

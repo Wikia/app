@@ -21,6 +21,7 @@
 // Core
 @import "core/buttons";
 @import "core/ads";
+@import "core/autocomplete";
 @import "core/typography";
 @import "core/sprite";
 @import "core/color";
@@ -33,7 +34,6 @@
 @import "core/page";
 @import "core/CommentsLikes";
 @import "core/WikiHeader";
-@import "core/WikiHeaderV2";
 @import "core/PageHeader";
 @import "core/Search";
 @import "core/article";
@@ -46,7 +46,6 @@
 @import "core/successerror";
 @import "core/SpeechBubble";
 @import "core/ArticleAfterComments";
-@import "core/SharingToolbar";
 @import "core/GlobalNotification";
 @import "core/WikiaBar";
 @import "core/jquery.ui.autocomplete"; // TODO: load on demand
@@ -65,10 +64,14 @@
 @import "extensions/wikia/WikiaStyleGuide/css/Form";
 @import "extensions/wikia/WikiaPhotoGallery/css/slideshow"; // TODO: load on demand
 @import "extensions/wikia/WikiaBar/css/WikiaBar";
+@import "extensions/wikia/Chat2/css/ChatEntryPoint";
 @import "extensions/wikia/WikiaSeasons/css/WikiaSeasonsBar";
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
 @import "/extensions/FBConnect/css/fbModal.css";
 @import "/extensions/wikia/AjaxLogin/AjaxLogin.css";
+@import "extensions/wikia/UserLogin/css/UserLoginDropdown";
+@import "extensions/wikia/Forum/css/RelatedForumDiscussion.scss";	// on every article page
+@import "extensions/VisualEditor/modules/ve/init/mw/styles/oasis";
 
 // Print
 @media print {

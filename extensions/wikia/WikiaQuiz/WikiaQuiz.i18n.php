@@ -350,6 +350,7 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'wikiaquiz-createquiz-headline' => 'Quiz vırazê',
@@ -369,12 +370,13 @@ $messages['diq'] = array(
 	'wikiaquiz-cancel-label' => 'Bıterkne',
 	'wikiaquiz-publish-label' => 'Vıla ke',
 	'wikiaquiz-game-start-button' => 'Destpêkerdışê Kayer',
-	'wikiaquiz-game-cadence-3' => 'Bıwanê',
+	'wikiaquiz-game-cadence-3' => 'Amade',
 	'wikiaquiz-game-cadence-2' => 'Set',
 	'wikiaquiz-game-cadence-1' => 'Şo!',
 	'wikiaquiz-game-question-label' => 'PERS',
 	'wikiaquiz-game-next-button' => 'Perso Bahdoyên',
 	'wikiaquiz-game-finish-button' => 'Qediya',
+	'wikiaquiz-game-incorrect-label' => 'Xırab. peh.',
 	'wikiaquiz-game-your-score' => 'SKORÊ ŞIMA',
 	'wikiaquiz-game-continue-button' => 'Dewam ke',
 	'wikiaquiz-game-mute' => 'Bêveng',
@@ -1872,4 +1874,3 @@ $messages['zh-hans'] = array(
 	'wikiaquiz-game-challenge' => '挑战您的朋友来参与！',
 	'wikiaquiz-game-mute' => '静音',
 );
-

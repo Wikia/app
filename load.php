@@ -29,32 +29,23 @@ if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.
 	wfPHPVersionError( 'load.php' );
 }
 
+// Wikia change - begin - @author
+// don't load user from session
+$wgUserForceAnon = true;
+// Wikia change - end
+
 if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	require ( 'phase3/includes/WebStart.php' );
 } else {
 	require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 }
 
-// Construct a tag for newrelic -- wgRequest is global in this scope
+// Construct a tag for newrelic
 if( function_exists( 'newrelic_name_transaction' ) ) {
 	if ( function_exists( 'newrelic_disable_autorum') ) {
 		newrelic_disable_autorum();
 	}
-	if (is_object($wgRequest)) {
-		$sharedWiki = (preg_match("/^slot[0-9]\$/",$wgDBname) || $wgDBname == 'devbox') ? "shared" : "local";
-		$only = $wgRequest->getVal( 'only', 'full' );
-		$modules = ResourceLoaderContext::expandModuleNames( $wgRequest->getVal( 'modules' ) );
-		if ( count( $modules ) > 2 ) {
-			$modules = count($modules) . '/' . $modules[0];
-		} else {
-			$modules = count($modules) . '/' . implode( ',', $modules );
-		}
-		newrelic_name_transaction( "/load/$sharedWiki/$only/$modules" );
-		if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
-			newrelic_add_custom_parameter( 'skin', $wgRequest->getVal( 'skin' ) );
-			newrelic_add_custom_parameter( 'lang', $wgRequest->getVal( 'lang' ) );
-		}
-        }
+	newrelic_name_transaction( "ResourceLoader" );
 }
 
 
@@ -62,6 +53,7 @@ wfProfileIn( 'load.php' );
 
 // URL safety checks
 if ( !$wgRequest->checkUrlExtension() ) {
+	wfProfileOut( 'load.php' );
 	return;
 }
 

@@ -155,12 +155,14 @@ class WikiaTempFilesUpload {
 	 */
 	public function checkImageName( $imageName, $uploadFieldName ) {
 		global $wgRequest, $wgUser;
+		wfProfileIn(__METHOD__);
 
 		$upload = new UploadFromFile();
 		$upload->initializeFromRequest($wgRequest);
 		$permErrors = $upload->verifyPermissions( $wgUser );
 
 		if ( $permErrors !== true ) {
+			wfProfileOut(__METHOD__);
 			return self::USER_PERMISSION_ERROR;
 		}
 
@@ -173,6 +175,7 @@ class WikiaTempFilesUpload {
 			return UploadBase::VERIFICATION_ERROR;
 		}
 
+		wfProfileOut(__METHOD__);
 		if(is_array($ret)) {
 			return $ret['status'];
 		} else {

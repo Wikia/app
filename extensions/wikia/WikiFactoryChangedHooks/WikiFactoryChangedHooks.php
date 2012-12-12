@@ -12,7 +12,6 @@ $wgAutoloadClasses['WikiFactoryChangedHooks'] = dirname(__FILE__)."/WikiFactoryC
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::achievements';
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::BlogArticle';
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::FounderProgressBar';
-$wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::oasisnav2';
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::recipesTweaks';
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::onAbuseFilterEnabled';
 

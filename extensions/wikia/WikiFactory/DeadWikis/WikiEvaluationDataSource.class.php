@@ -2,48 +2,21 @@
 
 class WikiEvaluationDataSource {
 
-	protected $id;
 	/**
-	 * @var Database
+	 * @var WikiDataSource
 	 */
-	protected $db = null;
-	protected $dbname = null;
+	protected $source;
 	
 	public function __construct( $id = null ) {
-		global $wgCityId, $wgDBname;
-		
-		if (is_null($id)) {
-			$id = $wgCityId;
-		}
-		$this->id = $id;
-
-		if ($wgCityId == $id) {
-			$this->db = wfGetDB(DB_SLAVE);
-			$this->dbname = $wgDBname;
-		} else {
-			// find db name
-			$dbname = WikiFactory::IDtoDB($this->id);
-			if ( empty($dbname) ) {
-				throw new Exception("Could not find wiki with ID {$this->id}");
-			}
-	
-			// open db connection (and check if db really exists)
-			$db = wfGetDB(DB_SLAVE, array(), $dbname);
-			if ( !is_object($db) ) {
-				throw new Exception("Could not connect to wiki database {$dbname}");
-			}
-			
-			$this->db = $db;
-			$this->dbname = $dbname;
-		}
+		$this->source = new WikiDataSource( $id );
 	}
 	
 	public function getId() {
-		return $this->id;
+		return $this->source->getId();
 	}
 	
 	public function getDbName() {
-		return $this->dbname;
+		return $this->source->getDbName();
 	}
 
 	public function getAge() {
@@ -61,7 +34,7 @@ class WikiEvaluationDataSource {
 
 	public function getLastEditTimestamp() {
 		$excludedUsersQuery = "NOT rev_user IN (" . implode(',',$this->getData('ExcludedUsers')) . ")";
-		$timestamp = $this->db->selectField(
+		$timestamp = $this->source->getDB()->selectField(
 			array( 'revision', 'page' ),
 			'max(rev_timestamp)',
 			array(
@@ -84,7 +57,7 @@ class WikiEvaluationDataSource {
 		if ( !is_null($period) ) {
 			$periodQuery = "rev_timestamp >= \"".wfTimestamp(TS_MW,strtotime($period))."\"";
 		}
-		return $this->db->selectField(
+		return $this->source->getDB()->selectField(
 			array( 'revision', 'page' ),
 			'count(*)',
 			array(
@@ -99,7 +72,7 @@ class WikiEvaluationDataSource {
 	}
 
 	public function getContentPagesCount() {
-		return $this->db->selectField('page','count(*)',array(
+		return $this->source->getDB()->selectField('page','count(*)',array(
 			'page_namespace' => 0,
 			'page_is_redirect' => 0,
 			'page_len > 0',
@@ -108,9 +81,9 @@ class WikiEvaluationDataSource {
 
 	public function getLoggedActionsCount() {
 		$excludedLogTypes = array( 'patrol' );
-		$excludedLogTypes = array_map( array( $this->db, 'addQuotes' ), $excludedLogTypes );
+		$excludedLogTypes = array_map( array( $this->source->getDB(), 'addQuotes' ), $excludedLogTypes );
 		$excludedLogTypes = "NOT log_type IN (" . implode(',',$excludedLogTypes) . ")";
-		$value = $this->db->selectField('logging','count(*)',array(
+		$value = $this->source->getDB()->selectField('logging','count(*)',array(
 			$excludedLogTypes,
 		),__METHOD__);
 		if (is_numeric($value)) {
@@ -125,7 +98,7 @@ class WikiEvaluationDataSource {
 		$endDate = date( 'Y-m-d', strtotime('-1 day') );
 		
 		$res = 0;
-		$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $this->id );
+		$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $this->getId() );
 		if ( !empty( $pageviews ) && is_array( $pageviews ) ) {
 			foreach ( $pageviews as $date => $value ) {
 				$res += $value;
@@ -188,7 +161,7 @@ class WikiEvaluationDataSource {
 		global $wgExternalSharedDB;
 
 		$db = wfGetDB(DB_SLAVE,array(),$wgExternalSharedDB);
-		$set = $db->select('user','user_id',array(
+		$set = $db->select('`user`','user_id',array(
 			'user_name' => array( 'Default', 'CreateWiki' ),
 		),__METHOD__,array('DISTINCT'));
 

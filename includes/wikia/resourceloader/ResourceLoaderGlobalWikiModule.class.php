@@ -9,6 +9,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	protected function parseTitle( $titleText ) {
 		global $wgCanonicalNamespaceNames;
 
+		wfProfileIn(__METHOD__);
 		$text = $titleText;
 		$namespace = NS_MAIN;
 		foreach ($wgCanonicalNamespaceNames as $namespaceId => $namespacePrefix) {
@@ -30,6 +31,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			$text = false;
 		}
 
+		wfProfileOut(__METHOD__);
 		return array( $text, $namespace );
 	}
 
@@ -41,7 +43,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	 * @return Title|GlobalTitle
 	 */
 	protected function resolveRedirect( $title ) {
-		$origTitle = $title;
+		wfProfileIn(__METHOD__);
 		if ( $title instanceof GlobalTitle ) {
 			if ( $title->isRedirect() ) {
 				$target = $title->getRedirectTarget();
@@ -58,17 +60,19 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 				}
 			}
 		}
+		wfProfileOut(__METHOD__);
 		return $title;
 	}
 
 	protected function createTitle( $titleText, $options = array() ) {
 		global $wgCityId;
+		wfProfileIn(__METHOD__);
 		$title = null;
 		$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
 		if ( !empty( $options['city_id'] ) && $wgCityId != $options['city_id'] ) {
 			list( $text, $namespace ) = $this->parseTitle($realTitleText);
 			if ( $text !== false ) {
-				$title = GlobalTitle::newFromText($text, $namespace, $options['city_id']);
+				$title = GlobalTitle::newFromTextCached($text, $namespace, $options['city_id']);
 			}
 			$title = $this->resolveRedirect($title);
 		} else {
@@ -76,11 +80,15 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			$title = $this->resolveRedirect($title);
 		}
 
+		wfProfileOut(__METHOD__);
 		return $title;
 	}
 
 	protected function getContent( $title, $titleText, $options = array() ) {
+		global $wgCityId;
 		$content = null;
+
+		wfProfileIn(__METHOD__);
 		if ( $title instanceof GlobalTitle ) {
 			// todo: think of pages like NS_MAIN:Test/code.js that are pulled
 			// from dev.wikia.com
@@ -89,14 +97,19 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 				return null;
 			}
 			*/
-			$content = $title->getContent();
+
+			if ( WikiFactory::isWikiPrivate( $title->getCityId() ) == false ) {
+				$content = $title->getContent();
+			}
 
 		// Try to load the contents of an article before falling back to a message (BugId:45352)
-		} else {
+		} elseif ( WikiFactory::isWikiPrivate( $wgCityId ) == false ) {
 			$revision = Revision::newFromTitle( $title );
+
 			if ($revision) {
 				$content = $revision->getRawText();
 			}
+
 			// Fall back to parent logic
 			if ( !$content ) {
 				$content = parent::getContent( $title, $options );
@@ -117,13 +130,16 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return $content;
 	}
 
 	protected function reallyGetTitleMtimes( ResourceLoaderContext $context ) {
+		wfProfileIn(__METHOD__);
 		$dbr = $this->getDB();
 		if ( !$dbr ) {
 			// We're dealing with a subclass that doesn't have a DB
+			wfProfileOut(__METHOD__);
 			return array();
 		}
 
@@ -131,7 +147,8 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		$local = array();
 		$byWiki = array();
 
-		foreach ( $this->getPages( $context ) as $titleText => $options ) {
+		$pages = $this->getPages( $context );
+		foreach ( $pages as $titleText => $options ) {
 			$title = $this->createTitle($titleText,$options);
 			if ($title instanceof GlobalTitle) {
 				$byWiki[$title->getCityId()][] = array( $title, $titleText, $options );
@@ -169,6 +186,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			$pagesData = array();
 			foreach ($pages as $page) {
 				list( $title, $titleText, $options ) = $page;
+				/** @var $title GlobalTitle */
 				$pagesData[$title->getNamespace()][$title->getDBkey()] = true;
 			}
 
@@ -178,12 +196,13 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 				__METHOD__
 			);
 			foreach ( $res as $row ) {
-				$title = GlobalTitle::newFromText( $row->page_title, $row->page_namespace, $cityId );
+				$title = GlobalTitle::newFromTextCached( $row->page_title, $row->page_namespace, $cityId );
 				$mtimes[$dbName.'::'.$title->getPrefixedDBkey()] =
 					wfTimestamp( TS_UNIX, $row->page_touched );
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return $mtimes;
 	}
 

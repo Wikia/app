@@ -15,13 +15,12 @@ class WikiCreationBlock {
 		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_WIKI_CREATION );
 
 		if ( !empty($blocksData) && !empty($text) ) {
-			foreach ($blocksData as $blockData) {
-				$result = Phalanx::isBlocked( $text, $blockData );
-				if ( $result['blocked'] ) {
-					wfProfileOut( __METHOD__ );
-					Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
-					return false;
-				}
+			$blockData = null;
+			$result = Phalanx::findBlocked( $text, $blocksData, true, $blockData );
+			if ( $result['blocked'] ) {
+				wfProfileOut( __METHOD__ );
+				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
+				return false;
 			}
 		}
 

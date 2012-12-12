@@ -43,14 +43,14 @@
 			}
 		// image caption
 			if ($image['caption'] != '') {
-				$caption = $image['caption'];
+				$caption = Sanitizer::removeHTMLtags( $image['caption'] );
 			} else {
 				$caption = wfMsg('wikiaPhotoGallery-preview-add-caption');
 			}
 
 		// image description
 			if ($image['linktext'] != '') {
-				$linktext = $image['linktext'];
+				$linktext = Sanitizer::removeHTMLtags( $image['linktext'] );
 			} else {
 				$linktext = wfMsg('wikiaPhotoGallery-preview-add-description');
 			}

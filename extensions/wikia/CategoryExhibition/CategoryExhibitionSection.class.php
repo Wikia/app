@@ -4,6 +4,7 @@
  * Main Category Gallery class
  */
 class CategoryExhibitionSection {
+	const CACHE_VERSION = 2;
 
 	protected $thumbWidth = 130;
 	protected $thumbHeight = 115;
@@ -19,6 +20,7 @@ class CategoryExhibitionSection {
 	public $urlParameter = 'section';	// contains section url variable that stores pagination
 	public $paginatorPosition = 1;		// default pagination
 	public $sUrl = '';
+	/* @var Title */
 	public $categoryTitle = false;		// title object of category
 	public $templateName = 'section';	// name of the section template
 	public $isFromAjax = false;		// true if request comes from ajax
@@ -48,6 +50,7 @@ class CategoryExhibitionSection {
 
 		// Check if page is a redirect
 		if( $this->categoryTitle->isRedirect() ){
+			/* @var WikiPage $oTmpArticle */
 			$oTmpArticle = new Article( $this->categoryTitle );
 			if ( !is_null( $oTmpArticle ) ) {
 				$rdTitle = $oTmpArticle->getRedirectTarget();
@@ -57,19 +60,22 @@ class CategoryExhibitionSection {
 			}
 		}
 		if (!is_array($mNamespace)){
-			$mNamespace = (int)$mNamespace;
+			$ns = (int)$mNamespace;
 		} else {
-			$mNamespace = implode(',', $mNamespace);
+			$ns = implode(',', $mNamespace);
 		}
 
 		switch ( $this->getSortType() ){
 			case 'mostvisited':
-				$res = CategoryDataService::getMostVisited( $sCategoryDBKey, $mNamespace, false, $negative );
+				if ( !is_array( $mNamespace ) ) {
+					$mNamespace = array( (int) $mNamespace );
+				}
 
+				$res = CategoryDataService::getMostVisited( $sCategoryDBKey, $mNamespace, false, $negative );
 				//FB#26239 - fall back to alphabetical order if most visited data is empty
-				return ( !empty( $res ) ) ? $res : CategoryDataService::getAlphabetical( $sCategoryDBKey, $mNamespace, $negative );
-			case 'alphabetical': return CategoryDataService::getAlphabetical( $sCategoryDBKey, $mNamespace, $negative );
-			case 'recentedits': return CategoryDataService::getRecentlyEdited( $sCategoryDBKey, $mNamespace, $negative );
+				return ( !empty( $res ) ) ? $res : CategoryDataService::getAlphabetical( $sCategoryDBKey, $ns, $negative );
+			case 'alphabetical': return CategoryDataService::getAlphabetical( $sCategoryDBKey, $ns, $negative );
+			case 'recentedits': return CategoryDataService::getRecentlyEdited( $sCategoryDBKey, $ns, $negative );
 		}
 		return array();
 	}
@@ -181,7 +187,6 @@ class CategoryExhibitionSection {
 	 * @param $namespace mixed: int namespace or array of int for category query
 	 * @return EasyTemplate object
 	 */
-
 	protected function getTemplateForNameSpace( $namespace, $itemsPerPage = 16, $negative = false ){
 
 		$cachedContent = $this->getFromCache();
@@ -253,7 +258,7 @@ class CategoryExhibitionSection {
 		$imageServing = new ImageServing( $mPageId, $this->thumbWidth , array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
 		$imageUrl = '';
 
-		foreach ( $imageServing->getImages( 1 ) as $key => $value ){
+		foreach ( $imageServing->getImages( 1 ) as $value ){
 			if ( !empty( $value[0]['name'] ) ){
 				$tmpTitle = Title::newFromText( $value[0]['name'], NS_FILE );
 				$image = wfFindFile( $tmpTitle );
@@ -262,7 +267,7 @@ class CategoryExhibitionSection {
 				}
 				$imageUrl = wfReplaceImageServer(
 					$image->getThumbUrl(
-						$imageServing->getCut( $image->width, $image->height )."-".$image->getName()
+						$imageServing->getCut( $image->getWidth(), $image->getHeight() )."-".$image->getName()
 					)
 				);
 			}
@@ -344,6 +349,10 @@ class CategoryExhibitionSection {
 		return $returnData;
 	}
 
+	/**
+	 * @param Title $oTitle
+	 * @return mixed
+	 */
 	protected function getTitleForElement( $oTitle ){
 		return $oTitle->getText();
 	}
@@ -368,7 +377,7 @@ class CategoryExhibitionSection {
 		}
 
 		$url = $wgTitle->getFullURL().'?'.implode( '&', $return );
-		if ( count($value) > 0 ){
+		if ( count($return) > 0 ){
 			$url.= '&'.$variableName.'=%s';
 		} else {
 			$url.= '?'.$variableName.'=%s';
@@ -381,19 +390,19 @@ class CategoryExhibitionSection {
 	/**
 	 * Caching functions.
 	 */
-
 	protected function getKey() {
 		global $wgVideoHandlersVideosMigrated;
 		return wfMemcKey(
 			'category_exhibition_section_0',
-			$this->categoryTitle->getDBKey(),
+			md5($this->categoryTitle->getDBKey()),
 			$this->templateName,
 			$this->paginatorPosition,
 			$this->getDisplayType(),
 			$this->getSortType(),
 			$this->isVerify(),
 			($wgVideoHandlersVideosMigrated ? 1 : 0),
-			$this->getTouched($this->categoryTitle)
+			$this->getTouched($this->categoryTitle),
+			self::CACHE_VERSION
 		);
 	}
 
@@ -413,7 +422,7 @@ class CategoryExhibitionSection {
 	protected function getTouchedKey($title) {
 		//fb#24914
 		if( $title instanceof Title ) {
-			$key = wfMemcKey( 'category_touched', $title->getDBKey() );
+			$key = wfMemcKey( 'category_touched', $title->getDBKey(), self::CACHE_VERSION );
 			return $key;
 		} else {
 			Wikia::log(__METHOD__, '', '$title not an instance of Title');

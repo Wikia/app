@@ -25,6 +25,7 @@ $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
 $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['LinkBegin'][] = 'SharedHelpLinkBegin';
 $wgHooks['WikiaCanonicalHref'][] = 'SharedHelpCanonicalHook';
+$wgHooks['SpecialSearchProfiles'][] = 'efSharedHelpSearchProfilesHook';
 
 
 /* in MW 1.19 WantedPages::getSQL hook changes into WantedPages::getQueryInfo */
@@ -280,6 +281,7 @@ function SharedHelpHook(&$out, &$text) {
 					$skipNamespaces[] = MWNamespace::getCanonicalName(NS_VIDEO);
 				}
 			}
+			$skipNamespaces[] = 'Special:Search'; // Stop hard coded Search on Community Central being removed
 
 			# replace help wiki links with local links, except for special namespaces defined above
 			$content = preg_replace("|{$sharedServer}{$sharedArticlePathClean}(?!" . implode(")(?!", $skipNamespaces) . ")|", $localArticlePathClean, $content);
@@ -315,7 +317,7 @@ function SharedHelpHook(&$out, &$text) {
 				}
 				$wgMemc->set($sharedRedirectsArticlesKey, $articleLink, 60*60*12);
 			}
-                        $helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
+			$helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
 
 			// "this text is stored..."
 			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . $articleLink, $helpSitename ) . '</div>';
@@ -345,7 +347,7 @@ function SharedHelpEditPageHook(&$editpage) {
 		return true;
 	}
 
-        $helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
+	$helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
 
 	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpEditInfo">'.wfMsgExt('shared_help_edit_info', 'parseinline', $wgTitle->getDBkey(), $helpSitename).'</div>';
 
@@ -522,6 +524,36 @@ function SharedHelpCanonicalHook( &$url ) {
 		$sharedServer = WikiFactory::getVarValueByName( 'wgServer', $wgHelpWikiId );
 		$titleUrl = $wgTitle->getLinkURL();
 		$url = $sharedServer . $titleUrl;
+	}
+
+	return true;
+}
+
+/**
+ * Adds a Help search filter on the Help Wiki
+ */
+function efSharedHelpSearchProfilesHook( &$profiles ) {
+	global $wgCityId, $wgHelpWikiId;
+	if ( empty( $wgHelpWikiId ) || $wgCityId != $wgHelpWikiId ) {
+		return true;
+	}
+	$helpSearchProfile = array(
+		'message' => 'sharedhelp-searchprofile',
+		'tooltip' => 'sharedhelp-searchprofile-tooltip',
+		'namespaces' => array( NS_HELP )
+	);
+
+	if ( !array_key_exists( 'advanced', $profiles ) ) {
+		$profiles['help'] = $helpSearchProfile;
+	} else {
+		$newProfiles = array();
+		foreach ( $profiles as $key => $value ) {
+			if ( $key === 'advanced' ) {
+				$newProfiles['help'] = $helpSearchProfile;
+			}
+			$newProfiles[$key] = $value;
+		}
+		$profiles = $newProfiles;
 	}
 
 	return true;

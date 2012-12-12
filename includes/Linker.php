@@ -175,14 +175,29 @@ class Linker {
 		}
 		$options = (array)$options;
 
+		/* Wikia change begin - @author: garth */
+		// Create a unique key from the arguments and cache the results of this
+		// method call for the rest of this request
+		static $linkCache = array();
+		$key = serialize( array( $target->getDBkey(), $target->getNamespace(), $target->getFragment(), $html, $customAttribs, $query, $options ) );
+
+		if ( array_key_exists($key, $linkCache) ) {
+			wfProfileOut( __METHOD__ );
+			return $linkCache[$key];
+		}
+		/* Wikia change - end */
+
 		$dummy = new DummyLinker; // dummy linker instance for bc on the hooks
 
 		$ret = null;
+		wfProfileIn(__METHOD__.'-hooks');
 		if ( !wfRunHooks( 'LinkBegin', array( $dummy, $target, &$html,
 		&$customAttribs, &$query, &$options, &$ret ) ) ) {
+			wfProfileOut(__METHOD__.'-hooks');
 			wfProfileOut( __METHOD__ );
 			return $ret;
 		}
+		wfProfileOut(__METHOD__.'-hooks');
 
 		# Normalize the Title if it's a special page
 		$target = self::normaliseSpecialPage( $target );
@@ -219,9 +234,17 @@ class Linker {
 		}
 
 		$ret = null;
+		wfProfileIn(__METHOD__.'-hooks');
 		if ( wfRunHooks( 'LinkEnd', array( $dummy, $target, $options, &$html, &$attribs, &$ret ) ) ) {
+			wfProfileOut(__METHOD__.'-hooks');
 			$ret = Html::rawElement( 'a', $attribs, $html );
+		} else {
+			wfProfileOut(__METHOD__.'-hooks');
 		}
+
+		/* Wikia change begin - @author: garth */
+		$linkCache[$key] = $ret;	
+		/* Wikia change - end */
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
@@ -1147,6 +1170,11 @@ class Linker {
 		$userTalkLink = self::link( $userTalkPage, wfMsgHtml( 'talkpagelinktext' ) );
 
 		/** Wikia change @author nAndy */
+
+		if ($userText instanceof User) {
+			$userText = $userText->getName();
+		}
+
 		wfRunHooks('LinkerUserTalkLinkAfter', array($userId, $userText, &$userTalkLink));
 		/** End of Wikia change */
 
@@ -1352,7 +1380,18 @@ class Linker {
 		self::$commentContextTitle = $title;
 		self::$commentLocal = $local;
 		$html = preg_replace_callback(
-			'/\[\[:?(.*?)(\|(.*?))*\]\]([^[]*)/',
+			'/
+				\[\[
+				:? # ignore optional leading colon
+				([^\]|]+) # 1. link target; page names cannot include ] or |
+				(?:\|
+					# 2. a pipe-separated substring; only the last is captured
+					# Stop matching at | and ]] without relying on backtracking.
+					((?:]?[^\]|])*+)
+				)*
+				\]\]
+				([^[]*) # 3. link trail (the text up until the next link)
+			/x',
 			array( 'Linker', 'formatLinksInCommentCallback' ),
 			$comment );
 		self::$commentContextTitle = null;
@@ -1378,8 +1417,8 @@ class Linker {
 		}
 
 		# Handle link renaming [[foo|text]] will show link as "text"
-		if ( $match[3] != "" ) {
-			$text = $match[3];
+		if ( $match[2] != "" ) {
+			$text = $match[2];
 		} else {
 			$text = $match[1];
 		}
@@ -1394,7 +1433,7 @@ class Linker {
 			}
 		} else {
 			# Other kind of link
-			if ( preg_match( $wgContLang->linkTrail(), $match[4], $submatch ) ) {
+			if ( preg_match( $wgContLang->linkTrail(), $match[3], $submatch ) ) {
 				$trail = $submatch[1];
 			} else {
 				$trail = "";
@@ -1798,6 +1837,12 @@ class Linker {
 				$outText .= wfMsgExt( 'templatesused', array( 'parse' ), count( $templates ) );
 			}
 			$outText .= "</div><ul>\n";
+
+			// Wikia change - begin - @author: wladek
+			// preload restrictions
+			$titleBatch = new TitleBatch($templates);
+			$titleBatch->loadRestrictions();
+			// Wikia change - end
 
 			usort( $templates, array( 'Title', 'compare' ) );
 			foreach ( $templates as $titleObj ) {

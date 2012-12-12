@@ -86,6 +86,7 @@ class User {
 		'mEmailToken',
 		'mEmailTokenExpires',
 		'mRegistration',
+		'mBirthDate', // Wikia. Added to reflect our user table layout.
 		'mEditCount',
 		// user_groups table
 		'mGroups',
@@ -167,6 +168,7 @@ class User {
 		$mEmail, $mTouched, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
 		$mCookiePassword, $mEditCount, $mAllowUsertalk;
+	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
 
 	/**
@@ -939,6 +941,8 @@ class User {
 		$this->mMonacoData = null;
 		$this->mMonacoSidebar = null;
 
+		$this->mBirthDate = null; // Wikia. Added to reflect our user table layout.
+
 		wfRunHooks( 'UserLoadDefaults', array( $this, $name ) );
 
 		wfProfileOut( __METHOD__ );
@@ -1166,6 +1170,13 @@ class User {
 			$this->mEmailToken = $row->user_email_token;
 			$this->mEmailTokenExpires = wfTimestampOrNull( TS_MW, $row->user_email_token_expires );
 			$this->mRegistration = wfTimestampOrNull( TS_MW, $row->user_registration );
+		} else {
+			$all = false;
+		}
+	
+		// Wikia. The following if/else statement has been added to reflect our user table layout.
+		if ( isset( $row->user_birthdate ) ) {
+			$this->mBirthDate = wfTimestampOrNull( TS_MW, $row->user_birthdate );
 		} else {
 			$all = false;
 		}
@@ -2270,7 +2281,7 @@ class User {
 		# set it, and then it was disabled removing their ability to change it).  But
 		# we don't want to erase the preferences in the database in case the preference
 		# is re-enabled again.  So don't touch $mOptions, just override the returned value
-		if( in_array( $oname, $wgHiddenPrefs ) && !$ignoreHidden ){
+		if( in_array( $oname, $wgHiddenPrefs ) && !$ignoreHidden ) {
 			return self::getDefaultOption( $oname );
 		}
 
@@ -2977,7 +2988,7 @@ class User {
 			$this->mPassword = '';
 		}
 
-                // wikia change begin
+		// wikia change begin
 		/**
 		 * @author Krzysztof Krzyżaniak (eloy)
 		 * trap for BugId: 4013
@@ -3099,6 +3110,7 @@ class User {
 			'user_real_name' => $user->mRealName,
 			'user_token' => strval( $user->mToken ),
 			'user_registration' => $dbw->timestamp( $user->mRegistration ),
+			'user_birthdate' => $dbw->timestampOrNull( $user->mBirthDate ), // Wikia. Added to reflect our user table layout.
 			'user_editcount' => 0,
 		);
 		foreach ( $params as $name => $value ) {
@@ -3139,6 +3151,7 @@ class User {
 				'user_real_name' => $this->mRealName,
 				'user_token' => strval( $this->mToken ),
 				'user_registration' => $dbw->timestamp( $this->mRegistration ),
+				'user_birthdate' => $dbw->timestampOrNull( $this->mBirthDate ), // Wikia. Added to reflect our user table layout.
 				'user_editcount' => 0,
 			), __METHOD__
 		);

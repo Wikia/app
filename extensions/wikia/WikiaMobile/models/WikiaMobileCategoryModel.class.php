@@ -20,13 +20,8 @@ class WikiaMobileCategoryModel extends WikiaModel{
 		$cacheKey = $this->getItemsCollectionCacheKey( $category->getName() );
 		$contents = $this->wg->memc->get( $cacheKey );
 
-
 		if ( empty( $contents ) ) {
-			/**
-			 * @var $wikiaMobileCategoryViewer WikiaMobileCategoryViewer
-			 */
-			$wikiaMobileCategoryViewer = F::build( 'WikiaMobileCategoryViewer', array( $category ) );
-			$contents = $wikiaMobileCategoryViewer->getContents();
+			$contents = (new WikiaMobileCategoryViewer( $category ))->getContents();
 			$this->wg->memc->set( $cacheKey, $contents, self::CACHE_TTL_ITEMSCOLLECTION );
 		}
 
@@ -42,7 +37,7 @@ class WikiaMobileCategoryModel extends WikiaModel{
 			$items = $this->wg->memc->get( $cacheKey );
 
 			if ( !is_array( $items ) ) {
-				$exh = CategoryDataService::getMostVisited( $title->getDBkey(), false, self::EXHIBITION_ITEMS_LIMIT );
+				$exh = CategoryDataService::getMostVisited( $title->getDBkey(), null, self::EXHIBITION_ITEMS_LIMIT );
 				$ids = array_keys( $exh );
 				$length = count( $ids );
 				$items = array();
@@ -79,11 +74,11 @@ class WikiaMobileCategoryModel extends WikiaModel{
 	}
 
 	private function getItemsCollectionCacheKey( $categoryName ){
-		return $this->wf->memcKey( __CLASS__, 'ItemsCollection', $categoryName );
+		return $this->wf->memcKey( __CLASS__, 'ItemsCollection', md5( $categoryName ) );
 	}
 
 	private function getExhibitionItemsCacheKey( $titleText ){
-		return $this->wf->memcKey( __CLASS__, 'Exhibition', $titleText );
+		return $this->wf->memcKey( __CLASS__, 'Exhibition', md5( $titleText ) );
 	}
 
 	public function purgeItemsCollectionCache( $categoryName ){
@@ -131,10 +126,10 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 			 $index = (string) mb_strtoupper( mb_substr( $sortkey, 0, 1 ) );
 
 			if ( empty( $this->items[$index] ) ) {
-				$this->items[$index] = F::build( 'WikiaMobileCategoryItemsCollection' );
+				$this->items[$index] = new WikiaMobileCategoryItemsCollection;
 			}
 
-			$this->items[$index]->addItem( F::build( 'WikiaMobileCategoryItem', array( $title ) ) );
+			$this->items[$index]->addItem( new WikiaMobileCategoryItem( $title ) );
 			$this->count++;
 		}
 	}
@@ -153,7 +148,7 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 		}
 		*/
 
-		$ret = F::build( 'WikiaMobileCategoryContents', array( $this->items, $this->count ) );
+		$ret = new WikiaMobileCategoryContents( $this->items, $this->count );
 
 		$this->count = $this->items = null;
 

@@ -1,5 +1,3 @@
-/*global AdDriverDelayedLoader: true */
-
 //Modal
 $.fn.extend({
 
@@ -99,13 +97,13 @@ $.fn.extend({
 				width: modalWidth,
 				height: options.height,
 				zIndex: zIndex + 1
-			}).css("margin-left", -wrapper.outerWidth()/2);
+			}).css("margin-left", -wrapper.outerWidth(false)/2);
 
 		} else {
 			wrapper
 				.width(settings.width)
 				.css({
-					marginLeft: -wrapper.outerWidth() / 2,
+					marginLeft: -wrapper.outerWidth(false) / 2,
 					top: wrapper.getModalTopOffset(),
 					zIndex: zIndex + 1
 				})
@@ -223,12 +221,6 @@ $.fn.extend({
 			settings.onCreate(this,wrapper);
 		}
 
-		// call AdDriver if necessary
-		if (window.loadAd) {
-			AdDriverDelayedLoader.load();
-			window.loadAd = false;
-		}
-
 		// BugId:7498
 		$(document.body).addClass('modalShown');
 
@@ -318,7 +310,7 @@ $.fn.extend({
 
 		wrapper
 			.width(width)
-			.css('marginLeft', -wrapper.outerWidth() >> 1)
+			.css('marginLeft', -wrapper.outerWidth(false) >> 1)
 			.log('resizeModal: #' + this.attr('id') + ' resized to ' + width + 'px');
 	},
 

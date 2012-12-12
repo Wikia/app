@@ -87,6 +87,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 					'emptyChartMsg' => $this->emptyChartMsg,
 				)
 			);
+			wfProfileOut( __METHOD__ );
 			return $oTmpl->render( '../../templates/output/'.self::TEMPLATE_CHART_EMPTY );
 		} else {
 			$datasets = isset($aData['serie']) ? $aData['serie'] : array();

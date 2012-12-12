@@ -52,8 +52,7 @@ class CategoryDataService extends Service {
 		return self::tableFromResult( $res );
 	}
 
-	public static function getMostVisited( $sCategoryDBKey, $mNamespace = false, $limit = false, $negative = false ){
-
+	public static function getMostVisited( $sCategoryDBKey, $mNamespace = null, $limit = false, $negative = false ){
 		global $wgStatsDB, $wgCityId, $wgStatsDBEnabled;
 
 		if ( empty( $wgStatsDBEnabled ) ) {
@@ -66,7 +65,7 @@ class CategoryDataService extends Service {
 		);
 
 		if( !empty( $mNamespace ) ) {
-			$where[] = 'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')';
+			$where[] = 'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . implode( ',', $mNamespace ) . ')';
 		}
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -82,51 +81,16 @@ class CategoryDataService extends Service {
 		if ( $dbr->numRows( $res ) > 0 ) {
 			Wikia::log(__METHOD__, ' Found some data in categories. Proceeding ');
 			$aCategoryArticles = self::tableFromResult( $res );
-
-			//nice trick to get far less results from Stats DB in most cases
 			$catKeys = array_keys($aCategoryArticles);
-			$catKeyMin = min($catKeys);
-			$catKeyMax = max($catKeys);
-
 			Wikia::log(__METHOD__, ' Searching for prepared data');
 
-			$optionsArray = array();
-			$optionsArray['ORDER BY'] = 'pv_views DESC';
+			//fix BugId:33086
+			//use DataMart for pageviews data
+			//as all the other data sources are disabled/obsolete
+			$items = DataMartService::getTopArticlesByPageview( $wgCityId, $catKeys, $mNamespace , $negative, count( $catKeys ) );
 
-			$where = array(
-				'city_id' => $wgCityId,
-				'page_id > ' . $catKeyMin,
-				'page_id < ' . $catKeyMax
-			);
-
-			if( !empty( $mNamespace )  ) {
-				$where[] = 'page_ns ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')';
-			}
-
-			$dbr = wfGetDB( DB_SLAVE, null, $wgStatsDB );
-			$res = $dbr->select(
-				array( 'specials.page_views_summary_articles' ),
-				array( 'page_id' ),
-				$where,
-				__METHOD__,
-				$optionsArray
-			);
-
-			if ( ( $dbr->numRows( $res ) == 0 ) ) {
-
-				Wikia::log(__METHOD__, ' No data. Try to gather some by myself');
-				// query here looked pretty bad from efficiency point of view,
-				// similar to that described in RCA from changeset r49897
-				// no sign of this scope being executed in logs, removing
-				// (2012-04-24)
-				Wikia::log(__METHOD__, ' Data gathering disabled');
-			}
-
-			if ( $dbr->numRows( $res ) > 0 ) {
-
+			if ( is_array( $items ) && count( $items ) > 0 ) {
 				Wikia::log(__METHOD__, ' Found some data. Lets find a commmon part with categories ');
-				Wikia::log(__METHOD__, ' Processing ' . $dbr->numRows( $res ) . ' rows against ' . count($catKeys) . ' categories ');
-
 				$aResult = array();
 				$aResultCount = 0;
 				$keys = array();
@@ -134,9 +98,9 @@ class CategoryDataService extends Service {
 
 				$time = microtime(true);
 
-				while ($row = $res->fetchObject($res)) {
-					$key = intval($row->page_id);
-					$keys [$key]= $key;
+				foreach ( $items as $id => $pv ) {
+					$key = intval( $id );
+					$keys[$key]= $key;
 				}
 
 				foreach($keys as $key) {

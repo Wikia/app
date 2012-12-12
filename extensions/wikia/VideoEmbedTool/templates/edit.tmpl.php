@@ -1,65 +1,74 @@
-<?php
-echo '<div style="position: relative; z-index: 5;">';
-echo '<h1 id="VideoEmbedTitle">';
-echo wfMsg('vet-details-inf2');
-echo '</h1>';
-?>
-<table class="VideoEmbedOptionsTable">
+<h1 id="VideoEmbedTitle2" ><?=wfMsg('vet-details-inf2') ?></h1>
+<form class="VideoEmbedOptionsTable WikiaForm" id="VET-display-options-update">
 <?php
 global $wgExtensionsPath;
 if('' == $props['oname']) {
 ?>
-
-	<tr id="VideoEmbedNameRow">
-		<th><?= wfMsg( 'vet-name' ) ?></th>
-		<td>
-			<?= htmlspecialchars($props['vname']) ?>
-		</td>
-		<td rowspan="5" >
-			<div id="VideoEmbedThumb" style="text-align: right; right: 15px">
-			<?= $props['code'] ?>
-			<div style="text-align: center;"><?= wfMsg( 'vet-preview' ) ?></div>
+	<div id="VideoEmbedThumb">
+		<?= $props['code'] ?>
+		<p><?= wfMsg( 'vet-preview' ) ?></p>
+	</div>
+	<div class="preview-options">
+		<div class="input-group" id="VideoEmbedNameRow">
+			<label class="option-label" for="wpVideoEmbedName"><?= wfMsg( 'vet-name' ) ?></label>
+			<div>
+				<p><?= htmlspecialchars($props['vname']) ?></p>
 			</div>
-		</td>
-	</tr>
+		</div>
+	</div>
 <?
 }
 ?>
-	<tr id="VideoEmbedSizeRow">
-		<th><?= wfMsg('vet-size') ?></th>
-		<td>
-			<input type="checkbox" name="fullthumb" id="VideoEmbedThumbOption" checked=checked /> <label for="VideoEmbedThumbOption" ><?= wfMsg('vet-thumbnail') ?></label>
-			&nbsp;
-		</td>
-	</tr>
-	<tr id="VideoEmbedWidthRow">
-		<th><?= wfMsg('vet-width') ?></th>
-		<td>
-			<div id="VideoEmbedSlider" class="WikiaSlider"></div>
-			<span id="VideoEmbedInputWidth">
-				<input type="text" id="VideoEmbedManualWidth" name="VideoEmbedManualWidth" value="" onchange="VET_manualWidthInput(this)" onkeyup="VET_manualWidthInput(this)" /> px
-			<span>
-		</td>
-	</tr>
-	<tr id="VideoEmbedLayoutRow">
-		<th><?= wfMsg('vet-layout') ?></th>
-		<td>
-			<input type="radio" id="VideoEmbedLayoutLeft" name="layout" onclick="VET_toggleSizing( true );" />
-			<label for="VideoEmbedLayoutLeft"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_left.png' ?>" /></label>
-			<input type="radio" id="VideoEmbedLayoutRight" name="layout" checked="checked" onclick="VET_toggleSizing( true );" />
-			<label for="VideoEmbedLayoutRight"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_right.png' ?>" /></label>
-		</td>
-	</tr>
-	<tr>
-		<th><?= wfMsg('vet-caption') ?></th>
-		<td><input id="VideoEmbedCaption" type="text" /><?= wfMsg('vet-optional') ?></td>
-	</tr>
-	<tr class="VideoEmbedNoBorder">
-		<td colspan="3" style="padding: 5px 0px 0px 0px" >
-			<div id="VideoReplaceLink"><?= wfMsgExt('vet-video-replace-link', 'parse', $props['href']); ?></div>
-			<input class="wikia-button v-float-right" type="submit" value="<?= wfMsg('vet-update') ?>" onclick="VET_doEditVideo();" />
-		</td>
-	</tr>
-</table>
-<input id="VideoEmbedHref" type="hidden" value="<?= htmlspecialchars($props['href']) ?>" />
-</div>
+	<div class="preview-options">
+		<div class="input-group" id="VideoEmbedSizeRow">
+			<label class="option-label"><?= wfMsg('vet-style') ?></label>
+			<div>
+				<span id="VET_StyleThumb" class="selected">
+					<input type="radio" id="VideoEmbedThumbOption" class="hidden" name="style" checked="checked" />
+					<label for="VideoEmbedThumbOption" class="vet-style-label VideoEmbedThumbOption" title="<?= wfMsg( 'vet-thumbnail' ) ?>"><?= wfMsg( 'vet-thumbnail' ) ?></label>
+				</span>
+				<span id="VET_StyleNoThumb">
+					<input type="radio" id="VideoEmbedNoThumbOption" class="hidden" name="style" />
+					<label for="VideoEmbedNoThumbOption" class="vet-style-label VideoEmbedNoThumbOption" title="<?= wfMsg( 'vet-no-thumbnail' ) ?>"><?= wfMsg( 'vet-no-thumbnail' ) ?></label>
+				</span>
+				<input id="VideoEmbedCaption" type="text" placeholder="<?= wfMsg( 'vet-caption' ) ?>" class="show" />
+				<p><?= wfMsg( 'vet-no-caption' ) ?></p>
+			</div>
+		</div>
+		<div class="input-group" id="VideoEmbedWidthRow">
+			<label class="option-label" for="VideoEmbedManualWidth"><?= wfMsg('vet-width') ?></label>
+			<div>
+				<div id="VideoEmbedSlider" class="WikiaSlider"></div>
+				<span id="VideoEmbedInputWidth">
+					<input type="text" id="VideoEmbedManualWidth" name="VideoEmbedManualWidth" value="" onchange="VET_manualWidthInput(this)" onkeyup="VET_manualWidthInput(this)" /> px
+				</span>
+			</div>
+		</div>
+		<div class="input-group" id="VideoEmbedLayoutRow">
+			<label class="option-label"><?= wfMsg('vet-layout') ?></label>
+			<div>
+				<span id="VET_LayoutLeftBox">
+					<input type="radio" id="VideoEmbedLayoutLeft" name="layout" class="hidden" onclick="VET_toggleSizing( true );" />
+					<label for="VideoEmbedLayoutLeft" class="vet-layout-label VideoEmbedLayoutLeft" title="<?= wfMsg( 'vet-left' ) ?>"><?= wfMsg( 'vet-left' ) ?></label>
+				</span>
+				<span id="VET_LayoutCenterBox">
+					<input type="radio" id="VideoEmbedLayoutCenter" name="layout" class="hidden" onclick="VET_toggleSizing( true );" />
+					<label for="VideoEmbedLayoutCenter" class="vet-layout-label VideoEmbedLayoutCenter" title="<?= wfMsg( 'vet-center' ) ?>"><?= wfMsg( 'vet-center' ) ?></label>
+				</span>
+				<span id="VET_LayoutRightBox">
+					<input type="radio" id="VideoEmbedLayoutRight" name="layout" class="hidden" onclick="VET_toggleSizing( true );" />
+					<label for="VideoEmbedLayoutRight" class="vet-layout-label VideoEmbedLayoutRight" title="<?= wfMsg( 'vet-right' ) ?>"><?= wfMsg( 'vet-right' ) ?></label>
+				</span>
+				<span id="VET_LayoutGalleryBox" style="display:none">
+					<input type="radio" id="VideoEmbedLayoutGallery" name="layout" onclick="VET_toggleSizing( false );" />
+					<label for="VideoEmbedLayoutGallery"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_gallery.png' ?>" alt="<?= wfMsg( 'vet-gallery' ) ?>" title="<?= wfMsg( 'vet-gallery' ) ?>" /></label>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div id="VideoReplaceLink"><?= wfMsgExt('vet-video-replace-link', 'parse', $props['href']); ?></div>
+	<div class="input-group VideoEmbedNoBorder">
+		<input class="wikia-button v-float-right" type="submit" value="<?= wfMsg('vet-update') ?>"/>
+	</div>
+	<input id="VideoEmbedHref" type="hidden" value="<?= htmlspecialchars($props['href']) ?>" />
+</form>

@@ -3,6 +3,7 @@
 /**
  * ArticleComment is article, this class is used for manipulation on
  */
+
 class ArticleComment {
 
 	const MOVE_USER = 'WikiaBot';
@@ -46,6 +47,8 @@ class ArticleComment {
 	 * @var $mFirstRevId Revision for displaying text
 	 */
 	public $mFirstRevision;
+
+	protected $minRevIdFromSlave;
 
 	/**
 	 * @param $title Title
@@ -152,51 +155,58 @@ class ArticleComment {
 	public function load($master = false) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
-
 		$result = true;
 
 		if ( $this->mTitle ) {
-			// get revision ids
-			if ($master) {
-				$this->mFirstRevId = $this->getFirstRevID( DB_MASTER );
+ 			// get revision ids
+			if ( $master ) {
 				$this->mLastRevId = $this->mTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
 			} else {
-				$this->mFirstRevId = $this->getFirstRevID( DB_SLAVE );
-				$this->mLastRevId = $this->mTitle->getLatestRevID();
-				// if first rev does not exist on slave then fall back to master anyway
-				if ( !$this->mFirstRevId ) {
-					$this->mFirstRevId = $this->getFirstRevID( DB_MASTER );
-				}
+				$this->mLastRevId = $this->mTitle->getLatestRevID( );
 				// if last rev does not exist on slave then fall back to master anyway
 				if ( !$this->mLastRevId ) {
 					$this->mLastRevId = $this->mTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
 				}
 				// if last rev STILL does not exist, give up and set it to first rev
 				if ( !$this->mLastRevId ) {
-					$this->mLastRevId = $this->mFirstRevId;
+					$this->mLastRevId = $this->getFirstRevID( DB_MASTER );
 				}
 			}
 
-			if( empty($this->mFirstRevId) || empty($this->mLastRevId) ) {
-			// assume article is bogus, threat as if it doesn't exist
+			if ( empty( $this->mLastRevId ) ) {
+				// assume article is bogus, threat as if it doesn't exist
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
 			$memckey = wfMemcKey( 'articlecomment', 'basedata', $this->mLastRevId );
-			$acData = $wgMemc->get($memckey);
-
-			if (!empty($acData) && is_array($acData)) {
+			$acData = $wgMemc->get( $memckey );	
+			
+			if (!empty( $acData ) && is_array( $acData ) ) {
 				$this->mText = $acData['text'];
-				$this->mMetadata = empty($this->mMetadata) ? $acData['metadata']:$this->mMetadata;
+				$this->mMetadata = empty( $this->mMetadata ) ? $acData['metadata'] : $this->mMetadata;
 				$this->mRawtext = $acData['raw'];
-				$this->mHeadItems = empty($acData['head']) ? null:$acData['head'];  
+				$this->mHeadItems = empty( $acData['head'] ) ? null : $acData['head'];
 				$this->mFirstRevision = $acData['first'];
+				$this->mFirstRevId = $this->mFirstRevision->getId();
 				$this->mLastRevision = $acData['last'];
 				$this->mUser = $acData['user'];
 				wfProfileOut( __METHOD__ );
 				return true;
 			}
+
+			$this->mFirstRevId = $this->getFirstRevID( DB_SLAVE );
+			// if first rev does not exist on slave then fall back to master anyway
+			if ( !$this->mFirstRevId ) {
+				$this->mFirstRevId = $this->getFirstRevID( DB_MASTER );
+			}
+
+			if ( empty( $this->mFirstRevId ) ) {
+				// assume article is bogus, threat as if it doesn't exist
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
+			
 			// get revision objects
 			if ( $this->mFirstRevId ) {
 				$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
@@ -226,6 +236,7 @@ class ArticleComment {
 			}
 
 			if(empty($this->mFirstRevision) || empty($this->mLastRevision) ){
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
@@ -284,6 +295,11 @@ class ArticleComment {
 
 		$id = false;
 
+		if ( $db_conn == DB_SLAVE && isset($this->minRevIdFromSlave) ) {
+			wfProfileOut( __METHOD__ );
+			return $this->minRevIdFromSlave;
+		}
+
 		if ( $this->mTitle ) {
 			$db = wfGetDB($db_conn);
 			$id = $db->selectField(
@@ -298,6 +314,13 @@ class ArticleComment {
 
 		return $id;
 	}
+
+	public function setFirstRevId( $value, $db_conn ) {
+		if ( $db_conn == DB_SLAVE ) {
+			$this->minRevIdFromSlave = $value;
+		}
+	}
+
 	/**
 	 * getTitle -- getter/accessor
 	 *
@@ -342,6 +365,7 @@ class ArticleComment {
 			if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) {
 				$props = BlogArticle::getProps($title->getArticleID());
 				$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
+				$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
 			}
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
@@ -650,6 +674,7 @@ class ArticleComment {
 			/**
 			 * because we save different title via Ajax request
 			 */
+			$origTitle = $wgTitle;
 			$wgTitle = $commentTitle;
 
 			/**
@@ -659,15 +684,12 @@ class ArticleComment {
 			$article = new Article( $commentTitle, intval($this->mLastRevId) );
 			$retval = self::doSaveAsArticle($text, $article, $user, $this->mMetadata, $summary );
 			if(!empty($title)) {
-				$key = $title->getPrefixedDBkey();
+				$purgeTarget = $title;
 			} else {
-				$key = $this->mTitle->getPrefixedDBkey();
-				$explode = $this->explode($key);
-				$key =  $explode['title'];
+				$purgeTarget = $origTitle;
 			}
 
-			$wgMemc->delete( wfMemcKey( 'articlecomment', 'comm', $key, 'v1' ) );
-
+			ArticleCommentList::purgeCache( $purgeTarget );
 			$res = array( $retval, $article );
 		} else {
 			$res = false;
@@ -697,7 +719,7 @@ class ArticleComment {
 		$editPage = new EditPage( $article );
 		$editPage->edittime = $article->getTimestamp();
 		$editPage->textbox1 = self::removeMetadataTag($text);
-		
+
 		$editPage->summary = $summary;
 
 		if(!empty($metadata)) {
@@ -799,6 +821,7 @@ class ArticleComment {
 		$wgTitle = $commentTitle;
 
 		if( !($commentTitle instanceof Title) ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -851,32 +874,29 @@ class ArticleComment {
 
 		global $wgMemc, $wgArticleCommentsLoadOnDemand;
 
-		$wgMemc->set( wfMemcKey( 'articlecomment', 'comm', $title->getDBkey(), 'v1' ), null );
-
 		// make sure our comment list is refreshed from the master RT#141861
 		$commentList = ArticleCommentList::newFromTitle($title);
+		$commentList->purge();
 		$commentList->getCommentList(true);
 
 		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
 		if ( !empty( $wgArticleCommentsLoadOnDemand ) ) {
-			$app = F::app();
-
 			$urls = array();
 			$pages = $commentList->getCountPages();
-			$basePath = $app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
-			$params = array(
-				'controller' => 'ArticleCommentsController',
-				'method' => 'Content',
-				'format' => 'html',
-				'articleId' => $title->getArticleId(),
-			);
+			$articleId = $title->getArticleId();
 
 			for ( $page = 1; $page <= $pages; $page++ ) {
 				$params[ 'page' ] = $page;
-				$urls[] = $app->wf->AppendQuery( $basePath, $params );
+				$urls[] = ArticleCommentsController::getUrl(
+					'Content',
+					array(
+						'format' => 'html',
+						'articleId' => $articleId,
+						'page' => $page,
+						'skin' => 'true'
+					)
+				);
 			}
-
-			$params[ 'skin' ] = true;
 
 			$squidUpdate = new SquidUpdate( $urls );
 			$squidUpdate->doUpdate();

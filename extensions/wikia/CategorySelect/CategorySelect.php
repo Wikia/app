@@ -51,11 +51,6 @@ function CategorySelectInit($forceInit = false) {
 		return true;
 	}
 
-	if ( (!$forceInit) && (!$wgUser->isAllowed('edit')) ){
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
 	//don't use CategorySelect for undo edits
 	$undoafter = $wgRequest->getVal('undoafter');
 	$undo = $wgRequest->getVal('undo');
@@ -116,13 +111,13 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 	}
 
 	// Don't initialize when user will see the source instead of the editor, see RT#25246
-	if ( !$title->quickUserCan('edit') && ( NS_SPECIAL != $title->mNamespace ) ) {
+	if ( ( NS_SPECIAL != $title->mNamespace ) && !$title->quickUserCan('edit') ) {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	if ($action == 'view' || $action == 'purge') {
-		if ($title->mArticleID == 0) {
+		if ($title->getArticleID() == 0) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
@@ -529,12 +524,9 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 
-//TODO
 function CategorySelectGenerateHTMLforEditRaw($categories, $text = '') {
 
-	$result = '
-		<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
-		<div class="csEditMode" style="display:none" id="csMainContainer"> ' . $text . '
+	$result = '<div class="csEditMode" id="csMainContainer"> ' . $text . '
 			<input placeholder="'.wfMsg('categoryselect-addcategory-edit').'" data-placeholder="'.wfMsg('categoryselect-addcategory-edit').'" id="csCategoryInput" type="text" />
 			<div id="csSuggestContainer">
 				<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
@@ -559,7 +551,7 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 
 	// use SCSS file for Oasis
 	if ( F::app()->checkSkin( 'oasis' ) ) {
-		$cssFile = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss');
+		$cssFile = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/CategorySelect/CategorySelect.scss');
 	}
 	else {
 		$cssFile = "{$wgExtensionsPath}/wikia/CategorySelect/CategorySelect.css";
@@ -578,7 +570,7 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 /**
  * Add required HTML and JS variables [for 'view article' mode]
  *
- * @author Maciej Błaszkowski <marooned at wikia-inc.com>>
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  * @author macbre
  */
 function CategorySelectGenerateHTMLforView() {

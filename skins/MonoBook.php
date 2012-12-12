@@ -188,11 +188,10 @@ class MonoBookTemplate extends WikiaMonoBookTemplate {
 
 		// Generate additional footer links
 		$footerlinks = array(
-			'lastmod', 'viewcount', 'numberofwatchingusers', 'credits', 'copyright',
-			'privacy', 'about', 'disclaimer', 'tagline',
-			/* Wikia change begin - @author: macbre */
-			'contact', 'advertise', 'hosting'
-			/* Wikia change end */
+			'lastmod', 'viewcount', 'numberofwatchingusers',
+            /* Wikia change begin - @author: Kamil Koterba */
+			'footerlinks'
+            /* Wikia change end */
 		);
 		$validFooterLinks = array();
 		foreach( $footerlinks as $aLink ) {

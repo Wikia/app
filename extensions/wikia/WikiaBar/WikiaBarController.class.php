@@ -6,20 +6,7 @@
  * @author Sebastian Marzjan
  */
 class WikiaBarController extends WikiaController {
-	/**
-	 * @desc User property name of field which has data about display state of WikiaBar
-	 */
-	const WIKIA_BAR_STATE_OPTION_NAME = 'WikiaBarDisplayState';
 
-	/**
-	 * @desc User WikiaBarDisplayState property shown value
-	 */
-	const WIKIA_BAR_SHOWN_STATE_VALUE = 'shown';
-
-	/**
-	 * @desc User WikiaBarDisplayState property hidden value
-	 */
-	const WIKIA_BAR_HIDDEN_STATE_VALUE = 'hidden';
 
 	/**
 	 * @desc Template for wrapper containing Weebo / Admin Toolbar
@@ -45,7 +32,7 @@ class WikiaBarController extends WikiaController {
 
 	protected function isCorporateMainPageNonAnon() {
 		return (
-			HubService::isCorporatePage(F::app()->wg->cityId)
+			HubService::isCorporatePage()
 			&& Wikia::isMainPage()
 			&& !F::app()->wg->User->isAnon()
 		);
@@ -89,56 +76,5 @@ class WikiaBarController extends WikiaController {
 	 */
 	public function user() {
 		//just render template
-	}
-
-	/**
-	 * @desc Checks users properties for WikiaBar display state and changes it to oposite
-	 */
-	public function changeUserStateBar() {
-		$results = $this->getWikiaBarState();
-		$state = $results->wikiaBarState;
-		$isShown = ($state === self::WIKIA_BAR_SHOWN_STATE_VALUE) ? true : false;
-
-		if( $isShown && $results->success ) {
-			$results->wikiaBarState = self::WIKIA_BAR_HIDDEN_STATE_VALUE;
-			$results->success = true;
-		} else if( !$isShown && $results->success ) {
-			$results->wikiaBarState = self::WIKIA_BAR_SHOWN_STATE_VALUE;
-			$results->success = true;
-		} else {
-			//results from WikiaBarController::getWikiaBarState()
-		}
-
-		$this->setWikiaBarState($results->wikiaBarState);
-		$this->results = $results;
-	}
-
-	/**
-	 * @desc Returns 'shown' or 'hidden' strings which discribe WikiaBar display state
-	 * @return String
-	 */
-	public function getWikiaBarState() {
-		$results = new stdClass();
-
-		if( $this->wg->User->isAnon() ) {
-			$state = self::WIKIA_BAR_SHOWN_STATE_VALUE;
-			$results->success = false;
-		} else {
-			$state = $this->wg->User->getOption(self::WIKIA_BAR_STATE_OPTION_NAME);
-			if( is_null($state) ) {
-				$state = self::WIKIA_BAR_SHOWN_STATE_VALUE;
-			}
-
-			$results->success = true;
-		}
-
-		$results->wikiaBarState = $state;
-		$this->results = $results;
-		return $results;
-	}
-
-	protected function setWikiaBarState($state) {
-		$this->wg->User->setOption(self::WIKIA_BAR_STATE_OPTION_NAME, $state);
-		$this->wg->User->saveSettings();
 	}
 }

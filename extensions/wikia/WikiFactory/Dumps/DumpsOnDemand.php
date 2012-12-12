@@ -8,9 +8,16 @@
 $wgHooks[ "CustomSpecialStatistics" ][] = "DumpsOnDemand::customSpecialStatistics";
 $wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  dirname( __FILE__ ) . '/DumpsOnDemand.i18n.php';
 
+$wgAvailableRights[] = 'dumpsondemand';
+$wgGroupPermissions['*']['dumpsondemand'] = false;
+$wgGroupPermissions['staff']['dumpsondemand'] = true;
+$wgGroupPermissions['sysop']['dumpsondemand'] = true;
+$wgGroupPermissions['bureaucrat']['dumpsondemand'] = true;
+$wgGroupPermissions['autoconfirmed']['dumpsondemand'] = true;
+
 class DumpsOnDemand {
 
-	const BASEURL = "http://wikistats.wikia.com";
+	const BASEURL = "http://dumps.wikia.net";
 
 	/**
 	 * @access public
@@ -69,10 +76,17 @@ class DumpsOnDemand {
 				? $wgLang->timeanddate( $index[ "pages_full.xml.gz" ]->mwtimestamp )
 				: "unknown"
 		));
+
+		// The Community Central's value of the wgDumpRequestBlacklist variable contains an array of users who are not allowed to request dumps with this special page.
+		$aDumpRequestBlacklist = (array) unserialize( WikiFactory::getVarByName( 'wgDumpRequestBlacklist', WikiFactory::COMMUNITY_CENTRAL )->cv_value );
+
+		$bIsAllowed = $wgUser->isAllowed( 'dumpsondemand' ) && !in_array( $wgUser->getName(), $aDumpRequestBlacklist );
+		$tmpl->set( 'bIsAllowed', $bIsAllowed );
+
 		$tmpl->set( "index", $index );
 		$text .= $tmpl->render( "dod" );
 
-		if( $wgRequest->wasPosted() && !$wgUser->isAnon() ) {
+		if( $wgRequest->wasPosted() && $bIsAllowed ) {
 			self::sendMail();
 			wfDebug( __METHOD__, ": request for database dump was posted\n" );
 			$text = Wikia::successbox( wfMsg( "dump-database-request-requested" ) ) . $text;

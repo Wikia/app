@@ -11,8 +11,17 @@
 $app = F::app();
 $dir = dirname(__FILE__) . '/';
 
-require( 'Solarium/Autoloader.php' );
+require_once( 'Solarium/Autoloader.php' );
 Solarium_Autoloader::register();
+
+/**
+ * constants we want for search profiles
+ */
+define( 'SEARCH_PROFILE_DEFAULT',  'default' );
+define( 'SEARCH_PROFILE_IMAGES',   'images' );
+define( 'SEARCH_PROFILE_USERS',    'users' );
+define( 'SEARCH_PROFILE_ALL',      'all' );
+define( 'SEARCH_PROFILE_ADVANCED', 'advanced' );
 
 /**
  * classes
@@ -25,6 +34,7 @@ $app->registerClass('WikiaSearchResult', 			$dir . 'WikiaSearchResult.class.php'
 $app->registerClass('WikiaSearchResultSet', 		$dir . 'WikiaSearchResultSet.class.php');
 $app->registerClass('WikiaSearchArticleMatch',		$dir . 'WikiaSearchArticleMatch.class.php');
 $app->registerClass('WikiaSearchAjaxController',	$dir . 'WikiaSearchAjaxController.class.php');
+$app->registerClass('WikiaVideoSearchController',	$dir . 'WikiaVideoSearchController.class.php');
 
 /**
  * special pages
@@ -32,7 +42,17 @@ $app->registerClass('WikiaSearchAjaxController',	$dir . 'WikiaSearchAjaxControll
 $app->registerSpecialPage('WikiaSearch',	'WikiaSearchController');
 $app->registerSpecialPage('Search',			'WikiaSearchController');
 
-global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB;
+/**
+ * Wikia API controllers
+ */
+$app->registerApiController( 'SearchApiController', "{$dir}SearchApiController.class.php" );
+
+global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB, $wgEnableRelatedVideoSearch, $wgSolrMaster;
+
+if (! empty( $wgEnableRelatedVideoSearch ) ) {
+	$app->registerSpecialPage('VideoSearch',	'WikiaVideoSearchController');
+}
+
 
 $wgSolrHost = isset($_GET['solrhost']) ? $_GET['solrhost'] : $wgSolrHost;
 
@@ -56,12 +76,9 @@ $solariumConfig = array(
 		)
 );
 
-//@todo configs for this?
-$searchMaster = $wgExternalSharedDB ? 'search-s6' : 'staff-search-s1';
-
 $indexerSolariumConfig = array(
 		'adapteroptions'	=> array(
-			'host' => $searchMaster,
+			'host' => $wgSolrMaster,
 			'port' => 8983,
 			'path' => '/solr/',
 		)
@@ -97,6 +114,8 @@ if (! $wgExternalSharedDB ) {
 	$app->registerHook('ArticleDeleteComplete', 'WikiaSearchIndexer', 'onArticleDeleteComplete');
 	$app->registerHook('ArticleSaveComplete', 'WikiaSearchIndexer', 'onArticleSaveComplete');
 	$app->registerHook('ArticleUndelete', 'WikiaSearchIndexer', 'onArticleUndelete');
+} else {
+	$app->registerHook('WikiFactoryPublicStatusChange', 'WikiaSearchIndexer', 'onWikiFactoryPublicStatusChange');
 }
 
 $wgExtensionCredits['other'][] = array(

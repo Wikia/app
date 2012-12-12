@@ -5,6 +5,8 @@
  */
 class EditPageLayout extends EditPage {
 
+	const COPYRIGHT_CACHE_TTL = 86400;
+
 	protected $app;
 	protected $out;
 	protected $request;
@@ -48,10 +50,10 @@ class EditPageLayout extends EditPage {
 		array( 'type' => 'save' ),
 	);
 
-	//prevent of save
+	// prevent of save
 	public $mPreventSave = false;
 
-	//used to call beforeSave method
+	// used to call beforeSave method
 	public $mSpecialPage = null;
 
 	// is edit page read only (i.e. anon can not edit)
@@ -63,8 +65,11 @@ class EditPageLayout extends EditPage {
 	// edit page preloads
 	protected $mEditPagePreloads = array();
 
-	//hide title on special CreateBlogPage
+	// hide title on special CreateBlogPage
 	public $hideTitle = false;
+
+	// prevent rendering list of used templates
+	protected $preventRenderingTemplatesList = true;
 
 	/**
 	 * @param Article $article
@@ -167,7 +172,7 @@ class EditPageLayout extends EditPage {
 
 		$this->out->clearHTML();
 
-		$bridge = WF::build('EditPageOutputBridge',array($this,$this->mCoreEditNotices)); /* @var $bridge EditPageOutputBridge */
+		$bridge = F::build('EditPageOutputBridge',array($this,$this->mCoreEditNotices)); /* @var $bridge EditPageOutputBridge */
 		parent::showHeader();
 
 		// handle notices related to edit undo
@@ -536,7 +541,7 @@ class EditPageLayout extends EditPage {
 	 * Parameters are the same as OutputPage:readOnlyPage()
 	 * Redirect to the article page if redlink=1
 	 */
-	function displayPermissionsError( $permErrors ) {
+	function displayPermissionsError( array $permErrors ) {
 		$this->mIsReadOnlyPage = true;
 		$this->helper->addJsVariable( 'wgEditPageIsReadOnly', true );
 
@@ -566,6 +571,7 @@ class EditPageLayout extends EditPage {
 	 * - new article intro
 	 * - custom intro (editintro=Foo in URL)
 	 * - talk page intro
+	 * - main page educational note (BugId:51755)
 	 *
 	 * Handle preloads (BugId:5652)
 	 */
@@ -613,17 +619,42 @@ class EditPageLayout extends EditPage {
 				'content' => $this->app->wf->msgExt('talkpagetext', array('parse')),
 				'class' => 'mw-talkpagetext',
 			);
+		} elseif ( $this->mTitle->isMainPage() && !$this->mTitle->isProtected() && !$this->userDismissedEduNote() ) {
+		//if this is an unprotected main page and user hasn't seen the main page educational notice -- show it :)
+			/** @var $notice EditPageNotice */
+			$notice = F::build( 'EditPageNotice',array($this->app->wf->msgExt('mainpagewarning-notice', array('parse')), 'MainPageEduNote') );
+			$this->helper->addJsVariable('mainPageEduNoteHash', $notice->getHash());
+			$this->addEditNotice($notice);
 		}
 
 		// Edit notice (BugId:7616)
 		$editnotice_ns_key = 'editnotice-'.$this->mTitle->getNamespace();
-		$editnotice_ns = $this->app->wf->msgExt( $editnotice_ns_key, array( 'parse' ) );
-		if ( !wfEmptyMsg( $editnotice_ns_key, $editnotice_ns ) ) {
+		$editnotice_ns_msg = new Message( $editnotice_ns_key );
+		if ( !$editnotice_ns_msg->isDisabled() ) {
 			$this->mEditPagePreloads['EditPageEditNotice'] = array(
-				'content' => $editnotice_ns,
+				'content' => $editnotice_ns_msg->parse(),
 				'class' => 'mw-editnotice',
 			);
 		}
+	}
+
+	/**
+	 * @desc Returns true if user is an anon or DB is in read-only mode and false if user hasn't seen the notification about Main Pages in RTE
+	 * @return bool
+	 */
+	protected function userDismissedEduNote() {
+		$RTEUserPropertiesHandler = F::build('RTEUserPropertiesHandler');  /* @var RTEUserPropertiesHandler $RTEUserPropertiesHandler */
+
+		try {
+			$results = $RTEUserPropertiesHandler->getUserPropertyValue(
+				$RTEUserPropertiesHandler->getRTEMainPageNoticePropertyName()
+			);
+			$result = ($results->value == true) ? true : false;
+		} catch( Exception $e ) {
+			$result = false;
+		}
+
+		return $result;
 	}
 
 	/**
@@ -687,9 +718,20 @@ class EditPageLayout extends EditPage {
 	 * Return contribution/copyright notice
 	 */
 	public function getCopyrightNotice() {
-		$wikitext = parent::getCopywarn();
-		$parser = new Parser();
+		global $wgMemc, $wgLang;
+		wfProfileIn( __METHOD__ );
 
-		return $parser->parse($wikitext, $this->app->wg->Title, new ParserOptions())->getText();
+		$wikitext = parent::getCopywarn();
+		$key = wfMemcKey(__METHOD__,$wgLang->getCode(),md5($wikitext));
+		$text = $wgMemc->get($key);
+		if ( empty($text) ) {
+			wfProfileIn( __METHOD__ . '-parse');
+			$text = ParserPool::parse($wikitext, $this->app->wg->Title, new ParserOptions())->getText();
+			wfProfileOut( __METHOD__ . '-parse');
+			$wgMemc->set($key,$text,self::COPYRIGHT_CACHE_TTL);
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $text;
 	}
 }

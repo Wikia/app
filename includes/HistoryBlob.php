@@ -213,6 +213,7 @@ class HistoryBlobStub {
 	 */
 	function getText() {
 		$fname = 'HistoryBlobStub::getText';
+		wfProfileOut( $fname );
 
 		if( isset( self::$blobCache[$this->mOldId] ) ) {
 			$obj = self::$blobCache[$this->mOldId];
@@ -220,6 +221,7 @@ class HistoryBlobStub {
 			$dbr = wfGetDB( DB_SLAVE );
 			$row = $dbr->selectRow( 'text', array( 'old_flags', 'old_text' ), array( 'old_id' => $this->mOldId ) );
 			if( !$row ) {
+				wfProfileOut( $fname );
 				return false;
 			}
 			$flags = explode( ',', $row->old_flags );
@@ -234,6 +236,7 @@ class HistoryBlobStub {
 
 			}
 			if( !in_array( 'object', $flags ) ) {
+				wfProfileOut( $fname );
 				return false;
 			}
 
@@ -251,6 +254,7 @@ class HistoryBlobStub {
 			}
 
 			if( !is_object( $obj ) ) {
+				wfProfileOut( $fname );
 				return false;
 			}
 
@@ -259,7 +263,9 @@ class HistoryBlobStub {
 			$obj->uncompress();
 			self::$blobCache = array( $this->mOldId => $obj );
 		}
-		return $obj->getItem( $this->mHash );
+		$res = $obj->getItem( $this->mHash );
+		wfProfileOut( $fname );
+		return $res;
 	}
 
 	/**

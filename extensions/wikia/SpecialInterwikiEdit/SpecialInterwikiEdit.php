@@ -33,7 +33,7 @@ class InterwikiEdit extends SpecialPage {
 		parent::__construct('InterwikiEdit');
 	}
 
-	function execute(){
+	function execute( $par ){
 		global $wgOut, $wgUser, $wgRequest;
 
 		if( !$wgUser->isAllowed( 'InterwikiEdit' ) ) {

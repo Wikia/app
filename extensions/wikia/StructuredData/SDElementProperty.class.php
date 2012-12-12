@@ -2,78 +2,160 @@
 /**
  * @author ADi
  */
-class SDElementProperty extends SDObject implements SplObserver {
-	protected $type = array( 'name' => '@set', 'range' => null );
+class SDElementProperty extends SDRenderableObject implements SplObserver {
+	/**
+	 * @var SDElementPropertyType
+	 */
+	protected $type = null;
 	protected $name = null;
-	protected $label = '';
 	protected $value = null;
+	private $_value = null; // cached SDElementPropertyValue object(s), used by getWrappedValue
+	protected $label = '';
 
-	function __construct($name, $value, $type = false) {
+	function __construct($name, $value, SDElementPropertyType $type = null) {
 		$this->name = $name;
-
 		$nameParts = explode( ':', $name );
 		$this->label = count($nameParts) > 1 ? $nameParts[1] : $name;
-
 		$this->value = $value;
-		if($type !== false) {
+
+		if($type instanceof SDElementPropertyType) {
 			$this->type = $type;
+		}
+		else {
+			$this->type = F::build( 'SDElementPropertyType' );
 		}
 	}
 
-	public function setType($type) {
+	/**
+	 * set property type
+	 * @param SDElementPropertyType $type
+	 */
+	public function setType( SDElementPropertyType $type ) {
 		$this->type = $type;
 	}
 
+	/**
+	 * get property type
+	 * @return SDElementPropertyType
+	 */
 	public function getType() {
 		return $this->type;
 	}
 
-	public function setValue($value) {
-		$this->value = $value;
-	}
-
-	//public function getValue() {
-	//	return ( in_array( $this->getTypeName(), array( '@set', '@list' ) ) && !is_array( $this->value ) ) ? array( $this->value ) : $this->value;
-	//}
-
-	public function getValue( $index = 0 ) {
-		$value = null;
-		$values = $this->getValues();
-
-		if(is_array( $values ) && isset($values[$index])) {
-			$value = $values[$index];
-		}
-		elseif(!is_array( $values )) {
+	/**
+	 * get SDS compatible json representation of this object
+	 * @return string
+	 */
+	public function toSDSJson() {
+		$value = $this->getWrappedValue();
+		if ( $this->isCollection() ) {
+			$values = array();
+			foreach($value as $v) {
+				$values[] = $v->convertValueToSDSJson();
+			}
 			$value = $values;
+		} else {
+			$value = $value->convertValueToSDSJson();
 		}
-
 		return $value;
 	}
 
-	public function getValues() {
-		return ( in_array( $this->getTypeName(), array( '@set', '@list' ) ) && !is_array( $this->value ) ) ? array( $this->value ) : $this->value;
+	/**
+	 * Parses a single value posted by a user
+	 * @param $value from the request
+	 * @return anyType
+	 */
+	protected function parseRequestValue( $value ) {
+		$value = trim( $value );
+		$range = $this->getType()->getRange();
+		$rangeClasses = ($range) ? $this->getType()->getRange()->getClasses() : array('rdfs:Literal');
+		if ( $range && $range->isEnum() ) {
+			if ( empty($value) ) return null;
+			return $value;
+		}
+		if ( in_array('rdfs:Literal', $rangeClasses) || in_array('xsd:anyURI', $rangeClasses) || in_array('xsd:integer', $rangeClasses) ||  in_array('xsd:hexBinary', $rangeClasses) ) {
+			return $value;
+		}
+		elseif ( in_array('xsd:boolean', $rangeClasses) ) {
+			return ($value == -1) ? null : ( (bool) $value );
+		}
+		else {
+			$valueObject = new stdClass();
+			$valueObject->id = $value;
+			$valueObject->object = null;
+			return $valueObject;
+
+		}
+		return $value;
 	}
 
-
-	public function expandValue(StructuredData $structuredData, $elementDepth) {
-		$value = $this->value;
-		if(is_object($value) && isset($value->id)) {
-			$value = array( $value );
-		}
-
-		if(is_array($value)) {
+	/**
+	 * Set a field value based on request values
+	 * @param $value single value or an array of values
+	 */
+	public function setValueFromRequest($value) {
+		if ( $this->isCollection() ) {
+			$parsedValue = array();
+			if (empty($value)) $value = array();
 			foreach($value as $v) {
-				if(isset($v->id)) {
-					try {
-						$SDElement = $structuredData->getSDElementById($v->id, $elementDepth+1);
-						$v->object = $SDElement;
-					}
-					catch(WikiaException $e) {
-						$v->object = null;
-					}
+				$parsedValue[] = $this->parseRequestValue($v);
+			}
+		} else {
+			$parsedValue = $this->parseRequestValue($value);
+		}
+		$this->setValue( $parsedValue );
+	}
+
+	public function setValue($value) {
+		$this->value = $value;
+		$this->_value = null;
+	}
+
+	public function appendValue( $value ) {
+		if($this->isCollection()) {
+			$values = $this->getCurrentValue();
+			$values[] = $value;
+			$this->setValue( $values );
+		}
+		else {
+			throw new WikiaException('appendValue called for non-collection property');
+		}
+	}
+
+	private function getCurrentValue() {
+		if($this->isCollection()) {
+			if ( is_array( $this->value ) ) {
+				if ((count($this->value) == 1) && (empty($this->value[0]))) $values = array();
+				else $values = $this->value;
+			} else {
+				$values = ( empty( $this->value ) ) ? array() : array( $this->value );
+			}
+			return $values;
+		}
+		return $this->value;
+	}
+
+	public function isCollection() {
+		return $this->getType()->isCollection();
+	}
+
+	/**
+	 * Return property value(s) wrapped in SDElementPropertyValue instance(s)
+	 * @return SDElementPropertyValue instance or array of SDElementPropertyValue instances in case of collection
+	 */
+	public function getWrappedValue() {
+		if ( is_null( $this->_value ) ) {
+			if ( !$this->isCollection()) {
+				$this->_value = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $this->value, 'propertyName' => $this->getName() ) );
+
+			} else {
+				$this->_value = array();
+				foreach($this->getCurrentValue() as $value) {
+					$this->_value[] = F::build( 'SDElementPropertyValue', array( 'type' => $this->getType(), 'value' => $value, 'propertyName' => $this->getName() ) );
 				}
 			}
 		}
+		return $this->_value;
 	}
 
 	public function setName($name) {
@@ -92,22 +174,6 @@ class SDElementProperty extends SDObject implements SplObserver {
 		return $this->label;
 	}
 
-	public function toArray() {
-		if($this->value instanceof SDElement) {
-			$array = $this->value->toArray();
-		}
-		else {
-			$array = array(
-				'type' => $this->type,
-				'name' => $this->name,
-				'label' => $this->label,
-				'value' => $this->value //$this->getValues()
-			);
-		}
-
-		return $array;
-	}
-
 	/**
 	 * (PHP 5 &gt;= 5.1.0)<br/>
 	 * Receive update from subject
@@ -119,22 +185,40 @@ class SDElementProperty extends SDObject implements SplObserver {
 	 */
 	public function update(SplSubject $subject) {
 		$type = $subject->getContext()->getType( $this->name );
+		$guessType = true;
 		if($type) {
-			$this->type = $type;
+			$this->type = F::build( 'SDElementPropertyType', array( 'name' => $type['name'], 'range' => $type['range'] ) );
+			$guessType = false;
+		}
+
+		if(!$this->getType()->hasRange()) {
+			$propertyDescription = $subject->getContext()->getPropertyDescription( $subject->getType(), $this->name );
+			if(is_object($propertyDescription) && isset($propertyDescription->range) && (count($propertyDescription->range) > 0)) {
+				//
+				// schema:name
+				if ( $guessType && (count($propertyDescription->range) == 1) ) {
+					if ( ( $propertyDescription->range[0]->id == "rdfs:Literal" ) &&
+						in_array( $this->getName(), array('schema:description', 'schema:name' ) ) ) {
+
+						$this->getType()->setName( $propertyDescription->range[0]->id );
+					}
+				}
+				$this->getType()->setRange( F::build( 'SDElementPropertyTypeRange', array( 'data' => $propertyDescription->range ) ) );
+			} else {
+
+				if ( $guessType && ( !in_array( $this->getName(), array( 'schema:relatedTo', 'callofduty:team', 'wikia:characterIn') ) ) )  {
+					$this->getType()->setName('rdfs:Literal');
+				}
+			}
 		}
 	}
 
 	public function getTypeName() {
-		return $this->type['name'];
+		return $this->getType()->getName();
 	}
 
 	public function getRendererNames() {
-		return array($this->getName(), $this->getTypeName());
+		//echo "SDElementProperty - returning renderers ".json_encode(array($this->getName(), $this->getTypeName()))." for property " .$this->getName(). "<br/>\n";
+		return array( $this->getName(), $this->getTypeName() );
 	}
-	/*
-	public function render( $context = SD_CONTEXT_DEFAULT ) {
-		$result = parent::render( $context );
-		return ( $result !== false ) ? $result : $this->getValue();
-	}
-	*/
 }

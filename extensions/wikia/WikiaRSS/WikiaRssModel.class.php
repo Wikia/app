@@ -13,12 +13,12 @@ class WikiaRssModel {
 	private $filterout = array();
 	private $parseError = false;
 	private $nojs = false;
-	
+
 	public function __construct($input) {
 		$this->parseFields($input);
 		$this->id = self::$staticId++;
 	}
-	
+
 	/**
 	 * @brief Returns a div with our class and short information
 	 * 
@@ -29,18 +29,18 @@ class WikiaRssModel {
 		$attrs = array();
 		$attrs['data-id'] = $this->id;
 		$attrs['class'] = 'wikiaRssPlaceholder';
-		
+
 		if( $this->parseError === false ) {
 			$output = wfMsg('wikia-rss-placeholder-loading');
 		} else {
 			$output = wfMsg('wikia-rss-error-parse');
 		}
-		
+
 		$output = Xml::element('div', $attrs, $output);
-		
+
 		return $output;
 	}
-	
+
 	/**
 	 * @brief Returns an array with attributes
 	 * 
@@ -50,19 +50,19 @@ class WikiaRssModel {
 	 */
 	public function getRssAttributes() {
 		$attrs = array();
-		
+
 		foreach(array('id', 'url', 'charset', 'maxheads', 'short', 'reverse', 'dateFormat', 'highlight', 'filter', 'filterout', 'nojs') as $attr) {
 			$attrs[$attr] = $this->$attr;
 		}
-		
+
 		//most of our messages are passed 
 		//via php responses for ajax requests
 		//this is the only exception
 		$attrs['ajaxErrorMsg'] = wfMsg('wikia-rss-error-ajax-loading');
-		
+
 		return $attrs;
 	}
-	
+
 	/**
 	 * @brief Parses user's input and sets options of display
 	 * 
@@ -71,14 +71,14 @@ class WikiaRssModel {
 	private function parseFields($input) {
 		$app = F::app();
 		$fields = explode('|', $input);
-		
+
 		if( !empty($fields) ) {
 			$this->url = $fields[0];
-			
+
 			$args = array();
 			for($i=1; $i < sizeof($fields); $i++) {
 				$f = $fields[$i];
-				
+
 				if( strpos($f, "=") === false ) {
 					$args[strtolower(trim($f))] = false;
 				} else {
@@ -90,35 +90,35 @@ class WikiaRssModel {
 					}
 				}
 			}
-			
+
 			if( isset($args['charset']) ) {
 				$this->charset = $args['charset'];
 			} else {
 				$this->charset = $app->wg->OutputEncoding;
 			}
-			
+
 			if( isset($args['max']) ) {
 				$this->maxheads = intval($args['max']);
 			}
 			$headcnt = 0;
-			
+
 			if( isset($args['short']) ) {
 				$this->short = true;
 			}
-			
+
 			if( isset($args['reverse']) ) {
 				$this->reverse = true;
 			}
-			
+
 			if( isset($args["date"]) ) {
-				$this->dateFormat =  $args["date"];
-				
+				$this->dateFormat = $args["date"];
+
 				if( empty($this->dateFormat) ) {
 				//TODO: maybe better is to get date format from user prefs?
 					$this->dateFormat = wfMsg('wikia-rss-date-format');
 				}
 			}
-			
+
 			foreach(array('highlight', 'filter', 'filterout') as $option) {
 				if( isset($args[$option]) ) {
 					$this->$option = $args[$option];
@@ -130,7 +130,7 @@ class WikiaRssModel {
 			if( isset($args['nojs']) ) {
 				$this->nojs = true;
 			}
-			
+
 		} else {
 			$this->parseError = true;
 		}

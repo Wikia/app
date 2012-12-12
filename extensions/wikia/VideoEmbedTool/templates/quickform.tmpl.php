@@ -1,40 +1,54 @@
-<form name="quickaddform" method="post" action="<?=$action?>">
-<table>
-<?php
-if ('' == $name) {
-?> 
-<tr><td width="120">
-<?= wfMsg( 'wva-name' ); ?>
-</td>
-<td>
-<input type="text" id="wpWikiaVideoAddName" name="wpWikiaVideoAddName" size="50" />
-</td>
-</tr>
-<?php
-}
-?>
-<tr><td>
-<?= wfMsg( 'wva-url' ); ?>
-</td>
-<td>
-<input type="text" id="wpWikiaVideoAddUrl" name="wpWikiaVideoAddUrl" size="50" />
-</td>
-</tr>
-<tr>
-<td colspan="2">
-<input type="submit" value="<?= wfMsg( 'wva-add' ); ?>" />
-</td>
-</tr>
-</table>
+<p><?= wfMessage('vet-video-add-intro')->parse() ?></p>
 
-<?php
-if ('' != $name) {
-?>
-<input type="hidden" name="wpWikiaVideoAddPrefilled" value="<?= $name ?>" id="wpWikiaVideoAddPrefilled"  />
-<?php
-}
+<?
+
+$urlInput = array(
+    'label' => wfMsg('wva-url'),
+    'type' => 'text',
+    'name' => 'wpWikiaVideoAddUrl',
+    'value' => $wpWikiaVideoAddUrl,
+    'isInvalid' => (!empty($errors) && array_key_exists('videoUrl', $errors) ),
+    'attributes' => array(
+        'id' => 'wpWikiaVideoAddUrl',
+        'size' => 50,
+    ),
+);
+$urlInput['errorMsg'] = $urlInput['isInvalid'] ? $errors['videoUrl'] : '';
+
+$formAttributes = array(
+	'name' => 'quickaddform',
+	'method' => 'post',
+	'action' => $action,
+);
+
+$formSubmits = array(
+	array(
+    	'value' => wfMsg( 'wva-add' ),
+    ),
+);
+
+// Name will already be set if a user is re-uploading a video
+$nameInput = array(
+	'type' => 'hidden',
+	'name' => 'name',
+	'value' => $name,
+);
+
+$form = array(
+	'inputs' => array(
+		$nameInput,
+		$urlInput,
+	),
+	'attributes' => $formAttributes,
+	'submits' => $formSubmits,
+);
+
+
+
+
+echo F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
+
 ?>
 
-</form>
 
 

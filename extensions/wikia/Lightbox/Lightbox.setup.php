@@ -8,11 +8,10 @@
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 //classes
-$app->registerClass('LightboxHelper', $dir . 'LightboxHelper.class.php');
 $app->registerClass('LightboxController', $dir . 'LightboxController.class.php');
 
 // hooks
-$app->registerHook('MakeGlobalVariablesScript', 'LightboxHelper', 'onMakeGlobalVariablesScript');
+$app->registerHook('MakeGlobalVariablesScript', 'LightboxController', 'onMakeGlobalVariablesScript');
 
 //$app->registerHook('ArticleEditUpdates', 'LightboxController', 'onArticleEditUpdates');
 

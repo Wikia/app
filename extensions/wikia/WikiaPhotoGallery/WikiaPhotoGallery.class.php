@@ -350,9 +350,9 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @param $html  String: additional HTML text to be shown. The name and size of the image are always shown.
 	 * @param $link  String: value of link= parameter
 	 */
-	function add($title, $html='', $link='') {
+	function add($title, $html='', $link='', $wikitext='') {
 		if ($title instanceof Title) {
-			$this->mImages[] = array($title, $html, $link);
+			$this->mImages[] = array( $title, $html, $link, $wikitext );
 			wfDebug( __METHOD__ . ' - ' . $title->getText() . "\n" );
 		}
 	}
@@ -412,7 +412,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'link' => $link,
 				'linktext' => $linktext,
 				'shorttext' => $shorttext,
-				'data-caption' => htmlspecialchars( $caption ),
+				'data-caption' => Sanitizer::removeHTMLtags( $caption ),
 			);
 
 			// store list of images from inner content of tag (to be used by front-end)
@@ -421,10 +421,15 @@ class WikiaPhotoGallery extends ImageGallery {
 			// store list of images actually shown (to be used by front-end)
 			$this->mData['imagesShown'][] = $imageItem;
 
-			// use global instance of parser (RT #44689 / RT #44712)
-			$caption = $this->mParser->recursiveTagParse($caption);
 
-			$this->add($nt, $caption, $link);
+
+			$this->add(
+				$nt,
+				// use global instance of parser (RT #44689 / RT #44712)
+				$this->mParser->recursiveTagParse( $caption ),
+				$link,
+				$caption
+			);
 
 			// Only add real images (bug #5586)
 			if ($nt->getNamespace() == NS_FILE) {
@@ -1132,7 +1137,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				// add link overlay
 				$linkOverlay = Xml::openElement('span', array('class' => 'wikia-slideshow-link-overlay'))
-					. wfMsg('wikiaPhotoGallery-slideshow-view-link-overlay', $linkText)
+					. wfMsg('wikiaPhotoGallery-slideshow-view-link-overlay', Sanitizer::removeHTMLtags( $linkText ))
 					. Xml::closeElement('span');
 			}
 
@@ -1375,10 +1380,10 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				$data = array(
 					'imageUrl' => $imageUrl,
-					'imageTitle' => $text,
-					'imageShortTitle' => $shortText,
+					'imageTitle' => Sanitizer::removeHTMLtags($text),
+					'imageShortTitle' => Sanitizer::removeHTMLtags($shortText),
 					'imageLink' => !empty($link) ? $linkAttribs['href'] : '',
-					'imageDescription' => $linkText,
+					'imageDescription' => Sanitizer::removeHTMLtags($linkText),
 					'imageThumbnail' => $thumbUrl,
 				);
 
@@ -1906,7 +1911,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			if( !empty( $item ) ) {
 				$media[] = array(
 					'title' => $val[0],
-					'caption' => $val[1],
+					'caption' => $val[3],
 					'link' => $val[2]
 				);
 			}

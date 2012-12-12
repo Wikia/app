@@ -20,11 +20,11 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController
 	public function __construct() {
 		$this->version = F::build( 'WikiaSpecialVersion' );
 		
-		parent::__construct( 'Version', 'Version', false );
+		parent::__construct( 'Version', 'Version', true );
 	}
 	
 	public function index() {
-		$title = F::build( 'Title', array( 'Version' ), 'newFromText' );
+		$title = F::build( 'Title', array( 'Version', NS_SPECIAL ), 'newFromText' );
 		$popts = F::build('ParserOptions', array( RequestContext::getMain() ), 'newFromContext' );
 
 		$this->wg->Title = $title;

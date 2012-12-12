@@ -161,7 +161,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	public function getResponse() {
 		return $this->response;
 	}
-	
+
 	// Magic setting of template variables so we don't have to do $this->response->setVal
 	// NOTE: This is the opposite behavior of the Oasis Module
 	// In a module, a public member variable goes to the template
@@ -200,5 +200,62 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 		} else {
 			$this->response->unsetVal($propertyName);
 		}		
+	}
+
+	/**
+	 * get URL that would be used from Ajax Nirvana call to access this method
+	 * primary intended use is for Purging those URLs in Varnish
+	 * @return String url
+	 */
+	public static function getUrl( $method, $params = array() ) {
+		$app = F::app();
+
+		$basePath = $app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
+
+		$baseParams = array(
+			'controller' => preg_replace( "/Controller$/", '', get_called_class() ),
+			'method' => $method
+		);
+
+		ksort( $params );
+
+		return $app->wf->AppendQuery(
+			$basePath,
+			array_merge( $baseParams, $params ) // all params
+		);
+	}
+
+	/**
+	 * purge external method call from caches
+	 */
+	public static function purgeMethod( $method, $params = array() ) {
+		$squidUpdate = new SquidUpdate(
+			array(
+				self::getUrl( $method, $params )
+			)
+		);
+		$squidUpdate->doUpdate();
+	}
+
+	/**
+	 *  purge external method with multiple sets of parameters 
+	 * 
+	 *  For example we have method which get some information about article: 
+	 *  controller=somectr&method=getSomeData&articleId=2 
+	 * 
+	 *  Now after some action in system we want to purge this method for articleId=1 and articleId=2
+	 * 
+	 *  we can call somectr::purgeMethodWithMultipleInputs('getSomeData', 'html', array( array('articleId' => 1), array('articleId' => 2) ) );
+	 *   
+	 */
+	public static function purgeMethodWithMultipleInputs($method, $paramsArray = array() ) {
+		$urls = array();
+		foreach($paramsArray as $params) {
+			$url = self::getUrl( $method, $params );
+			$urls[] = $url;			
+		}
+
+		$squidUpdate = new SquidUpdate( $urls );
+		$squidUpdate->doUpdate();		
 	}
 }

@@ -26,7 +26,10 @@ function WidgetFounderBadge($id, $params) {
 		$wgMemc->set($key, $user, 3600);
 	}
 
-	if (0 == $user) return wfMsgForContent("widget-founderbadge-notavailable");
+	if (0 == $user) {
+		wfProfileOut( __METHOD__ );
+		return wfMsgForContent("widget-founderbadge-notavailable");
+	}
 
 	$key = wfMemcKey("WidgetFounderBadge", "edits");
 	$edits = $wgMemc->get($key);

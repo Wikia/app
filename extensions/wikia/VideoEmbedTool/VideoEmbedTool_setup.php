@@ -3,6 +3,7 @@
  * @author Bartek Łapiński
  */
 
+
 if(!defined('MEDIAWIKI')) {
 	exit(1);
 }
@@ -15,8 +16,10 @@ $wgExtensionCredits['other'][] = array(
         'author' => 'Bartek Łapiński, Inez Korczyński',
 	'version' => '0.99',
 );
-
+$app = F::app();
 $dir = dirname(__FILE__).'/';
+
+$app->registerController('VideoEmbedToolController',	$dir . '/VideoEmbedToolController.class.php' );
 
 define( 'VIDEO_PREVIEW', 350 );
 
@@ -85,8 +88,6 @@ function VETSetup($editform) {
 	global $wgOut, $wgExtensionsPath, $wgHooks;
 	if( get_class(RequestContext::getMain()->getSkin()) === 'SkinOasis' ) {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
-		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js"></script>');
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'));
 	}
 	return true;
 }
@@ -97,6 +98,8 @@ function VETSetup($editform) {
  */
 function VETSetupVars(Array &$vars) {
 	global $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgFileExtensions;
+
+	$vars['wgEnableVideoToolExt'] = true;
 
 	$vars['vet_back'] = wfMsg('vet-back');
 	$vars['vet_imagebutton'] = wfMsg('vet-imagebutton') ;
@@ -117,9 +120,6 @@ function VETSetupVars(Array &$vars) {
 	$vars['vet_max_thumb'] = wfMsg('vet-max-thumb');
 	$vars['vet_title'] = wfMsg('vet-title');
 	$vars['vet_no_preview'] = wfMsg( 'vet-no-preview' );
-
-	// macbre: for FCK
-	$vars['vet_enabled'] = true;
 
 	return true;
 }

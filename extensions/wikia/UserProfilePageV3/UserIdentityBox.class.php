@@ -11,6 +11,7 @@ class UserIdentityBox {
 	 * @var integer
 	 */
 	const PAGE_WIKIA_PROPS_PROPNAME = 10;
+	const CACHE_VERSION = 2;
 
 	/**
 	 * Prefixes to memc keys etc.
@@ -44,7 +45,7 @@ class UserIdentityBox {
 		'twitter',
 		'fbPage',
 		'name',
-		'hideEditsWiki',
+		'hideEditsWikis',
 	);
 
 	/**
@@ -237,7 +238,7 @@ class UserIdentityBox {
 	 * @return string
 	 */
 	private function getMemcUserIdentityDataKey() {
-		return wfSharedMemcKey('user-identity-box-data0-' . $this->user->getId());
+		return wfSharedMemcKey('user-identity-box-data0', $this->user->getId(), self::CACHE_VERSION );
 	}
 
 	/**
@@ -247,7 +248,7 @@ class UserIdentityBox {
 	 */
 
 	private function getMemcMastheadEditsWikisKey() {
-		return wfSharedMemcKey('user-identity-box-data-masthead-edits0' . $this->user->getId());
+		return wfSharedMemcKey('user-identity-box-data-masthead-edits0', $this->user->getId(), self::CACHE_VERSION );
 	}
 
 	/**
@@ -715,7 +716,7 @@ class UserIdentityBox {
 	 * @return array
 	 */
 	private function getMemcHiddenWikisId() {
-		return wfSharedMemcKey('user-identity-box-data-top-hidden-wikis-' . $this->user->getId());
+		return $this->app->wf->SharedMemcKey( 'user-identity-box-data-top-hidden-wikis', $this->user->getId(), self::CACHE_VERSION );
 	}
 
 	/**

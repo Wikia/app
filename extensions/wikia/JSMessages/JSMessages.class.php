@@ -24,8 +24,8 @@ class JSMessages {
 	// list of registered message packages
 	private $packages = array();
 
-	// cache for all messages
-	private $allMessages = null;
+	// cache for all message keys
+	private $allMessageKeys = null;
 
 	function __construct() {
 		$this->app = F::app();
@@ -119,15 +119,18 @@ class JSMessages {
 		if($lang instanceof StubUserLang) {
 			$lang = $lang->_newObject();
 		}
-		$messages = $this->getAllMessages($lang);
+		$messageKeys = $this->getAllMessageKeys($lang);
 
-		// apply pattern
 		$ret = array();
-		foreach($messages as $msg => $val) {
+		foreach($messageKeys as $msg) {
+			if ( is_array( $msg ) ) {
+				var_dump($msg);
+			}
 			if (substr($msg, 0, $patternLen) === $pattern) {
 				$ret[$msg] = $this->app->wf->msgExt($msg, array('language' => $langCode));
 			}
 		}
+
 
 		$this->app->wf->ProfileOut($fname);
 		return $ret;
@@ -137,27 +140,31 @@ class JSMessages {
 	 * Helper method to get all messages
 	 *
 	 * @param Language $lang - Language object to get all messages from
-	 * @return array - list of all messages as key/value array
+	 * @return array - list of all message keys
 	 */
-	private function getAllMessages(Language $lang) {
+	private function getAllMessageKeys(Language $lang) {
 		$this->app->wf->ProfileIn(__METHOD__);
 
-		if (is_null($this->allMessages)) {
+		if (is_null($this->allMessageKeys)) {
 			$this->app->wf->ProfileIn(__METHOD__ . '::miss');
-			$this->allMessages = $lang->getAllMessages();
+			$messageKeys = $lang->getAllMessageKeys();
+			$this->allMessageKeys = $messageKeys['messages'];
 
 			$langCode = $lang->getCode();
 
 			// append legacy data
 			if (isset(Language::$dataCache->legacyData[$langCode]['messages'])) {
-				$this->allMessages = Language::$dataCache->legacyData[$langCode]['messages'] + $this->allMessages;
+				$this->allMessageKeys = array_unique(
+					array_keys( Language::$dataCache->legacyData[$langCode]['messages']),
+					$this->allMessageKeys
+				);
 			}
 
 			$this->app->wf->ProfileOut(__METHOD__ . '::miss');
 		}
 
 		$this->app->wf->ProfileOut(__METHOD__);
-		return $this->allMessages;
+		return $this->allMessageKeys;
 	}
 
 	/**
@@ -193,6 +200,7 @@ class JSMessages {
 					}
 					else {
 						Wikia::logBacktrace(__METHOD__);
+						$this->app->wf->ProfileOut(__METHOD__);
 						trigger_error("JSMessages: '{$name}' package with wildcard matching can only be used in EXTERNAL mode", E_USER_ERROR);
 						return;
 					}

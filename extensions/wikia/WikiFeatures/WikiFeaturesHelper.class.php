@@ -37,15 +37,15 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableCategoryExhibitionExt' => 201,	// Category Exhibition
 		'wgEnableChat' => 258,					// Chat
 		'wgEnableWallExt' => 258,				// Wall
-		'wgOasisNavV2' => 287,					// WikiNav
+		'wgEnableForumExt' => 259,				// Forum
 	);
 
 	// no need to add feature to $release_date if not require "new" flag
 	public static $release_date = array (
 		'wgEnableChat' => '2011-08-01',					// Chat
-		'wgOasisNavV2' => '2011-10-05',					// WikiNav
 		'wgShowTopListsInCreatePage' => '2012-02-12',	// Top 10 Lists
 		'wgEnableAchievementsExt' => '2012-02-12',		// Achievements
+		'wgEnableForumExt' => '2012-11-29',				// Forum
 	);
 
 	/**
@@ -66,7 +66,11 @@ class WikiFeaturesHelper extends WikiaModel {
 	 */
 	public function getFeatureNormal() {
 		$list = array();
+
 		if (isset($this->wg->WikiFeatures['normal']) && is_array($this->wg->WikiFeatures['normal'])) {
+			//allow adding features in runtime
+			$this->wf->runHooks( 'WikiFeatures::onGetFeatureNormal' );
+
 			foreach ($this->wg->WikiFeatures['normal'] as $feature) {
 				$list[] = array(
 					'name' => $feature,
@@ -191,7 +195,7 @@ class WikiFeaturesHelper extends WikiaModel {
 
 	public function getFogbugzService() {
 		if( $this->fogbugzService == null ) {
-			$this->fogbugzService = WF::build(
+			$this->fogbugzService = F::build(
 					'FogbugzService', array(
 						$this->wg->fogbugzAPIConfig['apiUrl'],
 						$this->wg->fogbugzAPIConfig['username'],

@@ -1,20 +1,29 @@
 <?php
 /**
  * VisualEditor extension
- * 
+ *
  * @file
  * @ingroup Extensions
- * 
- * @author Trevor Parscal <trevor@wikimedia.org>
- * @author Inez Korczyński <inez@wikia-inc.com>
- * @author Roan Kattouw <roan.kattouw@gmail.com>
- * @author Neil Kandalgaonkar <neilk@wikimedia.org>
- * @author Gabriel Wicke <gwicke@wikimedia.org>
- * @author Brion Vibber <brion@wikimedia.org>
- * @license GPL v2 or later
- * @version 0.1.0
+ * @copyright 2011-2012 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
  */
 
+/* Configuration */
+
+define( 'NS_VISUALEDITOR', 2500 );
+define( 'NS_VISUALEDITOR_TALK', 2501 );
+$wgExtraNamespaces[NS_VISUALEDITOR] = 'VisualEditor';
+$wgExtraNamespaces[NS_VISUALEDITOR_TALK] = 'VisualEditor_talk';
+$wgContentNamespaces[] = NS_VISUALEDITOR;
+$wgContentNamespaces[] = NS_VISUALEDITOR_TALK;
+
+// Interwiki prefix to pass to the Parsoid instance
+// Parsoid will be called as $url/$prefix/$pagename
+$wgVisualEditorParsoidPrefix = 'communitycouncil';
+// Timeout for HTTP requests to Parsoid in seconds
+$wgVisualEditorParsoidTimeout = 100;
+// Namespaces to enable VisualEditor in
+$wgVisualEditorNamespaces = array( NS_VISUALEDITOR );
 /* Setup */
 
 $wgExtensionCredits['other'][] = array(
@@ -27,6 +36,10 @@ $wgExtensionCredits['other'][] = array(
 		'Neil Kandalgaonkar',
 		'Gabriel Wicke',
 		'Brion Vibber',
+		'Christian Williams',
+		'Rob Moen',
+		'Subramanya Sastry',
+		'Timo Tijhof',
 	),
 	'version' => '0.1.0',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:VisualEditor',
@@ -34,10 +47,6 @@ $wgExtensionCredits['other'][] = array(
 );
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['VisualEditor'] = $dir . 'VisualEditor.i18n.php';
-$wgExtensionMessagesFiles['VisualEditorAliases'] = $dir . 'VisualEditor.alias.php';
-$wgAutoloadClasses['SpecialVisualEditorSandbox'] = $dir . 'SpecialVisualEditorSandbox.php';
-$wgSpecialPages['VisualEditorSandbox'] = 'SpecialVisualEditorSandbox';
-$wgSpecialPageGroups['VisualEditorSandbox'] = 'other';
 
 $wgVisualEditorResourceTemplate = array(
 	'localBasePath' => dirname( __FILE__ ) . '/modules',
@@ -46,128 +55,327 @@ $wgVisualEditorResourceTemplate = array(
 );
 
 $wgResourceModules += array(
-	'ext.visualEditor.special.sandbox' => $wgVisualEditorResourceTemplate + array(
+	'rangy' => $wgVisualEditorResourceTemplate + array(
 		'scripts' => array(
-			'sandbox/special.js',
+			'rangy/rangy-core.js',
+			'rangy/rangy-position.js',
 		),
-		'messages' => array(
-			'visualeditor-feedback-prompt',
-			'visualeditor-feedback-dialog-title',
-			'visualeditor-sandbox-title',
+	),
+	'jquery.multiSuggest' => $wgVisualEditorResourceTemplate + array(
+		'scripts' => array(
+			'jquery/jquery.multiSuggest.js'
 		),
-		'dependencies' => array( 
-			'ext.visualEditor.sandbox',
-			'mediawiki.feedback',
-			'mediawiki.Uri',
+	),
+	// Alias for backwards compat, safe to remove after
+	'ext.visualEditor.editPageInit' => $wgVisualEditorResourceTemplate + array(
+		'dependencies' => array(
+			'ext.visualEditor.viewPageTarget',
 		)
 	),
-	'ext.visualEditor.sandbox' => $wgVisualEditorResourceTemplate + array(
-		'scripts' => array(
-			'sandbox/sandbox.js',
-		),
-		'messages' => array(
-			'visualeditorsandbox',
-		),
-		'styles' => 'sandbox/sandbox.css',
-		'dependencies' => array(
-			'ext.visualEditor.ve',
+	'ext.visualEditor.viewPageTarget.icons-raster' => $wgVisualEditorResourceTemplate + array(
+		'styles' => array(
+			've/init/mw/styles/ve.init.mw.ViewPageTarget.Icons-raster.css',
 		),
 	),
-	'ext.visualEditor.ve' => $wgVisualEditorResourceTemplate + array(
+	'ext.visualEditor.viewPageTarget.icons-vector' => $wgVisualEditorResourceTemplate + array(
+		'styles' => array(
+			've/init/mw/styles/ve.init.mw.ViewPageTarget.Icons-vector.css',
+		),
+	),
+	'ext.visualEditor.viewPageTarget' => $wgVisualEditorResourceTemplate + array(
+		'scripts' => array(
+			've/init/mw/ve.init.mw.js',
+			've/init/mw/ve.init.mw.Platform.js',
+			've/init/mw/ve.init.mw.Target.js'
+		),
+		'skinScripts' => array(
+			'vector' => array(
+				've/init/mw/targets/ve.init.mw.ViewPageTarget.js'
+			),
+			'apex' => array(
+				've/init/mw/targets/ve.init.mw.ViewPageTarget.js'
+			),
+			'monobook' => array(
+				've/init/mw/targets/ve.init.mw.ViewPageTarget.js'
+			),
+			'oasis' => array(
+				've/init/mw/targets/ve.init.mw.ViewPageTarget.oasis.js'
+			)
+		),
+		'skinStyles' => array(
+			'vector' => array(
+				've/init/mw/styles/ve.init.mw.ViewPageTarget.css',
+				've/init/mw/styles/ve.init.mw.ViewPageTarget-vector.css',
+				've/init/mw/styles/ve.init.mw.ViewPageTarget-vector-hd.css' => array(
+					'media' => 'screen and (min-width: 982px)'
+				),
+			),
+			'apex' => array(
+				've/init/mw/styles/ve.init.mw.ViewPageTarget.css',
+				've/init/mw/styles/ve.init.mw.ViewPageTarget-apex.css',
+			),
+			'monobook' => array(
+				've/init/mw/styles/ve.init.mw.ViewPageTarget.css',
+				've/init/mw/styles/ve.init.mw.ViewPageTarget-monobook.css',
+			)
+		),
+		'dependencies' => array(
+			'ext.visualEditor.base',
+			'mediawiki.util',
+			'mediawiki.Uri',
+			'mediawiki.Title',
+			'jquery.placeholder',
+			'jquery.client',
+			'jquery.byteLimit',
+			'jquery.byteLength',
+			'user.tokens'
+		),
+		'messages' => array(
+			'minoredit',
+			'savearticle',
+			'cancel',
+			'watchthis',
+			'tooltip-save',
+			'copyrightwarning',
+			'copyrightpage',
+			'edit',
+			'create',
+			'accesskey-ca-edit',
+			'tooltip-ca-edit',
+			'viewsource',
+			'visualeditor-notification-saved',
+			'visualeditor-notification-created',
+			'visualeditor-ca-editsource',
+			'visualeditor-loadwarning',
+			'visualeditor-editsummary',
+		),
+	),
+	'ext.visualEditor.base' => $wgVisualEditorResourceTemplate + array(
 		'scripts' => array(
 			// ve
 			've/ve.js',
-			've/ve.Position.js',
-			've/ve.Range.js',
 			've/ve.EventEmitter.js',
+			've/init/ve.init.js',
+			've/init/ve.init.Platform.js',
+		),
+		'dependencies' => array(
+			'jquery.json',
+		),
+		'debugScripts' => array(
+			've/ve.debug.js',
+		),
+	),
+	'ext.visualEditor.specialMessages' => $wgVisualEditorResourceTemplate + array(
+		'class' => 'VisualEditorMessagesModule'
+	),
+	'ext.visualEditor.core' => $wgVisualEditorResourceTemplate + array(
+		'scripts' => array(
+			// ve
+			've/ve.Registry.js',
+			've/ve.Factory.js',
+			've/ve.Position.js',
+			've/ve.Command.js',
+			've/ve.CommandRegistry.js',
+			've/ve.Range.js',
 			've/ve.Node.js',
 			've/ve.BranchNode.js',
 			've/ve.LeafNode.js',
+			've/ve.Surface.js',
+			've/ve.Document.js',
+			've/ve.OrderedHashSet.js',
+			've/ve.AnnotationSet.js',
+			've/ve.Action.js',
+			've/ve.ActionFactory.js',
+
+			// actions
+			've/actions/ve.AnnotationAction.js',
+			've/actions/ve.FormatAction.js',
+			've/actions/ve.HistoryAction.js',
+			've/actions/ve.IndentationAction.js',
+			've/actions/ve.InspectorAction.js',
+			've/actions/ve.ListAction.js',
+
 			// dm
 			've/dm/ve.dm.js',
+			've/dm/ve.dm.NodeFactory.js',
+			've/dm/ve.dm.AnnotationFactory.js',
 			've/dm/ve.dm.Node.js',
 			've/dm/ve.dm.BranchNode.js',
 			've/dm/ve.dm.LeafNode.js',
+			've/dm/ve.dm.Annotation.js',
 			've/dm/ve.dm.TransactionProcessor.js',
 			've/dm/ve.dm.Transaction.js',
 			've/dm/ve.dm.Surface.js',
+			've/dm/ve.dm.SurfaceFragment.js',
+			've/dm/ve.dm.Document.js',
+			've/dm/ve.dm.DocumentSynchronizer.js',
+			've/dm/ve.dm.Converter.js',
+
+			've/dm/nodes/ve.dm.AlienInlineNode.js',
+			've/dm/nodes/ve.dm.AlienBlockNode.js',
+			've/dm/nodes/ve.dm.BreakNode.js',
+			've/dm/nodes/ve.dm.CenterNode.js',
+			've/dm/nodes/ve.dm.DefinitionListItemNode.js',
+			've/dm/nodes/ve.dm.DefinitionListNode.js',
 			've/dm/nodes/ve.dm.DocumentNode.js',
 			've/dm/nodes/ve.dm.HeadingNode.js',
-			've/dm/nodes/ve.dm.ParagraphNode.js',
-			've/dm/nodes/ve.dm.PreNode.js',
+			've/dm/nodes/ve.dm.ImageNode.js',
 			've/dm/nodes/ve.dm.ListItemNode.js',
 			've/dm/nodes/ve.dm.ListNode.js',
+			've/dm/nodes/ve.dm.MetaBlockNode.js',
+			've/dm/nodes/ve.dm.MetaInlineNode.js',
+			've/dm/nodes/ve.dm.ParagraphNode.js',
+			've/dm/nodes/ve.dm.PreformattedNode.js',
 			've/dm/nodes/ve.dm.TableCellNode.js',
 			've/dm/nodes/ve.dm.TableNode.js',
 			've/dm/nodes/ve.dm.TableRowNode.js',
-			've/dm/serializers/ve.dm.AnnotationSerializer.js',
-			've/dm/serializers/ve.dm.HtmlSerializer.js',
-			've/dm/serializers/ve.dm.JsonSerializer.js',
-			've/dm/serializers/ve.dm.WikitextSerializer.js',
-			// es
-			've/es/ve.es.js',
-			've/es/ve.es.Node.js',
-			've/es/ve.es.BranchNode.js',
-			've/es/ve.es.LeafNode.js',
-			've/es/ve.es.Content.js',
-			've/es/ve.es.Surface.js',
-			've/es/nodes/ve.es.DocumentNode.js',
-			've/es/nodes/ve.es.HeadingNode.js',
-			've/es/nodes/ve.es.ParagraphNode.js',
-			've/es/nodes/ve.es.PreNode.js',
-			've/es/nodes/ve.es.ListItemNode.js',
-			've/es/nodes/ve.es.ListNode.js',
-			've/es/nodes/ve.es.TableCellNode.js',
-			've/es/nodes/ve.es.TableNode.js',
-			've/es/nodes/ve.es.TableRowNode.js',
+			've/dm/nodes/ve.dm.TableSectionNode.js',
+			've/dm/nodes/ve.dm.TextNode.js',
+
+			've/dm/annotations/ve.dm.LinkAnnotation.js',
+			've/dm/annotations/ve.dm.MWExternalLinkAnnotation.js',
+			've/dm/annotations/ve.dm.MWInternalLinkAnnotation.js',
+			've/dm/annotations/ve.dm.TextStyleAnnotation.js',
+
+			// ce
+			've/ce/ve.ce.js',
+			've/ce/ve.ce.NodeFactory.js',
+			've/ce/ve.ce.Document.js',
+			've/ce/ve.ce.Node.js',
+			've/ce/ve.ce.BranchNode.js',
+			've/ce/ve.ce.LeafNode.js',
+			've/ce/ve.ce.Surface.js',
+			've/ce/ve.ce.SurfaceObserver.js',
+
+			've/ce/nodes/ve.ce.AlienNode.js',
+			've/ce/nodes/ve.ce.AlienInlineNode.js',
+			've/ce/nodes/ve.ce.AlienBlockNode.js',
+			've/ce/nodes/ve.ce.BreakNode.js',
+			've/ce/nodes/ve.ce.CenterNode.js',
+			've/ce/nodes/ve.ce.DefinitionListItemNode.js',
+			've/ce/nodes/ve.ce.DefinitionListNode.js',
+			've/ce/nodes/ve.ce.DocumentNode.js',
+			've/ce/nodes/ve.ce.HeadingNode.js',
+			've/ce/nodes/ve.ce.ImageNode.js',
+			've/ce/nodes/ve.ce.ListItemNode.js',
+			've/ce/nodes/ve.ce.ListNode.js',
+			've/ce/nodes/ve.ce.MetaBlockNode.js',
+			've/ce/nodes/ve.ce.MetaInlineNode.js',
+			've/ce/nodes/ve.ce.ParagraphNode.js',
+			've/ce/nodes/ve.ce.PreformattedNode.js',
+			've/ce/nodes/ve.ce.TableCellNode.js',
+			've/ce/nodes/ve.ce.TableNode.js',
+			've/ce/nodes/ve.ce.TableRowNode.js',
+			've/ce/nodes/ve.ce.TableSectionNode.js',
+			've/ce/nodes/ve.ce.TextNode.js',
+
 			// ui
 			've/ui/ve.ui.js',
+			've/ui/ve.ui.Context.js',
+			've/ui/ve.ui.Frame.js',
 			've/ui/ve.ui.Inspector.js',
+			've/ui/ve.ui.InspectorFactory.js',
+			've/ui/ve.ui.Menu.js',
 			've/ui/ve.ui.Tool.js',
 			've/ui/ve.ui.Toolbar.js',
-			've/ui/ve.ui.Context.js',
-			've/ui/ve.ui.Menu.js',
+			've/ui/ve.ui.ToolFactory.js',
+
 			've/ui/inspectors/ve.ui.LinkInspector.js',
+
 			've/ui/tools/ve.ui.ButtonTool.js',
 			've/ui/tools/ve.ui.AnnotationButtonTool.js',
-			've/ui/tools/ve.ui.ClearButtonTool.js',
-			've/ui/tools/ve.ui.HistoryButtonTool.js',
-			've/ui/tools/ve.ui.ListButtonTool.js',
+			've/ui/tools/ve.ui.InspectorButtonTool.js',
 			've/ui/tools/ve.ui.IndentationButtonTool.js',
+			've/ui/tools/ve.ui.ListButtonTool.js',
 			've/ui/tools/ve.ui.DropdownTool.js',
-			've/ui/tools/ve.ui.FormatDropdownTool.js',
+
+			've/ui/tools/buttons/ve.ui.BoldButtonTool.js',
+			've/ui/tools/buttons/ve.ui.ItalicButtonTool.js',
+			've/ui/tools/buttons/ve.ui.ClearButtonTool.js',
+			've/ui/tools/buttons/ve.ui.LinkButtonTool.js',
+			've/ui/tools/buttons/ve.ui.BulletButtonTool.js',
+			've/ui/tools/buttons/ve.ui.NumberButtonTool.js',
+			've/ui/tools/buttons/ve.ui.IndentButtonTool.js',
+			've/ui/tools/buttons/ve.ui.OutdentButtonTool.js',
+			've/ui/tools/buttons/ve.ui.RedoButtonTool.js',
+			've/ui/tools/buttons/ve.ui.UndoButtonTool.js',
+
+			've/ui/tools/dropdowns/ve.ui.FormatDropdownTool.js',
 		),
 		'styles' => array(
-			// es
-			've/es/styles/ve.es.Surface.css',
-			've/es/styles/ve.es.Content.css',
-			've/es/styles/ve.es.Document.css',
+			// ce
+			've/ce/styles/ve.ce.DocumentNode.css',
+			've/ce/styles/ve.ce.Node.css',
+			've/ce/styles/ve.ce.Surface.css',
 			// ui
 			've/ui/styles/ve.ui.Context.css',
 			've/ui/styles/ve.ui.Inspector.css',
-			've/ui/styles/ve.ui.Toolbar.css',
 			've/ui/styles/ve.ui.Menu.css',
+			've/ui/styles/ve.ui.Surface.css',
+			've/ui/styles/ve.ui.Toolbar.css',
+			've/ui/styles/ve.ui.Tool.css',
 		),
 		'dependencies' => array(
 			'jquery',
+			'rangy',
+			'ext.visualEditor.base',
+			'mediawiki.Title',
+			'jquery.autoEllipsis',
+			'jquery.multiSuggest'
 		),
 		'messages' => array(
-			'visualeditor-tooltip-wikitext',
-			'visualeditor-tooltip-json',
-			'visualeditor-tooltip-html',
-			'visualeditor-tooltip-render',
-			'visualeditor-tooltip-history',
-			'visualeditor-tooltip-help',
 			'visualeditor',
+			'visualeditor-linkinspector-title',
+			'visualeditor-linkinspector-label-pagetitle',
+			'visualeditor-linkinspector-suggest-existing-page',
+			'visualeditor-linkinspector-suggest-new-page',
+			'visualeditor-linkinspector-suggest-external-link',
+			'visualeditor-formatdropdown-title',
+			'visualeditor-formatdropdown-format-paragraph',
+			'visualeditor-formatdropdown-format-heading1',
+			'visualeditor-formatdropdown-format-heading2',
+			'visualeditor-formatdropdown-format-heading3',
+			'visualeditor-formatdropdown-format-heading4',
+			'visualeditor-formatdropdown-format-heading5',
+			'visualeditor-formatdropdown-format-heading6',
+			'visualeditor-formatdropdown-format-preformatted',
+			'visualeditor-annotationbutton-bold-tooltip',
+			'visualeditor-annotationbutton-italic-tooltip',
+			'visualeditor-annotationbutton-link-tooltip',
+			'visualeditor-indentationbutton-indent-tooltip',
+			'visualeditor-indentationbutton-outdent-tooltip',
+			'visualeditor-listbutton-number-tooltip',
+			'visualeditor-listbutton-bullet-tooltip',
+			'visualeditor-clearbutton-tooltip',
+			'visualeditor-historybutton-undo-tooltip',
+			'visualeditor-historybutton-redo-tooltip',
+			'visualeditor-viewpage-savewarning',
+			'visualeditor-saveerror',
+			'visualeditor-aliennode-tooltip',
 		),
-	)
+	),
+	'ext.visualEditor.icons-raster' => $wgVisualEditorResourceTemplate + array(
+		'styles' => array(
+			've/ui/styles/ve.ui.Icons-raster.css',
+		),
+	),
+	'ext.visualEditor.icons-vector' => $wgVisualEditorResourceTemplate + array(
+		'styles' => array(
+			've/ui/styles/ve.ui.Icons-vector.css',
+		),
+	),
 );
 
+// Parsoid Wrapper API
+$wgAutoloadClasses['ApiVisualEditor'] = $dir . 'ApiVisualEditor.php';
+$wgAPIModules['ve-parsoid'] = 'ApiVisualEditor';
 
-// API for retrieving wikidom parse results
-$wgAutoloadClasses['ApiQueryParseTree'] = $dir . 'api/ApiQueryParseTree.php';
-$wgAPIPropModules['parsetree'] = 'ApiQueryParseTree';
+// Integration Hooks
+$wgAutoloadClasses['VisualEditorHooks'] = $dir . 'VisualEditor.hooks.php';
+$wgHooks['BeforePageDisplay'][] = 'VisualEditorHooks::onBeforePageDisplay';
+//$wgHooks['GetPreferences'][] = 'VisualEditorHooks::onGetPreferences';
+$wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorHooks::onMakeGlobalVariablesScript';
+$wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorHooks::onResourceLoaderTestModules';
+$wgHooks['SkinTemplateNavigation'][] = 'VisualEditorHooks::onSkinTemplateNavigation';
 
-// external cmd, accepts wikitext and returns parse tree in JSON. Also set environment variables needed by script here.
-putenv('NODE_PATH=/usr/local/bin/node_modules' );
-$wgVisualEditorParserCmd = '/usr/local/bin/node ' . $dir . 'modules/parser/parse.js';
+$wgAutoloadClasses['VisualEditorMessagesModule'] = $dir . 'VisualEditorMessagesModule.php';

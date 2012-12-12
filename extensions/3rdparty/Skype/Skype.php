@@ -5,11 +5,14 @@
 // set up MediaWiki to react to the "<skype>" tag
 $wgHooks['ParserFirstCallInit'][] = "wfSkype";
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfSkype( $parser ) {
         $parser->setHook( "skype", "RenderSkype" );
         return true;
 }
-
 
 // the function that reacts to "<skype>"
 

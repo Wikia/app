@@ -24,9 +24,13 @@ class UserRights {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function getGlobalGroups($user) {
-		if (!isset(self::$globalGroup[$user->mId])) {
+	static function getGlobalGroups(User $user) {
+		$userId = $user->getId();
+		if ( $userId == 0 ) {
+			return array();
+		} elseif (!isset(self::$globalGroup[$userId])) {
 			global $wgWikiaGlobalUserGroups, $wgExternalSharedDB;
+
 			$globalGroups = array();
 
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
@@ -34,7 +38,7 @@ class UserRights {
 			$res = $dbr->select(
 				'user_groups',
 				'ug_group',
-				array('ug_user' => $user->mId),
+				array('ug_user' => $userId),
 				__METHOD__
 			);
 
@@ -42,9 +46,26 @@ class UserRights {
 				$globalGroups[] = $row->ug_group;
 			}
 			$dbr->freeResult($res);
-			self::$globalGroup[$user->mId] = array_intersect($globalGroups, $wgWikiaGlobalUserGroups);
+			self::$globalGroup[$userId] = array_intersect($globalGroups, $wgWikiaGlobalUserGroups);
 		}
-		return self::$globalGroup[$user->mId];
+		return self::$globalGroup[$userId];
+	}
+
+	/**
+	 * Get group data for the user object. Needed for removing global group rights.
+	 *
+	 * @author grunny
+	 */
+	public static function onUserLoadGroups( User $user ) {
+		$userId = $user->getId();
+		if ( !self::isCentralWiki() || $userId == 0 ) {
+			return true;
+		} elseif ( !isset( self::$globalGroup[$userId] ) ) {
+			// Load the global groups into the class variable
+			self::getGlobalGroups( $user );
+		}
+		$user->mGroups = array_merge( $user->mGroups, array_diff( self::$globalGroup[$userId], $user->mGroups ) );
+		return true;
 	}
 
 	static function addGlobalGroup( $user, $group ) {
@@ -109,7 +130,7 @@ class UserRights {
 	/**
 	 * hook handler
 	 *
-		 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function userEffectiveGroups(&$user, &$groups) {
 		$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));

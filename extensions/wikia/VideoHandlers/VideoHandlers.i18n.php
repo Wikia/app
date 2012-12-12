@@ -30,15 +30,17 @@ $messages['en'] = array(
 	'videos-add-video' => 'Add a video',
 	'videos-add-video-to-this-wiki' => 'Add a video to this wiki',
 	'videos-add-video-label-name' => 'Enter the full URL, from any of the supported sites.',
-	'videod-add-video-label-all' => 'See all',
+	'videos-add-video-label-all' => 'See all',
 	'videos-add-video-ok' => 'Add',
 	'videos-notify' => 'Please wait while we process this video',
 	'videos-something-went-wrong' => 'We are sorry, but something went wrong with the upload.',
 	'videos-error-not-logged-in' => 'Please log in first.',
 	'videos-error-no-video-url' => 'No video URL provided.',
+	'videos-error-invalid-video-url' => 'Please enter a valid URL from a supported content provider.',
 	'videos-error-unknown' => 'An unknown error occurred. Code: $1.',
 	'videos-error-old-type-video' => 'Old type of videos no longer supported (VideoPage)',
 	'videos-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refesh the page.',
+	'videos-initial-upload-edit-summary' => 'created video',
 );
 
 /** Message documentation (Message documentation) */
@@ -59,12 +61,13 @@ $messages['qqq'] = array(
 	'videos-add-video' => 'Button text to click to add a video to the wiki',
 	'videos-add-video-to-this-wiki' => 'Tooltip text for the button to add a video to this wiki',
 	'videos-add-video-label-name' => 'Instructions for adding a video to a wiki',
-	'videod-add-video-label-all' => 'Link to see a list of supported video providers',
+	'videos-add-video-label-all' => 'Link to see a list of supported video providers',
 	'videos-add-video-ok' => 'Button text to submit the add video form',
 	'videos-notify' => 'Loading text - wait while video is being added',
 	'videos-something-went-wrong' => 'Error message when a generic problem occurs while adding a video to a wiki',
 	'videos-error-not-logged-in' => 'Error message when a user tries to add a video while not logged in.',
 	'videos-error-no-video-url' => 'Error message when there\'s no video URL provided.',
+	'videos-error-invalid-video-url' => 'Error message when a user enters an invalid URL.',
 	'videos-error-unknown' => 'Error message when an unknown error occurred',
 	'videos-error-old-type-video' => 'Error message when user tries to add a video of a type that is no longer supported.',
 	'videos-error-while-loading' => 'Error message when failing to add a video.',
@@ -164,6 +167,8 @@ $messages['de'] = array(
 	'videos-add-video-label-name' => 'Gib die vollständige URL von einer der unterstützten Websites ein.',
 	'videos-add-video-ok' => 'Hinzufügen',
 	'videos-add-video-label-all' => 'Alle anzeigen',
+	'videos-add-video' => 'Video hinzufügen',
+	'videos-add-video-to-this-wiki' => 'Ein neues Video zu diesem Wiki hinzufügen',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)

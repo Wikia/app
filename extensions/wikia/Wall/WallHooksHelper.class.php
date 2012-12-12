@@ -40,7 +40,7 @@ class WallHooksHelper {
 
 			$mainTitle = Title::newFromId($title->getText());
 			if(empty($mainTitle)) {
-				$dbkey = $helper->getDbkeyFromArticleId_forDeleted($title->getText());
+				$dbkey = null;
 				$fromDeleted = true;
 			} else {
 				$dbkey = $mainTitle->getDBkey();
@@ -94,8 +94,7 @@ class WallHooksHelper {
 		}
 		
 		
-		if( $title->getNamespace() === NS_USER_WALL
-				&& !$title->isSubpage()
+		if( $title->getNamespace() === NS_USER_WALL && !$title->isSubpage()
 		) {
 			//message wall index
 			$outputDone = true;
@@ -326,11 +325,10 @@ class WallHooksHelper {
 	 **/
 	function onBeforeToolbarMenu(&$items) {
 		$app = F::app();
-		
 		if( empty( $app->wg->EnableWallExt ) ){
 			return true;
-		}		
-		
+		}
+
 		$title = $app->wg->Title;
 		$action = $app->wg->Request->getText('action');
 
@@ -831,28 +829,33 @@ class WallHooksHelper {
 				return true;
 			} else {
 				$rcTitle = $rc->getTitle();
-
+				
 				if( !($rcTitle instanceof Title) ) {
 					//it can be media wiki deletion of an article -- we ignore them
 					Wikia::log(__METHOD__, false, "WALL_NOTITLE_FROM_RC " . print_r($rc, true));
 					return true;
 				}
+			
+				if(!$rcTitle->isTalkPage()) {
+					return true;
+				}	
 
 				$wm = F::build('WallMessage', array($rcTitle));
 				$wm->load();
 
 				if( !$wm->isMain() ) {
+					$link = $wm->getMessagePageUrl(); 
 					$wm = $wm->getTopParentObj();
-
 					if( is_null($wm) ) {
 						Wikia::log(__METHOD__, false, "WALL_NO_PARENT_MSG_OBJECT " . print_r($rc, true));
 						return true;
 					} else {
 						$wm->load();
 					}
+				} else {
+					$link = $wm->getMessagePageUrl();
 				}
 
-				$link = $wm->getMessagePageUrl();
 				$title = $wm->getMetaTitle();
 				$wallUrl = $wm->getWallPageUrl();
 				$wallOwner = $wm->getWallOwnerName();
@@ -897,6 +900,7 @@ class WallHooksHelper {
 			if( !($rcTitle instanceof Title) ) {
 				//it can be media wiki deletion of an article -- we ignore them
 				Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_DIFF_HIST " . print_r(array($rc), true));
+				wfProfileOut(__METHOD__);
 				return true;
 			}
 
@@ -1050,8 +1054,6 @@ class WallHooksHelper {
 				$wfMsgOptsBase['wallPageName'],
 				$wfMsgOptsBase['actionUser']);
 
-
-
 			$msgType = ($wfMsgOptsBase['isThread']) ? 'thread' : 'reply';
 
 			//created in WallHooksHelper::getMessageOptions()
@@ -1134,61 +1136,6 @@ class WallHooksHelper {
 		}
 
 		return true;
-	}
-
-	/**
-	 * @brief Getting the title of a message
-	 *
-	 * @desc Callback method used in WallHooksHelper::onChangesListInsertLogEntry() hook if deleted message was a reply
-	 *
-	 * @param string $title
-	 *
-	 * @return string
-	 *
-	 * @author Andrzej 'nAndy' Lukaszewski
-	 */
-	private function getParentTitleTxt($title) {
-		wfProfileIn(__METHOD__);
-
-		$app = F::app();
-
-		if( $title instanceof Title ) {
-			$helper = F::build('WallHelper', array());
-
-			$wm = F::build('WallMessage', array($title));
-
-			$titleText = $title->getText();
-			$parentTitleTxt = $wm->getTopParentText($titleText);
-			if( is_null($parentTitleTxt) ) {
-				$parts = explode('/@', $titleText);
-				if( count($parts) > 1 ) {
-					$parentTitleTxt = $parts[0] . '/@' . $parts[1];
-				}
-			}
-
-			$articleData = array('text_id' => '');
-			$articleId = $helper->getArticleId_forDeleted($parentTitleTxt, $articleData);
-			if( !empty($articleId) ) {
-				//parent article was deleted as well
-				$articleTitleTxt = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
-			} else {
-				$title = F::build('Title', array($parentTitleTxt, MWNamespace::getTalk($title->getNamespace())), 'newFromText');
-
-				if( $title instanceof Title ) {
-					$parentWallMsg = F::build('WallMessage', array($title));
-					$parentWallMsg->load(true);
-					$articleTitleTxt = $parentWallMsg->getMetaTitle();
-				} else {
-					$articleTitleTxt = null;
-				}
-			}
-
-			wfProfileOut(__METHOD__);
-			return $articleTitleTxt;
-		}
-
-		wfProfileOut(__METHOD__);
-		return null;
 	}
 
 	/**
@@ -1586,7 +1533,7 @@ class WallHooksHelper {
 			$isThread = $wfMsgOptsBase['isThread'];
 			$isNew = $wfMsgOptsBase['isNew'];
 
-			$wfMsgOptsBase['createdAt'] = Xml::element('a', array('href' => $wfMsgOptsBase['articleUrl']), $app->wg->Lang->timeanddate( $app->wf->Timestamp(TS_MW, $row->rev_timestamp), true) );
+			$wfMsgOptsBase['createdAt'] = Xml::element('a', array('href' => $wfMsgOptsBase['articleFullUrl']), $app->wg->Lang->timeanddate( $app->wf->Timestamp(TS_MW, $row->rev_timestamp), true) );
 
 			if( $isNew ) {
 				$wfMsgOptsBase['DiffLink'] = $app->wf->Msg('diff');
@@ -1626,7 +1573,7 @@ class WallHooksHelper {
 			$ret = $del;
 			if(wfRunHooks('WallContributionsLine', array(MWNamespace::getSubject($row->page_namespace), $wallMessage, $wfMsgOptsBase, &$ret) )) {
 				$wfMsgOpts = array(
-					$wfMsgOptsBase['articleUrl'],
+					$wfMsgOptsBase['articleFullUrl'],
 					$wfMsgOptsBase['articleTitleTxt'],
 					$wfMsgOptsBase['wallPageUrl'],
 					$wfMsgOptsBase['wallPageName'],
@@ -1676,12 +1623,6 @@ class WallHooksHelper {
 	private function getMessageOptions($rc = null, $row = null, $fullUrls = false) {
 		wfProfileIn(__METHOD__);
 
-		if( !is_null($rc) ) {
-			$actionUser = $rc->getAttribute('rc_user_text');
-		} else {
-			$actionUser = '';
-		}
-
 		if( is_object($row) ) {
 			$objTitle = F::build('Title', array($row->page_title, $row->page_namespace), 'newFromText');
 			$userText = !empty($row->rev_user_text) ? $row->rev_user_text : '';
@@ -1698,47 +1639,60 @@ class WallHooksHelper {
 			$isNew = false; //it doesn't metter for rc -- we've got there rc_log_action
 		}
 
-		$wallTitleObj = F::build('Title', array($userText, NS_USER_WALL), 'newFromText');
-		$wallUrl = ($wallTitleObj instanceof Title) ? $wallTitleObj->getLocalUrl() : '#';
 
 		if( !($objTitle instanceof Title) ) {
 			//it can be media wiki deletion of an article -- we ignore them
 			Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r(array($rc, $row), true));
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
-		$parts = explode('/@', $objTitle->getText());
-		$isThread = ( count($parts) === 2 ) ? true : false;
-		$app = F::app();
-		$articleTitleTxt = $this->getParentTitleTxt($objTitle);
-		$wm = F::build('WallMessage', array($objTitle));
-		$articleId = $wm->getId();
-		$wallMsgNamespace = $app->wg->Lang->getNsText(NS_USER_WALL_MESSAGE);
-		$articleUrl = !empty($articleId) ? $wallMsgNamespace.':'.$articleId : '#';
-		$wallOwnerName = $wm->getWallOwnerName();
-		$userText = empty($wallOwnerName) ? $userText : $wallOwnerName;
-		$wallNamespace = $app->wg->Lang->getNsText(MWNamespace::getSubject($objTitle->getNamespace()));
-		$wallUrl = $wallNamespace.':'.$userText;
-
-		if( $fullUrls === true ) {
-		//by default it's Thread:xxx and Message_wall:XXX for messages of recent changes
-		//i.e. 'wall-recentchanges-wall-removed-thread'
-		//but here we need the entire links
-			$articleUrl = $wm->getMessagePageUrl();
-			$wallUrl = $wm->getWallUrl();
+		$wm = WallMessage::newFromId( $objTitle->getArticleId() );
+		if( empty($wm) ) {
+			//it can be media wiki deletion of an article -- we ignore them
+			Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r(array($rc, $row), true));
+			wfProfileOut(__METHOD__);
+			return true;
 		}
 
-		wfProfileOut(__METHOD__);
-		return array(
-			'articleUrl' => $articleUrl,
+		$wm->load();
+		if(!$wm->isMain()) {
+			$wmw = $wm->getTopParentObj();
+			if( empty($wmw) ) {
+				return true;
+			}
+			$wmw->load();
+		}
+
+		$articleId = $wm->getId();
+		$wallOwnerName = $wm->getArticleTitle()->getText();
+		
+		if(!empty($wmw)) {
+			$articleTitleTxt =  $wmw->getMetaTitle();
+			$articleId = $wmw->getId();
+		} else {
+			$articleTitleTxt = $wm->getMetaTitle();
+			$articleId = $wm->getId();
+		}
+		
+		$title = Title::newFromText($articleId, NS_USER_WALL_MESSAGE);
+
+		$out = array(
+			'articleUrl' => $title->getPrefixedText(),
+			'articleFullUrl' => $wm->getMessagePageUrl(),
 			'articleTitleVal' => $articleTitleTxt,
-			'articleTitleTxt' => empty($articleTitleTxt) ? $app->wf->Msg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
-			'wallPageUrl' => $wallUrl,
-			'wallPageName' => $userText,
-			'actionUser' => $actionUser,
-			'isThread' => $isThread,
+			'articleTitleTxt' => empty($articleTitleTxt) ? wfMsg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
+			'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
+			'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
+			'wallPageName' => $wm->getArticleTitle()->getText(),
+			'actionUser' => $userText,
+			'isThread' => $wm->isMain(),
 			'isNew' => $isNew,
 		);
+
+		wfProfileOut(__METHOD__);
+
+		return $out;
 	}
 
 	/**
@@ -2038,6 +1992,13 @@ class WallHooksHelper {
 		wfProfileOut(__METHOD__);	
 		return true;
 	}
+
+	public function onBeforeInitialize( $title, $unused, $output, $user, $request, $mediawiki ) {
+		if( !empty($title) && $title->isSpecial('Allpages') ) {
+			F::app()->registerHook('AfterLanguageGetNamespaces', 'WallHooksHelper', 'onAfterLanguageGetNamespaces');
+		}
+		return true;
+	}
 	
 	public function onAfterLanguageGetNamespaces( &$namespaces ) {
 		wfProfileIn(__METHOD__);
@@ -2056,6 +2017,27 @@ class WallHooksHelper {
 			}
 		}
 		wfProfileOut(__METHOD__);
+		return true;
+	}
+		
+	/**
+	 * create needed tables
+	 */
+	 
+	public static function onAfterToggleFeature($name, $val) {
+		if($name == 'wgEnableWallExt' || $name == 'wgEnableForumExt') {
+			$db = wfGetDB(DB_MASTER);
+			if(!$db->tableExists('wall_history')) {
+				$db->sourceFile($IP."/extensions/wikia/Wall/sql/wall_history_local.sql");
+			}
+	
+			if(!$db->tableExists('wall_related_pages')) {
+				$db->sourceFile($IP."/extensions/wikia/Wall/sql/wall_related_pages.sql");
+			}
+			
+			$nm = new NavigationModel();
+			$nm->clearMemc( NavigationModel::WIKIA_GLOBAL_VARIABLE );
+		}
 		return true;
 	}
 	

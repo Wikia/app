@@ -4,4 +4,14 @@
  * various code-paths, some of which don't load the rest of the MediaWiki stack.
  */
 
-$wgCacheBuster = '61838';
+global $wgMedusaSlot, $wgDevelEnvironment;
+
+$slot_name = 'code' . ($wgMedusaSlot == 1 ? '' : $wgMedusaSlot);
+$cbFilePath = "/usr/wikia/deploy/$slot_name/src/wgCacheBuster.php";
+
+if ($wgDevelEnvironment) {
+	global $wgCacheBuster;
+	$wgCacheBuster = time();
+} else {
+	include_once($cbFilePath);
+}

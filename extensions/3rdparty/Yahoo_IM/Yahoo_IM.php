@@ -13,14 +13,16 @@ $wgExtensionCredits['parserhook'][] = array(
 // set up MediaWiki to react to the "<yahoo>" tag
 $wgHooks['ParserFirstCallInit'][] = "wfYahoo";
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfYahoo( $parser ) {
 	$parser->setHook( "yahoo", "RenderYahoo" );
 	return true;
 }
 
-
 // the function that reacts to "<yahoo>"
-
 function RenderYahoo( $input, $argv ) {
 
 	// set your defaults for the style and action (addfriend, call or sendim) (0, 1, 2, 3 and 4)

@@ -55,6 +55,8 @@ class ExtensionHasCategory {
 
 	/**
 	 * Register our parser function.
+	 *
+	 * @param Parser $parser
 	 */
 	function RegisterParser( &$parser ) {
 		if ( defined( get_class( $parser ) . '::SFH_OBJECT_ARGS' ) ) {
@@ -69,6 +71,9 @@ class ExtensionHasCategory {
 
 	/**
 	 * Just "redirect" to $this->IfhascatPf().
+	 *
+	 * @param Parser $parser
+	 * @param PPFrame $frame
 	 */
 	function IfhascatPfObj( &$parser, $frame, $args ) {
 		$page     = isset($args[0]) ? trim($frame->expand($args[0])) : '';

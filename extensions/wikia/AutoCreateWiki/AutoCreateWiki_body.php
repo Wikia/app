@@ -446,6 +446,7 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		$this->setInfoLog( $msgType, wfMsg('autocreatewiki-step2') );
 		if( $msgType == 'ERROR' ) {
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -475,6 +476,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
 			$this->log( "Cannot set data in city_list table" );
 			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 		/*
@@ -488,6 +490,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
 			$this->log( "Empty city_id = {$this->mWikiId}" );
 			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -512,6 +515,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
 			$this->log( "Cannot set data in city_domains table" );
 			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -596,6 +600,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			if ( $error !== true ) {
 				$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step6') );
 				$wgOut->addHTML(wfMsg('autocreatewiki-step6-error'));
+				wfProfileOut( __METHOD__ );
 				return;
 			}
 		}
@@ -635,6 +640,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			if ($error !== true) {
 				$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step7') );
 				$wgOut->addHTML(wfMsg('autocreatewiki-step7-error'));
+				wfProfileOut( __METHOD__ );
 				return;
 			}
 			/**
@@ -1212,6 +1218,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		if ( wfReadOnly() ) {
+			wfProfileOut( __METHOD__ );
 			$wgOut->readOnlyPage();
 			return false;
 		}
@@ -1623,7 +1630,6 @@ class AutoCreateWikiPage extends SpecialPage {
 				$WFSettingsVars[ "wgEnableMagicAnswer"               ] = false;
 				$WFSettingsVars[ "wgEnableCategoryHubsExt"           ] = false;
 				$WFSettingsVars[ "wgEnableEditingTipsExt"            ] = false;
-				$WFSettingsVars[ "wgAdslot_HOME_LEFT_SKYSCRAPER_1"   ] = "Null";
 
 				if (Wikia::langToSomethingMap(array("ar" => true, "he" => true, "ja" => true, "th" => true, "zh" => true), $this->mWikiData["language"], false)) {
 					$WFSettingsVars[ "wgDisableAnswersShortQuestionsRedirect" ] = true;

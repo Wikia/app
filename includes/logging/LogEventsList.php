@@ -781,8 +781,10 @@ class LogEventsList {
 		if ( !empty( $row->log_type ) && $row->log_type == "move" ) {
 			if ( !empty( $row->log_params ) ) {
 				$params = unserialize( $row->log_params );
-				$target = array_shift( $params );
-				$paramArray[0] = $target;
+				if (is_array($params) ) {
+					$target = array_shift( $params );
+					$paramArray[0] = $target;
+				}
 			}
 		}
 		return $paramArray;

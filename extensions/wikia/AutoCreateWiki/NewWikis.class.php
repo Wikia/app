@@ -60,28 +60,26 @@ class NewWikis {
 
 		$row = $db->fetchObject( $res );
 
-		//select pv_city_id, sum(pv_views) from page_views_wikia  where pv_city_id in ( 249526,249598,249611,249645,249756,249771,249836,249839,249841,249948,250124,250179,250276,250427,250549,250747 ) group by 1
-		$res = $db->query("
-		  SELECT pv_city_id, sum(pv_views) AS pviews
-		  FROM page_views_wikia
-		  WHERE pv_city_id IN ( " . $row->wikis ." ) AND
-		    2 < " . self::MAX_PV . "
-		  GROUP BY 1
-		  ORDER BY 2 DESC
-		  LIMIT " . self::MAX_WIKIS
-		);
-
-		while( $row = $db->fetchObject( $res ) ) {
-			// won't work on devboxes for fresh city IDs
-			$activeWikis[] = array(
-			  'wikiId' => $row->pv_city_id,
-			  'wikiName' => WikiFactory::getVarValueByName( 'wgSitename', $row->pv_city_id ),
-			  'wikiUrl' => WikiFactory::getVarValueByName( 'wgServer', $row->pv_city_id ),
-			  'pv' => $row->pviews );
+		$wikis = explode(',', $row->wikis);
+		if ( !empty( $wikis ) ) {
+			$startDate = date( 'Y-m-01', strtotime('-1 month') );
+			$endDate = date( 'Y-m-01', strtotime('now') );
+			$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $wikis );
+			
+			if ( empty( $pageviews ) ) {
+				foreach ( $pageviews as $wiki_id => $wiki_data ) {
+					$activeWikis[] = array(
+						'wikiId'	=> $wiki_id,
+						'wikiName'	=> WikiFactory::getVarValueByName( 'wgSitename', $wiki_id ),
+						'wikiUrl'	=> WikiFactory::getVarValueByName( 'wgServer', $wiki_id ),
+						'pv'		=> intval( $wiki_data[ 'SUM' ] )
+					);
+				}
+			}
 		}
-
+		
 		$result = array(
-		  'wikisNum' => $db->numRows( $res ),
+		  'wikisNum' => count( $activeWikis ),
 		  'pageNo' => $pageNo,
 		  'wikis' => array_slice( $activeWikis, ($pageNo * self::MAX_WIKIS_PER_PAGE)-1, self::MAX_WIKIS_PER_PAGE )
 		);

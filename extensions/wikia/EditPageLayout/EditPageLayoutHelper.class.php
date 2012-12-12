@@ -41,6 +41,7 @@ class EditPageLayoutHelper {
 		if ($this->app->runFunction('wfReadOnly')) {
 			// set correct page title
 			$this->out->setPageTitle($this->app->runFunction('wfMsg', 'editing', $this->app->getGlobal('wgTitle')->getPrefixedText()));
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
@@ -50,17 +51,6 @@ class EditPageLayoutHelper {
 			// set Oasis entry-point
 			Wikia::setVar('OasisEntryControllerName', 'EditPageLayout');
 		}
-
-		// macbre: load YUI on edit page (it's always loaded using $.loadYUI)
-		// PLB has problems with $.loadYUI not working correctly in Firefox (callback is fired to early)
-		/*
-		$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('yui');
-		$wgJsMimeType = $this->app->wg->JsMimeType;
-		foreach($srcs as $src) {
-			$this->out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>");
-		}
-		*/
-		$this->out->addModules('wikia.yui');
 
 		// Disable custom JS while loading the edit page on MediaWiki JS pages and user subpages (BugID: 41449)
 		if ( ( $editedArticle->getTitle()->getNamespace() === NS_MEDIAWIKI
@@ -114,7 +104,7 @@ class EditPageLayoutHelper {
 		$this->app->registerHook('MakeGlobalVariablesScript', 'EditPageLayoutHelper', 'onMakeGlobalVariablesScript', array(), false, $this);
 		$this->app->registerHook('SkinGetPageClasses', 'EditPageLayoutHelper', 'onSkinGetPageClasses', array(), false, $this);
 
-		WF::setInstance('EditPageLayoutHelper', $this );
+		F::setInstance('EditPageLayoutHelper', $this );
 
 		$this->editPage->setHelper( $this );
 
@@ -136,7 +126,7 @@ class EditPageLayoutHelper {
 		// on edit page so it will make proper list of modules
 		$action = $this->request->setVal('action',null);
 		$diff = $this->request->setVal('diff',null);
-		$railModuleList = WF::build('BodyController')->getRailModuleList();
+		$railModuleList = F::build('BodyController')->getRailModuleList();
 		$this->request->setVal('action',$action);
 		$this->request->setVal('diff',$diff);
 

@@ -91,6 +91,14 @@
 				'text' => wfMsg('wall-message-reopen-thread'),
 			);
 		}
+		
+		if($canMove) {
+			$dropdown[] = array(
+				'class' => 'move-thread',
+				'href' => '#',
+				'text' => wfMsg('wall-message-move-thread'),
+			);
+		}
 	?>
 	<?php if(!empty($dropdown)): ?>
 		<?= F::app()->renderView('MenuButton',
@@ -148,6 +156,9 @@
 		 <? endif; ?>
 		 <? if( $canUnnotifyeveryone ): ?>
 		 	<a href="#" class="edit-notifyeveryone" data-mode="0"> <?= wfMsg('wall-message-unnotifyeveryone'); ?> </a>
+		 <? endif; ?>
+		 <? if( $canMove ): ?>
+		 	<a href="#" class="move-thread"> <?= wfMsg('wall-message-move-thread'); ?> </a>
 		 <? endif; ?>
 
 	</span>

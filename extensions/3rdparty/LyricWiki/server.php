@@ -2074,24 +2074,29 @@ function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags
  * @return an array of strings which are the textForm of the page title (eg: "Cake:Dime").
  */
 function lw_getSearchResults($searchString, $maxResults=25){
+	global $wgCityId;
 	$titles = array();
-	try{
-		$searchString = trim($searchString);
-		$response = F::app()->sendRequest( 'SimpleSearchService', 'localSearch', array( 'key' => $searchString, 'limit' => $maxResults ) );
-		// $numAvailResults = $response->getVal('totalCount'); // would be useful if we add paging.
-		if(is_array($response->getVal('titleResults'))){
-			foreach($response->getVal('titleResults') as $resultData){
-				$titles[] = $resultData['textForm'];
+
+	try {
+		$wikiaSearch = F::build('WikiaSearch');
+		$wikiaSearchConfig = F::build('WikiaSearchConfig');
+		$wikiaSearchConfig->setNamespaces( array( NS_MAIN ) )
+			->setQuery( $searchString )
+			->setLength( $maxResults )
+			->setCityId( $wgCityId );
+
+		$resultSet = $wikiaSearch->doSearch( $wikiaSearchConfig );
+		$found = $resultSet->getResultsFound();
+
+		if ( !empty( $found ) ) {
+			foreach ( $resultSet as $result ) {
+				$titles[] = $result->getTitle();
 			}
 		}
-		if(is_array($response->getVal('textResults'))){
-			foreach($response->getVal('textResults') as $resultData){
-				$titles[] = $resultData['textForm'];
-			}
-		}
-	} catch(WikiaException $e){
+	} catch( WikiaException $e ) {
 		// TODO: Add logging of some sort.  For now, just return empty results and don't handle the error.
 	}
+
 	return $titles;
 } // end lw_getSearchResults()
 

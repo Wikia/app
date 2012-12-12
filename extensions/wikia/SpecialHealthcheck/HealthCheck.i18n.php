@@ -27,6 +27,13 @@ $messages['ast'] = array(
 	'healthcheck-desc' => "Una [[Special:HealthCheck|páxina especial]] pa comprobar l'estáu del sirvidor",
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Khan27
+ */
+$messages['az'] = array(
+	'healthcheck-desc' => 'Server vəziyyətinin yoxlaması üçün [[Special:HealthCheck|xüsusi səhifə]].',
+);
+
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
@@ -104,7 +111,8 @@ $messages['gl'] = array(
 	'healthcheck-desc' => 'Unha [[Special:HealthCheck|páxina especial]] para comprobar o estado do servidor',
 );
 
-/** Hebrew (עברית) */
+/** Hebrew (עברית)
+ */
 $messages['he'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|דף מיוחד]] לבדיקת מצב השרת',
 );
@@ -283,4 +291,3 @@ $messages['uk'] = array(
 $messages['zh-hans'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|特页]]服务器状态检查',
 );
-

@@ -1,43 +1,38 @@
-(function(log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Krux) {
+(function(log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Cache, Krux) {
 	var module = 'AdEngine2.run'
 		, adConfig
 		, adEngine
+		, adLogicShortPage
+		, adLogicHighValueCountry
 		, scriptWriter
 		, wikiaDart
 		, evolveHelper
-		, expiringStorage
-		, adProviderAdDriver
-		, adProviderAdDriver2Helper
 		, adProviderAdDriver2
 		, adProviderEvolve
-		, adProviderEvolveRS
 		, adProviderGamePro
 		, adProviderLater
 		, adProviderNull
 		, slotTweaker
-		, lazyQueue = LazyQueue()
 
 		, queueForLateAds
-		, adConfigForLateAds;
+		, adConfigForLateAds
+	;
 
 	// Construct Ad Engine
-	adEngine = AdEngine2(log, lazyQueue);
+	adEngine = AdEngine2(log, LazyQueue);
+
+	// Construct various helpers
+	adLogicShortPage = AdLogicShortPage(document);
+	adLogicHighValueCountry = AdLogicHighValueCountry(window);
+	slotTweaker = SlotTweaker(log, document, window);
+	scriptWriter = ScriptWriter(log, ghostwriter, document);
+	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux, adLogicShortPage);
+	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
-	slotTweaker = SlotTweaker(log, document);
-	scriptWriter = ScriptWriter(log, ghostwriter, document);
-	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux);
-	evolveHelper = EvolveHelper(log, window);
-	expiringStorage = ExpiringStorage(log, JSON);
-
-	adProviderAdDriver = AdProviderAdDriver(log, window);
-	adProviderAdDriver2Helper = AdProviderAdDriver2Helper(log, window, expiringStorage);
-	adProviderAdDriver2 = AdProviderAdDriver2(
-		adProviderAdDriver2Helper, wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker
-	);
-	adProviderEvolve = AdProviderEvolve(scriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker);
-	adProviderEvolveRS = AdProviderEvolveRS(scriptWriter, WikiaTracker, log, window, document, evolveHelper);
-	adProviderGamePro = AdProviderGamePro(scriptWriter, WikiaTracker, log, window, document);
+	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry);
+	adProviderEvolve = AdProviderEvolve(wikiaDart, scriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker);
+	adProviderGamePro = AdProviderGamePro(wikiaDart, scriptWriter, WikiaTracker, log, window, document);
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	// Special Ad Provider, to deal with the late ads
@@ -46,13 +41,11 @@
 
 	adConfig = AdConfig2(
 		// regular dependencies:
-		log, window, document, Geo
+		log, window, document, Geo, adLogicShortPage
 
 		// AdProviders:
-		, adProviderAdDriver
 		, adProviderAdDriver2
 		, adProviderEvolve
-		, adProviderEvolveRS
 		, adProviderGamePro
 		, adProviderLater
 		, adProviderNull
@@ -62,6 +55,18 @@
 	WikiaTracker.trackAdEvent('liftium.init', {'ga_category':'init2/init', 'ga_action':'init', 'ga_label':'adengine2'}, 'ga');
 	window.adslots2 = window.adslots2 || [];
 	adEngine.run(adConfig, window.adslots2);
+
+	// DART API for Liftium
+	window.LiftiumDART = {
+		getUrl: function(slotname, slotsize, a, b) {
+			return wikiaDart.getUrl({
+				slotname: slotname,
+				slotsize: slotsize,
+				adType: 'adi',
+				src: 'liftium'
+			});
+		}
+	};
 
 	// Register Evolve hop
 	window.evolve_hop = function(slotname) {
@@ -104,4 +109,4 @@
 		}
 	};
 
-}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Wikia.Cookies, Krux));
+}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux));

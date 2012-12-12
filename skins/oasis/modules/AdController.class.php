@@ -3,7 +3,7 @@
 class AdController extends WikiaController {
 
 	private static $config;
-	private static $slotsUseGetAd = array( 'HOME_INVISIBLE_TOP', 'INVISIBLE_TOP', 'INVISIBLE_1', 'INVISIBLE_2', 'HOME_TOP_RIGHT_BUTTON', 'TOP_RIGHT_BUTTON' );
+	private static $slotsUseGetAd = array( 'INVISIBLE_1', 'INVISIBLE_2', 'HOME_TOP_RIGHT_BUTTON', 'TOP_RIGHT_BUTTON' );
 	private static $slotsDisplayShinyAdSelfServe = array( 'CORP_TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'TEST_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD' );
 
 	private function configure() {
@@ -16,8 +16,7 @@ class AdController extends WikiaController {
 		}
 
 		if(WikiaPageType::isWikiaHub() && AdEngine::isAdsEnabledOnWikiaHub()) {
-			self::$config['HOME_TOP_LEADERBOARD'] = true;
-			self::$config['TOP_BUTTON'] = true;
+			self::$config['HUB_TOP_LEADERBOARD'] = true;
 			return;
 		}
 		// Ads on corporate hub pages only
@@ -48,7 +47,6 @@ class AdController extends WikiaController {
 			self::$config['INVISIBLE_2'] = true;
 			self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 			self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
-			self::$config['HOME_INVISIBLE_TOP'] = false;	// skins used to be served from this slot, but are now served from TOP_LEADERBOARD with option dcopt=ist
 			if($wgEnableFAST_HOME2) {
 				self::$config['HOME_TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_HOME_TOP_RIGHT_BOXAD'] = true;
@@ -68,7 +66,6 @@ class AdController extends WikiaController {
 				self::$config['LEFT_SKYSCRAPER_3'] = true;
 				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
-				self::$config['INVISIBLE_TOP'] = false;	// skins used to be served from this slot, but are now served from TOP_LEADERBOARD with option dcopt=ist
 				self::$config['TOP_RIGHT_BUTTON'] = true;
 				self::$config['TOP_BUTTON'] = true;
 			} else if($namespace == NS_FILE) {
@@ -91,8 +88,6 @@ class AdController extends WikiaController {
 					self::$config['TOP_RIGHT_BOXAD'] = true;
 					self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 					self::$config['TOP_BUTTON'] = true;
-					self::$config['LEFT_SKYSCRAPER_2'] = true;
-					self::$config['LEFT_SKYSCRAPER_3'] = true;
 					self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 					self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				}
@@ -103,6 +98,7 @@ class AdController extends WikiaController {
 					self::$config['TOP_BUTTON'] = true;
 				} else if($wgTitle->isSpecial('Videos')) {
 					self::$config['TOP_LEADERBOARD'] = true;
+					self::$config['TOP_BUTTON'] = true;
 				}
 			} else if($namespace == NS_CATEGORY) {
 				// category page
@@ -161,6 +157,7 @@ class AdController extends WikiaController {
 			}
 		}
 
+		// TODO remove unused providers
 		if(isset(self::$config[$this->slotname])) {
 			if (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdDriver') {
 				$this->ad = AdEngine::getInstance()->getAd($this->slotname, $params);
@@ -170,6 +167,7 @@ class AdController extends WikiaController {
 			}
 			elseif (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'DARTGP' ||
 					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdEngine2' ||
+					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'Liftium2' ||
 					AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'GamePro') {
 				$this->ad = AdEngine::getInstance()->getAd($this->slotname);
 			}
@@ -211,5 +209,4 @@ class AdController extends WikiaController {
 			$this->topAdsExtraClasses = '';
 		}
 	}
-
 }

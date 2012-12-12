@@ -31,6 +31,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			// quit if this particular user has generated an edit email in the last hour
 			$memcKey = wfMemcKey("FounderEmail", "EditEvent", $eventData['data']['editorName']);
 			if ($wgMemc->get($memcKey) == "1") {
+				wfProfileOut( __METHOD__ );
 				return true;
 			}
 
@@ -68,6 +69,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 				// BugID: 1961 Quit if the founder email is not confirmed
 				if ( !$user->isEmailConfirmed() ) {
+					wfProfileOut( __METHOD__ );
 					return true;
 				}
 
@@ -81,6 +83,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				$aWikiCounter = empty( $aAllCounter[$wgCityId] ) ? array() : $aAllCounter[$wgCityId];
 
 				if ( !empty( $aWikiCounter[0] ) && $aWikiCounter[0] == $today && $aWikiCounter[1] === 'full' ) {
+					wfProfileOut( __METHOD__ );
 					return true;
 				}
 

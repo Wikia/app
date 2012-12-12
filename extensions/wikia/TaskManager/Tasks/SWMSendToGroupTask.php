@@ -5,7 +5,7 @@
  * @subpackage BatchTask
  * @author Maciej Błaszkowski <marooned at wikia-inc.com> for Wikia.com
  * @copyright (C) 2008, Wikia Inc.
- * @licence GNU General Public Licence 2.0 or later
+ * @license GNU General Public Licence 2.0 or later
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -33,7 +33,7 @@ class SWMSendToGroupTask extends BatchTask {
 	function  __construct() {
 		$this->mType = 'SWMSendToGroup';
 		$this->mVisible = false;
-		$this->mTTL = 3600; #--- one hour
+		$this->mTTL = 60 * 60 * 5; #--- 5 hours
 		parent::__construct();
 	}
 
@@ -56,7 +56,7 @@ class SWMSendToGroupTask extends BatchTask {
 		$args = unserialize($params->task_arguments) ;
 
 		$result = false;
-		$this->addLog("Begin process of sending messages [wiki mode: {$args['sendModeWikis']}, user mode: {$args['sendModeUsers']}].");
+		$this->log("Begin process of sending messages [wiki mode: {$args['sendModeWikis']}, user mode: {$args['sendModeUsers']}].");
 		switch ($args['sendModeWikis']) {
 			case 'ALL':
 				switch ($args['sendModeUsers']) {
@@ -86,6 +86,7 @@ class SWMSendToGroupTask extends BatchTask {
 				switch ($args['sendModeUsers']) {
 					case 'ALL':
 					case 'ACTIVE':
+					case 'ANONS':
 						$result = $this->sendMessageToHub($args);
 						break;
 
@@ -126,6 +127,7 @@ class SWMSendToGroupTask extends BatchTask {
 					case 'ACTIVE':
 					case 'GROUP':
 					case 'EDITCOUNT':
+					case 'ANONS':
 						$result = $this->sendMessageToListOfWikis( $args );
 						break;
 				}
@@ -137,6 +139,7 @@ class SWMSendToGroupTask extends BatchTask {
 					case 'ACTIVE':
 					case 'GROUP':
 					case 'EDITCOUNT':
+					case 'ANONS':
 						$result = $this->sendMessageToWikisByCreationDate( $args );
 						break;
 				}
@@ -319,6 +322,16 @@ class SWMSendToGroupTask extends BatchTask {
 									$args['senderId']
 								);
 								break;
+
+							case 'ANONS':
+								$desc = sprintf('SiteWideMessages :: Send to all anon users on a hub<br/>' .
+									'Hub ID: %s<br/>' .
+									'Sender: %s [id: %d]',
+									$args['hubId'],
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
 						}
 						break;
 
@@ -410,6 +423,15 @@ class SWMSendToGroupTask extends BatchTask {
 									$args['senderId']
 								);
 								break;
+
+							case 'ANONS':
+								$desc = sprintf('SiteWideMessages :: Send to all anonymous users on %s wikis<br/>' .
+									'Sender: %s [id: %d]',
+									count( $args['wikiNames'] ),
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
 						}
 						break;
 
@@ -456,6 +478,18 @@ class SWMSendToGroupTask extends BatchTask {
 									$args['senderId']
 								);
 								break;
+
+							case 'ANONS':
+								$desc = sprintf('SiteWideMessages :: Send to all anonymous users on wikis by creation date:<br/>' .
+									'Option: %s; Start date: %s; End date: %s<br />' .
+									'Sender: %s [id: %d]',
+									$args['wcOption'],
+									$args['wcStartDate'],
+									$args['wcEndDate'],
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
 						}
 						break;
 				}
@@ -483,7 +517,7 @@ class SWMSendToGroupTask extends BatchTask {
 		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		//step 1 of 3: get list of all active wikis
-		$this->addLog('Step 1 of 3: get list of all active wikis');
+		$this->log('Step 1 of 3: get list of all active wikis');
 		$dbResult = $DB->Query (
 			  'SELECT city_id, city_dbname'
 			. ' FROM city_list'
@@ -520,17 +554,17 @@ class SWMSendToGroupTask extends BatchTask {
 		$result = true;
 		$sqlValues = array();
 
-		$this->addLog("Step 1 of 2: make list of user ids from given " . count( $params['userNames'] ) ."users.");
+		$this->log("Step 1 of 2: make list of user ids from given " . count( $params['userNames'] ) ."users.");
 		foreach ( $params['userNames'] as $userName ) {
 			$userId = User::idFromName( trim( $userName ) );
 			if ( !$userId ) {
-				$this->addLog("Given user $userName does not exist.");
+				$this->log("Given user $userName does not exist.");
 			} else {
 				$sqlValues[] = "(NULL, $userId, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 			}
 		}
 
-		$this->addLog("Step 2 of 2: add records about new message to right users [number of users = " . count( $sqlValues ) . "]");
+		$this->log("Step 2 of 2: add records about new message to right users [number of users = " . count( $sqlValues ) . "]");
 		$result = $this->sendMessageHelperToUsers( $sqlValues );
 
 		unset( $sqlValues );
@@ -559,7 +593,7 @@ class SWMSendToGroupTask extends BatchTask {
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
-		$this->addLog( 'Get Wiki IDs for the supplied ' . count( $params['wikiNames'] ) . ' wikis' );
+		$this->log( 'Get Wiki IDs for the supplied ' . count( $params['wikiNames'] ) . ' wikis' );
 		foreach ( $params['wikiNames'] as $wikiName ) {
 			$wikiID = null;
 			$wikiDomains = array( '', '.wikia.com', '.sjc.wikia-inc.com' );
@@ -645,7 +679,7 @@ class SWMSendToGroupTask extends BatchTask {
 		// Only get active wikis
 		$where['city_public'] = 1;
 
-		$this->addLog( "Get Wiki IDs based on the given creation date parameters (option: {$params['wcOption']}; start date: {$params['wcStartDate']}; end date: {$params['wcEndDate']}" );
+		$this->log( "Get Wiki IDs based on the given creation date parameters (option: {$params['wcOption']}; start date: {$params['wcStartDate']}; end date: {$params['wcEndDate']}" );
 		$res = $dbr->select(
 			array( 'city_list' ),
 			array( 'city_id', 'city_dbname' ),
@@ -657,7 +691,7 @@ class SWMSendToGroupTask extends BatchTask {
 		}
 		$dbr->freeResult( $res );
 
-		$this->addLog( 'Send message to the retrieved ' . count( $wikisDB ) . ' wikis' );
+		$this->log( 'Send message to the retrieved ' . count( $wikisDB ) . ' wikis' );
 		switch ( $params['sendModeUsers'] ) {
 			case 'ALL':
 			case 'ACTIVE':
@@ -725,7 +759,7 @@ class SWMSendToGroupTask extends BatchTask {
 				break;
 		}
 
-		$this->addLog( "Step 1 of 2: make list of user ids from users who registered {$params['regOption']} start date {$params['regStartDate']} and {$params['regEndDate']}." );
+		$this->log( "Step 1 of 2: make list of user ids from users who registered {$params['regOption']} start date {$params['regStartDate']} and {$params['regEndDate']}." );
 		$res = $dbr->select(
 			array( 'user' ),
 			array( 'user_id' ),
@@ -737,7 +771,7 @@ class SWMSendToGroupTask extends BatchTask {
 		}
 		$dbr->freeResult( $res );
 
-		$this->addLog( 'Step 2 of 2: add records about new message to right users [number of users = ' . count( $sqlValues ) . ']' );
+		$this->log( 'Step 2 of 2: add records about new message to right users [number of users = ' . count( $sqlValues ) . ']' );
 		$result = $this->sendMessageHelperToUsers( $sqlValues );
 
 		unset( $sqlValues );
@@ -779,7 +813,7 @@ class SWMSendToGroupTask extends BatchTask {
 				break;
 		}
 
-		$this->addLog( "Step 1 of 2: make list of user ids from users who have a specific editcount. [operator = {$params['editCountOption']}, from = {$params['editCountStart']}, to = {$params['editCountEnd']}]." );
+		$this->log( "Step 1 of 2: make list of user ids from users who have a specific editcount. [operator = {$params['editCountOption']}, from = {$params['editCountStart']}, to = {$params['editCountEnd']}]." );
 		$res = $dbr->select(
 			array( 'events' ),
 			array( 'user_id', 'count(*) as editcnt' ),
@@ -795,7 +829,7 @@ class SWMSendToGroupTask extends BatchTask {
 		}
 		$dbr->freeResult( $res );
 
-		$this->addLog( 'Step 2 of 2: add records about new message to right users [number of users = ' . count( $sqlValues ) . ']' );
+		$this->log( 'Step 2 of 2: add records about new message to right users [number of users = ' . count( $sqlValues ) . ']' );
 		$result = $this->sendMessageHelperToUsers( $sqlValues );
 
 		unset( $sqlValues );
@@ -857,14 +891,14 @@ class SWMSendToGroupTask extends BatchTask {
 
 		if( $row = $dbr->fetchObject( $dbResult ) ) {
 			if ( $row->city_useshared != '1' ) {
-				$this->addLog("Wiki [wiki_id = $wikiID] does not use shared database. Message was not sent.");
+				$this->log("Wiki [wiki_id = $wikiID] does not use shared database. Message was not sent.");
 				return false;
 			}
 		}
 		$dbr->freeResult( $dbResult );
 
 		$wikiDB = WikiFactory::IDtoDB($wikiID);
-		$this->addLog("Look into selected wiki for users that have a specific editcount [operator = {$params['editCountOption']}, from = {$params['editCountStart']}, to = {$params['editCountEnd']}, wiki_id = $wikiID, wiki_db = $wikiDB]");
+		$this->log("Look into selected wiki for users that have a specific editcount [operator = {$params['editCountOption']}, from = {$params['editCountStart']}, to = {$params['editCountEnd']}, wiki_id = $wikiID, wiki_db = $wikiDB]");
 		$db = wfGetDB( DB_SLAVE, array(), $wikiDB );
 		$res = $db->select(
 			array( 'revision' ),
@@ -881,7 +915,7 @@ class SWMSendToGroupTask extends BatchTask {
 			$sqlValues[] = "($wikiID, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 		}
 		$db->freeResult( $res );
-		$this->addLog("Add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count( $sqlValues ) . "]");
+		$this->log("Add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count( $sqlValues ) . "]");
 		if ( count( $sqlValues ) ) {
 			$result = $this->sendMessageHelperToUsers( $sqlValues );
 		}
@@ -922,7 +956,7 @@ class SWMSendToGroupTask extends BatchTask {
 		}
 
 		foreach ( $wikisDB as $wikiID => $wikiDB ) {
-			$this->addLog("Look into selected wiki for users that have a specific editcount [operator = {$params['editCountOption']}, from = {$params['editCountStart']}, to = {$params['editCountEnd']}, wiki_id = $wikiID, wiki_db = $wikiDB]");
+			$this->log("Look into selected wiki for users that have a specific editcount [operator = {$params['editCountOption']}, from = {$params['editCountStart']}, to = {$params['editCountEnd']}, wiki_id = $wikiID, wiki_db = $wikiDB]");
 			$db = wfGetDB( DB_SLAVE, array(), $wikiDB );
 			$res = $db->select(
 				array( 'revision' ),
@@ -939,9 +973,9 @@ class SWMSendToGroupTask extends BatchTask {
 				$sqlValues[] = "($wikiID, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 			}
 			$db->freeResult( $res );
-			$this->addLog("Add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count( $sqlValues ) . "]");
+			$this->log("Add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count( $sqlValues ) . "]");
 		}
-		$this->addLog( 'Add records about new message to right users [number of wikis = ' . count( $wikisDB ) . ', number of users = ' . count( $sqlValues ) . ']' );
+		$this->log( 'Add records about new message to right users [number of wikis = ' . count( $wikisDB ) . ', number of users = ' . count( $sqlValues ) . ']' );
 		if ( count( $sqlValues ) ) {
 			$result = $this->sendMessageHelperToUsers( $sqlValues );
 		}
@@ -987,14 +1021,14 @@ class SWMSendToGroupTask extends BatchTask {
 
 		if($row = $DB->FetchObject($dbResult)) {
 			if ($row->city_useshared != '1') {
-				$this->addLog("Wiki [wiki_id = $wikiID] does not use shared database. Message was not sent.");
+				$this->log("Wiki [wiki_id = $wikiID] does not use shared database. Message was not sent.");
 				return false;
 			}
 		}
 		$DB->FreeResult($dbResult);
 
 		$wikiDB = WikiFactory::IDtoDB($wikiID);
-		$this->addLog("Look into selected wiki for users that belong to a specified group [wiki_id = $wikiID, wiki_db = $wikiDB]");
+		$this->log("Look into selected wiki for users that belong to a specified group [wiki_id = $wikiID, wiki_db = $wikiDB]");
 		$DB = wfGetDB( DB_SLAVE );
 		$DB->selectDB($wikiDB);
 		$dbResult = $DB->Query (
@@ -1010,7 +1044,7 @@ class SWMSendToGroupTask extends BatchTask {
 			$sqlValues[] = "($wikiID, {$row->ug_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 		}
 		$DB->FreeResult($dbResult);
-		$this->addLog("Add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count($sqlValues) . "]");
+		$this->log("Add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count($sqlValues) . "]");
 		if (count($sqlValues)) {
 			$result = $this->sendMessageHelperToUsers($sqlValues);
 		}
@@ -1033,11 +1067,12 @@ class SWMSendToGroupTask extends BatchTask {
 	private function sendMessageToHub($params) {
 		global $wgExternalSharedDB;
 		$result = true;
+		$sqlValues = array();
 
 		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		//step 1 of 3: get list of all active wikis
-		$this->addLog('Step 1 of 3: get list of all active wikis belonging to a specified hub');
+		$this->log('Step 1 of 3: get list of all active wikis belonging to a specified hub');
 		$dbResult = $DB->Query (
 			  'SELECT city_id, city_dbname'
 			. ' FROM city_list'
@@ -1055,7 +1090,24 @@ class SWMSendToGroupTask extends BatchTask {
 		}
 		$DB->FreeResult($dbResult);
 
-		$result = $this->sendMessageHelperToActive($DB, $wikisDB, $params);
+		if ( $params['sendModeUsers'] === 'ANONS' ) {
+			$this->log( 'Send message to anoymous users (on specified wikis) [number of wikis = ' . count( $wikisDB ) . ']' );
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+			foreach ( array_keys( $wikisDB ) as $mWikiId ) {
+				$sqlValues[] = array(
+					'msg_wiki_id' => $mWikiId,
+					'msg_recipient_id' => 0,
+					'msg_id' => $params['messageId'],
+					'msg_status' => MSG_STATUS_UNSEEN
+				);
+			}
+			$result = (boolean)$dbw->insert(
+				MSG_STATUS_DB,
+				$sqlValues
+			);
+		} else {
+			$result = $this->sendMessageHelperToActive($DB, $wikisDB, $params);
+		}
 
 		return $result;
 	}
@@ -1079,7 +1131,7 @@ class SWMSendToGroupTask extends BatchTask {
 		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		//step 1 of 3: get list of all active wikis
-		$this->addLog('Step 1 of 3: get list of all active wikis belonging to a specified hub');
+		$this->log('Step 1 of 3: get list of all active wikis belonging to a specified hub');
 		$dbResult = $DB->Query (
 			  'SELECT city_id, city_dbname'
 			. ' FROM city_list'
@@ -1128,7 +1180,7 @@ class SWMSendToGroupTask extends BatchTask {
 			: " AND city_cluster = 'c{$clusterId}' ";
 
 		//step 1 of 3: get list of all active wikis
-		$this->addLog('Step 1 of 3: get list of all active wikis belonging to a specified cluster');
+		$this->log('Step 1 of 3: get list of all active wikis belonging to a specified cluster');
 		$dbResult = $DB->Query (
 			  'SELECT city_id, city_dbname'
 			. ' FROM city_list'
@@ -1176,7 +1228,7 @@ class SWMSendToGroupTask extends BatchTask {
 
 
 		//step 1 of 3: get list of all active wikis
-		$this->addLog('Step 1 of 3: get list of all active wikis belonging to a specified cluster');
+		$this->log('Step 1 of 3: get list of all active wikis belonging to a specified cluster');
 		$dbResult = $DB->Query (
 			  'SELECT city_id, city_dbname'
 			. ' FROM city_list'
@@ -1220,7 +1272,7 @@ class SWMSendToGroupTask extends BatchTask {
 		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		//step 1 of 3: get list of all active wikis
-		$this->addLog('Step 1 of 3: get list of all active wikis');
+		$this->log('Step 1 of 3: get list of all active wikis');
 		$dbResult = $DB->Query (
 			  'SELECT city_id, city_dbname'
 			. ' FROM city_list'
@@ -1279,34 +1331,31 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of operation
 	 */
 	private function sendMessageHelperToActive(&$DB, &$wikisDB, &$params) {
-		global $wgStatsDB, $wgStatsDBEnabled;
-
 		$result = true;
 
 		//step 2 of 3: get list of active users (on specified wikis)
-		$this->addLog('Step 2 of 3: get list of active users (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
+		$this->log('Step 2 of 3: get list of active users (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
 
 		$sqlValues = array();
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		foreach ( $wikisDB as $wikiId => $wikiDB ) {
+			$dbr = wfGetDB( DB_SLAVE, array(), $wikiDB );
 
 			$dbResult = $dbr->select(
-				array('`specials`.`events_local_users`'),
-				array('user_id', 'wiki_id'),
-				array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')'),
+				array( 'revision' ),
+				array( 'rev_user' ),
+				'',
 				__METHOD__,
-				array('GROUP BY' => 'wiki_id, user_id')
+				array( 'GROUP BY' => 'rev_user' )
 			);
 
-			//step 3 of 3: add records about new message to right users
-			while ($row = $dbr->FetchObject($dbResult)) {
-				$sqlValues[] = "({$row->wiki_id}, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+			while ( $row = $dbr->fetchObject( $dbResult ) ) {
+				$sqlValues[] = "({$wikiId}, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 			}
-			$dbr->FreeResult($dbResult);
+			$dbr->freeResult( $dbResult );
 		}
 
 		if (count($sqlValues)) {
-			$this->addLog("Step 3 of 3: add records about new message to right users [number of users = " . count($sqlValues) .	"]");
+			$this->log("Step 3 of 3: add records about new message to right users [number of users = " . count($sqlValues) .	"]");
 			$result = $this->sendMessageHelperToUsers($sqlValues);
 		}
 		unset($sqlValues);
@@ -1332,7 +1381,7 @@ class SWMSendToGroupTask extends BatchTask {
 		$result = true;
 
 		//step 2 of 3: get list of users that belong to a specified group (on specified wikis)
-		$this->addLog('Step 2 of 3: get list of users that belong to a specified group (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
+		$this->log('Step 2 of 3: get list of users that belong to a specified group (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
 
 		$sqlValues = array();
 		if ( !empty( $wgStatsDBEnabled ) ) {
@@ -1358,7 +1407,7 @@ class SWMSendToGroupTask extends BatchTask {
 		}
 
 		if (count($sqlValues)) {
-			$this->addLog("Step 3 of 3: add records about new message to right users [number of users = " . count($sqlValues) .	"]");
+			$this->log("Step 3 of 3: add records about new message to right users [number of users = " . count($sqlValues) .	"]");
 			$result = $this->sendMessageHelperToUsers($sqlValues);
 		}
 		unset($sqlValues);

@@ -89,7 +89,28 @@ class WikiaHomePageController extends WikiaController {
 
 	public function footer() {
 		$this->response->addAsset('extensions/wikia/WikiaHomePage/js/CorporateFooterTracker.js');
-		$this->interlang = HubService::isCorporatePage($this->wg->cityId);
+		$this->interlang = HubService::isCorporatePage();
+
+		$corporateWikis = $this->helper->getVisualizationWikisData();
+		$this->selectedLang = $this->wg->ContLang->getCode();
+		$this->dropDownItems = $this->prepareDropdownItems($corporateWikis, $this->selectedLang);
+	}
+
+	protected function prepareDropdownItems($corpWikis, $selectedLang) {
+		$results = array();
+
+		foreach($corpWikis as $lang => $wiki) {
+			if( $lang !== $selectedLang ) {
+				$results[] = array(
+					'class' => $lang,
+					'href' => $wiki['url'],
+					'text' => '',
+					'title' => $wiki['wikiTitle']
+				);
+			}
+		}
+
+		return $results;
 	}
 
 	/**
@@ -106,17 +127,20 @@ class WikiaHomePageController extends WikiaController {
 		$stats = $this->wg->Memc->get($memKey);
 		if (empty($stats)) {
 			$stats['visitors'] = $this->helper->getStatsFromArticle('StatsVisitors');
+			$stats['mobileVisitors'] = $this->helper->getStatsFromArticle('StatsMobileVisitors');
 
 			$stats['edits'] = $this->helper->getEdits();
 			if (empty($stats['edits'])) {
 				$stats['editsDefault'] = $this->helper->getStatsFromArticle('StatsEdits');
 			}
 
-			$stats['communities'] = $this->helper->getStatsFromArticle('StatsCommunities');
+			$stats['communities'] = $this->helper->getTotalCommunities();
 
 			$defaultTotalPages = $this->helper->getStatsFromArticle('StatsTotalPages');
 			$totalPages = intval(Wikia::get_content_pages());
 			$stats['totalPages'] = ($totalPages > $defaultTotalPages) ? $totalPages : $defaultTotalPages;
+
+			$stats['newCommunities'] = $this->helper->getLastDaysNewCommunities();
 
 			$this->wg->Memc->set($memKey, $stats, 60 * 60 * 1);
 		}
@@ -125,7 +149,6 @@ class WikiaHomePageController extends WikiaController {
 			$this->$key = $this->wg->Lang->formatNum($value);
 		}
 
-		$this->communities = $this->communities . '+';
 		if (empty($stats['edits']) && in_array('editsDefault', $stats)) {
 			$this->edits = $this->editsDefault . '+';
 		}
@@ -145,6 +168,7 @@ class WikiaHomePageController extends WikiaController {
 		} else {
 			try {
 				Wikia::log(__METHOD__, false, ' pulling failover visualization data from message');
+
 				$status = 'false';
 				$this->source = $this->getMediaWikiMessage();
 
@@ -157,6 +181,7 @@ class WikiaHomePageController extends WikiaController {
 				$this->response->setVal('initialWikiBatchesForVisualization', json_encode($failoverBatches));
 			} catch (Exception $e) {
 				Wikia::log(__METHOD__, false, ' pulling failover visualization data from file');
+
 				$status = 'false';
 
 				$failoverData = $this->getFailoverWikiList();
@@ -172,6 +197,12 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	public function getMediaWikiMessage() {
+		$failoverArticle = Title::newFromText(self::$mwMsgWikiList, NS_MEDIAWIKI);
+
+		if( !$failoverArticle->exists() ) {
+			throw new Exception('MediaWiki failover message does NOT exist');
+		}
+
 		return wfMsgForContent(self::$mwMsgWikiList);
 	}
 
@@ -453,7 +484,7 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	protected function getTranscludedArticleForTodaysHub($hubname) {
-		$today = date('j_F_Y');
+		$today = wfMsgExt('wikiahome-hub-current-day',array('parseinline'));
 		$transcludedArticleName = $hubname . "/" . $today;
 		return $this->getRawArticleContent($transcludedArticleName);
 	}

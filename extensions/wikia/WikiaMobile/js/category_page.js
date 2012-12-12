@@ -27,7 +27,7 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 				this.className = this.className.replace(' exp', '');
 
 				for(i = 0; i < l; i++){
-					elements[i].className = elements[i].className.replace(' open', '');
+					elements[i].className = elements[i].className.replace(/ open(?!\S)/g, '');
 				}
 			} else {
 				this.className += ' exp';
@@ -55,12 +55,15 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 	if (categorySection) {
 		categorySection.addEventListener(clickEvent, function (ev) {
 			var t = ev.target;
+
 			if (t.tagName == 'A' && t.parentElement.className.indexOf('cld') > -1) {
 				ev.preventDefault();
 				track.event('category', track.TEXT_LINK, {
 					label: 'category',
 					href: t.href
 				});
+			} else if(t.className.indexOf('pag') > -1) {
+				onClick.call(t, ev);
 			}
 		});
 	}
@@ -118,12 +121,4 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 			}
 		});
 	}
-
-	categorySection.addEventListener(clickEvent, function(ev){
-		var t = ev.target;
-
-		if(t.className.indexOf('pag') > -1) {
-			onClick.call(t, ev);
-		}
-	});
 });

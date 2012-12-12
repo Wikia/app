@@ -27,6 +27,10 @@ class PhalanxHelper {
 		$result = false;
 		wfProfileIn( __METHOD__ );
 
+		if ( ( $data['type'] & Phalanx::TYPE_USER ) && User::isIP( $data['text'] ) ) {
+			$data['ip_hex'] = IP::toHex( $data['text'] );
+		}
+
 		//get data before update - we need it for cache update
 		$oldData = Phalanx::getFromId($data['id']);
 
@@ -63,6 +67,10 @@ class PhalanxHelper {
 		$result = false;
 		wfProfileIn( __METHOD__ );
 
+		if ( ( $data['type'] & Phalanx::TYPE_USER ) && User::isIP( $data['text'] ) ) {
+			$data['ip_hex'] = IP::toHex( $data['text'] );
+		}
+
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$dbw->insert(
 			'phalanx',
@@ -91,7 +99,7 @@ class PhalanxHelper {
 	static public function setBlock() {
 		global $wgRequest, $wgUser;
 
-		wfProfileOut( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
 		$id = $wgRequest->getVal( 'id', false ); // only set for update
 		$filter = $wgRequest->getText( 'wpPhalanxFilter' );
@@ -300,8 +308,20 @@ class PhalanxHelper {
 			}
 		}
 
+		$newDataShort = false;
+		if ( $newData ) {
+			$newDataShort = array(
+				$newData['id'],
+				$newData['text'],
+				  ($newData['exact'] ? Phalanx::FLAG_EXACT : 0)
+				+ ($newData['regex'] ? Phalanx::FLAG_REGEX : 0)
+				+ ($newData['case'] ? Phalanx::FLAG_CASE : 0)
+			);
+		}
+
 		$id = intval( $oldData ? $oldData['id'] : $newData['id'] );
 
+		$memcClient = is_callable(array($wgMemc,'getClient')) ? $wgMemc->getClient() : false;
 		// Iterate through each affected cache case and update
 		foreach ($list as $moduleId => $list2) {
 			foreach ($list2 as $lang => $props) {
@@ -311,10 +331,11 @@ class PhalanxHelper {
 				$save = !empty($props['save']);
 
 				$sLang = $lang ? $lang : 'all';
+
+				// update full format
 				$key = 'phalanx:' . $moduleId . ':' . $sLang;
 				Phalanx::clearCache($moduleId,$sLang); // clear local cache
 				$blocksData = $wgMemc->get($key);
-
 				if (empty($blocksData)) {
 					Phalanx::getFromFilter($moduleId, $lang, true /*use master to avoid lag - change was a moment ago*/);
 				} else {
@@ -325,7 +346,28 @@ class PhalanxHelper {
 					}
 					$wgMemc->set($key,$blocksData);
 				}
-				unset($wgMemc->_dupe_cache[$key]);
+				if ( $memcClient ) {
+					unset($memcClient->_dupe_cache[$key]);
+				}
+
+				// update short format (only for user)
+				if ( $moduleId == Phalanx::TYPE_USER ) {
+					$key = 'phalanx:' . $moduleId . ':' . $sLang . ':short';
+					$blocksData = $wgMemc->get($key);
+					if (empty($blocksData)) {
+						Phalanx::getFromFilterShort($moduleId, $lang, true /*use master to avoid lag - change was a moment ago*/);
+					} else {
+						if ($remove && !$save) {
+							unset($blocksData['blocks'][$id]); // remove block
+						} else if ($save) {
+							$blocksData['blocks'][$id] = $newDataShort; // add or overwrite block
+						}
+						$wgMemc->set($key,$blocksData);
+					}
+					if ( $memcClient ) {
+						unset($memcClient->_dupe_cache[$key]);
+					}
+				}
 			}
 		}
 
@@ -359,11 +401,10 @@ class PhalanxHelper {
 				continue;
 			}
 
-			foreach( $filters as $filter ) {
-				$result = Phalanx::isBlocked( $text, $filter );
-				if ( $result['blocked'] == true ) {
-					$data[$module][] = $filter;
-				}
+			$filter = null;
+			$result = Phalanx::findBlocked( $text, $filters, true, $filter );
+			if ( $result['blocked'] == true ) {
+				$data[$module][] = $filter;
 			}
 
 			if ( !empty( $data[$module] ) ) {

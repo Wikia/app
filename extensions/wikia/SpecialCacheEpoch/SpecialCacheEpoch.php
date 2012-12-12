@@ -45,12 +45,14 @@ class SpecialCacheEpoch extends SpecialPage {
 
 		if ($this->isRestricted() && !$this->userCanExecute($wgUser)) {
 			$this->displayRestrictionError();
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
 		//no WikiFactory (internal wikis)
 		if (empty($wgCityId)) {
 			$wgOut->addHTML(wfMsg('cacheepoch-no-wf'));
+			wfProfileOut(__METHOD__);
 			return;
 		}
 

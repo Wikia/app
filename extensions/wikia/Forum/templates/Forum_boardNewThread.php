@@ -4,6 +4,16 @@
 		<blockquote class="message">
 			<div class="message-container">
 				<h4 class="heading"><?= wfMsg('forum-board-new-message-heading') ?></h4>
+				<? if($isTopicPage): ?>
+					<div class="board-container">
+						<select class="board-list" id="BoardList">
+							<? foreach($destinationBoards as $board): ?>
+								<option name="boardList" value="<?= $board['value'] ?>"><?= $board['content'] ?></option>
+							<? endforeach; ?>
+						</select>
+						<span class="board-list-error"><?= wfMsg('forum-no-board-selection-error') ?></span>
+					</div>
+				<? endif; ?>
 				<? if ($wg->EnableMiniEditorExtForWall): ?>
 					<?= $app->getView('MiniEditorController', 'Header', array(
 						'attributes' => array(

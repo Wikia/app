@@ -74,6 +74,7 @@ class ImageOperationsHelper {
 		$heightBeforeResizing = $aOrigSize['height'];
 
 		if($widthBeforeResizing > 2000 && $heightBeforeResizing > 2000) {
+			$this->app->wf->ProfileOut(__METHOD__);
 			return self::UPLOAD_ERR_RESOLUTION;
 		}
 
@@ -130,6 +131,7 @@ class ImageOperationsHelper {
 			100
 		);
 
+		$this->app->wf->ProfileOut(__METHOD__);
 		return $oImg;
 	}
 

@@ -48,13 +48,6 @@ $messages['qqq'] = array(
 	'action-multilookup' => '{{doc-action|multilookup}}',
 );
 
-/** Tati (Tati)
- * @author Erdemaslancan
- */
-$messages['ttt'] = array(
-	'multilookupgo' => 'Buşu',
-);
-
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -65,7 +58,7 @@ $messages['af'] = array(
 	'multilookupnotspecify' => "U het nog nie 'n IP-adres gespesifiseer nie",
 	'multilookupnext' => 'volgende',
 	'multilookupprevious' => 'vorige',
-	'multilookupnbrresult' => 'Aantal resultate:',
+	'multilookupnbrresult' => 'Aantal resultate:', # Fuzzy
 	'multilookupinvalidresults' => 'Ongeldige resultate!',
 	'multilookupnoresultfound' => 'Geen resultate gevind nie!',
 	'multilookupwiki' => 'Wiki',
@@ -448,7 +441,8 @@ $messages['inh'] = array(
 	'multilookupwiki' => 'ВIикIи',
 );
 
-/** Italian (italiano) */
+/** Italian (italiano)
+ */
 $messages['it'] = array(
 	'multilookupgo' => 'Vai',
 	'multilookupnext' => 'succ',
@@ -649,7 +643,8 @@ $messages['nl-informal'] = array(
 	'multilookupnotspecify' => 'Je hebt nog geen IP-adres opgegeven',
 );
 
-/** Deitsch (Deitsch) */
+/** Deitsch (Deitsch)
+ */
 $messages['pdc'] = array(
 	'multilookupnext' => 'Neegschte',
 );
@@ -969,6 +964,13 @@ $messages['tt-cyrl'] = array(
 	'multilookupwiki' => 'Вики',
 );
 
+/** Tati (Tati)
+ * @author Erdemaslancan
+ */
+$messages['ttt'] = array(
+	'multilookupgo' => 'Buşu',
+);
+
 /** Ukrainian (українська)
  * @author Тест
  */
@@ -1002,4 +1004,3 @@ $messages['zh-hans'] = array(
 	'multilookupwikititle' => '标题',
 	'multilookupwikioptions' => '选择',
 );
-

@@ -1,3 +1,5 @@
+@import "color";
+
 .sprite {
 	background-color: transparent;
 	background-image: url(/skins/oasis/images/sprite.png); /* $wgCdnStylePath */
@@ -13,6 +15,11 @@
 		background-position: -1080px -48px;
 		height: 20px;
 		width: 16px;
+	}
+	&.talk-two {
+		background-position: -1112px 0;
+		height: 26px;
+		width: 27px;
 	}
 	&.categorization {
 		background-position: -1072px -32px;
@@ -42,10 +49,10 @@
 
 	//Search button
 	&.search {
-		@if lightness($color-buttons) > 50 {
-			background-position: -1036px -48px;
-		} @else {
+		@if lightness( $color-button-text ) > 50 {
 			background-position: -1055px -80px;
+		} @else {
+			background-position: -1036px -48px;
 		}
 
 		height: 16px;
@@ -233,12 +240,6 @@
 		background-position: -1192px -80px;
 		height: 16px;
 		width: 16px;
-	}
-
-	&.shadow {
-		background-position: 0 -32px;
-		height: 13px;
-		width: 1000px
 	}
 
 	//Facebook

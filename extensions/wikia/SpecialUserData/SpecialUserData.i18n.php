@@ -16,7 +16,8 @@ $messages['en'] = array(
 	'userdata-no-wf' => 'WikiFactory is not enabled on this wiki. Unable to alter wgUserData.',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'userdata-wf-reason' => 'Log message for administrators only. Do not change "Special:UserData."',
 );
@@ -338,4 +339,3 @@ $messages['zh-hans'] = array(
 	'userdata-userid-label' => '提供用户ID：',
 	'userdata-submit' => '获取数据',
 );
-

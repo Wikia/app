@@ -11,7 +11,6 @@
 
 $messages = array();
 
-// Lang: en
 $messages['en'] = array(
 	//  Tabs 
 	'main-tab-discover' => 'Discover',
@@ -146,13 +145,17 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Nedergard
+ * @author Nike
  */
 $messages['fi'] = array(
 	'main-tab-discover' => 'Tutustu',
+	'main-tab-personal' => 'Oma Wikia',
 	'main-tab-search' => 'Etsi',
 	'main-tab-offline' => 'Ei kirjautuneena',
 	'tab-discover-loading-message' => 'Ladataan...',
 	'tab-discover-no-network-dialog-title' => 'Verkko ei ole käytettävissä',
+	'tab-discover-no-network-dialog-message' => 'Verkkoyhteyttä ei havaittu.',
 	'tab-discover-no-network-dialog-close-button' => 'Valmis',
 	'tab-search-loading-message' => 'Etsitään...',
 	'browser-loading-message' => 'Ladataan...',
@@ -230,7 +233,8 @@ $messages['inh'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'ХӀаа',
 );
 
-/** Italian (italiano) */
+/** Italian (italiano)
+ */
 $messages['it'] = array(
 	'main-tab-discover' => 'Scopri',
 	'main-tab-personal' => 'My Wikia',
@@ -354,13 +358,14 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'main-tab-discover' => 'Descobrir',
 	'main-tab-personal' => 'A minha Wikia',
 	'main-tab-search' => 'Pesquisar',
 	'main-tab-offline' => 'Desligado',
-	'tab-discover-loading-message' => 'A carregar...',
+	'tab-discover-loading-message' => 'A carregar…',
 	'tab-discover-no-network-dialog-title' => 'Rede indisponível',
 	'tab-discover-no-network-dialog-message' => 'Não foi detectada uma ligação de rede',
 	'tab-discover-no-network-dialog-close-button' => 'OK',
@@ -416,7 +421,7 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'main-tab-personal' => 'నా వికియా',
-	'main-tab-search' => 'అన్వేషణ',
+	'main-tab-search' => 'వెతుకు',
 	'tab-discover-no-network-dialog-close-button' => 'సరే',
 );
 
@@ -461,3 +466,9 @@ $messages['ug-arab'] = array(
 	'browser-loading-message' => 'يۈكلەۋاتىدۇ…',
 );
 
+/** Simplified Chinese (中文（简体）‎)
+ * @author Sam Wang
+ */
+$messages['zh-hans'] = array(
+	'tab-discover-no-network-dialog-close-button' => '确认',
+);

@@ -4,9 +4,9 @@ require(['track', 'events', 'querystring', 'toast'], function(track, events, qs,
 	/** @private **/
 
 	//init
-	$(function () {
+	Wikia(function () {
 		var btn = document.getElementById('ssoFbBtn');
-		$.getResources(
+		Wikia.getResources(
 			['http://connect.facebook.net/en_US/all.js'],
 			function() {
 				//see fbconnect.js
@@ -34,7 +34,7 @@ require(['track', 'events', 'querystring', 'toast'], function(track, events, qs,
 				function(response){
 					if(typeof response === 'object' && response.status == 'connected'){
 						// now check FB account (is it connected with Wikia account?)
-						$.nirvana.postJson('FacebookSignupController', 'index', null, function(resp){
+						Wikia.nirvana.postJson('FacebookSignupController', 'index', null, function(resp){
 							if(resp.loggedIn){
 								track.event('login', track.CLICK, {
 									label: 'facebook',
@@ -48,16 +48,14 @@ require(['track', 'events', 'querystring', 'toast'], function(track, events, qs,
 									reload.setPath(wgArticlePath.replace('$1', returnto));
 								}
 
-								reload.setVal('returnto');
-								reload.addCb();
-								reload.goTo();
+								reload.removeVal('returnto').removeHash('topbar').addCb().goTo();
 
 							}else{
 								track.event('login', track.CLICK, {
 									label: 'facebook',
 									value: 0
 								});
-								toast.show($.msg('wikiamobile-facebook-connect-fail'), {error: true});
+								toast.show(Wikia.msg('wikiamobile-facebook-connect-fail'), {error: true});
 							}
 						});
 					}

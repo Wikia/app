@@ -1990,6 +1990,18 @@ class Language {
 	}
 
 	/**
+	 * Get a complete list of message keys that are defined
+	 *
+	 * (added by Wikia)
+	 *
+	 * @author Władysław Bodzek
+	 * @return array
+	 */
+	function getAllMessageKeys() {
+		return self::$dataCache->getItem( $this->mCode, 'list', 'messages' );
+	}
+
+	/**
 	 * @param $in
 	 * @param $out
 	 * @param $string

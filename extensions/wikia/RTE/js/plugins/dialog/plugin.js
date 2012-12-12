@@ -13,10 +13,13 @@ CKEDITOR.plugins.add('rte-dialog',
 			var self = this,
 				fieldId = field._.inputId,
 				node = $('#' + fieldId),
-				promise;
+				promise = $.Deferred();
 
 			if (!node.exists() || node.data('suggestSetUp')) {
-				return;
+				if (node.exists()) {
+					promise.resolveWith(this, [node]);
+				}
+				return promise.promise();
 			}
 
 			RTE.log('enabling MW suggest on #' + fieldId);
@@ -72,7 +75,6 @@ CKEDITOR.plugins.add('rte-dialog',
 				promise.resolveWith(self, [node]);
 			});
 
-			promise = $.Deferred();
 			return promise.promise();
 		};
 

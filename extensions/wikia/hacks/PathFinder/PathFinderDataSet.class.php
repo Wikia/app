@@ -43,11 +43,14 @@ class PathFinderDataSet extends WikiaObject{
 			$fileName = array_pop( $tokens );
 			
 			if ( file_exists( $fileName ) ) {
+				$this->app->wf->profileOut( __METHOD__ );
 				return self::DATA_PATH . '/' . $fileName;
 			}
 		} else {
+			$this->app->wf->profileOut( __METHOD__ );
 			throw new PathFinderDataSetInvalidName();
 		}
+		$this->app->wf->profileOut( __METHOD__ );
 	}
 }
 

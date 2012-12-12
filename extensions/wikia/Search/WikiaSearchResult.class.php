@@ -54,6 +54,11 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 			return $this->_fields['title'];
 		}
 		
+		// for video wiki
+		if ( isset( $this->_fields[WikiaSearch::field('title', 'en')] )  ) {
+			return $this->_fields[WikiaSearch::field('title', 'en')];
+		}
+		
 		return '';
 	}
 
@@ -157,7 +162,7 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 	public function getTitleObject() {
 		$title = $this->getTitle();
 		
-		if ( empty( $title ) ) {
+		if ( $title === null || $title === '' ) {
 			// this will likely be null
 			return $this->titleObject;
 		}
@@ -195,15 +200,16 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 
 	/**
 	 * Helper method for turning results into nested arrays for JSON encoding
-	 * @param array $keys
+	 * @param array $keys list of fields you want in your json output
 	 * @return array
 	 */
-	public function toArray($keys) {
+	public function toArray( $keys ) {
 		$array = array();
-		foreach ($this as $key => $value)
+		foreach ( $this->_fields as $key => $value )
 		{
-			if(in_array($key, $keys))
-			$array[$key] = $value;
+			if( in_array( $key, $keys ) ) {
+				$array[$key] = $value;
+			}
 		}
 		return $array;
 	}

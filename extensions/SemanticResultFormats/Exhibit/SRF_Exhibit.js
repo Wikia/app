@@ -119,6 +119,6 @@ function createExhibit() {//overload Exhibit's autoCreate-functionality
     window.exhibit.configureFromDOM();
 }
 
-$(createExhibit);
+addOnloadHook(createExhibit);
 
 

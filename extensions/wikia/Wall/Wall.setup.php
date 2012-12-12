@@ -23,16 +23,11 @@ include($dir . '/WallNamespaces.php');
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
-$wgUseWallIndex = WikiFactory::getVarValueByName('wgUseWallIndex', 177);
+$app = F::app();
 
-if(!empty($app->wg->EnableForumExt) || !empty($wgUseWallIndex)) {
-	$app->registerClass('Wall', $dir . '/Wall.class.php');
-	$app->registerClass('WallThread', $dir . '/WallThread.class.php');
-} else {
-	$app->registerClass('Wall', $dir . '/backward_compatibility/Wall.class.php');
-	$app->registerClass('WallThread', $dir . '/backward_compatibility/WallThread.class.php');
-}
-
+$app->registerClass('Wall', $dir . '/Wall.class.php');
+$app->registerClass('Walls', $dir . '/Walls.class.php');
+$app->registerClass('WallThread', $dir . '/WallThread.class.php');
 
 $app->registerClass('WallMessage', $dir . '/WallMessage.class.php');
 $app->registerClass('WallController', $dir . '/WallController.class.php');
@@ -143,7 +138,10 @@ $app->registerHook('SpecialWikiActivityExecute', 'WallHooksHelper', 'onSpecialWi
 $app->registerHook('WantedPages::getQueryInfo', 'WallHooksHelper', 'onWantedPagesGetQueryInfo');
 $app->registerHook('ListredirectsPage::getQueryInfo', 'WallHooksHelper', 'onListredirectsPageGetQueryInfo');
 
-$app->registerHook('AfterLanguageGetNamespaces', 'WallHooksHelper', 'onAfterLanguageGetNamespaces');
+$app->registerHook('BeforeInitialize', 'WallHooksHelper', 'onBeforeInitialize');
+// lazy loaded by the previous hook
+
+$app->registerHook( 'WikiFeatures::afterToggleFeature', 'WallHooksHelper', 'onAfterToggleFeature');
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',
@@ -213,8 +211,8 @@ $wgGroupPermissions['util']['walldelete'] = true;
 $wgGroupPermissions['*']['walladmindelete'] = false;
 $wgGroupPermissions['staff']['walladmindelete'] = false;
 $wgGroupPermissions['vstf']['walladmindelete'] = true;
-$wgGroupPermissions['helper']['walladmindelete'] = false;
-$wgGroupPermissions['sysop']['walladmindelete'] = false;
+$wgGroupPermissions['helper']['walladmindelete'] = true;
+$wgGroupPermissions['sysop']['walladmindelete'] = true;
 
 $wgGroupPermissions['*']['wallarchive'] = false;
 $wgGroupPermissions['staff']['wallarchive'] = true;
@@ -250,3 +248,6 @@ $wgGroupPermissions['*']['wallfastadmindelete'] = false;
 $wgGroupPermissions['sysop']['wallfastadmindelete'] = false;
 $wgGroupPermissions['vstf']['wallfastadmindelete'] = true;
 $wgGroupPermissions['staff']['wallfastadmindelete'] = true;
+
+$wgGroupPermissions['*']['wallmessagemove'] = false;
+$wgGroupPermissions['user']['wallmessagemove'] = true;

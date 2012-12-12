@@ -196,6 +196,7 @@ class PathFinderModel {
 	}
 	
 	private function getEntryPoints( $cityId, $articleId, $count, $dateSpan, $minVisitsCount, $whereParams = null ){
+		$this->app->wf->profileIn( __METHOD__ );
 		$dateString = "-" . $dateSpan . " day";
 		$date = date( "Ymd", strtotime( $dateString ) );
 		$dbr =$this->getDBConnection();

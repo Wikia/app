@@ -63,7 +63,8 @@ var WMU_panel = null,
 	WMU_box = -1,
 	WMU_width_par = null,
 	WMU_height_par = null,
-	WMU_skipDetails = false;
+	WMU_skipDetails = false,
+	WMU_isOnSpecialPage = false;
 
 if (typeof WMU_box_filled == 'undefined') {
 	WMU_box_filled = [];
@@ -97,11 +98,10 @@ function WMU_setSkip(){
 	WMU_skipDetails = true;
 }
 
+// Returns the DOM element for the RTE textarea
 function WMU_getRTETxtarea(){
-	// return dom element, not jquery object
 	return WikiaEditor.getInstance().getEditbox()[0];
 }
-
 
 function WMU_loadDetails() {
 
@@ -193,40 +193,6 @@ function WMU_moveBackButton(selector) {
 /*
  * Functions/methods
  */
-if(mwCustomEditButtons) {
-	if ( $("#siteSub").length == 0 ) {
-		mwCustomEditButtons.push({
-			"imageFile": wgExtensionsPath + '/wikia/WikiaMiniUpload/images/button_wmu.png',
-			"speedTip": wmu_imagebutton,
-			"tagOpen": "",
-			"tagClose": "",
-			"sampleText": "",
-			"imageId": "mw-editbutton-wmu",
-			'onclick': function(ev) {
-				WMU_show(ev);
-			}
-		});
-	}
-}
-
-$(function() {
-	$.when(
-		$.loadYUI(),
-		$.loadJQueryAIM()
-	).then(function(){
-		if(skin != 'monobook') {
-			if(document.forms.editform) {
-				WMU_addHandler();
-			}
-		}
-	});
-});
-
-function WMU_addHandler() {
-	$.loadYUI(function(){
-		YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink'], 'click',  WMU_show);
-	});
-}
 
 function WMU_licenseSelectorCheck() {
 	var selector = document.getElementById( "ImageUploadLicense" );
@@ -345,9 +311,11 @@ function WMU_getFirstFree( gallery, box ) {
 }
 
 function WMU_loadMainFromView() {
-	if (UserLogin.isForceLogIn()) {
+	if (wgUserName == null) {
+		UserLogin.rteForceLogin();
 		return;
 	}
+
 	var callback = function(data) {
 		// first, check if this is a special case for anonymous disabled...
 		if( data.wmu_init_login ) {
@@ -382,6 +350,7 @@ function WMU_loadMainFromView() {
 		user_blocked = data.user_blocked;
 		user_disallowed = data.user_disallowed;
 		user_protected = data.user_protected;
+
 		if( user_blocked ) {
 			document.location = wgScriptPath + '/index.php?title=' + encodeURIComponent( wgTitle ) + '&action=edit';
 		} else {
@@ -446,6 +415,9 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			wikiaEditor.plugins.MiniEditor.hasFocus = true;
 		}
 	}
+
+	// Special Case for using WMU in on Special Pages
+	WMU_isOnSpecialPage = wgNamespaceNumber === -1;
 
 	if(gallery === -2){
 		//	if (showComboAjaxForPlaceHolder("WikiaImagePlaceholderInner" + box,true)) return false;
@@ -613,17 +585,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	YAHOO.util.Event.addListener('ImageUploadBack', 'click', WMU_back);
 	YAHOO.util.Event.addListener('ImageUploadClose', 'click', WMU_close);
 }
-
-
-$(function(){
-	if ( window.wgComboAjaxLogin ) {
-		if( (window.location.href.indexOf("openwindow=WMU") > 1)
-			&& (window.location.href.indexOf("action=submit") > 1)
-			&& (wgUserName !== null) ) {
-			WMU_show(-1);
-		}
-	}
-});
 
 function WMU_loadMain() {
 	var callback = {
@@ -923,10 +884,6 @@ function WMU_displayDetails(responseText) {
 		}
 	}
 
-	if( 0 < WMU_thumb ) {
-//                $G( 'ImageSizeRow' ).style.display = 'none';
-	}
-
 	if( 0 < WMU_size ) {
 		$G( 'ImageUploadWidthCheckbox' ).click();
 		$G( 'ImageUploadManualWidth' ).value = WMU_size;
@@ -952,13 +909,6 @@ function WMU_displayDetails(responseText) {
 			$G('ImageUploadLicenseLink').innerHTML = '[' + wmu_show_license_message  + ']';
 		}
 	}
-	//$G( 'ImageColumnRow' ).style.display = 'none';
-//	if( -1 != WMU_gallery ) {
-	// todo gallery stuff here
-//		if( -2 == WMU_gallery ) { // placeholder stuff, don't need that
-	//$G( 'WMU_LayoutGalleryBox' ).style.display = 'none';
-//		}
-//	}
 
 	if(typeof(WMU_Event_OnLoadDetails) == "function") {
 		setTimeout(function() {
@@ -978,13 +928,18 @@ function WMU_insertPlaceholder( box ) {
 }
 
 function WMU_insertImage(e, type) {
-	YAHOO.util.Event.preventDefault(e);
-
 	var params = Array();
 	params.push('type='+type);
 	params.push('mwname='+$G('ImageUploadMWname').value);
 	params.push('tempid='+$G('ImageUploadTempid').value);
-	params.push('update_caption='+$G('ImageUploadReplaceDefault').value);
+
+	var captionUpdateInput = $('#ImageUploadReplaceDefault');
+	if (captionUpdateInput.is(':hidden')) {
+		params.push('update_caption=' + captionUpdateInput.val());
+	} else {
+		var isCaptionUpdate = (captionUpdateInput.is(':checked')) ? 'on' : '';
+		params.push('update_caption=' + isCaptionUpdate );
+	}
 
 	if(type == 'overwrite') {
 		params.push('name='+ encodeURIComponent( $G('ImageUploadExistingName').value ) );
@@ -1099,6 +1054,17 @@ function WMU_insertImage(e, type) {
 						return false;
 					}
 
+					// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
+					if (WMU_isOnSpecialPage) {
+						var $responseHTML = $(o.responseText),
+							wmuData = {
+							imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
+							imageWikiText: $responseHTML.find('#ImageUploadTag').val()
+						};
+						$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
+						return false;
+					}
+
 					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
 						if( -2 == WMU_gallery) {
 							WMU_insertPlaceholder( WMU_box );
@@ -1174,7 +1140,6 @@ function WMU_insertImage(e, type) {
 			WMU_indicator(1, false);
 		}
 	}
-
 	WMU_indicator(1, true);
 	YAHOO.util.Connect.abort(WMU_asyncTransaction);
 	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), callback);
@@ -1219,7 +1184,7 @@ function MWU_imageWidthChanged() {
 }
 
 function MWU_imageSizeChanged(size) {
-	YAHOO.util.Dom.setStyle(['ImageWidthRow', 'ImageLayoutRow'], 'display', size == 'thumb' ? '' : 'none');
+	YAHOO.util.Dom.setStyle(['ImageWidthRow'], 'display', size == 'thumb' ? '' : 'none');
 
 	if($G('ImageUploadThumb')) {
 		var image = $G('ImageUploadThumb').firstChild;

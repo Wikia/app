@@ -308,17 +308,12 @@ EOT
 		if( !empty($cachedData) ) {
 			if( $checkingBlocks === false ) {
 				if( $cachedData['groups'] === false ) {
-
-					wfProfileOut( __METHOD__ );
-					return '-';
+					$result = '-';
 				} else {
-
-					wfProfileOut( __METHOD__ );
-					return implode(', ', $cachedData['groups']);
+					$result = implode(', ', $cachedData['groups']);
 				}
 			} else {
-				wfProfileOut( __METHOD__ );
-				return ( $cachedData['blocked'] === true ) ? '<span class="user-blocked">Y</span>' : 'N';
+				$result = ( $cachedData['blocked'] === true ) ? '<span class="user-blocked">Y</span>' : 'N';
 			}
 		} else {
 			if( $checkingBlocks === false ) {
@@ -333,10 +328,9 @@ EOT
 							'<img src="' . $wgStylePath .'/common/images/ajax.gif" />'.
 							'</span>';
 			}
-
-			wfProfileOut( __METHOD__ );
-			return $result;
 		}
+		wfProfileOut( __METHOD__ );
+		return $result;
 	}
 
 	/**

@@ -31,6 +31,11 @@ class WallBaseController extends WikiaController{
 					'extensions/wikia/MiniEditor/css/Wall/Wall.scss'
 				)
 			));
+		}
+		
+		if( $this->app->checkSkin( 'monobook' ) ) {
+			$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Form.js' );
+			$this->response->addAsset( 'resources/wikia/modules/querystring.js' );
 		}		
 	}
 	
@@ -65,6 +70,9 @@ class WallBaseController extends WikiaController{
 			$wallMessage->load();
 			$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
 		}
+
+		//TODO: keep the varnish cache and do purging on post 
+		$this->response->setCacheValidity(0, 0);
 
 		wfProfileOut( __METHOD__ );	
 	}
@@ -111,6 +119,9 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
 		$this->response->setVal('currentPage', $page );
 		
+		//TODO: keep the varnish cache and do purging on post 
+		$this->response->setCacheValidity(0, 0);
+		
 		wfProfileOut( __METHOD__ );
 	}
 	
@@ -136,6 +147,7 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal( 'isAnon', $this->wg->User->isAnon() );
 		$this->response->setVal( 'canNotifyeveryone', $wallMessage->canNotifyeveryone() );
 		$this->response->setVal( 'canUnnotifyeveryone', $wallMessage->canUnnotifyeveryone() );
+		$this->response->setVal( 'canMove', $wallMessage->canMove($this->wg->User) );
 	}
 	
 	public function message() {
@@ -284,23 +296,14 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal( 'isStaff', $wallMessage->showWikiaEmblem() );
 		$this->response->setVal( 'username', $name );
 		
-		
-		$displayname  = "";
-		$displayname2 = $name;
-		
-		if( empty($displayname) ) {
-			$displayname = $name;
-			$displayname2 = '';
-		}
+		$displayname = $wallMessage->getUserDisplayName();
+		$displayname2 = '';
 
 		$url = $wallMessage->getUserWallUrl();
 		
 		if($wallMessage->getUser()->getId() == 0) { // anynymous contributor
-			$url = Skin::makeSpecialUrl('Contributions').'/'.$wallMessage->getUser()->getName();
-			
-			$displayname = wfMsg('oasis-anon-user');
 			$displayname2 = $wallMessage->getUser()->getName();
-		} 
+		}
 		
 		$this->response->setVal( 'displayname',  $displayname );
 		$this->response->setVal( 'displayname2', $displayname2 );

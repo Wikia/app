@@ -77,6 +77,7 @@ class WatchSubPagesHelper {
 		$t = reset( $arrTitle );
 		$newTitle = Title::newFromDBkey( $t );
 		if ( ! ( $newTitle instanceof Title ) ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 

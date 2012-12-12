@@ -71,9 +71,9 @@ class RelatedVideosNamespaceData {
 	}
 	
 	static public function create(Title $title) {
-
 		wfProfileIn( __METHOD__ );
 		if (empty($title) || $title->exists()) {
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 

@@ -36,6 +36,7 @@ class SponsorshipDashboardOutputTable extends SponsorshipDashboardOutputFormatte
 		$aLabel = array();
 
 		if ( count( $this->report->reportSources ) == 0 ) {
+			wfProfileOut(__METHOD__);
 			return '';
 		}
 

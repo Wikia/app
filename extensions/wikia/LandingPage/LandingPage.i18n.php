@@ -191,7 +191,8 @@ $messages['ia'] = array(
 	'landingpage-buttons-learn-more' => 'Leger plus &gt;',
 );
 
-/** Indonesian (Bahasa Indonesia) */
+/** Indonesian (Bahasa Indonesia)
+ */
 $messages['id'] = array(
 	'landingpage' => 'Selamat datang di Wikia',
 	'landingpage-start-exploring' => 'Siap untuk memulai penjelajahan?',
@@ -209,7 +210,8 @@ $messages['kk-cyrl'] = array(
 	'landingpage-start-exploring' => 'Үйренуді бастауға дайынбысыз?',
 );
 
-/** Korean (한국어) */
+/** Korean (한국어)
+ */
 $messages['ko'] = array(
 	'landingpage' => '위키아에 오신 것을 환영합니다',
 	'landingpage-start-exploring' => '탐험을 시작할 준비가 되셨나요?',
@@ -450,7 +452,8 @@ $messages['tt-cyrl'] = array(
 	'landingpage-buttons-learn-more' => 'Тулырак &gt;',
 );
 
-/** Ukrainian (українська) */
+/** Ukrainian (українська)
+ */
 $messages['uk'] = array(
 	'landingpage' => 'Ласкаво просимо у Wikia',
 	'landingpage-readfaq' => 'Є запитання? Читайте наші FAQ &gt;',
@@ -478,4 +481,3 @@ $messages['zh-hant'] = array(
 	'landingpage-readfaq' => '有問題？閱讀我們的常見問題&gt;',
 	'landingpage-buttons-learn-more' => '了解更多 &gt;',
 );
-

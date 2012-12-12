@@ -36,17 +36,17 @@
 		}
 	}
 	?>
-	
+
 	<section id="hub-top-wikis"<?php echo $hidetopwikis ?>>
 		<h1><?php echo wfMsg('hub-featured', $data['title']) ?></h1>
 		<?php
-			global $wgUser, $wgStylePath;	
+			global $wgUser, $wgStylePath;
 			if( $wgUser->isAllowed( 'corporatepagemanager' ) ) {
 				if( $data['var_feeds']['topwikis'] ) {
 		?>
 		<span class="toggleContainer" id="topwikis">[<a class="toggleFeed" href="#"><?php echo wfMsg('hide') ?></a>]</span>
 
-		<?php 
+		<?php
 				} else {
 		?>
 		<span class="toggleContainer" id="topwikis">[<a class="toggleFeed" href="#"><?php echo wfMsg('unhide') ?></a>]</span>
@@ -54,10 +54,10 @@
 		<?php
 				}
 			} else {
-	
+
 			}
 		?>
-	
+
 		<div id="top-wikis-lists-box" class="clearfix">
 			<ul id="top-wikis-list-1">
 				<?php $lp = 1;?>
@@ -79,7 +79,7 @@
 				<?php $lp ++;?>
 				<?php endforeach ;?>
 			</ul>
-	
+
   	</div><!-- END: #top-wikis-lists-box -->
 
 	</section><!-- END: #hub-top-wikis -->
@@ -96,7 +96,7 @@
 	}
 	?>
 	<?php if (AutoHubsPagesHelper::showAds()): /* move to AdEngine, use hooks */ ?>
-	<div id='CORP_TOP_RIGHT_BOXAD' style='margin-top:-15px'><?php echo AdEngine::getInstance()->getAd('CORP_TOP_RIGHT_BOXAD')?></div>
+		<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD')); ?>
 	<?php endif; ?>
 
 
@@ -105,7 +105,7 @@
 		<?php
 			if( $wgUser->isAllowed( 'corporatepagemanager' ) ) {
 				if( $data['var_feeds']['topblogs'] ) {
-	
+
 		?>
 		<span class="toggleContainer" id="topblogs">[<a class="toggleFeed" href="#"><?php echo wfMsg('hide') ?></a>]</span>
 		<?php
@@ -113,12 +113,12 @@
 		?>
 		<span class="toggleContainer" id="topblogs">[<a class="toggleFeed" href="#"><?php echo wfMsg('unhide') ?></a>]</span>
 		<?php
-				} 
+				}
 			} else {
-	
+
 			}
 		?>
-			
+
 		<ul id="hub-blog-articles">
 			<?php foreach( $data['topBlogs'] as $value ): ?>
 			<li class="clearfix <?php echo $value['hide'] ? 'hide-blog':''; ?>">
@@ -153,7 +153,7 @@
 		}
 	}
 	?>
-	
+
 	<section id="wikia-global-hot-spots"<?php echo $hidehotspots ?>>
 		<h1><?php echo wfMsg('hub-hotspot-header', $data['title']) ?></h1>
 		<?php
@@ -161,22 +161,22 @@
 				if( $data['var_feeds']['hotspots'] ) {
 		?>
 		<span class="toggleContainer" id="hotspots">[<a class="toggleFeed" href="#"><?php echo wfMsg('hide') ?></a>]</span>
-		<?php 
+		<?php
 				} else {
 		?>
 		<span class="toggleContainer" id="hotspots">[<a class="toggleFeed" href="#"><?php echo wfMsg('unhide') ?></a>]</span>
 		<?php
 				}
 			} else {
-	
+
 			}
 		?>
-	
+
 		<p><?php echo wfMsg('hub-hotspot-info') ?></p>
 		<ol>
 			<?php 	$first_hot = true;
 							$dspl_type = 'hilite';
-							
+
 			foreach( $data['hotSpots'] as $value ): $first_hot ? $first_hot = false : $dspl_type = ''; ?>
 			<li class="<?php echo $dspl_type ?> <?php echo $value['hide'] ? 'hide-blog':''; ?>">
 				<div class="page-activity-badge">
@@ -195,14 +195,14 @@
 								<?php if( $value['hide'] ): ?>
 									<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=article&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>&dir=1" ><?php echo wfMsg('hub-show-feed'); ?></a>
 								<?php else: ?>
-									<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=article&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>" ><?php echo wfMsg('hub-hide-feed'); ?></a>							
+									<a class="wikia-page-link head-hide-link" href="/index.php?action=ajax&rs=AutoHubsPagesHelper::hideFeed&type=article&tag_id=<?php echo $data['tag_id'] ?>&city_id=<?php echo $value['city_id'] ?>&page_id=<?php echo $value['page_id'] ?>" ><?php echo wfMsg('hub-hide-feed'); ?></a>
 								<?php endif; ?>
-							<?php endif; ?>									
+							<?php endif; ?>
 					</span>
 				</span>
 			</li>
 			<?php endforeach; ?>
-			
+
 		</ol>
 	</section><!-- END: #wikia-global-hot-spots -->
 
@@ -224,19 +224,19 @@
 				if( $data['var_feeds']['topeditors'] ) {
 		?>
 		<span class="toggleContainer" id="topeditors">[<a class="toggleFeed" href="#"><?php echo wfMsg('hide') ?></a>]</span>
-		<?php 
+		<?php
 				} else {
 		?>
 		<span class="toggleContainer" id="topeditors">[<a class="toggleFeed" href="#"><?php echo wfMsg('unhide') ?></a>]</span>
 		<?php
 				}
 			} else {
-	
+
 			}
 		?>
-		      
+
 		<p><?php echo wfMsg('hub-contributors-info') ?></p>
-	
+
 		<ul>
 			<?php foreach( $data['topEditors'] as $value ): ?>
 			<li>

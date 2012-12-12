@@ -15,7 +15,7 @@ For older setups, SRF 1.6.x can be used, which has these requirements:
 Installation instructions are available online in a more convenient form for
 reading at:
 
- https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats
+ http://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats
 
 Copy all files into MediaWiki's extensions folder, either by using SVN or by
 extracting an installation package. You need to enter one line to your local

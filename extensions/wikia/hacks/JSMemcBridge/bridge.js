@@ -10,7 +10,7 @@ allowedGETKeys['TEST'] = true;
 allowedSETKeys['TEST'] = true;
 
 if(mode == 'devbox') {
-	var memcached = new mwmemc( ["10.8.36.106:11000","10.8.36.107:11000"], null );
+	var memcached = new mwmemc( ["10.8.44.110:11000","10.8.36.107:11000"], null );
 }
 else {
 	var memcached = new mwmemc( ["127.0.0.1:11211"], null );

@@ -1,3 +1,5 @@
+if (!window.wgDisableOldAdDriver) {
+
 var AdsCB = Math.floor(Math.random()*99999999); // generate random number to use as a cache buster during the call for ad (OpenX and DART)
 /**
  * Utility functions related to AdEngine
@@ -194,3 +196,5 @@ AdEngine.hiddenSlotOnShortPage = function(slotname) {
 
 	return false;
 };
+
+} // endif (!window.wgDisableOldAdDriver)

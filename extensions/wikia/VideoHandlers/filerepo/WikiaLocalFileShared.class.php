@@ -57,13 +57,13 @@ class WikiaLocalFileShared  {
 			$handler->setThumbnailImage( $this->oFile->transform( array( 'width' => $width ) ) );
 			$this->trackingArticleId = false;
 			$embed = $handler->getEmbed( $this->trackingArticleId, $width, $autoplay, $isAjax, $postOnload );
-			wfProfileOut( __METHOD__ );
-			return $embed;
+			$res = $embed;
 		} else {
 			$this->trackingArticleId = false;
-			wfProfileOut( __METHOD__ );
-			return false;
+			$res = false;
 		}
+		wfProfileOut( __METHOD__ );
+		return $res;
 	}
 
 	public function getPlayerAssetUrl() {
@@ -71,13 +71,13 @@ class WikiaLocalFileShared  {
 		wfProfileIn( __METHOD__ );
 		if ( $this->isVideo() ) {
 			$asset = $this->oFile->getHandler()->getPlayerAssetUrl();
-			wfProfileOut( __METHOD__ );
-			return $asset;
+			$res = $asset;
 		}
 		else {
-			wfProfileOut( __METHOD__ );
-			return false;
+			$res = false;
 		}
+		wfProfileOut( __METHOD__ );
+		return $res;
 	}
 
 	public function getVideoUniqueId() {

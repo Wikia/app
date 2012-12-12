@@ -80,7 +80,8 @@ $wgExtensionFunctions[] = 'sffSetupExtension';
 
 $wgHooks['LinkEnd'][] = 'SFFormLinker::setBrokenLink';
 // 'SkinTemplateNavigation' replaced 'SkinTemplateTabs' in the Vector skin
-$wgHooks['SkinTemplateTabs'][] = 'SFFormEditAction::displayTab';
+//Wikia change -- disable SkinTemplateTabs hooks
+//$wgHooks['SkinTemplateTabs'][] = 'SFFormEditAction::displayTab';
 $wgHooks['SkinTemplateNavigation'][] = 'SFFormEditAction::displayTab2';
 $wgHooks['smwInitProperties'][] = 'SFUtils::initProperties';
 $wgHooks['AdminLinks'][] = 'SFUtils::addToAdminLinks';

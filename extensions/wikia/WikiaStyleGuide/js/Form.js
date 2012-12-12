@@ -126,7 +126,13 @@ WikiaForm.prototype.clearSuccessMsg = function(inputGroup) {
 
 WikiaForm.prototype.clearGenericError = function(inputGroup) {
 	inputGroup.hide().find('.error-msg').remove();
-}
+};
 WikiaForm.prototype.clearGenericSuccess = function(inputGroup) {
 	inputGroup.hide().find('.success-msg').remove();
-}
+};
+
+WikiaForm.prototype.clearAllInputErrors = function() {
+	for (var key in this.inputGroups) {
+		this.clearInputError(key);
+	}
+};

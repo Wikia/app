@@ -22,6 +22,9 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	
 	protected $uniqueId;
 	protected $memcached;
+
+	protected $timeout;
+	protected $connectTimeout;
 	
 	/**
 	 * Memcache initializer
@@ -31,8 +34,15 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	 * @return  mixed
 	 */
 	public function __construct( $args ) {
-		global $wgMemCachedTimeout;
-		$this->timeout = intval( $wgMemCachedTimeout / 1000 );
+		ksort($args);
+		$this->args = $args;
+
+		if ( !empty($args['debug']) ) {
+			$this->setDebug(true);
+		}
+
+		$this->timeout = intval( $args['timeout'] / 1000 );
+		$this->connectTimeout = intval( $args['connect_timeout'] * 1000 );
 		$this->stats = array();
 		$this->persistent = $args['persistent'];
 		$this->uniqueId = uniqid('',true);
@@ -106,8 +116,15 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	 * @return  mixed
 	 */
 	public function get( $key ) {
+		$origKey = $key;
+		wfProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__."::$origKey");
 		$this->prefixKeys($key);
 		if (array_key_exists($key,$this->cache)) {
+			wfProfileIn(__METHOD__."::$origKey !DUPE");
+			wfProfileOut(__METHOD__."::$origKey !DUPE");
+			wfProfileOut(__METHOD__."::$origKey");
+			wfProfileOut(__METHOD__);
 			return $this->cache[$key];
 		}
 		
@@ -119,13 +136,23 @@ class LibmemcachedBagOStuff extends BagOStuff {
 				// key doesn't exist
 				// FIXME: compatibility with MWMemcached rather than BagOStuff
 				// some part of the code relies on this (eg. InterwikiDispatcher)
+				wfProfileIn(__METHOD__."::$origKey !MISS");
+				wfProfileOut(__METHOD__."::$origKey !MISS");
+				wfProfileOut(__METHOD__."::$origKey");
+				wfProfileOut(__METHOD__);
 				return null;
 			case Memcached::RES_SUCCESS:
 				// value has been found
 				$this->cache[$key] = $value;
+				wfProfileIn(__METHOD__."::$origKey !HIT");
+				wfProfileOut(__METHOD__."::$origKey !HIT");
+				wfProfileOut(__METHOD__."::$origKey");
+				wfProfileOut(__METHOD__);
 				return $value;
 			default:
 				// error accessing server
+				wfProfileOut(__METHOD__."::$origKey");
+				wfProfileOut(__METHOD__);
 				return false;
 		}
 	} 
@@ -246,7 +273,7 @@ class LibmemcachedBagOStuff extends BagOStuff {
 	}
 	
 	protected function getPersistentId() {
-		return md5(serialize($this->servers));
+		return md5(serialize(array($this->args,$this->servers)));
 	}
 	
 	protected function getMemcachedObject() {
@@ -265,10 +292,11 @@ class LibmemcachedBagOStuff extends BagOStuff {
 			// the line above sets the next 2 options automatically
 			//$memcached->setOption(Memcached::OPT_HASH,Memcached::HASH_MD5);
 			//$memcached->setOption(Memcached::OPT_DISTRIBUTION,Memcached::DISTRIBUTION_CONSISTENT);
-			$memcached->setOption(Memcached::OPT_SERIALIZER,Memcached::SERIALIZER_IGBINARY);
+//			$memcached->setOption(Memcached::OPT_SERIALIZER,Memcached::SERIALIZER_IGBINARY);
 			$memcached->setOption(Memcached::OPT_COMPRESSION,$this->compression);
 			$memcached->setOption(Memcached::OPT_BINARY_PROTOCOL,$this->binary);
-			$memcached->setOption(Memcached::OPT_CONNECT_TIMEOUT,10);
+			$memcached->setOption(Memcached::OPT_TCP_NODELAY,true);
+			$memcached->setOption(Memcached::OPT_CONNECT_TIMEOUT,intval($this->connectTimeout));
 			$memcached->setOption(Memcached::OPT_SERVER_FAILURE_LIMIT,2);
 			$memcached->setOption(Memcached::OPT_SEND_TIMEOUT,$this->timeout);
 			$memcached->setOption(Memcached::OPT_RECV_TIMEOUT,$this->timeout);
@@ -276,13 +304,12 @@ class LibmemcachedBagOStuff extends BagOStuff {
 // 			$memcached->setOption();
 			
 			// allow settings override in configuration (eg. enable igbinary serializer)
-			global $wgLibMemCachedOptions;
-			if (is_array($wgLibMemCachedOptions)) {
-				foreach ($wgLibMemCachedOptions as $key => $val) {
+			if ( !empty( $this->args['options'] ) && is_array( $this->args['options'] ) ) {
+				foreach ($this->args['options'] as $key => $val) {
 					$memcached->setOption($key,$val);
 				}
 			}
-			
+
 			// add servers if required
 			if (!count($memcached->getServerList())) {
 				$memcached->addServers($this->servers);
@@ -314,6 +341,32 @@ class LibmemcachedBagOStuff extends BagOStuff {
 			$data[$k] = $v;
 		}
 		return $data;
+	}
+
+	static public function newFromGlobals( $params ) {
+		if ( !isset( $params['servers'] ) ) {
+			$params['servers'] = $GLOBALS['wgMemCachedServers'];
+		}
+		if ( !isset( $params['debug'] ) ) {
+			$params['debug'] = $GLOBALS['wgMemCachedDebug'];
+		}
+		if ( !isset( $params['persistent'] ) ) {
+			$params['persistent'] = $GLOBALS['wgMemCachedPersistent'];
+		}
+		if ( !isset( $params['timeout'] ) ) {
+			$params['timeout'] = $GLOBALS['wgMemCachedTimeout'];
+		}
+		if ( !isset( $params['connect_timeout'] ) ) {
+			$params['connect_timeout'] = 100;
+		}
+		if ( !isset( $params['options'] ) ) {
+			if ( !empty( $GLOBALS['wgLibMemCachedOptions'] ) ) {
+				$params['options'] = $GLOBALS['wgLibMemCachedOptions'];
+			} else {
+				$params['options'] = array();
+			}
+		}
+		return new self($params);
 	}
 
 }

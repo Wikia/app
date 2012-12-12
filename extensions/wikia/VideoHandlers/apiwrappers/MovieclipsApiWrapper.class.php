@@ -27,6 +27,7 @@ class MovieclipsApiWrapper extends ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		if (!empty($this->metadata['title'])) {
+			wfProfileOut( __METHOD__ );
 			return $this->metadata['title'];
 		}
 

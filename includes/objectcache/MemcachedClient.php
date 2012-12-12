@@ -416,19 +416,44 @@ class MWMemcached {
 	 */
 	public function get( $key ) {
 		wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ . "::$key" );
+
+		# start wikia change
+		# Memoize duplicate memcache requests for the same key in the same request
+		if( isset( $this->_dupe_cache[ $key ] ) ) {
+			wfProfileIn ( __METHOD__ . "::$key !DUPE" );
+			wfProfileOut ( __METHOD__ . "::$key !DUPE" );
+			wfProfileOut( __METHOD__ . "::$key" );
+			wfProfileOut( __METHOD__ );
+			return $this->_dupe_cache[ $key ];
+		}
+		# end wikia change
 
 		if ( $this->_debug ) {
 			$this->_debugprint( "get($key)\n" );
 		}
 
 		if ( !$this->_active ) {
+			wfProfileOut( __METHOD__ . "::$key" );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
+		# start wikia change
+		# Wikia::memcachePurge hook on MediawikiPerformAction
+		# @author owen
+		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads;
+		if( $wgAllowMemcacheDisable && ( $wgAllowMemcacheReads == false ) ) {
+			wfProfileOut( __METHOD__ . "::$key" );
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		# end wikia change
+
 		$sock = $this->get_sock( $key );
 
 		if ( !is_resource( $sock ) ) {
+			wfProfileOut( __METHOD__ . "::$key" );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -440,27 +465,10 @@ class MWMemcached {
 			$this->stats['get'] = 1;
 		}
 
-		# start wikia change
-		# Wikia::memcachePurge hook on MediawikiPerformAction
-		# @author owen
-		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads;
-		if( $wgAllowMemcacheDisable && ( $wgAllowMemcacheReads == false ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		# Memoize duplicate memcache requests for the same key in the same request
-		if( isset( $this->_dupe_cache[ $key ] ) ) {
-			wfProfileIn ( __METHOD__ . "::$key !DUPE" );
-			wfProfileOut ( __METHOD__ . "::$key !DUPE" );
-			wfProfileOut( __METHOD__ );
-			return $this->_dupe_cache[ $key ];
-		}
-		# end wikia change
-
 		$cmd = "get $key\r\n";
 		if ( !$this->_safe_fwrite( $sock, $cmd, strlen( $cmd ) ) ) {
 			$this->_dead_sock( $sock );
+			wfProfileOut( __METHOD__ . "::$key" );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -476,12 +484,12 @@ class MWMemcached {
 
 		# start wikia change
 		# Owen wants to get more detailed profiling info
-		if (isset ($val[$key])) {
+		if ( array_key_exists($key,$val) ) {
 			$this->_dupe_cache[$key] = $val[$key];
 			wfProfileIn ( __METHOD__ . "::$key !HIT");
 			wfProfileOut ( __METHOD__ . "::$key !HIT");
 		} else {
-			$this->_dupe_cache[$key] = null;
+			$this->_dupe_cache[$key] = false;
 			wfProfileIn ( __METHOD__ . "::$key !MISS");
 			wfProfileOut ( __METHOD__ . "::$key !MISS");
 		}
@@ -491,6 +499,7 @@ class MWMemcached {
 		if ( isset( $val[$key] ) ) {
 			$value = $val[$key];
 		}
+		wfProfileOut( __METHOD__ . "::$key" );
 		wfProfileOut( __METHOD__ );
 		return $value;
 	}
@@ -506,7 +515,14 @@ class MWMemcached {
 	 * @return Array
 	 */
 	public function get_multi( $keys ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( $this->_debug ) {
+			$this->_debugprint( sprintf( "MemCache: get_multi: called with %d key(s)\n", count($keys) ) );
+		}
+
 		if ( !$this->_active ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -515,6 +531,27 @@ class MWMemcached {
 		} else {
 			$this->stats['get_multi'] = 1;
 		}
+
+		// Wikia change - begin - @author: wladek
+		$val = array();
+		foreach ($keys as $k => $key) {
+			if ( array_key_exists( $key, $this->_dupe_cache ) ) {
+				wfProfileIn ( __METHOD__ . "::$key !DUPE" );
+				wfProfileOut ( __METHOD__ . "::$key !DUPE" );
+				unset($keys[$k]);
+				$val[$key] = $this->_dupe_cache[$key];
+			}
+		}
+		if ( empty( $keys ) ) {
+			if ( $this->_debug ) {
+				$this->_debugprint( sprintf( "MemCache: get_multi: all requested data has been found in dupe cache\n" ) );
+			}
+
+			wfProfileOut( __METHOD__ );
+			return $val;
+		}
+		// Wikia change - end
+
 		$sock_keys = array();
 
 		foreach ( $keys as $key ) {
@@ -546,7 +583,7 @@ class MWMemcached {
 		}
 
 		// Parse responses
-		$val = array();
+		//$val = array(); // defined earlier in this function - @author: wladek
 		foreach ( $gather as $sock ) {
 			$this->_load_items( $sock, $val );
 		}
@@ -557,6 +594,22 @@ class MWMemcached {
 			}
 		}
 
+		// Wikia change - begin - @author: wladek
+		foreach ($keys as $key) {
+			if ( array_key_exists($key,$val) ) {
+				$this->_dupe_cache[$key] = $val[$key];
+				wfProfileIn ( __METHOD__ . "::$key !HIT");
+				wfProfileOut ( __METHOD__ . "::$key !HIT");
+			} else {
+				$val[$key] = false;
+				$this->_dupe_cache[$key] = false;
+				wfProfileIn ( __METHOD__ . "::$key !MISS");
+				wfProfileOut ( __METHOD__ . "::$key !MISS");
+			}
+		}
+		// Wikia change - end
+
+		wfProfileOut( __METHOD__ );
 		return $val;
 	}
 
@@ -970,13 +1023,17 @@ class MWMemcached {
 				}
 
 				if ( $this->_have_zlib && $flags & self::COMPRESSED ) {
+					wfProfileIn( __METHOD__ . '::uncompress' );
 					$ret[$rkey] = gzuncompress( $ret[$rkey] );
+					wfProfileOut( __METHOD__ . '::uncompress' );
 				}
 
 				$ret[$rkey] = rtrim( $ret[$rkey] );
 
 				if ( $flags & self::SERIALIZED ) {
+					wfProfileIn( __METHOD__ . '::unserialize' );
 					$ret[$rkey] = unserialize( $ret[$rkey] );
+					wfProfileOut( __METHOD__ . '::unserialize' );
 				}
 
 			} else {

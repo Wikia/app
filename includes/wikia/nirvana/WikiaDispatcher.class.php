@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Nirvana Framework - Dispatcher class, this is where all magic happens
  *
@@ -51,7 +50,7 @@ class WikiaDispatcher {
 
 				// Determine the "base" name for the controller, stripping off Controller/Service/Module
 				$controllerName = $app->getBaseName( $request->getVal( 'controller' ) );
-				
+
 				// Service classes must be dispatched by full name otherwise we look for a controller.
 				if ($app->isService($request->getVal('controller'))) {
 					$controllerClassName = $app->getServiceClassName( $controllerName );
@@ -66,7 +65,7 @@ class WikiaDispatcher {
 				}
 
 				if ( empty( $autoloadClasses[$controllerClassName] ) ) {
-					throw new WikiaException( "Controller class does not exist: {$controllerClassName}" );
+					throw new WikiaException( "Controller class does not exist: {$controllerClassName} method: {$method}" );
 				}
 
 				$app->wf->profileIn($profilename);
@@ -146,6 +145,30 @@ class WikiaDispatcher {
 				$app->runHook( ( "{$controllerName}{$hookMethod}AfterExecute" ), array( &$controller, &$params ) );
 
 				$app->wf->profileOut($profilename);
+
+			} catch ( WikiaHttpException $e ) {
+				if ( $request->isInternal() ) {
+					//if it is internal call rethrow it so we can apply normal handling
+					throw $e;
+
+				} else {
+					$app->wf->profileOut($profilename);
+					$response->setFormat( 'json' );
+
+					$response->setHeader(
+						'HTTP/1.1',
+						$e->getCode(),
+						true
+					);
+
+					$response->setVal( 'error', get_class( $e ) );
+
+					$details = $e->getDetails();
+
+					if( !empty( $details ) ) {
+						$response->setVal( 'message', $details );
+					}
+				}
 			} catch ( Exception $e ) {
 				$app->wf->profileOut($profilename);
 

@@ -37,6 +37,7 @@ class CodeLintPhp extends CodeLint {
 	protected function inspectDirectory($dirName) {
 		global $wgPHPStormPath, $IP;
 		$start = microtime(true);
+		$dirName = realpath($dirName);
 
 		$isCached = ($this->cache['directory'] !== '') && (strpos($dirName, $this->cache['directory']) === 0);
 
@@ -47,26 +48,30 @@ class CodeLintPhp extends CodeLint {
 			// copy project meta data to trunk root
 			$copyCmd = "cp -rf {$projectMetaData}/.idea {$IP}";
 
-			#echo "Copying project meta data <{$copyCmd}>...";
+			echo "Copying project meta data <{$copyCmd}>...";
 			exec($copyCmd);
-			#echo " [done]\n";
+			echo " [done]\n";
 
 			// create a temporary directory for Code Inspect results
 			$resultsDir = wfTempDir() . '/phpstorm/' . uniqid('lint');
 			echo "Creating temporary directory for results <{$resultsDir}>...";
-			wfMkdirParents($resultsDir);
-			echo " [done]\n";
+			if (wfMkdirParents($resultsDir)) {
+				echo " [done]\n";
+			}
+			else {
+				echo " [err!]\n";
+			}
 
 			$cmd = sprintf('/bin/sh %s/inspect.sh %s %s %s -d %s -v2',
 				$wgPHPStormPath,
-				$IP, // PHP Storm project directory
+				realpath($IP . '/includes/..'), // PHP Storm project directory (this needs to be a parent of $dirName)
 				$lintProfile, // XML file with linting profile
 				$resultsDir, // output directory
 				$dirName // directory to check
 			);
 
 			echo "Running PHP storm <{$cmd}>...";
-			//echo "Running PhpStorm for <{$dirName}>...";
+			#echo "Running PhpStorm for <{$dirName}>...";
 
 			$retVal = 0;
 			$output = array();
@@ -258,9 +263,6 @@ class CodeLintPhp extends CodeLint {
 	public function internalCheckFile($fileName) {
 		// run PhpStorm for the whole directory
 		$output = $this->inspectDirectory(dirname($fileName));
-
-		// use the same directory structure as parseResults() method
-		$fileName = realpath($fileName);
 
 		// take issues for just the current file
 		$errors = isset($output['problems'][$fileName]) ? $output['problems'][$fileName] : array();

@@ -27,6 +27,19 @@ var AdminDashboard = {
 		}, function() {
 			AdminDashboard.tooltip.text('');
 		}).click(AdminDashboard.handleControlClick);
+		
+		// init addVideo jQuery plugin
+		var addVideoButton = AdminDashboard.cc.find('.addVideoButton'),
+			addVideoButtonReturnUrl = addVideoButton.data('return-url');
+
+		if( $.fn.addVideoButton ) {
+		//FB#68272
+			addVideoButton.addVideoButton({
+				callback: function() {
+					window.location = addVideoButtonReturnUrl;
+				}
+			});
+		}
 
 		AdminDashboard.allTabs.click(function(e) {
 			e.preventDefault();

@@ -46,7 +46,10 @@
 
 $wgHooks['ParserFirstCallInit'][] = 'wfEventCountdownExtension';
 
-
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfEventCountdownExtension( $parser ) {
         # register the extension with the WikiText parser
         # the first parameter is the name of the new tag.
@@ -90,7 +93,6 @@ function runShowEventCountdown( $input, $argv, $parser ) {
         $output = '';
 
         if ($daysUntil > 0) {
-                global $wgOut;
                 $output = parse($parser, $input);
         }
 
@@ -108,7 +110,7 @@ function getDaysBetween($date1, $date2) {
  *
  * Function copied from extension/Cite/Cite.php
  *
- * @param object $parser Parser object
+ * @param Parser $parser Parser object
  * @param string $in The text to parse
  * @return string The parsed text
  */

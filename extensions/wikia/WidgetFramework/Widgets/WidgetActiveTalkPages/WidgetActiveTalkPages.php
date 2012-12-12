@@ -66,5 +66,6 @@ function WidgetActiveTalkPages($id, $params) {
 	// 'more' link...
 	$more = Title::newFromText('Recentchanges', NS_SPECIAL)->getLocalURL('namespace=1');
 
+	wfProfileOut(__METHOD__);
 	return WidgetFramework::wrapLinks($list) . WidgetFramework::moreLink($more);
 }

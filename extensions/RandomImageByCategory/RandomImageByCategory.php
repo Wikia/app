@@ -73,6 +73,7 @@ function getRandomImage( $input, $args, $parser ) {
 		}
 
 		if( count( $category_match ) == 0 ) {
+			wfProfileOut( __METHOD__ );
 			return '';
 		}
 

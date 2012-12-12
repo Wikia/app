@@ -186,8 +186,8 @@ class GameGuidesModel{
 	 * @param string $term the term to search for
 	 * @param integer $totalLimit [OPTIONAL] the maximum total number of results to fetch from the search index
 	 *
-	 * @return array a results set produced by SimpleSearchController::localSearch
-	 * @see SimpleSearchController::localSearch
+	 * @return array a results set produced by WikiaSearch
+	 * @see WikiaSearch
 	 */
 	public function getSearchResults( $term, $totalLimit = self::SEARCH_RESULTS_LIMIT ){
 		$this->app->wf->profileIn( __METHOD__ );
@@ -216,24 +216,24 @@ class GameGuidesModel{
 
 				$resultSet = $wikiaSearch->doSearch( $wikiaSearchConfig );
 
-				$found = $resultSet->getResultsFound();
-				$count = 0;
 				$ret['textResults'] = array();
 
-				if ( !empty( $found ) ) {
+				if ( $resultSet->hasResults() ) {
 					$textResults = array();
 
-					foreach ( $resultSet as $result ) {
-						$textResults[] = array(
-							'textForm' => $result->getTitle(),
-							'urlForm' => $result->getTitleObject()->getLocalUrl( array( 'useskin' => 'wikiaapp') )
-						);
+					while ( $result = $resultSet->next() ) {
+						$title = $result->getTitleObject();
 
-						$count++;
+						if ( $title instanceof Title ) {
+							$textResults[] = array(
+								'textForm' => $result->getTitle(),
+								'urlForm' => $title->getLocalUrl( array( 'useskin' => 'wikiaapp') )
+							);
+						}
 					}
 
 					$ret['textResults'] = $textResults;
-					$ret['count'] = $count;
+					$ret['count'] = $resultSet->getResultsNum();
 				}
 			}
 

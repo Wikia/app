@@ -105,9 +105,11 @@ class TaskManagerArchive extends Maintenance {
 	 */
 	private function moveRows() {
 
+		global $wgExternalArchiveDB;
+
 		wfProfileIn( __METHOD__ );
 
-		$dbw = WikiFactory::db( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
 		$dbw->begin();
 		foreach( $this->mData as $num => $task ) {
 			$values = array(

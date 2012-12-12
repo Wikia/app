@@ -55,6 +55,7 @@ $starttime = microtime( true );
 
 // URL safety checks
 if ( !$wgRequest->checkUrlExtension() ) {
+	wfProfileOut( 'api.php' );
 	return;
 }
 
@@ -116,6 +117,9 @@ $wgTitle = Title::makeTitle( NS_MAIN, 'API' );
  * is some form of an ApiMain, possibly even one that produces an error message,
  * but we don't care here, as that is handled by the ctor.
  */
+if ( !empty( $wgVisualEditorSyncval ) && !empty( $_GET['syncval'] ) && $wgVisualEditorSyncval === $_GET['syncval'] ) {
+	$wgGroupPermissions['*']['read'] = true;
+}
 $processor = new ApiMain( $wgRequest, $wgEnableWriteAPI );
 
 // Process data & print results

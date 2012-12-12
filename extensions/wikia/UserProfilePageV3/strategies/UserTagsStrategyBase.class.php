@@ -111,8 +111,6 @@ abstract class UserTagsStrategyBase {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	protected function sortUserGroups($group1, $group2) {
-		$this->app->wf->ProfileIn(__METHOD__);
-
 		if( !isset($this->groupsRank[$group1]) && !isset($this->groupsRank[$group2]) ) {
 			$result = 0;
 		} elseif( !isset($this->groupsRank[$group1]) && isset($this->groupsRank[$group2]) ) {
@@ -123,7 +121,6 @@ abstract class UserTagsStrategyBase {
 			$result = ($this->groupsRank[$group1] < $this->groupsRank[$group2]) ? 1 : -1;
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
 		return $result;
 	}
 
@@ -159,7 +156,10 @@ abstract class UserTagsStrategyBase {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		$userGroups = $this->getUsersEffectiveGroups();
+		$this->app->wf->ProfileIn(__METHOD__.'-sort');
 		usort($userGroups, array($this, 'sortUserGroups'));
+		$this->app->wf->ProfileOut(__METHOD__.'-sort');
+
 
 		//just a regular member by default
 		$group = false;

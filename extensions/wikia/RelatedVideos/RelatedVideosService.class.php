@@ -75,6 +75,42 @@ class RelatedVideosService {
 		return $this->getRelatedVideoData( $params, $videoWidth, $cityShort, 0, $videoHeight );
 	}
 
+
+	/**
+	 * Preload information from memcached about given pages
+	 *
+	 * @author Władysław Bodzek
+	 * @param $pages array
+	 */
+	protected function preloadDataFromMemcached( $pages, $videoWidth = RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life' ) {
+		global $wgMemc;
+		wfProfileIn(__METHOD__);
+
+		if ( empty( $pages ) ) {
+			wfProfileOut(__METHOD__);
+			return;
+		}
+
+		if ( !is_callable( array( $wgMemc, 'getMulti' ) ) ) {
+			wfProfileOut(__METHOD__);
+			return;
+		}
+
+		$keys = array();
+		foreach ( $pages as $params ) {
+			$titleText = isset( $params['title'] ) ? $params['title'] : '';
+			$source = isset( $params['source'] ) ? $params['source'] : '';
+			$keys[] = $this->getMemcKey( $titleText, $source, $videoWidth, $cityShort );
+		}
+
+		$keys = array_unique($keys);
+
+		$data = $wgMemc->getMulti( $keys );
+		wfProfileOut(__METHOD__);
+
+		return $data;
+	}
+
 	private function extendVideoByLocalParams( $videoData, $localParams ){
 
 		if ( isset( $localParams['isNewDate'] ) && !empty( $localParams['isNewDate'] ) ){
@@ -197,6 +233,28 @@ class RelatedVideosService {
 		$oEmbededVideosLists = RelatedVideosEmbededData::newFromTitle( $title );
 		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();
 
+		// experimental - begin - @author: wladek - prefetch data from memcached
+		// todo: verify results
+		global $wgEnableMemcachedBulkMode;
+		if ( !empty( $wgEnableMemcachedBulkMode ) ) {
+			$pages = array();
+			foreach( array( $oGlobalLists, $oEmbededVideosLists, $oLocalLists ) as $oLists ){
+				if ( !empty( $oLists ) && $oLists->exists() ){
+					$data = $oLists->getData();
+					if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {
+						foreach( $data['lists']['WHITELIST'] as $page ){
+							$pages[] = $page;
+						}
+						foreach( $data['lists']['BLACKLIST'] as $page ){
+							$pages[] = $page;
+						}
+					}
+				}
+			}
+			$this->preloadDataFromMemcached($pages);
+		}
+		// experimental - end
+
 		$blacklist = array();
 		foreach( array( $oGlobalLists, $oEmbededVideosLists, $oLocalLists ) as $oLists ){
 			if ( !empty( $oLists ) && $oLists->exists() ){
@@ -244,12 +302,15 @@ class RelatedVideosService {
 		}
 
 		$file = wfFindFile( $oTitle );
-		$thumb = $file->transform( array( 'width'=>$width, 'height'=>$height ) );
-
-		$arr['thumbnail'] = $thumb->toHtml( array( 'custom-title-link' => $oTitle,
+		if (! empty( $file ) ) {
+			$thumb = $file->transform( array( 'width'=>$width, 'height'=>$height ) );
+			if ( ! empty( $thumb ) ) {
+				$arr['thumbnail'] = $thumb->toHtml( array( 'custom-title-link' => $oTitle,
 		                                           'duration' => true,
 			                                   'linkAttribs' => array( 'class' => 'video-thumbnail' )
 							) );
+			}
+		}
 	}
 
 }

@@ -18,134 +18,94 @@ class StructuredData {
 	}
 
 	/**
-	 * @param int $id
-	 * @param int $elementDepth
+	 * @param string $id
 	 * @return SDElement
 	 */
-	public function getSDElementById($id, $elementDepth = 0) {
-		$element = $this->APIClient->getObject( $id );
-		return $this->getSDElement( $element, $elementDepth );
+	public function getSDElementById($id) {
+		try {
+			$element = $this->APIClient->getObject( $id );
+		}
+		catch( WikiaException $exception ) {
+			return null;
+		}
+		return $this->getSDElement( $element );
 	}
 
-	public function getSDElementByURL($url, $elementDepth = 0) {
+	public function getSDElementByURL($url) {
 		$element = $this->APIClient->getObjectByURL($url);
-		return $this->getSDElement( $element, $elementDepth );
+		return $this->getSDElement( $element );
 	}
 
-	public function getSDElementByTypeAndName($type, $name, $elementDepth = 0) {
-		$element = $this->APIClient->getObjectByTypeAndName($type, $name);
-		return $this->getSDElement( $element, $elementDepth );
+	public function getSDElementByTypeAndName($type, $name) {
+		try {
+			$element = $this->APIClient->getObjectByTypeAndName($type, $name);
+		}
+		catch( WikiaException $exception ) {
+			return null;
+		}
+		return $this->getSDElement( $element );
 	}
 
-	private function getSDElement(stdClass $element, $elementDepth = 0) {
+	/**
+	 * fetch all objects of given type from SDS
+	 * @param $type
+	 * @return array
+	 */
+	public function getCollectionByType( $type, $extraFields = array() ) {
+		return $this->APIClient->getCollection( $type, $extraFields );
+	}
+
+	public function createSDElementByType( $elementType, stdClass $template = null ) {
+		if( empty( $template ) ) {
+			$template = $this->APIClient->getTemplate( $elementType );
+		}
+
+		return F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => null, 'depth' => 0 ), 'newFromTemplate' );
+	}
+
+	public function createSDElement( $elementType, array $params = array() ) {
+		$template = $this->APIClient->getTemplate( $elementType );
+		$result = $this->updateSDElement( $this->createSDElementByType( $elementType, $template ), $params );
+
+		if( isset( $result->error ) ) {
+			return $result;
+		}
+		else {
+			return F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => $result ), 'newFromTemplate' );
+		}
+	}
+
+	public function updateSDElement(SDElement $element, array $params = array()) {
+		if( count($params) ) {
+			$element->update($params);
+		}
+//echo $element->toSDSJson();
+//exit;
+		$elementId = $element->getId();
+
+		if( empty($elementId) ) {
+			return $this->APIClient->createObject($element->toSDSJson());
+		}
+		else {
+			return $this->APIClient->saveObject($element->getId(), $element->toSDSJson());
+		}
+	}
+
+	/**
+	 * Remove a single sds object
+	 * @param SDElement $element - sds object to be removed
+	 * @return mixed - JSON response from sds
+	 */
+	public function deleteSDElement(SDElement $element) {
+		return $this->APIClient->deleteObject( $element->getId() );
+	}
+
+	private function getSDElement(stdClass $element) {
 		$template = $this->APIClient->getTemplate( $element->type );
 
-		$SDElement = F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => $element, 'depth' => $elementDepth ), 'newFromTemplate');
+		$SDElement = F::build( 'SDElement', array( 'template' => $template, 'context' => $this->context, 'data' => $element ), 'newFromTemplate');
 
 		return $SDElement;
 	}
 
-	public function onParserFirstCallInit( Parser &$parser ) {
-		$parser->setHook( 'data', array( $this, 'dataParserHook' ) );
-		return true;
-	}
-
-	public function dataParserHook( $input, $args, $parser ) {
-		$result = '';
-		$inputData = $this->parseHookInput($input);
-
-		if( isset($inputData['hash']) ) {
-			$SDElement = $this->getSDElementById($inputData['hash']);
-		}
-		else {
-			// @todo hack! :-) remove when API will be working again..
-			switch( $inputData['url'] ) {
-				case 'callofduty:Weapon/M16':
-					$SDElement = $this->getSDElementById('50258c6fac50ed470f00000c');
-					break;
-				case 'callofduty:Character/Dimitri_Petrenko':
-					$SDElement = $this->getSDElementById('50258490ac50ed479a000005');
-					break;
-				default:
-					$SDElement = $this->getSDElementByURL($inputData['url']);
-			}
-		}
-
-		if($SDElement instanceof SDElement) {
-			$currentElement = $SDElement;
-			do {
-				$propertyName = array_shift( $inputData['propertyChain'] );
-				$valueIndex = null;
-
-				if(empty($propertyName)) {
-					break;
-				}
-
-				$matches = array();
-				preg_match('/([a-z,0-9,:,_]{1,})\[(\d{1,})\]/i', $propertyName, $matches);
-				if(count($matches) == 3) {
-					$propertyName = $matches[1];
-					$valueIndex = $matches[2];
-				}
-
-				$property = $currentElement->getProperty( $propertyName );
-				if($property instanceof SDElement) {
-					$currentElement = $property;
-				}
-				elseif($property instanceof SDElementProperty ) {
-					if(!count($inputData['propertyChain']) && is_null($valueIndex)) {
-						// last element in chain, try to render it
-						$result = $property->render();
-						if($result !== false) {
-							$currentElement = null;
-							break;
-						}
-					}
-
-					$result = $property->getValue( !is_null($valueIndex) ? $valueIndex : 0 );
-
-					if(is_object($result) && ($result->object instanceof SDElement)) {
-						$currentElement = $result->object;
-					}
-					elseif(!empty($result)) {
-						$currentElement = null;
-						$renderedResult = $property->render();
-						if($renderedResult !== false) {
-							$result = $renderedResult;
-						}
-					}
-					else {
-						$result = "Unknown value: " . $propertyName . ( !empty($valueIndex) ? "[$valueIndex]" : "" );
-						$currentElement = null;
-					}
-				}
-				else {
-					$result = "Unknown property: " . $propertyName;
-					$currentElement = null;
-				}
-			}
-			while( $currentElement instanceof SDElement );
-
-			if($currentElement instanceof SDElement) {
-				$result = $currentElement->render();
-			}
-		}
-		return $result;
-	}
-
-	private function parseHookInput( $input ) {
-		$inputParts = explode( '/', $input );
-		if( count( $inputParts ) >= 2 ) {
-			if( strpos( $inputParts[0], '#') === 0 ) {
-				$object['hash'] = substr( $inputParts[0], 1 );
-				$object['propertyChain'] = array_slice( $inputParts, 1, count($inputParts) );
-			}
-			else {
-				$object['url'] = $inputParts[0] . '/' . $inputParts[1];
-				$object['propertyChain'] = array_slice( $inputParts, 2, count($inputParts) );
-			}
-		}
-
-		return $object;
-	}
 }

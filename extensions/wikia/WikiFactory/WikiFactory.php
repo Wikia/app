@@ -62,6 +62,9 @@ class WikiFactory {
 	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
 	const CACHEDIR      = "/tmp/wikifactory/wikis";
 
+	// Community Central's city_id in wikicities.city_list.
+	const COMMUNITY_CENTRAL = 177;
+
 	static public $types = array(
 		"integer",
 		"long",
@@ -74,6 +77,11 @@ class WikiFactory {
 		"hash"
 	);
 
+	/**
+	 * list of valid database clusters used for creating wikis
+	 */
+	static public $clusters = array( "c1", "c2", "c3", "c4" );
+
 	static public $levels = array(
 		1 => "read only",
 		2 => "editable by staff",
@@ -81,6 +89,8 @@ class WikiFactory {
 	);
 
 	static public $mIsUsed = false;
+
+	static protected $variablesCache = array();
 
 	/**
 	 * simple accessor and toggle flag method which shows if WikiFactory is used
@@ -811,6 +821,30 @@ class WikiFactory {
 	 */
 	static public function getVarByName( $cv_name, $wiki, $master = false ) {
 		return self::loadVariableFromDB( false, $cv_name, $wiki, $master );
+	}
+
+	/**
+	 * getVarIdByName
+	 *
+	 * gets variable id using cv_name field
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param string	$cv_name	variable name in city_variables_pool
+	 * @param boolean	$master		choose between master & slave connection
+	 *
+	 * @return mixed 	variable id or false if not found city_variables & city_variables_pool
+	 */
+	static public function getVarIdByName( $cv_name, $master = false ) {
+		$varId = 0;
+		$varData = self::loadVariableFromDB( false, $cv_name, false, $master );
+
+		if( $varData ) {
+			$varId = (int) $varData->cv_id;
+		}
+
+		return ($varId > 0) ? $varId : false;
 	}
 
 	/**
@@ -1805,27 +1839,37 @@ class WikiFactory {
 		 */
 		if( $cv_id ) {
 			$condition = array( "cv_id" => $cv_id );
+			$cacheKey = "id:$cv_id";
 		}
 		else {
 			$condition = array( "cv_name" => $cv_name );
+			$cacheKey = "name:$cv_name";
 		}
 
 		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
 
-		$oRow = $dbr->selectRow(
-			array( "city_variables_pool" ),
-			array(
-				"cv_id",
-				"cv_name",
-				"cv_description",
-				"cv_variable_type",
-				"cv_variable_group",
-				"cv_access_level",
-				"cv_is_unique"
-			),
-			$condition,
-			__METHOD__
-		);
+
+		if ( $master || !isset( self::$variablesCache[$cacheKey] ) ) {
+			$oRow = $dbr->selectRow(
+				array( "city_variables_pool" ),
+				array(
+					"cv_id",
+					"cv_name",
+					"cv_description",
+					"cv_variable_type",
+					"cv_variable_group",
+					"cv_access_level",
+					"cv_is_unique"
+				),
+				$condition,
+				__METHOD__
+			);
+			self::$variablesCache[$cacheKey] = $oRow;
+		}
+		$oRow = self::$variablesCache[$cacheKey];
+		if ( is_object( $oRow ) ) {
+			$oRow = clone $oRow;
+		}
 
 		if( !isset( $oRow->cv_id ) ) {
 			/**
@@ -2493,7 +2537,7 @@ class WikiFactory {
 			$tables[] = "city_variables AS cv{$i}";
 
 			$where[] = "cv1.cv_city_id = cv{$i}.cv_city_id";
-			$where["cv{$i}.cv_variable_id"] = self::getVarByName($key, 177)->cv_variable_id;
+			$where["cv{$i}.cv_variable_id"] = self::getVarByName($key, self::COMMUNITY_CENTRAL)->cv_variable_id;
 			$where["cv{$i}.cv_value"] = @serialize($val);
 		}
 
@@ -2802,18 +2846,10 @@ class WikiFactory {
 	}
 
 	/**
-	 * getClusters
-	 *
-	 * Gets list of all database clusters
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @param
-	 *
+	 * Gets a list of all secondary database clusters, i.e. wikicities_c1, etc.
 	 */
 
-	static public function getClusters() {
+	static public function getSecondaryClusters() {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
@@ -2840,6 +2876,19 @@ class WikiFactory {
 
 		wfProfileOut( __METHOD__ );
 		return $clusters;
+	}
+
+	/**
+	 * isValidCluster -- check if name is valid cluster (c1, c2, c3, ... )
+	 *
+	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+	 * @access public
+	 * @static
+	 *
+	 * @param string $cluster cluster name
+	 */
+	static public function isValidCluster( $cluster ) {
+		return in_array( $cluster. self::$clusters );
 	}
 
 	/**
@@ -2885,48 +2934,100 @@ class WikiFactory {
 
 		$oRes = $dbr->select(
 			$aTables,
-			array('city_id', 'city_title', 'city_url', 'city_public'),
+			array('city_id', 'city_title', 'city_url', 'city_public', 'city_dbname'),
 			$aWhere,
 			__METHOD__,
 			$aOptions
 		);
 
 		while ($oRow = $dbr->fetchObject($oRes)) {
-			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ) );
+			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ), 'd' => $oRow->city_dbname );
 		}
 		$dbr->freeResult( $oRes );
 
 		return $aWikis;
 	}
 
-        /**
-         * fetching a number of wikis with select variable set to $val
-         * @param integer $varId
-         * @param string $type
-         * @param mixed $val
-         * @param string $likeVal
-         */
+	/**
+	* fetching a number of wikis with select variable set to $val
+	* @param integer $varId
+	* @param string $type
+	* @param mixed $val
+	* @param string $likeVal
+	*/
 
-        static public function getCountOfWikisWithVar( $varId, $type, $selectedCond ,$val, $likeVal = '' ) {
-            global $wgExternalSharedDB;
-            $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+	static public function getCountOfWikisWithVar( $varId, $type, $selectedCond ,$val, $likeVal = '' ) {
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-            $selectedVal = serialize( $val );
-            $aTables = array( 'city_variables', 'city_list' );
-            $varId = mysql_real_escape_string( $varId );
-            $aWhere = array(
-                'city_id = cv_city_id',
-                "cv_variable_id = '$varId'"
-            );
+		$selectedVal = serialize( $val );
+		$aTables = array( 'city_variables', 'city_list' );
+		$varId = mysql_real_escape_string( $varId );
+		$aWhere = array(
+			'city_id = cv_city_id',
+			"cv_variable_id = '$varId'"
+		);
 
-            if( 'full' == $type ) {
-                $aWhere[] = "cv_value " . $dbr->buildLike( $dbr->anyString(), $likeVal, $dbr->anyString() );
-            } else {
-                $aWhere[] = "cv_value $selectedCond '$selectedVal'";
-            }
+		if( 'full' == $type ) {
+			$aWhere[] = "cv_value " . $dbr->buildLike( $dbr->anyString(), $likeVal, $dbr->anyString() );
+		} else {
+			$aWhere[] = "cv_value $selectedCond '$selectedVal'";
+		}
 
-            $oRow = $dbr->selectRow( $aTables, 'COUNT(1) AS cnt', $aWhere, __METHOD__ );
+		$oRow = $dbr->selectRow( $aTables, 'COUNT(1) AS cnt', $aWhere, __METHOD__ );
+		return $oRow->cnt;
+	}
 
-            return $oRow->cnt;
-        }
+	/**
+	 * Checks if a wiki is "restricted", or "private" (i.e. users need to log in to read,
+	 * e.g. communitycouncil.wikia.com)
+	 *
+	 * @param integer $wikiId The ID of the wiki to check
+	 *
+	 * @return boolean true if it's restricted, false otherwise
+	 */
+	static public function isWikiPrivate( $wikiId ) {
+		wfProfileIn( __METHOD__ );
+
+		//restricting a wiki is done by setting the "read" permission
+		//to 0 (false) for the "*" group via a WF variable (source: Tor),
+		//if the above will change in the future then this will stop working (duh),
+		//we should probably introduce a WF flag to handle this case in a much more
+		//clean and portable way
+		$permissions =  self::getVarValueByName( 'wgGroupPermissionsLocal', $wikiId );
+		$ret = false;
+
+		if ( !empty( $permissions ) ) {
+			$permissions = WikiFactoryLoader::parsePermissionsSettings( $permissions );
+		}
+
+		if (
+			isset( $permissions['*'] ) &&
+			is_array( $permissions['*'] ) &&
+			isset( $permissions['*']['read'] ) &&
+			$permissions['*']['read'] === false
+		) {
+			$ret = true;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $ret;
+	}
+
+	/**
+	 * get url from dbname
+	 * @param string $dbname	name of database
+	 * @param boolean $master	use master or slave connection
+	 * @return url in city_list
+	 */
+	static public function DBtoUrl( $dbname, $master = false ) {
+		if( !self::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		$oRow = self::getWikiByDB( $dbname, $master );
+
+		return isset( $oRow->city_url ) ? $oRow->city_url : false;
+	}
 };

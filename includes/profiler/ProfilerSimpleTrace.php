@@ -61,6 +61,10 @@ class ProfilerSimpleTrace extends ProfilerSimple {
 	}
 
 	function logData() {
+		for ($i=0;$i<100;$i++) {
+			wfProfileIn('Profiler::noop');
+			wfProfileOut('Profiler::noop');
+		}
 		print "<!-- \n {$this->trace} \n -->";
 	}
 }

@@ -8,7 +8,8 @@ class WallHistoryController extends WallController {
 	
 	public function index() {
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL); 
-		$title = $this->request->getVal('title', $this->app->wg->Title);
+		$title = $this->app->wg->Title;
+		
 		$this->isThreadLevel = $this->request->getVal('threadLevelHistory', false);
 		
 		$path = array();
@@ -44,7 +45,7 @@ class WallHistoryController extends WallController {
 			$wallOwnerUser = $wallMessage->getWallOwner();
 			
 			$perPage = 50;
-			$wallHistory = F::build('WallHistory', array($this->app->wg->CityId));
+			$wallHistory = new WallHistory();
 			$wallHistory->setPage($page, $perPage);
 			$count = $wallHistory->getCount(null, $threadId);
 			$sort = $this->getSortingSelected();
@@ -56,33 +57,35 @@ class WallHistoryController extends WallController {
 				'url' => $wallMessage->getMessagePageUrl() 
 			); 			
 			
-			$wallUrl =  $wallMessage->getWall()->getUrl();
-			
+			$wallUrl =  $wallMessage->getArticleTitle()->getFullUrl();
+			$wallOwnerName =  $wallMessage->getArticleTitle()->getText();
+						
 			$this->response->setVal('wallHistoryUrl', $wallMessage->getMessagePageUrl(true).'?action=history&sort='.$sort);
-		} else {
-			$wall = F::build('Wall', array($title), 'newFromTitle');
-			$wallOwnerUser = $wall->getUser();
-			
+		} else {			
 			$perPage = 100;
-			$wallHistory = F::build( 'WallHistory', array( $this->app->wg->CityId ) );
+			$wallHistory = F::build( 'WallHistory' );
 			$wallHistory->setPage($page, $perPage);
-			$count = $wallHistory->getCount($wallOwnerUser);
 			$sort = $this->getSortingSelected();
-			$history = $wallHistory->get($wallOwnerUser, $sort);
+			if( $title->exists() ) {
+				$count = $wallHistory->getCount($title->getArticleId(), null, false);
+				$history = $wallHistory->get($title->getArticleId(), $sort, null, false);					
+			} else {
+				$count = 0;
+				$history = array();
+			}
+						
+			$wallUrl = $title->getFullUrl();
+			$wallOwnerName = $title->getText();
 			
-			$wallUrl = $wall->getUrl();
 			$this->response->setVal('wallHistory', $this->getFormatedHistoryData($history));
 			$this->response->setVal('wallHistoryUrl', $title->getFullURL(array('action' => 'history', 'sort' => $sort)));
 		}
 			
-		$wallOwnerName = $wallOwnerUsername = $wallOwnerUser->getName();
-
 		$path = array_merge(array(array(
 			'title' => wfMsg('wall-message-elseswall', array($wallOwnerName)),
 			'url' => $wallUrl 
 		)), $path); 
 		
-		$wallOwnerName = $wallOwnerUsername = $wallOwnerUser->getName();
 		$this->response->setVal('wallOwnerName', $wallOwnerName);
 
 		if( $this->isThreadLevel ) {

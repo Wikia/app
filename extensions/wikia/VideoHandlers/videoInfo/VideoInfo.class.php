@@ -13,6 +13,7 @@ class VideoInfo extends WikiaModel {
 	protected $duration = 0;
 	protected $hdfile = 0;
 	protected $removed = 0;
+	protected $featured = 0;
 
 	public function __construct( $data = array() ) {
 		foreach ( $data as $key => $value ) {
@@ -63,9 +64,17 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
+	 * check if it is featured video
+	 * @return boolean
+	 */
+	public function isFeatured() {
+		return ( $this->featured == 1 );
+	}
+
+	/**
 	 * update data in the database
 	 * @param array $updateValue [ array( field => value ) ]
-	 * [ field = added_at, added_by, duration, premium ,hdfile, removed ]
+	 * [ field = added_at, added_by, duration, premium , hdfile, removed, featured ]
 	 */
 	protected function updateDatabase( $updateValue ) {
 		$this->wf->ProfileIn( __METHOD__ );
@@ -110,6 +119,7 @@ class VideoInfo extends WikiaModel {
 					'premium' => $this->premium,
 					'hdfile' => $this->hdfile,
 					'removed' => $this->removed,
+					'featured' => $this->featured,
 				),
 				__METHOD__,
 				'IGNORE'
@@ -149,33 +159,59 @@ class VideoInfo extends WikiaModel {
 	/**
 	 * create video_info table if not exists
 	 */
-	public function createTableVideos() {
+	public function createTableVideoInfo() {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		if ( !$this->wf->ReadOnly() ) {
 			$db = $this->wf->GetDB( DB_MASTER );
 
-			if ( !$db->tableExists( 'video_info' ) ) {
+			$sql =<<<SQL
+				CREATE TABLE IF NOT EXISTS `video_info` (
+					`video_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
+					`added_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+					`added_by` int(10) unsigned NOT NULL DEFAULT '0',
+					`duration` int(10) unsigned NOT NULL DEFAULT '0',
+					`premium` tinyint(1) NOT NULL DEFAULT '0',
+					`hdfile` tinyint(1) NOT NULL DEFAULT '0',
+					`removed` tinyint(1) NOT NULL DEFAULT '0',
+					`featured` tinyint(1) NOT NULL DEFAULT '0',
+					`views_30day` int(10) unsigned DEFAULT '0',
+					`views_total` int(10) unsigned DEFAULT '0',
+					PRIMARY KEY (`video_title`),
+					KEY `added_at` (`added_at`, `duration`),
+					KEY `premium` (`premium`, `added_at`),
+					KEY `hdfile` (`hdfile`, `added_at`),
+					KEY `featured` (`featured`, `added_at`)
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+SQL;
+
+			$db->query( $sql, __METHOD__ );
+			$db->commit( __METHOD__ );
+		}
+
+		$this->wf->ProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * update schema for video_info table (v1): add featured field
+	 */
+	public function alterTableVideoInfoV1() {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		if ( !$this->wf->ReadOnly() ) {
+			$db = $this->wf->GetDB( DB_MASTER );
+
+			if ( $db->tableExists( 'video_info' ) ) {
 				$sql =<<<SQL
-					CREATE TABLE IF NOT EXISTS `video_info` (
-						`video_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-						`added_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-						`added_by` int(10) unsigned NOT NULL DEFAULT '0',
-						`duration` int(10) unsigned NOT NULL DEFAULT '0',
-						`premium` tinyint(1) NOT NULL DEFAULT '0',
-						`hdfile` tinyint(1) NOT NULL DEFAULT '0',
-						`removed` tinyint(1) NOT NULL DEFAULT '0',
-						`views_30day` int(10) unsigned DEFAULT '0',
-						`views_total` int(10) unsigned DEFAULT '0',
-						PRIMARY KEY (`video_title`),
-						KEY `added_at` (`added_at`, `duration`),
-						KEY `premium` (`premium`, `added_at`),
-						KEY `hdfile` (`hdfile`, `added_at`)
-					) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+					ALTER TABLE `video_info`
+					ADD `featured` tinyint(1) NOT NULL DEFAULT '0' AFTER `removed`,
+					ADD INDEX `featured` (`featured`, `added_at`)
 SQL;
 
 				$db->query( $sql, __METHOD__ );
-				$db->commit(__METHOD__);
+				$db->commit( __METHOD__ );
+			} else {
+				$this->createTableVideoInfo();
 			}
 		}
 
@@ -225,6 +261,7 @@ SQL;
 			'premium' => $row->premium,
 			'hdfile' => $row->hdfile,
 			'removed' => $row->removed,
+			'featured' => $row->featured,
 		);
 
 		$video = F::build( __CLASS__, array($data) );
@@ -255,6 +292,7 @@ SQL;
 			'premium' => $this->premium,
 			'hdfile' => $this->hdfile,
 			'removed' => $this->removed,
+			'featured' => $this->featured,
 		);
 
 		$this->updateDatabase( $data );

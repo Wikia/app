@@ -5,16 +5,41 @@
  *
  */
 (function($, window) {
+	// could be loaded by more than one extension
+	if(typeof window.AddVideo == 'function') {
+		return;
+	}
+
+	// temporary video survey code bugid-68723
+	var addSurveyLink = function() {
+		var surveyLink = $('#video-survey');
+		
+		if(!surveyLink.length){
+			return;
+		}
+		
+		var messages = surveyLink.find('span'),
+			count = messages.length,
+			chosen = Math.floor(Math.random() * count);
+
+		messages.eq(chosen).fadeIn();
+	};
+	
+	// run on dom ready
+	$(addSurveyLink);
 
 	var AddVideo = function(element, options) {
 		
 		var self = this,
 			alreadyLoggedIn = false,
 			assetsLoaded = false;
+		
+		options = options || {};
 
 		var settings = {
 			modalWidth: 666,
-			gaCat: null
+			gaCat: null,
+			callback: null
 		}
 
 		settings = $.extend(settings, options);
@@ -289,7 +314,9 @@
 			$(this).data('plugin_AddVideo', new AddVideo($(this), options));
 		});
 	
-	}
+	};
+	
+	window.AddVideo = AddVideo;
 
 })(jQuery, this);
 

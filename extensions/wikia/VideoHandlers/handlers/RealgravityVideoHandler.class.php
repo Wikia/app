@@ -16,43 +16,45 @@ class RealgravityVideoHandler extends VideoHandler {
 
 		$height = $this->getHeight($width);
 		$url = $this->getEmbedUrl();
-		$videoId = $this->getVideoId();
+		$videoId = $this->getEmbedVideoId();
 
 		if ( $width == self::DEFAULT_VET_WIDTH ) {
 			$playerId = self::REALGRAVITY_PLAYER_VIDEOEMBEDTOOL_ID;
-		} elseif ( $autoplay ) {
+		} else if ( $autoplay ) {
 			$playerId = self::REALGRAVITY_PLAYER_AUTOSTART_ID;
 		} else {
 			$playerId = self::REALGRAVITY_PLAYER_NO_AUTOSTART_ID;
 		}
 
-		$embed =
-			'<object id="rg_player_' . $playerId . '" name="rg_player_' . $playerId . '" type="application/x-shockwave-flash"
-			width="' . $width . '" height="' . $height . '" classid="clsid:' . $playerId . '" style="visibility: visible;"
-			data="'.$url.'">
-			<param name="allowscriptaccess" value="always"></param>
-			<param name="allowNetworking" value="all"></param>
-			<param name="menu" value="false"></param>
-			<param name="wmode" value="transparent"></param>
-			<param name="allowFullScreen" value="true"></param>
-			<param name="flashvars" value="&config=http://mediacast.realgravity.com/vs/api/playerxml/' . $playerId . '"></param>
-			<embed id="' . $playerId . '" name="' . $playerId . '" width="' . $width . '" height="' . $height . '"
-			allowNetworking="all" allowscriptaccess="always" allowfullscreen="true" wmode="transparent"
-			flashvars="config=http://mediacast.realgravity.com/vs/2/players/single/' . $playerId . '/' . $videoId . '.xml"
-			src="'.$url.'"></embed>
-			</object>';
+		$embed = <<<EOT
+<object id="rg_player_{$playerId}" name="rg_player_{$playerId}" type="application/x-shockwave-flash"
+width="{$width}" height="{$height}" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" style="visibility: visible;">
+	<param name="movie" value="http://anomaly.realgravity.com/flash/player.swf"></param>
+	<param name="allowScriptAccess" value="always"></param>
+	<param name="allowNetworking" value="all"></param>
+	<param name="menu" value="false"></param>
+	<param name="wmode" value="transparent"></param>
+	<param name="allowFullScreen" value="true"></param>
+	<param name="flashvars" value="config=http://mediacast.realgravity.com/vs/2/players/single/{$playerId}/{$videoId}.xml"></param>
+	<!--[if !IE]>-->
+	<embed id="{$playerId}" name="{$playerId}" width="{$width}" height="{$height}"
+	allowNetworking="all" allowScriptAccess="always" allowFullScreen="true" wmode="transparent"
+	flashvars="config=http://mediacast.realgravity.com/vs/2/players/single/{$playerId}/{$videoId}.xml"
+	src="http://anomaly.realgravity.com/flash/player.swf"></embed>
+	<!--<![endif]-->
+</object>
+EOT;
 
 		return $embed;
 	}
 
 	public function getEmbedSrcData() {
-
 		$playerId = self::REALGRAVITY_PLAYER_NO_AUTOSTART_ID;
-		$videoId = $this->getVideoId();
+		$videoId = $this->getEmbedVideoId();
 
 		$data = array();
 		$data['autoplayParam'] = $this->getAutoplayString();
-		$data['srcParam'] = $this->getEmbedUrl() . "?config=http://mediacast.realgravity.com/vs/2/players/single/{$playerId}/{$videoId}.xml";
+		$data['srcParam'] = $this->getEmbedUrl()."?config=http://mediacast.realgravity.com/vs/2/players/single/{$playerId}/{$videoId}.xml";
 		$data['srcType'] = 'player';
 		$data['canEmbed'] = 0;
 

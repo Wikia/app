@@ -11,7 +11,6 @@ var LightboxLoader = {
 		share: {},
 		to: 0
 	},
-	inlineVideos: $(),	// jquery array of inline videos
 	inlineVideoLinks: $(),	// jquery array of inline video links
 	lightboxLoading: false,
 	inlineVideoLoading: [],
@@ -28,14 +27,19 @@ var LightboxLoader = {
 		onClose: function() {
 			// Reset lightbox
 			$(window).off('.Lightbox');
+			// bugid-64334 and bugid-69047
+			Lightbox.openModal.find('.video-media').children().remove();
 			LightboxLoader.lightboxLoading = false;
+			// Update history api (remove "?file=" from URL)
+			Lightbox.updateUrlState(true);
 			// Reset carousel
 			Lightbox.current.thumbs = []; /* global Lightbox */
 			Lightbox.current.thumbTypesAdded = [];
 			Lightbox.to = LightboxLoader.cache.to;
 			// Reset Ad Flags
 			Lightbox.ads.adMediaProgress = [];
-			Lightbox.ads.adWasShown = false;
+			Lightbox.ads.adMediaShown = 0;
+			Lightbox.ads.adMediaShownSinceLastAd = 0;
 			Lightbox.ads.adIsShowing = false;
 			// Re-show box ad
 			LightboxLoader.pageAds.css('visibility','visible');
@@ -161,14 +165,12 @@ var LightboxLoader = {
 		}
 		
 		// for Video Thumbnails:
-		var targetChildImg = target.find('img').eq(0),
-			dataVideo;
-		if ( targetChildImg.length > 0 && targetChildImg.hasClass('Wikia-video-thumb') ) {
+		var targetChildImg = target.find('img').eq(0);
+		if ( targetChildImg.hasClass('Wikia-video-thumb') || target.hasClass('video') ) {
 			if ( target.data('video-name') ) {
 				mediaTitle = target.data('video-name');
-			// Assignment is intentional here
-			} else if ((dataVideo = targetChildImg.data('video'))) {
-				mediaTitle = dataVideo;
+			} else if (targetChildImg.data('video')) {
+				mediaTitle = targetChildImg.data('video');
 			}
 			
 			// check if we need to play video inline, and stop lightbox execution
@@ -212,8 +214,14 @@ var LightboxLoader = {
 		var deferredList = [];
 		if(!LightboxLoader.assetsLoaded) {
 			deferredList.push($.loadMustache());
-			deferredList.push($.getResources([$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss')]));
-			deferredList.push($.getResources([window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js']));
+
+			var resources = [
+				$.getAssetManagerGroupUrl('history_polyfill_js'),
+				$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss'),
+				window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js'
+			];
+			
+			deferredList.push($.getResources(resources));
 			
 			var deferredTemplate = $.Deferred();
 			$.nirvana.sendRequest({
@@ -255,9 +263,7 @@ var LightboxLoader = {
 			width: targetChildImg.width()
 		}, function(json) {
 			//retrieve DOM reference
-			var videoReference = target.next(),
-				embedCode = json['videoEmbedCode'];
-			
+			var	embedCode = json['videoEmbedCode'];
 			target.hide().after(embedCode);
 
 			// if player script, run it
@@ -267,8 +273,6 @@ var LightboxLoader = {
 
 			// save references for inline video removal later
 			LightboxLoader.inlineVideoLinks = target.add(LightboxLoader.inlineVideoLinks);
-			LightboxLoader.inlineVideos = videoReference.add(LightboxLoader.inlineVideos);
-
 			LightboxTracker.inlineVideoTrackingTimeout = setTimeout(function() {
 				LightboxTracker.track(WikiaTracker.ACTIONS.VIEW, 'video-inline', null, {title:json.title, provider: json.providerName, clickSource: clickSource});
 			}, 1000);
@@ -279,8 +283,7 @@ var LightboxLoader = {
 
 	removeInlineVideos: function() {
 		clearTimeout(LightboxTracker.inlineVideoTrackingTimeout);
-		LightboxLoader.inlineVideos.remove();
-		LightboxLoader.inlineVideoLinks.show();
+		LightboxLoader.inlineVideoLinks.show().next().remove();
 	},
 
 	getMediaDetail: function(mediaParams, callback) {
@@ -328,7 +331,38 @@ var LightboxLoader = {
 		} else {
 			callback(json);
 		}
+	},
+	loadFromURL: function() {
+		var fileTitle = $.getUrlVar('file'),
+			openModal = $('#LightboxModal');
+		
+		if(fileTitle) {
+			if(openModal.length) {
+				// Lightbox is already open, update it
+				LightboxLoader.getMediaDetail({fileTitle: fileTitle}, function(data) {
+					Lightbox.current.title = data.title;
+					Lightbox.current.type = data.mediaType;
+	
+					Lightbox.setCarouselIndex();
+					Lightbox.openModal.carousel.find('li').eq(Lightbox.current.index).click();
+				});
+				
+			} else {
+				// Open new Lightbox
+				// set a fake parent for carouselType
+				var trackingInfo = {
+					parent: $('#WikiaArticle'), 
+					clickSource: LightboxTracker.clickSource.SHARE
+				}
+				LightboxLoader.loadLightbox(fileTitle, trackingInfo);
+			}
+		} else {
+			if(openModal.length) {
+				openModal.closeModal();
+			}
+		}
 	}
+
 };
 
 LightboxTracker = {
@@ -358,7 +392,7 @@ LightboxTracker = {
 		LB: 'lightbox',
 		SHARE: 'share',
 		OTHER: 'other'
-	}	 
+	}
 };
 
 $(function() {
@@ -368,14 +402,5 @@ $(function() {
 
 	LightboxLoader.init();
 	
-	var fileTitle = $.getUrlVar('file');
-	
-	if(fileTitle) {
-		var trackingInfo = {
-			// set a fake parent for carouselType
-			parent: $('#WikiaArticle'), 
-			clickSource: LightboxTracker.clickSource.SHARE
-		}
-		LightboxLoader.loadLightbox(fileTitle, trackingInfo);
-	}
+	LightboxLoader.loadFromURL();
 });

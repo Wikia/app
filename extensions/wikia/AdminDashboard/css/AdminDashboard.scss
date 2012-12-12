@@ -241,6 +241,9 @@ $color-highlight-column: rgba($color-page, 0);
 							&.help {
 								background-position: -700px 0;
 							}
+							&.addvideo {
+								background-position: -850px 0;
+							}
 						}
 					}
 					&:hover {
@@ -299,6 +302,24 @@ $color-highlight-column: rgba($color-page, 0);
 			margin: 0 -10px 7px -10px;
 		}
 		/* end temp transistion code */
+	}
+}
+
+.AdminDashboardStub {
+	#siteSub {
+		display: inline;
+		font-size: 90%;
+		font-style: italic;
+		font-weight: normal;
+		text-align: right;
+	}
+	#contentSub, #contentSub2 {
+		color: #7D7D7D;
+		font-size: 84%;
+		line-height: 1.2em;
+		margin: 0 0 1.4em 1em;
+		padding: 0;
+		width: auto;
 	}
 }
 

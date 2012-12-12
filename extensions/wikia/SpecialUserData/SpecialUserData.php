@@ -44,6 +44,7 @@ class SpecialUserData extends SpecialPage {
 
 		if ($this->isRestricted() && !$this->userCanExecute($wgUser)) {
 			$this->displayRestrictionError();
+			wfProfileOut(__METHOD__);
 			return;
 		}
 

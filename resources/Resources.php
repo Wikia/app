@@ -75,7 +75,9 @@ return array(
 	/* jQuery */
 
 	'jquery' => array(
-		'scripts' => 'resources/jquery/jquery-1.7.2.js',
+		// Wikia change - begin
+		'scripts' => 'resources/jquery/jquery-1.8.2.js',
+		// Wikia change - end
 		'debugRaw' => false,
 	),
 
@@ -623,6 +625,7 @@ return array(
 
 	'mediawiki.action.edit' => array(
 		'scripts' => 'resources/mediawiki.action/mediawiki.action.edit.js',
+		'position' => 'top', // @author: wladek - workaround for JS error: "mw.toolbar is undefined"
 		'dependencies' => array(
 			'jquery.textSelection',
 			'jquery.byteLimit',
@@ -746,7 +749,7 @@ return array(
 		'dependencies' => array(
 			'jquery.checkboxShiftClick',
 			'jquery.makeCollapsible',
-			'jquery.placeholder',
+			//'jquery.placeholder', /* Wikia change - Using Wikia's version of placeholder plugin [Liz] bugid-52001 */
 			'jquery.mw-jump',
 			'mediawiki.util',
 		),

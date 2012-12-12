@@ -116,6 +116,8 @@ class WikiaPhotoGalleryHelper {
 	/* temp transition code until grid is fully rolled out, remove and integrate after transition */
 	static public function makeGlobalVariablesScriptForWikiaGrid(Array &$vars) {
 		global $wgOasisGrid;
+
+		$vars['wgEnableWikiaPhotoGalleryExt'] = true;
 		$vars['wgOasisGrid'] = $wgOasisGrid;
 
 		return true;
@@ -1012,7 +1014,6 @@ class WikiaPhotoGalleryHelper {
 		self::initParserHook();
 		self::$mGalleryHash = $hash;
 
-		$parser = new Parser();
 		$parserOptions = new ParserOptions();
 
 		$title = Title::newFromId( $articleId );
@@ -1029,7 +1030,7 @@ class WikiaPhotoGalleryHelper {
 		//should never happen
 		if (!is_null($rev)) {
 			$wikitext = $rev->getText();
-			$parser->parse( $wikitext, $title, $parserOptions )->getText();
+			ParserPool::parse( $wikitext, $title, $parserOptions )->getText();
 		}
 
 		// Marooned: check block state of user (RT #55274)

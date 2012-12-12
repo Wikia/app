@@ -8,8 +8,17 @@ class AssetsManagerServer {
 
 	public static function serve(WebRequest $request) {
 
+		$type = $request->getText('type');
+
+		if( function_exists( 'newrelic_name_transaction' ) ) {
+			if ( function_exists( 'newrelic_disable_autorum') ) {
+				newrelic_disable_autorum();
+			}
+			newrelic_name_transaction( "am/AssetManager/" . $type );
+		}
+
 		try {
-			switch($request->getText('type')) {
+			switch($type) {
 				case 'one':
 					$builder = new AssetsManagerOneBuilder($request);
 					break;

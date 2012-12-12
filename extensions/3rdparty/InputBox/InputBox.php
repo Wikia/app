@@ -59,4 +59,3 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 }
 
 include("$IP/extensions/3rdparty/InputBox/create.php");
-

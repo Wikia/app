@@ -263,6 +263,8 @@ Liftium.callAd = function (sizeOrSlot, slotPlacement) {
 		Liftium.slotPlacements[slotname] = slotPlacement;
 	}
 
+	WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':'slot/' + sizeOrSlot, 'ga_action':slotPlacement, 'ga_label':'liftium js'}, 'ga');
+
 	document.write('<div id="' + slotname + '">');
 	Liftium._callAd(slotname);
 	document.write("</div>");
@@ -391,13 +393,6 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, slotPlacemen
 	// this is a(n ugly?) shortcut, the right name would be slotname's parent div
 	var placement = iframeElement.id.replace(/_iframe$/, "");
 	WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':'slot/' + sizeOrSlot, 'ga_action':placement, 'ga_label':'liftium'}, 'ga');
-
-	/* ???	
-	var track_string = Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", sizeOrSlot + "_" + placement]);
-	if (track_string.indexOf('unknown') != -1) {
-		_wtq.push([null, 'liftium.varia', ['error', 'fb_15045', track_string]]);
-	}
-	*/
 
 	var t = Liftium.getNextTag(slotname);
 	if (!t) {
@@ -1357,8 +1352,6 @@ Liftium.init = function (callback) {
 
 	Liftium.pullGeo();
 	Liftium.pullConfig(callback2);
-	
-	Liftium.addEventListener(window, "load", Liftium.onLoadHandler);
 
 	// Tell the parent window to listen to hop messages 
 	if (LiftiumOptions.enableXDM !== false ){
@@ -1452,6 +1445,7 @@ Liftium.isNetworkInChain = function (network_name, slotname){
 	return found;
 };
 
+Liftium.isHighValueCountry = AdLogicHighValueCountry(window).isHighValueCountry;
 
 /* Check to see if the user from the right geography */
 Liftium.isValidCountry = function (countryList){
@@ -1461,7 +1455,7 @@ Liftium.isValidCountry = function (countryList){
 	Liftium.d("Checking if '" + ac + "' is in:", 8, countryList);
 
 	if (Liftium.in_array("row", countryList, true) &&
-		!AdConfig.isHighValueCountry(ac)){
+		!Liftium.isHighValueCountry(ac)){
 		Liftium.d("ROW targetted, and country not high-value", 8);
 		return true;
 	}
@@ -1684,15 +1678,16 @@ Liftium.onLoadHandler = function () {
 	//Liftium.trackEvent(["onload", Liftium.formatTrackTime(Liftium.debugTime(), 30)], "UA-17475676-7");
 
 	Liftium.pageLoaded = true;
-	if ( Liftium.iframesLoaded()) {
+	if (!Liftium.e(Liftium.config) && Liftium.iframesLoaded()) {
 		Liftium.sendBeacon();
 	} else if (Liftium.loadDelay < Liftium.maxLoadDelay){
 		// Check again in a bit. Keep increasing the time
 		Liftium.loadDelay += Liftium.loadDelay;
 		window.setTimeout(Liftium.onLoadHandler, Liftium.loadDelay);
 	} else {
-		Liftium.d("Gave up waiting for ads to load, sending beacon now");
-		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/gave_up_waiting_for_ads', 'ga_action':'gave_up_waiting_for_ads'}, 'ga');
+		var config_status = Liftium.e(Liftium.config) ? 'no config' : 'config loaded';
+		Liftium.d("Gave up waiting for ads to load (" + config_status + "), sending beacon now", 1);
+		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/gave_up_waiting_for_ads', 'ga_action':config_status}, 'ga');
 		Liftium.sendBeacon();
 	}
 };
@@ -2627,11 +2622,8 @@ if (LiftiumOptions.error_beacon !== false ){
 
 
 // Gentlemen, Start your optimization!
-if (Liftium.empty(LiftiumOptions.offline) && LiftiumOptions.autoInit !== false){
+if (Liftium.empty(LiftiumOptions.offline)){
 	Liftium.init();
 }
 
-// If an ad was specified in LiftiumOptions, call the ad directly
-if (LiftiumOptions.callAd){
-	Liftium.callAd(LiftiumOptions.callAd);
-}
+Liftium.addEventListener(window, 'load', Liftium.onLoadHandler);

@@ -8,6 +8,7 @@
  *
  * @author Marooned <marooned at wikia-inc.com>
  * @author Lucas Garczewski <tor@wikia-inc.com>
+ * @author Władysław Bodzek
  * @date 2010-06-09
  */
 
@@ -23,6 +24,12 @@ class UserBlock {
 		global $wgUser, $wgMemc, $wgRequest;
 		wfProfileIn( __METHOD__ );
 
+		if ( $user->isAllowed( 'phalanxexempt' ) ) {
+			wfDebug ( __METHOD__ . ": user has 'phalanxexempt' right - no block will be applied\n" );
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
 		$ret = true;
 		$text = $user->getName();
 
@@ -37,16 +44,18 @@ class UserBlock {
 			return $cachedState;
 		}
 
-		$blocksData = Phalanx::getFromFilter( self::TYPE );
-		if ( !empty($blocksData) && !empty($text) ) {
+		if ( !empty($text) ) {
 			if ( $user->isAnon() ) {
-				$ret =  self::blockCheckInternal( $user, $blocksData, $text, true, $isCurrentUser );
+				$ret =  self::blockCheckIP( $user, $text, $isCurrentUser );
 			} else {
-				$ret = self::blockCheckInternal( $user, $blocksData, $text, false, $isCurrentUser );
+				$blocksData = Phalanx::getFromFilterShort( self::TYPE );
+				if ( !empty($blocksData) ) {
+					$ret = self::blockCheckInternal( $user, $blocksData, $text, $isCurrentUser );
+				}
 				//do not check IP for current user when checking block status of different user
 				if ( $ret && $isCurrentUser ) {
 					// if the user name was not blocked, check for an IP block
-					$ret = self::blockCheckInternal( $user, $blocksData, $wgRequest->getIP(), true, $isCurrentUser );
+					$ret = self::blockCheckIP( $user, $wgRequest->getIP(), $isCurrentUser );
 				}
 			}
 		}
@@ -65,31 +74,86 @@ class UserBlock {
 		return $ret;
 	}
 
-	protected static function blockCheckInternal( User $user, $blocksData, $text, $isBlockIP = false, $writeStats = true ) {
+	protected static function blockCheckInternal( User $user, $blocksData, $text, $writeStats = true ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		foreach ($blocksData as $blockData) {
-			if ( $isBlockIP && !$user->isIP($blockData['text'])) {
-				continue;
+		$blockData = null;
+		$result = Phalanx::findBlocked( $text, $blocksData, $writeStats, $blockData );
+
+		if ( $result['blocked'] ) {
+			Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
+			self::setUserData( $user, $blockData, $text, false );
+
+			$cachedState = array(
+				'timestamp' => wfTimestampNow(),
+				'block' => $blockData,
+				'return' => false,
+			);
+			$wgMemc->set( self::getCacheKey( $user ), $cachedState );
+
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * Directly check for IP block which is quicker than looping through all filters as we don't support
+	 * anything other than exact for IP blocks, and this significantly improves performance
+	 *
+	 * @author grunny
+	 */
+	protected static function blockCheckIP( User $user, $text, $writeStats = true ) {
+		global $wgMemc, $wgExternalSharedDB;
+		wfProfileIn( __METHOD__ );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$moduleId = Phalanx::TYPE_USER;
+		$timestampNow = wfTimestampNow();
+		$ipAddr = IP::toHex( $text );
+		$row = $dbr->selectRow(
+			'phalanx',
+			'*',
+			array(
+				"p_type & $moduleId = $moduleId",
+				"p_lang IS NULL",
+				'p_ip_hex' => $ipAddr,
+				"p_expire IS NULL OR p_expire > {$dbr->addQuotes( $timestampNow )}"
+			),
+			__METHOD__
+		);
+		if ( $row !== false ) {
+			$blockData = array(
+				'id' => $row->p_id,
+				'author_id' => $row->p_author_id,
+				'text' => $row->p_text,
+				'type' => $row->p_type,
+				'timestamp' => $row->p_timestamp,
+				'expire' => $row->p_expire,
+				'exact' => $row->p_exact,
+				'regex' => $row->p_regex,
+				'case' => $row->p_case,
+				'reason' => $row->p_reason,
+				'lang' => $row->p_lang
+			);
+			Wikia::log(__METHOD__, __LINE__, "Block '{$blockData['text']}' blocked '$text'.");
+			if ( $writeStats ) {
+				Phalanx::addStats($blockData['id'], $blockData['type']);
 			}
 
-			$result = Phalanx::isBlocked( $text, $blockData, $writeStats );
+			self::setUserData( $user, $blockData, $text, true );
 
-			if ( $result['blocked'] ) {
-				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$text'.");
-				self::setUserData( $user, $blockData, $text, $isBlockIP );
+			$cachedState = array(
+				'timestamp' => wfTimestampNow(),
+				'block' => $blockData,
+				'return' => false,
+			);
+			$wgMemc->set( self::getCacheKey( $user ), $cachedState );
 
-				$cachedState = array(
-					'timestamp' => wfTimestampNow(),
-					'block' => $blockData,
-					'return' => false,
-				);
-				$wgMemc->set( self::getCacheKey( $user ), $cachedState );
-
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
+			wfProfileOut( __METHOD__ );
+			return false;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -106,6 +170,7 @@ class UserBlock {
 
 		$cacheKey = self::getCacheKey( $user );
 		$cachedState = $wgMemc->get( $cacheKey );
+		$cachedState = false;
 
 		if ( !empty( $cachedState ) && $cachedState['timestamp'] > (int) Phalanx::getLastUpdate() ) {
 			if ( !$cachedState['return'] && $isCurrentUser ) {
@@ -192,8 +257,8 @@ class UserBlock {
 	 */
 	public static function onAbortNewAccount( $user, &$abortError ) {
 		$text = $user->getName();
-		$blocksData = Phalanx::getFromFilter( self::TYPE );
-		$state = self::blockCheckInternal( $user, $blocksData, $text, false, true );
+		$blocksData = Phalanx::getFromFilterShort( self::TYPE );
+		$state = self::blockCheckInternal( $user, $blocksData, $text, true );
 		if ( !$state ) {
 			$abortError = wfMsg( 'phalanx-user-block-new-account' );
 			return false;
@@ -202,12 +267,10 @@ class UserBlock {
 		$emailBlocksData = Phalanx::getFromFilter( Phalanx::TYPE_EMAIL );
 		$userEmail = $user->getEmail();
 		if ( $userEmail !== '' ) {
-			foreach ( $emailBlocksData as $emailBlockData ) {
-				$result = Phalanx::isBlocked( $userEmail, $emailBlockData, true );
-				if ( $result['blocked'] ) {
-					$abortError = wfMsg( 'phalanx-user-block-new-account' );
-					return false;
-				}
+			$result = Phalanx::findBlocked( $userEmail, $emailBlocksData, true );
+			if ( $result['blocked'] ) {
+				$abortError = wfMsg( 'phalanx-user-block-new-account' );
+				return false;
 			}
 		}
 		return true;

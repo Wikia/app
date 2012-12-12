@@ -65,7 +65,7 @@ $wgResourceModules['ext.createUserPage'] = $qtResourceTemplate + array(
 $wgResourceModules['ext.quickAdopt'] = $qtResourceTemplate + array(
 	'scripts' => array( 'ext.quickAdopt.js' ),
 	'dependencies' => array(
-		'mediawiki.user',
+		'mediawiki.util',
 		'ext.createUserPage'
 	),
 	'messages' => array(

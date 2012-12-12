@@ -17,7 +17,7 @@ $messages['en'] = array(
  */
 $messages['ar'] = array(
 	'skinchooser-desc' => 'يسمح للمستخدمين باختيار skins في التفضيلات الخاصة بهم',
-	'new-look' => 'شكل جديدة للويكي',
+	'new-look' => 'شكل جديدة للويكي', # Fuzzy
 	'site-layout' => 'موقع تخطيطات',
 );
 
@@ -25,7 +25,7 @@ $messages['ar'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
-	'new-look' => 'Neuz nevez Wikia',
+	'new-look' => 'Neuz nevez Wikia', # Fuzzy
 );
 
 /** Czech (česky)
@@ -33,7 +33,7 @@ $messages['br'] = array(
  */
 $messages['cs'] = array(
 	'skinchooser-desc' => 'Umnožňuje uživatelům zvolit vzhled v předvolbách',
-	'new-look' => 'Nový vzhled Wikia',
+	'new-look' => 'Nový vzhled Wikia', # Fuzzy
 	'site-layout' => 'Rozložení webu',
 );
 
@@ -60,12 +60,13 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Crt
+ * @author Nedergard
  * @author Tm T
  * @author VezonThunder
  */
 $messages['fi'] = array(
 	'skinchooser-desc' => 'Mahdollistaa ulkoasun valinnan käyttäjän asetuksissa',
-	'new-look' => 'Wikian uusi ulkoasu',
+	'new-look' => 'Wikia',
 	'site-layout' => 'Sivuston ulkoasut',
 );
 
@@ -185,6 +186,13 @@ $messages['pms'] = array(
 	'site-layout' => 'Presentassion dël sit',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'new-look' => 'ويکيا',
+);
+
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author SandroHc
@@ -246,7 +254,6 @@ $messages['tl'] = array(
  */
 $messages['zh-hans'] = array(
 	'skinchooser-desc' => '用户可依自身偏好选择皮肤',
-	'new-look' => '新Wikia外观',
+	'new-look' => '新Wikia外观', # Fuzzy
 	'site-layout' => '网站布局',
 );
-

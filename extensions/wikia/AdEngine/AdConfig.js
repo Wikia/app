@@ -1,6 +1,9 @@
 /* global Features */
+
+if (!window.wgDisableOldAdDriver) {
+
 var AdConfig = {
-	adSlotsRequiringJSInvocation: { HOME_INVISIBLE_TOP:1, INVISIBLE_TOP:1, INVISIBLE_1:1, INVISIBLE_2:1 },
+	adSlotsRequiringJSInvocation: { INVISIBLE_1:1, INVISIBLE_2:1 },
 	geo: null,
 
 	isHighValueCountry: function(country) {
@@ -15,12 +18,9 @@ var AdConfig = {
 			case 'CORP_TOP_LEADERBOARD':
 			case 'CORP_TOP_RIGHT_BOXAD':
 			case 'EXIT_STITIAL_BOXAD_1':
-			case 'HOME_INVISIBLE_TOP':
 			case 'HOME_TOP_LEADERBOARD':
 			case 'HOME_TOP_RIGHT_BOXAD':
 			case 'HUB_TOP_LEADERBOARD':
-			case 'INVISIBLE_MODAL':
-			case 'INVISIBLE_TOP':	// skin
 			case 'LEFT_SKYSCRAPER_2':
 			case 'MIDDLE_RIGHT_BOXAD':
 			case 'MODAL_RECTANGLE':
@@ -86,12 +86,7 @@ AdConfig.DART = {
        'CORP_TOP_RIGHT_BOXAD': {'tile':1, 'loc': 'top'},
 	   'DOCKED_LEADERBOARD': {'tile': 8, 'loc': "bottom"},
 	   'EXIT_STITIAL_BOXAD_1': {'tile':2, 'loc': "exit"},
-	   'EXIT_STITIAL_BOXAD_2': {'tile':3, 'loc': "exit"},
-	   'EXIT_STITIAL_INVISIBLE': {'tile':1, 'loc': "exit", 'dcopt': "ist"},
 	   'FOOTER_BOXAD': {'tile': 5, 'loc': "footer"},
-	   'HOME_INVISIBLE_TOP': {'tile':12, 'loc': "invisible"},
-	   'HOME_LEFT_SKYSCRAPER_1': {'tile':3, 'loc': "top"},
-	   'HOME_LEFT_SKYSCRAPER_2': {'tile':3, 'loc': "middle"},
 	   'HOME_TOP_LEADERBOARD': {'tile': 2, 'loc': "top", 'dcopt': "ist"},
 	   'HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
 	   'HOME_TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"},
@@ -108,8 +103,6 @@ AdConfig.DART = {
 	   'INCONTENT_LEADERBOARD_5': {'tile':8, 'loc': "middle"},
 	   'INVISIBLE_1': {'tile':10, 'loc': "invisible"},
 	   'INVISIBLE_2': {'tile':11, 'loc': "invisible"},
-	   'INVISIBLE_MODAL': {'tile':14, 'loc': "invisible"},
-	   'INVISIBLE_TOP': {'tile':13, 'loc': "invisible"},
 	   'JWPLAYER': {'tile': 2, 'loc': "top"},
 	   'LEFT_SKYSCRAPER_1': {'tile': 3, 'loc': "top"},
 	   'LEFT_SKYSCRAPER_2': {'tile': 3, 'loc': "middle"},
@@ -608,3 +601,5 @@ AdConfig.DART.getUniqueId = function () {
 };
 
 AdConfig.init();
+
+} // endif (!window.wgDisableOldAdDriver)

@@ -45,21 +45,38 @@ class AchNotificationService {
 		$badge = null;
 		$badges = array();
 
-		$where = array('user_id' => $userId, 'notified' => 0);
-		if(empty($wgEnableAchievementsStoreLocalData)) {
-			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-			$where['wiki_id'] = $wgCityId;
-		} else {
+		$lastSeen = null;
+		$lastSeenCurrent = null;
+		if(!empty($wgEnableAchievementsStoreLocalData)) {
 			$dbw = wfGetDB(DB_MASTER);
+			$res = $dbw->select('ach_user_badges_notified', array('lastseen'), array('user_id' => $userId), __METHOD__);
+			if( $row = $res->fetchObject($res) ) {
+				$lastSeen = $row->lastseen;
+			}
 		}
-		$res = $dbw->select('ach_user_badges', array('badge_type_id', 'badge_lap', 'badge_level'), $where, __METHOD__);
 
+		if(!empty($lastSeen)) {
+			$where = "`user_id` = $userId and `date` > \"$lastSeen\"";
+			$res = $dbw->select('ach_user_badges', array('badge_type_id', 'badge_lap', 'badge_level', 'date'), $where, __METHOD__);
+		} else {
+			$where = array('user_id' => $userId, 'notified' => 0);
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+				$where['wiki_id'] = $wgCityId;
+			} else {
+				$dbw = wfGetDB(DB_MASTER);
+			}
+			$res = $dbw->select('ach_user_badges', array('badge_type_id', 'badge_lap', 'badge_level', 'date'), $where, __METHOD__);
+		}
 		while($row = $dbw->fetchObject($res)) {
 			if(!isset($badges[$row->badge_level])) {
 				$badges[$row->badge_level] = array();
 			}
 
 			$badges[$row->badge_level][] = new AchBadge($row->badge_type_id, $row->badge_lap, $row->badge_level);
+			if(empty($lastSeenCurrent) || $row->date > $lastSeenCurrent) {
+				$lastSeenCurrent = $row->date;
+			}
 		}
 
 		if(count($badges) > 0) {
@@ -70,10 +87,21 @@ class AchNotificationService {
 			}
 
 			$badge = $badges[$maxLevel][0];
-			if($markAsNotified && !wfReadOnly()){
-				$dbw->update('ach_user_badges', array('notified' => 1), array('wiki_id' => $wgCityId, 'user_id' => $userId, 'notified' => 0));
+			if($markAsNotified && !wfReadOnly() && empty($lastSeen)){
+				$dbw->update('ach_user_badges', array('notified' => 1), $where);
 			}
 		}
+
+		if($markAsNotified && !wfReadOnly() ){
+			if($lastSeen && $lastSeen != $lastSeenCurrent) {
+				$dbw->update('ach_user_badges_notified', array('lastseen' => $lastSeenCurrent), array('user_id'=>$userId));
+			} else if ($lastSeenCurrent) {
+				try {
+					$dbw->insert('ach_user_badges_notified', array('lastseen' => $lastSeenCurrent, 'user_id'=>$userId));
+				} catch(Exception $e) {}
+			}
+		}
+
 
 		wfProfileOut(__METHOD__);
 		return $badge;

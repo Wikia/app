@@ -146,7 +146,8 @@ class WikiaSendgridMailer {
 				return $status->getMessage();
 			}
 		}
-		
+
+		wfProfileOut( __METHOD__ );
 		# return false to return Status::newGood() in UserMailer::send method
 		return false;
 	}

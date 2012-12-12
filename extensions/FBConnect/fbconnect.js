@@ -49,7 +49,10 @@ window.onFBloaded = function() {
 			window.location.host + window.wgScriptPath +
 			'/channel.php?lang=' + encodeURIComponent(window.fbScriptLangCode);
 
-	if (typeof fbAppId != 'string') {
+	if (window.fbAppInit) {
+		return;
+
+	} else if (typeof fbAppId != 'string') {
 		$().log('FB', 'appId is empty!');
 		return;
 	}
@@ -67,6 +70,8 @@ window.onFBloaded = function() {
 	if (typeof GlobalTriggers != 'undefined') {
 		GlobalTriggers.fire('fbinit');
 	}
+
+	window.fbAppInit = true;
 };
 
 /**
@@ -187,96 +192,6 @@ function loginByFBConnect() {
 */
 	openFbLogin();
 	return false;
-}
-
-/**
- * When user wants to log in using a Wikia account and connect
- * it to a Facebook account at the same time.
- */
-function loginAndConnectExistingUser(){
-	AjaxLogin.action = 'loginAndConnect'; // for clicktracking
-	AjaxLogin.form.unbind('submit'); // unbind the hander for previous form
-	AjaxLogin.form = $('#userajaxconnectform');
-
-	//window.wgAjaxLoginOnSuccess = loggedInNowNeedToConnect;
-
-	// Make sure the default even doesn't happen.
-	AjaxLogin.form.submit(function(ev){
-			AjaxLogin.formSubmitHandler(ev);
-			return false;
-	});
-}
-
-/*
- * expend ajax login to use slider login/merge switch
- */
-
-window.wgAjaxLoginOnInit = function() {
-	AjaxLogin.slideToNormalLogin = function(el){
-		var firstSliderCell = $("#AjaxLoginSliderNormal");
-		var slideto = 0;
-
-		AjaxLogin.beforeDoSuccess = function() {
-			return true;
-		};
-		$("#AjaxLoginConnectMarketing a.forward").show();
-		$("#AjaxLoginConnectMarketing a.back").hide();
-		firstSliderCell.animate({
-			marginLeft: slideto
-		}, function(){$('#fbLoginAndConnect').hide();});
-	};
-	AjaxLogin.slideToLoginAndConnect = function(el){
-		$('#fbLoginAndConnect').show();
-		var firstSliderCell = $("#AjaxLoginSliderNormal");
-		var slideto = -351;
-		$("#AjaxLoginConnectMarketing a.forward").hide();
-		$("#AjaxLoginConnectMarketing a.back").show();
-
-		AjaxLogin.beforeDoSuccess = function() {
-			FB.getLoginStatus(function(response) {
-				if (response.session) {
-					// already logged-in/connected via facebook
-					sendToConnectOnLoginForSpecificForm("ConnectExisting");
-				} else {
-					var slideto = -354;
-					$('#userloginErrorBox3').hide();
-					$('#fbLoginLastStep').show();
-					$('#AjaxLoginConnectMarketing').animate({
-						marginLeft: slideto
-					}, function() {
-						$('#fbLoginAndConnect').animate({
-							marginLeft: slideto
-						});
-					});
-					$('#fbLoginAndConnect').hide();
-				}
-			});
-			return false;
-		}
-
-		firstSliderCell.animate({
-			marginLeft: slideto
-		});
-	};
-	AjaxLogin.LoginAndConnectHideBack = function() {
-		$("#AjaxLoginConnectMarketing a.back").hide();
-	};
-
-	AjaxLogin.slider = function(e) {
-		if(typeof e != 'undefined'){
-			e.preventDefault();
-		}
-
-		// Split into diff functions so that they can be called from elsewhere.
-		if ($(this).hasClass("forward")) {
-			AjaxLogin.slideToLoginAndConnect(this);
-		} else {
-			AjaxLogin.slideToNormalLogin(this);
-		}
-	};
-
-	//setup slider
-	$("#AjaxLoginConnectMarketing a").click(AjaxLogin.slider);
 }
 
 function fixXFBML(id) {

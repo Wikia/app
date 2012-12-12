@@ -6,30 +6,30 @@
  * $ SERVER_ID=80433 php WikiaComWikisList.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --file='../../../extensions/wikia/WikiaHomePage/text_files/Top wikis for wikia.com - Ready for upload.csv'
  * for German version:
  * $ SERVER_ID=111264 php WikiaComWikisList.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --file='../../../extensions/wikia/WikiaHomePage/text_files/Top wikis for de.wikia.com.csv'
- * Optional parameter
+ * Optional parameters:
  * --message='TestMessageForVisualisation_test'
  * --overwritelang=en
  * --skipupload
- * --supressfilenames
  * --addimageuploadtask
+ * --check-city-id
  */
 require_once("../../commandLine.inc");
 global $wgEnableSpecialPromoteExt, $wgEnablePromoteImageReviewExt;
 
 $putItToAmessage = isset($options['message']) ? true : false;
+$ifCheckingCityIdInTheFile = isset($options['check-city-id']) ? true : false;
 
 $params = new stdClass();
 $params->csvContent = explode("\n", file_get_contents($options['file']));
 $params->overwrittenLang = isset($options['overwritelang']) ? $options['overwritelang'] : false;
 $params->skipUpload = isset($options['skipupload']) ? true : false;
-$params->supressFileNames = isset($options['supressfilenames']) ? true : false;
 $params->addImageUploadTask = isset($options['addimageuploadtask']) ? true : false;
 
 if( $params->overwrittenLang !== false ) {
 	$params->overwrittenLang = strtolower( substr($params->overwrittenLang, 0, 2) );
 }
 
-if( true === $params->supressFileNames && empty($wgEnableSpecialPromoteExt) ) {
+if( empty($wgEnableSpecialPromoteExt) ) {
 	include_once('../../../extensions/wikia/SpecialPromote/UploadVisualizationImageFromFile.class.php');
 }
 
@@ -37,7 +37,11 @@ if( true === $params->addImageUploadTask && empty($wgEnablePromoteImageReviewExt
 	include_once('../../../extensions/wikia/ImageReview/modules/PromoteImage/PromoteImageReviewTask.php');
 }
 
-if( $putItToAmessage ) {
+if( $ifCheckingCityIdInTheFile ) {
+	echo 'Checking if provided city id/city id list exists in the message...'."\n";
+	$import = new WikiaComWikisListImport($params);
+	$import->checkCityIdList($options['check-city-id']);
+} else if( $putItToAmessage ) {
 	echo 'Importing wikis to a MediaWiki message...'."\n";
 	$params->mediaWikiMessage = $options['message'];
 	$import = new WikiaComWikisListImport($params);
@@ -50,10 +54,10 @@ if( $putItToAmessage ) {
 
 class WikiaComWikisListImport {
 	const SPREADSHEET_FIRST_ADD_IMG_IDX = 6;
-	const SPREADSHEET_LAST_ADD_IMG_IDX = 6;
+	const SPREADSHEET_LAST_ADD_IMG_IDX = 5;
 
 	protected $options = null;
-	protected $verticalsNames = array('Video Games', 'Entertainment', 'Lifestyle');
+	protected $verticalsNames = array(2 => 'video games', 3 => 'entertainment', 9 => 'lifestyle'); //keep it lower-cased
 	protected $wikisAdded = array();
 	protected $wikisNotAdded = array();
 	protected $wikisUpdated = array();
@@ -70,34 +74,34 @@ class WikiaComWikisListImport {
 	protected function areAllRequiredWikiDataForMediaWikiMessageSet($data) {
 		wfProfileIn(__METHOD__);
 
-		if( !empty($data[2]) && !empty($data[4]) && in_array($data[3], $this->verticalsNames) ) {
-			wfProfileOut(__METHOD__);
-			return true;
+		if( !empty($data[2]) && !empty($data[4]) && in_array(strtolower(trim($data[3])), $this->verticalsNames) ) {
+			$res = true;
 		} else {
-			wfProfileOut(__METHOD__);
-			return false;
+			$res = false;
 		}
+		wfProfileOut(__METHOD__);
+		return $res;
 	}
 
 	protected function areAllRequiredWikiDataForDatabaseSet($data) {
 		wfProfileIn(__METHOD__);
 
 		if( !empty($data[2]) && !empty($data[4]) ) {
-			wfProfileOut(__METHOD__);
-			return true;
+			$res = true;
 		} else {
-			wfProfileOut(__METHOD__);
-			return false;
+			$res = false;
 		}
+		wfProfileOut(__METHOD__);
+		return $res;
 	}
 
 	public function loadDataAndUpdateMessage() {
 		wfProfileIn(__METHOD__);
 
 		$verticals = array(
-			$this->verticalsNames[0] => array(),
-			$this->verticalsNames[1] => array(),
-			$this->verticalsNames[2] => array()
+			$this->verticalsNames[2] => array(),
+			$this->verticalsNames[3] => array(),
+			$this->verticalsNames[9] => array()
 		);
 
 		foreach($this->options->csvContent as $line) {
@@ -108,29 +112,34 @@ class WikiaComWikisListImport {
 				$wikiDomain = trim( str_replace('http://', '', $wikiUrl), '/');
 				$wikiId = WikiFactory::DomainToID($wikiDomain);
 
-				$wikiHeadline = $element[1];
-				$wikiVertical = $element[3];
-				$wikiMainImageUrl = $element[4];
-				$wikiDesc = $element[5];
-				$spreadSheetImageName = basename($element[4]);
-				$wikiImageName = $this->getCorpDestImageName($wikiUrl, $spreadSheetImageName);
+				if( $wikiId > 0 ) {
+					$wikiHeadline = $element[1];
+					$wikiVerticalId = HubService::getComscoreCategory($wikiId)->cat_id;
 
-				if( !$this->options->skipUpload ) {
-					$this->uploadImage($wikiMainImageUrl, $wikiImageName, $wikiId);
+					$wikiMainImageUrl = $element[4];
+					$wikiDesc = $element[5];
+					$spreadSheetImageName = basename($element[4]);
+					$wikiImageName = $this->getCorpDestImageName($wikiUrl, $spreadSheetImageName);
+
+					if( !$this->options->skipUpload ) {
+						$this->uploadImage($wikiMainImageUrl, $wikiImageName, $wikiId);
+					}
+
+					$wikiUrl = (
+						(stripos($wikiUrl, 'http://') === false)
+							&& (stripos($wikiUrl, 'https://') === false)
+					) ? ('http://' . $wikiUrl) : $wikiUrl;
+
+					$verticals[$this->verticalsNames[$wikiVerticalId]][] = '**' . $wikiHeadline . '|' . $wikiUrl . '|' . $wikiImageName . '|' . $wikiDesc;
+				} else {
+					$this->wikisNotAdded[] = $wikiDomain.' ('.$wikiId.') ';
 				}
-
-				$wikiUrl = (
-					(stripos($wikiUrl, 'http://') === false)
-						&& (stripos($wikiUrl, 'https://') === false)
-				) ? ('http://' . $wikiUrl) : $wikiUrl;
-
-				$verticals[$wikiVertical][] = '**' . $wikiHeadline . '|' . $wikiUrl . '|' . $wikiImageName . '|' . $wikiDesc;
 			}
 		}
 
 		$title = Title::newFromText($this->options->mediaWikiMessage, NS_MEDIAWIKI);
 		$article = new Article($title);
-		$content = $this->parseWikisList(0, $verticals) . $this->parseWikisList(1, $verticals) . $this->parseWikisList(2, $verticals);
+		$content = $this->parseWikisList(2, $verticals) . $this->parseWikisList(3, $verticals) . $this->parseWikisList(9, $verticals);
 		$summary = "automated import";
 		$article->doEdit($content, $summary);
 
@@ -218,12 +227,10 @@ class WikiaComWikisListImport {
 	protected function getCorpDestImageName($wikiUrl, $origImageName, $index = false) {
 		wfProfileIn(__METHOD__);
 
-		if( $this->options->supressFileNames ) {
-			$wikiDomain = trim( str_replace('http://', '', $wikiUrl), '/');
-			$wikiDb = WikiFactory::DomainToDB($wikiDomain);
-		}
+		$wikiDomain = trim( str_replace('http://', '', $wikiUrl), '/');
+		$wikiDb = WikiFactory::DomainToDB($wikiDomain);
 
-		if( $this->options->supressFileNames && !empty($wikiDb) ) {
+		if( !empty($wikiDb) ) {
 			if( $index === false ) {
 				$resultName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
 				$resultNameArr = explode('.', $resultName);
@@ -265,16 +272,20 @@ class WikiaComWikisListImport {
 			echo 'OK uploads: ' . $okSliderImagesUpload . '/' . $totalSliderImages;
 			echo "\n";
 
-			if( !empty($this->faileduploads['slider-images']) || !empty($this->faileduploads['slider-images']) ) {
+			if( !empty($this->faileduploads['main-images']) || !empty($this->faileduploads['slider-images']) ) {
 				echo 'Failed uploads: ' . ($failedMainUploads + $failedSliderUploads) . '/' . ($totalMainImages + $totalSliderImages);
 				echo "\n";
 				echo 'Failed uploads list:';
 				echo "\n";
-				foreach( $this->faileduploads['main-images'] as $filename ) {
-					echo $filename . "\n";
+				foreach( $this->faileduploads['main-images'] as $data ) {
+					echo 'File: ' . $data['name'] . "\n" . 'Upload result: ' . "\n";
+					print_r($data['result']);
+					echo "\n\n";
 				}
-				foreach( $this->faileduploads['slider-images'] as $filename ) {
-					echo $filename . "\n";
+				foreach( $this->faileduploads['slider-images'] as $data ) {
+					echo 'File: ' . $data['name'] . "\n" . 'Upload result: ' . "\n";
+					print_r($data['result']);
+					echo "\n\n";
 				}
 			}
 
@@ -328,18 +339,17 @@ class WikiaComWikisListImport {
 			$statusArrayKey = 'main-images';
 		}
 
-		if( $result['status'] === true ) {
+		if( $result['status'] === true || (
+			$result['status'] !== true
+			&& !empty($result['errors'][0]['message'])
+			&& $result['errors'][0]['message'] === 'backend-fail-alreadyexists'
+		) ) {
 			$this->okuploads[$statusArrayKey][] = array('city_id' => $wikiId, 'id' => $result['page_id'], 'name' => $imageName);
 			echo '.';
 			$success = true;
 		} else {
-			if (!empty($result['errors'][0]['message']) && $result['errors'][0]['message'] === 'filerenameerror') {
-				$this->fileexists[$statusArrayKey][] = $imageName;
-				echo '!';
-			} else {
-				$this->faileduploads[$statusArrayKey][] = $imageName;
-				echo '.';
-			}
+			$this->faileduploads[$statusArrayKey][] = array('name' => $imageName, 'result' => $result);
+			echo '!';
 		}
 
 		wfProfileOut(__METHOD__);
@@ -446,7 +456,7 @@ class WikiaComWikisListImport {
 		global $wgCityId;
 		wfProfileIn(__METHOD__);
 
-		if( !$this->options->skipUpload && $this->options->addImageUploadTask ) {
+		if( !$this->options->skipUpload && $this->options->addImageUploadTask && $this->wereAnyFilesUploaded() ) {
 			$taskAdditionList = array();
 			foreach($this->okuploads['main-images'] as $image) {
 				$targetWikiId = $image['city_id'];
@@ -472,6 +482,45 @@ class WikiaComWikisListImport {
 		}
 
 		wfProfileOut(__METHOD__);
+	}
+
+	protected function wereAnyFilesUploaded() {
+		if( empty($this->okuploads['main-images']) || empty($this->okuploads['main-images']) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @desc Parses the source file, retrives city_ids of wikis from the file and checks if given city_id is on the list
+	 * @param String $params city_id or comma-separated city_id list
+	 */
+	public function checkCityIdList($params) {
+		if( !is_string($params) ) {
+			echo 'Invalid city id or city id list' . "\n";
+			return false;
+		}
+
+		$isList = strpos($params, ',');
+		if( $isList ) {
+			$cityIdList = explode(',', $params);
+		} else {
+			$cityIdList = array(intval($params));
+		}
+
+		foreach( $this->options->csvContent as $line ) {
+			$element = str_getcsv($line, ',', '"');
+
+			if( $this->areAllRequiredWikiDataForDatabaseSet($element) ) {
+				$wikiDomain = trim( str_replace('http://', '', $element[2]), '/');
+				$wikiId = WikiFactory::DomainToID($wikiDomain);
+
+				if( in_array($wikiId, $cityIdList) ) {
+					echo 'Found: ' . $wikiId . ' in the file (' . $wikiDomain . ')' . "\n";
+				}
+			}
+		}
 	}
 
 }

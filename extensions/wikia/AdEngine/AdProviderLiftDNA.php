@@ -15,6 +15,7 @@ class AdProviderLiftDNA implements iAdProvider {
 
 		static $called = false;
 		if ($called) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 		$called = true;

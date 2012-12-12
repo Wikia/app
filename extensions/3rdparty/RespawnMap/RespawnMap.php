@@ -22,6 +22,10 @@ $wgHooks['LanguageGetMagic'][] = 'wfImageURL_Magic';
 $wgHooks['ParserFirstCallInit'][] = "wfRespawnMapExtension_InstallParser";
 $wgExtensionMessagesFiles['RespawnMap'] = dirname(__FILE__) . '/RespawnMap.i18n.php';
 
+/**
+ * @param Parser $parser
+ * @return bool
+ */
 function wfRespawnMapExtension_InstallParser( $parser ) {
 	# register the extension with the WikiText parser
 	# the first parameter is the name of the new tag.
@@ -43,7 +47,7 @@ function renderRespawnMap( $input, $argv, &$parser ) {
 
 	$localParser = new Parser();
 
-	$imageObj = Image::newFromName( $argv['image'] );
+	$imageObj = wfFindFile( $argv['image'] );
 	if (!$imageObj || !$imageObj->exists())
 		return wfMsg('respawn:noexist', $argv['image']);
 
@@ -68,7 +72,7 @@ function renderRespawnMap( $input, $argv, &$parser ) {
 		list($pos, $details) = explode('|', $parms, 2);
 		list($posX, $posY) = explode(',', $pos, 2);
 
-		$imageObj = Image::newFromName( $itemName . ".gif" );
+		$imageObj = wfFindFile( $itemName . ".gif" );
 		if (!$imageObj || !$imageObj->exists())
 			continue;
 
@@ -92,11 +96,10 @@ function wfImageURL_Magic( &$magicWords, $langCode ) {
 
 function imageURL(&$parser, $name = '') {
 
-	$imageObj = Image::newFromName( $name );
+	$imageObj = wfFindFile( $name );
 	if (!$imageObj || !$imageObj->exists())
 		return wfMsg('respawn:noexist', $name);
 	else
 		return $imageObj->getViewURL();
 
 }
-?>

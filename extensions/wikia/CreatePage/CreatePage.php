@@ -107,7 +107,9 @@ function wfCreatePageLoadPreformattedContent( $editpage ) {
 	global $wgRequest;
 
 	if ( $wgRequest->getCheck( 'useFormat' ) ) {
-		$editpage->textbox1 = wfMsgForContentNoTrans( 'newpagelayout' );
+                if ( !$editpage->textbox1 ) {
+                        $editpage->textbox1 = wfMsgForContentNoTrans( 'newpagelayout' );
+                }
 	}
 	return true ;
 }

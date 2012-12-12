@@ -9,8 +9,10 @@
 			<? if( !empty($user['name']) ): ?>
 				<h1 class=mstNm itemprop=name><?= $user['name']; ?></h1>
 			<? endif; ?>
-			<? if( !empty($user['group']) ): ?>
-				<span class=mstGr><?= $user['group']; ?></span>
+			<? if( !empty($user['tags']) ): ?>
+				<?php foreach($user['tags'] as $tag): ?>
+					<span class=mstGr><?= $tag; ?></span>
+				<?php endforeach; ?>
 			<? endif; ?>
 			<? if(!empty($user['chatBanned'])): ?>
 				<span class=mstGr><?= wfMsg('user-identity-box-banned-from-chat'); ?></span>

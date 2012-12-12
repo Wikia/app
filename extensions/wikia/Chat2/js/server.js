@@ -657,6 +657,11 @@ function giveChatMod(client, socket, msg){
 		storage.getRoomState(client.roomId, function(nodeChatModel) {	
 			// Initial connection of the user (unless they're already connected).
 			var promotedUser = nodeChatModel.users.findByName(userNameToPromote);
+
+			if(!promotedUser) {
+				return true;
+			}
+
 			promotedUser.set('isModerator', true);
 
 			broadcastInlineAlert(client, socket, 'chat-inlinealert-a-made-b-chatmod', [client.myUser.get('name'), promotedUser.get('name')], function() {

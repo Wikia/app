@@ -31,12 +31,26 @@ $messages['de'] = array(
 	'campfire-licensed-under' => 'Lizenziert unter $1',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'campfire-page-header' => '$1 ra $2',
+);
+
 /** Spanish (español)
  * @author VegaDark
  */
 $messages['es'] = array(
 	'campfire-page-header' => '$1 de $2',
 	'campfire-licensed-under' => 'Bajo la licencia $1',
+);
+
+/** Persian (فارسی)
+ * @author پاناروما
+ */
+$messages['fa'] = array(
+	'campfire-licensed-under' => 'تحت مجوز$1',
 );
 
 /** Finnish (suomi)
@@ -213,4 +227,3 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'campfire-page-header' => '$1從$2',
 );
-

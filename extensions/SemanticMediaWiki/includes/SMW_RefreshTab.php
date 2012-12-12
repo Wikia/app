@@ -14,7 +14,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 global $wgHooks;
 
-$wgHooks['SkinTemplateTabs'][] = 'smwfAddRefreshTab'; // basic tab addition
+//Wikia change -- disable SkinTemplateTabs hooks
+//$wgHooks['SkinTemplateTabs'][] = 'smwfAddRefreshTab'; // basic tab addition
 $wgHooks['SkinTemplateNavigation'][] = 'smwfAddStructuredRefreshTab'; // structured version for "Vector"-type skins
 
 /**

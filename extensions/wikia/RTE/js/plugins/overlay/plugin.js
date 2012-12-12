@@ -190,21 +190,28 @@ CKEDITOR.plugins.add('rte-overlay',
 		// render media caption
 		var captionContent = (typeof data.params != 'undefined') && (data.params.captionParsed || data.params.caption);
 		if (captionContent && isFramed) {
-			var captionTop = parseInt(node.innerHeight());
-			var captionWidth = parseInt(node.innerWidth());
+			var captionTop = parseInt(node.outerHeight(false));
+			var captionWidth = parseInt(node.outerWidth(false) + 2);
 
 			captionTop -= 25; /* padding-top (25px) */
 			captionWidth -= 10; /* (padding (3px) + border(1px) + spacing(1px)) * 2 */
 
 			var caption = $('<div>').
 				addClass('RTEMediaCaption').
-				css('top',captionTop + 'px').
+				css({
+					top: captionTop + 'px',
+					left: '-1px'
+				}).
 				width(captionWidth).
 				html(captionContent).
 				click(function(ev) {
 					// disable clicks on links inside caption
 					ev.preventDefault();
 				});
+
+			if (node.hasClass('alignCenter')) {
+				caption.css('left', '1px');
+			}
 
 			return caption;
 		}
@@ -221,6 +228,7 @@ CKEDITOR.plugins.add('rte-overlay',
 			// image / video placeholder
 			position.top += 2;
 			position.left += 2;
+
 		}
 		else {
 			// take image margins into consideration
@@ -230,6 +238,21 @@ CKEDITOR.plugins.add('rte-overlay',
 				if (!node.hasClass('alignLeft')) {
 					position.left += 18;
 				}
+			}
+		}
+
+		// fix modify/remove for center aligned elements
+		if (node.hasClass('alignCenter')) {
+			var getLeftOffsetForAlignCenter = function(node) {
+				var nodeWidth = node.outerWidth(false),
+					nodeParentWidth = node.parent().outerWidth(false);
+				return (nodeParentWidth - nodeWidth) / 2 - 4;
+			};
+			position.left = getLeftOffsetForAlignCenter(node);
+			position.top -= 3;
+			if ( node.hasClass('thumb')) {
+				position.left -= 2;
+				position.top -= 3;
 			}
 		}
 
