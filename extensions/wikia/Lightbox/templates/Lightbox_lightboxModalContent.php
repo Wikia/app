@@ -83,7 +83,7 @@
 		{{#thumbs}}
 			<li{{#liClass}} class="{{liClass}}"{{/liClass}}>
 				{{{playButtonSpan}}}
-				<img src="<?= $wg->BlankImgUrl ?>" data-src="{{thumbUrl}}" data-caption="{{caption}}" width="90" height="55">
+				<img class="thumb" src="<?= $wg->BlankImgUrl ?>" data-src="{{thumbUrl}}" data-caption="{{caption}}" width="90" height="55">
 			</li>
 		{{/thumbs}}
 	</script>

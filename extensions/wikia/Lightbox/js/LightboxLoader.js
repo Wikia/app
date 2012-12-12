@@ -229,7 +229,7 @@ var LightboxLoader = {
 				type:		'GET',
 				format: 'html',
 				data: {
-					lightboxVersion: 5 // update this when we change the template Lightbox_lightboxModalContent.php
+					lightboxVersion: 6 // update this when we change the template Lightbox_lightboxModalContent.php
 				},
 				callback: function(html) {
 					LightboxLoader.templateHtml = html;
