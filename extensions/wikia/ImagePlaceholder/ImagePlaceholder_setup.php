@@ -242,20 +242,8 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		}
 	}
 
-	// FIXME: argh! inline styles! Move to classes someday... --TOR
-	$margin = '';
 	$additionalClass = '';
-	if( isset( $align ) ) {
-		if ( $align == 'right' ) {
-			$margin = 'margin: 0.5em 0 1.2em 1.4em;';
-		} else if ( $align == 'center' ) {
-			$margin = 'margin: 0.5em auto 1.2em;';
-			$additionalClass = ' center';
-		} else {
-			$margin = 'margin: 0.5em 1.4em 1.2em 0;';
-		}
-	}
-	
+
 	if( $isvideo ) {
 		$additionalClass .= ' wikiaVideoPlaceholder';
 	}
@@ -265,7 +253,6 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	$wrapperAttribs = array(
 		'class' => "gallerybox wikiaPlaceholder{$additionalClass}",
-		'style' => 'vertical-align: bottom', // TODO: move to static CSS file
 	);
 	
 	// ImagePlaceholders still use id attribute, videos use data-id attribute. Images should be updated to match videos at some point
@@ -280,13 +267,13 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$out .= Xml::openElement('div', $wrapperAttribs);
 	$out .= Xml::openElement('div', array(
 		'class' => "thumb t{$align} videobox", // TODO: maybe change class name (videobox)
-		'style' => "height: {$height}px; width: {$width}px; {$margin}",
+		'style' => "height: {$height}px; width: {$width}px;",
 	));
 
 	$linkAttrs = array(
 		'id' => "WikiaImagePlaceholderInner{$wgWikiaImagePlaceholderId}",
 		'class' => 'wikia-button',
-		'style' => "top: {$tmarg}px;position:relative;",
+		'style' => "top: {$tmarg}px;",
 		'href' => $wgTitle->getLocalUrl( array( 'action' => 'edit') ),
 		'data-id' => $wgWikiaVideoPlaceholderId,
 		'data-align' => $isalign,
