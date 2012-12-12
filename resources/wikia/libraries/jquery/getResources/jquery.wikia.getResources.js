@@ -1,4 +1,4 @@
-(function( $ ) {
+(function( window, $ ) {
 
 /**
  * Fetches a list of resources and fires a callback when they have all finished
@@ -11,7 +11,16 @@
  * @author kflorence
  */
 var getResources = (function() {
-	var rAssetManagerGroup = /__am\/\d+\/groups?\/.*\/(.*)$/,
+	var rAssetManagerGroup = new RegExp( window.wgAssetsManagerQuery
+			// Replace the first parameter with 'groups' since that's all we care about
+			.replace( '%1$s', 'groups' )
+			// Escape any special regex characters in the URL
+			.replace( /[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&' )
+			// Replace remaining parameters with wildcard matches
+			.replace( /%\d\\\$(?:s|d)/g, '(?:.*)' )
+			// Escape forward slashes
+			.replace( /\//g, '\\/' )
+		),
 		rAssetManagerGroupType = /(js|s?css)/,
 		rExtension = /\.(js|s?css)$/;
 
@@ -89,4 +98,4 @@ var getResources = (function() {
 // Exports
 $.getResources = $.getResource = getResources;
 
-})( jQuery );
+})( window, jQuery );
