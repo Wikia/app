@@ -581,20 +581,23 @@ class WikiaSearch extends WikiaObject {
 	 */
 	protected function postSearch( WikiaSearchConfig $searchConfig, Solarium_Result_Select $result ) {
 		
-		if ( $this->wg->WikiaSearchSpellcheckActivated && $result->getNumFound() == 0 ) {
+		if ( $this->wg->WikiaSearchSpellcheckActivated 
+				&& $result->getNumFound() == 0
+				&& !$searchConfig->hasArticleMatch() ) {
 			if ( $collation = $result->getSpellcheck()->getCollation() ) {
 				$searchConfig->setQuery( $collation->getQuery() );
-				$this->search( $searchConfig );
+				$result = $this->search( $searchConfig );
 			}
 		}
 		
 		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
+
+		$resultCount = $results->getResultsFound();
 		
 		$searchConfig->setResults		( $results )
-					 ->setResultsFound	( $results->getResultsFound() )
+					 ->setResultsFound	( $resultCount )
 		;
 		if( $searchConfig->getPage() == 1 ) {
-			$resultCount = $results->getResultsFound();
 			F::build( 'Track' )->event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
 										array(	'sterm'	=> $searchConfig->getQuery(), 
 												'rver'	=> self::RELEVANCY_FUNCTION_ID,

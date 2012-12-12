@@ -1439,39 +1439,63 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 				'WikiaSearch::getInterestingTerms should perform a moreLikeThis call and return the interesting terms of the result set in an array'
 		);
 	}
-
+	
 	/**
 	 * @covers WikiaSearch::doSearch
 	 */
-	public function testDoSearchInterWiki() {
-		$searchConfigMethods = array(
-				'getGroupResults', 'setLength', 'setIsInterWiki', 'getPage', 'setResults', 'setResultsFound', 'getQuery', 'getIsInterWiki'
-				);
-		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', $searchConfigMethods );
-		$mockClient		=	$this->getMockBuilder( 'Solarium_Client' )
-								->disableOriginalConstructor()
-								->setMethods( array( 'select' ) )
-								->getMock();
-
+	public function testDoSearch() {
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'getResults' ) );
 		$mockResultSet	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
 								->disableOriginalConstructor()
-								->setMethods( array( 'getResultsFound' ) )
 								->getMock();
-
-		$mockSolResult	=	$this->getMockBuilder( 'Solarium_Result' )
+		
+		$mockSearch		=	$this->getMockBuilder( 'WikiaSearch' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'preSearch', 'search', 'postSearch' ) )
+								->getMock();
+		
+		$mockResult		=	$this->getMockBuilder( 'Solarium_Result_Select' )
 								->disableOriginalConstructor()
 								->getMock();
-
+		
+		$mockSearch
+			->expects	( $this->at( 0 ) )
+			->method	( 'preSearch' )
+			->with		( $mockConfig )
+		;
+		$mockSearch
+			->expects	( $this->at( 1 ) )
+			->method	( 'search' )
+			->with		( $mockConfig )
+			->will		( $this->returnValue( $mockResult ) )
+		;
+		$mockSearch
+			->expects	( $this->at( 2 ) )
+			->method	( 'postSearch' )
+			->with		( $mockConfig, $mockResult )
+		;
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResults' )
+			->will		( $this->returnValue( $mockResultSet ) )
+		;
+		$this->assertEquals(
+				$mockResultSet,
+				$mockSearch->doSearch( $mockConfig ),
+				'WikiaSearch::doSearch should always return an instance of WikiaSearchResultSet'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearch::preSearch 
+	 */
+	public function testPreSearchInterWiki() {
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'getGroupResults', 'setLength', 'setIsInterWiki', 'getPage' ) );
+		
 		$mockSearch 	=	$this->getMockBuilder( 'WikiaSearch' )
-								->setMethods( array( 'getSelectQuery' ) )
-								->setConstructorArgs( array( $mockClient ) )
-								->getMock();
-
-		$mockQuery		=	$this->getMockBuilder( 'Solarium_Query_Select' )
 								->disableOriginalConstructor()
 								->getMock();
-		$mockTrack		=	$this->getMock( 'Track', array( 'event' ) );
-
+		
 		$mockConfig
 			->expects	( $this->at( 0 ) )
 			->method	( 'getGroupResults' )
@@ -1494,317 +1518,296 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( 1 ) )
 		;
 		$mockConfig
-			->expects	( $this->at( 4 ) )
-			->method	( 'setResults' )
-			->with		( $mockResultSet )
-			->will		( $this->returnValue( $mockConfig ) )
+			->expects	( $this->never() )
+			->method	( 'setStart' )
+		;
+		
+		$preSearch = new ReflectionMethod( 'WikiaSearch', 'preSearch' );
+		$preSearch->setAccessible( true );
+		$preSearch->invoke( $mockSearch, $mockConfig );
+	}
+	
+	/**
+	 * @covers WikiaSearch::preSearch 
+	 */
+	public function testPreSearchPaginated() {
+		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', array( 'getGroupResults', 'getPage', 'getLength', 'setStart' ) );
+		
+		$mockSearch 	=	$this->getMockBuilder( 'WikiaSearch' )
+								->disableOriginalConstructor()
+								->getMock();
+		
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'getGroupResults' )
+			->will		( $this->returnValue( false ) )
 		;
 		$mockConfig
-			->expects	( $this->at( 5 ) )
-			->method	( 'setResultsFound' )
-			->with		( 100 )
-			->will		( $this->returnValue( $mockConfig ) )
-		;
-		$mockConfig
-			->expects	( $this->at( 6 ) )
+			->expects	( $this->at( 1 ) )
 			->method	( 'getPage' )
-			->will		( $this->returnValue( 1 ) )
+			->will		( $this->returnValue( 2 ) )
 		;
 		$mockConfig
-			->expects	( $this->at( 7 ) )
+			->expects	( $this->at( 2 ) )
+			->method	( 'getPage' )
+			->will		( $this->returnValue( 3 ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 3 ) )
+			->method	( 'getLength' )
+			->will		( $this->returnValue( 10 ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 4 ) )
+			->method	( 'setStart' )
+			->with		( 20 )
+		;
+		
+		$preSearch = new ReflectionMethod( 'WikiaSearch', 'preSearch' );
+		$preSearch->setAccessible( true );
+		$preSearch->invoke( $mockSearch, $mockConfig );
+	}
+
+	/**
+	 * @covers WikiaSearch::postSearch
+	 */
+	public function testPostSearchWithoutSpellcheckOrTracking() {
+		$mockConfig = $this->getMockBuilder( 'WikiaSearchConfig' )
+							->setMethods( array( 'setresults', 'setResultsFound', 'getPage' ) )
+							->getMock();
+		
+		$mockResults = $this->getMockBuilder( 'WikiaSearchResultSet' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getResultsFound' ) )
+							->getMock();
+		
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockResult = $this->getMockBuilder( 'Solarium_Result_Select' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$found = 100;
+		
+		$mockResults
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResultsFound' )
+			->will		( $this->returnValue( $found ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'setResults' )
+			->with		( $mockResults )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 1 ) )
+			->method	( 'setResultsFound' )
+			->with		( $found )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 2 ) )
+			->method	( 'getPage' )
+			->will		( $this->returnValue( 2 ) )
+		;
+		
+		$this->mockClass( 'WikiaSearchResultSet', $mockResults );
+		$this->mockApp();
+		
+		$wg = new ReflectionProperty( 'WikiaSearch', 'wg' );
+		$wg->setAccessible( true );
+		$wg->setValue( $mockSearch, (object) array( 'WikiaSearchSpellcheckActivated' => false ) );
+		
+		$postSearch = new ReflectionMethod( 'WikiaSearch', 'postSearch' );
+		$postSearch->setAccessible( true );
+		$postSearch->invoke( $mockSearch, $mockConfig, $mockResult );
+	}
+	
+	/**
+	 * @covers WikiaSearch::postSearch
+	 */
+	public function testPostSearchWithSpellcheck() {
+		$mockConfig = $this->getMockBuilder( 'WikiaSearchConfig' )
+							->setMethods( array( 'setresults', 'setResultsFound', 'hasArticleMatch', 'setQuery', 'getPage' ) )
+							->getMock();
+		
+		$mockResults = $this->getMockBuilder( 'WikiaSearchResultSet' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getResultsFound' ) )
+							->getMock();
+		
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'search' ) )
+							->getMock();
+		
+		$mockSpellcheck = $this->getMockBuilder( 'Solarium_Result_Select_Spellcheck' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getCollation' ) )
+								->getMock();
+		
+		$mockCollation = $this->getMockBuilder( 'Solarium_Result_Select_Spellcheck_Collation' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getQuery' ) )
+								->getMock();
+		
+		$mockResult = $this->getMockBuilder( 'Solarium_Result_Select' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getNumFound', 'getSpellcheck' ) )
+							->getMock();
+		
+		$found = 0;
+		
+		$mockResult
+			->expects	( $this->at( 0 ) )
+			->method	( 'getNumFound' )
+			->will		( $this->returnValue( 0 ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'hasArticleMatch' )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockResult
+			->expects	( $this->at( 1 ) )
+			->method	( 'getSpellcheck' )
+			->will		( $this->returnValue( $mockSpellcheck ) )
+		;
+		$mockSpellcheck
+			->expects	( $this->at( 0 ) )
+			->method	( 'getCollation' )
+			->will		( $this->returnValue( $mockCollation ) )
+		;
+		$mockCollation
+			->expects	( $this->at( 0 ) )
 			->method	( 'getQuery' )
 			->will		( $this->returnValue( 'foo' ) )
 		;
 		$mockConfig
-			->expects	( $this->at( 8 ) )
+			->expects	( $this->at( 1 ) )
+			->method	( 'setQuery' )
+			->with		( 'foo' )
+		;
+		$mockSearch
+			->expects	( $this->at( 0 ) )
+			->method	( 'search' )
+			->will		( $this->returnValue( $mockResult ) )
+		;
+		$mockResults
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResultsFound' )
+			->will		( $this->returnValue( $found ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 2 ) )
+			->method	( 'setResults' )
+			->with		( $mockResults )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 3 ) )
+			->method	( 'setResultsFound' )
+			->with		( $found )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 4 ) )
+			->method	( 'getPage' )
+			->will		( $this->returnValue( 2 ) )
+		;
+		
+		$this->mockClass( 'WikiaSearchResultSet', $mockResults );
+		$this->mockApp();
+		
+		$wg = new ReflectionProperty( 'WikiaSearch', 'wg' );
+		$wg->setAccessible( true );
+		$wg->setValue( $mockSearch, (object) array( 'WikiaSearchSpellcheckActivated' => true ) );
+		
+		$postSearch = new ReflectionMethod( 'WikiaSearch', 'postSearch' );
+		$postSearch->setAccessible( true );
+		$postSearch->invoke( $mockSearch, $mockConfig, $mockResult );
+	}
+	
+	/**
+	 * @covers WikiaSearch::postSearch
+	 */
+	public function testPostSearchWithTracking() {
+		$mockConfig = $this->getMockBuilder( 'WikiaSearchConfig' )
+							->setMethods( array( 'setresults', 'setResultsFound', 'getQuery', 'getIsInterWiki', 'getPage' ) )
+							->getMock();
+		
+		$mockResult = $this->getMockBuilder( 'Solarium_Result_Select' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockResults = $this->getMockBuilder( 'WikiaSearchResultSet' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getResultsFound' ) )
+							->getMock();
+		
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+							->disableOriginalConstructor()
+							->getMock();
+		
+		$mockTrack = $this->getMockBuilder( 'Track' )
+						->disableOriginalConstructor()
+						->setMethods( array( 'event' ) )
+						->getMock();
+		
+		$found = 100;
+
+		$mockResults
+			->expects	( $this->at( 0 ) )
+			->method	( 'getResultsFound' )
+			->will		( $this->returnValue( $found ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 0 ) )
+			->method	( 'setResults' )
+			->with		( $mockResults )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 1 ) )
+			->method	( 'setResultsFound' )
+			->with		( $found )
+			->will		( $this->returnValue( $mockConfig ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 2 ) )
+			->method	( 'getPage' )
+			->will		( $this->returnValue( 1 ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 3 ) )
+			->method	( 'getQuery' )
+			->will		( $this->returnValue( 'foo' ) )
+		;
+		$mockConfig
+			->expects	( $this->at( 4 ) )
 			->method	( 'getIsInterWiki' )
-			->will		( $this->returnValue( true ) )
-		;
-		$mockResultSet
-			->expects	( $this->any() )
-			->method	( 'getResultsFound' )
-			->will		( $this->returnValue ( 100 ) )
-		;
-		$mockSearch
-			->expects	( $this->once() )
-			->method	( 'getSelectQuery' )
-			->will		( $this->returnValue( $mockQuery ) )
-		;
-		$mockClient
-			->expects	( $this->once() )
-			->method	( 'select' )
-			->with		( $mockQuery )
-			->will		( $this->returnValue( $mockSolResult ) )
-		;
-		$this->mockClass( 'WikiaSearchResultSet', $mockResultSet );
-		$this->mockClass( 'Track', $mockTrack );
-		$this->mockApp();
-
-		$this->assertEquals(
-				$mockResultSet,
-				$mockSearch->doSearch( $mockConfig ),
-				'WikiaSearch::doSearch should always return an instance of WikiaSearchResultSet'
-		);
-
-	}
-
-
-	/**
-	 * @covers WikiaSearch::doSearch
-	 * Here, we test an on-wiki search at page 2 that errors out at first, but works when boost functions are skipped
-	 */
-	public function testDoSearchOnWiki() {
-		$searchConfigMethods = array(
-				'getGroupResults', 'setLength', 'setIsInterWiki', 'getPage', 'setResults',
-				'setResultsFound', 'getQuery', 'getIsInterWiki', 'getLength', 'setStart', 'setSkipBoostFunctions'
-				);
-		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', $searchConfigMethods );
-		$mockClient		=	$this->getMockBuilder( 'Solarium_Client' )
-								->disableOriginalConstructor()
-								->setMethods( array( 'select' ) )
-								->getMock();
-
-		$mockResultSet	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
-								->disableOriginalConstructor()
-								->setMethods( array( 'getResultsFound' ) )
-								->getMock();
-
-		$mockSolResult	=	$this->getMockBuilder( 'Solarium_Result' )
-								->disableOriginalConstructor()
-								->getMock();
-
-		$mockSearch 	=	$this->getMockBuilder( 'WikiaSearch' )
-								->setMethods( array( 'getSelectQuery' ) )
-								->setConstructorArgs( array( $mockClient ) )
-								->getMock();
-
-		$mockQuery		=	$this->getMockBuilder( 'Solarium_Query_Select' )
-								->disableOriginalConstructor()
-								->getMock();
-
-		$mockTrack		=	$this->getMockBuilder( 'Track' )
-								->disableOriginalConstructor()
-								->setMethods( array( 'event' ) )
-								->getMock();
-
-
-		$mockWikia = $this->getMock( 'Wikia', array( 'log' ) );
-
-		$mockWikia
-			->staticExpects	( $this->any() )
-			->method		( 'log' )
-		;
-		$mockConfig
-			->expects	( $this->at( 0 ) )
-			->method	( 'getGroupResults' )
 			->will		( $this->returnValue( false ) )
-		;
-		$mockConfig
-			->expects	( $this->at( 1 ) )
-			->method	( 'getPage' )
-			->will		( $this->returnValue( 2 ) )
-		;
-		$mockConfig
-			->expects	( $this->at( 2 ) )
-			->method	( 'getPage' )
-			->will		( $this->returnValue( 2 ) )
-		;
-		$mockConfig
-			->expects	( $this->at( 3 ) )
-			->method	( 'getLength' )
-			->will		( $this->returnValue( 10 ) )
-		;
-		$mockConfig
-			->expects	( $this->at( 4 ) )
-			->method	( 'setStart' )
-			->with		( 10 )
-		;
-		$mockConfig
-			->expects	( $this->at( 5 ) )
-			->method	( 'setSkipBoostFunctions' )
-			->with		( true )
-			->will		( $this->returnValue( $mockConfig ) )
-		;
-		$mockConfig
-			->expects	( $this->once() )
-			->method	( 'setResults' )
-			->with		( $mockResultSet )
-			->will		( $this->returnValue( $mockConfig ) )
-		;
-		$mockConfig
-			->expects	( $this->once() )
-			->method	( 'setResultsFound' )
-			->with		( 100 )
-			->will		( $this->returnValue( $mockConfig ) )
-		;
-		$mockConfig
-			->expects	( $this->at( 8 ) )
-			->method	( 'getPage' )
-			->will		( $this->returnValue( 2 ) )
-		;
-		$mockResultSet
-			->expects	( $this->any() )
-			->method	( 'getResultsFound' )
-			->will		( $this->returnValue ( 100 ) )
-		;
-		$mockSearch
-			->expects	( $this->exactly( 2 ) )
-			->method	( 'getSelectQuery' )
-			->will		( $this->returnValue( $mockQuery ) )
-		;
-
-		$exception = $this->getMock( 'Solarium_Exception' );
-
-		$mockClient
-			->expects	( $this->at( 0 ) )
-			->method	( 'select' )
-			->will		( $this->throwException( $exception ) )
-		;
-		$mockClient
-			->expects	( $this->exactly( 2 ) )
-			->method	( 'select' )
-			->with		( $mockQuery )
-			->will		( $this->returnValue( $mockSolResult ) )
-		;
-
-		$this->mockClass( 'WikiaSearchResultSet', $mockResultSet );
-		$this->mockClass( 'Track', $mockTrack );
-		$this->mockClass( 'Wikia', $mockWikia );
-		$this->mockApp();
-
-		$this->assertEquals(
-				$mockResultSet,
-				$mockSearch->doSearch( $mockConfig ),
-				'WikiaSearch::doSearch should always return an instance of WikiaSearchResultSet'
-		);
-
-	}
-
-	/**
-	 * @covers WikiaSearch::doSearch
-	 * If we get an exception from Solarium even without the boost functions, we should still return an empty result set
-	 */
-	public function testDoSearchGracefulScrewup() {
-		$searchConfigMethods = array(
-				'getGroupResults', 'setLength', 'setIsInterWiki', 'getPage', 'setResults',
-				'setResultsFound', 'getQuery', 'getIsInterWiki', 'getLength', 'setStart', 'setSkipBoostFunctions'
-				);
-		$mockConfig		=	$this->getMock( 'WikiaSearchConfig', $searchConfigMethods );
-		$mockClient		=	$this->getMockBuilder( 'Solarium_Client' )
-								->disableOriginalConstructor()
-								->setMethods( array( 'select' ) )
-								->getMock();
-
-		$mockResultSet	=	$this->getMockBuilder( 'WikiaSearchResultSet' )
-								->disableOriginalConstructor()
-								->setMethods( array( 'getResultsFound' ) )
-								->getMock();
-
-		$mockSolResult	=	$this->getMockBuilder( 'Solarium_Result_Select_Empty' )
-								->disableOriginalConstructor()
-								->getMock();
-
-		$mockSearch 	=	$this->getMockBuilder( 'WikiaSearch' )
-								->setMethods( array( 'getSelectQuery' ) )
-								->setConstructorArgs( array( $mockClient ) )
-								->getMock();
-
-		$mockQuery		=	$this->getMockBuilder( 'Solarium_Query_Select' )
-								->disableOriginalConstructor()
-								->getMock();
-
-		$mockTrack		=	$this->getMockBuilder( 'Track' )
-								->disableOriginalConstructor()
-								->setMethods( array( 'event' ) )
-								->getMock();
-
-
-		$mockWikia = $this->getMock( 'Wikia', array( 'log' ) );
-
-		$mockWikia
-			->staticExpects	( $this->any() )
-			->method		( 'log' )
-		;
-		$mockConfig
-			->expects	( $this->at( 0 ) )
-			->method	( 'getGroupResults' )
-			->will		( $this->returnValue( false ) )
-		;
-		$mockConfig
-			->expects	( $this->at( 1 ) )
-			->method	( 'getPage' )
-			->will		( $this->returnValue( 2 ) )
-		;
-		$mockConfig
-			->expects	( $this->at( 2 ) )
-			->method	( 'getPage' )
-			->will		( $this->returnValue( 2 ) )
-		;
-		$mockConfig
-			->expects	( $this->at( 3 ) )
-			->method	( 'getLength' )
-			->will		( $this->returnValue( 10 ) )
-		;
-		$mockConfig
-			->expects	( $this->at( 4 ) )
-			->method	( 'setStart' )
-			->with		( 10 )
-		;
-		$mockConfig
-			->expects	( $this->at( 5 ) )
-			->method	( 'setSkipBoostFunctions' )
-			->with		( true )
-			->will		( $this->returnValue( $mockConfig ) )
-		;
-		$mockConfig
-			->expects	( $this->once() )
-			->method	( 'setResults' )
-			->with		( $mockResultSet )
-			->will		( $this->returnValue( $mockConfig ) )
-		;
-		$mockConfig
-			->expects	( $this->once() )
-			->method	( 'setResultsFound' )
-			->with		( 100 )
-			->will		( $this->returnValue( $mockConfig ) )
-		;
-		$mockConfig
-			->expects	( $this->at( 8 ) )
-			->method	( 'getPage' )
-			->will		( $this->returnValue( 2 ) )
-		;
-		$mockResultSet
-			->expects	( $this->any() )
-			->method	( 'getResultsFound' )
-			->will		( $this->returnValue ( 100 ) )
-		;
-		$mockSearch
-			->expects	( $this->exactly( 2 ) )
-			->method	( 'getSelectQuery' )
-			->will		( $this->returnValue( $mockQuery ) )
-		;
-
-		$exception = $this->getMock( 'Solarium_Exception' );
-
-		$mockClient
-			->expects	( $this->any() )
-			->method	( 'select' )
-			->will		( $this->throwException( $exception ) )
 		;
 		$mockTrack
-			->expects	( $this->any() )
+			->staticExpects	( $this->at( 0 ) )
 			->method		( 'event' )
+			->with			( 'search_start', array( 'sterm' => 'foo', 'rver' => WikiaSearch::RELEVANCY_FUNCTION_ID, 'stype' => 'intra' ) )
 		;
-		$this->mockClass( 'WikiaSearchResultSet', $mockResultSet );
+		
 		$this->mockClass( 'Track', $mockTrack );
-		$this->mockClass( 'Wikia', $mockWikia );
+		$this->mockClass( 'WikiaSearchResultSet', $mockResults );
 		$this->mockApp();
-
-		$this->assertEquals(
-				$mockResultSet,
-				$mockSearch->doSearch( $mockConfig ),
-				'WikiaSearch::doSearch should always return an instance of WikiaSearchResultSet'
-		);
+		
+		$wg = new ReflectionProperty( 'WikiaSearch', 'wg' );
+		$wg->setAccessible( true );
+		$wg->setValue( $mockSearch, (object) array( 'WikiaSearchSpellcheckActivated' => false ) );
+		
+		$postSearch = new ReflectionMethod( 'WikiaSearch', 'postSearch' );
+		$postSearch->setAccessible( true );
+		$postSearch->invoke( $mockSearch, $mockConfig, $mockResult );
 	}
 
 	/**
