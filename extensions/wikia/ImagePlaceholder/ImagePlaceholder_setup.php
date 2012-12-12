@@ -149,7 +149,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	wfProfileIn(__METHOD__);
 
-        global $wgRequest, $wgWikiaImagePlaceholderId, $wgWikiaVideoPlaceholderId, $wgContLang;
+	global $wgRequest, $wgWikiaImagePlaceholderId, $wgWikiaVideoPlaceholderId, $wgContLang, $wgTitle;
 	// Shortcuts
 	$fp =& $frameParams;
 	$hp =& $handlerParams;
@@ -291,7 +291,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		'id' => "WikiaImagePlaceholderInner{$wgWikiaImagePlaceholderId}",
 		'class' => 'wikia-button',
 		'style' => "top: {$tmarg}px;position:relative;",
-		'href' => '#',
+		'href' => $wgTitle->getLocalUrl( array( 'action' => 'edit') ),
 	);
 	
 	if( $isvideo ) { // video placeholder
