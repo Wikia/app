@@ -81,6 +81,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 					'required' => false,
 					'ownValidator' => new WikiaValidatorString(
 						array(
+							'required' => true,
 							'min' => 1
 						),
 						array(

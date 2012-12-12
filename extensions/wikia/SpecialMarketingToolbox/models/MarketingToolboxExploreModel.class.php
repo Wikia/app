@@ -1,4 +1,4 @@
-<?
+<?php
 class MarketingToolboxExploreModel extends WikiaModel {
 	const FORM_SECTION_LIMIT = 4;
 	const FORM_SECTION_LINKS_LIMIT = 4;
