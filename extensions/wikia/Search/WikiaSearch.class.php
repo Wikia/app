@@ -524,6 +524,7 @@ class WikiaSearch extends WikiaObject {
 			$spellcheck->setMaxCollationTries( self::SPELLING_MAX_COLLATION_TRIES );
 			$spellcheck->setMaxCollations( 5 );
 			$spellcheck->setExtendedResults( true );
+			$spellcheck->setCollateParam( 'fq', 'is_content:true AND wid:'.$searchConfig->getCityId() );
 			$spellcheck->setOnlyMorePopular( true );
 			$spellcheck->setDictionary( in_array( $this->wg->LanguageCode, $this->wg->WikiaSearchSupportedLanguages ) ? $this->wg->LanguageCode : 'default'   );
 			$spellcheck->setCollateExtendedResults( true );
@@ -581,8 +582,10 @@ class WikiaSearch extends WikiaObject {
 	protected function postSearch( WikiaSearchConfig $searchConfig, Solarium_Result_Select $result ) {
 		
 		if ( $this->wg->WikiaSearchSpellcheckActivated && $result->getNumFound() == 0 ) {
-			$searchConfig->setQuery( $result->getSpellcheck()->getCollation()->getQuery() );
-			$this->search( $searchConfig );
+			if ( $collation = $result->getSpellcheck()->getCollation() ) {
+				$searchConfig->setQuery( $collation->getQuery() );
+				$this->search( $searchConfig );
+			}
 		}
 		
 		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );

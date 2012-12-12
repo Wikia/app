@@ -70,6 +70,11 @@ class Solarium_Client_RequestBuilder_Select_Component_Spellcheck
         $request->addParam('spellcheck.maxCollationEvaluations', $component->getMaxCollationEvaluations());
         $request->addParam('spellcheck.collateExtendedResults', $component->getCollateExtendedResults());
         $request->addParam('spellcheck.accuracy', $component->getAccuracy());
+        
+        foreach ( $component->getCollateParams() as $param => $value )
+        {
+        	$request->addParam('spellcheck.collateParam.'.$param, $value);
+        } 
 
         return $request;
     }
