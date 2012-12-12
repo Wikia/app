@@ -64,6 +64,18 @@ class WikiaSearch extends WikiaObject {
 	const HL_MATCH_POSTFIX					= '</span>';
 	
 	/**
+	 * Sets max collation tries when spellchecking
+	 * @var int
+	 */
+	const SPELLING_MAX_COLLATION_TRIES = 20;
+	
+	/**
+	 * Sets the max number of results to return when spellchecking
+	 * @var int
+	 */
+	const SPELLING_RESULT_COUNT = 20;
+	
+	/**
 	 * These fields are actually dynamic language fields supported in 36 different languages
 	 * @see WikiaSearch::field
 	 * @staticvar array
@@ -148,52 +160,12 @@ class WikiaSearch extends WikiaObject {
 	public function doSearch( WikiaSearchConfig $searchConfig ) {
 		wfProfileIn(__METHOD__);
 
-		if($searchConfig->getGroupResults() == true) {
-
-			$searchConfig	->setLength		( self::GROUP_RESULTS_GROUPINGS_LIMIT )
-							->setIsInterWiki( true )
-			;
-
-		}
-
-		if ( $searchConfig->getPage() > 1 ) {
-			$searchConfig	->setStart		( ( $searchConfig->getPage() - 1 ) * $searchConfig->getLength() );
-		}
-		
-		try {
-			$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
-			
-		} catch ( Exception $e ) {
-			F::build('Wikia')->log(__METHOD__, 'Querying Solr First Time', $e);
-			$searchConfig	->setSkipBoostFunctions( true )
-							->setError( $e );
-			try {
-				$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
-			} catch ( Exception $e ) {
-				$searchConfig->setError( $e );
-				F::build('Wikia')->log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
-				$result = F::build('Solarium_Result_Select_Empty');
-			}
-		}
-		
-		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
-		
-		$searchConfig->setResults		( $results )
-					 ->setResultsFound	( $results->getResultsFound() )
-		;		
-
-		if( $searchConfig->getPage() == 1 ) {
-			$resultCount = $results->getResultsFound();
-			F::build( 'Track' )->event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
-										array(	'sterm'	=> $searchConfig->getQuery(), 
-												'rver'	=> self::RELEVANCY_FUNCTION_ID,
-												'stype'	=> ( $searchConfig->getIsInterWiki() ? 'inter' : 'intra' ) 
-											 ) 
-						);
-		}
+		$this->preSearch( $searchConfig );
+		$result = $this->search( $searchConfig );
+		$this->postSearch( $searchConfig, $result );
 
 		wfProfileOut(__METHOD__);
-		return $results;
+		return $searchConfig->getResults();
 	}
 	
 	/**
@@ -234,7 +206,7 @@ class WikiaSearch extends WikiaObject {
 		
 		$searchConfig->setResults		( $results )
 					 ->setResultsFound	( $results->getResultsFound() )
-		;		
+		;
 		
 		$this->wf->ProfileOut( __METHOD__ );
 		
@@ -536,8 +508,97 @@ class WikiaSearch extends WikiaObject {
 		
 		$formulatedQuery = sprintf('%s AND (%s)', $this->getQueryClausesString( $searchConfig ), $this->getNestedQuery( $searchConfig ));
 		$query->setQuery( $formulatedQuery );
+		
+		$this->handleSpellcheck( $query, $searchConfig );
+		
 		wfProfileOut(__METHOD__);
 		return $query;
+	}
+	
+	protected function handleSpellcheck( Solarium_Query $query, WikiaSearchConfig $searchConfig ) {
+		if ( $this->wg->WikiaSearchSpellcheckActivated ) {
+			$spellcheck = $query->getSpellcheck();
+			$spellcheck->setQuery( $searchConfig->getQueryNoQuotes( true ) );
+			$spellcheck->setCollate( true );
+			$spellcheck->setCount( self::SPELLING_RESULT_COUNT );
+			$spellcheck->setMaxCollationTries( self::SPELLING_MAX_COLLATION_TRIES );
+			$spellcheck->setMaxCollations( 5 );
+			$spellcheck->setExtendedResults( true );
+			$spellcheck->setOnlyMorePopular( true );
+			$spellcheck->setDictionary( in_array( $this->wg->LanguageCode, $this->wg->WikiaSearchSupportedLanguages ) ? $this->wg->LanguageCode : 'default'   );
+			$spellcheck->setCollateExtendedResults( true );
+		}
+	}
+	
+	/**
+	 * Responsible for the initial query to Solr, with some error handling built in
+	 * @param WikiaSearchConfig $searchConfig
+	 * @return Solarium_Result_Select
+	 */
+	protected function search( WikiaSearchConfig $searchConfig ) {
+		try {
+			$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
+			
+		} catch ( Exception $e ) {
+			F::build('Wikia')->log(__METHOD__, 'Querying Solr First Time', $e);
+			$searchConfig	->setSkipBoostFunctions( true )
+							->setError( $e );
+			try {
+				$result = $this->client->select( $this->getSelectQuery( $searchConfig ) );
+			} catch ( Exception $e ) {
+				$searchConfig->setError( $e );
+				F::build('Wikia')->log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
+				$result = F::build('Solarium_Result_Select_Empty');
+			}
+		}
+		return $result;
+	}
+	
+	/**
+	 * Handles initial configuration when invoking doSearch
+	 * @param WikiaSearchConfig $searchConfig
+	 */
+	protected function preSearch( WikiaSearchConfig $searchConfig ) {
+		if($searchConfig->getGroupResults() == true) {
+
+			$searchConfig	->setLength		( self::GROUP_RESULTS_GROUPINGS_LIMIT )
+							->setIsInterWiki( true )
+			;
+
+		}
+
+		if ( $searchConfig->getPage() > 1 ) {
+			$searchConfig	->setStart		( ( $searchConfig->getPage() - 1 ) * $searchConfig->getLength() );
+		}
+	}
+	
+	/**
+	 * Handles tracking and preparation of search result set
+	 * Also handles going back through to perform a spelling-corrected search
+	 * @param WikiaSearchConfig $searchConfig
+	 * @param Solarium_Result $result
+	 */
+	protected function postSearch( WikiaSearchConfig $searchConfig, Solarium_Result_Select $result ) {
+		
+		if ( $this->wg->WikiaSearchSpellcheckActivated && $result->getNumFound() == 0 ) {
+			$searchConfig->setQuery( $result->getSpellcheck()->getCollation()->getQuery() );
+			$this->search( $searchConfig );
+		}
+		
+		$results = F::build('WikiaSearchResultSet', array($result, $searchConfig) );
+		
+		$searchConfig->setResults		( $results )
+					 ->setResultsFound	( $results->getResultsFound() )
+		;
+		if( $searchConfig->getPage() == 1 ) {
+			$resultCount = $results->getResultsFound();
+			F::build( 'Track' )->event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
+										array(	'sterm'	=> $searchConfig->getQuery(), 
+												'rver'	=> self::RELEVANCY_FUNCTION_ID,
+												'stype'	=> ( $searchConfig->getIsInterWiki() ? 'inter' : 'intra' ) 
+											 ) 
+						);
+		}
 	}
 	
 	/**
