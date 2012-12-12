@@ -379,9 +379,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$searchEngine = F::build( 'SearchEngine' );
-		
+
+		$searchableNamespaces = $searchEngine->searchableNamespaces();
+
+		wfRunHooks( 'AdvancedBoxSearchableNamespaces', array( &$searchableNamespaces ) );
+
 		$this->setVal( 'namespaces', 			$config->getNamespaces() );
-		$this->setVal( 'searchableNamespaces', 	$searchEngine->searchableNamespaces() );
+		$this->setVal( 'searchableNamespaces', 	$searchableNamespaces );
 		$this->setVal( 'redirs', 				$config->getIncludeRedirects() );
 		$this->setVal( 'advanced', 				$config->getAdvanced() );
 	}

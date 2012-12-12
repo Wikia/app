@@ -302,7 +302,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 		}
 		$queryNamespaceArray = ( isset( $this->params['queryNamespace'] ) ) ? array( $this->params['queryNamespace'] ) : array(); 
 		$this->params['namespaces'] = array_unique( array_merge( $namespaces, $queryNamespaceArray ) );
-		
+
 		return $this->params['namespaces'];
 	}
 	
@@ -447,6 +447,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	public function getSearchProfiles() {
 	    // Builds list of Search Types (profiles)
 	    $searchEngine = F::build( 'SearchEngine' );
+		/* @var $searchEngine SearchEngine */
 	    $nsAllSet = array_keys( $searchEngine->searchableNamespaces() );
 	    $defaultNamespaces = $searchEngine->defaultNamespaces();
 

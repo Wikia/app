@@ -524,5 +524,37 @@ class WallHelper {
 		$app = F::App();
 		return in_array( MWNamespace::getSubject( $ns ), $app->wg->WallNS );
 	}
+
+	public static function clearNamespaceList($namespaces) {
+		if(!empty(F::app()->wg->EnableForumExt)) {
+			if(isset($namespaces[NS_FORUM])) {
+				unset($namespaces[NS_FORUM]);
+			}
+
+			if(isset($namespaces[NS_FORUM_TALK])) {
+				unset($namespaces[NS_FORUM_TALK]);
+			}
+
+			if(isset($namespaces[NS_WIKIA_FORUM_TOPIC_BOARD])) {
+				unset($namespaces[NS_WIKIA_FORUM_TOPIC_BOARD]);
+			}
+		}
+
+		if(!empty(F::app()->wg->EnableWallExt)) {
+			if(isset($namespaces[NS_USER_WALL])) {
+				unset($namespaces[NS_USER_WALL]);
+			}
+
+			if(isset($namespaces[NS_USER_WALL_MESSAGE_GREETING])) {
+				unset($namespaces[NS_USER_WALL_MESSAGE_GREETING]);
+			}
+
+			if(isset($namespaces[NS_USER_WALL_MESSAGE])) {
+				$namespaces[NS_USER_WALL_MESSAGE] = wfMsg('wall-recentchanges-wall-thread');
+			}
+		}
+
+		return $namespaces;
+	}
 	
 }
