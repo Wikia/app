@@ -24,7 +24,7 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController
 	}
 	
 	public function index() {
-		$title = F::build( 'Title', array( 'Version' ), 'newFromText' );
+		$title = F::build( 'Title', array( 'Version', NS_SPECIAL ), 'newFromText' );
 		$popts = F::build('ParserOptions', array( RequestContext::getMain() ), 'newFromContext' );
 
 		$this->wg->Title = $title;
