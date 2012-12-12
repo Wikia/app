@@ -282,7 +282,13 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 	public function getVideoDetails() {
 		$html = $this->wf->MsgExt($this->getVal('wikiText', false), array('parse'));
-		$this->fileName = $html;
+		$this->fileName = $this->parseVideoHtml($html);
+	}
+
+	public function parseVideoHtml($html) {
+		//TO-DO: remove mocked data and get <a>(...)</a> tags from $html
+		$figureElement = '<a href="/wiki/File:Muppet_Show_Season_Two_(2007)_-_Clip_Kermit_and_Fozzie_-_What_Is_Friendship,_Post" class="image video" data-video-name="Muppet Show Season Two (2007) - Clip Kermit and Fozzie - What Is Friendship, Post" itemprop="video" itemscope="" itemtype="http://schema.org/VideoObject"><span class="Wikia-video-play-button mid" style="width: 180px; height: 101px;"></span><img alt="Muppet Show Season Two (2007) - Clip Kermit and Fozzie - What Is Friendship, Post" src="http://images.marcin.wikia-dev.com/__cb20120925182528/video151/images/thumb/7/72/Muppet_Show_Season_Two_%282007%29_-_Clip_Kermit_and_Fozzie_-_What_Is_Friendship%2C_Post/180px-Muppet_Show_Season_Two_%282007%29_-_Clip_Kermit_and_Fozzie_-_What_Is_Friendship%2C_Post.jpg" width="180" height="101" data-video="Muppet Show Season Two (2007) - Clip Kermit and Fozzie - What Is Friendship, Post" itemprop="thumbnail" class="Wikia-video-thumb thumbimage"></a>';
+		return $figureElement;
 	}
 
 	// TODO extract this code somewhere
