@@ -83,7 +83,7 @@ class SEOTweaksHooksHelper extends WikiaModel {
 	 * @return bool
 	 */
 	public function onBeforeParserMakeImageLinkObjOptions( $parser, $title, &$parts, &$params, &$time, &$descQuery, $options ) {
-		$grepped = preg_grep( '/^alt=/', $parts);
+		$grepped = preg_grep( '/^alt=/', (array) $parts);
 		if ( $title->getNamespace() == NS_FILE && empty( $grepped ) ) {
 			$text = $title->getText();
 			$alt = implode( '.', array_slice( explode( '.', $text ), 0, -1 ) ); // lop off text after the ultimate dot (e.g. JPG)
