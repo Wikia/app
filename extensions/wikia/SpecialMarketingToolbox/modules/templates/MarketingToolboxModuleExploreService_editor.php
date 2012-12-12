@@ -25,25 +25,25 @@
 				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
-					array('inputData' => $fields['exploreLinkHeader'.$i.'a'])
+					array('inputData' => $fields['exploreLinkText'.$i.'a'])
 				);
 				?>
 				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
-					array('inputData' => $fields['exploreLinkHeader'.$i.'b'])
+					array('inputData' => $fields['exploreLinkText'.$i.'b'])
 				);
 				?>
 				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
-					array('inputData' => $fields['exploreLinkHeader'.$i.'c'])
+					array('inputData' => $fields['exploreLinkText'.$i.'c'])
 				);
 				?>
 				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
-					array('inputData' => $fields['exploreLinkHeader'.$i.'d'])
+					array('inputData' => $fields['exploreLinkText'.$i.'d'])
 				);
 				?>
 			</div>
@@ -51,8 +51,8 @@
 				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
-						array('inputData' => $fields['exploreLinkUrl1a'])
-					);
+					array('inputData' => $fields['exploreLinkUrl'.$i.'a'])
+				);
 				?>
 				<?=$app->renderView(
 					'MarketingToolbox',

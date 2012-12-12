@@ -29,25 +29,19 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 
 	public function validate($data) {
 		$out = array();
-
 		$fields = $this->getFormFields();
 
-		foreach ($fields as $fieldName => &$field) {
-			if (!empty($field['validator'])) {
-				$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
-				$field['formValue'] = $fieldData;
-
-				if (!($field['validator'] instanceof WikiaValidatorDepend) && !$field['validator']->isValid($fieldData)) {
-					$out[$fieldName] = $field['validator']->getError()->getMsg();
-				}
-			}
-		}
-
 		foreach ($fields as $fieldName => $field) {
-			if (!empty($field['validator'])) {
+			if( !empty($field['validator']) ) {
 				$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
-				if (($field['validator'] instanceof WikiaValidatorDepend) && !$field['validator']->isValid($fieldData, $fields)) {
-					$out[$fieldName] = $field['validator']->getError()->getMsg();
+
+				if( $field['validator'] instanceof WikiaValidatorDepend ) {
+					$field['validator']->setFormData($data);
+					$field['validator']->setFormFields($fields);
+				}
+
+				if( !$field['validator']->isValid($fieldData) && (($validationError = $field['validator']->getError()) instanceof WikiaValidationError) ) {
+					$out[$fieldName] = $validationError->getMsg();
 				}
 			}
 		}
