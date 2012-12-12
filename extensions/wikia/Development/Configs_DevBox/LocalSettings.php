@@ -108,8 +108,10 @@ if ( is_null( $wgDBcluster ) ) {
 $wgLBDefaultSection = 'c1';
 
 ##### /MAKE ANY CHANGES _BEFORE_ HERE THAT YOU  WANT TO SHOW UP ON DEVBOXES BY DEFAULT BUT STILL BE OVERRIDABLE #####
-
-require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxSettings.php' );
+// don't include DevBoxSettings when running unit tests (BugId:93186)
+if (empty($wgRunningUnitTests)) {
+	require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxSettings.php' );
+}
 
 # Overwrite some variables, load extensions, etc.
 # Former CustomSettings.php

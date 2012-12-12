@@ -57,7 +57,6 @@ function wfAdEngineSetupTopVars(&$vars) {
 
 	// generic type of page: forum/search/article/home/...
 	$vars['wikiaPageType'] = WikiaPageType::getPageType();
-	$vars['wikiaPageIsHub'] = WikiaPageType::isWikiaHub();
 
 	// category/hub
 	$catInfo = HubService::getComscoreCategory($wgCityId);
