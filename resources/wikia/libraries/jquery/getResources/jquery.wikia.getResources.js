@@ -12,14 +12,14 @@
  */
 var getResources = (function() {
 	var rAssetManagerGroup = new RegExp( window.wgAssetsManagerQuery
-			// Replace the first parameter with 'groups' since that's all we care about
-			.replace( '%1$s', 'groups' )
 			// Escape any special regex characters in the URL
 			.replace( /[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&' )
+			// Escape forward slashes (required for string)
+			.replace( /\//g, '\\/' )
+			// Replace the first parameter to match group or groups
+			.replace( '%1\\$s', 'groups?' )
 			// Replace remaining parameters with wildcard matches
 			.replace( /%\d\\\$(?:s|d)/g, '(?:.*)' )
-			// Escape forward slashes
-			.replace( /\//g, '\\/' )
 		),
 		rAssetManagerGroupType = /(js|s?css)/,
 		rExtension = /\.(js|s?css)$/;
