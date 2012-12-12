@@ -6,23 +6,34 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		getUrl,
 		ord = Math.round(Math.random() * 23456787654),
 		tile = 1,
+		initSiteAndZones,
 
 		kvStrMaxLength = 500,
 		categoryStrMaxLength = 300,
 
 		decorateAsKv,
 		trimKvs,
+		isWikiaHub,
+		isAutoHub,
+		getSite,
+		getZone1,
+		getZone2,
 		getSubdomain,
 		getCustomKeyValues,
 		getArticleKV,
 		getDomainKV,
-		getDartHubName,
 		getHostnamePrefix,
 		getTitle,
 		getLanguage,
 		getResolution,
 		getPrefooterStatus,
-		getCategories;
+		getImpressionCount,
+		getPartnerKeywords,
+		getCategories,
+
+		site,
+		zone1,
+		zone2;
 
 	trimKvs = function (kvs, limit) {
 		return kvs.substr(0, limit).replace(/;[^;]*$/, ';');
@@ -35,14 +46,54 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		return '';
 	};
 
-	getDartHubName = function () {
-		if (window.cscoreCat === 'Entertainment') {
-			return 'ent';
+	// TODO @rychu refactor out?
+	isWikiaHub = function () {
+		return !!window.wgWikiaHubType;	// defined in source of hub article
+	};
+
+	// TODO @rychu refactor out?
+	// TODO: this function doesn't really work
+	isAutoHub = function () {
+		var key;
+
+		if (window.wgDBname !== 'wikiaglobal') {
+			return false;
 		}
-		if (window.cscoreCat === 'Gaming') {
-			return 'gaming';
+
+		if (!window.wgHubsPages) {
+			return false;
 		}
-		return 'life';
+
+		for (key in window.wgHubsPages) {
+			if (window.wgHubsPages.hasOwnProperty(key)) {
+				if (window.wgPageName.toLowerCase() === key.toLowerCase()) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	};
+
+	getSite = function (hub) {
+		return 'wka.' + hub;
+	};
+
+	// Effectively the dbname, defaulting to wikia.
+	getZone1 = function (dbname) {
+		// Zone1 is prefixed with "_" because zone's can't start with a number, and some dbnames do.
+		if (dbname) {
+			return '_' + dbname.replace('/[^0-9A-Z_a-z]/', '_');
+		}
+		return '_wikia';
+	};
+
+	// Page type, ie, "home" or "article"
+	getZone2 = function (pageType) {
+		if (pageType) {
+			return pageType;
+		}
+		return 'article';
 	};
 
 	getSubdomain = function () {
@@ -157,6 +208,46 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		return 'hasp=no;';
 	};
 
+	// TODO FIXME? remove?
+	getImpressionCount = function (slotname) {
+		/*
+		 // return key-value only if impression cookie exists
+
+		 if (AdConfig.DART.adDriverNumCall == null) {
+		 var cookie = AdConfig.cookie('adDriverNumAllCall');
+		 if (typeof cookie != 'undefined' && cookie) {
+		 AdConfig.DART.adDriverNumCall = eval('(' + cookie + ')');
+		 }
+		 }
+
+		 if (AdConfig.DART.adDriverNumCall != null) {
+		 for (var i=0; i < AdConfig.DART.adDriverNumCall.length; i++) {
+		 if (AdConfig.DART.adDriverNumCall[i].slotname == slotname) {
+		 // check cookie expiration
+		 if (parseInt(AdConfig.DART.adDriverNumCall[i].ts) + 1*3600000 > wgNow.getTime()) {  // wgAdDriverCookieLifetime in hours, convert to msec
+		 var num = parseInt(AdConfig.DART.adDriverNumCall[i].num);
+		 return 'impct=' + num + ';';
+		 }
+		 }
+		 }
+		 }
+		 */
+
+		return '';
+	};
+
+	// TODO remove?
+	getPartnerKeywords = function () {
+		var kw = '';
+		if (!window.partnerKeywords) {
+			return kw;
+		}
+
+		kw = 'pkw=' + encodeURIComponent(window.partnerKeywords) + ';';
+
+		return kw;
+	};
+
 	getCategories = function () {
 		var i, categories = '';
 
@@ -199,10 +290,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			kruxKV = '',
 			url,
 			subdomain = params.subdomain || getSubdomain(),
-			endTag = params.omitEndTag ? '' : 'endtag=$;',
-			site,
-			zone1,
-			zone2;
+			endTag = params.omitEndTag ? '' : 'endtag=$;';
 
 		if (adType === 'jwplayer') {
 			pathPrefix = 'pfadx/';
@@ -227,15 +315,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 
 		log(['getUrl', slotname, size], 5, logGroup);
 
-		if (window.wikiaPageIsHub) {
-			site = 'wka.hub';
-			zone1 = '_' + getDartHubName() + '_hub';
-			zone2 = 'hub';
-		} else {
-			site = 'wka.' + window.cityShort;
-			zone1 = '_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
-			zone2 = window.wikiaPageType || 'article';
-		}
+		initSiteAndZones();
 
 		/*
 		 http://ad.doubleclick.net/adj/wka.ent/_glee/article;s0=ent;s1=_glee;s2=article;media=tv;sex=f;age=13-17;age=18-34;eth=asian;hhi=0-30;aff=fashion;aff=teens;age=teen;aff=video;aff=communities;artid=2102;dmn=wikia-devcom;hostpre=glee;pos=TOP_RIGHT_BOXAD;wpage=the_rhodes_not_taken;lang=en;dis=large;hasp=yes;u=H5feJdXS;ksgmnt=l4ml7tc6y;ksgmnt=l7drxohb5;ksgmnt=mhu7kdyz5;ksgmnt=mkwaoxp2x;ksgmnt=mkcdphvyq;ksgmnt=l4ipfweef;ksgmnt=mhu6miy43;ksgmnt=l5g2q8ndp;ksgmnt=l6dwvwk4q;ksgmnt=mlhkv0y2u;ksgmnt=l60oj8o6a;ksgmnt=l65e7q72q;ksgmnt=mdfzhvp3x;ksgmnt=mczlqdo8q;ksgmnt=l9cwgqxmx;ksgmnt=miqlt2xrx;ksgmnt=mhu6jt32u;ksgmnt=l5hqg89ks;ksgmnt=md0socy4l;ksgmnt=mnbz18cpv;ksgmnt=l8cvx4q0q;
@@ -266,9 +346,11 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			getTitle() + // TODO FIXME missing in adsinhead
 			getLanguage() +
 			getResolution() +
-			getPrefooterStatus() +
+			getPrefooterStatus() + // TODO FIXME just height
 			decorateAsKv('positionfixed', params.positionfixed) +
 			kruxKV +
+			// getImpressionCount(slotname) + // TODO remove missing
+			// getPartnerKeywords() + // TODO remove missing
 			getCategories() + // TODO FIXME missing in adsinhead
 			loc +
 			dcopt +
@@ -285,11 +367,34 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		return url;
 	};
 
+	initSiteAndZones = function () {
+		if (isWikiaHub()) {
+			site = getSite('hub');
+			zone1 = getZone1(window.wgWikiaHubType + '_hub');
+			zone2 = 'hub';
+		} else if (isAutoHub()) {
+			var hubsPages = window.wgHubsPages[window.wgPageName.toLowerCase()];
+			site = getSite(hubsPages.site);
+			zone1 = getZone1(hubsPages.name);
+			zone2 = 'hub';
+		}
+
+		if (!site) {
+			site = getSite(window.cityShort);
+		}
+		if (!zone1) {
+			zone1 = getZone1(window.wgDBname);
+		}
+		if (!zone2) {
+			zone2 = getZone2(window.wikiaPageType);
+		}
+	};
+
 	return {
-		getUrl: getUrl,
-		getCustomKeyValues: getCustomKeyValues,
-		getDomainKV: getDomainKV,
-		getHostnamePrefix: getHostnamePrefix
+		getUrl: getUrl
+		, getCustomKeyValues: getCustomKeyValues
+		, getDomainKV: getDomainKV
+		, getHostnamePrefix: getHostnamePrefix
 	};
 };
 
