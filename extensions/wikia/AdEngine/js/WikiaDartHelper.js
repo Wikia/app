@@ -6,7 +6,6 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		getUrl,
 		ord = Math.round(Math.random() * 23456787654),
 		tile = 1,
-		initSiteAndZones,
 
 		kvStrMaxLength = 500,
 		categoryStrMaxLength = 300,
@@ -23,11 +22,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		getLanguage,
 		getResolution,
 		getPrefooterStatus,
-		getCategories,
-
-		site,
-		zone1,
-		zone2;
+		getCategories;
 
 	trimKvs = function (kvs, limit) {
 		return kvs.substr(0, limit).replace(/;[^;]*$/, ';');
@@ -204,7 +199,10 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			kruxKV = '',
 			url,
 			subdomain = params.subdomain || getSubdomain(),
-			endTag = params.omitEndTag ? '' : 'endtag=$;';
+			endTag = params.omitEndTag ? '' : 'endtag=$;',
+			site,
+			zone1,
+			zone2;
 
 		if (adType === 'jwplayer') {
 			pathPrefix = 'pfadx/';
@@ -229,7 +227,15 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 
 		log(['getUrl', slotname, size], 5, logGroup);
 
-		initSiteAndZones();
+		if (window.wikiaPageIsHub) {
+			site = 'wka.hub';
+			zone1 = '_' + getDartHubName() + '_hub';
+			zone2 = 'hub';
+		} else {
+			site = 'wka.' + window.cityShort;
+			zone1 = '_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
+			zone2 = window.wikiaPageType || 'article';
+		}
 
 		/*
 		 http://ad.doubleclick.net/adj/wka.ent/_glee/article;s0=ent;s1=_glee;s2=article;media=tv;sex=f;age=13-17;age=18-34;eth=asian;hhi=0-30;aff=fashion;aff=teens;age=teen;aff=video;aff=communities;artid=2102;dmn=wikia-devcom;hostpre=glee;pos=TOP_RIGHT_BOXAD;wpage=the_rhodes_not_taken;lang=en;dis=large;hasp=yes;u=H5feJdXS;ksgmnt=l4ml7tc6y;ksgmnt=l7drxohb5;ksgmnt=mhu7kdyz5;ksgmnt=mkwaoxp2x;ksgmnt=mkcdphvyq;ksgmnt=l4ipfweef;ksgmnt=mhu6miy43;ksgmnt=l5g2q8ndp;ksgmnt=l6dwvwk4q;ksgmnt=mlhkv0y2u;ksgmnt=l60oj8o6a;ksgmnt=l65e7q72q;ksgmnt=mdfzhvp3x;ksgmnt=mczlqdo8q;ksgmnt=l9cwgqxmx;ksgmnt=miqlt2xrx;ksgmnt=mhu6jt32u;ksgmnt=l5hqg89ks;ksgmnt=md0socy4l;ksgmnt=mnbz18cpv;ksgmnt=l8cvx4q0q;
@@ -277,28 +283,6 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 
 		log(url, /* 7 */ 5, logGroup);
 		return url;
-	};
-
-	initSiteAndZones = function () {
-		var getZone2;
-
-		// Page type, ie, "home" or "article"
-		getZone2 = function (pageType) {
-			if (pageType) {
-				return pageType;
-			}
-			return 'article';
-		};
-
-		if (window.wikiaPageIsHub) {
-			site = 'wka.hub';
-			zone1 = '_' + getDartHubName() + '_hub';
-			zone2 = 'hub';
-		} else {
-			site = 'wka.' + window.cityShort;
-			zone1 = '_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
-			zone2 = getZone2(window.wikiaPageType);
-		}
 	};
 
 	return {
