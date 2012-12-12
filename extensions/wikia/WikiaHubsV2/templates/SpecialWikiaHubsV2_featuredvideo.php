@@ -9,7 +9,9 @@
 <div class="sponsored-video-content">
 	<?php if ($video): ?>
 	<a href="<?= $video['href']; ?>" class="video-thumbnail lightbox" data-video-name="<?= $video['title']; ?>">
-		<span class="Wikia-video-play-button" style="width: 300px; height: 168px;"></span>
+		<div class="Wikia-video-play-button">
+			<img class="sprite play" style="width: 300px; height: 168px;">
+		</div>
 		<img alt="<?= $video['href']; ?>" src="<?= $video['thumbSrc']; ?>" class="Wikia-video-thumb thumbimage"/>
 	</a>
 	<?php endif; ?>

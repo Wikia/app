@@ -72,15 +72,16 @@ var ImageLightbox = {
 
 		// move to parent of an image -> anchor
 		if ( target.is('span') || target.is('img') ) {
-			if ( target.hasClass('Wikia-video-play-button') || target.hasClass('Wikia-video-thumb') ) {
+			if ( target.hasClass('play') || target.hasClass('Wikia-video-thumb') ) {
 				target = target.parent();
 				target.addClass('image');
 			} else {
 				target = target.parent();
 			}
 		}
-        // move to parent of an playButton (relatedVideos)
-        if (target.is('div') && target.hasClass('playButton')) {
+
+        // move to parent of a play button
+        if (target.is('div') && (target.hasClass('playButton') || target.hasClass('Wikia-video-play-button'))) {
             target = target.parent();
         }
 
@@ -93,7 +94,6 @@ var ImageLightbox = {
 		if (!target.hasClass('lightbox') && !target.hasClass('image')) {
 			return;
 		}
-
 
 		// don't show thumbs for gallery images linking to a page
 		if (target.hasClass('link-internal')) {
@@ -109,7 +109,6 @@ var ImageLightbox = {
 		if (ev.ctrlKey) {
 			return;
 		}
-
 
 		// store clicked element
 		this.target = target;
@@ -475,14 +474,14 @@ var ImageLightbox = {
 			var trackingTitle = titleKey,
 				timeout = (type == 'video') ? 1000 : 500;
 			ImageLightbox.trackingTimeout = setTimeout(function() {
-				ImageLightbox.track(WikiaTracker.ACTIONS.VIEW, type, 0, {title: trackingTitle, provider: provider, clickSource: 'hubs'});		
+				ImageLightbox.track(WikiaTracker.ACTIONS.VIEW, type, 0, {title: trackingTitle, provider: provider, clickSource: 'hubs'});
 			}, timeout);
-		}	
+		}
 	},
 	track: function(action, label, value, data) {
 		// @param data - any extra params we want to pass to internal tracking
-		// Don't add willy nilly though... check with Jonathan.  
-		var ga_params  = {		
+		// Don't add willy nilly though... check with Jonathan.
+		var ga_params  = {
 			ga_category: 'lightbox',
 			ga_action: action,
 			ga_label: label || '',
