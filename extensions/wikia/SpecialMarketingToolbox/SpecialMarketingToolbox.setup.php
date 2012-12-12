@@ -31,6 +31,7 @@ $app->registerController('MarketingToolboxController', $dir.'MarketingToolboxCon
 $app->registerClass('MarketingToolboxModel', $dir.'models/MarketingToolboxModel.class.php');
 $app->registerClass('MarketingToolboxUserPropertiesHandler', $dir.'models/MarketingToolboxUserPropertiesHandler.class.php');
 $app->registerClass('MarketingToolboxTop10listModel', $dir.'models/MarketingToolboxTop10listModel.class.php');
+$app->registerClass('MarketingToolboxPollsModel', $dir.'models/MarketingToolboxPollsModel.class.php');
 
 $app->registerClass('MarketingToolboxModuleService', $dir.'modules/MarketingToolboxModuleService.class.php');
 $app->registerClass('MarketingToolboxModuleSliderService', $dir.'modules/MarketingToolboxModuleSliderService.class.php');
