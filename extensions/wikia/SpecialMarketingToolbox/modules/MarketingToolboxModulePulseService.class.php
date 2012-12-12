@@ -72,7 +72,6 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 				'attributes' => array(
 					'class' => 'required'
-					//'{required: \'#MarketingToolboxstat1:filled\'}'
 				)
 			),
 			'number2' => array(

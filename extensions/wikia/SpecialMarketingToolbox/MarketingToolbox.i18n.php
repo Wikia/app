@@ -64,6 +64,10 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-top10list-title' => 'Title',
 	'marketing-toolbox-hub-module-top10list-desc' => 'Description',
 
+	'marketing-toolbox-hub-module-slider-short-description' => 'Short description',
+	'marketing-toolbox-hub-module-slider-long-description' => 'Long description',
+	'marketing-toolbox-hub-module-slider-url' => 'Wiki URL',
+
 	'marketing-toolbox-hub-module-explore-title' => 'Main Title',
 	'marketing-toolbox-hub-module-explore-header' => 'Header $1',
 	'marketing-toolbox-hub-module-explore-link-url' => 'URL',
