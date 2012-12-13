@@ -59,7 +59,6 @@ var MediaPlaceholder = {
 				});
 			} else {
 				// handle image placeholder
-
 				if(self.disabled) {
 					GlobalNotification.show( $.msg('imgplc-notinhistory'), 'warn' );			
 					return;
@@ -71,8 +70,8 @@ var MediaPlaceholder = {
 				$.when(
 					$.loadYUI(),
 					$.getResources([ 
-						mw.loader.load( wgExtensionsPath + "/wikia/WikiaMiniUpload/css/WMU.css", "text/css" ),
-						window.wgExtensionsPath + "/wikia/WikiaMiniUpload/js/WMU.js"
+						window.wgExtensionsPath + "/wikia/WikiaMiniUpload/js/WMU.js",
+						window.wgExtensionsPath + "/wikia/WikiaMiniUpload/css/WMU.css"
 					])
 				).done(function() {
 					WMU_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption, props.link);
