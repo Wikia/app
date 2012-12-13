@@ -290,3 +290,33 @@ class WikiawebinarsApiWrapper extends OoyalaApiWrapper {
 
 class FunimationApiWrapper extends OoyalaApiWrapper {
 }
+
+class WbieApiWrapper extends OoyalaApiWrapper {
+}
+
+class SoeApiWrapper extends OoyalaApiWrapper {
+}
+
+class WikiaproductionsApiWrapper extends OoyalaApiWrapper {
+}
+
+class KonamiApiWrapper extends OoyalaApiWrapper {
+}
+
+class EaApiWrapper extends OoyalaApiWrapper {
+}
+
+class KabamApiWrapper extends OoyalaApiWrapper {
+}
+
+class SonypicturesApiWrapper extends OoyalaApiWrapper {
+}
+
+class UniversalApiWrapper extends OoyalaApiWrapper {
+}
+
+class WarnerbrothersApiWrapper extends OoyalaApiWrapper {
+}
+
+class FoxApiWrapper extends OoyalaApiWrapper {
+}
