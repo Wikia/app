@@ -235,6 +235,30 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return 0;
 	}
 
+	protected function getTrailerRating() {
+		if ( !empty($this->metadata['trailerRating']) ) {
+			return $this->metadata['trailerRating'];
+		}
+
+		if ( !empty($this->interfaceObj['metadata']['trailerrating']) ) {
+			return $this->interfaceObj['metadata']['trailerrating'];
+		}
+
+		return '';
+	}
+
+	protected function getIndustryRating() {
+		if ( !empty($this->metadata['industryRating']) ) {
+			return $this->metadata['industryRating'];
+		}
+
+		if ( !empty($this->interfaceObj['metadata']['industryrating']) ) {
+			return $this->interfaceObj['metadata']['industryrating'];
+		}
+
+		return '';
+	}
+
 	protected function isAgeGate() {
 		if ( !empty($this->metadata['ageGate']) ) {
 			return $this->metadata['ageGate'];
