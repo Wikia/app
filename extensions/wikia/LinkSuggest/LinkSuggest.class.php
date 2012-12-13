@@ -118,15 +118,19 @@ class LinkSuggest {
 		}
 
 		//limit the result only to this namespace
-		$namespaceFilter = $request->getVal('nsfilter');
+		//
+		// BugId:93294 The nsfilter parameter is optional. If not set explicitly,
+		// assume it to be the same as $namespace, otherwise search suggestions
+		// for all namespaces but NS_MAIN won't work. The default filter is
+		// no-filter.
+		$namespaceFilter = $request->getVal('nsfilter', $namespace);
 
 		if(strlen($namespaceFilter) > 0) {
 			$namespaces = array($namespaceFilter);
 		}
 
-		if (!empty($namespace) && $namespace != $namespaceFilter) {
+		if ( !empty($namespace) && $namespace != $namespaceFilter) {
 			$out = self::getEmptyResponse($request->getText('format'));
-
 			wfProfileOut(__METHOD__);
 			return $out;
 		}
