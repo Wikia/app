@@ -11,9 +11,9 @@ $wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  dirname( __FILE__ ) . '/DumpsOnD
 $wgAvailableRights[] = 'dumpsondemand';
 $wgGroupPermissions['*']['dumpsondemand'] = false;
 $wgGroupPermissions['staff']['dumpsondemand'] = true;
+$wgGroupPermissions['helper']['dumpsondemand'] = true;
 $wgGroupPermissions['sysop']['dumpsondemand'] = true;
 $wgGroupPermissions['bureaucrat']['dumpsondemand'] = true;
-$wgGroupPermissions['autoconfirmed']['dumpsondemand'] = true;
 
 class DumpsOnDemand {
 
