@@ -2,6 +2,16 @@
 
 class UpdateBacklinksJobTest extends WikiaBaseTest
 {
+	public function setUp()
+	{
+		parent::setUp();
+		$dir = dirname(__FILE__ ).'/..';
+		$app = F::app();
+		$app->registerClass("Backlinks", "$dir/Backlinks.class.php");
+		$app->registerClass("UpdateBacklinksJob", "$dir/job/UpdateBacklinksJob.class.php");
+
+	}
+
 	/**
 	 * @covers UpdateBacklinksJob::run
 	 */
