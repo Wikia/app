@@ -565,7 +565,7 @@ class RenameUserProcess {
 			if ( RenameUserHelper::CLUSTER_DEFAULT != $clusterName ) {
 				$clusterName = 'wikicities_' . $clusterName;
 				$oDB = wfGetDB( DB_MASTER, array(), $clusterName );
-				$oDB->delete( 'user', array( 'user_id' => $this->mUserId ) );
+				$oDB->delete( '`user`', array( 'user_id' => $this->mUserId ) );
 				if ( $oDB->affectedRows() ) {
 					$this->addLog( sprintf( '%s: deleted user data.', $clusterName ) );
 				} else {
