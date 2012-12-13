@@ -9,33 +9,43 @@
  
 (function($, window) {
 var MediaPlaceholder = {
+
 	init: function() {
+
 		// Don't run more than once
 		if(this.loaded) {
 			return;
 		}
+
 		this.loaded = true;
-		
+
+		// Don't allow editing on history or diff pages
+		this.disabled = ( $.getUrlVar('diff') || $.getUrlVar('oldid') );
+
 		var self = this;
-		
+
 		 $('#WikiaArticle').on('click', '.wikiaPlaceholder a', function(e) {
 			e.preventDefault();
-			
-			var $this = $(this),
-				id = $this.data('id'),
-				align = $this.data('align'),
-				width = $this.data('width') || null,
-				thumb = $this.data('thumb'),
-				link = $this.data('link'),
-				caption = $this.data('caption');
-			
-			// For now, make this backwards compatible with unpurged saved placholders
-			if($this.attr('onclick') != 'undefined') {
+
+			// cache jquery object
+			var $this = $(this);
+
+			// For now, make this somewhat backwards compatible with unpurged saved placholders
+			if($this.prop('onclick')) {
 				return;
 			}
-				
+
 			if($this.parent().parent().hasClass('wikiaVideoPlaceholder')) {
-				// video - open VET
+				// handle video placeholder
+
+				if(self.disabled) {
+					GlobalNotification.show( $.msg('imgplc-notinhistory-video'), 'warn' );
+					return;
+				}
+
+				var props = self.getProps($this);
+
+				// open VET
 				$.when(
 					$.loadYUI(),
 					$.getResources([ 
@@ -45,10 +55,19 @@ var MediaPlaceholder = {
 						window.wgExtensionsPath + "/wikia/WikiaStyleGuide/js/Dropdown.js"
 					])
 				).done(function() {
-					VET_show( self.getEvent(), -2, id, align, thumb, width, caption); 
+					VET_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption); 
 				});
 			} else {
-				// image - open WMU
+				// handle image placeholder
+
+				if(self.disabled) {
+					GlobalNotification.show( $.msg('imgplc-notinhistory'), 'warn' );			
+					return;
+				}
+
+				var props = self.getProps($this);
+
+				// open WMU
 				$.when(
 					$.loadYUI(),
 					$.getResources([ 
@@ -56,10 +75,22 @@ var MediaPlaceholder = {
 						window.wgExtensionsPath + "/wikia/WikiaMiniUpload/js/WMU.js"
 					])
 				).done(function() {
-					WMU_show( self.getEvent(), -2, id, align, thumb, width, caption, link);
+					WMU_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption, props.link);
 				});
 			}
 		});
+	},
+
+	// Get data for WMU / VET from placeholder element
+	getProps: function(elem) {
+		return {
+			id: elem.data('id'),
+			align: elem.data('align'),
+			width: elem.data('width') || null,
+			thumb: elem.data('thumb'),
+			link: elem.data('link'),
+			caption: elem.data('caption')
+		}
 	},
 
 	/**

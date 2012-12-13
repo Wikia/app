@@ -6,7 +6,8 @@ $messages['en'] = array(
 	'imgplc-add-video' => 'Add Video',
 	'imgplc-placeholder' => 'Placeholder',
 	'imgplc-image' => 'Image',
-	'imgplc-notinhistory' => "You cannot add a picture in history mode."
+	'imgplc-notinhistory' => "You cannot add a picture in history mode.",
+	'imgplc-notinhistory-video' => "You cannot add a video in history mode.",
 );
 
 /** Afrikaans (Afrikaans)

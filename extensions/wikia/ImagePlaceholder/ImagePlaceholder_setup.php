@@ -28,7 +28,14 @@ define('IMG_PLC_PLACEHOLDER', 'Placeholder');
 $dir = dirname(__FILE__).'/';
 
 $wgExtensionFunctions[] = 'ImagePlaceholder_init';
+
+/**
+ * message files
+ */
 $wgExtensionMessagesFiles['ImagePlaceholder'] = dirname(__FILE__).'/ImagePlaceholder.i18n.php';
+
+F::build('JSMessages')->registerPackage('ImagePlaceholder', array('imgplc-*'));
+F::build('JSMessages')->enqueuePackage('ImagePlaceholder', JSMessages::EXTERNAL);
 
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'ImagePlaceholderFetchTemplateAndTitle';
 $wgHooks['ImageBeforeProduceHTML'][] = 'ImagePlaceholderImageBeforeProduceHTML';
@@ -234,13 +241,6 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	// this is for positioning the "Add Image" button
 	$lmarg = ceil( ( $width - 90 ) / 2 );
 	$tmarg = ceil( ( $height - 30 ) / 2 );
-
-	// macbre: RTE support for video placeholder
-	if (empty($wgRTEParserEnabled)) {
-		if( ($wgRequest->getVal('diff',0) != 0) || ($wgRequest->getVal('oldid',0) != 0) ) {
-			$onclick = 'alert('.escapeshellarg(wfMsg('imgplc-notinhistory')).'); return false;';
-		}
-	}
 
 	$additionalClass = '';
 
