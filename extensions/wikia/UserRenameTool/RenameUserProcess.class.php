@@ -556,21 +556,31 @@ class RenameUserProcess {
 		$this->addLog("Broadcasting hook: {$hookName}");
 		wfRunHooks($hookName, array($this->mUserId, $this->mOldUsername, $this->mNewUsername));
 
-		//rename the user account across clusters
-		$clusters = WikiFactory::getClusters(); // wikicities with a c1 .. cx cluster suffix.
-		$clusters[] = ''; // wikicities without the cluster suffix.
+		// delete the record from all the secondary clusters
+		$clusters = WikiFactory::getSecondaryClusters(); // wikicities with a c1 .. cx cluster suffix.
 
 		foreach ($clusters as $clusterName) {
-			if(!$this->renameAccount($clusterName)){
-				if ( $clusterName === RenameUserHelper::CLUSTER_DEFAULT ) {
-					$this->addLog("Renaming user account on the main cluster resulted in a failure.");
-					$this->addError(wfMsgForContent('userrenametool-error-cannot-rename-account'));
-					wfProfileOut(__METHOD__);
-					return false;
+			// This is a classic double-check. I do not want to delete the record from the primary cluster.
+			// No, really! I do not.
+			if ( RenameUserHelper::CLUSTER_DEFAULT != $clusterName ) {
+				$clusterName = 'wikicities_' . $clusterName;
+				$oDB = wfGetDB( DB_MASTER, array(), $clusterName );
+				$oDB->delete( 'user', array( 'user_id' => $this->mUserId ) );
+				if ( $oDB->affectedRows() ) {
+					$this->addLog( sprintf( '%s: deleted user data.', $clusterName ) );
 				} else {
-					$this->addLog("Renaming user account on cluster {$clusterName} resulted in a failure.");
+					$this->addLog( sprintf( '%s: nothing to do here.', $clusterName ) );
 				}
+				$oDB->close();
 			}
+		}
+
+		// rename the user on the primary cluster
+		if ( !$this->renameAccount( RenameUserHelper::CLUSTER_DEFAULT ) ) {
+			$this->addLog("Failed to rename the user on the primary cluster. Report the problem to the engineers.");
+			$this->addError(wfMsgForContent('userrenametool-error-cannot-rename-account'));
+			wfProfileOut(__METHOD__);
+			return false;
 		}
 
 		$this->invalidateUser($this->mNewUsername);
@@ -583,11 +593,19 @@ class RenameUserProcess {
 		$fakeUser = null;
 
 		if(empty($this->mFakeUserId)){
-			//IMPORTANT: the extension is meant to be enabled only on community central
-			$fakeUser = User::createNew($this->mOldUsername);
-			$fakeUser->setOption( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
-			$fakeUser->saveToCache();
 
+			global $wgAuth, $wgExternalAuthType;
+
+			$fakeUser = User::newFromName( $this->mOldUsername, 'creatable' );
+			
+			if ( $wgExternalAuthType ) {
+				$fakeUser = ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
+			} else {
+				$fakeUser->addToDatabase();
+			}
+
+			$fakeUser->setOption( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
+			$fakeUser->saveSettings();
 			$this->mFakeUserId = $fakeUser->getId();
 			$this->addLog("Created fake user account with ID {$this->mFakeUserId} and renameData '{$fakeUser->getOption( 'renameData', '')}'");
 		} else {
