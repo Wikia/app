@@ -19,5 +19,5 @@ $specialPageAliases['fr'] = array(
 
 /** Spanish (Espanol) */
 $specialPageAliases['es'] = array(
-	'Promote' => array( 'Promocionar ' ),
+	'Promote' => array( 'Promocionar' ),
 );
