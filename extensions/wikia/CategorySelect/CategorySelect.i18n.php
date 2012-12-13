@@ -21,6 +21,7 @@ $messages = array();
 
 $messages[ 'en' ] = array(
 	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article',
+	'categoryselect-button-add' => 'Add category',
 	'categoryselect-button-cancel' => 'Cancel',
 	'categoryselect-button-save' => 'Save',
 	'categoryselect-category-add' => 'Add category...',

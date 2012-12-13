@@ -11,38 +11,27 @@ $categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% )
 	padding: 0;
 	position: relative;
 
-	&.modified .toolbar {
-		display: block;
-	}
-
+	&.modified .toolbar,
 	&.showHidden .category.hidden {
 		display: block;
 	}
 
-	.addCategory {
-		@include border-radius( 4px );
-		background-color: transparent;
-		color: $color-text;
-		outline: none;
-		width: 245px;
-
-		&:focus {
-			background-color: $categoryselect-color-category;
-		}
+	.add {
+		margin-left: 5px;
 	}
 
-	.addCategory,
 	.category,
+	.input,
 	.placeholder {
-		border: 1px solid transparent;
 		display: block;
 		float: left;
-		margin: 0 5px 5px 0;
-		padding: 5px;
+		margin: 0;
+		margin-bottom: 5px;
+		padding: 0 5px;
 	}
 
 	.categories {
-		float: left;
+		@include clearfix;
 		margin: 0;
 		padding: 0;
 	}
@@ -50,29 +39,22 @@ $categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% )
 	.categoriesLink {
 		display: block;
 		float: left;
-		padding: 5px 0;
+		margin-right: 5px;
 
 		&:after {
-			content: ":";
+			content: ':';
 		}
 	}
 
 	.category {
-		@include border-radius( 4px );
-		background-color: $categoryselect-color-category;
+		border-right: 1px solid $color-page-border;
+
+		&:last-child {
+			border-right: 0;
+		}
 
 		&.hidden {
 			display: none;
-		}
-
-		&.new {
-			.name {
-				cursor: move;
-			}
-
-			.toolbar {
-				display: inline-block;
-			}
 		}
 
 		.toolbar {
@@ -80,13 +62,43 @@ $categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% )
 		}
 	}
 
+	.edit {
+		@include clearfix;
+	}
+
+	.hide {
+		display: none;
+	}
+
+	.input {
+		background-color: $color-page;
+		border: 1px solid $color-page-border;
+		color: $color-text;
+		font-size: 13px;
+		margin-left: 5px;
+		outline: none;
+		padding: 4px 9px;
+		width: 245px;
+	}
+
+	.newCategories {
+		float: left;
+
+		.name {
+			cursor: move;
+		}
+
+		.toolbar {
+			display: inline-block;
+		}
+	}
+
 	.padded {
-		padding: 10px 10px 5px 10px;
+		padding: 10px;
 	}
 
 	.shifted {
-		@include clearfix;
-		margin-left: 72px;
+		overflow: hidden;
 	}
 
 	.tool {

@@ -1,0 +1,1 @@
+<input autocomplete="off" class="input<? if ( !empty( $className ) ): ?> <?= $className ?><? endif ?>" id="CategorySelectInput" name="CategorySelectInput" placeholder="<?= wfMsg( 'categoryselect-category-add' ) ?>" type="text">

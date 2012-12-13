@@ -1,1 +1,0 @@
-<input autocomplete="off" class="addCategory" id="CategorySelectAdd" name="CategorySelectAdd" placeholder="<?= wfMsg( 'categoryselect-category-add' ) ?>" type="text">

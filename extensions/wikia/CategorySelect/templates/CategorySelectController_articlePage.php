@@ -4,7 +4,11 @@
 		<div class="shifted">
 			<?= $app->getView( 'CategorySelect', 'categories', array( 'categories' => $categories ) ) ?>
 			<? if ( $userCanEdit ): ?>
-				<?= $app->getView( 'CategorySelect', 'addCategory' ) ?>
+				<div class="edit">
+					<ul class="newCategories"></ul>
+					<button class="wikia-button add" id="CategorySelectAdd" type="button"><?= $wf->Message( 'categoryselect-button-add' ) ?></button>
+					<?= $app->getView( 'CategorySelect', 'input', array( 'className' => 'hide' ) ) ?>
+				</div>
 			<? endif ?>
 		</div>
 	</div>

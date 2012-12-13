@@ -16,22 +16,18 @@ $categoryselect-color-placeholder: darken( $color-epl-input, 2% );
 
 // Needs editPage class so these styles won't apply to preview modal
 .CategorySelect.editPage {
-	.addCategory,
-	.categories {
-		@include epl-textfield;
-		width: $categoryselect-width;
-	}
-
-	.addCategory {
-		outline: none;
-	}
-
 	.categories {
 		// 4 items at 25px high
 		height: 100px;
 		margin: 10px 0 0 0;
 		overflow: auto;
 		position: relative;
+	}
+
+	.categories,
+	.input, {
+		@include epl-textfield;
+		width: $categoryselect-width;
 	}
 
 	.category,
@@ -61,6 +57,10 @@ $categoryselect-color-placeholder: darken( $color-epl-input, 2% );
 				display: inline-block;
 			}
 		}
+	}
+
+	.input {
+		outline: none;
 	}
 
 	.name {

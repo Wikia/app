@@ -44,6 +44,9 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 				placement: 'top'
 			}
 
+		}).on( 'add.' + namespace, function( event, cs, data ) {
+			cs.elements.list.append( data.element );
+
 		}).on( 'update.' + namespace, function( event ) {
 			$categories.val( JSON.stringify(
 				$categorySelect.data( 'categorySelect' ).getData() ) );
