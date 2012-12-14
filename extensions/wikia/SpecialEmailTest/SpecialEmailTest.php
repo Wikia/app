@@ -66,7 +66,8 @@ class SpecialEmailTest extends UnlistedSpecialPage {
 						  $this->mConfirmToken."\n".$this->mText,
 						  null,
 						  null,
-						  "emailtest"
+						  "emailtest",
+						  1
 						);
 						
 		header("Status: 200");
