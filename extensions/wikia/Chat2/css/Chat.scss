@@ -406,3 +406,28 @@ a {
 		top: 6px;
 	}
 }
+
+.VideoChat {
+	width:574px;
+	height: 435px;
+	margin: 20px auto 0;
+	position: relative;
+	button {
+		margin: 5px 0px 5px 10px;
+	}
+	// Other user's video stream (larger)
+	#vid2 {
+		width: 564px;
+		height: 425px;
+		border: 5px solid #CCC;
+	}
+	// Your video stream (smaller and overlayed)
+	#vid1 {
+		width: 202px;
+		height: 150px;
+		border: 5px solid #CCC;
+		position: absolute;
+		right: -20px;
+		bottom: -20px;
+	}
+}
