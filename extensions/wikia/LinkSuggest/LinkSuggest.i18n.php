@@ -184,6 +184,13 @@ $messages['ksh'] = array(
 	'tog-redirected-from' => '&ndash; ömjeleidt vun $1',
 );
 
+/** Kirghiz (Кыргызча)
+ * @author Growingup
+ */
+$messages['ky'] = array(
+	'tog-disablelinksuggest' => 'Баштапкы код режиминен шилтеме сунушун көрсөтпөө',
+);
+
 /** Ladino (Ladino)
  */
 $messages['lad'] = array(
@@ -235,6 +242,7 @@ $messages['nb'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'linksuggest-desc' => 'Verwijzingen voorstellen tijdens het bewerken',
 	'tog-disablelinksuggest' => 'Geen verwijzingssuggesties weergeven in bronmodus',
 	'tog-redirected-from' => '&ndash; Doorverwezen vanaf $1',
 );

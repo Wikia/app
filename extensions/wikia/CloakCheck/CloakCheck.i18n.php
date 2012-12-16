@@ -144,6 +144,18 @@ $messages['diq'] = array(
 	'cloakcheck-process-username' => 'Namey karberi: $1',
 );
 
+/** Greek (Ελληνικά)
+ * @author Glavkos
+ */
+$messages['el'] = array(
+	'cloakcheck-form-username' => 'Όνομα χρήστη:',
+	'cloakcheck-form-check' => 'Ελέγξτε το όνομα χρήστη',
+	'cloakcheck-process-accountage-yes' => 'Ο λογαριασμός είναι αρκετά παλαιός.',
+	'cloakcheck-process-accountage-no' => 'Ο λογαριασμός είναι πολύ νέος.',
+	'cloakcheck-process-edits-yes' => 'Ο χρήστης έχει αρκετές επεξεργασίες.',
+	'cloakcheck-process-edits-no' => 'Ο χρήστης δεν έχει αρκετές επεξεργασίες.',
+);
+
 /** Spanish (español)
  * @author Absay
  * @author Locos epraix

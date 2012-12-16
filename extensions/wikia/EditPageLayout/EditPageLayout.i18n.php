@@ -1558,6 +1558,7 @@ $messages['ms'] = array(
 
 /** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
+ * @author EvenT
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -1627,7 +1628,7 @@ $messages['nb'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Merk:''' Du er i ferd med å opprette en side som tidligere har blitt slettet. [Mer info]",
 	'restore-edits-notice' => "Velkommen tilbake! Vi har gjenopprettet noen endringer du ikke publiserte. <a class='notice-action restoreeditlink'>Slett endringene mine og begynn å redigere på nytt</a>",
 	'restore-edits-diff-notice' => "Velkommen tilbake! Vi har gjenopprettet noen endringer du ikke publiserte. Siden har imidlertid blirr oppdatert siden den gang. Ønsker du å: <a class='notice-action restoreeditlink'>Slette endringene mine og begynne med den siste teksten</a> eller <a class='notice-action difflink'>Vise en sammenligning av endringer med den siste siden</a>",
-	'mainpagewarning-notice' => 'Lær mer om [[w:c:Community:Help:Main page|redigering av hovedsiden]].', # Fuzzy
+	'mainpagewarning-notice' => 'Her kan du lese om [[w:c:Community:Help:Main_page|redigering av hovedsiden.]]', # Fuzzy
 	'prefs-general' => 'Generelt',
 	'prefs-starting-an-edit' => 'Starter en redigering',
 	'prefs-editing-experience' => 'Redigeringserfaring',
@@ -1713,6 +1714,7 @@ $messages['nl'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Let op:''' U maakt een pagina opnieuw aan die voorheen is verwijderd. [Meer info]",
 	'restore-edits-notice' => "Welkom terug! We hebben een aantal wijzigingen hersteld die u niet had gepubliceerd. <a class='notice-action restoreeditlink'>Verwijder mijn wijzigingen en begin een nieuwe bewerking</a>.",
 	'restore-edits-diff-notice' => "Welkom terug! We hebben een aantal wijzigingen die nog niet waren gepubliceerd hersteld. De pagina is echter sindsdien bijgewerkt. Wilt u: <a class='notice-action restoreeditlink'>uw wijzigingen verwijderen en met de meest recente tekst verder werken</a> of wilt u een <a class='notice-action difflink'>overzicht van de verschillen met de meest recente versie bekijken</a>?",
+	'mainpagewarning-notice' => 'Meer lezen over [[w:c:community:Help:Main_page|de hoofdpagina bewerken]].',
 	'prefs-general' => 'Algemeen',
 	'prefs-starting-an-edit' => 'Een bewerking starten',
 	'prefs-editing-experience' => 'Bewerkingservaring',

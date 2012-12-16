@@ -526,6 +526,19 @@ $messages['tr'] = array(
 	'iwedit-success' => '<p>Bağlantı yaratımı başarılı</p>',
 );
 
+/** Ukrainian (українська)
+ * @author Base
+ */
+$messages['uk'] = array(
+	'interwikiedit' => 'Редактор інтервікі',
+	'iwedit-title' => 'Редактор інтервікі',
+	'iwedit-language-interwikis' => 'лише мовні інтервікі',
+	'iwedit-all-interwikis' => 'усі інтервікі',
+	'iwedit-update' => 'Оновити',
+	'iwedit-error' => '<p>Сталася помилка.</p>',
+	'iwedit-success' => '<p>Посилання успішно створено.</p>',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */

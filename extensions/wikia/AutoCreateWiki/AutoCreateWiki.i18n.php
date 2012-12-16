@@ -995,6 +995,7 @@ $messages['el'] = array(
 	'autocreatewiki' => 'Δημιουργήστε έναν νέο ιστότοπο τύπου Wiki',
 	'autocreatewiki-desc' => 'Δημιουργήστε έναν ιστότοπο τύπου wiki στο WikiFactory από αιτήματα χρηστών',
 	'autocreatewiki-page-title-default' => 'Δημιουργήστε έναν καινούργιο ιστότοπο τύπου Wiki',
+	'autocreatewiki-page-title-answers' => 'Δημιουργήστε έναν νέο ιστότοπο για απαντήσεις',
 	'createwiki' => 'Δημιουργήστε έναν ιστότοπο τύπου Wiki',
 	'autocreatewiki-chooseone' => 'Διαλέξτε ένα',
 	'autocreatewiki-required' => '$1 = απαιτείται',
@@ -1010,11 +1011,14 @@ $messages['el'] = array(
 	'autocreatewiki-error' => 'σφάλμα',
 	'autocreatewiki-haveaccount-question' => 'Έχετε ήδη ένα λογαριασμό Wikia;',
 	'autocreatewiki-success-title-default' => 'Το wiki σας έχει δημιουργηθεί!',
+	'autocreatewiki-success-title-answers' => 'Η ιστοσελίδα σας για απαντήσεις έχει δημιουργηθεί!',
 	'autocreatewiki-success-subtitle' => 'Μπορείτε τώρα να ξεκινήσετε να δουλεύετε το wiki σας επισκέπτοντας:',
 	'autocreatewiki-success-has-been-created' => 'έχει δημιουργηθεί!',
 	'autocreatewiki-success-get-started' => 'Ξεκινήστε',
 	'autocreatewiki-info-domain' => 'Καλύτερα να χρησιμοποιήσετε μια λέξη-κλειδί αναζήτησης του θέματός σας.',
 	'autocreatewiki-info-topic' => 'Βάλε τε μια σύντομη περιγραφή όπως "Διαδίκτυο" ή "Λογοτεχνεία".',
+	'autocreatewiki-info-category-default' => 'Αυτό θα βοηθήσει τους επισκέπτες να βρουν wiki σας.',
+	'autocreatewiki-info-category-answers' => 'Αυτό θα βοηθήσει τους επισκέπτες να βρουν την ιστοσελίδα σας για απαντήσεις.',
 	'autocreatewiki-info-language' => 'Αυτή θα είναι η προεπιλεγμένη γλώσσα για τους επισκέπτες του wiki σας.',
 	'autocreatewiki-info-email-address' => 'Το ηλεκτρονικό σας ταχυδρομείο δεν φαίνεται σε κανέναν στο Wikia.',
 	'autocreatewiki-info-realname' => 'Αν το δώσετε, αυτό θα χρησιμοποιηθεί για να σας αποδωθεί η δουλειά σας.',
@@ -1033,13 +1037,18 @@ $messages['el'] = array(
 	'autocreatewiki-category-label' => 'Κατηγορία:',
 	'autocreatewiki-category-other' => 'Άλλο',
 	'autocreatewiki-set-username' => 'Πρώτα ορίστε όνομα χρήστη.',
+	'autocreatewiki-step1' => 'Δημιουργία φακέλου εικόνων...',
+	'autocreatewiki-step2' => 'Δημιουργία βάσης δεδομένων...',
+	'autocreatewiki-step3' => 'Ρύθμιση προεπιλεγμένων πληροφοριών στη βάση δεδομένων...',
 	'autocreatewiki-congratulation' => 'Συγχαρητήρια!',
 	'autocreatewiki-welcometalk-log' => 'Χαιρετιστήριο Μήνυμα',
+	'autocreatewiki-step2-error' => 'Η βάση δεδομένων υπάρχει!',
 	'newwikis' => 'Νέα wiki',
 	'autocreatewiki-subname-answers' => 'Απαντήσεις',
 );
 
 /** Esperanto (Esperanto)
+ * @author Objectivesea
  * @author Tradukisto
  */
 $messages['eo'] = array(
@@ -1047,10 +1056,19 @@ $messages['eo'] = array(
 	'autocreatewiki-language-all' => 'Ĉiuj lingvoj',
 	'autocreatewiki-create-account' => 'Registri sin',
 	'autocreatewiki-done' => 'farita',
+	'autocreatewiki-error' => 'eraro',
 	'autocreatewiki-haveaccount-question' => 'Ĉu vi jam havas Wikia-konton?',
 	'autocreatewiki-success-title-default' => 'Via vikio estas kreita!',
+	'autocreatewiki-success-has-been-created' => 'kreis!',
+	'autocreatewiki-success-get-started' => 'Komenci',
 	'autocreatewiki-info-topic' => 'Aldoni mallongan priskribon, ekzemple "Stelaj Militoj" aŭ "Televidaj programoj".',
+	'autocreatewiki-info-category-default' => 'Ĉi tio helpos vizitontojn trovi vian vikion.',
+	'autocreatewiki-info-category-answers' => 'Ĉi tio helpos vizitontojn trovi vian respondoj-situon.',
+	'autocreatewiki-title-template' => '$1 Vikio',
+	'autocreatewiki-limit-day' => 'Wikia superis la maksimuman nombron da vikikreaĵoj hodiaŭ ($1).',
+	'autocreatewiki-limit-creation' => 'Vi superis la ĉiutage maksimuman nombron da vikikreaĵoj ($1).',
 	'autocreatewiki-invalid-wikiname' => 'La nomo ne povas enhavi specialajn signojn (ekzemple $ aŭ @) aŭ esti malplena.',
+	'autocreatewiki-violate-policy' => 'Ĉi tiu vikinomo entenas vorton kiu malobservas nian nompolitikon',
 	'autocreatewiki-name-too-long' => 'La adreso estas tro longa. Elektu adreson kun maksimume 50 signoj.',
 	'autocreatewiki-category-label' => 'Kategorio:',
 	'autocreatewiki-welcomebody' => 'Saluton, $2!

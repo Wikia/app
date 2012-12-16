@@ -311,11 +311,16 @@ $messages['diq'] = array(
  * @author Glavkos
  */
 $messages['el'] = array(
+	'categoryselect-code-view' => 'Προβολή κώδικα',
+	'categoryselect-visual-view' => 'Οπτική προβολή',
+	'categoryselect-infobox-caption' => 'Επιλογές κατηγορίας',
+	'categoryselect-infobox-category' => 'Δώστε το όνομα της κατηγορίας:',
 	'categoryselect-addcategory-button' => 'Προσθήκη κατηγορίας',
 	'categoryselect-addcategory-edit' => 'Προσθήκη μιας κατηγορίας',
 	'categoryselect-suggest-hint' => 'Πατήστε Enter όταν γίνει',
 	'categoryselect-button-save' => 'Αποθήκευση',
 	'categoryselect-button-cancel' => 'Ακύρωση',
+	'categoryselect-error-db-locked' => 'Η βάση δεδομένων είναι κλειδωμένη',
 );
 
 /** Spanish (español)

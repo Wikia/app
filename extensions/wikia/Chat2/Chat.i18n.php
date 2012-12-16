@@ -632,6 +632,28 @@ $messages['diq'] = array(
 	'chat-status-away' => 'Duri de',
 );
 
+/** Greek (Ελληνικά)
+ * @author Glavkos
+ */
+$messages['el'] = array(
+	'chat-log-reason-undo' => 'αναίρεση',
+	'chat-ban-undolink' => 'αναίρεση',
+	'chat-ban-modal-button-ok' => 'Φραγή αυτού του χρήστη',
+	'chat-ban-modal-button-cancel' => 'Ακύρωση',
+	'chat-ban-modal-change-ban-label' => 'Αλλαγή σε',
+	'chat-ban-modal-end-ban' => 'Τέλος Φραγής',
+	'chat-log-reason-banchange' => 'Δεν δόθηκε καμία αιτιολογία',
+	'chat-log-reason-banremove' => 'Δεν δόθηκε καμία αιτιολογία',
+	'chat-join-the-chat' => 'Μπείτε στο Chat',
+	'chat-user-menu-talk-page' => 'Σελίδα συζήτησης',
+	'chat-user-menu-contribs' => 'Συνεισφορές',
+	'chat-user-menu-private' => 'Προσωπικό Μήνυμα',
+	'chat-user-menu-kick' => 'Κλωτσιά',
+	'chat-user-menu-ban' => 'Φραγή',
+	'chat-user-menu-private-block' => 'Φραγή Ιδιωτικών Μηνυμάτων',
+	'chat-user-menu-private-allow' => 'Να επιτρέπονται Ιδιωτικά Μηνύματα',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
@@ -1399,6 +1421,18 @@ $messages['ko'] = array(
 	'chat-edit-count' => '편집 $1회',
 	'chat-member-since' => '$1부터 기여',
 	'chat-user-menu-message-wall' => '메시지 담벼락',
+);
+
+/** Kirghiz (Кыргызча)
+ * @author Growingup
+ */
+$messages['ky'] = array(
+	'chat' => 'Чат',
+	'chat-ban-modal-label-reason' => 'Себеп',
+	'chat-log-reason-undo' => 'жокко чыгаруу',
+	'chat-ban-undolink' => 'жокко чыгаруу',
+	'chat-ban-modal-button-cancel' => 'Жокко чыгаруу',
+	'chat-user-menu-ban' => 'Бан кылуу',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
