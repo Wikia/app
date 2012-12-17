@@ -517,7 +517,7 @@
 				$periodId = self::PERIOD_ID_MONTHLY;
 			}
 
-			$memKey = $app->wf->SharedMemcKey( 'datamart', 'total_video_views', 'v2', $wikiId, $periodId, $startDate, $endDate );
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'total_video_views', 'v3', $wikiId, $periodId, $startDate, $endDate );
 			$videoViews = $app->wg->Memc->get( $memKey );
 			if ( !is_array($videoViews) ) {
 				$videoViews = array();
@@ -544,7 +544,7 @@
 						$videoViews[$hashTitle] = $row->cnt;
 					}
 
-					$app->wg->Memc->set( $memKey, $videoViews, 60*60*12 );
+					$app->wg->Memc->set( $memKey, $videoViews, 60*60*2 );
 				}
 			}
 
