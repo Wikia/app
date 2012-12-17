@@ -40,7 +40,7 @@ class RelatedVideosData {
 			$data['fullUrl']		= $title->getFullURL();
 			$data['prefixedUrl']	= $title->getPrefixedURL();
 			$data['description']	= $file->getDescription();
-			$data['duration']		= $meta['duration'];
+			$data['duration']		= empty( $meta['duration'] ) ? 0 : $meta['duration'];
 			$data['embedCode']		= null;
 			$data['embedJSON']		= null;
 			$data['provider']		= $file->minor_mime;

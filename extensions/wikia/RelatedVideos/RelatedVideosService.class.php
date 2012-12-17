@@ -144,7 +144,6 @@ class RelatedVideosService {
 	}
 
 	public function saveToCache( $title, $source, $videoWidth, $cityShort, $data ) {
-
 		$oMemc = F::app()->wg->memc;
 		$weekInSeconds = 604800;
 		$oMemc->set(
