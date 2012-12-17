@@ -37,12 +37,12 @@ class WikiaValidatorDependent extends WikiaValidator {
 		}
 
 		$dependentFieldValue = (isset($this->formData[$dependentField]) ? $this->formData[$dependentField] : null);
-
-		if( $this->validateDependentField($dependentFieldValue) && !$ownValidator->isValid($value) ) {
+		
+		if( $this->isDependentFieldValid($dependentFieldValue) && !$ownValidator->isValid($value) ) {
 			$this->setError( $ownValidator->getError() );
 			return false;
 		}
-
+		
 		return true;
 	}
 
@@ -52,7 +52,7 @@ class WikiaValidatorDependent extends WikiaValidator {
 		return $this->isValidInternal($value);
 	}
 	
-	protected function validateDependentField($dependentFieldValue) {
+	protected function isDependentFieldValid($dependentFieldValue) {
 		$validationCondition = $this->getOption('dependentFieldCondition');
 		switch($validationCondition) {
 			case self::CONDITION_EMPTY:
