@@ -73,6 +73,7 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-explore-link-url' => 'URL',
 	'marketing-toolbox-hub-module-explore-link-text-too-short-error' => 'URL header text is too short fill or remove the URL field',
 	'marketing-toolbox-hub-module-explore-link-url-invalid' => 'Invalid URL address',
+	'marketing-toolbox-hub-module-explore-add-photo' => 'Add a photo',
 
 	'marketing-toolbox-hub-module-polls-title' => 'Header',
 	'marketing-toolbox-hub-module-polls-question' => 'Question title',
