@@ -619,7 +619,7 @@ class EditPageLayout extends EditPage {
 				'content' => $this->app->wf->msgExt('talkpagetext', array('parse')),
 				'class' => 'mw-talkpagetext',
 			);
-		} elseif ( $this->mTitle->isMainPage() && !$this->mTitle->isProtected() && !$this->userDismissedEduNote() ) {
+		} elseif ( F::app()->wg->EnableRTEExt && $this->mTitle->isMainPage() && !$this->mTitle->isProtected() && !$this->userDismissedEduNote() ) {
 		//if this is an unprotected main page and user hasn't seen the main page educational notice -- show it :)
 			/** @var $notice EditPageNotice */
 			$notice = F::build( 'EditPageNotice',array($this->app->wf->msgExt('mainpagewarning-notice', array('parse')), 'MainPageEduNote') );
