@@ -167,10 +167,16 @@ class WikiaSearchIndexer extends WikiaObject {
 			$categories[] = str_replace( '_', ' ', $category['*'] );
 		}
 		
+		$headings = array();
+		foreach( $response['parse']['sections'] as $section ) {
+			$headings[] = $section['line'];
+		}
+		
 		$result['wid']			= empty( $this->wg->ExternalSharedDB ) ? $this->wg->SearchWikiId : (int) $this->wg->CityId;
 		$result['pageid']		= $pageId;
 		$result['id']			= $result['wid'] . '_' . $result['pageid'];
 		$result['title']		= ''.$title;
+		$result['titleStrict']	= ''.$title;
 		$result['canonical']	= $canonical;
 		$result['html']			= html_entity_decode($html, ENT_COMPAT, 'UTF-8');
 		$result['url']			= $title->getFullUrl();
@@ -179,7 +185,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['lang']			= $this->wg->ContLang->mCode;
 		$result['categories']	= $categories;
 		$result['page_images']	= count( $response['parse']['images'] );
-		var_dump($response['parse']['sections']); die;
+		$result['headings']		= $headings;
 	
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
 		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
