@@ -386,6 +386,7 @@ $wgAutoloadClasses[ "WikiaValidatorCompare"         ] = "$IP/includes/wikia/vali
 $wgAutoloadClasses[ "WikiaValidatorCompareValueIF"  ] = "$IP/includes/wikia/validators/WikiaValidatorCompareValueIF.class.php";
 $wgAutoloadClasses[ "WikiaValidatorCompareEmptyIF"  ] = "$IP/includes/wikia/validators/WikiaValidatorCompareEmptyIF.class.php";
 $wgAutoloadClasses[ "WikiaValidatorDepend"          ] = "$IP/includes/wikia/validators/WikiaValidatorDepend.class.php";
+$wgAutoloadClasses[ "WikiaValidatorFileTitle"       ] = "$IP/includes/wikia/validators/WikiaValidatorFileTitle.class.php";
 
 
 /**
