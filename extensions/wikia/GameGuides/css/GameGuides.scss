@@ -126,6 +126,15 @@ a {
 		pointer-events: auto;
 
 		border-bottom: 1px dotted $linkColor;
+
+		* {
+			//slow
+			//but still faster than looking for it in JS
+			//see GameGuides.js and listener on html
+			//I expect there tag a and if something is inside
+			//it passes the Ponto and go to link directly
+			pointer-events: none;
+		}
 	}
 
 	.link &, .thumb & {
