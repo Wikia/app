@@ -13,7 +13,7 @@
 		
 		
 		<?php 
-		if ($count == $max_visible && $request_all != true) { ?>
+		if ($count > $max_visible && $request_all != true) { ?>
 		
 		
 			<li class="more-link"><a href="?interlang=all"><?= wfMsg('oasis-interlang-show-all'); ?></a></li>	
