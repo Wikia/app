@@ -9,10 +9,12 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 		for ($i = 1; $i <= $slidesCount; $i++) {
 			$fields['photo' . $i] = array(
 				'type' => 'hidden',
-				//TODO
-				'validator' => null,
+				'validator' => new WikiaValidatorFileTitle(
+					array(
+						'required' => true
+					)
+				),
 				'attributes' => array(
-					// TODO
 					'class' => 'required'
 				)
 			);
