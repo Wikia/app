@@ -23,6 +23,7 @@ var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, 
 		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250'},
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250'},
 		'TOP_BUTTON': {'size':'242x90'},
+		'TOP_BUTTON_WIDE': {'size':'292x90'},
 
 		// TOP_BUTTON after TOP_LEADERBOARD hack:
 		'TOP_BUTTON.force':'hack',

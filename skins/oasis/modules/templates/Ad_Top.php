@@ -20,7 +20,9 @@ elseif ($wg->EnableCorporatePageExt) {
 		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
 	}
 }
-if ($wg->EnableTopButton) {
+if ($wg->EnableTopButtonWide) {
+	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'TOP_BUTTON_WIDE'));
+} else if ($wg->EnableTopButton) {
 	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'TOP_BUTTON'));
 }
 
