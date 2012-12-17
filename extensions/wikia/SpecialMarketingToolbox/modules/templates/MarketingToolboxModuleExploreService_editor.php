@@ -1,7 +1,7 @@
 <div class="module-explore">
 	<div class="photo-group grid-4 alpha">
 		<div class="grid-3 alpha">
-			photo editor (work in progress)
+			<input type="button" class="wmu-show" value="<?= $wf->Msg('marketing-toolbox-hub-module-explore-add-photo') ?>" />
 			<?=$app->renderView(
 				'MarketingToolbox',
 				'FormField',
@@ -10,7 +10,7 @@
 			?>
 		</div>
 		<div class="grid-1 alpha">
-			placeholder (work in progress)
+			<div class="placeholder"></div>
 		</div>
 	</div>
 	<? for($i = 1; $i <= $sectionLimit; $i++): ?>
