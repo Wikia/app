@@ -113,4 +113,34 @@ class RelatedVideosHookHandler {
 		$app->wf->ProfileOut(__METHOD__);
 		return true;
 	}
+
+	/**
+	 * Hook: clear cache when file is deleted
+	 * @param LocalFile $file
+	 * @param $oldimage
+	 * @param $article
+	 * @param User $user
+	 * @param $reason
+	 * @return true
+	 */
+	public static function onFileDeleteComplete( &$file, $oldimage, $article, $user, $reason ) {
+		$title = $file->getTitle();
+		if ( !empty( $title ) ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$result = $dbr->select(
+				'imagelinks',
+				'*',
+				array( 'il_to' => $title->getDBKey() ),
+				__METHOD__
+			);
+			while( $row = $dbr->fetchObject($result) ) {
+				$ilArticle = Article::newFromID( $row->il_from );
+				$oEmbededVideosLists = RelatedVideosEmbededData::newFromTitle( $ilArticle->getTitle() );
+				$oEmbededVideosLists->clearCache();
+			}
+		}
+
+		return true;
+	}
+
 }

@@ -122,4 +122,9 @@ class RelatedVideosEmbededData extends RelatedVideosNamespaceData {
 		// do nothing
 		return false;
 	}
+
+	public function clearCache() {
+		return F::app()->wg->Memc->delete( $this->mMemcacheKey );
+	}
+
 }
