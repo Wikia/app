@@ -169,6 +169,8 @@ class GameGuidesController extends WikiaController {
 		$title = Title::newFromText( $titleName );
 
 		if ( $title instanceof Title ) {
+			RequestContext::getMain()->setTitle( $title );
+
 			$revId = $title->getLatestRevID();
 
 			if ( $revId > 0 ) {
