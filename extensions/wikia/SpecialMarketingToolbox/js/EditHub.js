@@ -4,8 +4,8 @@ var vet_back,vet_close; //hack for VET, please remove this line after VET refact
 
 EditHub.prototype = {
 	form: undefined,
-	wmuDeffered: undefined,
 	vetReady: undefined,
+	wmuReady: undefined,
 	placeholderDimensions: 138,
 
 	init: function () {
@@ -38,27 +38,31 @@ EditHub.prototype = {
 			}
 		});
 
+		this.wmuReady = false;
 		this.vetReady = false;
 	},
 
 	wmuInit: function(event) {
 		event.preventDefault();
-		var $input = $(this).prev();
-		if (!this.wmuDeffered) {
-			this.wmuDeffered = mw.loader.use(
-				'ext.wikia.WMU'
+		if (!this.vetReady) {
+			var $input = $(this).prev();
+			$.when(
+				$.loadYUI(),
+				$.getResources([
+					wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
+					wgExtensionsPath + '/wikia/WikiaMiniUpload/css/WMU.css'
+				])
 			).then(function() {
 				WMU_skipDetails = true;
 				WMU_show();
 			});
-		} else if (this.wmuDeffered.state() === 'resolved') {
-			WMU_show();
-		} else {
-			return false;
+			$(window).bind('WMU_addFromSpecialPage', $.proxy(function(event, wmuData) {
+				this.addImage(wmuData);
+			}, this));
 		}
-		$(window).bind('WMU_addFromSpecialPage', $.proxy(function(event, wmuData) {
-			this.addImage(wmuData);
-		}, this));
+		else {
+			WMU_show();
+		}
 	},
 
 	vetInit: function(event) {

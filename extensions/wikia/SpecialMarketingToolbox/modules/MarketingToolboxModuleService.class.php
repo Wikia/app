@@ -50,7 +50,9 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	public function filterData($data) {
-		return array_intersect_key($data, $this->getFormFields());
+		$filteredData = array_intersect_key($data, $this->getFormFields());
+		$filteredData = array_filter($filteredData,function($value) {return !empty($value); });
+		return $filteredData;
 	}
 
 	protected function getView($viewName, $data) {

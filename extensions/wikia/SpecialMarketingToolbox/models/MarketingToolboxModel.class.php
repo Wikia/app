@@ -121,7 +121,7 @@ class MarketingToolboxModel extends WikiaModel {
 	/**
 	 * Get section name
 	 *
-	 * @param int $sectionId sectioId
+	 * @param int $sectionId sectionId
 	 *
 	 * @return string section name
 	 */
