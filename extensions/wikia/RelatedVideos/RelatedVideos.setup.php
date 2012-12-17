@@ -45,6 +45,8 @@ if ( empty( $wgRelatedVideosPartialRelease ) ){
 }
 $app->registerHook('ArticleSaveComplete', 'RelatedVideosHookHandler', 'onArticleSaveComplete');
 $app->registerHook( 'FileDeleteComplete', 'RelatedVideosHookHandler', 'onFileDeleteComplete' );
+$app->registerHook( 'FileUndeleteComplete', 'RelatedVideosHookHandler', 'onFileUndeleteComplete' );
+$app->registerHook( 'SpecialMovepageAfterMove', 'RelatedVideosHookHandler', 'onFileRenameComplete' );
 
 /**
  * messages

@@ -127,4 +127,21 @@ class RelatedVideosEmbededData extends RelatedVideosNamespaceData {
 		return F::app()->wg->Memc->delete( $this->mMemcacheKey );
 	}
 
+	public static function purgeEmbededArticles( $title ) {
+		if ( !empty( $title ) ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$result = $dbr->select(
+				'imagelinks',
+				'*',
+				array( 'il_to' => $title->getDBKey() ),
+				__METHOD__
+			);
+
+			while( $row = $dbr->fetchObject($result) ) {
+				$ilArticle = Article::newFromID( $row->il_from );
+				$embededVideosLists = self::newFromTitle( $ilArticle->getTitle() );
+				$embededVideosLists->clearCache();
+			}
+		}
+	}
 }

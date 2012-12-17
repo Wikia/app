@@ -124,20 +124,35 @@ class RelatedVideosHookHandler {
 	 * @return true
 	 */
 	public static function onFileDeleteComplete( &$file, $oldimage, $article, $user, $reason ) {
-		$title = $file->getTitle();
-		if ( !empty( $title ) ) {
-			$dbr = wfGetDB( DB_SLAVE );
-			$result = $dbr->select(
-				'imagelinks',
-				'*',
-				array( 'il_to' => $title->getDBKey() ),
-				__METHOD__
-			);
-			while( $row = $dbr->fetchObject($result) ) {
-				$ilArticle = Article::newFromID( $row->il_from );
-				$oEmbededVideosLists = RelatedVideosEmbededData::newFromTitle( $ilArticle->getTitle() );
-				$oEmbededVideosLists->clearCache();
-			}
+		RelatedVideosEmbededData::purgeEmbededArticles( $file->getTitle() );
+
+		return true;
+	}
+
+	/**
+	 * Hook: clear cache when file is restored
+	 * @param Title $title
+	 * @param $versions
+	 * @param User $user
+	 * @param $comment
+	 * @return true
+	 */
+	public static function onFileUndeleteComplete( $title, $versions, $user, $comment ) {
+		RelatedVideosEmbededData::purgeEmbededArticles( $title );
+
+		return true;
+	}
+
+	/**
+	 * Hook: clear cache when file is renamed
+	 * @param $form
+	 * @param Title $oldTitle
+	 * @param Title $newTitle
+	 * @return true
+	 */
+	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
+		if ( $oldTitle->getDBKey() != $newTitle->getDBKey() ) {
+			RelatedVideosEmbededData::purgeEmbededArticles( $oldTitle );
 		}
 
 		return true;
