@@ -82,6 +82,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['language'] =  empty($video['metadata']['lang']) ? '' : $video['metadata']['lang'];
 				$clipData['genres'] = empty($video['metadata']['genres']) ? '' : $video['metadata']['genres'];
 				$clipData['actors'] = empty($video['metadata']['actors']) ? '' : $video['metadata']['actors'];
+				$clipData['startDate'] = empty($video['metadata']['startdate']) ? '' : $video['metadata']['startdate'];
+				$clipData['expirationDate'] = empty($video['metadata']['expirationdate']) ? '' : $video['metadata']['expirationdate'];
 
 				$msg = '';
 				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug, 'provider' => $clipData['provider'] );
@@ -170,6 +172,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			'language' => $data['language'],
 			'genres' => $data['genres'],
 			'actors' => $data['actors'],
+			'startDate' => empty($data['startDate']) ? $data['startDate'] : strtotime($data['startDate']),
+			'expirationDate' => empty($data['expirationDate']) ? $data['expirationDate'] : strtotime($data['expirationDate']),
 		);
 
 		return $metadata;

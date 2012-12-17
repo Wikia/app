@@ -143,6 +143,12 @@ class OoyalaApiWrapper extends ApiWrapper {
 		if ( !isset($overrideFields['actors']) ) {
 			$overrideFields['actors'] = $this->getActors();
 		}
+		if ( !isset($overrideFields['startDate']) ) {
+			$overrideFields['startDate'] = $this->getVideoStartDate();
+		}
+		if ( !isset($overrideFields['expirationDate']) ) {
+			$overrideFields['expirationDate'] = $this->getVideoExpirationDate();
+		}
 
 		parent::loadMetadata( $overrideFields );
 	}
@@ -302,6 +308,30 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 		if ( !empty($this->interfaceObj['metadata']['actors']) ) {
 			return $this->interfaceObj['metadata']['actors'];
+		}
+
+		return '';
+	}
+
+	protected function getVideoStartDate() {
+		if ( !empty($this->metadata['startDate']) ) {
+			return $this->metadata['startDate'];
+		}
+
+		if ( !empty($this->interfaceObj['metadata']['startdate']) ) {
+			return strtotime( $this->interfaceObj['metadata']['startdate'] );
+		}
+
+		return '';
+	}
+
+	protected function getVideoExpirationDate() {
+		if ( !empty($this->metadata['expirationDate']) ) {
+			return $this->metadata['expirationDate'];
+		}
+
+		if ( !empty($this->interfaceObj['metadata']['expirationdate']) ) {
+			return strtotime( $this->interfaceObj['metadata']['expirationdate'] );
 		}
 
 		return '';
