@@ -1,4 +1,4 @@
-<?
+<?php
 abstract class MarketingToolboxModuleService extends WikiaService {
 	const CLASS_NAME_PREFIX = 'MarketingToolboxModule';
 	const CLASS_NAME_SUFFIX = 'Service';
@@ -29,22 +29,20 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 
 	public function validate($data) {
 		$out = array();
-
 		$fields = $this->getFormFields();
 
-		foreach( $fields as $fieldName => &$field ) {
-			$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
-			$field['formValue'] = $fieldData;
+		foreach ($fields as $fieldName => $field) {
+			if( !empty($field['validator']) ) {
+				$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
 
-			if( !($field['validator'] instanceof WikiaValidatorDepend) && !$field['validator']->isValid($fieldData) ) {
-				$out[$fieldName] = $field['validator']->getError()->getMsg();
-			}
-		}
+				if( $field['validator'] instanceof WikiaValidatorDependent ) {
+					$field['validator']->setFormData($data);
+					$field['validator']->setFormFields($fields);
+				}
 
-		foreach( $fields as $fieldName => $field ) {
-			$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
-			if( ($field['validator'] instanceof WikiaValidatorDepend) && !$field['validator']->isValid($fieldData, $fields) ) {
-				$out[$fieldName] = $field['validator']->getError()->getMsg();
+				if( !$field['validator']->isValid($fieldData) && (($validationError = $field['validator']->getError()) instanceof WikiaValidationError) ) {
+					$out[$fieldName] = $validationError->getMsg();
+				}
 			}
 		}
 
@@ -52,7 +50,9 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	public function filterData($data) {
-		return array_intersect_key($data, $this->getFormFields());
+		$filteredData = array_intersect_key($data, $this->getFormFields());
+		$filteredData = array_filter($filteredData,function($value) {return !empty($value); });
+		return $filteredData;
 	}
 
 	protected function getView($viewName, $data) {
@@ -69,7 +69,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 				'value' => isset($values[$fieldName]) ? $values[$fieldName] : '',
 				'errorMessage' => isset($errorMessages[$fieldName]) ? $errorMessages[$fieldName] : '',
 				'label' => isset($field['label']) ? $field['label'] : null,
-				'attributes' => isset($field['attributes'])  ? $this->prepareFieldAttributes($field['attributes']) : '',
+				'attributes' => isset($field['attributes']) ? $this->prepareFieldAttributes($field['attributes']) : '',
 				'type' => isset($field['type']) ? $field['type'] : 'text'
 			);
 		}
@@ -88,4 +88,5 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 }
+
 ?>

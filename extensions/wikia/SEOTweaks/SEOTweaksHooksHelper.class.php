@@ -16,14 +16,11 @@ class SEOTweaksHooksHelper extends WikiaModel {
 	 * @return bool true
 	 */
 	function onBeforePageDisplay( $out ) {
-		if ( !empty( F::app()->wg->SEOGoogleSiteVerification ) ) {
-			$out->addMeta( 'google-site-verification', F::app()->wg->SEOGoogleSiteVerification );
+		if ( !empty( $this->wg->SEOGoogleSiteVerification ) ) {
+			$out->addMeta( 'google-site-verification', $this->wg->SEOGoogleSiteVerification );
 		}
-		if ( !empty( F::app()->wg->SEOBingValidate ) ) {
-			$out->addMeta( 'msvalidate.01', F::app()->wg->SEOBingValidate );
-		}
-		if ( !empty( F::app()->wg->SEOGooglePlusLink ) ) {
-			$out->addLink( array( 'href' => F::app()->wg->SEOGooglePlusLink, 'rel' => 'publisher' ) );
+		if ( !empty( $this->wg->SEOGooglePlusLink ) ) {
+			$out->addLink( array( 'href' => $this->wg->SEOGooglePlusLink, 'rel' => 'publisher' ) );
 		}
 		return true;
 	}
@@ -38,7 +35,7 @@ class SEOTweaksHooksHelper extends WikiaModel {
 	 */
 	public function onArticleFromTitle( &$title, &$article ) {
 		if( !$title->exists() && $title->isDeleted() ) {
-			F::app()->wg->Out->setStatusCode( SEOTweaksHooksHelper::DELETED_PAGES_STATUS_CODE );
+			$this->wg->Out->setStatusCode( SEOTweaksHooksHelper::DELETED_PAGES_STATUS_CODE );
 		}
 		return true;
 	}
@@ -58,23 +55,43 @@ class SEOTweaksHooksHelper extends WikiaModel {
 
 		if ( !empty( $file ) && !empty( $title ) ) {
 
-			if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
+			if ( F::build( 'WikiaFileHelper' )->isFileTypeVideo( $file ) ) {
 
-				$newTitle = wfMsg('seotweaks-video') . ' - ' . $title->getBaseText();
+				$newTitle = $this->wf->Msg('seotweaks-video') . ' - ' . $title->getBaseText();
 			} else {
 
 				// It's not Video so lets check if it is Image
 				if ( $file instanceof LocalFile && $file->getHandler() instanceof BitmapHandler ) {
 
-					$newTitle = wfMsg('seotweaks-image') . ' - ' . $title->getBaseText();
+					$newTitle = $this->wf->Msg('seotweaks-image') . ' - ' . $title->getBaseText();
 				}
 			}
 
 			if ( !empty( $newTitle ) ) {
-				$this->wg->out->setPageTitle( $newTitle );
+				$this->wg->Out->setPageTitle( $newTitle );
 			}
 		}
 		return true;
+	}
+	
+	/**
+	 * Prepends alt text for an image if that image does not have that option set
+	 * @param  Parser $parser
+	 * @param  Title  $title
+	 * @param  Array  $options
+	 * @param  bool   $descQuery
+	 * @return bool
+	 */
+	public function onBeforeParserMakeImageLinkObjOptions( $parser, $title, &$parts, &$params, &$time, &$descQuery, $options ) {
+		$grepped = preg_grep( '/^alt=/', (array) $parts);
+		if ( $title->getNamespace() == NS_FILE && empty( $grepped ) ) {
+			$text = $title->getText();
+			$alt = implode( '.', array_slice( explode( '.', $text ), 0, -1 ) ); // lop off text after the ultimate dot (e.g. JPG)
+			$parts[] = "alt={$alt}";
+		}
+		
+		return true;
+		
 	}
 
 }

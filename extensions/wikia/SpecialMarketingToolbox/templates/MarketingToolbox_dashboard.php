@@ -1,4 +1,4 @@
-<?= F::app()->renderView(
+<?= $app->renderView(
 	'MarketingToolbox',
 	'Header'
 ) ?>

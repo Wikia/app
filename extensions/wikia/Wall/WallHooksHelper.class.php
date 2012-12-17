@@ -2049,4 +2049,9 @@ class WallHooksHelper {
 		$newtext = ArticleComment::removeMetadataTag($newtext);; */
 		return true;
 	}
+
+	public function onAdvancedBoxSearchableNamespaces(&$namespace) {
+		$namespace = WallHelper::clearNamespaceList($namespace);
+		return true;
+	}
 }

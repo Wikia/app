@@ -646,7 +646,37 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 	/**
 	 * @covers WikiaSearchIndexer::reindexBatch
 	 */
-	public function testReindexBatchWorks() {
+	public function testReindexBatch() {
+		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'getSolrDocument', 'updateDocuments' ) )
+								->getMock();
+		
+		$mockId = 1234;
+		$mockDocument = $this->getMock( 'Solarium_Document_ReadWrite' );
+		
+		$mockIndexer
+			->expects	( $this->at( 0 ) )
+			->method	( 'getSolrDocument' )
+			->with		( $mockId )
+			->will		( $this->returnValue( $mockDocument ) )
+		;
+		$mockIndexer
+			->expects	( $this->at( 1 ) )
+			->method	( 'updateDocuments' )
+			->with		( array( $mockDocument ) )
+			->will		( $this->returnValue( true ) )
+		;
+		$this->assertTrue(
+				$mockIndexer->reindexBatch( array( $mockId ) ),
+				'WikiaSearchIndexer::reindexBatch should always return true'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::updateDocuments
+	 */
+	public function testUpdateDocumentsWorks() {
 		$mockClient		=	$this->getMock( 'Solarium_Client', array( 'update', 'createUpdate' ) );
 		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
 								->setConstructorArgs( array( $mockClient ) )
@@ -661,12 +691,6 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->expects	( $this->at( 0 ) )
 			->method	( 'createUpdate' )
 			->will		( $this->returnValue( $mockHandler ) )
-		;
-		$mockIndexer
-			->expects	( $this->at( 0 ) )
-			->method	( 'getSolrDocument' )
-			->with		( 123 )
-			->will		( $this->returnValue( $mockDocument ) )
 		;
 		$mockHandler
 			->expects	( $this->at( 0 ) )
@@ -684,15 +708,15 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		;
 
 		$this->assertTrue(
-				$mockIndexer->reindexBatch( array( 123 ) ),
+				$mockIndexer->updateDocuments( array( $mockDocument ) ),
 				'WikiaSearchIndexer::reindexBatch should always return true'
 		);
 	}
 
 	/**
-	 * @covers WikiaSearchIndexer::reindexBatch
+	 * @covers WikiaSearchIndexer::updateDocuments
 	 */
-	public function testReindexBatchBreaks() {
+	public function testUpdateDocumentsBreaks() {
 		$mockClient		=	$this->getMock( 'Solarium_Client', array( 'update', 'createUpdate' ) );
 		$mockIndexer	=	$this->getMockBuilder( 'WikiaSearchIndexer' )
 								->setConstructorArgs( array( $mockClient ) )
@@ -711,12 +735,6 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->expects	( $this->at( 0 ) )
 			->method	( 'createUpdate' )
 			->will		( $this->returnValue( $mockHandler ) )
-		;
-		$mockIndexer
-			->expects	( $this->at( 0 ) )
-			->method	( 'getSolrDocument' )
-			->with		( 123 )
-			->will		( $this->returnValue( $mockDocument ) )
 		;
 		$mockHandler
 			->expects	( $this->at( 0 ) )
@@ -742,7 +760,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$this->mockApp();
 
 		$this->assertTrue(
-				$mockIndexer->reindexBatch( array( 123 ) ),
+				$mockIndexer->updateDocuments( array( $mockDocument ) ),
 				'WikiaSearchIndexer::reindexBatch should always return true'
 		);
 	}

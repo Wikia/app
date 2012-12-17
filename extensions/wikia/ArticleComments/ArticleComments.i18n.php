@@ -376,6 +376,21 @@ Wikia
 </p>', # Fuzzy
 );
 
+/** Catalan (català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'article-comments-history' => 'historial',
+	'article-comments-toc-item' => 'Comentaris',
+	'article-comments-reply' => 'Respon',
+	'article-comments-show-all' => 'Mostra tots els comentaris',
+	'article-comments-prev-page' => 'Anterior',
+	'article-comments-next-page' => 'Següent',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => "L'article / comentari arrel ha estat suprimit.",
+	'wikiamobile-article-comments-header' => 'comentaris <span class=cnt id=wkArtCnt>$1</span>',
+);
+
 /** Sorani Kurdish (کوردی)
  * @author Calak
  */
@@ -632,6 +647,7 @@ $messages['el'] = array(
 	'article-comments-next-page' => 'Επόμενο',
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-empty-comment' => "Δεν μπορείτε να δημοσιεύσετε ένα κενό σχόλιο. <a href='$1'>Αντ'αυτού να το διαγράψετε;</a>",
+	'wikiamobile-article-comments-header' => 'σχόλια <span class=cnt id=wkArtCnt>$1</span>',
 	'wikiamobile-article-comments-more' => 'Φορτώστε περισσότερα',
 	'wikiamobile-article-comments-prev' => 'Φορτώστε τα προηγούμενα',
 	'wikiamobile-article-comments-none' => 'Δεν υπάρχουν σχόλια',
@@ -641,14 +657,20 @@ $messages['el'] = array(
 	'wikiamobile-article-comments-post' => 'Δημοσιεύστε',
 	'wikiamobile-article-comments-placeholder' => 'Δημοσίευση σχολίου',
 	'wikiamobile-article-comments-show' => 'Παρουσίαση',
+	'wikiamobile-article-comments-login-post' => 'Παρακαλώ συνδεθείτε για να αναρτήσετε ένα σχόλιο.',
+	'enotif_subject_article_comment' => '$PAGEEDITOR έχει σχολιάσει στο "$PAGETITLE" στο {{SITENAME}}',
 );
 
 /** Esperanto (Esperanto)
+ * @author Objectivesea
  * @author Tradukisto
  */
 $messages['eo'] = array(
 	'article-comments-edit' => 'redakti',
+	'article-comments-history' => 'historio',
 	'article-comments-toc-item' => 'Komentoj',
+	'article-comments-vote' => 'Voĉdoni supren',
+	'wikiamobile-article-comments-none' => 'Neniuj komentoj',
 );
 
 /** Spanish (español)
@@ -1225,6 +1247,7 @@ $messages['inh'] = array(
  * @author Geitost
  * @author Leviathan 89
  * @author Minerva Titani
+ * @author Viscontino
  * @author Ximo17
  */
 $messages['it'] = array(
@@ -1275,7 +1298,7 @@ $PAGETITLE_URL
 
 Per favore continua a visitare e contribuire spesso...
 
-Wikia', # Fuzzy
+Wikia',
 	'enotif_body_article_comment-HTML' => '<p>Caro $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR ha commentato su "$PAGETITLE".
@@ -1289,7 +1312,7 @@ Wikia
 <ul>
 <li>Vuoi scegliere quali e-mail ricevere? <a href="{{fullurl:Special:Preferences}}">Aggiorna le tue preferenze<a>...</a> </a></li>
 </ul>
-</p>', # Fuzzy
+</p>',
 );
 
 /** Japanese (日本語)
@@ -1407,6 +1430,16 @@ $messages['ku-latn'] = array(
 	'article-comments-delete' => 'jê bibe',
 	'article-comments-edit' => 'biguherîne',
 	'article-comments-history' => 'dîrok',
+);
+
+/** Kirghiz (Кыргызча)
+ * @author Growingup
+ */
+$messages['ky'] = array(
+	'article-comments-delete' => 'өчүрүү',
+	'article-comments-edit' => 'оңдоо',
+	'article-comments-history' => 'тарых',
+	'article-comments-reply' => 'Жооп берүү',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1791,30 +1824,27 @@ $messages['nl'] = array(
 	'wikiamobile-article-comments-show' => 'Weergeven',
 	'wikiamobile-article-comments-login-post' => 'Meld u aan om te reageren.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE" op {{SITENAME}}',
-	'enotif_body_article_comment' => 'Beste $WATCHINGUSERNAME,
+	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
 
-$ PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE".
+Er is een nieuwe reactie bij $PAGETITLE op {{SITENAME}}. Gebruik de volgende verwijzing om alle reacties te bekijken: $PAGETITLE_URL#WikiaArticleComments
 
-U kunt de discussie bekijken via de volgende verwijzing:
-$PAGETITLE_URL
+- Wikia Community Support
 
-Kom alstublieft vaak langs en bewerk veelvuldig...
-
-Wikia', # Fuzzy
-	'enotif_body_article_comment-HTML' => '<p>Beste $WATCHINGUSERNAME,
+___________________________________________
+* Voor hulp en advies op Community Central gaat u naar http://community.wikia.com
+* Wilt u minder berichten van ons ontvangen? Schrijf u dan uit of wijzig uw e-mailvoorkeuren: http://community.wikia.com/wiki/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Hallo $WATCHINGUSERNAME,
 <br /><br />
-$ PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE".
+Er is een nieuwe reactie bij $PAGETITLE op {{SITENAME}}. Gebruik de volgende verwijzing om alle reacties te bekijken: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-U kunt de discussie bekijken via de volgende verwijzing: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+- Wikia Community Support
 <br /><br />
-Kom alstublieft vaak langs en bewerk veelvuldig...
-<br /><br />
-Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li>Wilt u bepalen welke e-mails u ontvangt? <a href="{{fullurl:{{ns:special}}:Preferences}}">Pas dan uw Voorkeuren aan<a>.</li>
+<li>Voor hulp en advies op Community Central gaat u naar <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Wilt u minder berichten van ons ontvangen? Schrijf u dan uit of wijzig uw e-mailvoorkeuren op <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
-</p>', # Fuzzy
+</p>',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)

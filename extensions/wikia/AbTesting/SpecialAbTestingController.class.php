@@ -341,14 +341,25 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 				$abData->saveGroup($grp);
 				$existingGroups[$normalizedName] = $grp['id'];
 			}
+
+			// Despite the key name, this can actually be a name not an ID
+			if (is_numeric($data['control_group_id'])) {
+				$control_group_id = $data['control_group_id'];
+			} else {
+				$control_group_name = $abTesting->normalizeName($data['control_group_id']);
+				$control_group_id = $existingGroups[$control_group_name];
+			}
+
 			// if ranges configuration has changed
 			if ( $versionChanged ) {
+
 				// find previous and current versions
 				$versions = array_slice($exp['versions'],-2);
 				if ( !$hasFutureVersion ) {
 					array_shift($versions);
 					array_push($versions,$abData->newVersion());
 				}
+
 				if ( count( $versions ) == 2 ) {
 					$previous = $versions[0];
 					$current = $versions[1];
@@ -369,12 +380,12 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 				// save the current version of experiment
 				$current = array_merge( $current, array(
 					'experiment_id' => $expId,
-					'control_group_id' => $data['control_group_id'],
+					'control_group_id' => $control_group_id,
 					'start_time' => $data['start_time'],
 					'end_time' => $data['end_time'],
 					'ga_slot' => $data['ga_slot'],
 				) );
-				$abData->saveVersion($current, true);
+				$abData->saveVersion($current);
 				$verId = $current['id'];
 				// save group ranges
 				foreach ($groups as $normalizedName => $info) {
@@ -446,8 +457,8 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$info['firstVersion'] = $exp['versions'][$firstId];
 			$lastId = max( array_keys( $exp['versions'] ) );
 			$info['lastVersion'] = $exp['versions'][$lastId];
-			$info['hasStarted'] = $info['firstVersion']['start_time'] < $nowPlusCache;
-			$info['hasFutureVersion'] = $info['lastVersion']['start_time'] < $nowPlusCache;
+			$info['hasStarted'] = strtotime($info['firstVersion']['start_time']) < $nowPlusCache;
+			$info['hasFutureVersion'] = strtotime($info['lastVersion']['start_time']) > $nowPlusCache;
 		}
 
 		return $info;

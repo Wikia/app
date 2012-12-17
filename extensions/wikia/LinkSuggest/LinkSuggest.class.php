@@ -36,7 +36,7 @@ class LinkSuggest {
 		wfProfileOut(__METHOD__);
 		return $out;
 	}
-	
+
 	/**
 	 * Get a list of suggested titles
 	 *
@@ -46,7 +46,7 @@ class LinkSuggest {
 	 * @author Inez Korczyński <inez@wikia-inc.com>
 	 * @author Robert Elwell <robert@wikia-inc.com>
 	 */
-	 
+
 	static function getLinkSuggest(WebRequest $request) {
 		global $wgContLang, $wgContentNamespaces, $wgMemc, $wgLinkSuggestLimit;
 		wfProfileIn(__METHOD__);
@@ -121,14 +121,15 @@ class LinkSuggest {
 		$namespaceFilter = $request->getVal('nsfilter');
 
 		if(strlen($namespaceFilter) > 0) {
-			$namespaces = array($namespaceFilter);	
+			$namespaces = array($namespaceFilter);
 		}
-	
+
 		if (!empty($namespace) && $namespace != $namespaceFilter) {
-			$out = self::getEmptyResponse($request->getText('format'));	
-			return linkSuggestAjaxResponse($out);	
+			$out = self::getEmptyResponse($request->getText('format'));
+
+			wfProfileOut(__METHOD__);
+			return $out;
 		}
-		
 
 		$query = addslashes($query);
 
@@ -261,15 +262,15 @@ class LinkSuggest {
 	}
 
 	/**
-	 * 
+	 *
 	 * helper function for return empty response
-	 * 
+	 *
 	 * @param String $format json or html(default)
-	 * 
+	 *
 	 * @return string
-	 * 
+	 *
 	 * @author Tomasz Odrobny <tomek@wikia-inc.com>
-	 * 
+	 *
 	 */
 
 	static function getEmptyResponse($format) {
@@ -287,7 +288,7 @@ class LinkSuggest {
 	 *
 	 * @author dymsza
 	 */
-	 
+
 	static private function formatResults($db, $res, $query, &$redirects, &$results, &$exactMatchRow) {
 		global $wgLinkSuggestLimit;
 		while(($row = $db->fetchObject($res)) && count($results) < $wgLinkSuggestLimit ) {

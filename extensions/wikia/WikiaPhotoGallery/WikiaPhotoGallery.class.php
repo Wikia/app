@@ -903,6 +903,7 @@ class WikiaPhotoGallery extends ImageGallery {
 						'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
 						'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
 						'class' => 'thumbimage',
+						'alt' => preg_replace( '/\.[^\.]+$/', '', $image['linkTitle'] ),
 						//'width' => isset($thumbParams) ? $thumbParams['width'] : $image['width'], // TODO: reinstate this with some WPG refactoring (BugId:38660)
 						//'height' => isset($thumbParams) ? $thumbParams['height'] : $image['height'],
 					);

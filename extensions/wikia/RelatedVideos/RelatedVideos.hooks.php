@@ -113,4 +113,49 @@ class RelatedVideosHookHandler {
 		$app->wf->ProfileOut(__METHOD__);
 		return true;
 	}
+
+	/**
+	 * Hook: clear cache when file is deleted
+	 * @param LocalFile $file
+	 * @param $oldimage
+	 * @param $article
+	 * @param User $user
+	 * @param $reason
+	 * @return true
+	 */
+	public static function onFileDeleteComplete( &$file, $oldimage, $article, $user, $reason ) {
+		RelatedVideosEmbededData::purgeEmbededArticles( $file->getTitle() );
+
+		return true;
+	}
+
+	/**
+	 * Hook: clear cache when file is restored
+	 * @param Title $title
+	 * @param $versions
+	 * @param User $user
+	 * @param $comment
+	 * @return true
+	 */
+	public static function onFileUndeleteComplete( $title, $versions, $user, $comment ) {
+		RelatedVideosEmbededData::purgeEmbededArticles( $title );
+
+		return true;
+	}
+
+	/**
+	 * Hook: clear cache when file is renamed
+	 * @param $form
+	 * @param Title $oldTitle
+	 * @param Title $newTitle
+	 * @return true
+	 */
+	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
+		if ( $oldTitle->getDBKey() != $newTitle->getDBKey() ) {
+			RelatedVideosEmbededData::purgeEmbededArticles( $oldTitle );
+		}
+
+		return true;
+	}
+
 }

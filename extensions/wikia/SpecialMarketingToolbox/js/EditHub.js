@@ -4,7 +4,9 @@ var vet_back,vet_close; //hack for VET, please remove this line after VET refact
 
 EditHub.prototype = {
 	form: undefined,
-	wmuDeffered: undefined,
+	vetReady: undefined,
+	wmuReady: undefined,
+	placeholderDimensions: 138,
 
 	init: function () {
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
@@ -13,7 +15,7 @@ EditHub.prototype = {
 		this.form = $('#marketing-toolbox-form');
 
 		$('#marketing-toolbox-clearall').click($.proxy(function(){
-			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation')) == true) {
+			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation',this.form.data('module-name'))) == true) {
 				this.formReset();
 			}
 		}, this));
@@ -35,42 +37,54 @@ EditHub.prototype = {
 				return !this.checkable(element) && (element.name in this.submitted || !this.optional(element) || element === this.lastActive);
 			}
 		});
+
+		this.wmuReady = false;
+		this.vetReady = false;
 	},
 
 	wmuInit: function(event) {
 		event.preventDefault();
-		var $input = $(this).prev();
-		if (!this.wmuDeffered) {
-			this.wmuDeffered = mw.loader.use(
-				'ext.wikia.WMU'
+		if (!this.vetReady) {
+			var $input = $(this).prev();
+			$.when(
+				$.loadYUI(),
+				$.getResources([
+					wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
+					wgExtensionsPath + '/wikia/WikiaMiniUpload/css/WMU.css'
+				])
 			).then(function() {
-					WMU_skipDetails = true;
-					WMU_show();
-				});
-		} else if (this.wmuDeffered.state() === 'resolved') {
-			WMU_show();
-		} else {
-			return false;
+				WMU_skipDetails = true;
+				WMU_show();
+			});
+			$(window).bind('WMU_addFromSpecialPage', $.proxy(function(event, wmuData) {
+				this.addImage(wmuData);
+			}, this));
 		}
-		$(window).bind('WMU_addFromSpecialPage', $.proxy(function(event, wmuData) {
-			this.addImage(wmuData);
-		}, this));
+		else {
+			WMU_show();
+		}
 	},
 
 	vetInit: function(event) {
-		$.when(
-			$.loadYUI(),
-			$.loadMustache(),
-			$.getResources([
-				wgExtensionsPath + '/wikia/WikiaStyleGuide/js/Dropdown.js',
-				wgExtensionsPath + '/wikia/VideoEmbedTool/js/VET.js',
-				$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
-				$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
-			])
-		).then(function() {
+		if (!this.vetReady) {
+			$.when(
+				$.loadYUI(),
+				$.loadMustache(),
+				$.getResources([
+					wgExtensionsPath + '/wikia/WikiaStyleGuide/js/Dropdown.js',
+					wgExtensionsPath + '/wikia/VideoEmbedTool/js/VET.js',
+					$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
+					$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
+				])
+			).then(function() {
+				VET_show();
+			});
+			$(window).bind('VET_addFromSpecialPage', $.proxy(this.addVideo, this));
+			this.vetReady = true;
+		}
+		else {
 			VET_show();
-		});
-		$(window).bind('VET_addFromSpecialPage', $.proxy(this.addVideo, this));
+		}
 	},
 
 	addImage: function(wmuData) {
@@ -81,11 +95,13 @@ EditHub.prototype = {
 			data: {
 				'fileHandler': wmuData.imageTitle
 			},
-			callback: function(response) {
+			callback: $.proxy(function(response) {
 				var tempImg = new Image();
 				tempImg.src = response.fileUrl;
-				$('.MarketingToolboxMain').append(tempImg);
-			}
+				tempImg.height = this.placeholderDimensions;
+				tempImg.width = this.placeholderDimensions;
+				$('.MarketingToolboxMain .placeholder').append(tempImg);
+			}, this)
 		});
 	},
 

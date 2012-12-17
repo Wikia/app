@@ -22,7 +22,6 @@
 @import '../../WikiaMobile/css/modal';
 @import '../../WikiaMobile/css/media_modal';
 @import "../../WikiaMobile/css/mediagallery";
-@import '../../WikiaMobile/css/image_placeholder';
 @import '../../WikiaMobile/css/loader';
 
 $mainGreen: rgb(171,197,97);
@@ -126,6 +125,15 @@ a {
 		pointer-events: auto;
 
 		border-bottom: 1px dotted $linkColor;
+
+		* {
+			//slow
+			//but still faster than looking for it in JS
+			//see GameGuides.js and listener on html
+			//I expect there tag a and if something is inside
+			//it passes the Ponto and go to link directly
+			pointer-events: none;
+		}
 	}
 
 	.link &, .thumb & {
@@ -254,9 +262,9 @@ table {
 figure {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 
-	img {
-		border: 1px solid rgb(42, 42, 42);
-	}
+	//img {
+	//	border: 1px solid rgb(42, 42, 42);
+	//}
 
 	.thumbcaption {
 		position: relative;
@@ -266,4 +274,18 @@ figure {
 		white-space: normal;
 		color: rgb(187, 187, 187);
 	}
+}
+
+.imgPlcHld, wkSlider img, .lazy {
+	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_light.png'); /* base64 */
+	background-repeat: no-repeat;
+	background-position: center;
+
+	background-color: rgba(255, 255, 255, .02);
+}
+
+.galPlc.img, .galPlcHld {
+	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_dark.png'); /* base64 */
+	background-repeat: no-repeat;
+	background-position: center;
 }

@@ -66,6 +66,8 @@ class WikisApiController extends WikiaApiController {
 	 * @requestParam string $lang [OPTIONAL] The language code (e.g. en, de, fr, es, it, etc.) to use as a filter
 	 * @requestParam integer $limit [OPTIONAL] The number of items per each batch/page, defaults to 25
 	 * @requestParam integer $batch [OPTIONAL] The batch/page index to retrieve, defaults to 1
+	 * @requestParam bool $includeDomain [OPTIONAL] Wheter to include wikis' domains as search targets or not,
+	 * defaults to false
 	 *
 	 * @responseParam array $items The list of wikis matching the keyword and the optional filtering
 	 * @responseParam integer $total The total number of results
@@ -83,12 +85,13 @@ class WikisApiController extends WikiaApiController {
 		$lang = trim( $this->getVal( 'lang', null ) );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getInt( 'batch', 1 );
+		$includeDomain = $this->request->getBool( 'includeDomain', false );
 
 		if ( empty( $keyword ) ) {
 			throw new MissingParameterApiException( self::PARAMETER_KEYWORD );
 		}
 
-		$results = self::$model->getByString($keyword, $lang, $hub );
+		$results = self::$model->getByString($keyword, $lang, $hub, $includeDomain );
 		$batches = $this->wf->PaginateArray( $results, $limit, $batch );
 
 		foreach ( $batches as $name => $value ) {

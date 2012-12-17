@@ -222,6 +222,7 @@ $messages['nl'] = array(
 	'sharedhelp-desc' => "Haalt pagina's op van [[w:c:Help|Wikia-help]] en voegt ze toe aan de naamruimte {{ns:help}} in deze wiki",
 	'sharedhelp-autotalkcreate-summary' => 'Overlegpagina automatisch aangemaakt',
 	'sharedhelp-searchprofile' => "Hulppagina's",
+	'sharedhelp-searchprofile-tooltip' => "Hulppagina's zoeken",
 );
 
 /** Polish (polski)

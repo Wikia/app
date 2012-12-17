@@ -168,7 +168,7 @@ class AbTestingData extends WikiaObject {
 		return $row;
 	}
 
-	protected function saveRow( $table, &$row, $fname, $no_checks=false ) {
+	protected function saveRow( $table, &$row, $fname ) {
 		$dbw = $this->getDb(DB_MASTER);
 		$copy = $this->filterRow($table,$row);
 		if ( !empty($row['id']) ) {
@@ -178,19 +178,9 @@ class AbTestingData extends WikiaObject {
 			unset($copy['id']);
 			$dbw->update($table,$copy,$where,$fname);
 		} else {
-			// If this is set, relax foriegn key checks so that we can insert
-			// circular references
-			if ($no_checks) {
-				$dbw->query("SET foreign_key_checks = 0");
-			}
-
 			unset($row['id']);
 			$dbw->insert($table,$copy,$fname);
 			$row['id'] = $dbw->insertId();
-
-			if ($no_checks) {
-				$dbw->query("SET foreign_key_checks = 1");
-			}
 		}
 	}
 
@@ -237,8 +227,8 @@ class AbTestingData extends WikiaObject {
 		$this->deleteRow(self::TABLE_GROUPS,$grp,__METHOD__);
 	}
 
-	public function saveVersion( &$ver, $no_checks = false ) {
-		$this->saveRow(self::TABLE_VERSIONS,$ver,__METHOD__, $no_checks);
+	public function saveVersion( &$ver) {
+		$this->saveRow(self::TABLE_VERSIONS,$ver,__METHOD__);
 	}
 
 	public function deleteVersion( &$ver ) {

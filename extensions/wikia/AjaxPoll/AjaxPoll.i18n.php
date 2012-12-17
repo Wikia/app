@@ -183,10 +183,18 @@ $messages['diq'] = array(
 $messages['el'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;όλων των ψήφων',
 	'ajaxpoll-thankyou' => 'Ευχαριστούμε για την ψήφο σας!',
+	'ajaxpoll-error' => 'Παρουσιάστηκε πρόβλημα κατά την επεξεργασία της ψήφου σας, παρακαλώ ξαναπροσπαθήστε.',
 	'ajaxpoll-summary' => 'Η ψηφοφορία δημιουργήθηκε στις $1, $2 και μέχρι στιγμής $3 άτομα έχουν ψηφίσει.',
 	'ajaxpoll-submit' => 'Ψηφίστε!',
 	'ajaxpoll-closed' => 'Η ψηφοφορία έχει κλείσει τώρα. Απολαύστε τα αποτελέσματα.',
 	'ajaxpoll-submitting' => 'Παρακαλώ περιμένετε, υποβάλλοντας την ψήφο σας...',
+);
+
+/** Esperanto (Esperanto)
+ * @author Objectivesea
+ */
+$messages['eo'] = array(
+	'ajaxpoll-thankyou' => 'Dankon pro via voĉdono!',
 );
 
 /** Spanish (español)

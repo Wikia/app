@@ -217,6 +217,7 @@ class GameGuidesModel{
 				$resultSet = $wikiaSearch->doSearch( $wikiaSearchConfig );
 
 				$ret['textResults'] = array();
+				$count = 0;
 
 				if ( $resultSet->hasResults() ) {
 					$textResults = array();
@@ -229,11 +230,13 @@ class GameGuidesModel{
 								'textForm' => $result->getTitle(),
 								'urlForm' => $title->getLocalUrl( array( 'useskin' => 'wikiaapp') )
 							);
+
+							$count++;
 						}
 					}
 
 					$ret['textResults'] = $textResults;
-					$ret['count'] = $resultSet->getResultsNum();
+					$ret['count'] = $count;
 				}
 			}
 

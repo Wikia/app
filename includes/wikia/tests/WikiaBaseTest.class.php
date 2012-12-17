@@ -13,11 +13,11 @@
  * Complications: Most extensions have a setup file.  If this setup file is NOT globally included, you will have to
  * include it yourself in the constructor for your unit test.  PHPUnit interacts weirdly with autoloader.
  *
- * function __construct() {
- *    $this->setupFile = dirname(__FILE__) . '/../MyExtension_setup.php';
+ * function setUp() {
+ *    $this->setupFile = __DIR__ . '/../MyExtension_setup.php';
+ *    parent::setUp();
  * }
  */
-
 class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected $setupFile = null;
@@ -28,7 +28,16 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	private $appMock = null;
 	private $mockedClasses = array();
 
+	private static $lastTestClass = '';
+
 	protected function setUp() {
+		$testClass = get_class($this);
+
+		if (self::$lastTestClass !== $testClass) {
+			echo "\nRunning '{$testClass}'...";
+			self::$lastTestClass = $testClass;
+		}
+
 		$this->app = F::app();
 		$this->appOrig = F::app();
 		$this->appMock = new WikiaAppMock( $this );
