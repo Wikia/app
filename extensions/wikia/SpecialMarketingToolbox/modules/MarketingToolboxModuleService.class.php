@@ -1,4 +1,4 @@
-<?
+<?php
 abstract class MarketingToolboxModuleService extends WikiaService {
 	const CLASS_NAME_PREFIX = 'MarketingToolboxModule';
 	const CLASS_NAME_SUFFIX = 'Service';
@@ -35,7 +35,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 			if( !empty($field['validator']) ) {
 				$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
 
-				if( $field['validator'] instanceof WikiaValidatorDepend ) {
+				if( $field['validator'] instanceof WikiaValidatorDependent ) {
 					$field['validator']->setFormData($data);
 					$field['validator']->setFormFields($fields);
 				}
