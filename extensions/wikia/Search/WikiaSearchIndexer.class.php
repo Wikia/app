@@ -15,12 +15,6 @@ class WikiaSearchIndexer extends WikiaObject {
 	const WIKIPAGES_CACHE_TTL	= 604800;
 	
 	/**
-	 * Used to determine whether we have registered the onParserClearState hook
-	 * @var boolean
-	 */
-	protected $parserHookActive	= false;
-	
-	/**
 	 * Used for querying Solr
 	 * @var Solarium_Client
 	 */
@@ -83,19 +77,6 @@ class WikiaSearchIndexer extends WikiaObject {
 		if( $page === null ) {
 			throw new WikiaException( 'Invalid Article ID' );
 		}
-	
-		if(! $this->parserHookActive ) {
-			$this->app->registerHook('ParserClearState', 'WikiaSearchIndexer', 'onParserClearState');
-			$this->parserHookActive = true;
-		}
-	
-		// hack: setting wgTitle as rendering fails otherwise
-		$wgTitle 			= $this->wg->Title;
-		$this->wg->Title	= $page->getTitle();
-
-		// hack: setting action=render to exclude "Related Pages" and other unwanted stuff
-		$wgRequest = $this->wg->Request;
-		$this->wg->Request->setVal('action', 'parse');
 
 		if( $page->isRedirect() ) {
 			$page = F::build( 'Article', array( $page->getRedirectTarget() ) );
@@ -198,6 +179,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['lang']			= $this->wg->ContLang->mCode;
 		$result['categories']	= $categories;
 		$result['page_images']	= count( $response['parse']['images'] );
+		var_dump($response['parse']['sections']); die;
 	
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
 		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
@@ -211,11 +193,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		}
 		
 		$result = array_merge($result, $this->getPageMetaData($page));
-	
-		// restore global state
-		$this->wg->Title	= $wgTitle;
-		$this->wg->Request	= $wgRequest;
-	
+		
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
@@ -524,18 +502,6 @@ class WikiaSearchIndexer extends WikiaObject {
 	/**
 	 * MediaWiki Hooks
 	 */
-
-	/**
-	 * ParserClearState hook handler, called internally.
-	 * @static
-	 * @param $parser Parser
-	 * @return bool
-	 */
-	public static function onParserClearState( &$parser ) {
-	    // prevent from caching when indexer is running to avoid infrastructure overload
-	    $parser->getOutput()->setCacheTime(-1);
-	    return true;
-	}
 	
 	/**
 	 * Sends delete request to article if it gets deleted
