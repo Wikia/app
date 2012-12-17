@@ -44,6 +44,8 @@ class GameGuidesController extends WikiaController {
 	 */
 	public function listWikis(){
 		$this->wf->profileIn( __METHOD__ );
+
+		$this->response->setFormat( 'json' );
 		
 		$limit = $this->request->getInt( 'limit', null );
 		$batch = $this->request->getInt( 'batch', 1 );
@@ -66,6 +68,8 @@ class GameGuidesController extends WikiaController {
 
 	public function listWikiContents(){
 		$this->wf->profileIn( __METHOD__ );
+
+		$this->response->setFormat( 'json' );
 		
 		$result = $this->mModel->getWikiContents();
 		
@@ -88,9 +92,12 @@ class GameGuidesController extends WikiaController {
 	 */
 	public function listCategoryContents(){
 		$this->wf->profileIn( __METHOD__ );
+
+		$this->response->setFormat( 'json' );
 		
 		$category = $this->getVal('category');
-		
+
+
 		$limit = $this->request->getInt( 'limit', null );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$result = $this->mModel->getCategoryContents( $category, $limit, $batch );
@@ -114,6 +121,8 @@ class GameGuidesController extends WikiaController {
 	 */
 	public function search(){
 		$this->wf->profileIn( __METHOD__ );
+
+		$this->response->setFormat( 'json' );
 		
 		$term = $this->request->getVal( 'term' );
 		$limit = $this->request->getInt( 'limit', GameGuidesModel::SEARCH_RESULTS_LIMIT );
