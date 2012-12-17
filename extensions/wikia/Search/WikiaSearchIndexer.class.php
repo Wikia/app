@@ -445,17 +445,22 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$dbr = $this->wf->GetDB(DB_SLAVE);
 	
-		$result = $dbr->selectRow(
+		$result = array();
+		$query = $dbr->select(
 				array( 'redirect', 'page' ),
-				array( 'GROUP_CONCAT(page_title SEPARATOR " | ") AS redirect_titles' ),
+				array( 'page_title' ),
 				array(),
 				__METHOD__,
 				array( 'GROUP'=>'rd_title' ),
 				array( 'page' => array( 'INNER JOIN', array('rd_title'=>$page->getTitle()->getDbKey(), 'page_id = rd_from' ) ) )
-		);
-	
+				);
+		
+		while ( $row = $dbr->fetchObject( $query ) ) {
+			$result[] = str_replace( '_', '_', $row->page_title );
+		}
+		
 		wfProfileOut(__METHOD__);
-		return ( !empty( $result ) ) ? str_replace( '_', ' ', $result->redirect_titles ) : '';
+		return $result;
 	}
 	
 	/**
