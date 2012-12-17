@@ -262,9 +262,9 @@ table {
 figure {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 
-	img {
-		border: 1px solid rgb(42, 42, 42);
-	}
+	//img {
+	//	border: 1px solid rgb(42, 42, 42);
+	//}
 
 	.thumbcaption {
 		position: relative;
@@ -281,7 +281,7 @@ figure {
 	background-repeat: no-repeat;
 	background-position: center;
 
-	background-color: #2b2b2b;
+	background-color: transparent;
 }
 
 .galPlc.img, .galPlcHld {
