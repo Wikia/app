@@ -34,10 +34,13 @@ var MediaPlaceholder = {
 			if($this.prop('onclick')) {
 				return;
 			}
+			
+			// Provide immediate feedback once button is clicked
+			var oText = $this.text();
+			$this.startThrobbing();
 
 			if($this.parent().parent().hasClass('wikiaVideoPlaceholder')) {
 				// handle video placeholder
-
 				if(self.disabled) {
 					GlobalNotification.show( $.msg('imgplc-notinhistory-video'), 'warn' );
 					return;
@@ -55,6 +58,7 @@ var MediaPlaceholder = {
 						window.wgExtensionsPath + "/wikia/WikiaStyleGuide/js/Dropdown.js"
 					])
 				).done(function() {
+					$this.text(oText);
 					VET_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption); 
 				});
 			} else {
@@ -74,6 +78,7 @@ var MediaPlaceholder = {
 						window.wgExtensionsPath + "/wikia/WikiaMiniUpload/css/WMU.css"
 					])
 				).done(function() {
+					$this.text(oText);
 					WMU_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption, props.link);
 				});
 			}
