@@ -34,14 +34,16 @@ var SlotTweaker = function(log, document, window) {
 		;
 
 		if (isLeaderboard && !isStandardSize) {
-			log('#' + slotname + ' height: ' + slot.offsetHeight + ' not standard, removing TOP_BUTTON', 3, logGroup);
+			log('#' + slotname + ' height: ' + slot.offsetHeight + ' not standard, removing TOP_BUTTON(_WIDE)', 3, logGroup);
 			hide('TOP_BUTTON');
+			hide('TOP_BUTTON_WIDE');
 			removeClass(topAds, 'WikiaTopButtonLeft');
 			removeClass(topAds, 'WikiaTopButtonRight');
 		}
 		if (isLeaderboard && isStandardSize) {
-			log('#' + slotname + ' height: ' + slot.offsetHeight + ' is standard, pushing TOP_BUTTON.force to Liftium2 queue', 2, logGroup);
+			log('#' + slotname + ' height: ' + slot.offsetHeight + ' is standard, pushing TOP_BUTTON(_WIDE).force to Liftium2 queue', 2, logGroup);
 			window.adslots2.push(['TOP_BUTTON.force', null, 'Liftium2']);
+			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
 		}
 	};
 
