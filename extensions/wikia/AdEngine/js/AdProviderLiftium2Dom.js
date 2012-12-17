@@ -27,6 +27,7 @@ var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, 
 
 		// TOP_BUTTON after TOP_LEADERBOARD hack:
 		'TOP_BUTTON.force':'hack',
+		'TOP_BUTTON_WIDE.force':'hack',
 
 		'TOP_LEADERBOARD':{'size':'728x90'},
 		'TOP_RIGHT_BOXAD':{'size':'300x250'},
@@ -54,17 +55,18 @@ var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, 
 		log(slot, 5, logGroup);
 
 		// TOP_BUTTON after TOP_LEADERBOARD hack:
-		if (slot[0] === 'TOP_BUTTON') {
-			log('Tried TOP_BUTTON. Disabled (waiting for leaderboard ads)', 2, logGroup);
+		if (slot[0] === 'TOP_BUTTON' || slot[0] === 'TOP_BUTTON_WIDE') {
+			log('Tried TOP_BUTTON(_WIDE). Disabled (waiting for leaderboard ads)', 2, logGroup);
 			return;
 		}
-		if (slot[0] === 'TOP_BUTTON.force') {
-			log('Forced TOP_BUTTON call (this means leaderboard is ready and standard)', 2, logGroup);
-			slot[0] = 'TOP_BUTTON';
+		if (slot[0] === 'TOP_BUTTON.force' || slot[0] === 'TOP_BUTTON_WIDE.force') {
+			log('Forced TOP_BUTTON(_WIDE) call (this means leaderboard is ready and standard)', 2, logGroup);
+			slot[0] = slot[0].replace('.force', '');
 		}
 		if (slot[0].indexOf('LEADERBOARD') !== -1) {
-			log('LEADERBOARD-ish slot handled by Liftium. Running the forced TOP_BUTTON now', 2, logGroup);
+			log('LEADERBOARD-ish slot handled by Liftium. Running the forced TOP_BUTTON(_WIDE) now', 2, logGroup);
 			fillInSlot(['TOP_BUTTON.force']);
+			fillInSlot(['TOP_BUTTON_WIDE.force']);
 		}
 		// END of hack
 		if (!document.getElementById(slot[0])) {
