@@ -46,7 +46,7 @@ class WikiaValidatorDependent extends WikiaValidator {
 		return true;
 	}
 
-	public function isValid($value) {
+	public function isValid($value = null) {
 	//skip here validation of $value because it should be validated only after the dependentField is valid
 		$this->error = null;
 		return $this->isValidInternal($value);
