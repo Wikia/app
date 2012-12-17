@@ -6,6 +6,7 @@ EditHub.prototype = {
 	form: undefined,
 	wmuDeffered: undefined,
 	vetReady: undefined,
+	placeholderDimensions: 138,
 
 	init: function () {
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
@@ -90,11 +91,13 @@ EditHub.prototype = {
 			data: {
 				'fileHandler': wmuData.imageTitle
 			},
-			callback: function(response) {
+			callback: $.proxy(function(response) {
 				var tempImg = new Image();
 				tempImg.src = response.fileUrl;
-				$('.MarketingToolboxMain').append(tempImg);
-			}
+				tempImg.height = this.placeholderDimensions;
+				tempImg.width = this.placeholderDimensions;
+				$('.MarketingToolboxMain .placeholder').append(tempImg);
+			}, this)
 		});
 	},
 
