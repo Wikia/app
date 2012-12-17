@@ -158,6 +158,7 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author CuBaN VeRcEttI
+ * @author Solde
  */
 $messages['ca'] = array(
 	'quickstats-header-label' => 'Estadístiques ràpides',
@@ -169,6 +170,9 @@ $messages['ca'] = array(
 	'quickstats-totals-label' => 'Totals',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Veure més estadístiques]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '
+$1B',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -258,14 +262,25 @@ $messages['el'] = array(
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Δείτε περισσότερα στατιστικά]]',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1δις',
 );
 
 /** Esperanto (Esperanto)
+ * @author Objectivesea
  * @author Tradukisto
  */
 $messages['eo'] = array(
+	'quickstats-header-label' => 'Baldaŭa statistiko',
 	'quickstats-header-date' => 'Dato',
+	'quickstats-header-views' => 'Vidoj',
 	'quickstats-header-edits' => 'Redaktoj',
+	'quickstats-header-photos' => 'Fotoj',
+	'quickstats-header-likes' => 'Ŝatoj',
+	'quickstats-totals-label' => 'Sumoj',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Vidu pli da statistiko]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1 Mrd',
 );
 
 /** Spanish (español)
@@ -502,6 +517,15 @@ $messages['ku-latn'] = array(
 	'quickstats-header-date' => 'Dîrok',
 	'quickstats-header-photos' => 'Wêne',
 	'quickstats-totals-label' => 'Hemû',
+);
+
+/** Kirghiz (Кыргызча)
+ * @author Growingup
+ */
+$messages['ky'] = array(
+	'quickstats-header-date' => 'Дата',
+	'quickstats-header-edits' => 'Оңдоолор',
+	'quickstats-header-photos' => 'Фото',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

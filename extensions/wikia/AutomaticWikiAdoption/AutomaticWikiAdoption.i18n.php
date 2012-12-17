@@ -316,6 +316,9 @@ $messages['diq'] = array(
  * @author Glavkos
  */
 $messages['el'] = array(
+	'wikiadoption-header' => 'Υιοθετήστε αυτό το wiki',
+	'wikiadoption-button-adopt' => 'Ναι, θέλω να υιοθετήσω {{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => 'Μάθετε περισσότερα!',
 	'wikiadoption-welcome-header' => 'Συγχαρητήρια! Έχετε πάρει το {{SITENAME}}!',
 );
 

@@ -4,7 +4,6 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 		return array(
 			'boardUrl' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-wikiurl'),
-				'isRequired' => false,
 				'validator' => new WikiaValidatorUrl(),
 				'attributes' => array(
 					'class' => 'wikiaUrl'
@@ -73,7 +72,6 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 				),
 				'attributes' => array(
 					'class' => 'required'
-					//'{required: \'#MarketingToolboxstat1:filled\'}'
 				)
 			),
 			'number2' => array(

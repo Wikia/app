@@ -45,7 +45,7 @@ class SiteWideMessagesMaintenance {
 		global $wgExternalSharedDB;
 		$dbr = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
-		$dbResult = (boolean) $dbr->Query (
+		$dbResult = (boolean) $dbr->query(
 			  'DELETE'
 			. ' FROM ' . MSG_STATUS_DB
 			. ' WHERE msg_id IN ('
@@ -57,6 +57,12 @@ class SiteWideMessagesMaintenance {
 			. ' );'
 			, __METHOD__
 		);
+
+		if ( $dbResult ) {
+			echo "Rows affected: {$dbr->affectedRows()}\n";
+		} else {
+			echo "Query failed.\n";
+		}
 
 		wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || result=" . ($dbResult ? 'true':'false') . "\n");
 	}

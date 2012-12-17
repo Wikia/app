@@ -1,10 +1,9 @@
 <?
-class MarketingToolboxModuleTop10listsService extends MarketingToolboxModuleService {
+class MarketingToolboxModuleTop10listService extends MarketingToolboxModuleService {
 	protected function getFormFields() {
 		return array(
 			'boardTitle' => array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-top10lists-title'),
-				'isRequired' => true,
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-top10list-title'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -17,8 +16,7 @@ class MarketingToolboxModuleTop10listsService extends MarketingToolboxModuleServ
 				)
 			),
 			'boardDescription' => array(
-				'label' => $this->wf->msg('marketing-toolbox-hub-module-top10lists-desc'),
-				'isRequired' => false,
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-top10list-desc'),
 				'validator' => new WikiaValidatorString(),
 				'type' => 'textarea',
 				'attributes' => array(
@@ -29,7 +27,7 @@ class MarketingToolboxModuleTop10listsService extends MarketingToolboxModuleServ
 	}
 
 	public function renderEditor($data) {
-		$model = new MarketingToolboxTop10listsModel();
+		$model = new MarketingToolboxTop10listModel();
 		$data['list'] = $model->getWikiListByCategoryId($this->langCode, $this->verticalId);
 
 		return parent::renderEditor($data);

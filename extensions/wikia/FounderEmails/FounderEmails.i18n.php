@@ -1723,6 +1723,7 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Crt
  * @author Kalakuh
  * @author Nedergard
  * @author Nike
@@ -1753,7 +1754,7 @@ Wikia-ryhmä',
 	'founderemails-email-page-edited-reg-user-subject' => 'Uusi $WIKINAME -muokkaus!',
 	'founderemails-email-page-edited-reg-user-body' => 'Hei $USERNAME,
 
-$EDITORNAME muokkasi juuri $WIKINAME-wikin sivua $PAGETITLE.
+$EDITORNAME muokkasi juuri wikin $WIKINAME sivua $PAGETITLE.
 
 Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.
 
@@ -1761,7 +1762,7 @@ $PAGEURL
 
 Wikia-ryhmä',
 	'founderemails-email-general-edit-greeting' => 'Hei $USERNAME,',
-	'founderemails-email-general-edit-headline' => '$EDITORNAME muokkasi juuri $WIKINAME-wikin sivua $PAGETITLE.',
+	'founderemails-email-general-edit-headline' => '$EDITORNAME muokkasi juuri wikin $WIKINAME sivua $PAGETITLE.',
 	'founderemails-email-general-edit-content' => 'Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.',
 	'founderemails-email-general-edit-signature' => 'Wikia-ryhmä',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hei $USERNAME,<br /><br />

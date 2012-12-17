@@ -3628,6 +3628,7 @@ $messages['zh'] = array(
  * @author Hzy980512
  * @author Liangent
  * @author Yanmiao liu
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'myhome-desc' => '已登录的用户的个人主页',
@@ -3645,6 +3646,7 @@ $messages['zh-hans'] = array(
 	'myhome-hot-spots-feed-empty' => "维基在等待您的参与。
 点击'''[[Special:CreatePage|新页面]]'''开始撰写！",
 	'myhome-hot-spots-newest' => '维基上的新页面',
+	'tog-userlandingpage' => '登陆页面：',
 	'prefs-myhome' => '我的主页',
 	'myhome-feed-newpage' => '新页面',
 	'myhome-feed-edit' => '编辑',

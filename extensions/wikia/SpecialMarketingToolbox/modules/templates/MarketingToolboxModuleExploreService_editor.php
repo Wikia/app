@@ -2,7 +2,7 @@
 	<div class="photo-group grid-4 alpha">
 		<div class="grid-3 alpha">
 			photo editor (work in progress)
-			<?=F::app()->renderView(
+			<?=$app->renderView(
 				'MarketingToolbox',
 				'FormField',
 				array('inputData' => $fields['exploreTitle'])
@@ -16,57 +16,57 @@
 	<? for($i = 1; $i <= $sectionLimit; $i++): ?>
 		<div class="header-group grid-4 alpha">
 			<div class="grid-2 alpha">
-				<?=F::app()->renderView(
+				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
 					array('inputData' => $fields['exploreSectionHeader'.$i])
 				);
 				?>
-				<?=F::app()->renderView(
+				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
-					array('inputData' => $fields['exploreLinkHeader'.$i.'a'])
+					array('inputData' => $fields['exploreLinkText'.$i.'a'])
 				);
 				?>
-				<?=F::app()->renderView(
+				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
-					array('inputData' => $fields['exploreLinkHeader'.$i.'b'])
+					array('inputData' => $fields['exploreLinkText'.$i.'b'])
 				);
 				?>
-				<?=F::app()->renderView(
+				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
-					array('inputData' => $fields['exploreLinkHeader'.$i.'c'])
+					array('inputData' => $fields['exploreLinkText'.$i.'c'])
 				);
 				?>
-				<?=F::app()->renderView(
+				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
-					array('inputData' => $fields['exploreLinkHeader'.$i.'d'])
+					array('inputData' => $fields['exploreLinkText'.$i.'d'])
 				);
 				?>
 			</div>
 			<div class="grid-2 alpha url-group">
-				<?=F::app()->renderView(
+				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
-						array('inputData' => $fields['exploreLinkUrl1a'])
-					);
+					array('inputData' => $fields['exploreLinkUrl'.$i.'a'])
+				);
 				?>
-				<?=F::app()->renderView(
+				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
 					array('inputData' => $fields['exploreLinkUrl'.$i.'b'])
 				);
 				?>
-				<?=F::app()->renderView(
+				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
 					array('inputData' => $fields['exploreLinkUrl'.$i.'c'])
 				);
 				?>
-				<?=F::app()->renderView(
+				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
 					array('inputData' => $fields['exploreLinkUrl'.$i.'d'])

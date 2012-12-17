@@ -124,6 +124,17 @@ $messages['diq'] = array(
 	'category-exhibition-subcategories-header' => 'Kategoriyê bınêni',
 );
 
+/** Greek (Ελληνικά)
+ * @author Glavkos
+ */
+$messages['el'] = array(
+	'category-exhibition-alphabetical' => 'Αλφαβητικά',
+	'category-exhibition-page-header' => 'Σελίδες στην κατηγορία "$1"',
+	'category-exhibition-subcategories-header' => 'Υποκατηγορίες',
+	'category-exhibition-media-header' => 'Αρχεία πολυμέσων στην κατηγορία "$1"',
+	'category-exhibition-blogs-header' => 'Καταχωρήσεις ιστολογίου',
+);
+
 /** Spanish (español)
  */
 $messages['es'] = array(

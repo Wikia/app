@@ -13,4 +13,4 @@ $wgEnableBacklinksExt = true;
 
 include("$IP/extensions/wikia/Backlinks/Backlinks.setup.php");
 
-echo Backlinks::initTable()."\n";
+echo Backlinks::dropTable()."\n";

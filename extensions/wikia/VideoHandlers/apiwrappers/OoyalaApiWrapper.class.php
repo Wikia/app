@@ -143,6 +143,12 @@ class OoyalaApiWrapper extends ApiWrapper {
 		if ( !isset($overrideFields['actors']) ) {
 			$overrideFields['actors'] = $this->getActors();
 		}
+		if ( !isset($overrideFields['startDate']) ) {
+			$overrideFields['startDate'] = $this->getVideoStartDate();
+		}
+		if ( !isset($overrideFields['expirationDate']) ) {
+			$overrideFields['expirationDate'] = $this->getVideoExpirationDate();
+		}
 
 		parent::loadMetadata( $overrideFields );
 	}
@@ -235,6 +241,30 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return 0;
 	}
 
+	protected function getTrailerRating() {
+		if ( !empty($this->metadata['trailerRating']) ) {
+			return $this->metadata['trailerRating'];
+		}
+
+		if ( !empty($this->interfaceObj['metadata']['trailerrating']) ) {
+			return $this->interfaceObj['metadata']['trailerrating'];
+		}
+
+		return '';
+	}
+
+	protected function getIndustryRating() {
+		if ( !empty($this->metadata['industryRating']) ) {
+			return $this->metadata['industryRating'];
+		}
+
+		if ( !empty($this->interfaceObj['metadata']['industryrating']) ) {
+			return $this->interfaceObj['metadata']['industryrating'];
+		}
+
+		return '';
+	}
+
 	protected function isAgeGate() {
 		if ( !empty($this->metadata['ageGate']) ) {
 			return $this->metadata['ageGate'];
@@ -283,10 +313,64 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	protected function getVideoStartDate() {
+		if ( !empty($this->metadata['startDate']) ) {
+			return $this->metadata['startDate'];
+		}
+
+		if ( !empty($this->interfaceObj['metadata']['startdate']) ) {
+			return strtotime( $this->interfaceObj['metadata']['startdate'] );
+		}
+
+		return '';
+	}
+
+	protected function getVideoExpirationDate() {
+		if ( !empty($this->metadata['expirationDate']) ) {
+			return $this->metadata['expirationDate'];
+		}
+
+		if ( !empty($this->interfaceObj['metadata']['expirationdate']) ) {
+			return strtotime( $this->interfaceObj['metadata']['expirationdate'] );
+		}
+
+		return '';
+	}
+
 }
 
 class WikiawebinarsApiWrapper extends OoyalaApiWrapper {
 }
 
 class FunimationApiWrapper extends OoyalaApiWrapper {
+}
+
+class WbieApiWrapper extends OoyalaApiWrapper {
+}
+
+class SoeApiWrapper extends OoyalaApiWrapper {
+}
+
+class WikiaproductionsApiWrapper extends OoyalaApiWrapper {
+}
+
+class KonamiApiWrapper extends OoyalaApiWrapper {
+}
+
+class EaApiWrapper extends OoyalaApiWrapper {
+}
+
+class KabamApiWrapper extends OoyalaApiWrapper {
+}
+
+class SonypicturesApiWrapper extends OoyalaApiWrapper {
+}
+
+class UniversalApiWrapper extends OoyalaApiWrapper {
+}
+
+class WarnerbrothersApiWrapper extends OoyalaApiWrapper {
+}
+
+class FoxApiWrapper extends OoyalaApiWrapper {
 }

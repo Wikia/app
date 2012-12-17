@@ -241,7 +241,10 @@
 
 				// TODO: why is errors an array of arrays? should be array of strings
 				$.each( response.errors, function( i, error ) {
-					errorMessage.html( errorMessage.html() + error.join( '<br />' ) + '<br />' );
+					// Not sure if the above TODO was addresed, but this now seems
+					// to be a string sometimes and not an array.
+					var str = typeof error == 'string' ? error : error.join( '<br />' );
+					errorMessage.html( errorMessage.html() + str + '<br />' );
 				});
 
 				form.find( '.general-errors' ).remove();

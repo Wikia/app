@@ -4,15 +4,15 @@ class WikiaValidatorString extends WikiaValidator {
 	
 	protected function config( array $options = array() ) {
 		$this->setOption('min', 0);
-		$this->setOption('max', 0);			
+		$this->setOption('max', 0);
 	}
 	
 	protected function configMsgs( array $msgs = array() ) {
 		$this->setMsg( 'too_short', 'wikia-validator-string-short' );
-		$this->setMsg( 'too_long', 'wikia-validator-string-long' );		
+		$this->setMsg( 'too_long', 'wikia-validator-string-long' );
 	}
 	
-	public function isValidInternal($value = null) {		
+	public function isValidInternal($value = null) {
 		if(mb_strlen($value) < $this->getOption('min') ) {
 			$this->createError( 'too_short' );
 			return false;

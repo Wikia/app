@@ -1312,6 +1312,7 @@ Laat de gebruiker bij deze wiki aanmelden met een nieuw wachtwoord om problemen 
 	'editaccount-label-pass' => 'Nieuw wachtwoord instellen',
 	'editaccount-label-realname' => 'Nieuwe echte naam instellen',
 	'editaccount-label-clearunsub' => 'Uitgeschreven',
+	'editaccount-label-toggleadopt' => 'Adoptiestatus aanpassen (voor AutomaticWikiAdopt):',
 	'editaccount-label-toggleadopt-prevent' => 'Automatische adoptie voorkomen',
 	'editaccount-label-toggleadopt-allow' => 'Automatische adoptie toestaan',
 	'editaccount-label-reason' => 'Reden:',

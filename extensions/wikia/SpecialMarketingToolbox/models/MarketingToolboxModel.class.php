@@ -10,7 +10,7 @@ class MarketingToolboxModel extends WikiaModel {
 	const MODULE_EXPLORE = 5;
 	const MODULE_FROM_THE_COMMUNITY = 6;
 	const MODULE_POLLS = 7;
-	const MODULE_TOP_10_LISTS = 8;
+	const MODULE_TOP_10_LIST = 8;
 	const MODULE_POPULAR_VIDEOS = 9;
 
 	const HUBS_TABLE_NAME = '`wikia_hub_modules`';
@@ -43,7 +43,7 @@ class MarketingToolboxModel extends WikiaModel {
 			self::MODULE_EXPLORE => 'explore',
 			self::MODULE_FROM_THE_COMMUNITY => 'from-the-community',
 			self::MODULE_POLLS => 'polls',
-			self::MODULE_TOP_10_LISTS => 'top10-lists',
+			self::MODULE_TOP_10_LIST => 'top10-list',
 			self::MODULE_POPULAR_VIDEOS => 'popular-videos'
 		);
 

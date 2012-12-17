@@ -62,6 +62,9 @@ class WikiFactory {
 	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
 	const CACHEDIR      = "/tmp/wikifactory/wikis";
 
+	// Community Central's city_id in wikicities.city_list.
+	const COMMUNITY_CENTRAL = 177;
+
 	static public $types = array(
 		"integer",
 		"long",
@@ -2534,7 +2537,7 @@ class WikiFactory {
 			$tables[] = "city_variables AS cv{$i}";
 
 			$where[] = "cv1.cv_city_id = cv{$i}.cv_city_id";
-			$where["cv{$i}.cv_variable_id"] = self::getVarByName($key, 177)->cv_variable_id;
+			$where["cv{$i}.cv_variable_id"] = self::getVarByName($key, self::COMMUNITY_CENTRAL)->cv_variable_id;
 			$where["cv{$i}.cv_value"] = @serialize($val);
 		}
 
@@ -2843,18 +2846,10 @@ class WikiFactory {
 	}
 
 	/**
-	 * getClusters
-	 *
-	 * Gets list of all database clusters
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @param
-	 *
+	 * Gets a list of all secondary database clusters, i.e. wikicities_c1, etc.
 	 */
 
-	static public function getClusters() {
+	static public function getSecondaryClusters() {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 

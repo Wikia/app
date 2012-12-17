@@ -109,10 +109,11 @@ class WikisModel extends WikiaModel {
 	 * @param mixed $hub [OPTIONAL] The name of the vertical as a string(e.g. Gaming, Entertainment,
 	 * Lifestyle, etc.) or it's related numeric ID to use as a filter
 	 * @param string $lang [OPTIONAL] The language code (e.g. en, de, fr, es, it, etc.) to use as a filter
+	 * @param bool [OPTIONAL] Include the domain name in the search, defaults to false
 	 *
 	 * @return array A collection of results with id, name, hub, language, topic, domain
 	 */
-	public function getByString( $string, $lang = null, $hub = null ) {
+	public function getByString( $string, $lang = null, $hub = null, $includeDomain = false ) {
 		$this->wf->profileIn( __METHOD__ );
 
 		$wikis = array();
@@ -134,7 +135,7 @@ class WikisModel extends WikiaModel {
 			}
 
 			if ( empty( $hub ) || ( !empty( $hub ) && is_integer( $hubId ) ) ) {
-				$cacheKey = $this->wf->SharedMemcKey( __METHOD__, self::CACHE_VERSION,  md5( strtolower( $string ) ), $hubId, $lang );
+				$cacheKey = $this->wf->SharedMemcKey( __METHOD__, self::CACHE_VERSION,  md5( strtolower( $string ) ), $hubId, $lang, ( ( !empty( $includeDomain ) ? 'includeDomain' : null ) ) );
 				$wikis = $this->app->wg->Memc->get( $cacheKey );
 
 				if ( !is_array( $wikis ) ) {
@@ -146,10 +147,20 @@ class WikisModel extends WikiaModel {
 						'city_list',
 						'city_variables'
 					);
+
+					$clause = array( "city_list.city_title LIKE {$string}" );
+
+					if ( !empty( $includeDomain ) ) {
+						$clause[] = "city_list.city_url LIKE {$string}";
+					}
+
+					$clause[] = "city_variables.cv_value LIKE {$string}";
+
 					$where = array(
 						'city_list.city_public' => 1,
-						"(city_list.city_title LIKE {$string} OR city_list.city_url LIKE {$string} OR city_variables.cv_value LIKE {$string})"
+						'(' . implode( ' OR ', $clause ) . ')'
 					);
+
 					$join = array(
 						'city_variables' => array(
 							'LEFT JOIN',

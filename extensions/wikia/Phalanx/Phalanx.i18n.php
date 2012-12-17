@@ -2191,6 +2191,7 @@ $messages['sv'] = array(
 	'phalanx-modify-failure' => 'Det uppstod ett fel när blockeringen skulle ändras',
 	'phalanx-modify-warning' => 'Du redigerar blockerings-ID #$1.
 Klicka på "{{int:phalanx-edit-block}}" för att spara dina ändringar!',
+	'phalanx-test-description' => 'Testet gav text mot aktuella blockeringar.',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-test-results-legend' => 'Testresultat',
 	'phalanx-display-row-blocks' => 'blockeringar: $1',
@@ -2240,6 +2241,7 @@ Var god [[Special:Contact|kontakta Wikia]] om problemet.<br />Blockeringen gav o
 	'phalanx-stats-table-expire' => 'Upphör',
 	'phalanx-stats-table-exact' => 'Exakt',
 	'phalanx-stats-table-regex' => 'Reguljärt uttryck',
+	'phalanx-stats-table-case' => 'Händelse',
 	'phalanx-stats-table-language' => 'Språk',
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Anledning',

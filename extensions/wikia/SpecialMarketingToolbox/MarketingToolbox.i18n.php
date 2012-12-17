@@ -40,7 +40,7 @@ $messages['en'] = array(
 	'marketing-toolbox-edithub-save-button' => 'Save',
 	'marketing-toolbox-edithub-clearall-button' => 'Clear all',
 
-	'marketing-toolbox-edithub-clearall-confirmation' => 'Are you sure you want to clear the entire pulse?',
+	'marketing-toolbox-edithub-clearall-confirmation' => 'Are you sure you want to clear the entire $1?',
 
 	'marketing-toolbox-hub-module-slider' => 'Slider',
 	'marketing-toolbox-hub-module-pulse' => 'Pulse',
@@ -49,7 +49,7 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-explore' => 'Explore',
 	'marketing-toolbox-hub-module-from-the-community' => 'From the community',
 	'marketing-toolbox-hub-module-polls' => 'Polls',
-	'marketing-toolbox-hub-module-top10-lists' => 'Top 10 lists',
+	'marketing-toolbox-hub-module-top10-list' => 'Top 10 list',
 	'marketing-toolbox-hub-module-popular-videos' => 'Popular videos',
 
 	'marketing-toolbox-hub-module-pulse-wikiurl' => 'Wiki URL',
@@ -61,15 +61,26 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-pulse-number2' => 'Number 2.',
 	'marketing-toolbox-hub-module-pulse-number3' => 'Number 3.',
 
-	'marketing-toolbox-hub-module-top10lists-title' => 'Title',
-	'marketing-toolbox-hub-module-top10lists-desc' => 'Description',
+	'marketing-toolbox-hub-module-top10list-title' => 'Title',
+	'marketing-toolbox-hub-module-top10list-desc' => 'Description',
+
+	'marketing-toolbox-hub-module-slider-short-description' => 'Short description',
+	'marketing-toolbox-hub-module-slider-long-description' => 'Long description',
+	'marketing-toolbox-hub-module-slider-url' => 'Wiki URL',
 
 	'marketing-toolbox-hub-module-explore-title' => 'Main Title',
 	'marketing-toolbox-hub-module-explore-header' => 'Header $1',
 	'marketing-toolbox-hub-module-explore-link-url' => 'URL',
+	'marketing-toolbox-hub-module-explore-link-text-too-short-error' => 'URL header text is too short fill or remove the URL field',
+	'marketing-toolbox-hub-module-explore-link-url-invalid' => 'Invalid URL address',
+
+	'marketing-toolbox-hub-module-polls-title' => 'Header',
+	'marketing-toolbox-hub-module-polls-question' => 'Question title',
+	'marketing-toolbox-hub-module-polls-option-mandatory' => 'Option $1 *',
+	'marketing-toolbox-hub-module-polls-option-voluntary' => 'Option $1',
 
 	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
-	'marketing-toolbox-module-save-ok' => '$1 module saved successfully',
+	'marketing-toolbox-module-save-ok' => '$1 saved successfully!',
 
 	'marketing-toolbox-validator-string-short' => 'Your text is too short, please write more',
 	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',

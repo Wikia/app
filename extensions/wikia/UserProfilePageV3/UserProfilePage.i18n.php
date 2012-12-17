@@ -1771,6 +1771,7 @@ $messages['nl'] = array(
 	'user-identity-box-group-vstf' => 'Vrijwilliger Spamtaskforce',
 	'user-identity-box-group-authenticated' => 'Aangemeld',
 	'user-identity-box-group-council' => 'raadgever',
+	'user-identity-box-group-adminmentor' => 'Beheerdersmentor',
 	'user-identity-box-zero-state-location' => 'Locatie',
 	'user-identity-box-zero-state-birthday' => 'Verjaardag',
 	'user-identity-box-zero-state-gender' => 'Geslacht',

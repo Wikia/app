@@ -53,6 +53,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		margin: 0;
 		padding: 0;
 	}
+	h1, h2, h3 {
+		display: block;
+	}
 	h2 {
 		/* TODO: hyun - we have to UI Styleguide this and share with hubs.  Need to talk to Tim and Mika */
 		border-bottom: 4px solid #d8e3e9;

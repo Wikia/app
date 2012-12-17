@@ -142,6 +142,8 @@ $app->registerHook('BeforeInitialize', 'WallHooksHelper', 'onBeforeInitialize');
 // lazy loaded by the previous hook
 
 $app->registerHook( 'WikiFeatures::afterToggleFeature', 'WallHooksHelper', 'onAfterToggleFeature');
+$app->registerHook( 'AdvancedBoxSearchableNamespaces', 'WallHooksHelper', 'onAdvancedBoxSearchableNamespaces');
+
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',

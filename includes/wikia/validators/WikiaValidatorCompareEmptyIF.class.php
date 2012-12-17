@@ -20,7 +20,7 @@ class WikiaValidatorCompareEmptyIF extends WikiaValidatorCompareValueIF {
 	}
 
 	protected function configMsgs( array $msgs = array() ) {
-		$this->setMsg( 'compare_fail', 'wikia-validator-compare-emty-if-fail' );
+		$this->setMsg( 'compare_fail', 'wikia-validator-compare-empty-if-fail' );
 	}
 
 	/**
