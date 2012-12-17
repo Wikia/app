@@ -29,7 +29,7 @@ var VET_refid = null;
 var VET_wysiwygStart = 1;
 var VET_ratio = 1;
 var VET_shownMax = false;
-var VET_inGalleryPosition = false; // lizbug - Looks like this is never set to true
+var VET_inGalleryPosition = false; // Note for refactor: Looks like this is never set to true
 var VET_notificationTimout = 4000;
 var VET_isOnSpecialPage = false;
 
@@ -270,7 +270,7 @@ function VET_readjustSlider( value ) {
 		}
 }
 
-function VET_showPreview(e) { // lizbug - doesn't seem to be getting called anywhere
+function VET_showPreview(e) { // note for refactory - doesn't seem to be getting called anywhere
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
 
 	var html = '';
@@ -773,13 +773,6 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 		$G('VideoEmbedCaptionRow').style.display = 'none';
 	}
 
-	// lizbug - remove this because we want to show layout controlls
-	/*if ( ( '-1' < VET_gallery ) || VET_inGalleryPosition ) {
-		$G( 'VideoEmbedWidthRow' ).style.display = 'none';
-		$G( 'VideoEmbedLayoutRow' ).style.display = 'none';
-		$G( 'VideoEmbedSizeRow' ).style.display = 'none';
-	}*/
-
 	if ( '-2' == VET_gallery) {
 		$G( 'VET_LayoutGalleryBox' ).style.display = 'none';
 
@@ -836,7 +829,7 @@ function VET_insertFinalVideo(e, type) {
 		}
 	}
 
-	if( VET_inGalleryPosition ) { // lizbug - I think we can remove this
+	if( VET_inGalleryPosition ) { // Note for refactor - I think we can remove this
 		params.push( 'mwgalpos=' + VET_inGalleryPosition );
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
 		params.push( 'ns='+wgNamespaceNumber );
@@ -878,24 +871,6 @@ function VET_insertFinalVideo(e, type) {
 		}
 		params.push('caption=' + encodeURIComponent( $G('VideoEmbedCaption').value ) );
 	}
-
-	// lizbug - remove this, we can use code above 
-	/*if( '-2' == VET_gallery ) { // placeholder magic
-		if( 0 < VET_align ) {
-			( '1' == VET_align ) ? params.push( 'layout=left' ) : params.push( 'layout=right' ) ;
-		}
-
-		if( 0 < VET_thumb ) {
-			params.push( 'size=thumb' );
-		}
-
-		if( 0 < VET_size ) {
-			params.push( 'width=' + VET_size );
-		}
-		if( '' != VET_caption ) {
-			params.push( 'caption=' + VET_caption );
-		}
-	}*/
 
 	var callback = {
 		success: function(o) {
@@ -1274,8 +1249,7 @@ var VETExtended = {
 
             that.isCarouselCheck();
 		});
-		
-//alert('bind submit event');
+
 		// attach handlers - search
 		this.cachedSelectors.searchForm.submit(function(event) {
 			event.preventDefault();
