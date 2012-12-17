@@ -82,26 +82,52 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		if ( !F::build( 'VideoInfoHelper', array(), 'videoInfoExists' ) ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
 			return true;
 		}
 
+		$images = array();
 		$insertedImages = Wikia::getVar( 'imageInserts' );
+		foreach( $insertedImages as $img ) {
+			$key = md5( $img['il_to'] );
+			if ( !array_key_exists($key, $images) ) {
+				$images[$key] = $img['il_to'];
+			}
+		}
+
+		// related videos global list
+		$title = $article->getTitle();
+		if ( !empty($title) ) {
+			$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
+			if ( !empty($relatedVideos) && $title->getNamespace() == NS_MEDIAWIKI
+				&& $title->getText() == RelatedVideosNamespaceData::GLOBAL_RV_LIST ) {
+				$data = $relatedVideos->getData();
+				if ( isset($data['lists'])
+					&& isset($data['lists'][RelatedVideosNamespaceData::WHITELIST_MARKER]) ) {
+					foreach( $data['lists'][RelatedVideosNamespaceData::WHITELIST_MARKER] as $page ) {
+						$key = md5( $page['title'] );
+						if ( !array_key_exists($key, $images) ) {
+							$images[$key] = $page['title'];
+						}
+					}
+				}
+			}
+		}
 
 		$affected = false;
 		$userId = $user->getId();
-		foreach( $insertedImages as $img ) {
-			$videoInfoHelper = F::build( 'VideoInfoHelper' );
-			$videoData = $videoInfoHelper->getVideoDataByTitle( $img['il_to'], true );
+		$videoInfoHelper = new VideoInfoHelper();
+		foreach( $images as $img ) {
+			$videoData = $videoInfoHelper->getVideoDataByTitle( $img, true );
 			if ( !empty($videoData) ) {
-				$videoInfo = F::build( 'VideoInfo', array( $videoData ) );
+				$videoInfo = new VideoInfo( $videoData );
 				$affected = $videoInfo->addPremiumVideo( $userId );
 			}
 		}
 
 		// clear cache if premium video is added
 		if ( $affected ) {
-			$mediaService = F::build( 'MediaQueryService' );
+			$mediaService = new MediaQueryService();
 			$mediaService->clearCacheTotalVideos();
 			$mediaService->clearCacheTotalPremiumVideos();
 		}
