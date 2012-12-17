@@ -76,7 +76,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		$linkHeaderFieldName = self::LINK_TEXT . $sectionIdx . $this->lettersMap[$linkIdx];
 		$linkHeaderField = array(
 			'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $this->lettersMap[$linkIdx]),
-			'validator' => new WikiaValidatorDepend(
+			'validator' => new WikiaValidatorDependent(
 				array(
 					'required' => false,
 					'ownValidator' => new WikiaValidatorString(
@@ -88,7 +88,8 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 							'too_short' => 'marketing-toolbox-hub-module-explore-link-text-too-short-error'
 						)
 					),
-					'dependencyField' => $linkUrlFieldName
+					'dependentField' => $linkUrlFieldName,
+					'dependentFieldCondition' => WikiaValidatorDependent::CONDITION_NOT_EMPTY
 				)
 			),
 			'attributes' => array(
