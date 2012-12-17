@@ -46,7 +46,7 @@ function TOCimprovementsInit() {
  * too see TOC (which is now hidden by default)
  */
 function TOCcssfornoscript( OutputPage &$out, &$skin ) {
-	$out->addHtml( '<noscript><link rel="stylesheet" href="' . F::app()->wg->ExtensionsPath . '/wikia/TOCimprovements/css/TOCNoScript.css" /></noscript>' );
+	$out->addHtml( '<noscript><link rel="stylesheet" href="' . F::app()->wg->ExtensionsPath . '/wikia/TOCimprovements/TOCNoScript.css" /></noscript>' );
 	return true;
 }
 
