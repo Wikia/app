@@ -95,33 +95,33 @@ class WikiaSearchIndexer extends WikiaObject {
 
 		// hack: setting action=render to exclude "Related Pages" and other unwanted stuff
 		$wgRequest = $this->wg->Request;
-		$this->wg->Request->setVal('action', 'render');
+		$this->wg->Request->setVal('action', 'parse');
 
 		if( $page->isRedirect() ) {
-			$redirectPage = F::build( 'Article', array( $page->getRedirectTarget() ) );
-			$redirectPage->loadContent();
-	
-			// hack: setting wgTitle as rendering fails otherwise
-			$this->wg->Title = $page->getRedirectTarget();
-
-			$redirectPage->render();
+			$page = F::build( 'Article', array( $page->getRedirectTarget() ) );
 			$canonical = $page->getRedirectTarget()->getPrefixedText();
 		}
 		else {
-			$page->render();
 			$canonical = '';
 		}
 	
-		$html 		= $this->wg->Out->getHTML();
-		$namespace	= $this->wg->Title->getNamespace();
-	
+		$apiService = F::build( 'ApiService' );
+		$response = $apiService->call( array(
+					'pageid'	=> $page->getID(),
+					'action'	=> 'parse',
+		));
+		
+		$title		= $page->getTitle();
+		$html 		= $response['parse']['text']['*'];
+		$namespace	= $title->getNamespace();
+
 		$isVideo	= false;
 		$isImage	= false;
 		$vidFields	= array();	
 		
-		if ( $namespace == NS_FILE && ($file = $this->wf->findFile( $this->wg->Title->getText() )) ) {
+		if ( $namespace == NS_FILE && ($file = $this->wf->findFile( $title->getText() )) ) {
 			$fileHelper	= F::build( 'WikiaFileHelper' );
-			$detail		= $fileHelper->getMediaDetail( $this->wg->Title );
+			$detail		= $fileHelper->getMediaDetail( $title );
 			$isVideo	= $fileHelper->isVideoFile( $file );
 			$isImage	= ($detail['mediaType'] == 'image') && !$isVideo;
 			$metadata	= $file->getMetadata();
@@ -167,9 +167,7 @@ class WikiaSearchIndexer extends WikiaObject {
 				
 			}
 		}
-	
-		$title = $page->getTitle()->getText();
-	
+
 		if ( in_array( $namespace, array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
 			$wm = F::build( 'WallMessage', array( $page->getId() ), 'newFromId' );
 			$wm->load();
@@ -182,20 +180,24 @@ class WikiaSearchIndexer extends WikiaObject {
 				}
 			}
 		}
-	
-		// clear output buffer in case we want get more pages
-		$this->wg->Out->clearHTML();
-	
+		
+		$categories = array();
+		foreach ( $response['parse']['categories'] as $category ) {
+			$categories[] = str_replace( '_', ' ', $category['*'] );
+		}
+		
 		$result['wid']			= empty( $this->wg->ExternalSharedDB ) ? $this->wg->SearchWikiId : (int) $this->wg->CityId;
 		$result['pageid']		= $pageId;
 		$result['id']			= $result['wid'] . '_' . $result['pageid'];
-		$result['title']		= $title;
+		$result['title']		= ''.$title;
 		$result['canonical']	= $canonical;
 		$result['html']			= html_entity_decode($html, ENT_COMPAT, 'UTF-8');
-		$result['url']			= $page->getTitle()->getFullUrl();
-		$result['ns']			= $page->getTitle()->getNamespace();
+		$result['url']			= $title->getFullUrl();
+		$result['ns']			= $title->getNamespace();
 		$result['host']			= substr($this->wg->Server, 7);
 		$result['lang']			= $this->wg->ContLang->mCode;
+		$result['categories']	= $categories;
+		$result['page_images']	= count( $response['parse']['images'] );
 	
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
 		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
@@ -416,7 +418,7 @@ class WikiaSearchIndexer extends WikiaObject {
 			$data = $apiService->call( array(
 					'pageids'	=> $pageId,
 					'action'	=> 'query',
-					'prop'		=> 'info|categories',
+					'prop'		=> 'info',
 					'inprop'	=> 'url|created|views|revcount',
 					'meta'		=> 'siteinfo',
 					'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
@@ -428,19 +430,11 @@ class WikiaSearchIndexer extends WikiaObject {
 				$result['created']	= $pageData['created'];
 				$result['touched']	= $pageData['touched'];
 			}
-		
-			$result['categories'] = array();
-		
-			if ( isset( $pageData['categories'] ) ) {
-				foreach ( $pageData['categories'] as $category ) {
-					$result['categories'][] = implode( ':', array_slice( explode( ':', $category['title'] ), 1 ) );
-				}
-			}
-		
+			
 			$result['hub'] 			= isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
 			$result['wikititle']	= $this->wg->Sitename;
 		}
-	
+
 		$result['redirect_titles'] = $this->getRedirectTitles($page);
 	
 		$wikiViews = $this->getWikiViews($page);
