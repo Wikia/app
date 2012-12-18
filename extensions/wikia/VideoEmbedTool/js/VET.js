@@ -16,7 +16,7 @@ var VET_prevScreen = null;
 var VET_slider = null;
 var VET_thumbSize = null;
 var VET_orgThumbSize = null;
-var VET_placeholder = false;
+var VET_placeholder = -1;
 var VET_align = 0;
 var VET_thumb = 0;
 var VET_size = 0;
@@ -301,7 +301,7 @@ function VET_showPreview(e) { // note for refactory - doesn't seem to be getting
 	VET_previewPanel.render();
 	VET_previewPanel.show();
 	VET_panel.center();
-	if(VET_refid != null && ( VET_wysiwygStart == 2 || VET_placeholder ) ) {
+	if(VET_refid != null && ( VET_wysiwygStart == 2 || VET_placeholder == -2 ) ) {
 		VET_editVideo();
 	} else {
 		VET_loadMain();
@@ -328,7 +328,7 @@ function VET_getCaret() {
   return (caretPos);
 }
 
-function VET_show( e, isPlaceholder, box, align, thumb, size, caption ) {
+function VET_show( e, placeholder, box, align, thumb, size, caption ) {
 	if (wgUserName == null && wgAction == 'edit') {
 		// handle login on edit page
 		UserLogin.rteForceLogin();
@@ -352,10 +352,10 @@ function VET_show( e, isPlaceholder, box, align, thumb, size, caption ) {
 
 	VET_refid = null;
 	VET_wysiwygStart = 1;
-	VET_placeholder = false;
+	VET_placeholder = -1;
 
-	if(isPlaceholder) {
-		VET_placeholder = true;
+	if(typeof placeholder != 'undefined') {
+		VET_placeholder = placeholder;
 		VET_box = box;
 		// they only are given when the placeholder is given...
 		if(typeof align != "undefined") {
@@ -394,14 +394,13 @@ function VET_show( e, isPlaceholder, box, align, thumb, size, caption ) {
 			// get video from event data
 			window.VET_RTEVideo = e.data.element;
 			if (window.VET_RTEVideo) {
-				// edit an  video
+				// edit a video
 				var data = window.VET_RTEVideo.getData();
-//lizbug - check on this
 				if (e.data.isPlaceholder) {
 					// video placeholder
 					RTE.log('video placeholder clicked');
 
-					VET_placeholder = false;
+					VET_placeholder = -1;
 				}
 				else {
 					// "regular" video
@@ -445,7 +444,7 @@ function VET_show( e, isPlaceholder, box, align, thumb, size, caption ) {
 	}
 
 	// for placeholder, load differently...
-	if( VET_placeholder  ) {
+	if( VET_placeholder != -1 ) {
 		VET_loadMainFromView();
 	} else {
 		var html = '';
@@ -719,7 +718,7 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 		$G('VideoEmbedCaptionRow').style.display = 'none';
 	}
 
-	if ( VET_placeholder ) {
+	if ( VET_placeholder != -1 ) {
 		$G( 'VET_LayoutGalleryBox' ).style.display = 'none';
 
 	}
@@ -775,8 +774,8 @@ function VET_insertFinalVideo(e, type) {
 		}
 	}
 
-	if( VET_placeholder ) {
-		params.push( 'placeholder=' + 1 );
+	if( VET_placeholder != -1 ) {
+		params.push( 'placeholder=' + VET_placeholder );
 		params.push( 'box=' + VET_box );
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
 		params.push( 'ns='+wgNamespaceNumber );
@@ -844,12 +843,14 @@ function VET_insertFinalVideo(e, type) {
 					}
 
 					if ( !$G( 'VideoEmbedCreate'  ) && !$G( 'VideoEmbedReplace' ) ) {
-						if(VET_refid == null) { // not FCK
+						if(VET_refid == null) {
 							if (typeof RTE !== 'undefined') {
 								RTE.getInstanceEditor().getEditbox().focus();
 							}
-							
-							if( VET_placeholder ) {
+							if ( VET_placeholder == -1) {
+								VET_getTextarea().focus();
+								insertTags( $G('VideoEmbedTag').value, '', '', VET_getTextarea());
+							} else if( VET_placeholder == -2 ) {
 								// handle article view - replace video placeholders with video
 								var placeholders = $('#WikiaArticle').find('.wikiaVideoPlaceholder a'),
 									to_update = placeholders.filter('[data-id='+VET_box+']'),
@@ -857,22 +858,19 @@ function VET_insertFinalVideo(e, type) {
 									html = $('#VideoEmbedCode').html();
 
 								to_update.parent().parent().replaceWith(html);
-								
+
 								// update data id so we can match DOM placeholders to parsed wikitext placeholders
 								placeholders.each(function() {
 									var $this = $(this),
 										id = $this.attr('data-id');
-									
+
 									if(id > VET_box) {
 										$this.attr('data-id', id-1);
 									}
 								});
-								
+
 								// purge cache of article so video will show up on reload
 								$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
-							} else {
-								VET_getTextarea().focus();
-								insertTags( $G('VideoEmbedTag').value, '', '', VET_getTextarea());
 							}
 						} else { 
 							var wikitag = YAHOO.util.Dom.get('VideoEmbedTag').value;
