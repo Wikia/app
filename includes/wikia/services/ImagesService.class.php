@@ -34,6 +34,26 @@ class ImagesService extends Service {
 	}
 
 	/**
+	 * @param String $fileName file name with or without namespace "File:"
+	 * @return string url to the file or empty string when failed
+	 */
+	public static function getImageUrlFromText($fileName) {
+		$url = '';
+		
+		$app = F::app();
+		//remove namespace string
+		$fileName = str_replace($app->wg->ContLang->getNsText(NS_FILE) . ':', '', $fileName);
+		$title = Title::newFromText($fileName, NS_FILE);
+		$findFile = $app->wf->FindFile($title);
+		
+		if( $findFile ) {
+			$url = $findFile->getUrl();
+		}
+		
+		return $url;
+	}
+
+	/**
 	 * get image page url
 	 * @param integer $wikiId
 	 * @param integer $pageId

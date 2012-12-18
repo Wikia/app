@@ -293,10 +293,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 	public function getImageDetails() {
 		$fileName = $this->getVal('fileHandler', false);
-		if ($fileName) {
-			$title = Title::newFromText($fileName);
-			$findFile = F::App()->wf->FindFile($title);
-			$this->fileUrl = $findFile->getUrl();
+		if( $fileName ) {
+			$this->fileUrl = ImagesService::getImageUrlFromText($fileName);
 		}
 	}
 

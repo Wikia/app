@@ -19,7 +19,11 @@
 			?>
 		</div>
 		<div class="grid-1 alpha">
-			<div class="placeholder"></div>
+			<div class="placeholder">
+				<?php if( !empty($fileUrl) ): ?>
+					<img width="138" height="138" src="<?= $fileUrl; ?>" />
+				<?php endif; ?>
+			</div>
 		</div>
 	</div>
 	<? for($i = 1; $i <= $sectionLimit; $i++): ?>
