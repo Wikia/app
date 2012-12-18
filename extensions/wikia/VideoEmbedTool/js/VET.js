@@ -837,7 +837,7 @@ function VET_insertFinalVideo(e, type) {
 		params.push( 'ns='+wgNamespaceNumber );
 	}
 
-	if( '-1' != VET_gallery ) { // Video placeholder (in view mode only?)
+	if( '-1' != VET_gallery ) {
 		params.push( 'gallery=' + VET_gallery );
 		params.push( 'box=' + VET_box );
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
