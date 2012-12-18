@@ -445,7 +445,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		$dbr = $this->wf->GetDB(DB_SLAVE);
 	
-		$result = array();
+		$result = array( 'redirect_titles' => array() );
 		$query = $dbr->select(
 				array( 'redirect', 'page' ),
 				array( 'page_title' ),
@@ -456,7 +456,7 @@ class WikiaSearchIndexer extends WikiaObject {
 				);
 		
 		while ( $row = $dbr->fetchObject( $query ) ) {
-			$result[] = str_replace( '_', '_', $row->page_title );
+			$result['redirect_titles'][] = str_replace( '_', '_', $row->page_title );
 		}
 		
 		wfProfileOut(__METHOD__);
