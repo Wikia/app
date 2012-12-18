@@ -75,8 +75,9 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 				)
 			),
 			'attributes' => array(
-				'class' => "wikiaUrl"
-			)
+				'class' => "wikiaUrl",
+			),
+			'icon' => true
 		);
 
 		$linkHeaderFieldName = self::LINK_TEXT . $sectionIdx . $this->lettersMap[$linkIdx];

@@ -4,7 +4,12 @@
 	">
 <? endif ?>
 	<? if (!empty($inputData['label'])): ?>
-		<label for="<?=$inputData['name']?>"><?=$inputData['label']?></label>
+		<label for="<?=$inputData['name']?>">
+			<? if (!empty($inputData['icon'])): ?>
+				<img src="<?= $wg->blankImgUrl ?>" class="input-icon" />
+			<? endif ?>
+			<?=$inputData['label']?>
+		</label>
 	<? endif ?>
 
 	<? switch ($inputData['type']):
