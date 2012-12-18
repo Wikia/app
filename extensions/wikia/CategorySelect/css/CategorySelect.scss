@@ -73,14 +73,14 @@ $categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% )
 	.input {
 		@include border-radius( 4px );
 		background-color: $color-page;
-		border: 1px solid $color-page-border;
+		border: 0;
 		color: $color-text;
 		font-size: 12px;
-		height: 19px;
+		height: 21px;
 		margin-bottom: 0;
 		margin-left: 6px;
 		outline: none;
-		padding: 0 5px;
+		padding: 0;
 		width: 245px;
 	}
 
