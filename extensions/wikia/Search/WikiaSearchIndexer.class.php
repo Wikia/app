@@ -80,77 +80,23 @@ class WikiaSearchIndexer extends WikiaObject {
 
 		if( $page->isRedirect() ) {
 			$page = F::build( 'Article', array( $page->getRedirectTarget() ) );
-			$canonical = $page->getRedirectTarget()->getPrefixedText();
 		}
-		else {
-			$canonical = '';
-		}
+		
+		$pageId		= $page->getID();
 	
 		$apiService = F::build( 'ApiService' );
 		$response = $apiService->call( array(
-					'pageid'	=> $page->getID(),
+					'pageid'	=> $pageId,
 					'action'	=> 'parse',
 		));
 		
 		$title		= $page->getTitle();
 		$html 		= $response['parse']['text']['*'];
 		$namespace	= $title->getNamespace();
-
-		$isVideo	= false;
-		$isImage	= false;
-		$vidFields	= array();	
 		
-		if ( $namespace == NS_FILE && ($file = $this->wf->findFile( $title->getText() )) ) {
-			$fileHelper	= F::build( 'WikiaFileHelper' );
-			$detail		= $fileHelper->getMediaDetail( $title );
-			$isVideo	= $fileHelper->isVideoFile( $file );
-			$isImage	= ($detail['mediaType'] == 'image') && !$isVideo;
-			$metadata	= $file->getMetadata();
-	
-			if ( $metadata !== "0" ) {
-				$metadata = unserialize( $metadata );
-				$fileParams = array( 'description', 'keywords' );
-				$videoParams = array( 'movieTitleAndYear', 'videoTitle', 'title', 'tags', 'category' );
-				if ( $isVideo ) {
-					$fileParams = array_merge( $fileParams, $videoParams );
-					
-					/**
-					 * This maps video metadata field keys to dynamic fields
-					 */
-					$videoMetadataMapper = array(
-							'duration'		=>	'video_duration_i',
-							'provider'		=>	'video_provider_s',
-							'videoId'		=>	'video_id_s',
-							'altVideoId'	=>	'video_altid_s',
-							'aspectRatio'	=>	'video_aspectratio_s'
-							);
-					
-					foreach ( $videoMetadataMapper as $key => $field ) {
-						if ( isset( $metadata[$key] ) ) {
-							$vidFields[$field] = $metadata[$key];
-						}
-					}
-					// special cases
-					if ( isset( $metadata['hd'] ) ) {
-						$vidFields['video_hd_b'] = empty( $metadata['hd'] ) ? 'false' : 'true';
-					}
-					if ( isset( $metadata['genres'] ) ) {
-						$vidFields['video_genres_txt'] = preg_split( '/, ?/', $metadata['genres'] );
-					}
-					if ( isset( $metadata['actors'] ) ) {
-						$vidFields['video_actors_txt'] = preg_split( '/, ?/', $metadata['actors'] );
-					}
-				}
-	
-				foreach ($fileParams as $datum) {
-					$html .= isset( $metadata[$datum] ) ? ' ' . $metadata[$datum] : '';
-				}
-				
-			}
-		}
 
 		if ( in_array( $namespace, array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
-			$wm = F::build( 'WallMessage', array( $page->getId() ), 'newFromId' );
+			$wm = F::build( 'WallMessage', array( $pageId ), 'newFromId' );
 			$wm->load();
 			if ($wm->isMain()) {
 				$title = $wm->getMetaTitle();
@@ -177,7 +123,6 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['id']			= $result['wid'] . '_' . $result['pageid'];
 		$result['title']		= ''.$title;
 		$result['titleStrict']	= ''.$title;
-		$result['canonical']	= $canonical;
 		$result['html']			= html_entity_decode($html, ENT_COMPAT, 'UTF-8');
 		$result['url']			= $title->getFullUrl();
 		$result['ns']			= $title->getNamespace();
@@ -189,19 +134,89 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
 		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
-		$result['is_main_page']	= ( ( $page->getId() != 0 ) && ( $page->getId() == F::build( 'Title', array( 'newMainPage' ) )->getArticleId() ) ) ? 'true' : 'false';
-		$result['is_redirect']	= ($canonical == '') ? 'false' : 'true';
-		$result['is_video']		= $isVideo ? 'true' : 'false';
-		$result['is_image']		= $isImage ? 'true' : 'false';
-	
-		foreach ( $vidFields as $fieldName => $fieldValue ) {
-			$result[$fieldName] = $fieldValue;
-		}
+		$result['is_main_page']	= ( $pageId == F::build( 'Title', array( 'newMainPage' ) )->getArticleId() ) ? 'true' : 'false';
 		
-		$result = array_merge($result, $this->getPageMetaData($page));
+		// these will eventually be broken out into their own atomic updates
+		$result = array_merge($result, $this->getPageMetaData( $page ), $this->indexMedia( $title ) );
 		
 		wfProfileOut(__METHOD__);
 		return $result;
+	}
+	
+	/**
+	 * Perform the indexing logic with respect to videos
+	 * This is separated out so that we can eventually handle 
+	 * it separate from the main indexing pipeline
+	 * @todo determine whether we expose the result array via a JSON service or perform atomic update here  
+	 * @param Title $title
+	 * @return array
+	 */
+	public function indexMedia( Title $title )
+	{
+		$results = array();
+		
+		if ( $title->getNamespace() != NS_FILE ) {
+			return $results;
+		}
+		
+		$file = $this->wf->findFile( $title->getText() );
+		if ( empty( $file ) ) {
+			return $results;
+		}
+	
+		$fileHelper	= F::build( 'WikiaFileHelper' );
+		$detail		= $fileHelper->getMediaDetail( $title );
+		$metadata	= $file->getMetadata();
+		
+		$results['is_video'] = $fileHelper->isVideoFile( $file );
+		$results['is_image'] = ($detail['mediaType'] == 'image') && !$results['is_video'];
+
+		if ( $metadata == "0" || !$results['is_video'] ) {
+			return $results;
+		}
+
+		$metadata = unserialize( $metadata );
+		$fileParams = array( 'description', 'keywords' );
+		$videoParams = array( 'movieTitleAndYear', 'videoTitle', 'title', 'tags', 'category' );
+		if ( $results['is_video'] ) {
+			$fileParams = array_merge( $fileParams, $videoParams );
+			
+			/**
+			 * This maps video metadata field keys to dynamic fields
+			 */
+			$videoMetadataMapper = array(
+					'duration'		=>	'video_duration_i',
+					'provider'		=>	'video_provider_s',
+					'videoId'		=>	'video_id_s',
+					'altVideoId'	=>	'video_altid_s',
+					'aspectRatio'	=>	'video_aspectratio_s'
+					);
+			
+			foreach ( $videoMetadataMapper as $key => $field ) {
+				if ( isset( $metadata[$key] ) ) {
+					$results[$field] = $metadata[$key];
+				}
+			}
+			// special cases
+			if ( isset( $metadata['hd'] ) ) {
+				$results['video_hd_b'] = empty( $metadata['hd'] ) ? 'false' : 'true';
+			}
+			if ( isset( $metadata['genres'] ) ) {
+				$results['video_genres_txt'] = preg_split( '/, ?/', $metadata['genres'] );
+			}
+			if ( isset( $metadata['actors'] ) ) {
+				$results['video_actors_txt'] = preg_split( '/, ?/', $metadata['actors'] );
+			}
+		}
+		
+		$results['html_media_extras_txt'] = array();
+		foreach ( $fileParams as $datum ) {
+			if ( isset( $metadata[$datum] ) ) {
+				$results['html_media_extras_txt'][] = $metadata[$datum];
+			} 
+		}
+		
+		return $results;
 	}
 	
 	/**
