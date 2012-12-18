@@ -11,8 +11,6 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 		getUrl,
 		getKv,
 		wikiaDartHelper_getZone1,
-		wikiaDartHelper_getCustomKeyValues,
-		wikiaDartHelper_getKruxKV,
 		kvStrMaxLength = 500,
 		iface,
 		sanitizeSlotname,
@@ -118,8 +116,8 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +
 			wikiaDartHelper_getZone1() +
-			wikiaDartHelper_getCustomKeyValues() +
-			wikiaDartHelper_getKruxKV();
+			wikiaDart.getCustomKeyValues() +
+			wikiaDart.getKruxKeyValues();
 	};
 
 	// adapted for Evolve + simplified copy of AdConfig.DART.getUrl
@@ -157,41 +155,6 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 
 		if (window.wgDBname) {
 			var kv = 's1=_' + window.wgDBname.replace('/[^0-9A-Z_a-z]/', '_') + ';';
-
-			log(kv, 7, 'AdProviderEvolve');
-			return kv;
-		}
-
-		return '';
-	};
-
-	// c&p wikiaDartHelper.getCustomKeyValues
-	// TODO refactor
-	wikiaDartHelper_getCustomKeyValues = function () {
-		log('wikiaDartHelper_getCustomKeyValues', 5, 'AdProviderEvolve');
-
-		if (window.wgDartCustomKeyValues) {
-			var kv = window.wgDartCustomKeyValues + ';';
-			kv = kv.substr(0, kvStrMaxLength);
-			kv = kv.replace(/;[^;]*$/, ';');
-
-			log(kv, 7, 'AdProviderEvolve');
-			return kv;
-		}
-
-		return '';
-	};
-
-	// c&p wikiaDartHelper.getKruxKV
-	// TODO refactor
-	wikiaDartHelper_getKruxKV = function () {
-		log('wikiaDartHelper_getKruxKV', 5, 'AdProviderEvolve');
-
-		var kv = Krux.dartKeyValues;
-
-		if (kv) {
-			kv = kv.substr(0, kvStrMaxLength);
-			kv = kv.replace(/;[^;]*$/, ';');
 
 			log(kv, 7, 'AdProviderEvolve');
 			return kv;
