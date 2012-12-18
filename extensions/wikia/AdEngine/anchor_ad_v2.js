@@ -18,7 +18,7 @@ var displayAnchorAd = function(){
 			var html = '<style type="text/css">\
 				.FooterAd {\
 					height: 0;\
-					width: 1000px;\
+					width: 1030px;\
 					z-index: 0;\
 				}\
 				.WikiaFooter.float .FooterAd,\

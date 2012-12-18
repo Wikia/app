@@ -4,8 +4,10 @@ var vet_back,vet_close; //hack for VET, please remove this line after VET refact
 
 EditHub.prototype = {
 	form: undefined,
-	vetReady: undefined,
 	wmuReady: undefined,
+	vetReady: undefined,
+	wmuDeffered: undefined,
+	vetDeffered: undefined,
 	placeholderDimensions: 138,
 
 	init: function () {
@@ -44,18 +46,19 @@ EditHub.prototype = {
 
 	wmuInit: function(event) {
 		event.preventDefault();
-		if (!this.vetReady) {
+		if (!this.wmuReady) {
 			var $input = $(this).prev();
-			$.when(
+			this.wmuDeffered = $.when(
 				$.loadYUI(),
 				$.getResources([
 					wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
 					wgExtensionsPath + '/wikia/WikiaMiniUpload/css/WMU.css'
 				])
-			).then(function() {
+			).then($.proxy(function() {
 				WMU_skipDetails = true;
 				WMU_show();
-			});
+				this.wmuReady = true;
+			}, this));
 			$(window).bind('WMU_addFromSpecialPage', $.proxy(function(event, wmuData) {
 				this.addImage(wmuData);
 			}, this));
@@ -67,7 +70,7 @@ EditHub.prototype = {
 
 	vetInit: function(event) {
 		if (!this.vetReady) {
-			$.when(
+			this.vetDeffered = $.when(
 				$.loadYUI(),
 				$.loadMustache(),
 				$.getResources([

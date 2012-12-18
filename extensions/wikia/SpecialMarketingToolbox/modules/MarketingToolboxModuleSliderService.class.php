@@ -16,7 +16,8 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 				),
 				'attributes' => array(
 					'class' => 'required'
-				)
+				),
+				'class' => 'hidden'
 			);
 
 			$fields['shortDesc' . $i] = array(
@@ -56,7 +57,8 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 				),
 				'attributes' => array(
 					'class' => 'required wikiaUrl'
-				)
+				),
+				'class' => 'borderNone'
 			);
 		}
 
@@ -70,4 +72,3 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 		return parent::renderEditor($data);
 	}
 }
-?>

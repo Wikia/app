@@ -1,6 +1,12 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
 
+$module-background-color: #fafafa;
+$vertical-border-color: #cdcdcd;
+$horizontal-border-color: #eee;
+$chevron-color: #888;
+
+
 .WikiaGrid .WikiaArticle {
 	border: none;
 }
@@ -10,6 +16,15 @@
 
 	margin-top: 15px;
 
+	h3 {
+		width: 30px;
+		font-size: 24px;
+		text-align: right;
+		float: left;
+		margin-right: 10px;
+		margin-left: -40px;
+	}
+
 	form {
 		margin-top: 5px;
 	}
@@ -17,6 +32,7 @@
 	.input-group {
 		margin: 0px 7px;
 		padding: 5px 0;
+		float: none;
 
 		label {
 			clear: both;
@@ -81,11 +97,15 @@
 		color: $color-alternate-text;
 	}
 
+	.hidden {
+		display: none;
+	}
+
 	.module-explore {
 		.grid-4 {
-			background-color: #fafafa;
-			border: 1px solid #eee;
-			border-top: 1px solid #cdcdcd;
+			background-color: $module-background-color;
+			border: 1px solid $horizontal-border-color;
+			border-top: 1px solid $vertical-border-color;
 			margin-bottom: 30px;
 		}
 		.header-group {
@@ -111,6 +131,83 @@
 			height: 138px;
 			margin: 10px 0;
 			width: 138px;
+		}
+	}
+
+	.module-box {
+		@include clearfix;
+
+		.module-right-box {
+			background-color: $module-background-color;
+			border: 1px solid $horizontal-border-color;
+			border-top-color: $vertical-border-color;
+			border-bottom-color: $vertical-border-color;
+			margin-bottom: 35px;
+			float: left;
+			padding: 10px 0px;
+			position: relative;
+
+			.module-input-box {
+				float: left;
+
+				input[type="text"] {
+					width: 291px;
+				}
+
+				input[type="button"] {
+					margin-left: 7px;
+				}
+
+				input.secondary {
+					margin-top: 5px;
+				}
+
+				.filename-placeholder {
+					margin-left: 5px;
+				}
+			}
+
+			.module-image-box {
+				float: right;
+				margin: 7px 30px 0 0;
+
+				.image-placeholder {
+					border: 1px solid $vertical-border-color;
+					width: 155px;
+					height: 155px;
+				}
+			}
+
+			.navigation {
+				width: 25px;
+				height: 40px;
+				position: absolute;
+				right: -1px;
+				margin: 0;
+				border-radius: 0;
+
+				&.nav-up {
+					top: -1px;
+				}
+
+				&.nav-down {
+					bottom: -1px;
+				}
+
+				.chevron {
+					border-width: 5px;
+				}
+
+				.chevron-up {
+					border-color: transparent transparent $chevron-color;
+					margin-top: -5px;
+				}
+
+				.chevron-down {
+					border-color: $chevron-color transparent transparent;
+					margin-top: 5px;
+				}
+			}
 		}
 	}
 
