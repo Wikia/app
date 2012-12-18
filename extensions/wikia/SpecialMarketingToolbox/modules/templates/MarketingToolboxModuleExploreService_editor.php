@@ -21,6 +21,7 @@
 		<div class="grid-1 alpha">
 			<div class="placeholder"></div>
 		</div>
+		<input class="secondary clear-button" type="button" value="Clear" />
 	</div>
 	<? for($i = 1; $i <= $sectionLimit; $i++): ?>
 		<div class="header-group grid-4 alpha">
@@ -82,6 +83,7 @@
 				);
 				?>
 			</div>
+			<input class="secondary clear-button" type="button" value="Clear" />
 		</div>
 	<? endfor; ?>
 </div>
