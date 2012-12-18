@@ -204,21 +204,16 @@ class RenameUserProcess {
 		$this->mWarnings[] = $msg;
 	}
 
-	//not used anymore, '`user`' is required if running from cluster 1, not only from devbox
-	protected function getUserTableName(){
-		return (defined('ENV_DEVBOX')) ? '`user`' : 'user';
+	protected function getUserTableName($database){
+		return "`{$database}`.`user`";
 	}
 
-	protected function renameAccount( $cluster ) {
+	protected function renameAccount() {
+		global $wgExternalSharedDB;
 		wfProfileIn(__METHOD__);
-		$dbName = 'wikicities';
-		if ( !empty( $cluster ) ) {
-			$dbName .= "_{$cluster}";
-		}
-		$dbw = wfGetDb( DB_MASTER, array(), $dbName );
+		$dbw = wfGetDb( DB_MASTER, array(), $wgExternalSharedDB );
 
 		$table = '`user`';
-
 		$this->addLog("Changing user {$this->mOldUsername} to {$this->mNewUsername} in {$dbName}");
 
 		if($dbw->tableExists($table)){
@@ -563,20 +558,23 @@ class RenameUserProcess {
 			// This is a classic double-check. I do not want to delete the record from the primary cluster.
 			// No, really! I do not.
 			if ( RenameUserHelper::CLUSTER_DEFAULT != $clusterName ) {
+				$memkey = sprintf("extuser:%d:%s", $this->mUserId, $clusterName);
 				$clusterName = 'wikicities_' . $clusterName;
 				$oDB = wfGetDB( DB_MASTER, array(), $clusterName );
-				$oDB->delete( '`user`', array( 'user_id' => $this->mUserId ) );
+				$oDB->delete( $this->getUserTableName($clusterName), array( 'user_id' => $this->mUserId ) );
 				if ( $oDB->affectedRows() ) {
 					$this->addLog( sprintf( '%s: deleted user data.', $clusterName ) );
 				} else {
 					$this->addLog( sprintf( '%s: nothing to do here.', $clusterName ) );
 				}
-				$oDB->close();
+				$oDB->commit();
+				# clear memcache
+				$wgMemc->delete( $memkey );
 			}
 		}
 
-		// rename the user on the primary cluster
-		if ( !$this->renameAccount( RenameUserHelper::CLUSTER_DEFAULT ) ) {
+		// rename the user on the shared cluster
+		if ( !$this->renameAccount() ) {
 			$this->addLog("Failed to rename the user on the primary cluster. Report the problem to the engineers.");
 			$this->addError(wfMsgForContent('userrenametool-error-cannot-rename-account'));
 			wfProfileOut(__METHOD__);
@@ -597,6 +595,22 @@ class RenameUserProcess {
 			global $wgAuth, $wgExternalAuthType;
 
 			$fakeUser = User::newFromName( $this->mOldUsername, 'creatable' );
+			
+			if ( !is_object( $fakeUser ) ) {
+				$this->addLog("Cannot create fake user: {$this->mOldUsername}");
+				wfProfileOut(__METHOD__);
+				return false;
+			} 
+
+			$mExtUser = ExternalUser_Wikia::newFromName( $this->mOldUsername );
+
+			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
+				$this->addLog("Fake user {$this->mOldUsername} still exists in database");
+				return false;
+			}
+			
+			$fakeUser->setPassword( null );
+			$fakeUser->setRealName( '' );
 			
 			if ( $wgExternalAuthType ) {
 				$fakeUser = ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
@@ -656,19 +670,19 @@ class RenameUserProcess {
 		$this->addLog("Initializing update of global shared DB's.");
 		$this->updateGlobal();
 
-                // create a new task for the Task Manager to handle all the global tables
-                $this->addLog("Setting up a task for processing global DB");
-                $task = new UserRenameGlobalTask();
-                $task->createTask(
-                        array(
-                            'rename_user_id'  => $this->mUserId,
-                            'rename_old_name' => $this->mOldUsername,
-                            'rename_new_name' => $this->mNewUsername,
-                            'tasks'           => self::$mStatsDefaults
-                        ),
-                        TASK_QUEUED
-                );
-                $this->addLog("Task created with ID " . $task->getID());
+		// create a new task for the Task Manager to handle all the global tables
+		$this->addLog("Setting up a task for processing global DB");
+		$task = new UserRenameGlobalTask();
+		$task->createTask(
+				array(
+					'rename_user_id'  => $this->mUserId,
+					'rename_old_name' => $this->mOldUsername,
+					'rename_new_name' => $this->mNewUsername,
+					'tasks'           => self::$mStatsDefaults
+				),
+				TASK_QUEUED
+		);
+		$this->addLog("Task created with ID " . $task->getID());
 		$this->addLog("Setting up a task for processing local DB's");
 		//create a new task for the Task Manager to handle all the local tables per each wiki
 		$task = new UserRenameLocalTask();
