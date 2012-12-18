@@ -1,4 +1,4 @@
-<div class="BreadCrumbs">
+<nav class="BreadCrumbs" itemprop="breadcrumb">
 	<? $total = count($path) - 1 ?>
 	<? foreach($path as $index => $val): ?>
 		<? if (!empty($val['url'])): ?>
@@ -13,4 +13,4 @@
 	<? if (!empty($isRemoved) || !empty($isAdminDeleted)): ?>
 		<span class="removed"><?= '(' . wfMsg('wall-thread-' . ($isAdminDeleted ? 'deleted' : 'removed')) . ')' ?></span>
 	<? endif ?>
-</div>
+</nav>
