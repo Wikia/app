@@ -41,7 +41,9 @@ function wfJSVariablesTopScripts(Array &$vars) {
 	} else {
 		$vars['wgUserName'] = $user->getName();
 	}
-	$vars['wgArticleId'] = $out->getWikiPage()->getId();
+	if ($out->isArticle()) {
+		$vars['wgArticleId'] = $out->getWikiPage()->getId();
+	}
 	$vars['wgCategories'] = $out->getCategories();
 	$vars['wgPageName'] = $title->getPrefixedDBKey();
 
