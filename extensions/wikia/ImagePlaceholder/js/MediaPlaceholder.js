@@ -59,7 +59,7 @@ var MediaPlaceholder = {
 					])
 				).done(function() {
 					$this.text(oText);
-					VET_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption); 
+					VET_show( self.getEvent(), true, props.id, props.align, props.thumb, props.width, props.caption); 
 				});
 			} else {
 				// handle image placeholder

@@ -16,7 +16,7 @@ var VET_prevScreen = null;
 var VET_slider = null;
 var VET_thumbSize = null;
 var VET_orgThumbSize = null;
-var VET_gallery = -1;
+var VET_placeholder = false;
 var VET_align = 0;
 var VET_thumb = 0;
 var VET_size = 0;
@@ -29,7 +29,6 @@ var VET_refid = null;
 var VET_wysiwygStart = 1;
 var VET_ratio = 1;
 var VET_shownMax = false;
-var VET_inGalleryPosition = false; // Note for refactor: Looks like this is never set to true
 var VET_notificationTimout = 4000;
 var VET_isOnSpecialPage = false;
 
@@ -302,7 +301,7 @@ function VET_showPreview(e) { // note for refactory - doesn't seem to be getting
 	VET_previewPanel.render();
 	VET_previewPanel.show();
 	VET_panel.center();
-	if(VET_refid != null && ( VET_wysiwygStart == 2 || VET_gallery == -2 ) ) {
+	if(VET_refid != null && ( VET_wysiwygStart == 2 || VET_placeholder ) ) {
 		VET_editVideo();
 	} else {
 		VET_loadMain();
@@ -329,33 +328,7 @@ function VET_getCaret() {
   return (caretPos);
 }
 
-function VET_inGallery() {
-	var originalCaretPosition = VET_getCaret(),
-		originalText = VET_getTextareaValue(),
-		lastIndexOfvideogallery = originalText.substring(0, originalCaretPosition).lastIndexOf('<videogallery>');
-
-	if(lastIndexOfvideogallery > 0) {
-	  var indexOfvideogallery = originalText.substring(originalCaretPosition).indexOf('</videogallery>');
-	  if(indexOfvideogallery > 0) {
-	    var textInTag = originalText.substring(lastIndexOfvideogallery + 15, indexOfvideogallery + originalCaretPosition);
-	    if(textInTag.indexOf('<') == -1 && textInTag.indexOf('>') == -1) {
-		    return textInTag.lastIndexOf("\n") + lastIndexOfvideogallery + 15;
-	    }
-	  }
-	}
-	return false;
-}
-
-function VET_getFirstFree( gallery, box ) {
-	for (var i=box; i >= 0; i--) {
-		if ( ! $G( 'WikiaVideoGalleryPlaceholder' + gallery + 'x' + i ) ) {
-			return i + 1;
-		}
-	}
-	return box;
-}
-
-function VET_show( e, gallery, box, align, thumb, size, caption ) {
+function VET_show( e, isPlaceholder, box, align, thumb, size, caption ) {
 	if (wgUserName == null && wgAction == 'edit') {
 		// handle login on edit page
 		UserLogin.rteForceLogin();
@@ -377,27 +350,14 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 
 	VET_isOnSpecialPage = wgNamespaceNumber === -1;
 
-	if(typeof gallery == "undefined") {
-		if (typeof showComboAjaxForPlaceHolder == 'function') {
-			if (showComboAjaxForPlaceHolder("",false)) {
-				return false;
-			}
-		}
-	}
-
 	VET_refid = null;
 	VET_wysiwygStart = 1;
-	VET_gallery = -1;
+	VET_placeholder = false;
 
-	if(typeof gallery != "undefined") {
-		// if in preview mode, go away
-		if ($G ( 'editform' ) && !YAHOO.lang.isNumber(e) ) {
-			GlobalNotification.show( vet_no_preview, 'error', errorDiv, VET_notificationTimout );
-			return false;
-		}
-		VET_gallery = gallery;
+	if(isPlaceholder) {
+		VET_placeholder = true;
 		VET_box = box;
-		// they only are given when the gallery is given...
+		// they only are given when the placeholder is given...
 		if(typeof align != "undefined") {
 			VET_align = align;
 		}
@@ -436,11 +396,12 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 			if (window.VET_RTEVideo) {
 				// edit an  video
 				var data = window.VET_RTEVideo.getData();
+//lizbug - check on this
 				if (e.data.isPlaceholder) {
 					// video placeholder
 					RTE.log('video placeholder clicked');
 
-					VET_gallery = -1;
+					VET_placeholder = false;
 				}
 				else {
 					// "regular" video
@@ -483,8 +444,8 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		return;
 	}
 
-	// for gallery and placeholder, load differently...
-	if( -1 != VET_gallery  ) {
+	// for placeholder, load differently...
+	if( VET_placeholder  ) {
 		VET_loadMainFromView();
 	} else {
 		var html = '';
@@ -686,23 +647,6 @@ function VET_preQuery(e) {
 	}
 }
 
-function VET_insertTag( target, tag, position ) {
-	// store the scrollbar positions
-	if (document.selection  && document.selection.createRange) { // IE/Opera
-		var winScroll = target.scrollTop;
-		target.value = target.value.substring(0, position)
-			+ '\n' + tag + '\n'
-			+ target.value.substring( position + 1, target.value.length);
-		target.scrollTop = winScroll;
-	} else if (target.selectionStart || target.selectionStart == '0') { // Mozilla
-		var textScroll = target.scrollTop;
-		target.value = target.value.substring(0, position)
-			+ '\n' + tag + '\n'
-			+ target.value.substring( position + 1, target.value.length);
-		target.scrollTop = textScroll;
-	}
-}
-
 function VET_displayDetails(responseText, dataFromEditMode) {
 	var errorDiv = $('#VideoEmbedError');
 
@@ -775,7 +719,7 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 		$G('VideoEmbedCaptionRow').style.display = 'none';
 	}
 
-	if ( '-2' == VET_gallery) {
+	if ( VET_placeholder ) {
 		$G( 'VET_LayoutGalleryBox' ).style.display = 'none';
 
 	}
@@ -831,14 +775,8 @@ function VET_insertFinalVideo(e, type) {
 		}
 	}
 
-	if( VET_inGalleryPosition ) { // Note for refactor - I think we can remove this
-		params.push( 'mwgalpos=' + VET_inGalleryPosition );
-		params.push( 'article='+encodeURIComponent( wgTitle ) );
-		params.push( 'ns='+wgNamespaceNumber );
-	}
-
-	if( '-1' != VET_gallery ) {
-		params.push( 'gallery=' + VET_gallery );
+	if( VET_placeholder ) {
+		params.push( 'placeholder=' + 1 );
 		params.push( 'box=' + VET_box );
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
 		params.push( 'ns='+wgNamespaceNumber );
@@ -910,14 +848,9 @@ function VET_insertFinalVideo(e, type) {
 							if (typeof RTE !== 'undefined') {
 								RTE.getInstanceEditor().getEditbox().focus();
 							}
-							if ('-1' == VET_gallery) {
-								if (!VET_inGalleryPosition) {
-									VET_getTextarea().focus();
-									insertTags( $G('VideoEmbedTag').value, '', '', VET_getTextarea());
-								} else {
-									VET_insertTag( VET_getTextarea(), $G('VideoEmbedTag').value, VET_inGalleryPosition );
-								}
-							} else if( '-2' == VET_gallery) {
+							
+							if( VET_placeholder ) {
+								// handle article view - replace video placeholders with video
 								var placeholders = $('#WikiaArticle').find('.wikiaVideoPlaceholder a'),
 									to_update = placeholders.filter('[data-id='+VET_box+']'),
 									// get thumbnail code from hidden div in success modal
@@ -935,17 +868,13 @@ function VET_insertFinalVideo(e, type) {
 									}
 								});
 								
-								YAHOO.util.Connect.asyncRequest('POST', wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
+								// purge cache of article so video will show up on reload
+								$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 							} else {
-								// insert into first free "add video" node
-								var box_num = VET_getFirstFree( VET_gallery, VET_box );
-								if( $G( 'WikiaVideoGalleryPlaceholder' + VET_gallery + 'x' + box_num ) ) {
-									var to_update = $G( 'WikiaVideoGalleryPlaceholder' + VET_gallery + 'x' + box_num );
-									to_update.parentNode.innerHTML = $G('VideoEmbedCode').innerHTML;
-									YAHOO.util.Connect.asyncRequest('POST', wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
-								}
+								VET_getTextarea().focus();
+								insertTags( $G('VideoEmbedTag').value, '', '', VET_getTextarea());
 							}
-						} else { // FCK
+						} else { 
 							var wikitag = YAHOO.util.Dom.get('VideoEmbedTag').value;
 							var options = {};
 
@@ -974,7 +903,7 @@ function VET_insertFinalVideo(e, type) {
 								}
 							}
 							else if(VET_refid != -1) {
-								if( VET_gallery != -1 ) { // gallery
+								if( VET_placeholder != -1 ) {
 									FCK.VideoGalleryUpdate( VET_refid, wikitag );
 								} else { // placeholder
 									FCK.VideoAdd(wikitag, options, VET_refid);

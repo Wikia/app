@@ -6,8 +6,10 @@ $messages['en'] = array(
 	'imgplc-add-video' => 'Add Video',
 	'imgplc-placeholder' => 'Placeholder',
 	'imgplc-image' => 'Image',
-	'imgplc-notinhistory' => "You cannot add a picture in history mode.",
-	'imgplc-notinhistory-video' => "You cannot add a video in history mode.",
+	'imgplc-notinhistory' => 'You cannot add a picture in history mode.',
+	'imgplc-notinhistory-video' => 'You cannot add a video in history mode.',
+	'imgplc-insert-error' => 'Sorry, something went wrong while inserting this video to the article',
+
 );
 
 /** Afrikaans (Afrikaans)

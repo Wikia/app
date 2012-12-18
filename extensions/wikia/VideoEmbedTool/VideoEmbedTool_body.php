@@ -269,8 +269,8 @@ class VideoEmbedTool {
 		$button_message = wfMessage('vet-return');
 
 		// Adding a video from article view page
-		$editingFromView = $wgRequest->getVal( 'gallery' );
-		if( $editingFromView == -2 ) {
+		$editingFromView = $wgRequest->getVal( 'placeholder' );
+		if( $editingFromView ) {
 			Wikia::setVar('EditFromViewMode', true);
 			
 			$article_title = $wgRequest->getVal( 'article' );
