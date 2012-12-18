@@ -17,7 +17,7 @@
 	}
 
 	$(document).ready(function() {
-		$('.WikiaArticle a.external.exitstitial').click(function(event) {
+		$('.WikiaArticle a.exitstitial').filter('.external, .extiw').click(function(event) {
 			event.preventDefault();
 
 			var url = $(this).attr('href');
