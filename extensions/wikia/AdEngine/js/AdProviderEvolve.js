@@ -10,8 +10,6 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 		getReskinAndSilverScript,
 		getUrl,
 		getKv,
-		wikiaDartHelper_getZone1,
-		kvStrMaxLength = 500,
 		iface,
 		sanitizeSlotname,
 		formatTrackTime,
@@ -115,7 +113,7 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 			'sect=' + sect + ';' +
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +
-			wikiaDartHelper_getZone1() +
+			's1=_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_') + ';' +
 			wikiaDart.getCustomKeyValues() +
 			wikiaDart.getKruxKeyValues();
 	};
@@ -146,21 +144,6 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 
 		log(url, 7, 'AdProviderEvolve');
 		return url;
-	};
-
-	// c&p wikiaDartHelper.getZone1
-	// TODO refactor
-	wikiaDartHelper_getZone1 = function () {
-		log('wikiaDartHelper_getZone1', 5, 'AdProviderEvolve');
-
-		if (window.wgDBname) {
-			var kv = 's1=_' + window.wgDBname.replace('/[^0-9A-Z_a-z]/', '_') + ';';
-
-			log(kv, 7, 'AdProviderEvolve');
-			return kv;
-		}
-
-		return '';
 	};
 
 	hop = function (slotname) {
