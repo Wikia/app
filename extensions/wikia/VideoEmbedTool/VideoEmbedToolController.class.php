@@ -4,6 +4,11 @@ class VideoEmbedToolController extends WikiaController {
 
 	const VIDEO_THUMB_DEFAULT_WIDTH = 160;
 	const VIDEO_THUMB_DEFAULT_HEIGHT = 90;
+	
+	public function modal() {
+		$vet = new VideoEmbedTool();
+		$this->html = $vet->loadMain();
+	}
 
 	/*
 	 *   Example of use:

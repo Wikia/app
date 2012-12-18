@@ -880,6 +880,7 @@ $config['relatedvideos_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/VideoHandlers/js/AddVideo.js',
+		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
 		'//extensions/wikia/RelatedVideos/js/RelatedVideos.js'
 	)
 );
@@ -1148,6 +1149,7 @@ $config['special_videos_js'] = array(
 	'skin' => array( 'oasis', 'monobook' ),
 	'assets' => array(
 		'//extensions/wikia/VideoHandlers/js/AddVideo.js',
+		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
 		'//extensions/wikia/SpecialVideos/js/SpecialVideos.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
 	)

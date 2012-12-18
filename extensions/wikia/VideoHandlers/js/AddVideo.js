@@ -308,6 +308,7 @@
 
 	};
 
+/*
 	$.fn.addVideoButton = function(options) {
 	
 		return this.each(function() {
@@ -315,7 +316,8 @@
 		});
 	
 	};
-	
+*/
+
 	window.AddVideo = AddVideo;
 
 })(jQuery, this);
