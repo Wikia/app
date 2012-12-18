@@ -28,7 +28,8 @@ var MediaPlaceholder = {
 			e.preventDefault();
 
 			// cache jquery object
-			var $this = $(this);
+			var $this = $(this),
+				props;
 
 			// For now, make this somewhat backwards compatible with unpurged saved placholders
 			if($this.prop('onclick')) {
@@ -46,7 +47,7 @@ var MediaPlaceholder = {
 					return;
 				}
 
-				var props = self.getProps($this);
+				props = self.getProps($this);
 
 				// open VET
 				$.when(
@@ -68,7 +69,7 @@ var MediaPlaceholder = {
 					return;
 				}
 
-				var props = self.getProps($this);
+				props = self.getProps($this);
 
 				// open WMU
 				$.when(

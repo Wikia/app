@@ -1,3 +1,5 @@
+/*global vet_warn2, vet_warn3, UserLogin, WikiaEditor*/
+
 /*
  * Author: Inez Korczynski, Bartek Lapinski
  */
