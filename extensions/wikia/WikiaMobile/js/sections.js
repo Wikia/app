@@ -139,7 +139,7 @@ define('sections', ['events', 'JSMessages'], function(ev, msg){
 	}
 
 	function find(heading){
-		if(typeof heading === 'string') {
+		if(typeof heading == 'string') {
 			heading = d.getElementById(heading.replace(/ /, '_'));
 		}
 
