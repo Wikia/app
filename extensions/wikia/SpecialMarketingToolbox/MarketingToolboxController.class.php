@@ -123,6 +123,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->prepareLayoutData($this->selectedModuleId, $modulesData);
 
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHub.js');
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHubNavigation.js');
 		$this->response->addAsset('/resources/jquery/jquery.validate.js');
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/jquery.MetaData.js');
 

@@ -33,7 +33,7 @@
 				?>
 
 
-				<input class="secondary" type="button" value="<?= $wf->msg('marketing-toolbox-edithub-clear-button')?>" />
+				<input class="secondary clear" type="button" value="<?= $wf->msg('marketing-toolbox-edithub-clear-button')?>" />
 			</div>
 			<div class="module-image-box">
 				<div class="image-placeholder"></div>
