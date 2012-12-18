@@ -1,36 +1,47 @@
 <?php
 class WikiaValidatorDependentTest extends WikiaBaseTest {
+
+	/**
+	 * @dataProvider dataProviderWithInvalidConfigParams
+	 */
+	public function testIsValidWithInvalidConfigParams($validator, $exceptionName) {
+		$this->setExpectedException($exceptionName);
+		$validator->isValid('testValue');
+	}
 	
-	public function testIsValidWithInvalidConfigParams() {
+	public function dataProviderWithInvalidConfigParams() {
 		$wikiaValidatorStringStub = $this->getMock('WikiaValidatorString');
 		
-		//no dependentField passed
-		$validator = new WikiaValidatorDependent(array(
-			'required' => false,
-			'ownValidator' => $wikiaValidatorStringStub,
-			'dependentFieldCondition' => WikiaValidatorDependent::CONDITION_NOT_EMPTY
-		));
-		$this->setExpectedException('Exception');
-		$validator->isValid('testValue');
-
-		//no ownValidator passed
-		$validator = new WikiaValidatorDependent(array(
-			'required' => false,
-			'dependentField' => 'aFormFieldName',
-			'dependentFieldCondition' => WikiaValidatorDependent::CONDITION_NOT_EMPTY
-		));
-		$this->setExpectedException('Exception');
-		$validator->isValid('testValue');
-
-		//invalid ownValidator passed
-		$validator = new WikiaValidatorDependent(array(
-			'required' => false,
-			'ownValidator' => new stdClass(),
-			'dependentField' => 'aFormFieldName',
-			'dependentFieldCondition' => WikiaValidatorDependent::CONDITION_NOT_EMPTY
-		));
-		$this->setExpectedException('Exception');
-		$validator->isValid('testValue');
+		return array(
+			//no ownValidator passed
+			array(
+				new WikiaValidatorDependent(array(
+					'required' => false,
+					'dependentField' => 'aFormFieldName',
+					'dependentFieldCondition' => WikiaValidatorDependent::CONDITION_NOT_EMPTY
+				)),
+				'WikiaValidatorGivenObjectIsNotWikiaValidator',
+			),
+			//invalid ownValidator passed
+			array(
+				new WikiaValidatorDependent(array(
+					'required' => false,
+					'ownValidator' => new stdClass(),
+					'dependentField' => 'aFormFieldName',
+					'dependentFieldCondition' => WikiaValidatorDependent::CONDITION_NOT_EMPTY
+				)),
+				'WikiaValidatorGivenObjectIsNotWikiaValidator'
+			),
+			//no dependentField passed
+			array(
+				new WikiaValidatorDependent(array(
+					'required' => false,
+					'ownValidator' => $wikiaValidatorStringStub,
+					'dependentFieldCondition' => WikiaValidatorDependent::CONDITION_NOT_EMPTY
+				)),
+				'WikiaValidatorDependentFieldEmptyException'
+			),
+		);
 	}
 
 	public function testIsValid() {
