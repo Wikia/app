@@ -1,5 +1,5 @@
+@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/transition";
 
 $categoryselect-color-category: mix( $color-text, $color-page, 5% );
 $categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% );
@@ -71,21 +71,42 @@ $categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% )
 	}
 
 	.input {
+		@include border-radius( 4px );
 		background-color: $color-page;
 		border: 1px solid $color-page-border;
 		color: $color-text;
-		font-size: 13px;
-		margin-left: 5px;
+		font-size: 12px;
+		height: 19px;
+		margin-bottom: 0;
+		margin-left: 6px;
 		outline: none;
-		padding: 4px 9px;
+		padding: 0 5px;
 		width: 245px;
 	}
 
 	.newCategories {
 		float: left;
 
+		.category {
+			@include border-radius( 4px );
+			background-color: $categoryselect-color-category;
+			border: 1px solid $color-page-border;
+			margin-bottom: 0;
+			margin-left: 5px;
+			padding: 2px 5px 3px 5px;
+		}
+
 		.name {
 			cursor: move;
+		}
+
+		.sprite-small {
+			vertical-align: top;
+		}
+
+		.removeCategory {
+			border-left: 1px solid $color-page-border;
+			padding-left: 5px;
 		}
 
 		.toolbar {
