@@ -1,8 +1,8 @@
 <? for ($i = 1; $i <= $slidesCount; $i++): ?>
-	<div class="module-slider-box">
+	<div class="module-box">
 		<h3 class="alternative"><?= $i?>.</h3>
-		<div class="module-slider-right-box">
-			<div class="module-slider-input-box">
+		<div class="module-right-box">
+			<div class="module-input-box">
 				<input type="button" class="vet-show" value="<?= $wf->msg('marketing-toolbox-edithub-add-file-button')?>" />
 				<span class="alternative filename-placeholder">File name</span>
 				<?=$app->renderView(
@@ -33,7 +33,7 @@
 
 				<input class="secondary" type="button" value="<?= $wf->msg('marketing-toolbox-edithub-clear-button')?>" />
 			</div>
-			<div class="module-slider-image-box">
+			<div class="module-image-box">
 				<div class="image-placeholder"></div>
 			</div>
 
