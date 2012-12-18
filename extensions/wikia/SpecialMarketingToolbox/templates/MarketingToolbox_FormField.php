@@ -1,6 +1,8 @@
-<div class="input-group
-<?= (isset($inputData['class']))? ' '.$inputData['class'] : '' ?>
-">
+<? if ($inputData['type'] !== 'hidden'): ?>
+	<div class="input-group
+		<?= (isset($inputData['class']))? ' '.$inputData['class'] : '' ?>
+	">
+<? endif ?>
 	<? if (!empty($inputData['label'])): ?>
 		<label for="<?=$inputData['name']?>"><?=$inputData['label']?></label>
 	<? endif ?>
@@ -18,4 +20,6 @@
 	<? if (!empty($inputData['errorMessage'])): ?>
 		<p class="error error-msg"><?=$inputData['errorMessage']?></p>
 	<? endif ?>
-</div>
+<? if ($inputData['type'] !== 'hidden'): ?>
+	</div>
+<? endif ?>

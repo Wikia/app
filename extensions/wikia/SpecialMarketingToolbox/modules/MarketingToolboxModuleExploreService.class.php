@@ -29,7 +29,13 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
 				'attributes' => array(
-					'class' => 'required'
+					'class' => 'required explore-title'
+				)
+			),
+			'fileName' => array(
+				'type' => 'hidden',
+				'attributes' => array(
+					'class' => 'wmu-file-name-input'
 				)
 			),
 		);

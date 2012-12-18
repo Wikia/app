@@ -91,12 +91,13 @@ EditHub.prototype = {
 	},
 
 	addImage: function(wmuData) {
+		var fileName = wmuData.imageTitle;
 		$.nirvana.sendRequest({
 			controller: 'MarketingToolbox',
 			method: 'getImageDetails',
 			type: 'get',
 			data: {
-				'fileHandler': wmuData.imageTitle
+				'fileHandler': fileName
 			},
 			callback: $.proxy(function(response) {
 				var tempImg = new Image();
@@ -104,6 +105,8 @@ EditHub.prototype = {
 				tempImg.height = this.placeholderDimensions;
 				tempImg.width = this.placeholderDimensions;
 				$('.MarketingToolboxMain .placeholder').append(tempImg);
+				$('.MarketingToolboxMain .wmu-file-name').html(fileName);
+				$('.MarketingToolboxMain .wmu-file-name-input').val(fileName);
 			}, this)
 		});
 	},
