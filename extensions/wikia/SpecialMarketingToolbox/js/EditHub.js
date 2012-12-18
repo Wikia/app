@@ -18,8 +18,13 @@ EditHub.prototype = {
 
 		$('#marketing-toolbox-clearall').click($.proxy(function(){
 			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation',this.form.data('module-name'))) == true) {
-				this.formReset();
+				this.formReset(this.form);
 			}
+		}, this));
+
+		$(this.form).find('.clear').click($.proxy(function(event){
+			var sectionToReset = $(event.target).parents('.module-box');
+			this.formReset(sectionToReset);
 		}, this));
 
 		$.validator.addMethod("wikiaUrl", function(value, element) {
@@ -91,12 +96,13 @@ EditHub.prototype = {
 	},
 
 	addImage: function(wmuData) {
+		var fileName = wmuData.imageTitle;
 		$.nirvana.sendRequest({
 			controller: 'MarketingToolbox',
 			method: 'getImageDetails',
 			type: 'get',
 			data: {
-				'fileHandler': wmuData.imageTitle
+				'fileHandler': fileName
 			},
 			callback: $.proxy(function(response) {
 				var tempImg = new Image();
@@ -104,6 +110,8 @@ EditHub.prototype = {
 				tempImg.height = this.placeholderDimensions;
 				tempImg.width = this.placeholderDimensions;
 				$('.MarketingToolboxMain .placeholder').append(tempImg);
+				$('.MarketingToolboxMain .wmu-file-name').html(fileName);
+				$('.MarketingToolboxMain .wmu-file-name-input').val(fileName);
 			}, this)
 		});
 	},
@@ -122,11 +130,12 @@ EditHub.prototype = {
 		});
 	},
 
-	formReset: function() {
-		this.form.find('input:text, input:password, input:file, select, textarea').val('');
-		this.form.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+	formReset: function(elem) {
+		elem.find('input:text, input:password, input:file, select, textarea').val('');
+		elem.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
 	}
-}
+};
+
 
 var EditHub = new EditHub();
 $(function () {

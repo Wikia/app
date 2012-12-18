@@ -8,6 +8,12 @@
 			<?=$app->renderView(
 				'MarketingToolbox',
 				'FormField',
+				array('inputData' => $fields['fileName'])
+			);
+			?>
+			<?=$app->renderView(
+				'MarketingToolbox',
+				'FormField',
 				array('inputData' => $fields['exploreTitle'])
 			);
 			?>

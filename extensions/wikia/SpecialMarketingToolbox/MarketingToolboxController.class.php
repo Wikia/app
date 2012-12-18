@@ -87,13 +87,32 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->overrideTemplate('dashboard');
 	}
 
+	protected function checkDate($date) {
+		$datetime = new DateTime('@' . $date);
+		if ($datetime->format('H') != 0 || $datetime->format('i') != 0 || $datetime->format('s') != 0) {
+			$datetime->setTime(0, 0, 0);
+			$url = $this->toolboxModel->getModuleUrl(
+				$this->langCode,
+				$this->sectionId,
+				$this->verticalId,
+				$datetime->getTimestamp(),
+				$this->selectedModuleId
+			);
+			$this->response->redirect($url);
+		}
+	}
+
 	/**
 	 * Main action for editing hub modules
 	 */
 	public function editHubAction() {
-		$this->flashMessage = $this->getFlashMessage();
 
 		$this->retriveDataFromUrl();
+
+		$this->checkDate($this->date);
+
+		$this->flashMessage = $this->getFlashMessage();
+
 		$modulesData = $this->toolboxModel->getModulesData(
 			$this->langCode,
 			$this->sectionId,
@@ -104,6 +123,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->prepareLayoutData($this->selectedModuleId, $modulesData);
 
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHub.js');
+		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/EditHubNavigation.js');
 		$this->response->addAsset('/resources/jquery/jquery.validate.js');
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/jquery.MetaData.js');
 
