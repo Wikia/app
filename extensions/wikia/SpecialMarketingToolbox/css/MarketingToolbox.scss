@@ -123,7 +123,13 @@ $chevron-color: #888;
 		}
 		.wmu-show {
 			display: block;
+			float: left;
 			margin: 7px;
+		}
+		.wmu-file-name {
+			color: #7f7f7f;
+			float: left;
+			margin-top: 7px;
 		}
 		.placeholder {
 			border: 1px solid #d2d2d2;
@@ -131,6 +137,9 @@ $chevron-color: #888;
 			height: 138px;
 			margin: 10px 0;
 			width: 138px;
+		}
+		.input-group .explore-title {
+			width: 320px;
 		}
 	}
 

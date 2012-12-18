@@ -41,6 +41,7 @@ $messages['en'] = array(
 	'marketing-toolbox-edithub-clearall-button' => 'Clear all',
 	'marketing-toolbox-edithub-clear-button' => 'Clear',
 	'marketing-toolbox-edithub-add-file-button' => 'Add a photo',
+	'marketing-toolbox-edithub-file-name' => 'File name',
 
 	'marketing-toolbox-edithub-clearall-confirmation' => 'Are you sure you want to clear the entire $1?',
 

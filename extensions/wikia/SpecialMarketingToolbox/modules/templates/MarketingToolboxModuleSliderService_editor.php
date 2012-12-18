@@ -4,7 +4,9 @@
 		<div class="module-right-box">
 			<div class="module-input-box">
 				<input type="button" class="vet-show" value="<?= $wf->msg('marketing-toolbox-edithub-add-file-button')?>" />
-				<span class="alternative filename-placeholder">File name</span>
+				<span class="alternative filename-placeholder">
+					<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
+				</span>
 				<?=$app->renderView(
 					'MarketingToolbox',
 					'FormField',
