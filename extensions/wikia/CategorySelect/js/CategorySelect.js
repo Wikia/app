@@ -88,7 +88,7 @@
 		elements.list = element.find( options.selectors.categories );
 
 		// Store category data in categories
-		elements.categories = elements.list
+		elements.categories = element
 			.find( options.selectors.category )
 			.each(function( i ) {
 				$( this ).data( 'category',
@@ -349,7 +349,7 @@
 
 			// By jQuery object or DOM Element
 			} else {
-				category = this.elements.list.find( category );
+				category = this.element.find( category );
 			}
 
 			return category;
@@ -425,8 +425,7 @@
 		 *          The updated categories object.
 		 */
 		updateCategories: function() {
-			return this.elements.categories = this.elements.list
-				.find( this.options.selectors.category );
+			return this.elements.categories = this.element.find( this.options.selectors.category );
 		}
 	});
 

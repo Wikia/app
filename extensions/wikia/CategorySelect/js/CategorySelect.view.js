@@ -62,8 +62,9 @@
 			$wrapper.removeClass( 'modified' ).trigger( 'reset' );
 		});
 
-		// FIXME
 		$wrapper.find( '.save' ).on( 'click.' + namespace, function( event ) {
+			var $saveButton = $( this ).attr( 'disabled', true );
+
 			$.nirvana.sendRequest({
 				controller: 'CategorySelectController',
 				data: {
@@ -73,6 +74,7 @@
 				method: 'save'
 
 			}).done(function( response ) {
+				$saveButton.removeAttr( 'disabled' );
 
 				// TODO: don't use alert
 				if ( response.error ) {
@@ -82,19 +84,25 @@
 					$wrapper.removeClass( 'modified' );
 
 					// Linkify the new categories
-					$categories.find( '.new' ).each(function( i ) {
-						var $category = $( this ),
+					$newCategories.find( '.category' ).each(function( i ) {
+						var $category = $( this ).detach(),
 							category = $category.data( 'category' ),
-							link = mw.util.wikiGetlink( categoryLinkPrefix + category.name ),
-							$link = $( '<a>' )
-								.addClass( 'name' )
-								.attr( 'href', link )
-								.text( category.name );
+							$link = $( '<a>' );
+
+						// Make sure first character in name is uppercased
+						category.name = category.name.charAt( 0 ).toUpperCase() + category.name.slice( 1 );
+
+						$link
+							.addClass( 'name' )
+							.attr( 'href', mw.util.wikiGetlink( categoryLinkPrefix + category.name ) )
+							.text( category.name );
 
 						$category
 							.removeClass( 'new' )
 							.find( '.name' )
-							.replaceWith( $link );
+							.replaceWith( $link )
+
+						$categories.append( $category );
 					});
 				}
 			});
