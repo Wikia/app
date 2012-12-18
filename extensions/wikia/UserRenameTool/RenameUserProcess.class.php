@@ -228,7 +228,7 @@ class RenameUserProcess {
 
 			if($affectedRows) {
 				$dbw->commit();
-				$this->addLog("Changed user {$this->mOldUsername} to {$this->mNewUsername} in {$dbName}");
+				$this->addLog("Changed user {$this->mOldUsername} to {$this->mNewUsername} in {$wgExternalSharedDB}");
 				wfProfileOut(__METHOD__);
 				return true;
 			} else {
@@ -611,6 +611,7 @@ class RenameUserProcess {
 			
 			$fakeUser->setPassword( null );
 			$fakeUser->setRealName( '' );
+			$fakeUser->setName( $this->mOldUsername );
 			
 			if ( $wgExternalAuthType ) {
 				$fakeUser = ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
@@ -621,7 +622,7 @@ class RenameUserProcess {
 			$fakeUser->setOption( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
 			$fakeUser->saveSettings();
 			$this->mFakeUserId = $fakeUser->getId();
-			$this->addLog("Created fake user account with ID {$this->mFakeUserId} and renameData '{$fakeUser->getOption( 'renameData', '')}'");
+			$this->addLog("Created fake user account for {$fakeUser->getName()} with ID {$this->mFakeUserId} and renameData '{$fakeUser->getOption( 'renameData', '')}'");
 		} else {
 			$fakeUser = User::newFromId($this->mFakeUserId);
 			$this->addLog("Fake user account already exists: {$this->mFakeUserId}");
