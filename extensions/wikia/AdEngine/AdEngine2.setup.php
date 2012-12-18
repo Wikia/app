@@ -8,6 +8,7 @@ $app->registerHook('WikiaSkinTopScripts', 'AdEngine2Controller', 'onWikiaSkinTop
 $app->registerHook('OasisSkinAssetGroupsBlocking', 'AdEngine2Controller', 'onOasisSkinAssetGroupsBlocking');
 $app->registerHook('OasisSkinAssetGroups', 'AdEngine2Controller', 'onOasisSkinAssetGroups');
 $app->registerHook('LinkerMakeExternalLink', 'AdEngine2Controller', 'onLinkerMakeExternalLink');
+$app->registerHook('LinkEnd', 'AdEngine2Controller', 'onLinkEnd');
 
 $app->registerExtensionMessageFile('AdEngine', __DIR__ . '/AdEngine.i18n.php');
 
