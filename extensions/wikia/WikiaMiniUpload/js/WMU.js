@@ -311,11 +311,6 @@ function WMU_getFirstFree( gallery, box ) {
 }
 
 function WMU_loadMainFromView() {
-	if (wgUserName == null) {
-		UserLogin.rteForceLogin();
-		return;
-	}
-
 	var callback = function(data) {
 		// first, check if this is a special case for anonymous disabled...
 		if( data.wmu_init_login ) {
@@ -407,6 +402,17 @@ function WMU_loadMainFromView() {
 
 
 function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
+	if (wgUserName == null && wgAction == 'edit') {
+		// handle login on edit page
+		UserLogin.rteForceLogin();
+		return;
+	} else if (UserLogin.isForceLogIn()) {
+		// handle login on article page
+		return;
+	}
+
+
+
 	// Handle MiniEditor focus
 	// (BugId:18713)
 	if (window.WikiaEditor) {
@@ -418,12 +424,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 
 	// Special Case for using WMU in on Special Pages
 	WMU_isOnSpecialPage = wgNamespaceNumber === -1;
-
-	if(typeof gallery == "undefined") {
-		if (typeof showComboAjaxForPlaceHolder == 'function') {
-			if (showComboAjaxForPlaceHolder("",false, "", false, true)) return false; // show the 'login required for this action' message.
-		}
-	}
 
 	WMU_refid = null;
 	WMU_wysiwygStart = 1;
