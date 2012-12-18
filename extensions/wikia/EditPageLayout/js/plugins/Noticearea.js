@@ -185,12 +185,12 @@
 						controller: 'WikiaUserPropertiesController',
 						method: 'performPropertyOperation',
 						data: {
-							handlerName: 'RTEUserPropertiesHandler',
-							methodName: 'dismissRTEMainPageNotice'
+							handlerName: 'EditorUserPropertiesHandler',
+							methodName: 'dismissEditorMainPageNotice'
 						},
 						type: 'post',
 						format: 'json',
-						callback: $.proxy(this.onDismissRTEMainPageNotice, this)
+						callback: $.proxy(this.onDismissMainPageNotice, this)
 					});
 				}
 
@@ -198,7 +198,7 @@
 			}
 		},
 
-		onDismissRTEMainPageNotice: function(response) {
+		onDismissMainPageNotice: function(response) {
 			if( response.result && response.result.success != true ) {
 				$().log('Noticearea error: wrong during dissmissing main page edu note');
 

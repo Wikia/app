@@ -32,7 +32,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		$fields = $this->getFormFields();
 
 		foreach ($fields as $fieldName => $field) {
-			if( !empty($field['validator']) ) {
+			if (!empty($field['validator'])) {
 				$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
 
 				if( $field['validator'] instanceof WikiaValidatorDependent ) {
@@ -40,7 +40,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 					$field['validator']->setFormFields($fields);
 				}
 
-				if( !$field['validator']->isValid($fieldData) && (($validationError = $field['validator']->getError()) instanceof WikiaValidationError) ) {
+				if (!$field['validator']->isValid($fieldData) && (($validationError = $field['validator']->getError()) instanceof WikiaValidationError)) {
 					$out[$fieldName] = $validationError->getMsg();
 				}
 			}
@@ -51,7 +51,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 
 	public function filterData($data) {
 		$filteredData = array_intersect_key($data, $this->getFormFields());
-		$filteredData = array_filter($filteredData,function($value) {return !empty($value); });
+		$filteredData = array_filter($filteredData, function ($value) { return !empty($value); });
 		return $filteredData;
 	}
 
