@@ -328,4 +328,15 @@ class ForumHooksHelper {
 		self::onWallAction(null, $parent, $id);
 		return true;
 	}
+
+	static public function onArticleFromTitle( &$title ){
+
+		$currentNs = MWNamespace::getSubject( $title->getNamespace() );
+		if ( $currentNs == NS_WIKIA_FORUM_BOARD || $currentNs == NS_WIKIA_FORUM_TOPIC_BOARD
+			|| $currentNs == NS_WIKIA_FORUM_BOARD_THREAD ) {
+			die('sfsfsf' . $currentNs);
+			OasisController::addBodyParameter('itemscope itemtype="http://schema.org/WebPage"');
+		}
+		return true;
+	}
 }
