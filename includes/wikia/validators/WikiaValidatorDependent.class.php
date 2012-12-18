@@ -11,9 +11,9 @@ class WikiaValidatorDependent extends WikiaValidator {
 	protected $formData = array();
 
 	protected function config( array $options = array() ) {
-		$this->setOption('ownValidator', 0);
+		$this->setOption('ownValidator', null);
 		$this->setOption('dependentFieldCondition', self::CONDITION_EMPTY);
-		$this->setOption('dependentField', 0);
+		$this->setOption('dependentField', null);
 	}
 
 	public function setFormData($data) {
@@ -28,11 +28,11 @@ class WikiaValidatorDependent extends WikiaValidator {
 		$ownValidator = $this->getOption('ownValidator');
 		$dependentField = $this->getOption('dependentField');
 
-		if( $dependentField === 0 ) {
+		if( is_null($dependentField) ) {
 			throw new Exception( 'WikiaValidatorDepend: dependent field is empty' );
 		}
 
-		if( $ownValidator === 0 || !($ownValidator instanceof WikiaValidator) ) {
+		if( is_null($ownValidator) || !($ownValidator instanceof WikiaValidator) ) {
 			throw new Exception( 'WikiaValidatorDepend: own validator is not an instance of WikiaValidator' );
 		}
 
