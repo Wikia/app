@@ -554,7 +554,7 @@ class WikiaSearch extends WikiaObject {
 		try {
 			return $this->client->select( $this->getSelectQuery( $searchConfig ) );
 		} catch ( Exception $e ) {
-			if ( $searchConfig->getError() !== false ) {
+			if ( $searchConfig->getError() !== null ) {
 				$searchConfig->setError( $e );
 				F::build('Wikia')->log(__METHOD__, 'Querying Solr With No Boost Functions', $e);
 				return F::build('Solarium_Result_Select_Empty');

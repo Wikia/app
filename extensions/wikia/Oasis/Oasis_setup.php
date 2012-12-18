@@ -123,7 +123,7 @@ $wgOasisThemes = array(
 		"page-opacity" => "100"
 	),
 	'babygirl' => array(
-		"color-body" => "#381B29",
+		"color-body" => "#000000",
 		"color-page" => "#FFFFFF",
 		"color-buttons" => "#6F027C",
 		"color-links" => "#6F027C",
@@ -206,7 +206,7 @@ $wgOasisThemes = array(
 		"page-opacity" => "100"
 	),
 	'police' => array(
-		"color-body" => "#1A1A1A",
+		"color-body" => "#000000",
 		"color-page" => "#0F142F",
 		"color-buttons" => "#1A52AC",
 		"color-links" => "#D6AD0B",

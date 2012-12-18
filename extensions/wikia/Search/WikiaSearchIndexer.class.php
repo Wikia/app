@@ -438,7 +438,7 @@ class WikiaSearchIndexer extends WikiaObject {
 			}
 		
 			$result['hub'] 			= isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
-			$result['wikititle']	= isset($data['query']['wikidesc']['pagetitle']) ? $data['query']['wikidesc']['pagetitle'] : '';
+			$result['wikititle']	= $this->wg->Sitename;
 		}
 	
 		$result['redirect_titles'] = $this->getRedirectTitles($page);

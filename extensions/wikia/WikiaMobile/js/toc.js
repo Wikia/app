@@ -69,7 +69,7 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 
 			parent = {
 				id: id,
-				name: a.getElementsByClassName('toctext')[0].innerText
+				name: a.getElementsByClassName('toctext')[0].innerHTML
 			};
 
 			ul && (parent.children = getToc(ul.children));
@@ -89,6 +89,18 @@ define('toc', ['track', 'sections'], function toc(track, sections){
 
 			if(table || (table = d.getElementById('toc'))){
 				toc = getToc(table.getElementsByClassName('toclevel-1'));
+			}else{
+				//fallback if there is no toc on a page
+				var h2s = d.querySelectorAll('#mw-content-text h2[id]'),
+					h2,
+					i = 0;
+
+				while(h2 = h2s[i++]){
+					toc.push({
+						id: h2.id,
+						name: h2.innerText
+					})
+				}
 			}
 
 			return toc;

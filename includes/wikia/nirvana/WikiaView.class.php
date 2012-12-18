@@ -220,7 +220,6 @@ class WikiaView {
 			default:
 				// Export the app wg and wf helper objects into the template
 				// Note: never do this for Raw or Json formats due to major security issues there
-				wfProfileIn(__METHOD__ . ' - templateengine PHP');
 
 				$data['app'] = F::app();
 				$data['wg'] = F::app()->wg;
@@ -230,14 +229,12 @@ class WikiaView {
 					extract( $data );
 				}
 
-
 				ob_start();
 				$templatePath = $this->getTemplatePath();
 				wfProfileIn(__METHOD__ . ' - template: ' . $templatePath);
 				require $templatePath;
 				wfProfileOut(__METHOD__ . ' - template: ' . $templatePath);
 				$out = ob_get_clean();
-				wfProfileOut(__METHOD__ . ' - templateengine PHP');
 				wfProfileOut(__METHOD__);
 				return $out;
 				break;

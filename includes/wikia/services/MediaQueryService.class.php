@@ -503,18 +503,18 @@ SQL;
 
 		$app->wf->ProfileIn( __METHOD__ );
 
-		$memKey = $app->wf->MemcKey( 'videos', 'total_video_views' );
+		$memKey = $app->wf->MemcKey( 'videos', 'total_video_views', 'v3' );
 		$videoList = $app->wg->Memc->get( $memKey );
 		if ( !is_array($videoList) ) {
 			if ( !VideoInfoHelper::videoInfoExists() ) {
-				$videoList = F::build( 'DataMartService', array(), 'getVideoListViewsByTitleTotal' );
+				$videoList = DataMartService::getVideoListViewsByTitleTotal();
 			} else {
 				$db = $app->wf->GetDB( DB_SLAVE );
 
 				$result = $db->select(
 					array( 'video_info' ),
 					array( 'video_title, views_total' ),
-					array(),
+					array( 'views_total != 0' ),
 					__METHOD__
 				);
 
@@ -524,7 +524,7 @@ SQL;
 					$videoList[$hashTitle] = $row->views_total;
 				}
 
-				$app->wg->Memc->set( $memKey, $videoList, 60*60*24 );
+				$app->wg->Memc->set( $memKey, $videoList, 60*60*2 );
 			}
 		}
 

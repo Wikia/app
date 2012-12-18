@@ -25,6 +25,7 @@ class AdController extends WikiaController {
 				self::$config['CORP_TOP_LEADERBOARD'] = true;
 				self::$config['CORP_TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
+				self::$config['TOP_BUTTON_WIDE'] = true;
 			}
 			elseif (WikiaPageType::isSearch()) {
 				if (!empty($this->wg->EnableWikiaSearchAds)) {
@@ -32,7 +33,8 @@ class AdController extends WikiaController {
 				} else {
 					self::$config['TOP_LEADERBOARD'] = true;
 					self::$config['TOP_RIGHT_BOXAD'] = true;
-					self::$config['TOP_BUTTON'] = true;				
+					self::$config['TOP_BUTTON'] = true;
+					self::$config['TOP_BUTTON_WIDE'] = true;
 				}
 			}
 			return;
@@ -53,6 +55,7 @@ class AdController extends WikiaController {
 			}
 			self::$config['HOME_TOP_RIGHT_BUTTON'] = true;
 			self::$config['TOP_BUTTON'] = true;
+			self::$config['TOP_BUTTON_WIDE'] = true;
 		} else {
 			if(in_array($namespace, $wgContentNamespaces)) {
 				// content page
@@ -68,15 +71,18 @@ class AdController extends WikiaController {
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				self::$config['TOP_RIGHT_BUTTON'] = true;
 				self::$config['TOP_BUTTON'] = true;
+				self::$config['TOP_BUTTON_WIDE'] = true;
 			} else if($namespace == NS_FILE) {
 				// file/image page
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
+				self::$config['TOP_BUTTON_WIDE'] = true;
 			} else if(WikiaPageType::isForum()) {
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
+				self::$config['TOP_BUTTON_WIDE'] = true;
 				self::$config['LEFT_SKYSCRAPER_3'] = true;
 				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
@@ -88,17 +94,20 @@ class AdController extends WikiaController {
 					self::$config['TOP_RIGHT_BOXAD'] = true;
 					self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 					self::$config['TOP_BUTTON'] = true;
+					self::$config['TOP_BUTTON_WIDE'] = true;
 					self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 					self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				}
 			} else if($namespace == NS_SPECIAL) {
 				if($wgTitle->isSpecial('Leaderboard')) {
 					self::$config['TOP_LEADERBOARD'] = true;
-					self::$config['TOP_RIGHT_BOXAD'] = true;					
+					self::$config['TOP_RIGHT_BOXAD'] = true;
 					self::$config['TOP_BUTTON'] = true;
+					self::$config['TOP_BUTTON_WIDE'] = true;
 				} else if($wgTitle->isSpecial('Videos')) {
 					self::$config['TOP_LEADERBOARD'] = true;
 					self::$config['TOP_BUTTON'] = true;
+					self::$config['TOP_BUTTON_WIDE'] = true;
 				}
 			} else if($namespace == NS_CATEGORY) {
 				// category page
@@ -110,26 +119,32 @@ class AdController extends WikiaController {
 				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
+				self::$config['TOP_BUTTON_WIDE'] = true;
 			} else if($namespace == NS_PROJECT) {
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
+				self::$config['TOP_BUTTON_WIDE'] = true;
 			} else if($namespace == NS_FORUM) {
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
+				self::$config['TOP_BUTTON_WIDE'] = true;
 			} else if( BodyController::isBlogListing() ) {
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
+				self::$config['TOP_BUTTON_WIDE'] = true;
 			} else if( BodyController::isBlogPost() ) {
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
+				self::$config['TOP_BUTTON_WIDE'] = true;
 			} else if (array_key_exists($namespace, $wgExtraNamespaces)) {
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_BUTTON'] = true;
+				self::$config['TOP_BUTTON_WIDE'] = true;
 			}
 		}
 	}

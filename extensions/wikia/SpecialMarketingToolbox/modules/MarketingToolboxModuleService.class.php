@@ -1,4 +1,4 @@
-<?
+<?php
 abstract class MarketingToolboxModuleService extends WikiaService {
 	const CLASS_NAME_PREFIX = 'MarketingToolboxModule';
 	const CLASS_NAME_SUFFIX = 'Service';
@@ -32,15 +32,15 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		$fields = $this->getFormFields();
 
 		foreach ($fields as $fieldName => $field) {
-			if( !empty($field['validator']) ) {
+			if (!empty($field['validator'])) {
 				$fieldData = isset($data[$fieldName]) ? $data[$fieldName] : null;
 
-				if( $field['validator'] instanceof WikiaValidatorDepend ) {
+				if( $field['validator'] instanceof WikiaValidatorDependent ) {
 					$field['validator']->setFormData($data);
 					$field['validator']->setFormFields($fields);
 				}
 
-				if( !$field['validator']->isValid($fieldData) && (($validationError = $field['validator']->getError()) instanceof WikiaValidationError) ) {
+				if (!$field['validator']->isValid($fieldData) && (($validationError = $field['validator']->getError()) instanceof WikiaValidationError)) {
 					$out[$fieldName] = $validationError->getMsg();
 				}
 			}
@@ -50,7 +50,9 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	public function filterData($data) {
-		return array_intersect_key($data, $this->getFormFields());
+		$filteredData = array_intersect_key($data, $this->getFormFields());
+		$filteredData = array_filter($filteredData, function ($value) { return !empty($value); });
+		return $filteredData;
 	}
 
 	protected function getView($viewName, $data) {

@@ -22,7 +22,6 @@
 @import '../../WikiaMobile/css/modal';
 @import '../../WikiaMobile/css/media_modal';
 @import "../../WikiaMobile/css/mediagallery";
-@import '../../WikiaMobile/css/image_placeholder';
 @import '../../WikiaMobile/css/loader';
 
 $mainGreen: rgb(171,197,97);
@@ -263,10 +262,6 @@ table {
 figure {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 
-	img {
-		border: 1px solid rgb(42, 42, 42);
-	}
-
 	.thumbcaption {
 		position: relative;
 
@@ -275,4 +270,18 @@ figure {
 		white-space: normal;
 		color: rgb(187, 187, 187);
 	}
+}
+
+.imgPlcHld, wkSlider img, .lazy {
+	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_light.png'); /* base64 */
+	background-repeat: no-repeat;
+	background-position: center;
+
+	background-color: rgba(255, 255, 255, .02);
+}
+
+.galPlc.img, .galPlcHld {
+	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_dark.png'); /* base64 */
+	background-repeat: no-repeat;
+	background-position: center;
 }

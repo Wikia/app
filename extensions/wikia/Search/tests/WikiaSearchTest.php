@@ -2071,7 +2071,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$mockConfig
 			->expects	( $this->at( 0 ) )
 			->method	( 'getError' )
-			->will		( $this->returnValue( false ) )
+			->will		( $this->returnValue( null ) )
 		;
 		$mockConfig
 			->expects	( $this->at( 1 ) )
