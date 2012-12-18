@@ -142,8 +142,6 @@ var CreatePage = {
 				    $('.noarticletext a[href*="redlink=1"]').click( function(e) {CreatePage.openDialog(e, wgPageName); return false; });
                         }
 
-			}
-
 			// CreatePage chicklet (Oasis)
 			$('.createpage').click(CreatePage.openDialog);
 
