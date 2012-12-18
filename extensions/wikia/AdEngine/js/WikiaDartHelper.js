@@ -7,7 +7,6 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		ord = Math.round(Math.random() * 23456787654),
 		tile = 1,
 
-		kvStrMaxLength = 500,
 		categoryStrMaxLength = 300,
 
 		decorateAsKv,
@@ -18,6 +17,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		getDomainKV,
 		getDartHubName,
 		getHostnamePrefix,
+		getKruxKeyValues,
 		getTitle,
 		getLanguage,
 		getResolution,
@@ -25,6 +25,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		getCategories;
 
 	trimKvs = function (kvs, limit) {
+		limit = limit || 500;
 		return kvs.substr(0, limit).replace(/;[^;]*$/, ';');
 	};
 
@@ -90,7 +91,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 
 	getCustomKeyValues = function () {
 		if (window.wgDartCustomKeyValues) {
-			return trimKvs(window.wgDartCustomKeyValues + ';', kvStrMaxLength);
+			return trimKvs(window.wgDartCustomKeyValues + ';');
 		}
 		return '';
 	};
@@ -196,7 +197,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			src = params.src || 'driver',
 			localTile,
 			localOrd = params.ord || ord,
-			kruxKV = '',
+			kruxKV = getKruxKeyValues(),
 			url,
 			subdomain = params.subdomain || getSubdomain(),
 			endTag = params.omitEndTag ? '' : 'endtag=$;',
@@ -219,10 +220,6 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		} else {
 			localTile = tile;
 			tile += 1;
-		}
-
-		if (Krux && Krux.dartKeyValues) {
-			kruxKV = trimKvs(Krux.dartKeyValues, kvStrMaxLength);
 		}
 
 		log(['getUrl', slotname, size], 5, logGroup);
@@ -285,11 +282,19 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		return url;
 	};
 
+	getKruxKeyValues = function () {
+		if (Krux && Krux.dartKeyValues) {
+			return trimKvs(Krux.dartKeyValues);
+		}
+		return '';
+	};
+
 	return {
 		getUrl: getUrl,
 		getCustomKeyValues: getCustomKeyValues,
 		getDomainKV: getDomainKV,
-		getHostnamePrefix: getHostnamePrefix
+		getHostnamePrefix: getHostnamePrefix,
+		getKruxKeyValues: getKruxKeyValues
 	};
 };
 

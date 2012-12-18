@@ -32,7 +32,12 @@ test('sanitizeSlotname', function() {
 test('getUrl', function() {
 	var wikiaTrackerMock
 		, logMock = function() {}
-		, wikiaDartMock = {getDomainKV: function() {return 'dmn=mock;';}, getHostnamePrefix: function() {return 'hostpre=mock;';}}
+		, wikiaDartMock = {
+			getDomainKV: function() {return 'dmn=mock;';},
+			getHostnamePrefix: function() {return 'hostpre=mock;';},
+			getCustomKeyValues: function() {return '';},
+			getKruxKeyValues: function() {return '';}
+		}
 		, scriptWriterMock
 		, windowMock = {wgInsideUnitTest: true, location: {hostname: 'mock'}}
 		, documentMock
