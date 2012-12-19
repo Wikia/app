@@ -385,14 +385,13 @@ class WikiaSearchIndexer extends WikiaObject {
 		if ( in_array( $title->getNamespace(), array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
 			$wm = WallMessage::newFromId( $title->getArticleID() );
 			$wm->load();
-			if ($wm->isMain()) {
-				return ''.$wm->getMetaTitle();
-			} else {
-				if ($main = $wm->getTopParentObj() and !empty($main)) {
-					$main->load();
-					return''.$main->getMetaTitle();
-				}
+			
+			if ( !$wm->isMain() && ( $main = $wm->getTopParentObj() ) && !empty( $main ) ) {
+				$main->load();
+				$wm = $main;
 			}
+			
+			return ''.$wm->getMetaTitle();
 		}
 		return ''.$title;
 	}
