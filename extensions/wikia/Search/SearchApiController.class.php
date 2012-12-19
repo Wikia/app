@@ -81,7 +81,7 @@ class SearchApiController extends WikiaApiController {
 					$results[] = array(
 						'title' => $result->getTitle(),
 						'url' => $title->getLocalUrl(),
-						'namespace' => $title->getNamespace()
+						'ns' => $title->getNamespace()
 					);
 				}
 
