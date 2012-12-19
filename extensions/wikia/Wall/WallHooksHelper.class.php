@@ -2025,6 +2025,7 @@ class WallHooksHelper {
 	 */
 	 
 	public static function onAfterToggleFeature($name, $val) {
+		global $IP;
 		if($name == 'wgEnableWallExt' || $name == 'wgEnableForumExt') {
 			$db = wfGetDB(DB_MASTER);
 			if(!$db->tableExists('wall_history')) {
@@ -2054,4 +2055,16 @@ class WallHooksHelper {
 		$namespace = WallHelper::clearNamespaceList($namespace);
 		return true;
 	}
+
+	static public function onArticleRobotPolicy( &$policy, Title $title ) {
+		$ns = $title->getNamespace();
+		if ( $ns == NS_USER_WALL_MESSAGE ) {
+			$policy = array(
+				'index'  => 'index',
+				'follow' => 'follow'
+			);
+		}
+		return true;
+	}
+
 }

@@ -742,6 +742,13 @@ class Article extends Page {
 
 		$ns = $this->getTitle()->getNamespace();
 
+		$specialPolicy = array();
+		wfRunHooks( 'ArticleRobotPolicy', array( &$specialPolicy, $this->getTitle() ) );
+		if ( !empty($specialPolicy) ) {
+			return $specialPolicy;
+		}
+
+
 		if ( $ns == NS_USER || $ns == NS_USER_TALK ) {
 			# Don't index user and user talk pages for blocked users (bug 11443)
 			if ( !$this->getTitle()->isSubpage() ) {

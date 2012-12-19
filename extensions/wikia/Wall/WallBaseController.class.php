@@ -559,7 +559,9 @@ class WallBaseController extends WikiaController{
 			$path[] = array( 
 				'title' => $messageTitle
 			);
-			
+
+			$this->getContext()->getOutput()->setRobotPolicy('index,follow');
+
 			wfRunHooks('WallThreadHeader', array($title, $wallMessage, &$path, &$this->response, &$this->request));
 		} else {
 			wfRunHooks('WallHeader', array($this->wg->Title, &$path, &$this->response, &$this->request));
