@@ -1911,4 +1911,73 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				'WikiaSearchIndexer::getTitleString should return the meta title for a main message wall instance'
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::getMediaMetadata
+	 */
+	public function testGetMediaMetadataNonFileNS() {
+		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'foo' ) )
+							->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+						->disableOriginalConstructor()
+						->setMethods( array( 'getNamespace' ) )
+						->getMock();
+		
+		$mockTitle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_MAIN ) )
+		;
+		
+		$this->assertEmpty(
+				$mockIndexer->getMediaMetadata( $mockTitle )
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::getMediaMetadata
+	 */
+	public function testGetMediaMetadataNonFileFound() {
+		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'foo' ) )
+							->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+						->disableOriginalConstructor()
+						->setMethods( array( 'getNamespace', 'getText' ) )
+						->getMock();
+		
+		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'findFile' ) )
+							->getMock();
+		
+		$mockTitle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_FILE ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 1 ) )
+			->method	( 'getText' )
+			->will		( $this->returnValue( 'foo' ) )
+		;
+		$mockWrapper
+			->expects	( $this->at( 0 ) )
+			->method	( 'findFile' )
+			->will		( $this->returnValue( null ) )
+		;
+		
+		$wf = new ReflectionProperty( 'WikiaSearchIndexer', 'wf' );
+		$wf->setAccessible( true );
+		$wf->setValue( $mockIndexer, $mockWrapper );
+		
+		$this->assertEmpty(
+				$mockIndexer->getMediaMetadata( $mockTitle )
+		);
+	}
 }
