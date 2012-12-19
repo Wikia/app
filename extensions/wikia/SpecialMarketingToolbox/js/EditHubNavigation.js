@@ -3,6 +3,7 @@ var ModuleNavigation = function() {
 
 ModuleNavigation.prototype = {
 	boxes: undefined,
+	switchSelector: 'input:not(:button), textarea, .filename-placeholder, .image-placeholder img',
 
 	init: function () {
 		this.boxes = $('#marketing-toolbox-form').find('.module-box');
@@ -24,7 +25,7 @@ ModuleNavigation.prototype = {
 		return false;
 	},
 
-	moveDown: function() {
+	moveDown: function(event) {
 		var sourceBox = $(event.target).parents('.module-box');
 		var destBox = $(event.target).parents('.module-box').next();
 		this.switchValues(sourceBox, destBox);
@@ -32,9 +33,51 @@ ModuleNavigation.prototype = {
 	},
 
 	switchValues: function(source, dest) {
-		// TODO switch module data
-		console.log(source);
-		console.log(dest);
+		var sourceContainers = source.find(this.switchSelector);
+		var destContainers = dest.find(this.switchSelector);
+
+		var sourceContainersLength = sourceContainers.length;
+		var destContainersLength = destContainers.length;
+
+		if (sourceContainersLength != destContainersLength) {
+			throw "Switchable length not equals";
+		}
+		for (var i = 0; i < sourceContainersLength; i++) {
+			this.switchElementValue(sourceContainers[i], destContainers[i]);
+		}
+	},
+
+	switchElementValue: function(source, dest) {
+		if (source.nodeName.toLowerCase() != dest.nodeName.toLowerCase()) {
+			throw "Switchable type not equals";
+		}
+
+		var fncName = this.getSwitchFunctionName(source.nodeName.toLowerCase());
+
+		source = $(source);
+		dest = $(dest);
+
+		var tmp = source[fncName]();
+		source[fncName](dest[fncName]());
+		dest[fncName](tmp);
+	},
+
+	getSwitchFunctionName: function (tagName) {
+		var fncName;
+
+		switch(tagName) {
+			case 'span':
+			case 'textarea':
+				fncName = 'html';
+				break;
+			case 'img':
+				fncName = 'src';
+				break;
+			default:
+				fncName = 'val';
+		}
+
+		return fncName
 	}
 };
 
