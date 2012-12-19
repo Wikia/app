@@ -183,9 +183,11 @@ function SharedHelpHook(&$out, &$text) {
 				}
 			}
 		}
-		# If getting content from memcache failed (invalidate) then just download it via HTTP
-		if(empty($content)) {
-			$urlTemplate = $sharedServer . $sharedScript . "?title=Help:%s&action=render";
+		if(!empty($content)) {
+            # get rid of magic word editsection (non parsed piece causing double section headers)
+            $content = preg_replace("|<mw:editsection( .*)?>.*?</mw:editsection>|", "", $content);
+        } else {# If getting content from memcache failed (invalidate) then just download it via HTTP
+            $urlTemplate = $sharedServer . $sharedScript . "?title=Help:%s&action=render";
 			$articleUrl = sprintf($urlTemplate, urlencode($wgTitle->getDBkey()));
 			list($content, $c) = SharedHttp::get($articleUrl);
 
