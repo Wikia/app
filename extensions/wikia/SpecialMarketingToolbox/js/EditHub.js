@@ -8,7 +8,8 @@ EditHub.prototype = {
 	vetReady: undefined,
 	wmuDeffered: undefined,
 	vetDeffered: undefined,
-	placeholderDimensions: 138,
+	lastActiveWmuButton: undefined,
+	placeholderDimensions: 155,
 
 	init: function () {
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
@@ -51,6 +52,7 @@ EditHub.prototype = {
 
 	wmuInit: function(event) {
 		event.preventDefault();
+		this.lastActiveWmuButton = $(event.target);
 		if (!this.wmuReady) {
 			var $input = $(this).prev();
 			this.wmuDeffered = $.when(
@@ -109,9 +111,17 @@ EditHub.prototype = {
 				tempImg.src = response.fileUrl;
 				tempImg.height = this.placeholderDimensions;
 				tempImg.width = this.placeholderDimensions;
-				$('.MarketingToolboxMain .placeholder').append(tempImg);
-				$('.MarketingToolboxMain .wmu-file-name').html(fileName);
-				$('.MarketingToolboxMain .wmu-file-name-input').val(fileName);
+
+				var box = this.lastActiveWmuButton.parents('.module-box:first');
+				if (!box.length) {
+					box = $('.MarketingToolboxMain');
+				}
+
+				var imagePlaceholder = box.find('.placeholder');
+				imagePlaceholder.find('img').remove();
+				imagePlaceholder.append(tempImg);
+				box.find('.wmu-file-name').html(fileName);
+				box.find('.wmu-file-name-input').val(fileName);
 			}, this)
 		});
 	},
@@ -133,6 +143,7 @@ EditHub.prototype = {
 	formReset: function(elem) {
 		elem.find('input:text, input:password, input:file, select, textarea').val('');
 		elem.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+		elem.find('.filename-placeholder').html($.msg('marketing-toolbox-edithub-file-name'));
 	}
 };
 

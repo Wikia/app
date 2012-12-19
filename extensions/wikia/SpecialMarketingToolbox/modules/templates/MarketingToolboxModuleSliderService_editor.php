@@ -3,8 +3,8 @@
 		<h3 class="alternative"><?= $i?>.</h3>
 		<div class="module-right-box">
 			<div class="module-input-box">
-				<input type="button" class="vet-show" value="<?= $wf->msg('marketing-toolbox-edithub-add-file-button')?>" />
-				<span class="alternative filename-placeholder">
+				<input type="button" class="wmu-show" value="<?= $wf->msg('marketing-toolbox-edithub-add-file-button')?>" />
+				<span class="alternative filename-placeholder wmu-file-name">
 					<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
 				</span>
 				<?=$app->renderView(
@@ -36,7 +36,9 @@
 				<input class="secondary clear" type="button" value="<?= $wf->msg('marketing-toolbox-edithub-clear-button')?>" />
 			</div>
 			<div class="module-image-box">
-				<div class="image-placeholder"></div>
+				<div class="image-placeholder placeholder">
+					<img src="<?= $wg->BlankImgUrl; ?>" />
+				</div>
 			</div>
 
 			<button class="secondary navigation nav-up"><img class="chevron chevron-up" src="<?= $wg->BlankImgUrl; ?>"></button>
