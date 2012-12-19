@@ -444,6 +444,35 @@ class GameGuidesController extends WikiaController {
 			}
 		}
 
+		$sort = $this->request->getVal('sort', 'alpha');
+
+		if ( $sort == 'alpha' ) {
+			usort($ret, function( $a, $b ){
+				return strcasecmp($a['name'], $b['name']);
+			});
+		} else if ( $sort == 'hot' ) {
+
+			$hot = DataMartService::getTopArticlesByPageview(
+				$this->wg->CityId,
+				array_reduce($ret, function($ret, $item){
+					$ret[] = $item['pageid'];
+					return $ret;
+				}),
+				null,
+				false,
+				500
+			);
+
+			//$sorted = [];
+			array_walk($ret, function($item, $key) use($hot){
+				//var_dump($hot[$item['pageid']]);exit();
+			});
+
+
+		} else {
+			throw new InvalidParameterApiException( 'sort' );
+		}
+
 		$this->response->setVal( 'categories', $ret );
 
 		$this->wf->profileOut( __METHOD__ );
