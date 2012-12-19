@@ -117,10 +117,10 @@ EditHub.prototype = {
 					box = $('.MarketingToolboxMain');
 				}
 
-				var imagePlaceholder = box.find('.placeholder');
+				var imagePlaceholder = box.find('.image-placeholder');
 				imagePlaceholder.find('img').remove();
 				imagePlaceholder.append(tempImg);
-				box.find('.wmu-file-name').html(fileName);
+				box.find('.filename-placeholder').html(fileName);
 				box.find('.wmu-file-name-input').val(fileName);
 			}, this)
 		});
@@ -144,6 +144,7 @@ EditHub.prototype = {
 		elem.find('input:text, input:password, input:file, select, textarea').val('');
 		elem.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
 		elem.find('.filename-placeholder').html($.msg('marketing-toolbox-edithub-file-name'));
+		elem.find('.image-placeholder').find('img').attr('src', wgBlankImgUrl);
 	}
 };
 

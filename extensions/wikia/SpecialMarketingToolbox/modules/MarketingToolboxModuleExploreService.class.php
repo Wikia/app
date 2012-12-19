@@ -35,7 +35,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 			'fileName' => array(
 				'type' => 'hidden',
 				'attributes' => array(
-					'class' => 'wmu-file-name-input'
+					'class' => 'wmu-file-name-input required'
 				)
 			),
 		);
