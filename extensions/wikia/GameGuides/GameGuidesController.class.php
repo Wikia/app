@@ -578,7 +578,18 @@ class GameGuidesController extends WikiaController {
 				);
 
 				if ( !empty( $articles['query']['categorymembers'] ) ) {
-					$this->response->setVal( 'articles', $articles['query']['categorymembers']);
+
+					$arts = $articles['query']['categorymembers'];
+
+					foreach( $arts as &$article ) {
+						$title = Title::newFromText( $article['title'] );
+
+						if ( $title ) {
+							$article['title'] = $title->getText();
+						}
+					}
+
+					$this->response->setVal( 'articles', $arts);
 
 					if ( !empty( $articles['query-continue'] ) ) {
 						$this->response->setVal( 'offset', $articles['query-continue']['categorymembers']['cmcontinue']);
