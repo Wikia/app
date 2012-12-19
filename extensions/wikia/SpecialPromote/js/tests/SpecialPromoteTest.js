@@ -9,6 +9,9 @@
 @test-require-asset resources/wikia/libraries/jquery/nirvana/jquery.wikia.nirvana.js
 */
 
+//SpecialPromote needs log on onload
+$.fn.log = function(){return true;}
+
 function specialPromoteSetup() {
 	// create a SpecialPromote instance and mock methods
 	$.showModal = function() {return true;}
