@@ -127,6 +127,8 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$excludeList = array(NS_USER, NS_PROJECT, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP, 110, 1100, 1200, 1202);
 
+		$includeList = array(1201);
+
 		wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_SLAVE, "vslow" );
 		$res = $dbr->select(
@@ -145,7 +147,8 @@ class SitemapPage extends UnlistedSpecialPage {
 			if( $row->page_namespace >= 0 ) {
 
 				if ( !in_array($row->page_namespace, $excludeList ) ) {
-					if (  $row->page_namespace%2 != 1 ) {
+
+					if (  $row->page_namespace%2 == 0 || in_array( $row->page_namespace, $includeList ) ) {
 						$this->mNamespaces[] = $row->page_namespace;
 					}
 				}
