@@ -17,6 +17,8 @@ test("processText links", function() {
 	window.wgArticlePath = "/wiki/$1";
 	window.EMOTICONS = '';
 
+	$.fn.log = function(){return true;}
+
 	// create a view instance and test the processtest method
 	var c = new ChatView({});
     equal(c.processText('[[Test_underscores]]'),
