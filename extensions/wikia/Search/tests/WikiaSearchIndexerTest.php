@@ -1689,6 +1689,189 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 	 * @covers WikiaSearchIndexer::getPage
 	 */
 	public function testGetPage() {
+		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getTitleString', 'getPageMetaData', 'getMediaMetadata' ) )
+							->getMock();
 		
+		$mockArticle = $this->getMockBuilder( 'Article' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getID', 'isRedirect', 'getRedirectTarget', 'getTitle' ) )
+							->getMock();
+		
+		$mockApiService = $this->getMockBuilder( 'ApiService' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'call' ) )
+								->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+						->disableOriginalConstructor()
+						->setMethods( array( 'getID', 'getNamespace', 'getFullUrl' ) )
+						->getMock();
+		
+		$mockHtml = "This is my text";
+		
+		$apiResponse = array(
+				'parse' => array( 
+						'text' => array( '*' => $mockHtml ),
+						'categories' => array( 
+								array( '*' => 'Category_A' ), 
+								array( '*' => 'Category_B' ), 
+								),
+						'sections' => array(
+								array( 'line' => "Section .80" ),
+								array( 'line' => "Good Kid, m.A.A.d City" ),
+								),
+						'images' => array(),
+						),
+				);
+		
+		$mockTitleString = 'This is my title';
+		$mockUrl = 'http://foo.wikia.com/wiki/MockArticle';
+		
+		
+		$mockArticle
+			->expects	( $this->at( 0 ) )
+			->method	( 'isRedirect' )
+			->will		( $this->returnValue( true ) )
+		;
+		$mockArticle
+			->expects	( $this->at( 1 ) )
+			->method	( 'getRedirectTarget' )
+			->will		( $this->returnValue( 321 ) )
+		;
+		$mockArticle
+			->expects	( $this->at( 2 ) )
+			->method	( 'getID' )
+			->will		( $this->returnValue( 321 ) ) 
+		;
+		$mockApiService
+			->staticExpects	( $this->at( 0 ) )
+			->method		( 'call' )
+			->with			( array( 'pageid' => 321, 'action' => 'parse' ) )
+			->will			( $this->returnValue( $apiResponse ) )
+		;
+		$mockArticle
+			->expects	( $this->at( 3 ) )
+			->method	( 'getTitle' )
+			->will		( $this->returnValue( $mockTitle ) )
+		;
+		$mockIndexer
+			->expects	( $this->at( 0 ) )
+			->method	( 'getTitleString' )
+			//->with		( $mockTitle )  this is commented out because phpunit gets confused matching identical instances at different times
+			->will		( $this->returnValue( $mockTitleString ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getFullUrl' )
+			->will		( $this->returnValue( $mockUrl ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 1 ) )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_MAIN ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 1 ) )
+			->method	( 'getArticleId' )
+			->will		( $this->returnValue( 5432 ) ) // as main page
+		;
+		$mockIndexer
+			->expects	( $this->at( 1 ) )
+			->method	( 'getPageMetadata' )
+			->with		( $mockArticle )
+			->will		( $this->returnValue( array() ) )
+		;
+		$mockIndexer
+			->expects	( $this->at( 2 ) )
+			->method	( 'getMediaMetadata' )
+			->with		( $mockTitle )
+			->will		( $this->returnValue( array() ) )
+		;
+		
+		$mockWg = (object) array(
+				'ExternalSharedDB' => true,
+				'CityId' => 123,
+				'ContLang' => (object) array( 'mCode' => 'en' ),
+				'Server' => 'http://foo.wikia.com',
+				'Sitename' => 'foo' ,
+				'ContentNamespaces' => array( NS_MAIN )
+				);
+		$wg = new ReflectionProperty( 'WikiaObject', 'wg' );
+		$wg->setAccessible( true );
+		$wg->setValue( $mockIndexer, $mockWg );
+		
+		$this->proxyClass( 'Article', $mockArticle, 'newFromID' );
+		$this->proxyClass( 'Title', $mockTitle, 'newMainPage' );
+		$this->mockClass( 'Article', $mockArticle );
+		$this->mockClass( 'ApiService', $mockApiService );
+		$this->mockClass( 'Title', $mockTitle );
+		$this->mockApp();
+		
+		$result = $mockIndexer->getPage( 123 );
+		
+		$this->assertEquals(
+				$mockWg->CityId,
+				$result['wid']
+		);
+		$this->assertEquals(
+				'321',
+				$result['pageid']
+		);
+		$this->assertEquals(
+				'123_321',
+				$result['id']
+		);
+		$this->assertEquals(
+				$mockTitleString,
+				$result['title']
+		);
+		$this->assertEquals(
+				$mockTitleString,
+				$result['titleStrict']
+		);
+		$this->assertEquals(
+				$mockHtml,
+				$result['html']
+		);
+		$this->assertEquals(
+				$mockUrl,
+				$result['url']
+		);
+		$this->assertEquals(
+				NS_MAIN,
+				$result['ns']
+		);
+		$this->assertEquals(
+				'foo.wikia.com',
+				$result['host']
+		);
+		$this->assertEquals(
+				'en',
+				$result['lang']
+		);
+		$this->assertEquals(
+				$mockWg->Sitename,
+				$result['wikititle']
+		);
+		$this->assertNotEmpty(
+				$result['categories']
+		);
+		$this->assertEquals(
+				0,
+				$result['page_images']
+		);
+		$this->assertNotEmpty(
+				$result['headings']
+		);
+		$this->assertEquals(
+				'true',
+				$result['iscontent']
+		);
+		$this->assertEquals(
+				'false',
+				$result['is_main_page']
+		);
 	}
 }

@@ -70,7 +70,7 @@ class WikiaSearchIndexer extends WikiaObject {
 
 		$result = array();
 	
-		$page = F::build( 'Article', array( $pageId ), 'newFromID' );
+		$page = Article::newFromID( $pageId );
 	
 		if( $page === null ) {
 			throw new WikiaException( 'Invalid Article ID' );
@@ -89,7 +89,6 @@ class WikiaSearchIndexer extends WikiaObject {
 		));
 		
 		$title		= $page->getTitle();
-		$namespace	= $title->getNamespace();
 		$titleStr	= $this->getTitleString( $title );
 		$html 		= $response['parse']['text']['*'];
 
@@ -121,10 +120,8 @@ class WikiaSearchIndexer extends WikiaObject {
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
 		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
 		$result['is_main_page']	= ( $pageId == F::build( 'Title', array( 'newMainPage' ) )->getArticleId() ) ? 'true' : 'false';
-		
 		// these will eventually be broken out into their own atomic updates
 		$result = array_merge($result, $this->getPageMetaData( $page ), $this->getMediaMetadata( $title ) );
-		
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
