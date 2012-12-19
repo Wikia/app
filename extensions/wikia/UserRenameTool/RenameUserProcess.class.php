@@ -602,13 +602,6 @@ class RenameUserProcess {
 				return false;
 			} 
 
-			$mExtUser = ExternalUser_Wikia::newFromName( $this->mOldUsername );
-
-			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
-				$this->addLog("Fake user {$this->mOldUsername} still exists in database");
-				return false;
-			}
-			
 			$fakeUser->setPassword( null );
 			$fakeUser->setRealName( '' );
 			$fakeUser->setName( $this->mOldUsername );
