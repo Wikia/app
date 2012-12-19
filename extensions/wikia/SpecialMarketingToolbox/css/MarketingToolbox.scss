@@ -48,10 +48,6 @@ $chevron-color: #888;
 		}
 	}
 
-	.grid-2 .input-group input.wikiaUrl {
-		width: 239px;
-	}
-
 	.error {
 		font-size: 12px;
 	}
@@ -84,6 +80,7 @@ $chevron-color: #888;
 
 			input {
 				margin-right: 10px;
+				float: right;
 			}
 		}
 	}
@@ -139,7 +136,9 @@ $chevron-color: #888;
 			width: 320px;
 		}
 		.wikiaUrlLabel {
-			width: 55px;
+			padding-right: 10px;
+			text-align: right;
+			width: 135px;
 		}
 		.input-icon {
 			background-image: url("/extensions/wikia/SpecialMarketingToolbox/images/url.png"); /* base64 */
