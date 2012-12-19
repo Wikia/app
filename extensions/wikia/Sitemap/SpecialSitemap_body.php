@@ -127,7 +127,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$excludeList = array(NS_USER, NS_PROJECT, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP, 110, 1100, 1200, 1202);
 
-		$includeList = array(1201);
+		$includeList = array();
 
 		wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_SLAVE, "vslow" );
