@@ -35,7 +35,13 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 			'fileName' => array(
 				'type' => 'hidden',
 				'attributes' => array(
-					'class' => 'wmu-file-name-input'
+					'class' => 'wmu-file-name-input required'
+				),
+				'validator' => new WikiaValidatorFileTitle(
+					array(
+						'required' => true
+					),
+					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
 				)
 			),
 		);
@@ -112,6 +118,12 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 
 	public function renderEditor($data) {
 		$data['sectionLimit'] = $this->model->getFormSectionsLimit();
+		
+		if( !empty($data['values']['fileName']) ) {
+			$data['imageSize'] = $imageSize = $this->model->getImageWidth();
+			$data['fileUrl'] = ImagesService::getLocalFileThumbUrl($data['values']['fileName'], $imageSize);
+		}
+		
 		return parent::renderEditor($data);
 	}
 }

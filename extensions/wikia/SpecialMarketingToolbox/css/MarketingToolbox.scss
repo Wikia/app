@@ -46,10 +46,12 @@ $chevron-color: #888;
 		input[type="text"] {
 			width: 149px;
 		}
-		.error {
-			font-size: 12px;
-		}
 	}
+
+	.error {
+		font-size: 12px;
+	}
+
 	.input-group:not(.borderNone) {
 		border-bottom: 1px solid #e5e5e5;
 	}
@@ -107,6 +109,7 @@ $chevron-color: #888;
 			border: 1px solid $horizontal-border-color;
 			border-top: 1px solid $vertical-border-color;
 			margin-bottom: 30px;
+			padding: 10px 0px;
 		}
 		.header-group {
 			.url-group {
@@ -121,16 +124,6 @@ $chevron-color: #888;
 				border: none;
 			}
 		}
-		.wmu-show {
-			display: block;
-			float: left;
-			margin: 7px;
-		}
-		.wmu-file-name {
-			color: #7f7f7f;
-			float: left;
-			margin-top: 7px;
-		}
 		.placeholder {
 			border: 1px solid #d2d2d2;
 			float: right;
@@ -140,9 +133,6 @@ $chevron-color: #888;
 		}
 		.input-group .explore-title {
 			width: 320px;
-		}
-		.clear-button {
-			margin: 7px;
 		}
 		.input-icon {
 			background-image: url("/extensions/wikia/SpecialMarketingToolbox/images/url.png"); /* base64 */
@@ -169,37 +159,6 @@ $chevron-color: #888;
 
 				input[type="text"] {
 					width: 291px;
-				}
-
-				.wmu-show {
-					float: left;
-				}
-
-				input[type="button"] {
-					margin-left: 7px;
-				}
-
-				input.secondary {
-					margin-top: 5px;
-				}
-
-				.filename-placeholder {
-					margin-left: 5px;
-					display: block;
-					width: 360px;
-					float:left;
-					overflow: hidden;
-				}
-			}
-
-			.module-image-box {
-				float: right;
-				margin: 7px 30px 0 0;
-
-				.image-placeholder {
-					border: 1px solid $vertical-border-color;
-					width: 155px;
-					height: 155px;
 				}
 			}
 
@@ -235,6 +194,36 @@ $chevron-color: #888;
 				}
 			}
 		}
+		.wmu-show {
+			float: left;
+		}
+
+		input[type="button"] {
+			margin-left: 7px;
+		}
+
+		input.secondary {
+			margin-top: 5px;
+		}
+
+		.filename-placeholder {
+			margin-left: 5px;
+			display: block;
+			width: 360px;
+			float:left;
+			overflow: hidden;
+		}
+
+		.module-image-box {
+			float: right;
+			margin: 7px 30px 0 0;
+		}
+		.image-placeholder {
+			border: 1px solid $vertical-border-color;
+			width: 155px;
+			height: 155px;
+		}
+
 	}
 
 	.module-polls {
