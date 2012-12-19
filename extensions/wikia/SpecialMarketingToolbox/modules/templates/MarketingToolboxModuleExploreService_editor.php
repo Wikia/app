@@ -3,7 +3,11 @@
 		<div class="grid-3 alpha">
 			<input type="button" class="wmu-show" value="<?= $wf->Msg('marketing-toolbox-hub-module-explore-add-photo') ?>" />
 			<span class="filename-placeholder alternative">
-				<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
+				<? if (!empty($fields['fileName'])): ?>
+					<?= $fields['fileName']['value']; ?>
+				<? else: ?>
+					<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
+				<? endif ?>
 			</span>
 			<?=$app->renderView(
 				'MarketingToolbox',
@@ -21,7 +25,7 @@
 		<div class="grid-1 alpha">
 			<div class="image-placeholder">
 				<?php if( !empty($fileUrl) ): ?>
-					<img width="<?= $imageSize; ?>" height="<?= $imageSize; ?>" src="<?= $fileUrl; ?>" />
+					<img src="<?= $fileUrl; ?>" />
 				<?php else: ?>
 					<img src="<?= $wg->BlankImgUrl; ?>" />
 				<?php endif; ?>

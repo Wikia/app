@@ -5,7 +5,11 @@
 			<div class="module-input-box">
 				<input type="button" class="wmu-show" value="<?= $wf->msg('marketing-toolbox-edithub-add-file-button')?>" />
 				<span class="alternative filename-placeholder">
-					<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
+					<? if (!empty($fields['photo' . $i])): ?>
+						<?= $fields['photo' . $i]['value']; ?>
+					<? else: ?>
+						<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
+					<? endif ?>
 				</span>
 				<?=$app->renderView(
 					'MarketingToolbox',
@@ -37,7 +41,11 @@
 			</div>
 			<div class="module-image-box">
 				<div class="image-placeholder">
-					<img src="<?= $wg->BlankImgUrl; ?>" />
+					<? if (!empty($photos[$i])): ?>
+						<img src="<?=$photos[$i]?>" />
+					<? else: ?>
+						<img src="<?= $wg->BlankImgUrl; ?>" />
+					<? endif ?>
 				</div>
 			</div>
 

@@ -74,6 +74,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 
 		$linkUrlField = array(
 			'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
+			'labelclass' => "wikiaUrlLabel",
 			'validator' => new WikiaValidatorUrl(
 				array(),
 				array(
@@ -120,7 +121,9 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		$data['sectionLimit'] = $this->model->getFormSectionsLimit();
 		
 		if( !empty($data['values']['fileName']) ) {
-			$data['imageSize'] = $imageSize = $this->model->getImageWidth();
+			$model = new MarketingToolboxModel();
+
+			$data['imageSize'] = $imageSize = $model->getThumbnailSize();
 			$data['fileUrl'] = ImagesService::getLocalFileThumbUrl($data['values']['fileName'], $imageSize);
 		}
 		
