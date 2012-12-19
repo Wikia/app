@@ -90,7 +90,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		
 		$title		= $page->getTitle();
 		$namespace	= $title->getNamespace();
-		$titleStr	= $this->getTitleStringForPage( $title );
+		$titleStr	= $this->getTitleString( $title );
 		$html 		= $response['parse']['text']['*'];
 
 		$categories = array();
@@ -384,9 +384,9 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param Title $title
 	 * @return string
 	 */
-	protected function getTitleStringForPage( Title $title ) {
+	protected function getTitleString( Title $title ) {
 		if ( in_array( $title->getNamespace(), array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
-			$wm = F::build( 'WallMessage', array( $title->getArticleID() ), 'newFromId' );
+			$wm = WallMessage::newFromId( $title->getArticleID() );
 			$wm->load();
 			if ($wm->isMain()) {
 				return ''.$wm->getMetaTitle();

@@ -1754,4 +1754,161 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		);
 	}
 	
+	/**
+	 * @covers WikiaSearchIndexer::getTitleString
+	 */
+	public function testGetTitleStringNormal() {
+		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'foo' ) )
+							->getMock();
+		$mockTitle = $this->getMockBuilder( 'Title' )
+						->disableOriginalConstructor()
+						->setMethods( array( 'getNamespace', '__toString' ) )
+						->getMock();
+		
+		$mockTitle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_MAIN ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 1 ) )
+			->method	( '__toString' )
+			->will		( $this->returnValue( 'mock title' ) )
+		;
+		
+		$method = new ReflectionMethod( 'WikiaSearchIndexer', 'getTitleString' );
+		$method->setAccessible( true );
+		
+		$this->assertEquals(
+				'mock title',
+				$method->invoke( $mockIndexer, $mockTitle ),
+				'If it does not meet special cases, WikiaSearchIndexer::getTitleString should return the title instance cast to string'
+		);
+		
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::getTitleString
+	 */
+	public function testGetTitleStringMainWallMessage() {
+		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'foo' ) )
+							->getMock();
+		$mockTitle = $this->getMockBuilder( 'Title' )
+						->disableOriginalConstructor()
+						->setMethods( array( 'getNamespace', '__toString', 'getArticleID' ) )
+						->getMock();
+		$mockWallMessage = $this->getMockBuilder( 'WallMessage' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'isMain', 'getMetaTitle', 'getTopParentObj', 'load' ) )
+								->getMock();
+		
+		$titleString = 'Main wall message metatitle';
+		
+		$mockTitle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_WIKIA_FORUM_BOARD_THREAD ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 1 ) )
+			->method	( 'getArticleID' )
+			->will		( $this->returnValue( 123 ) )
+		;
+		$mockWallMessage
+			->expects	( $this->at( 0 ) )
+			->method	( 'load' )
+		;
+		$mockWallMessage
+			->expects	( $this->at( 1 ) )
+			->method	( 'isMain' )
+			->will		( $this->returnValue( true ) )
+		;
+		$mockWallMessage
+			->expects	( $this->at( 2 ) )
+			->method	( 'getMetaTitle' )
+			->will		( $this->returnValue( $titleString ) )
+		;
+		
+		$this->proxyClass( 'WallMessage', $mockWallMessage, 'newFromId' );
+		$this->mockApp();
+		
+		$method = new ReflectionMethod( 'WikiaSearchIndexer', 'getTitleString' );
+		$method->setAccessible( true );
+		
+		$this->assertEquals(
+				$titleString,
+				$method->invoke( $mockIndexer, $mockTitle ),
+				'WikiaSearchIndexer::getTitleString should return the meta title for a main message wall instance'
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::getTitleString
+	 */
+	public function testGetTitleStringNonMainWallMessage() {
+		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'foo' ) )
+							->getMock();
+		$mockTitle = $this->getMockBuilder( 'Title' )
+						->disableOriginalConstructor()
+						->setMethods( array( 'getNamespace', '__toString', 'getArticleID' ) )
+						->getMock();
+		$mockWallMessage = $this->getMockBuilder( 'WallMessage' )
+								->disableOriginalConstructor()
+								->setMethods( array( 'isMain', 'getMetaTitle', 'getTopParentObj', 'load' ) )
+								->getMock();
+		
+		$titleString = 'Main wall message metatitle';
+		
+		$mockTitle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_WIKIA_FORUM_BOARD_THREAD ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 1 ) )
+			->method	( 'getArticleID' )
+			->will		( $this->returnValue( 123 ) )
+		;
+		$mockWallMessage
+			->expects	( $this->at( 0 ) )
+			->method	( 'load' )
+		;
+		$mockWallMessage
+			->expects	( $this->at( 1 ) )
+			->method	( 'isMain' )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockWallMessage
+			->expects	( $this->at( 2 ) )
+			->method	( 'getTopParentObj' )
+			->will		( $this->returnValue( $mockWallMessage ) )
+		;
+		$mockWallMessage
+			->expects	( $this->at( 3 ) )
+			->method	( 'load' )
+		;
+		$mockWallMessage
+			->expects	( $this->at( 4 ) )
+			->method	( 'getMetaTitle' )
+			->will		( $this->returnValue( $titleString ) )
+		;
+		
+		$this->proxyClass( 'WallMessage', $mockWallMessage, 'newFromId' );
+		$this->mockApp();
+		
+		$method = new ReflectionMethod( 'WikiaSearchIndexer', 'getTitleString' );
+		$method->setAccessible( true );
+		
+		$this->assertEquals(
+				$titleString,
+				$method->invoke( $mockIndexer, $mockTitle ),
+				'WikiaSearchIndexer::getTitleString should return the meta title for a main message wall instance'
+		);
+	}
 }
