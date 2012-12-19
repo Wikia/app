@@ -2,8 +2,6 @@
 
 /**
  * This class is responsible for handling all the methods needed to serve up document data for indexing.
- * These methods used to live in WikiaSearch, but there seems to be a nice point of functional cleavage between searching and indexing.
- * Note that this class DOES NOT actually send values to Solr. This powers a JSON-based service our back-end indexer queries.
  * @author Robert Elwell
  */
 class WikiaSearchIndexer extends WikiaObject {
@@ -91,23 +89,10 @@ class WikiaSearchIndexer extends WikiaObject {
 		));
 		
 		$title		= $page->getTitle();
-		$html 		= $response['parse']['text']['*'];
 		$namespace	= $title->getNamespace();
-		
+		$titleStr	= $this->getTitleStringForPage( $title );
+		$html 		= $response['parse']['text']['*'];
 
-		if ( in_array( $namespace, array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
-			$wm = F::build( 'WallMessage', array( $pageId ), 'newFromId' );
-			$wm->load();
-			if ($wm->isMain()) {
-				$title = $wm->getMetaTitle();
-			} else {
-				if ($main = $wm->getTopParentObj() and !empty($main)) {
-					$main->load();
-					$title = $main->getMetaTitle();
-				}
-			}
-		}
-		
 		$categories = array();
 		foreach ( $response['parse']['categories'] as $category ) {
 			$categories[] = str_replace( '_', ' ', $category['*'] );
@@ -121,8 +106,8 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['wid']			= empty( $this->wg->ExternalSharedDB ) ? $this->wg->SearchWikiId : (int) $this->wg->CityId;
 		$result['pageid']		= $pageId;
 		$result['id']			= $result['wid'] . '_' . $result['pageid'];
-		$result['title']		= ''.$title;
-		$result['titleStrict']	= ''.$title;
+		$result['title']		= $titleStr;
+		$result['titleStrict']	= $titleStr;
 		$result['html']			= html_entity_decode($html, ENT_COMPAT, 'UTF-8');
 		$result['url']			= $title->getFullUrl();
 		$result['ns']			= $title->getNamespace();
@@ -138,7 +123,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['is_main_page']	= ( $pageId == F::build( 'Title', array( 'newMainPage' ) )->getArticleId() ) ? 'true' : 'false';
 		
 		// these will eventually be broken out into their own atomic updates
-		$result = array_merge($result, $this->getPageMetaData( $page ), $this->indexMedia( $title ) );
+		$result = array_merge($result, $this->getPageMetaData( $page ), $this->getMediaMetadata( $title ) );
 		
 		wfProfileOut(__METHOD__);
 		return $result;
@@ -152,7 +137,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @param Title $title
 	 * @return array
 	 */
-	public function indexMedia( Title $title )
+	public function getMediaMetadata( Title $title )
 	{
 		$results = array();
 		
@@ -391,6 +376,28 @@ class WikiaSearchIndexer extends WikiaObject {
 		$this->deleteBatch( array( $id ) );
 		
 		return true;
+	}
+	
+	/**
+	 * Provided a page, returns the string value of that page's title
+	 * This allows us to accommodate unconventional locations for titles
+	 * @param Title $title
+	 * @return string
+	 */
+	protected function getTitleStringForPage( Title $title ) {
+		if ( in_array( $title->getNamespace(), array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
+			$wm = F::build( 'WallMessage', array( $title->getArticleID() ), 'newFromId' );
+			$wm->load();
+			if ($wm->isMain()) {
+				return ''.$wm->getMetaTitle();
+			} else {
+				if ($main = $wm->getTopParentObj() and !empty($main)) {
+					$main->load();
+					return''.$main->getMetaTitle();
+				}
+			}
+		}
+		return ''.$title;
 	}
 	
 	/**
