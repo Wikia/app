@@ -4,7 +4,7 @@
 	">
 <? endif ?>
 	<? if (!empty($inputData['label'])): ?>
-		<label for="<?=$inputData['name']?>">
+		<label for="<?=$inputData['name']?>" <?= (isset($inputData['labelclass']))? ' '. 'class="' . $inputData['labelclass'] . '" ' : '' ?> >
 			<? if (!empty($inputData['icon'])): ?>
 				<img src="<?= $wg->blankImgUrl ?>" class="input-icon" />
 			<? endif ?>
