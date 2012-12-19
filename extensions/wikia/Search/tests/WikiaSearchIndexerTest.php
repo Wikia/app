@@ -1980,4 +1980,203 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				$mockIndexer->getMediaMetadata( $mockTitle )
 		);
 	}
+
+	/**
+	 * @covers WikiaSearchIndexer::getMediaMetadata
+	 */
+	public function testGetMediaMetadataImageFound() {
+		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'foo' ) )
+							->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+						->disableOriginalConstructor()
+						->setMethods( array( 'getNamespace', 'getText' ) )
+						->getMock();
+		
+		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'findFile' ) )
+							->getMock();
+		
+		$mockFile = $this->getMockBuilder( 'File' )
+						->setMethods( array( 'getMetadata' ) )
+						->disableOriginalConstructor()
+						->getMock();
+		
+		$mockFileHelper = $this->getMockBuilder( 'WikiaFileHelper' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getMediaDetail', 'isVideoFile' ) )
+							->getMock();
+		
+		$mediaDetail = array( 'mediaType' => 'image' );
+		$metadata = array(
+				'description' => "A picture of a fluffy bunny",
+				'keywords' => "Fluffy, bunny, awesome"
+		);
+		
+		$mockTitle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_FILE ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 1 ) )
+			->method	( 'getText' )
+			->will		( $this->returnValue( 'foo' ) )
+		;
+		$mockWrapper
+			->expects	( $this->at( 0 ) )
+			->method	( 'findFile' )
+			->will		( $this->returnValue( $mockFile ) )
+		;
+		$mockFileHelper
+			->staticExpects	( $this->at( 0 ) )
+			->method		( 'getMediaDetail' )
+			->with			( $mockTitle )
+			->will			( $this->returnValue( $mediaDetail ) )
+		;
+		$mockFile
+			->expects	( $this->at( 0 ) )
+			->method	( 'getMetadata' )
+			->will		( $this->returnValue( '0' ) )
+		;
+		$mockFileHelper
+			->staticExpects	( $this->at( 1 ) )
+			->method		( 'isVideoFile' )
+			->with			( $mockFile )
+			->will			( $this->returnValue( false ) )
+		;
+		
+		$wf = new ReflectionProperty( 'WikiaSearchIndexer', 'wf' );
+		$wf->setAccessible( true );
+		$wf->setValue( $mockIndexer, $mockWrapper );
+		
+		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
+		$this->mockApp();
+		
+		$result = $mockIndexer->getMediaMetadata( $mockTitle );
+		
+		$this->assertEquals(
+				'true',
+				$result['is_image']
+		);
+		$this->assertEquals(
+				'false',
+				$result['is_video']
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::getMediaMetadata
+	 */
+	public function testGetMediaMetadataVideoFound() {
+		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'foo' ) )
+							->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+						->disableOriginalConstructor()
+						->setMethods( array( 'getNamespace', 'getText' ) )
+						->getMock();
+		
+		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'findFile' ) )
+							->getMock();
+		
+		$mockFile = $this->getMockBuilder( 'File' )
+						->setMethods( array( 'getMetadata' ) )
+						->disableOriginalConstructor()
+						->getMock();
+		
+		$mockFileHelper = $this->getMockBuilder( 'WikiaFileHelper' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getMediaDetail', 'isVideoFile' ) )
+							->getMock();
+		
+		$mediaDetail = array( 'mediaType' => 'video' );
+		$metadata = array(
+				'description' => "From Good Kid, m.A.A.d City, sampling Janet Jackson",
+				'keywords' => "Kendrick Lamar, Janet Jackson, Drake, Compton, Songs that sample music from movies that star the singer's idol",
+				'duration' => 12345,
+				'title' => 'Kendrick Lamar: Poetic Justice (feat. Drake)',
+				'hd'	=>	true,
+				'actors' => 'Kendrick Lamar, Drake, Janet Jackson',
+				'genres' => 'Hip Hop, R&B',
+		);
+		
+		$mockTitle
+			->expects	( $this->at( 0 ) )
+			->method	( 'getNamespace' )
+			->will		( $this->returnValue( NS_FILE ) )
+		;
+		$mockTitle
+			->expects	( $this->at( 1 ) )
+			->method	( 'getText' )
+			->will		( $this->returnValue( 'foo' ) )
+		;
+		$mockWrapper
+			->expects	( $this->at( 0 ) )
+			->method	( 'findFile' )
+			->will		( $this->returnValue( $mockFile ) )
+		;
+		$mockFileHelper
+			->staticExpects	( $this->at( 0 ) )
+			->method		( 'getMediaDetail' )
+			->with			( $mockTitle )
+			->will			( $this->returnValue( $mediaDetail ) )
+		;
+		$mockFile
+			->expects	( $this->at( 0 ) )
+			->method	( 'getMetadata' )
+			->will		( $this->returnValue( serialize( $metadata ) ) )
+		;
+		$mockFileHelper
+			->staticExpects	( $this->at( 1 ) )
+			->method		( 'isVideoFile' )
+			->with			( $mockFile )
+			->will			( $this->returnValue( true ) )
+		;
+		
+		$wf = new ReflectionProperty( 'WikiaSearchIndexer', 'wf' );
+		$wf->setAccessible( true );
+		$wf->setValue( $mockIndexer, $mockWrapper );
+		
+		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
+		$this->mockApp();
+		
+		$result = $mockIndexer->getMediaMetadata( $mockTitle );
+		
+		$this->assertEquals(
+				'false',
+				$result['is_image']
+		);
+		$this->assertEquals(
+				'true',
+				$result['is_video']
+		);
+		$this->assertEquals(
+				12345,
+				$result['video_duration_i']
+		);
+		$this->assertEquals(
+				'true',
+				$result['video_hd_b']
+		);
+		$this->assertEquals(
+				array( 'Hip Hop', 'R&B' ),
+				$result['video_genres_txt']
+		);
+		$this->assertEquals(
+				array( 'Kendrick Lamar', 'Drake', 'Janet Jackson' ),
+				$result['video_actors_txt']
+		);
+		$this->assertEquals(
+				array( $metadata['description'], $metadata['keywords'], $metadata['title'] ),
+				$result['html_media_extras_txt']
+		);
+	}
 }

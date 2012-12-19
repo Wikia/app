@@ -153,53 +153,50 @@ class WikiaSearchIndexer extends WikiaObject {
 		$fileHelper	= F::build( 'WikiaFileHelper' );
 		$detail		= $fileHelper->getMediaDetail( $title );
 		$metadata	= $file->getMetadata();
-		
-		$results['is_video'] = $fileHelper->isVideoFile( $file );
-		$results['is_image'] = ($detail['mediaType'] == 'image') && !$results['is_video'];
 
-		if ( $metadata == "0" || !$results['is_video'] ) {
-			return $results;
-		}
+		$results['is_video'] = $fileHelper->isVideoFile( $file ) ? 'true' : 'false';
+		$results['is_image'] = ( ($detail['mediaType'] == 'image') && $results['is_video'] == 'false' ) ? 'true' : 'false';
 
-		$metadata = unserialize( $metadata );
-		$fileParams = array( 'description', 'keywords' );
-		$videoParams = array( 'movieTitleAndYear', 'videoTitle', 'title', 'tags', 'category' );
-		if ( $results['is_video'] ) {
-			$fileParams = array_merge( $fileParams, $videoParams );
-			
-			/**
-			 * This maps video metadata field keys to dynamic fields
-			 */
-			$videoMetadataMapper = array(
-					'duration'		=>	'video_duration_i',
-					'provider'		=>	'video_provider_s',
-					'videoId'		=>	'video_id_s',
-					'altVideoId'	=>	'video_altid_s',
-					'aspectRatio'	=>	'video_aspectratio_s'
-					);
-			
-			foreach ( $videoMetadataMapper as $key => $field ) {
-				if ( isset( $metadata[$key] ) ) {
-					$results[$field] = $metadata[$key];
+		if ( $metadata != "0" ) {
+			$metadata = unserialize( $metadata );
+			$fileParams = array( 'description', 'keywords' );
+			if ( $results['is_video'] ) {
+				$fileParams = array_merge( $fileParams, array( 'movieTitleAndYear', 'videoTitle', 'title', 'tags', 'category' ) );
+				
+				/**
+				 * This maps video metadata field keys to dynamic fields
+				 */
+				$videoMetadataMapper = array(
+						'duration'		=>	'video_duration_i',
+						'provider'		=>	'video_provider_s',
+						'videoId'		=>	'video_id_s',
+						'altVideoId'	=>	'video_altid_s',
+						'aspectRatio'	=>	'video_aspectratio_s'
+						);
+				
+				foreach ( $videoMetadataMapper as $key => $field ) {
+					if ( isset( $metadata[$key] ) ) {
+						$results[$field] = $metadata[$key];
+					}
+				}
+				// special cases
+				if ( isset( $metadata['hd'] ) ) {
+					$results['video_hd_b'] = empty( $metadata['hd'] ) ? 'false' : 'true';
+				}
+				if ( isset( $metadata['genres'] ) ) {
+					$results['video_genres_txt'] = preg_split( '/, ?/', $metadata['genres'] );
+				}
+				if ( isset( $metadata['actors'] ) ) {
+					$results['video_actors_txt'] = preg_split( '/, ?/', $metadata['actors'] );
 				}
 			}
-			// special cases
-			if ( isset( $metadata['hd'] ) ) {
-				$results['video_hd_b'] = empty( $metadata['hd'] ) ? 'false' : 'true';
+			
+			$results['html_media_extras_txt'] = array();
+			foreach ( $fileParams as $datum ) {
+				if ( isset( $metadata[$datum] ) ) {
+					$results['html_media_extras_txt'][] = $metadata[$datum];
+				} 
 			}
-			if ( isset( $metadata['genres'] ) ) {
-				$results['video_genres_txt'] = preg_split( '/, ?/', $metadata['genres'] );
-			}
-			if ( isset( $metadata['actors'] ) ) {
-				$results['video_actors_txt'] = preg_split( '/, ?/', $metadata['actors'] );
-			}
-		}
-		
-		$results['html_media_extras_txt'] = array();
-		foreach ( $fileParams as $datum ) {
-			if ( isset( $metadata[$datum] ) ) {
-				$results['html_media_extras_txt'][] = $metadata[$datum];
-			} 
 		}
 		
 		return $results;
