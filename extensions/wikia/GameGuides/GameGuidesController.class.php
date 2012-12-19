@@ -444,36 +444,47 @@ class GameGuidesController extends WikiaController {
 			}
 		}
 
-		$sort = $this->request->getVal('sort', 'alpha');
+		if ( !empty( $ret ) ) {
+			$sort = $this->request->getVal( 'sort' );
 
-		if ( $sort == 'alpha' ) {
-			usort($ret, function( $a, $b ){
-				return strcasecmp($a['name'], $b['name']);
-			});
-		} else if ( $sort == 'hot' ) {
+			if ( !empty( $sort ) ) {
+				if ( $sort == 'alpha' ) {
+					usort($ret, function( $a, $b ){
+						return strcasecmp($a['name'], $b['name']);
+					});
+				} else if ( $sort == 'hot' ) {
+					$hot = array_keys(
+						DataMartService::getTopArticlesByPageview(
+							$this->wg->CityId,
+							array_reduce($ret, function($ret, $item){
+								$ret[] = $item['pageid'];
+								return $ret;
+							}),
+							null,
+							false,
+							5000
+						)
+					);
 
-			$hot = DataMartService::getTopArticlesByPageview(
-				$this->wg->CityId,
-				array_reduce($ret, function($ret, $item){
-					$ret[] = $item['pageid'];
-					return $ret;
-				}),
-				null,
-				false,
-				500
-			);
+					$sorted = [];
+					foreach ( $ret as $value ) {
+						$sorted[array_search( $value['pageid'], $hot )] = $value;
+					}
 
-			//$sorted = [];
-			array_walk($ret, function($item, $key) use($hot){
-				//var_dump($hot[$item['pageid']]);exit();
-			});
+					ksort( $sorted );
 
+					$ret = $sorted;
+				} else {
+					$this->wf->profileOut( __METHOD__ );
+					throw new InvalidParameterApiException( 'sort' );
+				}
+			}
 
+			$this->response->setVal( 'categories', $ret );
 		} else {
-			throw new InvalidParameterApiException( 'sort' );
+			$this->wf->profileOut( __METHOD__ );
+			throw new InvalidParameterApiException( 'tag' );
 		}
-
-		$this->response->setVal( 'categories', $ret );
 
 		$this->wf->profileOut( __METHOD__ );
 	}
