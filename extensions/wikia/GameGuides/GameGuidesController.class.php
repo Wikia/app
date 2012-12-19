@@ -462,18 +462,26 @@ class GameGuidesController extends WikiaController {
 							}),
 							null,
 							false,
-							5000
+							//I need all of them basically
+							count( $ret )
 						)
 					);
 
 					$sorted = [];
+					$left = [];
 					foreach ( $ret as $value ) {
-						$sorted[array_search( $value['pageid'], $hot )] = $value;
+						$key = array_search( $value['pageid'], $hot );
+
+						if ( $key === false ) {
+							$left[] = $value;
+						} else {
+							$sorted[$key] = $value;
+						}
 					}
 
 					ksort( $sorted );
 
-					$ret = $sorted;
+					$ret = array_merge( $sorted, $left );
 				} else {
 					$this->wf->profileOut( __METHOD__ );
 					throw new InvalidParameterApiException( 'sort' );
