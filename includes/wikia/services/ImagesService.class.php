@@ -23,14 +23,37 @@ class ImagesService extends Service {
 			'imgSize' => $imgSize,
 			'imgFailOnFileNotFound' => 'true',
 		);
-
+		
 		$response = ApiService::foreignCall($dbname, $param);
-
+		
 		$imageSrc = (empty($response['image']['imagecrop'])) ? '' : $response['image']['imagecrop'];
 		$imagePage = (empty($response['imagepage']['imagecrop'])) ? '' : $response['imagepage']['imagecrop'];
 
 		$app->wf->ProfileOut(__METHOD__);
 		return array('src' => $imageSrc, 'page' => $imagePage);
+	}
+
+	/**
+	 * @param String $fileName file name with or without namespace "File:"
+	 * @param Integer $imageWidth 
+	 * 
+	 * @return String url to the image's thumbnail
+	 */
+	public static function getLocalFileThumbUrl($fileName, $imageWidth = 250) {
+		$app = F::app();
+		$url = '';
+		
+		//remove namespace string
+		$fileName = str_replace($app->wg->ContLang->getNsText(NS_FILE) . ':', '', $fileName);
+		$title = Title::newFromText($fileName, NS_FILE);
+		$foundFile = $app->wf->FindFile($title);
+		
+		if( $foundFile ) {
+			$url = $foundFile->getThumbUrl( $foundFile->thumbName(array( 'width' => $imageWidth )) );
+			$url = ($app->wg->DevelEnvironment) ? wfReplaceImageServer($url) : $url;
+		}
+		
+		return $url;
 	}
 
 	/**

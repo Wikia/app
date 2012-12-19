@@ -20,7 +20,11 @@
 		</div>
 		<div class="grid-1 alpha">
 			<div class="image-placeholder">
-				<img src="<?= $wg->BlankImgUrl; ?>" />
+				<?php if( !empty($fileUrl) ): ?>
+					<img width="<?= $imageSize; ?>" height="<?= $imageSize; ?>" src="<?= $fileUrl; ?>" />
+				<?php else: ?>
+					<img src="<?= $wg->BlankImgUrl; ?>" />
+				<?php endif; ?>
 			</div>
 		</div>
 		<input class="secondary clear" type="button" value="Clear" />
