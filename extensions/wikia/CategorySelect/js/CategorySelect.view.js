@@ -36,9 +36,9 @@
 				$wrapper.categorySelect({
 					categories: wgCategorySelect.categories,
 					placement: 'right',
-					selectors: {
-						sortable: '.newCategories'
-					},
+					//selectors: {
+					//	sortable: '.newCategories'
+					//},
 					sortable: {
 						axis: false,
 						forcePlaceholderSize: true,
@@ -46,13 +46,10 @@
 					}
 
 				}).on( 'add.' + namespace, function( event, cs, data ) {
-					$addCategory.removeClass( 'hide' );
-					$input.addClass( 'hide' );
-
-					$newCategories.append( data.element );
+					$categories.append( data.element );
 
 				}).on( 'update.' + namespace, function( event ) {
-					$wrapper.toggleClass( 'modified', $newCategories.children().length > 0 );
+					$wrapper.toggleClass( 'modified', $categories.find( '.new' ).length > 0 );
 				});
 			});
 		}
@@ -108,9 +105,7 @@
 			});
 		});
 
-		$addCategory
-			.one( 'click.' + namespace, initialize )
-			.on( 'click.' + namespace, add );
+		$input.one( 'focus.' + namespace, initialize );
 	});
 
 })( window, window.jQuery, window.mw );

@@ -7,136 +7,95 @@ $categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% )
 // These styles are for view pages only
 .CategorySelect.articlePage {
 	@include clear-linear-gradient();
+	@include clearfix;
+	border: 0;
 	line-height: normal;
+	margin: 0;
 	padding: 0;
 	position: relative;
 
-	&.modified .toolbar,
+	&.modified .editToolbar,
 	&.showHidden .category.hidden {
 		display: block;
 	}
 
-	.add {
-		margin-left: 5px;
+	h2 {
+		@include clearfix;
+		border-bottom: 1px solid $color-page-border;
+		font-size: 18px;
+		padding-bottom: 6px;
 	}
 
 	.category,
 	.input,
 	.placeholder {
+		@include border-radius( 4px );
+		background-color: $categoryselect-color-category;
+		border: 1px solid $color-page-border;
 		display: block;
 		float: left;
-		margin: 0;
-		margin-bottom: 5px;
-		padding: 0 5px;
+		margin: 6px 6px 0 0;
+		padding: 2px 6px;
 	}
 
 	.categories {
-		@include clearfix;
 		margin: 0;
 		padding: 0;
 	}
 
-	.categoriesLink {
-		display: block;
-		float: left;
-		margin-right: 5px;
-
-		&:after {
-			content: ':';
-		}
-	}
-
 	.category {
-		border-right: 1px solid $color-page-border;
-
-		&:last-child {
-			border-right: 0;
-		}
-
 		&.hidden {
 			display: none;
 		}
 
+		&.new {
+			.toolbar {
+				display: inline-block;
+			}
+		}
+
 		.toolbar {
 			display: none;
 		}
 	}
 
-	.edit {
+	.container {
 		@include clearfix;
+		padding: 5px 10px 0 10px;
 	}
 
-	.hide {
+	.editToolbar {
+		clear: both;
 		display: none;
-	}
-
-	.input {
-		@include border-radius( 4px );
-		background-color: $color-page;
-		border: 0;
-		color: $color-text;
-		font-size: 12px;
-		height: 21px;
-		margin-bottom: 0;
-		margin-left: 6px;
-		outline: none;
-		padding: 0;
-		width: 245px;
-	}
-
-	.newCategories {
-		float: left;
-
-		.category {
-			@include border-radius( 4px );
-			background-color: $categoryselect-color-category;
-			border: 1px solid $color-page-border;
-			margin-bottom: 0;
-			margin-left: 5px;
-			padding: 2px 5px 3px 5px;
-		}
-
-		.name {
-			cursor: move;
-		}
-
-		.sprite-small {
-			vertical-align: top;
-		}
-
-		.removeCategory {
-			border-left: 1px solid $color-page-border;
-			padding-left: 5px;
-		}
-
-		.toolbar {
-			display: inline-block;
-		}
-	}
-
-	.padded {
-		padding: 10px;
-	}
-
-	.shifted {
-		overflow: hidden;
-	}
-
-	.tool {
-		cursor: pointer;
-		display: inline-block;
-		margin-left: 5px;
-	}
-
-	> .toolbar {
-		background-color: $categoryselect-color-category;
-		border-top: 1px solid $color-page-border;
-		display: none;
-		padding: 5px 10px;
+		margin: 10px;
 		text-align: right;
 
 		.wikia-button {
-			margin-left: 5px;
+			margin-left: 6px;
+		}
+	}
+
+	.input {
+		background-color: $color-page;
+		border-color: $color-page;
+		color: $color-text;
+		font-size: 12px;
+		outline: none;
+		width: 245px;
+
+		&:focus {
+			background-color: $categoryselect-color-category;
+		}
+	}
+
+	.tool {
+		border-left: 1px solid $color-page-border;
+		cursor: pointer;
+		display: inline-block;
+		margin-left: 6px;
+
+		&:first-child {
+			border-left: 0;
 		}
 	}
 }
