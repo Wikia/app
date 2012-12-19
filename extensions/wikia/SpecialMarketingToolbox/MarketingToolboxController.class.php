@@ -291,10 +291,15 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/css/MarketingToolbox_Footer.scss');
 	}
 
+	/**
+	 * @desc Used by WMU to get the image url
+	 * @todo: Let's add here rights check maybe... ;)
+	 */
 	public function getImageDetails() {
 		$fileName = $this->getVal('fileHandler', false);
+		$imageWidth = $this->getVal('imageWidth', 155);
 		if( $fileName ) {
-			$this->fileUrl = ImagesService::getImageUrlFromText($fileName);
+			$this->fileUrl = ImagesService::getLocalFileThumbUrl($fileName, $imageWidth);
 		}
 	}
 

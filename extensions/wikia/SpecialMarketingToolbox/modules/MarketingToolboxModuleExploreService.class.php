@@ -113,7 +113,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		$data['sectionLimit'] = $this->model->getFormSectionsLimit();
 		
 		if( !empty($data['values']['fileName']) ) {
-			$data['fileUrl'] = ImagesService::getImageUrlFromText($data['values']['fileName']);
+			$data['fileUrl'] = ImagesService::getLocalFileThumbUrl($data['values']['fileName'], $this->model->getImageWidth());
 		}
 		
 		return parent::renderEditor($data);
