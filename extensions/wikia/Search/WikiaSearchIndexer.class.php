@@ -128,6 +128,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['ns']			= $title->getNamespace();
 		$result['host']			= substr($this->wg->Server, 7);
 		$result['lang']			= $this->wg->ContLang->mCode;
+		$result['wikititle']	= $this->wg->Sitename;
 		$result['categories']	= $categories;
 		$result['page_images']	= count( $response['parse']['images'] );
 		$result['headings']		= $headings;
@@ -431,7 +432,6 @@ class WikiaSearchIndexer extends WikiaObject {
 			}
 			
 			$result['hub'] 			= isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
-			$result['wikititle']	= $this->wg->Sitename;
 		}
 
 		$result['redirect_titles'] = $this->getRedirectTitles($page);
