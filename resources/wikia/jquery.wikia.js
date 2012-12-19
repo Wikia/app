@@ -56,7 +56,7 @@ $.getScript = function(url, callback, failureFn) {
 };
 
 $.fn.log = function (msg, group) {
-	window.Wikia && Wikia.log && Wikia.log(msg, Wikia.log.levels.info, group);
+	Wikia.log(msg, Wikia.log.levels.info, group);
 	return this;
 };
 
