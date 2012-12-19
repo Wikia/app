@@ -12,7 +12,8 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 				'validator' => new WikiaValidatorFileTitle(
 					array(
 						'required' => true
-					)
+					),
+					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
 				),
 				'attributes' => array(
 					'class' => 'required wmu-file-name-input'

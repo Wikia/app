@@ -36,6 +36,12 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 				'type' => 'hidden',
 				'attributes' => array(
 					'class' => 'wmu-file-name-input required'
+				),
+				'validator' => new WikiaValidatorFileTitle(
+					array(
+						'required' => true
+					),
+					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
 				)
 			),
 		);
