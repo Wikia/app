@@ -3,7 +3,7 @@
 	html.addEventListener('click', function(ev){
 		var t = ev.target;
 
-		if(t.tagName === 'A' && t.hasAttribute('title') && t.className.indexOf('image') == -1) {
+		if(t.tagName === 'A' && t.hasAttribute('title')) {
 			ev.preventDefault();
 			Ponto.invoke(
 				'Linker',
