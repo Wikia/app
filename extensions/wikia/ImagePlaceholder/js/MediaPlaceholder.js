@@ -51,6 +51,7 @@ var MediaPlaceholder = {
 
 				// open VET
 				$.when(
+					$.getJSON( window.wgScriptPath + "index.php?action=ajax&rs=VET&method=getMsgVars"), // leave this in first position
 					$.loadYUI(),
 					$.getResources([ 
 						$.getSassCommonURL("/extensions/wikia/VideoEmbedTool/css/VET.scss" ),
@@ -58,7 +59,12 @@ var MediaPlaceholder = {
 						window.wgExtensionsPath + "/wikia/VideoEmbedTool/js/VET.js",
 						window.wgExtensionsPath + "/wikia/WikiaStyleGuide/js/Dropdown.js"
 					])
-				).done(function() {
+				).done(function(VETMessages) {
+					// VET i18n messages 
+					for (var v in VETMessages) {
+						wgMessages[v] = VETMessages[v];
+					}
+
 					$this.text(oText);
 					VET_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption); 
 				});

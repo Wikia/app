@@ -1,7 +1,5 @@
 var EditHub = function() {};
 
-var vet_back,vet_close; //hack for VET, please remove this line after VET refactoring
-
 EditHub.prototype = {
 	form: undefined,
 	vetReady: undefined,

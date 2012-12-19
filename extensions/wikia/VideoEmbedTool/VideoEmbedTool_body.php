@@ -6,41 +6,25 @@
 
 class VideoEmbedTool {
 
-	function loadMainFromView( $error = false ) {
-		$out = '';
+	function getMsgVars() {
+	
+	
+		$vars = array(
+			'vet-back', 
+			'vet-imagebutton',
+			'vet-close',
+			'vet-warn1',
+			'vet-warn2',
+			'vet-warn3',
+		);
+		
+		$ret = array();
+		
+		foreach($vars as $var) {
+			$ret[$var] = wfMsg($var);
+		}
 
-		$out .= '<script type="text/javascript">';
-                $out .= 'var vet_back = \'' . wfMsg('vet-back') . '\';';
-                $out .= 'var vet_imagebutton = \'' . wfMsg('vet-imagebutton') . '\';';
-                $out .= 'var vet_close = \'' . wfMsg('vet-close') . '\';';
-                $out .= 'var vet_warn1 = \'' . wfMsg('vet-warn1') . '\';';
-                $out .= 'var vet_warn2 = \'' . wfMsg('vet-warn2') . '\';';
-                $out .= 'var vet_warn3 = \'' . wfMsg('vet-warn3') . '\';';
-
-                $out .= 'var vet_bad_extension = \'' . wfMsg('vet-bad-extension') . '\';';
-                $out .= 'var vet_show_message = \'' . wfMsg('vet-show-message') . '\';';
-                $out .= 'var vet_hide_message = \'' . wfMsg('vet-hide-message') . '\';';
-                $out .= 'var vet_title = \'' . wfMsg('vet-title') . '\';';
-                $out .= 'var vet_max_thumb = \'' . wfMsg('vet-max-thumb') . '\';';
-
-                $out .= '</script>';
-
-		global $wgBlankImgUrl;
-				$out = '<div class="reset" id="VideoEmbed">';
-                $out .= '<div id="VideoEmbedError"></div>';
-                $out .= '<div id="VideoEmbedBorder"></div>';
-                $out .= '<div id="VideoEmbedProgress1" class="VideoEmbedProgress"></div>';
-                $out .= '<div id="VideoEmbedBack"><img src="'.$wgBlankImgUrl.'" id="fe_vetback_img" class="sprite back" alt="'.wfMsg('vet-back').'" /><a href="#">' . wfMsg( 'vet-back' ) . '</a></div>' ;
-                $out .= '<div id="VideoEmbedBody">';
-                $out .= '<div id="VideoEmbedClose"><img src="'.$wgBlankImgUrl.'" id="fe_vetclose_img" class="sprite close" alt="'.wfMsg('vet-close').'" /><a href="#">' . wfMsg( 'vet-close' ) . '</a></div>';
-                $out .= '<div id="VideoEmbedMain">' . $this->loadMain() . '</div>';
-                $out .= '<div id="VideoEmbedDetails" style="display: none;"></div>';
-                $out .= '<div id="VideoEmbedConflict" style="display: none;"></div>';
-                $out .= '<div id="VideoEmbedSummary" style="display: none;"></div>';
-                $out .= '</div>';
-                $out .= '</div>';
-
-		return $out;
+		return json_encode($ret);
 	}
 
 	function loadMain( $error = false ) {
