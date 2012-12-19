@@ -2064,6 +2064,12 @@ class WallHooksHelper {
 				'follow' => 'follow'
 			);
 		}
+		elseif ( $ns == NS_USER_WALL ) {
+			$policy = array(
+				'index'  => 'noindex',
+				'follow' => 'nofollow'
+			);
+		}
 		return true;
 	}
 
