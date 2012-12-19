@@ -15,7 +15,7 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 					)
 				),
 				'attributes' => array(
-					'class' => 'required'
+					'class' => 'required wmu-file-name-input'
 				),
 				'class' => 'hidden'
 			);

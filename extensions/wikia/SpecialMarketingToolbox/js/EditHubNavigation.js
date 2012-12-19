@@ -19,17 +19,17 @@ ModuleNavigation.prototype = {
 	},
 
 	moveUp: function(event) {
+		event.preventDefault();
 		var sourceBox = $(event.target).parents('.module-box');
 		var destBox = $(event.target).parents('.module-box').prev();
 		this.switchValues(sourceBox, destBox);
-		return false;
 	},
 
 	moveDown: function(event) {
+		event.preventDefault();
 		var sourceBox = $(event.target).parents('.module-box');
 		var destBox = $(event.target).parents('.module-box').next();
 		this.switchValues(sourceBox, destBox);
-		return false;
 	},
 
 	switchValues: function(source, dest) {
@@ -48,36 +48,32 @@ ModuleNavigation.prototype = {
 	},
 
 	switchElementValue: function(source, dest) {
-		if (source.nodeName.toLowerCase() != dest.nodeName.toLowerCase()) {
+		var sourceTagName = source.nodeName.toLowerCase();
+		var tmp;
+		if (sourceTagName != dest.nodeName.toLowerCase()) {
 			throw "Switchable type not equals";
 		}
-
-		var fncName = this.getSwitchFunctionName(source.nodeName.toLowerCase());
 
 		source = $(source);
 		dest = $(dest);
 
-		var tmp = source[fncName]();
-		source[fncName](dest[fncName]());
-		dest[fncName](tmp);
-	},
-
-	getSwitchFunctionName: function (tagName) {
-		var fncName;
-
-		switch(tagName) {
+		switch(sourceTagName) {
 			case 'span':
 			case 'textarea':
-				fncName = 'html';
+				tmp = source.text();
+				source.text(dest.text());
+				dest.text(tmp);
 				break;
 			case 'img':
-				fncName = 'src';
+				tmp = source.attr('src');
+				source.attr('src', dest.attr('src'));
+				dest.attr('src', tmp);
 				break;
 			default:
-				fncName = 'val';
+				tmp = source.val();
+				source.val(dest.val());
+				dest.val(tmp);
 		}
-
-		return fncName
 	}
 };
 
