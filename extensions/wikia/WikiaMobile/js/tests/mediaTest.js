@@ -7,6 +7,7 @@
  @test-require-asset /extensions/wikia/WikiaMobile/js/loader.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/track.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/events.js
+ @test-require-asset /extensions/wikia/WikiaMobile/js/pager.js
  @test-require-asset /resources/wikia/modules/querystring.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/modal.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/media.js
