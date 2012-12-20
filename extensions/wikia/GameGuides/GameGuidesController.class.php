@@ -638,5 +638,3 @@ class GameGuidesWrongAPIVersionException extends WikiaException {
 		parent::__construct( 'Wrong API version', 801 );
 	}
 }
-
-class NotFoundApiException extends NotFoundException {}

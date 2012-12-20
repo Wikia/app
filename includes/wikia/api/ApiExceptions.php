@@ -20,4 +20,6 @@ class InvalidParameterApiException extends BadRequestException {
 	}
 }
 
+class NotFoundApiException extends NotFoundException {}
+
 class InvalidDataApiException extends InvalidDataException {}
