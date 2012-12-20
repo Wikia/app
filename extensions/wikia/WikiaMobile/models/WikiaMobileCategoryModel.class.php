@@ -74,11 +74,11 @@ class WikiaMobileCategoryModel extends WikiaModel{
 	}
 
 	private function getItemsCollectionCacheKey( $categoryName ){
-		return $this->wf->memcKey( __CLASS__, 'ItemsCollection', $categoryName );
+		return $this->wf->memcKey( __CLASS__, 'ItemsCollection', md5( $categoryName ) );
 	}
 
 	private function getExhibitionItemsCacheKey( $titleText ){
-		return $this->wf->memcKey( __CLASS__, 'Exhibition', $titleText );
+		return $this->wf->memcKey( __CLASS__, 'Exhibition', md5( $titleText ) );
 	}
 
 	public function purgeItemsCollectionCache( $categoryName ){

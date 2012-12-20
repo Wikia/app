@@ -19,9 +19,15 @@ class AdEngine2Controller extends WikiaController {
 	 * @return bool
 	 */
 	public static function areAdsShowableOnPage() {
+		// Don't show ads on:
+		if (WikiaPageType::isActionPage()) {
+			return false;
+		}
+
 		$wg = F::app()->wg;
 		$title = $wg->Title;
 
+		// Show ads only on the following page types:
 		$runAds = $wg->Out->isArticle()
 			|| WikiaPageType::isSearch()
 			|| WikiaPageType::isForum()
@@ -116,8 +122,26 @@ class AdEngine2Controller extends WikiaController {
 	}
 
 	/**
-	 * Add exitstitial class to the external links pointing to not-whitelisted domains
-	 * if $wgEnableOutboundScreenExt is set, user is anonymous, not in editor, etc
+	 * Deal with external interwiki links: add exitstitial class to them if needed
+	 *
+	 * @param $skin
+	 * @param $target
+	 * @param $options
+	 * @param $text
+	 * @param $attribs
+	 * @param $ret
+	 *
+	 * @return bool
+	 */
+	public function onLinkEnd($skin, Title $target, array $options, &$text, array &$attribs, &$ret) {
+		if ($target->isExternal()) {
+			$this->handleExternalLink($attribs['href'], $attribs);
+		}
+		return true;
+	}
+
+	/**
+	 * Deal with external links: add exitstitial class to them if needed
 	 *
 	 * @param $url
 	 * @param $text
@@ -127,23 +151,36 @@ class AdEngine2Controller extends WikiaController {
 	 * @return bool
 	 */
 	public function onLinkerMakeExternalLink(&$url, &$text, &$link, &$attribs) {
+		$this->handleExternalLink($url, $attribs);
+		return true;
+	}
+
+	/**
+	 * Add exitstitial class to the external links pointing to not-whitelisted domains
+	 * if $wgEnableOutboundScreenExt is set, user is anonymous, not in editor, etc
+	 *
+	 * @param $url
+	 * @param $attribs
+	 *
+	 * @return null
+	 */
+	private function handleExternalLink($url, &$attribs) {
 		if (!$this->wg->EnableOutboundScreenExt
 			|| $this->wg->RTEParserEnabled    // skip logic when in FCK
 			|| empty($this->wg->Title)        // setup functions can call MakeExternalLink before wgTitle is set RT#144229
 			|| $this->wg->User->isLoggedIn()  // logged in users have no exit stitial ads
 			|| strpos($url, 'http://') !== 0
 		) {
-			return true;
+			return;
 		}
 
 		foreach ($this->getExitstitialUrlsWhiteList() as $whiteListedUrl) {
 			if (preg_match('/' . preg_quote($whiteListedUrl) . '/i', $url)) {
-				return true;
+				return;
 			}
 		}
 
 		$attribs['class'] .= ' exitstitial';
-		return true;
 	}
 
 	private function getExitstitialUrlsWhiteList() {

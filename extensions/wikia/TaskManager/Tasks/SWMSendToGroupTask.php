@@ -33,7 +33,7 @@ class SWMSendToGroupTask extends BatchTask {
 	function  __construct() {
 		$this->mType = 'SWMSendToGroup';
 		$this->mVisible = false;
-		$this->mTTL = 60 * 60 * 5; #--- 5 hours
+		$this->mTTL = 60 * 60 * 12; #--- 12 hours
 		parent::__construct();
 	}
 
@@ -1331,34 +1331,27 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of operation
 	 */
 	private function sendMessageHelperToActive(&$DB, &$wikisDB, &$params) {
+		global $IP, $wgWikiaLocalSettingsPath;
 		$result = true;
 
 		//step 2 of 3: get list of active users (on specified wikis)
-		$this->log('Step 2 of 3: get list of active users (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
+		$this->log('Step 2 of 2: get list of active users (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
 
-		$sqlValues = array();
 		foreach ( $wikisDB as $wikiId => $wikiDB ) {
-			$dbr = wfGetDB( DB_SLAVE, array(), $wikiDB );
+			$this->log( "Sending to active users on $wikiDB ($wikiId)" );
+			$sCommand = "SERVER_ID={$wikiId} php $IP/extensions/wikia/SiteWideMessages/maintenance/sendToActiveOnWiki.php ";
+			$sCommand .= escapeshellarg( $params['messageId'] ) . " --conf {$wgWikiaLocalSettingsPath}";
 
-			$dbResult = $dbr->select(
-				array( 'revision' ),
-				array( 'rev_user' ),
-				'',
-				__METHOD__,
-				array( 'GROUP BY' => 'rev_user' )
-			);
+			$retval = '';
+			$responseMessage = wfShellExec( $sCommand, $retval );
 
-			while ( $row = $dbr->fetchObject( $dbResult ) ) {
-				$sqlValues[] = "({$wikiId}, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+			if ( $retval ) {
+				$this->log( "Sending to active users on $wikiDB ($wikiId) failed. Error code returned: $retval. Error was: $responseMessage" );
+			} else {
+				$this->log( "Sending to active users on $wikiDB ($wikiId) succeeded. Message was: $responseMessage" );
 			}
-			$dbr->freeResult( $dbResult );
 		}
-
-		if (count($sqlValues)) {
-			$this->log("Step 3 of 3: add records about new message to right users [number of users = " . count($sqlValues) .	"]");
-			$result = $this->sendMessageHelperToUsers($sqlValues);
-		}
-		unset($sqlValues);
+		$this->log( 'Done!' );
 
 		return $result;
 	}

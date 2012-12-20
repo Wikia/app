@@ -369,6 +369,13 @@ body {
 			}
 		}
 	}
+	.editpage-sourcewidemode-on {
+		#EditPageRail {
+			> .module_page_controls {
+				display: none !important;
+			}
+		}
+	}
 }
 
 /* modal dialog (page title, captcha) */

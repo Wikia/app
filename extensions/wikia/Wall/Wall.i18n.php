@@ -181,6 +181,8 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-deleted-msg-return-to' => 'Return to $1\'s wall.',
 	'wall-deleted-msg-view' => '(View/Restore)',
 
+
+	'wall-recentchanges-wall-thread' => 'Wall thread',
 	'wall-recentchanges-new-message' => 'on <a href="$1">$2\'s wall</a>',
 	'wall-recentchanges-edit' => '(edited message)',
 	'wall-recentchanges-summary' => '($1)',
@@ -336,7 +338,7 @@ ___________________________________________<br />
 your email preferences here: http://community.wikia.com/Special:Preferences',
 
 	/* Preferences */
-	'prefs-email-wall-v2' => 'Message Wall',
+	'prefs-email-wall-v2' => 'Message Wall and Forum',
 
 	'tog-enotifwallthread-v2' => 'Email me…',
 
@@ -577,6 +579,7 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 	'wall-deleted-msg-text' => 'Error message when a user follows a link to a deleted thread',
 	'wall-deleted-msg-return-to' => "Link to return to user's wall when you try to follow a link to a deleted thread, $1 is wall owner",
 	'wall-deleted-msg-view' => 'Option for admins and staff to view and restore a deleted thread',
+	'wall-recentchanges-wall-thread' => 'label for recent changes filter',
 	'wall-recentchanges-new-message' => 'Recent changes item, $2 is wall owner',
 	'wall-recentchanges-edit' => 'Recent changes item, default summary for editing a message',
 	'wall-recentchanges-summary' => 'Recent changes item, summary for editing a message',
@@ -1153,6 +1156,7 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
 	'wall-deleted-msg-text' => 'Die Nachricht, die du einsehen möchtest, wurde gelöscht.',
 	'wall-deleted-msg-return-to' => 'Zurück zu  $1s Nachrichtenseite.',
 	'wall-deleted-msg-view' => '(Einsehen/Wiederherstellen)',
+	'wall-recentchanges-wall-thread' => 'Nachrichtenthread',
 	'wall-recentchanges-new-message' => 'auf <a href="$1">$2s Nachrichtenseite</a>',
 	'wall-recentchanges-edit' => '(Nachricht bearbeitet)',
 	'wall-recentchanges-summary' => '($1)',
@@ -1203,6 +1207,7 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
 	'wall-thread-history-reply-created' => '$1 $2 antwortete',
 	'wall-thread-history-thread-removed' => '$1 $2 entfernte die Diskussion',
 	'wall-thread-history-reply-removed' => '$1 $2 entfernte $3s Antwort $5',
+	'wall-thread-history-reply-deleted' => '$1 $2 löschte die Antwort von $3',
 	'wall-thread-history-thread-restored' => '$1 $2 stellte die Diskussion wieder her',
 	'wall-thread-history-reply-restored' => '$1 $2 stellte $3s Antwort $5 wieder her',
 	'wall-thread-history-thread-deleted' => '$1 $2 löschte die Diskussion',
@@ -1253,7 +1258,7 @@ ___________________________________________<br />
  * Hilfe und Beratung im Community-Wiki finden: http://de.community.wikia.com
  * Weniger Nachrichten von uns erhalten? Abmelden oder Ändern der
  E-Mail-Einstellungen hier: http://de.community.wikia.com/Spezial:Einstellungen',
-	'prefs-email-wall-v2' => 'Nachrichtenseite',
+	'prefs-email-wall-v2' => 'Nachrichtenseite und Forum',
 	'tog-enotifwallthread-v2' => 'Schicke mir eine E-Mail…',
 	'tog-enotifmywall-every' => 'Für jede Nachricht & Antwort',
 	'tog-enotifmywall-sincevisited' => 'Einmal pro Diskussion seit meinem letzten Besuch',
@@ -1355,7 +1360,7 @@ $messages['diq'] = array(
 	'wall-history-action-view' => 'bıvin',
 	'wall-history-action-restore' => 'Timar bike',
 	'mail-notification-html-greeting' => 'Merheba $1,',
-	'prefs-email-wall-v2' => 'Mesacê Dêsi',
+	'prefs-email-wall-v2' => 'Mesacê Dêsi', # Fuzzy
 	'tog-enotifwallthread-v2' => 'E-postay me...',
 	'wall-notifications-notifyeveryone' => 'Xulasaya $1',
 	'wall-votes-modal-title' => 'Nam',
@@ -1367,6 +1372,75 @@ $messages['diq'] = array(
 	'wall-preview-modal-button-publish' => 'Vıla ke',
 	'wall-topic-input-heading' => 'Topik:',
 	'wall-topic-edit' => 'Topiki bıvurne',
+);
+
+/** Greek (Ελληνικά)
+ * @author Glavkos
+ */
+$messages['el'] = array(
+	'wall-no-title' => 'Χωρίς τίτλο',
+	'wall-message-loadmore' => 'Προβολή <span class="count">{{PLURAL:$1|$1 απάντησης|όλων $1 των απαντήσεων}}</span>',
+	'wall-message-wall' => 'Τοίχος μηνυμάτων',
+	'wall-message-wall-shorten' => 'τοίχος',
+	'wall-message-unfollow' => 'Μην ακολουθείτε',
+	'wall-message-undoremove' => 'Αναίρεση',
+	'wall-message-edited' => '<a href="$3" >Επεξεργασία από τον</a> <a class="username" href="$1">$2</a>',
+	'wall-message-edited-summary' => '<a href="$4" >$1 από </a><a class="username" href="$2">$3</a>',
+	'wall-message-update-topics-summary' => 'Το θέμα άλλαξε',
+	'wall-message-update-highlight-summary' => 'Επισημάνθηκε',
+	'wall-message-update-removed-highlight-summary' => 'Η επισήμανση αφαιρέθηκε',
+	'wall-message-mywall' => 'Ο τοίχος μου',
+	'wall-toolbar-history' => 'Ιστορικό',
+	'wall-message-notify' => 'Ειδοποίηση διαχειριστή',
+	'wall-message-remove' => 'Απομάκρυνση',
+	'wall-message-rev-delete' => 'Διαγραφή αναθεώρησης',
+	'wall-message-fast-admin-delete-message' => 'VSTF διαγραφή',
+	'wall-message-quote-button' => 'Παράθεση',
+	'wall-message-elseswall' => 'Τοίχος του $1',
+	'wall-message-no-permission' => 'Δεν έχετε δικαιώματα για να εκτελέσετε  αυτήν την ενέργεια για το μήνυμα',
+	'wall-thread-removed' => 'Αφαιρέθηκε',
+	'wall-thread-isnotifyeveryone' => 'Επισήμανση',
+	'wall-thread-deleted' => 'Διαγράφηκε',
+	'wall-thread-closed' => 'Κλεισμένο',
+	'wall-default-title' => 'Μήνυμα από $1',
+	'wall-button-to-submit-reply' => 'Απάντηση',
+	'wall-button-to-submit-comment-no-topic' => 'Δημοσίευση χωρίς τίτλο',
+	'wall-button-save-changes' => 'Αποθήκευση αλλαγών',
+	'wall-button-cancel-changes' => 'Ακύρωση',
+	'wall-button-done-source' => 'Έγινε',
+	'wall-message-edit' => 'Επεξεργασία',
+	'wall-message-more' => 'Περισσότερα',
+	'wall-message-delete' => 'Διαγραφή',
+	'wall-message-close-thread' => 'Κλείστε αυτό το νήμα',
+	'wall-message-reopen-thread' => 'Επαναφέρετε αυτό το νήμα',
+	'wall-message-removed-thread-because' => '$1 αφαίρεσα αυτό το νήμα διότι:',
+	'wall-message-restore-thread' => 'Επαναφορά Νήματος',
+	'wall-action-admin-thread-title' => 'Διαγράψτε αυτού του νήματος',
+	'wall-action-admin-reply-title' => 'Διαγραφή αυτής της απάντησης',
+	'wall-action-admin-confirm-ok' => 'Διαγραφή',
+	'wall-action-restore-thread-title' => 'Επαναφορά αυτού του νήματος',
+	'wall-action-restore-reply-title' => 'Επαναφορά αυτής της απάντησης',
+	'wall-action-restore-confirm' => 'Παρακαλούμε πείτε μας γιατί θα θέλατε να επαναφέρετε αυτό:',
+	'wall-action-restore-confirm-ok' => 'Επαναφορά',
+	'wall-notifications' => 'Ειδοποιήσεις',
+	'wall-notifications-all' => 'Όλες οι ειδοποιήσεις',
+	'wall-notifications-markasread' => 'Σήμανση όλων ως διαβασμένα',
+	'wall-notifications-markasread-all-wikis' => 'Όλα τα wikis',
+	'wall-notifications-markasread-this-wiki' => 'Αυτό το wiki',
+	'wall-notifications-empty' => 'Δεν υπάρχουν ειδοποιήσεις',
+	'wall-notifications-loading' => 'Φόρτωση ειδοποιήσεων',
+	'wall-notifications-reminder' => 'Έχετε <span> $1 </span> μη αναγνωσμένη  {{PLURAL:$1|ειδοποίηση|ειδοποιήσεις}}',
+	'wall-notifications-wall-disabled' => 'Ο τοίχος μηνυμάτων έχει απενεργοποιηθεί σε αυτό το wiki.',
+	'wall-thread-history-thread-closed' => 'Ο $2 έκλεισε αυτό το νήμα',
+	'wall-thread-history-thread-reopened' => 'Ο $2 ξανάνοιξε αυτό το νήμα',
+	'wall-history-action-restore-reply' => 'επαναφορά απάντησης',
+	'prefs-email-wall-v2' => 'Τοίχος Μηνυμάτων', # Fuzzy
+	'tog-enotifwallthread-v2' => 'Στείλτε μου email...',
+	'tog-enotifmywall-every' => 'Για κάθε μήνυμα & απάντηση',
+	'tog-enotifmywall-sincevisited' => 'Μία φορά ανά νήμα από την τελευταία μου επίσκεψη',
+	'tog-enotifmywall-reminder' => 'Με ένα ημερήσιο email υπενθύμισης',
+	'wall-votes-number' => '$1 Kudos',
+	'wall-votes-number-tooltip' => 'Δείτε ποιος έδωσε Kudos σε αυτό το μήνυμα',
 );
 
 /** Spanish (español)
@@ -1578,6 +1652,7 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-thread-history-reply-created' => '$1 $2 dejó una respuesta',
 	'wall-thread-history-thread-removed' => '$1 $2 retiró este tema',
 	'wall-thread-history-reply-removed' => '$1 $2 retiró la respuesta $5 de $3',
+	'wall-thread-history-reply-deleted' => '$1 $2 borró la respuesta de $3',
 	'wall-thread-history-thread-restored' => '$1 $2 restauró este tema',
 	'wall-thread-history-reply-restored' => '$1 $2 restauró la respuesta $5 de $3',
 	'wall-thread-history-thread-deleted' => '$1 $2 borró este tema',
@@ -1640,7 +1715,7 @@ ___________________________________________
 ___________________________________________<br />
 * Encuentra la ayuda y los consejos que necesitas en la Central de Wikia en español: http://es.wikia.com
 * ¿Quieres recibir menos mensajes de nosotros? Puedes cambiar tus preferencias con respecto a los emails aquí: http://es.wikia.com/wiki/Especial:Preferencias',
-	'prefs-email-wall-v2' => 'Muro de mensajes',
+	'prefs-email-wall-v2' => 'Muro de mensajes', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Envíame un correo...',
 	'tog-enotifmywall-every' => 'Para cada mensaje y respuesta',
 	'tog-enotifmywall-sincevisited' => 'Una vez por cada tema desde mi última visita',
@@ -1686,6 +1761,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Ilkea
  * @author Lukkipoika
+ * @author Nike
  */
 $messages['fi'] = array(
 	'wall-no-title' => 'Ei otsikkoa',
@@ -1726,6 +1802,7 @@ $messages['fi'] = array(
 	'wall-message-removed-thread-because' => '$1 poisti tämän keskustelun koska:',
 	'wall-message-deleted-thread-because' => '$1 poisti tämän keskustelun koska:',
 	'wall-message-restore-thread' => 'Palauta keskustelu',
+	'wall-message-move-thread' => 'Siirrä tämä ketju',
 	'wall-message-removed-reply-because' => '$1 poisti tämän vastauksen koska:',
 	'wall-message-deleted-reply-because' => '$1 poisti tämän vastauksen koska:',
 	'wall-message-restore-reply' => 'Palauta vastaus',
@@ -2038,6 +2115,7 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-thread-history-reply-created' => '$1 $2 a laissé une réponse',
 	'wall-thread-history-thread-removed' => '$1 $2 a retiré ce fil',
 	'wall-thread-history-reply-removed' => '$1 $2 a retiré la réponse $5 de $3',
+	'wall-thread-history-reply-deleted' => '$1 $2 a supprimé la réponse de $3',
 	'wall-thread-history-thread-restored' => '$1 $2 a restauré ce fil',
 	'wall-thread-history-reply-restored' => '$1 $2 a restauré la réponse $5 de $3',
 	'wall-thread-history-thread-deleted' => '$1 $2 a supprimé ce fil',
@@ -2099,7 +2177,7 @@ ___________________________________________<br />
 * Trouvez de l’aide et des conseils sur le wiki des communautés : http://communaute.wikia.com
 * Vous souhaitez recevoir moins de messages de notre part ? Vous pouvez vous désinscrire ou
 modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Mur de discussion',
+	'prefs-email-wall-v2' => 'Mur de discussion', # Fuzzy
 	'tog-enotifwallthread-v2' => 'M’envoyer un courriel quand…',
 	'tog-enotifmywall-every' => 'Pour chaque message et réponse',
 	'tog-enotifmywall-sincevisited' => 'Un par fil depuis ma dernière visite',
@@ -2339,6 +2417,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-thread-history-reply-created' => '$1 $2 deixou unha resposta',
 	'wall-thread-history-thread-removed' => '$1 $2 eliminou este fío',
 	'wall-thread-history-reply-removed' => '$1 $2 eliminou a resposta $5 de $3',
+	'wall-thread-history-reply-deleted' => '$1 $2 borrou a resposta de $3',
 	'wall-thread-history-thread-restored' => '$1 $2 restaurou este fío',
 	'wall-thread-history-reply-restored' => '$1 $2 restaurou a resposta $5 de $3',
 	'wall-thread-history-thread-deleted' => '$1 $2 borrou este fío',
@@ -2403,7 +2482,7 @@ ___________________________________________<br />
 * Atope axuda e consellos na central da comunidade: http://community.wikia.com
 * Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar
 as preferencias de correo electrónico aquí: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Muro de mensaxes',
+	'prefs-email-wall-v2' => 'Muro de mensaxes', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Enviádeme un correo…',
 	'tog-enotifmywall-every' => 'Por cada mensaxe e resposta',
 	'tog-enotifmywall-sincevisited' => 'Unha por fío desde a miña última visita',
@@ -2670,7 +2749,7 @@ ___________________________________________
 ___________________________________________<br />
 * Segítséget és tanácsot a Community Central wikin találsz: http://community.wikia.com
 * Kevesebb üzenetet szeretnél tőlünk? Itt leiratkozhatsz, vagy megváltoztathatod az e-mailekre vonatkozó beállításaidat: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Üzenőfal',
+	'prefs-email-wall-v2' => 'Üzenőfal', # Fuzzy
 	'tog-enotifwallthread-v2' => 'E-mail küldése&hellip;',
 	'tog-enotifmywall-every' => 'Minden üzenet és válasz után',
 	'tog-enotifmywall-sincevisited' => 'Beszélgetésfolyamonként egyszer, az utolsó látogatásom után',
@@ -2922,7 +3001,7 @@ ___________________________________________<br />
 * Adjuta e consilios in le Centro del Communitate: http://community.wikia.com
 * Vole reciper minus messages de nos? Tu pote disabonar te o cambiar le
 tue preferentias de e-mail: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Muro de messages',
+	'prefs-email-wall-v2' => 'Muro de messages', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Inviar me un e-mail…',
 	'tog-enotifmywall-every' => 'Pro cata message e responsa',
 	'tog-enotifmywall-sincevisited' => 'Un vice per discussion depost mi ultime visita',
@@ -3204,7 +3283,7 @@ ___________________________________________
 ___________________________________________<br />
 <p>* フォローの設定を変更する:<br />
 http://ja.wikia.com/wiki/Special:Following</p>',
-	'prefs-email-wall-v2' => 'メッセージウォール',
+	'prefs-email-wall-v2' => 'メッセージウォール', # Fuzzy
 	'tog-enotifwallthread-v2' => 'メール通知の設定',
 	'tog-enotifmywall-every' => 'すべてのメッセージと返信を通知',
 	'tog-enotifmywall-sincevisited' => '各スレッドについて最後の閲覧後に一度だけ通知する',
@@ -3261,7 +3340,7 @@ $messages['ko'] = array(
 	'wall-thread-deleted' => '삭제됨',
 	'wall-thread-closed' => '폐쇄됨',
 	'wall-recentchanges-namespace-selector-message-wall' => '메시지 담벼락',
-	'prefs-email-wall-v2' => '메시지 담벼락',
+	'prefs-email-wall-v2' => '메시지 담벼락', # Fuzzy
 	'wall-quote-author' => '$1의 말:',
 	'wall-quote-reply-to' => '#$1에 대한 덧글',
 );
@@ -3562,6 +3641,7 @@ $messages['mk'] = array(
 	'wall-thread-history-reply-created' => '$1 $2 даде одговор',
 	'wall-thread-history-thread-removed' => '$1 $2 ја отстрани нишкава',
 	'wall-thread-history-reply-removed' => '$1 $2 го отстрани одговорот бр. $5 на $3',
+	'wall-thread-history-reply-deleted' => '$1 $2 го избриша одговорот на $3',
 	'wall-thread-history-thread-restored' => '$1 $2 ја врати нишкава',
 	'wall-thread-history-reply-restored' => '$1 $2 го врати одговорот бр. $5 на $3',
 	'wall-thread-history-thread-deleted' => '$1 $2 ја избриша нишкава',
@@ -3626,7 +3706,7 @@ ___________________________________________<br />
 * Помош и совети ќе добиете на Центарот на заедницата: http://community.wikia.com
 * Сакате да добивате помалку пораки од нас? Можете да се отпишете или да ги смените
 нагодувањата за е-пошта на: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Ѕид за пораки',
+	'prefs-email-wall-v2' => 'Ѕид за пораки', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Испраќај ми е-пошта…',
 	'tog-enotifmywall-every' => 'За секоја порака и одговор',
 	'tog-enotifmywall-sincevisited' => 'Еднаш на секоја нишка појавена од мојата последна посета',
@@ -3866,6 +3946,7 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-thread-history-reply-created' => '$1 $2 meninggalkan balasan',
 	'wall-thread-history-thread-removed' => '$1 $2 membuang tred ini',
 	'wall-thread-history-reply-removed' => '$1 $2 membuang balasan $3 $5',
+	'wall-thread-history-reply-deleted' => '$1 $2 memadamkan balasan $3',
 	'wall-thread-history-thread-restored' => '$1 $2 memulihkan tred ini',
 	'wall-thread-history-reply-restored' => '$1 $2 memulihkan balasan $3 $5',
 	'wall-thread-history-thread-deleted' => '$1 $2 menghapuskan tred ini',
@@ -3930,7 +4011,7 @@ ___________________________________________<br />
 * Dapatkan bantuan dan nasihat di Community Central: http://community.wikia.com
 * Tak nak terima banyak pesanan daripada kami? Anda boleh berhenti melanggan atau 
 ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Papan Pesanan',
+	'prefs-email-wall-v2' => 'Papan Pesanan', # Fuzzy
 	'tog-enotifwallthread-v2' => 'E-mel saya…',
 	'tog-enotifmywall-every' => 'Untuk setiap pesanan & balasan',
 	'tog-enotifmywall-sincevisited' => 'Sekali setred sejak kunjungan terkini saya',
@@ -3967,6 +4048,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 
 /** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
+ * @author EvenT
  * @author Wouterkoch
  */
 $messages['nb'] = array(
@@ -4018,6 +4100,7 @@ $messages['nb'] = array(
 	'wall-message-removed-thread-because' => '$1 fjernet denne tråden fordi:',
 	'wall-message-deleted-thread-because' => '$1 slettet denne tråden fordi:',
 	'wall-message-restore-thread' => 'Gjenopprett tråd',
+	'wall-message-move-thread' => 'Flytt denne tråden',
 	'wall-message-removed-reply-because' => '$1 fjernet dette svaret fordi:',
 	'wall-message-deleted-reply-because' => '$1 slettet dette svaret fordi:',
 	'wall-message-closed-by' => '[[$2|$1]] stengte denne tråden',
@@ -4059,6 +4142,11 @@ Originalinnlegget og sammendraget vil fremdeles vises i wikiens historikk.',
 	'wall-action-rev-reply-confirm' => 'Er du sikker på at du vil slette denne beskjeden?',
 	'wall-action-rev-thread-confirm' => 'Er du sikker på at du vil revisjonsslette denne tråden og all dens historikk fra wikien? Dette kan ikke omgjøres.',
 	'wall-action-rev-confirm-ok' => 'Ja, slett',
+	'wall-action-move-thread-heading' => 'Flytt denne tråden',
+	'wall-action-move-validation-select-wall' => 'Vennligst velg en tavle',
+	'wall-action-move-topics-summary' => 'Tråden er flyttet',
+	'wall-action-move-thread-ok' => 'Flytt tråden',
+	'wall-action-move-board-label' => 'Velg en tavle å flytte til',
 	'wall-notifications' => 'Varslinger',
 	'wall-notifications-all' => 'Alle varslinger',
 	'wall-notifications-markasread' => 'Merk alle som lest',
@@ -4163,6 +4251,7 @@ Originalinnlegget og sammendraget vil fremdeles vises i wikiens historikk.',
 	'wall-thread-history-reply-created' => '$1 $2 la igjen et svar',
 	'wall-thread-history-thread-removed' => '$1 $2 fjernet denne tråden',
 	'wall-thread-history-reply-removed' => '$1 $2 fjernet $3 sitt svar $5',
+	'wall-thread-history-reply-deleted' => '$1 $2 slettet $3 sitt svar',
 	'wall-thread-history-thread-restored' => '$1 $2 gjenopprettet denne tråden',
 	'wall-thread-history-reply-restored' => '$1 $2 gjenopprettet $3 sitt svar $5',
 	'wall-thread-history-thread-deleted' => '$1 $2 slettet denne tråden',
@@ -4212,7 +4301,7 @@ ___________________________________________<br />
 * Finn hjelp og råd på Fellesskapssentralen: http://community.wikia.com
 * Vil du motta færre meldinger fra oss? Du kan avslutte abonnementet eller
 endre e-post-innstillingene dine her: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Beskjedtavle',
+	'prefs-email-wall-v2' => 'Beskjedtavle', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Send meg en e-post...',
 	'tog-enotifmywall-every' => 'For hver melding og hvert svar',
 	'tog-enotifmywall-sincevisited' => 'En gang per tråd siden mitt siste besøk',
@@ -4263,12 +4352,16 @@ $messages['nl'] = array(
 	'wall-message-unfollow' => 'Niet langer volgen',
 	'wall-message-undoremove' => 'Ongedaan maken',
 	'wall-message-edited' => '<a href="$3" >Bewerkt door</a> <a class="username" href="$1">$2</a>',
+	'wall-message-edited-summary' => '<a href="$4" >$1 door </a><a class="username" href="$2">$3</a>',
 	'wall-message-update-topics-summary' => 'Onderwerp gewijzigd',
+	'wall-message-update-highlight-summary' => 'Uitgelicht',
+	'wall-message-update-removed-highlight-summary' => 'Uitgelicht verwijderd',
 	'wall-message-mywall' => 'Mijn prikbord',
 	'wall-toolbar-history' => 'Geschiedenis',
 	'wall-message-notify' => 'Beheerder informeren',
 	'wall-message-remove' => 'Verwijderen',
 	'wall-message-rev-delete' => 'Versies verwijderen',
+	'wall-message-fast-admin-delete-message' => 'VSTF verwijderen',
 	'wall-message-quote-button' => 'Citeren',
 	'wall-message-elseswall' => 'Prikbord van $1',
 	'wall-message-no-permission' => 'U hebt geen rechten om deze handeling op het bericht uit te voeren',
@@ -4300,6 +4393,7 @@ $messages['nl'] = array(
 	'wall-message-removed-thread-because' => '$1 heeft deze draad verwijderd om de volgende reden:',
 	'wall-message-deleted-thread-because' => '$1 heeft deze draad verwijderd om de volgende reden:',
 	'wall-message-restore-thread' => 'Draad terugplaatsen',
+	'wall-message-move-thread' => 'Draad hernoemen',
 	'wall-message-removed-reply-because' => '$1 heeft dit antwoord verwijderd om de volgende reden:',
 	'wall-message-deleted-reply-because' => '$1 heeft dit antwoord verwijderd om de volgende reden:',
 	'wall-message-closed-by' => '[[$2|$1]] heeft deze draad gesloten',
@@ -4307,6 +4401,7 @@ $messages['nl'] = array(
 	'wall-delete-reason' => 'Gebruikers- of beheerdershandeling',
 	'wall-user-talk-page-archive-anchor' => 'Zie gearchiveerde overlegpagina',
 	'wall-user-talk-archive-page-title' => 'Gearchiveerde_overlegpagina',
+	'wall-ipb-disableusertalk' => 'Voorkomen dat deze gebruiker tijdens de blokkade de eigen berichtenmuur kan bewerken',
 	'wall-action-all-confirm-cancel' => 'Annuleren',
 	'wall-action-all-confirm-notify' => 'Beheerder informeren',
 	'wall-action-remove-reply-title' => 'Dit antwoord verwijderen',
@@ -4399,6 +4494,7 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-deleted-msg-text' => 'Het bericht dat u probeert te bekijken is verwijderd.',
 	'wall-deleted-msg-return-to' => 'Terug naar het prikbord van $1.',
 	'wall-deleted-msg-view' => '(Bekijken/terugplaatsen)',
+	'wall-recentchanges-wall-thread' => 'Prikboarddraad',
 	'wall-recentchanges-new-message' => 'op het <a href="$1">prikbord van $2</a>',
 	'wall-recentchanges-edit' => '(bericht bewerkt)',
 	'wall-recentchanges-summary' => '($1)',
@@ -4497,7 +4593,7 @@ ___________________________________________<br />
  * Vind hulp en advies op Community Central: http://community.wikia.com
  * Wilt u minder berichten ontvangen van ons? U kunt hier afmelden of uw
 e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Prikbord',
+	'prefs-email-wall-v2' => 'Prikbord en forum',
 	'tog-enotifwallthread-v2' => 'E-mail mij...',
 	'tog-enotifmywall-every' => 'Bij elk bericht en antwoord',
 	'tog-enotifmywall-sincevisited' => 'Een keer per draad sinds mijn laatste bezoek',
@@ -4770,6 +4866,7 @@ Ten wątek i jego historia nadal będą dostępne w historii wiki.',
 	'wall-thread-history-reply-created' => '$1 $2 {{GENDER:$2|zostawił|zostawiła|zostawił}} odpowiedź',
 	'wall-thread-history-thread-removed' => '$1 $2 {{GENDER:$2|usunął|usunęła|usunął}} ten wątek',
 	'wall-thread-history-reply-removed' => '$1 $2 {{GENDER:$2|usunął|usunęła|usunął}} odpowiedź $5 użytkownika $3',
+	'wall-thread-history-reply-deleted' => '$1 $2 {{GENDER:$2|usunął|usunęła|usunął}} odpowiedź {{GENDER:$3|użytkownika|użytkowniczki|użytkownika}} $3',
 	'wall-thread-history-thread-restored' => '$1 $2 {{GENDER:$2|przywrócił|przywróciła|przywrócił}} ten wątek',
 	'wall-thread-history-reply-restored' => '$1 $2 {{GENDER:$2|przywrócił|przywróciła|przywrócił}} odpowiedź $5 użytkownika $3',
 	'wall-thread-history-thread-deleted' => '$1 $2 {{GENDER:$2|skasował|skasowała|skasował}} ten wątek',
@@ -4832,7 +4929,7 @@ ___________________________________________
 ___________________________________________<br />
 * Znajdź pomoc w Centrum Społeczności: http://spolecznosc.wikia.com
 * Nie chcesz otrzymywać wiadomości? Możesz zmienić ustawienia tutaj: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Tablica Wiadomości',
+	'prefs-email-wall-v2' => 'Tablica Wiadomości', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Wyślij e-mail gdy…',
 	'tog-enotifmywall-every' => 'Dla każdej wiadomości i odpowiedzi',
 	'tog-enotifmywall-sincevisited' => 'Raz na każdy zmieniony wątek od moich ostatnich odwiedzin',
@@ -4923,8 +5020,10 @@ $messages['ps'] = array(
 	'wall-history-action-view' => 'کتل',
 	'wall-history-action-restore' => 'بيازېرمل',
 	'mail-notification-html-greeting' => 'سلامونه $1،',
-	'prefs-email-wall-v2' => 'پيغام دېوال',
+	'prefs-email-wall-v2' => 'پيغام دېوال', # Fuzzy
 	'tog-enotifwallthread-v2' => 'برېښليک راولېږه…',
+	'wall-preview-modal-title' => 'مخليدنه',
+	'wall-preview-modal-button-publish' => 'خپرول',
 );
 
 /** Portuguese (português)
@@ -5094,7 +5193,7 @@ ___________________________________________<br />
 * Encontre ajuda e conselhos na Central da Comunidade: http://community.wikia.com
 * Quer receber menos mensagens nossas? Você pode parar de subscrever ou alterar as
 suas preferências de e-mail aqui: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Mural de Mensagens',
+	'prefs-email-wall-v2' => 'Mural de Mensagens', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Enviar-me um email...',
 	'tog-enotifmywall-every' => 'Para cada mensagem & resposta',
 	'tog-enotifmywall-sincevisited' => 'Uma vez por tópico desde a minha última visita',
@@ -5267,7 +5366,7 @@ ___________________________________________<br>
 * Procure ajuda e conselho na Wikia Português do Brasil: http://pt-br.wikia.com
 * Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar
 suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferências', # Fuzzy
-	'prefs-email-wall-v2' => 'Mural de Mensagens',
+	'prefs-email-wall-v2' => 'Mural de Mensagens', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Enviar-me um email...',
 	'wall-quote-author' => '$1 escreveu:',
 	'wall-quote-reply-to' => 'responder a #$1',
@@ -5537,7 +5636,7 @@ ___________________________________________
 ___________________________________________<br />
 * Найти помощь и совет можно на Community Central: http://community.wikia.com
 * Хотите уменьшить количество данных писем? Вы можете отписаться от рассылки или внести в неё коррективы на странице личных настроек: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Стена обсуждения',
+	'prefs-email-wall-v2' => 'Стена обсуждения', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Отправлять мне email...',
 	'tog-enotifmywall-every' => 'о каждом сообщении и ответе',
 	'tog-enotifmywall-sincevisited' => 'только о теме, которую я посещал последней',
@@ -5775,6 +5874,7 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'wall-thread-history-reply-created' => '$1 $2 lämnade ett svar',
 	'wall-thread-history-thread-removed' => '$1 $2 tog bort denna tråd',
 	'wall-thread-history-reply-removed' => '$1 $2 tog bort $3s svar $5',
+	'wall-thread-history-reply-deleted' => '$1 $2 raderade $3s svar',
 	'wall-thread-history-thread-restored' => '$1 $2 återställde denna tråd',
 	'wall-thread-history-reply-restored' => '$1 $2 återställde $3s svar $5',
 	'wall-thread-history-thread-deleted' => '$1 $2 raderade denna tråd',
@@ -5839,7 +5939,7 @@ ___________________________________________<br />
 * Hitta hjälp och råd på Gemenskapscentralen: http://community.wikia.com
 * Vill du få färre meddelanden från oss? Du kan avprenumerera eller ändra
 dina e-postinställningar här: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Meddelandevägg',
+	'prefs-email-wall-v2' => 'Meddelandevägg', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Skicka e-post till mig...',
 	'tog-enotifmywall-every' => 'För varje meddelande & svar',
 	'tog-enotifmywall-sincevisited' => 'En gång per tråd sedan mitt senaste besök',
@@ -6155,7 +6255,7 @@ ___________________________________________<br />
 * Maghanap ng tulong at payo sa Lunduyan ng Pamayanan: http://community.wikia.com
 * Nais tumanggap ng mas kakaunting mga mensahe mula sa amin? Maaari kang huwag nang magpasipi o baguhin 
 ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Dingding ng Mensahe',
+	'prefs-email-wall-v2' => 'Dingding ng Mensahe', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Padalhan ako ng e-liham...',
 	'tog-enotifmywall-every' => 'Para sa bawat mensahe at sagot',
 	'tog-enotifmywall-sincevisited' => 'Isa bawat sinulid magmula noong huling pagdalaw ko',
@@ -6470,7 +6570,7 @@ ___________________________________________
 ___________________________________________<br />
 * Ви можете знайти допомогу, та поради на (http://community.wikia.com) та Вики Сообщества (http://ru.community.wikia.com)
 * Хочете отримувати менше таких повідомленнь? Ви можете відмовитися від розсилки даних повідомлень, або внести в неї корективи на сторінці власних налаштуваннь: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Стіна обговорення',
+	'prefs-email-wall-v2' => 'Стіна обговорення', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Відправляти мені email…',
 	'tog-enotifmywall-every' => 'про кожне повідомлення і відповідь',
 	'tog-enotifmywall-sincevisited' => 'тільки про обговорення, яке я переглядав останнім',
@@ -6733,7 +6833,7 @@ ___________________________________________<br />
 * Nhận được sự hỗ trợ từ ngôn ngữ của bạn tại Wikia Tiếng Việt: http://vi.wikia.com
 * Muốn nhận ít thư thông báo hơn từ chúng tôi? Bạn có thể bỏ chọn hoặc thay đổi
  tuỳ chọn thư điện tử của bạn ở đây: http://vi.wikia.com/wiki/Đặc_biệt:Tùy_chọn',
-	'prefs-email-wall-v2' => 'Tường tin nhắn',
+	'prefs-email-wall-v2' => 'Tường tin nhắn', # Fuzzy
 	'tog-enotifwallthread-v2' => 'Gửi thư điện tử cho tôi…',
 	'tog-enotifmywall-every' => 'Cho mỗi tin nhắn & hồi âm',
 	'tog-enotifmywall-sincevisited' => 'Mỗi lần một luồng kể từ lần cuối cùng tôi đăng nhập',
@@ -6875,5 +6975,5 @@ $messages['zh-hans'] = array(
 	'wall-sorting-most-active' => '最活跃',
 	'wall-recentchanges-new-message' => '在<a href="$1">$2的信息墙上</a>',
 	'mail-notification-html-greeting' => '嗨！$1,',
-	'prefs-email-wall-v2' => '信息墙',
+	'prefs-email-wall-v2' => '信息墙', # Fuzzy
 );

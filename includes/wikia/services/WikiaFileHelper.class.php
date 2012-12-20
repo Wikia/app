@@ -118,20 +118,29 @@ class WikiaFileHelper extends Service {
 	}
 
 	public static function videoPlayButtonOverlay( $width, $height ) {
+		global $wgBlankImgUrl;
 
-		$sizeClass = 'mid';
+		$sizeClass = '';
 		if ( $width <= 170 ) {
-			$sizeClass = 'min';
+			$sizeClass = 'small';
 		}
 		if ( $width > 360 ) {
-			$sizeClass = 'max';
+			$sizeClass = 'large';
 		}
 
-		$playButton = array(
-			"class"		=> "Wikia-video-play-button ".$sizeClass,
-			"style"		=> "width: {$width}px; height: ".($height)."px;"
-		);
-		return  Xml::element( 'span', $playButton, '', false );
+		$html = Xml::openElement( 'div', array(
+			'class' => 'Wikia-video-play-button',
+			'style' => 'line-height:' . $height . 'px;width:' . $width . 'px;',
+		));
+
+		$html .= Xml::element( 'img', array(
+			'class' => 'sprite play ' . $sizeClass,
+			'src' => $wgBlankImgUrl,
+		));
+
+		$html .= Xml::closeElement( 'div' );
+
+		return $html;
 	}
 
 	public static function videoInfoOverlay( $width, $title = null ) {
@@ -146,9 +155,9 @@ class WikiaFileHelper extends Service {
 			$file = wfFindFile( $media );
 			if ( !empty($file) ) {
 				// video title
-				$width = $width - 60;
+				$contentWidth = $width - 60;
 				$videoTitle = $media->getText();
-				$content = self::videoOverlayTitle( $videoTitle, $width );
+				$content = self::videoOverlayTitle( $videoTitle, $contentWidth );
 
 				// video duration
 				$duration = '';
@@ -174,6 +183,7 @@ class WikiaFileHelper extends Service {
 				// info
 				$attribs = array(
 					"class" => "info-overlay",
+					"style" => "width: {$width}px;"
 				);
 
 				$html = Xml::tags( 'span', $attribs, $content );
@@ -484,7 +494,7 @@ class WikiaFileHelper extends Service {
 		return $hms;
 	}
 
-	/** 
+	/**
 	 * Get the duration in ISO 8601 format for meta tag
 	 * @return string
 	 */
@@ -494,13 +504,13 @@ class WikiaFileHelper extends Service {
 			$ret = "PT";
 			if(count($segments) == 3) {
 				$ret .= array_shift($segments) . 'H';
-			} 
+			}
 			$ret .= array_shift($segments) . 'M';
 			$ret .= array_shift($segments) . 'S';
-			
+
 			return $ret;
-		}		
-		return '';		
+		}
+		return '';
 	}
 
 

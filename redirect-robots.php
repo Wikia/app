@@ -230,6 +230,8 @@ function getLangSpecificNamespace( &$lang, $code, $bot='' ){
 		$r .= sprintf( "Allow: /wiki/%s:CreateWiki*\n", urlencode( $ns[NS_SPECIAL] ) );
 		$r .= sprintf( "Allow: /%s*\n", $lang->specialPage("Videos") );
 		$r .= sprintf( "Allow: /wiki/%s*\n", $lang->specialPage("Videos") );
+		$r .= sprintf( "Allow: /%s*\n", $lang->specialPage("Forum") );
+		$r .= sprintf( "Allow: /wiki/%s*\n", $lang->specialPage("Forum") );
 		$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
 		$r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
 		$r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
@@ -255,6 +257,8 @@ function getLangSpecificNamespace( &$lang, $code, $bot='' ){
 		$r .= sprintf( "Allow: /wiki/%s:CreateWiki*\n", urlencode( $ns[NS_SPECIAL] ) );
 		$r .= sprintf( "Allow: /%s*\n", $lang->specialPage("Videos") );
 		$r .= sprintf( "Allow: /wiki/%s*\n", $lang->specialPage("Videos") );
+		$r .= sprintf( "Allow: /%s*\n", $lang->specialPage("Forum") );
+		$r .= sprintf( "Allow: /wiki/%s*\n", $lang->specialPage("Forum") );
 		$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
 		$r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
 		$r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";

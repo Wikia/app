@@ -103,9 +103,13 @@ class AbTestingData extends WikiaObject {
 		return $ret;
 	}
 
-	protected function loadFromDb( $where = array() ) {
+	protected function loadFromDb( $where = array(), $use_master = false ) {
+		// Some calls to this method want to load from the master so that they
+		// don't race with replication lag
+		$db_type = $use_master ? DB_MASTER : DB_SLAVE;
+
 		/** @var $dbr DatabaseMysql */
-		$dbr = $this->getDb();
+		$dbr = $this->getDb( $db_type );
 		$res = $dbr->select(
 			array( // tables
 				'e' => 'ab_experiments',
@@ -144,10 +148,11 @@ class AbTestingData extends WikiaObject {
 		return $this->loadFromDb();
 	}
 
-	public function getById( $id ) {
+	public function getById( $id, $use_master = false ) {
 		$list = $this->loadFromDb(array(
 			'e.id' => $id,
-		));
+		), $use_master);
+
 		return @$list[$id];
 	}
 
@@ -222,7 +227,7 @@ class AbTestingData extends WikiaObject {
 		$this->deleteRow(self::TABLE_GROUPS,$grp,__METHOD__);
 	}
 
-	public function saveVersion( &$ver ) {
+	public function saveVersion( &$ver) {
 		$this->saveRow(self::TABLE_VERSIONS,$ver,__METHOD__);
 	}
 

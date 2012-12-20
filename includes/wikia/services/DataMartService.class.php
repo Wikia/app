@@ -79,7 +79,7 @@
 		 * @return array $pageviews [ array( 'WIKI_ID' => array( 'YYYY-MM-DD' => pageviews, 'SUM' => sum(pageviews) ) ) ]
 		 */
 		protected static function getPageviewsForWikis( $periodId, $wikis, $startDate, $endDate = null ) {
-			$app = F::app(); 
+			$app = F::app();
 
 			$app->wf->ProfileIn( __METHOD__ );
 
@@ -127,7 +127,7 @@
 
 			return $pageviews;
 		}
-		
+
 		/**
 		 * get pageviews
 		 * @param array $dates ( YYYY-MM-DD, YYYY-MM-DD ... )
@@ -176,7 +176,7 @@
 
 			return $pageviews;
 		}
-		
+
 		// get daily pageviews
 		public static function getPageviewsDaily( $startDate, $endDate = null, $wiki = null ) {
 			if ( is_array( $wiki ) ) {
@@ -209,7 +209,7 @@
 
 			return $pageviews;
 		}
-		
+
 		/**
 		 * Get top wikis by pageviews over a specified span of time, optionally filtering by
 		 * public status, language and vertical (hub)
@@ -517,7 +517,7 @@
 				$periodId = self::PERIOD_ID_MONTHLY;
 			}
 
-			$memKey = $app->wf->SharedMemcKey( 'datamart', 'total_video_views', 'v2', $wikiId, $periodId, $startDate, $endDate );
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'total_video_views', 'v3', $wikiId, $periodId, $startDate, $endDate );
 			$videoViews = $app->wg->Memc->get( $memKey );
 			if ( !is_array($videoViews) ) {
 				$videoViews = array();
@@ -544,7 +544,7 @@
 						$videoViews[$hashTitle] = $row->cnt;
 					}
 
-					$app->wg->Memc->set( $memKey, $videoViews, 60*60*12 );
+					$app->wg->Memc->set( $memKey, $videoViews, 60*60*2 );
 				}
 			}
 
@@ -583,12 +583,16 @@
 
 			$keyToken = '';
 
-			if ( is_array( $namespaces ) ) {
+			if ( !empty( $namespaces ) && is_array( $namespaces ) ) {
 				$keyToken .= implode( ':', $namespaces );
+			} else {
+				$namespaces = null;
 			}
 
-			if ( is_array( $articleIds ) ) {
+			if ( !empty( $articleIds ) && is_array( $articleIds ) ) {
 				$keyToken .= implode( ':', $articleIds );
+			} else {
+				$articleIds = null;
 			}
 
 			$memKey = $app->wf->SharedMemcKey(
@@ -613,7 +617,7 @@
 						'wiki_id' => $wikiId
 					);
 
-					if ( is_array( $namespaces ) ) {
+					if ( !empty( $namespaces ) ) {
 						$namespaces = array_filter( $namespaces, function( $val ) {
 							return is_integer( $val );
 						} );
@@ -621,7 +625,7 @@
 						$where[] = 'namespace_id ' . ( ( !empty( $excludeNamespaces ) ) ? 'NOT ' : null ) . ' IN (' . implode( ',' , $namespaces ) . ')';
 					}
 
-					if ( is_array( $articleIds ) ) {
+					if ( !empty( $articleIds ) ) {
 						$articleIds = array_filter( $articleIds, function( $val ) {
 							return is_integer( $val );
 						} );
@@ -663,7 +667,7 @@
 			$app->wf->ProfileOut( __METHOD__ );
 			return $topArticles;
 		}
-		
+
 		/**
 		 * Returns the latest WAM score provided a wiki ID
 		 * @param int $wikiId
@@ -672,12 +676,12 @@
 		public static function getCurrentWamScoreForWiki( $wikiId ) {
 			$app = F::app();
 			$app->wf->ProfileIn( __METHOD__ );
-			
+
 			$memKey = $app->wf->SharedMemcKey( 'datamart', 'wam', $wikiId );
-			
+
 			$getData = function() use ( $app, $wikiId ) {
 				$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
-				
+
 				$result = $db->select(
 							array( 'fact_wam_scores' ),
 							array(
@@ -692,22 +696,22 @@
 								'LIMIT' => 1
 							)
 						);
-				
+
 				return ( $row = $db->fetchObject( $result ) ) ? $row->wam : 0;
 			};
-			
+
 			$wamScore = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData );
 			$app->wf->ProfileOut( __METHOD__ );
 			return $wamScore;
 		}
-		
+
 		/**
 		 * Gets the list of top wikis for tag_id and language on a monthly pageviews basis
-		 * 
+		 *
 		 * @param integer $tagId A valid tag_id from city_tag_map table
 		 * @param string $startDate [YYYY-MM-DD]
 		 * @param string $endDate [YYYY-MM-DD]
-		 * @param integer $langCode A valid Wiki's language code 
+		 * @param string $langCode A valid Wiki's language code
 		 * @param integer $periodId
 		 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
 		 *
@@ -730,34 +734,34 @@
 				$periodId = self::PERIOD_ID_MONTHLY;
 			}
 
-			$memKey = $app->wf->SharedMemcKey( 'datamart', 'tags_top_wikis', $tagId, $periodId, $startDate, $endDate, $langCode = 'en', $limit );
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'tags_top_wikis', $tagId, $periodId, $startDate, $endDate, $langCode, $limit );
 			$tagViews = $app->wg->Memc->get( $memKey );
 			if ( !is_array($tagViews) ) {
 				$tagViews = array();
 				if ( !empty($app->wg->StatsDBEnabled) ) {
 					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 
-					$tables = array( 
-						'r' => 'rollup_wiki_pageviews', 
-						'c' => 'wikicities.city_tag_map', 
-						'd' => 'dimension_wikis' 
+					$tables = array(
+						'r' => 'rollup_wiki_pageviews',
+						'c' => 'wikicities.city_tag_map',
+						'd' => 'dimension_wikis'
 					);
 					$fields = array(
-						'c.tag_id as tag_id', 
-						'r.wiki_id', 
+						'c.tag_id as tag_id',
+						'r.wiki_id',
 						'sum(r.pageviews) as pviews'
 					);
-					$cond = array( 
+					$cond = array(
 						'period_id' => $periodId,
 						'tag_id'	=> $tagId,
-						"time_id between '{$startDate}' AND '{$endDate}'", 
+						"time_id between '{$startDate}' AND '{$endDate}'",
 					);
-					$opts = array( 
+					$opts = array(
 						'GROUP BY'	=> 'c.tag_id, r.wiki_id',
 						'ORDER BY'	=> 'pviews DESC',
 						'LIMIT'		=> $limit
 					);
-					$join_conds = array( 
+					$join_conds = array(
 						'c' => array( 'INNER JOIN', array( 'c.city_id = r.wiki_id' ) ),
 						'd' => array( 'INNER JOIN', array( 'd.wiki_id = r.wiki_id', 'd.public = 1', "d.lang = '{$langCode}'" ) )
 					);
@@ -775,5 +779,83 @@
 			$app->wf->ProfileOut( __METHOD__ );
 
 			return $tagViews;
+		}
+
+		/**
+		 * Gets the list of top wikis for category_id and language on a monthly pageviews basis
+		 *
+		 * @param integer $categoryId A valid category_id from city_cat_mapping table
+		 * @param string $startDate [YYYY-MM-DD]
+		 * @param string $endDate [YYYY-MM-DD]
+		 * @param string $langCode A valid Wiki's language code
+		 * @param integer $periodId
+		 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
+		 *
+		 * @return Array The list, the key contains Wiki ID's and "pageviews" number
+		 */
+		public static function getTopCategoriesWikisByPageviews( $categoryId, $startDate, $endDate, $langCode = 'en', $periodId = null, $limit = 200 ) {
+			$app = F::app();
+
+			$app->wf->ProfileIn( __METHOD__ );
+
+			if ( empty($endDate) ) {
+				if ( $periodId == self::PERIOD_ID_MONTHLY ) {
+					$endDate = date( 'Y-m-01' );
+				} else {
+					$endDate = date( 'Y-m-d', strtotime('-1 day') );
+				}
+			}
+
+			if ( empty($periodId) ) {
+				$periodId = self::PERIOD_ID_MONTHLY;
+			}
+
+			$categoryViews = WikiaDataAccess::cache(
+				$app->wf->SharedMemcKey( 'datamar2t', 'categories_top_wikis', $categoryId, $periodId, $startDate, $endDate, $langCode, $limit ),
+				12 * 60 * 60,
+				function() use($app, $categoryId, $startDate, $endDate, $langCode, $periodId, $limit) {
+					$categoryViews = array();
+					if ( !empty($app->wg->StatsDBEnabled) ) {
+						$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+
+						$tables = array(
+							'r' => 'rollup_wiki_pageviews',
+							'c' => 'wikicities.city_cat_mapping',
+							'd' => 'dimension_wikis'
+						);
+						$fields = array(
+							'c.cat_id as cat_id',
+							'r.wiki_id',
+							'sum(r.pageviews) as pviews'
+						);
+						$cond = array(
+							'period_id' => $periodId,
+							'cat_id'	=> $categoryId,
+							"time_id between '{$startDate}' AND '{$endDate}'",
+						);
+						$opts = array(
+							'GROUP BY'	=> 'c.cat_id, r.wiki_id',
+							'ORDER BY'	=> 'pviews DESC',
+							'LIMIT'		=> $limit
+						);
+						$join_conds = array(
+							'c' => array( 'INNER JOIN', array( 'c.city_id = r.wiki_id' ) ),
+							'd' => array( 'INNER JOIN', array( 'd.wiki_id = r.wiki_id', 'd.public = 1', "d.lang = '{$langCode}'" ) )
+						);
+
+						$result = $db->select( $tables, $fields, $cond, __METHOD__, $opts, $join_conds );
+
+						while ( $row = $db->fetchObject($result) ) {
+							$categoryViews[ $row->wiki_id ] = $row->pviews;
+						}
+					}
+					return $categoryViews;
+				}
+			);
+
+
+			$app->wf->ProfileOut( __METHOD__ );
+
+			return $categoryViews;
 		}
 	}

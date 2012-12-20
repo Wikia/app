@@ -262,9 +262,18 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'wikiagameguides-desc' => 'Applicatiemodules voor mobiel voor Wikia Game Guides',
+	'wikiagameguides-preview-description' => 'Dit is alleen maar een voorvertoning van hoe een pagina eruit ziet in de Wikia Game Guides.',
+	'wikiagameguides-content-title' => 'Contentbeheerprogramma voor Wikia Game Guides',
 	'wikiagameguides-content-category' => 'Categorie',
+	'wikiagameguides-content-category-desc' => 'Geef de categorieën uit uw wiki in die u wilt opnemen in de Wikia Game Guides.',
+	'wikiagameguides-content-tag' => 'Categorielabel (optioneel)',
+	'wikiagameguides-content-tag-desc' => 'Organiseer uw gamecategorieën door ze te labelen.',
+	'wikiagameguides-content-name' => 'Game Guidenaam (optioneel)',
+	'wikiagameguides-content-name-desc' => 'Hernoem de wikicategorieën naar hoe u wilt dat ze worden weergegeven in Game Guides',
 	'wikiagameguides-content-add' => 'Toevoegen',
 	'wikiagameguides-content-save' => 'Opslaan',
+	'wikiagameguides-content-category-error' => 'Categorie bestaat niet',
+	'wikiagameguides-content-duplicate-entry' => 'Deze waarde komt meerdere keren voor',
 );
 
 /** Polish (polski)
@@ -292,6 +301,15 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'wikiagameguides-desc' => "Mòdoj ëd l'aplicassion mòbil Wikia Games Guides",
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikiagameguides-content-category' => 'وېشنيزه',
+	'wikiagameguides-content-add' => 'ورګډول',
+	'wikiagameguides-content-save' => 'خوندي کول',
 );
 
 /** Portuguese (português)

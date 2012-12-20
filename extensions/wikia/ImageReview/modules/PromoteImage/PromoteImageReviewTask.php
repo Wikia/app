@@ -194,7 +194,6 @@ class PromoteImageReviewTask extends BatchTask {
 		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/PromoteImage/upload.php";
 		$sCommand .= " --originalimageurl=" . escapeshellarg($sourceImageUrl);
 		$sCommand .= " --destimagename=" . escapeshellarg($destinationName);
-		$sCommand .= " --userid=" . escapeshellarg( $this->mUser );
 		$sCommand .= " --wikiid=" . escapeshellarg( $sourceWikiId );
 		$sCommand .= " --conf {$wgWikiaLocalSettingsPath}";
 

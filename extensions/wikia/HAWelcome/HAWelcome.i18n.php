@@ -790,6 +790,7 @@ Silakan tinggalkan pesan di [[$2|Pembicaraan halaman saya]] jika saya dapat memb
 /** Italian (italiano)
  * @author Beta16
  * @author Gianfranco
+ * @author Viscontino
  */
 $messages['it'] = array(
 	'welcome-user-page' => "==Qualcosa su di me==
@@ -834,6 +835,11 @@ Se hai bisogno di aiuto e non ci sono amministratori disponibili, visita i [[wik
 	'welcome-message-wall-user' => 'Ciao, benvenuto su {{SITENAME}}! Grazie per la tua modifica alla pagina [[:$1]].
 
 Lascia pure un messaggio se posso esserti utile per qualsiasi cosa!',
+	'welcome-message-wall-user-staff' => 'Ciao, benvenuto su {{SITENAME}}! Grazie per la tua modifica alla voce [[$1]].
+
+Se hai bisogno di aiuto, e gli amministratori locali non sono presenti, puoi visitare il [[wikia:Forum:Community Central Forum|Forum sulla Comunità Centrale di Wiki]]. È anche possibile controllare il nostro [[w:c:community:Blog:Wikia_Staff_Blog|blog dello Staff]] per seguire le ultime notizie e gli eventi di Wikia.
+
+Buone modifiche!',
 );
 
 /** Japanese (日本語)

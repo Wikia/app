@@ -34,7 +34,7 @@ class RelatedVideosController extends WikiaController {
 		$this->linkToSeeMore = !empty($this->app->wg->EnableSpecialVideosExt) ? SpecialPage::getTitleFor("Videos")->escapeLocalUrl() : Title::newFromText(WikiaVideoPage::getVideosCategory())->getFullUrl();
 		$this->videos = $videos;
 
-		$mediaService = F::build( 'MediaQueryService' ); /** @var $mediaService MediaQueryService */
+		$mediaService = new MediaQueryService();
 		$this->totalVideos = $this->wg->Lang->formatNum( $mediaService->getTotalVideos() );
 	}
 

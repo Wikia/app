@@ -157,7 +157,6 @@ class StructuredDataController extends WikiaSpecialPageController {
 					$result = $this->structuredData->updateSDElement($sdsObject, $requestParams);
 					if( isset( $result->error ) ) {
 						$updateResult = $result;
-						$action = 'edit';
 					}
 					else {
 						$this->wg->out->redirect( $sdsObject->getObjectPageUrl( SD_CONTEXT_SPECIAL ) . '?success=true' );
@@ -279,6 +278,11 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 			foreach ( $objectTypes as $type ) {
 
+				// TODO: remove 'schema:Photograph' from containers range
+				if ($type === 'schema:Photograph' && in_array('schema:ImageObject', $objectTypes)) {
+					continue;
+				}
+
 				$getSpecialFields = array();
 				if ( isset( $specialFields[ $type ] ) ) $getSpecialFields = $specialFields[ $type ];
 				$collection = $this->structuredData->getCollectionByType( $objectTypes[0], $getSpecialFields );
@@ -293,13 +297,14 @@ class StructuredDataController extends WikiaSpecialPageController {
 						}
 						$item['url'] = $specialPageUrl;
 
-						if ( !in_array( $item, $resultCollection ) ) {
-							$resultCollection[] = $item;
-						}
+						// avoiding object duplication in collection
+						$resultCollection[$item['id']] = $item;
+
 					}
 				}
 			}
-			$this->response->setVal( "list", $resultCollection );
+
+			$this->response->setVal( "list", array_values($resultCollection) );
 			$this->setVal( "specialPageUrl", SpecialPage::getTitleFor( 'StructuredData' )->getFullUrl() );
 			$this->setVal( "objectType", $objectType);
 		}

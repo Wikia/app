@@ -182,11 +182,15 @@
 					this.setNoticeAreaStatus(noticeareaStatus);
 				} else if( hash && isMainPageEduNote && window.wgUserName ) {
 					$.nirvana.sendRequest({
-						controller: 'WikiaUserProperties',
-						method: 'dismissRTEMainPageNotice',
+						controller: 'WikiaUserPropertiesController',
+						method: 'performPropertyOperation',
+						data: {
+							handlerName: 'EditorUserPropertiesHandler',
+							methodName: 'dismissEditorMainPageNotice'
+						},
 						type: 'post',
 						format: 'json',
-						callback: $.proxy(this.onDismissRTEMainPageNotice, this)
+						callback: $.proxy(this.onDismissMainPageNotice, this)
 					});
 				}
 
@@ -194,7 +198,7 @@
 			}
 		},
 
-		onDismissRTEMainPageNotice: function(response) {
+		onDismissMainPageNotice: function(response) {
 			if( response.result && response.result.success != true ) {
 				$().log('Noticearea error: wrong during dissmissing main page edu note');
 

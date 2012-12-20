@@ -184,9 +184,11 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 
 		/** @var $status Status */
 		$status = $this->doSave( $experiment, $data );
+		// Set the ID again in case this was a new experiment
+		$id = $experiment['id'];
 
 		if ( $status->isGood() ) {
-			$experiment = $this->getAbData()->getById($id);
+			$experiment = $this->getAbData()->getById($id, true);
 			$this->addActions($experiment);
 			$this->setVal('status',true);
 			$this->setVal('id',$id);
@@ -220,7 +222,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		return $changed;
 	}
 
-	protected function doSave( $exp, $data ) {
+	protected function doSave( &$exp, $data ) {
 		$abTesting = $this->getAbTesting();
 		$status = Status::newGood();
 		$info = $this->getExperimentInfo($exp);
@@ -277,8 +279,11 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$normalizedName = $abTesting->normalizeName($groupName);
 			if ( isset( $groups[$normalizedName] ) ) {
 				$prevGroupName = $groups[$normalizedName]['name'];
-				$status->error("These groups resolve to the same identifier: \"{$prevGroupName}\", \"{$groupName}\"");
+				$status->error("These group names resolve to the same identifier: \"{$prevGroupName}\", \"{$groupName}\"");
 			}
+
+			// Save the original name in case we need it for error reporting
+			$groups[$normalizedName]['name'] = $groupName;
 
 			// check if provided ranges can be parsed
 			if ( $abTesting->parseRanges($ranges, true) === false ) {
@@ -286,7 +291,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			}
 
 			// save group-to-range assignment in a more helpful way
-			$groups[$normalizedName] = $ranges;
+			$groups[$normalizedName]['ranges'] = $ranges;
 
 			// if group doesn't exist schedule it for adding
 			if ( !isset($existingGroups[$normalizedName] ) ) {
@@ -314,7 +319,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$endTime = $abTesting->getTimestampForUTCDate($data['end_time']);
 
 			if ( $startTime < $nowPlusCache ) {
-				$status->error('Start time must be at least 10 minutes in the future');
+				$status->error("Start time must be at least 10 minutes in the future");
 			}
 
 			if ( $startTime >= $endTime ) {
@@ -336,14 +341,25 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 				$abData->saveGroup($grp);
 				$existingGroups[$normalizedName] = $grp['id'];
 			}
+
+			// Despite the key name, this can actually be a name not an ID
+			if (is_numeric($data['control_group_id'])) {
+				$control_group_id = $data['control_group_id'];
+			} else {
+				$control_group_name = $abTesting->normalizeName($data['control_group_id']);
+				$control_group_id = $existingGroups[$control_group_name];
+			}
+
 			// if ranges configuration has changed
 			if ( $versionChanged ) {
+
 				// find previous and current versions
 				$versions = array_slice($exp['versions'],-2);
 				if ( !$hasFutureVersion ) {
 					array_shift($versions);
 					array_push($versions,$abData->newVersion());
 				}
+
 				if ( count( $versions ) == 2 ) {
 					$previous = $versions[0];
 					$current = $versions[1];
@@ -364,7 +380,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 				// save the current version of experiment
 				$current = array_merge( $current, array(
 					'experiment_id' => $expId,
-					'control_group_id' => $data['control_group_id'],
+					'control_group_id' => $control_group_id,
 					'start_time' => $data['start_time'],
 					'end_time' => $data['end_time'],
 					'ga_slot' => $data['ga_slot'],
@@ -372,7 +388,8 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 				$abData->saveVersion($current);
 				$verId = $current['id'];
 				// save group ranges
-				foreach ($groups as $normalizedName => $ranges) {
+				foreach ($groups as $normalizedName => $info) {
+					$ranges = $info['ranges'];
 					$grpId = $existingGroups[$normalizedName];
 					$grn = array(
 						'group_id' => $grpId,
@@ -440,8 +457,8 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$info['firstVersion'] = $exp['versions'][$firstId];
 			$lastId = max( array_keys( $exp['versions'] ) );
 			$info['lastVersion'] = $exp['versions'][$lastId];
-			$info['hasStarted'] = $info['firstVersion']['start_time'] < $nowPlusCache;
-			$info['hasFutureVersion'] = $info['lastVersion']['start_time'] < $nowPlusCache;
+			$info['hasStarted'] = strtotime($info['firstVersion']['start_time']) < $nowPlusCache;
+			$info['hasFutureVersion'] = strtotime($info['lastVersion']['start_time']) > $nowPlusCache;
 		}
 
 		return $info;

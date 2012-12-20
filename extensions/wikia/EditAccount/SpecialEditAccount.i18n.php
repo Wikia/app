@@ -926,6 +926,7 @@ $messages['id'] = array(
  * @author Leviathan 89
  * @author Lexaeus 94
  * @author Pietrodn
+ * @author Viscontino
  */
 $messages['it'] = array(
 	'editaccount' => 'Modifica account',
@@ -941,10 +942,13 @@ $messages['it'] = array(
 	'editaccount-label-email' => 'Imposta un nuovo indirizzo e-mail',
 	'editaccount-label-pass' => 'Riscrivi la nuova password',
 	'editaccount-label-realname' => 'Imposta il nuovo nome reale',
+	'editaccount-label-clearunsub' => 'Disiscritto',
+	'editaccount-label-reason' => 'Motivo:',
 	'editaccount-submit-email' => 'Salva e-mail',
 	'editaccount-submit-pass' => 'Salva password',
 	'editaccount-submit-realname' => 'Salva il nome reale',
 	'editaccount-submit-close' => 'Chiudi account',
+	'editaccount-submit-button' => 'Salva',
 	'editaccount-usage-close' => "È anche possibile disattivare un account utente rimescolando la relativa password e rimuovendo l'indirizzo di posta elettronica. Si noti che questi dati saranno persi e non saranno recuperabili.",
 	'editaccount-warning-close' => "<b>Attenzione:</b> Si sta per disabilitare permanentemente l'account dell'utente <b>$1.</b> Ciò non può essere annullato. Sicuro che sia quello che vuoi fare?",
 	'editaccount-status' => 'Messaggio di stato',
@@ -967,6 +971,8 @@ $messages['it'] = array(
 	'editaccount-status-confirmed' => 'Confermato',
 	'editaccount-status-unconfirmed' => 'Non confermato',
 	'editaccount-status-realuser' => 'Utente attivo',
+	'editaccount-status-tempuser' => 'Utente inattivo',
+	'editaccount-error-tempuser-email' => "Gli utenti temporanei non possono lasciare vuoto il campo dell'indirizzo email, per favore inseriscine uno.",
 	'editaccount-log' => 'Registro account utente',
 	'editaccount-log-header' => 'Questa pagina elenca le modifiche alle preferenze utente effettuate dallo Staff Wikia.',
 	'editaccount-log-entry-email' => "E-mail dell'utente $2 cambiata",
@@ -975,6 +981,7 @@ $messages['it'] = array(
 	'editaccount-log-entry-close' => 'Account $2 disabilitato',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Questo account è stato globalmente disattivato da Wikia.</div>',
 	'right-editaccount' => 'Modifica le preferenze degli altri utenti',
+	'action-editaccount' => 'modificare le informazioni di altri utenti',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1305,6 +1312,7 @@ Laat de gebruiker bij deze wiki aanmelden met een nieuw wachtwoord om problemen 
 	'editaccount-label-pass' => 'Nieuw wachtwoord instellen',
 	'editaccount-label-realname' => 'Nieuwe echte naam instellen',
 	'editaccount-label-clearunsub' => 'Uitgeschreven',
+	'editaccount-label-toggleadopt' => 'Adoptiestatus aanpassen (voor AutomaticWikiAdopt):',
 	'editaccount-label-toggleadopt-prevent' => 'Automatische adoptie voorkomen',
 	'editaccount-label-toggleadopt-allow' => 'Automatische adoptie toestaan',
 	'editaccount-label-reason' => 'Reden:',
@@ -1540,9 +1548,11 @@ $messages['ps'] = array(
 	'editaccount-label-email' => 'نوې برېښليک پته ټاکل',
 	'editaccount-label-pass' => 'نوی پټنوم ټاکل',
 	'editaccount-label-realname' => 'نوی اصلي نوم ټاکل',
+	'editaccount-label-reason' => 'سبب:',
 	'editaccount-submit-email' => 'برېښليک خوندي کول',
 	'editaccount-submit-pass' => 'پټنوم خوندي کول',
 	'editaccount-submit-close' => 'کارن حساب تړل',
+	'editaccount-submit-button' => 'خوندي کول',
 	'editaccount-status' => 'د پيغام دريځ',
 	'editaccount-labal-account-status' => 'د ګڼون دريځ',
 	'editaccount-labal-email-status' => 'د برېښليک دريځ',

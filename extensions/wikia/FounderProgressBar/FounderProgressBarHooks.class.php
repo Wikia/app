@@ -27,24 +27,24 @@ class FounderProgressBarHooks {
 		if ($flags & EDIT_NEW) {
 			// Tasks related to adding new pages X (do not count auto generated user pages or categories or files or ...)
 			if ($title->getNamespace() == NS_MAIN) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_10));
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PAGE_ADD_20));
-				if (self::bonusTaskEnabled(FT_BONUS_PAGE_ADD_5)) {
-					$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BONUS_PAGE_ADD_5));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_PAGE_ADD_10']));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_PAGE_ADD_20']));
+				if (self::bonusTaskEnabled(FounderProgressBarController::$tasks['FT_BONUS_PAGE_ADD_5'])) {
+					$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_BONUS_PAGE_ADD_5']));
 				}
 			}
 			// if blogpost
 			if ($app->wg->EnableBlogArticles && $title->getNamespace() == NS_BLOG_ARTICLE) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BLOGPOST_ADD));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_BLOGPOST_ADD']));
 			}
 			// if topten list
 			if ($app->wg->EnableTopListsExt && $title->getNamespace() == NS_TOPLIST) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOPTENLIST_ADD));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_TOPTENLIST_ADD']));
 			}
 
 			// edit profile page X
 			if ($title->getNamespace() == NS_USER && $title->getText() == $app->wg->User->getName()) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PROFILE_EDIT));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_PROFILE_EDIT']));
 			}
 		}
 
@@ -52,52 +52,52 @@ class FounderProgressBarHooks {
 		if ($flags & EDIT_UPDATE) {
 
 			// Tasks related to editing any article content X
-			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOTAL_EDIT_75));
-			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOTAL_EDIT_300));
-			if (self::bonusTaskEnabled(FT_BONUS_EDIT_50)) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BONUS_EDIT_50));
+			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_TOTAL_EDIT_75']));
+			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_TOTAL_EDIT_300']));
+			if (self::bonusTaskEnabled(FounderProgressBarController::$tasks['FT_BONUS_EDIT_50'])) {
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_BONUS_EDIT_50']));
 			}
 
 			// if main page
 			if ($title->getArticleId() == Title::newMainPage()->getArticleId()) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_MAINPAGE_EDIT));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_MAINPAGE_EDIT']));
 
 				// Is there a better way to detect if there's a slider on the main page?
 				if (stripos($text, "slider") > 0) {
-					$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_MAINPAGE_ADDSLIDER));
+					$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_MAINPAGE_ADDSLIDER']));
 				}
 			}
 
 			// Add a page to a category: this var is set by the Parser
 			$categoryInserts = Wikia::getVar('categoryInserts');
 			if (!empty($categoryInserts)) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_ADD_3));
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_ADD_5));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_CATEGORY_ADD_3']));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_CATEGORY_ADD_5']));
 			}
 
 			// edit category page X
 			if ($title->getNamespace() == NS_CATEGORY) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_CATEGORY_EDIT));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_CATEGORY_EDIT']));
 			}
 
 			// edit TOP_NAV Wiki-navigation X
 			if ($title->getNamespace() == NS_MEDIAWIKI && $title->getText() == "Wiki-navigation") {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOPNAV_EDIT));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_TOPNAV_EDIT']));
 			}
 
 			// if commcorner X
 			if ($title->getNamespace() == NS_MEDIAWIKI && $title->getText() == "Community-corner") {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_COMMCORNER_EDIT));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_COMMCORNER_EDIT']));
 			}
 
 			// edit profile page X
 			if ($title->getNamespace() == NS_USER && $title->getText() == $app->wg->User->getName()) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PROFILE_EDIT));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_PROFILE_EDIT']));
 			}
 
 			// if page contains gallery tag
 			if (stripos ($text, "<gallery") !== false) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_GALLERY_ADD));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_GALLERY_ADD']));
 			}
 		}
 
@@ -121,10 +121,10 @@ class FounderProgressBarHooks {
 
 		$app = F::app();
 		// Any image counts for these
-		$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PHOTO_ADD_10));
-		$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PHOTO_ADD_20));
-		if (self::bonusTaskEnabled(FT_BONUS_PHOTO_ADD_10)) {
-			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BONUS_PHOTO_ADD_10));
+		$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_PHOTO_ADD_10']));
+		$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_PHOTO_ADD_20']));
+		if (self::bonusTaskEnabled(FounderProgressBarController::$tasks['FT_BONUS_PHOTO_ADD_10'])) {
+			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_BONUS_PHOTO_ADD_10']));
 		}
 
 		wfProfileOut(__METHOD__);
@@ -143,7 +143,7 @@ class FounderProgressBarHooks {
 			return true;
 		}
 
-		F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_WORDMARK_EDIT));
+		F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_WORDMARK_EDIT']));
 
 		return true;
 	}
@@ -155,7 +155,7 @@ class FounderProgressBarHooks {
 			return true;
 		}
 
-		F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_USER_ADD_5));
+		F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_USER_ADD_5']));
 		return true;
 	}
 
@@ -181,7 +181,7 @@ class FounderProgressBarHooks {
 			return true;
 		}
 
-		F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_FB_CONNECT));
+		F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_FB_CONNECT']));
 		return true;
 	}
 
@@ -197,7 +197,7 @@ class FounderProgressBarHooks {
 		}
 
 		if( $result->ok ) {
-			F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_VIDEO_ADD));
+			F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_VIDEO_ADD']));
 		}
 
 		return true;
@@ -218,10 +218,11 @@ class FounderProgressBarHooks {
 		$app = F::app();
 		$dbw = $app->wf->GetDB(DB_MASTER, array(), $app->wg->ExternalSharedDB);
 
-		// FIXME: this has to be updated when new tasks are added
-		for($task_id = 10; $task_id <= 300; $task_id+=10) {
-			$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$task_id";
-			$dbw->query ($sql, __METHOD__);
+		foreach(FounderProgressBarController::$tasks as $task_id) {
+			if($task_id < FounderProgressBarController::REGULAR_TASK_MAX_ID) {
+				$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$task_id";
+				$dbw->query ($sql, __METHOD__);
+			}
 		}
 		$dbw->commit();
 
@@ -242,7 +243,7 @@ class FounderProgressBarHooks {
 		$memKey = $app->wf->MemcKey('FounderTasksCompleted');
 		$task_complete = $app->wg->Memc->get($memKey);
 		if (empty($task_complete)) {
-			$response = $app->sendRequest('FounderProgressBar',"isTaskComplete", array("task_id" => FT_COMPLETION));
+			$response = $app->sendRequest('FounderProgressBar',"isTaskComplete", array("task_id" => FounderProgressBarController::$tasks['FT_COMPLETION']));
 			$completed = $response->getVal('task_completed', 0);
 			// Completion task set, and once set it can never be undone
 			if ($completed) {
@@ -258,7 +259,7 @@ class FounderProgressBarHooks {
 			// TODO: display some kind of YAY YOU DID IT! message here
 			if ($data['total_tasks'] > 1 && $data['tasks_completed'] >= $data['total_tasks']) {
 				$app->wg->Memc->set($memKey, true, 86400*30 );
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_COMPLETION));
+				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_COMPLETION']));
 
 				wfProfileOut(__METHOD__);
 				return true;

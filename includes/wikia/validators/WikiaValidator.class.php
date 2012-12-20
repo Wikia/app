@@ -40,7 +40,7 @@ abstract class WikiaValidator {
 	}
 
 	public function isValid($value = null) {
-		if(!is_array($value) && !$this->getOption("required") && strlen($value) == 0 ) {
+		if(!is_array($value) && !$this->getOption("required") && mb_strlen($value) == 0 ) {
 			return true;
 		}
 		$this->error = null;
@@ -82,7 +82,7 @@ abstract class WikiaValidator {
 	}
 
 	protected function hasOption( $name ){
-		return isset($this->options[$name]);
+		return array_key_exists($name, $this->options);
 	}
 
 	protected function mwMsg($errorCode) {

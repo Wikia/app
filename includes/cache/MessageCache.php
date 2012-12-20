@@ -805,19 +805,36 @@ class MessageCache {
 			$this->mInParser = true;
 			// Wikia change - begin - @author: wladek
 			// optimization for cases when transform()/"parsemag" is used
-			// only for processing {{plural:}} or {{formatnum:}}
+			// for the given set of supported functions and variables
+			$INLINE_FUNCS = array(
+				// function name => (unused) // must be a method of CoreParserFunctions
+				'plural' => 'plural',
+				'formatnum' => 'formatnum',
+			);
+			$INLINE_VARS = array(
+				// var name in wikitext => MW global variable name
+				'sitename' => 'wgSitename',
+				'contentlanguage' => 'wgLanguageCode',
+			);
+			$REGEX = "/(?<!{){{((?P<func>".implode('|',array_keys($INLINE_FUNCS))."):(?P<args>(}[^}]|[^}])+)|(?P<var>".implode('|',array_keys($INLINE_VARS))."))}}/i";
 			$firstTime = true;
-			$message = preg_replace_callback("/(?<!{){{(plural|formatnum):((}[^}]|[^}])+)}}/i",
-				function($matches) use ($firstTime,$popts,$parser) {
-					if ( $firstTime ) {
-						$firstTime = false;
-						$parser->startExternalParse(new Title('DoesntExistXYZ'),$popts,Parser::OT_PREPROCESS,true);
+			$message = preg_replace_callback($REGEX,
+				function($matches) use ($firstTime,$popts,$parser,$INLINE_VARS) {
+					if ( !empty($matches['func'] ) ) {
+						if ( $firstTime ) {
+							$firstTime = false;
+							$parser->startExternalParse(new Title('DoesntExistXYZ'),$popts,Parser::OT_PREPROCESS,true);
+						}
+						$funcName = strtolower($matches['func']);
+						$args = explode('|',$matches['args']);
+						array_unshift($args,$parser);
+						$callback = array( 'CoreParserFunctions', $funcName );
+						return call_user_func_array($callback,$args);
+					} else if ( !empty($matches['var'] ) ) {
+						$varName = strtolower($matches['var']);
+						return $GLOBALS[$INLINE_VARS[$varName]];
 					}
-					$funcName = strtolower($matches[1]);
-					$args = explode('|',$matches[2]);
-					array_unshift($args,$parser);
-					$callback = array( 'CoreParserFunctions', $funcName );
-					return call_user_func_array($callback,$args);
+					return $matches[0];
 				},
 				$message);
 

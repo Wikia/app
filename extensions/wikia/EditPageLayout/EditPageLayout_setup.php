@@ -60,6 +60,10 @@ $app->registerHook('LogEventsListShowLogExtract', 'EditPageLayoutHelper', 'onLog
 // messages
 $app->registerExtensionMessageFile('EditPageLayout', $dir . '/EditPageLayout.i18n.php');
 
+// add class to autoloader and register handler for it
+$wgAutoloadClasses['EditorUserPropertiesHandler'] = "$dir/models/EditorUserPropertiesHandler.class.php";
+WikiaUserPropertiesController::registerHandler('EditorUserPropertiesHandler');
+
 // register messages package for JS
 F::build('JSMessages')->registerPackage('EditPageLayout', array(
 	'ok',

@@ -135,6 +135,13 @@ $messages['ksh'] = array(
 	'categorygalleries-desc' => 'Donn en Jalleri vun Sigge op de Sigge vun de Saachjroppe aanzeije.',
 );
 
+/** Kirghiz (Кыргызча)
+ * @author Growingup
+ */
+$messages['ky'] = array(
+	'categorygalleries-desc' => 'Категория барактарынан галерея барактарын көрсөтөт',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

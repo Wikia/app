@@ -27,6 +27,7 @@ if (!empty($wgSharedDB)) {
 	$wgHooks['UserRights::showEditUserGroupsForm'][] = 'UserRights::showEditUserGroupsForm';
 	$wgHooks['UserAddGroup'][] = 'UserRights::addGlobalGroup';
 	$wgHooks['UserRemoveGroup'][] = 'UserRights::removeGlobalGroup';
+	$wgHooks['UserLoadGroups'][] = 'UserRights::onUserLoadGroups';
 	$wgAutoloadClasses['UserRights'] = "$IP/extensions/wikia/SharedUserrights/SharedUserrights.class.php";
 }
 

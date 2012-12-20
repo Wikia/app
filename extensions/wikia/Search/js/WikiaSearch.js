@@ -28,6 +28,14 @@ var WikiaSearch = {
 				
 			});
 		});
+
+		$('#mw-search-select-all').click(function(){
+			if ($(this).attr('checked')) {
+				advancedCheckboxes.attr('checked', 'checked');
+			} else {
+				advancedCheckboxes.attr('checked', false);
+			}
+		});
 		
 		this.initVideoTabEvents();
 	},

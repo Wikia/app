@@ -412,6 +412,15 @@ $messages['bg'] = array(
 
 -- Екипът на Wikia', # Fuzzy
 	'founderemails-email-page-edited-anon-subject' => 'Тайнствен приятел редактира $WIKINAME',
+	'founderemails-email-page-edited-anon-body' => 'Здрасти, $USERNAME,
+
+Редактор на Уикия току що направи редакция на страницата $PAGETITLE в $WIKINAME.
+
+Уикия редакторите са хора, които допринасят без да са влезли със сметката си в Wikia. Можете да отидете и да видите как е допринесъл за уикито този тайнствен приятел!
+
+$PAGEURL
+
+Екипът на Уикия',
 	'founderemails-email-anon-edit-signature' => 'Екипът на Wikia',
 	'founderemails-email-lot-happening-signature' => 'Екипът на Wikia',
 	'founderemails-email-0-day-addpages-heading' => 'Добавяне на страници.',
@@ -1714,6 +1723,7 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Crt
  * @author Kalakuh
  * @author Nedergard
  * @author Nike
@@ -1744,7 +1754,7 @@ Wikia-ryhmä',
 	'founderemails-email-page-edited-reg-user-subject' => 'Uusi $WIKINAME -muokkaus!',
 	'founderemails-email-page-edited-reg-user-body' => 'Hei $USERNAME,
 
-$EDITORNAME muokkasi juuri $WIKINAME-wikin sivua $PAGETITLE.
+$EDITORNAME muokkasi juuri wikin $WIKINAME sivua $PAGETITLE.
 
 Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.
 
@@ -1752,7 +1762,7 @@ $PAGEURL
 
 Wikia-ryhmä',
 	'founderemails-email-general-edit-greeting' => 'Hei $USERNAME,',
-	'founderemails-email-general-edit-headline' => '$EDITORNAME muokkasi juuri $WIKINAME-wikin sivua $PAGETITLE.',
+	'founderemails-email-general-edit-headline' => '$EDITORNAME muokkasi juuri wikin $WIKINAME sivua $PAGETITLE.',
 	'founderemails-email-general-edit-content' => 'Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.',
 	'founderemails-email-general-edit-signature' => 'Wikia-ryhmä',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hei $USERNAME,<br /><br />
@@ -5412,6 +5422,8 @@ $messages['ps'] = array(
 	'founderemails-email-0-day-addphotos-heading' => 'انځورونه ورګډول.',
 	'founderemails-email-0-day-addphotos-button' => 'يو انځور ورګډول',
 	'founderemails-email-3-day-addphotos-button' => 'انځورونه ورګډول',
+	'founderemails-email-views-digest-greeting' => 'سلامونه $USERNAME،',
+	'founderemails-email-views-digest-signature' => 'د ويکيا ډله',
 	'founderemails-email-complete-digest-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-complete-digest-signature' => 'د ويکيا ډله',
 );

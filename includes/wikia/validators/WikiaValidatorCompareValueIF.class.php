@@ -19,9 +19,9 @@ class WikiaValidatorCompareValueIF extends WikiaValidatorCompare {
 			$this->throwException( 'WikiaValidatorCompareValueIF: passed value need to be an array with two elements' );
 		}
 
-		$valid = $this->doCompare( $expression, $value[0],  $this->getOption( 'value' ) );
+		$valid = $this->doCompare( $expression, $value[0], $this->getOption( 'value' ) );
 
-		$validator =  $this->getOption( 'validator' );
+		$validator = $this->getOption( 'validator' );
 
 		if( ($valid) && $validator != false ) {
 			if( !$validator->isValid($value[1]) ) {

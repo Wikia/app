@@ -2584,6 +2584,10 @@ $messages['ps'] = array(
 	'rte-ck-templateEditor-editor-previewTitle' => 'مخليدنه',
 	'rte-ck-video-add' => 'يوه ويډيو ورګډول',
 	'rte-ck-video-video' => 'ويډيو',
+	'rte-ck-format-tag_h2' => 'سرليک 2',
+	'rte-ck-format-tag_h3' => 'سرليک 3',
+	'rte-ck-format-tag_h4' => 'سرليک 4',
+	'rte-ck-format-tag_h5' => 'سرليک 5',
 );
 
 /** Portuguese (português)

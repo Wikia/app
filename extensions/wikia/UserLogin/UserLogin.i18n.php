@@ -700,6 +700,14 @@ Szeretnéd módosítani a kapott e-mailekre vonatkozó beállításaidat? Ugrás
 	'wikiamobile-facebook-connect-fail' => 'Sajnos a Facebook fiókod nincs összekötve egy Wikia fiókkal sem.',
 );
 
+/** Armenian (Հայերեն)
+ * @author Vadgt
+ */
+$messages['hy'] = array(
+	'userlogin-forgot-password' => 'Մոռացե՞լ եք ձեր գաղտնաբառը',
+	'userlogin-password-email-greeting' => 'Բարև $USERNAME',
+);
+
 /** Interlingua (interlingua)
  * @author McDutchie
  */

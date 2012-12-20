@@ -1,4 +1,25 @@
 <?php
+/**
+ * Structured Data
+ *
+ * extension for manipulating with SDS objects
+ *
+ * @author Adrian 'ADi' Wieczorek <adi@wikia-inc.com>
+ * @author Jacek Jursza <jacek@wikia-inc.com>
+ * @author Jacek 'mech' Woźniak <mech@wikia-inc.com>
+ * @author Rafał Leszczyński <rafal@wikia-inc.com>
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ * @package MediaWiki
+ *
+ */
+
+$wgExtensionCredits['specialpage'][] = array(
+	'name' => 'Structured Data',
+	'author' => array( 'Adrian \'ADi\' Wieczorek', 'Jacek Jursza', 'Jacek \'mech\' Woźniak', 'Rafał Leszczyński' ),
+	'url' => 'http://callofduty.wikia.com/wiki/Special:StructuredData',
+	'descriptionmsg' => 'structureddata-desc',
+);
+
 $app = F::app();
 $dir = dirname(__FILE__) . '/';
 
@@ -76,11 +97,11 @@ $wgStructuredDataConfig = array(
 $wgAvailableRights[] = 'sdsediting';
 $wgGroupPermissions['*']['sdsediting'] = false;
 $wgGroupPermissions['staff']['sdsediting'] = true;
-$wgGroupPermissions['admin']['sdsediting'] = true;
+$wgGroupPermissions['sysop']['sdsediting'] = true;
 $wgAvailableRights[] = 'sdsdeleting';
 $wgGroupPermissions['*']['sdsdeleting'] = false;
 $wgGroupPermissions['staff']['sdsdeleting'] = true;
-$wgGroupPermissions['admin']['sdsdeleting'] = true;
+$wgGroupPermissions['sysop']['sdsdeleting'] = true;
 
 define('SD_CONTEXT_DEFAULT', 0);
 define('SD_CONTEXT_SPECIAL', 1);

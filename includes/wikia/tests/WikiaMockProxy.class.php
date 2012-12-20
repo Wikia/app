@@ -71,7 +71,6 @@ class WikiaMockProxy {
 	// PHP thinks that it is dealing with a MockProxy object, which has no useful functions
 	// So we have to map all function calls back to the original class/method
 	public function __call($name, $arguments) {
-		$class = new ReflectionClass($this->_mockClassName);
 		if (method_exists($this->_mockClassName, $name)) {
 			$mockObject = self::$instances[$this->_mockClassName];
 			return call_user_func_array(array($mockObject, $name), $arguments);

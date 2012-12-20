@@ -64,7 +64,7 @@ AIC2.checkStartStopPosition = function() {
 		startPosition = parseInt(AIC2.$placeHolder.offset().top, 10);
 		stopPosition = parseInt($footer.offset().top, 10) - 10 - adHeight;
 
-		if ($leftSkyScraper.length && $leftSkyScraper.height() > 50) {
+		if ($leftSkyScraper.is(':visible') && $leftSkyScraper.height() > 50) {
 			Liftium.d("AIC2: sky3 found", 3);
 			stopPosition = parseInt($leftSkyScraper.offset().top, 10) - 20 - adHeight;
 		}

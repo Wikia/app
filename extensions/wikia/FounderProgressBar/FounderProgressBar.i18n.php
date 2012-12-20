@@ -387,6 +387,21 @@ $messages['diq'] = array(
 	'founderprogressbar-browse-page-name' => 'Çımpawe',
 );
 
+/** Greek (Ελληνικά)
+ * @author Glavkos
+ */
+$messages['el'] = array(
+	'founderprogressbar-page-add20-action' => 'Προσθέστε μια σελίδα',
+	'founderprogressbar-video-add-label' => 'Προσθέστε ένα βίντεο',
+	'founderprogressbar-video-add-action' => 'Προσθέστε ένα βίντεο',
+	'founderprogressbar-user-add5-action' => 'Μεταβείτε στη σελίδα Βοήθειας',
+	'founderprogressbar-recentchanges-visit-label' => 'Επισκεφθείτε τις πρόσφατες αλλαγές',
+	'founderprogressbar-recentchanges-visit-action' => 'Μετάβαση στο Ειδικό:ΠρόσφατεςΑλλαγές',
+	'founderprogressbar-mostvisited-visit-label' => 'Δείτε τις πιο συχνά επισκεπτόμενες σελίδες σας',
+	'founderprogressbar-toptenlist-add-label' => 'Προσθέστε έναν κατάλογο των δέκα κορυφαίων',
+	'founderprogressbar-toptenlist-add-action' => 'Προσθέστε έναν κατάλογο των δέκα κορυφαίων',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
@@ -1736,6 +1751,7 @@ $messages['pl'] = array(
 $messages['ps'] = array(
 	'founderprogressbar-progress-see-full-list' => 'بشپړ لړليک کتل',
 	'founderprogressbar-progress-hide-full-list' => 'بشپړ لړليک پټول',
+	'founderprogressbar-task-completed' => 'بشپړ شو',
 	'founderprogressbar-page-add10-action' => 'يو مخ ورګډول',
 	'founderprogressbar-photo-add10-action' => 'يو انځور ورګډول',
 	'founderprogressbar-category-add3-action' => 'يوه وېشنيزه ورګډول',

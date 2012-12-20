@@ -620,7 +620,7 @@ class EditPageLayout extends EditPage {
 				'class' => 'mw-talkpagetext',
 			);
 		} elseif ( $this->mTitle->isMainPage() && !$this->mTitle->isProtected() && !$this->userDismissedEduNote() ) {
-		//if this is an unprotected main page and user hasn't seen the main page educational notice -- show it :)
+			//if this is an unprotected main page and user hasn't seen the main page educational notice -- show it :)
 			/** @var $notice EditPageNotice */
 			$notice = F::build( 'EditPageNotice',array($this->app->wf->msgExt('mainpagewarning-notice', array('parse')), 'MainPageEduNote') );
 			$this->helper->addJsVariable('mainPageEduNoteHash', $notice->getHash());
@@ -643,13 +643,12 @@ class EditPageLayout extends EditPage {
 	 * @return bool
 	 */
 	protected function userDismissedEduNote() {
-		$wikiaUserPropertiesController = F::build('WikiaUserPropertiesController'); /** @var WikiaUserPropertiesController $wikiaUserPropertiesController */
+		$EditorUserPropertiesHandler = F::build('EditorUserPropertiesHandler');  /* @var EditorUserPropertiesHandler $EditorUserPropertiesHandler */
 
 		try {
-			$response = $this->app->sendRequest('WikiaUserPropertiesController', 'getUserPropertyValue', array(
-				'propertyName' => $wikiaUserPropertiesController->getRTEMainPageNoticePropertyName()
-			));
-			$results = $response->getVal('results', false);
+			$results = $EditorUserPropertiesHandler->getUserPropertyValue(
+				$EditorUserPropertiesHandler->getEditorMainPageNoticePropertyName()
+			);
 			$result = ($results->value == true) ? true : false;
 		} catch( Exception $e ) {
 			$result = false;
@@ -727,8 +726,7 @@ class EditPageLayout extends EditPage {
 		$text = $wgMemc->get($key);
 		if ( empty($text) ) {
 			wfProfileIn( __METHOD__ . '-parse');
-			$parser = new Parser();
-			$text = $parser->parse($wikitext, $this->app->wg->Title, new ParserOptions())->getText();
+			$text = ParserPool::parse($wikitext, $this->app->wg->Title, new ParserOptions())->getText();
 			wfProfileOut( __METHOD__ . '-parse');
 			$wgMemc->set($key,$text,self::COPYRIGHT_CACHE_TTL);
 		}

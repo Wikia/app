@@ -244,6 +244,15 @@ $messages['el'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'Αρχίστε &raquo;',
 );
 
+/** Esperanto (Esperanto)
+ * @author Objectivesea
+ */
+$messages['eo'] = array(
+	'comboajaxlogin-createlog' => 'Ensaluti aŭ krei novan konton',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Reveni',
+	'comboajaxlogin-connectmarketing-forward' => 'Komenci &raquo;',
+);
+
 /** Spanish (español)
  * @author Absay
  * @author Crazymadlover
@@ -499,9 +508,11 @@ $messages['id'] = array(
 
 /** Italian (italiano)
  * @author Gianfranco
+ * @author Viscontino
  * @author Ximo17
  */
 $messages['it'] = array(
+	'comboajaxlogin-desc' => 'Campo dinamico che consente agli utenti di accedere, ricordare la password e registrare utenti',
 	'comboajaxlogin-createlog' => 'Entra o crea un nuovo account',
 	'comboajaxlogin-actionmsg' => 'Per eseguire questa operazione, è necessario innanzitutto accedere o creare un account',
 	'comboajaxlogin-actionmsg-protected' => 'Per eseguire questa azione è prima necessario accedere o creare un account.',

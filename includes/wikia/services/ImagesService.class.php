@@ -23,14 +23,75 @@ class ImagesService extends Service {
 			'imgSize' => $imgSize,
 			'imgFailOnFileNotFound' => 'true',
 		);
-
+		
 		$response = ApiService::foreignCall($dbname, $param);
-
+		
 		$imageSrc = (empty($response['image']['imagecrop'])) ? '' : $response['image']['imagecrop'];
 		$imagePage = (empty($response['imagepage']['imagecrop'])) ? '' : $response['imagepage']['imagecrop'];
 
 		$app->wf->ProfileOut(__METHOD__);
 		return array('src' => $imageSrc, 'page' => $imagePage);
+	}
+
+	/**
+	 * @desc Returns image's thumbnail's url and its sizes if $destImageWidth given it can be scaled
+	 * 
+	 * @param String $fileName filename with or without namespace string
+	 * @param Integer $imageWidth optional parameter 
+	 * 
+	 * @return stdClass to the image's thumbnail
+	 */
+	public static function getLocalFileThumbUrlAndSizes($fileName, $destImageWidth = 0) {
+		$app = F::app();
+		$results = new stdClass();
+		
+		//remove namespace string
+		$fileName = str_replace($app->wg->ContLang->getNsText(NS_FILE) . ':', '', $fileName);
+		$title = Title::newFromText($fileName, NS_FILE);
+		$foundFile = $app->wf->FindFile($title);
+		
+		if( $foundFile ) {
+			$imageWidth = $foundFile->getWidth();
+			$sizes = ($destImageWidth > 0) ?
+				self::calculateScaledImageSizes($destImageWidth, $foundFile->getWidth(), $foundFile->getHeight()) :
+				self::calculateScaledImageSizes($imageWidth, $imageWidth, $foundFile->getHeight());
+
+			$results->url = $foundFile->getThumbUrl( $foundFile->thumbName( array( 'width' => $sizes->width) ) );
+			$results->width = $sizes->width;
+			$results->height = $sizes->height;
+		}
+		
+		return $results;
+	}
+
+	/**
+	 * @desc Depending on image original width&height we calculate or not new width based on passed $destImageWidth
+	 * 
+	 * @param Integer $destImageSize
+	 * @param Integer $imageWidth
+	 * @param Integer $imageHeight
+	 * 
+	 * @return float
+	 */
+	public static function calculateScaledImageSizes($destImageSize, $imageWidth, $imageHeight) {
+		if( $imageWidth > $imageHeight ) {
+			$aspectRatio = $imageHeight / $imageWidth;
+			$calculatedWidth = $destImageSize;
+			$calculatedHeight = floor( $destImageSize * $aspectRatio );
+		} else if( $imageWidth < $imageHeight ) {
+			$aspectRatio = $imageWidth / $imageHeight;
+			$calculatedWidth = floor( $destImageSize * $aspectRatio );
+			$calculatedHeight = $destImageSize;
+		} else {
+			$calculatedWidth = $destImageSize;
+			$calculatedHeight = $destImageSize;
+		}
+		
+		$result = new StdClass();
+		$result->width = $calculatedWidth;
+		$result->height = $calculatedHeight;
+		
+		return $result;
 	}
 
 	/**
@@ -51,7 +112,7 @@ class ImagesService extends Service {
 	}
 
 	/**
-	 * @desc Uploads an image on a wki
+	 * @desc Uploads an image on a wiki
 	 *
 	 * @static
 	 * @param string $imageUrl url address to original file
@@ -70,7 +131,8 @@ class ImagesService extends Service {
 		$data = array(
 			'wpUpload' => 1,
 			'wpSourceType' => 'web',
-			'wpUploadFileURL' => $imageUrl
+			'wpUploadFileURL' => $imageUrl,
+			'wpDestFile' => $oImageData->name,
 		);
 
 		//validate of optional image data
@@ -82,34 +144,76 @@ class ImagesService extends Service {
 
 		$upload = F::build('UploadFromUrl'); /* @var $upload UploadFromUrl */
 		$upload->initializeFromRequest(F::build('FauxRequest', array($data, true)));
-		$upload->fetchFile();
-		$upload->verifyUpload();
+		$fetchStatus = $upload->fetchFile();
 
+		if( $fetchStatus->isGood() ) {
+			$status = $upload->verifyUpload();
+
+			if( isset($status['status']) && ($status['status'] == UploadBase::SUCCESS) ) {
+				$file = self::createImagePage($oImageData->name); /** @var $file WikiaLocalFile */
+				$result = self::updateImageInfoInDb( $file, $upload->getTempPath(), $oImageData, $user); /** @var $result */
+
+				return self::buildStatus($result->ok, $file->getTitle()->getArticleID(), $result->errors);
+			} else {
+				$errorMsg = 'Upload verification faild ';
+				$errorMsg .= ( isset($status['status']) ? print_r($status, true) : '');
+
+				return self::buildStatus(false, null, $errorMsg);
+			}
+		} else {
+			return self::buildStatus($fetchStatus->ok, null, $fetchStatus->errors);
+		}
+	}
+
+	/**
+	 * @param String $name destination file name
+	 *
+	 * @return WikiaLocalFile
+	 */
+	public static function createImagePage($name) {
 		// create destination file
-		$title = Title::newFromText($oImageData->name, NS_FILE);
-		$file = F::build(
+		$title = Title::newFromText($name, NS_FILE); /** @var $title Title */
+		return F::build(
 			'WikiaLocalFile',
 			array(
 				$title,
 				RepoGroup::singleton()->getLocalRepo()
 			)
-		); /* @var $file WikiaLocalFile */
+		); /** @var $file WikiaLocalFile */
+	}
 
-		/* real upload */
-		$result = $file->upload(
-			$upload->getTempPath(),
-			$oImageData->comment,
-			$oImageData->description,
+	/**
+	 * @param File $file
+	 * @param String $tmpPath
+	 * @param StdClass $imageData
+	 * @param User|null $user
+	 *
+	 * @return mixed
+	 */
+	public static function updateImageInfoInDb(File $file, $tmpPath, $imageData, $user = null) {
+		return $file->upload(
+			$tmpPath,
+			$imageData->comment,
+			$imageData->description,
 			File::DELETE_SOURCE,
 			false,
 			false,
 			$user
 		);
+	}
 
+	/**
+	 * @param bool $status
+	 * @param Integer|null $page_id
+	 * @param null $errors
+	 *
+	 * @return array
+	 */
+	public static function buildStatus($status = false, $page_id = null, $errors = null) {
 		return array(
-			'status' => $result->ok,
-			'page_id' => $title->getArticleID(),
-			'errors' => $result->errors,
+			'status' => $status,
+			'page_id' => $page_id,
+			'errors' => $errors,
 		);
 	}
 }

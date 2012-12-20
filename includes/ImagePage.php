@@ -82,8 +82,20 @@ class ImagePage extends Article {
 	}
 
 	public function view() {
-		global $wgOut, $wgShowEXIF, $wgRequest, $wgUser;
+		global $wgOut, $wgShowEXIF, $wgRequest, $wgUser, $wgAddNoIndexToFilePages;
 
+		/** 
+		 * Wikia change start
+		 * 
+		 * https://wikia.fogbugz.com/default.asp?70212#475120
+		 */ 
+		if(!empty($wgAddNoIndexToFilePages)) {
+			$wgOut->addMeta('robots', 'noindex, follow');				
+		}
+		/**
+		 * wikia change end
+		 */
+	
 		$diff = $wgRequest->getVal( 'diff' );
 		$diffOnly = $wgRequest->getBool( 'diffonly', $wgUser->getOption( 'diffonly' ) );
 

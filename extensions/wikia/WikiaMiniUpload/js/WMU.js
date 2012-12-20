@@ -15,7 +15,7 @@
  * @return {Event} the event
  * @static
  *
- * @deprecated - used by WMU only
+ * @deprecated - used by WMU and VET only
  */
 $.getEvent = function(e, boundEl) {
 	var ev = e || window.event;
@@ -311,11 +311,6 @@ function WMU_getFirstFree( gallery, box ) {
 }
 
 function WMU_loadMainFromView() {
-	if (wgUserName == null) {
-		UserLogin.rteForceLogin();
-		return;
-	}
-	
 	var callback = function(data) {
 		// first, check if this is a special case for anonymous disabled...
 		if( data.wmu_init_login ) {
@@ -350,15 +345,6 @@ function WMU_loadMainFromView() {
 		user_blocked = data.user_blocked;
 		user_disallowed = data.user_disallowed;
 		user_protected = data.user_protected;
-
-		WMU_isOnSpecialPage = (wgNamespaceNumber === -1) ? true : false;
-
-		// Special Case for using WMU in on Special Pages - used for SDSObject Special Page
-		if (WMU_isOnSpecialPage) {
-			user_protected = false;
-			user_disallowed = false;
-			WMU_skipDetails = true;
-		}
 
 		if( user_blocked ) {
 			document.location = wgScriptPath + '/index.php?title=' + encodeURIComponent( wgTitle ) + '&action=edit';
@@ -416,6 +402,17 @@ function WMU_loadMainFromView() {
 
 
 function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
+	if (wgUserName == null && wgAction == 'edit') {
+		// handle login on edit page
+		UserLogin.rteForceLogin();
+		return;
+	} else if (UserLogin.isForceLogIn()) {
+		// handle login on article page
+		return;
+	}
+
+
+
 	// Handle MiniEditor focus
 	// (BugId:18713)
 	if (window.WikiaEditor) {
@@ -425,15 +422,8 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		}
 	}
 
-	if(gallery === -2){
-		//	if (showComboAjaxForPlaceHolder("WikiaImagePlaceholderInner" + box,true)) return false;
-	}
-
-	if(typeof gallery == "undefined") {
-		if (typeof showComboAjaxForPlaceHolder == 'function') {
-			if (showComboAjaxForPlaceHolder("",false, "", false, true)) return false; // show the 'login required for this action' message.
-		}
-	}
+	// Special Case for using WMU in on Special Pages
+	WMU_isOnSpecialPage = wgNamespaceNumber === -1;
 
 	WMU_refid = null;
 	WMU_wysiwygStart = 1;
@@ -934,9 +924,6 @@ function WMU_insertPlaceholder( box ) {
 }
 
 function WMU_insertImage(e, type) {
-	if (!WMU_isOnSpecialPage) {
-		YAHOO.util.Event.preventDefault(e);
-	}
 	var params = Array();
 	params.push('type='+type);
 	params.push('mwname='+$G('ImageUploadMWname').value);
@@ -1063,6 +1050,17 @@ function WMU_insertImage(e, type) {
 						return false;
 					}
 
+					// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
+					if (WMU_isOnSpecialPage) {
+						var $responseHTML = $(o.responseText),
+							wmuData = {
+							imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
+							imageWikiText: $responseHTML.find('#ImageUploadTag').val()
+						};
+						$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
+						return false;
+					}
+
 					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
 						if( -2 == WMU_gallery) {
 							WMU_insertPlaceholder( WMU_box );
@@ -1137,14 +1135,6 @@ function WMU_insertImage(e, type) {
 			}
 			WMU_indicator(1, false);
 		}
-	}
-	// Special Case for using WMU in SDSObject Special Page
-	if (WMU_isOnSpecialPage) {
-		var filePageUrl = 'File:';
-		filePageUrl += $('#ImageUploadMWname').val();
-		$(window).trigger('WMU_addFromSpecialPage', [filePageUrl]);
-		WMU_switchScreen('Summary');
-		return;
 	}
 	WMU_indicator(1, true);
 	YAHOO.util.Connect.abort(WMU_asyncTransaction);

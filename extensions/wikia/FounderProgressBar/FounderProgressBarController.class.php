@@ -10,141 +10,185 @@ class FounderProgressBarController extends WikiaController {
 	var $bonus_tasks;
 	var $click_events;
 
+	const REGULAR_TASK_MAX_ID = 499;
+
+	// Define founder events
+	public static $tasks = array(
+		'FT_PAGE_ADD_10' => 10,
+		'FT_THEMEDESIGNER_VISIT' => 20,
+		'FT_MAINPAGE_EDIT' => 30,
+		'FT_PHOTO_ADD_10' => 40,
+		'FT_CATEGORY_ADD_3' => 50,
+		'FT_COMMCENTRAL_VISIT' => 60,
+		'FT_WIKIACTIVITY_VISIT' => 70,
+		'FT_PROFILE_EDIT' => 80,
+		'FT_PHOTO_ADD_20' => 90,
+		'FT_TOTAL_EDIT_75' => 100,
+		'FT_PAGE_ADD_20' => 110,
+		'FT_CATEGORY_EDIT' => 120,
+		'FT_WIKIALABS_VISIT' => 130,
+		'FT_FB_CONNECT' => 140,
+		'FT_CATEGORY_ADD_5' => 150,
+		'FT_GALLERY_ADD' => 170,
+		'FT_TOPNAV_EDIT' => 180,
+		'FT_MAINPAGE_ADDSLIDER' => 190,
+		'FT_COMMCORNER_EDIT' => 200,
+		'FT_VIDEO_ADD' => 210,
+		'FT_USER_ADD_5' => 220,
+		'FT_RECENTCHANGES_VISIT' => 230,
+		'FT_WORDMARK_EDIT' => 240,
+		'FT_MOSTVISITED_VISIT' => 250,
+		'FT_TOPTENLIST_ADD' => 260,
+		'FT_BLOGPOST_ADD' => 270,
+		'FT_FB_LIKES_3' => 280,
+		'FT_UNCATEGORIZED_VISIT' => 290,
+		'FT_TOTAL_EDIT_300' => 300,
+
+		// Bonus tasks start at ID 500 just to keep them separate if we add more "base" tasks
+		'FT_BONUS_PHOTO_ADD_10' => 510,
+		'FT_BONUS_PAGE_ADD_5' => 520,
+		'FT_BONUS_EDIT_50' => 540,
+
+		// special internal flag for "all tasks complete"
+		'FT_COMPLETION' => 1000,
+	);
+
+
 	public function init() {
 		// Messages are defined in the i18n file
 		// Each message in i18n has a -label -description and -action version
 		// If the message name has a % in it that means a $1 substitution is done
 		$this->messages = array (
-				FT_PAGE_ADD_10 => "page-add%",
-				FT_THEMEDESIGNER_VISIT => "themedesigner-visit",
-				FT_MAINPAGE_EDIT => "mainpage-edit",
-				FT_PHOTO_ADD_10 => "photo-add%",
-				FT_CATEGORY_ADD_3 => "category-add%",
-				FT_COMMCENTRAL_VISIT => "commcentral-visit",
-				FT_WIKIACTIVITY_VISIT => "wikiactivity-visit",
-				FT_PROFILE_EDIT => "profile-edit",
-				FT_PHOTO_ADD_20 => "photo-add%",
-				FT_TOTAL_EDIT_75 => "total-edit%",
-				FT_PAGE_ADD_20 => "page-add%",
-				FT_CATEGORY_EDIT => "category-edit",
-				FT_WIKIALABS_VISIT => "wikialabs-visit",
-				FT_FB_CONNECT => "fb-connect",
-				FT_CATEGORY_ADD_5 => "category-add%",
-				FT_GALLERY_ADD => "gallery-add",
-				FT_TOPNAV_EDIT => "topnav-edit",
-				FT_MAINPAGE_ADDSLIDER => "mainpage-addslider",
-				FT_COMMCORNER_EDIT => "commcorner-edit",
-				FT_VIDEO_ADD => "video-add",
-				FT_USER_ADD_5 => "user-add%",
-				FT_RECENTCHANGES_VISIT => "recentchanges-visit",
-				FT_WORDMARK_EDIT => "wordmark-edit",
-				FT_MOSTVISITED_VISIT => "mostvisited-visit",
-				FT_TOPTENLIST_ADD => "toptenlist-add",
-				FT_BLOGPOST_ADD => "blogpost-add",
-				FT_FB_LIKES_3 => "fb-likes%",
-				FT_UNCATEGORIZED_VISIT => "uncategorized-visit",
-				FT_TOTAL_EDIT_300 => "total-edit%",
-				FT_BONUS_PHOTO_ADD_10 => "bonus-photo-add%",
-				FT_BONUS_PAGE_ADD_5 => "bonus-page-add%",
-				FT_BONUS_EDIT_50 => "bonus-edit%",
-				FT_COMPLETION => "completion"
-			);
+			self::$tasks['FT_PAGE_ADD_10'] => "page-add%",
+			self::$tasks['FT_THEMEDESIGNER_VISIT'] => "themedesigner-visit",
+			self::$tasks['FT_MAINPAGE_EDIT'] => "mainpage-edit",
+			self::$tasks['FT_PHOTO_ADD_10'] => "photo-add%",
+			self::$tasks['FT_CATEGORY_ADD_3'] => "category-add%",
+			self::$tasks['FT_COMMCENTRAL_VISIT'] => "commcentral-visit",
+			self::$tasks['FT_WIKIACTIVITY_VISIT'] => "wikiactivity-visit",
+			self::$tasks['FT_PROFILE_EDIT'] => "profile-edit",
+			self::$tasks['FT_PHOTO_ADD_20'] => "photo-add%",
+			self::$tasks['FT_TOTAL_EDIT_75'] => "total-edit%",
+			self::$tasks['FT_PAGE_ADD_20'] => "page-add%",
+			self::$tasks['FT_CATEGORY_EDIT'] => "category-edit",
+			self::$tasks['FT_WIKIALABS_VISIT'] => "wikialabs-visit",
+			self::$tasks['FT_FB_CONNECT'] => "fb-connect",
+			self::$tasks['FT_CATEGORY_ADD_5'] => "category-add%",
+			self::$tasks['FT_GALLERY_ADD'] => "gallery-add",
+			self::$tasks['FT_TOPNAV_EDIT'] => "topnav-edit",
+			self::$tasks['FT_MAINPAGE_ADDSLIDER'] => "mainpage-addslider",
+			self::$tasks['FT_COMMCORNER_EDIT'] => "commcorner-edit",
+			self::$tasks['FT_VIDEO_ADD'] => "video-add",
+			self::$tasks['FT_USER_ADD_5'] => "user-add%",
+			self::$tasks['FT_RECENTCHANGES_VISIT'] => "recentchanges-visit",
+			self::$tasks['FT_WORDMARK_EDIT'] => "wordmark-edit",
+			self::$tasks['FT_MOSTVISITED_VISIT'] => "mostvisited-visit",
+			self::$tasks['FT_TOPTENLIST_ADD'] => "toptenlist-add",
+			self::$tasks['FT_BLOGPOST_ADD'] => "blogpost-add",
+			self::$tasks['FT_FB_LIKES_3'] => "fb-likes%",
+			self::$tasks['FT_UNCATEGORIZED_VISIT'] => "uncategorized-visit",
+			self::$tasks['FT_TOTAL_EDIT_300'] => "total-edit%",
+			self::$tasks['FT_BONUS_PHOTO_ADD_10'] => "bonus-photo-add%",
+			self::$tasks['FT_BONUS_PAGE_ADD_5'] => "bonus-page-add%",
+			self::$tasks['FT_BONUS_EDIT_50'] => "bonus-edit%",
+			self::$tasks['FT_COMPLETION'] => "completion"
+		);
 
 		// This list says how many times an item needs to be counted to be finished
 		$this->counters = array (
-				FT_PAGE_ADD_10 => 10,
-				FT_THEMEDESIGNER_VISIT => 1,
-				FT_MAINPAGE_EDIT => 1,
-				FT_PHOTO_ADD_10 => 10,
-				FT_CATEGORY_ADD_3 => 3,
-				FT_COMMCENTRAL_VISIT => 1,
-				FT_WIKIACTIVITY_VISIT => 1,
-				FT_PROFILE_EDIT => 1,
-				FT_PHOTO_ADD_20 => 20,
-				FT_TOTAL_EDIT_75 => 75,
-				FT_PAGE_ADD_20 => 20,
-				FT_CATEGORY_EDIT => 1,
-				FT_WIKIALABS_VISIT => 1,
-				FT_FB_CONNECT => 1,
-				FT_CATEGORY_ADD_5 => 5,
-				FT_GALLERY_ADD => 1,
-				FT_TOPNAV_EDIT => 1,
-				FT_MAINPAGE_ADDSLIDER => 1,
-				FT_COMMCORNER_EDIT => 1,
-				FT_VIDEO_ADD => 1,
-				FT_USER_ADD_5 => 5,
-				FT_RECENTCHANGES_VISIT => 1,
-				FT_WORDMARK_EDIT => 1,
-				FT_MOSTVISITED_VISIT => 1,
-				FT_TOPTENLIST_ADD => 1,
-				FT_BLOGPOST_ADD => 1,
-				FT_FB_LIKES_3 => 3,
-				FT_UNCATEGORIZED_VISIT => 1,
-				FT_TOTAL_EDIT_300 => 300,
-				FT_BONUS_PHOTO_ADD_10 => 10,
-				FT_BONUS_PAGE_ADD_5 => 5,
-				FT_BONUS_EDIT_50 => 50,
-				FT_COMPLETION => 1
+			self::$tasks['FT_PAGE_ADD_10'] =>  10,
+			self::$tasks['FT_THEMEDESIGNER_VISIT'] =>  1,
+			self::$tasks['FT_MAINPAGE_EDIT'] =>  1,
+			self::$tasks['FT_PHOTO_ADD_10'] =>  10,
+			self::$tasks['FT_CATEGORY_ADD_3'] =>  3,
+			self::$tasks['FT_COMMCENTRAL_VISIT'] =>  1,
+			self::$tasks['FT_WIKIACTIVITY_VISIT'] =>  1,
+			self::$tasks['FT_PROFILE_EDIT'] =>  1,
+			self::$tasks['FT_PHOTO_ADD_20'] =>  20,
+			self::$tasks['FT_TOTAL_EDIT_75'] =>  75,
+			self::$tasks['FT_PAGE_ADD_20'] =>  20,
+			self::$tasks['FT_CATEGORY_EDIT'] =>  1,
+			self::$tasks['FT_WIKIALABS_VISIT'] =>  1,
+			self::$tasks['FT_FB_CONNECT'] =>  1,
+			self::$tasks['FT_CATEGORY_ADD_5'] =>  5,
+			self::$tasks['FT_GALLERY_ADD'] =>  1,
+			self::$tasks['FT_TOPNAV_EDIT'] =>  1,
+			self::$tasks['FT_MAINPAGE_ADDSLIDER'] =>  1,
+			self::$tasks['FT_COMMCORNER_EDIT'] =>  1,
+			self::$tasks['FT_VIDEO_ADD'] =>  1,
+			self::$tasks['FT_USER_ADD_5'] =>  5,
+			self::$tasks['FT_RECENTCHANGES_VISIT'] =>  1,
+			self::$tasks['FT_WORDMARK_EDIT'] =>  1,
+			self::$tasks['FT_MOSTVISITED_VISIT'] =>  1,
+			self::$tasks['FT_TOPTENLIST_ADD'] =>  1,
+			self::$tasks['FT_BLOGPOST_ADD'] =>  1,
+			self::$tasks['FT_FB_LIKES_3'] =>  3,
+			self::$tasks['FT_UNCATEGORIZED_VISIT'] =>  1,
+			self::$tasks['FT_TOTAL_EDIT_300'] =>  300,
+			self::$tasks['FT_BONUS_PHOTO_ADD_10'] =>  10,
+			self::$tasks['FT_BONUS_PAGE_ADD_5'] =>  5,
+			self::$tasks['FT_BONUS_EDIT_50'] =>  50,
+			self::$tasks['FT_COMPLETION'] =>  1
 		);
 
 		// This list contains rules to build URLs for all the actions
 		$this->urls = array (
-				FT_PAGE_ADD_10 => array("newFromText", "CreatePage", NS_SPECIAL),
-				FT_THEMEDESIGNER_VISIT => array("newFromText", "ThemeDesigner", NS_SPECIAL),
-				FT_MAINPAGE_EDIT => array("newMainPage"),
-				FT_PHOTO_ADD_10 => array("newFromText", "Upload", NS_SPECIAL),
-				FT_CATEGORY_ADD_3 => array("newFromText", wfMsg('founderprogressbar-browse-page-name'), NS_CATEGORY),
-				FT_COMMCENTRAL_VISIT => wfMsg('founderprogressbar-commcentral-visit-url'),
-				FT_WIKIACTIVITY_VISIT => array("newFromText", "WikiActivity", NS_SPECIAL),
-				FT_PROFILE_EDIT => array("newFromText", $this->wg->User->getName(), NS_USER),
-				FT_PHOTO_ADD_20 => array("newFromText", "Upload", NS_SPECIAL),
-				FT_TOTAL_EDIT_75 => array("newFromText", "CreatePage", NS_SPECIAL),
-				FT_PAGE_ADD_20 => array("newFromText", "CreatePage", NS_SPECIAL),
-				FT_CATEGORY_EDIT => array("newFromText", "Browse", NS_CATEGORY),
-				FT_WIKIALABS_VISIT => array("newFromText", "WikiaLabs", NS_SPECIAL),
-				FT_FB_CONNECT => array("newFromText", "Connect", NS_SPECIAL),
-				FT_CATEGORY_ADD_5 => array("newFromText", wfMsg('founderprogressbar-browse-page-name'), NS_CATEGORY),
-				FT_GALLERY_ADD => wfMsg('founderprogressbar-gallery-add-url'),
-				FT_TOPNAV_EDIT => array("newFromText", "Wiki-navigation", NS_MEDIAWIKI),
-				FT_MAINPAGE_ADDSLIDER => array("newMainPage"),
-				FT_COMMCORNER_EDIT => array("newFromText", "Community-corner", NS_MEDIAWIKI),
-				FT_VIDEO_ADD => array("newFromText", "Upload", NS_SPECIAL),
-				FT_USER_ADD_5 => wfMsg('founderprogressbar-user-add5-url'),
-				FT_RECENTCHANGES_VISIT => array("newFromText", "RecentChanges", NS_SPECIAL),
-				FT_WORDMARK_EDIT => array("newFromText", "ThemeDesigner", NS_SPECIAL),
-				FT_MOSTVISITED_VISIT => array("newFromText", "Mostvisitedpages", NS_SPECIAL),
-				FT_TOPTENLIST_ADD => array("newFromText", "CreatePage", NS_SPECIAL),
-				FT_FB_LIKES_3 => array("newMainPage"),
-				FT_UNCATEGORIZED_VISIT => array("newFromText", "UncategorizedPages", NS_SPECIAL),
-				FT_BONUS_PHOTO_ADD_10 => array("newFromText", "Upload", NS_SPECIAL),
-				FT_BONUS_PAGE_ADD_5 => array("newFromText", "CreatePage", NS_SPECIAL),
-				FT_BONUS_EDIT_50 => array("newFromText", "WikiActivity", NS_SPECIAL),
-				FT_TOTAL_EDIT_300 => array("newFromText", "CreatePage", NS_SPECIAL),
+			self::$tasks['FT_PAGE_ADD_10'] => array("newFromText", "CreatePage", NS_SPECIAL),
+			self::$tasks['FT_THEMEDESIGNER_VISIT'] => array("newFromText", "ThemeDesigner", NS_SPECIAL),
+			self::$tasks['FT_MAINPAGE_EDIT'] => array("newMainPage"),
+			self::$tasks['FT_PHOTO_ADD_10'] => array("newFromText", "Upload", NS_SPECIAL),
+			self::$tasks['FT_CATEGORY_ADD_3'] => array("newFromText", wfMsg('founderprogressbar-browse-page-name'), NS_CATEGORY),
+			self::$tasks['FT_COMMCENTRAL_VISIT'] => wfMsg('founderprogressbar-commcentral-visit-url'),
+			self::$tasks['FT_WIKIACTIVITY_VISIT'] => array("newFromText", "WikiActivity", NS_SPECIAL),
+			self::$tasks['FT_PROFILE_EDIT'] => array("newFromText", $this->wg->User->getName(), NS_USER),
+			self::$tasks['FT_PHOTO_ADD_20'] => array("newFromText", "Upload", NS_SPECIAL),
+			self::$tasks['FT_TOTAL_EDIT_75'] => array("newFromText", "CreatePage", NS_SPECIAL),
+			self::$tasks['FT_PAGE_ADD_20'] => array("newFromText", "CreatePage", NS_SPECIAL),
+			self::$tasks['FT_CATEGORY_EDIT'] => array("newFromText", "Browse", NS_CATEGORY),
+			self::$tasks['FT_WIKIALABS_VISIT'] => array("newFromText", "WikiaLabs", NS_SPECIAL),
+			self::$tasks['FT_FB_CONNECT'] => array("newFromText", "Connect", NS_SPECIAL),
+			self::$tasks['FT_CATEGORY_ADD_5'] => array("newFromText", wfMsg('founderprogressbar-browse-page-name'), NS_CATEGORY),
+			self::$tasks['FT_GALLERY_ADD'] => wfMsg('founderprogressbar-gallery-add-url'),
+			self::$tasks['FT_TOPNAV_EDIT'] => array("newFromText", "Wiki-navigation", NS_MEDIAWIKI),
+			self::$tasks['FT_MAINPAGE_ADDSLIDER'] => array("newMainPage"),
+			self::$tasks['FT_COMMCORNER_EDIT'] => array("newFromText", "Community-corner", NS_MEDIAWIKI),
+			self::$tasks['FT_VIDEO_ADD'] => array("newFromText", "Upload", NS_SPECIAL),
+			self::$tasks['FT_USER_ADD_5'] => wfMsg('founderprogressbar-user-add5-url'),
+			self::$tasks['FT_RECENTCHANGES_VISIT'] => array("newFromText", "RecentChanges", NS_SPECIAL),
+			self::$tasks['FT_WORDMARK_EDIT'] => array("newFromText", "ThemeDesigner", NS_SPECIAL),
+			self::$tasks['FT_MOSTVISITED_VISIT'] => array("newFromText", "Mostvisitedpages", NS_SPECIAL),
+			self::$tasks['FT_TOPTENLIST_ADD'] => array("newFromText", "CreatePage", NS_SPECIAL),
+			self::$tasks['FT_FB_LIKES_3'] => array("newMainPage"),
+			self::$tasks['FT_UNCATEGORIZED_VISIT'] => array("newFromText", "UncategorizedPages", NS_SPECIAL),
+			self::$tasks['FT_BONUS_PHOTO_ADD_10'] => array("newFromText", "Upload", NS_SPECIAL),
+			self::$tasks['FT_BONUS_PAGE_ADD_5'] => array("newFromText", "CreatePage", NS_SPECIAL),
+			self::$tasks['FT_BONUS_EDIT_50'] => array("newFromText", "WikiActivity", NS_SPECIAL),
+			self::$tasks['FT_TOTAL_EDIT_300'] => array("newFromText", "CreatePage", NS_SPECIAL),
 		);
 
 		// This task is optional on some wikis
 		if (defined('NS_BLOG_ARTICLE')) {
-			$this->urls[FT_BLOGPOST_ADD] = array("newFromText", $this->wg->User->getName(), NS_BLOG_ARTICLE);
+			$this->urls[self::$tasks['FT_BLOGPOST_ADD']] = array("newFromText", $this->wg->User->getName(), NS_BLOG_ARTICLE);
 		} else {
-			$this->urls[FT_BLOGPOST_ADD] = array("newFromText", $this->wg->User->getName(), NS_USER);
+			$this->urls[self::$tasks['FT_BLOGPOST_ADD']] = array("newFromText", $this->wg->User->getName(), NS_USER);
 		}
 
 		// This list contains additional "bonus" tasks that can be completed if all other tasks are skipped or completed
 		$this->bonus_tasks = array (
-				FT_BONUS_PHOTO_ADD_10,
-				FT_BONUS_PAGE_ADD_5,
-				FT_BONUS_EDIT_50
+			self::$tasks['FT_BONUS_PHOTO_ADD_10'],
+			self::$tasks['FT_BONUS_PAGE_ADD_5'],
+			self::$tasks['FT_BONUS_EDIT_50']
 		);
 
 		// tracked events on the frontend
 		$this->click_events = array(
-				FT_THEMEDESIGNER_VISIT => true,
-				FT_COMMCENTRAL_VISIT => true,
-				FT_WIKIACTIVITY_VISIT => true,
-				FT_WIKIALABS_VISIT => true,
-				FT_RECENTCHANGES_VISIT => true,
-				FT_MOSTVISITED_VISIT => true,
-				FT_UNCATEGORIZED_VISIT => true,
+			self::$tasks['FT_THEMEDESIGNER_VISIT'] => true,
+			self::$tasks['FT_COMMCENTRAL_VISIT'] => true,
+			self::$tasks['FT_WIKIACTIVITY_VISIT'] => true,
+			self::$tasks['FT_WIKIALABS_VISIT'] => true,
+			self::$tasks['FT_RECENTCHANGES_VISIT'] => true,
+			self::$tasks['FT_MOSTVISITED_VISIT'] => true,
+			self::$tasks['FT_UNCATEGORIZED_VISIT'] => true,
 		);
 	}
 
@@ -171,7 +215,7 @@ class FounderProgressBarController extends WikiaController {
 		$short_list = array();
 		// Grab the first two available items from the long list
 		foreach ($list as $id => $item) {
-			if ($item['task_skipped'] == 0 && $item['task_completed'] == 0 && $item['task_id'] < 500) {
+			if ($item['task_skipped'] == 0 && $item['task_completed'] == 0 && $item['task_id'] <= self::REGULAR_TASK_MAX_ID) {
 				$short_list[$id] = $item;
 			}
 			if (count($short_list) == 2) break;
@@ -230,7 +274,7 @@ class FounderProgressBarController extends WikiaController {
 
 			while($row = $dbr->fetchObject($res)) {
 				$task_id = $row->task_id;
-				if ($task_id == FT_COMPLETION) continue;  // Make sure the "completion" task does not show up as a task
+				if ($task_id == self::$tasks['FT_COMPLETION']) continue;  // Make sure the "completion" task does not show up as a task
 				$list[$task_id] = array (
 					"task_id" => $task_id,
 					"task_count" => $row->task_count,
@@ -437,7 +481,7 @@ class FounderProgressBarController extends WikiaController {
 				$skippedTaskList[] = $activity;
 			} else if (in_array($activity['task_id'], $this->bonus_tasks)) {
 				// bonus task list is built in the next step
-			} else if ($activity['task_id'] == FT_COMPLETION) {
+			} else if ($activity['task_id'] == self::$tasks['FT_COMPLETION']) {
 				$showCompletionMessage = !$activity['task_skipped'];
 			} else {
 				$activity['task_skippable'] = 1;

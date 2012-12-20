@@ -920,7 +920,7 @@
 						(100.0*method.totalTime/total).toFixed(2),
 						method.calls,
 						'<a href="#" class="method-drilldown" data-drilldown-type="cut" data-method-id="'+method.id+'">[X]</a> '
-							+ '<a href="#" class="method-drilldown" data-drilldown-type="nullity" data-method-id="'+method.id+'">[N]</a> '
+							+ '<a href="#" class="method-drilldown" data-drilldown-type="nullify" data-method-id="'+method.id+'">[N]</a> '
 							+ '<a href="#" class="method-drilldown" data-drilldown-type="select" data-method-id="'+method.id+'">'+method.id+'</a>',
 					];
 				html += '<tr>';
@@ -1022,6 +1022,10 @@
 	});
 
 	TraceDialogStackTracesPanel = createClass(TraceDialogPanel,{
+		init: function() {
+			this.el.unbind('.stacktracespanel');
+			this.el.on('click.stacktracespanel','a.show-all', proxy(this.showAll,this));
+		},
 		setSource: function( data ) {
 			this.source = true;
 			this.data = data;
@@ -1029,6 +1033,12 @@
 		},
 		notifySourceChanged: function() {
 			this.changed = true;
+			this.shownLimit = 50;
+			this.refresh();
+		},
+		showAll: function() {
+			this.changed = true;
+			this.shownLimit = false;
 			this.refresh();
 		},
 		render: function() {
@@ -1049,8 +1059,10 @@
 			}
 
 			var html = '',
-				path, stack;
-			for (i=0;i<paths.length;i++) {
+				path, stack,
+				limit = this.shownLimit
+					? Math.min(this.shownLimit,paths.length) : paths.length;
+			for (i=0;i<limit;i++) {
 				path = paths[i];
 				html += '<b>Stack #'+(i+1)+'</b><br />';
 				for (j=0;j<path.length;j++) {
@@ -1069,6 +1081,9 @@
 						+ ' SelfTime: '  + path[path.length-1].selfTime.toFixed(5);
 				}
 				html += '<br />';
+			}
+			if (paths.length>limit) {
+				html += '<br /><a href="#" class="show-all">Show all...</a><br />';
 			}
 			this.el.html(html);
 		}
@@ -1364,8 +1379,6 @@
 					if ( i >= 0 ) {
 						text = text.substr(i);
 						text = text.replace(/<!--|-->/g,'');
-						console.log(text.substr(0,250));
-						console.log(text.substr(-250));
 						self.data.initFromText(text);
 						self.dialog.setTitle(origUrl);
 					} else {

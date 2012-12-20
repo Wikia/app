@@ -1,3 +1,5 @@
+&lt; <a href="<?=$specialPageUrl;?>" title="<?= wfMsg('structureddata-back-to-list-of-classes') ?>"><?= wfMsg('structureddata-back-to-list-of-classes') ?></a>
+<h3><?=wfMsg('structureddata-listing-objects-caption', $objectType)?></h3>
 <ul>
 <?php foreach ( $list as $obj ) { ?>
 	<li>

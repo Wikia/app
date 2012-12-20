@@ -324,10 +324,10 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 					$isThumb = true;
 
 					if  ( in_array( $extension, array( 'gif', 'svg' ) ) ) {
-						$img = ImageService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
+						$img = ImagesService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
 						$isThumb = false;
 					}
-					
+
 					$imageList[] = array(
 						'wikiId' => $row->wiki_id,
 						'pageId' => $row->page_id,
@@ -534,31 +534,31 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 		$dbr = $this->getDatawareDB( DB_SLAVE );
 		$reviewers = $this->getReviewersForStats();
-		
+
 		$count_users = count( $reviewers );
 		if ( $count_users > 0 ) {
-			foreach ( $reviewers as $reviewer ) { 
-				# user 
+			foreach ( $reviewers as $reviewer ) {
+				# user
 				$user = User::newFromId( $reviewer );
 				if ( !is_object( $user ) ) {
-					// invalid user id? 
+					// invalid user id?
 					continue;
 				}
-				$data[ $reviewer ] = array( 
+				$data[ $reviewer ] = array(
 					'name' => $user->getName(),
 					'total' => 0,
 					ImageReviewStatuses::STATE_APPROVED => 0,
 					ImageReviewStatuses::STATE_REJECTED => 0,
-					ImageReviewStatuses::STATE_QUESTIONABLE => 0,					
+					ImageReviewStatuses::STATE_QUESTIONABLE => 0,
 				);
-				
+
 				$query = array();
 				foreach ( array_keys( $summary ) as $review_state ) {
 					# union query: mysql explain: Using where; Using index and max 150k rows
 					$query[] = $dbr->selectSQLText(
 						array( 'image_review_stats' ),
 						array( 'review_state', 'count(*) as cnt' ),
-						array( 
+						array(
 							"review_state"	=> $review_state,
 							"reviewer_id"	=> $reviewer,
 							"review_end between '{$startDate}' AND '{$endDate}'"
@@ -566,25 +566,27 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 						__METHOD__
 					);
 				}
-				
+
 				# Join the two fast queries, and sort the result set
 				$sql = $dbr->unionQueries( $query, false );
 				$res = $dbr->query( $sql, __METHOD__ );
-						
+
 				while ( $row = $dbr->fetchObject( $res ) ) {
-					$data[ $reviewer ][ $row->review_state ] = $row->cnt;
-					$data[ $reviewer ][ 'total' ] += $row->cnt;
-					
-					# total
-					$total += $row->cnt;
-					
-					# index in summary
-					$summary[ $row->review_state ] += $row->cnt;
+					if ( !empty( $row->review_state ) ) {
+						$data[ $reviewer ][ $row->review_state ] = $row->cnt;
+						$data[ $reviewer ][ 'total' ] += $row->cnt;
+
+						# total
+						$total += $row->cnt;
+
+						# index in summary
+						$summary[ $row->review_state ] += $row->cnt;
+					}
 				}
-				
+
 			}
 		}
-			
+
 		$summary[ 'all' ] = $total;
 		$summary[ 'avg' ] = $count_users > 0 ? $summary['all'] / $count_users : 0;
 
@@ -601,7 +603,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	public function getUserTsKey() {
 		return $this->wf->MemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
 	}
-	
+
 	private function getImageStatesForStats() {
 		$this->wf->ProfileIn( __METHOD__ );
 
@@ -629,7 +631,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$this->wf->ProfileOut( __METHOD__ );
 		return $states;
 	}
-	
+
 	private function getReviewersForStats() {
 		$this->wf->ProfileIn( __METHOD__ );
 
@@ -649,12 +651,12 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			);
 
 			while( $row = $db->fetchObject($result) ) {
-				$reviewers[] = $row->review_state;
+				$reviewers[] = $row->reviewer_id;
 			}
-			$this->wg->memc->set( $key, $states, 60 * 60 * 8 );
+			$this->wg->memc->set( $key, $reviewers, 60 * 60 * 8 );
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
 		return $reviewers;
-	} 
+	}
 }

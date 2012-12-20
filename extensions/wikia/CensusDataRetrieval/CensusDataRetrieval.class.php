@@ -226,7 +226,7 @@ class CensusDataRetrieval {
 			}
 		}
 
-		$output .= "\n}}\n";
+		$output .= "\n}}";
                 wfProfileOut(__METHOD__);
 		return $output;
 	}

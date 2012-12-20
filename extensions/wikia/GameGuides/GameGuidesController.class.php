@@ -15,6 +15,8 @@ class GameGuidesController extends WikiaController {
 	const SIX_HOURS = 21600; //6h
 	const LIMIT = 25;
 
+	const NEW_API_VERSION = 1;
+
 	/**
 	 * @var $mModel GameGuidesModel
 	 */
@@ -44,6 +46,8 @@ class GameGuidesController extends WikiaController {
 	 */
 	public function listWikis(){
 		$this->wf->profileIn( __METHOD__ );
+
+		$this->response->setFormat( 'json' );
 		
 		$limit = $this->request->getInt( 'limit', null );
 		$batch = $this->request->getInt( 'batch', 1 );
@@ -66,6 +70,8 @@ class GameGuidesController extends WikiaController {
 
 	public function listWikiContents(){
 		$this->wf->profileIn( __METHOD__ );
+
+		$this->response->setFormat( 'json' );
 		
 		$result = $this->mModel->getWikiContents();
 		
@@ -88,9 +94,12 @@ class GameGuidesController extends WikiaController {
 	 */
 	public function listCategoryContents(){
 		$this->wf->profileIn( __METHOD__ );
+
+		$this->response->setFormat( 'json' );
 		
 		$category = $this->getVal('category');
-		
+
+
 		$limit = $this->request->getInt( 'limit', null );
 		$batch = $this->request->getInt( 'batch', 1 );
 		$result = $this->mModel->getCategoryContents( $category, $limit, $batch );
@@ -114,6 +123,8 @@ class GameGuidesController extends WikiaController {
 	 */
 	public function search(){
 		$this->wf->profileIn( __METHOD__ );
+
+		$this->response->setFormat( 'json' );
 		
 		$term = $this->request->getVal( 'term' );
 		$limit = $this->request->getInt( 'limit', GameGuidesModel::SEARCH_RESULTS_LIMIT );
@@ -160,6 +171,8 @@ class GameGuidesController extends WikiaController {
 		$title = Title::newFromText( $titleName );
 
 		if ( $title instanceof Title ) {
+			RequestContext::getMain()->setTitle( $title );
+
 			$revId = $title->getLatestRevID();
 
 			if ( $revId > 0 ) {
@@ -192,10 +205,10 @@ class GameGuidesController extends WikiaController {
 					$revId
 				);
 			} else {
-				$this->response->setVal( 'error', 'Revision ID = 0' );
+				throw new NotFoundApiException( 'Revision ID = 0' );
 			}
 		} else {
-			$this->response->setVal( 'error', 'Title not found' );
+			throw new NotFoundApiException( 'Title not found' );
 		}
 	}
 
@@ -337,7 +350,7 @@ class GameGuidesController extends WikiaController {
 
 		$this->response->setFormat( 'json' );
 
-		$content = WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId );
+		$content = WikiFactory::getVarValueByName( GameGuidesSpecialContentController::WIKI_FACTORY_VARIABLE_NAME, $this->wg->CityId );
 
 		if ( empty( $content ) ) {
 			$this->getCategories();
@@ -368,40 +381,53 @@ class GameGuidesController extends WikiaController {
 	private function getCategories(){
 		$this->wf->profileIn( __METHOD__ );
 
-		$limit = $this->request->getVal( 'limit', self::LIMIT );
+		$limit = $this->request->getVal( 'limit', self::LIMIT * 2 );
 		$offset = $this->request->getVal( 'offset', '' );
 
 		$categories = WikiaDataAccess::cache(
-			$this->wf->memcKey( __METHOD__, $offset, $limit ),
+			$this->wf->memcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
 			self::SIX_HOURS,
 			function() use ( $limit, $offset ) {
 				return ApiService::call(
 					array(
 						'action' => 'query',
 						'list' => 'allcategories',
+						'redirects' => true,
 						'aclimit' => $limit,
-						'acfrom' => $offset
+						'acfrom' => $offset,
+						'acprop' => 'id|size',
+						//We don't want empty categories to show up
+						'acmin' => 1
 					)
 				);
-			}
+			},
+			WikiaDataAccess::SKIP_CACHE
 		);
 
 		$allCategories = $categories['query']['allcategories'];
 
 		if ( !empty( $allCategories ) ) {
 
-			foreach( $allCategories as $key => $value ) {
-				$allCategories[$key] = array( 'name' => $value['*'] );
+			$ret = [];
+
+			foreach( $allCategories as $value ) {
+				if($value['size'] - $value['files'] > 0){
+					$ret[] = array(
+						'title' => $value['*'],
+						'id'=> $value['pageid']
+					);
+				}
 			}
 
-			$this->response->setVal( 'categories', $allCategories );
+			$this->response->setVal( 'items', $ret );
 
 			if ( !empty( $categories['query-continue'] ) ) {
 				$this->response->setVal( 'offset', $categories['query-continue']['allcategories']['acfrom'] );
 			}
 
 		} else {
-			$this->response->setVal( 'error', 'No Categories' );
+			$this->wf->profileOut( __METHOD__ );
+			throw new NotFoundApiException( 'No Categories' );
 		}
 
 		$this->wf->profileOut( __METHOD__ );
@@ -422,12 +448,60 @@ class GameGuidesController extends WikiaController {
 		$ret = false;
 
 		foreach( $content as $tag ){
-			if ( $requestTag == $tag['name'] ) {
+			if ( $requestTag == $tag['title'] ) {
 				$ret = $tag['categories'];
 			}
 		}
 
-		$this->response->setVal( 'categories', $ret );
+		if ( !empty( $ret ) ) {
+			$sort = $this->request->getVal( 'sort' );
+
+			if ( !empty( $sort ) ) {
+				if ( $sort == 'alpha' ) {
+					usort($ret, function( $a, $b ){
+						return strcasecmp($a['title'], $b['title']);
+					});
+				} else if ( $sort == 'hot' ) {
+					$hot = array_keys(
+						DataMartService::getTopArticlesByPageview(
+							$this->wg->CityId,
+							array_reduce($ret, function($ret, $item){
+								$ret[] = $item['id'];
+								return $ret;
+							}),
+							null,
+							false,
+							//I need all of them basically
+							count( $ret )
+						)
+					);
+
+					$sorted = [];
+					$left = [];
+					foreach ( $ret as $value ) {
+						$key = array_search( $value['id'], $hot );
+
+						if ( $key === false ) {
+							$left[] = $value;
+						} else {
+							$sorted[$key] = $value;
+						}
+					}
+
+					ksort( $sorted );
+
+					$ret = array_merge( $sorted, $left );
+				} else {
+					$this->wf->profileOut( __METHOD__ );
+					throw new InvalidParameterApiException( 'sort' );
+				}
+			}
+
+			$this->response->setVal( 'items', $ret );
+		} else if ( $requestTag !== '' ) {
+			$this->wf->profileOut( __METHOD__ );
+			throw new InvalidParameterApiException( 'tag' );
+		}
 
 		$this->wf->profileOut( __METHOD__ );
 	}
@@ -446,7 +520,13 @@ class GameGuidesController extends WikiaController {
 			array_reduce(
 				$content,
 				function( $ret, $item ) {
-					$ret[] = array( 'name' => $item['name'] );
+					if( $item['title'] !== '' ) {
+						$ret[] = array(
+							'title' => $item['title'],
+							'id' => $item['categories'][0]['id'] // for now lets use first category in tag, then we'll see
+						);
+					}
+
 					return $ret;
 				}
 			)
@@ -454,74 +534,6 @@ class GameGuidesController extends WikiaController {
 
 		//there also might be some categories without TAG, lets find them as well
 		$this->getTagCategories( $content, '' );
-
-		$this->wf->profileOut( __METHOD__ );
-	}
-
-	/**
-	 * @requestParam String category
-	 * @requestParam Integer limit [optional]
-	 * @requestParam String offset [optional]
-	 *
-	 * @return Array of articles
-	 *
-	 * @example method=getArticles&category=Category_Name
-	 * @example method=getArticles&category=Category_Name&offset=Offset
-	 * @example method=getArticles&category=Category:Category_Name&offset=Offset
-	 */
-	public function getArticles(){
-		$this->wf->profileIn( __METHOD__ );
-
-		$this->response->setFormat( 'json' );
-
-		$this->cacheMeFor( 1 );
-
-		$category = $this->request->getVal( 'category' );
-
-		if( !empty( $category ) ) {
-			//if $category does not have Category: in it, add it as API needs it
-			$category = Title::newFromText( $category, NS_CATEGORY );
-
-			if( !is_null( $category ) ) {
-				$category = $category->getFullText();
-
-				$limit = $this->request->getVal( 'limit', self::LIMIT );
-				$offset = $this->request->getVal( 'offset', '' );
-
-				$articles = WikiaDataAccess::cache(
-					$this->wf->memcKey( __METHOD__, $category, $offset, $limit ),
-					self::SIX_HOURS,
-					function() use ( $category, $limit, $offset ){
-						return ApiService::call(
-							array(
-								'action' => 'query',
-								'list' => 'categorymembers',
-								'cmtype' => 'page|subcat',
-								'cmprop' => 'ids|title',
-								'cmtitle' => $category,
-								'cmlimit' => $limit,
-								'cmcontinue' => $offset
-							)
-						);
-					}
-				);
-
-				if ( !empty( $articles['query']['categorymembers'] ) ) {
-					$this->response->setVal( 'articles', $articles['query']['categorymembers']);
-
-					if ( !empty( $articles['query-continue'] ) ) {
-						$this->response->setVal( 'offset', $articles['query-continue']['categorymembers']['cmcontinue']);
-					}
-				} else {
-					$this->response->setVal( 'error', 'No members' );
-				}
-			} else {
-				$this->response->setVal( 'error', 'Title::newFromText returned null' );
-			}
-		} else {
-			$this->response->setVal( 'error', 'No category given' );
-		}
-
 
 		$this->wf->profileOut( __METHOD__ );
 	}

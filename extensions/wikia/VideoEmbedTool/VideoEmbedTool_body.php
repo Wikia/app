@@ -6,41 +6,25 @@
 
 class VideoEmbedTool {
 
-	function loadMainFromView( $error = false ) {
-		$out = '';
+	function getMsgVars() {
+	
+	
+		$vars = array(
+			'vet-back', 
+			'vet-imagebutton',
+			'vet-close',
+			'vet-warn1',
+			'vet-warn2',
+			'vet-warn3',
+		);
+		
+		$ret = array();
+		
+		foreach($vars as $var) {
+			$ret[$var] = wfMsg($var);
+		}
 
-		$out .= '<script type="text/javascript">';
-                $out .= 'var vet_back = \'' . wfMsg('vet-back') . '\';';
-                $out .= 'var vet_imagebutton = \'' . wfMsg('vet-imagebutton') . '\';';
-                $out .= 'var vet_close = \'' . wfMsg('vet-close') . '\';';
-                $out .= 'var vet_warn1 = \'' . wfMsg('vet-warn1') . '\';';
-                $out .= 'var vet_warn2 = \'' . wfMsg('vet-warn2') . '\';';
-                $out .= 'var vet_warn3 = \'' . wfMsg('vet-warn3') . '\';';
-
-                $out .= 'var vet_bad_extension = \'' . wfMsg('vet-bad-extension') . '\';';
-                $out .= 'var vet_show_message = \'' . wfMsg('vet-show-message') . '\';';
-                $out .= 'var vet_hide_message = \'' . wfMsg('vet-hide-message') . '\';';
-                $out .= 'var vet_title = \'' . wfMsg('vet-title') . '\';';
-                $out .= 'var vet_max_thumb = \'' . wfMsg('vet-max-thumb') . '\';';
-
-                $out .= '</script>';
-
-		global $wgBlankImgUrl;
-				$out = '<div class="reset" id="VideoEmbed">';
-                $out .= '<div id="VideoEmbedError"></div>';
-                $out .= '<div id="VideoEmbedBorder"></div>';
-                $out .= '<div id="VideoEmbedProgress1" class="VideoEmbedProgress"></div>';
-                $out .= '<div id="VideoEmbedBack"><img src="'.$wgBlankImgUrl.'" id="fe_vetback_img" class="sprite back" alt="'.wfMsg('vet-back').'" /><a href="#">' . wfMsg( 'vet-back' ) . '</a></div>' ;
-                $out .= '<div id="VideoEmbedBody">';
-                $out .= '<div id="VideoEmbedClose"><img src="'.$wgBlankImgUrl.'" id="fe_vetclose_img" class="sprite close" alt="'.wfMsg('vet-close').'" /><a href="#">' . wfMsg( 'vet-close' ) . '</a></div>';
-                $out .= '<div id="VideoEmbedMain">' . $this->loadMain() . '</div>';
-                $out .= '<div id="VideoEmbedDetails" style="display: none;"></div>';
-                $out .= '<div id="VideoEmbedConflict" style="display: none;"></div>';
-                $out .= '<div id="VideoEmbedSummary" style="display: none;"></div>';
-                $out .= '</div>';
-                $out .= '</div>';
-
-		return $out;
+		return json_encode($ret);
 	}
 
 	function loadMain( $error = false ) {
@@ -195,6 +179,7 @@ class VideoEmbedTool {
 
 		$id = $wgRequest->getVal('id');
 		$provider = $wgRequest->getVal('provider');
+		$ns_file = $wgContLang->getFormattedNsText( NS_FILE );
 
 		$name = urldecode( $wgRequest->getVal('name') );
 		$oname = urldecode( $wgRequest->getVal('oname') );
@@ -248,8 +233,9 @@ class VideoEmbedTool {
 				return wfMsg( 'wva-thumbnail-upload-failed' );
 			}
 		}
+		
 		$message = wfMsg( 'vet-single-success' );
-		$ns_vid = $wgContLang->getFormattedNsText( $title->getNamespace() );
+		$ns_file = $wgContLang->getFormattedNsText( $title->getNamespace() );
 		$caption = $wgRequest->getVal('caption');
 
 		$size = $wgRequest->getVal('size');
@@ -257,20 +243,67 @@ class VideoEmbedTool {
 		$layout = $wgRequest->getVal('layout');
 
 		header('X-screen-type: summary');
-		$tag = $ns_vid . ":" . $oTitle->getText();
+		$tag = $ns_file . ":" . $oTitle->getText();
 		if(!empty($size))		$tag .= "|$size";
 		if(!empty($layout))		$tag .= "|$layout";
-		if($width != 'px')		$tag .= "|$width";
+		if($width != '')		$tag .= "|$width px";
 		if($caption != '')		$tag .= "|".$caption;
 
 		$tag = "[[$tag]]";
+		$button_message = wfMessage('vet-return');
 
+		// Adding a video from article view page
+		$editingFromView = ($wgRequest->getVal( 'placeholder' ) == -2);
+		if( $editingFromView ) {
+			Wikia::setVar('EditFromViewMode', true);
+			
+			$article_title = $wgRequest->getVal( 'article' );
+			$ns = $wgRequest->getVal( 'ns' );
+			$box = $wgRequest->getVal( 'box' );
+
+			$article_title_obj = Title::newFromText( $article_title, $ns );
+			$article_obj = new Article( $article_title_obj );
+			$text = $article_obj->getContent();
+
+			// match [[File:Placeholder|video]]
+			preg_match_all( '/\[\[' . $ns_file . ':Placeholder[^\]]*\|video[^\]]*\]\]/s', $text, $matches, PREG_OFFSET_CAPTURE );
+
+			$placeholder_tag = $matches[0][$box][0];
+			$file = wfFindFile( $title );
+			$thumb = $file->transform( array('width'=>$width) );
+			$embed_code = $thumb->toHtml( array('desc-link' => true) );
+			$html_params = array( 
+				'imageHTML' => $embed_code,
+				'align' => $layout,
+				'width' => $width,
+				'showCaption' => !empty($caption),
+				'caption' => $caption,
+				'showPictureAttribution' => true,
+			);
+			
+			// Get all html to insert into article view page
+			$image_service = F::app()->sendRequest( 'ImageTweaksService', 'getTag', $html_params );
+			$image_data = $image_service->getData();
+			$embed_code = $image_data['tag'];
+
+			$summary = wfMsg( 'vet-added-from-placeholder' );
+
+			$text = substr_replace( $text, $tag, $matches[0][$box][1], strlen( $placeholder_tag ) );
+			
+			$button_message = wfMessage('vet-placeholder-return');
+			$success = $article_obj->doEdit( $text, $summary);
+			if ( !$success ) {
+				header('X-screen-type: error');
+				return wfMsg ( 'vet-insert-error' );
+			}
+		}
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array(
 			'tag' => $tag,
 			'message' => $message,
 			'code' => $embed_code,
+			'button_message' => $button_message,
 			));
 		return $tmpl->render('summary');
 	}

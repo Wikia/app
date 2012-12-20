@@ -412,7 +412,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'link' => $link,
 				'linktext' => $linktext,
 				'shorttext' => $shorttext,
-				'data-caption' => htmlspecialchars( $caption ),
+				'data-caption' => Sanitizer::removeHTMLtags( $caption ),
 			);
 
 			// store list of images from inner content of tag (to be used by front-end)
@@ -903,6 +903,7 @@ class WikiaPhotoGallery extends ImageGallery {
 						'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
 						'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
 						'class' => 'thumbimage',
+						'alt' => preg_replace( '/\.[^\.]+$/', '', $image['linkTitle'] ),
 						//'width' => isset($thumbParams) ? $thumbParams['width'] : $image['width'], // TODO: reinstate this with some WPG refactoring (BugId:38660)
 						//'height' => isset($thumbParams) ? $thumbParams['height'] : $image['height'],
 					);
@@ -1137,7 +1138,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				// add link overlay
 				$linkOverlay = Xml::openElement('span', array('class' => 'wikia-slideshow-link-overlay'))
-					. wfMsg('wikiaPhotoGallery-slideshow-view-link-overlay', htmlspecialchars($linkText))
+					. wfMsg('wikiaPhotoGallery-slideshow-view-link-overlay', Sanitizer::removeHTMLtags( $linkText ))
 					. Xml::closeElement('span');
 			}
 
@@ -1380,10 +1381,10 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				$data = array(
 					'imageUrl' => $imageUrl,
-					'imageTitle' => htmlspecialchars($text),
-					'imageShortTitle' => htmlspecialchars($shortText),
+					'imageTitle' => Sanitizer::removeHTMLtags($text),
+					'imageShortTitle' => Sanitizer::removeHTMLtags($shortText),
 					'imageLink' => !empty($link) ? $linkAttribs['href'] : '',
-					'imageDescription' => htmlspecialchars($linkText),
+					'imageDescription' => Sanitizer::removeHTMLtags($linkText),
 					'imageThumbnail' => $thumbUrl,
 				);
 

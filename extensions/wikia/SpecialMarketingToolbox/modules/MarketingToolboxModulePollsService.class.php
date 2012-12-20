@@ -1,0 +1,62 @@
+<?php
+class MarketingToolboxModulePollsService extends MarketingToolboxModuleService {
+	protected function getFormFields() {
+		$fields = array(
+			'pollsTitle' => array(
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-polls-title'),
+				'validator' => new WikiaValidatorString(
+					array(
+						'required' => true,
+						'min' => 1
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
+				),
+				'attributes' => array(
+					'class' => 'required'
+				)
+			),
+			'pollsQuestion' => array(
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-polls-question'),
+				'validator' => new WikiaValidatorString(),
+				'attributes' => array(
+					'class' => 'required'
+				)
+			)
+		);
+
+		$model = new MarketingToolboxPollsModel();
+		$mandatoryOptionsLimit = $model->getMandatoryOptionsLimit();
+		$voluntaryOptionsLimit = $model->getVoluntaryOptionsLimit();
+
+		for ($i = 1; $i <= $mandatoryOptionsLimit; $i++) {
+			$fields['pollsOption' . $i] = array(
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-polls-option-mandatory',$i),
+				'validator' => new WikiaValidatorString(
+					array(
+						'required' => true,
+						'min' => 1
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
+				),
+				'attributes' => array(
+					'class' => 'required'
+				)
+			);
+		}
+
+		for ($j = $i; $j < $i+$voluntaryOptionsLimit; $j++) {
+			$fields['pollsOption' . $j] = array(
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-polls-option-voluntary',$j),
+			);
+		}
+
+		return $fields;
+	}
+
+	public function renderEditor($data) {
+		$model = new MarketingToolboxPollsModel();
+		$data['optionsLimit'] = $model->getTotalOptionsLimit();
+
+		return parent::renderEditor($data);
+	}
+}

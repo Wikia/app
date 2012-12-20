@@ -250,6 +250,13 @@ $messages['ia'] = array(
 	'feed-title-recentchanges' => 'Modificationes recente',
 );
 
+/** Italian (italiano)
+ * @author Minerva Titani
+ */
+$messages['it'] = array(
+	'partner-feed-achievements-leaderboard' => 'Classifica dei successi nella wiki',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -547,9 +554,11 @@ $messages['sv'] = array(
 	'partner-feed-earned-badges' => 'Nyligen tjänade emblem för en viss Wiki',
 	'partner-feed-recent-blog-posts' => 'Senaste blogginläggen med anknytning till en befordran',
 	'partner-feed-latest-images' => 'Galleri med de senaste bilderna som har laddats upp',
+	'partner-feed-hotcontent' => 'Hub / vertikalt "Hett innehåll" som rangordnas efter antalet redigerare',
 	'partner-feed-recent-blog-comments' => 'Senaste kommentarer som anknyter till specifika blogginlägg.',
 	'partner-feed-recent-changes' => 'Senaste ändringar',
 	'partnerfeed' => 'Partnerflöde',
+	'error-no-article' => 'Fel: Ingen "artikel"-parameter passerade',
 	'feed-title-blogposts' => 'Senaste blogginlägg',
 	'feed-title-recent-badges' => 'Senaste emblem',
 	'feed-title-recent-images' => 'Senaste bilder',

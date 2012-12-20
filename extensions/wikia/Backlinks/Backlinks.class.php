@@ -5,116 +5,63 @@
  *
  */
 
-class Backlinks
+class Backlinks extends WikiaObject
 {
 	const TABLE_NAME = 'wikia_page_backlinks';
 
-	// allows us to store multiple links
+	/**
+	 * Stores backlinks for each target article, listing the backlink text, and which source articles link to them
+	 * @var unknown_type
+	 */
 	static $backlinkRows = array();
 
-	// allows us to keep track of multiple articles
-	static $sourceArticleIds = array();
-
-	static function storeBackLinkText( $skin, Title $target, array $options, &$text, array &$attribs, &$ret )
+	/**
+	 * Uses MediaWiki LinkEnd hook to store backlinks
+	 * @param unknown_type $skin
+	 * @param Title $target
+	 * @param array $options
+	 * @param unknown_type $text
+	 * @param array $attribs
+	 * @param unknown_type $ret
+	 * @return boolean
+	 */
+	public function onLinkEnd( $skin, Title $target, array $options, &$text, array &$attribs, &$ret )
 	{
 		wfProfileIn(__METHOD__);
-		global $wgArticle;
 
 		$targetArticleId = $target->getArticleId();
-		if ((! is_int($targetArticleId)) || ($wgArticle === null) || $targetArticleId === 0) {
+		if ( (! is_int($targetArticleId) ) || ( $this->wg->Article === null ) || $targetArticleId === 0 ) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
+		
+		$targetId = $this->wg->CityID . '_' . $targetArticleId;
+		$sourceId = $this->wg->CityID . '_' . $this->wg->Article->getId();
 
-		$sourceArticleId = $wgArticle->getId();
-
-		self::$sourceArticleIds = array_unique( self::$sourceArticleIds + array($sourceArticleId) );
-
-		$backlinkRowSignature = sprintf( "(%s,%s,'%s',", $sourceArticleId,
-														 $targetArticleId,
-														 mysql_real_escape_string(substr($text, 0, 255))
-										);
-
-		self::$backlinkRows[$backlinkRowSignature] = isset( self::$backlinkRows[$backlinkRowSignature] )
-												   ? self::$backlinkRows[$backlinkRowSignature] + 1
-												   : 1;
+		if (! isset( self::$backlinkRows[$targetId] ) ) {
+			self::$backlinkRows[$targetId] = array( $text => array( $sourceId => 1 ) );
+		} else if (! isset( self::$backlinkRows[$targetId][$text] ) ) {
+			self::$backlinkRows[$targetId][$text] = array( $sourceId => 1 );
+		} else if (! isset( self::$backlinkRows[$targetId][$text][$sourceId] ) ) {
+			self::$backlinkRows[$targetId][$text][$sourceId] = 1;
+		} else {
+			self::$backlinkRows[$targetId][$text][$sourceId]++;
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;
 
 	}
 
-	static function clearRows()
-	{
-		self::$backlinkRows = array();
-		self::$sourceArticleIds = array();
-	}
-
-	static function getForArticle( Article $article )
-	{
-		$targetPageId = $article->getId();
-
-		if (! $targetPageId) {
-			return array();
-		}
-
-		try {
-			$dbr = wfGetDb( DB_SLAVE );
-			$res = $dbr->select( self::TABLE_NAME,
-								 array('backlink_text', 'SUM(count)'),
-								 array('target_page_id' => $targetPageId),
-								 __METHOD__,
-								 array('GROUP BY' => array('target_page_id', 'backlink_text'))
-							   );
-
-			$resultArray = array();
-
-			while ( $row = $res->fetchRow() ) {
-				$resultArray[$row['backlink_text']] = $row['SUM(count)'];
-			}
-
-			return $resultArray;
-
-		} catch (Exception $e) {
-			// should probably log this
-			return array();
-		}
-
-	}
-
-	static function updateBacklinkText()
+	/**
+	 * Queues up a job to handle the backlinks aggregated during this request
+	 * @return boolean
+	 */
+	public function onOutputPageParserOutput()
 	{
 		wfProfileIn(__METHOD__);
-
-		$dbr = wfGetDb( DB_MASTER );
-
-		$rowCount = count( self::$backlinkRows );
-		if ($rowCount == 0) {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		$deleteSql = 'DELETE FROM `'.self::TABLE_NAME.'` WHERE source_page_id IN ('.implode(', ', self::$sourceArticleIds).');';
-		$insertSql = "INSERT IGNORE INTO `".self::TABLE_NAME."` (`source_page_id`, `target_page_id`, `backlink_text`, `count` ) VALUES ";
-
-		$rowCounter = 0;
-		foreach ( self::$backlinkRows as $signature => $count )
-		{
-			// $signature is incomplete sql value set "(1234,1234,'foo', "
-			$insertSql .= $signature . "{$count})";
-			$insertSql .= ++$rowCounter == $rowCount ? ';' : ', ';
-		}
-
-		try {
-			$dbr->begin();
-			$dbr->query( $deleteSql, __METHOD__ );
-			$dbr->query( $insertSql, __METHOD__ );
-			$dbr->commit(__METHOD__);
-		} catch (Exception $e) {
-			$dbr->rollback();
-			Wikia::Log( __METHOD__, 'Transaction', $e );
-		}
-
+		Job::batchInsert( array( new UpdateBacklinksJob( $this->wg->Title, self::$backlinkRows ) ) );
+		self::$backlinkRows = array(); // prevent duplicate jobs
 		wfProfileOut(__METHOD__);
 		return true;
 
@@ -122,52 +69,27 @@ class Backlinks
 
 	/**
 	 * Called by maintenance script.
+	 * @todo remove this method once we've ran it against all wikis
 	 */
-	static function initTable() {
+	static function dropTable() {
 		wfProfileIn(__METHOD__);
 
 		// create db handler
 		$dbr = wfGetDb( DB_MASTER );
 
-		if (! $dbr->tableExists(self::TABLE_NAME) ) {
+		if ( $dbr->tableExists(self::TABLE_NAME) ) {
 			try {
-				$source = dirname(__FILE__) . "/patch-create-wikia_page_backlinks.sql";
-				$dbr->sourceFile( $source );
+				$dbr->query( 'DROP TABLE '.self::TABLE_NAME );
 			}
 			catch (Exception $e) {
 				wfProfileOut(__METHOD__);
 				return $e;
 			}
 			wfProfileOut(__METHOD__);
-			return "Table ".self::TABLE_NAME." created.";
+			return "Dropped table ".self::TABLE_NAME;
 		}
 
 		wfProfileOut(__METHOD__);
-		return "Table ".self::TABLE_NAME." already exists.";
-	}
-
-	/**
-	 * LoadExtensionSchemaUpdates handler; set up wikia_page_backlinks table on install/upgrade.
-	 *
-	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
-	 * @param $updater DatabaseUpdater
-	 * @return bool
-	 */
-	static function onLoadExtensionSchemaUpdates( $updater = null ) {
-		wfProfileIn( __METHOD__ );
-		$map = array(
-			'mysql' => 'patch-create-wikia_page_backlinks.sql',
-		);
-
-		$type = $updater->getDB()->getType();
-		if( isset( $map[$type] ) ) {
-			$sql = dirname( __FILE__ ) . "/" . $map[ $type ];
-			$updater->addExtensionTable( 'wikia_page_backlinks', $sql );
-		} else {
-			throw new MWException( "Backlinks extension does not currently support $type database." );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
+		return "Table ".self::TABLE_NAME." doesn't exists.";
 	}
 }

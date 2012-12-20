@@ -36,6 +36,20 @@
 	h6 {
 		font-size: 11px;
 	}
+	.headline-wrapper button, .headline-wrapper-h2 button {
+		vertical-align: baseline;
+	}
+	.headline-wrapper h2, .headline-wrapper-h2 {
+		overflow: hidden;
+	}
+	.headline-wrapper-h2 {
+		border-bottom: solid 1px $color-headline-border;
+	}
+	.headline-wrapper-h2 h2 {
+		border: none;
+		display: inline;
+		vertical-align: baseline;
+	}
 	.editsection {
 		float: none;
 		font-size: 13px;
@@ -366,8 +380,25 @@
 		}
 	}
 
-	.wikiaPlaceholder > div {
-		text-align: center;
+	.wikiaPlaceholder {
+		vertical-align: bottom;
+		
+		> div {
+			margin: 0.5em 1.4em 1.2em 0;
+			text-align: center;
+			
+			&.tright {
+				margin: 0.5em 0 1.2em 1.4em;
+			}
+			
+			&.tcenter {
+				margin: 0.5em auto 1.2em;
+			}
+			
+			a {
+				position:relative;
+			}
+		}
 	}
 	.fullMedia {
 		word-wrap: break-word;

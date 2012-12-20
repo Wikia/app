@@ -54,7 +54,8 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		.lightbox-arrows,
 		.LightboxHeader,
 		.LightboxCarousel,
-		.media {
+		.media,
+		.modal_interstitial {
 			display: none;
 		}
 	}
@@ -71,7 +72,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		&.video-lightbox {
 			.media {
 				margin: 90px 0;
-			}		
+			}
 		}
 		.LightboxCarousel,
 		.LightboxHeader {
@@ -136,14 +137,14 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			@include clearfix;
 			clear: both;
 			margin-top: 25px;
-			
+
 			input[type="text"] {
 				width: 350px;
 			}
-			
+
 			.share-form {
 				float: right;
-				width: 650px;		
+				width: 650px;
 				.WikiaForm {
 					margin: 20px 0 0 -7px; // left align with title while keeping room for error bg
 				}
@@ -224,7 +225,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		}
 	}
 	.wikiaThrobber {
-		z-index: 0;	/* resetting throbber mask */	
+		z-index: 0;	/* resetting throbber mask */
 	}
 	#LightboxPreload {
 		position: absolute;
@@ -301,7 +302,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 				float: right;
 				margin-left: 4px;
 			}
-		}		
+		}
 		.LightboxCarouselContainer {
 			margin-left: 40px;
 			height: 55px;
@@ -357,7 +358,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 					}
 				}
 			}
-			img {
+			.thumb {
 				width: 90px;
 				height: 55px;
 				cursor: pointer;
@@ -365,14 +366,14 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			}
 		}
 		.carousel-arrow {
-			cursor: pointer;			
+			cursor: pointer;
 			&.next {
 				height: 56px;
 				clear: right;
 				display: block;
 				float: right;
 				&:after {
-					@include arrow(8px, $color-buttons, 'right');				
+					@include arrow(8px, $color-buttons, 'right');
 					content: " ";
 					display: block;
 					margin: 20px -3px 0 0;
@@ -398,7 +399,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			padding: 10px 20px;
 		}
 	}
-	
+
 	.show-ads .LightboxCarousel {
 		@include clearfix;
 		.wikia-ad {
@@ -416,10 +417,10 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		}
 		.content{
 			border-right: 1px solid $color-page-border;
-			width: 625px;		
+			width: 625px;
 		}
 		.icon {
-			margin-right: 21px;			
+			margin-right: 21px;
 		}
 		.progress {
 			margin-left: 22px;
@@ -429,11 +430,11 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 				margin-right: -10px;
 			}
 			&.previous {
-				margin-left: -10px;			
+				margin-left: -10px;
 			}
 		}
 	}
-	
+
 	.modal_interstitial {
 		height: 100%;
 		> div {
@@ -443,7 +444,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			position: relative;
 		}
 	}
-	
+
 	.LightboxHeader {
 		border-bottom: 1px solid $color-lightbox-border;
 		height: 50px;
@@ -452,7 +453,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		width: 960px;
 		z-index: 2;
 		h1 {
-			float: left; 
+			float: left;
 			font-size: 18px;
 			line-height: 22px;
 			max-width: 600px;	/* compensation for i18n on .see-full-size-link */
@@ -481,17 +482,17 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 				margin: 4px 4px 0 -3px;
 			}
 		}
-		.more-info-button{ 
+		.more-info-button{
 			&:before {
 				@include sprite-Lightbox('more_info'+$sprite-normal);
-				margin-top: 3px;	
+				margin-top: 3px;
 			}
 		}
 		.share-button {
 			margin-right: 20px;
 			&:before {
-				@include sprite-Lightbox('share'+$sprite-normal);	
-			}		
+				@include sprite-Lightbox('share'+$sprite-normal);
+			}
 		}
 		.user-details {
 			clear: left;
@@ -511,7 +512,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	// Left right arrows in lightbox (not carousel arrows)
 	.lightbox-arrows {
 		span {
-			@include opacity(65); 
+			@include opacity(65);
 			@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
 			cursor: pointer;
 			display: block;

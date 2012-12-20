@@ -11,7 +11,7 @@
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
 require_once( "commandLine.inc" );
 
-include("$IP/extensions/wikia/Search/WikiaSearch.setup.php");
+include_once("$IP/extensions/wikia/Search/WikiaSearch.setup.php");
 
 $indexer = F::build( 'WikiaSearchIndexer' );
 

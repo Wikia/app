@@ -219,7 +219,7 @@ class Title {
 	 * Make an array of titles from an array of IDs
 	 *
 	 * @param $ids Array of Int Array of IDs
-	 * @return Array of Titles
+	 * @return Title[]
 	 */
 	public static function newFromIDs( $ids ) {
 		if ( !count( $ids ) ) {

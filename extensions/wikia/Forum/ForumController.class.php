@@ -18,19 +18,31 @@ class ForumController extends WallBaseController {
 	}
 
 	public function board() {
+		$ns = $this->wg->Title->getNamespace();
+
+		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
+			$topicTitle = $this->getTopicTitle();
+			if ( empty($topicTitle) || !$topicTitle->exists() ) {
+				if(!$topicTitle->exists()) {
+					$this->redirectToIndex();
+					return null;
+				}
+			}
+		}
+
 		parent::index();
 		$this->setIsForum();
 		
 		F::build( 'JSMessages' )->enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 		$this->response->addAsset( 'forum_js' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoard.scss' );
-		$this->response->addAsset( 'extensions/wikia/Forum/css/MessageTopic.scss' );
+		$this->response->addAsset( 'extensions/wikia/Wall/css/MessageTopic.scss' );
 
 		$this->addMiniEditorAssets();
 
 		$this->description = ''; 
 
-		if ( $this->wall->getTitle()->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
+		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$board = F::build( 'ForumBoard', array( ), 'getEmpty' );
 
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
@@ -67,10 +79,15 @@ class ForumController extends WallBaseController {
 		$this->response->redirect( $title->getFullURL() . '?showWarning=1' );
 	}
 
+	protected function getTopicTitle() {
+		$text = $this->wg->Title->getText();
+		$topicTitle =  Title::newFromURL($text);
+		return $topicTitle;
+	}
+
 	public function getWallForIndexPage($title) {
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			$topicTitle = F::build( 'Title', array( $title->getText() ), 'newFromURL' );
-
+			$topicTitle = $this->getTopicTitle();
 			if ( !empty( $topicTitle ) ) {
 				$wall = F::build( 'Wall', array( $title, $topicTitle->getArticleId() ), 'newFromRelatedPages' );
 				$this->response->setVal( 'topicText', $topicTitle->getPrefixedText() );
@@ -120,11 +137,13 @@ class ForumController extends WallBaseController {
 		$this->response->setVal( 'kudosNumber', $wallMessage->getVoteCount() );
 
 		$replies = $this->getVal( 'replies', array() );
-		$repliesCount = count( $replies );
+		$repliesCount = count( $replies ) + 1;
 		$this->response->setVal( 'repliesNumber', $repliesCount );
 
-		$lastReply = $this->getLastReply( $replies );
-		if ( $lastReply === false ) {
+		$thread = WallThread::newFromId($wallMessage->getId());
+
+		$lastReply = $thread->getLastMessage( $replies );
+		if ( $lastReply === null ) {
 			$lastReply = $wallMessage;
 		}
 
@@ -271,23 +290,6 @@ class ForumController extends WallBaseController {
 		}
 
 		return $selected;
-	}
-
-	/**
-	 * get last reply object
-	 * @param array $replies
-	 * @return false or WallMessage
-	 */
-	protected function getLastReply($replies = array()) {
-		if ( count( $replies ) > 0 ) {
-			$last = end( $replies );
-			if ( $last instanceof WallMessage ) {
-				$last->load();
-				return $last;
-			}
-		}
-
-		return false;
 	}
 
 	public function forumActivityModule() {

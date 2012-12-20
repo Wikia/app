@@ -153,9 +153,11 @@ $messages['id'] = array(
 /** Italian (italiano)
  * @author Civvì
  * @author Leviathan 89
+ * @author Viscontino
  * @author Ximo17
  */
 $messages['it'] = array(
+	'linksuggest-desc' => "Propone collegamenti ai contributori nell'interfaccia di modifica",
 	'tog-disablelinksuggest' => 'Non mostrare i link suggeriti nel codice sorgente',
 	'tog-redirected-from' => '&ndash; reindirizzamento da $1',
 );
@@ -180,6 +182,13 @@ $messages['km'] = array(
 $messages['ksh'] = array(
 	'tog-disablelinksuggest' => 'Donn en dä Quälle-Aat kein Vörschlääsch för Lenks aanzeije',
 	'tog-redirected-from' => '&ndash; ömjeleidt vun $1',
+);
+
+/** Kirghiz (Кыргызча)
+ * @author Growingup
+ */
+$messages['ky'] = array(
+	'tog-disablelinksuggest' => 'Баштапкы код режиминен шилтеме сунушун көрсөтпөө',
 );
 
 /** Ladino (Ladino)
@@ -233,6 +242,7 @@ $messages['nb'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'linksuggest-desc' => 'Verwijzingen voorstellen tijdens het bewerken',
 	'tog-disablelinksuggest' => 'Geen verwijzingssuggesties weergeven in bronmodus',
 	'tog-redirected-from' => '&ndash; Doorverwezen vanaf $1',
 );

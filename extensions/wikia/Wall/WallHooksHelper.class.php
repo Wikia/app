@@ -829,12 +829,16 @@ class WallHooksHelper {
 				return true;
 			} else {
 				$rcTitle = $rc->getTitle();
-
+				
 				if( !($rcTitle instanceof Title) ) {
 					//it can be media wiki deletion of an article -- we ignore them
 					Wikia::log(__METHOD__, false, "WALL_NOTITLE_FROM_RC " . print_r($rc, true));
 					return true;
 				}
+			
+				if(!$rcTitle->isTalkPage()) {
+					return true;
+				}	
 
 				$wm = F::build('WallMessage', array($rcTitle));
 				$wm->load();
@@ -2021,6 +2025,7 @@ class WallHooksHelper {
 	 */
 	 
 	public static function onAfterToggleFeature($name, $val) {
+		global $IP;
 		if($name == 'wgEnableWallExt' || $name == 'wgEnableForumExt') {
 			$db = wfGetDB(DB_MASTER);
 			if(!$db->tableExists('wall_history')) {
@@ -2045,4 +2050,27 @@ class WallHooksHelper {
 		$newtext = ArticleComment::removeMetadataTag($newtext);; */
 		return true;
 	}
+
+	public function onAdvancedBoxSearchableNamespaces(&$namespace) {
+		$namespace = WallHelper::clearNamespaceList($namespace);
+		return true;
+	}
+
+	static public function onArticleRobotPolicy( &$policy, Title $title ) {
+		$ns = $title->getNamespace();
+		if ( $ns == NS_USER_WALL_MESSAGE ) {
+			$policy = array(
+				'index'  => 'index',
+				'follow' => 'follow'
+			);
+		}
+		elseif ( $ns == NS_USER_WALL ) {
+			$policy = array(
+				'index'  => 'noindex',
+				'follow' => 'nofollow'
+			);
+		}
+		return true;
+	}
+
 }

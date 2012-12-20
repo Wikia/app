@@ -69,6 +69,8 @@ $app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'WallHooksHelper'
 $app->registerHook('BlockIpCompleteWatch', 'WallHooksHelper', 'onBlockIpCompleteWatch');
 $app->registerHook('UserIsBlockedFrom', 'WallHooksHelper', 'onUserIsBlockedFrom');
 
+$app->registerHook( 'ArticleRobotPolicy', 'WallHooksHelper', 'onArticleRobotPolicy' );
+
 //wall history in toolbar
 $app->registerHook('BeforeToolbarMenu', 'WallHooksHelper', 'onBeforeToolbarMenu');
 $app->registerHook('BeforePageHistory', 'WallHooksHelper', 'onBeforePageHistory');
@@ -142,6 +144,8 @@ $app->registerHook('BeforeInitialize', 'WallHooksHelper', 'onBeforeInitialize');
 // lazy loaded by the previous hook
 
 $app->registerHook( 'WikiFeatures::afterToggleFeature', 'WallHooksHelper', 'onAfterToggleFeature');
+$app->registerHook( 'AdvancedBoxSearchableNamespaces', 'WallHooksHelper', 'onAdvancedBoxSearchableNamespaces');
+
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',

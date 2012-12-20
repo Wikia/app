@@ -15,18 +15,33 @@ var StructuredData = {
 		this.attachSpecialPageBrowsingModeHandlers(this);
 		// Add WMU support for editing image objects
 		this.cachedSeletors.SDObjectWrapper.find('table[data-object-type="schema:ImageObject"] input[name="schema:url"]').after(' <button id="useWMU">Use WMU</button>');
+		var wmuDeffered;
 		$('#useWMU').click(function(event){
 			event.preventDefault();
 			var $input = $(this).prev();
-			$.loadYUI( function() {
-				$.getScript(wgExtensionsPath+'/wikia/WikiaMiniUpload/js/WMU.js', function() {
-					WMU_show($.getEvent(), -2);
-					mw.loader.load( wgExtensionsPath+'/wikia/WikiaMiniUpload/css/WMU.css', "text/css" );
+			if (!wmuDeffered) {
+				// *** WMU is not ready for resource loader
+				// ***
+				// wmuDeffered = mw.loader.use(
+				//	'ext.wikia.WMU'
+				// ***
+				// *** so for the moment all assets need to be loaded separately
+				wmuDeffered = $.when(
+					$.loadYUI(),
+					$.loadJQueryAIM(),
+					$.getResource([wgExtensionsPath + '/wikia/WikiaMiniUpload/css/WMU.css', wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js'])
+				).then(function() {
+					WMU_skipDetails = true;
+					WMU_show();
 				});
-				$(window).bind('WMU_addFromSpecialPage', function(event, filePageUrl) {
-					var filePageUrl = window.location.protocol + '//' + window.location.host + '/' + filePageUrl;
-					$input.val(filePageUrl);
-				});
+			} else if (wmuDeffered.state() === 'resolved') {
+				WMU_show();
+			} else {
+				 return false;
+			}
+			$(window).bind('WMU_addFromSpecialPage', function(event, wmuData) {
+				var filePageUrl = window.location.protocol + '//' + window.location.host + '/' + wmuData.imageTitle;
+				$input.val(filePageUrl);
 			});
 		});
 		// Add date/time pickers only for SD object page

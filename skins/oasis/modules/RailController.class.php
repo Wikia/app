@@ -9,6 +9,7 @@ class RailController extends WikiaController {
 
 		$this->railModuleList = isset($params['railModuleList']) ? $params['railModuleList'] : null;
 		$this->isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
+		$this->isAside = $this->wg->RailInAside;
 
 		wfProfileOut(__METHOD__);
 	}

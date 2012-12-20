@@ -3,10 +3,14 @@
 @test-framework QUnit
 // Include jQuery and jQuery.wikia and specialPromote
 @test-require-asset resources/jquery/jquery-1.7.2.js
+@test-require-asset resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js
 @test-require-asset resources/wikia/jquery.wikia.js
 @test-require-asset extensions/wikia/SpecialPromote/js/SpecialPromote.js
 @test-require-asset resources/wikia/libraries/jquery/nirvana/jquery.wikia.nirvana.js
 */
+
+//SpecialPromote needs log on onload
+$.fn.log = function(){return true;}
 
 function specialPromoteSetup() {
 	// create a SpecialPromote instance and mock methods

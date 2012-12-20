@@ -16,6 +16,15 @@ $namespaces = $sitemap->getNamespacesList();
 
 wfOut( "Caching {$wgDBname} ({$wgCityId}) for {$sitemap->mCacheTime} sec.\n");
 
+/*
+ * DPL causes some problems while parsing wiki text ( Video description )
+ * so let's unset DPL parser hooks for maintenance script
+ */
+$key = array_search( "ExtDynamicPageList::setupDPL", $wgHooks['ParserFirstCallInit'] );
+if ( $key > 0 ) {
+	unset( $wgHooks['ParserFirstCallInit'][$key] );
+}
+
 $indexes = array();
 foreach( $namespaces as $namespace ) {
 	echo "Caching namespace $namespace...";
@@ -24,7 +33,7 @@ foreach( $namespaces as $namespace ) {
 	echo " done\n";
 
 	$includeVideo = (bool) F::app()->wg->EnableVideoSitemaps;
-	if( $includeVideo && !in_array( $namespace, $sitemap->getVideoNamespacesList() ) ) {
+	if( $includeVideo && ( $namespace !=  NS_FILE ) ) {
 		$includeVideo = false;
 	}
 

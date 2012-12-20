@@ -223,7 +223,11 @@ $messages['bar'] = array(
 $messages['bg'] = array(
 	'editpagelayout-more' => 'повече',
 	'editpagelayout-less' => 'по-малко',
+	'wikia-editor-media-image' => 'Снимка',
+	'wikia-editor-media-gallery' => 'Галерия',
 	'wikia-editor-media-video' => 'Видео',
+	'wikia-editor-source-bold-tooltip' => 'Получер',
+	'wikia-editor-source-italic-tooltip' => 'Курсив',
 	'wikia-editor-modules-templates-title' => 'Шаблони',
 	'wikia-editor-modules-templates-otherTemplates' => 'Добавяне на други шаблони',
 	'wikia-editor-modules-categories-title' => 'Категории',
@@ -1122,14 +1126,49 @@ $messages['inh'] = array(
 /** Italian (italiano)
  * @author Lexaeus 94
  * @author Minerva Titani
+ * @author Viscontino
  */
 $messages['it'] = array(
+	'editpagelayout-more' => 'altro',
 	'editpagelayout-less' => 'meno',
+	'editpagelayout-helpLink-url' => 'Help:Modifica',
+	'editpagelayout-helpLink' => 'Bisogno di [[{{MediaWiki:Editpagelayout-helpLink-url}}|Aiuto?]]',
+	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Notifica|Notifiche}}',
+	'editpagelayout-notificationsLink-none' => 'Notifiche',
+	'editpagelayout-edit-title' => 'Modifica il titolo',
 	'editpagelayout-edit-info' => 'Modifica info',
 	'editpagelayout-diff-header-url' => 'Help:Diff',
+	'editpagelayout-diff-header' => 'Le differenze ([[{{MediaWiki:Editpagelayout-diff-header-url}}|aiutano]])',
+	'editpagelayout-myedit-header' => "Questa è la tua modifica. Copia i tuoi cambiamenti nell'area di testo qui sopra!",
+	'editpagelayout-captcha-title' => 'Captcha',
 	'editpagelayout-pageControls-pageLink' => 'Ritorna alla pagina',
+	'editpagelayout-pageControls-minorEdit' => 'Modifica minore',
+	'editpagelayout-pageControls-summaryLabel' => 'Aggiungi una descrizione della tua modifica',
+	'editpagelayout-pageControls-back' => 'Torna alla pagina di modifica',
+	'editpagelayout-pageControls-changes' => 'Modifiche',
 	'editpagelayout-blocked-user' => 'Il tuo nome utente o indirizzo IP è stato bloccato',
 	'editpagelayout-edit-summary-label' => 'Riassunto della modifica',
+	'wikia-editor-media-image' => 'Foto',
+	'wikia-editor-media-gallery' => 'Galleria',
+	'wikia-editor-media-slideshow' => 'Presentazione',
+	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-mut' => 'Video',
+	'wikia-editor-media-image-tooltip' => 'Aggiungi una foto',
+	'wikia-editor-media-gallery-tooltip' => 'Aggiungi una galleria',
+	'wikia-editor-media-slideshow-tooltip' => 'Aggiungi una presentazione',
+	'wikia-editor-media-video-tooltip' => 'Aggiungi un video',
+	'wikia-editor-source-bold-tooltip' => 'Grassetto',
+	'wikia-editor-source-italic-tooltip' => 'Corsivo',
+	'wikia-editor-source-link-tooltip' => 'Aggiungi un collegamento',
+	'wikia-editor-modules-categories-title' => 'Categorie',
+	'wikia-editor-loadingStates-saving' => 'Pubblicazione della tua modifica',
+	'wikia-editor-edittools-caption' => 'altro',
+	'wikia-editor-notices-dialog-title' => 'Dettagli della notifica',
+	'nonunicodebrowser-notice' => "'''Attenzione! Il tuo browser non supporta la codifica Unicode.'''",
+	'rev-deleted-text-notice' => "Attenzione: questa versione della voce è stata '''cancellata'''. [Maggiori informazioni]",
+	'readonlywarning-notice' => "'''Attenzione: il database è stato bloccato per manutenzione.''' Una volta terminata sarà possibile tornare a modificare. [Maggiori informazioni]",
+	'semiprotectedpagewarning-notice' => "'''Nota:''' questa voce è stata bloccata in modo che solo gli utenti registrati possano modificarla. Si prega di accedere per modificare.",
+	'recreate-moveddeleted-warn-notice' => "'''Nota:''' stai ricreando una voce che è stata cancellata in precedenza. [Maggiori informazioni]",
 	'prefs-general' => 'Generale',
 	'prefs-starting-an-edit' => 'Opzioni di modifica',
 	'prefs-editing-experience' => 'Opzioni di modifica avanzate',
@@ -1519,6 +1558,7 @@ $messages['ms'] = array(
 
 /** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
+ * @author EvenT
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -1588,7 +1628,7 @@ $messages['nb'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Merk:''' Du er i ferd med å opprette en side som tidligere har blitt slettet. [Mer info]",
 	'restore-edits-notice' => "Velkommen tilbake! Vi har gjenopprettet noen endringer du ikke publiserte. <a class='notice-action restoreeditlink'>Slett endringene mine og begynn å redigere på nytt</a>",
 	'restore-edits-diff-notice' => "Velkommen tilbake! Vi har gjenopprettet noen endringer du ikke publiserte. Siden har imidlertid blirr oppdatert siden den gang. Ønsker du å: <a class='notice-action restoreeditlink'>Slette endringene mine og begynne med den siste teksten</a> eller <a class='notice-action difflink'>Vise en sammenligning av endringer med den siste siden</a>",
-	'mainpagewarning-notice' => 'Lær mer om [[w:c:Community:Help:Main page|redigering av hovedsiden]].', # Fuzzy
+	'mainpagewarning-notice' => 'Her kan du lese om [[w:c:Community:Help:Main_page|redigering av hovedsiden.]]', # Fuzzy
 	'prefs-general' => 'Generelt',
 	'prefs-starting-an-edit' => 'Starter en redigering',
 	'prefs-editing-experience' => 'Redigeringserfaring',
@@ -1674,6 +1714,7 @@ $messages['nl'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Let op:''' U maakt een pagina opnieuw aan die voorheen is verwijderd. [Meer info]",
 	'restore-edits-notice' => "Welkom terug! We hebben een aantal wijzigingen hersteld die u niet had gepubliceerd. <a class='notice-action restoreeditlink'>Verwijder mijn wijzigingen en begin een nieuwe bewerking</a>.",
 	'restore-edits-diff-notice' => "Welkom terug! We hebben een aantal wijzigingen die nog niet waren gepubliceerd hersteld. De pagina is echter sindsdien bijgewerkt. Wilt u: <a class='notice-action restoreeditlink'>uw wijzigingen verwijderen en met de meest recente tekst verder werken</a> of wilt u een <a class='notice-action difflink'>overzicht van de verschillen met de meest recente versie bekijken</a>?",
+	'mainpagewarning-notice' => 'Meer lezen over [[w:c:community:Help:Main_page|de hoofdpagina bewerken]].',
 	'prefs-general' => 'Algemeen',
 	'prefs-starting-an-edit' => 'Een bewerking starten',
 	'prefs-editing-experience' => 'Bewerkingservaring',
@@ -1731,7 +1772,7 @@ $messages['pl'] = array(
 	'wikia-editor-media-gallery' => 'Galeria',
 	'wikia-editor-media-slideshow' => 'Pokaz slajdów',
 	'wikia-editor-media-slider' => 'Slider',
-	'wikia-editor-media-video' => 'Filmy',
+	'wikia-editor-media-video' => 'Film',
 	'wikia-editor-media-mut' => 'Film',
 	'wikia-editor-media-image-tooltip' => 'Dodaj obraz',
 	'wikia-editor-media-gallery-tooltip' => 'Dodaj galerię',
@@ -1800,6 +1841,8 @@ $messages['ps'] = array(
 	'wikia-editor-media-image-tooltip' => 'انځور ورګډول',
 	'wikia-editor-media-gallery-tooltip' => 'انځورتون ورګډول',
 	'wikia-editor-media-video-tooltip' => 'ويډيو ورګډول',
+	'wikia-editor-source-bold-tooltip' => 'زغرد',
+	'wikia-editor-source-italic-tooltip' => 'رېوند',
 	'wikia-editor-source-link-tooltip' => 'تړنه ورګډول',
 	'wikia-editor-modules-templates-title' => 'کينډۍ',
 	'wikia-editor-modules-categories-title' => 'وېشنيزې',
