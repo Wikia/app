@@ -393,27 +393,33 @@ class GameGuidesController extends WikiaController {
 						'action' => 'query',
 						'list' => 'allcategories',
 						'redirects' => true,
-						'aclimit' => $limit,
+						'aclimit' => $limit * 2,
 						'acfrom' => $offset,
-						'acprop' => 'id',
+						'acprop' => 'id|size',
+						//We don't want empty categories to show up
 						'acmin' => 1
 					)
 				);
-			}
+			},
+			WikiaDataAccess::SKIP_CACHE
 		);
 
 		$allCategories = $categories['query']['allcategories'];
 
 		if ( !empty( $allCategories ) ) {
 
+			$ret = [];
+
 			foreach( $allCategories as $key => $value ) {
-				$allCategories[$key] = array(
-					'name' => $value['*'],
-					'pageid'=> $value['pageid']
-				);
+				if($value['size'] - $value['files'] > 0){
+					$ret[$key] = array(
+						'name' => $value['*'],
+						'pageid'=> $value['pageid']
+					);
+				}
 			}
 
-			$this->response->setVal( 'categories', $allCategories );
+			$this->response->setVal( 'categories', $ret );
 
 			if ( !empty( $categories['query-continue'] ) ) {
 				$this->response->setVal( 'offset', $categories['query-continue']['allcategories']['acfrom'] );
