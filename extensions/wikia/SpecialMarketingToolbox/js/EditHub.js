@@ -75,6 +75,7 @@ EditHub.prototype = {
 	vetInit: function(event) {
 		if (!this.vetReady) {
 			this.vetDeffered = $.when(
+				$.getJSON( window.wgScriptPath + "index.php?action=ajax&rs=VET&method=getMsgVars"), // leave this in first position
 				$.loadYUI(),
 				$.loadMustache(),
 				$.getResources([
@@ -83,7 +84,12 @@ EditHub.prototype = {
 					$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
 					$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
 				])
-			).then(function() {
+			).then(function(VETMessages) {
+				// VET i18n messages 
+				for (var v in VETMessages) {
+					wgMessages[v] = VETMessages[v];
+				}
+				
 				VET_show();
 			});
 			$(window).bind('VET_addFromSpecialPage', $.proxy(this.addVideo, this));
