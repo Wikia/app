@@ -11,6 +11,7 @@
 		var $wrapper = $( '#WikiaArticleCategories' ),
 			$add = $wrapper.find( '.add' ),
 			$categories = $wrapper.find( '.categories' ),
+			$container = $wrapper.find( '.container' ),
 			$input = $wrapper.find( '.input' ),
 			articleId = window.wgArticleId,
 			categoryLinkPrefix = wgCategorySelect.defaultNamespace +
@@ -52,7 +53,9 @@
 		});
 
 		$wrapper.find( '.save' ).on( 'click.' + namespace, function( event ) {
-			var $saveButton = $( this ).attr( 'disabled', true ).startThrobbing();
+			var $saveButton = $( this ).attr( 'disabled', true );
+
+			$container.startThrobbing();
 
 			$.nirvana.sendRequest({
 				controller: 'CategorySelectController',
@@ -63,7 +66,8 @@
 				method: 'save'
 
 			}).done(function( response ) {
-				$saveButton.removeAttr( 'disabled' ).stopThrobbing();
+				$container.stopThrobbing();
+				$saveButton.removeAttr( 'disabled' );
 
 				// TODO: don't use alert
 				if ( response.error ) {
@@ -77,9 +81,6 @@
 						var $category = $( this ),
 							category = $category.data( 'category' ),
 							$link = $( '<a>' );
-
-						// Make sure first character in name is uppercased
-						category.name = category.name.charAt( 0 ).toUpperCase() + category.name.slice( 1 );
 
 						$link
 							.addClass( 'name' )

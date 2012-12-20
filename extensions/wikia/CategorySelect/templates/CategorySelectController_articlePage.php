@@ -17,9 +17,9 @@
 				</li>
 			<? endif ?>
 		</ul>
-	</div>
-	<div class="toolbar">
-		<button class="wikia-button save" id="CategorySelectSave" type="button"><?= $wf->Message( 'categoryselect-button-save' ) ?></button>
-		<button class="wikia-button secondary cancel" id="CategorySelectCancel" type="button"><?= $wf->Message( 'categoryselect-button-cancel' ) ?></button>
+		<div class="toolbar">
+			<button class="wikia-button save" id="CategorySelectSave" type="button"><?= $wf->Message( 'categoryselect-button-save' ) ?></button>
+			<button class="wikia-button secondary cancel" id="CategorySelectCancel" type="button"><?= $wf->Message( 'categoryselect-button-cancel' ) ?></button>
+		</div>
 	</div>
 </nav>

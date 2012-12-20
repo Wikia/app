@@ -9,9 +9,8 @@
 	line-height: normal;
 	margin: 0;
 	padding-bottom: 0;
-	position: relative;
 
-	&.modified > .toolbar {
+	&.modified .container > .toolbar {
 		display: block;
 	}
 
@@ -42,7 +41,7 @@
 	}
 
 	.categories {
-		float: left;
+		@include clearfix;
 		margin: 0;
 		padding: 0;
 	}
@@ -64,8 +63,17 @@
 	}
 
 	.container {
-		@include clearfix;
 		padding: 4px 10px 10px 10px;
+		position: relative;
+
+		> .toolbar {
+			margin-top: 10px;
+			text-align: right;
+
+			.wikia-button {
+				margin-left: 6px;
+			}
+		}
 	}
 
 	.input {
@@ -101,14 +109,6 @@
 
 	.toolbar {
 		display: none;
-	}
-
-	> .toolbar {
-		text-align: right;
-
-		.wikia-button {
-			margin-left: 6px;
-		}
 	}
 
 	.ui-autocomplete {

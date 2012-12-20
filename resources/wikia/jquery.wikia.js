@@ -279,6 +279,7 @@ $.fn.hasParent = function(selector) {
 $.fn.startThrobbing = function() {
 	return this.append('<div class="wikiaThrobber"></div>');
 };
+
 $.fn.stopThrobbing = function() {
 	return this.find('.wikiaThrobber').remove();
 };

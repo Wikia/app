@@ -67,7 +67,7 @@ class CategorySelectController extends WikiaController {
 		// Categories link
 		$categoriesLinkAttributes = array( 'class' => 'categoriesLink' );
 		$categoriesLinkPage = $this->wf->Message( 'pagecategorieslink' )->inContentLanguage()->text();
-		$categoriesLinkText = $this->wf->Message( 'pagecategories', count( $categories ) )->escaped();
+		$categoriesLinkText = $this->wf->Message( 'pagecategories' )->escaped();
 
 		if ( !empty( $this->wg->WikiaUseNoFollow ) ) {
 			$categoriesLinkAttributes[ 'rel' ] = 'nofollow';
