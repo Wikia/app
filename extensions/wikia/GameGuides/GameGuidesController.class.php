@@ -489,7 +489,7 @@ class GameGuidesController extends WikiaController {
 			}
 
 			$this->response->setVal( 'categories', $ret );
-		} else {
+		} else if ( $requestTag !== '' ) {
 			$this->wf->profileOut( __METHOD__ );
 			throw new InvalidParameterApiException( 'tag' );
 		}
