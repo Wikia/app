@@ -39,7 +39,7 @@ class ImagesService extends Service {
 	 * 
 	 * @return String url to the image's thumbnail
 	 */
-	public static function getLocalFileThumbUrl($fileName, $imageWidth = 250) {
+	public static function getLocalFileThumbUrl($fileName, $destImageWidth = 250) {
 		$app = F::app();
 		$url = '';
 		
@@ -49,11 +49,32 @@ class ImagesService extends Service {
 		$foundFile = $app->wf->FindFile($title);
 		
 		if( $foundFile ) {
-			$url = $foundFile->getThumbUrl( $foundFile->thumbName(array( 'width' => $imageWidth )) );
+			$imageWidth = self::calculateScaledImageWidth($destImageWidth, $foundFile->getWidth(), $foundFile->getHeight());
+			$url = $foundFile->getThumbUrl( $foundFile->thumbName( array( 'width' => $imageWidth) ) );
 			$url = ($app->wg->DevelEnvironment) ? wfReplaceImageServer($url) : $url;
 		}
 		
 		return $url;
+	}
+
+	/**
+	 * @desc Depending on image original width&height we calculate or not new width based on passed $destImageWidth
+	 * 
+	 * @param Integer $destImageWidth
+	 * @param Integer $imageWidth
+	 * @param Integer $imageHeight
+	 * 
+	 * @return float
+	 */
+	public static function calculateScaledImageWidth($destImageWidth, $imageWidth, $imageHeight) {
+		if( $imageWidth > $imageHeight || $imageWidth === $imageHeight) {
+			$calculatedWidth = $destImageWidth;
+		} else {
+			$aspectRatio = $imageWidth/$imageHeight;
+			$calculatedWidth = floor( $destImageWidth * $aspectRatio );
+		}
+		
+		return $calculatedWidth;
 	}
 
 	/**
