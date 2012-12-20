@@ -121,7 +121,12 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
 		$result['is_main_page']	= ( $pageId == F::build( 'Title', array( 'newMainPage' ) )->getArticleId() ) ? 'true' : 'false';
 		// these will eventually be broken out into their own atomic updates
-		$result = array_merge($result, $this->getPageMetaData( $page ), $this->getMediaMetadata( $title ) );
+		$result = array_merge( 
+				$result, 
+				$this->getPageMetaData( $page ), 
+				$this->getMediaMetadata( $title ),
+				$this->getWikiPromoData() 
+		);
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
@@ -370,6 +375,25 @@ class WikiaSearchIndexer extends WikiaObject {
 		$this->deleteBatch( array( $id ) );
 		
 		return true;
+	}
+	
+	/**
+	 * Access the promo text for a given wiki and set it in the document
+	 * @todo these need to be updated any time one of these values change for a wiki. could get dicey. will def need atomic update.
+	 * @param int $wid the wiki id
+	 * @return array containing result data
+	 */
+	public function getWikiPromoData() {
+		$homepageHelper = new WikiaHomePageHelper();
+		$detail = $homepageHelper->getWikiInfoForVisualization( $this->wg->CityId, $this->wg->ContLang->getCode() );
+		
+		return array(
+				'wiki_description_txt' => $detail['description'],
+				'wiki_new_b' => empty( $detail['new'] ) ? 'false' : 'true',
+				'wiki_hot_b' => empty( $detail['hot'] ) ? 'false' : 'true',
+				'wiki_official_b' => empty( $detail['official'] ) ? 'false' : 'true',
+				'wiki_promoted_b' => empty( $detail['promoted'] ) ? 'false' : 'true',
+		);
 	}
 	
 	/**

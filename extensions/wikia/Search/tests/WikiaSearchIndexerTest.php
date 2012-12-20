@@ -1691,7 +1691,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 	public function testGetPage() {
 		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
 							->disableOriginalConstructor()
-							->setMethods( array( 'getTitleString', 'getPageMetaData', 'getMediaMetadata' ) )
+							->setMethods( array( 'getTitleString', 'getPageMetaData', 'getMediaMetadata', 'getWikiPromoData' ) )
 							->getMock();
 		
 		$mockArticle = $this->getMockBuilder( 'Article' )
@@ -1789,6 +1789,11 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->with		( $mockTitle )
 			->will		( $this->returnValue( array() ) )
 		;
+		$mockIndexer
+			->expects	( $this->at( 3 ) )
+			->method	( 'getWikiPromoData' )
+			->will		( $this->returnValue( array() ) )
+		;
 		
 		$mockWg = (object) array(
 				'ExternalSharedDB' => true,
@@ -1872,6 +1877,83 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$this->assertEquals(
 				'false',
 				$result['is_main_page']
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::getWikiPromoData
+	 */
+	public function testGetWikiPromoData() {
+		
+		$mockHomepageHelper = $this->getMock( 'WikiaHomePageHelper', array( 'getWikiInfoForVisualization' ) );
+		
+		$mockContLang = $this->getMockBuilder( 'Language' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getCode' ) )
+							->getMock();
+		
+		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'foo' ) )
+							->getMock();
+
+		$mockWg = (object) array(
+				'CityId' => 123,
+				'ContLang' => $mockContLang
+				);
+		$mockDetail = array(
+				'description' => 'Whiki wiki is a wiki cataloguing people who aspirate word-initial /w/\'s',
+				'new' => 0,
+				'hot' => 1,
+				'official' => 0,
+				'promoted' => 1 
+				);
+		$mockContLang
+			->expects	( $this->at( 0 ) )
+			->method	( 'getCode' )
+			->will		( $this->returnValue( 'en' ) )
+		;
+		$mockHomepageHelper
+			->expects	( $this->at( 0 ) )
+			->method	( 'getWikiInfoForVisualization' )
+			->with		( 123, 'en' )
+			->will		( $this->returnValue( $mockDetail ) )
+		;
+		
+		$this->proxyClass( 'WikiaHomePageHelper', $mockHomepageHelper );
+		$this->mockClass( 'WikiaHomePageHelper', $mockHomepageHelper );
+		$this->mockApp();
+		
+		$wg = new ReflectionProperty( 'WikiaObject', 'wg' );
+		$wg->setAccessible( true );
+		$wg->setValue( $mockIndexer, $mockWg );
+		
+		$result = $mockIndexer->getWikiPromoData();
+		
+		$this->assertEquals(
+				$mockDetail['description'],
+				$result['wiki_description_txt'],
+				'WikiaSearchIndexer::getWikiPromoData should assign the wiki promo text to the wiki_description_txt field of the output array'
+		);
+		$this->assertEquals(
+				'false',
+				$result['wiki_new_b'],
+				'WikiaSearchIndexer::getWikiPromoData should assign a textual "yes" or "no" to boolean-cast fields in the output array, based on original field int value'
+		);
+		$this->assertEquals(
+				'true',
+				$result['wiki_hot_b'],
+				'WikiaSearchIndexer::getWikiPromoData should assign a textual "yes" or "no" to boolean-cast fields in the output array, based on original field int value'
+		);
+		$this->assertEquals(
+				'false',
+				$result['wiki_official_b'],
+				'WikiaSearchIndexer::getWikiPromoData should assign a textual "yes" or "no" to boolean-cast fields in the output array, based on original field int value'
+		);
+		$this->assertEquals(
+				'true',
+				$result['wiki_promoted_b'],
+				'WikiaSearchIndexer::getWikiPromoData should assign a textual "yes" or "no" to boolean-cast fields in the output array, based on original field int value'
 		);
 	}
 }
