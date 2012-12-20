@@ -1033,6 +1033,10 @@ HTML;
 	 */
 	public function getIP() {
 		global $wgUsePrivateIPs;
+		# wikia change start
+		global $wgClientIPHeader;
+
+		$foundTrustedHeader = false;
 
 		# Return cached result
 		if ( $this->ip !== null ) {
@@ -1042,9 +1046,19 @@ HTML;
 		# collect the originating ips
 		$ip = $this->getRawIP();
 
+		# short circuit XFF Check, and keep us from needing to know fastly IPS
+		if ( $wgClientIPHeader ) { 
+			$trustedHeaderIp = $this->getHeader( $wgClientIPHeader ) ;
+			if ( $trustedHeaderIp !== false ) {
+				$ip = $trustedHeaderIp;	
+				$foundTrustedHeader = true;
+			}
+		}
+
 		# Append XFF
 		$forwardedFor = $this->getHeader( 'X-Forwarded-For' );
-		if ( $forwardedFor !== false ) {
+		if ( $forwardedFor !== false && $foundTrustedHeader === false ) {
+		# wikia change end 
 			$ipchain = array_map( 'trim', explode( ',', $forwardedFor ) );
 			$ipchain = array_reverse( $ipchain );
 			if ( $ip ) {
