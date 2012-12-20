@@ -437,12 +437,6 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method	( 'getId' )
 			->will		( $this->returnValue( $mockId ) )
 		;
-		$mockBacklinks = array( 'query' => array( 'backlinks_count' => 20 ) );
-		$mockApiService
-			->staticExpects	( $this->at( 0 ) )
-			->method		( 'call' )
-			->will			( $this->returnValue( $mockBacklinks ) )
-		;
 		$mockPageData = array( 'query' => array( 'pages' => array( $mockId =>
 				array( 'views' => 100,
 						'revcount' => 20,
@@ -451,7 +445,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 						'categories' => array( array( 'title' => 'Category:Stuff' ), array( 'title' => 'Category:Things' ), array( 'title' => 'Category:Miscellany' ) )
 						) ) ) );
 		$mockApiService
-			->staticExpects	( $this->at( 1 ) )
+			->staticExpects	( $this->at( 0 ) )
 			->method		( 'call' )
 			->will			( $this->returnValue( $mockPageData ) )
 		;
@@ -475,7 +469,45 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$result = $method->invoke( $mockSearchIndexer, $mockArticle );
 
 	}
+	
+	
+	/**
+	 * @covers WikiaSearchIndexer::getBacklinksCount
+	 */
+	public function getBacklinksCount() {
+		$mockSearchIndexer 	= $this->getMockBuilder( 'WikiaSearchIndexer' )
+									->disableOriginalConstructor()
+									->getMock();
 
+		$mockArticle		= $this->getMockBuilder( 'Title' )
+									->disableOriginalConstructor()
+									->getMock();
+
+		$mockApiService		= $this->getMock( 'ApiService', array( 'call' ) );
+
+		$mockBacklinks = array( 'query' => array( 'backlinks_count' => 20 ) );
+		$mockApiService
+			->staticExpects	( $this->at( 0 ) )
+			->method		( 'call' )
+			->will			( $this->returnValue( $mockBacklinks ) )
+		;
+	
+		$method = new ReflectionMethod( 'WikiaSearchIndexer', 'getBacklinksCount' );
+		$method->setAccessible( true );
+
+		$this->mockClass( 'ApiService', $mockApiService );
+		$this->mockApp();
+
+		$result = $method->invoke( $mockSearchIndexer, $mockArticle );
+		
+		$this->assertEquals(
+				20,
+				$result['backlinks'],
+				'WikiaSearchIndexer::getBacklinksCount should set backlink count from the api in a field'
+		);
+
+	}
+	
 	/**
 	 * @covers WikiaSearchIndexer::deleteArticle
 	 */

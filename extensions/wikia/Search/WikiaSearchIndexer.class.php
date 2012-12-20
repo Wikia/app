@@ -127,7 +127,8 @@ class WikiaSearchIndexer extends WikiaObject {
 				$this->getMediaMetadata( $title ),
 				$this->getWikiPromoData(),
 				$this->getRedirectTitles( $page ),
-				$this->getWikiViews( $page )
+				$this->getWikiViews( $page ),
+				$this->getBacklinksCount( $title )
 		);
 		wfProfileOut(__METHOD__);
 		return $result;
@@ -428,18 +429,8 @@ class WikiaSearchIndexer extends WikiaObject {
 		wfProfileIn(__METHOD__);
 		$result = array();
 	
-		$apiService = F::build( 'ApiService' );
-		$data = $apiService->call( array(
-				'titles'	=> $page->getTitle(),
-				'bltitle'	=> $page->getTitle(),
-				'action'	=> 'query',
-				'list'		=> 'backlinks',
-				'blcount'	=> 1
-		));
-		$result['backlinks'] = isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0;  
-	
 		$pageId = $page->getId();
-		
+		$apiService = F::build( 'ApiService' );
 		if (! empty( $this->wg->ExternalSharedDB ) ) {
 			$data = $apiService->call( array(
 					'pageids'	=> $pageId,
@@ -467,6 +458,26 @@ class WikiaSearchIndexer extends WikiaObject {
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
+	
+	/**
+	 * Returns an array keyed for a solr schema field for backlinks
+	 * @param Title $title
+	 * @return array
+	 */
+	protected function getBacklinksCount( Title $title ) {
+		$apiService = F::build( 'ApiService' );
+		$data = $apiService->call( array(
+				'titles'	=> $title,
+				'bltitle'	=> $title,
+				'action'	=> 'query',
+				'list'		=> 'backlinks',
+				'blcount'	=> 1
+		));
+		return array(
+				'backlinks' => isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0
+		);
+	}
+	
 	
 	/**
 	 * Provided an Article, queries the database for all titles that are redirects to that page.
