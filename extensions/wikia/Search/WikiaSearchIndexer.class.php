@@ -125,7 +125,8 @@ class WikiaSearchIndexer extends WikiaObject {
 				$result, 
 				$this->getPageMetaData( $page ), 
 				$this->getMediaMetadata( $title ),
-				$this->getWikiPromoData() 
+				$this->getWikiPromoData(),
+				$this->getRedirectTitles( $page )
 		);
 		wfProfileOut(__METHOD__);
 		return $result;
@@ -457,8 +458,6 @@ class WikiaSearchIndexer extends WikiaObject {
 			
 			$result['hub'] 			= isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
 		}
-
-		$result['redirect_titles'] = $this->getRedirectTitles($page);
 	
 		$wikiViews = $this->getWikiViews($page);
 	

@@ -408,7 +408,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 	public function testGetPageMetadata() {
 		$mockSearchIndexer 	= $this->getMockBuilder( 'WikiaSearchIndexer' )
 									->disableOriginalConstructor()
-									->setMethods( array( 'getRedirectTitles', 'getWikiViews' ) )
+									->setMethods( array( 'getWikiViews' ) )
 									->getMock();
 
 		$mockArticle		= $this->getMockBuilder( 'Article' )
@@ -457,12 +457,6 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( (object) array( 'weekly' => 10, 'monthly' => 100 ) ) )
 		;
 		$redirectTitles = array( 'foo', 'bar', 'baz', 'qux' );
-		$mockSearchIndexer
-			->expects	( $this->once() )
-			->method	( 'getRedirectTitles' )
-			->with		( $mockArticle )
-			->will		( $this->returnValue( $redirectTitles ) )
-		;
 		$mockDataMart
 			->expects	( $this->once() )
 			->method	( 'getCurrentWamScoreForWiki' )
@@ -1689,9 +1683,17 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 	 * @covers WikiaSearchIndexer::getPage
 	 */
 	public function testGetPage() {
+		$indexerMethods = array(
+				'getTitleString',
+				'getPageMetaData',
+				'getMediaMetadata',
+				'getWikiPromoData',
+				'getRedirectTitles'
+		);
+		
 		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
 							->disableOriginalConstructor()
-							->setMethods( array( 'getTitleString', 'getPageMetaData', 'getMediaMetadata', 'getWikiPromoData' ) )
+							->setMethods( $indexerMethods )
 							->getMock();
 		
 		$mockArticle = $this->getMockBuilder( 'Article' )
@@ -1792,6 +1794,11 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$mockIndexer
 			->expects	( $this->at( 3 ) )
 			->method	( 'getWikiPromoData' )
+			->will		( $this->returnValue( array() ) )
+		;
+		$mockIndexer
+			->expects	( $this->at( 4 ) )
+			->method	( 'getRedirectTitles' )
 			->will		( $this->returnValue( array() ) )
 		;
 		
