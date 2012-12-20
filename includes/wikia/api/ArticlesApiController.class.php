@@ -336,7 +336,7 @@ class ArticlesApiController extends WikiaApiController {
 
 						$collection[$id] = [
 							'revision' => $t->getLatestRevID(),
-							'namespace' => $t->getNamespace()
+							'ns' => $t->getNamespace()
 						];
 
 						$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
