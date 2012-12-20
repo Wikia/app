@@ -1,4 +1,4 @@
-<p><?= $description ?></p>
+<p><?= htmlspecialchars( $description ) ?></p>
 <div id="toplists-list-body">
 	<input type="hidden" id="top-list-title" value="<?= htmlspecialchars( $listTitle ) ?>">
 	<? if ( !empty( $relatedImage ) ) :?>
@@ -71,7 +71,7 @@
 							$lookBackAt = $latest - TOPLISTS_HOT_MIN_TIMESPAN;
 							$oldest = $latest;
 							$count = 0;
-							
+
 							foreach ( $timeStamps as $tms ) {
 								if( $tms >= $lookBackAt ) {
 									$count++;
