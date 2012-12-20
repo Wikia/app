@@ -7,6 +7,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( 'Forum', '', false );
+		OasisController::addBodyParameter('itemscope itemtype="http://schema.org/WebPage"');
 	}
 
 	public function init() {
@@ -23,6 +24,8 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->wf->profileIn( __METHOD__ );
+
+		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
 		
 		$policies = Title::newFromText( 'forum-policies-and-faq', NS_MEDIAWIKI);
 		$this->response->setJsVar( 'wgCanEditPolicies', $this->wg->User->isAllowed('forumadmin'));

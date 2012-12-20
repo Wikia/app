@@ -278,6 +278,11 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 			foreach ( $objectTypes as $type ) {
 
+				// TODO: remove 'schema:Photograph' from containers range
+				if ($type === 'schema:Photograph' && in_array('schema:ImageObject', $objectTypes)) {
+					continue;
+				}
+
 				$getSpecialFields = array();
 				if ( isset( $specialFields[ $type ] ) ) $getSpecialFields = $specialFields[ $type ];
 				$collection = $this->structuredData->getCollectionByType( $objectTypes[0], $getSpecialFields );
