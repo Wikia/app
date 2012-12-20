@@ -9,19 +9,13 @@
 
 	$(function() {
 		var $wrapper = $( '#WikiaArticleCategories' ),
-			$addCategory = $wrapper.find( '.add' ),
+			$add = $wrapper.find( '.add' ),
 			$categories = $wrapper.find( '.categories' ),
 			$input = $wrapper.find( '.input' ),
-			$newCategories = $wrapper.find( '.newCategories' ),
 			articleId = window.wgArticleId,
 			categoryLinkPrefix = wgCategorySelect.defaultNamespace +
 				wgCategorySelect.defaultSeparator,
 			namespace = 'categorySelect';
-
-		function add( event ) {
-			$addCategory.addClass( 'hide' );
-			$input.removeClass( 'hide' ).focus();
-		}
 
 		function initialize( event ) {
 			$.when(
@@ -36,17 +30,15 @@
 				$wrapper.categorySelect({
 					categories: wgCategorySelect.categories,
 					placement: 'right',
-					//selectors: {
-					//	sortable: '.newCategories'
-					//},
 					sortable: {
 						axis: false,
 						forcePlaceholderSize: true,
+						items: '.new',
 						revert: 200
 					}
 
 				}).on( 'add.' + namespace, function( event, cs, data ) {
-					$categories.append( data.element );
+					$add.before( data.element );
 
 				}).on( 'update.' + namespace, function( event ) {
 					$wrapper.toggleClass( 'modified', $categories.find( '.new' ).length > 0 );
@@ -55,12 +47,12 @@
 		}
 
 		$wrapper.find( '.cancel' ).on( 'click.' + namespace, function( event ) {
-			$newCategories.empty();
+			$categories.find( '.new' ).remove();
 			$wrapper.removeClass( 'modified' ).trigger( 'reset' );
 		});
 
 		$wrapper.find( '.save' ).on( 'click.' + namespace, function( event ) {
-			var $saveButton = $( this ).attr( 'disabled', true );
+			var $saveButton = $( this ).attr( 'disabled', true ).startThrobbing();
 
 			$.nirvana.sendRequest({
 				controller: 'CategorySelectController',
@@ -71,7 +63,7 @@
 				method: 'save'
 
 			}).done(function( response ) {
-				$saveButton.removeAttr( 'disabled' );
+				$saveButton.removeAttr( 'disabled' ).stopThrobbing();
 
 				// TODO: don't use alert
 				if ( response.error ) {
@@ -81,8 +73,8 @@
 					$wrapper.removeClass( 'modified' );
 
 					// Linkify the new categories
-					$newCategories.find( '.category' ).each(function( i ) {
-						var $category = $( this ).detach(),
+					$categories.find( '.new' ).each(function( i ) {
+						var $category = $( this ),
 							category = $category.data( 'category' ),
 							$link = $( '<a>' );
 
@@ -98,8 +90,6 @@
 							.removeClass( 'new' )
 							.find( '.name' )
 							.replaceWith( $link )
-
-						$categories.append( $category );
 					});
 				}
 			});

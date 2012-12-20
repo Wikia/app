@@ -1,26 +1,25 @@
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
-
-$categoryselect-color-category: mix( $color-text, $color-page, 5% );
-$categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% );
+@import "skins/oasis/css/mixins/opacity";
 
 // These styles are for view pages only
 .CategorySelect.articlePage {
 	@include clear-linear-gradient();
-	@include clearfix;
 	border: 0;
 	line-height: normal;
 	margin: 0;
-	padding: 0;
+	padding-bottom: 0;
 	position: relative;
 
-	&.modified .editToolbar,
-	&.showHidden .category.hidden {
+	&.modified > .toolbar {
+		display: block;
+	}
+
+	&.showHidden .hidden {
 		display: block;
 	}
 
 	h2 {
-		@include clearfix;
 		border-bottom: 1px solid $color-page-border;
 		font-size: 18px;
 		padding-bottom: 6px;
@@ -30,7 +29,7 @@ $categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% )
 	.input,
 	.placeholder {
 		@include border-radius( 4px );
-		background-color: $categoryselect-color-category;
+		background-color: $color-speech-bubble;
 		border: 1px solid $color-page-border;
 		display: block;
 		float: left;
@@ -38,7 +37,12 @@ $categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% )
 		padding: 2px 6px;
 	}
 
+	.add {
+		float: left;
+	}
+
 	.categories {
+		float: left;
 		margin: 0;
 		padding: 0;
 	}
@@ -49,30 +53,19 @@ $categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% )
 		}
 
 		&.new {
+			.name {
+				cursor: move;
+			}
+
 			.toolbar {
 				display: inline-block;
 			}
-		}
-
-		.toolbar {
-			display: none;
 		}
 	}
 
 	.container {
 		@include clearfix;
-		padding: 5px 10px 0 10px;
-	}
-
-	.editToolbar {
-		clear: both;
-		display: none;
-		margin: 10px;
-		text-align: right;
-
-		.wikia-button {
-			margin-left: 6px;
-		}
+		padding: 4px 10px 10px 10px;
 	}
 
 	.input {
@@ -81,11 +74,16 @@ $categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% )
 		color: $color-text;
 		font-size: 12px;
 		outline: none;
+		padding-top: 1px;
 		width: 245px;
+	}
 
-		&:focus {
-			background-color: $categoryselect-color-category;
-		}
+	.placeholder {
+		@include opacity( 35 );
+	}
+
+	.sprite-small {
+		vertical-align: text-top;
 	}
 
 	.tool {
@@ -93,10 +91,28 @@ $categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% )
 		cursor: pointer;
 		display: inline-block;
 		margin-left: 6px;
+		padding-left: 6px;
 
 		&:first-child {
 			border-left: 0;
+			padding-left: 0;
 		}
+	}
+
+	.toolbar {
+		display: none;
+	}
+
+	> .toolbar {
+		text-align: right;
+
+		.wikia-button {
+			margin-left: 6px;
+		}
+	}
+
+	.ui-autocomplete {
+		border-top: 1px solid $color-page-border;
 	}
 }
 
