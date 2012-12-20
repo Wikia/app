@@ -126,7 +126,8 @@ class WikiaSearchIndexer extends WikiaObject {
 				$this->getPageMetaData( $page ), 
 				$this->getMediaMetadata( $title ),
 				$this->getWikiPromoData(),
-				$this->getRedirectTitles( $page )
+				$this->getRedirectTitles( $page ),
+				$this->getWikiViews( $page )
 		);
 		wfProfileOut(__METHOD__);
 		return $result;
@@ -459,12 +460,8 @@ class WikiaSearchIndexer extends WikiaObject {
 			$result['hub'] 			= isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
 		}
 	
-		$wikiViews = $this->getWikiViews($page);
-	
 		$wam = F::build( 'DataMartService' )->getCurrentWamScoreForWiki( $this->wg->CityId );
 		
-		$result['wikiviews_weekly']		= (int) $wikiViews->weekly;
-		$result['wikiviews_monthly']	= (int) $wikiViews->monthly;
 		$result['wam']					= $wam > 0 ? ceil( $wam ) : 1; //mapped here for computational cheapness
 	
 		wfProfileOut(__METHOD__);
@@ -515,7 +512,10 @@ class WikiaSearchIndexer extends WikiaObject {
 		// should probably re-poll for wikis without much love
 		if ( ( $result = $this->wg->Memc->get( $key ) ) && ( $result->weekly > 0 || $result->monthly > 0 ) ) {
 			wfProfileOut(__METHOD__);
-			return $result;
+			return array(
+					'wikiviews_weekly' => (int) $result->weekly,
+					'wikiviews_monthly' => (int) $result->monthly, 
+			);
 		}
 
 		$row = new stdClass();	
@@ -543,9 +543,12 @@ class WikiaSearchIndexer extends WikiaObject {
 		}
 	
 		$this->wg->Memc->set( $key, $row, self::WIKIPAGES_CACHE_TTL );
-	
+		
 		wfProfileOut(__METHOD__);
-		return $row;
+		return array(
+				'wikiviews_weekly' => (int) $row->weekly,
+				'wikiviews_monthly' => (int) $row->monthly, 
+		);
 	}
 	
 	/**

@@ -47,8 +47,13 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$method		= new ReflectionMethod( 'WikiaSearchIndexer', 'getWikiViews' );
 		$method->setAccessible( true );
 
+		$mockResultArray = array(
+				'wikiviews_weekly' => 1,
+				'wikiviews_monthly' => 1
+		);
+		
 		$this->assertEquals(
-				$mockResult,
+				$mockResultArray,
 				$method->invoke( $indexer, $mockArticle ),
 				'A cached value with weekly and monthly rows greater than 0 should get returned'
 		);
@@ -93,7 +98,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$method->setAccessible( true );
 
 		$this->assertEquals(
-				(object) array( 'weekly' => 1234, 'monthly' => 12345 ),
+				array( 'wikiviews_weekly' => 1234, 'wikiviews_monthly' => 12345 ),
 				$method->invoke( $indexer, $mockArticle ),
 				'A non-cached result should contain weekly and monthly values'
 		);
@@ -449,12 +454,6 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->staticExpects	( $this->at( 1 ) )
 			->method		( 'call' )
 			->will			( $this->returnValue( $mockPageData ) )
-		;
-		$mockSearchIndexer
-			->expects	( $this->once() )
-			->method	( 'getWikiViews' )
-			->with		( $mockArticle )
-			->will		( $this->returnValue( (object) array( 'weekly' => 10, 'monthly' => 100 ) ) )
 		;
 		$redirectTitles = array( 'foo', 'bar', 'baz', 'qux' );
 		$mockDataMart
@@ -1688,7 +1687,8 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				'getPageMetaData',
 				'getMediaMetadata',
 				'getWikiPromoData',
-				'getRedirectTitles'
+				'getRedirectTitles',
+				'getWikiViews'
 		);
 		
 		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
@@ -1801,7 +1801,11 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method	( 'getRedirectTitles' )
 			->will		( $this->returnValue( array() ) )
 		;
-		
+		$mockIndexer
+			->expects	( $this->at( 5 ) )
+			->method	( 'getWikiViews' )
+			->will		( $this->returnValue( array() ) )
+		;
 		$mockWg = (object) array(
 				'ExternalSharedDB' => true,
 				'CityId' => 123,
