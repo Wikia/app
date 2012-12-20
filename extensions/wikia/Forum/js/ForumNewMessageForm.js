@@ -2,7 +2,7 @@
 Forum.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm, {
 	constructor: function() {
 		Forum.NewMessageForm.superclass.constructor.apply(this, arguments);
-		if(new Wikia.Querystring(window.location + '').getVal('openEditor')) {
+		if(new Wikia.Querystring().getVal('openEditor')) {
 			this.messageTitleFocus();
 		}
 	},

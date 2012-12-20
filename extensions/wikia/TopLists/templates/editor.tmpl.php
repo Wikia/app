@@ -67,7 +67,7 @@
         </label>
 
         <input type="text" id="description" name="description" placeholder="<?= wfMsg( 'toplists-editor-description-placeholder' ) ;?>"
-               autocomplete="off" value="<?= $description ;?>"
+               autocomplete="off" value="<?= htmlspecialchars( $description ); ?>"
             <?= ( !empty( $errors[ 'description' ] ) ) ? ' class="error"' : null ;?> />
 
         <? if ( !empty( $errors[ 'description' ] ) ) :?>

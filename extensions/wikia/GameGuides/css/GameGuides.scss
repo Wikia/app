@@ -1,14 +1,14 @@
 @font-face {
-	font-family: 'Droid Serif';
+	font-family: 'GGSerif';
 	src: local('Droid Serif'), local('DroidSerif'), url(extensions/wikia/GameGuides/fonts/DroidSerif.ttf) format('truetype');
 	font-weight: 400;
 }
 
-@font-face {
-	font-family: 'Roboto-Thin';
-	//src: local('Roboto Thin'), local('RobotoThin'), url(extensions/wikia/GameGuides/fonts/RobotoThin.ttf), url(file:///android_asset/fonts/RobotoThin.ttf) format('truetype');
-	font-weight: 100;
-}
+//@font-face {
+//	font-family: 'Roboto-Thin';
+//	//src: local('Roboto Thin'), local('RobotoThin'), url(extensions/wikia/GameGuides/fonts/RobotoThin.ttf), url(file:///android_asset/fonts/RobotoThin.ttf) format('truetype');
+//	font-weight: 100;
+//}
 
 @import "../../WikiaMobile/css/variables";
 
@@ -24,7 +24,7 @@
 @import "../../WikiaMobile/css/mediagallery";
 @import '../../WikiaMobile/css/loader';
 
-$mainGreen: rgb(171,197,97);
+$mainGreen: #8CA038;
 $halfMainGreen: rgba(171,197,97,.5);
 
 $sectionGrey: rgb(41, 41, 41);
@@ -39,10 +39,14 @@ html {
 
 	font-size: 1em;
 
-	font-family: 'Helvetica-Light', Helvetica, 'Roboto-Thin', 'Lucida Grande';
+	font-family: 'Helvetica-Light', Helvetica, 'Lucida Grande', Aria, sans-serif;
+
+	-webkit-backface-visibility: hidden;
+	-webkit-transform: translateZ(0);
+
 
 	&.serif {
-		font-family: 'Droid Serif', serif;
+		font-family: Palatino, "GGSerif", "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
 	}
 
 	&.full {
@@ -97,6 +101,8 @@ h2, h3, .collSec {
 
 	-webkit-transition: background-position .3s linear, color .3s;
 	-webkit-transition-delay: .05s;
+
+	font-family: inherit;
 
 	&.open {
 		color: $mainGreen;
@@ -158,8 +164,8 @@ dd {
 	display: none;
 }
 
-$size: 10;
-$width: 1;
+$size: 11;
+$width: 1.5;
 
 .chev {
 	position: relative;
@@ -184,7 +190,7 @@ $width: 1;
 		position: absolute;
 
 		left: ( -$size + $width ) + px;
-		top: ( -$size - 1 ) + px;
+		top: ( -$size - .6 ) + px;
 		width: 0;
 		height: 0;
 
@@ -262,10 +268,6 @@ table {
 figure {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 
-	//img {
-	//	border: 1px solid rgb(42, 42, 42);
-	//}
-
 	.thumbcaption {
 		position: relative;
 
@@ -288,4 +290,20 @@ figure {
 	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_dark.png'); /* base64 */
 	background-repeat: no-repeat;
 	background-position: center;
+
+	&.this {
+		border: 4px solid $mainGreen;
+	}
+}
+
+#wkGalPag {
+	.dot.curr {
+		background-color: $mainGreen;
+	}
+}
+
+.wkMedGal {
+	#wkGalTgl {
+		background-image: url('/extensions/wikia/GameGuides/images/gallery_green.png'); /* base64 */
+	}
 }

@@ -23,14 +23,75 @@ class ImagesService extends Service {
 			'imgSize' => $imgSize,
 			'imgFailOnFileNotFound' => 'true',
 		);
-
+		
 		$response = ApiService::foreignCall($dbname, $param);
-
+		
 		$imageSrc = (empty($response['image']['imagecrop'])) ? '' : $response['image']['imagecrop'];
 		$imagePage = (empty($response['imagepage']['imagecrop'])) ? '' : $response['imagepage']['imagecrop'];
 
 		$app->wf->ProfileOut(__METHOD__);
 		return array('src' => $imageSrc, 'page' => $imagePage);
+	}
+
+	/**
+	 * @desc Returns image's thumbnail's url and its sizes if $destImageWidth given it can be scaled
+	 * 
+	 * @param String $fileName filename with or without namespace string
+	 * @param Integer $imageWidth optional parameter 
+	 * 
+	 * @return stdClass to the image's thumbnail
+	 */
+	public static function getLocalFileThumbUrlAndSizes($fileName, $destImageWidth = 0) {
+		$app = F::app();
+		$results = new stdClass();
+		
+		//remove namespace string
+		$fileName = str_replace($app->wg->ContLang->getNsText(NS_FILE) . ':', '', $fileName);
+		$title = Title::newFromText($fileName, NS_FILE);
+		$foundFile = $app->wf->FindFile($title);
+		
+		if( $foundFile ) {
+			$imageWidth = $foundFile->getWidth();
+			$sizes = ($destImageWidth > 0) ?
+				self::calculateScaledImageSizes($destImageWidth, $foundFile->getWidth(), $foundFile->getHeight()) :
+				self::calculateScaledImageSizes($imageWidth, $imageWidth, $foundFile->getHeight());
+
+			$results->url = $foundFile->getThumbUrl( $foundFile->thumbName( array( 'width' => $sizes->width) ) );
+			$results->width = $sizes->width;
+			$results->height = $sizes->height;
+		}
+		
+		return $results;
+	}
+
+	/**
+	 * @desc Depending on image original width&height we calculate or not new width based on passed $destImageWidth
+	 * 
+	 * @param Integer $destImageSize
+	 * @param Integer $imageWidth
+	 * @param Integer $imageHeight
+	 * 
+	 * @return float
+	 */
+	public static function calculateScaledImageSizes($destImageSize, $imageWidth, $imageHeight) {
+		if( $imageWidth > $imageHeight ) {
+			$aspectRatio = $imageHeight / $imageWidth;
+			$calculatedWidth = $destImageSize;
+			$calculatedHeight = floor( $destImageSize * $aspectRatio );
+		} else if( $imageWidth < $imageHeight ) {
+			$aspectRatio = $imageWidth / $imageHeight;
+			$calculatedWidth = floor( $destImageSize * $aspectRatio );
+			$calculatedHeight = $destImageSize;
+		} else {
+			$calculatedWidth = $destImageSize;
+			$calculatedHeight = $destImageSize;
+		}
+		
+		$result = new StdClass();
+		$result->width = $calculatedWidth;
+		$result->height = $calculatedHeight;
+		
+		return $result;
 	}
 
 	/**

@@ -15,6 +15,8 @@ $color-toolbox-datepicker-inprog-background: #d4ecf7;
 	h2 {
 		border-bottom: none;
 		margin-bottom: 30px;
+		float: left;
+
 	}
 
 	&>div:not(:first-child) {
@@ -37,7 +39,7 @@ $color-toolbox-datepicker-inprog-background: #d4ecf7;
 		margin-left: -1px;
 		margin-top: -15px;
 		position: absolute;
-		top: 37%;
+		top: 38%;
 	}
 
 	.chevron.border {
@@ -51,6 +53,10 @@ $color-toolbox-datepicker-inprog-background: #d4ecf7;
 
 	#marketingToolboxRegionSelect {
 		width: 100%;
+	}
+
+	#date-picker {
+		clear: left;
 	}
 }
 

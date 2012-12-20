@@ -12,11 +12,13 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 				'validator' => new WikiaValidatorFileTitle(
 					array(
 						'required' => true
-					)
+					),
+					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
 				),
 				'attributes' => array(
-					'class' => 'required'
-				)
+					'class' => 'required wmu-file-name-input'
+				),
+				'class' => 'hidden'
 			);
 
 			$fields['shortDesc' . $i] = array(
@@ -56,7 +58,8 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 				),
 				'attributes' => array(
 					'class' => 'required wikiaUrl'
-				)
+				),
+				'class' => 'borderNone'
 			);
 		}
 
@@ -64,10 +67,21 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 	}
 
 	public function renderEditor($data) {
-		$model = new MarketingToolboxSliderModel();
-		$data['slidesCount'] = $model->getSlidesCount();
+		$sliderModel = new MarketingToolboxSliderModel();
+		$data['slidesCount'] = $sliderModel->getSlidesCount();
+
+
+		$data['photos'] = array();
+
+		$model = new MarketingToolboxModel();
+		$imageSize = $model->getThumbnailSize();
+		for ($i = 1; $i <= $data['slidesCount']; $i++) {
+
+			if (!empty($data['values']['photo' . $i])) {
+				$data['photos'][$i] = ImagesService::getLocalFileThumbUrl($data['values']['photo' . $i], $imageSize);
+			}
+		}
 
 		return parent::renderEditor($data);
 	}
 }
-?>

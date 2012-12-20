@@ -139,7 +139,7 @@ define('sections', ['events', 'JSMessages'], function(ev, msg){
 	}
 
 	function find(heading){
-		if(typeof heading === 'string') {
+		if(typeof heading == 'string') {
 			heading = d.getElementById(heading.replace(/ /, '_'));
 		}
 
@@ -157,14 +157,24 @@ define('sections', ['events', 'JSMessages'], function(ev, msg){
 		return [];
 	}
 
+	function findPos(obj) {
+		var curtop = 0;
+		if (obj.offsetParent) {
+			do {
+				curtop += obj.offsetTop;
+			} while (obj = obj.offsetParent);
+			return [curtop];
+		}
+	}
+
 	function scrollTo(header){
 		//scroll header into view
 		//if the page is long that is the way I found it reliable
 		//without calling it like that android sometimes did not scroll at all
 		//and iOS sometimes scrolled to a wrong place
-		header.scrollIntoView();
+		window.scrollTo(0, findPos(header));
 		setTimeout(function(){
-			header.scrollIntoView();
+			window.scrollTo(0, findPos(header));
 		}, 50);
 	}
 

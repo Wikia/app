@@ -8,6 +8,8 @@
 class SearchApiController extends WikiaApiController {
 	const ITEMS_PER_BATCH = 25;
 
+	const PARAMETER_NAMESPACES = 'namespaces';
+
 	/**
 	 * Fetches results for the submitted query
 	 *
@@ -31,7 +33,7 @@ class SearchApiController extends WikiaApiController {
 		$rank = $this->request->getVal( 'rank', 'default' );
 		$limit = $this->request->getInt( 'limit', self::ITEMS_PER_BATCH );
 		$batch = $this->request->getVal( 'batch', 1 );
-		$namespaces = $this->request->getVal( 'namespaces', null );
+		$namespaces = $this->request->getArray( 'namespaces', null );
 		$total = 0;
 		$results = array();
 		$batches = 0;
@@ -53,21 +55,15 @@ class SearchApiController extends WikiaApiController {
 			->setGroupResults( false );
 
 		if ( !empty( $namespaces ) ) {
-			$namespaces = explode( ',', $namespaces );
-
-			foreach( $namespaces as $index => $key ) {
-				$nsId = ( strtolower( $key ) == 'main' ) ? 0 : $this->wg->ContLang->getNsIndex( $key );
-
-				if ( $nsId !== false ) {
-					$namespaces[$index] = $nsId;
+			foreach ( $namespaces as &$n ) {
+				if ( is_numeric( $n ) ) {
+					$n = (int) $n;
 				} else {
-					unset( $namespaces[$index] );
+					throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
 				}
 			}
 
-			if ( !empty( $namespaces ) ) {
-				$searchConfig->setNamespaces( $namespaces );
-			}
+			$searchConfig->setNamespaces( $namespaces );
 		}
 
 		if ( $searchConfig->getQueryNoQuotes( true ) ) {
@@ -76,20 +72,25 @@ class SearchApiController extends WikiaApiController {
 
 			if ( $total ) {
 				foreach ( $resultSet as $result ) {
+					$title = $result->getTitleObject();
+
 					$results[] = array(
 						'title' => $result->getTitle(),
-						'url' => $result->getTitleObject()->getLocalUrl()
+						'url' => $title->getLocalUrl(),
+						'ns' => $title->getNamespace()
 					);
 				}
 
 				$total = $searchConfig->getResultsFound();
 				$batches = $searchConfig->getNumPages();
 				$currentBatch = $searchConfig->getPage();
-				$next = ( $total - ( $limit * $currentBatch ) );
+				$next = max( 0, $total - ( $limit * $currentBatch ) );
 
-				if ($next > $limit) {
+				if ( $next > $limit ) {
 					$next = $limit;
 				}
+			} else {
+				throw new NotFoundApiException();
 			}
 		}
 

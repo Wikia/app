@@ -324,7 +324,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 					$isThumb = true;
 
 					if  ( in_array( $extension, array( 'gif', 'svg' ) ) ) {
-						$img = ImageService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
+						$img = ImagesService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
 						$isThumb = false;
 					}
 

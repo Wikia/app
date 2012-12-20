@@ -20,6 +20,7 @@ class ForumHooksHelper {
 		if ( MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
 			$app = F::App();
 			$path = array_merge( $this->getPath( $wallMessage ), array( $path[1] ) );
+			OasisController::addBodyParameter(' itemscope itemtype="http://schema.org/WebPage"');
 		}
 		return true;
 	}
@@ -326,6 +327,16 @@ class ForumHooksHelper {
 
 	public static function onWallStoreRelatedTopicsInDB($parent, $id, $namespace) {
 		self::onWallAction(null, $parent, $id);
+		return true;
+	}
+
+	static public function onArticleFromTitle( &$title ){
+
+		$currentNs = MWNamespace::getSubject( $title->getNamespace() );
+		if ( $currentNs == NS_WIKIA_FORUM_BOARD || $currentNs == NS_WIKIA_FORUM_TOPIC_BOARD
+			|| $currentNs == NS_WIKIA_FORUM_BOARD_THREAD ) {
+			OasisController::addBodyParameter(' itemscope itemtype="http://schema.org/WebPage"');
+		}
 		return true;
 	}
 }

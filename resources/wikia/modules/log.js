@@ -1,31 +1,49 @@
-/*global console: true, opera: true */
 /**
  * Logging utility extracted from Liftium's library and further modified
  *
  * @author Przemek Piotrowski (Nef) <ppiotr(at)wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+ *
+ * @example
+ * //AMD
+ * require(['log'], function (log) { log(123, log.levels.info, 'MyLogGroup'); });
+ *
+ * //JS Namespace
+ * Wikia.log(123, Wikia.log.levels.info, 'MyLogGroup');
+ *
+ * //To allow the messages to be printed to the console add log_level=X to the
+ * //URL querystring, where X is one of the values in the levels hash (either the hash key or it's value)
+ * //e.g. http://glee.wikia.com/wiki/Rachel_Berry?log_level=info
+ *
+ * @see  printMessage for a list of parameters and their description
  */
 (function (context) {
 	'use strict';
 
+	var levels = {
+		user: 1,
+		feedback: 2,
+		info: 3,
+		system: 4,
+		warning: 5,
+		error: 6,
+		debug: 7,
+		trace: 8,
+		trace_l2: 9,
+		trace_l3: 10
+	};
+
 	function logger() {
-		var levels = {
-				user: 1,
-				feedback: 2,
-				info: 3,
-				system: 4,
-				warning: 5,
-				error: 6,
-				debug: 7,
-				trace: 8,
-				trace_l2: 9,
-				trace_l3: 10
-			},
+		var console = context.console,
+			//used for undefined checks
+			undef,
 			outputLevel = 0,
 			groups = {},
 			groupsString = '',
 			groupsCount = 0,
 			enabled = false,
+			//used to check for iOS devices
+			isIdevice,
 			levelsMap = [],
 			levelID,
 			p,
@@ -51,10 +69,26 @@
 		 * @param {String} group The log group
 		 */
 		function printMessage(msg, level, group) {
-			if (typeof console !== 'undefined') {
-				console.log((typeof msg !== 'object' ? '%s: %s' : '%s: %o'), group, msg);
-			} else if (typeof opera !== 'undefined') {
-				opera.postError(group + ': ' + msg);
+			if (console !== undef) {
+				if (group) {
+					//forcing space as IE doesn't
+					//add one between parameters
+					group += ': ';
+
+					if (isIdevice === undef) {
+						isIdevice = /i(pod|pad|phone)/i.test(context.navigator.userAgent);
+					}
+
+					if (isIdevice) {
+						//iOS doesn't print out more than one parameter
+						//and has no tree view for objects
+						console.log(group + msg.toString());
+					} else {
+						console.log(group, msg);
+					}
+				} else {
+					console.log(msg);
+				}
 			}
 		}
 
@@ -85,7 +119,7 @@
 			group = group || 'Unknown source';
 
 			if (!enabled ||
-					(typeof msg === "undefined") ||
+					(msg === undef) ||
 					(levelID > outputLevel) ||
 					(groupsCount > 0 && !(groups.hasOwnProperty(group)))) {
 				return false;
@@ -115,7 +149,7 @@
 			if (levels.hasOwnProperty(outputLevel)) {
 				outputLevel = levels[outputLevel];
 			} else {
-				outputLevel = parseInt( outputLevel, 10);
+				outputLevel = parseInt(outputLevel, 10);
 			}
 
 			selectedGroups = (qs.getVal('log_group') || cookies.get('log_group') || '').replace(' ', '').replace('|', ',').split(',');
@@ -151,7 +185,9 @@
 		context.Wikia = {};
 	}
 
-	context.Wikia.log = logger();//late binding
+	context.Wikia.log = logger();
+	//exposing levels to the outside world
+	context.Wikia.log.levels = levels;
 
 	if (context.define && context.define.amd) {
 		//AMD

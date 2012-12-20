@@ -82,7 +82,7 @@ abstract class WikiaValidator {
 	}
 
 	protected function hasOption( $name ){
-		return isset($this->options[$name]);
+		return array_key_exists($name, $this->options);
 	}
 
 	protected function mwMsg($errorCode) {

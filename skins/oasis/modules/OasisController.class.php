@@ -3,6 +3,7 @@
 class OasisController extends WikiaController {
 
 	private static $extraBodyClasses = array();
+	private static  $bodyParametersArray = array();
 
 	/* @var AssetsManager */
 	private $assetsManager;
@@ -563,6 +564,15 @@ EOT;
 			return ' itemscope itemtype="http://schema.org/'.$type.'"';
 
 		}
+
+		if (isset(static::$bodyParametersArray) && count(static::$bodyParametersArray) > 0 ) {
+			return implode(" ", static::$bodyParametersArray);
+		}
+
 		return '';
+	}
+
+	public static function addBodyParameter($parameter) {
+		static::$bodyParametersArray[] = $parameter;
 	}
 }

@@ -67,6 +67,8 @@ $app->registerHook( 'WallAction', 'ForumHooksHelper', 'onWallAction');
 $app->registerHook( 'WallBeforeStoreRelatedTopicsInDB', 'ForumHooksHelper', 'onWallStoreRelatedTopicsInDB');
 $app->registerHook( 'WallAfterStoreRelatedTopicsInDB', 'ForumHooksHelper', 'onWallStoreRelatedTopicsInDB');
 
+$app->registerHook( 'ArticleFromTitle', 'ForumHooksHelper', 'onArticleFromTitle' );
+
 include ($dir . '/Forum.namespace.setup.php');
 
 //add this namespace to list of wall namespaces

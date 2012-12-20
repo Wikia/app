@@ -69,6 +69,8 @@ $app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'WallHooksHelper'
 $app->registerHook('BlockIpCompleteWatch', 'WallHooksHelper', 'onBlockIpCompleteWatch');
 $app->registerHook('UserIsBlockedFrom', 'WallHooksHelper', 'onUserIsBlockedFrom');
 
+$app->registerHook( 'ArticleRobotPolicy', 'WallHooksHelper', 'onArticleRobotPolicy' );
+
 //wall history in toolbar
 $app->registerHook('BeforeToolbarMenu', 'WallHooksHelper', 'onBeforeToolbarMenu');
 $app->registerHook('BeforePageHistory', 'WallHooksHelper', 'onBeforePageHistory');

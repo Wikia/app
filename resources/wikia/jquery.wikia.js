@@ -56,15 +56,7 @@ $.getScript = function(url, callback, failureFn) {
 };
 
 $.fn.log = function (msg, group) {
-	if (typeof console != 'undefined') { /* JSlint ignore */
-		if (group) {
-			// nice formatting of objects with group prefix
-			console.log((typeof msg != 'object' ? '%s: %s' : '%s: %o'), group, msg);
-		}
-		else {
-			console.log(msg);
-		}
-	}
+	Wikia.log(msg, Wikia.log.levels.info, group);
 	return this;
 };
 
