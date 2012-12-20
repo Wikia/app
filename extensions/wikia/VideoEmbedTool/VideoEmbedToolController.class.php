@@ -7,7 +7,7 @@ class VideoEmbedToolController extends WikiaController {
 	
 	public function modal() {
 		$vet = new VideoEmbedTool();
-		$this->html = $vet->loadMainFromView();
+		$this->html = $vet->loadMain();
 	}
 
 	/*
