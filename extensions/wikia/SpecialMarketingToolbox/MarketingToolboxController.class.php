@@ -293,9 +293,15 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 	/**
 	 * @desc Used by WMU to get the image url
-	 * @todo: Let's add here rights check maybe... ;)
 	 */
 	public function getImageDetails() {
+		if( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('marketingtoolbox') ) {
+			$this->specialPage->displayRestrictionError();
+			return false;
+		}
+		
+		$this->wf->ProfileIn(__METHOD__);
+		
 		$fileName = $this->getVal('fileHandler', false);
 		if( $fileName ) {
 			$model = new MarketingToolboxModel();
@@ -304,6 +310,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$this->imageHeight = $file->getHeight();
 			$this->fileUrl = ImagesService::getLocalFileThumbUrl($file, $model->getThumbnailSize());
 		}
+
+		$this->wf->ProfileOut(__METHOD__);
 	}
 
 	public function getVideoDetails() {
