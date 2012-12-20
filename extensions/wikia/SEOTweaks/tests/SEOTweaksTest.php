@@ -78,7 +78,7 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
-	 * @covers SEOTweaksHooksHelper::onArticleBeforeTitle
+	 * @covers SEOTweaksHooksHelper::onArticleFromTitle
 	 */
 	public function testOnArticleBeforeTitleValid() {
 		
@@ -122,12 +122,12 @@ class SEOTweaksTest extends WikiaBaseTest
 		
 		$this->assertTrue(
 				$mockHelper->onArticleFromTitle( $mockTitle, $mockArticle ),
-				'SEOTweaksHooksHelper::onArticleBeforeTitleValid should always return true'
+				'SEOTweaksHooksHelper::onArticleFromTitle should always return true'
 		);
 	}
 	
 	/**
-	 * @covers SEOTweaksHooksHelper::onArticleBeforeTitle
+	 * @covers SEOTweaksHooksHelper::onArticleFromTitle
 	 */
 	public function testOnArticleBeforeTitleNotValid() {
 		
@@ -173,7 +173,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		
 		$this->assertTrue(
 				$mockHelper->onArticleFromTitle( $mockTitle, $mockArticle ),
-				'SEOTweaksHooksHelper::onArticleBeforeTitleValid should always return true'
+				'SEOTweaksHooksHelper::onArticleFromTitle should always return true'
 		);
 	}
 	
