@@ -177,6 +177,7 @@ class ArticlesApiController extends WikiaApiController {
 		);
 
 		$this->response->setVal( 'items', $collection );
+		$this->response->setVal( 'basepath', $this->wg->Server );
 
 		$batches = null;
 		$this->wf->ProfileOut( __METHOD__ );
