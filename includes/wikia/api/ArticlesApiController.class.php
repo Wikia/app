@@ -332,16 +332,12 @@ class ArticlesApiController extends WikiaApiController {
 
 				if ( !empty( $titles ) ) {
 					foreach ( $titles as $t ) {
-						$ns = $t->getNamespace();
 						$id = $t->getArticleID();
 
-						$collection[$id] = array(
+						$collection[$id] = [
 							'revision' => $t->getLatestRevID(),
-							'namespace' => array(
-								'id' => $t->getNamespace(),
-								'text' => ( $ns === 0 ) ? 'Main' : $t->getNsText()
-							)
-						);
+							'namespace' => $t->getNamespace()
+						];
 
 						$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
 
