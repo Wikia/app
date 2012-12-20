@@ -7,7 +7,6 @@ EditHub.prototype = {
 	wmuDeffered: undefined,
 	vetDeffered: undefined,
 	lastActiveWmuButton: undefined,
-	placeholderDimensions: 155,
 
 	init: function () {
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
@@ -107,8 +106,8 @@ EditHub.prototype = {
 			callback: $.proxy(function(response) {
 				var tempImg = new Image();
 				tempImg.src = response.fileUrl;
-				tempImg.height = this.placeholderDimensions;
-				tempImg.width = this.placeholderDimensions;
+				tempImg.height = response.imageHeight
+				tempImg.width = response.imageWidth;
 
 				var box = this.lastActiveWmuButton.parents('.module-box:first');
 				if (!box.length) {

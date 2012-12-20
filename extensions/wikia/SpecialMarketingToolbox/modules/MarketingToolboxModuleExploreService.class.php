@@ -122,7 +122,10 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		
 		if( !empty($data['values']['fileName']) ) {
 			$model = new MarketingToolboxModel();
-			$data['fileUrl'] = ImagesService::getLocalFileThumbUrl($data['values']['fileName'], $model->getThumbnailSize());
+			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['values']['fileName'], $model->getThumbnailSize());
+			$data['fileUrl'] = $imageData->url;
+			$data['imageWidth'] = $imageData->width;
+			$data['imageHeight'] = $imageData->height;
 		}
 		
 		return parent::renderEditor($data);

@@ -25,7 +25,7 @@
 		<div class="grid-1 alpha">
 			<div class="image-placeholder">
 				<?php if( !empty($fileUrl) ): ?>
-					<img src="<?= $fileUrl; ?>" />
+					<img width="<?= $imageWidth; ?>" height="<?= $imageHeight; ?>" src="<?= $fileUrl; ?>" />
 				<?php else: ?>
 					<img src="<?= $wg->BlankImgUrl; ?>" />
 				<?php endif; ?>
