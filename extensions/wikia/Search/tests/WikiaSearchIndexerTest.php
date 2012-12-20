@@ -1741,7 +1741,9 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				'getMediaMetadata',
 				'getWikiPromoData',
 				'getRedirectTitles',
-				'getWikiViews'
+				'getWikiViews',
+				'getBacklinksCount',
+				'getWamForWiki'
 		);
 		
 		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
@@ -1832,6 +1834,9 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method	( 'getArticleId' )
 			->will		( $this->returnValue( 5432 ) ) // as main page
 		;
+		/**
+		 * @todo: Maybe mock the return values more? They are mocked in other tests, though.
+		 */
 		$mockIndexer
 			->expects	( $this->at( 1 ) )
 			->method	( 'getPageMetadata' )
@@ -1857,6 +1862,17 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$mockIndexer
 			->expects	( $this->at( 5 ) )
 			->method	( 'getWikiViews' )
+			->will		( $this->returnValue( array() ) )
+		;
+		$mockIndexer
+			->expects	( $this->at( 6 ) )
+			->method	( 'getBacklinksCount' )
+			->with		( $mockTitle )
+			->will		( $this->returnValue( array() ) )
+		;
+		$mockIndexer
+			->expects	( $this->at( 7 ) )
+			->method	( 'getWamForWiki' )
 			->will		( $this->returnValue( array() ) )
 		;
 		$mockWg = (object) array(

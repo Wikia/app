@@ -120,6 +120,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
 		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
 		$result['is_main_page']	= ( $pageId == F::build( 'Title', array( 'newMainPage' ) )->getArticleId() ) ? 'true' : 'false';
+		
 		// these will eventually be broken out into their own atomic updates
 		$result = array_merge( 
 				$result, 
@@ -128,7 +129,8 @@ class WikiaSearchIndexer extends WikiaObject {
 				$this->getWikiPromoData(),
 				$this->getRedirectTitles( $page ),
 				$this->getWikiViews( $page ),
-				$this->getBacklinksCount( $title )
+				$this->getBacklinksCount( $title ),
+				$this->getWamForWiki()
 		);
 		wfProfileOut(__METHOD__);
 		return $result;
@@ -387,9 +389,10 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @return array containing result data
 	 */
 	public function getWikiPromoData() {
+		wfProfileIn(__METHOD__);
 		$homepageHelper = new WikiaHomePageHelper();
 		$detail = $homepageHelper->getWikiInfoForVisualization( $this->wg->CityId, $this->wg->ContLang->getCode() );
-		
+		wfProfileOut(__METHOD__);
 		return array(
 				'wiki_description_txt' => $detail['description'],
 				'wiki_new_b' => empty( $detail['new'] ) ? 'false' : 'true',
@@ -460,8 +463,10 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @return array
 	 */
 	protected function getWamForWiki() {
+		wfProfileIn(__METHOD__);
 		$wam = F::build( 'DataMartService' )->getCurrentWamScoreForWiki( $this->wg->CityId );
 		$wam = $wam > 0 ? ceil( $wam ) : 1; //mapped here for computational cheapness
+		wfProfileOut(__METHOD__);
 		return array( 'wam' => $wam );
 	}
 	
@@ -471,6 +476,7 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @return array
 	 */
 	protected function getBacklinksCount( Title $title ) {
+		wfProfileIn(__METHOD__);
 		$apiService = F::build( 'ApiService' );
 		$data = $apiService->call( array(
 				'titles'	=> $title,
@@ -479,6 +485,7 @@ class WikiaSearchIndexer extends WikiaObject {
 				'list'		=> 'backlinks',
 				'blcount'	=> 1
 		));
+		wfProfileOut(__METHOD__);
 		return array(
 				'backlinks' => isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0
 		);
