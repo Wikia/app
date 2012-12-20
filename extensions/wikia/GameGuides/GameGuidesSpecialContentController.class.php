@@ -1,6 +1,9 @@
 <?php
 
 class GameGuidesSpecialContentController extends WikiaSpecialPageController {
+
+	const WIKI_FACTORY_VARIABLE_NAME = 'wgWikiaGameGuidesContent';
+
 	public function __construct() {
 		parent::__construct( 'GameGuidesContent', '', false );
 	}
@@ -37,7 +40,7 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		F::build( 'JSMessages' )->enqueuePackage( 'GameGuidesContentMsg', JSMessages::INLINE );
 
-		$tags = WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId );
+		$tags = WikiFactory::getVarValueByName( self::WIKI_FACTORY_VARIABLE_NAME, $this->wg->CityId );
 
 		$this->response->setVal( 'tags', $tags );
 		return true;
@@ -91,7 +94,7 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 			}
 		}
 
-		$status = WikiFactory::setVarByName( 'wgWikiaGameGuidesContent', $this->wg->CityId, array_values( $tags ) );
+		$status = WikiFactory::setVarByName( self::WIKI_FACTORY_VARIABLE_NAME, $this->wg->CityId, array_values( $tags ) );
 		$this->response->setVal( 'status', $status );
 
 		if ( $status ) {

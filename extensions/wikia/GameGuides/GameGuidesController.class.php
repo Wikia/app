@@ -350,7 +350,7 @@ class GameGuidesController extends WikiaController {
 
 		$this->response->setFormat( 'json' );
 
-		$content = WikiFactory::getVarValueByName( 'wgWikiaGameGuidesContent', $this->wg->CityId );
+		$content = WikiFactory::getVarValueByName( GameGuidesSpecialContentController::WIKI_FACTORY_VARIABLE_NAME, $this->wg->CityId );
 
 		if ( empty( $content ) ) {
 			$this->getCategories();
