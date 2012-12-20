@@ -18,7 +18,11 @@
 					<?php endif; ?>
 				</span>
 				<ul class="actionlinks">
-					<li><a href="<?= $userInvolved['userwall']; ?>"> <?= wfMsg('wall-history-rail-wall'); ?></a></li>
+					<? if(!$showTalkPage): ?>
+						<li><a href="<?= $userInvolved['userwall']; ?>"> <?= wfMsg('wall-history-rail-wall'); ?></a></li>
+					<? else: ?>
+						<li><a href="<?= $userInvolved['usertalk']; ?>"> <?= wfMsg('talkpage'); ?></a></li>
+					<? endif; ?>
 					<li><a href="<?= $userInvolved['usercontribs']; ?>"> <?= wfMsg('wall-history-rail-contribs'); ?></a></li>
 					<li><a href="<?= $userInvolved['userblock']; ?>"> <?= wfMsg('wall-history-rail-block'); ?></a></li>
 				</ul>

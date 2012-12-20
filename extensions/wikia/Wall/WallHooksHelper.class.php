@@ -840,6 +840,7 @@ class WallHooksHelper {
 					return true;
 				}	
 
+
 				$wm = F::build('WallMessage', array($rcTitle));
 				$wm->load();
 

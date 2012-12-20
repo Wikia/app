@@ -353,3 +353,31 @@ test('getUrl Auto tile, same ord', function() {
 
 	equal(actual, expected, 'tile 3');
 });
+
+test('getUrl Page categories', function() {
+	var logMock = function() {},
+		windowMock = {
+			location: {hostname: 'example.org'},
+			cityShort: 'vertical',
+			wgDBname: 'dbname',
+			wgContentLanguage: 'xx',
+			wgCategories: ['Category', 'Another Category', 'YetAnother Category']
+		},
+		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+		adLogicShortPageMock = {hasPreFooters: function() {return true;}},
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock),
+		actual = dartHelper.getUrl({
+			ord: 7,
+			slotsize: '100x200',
+			slotname: 'SLOT_NAME',
+			subdomain: 'sub',
+			tile: 3
+		}),
+		expected = 'http://sub.doubleclick.net/adj/wka.vertical/_dbname/article;' +
+			's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
+			'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;' +
+			'cat=category;cat=another_category;cat=yetanother_category;src=driver;sz=100x200;' +
+			'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
+
+	equal(actual, expected);
+});

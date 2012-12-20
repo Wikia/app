@@ -10,15 +10,23 @@ class WallRailController extends WikiaController {
 		
 		$this->response->addAsset('extensions/wikia/Wall/css/WallHistoryRail.scss');
 		$this->usersInvolved = array_merge($this->getUsersData(self::$usersData), $this->getUsersData(self::$anonsData));
+
+		if ($this->wg->EnableWallExt) {
+			$this->showTalkPage = false;
+		} else {
+			$this->showTalkPage = true;
+		}
 		
 		$app->wf->ProfileOut(__METHOD__);
 	}
+
 	
 	private function getUsersData($usersObjects) {
 		$key = 0;
 		
 		$usersInvolved = array();
 		$sorting = array();
+
 		foreach($usersObjects as $user) {
 			if( $user->isAnon() ) {
 				$name = wfMsg('oasis-anon-user');
@@ -39,10 +47,12 @@ class WallRailController extends WikiaController {
 				//if he's an anon use username
 				$sorting[$key] = ($user->isAnon()) ? $username : $name;
 			}
-			
+
 			$usersInvolved[$key]['username'] = $username;
 			$usersInvolved[$key]['userpage'] = $userpage;
 			$usersInvolved[$key]['userwall'] = Title::newFromText($username, NS_USER_WALL)->getFullUrl();
+			$usersInvolved[$key]['usertalk'] = Title::newFromText($username, NS_USER_TALK)->getFullUrl();
+
 			$usersInvolved[$key]['usercontribs'] = Skin::makeSpecialUrl('Contributions').'/'.$username;
 			$usersInvolved[$key]['userblock'] = Skin::makeSpecialUrl('Block').'/'.$username;
 			$key++;

@@ -283,7 +283,8 @@ class VideoEmbedTool {
 			
 			// Get all html to insert into article view page
 			$image_service = F::app()->sendRequest( 'ImageTweaksService', 'getTag', $html_params );
-			$embed_code = $image_service->getData()['tag'];
+			$image_data = $image_service->getData();
+			$embed_code = $image_data['tag'];
 
 			$summary = wfMsg( 'vet-added-from-placeholder' );
 
