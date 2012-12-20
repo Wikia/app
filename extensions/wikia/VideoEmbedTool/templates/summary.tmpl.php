@@ -4,7 +4,7 @@
 </div>
 <div style="float:right;">
 	<div id="VideoEmbedPageSuccess" style="display:none;"><?= $message ?></br><br/></div>
-	<input onclick="VET_close(event);" type="button" value="<?= wfMsg( 'vet-return' ) ?>" />
+	<input onclick="VET_close(event);" type="button" value="<?= $button_message ?>" />
 	<div id="VideoEmbedCode" style="display: none;" ><?= $code ?></div>
 	<input type="hidden" id="VideoEmbedTag" value="<?= htmlspecialchars( $tag ) ?>" />
 </div>

@@ -66,6 +66,10 @@ extAddSpecialPage( dirname(__FILE__) . '/WikiaVideoAdd_body.php', 'WikiaVideoAdd
 $wgExtensionMessagesFiles['VideoEmbedTool'] = $dir.'/VideoEmbedTool.i18n.php';
 $wgHooks['EditPage::showEditForm:initial2'][] = 'VETSetup';
 
+F::build('JSMessages')->registerPackage('VideoEmbedTool', array('vet-*'));
+F::build('JSMessages')->enqueuePackage('VideoEmbedTool', JSMessages::EXTERNAL);
+
+
 /**
  * @param $article
  * @param $user
@@ -100,26 +104,10 @@ function VETSetupVars(Array &$vars) {
 	global $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgFileExtensions;
 
 	$vars['wgEnableVideoToolExt'] = true;
-
-	$vars['vet_back'] = wfMsg('vet-back');
-	$vars['vet_imagebutton'] = wfMsg('vet-imagebutton') ;
-	$vars['vet_close'] = wfMsg('vet-close');
-	$vars['vet_warn1'] = wfMsg('vet-warn1');
-	$vars['vet_warn2'] = wfMsg('vet-warn2');
-	$vars['vet_warn3'] = wfMsg('vet-warn3');
-	$vars['vet_insert_error'] = wfMsg('vet-insert-error');
-	$vars['vet_bad_extension'] = wfMsg('vet-bad-extension');
 	$vars['file_extensions'] = $wgFileExtensions;
 	$vars['file_blacklist'] = $wgFileBlacklist;
 	$vars['check_file_extensions'] = $wgCheckFileExtensions;
 	$vars['strict_file_extensions'] = $wgStrictFileExtensions;
-	$vars['vet_show_message'] = wfMsg('vet-show-message');
-	$vars['vet_hide_message'] = wfMsg('vet-hide-message');
-	$vars['vet_show_license_message'] = wfMsg('vet-show-license-msg');
-	$vars['vet_hide_license_message'] = wfMsg('vet-hide-license-msg');
-	$vars['vet_max_thumb'] = wfMsg('vet-max-thumb');
-	$vars['vet_title'] = wfMsg('vet-title');
-	$vars['vet_no_preview'] = wfMsg( 'vet-no-preview' );
 
 	return true;
 }

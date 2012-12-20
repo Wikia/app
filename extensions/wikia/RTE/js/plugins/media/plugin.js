@@ -363,7 +363,7 @@ CKEDITOR.plugins.add('rte-media',
 
 		var videos = placeholder.filter('.video-placeholder');
 		videos.attr('title', RTE.getInstance().lang.videoPlaceholder.tooltip);
-		videos.bind('edit.placeholder', function(ev) {
+		videos.bind('click.placeholder', function(ev) {
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			var self = this;
 			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
