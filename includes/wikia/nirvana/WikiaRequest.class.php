@@ -148,7 +148,9 @@ class WikiaRequest {
 	public function getArray( $name, $default = array() ) {
 		$val = $this->getVal( $name, $default );
 
-		if ( is_string( $val ) && strpos( $val, ',') !== false ) {
+		if ( $val === $default ) {
+			//just return $default
+		} else if ( is_string( $val ) && strpos( $val, ',') !== false ) {
 			$val = explode( ',', $val );
 		} elseif ( !is_array( $val ) ) {
 			$val = array( $val );
