@@ -123,7 +123,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		// these will eventually be broken out into their own atomic updates
 		$result = array_merge( 
 				$result, 
-				$this->getPageMetaData( $page ), 
+				$this->getPageMetaData( $pageId ), 
 				$this->getMediaMetadata( $title ),
 				$this->getWikiPromoData(),
 				$this->getRedirectTitles( $page ),
@@ -423,13 +423,13 @@ class WikiaSearchIndexer extends WikiaObject {
 	/**
 	 * Makes a handful of MediaWiki API requests to get metadata about a page
 	 * @see WikiaSearchIndexer::getPage()
-	 * @param Article $page
+	 * @param int $pageId
+	 * @return array
 	 */
-	protected function getPageMetaData( Article $page ) {
+	protected function getPageMetaData( $pageId ) {
 		wfProfileIn(__METHOD__);
 		$result = array();
 	
-		$pageId = $page->getId();
 		$apiService = F::build( 'ApiService' );
 		if (! empty( $this->wg->ExternalSharedDB ) ) {
 			$data = $apiService->call( array(
@@ -451,12 +451,18 @@ class WikiaSearchIndexer extends WikiaObject {
 			$result['hub'] 			= isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
 		}
 	
-		$wam = F::build( 'DataMartService' )->getCurrentWamScoreForWiki( $this->wg->CityId );
-		
-		$result['wam']					= $wam > 0 ? ceil( $wam ) : 1; //mapped here for computational cheapness
-	
 		wfProfileOut(__METHOD__);
 		return $result;
+	}
+	
+	/**
+	 * Provides Wam score in an array keyed with 'wam'
+	 * @return array
+	 */
+	protected function getWamForWiki() {
+		$wam = F::build( 'DataMartService' )->getCurrentWamScoreForWiki( $this->wg->CityId );
+		$wam = $wam > 0 ? ceil( $wam ) : 1; //mapped here for computational cheapness
+		return array( 'wam' => $wam );
 	}
 	
 	/**

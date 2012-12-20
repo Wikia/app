@@ -416,27 +416,10 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 									->setMethods( array( 'getWikiViews' ) )
 									->getMock();
 
-		$mockArticle		= $this->getMockBuilder( 'Article' )
-									->disableOriginalConstructor()
-									->setMethods( array( 'getTitle', 'getId' ) )
-									->getMock();
-
 		$mockApiService		= $this->getMock( 'ApiService', array( 'call' ) );
-		$mockDataMart		= $this->getMock( 'DataMartServie', array( 'getCurrentWamScoreForWiki' ) );
-
 		$mockTitle			= 'PHPUnit/Being_Awesome';
 		$mockId				= 123;
 
-		$mockArticle
-			->expects	( $this->any() )
-			->method	( 'getTitle' )
-			->will		( $this->returnValue( $mockTitle ) )
-		;
-		$mockArticle
-			->expects	( $this->any() )
-			->method	( 'getId' )
-			->will		( $this->returnValue( $mockId ) )
-		;
 		$mockPageData = array( 'query' => array( 'pages' => array( $mockId =>
 				array( 'views' => 100,
 						'revcount' => 20,
@@ -449,26 +432,64 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 			->method		( 'call' )
 			->will			( $this->returnValue( $mockPageData ) )
 		;
-		$redirectTitles = array( 'foo', 'bar', 'baz', 'qux' );
-		$mockDataMart
-			->expects	( $this->once() )
-			->method	( 'getCurrentWamScoreForWiki' )
-		;
 
 		$wgProperty = new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
 		$wgProperty->setAccessible( true );
-		$wgProperty->setValue( $mockSearchIndexer, (object) array( 'CityId' => 123, 'ExternalSharedDB' => true ) );
+		$wgProperty->setValue( $mockSearchIndexer, (object) array( 'ExternalSharedDB' => true ) );
 
 		$method = new ReflectionMethod( 'WikiaSearchIndexer', 'getPageMetaData' );
 		$method->setAccessible( true );
 
 		$this->mockClass( 'ApiService', $mockApiService );
-		$this->mockClass( 'DataMartService', $mockDataMart );
 		$this->mockApp();
 
-		$result = $method->invoke( $mockSearchIndexer, $mockArticle );
+		$result = $method->invoke( $mockSearchIndexer, $mockId );
 
+		foreach ( array( 'views', 'revcount', 'created', 'touched', 'hub' ) as $key ) {
+			$this->assertArrayHasKey(
+					$key,
+					$result,
+					'WikiaSearchIndexer::getPageMetaData should assign the values found from the API for the page to the appropriate keys'
+			);
+		}
 	}
+	
+	/**
+	 * @covers WikiaSearchIndexer::getWamForWiki
+	 */
+	public function testGetWamForWiki() {
+		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'foo' ) )
+							->getMock();
+		
+		$mockDataMart = $this->getMockBuilder( 'DataMartService' )
+							->disableOriginalConstructor()
+							->setMethods( array( 'getCurrentWamScoreForWiki' ) )
+							->getMock();
+		
+		$mockDataMart
+			->staticExpects	( $this->once() )
+			->method		( 'getCurrentWamScoreForWiki' )
+			->will			( $this->returnValue( 50 ) )
+		;
+		
+		$this->mockClass( 'DataMartService', $mockDataMart );
+		$this->mockApp();
+		
+		$wg = new ReflectionProperty( 'WikiaSearchIndexer', 'wg' );
+		$wg->setAccessible( true );
+		$wg->setValue( $mockIndexer, (object) array( 'CityId' => 123 ) );
+		
+		$method = new ReflectionMethod( 'WikiaSearchIndexer', 'getWamForWiki' );
+		$method->setAccessible( true );
+		$result = $method->invoke( $mockIndexer );
+		$this->assertEquals(
+				50,
+				$result['wam']
+		);
+	}
+	
 	
 	
 	/**
@@ -1814,7 +1835,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$mockIndexer
 			->expects	( $this->at( 1 ) )
 			->method	( 'getPageMetadata' )
-			->with		( $mockArticle )
+			->with		( 321 )
 			->will		( $this->returnValue( array() ) )
 		;
 		$mockIndexer
