@@ -26,7 +26,7 @@ var MediaPlaceholder = {
 
 		var self = this;
 
-		 $('#WikiaArticle').on('click', '.wikiaPlaceholder a', function(e) {
+		$('#WikiaArticle').on('click', '.wikiaPlaceholder a', function(e) {
 			e.preventDefault();
 
 			// cache jquery object
@@ -37,14 +37,14 @@ var MediaPlaceholder = {
 			if($this.prop('onclick')) {
 				return;
 			}
-			
+
 			// Provide immediate feedback once button is clicked
 			var oText = $this.text();
 			$this.startThrobbing();
 
 			// handle video placeholder
 			if($this.parent().parent().hasClass('wikiaVideoPlaceholder')) {
-				
+
 				// Don't allow editing on history pages
 				if(self.disabled) {
 					GlobalNotification.show( $.msg('imgplc-notinhistory-video'), 'warn' );
@@ -141,7 +141,7 @@ var MediaPlaceholder = {
 	 */
 	getEvent: function(e, boundEl) {
 		var ev = e || window.event;
-	
+
 		if (!ev) {
 			var c = this.getEvent.caller;
 			while (c) {
@@ -152,7 +152,7 @@ var MediaPlaceholder = {
 				c = c.caller;
 			}
 		}
-	
+
 		return ev;
 	}
 
