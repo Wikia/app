@@ -88,7 +88,7 @@ class SearchApiController extends WikiaApiController {
 				$total = $searchConfig->getResultsFound();
 				$batches = $searchConfig->getNumPages();
 				$currentBatch = $searchConfig->getPage();
-				$next = ( $total - ( $limit * $currentBatch ) );
+				$next = max( 0, $total - ( $limit * $currentBatch ) );
 
 				if ($next > $limit) {
 					$next = $limit;
