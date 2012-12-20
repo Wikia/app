@@ -1,14 +1,14 @@
 <?php
 
 /**
- * UserProperties Handler for RTE
+ * UserProperties Handler for Editor
  */
 
-class RTEUserPropertiesHandler extends WikiaUserPropertiesHandlerBase {
+class EditorUserPropertiesHandler extends WikiaUserPropertiesHandlerBase {
 
-	const MAIN_PAGE_NOTIFICATIONS_HIDDEN_PROP_NAME = 'RteMainPageNotificationHidden';
+	const MAIN_PAGE_NOTIFICATIONS_HIDDEN_PROP_NAME = 'EditorMainPageNotificationHidden';
 
-	public function dismissRTEMainPageNotice($params = null) {
+	public function dismissEditorMainPageNotice($params = null) {
 		$results = new stdClass();
 
 		if ($this->wg->ReadOnly) {
@@ -17,7 +17,7 @@ class RTEUserPropertiesHandler extends WikiaUserPropertiesHandlerBase {
 		} else {
 			$this->throwExceptionForAnons();
 
-			$this->wg->User->setOption($this->getRTEMainPageNoticePropertyName(), true);
+			$this->wg->User->setOption($this->getEditorMainPageNoticePropertyName(), true);
 			$this->wg->User->saveSettings();
 			$results->success = true;
 		}
@@ -38,7 +38,7 @@ class RTEUserPropertiesHandler extends WikiaUserPropertiesHandlerBase {
 		return $results;
 	}
 
-	public function getRTEMainPageNoticePropertyName() {
+	public function getEditorMainPageNoticePropertyName() {
 		return self::MAIN_PAGE_NOTIFICATIONS_HIDDEN_PROP_NAME . '_' . $this->app->wg->CityId;
 	}
 

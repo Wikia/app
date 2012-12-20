@@ -292,13 +292,14 @@ class StructuredDataController extends WikiaSpecialPageController {
 						}
 						$item['url'] = $specialPageUrl;
 
-						if ( !in_array( $item, $resultCollection ) ) {
-							$resultCollection[] = $item;
-						}
+						// avoiding object duplication in collection
+						$resultCollection[$item['id']] = $item;
+
 					}
 				}
 			}
-			$this->response->setVal( "list", $resultCollection );
+
+			$this->response->setVal( "list", array_values($resultCollection) );
 			$this->setVal( "specialPageUrl", SpecialPage::getTitleFor( 'StructuredData' )->getFullUrl() );
 			$this->setVal( "objectType", $objectType);
 		}

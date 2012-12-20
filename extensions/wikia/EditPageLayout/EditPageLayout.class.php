@@ -619,8 +619,8 @@ class EditPageLayout extends EditPage {
 				'content' => $this->app->wf->msgExt('talkpagetext', array('parse')),
 				'class' => 'mw-talkpagetext',
 			);
-		} elseif ( F::app()->wg->EnableRTEExt && $this->mTitle->isMainPage() && !$this->mTitle->isProtected() && !$this->userDismissedEduNote() ) {
-		//if this is an unprotected main page and user hasn't seen the main page educational notice -- show it :)
+		} elseif ( $this->mTitle->isMainPage() && !$this->mTitle->isProtected() && !$this->userDismissedEduNote() ) {
+			//if this is an unprotected main page and user hasn't seen the main page educational notice -- show it :)
 			/** @var $notice EditPageNotice */
 			$notice = F::build( 'EditPageNotice',array($this->app->wf->msgExt('mainpagewarning-notice', array('parse')), 'MainPageEduNote') );
 			$this->helper->addJsVariable('mainPageEduNoteHash', $notice->getHash());
@@ -643,11 +643,11 @@ class EditPageLayout extends EditPage {
 	 * @return bool
 	 */
 	protected function userDismissedEduNote() {
-		$RTEUserPropertiesHandler = F::build('RTEUserPropertiesHandler');  /* @var RTEUserPropertiesHandler $RTEUserPropertiesHandler */
+		$EditorUserPropertiesHandler = F::build('EditorUserPropertiesHandler');  /* @var EditorUserPropertiesHandler $EditorUserPropertiesHandler */
 
 		try {
-			$results = $RTEUserPropertiesHandler->getUserPropertyValue(
-				$RTEUserPropertiesHandler->getRTEMainPageNoticePropertyName()
+			$results = $EditorUserPropertiesHandler->getUserPropertyValue(
+				$EditorUserPropertiesHandler->getEditorMainPageNoticePropertyName()
 			);
 			$result = ($results->value == true) ? true : false;
 		} catch( Exception $e ) {

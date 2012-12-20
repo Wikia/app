@@ -395,7 +395,15 @@ class SitemapPage extends UnlistedSpecialPage {
 	private function videoEntry( Title $title ) {
 		wfProfileIn( __METHOD__ );
 
+		$file = wfFindFile( $title );
+
 		$videoTitleData = $this->mMediaService->getMediaData( $title );
+
+		$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
+		if ( !$isVideo ) {
+			return '';
+		}
+
 		$metaData = $videoTitleData['meta'];
 
 		if( ( $videoTitleData['type'] != MediaQueryService::MEDIA_TYPE_VIDEO ) || $metaData['canEmbed'] === 0 ) {

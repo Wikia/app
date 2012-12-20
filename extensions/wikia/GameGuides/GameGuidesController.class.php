@@ -444,7 +444,55 @@ class GameGuidesController extends WikiaController {
 			}
 		}
 
-		$this->response->setVal( 'categories', $ret );
+		if ( !empty( $ret ) ) {
+			$sort = $this->request->getVal( 'sort' );
+
+			if ( !empty( $sort ) ) {
+				if ( $sort == 'alpha' ) {
+					usort($ret, function( $a, $b ){
+						return strcasecmp($a['name'], $b['name']);
+					});
+				} else if ( $sort == 'hot' ) {
+					$hot = array_keys(
+						DataMartService::getTopArticlesByPageview(
+							$this->wg->CityId,
+							array_reduce($ret, function($ret, $item){
+								$ret[] = $item['pageid'];
+								return $ret;
+							}),
+							null,
+							false,
+							//I need all of them basically
+							count( $ret )
+						)
+					);
+
+					$sorted = [];
+					$left = [];
+					foreach ( $ret as $value ) {
+						$key = array_search( $value['pageid'], $hot );
+
+						if ( $key === false ) {
+							$left[] = $value;
+						} else {
+							$sorted[$key] = $value;
+						}
+					}
+
+					ksort( $sorted );
+
+					$ret = array_merge( $sorted, $left );
+				} else {
+					$this->wf->profileOut( __METHOD__ );
+					throw new InvalidParameterApiException( 'sort' );
+				}
+			}
+
+			$this->response->setVal( 'categories', $ret );
+		} else {
+			$this->wf->profileOut( __METHOD__ );
+			throw new InvalidParameterApiException( 'tag' );
+		}
 
 		$this->wf->profileOut( __METHOD__ );
 	}
@@ -530,7 +578,18 @@ class GameGuidesController extends WikiaController {
 				);
 
 				if ( !empty( $articles['query']['categorymembers'] ) ) {
-					$this->response->setVal( 'articles', $articles['query']['categorymembers']);
+
+					$arts = $articles['query']['categorymembers'];
+
+					foreach( $arts as &$article ) {
+						$title = Title::newFromText( $article['title'] );
+
+						if ( $title ) {
+							$article['title'] = $title->getText();
+						}
+					}
+
+					$this->response->setVal( 'articles', $arts);
 
 					if ( !empty( $articles['query-continue'] ) ) {
 						$this->response->setVal( 'offset', $articles['query-continue']['categorymembers']['cmcontinue']);

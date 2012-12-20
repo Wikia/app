@@ -585,6 +585,7 @@ $config['wikiaapp_js'] = array(
 $config['monobook_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'#group_oasis_wikia_js',
 		'#group_oasis_jquery',
 		'#group_articlecomments_js',
 
@@ -777,7 +778,10 @@ $config['theme_designer_js'] = array(
 
 		'#group_oasis_tracker_js',
 
-		'//resources/wikia/libraries/jquery-ui/jquery-ui-1.8.14.custom.js',
+		'//resources/jquery.ui/jquery.ui.widget.js',
+		'//resources/jquery.ui/jquery.ui.mouse.js',
+		'//resources/jquery.ui/jquery.ui.slider.js',
+		'//resources/jquery.ui/jquery.ui.core.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
 		'//resources/wikia/libraries/aim/jquery.aim.js',
@@ -1186,5 +1190,5 @@ $config['history_polyfill_js'] = array(
 		'//resources/wikia/polyfills/history/history.adapter.jquery.js',
 		//'//resources/wikia/polyfills/history/history.html4.js', // add this back in when we're ready to support IE
 		'//resources/wikia/polyfills/history/history.js',
-	)	
+	)
 );

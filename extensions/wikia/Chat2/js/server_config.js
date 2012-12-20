@@ -82,7 +82,7 @@ exports.validateActiveBasket = function(basket) {
 	return false;
 }
 
-exports.logLevel = (typeof arvg.loglevel != 'undefined') ? arvg.loglevel : "info" ;
+exports.logLevel = (typeof arvg.loglevel != 'undefined') ? arvg.loglevel : "CRITICAL" ;
 
 //TODO move this to other file
 /** KEY BUILDING / ACCESSING FUNCTIONS **/

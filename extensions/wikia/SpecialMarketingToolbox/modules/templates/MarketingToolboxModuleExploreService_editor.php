@@ -1,7 +1,20 @@
 <div class="module-explore">
-	<div class="photo-group grid-4 alpha">
+	<div class="module-box grid-4 alpha">
 		<div class="grid-3 alpha">
 			<input type="button" class="wmu-show" value="<?= $wf->Msg('marketing-toolbox-hub-module-explore-add-photo') ?>" />
+			<span class="filename-placeholder alternative">
+				<? if (!empty($fields['fileName'])): ?>
+					<?= $fields['fileName']['value']; ?>
+				<? else: ?>
+					<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
+				<? endif ?>
+			</span>
+			<?=$app->renderView(
+				'MarketingToolbox',
+				'FormField',
+				array('inputData' => $fields['fileName'])
+			);
+			?>
 			<?=$app->renderView(
 				'MarketingToolbox',
 				'FormField',
@@ -10,11 +23,18 @@
 			?>
 		</div>
 		<div class="grid-1 alpha">
-			<div class="placeholder"></div>
+			<div class="image-placeholder">
+				<?php if( !empty($fileUrl) ): ?>
+					<img src="<?= $fileUrl; ?>" />
+				<?php else: ?>
+					<img src="<?= $wg->BlankImgUrl; ?>" />
+				<?php endif; ?>
+			</div>
 		</div>
+		<input class="secondary clear" type="button" value="Clear" />
 	</div>
 	<? for($i = 1; $i <= $sectionLimit; $i++): ?>
-		<div class="header-group grid-4 alpha">
+		<div class="module-box header-group grid-4 alpha">
 			<div class="grid-2 alpha">
 				<?=$app->renderView(
 					'MarketingToolbox',
@@ -73,6 +93,7 @@
 				);
 				?>
 			</div>
+			<input class="secondary clear" type="button" value="Clear" />
 		</div>
 	<? endfor; ?>
 </div>

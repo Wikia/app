@@ -29,7 +29,19 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
 				'attributes' => array(
-					'class' => 'required'
+					'class' => 'required explore-title'
+				)
+			),
+			'fileName' => array(
+				'type' => 'hidden',
+				'attributes' => array(
+					'class' => 'wmu-file-name-input required'
+				),
+				'validator' => new WikiaValidatorFileTitle(
+					array(
+						'required' => true
+					),
+					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
 				)
 			),
 		);
@@ -62,6 +74,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 
 		$linkUrlField = array(
 			'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
+			'labelclass' => "wikiaUrlLabel",
 			'validator' => new WikiaValidatorUrl(
 				array(),
 				array(
@@ -69,8 +82,9 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 				)
 			),
 			'attributes' => array(
-				'class' => "wikiaUrl"
-			)
+				'class' => "wikiaUrl",
+			),
+			'icon' => true
 		);
 
 		$linkHeaderFieldName = self::LINK_TEXT . $sectionIdx . $this->lettersMap[$linkIdx];
@@ -105,6 +119,14 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 
 	public function renderEditor($data) {
 		$data['sectionLimit'] = $this->model->getFormSectionsLimit();
+		
+		if( !empty($data['values']['fileName']) ) {
+			$model = new MarketingToolboxModel();
+
+			$data['imageSize'] = $imageSize = $model->getThumbnailSize();
+			$data['fileUrl'] = ImagesService::getLocalFileThumbUrl($data['values']['fileName'], $imageSize);
+		}
+		
 		return parent::renderEditor($data);
 	}
 }

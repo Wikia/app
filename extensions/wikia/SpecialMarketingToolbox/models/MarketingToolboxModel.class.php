@@ -15,6 +15,8 @@ class MarketingToolboxModel extends WikiaModel {
 
 	const HUBS_TABLE_NAME = '`wikia_hub_modules`';
 
+	const FORM_THUMBNAIL_SIZE = 155;
+
 	protected $statuses = array();
 	protected $modules = array();
 	protected $sections = array();
@@ -59,6 +61,10 @@ class MarketingToolboxModel extends WikiaModel {
 			)
 		);
 
+	}
+
+	public function getThumbnailSize() {
+		return self::FORM_THUMBNAIL_SIZE;
 	}
 
 	public function getModuleName($moduleId) {

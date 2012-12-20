@@ -2,9 +2,12 @@ var EditHub = function() {};
 
 EditHub.prototype = {
 	form: undefined,
-	vetReady: undefined,
 	wmuReady: undefined,
-	placeholderDimensions: 138,
+	vetReady: undefined,
+	wmuDeffered: undefined,
+	vetDeffered: undefined,
+	lastActiveWmuButton: undefined,
+	placeholderDimensions: 155,
 
 	init: function () {
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
@@ -14,8 +17,13 @@ EditHub.prototype = {
 
 		$('#marketing-toolbox-clearall').click($.proxy(function(){
 			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation',this.form.data('module-name'))) == true) {
-				this.formReset();
+				this.formReset(this.form);
 			}
+		}, this));
+
+		$(this.form).find('.clear').click($.proxy(function(event){
+			var sectionToReset = $(event.target).parents('.module-box');
+			this.formReset(sectionToReset);
 		}, this));
 
 		$.validator.addMethod("wikiaUrl", function(value, element) {
@@ -42,18 +50,20 @@ EditHub.prototype = {
 
 	wmuInit: function(event) {
 		event.preventDefault();
-		if (!this.vetReady) {
+		this.lastActiveWmuButton = $(event.target);
+		if (!this.wmuReady) {
 			var $input = $(this).prev();
-			$.when(
+			this.wmuDeffered = $.when(
 				$.loadYUI(),
 				$.getResources([
 					wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
 					wgExtensionsPath + '/wikia/WikiaMiniUpload/css/WMU.css'
 				])
-			).then(function() {
+			).then($.proxy(function() {
 				WMU_skipDetails = true;
 				WMU_show();
-			});
+				this.wmuReady = true;
+			}, this));
 			$(window).bind('WMU_addFromSpecialPage', $.proxy(function(event, wmuData) {
 				this.addImage(wmuData);
 			}, this));
@@ -65,7 +75,7 @@ EditHub.prototype = {
 
 	vetInit: function(event) {
 		if (!this.vetReady) {
-			$.when(
+			this.vetDeffered = $.when(
 				$.loadYUI(),
 				$.loadMustache(),
 				$.getResources([
@@ -86,19 +96,30 @@ EditHub.prototype = {
 	},
 
 	addImage: function(wmuData) {
+		var fileName = wmuData.imageTitle;
 		$.nirvana.sendRequest({
 			controller: 'MarketingToolbox',
 			method: 'getImageDetails',
 			type: 'get',
 			data: {
-				'fileHandler': wmuData.imageTitle
+				'fileHandler': fileName
 			},
 			callback: $.proxy(function(response) {
 				var tempImg = new Image();
 				tempImg.src = response.fileUrl;
 				tempImg.height = this.placeholderDimensions;
 				tempImg.width = this.placeholderDimensions;
-				$('.MarketingToolboxMain .placeholder').append(tempImg);
+
+				var box = this.lastActiveWmuButton.parents('.module-box:first');
+				if (!box.length) {
+					box = $('.MarketingToolboxMain');
+				}
+
+				var imagePlaceholder = box.find('.image-placeholder');
+				imagePlaceholder.find('img').remove();
+				imagePlaceholder.append(tempImg);
+				box.find('.filename-placeholder').html(fileName);
+				box.find('.wmu-file-name-input').val(fileName);
 			}, this)
 		});
 	},
@@ -117,11 +138,14 @@ EditHub.prototype = {
 		});
 	},
 
-	formReset: function() {
-		this.form.find('input:text, input:password, input:file, select, textarea').val('');
-		this.form.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+	formReset: function(elem) {
+		elem.find('input:text, input:password, input:file, select, textarea').val('');
+		elem.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+		elem.find('.filename-placeholder').html($.msg('marketing-toolbox-edithub-file-name'));
+		elem.find('.image-placeholder').find('img').attr('src', wgBlankImgUrl);
 	}
-}
+};
+
 
 var EditHub = new EditHub();
 $(function () {

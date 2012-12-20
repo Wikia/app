@@ -3816,6 +3816,151 @@ class WikiaSearchControllerTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
+	 * @covers WikiaSearchController::tabs
+	 */
+	public function testTabsVideoWithNoFilter() {
+		$mockController		=	$this->searchController->setMethods( array( 'getVal', 'setVal' ) )->getMock();
+		$mockSearchConfig	=	$this->getMockBuilder( 'WikiaSearchConfig' )
+									->disableOriginalConstructor()
+									->setMethods( array( 'getNamespaces', 'getQuery', 'getSearchProfiles', 'getIncludeRedirects', 'getActiveTab', 'getFilterQueries', 'getRank' ) )
+									->getMock();
+		
+		$this->mockGlobalVariable( 'wgDefaultSearchProfile', SEARCH_PROFILE_DEFAULT );
+		
+		$defaultNamespaces = array( NS_MAIN, NS_CATEGORY );
+		
+		$searchProfileArray = array(
+	            SEARCH_PROFILE_DEFAULT => array(
+	                    'message' => 'wikiasearch2-tabs-articles',
+	                    'tooltip' => 'searchprofile-articles-tooltip',
+	                    'namespaces' => $defaultNamespaces,
+	                    'namespace-messages' => SearchEngine::namespacesAsText( $defaultNamespaces ),
+	            ),
+	            SEARCH_PROFILE_IMAGES => array(
+	                    'message' => 'wikiasearch2-tabs-photos-and-videos',
+	                    'tooltip' => 'searchprofile-images-tooltip',
+	                    'namespaces' => array( NS_FILE ),
+	            ),
+	            SEARCH_PROFILE_USERS => array(
+	                    'message' => 'wikiasearch2-users',
+	                    'tooltip' => 'wikiasearch2-users-tooltip',
+	                    'namespaces' => array( NS_USER )
+	            ),
+	            SEARCH_PROFILE_ALL => array(
+	                    'message' => 'searchprofile-everything',
+	                    'tooltip' => 'searchprofile-everything-tooltip',
+	                    'namespaces' => array( NS_MAIN, NS_TALK, NS_CATEGORY, NS_CATEGORY_TALK, NS_FILE, NS_USER ),
+	            ),
+	            SEARCH_PROFILE_ADVANCED => array(
+	                    'message' => 'searchprofile-advanced',
+	                    'tooltip' => 'searchprofile-advanced-tooltip',
+	                    'namespaces' => array( NS_MAIN, NS_CATEGORY ),
+	                    'parameters' => array( 'advanced' => 1 ),
+	            )
+		);
+		
+		$form = array(
+				'no_filter' =>          0,
+				'by_category' =>        false,
+				'cat_videogames' =>     false,
+				'cat_entertainment' =>  false,
+				'cat_lifestyle' =>      false,
+				'is_hd' =>              false,
+				'is_image' =>           false,
+				'is_video' =>           1,
+				'sort_default' =>       true,
+				'sort_longest' =>       false,
+				'sort_newest' =>        false,
+		);
+		
+		$incr = 0;
+		
+		$wg = (object) array( 'CityId' => WikiaSearch::VIDEO_WIKI_ID ); 
+		
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getVal' )
+			->with		( 'config', false )
+			->will		( $this->returnValue( $mockSearchConfig ) )
+		;
+		$mockSearchConfig
+			->expects	( $this->once() )
+			->method	( 'getFilterQueries' )
+			->will		( $this->returnValue( array() ) )
+		;
+		$mockSearchConfig
+			->expects	( $this->once() )
+			->method	( 'getRank' )
+			->will		( $this->returnValue( 'default' ) )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'getVal' )
+			->with		( 'by_category', false )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockSearchConfig
+			->expects	( $this->once() )
+			->method	( 'getQuery' )
+			->with		( WikiaSearchConfig::QUERY_RAW )
+			->will		( $this->returnValue( 'foo' ) )
+		;
+		$mockSearchConfig
+			->expects	( $this->once() )
+			->method	( 'getSearchProfiles' )
+			->will		( $this->returnValue( $searchProfileArray ) )
+		;
+		$mockSearchConfig
+			->expects	( $this->once() )
+			->method	( 'getIncludeRedirects' )
+			->will		( $this->returnValue( false ) )
+		;
+		$mockSearchConfig
+			->expects	( $this->once() )
+			->method	( 'getActiveTab' )
+			->will		( $this->returnValue( 'default' ) )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'setVal' )
+			->with		( 'bareterm', 'foo' )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'setVal' )
+			->with		( 'searchProfiles', $searchProfileArray )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'setVal' )
+			->with		( 'redirs', false )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'setVal' )
+			->with		( 'activeTab', 'default' )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'setVal' )
+			->with		( 'form', $form )
+		;
+		$mockController
+			->expects	( $this->at( $incr++ ) )
+			->method	( 'setVal' )
+			->with		( 'is_video_wiki', true )
+		;
+		
+		$this->mockApp();
+		
+		$reflWg = new ReflectionProperty( 'WikiaSearchController', 'wg' );
+		$reflWg->setAccessible( true );
+		$reflWg->setValue( $mockController, $wg );
+		
+		$mockController->tabs();
+	}
+	
+	/**
 	 * @covers WikiaSearchController::advancedBox
 	 */
 	public function testAdvancedBoxWithoutConfig() {

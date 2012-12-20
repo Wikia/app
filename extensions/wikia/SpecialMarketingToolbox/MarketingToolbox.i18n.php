@@ -39,6 +39,9 @@ $messages['en'] = array(
 	'marketing-toolbox-footer-button-publish' => 'Publish',
 	'marketing-toolbox-edithub-save-button' => 'Save',
 	'marketing-toolbox-edithub-clearall-button' => 'Clear all',
+	'marketing-toolbox-edithub-clear-button' => 'Clear',
+	'marketing-toolbox-edithub-add-file-button' => 'Add a photo',
+	'marketing-toolbox-edithub-file-name' => 'File name',
 
 	'marketing-toolbox-edithub-clearall-confirmation' => 'Are you sure you want to clear the entire $1?',
 
@@ -86,6 +89,7 @@ $messages['en'] = array(
 	'marketing-toolbox-validator-string-short' => 'Your text is too short, please write more',
 	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',
 	'marketing-toolbox-validator-wrong-url' => 'The URL you entered is not valid, please try again',
+	'marketing-toolbox-validator-wrong-file' => 'The file you chose is not valid, please try again'
 );
 
 $messages['qqq'] = array(
