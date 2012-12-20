@@ -32,27 +32,38 @@ class ImagesService extends Service {
 		$app->wf->ProfileOut(__METHOD__);
 		return array('src' => $imageSrc, 'page' => $imagePage);
 	}
-
-	/**
-	 * @param String $fileName file name with or without namespace "File:"
-	 * @param Integer $imageWidth 
-	 * 
-	 * @return String url to the image's thumbnail
-	 */
-	public static function getLocalFileThumbUrl($fileName, $destImageWidth = 250) {
+	
+	public static function getLocalFile($fileName) {
 		$app = F::app();
-		$url = '';
-		
+
 		//remove namespace string
 		$fileName = str_replace($app->wg->ContLang->getNsText(NS_FILE) . ':', '', $fileName);
 		$title = Title::newFromText($fileName, NS_FILE);
 		$foundFile = $app->wf->FindFile($title);
-		
+
 		if( $foundFile ) {
-			$imageWidth = self::calculateScaledImageWidth($destImageWidth, $foundFile->getWidth(), $foundFile->getHeight());
-			$url = $foundFile->getThumbUrl( $foundFile->thumbName( array( 'width' => $imageWidth) ) );
-			$url = ($app->wg->DevelEnvironment) ? wfReplaceImageServer($url) : $url;
+			return $foundFile;
 		}
+		
+		return false;
+	}
+
+	/**
+	 * @desc Returns image's thumbnail if $destImageWidth given it can be scaled
+	 * 
+	 * @param LocalFile $file instance of LocalFile class
+	 * @param Integer $imageWidth optional parameter 
+	 * 
+	 * @return String url to the image's thumbnail
+	 */
+	public static function getLocalFileThumbUrl(LocalFile $file, $destImageWidth = 0) {
+		if( $destImageWidth > 0 ) {
+			$imageWidth = self::calculateScaledImageWidth($destImageWidth, $file->getWidth(), $file->getHeight());
+		} else {
+			$imageWidth = $file->getWidth();
+		}
+		
+		$url = $file->getThumbUrl( $file->thumbName( array( 'width' => $imageWidth) ) );
 		
 		return $url;
 	}
