@@ -6,7 +6,6 @@ $vertical-border-color: #cdcdcd;
 $horizontal-border-color: #eee;
 $chevron-color: #888;
 
-
 .WikiaGrid .WikiaArticle {
 	border: none;
 }
@@ -46,6 +45,10 @@ $chevron-color: #888;
 		input[type="text"] {
 			width: 149px;
 		}
+	}
+
+	.grid-2 .input-group input.wikiaUrl {
+		width: 239px;
 	}
 
 	.error {
@@ -136,9 +139,7 @@ $chevron-color: #888;
 			width: 320px;
 		}
 		.wikiaUrlLabel {
-			padding-right: 10px;
-			text-align: right;
-			width: 135px;
+			width: 55px;
 		}
 		.input-icon {
 			background-image: url("/extensions/wikia/SpecialMarketingToolbox/images/url.png"); /* base64 */
@@ -216,7 +217,7 @@ $chevron-color: #888;
 			margin-left: 5px;
 			display: block;
 			width: 360px;
-			float:left;
+			float: left;
 			overflow: hidden;
 		}
 
