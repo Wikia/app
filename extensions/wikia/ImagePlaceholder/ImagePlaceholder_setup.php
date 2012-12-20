@@ -275,7 +275,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		'class' => 'wikia-button',
 		'style' => "top: {$tmarg}px;",
 		'href' => $wgTitle->getLocalUrl( array( 'action' => 'edit') ),
-		'data-id' => $wgWikiaVideoPlaceholderId,
+		'data-id' => $isvideo ? $wgWikiaVideoPlaceholderId : $wgWikiaImagePlaceholderId,
 		'data-align' => $isalign,
 		'data-thumb' => $isthumb,
 		'data-caption' => htmlspecialchars($caption),

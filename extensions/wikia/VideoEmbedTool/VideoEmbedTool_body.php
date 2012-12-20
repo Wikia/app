@@ -285,7 +285,7 @@ class VideoEmbedTool {
 			$image_service = F::app()->sendRequest( 'ImageTweaksService', 'getTag', $html_params );
 			$embed_code = $image_service->getData()['tag'];
 
-			$summary = wfMsg( 'vet-added-from-gallery' ); // lizbug - update this text to be from article view instead of gallery
+			$summary = wfMsg( 'vet-added-from-placeholder' );
 
 			$text = substr_replace( $text, $tag, $matches[0][$box][1], strlen( $placeholder_tag ) );
 			

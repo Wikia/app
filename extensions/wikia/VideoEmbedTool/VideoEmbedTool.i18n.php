@@ -72,6 +72,7 @@ $messages['en'] = array(
 	'vet-page-success' => 'Video page was successfully updated. You may have to purge the video page to see the change.',
 	'vet-add-button' => 'Add video',
 	'vet-added-from-gallery' => 'video added from video gallery',
+	'vet-added-from-placeholder' => 'Video added from video placeholder',
 	'vet-see-all' => 'all',
 	'vet-bad-search' => 'Error loading search query.',
 	'vet-no-preview' => 'You cannot add video from article in preview mode.',

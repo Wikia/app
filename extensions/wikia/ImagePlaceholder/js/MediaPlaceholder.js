@@ -18,6 +18,8 @@ var MediaPlaceholder = {
 		}
 
 		this.loaded = true;
+		this.videoLoaded = false;
+		this.imageLoaded = false;
 
 		// Don't allow editing on history or diff pages
 		this.disabled = ( $.getUrlVar('diff') || $.getUrlVar('oldid') );
@@ -49,25 +51,32 @@ var MediaPlaceholder = {
 
 				props = self.getProps($this);
 
-				// open VET
-				$.when(
-					$.getJSON( window.wgScriptPath + "index.php?action=ajax&rs=VET&method=getMsgVars"), // leave this in first position
-					$.loadYUI(),
-					$.getResources([ 
-						$.getSassCommonURL("/extensions/wikia/VideoEmbedTool/css/VET.scss" ),
-						$.getSassCommonURL("/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss" ),
-						window.wgExtensionsPath + "/wikia/VideoEmbedTool/js/VET.js",
-						window.wgExtensionsPath + "/wikia/WikiaStyleGuide/js/Dropdown.js"
-					])
-				).done(function(VETMessages) {
-					// VET i18n messages 
-					for (var v in VETMessages) {
-						wgMessages[v] = VETMessages[v];
-					}
-
+				if(!self.videoLoaded) {
+					// open VET
+					$.when(
+						$.getJSON( window.wgScriptPath + "index.php?action=ajax&rs=VET&method=getMsgVars"), // leave this in first position
+						$.loadYUI(),
+						$.getResources([ 
+							$.getSassCommonURL("/extensions/wikia/VideoEmbedTool/css/VET.scss" ),
+							$.getSassCommonURL("/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss" ),
+							window.wgExtensionsPath + "/wikia/VideoEmbedTool/js/VET.js",
+							window.wgExtensionsPath + "/wikia/WikiaStyleGuide/js/Dropdown.js"
+						])
+					).done(function(VETMessages) {
+						// VET i18n messages 
+						for (var v in VETMessages) {
+							wgMessages[v] = VETMessages[v];
+						}
+						
+						self.videoLoaded = true;
+	
+						$this.text(oText);
+						VET_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption); 
+					});
+				} else {
 					$this.text(oText);
-					VET_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption); 
-				});
+					VET_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption); 				
+				}
 			} else {
 				// handle image placeholder
 				if(self.disabled) {
@@ -77,17 +86,24 @@ var MediaPlaceholder = {
 
 				props = self.getProps($this);
 
-				// open WMU
-				$.when(
-					$.loadYUI(),
-					$.getResources([ 
-						window.wgExtensionsPath + "/wikia/WikiaMiniUpload/js/WMU.js",
-						window.wgExtensionsPath + "/wikia/WikiaMiniUpload/css/WMU.css"
-					])
-				).done(function() {
+				if(!self.imageLoaded) {
+					// open WMU
+					$.when(
+						$.loadYUI(),
+						$.getResources([ 
+							window.wgExtensionsPath + "/wikia/WikiaMiniUpload/js/WMU.js",
+							window.wgExtensionsPath + "/wikia/WikiaMiniUpload/css/WMU.css"
+						])
+					).done(function() {
+						self.imageLoaded = true;
+						
+						$this.text(oText);
+						WMU_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption, props.link);
+					});
+				} else {
 					$this.text(oText);
-					WMU_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption, props.link);
-				});
+					WMU_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption, props.link);				
+				}
 			}
 		});
 	},
