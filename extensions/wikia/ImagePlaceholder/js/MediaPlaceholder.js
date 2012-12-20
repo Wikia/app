@@ -42,10 +42,13 @@ var MediaPlaceholder = {
 			var oText = $this.text();
 			$this.startThrobbing();
 
+			// handle video placeholder
 			if($this.parent().parent().hasClass('wikiaVideoPlaceholder')) {
-				// handle video placeholder
+				
+				// Don't allow editing on history pages
 				if(self.disabled) {
 					GlobalNotification.show( $.msg('imgplc-notinhistory-video'), 'warn' );
+					$this.text(oText);
 					return;
 				}
 
@@ -77,8 +80,10 @@ var MediaPlaceholder = {
 					$this.text(oText);
 					VET_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption); 				
 				}
+			// handle image placeholder
 			} else {
-				// handle image placeholder
+
+				// Don't allow editing on history pages
 				if(self.disabled) {
 					GlobalNotification.show( $.msg('imgplc-notinhistory'), 'warn' );			
 					return;
