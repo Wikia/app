@@ -63,7 +63,7 @@ class ArticlesApiController extends WikiaApiController {
 				if ( !empty( $ids ) ) {
 					return array( $ids['query']['categorymembers'], !empty( $ids['query-continue']) ? $ids['query-continue']['categorymembers']['cmcontinue'] : null );
 				} else {
-					return array();
+					return null;
 				}
 			}
 		);
@@ -236,7 +236,7 @@ class ArticlesApiController extends WikiaApiController {
 					if ( !empty( $pages ) ) {
 						return array( $pages['query']['allpages'], !empty( $pages['query-continue']) ? $pages['query-continue']['allpages']['apfrom'] : null );
 					} else {
-						return array();
+						return null;
 					}
 				}
 			);
