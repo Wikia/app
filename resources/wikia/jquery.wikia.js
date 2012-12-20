@@ -277,10 +277,11 @@ $.fn.hasParent = function(selector) {
  * and in the middle of it throbber will be displayed.
  */
 $.fn.startThrobbing = function() {
-	this.append('<div class="wikiaThrobber"></div>');
+	return this.append('<div class="wikiaThrobber"></div>');
 };
+
 $.fn.stopThrobbing = function() {
-	this.find('.wikiaThrobber').remove();
+	return this.find('.wikiaThrobber').remove();
 };
 
 /*

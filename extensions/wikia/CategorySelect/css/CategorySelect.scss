@@ -1,33 +1,43 @@
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
-
-$categoryselect-color-category: mix( $color-text, $color-page, 5% );
-$categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% );
+@import "skins/oasis/css/mixins/opacity";
 
 // These styles are for view pages only
 .CategorySelect.articlePage {
 	@include clear-linear-gradient();
+	border: 0;
 	line-height: normal;
-	padding: 0;
-	position: relative;
+	margin: 0;
+	padding-bottom: 0;
 
-	&.modified .toolbar,
-	&.showHidden .category.hidden {
+	&.modified .container > .toolbar {
 		display: block;
 	}
 
-	.add {
-		margin-left: 5px;
+	&.showHidden .hidden {
+		display: block;
+	}
+
+	h2 {
+		border-bottom: 1px solid $color-page-border;
+		font-size: 18px;
+		padding-bottom: 6px;
 	}
 
 	.category,
 	.input,
 	.placeholder {
+		@include border-radius( 4px );
+		background-color: $color-speech-bubble;
+		border: 1px solid $color-page-border;
 		display: block;
 		float: left;
-		margin: 0;
-		margin-bottom: 5px;
-		padding: 0 5px;
+		margin: 6px 6px 0 0;
+		padding: 2px 6px;
+	}
+
+	.add {
+		float: left;
 	}
 
 	.categories {
@@ -36,108 +46,73 @@ $categoryselect-color-placeholder: lighten( $categoryselect-color-category, 2% )
 		padding: 0;
 	}
 
-	.categoriesLink {
-		display: block;
-		float: left;
-		margin-right: 5px;
-
-		&:after {
-			content: ':';
-		}
-	}
-
 	.category {
-		border-right: 1px solid $color-page-border;
-
-		&:last-child {
-			border-right: 0;
-		}
-
 		&.hidden {
 			display: none;
 		}
 
-		.toolbar {
-			display: none;
+		&.new {
+			.name {
+				cursor: move;
+			}
+
+			.toolbar {
+				display: inline-block;
+			}
 		}
 	}
 
-	.edit {
-		@include clearfix;
-	}
+	.container {
+		padding: 4px 10px 10px 10px;
+		position: relative;
 
-	.hide {
-		display: none;
+		> .toolbar {
+			margin-top: 10px;
+			text-align: right;
+
+			.wikia-button {
+				margin-left: 6px;
+			}
+		}
 	}
 
 	.input {
-		@include border-radius( 4px );
 		background-color: $color-page;
-		border: 0;
+		border-color: $color-page;
 		color: $color-text;
 		font-size: 12px;
-		height: 21px;
-		margin-bottom: 0;
-		margin-left: 6px;
 		outline: none;
-		padding: 0;
+		padding-top: 1px;
 		width: 245px;
 	}
 
-	.newCategories {
-		float: left;
-
-		.category {
-			@include border-radius( 4px );
-			background-color: $categoryselect-color-category;
-			border: 1px solid $color-page-border;
-			margin-bottom: 0;
-			margin-left: 5px;
-			padding: 2px 5px 3px 5px;
-		}
-
-		.name {
-			cursor: move;
-		}
-
-		.sprite-small {
-			vertical-align: top;
-		}
-
-		.removeCategory {
-			border-left: 1px solid $color-page-border;
-			padding-left: 5px;
-		}
-
-		.toolbar {
-			display: inline-block;
-		}
+	.placeholder {
+		@include opacity( 35 );
 	}
 
-	.padded {
-		padding: 10px;
-	}
-
-	.shifted {
-		overflow: hidden;
+	.sprite-small {
+		vertical-align: text-top;
 	}
 
 	.tool {
+		border-left: 1px solid $color-page-border;
 		cursor: pointer;
 		display: inline-block;
-		margin-left: 5px;
+		margin-left: 6px;
+		padding-left: 6px;
+
+		&:first-child {
+			border-left: 0;
+			padding-left: 0;
+		}
 	}
 
-	> .toolbar {
-		background-color: $categoryselect-color-category;
-		border-top: 1px solid $color-page-border;
+	.toolbar {
 		display: none;
-		padding: 5px 10px;
-		text-align: right;
+	}
 
-		.wikia-button {
-			margin-left: 5px;
-		}
+	.ui-autocomplete {
+		border-top: 1px solid $color-page-border;
 	}
 }
 

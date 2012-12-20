@@ -9,19 +9,14 @@
 
 	$(function() {
 		var $wrapper = $( '#WikiaArticleCategories' ),
-			$addCategory = $wrapper.find( '.add' ),
+			$add = $wrapper.find( '.add' ),
 			$categories = $wrapper.find( '.categories' ),
+			$container = $wrapper.find( '.container' ),
 			$input = $wrapper.find( '.input' ),
-			$newCategories = $wrapper.find( '.newCategories' ),
 			articleId = window.wgArticleId,
 			categoryLinkPrefix = wgCategorySelect.defaultNamespace +
 				wgCategorySelect.defaultSeparator,
 			namespace = 'categorySelect';
-
-		function add( event ) {
-			$addCategory.addClass( 'hide' );
-			$input.removeClass( 'hide' ).focus();
-		}
 
 		function initialize( event ) {
 			$.when(
@@ -36,34 +31,31 @@
 				$wrapper.categorySelect({
 					categories: wgCategorySelect.categories,
 					placement: 'right',
-					selectors: {
-						sortable: '.newCategories'
-					},
 					sortable: {
 						axis: false,
 						forcePlaceholderSize: true,
+						items: '.new',
 						revert: 200
 					}
 
 				}).on( 'add.' + namespace, function( event, cs, data ) {
-					$addCategory.removeClass( 'hide' );
-					$input.addClass( 'hide' );
-
-					$newCategories.append( data.element );
+					$add.before( data.element );
 
 				}).on( 'update.' + namespace, function( event ) {
-					$wrapper.toggleClass( 'modified', $newCategories.children().length > 0 );
+					$wrapper.toggleClass( 'modified', $categories.find( '.new' ).length > 0 );
 				});
 			});
 		}
 
 		$wrapper.find( '.cancel' ).on( 'click.' + namespace, function( event ) {
-			$newCategories.empty();
+			$categories.find( '.new' ).remove();
 			$wrapper.removeClass( 'modified' ).trigger( 'reset' );
 		});
 
 		$wrapper.find( '.save' ).on( 'click.' + namespace, function( event ) {
 			var $saveButton = $( this ).attr( 'disabled', true );
+
+			$container.startThrobbing();
 
 			$.nirvana.sendRequest({
 				controller: 'CategorySelectController',
@@ -74,6 +66,7 @@
 				method: 'save'
 
 			}).done(function( response ) {
+				$container.stopThrobbing();
 				$saveButton.removeAttr( 'disabled' );
 
 				// TODO: don't use alert
@@ -84,13 +77,10 @@
 					$wrapper.removeClass( 'modified' );
 
 					// Linkify the new categories
-					$newCategories.find( '.category' ).each(function( i ) {
-						var $category = $( this ).detach(),
+					$categories.find( '.new' ).each(function( i ) {
+						var $category = $( this ),
 							category = $category.data( 'category' ),
 							$link = $( '<a>' );
-
-						// Make sure first character in name is uppercased
-						category.name = category.name.charAt( 0 ).toUpperCase() + category.name.slice( 1 );
 
 						$link
 							.addClass( 'name' )
@@ -101,16 +91,12 @@
 							.removeClass( 'new' )
 							.find( '.name' )
 							.replaceWith( $link )
-
-						$categories.append( $category );
 					});
 				}
 			});
 		});
 
-		$addCategory
-			.one( 'click.' + namespace, initialize )
-			.on( 'click.' + namespace, add );
+		$input.one( 'focus.' + namespace, initialize );
 	});
 
 })( window, window.jQuery, window.mw );

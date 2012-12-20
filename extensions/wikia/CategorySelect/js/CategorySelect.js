@@ -600,7 +600,8 @@
 				forcePlaceholderSize: true,
 				handle: '.name',
 				items: '.category',
-				placeholder: 'placeholder'
+				placeholder: 'placeholder',
+				tolerance: 'pointer'
 			}
 		}
 	});
