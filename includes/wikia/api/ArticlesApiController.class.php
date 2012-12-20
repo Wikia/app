@@ -152,7 +152,7 @@ class ArticlesApiController extends WikiaApiController {
 						$id = $t->getArticleID();
 						$collection[$id] = array(
 							'title' => $t->getText(),
-							'url' => $t->getFullURL(),
+							'url' => $t->getLocalURL(),
 							'namespace' => array(
 								'id' => $t->getNamespace(),
 								'text' => ( $ns === 0 ) ? 'Main' : $t->getNsText()
