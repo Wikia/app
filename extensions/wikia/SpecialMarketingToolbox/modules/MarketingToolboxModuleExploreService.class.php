@@ -120,9 +120,12 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 	public function renderEditor($data) {
 		$data['sectionLimit'] = $this->model->getFormSectionsLimit();
 		
-		if( !empty($data['values']['fileName']) && (($file = ImagesService::getLocalFile($data['values']['fileName'])) instanceof File) ) {
+		if( !empty($data['values']['fileName']) ) {
 			$model = new MarketingToolboxModel();
-			$data['fileUrl'] = ImagesService::getLocalFileThumbUrl($file, $model->getThumbnailSize());
+			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['values']['fileName'], $model->getThumbnailSize());
+			$data['fileUrl'] = $imageData->url;
+			$data['imageWidth'] = $imageData->width;
+			$data['imageHeight'] = $imageData->height;
 		}
 		
 		return parent::renderEditor($data);

@@ -305,10 +305,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$fileName = $this->getVal('fileHandler', false);
 		if( $fileName ) {
 			$model = new MarketingToolboxModel();
-			$file = ImagesService::getLocalFile($fileName);
-			$this->imageWidth = $file->getWidth();
-			$this->imageHeight = $file->getHeight();
-			$this->fileUrl = ImagesService::getLocalFileThumbUrl($file, $model->getThumbnailSize());
+			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($fileName, $model->getThumbnailSize());
+			$this->fileUrl = $imageData->url;
+			$this->imageWidth = $imageData->width;
+			$this->imageHeight = $imageData->height;
 		}
 
 		$this->wf->ProfileOut(__METHOD__);

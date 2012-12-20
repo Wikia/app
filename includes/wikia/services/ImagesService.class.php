@@ -32,60 +32,66 @@ class ImagesService extends Service {
 		$app->wf->ProfileOut(__METHOD__);
 		return array('src' => $imageSrc, 'page' => $imagePage);
 	}
-	
-	public static function getLocalFile($fileName) {
-		$app = F::app();
 
+	/**
+	 * @desc Returns image's thumbnail's url and its sizes if $destImageWidth given it can be scaled
+	 * 
+	 * @param String $fileName filename with or without namespace string
+	 * @param Integer $imageWidth optional parameter 
+	 * 
+	 * @return stdClass to the image's thumbnail
+	 */
+	public static function getLocalFileThumbUrlAndSizes($fileName, $destImageWidth = 0) {
+		$app = F::app();
+		$results = new stdClass();
+		
 		//remove namespace string
 		$fileName = str_replace($app->wg->ContLang->getNsText(NS_FILE) . ':', '', $fileName);
 		$title = Title::newFromText($fileName, NS_FILE);
 		$foundFile = $app->wf->FindFile($title);
-
+		
 		if( $foundFile ) {
-			return $foundFile;
-		}
-		
-		return false;
-	}
+			$imageWidth = $foundFile->getWidth();
+			$sizes = ($destImageWidth > 0) ?
+				self::calculateScaledImageSizes($destImageWidth, $foundFile->getWidth(), $foundFile->getHeight()) :
+				self::calculateScaledImageSizes($imageWidth, $imageWidth, $foundFile->getHeight());
 
-	/**
-	 * @desc Returns image's thumbnail if $destImageWidth given it can be scaled
-	 * 
-	 * @param LocalFile $file instance of LocalFile class
-	 * @param Integer $imageWidth optional parameter 
-	 * 
-	 * @return String url to the image's thumbnail
-	 */
-	public static function getLocalFileThumbUrl(LocalFile $file, $destImageWidth = 0) {
-		if( $destImageWidth > 0 ) {
-			$imageWidth = self::calculateScaledImageWidth($destImageWidth, $file->getWidth(), $file->getHeight());
-		} else {
-			$imageWidth = $file->getWidth();
+			$results->url = $foundFile->getThumbUrl( $foundFile->thumbName( array( 'width' => $sizes->width) ) );
+			$results->width = $sizes->width;
+			$results->height = $sizes->height;
 		}
 		
-		$url = $file->getThumbUrl( $file->thumbName( array( 'width' => $imageWidth) ) );
-		
-		return $url;
+		return $results;
 	}
 
 	/**
 	 * @desc Depending on image original width&height we calculate or not new width based on passed $destImageWidth
 	 * 
-	 * @param Integer $destImageWidth
+	 * @param Integer $destImageSize
 	 * @param Integer $imageWidth
 	 * @param Integer $imageHeight
 	 * 
 	 * @return float
 	 */
-	public static function calculateScaledImageWidth($destImageWidth, $imageWidth, $imageHeight) {
-		if( $imageWidth > $imageHeight || $imageWidth === $imageHeight) {
-			$calculatedWidth = $destImageWidth;
+	public static function calculateScaledImageSizes($destImageSize, $imageWidth, $imageHeight) {
+		if( $imageWidth > $imageHeight ) {
+			$aspectRatio = $imageHeight / $imageWidth;
+			$calculatedWidth = $destImageSize;
+			$calculatedHeight = floor( $destImageSize * $aspectRatio );
+		} else if( $imageWidth < $imageHeight ) {
+			$aspectRatio = $imageWidth / $imageHeight;
+			$calculatedWidth = floor( $destImageSize * $aspectRatio );
+			$calculatedHeight = $destImageSize;
 		} else {
-			$aspectRatio = $imageWidth/$imageHeight;
-			$calculatedWidth = floor( $destImageWidth * $aspectRatio );
+			$calculatedWidth = $destImageSize;
+			$calculatedHeight = $destImageSize;
 		}
 		
-		return $calculatedWidth;
+		$result = new StdClass();
+		$result->width = $calculatedWidth;
+		$result->height = $calculatedHeight;
+		
+		return $result;
 	}
 
 	/**
