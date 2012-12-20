@@ -67,8 +67,8 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 				} else if ( empty( $err ) ) {
 
 					$category = array(
-						'name' => $categoryName,
-						'pageid' => $category->getTitle()->getArticleID()
+						'title' => $categoryName,
+						'id' => $category->getTitle()->getArticleID()
 					);
 
 					if ( !empty( $values['name'] ) ) {
@@ -79,7 +79,7 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 						$tags[$values['tag']]['categories'][] = $category;
 					} else {
 						$tags[$values['tag']] = array(
-							'name' => $values['tag'],
+							'title' => $values['tag'],
 							'categories' => array(
 								$category
 							)

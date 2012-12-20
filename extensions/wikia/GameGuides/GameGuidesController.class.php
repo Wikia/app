@@ -381,7 +381,7 @@ class GameGuidesController extends WikiaController {
 	private function getCategories(){
 		$this->wf->profileIn( __METHOD__ );
 
-		$limit = $this->request->getVal( 'limit', self::LIMIT );
+		$limit = $this->request->getVal( 'limit', self::LIMIT * 2 );
 		$offset = $this->request->getVal( 'offset', '' );
 
 		$categories = WikiaDataAccess::cache(
@@ -393,7 +393,7 @@ class GameGuidesController extends WikiaController {
 						'action' => 'query',
 						'list' => 'allcategories',
 						'redirects' => true,
-						'aclimit' => $limit * 2,
+						'aclimit' => $limit,
 						'acfrom' => $offset,
 						'acprop' => 'id|size',
 						//We don't want empty categories to show up
@@ -410,16 +410,16 @@ class GameGuidesController extends WikiaController {
 
 			$ret = [];
 
-			foreach( $allCategories as $key => $value ) {
+			foreach( $allCategories as $value ) {
 				if($value['size'] - $value['files'] > 0){
-					$ret[$key] = array(
-						'name' => $value['*'],
-						'pageid'=> $value['pageid']
+					$ret[] = array(
+						'title' => $value['*'],
+						'id'=> $value['pageid']
 					);
 				}
 			}
 
-			$this->response->setVal( 'categories', $ret );
+			$this->response->setVal( 'items', $ret );
 
 			if ( !empty( $categories['query-continue'] ) ) {
 				$this->response->setVal( 'offset', $categories['query-continue']['allcategories']['acfrom'] );
@@ -448,7 +448,7 @@ class GameGuidesController extends WikiaController {
 		$ret = false;
 
 		foreach( $content as $tag ){
-			if ( $requestTag == $tag['name'] ) {
+			if ( $requestTag == $tag['title'] ) {
 				$ret = $tag['categories'];
 			}
 		}
@@ -459,14 +459,14 @@ class GameGuidesController extends WikiaController {
 			if ( !empty( $sort ) ) {
 				if ( $sort == 'alpha' ) {
 					usort($ret, function( $a, $b ){
-						return strcasecmp($a['name'], $b['name']);
+						return strcasecmp($a['title'], $b['title']);
 					});
 				} else if ( $sort == 'hot' ) {
 					$hot = array_keys(
 						DataMartService::getTopArticlesByPageview(
 							$this->wg->CityId,
 							array_reduce($ret, function($ret, $item){
-								$ret[] = $item['pageid'];
+								$ret[] = $item['id'];
 								return $ret;
 							}),
 							null,
@@ -479,7 +479,7 @@ class GameGuidesController extends WikiaController {
 					$sorted = [];
 					$left = [];
 					foreach ( $ret as $value ) {
-						$key = array_search( $value['pageid'], $hot );
+						$key = array_search( $value['id'], $hot );
 
 						if ( $key === false ) {
 							$left[] = $value;
@@ -497,7 +497,7 @@ class GameGuidesController extends WikiaController {
 				}
 			}
 
-			$this->response->setVal( 'categories', $ret );
+			$this->response->setVal( 'items', $ret );
 		} else if ( $requestTag !== '' ) {
 			$this->wf->profileOut( __METHOD__ );
 			throw new InvalidParameterApiException( 'tag' );
@@ -520,10 +520,10 @@ class GameGuidesController extends WikiaController {
 			array_reduce(
 				$content,
 				function( $ret, $item ) {
-					if( $item['name'] !== '' ) {
+					if( $item['title'] !== '' ) {
 						$ret[] = array(
-							'name' => $item['name'],
-							'pageid' => $item['categories'][0]['pageid'] // for now lets use first category in tag, then we'll see
+							'title' => $item['title'],
+							'id' => $item['categories'][0]['id'] // for now lets use first category in tag, then we'll see
 						);
 					}
 
