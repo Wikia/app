@@ -5,6 +5,7 @@
 		, adLogicShortPage
 		, adLogicHighValueCountry
 		, scriptWriter
+		, dartUrl
 		, wikiaDart
 		, evolveHelper
 		, adProviderAdDriver2
@@ -26,7 +27,8 @@
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
 	slotTweaker = SlotTweaker(log, document, window);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
-	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux, adLogicShortPage);
+	dartUrl = DartUrl();
+	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux, adLogicShortPage, dartUrl);
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
