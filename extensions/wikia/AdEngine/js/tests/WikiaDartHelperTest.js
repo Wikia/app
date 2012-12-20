@@ -1,9 +1,12 @@
 /**
  * @test-framework QUnit
+ * @test-require-asset extensions/wikia/AdEngine/js/DartUrl.js
  * @test-require-asset extensions/wikia/AdEngine/js/WikiaDartHelper.js
  */
 
 module('WikiaDartHelper');
+
+dartUrl = DartUrl();
 
 test('getUrl Simple call', function() {
 	var logMock = function() {},
@@ -15,7 +18,7 @@ test('getUrl Simple call', function() {
 		},
 		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
 		adLogicShortPageMock = {hasPreFooters: function() {return true;}},
-		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock),
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock, dartUrl),
 		actual = dartHelper.getUrl({
 			ord: 7,
 			slotsize: '100x200',
@@ -40,7 +43,7 @@ test('getUrl default DB name', function() {
 		},
 		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
 		adLogicShortPageMock = {hasPreFooters: function() {return true;}},
-		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock),
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock, dartUrl),
 		actual = dartHelper.getUrl({
 			ord: 7,
 			slotsize: '100x200',
@@ -66,7 +69,7 @@ test('getUrl page type', function() {
 		},
 		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
 		adLogicShortPageMock = {hasPreFooters: function() {return true;}},
-		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock),
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock, dartUrl),
 		actual = dartHelper.getUrl({
 			ord: 7,
 			slotsize: '100x200',
@@ -104,77 +107,77 @@ test('getUrl Geo discovery', function() {
 		};
 
 	geoMock.getContinentCode = function() {return 'NA'};
-	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock),
-		actual = dartHelper.getUrl(params),
-		expected = 'http://ad.doubleclick.net/adj/wka.vertical/_dbname/article;' +
-			's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
-			'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
-			'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
+	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock, dartUrl);
+	actual = dartHelper.getUrl(params);
+	expected = 'http://ad.doubleclick.net/adj/wka.vertical/_dbname/article;' +
+		's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
+		'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
+		'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
 	equal(actual, expected, 'North America -> ad');
 
 	geoMock.getContinentCode = function() {return 'SA'};
-	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock),
-		actual = dartHelper.getUrl(params),
-		expected = 'http://ad.doubleclick.net/adj/wka.vertical/_dbname/article;' +
-			's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
-			'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
-			'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
+	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock, dartUrl);
+	actual = dartHelper.getUrl(params);
+	expected = 'http://ad.doubleclick.net/adj/wka.vertical/_dbname/article;' +
+		's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
+		'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
+		'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
 	equal(actual, expected, 'South America -> ad');
 
 	geoMock.getContinentCode = function() {return 'XX'};
-	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock),
-		actual = dartHelper.getUrl(params),
-		expected = 'http://ad.doubleclick.net/adj/wka.vertical/_dbname/article;' +
-			's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
-			'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
-			'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
+	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock, dartUrl);
+	actual = dartHelper.getUrl(params);
+	expected = 'http://ad.doubleclick.net/adj/wka.vertical/_dbname/article;' +
+		's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
+		'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
+		'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
 	equal(actual, expected, 'Unknown -> ad');
 
 	geoMock.getContinentCode = function() {return 'AF'};
-	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock),
-		actual = dartHelper.getUrl(params),
-		expected = 'http://ad-emea.doubleclick.net/adj/wka.vertical/_dbname/article;' +
-			's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
-			'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
-			'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
+	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock, dartUrl);
+	actual = dartHelper.getUrl(params);
+	expected = 'http://ad-emea.doubleclick.net/adj/wka.vertical/_dbname/article;' +
+		's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
+		'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
+		'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
 	equal(actual, expected, 'Africa -> ad-emea');
 
 	geoMock.getContinentCode = function() {return 'OC'};
-	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock),
-		actual = dartHelper.getUrl(params),
-		expected = 'http://ad-apac.doubleclick.net/adj/wka.vertical/_dbname/article;' +
-			's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
-			'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
-			'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
+	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock, dartUrl);
+	actual = dartHelper.getUrl(params);
+	expected = 'http://ad-apac.doubleclick.net/adj/wka.vertical/_dbname/article;' +
+		's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
+		'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
+		'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
 	equal(actual, expected, 'Oceania -> ad-apac');
 
 	geoMock.getContinentCode = function() {return 'EU'};
-	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock),
-		actual = dartHelper.getUrl(params),
-		expected = 'http://ad-emea.doubleclick.net/adj/wka.vertical/_dbname/article;' +
-			's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
-			'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
-			'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
+	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock, dartUrl);
+	actual = dartHelper.getUrl(params);
+	expected = 'http://ad-emea.doubleclick.net/adj/wka.vertical/_dbname/article;' +
+		's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
+		'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
+		'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
 	equal(actual, expected, 'Europe -> ad-emea');
 
 	geoMock.getContinentCode = function() {return 'AS'};
 	geoMock.getCountryCode = function() {return 'QA'};
-	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock),
-		actual = dartHelper.getUrl(params),
-		expected = 'http://ad-emea.doubleclick.net/adj/wka.vertical/_dbname/article;' +
-			's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
-			'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
-			'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
+	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock, dartUrl);
+	actual = dartHelper.getUrl(params);
+	expected = 'http://ad-emea.doubleclick.net/adj/wka.vertical/_dbname/article;' +
+		's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
+		'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
+		'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
 	equal(actual, expected, 'Qatar -> ad-emea');
 
 	geoMock.getContinentCode = function() {return 'AS'};
 	geoMock.getCountryCode = function() {return 'CN'};
-	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock),
-		actual = dartHelper.getUrl(params),
-		expected = 'http://ad-apac.doubleclick.net/adj/wka.vertical/_dbname/article;' +
-			's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
-			'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
-			'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
+	dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, geoMock, {}, adLogicShortPageMock, dartUrl);
+	actual = dartHelper.getUrl(params);
+	expected = 'http://ad-apac.doubleclick.net/adj/wka.vertical/_dbname/article;' +
+		's0=vertical;s1=_dbname;s2=article;dmn=exampleorg;hostpre=example;' +
+		'pos=SLOT_NAME;lang=xx;dis=large;hasp=yes;src=driver;sz=100x200;' +
+		'mtfIFPath=/extensions/wikia/AdEngine/;mtfInline=true;tile=3;endtag=$;ord=7?';
 	equal(actual, expected, 'China -> ad-apac');
 });
 
@@ -191,7 +194,7 @@ test('getUrl Hub page: video games', function() {
 		},
 		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
 		adLogicShortPageMock = {hasPreFooters: function() {return true;}},
-		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock),
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock, dartUrl),
 		actual = dartHelper.getUrl({
 			ord: 7,
 			slotsize: '100x200',
@@ -220,7 +223,7 @@ test('getUrl Hub page: entertainment', function() {
 		},
 		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
 		adLogicShortPageMock = {hasPreFooters: function() {return true;}},
-		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock),
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock, dartUrl),
 		actual = dartHelper.getUrl({
 			ord: 7,
 			slotsize: '100x200',
@@ -249,7 +252,7 @@ test('getUrl Hub page: lifestyle', function() {
 		},
 		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
 		adLogicShortPageMock = {hasPreFooters: function() {return true;}},
-		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock),
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock, dartUrl),
 		actual = dartHelper.getUrl({
 			ord: 7,
 			slotsize: '100x200',
@@ -278,7 +281,7 @@ test('getUrl Hub page: bogus one', function() {
 		},
 		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
 		adLogicShortPageMock = {hasPreFooters: function() {return true;}},
-		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock),
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock, dartUrl),
 		actual = dartHelper.getUrl({
 			ord: 7,
 			slotsize: '100x200',
@@ -304,7 +307,7 @@ test('getUrl Auto tile, same ord', function() {
 		},
 		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
 		adLogicShortPageMock = {hasPreFooters: function() {return true;}},
-		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock),
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock, dartUrl),
 		params = {
 			slotsize: '100x200',
 			slotname: 'SLOT_NAME',
@@ -365,7 +368,7 @@ test('getUrl Page categories', function() {
 		},
 		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
 		adLogicShortPageMock = {hasPreFooters: function() {return true;}},
-		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock),
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, {}, adLogicShortPageMock, dartUrl),
 		actual = dartHelper.getUrl({
 			ord: 7,
 			slotsize: '100x200',
