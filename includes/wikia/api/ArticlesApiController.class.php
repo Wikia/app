@@ -77,17 +77,14 @@ class ArticlesApiController extends WikiaApiController {
 	 * @requestParam integer $batch [OPTIONAL] The batch/page index to retrieve, defaults to 1
 	 *
 	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
-	 * @responseParam integer $total The total number of results
-	 * @responseParam integer $currentBatch The index of the current batch/page
-	 * @responseParam integer $batches The total number of batches/pages
-	 * @responseParam integer $next The amount of items in the next batch/page
+	 * @responseParam array $basepath domain of a wiki to create a url for an article
 	 *
-	 * @example http://glee.wikia.com/wikia.php?controller=ArticlesApi&method=getList&namespaces=Main,Category
+	 * @example http://glee.wikia.com/wikia.php?controller=ArticlesApi&method=getTop&namespaces=Main,Category
 	 */
-	public function getList() {
+	public function getTop() {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$namespaces = $this->request->getVal( self::PARAMETER_NAMESPACES, null );
+		$namespaces = $this->request->getArray( self::PARAMETER_NAMESPACES, null );
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
 		$ids = null;
 
@@ -102,10 +99,9 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		if ( !empty( $namespaces ) ) {
-			$namespaces = explode( ',', $namespaces );
 
 			foreach ( $namespaces as &$n ) {
-				$n = ( strtolower( $n ) === 'main' ) ? 0 : $this->wg->ContLang->getNsIndex( $n );
+				$n = is_numeric( $n ) ? (int) $n : false;
 
 				if ( $n === false ) {
 					throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
@@ -148,15 +144,11 @@ class ArticlesApiController extends WikiaApiController {
 
 				if ( !empty( $titles ) ) {
 					foreach ( $titles as $t ) {
-						$ns = $t->getNamespace();
 						$id = $t->getArticleID();
 						$collection[$id] = array(
 							'title' => $t->getText(),
 							'url' => $t->getLocalURL(),
-							'namespace' => array(
-								'id' => $t->getNamespace(),
-								'text' => ( $ns === 0 ) ? 'Main' : $t->getNsText()
-							)
+							'ns' => $t->getNamespace()
 						);
 
 						$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $collection[$id], 86400 );
@@ -165,6 +157,9 @@ class ArticlesApiController extends WikiaApiController {
 
 				$titles = null;
 			}
+		} else {
+			$this->wf->ProfileOut( __METHOD__ );
+			throw new NotFoundApiException();
 		}
 
 		$this->response->setCacheValidity(
@@ -181,6 +176,10 @@ class ArticlesApiController extends WikiaApiController {
 
 		$batches = null;
 		$this->wf->ProfileOut( __METHOD__ );
+	}
+
+	public function getList(){
+
 	}
 
 	/**
