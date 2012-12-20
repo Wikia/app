@@ -15,6 +15,8 @@ class GameGuidesController extends WikiaController {
 	const SIX_HOURS = 21600; //6h
 	const LIMIT = 25;
 
+	const NEW_API_VERSION = 1;
+
 	/**
 	 * @var $mModel GameGuidesModel
 	 */
@@ -383,7 +385,7 @@ class GameGuidesController extends WikiaController {
 		$offset = $this->request->getVal( 'offset', '' );
 
 		$categories = WikiaDataAccess::cache(
-			$this->wf->memcKey( __METHOD__, $offset, $limit ),
+			$this->wf->memcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
 			self::SIX_HOURS,
 			function() use ( $limit, $offset ) {
 				return ApiService::call(
@@ -511,7 +513,7 @@ class GameGuidesController extends WikiaController {
 			array_reduce(
 				$content,
 				function( $ret, $item ) {
-					if( $item['name'] != '' ) {
+					if( $item['name'] !== '' ) {
 						$ret[] = array(
 							'name' => $item['name'],
 							'pageid' => $item['categories'][0]['pageid'] // for now lets use first category in tag, then we'll see
@@ -560,14 +562,14 @@ class GameGuidesController extends WikiaController {
 				$offset = $this->request->getVal( 'offset', '' );
 
 				$articles = WikiaDataAccess::cache(
-					$this->wf->memcKey( __METHOD__, $category, $offset, $limit ),
+					$this->wf->memcKey( __METHOD__, $category, $offset, $limit, self::NEW_API_VERSION ),
 					self::SIX_HOURS,
 					function() use ( $category, $limit, $offset ){
 						return ApiService::call(
 							array(
 								'action' => 'query',
 								'list' => 'categorymembers',
-								'cmtype' => 'page|subcat',
+								'cmnamespace' => '0|14',
 								'cmprop' => 'ids|title',
 								'cmtitle' => $category,
 								'cmlimit' => $limit,
@@ -601,7 +603,8 @@ class GameGuidesController extends WikiaController {
 				$this->response->setVal( 'error', 'Title::newFromText returned null' );
 			}
 		} else {
-			$this->response->setVal( 'error', 'No category given' );
+			$this->wf->profileOut( __METHOD__ );
+			throw new MissingParameterApiException( 'category' );
 		}
 
 
