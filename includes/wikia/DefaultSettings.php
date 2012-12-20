@@ -160,6 +160,7 @@ $app->registerClass( 'BadRequestApiException', "{$IP}/includes/wikia/api/ApiExce
 $app->registerClass( 'OutOfRangeApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
 $app->registerClass( 'MissingParameterApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
 $app->registerClass( 'InvalidParameterApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
+$app->registerClass( 'NotFoundApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
 
 /**
  * Wikia API end
