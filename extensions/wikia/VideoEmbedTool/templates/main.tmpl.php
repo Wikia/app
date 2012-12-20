@@ -8,7 +8,7 @@
 ?>
 
 <h1 id="VideoEmbedTitle"><?= wfMsg( 'vet-title' ) ?></h1>
-<section class="modalContent">
+<section>
 	<img src="<?= $wgStylePath; ?>/common/images/ajax.gif" id="VideoEmbedProgress2" style="display: none;"/>
 	<form action="<?= $wgScript ?>?action=ajax&rs=VET&method=insertVideo" id="VideoEmbedForm" class="WikiaForm" method="POST">
 	<?php if( !$wgUser->isAllowed( 'upload' ) ) {
