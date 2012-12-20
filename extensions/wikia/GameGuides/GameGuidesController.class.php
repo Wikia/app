@@ -205,10 +205,10 @@ class GameGuidesController extends WikiaController {
 					$revId
 				);
 			} else {
-				$this->response->setVal( 'error', 'Revision ID = 0' );
+				throw new NotFoundApiException( 'Revision ID = 0' );
 			}
 		} else {
-			$this->response->setVal( 'error', 'Title not found' );
+			throw new NotFoundApiException( 'Title not found' );
 		}
 	}
 
@@ -420,7 +420,8 @@ class GameGuidesController extends WikiaController {
 			}
 
 		} else {
-			$this->response->setVal( 'error', 'No Categories' );
+			$this->wf->profileOut( __METHOD__ );
+			throw new NotFoundApiException( 'No Categories' );
 		}
 
 		$this->wf->profileOut( __METHOD__ );
@@ -597,10 +598,12 @@ class GameGuidesController extends WikiaController {
 						$this->response->setVal( 'offset', $articles['query-continue']['categorymembers']['cmcontinue']);
 					}
 				} else {
-					$this->response->setVal( 'error', 'No members' );
+					$this->wf->profileOut( __METHOD__ );
+					throw new NotFoundApiException( 'No members' );
 				}
 			} else {
-				$this->response->setVal( 'error', 'Title::newFromText returned null' );
+				$this->wf->profileOut( __METHOD__ );
+				throw new NotFoundApiException( 'Title::newFromText returned null' );
 			}
 		} else {
 			$this->wf->profileOut( __METHOD__ );
@@ -629,3 +632,5 @@ class GameGuidesWrongAPIVersionException extends WikiaException {
 		parent::__construct( 'Wrong API version', 801 );
 	}
 }
+
+class NotFoundApiException extends NotFoundException {}
