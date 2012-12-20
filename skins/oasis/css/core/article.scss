@@ -375,8 +375,25 @@
 		}
 	}
 
-	.wikiaPlaceholder > div {
-		text-align: center;
+	.wikiaPlaceholder {
+		vertical-align: bottom;
+		
+		> div {
+			margin: 0.5em 1.4em 1.2em 0;
+			text-align: center;
+			
+			&.tright {
+				margin: 0.5em 0 1.2em 1.4em;
+			}
+			
+			&.tcenter {
+				margin: 0.5em auto 1.2em;
+			}
+			
+			a {
+				position:relative;
+			}
+		}
 	}
 	.fullMedia {
 		word-wrap: break-word;

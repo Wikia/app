@@ -53,10 +53,9 @@ class VideoHandlerHooks extends WikiaObject{
 
 	public function WikiaVideoParserBeforeStrip($parser, &$text, $strip_state) {
 
-		global $wgWikiaVideoGalleryId, $wgWikiaVideoPlaceholderId, $wgRTEParserEnabled;
+		global $wgWikiaVideoGalleryId, $wgRTEParserEnabled;
 
 		$wgWikiaVideoGalleryId = 0;
-		$wgWikiaVideoPlaceholderId = 0;
 
 		// macbre: don't touch anything when parsing for RTE
 		if (!empty($wgRTEParserEnabled)) {
