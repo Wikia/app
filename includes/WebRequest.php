@@ -1048,7 +1048,7 @@ HTML;
 
 		# short circuit XFF Check, and keep us from needing to know fastly IPS
 		if ( $wgClientIPHeader ) { 
-			$trustedHeaderIp = $this->getHeader( $wgClientIPHeader ) 
+			$trustedHeaderIp = $this->getHeader( $wgClientIPHeader ) ;
 			if ( $trustedHeaderIp !== false ) {
 				$ip = $trustedHeaderIp;	
 				$foundTrustedHeader = true;
