@@ -76,9 +76,11 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 		$model = new MarketingToolboxModel();
 		$imageSize = $model->getThumbnailSize();
 		for ($i = 1; $i <= $data['slidesCount']; $i++) {
-
 			if (!empty($data['values']['photo' . $i])) {
-				$data['photos'][$i] = ImagesService::getLocalFileThumbUrl($data['values']['photo' . $i], $imageSize);
+				$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['values']['photo' . $i], $imageSize);
+				$data['photos'][$i]['url'] = $imageData->url;
+				$data['photos'][$i]['imageWidth'] = $imageData->width;
+				$data['photos'][$i]['imageHeight'] = $imageData->height;
 			}
 		}
 
