@@ -26,11 +26,18 @@ class ArticlesApiController extends WikiaApiController {
 		foreach ( $added + $deleted as $cat) {
 			WikiaDataAccess::cachePurge( self::getCacheKey( $cat, self::CATEGORY_CACHE_ID ) );
 
+			$param = array(
+				'category' => $cat
+			);
+
+			self::purgeMethod(
+				'getTop',
+				$param
+			);
+
 			self::purgeMethod(
 				'getList',
-				array(
-					'category' => $cat
-				)
+				$param
 			);
 		}
 
@@ -43,7 +50,7 @@ class ArticlesApiController extends WikiaApiController {
 	 */
 	private static function getCategoryMembers( $category, $limit = 5000, $offset = '', $namespaces = '', $sort = 'sortkey', $dir = 'asc' ){
 		return WikiaDataAccess::cache(
-			self::getCacheKey( $category, $limit, $offset, $namespaces, self::CATEGORY_CACHE_ID, $dir, self::API_VERSION ),
+			self::getCacheKey( $category, $limit, $offset, $namespaces, self::CATEGORY_CACHE_ID, $dir ),
 			self::CLIENT_CACHE_VALIDITY,
 			function() use ( $category, $limit, $sort, $offset, $namespaces, $dir ) {
 				$ids = ApiService::call(
@@ -215,7 +222,7 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		} else {
 			$articles = WikiaDataAccess::cache(
-				self::getCacheKey( $limit, $offset, $namespaces, 'page', self::API_VERSION ),
+				self::getCacheKey( $limit, $offset, $namespaces, 'page' ),
 				self::CLIENT_CACHE_VALIDITY,
 				function() use ( $limit, $offset, $namespaces ) {
 
@@ -396,7 +403,7 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	static private function getCacheKey( $name, $type ) {
-		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, $type, $name );
+		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, $type, $name, self::API_VERSION );
 	}
 
 	static public function purgeCache( $id ) {
