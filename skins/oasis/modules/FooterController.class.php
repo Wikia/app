@@ -101,9 +101,19 @@ class FooterController extends WikiaController {
 	}
 
 	public function executeMenu( $params ) {
+		$this->wf->profileIn(__METHOD__);
 		$items = (array)$params['items'];
 		wfRunHooks('BeforeToolbarMenu', array(&$items));
-		$this->items = $items;
-	}
 
+		$itemObjects = array();
+		foreach($items as $item) {
+			$itemObj = FooterMenuItemFactory::buildItem($item['type']);
+			$itemObj->setRawData($item);
+			$itemObjects [] = $itemObj;
+		}
+		$this->items = $itemObjects;
+
+		$this->wf->profileOut(__METHOD__);
+	}
 }
+

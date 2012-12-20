@@ -320,6 +320,18 @@ $wgAutoloadClasses['FooterCustomizeItemService'] = $IP.'/skins/oasis/modules/foo
 $wgAutoloadClasses['FooterDevinfoItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterDevinfoItem.class.php';
 $wgAutoloadClasses['FooterDisabledItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterDisabledItem.class.php';
 
+// Footer Menu Controller refactor
+$wgAutoloadClasses['FooterMenuItemFactory'] = $IP.'/skins/oasis/modules/footer/FooterMenuItemFactory.class.php';
+$wgAutoloadClasses['FooterMenuItemBaseService'] = $IP.'/skins/oasis/modules/footer/FooterMenuItemBase.class.php';
+$wgAutoloadClasses['FooterShareItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterShareItem.class.php';
+$wgAutoloadClasses['FooterFollowItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterFollowItem.class.php';
+$wgAutoloadClasses['FooterMenuItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterMenuItem.class.php';
+$wgAutoloadClasses['FooterLinkItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterLinkItem.class.php';
+$wgAutoloadClasses['FooterHtmlItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterHtmlItem.class.php';
+$wgAutoloadClasses['FooterCustomizeItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterCustomizeItem.class.php';
+$wgAutoloadClasses['FooterDevinfoItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterDevinfoItem.class.php';
+$wgAutoloadClasses['FooterDisabledItemService'] = $IP.'/skins/oasis/modules/footer/features/FooterDisabledItem.class.php';
+
 // TODO:move this inclusions to CommonExtensions?
 require_once( $IP.'/extensions/wikia/ImageTweaks/ImageTweaks.setup.php' );
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
