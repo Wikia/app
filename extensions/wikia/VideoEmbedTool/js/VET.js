@@ -19,10 +19,6 @@ var VET_slider = null;
 var VET_thumbSize = null;
 var VET_orgThumbSize = null;
 var VET_placeholder = -1;
-var VET_align = 0;
-var VET_thumb = 0;
-var VET_size = 0;
-var VET_caption = 0;
 var VET_box = -1;
 var VET_height = null;
 var VET_refid = null;
@@ -326,7 +322,7 @@ function VET_getCaret() {
   return (caretPos);
 }
 
-function VET_show( e, placeholder, box, align, thumb, size, caption ) {
+function VET_show( e ) {
 	if (wgUserName == null && wgAction == 'edit') {
 		// handle login on edit page
 		UserLogin.rteForceLogin();
@@ -351,28 +347,6 @@ function VET_show( e, placeholder, box, align, thumb, size, caption ) {
 	VET_wysiwygStart = 1;
 	VET_placeholder = -1;
 
-	if(typeof placeholder != 'undefined') {
-		console.log('this is placeholder', placeholder, box, align, thumb, size, caption);
-		VET_placeholder = placeholder;
-		VET_box = box;
-		// they only are given when the placeholder is given...
-		if(typeof align != "undefined") {
-			VET_align = align;
-		}
-
-		if(typeof thumb != "undefined") {
-			VET_thumb = thumb;
-		}
-
-		if(typeof size != "undefined") {
-			VET_size = size;
-		}
-
-		if(typeof caption != "undefined") {
-			VET_caption = caption;
-		}
-	}
-
 	// TODO: FCK support - to be removed after full switch to RTE
 	if(YAHOO.lang.isNumber(e)) {
 		if( typeof FCK != "undefined" ){
@@ -396,7 +370,6 @@ function VET_show( e, placeholder, box, align, thumb, size, caption ) {
 				var data = window.VET_RTEVideo.getData();
 				console.log('VET mess', window.VET_RTEVideo, data);
 				if (e.data.isPlaceholder) {
-					console.log('editor placeholder');
 				
 					// video placeholder
 					RTE.log('video placeholder clicked');
@@ -619,22 +592,6 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 
 	if ($G( 'VET_error_box' )) {
 		GlobalNotification.show( $G( 'VET_error_box' ).innerHTML, 'error', null, VET_notificationTimout );
-	}
-
-	if( 0 < VET_align ) {
-		$G( 'VideoEmbedLayoutRow' ).style.display = 'none';
-	}
-
-	if( 0 < VET_thumb ) {
-		$G( 'VideoEmbedSizeRow' ).style.display = 'none';
-	}
-
-	if( 0 < VET_size ) {
-		$G( 'VideoEmbedWidthRow' ).style.display = 'none';
-	}
-
-	if( '' != VET_caption ) {
-		$G('VideoEmbedCaptionRow').style.display = 'none';
 	}
 
 	if ( $G('VideoEmbedMain').innerHTML == '' ) {
