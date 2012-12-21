@@ -69,8 +69,6 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 	public function renderEditor($data) {
 		$sliderModel = new MarketingToolboxSliderModel();
 		$data['slidesCount'] = $sliderModel->getSlidesCount();
-
-
 		$data['photos'] = array();
 
 		$model = new MarketingToolboxModel();
