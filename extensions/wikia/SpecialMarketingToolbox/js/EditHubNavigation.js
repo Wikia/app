@@ -45,6 +45,7 @@ ModuleNavigation.prototype = {
 		for (var i = 0; i < sourceContainersLength; i++) {
 			this.switchElementValue(sourceContainers[i], destContainers[i]);
 		}
+		dest.get(0).scrollIntoView();
 	},
 
 	switchElementValue: function(source, dest) {
