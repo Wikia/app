@@ -53,6 +53,7 @@ ModuleNavigation.prototype = {
 		if (sourceTagName != dest.nodeName.toLowerCase()) {
 			throw "Switchable type not equals";
 		}
+		var imgAttribsToSwitch = ['src', 'width', 'height'];
 
 		source = $(source);
 		dest = $(dest);
@@ -65,9 +66,11 @@ ModuleNavigation.prototype = {
 				dest.text(tmp);
 				break;
 			case 'img':
-				tmp = source.attr('src');
-				source.attr('src', dest.attr('src'));
-				dest.attr('src', tmp);
+				for (var i = 0; i < imgAttribsToSwitch.length; i++) {
+					tmp = source.attr(imgAttribsToSwitch[i]);
+					source.attr(imgAttribsToSwitch[i], dest.attr(imgAttribsToSwitch[i]));
+					dest.attr(imgAttribsToSwitch[i], tmp);
+				}
 				break;
 			default:
 				tmp = source.val();
