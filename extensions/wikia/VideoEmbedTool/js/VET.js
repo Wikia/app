@@ -269,71 +269,6 @@ function VET_show( options ) {
 
 	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'open');
 
-	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
-	/* gets it from cache?
-	if(VET_panel != null) {
-		if ( 400 == wgNamespaceNumber ) {
-			if( $G( 'VideoEmbedPageWindow' ) ) {
-				$G( 'VideoEmbedPageWindow' ).style.visibility = 'hidden';
-			}
-		}
-
-		VET_panel.show();
-		// Recenter each time for different instances of RTE. (BugId:15589)
-		VET_panel.center();
-		if(VET_refid != null && VET_wysiwygStart == 2) {
-			VET_editVideo();
-		} else if($G('VideoEmbedUrl')) {
-			$G('VideoEmbedUrl').focus();
-		}
-		return;
-	}*/
-/*
-	var html = '';
-	html += '<div class="reset" id="VideoEmbed">';
-	html += '	<div id="VideoEmbedError"></div>';
-	html += '	<div id="VideoEmbedBorder"></div>';
-	html += '	<div id="VideoEmbedProgress1" class="VideoEmbedProgress"></div>';
-	html += '	<div id="VideoEmbedBack"><img src="'+wgBlankImgUrl+'" id="fe_vetback_img" class="sprite back" alt="' + $.msg('vet-back') + '" /><a href="#">' + $.msg('vet-back') + '</a></div>';
-	html += '	<div id="VideoEmbedBody">';
-	html += '		<div id="VideoEmbedClose"><img src="'+wgBlankImgUrl+'" id="fe_vetclose_img" class="sprite close" alt="' + $.msg('vet-close') + '" /><a href="#">' + $.msg('vet-close') + '</a></div>';
-	html += '		<div id="VideoEmbedMain"></div>';
-	html += '		<div id="VideoEmbedDetails" style="display: none;"></div>';
-	html += '		<div id="VideoEmbedConflict" style="display: none;"></div>';
-	html += '		<div id="VideoEmbedSummary" style="display: none;"></div>';
-	html += '	</div>';
-	html += '</div>';
-
-	var element = document.createElement('div');
-	element.id = 'VET_div';
-	element.style.width = '970px';
-	element.style.height = '487px';
-	element.innerHTML = html;
-
-	document.body.appendChild(element);
-
-	VET_panel = new YAHOO.widget.Panel('VET_div', {
-		modal: true,
-		constraintoviewport: true,
-		draggable: false,
-		close: false,
-		underlay: "none",
-		visible: false,
-		zIndex: 900
-	});
-
-	// use display: block/none for YUI panels (BugId:8825)
-	VET_panel.showEvent.subscribe(function() {
-		YAHOO.util.Dom.setStyle(this.element, "display", "block");
-	});
-	VET_panel.hideEvent.subscribe(function() {
-		YAHOO.util.Dom.setStyle(this.element, "display", "none");
-	});
-
-	VET_panel.render();
-	VET_panel.show();
-	VET_panel.center();*/
-
 	if(VET_wysiwygStart == 2) {
 		VET_editVideo();
 	} else {
@@ -703,8 +638,7 @@ function VET_close(e) {
 	}
 
 	VET_switchScreen('Main');
-	VET_loadMain();
-	YAHOO.util.Dom.setStyle('header_ad', 'display', 'block');*/
+	VET_loadMain();*/
 
 	// Handle MiniEditor focus
 	// (BugId:18713)

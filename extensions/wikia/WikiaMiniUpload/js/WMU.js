@@ -509,7 +509,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		}
 	}
 
-	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
 	if(WMU_panel != null) {
 		WMU_panel.show();
 		// Recenter each time for different instances of RTE. (BugId:15589)
@@ -1269,7 +1268,6 @@ function WMU_close(e) {
 	if(typeof window.RTE == 'undefined' && $G('wpTextbox1')) $G('wpTextbox1').focus();
 	WMU_switchScreen('Main');
 	WMU_loadMain();
-	YAHOO.util.Dom.setStyle('header_ad', 'display', 'block');
 
 	// Handle MiniEditor focus
 	// (BugId:18713)
