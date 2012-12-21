@@ -7,11 +7,10 @@
 
 class ArticlesApiController extends WikiaApiController {
 
-	const API_VERSION = 1;
+	const CACHE_VERSION = 8;
 
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
-	const CACHE_VERSION = 7;
 	const CLIENT_CACHE_VALIDITY = 86400;//24h
 	const PARAMETER_ARTICLES = 'ids';
 	const PARAMETER_ABSTRACT = 'abstract';
@@ -21,6 +20,7 @@ class ArticlesApiController extends WikiaApiController {
 	const CATEGORY_CACHE_ID = 'category';
 	const ARTICLE_CACHE_ID = 'article';
 	const DETAILS_CACHE_ID = 'details';
+	const PAGE_CACHE_ID = 'page';
 
 	/**
 	 * @private
@@ -53,9 +53,9 @@ class ArticlesApiController extends WikiaApiController {
 	 */
 	private static function getCategoryMembers( $category, $limit = 5000, $offset = '', $namespaces = '', $sort = 'sortkey', $dir = 'asc' ){
 		return WikiaDataAccess::cache(
-			self::getCacheKey( $category, $limit, $offset, $namespaces, self::CATEGORY_CACHE_ID, $dir ),
+			self::getCacheKey( $category, self::CATEGORY_CACHE_ID, [ $limit, $offset, $namespaces, $dir ] ),
 			self::CLIENT_CACHE_VALIDITY,
-			function() use ( $category, $limit, $sort, $offset, $namespaces, $dir ) {
+			function() use ( $category, $limit, $offset, $namespaces, $sort, $dir ) {
 				$ids = ApiService::call(
 					array(
 						'action' => 'query',
@@ -116,7 +116,6 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		if ( !empty( $namespaces ) ) {
-
 			foreach ( $namespaces as &$n ) {
 				$n = is_numeric( $n ) ? (int) $n : false;
 
@@ -218,25 +217,46 @@ class ArticlesApiController extends WikiaApiController {
 		$limit = $this->request->getVal( 'limit', self::ITEMS_PER_BATCH );
 		$offset = $this->request->getVal( 'offset', '' );
 
-		if ( !is_numeric( $namespaces ) ) {
-			throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
-		}
-
 		if ( !empty( $category ) ) {
 			//if $category does not have Category: in it, add it as API needs it
 			$category = Title::newFromText( $category, NS_CATEGORY );
 
 			if ( !is_null( $category ) ) {
+				if ( !empty( $namespaces ) ) {
+					foreach ( $namespaces as &$n ) {
+						if ( !is_numeric( $n ) ) {
+							throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
+						}
+					}
+
+					$namespaces = implode( '|', $namespaces );
+				}
+
 				$articles = self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
 			} else {
 				$this->wf->profileOut( __METHOD__ );
 				throw new NotFoundApiException( 'Title::newFromText returned null' );
 			}
 		} else {
+
+			$namespace = $namespaces[0];
+
+			if (
+				//if it is not numeric
+				!empty( $namespace ) && !is_numeric( $namespace ) ||
+				//is empty string
+				$namespace === '' ||
+				//or is an array with more than one value
+				is_array($namespaces) && count($namespaces ) > 1
+			) {
+				//throw an error as for now this method accepts only one namespace
+				throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
+			}
+
 			$articles = WikiaDataAccess::cache(
-				self::getCacheKey( $limit, $offset, $namespaces, 'page' ),
+				self::getCacheKey( $offset, self::PAGE_CACHE_ID, [ $limit . $namespace ] ),
 				self::CLIENT_CACHE_VALIDITY,
-				function() use ( $limit, $offset, $namespaces ) {
+				function() use ( $limit, $offset, $namespace ) {
 
 					$params = array(
 						'action' => 'query',
@@ -245,9 +265,9 @@ class ArticlesApiController extends WikiaApiController {
 						'apfrom' => $offset
 					);
 
-					//even if this is an empty string allpages fail to fallback to Main namespace
-					if ( !empty( $namespaces ) ) {
-						$params['apnamespace'] = $namespaces;
+					//even if this is $namespace empty string allpages fail to fallback to Main namespace
+					if ( !empty( $namespace ) ) {
+						$params['apnamespace'] = $namespace;
 					}
 
 					$pages = ApiService::call( $params );
@@ -261,7 +281,7 @@ class ArticlesApiController extends WikiaApiController {
 			);
 		}
 
-		if ( !empty( $articles ) ) {
+		if ( is_array( $articles ) && !empty( $articles[0] ) ) {
 			$ret = [];
 
 			foreach( $articles[0] as $article ) {
@@ -414,8 +434,11 @@ class ArticlesApiController extends WikiaApiController {
 		$this->wf->ProfileOut( __METHOD__ );
 	}
 
-	static private function getCacheKey( $name, $type ) {
-		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, $type, $name, self::API_VERSION );
+	static private function getCacheKey( $name, $type, $params = '' ) {
+		if ( $params !== '' ) {
+			$params = md5( implode( '|', $params ) );
+		}
+		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, $type, $name, $params );
 	}
 
 	/**
