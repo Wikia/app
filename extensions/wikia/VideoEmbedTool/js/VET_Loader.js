@@ -19,7 +19,9 @@
 	}
 	*/
 	
-	VET_load_in_editor = function(event, mode) {
+	window.VET_load_in_editor = function(event) {
+		var mode = event.data.mode;
+		var element = event.element;
 		var embedPresets = {};
 		var exists = false;
 		var element = false;
@@ -47,14 +49,12 @@
 		if(mode === 'create') {
 			callback = function(embedData) {
 				var wikitag = $('#VideoEmbedTag').val();
-				if (typeof window.VET_RTEVideo != 'undefined') {
-					if (window.VET_RTEVideo && window.VET_RTEVideo.hasClass('media-placeholder')) {
-						// replace "Add Video" placeholder
-						RTE.mediaEditor.update(window.VET_RTEVideo, wikitag, embedData);
-					}
-					else {
-						RTE.mediaEditor.addVideo(wikitag, embedData);
-					}
+				if (element && element.hasClass('media-placeholder')) {
+					// replace "Add Video" placeholder
+					RTE.mediaEditor.update(window.VET_RTEVideo, wikitag, embedData);
+				}
+				else {
+					RTE.mediaEditor.addVideo(wikitag, embedData);
 				}
 
 			};
@@ -104,7 +104,6 @@
 	}
 	
 	VET_loader.load = function(options) {
-		debugger;
 		
 		var deferredList = [];
 		

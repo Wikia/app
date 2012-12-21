@@ -550,6 +550,9 @@ function VET_insertFinalVideo(e, type) {
 							options.caption = $G('VideoEmbedCaption').value;
 
 							// macbre: CK support
+							if(VET_callbackAfterEmbed) {
+								VET_callbackAfterEmbed(options);
+							}
 							/* move to VET_Loader.load from editor 
 							if (typeof window.VET_RTEVideo != 'undefined') {
 								if (window.VET_RTEVideo && window.VET_RTEVideo.hasClass('media-placeholder')) {

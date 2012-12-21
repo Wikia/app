@@ -54,8 +54,13 @@ CKEDITOR.plugins.add('rte-media',
 			editor.addCommand('addvideo', {
 				exec: function(editor) {
 					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+						RTE.tools.callFunction(window.VET_load_in_editor, null, {mode: 'create'});
+					});
+					/*
+					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
 						RTE.tools.callFunction(window.VET_show);
 					});
+					*/
 				}
 			});
 

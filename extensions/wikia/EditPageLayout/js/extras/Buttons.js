@@ -89,6 +89,7 @@
 		forceLogin: true,
 		clicksource: function() {
 			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+				console.log('point 5');
 				VET_show({
 					target: {
 						id: 'mw-editbutton-vet'
@@ -167,6 +168,7 @@
 				imageId: 'mw-editbutton-vet',
 				onclick: function( event ) {
 					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+						console.log('point 6');
 						VET_show( event );
 					});
 				}
