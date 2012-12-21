@@ -56,7 +56,8 @@ EditHub.prototype = {
 				$.loadYUI(),
 				$.getResources([
 					wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
-					wgExtensionsPath + '/wikia/WikiaMiniUpload/css/WMU.css'
+					wgExtensionsPath + '/wikia/WikiaMiniUpload/css/WMU.css',
+					'/resources/wikia/libraries/aim/jquery.aim.js'
 				])
 			).then($.proxy(function() {
 				WMU_skipDetails = true;
