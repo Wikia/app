@@ -774,8 +774,8 @@ $config['chat_ban_js'] = array(
 $config['theme_designer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'#group_oasis_wikia_js',
 		'#group_oasis_jquery',
-
 		'#group_oasis_tracker_js',
 
 		'//resources/jquery.ui/jquery.ui.widget.js',
