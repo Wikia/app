@@ -148,7 +148,7 @@
 		}
 		
 		$.when.apply(this, deferredList).done(function() {
-			$(templateHtml).makeModal({width:1000});
+			VET_loader.modal = $(templateHtml).makeModal({width:1000});
 			VET_show(options);
 			resourcesLoaded = true;
 		});			

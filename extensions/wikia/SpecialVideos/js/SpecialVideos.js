@@ -13,10 +13,10 @@ var SpecialVideos = {
 		});
 		
 		$('.addVideo').addVideoButton({
-			gaCat: 'testing',
-			callback: function() {
-				// After adding a video, show the video at the top of the "recent" sort screen
-				window.location.search = "?sort=recent"; 
+			callbackAfterSelect: function(url) {
+				AddVideoStatic.addVideoCallbackFunction(url, 'VideosController', function() {
+					window.location.search = "?sort=recent"; 
+				});
 			}
 		});
 	}

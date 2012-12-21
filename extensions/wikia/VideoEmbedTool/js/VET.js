@@ -26,6 +26,8 @@ var VET_shownMax = false;
 var VET_notificationTimout = 4000;
 var VET_isOnSpecialPage = false;
 var VET_embedPresets = false;
+var VET_callbackAfterSelect = false;
+var VET_callbackAfterEmbed = false;
 
 // Returns the DOM element for the RTE textarea
 function VET_getTextarea() {
@@ -264,8 +266,11 @@ function VET_show( options ) {
 
 	VET_isOnSpecialPage = wgNamespaceNumber === -1;
 
+	/* set options */
 	VET_embedPresets = options.embedPresets;
 	VET_wysiwygStart = options.startPoint || 1;
+	VET_callbackAfterSelect = options.callbackAfterSelect || false;
+	VET_callbackAfterEmbed = options.callbackAfterEmbed || false;
 
 	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'open');
 
@@ -276,12 +281,6 @@ function VET_show( options ) {
 	}
 
 	YAHOO.util.Event.addListener('VideoEmbedBack', 'click', VET_back);
-
-	if ( 400 == wgNamespaceNumber ) {
-		if( $G( 'VideoEmbedPageWindow' ) ) {
-			$G( 'VideoEmbedPageWindow' ).style.visibility = 'hidden';
-		}
-	}
 }
 
 function VET_loadMain() {
@@ -762,7 +761,11 @@ var VETExtended = {
 		// attach handlers - add video button
 		this.cachedSelectors.carousel.on('click', 'li > a', function(event) {
 			event.preventDefault();
-			VET_sendQueryEmbed($(this).attr('href'));
+			if(VET_callbackAfterSelect) {
+				VET_callbackAfterSelect($(this).attr('href'));
+			} else {
+				VET_sendQueryEmbed($(this).attr('href'));
+			}
 			
 			// track event
 			var label = that.carouselMode === 'search' ? 'add-video' : 'add-video-suggested';

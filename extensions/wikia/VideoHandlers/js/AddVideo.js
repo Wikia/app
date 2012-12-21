@@ -53,27 +53,13 @@
 		var loginWrapper = function ( callback ){
 			var message = 'protected';
 			if(( wgUserName == null ) && ( !alreadyLoggedIn )){
-				if (window.wgComboAjaxLogin) {
-					showComboAjaxForPlaceHolder( false, "", function() {
-						AjaxLogin.doSuccess = function() {
-							$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
-							alreadyLoggedIn = true;
-							callback();
-						};
-						AjaxLogin.close = function() {
-							$('#AjaxLoginBoxWrapper').closeModal();
-							$( window ).scrollTop( element.offset().top + 100 );
-						}
-					}, false, message );
-				} else {
-					UserLoginModal.show({
-						callback: function() {
-							$( window ).scrollTop( element.offset().top + 100 );
-							alreadyLoggedIn = true;
-							callback();
-						}
-					});
-				}
+				UserLoginModal.show({
+					callback: function() {
+						$( window ).scrollTop( element.offset().top + 100 );
+						alreadyLoggedIn = true;
+						callback();
+					}
+				});
 			} else {
 				callback();
 			}
@@ -307,6 +293,49 @@
 		element.on('click', handleClick);
 
 	};
+	
+	AddVideoStatic = {};
+	AddVideoStatic.addVideoCallbackFunction = function(url, controllerName, callback) {
+		//GlobalNotification.show( self.addModal.find('.notifyHolder').html(), 'notify' );
+		$.nirvana.postJson(
+			controllerName,
+			'addVideo',
+			{
+				articleId: wgArticleId,
+				url: url
+			},
+			function( formRes ) {
+				/* do this tracking outside
+				WikiaTracker.trackEvent(
+					'trackingevent',
+					{
+						'ga_category': settings.gaCat,
+						'ga_action': WikiaTracker.ACTIONS.ADD,
+						'ga_label': 'add-video-success'
+					},
+					'both'
+				);
+				*/
+				GlobalNotification.hide();
+				if ( formRes.error ) {
+					showError( formRes.error );
+				} else if ( formRes.html ){
+					VET_loader.modal.closeModal();
+					// Call success callback
+					if($.isFunction(callback)) {
+						callback(formRes.html);
+					}
+				} else {
+					//showError( self.addModal.find('.somethingWentWrong').html() );
+				}
+			},
+			function(){
+				showError();
+			}
+		);
+	};
+	
+	window.AddVideoStatic = AddVideoStatic;
 
 /*
 	$.fn.addVideoButton = function(options) {
