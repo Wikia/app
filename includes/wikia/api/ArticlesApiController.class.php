@@ -202,12 +202,12 @@ class ArticlesApiController extends WikiaApiController {
 
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
 
-		$namespaces = $this->request->getArray( self::PARAMETER_NAMESPACES, '' );
+		$namespaces = $this->request->getVal( self::PARAMETER_NAMESPACES, 0 );
 		$limit = $this->request->getVal( 'limit', self::ITEMS_PER_BATCH );
 		$offset = $this->request->getVal( 'offset', '' );
 
-		if ( !empty( $namespaces ) ) {
-			$namespaces = implode( '|', $namespaces );
+		if ( !is_numeric( $namespaces ) ) {
+			throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
 		}
 
 		if ( !empty( $category ) ) {
