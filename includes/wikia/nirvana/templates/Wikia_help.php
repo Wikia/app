@@ -7,7 +7,7 @@
 	 	<?= $method['description']; ?>
 		 <? if ( !empty( $method['examples'] ) ) :?>
 		 <dl>
-			 <dt><h4>Examples:</h4></dt>
+			 <dt><h4>Examples</h4></dt>
 			 <dd><ul>
 				 <? foreach ( $method['examples'] as $item ) :?>
 				 <li>
