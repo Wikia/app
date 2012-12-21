@@ -9,7 +9,8 @@ var app = require('express').createServer()
     , storage = require('./storage').redisFactory()
     , models = require('./models/models')
 	, mwBridge = require('./WMBridge.js').WMBridge
-	, loggerModule = require('./logger.js')
+	, loggerModule = require('./logger.js'),
+	, tracker = require('./tracker.js'),
 	, logger = loggerModule.logger;
 var http = require("http");
 
@@ -464,7 +465,10 @@ function formallyAddClient(client, socket, connectedUser){
 				event: 'join',
 				joinData: connectedUser.xport()
 			});
-			broadcastUserListToMediaWiki(client, false);		
+			broadcastUserListToMediaWiki(client, false);
+			//Conenction complted
+			//let's track it
+			logger.trackEvent(connectedUser);
 		}
 	);	
 } // end formallyAddClient()
