@@ -77,7 +77,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		}
 
 		if( $page->isRedirect() ) {
-			$page = F::build( 'Article', array( $page->getRedirectTarget() ) );
+			$page = new Article( $page->getRedirectTarget() );
 		}
 		
 		$pageId		= $page->getID();
@@ -418,9 +418,9 @@ class WikiaSearchIndexer extends WikiaObject {
 				$wm = $main;
 			}
 			
-			return ''.$wm->getMetaTitle();
+			return (string) $wm->getMetaTitle();
 		}
-		return ''.$title;
+		return (string) $title;
 	}
 	
 	/**
