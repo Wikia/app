@@ -28,7 +28,7 @@
 	slotTweaker = SlotTweaker(log, document, window);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	dartUrl = DartUrl();
-	wikiaDart = WikiaDartHelper(log, window, document, Geo, Krux, adLogicShortPage, dartUrl);
+	wikiaDart = WikiaDartHelper(log, window, document, Krux, adLogicShortPage, dartUrl);
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers

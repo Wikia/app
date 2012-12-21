@@ -1,5 +1,5 @@
 
-var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPage, dartUrl) {
+var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, dartUrl) {
 	'use strict';
 
 	var logGroup = 'WikiaDartHelper',
@@ -26,49 +26,6 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			return 'gaming';
 		}
 		return 'life';
-	};
-
-	getSubdomain = function () {
-		var subdomain;
-
-		switch (Geo.getContinentCode()) {
-		case 'AF':
-		case 'EU':
-			subdomain = 'ad-emea';
-			break;
-		case 'AS':
-			switch (Geo.getCountryCode()) {
-				// Middle East
-			case 'AE':
-			case 'CY':
-			case 'BH':
-			case 'IL':
-			case 'IQ':
-			case 'IR':
-			case 'JO':
-			case 'KW':
-			case 'LB':
-			case 'OM':
-			case 'PS':
-			case 'QA':
-			case 'SA':
-			case 'SY':
-			case 'TR':
-			case 'YE':
-				subdomain = 'ad-emea';
-				break;
-			default:
-				subdomain = 'ad-apac';
-			}
-			break;
-		case 'OC':
-			subdomain = 'ad-apac';
-			break;
-		default: // NA, SA
-			subdomain = 'ad';
-		}
-
-		return subdomain;
 	};
 
 	getCustomKeyValues = function () {
@@ -123,12 +80,12 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 	 *
 	 * @param params {
 	 *   REQUIRED:
+	 *     subdomain
 	 *     slotname
 	 *     slotsize
 	 *   OPTIONAL:
 	 *     adType (default: adj, adi, jwplayer, mobile)
 	 *     src (default: driver)
-	 *     subdomain (default: by geo)
 	 *     loc, dcopt, tile, positionfixed
 	 * }
 	 * @return {String} URL of DART script
@@ -142,7 +99,7 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			localTile,
 			localOrd = params.ord || ord,
 			url,
-			subdomain = params.subdomain || getSubdomain(),
+			subdomain = params.subdomain,
 			site,
 			zone1,
 			zone2,
@@ -255,11 +212,10 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 var WikiaDartMobileHelper = function (log, window, document) {
 	'use strict';
 
-	var nullGeo,
-		nullKrux,
+	var nullKrux,
 		nullAdLogicShortPage,
 		dartUrl = DartUrl(),
-		wikiaDartHelper = WikiaDartHelper(log, window, document, nullGeo, nullKrux, nullAdLogicShortPage, dartUrl);
+		wikiaDartHelper = WikiaDartHelper(log, window, document, nullKrux, nullAdLogicShortPage, dartUrl);
 
 	return {
 		/**
