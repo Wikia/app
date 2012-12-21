@@ -9,6 +9,7 @@ var config = require("./server_config.js");
 var qs = require('qs');
 var request = require('request');
 var logger = require('./logger.js').logger;
+var trackId = 0;
 //process.uptime()
 
 
@@ -20,6 +21,15 @@ var logger = require('./logger.js').logger;
 */
 
 var send = function(data) {
+	data.track_id = trackId;
+	trackId++;
+	if(trackId > 255) {
+		trackId = 0;
+	}
+
+	var ts = Math.round((new Date()).getTime() / 1000);
+	data.ts = ts;
+
 	var url =  'http://a.wikia-beacon.com/__track/special/chatevent?' + qs.stringify(data);
 	logger.info(url);
 	request({

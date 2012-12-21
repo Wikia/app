@@ -414,6 +414,9 @@ function finishConnectingUser(client, socket ){
 
 		if(oldClient && oldClient.userKey != client.userKey ){
 			oldClient.donotSendPart = true;
+			if(!oldClient.logout) {
+				tracker.trackEvent(client, 'disconnect');
+			}
 			// Send the old client a notice that they're about to be disconnected and why.
 			sendInlineAlertToClient(oldClient, '', 'chat-err-connected-from-another-browser', [], function(){
 				// Looks like we're kicking ourself, but since we're not in the sessionIdsByKey map yet,
@@ -431,6 +434,7 @@ function finishConnectingUser(client, socket ){
 			//we have double connection for the same window
 			if(oldClient){
 				monitoring.incrEventCounter('double_connects');
+				tracker.trackEvent(client, 'disconnect');
 				oldClient.donotSendPart = true;
                                 setTimeout(function(){
                                         if(oldClient){
@@ -566,6 +570,7 @@ function logout(client, socket, msg) {
 	});
 	monitoring.incrEventCounter('logouts');
 	tracker.trackEvent(client, 'logout');
+	client.logout = true;
 	// I'm still not sure if we should call kickUserFromRoom here or not...
 	broadcastToRoom(client, socket, {
 			event: 'logout', 
