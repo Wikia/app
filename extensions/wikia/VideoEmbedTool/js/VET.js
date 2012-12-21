@@ -20,12 +20,12 @@ var VET_thumbSize = null;
 var VET_orgThumbSize = null;
 var VET_box = -1;
 var VET_height = null;
-var VET_refid = null;
 var VET_wysiwygStart = 1;
 var VET_ratio = 1;
 var VET_shownMax = false;
 var VET_notificationTimout = 4000;
 var VET_isOnSpecialPage = false;
+var VET_embedPresets = false;
 
 // Returns the DOM element for the RTE textarea
 function VET_getTextarea() {
@@ -47,7 +47,7 @@ function VET_editVideo() {
 
 	var callback = {
 		success: function(o) {
-			var data = FCK.wysiwygData[VET_refid];
+			var data = VET_embedPresets;
 
 			VET_displayDetails(o.responseText, data);
 
@@ -101,10 +101,10 @@ function VET_editVideo() {
 	YAHOO.util.Connect.abort(VET_asyncTransaction);
 	var params = [];
 	var escTitle = "";
-	if ( typeof(FCK.wysiwygData[VET_refid].href) == "undefined" ) {
-		escTitle = FCK.wysiwygData[VET_refid].title;
+	if ( typeof(VET_embedPresets.href) == "undefined" ) {
+		escTitle = VET_embedPresets.title;
 	} else {
-		escTitle = FCK.wysiwygData[VET_refid].href;
+		escTitle = VET_embedPresets.href;
 	}
 	escTitle = encodeURIComponent(escTitle);
 	params.push( 'itemTitle='+escTitle );
@@ -140,43 +140,6 @@ function VET_doEditVideo() {
 
 	if ($G('VideoEmbedCaption').value) {
 		 extraData.caption = $G('VideoEmbedCaption').value;
-	}
-
-	// generate wikitext
-	var wikitext = '[[' + extraData.href;
-
-	if (extraData.thumb) {
-		wikitext += '|thumb';
-	}
-
-	if (extraData.align) {
-		wikitext += '|' + extraData.align;
-	}
-
-	if (extraData.width) {
-		wikitext += '|' + extraData.width + 'px';
-	}
-
-	if (extraData.caption) {
-		wikitext += '|' + extraData.caption;
-	}
-
-	wikitext += ']]';
-
-	// macbre: CK support
-	if (typeof window.VET_RTEVideo != 'undefined') {
-		if (window.VET_RTEVideo) {
-			// update existing video
-			RTE.mediaEditor.update(window.VET_RTEVideo, wikitext, extraData);
-		}
-		else {
-			// add new video
-			RTE.mediaEditor.addVideo(wikitext, extraData);
-		}
-	}
-	else {
-		// update FCK
-		FCK.VideoUpdate(VET_refid, wikitext, extraData);
 	}
 
 	// close dialog
@@ -262,47 +225,6 @@ function VET_readjustSlider( value ) {
 		}
 }
 
-function VET_showPreview(e) { // note for refactory - doesn't seem to be getting called anywhere
-	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
-
-	var html = '';
-	html += '<div class="reset" id="VideoEmbedPreview">';
-	html += '	<div id="VideoEmbedBorder"></div>';
-	html += '	<div id="VideoEmbedPreviewClose"><img src="'+wgBlankImgUrl+'" id="fe_vetpreviewclose_img" class="sprite close" alt="' + $.msg('vet-close') + '" /><a href="#">' + $.msg('vet-close') + '</a></div>';
-	html += '	<div id="VideoEmbedPreviewBody">';
-	html += '		<div id="VideoEmbedPreviewContent" style="display: none;"></div>';
-	html += '	</div>';
-	html += '</div>';
-
-	var element = document.createElement('div');
-	element.id = 'VET_previewDiv';
-	element.style.width = '600px';
-	element.style.height = '300px';
-	element.innerHTML = html;
-
-	document.body.appendChild(element);
-
-	VET_previewPanel = new YAHOO.widget.Panel('VET_previewDiv', {
-		modal: true,
-		constraintoviewport: true,
-		draggable: false,
-		close: false,
-		underlay: "none",
-		visible: false,
-		zIndex: 1600
-	});
-	VET_previewPanel.render();
-	VET_previewPanel.show();
-	VET_panel.center();
-	if(VET_refid != null && VET_wysiwygStart == 2 ) {
-		VET_editVideo();
-	} else {
-		VET_loadMain();
-	}
-
-	YAHOO.util.Event.addListener('VideoEmbedPreviewClose', 'click', VET_previewClose);
-}
-
 function VET_getCaret() {
   var caretPos = 0, control = VET_getTextarea();
 	if(YAHOO.env.ua.ie != 0) { // IE Support
@@ -321,7 +243,7 @@ function VET_getCaret() {
   return (caretPos);
 }
 
-function VET_show( e ) {
+function VET_show( options ) {
 	if (wgUserName == null && wgAction == 'edit') {
 		// handle login on edit page
 		UserLogin.rteForceLogin();
@@ -342,59 +264,13 @@ function VET_show( e ) {
 
 	VET_isOnSpecialPage = wgNamespaceNumber === -1;
 
-	VET_refid = null;
-	VET_wysiwygStart = 1;
-
-	// TODO: FCK support - to be removed after full switch to RTE
-	if(YAHOO.lang.isNumber(e)) {
-		if( typeof FCK != "undefined" ){
-			VET_refid = e;
-			if(VET_refid != -1) {
-				if(FCK.wysiwygData[VET_refid].href) {
-					// go to details page
-					VET_wysiwygStart = 2;
-				} else {
-					// go to main page
-				}
-			}
-		}
-	} else {
-		// macbre: CK support
-		if (e && e.type === 'rte') {
-			// get video from event data
-			window.VET_RTEVideo = e.data.element;
-			if (window.VET_RTEVideo) {
-				// edit a video
-				var data = window.VET_RTEVideo.getData();
-				console.log('VET mess', window.VET_RTEVideo, data);
-				if (e.data.isPlaceholder) {
-				
-					// video placeholder
-					RTE.log('video placeholder clicked');
-				}
-				else {
-					// "regular" video
-					$.extend(data, data.params);
-					delete data.params;
-
-					VET_wysiwygStart = 2;
-				}
-
-				// FIXME: let's pretend we're FCK for now
-				VET_refid = 0;
-				window.FCK = {wysiwygData: {0: {}}};
-				window.FCK.wysiwygData[0] = data;
-			}
-			else {
-				// add new video
-				VET_refid = -1;
-			}
-		}
-	}
+	VET_embedPresets = options.embedPresets;
+	VET_wysiwygStart = options.startPoint || 1;
 
 	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'open');
 
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
+	/* gets it from cache?
 	if(VET_panel != null) {
 		if ( 400 == wgNamespaceNumber ) {
 			if( $G( 'VideoEmbedPageWindow' ) ) {
@@ -405,14 +281,14 @@ function VET_show( e ) {
 		VET_panel.show();
 		// Recenter each time for different instances of RTE. (BugId:15589)
 		VET_panel.center();
-			if(VET_refid != null && VET_wysiwygStart == 2) {
+		if(VET_refid != null && VET_wysiwygStart == 2) {
 			VET_editVideo();
 		} else if($G('VideoEmbedUrl')) {
 			$G('VideoEmbedUrl').focus();
 		}
 		return;
-	}
-
+	}*/
+/*
 	var html = '';
 	html += '<div class="reset" id="VideoEmbed">';
 	html += '	<div id="VideoEmbedError"></div>';
@@ -456,9 +332,9 @@ function VET_show( e ) {
 
 	VET_panel.render();
 	VET_panel.show();
-	VET_panel.center();
+	VET_panel.center();*/
 	
-	if(VET_refid != null && VET_wysiwygStart == 2) {
+	if(VET_wysiwygStart == 2) {
 		VET_editVideo();
 	} else {
 		VET_loadMain();
@@ -477,9 +353,7 @@ function VET_loadMain() {
 	var callback = {
 		success: function(o) {
 			$G('VideoEmbedMain').innerHTML = o.responseText;
-			if($G('VideoEmbedUrl') && VET_panel.element.style.visibility == 'visible') {
-				$G('VideoEmbedUrl').focus();
-			}
+			$('#VideoEmbedUrl').focus();
 
 			// macbre: RT #19150
 			if ( window.wgEnableAjaxLogin == true && $('#VideoEmbedLoginMsg').exists() ) {
@@ -638,9 +512,6 @@ function VET_insertFinalVideo(e, type) {
 		params.push( 'box=' + VET_box );
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
 		params.push( 'ns='+wgNamespaceNumber );
-		if( VET_refid != null ) {
-			params.push( 'fck=true' );
-		}
 	*/
 
 	params.push('oname='+encodeURIComponent( $G('VideoEmbedOname').value ) );
@@ -688,12 +559,15 @@ function VET_insertFinalVideo(e, type) {
 					}
 
 					if ( !$G( 'VideoEmbedCreate'  ) && !$G( 'VideoEmbedReplace' ) ) {
-						if(VET_refid == null) {
+						//if(VET_refid == null) {
+							/* impossible code because RTE cannot exist with VET_refid being null
 							if (typeof RTE !== 'undefined') {
 								RTE.getInstanceEditor().getEditbox().focus();
 							}
 							VET_getTextarea().focus();
 							insertTags( $G('VideoEmbedTag').value, '', '', VET_getTextarea());
+							*/
+							
 							/* move into media-placeholder callback 
 							} else if( VET_placeholder == -2 ) {
 								// handle article view - replace video placeholders with video
@@ -717,8 +591,8 @@ function VET_insertFinalVideo(e, type) {
 								// purge cache of article so video will show up on reload
 								$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 							}*/
-						} else { 
-							var wikitag = YAHOO.util.Dom.get('VideoEmbedTag').value;
+						//} else { 
+							//var wikitag = YAHOO.util.Dom.get('VideoEmbedTag').value;
 							var options = {};
 
 							if($G('VideoEmbedThumbOption').checked) {
@@ -736,6 +610,7 @@ function VET_insertFinalVideo(e, type) {
 							options.caption = $G('VideoEmbedCaption').value;
 
 							// macbre: CK support
+							/* move to VET_Loader.load from editor 
 							if (typeof window.VET_RTEVideo != 'undefined') {
 								if (window.VET_RTEVideo && window.VET_RTEVideo.hasClass('media-placeholder')) {
 									// replace "Add Video" placeholder
@@ -744,8 +619,8 @@ function VET_insertFinalVideo(e, type) {
 								else {
 									RTE.mediaEditor.addVideo(wikitag, options);
 								}
-							}
-						}
+							}*/
+						//}
 					} else {
 						$G( 'VideoEmbedSuccess' ).style.display = 'none';
 						$G( 'VideoEmbedTag' ).style.display = 'none';
