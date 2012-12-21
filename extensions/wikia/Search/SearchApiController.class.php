@@ -26,12 +26,12 @@ class SearchApiController extends WikiaApiController {
 	 * @responseParam integer $batches The total number of batches/pages
 	 * @responseParam integer $next The amount of items in the next batch/page
 	 *
-	 * @example controller=SearchApi&method=getList&query=char
-	 * @example controller=SearchApi&method=getList&query=vid&type=videos
-	 * @example controller=SearchApi&method=getList&query=char&rank=oldest
-	 * @example controller=SearchApi&method=getList&limit=5&query=char
-	 * @example controller=SearchApi&method=getList&batch=2&limit=5&query=char
-	 * @example controller=SearchApi&method=getList&namespaces=14&query=char
+	 * @example &query=char
+	 * @example &query=vid&type=videos
+	 * @example &query=char&rank=oldest
+	 * @example &limit=5&query=char
+	 * @example &batch=2&limit=5&query=char
+	 * @example &namespaces=14&query=char
 	 */
 	public function getList() {
 		$searchConfig = F::build('WikiaSearchConfig');
