@@ -8,16 +8,14 @@ var app = require('express').createServer()
     , Backbone = require('backbone')
     , storage = require('./storage').redisFactory()
     , models = require('./models/models')
-	, mwBridge = require('./WMBridge.js').WMBridge
-	, loggerModule = require('./logger.js'),
-	, tracker = require('./tracker.js'),
-	, logger = loggerModule.logger;
+    , mwBridge = require('./WMBridge.js').WMBridge
+    , loggerModule = require('./logger.js')
+    , tracker = require('./tracker.js')
+    , logger = loggerModule.logger;
 var http = require("http");
 
 var monitoring = require('./monitoring.js');
 monitoring.startMonitoring(50000, storage);
-
-
 // TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
 //process.on('uncaughtException', function (err) {
 //  logger.error('Caught exception: ' + err, 'Stacktrace: ', err.stack, 'Full, raw error: ', err);
@@ -468,7 +466,7 @@ function formallyAddClient(client, socket, connectedUser){
 			broadcastUserListToMediaWiki(client, false);
 			//Conenction complted
 			//let's track it
-			logger.trackEvent(connectedUser);
+			tracker.trackEvent(connectedUser);
 		}
 	);	
 } // end formallyAddClient()
