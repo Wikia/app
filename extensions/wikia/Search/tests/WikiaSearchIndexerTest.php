@@ -1888,6 +1888,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 		$wg->setValue( $mockIndexer, $mockWg );
 		
 		$this->proxyClass( 'Article', $mockArticle, 'newFromID' );
+		$this->proxyClass( 'Article', $mockArticle );
 		$this->proxyClass( 'Title', $mockTitle, 'newMainPage' );
 		$this->mockClass( 'Article', $mockArticle );
 		$this->mockClass( 'ApiService', $mockApiService );
