@@ -26,8 +26,6 @@ class ImagesServingTest extends WikiaBaseTest {
 			$results[] = $result;
 		}
 		
-		var_dump($results);
-		
 		return array(
 			array(0, 0, 0, $results[0]), 
 			array(0, 150, 150, $results[1]),
