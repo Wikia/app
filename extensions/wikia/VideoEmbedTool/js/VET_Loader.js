@@ -19,7 +19,7 @@
 	}
 	*/
 	
-	VET_load_in_editor = function(event) {
+	VET_load_in_editor = function(event, mode) {
 		var embedPresets = {};
 		var exists = false;
 		var element = false;
@@ -44,7 +44,7 @@
 		
 		var callback = null;
 		
-		if(createmode) {
+		if(mode === 'create') {
 			callback = function(embedData) {
 				var wikitag = $('#VideoEmbedTag').val();
 				if (typeof window.VET_RTEVideo != 'undefined') {
@@ -58,7 +58,7 @@
 				}
 
 			};
-		} else if (editmode) {
+		} else if (mode === 'edit') {
 
 			callback = function (embedData) {
 				// generate wikitext
@@ -104,6 +104,7 @@
 	}
 	
 	VET_loader.load = function(options) {
+		debugger;
 		
 		var deferredList = [];
 		

@@ -14,7 +14,7 @@ var SpecialVideos = {
 		
 		$('.addVideo').addVideoButton({
 			callbackAfterSelect: function(url) {
-				AddVideoStatic.addVideoCallbackFunction(url, 'VideosController', function() {
+				AddVideo.addVideoCallbackFunction(url, 'VideosController', function() {
 					window.location.search = "?sort=recent"; 
 				});
 			}

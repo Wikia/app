@@ -323,6 +323,9 @@ function VET_sendQuery(query, page, sourceId, pagination) {
 	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId, callback);
 }
 
+/*
+ * note: VET_onVideoEmbedUrlKeypress is called from template
+ */
 function VET_onVideoEmbedUrlKeypress(e) {
 	var event = YAHOO.util.Event.getEvent();
 	if (YAHOO.util.Event.getCharCode(event) == 13){
@@ -333,6 +336,9 @@ function VET_onVideoEmbedUrlKeypress(e) {
 
 }
 
+/*
+ * note: VET_preQuery is called from a template, and from VET_onVideoEmbedUrlKeypress
+ */
 function VET_preQuery(e) {
 	if($G('VideoEmbedUrl').value == '') {
 		GlobalNotification.show( $.msg('vet-warn2'), 'error', null, VET_notificationTimout );
@@ -660,29 +666,34 @@ function VET_tracking(action, label, value) {
 
 /*
  * transition from search to embed
+ * todo: rename this function, because it does not only send query to embed
  */
 function VET_sendQueryEmbed(query) {
-	var callback = {
-		success: function(o) {
-			var screenType = o.getResponseHeader['X-screen-type'];
-			if(typeof screenType == "undefined") {
-				screenType = o.getResponseHeader['X-Screen-Type'];
+	if(VET_callbackAfterSelect) {
+		VET_callbackAfterSelect(query);
+	} else {
+		var callback = {
+			success: function(o) {
+				var screenType = o.getResponseHeader['X-screen-type'];
+				if(typeof screenType == "undefined") {
+					screenType = o.getResponseHeader['X-Screen-Type'];
+				}
+	
+				if( 'error' == YAHOO.lang.trim(screenType) ) {
+					GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
+				} else {
+					// attach handlers - close preview on VET modal close (IE bug fix)
+					VETExtended.cachedSelectors.closePreviewBtn.click();
+					VET_displayDetails(o.responseText);
+				}
+				
+				
+				
 			}
-
-			if( 'error' == YAHOO.lang.trim(screenType) ) {
-				GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
-			} else {
-				// attach handlers - close preview on VET modal close (IE bug fix)
-				VETExtended.cachedSelectors.closePreviewBtn.click();
-				VET_displayDetails(o.responseText);
-			}
-			
-			
-			
 		}
+		YAHOO.util.Connect.abort(VET_asyncTransaction);
+		VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('POST', wgScriptPath + '/index.php', callback, 'action=ajax&rs=VET&method=insertVideo&url=' + escape(query));
 	}
-	YAHOO.util.Connect.abort(VET_asyncTransaction);
-	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('POST', wgScriptPath + '/index.php', callback, 'action=ajax&rs=VET&method=insertVideo&url=' + escape(query));
 }
 
 //***********************************************
@@ -761,11 +772,7 @@ var VETExtended = {
 		// attach handlers - add video button
 		this.cachedSelectors.carousel.on('click', 'li > a', function(event) {
 			event.preventDefault();
-			if(VET_callbackAfterSelect) {
-				VET_callbackAfterSelect($(this).attr('href'));
-			} else {
-				VET_sendQueryEmbed($(this).attr('href'));
-			}
+			VET_sendQueryEmbed($(this).attr('href'));
 			
 			// track event
 			var label = that.carouselMode === 'search' ? 'add-video' : 'add-video-suggested';
