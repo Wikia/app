@@ -1,8 +1,8 @@
 (function(window, $) {
 
-	var resourcesLoaded = false;
-	
-	var VET_loader = {};
+	var resourcesLoaded = false,
+		templateHtml = '',
+		VET_loader = {};
 	
 	/* Sample input json for options
 	{
@@ -104,23 +104,39 @@
 	}
 	
 	VET_loader.load = function(options) {
-		var deferredList = [],
-			templateHtml = '',
-			templateDeferred = $.Deferred();
-			
-		$.nirvana.sendRequest({
-			controller: 'VideoEmbedToolController',
-			method: 'modal',
-			type: 'get',
-			format: 'html',
-			callback: function(html) {
-				templateHtml = html;
-				templateDeferred.resolve();
-			}
-		});
-		deferredList.push(templateDeferred);
+		
+		var deferredList = [];
 		
 		if(!resourcesLoaded) {
+			var templateDeferred = $.Deferred(),
+				deferredMessages = $.Deferred();
+				
+			// Get modal template HTML
+			$.nirvana.sendRequest({
+				controller: 'VideoEmbedToolController',
+				method: 'modal',
+				type: 'get',
+				format: 'html',
+				callback: function(html) {
+					templateHtml = html;
+					templateDeferred.resolve();
+				}
+			});
+			deferredList.push(templateDeferred);
+
+			// Get VET i18n messages 
+			$.getJSON( 
+				window.wgScriptPath + "index.php?action=ajax&rs=VET&method=getMsgVars", 
+				function(VETMessages) {
+					for (var v in VETMessages) {
+						wgMessages[v] = VETMessages[v];
+					}
+					deferredMessages.resolve();
+				}
+			);
+			deferredList.push(deferredMessages);
+
+			// Get JS and CSS
 			var resourcePromise = $.getResources([
 				$.loadYUI,
 				window.wgExtensionsPath + '/wikia/WikiaStyleGuide/js/Dropdown.js',
@@ -128,7 +144,6 @@
 				$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
 				$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
 			]);
-			
 			deferredList.push(resourcePromise);
 		}
 		
@@ -142,8 +157,7 @@
 	$.fn.addVideoButton = function(options) {
 	
 		return this.each(function() {
-			var $el = $(this);
-			$el.on('click.VETLoader', function(e) {
+			$(this).on('click.VETLoader', function(e) {
 				e.preventDefault();
 				VET_loader.load(options);
 			});
