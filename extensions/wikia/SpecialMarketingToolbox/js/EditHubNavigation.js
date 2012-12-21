@@ -61,7 +61,6 @@ ModuleNavigation.prototype = {
 
 		switch(sourceTagName) {
 			case 'span':
-			case 'textarea':
 				tmp = source.text();
 				source.text(dest.text());
 				dest.text(tmp);
@@ -75,8 +74,8 @@ ModuleNavigation.prototype = {
 				break;
 			default:
 				tmp = source.val();
-				source.val(dest.val());
-				dest.val(tmp);
+				source.val(dest.val()).valid();
+				dest.val(tmp).valid();
 		}
 	}
 };
