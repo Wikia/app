@@ -495,7 +495,7 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 	/**
 	 * @covers WikiaSearchIndexer::getBacklinksCount
 	 */
-	public function getBacklinksCount() {
+	public function testGetBacklinksCount() {
 		$mockSearchIndexer 	= $this->getMockBuilder( 'WikiaSearchIndexer' )
 									->disableOriginalConstructor()
 									->getMock();
