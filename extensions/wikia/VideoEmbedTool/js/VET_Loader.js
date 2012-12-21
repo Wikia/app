@@ -104,33 +104,39 @@
 	}
 	
 	VET_loader.load = function(options) {
+		var deferredList = [],
+			templateHtml = '',
+			templateDeferred = $.Deferred();
+			
 		$.nirvana.sendRequest({
 			controller: 'VideoEmbedToolController',
 			method: 'modal',
 			type: 'get',
 			format: 'html',
 			callback: function(html) {
-				$(html).makeModal({width:1000});
-				if(!resourcesLoaded) {
-					var resourcePromise = $.getResources([
-						$.loadYUI,
-						window.wgExtensionsPath + '/wikia/WikiaStyleGuide/js/Dropdown.js',
-						window.wgExtensionsPath + '/wikia/VideoEmbedTool/js/VET.js', 
-						$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss')
-					]);
-					
-					$.when(resourcePromise).then(function() {
-						VET_show(options);
-						//VETExtended.init();
-						resourcesLoaded = true;
-					});
-				} else {
-					VET_show(options);
-					//VETExtended.init();
-				}
-				
+				templateHtml = html;
+				templateDeferred.resolve();
 			}
 		});
+		deferredList.push(templateDeferred);
+		
+		if(!resourcesLoaded) {
+			var resourcePromise = $.getResources([
+				$.loadYUI,
+				window.wgExtensionsPath + '/wikia/WikiaStyleGuide/js/Dropdown.js',
+				window.wgExtensionsPath + '/wikia/VideoEmbedTool/js/VET.js', 
+				$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
+				$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
+			]);
+			
+			deferredList.push(resourcePromise);
+		}
+		
+		$.when.apply(this, deferredList).done(function() {
+			$(templateHtml).makeModal({width:1000});
+			VET_show(options);
+			resourcesLoaded = true;
+		});			
 	};
 
 	$.fn.addVideoButton = function(options) {

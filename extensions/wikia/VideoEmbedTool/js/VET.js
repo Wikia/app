@@ -333,7 +333,7 @@ function VET_show( options ) {
 	VET_panel.render();
 	VET_panel.show();
 	VET_panel.center();*/
-	
+
 	if(VET_wysiwygStart == 2) {
 		VET_editVideo();
 	} else {
@@ -691,7 +691,7 @@ function VET_previewClose(e) {
 }
 
 function VET_close(e) {
-	if(e) {
+	/*if(e) {
 		YAHOO.util.Event.preventDefault(e);
 	}
 
@@ -704,7 +704,7 @@ function VET_close(e) {
 
 	VET_switchScreen('Main');
 	VET_loadMain();
-	YAHOO.util.Dom.setStyle('header_ad', 'display', 'block');
+	YAHOO.util.Dom.setStyle('header_ad', 'display', 'block');*/
 
 	// Handle MiniEditor focus
 	// (BugId:18713)
