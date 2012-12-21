@@ -206,6 +206,13 @@ $messages['tt-cyrl'] = array(
 	'campfire-licensed-under' => '$1 лицензиясы астында',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'campfire-page-header' => '$1 з $2',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */

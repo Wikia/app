@@ -2102,6 +2102,7 @@ Mga Kasangkapang Nakakatulong:
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -2109,6 +2110,7 @@ $messages['uk'] = array(
 	'wikiadoption-button-adopt' => 'Так, я хочу прийняти {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Дізнайтеся більше!',
 	'wikiadoption-know-more-header' => 'Хочете знати більше?',
+	'wikiadoption-adoption-successed' => 'Вітаємо! Тепер Ви адміністратор цієї вікі!',
 );
 
 /** Simplified Chinese (中文（简体）‎)

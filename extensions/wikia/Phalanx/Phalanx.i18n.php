@@ -2407,6 +2407,7 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -2460,6 +2461,13 @@ $messages['uk'] = array(
 Якщо Ви вважаєте, що сталася помилка, будь ласка,[[Special:Contact|зверніться до адміністраторів Вікіа]].<br />Блокувач так пояснив свій крок: $1.",
 	'phalanx-user-block-withreason-similar' => "Користувач з цим ім'ям не може редагувати на всій Вікіа через вандалізм або інші порушення, які вчинив він або хтось з тією ж IP-адресою.
 Якщо Ви вважаєте, що сталася помилка, будь ласка,[[Special:Contact|зверніться до адміністраторів Вікіа]].<br />Блокувач так пояснив свій крок: $1.",
+	'phalanx-stats-table-type' => 'Тип',
+	'phalanx-stats-table-expire' => 'Закінчується',
+	'phalanx-stats-table-exact' => 'Точно',
+	'phalanx-stats-table-case' => 'У разі',
+	'phalanx-stats-table-language' => 'Мова',
+	'phalanx-stats-table-text' => 'Текст',
+	'phalanx-stats-table-reason' => 'Причина',
 );
 
 /** Simplified Chinese (中文（简体）‎)

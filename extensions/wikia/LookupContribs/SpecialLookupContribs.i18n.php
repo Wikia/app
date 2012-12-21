@@ -1597,14 +1597,19 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
+	'lookupcontribsselectuser' => 'Виберіть користувача:',
 	'lookupcontribsgo' => 'Перейти',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikioptions' => 'Параметри',
 	'lookupcontribsrestore' => 'відновити',
 	'lookupcontribslog' => 'журнал',
 	'lookupcontribshist' => 'історія',
 	'lookupcontribsdiff' => 'різн.',
+	'lookupcontribscontent' => 'вміст',
 );
 
 /** Yiddish (ייִדיש)

@@ -627,10 +627,10 @@ $messages['fr'] = array(
 	'editaccount-label-pass' => 'Définir un nouveau mot de passe',
 	'editaccount-label-realname' => 'Définir un nouveau nom complet',
 	'editaccount-label-clearunsub' => 'Désabonné',
-	'editaccount-label-toggleadopt' => "Modifier l'état de l'adoptant (pour AutomaticWikiAdopt):",
-	'editaccount-label-toggleadopt-prevent' => "Éviter l'adoption automatique",
-	'editaccount-label-toggleadopt-allow' => "Permettre l'adoption automatique",
-	'editaccount-label-reason' => 'Motif:',
+	'editaccount-label-toggleadopt' => 'Modifier le statut d’adoptant (pour AutomaticWikiAdopt) :',
+	'editaccount-label-toggleadopt-prevent' => 'Empêcher l’adoption automatique',
+	'editaccount-label-toggleadopt-allow' => 'Autoriser l’adoption automatique',
+	'editaccount-label-reason' => 'Motif :',
 	'editaccount-submit-email' => "Sauvegarder l'adresse électronique",
 	'editaccount-submit-pass' => 'Sauvegarder le mot de passe',
 	'editaccount-submit-realname' => 'Sauvegarder le nom complet',
@@ -674,7 +674,7 @@ $messages['fr'] = array(
 	'editaccount-log-entry-close' => 'a désactivé le compte $2§',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Ce compte a été désactivé globalement par Wikia.</div>',
 	'right-editaccount' => "Modifier les préférences d'autres utilisateurs",
-	'action-editaccount' => "modifier l'information des autres utilisateurs",
+	'action-editaccount' => 'modifier les informations des autres utilisateurs',
 );
 
 /** Galician (galego)

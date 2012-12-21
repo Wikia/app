@@ -1113,6 +1113,7 @@ $messages['cs'] = array(
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Porovnat',
 	'right-wikifactory' => 'Změnit vnitřní nastavení pro wiki',
+	'action-wikifactory' => 'změnit vnitřní nastavení wiki',
 	'wikifactory-domain-edit' => 'editovat tuto URL',
 	'wikifactory-domain-remove' => 'odstranit tuto adresu URL z wiki',
 	'wikifactory-domain-setmain' => 'vložit toto URL do wgServer',
@@ -1187,7 +1188,7 @@ $messages['cs'] = array(
 	'closed-wiki' => 'Uzavřená wiki',
 	'closed-wiki-info' => 'Tato wiki byla uzavřena',
 	'disabled-wiki-info' => 'Tato wiki byla odpojena',
-	'closed-wiki-dump-exists' => 'Pokud chcete znovu načíst obsah, klikněte [$1 sem]<br />(Pokud byla vaše wiki nedávno zavřena, může generování souborů chvíli trvat.)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Pokud chcete znovu načíst obsah, klikněte [$1 sem]<br />(Pokud byla vaše wiki nedávno zavřena, může generování souborů chvíli trvat.)',
 	'closed-wiki-dump-noexists' => 'Tato wiki byla uzavřena. Obsah výstupu z databáze bude k dispozici během 24 hodin. Zkontrolujte prosím později.',
 	'closed-wiki-create-wiki' => 'Vytvořit novou wiki',
 	'closed-wiki-policy' => 'Zobrazit pravidla Wikie ohledně uzavírání wiki',
@@ -5143,6 +5144,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Simon Shek
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
@@ -5193,7 +5195,7 @@ $messages['zh-hant'] = array(
 	'awc-metrics-revisions-per-page' => '修改<br />(平均每頁)',
 	'awc-metrics-edits' => '編輯次數',
 	'awc-metrics-db-size' => '資料庫大小',
-	'awc-metrics-images' => '圖像',
+	'awc-metrics-images' => '圖片',
 	'awc-metrics-close' => '關閉',
 	'awc-metrics-close-action' => '關閉',
 	'awc-metrics-active' => '活躍',

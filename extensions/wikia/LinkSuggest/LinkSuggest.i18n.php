@@ -50,6 +50,7 @@ $messages['ca'] = array(
  * @author Mormegil
  */
 $messages['cs'] = array(
+	'linksuggest-desc' => 'Navrhuje editorům odkazy při editování',
 	'tog-disablelinksuggest' => 'Nezobrazovat návrhy odkazů ve zdrojovém módu',
 	'tog-redirected-from' => '&ndash; přesměrováno z $1',
 );
@@ -90,7 +91,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
-	'linksuggest-desc' => 'Propose des liens aux éditeurs dans la vue de modification',
+	'linksuggest-desc' => 'Propose des liens aux contributeurs en édition',
 	'tog-disablelinksuggest' => 'Ne pas afficher la suggestion de lien en mode source',
 	'tog-redirected-from' => '&ndash; Redirigé depuis $1',
 );

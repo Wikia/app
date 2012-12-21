@@ -671,6 +671,19 @@ $messages['tly'] = array(
 	'alert-download-updated-wikis-button-ok' => 'OK',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'activityindicator-message' => 'Завантаження...',
+	'window-category-load-batch' => 'Більше',
+	'window-article-button-close' => 'Закрити',
+	'window-article-button-back' => 'Назад',
+	'window-article-menu-search-label' => 'Пошук',
+	'window-article-menu-cancel-label' => 'Скасувати',
+	'alert-download-updated-wikis-button-ok' => 'Гаразд',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Sam Wang

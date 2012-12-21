@@ -1675,7 +1675,7 @@ $messages['nl'] = array(
 	'wikia-editor-media-slider' => 'Afbeeldingenschuiver',
 	'wikia-editor-media-video' => 'Video',
 	'wikia-editor-media-mut' => 'Video',
-	'wikia-editor-media-image-tooltip' => 'Foto toevoegen',
+	'wikia-editor-media-image-tooltip' => 'Afbeeldingen toevoegen',
 	'wikia-editor-media-gallery-tooltip' => 'Galerij toevoegen',
 	'wikia-editor-media-slideshow-tooltip' => 'Diavoorstelling toevoegen',
 	'wikia-editor-media-slider-tooltip' => 'Schuifdiashow toevoegen',
@@ -2314,12 +2314,23 @@ $messages['ttt'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  */
 $messages['uk'] = array(
+	'editpagelayout-edit-title' => 'Редагувати назву',
+	'editpagelayout-pageControls-changes' => 'Зміни',
+	'wikia-editor-media-image' => 'Фото',
+	'wikia-editor-media-gallery' => 'Галерея',
 	'wikia-editor-media-video' => 'Відео',
+	'wikia-editor-media-mut' => 'Відео',
 	'wikia-editor-media-image-tooltip' => 'Додати фотографію',
 	'wikia-editor-media-gallery-tooltip' => 'Додати галерею',
 	'wikia-editor-media-slideshow-tooltip' => 'Додати слайдшоу',
+	'wikia-editor-media-video-tooltip' => 'Додати відео',
+	'wikia-editor-media-mut-tooltip' => 'Додати відео (бета-версія)',
+	'wikia-editor-source-bold-tooltip' => 'Жирний',
+	'wikia-editor-source-italic-tooltip' => 'Курсив',
+	'wikia-editor-modules-categories-title' => 'Категорії',
 );
 
 /** Veps (vepsän kel’)

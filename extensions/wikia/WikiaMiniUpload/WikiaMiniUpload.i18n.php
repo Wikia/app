@@ -568,6 +568,7 @@ $messages['ce'] = array(
 
 /** Czech (česky)
  * @author Chmee2
+ * @author Darth Daron
  * @author Dontlietome7
  * @author Mr. Richard Bolla
  */
@@ -644,6 +645,7 @@ $messages['cs'] = array(
 	'wmu-appearance-in-article' => 'Vzhled v článku',
 	'wmu-alignment' => 'Zarovnání',
 	'wmu-file-protected' => 'Tento obrázek je chráněn',
+	'wmu-file-error' => 'Došlo k chybě při odesílání. Zkuste prosím znovu.',
 );
 
 /** Welsh (Cymraeg)

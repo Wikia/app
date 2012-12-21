@@ -3373,6 +3373,7 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -3382,6 +3383,7 @@ $messages['uk'] = array(
 	'rte-ck-hoverPreview-delete' => 'вилучити',
 	'rte-ck-hoverPreview-edit' => 'редагувати',
 	'rte-ck-image-add' => 'Додати зображення',
+	'rte-ck-image-photo' => 'Фото',
 	'rte-ck-link-error-title' => 'Помилка',
 	'rte-ck-link-external-tab' => 'Зовнішнє посилання',
 	'rte-ck-link-internal-pageName' => 'Назва сторінки',

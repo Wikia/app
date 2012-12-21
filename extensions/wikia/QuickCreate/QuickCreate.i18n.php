@@ -329,10 +329,12 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
 	'quickcreate-desc' => 'Додає кнопку створення нової сторінки з можливістю увійти в систему для анонімних користувачів', # Fuzzy
+	'quickcreate' => 'надіслати свій рецепт',
 );
 
 /** Simplified Chinese (中文（简体）‎)

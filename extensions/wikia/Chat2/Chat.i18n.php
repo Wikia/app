@@ -2578,6 +2578,14 @@ $messages['tzm'] = array(
 	'chat-ban-modal-button-cancel' => 'ⵓⵖⴰⵍ',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'chat' => 'Чат',
+	'chat-ban-modal-button-cancel' => 'Скасувати',
+);
+
 /** Veps (vepsän kel’)
  * @author Игорь Бродский
  */

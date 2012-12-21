@@ -331,6 +331,14 @@ $messages['tl'] = array(
 	'userdata-no-wf' => 'Hindi pinagagana ang WikiFactory sa wiking ito.  Hindi nabago ang wgUserData.',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'userdata' => 'Отримати дані користувача',
+	'userdata-submit' => 'Отримати дані',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */

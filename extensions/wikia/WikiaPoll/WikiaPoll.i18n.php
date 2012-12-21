@@ -850,11 +850,26 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  */
 $messages['uk'] = array(
+	'wikiapoll-desc' => 'Забезпечує простий спосіб створення та керування опитуваннями',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 особа проголосувала|$1 осіб проголосувало}}',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Дякуємо!',
+	'wikiapoll-vote' => 'Проголосувати!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 голос|$1 голоси|$1 голосів}}',
+	'wikiapoll-createpoll-headline' => 'Створити опитування',
+	'wikiapoll-editpoll-headline' => 'Редагувати опитування',
+	'wikiapoll-question-label' => 'Запитання',
+	'wikiapoll-addnewitem-label' => 'Додати новий пункт',
 	'wikiapoll-cancel-label' => 'Скасувати',
 	'wikiapoll-publish-label' => 'Опублікувати',
 	'wikiapoll-error-duplicate' => 'Опитування з такою назвою вже існує.',
+	'wikiapoll-error-invalid-title' => 'Текст запитання є неприпустимим.',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Дякуємо за участь у голосуванні!',
+	'wikiamobile-wikiapoll-poll' => 'Опитування',
+	'wikiamobile-wikiapoll-user-voted' => 'Ви проголосували за $1',
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -966,6 +966,20 @@ $messages['tt-cyrl'] = array(
 	'specialcontact-username' => 'Кулланучы исеме',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'specialcontact-username' => "Ім'я користувача",
+	'specialcontact-realname' => "Ваше ім'я",
+	'specialcontact-yourmail' => 'Адреса електронної пошти',
+	'specialcontact-problem' => 'Тема',
+	'specialcontact-problemdesc' => 'Повідомлення',
+	'specialcontact-ccme' => 'Надіслати мені копію цього повідомлення',
+	'specialcontact-notyou' => 'Не Ви?',
+	'specialcontact-captchainfo' => 'Будь ласка, введіть текст на зображенні.',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  * @author XiaoQiaoGrace

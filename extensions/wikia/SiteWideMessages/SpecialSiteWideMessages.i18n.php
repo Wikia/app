@@ -3056,6 +3056,7 @@ $messages['tzm'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -3068,8 +3069,13 @@ $messages['uk'] = array(
 	'swm-label-sent' => 'Надіслане',
 	'swm-label-list' => 'Список',
 	'swm-label-recipient-users' => 'Користувачі',
+	'swm-label-mode-wikis-cluster' => 'Вибраний кластер',
+	'swm-label-mode-wikis-wiki' => 'Вибрана вікі',
 	'swm-label-mode-users-all' => 'Всі користувачі',
 	'swm-label-mode-users-active' => 'Активні користувачі',
+	'swm-label-mode-users-user' => 'Вибраний користувач',
+	'swm-label-mode-users-user-multi' => 'Список користувачів',
+	'swm-label-content' => 'Вміст',
 	'swm-label-comment' => 'Коментар',
 	'swm-label-language' => 'Мова',
 	'swm-button-preview' => '[ Попередній перегляд ]',
@@ -3078,6 +3084,8 @@ $messages['uk'] = array(
 	'swm-button-new' => '[ Нове ]',
 	'swm-msg-sent-ok' => '<h3>Повідомлення надіслане.</h3>',
 	'swm-list-no-messages' => 'Немає повідомлень.',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-sender' => 'Відправник',
 	'swm-list-table-wiki' => 'Вікі',
 	'swm-list-table-group' => 'Група',
 	'swm-list-table-date' => 'Дата надсилання',
@@ -3086,6 +3094,12 @@ $messages['uk'] = array(
 	'swm-yes' => 'Так',
 	'swm-no' => 'Ні',
 	'swm-error-no-such-wiki' => 'Немає такої вікі!',
+	'swm-mode-users-editcount-more' => 'Більше',
+	'swm-mode-users-editcount-less' => 'Менше',
+	'swm-mode-users-editcount-between' => 'Між',
+	'swm-mode-wikis-created-after' => 'Після',
+	'swm-mode-wikis-created-before' => 'До',
+	'swm-mode-wikis-created-between' => 'Між',
 );
 
 /** Volapük (Volapük)

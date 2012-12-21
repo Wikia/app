@@ -569,9 +569,12 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  */
 $messages['uk'] = array(
 	'places' => 'Місця на цій wiki',
+	'places-editor-search' => 'Пошук',
+	'places-geolocation-modal-error-title' => 'Помилка',
 );
 
 /** Walloon (walon)

@@ -484,10 +484,16 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
 	'stafflog-blockmsg' => '$1 $2 спробував заблокувати користувача-співробітника $3 у вікі $4. Причина: $5',
+	'stafflog-filter-label' => 'Фільтр',
+	'stafflog-filter-user' => 'Користувач:',
+	'stafflog-filter-type' => 'Тип:',
+	'stafflog-filter-apply' => 'Застосувати фільтр',
+	'stafflog-filter-type-block' => 'Блокування',
 );
 
 /** Simplified Chinese (中文（简体）‎)

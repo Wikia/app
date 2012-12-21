@@ -1740,7 +1740,7 @@ Näyttää siltä, että $EDITORNAME on rekisteröitynyt wikiisi! Miksi et sano 
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Uusi $WIKINAME -muokkaus!',
 	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Hei $USERNAME,
 
-Hienoa! $EDITORNAME teki juuri ensimmäinen muokkauksensa $WIKINAME-wikissä.
+Hienoa! $EDITORNAME teki juuri ensimmäinen muokkauksensa wikissä $WIKINAME.
 
 Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.
 
@@ -1748,7 +1748,7 @@ $PAGEURL
 
 Wikia-ryhmä',
 	'founderemails-email-first-edit-greeting' => 'Hei $USERNAME,',
-	'founderemails-email-first-edit-headline' => 'Hienoa! $EDITORNAME teki juuri ensimmäinen muokkauksensa $WIKINAME-wikissä.',
+	'founderemails-email-first-edit-headline' => 'Hienoa! $EDITORNAME teki juuri ensimmäinen muokkauksensa wikissä $WIKINAME.',
 	'founderemails-email-first-edit-content' => 'Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.',
 	'founderemails-email-first-edit-signature' => 'Wikia-ryhmä',
 	'founderemails-email-page-edited-reg-user-subject' => 'Uusi $WIKINAME -muokkaus!',
@@ -6732,6 +6732,7 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -6744,6 +6745,8 @@ $messages['uk'] = array(
 	'founderemails-answers-email-page-edited-reg-user-subject' => 'Зареєстрований користувач змінив ваш сайт!',
 	'founderemails-answers-email-page-edited-anon-subject' => 'Хтось змінив ваш сайт!',
 	'founderemails-lot-happening-subject' => 'Сьогодні на вашому сайті відбувається багато подій!', # Fuzzy
+	'founderemails-email-0-day-addpages-button' => 'Додати сторінку',
+	'founderemails-email-0-day-addphotos-button' => 'Додати фото',
 );
 
 /** Vietnamese (Tiếng Việt)
