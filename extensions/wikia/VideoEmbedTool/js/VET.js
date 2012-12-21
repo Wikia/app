@@ -18,7 +18,6 @@ var VET_prevScreen = null;
 var VET_slider = null;
 var VET_thumbSize = null;
 var VET_orgThumbSize = null;
-var VET_placeholder = -1;
 var VET_box = -1;
 var VET_height = null;
 var VET_refid = null;
@@ -345,7 +344,6 @@ function VET_show( e ) {
 
 	VET_refid = null;
 	VET_wysiwygStart = 1;
-	VET_placeholder = -1;
 
 	// TODO: FCK support - to be removed after full switch to RTE
 	if(YAHOO.lang.isNumber(e)) {
@@ -635,7 +633,7 @@ function VET_insertFinalVideo(e, type) {
 		}
 	}
 
-	if( VET_placeholder != -1 ) {
+	/* should go into media-placeholder call back
 		params.push( 'placeholder=' + VET_placeholder );
 		params.push( 'box=' + VET_box );
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
@@ -643,7 +641,7 @@ function VET_insertFinalVideo(e, type) {
 		if( VET_refid != null ) {
 			params.push( 'fck=true' );
 		}
-	}
+	*/
 
 	params.push('oname='+encodeURIComponent( $G('VideoEmbedOname').value ) );
 	params.push('name='+encodeURIComponent( $G('VideoEmbedName').value) );
@@ -694,9 +692,9 @@ function VET_insertFinalVideo(e, type) {
 							if (typeof RTE !== 'undefined') {
 								RTE.getInstanceEditor().getEditbox().focus();
 							}
-							if ( VET_placeholder == -1) {
-								VET_getTextarea().focus();
-								insertTags( $G('VideoEmbedTag').value, '', '', VET_getTextarea());
+							VET_getTextarea().focus();
+							insertTags( $G('VideoEmbedTag').value, '', '', VET_getTextarea());
+							/* move into media-placeholder callback 
 							} else if( VET_placeholder == -2 ) {
 								// handle article view - replace video placeholders with video
 								var placeholders = $('#WikiaArticle').find('.wikiaVideoPlaceholder a'),
@@ -718,7 +716,7 @@ function VET_insertFinalVideo(e, type) {
 
 								// purge cache of article so video will show up on reload
 								$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
-							}
+							}*/
 						} else { 
 							var wikitag = YAHOO.util.Dom.get('VideoEmbedTag').value;
 							var options = {};
@@ -746,15 +744,6 @@ function VET_insertFinalVideo(e, type) {
 								else {
 									RTE.mediaEditor.addVideo(wikitag, options);
 								}
-							}
-							else if(VET_refid != -1) {
-								if( VET_placeholder != -1 ) {
-									FCK.VideoGalleryUpdate( VET_refid, wikitag );
-								} else { // placeholder
-									FCK.VideoAdd(wikitag, options, VET_refid);
-								}
-							} else {
-								FCK.VideoAdd(wikitag, options);
 							}
 						}
 					} else {
