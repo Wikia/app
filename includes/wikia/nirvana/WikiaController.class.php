@@ -86,7 +86,13 @@ abstract class WikiaController extends WikiaDispatchableObject {
 							$examples = [];
 
 							foreach ( $res[0] as $r ) {
-								$examples[] = $this->wg->Server . '/wikia.php?' . str_replace('@example ', '', $r);
+								$example = str_replace('@example ', '', $r);
+
+								if( strpos( $example, 'http' ) === false ) {
+									$example = $this->wg->Server . '/wikia.php?' . $example;
+								}
+
+								$examples[] = $example;
 
 								$comment = preg_replace( "~" . preg_quote($r) . "~", '', $comment, 1 );
 							}
