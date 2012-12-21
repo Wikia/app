@@ -60,7 +60,7 @@ exports.trackServerStart = function() {
 
 exports.trackEvent = function(client, action) {
 	var data = {
-		"userkey": client.key,
+		"userkey": client.userKey,
 		"msgcount": client.msgCount,
 		"room_id": client.roomId,
 		"city_id": client.cityId,

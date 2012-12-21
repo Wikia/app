@@ -170,6 +170,7 @@ function messageDispatcher(client, socket, data){
 			case 'chat':
 				logger.debug("Dispatching to message handler.");
 				chatMessage(client, socket, data);
+				client.msgCount++;
 				break;
 			case 'command':
 				switch(dataObj.attrs.command){ // all commands should be in lowercase
@@ -297,7 +298,7 @@ function authConnection(handshakeData, authcallback){
 					client.isStaff = data.isStaff;
 					client.roomId = roomId;
 					client.cityId = data.wgCityId;
-					client.privateRoom = (users.length == 0);
+					client.privateRoom = !(users.length == 0);
 					// TODO: REFACTOR THIS TO TAKE ANY FIELDS THAT data GIVES IT.
 					client.ATTEMPTED_NAME = data.username;
 					// User has been approved & their data has been set on the client. Put them into the chat.
@@ -453,6 +454,8 @@ function formallyAddClient(client, socket, connectedUser){
 	// Add the user to the set of users in the room in redis.
 	var userData = client.myUser.attributes;
 	delete userData.id;
+	logger.debug("clientConencted");
+	tracker.trackEvent(client, 'connect');
 	sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)] = client.sessionId;
 	storage.setUserData(client.roomId, client.myUser.get('name'), userData,
 		null,
@@ -466,8 +469,6 @@ function formallyAddClient(client, socket, connectedUser){
 			});
 			broadcastUserListToMediaWiki(client, false);
 			//Conenction complted
-			//let's track it
-			tracker.trackEvent(client, 'connect');
 		}
 	);	
 } // end formallyAddClient()
@@ -540,7 +541,7 @@ function broadcastUserListToMediaWiki(client, removeClient){
 			}
 		}
 		logger.debug("Sending status update to media wiki")
-		if(client.privateRoom) {
+		if(!client.privateRoom) {
 			mwBridge.setUsersList(client.roomId, users);	
 		}
 	});
