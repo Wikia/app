@@ -4,6 +4,20 @@
 	
 	var VET_loader = {};
 	
+	/* Sample input json for options
+	{
+		callbackAfterSelect: function() {},
+		callbackAfterEmbed: function() {},
+		embedPresets: {
+			align: "right"
+			caption: ""
+			thumbnail: true
+			thumb: true
+			width: 335
+		}
+	}
+	*/
+	
 	VET_loader.load = function(options) {
 		$.nirvana.sendRequest({
 			controller: 'VideoEmbedToolController',

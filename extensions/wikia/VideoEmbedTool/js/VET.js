@@ -24,9 +24,7 @@ var VET_thumb = 0;
 var VET_size = 0;
 var VET_caption = 0;
 var VET_box = -1;
-var VET_width = null;
 var VET_height = null;
-var VET_widthChanges = 1;
 var VET_refid = null;
 var VET_wysiwygStart = 1;
 var VET_ratio = 1;
@@ -86,8 +84,7 @@ function VET_editVideo() {
 				
 				if(data.width) {
 					VET_readjustSlider( data.width );
-					VET_width = data.width;
-					$('#VideoEmbedManualWidth').val(VET_width);
+					$('#VideoEmbedManualWidth').val( data.width );
 				}
 				
 			}, 200);
@@ -302,7 +299,7 @@ function VET_showPreview(e) { // note for refactory - doesn't seem to be getting
 	VET_previewPanel.render();
 	VET_previewPanel.show();
 	VET_panel.center();
-	if(VET_refid != null && ( VET_wysiwygStart == 2 || VET_placeholder == -2 ) ) {
+	if(VET_refid != null && VET_wysiwygStart == 2 ) {
 		VET_editVideo();
 	} else {
 		VET_loadMain();
@@ -355,6 +352,7 @@ function VET_show( e, placeholder, box, align, thumb, size, caption ) {
 	VET_placeholder = -1;
 
 	if(typeof placeholder != 'undefined') {
+		console.log('this is placeholder', placeholder, box, align, thumb, size, caption);
 		VET_placeholder = placeholder;
 		VET_box = box;
 		// they only are given when the placeholder is given...
@@ -396,11 +394,12 @@ function VET_show( e, placeholder, box, align, thumb, size, caption ) {
 			if (window.VET_RTEVideo) {
 				// edit a video
 				var data = window.VET_RTEVideo.getData();
+				console.log('VET mess', window.VET_RTEVideo, data);
 				if (e.data.isPlaceholder) {
+					console.log('editor placeholder');
+				
 					// video placeholder
 					RTE.log('video placeholder clicked');
-
-					VET_placeholder = -1;
 				}
 				else {
 					// "regular" video
@@ -545,16 +544,6 @@ function VET_sendQuery(query, page, sourceId, pagination) {
 	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId, callback);
 }
 
-function VET_chooseImage(sourceId, itemId, itemLink, itemTitle) {
-	var callback = {
-		success: function(o) {
-			VET_displayDetails(o.responseText);
-		}
-	}
-	YAHOO.util.Connect.abort(VET_asyncTransaction);
-	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=chooseImage&' + 'sourceId=' + sourceId + '&itemId=' + itemId + '&itemLink=' + itemLink + '&itemTitle=' + itemTitle, callback);
-}
-
 function VET_onVideoEmbedUrlKeypress(e) {
 	var event = YAHOO.util.Event.getEvent();
 	if (YAHOO.util.Event.getCharCode(event) == 13){
@@ -576,9 +565,11 @@ function VET_preQuery(e) {
 	}
 }
 
+/*
+ * renders the embed screen (aka 2nd screen)
+ */
 function VET_displayDetails(responseText, dataFromEditMode) {
 	VET_switchScreen('Details');
-	VET_width = null;
 	$G('VideoEmbedBack').style.display = 'inline';
 
 	// wlee: responseText could include <script>. Use jQuery to parse
@@ -646,18 +637,6 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 		$G('VideoEmbedCaptionRow').style.display = 'none';
 	}
 
-	if ( VET_placeholder != -1 ) {
-		$G( 'VET_LayoutGalleryBox' ).style.display = 'none';
-
-	}
-
-	if ( ( 400 == wgNamespaceNumber ) ) {
-		if( $G( 'VideoEmbedName' ) ) {
-			$G( 'VideoEmbedName' ).value = wgTitle;
-			$G( 'VideoEmbedNameRow' ).style.display = 'none';
-		}
-	}
-
 	if ( $G('VideoEmbedMain').innerHTML == '' ) {
 		VET_loadMain();
 	}
@@ -710,16 +689,7 @@ function VET_insertFinalVideo(e, type) {
 	}
 
 	params.push('oname='+encodeURIComponent( $G('VideoEmbedOname').value ) );
-
-	if(type == 'overwrite') {
-		params.push('name='+encodeURIComponent( $G('VideoEmbedExistingName').value ) );
-	} else if(type == 'rename') {
-		params.push('name='+encodeURIComponent( $G('VideoEmbedRenameName').value ) );
-	} else {
-		if ($G( 'VideoEmbedName' )) {
-			params.push('name='+encodeURIComponent( $G('VideoEmbedName').value) );
-		}
-	}
+	params.push('name='+encodeURIComponent( $G('VideoEmbedName').value) );
 
 	if($G('VideoEmbedThumb')) {
 		params.push('size=' + ($G('VideoEmbedThumbOption').checked ? 'thumb' : 'full'));
@@ -746,10 +716,6 @@ function VET_insertFinalVideo(e, type) {
 				case 'error':
 					o.responseText = o.responseText.replace(/<script.*script>/, "" );
 					GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
-					break;
-				case 'conflict':
-					VET_switchScreen('Conflict');
-					$G('VideoEmbed' + VET_curScreen).innerHTML = o.responseText;
 					break;
 				case 'summary':
 					VET_switchScreen('Summary');
@@ -840,8 +806,7 @@ function VET_insertFinalVideo(e, type) {
 						$G( 'VideoEmbedPageSuccess' ).style.display = 'block';
 					}
 					break;
-				case 'existing':
-					VET_displayDetails(o.responseText);
+				default:
 					break;
 			}
 		},
@@ -939,6 +904,9 @@ function VET_tracking(action, label, value) {
 	}, 'internal');
 }
 
+/*
+ * transition from search to embed
+ */
 function VET_sendQueryEmbed(query) {
 	var callback = {
 		success: function(o) {

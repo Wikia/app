@@ -174,6 +174,9 @@ class VideoEmbedTool {
 		return $tmpl->render('details');
 	}
 
+	/*
+	 * does the actual uploading.  moves temp file to permanent somehow.
+	 */
 	function insertFinalVideo() {
 		global $wgRequest, $wgContLang;
 
