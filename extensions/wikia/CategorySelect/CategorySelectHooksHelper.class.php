@@ -130,11 +130,17 @@ class CategorySelectHooksHelper {
 	 */
 	public static function onMakeGlobalVariablesScript( Array &$vars ) {
 		$app = F::app();
+		$action = $app->wg->Request->getVal( 'action', 'view' );
+		$categories = array();
 
-		$data = CategorySelect::getExtractedCategoryData();
+		// Load categories data for edit page
+		if ( $action == 'edit' || $action == 'submit' ) {
+			$data = CategorySelect::getExtractedCategoryData();
+			$categories = $data[ 'categories' ];
+		}
 
 		$vars[ 'wgCategorySelect' ] = array(
-			'categories' => $data[ 'categories' ],
+			'categories' => $categories,
 			'defaultNamespace' => $app->wg->ContLang->getNsText( NS_CATEGORY ),
 			'defaultNamespaces' => CategorySelect::getDefaultNamespaces(),
 			'defaultSeparator' => trim( $app->wf->Message( 'colon-separator' )->escaped() ),
