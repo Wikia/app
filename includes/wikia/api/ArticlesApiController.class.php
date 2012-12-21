@@ -7,7 +7,7 @@
 
 class ArticlesApiController extends WikiaApiController {
 
-	const API_VERSION = 0;
+	const API_VERSION = 1;
 
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
@@ -22,6 +22,9 @@ class ArticlesApiController extends WikiaApiController {
 	const ARTICLE_CACHE_ID = 'article';
 	const DETAILS_CACHE_ID = 'details';
 
+	/**
+	 * @private
+	 */
 	static function onArticleUpdateCategoryCounts( $this, $added, $deleted ) {
 		foreach ( $added + $deleted as $cat) {
 			WikiaDataAccess::cachePurge( self::getCacheKey( $cat, self::CATEGORY_CACHE_ID ) );
@@ -79,13 +82,14 @@ class ArticlesApiController extends WikiaApiController {
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
 	 *
-	 * @requestParam string $namespaces [OPTIONAL] The name of the namespaces (e.g. Main, Category, File, etc.) to use as a filter, comma separated
+	 * @requestParam array $namespaces [OPTIONAL] The name of the namespaces (e.g. 0, 14, 6, etc.) to use as a filter, comma separated
 	 * @requestParam string $category [OPTIONAL] The name of a category (e.g. Characters) to use as a filter
 	 *
 	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
-	 * @responseParam array $basepath domain of a wiki to create a url for an article
+	 * @responseParam string $basepath domain of a wiki to create a url for an article
 	 *
-	 * @example http://glee.wikia.com/wikia.php?controller=ArticlesApi&method=getTop&namespaces=0,14
+	 * @example controller=ArticlesApi&method=getTop
+	 * @example controller=ArticlesApi&method=getTop&namespaces=0,14
 	 */
 	public function getTop() {
 		$this->wf->ProfileIn( __METHOD__ );
@@ -102,6 +106,13 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			$ids = self::getCategoryMembers( $cat->getFullText(), 5000, '', '', 'timestamp' , 'desc' );
+
+			if ( !empty( $ids ) ) {
+				$ids = array_reduce($ids[0], function( $ret, $item ) {
+					$ret[] = $item['pageid'];
+					return $ret;
+				});
+			}
 		}
 
 		if ( !empty( $namespaces ) ) {
@@ -187,22 +198,23 @@ class ArticlesApiController extends WikiaApiController {
 	/**
 	 * Get Articles under a category
 	 *
-	 * @requestParam string $namespaces [OPTIONAL] The name of the namespaces (e.g. Main, Category, File, etc.) to use as a filter, comma separated
 	 * @requestParam string $category [OPTIONAL] The name of a category (e.g. Characters) to use as a filter
+	 * @requestParam array $namespaces [OPTIONAL] The name of the namespaces (e.g. 0, 14, 5, etc.) to use as a filter, comma separated
 	 * @requestParam integer $limit [OPTIONAL] The maximum number of results to fetch, defaults to 25
-	 * @requestParam integer $batch [OPTIONAL] The batch/page index to retrieve, defaults to 1
+	 * @requestParam integer $offset [OPTIONAL] Offset to start fetching data from
 	 *
 	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
 	 * @responseParam array $basepath domain of a wiki to create a url for an article
+	 * @responseParam string $offset offset to start next batch of data
 	 *
-	 * @example http://glee.wikia.com/wikia.php?controller=ArticlesApi&method=getList
+	 * @example controller=ArticlesApi&method=getList
 	 */
 	public function getList(){
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
 
-		$namespaces = $this->request->getVal( self::PARAMETER_NAMESPACES, 0 );
+		$namespaces = $this->request->getArray( self::PARAMETER_NAMESPACES, null );
 		$limit = $this->request->getVal( 'limit', self::ITEMS_PER_BATCH );
 		$offset = $this->request->getVal( 'offset', '' );
 
@@ -298,7 +310,7 @@ class ArticlesApiController extends WikiaApiController {
 	 *
 	 * @responseParam array A list of results with the article ID as the index, each item has a revision, namespace (id, text), comments (if ArticleComments is enabled on the wiki), abstract (if available), thumbnail (if available) property
 	 *
-	 * @example http://glee.wikia.com/wikia.php?controller=ArticlesApi&method=getDetails&ids=2187,23478&abstract=200&width=300&height=150
+	 * @example controller=ArticlesApi&method=getDetails&ids=2187,23478&abstract=200&width=300&height=150
 	 */
 	public function getDetails() {
 		$this->wf->profileIn( __METHOD__ );
@@ -406,6 +418,9 @@ class ArticlesApiController extends WikiaApiController {
 		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, $type, $name, self::API_VERSION );
 	}
 
+	/**
+	 * @private
+	 */
 	static public function purgeCache( $id ) {
 		$memc = F::app()->wg->Memc;
 		$memc->delete( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ) );
