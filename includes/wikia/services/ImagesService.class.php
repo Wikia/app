@@ -43,7 +43,11 @@ class ImagesService extends Service {
 	 */
 	public static function getLocalFileThumbUrlAndSizes($fileName, $destImageWidth = 0) {
 		$app = F::app();
+		
 		$results = new stdClass();
+		$results->url = '';
+		$results->width = 0;
+		$results->height = 0;
 		
 		//remove namespace string
 		$fileName = str_replace($app->wg->ContLang->getNsText(NS_FILE) . ':', '', $fileName);
