@@ -10,6 +10,7 @@ var qs = require('qs');
 var request = require('request');
 var logger = require('./logger.js').logger;
 var trackId = 0;
+var lastTs = 0;
 //process.uptime()
 
 
@@ -22,15 +23,18 @@ var trackId = 0;
 
 var send = function(data) {
 	data.track_id = trackId;
-	trackId++;
-	if(trackId > 255) {
-		trackId = 0;
-	}
 
 	var ts = Math.round((new Date()).getTime() / 1000);
-	data.ts = ts;
+	trackId++;
 
-	var url =  'http://a.wikia-beacon.com/__track/special/chatevent?' + qs.stringify(data);
+	if(trackId > 255 && lastTs != ts) {  //do not restart the clock in the some secone
+		trackId = 0;
+	}
+	lastTs = ts;
+	data.ts = ts;
+	data.beacon = '0000000000';
+
+	var url =  'http://a.wikia-beacon.com/__track/special/chat-event?' + qs.stringify(data);
 	logger.info(url);
 	request({
 			method: "GET",
@@ -70,6 +74,7 @@ exports.trackServerStart = function() {
 
 exports.trackEvent = function(client, action) {
 	var data = {
+		"username": client.username,
 		"userkey": client.userKey,
 		"msgcount": client.msgCount,
 		"room_id": client.roomId,
