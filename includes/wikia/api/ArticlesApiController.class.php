@@ -92,6 +92,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * @example controller=ArticlesApi&method=getTop
 	 * @example controller=ArticlesApi&method=getTop&namespaces=0,14
 	 * @example controller=ArticlesApi&method=getTop&category=Characters
+	 * @example controller=ArticlesApi&method=getTop&category=Characters&namespaces=14
 	 */
 	public function getTop() {
 		$this->wf->ProfileIn( __METHOD__ );
@@ -203,6 +204,11 @@ class ArticlesApiController extends WikiaApiController {
 	 * @responseParam string $offset offset to start next batch of data
 	 *
 	 * @example controller=ArticlesApi&method=getList
+	 * @example controller=ArticlesApi&method=getList&namespaces=14
+	 * @example controller=ArticlesApi&method=getList&limit=10&namespaces=14
+	 * @example controller=ArticlesApi&method=getList&limit=10&namespaces=14&offset=R
+	 * @example controller=ArticlesApi&method=getList&category=Weapons
+	 * @example controller=ArticlesApi&method=getList&category=Weapons&limit=5
 	 */
 	public function getList(){
 		$this->wf->ProfileIn( __METHOD__ );
