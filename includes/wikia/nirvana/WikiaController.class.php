@@ -40,53 +40,70 @@ abstract class WikiaController extends WikiaDispatchableObject {
 			if ( !in_array( $method->name, $skipMethods ) ) {
 				$comment = $method->getDocComment();
 
-				$data = array(
-					'method' => $method->name,
-					//TODO: we need a better way to detect available formats
-					//for now let's disable this hardcoded list as API controllers
-					//allow only for JSON and some normal controllers have to HTML
-					//'formats' => array( 'html', 'json' ),
-					//'formats' => $this->allowedRequests[$method->name],
-					'request' => array(),
-					'response' => array()
-				);
+				if ( strpos( $comment, '@private' ) === false ) {
 
-				if ( !empty( $comment ) ) {
-					$results = array();
-
-					//grab documentation tokens
-					preg_match_all(
-						'/^\s*\*\s*@(response|request)param\s*(\S*)\s*\$?(\S*)\s*(\[optional\])?\s*([^\n]*)$/im',
-						$comment,
-						$results,
-						PREG_SET_ORDER
+					$data = array(
+						'method' => $method->name,
+						//TODO: we need a better way to detect available formats
+						//for now let's disable this hardcoded list as API controllers
+						//allow only for JSON and some normal controllers have to HTML
+						//'formats' => array( 'html', 'json' ),
+						//'formats' => $this->allowedRequests[$method->name],
+						'request' => array(),
+						'response' => array()
 					);
 
-					foreach ( $results as $res ) {
-						$kind = strtolower( $res[1] );
+					if ( !empty( $comment ) ) {
+						$results = array();
 
-						if ( array_key_exists( $kind, $data ) ) {
-							$data[$kind][] = array(
-								'name' => $res[3],
-								'type' => $res[2],
-								'optional' => !empty( $res[4] ),
-								'description' => $res[5]
-							);
+						//grab documentation tokens
+						preg_match_all(
+							'/^\s*\*\s*@(response|request)param\s*(\S*)\s*\$?(\S*)\s*(\[optional\])?\s*([^\n]*)$/im',
+							$comment,
+							$results,
+							PREG_SET_ORDER
+						);
+
+						foreach ( $results as $res ) {
+							$kind = strtolower( $res[1] );
+
+							if ( array_key_exists( $kind, $data ) ) {
+								$data[$kind][] = array(
+									'name' => $res[3],
+									'type' => $res[2],
+									'optional' => !empty( $res[4] ),
+									'description' => $res[5]
+								);
+							}
+
+							$comment = str_replace( $res[0], '', $comment );
 						}
 
-						$comment = str_replace( $res[0], '', $comment );
+						preg_match_all( '/@example .*/', $comment, $res );
+
+						if ( $res ) {
+
+							$examples = [];
+
+							foreach ( $res[0] as $r ) {
+								$examples[] = $this->wg->Server . '/wikia.php?' . str_replace('@example ', '', $r);
+
+								$comment = preg_replace( "~" . preg_quote($r) . "~", '', $comment, 1 );
+							}
+
+							$data['examples'] = $examples;
+						}
+
+						//remove /*\n and */
+						$comment = substr( $comment, 3, -2 );
+						//remove empty comment lines starting with *,
+						//non-desired @ metadata
+						//and trailing *'s
+						$data['description'] =  preg_replace( '/^@.*$/', '', preg_replace( '/^\s*\*\s*/m', '', $comment ) );
 					}
 
-					//remove /*\n and */
-					$comment = substr( $comment, 3, -2 );
-					//remove empty comment lines starting with *,
-					//non-desired @ metadata
-					//and trailing *'s
-					$data['description'] =  preg_replace( '/^@.*$/', '', preg_replace( '/^\s*\*\s*/m', '', $comment ) );
+					$help[] = $data;
 				}
-
-
-				$help[] = $data;
 			}
 		}
 

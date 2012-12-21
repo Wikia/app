@@ -16,6 +16,8 @@ abstract class WikiaApiController extends WikiaController {
 	/**
 	 * block throiwng WikiaException for WikiaApi
 	 * if no method is passed
+	 *
+	 * @private
 	 */
 	public final function index(){}
 
