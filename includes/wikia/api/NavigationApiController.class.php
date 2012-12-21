@@ -12,7 +12,7 @@ class NavigationApiController extends WikiaApiController {
 	 *
 	 * @responseParam array $navigation Wiki Navigation
 	 *
-	 * @example wikia.php?controller=NavigationApi&method=getData
+	 * @example
 	 */
 	public function getData(){
 		$model = new NavigationModel();

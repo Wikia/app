@@ -88,8 +88,10 @@ class ArticlesApiController extends WikiaApiController {
 	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
 	 * @responseParam string $basepath domain of a wiki to create a url for an article
 	 *
-	 * @example controller=ArticlesApi&method=getTop
-	 * @example controller=ArticlesApi&method=getTop&namespaces=0,14
+	 * @example
+	 * @example &namespaces=0,14
+	 * @example &category=Characters
+	 * @example &category=Characters&namespaces=14
 	 */
 	public function getTop() {
 		$this->wf->ProfileIn( __METHOD__ );
@@ -206,7 +208,12 @@ class ArticlesApiController extends WikiaApiController {
 	 * @responseParam array $basepath domain of a wiki to create a url for an article
 	 * @responseParam string $offset offset to start next batch of data
 	 *
-	 * @example controller=ArticlesApi&method=getList
+	 * @example
+	 * @example &namespaces=14
+	 * @example &limit=10&namespaces=14
+	 * @example &limit=10&namespaces=14&offset=R
+	 * @example &category=Weapons
+	 * @example &category=Weapons&limit=5
 	 */
 	public function getList(){
 		$this->wf->ProfileIn( __METHOD__ );
@@ -330,7 +337,7 @@ class ArticlesApiController extends WikiaApiController {
 	 *
 	 * @responseParam array A list of results with the article ID as the index, each item has a revision, namespace (id, text), comments (if ArticleComments is enabled on the wiki), abstract (if available), thumbnail (if available) property
 	 *
-	 * @example controller=ArticlesApi&method=getDetails&ids=2187,23478&abstract=200&width=300&height=150
+	 * @example &ids=2187,23478&abstract=200&width=300&height=150
 	 */
 	public function getDetails() {
 		$this->wf->profileIn( __METHOD__ );
