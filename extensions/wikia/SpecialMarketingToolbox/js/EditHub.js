@@ -119,7 +119,7 @@ EditHub.prototype = {
 				imagePlaceholder.find('img').remove();
 				imagePlaceholder.append(tempImg);
 				box.find('.filename-placeholder').html(fileName);
-				box.find('.wmu-file-name-input').val(fileName);
+				box.find('.wmu-file-name-input').val(fileName).valid();
 			}, this)
 		});
 	},
