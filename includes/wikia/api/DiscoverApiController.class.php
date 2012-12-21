@@ -23,6 +23,7 @@ class DiscoverApiController extends WikiaApiController {
 				if ( $comment ) {
 					$comment = substr( $comment, 3, -2 );
 					$comment = preg_replace( '~^\s*\*\s*~m', '', $comment );
+					$comment = preg_replace('~\*\s*@author.*~' , '', $comment);
 				} else {
 					$comment = null;
 				}
