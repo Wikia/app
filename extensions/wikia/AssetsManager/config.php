@@ -751,6 +751,10 @@ $config['chat_js2'] = array(
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
+
 		'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
 		'//extensions/wikia/Chat2/js/emoticons.js', // must be before controllers.js
 		'//extensions/wikia/Chat2/js/lib/underscore.js',
