@@ -31,7 +31,7 @@ require("./server_api.js");
 
 // Start the Node Chat server (which browsers connect to).
 logger.info("== Starting Node Chat Server ==");
-
+tracker.trackServerStart();
 //configure express to use jade
 app.set('view engine', 'jade');
 app.set('view options', {layout: false});
@@ -287,6 +287,7 @@ function authConnection(handshakeData, authcallback){
 				if(users.length == 0 || _.indexOf(users, data.username) !== -1 ) { //
 					var client = {};
 					client.userKey = key;
+					client.msgCount = 0;
 					client.username = data.username;
 					client.avatarSrc = data.avatarSrc;
 					client.isChatMod = data.isChatMod;
@@ -466,7 +467,7 @@ function formallyAddClient(client, socket, connectedUser){
 			broadcastUserListToMediaWiki(client, false);
 			//Conenction complted
 			//let's track it
-			tracker.trackEvent(connectedUser);
+			tracker.trackEvent(client, 'connect');
 		}
 	);	
 } // end formallyAddClient()
@@ -510,7 +511,9 @@ function broadcastDisconnectionInfo(client, socket){
 	if(client.donotSendPart) {
 		return true;
 	}
-	
+
+	tracker.trackEvent(client, 'disconnection');
+
 	broadcastUserListToMediaWiki(client, true);
 
 	broadcastToRoom(client, socket, {
@@ -561,6 +564,7 @@ function logout(client, socket, msg) {
 		leavingUserName: client.myUser.get('name')
 	});
 	monitoring.incrEventCounter('logouts');
+	tracker.trackEvent(client, 'logout');
 	// I'm still not sure if we should call kickUserFromRoom here or not...
 	broadcastToRoom(client, socket, {
 			event: 'logout', 
