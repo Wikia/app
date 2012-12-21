@@ -91,6 +91,7 @@ class ArticlesApiController extends WikiaApiController {
 	 *
 	 * @example controller=ArticlesApi&method=getTop
 	 * @example controller=ArticlesApi&method=getTop&namespaces=0,14
+	 * @example controller=ArticlesApi&method=getTop&category=Characters
 	 */
 	public function getTop() {
 		$this->wf->ProfileIn( __METHOD__ );
