@@ -63,7 +63,6 @@
 			.off( '.' + namespace )
 			.data( namespace, self );
 
-		self.dirty = true;
 		self.elements = elements;
 
 		// Attach listeners
@@ -88,7 +87,7 @@
 		elements.list = element.find( options.selectors.categories );
 
 		// Store category data in categories
-		elements.categories = element
+		elements.categories = elements.list
 			.find( options.selectors.category )
 			.each(function( i ) {
 				$( this ).data( 'category',
@@ -129,7 +128,6 @@
 				.sortable( $.extend( options.sortable, {
 					update: function( event, ui ) {
 						self.dirty = true;
-						self.updateCategories();
 						self.trigger( 'update' );
 					}
 				}));
@@ -161,7 +159,7 @@
 			category = CategorySelect.normalize( category );
 
 			if ( category ) {
-				data = self.getData( category.name );
+				data = self.getData( category.name )[ 0 ];
 
 				if ( data ) {
 					category = data;
@@ -186,7 +184,6 @@
 							.data( 'category', category );
 
 						self.dirty = true;
-						self.updateCategories();
 
 						self.trigger( 'add', {
 							category: category,
@@ -244,7 +241,7 @@
 									if ( name === '' ) {
 										error = cached.messages.errorEmptyCategoryName;
 
-									} else if ( name !== category.name && self.getData( name ) ) {
+									} else if ( name !== category.name && self.getData( name )[ 0 ] ) {
 										error = $.msg( 'categoryselect-error-duplicate-category-name', name );
 									}
 
@@ -286,73 +283,71 @@
 		},
 
 		/**
-		 * Gets the data associated with a category, or the data for all categories.
+		 * Gets the data associated with categories.
 		 *
-		 * @param { Element | jQuery | Number | String } [ category ]
-		 *        The index of a category relative to the list of categories, the
-		 *        name of a category or the jQuery or DOM Element for a category.
+		 * @param { Element | jQuery | Number | String } filter
+		 *        The index of a category relative to the list of categories, a
+		 *        selector string or the jQuery object or DOM Element for a category.
 		 *
 		 * @returns	{ Object }
 		 *			The data associated with the category, an array of category data
 		 *          for all categories, or undefined if not found.
 		 */
-		getData: (function() {
-			var categories = [];
+		getData: function( filter ) {
+			var data = [];
 
-			return function( category ) {
-				var data;
+			this.getCategories( filter ).each(function() {
+				data.push( $( this ).data( 'category' ) );
+			});
 
-				// Get the data for one category
-				if ( category ) {
-					return this.getCategory( category ).data( 'category' );
-				}
+			return data;
+		},
 
-				// Cache is stale, rebuild it
-				if ( this.dirty ) {
-					data = [];
+		/**
+		 * Gets categories from the list of categories.
+		 *
+		 * @param { Element | jQuery | Number | String } filter
+		 *        The index of a category relative to the list of categories, a
+		 *        selector string or the jQuery object or DOM Element for a category.
+		 *
+		 * @returns	{ jQuery }
+		 *			The categories, or an empty jQuery object if not found.
+		 */
+		getCategories: function( filter ) {
+			var $category, data,
+				categories = this.elements.categories;
 
-					this.dirty = false;
-					this.updateCategories().each(function() {
-						data.push( $( this ).data( 'category' ) );
-					});
+			// Rebuild categories cache if it has been modified
+			if ( this.dirty ) {
+				categories = this.elements.categories =
+					this.elements.list.find( this.options.selectors.category );
+			}
 
-					categories = data;
-				}
-
-				return categories;
-			};
-		}()),
+			return filter !== undefined ?
+				( !isNaN( parseInt( filter, 10 ) ) ?
+					// By category index (relative to other categories)
+					categories.eq( filter ) :
+					// By category name, selector string, jQuery object or DOM Element
+					categories.filter(function() {
+						$category = $( this );
+						return $category.is( filter ) ||
+							( data = $category.data( 'category' ) ) && data.name === filter;
+					})
+				) : categories;
+		},
 
 		/**
 		 * Gets a category from the list of categories.
 		 *
-		 * @param { Element | jQuery | Number | String } category
-		 *        The index of a category relative to the list of categories, the
-		 *        name of a category or the jQuery or DOM Element for a category.
+		 * @param { Element | jQuery | Number | String } filter
+		 *        The index of a category relative to the list of categories, a
+		 *        selector string or the jQuery object or DOM Element for a category.
 		 *
 		 * @returns	{ jQuery }
-		 *			The category, or an empty jQuery object if not found.
+		 *			The categories, or an empty jQuery object if not found.
 		 */
-		getCategory: function( category ) {
-			var data;
-
-			// By index (relative to other categories)
-			if ( !isNaN( parseInt( category, 10 ) ) ) {
-				category = this.elements.categories.eq( category );
-
-			// By category name
-			} else if ( typeof category === 'string' ) {
-				category = this.elements.categories.filter(function() {
-					data = $( this ).data( 'category' );
-					return data && data.name === category;
-				});
-
-			// By jQuery object or DOM Element
-			} else {
-				category = this.element.find( category );
-			}
-
-			return category;
+		getCategory: function( filter ) {
+			return this.getCategories( filter ).eq( 0 );
 		},
 
 		/**
@@ -379,7 +374,6 @@
 					dfd.resolve( element.detach() );
 
 					self.dirty = true;
-					self.updateCategories();
 
 					self.trigger( 'remove', {
 						element: element
@@ -399,7 +393,7 @@
 		 *          removed.
 		 */
 		resetCategories: function() {
-			return this.removeCategory( this.elements.categories.filter( '.new' ) );
+			return this.removeCategory( this.getCategories( '.new' ) );
 		},
 
 		/**
@@ -416,16 +410,6 @@
 		trigger: function( eventType ) {
 			var args = [ this ].concat( slice.call( arguments, 1 ) );
 			return this.element.triggerHandler( eventType + '.' + namespace, args );
-		},
-
-		/**
-		 * Updates the cached categories object.
-		 *
-		 * @returns { jQuery }
-		 *          The updated categories object.
-		 */
-		updateCategories: function() {
-			return this.elements.categories = this.element.find( this.options.selectors.category );
 		}
 	});
 

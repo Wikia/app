@@ -26,36 +26,27 @@ class CategorySelectController extends WikiaController {
 			return false;
 		}
 
+		// Categories are passed in for EditPage preview
 		$categories = $this->request->getVal( 'categories', array() );
 		$userCanEdit = $this->request->getVal( 'userCanEdit', CategorySelect::isEditable() );
 
-		// Get categories from article
+		// Build categories from categoryTypes array
 		if ( empty( $categories ) ) {
-			$data = CategorySelect::getExtractedCategoryData();
-			$categories = $data[ 'categories' ];
-		}
-
-		if ( !empty( $categories ) ) {
 			$categoryTypes = CategorySelect::getCategoryTypes();
 
-			foreach( $categories as $index => &$category ) {
-				$title = Title::newFromText( $category[ 'name' ], NS_CATEGORY );
+			if ( is_array( $categoryTypes ) ) {
+				foreach( $categoryTypes as $title => $type ) {
+					$title = Title::newFromText( $title, NS_CATEGORY );
 
-				if ( !is_null( $title ) ) {
-					$category[ 'link' ] = htmlspecialchars( $title->getLinkURL() );
-
-					// Add variant support
-					$category[ 'name' ] = $this->wg->ContLang->convertHtml( $title->getText() );
-
-					// Category type ("normal" or "hidden")
-					$key = $title->getDBKey();
-					if ( is_array( $categoryTypes ) && array_key_exists( $key, $categoryTypes ) ) {
-						$category[ 'type' ] = $categoryTypes[ $key ];
+					if ( !is_null( $title ) ) {
+						$categories[] = array(
+							'link' => htmlspecialchars( $title->getLinkURL() ),
+							'name' => $this->wg->ContLang->convertHtml( $title->getText() ),
+							'type' => $type,
+						);
 					}
 				}
 			}
-
-			unset( $category );
 		}
 
 		// There are no categories present and user can't edit, skip rendering
@@ -187,10 +178,7 @@ class CategorySelectController extends WikiaController {
 
 			$article = new Article( $title );
 			$wikitext = $article->fetchContent();
-
-			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
-			$categories = CategorySelect::getUniqueCategories( $categories, 'array', 'wikitext' );
-			$wikitext = $data[ 'wikitext' ] . $categories;
+			$wikitext .= CategorySelect::getUniqueCategories( $categories, 'array', 'wikitext' );
 
 			$dbw = $this->wf->GetDB( DB_MASTER );
 			$dbw->begin();

@@ -61,7 +61,7 @@
 				controller: 'CategorySelectController',
 				data: {
 					articleId: articleId,
-					categories: $wrapper.data( 'categorySelect' ).getData()
+					categories: $wrapper.data( 'categorySelect' ).getData( '.new' )
 				},
 				method: 'save'
 
