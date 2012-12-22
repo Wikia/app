@@ -156,6 +156,8 @@ class GameGuidesController extends WikiaController {
 	 * @example wikia.php?controller=GameGuides&method=getPage&page={Title}
 	 */
 	public function getPage(){
+		global $wgTitle;
+
 		//This will always return json
 		$this->response->setFormat( 'json' );
 
@@ -172,6 +174,7 @@ class GameGuidesController extends WikiaController {
 
 		if ( $title instanceof Title ) {
 			RequestContext::getMain()->setTitle( $title );
+			$wgTitle = $title;
 
 			$revId = $title->getLatestRevID();
 
@@ -180,7 +183,8 @@ class GameGuidesController extends WikiaController {
 					!empty( $this->wg->EnableRelatedPagesExt ) &&
 						empty( $this->wg->MakeWikiWebsite ) &&
 						empty( $this->wg->EnableAnswers ) ) ?
-					$this->app->sendRequest( 'RelatedPagesController', 'index', array(
+					$this->app->sendRequest( 'RelatedPages', 'index',
+						array(
 							'categories' => $this->wg->Title->getParentCategories()
 						)
 					) : null;
