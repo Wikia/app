@@ -20,25 +20,24 @@
 	*/
 	
 	window.VET_load_in_editor = function(event) {
-		var mode = event.data.mode;
-		var element = event.element;
+		var mode = 'create';
 		var embedPresets = {};
 		var exists = false;
-		var element = false;
+		var element = event.data.element || false;
 		var startPoint = 1;
 		
 		if (event && event.type === 'rte') {
 			// get video from event data
-			element = event.data.element;
 			if (element) {
 				// edit a video
+				mode = 'edit';
 				embedPresets = element.getData();
 				
 				if (!event.data.isPlaceholder) {
 					// "regular" video
 					$.extend(embedPresets, embedPresets.params);
 					delete embedPresets.params;
-
+					
 					startPoint = 2;
 				}
 			}
@@ -51,14 +50,14 @@
 				var wikitag = $('#VideoEmbedTag').val();
 				if (element && element.hasClass('media-placeholder')) {
 					// replace "Add Video" placeholder
-					RTE.mediaEditor.update(window.VET_RTEVideo, wikitag, embedData);
+					RTE.mediaEditor.update(element, wikitag, embedData);
 				}
 				else {
 					RTE.mediaEditor.addVideo(wikitag, embedData);
 				}
 
 			};
-		} else if (mode === 'edit') {
+		} else if(mode === 'edit') {
 
 			callback = function (embedData) {
 				// generate wikitext
@@ -81,10 +80,11 @@
 				}
 			
 				wikitext += ']]';
-				if (typeof window.VET_RTEVideo != 'undefined') {
-					if (window.VET_RTEVideo) {
+				if (element != 'undefined') {
+					if (element) {
 						// update existing video
-						RTE.mediaEditor.update(window.VET_RTEVideo, wikitext, embedData);
+						RTE.mediaEditor.update(element, wikitext, embedData);
+						VET_loader.modal.closeModal();
 					}
 					else {
 						// add new video
@@ -150,6 +150,7 @@
 		$.when.apply(this, deferredList).done(function() {
 			VET_loader.modal = $(templateHtml).makeModal({width:1000});
 			VET_show(options);
+			VETExtended.init(); // TODO on 2013: find the place where edit mode needs to call VETExtended.init() and abstract it, you shouldn't need this when startscreen == 2
 			resourcesLoaded = true;
 		});			
 	};

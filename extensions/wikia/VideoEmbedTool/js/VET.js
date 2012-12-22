@@ -56,7 +56,6 @@ function VET_editVideo() {
 			$G('VideoEmbedBack').style.display = 'none';
 
 			setTimeout(function() {
-
 				if ( (typeof (data.thumbnail) != "undefined" && data.thumbnail ) ||
 		             (typeof (data.thumb) != "undefined" && data.thumb ) ) {
 		
@@ -142,6 +141,10 @@ function VET_doEditVideo() {
 
 	if ($G('VideoEmbedCaption').value) {
 		 extraData.caption = $G('VideoEmbedCaption').value;
+	}
+	
+	if(VET_callbackAfterEmbed) {
+		VET_callbackAfterEmbed(extraData);
 	}
 
 	// close dialog
@@ -584,7 +587,6 @@ function VET_insertFinalVideo(e, type) {
 }
 
 function VET_switchScreen(to) {
-
 	VET_prevScreen = VET_curScreen;
 	VET_curScreen = to;
 	$G('VideoEmbed' + VET_prevScreen).style.display = 'none';
@@ -600,7 +602,6 @@ function VET_switchScreen(to) {
 	if (window.skin == 'oasis') {
 		setTimeout(function() {
 			$().log(to, 'VET_switchScreen');
-
 			switch(to) {
 				case 'Details':
 					VET_moveBackButton($('.VideoEmbedNoBorder.addVideoDetailsFormControls').find('input'));
@@ -634,19 +635,21 @@ function VET_previewClose(e) {
 }
 
 function VET_close(e) {
-	/*if(e) {
+	if(e) {
 		YAHOO.util.Event.preventDefault(e);
 	}
 
+	/*
 	VET_panel.hide();
 	if ( 400 == wgNamespaceNumber ) {
 		if( $G( 'VideoEmbedPageWindow' ) ) {
 			$G( 'VideoEmbedPageWindow' ).style.visibility = '';
 		}
 	}
+	*/
 
-	VET_switchScreen('Main');
-	VET_loadMain();*/
+	//VET_switchScreen('Main');
+	//VET_loadMain();
 
 	// Handle MiniEditor focus
 	// (BugId:18713)
