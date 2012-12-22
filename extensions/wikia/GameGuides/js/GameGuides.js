@@ -37,17 +37,25 @@
 
 	w.Photos = Photos;
 
-	function Font(){
-		this.toggleType = function(){
-			if(html.className.indexOf('serif') > -1) {
-				html.className = html.className.replace(' serif', '');
+	function toggle(on, off, force){
+		var hasClass = ~html.className.indexOf(on);
 
-				return 'sans-serif';
+		if(!force || force == on || force == off){
+			if(force == off || hasClass && force != on) {
+				hasClass && (html.className = html.className.replace(' ' + on, ''));
+
+				return off;
 			}else{
-				html.className += ' serif';
+				!hasClass && (html.className += ' ' + on);
 
-				return 'serif';
+				return on;
 			}
+		}
+	}
+
+	function Font(){
+		this.toggleType = function(type){
+			return toggle('serif', 'sans-serif', type)
 		};
 
 		this.setSize = function(size){
@@ -57,16 +65,17 @@
 			return size;
 		};
 
-		this.toggleAlignment = function(){
-			if(html.className.indexOf('full') > -1) {
-				html.className = html.className.replace(' full', '');
+		this.toggleAlignment = function(alignment){
+			return toggle('full', 'left', alignment)
+		};
 
-				return 'left';
-			}else{
-				html.className += ' full';
+		this.setOptions = function(size, type, alignment){
+			return {
+				size: size !== undefined && this.setSize(size),
+				type: type && this.toggleType(type),
+				alignment: alignment && this.toggleAlignment(alignment)
+			};
 
-				return 'full';
-			}
 		};
 	}
 
@@ -116,4 +125,3 @@
 		});
 	});
 })(document.documentElement, this);
-
