@@ -1069,6 +1069,26 @@ $messages['tr'] = array(
 	'about-heading-licensing' => 'Telif hakları',
 );
 
+/** Ukrainian (українська)
+ * @author Base
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'app-loading' => 'Завантаження...',
+	'app-tab-search' => 'Пошук',
+	'app-tab-about' => 'Про програму',
+	'app-tab-browse' => 'A..Z',
+	'app-async-error-title' => 'Ой',
+	'app-nonetwork-dialog-close-button' => 'Гаразд',
+	'login-username-hint' => "Ім'я користувача",
+	'login-password-hint' => 'Пароль',
+	'login-submit-button' => 'Увійти',
+	'about-heading' => 'LyricWiki',
+	'about-heading-tips' => 'Пошук',
+	'about-heading-licensing' => 'Авторські права',
+	'about-heading-feedback' => "Зворотний зв'язок",
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  */

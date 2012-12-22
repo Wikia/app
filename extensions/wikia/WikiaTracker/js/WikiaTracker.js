@@ -183,7 +183,7 @@ window.WikiaTracker = (function(){
 			'beacon': window.beacon_id || '',
 			'cb': Math.floor(Math.random()*99999)
 		};
-
+		
 		// Add data object to params object
 		extendObject(params, data);
 		var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement,

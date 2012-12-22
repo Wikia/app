@@ -721,6 +721,7 @@ $messages['crh-latn'] = array(
 /** Czech (česky)
  * @author Chmee2
  * @author Danny B.
+ * @author Darth Daron
  * @author Dontlietome7
  * @author Li-sung
  * @author Martin Kozák
@@ -740,6 +741,10 @@ Protokoly viz [[Special:Stafflog]].',
 	'userrenametool-reserve' => 'Zabránit nové registraci původního uživatelského jména',
 	'userrenametool-notify-renamed' => 'Poslat přejmenovanému uživateli email až bude hotovo',
 	'userrenametool-warnings' => 'Upozornění:',
+	'userrenametool-requested-rename' => 'Uživatel $1 požádal o přejmenování',
+	'userrenametool-did-not-request-rename' => 'Uživatel $1 nepožádal o přejmenování',
+	'userrenametool-previously-renamed' => 'Uživatel $1 již byl přejmenován',
+	'userrenametool-phalanx-matches' => 'Phalanx filtry odpovídající $1:',
 	'userrenametool-confirm' => 'Ano, přejmenovat uživatele',
 	'userrenametool-submit' => 'Přejmenovat',
 	'userrenametool-errordoesnotexist' => 'Uživatel se jménem „<nowiki>$1</nowiki>“ neexistuje',
@@ -755,7 +760,7 @@ Protokoly viz [[Special:Stafflog]].',
 	'userrenametool-error-same-user' => 'Nové uživatelské jméno je stejné jako dosavadní.',
 	'userrenametool-error-extension-abort' => 'Rozšíření brání procesu přejmenování.',
 	'userrenametool-error-cannot-rename-account' => 'Přejmenování uživatelského účtu na sdílené globální databázi se nezdařilo.',
-	'userrenametool-error-cannot-create-block' => 'Vytvoření blokace přihlášení se nezdařilo.', # Fuzzy
+	'userrenametool-error-cannot-create-block' => 'Vytvoření Phalanx blokace se nezdařilo.',
 	'userrenametool-warn-repeat' => 'Pozor! Uživatel "<nowiki>$1</nowiki>" již byl přejmenován na "<nowiki>$2</nowiki>".
 Pokračujte, pouze pokud potřebujete doplnit chybějící informace.',
 	'userrenametool-warn-table-missing' => 'Tabulka "<nowiki>$2</nowiki>" neexistuje v databázi "<nowiki>$1</nowiki>".',

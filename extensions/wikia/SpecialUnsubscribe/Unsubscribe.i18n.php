@@ -553,10 +553,14 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
+	'unsubscribe' => 'Відписатись',
+	'unsubscribe-confirm-legend' => 'Підтвердити',
 	'unsubscribe-confirm-button' => 'Так, я впевнений',
+	'unsubscribe-working-done' => 'Готово.',
 );
 
 /** Vietnamese (Tiếng Việt)

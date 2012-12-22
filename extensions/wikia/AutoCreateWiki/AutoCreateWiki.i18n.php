@@ -3480,7 +3480,7 @@ $messages['nl'] = array(
 	'autocreatewiki-blurry-word' => 'Wazige woord:',
 	'autocreatewiki-remember' => 'Aanmeldgegevens onthouden',
 	'autocreatewiki-create-account' => 'Registreren',
-	'autocreatewiki-done' => 'volbracht',
+	'autocreatewiki-done' => 'afgerond',
 	'autocreatewiki-error' => 'fout',
 	'autocreatewiki-haveaccount-question' => 'Hebt u al een Wikia-gebruiker?',
 	'autocreatewiki-success-title-default' => 'Uw wiki is aangemaakt!',
@@ -3533,7 +3533,7 @@ Kies een categorie uit de lijst.',
 Kies een taal uit de lijst.',
 	'autocreatewiki-invalid-retype-passwd' => 'Herhaal hetzelfde wachtwoord',
 	'autocreatewiki-invalid-birthday' => 'Ongeldige geboortedatum',
-	'autocreatewiki-limit-birthday' => 'Kan geen registratie creëren.',
+	'autocreatewiki-limit-birthday' => 'De registratie kan niet aangemaakt worden.',
 	'autocreatewiki-log-title' => 'Uw wiki wordt aangemaakt',
 	'autocreatewiki-step0' => 'Proces aan het initialiseren ...',
 	'autocreatewiki-stepdefault' => 'Proces is aan het werk. Een moment geduld alstublieft...',
@@ -3573,6 +3573,18 @@ $3
 Wikia Gemeenschapsondersteuning
 <http://community.wikia.com/wiki/User:$4>",
 	'autocreatewiki-welcometalk-wall-title' => 'Welkom!',
+	'autocreatewiki-welcometalk-wall' => "Hallo!
+We zijn blij dat {{subst:SITENAME}} nu onderdeel is van de Wikiagemeenschap. Er is nog veel te doen, dus hier zijn wat handige tips om uw wiki verder te helpen:
+* Weet u niet zeker waar u moet beginnen? Ga naar [[w:c:community:Admin_Central:Main_Page|De hub voor Oprichters en beheerders]] en neem vooral ook een kijkje op de [[w:c:community:Blog:Wikia_Founders_&_Admins|Blog]] voor tips over hoe u uw wiki een vlotte start kunt geven en kunt laten groeien.
+* Maak in de [[w:c:community:Special:Chat|chat]] van [[w:c:community:main page|Community Central]] nieuwe vrienden en leer over nieuwe functies en nieuws van Wikia op de  [[w:c:community:Blog:Wikia_Staff_Blog|Stafblog]].
+* Neem deel aan een van onze [[w:c:community:Webinars|webinars]] -- waar u kunt inschrijven voor interactieve sessies met onze medewerkers en reeds gehouden sessies (nog een keer) kunt bekijken.
+* Neem zeker ook een kijkje op [[Special:WikiFeatures|Wikifuncties]] om te kijken welke functies u voor uw wiki in kunt schakelen.
+* Ga op ontdekkingstocht op de [[w:c:community:Admin_Central:Forum|forums]] op de Hub voor Oprichters en Beheerders om de ontdekken wat andere wikibeheerders vragen.
+* Tenslotte kunt u onze [[w:c:community:Help:Contents|Hulppagina's]] bekijken om snel vragen beantwoord te krijgen waar u mee zit.
+
+Alle bovenstaande verwijzingen zijn een prima plaats om te beginnen met het verkennen van Wikia. Als u vast komt te zitten, of een antwoord niet kunt vinden, [[Special:Contact|neem dan alstublieft contact met ons op]]. En het meest belangrijke: maak plezier!
+
+Veel plezier met bewerken!",
 	'autocreatewiki-welcometalk' => "== Welkom! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Hallo \$1. We zijn erg blij dat '''\$4''' onderdeel is geworden van de Wikiagemeenschap!
 
@@ -5265,6 +5277,7 @@ $messages['tzm'] = array(
  * @author Ahonc
  * @author NickK
  * @author Prima klasy4na
+ * @author Steve.rusyn
  * @author Vox
  * @author Тест
  */
@@ -5368,6 +5381,7 @@ $messages['uk'] = array(
 Команда спільноти Wikia
 
 <http://www.wikia.com/wiki/User:$4>', # Fuzzy
+	'autocreatewiki-welcometalk-wall-title' => 'Ласкаво просимо!',
 	'autocreatewiki-welcometalk' => "== Ласкаво просимо! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Вітаємо, \$1 — ми раді, що '''\$4''' — частина спільноти Wikia!
 
@@ -5389,6 +5403,7 @@ $messages['uk'] = array(
 Це зовсім новий проект тому, будь ласка, напишіть нам, коли у вас виникнуть які-небудь питання!
 
 — Команда спільноти Wikia',
+	'autocreatewiki-subname-answers' => 'Відповіді',
 );
 
 /** Veps (vepsän kel’)

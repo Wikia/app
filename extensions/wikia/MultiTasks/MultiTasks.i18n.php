@@ -3169,10 +3169,20 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Base
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
+	'multitasks-link-back-label' => 'тут',
+	'multiwikiedit_button' => 'РЕДАГУВАТИ',
+	'multiwikiedit_confirm' => 'ПІДТВЕРДИТИ',
+	'multiwikiedit_caption' => 'Список сторінок',
+	'multiwikiedit_or' => '<b>АБО</b>',
+	'multiwikiedit_select_yourself' => 'Ви',
 	'multidelete_button' => 'ВИЛУЧИТИ',
+	'multidelete_select_all' => 'Вибрати всі',
+	'multidelete_this_wiki' => 'ця вікі',
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -2590,14 +2590,37 @@ $messages['tr'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  */
 $messages['uk'] = array(
+	'userprofilepage-edit-modal-header' => 'Редагувати профіль',
+	'userprofilepage-question-caption' => 'Запитання $1/$2',
+	'userprofilepage-lightbox-interview-cancel' => 'Скасувати',
+	'userprofilepage-add-question' => 'Додати нове запитання',
+	'userprofilepage-question-save' => 'Зберегти запитання',
+	'user-identity-box-edit' => 'Редагувати',
+	'user-identity-box-edit-avatar' => 'Змінити аватар',
+	'user-identity-box-delete-avatar' => 'Видалити аватар',
+	'user-identity-box-avatar-upload-avatar' => 'Завантажити аватар',
+	'user-identity-box-avatar-choose-avatar' => 'Вибрати аватар',
+	'user-identity-box-avatar-cancel' => 'Скасувати',
+	'user-identity-box-my-twitter' => 'Мій Twitter',
+	'user-identity-box-my-website' => 'Мій веб-сайт',
+	'user-identity-box-my-fb-page' => 'Мій Facebook',
+	'user-identity-box-group-blocked' => 'Заблокований',
 	'user-identity-box-group-sysop' => 'Адміністратор',
+	'user-identity-box-group-bureaucrat' => 'Бюрократ',
+	'user-identity-box-group-founder' => 'Засновник',
+	'user-identity-box-group-council' => 'Радник',
 	'user-identity-box-zero-state-location' => 'Місцезнаходження',
 	'user-identity-box-zero-state-birthday' => 'День народження',
 	'user-identity-box-zero-state-gender' => 'Стать',
 	'user-identity-box-zero-state-occupation' => 'Рід занять:',
 	'user-identity-box-zero-state-twitter' => 'Мій Твіттер',
+	'user-identity-box-zero-state-website' => 'Мій веб-сайт',
+	'user-identity-box-zero-state-fb-page' => 'Мій Facebook',
+	'user-identity-box-about-me' => 'Про мене',
+	'user-identity-box-avatar' => 'Аватар',
 	'user-identity-box-about-name' => "Ваше ім'я?",
 	'user-identity-box-about-location' => 'Де ви мешкаєте?',
 	'user-identity-box-about-birthday' => 'Коли у вас день народження?',

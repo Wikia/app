@@ -2572,8 +2572,13 @@ $messages['tzm'] = array(
 /** Ukrainian (українська)
  * @author A1
  * @author Base
+ * @author Steve.rusyn
  */
 $messages['uk'] = array(
+	'article-comments-anonymous' => 'Анонімний користувач',
+	'article-comments-comments' => 'Коментарі ($1)',
+	'article-comments-post' => 'Залишити коментар',
+	'article-comments-cancel' => 'Скасувати',
 	'article-comments-delete' => 'вилучити',
 	'article-comments-edit' => 'редагувати',
 	'article-comments-history' => 'історія',
@@ -2581,10 +2586,23 @@ $messages['uk'] = array(
 	'article-comments-undeleted-comment' => 'Відновити коментар на сторінці блогу $1',
 	'article-comments-rc-comment' => 'Коментар до статті (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Коментарі до статті ([[$1]])',
+	'article-comments-toc-item' => 'Коментарі',
+	'article-comments-vote' => 'Голосувати за',
+	'article-comments-reply' => 'Відповісти',
+	'article-comments-show-all' => 'Показати всі коментарі',
+	'article-comments-prev-page' => 'Попер.', # Fuzzy
+	'article-comments-next-page' => 'Наст.', # Fuzzy
 	'article-comments-page-spacer' => '&#160...&#160',
 	'wikiamobile-article-comments-more' => 'Завантажити більше',
 	'wikiamobile-article-comments-prev' => 'Завантажити попередні',
 	'wikiamobile-article-comments-none' => 'немає коментарів',
+	'wikiamobile-article-comments-view' => 'Переглянути відповіді',
+	'wikiamobile-article-comments-replies' => 'відповіді',
+	'wikiamobile-article-comments-post-reply' => 'Відповісти',
+	'wikiamobile-article-comments-post' => 'Залишити повідомлення',
+	'wikiamobile-article-comments-placeholder' => 'Залишити коментар',
+	'wikiamobile-article-comments-show' => 'Показати',
+	'wikiamobile-article-comments-login-post' => 'Будь ласка, увійдіть, щоб залишити коментар.',
 );
 
 /** Veps (vepsän kel’)

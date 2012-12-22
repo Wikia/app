@@ -4516,6 +4516,7 @@ $messages['tzm'] = array(
 /** Ukrainian (українська)
  * @author A1
  * @author Prima klasy4na
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -4532,15 +4533,25 @@ $messages['uk'] = array(
 	'create-blog-listing-preview' => 'Попередній перегляд',
 	'create-blog-listing-sortby' => 'Сортувати за',
 	'create-blog-listing-sortby-author' => 'автором',
+	'blog-defaulttitle' => 'Блоги',
 	'blog-readfullpost' => 'Читати далі',
+	'blog-added' => 'додано',
+	'blog-page' => 'Блог',
+	'blog-comment-post' => 'Залишити коментар',
 	'blog-comments' => 'Коментарі',
+	'blog-voting-label' => 'Голосування',
+	'blog-comments-anonymous' => 'Анонімний користувач',
 	'blog-comment-delete' => 'вилучити',
 	'blog-comment-hide' => 'сховати',
 	'blog-comment-unhide' => 'показати',
 	'blog-comment-history' => 'історія',
 	'blog-comment-edit' => 'редагувати',
+	'blog-page-rate' => 'Оцініть цю статтю:',
 	'blog-refresh-label' => 'Оновити',
+	'blog-fromsitename' => 'З $1',
 	'blogs-reportproblem' => 'Повідомити про проблему',
+	'blog-comment-sending' => 'Надсилання...',
+	'blogs-searchprofile' => 'Блоги',
 );
 
 /** Uzbek (oʻzbekcha)

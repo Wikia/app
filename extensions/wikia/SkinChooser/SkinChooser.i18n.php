@@ -29,11 +29,12 @@ $messages['br'] = array(
 );
 
 /** Czech (česky)
+ * @author Darth Daron
  * @author Dontlietome7
  */
 $messages['cs'] = array(
 	'skinchooser-desc' => 'Umnožňuje uživatelům zvolit vzhled v předvolbách',
-	'new-look' => 'Nový vzhled Wikia', # Fuzzy
+	'new-look' => 'Wikia',
 	'site-layout' => 'Rozložení webu',
 );
 

@@ -229,6 +229,17 @@ $messages['tl'] = array(
 	'wikiaconfirmemail-username' => 'Pangalan ng tagagamit',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'wikiaconfirmemail-error-empty-code' => 'Порожній код підтвердження',
+	'wikiaconfirmemail-error-invalid-code' => 'Код підтвердження невірний',
+	'wikiaconfirmemail-login-button' => 'Підтвердити й увійти',
+	'wikiaconfirmemail-heading' => 'Майже готово',
+	'wikiaconfirmemail-username' => "Ім'я користувача",
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */

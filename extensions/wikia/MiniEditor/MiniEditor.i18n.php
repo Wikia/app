@@ -264,3 +264,12 @@ $messages['tzm'] = array(
 	'minieditor-new-heading' => 'ⴰⵔⴰ ⵜⴰⴱⵔⴰⵜ ⵜⴰⵎⴰⵢⵏⵓⵜ',
 	'minieditor-reply' => 'ⵔⴰⵔ',
 );
+
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'minieditor-new-heading' => 'Створити нове повідомлення',
+	'minieditor-placeholder-new' => 'Введіть ваше повідомлення тут',
+	'minieditor-reply' => 'Відповісти',
+);

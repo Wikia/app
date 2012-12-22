@@ -70,12 +70,7 @@ class ArticleCommentInit {
 		}
 
 		//blog listing? (eg: User:Name instead of User:Name/Blog_name) - do not show comments
-		if (
-				defined('NS_BLOG_ARTICLE') &&
-				$title instanceof Title &&
-				$title->getNamespace() == NS_BLOG_ARTICLE &&
-				strpos($title->getText(), '/') === false
-		) {
+		if ( ArticleComment::isBlog() && strpos( $title->getText(), '/' ) === false ) {
 			wfProfileOut(__METHOD__);
 			return false;
 		}
@@ -240,8 +235,7 @@ class ArticleCommentInit {
 		}
 
 		//for blog comments BlogLockdown is checking rights
-		if ((defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) ||
-				defined('NS_BLOG_ARTICLE_TALK') && $namespace == NS_BLOG_ARTICLE_TALK ) {
+		if ( ArticleComment::isBlog() ) {
 			return true;
 		}
 

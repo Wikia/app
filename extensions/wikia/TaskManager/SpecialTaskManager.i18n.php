@@ -437,3 +437,11 @@ $messages['tr'] = array(
 	'taskmanager_title' => 'Geri plandaki işlemleri göster ve yönet',
 	'taskmanager_tasklist' => 'İşlem Listesine geri dön',
 );
+
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'taskmanager_tasklist' => 'Повернутися до списку завдань',
+	'taskmanager-invert' => 'Інвертувати виділення',
+);

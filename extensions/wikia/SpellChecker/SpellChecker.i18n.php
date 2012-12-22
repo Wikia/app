@@ -460,6 +460,16 @@ $messages['tt-cyrl'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Тел',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'spellchecker-info-languages' => 'Доступні мови ($1)',
+	'spellchecker-info-provider' => 'Постачальник',
+	'spellchecker-info-spellcheck-languages' => 'Мова',
+	'spellchecker-info-spellcheck-submit' => 'Перевірка правопису',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  * @author XiaoQiaoGrace

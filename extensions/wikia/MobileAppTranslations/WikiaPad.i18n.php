@@ -466,6 +466,20 @@ $messages['ug-arab'] = array(
 	'browser-loading-message' => 'يۈكلەۋاتىدۇ…',
 );
 
+/** Ukrainian (українська)
+ * @author Base
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'main-tab-search' => 'Пошук',
+	'main-tab-offline' => 'Офлайн',
+	'tab-discover-loading-message' => 'Завантаження...',
+	'tab-discover-no-network-dialog-title' => 'Мережа недоступна',
+	'tab-discover-no-network-dialog-close-button' => 'Гаразд',
+	'tab-search-loading-message' => 'Пошук...',
+	'browser-loading-message' => 'Завантаження...',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Sam Wang
  */

@@ -563,6 +563,7 @@ Svůj seznam sledovaných stránek můžete použít pro zobrazení změn na str
 	'myhome-hot-spots-feed-empty' => "Tato wiki čeká, až se zapojíte.
 Klepněte na '''[[Special:CreatePage|Nová stránka]]''' a začněte psát!",
 	'myhome-hot-spots-newest' => 'Nové stránky na wiki',
+	'tog-userlandingpage' => 'Vstupní stránka:',
 	'prefs-myhome' => 'Moje domovská stránka',
 	'myhome-feed-newpage' => 'nová stránka',
 	'myhome-feed-edit' => 'editovat',
@@ -1209,7 +1210,7 @@ Vous pouvez vous servir de votre liste de suivi pour garder une trace des dernie
 	'myhome-hot-spots-feed-empty' => "Vous n'avez pas encore participé à ce wiki.
 Cliquez sur '''[[Special:CreatePage|Nouvelle page]]''' pour commencer à écrire !",
 	'myhome-hot-spots-newest' => 'Nouvelles pages du wiki',
-	'tog-userlandingpage' => "Page d'accueil:",
+	'tog-userlandingpage' => 'Page d’arrivée :',
 	'prefs-myhome' => 'Mon accueil',
 	'myhome-feed-newpage' => 'nouvelle page',
 	'myhome-feed-edit' => 'modifier',
