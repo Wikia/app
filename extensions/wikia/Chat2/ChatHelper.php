@@ -238,7 +238,7 @@ class ChatHelper {
 		return true;
 	}
 
-	public static function formatLogEntry( $type, $action, $title, $forUI, $params ) {
+	public static function formatLogEntry( $type, $action, $title, $forUI, $params, $filterWikilinks ) {
 		global $wgLang;
 
 		if(empty($params[0])){
@@ -253,8 +253,13 @@ class ChatHelper {
 		$skin = RequestContext::getMain()->getSkin();
 		$id =  $params[1];
 		$revert = "(" . "<a class='chat-change-ban' data-user-id='{$params[1]}' href='#'>" . wfMsg( 'chat-ban-log-change-ban-link') . "</a>" . ")";
-		$link = $skin->userLink( $id, $title->getText() )
-						.$skin->userToolLinks( $id, $title->getText(), false );
+		if ( !$filterWikilinks ) { // Plaintext? Used for IRC messages (BugID: 44249)
+			$targetUser = User::newFromId( $id );
+			$link = "[[User:{$targetUser->getName()}]]";
+		} else {
+			$link = $skin->userLink( $id, $title->getText() )
+							.$skin->userToolLinks( $id, $title->getText(), false );
+		}
 
 		$time = "";
 		if(!empty($params[2])) {
