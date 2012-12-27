@@ -35,13 +35,11 @@ class ImagesService extends Service {
 
 	public static function getImageOriginalUrl( $wikiId, $pageId ) {
 		$app = F::app();
-
 		$app->wf->ProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
-
 		$title = GlobalTitle::newFromId( $pageId, $wikiId );
-
+		
 		$param = array(
 			'action' => 'query',
 			'prop' => 'imageinfo',
@@ -49,7 +47,16 @@ class ImagesService extends Service {
 			'titles' => $title->getPrefixedText(),
 		);
 
+		$imagePage = $title->getFullUrl();
 		$response = ApiService::foreignCall($dbname, $param);
+		
+		if( !empty($response['query']['pages']) ) {
+			$imagePageData = array_shift($response['query']['pages']);
+			$imageInfo = array_shift($imagePageData['imageinfo']);
+			$imageSrc = (empty($imageInfo['url'])) ? '' : $imageInfo['url'];
+		} else {
+			$imageSrc = '';
+		}
 
 		$app->wf->ProfileOut(__METHOD__);
 		return array( 'src' => $imageSrc, 'page' => $imagePage );
