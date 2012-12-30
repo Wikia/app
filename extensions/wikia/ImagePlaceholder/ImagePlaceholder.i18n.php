@@ -71,6 +71,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Metalhead64
  */
 $messages['de'] = array(
 	'imgplc-add-image' => 'Bild hinzufügen',
@@ -78,6 +79,7 @@ $messages['de'] = array(
 	'imgplc-placeholder' => 'Platzhalter',
 	'imgplc-image' => 'Bild',
 	'imgplc-notinhistory' => 'Du kannst keine Bilder im Verlaufsmodus hinzufügen.',
+	'imgplc-notinhistory-video' => 'Du kannst kein Video im Verlaufsmodus hinzufügen.',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -98,6 +100,7 @@ $messages['diq'] = array(
 
 /** Spanish (español)
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'imgplc-add-image' => 'Añadir imagen',
@@ -105,6 +108,7 @@ $messages['es'] = array(
 	'imgplc-placeholder' => 'Posicionador',
 	'imgplc-image' => 'Imagen',
 	'imgplc-notinhistory' => 'No puedes añadir una imagen en modo historial',
+	'imgplc-notinhistory-video' => 'No puedes añadir un vídeo en el modo de historial.',
 );
 
 /** Basque (euskara)
@@ -137,6 +141,7 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Peter17
  * @author Wyz
  */
@@ -146,6 +151,7 @@ $messages['fr'] = array(
 	'imgplc-placeholder' => 'Espace réservé',
 	'imgplc-image' => 'Image',
 	'imgplc-notinhistory' => "Vous ne pouvez pas ajouter d'image en mode historique.",
+	'imgplc-notinhistory-video' => 'Vous ne pouvez pas ajouter une vidéo en mode historique.',
 );
 
 /** Galician (galego)
@@ -153,10 +159,11 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'imgplc-add-image' => 'Engadir unha imaxe',
-	'imgplc-add-video' => 'Engadir o vídeo',
+	'imgplc-add-video' => 'Engadir un vídeo',
 	'imgplc-placeholder' => 'Marcador de posición',
 	'imgplc-image' => 'Imaxe',
-	'imgplc-notinhistory' => 'Non podes engadir imaxes no modo de historial.',
+	'imgplc-notinhistory' => 'Non pode engadir imaxes no modo de historial.',
+	'imgplc-notinhistory-video' => 'Non pode engadir vídeos no modo de historial.',
 );
 
 /** Hebrew (עברית)
@@ -268,7 +275,8 @@ $messages['mk'] = array(
 	'imgplc-add-video' => 'Додај видео',
 	'imgplc-placeholder' => 'Пополнувач',
 	'imgplc-image' => 'Слика',
-	'imgplc-notinhistory' => 'Не можете да додавате слики во историски режим.',
+	'imgplc-notinhistory' => 'Не можете да додавате слики во историскиот режим.',
+	'imgplc-notinhistory-video' => 'Не можете да додавате видеа во историскиот режим.',
 );
 
 /** Malayalam (മലയാളം)
@@ -288,6 +296,7 @@ $messages['ms'] = array(
 	'imgplc-placeholder' => 'Pemegang tempat',
 	'imgplc-image' => 'Gambar',
 	'imgplc-notinhistory' => 'Anda tidak boleh membubuh gambar dalam mod sejarah.',
+	'imgplc-notinhistory-video' => 'Anda tidak boleh meletakkan video dalam mod sejarah.',
 );
 
 /** Norwegian Bokmål (norsk (bokmål)‎)
@@ -310,6 +319,7 @@ $messages['nl'] = array(
 	'imgplc-placeholder' => 'Plaatshouder',
 	'imgplc-image' => 'Afbeelding',
 	'imgplc-notinhistory' => 'U kunt geen afbeelding toevoegen in geschiedenismodus.',
+	'imgplc-notinhistory-video' => 'U kunt geen video toevoegen in geschiedenismodus.',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -349,6 +359,7 @@ $messages['pl'] = array(
 	'imgplc-placeholder' => 'Wypełniacz',
 	'imgplc-image' => 'Obraz',
 	'imgplc-notinhistory' => 'Nie możesz dodać obrazu w trybie historii.',
+	'imgplc-notinhistory-video' => 'Nie można dodać filmu w trybie historii.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -357,9 +368,11 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'imgplc-add-image' => 'Gionta Figura',
+	'imgplc-add-video' => 'Gionta Video',
 	'imgplc-placeholder' => 'Marcapòst',
 	'imgplc-image' => 'Figura',
 	'imgplc-notinhistory' => 'A peul pa gionté na figura an modalità stòria.',
+	'imgplc-notinhistory-video' => 'A peul pa gionté un video an modalità stòria.',
 );
 
 /** Pashto (پښتو)
@@ -416,13 +429,15 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Sertion
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'imgplc-add-image' => 'Lägg till bild',
 	'imgplc-add-video' => 'Lägg till video',
 	'imgplc-placeholder' => 'Platshållare',
 	'imgplc-image' => 'Bild',
-	'imgplc-notinhistory' => 'Du kan inte lägga till bilder i historik-läget.',
+	'imgplc-notinhistory' => 'Du kan inte lägga till en bild i historikläget.',
+	'imgplc-notinhistory-video' => 'Du kan inte lägga till ett videoklipp i historikläget.',
 );
 
 /** Tagalog (Tagalog)

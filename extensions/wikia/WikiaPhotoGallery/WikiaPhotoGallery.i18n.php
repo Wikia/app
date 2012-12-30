@@ -214,7 +214,7 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-upload-findbutton' => '{{Identical|Find}}',
 	'wikiaPhotoGallery-upload-page-next' => '{{Identical|Next}}',
 	'wikiaPhotoGallery-upload-page-prev' => '{{Identical|Previous}}',
-	'wikiaPhotoGallery-upload-error-title' => '"Error" but successful? Maybe "could not be completed" is meant?', # Fuzzy
+	'wikiaPhotoGallery-upload-error-title' => 'Error message.',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => '{{Identical|Insert}}',
 	'wikiaPhotoGallery-upload-select-images' => '{{Identical|Select}}',
 	'wikiaPhotoGallery-photooptions-done' => '{{Identical|Done}}',
@@ -6096,6 +6096,7 @@ $messages['yi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Hydra
  * @author Hzy980512
  */
@@ -6110,6 +6111,7 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-upload-findtitle' => '寻找',
 	'wikiaPhotoGallery-upload-findbutton' => '寻找',
 	'wikiaPhotoGallery-upload-filestitle-pre' => '最近上传的文件',
+	'wikiaPhotoGallery-upload-filestitle-post' => '本维基上的图片（$1条结果）',
 	'wikiaPhotoGallery-upload-page-next' => '后 8 个',
 	'wikiaPhotoGallery-upload-page-prev' => '前 8 个',
 	'wikiaPhotoGallery-upload-error-title' => '您的上传无法完成',
@@ -6125,6 +6127,7 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-preview-px' => 'px',
 	'wikiaPhotoGallery-preview-size-smaller' => '缩小',
 	'wikiaPhotoGallery-preview-size-larger' => '放大',
+	'wikiaPhotoGallery-preview-columns' => '列数',
 	'wikiaPhotoGallery-preview-position-left' => '左',
 	'wikiaPhotoGallery-preview-position-center' => '中间',
 	'wikiaPhotoGallery-preview-position-right' => '右',
@@ -6132,16 +6135,22 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-preview-spacing-small' => '小',
 	'wikiaPhotoGallery-preview-spacing-medium' => '中',
 	'wikiaPhotoGallery-preview-spacing-large' => '大',
+	'wikiaPhotoGallery-preview-captionposition' => '标题位置',
+	'wikiaPhotoGallery-preview-captionposition-below' => '图片下方',
+	'wikiaPhotoGallery-preview-captionalignment' => '标题对齐方式',
 	'wikiaPhotoGallery-preview-captionalignment-left' => '左',
 	'wikiaPhotoGallery-preview-captionalignment-center' => '中间',
 	'wikiaPhotoGallery-preview-captionalignment-right' => '右',
+	'wikiaPhotoGallery-preview-captionsize' => '标题大小',
 	'wikiaPhotoGallery-preview-captionsize-small' => '小',
 	'wikiaPhotoGallery-preview-captionsize-medium' => '中',
 	'wikiaPhotoGallery-preview-captionsize-large' => '大',
+	'wikiaPhotoGallery-preview-captioncolor' => '标题颜色',
 	'wikiaPhotoGallery-preview-bordersize-none' => '无',
 	'wikiaPhotoGallery-preview-bordersize-small' => '小',
 	'wikiaPhotoGallery-preview-bordersize-medium' => '中',
 	'wikiaPhotoGallery-preview-bordersize-large' => '大',
+	'wikiaPhotoGallery-preview-colorpicker-title' => '拾色器',
 	'wikiaPhotoGallery-preview-size' => '图片尺寸',
 	'wikiaPhotoGallery-preview-captions-left' => '左',
 	'wikiaPhotoGallery-preview-captions-center' => '中间',
@@ -6158,6 +6167,7 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-slideshow-view-title' => '幻灯片',
 	'wikiaPhotoGallery-slideshow-view-startslideshow' => '播放幻灯片',
 	'wikiaPhotoGallery-slideshow-view-stopslideshow' => '停止幻灯片',
+	'wikiaPhotoGallery-slideshow-view-details-tooltip' => '查看图片细节',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => '到达$1',
 	'wikiaPhotoGallery-choice-gallery' => '新建图库',
 	'wikiaPhotoGallery-slideshowpreview-title' => '幻灯片创建器',

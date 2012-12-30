@@ -246,6 +246,8 @@ $messages['pl'] = array(
 $messages['pms'] = array(
 	'sharedhelp-desc' => "A pija dle pàgine da [[w:c:Help|Help Wikia]] e a j'anseriss ant lë spassi nominal {{ns:help}} dë sta wiki-sì",
 	'sharedhelp-autotalkcreate-summary' => 'Pàgina ëd discussion creà automaticament',
+	'sharedhelp-searchprofile' => "Pagine d'agiut",
+	'sharedhelp-searchprofile-tooltip' => "Sërché pàgine d'agiut",
 );
 
 /** Pashto (پښتو)

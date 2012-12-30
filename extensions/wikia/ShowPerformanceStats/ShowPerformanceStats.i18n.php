@@ -295,5 +295,6 @@ $messages['uk'] = array(
  * @author Dimension
  */
 $messages['zh-hans'] = array(
+	'performancestat-total' => '总计：$1秒',
 	'performancestat-cpu' => 'CPU: $1秒',
 );

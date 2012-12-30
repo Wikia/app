@@ -693,6 +693,7 @@ $messages['zh-hans'] = array(
 	'window-category-load-batch' => '更多',
 	'window-article-button-close' => '关闭',
 	'window-article-button-back' => '返回',
+	'window-article-menu-search-label' => '查找',
 	'searchview-button-back-article' => '返回条目',
 	'alert-download-updated-wikis-button-ok' => '确认',
 );

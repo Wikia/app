@@ -543,8 +543,14 @@ $messages['vi'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
+	'timeago-day' => '$1天前',
+	'timeago-hour' => '$1小时前',
+	'timeago-minute' => '$1分钟前',
 	'timeago-second' => '一分钟前',
+	'timeago-day-from-now' => '$1天前',
+	'timeago-second-from-now' => '一分钟前',
 );

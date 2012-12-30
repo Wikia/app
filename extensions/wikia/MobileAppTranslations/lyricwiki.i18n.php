@@ -956,6 +956,28 @@ $messages['ru'] = array(
 	'ringtone-matcher-by-song' => 'Отправить  %s  рингтон для вашей группы',
 );
 
+/** Slovak (slovenčina)
+ * @author Kusavica
+ */
+$messages['sk'] = array(
+	'app-loading' => 'Načítava sa...',
+	'app-tab-search' => 'Hľadať',
+	'app-tab-about' => 'O aplikácii',
+	'app-async-error-title' => 'Oops',
+	'app-async-error-message' => 'Dočasný problém s pripojením. Skúste sa pripojiť neskôr prosím.',
+	'app-nonetwork-dialog-title' => 'Sieť nie je k dispozícii',
+	'app-nonetwork-dialog-close-button' => 'OK',
+	'search-go' => 'Choď!',
+	'search-no-match-found' => 'Nenašla sa žiadna zhoda.',
+	'login-label' => 'Prihlásiť sa do LyricWiki',
+	'login-username-hint' => 'Používateľské meno',
+	'login-password-hint' => 'Heslo',
+	'login-submit-button' => 'Prihlásiť sa',
+	'about-heading' => 'LyricWiki',
+	'about-heading-feedback' => 'Spätná väzba',
+	'about-heading-rate' => 'Prosím ohodnoťte aplikáciu!',
+);
+
 /** Swedish (svenska)
  * @author Nghtwlkr
  * @author WikiPhoenix

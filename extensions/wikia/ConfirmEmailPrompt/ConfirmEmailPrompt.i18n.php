@@ -201,3 +201,11 @@ $messages['vi'] = array(
 	'confirmemailprompt-desc' => 'Hiển thị một thông điệp cảnh báo nếu một người dùng có địa chỉ thư điện tử chưa được xác nhận',
 	'confirmemailprompt-error' => 'Đây có phải là địa chỉ e-mail của bạn: <strong>$1</strong>? [[$2|Xác nhận nó]] hoặc [[$3|thay đổi nó]].',
 );
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'confirmemailprompt-desc' => '当用户电子邮件地址未被确认时显示警告信息',
+	'confirmemailprompt-error' => '您的电子邮件地址是：<strong>$1</strong>么？[[$2|确认地址]]或[[$3|变更地址]].',
+);

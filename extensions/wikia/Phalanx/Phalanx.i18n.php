@@ -2408,12 +2408,13 @@ $messages['tt-cyrl'] = array(
 /** Ukrainian (українська)
  * @author A1
  * @author Steve.rusyn
+ * @author Ата
  * @author Тест
  */
 $messages['uk'] = array(
-	'phalanx-desc' => 'Phalanx - комплексний механізм виявлення спаму',
+	'phalanx-desc' => 'Phalanx — комплексний механізм захисту від спаму',
 	'phalanx' => 'Phalanx',
-	'phalanx-title' => 'Phalanx - комплексний механізм захисту від спаму',
+	'phalanx-title' => 'Phalanx — комплексний механізм захисту від спаму',
 	'phalanx-type-content' => 'зміст сторінки',
 	'phalanx-type-summary' => 'стислий опис сторінки',
 	'phalanx-type-title' => 'Назва сторінки',

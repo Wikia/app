@@ -7096,6 +7096,7 @@ $EDITORPAGEURL
 
 Wikia团队',
 	'founderemails-email-user-registered-greeting' => '嗨！$USERNAME，',
+	'founderemails-email-user-registered-headline' => '恭喜！$EDITORNAME刚刚加入了$WIKINAME。',
 	'founderemails-email-user-registered-signature' => 'Wikia团队',
 	'founderemails-email-0-days-passed-subject' => '欢迎来到Wikia！',
 	'founderemails-email-10-days-passed-subject' => '“10天纪念日”快乐！',
@@ -7127,6 +7128,9 @@ ___________________________________________
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME 有新编辑 ！',
 	'founderemails-email-first-edit-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-first-edit-signature' => 'Wikia团队',
+	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Hey $USERNAME,<br /><br />
+注册用户$EDITORNAME刚刚在你的维基上作出了首次编辑哦！何不访问TA的<a href="$EDITORTALKPAGEURL">对话页</a> 去打个招呼？<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Wikia团队</div>',
 	'founderemails-email-general-edit-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-general-edit-signature' => 'Wikia团队',
 	'founderemails-email-page-edited-anon-body' => 'Hi $USERNAME，
@@ -7161,6 +7165,7 @@ Wikia团队',
 	'founderemails-lot-happening-subject' => '$WIKINAME正在热力升温！',
 	'founderemails-email-lot-happening-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-lot-happening-signature' => 'Wikia团队',
+	'founderemails-email-lot-happening-button' => '查看动态',
 	'founderemails-email-0-day-heading' => '很高兴认识你，$USERNAME，',
 	'founderemails-email-0-day-congratulations' => '祝贺创建 $HDWIKINAME ！',
 	'founderemails-email-0-day-tips-heading' => '这里有几个有益的提示帮助您开始：',
@@ -7177,17 +7182,28 @@ Wikia团队',
 	'founderemails-email-3-day-explore-heading' => '寻找灵感。',
 	'founderemails-email-3-day-wikiahelps-signature' => '继续努力吧！<br />Wikia团队',
 	'founderemails-email-10-day-congratulations' => '哇哦，时光飞逝！您建立$HDWIKINAME已逾10日。',
+	'founderemails-email-10-day-share-heading' => '妈妈一定和你说过“独乐乐不如众乐乐”的道理吧？',
 	'founderemails-email-10-day-join-heading' => '链接同类网站。',
+	'founderemails-email-views-digest-body' => '本日$WIKINAME的访问量是$1{{PLURAL:$1|人|人}}.
+
+继续丰富、宣传你的维基来鼓励更多人阅读、编辑和传播吧。
+
+$WIKIURL
+
+Wikia团队',
 	'founderemails-email-views-digest-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-views-digest-button' => '添加更多页面',
 	'founderemails-email-complete-digest-subject' => '$WIKINAME上的最新活动',
 	'founderemails-email-complete-digest-greeting' => '嗨，$USERNAME，',
+	'founderemails-email-complete-digest-content-heading1' => '$1{{PLURAL:$1|人|人}}次访问了你的维基。',
 	'founderemails-email-complete-digest-content-heading2' => '已做出$1 {{PLURAL:$1|处编辑|处编辑}}。',
 	'founderemails-email-complete-digest-content-heading3' => '$1人加入了你的维基。',
+	'founderemails-email-complete-digest-signature' => 'Wikia团队',
 	'founderemails-email-complete-digest-button' => '前往 维基活动',
 	'founderemails-pref-joins' => '有人加入$1时邮件通知我。',
 	'founderemails-pref-edits' => '有人编辑$1时邮件通知我。',
 	'founderemails-pref-edits-v2' => '...他人编辑',
+	'founderemails-pref-complete-digest-v2' => '...一份每日注册、编辑、访问摘要已备好',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

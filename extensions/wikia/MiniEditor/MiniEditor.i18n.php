@@ -273,3 +273,10 @@ $messages['uk'] = array(
 	'minieditor-placeholder-new' => 'Введіть ваше повідомлення тут',
 	'minieditor-reply' => 'Відповісти',
 );
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'minieditor-reply' => '回复',
+);

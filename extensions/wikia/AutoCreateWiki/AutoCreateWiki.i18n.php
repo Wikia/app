@@ -2799,7 +2799,7 @@ wulle mer, dat De dat verwaggelt Woot, wat De heh sühß, en heh dat Feld entipp
 	'autocreatewiki-empty-username' => 'Ene Name för ene Metmacher kann nit läddesch sin.',
 	'autocreatewiki-empty-password' => 'E Paßwoot kann nit läddesch sin.',
 	'autocreatewiki-empty-retype-password' => 'Et Paßwoot widderhollt kann nit läddesch sin.',
-	'autocreatewiki-category-label' => 'Saachjropp:', # Fuzzy
+	'autocreatewiki-category-label' => 'Saachjropp:',
 	'autocreatewiki-category-other' => 'Ander',
 	'autocreatewiki-set-username' => 'Lääsh et eez ene Metmaaacher_Name faß.',
 	'autocreatewiki-invalid-category' => 'Dat es ene onjölteje Saachjripp.
@@ -2856,6 +2856,17 @@ $messages['ku-latn'] = array(
 	'autocreatewiki-done' => 'çêbû',
 	'autocreatewiki-category-label' => 'Kategorî:',
 	'autocreatewiki-subname-answers' => 'Bersiv',
+);
+
+/** Kirghiz (Кыргызча)
+ * @author Growingup
+ */
+$messages['ky'] = array(
+	'autocreatewiki-remember' => 'Мени эске сактоо',
+	'autocreatewiki-create-account' => 'Эсеп жазуусун жаратуу',
+	'autocreatewiki-error' => 'ката',
+	'autocreatewiki-category-label' => 'Категория:',
+	'autocreatewiki-category-other' => 'Башка',
 );
 
 /** Latin (Latina)
@@ -5499,6 +5510,8 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-info-email-address' => '您的电子邮件地址不会显示给Wikia上的任何人。',
 	'autocreatewiki-info-realname' => '如果提供这将用于为您提供了归因你的工作。',
 	'autocreatewiki-title-template' => '$1 维基',
+	'autocreatewiki-limit-creation' => '您在24小时内超越了维基创建数目上限($1)。',
+	'autocreatewiki-invalid-wikiname' => '名称不能包含特殊字符（如$或@）且不能为空。',
 	'autocreatewiki-violate-policy' => '此维基名中含有违反命名策略的词语',
 	'autocreatewiki-name-too-short' => '此地址过短，请选择一个至少包含3个字符的地址。',
 	'autocreatewiki-name-too-long' => '此地址过长，请选择一个最多包含50个字符的地址。',
@@ -5560,6 +5573,7 @@ $messages['zh-hans'] = array(
 祝您编辑快乐！', # Fuzzy
 	'newwikis' => '新的维基',
 	'newwikisstart' => '以此页面打开维基：',
+	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
 	'autocreatewiki-reminder-body' => '亲爱的$1:
 
 恭喜您创建了自己的维基，{{SITENAME}}! 您可以访问$2返回并为您的维基添加更多信息。

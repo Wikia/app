@@ -346,4 +346,5 @@ $messages['zh-hans'] = array(
 	'userdata' => '获取用户档案',
 	'userdata-userid-label' => '提供用户ID：',
 	'userdata-submit' => '获取数据',
+	'userdata-not-updated' => '更新wgUserData失败',
 );

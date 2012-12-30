@@ -2578,6 +2578,7 @@ $messages['pms'] = array(
 	'myhome-hot-spots-feed' => 'Ròba Càuda',
 	'myhome-hot-spots-feed-empty' => "Sta wiki-sì a speta che chiel a ancamin-a. Ch'a sgnaca dzora a '''[[Special:CreatePage|Pàgina neuva]]''' për ancaminé a scrive!",
 	'myhome-hot-spots-newest' => 'Pàgine neuve an sla wiki',
+	'tog-userlandingpage' => "Pàgina d'ariv:",
 	'prefs-myhome' => 'Mia Intrada',
 	'myhome-feed-newpage' => 'pàgina neuva',
 	'myhome-feed-edit' => 'modifiché',

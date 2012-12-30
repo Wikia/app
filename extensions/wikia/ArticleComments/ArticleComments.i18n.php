@@ -223,6 +223,36 @@ $messages['azb'] = array(
 	'wikiamobile-article-comments-show' => 'گؤستر',
 );
 
+/** Bashkir (башҡортса)
+ * @author Ләйсән
+ * @author ҒатаУлла
+ */
+$messages['ba'] = array(
+	'article-comments-anonymous' => 'Аноним ҡулланыусылар',
+	'article-comments-comments' => 'Фекерҙәр ($1)',
+	'article-comments-post' => 'Фекер яҙырға',
+	'article-comments-cancel' => 'Кире алырға',
+	'article-comments-delete' => 'юйырға',
+	'article-comments-edit' => 'үҙгәртергә',
+	'article-comments-history' => 'тарих',
+	'article-comments-error' => 'Фекер һаҡлана алмай',
+	'article-comments-undeleted-comment' => '$1 блогы битендәге фекерҙе кире ҡайтарыу',
+	'article-comments-rc-comment' => '(<span class="plainlinks">[$1 $2]</span>) мәҡәләһенә фекер',
+	'article-comments-rc-comments' => '[[$1]] мәҡәләһенә фекер',
+	'article-comments-fblogin' => 'Зинһар, был вики-проектта фекер ҡалдырыу өсөн <a href="$1" rel="nofollow">системаға йәки Facebookка керегеҙ</a> һәм !',
+	'article-comments-fbconnect' => 'Зинһар, фекер ҡалдырыр өсөн <a href="$1">иҫәп яҙыуығыҙҙы Facebook менән бәйләгеҙ</a>!',
+	'article-comments-rc-blog-comment' => '(<span class="plainlinks">[$1 $2]</span>) блогына фекер',
+	'article-comments-rc-blog-comments' => '([[$1]]) блогына фекерҙәр',
+	'article-comments-login' => 'Был вики-проектта фекер ҡалдырыу өсөн, зинһар,  <a href="$1">системаға керегеҙ</a>',
+	'article-comments-toc-item' => 'Фекерҙәр',
+	'article-comments-comment-cannot-add' => 'Һеҙ был мәҡәлә өсөн фекер ҡалдыра алмыйһығыҙ',
+	'article-comments-vote' => '- өсөн тауыш бирергә',
+	'article-comments-reply' => 'Яуап бирергә',
+	'article-comments-show-all' => 'Бөтә  фекерҙәрҙе күрһәтергә',
+	'wikiamobile-article-comments-view' => 'Яуаптарҙы ҡарау',
+	'wikiamobile-article-comments-replies' => 'Яуаптар',
+);
+
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
@@ -1436,10 +1466,15 @@ $messages['ku-latn'] = array(
  * @author Growingup
  */
 $messages['ky'] = array(
+	'article-comments-cancel' => 'Жокко чыгаруу',
 	'article-comments-delete' => 'өчүрүү',
 	'article-comments-edit' => 'оңдоо',
 	'article-comments-history' => 'тарых',
+	'article-comments-toc-item' => 'Комментарийлер',
 	'article-comments-reply' => 'Жооп берүү',
+	'article-comments-next-page' => 'Кийинки',
+	'wikiamobile-article-comments-post' => 'Калтыруу',
+	'wikiamobile-article-comments-show' => 'Көрсөтүү',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -2142,9 +2177,18 @@ $messages['ro'] = array(
 
 /** tarandíne (tarandíne)
  * @author Joetaras
+ * @author Reder
  */
 $messages['roa-tara'] = array(
+	'article-comments-anonymous' => 'Utinde anonime',
+	'article-comments-comments' => 'Commende $1',
+	'article-comments-post' => "Mitte 'nu commende",
 	'article-comments-cancel' => 'Annulle',
+	'article-comments-delete' => 'scangille',
+	'article-comments-edit' => 'cange',
+	'article-comments-history' => 'cunde',
+	'article-comments-error' => "Non g'è state possibbele ccu salve 'u commende",
+	'article-comments-undeleted-comment' => "Commende no scangellate p'a pàgene $1 d'u blog",
 	'article-comments-toc-item' => 'Commende',
 	'article-comments-reply' => 'Respunne',
 );
@@ -2726,30 +2770,31 @@ $messages['zh-hans'] = array(
 	'wikiamobile-article-comments-show' => '展开',
 	'wikiamobile-article-comments-login-post' => '请登录以发表评论。',
 	'enotif_subject_article_comment' => '$PAGEEDITOR在{{SITENAME}}上对"$PAGETITLE"发表了评论',
-	'enotif_body_article_comment' => '亲爱的$WATCHINGUSERNAME，
+	'enotif_body_article_comment' => 'Hi~,$WATCHINGUSERNAME，
 
-$PAGEEDITOR对"$PAGETITLE"做出了评论。
+{{SITENAME}}上的$PAGETITLE有了新评论哦。
+点此链接查看评论：$PAGETITLE_URL#WikiaArticleComments
 
-依下方链接查看此评论：
-$PAGETITLE_URL
+Wikia社区支持
 
-请常来访问和编辑……
+___________________________________________
+* 在社区中心寻找帮助和建议: http://community.wikia.com
+* 觉得信息太多？您可以在这里退订或变更邮件偏好：http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Hi，$WATCHINGUSERNAME,
+<br /><br />
+{{SITENAME}}上的$PAGETITLE有评论哦。点击如下链接查看全部评论：
+<br /><br />
+依如下链接查看评论：<a href="$PAGETITLE_URL">$PAGETITLE</a>$PAGETITLE_URL#WikiaArticleComments
+<br /><br />
+- Wikia社区支持
+<br /><br />
 
-Wikia', # Fuzzy
-	'enotif_body_article_comment-HTML' => '<p>亲爱的$WATCHINGUSERNAME,
-<br /><br />
-$PAGEEDITOR在"$PAGETITLE"上做出了评论。
-<br /><br />
-依如下链接查看评论：<a href="$PAGETITLE_URL">$PAGETITLE</a>
-<br /><br />
-敬请常来访编辑……
-<br /><br />
-Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li>想管理你将收到何种邮件？ <a href="{{fullurl:Special:Preferences}}">更新偏好设置<a>.</li>
+<li>在社区中心群求帮助或建议：<a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>管理您收到的邮件，退订或改变邮件设置请点击： <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
-</p>', # Fuzzy
+</p>',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

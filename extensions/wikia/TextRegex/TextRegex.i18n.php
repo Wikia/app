@@ -50,7 +50,7 @@ Try once again.',
 $messages['qqq'] = array(
 	'textregex' => '"Regex" is a abbreviation for "regular expression".',
 	'textregex-desc' => '{{desc}}',
-	'textregex-addedby-user' => 'If $2 is a time stamp, split date and time', # Fuzzy
+	'textregex-addedby-user' => '',
 	'textregex-remove-url' => '{{Identical|Remove}}',
 	'textregex-stats-url' => '{{Identical|Statistics}}',
 	'textregex-select-default' => '{{Identical|Select}}',

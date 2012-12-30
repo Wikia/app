@@ -1245,6 +1245,7 @@ $messages['nb'] = array(
 	'editaccount-label-pass' => 'Angi nytt passord',
 	'editaccount-label-realname' => 'Angi nytt virkelig navn',
 	'editaccount-label-clearunsub' => 'Avsluttet abonnement',
+	'editaccount-label-reason' => 'Begrunnelse:',
 	'editaccount-submit-email' => 'Lagre e-post',
 	'editaccount-submit-pass' => 'Lagre passord',
 	'editaccount-submit-realname' => 'Lagre virkelig navn',
@@ -2194,6 +2195,7 @@ $messages['zh-hans'] = array(
 	'editaccount-submit-pass' => '保存密码',
 	'editaccount-submit-realname' => '保存真名',
 	'editaccount-submit-close' => '关闭帐户',
+	'editaccount-submit-button' => '保存',
 	'editaccount-success-email-blank' => '成功移除帐户 $1 的电子邮件地址。',
 	'editaccount-success-pass' => '帐户 $1 的密码更改成功。',
 	'editaccount-success-realname' => '帐户 $1 的真实姓名更改成功。',
@@ -2206,6 +2208,9 @@ $messages['zh-hans'] = array(
 	'editaccount-status-realuser' => '活跃用户',
 	'editaccount-status-tempuser' => '临时用户',
 	'editaccount-log' => '用户帐户日志',
+	'editaccount-log-entry-email' => '用户$2电子邮箱地址已变更',
+	'editaccount-log-entry-pass' => '用户$2密码已变更',
+	'editaccount-log-entry-realname' => '用户$2真实姓名已变更',
 	'right-editaccount' => '编辑其他用户的信息',
 );
 

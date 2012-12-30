@@ -128,9 +128,9 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'founderprogressbar-themedesigner-visit-action' => 'Ugly!', # Fuzzy
-	'founderprogressbar-photo-add10-label' => 'Needs plural.', # Fuzzy
-	'founderprogressbar-category-add3-label' => 'Needs plural.', # Fuzzy
+	'founderprogressbar-themedesigner-visit-action' => '',
+	'founderprogressbar-photo-add10-label' => 'Goal.',
+	'founderprogressbar-category-add3-label' => '',
 );
 
 /** Breton (brezhoneg)
@@ -1687,7 +1687,7 @@ $messages['pl'] = array(
 	'founderprogressbar-fb-connect-label' => 'Facebook Connect',
 	'founderprogressbar-fb-connect-action' => 'Facebook Connect',
 	'founderprogressbar-fb-connect-description' => 'Podziel się tym co robisz! Facebook Connect pozawala na dzielenie się z Twoimi przyjaciółmi na Facebooku Twoją pracą na wiki. Możesz wybrać, co powinno być publikowane. Wystarczy, że jeden administrator włączy tą opcję aby ukończyć zadanie',
-	'founderprogressbar-category-add5-label' => 'Osiągnij $1{{PLURAL:$1|Kategorię|Kategorie|Kategorii}}',
+	'founderprogressbar-category-add5-label' => 'Osiągnij $1 {{PLURAL:$1|Kategorię|Kategorie|Kategorii}}',
 	'founderprogressbar-category-add5-action' => 'Dodaj kategorię',
 	'founderprogressbar-category-add5-description' => 'Teraz, gdy masz już wystarczającą liczbę stron na swojej wiki, potrzebne może być więcej kategorii aby je zorganizować.',
 	'founderprogressbar-gallery-add-label' => 'Dodaj galerię obrazów',
@@ -2329,14 +2329,18 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-topnav-edit-action' => '编辑导航',
 	'founderprogressbar-mainpage-addslider-action' => '编辑主页',
 	'founderprogressbar-video-add-label' => '添加一段视频',
+	'founderprogressbar-video-add-action' => '添加视频',
 	'founderprogressbar-user-add5-label' => '查看5个用户的档案',
 	'founderprogressbar-user-add5-action' => '转到帮助页',
 	'founderprogressbar-recentchanges-visit-label' => '查看最近更改',
 	'founderprogressbar-recentchanges-visit-action' => '转到 Special:RecentChanges',
 	'founderprogressbar-wordmark-edit-action' => '转到 Special:ThemeDesigner',
 	'founderprogressbar-blogpost-add-label' => '撰写一篇博客',
+	'founderprogressbar-blogpost-add-action' => '转到你的博客',
 	'founderprogressbar-fb-likes3-action' => '转到主页',
 	'founderprogressbar-total-edit300-action' => '添加页面',
+	'founderprogressbar-bonus-photo-add10-label' => '添加$1张图片。',
+	'founderprogressbar-bonus-photo-add10-action' => '添加图片',
 	'founderprogressbar-bonus-page-add5-action' => '添加页面',
 	'founderprogressbar-bonus-edit50-action' => '转到 Special:WikiActivity',
 	'founderprogressbar-browse-page-name' => '浏览',

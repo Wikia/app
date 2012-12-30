@@ -21,7 +21,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'mostvisitedpageslatest' => 'Needs plural support.', # Fuzzy
+	'mostvisitedpageslatest' => '',
 );
 
 /** Afrikaans (Afrikaans)

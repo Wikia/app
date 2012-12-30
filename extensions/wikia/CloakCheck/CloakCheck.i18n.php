@@ -751,5 +751,6 @@ $messages['zh-hans'] = array(
 	'cloakcheck-process-accountage-yes' => '用户够旧',
 	'cloakcheck-process-accountage-no' => '用户太新',
 	'cloakcheck-process-emailconf-yes' => '电子邮件地址已确认。',
+	'cloakcheck-process-emailconf-no' => '电子邮件地址未确认。',
 	'cloakcheck-process-edits-no' => '用户编辑数不足。',
 );

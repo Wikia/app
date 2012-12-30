@@ -400,6 +400,22 @@ $messages['ru'] = array(
 	'browser-loading-message' => 'Загрузка...',
 );
 
+/** Slovak (slovenčina)
+ * @author Kusavica
+ */
+$messages['sk'] = array(
+	'main-tab-discover' => 'Objavte',
+	'main-tab-personal' => 'Moja Wikia',
+	'main-tab-search' => 'Hľadať',
+	'main-tab-offline' => 'V režime offline',
+	'tab-discover-loading-message' => 'Načítava sa...',
+	'tab-discover-no-network-dialog-title' => 'Sieť nie je k dispozícii',
+	'tab-discover-no-network-dialog-message' => 'Nebolo nájdené žiadne sieťové pripojenie',
+	'tab-discover-no-network-dialog-close-button' => 'OK',
+	'tab-search-loading-message' => 'Vyhľadávanie...',
+	'browser-loading-message' => 'Načítava sa...',
+);
+
 /** Swedish (svenska)
  * @author WikiPhoenix
  */
@@ -481,8 +497,11 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
+	'main-tab-personal' => '我的Wikia',
 	'tab-discover-no-network-dialog-close-button' => '确认',
+	'browser-loading-message' => '载入中...',
 );

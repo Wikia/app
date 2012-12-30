@@ -3640,6 +3640,7 @@ ___________________________________________
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
@@ -3696,11 +3697,16 @@ $messages['zh-hans'] = array(
 	'usersignup-confirmation-email-signature' => 'Wikia团队',
 	'usersignup-confirmation-email_body' => '你好$2，
 
-您已到创立Wikia帐户地最后一步！请点击下列链接。
+您距离成功创建Wikia帐户只差一步！请点击下列链接确认邮箱地址。
 
 $3
 
-Wikia团队', # Fuzzy
+Wikia团队
+
+___________________________________________
+
+查看Wikia最新动态，请访问http://community.wikia.com
+管理您的邮件订阅，访问:{{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-reconfirmation-email-sent' => '您的电子邮箱地址已换成$1。我们已向您发送确认邮件。请确认您新的邮箱地址。',
 	'usersignup-reconfirmation-email_subject' => '在Wikia上确认您的电子邮箱地址。',
 	'usersignup-reconfirmation-email-greeting' => '你好$USERNAME',

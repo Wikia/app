@@ -2278,9 +2278,12 @@ $messages['uk'] = array(
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'toplists-error-duplicated-entry' => '该名称不可重复使用。',
 	'toplists-editor-title-label' => '列表名称',
 	'toplists-editor-title-placeholder' => '为列表命名',
+	'toplists-editor-description-placeholder' => '输入描述',
 	'toplists-editor-image-browser-tooltip' => '添加图片',
+	'toplists-editor-drag-item-tooltip' => '拖拽以改变顺序',
 	'toplists-create-button' => '创建列表',
 	'toplists-update-button' => '保存列表',
 	'toplists-cancel-button' => '取消',

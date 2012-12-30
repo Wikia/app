@@ -55,11 +55,15 @@ $messages['az'] = array(
 );
 
 /** Bashkir (башҡортса)
+ * @author Ләйсән
  * @author ҒатаУлла
  */
 $messages['ba'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp; бөтә тауыштан',
 	'ajaxpoll-thankyou' => 'Тауышығыз өсөн рәхмәт!',
+	'ajaxpoll-submit' => 'Тауыш бирергә!',
+	'ajaxpoll-closed' => 'Тауыш биреү ябыҡ. Һөҙөмтәләр менән рәхәтләнегеҙ.',
+	'ajaxpoll-submitting' => 'Зинһар, һеҙҙең тауыш тураһында мәғлүмәт тапшырылғанын көтөгөз...',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
@@ -628,9 +632,16 @@ $messages['ro'] = array(
 
 /** tarandíne (tarandíne)
  * @author Joetaras
+ * @author Reder
  */
 $messages['roa-tara'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;de totte le vote',
+	'ajaxpoll-thankyou' => "Grazzie p'u vote tue!",
+	'ajaxpoll-error' => "N'è state 'nu prubbleme cu l'elaborazione d'u vote tue, pe' piacere vote arrète",
+	'ajaxpoll-summary' => "'U sondagge ha state crejete a $1 pe' $2, e pe' mò $3 crestiane honne votate.",
 	'ajaxpoll-submit' => 'Vote!',
+	'ajaxpoll-closed' => "'U sondagge ha state chiuse mò mò. Uardate le resultate.",
+	'ajaxpoll-submitting' => "Pe' piacere aspette, stoche elaboranne 'u vote tue...",
 );
 
 /** Russian (русский)

@@ -404,9 +404,11 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'wikiagameguides-content-add' => '添加',
 	'wikiagameguides-content-save' => '保存',
+	'wikiagameguides-content-category-error' => '不存在该分类',
 );

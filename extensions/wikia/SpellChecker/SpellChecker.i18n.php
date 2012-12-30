@@ -506,8 +506,10 @@ $messages['wa'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'spellchecker-info-spellcheck-languages' => '语言',
+	'spellchecker-info-spellcheck-submit' => '拼写检查',
 );

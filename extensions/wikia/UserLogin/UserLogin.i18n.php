@@ -1695,15 +1695,29 @@ $messages['te'] = array(
 );
 
 /** Thai (ไทย)
+ * @author Horus
  * @author Saipetch
+ * @author TMo3289
  */
 $messages['th'] = array(
 	'userlogin-login-heading' => 'ล็อกอิน',
+	'userlogin-forgot-password' => 'ลืมรหัสผ่าน',
+	'userlogin-remembermypassword' => 'คงสถานะอยู่ในระบบ (แม้ปิดเบราว์เซอร์แล้ว)',
+	'userlogin-error-noname' => 'ขออภัย โปรดกรอกชื่อผู้ใช้งานของท่าน',
+	'userlogin-error-sessionfailure' => 'การเข้าระบบครั้งก่อนของท่านหมดเวลาแล้ว โปรดเข้าระบบใหม่',
+	'userlogin-error-nosuchuser' => 'ขออภัย ชื่อผู้ใช้นี้ไม่ได้มีในฐานข้อมูลชื่อผู้ใช้ ลองตรวจสอบตัวพิมพ์ใหญ่-เล็กอีกครั้งหนึ่ง',
+	'userlogin-error-wrongpassword' => 'ขออภัย รหัสผ่านผิด โปรดตรวจสอบว่าปุ่ม caps lock ปิดแล้ว จากนั้นลองใหม่อีกครั้ง',
+	'userlogin-get-account' => 'ไม่มีบัญชีใช่ไหม โปรด[[Special:UserSignup|สมัครบัญชีผู้ใช้]]',
 	'userlogin-password-page-title' => 'เปลี่ยนรหัสผ่าน',
 	'userlogin-oldpassword' => 'รหัสผ่านเดิม',
 	'userlogin-newpassword' => 'รหัสผ่านใหม่',
 	'userlogin-retypenew' => 'พิมพ์รหัสผ่านใหม่อีกครั้ง',
+	'userlogin-password-email-greeting' => 'สวัสดี $USERNAME',
 	'userlogin-provider-or' => 'หรือ',
+	'userlogin-loginreqlink' => 'เข้าสู่ระบบ',
+	'userlogin-changepassword-needlogin' => 'ท่านต้อง $1 เพื่อที่จะเปลี่ยนรหัสผ่าน',
+	'wikiamobile-sendpassword-label' => 'ส่งรหัสผ่านใหม่',
+	'wikiamobile-facebook-connect-fail' => 'ขออภัยที่บัญชีเฟสบุ๊คของท่านไม่ได้เชื่อมโยงกับบัญชีวิเกีย',
 );
 
 /** Tagalog (Tagalog)
@@ -1858,6 +1872,20 @@ ___________________________________________
 	'userlogin-changepassword-needlogin' => 'Вам необхідно  $1  щоб змінити свій пароль.',
 	'wikiamobile-sendpassword-label' => 'Надіслати новий пароль',
 	'wikiamobile-facebook-connect-fail' => "На жаль, ваш обліковий запис на Facebook наразі не пов'язаний з обліковим записом Wikia.",
+);
+
+/** Uzbek (oʻzbekcha)
+ * @author Akmalzhon
+ */
+$messages['uz'] = array(
+	'userlogin-login-heading' => 'Kirish',
+	'userlogin-forgot-password' => 'Maxfiy so‘zni qayta kiriting:',
+	'userlogin-error-unconfirmed-user' => 'Sizning elektron pochta manzilingiz tasdiqlanmagan. Iltimos elektron pochta manzilingizni tasdiqlang.',
+	'userlogin-password-page-title' => "Hisob mahfiy so'zini o'zgartirish",
+	'userlogin-oldpassword' => "Eski mahfiy so'z:",
+	'userlogin-newpassword' => "Yangi mahfiy so'z:",
+	'userlogin-retypenew' => "Yangi mahfiy so'zni qayta tering:",
+	'userlogin-loginreqlink' => 'Kirish',
 );
 
 /** Vietnamese (Tiếng Việt)

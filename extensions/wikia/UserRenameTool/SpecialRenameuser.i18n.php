@@ -93,8 +93,8 @@ $messages['qqq'] = array(
 	'userrenametool-desc' => 'Short description of the Renameuser extension, shown on [[Special:Version]]. Do not translate or change links.',
 	'userrenametool-reserve' => 'Option to block the old username (after it has been renamed) from being used again.',
 	'userrenametool-submit' => '{{Identical|Submit}}',
-	'userrenametool-error-cannot-create-block' => 'Needs context.', # Fuzzy
-	'userrenametool-info-wiki-finished' => 'Needs data/tie split ($4, right?)', # Fuzzy
+	'userrenametool-error-cannot-create-block' => '',
+	'userrenametool-info-wiki-finished' => '',
 	'userrenametool-confirm-yes' => '{{Identical|Yes}}',
 	'userrenametool-confirm-no' => '{{Identical|No}}',
 	'userrenametool-logentry' => 'Used in [[Special:Log/renameuser]].
@@ -4371,6 +4371,7 @@ $messages['yue'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Gzdavidwong
  * @author Hydra
  */
@@ -4383,6 +4384,7 @@ $messages['zh-hans'] = array(
 	'userrenametool-move' => '移动用户页及其对话页（包括各子页）到新的名字',
 	'userrenametool-reserve' => '封禁旧用户名，使之不能在日后使用',
 	'userrenametool-warnings' => '警告:',
+	'userrenametool-requested-rename' => '用户$1要求重命名',
 	'userrenametool-confirm' => '是，为用户重命名',
 	'userrenametool-submit' => '提交',
 	'userrenametool-errordoesnotexist' => '用户"<nowiki>$1</nowiki>"不存在',

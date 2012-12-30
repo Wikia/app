@@ -874,6 +874,7 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Hydra
  * @author Hzy980512
  */
@@ -890,6 +891,7 @@ $messages['zh-hans'] = array(
 	'wikiapoll-cancel-label' => '取消',
 	'wikiapoll-publish-label' => '发表',
 	'wikiapoll-error-invalid-title' => '问题文本无效。',
+	'wikiamobile-wikiapoll-user-voted' => '您投给了$1',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

@@ -1018,6 +1018,7 @@ Nếu bạn thích sử dụng thư điện tử thường xuyên hoặc có t�
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -1030,6 +1031,7 @@ $messages['zh-hans'] = array(
 	'specialcontact-yourmail' => '电子邮件地址',
 	'specialcontact-problemdesc' => '信息',
 	'specialcontact-notyou' => '不是您？',
+	'specialcontact-submitcomplete' => '感谢您联系Wikia',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

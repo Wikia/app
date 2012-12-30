@@ -66,7 +66,7 @@ Check given username for possible typos.</p>',
  */
 $messages['qqq'] = array(
 	'right-lookupcontribs' => '{{doc-right|lookupcontribs}}',
-	'lookupcontribsshowpages' => 'If $1 is a number, this should support plural.', # Fuzzy
+	'lookupcontribsshowpages' => '',
 	'lookupcontribscontent' => '{{Identical|Content}}',
 );
 

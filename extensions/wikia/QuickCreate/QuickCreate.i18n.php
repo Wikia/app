@@ -341,5 +341,5 @@ $messages['uk'] = array(
  * @author Dimension
  */
 $messages['zh-hans'] = array(
-	'quickcreate-desc' => '添加“创建新页面”按钮，它具有使匿名用户登录的功能。', # Fuzzy
+	'quickcreate-desc' => '添加“创建新页面”按钮，要求匿名用户登录编辑。',
 );

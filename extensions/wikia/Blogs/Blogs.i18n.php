@@ -144,8 +144,8 @@ $messages['qqq'] = array(
 	'create-blog-post-recent-listing-log' => 'Edit summary, maybe.',
 	'create-blog-empty-article-log' => 'Edit summary',
 	'create-blog-listing-preview' => 'This is an H2 level header above a preview.',
-	'create-blog-listing-matches-info' => 'Looks like this message may have a leading number. Please check. If so, integrate in message.', # Fuzzy
-	'blog-last-edited' => 'If $1 is a time stamp, split date and time to $2 and $3.', # Fuzzy
+	'create-blog-listing-matches-info' => '',
+	'blog-last-edited' => '',
 	'blog-added' => 'This is the possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-edited' => 'This is a possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-comments' => '{{Identical|Comment}}',
@@ -1380,7 +1380,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
 	'blog-listing-created' => 'Blogi-luettelointisivu luotu',
 	'blog-userblog' => 'Käyttäjän $1 blogi',
 	'blog-fromsitename' => 'Tuotu $1',
-	'blogs-reportproblem' => 'Raportoi ongelmasta',
+	'blogs-reportproblem' => 'Ilmoita ongelmasta',
 	'blogs-comment-hidden' => 'Kommentti piilotettu.',
 	'right-blog-comments-toggle' => 'Kytkeä blogikirjoitusten kommentteja päälle/pois',
 	'right-blog-comments-delete' => 'Poistaa kommentteja blogiartikkeleista',
@@ -3456,6 +3456,7 @@ $messages['pms'] = array(
 	'blog-by' => '$1 da $2',
 	'blogs-searchprofile' => 'Scartari',
 	'blogs-searchprofile-tooltip' => "Sërché ant j'artìcoj e le Liste dë Scartari",
+	'user-blog-url-link' => 'Startari utent:$1',
 );
 
 /** Pashto (پښتو)
@@ -3918,6 +3919,13 @@ $messages['ru'] = array(
 	'blogs-searchprofile' => 'Блоги',
 	'blogs-searchprofile-tooltip' => 'Поиск в блогах и в списках блогов',
 	'user-blog-url-link' => 'Блог участника:$1',
+);
+
+/** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['si'] = array(
+	'blog-userblog' => '$1 ගේ බ්ලොගය',
 );
 
 /** Slovenian (slovenščina)
@@ -4531,6 +4539,8 @@ $messages['uk'] = array(
 	'create-blog-save' => 'Зберегти сторінку',
 	'create-blog-preview' => 'Попередній перегляд',
 	'create-blog-listing-preview' => 'Попередній перегляд',
+	'create-blog-listing-matches-calculate' => 'Обчислити',
+	'create-blog-listing-matches-recalculate' => 'Перерахувати',
 	'create-blog-listing-sortby' => 'Сортувати за',
 	'create-blog-listing-sortby-author' => 'автором',
 	'blog-defaulttitle' => 'Блоги',
@@ -4836,6 +4846,7 @@ $messages['zh-hans'] = array(
 	'blog-movepage-badtitle' => '无效的博客帖子标题。',
 	'blog-comment-sending' => '正在发送...',
 	'blog-by' => '$1由$2',
+	'blogs-searchprofile' => '博客',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

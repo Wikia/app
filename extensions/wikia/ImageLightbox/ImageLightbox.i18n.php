@@ -827,4 +827,5 @@ $messages['zh-hans'] = array(
 	'lightbox-forum' => '论坛',
 	'lightbox-share-button-email' => '电子邮件',
 	'lightbox-share-button-www' => '分享',
+	'lightbox-share-email-error-caption' => '错误',
 );

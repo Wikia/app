@@ -2655,6 +2655,7 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hydra
  * @author Sam Wang
  */
@@ -2670,6 +2671,7 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
 	'scavengerhunt-quit-game-button-quit' => '退出',
 	'scavengerhunt-quit-game-button-cancel' => '取消',
+	'scavengerhunt-label-entry-form-username' => '用户名',
 	'scavengerhunt-label-clue-color' => '字体颜色',
 	'scavengerhunt-label-clue-size' => '字体大小',
 );

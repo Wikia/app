@@ -1407,9 +1407,12 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
+	'photopop-setup-watermark-label' => '水印',
+	'photopop-current-settings-title' => '当前设置',
 	'photopop-game-correct' => '正确',
 	'photopop-game-points' => '分数',
 	'photopop-game-total' => '总分',

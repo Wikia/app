@@ -2766,6 +2766,7 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Hzy980512
  * @author Sam Wang
  */
@@ -2774,6 +2775,8 @@ $messages['zh-hans'] = array(
 	'userprofilepage-question-caption' => '$2个问题之$1',
 	'userprofilepage-lightbox-interview-cancel' => '取消',
 	'userprofilepage-lightbox-interview-save' => '做完了，保存',
+	'userprofilepage-add-question' => '提新问题',
+	'userprofilepage-question-save' => '保存提问',
 	'userprofilepage-interview-section-title' => '用户采访',
 	'userprofilepage-invalid-user' => '无效用户！您未登入或者没有权限进行',
 	'user-identity-box-edit' => '编辑',
@@ -2796,15 +2799,20 @@ $messages['zh-hans'] = array(
 	'user-identity-box-zero-state-gender' => '性别',
 	'user-identity-box-zero-state-occupation' => '职业',
 	'user-identity-box-zero-state-website' => '我的网站',
+	'user-identity-box-about-me' => '关于我',
+	'user-identity-box-avatar' => '头像',
 	'user-identity-box-about-fav-wikis-refresh' => '刷新',
 	'user-identity-box-connect-to-fb' => '使用 Facebook 连接',
 	'userprofilepage-lightbox-about-me-cancel' => '取消',
 	'userprofilepage-closing-popup-discard-and-quit' => '放弃更改并退出',
 	'userprofilepage-closing-popup-save-and-quit' => '保存并退出',
 	'userprofilepage-closing-popup-cancel' => '取消',
+	'user-action-menu-edit' => '编辑',
+	'user-action-menu-edit-profile' => '编辑个人资料',
 	'user-action-menu-view-source' => '查看源代码',
 	'user-action-menu-protect' => '保护',
 	'user-action-menu-delete' => '删除',
+	'user-action-menu-history' => '历史',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
