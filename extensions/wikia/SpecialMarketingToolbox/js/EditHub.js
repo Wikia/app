@@ -118,8 +118,8 @@ EditHub.prototype = {
 				var imagePlaceholder = box.find('.image-placeholder');
 				imagePlaceholder.find('img').remove();
 				imagePlaceholder.append(tempImg);
-				box.find('.filename-placeholder').html(fileName);
-				box.find('.wmu-file-name-input').val(fileName).valid();
+				box.find('.filename-placeholder').html(response.fileTitle);
+				box.find('.wmu-file-name-input').val(response.fileTitle).valid();
 			}, this)
 		});
 	},

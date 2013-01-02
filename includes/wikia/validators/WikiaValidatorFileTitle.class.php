@@ -9,7 +9,7 @@ class WikiaValidatorFileTitle extends WikiaValidator {
 	public function isValidInternal($value = null) {
 		$titleClass = $this->getTitleClass();
 
-		$title = $titleClass::newFromText($value);
+		$title = $titleClass::makeTitle(NS_FILE, $value);
 
 		if ($title instanceof Title && $title->exists() && $title->getNamespace() == NS_FILE) {
 			return true;

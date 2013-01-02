@@ -75,6 +75,7 @@ class ImagesService extends Service {
 		
 		$results = new stdClass();
 		$results->url = '';
+		$results->title = '';
 		$results->width = 0;
 		$results->height = 0;
 		
@@ -92,6 +93,7 @@ class ImagesService extends Service {
 			$results->url = $foundFile->getThumbUrl( $foundFile->thumbName( array( 'width' => $sizes->width) ) );
 			$results->width = $sizes->width;
 			$results->height = $sizes->height;
+			$results->title = $title->getText();
 		}
 		
 		return $results;

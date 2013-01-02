@@ -308,6 +308,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			$this->fileUrl = $imageData->url;
 			$this->imageWidth = $imageData->width;
 			$this->imageHeight = $imageData->height;
+			$this->fileTitle = $imageData->title;
 		}
 
 		$this->wf->ProfileOut(__METHOD__);
