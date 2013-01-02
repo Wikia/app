@@ -86,6 +86,14 @@ class SharingToolbarController extends WikiaController {
 	}
 
 	public function index() {
+		$app = F::app();
+		$titleString = $this->getVal( 'pagename' );
+		Wikia::Log( __METHOD__, '', $titleString );
+		$newTitle = Title::newFromText( $titleString );
+		if ( $newTitle !== null ) {
+			$app->wg->Title = $newTitle;
+		}
+
 		$this->response->setVal( 'shareButtons', self::getShareButtons() );
 	}
 
