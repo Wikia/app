@@ -6,7 +6,7 @@ class WallThread {
 	private $mThreadId = false;
 	private $mCached = null;
 	private $mForceMaster = false;
-	
+
 	// cached data
 	private $data;
 	/*
@@ -26,14 +26,14 @@ class WallThread {
 		$this->mCached = null;
 		$this->mCityId = F::app()->wg->CityId;
 	}
-	
+
 	static public function newFromId( $id ) {
 		$wt = new WallThread();
 		$wt->mThreadId = $id;
-		
+
 		return $wt;
 	}
-	
+
 	public function timestampToScore ( $timestamp ) {
 		$ago = time() - strtotime($timestamp) + 1;
 		if ($ago < 86400) {
@@ -56,14 +56,14 @@ class WallThread {
 			return 0;
 		}
 	}
-	
+
 	public function loadIfCached() {
 		if($this->mCached === null) {
 			$this->loadFromMemcache();
 		}
 		return $this->mCached;
 	}
-	
+
 	public function setReplies( $ids ) {
 		// set and cache replies of this thread
 		$this->data = null;
@@ -77,7 +77,7 @@ class WallThread {
 		$this->data->threadActivityScore = $this->_getScore();
 		$this->data->threadLastReplyTimestamp = $this->_getLastReplyTimestamp();
 		$this->data->threadReplyScore = $this->_getReplyScore();
-		
+
 		$this->saveToMemcache();
 	}
 
@@ -94,7 +94,7 @@ class WallThread {
 		$this->data->threadLastReplyTimestamp = $this->_getLastReplyTimestamp();
 		return $this->data->threadLastReplyTimestamp;
 	}
-	
+
 	public function getReplyScore() {
 		if( !($this->data->threadReplyScore === false) ) {
 			return $this->data->threadReplyScore;
@@ -115,7 +115,7 @@ class WallThread {
 				$score += $this->timestampToScore( $timestamp );
 			}
 		}
-		
+
 		$mainMsg = $this->getThreadMainMsg();
 		if(!($mainMsg instanceof WallMessage)) {
 			return 0;
@@ -138,7 +138,7 @@ class WallThread {
 		$last->load();
 
 		return $last->getCreateTimeRAW();
-	
+
 	}
 
 	// get reply score - score is used for Most Replies in 7 day sorting ( from comment_index table )
@@ -178,11 +178,11 @@ class WallThread {
 		if( $this->data->threadReplyIds === false )
 			$this->loadReplyIdsFromDB();
 		$this->data->threadReplyObjs = array();
-		
+
 		if(empty($this->data->threadReplyIds)) {
 			$this->data->threadReplyIds = array();
 		}
-		
+
 		foreach( $this->data->threadReplyIds as $id ) {
 			$wm = WallMessage::newFromId( $id, $this->mForceMaster );
 			if($wm instanceof WallMessage && !$wm->isAdminDelete()) {
@@ -190,7 +190,7 @@ class WallThread {
 			}
 		}
 	}
-	
+
 	private function loadReplyIdsFromDB($master = false) {
 		// this is a direct way to get IDs
 		// the other one is in Wall.class done in a grouped way
@@ -201,7 +201,7 @@ class WallThread {
 		if( empty($title) ) {
 			$title = Title::newFromId( $this->mThreadId, Title::GAID_FOR_UPDATE );
 		}
-		
+
 		if( empty($title) ) {
 			return ;
 		}
@@ -220,7 +220,7 @@ class WallThread {
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			array_push($list, $row->page_id);
 		}
-		
+
 		$this->setReplies( $list );
 	}
 
@@ -229,19 +229,19 @@ class WallThread {
 		$this->mForceMaster = true;
 		$this->loadReplyIdsFromDB( true );
 	}
-	
+
 	private function getThreadKey() {
 		return  wfMemcKey(__CLASS__, '-thread-key-v16-', $this->mThreadId);
 	}
-	
+
 	private function getCache() {
 		return F::App()->wg->Memc;
 	}
-	
+
 	private function loadFromMemcache() {
 		$cache = $this->getCache();
 		$key = $this->getThreadKey();
-		
+
 		$ret = $cache->get($key);
 		if($ret === false || $ret === null) {
 			$this->mCached = false;
@@ -250,7 +250,7 @@ class WallThread {
 			$this->mCached = true;
 		}
 	}
-	
+
 	private function saveToMemcache() {
 		$cache = $this->getCache();
 		$key = $this->getThreadKey();
@@ -259,11 +259,11 @@ class WallThread {
 		$this->mCached = true;
 		$this->mForceMaster = false;
 	}
-	
+
 	public function getThreadMainMsg() {
 		return WallMessage::newFromId( $this->mThreadId );
 	}
-	
+
 	public function getRepliesWallMessages() {
 		if($this->data->threadReplyObjs === false)
 			$this->loadReplyObjs();
@@ -271,5 +271,3 @@ class WallThread {
 	}
 
 }
-
-?>
