@@ -116,7 +116,16 @@ $.loadFacebookAPI = function(callback) {
 	return $.loadLibrary('Facebook API',
 		window.fbScript || '//connect.facebook.net/en_US/all.js',
 		typeof window.FB,
-		callback
+		function() {
+			// always initialize FB API when SDK is loaded on-demand
+			if (window.onFBloaded) {
+				window.onFBloaded();
+			}
+
+			if (typeof callback === 'function') {
+				callback();
+			}
+		}
 	);
 };
 
