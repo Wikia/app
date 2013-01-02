@@ -7,8 +7,6 @@
 
 class StatsApiController extends WikiaApiController {
 
-	const CACHE_VERSION = 0;
-
 	/**
 	 * Get stats about wiki
 	 *
@@ -22,12 +20,13 @@ class StatsApiController extends WikiaApiController {
 		$siteStats = $wikiService->getSiteStats();
 		$siteStats['videos'] = $wikiService->getTotalVideos();
 
-		//lets return always integer for consistency
+		//views are empty anyway...
+		unset( $siteStats['views'] );
+
+		//lets return always integers for consistency
 		foreach( $siteStats as &$stat ) {
 			$stat = (int) $stat;
 		}
-
-		$siteStats['views'] = DataMartService::getSumPageviewsMonthly( [ date( 'Y-m-d', strtotime('-1 month') ) ] );
 
 		$siteStats['admins'] = count( $wikiService->getWikiAdminIds() );
 
