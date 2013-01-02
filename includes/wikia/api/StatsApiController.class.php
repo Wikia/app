@@ -7,14 +7,25 @@
 
 class StatsApiController extends WikiaApiController {
 
+	const CACHE_VALIDITY = 10800; //3 hours
+
 	/**
 	 * Get stats about wiki
 	 *
-	 * @responseParam $stats Stats
+	 * @responseParam object stats Stats about wiki edits | articles | pages | users | activeUsers | images | videos | admins
 	 *
 	 * @example
 	 */
 	function getData() {
+		$this->response->setCacheValidity(
+			self::CACHE_VALIDITY,
+			self::CACHE_VALIDITY,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
+
 		$wikiService = new WikiService();
 
 		$siteStats = $wikiService->getSiteStats();
