@@ -59,9 +59,10 @@ ModuleNavigation.prototype = {
 		source = $(source);
 		dest = $(dest);
 
+		var form = EditHub.form.validate();
+
 		switch(sourceTagName) {
 			case 'span':
-			case 'textarea':
 				tmp = source.text();
 				source.text(dest.text());
 				dest.text(tmp);
@@ -73,11 +74,36 @@ ModuleNavigation.prototype = {
 					dest.attr(imgAttribsToSwitch[i], tmp);
 				}
 				break;
+			case 'textarea':
 			default:
+				var sourceInvalid = this.checkFieldsValidationErrors(form, source);
+				var destInvalid = this.checkFieldsValidationErrors(form, dest);
+
 				tmp = source.val();
 				source.val(dest.val());
 				dest.val(tmp);
+
+
+				if (sourceInvalid) {
+					this.switchValidationError(form, source, dest);
+				}
+
+				if (destInvalid) {
+					this.switchValidationError(form, dest, source);
+				}
+
 		}
+	},
+	switchValidationError: function(form, source, dest) {
+		var cleanedElement = form.clean(source);
+		delete form.invalid[cleanedElement.name];
+		form.prepareElement(cleanedElement);
+		form.hideErrors();
+		form.settings.unhighlight(cleanedElement, form.settings.errorClass, form.settings.validClass);
+		form.element(dest);
+	},
+	checkFieldsValidationErrors: function(form, field) {
+		return Boolean(form.errors().filter('[for="' + field.attr('id') + '"]:visible').length);
 	}
 };
 
