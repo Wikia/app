@@ -12,7 +12,8 @@ jQuery(function( $ ) {
 				scripts: 'sharingtoolbar_js',
 				templates: [{
 					controllerName: 'SharingToolbarController',
-					methodName: 'Index'
+					methodName: 'Index',
+					params: {pagename: window.mw.config.get('wgPageName')}
 				}]
 			}),
 			// Can't load this with Wikia.getMultiTypePackage because it needs params :(
