@@ -100,8 +100,14 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 							'too_short' => 'marketing-toolbox-hub-module-explore-link-text-too-short-error'
 						)
 					),
-					'dependentField' => $linkUrlFieldName,
-					'dependentFieldCondition' => WikiaValidatorDependent::CONDITION_NOT_EMPTY
+					'dependentFields' => array(
+						$linkUrlFieldName => new WikiaValidatorString(
+							array(
+								'required' => true,
+								'min' => 1
+							)
+						)
+					)
 				)
 			),
 			'attributes' => array(

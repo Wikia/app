@@ -37,7 +37,6 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 
 				if( $field['validator'] instanceof WikiaValidatorDependent ) {
 					$field['validator']->setFormData($data);
-					$field['validator']->setFormFields($fields);
 				}
 
 				if (!$field['validator']->isValid($fieldData) && (($validationError = $field['validator']->getError()) instanceof WikiaValidationError)) {
