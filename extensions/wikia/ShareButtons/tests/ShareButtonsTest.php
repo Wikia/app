@@ -48,5 +48,40 @@ class ShareButtonsTest extends WikiaBaseTest {
 		$this->assertContains('data-size="tall"', $box);
 		$this->assertContains('data-href="' . htmlspecialchars($url) . '"', $box);
 	}
+	
+	public function testUrlSpecialCharsAreEncoded() {
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		
+		$titleUrlString = '/wiki/ParŽnt_Page?/This_is_a_tŽst!';
+		
+		$mockTitle
+		    ->expects    ( $this->any() )
+		    ->method     ( 'getLocalUrl' )
+		    ->will       ( $this->returnValue( $titleUrlString ) )
+		;
+		$mockTitle
+		    ->expects    ( $this->any() )
+		    ->method     ( 'getFullUrl' )
+		    ->will       ( $this->returnValue( 'http://foo.wikia.com' . $titleUrlString ) )
+		;
+		
+		$this->mockGlobalVariable('wgServer', 'http://foo.wikia.com' );
+	    $this->mockGlobalVariable('wgTitle', $mockTitle);
+	    $this->mockApp();
+	    $twitter = F::build('ShareButton', array('app' => $this->app, 'id' => 'Twitter'), 'factory');
+	    
+        $getUrl = new ReflectionMethod( 'ShareButton', 'getUrl' );
+        $getUrl->setAccessible( true );
+        $getUrlString = $getUrl->invoke( $twitter );
+        
+	    $this->assertContains(
+	    		"/wiki/Par%8Ent_Page%3F/This_is_a_t%8Est%21",
+	    		$getUrlString,
+	    		'An instance of ShareButton should URL-encode path names.'
+		);
+	    
+	}
 
 }
