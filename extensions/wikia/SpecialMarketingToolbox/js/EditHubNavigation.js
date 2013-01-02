@@ -103,7 +103,7 @@ ModuleNavigation.prototype = {
 		form.element(dest);
 	},
 	checkFieldsValidationErrors: function(form, field) {
-		return Boolean(form.errors().filter('[for="' + field.attr('id') + '"]:visible').length);
+		return Boolean(form.errors().filter('[for="' + form.idOrName(form.clean(field)) + '"]:visible').length);
 	}
 };
 
