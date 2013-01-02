@@ -39,6 +39,10 @@ $(function(){
 	enableDisablePushAllow(false);
 	$('#mw-preferences-form').submit(function() { enableDisablePushAllow(true); });
 
-	// BugId:19603
-	fixXFBML('fbPrefsConnect');
+	// BugId:93549
+	$.loadFacebookAPI(function() {
+		FB.XFBML.parse(document.getElementById('preferences'));
+		// BugId:19603
+		fixXFBML('fbPrefsConnect');
+	});
 });
