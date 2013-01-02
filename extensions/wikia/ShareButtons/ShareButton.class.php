@@ -48,11 +48,16 @@ abstract class ShareButton {
 
 	/**
 	 * Return absolute URL to a page to be shared (uses wgTitle)
-	 *
+	 * The path component of the URL is urlencoded to prevent confusion between sharing services
 	 * @return string URL to be shared
 	 */
 	protected function getURL() {
-		return $this->title->getFullUrl();
+		$path = $this->title->getLocalUrl();
+		$paths = explode( '/', $path );
+		foreach ( $paths as $index => $section ) {
+			$paths[$index] = urlencode( $section );
+		}
+		return str_replace( $path, implode( '/', $paths ), $this->title->getFullUrl() );
 	}
 
 	/**
