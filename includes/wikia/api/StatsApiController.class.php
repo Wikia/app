@@ -21,13 +21,19 @@ class StatsApiController extends WikiaApiController {
 
 		$siteStats = $wikiService->getSiteStats();
 		$siteStats['videos'] = $wikiService->getTotalVideos();
-		$siteStats['totalImages'] = $wikiService->getTotalImages();
 
-		foreach($siteStats as &$stat) {
+		//lets return always integer for consistency
+		foreach( $siteStats as &$stat ) {
 			$stat = (int) $stat;
 		}
 
-		$siteStats['topEditors'] = $wikiService->getTopEditors();
+		$siteStats['views'] = [
+			'monthly' => DataMartService::getPageviewsMonthly( date( 'Y-m-d', strtotime('-1 month') ) ),
+			'weekly' => DataMartService::getPageviewsWeekly( date( 'Y-m-d', strtotime('-1 week') ) ),
+			'daily' => DataMartService::getPageviewsDaily( date( 'Y-m-d', strtotime('-1 day') ) )
+		];
+
+		$siteStats['admins'] = count( $wikiService->getWikiAdminIds() );
 
 		$this->response->setVal( 'stats',  $siteStats );
 	}
