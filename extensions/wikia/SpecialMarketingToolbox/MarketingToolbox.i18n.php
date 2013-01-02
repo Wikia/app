@@ -83,6 +83,11 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-polls-option-mandatory' => 'Option $1 *',
 	'marketing-toolbox-hub-module-polls-option-voluntary' => 'Option $1',
 
+	'marketing-toolbox-hub-module-from-the-community-title' => 'Title',
+	'marketing-toolbox-hub-module-from-the-community-users-url' => 'User\'s URL',
+	'marketing-toolbox-hub-module-from-the-community-long-quote' => 'Quote',
+	'marketing-toolbox-hub-module-from-the-community-url' => 'Article URL',
+
 	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
 	'marketing-toolbox-module-save-ok' => '$1 saved successfully!',
 
