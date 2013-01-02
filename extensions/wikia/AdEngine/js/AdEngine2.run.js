@@ -4,6 +4,7 @@
 		, adEngine
 		, adLogicShortPage
 		, adLogicHighValueCountry
+		, adLogicDartSubdomain
 		, scriptWriter
 		, dartUrl
 		, wikiaDart
@@ -25,6 +26,7 @@
 	// Construct various helpers
 	adLogicShortPage = AdLogicShortPage(document);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
+	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	slotTweaker = SlotTweaker(log, document, window);
 	scriptWriter = ScriptWriter(log, ghostwriter, document);
 	dartUrl = DartUrl();
@@ -32,7 +34,7 @@
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
-	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry);
+	adProviderAdDriver2 = AdProviderAdDriver2(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, adLogicDartSubdomain);
 	adProviderEvolve = AdProviderEvolve(wikiaDart, scriptWriter, WikiaTracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderGamePro = AdProviderGamePro(wikiaDart, scriptWriter, WikiaTracker, log, window, document);
 	adProviderNull = AdProviderNull(log, slotTweaker);
@@ -64,6 +66,7 @@
 			return wikiaDart.getUrl({
 				slotname: slotname,
 				slotsize: slotsize,
+				subdomain: adLogicDartSubdomain.getSubdomain(),
 				adType: 'adi',
 				src: 'liftium'
 			});

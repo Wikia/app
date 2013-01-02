@@ -1,6 +1,6 @@
 // TODO: move WikiaTracker outside
 
-var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry) {
+var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, adLogicDartSubdomain) {
 	'use strict';
 
 	var logGroup = 'AdProviderAdDriver2',
@@ -9,7 +9,6 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 		incrementItemInStorage,
 		fillInSlot,
 		canHandleSlot,
-		getSubdomain,
 		formatTrackTime,
 		country = Geo.getCountryCode(),
 		now = window.wgNow || new Date(),
@@ -161,7 +160,7 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 		url = wikiaDart.getUrl({
 			slotname: slotname,
 			slotsize: slotsize,
-			subdomain: getSubdomain(),
+			subdomain: adLogicDartSubdomain.getSubdomain(),
 			dcopt: dcopt,
 			loc: loc,
 			ord: ord
@@ -194,49 +193,6 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 				success();
 			}
 		});
-	};
-
-	getSubdomain = function () {
-		var subdomain;
-
-		switch (Geo.getContinentCode()) {
-			case 'AF':
-			case 'EU':
-				subdomain = 'ad-emea';
-				break;
-			case 'AS':
-				switch (Geo.getCountryCode()) {
-					// Middle East
-					case 'AE':
-					case 'CY':
-					case 'BH':
-					case 'IL':
-					case 'IQ':
-					case 'IR':
-					case 'JO':
-					case 'KW':
-					case 'LB':
-					case 'OM':
-					case 'PS':
-					case 'QA':
-					case 'SA':
-					case 'SY':
-					case 'TR':
-					case 'YE':
-						subdomain = 'ad-emea';
-						break;
-					default:
-						subdomain = 'ad-apac';
-				}
-				break;
-			case 'OC':
-				subdomain = 'ad-apac';
-				break;
-			default: // NA, SA
-				subdomain = 'ad';
-		}
-
-		return subdomain;
 	};
 
 	formatTrackTime = function(t, max) {
