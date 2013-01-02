@@ -617,7 +617,7 @@ class RTEReverseParser {
 
 		// remove trailing space from text node which is followed by <!-- RTE_LINE_BREAK --> comment
 		if (self::nextCommentIs($node, 'LINE_BREAK')) {
-			$out = ltrim( $out, ' ' );
+			$out = rtrim( $out, ' ' );
 		}
 
 		// fix for tables created in CK
