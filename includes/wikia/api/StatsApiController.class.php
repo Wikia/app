@@ -41,6 +41,6 @@ class StatsApiController extends WikiaApiController {
 
 		$siteStats['admins'] = count( $wikiService->getWikiAdminIds() );
 
-		$this->response->setVal( 'stats',  $siteStats );
+		$this->response->setVal( 'items',  $siteStats );
 	}
 }
