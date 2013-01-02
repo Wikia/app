@@ -17,8 +17,18 @@ class StatsApiController extends WikiaApiController {
 	 * @example
 	 */
 	function getData() {
+		$wikiService = new WikiService();
 
+		$siteStats = $wikiService->getSiteStats();
+		$siteStats['videos'] = $wikiService->getTotalVideos();
+		$siteStats['totalImages'] = $wikiService->getTotalImages();
 
-		$this->response->setVal( 'stats', (new WikiService())->getSiteStats() );
+		foreach($siteStats as &$stat) {
+			$stat = (int) $stat;
+		}
+
+		$siteStats['topEditors'] = $wikiService->getTopEditors();
+
+		$this->response->setVal( 'stats',  $siteStats );
 	}
 }
