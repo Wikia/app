@@ -27,11 +27,7 @@ class StatsApiController extends WikiaApiController {
 			$stat = (int) $stat;
 		}
 
-		$siteStats['views'] = [
-			'monthly' => DataMartService::getPageviewsMonthly( date( 'Y-m-d', strtotime('-1 month') ) ),
-			'weekly' => DataMartService::getPageviewsWeekly( date( 'Y-m-d', strtotime('-1 week') ) ),
-			'daily' => DataMartService::getPageviewsDaily( date( 'Y-m-d', strtotime('-1 day') ) )
-		];
+		$siteStats['views'] = DataMartService::getSumPageviewsMonthly( [ date( 'Y-m-d' ) ] );
 
 		$siteStats['admins'] = count( $wikiService->getWikiAdminIds() );
 
