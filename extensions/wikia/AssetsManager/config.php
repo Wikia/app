@@ -74,6 +74,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdLogicShortPage.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
+		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
 
