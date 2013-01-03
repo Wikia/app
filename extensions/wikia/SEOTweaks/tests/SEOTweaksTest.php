@@ -583,6 +583,61 @@ class SEOTweaksTest extends WikiaBaseTest
 		);
 	}
 	
+    /**
+	 * @covers SEOTweaksHooksHelper::onArticleViewHeader
+	 */
+	public function testOnArticleViewHeaderTitleExistsNonShareReferrer()
+	{
+		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
+		                                 ->getMock();
+		
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'getTitle' ) )
+		                    ->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'exists' ) )
+		                  ->getMock();
+		
+		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'GetDB' ) )
+		                    ->getMock();
+		
+		$outputDone = false;
+		$pcache = false;
+		
+		$mockArticle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getTitle' )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'exists' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockWrapper
+		    ->expects( $this->never() )
+		    ->method ( 'getDB' )
+		;
+		
+		$reflWf = new ReflectionProperty( 'WikiaObject', 'wf' );
+		$reflWf->setAccessible( true );
+		$reflWf->setValue( $mockHelper, $mockWrapper );
+		
+		$this->assertTrue(
+				$mockHelper->onArticleViewHeader( $mockArticle, $outputDone, $pcache),
+				'SEOTweaksHooksHelper::onArticleViewHeader should always return true'
+		);
+		$this->assertFalse(
+				$outputDone,
+				'$outputDone should not be set to true by SEOTweaksHooksHelper::onArticleViewHeader unless we redirect' 
+		);
+	}
+	
 	/**
 	 * @covers SEOTweaksHooksHelper::onArticleViewHeader
 	 */
@@ -619,6 +674,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		$pcache = false;
 		
 		$dbKey = "Wanted";
+		$_SERVER['HTTP_REFERER'] = 'http://www.facebook.com'; 
 		
 		$mockArticle
 		    ->expects( $this->at( 0 ) )
@@ -707,6 +763,7 @@ class SEOTweaksTest extends WikiaBaseTest
 		$pcache = false;
 		
 		$dbKey = "Wanted";
+		$_SERVER['HTTP_REFERER'] = 'http://www.facebook.com';
 		$resultObject = (object) array( 'page_title' => "Wanted!" );
 		$fullUrl = 'http://foo.wikia.com/wiki/Wanted!';
 		
