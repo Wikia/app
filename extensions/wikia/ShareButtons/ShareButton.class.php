@@ -4,37 +4,32 @@
  * Abstract class for various social networks providing share buttons
  */
 
-abstract class ShareButton {
-
-	protected $app;
+abstract class ShareButton extends WikiaObject {
+	/**
+	 * The title object whose URL we will be using to share. Defaults to wgTitle.
+	 * @var Title
+	 */
 	protected $title;
 
 	/**
 	 * Return instance of share button for given social network
 	 *
-	 * @param WikiaApp $app application instance
 	 * @param string $name social networks name
+	 * @param Title|null $title the title whose URL we will share 
 	 * @return ShareButton object instance
 	 */
-	static public function factory(WikiaApp $app, $name) {
+	static public function factory( $name, $title = null ) {
 		$className = 'ShareButton' . $name;
-		$instance = null;
-
-		if (class_exists($className)) {
-			$instance = F::build($className, array('app' => $app));
+		if ( class_exists( $className ) ) {
+			return new $className( $title instanceof Title ? $title : F::app()->wg->Title );
 		}
-
-		return $instance;
 	}
 
 	/**
 	 * Use ShareButton::factory instead
 	 */
-	public function __construct(WikiaApp $app) {
-		$this->app = $app;
-
-		// use the current title
-		$this->title = $this->app->wg->Title;
+	public function __construct( Title $title ) {
+		$this->title = $title;
 	}
 
 	/**
@@ -48,11 +43,16 @@ abstract class ShareButton {
 
 	/**
 	 * Return absolute URL to a page to be shared (uses wgTitle)
-	 *
+	 * The path component of the URL is urlencoded to prevent confusion between sharing services
 	 * @return string URL to be shared
 	 */
 	protected function getURL() {
-		return $this->title->getFullUrl();
+		$path = $this->title->getLocalUrl();
+		$paths = explode( '/', $path );
+		foreach ( $paths as $index => $section ) {
+			$paths[$index] = urlencode( $section );
+		}
+		return str_replace( $path, implode( '/', $paths ), $this->title->getFullUrl() );
 	}
 
 	/**
