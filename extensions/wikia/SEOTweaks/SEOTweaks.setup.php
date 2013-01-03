@@ -18,7 +18,7 @@ $app->registerHook('BeforePageDisplay', 'SEOTweaksHooksHelper', 'onBeforePageDis
 $app->registerHook('ArticleFromTitle', 'SEOTweaksHooksHelper', 'onArticleFromTitle');
 $app->registerHook('ImagePageAfterImageLinks', 'SEOTweaksHooksHelper', 'onImagePageAfterImageLinks');
 $app->registerHook('BeforeParserMakeImageLinkObjOptions', 'SEOTweaksHooksHelper', 'onBeforeParserMakeImageLinkObjOptions');
-
+$app->registerHook('ArticleViewHeader', 'SEOTweaksHooksHelper', 'onArticleViewHeader');
 
 // messages
 $app->registerExtensionMessageFile('SEOTweaks', $dir . 'SEOTweaks.i18n.php');
