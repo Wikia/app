@@ -349,7 +349,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$db->update(
 				'image_review',
 				array(
-					'state' => ImageReviewStatuses::STATE_INVALID_IMAGE
+					'state' => ImageReviewStatuses::STATE_QUESTIONABLE // changed from STATE_INVALID_IMAGE
 				),
 				array( implode(' OR ', $invalidImages) ),
 				__METHOD__
