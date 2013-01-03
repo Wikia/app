@@ -68,7 +68,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 	}
 
 	protected function generateSectionLinkFields($sectionIdx, $linkIdx) {
-		$linkUrlFieldName = self::LINK_URL . $sectionIdx . $this->lettersMap[$linkIdx];
+		$linkUrlFieldName = $this->generateUrlFieldName($sectionIdx, $linkIdx);
 
 		$linkUrlField = array(
 			'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
@@ -121,6 +121,10 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		);
 	}
 
+	protected function generateUrlFieldName($sectionIdx, $linkIdx) {
+		return  self::LINK_URL . $sectionIdx . $this->lettersMap[$linkIdx];
+	}
+
 	public function renderEditor($data) {
 		$data['sectionLimit'] = $this->model->getFormSectionsLimit();
 		
@@ -133,6 +137,24 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		}
 		
 		return parent::renderEditor($data);
+	}
+
+	public function filterData($data) {
+		$data = parent::filterData($data);
+
+		$sectionsLimit = $this->model->getFormSectionsLimit();
+		$linksLimit = $this->model->getLinksLimit();
+
+		for($sectionIdx = 1; $sectionIdx <= $sectionsLimit; $sectionIdx++) {
+			for($linkIdx = 0; $linkIdx < $linksLimit; $linkIdx++) {
+				$urlFieldName = $this->generateUrlFieldName($sectionIdx, $linkIdx);
+				if (!empty($data[$urlFieldName])) {
+					$data[$urlFieldName] = $this->addProtocolToLink($data[$urlFieldName]);
+				}
+			}
+		}
+
+		return $data;
 	}
 }
 ?>

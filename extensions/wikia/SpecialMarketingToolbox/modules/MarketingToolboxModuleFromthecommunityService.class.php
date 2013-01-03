@@ -164,4 +164,27 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 
 		return parent::renderEditor($data);
 	}
+
+	public function filterData($data) {
+		$data = parent::filterData($data);
+
+		$model = new MarketingToolboxFromthecommunityModel();
+		$boxesCount = $model->getBoxesCount();
+
+		for ($i = 1; $i <= $boxesCount; $i++) {
+			if (!empty($data['url' . $i])) {
+				$data['url' . $i] = $this->addProtocolToLink($data['url' . $i]);
+			}
+
+
+			if (!empty($data['usersUrl' . $i])) {
+				$data['usersUrl' . $i] = $this->addProtocolToLink($data['usersUrl' . $i]);
+
+				$parsedUrl = parse_url($data['usersUrl' . $i]);
+				$data['wikiUrl' . $i] = $parsedUrl['host'];
+			}
+		}
+
+		return $data;
+	}
 }
