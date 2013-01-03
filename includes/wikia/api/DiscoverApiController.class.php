@@ -28,6 +28,8 @@ class DiscoverApiController extends WikiaApiController {
 					$comment = null;
 				}
 
+				$c = preg_replace( '/Controller$/' , '', $c );
+
 				$controllers[] = array(
 					'name' => $c,
 					'description' => $comment,
