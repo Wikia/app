@@ -11,13 +11,43 @@ class ShareButtonsTest extends WikiaBaseTest {
 		$this->mockApp();
 	}
 
-	public function testFactory() {
-		$facebook = F::build('ShareButton', array('app' => $this->app, 'id' => 'Facebook'), 'factory');
+	public function testFactoryWithDefaults() {
+		$facebook = ShareButton::factory( 'Facebook' );
 		$this->assertInstanceOf('ShareButtonFacebook', $facebook);
+		
+		$titleRefl = new ReflectionProperty( 'ShareButton', 'title' );
+		$titleRefl->setAccessible( true );
+		
+		$this->assertEquals(
+				Title::newMainPage(),
+				$titleRefl->getValue( $facebook )
+		);
+	}
+	
+	public function testFactoryWithTitle() {
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		
+		$twitter = ShareButton::factory( 'Twitter', $mockTitle );
+		$this->assertInstanceOf('ShareButtonTwitter', $twitter);
+		
+		$titleRefl = new ReflectionProperty( 'ShareButton', 'title' );
+		$titleRefl->setAccessible( true );
+		$titleResult = $titleRefl->getValue( $twitter );
+		
+		$this->assertEquals(
+				$mockTitle,
+				$titleResult
+		);
+		$this->assertNotEquals(
+				Title::newMainPage(),
+				$titleResult
+		);
 	}
 
 	public function testFacebookShareBox() {
-		$facebook = F::build('ShareButton', array('app' => $this->app, 'id' => 'Facebook'), 'factory');
+		$facebook = ShareButton::factory( 'Facebook' );
 
 		$box = $facebook->getShareBox();
 		$url = $this->app->wg->Title->getFullUrl();
@@ -28,7 +58,7 @@ class ShareButtonsTest extends WikiaBaseTest {
 	}
 
 	public function testTwitterShareBox() {
-		$twitter = F::build('ShareButton', array('app' => $this->app, 'id' => 'Twitter'), 'factory');
+		$twitter = ShareButton::factory( 'Twitter' );
 
 		$box = $twitter->getShareBox();
 		$url = $this->app->wg->Title->getFullUrl();
@@ -39,7 +69,7 @@ class ShareButtonsTest extends WikiaBaseTest {
 	}
 
 	public function testGooglePlusShareBox() {
-		$googleplus = F::build('ShareButton', array('app' => $this->app, 'id' => 'GooglePlus'), 'factory');
+		$googleplus = ShareButton::factory( 'GooglePlus' );
 
 		$box = $googleplus->getShareBox();
 		$url = $this->app->wg->Title->getFullUrl();
@@ -70,7 +100,7 @@ class ShareButtonsTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgServer', 'http://foo.wikia.com' );
 	    $this->mockGlobalVariable('wgTitle', $mockTitle);
 	    $this->mockApp();
-	    $twitter = F::build('ShareButton', array('app' => $this->app, 'id' => 'Twitter'), 'factory');
+	    $twitter = ShareButton::factory( 'Twitter' );
 	    
         $getUrl = new ReflectionMethod( 'ShareButton', 'getUrl' );
         $getUrl->setAccessible( true );
