@@ -178,7 +178,7 @@ class TempUser extends WikiaModel {
 	 * map temp user to user
 	 * @param boolean $resetUserId
 	 * @param object $user
-	 * @return object $user
+	 * @return User $user
 	 */
 	public function mapTempUserToUser( $resetUserId=true, $user=null ) {
 		if ( !$user ) {
