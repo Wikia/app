@@ -330,6 +330,18 @@ class WikiaResponse {
 		$this->data[$key] = $value;
 	}
 
+	/**
+	 * Adds multiple values to the response object at once
+	 *
+	 * @param Array $values An hash with keys and related values, if the key is already
+	 * set the value will be overwritten
+	 *
+	 * @author  Federico "Lox" Lucignano <federico@wikia-inc.com>
+	 */
+	public function setValues( Array $values ) {
+		$this->data = array_merge( $this->data, $values);
+	}
+
 	/* getVal can be called directly via $this->response->getVal()
 	 * or by __get on WikiaDispatchable, which is frequently a "get" right before a "set"
 	 * Returning a reference here allows us to use a pattern like:
