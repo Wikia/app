@@ -108,15 +108,15 @@ define('sections', ['events', 'JSMessages'], function(ev, msg){
 		}
 
 		//this has to run even if we don't find any sections on a page for ie. Category Pages, pages without any sections but with readmore and stuff
-		d.body.addEventListener(click, function(ev){
-			var t = ev.target;
-			if(t.className.indexOf('collSec') > -1){
+		d.getElementById('wkPage').addEventListener(click, function(ev){
+			var t = ev.target,
+				className = t.className;
+
+			if(~className.indexOf('collSec')){
 				toggle(t);
-			}else if(t.className.indexOf('goBck') > -1){
+			}else if(~className.indexOf('goBck')){
 				var parent = t.parentElement,
 					prev = parent.previousElementSibling;
-
-				//track('section/close');
 
 				parent.className = parent.className.replace(' open', '');
 				prev.className = prev.className.replace(' open', '');
