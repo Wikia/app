@@ -522,37 +522,7 @@ class RTEReverseParser {
 		wfProfileIn(__METHOD__);
 
 		$entity = $node->getAttribute(self::DATA_RTE_ENTITY);
-
-		// convert text content back to HTML entity
-		$textEncoded = htmlentities($textContent, ENT_COMPAT, 'UTF-8');
-
-		//RTE::log(__METHOD__, array($entity, $textContent, $textEncoded));
-
-		// compare stored entity with text content
-		if ($entity{0} == '#') {
-			// get ASCII code of entity (&#x5f; / &#58;) and compare it with textContent
-			$code = ($entity{1} == 'x') ? hexdec(substr($entity, 2)) : intval(substr($entity, 1));
-			$matches = $code == ord($textContent);
-
-			// special handling for &nbsp; (#160)
-			if (($code == 160) && ($textContent == '&nbsp;')) {
-				$matches = true;
-			}
-		}
-		else {
-			// &nbsp;
-			$matches = in_array("&{$entity};", array($textEncoded, $textContent));
-		}
-
-		RTE::log(__METHOD__ . '::compare', $matches ? 'true' : "false ({$entity})");
-
-		if ($matches) {
-			// return entity marker
-			$out = self::getEntityMarker($entity);
-		}
-		else {
-			$out = $textContent;
-		}
+		$out = self::getEntityMarker($entity);
 
 		wfProfileOut(__METHOD__);
 
