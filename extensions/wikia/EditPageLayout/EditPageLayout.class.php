@@ -622,7 +622,6 @@ class EditPageLayout extends EditPage {
 	 * Handle preloads (BugId:5652)
 	 */
 	protected function showIntro() {
-	print_r('showIntro');
 		// Code based on EditPage.php
 		if (!$this->mTitle->exists() ) {
 			if ( $this->app->wg->User->isLoggedIn() ) {
