@@ -66,6 +66,10 @@ class TitleBatch {
 		if ( !$this->restrictionsLoaded ) {
 			wfProfileIn( __METHOD__ . '::CacheMiss' );
 			$articleIds = $this->getArticleIds();
+			if ( empty( $articleIds ) ) {
+				wfProfileOut( __METHOD__ . '::CacheMiss' );
+				return $this;
+			}
 
 			$dbr = wfGetDB( DB_SLAVE );
 
