@@ -6,10 +6,12 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 			'fileName' => array(
 				'type' => 'hidden',
 				'attributes' => array(
-					'class' => 'wmu-file-name-input'
+					'class' => 'wmu-file-name-input required'
 				),
 				'validator' => new WikiaValidatorFileTitle(
-					array(),
+					array(
+						'required' => true
+					),
 					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
 				)
 			),
