@@ -9,12 +9,16 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 	/**
 	 * @var MarketingToolboxExploreModel|null
 	 */
-	protected $model = null;
+	protected $model;
+	protected $sectionsLimit;
+	protected $linksLimit;
 
 	public function __construct($langCode, $sectionId, $verticalId) {
 		parent::__construct($langCode, $sectionId, $verticalId);
 
 		$this->model = new MarketingToolboxExploreModel();
+		$this->sectionsLimit = $this->model->getFormSectionsLimit();
+		$this->linksLimit = $this->model->getLinksLimit();
 	}
 
 	protected function getFormFields() {
@@ -43,13 +47,11 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 				)
 			),
 		);
-		$sectionsLimit = $this->model->getFormSectionsLimit();
-		$linksLimit = $this->model->getLinksLimit();
 
-		for($sectionIdx = 1; $sectionIdx <= $sectionsLimit; $sectionIdx++) {
+		for($sectionIdx = 1; $sectionIdx <= $this->sectionsLimit; $sectionIdx++) {
 			$formFields = $formFields + $this->generateSectionHeaderField($sectionIdx);
 
-			for($linkIdx = 0; $linkIdx < $linksLimit; $linkIdx++) {
+			for($linkIdx = 0; $linkIdx < $this->linksLimit; $linkIdx++) {
 				$formFields = $formFields + $this->generateSectionLinkFields($sectionIdx, $linkIdx);
 			}
 		}
@@ -62,8 +64,25 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		return array(
 			$fieldName => array(
 				'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $sectionIdx),
-				'validator' => new WikiaValidatorString(),
-			),
+				'validator' => new WikiaValidatorDependent(
+					array(
+						'required' => false,
+						'ownValidator' => new WikiaValidatorString(
+							array(
+								'required' => true,
+								'min' => 1
+							),
+							array(
+								'too_short' => 'marketing-toolbox-validator-string-short'
+							)
+						),
+						'dependentFields' => $this->getDependentFields($sectionIdx)
+					)
+				),
+				'attributes' => array(
+					'class' => "{required: {$this->getJsRequiredValidator($sectionIdx)}}"
+				)
+			)
 		);
 	}
 
@@ -85,7 +104,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 			'icon' => true
 		);
 
-		$linkHeaderFieldName = self::LINK_TEXT . $sectionIdx . $this->lettersMap[$linkIdx];
+		$linkHeaderFieldName = $this->generateHeaderFieldName($sectionIdx, $linkIdx);
 		$linkHeaderField = array(
 			'label' => $this->wf->MsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $this->lettersMap[$linkIdx]),
 			'validator' => new WikiaValidatorDependent(
@@ -111,7 +130,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 				)
 			),
 			'attributes' => array(
-				'class' => "{required: '#MarketingToolbox{$linkUrlFieldName}:filled'}"
+				'class' => "{required: '#" . MarketingToolboxModel::FORM_FIELD_PREFIX . $linkUrlFieldName . ":filled'}"
 			)
 		);
 
@@ -121,12 +140,59 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		);
 	}
 
+	protected function getDependentFields($sectionIdx) {
+		$fields = array();
+
+		for($linkIdx = 0; $linkIdx < $this->linksLimit; $linkIdx++) {
+			$urlFieldName = $this->generateUrlFieldName($sectionIdx, $linkIdx);
+			$headerFieldName = $this->generateHeaderFieldName($sectionIdx, $linkIdx);
+
+			$fields[$urlFieldName] = new WikiaValidatorString(
+				array(
+					'required' => true,
+					'min' => 1
+				)
+			);
+
+			$fields[$headerFieldName] = new WikiaValidatorString(
+				array(
+					'required' => true,
+					'min' => 1
+				)
+			);
+		}
+
+		return $fields;
+	}
+
+	protected function getJsRequiredValidator($sectionIdx) {
+		$dependentRules = array();
+
+		for($linkIdx = 0; $linkIdx < $this->linksLimit; $linkIdx++) {
+			$urlFieldName = $this->generateUrlFieldName($sectionIdx, $linkIdx);
+			$headerFieldName = $this->generateHeaderFieldName($sectionIdx, $linkIdx);
+
+			$dependentRules[] = '#' . MarketingToolboxModel::FORM_FIELD_PREFIX . $urlFieldName . ':filled';
+			$dependentRules[] = '#' . MarketingToolboxModel::FORM_FIELD_PREFIX . $headerFieldName . ':filled';
+		}
+
+		return "'" . implode(',', $dependentRules) . "'";
+	}
+
 	protected function generateUrlFieldName($sectionIdx, $linkIdx) {
-		return  self::LINK_URL . $sectionIdx . $this->lettersMap[$linkIdx];
+		return  $this->generateFieldName(self::LINK_URL, $sectionIdx, $linkIdx);
+	}
+
+	protected function generateHeaderFieldName($sectionIdx, $linkIdx) {
+		return  $this->generateFieldName(self::LINK_TEXT, $sectionIdx, $linkIdx);
+	}
+
+	protected function generateFieldName($fieldType, $sectionIdx, $linkIdx) {
+		return  $fieldType . $sectionIdx . $this->lettersMap[$linkIdx];
 	}
 
 	public function renderEditor($data) {
-		$data['sectionLimit'] = $this->model->getFormSectionsLimit();
+		$data['sectionLimit'] = $this->sectionsLimit;
 		
 		if( !empty($data['values']['fileName']) ) {
 			$model = new MarketingToolboxModel();
@@ -142,11 +208,8 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 	public function filterData($data) {
 		$data = parent::filterData($data);
 
-		$sectionsLimit = $this->model->getFormSectionsLimit();
-		$linksLimit = $this->model->getLinksLimit();
-
-		for($sectionIdx = 1; $sectionIdx <= $sectionsLimit; $sectionIdx++) {
-			for($linkIdx = 0; $linkIdx < $linksLimit; $linkIdx++) {
+		for($sectionIdx = 1; $sectionIdx <= $this->sectionsLimit; $sectionIdx++) {
+			for($linkIdx = 0; $linkIdx < $this->linksLimit; $linkIdx++) {
 				$urlFieldName = $this->generateUrlFieldName($sectionIdx, $linkIdx);
 				if (!empty($data[$urlFieldName])) {
 					$data[$urlFieldName] = $this->addProtocolToLink($data[$urlFieldName]);
