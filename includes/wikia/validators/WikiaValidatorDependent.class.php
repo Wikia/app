@@ -24,7 +24,7 @@ class WikiaValidatorDependent extends WikiaValidator {
 		}
 
 		if (!is_array($this->getOption('dependentFields'))) {
-			throw new WikiaValidatorDependentFieldEmptyException( 'WikiaValidatorDepend: dependent field is empty' );
+			throw new WikiaValidatorDependentFieldEmptyException( 'WikiaValidatorDepend: dependent fields should be in array' );
 		}
 
 		if( $this->anyDependentFieldsValid() && !$ownValidator->isValid($value) ) {
