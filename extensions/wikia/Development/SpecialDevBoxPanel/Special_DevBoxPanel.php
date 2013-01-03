@@ -40,6 +40,7 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['DevBoxPanel'] = $dir.'Special_DevBoxPanel.i18n.php';
 $wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
 $wgHooks['PageRenderingHash'][] = 'wfDevBoxSeparateParserCache';
+$wgExceptionHooks['MWExceptionRaw'][] = "wfDevBoxLogExceptions";
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'DevBoxPanel',
@@ -186,6 +187,12 @@ function wfDevBoxSeparateParserCache(&$hash) {
 	return true;
 }
 
+
+function wfDevBoxLogExceptions( $errorText ) {
+	Wikia::logBacktrace("wfDevBoxLogExceptions");
+	Wikia::log($errorText);
+	return $errorText;
+}
 
 /**
  * @return array Parts of host. used to set $wgDevelEnvironmentName;
