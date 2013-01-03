@@ -329,7 +329,7 @@ class BlogArticle extends Article {
 
 	static public function blogsInCategory ( $cat ) {
 		global $wgMemc;
-		$titleText = $cat->getTitle()->getText();
+		$titleText = $cat->getTitle()->getDBkey();
 		$memKey = self::getCountKey( $titleText );
 
 		$count = $wgMemc->get( $memKey );
