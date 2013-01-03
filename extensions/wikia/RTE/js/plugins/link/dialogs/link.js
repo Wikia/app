@@ -11,7 +11,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 	function checkStatus() {
 		var pageName = CKEDITOR.dialog.getCurrent().getContentElement('internal','name').getValue();
-		if( pageName ){
+		if ( pageName ) {
 			$(".link-type-note span").html(editor.lang.link.status.checking);
 			$(".link-type-note img")[0].className = 'sprite progress';
 
@@ -24,11 +24,10 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	}
 
 	function setLinkExistance(exists) {
-		if( exists ){
+		if ( exists ) {
 			$(".link-type-note span").html(editor.lang.link.status.exists);
 			$(".link-type-note img")[0].className = 'link-icon link-yes';
-		}
-		else {
+		} else {
 			$(".link-type-note span").html(editor.lang.link.status.notexists);
 			$(".link-type-note img")[0].className = 'link-icon link-no';
 		}
@@ -40,7 +39,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 		// two things must be set to switch between int/ext mode,
 		// the upper-right mode label and the radio button
-		if( mode == 'external' ){
+		if ( mode == 'external' ) {
 			radios = linkDialog.getContentElement('internal','linktype');
 			if( radios.getValue() != 'ext' ){
 				radios.setValue('ext');
@@ -49,9 +48,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			$(".link-type-note img")[0].className = 'sprite external';
 
 			// disable suggestions on the name box if external url
-		}else if( mode == 'internal' ) {
+		} else if ( mode == 'internal' ) {
 			radios = linkDialog.getContentElement('internal','linktype');
-			if( radios.getValue() != 'wiki' ){
+			if( radios.getValue() != 'wiki' ) {
 				radios.setValue('wiki');
 			}
 			checkStatus();
@@ -68,7 +67,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 							var value = ui.item && ui.item.label,
 								labelField = dialog.getContentElement('internal', 'label');
 
-							if (typeof value !== 'undefined') {
+							if (typeof value !== 'undefined' && dialog.method == 'new') {
 								labelField.setValue(value);
 
 								// validate a link (BugId:51414)
@@ -83,7 +82,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	var setupDialog = function( editor, element ) {
 		// set value of link dialog fields
 		function setValues(tab, link, label) {
-			var dialog = CKEDITOR.dialog.getCurrent();
+			var	dialog = CKEDITOR.dialog.getCurrent();
 			// only one tab, so tab is ignored but kept for future use
 			dialog.setValueOf('internal', 'name', link);
 			dialog.setValueOf('internal', 'label', label || '');
@@ -117,7 +116,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					};
 					setMode('external');
 				}
-			}else{
+			} else {
 				// select a mode for our two proper link types
 				switch(data.type) {
 					case 'internal':
@@ -156,8 +155,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					linkTextDirty = true;
 					break;
 			}
-		}
-		else {
+			this.method = 'existing';
+		} else {
 			linkTextField = this.getContentElement('internal', 'label');
 			//linkTextField.enable();
 
@@ -180,9 +179,11 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				setValues(tab, selectionContent, selectionContent);
 				setTimeout(checkStatus,200);
 
-				RTE.log('link: using selected text "' + selectionContent + '" for new '+tab+' link');
-			}else{
+				this.method = 'new-from-selection';
 
+				RTE.log('link: using selected text "' + selectionContent + '" for new '+tab+' link');
+			} else {
+				this.method = 'new';
 				RTE.log('link: fresh link');
 			}
 		}
@@ -196,8 +197,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		// Create element if current selection is collapsed.
 		var selection = editor.getSelection(),
 			ranges = selection.getRanges();
-		if ( ranges.length == 1 && ranges[0].collapsed )
-		{
+		if ( ranges.length == 1 && ranges[0].collapsed ) {
 			var text = new CKEDITOR.dom.text( '', editor.document );
 			ranges[0].insertNode( text );
 			ranges[0].selectNodeContents( text );
@@ -286,7 +286,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								re,
 								isValid;
 
-							if( linktype == 'wiki' ){
+							if ( linktype == 'wiki' ) {
 								// validate page name and anchors (RT #34047)
 								re = new RegExp('^(#(.+))|[' + RTE.constants.validTitleChars + ']+$');
 								var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badPageTitle);
@@ -295,8 +295,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								if (!isValid) {
 									RTE.track('link', 'dialog', 'error');
 								}
-							}
-							else {
+							} else {
 								// validate URL
 								re = new RegExp('^(' + RTE.constants.urlProtocols + ')');
 								if (!this.getValue().match(re)) {
@@ -330,13 +329,13 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						'id': 'linktype',
 						'onChange': function( e )
 						{ // mode change should only happen when we're showing a dialog
-							if( CKEDITOR.dialog.getCurrent() ){
+							if ( CKEDITOR.dialog.getCurrent() ) {
 								RTE.log("mode changed to "+e.data.value);
-								if( e.data && e.data.value == 'ext' ){
+								if ( e.data && e.data.value == 'ext' ) {
 									setMode('external');
 
 									RTE.track('link', 'dialog', 'tab', 'internal2external');
-								}else{
+								} else {
 									setMode('internal');
 
 									RTE.track('link', 'dialog', 'tab', 'external2internal');
@@ -365,8 +364,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			element = plugin.getSelectedLink( editor );
 			if ( element && element.getAttribute( 'href' ) ) {
 				selection.selectElement( element );
-			}
-			else {
+			} else {
 				element = null;
 			}
 
@@ -396,8 +394,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			if (!this._.selectedElement) {
 				RTE.log('creating new link...');
 				element = createNewLink.apply(this, [editor]);
-			}
-			else {
+			} else {
 				element = this._.selectedElement;
 			}
 
@@ -479,8 +476,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 					if (data.text == '') {
 						type = 'internalSimple';
-					}
-					else {
+					} else {
 						type = 'internalNamed';
 					}
 
