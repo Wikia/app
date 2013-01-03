@@ -177,7 +177,6 @@ abstract class CodeLint {
 		if (!empty($blacklist) && is_array($blacklist)) {
 			foreach($blacklist as $item) {
 				if (strpos($entry, $item) !== false) {
-					echo "{$entry} is blacklisted!\n";
 					wfProfileOut(__METHOD__);
 					return true;
 				}
