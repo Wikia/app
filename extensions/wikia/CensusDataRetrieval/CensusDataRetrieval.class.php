@@ -130,7 +130,7 @@ class CensusDataRetrieval {
 
 		$text .= $this->getLayout();
 
-		$text .= "\n[[" . $this->getFlagCategoryTitle()->getPrefixedText() . ']]';
+		$text .= "\n[[" . self::getFlagCategoryTitle()->getPrefixedText() . ']]';
                 wfProfileOut(__METHOD__);
                 return $text;
 	}
@@ -507,7 +507,7 @@ class CensusDataRetrieval {
          * 
          * @return Title
 	 */
-        public function getFlagCategoryTitle () {
+        public static function getFlagCategoryTitle () {
                 return Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY );
         }
 	
