@@ -20,8 +20,8 @@
  * @property WebRequest $request
  * @property WebResponse $Response
  * @property WebResponse $response
- * @property MemCache Memc
- * @property MemCache memc
+ * @property MWMemcached Memc
+ * @property MWMemcached memc
  * @property Language ContLang
  * @property String ArticlePath
  * @property Boolean DevelEnvironment
