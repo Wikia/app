@@ -13,7 +13,7 @@ class OoyalaVideoHandler extends VideoHandler {
 		$containerId = 'ooyalaplayer-'.$this->videoId.'-'.time();
 
 		$embed = <<<EOT
-<div id="{$containerId}"></div>
+<div id="{$containerId}" style="width:{$width}px;"></div>
 <script type="text/javascript" src="http://player.ooyala.com/player.js?embedCode={$this->videoId}&width={$width}&height={$height}&playerContainerId={$containerId}&autoplay={$autoPlayStr}"></script>
 EOT;
 
