@@ -71,24 +71,27 @@ window.WikiaTracker = (function(){
 	 *		       href - (optional) if present, delay following outbound link of 100ms (to ensure tracking execution)
 	 *             [more custom parameters] - please ping the Tracking leads before adding a new ones
 	 * @param string trackingMethod Tracking method [both/ga/internal/none] (optional, default:none)
+	 * @param Object browserEvent (optional) browser event object in example an object created on click (basically all click-tracking should have this parameter passed otherwise it'll try to get it from window.event)
 	 *
 	 * @author Hyun Lim <hyun(at)wikia-inc.com>
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
-	function trackEvent(eventName, data, trackingMethod){
+	function trackEvent(eventName, data, trackingMethod, browserEvent) {
 		var logGroup = 'WikiaTracker',
 		eventName = eventName || mainEventName,
 		data = data || {},
 		trackingMethod = trackingMethod || 'none',
+		browserEvent = browserEvent || window.event,
 		isLink = (data && data.href),
-		isMiddleClick = (data.button && data.button === 1),
+		//we don't need to care here about the fact Microsoft has different value of button for middle clicks; only webkit fires click event on middle mouse button click
+		isMiddleClick = (browserEvent && browserEvent.button === 1),
 		gaqArgs = [];
 
 		// If clicking a link that will unload the page before tracking can happen,
 		// let's stop the default event and delay 100ms changing location (at the bottom)
-		// FIXME: this doesn't work in Firefox (there is no global event object there).
-		if( isLink && typeof event != 'undefined' && !isMiddleClick ) {
-			event.preventDefault();
+		// only if it's not mouse middle button click in a webkit browser
+		if( isLink && !isMiddleClick ) {
+			browserEvent.preventDefault();
 		}
 
 		var ga_category = data['ga_category'],
