@@ -528,4 +528,56 @@ class SEOTweaksTest extends WikiaBaseTest
 		);
 	}
 	
+	public function testOnArticleViewHeaderTitleExists()
+	{
+		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
+		                                 ->getMock();
+		
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'getTitle' ) )
+		                    ->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'exists' ) )
+		                  ->getMock();
+		
+		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'GetDB' ) )
+		                    ->getMock();
+		
+		$outputDone = false;
+		$pcache = false;
+		
+		$mockArticle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getTitle' )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'exists' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockWrapper
+		    ->expects( $this->never() )
+		    ->method ( 'getDB' )
+		;
+		
+		$reflWf = new ReflectionProperty( 'WikiaObject', 'wf' );
+		$reflWf->setAccessible( true );
+		$reflWf->setValue( $mockHelper, $mockWrapper );
+		
+		$this->assertTrue(
+				$mockHelper->onArticleViewHeader( $mockArticle, $outputDone, $pcache),
+				'SEOTweaksHooksHelper::onArticleViewHeader should always return true'
+		);
+		$this->assertFalse(
+				$outputDone,
+				'$outputDone should not be set to false by SEOTweaksHooksHelper::onArticleViewHeader unless we redirect' 
+		);
+	}
+	
 }
