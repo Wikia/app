@@ -337,6 +337,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function executeFormField() {
+		$this->formFieldPrefix = MarketingToolboxModel::FORM_FIELD_PREFIX;
 		$this->inputData = $this->getVal('inputData');
 	}
 }
