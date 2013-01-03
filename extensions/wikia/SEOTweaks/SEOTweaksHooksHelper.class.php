@@ -93,5 +93,33 @@ class SEOTweaksHooksHelper extends WikiaModel {
 		return true;
 		
 	}
+	
+	/**
+	 * Attempts to recover a URL that was truncated by an external service (e.g. /wiki/Wanted! --> /wiki/Wanted)
+	 * @param Article $article
+	 * @param bool $outputDone
+	 * @param bool $pcache
+	 */
+	public function onArticleViewHeader( &$article, &$outputDone, &$pcache )
+	{
+		$title = $article->getTitle();
+		if (! $title->exists() ) {
+		    
+			$dbr = $this->wf->GetDB(DB_SLAVE);
+			$sql = sprintf( 'SELECT page_title FROM page WHERE page_title REGEXP "^%s[[:punct:]]+" ORDER BY CHAR_LENGTH( page_title ) LIMIT 1', $title->getDBKey() );
+			$result = $dbr->query( $sql );
+			
+			if ( $row = $dbr->fetchObject( $result ) ) {
+				$title = Title::newFromText( $row->page_title );
+				if ( $title ) {
+					$url = $title->getFullUrl();
+					
+					$this->wg->Out->redirect( $url );
+				    $outputDone = true;
+				}
+			}
+		}
+		return true;
+	}
 
 }
