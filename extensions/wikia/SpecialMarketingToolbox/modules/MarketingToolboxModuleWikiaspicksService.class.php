@@ -58,3 +58,4 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 	}
 	
 }
+
