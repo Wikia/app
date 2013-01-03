@@ -41,7 +41,9 @@ $messages['en'] = array(
 	'marketing-toolbox-edithub-clearall-button' => 'Clear all',
 	'marketing-toolbox-edithub-clear-button' => 'Clear',
 	'marketing-toolbox-edithub-add-file-button' => 'Add a photo',
+	'marketing-toolbox-edithub-add-video-button' => 'Add a Video',
 	'marketing-toolbox-edithub-file-name' => 'File name',
+	'marketing-toolbox-edithub-video-name' => 'Video name',
 
 	'marketing-toolbox-edithub-clearall-confirmation' => 'Are you sure you want to clear the entire $1?',
 
@@ -90,6 +92,9 @@ $messages['en'] = array(
 
 	'marketing-toolbox-hub-module-wikiaspicks-header' => 'Header',
 	'marketing-toolbox-hub-module-wikiaspicks-text' => 'Text',
+
+	'marketing-toolbox-hub-module-featured-video-header' => 'Header',
+	'marketing-toolbox-hub-module-featured-video-desc' => 'Description',
 
 	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
 	'marketing-toolbox-module-save-ok' => '$1 saved successfully!',

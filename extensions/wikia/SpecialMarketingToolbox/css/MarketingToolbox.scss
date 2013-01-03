@@ -202,7 +202,7 @@ $chevron-color: #888;
 				}
 			}
 		}
-		.wmu-show {
+		.wmu-show, .vet-show {
 			float: left;
 		}
 
@@ -240,7 +240,7 @@ $chevron-color: #888;
 		clear: both;
 	}
 
-	.module-wikiaspicks {
+	.module-mediabox {
 		.input-group input,
 		.input-group textarea {
 			width: 320px;
