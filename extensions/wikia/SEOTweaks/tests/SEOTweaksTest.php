@@ -580,4 +580,84 @@ class SEOTweaksTest extends WikiaBaseTest
 		);
 	}
 	
+    public function testOnArticleViewHeaderTitleNotExistsNoResults()
+	{
+		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
+		                                 ->getMock();
+		
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'getTitle' ) )
+		                    ->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'exists', 'getDBKey' ) )
+		                  ->getMock();
+		
+		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'GetDB' ) )
+		                    ->getMock();
+		
+		$mockDb = $this->getMockBuilder( "DatabaseMysql" )
+		               ->disableOriginalConstructor()
+		               ->setMethods( array( 'query', 'fetchObject' ) )
+		               ->getMock();
+		
+		$mockResultWrapper = $this->getMockBuilder( 'ResultWrapper' )
+		                          ->disableOriginalConstructor()
+		                          ->getMock();
+		
+		$outputDone = false;
+		$pcache = false;
+		
+		$dbKey = "Wanted";
+		
+		$mockArticle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getTitle' )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'exists' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockWrapper
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getDB' )
+		    ->will   ( $this->returnValue( $mockDb ) )
+		;
+		$mockTitle
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getDBKey' )
+		    ->will   ( $this->returnValue( $dbKey ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'query' )
+		    ->with   ( 'SELECT page_title FROM page WHERE page_title REGEXP "^' . $dbKey . '[[:punct:]]+" ORDER BY CHAR_LENGTH( page_title ) LIMIT 1' )
+		    ->will   ( $this->returnValue( $mockResultWrapper ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'fetchObject' )
+		    ->will   ( $this->returnValue( null ) )
+		;
+		
+		$reflWf = new ReflectionProperty( 'WikiaObject', 'wf' );
+		$reflWf->setAccessible( true );
+		$reflWf->setValue( $mockHelper, $mockWrapper );
+		
+		$this->assertTrue(
+				$mockHelper->onArticleViewHeader( $mockArticle, $outputDone, $pcache),
+				'SEOTweaksHooksHelper::onArticleViewHeader should always return true'
+		);
+		$this->assertFalse(
+				$outputDone,
+				'$outputDone should not be set to false by SEOTweaksHooksHelper::onArticleViewHeader unless we redirect' 
+		);
+	}
+	
 }

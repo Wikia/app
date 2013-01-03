@@ -105,18 +105,14 @@ class SEOTweaksHooksHelper extends WikiaModel {
 		$title = $article->getTitle();
 		if (! $title->exists() ) {
 		    
-			$dbr = $this->wf->GetDB(DB_SLAVE);
+			$dbr = $this->wf->GetDB( DB_SLAVE );
 			$sql = sprintf( 'SELECT page_title FROM page WHERE page_title REGEXP "^%s[[:punct:]]+" ORDER BY CHAR_LENGTH( page_title ) LIMIT 1', $title->getDBKey() );
 			$result = $dbr->query( $sql );
 			
 			if ( $row = $dbr->fetchObject( $result ) ) {
 				$title = Title::newFromText( $row->page_title );
-				if ( $title ) {
-					$url = $title->getFullUrl();
-					
-					$this->wg->Out->redirect( $url );
-				    $outputDone = true;
-				}
+				$this->wg->Out->redirect( $title->getFullUrl() );
+			    $outputDone = true;
 			}
 		}
 		return true;
