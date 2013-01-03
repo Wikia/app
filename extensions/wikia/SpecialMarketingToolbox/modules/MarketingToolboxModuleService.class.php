@@ -89,6 +89,14 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return $out;
 	}
 
+	protected function addProtocolToLink($link) {
+		if (strpos($link, 'http://') === false) {
+			$link = 'http://' . $link;
+		}
+
+		return $link;
+	}
+
 }
 
 ?>

@@ -111,8 +111,8 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 	public function filterData($data) {
 		$data = parent::filterData($data);
 
-		if (!empty($data['boardUrl']) && strpos($data['boardUrl'], 'http://') === false) {
-			$data['boardUrl'] = 'http://' . $data['boardUrl'];
+		if (!empty($data['boardUrl'])) {
+			$data['boardUrl'] = $this->addProtocolToLink($data['boardUrl']);
 		}
 
 		return $data;

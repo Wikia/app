@@ -84,4 +84,19 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 
 		return parent::renderEditor($data);
 	}
+
+	public function filterData($data) {
+		$data = parent::filterData($data);
+
+		$model = new MarketingToolboxSliderModel();
+		$slidesCount = $model->getSlidesCount();
+
+		for ($i = 1; $i <= $slidesCount; $i++) {
+			if (!empty($data['url' . $i])) {
+				$data['url' . $i] = $this->addProtocolToLink($data['url' . $i]);
+			}
+		}
+
+		return $data;
+	}
 }
