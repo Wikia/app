@@ -213,7 +213,7 @@ $wgGroupPermissions['*']['walldelete'] = false;
 $wgGroupPermissions['util']['walldelete'] = true;
 
 $wgGroupPermissions['*']['walladmindelete'] = false;
-$wgGroupPermissions['staff']['walladmindelete'] = false;
+$wgGroupPermissions['staff']['walladmindelete'] = true;
 $wgGroupPermissions['vstf']['walladmindelete'] = true;
 $wgGroupPermissions['helper']['walladmindelete'] = true;
 $wgGroupPermissions['sysop']['walladmindelete'] = true;
