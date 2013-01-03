@@ -220,4 +220,3 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		return $data;
 	}
 }
-?>

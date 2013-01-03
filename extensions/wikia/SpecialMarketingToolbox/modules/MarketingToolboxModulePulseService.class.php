@@ -118,4 +118,3 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 		return $data;
 	}
 }
-?>
