@@ -107,7 +107,9 @@ class ImportFreeImages {
 		$this->suppressStrictWarnings();
 		$result = $this->flickr->photos_getInfo( $id );
 		$this->restoreStrictWarnings();
-		return $result;
+		/* Wikia change begin */
+		return $result['photo'];
+		/* Wikia change end */
 	}
 
 	/**
