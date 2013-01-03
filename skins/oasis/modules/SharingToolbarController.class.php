@@ -52,13 +52,12 @@ class SharingToolbarController extends WikiaController {
 		return $ret;
 	}
 
-	public function getShareButtons() {
+	public function getShareButtons( Title $title ) {
 		if ( !self::$shareButtons ) {
-			$app = F::app();
 			$shareButtons = array();
 
 			foreach( self::$shareNetworks as $network ) {
-				$shareButton = F::build( 'ShareButton', array( $app, $network ), 'factory' );
+				$shareButton = ShareButton::factory( $network, $title );
 
 				if ( $shareButton instanceof ShareButton ) {
 					$shareButtons[] = $shareButton;
@@ -86,15 +85,9 @@ class SharingToolbarController extends WikiaController {
 	}
 
 	public function index() {
-		$app = F::app();
 		$titleString = $this->getVal( 'pagename' );
-		Wikia::Log( __METHOD__, '', $titleString );
-		$newTitle = Title::newFromText( $titleString );
-		if ( $newTitle !== null ) {
-			$app->wg->Title = $newTitle;
-		}
-
-		$this->response->setVal( 'shareButtons', self::getShareButtons() );
+		$title = $titleString !== null ? Title::newFromText( $titleString ) : $this->wg->Title;
+		$this->response->setVal( 'shareButtons', self::getShareButtons( $title ) );
 	}
 
 	// Returning false will prevent the button from being shown
