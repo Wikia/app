@@ -1,6 +1,6 @@
 <?php
 	/**
-	 * Controller to fetch various stats info
+	 * Controller to fetch various stats info about the current wiki
 	 *
 	 * @author Jakub Olek <jolek@wikia-inc.com>
 	 */
@@ -10,7 +10,7 @@ class StatsApiController extends WikiaApiController {
 	const CACHE_VALIDITY = 10800; //3 hours
 
 	/**
-	 * Get stats about wiki
+	 * Get statistical information about the current wiki
 	 *
 	 * @responseParam object stats Stats about wiki edits | articles | pages | users | activeUsers | images | videos | admins
 	 *
