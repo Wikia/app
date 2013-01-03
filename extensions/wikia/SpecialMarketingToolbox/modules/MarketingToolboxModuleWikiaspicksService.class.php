@@ -1,5 +1,6 @@
 <?php
 class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleService {
+	
 	protected function getFormFields() {
 		$fields = array(
 			'fileName' => array(
@@ -26,6 +27,7 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 				)
 			),
 			'text' => array(
+				'label' => $this->wf->Msg('marketing-toolbox-hub-module-wikiaspicks-text'),
 				'validator' => new WikiaValidatorFileTitle(
 					array(),
 					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
@@ -33,11 +35,24 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 				'type' => 'textarea',
 				'attributes' => array(
 					'class' => 'required',
-					'rows' => 4
+					'rows' => 3
 				)
 			)
 		);
 
 		return $fields;
 	}
+
+	public function renderEditor($data) {
+		if( !empty($data['values']['fileName']) ) {
+			$model = new MarketingToolboxModel();
+			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['values']['fileName'], $model->getThumbnailSize());
+			$data['fileUrl'] = $imageData->url;
+			$data['imageWidth'] = $imageData->width;
+			$data['imageHeight'] = $imageData->height;
+		}
+		
+		return parent::renderEditor($data);
+	}
+	
 }

@@ -58,6 +58,7 @@ $chevron-color: #888;
 	.input-group:not(.borderNone) {
 		border-bottom: 1px solid #e5e5e5;
 	}
+	
 	.grid-4.wide {
 		margin-bottom: 28px;
 		input[type="text"], textarea {
@@ -226,6 +227,7 @@ $chevron-color: #888;
 			margin: 7px 30px 0 0;
 		}
 		.image-placeholder {
+			background-color: $module-background-color;
 			border: 1px solid $vertical-border-color;
 			width: 155px;
 			height: 155px;
@@ -236,5 +238,12 @@ $chevron-color: #888;
 	.module-polls {
 		overflow: hidden;
 		clear: both;
+	}
+
+	.module-wikiaspicks {
+		.input-group input,
+		.input-group textarea {
+			width: 320px;
+		}
 	}
 }
