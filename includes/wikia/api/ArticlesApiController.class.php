@@ -23,63 +23,6 @@ class ArticlesApiController extends WikiaApiController {
 	const PAGE_CACHE_ID = 'page';
 
 	/**
-	 * @private
-	 */
-	static function onArticleUpdateCategoryCounts( $this, $added, $deleted ) {
-		foreach ( $added + $deleted as $cat) {
-			WikiaDataAccess::cachePurge( self::getCacheKey( $cat, self::CATEGORY_CACHE_ID ) );
-
-			$param = array(
-				'category' => $cat
-			);
-
-			self::purgeMethod(
-				'getTop',
-				$param
-			);
-
-			self::purgeMethod(
-				'getList',
-				$param
-			);
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param $category
-	 * @return array|null|string
-	 */
-	private static function getCategoryMembers( $category, $limit = 5000, $offset = '', $namespaces = '', $sort = 'sortkey', $dir = 'asc' ){
-		return WikiaDataAccess::cache(
-			self::getCacheKey( $category, self::CATEGORY_CACHE_ID, [ $limit, $offset, $namespaces, $dir ] ),
-			self::CLIENT_CACHE_VALIDITY,
-			function() use ( $category, $limit, $offset, $namespaces, $sort, $dir ) {
-				$ids = ApiService::call(
-					array(
-						'action' => 'query',
-						'list' => 'categorymembers',
-						'cmprop' => 'ids|title',
-						'cmsort' => $sort,
-						'cmnamespace' => $namespaces,
-						'cmdir' => $dir,
-						'cmtitle' => $category,
-						'cmlimit' => $limit,
-						'cmcontinue' => $offset
-					)
-				);
-
-				if ( !empty( $ids ) ) {
-					return array( $ids['query']['categorymembers'], !empty( $ids['query-continue']) ? $ids['query-continue']['categorymembers']['cmcontinue'] : null );
-				} else {
-					return null;
-				}
-			}
-		);
-	}
-
-	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
 	 *
 	 * @requestParam array $namespaces [OPTIONAL] The name of the namespaces (e.g. 0, 14, 6, etc.) to use as a filter, comma separated
@@ -444,6 +387,63 @@ class ArticlesApiController extends WikiaApiController {
 
 		$collection = null;
 		$this->wf->ProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @private
+	 */
+	static function onArticleUpdateCategoryCounts( $this, $added, $deleted ) {
+		foreach ( $added + $deleted as $cat) {
+			WikiaDataAccess::cachePurge( self::getCacheKey( $cat, self::CATEGORY_CACHE_ID ) );
+
+			$param = array(
+				'category' => $cat
+			);
+
+			self::purgeMethod(
+				'getTop',
+				$param
+			);
+
+			self::purgeMethod(
+				'getList',
+				$param
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param $category
+	 * @return array|null|string
+	 */
+	private static function getCategoryMembers( $category, $limit = 5000, $offset = '', $namespaces = '', $sort = 'sortkey', $dir = 'asc' ){
+		return WikiaDataAccess::cache(
+			self::getCacheKey( $category, self::CATEGORY_CACHE_ID, [ $limit, $offset, $namespaces, $dir ] ),
+			self::CLIENT_CACHE_VALIDITY,
+			function() use ( $category, $limit, $offset, $namespaces, $sort, $dir ) {
+				$ids = ApiService::call(
+					array(
+						'action' => 'query',
+						'list' => 'categorymembers',
+						'cmprop' => 'ids|title',
+						'cmsort' => $sort,
+						'cmnamespace' => $namespaces,
+						'cmdir' => $dir,
+						'cmtitle' => $category,
+						'cmlimit' => $limit,
+						'cmcontinue' => $offset
+					)
+				);
+
+				if ( !empty( $ids ) ) {
+					return array( $ids['query']['categorymembers'], !empty( $ids['query-continue']) ? $ids['query-continue']['categorymembers']['cmcontinue'] : null );
+				} else {
+					return null;
+				}
+			}
+		);
 	}
 
 	static private function getCacheKey( $name, $type, $params = '' ) {
