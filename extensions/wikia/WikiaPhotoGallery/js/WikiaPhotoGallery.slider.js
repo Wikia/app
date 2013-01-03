@@ -1,29 +1,11 @@
 var WikiaPhotoGallerySlider = {
-	//timer for automatic wikiaPhotoGallery slideshow
-	timer: null,
-	sliderEnable: true,
-
-	//ID of image that will be shown on load, integer, 0-3
-	initialImageId: 0, //Math.floor(Math.random() * 4),
-
-	sliderId: null,
-
-	log: function(msg) {
-		$().log(msg, 'WikiaPhotoGallery:Slider');
-	},
+	sliderEnabled: true,
 
 	init: function(sliderId) {
-		var that = this;
-		this.sliderId = sliderId;
-		$().log('Slider');
-		$().log(this.sliderId);
-		//move spotlights
-		$('.wikiaPhotoGallery-slider-body').each(function() {
-			var node = $(this);
-			node.css('left', parseInt(node.css('left')) - (620 * WikiaPhotoGallerySlider.initialImageId), 10);
-		});
-
-		var currentImage = $('#wikiaPhotoGallery-slider-' + sliderId + '-' + WikiaPhotoGallerySlider.initialImageId);
+		var that = this,
+			timer = null,
+			sliderElem = $('#wikiaPhotoGallery-slider-body-' + sliderId),
+			currentImage = $('#wikiaPhotoGallery-slider-' + sliderId + '-0'); // Always start on first image
 
 		//select nav
 		currentImage.find('.nav').addClass('selected');
@@ -33,55 +15,56 @@ var WikiaPhotoGallerySlider = {
 		currentImage.find('.description-background').show();
 
 		//bind events
-		$('#wikiaPhotoGallery-slider-body-' + sliderId + ' .nav').click(function() {
-			if ( $('#wikiaPhotoGallery-slider-body-' + sliderId + ' .wikiaPhotoGallery-slider').queue().length == 0 ){
-				clearInterval(WikiaPhotoGallerySlider.timer);
+		sliderElem.find('.nav').click(function() {
+			if ( sliderElem.find('.wikiaPhotoGallery-slider').queue().length == 0 ){
+				clearInterval(timer);
 				WikiaPhotoGallerySlider.scroll($(this));
 			}
 		});
+		
 		$('.wikiaPhotoGallery-slider-body ul li a').click(function() {
-			WikiaPhotoGallerySlider.sliderEnable = false;
+			WikiaPhotoGallerySlider.sliderEnabled = false;
 		});
+		
 		// kill slider while closing preview in edit mode
 		$(window).bind('EditPagePreviewClosed', function() {
-			that.killSlider();
+			that.killSlider(timer);
 		});
 
-		$('#wikiaPhotoGallery-slider-body-' + sliderId).show();
+		sliderElem.show();
 
 		//only slideshows with more than one item should animate
-		if ($('#wikiaPhotoGallery-slider-body-' + sliderId).find('ul').children().length > 1) {
-			this.timer = setInterval(this.slideshow, 7000);
+		if (sliderElem.find('ul').children().length > 1) {
+			timer = setInterval(function() {
+				that.slideshow(sliderId);
+			}, 7000);
 		}
 	},
 
 	// kill slider instance - exp. when closing preview in editor
-	killSlider: function() {
-		clearInterval(this.timer);
-		this.timer = null;
-		this.sliderEnable = true;
-		this.initialImageId = 0;
-		this.sliderId = null;
+	killSlider: function(timer) {
+		clearInterval(timer);
+		this.sliderEnabled = true;
 	},
 
 	scroll: function(nav) {
 		//setup variables
-		var thumb_index = nav.parent().prevAll().length,
+		var thumb_index = nav.parent().index(),
 			scroll_by = parseInt(nav.parent().find('.wikiaPhotoGallery-slider').css('left')),
 			slider_body = nav.closest('.wikiaPhotoGallery-slider-body'),
 			parent_id = slider_body.attr('id');
 
-		if ($('#' + parent_id + ' .wikiaPhotoGallery-slider').queue().length == 0) {
+		if (slider_body.find('.wikiaPhotoGallery-slider').queue().length == 0) {
 
 			//set 'selected' class
-			$('#' + parent_id + ' .nav').removeClass('selected');
+			slider_body.find('.nav').removeClass('selected');
 			nav.addClass('selected');
 
 			//hide description
-			$('#' + parent_id + ' .description').clearQueue().hide();
+			slider_body.find('.description').clearQueue().hide();
 
 			//scroll
-			$('#' + parent_id + ' .wikiaPhotoGallery-slider').animate({
+			slider_body.find('.wikiaPhotoGallery-slider').animate({
 				left: '-=' + scroll_by
 			}, function() {
 				slider_body.find( '.wikiaPhotoGallery-slider-' + thumb_index ).find( '.description' ).fadeIn();
@@ -89,11 +72,11 @@ var WikiaPhotoGallerySlider = {
 		}
 	},
 
-	slideshow: function() {
-		if (WikiaPhotoGallerySlider.sliderEnable) {
-			var current = $('#wikiaPhotoGallery-slider-body-' + WikiaPhotoGallerySlider.sliderId + ' .selected').parent().prevAll().length;
-			var next = ( ( current == $('#wikiaPhotoGallery-slider-body-' + WikiaPhotoGallerySlider.sliderId + ' .nav').length - 1 ) || ( current > 3 ) ) ? 0 : current + 1;
-			WikiaPhotoGallerySlider.scroll($('#wikiaPhotoGallery-slider-' + WikiaPhotoGallerySlider.sliderId + '-' + next).find('.nav'), WikiaPhotoGallerySlider.sliderId);
+	slideshow: function(sliderId) {
+		if (WikiaPhotoGallerySlider.sliderEnabled) {
+			var current = $('#wikiaPhotoGallery-slider-body-' + sliderId + ' .selected').parent().prevAll().length;
+			var next = ( ( current == $('#wikiaPhotoGallery-slider-body-' + sliderId + ' .nav').length - 1 ) || ( current > 3 ) ) ? 0 : current + 1;
+			WikiaPhotoGallerySlider.scroll($('#wikiaPhotoGallery-slider-' + sliderId + '-' + next).find('.nav'));
 		}
 	}
 }
