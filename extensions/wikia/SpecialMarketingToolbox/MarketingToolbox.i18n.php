@@ -98,6 +98,9 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-featured-video-desc' => 'Description',
 	'marketing-toolbox-hub-module-featured-video-article-url' => 'Article URL',
 
+	'marketing-toolbox-hub-module-featured-video-header' => 'Header',
+	'marketing-toolbox-hub-module-featured-video-desc' => 'Description',
+
 	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
 	'marketing-toolbox-module-save-ok' => '$1 module saved successfully!',
 
