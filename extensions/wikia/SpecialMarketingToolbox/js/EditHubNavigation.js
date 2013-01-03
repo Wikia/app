@@ -21,14 +21,14 @@ ModuleNavigation.prototype = {
 	moveUp: function(event) {
 		event.preventDefault();
 		var sourceBox = $(event.target).parents('.module-box');
-		var destBox = $(event.target).parents('.module-box').prev();
+		var destBox = sourceBox.prev();
 		this.switchValues(sourceBox, destBox);
 	},
 
 	moveDown: function(event) {
 		event.preventDefault();
 		var sourceBox = $(event.target).parents('.module-box');
-		var destBox = $(event.target).parents('.module-box').next();
+		var destBox = sourceBox.next();
 		this.switchValues(sourceBox, destBox);
 	},
 
