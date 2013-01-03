@@ -177,6 +177,7 @@ abstract class CodeLint {
 		if (!empty($blacklist) && is_array($blacklist)) {
 			foreach($blacklist as $item) {
 				if (strpos($entry, $item) !== false) {
+					echo "{$entry} is blacklisted!\n";
 					wfProfileOut(__METHOD__);
 					return true;
 				}
@@ -345,6 +346,8 @@ abstract class CodeLint {
 		$results = array();
 
 		foreach($fileNames as $fileName) {
+			$fileName = realpath($fileName);
+
 			if (!$this->isBlacklisted($fileName, $blacklist)) {
 				$results[] = $this->checkFile($fileName);
 			}
@@ -418,6 +421,8 @@ abstract class CodeLint {
 		$results = array();
 
 		foreach($directoryNames as $directoryName) {
+			$directoryName = realpath($directoryName);
+
 			if (!$this->isBlacklisted($directoryName, $blacklist)) {
 				$results += $this->checkDirectory($directoryName, $blacklist);
 			}
