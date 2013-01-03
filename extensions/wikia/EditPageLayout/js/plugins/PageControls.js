@@ -395,7 +395,7 @@
 		// render "Preview" modal
 		renderPreview: function(extraData) {
 			var self = this,
-				articleWidth = mw.config.values.sassParams.widthType == 1 ? 850 : 660;
+				articleWidth = mw.config.values.sassParams.widthType == 1 ? 850 : 660,
 				width = articleWidth + 32 /* modal padding */ + (this.isGridLayout ? 30 : 0),
 				config = this.editor.config;
 
