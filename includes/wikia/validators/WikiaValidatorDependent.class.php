@@ -23,6 +23,10 @@ class WikiaValidatorDependent extends WikiaValidator {
 			throw new WikiaValidatorGivenObjectIsNotWikiaValidator('WikiaValidatorDepend: own validator is not an instance of WikiaValidator');
 		}
 
+		if (!is_array($this->getOption('dependentFields'))) {
+			throw new WikiaValidatorDependentFieldEmptyException( 'WikiaValidatorDepend: dependent field is empty' );
+		}
+
 		if( $this->anyDependentFieldsValid() && !$ownValidator->isValid($value) ) {
 			$this->setError( $ownValidator->getError() );
 			return false;
