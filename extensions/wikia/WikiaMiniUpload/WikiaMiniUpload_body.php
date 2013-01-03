@@ -551,7 +551,7 @@ class WikiaMiniUpload {
 			$ns_vid = $wgContLang->getFormattedNsText( NS_FILE );
 			$ns_img = ImagePlaceholderTranslateNsImage();
 
-            // Get the same as above but for english
+			// Get the same as above but for english
 			$enLang = Language::factory( 'en' );
 			$en_ns_vid = $enLang->getFormattedNsText( NS_FILE );
 
