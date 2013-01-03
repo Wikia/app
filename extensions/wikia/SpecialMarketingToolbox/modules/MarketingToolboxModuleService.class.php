@@ -98,5 +98,3 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 }
-
-?>
