@@ -55,7 +55,7 @@
 
 	function Font(){
 		this.toggleType = function(type){
-			return toggle('serif', 'sans-serif', type)
+			return toggle('serif', 'sans-serif', type);
 		};
 
 		this.setSize = function(size){
@@ -87,6 +87,26 @@
 
 	w.Font = Font;
 
+	require(['modal'], function(m){
+		function Modal(){
+			this.close = function(){
+				var open = m.isOpen();
+
+				m.close();
+
+				return !!open;
+			};
+		}
+
+		Ponto.PontoBaseHandler.derive(Modal);
+
+		Modal.getInstance = function(){
+			return new Modal();
+		};
+
+		w.Modal = Modal;
+	});
+
 	require(['sections'], function(s){
 		function Sections(){
 			this.open = function(id){
@@ -108,20 +128,20 @@
 	});
 
 
-	window.addEventListener('DOMContentLoaded', function(){
-		require(['toc'], function(toc){
-			Ponto.invoke(
-				'Article',
-				'data',
-				{
-					data: {
-						title: wgTitle,
-						articleId: wgArticleId,
-						cityId: wgCityId
-					},
-					toc: toc.get()
-				}
-			);
-		});
-	});
+//	window.addEventListener('DOMContentLoaded', function(){
+//		require(['toc'], function(toc){
+//			Ponto.invoke(
+//				'Article',
+//				'data',
+//				{
+//					data: {
+//						title: wgTitle,
+//						articleId: wgArticleId,
+//						cityId: wgCityId
+//					},
+//					toc: toc.get()
+//				}
+//			);
+//		});
+//	});
 })(document.documentElement, this);
