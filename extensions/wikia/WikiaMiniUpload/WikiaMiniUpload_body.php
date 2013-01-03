@@ -546,8 +546,19 @@ class WikiaMiniUpload {
 			// clear the old caption for upload
 			$caption = $wgRequest->getVal('caption');
 			$slider = $wgRequest->getVal('slider');
+
+			// Get the namesapace translations in the content language for files and videos
 			$ns_vid = $wgContLang->getFormattedNsText( NS_FILE );
 			$ns_img = ImagePlaceholderTranslateNsImage();
+
+            // Get the same as above but for english
+			$enLang = Language::factory( 'en' );
+			$en_ns_vid = $enLang->getFormattedNsText( NS_FILE );
+
+			$oldWgContLang = $wgContLang;
+			$wgContLang = $enLang;
+			$en_ns_img = ImagePlaceholderTranslateNsImage();
+			$wgContLang = $oldWgContLang;
 
 			$title_obj = Title::newFromText( $title_main, $ns );
 			$article_obj = new Article( $title_obj );
@@ -557,14 +568,18 @@ class WikiaMiniUpload {
 
 			( '' != $wgRequest->getVal( 'box' ) ) ? $box = $wgRequest->getVal( 'box' ) : $box = '' ;
 
+			// Get the placeholder text in both the content language and in english
 			$placeholder_msg = wfMsgForContent( 'imgplc-placeholder' );
+			$en_placeholder_msg = wfMsgReal( 'imgplc-placeholder', array(), 'en');
 
 			$transl_v_t = '\[\[' . $ns_vid . ':' . $placeholder_msg . '[^\]]*\]\]';
 			$transl_i_t = '\[\[' . $ns_img . ':' . $placeholder_msg . '[^\]]*\]\]';
+			$en_transl_v_t = '\[\[' . $en_ns_vid . ':' . $en_placeholder_msg . '[^\]]*\]\]';
+			$en_transl_i_t = '\[\[' . $en_ns_img . ':' . $en_placeholder_msg . '[^\]]*\]\]';
 
 			$success = false;
 
-			preg_match_all( '/' . $transl_v_t . '|' . $transl_i_t . '/si', $text, $matches, PREG_OFFSET_CAPTURE );
+			preg_match_all( '/' . $transl_v_t . '|' . $transl_i_t . '|' . $en_transl_i_t . '|' . $en_transl_v_t . '/si', $text, $matches, PREG_OFFSET_CAPTURE );
 
 			if( is_array( $matches ) && $box < count($matches[0]) ) {
 				$our_gallery = $matches[0][$box][0];
