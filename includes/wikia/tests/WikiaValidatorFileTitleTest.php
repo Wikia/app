@@ -27,7 +27,7 @@ class WikiaValidatorFileTitleTest extends PHPUnit_Framework_TestCase {
 
 		$titleMock->staticExpects($this->any())
 			->method('newFromText')
-			->with($this->equalTo(NS_FILE), $this->equalTo($fileString))
+			->with($this->equalTo($fileString), $this->equalTo(NS_FILE))
 			->will($this->returnValue($titleMock));
 
 		$titleMock->expects($this->any())
