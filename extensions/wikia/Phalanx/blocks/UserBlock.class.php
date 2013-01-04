@@ -170,7 +170,6 @@ class UserBlock {
 
 		$cacheKey = self::getCacheKey( $user );
 		$cachedState = $wgMemc->get( $cacheKey );
-		$cachedState = false;
 
 		if ( !empty( $cachedState ) && $cachedState['timestamp'] > (int) Phalanx::getLastUpdate() ) {
 			if ( !$cachedState['return'] && $isCurrentUser ) {
