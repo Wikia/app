@@ -80,8 +80,13 @@ function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDa
 	// See if there are any rooms for this wiki and if there are, get the first one.
 	var roomId = "";
 
-	users = typeof(users) == 'undefined' ? []:users.split(',');
-	
+	users = [];
+	if ( typeof(users) != 'undefined' ) {
+		try {
+			users = JSON.parse( users );
+		} catch(err) {}
+	}
+
 	var createRoom = function() {
 		api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, type, users, successCallback, errorCallback);
 	};
