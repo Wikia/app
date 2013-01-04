@@ -463,10 +463,12 @@ var NodeChatUsers = Backbone.View.extend({
 		// Add users to list
 		if (list.children().length) {
 			// The list is not empty. Arrange alphabetically.
-			var compareA = el.data('user').toUpperCase();
+			var compareA = el.data('user');
+			if ( typeof(compareA)=='string' )  compareA = compareA.toUpperCase();
 			var wasAdded = false;
 			list.children().each(function(idx, itm) {
-				compareB = $(itm).data('user').toUpperCase();
+				compareB = $(itm).data('user');
+				if ( typeof(compareB)=='string' )  compareB = compareB.toUpperCase();
 				//TODO: check it
 				if (compareA == compareB) {
 					return false;
