@@ -237,8 +237,7 @@ RedisStorage.prototype = {
 		var self = this;
 		self._rpush(self.config.getKey_chatEntriesInRoom(roomId), data, function(result) {
 			if (typeof callback == "function") callback(result);
-			
-			// Keep the list to a defined max length.
+			self._expier(self.config.getKey_chatEntriesInRoom(roomId), 60*60*8, null, null, null);
 			self._pruneExtraMessagesFromRoom(roomId);
 		},
 		'Error while adding chat entry for room ' + roomId + ' : %error%',
@@ -402,7 +401,12 @@ RedisStorage.prototype = {
 			self._redisCallback(err, result, callback, errorMsg, errback, both);
 		});
 	},
-	
+	_expire: function(key, callback, errorMsg, errback, both) {
+                var self = this;
+                self._rc.expire(key, function(err, result) {
+                        self._redisCallback(err, result, callback, errorMsg, errback, both);
+                });
+        },
 	_del: function(key, callback, errorMsg, errback, both) {
 		var self = this;
 		self._rc.del(key, function(err, result) {
