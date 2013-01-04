@@ -39,6 +39,7 @@ class RTEParser extends Parser {
 
 		RTE::log(__METHOD__, $oLine);
 
+		$this->checkForContextSensitiveEdgeCases( $oLine );
 		// check if previous line was empty
 		if ($this->lastLineWasEmpty) {
 			// increase empty lines counter
@@ -67,6 +68,27 @@ class RTEParser extends Parser {
 		$this->lastOutput = $output;
 
 		wfProfileOut(__METHOD__);
+	}
+	
+	/**
+	 * Registers the wikitext as an edge case with RTE stack for cases where 
+	 * line-initial HTML tags interfere with wikitext that must be line-initial
+	 * @param string $line
+	 */
+	public function checkForContextSensitiveEdgeCases( $line ) {
+        // these are already escaped for regex
+		$tokens = array(
+				'\*',
+				'{\|',
+				'#',
+				'=',
+		);
+		
+		foreach ( $tokens as $token ) {
+			if ( preg_match( '/^<[^>]+>' . $token . '/is', $line ) ) {
+				RTE::$edgeCases[] = 'CONTEXT_SENSITIVE_TOKEN_FOLLOWING_HTML_TAG';
+			}
+		}
 	}
 
 	/**
