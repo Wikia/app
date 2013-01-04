@@ -148,12 +148,12 @@ EditHub.prototype = {
 					box = $('.MarketingToolboxMain');
 				}
 				// TODO
-				box.find('.filename-placeholder').html(vetData.videoWikiText);
-				box.find('.wmu-file-name-input').val(vetData.videoWikiText).valid();
+				box.find('.filename-placeholder').html(response.videoFileName);
+				box.find('.wmu-file-name-input').val(response.videoFileName).valid();
 
 				box.find('.image-placeholder')
 					.empty()
-					.html(response.fileName);
+					.html(response.videoFileMarkup);
 			}, this)
 		});
 	},
