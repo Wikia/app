@@ -25,7 +25,7 @@ describe("Lazyload module", function () {
 	window.wgStyleVersion = 123;
 
 	async.it('should be defined', function(done){
-		document.body.innerHTML = '<section id="mw-content-text"></section>';
+		document.body.innerHTML = '<div id="wkPage"><section id="mw-content-text"></section></div>';
 
 		require(['lazyload'], function(lazyload){
 
@@ -36,7 +36,7 @@ describe("Lazyload module", function () {
 	});
 
 	async.it('should lazyload images', function(done){
-		document.body.innerHTML = '<section id="mw-content-text"><img alt="Sectionals2.jpg" width="480" height="207" data-src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="lazy media" data-params="[{&quot;name&quot;:&quot;Sectionals2.jpg&quot;,&quot;full&quot;:&quot;data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D&quot;}]"></section>';
+		document.body.innerHTML = '<div id="wkPage"><section id="mw-content-text"><img alt="Sectionals2.jpg" width="480" height="207" data-src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="lazy media" data-params="[{&quot;name&quot;:&quot;Sectionals2.jpg&quot;,&quot;full&quot;:&quot;data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D&quot;}]"></section></div>';
 
 		require(['lazyload'], function(lazyload){
 

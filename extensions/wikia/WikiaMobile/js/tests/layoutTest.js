@@ -22,7 +22,7 @@ describe("Layout module", function () {
 	window.wgStyleVersion = 123;
 
 	async.it('should be defined', function(done){
-		document.body.innerHTML = '<div id="mw-content-text"></div>';
+		document.body.innerHTML = '<div id="wkPage"><div id="mw-content-text"></div></div>';
 
 		require(['layout'], function(layout){
 			expect(layout).toBeDefined();

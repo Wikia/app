@@ -43,7 +43,7 @@ describe("Tables module", function () {
 
 	async.it('should be defined', function(done){
 
-		document.body.innerHTML = '<div id="mw-content-text"></div>';
+		document.body.innerHTML = '<div id="wkPage"><div id="mw-content-text"></div></div>';
 
 		require(['tables'], function(tables){
 			expect(tables).toBeDefined();
@@ -54,7 +54,7 @@ describe("Tables module", function () {
 	});
 
 	async.it('should wrap/unwrap table', function(done){
-		document.body.innerHTML = '<div id="mw-content-text"><table style="width:2000px"><tr><td></td></tr></table><table><tr><td></td></tr></table></div>';
+		document.body.innerHTML = '<div id="wkPage"><div id="mw-content-text"><table style="width:2000px"><tr><td></td></tr></table><table><tr><td></td></tr></table></div></div>';
 
 		var tab = document.getElementsByTagName('table');
 
@@ -80,7 +80,7 @@ describe("Tables module", function () {
 	});
 
 	async.it('should add wkScroll to bitTable', function(done){
-		document.body.innerHTML = '<div id="mw-content-text"><table style="width:2000px"><tr><td></td></tr></table><table><tr><td></td></tr></table></div>';
+		document.body.innerHTML = '<div id="wkPage"><div id="mw-content-text"><table style="width:2000px"><tr><td></td></tr></table><table><tr><td></td></tr></table></div></div>';
 
 		var tab = document.getElementsByTagName('table');
 
