@@ -11,7 +11,7 @@
  @test-require-asset /resources/wikia/modules/loader.js
  */
 
-/*global describe, require*/
+/*global describe, require, spyOn*/
 
 describe("Loader Module", function () {
 	'use strict';
@@ -87,7 +87,6 @@ describe("Loader Module", function () {
 			done();
 		});
 	});
-
 	async.it('should fire on fail callback', function(done) {
 		require(['loader'], function(loader) {
 
@@ -111,6 +110,23 @@ describe("Loader Module", function () {
 
 				done();
 			})
+		});
+	});
+
+	async.it('Facebook library is properly initialized when lazy loaded', function(done) {
+		// mock FB API init
+		window.onFBloaded = function() {};
+		spyOn(window, 'onFBloaded').andCallThrough();
+
+		require(['loader'], function(loader) {
+			loader({
+				type: loader.LIBRARY,
+				resources: ['facebook']
+			}).
+			done(function() {
+				expect(window.onFBloaded).toHaveBeenCalled();
+				done();
+			});
 		});
 	});
 });

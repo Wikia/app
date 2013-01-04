@@ -88,7 +88,19 @@
 				},
 				facebook: {
 					file: w.fbScript || '//connect.facebook.net/en_US/all.js',
-					check: function(){ return typeof w.FB }
+					check: function(){ return typeof w.FB },
+					addition: function(callbacks) {
+						// always initialize FB API when SDK is loaded on-demand
+						if (typeof w.onFBloaded === 'function') {
+							w.onFBloaded();
+						}
+
+						if (typeof callbacks.success === 'function') {
+							callbacks.success();
+						}
+
+						return callbacks;
+					}
 				},
 				googlemaps: {
 					file: 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
