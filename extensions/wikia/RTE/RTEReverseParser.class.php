@@ -488,6 +488,20 @@ class RTEReverseParser {
 				}
 			}
 		}
+		
+		// fix for wikitext that is context-sensitive
+		// these are escaped for regex matching
+		$lineInitialTokens = array(
+				'\*',
+				'{\|',
+				'#',
+				'=',
+		);
+		foreach ( $lineInitialTokens as $token ) {
+			if ( preg_match( "/^{$token}/is", $textContent ) ) {
+				$beforeText = "\n";
+			}
+		}
 
 		// special handling of headings in <div> tags (BugId:4908)
 		if (self::isHeadingNode($node) && self::isChildOf($node, 'div') && !self::isFirstChild($node)) {
