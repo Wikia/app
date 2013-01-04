@@ -4,9 +4,7 @@
  * @test-require-asset resources/wikia/modules/cache.js
  */
 
-/*global describe, it, runs, waitsFor, expect, require*/
-describe("Cache", function () {
-	'use strict';
+module("CacheTest");
 
 test('Set then get', function() {
 	var wc = define.getModule();
