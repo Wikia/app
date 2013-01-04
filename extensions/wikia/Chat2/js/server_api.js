@@ -76,14 +76,14 @@ function apiDispatcher(req, res, reqData, successCallback, errorCallback){
  * As per the API convention, passes json on success to the successCallback or an error message (a string) to
  * the errorCallback on error.
  */
-function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDataString, type, users, successCallback, errorCallback){
+function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDataString, type, serializedUsers, successCallback, errorCallback){
 	// See if there are any rooms for this wiki and if there are, get the first one.
 	var roomId = "";
 
 	users = [];
-	if ( typeof(users) != 'undefined' ) {
+	if ( typeof(serializedUsers) != 'undefined' ) {
 		try {
-			users = JSON.parse( users );
+			users = JSON.parse( serializedUsers ) || [];
 		} catch(err) {}
 	}
 
@@ -91,7 +91,7 @@ function api_getDefaultRoomId(cityId, defaultRoomName, defaultRoomTopic, extraDa
 		api_createChatRoom(cityId, defaultRoomName, defaultRoomTopic, extraDataString, type, users, successCallback, errorCallback);
 	};
 	
-	storage.getListOfRooms(cityId, type, users, 
+	storage.getListOfRooms(cityId, type, users,
 		function(roomIds) {
 			if(roomIds){
 				// For now, if there is more than one wiki in the room, we just grab the first as the default room.
