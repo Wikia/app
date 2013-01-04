@@ -370,7 +370,8 @@ class ArticlesApiController extends WikiaApiController {
 	 * @requestParam integer $width [OPTIONAL] The desired width for the thumbnail, defaults to 200, 0 for no thumbnail
 	 * @requestParam integer $height [OPTIONAL] The desired height for the thumbnail, defaults to 200, 0 for no thumbnail
 	 *
-	 * @responseParam array A list of results with the article ID as the index, each item has a revision, namespace (id, text), comments (if ArticleComments is enabled on the wiki), abstract (if available), thumbnail (if available) property
+	 * @responseParam array $items A list of results with the article ID as the index, each item has a title, url, revision, namespace ID, comments (if ArticleComments is enabled on the wiki), abstract (if available), thumbnail (if available) property
+	 * @responseParam string $basepath domain of a wiki to create a url for an article
 	 *
 	 * @example &ids=2187,23478&abstract=200&width=300&height=150
 	 */
@@ -416,6 +417,8 @@ class ArticlesApiController extends WikiaApiController {
 						$id = $t->getArticleID();
 
 						$collection[$id] = [
+							'title' => $t->getText(),
+							'url' => $t->getLocalURL(),
 							'revision' => $t->getLatestRevID(),
 							'ns' => $t->getNamespace()
 						];
@@ -471,6 +474,7 @@ class ArticlesApiController extends WikiaApiController {
 		 */
 
 		$this->response->setVal( 'items', $collection );
+		$this->response->setVal( 'basepath', $this->wg->Server );
 
 		$collection = null;
 		$this->wf->ProfileOut( __METHOD__ );
