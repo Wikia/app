@@ -21,3 +21,6 @@ function define(id, deps, def) {
 }
 
 define.amd = true;
+require = {
+	optional: function() {}
+};

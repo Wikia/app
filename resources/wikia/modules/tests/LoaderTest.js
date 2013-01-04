@@ -1,13 +1,9 @@
 /*
  @test-framework Jasmine
- @test-require-asset /resources/wikia/libraries/modil/modil.js
+ @test-require-asset /resources/wikia/libraries/define.mock.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/Wikia.utils.js
  @test-require-asset /resources/wikia/libraries/deferred/deferred.js
  @test-require-asset /resources/wikia/libraries/deferred/deferred.api.js
- @test-require-asset /resources/wikia/modules/window.js
- @test-require-asset /resources/wikia/modules/mw.js
- @test-require-asset /resources/wikia/modules/ajax.js
- @test-require-asset /resources/wikia/modules/nirvana.js
  @test-require-asset /resources/wikia/modules/loader.js
  */
 
@@ -16,117 +12,99 @@
 describe("Loader Module", function () {
 	'use strict';
 
-	var async = new AsyncSpec(this);
+	var async = new AsyncSpec(this),
+		windowMock = {
+			document: window.document
+		},
+		mwMock = undefined,
+		nirvanaMock = {},
+		loader = define.getModule(windowMock, mwMock, nirvanaMock);
 
 	window.wgCdnRootUrl = '';
 	window.wgAssetsManagerQuery = "/__am/%4$d/%1$s/%3$s/%2$s";
 	window.wgStyleVersion = ~~(Math.random()*99999);
 
-	async.it('registers itself', function(done) {
-		require(['loader'], function(loader) {
-			expect(typeof loader).toBe('function');
-			expect(typeof loader.processScript).toBe('function');
-			expect(typeof loader.processStyle).toBe('function');
-
-			done();
-		});
+	it('registers itself', function() {
+		expect(typeof loader).toBe('function');
+		expect(typeof loader.processScript).toBe('function');
+		expect(typeof loader.processStyle).toBe('function');
 	});
 
-	async.it('gives meaningful types', function(done) {
-		require(['loader'], function(loader) {
-			expect(loader.JS).toEqual('js');
-			expect(loader.AM_GROUPS).toEqual('amgroups');
-			expect(loader.CSS).toEqual('css');
-			expect(loader.SCSS).toEqual('scss');
-			expect(loader.MULTI).toEqual('multi');
-			expect(loader.LIBRARY).toEqual('library');
-
-			done();
-		});
+	it('gives meaningful types', function() {
+		expect(loader.JS).toEqual('js');
+		expect(loader.AM_GROUPS).toEqual('amgroups');
+		expect(loader.CSS).toEqual('css');
+		expect(loader.SCSS).toEqual('scss');
+		expect(loader.MULTI).toEqual('multi');
+		expect(loader.LIBRARY).toEqual('library');
 	});
 
-	async.it('gives meaningful errors', function(done) {
-		require(['loader'], function(loader) {
-			expect(loader.NOT_LOADED).toEqual('Some of resources not loaded');
-			expect(loader.CORRUPT_FORMAT).toEqual('Wrong object format');
-
-			done();
-		});
+	it('gives meaningful errors', function() {
+		expect(loader.NOT_LOADED).toEqual('Some of resources not loaded');
+		expect(loader.CORRUPT_FORMAT).toEqual('Wrong object format');
 	});
 
-	async.it('style should be processed', function(done) {
+	it('style should be processed', function() {
 		document.body.innerHTML = '<div class=test></div>';
 
-		require(['loader'], function(loader) {
-			var div = document.getElementsByClassName('test')[0];
+		var div = document.getElementsByClassName('test')[0];
 
-			expect(div.style.width).toBe('');
-			loader.processStyle('.test{width:100px}');
-			expect(getComputedStyle(div).width).toBe('100px');
-
-			done();
-		});
+		expect(div.style.width).toBe('');
+		loader.processStyle('.test{width:100px}');
+		expect(getComputedStyle(div).width).toBe('100px');
 	});
 
-	async.it('scripts should be processed', function(done) {
-		require(['loader'], function(loader) {
-			loader.processScript('window.run = true');
-			expect(window.run).toBe(true);
-
-			done();
-		});
+	it('scripts should be processed', function() {
+		loader.processScript('window.run = true');
+		expect(window.run).toBe(true);
 	});
 
-	async.it('support deferred', function(done) {
-		require(['loader'], function(loader) {
-
+	it('support deferred', function() {
 			expect(typeof loader('some/path').then).toBe('function');
 			expect(typeof loader('some/path').done).toBe('function');
 			expect(typeof loader('some/path').fail).toBe('function');
+	});
+
+	async.it('should fire on fail callback', function(done) {
+		var path = 'some/path/asd',
+			someOtherPath = 'and/thi/thiss.js';
+
+		loader(path, someOtherPath)
+
+		.done(function(){
+			//if this runs there is something wrong
+			//email someone!!! :)
+			expect(false).toBe(true);
+			done();
+		})
+
+		.fail(function(resources){
+
+			expect(resources).toBeDefined();
+			expect(resources.value.error).toEqual(loader.NOT_LOADED);
+			expect(resources.value.resources[1].type).toEqual('js');
 
 			done();
-		});
-	});
-	async.it('should fire on fail callback', function(done) {
-		require(['loader'], function(loader) {
-
-			var path = 'some/path/asd',
-				someOtherPath = 'and/thi/thiss.js';
-
-			loader(path, someOtherPath)
-
-			.done(function(){
-				//if this runs there is something wrong
-				//email someone!!! :)
-				expect(false).toBe(true);
-				done();
-			})
-
-			.fail(function(resources){
-
-				expect(resources).toBeDefined();
-				expect(resources.value.error).toEqual(loader.NOT_LOADED);
-				expect(resources.value.resources[1].type).toEqual('js');
-
-				done();
-			})
 		});
 	});
 
 	async.it('Facebook library is properly initialized when lazy loaded', function(done) {
-		// mock FB API init
-		window.onFBloaded = function() {};
-		spyOn(window, 'onFBloaded').andCallThrough();
+		var windowMock = {
+			document: window.document,
+			onFBloaded:  function() {}
+		},
+		loader = define.getModule(windowMock, mwMock, nirvanaMock);
 
-		require(['loader'], function(loader) {
-			loader({
-				type: loader.LIBRARY,
-				resources: ['facebook']
-			}).
-			done(function() {
-				expect(window.onFBloaded).toHaveBeenCalled();
-				done();
-			});
+		// check calls to this function
+		spyOn(windowMock, 'onFBloaded').andCallThrough();
+
+		loader({
+			type: loader.LIBRARY,
+			resources: ['facebook']
+		}).
+		done(function() {
+			expect(windowMock.onFBloaded).toHaveBeenCalled();
+			done();
 		});
 	});
 });
