@@ -231,6 +231,10 @@ $chevron-color: #888;
 			border: 1px solid $vertical-border-color;
 			width: 155px;
 			height: 155px;
+
+			a {
+				position: relative;
+			}
 		}
 
 	}
