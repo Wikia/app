@@ -1517,100 +1517,108 @@ class WallHooksHelper {
 	 * @return true
 	 */
 	public function onContributionsLineEnding(&$contribsPager, &$ret, $row) {
+
+		if( isset( $row->page_namespace ) && in_array( MWNamespace::getSubject($row->page_namespace), array(NS_USER_WALL) ) ) {
+			return $this->contributionsLineEndingProcess( $contribsPager, $ret, $row );
+		}
+		return true;
+	}
+
+	public function contributionsLineEndingProcess( &$contribsPager, &$ret, $row ) {
+
 		wfProfileIn(__METHOD__);
 
 		$app = F::app();
 
-		if( isset($row->page_namespace) && in_array(MWNamespace::getSubject($row->page_namespace), $app->wg->WallNS)) {
-			$topmarktext = '';
+		$rev = new Revision($row);
+		$page = $rev->getTitle();
+		$page->resetArticleId($row->rev_page);
+		$skin = $app->wg->User->getSkin();
 
-			$rev = new Revision($row);
-			$page = $rev->getTitle();
-			$page->resetArticleId($row->rev_page);
-			$skin = $app->wg->User->getSkin();
-
-			$wfMsgOptsBase = $this->getMessageOptions(null, $row, true);
+		$wfMsgOptsBase = $this->getMessageOptions(null, $row, true);
 
 
-			$isThread = $wfMsgOptsBase['isThread'];
-			$isNew = $wfMsgOptsBase['isNew'];
+		$isThread = $wfMsgOptsBase['isThread'];
+		$isNew = $wfMsgOptsBase['isNew'];
 
-			$wfMsgOptsBase['createdAt'] = Xml::element('a', array('href' => $wfMsgOptsBase['articleFullUrl']), $app->wg->Lang->timeanddate( $app->wf->Timestamp(TS_MW, $row->rev_timestamp), true) );
+		$wfMsgOptsBase['createdAt'] = Xml::element('a', array('href' => $wfMsgOptsBase['articleFullUrl']), $app->wg->Lang->timeanddate( $app->wf->Timestamp(TS_MW, $row->rev_timestamp), true) );
 
-			if( $isNew ) {
-				$wfMsgOptsBase['DiffLink'] = $app->wf->Msg('diff');
+		if( $isNew ) {
+			$wfMsgOptsBase['DiffLink'] = $app->wf->Msg('diff');
+		} else {
+			$query = array(
+				'diff' => 'prev',
+				'oldid' => $row->rev_id,
+			);
+
+			$wfMsgOptsBase['DiffLink'] = Xml::element('a', array(
+				'href' => $rev->getTitle()->getLocalUrl($query),
+			), $app->wf->Msg('diff'));
+		}
+
+		$wallMessage = F::build('WallMessage', array($page));
+		$historyLink = $wallMessage->getMessagePageUrl(true).'?action=history';
+		$wfMsgOptsBase['historyLink'] = Xml::element('a', array('href' => $historyLink), $app->wf->Msg('hist'));
+
+		// Don't show useless link to people who cannot hide revisions
+		$canHide = $app->wg->User->isAllowed('deleterevision');
+		if( $canHide || ($rev->getVisibility() && $app->wg->User->isAllowed('deletedhistory')) ) {
+			if( !$rev->userCan(Revision::DELETED_RESTRICTED) ) {
+				$del = $skin->revDeleteLinkDisabled($canHide); // revision was hidden from sysops
 			} else {
 				$query = array(
-						'diff' => 'prev',
-						'oldid' => $row->rev_id,
+					'type'		=> 'revision',
+					'target'	=> $page->getPrefixedDbkey(),
+					'ids'		=> $rev->getId()
 				);
-
-				$wfMsgOptsBase['DiffLink'] = Xml::element('a', array(
-						'href' => $rev->getTitle()->getLocalUrl($query),
-				), $app->wf->Msg('diff'));
+				$del = $skin->revDeleteLink($query, $rev->isDeleted(Revision::DELETED_RESTRICTED), $canHide);
 			}
+			$del .= ' ';
+		} else {
+			$del = '';
+		}
 
-			$wallMessage = F::build('WallMessage', array($page));
-			$historyLink = $wallMessage->getMessagePageUrl(true).'?action=history';
-			$wfMsgOptsBase['historyLink'] = Xml::element('a', array('href' => $historyLink), $app->wf->Msg('hist'));
+		$ret = $del;
+		if(wfRunHooks('WallContributionsLine', array(MWNamespace::getSubject($row->page_namespace), $wallMessage, $wfMsgOptsBase, &$ret) )) {
+			$wfMsgOpts = array(
+				$wfMsgOptsBase['articleFullUrl'],
+				$wfMsgOptsBase['articleTitleTxt'],
+				$wfMsgOptsBase['wallPageUrl'],
+				$wfMsgOptsBase['wallPageName'],
+				$wfMsgOptsBase['createdAt'],
+				$wfMsgOptsBase['DiffLink'],
+				$wfMsgOptsBase['historyLink']
+			);
 
-			// Don't show useless link to people who cannot hide revisions
-			$canHide = $app->wg->User->isAllowed('deleterevision');
-			if( $canHide || ($rev->getVisibility() && $app->wg->User->isAllowed('deletedhistory')) ) {
-				if( !$rev->userCan(Revision::DELETED_RESTRICTED) ) {
-					$del = $skin->revDeleteLinkDisabled($canHide); // revision was hidden from sysops
-				} else {
-					$query = array(
-							'type'		=> 'revision',
-							'target'	=> $page->getPrefixedDbkey(),
-							'ids'		=> $rev->getId()
-					);
-					$del = $skin->revDeleteLink($query, $rev->isDeleted(Revision::DELETED_RESTRICTED), $canHide);
-				}
-				$del .= ' ';
+			if( $isThread && $isNew ) {
+				$wfMsgOpts[7] = Xml::element('strong', array(), wfMsg('newpageletter').' ');
 			} else {
-				$del = '';
+				$wfMsgOpts[7] = '';
 			}
 
-			$ret = $del;
-			if(wfRunHooks('WallContributionsLine', array(MWNamespace::getSubject($row->page_namespace), $wallMessage, $wfMsgOptsBase, &$ret) )) {
-				$wfMsgOpts = array(
-					$wfMsgOptsBase['articleFullUrl'],
-					$wfMsgOptsBase['articleTitleTxt'],
-					$wfMsgOptsBase['wallPageUrl'],
-					$wfMsgOptsBase['wallPageName'],
-					$wfMsgOptsBase['createdAt'],
-					$wfMsgOptsBase['DiffLink'],
-					$wfMsgOptsBase['historyLink']
-				);
-
-				if( $isThread && $isNew ) {
-					$wfMsgOpts[7] = Xml::element('strong', array(), wfMsg('newpageletter').' ');
-				} else {
-					$wfMsgOpts[7] = '';
-				}
-
-				$ret .= $app->wf->Msg('wall-contributions-wall-line', $wfMsgOpts);
-
-			}
-
-			if( !$isNew ) {			
-				$summary = $rev->getComment();
-				
-				if(empty($summary)) {
-					$msg = $app->wf->MsgForContent( $this->getMessagePrefix($row->page_namespace).'-edit' );
-				} else {
-					$msg = $app->wf->MsgForContent( 'wall-recentchanges-summary', $summary );
-				}
-				
-				$ret .= ' ' . Xml::openElement('span', array('class' => 'comment')) . $msg . Xml::closeElement('span');
-			}
+			$ret .= $app->wf->Msg('wall-contributions-wall-line', $wfMsgOpts);
 
 		}
 
-	 	wfProfileOut(__METHOD__);
+		if( !$isNew ) {
+			$summary = $rev->getComment();
+
+			if(empty($summary)) {
+				$msg = $app->wf->MsgForContent( $this->getMessagePrefix($row->page_namespace).'-edit' );
+			} else {
+				$msg = $app->wf->MsgForContent( 'wall-recentchanges-summary', $summary );
+			}
+
+			$ret .= ' ' . Xml::openElement('span', array('class' => 'comment')) . $msg . Xml::closeElement('span');
+		}
+
+
+
+		wfProfileOut(__METHOD__);
+
 		return true;
 	}
+
 
 	/**
 	 * @brief Collects data basing on RC object or std object
