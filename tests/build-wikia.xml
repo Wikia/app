@@ -128,8 +128,8 @@
 			<arg line="codelint.php
 					   --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
 					   --mode=js
-					   --dir=${basedir}/../skins/oasis,${basedir}/../skins/wikia,${basedir}/../re..s,${basedir}/../extensions/wikia
-					   --blacklist=/CodeLint/examples/anticode.js,/AdEngine/ghost/,/libraries/zepto/,/libraries/yui,/CodeLint/js/,/RTE/ckeditor/_../,/jquery/jquery-,/re..s/jquery,/re..s/mediawiki,/Chat/js/lib/,lib/socket.io,/AdEngine/bezen/,/extensions/wikia/hacks,/extensions/wikia/SemanticBundle,qunit/qunit.js,jasmine/jasmine.js,/re..s/mediawiki.language/
+					   --dir=${basedir}/../skins/oasis,${basedir}/../skins/wikia,${basedir}/../resources,${basedir}/../extensions/wikia
+					   --blacklist=/CodeLint/examples/anticode.js,/AdEngine/ghost/,/libraries/zepto/,/libraries/yui,/CodeLint/js/,/RTE/ckeditor/_../,/jquery/jquery-,/resources/jquery,/resources/mediawiki,/Chat/js/lib/,lib/socket.io,/AdEngine/bezen/,/extensions/wikia/hacks,/extensions/wikia/SemanticBundle,qunit/qunit.js,jasmine/jasmine.js,/resources/mediawiki.language/
 					   --format=html
 					   --output=${basedir}/build/jslint.html
 					   " />
