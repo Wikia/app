@@ -102,7 +102,7 @@ EditHub.prototype = {
 	},
 
 	showVet: function(event) {
-		VET_show(event, VET_placeholder, true, true, true, window.wgMarketingToolboxThumbnailSize);
+		VET_show(event, VET_placeholder, true, true, true, window.wgMarketingToolboxThumbnailSize, undefined, 'newest');
 	},
 
 	addImage: function(wmuData) {
