@@ -138,7 +138,7 @@ class ChatAjax {
 		$roomName = 'private room name';
 		$roomTopic = 'private room topic';
 
-		$users = explode( ',', $wgRequest->getVal('users'));
+		$users = json_decode($wgRequest->getVal('users'));
 		$roomId = NodeApiClient::getDefaultRoomId($roomName, $roomTopic, 'private', $users );
 
 		wfProfileOut( __METHOD__ );
