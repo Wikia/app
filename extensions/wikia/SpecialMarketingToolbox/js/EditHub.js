@@ -7,6 +7,7 @@ EditHub.prototype = {
 	wmuDeffered: undefined,
 	vetDeffered: undefined,
 	lastActiveWmuButton: undefined,
+	lastActiveVetButton: undefined,
 
 	init: function () {
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
@@ -74,6 +75,7 @@ EditHub.prototype = {
 	},
 
 	vetInit: function(event) {
+		this.lastActiveVetButton = $(event.target);
 		if (!this.vetReady) {
 			this.vetDeffered = $.when(
 				$.loadYUI(),
@@ -84,15 +86,23 @@ EditHub.prototype = {
 					$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
 					$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
 				])
-			).then(function() {
-				VET_show();
-			});
+			).then(
+				$.proxy(function(event) {
+						this.showVet(event);
+					},
+					this
+				)
+			);
 			$(window).bind('VET_addFromSpecialPage', $.proxy(this.addVideo, this));
 			this.vetReady = true;
 		}
 		else {
-			VET_show();
+			this.showVet(event);
 		}
+	},
+
+	showVet: function(event) {
+		VET_show(event, VET_placeholder, true, true, true, window.wgMarketingToolboxThumbnailSize);
 	},
 
 	addImage: function(wmuData) {
@@ -132,9 +142,19 @@ EditHub.prototype = {
 			data: {
 				'wikiText': vetData.videoWikiText
 			},
-			callback: function(response) {
-				$('.MarketingToolboxMain').append(response.fileName);
-			}
+			callback: $.proxy(function(response) {
+				var box = this.lastActiveVetButton.parents('.module-box:first');
+				if (!box.length) {
+					box = $('.MarketingToolboxMain');
+				}
+				// TODO
+				box.find('.filename-placeholder').html(vetData.videoWikiText);
+				box.find('.wmu-file-name-input').val(vetData.videoWikiText).valid();
+
+				box.find('.image-placeholder')
+					.empty()
+					.html(response.fileName);
+			}, this)
 		});
 	},
 

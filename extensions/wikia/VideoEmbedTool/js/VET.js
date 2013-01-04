@@ -16,12 +16,12 @@ var VET_asyncTransaction = null;
 var VET_curScreen = 'Main';
 var VET_prevScreen = null;
 var VET_slider = null;
-var VET_thumbSize = null;
 var VET_orgThumbSize = null;
 var VET_placeholder = -1;
 var VET_align = 0;
 var VET_thumb = 0;
 var VET_size = 0;
+var VET_thumbSize = 335;
 var VET_caption = 0;
 var VET_box = -1;
 var VET_width = null;
@@ -244,8 +244,8 @@ function VET_toggleSizing( enable ) {
 function VET_manualWidthInput( elem ) {
     var val = parseInt( elem.value );
     if ( isNaN( val ) ) {
-		$G( 'VideoEmbedManualWidth' ).value = 335;
-		VET_readjustSlider( 335 );
+		$G( 'VideoEmbedManualWidth' ).value = VET_thumbSize;
+		VET_readjustSlider( VET_thumbSize );
 		return false;
     }
 	$G( 'VideoEmbedManualWidth' ).value = val;
@@ -257,7 +257,7 @@ function VET_readjustSlider( value ) {
 			if ( $('#VideoEmbedSlider .ui-slider-handle').is(':visible') ) {
 				$('#VideoEmbedSlider .ui-slider-handle').hide();
 				$('#VideoEmbedSlider').slider && $('#VideoEmbedSlider').slider({
-					value: 335
+					value: VET_thumbSize
 				});
 			}
 		} else {
@@ -370,6 +370,7 @@ function VET_show( e, placeholder, box, align, thumb, size, caption ) {
 
 		if(typeof size != "undefined") {
 			VET_size = size;
+			VET_thumbSize = size;
 		}
 
 		if(typeof caption != "undefined") {
@@ -623,7 +624,7 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 		VET_orgThumbSize = null;
 	}
 	
-	var value = 335;
+	var value = VET_thumbSize;
 	
 	if (dataFromEditMode && dataFromEditMode.width) {
 		value = dataFromEditMode.width;
