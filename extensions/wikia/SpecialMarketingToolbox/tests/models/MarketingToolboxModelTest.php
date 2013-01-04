@@ -118,9 +118,9 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$specialPageMock->staticExpects($this->once())
 			->method('getTitleFor')
 			->with(
-				$this->equalTo('MarketingToolbox'),
-				$this->equalTo('editHub')
-			)
+			$this->equalTo('MarketingToolbox'),
+			$this->equalTo('editHub')
+		)
 			->will($this->returnValue($titleMock));
 
 		$model = new MarketingToolboxModel();
@@ -142,7 +142,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			'langCode' => 'pl',
 			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-			'timestamp'=> 789654,
+			'timestamp' => 789654,
 			'activeModule' => MarketingToolboxModel::MODULE_WIKIAS_PICKS
 		);
 
@@ -221,7 +221,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			'langCode' => 'pl',
 			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-			'timestamp'=> 789654,
+			'timestamp' => 789654,
 			'activeModule' => MarketingToolboxModel::MODULE_WIKIAS_PICKS
 		);
 		$lastPublishTimestamp = 66789;
@@ -287,23 +287,23 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$modelMock->expects($this->at(0))
 			->method('getModulesDataFromDb')
 			->with(
-				$this->equalTo($params['langCode']),
-				$this->equalTo($params['sectionId']),
-				$this->equalTo($params['verticalId']),
-				$this->equalTo($lastPublishTimestamp)
-			)
+			$this->equalTo($params['langCode']),
+			$this->equalTo($params['sectionId']),
+			$this->equalTo($params['verticalId']),
+			$this->equalTo($lastPublishTimestamp)
+		)
 			->will($this->returnValue($mockedModulesData));
 		$modelMock->expects($this->at(1))
 			->method('getModulesDataFromDb')
 			->with(
-				$this->equalTo($params['langCode']),
-				$this->equalTo($params['sectionId']),
-				$this->equalTo($params['verticalId']),
-				$this->equalTo($params['timestamp'])
-			)
+			$this->equalTo($params['langCode']),
+			$this->equalTo($params['sectionId']),
+			$this->equalTo($params['verticalId']),
+			$this->equalTo($params['timestamp'])
+		)
 			->will($this->returnValue(
-				array()
-			));
+			array()
+		));
 
 		$modelMock->expects($this->any())
 			->method('getModuleUrl')
@@ -346,7 +346,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			$this->assertEquals(1, $module['status']);
 			$this->assertEquals($mockDataForModule['lastEditTime'], $module['lastEditTime']);
 			$this->assertEquals($mockDataForModule['lastEditorId'], $module['lastEditorId']);
-			$this->assertEquals($mockDataForModule['data'],  $module['data']);
+			$this->assertEquals($mockDataForModule['data'], $module['data']);
 			$this->assertNotNull($module['name']);
 			$this->assertEquals('test href', $module['href']);
 		}
@@ -363,7 +363,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals(1, $module['status']);
 		$this->assertEquals($mockDataForLastModule['lastEditTime'], $module['lastEditTime']);
 		$this->assertEquals($mockDataForLastModule['lastEditorId'], $module['lastEditorId']);
-		$this->assertEquals($mockDataForLastModule['data'],  $module['data']);
+		$this->assertEquals($mockDataForLastModule['data'], $module['data']);
 		$this->assertNotNull($module['name']);
 		$this->assertEquals('test href', $module['href']);
 	}
@@ -391,18 +391,18 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$dbMock->expects($this->once())
 			->method('insert')
 			->with(
-				$this->equalTo(MarketingToolboxModel::HUBS_TABLE_NAME),
-				$this->equalTo(
-					array(
-						'module_data' => json_encode($dataToInsert['data']),
-						'last_editor_id' => $dataToInsert['editorId'],
-						'lang_code' => $dataToInsert['lang'],
-						'vertical_id' => $dataToInsert['verticalId'],
-						'module_id' => $dataToInsert['moduleId'],
-						'hub_date' => $dbMock->timestamp($dataToInsert['timestamp'])
-					)
+			$this->equalTo(MarketingToolboxModel::HUBS_TABLE_NAME),
+			$this->equalTo(
+				array(
+					'module_data' => json_encode($dataToInsert['data']),
+					'last_editor_id' => $dataToInsert['editorId'],
+					'lang_code' => $dataToInsert['lang'],
+					'vertical_id' => $dataToInsert['verticalId'],
+					'module_id' => $dataToInsert['moduleId'],
+					'hub_date' => $dbMock->timestamp($dataToInsert['timestamp'])
 				)
-			);
+			)
+		);
 
 		$functionWrapperMock = $this->getMock('WikiaFunctionWrapper', array('GetDB'));
 
@@ -487,4 +487,39 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		);
 
 	}
+
+	/**
+	 * @dataProvider extractTitleFromVETWikitextDataProvider
+	 */
+	public function testExtractTitleFromVETWikitext($wikiText, $expFileName) {
+		$model = new MarketingToolboxModel();
+		$actualResult = $model->extractTitleFromVETWikitext($wikiText);
+		$this->assertEquals($expFileName, $actualResult);
+	}
+
+	public function extractTitleFromVETWikitextDataProvider() {
+		return array(
+			array(
+				'[[File:Batman - Following|thumb|right|335 px]]',
+				'Batman - Following'
+			),
+			array(
+				'[[Grafika:Batman - Following|thumb|right|335 px]]',
+				'Batman - Following'
+			),
+			array(
+				'File:Batman - Following|thumb|right|335 px',
+				'Batman - Following'
+			),
+			array(
+				'Grafika:Batman - Following|thumb|right|335 px',
+				'Batman - Following'
+			),
+			array(
+				'[[Batman - Following|thumb|right|335 px]]',
+				false
+			),
+		);
+	}
+
 }
