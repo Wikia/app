@@ -147,7 +147,7 @@ EditHub.prototype = {
 				if (!box.length) {
 					box = $('.MarketingToolboxMain');
 				}
-				// TODO
+
 				box.find('.filename-placeholder').html(response.videoFileName);
 				box.find('.wmu-file-name-input').val(response.videoFileName).valid();
 
