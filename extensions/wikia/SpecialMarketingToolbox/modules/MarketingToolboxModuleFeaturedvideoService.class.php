@@ -7,11 +7,10 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 				'attributes' => array(
 					'class' => 'wmu-file-name-input required'
 				),
-				'validator' => new WikiaValidatorFileTitle(
+				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true
-					),
-					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
+					)
 				)
 			),
 			'header' => array(
@@ -37,5 +36,15 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 				)
 			),
 		);
+	}
+
+	public function renderEditor($data) {
+		if (!empty($data['values']['video'])) {
+			$model = new MarketingToolboxModel();
+			$videoDataHelper = new RelatedVideosData();
+			$data['videoData'] = $videoDataHelper->getVideoData($data['values']['video'], $model->getThumbnailSize());
+		}
+
+		return parent::renderEditor($data);
 	}
 }
