@@ -527,7 +527,9 @@ function VET_loadMain() {
 			}
 			
 			// Add suggestions and search to VET
-			VETExtended.init(VET_searchOrder);
+			VETExtended.init({
+				searchOrder: VET_searchOrder
+			});
 		}
 	}
 	VET_indicator(1, true);
@@ -1049,7 +1051,7 @@ var VETExtended = {
 		}, data || {}), 'internal');
 	},
 
-	init: function(searchOrder) {
+	init: function(searchSettings) {
 
 		var that = this;
 		
@@ -1058,6 +1060,8 @@ var VETExtended = {
 		this.searchCachedStuff.inSearchMode = false;
 		this.suggestionsCachedStuff.cashedSuggestions = [];
 		this.suggestionsCachedStuff.fetchedResoultsCount = 0;
+
+		$.extend(this.searchCachedStuff, searchSettings);
 		
 		// load mustache as deferred object and then make request for suggestions 
 		$.when(
@@ -1084,10 +1088,6 @@ var VETExtended = {
 			this.searchCachedStuff.searchType = 'local';
 		} else {
 			this.searchCachedStuff.searchType = 'premium';
-		}
-
-		if (searchOrder != 'undefined') {
-			this.searchCachedStuff.searchOrder = searchOrder;
 		}
 
 		// attach handlers - add video button
