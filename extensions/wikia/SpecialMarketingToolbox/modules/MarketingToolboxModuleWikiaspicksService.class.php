@@ -60,4 +60,13 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 		return parent::renderEditor($data);
 	}
 	
+	public function filterData($data) {
+		if( !empty($data['text']) ) {
+			$model = new MarketingToolboxWikiaspicksModel();
+			$data['text'] = strip_tags($data['text'], $model->getAllowedTags());
+		}
+		
+		return parent::filterData($data);
+	}
+	
 }
