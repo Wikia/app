@@ -173,12 +173,6 @@ $config['jquery'] = array(
 $config['oasis_jquery'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		// AMD modules
-		'//resources/wikia/modules/jquery.js',
-		'//resources/wikia/modules/nirvana.js',
-		'//resources/wikia/modules/mw.js',
-		'//resources/wikia/modules/loader.js',
-
 		// polyfills
 		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
 		'//resources/wikia/polyfills/array.js',
@@ -209,7 +203,16 @@ $config['oasis_jquery'] = array(
 $config['oasis_wikia_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		// classes
 		'//resources/wikia/libraries/my.class/my.class.js',
+
+		// AMD modules
+		'//resources/wikia/modules/jquery.js',
+		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/ajax.js',
+		'//resources/wikia/modules/nirvana.js',
+		'//resources/wikia/modules/mw.js',
+		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/log.js',
@@ -426,15 +429,15 @@ $config['wikiamobile_js_body_minimal'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		//libraries/frameworks
-		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
-		'//extensions/wikia/WikiaMobile/js/Wikia.getcss.js',
 		'//resources/wikia/libraries/modil/modil.js',
+		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
 
 		// deferred.js - jQuery-free implementation (BugId:34943)
 		'//resources/wikia/libraries/deferred/deferred.js',
 		'//resources/wikia/libraries/deferred/deferred.api.js',
 
 		//core modules
+		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
@@ -448,6 +451,9 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 
 		//modules
+		'//resources/wikia/modules/ajax.js',
+		'//resources/wikia/modules/nirvana.js',
+		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/cache.js'
 	)
 );
@@ -476,7 +482,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/track.js',
 		'//extensions/wikia/WikiaMobile/js/events.js',
 		'//extensions/wikia/WikiaMobile/js/toc.js',
-		'//extensions/wikia/WikiaMobile/js/loader.js',
+		'//extensions/wikia/WikiaMobile/js/throbber.js',
 		'//extensions/wikia/WikiaMobile/js/toast.js',
 		'//extensions/wikia/WikiaMobile/js/pager.js',
 		'//extensions/wikia/WikiaMobile/js/modal.js',

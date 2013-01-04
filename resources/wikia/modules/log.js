@@ -171,7 +171,7 @@
 		}
 
 		//init
-		if (context.require && context.define && context.define.amd) {
+		if (context.define && context.define.amd) {
 			context.require(['querystring', 'cookies'], init);
 		} else {
 			init(context.Wikia.Querystring, context.Wikia.Cookies);
