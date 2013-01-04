@@ -379,3 +379,31 @@ var wgUploadLicenseObj = {
 }
 
 addOnloadHook( wgUploadSetup );
+
+/**
+ * WIKIA CHANGE
+ * Disables submit button until one file is selected.
+ * Depends on jQuery
+ * This is not a critical component, just a user convenience.  Remove if necessary.
+ */
+$(function() {
+	(function($) {
+		var inputs = $('#mw-upload-form input[type=file]'),
+			submit = $('#mw-upload-form input[name=wpUpload]'),
+			empty = true;
+		submit.attr('disabled', 'true');
+		inputs.on('change.multiupload', function(e) {
+			if(empty) {
+				inputs.each(function(i) {
+					if($(this).val()) {
+						empty = false;
+					}
+				});
+				if(!empty) {
+					submit.removeAttr('disabled');
+					inputs.off('.multiupload');
+				}
+			}
+		})
+	})(jQuery);
+});
