@@ -1,6 +1,6 @@
 <?php
 class MarketingToolboxWikiaspicksModel extends WikiaModel {
-	protected $allowedTags = array('<a>', '<strong>');
+	protected $allowedTags = array('<a>');
 
 	/**
 	 * @desc Returns HTML tags which are allowed in the module's text field
