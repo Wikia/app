@@ -52,11 +52,9 @@ var LightboxLoader = {
 		$().log(content, "LightboxLoader");
 	},
 	init: function() {
-		var article;
+		var clickAreas = $('#WikiaArticle, #LatestPhotosModule, #WikiaArticleComments, #RelatedVideosRL');
 
-		article = $('#WikiaArticle, #LatestPhotosModule, #article-comments, #RelatedVideosRL');
-
-		article.
+		clickAreas.
 			off('.lightbox').
 			on('click.lightbox', function(e) {
                 LightboxLoader.handleClick(e, $(this));
