@@ -88,6 +88,40 @@ describe("Loader Module", function () {
 		});
 	});
 
+	async.it('RL module is properly loaded', function(done) {
+		var mwMock = {
+			loader: {
+				use: function(use) {
+					expect(JSON.stringify(use)).toEqual('["jquery.mustache"]');
+
+					// mock and return deferred object
+					return {
+						done: function(cb) {
+							cb();
+
+							return {
+								fail:function() {}
+							};
+						}
+					};
+				}
+			}
+		},
+		loader = define.getModule(windowMock, mwMock, nirvanaMock);
+
+		// check calls to this function
+		spyOn(mwMock.loader, 'use').andCallThrough();
+
+		loader({
+			type: loader.LIBRARY,
+			resources: ['mustache']
+		}).
+		done(function() {
+			expect(mwMock.loader.use).toHaveBeenCalled();
+			done();
+		});
+	});
+
 	async.it('Facebook library is properly initialized when lazy loaded', function(done) {
 		var windowMock = {
 			document: window.document,
