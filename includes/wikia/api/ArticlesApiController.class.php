@@ -157,19 +157,23 @@ class ArticlesApiController extends WikiaApiController {
 
 			$articles = null;
 
-			if ( count( $ids) > 0 ) {
+			if ( count( $ids ) > 0 ) {
 				$titles = Title::newFromIDs( $ids );
 
 				if ( !empty( $titles ) ) {
 					foreach ( $titles as $t ) {
 						$id = $t->getArticleID();
-						$collection[$id] = array(
+
+						$article = array(
+							'id' => $id,
 							'title' => $t->getText(),
 							'url' => $t->getLocalURL(),
 							'ns' => $t->getNamespace()
 						);
 
-						$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $collection[$id], 86400 );
+						$collection[] = $article;
+
+						$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $article, 86400 );
 					}
 				}
 
@@ -295,7 +299,8 @@ class ArticlesApiController extends WikiaApiController {
 				$title = Title::newFromText( $article['title'] );
 
 				if ( $title ) {
-					$ret[ $article['pageid'] ] = [
+					$ret[] = [
+						'id' => $article['pageid'],
 						'title' => $title->getText(),
 						'url' => $title->getLocalURL(),
 						'ns' => $article['ns']
