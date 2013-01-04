@@ -82,15 +82,15 @@ window.WikiaTracker = (function(){
 		data = data || {},
 		trackingMethod = trackingMethod || 'none',
 		browserEvent = browserEvent || window.event,
+		mouseMiddleClick = isMiddleClick(browserEvent),
+		ctrlMouseLeftClick = isCtrlLeftClick(browserEvent),
 		isLink = (data && data.href),
-		//we don't need to care here about the fact Microsoft has different value of button for middle clicks; only webkit fires click event on middle mouse button click
-		isMiddleClick = (browserEvent && browserEvent.button === 1),
 		gaqArgs = [];
-
+		
 		// If clicking a link that will unload the page before tracking can happen,
 		// let's stop the default event and delay 100ms changing location (at the bottom)
-		// only if it's not mouse middle button click in a webkit browser
-		if( isLink && !isMiddleClick ) {
+		// only if it's not mouse middle button click in a webkit browser or ctrl + mouse left button click
+		if( isLink && !mouseMiddleClick && !ctrlMouseLeftClick ) {
 			browserEvent.preventDefault();
 		}
 
@@ -126,12 +126,12 @@ window.WikiaTracker = (function(){
 		if(ga_value)
 			gaqArgs.push(ga_value);
 
-		if(trackingMethod == 'internal' || trackingMethod == 'both') {
+		if( trackingMethod == 'internal' || trackingMethod == 'both' ) {
 			Wikia.log(eventName + ' ' + gaqArgs.join('/') + ' [internal track]', 'info', logGroup);
 			internalTrack(eventName, data);
 		}
 
-		if(trackingMethod == 'ga' || trackingMethod == 'both') {
+		if( trackingMethod == 'ga' || trackingMethod == 'both' ) {
 			Wikia.log(eventName + ' ' + gaqArgs.join('/') + ' [GA track]', 'info', logGroup);
 
 			// uncomment the next line later when GA is re-implemented
@@ -140,11 +140,34 @@ window.WikiaTracker = (function(){
 		}
 
 		//delay at the end to make sure all of the above was at least invoked
-		if( isLink && !isMiddleClick ) {
+		if( isLink && !mouseMiddleClick && !ctrlMouseLeftClick ) {
 			setTimeout(function() {
 				document.location = data.href;
 			}, 100);
 		}
+	}
+	
+	function isMiddleClick(browserEvent) {
+	//bugId:31900
+	//only webkit fires click event on middle mouse button click
+	//so, we don't care about other browsers (Microsoft has 4 assigned to middle click)
+		return (browserEvent && browserEvent.button === 1) ? true : false;
+	}
+	
+	function isCtrlLeftClick(browserEvent) {
+	//bugId:45483
+		var result = false;
+		
+		if( browserEvent ) {
+			if( browserEvent.button === 1 ) {
+			//Microsoft left mouse button === 1
+				result = true;
+			} else if( browserEvent.button == 0 ) {
+				result = true;
+			}
+		}
+		
+		return result;
 	}
 
 	/**
