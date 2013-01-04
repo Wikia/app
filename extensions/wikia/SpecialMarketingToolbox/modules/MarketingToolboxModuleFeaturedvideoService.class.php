@@ -7,10 +7,11 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 				'attributes' => array(
 					'class' => 'wmu-file-name-input required'
 				),
-				'validator' => new WikiaValidatorString(
+				'validator' => new WikiaValidatorFileTitle(
 					array(
 						'required' => true
-					)
+					),
+					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
 				)
 			),
 			'header' => array(
