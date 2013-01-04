@@ -1,13 +1,14 @@
 // TODO: move WikiaTracker outside
 
-var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry) {
+var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, adLogicDartSubdomain) {
 	'use strict';
 
 	var logGroup = 'AdProviderAdDriver2',
 		slotMap,
 		forgetAdsShownAfterTime = 3600, // an hour
 		incrementItemInStorage,
-		fillInSlot, canHandleSlot,
+		fillInSlot,
+		canHandleSlot,
 		formatTrackTime,
 		country = Geo.getCountryCode(),
 		now = window.wgNow || new Date(),
@@ -159,6 +160,7 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 		url = wikiaDart.getUrl({
 			slotname: slotname,
 			slotsize: slotsize,
+			subdomain: adLogicDartSubdomain.getSubdomain(),
 			dcopt: dcopt,
 			loc: loc,
 			ord: ord
