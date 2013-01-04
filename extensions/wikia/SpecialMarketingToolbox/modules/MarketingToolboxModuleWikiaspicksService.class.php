@@ -30,9 +30,12 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 			),
 			'text' => array(
 				'label' => $this->wf->Msg('marketing-toolbox-hub-module-wikiaspicks-text'),
-				'validator' => new WikiaValidatorFileTitle(
-					array(),
-					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
+				'validator' => new WikiaValidatorString(
+					array(
+						'required' => true,
+						'min' => 1
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
 				'type' => 'textarea',
 				'attributes' => array(
