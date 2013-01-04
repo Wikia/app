@@ -30,12 +30,14 @@
 		</div>
 		<div class="grid-1 alpha">
 			<div class="image-placeholder">
-				<?= $app->renderView(
-					'MarketingToolboxVideos',
-					'index',
-					array('video' => $videoData)
-				);
-				?>
+				<? if (!empty($videoData)): ?>
+					<?= $app->renderView(
+						'MarketingToolboxVideos',
+						'index',
+						array('video' => $videoData)
+					);
+					?>
+				<? endif ?>
 			</div>
 		</div>
 	</div>
