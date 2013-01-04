@@ -230,21 +230,21 @@ class WikiaSearchIndexer extends WikiaObject {
 		$html = $pageData['html'];
 		
 		$regexes = array(
-				'\+s'											=>	' ',
-				'<span[^>]*editsection[^>]*>.*?<\/span>'		=>	'',
-				'<img[^>]*>'									=>	'',
-				'<\/img>'										=>	'',
-				'<noscript>.*?<\/noscript>'						=>	'',
-				'<div[^>]*picture-attribution[^>]*>.*?<\/div>'	=>	'',
-				'<ol[^>]*references[^>]*>.*?<\/ol>'				=>	'',
-				'<sup[^>]*reference[^>]*>.*?<\/sup>'			=>	'',
-				'<script .*?<\/script>'							=>	'',
-				'<style .*?<\/style>'							=>	'',
-				'\+s'											=>	' ',
+				'\+s',
+				'<span[^>]*editsection[^>]*>.*?<\/span>',
+				'<img[^>]*>',
+				'<\/img>',
+				'<noscript>.*?<\/noscript>',
+				'<div[^>]*picture-attribution[^>]*>.*?<\/div>',
+				'<ol[^>]*references[^>]*>.*?<\/ol>',
+				'<sup[^>]*reference[^>]*>.*?<\/sup>',
+				'<script .*?<\/script>',
+				'<style .*?<\/style>',
+				'\+s',
 		);
 		
-		foreach ($regexes as $re => $repl ) {
-			$html = preg_replace( "/$re/mU", $repl, $html );
+		foreach ($regexes as $re ) {
+			$html = preg_replace( "/$re/mU", $re == '\+s' ? ' ' : '', $html );
 		}
 		
 		$pageData['html'] = strip_tags( $html );

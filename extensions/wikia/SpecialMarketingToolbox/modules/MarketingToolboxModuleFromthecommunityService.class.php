@@ -113,8 +113,6 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 				),
 				'class' => 'borderNone'
 			);
-
-
 		}
 
 		return $fields;
@@ -180,11 +178,16 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 			if (!empty($data['usersUrl' . $i])) {
 				$data['usersUrl' . $i] = $this->addProtocolToLink($data['usersUrl' . $i]);
 
+				// get Wiki URL
 				$parsedUrl = parse_url($data['usersUrl' . $i]);
 				$data['wikiUrl' . $i] = $parsedUrl['host'];
+
+				// get User Name
+				$userUrlParted = explode(':', $data['usersUrl' . $i], 3);
+				$user = User::newFromName($userUrlParted[2]);
+				$data['UserName' . $i] = $user->getName();
 			}
 		}
-
 		return $data;
 	}
 }

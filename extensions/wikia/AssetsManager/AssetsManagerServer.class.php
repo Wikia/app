@@ -10,13 +10,6 @@ class AssetsManagerServer {
 
 		$type = $request->getText('type');
 
-		if( function_exists( 'newrelic_name_transaction' ) ) {
-			if ( function_exists( 'newrelic_disable_autorum') ) {
-				newrelic_disable_autorum();
-			}
-			newrelic_name_transaction( "am/AssetManager/" . $type );
-		}
-
 		try {
 			switch($type) {
 				case 'one':
@@ -45,6 +38,15 @@ class AssetsManagerServer {
 			header('HTTP/1.1 404 Not Found');
 			echo $e->getMessage();
 			return;
+		}
+
+		// do not log illegal request type (one/group/groups/sass supported only) - not to pollute
+		// logs
+		if( function_exists( 'newrelic_name_transaction' ) ) {
+			if ( function_exists( 'newrelic_disable_autorum') ) {
+				newrelic_disable_autorum();
+			}
+			newrelic_name_transaction( "am/AssetManager/" . $type );
 		}
 
 		$headers = array();

@@ -16,12 +16,12 @@ var VET_asyncTransaction = null;
 var VET_curScreen = 'Main';
 var VET_prevScreen = null;
 var VET_slider = null;
-var VET_thumbSize = null;
 var VET_orgThumbSize = null;
 var VET_placeholder = -1;
 var VET_align = 0;
 var VET_thumb = 0;
 var VET_size = 0;
+var VET_thumbSize = 335;
 var VET_caption = 0;
 var VET_box = -1;
 var VET_width = null;
@@ -33,6 +33,7 @@ var VET_ratio = 1;
 var VET_shownMax = false;
 var VET_notificationTimout = 4000;
 var VET_isOnSpecialPage = false;
+var VET_searchOrder = undefined;
 
 // Returns the DOM element for the RTE textarea
 function VET_getTextarea() {
@@ -244,8 +245,8 @@ function VET_toggleSizing( enable ) {
 function VET_manualWidthInput( elem ) {
     var val = parseInt( elem.value );
     if ( isNaN( val ) ) {
-		$G( 'VideoEmbedManualWidth' ).value = 335;
-		VET_readjustSlider( 335 );
+		$G( 'VideoEmbedManualWidth' ).value = VET_thumbSize;
+		VET_readjustSlider( VET_thumbSize );
 		return false;
     }
 	$G( 'VideoEmbedManualWidth' ).value = val;
@@ -257,7 +258,7 @@ function VET_readjustSlider( value ) {
 			if ( $('#VideoEmbedSlider .ui-slider-handle').is(':visible') ) {
 				$('#VideoEmbedSlider .ui-slider-handle').hide();
 				$('#VideoEmbedSlider').slider && $('#VideoEmbedSlider').slider({
-					value: 335
+					value: VET_thumbSize
 				});
 			}
 		} else {
@@ -330,7 +331,7 @@ function VET_getCaret() {
   return (caretPos);
 }
 
-function VET_show( e, placeholder, box, align, thumb, size, caption ) {
+function VET_show( e, placeholder, box, align, thumb, size, caption, searchOrder ) {
 	if (wgUserName == null && wgAction == 'edit') {
 		// handle login on edit page
 		UserLogin.rteForceLogin();
@@ -370,10 +371,15 @@ function VET_show( e, placeholder, box, align, thumb, size, caption ) {
 
 		if(typeof size != "undefined") {
 			VET_size = size;
+			VET_thumbSize = size;
 		}
 
 		if(typeof caption != "undefined") {
 			VET_caption = caption;
+		}
+
+		if(typeof searchOrder != "undefined") {
+			VET_searchOrder = searchOrder;
 		}
 	}
 
@@ -521,7 +527,9 @@ function VET_loadMain() {
 			}
 			
 			// Add suggestions and search to VET
-			VETExtended.init();
+			VETExtended.init({
+				searchOrder: VET_searchOrder
+			});
 		}
 	}
 	VET_indicator(1, true);
@@ -623,7 +631,7 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 		VET_orgThumbSize = null;
 	}
 	
-	var value = 335;
+	var value = VET_thumbSize;
 	
 	if (dataFromEditMode && dataFromEditMode.width) {
 		value = dataFromEditMode.width;
@@ -1031,7 +1039,8 @@ var VETExtended = {
 		inSearchMode: false,
 		currentKeywords: '',
 		fetchedResoultsCount: 0,
-		searchType: 'premium'
+		searchType: 'premium',
+		searchOrder: 'default'
 	},
 	
 	track: function(action, label, data) {
@@ -1042,7 +1051,7 @@ var VETExtended = {
 		}, data || {}), 'internal');
 	},
 
-	init: function() {
+	init: function(searchSettings) {
 
 		var that = this;
 		
@@ -1051,6 +1060,8 @@ var VETExtended = {
 		this.searchCachedStuff.inSearchMode = false;
 		this.suggestionsCachedStuff.cashedSuggestions = [];
 		this.suggestionsCachedStuff.fetchedResoultsCount = 0;
+
+		$.extend(this.searchCachedStuff, searchSettings);
 		
 		// load mustache as deferred object and then make request for suggestions 
 		$.when(
@@ -1439,7 +1450,8 @@ var VETExtended = {
 					svStart: svStart,
 					svSize: svSize,
 					phrase: phrase,
-					type: that.searchCachedStuff.searchType
+					type: that.searchCachedStuff.searchType,
+					order: that.searchCachedStuff.searchOrder
 				},
 				callback: function(data) {
 					

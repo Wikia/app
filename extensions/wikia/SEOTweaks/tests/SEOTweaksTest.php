@@ -528,4 +528,306 @@ class SEOTweaksTest extends WikiaBaseTest
 		);
 	}
 	
+	/**
+	 * @covers SEOTweaksHooksHelper::onArticleViewHeader
+	 */
+	public function testOnArticleViewHeaderTitleExists()
+	{
+		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
+		                                 ->getMock();
+		
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'getTitle' ) )
+		                    ->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'exists' ) )
+		                  ->getMock();
+		
+		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'GetDB' ) )
+		                    ->getMock();
+		
+		$outputDone = false;
+		$pcache = false;
+		
+		$mockArticle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getTitle' )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'exists' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockWrapper
+		    ->expects( $this->never() )
+		    ->method ( 'getDB' )
+		;
+		
+		$reflWf = new ReflectionProperty( 'WikiaObject', 'wf' );
+		$reflWf->setAccessible( true );
+		$reflWf->setValue( $mockHelper, $mockWrapper );
+		
+		$this->assertTrue(
+				$mockHelper->onArticleViewHeader( $mockArticle, $outputDone, $pcache),
+				'SEOTweaksHooksHelper::onArticleViewHeader should always return true'
+		);
+		$this->assertFalse(
+				$outputDone,
+				'$outputDone should not be set to true by SEOTweaksHooksHelper::onArticleViewHeader unless we redirect' 
+		);
+	}
+	
+    /**
+	 * @covers SEOTweaksHooksHelper::onArticleViewHeader
+	 */
+	public function testOnArticleViewHeaderTitleExistsNonShareReferrer()
+	{
+		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
+		                                 ->getMock();
+		
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'getTitle' ) )
+		                    ->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'exists' ) )
+		                  ->getMock();
+		
+		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'GetDB' ) )
+		                    ->getMock();
+		
+		$outputDone = false;
+		$pcache = false;
+		
+		$mockArticle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getTitle' )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'exists' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockWrapper
+		    ->expects( $this->never() )
+		    ->method ( 'getDB' )
+		;
+		
+		$reflWf = new ReflectionProperty( 'WikiaObject', 'wf' );
+		$reflWf->setAccessible( true );
+		$reflWf->setValue( $mockHelper, $mockWrapper );
+		
+		$this->assertTrue(
+				$mockHelper->onArticleViewHeader( $mockArticle, $outputDone, $pcache),
+				'SEOTweaksHooksHelper::onArticleViewHeader should always return true'
+		);
+		$this->assertFalse(
+				$outputDone,
+				'$outputDone should not be set to true by SEOTweaksHooksHelper::onArticleViewHeader unless we redirect' 
+		);
+	}
+	
+	/**
+	 * @covers SEOTweaksHooksHelper::onArticleViewHeader
+	 */
+    public function testOnArticleViewHeaderTitleNotExistsNoResults()
+	{
+		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
+		                                 ->getMock();
+		
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'getTitle' ) )
+		                    ->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'exists', 'getDBKey' ) )
+		                  ->getMock();
+		
+		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'GetDB' ) )
+		                    ->getMock();
+		
+		$mockDb = $this->getMockBuilder( "DatabaseMysql" )
+		               ->disableOriginalConstructor()
+		               ->setMethods( array( 'query', 'fetchObject' ) )
+		               ->getMock();
+		
+		$mockResultWrapper = $this->getMockBuilder( 'ResultWrapper' )
+		                          ->disableOriginalConstructor()
+		                          ->getMock();
+		
+		$outputDone = false;
+		$pcache = false;
+		
+		$dbKey = "Wanted";
+		$_SERVER['HTTP_REFERER'] = 'http://www.facebook.com'; 
+		
+		$mockArticle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getTitle' )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'exists' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockWrapper
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getDB' )
+		    ->will   ( $this->returnValue( $mockDb ) )
+		;
+		$mockTitle
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getDBKey' )
+		    ->will   ( $this->returnValue( $dbKey ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'query' )
+		    ->with   ( 'SELECT page_title FROM page WHERE page_title REGEXP "^' . $dbKey . '[[:punct:]]+" ORDER BY CHAR_LENGTH( page_title ) LIMIT 1' )
+		    ->will   ( $this->returnValue( $mockResultWrapper ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'fetchObject' )
+		    ->will   ( $this->returnValue( null ) )
+		;
+		
+		$reflWf = new ReflectionProperty( 'WikiaObject', 'wf' );
+		$reflWf->setAccessible( true );
+		$reflWf->setValue( $mockHelper, $mockWrapper );
+		
+		$this->assertTrue(
+				$mockHelper->onArticleViewHeader( $mockArticle, $outputDone, $pcache),
+				'SEOTweaksHooksHelper::onArticleViewHeader should always return true'
+		);
+		$this->assertFalse(
+				$outputDone,
+				'$outputDone should not be set to true by SEOTweaksHooksHelper::onArticleViewHeader unless we redirect' 
+		);
+	}
+	
+	/**
+	 * @covers SEOTweaksHooksHelper::onArticleViewHeader
+	 */
+    public function testOnArticleViewHeaderTitleNotExistsWithResults()
+	{
+		$mockHelper = $this->helperMocker->setMethods( array( 'foo' ) ) // fake method required to run real methods
+		                                 ->getMock();
+		
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'getTitle' ) )
+		                    ->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'exists', 'getDBKey', 'getFullUrl' ) )
+		                  ->getMock();
+		
+		$mockWrapper = $this->getMockBuilder( 'WikiaFunctionWrapper' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'GetDB' ) )
+		                    ->getMock();
+		
+		$mockDb = $this->getMockBuilder( "DatabaseMysql" )
+		               ->disableOriginalConstructor()
+		               ->setMethods( array( 'query', 'fetchObject' ) )
+		               ->getMock();
+		
+		$mockResultWrapper = $this->getMockBuilder( 'ResultWrapper' )
+		                          ->disableOriginalConstructor()
+		                          ->getMock();
+		
+		$mockOut = $this->getMockBuilder( 'OutputPage' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'redirect' ) )
+		                ->getMock();
+		
+		$outputDone = false;
+		$pcache = false;
+		
+		$dbKey = "Wanted";
+		$_SERVER['HTTP_REFERER'] = 'http://www.facebook.com';
+		$resultObject = (object) array( 'page_title' => "Wanted!" );
+		$fullUrl = 'http://foo.wikia.com/wiki/Wanted!';
+		
+		$mockArticle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getTitle' )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockTitle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'exists' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockWrapper
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getDB' )
+		    ->will   ( $this->returnValue( $mockDb ) )
+		;
+		$mockTitle
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getDBKey' )
+		    ->will   ( $this->returnValue( $dbKey ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'query' )
+		    ->with   ( 'SELECT page_title FROM page WHERE page_title REGEXP "^' . $dbKey . '[[:punct:]]+" ORDER BY CHAR_LENGTH( page_title ) LIMIT 1' )
+		    ->will   ( $this->returnValue( $mockResultWrapper ) )
+		;
+		$mockDb
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'fetchObject' )
+		    ->will   ( $this->returnValue( $resultObject ) )
+		;
+		$mockTitle
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'getFullUrl' )
+		    ->will   ( $this->returnValue( $fullUrl ) )
+		;
+		$mockOut
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'redirect' )
+		    ->with   ( $fullUrl )
+		;
+		
+		$reflWf = new ReflectionProperty( 'WikiaObject', 'wf' );
+		$reflWf->setAccessible( true );
+		$reflWf->setValue( $mockHelper, $mockWrapper );
+		
+		$reflWg = new ReflectionProperty( 'WikiaObject', 'wg' );
+		$reflWg->setAccessible( true );
+		$reflWg->setValue( $mockHelper, (object) array( 'Out' => $mockOut ) );
+		
+		$this->mockClass( 'Title', $mockTitle );
+		$this->proxyClass( 'Title', $mockTitle, 'newFromText' );
+		
+		$this->assertTrue(
+				$mockHelper->onArticleViewHeader( $mockArticle, $outputDone, $pcache),
+				'SEOTweaksHooksHelper::onArticleViewHeader should always return true'
+		);
+		$this->assertTrue(
+				$outputDone,
+				'$outputDone should be set to true by SEOTweaksHooksHelper::onArticleViewHeader if we redirect' 
+		);
+	}
+	
 }

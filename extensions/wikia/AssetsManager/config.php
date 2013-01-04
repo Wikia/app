@@ -64,6 +64,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 
 		// high prio
+		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
@@ -73,6 +74,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdLogicShortPage.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
+		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
 
@@ -508,7 +510,9 @@ $config['wikiamobile_js_ads'] = array(
 		'//resources/wikia/libraries/DOMwriter/domwriter.js',
 
 		//advertisement "core"
+		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
 
 		//modules
 		'//resources/wikia/modules/geo.js',
@@ -1080,15 +1084,6 @@ $config['imagedrop_scss'] = array(
 	'skin' => array( 'monobook', 'oasis' ),
 	'assets' => array(
 		'//extensions/wikia/ImageDrop/css/ImageDrop.scss'
-	)
-);
-
-// AbTesting
-$config['abtesting'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => array( 'monobook', 'oasis', 'wikiamobile' ),
-	'assets' => array(
-		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
 );
 

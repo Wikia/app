@@ -281,7 +281,7 @@ class UserLoginHelper extends WikiaModel {
 		$tempUser->saveSettingsTempUserToUser( $user );
 		if( !$response->isGood() ) {
 			$result['result'] = 'error';
-			$result['msg'] = $this->wf->Msg( 'userlogin-error-mail-error', $result->getMessage() );
+			$result['msg'] = $this->wf->Msg( 'userlogin-error-mail-error' );
 		} else {
 			$result['result'] = 'ok';
 			$result['msg'] = $this->wf->MsgExt( 'usersignup-confirmation-email-sent', array('parseinline'), htmlspecialchars($tempUser->getEmail()) );
