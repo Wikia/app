@@ -90,7 +90,7 @@ window.WikiaTracker = (function(){
 		// If clicking a link that will unload the page before tracking can happen,
 		// let's stop the default event and delay 100ms changing location (at the bottom)
 		// only if it's not mouse middle button click in a webkit browser or ctrl + mouse left button click
-		if( isLink && !mouseMiddleClick && !ctrlMouseLeftClick ) {
+		if( isLink && !mouseMiddleClick && typeof(browserEvent) !== 'undefined' ) {
 			browserEvent.preventDefault();
 		}
 
@@ -138,6 +138,12 @@ window.WikiaTracker = (function(){
 			//WikiaTracker.track(null, 'main.sampled', gaqArgs);
 			if(window.gaTrackEvent) gaTrackEvent(ga_category, ga_action, ga_label, ga_value, true);
 		}
+		
+		if( isLink && ctrlMouseLeftClick && typeof(browserEvent) !== 'undefined' ) { //TODO: and it's not a mobile skin
+			$().log('==========');
+			$().log('TRIGGER THE EVENT!');
+			$().log('==========');
+		}
 
 		//delay at the end to make sure all of the above was at least invoked
 		if( isLink && !mouseMiddleClick && !ctrlMouseLeftClick ) {
@@ -158,7 +164,7 @@ window.WikiaTracker = (function(){
 	//bugId:45483
 		var result = false;
 		
-		if( browserEvent ) {
+		if( browserEvent && browserEvent.ctrlKey ) {
 			if( browserEvent.button === 1 ) {
 			//Microsoft left mouse button === 1
 				result = true;
@@ -166,6 +172,11 @@ window.WikiaTracker = (function(){
 				result = true;
 			}
 		}
+		
+		$().log('=========');
+		$().log('isCtrlLeftClick: ');
+		$().log(result);
+		$().log('=========');
 		
 		return result;
 	}
