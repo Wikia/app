@@ -162,7 +162,7 @@ var LightboxLoader = {
 		}
 
 		// for Video Thumbnails:
-		var targetChildImg = target.find('img').eq(0);
+		var targetChildImg = target.children('img').eq(0);
 		if ( targetChildImg.hasClass('Wikia-video-thumb') || target.hasClass('video') ) {
 			if ( target.data('video-name') ) {
 				mediaTitle = target.data('video-name');
@@ -275,7 +275,8 @@ var LightboxLoader = {
 			}, 1000);
 
 			LightboxLoader.inlineVideoLoading.splice($.inArray(mediaTitle, LightboxLoader.inlineVideoLoading), 1);
-		});
+		},
+		true); // Don't cache the media details
 	},
 
 	removeInlineVideos: function() {
@@ -283,8 +284,9 @@ var LightboxLoader = {
 		LightboxLoader.inlineVideoLinks.show().next().remove();
 	},
 
-	getMediaDetail: function(mediaParams, callback) {
+	getMediaDetail: function(mediaParams, callback, nocache) {
 		var title = mediaParams['fileTitle'];
+
 		if(LightboxLoader.cache.details[title]) {
 			callback(LightboxLoader.cache.details[title]);
 		} else {
@@ -296,7 +298,10 @@ var LightboxLoader = {
 				data: mediaParams,
 				callback: function(json) {
 					LightboxLoader.normalizeMediaDetail(json, function(json) {
-						LightboxLoader.cache.details[title] = json;
+						// Don't cache videos played inline because width will be off for lightbox version bugid-42269
+						if(!nocache) {
+							LightboxLoader.cache.details[title] = json;
+						}
 						callback(json);
 					});
 				}
