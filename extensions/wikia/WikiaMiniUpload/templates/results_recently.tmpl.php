@@ -3,7 +3,7 @@
 <?php
 if(isset($data['prev'])) {
 ?>
-	<a onclick="WMU_recentlyUploaded('from=<?= $data['prev'] ?>', 'prev'); return false;" href="#"><?= wfMsg('wmu-prev') ?></a>
+	<a onclick="WMU_recentlyUploaded('offset=<?= $data['prev'] ?>', 'prev'); return false;" href="#"><?= wfMsg('wmu-prev') ?></a>
 <?php
 }
 if(isset($data['prev']) && isset($data['next'])) {
@@ -13,7 +13,7 @@ if(isset($data['prev']) && isset($data['next'])) {
 }
 if(isset($data['next'])) {
 ?>
-	<a onclick="WMU_recentlyUploaded('until=<?= $data['next'] ?>', 'next'); return false;" href="#"><?= wfMsg('wmu-next') ?></a>
+	<a onclick="WMU_recentlyUploaded('offset=<?= $data['next'] ?>', 'next'); return false;" href="#"><?= wfMsg('wmu-next') ?></a>
 <?php
 }
 ?>
