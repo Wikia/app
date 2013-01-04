@@ -162,7 +162,8 @@ EditHub.prototype = {
 		elem.find('input:text, input:password, input:file, input:hidden, select, textarea').val('');
 		elem.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
 		elem.find('.filename-placeholder').html($.msg('marketing-toolbox-edithub-file-name'));
-		elem.find('.image-placeholder').find('img').attr('src', wgBlankImgUrl);
+		elem.find('.image-placeholder').find('img').attr('src', wgBlankImgUrl)
+			.end().filter('.video').empty();
 	}
 };
 
