@@ -3,7 +3,7 @@
 		<div class="grid-3 alpha">
 			<input type="button" class="vet-show" value="<?= $wf->Msg('marketing-toolbox-edithub-add-video-button') ?>" />
 			<span class="filename-placeholder alternative">
-				<?php if( !empty($fields['fileName']) ): ?>
+				<?php if( !empty($fields['video']) ): ?>
 				<?= $fields['video']['value']; ?>
 				<?php else: ?>
 				<?= $wf->msg('marketing-toolbox-edithub-video-name') ?>
@@ -30,7 +30,12 @@
 		</div>
 		<div class="grid-1 alpha">
 			<div class="image-placeholder">
-				// TODO
+				<?= $app->renderView(
+					'MarketingToolboxVideos',
+					'index',
+					array('video' => $videoData)
+				);
+				?>
 			</div>
 		</div>
 	</div>
