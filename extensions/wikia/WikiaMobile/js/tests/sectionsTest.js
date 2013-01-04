@@ -37,7 +37,7 @@ describe("Sections module", function () {
 
 	async.it('should init sections', function(done){
 
-		document.body.innerHTML = '<div id="mw-content-text"><h2>one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div>';
+		document.body.innerHTML = '<div id="wkPage"><div id="mw-content-text"><h2>one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div></div>';
 
 		require(['sections'], function(sections){
 			sections.init();
@@ -59,7 +59,7 @@ describe("Sections module", function () {
 
 	async.it('should open/close/toggle section', function(done){
 
-		document.body.innerHTML = '<div id="mw-content-text"><div></div><h2 id="one">one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div>';
+		document.body.innerHTML = '<div id="wkPage"><div id="mw-content-text"><div></div><h2 id="one">one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div></div>';
 
 		require(['sections'], function(sections){
 			sections.init();
@@ -104,7 +104,7 @@ describe("Sections module", function () {
 	});
 
 	async.it('should fire events', function(done){
-		document.body.innerHTML = '<div id="mw-content-text"><h2>one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div>';
+		document.body.innerHTML = '<div id="wkPage"><div id="mw-content-text"><h2>one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div></div>';
 
 		require(['sections'], function(sections){
 			sections.init();
