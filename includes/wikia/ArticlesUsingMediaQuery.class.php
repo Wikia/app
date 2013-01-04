@@ -4,8 +4,7 @@
  *
  */
 
-class ArticlesUsingMediaQuery
-{
+class ArticlesUsingMediaQuery {
 	private $fileTitle;
 	private $app;
 	private $memc;
@@ -14,7 +13,6 @@ class ArticlesUsingMediaQuery
 	 * @param Title $fileTitle
 	 */
 	public function __construct($fileTitle) {
-
 		$this->fileTitle = $fileTitle;
 		$this->app = F::app();
 		$this->memc = $this->app->getGlobal('wgMemc');
@@ -25,11 +23,9 @@ class ArticlesUsingMediaQuery
 	 * @return array article list ( ns, title, url )
 	 */
 	public function getArticleList($purgeCache = false) {
-
 		wfProfileIn( __METHOD__ );
 
 		if ( !$purgeCache ) {
-
 			$data = $this->memc->get( $this->getMemcKey() );
 
 			if ( is_array($data) ) {
@@ -53,10 +49,9 @@ class ArticlesUsingMediaQuery
 			$title = Title::makeTitle($s->page_namespace, $s->page_title);
 			$data[] = array( 'ns' => $s->page_namespace,
 			                 'title' => $s->page_title,
-			                 'titleText' => $title->getText(),
+			                 'titleText' => $title->getPrefixedText(),
 			                 'url' => $title->getLocalURL()
 			);
-
 		}
 
 		$this->memc->set( $this->getMemcKey(), $data );
@@ -67,26 +62,24 @@ class ArticlesUsingMediaQuery
 	}
 
 	public function getMemcKey() {
-
 		$key = '';
 		$key .= $this->app->wg->cityId;
-		$key .= 'ArticlesUsingMediaQuery_v2_';
+		$key .= 'ArticlesUsingMediaQuery_v3_';
 		$key .= $this->fileTitle->getDBKey();
 
 		return $key;
 	}
 
 	public function unsetCache() {
-
 		$this->memc->set( $this->getMemcKey(), null );
 	}
-	
+
 	public static function onArticleSaveComplete($article, $user, $revision, $status) {
 		wfProfileIn(__METHOD__);
-		
+
 		$insertedImages = Wikia::getVar('imageInserts');
 		$imageDeletes = Wikia::getVar('imageDeletes');
-		
+
 		$changedImages = $imageDeletes;
 		foreach($insertedImages as $img) {
 			$changedImages[ $img['il_to'] ] = true;
@@ -109,17 +102,15 @@ class ArticlesUsingMediaQuery
 		}
 
 		wfProfileOut(__METHOD__);
+
 		return true;
-		
 	}
 
 	public static function onArticleDelete( &$article, &$wgUser=false, &$reason=false, &$error=false ) {
-
 		$id = $article->mTitle->getArticleID();
 		$dbr = wfGetDB( DB_SLAVE );
 
 		if ( (int) $id > 0 ) {
-
 			$res = $dbr->select(
 				array( 'imagelinks' ),
 				array( 'il_to' ),
@@ -128,7 +119,6 @@ class ArticlesUsingMediaQuery
 			);
 
 			while ( $s = $res->fetchObject() ) {
-
 				$title = Title::newFromDBkey( $s->il_to );
 				if ( !empty( $title ) ) {
 					$mq = new self( $title );
@@ -136,8 +126,8 @@ class ArticlesUsingMediaQuery
 				}
 			}
 		}
+
 		return true;
 	}
-
 
 }
