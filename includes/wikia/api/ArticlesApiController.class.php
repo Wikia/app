@@ -151,7 +151,7 @@ class ArticlesApiController extends WikiaApiController {
 				if ( !is_array( $cache ) ) {
 					$ids[] = $i;
 				} else {
-					$collection[$i] = $cache;
+					$collection[] = $cache;
 				}
 			}
 
