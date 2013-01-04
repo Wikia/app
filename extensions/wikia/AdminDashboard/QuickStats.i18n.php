@@ -524,6 +524,7 @@ $messages['ku-latn'] = array(
  */
 $messages['ky'] = array(
 	'quickstats-header-date' => 'Дата',
+	'quickstats-header-views' => 'Көрүүлөр',
 	'quickstats-header-edits' => 'Оңдоолор',
 	'quickstats-header-photos' => 'Фото',
 );
@@ -739,10 +740,17 @@ $messages['pt-br'] = array(
 
 /** tarandíne (tarandíne)
  * @author Joetaras
+ * @author Reder
  */
 $messages['roa-tara'] = array(
+	'quickstats-header-label' => 'Statisteche veloce',
 	'quickstats-header-date' => 'Date',
+	'quickstats-header-views' => 'Visite',
 	'quickstats-header-edits' => 'Cangiaminde',
+	'quickstats-header-photos' => 'Foto',
+	'quickstats-header-likes' => 'Apprezzamènde',
+	'quickstats-totals-label' => 'Totele',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Vide cchiù statisteche]]',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
@@ -780,6 +788,7 @@ $messages['sh'] = array(
 );
 
 /** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
  * @author බිඟුවා
  */
 $messages['si'] = array(
@@ -790,6 +799,7 @@ $messages['si'] = array(
 	'quickstats-header-photos' => 'රූප',
 	'quickstats-header-likes' => 'වගේ',
 	'quickstats-totals-label' => 'සියල්ල',
+	'quickstats-number-shortening' => '$1K',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -971,6 +981,7 @@ $messages['zh-hans'] = array(
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看更多统计]]',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1（百万）',
+	'quickstats-number-shortening-billions' => '$10亿',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

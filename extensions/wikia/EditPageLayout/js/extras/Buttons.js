@@ -163,7 +163,7 @@
 		if ( window.wgEnableVideoToolExt ) {
 			mediawikiButtons.push({
 				imageFile: extensionsPath + '/wikia/VideoEmbedTool/images/button_vet.png',
-				speedTip: vet_imagebutton,
+				speedTip: $.msg('vet-imagebutton'),
 				imageId: 'mw-editbutton-vet',
 				onclick: function( event ) {
 					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {

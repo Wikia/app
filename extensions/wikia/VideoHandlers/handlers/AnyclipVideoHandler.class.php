@@ -30,23 +30,17 @@ EOT;
 		 * Array[1] = flash vars to be added
 		 * Array[2] = params for object tag
 		 */
-		
-		if ( $isAjax || $postOnload ) {
-			$html .= <<<EOT
+		$html .= <<<EOT
 <script type="text/javascript">
+wgAfterContentAndJS.push(function(){
 	$.when(
 		$.getScript('{$jsFile}')
 	).done(function() {
 		AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}"{$autoPlayStr}}, {wmode: "opaque"}]);
 	});
+});
 </script>
 EOT;
-		} else {
-			$html .= <<<EOT
-<script type="text/javascript" src="{$jsFile}"></script>
-<script type="text/javascript">AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}{$autoPlayStr}"}, {wmode: "opaque"}]);</script>
-EOT;
-		}
 
 		return $html;
 	}

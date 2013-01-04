@@ -71,6 +71,7 @@ $messages['en'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Remove this gallery?',
 	'rte-ck-photoGallery-tooltip' => 'This is a gallery.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'This is a slideshow.',
+	'rte-ck-photoGallery-tooltipSlider' => 'This is a slider.',
 	'rte-ck-poll-add' => 'Add a poll',
 	'rte-ck-poll-poll' => 'Poll',
 	'rte-ck-signature-add' => 'Add your signature',
@@ -144,6 +145,7 @@ $messages['qqq'] = array(
 	'rte-ck-media-delete' => '{{Identical|Remove}}',
 	'rte-ck-media-edit' => '{{Identical|Modify}}',
 	'rte-ck-modeSwitch-toWysiwyg' => 'A type of editor that makes code easier to read/edit and easy for new editors.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Tooltip for the slider placeholder in the editor.',
 	'rte-ck-signature-label' => '{{Identical|Signature}}',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'See [[mw:Help:Magic words]] for the term.',
 	'rte-ck-templateDropDown-label' => '{{Identical|Template}}',
@@ -3373,6 +3375,7 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -3382,6 +3385,7 @@ $messages['uk'] = array(
 	'rte-ck-hoverPreview-delete' => 'вилучити',
 	'rte-ck-hoverPreview-edit' => 'редагувати',
 	'rte-ck-image-add' => 'Додати зображення',
+	'rte-ck-image-photo' => 'Фото',
 	'rte-ck-link-error-title' => 'Помилка',
 	'rte-ck-link-external-tab' => 'Зовнішнє посилання',
 	'rte-ck-link-internal-pageName' => 'Назва сторінки',

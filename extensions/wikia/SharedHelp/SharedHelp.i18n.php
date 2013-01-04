@@ -51,11 +51,14 @@ $messages['br'] = array(
 );
 
 /** Czech (česky)
+ * @author Darth Daron
  * @author Mormegil
  */
 $messages['cs'] = array(
 	'sharedhelp-desc' => 'Přebírá stránky z [[w:c:Help|Nápovědy Wikia]] a vkládá je do jmenného prostoru {{ns:help}} na této wiki',
 	'sharedhelp-autotalkcreate-summary' => 'Diskusní stránka založena automaticky',
+	'sharedhelp-searchprofile' => 'Nápověda',
+	'sharedhelp-searchprofile-tooltip' => 'Hledat v nápovědě',
 );
 
 /** German (Deutsch)
@@ -243,6 +246,8 @@ $messages['pl'] = array(
 $messages['pms'] = array(
 	'sharedhelp-desc' => "A pija dle pàgine da [[w:c:Help|Help Wikia]] e a j'anseriss ant lë spassi nominal {{ns:help}} dë sta wiki-sì",
 	'sharedhelp-autotalkcreate-summary' => 'Pàgina ëd discussion creà automaticament',
+	'sharedhelp-searchprofile' => "Pagine d'agiut",
+	'sharedhelp-searchprofile-tooltip' => "Sërché pàgine d'agiut",
 );
 
 /** Pashto (پښتو)
@@ -300,11 +305,13 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
 	'sharedhelp-desc' => 'Бере сторінки з [[w:c:Help|Help Wikia]] і додає їх до простору назв {{ns:help}} цієї вікі',
 	'sharedhelp-autotalkcreate-summary' => 'Сторінку обговорення створено автоматично',
+	'sharedhelp-searchprofile' => 'Сторінки довідки',
 );
 
 /** Simplified Chinese (中文（简体）‎)

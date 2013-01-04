@@ -393,10 +393,22 @@ $messages['tt-cyrl'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides мобиль кушымтасы өчен модульләр',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'wikiagameguides-content-category' => 'Категорія',
+	'wikiagameguides-content-add' => 'Додати',
+	'wikiagameguides-content-save' => 'Зберегти',
+	'wikiagameguides-content-category-error' => 'Категорія не існує',
+);
+
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'wikiagameguides-content-add' => '添加',
 	'wikiagameguides-content-save' => '保存',
+	'wikiagameguides-content-category-error' => '不存在该分类',
 );

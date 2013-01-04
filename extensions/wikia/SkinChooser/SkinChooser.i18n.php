@@ -29,11 +29,12 @@ $messages['br'] = array(
 );
 
 /** Czech (česky)
+ * @author Darth Daron
  * @author Dontlietome7
  */
 $messages['cs'] = array(
 	'skinchooser-desc' => 'Umnožňuje uživatelům zvolit vzhled v předvolbách',
-	'new-look' => 'Nový vzhled Wikia', # Fuzzy
+	'new-look' => 'Wikia',
 	'site-layout' => 'Rozložení webu',
 );
 
@@ -249,11 +250,19 @@ $messages['tl'] = array(
 	'site-layout' => 'Mga Latag ng Pook',
 );
 
+/** Uzbek (oʻzbekcha)
+ * @author Akmalzhon
+ */
+$messages['uz'] = array(
+	'skinchooser-desc' => 'Foydalanuvchilarga uz skinlarini tanlashga imkon beradi',
+	'new-look' => 'Vikia',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(
 	'skinchooser-desc' => '用户可依自身偏好选择皮肤',
-	'new-look' => '新Wikia外观', # Fuzzy
+	'new-look' => 'Wikia',
 	'site-layout' => '网站布局',
 );

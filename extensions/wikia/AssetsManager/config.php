@@ -751,6 +751,10 @@ $config['chat_js2'] = array(
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
+
 		'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
 		'//extensions/wikia/Chat2/js/emoticons.js', // must be before controllers.js
 		'//extensions/wikia/Chat2/js/lib/underscore.js',
@@ -774,8 +778,8 @@ $config['chat_ban_js'] = array(
 $config['theme_designer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'#group_oasis_wikia_js',
 		'#group_oasis_jquery',
-
 		'#group_oasis_tracker_js',
 
 		'//resources/jquery.ui/jquery.ui.widget.js',
@@ -1076,15 +1080,6 @@ $config['imagedrop_scss'] = array(
 	'skin' => array( 'monobook', 'oasis' ),
 	'assets' => array(
 		'//extensions/wikia/ImageDrop/css/ImageDrop.scss'
-	)
-);
-
-// AbTesting
-$config['abtesting'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => array( 'monobook', 'oasis', 'wikiamobile' ),
-	'assets' => array(
-		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
 );
 

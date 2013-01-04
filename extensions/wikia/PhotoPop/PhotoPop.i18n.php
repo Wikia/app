@@ -1366,6 +1366,7 @@ $messages['tzm'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  */
 $messages['uk'] = array(
 	'photopop-setup-category-label' => 'Категорія',
@@ -1390,13 +1391,28 @@ $messages['uk'] = array(
 	'photopop-game-finished' => 'виконано!',
 	'photopop-game-image-load-error' => 'Зображення неможливо завантажити. Перепрошуємо, спробуйте ще раз.',
 	'photopop-game-loading-image' => 'Завантаження зображення... <br />Зачекайте',
+	'photopop-game-month-0' => 'Січ',
+	'photopop-game-month-1' => 'Лют',
+	'photopop-game-month-2' => 'Бер',
+	'photopop-game-month-3' => 'Квіт',
+	'photopop-game-month-4' => 'Трав',
+	'photopop-game-month-5' => 'Чер',
+	'photopop-game-month-6' => 'Лип',
+	'photopop-game-month-7' => 'Сер',
+	'photopop-game-month-8' => 'Вер',
+	'photopop-game-month-9' => 'Жовт',
+	'photopop-game-month-10' => 'Лис',
+	'photopop-game-month-11' => 'Груд',
 );
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
+	'photopop-setup-watermark-label' => '水印',
+	'photopop-current-settings-title' => '当前设置',
 	'photopop-game-correct' => '正确',
 	'photopop-game-points' => '分数',
 	'photopop-game-total' => '总分',

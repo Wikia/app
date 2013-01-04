@@ -42,7 +42,7 @@
 			<div class="module-image-box">
 				<div class="image-placeholder">
 					<? if (!empty($photos[$i])): ?>
-						<img src="<?=$photos[$i]?>" />
+						<img width="<?= $photos[$i]['imageWidth']; ?>" height="<?= $photos[$i]['imageHeight']; ?>" src="<?= $photos[$i]['url']; ?>" />
 					<? else: ?>
 						<img src="<?= $wg->BlankImgUrl; ?>" />
 					<? endif ?>

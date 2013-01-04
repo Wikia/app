@@ -639,9 +639,12 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'partner-feed-recent-changes' => '最新更改',
+	'feed-title-blogposts' => '最新博客帖子',
+	'feed-title-recent-badges' => '最新徽章',
 	'all-blog-posts' => '全部分类',
 );

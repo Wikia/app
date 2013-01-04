@@ -424,7 +424,7 @@ $messages['br'] = array(
 	'wmu-name' => 'Anv',
 	'wmu-license' => 'Aotre-implijout',
 	'wmu-licensing' => 'Aotre-implijout',
-	'wmu-details-inf2' => '<h1>Dibaboù ar pennad</1>Dibabit penaos e vo diskwelet ar restr en ho pennad.',
+	'wmu-details-inf2' => '<h1>Dibaboù ar pennad</h1>Dibabit penaos e vo diskwelet ar restr en ho pennad.',
 	'wmu-size' => 'Ment',
 	'wmu-thumbnail' => 'Munud',
 	'wmu-fullsize' => 'Ment wirion ($1x$2px)',
@@ -568,6 +568,7 @@ $messages['ce'] = array(
 
 /** Czech (česky)
  * @author Chmee2
+ * @author Darth Daron
  * @author Dontlietome7
  * @author Mr. Richard Bolla
  */
@@ -644,6 +645,7 @@ $messages['cs'] = array(
 	'wmu-appearance-in-article' => 'Vzhled v článku',
 	'wmu-alignment' => 'Zarovnání',
 	'wmu-file-protected' => 'Tento obrázek je chráněn',
+	'wmu-file-error' => 'Došlo k chybě při odesílání. Zkuste prosím znovu.',
 );
 
 /** Welsh (Cymraeg)

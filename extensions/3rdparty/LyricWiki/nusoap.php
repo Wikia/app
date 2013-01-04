@@ -1458,11 +1458,6 @@ class XMLSchema extends nusoap_base  {
 }
 
 
-
-?><?php
-
-
-
 /**
 * for creating serializable abstractions of native PHP types
 * NOTE: this is only really used when WSDL is not available.
@@ -1513,10 +1508,6 @@ class soapval extends nusoap_base {
 		return $this->value;
 	}
 }
-
-
-
-?><?php
 
 
 
@@ -2193,9 +2184,6 @@ class soap_transport_http extends nusoap_base {
 		return true;
 	}
 }
-
-?><?php
-
 
 
 /**
@@ -3007,10 +2995,6 @@ class soap_server extends nusoap_base {
             'bindingType'=>'http://schemas.xmlsoap.org/wsdl/soap/');
     }
 }
-
-
-
-?><?php
 
 
 
@@ -4301,8 +4285,6 @@ class wsdl extends nusoap_base {
 		return true;
 	}
 }
-?><?php
-
 
 
 /**
@@ -4818,10 +4800,6 @@ class soap_parser extends nusoap_base {
 		}
 	}
 }
-
-
-
-?><?php
 
 
 

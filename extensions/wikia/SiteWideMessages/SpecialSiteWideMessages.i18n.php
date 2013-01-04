@@ -149,7 +149,7 @@ $messages['qqq'] = array(
 	'swm-button-save' => '{{Identical|Save}}',
 	'swm-button-new' => '{{Identical|New}}',
 	'swm-msg-sent-task' => 'Message to display when a task is created in order to send a message. $1 is a link to the created task.',
-	'swm-expire-info' => 'If $1 is a time stamp, split date and time.', # Fuzzy
+	'swm-expire-info' => '',
 	'swm-list-table-group' => '{{Identical|Group}}',
 	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.',
 	'swm-list-table-content' => '{{Identical|Content}}',
@@ -3056,6 +3056,7 @@ $messages['tzm'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -3068,8 +3069,13 @@ $messages['uk'] = array(
 	'swm-label-sent' => 'Надіслане',
 	'swm-label-list' => 'Список',
 	'swm-label-recipient-users' => 'Користувачі',
+	'swm-label-mode-wikis-cluster' => 'Вибраний кластер',
+	'swm-label-mode-wikis-wiki' => 'Вибрана вікі',
 	'swm-label-mode-users-all' => 'Всі користувачі',
 	'swm-label-mode-users-active' => 'Активні користувачі',
+	'swm-label-mode-users-user' => 'Вибраний користувач',
+	'swm-label-mode-users-user-multi' => 'Список користувачів',
+	'swm-label-content' => 'Вміст',
 	'swm-label-comment' => 'Коментар',
 	'swm-label-language' => 'Мова',
 	'swm-button-preview' => '[ Попередній перегляд ]',
@@ -3078,6 +3084,8 @@ $messages['uk'] = array(
 	'swm-button-new' => '[ Нове ]',
 	'swm-msg-sent-ok' => '<h3>Повідомлення надіслане.</h3>',
 	'swm-list-no-messages' => 'Немає повідомлень.',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-sender' => 'Відправник',
 	'swm-list-table-wiki' => 'Вікі',
 	'swm-list-table-group' => 'Група',
 	'swm-list-table-date' => 'Дата надсилання',
@@ -3086,6 +3094,12 @@ $messages['uk'] = array(
 	'swm-yes' => 'Так',
 	'swm-no' => 'Ні',
 	'swm-error-no-such-wiki' => 'Немає такої вікі!',
+	'swm-mode-users-editcount-more' => 'Більше',
+	'swm-mode-users-editcount-less' => 'Менше',
+	'swm-mode-users-editcount-between' => 'Між',
+	'swm-mode-wikis-created-after' => 'Після',
+	'swm-mode-wikis-created-before' => 'До',
+	'swm-mode-wikis-created-between' => 'Між',
 );
 
 /** Volapük (Volapük)
@@ -3103,6 +3117,7 @@ $messages['yi'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hydra
  * @author Sam Wang
  * @author Xiaomingyan
@@ -3118,6 +3133,8 @@ $messages['zh-hans'] = array(
 	'swm-label-recipient-users' => '用户',
 	'swm-label-mode-wikis-all' => '所有维基',
 	'swm-label-mode-users-all' => '所有用户',
+	'swm-label-mode-users-active' => '活跃用户',
+	'swm-label-mode-users-user-multi' => '用户列表',
 	'swm-label-content' => '内容',
 	'swm-label-comment' => '评语',
 	'swm-label-language' => '语言',
@@ -3130,6 +3147,7 @@ $messages['zh-hans'] = array(
 	'swm-list-table-recipient' => '受信者',
 	'swm-list-table-group' => '用户组',
 	'swm-list-table-content' => '内容',
+	'swm-list-table-lang' => '语言',
 	'swm-yes' => '是',
 	'swm-no' => '不是',
 	'swm-error-no-such-wiki' => '没有这个维基！',

@@ -2,10 +2,6 @@
 
 class ShareButtonGooglePlus extends ShareButton {
 
-	public function __construct(WikiaApp $app) {
-		parent::__construct($app);
-	}
-
 	// AssetsManager compliant path to assets
 	public function getAssets() {
 		return array( '//extensions/wikia/ShareButtons/js/ShareButtonGooglePlus.js' );

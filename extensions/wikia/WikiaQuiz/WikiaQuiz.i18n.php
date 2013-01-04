@@ -1800,13 +1800,39 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  */
 $messages['uk'] = array(
 	'wikiaquiz-title-label' => 'Назва',
 	'wikiaquiz-titlescreentext-label' => 'Назва для відображення на екрані',
+	'wikiaquiz-moreinfoarticle-label' => 'Стаття',
+	'wikiaquiz-moreinfolinktext-label' => 'Текст посилання',
+	'wikiaquiz-question-label' => 'Запитання',
+	'wikiaquiz-image-label' => "Зображення (необов'язково)",
+	'wikiaquiz-video-label' => "Відео (необов'язково, заміняє зображення)",
+	'wikiaquiz-explanation-label' => "Пояснення відповіді (необов'язково)",
+	'wikiaquiz-questions-label' => 'Запитання',
+	'wikiaquiz-answers-label' => 'Відповіді',
+	'wikiaquiz-answer-label' => 'Відповідь',
+	'wikiaquiz-correct-label' => 'Вірно?',
+	'wikiaquiz-addnewitem-label' => 'Додати новий пункт',
+	'wikiaquiz-cancel-label' => 'Скасувати',
+	'wikiaquiz-publish-label' => 'Опублікувати',
+	'wikiaquiz-game-start-button' => 'Розпочати гру',
+	'wikiaquiz-game-cadence-3' => 'Приготуватися',
+	'wikiaquiz-game-cadence-2' => 'Увага',
+	'wikiaquiz-game-cadence-1' => 'Почали!',
+	'wikiaquiz-game-question-label' => 'ЗАПИТАННЯ',
+	'wikiaquiz-game-next-button' => 'Наступне запитання',
 	'wikiaquiz-game-finish-button' => 'Виконано',
 	'wikiaquiz-game-correct-label' => 'Вірно! Ви праві.',
 	'wikiaquiz-game-incorrect-label' => 'Невірно.',
+	'wikiaquiz-game-congratulations' => 'Чудова робота, $1!',
+	'wikiaquiz-game-congratulations-anon' => 'Чудова робота!',
+	'wikiaquiz-game-continue-button' => 'Продовжити',
+	'wikiaquiz-game-thanks' => 'Дякуємо за гру!',
+	'wikiaquiz-game-provide-email' => 'Будь ласка, введіть Вашу адресу електронної пошти',
+	'wikiaquiz-game-mute' => 'Без звуку',
 );
 
 /** Simplified Chinese (中文（简体）‎)

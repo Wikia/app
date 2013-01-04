@@ -33,6 +33,35 @@ class ImagesService extends Service {
 		return array('src' => $imageSrc, 'page' => $imagePage);
 	}
 
+	public static function getImageOriginalUrl( $wikiId, $pageId ) {
+		$app = F::app();
+		$app->wf->ProfileIn(__METHOD__);
+
+		$dbname = WikiFactory::IDtoDB($wikiId);
+		$title = GlobalTitle::newFromId( $pageId, $wikiId );
+		
+		$param = array(
+			'action' => 'query',
+			'prop' => 'imageinfo',
+			'iiprop' => 'url',
+			'titles' => $title->getPrefixedText(),
+		);
+
+		$imagePage = $title->getFullUrl();
+		$response = ApiService::foreignCall($dbname, $param);
+		
+		if( !empty($response['query']['pages']) ) {
+			$imagePageData = array_shift($response['query']['pages']);
+			$imageInfo = array_shift($imagePageData['imageinfo']);
+			$imageSrc = (empty($imageInfo['url'])) ? '' : $imageInfo['url'];
+		} else {
+			$imageSrc = '';
+		}
+
+		$app->wf->ProfileOut(__METHOD__);
+		return array( 'src' => $imageSrc, 'page' => $imagePage );
+	}
+
 	/**
 	 * @desc Returns image's thumbnail's url and its sizes if $destImageWidth given it can be scaled
 	 * 
@@ -43,7 +72,12 @@ class ImagesService extends Service {
 	 */
 	public static function getLocalFileThumbUrlAndSizes($fileName, $destImageWidth = 0) {
 		$app = F::app();
+		
 		$results = new stdClass();
+		$results->url = '';
+		$results->title = '';
+		$results->width = 0;
+		$results->height = 0;
 		
 		//remove namespace string
 		$fileName = str_replace($app->wg->ContLang->getNsText(NS_FILE) . ':', '', $fileName);
@@ -59,6 +93,7 @@ class ImagesService extends Service {
 			$results->url = $foundFile->getThumbUrl( $foundFile->thumbName( array( 'width' => $sizes->width) ) );
 			$results->width = $sizes->width;
 			$results->height = $sizes->height;
+			$results->title = $title->getText();
 		}
 		
 		return $results;

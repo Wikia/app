@@ -29,8 +29,10 @@ $messages['br'] = array(
 
 /** Czech (česky)
  * @author Chmee2
+ * @author Darth Daron
  */
 $messages['cs'] = array(
+	'centralhelpsearch-desc' => 'Povolit vložení formuláře vyhledávání v nápovědě komunitní cetrály',
 	'centralhelpsearch-placeholder' => 'Hledat v nápovědě',
 );
 

@@ -167,15 +167,15 @@ $messages['qqq'] = array(
 	'wikifactory-label-findtags' => 'Label for a tab that contains a form, allowing staff to find wikis by tag. [http://translatewiki.net/w/i.php?title=Thread:Translating_talk:Wikia/MassTag%3F_FindTag%3F/reply source]',
 	'right-wikifactory' => '{{doc-right|wikifactory}}',
 	'action-wikifactory' => '{{doc-action|wikifactory}}',
-	'closewiki-nbr-wiki' => 'What is $1? If it is a number it should support PLURAL', # Fuzzy
+	'closewiki-nbr-wiki' => '',
 	'closewiki-unknown' => '{{Identical|Unknown}}',
 	'wikifactory-public-status-change-default-reason' => 'WikiFactory is a staff tool that allows Wikia to manage per-wiki settings across their network. The "public status" setting determines whether a wiki is available for users or closed and assigned for removal. Staff members usually justify a change of the status of a wiki by filling in the "Reason" field in the form. If no reason is provided, the wikifactory-public-status-change-default-reason is used automatically so it can be deduced where the change had been requested from.',
 	'awc-metrics-nbr-result' => '{{Identical|Result}}',
 	'awc-metrics-close' => '{{Identical|Close}}',
 	'awc-metrics-active' => '{{Identical|Active}}',
 	'awc-metrics-closed' => '{{Identical|Closed}}',
-	'awc-metrics-fewer-than' => 'Lego.', # Fuzzy
-	'awc-metrics-edits-label' => 'Lego, unknown paramters.', # Fuzzy
+	'awc-metrics-fewer-than' => '',
+	'awc-metrics-edits-label' => '',
 	'awc-metrics-pageviews-label' => 'Needs plural support for $1 and $2',
 	'awc-metrics-exact-match' => '{{Identical|Exact match}}',
 	'awc-metrics-recordspager' => 'Recordspager message. This message cannot support PLURAL for now, because it is used in JavaScript. Parameters:
@@ -1113,6 +1113,7 @@ $messages['cs'] = array(
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Porovnat',
 	'right-wikifactory' => 'Změnit vnitřní nastavení pro wiki',
+	'action-wikifactory' => 'změnit vnitřní nastavení wiki',
 	'wikifactory-domain-edit' => 'editovat tuto URL',
 	'wikifactory-domain-remove' => 'odstranit tuto adresu URL z wiki',
 	'wikifactory-domain-setmain' => 'vložit toto URL do wgServer',
@@ -1187,7 +1188,7 @@ $messages['cs'] = array(
 	'closed-wiki' => 'Uzavřená wiki',
 	'closed-wiki-info' => 'Tato wiki byla uzavřena',
 	'disabled-wiki-info' => 'Tato wiki byla odpojena',
-	'closed-wiki-dump-exists' => 'Pokud chcete znovu načíst obsah, klikněte [$1 sem]<br />(Pokud byla vaše wiki nedávno zavřena, může generování souborů chvíli trvat.)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Pokud chcete znovu načíst obsah, klikněte [$1 sem]<br />(Pokud byla vaše wiki nedávno zavřena, může generování souborů chvíli trvat.)',
 	'closed-wiki-dump-noexists' => 'Tato wiki byla uzavřena. Obsah výstupu z databáze bude k dispozici během 24 hodin. Zkontrolujte prosím později.',
 	'closed-wiki-create-wiki' => 'Vytvořit novou wiki',
 	'closed-wiki-policy' => 'Zobrazit pravidla Wikie ohledně uzavírání wiki',
@@ -2535,7 +2536,7 @@ $messages['id'] = array(
 $messages['ig'] = array(
 	'wf_cc_name' => 'Ébéonọr',
 	'wikifactory-label-actions' => 'Mmèmé',
-	'wikifactory-label-close' => 'Mèchié',
+	'wikifactory-label-close' => 'Mèchí',
 	'closewiki-unknown' => 'Nke námaghị',
 	'awc-metrics-category' => 'na ébéonọr:',
 	'awc-metrics-all' => 'Wiki níle',
@@ -5120,29 +5121,36 @@ $messages['yi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'closewiki' => '关闭维基',
+	'wf_city_id' => 'id',
 	'wf_city_title' => '标题',
 	'wf_city_lang' => '语言',
 	'wf_cc_name' => '分类',
 	'wikifactory-label-close' => '关闭',
+	'wikifactory-label-compare' => '比较',
+	'closewiki-redirect-to' => '重定向至',
 	'closewiki-nbr-wiki' => '$1 维基',
 	'awc-metrics-all' => '所有维基',
 	'awc-metrics-all-languages' => '所有语言',
+	'awc-metrics-images' => '图像',
 	'awc-metrics-close' => '关闭',
 	'awc-metrics-close-action' => '关闭',
 	'closed-wiki' => '已关闭的维基',
 	'closed-wiki-info' => '此维基已关闭',
 	'disabled-wiki-info' => '此维基已禁用',
 	'closed-wiki-create-wiki' => '创造一个新维基',
+	'closed-delete-images' => '删除图像',
 	'closed-confirm-btn' => '确定关闭',
 	'closed-reason' => '原因：',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Simon Shek
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
@@ -5193,7 +5201,7 @@ $messages['zh-hant'] = array(
 	'awc-metrics-revisions-per-page' => '修改<br />(平均每頁)',
 	'awc-metrics-edits' => '編輯次數',
 	'awc-metrics-db-size' => '資料庫大小',
-	'awc-metrics-images' => '圖像',
+	'awc-metrics-images' => '圖片',
 	'awc-metrics-close' => '關閉',
 	'awc-metrics-close-action' => '關閉',
 	'awc-metrics-active' => '活躍',

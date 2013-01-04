@@ -361,7 +361,7 @@ class WallBaseController extends WikiaController{
 				if($showRemoveOrDeleteInfo) {
 					$this->response->setVal('canRestore', $wallMessage->canRestore($this->app->wg->User) );
 					$this->response->setVal('fastrestore', $wallMessage->canFastrestore($this->app->wg->User) );
-					$this->response->setVal('isreply', $wallMessage->isMain() );
+					$this->response->setVal('isreply', !$wallMessage->isMain() );
 				}
 			}
 		}

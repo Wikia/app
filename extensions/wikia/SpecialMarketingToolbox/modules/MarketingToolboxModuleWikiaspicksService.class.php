@@ -4,4 +4,3 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 		return array();
 	}
 }
-?>

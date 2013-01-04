@@ -972,6 +972,7 @@ $messages['ttt'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -981,7 +982,9 @@ $messages['uk'] = array(
 	'multilookupnbrresult' => 'Кількість результатів:',
 	'multilookupnoresultfound' => 'Нічого не знайдено!',
 	'multilookupwiki' => 'Вікі',
+	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Назва',
+	'multilookupwikioptions' => 'Параметри',
 	'multilookuplastedithdr' => 'Останнє редагування',
 );
 

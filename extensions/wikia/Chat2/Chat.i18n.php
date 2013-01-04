@@ -754,13 +754,25 @@ Por favor, contáctalo para más información.',
 );
 
 /** Persian (فارسی)
+ * @author BlueDevil
  * @author پاناروما
  */
 $messages['fa'] = array(
+	'chat' => 'چت',
+	'chat-default-topic' => 'به چت $1 خوش‌آمدید',
+	'chat-welcome-message' => 'به چت $1 خوش‌آمدید',
+	'chat-user-joined' => '$1 به چت پیوست.',
+	'chat-private-messages' => 'پیغام‌های خصوصی',
+	'chat-user-parted' => '$1 چت را ترک کرده‌است.',
+	'chat-user-blocked' => '$1 توسط $2 مسدود شده‌است.',
 	'chat-ban-modal-label-reason' => 'دلیل:',
 	'chat-log-reason-undo' => 'خنثی‌سازی',
 	'chat-ban-modal-button-cancel' => 'لغو کردن',
 	'chat-live2' => 'گفتگوی زنده',
+	'chat-user-menu-private' => 'پیام خصوصی',
+	'group-chatmoderator' => 'مدیر چت',
+	'group-chatmoderator-member' => 'مدیر چت',
+	'chat-ban-option-list' => '۲ ساعت:2 hours,۱ روز:1 day,۳ روز:3 days,۱ هفته:1 week,۲ هفته:2 weeks,۱ ماه:1 month,۳ ماه:3 months,۶ ماه:6 months,۱ سال:1 year,بی‌پایان:infinite',
 );
 
 /** Finnish (suomi)
@@ -2578,6 +2590,14 @@ $messages['tzm'] = array(
 	'chat-ban-modal-button-cancel' => 'ⵓⵖⴰⵍ',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'chat' => 'Чат',
+	'chat-ban-modal-button-cancel' => 'Скасувати',
+);
+
 /** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
@@ -2694,16 +2714,22 @@ $messages['zh-hans'] = array(
 	'chat-default-topic' => '欢迎来到$1聊天',
 	'chat-user-joined' => '$1 已经加入聊天。',
 	'chat-read-only' => '维基是只读模式，聊天暂时不可用。',
+	'chat-private-messages' => '私信',
 	'chat-user-parted' => '$1 已经离开聊天。',
 	'chat-user-blocked' => '$1 已经屏蔽了 $2。',
 	'chat-user-allow' => '$1 已经允许了 $2。',
+	'chat-you-were-banned' => '您已被$1封禁',
 	'chat-user-permanently-disconnected' => '您已经断开，检查网络连接并刷新浏览器窗口',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 升级 <strong>$2</strong> 为聊天主持人。',
 	'chat-err-connected-from-another-browser' => '您已从另一个浏览器连接。此连接将被关闭。',
 	'chat-err-communicating-with-mediawiki' => '与 MediaWiki 服务器通讯出错。',
 	'chat-log-reason-undo' => '还原',
 	'chat-ban-undolink' => '还原',
+	'chat-ban-modal-button-ok' => '封禁该用户',
+	'chat-ban-modal-button-change-ban' => '改变封禁',
 	'chat-ban-modal-button-cancel' => '取消',
+	'chat-ban-modal-change-ban-label' => '变更为',
+	'chat-ban-modal-end-ban' => '终止封禁',
 	'chat-ban-cant-ban-moderator' => '您不能踢出另一个聊天主持人。',
 	'chat-ban-already-banned' => '$1 已经在此维基的聊天中被禁止。',
 	'chat-ban-you-need-permission' => '您没有$1权限，不能踢出/封禁用户。',
@@ -2721,6 +2747,8 @@ $messages['zh-hans'] = array(
 	'chat-edit-count' => '{{PLURAL:$1|$1 次编辑|$1 次编辑}}',
 	'chat-member-since' => '$1以来的成员',
 	'chat-great-youre-logged-in' => '太棒了！您已登录。',
+	'chat-user-menu-message-wall' => '信息墙',
+	'chat-user-menu-talk-page' => '对话页',
 	'chat-user-menu-contribs' => '贡献',
 	'chat-user-menu-private' => '悄悄话',
 	'chat-user-menu-give-chat-mod' => '给聊天主持人状态',
@@ -2733,6 +2761,9 @@ $messages['zh-hans'] = array(
 	'group-chatmoderator-member' => '聊天主持人',
 	'group-bannedfromchat' => '从聊天中禁止',
 	'group-bannedfromchat-member' => '从聊天中禁止',
+	'chat-ban-log-change-ban-link' => '改变封禁',
+	'chat-chatban-log' => '聊天封禁日志',
+	'chat-checkuser-join-action' => '加入聊天',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

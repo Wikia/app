@@ -44,12 +44,7 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		$commentingAllowed = true;
-		if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) {
-			$props = BlogArticle::getProps($title->getArticleID());
-			$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
-		}
-		if (!$commentingAllowed) {
+		if (!ArticleComment::canComment()) {
 			return $result;
 		}
 
@@ -184,12 +179,7 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		if ( defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE ) {
-			$props = BlogArticle::getProps( $title->getArticleID() );
-			$commentingAllowed = ( isset( $props['commenting'] ) ) ? (bool)$props['commenting'] : true;
-		}
-
-		if ( !$commentingAllowed ) {
+		if ( !ArticleComment::canComment() ) {
 			return $result;
 		}
 

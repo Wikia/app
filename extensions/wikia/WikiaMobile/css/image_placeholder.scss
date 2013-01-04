@@ -1,3 +1,5 @@
+@import "variables";
+
 .imgPlcHld, wkSlider img, .lazy {
 	background-image: url('/extensions/wikia/WikiaPhotoGallery/images/wikiamobile_img_placeholder.png'); /* base64 */
 	background-repeat: no-repeat;
@@ -8,4 +10,14 @@
 	background-image: url('/extensions/wikia/WikiaMobile/images/gallery_placeholder.png'); /* base64 */
 	background-repeat: no-repeat;
 	background-position: center;
+}
+
+.lazy {
+	background-size: 70px;
+	display: none;
+	background-color: $imagePlaceholderBackground;
+
+	.js & {
+		display: inline;
+	}
 }

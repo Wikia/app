@@ -73,7 +73,7 @@ class OasisController extends WikiaController {
 
 			$jsAtBottom = true;	// Liftium.js (part of AssetsManager) must be loaded after LiftiumOptions variable is set in page source
 		}
-		elseif ($wgTitle->getNamespace() == NS_SPECIAL || $wgTitle->getNamespace() == NS_FILE || BodyController::isEditPage()) {
+		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
 			$jsAtBottom = false;
 		}
 		else {

@@ -14,6 +14,9 @@ var UserLoginFacebook = {
 			this.loginSetup();
 			this.setupTooltips();
 
+			// load when the login dropdown is shown - see BugId:68955
+			$.loadFacebookAPI();
+
 			this.log('init');
 		}
 	},
@@ -28,14 +31,9 @@ var UserLoginFacebook = {
 		$('body').off('fb').on('click.fb', '.sso-login-facebook', function(ev) {
 			ev.preventDefault();
 
-			// Lazy load the facebook API
-			$.loadFacebookAPI().done(function() {
-				window.onFBloaded();
-
-				// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
-				FB.login($.proxy(self.loginCallback, self), {
-					scope:'publish_stream,email'
-				});
+			// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
+			FB.login($.proxy(self.loginCallback, self), {
+				scope:'publish_stream,email'
 			});
 		});
 	},

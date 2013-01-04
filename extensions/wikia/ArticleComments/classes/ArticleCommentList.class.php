@@ -390,7 +390,7 @@ class ArticleCommentList {
 	 */
 
 	public function getData($page = 1) {
-		global $wgUser, $wgTitle, $wgStylePath;
+		global $wgUser, $wgStylePath;
 
 		$groups = $wgUser->getEffectiveGroups();
 		//$isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
@@ -415,15 +415,12 @@ class ArticleCommentList {
 		$pagination = $this->doPagination($countComments, count($comments), $page);
 
 		$commentListHTML = '';
-		if(!empty($wgTitle)) {
-			$commentListHTML = F::app()->getView('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false  ))->render();
-		}
-
-		$commentingAllowed = true;
-
-		if (defined('NS_BLOG_ARTICLE') && $wgTitle && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
-			$props = BlogArticle::getProps($wgTitle->getArticleID());
-			$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
+		if(!empty($this->mTitle)) {
+			$commentListHTML = F::app()->getView('ArticleComments', 'CommentList', array(
+				'commentListRaw' => $comments,
+				'page' => $page,
+				'useMaster' => false
+			))->render();
 		}
 
 		$retVal = array(
@@ -432,7 +429,7 @@ class ArticleCommentList {
 			'canEdit' => $canEdit,
 			'commentListRaw' => $comments,
 			'commentListHTML' => $commentListHTML,
-			'commentingAllowed' => $commentingAllowed,
+			'commentingAllowed' => ArticleComment::canComment( $this->mTitle ),
 			'commentsPerPage' => $this->mMaxPerPage,
 			'countComments' => $countComments,
 			'countCommentsNested' => $countCommentsNested,
@@ -444,7 +441,7 @@ class ArticleCommentList {
 			'pagination' => $pagination,
 			'reason' => $isBlocked ? $this->blockedPage() : '',
 			'stylePath' => $wgStylePath,
-			'title' => $wgTitle
+			'title' => $this->mTitle
 		);
 
 		return $retVal;
@@ -885,8 +882,7 @@ class ArticleCommentList {
 				$namespace = $title->getNamespace();
 				$title = Title::newFromText($title->getText(), MWNamespace::getSubject($namespace));
 
-				if( (defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) ||
-					defined('NS_BLOG_ARTICLE_TALK') && $namespace == NS_BLOG_ARTICLE_TALK ) {
+				if ( ArticleComment::isBlog() ) {
 					$messageKey = 'article-comments-rc-blog-comments';
 				} else {
 					$messageKey = 'article-comments-rc-comments';
@@ -1030,8 +1026,7 @@ class ArticleCommentList {
 
 			//fb#15143
 			if( $titleMainArticle instanceof Title ) {
-				if( (defined('NS_BLOG_ARTICLE') && $rcNamespace == NS_BLOG_ARTICLE)
-				  || defined('NS_BLOG_ARTICLE_TALK') && $rcNamespace == NS_BLOG_ARTICLE_TALK ) {
+				if ( ArticleComment::isBlog() ) {
 					$messageKey = 'article-comments-rc-blog-comment';
 				} else {
 					$messageKey = 'article-comments-rc-comment';

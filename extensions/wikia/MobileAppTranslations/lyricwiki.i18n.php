@@ -956,6 +956,28 @@ $messages['ru'] = array(
 	'ringtone-matcher-by-song' => 'Отправить  %s  рингтон для вашей группы',
 );
 
+/** Slovak (slovenčina)
+ * @author Kusavica
+ */
+$messages['sk'] = array(
+	'app-loading' => 'Načítava sa...',
+	'app-tab-search' => 'Hľadať',
+	'app-tab-about' => 'O aplikácii',
+	'app-async-error-title' => 'Oops',
+	'app-async-error-message' => 'Dočasný problém s pripojením. Skúste sa pripojiť neskôr prosím.',
+	'app-nonetwork-dialog-title' => 'Sieť nie je k dispozícii',
+	'app-nonetwork-dialog-close-button' => 'OK',
+	'search-go' => 'Choď!',
+	'search-no-match-found' => 'Nenašla sa žiadna zhoda.',
+	'login-label' => 'Prihlásiť sa do LyricWiki',
+	'login-username-hint' => 'Používateľské meno',
+	'login-password-hint' => 'Heslo',
+	'login-submit-button' => 'Prihlásiť sa',
+	'about-heading' => 'LyricWiki',
+	'about-heading-feedback' => 'Spätná väzba',
+	'about-heading-rate' => 'Prosím ohodnoťte aplikáciu!',
+);
+
 /** Swedish (svenska)
  * @author Nghtwlkr
  * @author WikiPhoenix
@@ -1067,6 +1089,26 @@ $messages['tr'] = array(
 	'login-username-hint' => 'Kullanıcı adı',
 	'login-password-hint' => 'Parola',
 	'about-heading-licensing' => 'Telif hakları',
+);
+
+/** Ukrainian (українська)
+ * @author Base
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'app-loading' => 'Завантаження...',
+	'app-tab-search' => 'Пошук',
+	'app-tab-about' => 'Про програму',
+	'app-tab-browse' => 'A..Z',
+	'app-async-error-title' => 'Ой',
+	'app-nonetwork-dialog-close-button' => 'Гаразд',
+	'login-username-hint' => "Ім'я користувача",
+	'login-password-hint' => 'Пароль',
+	'login-submit-button' => 'Увійти',
+	'about-heading' => 'LyricWiki',
+	'about-heading-tips' => 'Пошук',
+	'about-heading-licensing' => 'Авторські права',
+	'about-heading-feedback' => "Зворотний зв'язок",
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -229,6 +229,17 @@ $messages['tl'] = array(
 	'wikiaconfirmemail-username' => 'Pangalan ng tagagamit',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'wikiaconfirmemail-error-empty-code' => 'Порожній код підтвердження',
+	'wikiaconfirmemail-error-invalid-code' => 'Код підтвердження невірний',
+	'wikiaconfirmemail-login-button' => 'Підтвердити й увійти',
+	'wikiaconfirmemail-heading' => 'Майже готово',
+	'wikiaconfirmemail-username' => "Ім'я користувача",
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */
@@ -240,4 +251,15 @@ $messages['vi'] = array(
 	'wikiaconfirmemail-heading' => 'Hầu như có!',
 	'wikiaconfirmemail-subheading' => 'Đăng nhập bằng tên người dùng và mật khẩu của bạn để chúng tôi biết rằng bạn đã nhận được email.',
 	'wikiaconfirmemail-username' => 'Tên người dùng',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'wikiaconfirmemail-error-empty-code' => '验证码为空',
+	'wikiaconfirmemail-error-invalid-code' => '验证码无效。',
+	'wikiaconfirmemail-login-button' => '确认并登录',
+	'wikiaconfirmemail-heading' => '马上好了。',
+	'wikiaconfirmemail-username' => '用户名',
 );

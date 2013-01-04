@@ -102,18 +102,34 @@ Detalls: $2",
 
 /** Czech (česky)
  * @author Chmee2
+ * @author Darth Daron
  */
 $messages['cs'] = array(
 	'lightbox_details_tooltip' => 'Zobrazit podrobnosti fotografie',
 	'lightbox-forum' => 'Fórum',
 	'lightbox-standard-link' => 'Standardní link',
+	'lightbox-blog-link' => 'Odkaz na blog',
 	'lightbox-send' => 'Poslat',
+	'lightbox-share-description' => 'Fotografie na $1 z $2',
+	'lightbox-share-email-subject' => '$1 Vám poslal na Wikii fotku.',
+	'lightbox-share-email-body' => 'Zdravím,
+někdo Vám chce ukázat fotku na Wikii. Podívat se můžete zde:
+$1
+ - Wikia Tým',
 	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Sdílet',
+	'lightbox-share-button-embed' => 'Vložit',
 	'lightbox-share-email-label' => 'Poslat obrázek emailem kamarádovi',
 	'lightbox-share-email-page-label' => 'Poslat stránku emailem kamarádovi',
 	'lightbox-share-email-page-label-address' => 'E-mailová adresa',
+	'lightbox-share-email-ok-caption' => 'Potvrzení',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-mail byl odeslán|E-maily byly odeslány}}.',
 	'lightbox-share-email-error-caption' => 'Chyba',
+	'lightbox-share-email-error-content' => 'Chyba při odesílání  {{PLURAL:$1| e-mailu|e-mailů}}.
+Podrobnosti:$2',
+	'lightbox-share-email-error-login' => 'Pro odesílání e-mailů se musíte přihlásit.',
+	'lightbox-share-email-error-noaddress' => 'Nebyla zadána adresa.',
+	'lightbox-visit-the-wiki' => 'Navštivte wiki:',
 );
 
 /** German (Deutsch)
@@ -786,6 +802,22 @@ $messages['tr'] = array(
 	'lightbox-share-email-error-caption' => 'Hata',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'lightbox_details_tooltip' => 'Перегляд відомостей про фото',
+	'lightbox-forum' => 'Форум',
+	'lightbox-standard-link' => 'Стандартне посилання',
+	'lightbox-send' => 'Надіслати',
+	'lightbox-share-button-email' => 'Email',
+	'lightbox-share-button-www' => 'Поділитися',
+	'lightbox-share-button-embed' => 'Вставити',
+	'lightbox-share-email-page-label-address' => 'Адреса електронної пошти',
+	'lightbox-share-email-ok-caption' => 'Підтвердження',
+	'lightbox-share-email-error-caption' => 'Помилка',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Sam Wang
@@ -795,4 +827,5 @@ $messages['zh-hans'] = array(
 	'lightbox-forum' => '论坛',
 	'lightbox-share-button-email' => '电子邮件',
 	'lightbox-share-button-www' => '分享',
+	'lightbox-share-email-error-caption' => '错误',
 );

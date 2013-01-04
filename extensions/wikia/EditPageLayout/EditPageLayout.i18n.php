@@ -118,8 +118,10 @@ $messages['qqq'] = array(
 	'wikia-editor-source-bold-tooltip' => 'Tooltip for the button used to bold text in source mode.',
 	'wikia-editor-source-italic-tooltip' => 'Tooltip for the button used to italicize text in source mode.',
 	'wikia-editor-source-link-tooltip' => 'Tooltip for the button used to add a link in source mode.',
-	'wikia-editor-modules-license-text' => 'Needs plural support.
-The first parameter is a placeholder for the license logo/image. The third parameter is the license name.', # Fuzzy
+	'wikia-editor-modules-license-text' => 'Parameters:
+* $1 is a placeholder for the license logo/image.
+* $2 is a URL.
+* $3 a license name.',
 	'restore-edits-notice' => "Please preserve the HTML markup as it's used to bind functionality via JS",
 	'restore-edits-diff-notice' => "Please preserve the HTML markup as it's used to bind functionality via JS",
 	'prefs-starting-an-edit' => 'This is a heading in Special:Preferences',
@@ -1675,7 +1677,7 @@ $messages['nl'] = array(
 	'wikia-editor-media-slider' => 'Afbeeldingenschuiver',
 	'wikia-editor-media-video' => 'Video',
 	'wikia-editor-media-mut' => 'Video',
-	'wikia-editor-media-image-tooltip' => 'Foto toevoegen',
+	'wikia-editor-media-image-tooltip' => 'Afbeeldingen toevoegen',
 	'wikia-editor-media-gallery-tooltip' => 'Galerij toevoegen',
 	'wikia-editor-media-slideshow-tooltip' => 'Diavoorstelling toevoegen',
 	'wikia-editor-media-slider-tooltip' => 'Schuifdiashow toevoegen',
@@ -2087,7 +2089,7 @@ $messages['sv'] = array(
 	'editpagelayout-helpLink-url' => 'Help:Editing',
 	'editpagelayout-helpLink' => 'Behöver du [[{{MediaWiki:Editpagelayout-helpLink-url}}|hjälp?]]',
 	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|meddelande|meddelanden}}',
-	'editpagelayout-notificationsLink-none' => 'Notifikationer',
+	'editpagelayout-notificationsLink-none' => 'Meddelanden',
 	'editpagelayout-edit-title' => 'Redigera titel',
 	'editpagelayout-edit-info' => 'Redigera info',
 	'editpagelayout-diff-header-url' => 'Help:Diff',
@@ -2119,7 +2121,7 @@ $messages['sv'] = array(
 	'wikia-editor-source-italic-tooltip' => 'Kursiv',
 	'wikia-editor-source-link-tooltip' => 'Lägg till länk',
 	'wikia-editor-modules-templates-title' => 'Mallar',
-	'wikia-editor-modules-templates-add-tooltip' => "Lägg till '$1'-mall",
+	'wikia-editor-modules-templates-add-tooltip' => 'Lägg till "$1"mall',
 	'wikia-editor-modules-templates-otherTemplates' => 'Lägg till andra mallar',
 	'wikia-editor-modules-templates-showUsedList' => 'Visa lista över använda mallar',
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Lista över använda mallar',
@@ -2314,12 +2316,23 @@ $messages['ttt'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  */
 $messages['uk'] = array(
+	'editpagelayout-edit-title' => 'Редагувати назву',
+	'editpagelayout-pageControls-changes' => 'Зміни',
+	'wikia-editor-media-image' => 'Фото',
+	'wikia-editor-media-gallery' => 'Галерея',
 	'wikia-editor-media-video' => 'Відео',
+	'wikia-editor-media-mut' => 'Відео',
 	'wikia-editor-media-image-tooltip' => 'Додати фотографію',
 	'wikia-editor-media-gallery-tooltip' => 'Додати галерею',
 	'wikia-editor-media-slideshow-tooltip' => 'Додати слайдшоу',
+	'wikia-editor-media-video-tooltip' => 'Додати відео',
+	'wikia-editor-media-mut-tooltip' => 'Додати відео (бета-версія)',
+	'wikia-editor-source-bold-tooltip' => 'Жирний',
+	'wikia-editor-source-italic-tooltip' => 'Курсив',
+	'wikia-editor-modules-categories-title' => 'Категорії',
 );
 
 /** Veps (vepsän kel’)
@@ -2447,6 +2460,7 @@ $messages['zh-hans'] = array(
 	'wikia-editor-media-gallery-tooltip' => '添加图库',
 	'wikia-editor-media-slider-tooltip' => '添加滑块',
 	'wikia-editor-media-video-tooltip' => '添加视频',
+	'wikia-editor-media-mut-tooltip' => '添加视频（测试版）',
 	'wikia-editor-source-bold-tooltip' => '粗体',
 	'wikia-editor-source-italic-tooltip' => '斜体',
 	'wikia-editor-source-link-tooltip' => '添加链接',
@@ -2462,7 +2476,9 @@ $messages['zh-hans'] = array(
 	'wikia-editor-loadingStates-toVisual' => '切换到预览模式...',
 	'wikia-editor-loadingStates-saving' => '发布您的编辑',
 	'wikia-editor-edittools-caption' => '更多',
+	'wikia-editor-notices-dialog-title' => '通知详情',
 	'rev-deleted-text-notice' => "警告：本项页面修订已被'''删除'''。[详细内容]",
+	'userinvalidcssjstitle-notice' => "'''警告：''' 皮肤\"\$1\"不存在。 [更多信息]",
 	'semiprotectedpagewarning-notice' => "'''注：''' 本页面已被锁定，仅注册用户可以编辑。您可能需要登录以进行编辑。[详细内容]",
 	'protectedpagewarning-notice' => "'''注：''' 本页面已被锁定，只有管理员可以编辑。本地管理员可以更改此状态。[详细内容]",
 	'titleprotectedwarning-notice' => "'''注：''' 本页面已被锁定，只有管理员可以创建。本地管理员可以更改此状态。[详细内容]",

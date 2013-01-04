@@ -2629,6 +2629,7 @@ $messages['tly'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  */
 $messages['uk'] = array(
 	'scavengerhunt-list-header-name' => 'Назва гри',
@@ -2639,9 +2640,22 @@ $messages['uk'] = array(
 	'scavengerhunt-label-image-check' => '(показати зображення)',
 	'scavengerhunt-label-general' => 'Основні',
 	'scavengerhunt-label-name' => 'Назва:',
+	'scavengerhunt-button-save' => 'Зберегти',
+	'scavengerhunt-button-disable' => 'Вимкнути',
+	'scavengerhunt-button-enable' => 'Увімкнути',
+	'scavengerhunt-button-delete' => 'Видалити',
+	'scavengerhunt-entry-form-name' => "Ваше ім'я:",
+	'scavengerhunt-entry-form-email' => 'Ваша адреса електронної пошти:',
+	'scavengerhunt-quit-game-button-quit' => 'Вихід',
+	'scavengerhunt-quit-game-button-cancel' => 'Скасувати',
+	'scavengerhunt-label-entry-form-email' => 'Електронна адреса користувача',
+	'scavengerhunt-label-entry-form-username' => 'Ім’я користувача',
+	'scavengerhunt-label-clue-color' => 'Колір шрифту',
+	'scavengerhunt-label-clue-size' => 'Розмір шрифту',
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hydra
  * @author Sam Wang
  */
@@ -2657,6 +2671,7 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
 	'scavengerhunt-quit-game-button-quit' => '退出',
 	'scavengerhunt-quit-game-button-cancel' => '取消',
+	'scavengerhunt-label-entry-form-username' => '用户名',
 	'scavengerhunt-label-clue-color' => '字体颜色',
 	'scavengerhunt-label-clue-size' => '字体大小',
 );

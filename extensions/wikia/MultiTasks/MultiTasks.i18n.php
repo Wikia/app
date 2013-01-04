@@ -127,17 +127,16 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'multiwikiedit_task_link' => ' "check" as in "verify" or as in "select"?', # Fuzzy
-	'multiwikiedit_on' => 'Lego. Probably has leading and trailing parameters. Please add this to the message...', # Fuzzy
+	'multiwikiedit_task_link' => '',
+	'multiwikiedit_on' => '',
 	'action-multiwikiedit' => '{{doc-action|multiwikiedit}}',
 	'multidelete_button' => '{{Identical|Delete}}',
-	'multidelete_task_link' => ' "check" as in "verify" or as in "select"?', # Fuzzy
+	'multidelete_task_link' => '',
 	'multidelete_reason' => '{{Identical|Reason for deletion}}',
-	'multidelete_split_results' => 'Needs plural support for $1 and $2.
-No, the message won\'t be displayed of $1 or $2 was just "1".', # Fuzzy
-	'multidelete_max_display_size' => 'Needs plural support for $1', # Fuzzy
+	'multidelete_split_results' => '',
+	'multidelete_max_display_size' => '',
 	'action-multidelete' => '{{doc-action|multidelete}}',
-	'multiwikirecords' => 'If $1 is a number, add plural support', # Fuzzy
+	'multiwikirecords' => '',
 	'action-multiwikifinder' => '{{doc-action|multiwikifinder}}',
 );
 
@@ -3169,10 +3168,20 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Base
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
+	'multitasks-link-back-label' => 'тут',
+	'multiwikiedit_button' => 'РЕДАГУВАТИ',
+	'multiwikiedit_confirm' => 'ПІДТВЕРДИТИ',
+	'multiwikiedit_caption' => 'Список сторінок',
+	'multiwikiedit_or' => '<b>АБО</b>',
+	'multiwikiedit_select_yourself' => 'Ви',
 	'multidelete_button' => 'ВИЛУЧИТИ',
+	'multidelete_select_all' => 'Вибрати всі',
+	'multidelete_this_wiki' => 'ця вікі',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -3207,6 +3216,7 @@ $messages['zh-hans'] = array(
 	'multidelete_select_all' => '选择全部',
 	'multidelete_page' => '待删除页面',
 	'multidelete_reason' => '删除原因',
+	'multidelete_processing' => '页面删除中',
 	'multidelete_this_wiki' => '这个维基',
 	'multidelete_inbox_caption' => '或以逗号隔开',
 	'multidelete_all_wikis' => '所有维基',

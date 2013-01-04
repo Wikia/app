@@ -16,14 +16,12 @@
 	width: 720px;
 }
 #ImageUploadBody {
-	background: #FFF;
 	height: 470px;
 	opacity: 1;
 	overflow: hidden;
 	padding: 15px;
 	position: relative;
 	width: 670px;
-	color: #000 !important;
 }
 #ImageUpload h1 {
 	color: #222;
@@ -132,7 +130,6 @@
 	padding-top: 8px;
 }
 #ImageUploadFindTable {
-	background: #EEE;
 	margin: 0 0 5px;
 	width: 100%;
 }

@@ -38,7 +38,7 @@ class WikiService extends WikiaModel {
 							$adminIds[] = $row->ug_user;
 						}
 						$db->freeResult( $result );
-						$this->wg->Memc->set( $memKey, $adminIds, 60*60*24 );
+						$this->wg->Memc->set( $memKey, $adminIds, 60*60*3 );
 					}
 					$userIds = array_unique( array_merge($userIds, $adminIds) );
 				}
@@ -87,7 +87,7 @@ class WikiService extends WikiaModel {
 					$totalVideos = intval( $row->cnt );
 				}
 
-				$this->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
+				$this->wg->Memc->set( $memKey, $totalVideos, 60*60*3 );
 			}
 		}
 
@@ -140,7 +140,7 @@ class WikiService extends WikiaModel {
 					);
 				}
 
-				$this->wg->Memc->set( $memKey, $sitestats, 60*60*24 );
+				$this->wg->Memc->set( $memKey, $sitestats, 60*60*3 );
 			}
 		}
 
@@ -177,7 +177,7 @@ class WikiService extends WikiaModel {
 				$topEditors[$row->user_id] = intval( $row->edits );
 			}
 
-			$this->wg->Memc->set( $memKey, $topEditors, 60*60*24 );
+			$this->wg->Memc->set( $memKey, $topEditors, 60*60*3 );
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
@@ -214,7 +214,7 @@ class WikiService extends WikiaModel {
 					$userEdits = intval( $row->cnt );
 				}
 
-				$this->wg->Memc->set( $memKey, $userEdits, 60*60*24 );
+				$this->wg->Memc->set( $memKey, $userEdits, 60*60*3 );
 			}
 		}
 
@@ -253,7 +253,7 @@ class WikiService extends WikiaModel {
 				$totalImages = intval( $row->cnt );
 			}
 
-			$this->wg->Memc->set( $memKey, $totalImages, 60*60*24 );
+			$this->wg->Memc->set( $memKey, $totalImages, 60*60*3 );
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );

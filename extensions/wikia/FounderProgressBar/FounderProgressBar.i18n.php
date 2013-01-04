@@ -128,9 +128,9 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'founderprogressbar-themedesigner-visit-action' => 'Ugly!', # Fuzzy
-	'founderprogressbar-photo-add10-label' => 'Needs plural.', # Fuzzy
-	'founderprogressbar-category-add3-label' => 'Needs plural.', # Fuzzy
+	'founderprogressbar-themedesigner-visit-action' => '',
+	'founderprogressbar-photo-add10-label' => 'Goal.',
+	'founderprogressbar-category-add3-label' => '',
 );
 
 /** Breton (brezhoneg)
@@ -1506,13 +1506,13 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'founderprogressbar-credits' => 'Een takenhub en gids voor nieuwe wikioprichters',
-	'founderprogressbar-widget-label' => "{{SITENAME}}'s voortgang",
+	'founderprogressbar-widget-label' => 'Voortgang van {{SITENAME}}',
 	'founderprogressbar-progress-label' => 'Afgeronde taken',
 	'founderprogressbar-progress-see-full-list' => 'Volledige lijst bekijken',
 	'founderprogressbar-progress-hide-full-list' => 'Volledige lijst verbergen',
 	'founderprogressbar-skip-for-now' => 'Voorlopig overslaan',
 	'founderprogressbar-task-completed' => 'Voltooid',
-	'founderprogressbar-list-label' => "{{SITENAME}}'s taken",
+	'founderprogressbar-list-label' => 'Taken voor {{SITENAME}}',
 	'founderprogressbar-list-description1' => 'Klaar om uw wiki succesvol te maken? Voltooi alle onderstaande taken om uw voortgangsbalk naar 100% te brengen! Iedere gebruiker kan uw wiki kan helpen en alle bijdragen worden meegeteld voor de taken op deze lijst.',
 	'founderprogressbar-list-description2' => 'In het takengebied staan alle uit te voeren taken. Als u een taak overslaat wordt deze verplaats naar het gedeelte "Overgeslagen taken" en blijft deze taak beschikbaar om uitgevoerd te worden. Is er een taak is die niet bij uw wiki past? Maak u geen zorgen. Als er alleen overgeslagen taken open staan, komen de bonustaken beschikbaar. Voltooi de bonustaken om tot 100% te komen.',
 	'founderprogressbar-list-task-label' => 'Taken',
@@ -1636,7 +1636,7 @@ $messages['pl'] = array(
 	'founderprogressbar-task-completed' => 'Ukończono',
 	'founderprogressbar-list-label' => 'Zadania dla {{SITENAME}}',
 	'founderprogressbar-list-description1' => 'Gotowy na nadanie swojej wiki właściwego kierunku? Wypełnij wszystkie poniższe zadania aby doprowadzić pasek postępu do 100%! Każdy na Twojej wiki może pomóc i wszystkie edycje będą się wpływać na postęp poszczególnych zadań.',
-	'founderprogressbar-list-description2' => 'Obszar zadań to lista wszystkich zadań wymagających ukończenia. Jeśli ominiesz któreś zadanie, zostanie ono przesunięte do sekcji Odłożone Zadania ale będzie dostępne w dowolnej chwili. Jest jakieś zadanie, które nie pasuje do Twojej wiki? Nie martw się, jeżeli w Odłożonych Zadaniach pozostają jakieś cele do osiągnięcia, możesz wykonać Dodatkowe Zadania. Ich ukończenie także wpływa na pasek postępu, więc możesz osiągnąć 100% nawet jeżeli nie wykonasz wszystkich zadań.',
+	'founderprogressbar-list-description2' => 'Obszar zadań to lista wszystkich zadań wymagających ukończenia. Jeśli ominiesz któreś zadanie, zostanie ono przesunięte do sekcji Pominięte zadania ale będzie dostępne w dowolnej chwili. Jest jakieś zadanie, które nie pasuje do Twojej wiki? Nie martw się, jeżeli w Pominiętych zadaniach pozostają jakieś cele do osiągnięcia, możesz wykonać Dodatkowe zadania. Ich ukończenie także wpływa na pasek postępu, więc możesz osiągnąć 100% nawet jeżeli nie wykonasz wszystkich zadań.',
 	'founderprogressbar-list-task-label' => 'Zadania',
 	'founderprogressbar-list-skipped-task-label' => 'Pominięte zadania',
 	'founderprogressbar-list-skipped-task-desc' => 'Można wykonać te zadania w dowolnym momencie.',
@@ -1686,8 +1686,8 @@ $messages['pl'] = array(
 	'founderprogressbar-wikialabs-visit-description' => 'Laboratorium pozwala na włączenia najnowszych rozszerzeń na Twojej wiki. Prace nad nimi nadal trwają, ale Laboratorium powoli Ci przejrzeć i wypróbować nad czym pracujemy.',
 	'founderprogressbar-fb-connect-label' => 'Facebook Connect',
 	'founderprogressbar-fb-connect-action' => 'Facebook Connect',
-	'founderprogressbar-fb-connect-description' => 'Podzieli się tym co robisz! Facebook Connect pozawala na dzielenie się z Twoimi przyjaciółmi na Facebooku Twoją pracą na wiki. Możesz wybrać, co powinno być publikowane. Wystarczy, że jeden administrator włączy tą opcję aby ukończyć zadanie',
-	'founderprogressbar-category-add5-label' => 'Osiągnij $1{{PLURAL:$1|Kategorię|Kategorie|Kategorii}}',
+	'founderprogressbar-fb-connect-description' => 'Podziel się tym co robisz! Facebook Connect pozawala na dzielenie się z Twoimi przyjaciółmi na Facebooku Twoją pracą na wiki. Możesz wybrać, co powinno być publikowane. Wystarczy, że jeden administrator włączy tą opcję aby ukończyć zadanie',
+	'founderprogressbar-category-add5-label' => 'Osiągnij $1 {{PLURAL:$1|Kategorię|Kategorie|Kategorii}}',
 	'founderprogressbar-category-add5-action' => 'Dodaj kategorię',
 	'founderprogressbar-category-add5-description' => 'Teraz, gdy masz już wystarczającą liczbę stron na swojej wiki, potrzebne może być więcej kategorii aby je zorganizować.',
 	'founderprogressbar-gallery-add-label' => 'Dodaj galerię obrazów',
@@ -2264,19 +2264,33 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  */
 $messages['uk'] = array(
+	'founderprogressbar-list-task-label' => 'Завдання',
+	'founderprogressbar-list-skipped-task-label' => 'Пропущені завдання',
+	'founderprogressbar-list-bonus-task-label' => 'Бонусні завдання',
+	'founderprogressbar-task-call-to-action' => 'Перейти до завдання',
 	'founderprogressbar-page-add10-action' => 'Додати сторінку',
+	'founderprogressbar-photo-add10-action' => 'Додати фото',
+	'founderprogressbar-category-add3-action' => 'Додати категорію',
+	'founderprogressbar-photo-add20-action' => 'Додати фото',
 	'founderprogressbar-total-edit75-label' => 'Досягти 75 редагувань',
 	'founderprogressbar-total-edit75-action' => 'Додати сторінку',
 	'founderprogressbar-total-edit75-description' => '75 правок - це віха на шляху до величі wiki!',
 	'founderprogressbar-page-add20-label' => 'Досягти  $1   {{PLURAL:$1| сторінки | сторінки}}',
 	'founderprogressbar-page-add20-action' => 'Додати сторінку',
+	'founderprogressbar-category-edit-action' => 'Перейти до категорії',
+	'founderprogressbar-category-add5-action' => 'Додати категорію',
+	'founderprogressbar-gallery-add-label' => 'Додати фотогалерею',
 	'founderprogressbar-video-add-label' => 'Додати відео',
 	'founderprogressbar-video-add-action' => 'Додати відео',
 	'founderprogressbar-video-add-description' => 'Відео це інший тип популярних засобів масової інформації, які допоможуть залучити людей на ваш wiki. Ви можете позичити відео на YouTube, Hulu та інших сайтах. Додати, використовуючи кнопку "Можливості і Медіа" в редакторі',
 	'founderprogressbar-user-add5-label' => 'Досягти 5 профілів користувачів',
 	'founderprogressbar-user-add5-action' => 'Перейти до сторінки довідки',
+	'founderprogressbar-total-edit300-action' => 'Додати сторінку',
+	'founderprogressbar-bonus-photo-add10-action' => 'Додати фото',
+	'founderprogressbar-bonus-page-add5-action' => 'Додати сторінку',
 	'founderprogressbar-browse-page-name' => 'Огляд',
 );
 
@@ -2315,14 +2329,18 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-topnav-edit-action' => '编辑导航',
 	'founderprogressbar-mainpage-addslider-action' => '编辑主页',
 	'founderprogressbar-video-add-label' => '添加一段视频',
+	'founderprogressbar-video-add-action' => '添加视频',
 	'founderprogressbar-user-add5-label' => '查看5个用户的档案',
 	'founderprogressbar-user-add5-action' => '转到帮助页',
 	'founderprogressbar-recentchanges-visit-label' => '查看最近更改',
 	'founderprogressbar-recentchanges-visit-action' => '转到 Special:RecentChanges',
 	'founderprogressbar-wordmark-edit-action' => '转到 Special:ThemeDesigner',
 	'founderprogressbar-blogpost-add-label' => '撰写一篇博客',
+	'founderprogressbar-blogpost-add-action' => '转到你的博客',
 	'founderprogressbar-fb-likes3-action' => '转到主页',
 	'founderprogressbar-total-edit300-action' => '添加页面',
+	'founderprogressbar-bonus-photo-add10-label' => '添加$1张图片。',
+	'founderprogressbar-bonus-photo-add10-action' => '添加图片',
 	'founderprogressbar-bonus-page-add5-action' => '添加页面',
 	'founderprogressbar-bonus-edit50-action' => '转到 Special:WikiActivity',
 	'founderprogressbar-browse-page-name' => '浏览',

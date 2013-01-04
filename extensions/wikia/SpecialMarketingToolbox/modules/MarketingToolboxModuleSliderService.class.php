@@ -69,19 +69,34 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 	public function renderEditor($data) {
 		$sliderModel = new MarketingToolboxSliderModel();
 		$data['slidesCount'] = $sliderModel->getSlidesCount();
-
-
 		$data['photos'] = array();
 
 		$model = new MarketingToolboxModel();
 		$imageSize = $model->getThumbnailSize();
 		for ($i = 1; $i <= $data['slidesCount']; $i++) {
-
 			if (!empty($data['values']['photo' . $i])) {
-				$data['photos'][$i] = ImagesService::getLocalFileThumbUrl($data['values']['photo' . $i], $imageSize);
+				$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['values']['photo' . $i], $imageSize);
+				$data['photos'][$i]['url'] = $imageData->url;
+				$data['photos'][$i]['imageWidth'] = $imageData->width;
+				$data['photos'][$i]['imageHeight'] = $imageData->height;
 			}
 		}
 
 		return parent::renderEditor($data);
+	}
+
+	public function filterData($data) {
+		$data = parent::filterData($data);
+
+		$model = new MarketingToolboxSliderModel();
+		$slidesCount = $model->getSlidesCount();
+
+		for ($i = 1; $i <= $slidesCount; $i++) {
+			if (!empty($data['url' . $i])) {
+				$data['url' . $i] = $this->addProtocolToLink($data['url' . $i]);
+			}
+		}
+
+		return $data;
 	}
 }

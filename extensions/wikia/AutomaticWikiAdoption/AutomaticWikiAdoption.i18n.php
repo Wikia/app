@@ -62,7 +62,7 @@ You can <a href=\"$3\">unsubscribe</a> from changes to this list.",
 	'wikiadoption-mail-second-content' => "Hi $1,
 Oh, no! It's been almost 60 days since there's been an active administrator on #WIKINAME. It's important that administrators regularly appear and contribute so the wiki can continue to run smoothly.
 
-Since it's been so many days since a current administrator has appeared, #WIKINAME will now be offered for adoption to other editors. 
+Since it's been so many days since a current administrator has appeared, #WIKINAME will now be offered for adoption to other editors.
 
 The Wikia Team
 
@@ -1116,7 +1116,7 @@ Anda boleh <a href="$3">berhenti melanggan</a> perubahan pada senarai ini.',
 
 Alamak! Sudah hampir 60 hari sejak kali terakhir ada pentadbir yang aktif di #WIKINAME. Adalah penting untuk pentadbir kerap hadir dan menyumbang supaya wiki ini terus berjalan lancar.
 
-Memandangkan sudah berapa lama sejak hadirnya seorang pentadbir semasa, maka #WIKINAME kini akan ditawarkan untuk diambil alih oleh pentadbir lain. 
+Memandangkan sudah berapa lama sejak hadirnya seorang pentadbir semasa, maka #WIKINAME kini akan ditawarkan untuk diambil alih oleh pentadbir lain.
 
 Pasukan Wikia
 
@@ -1466,7 +1466,7 @@ $messages['pl'] = array(
 <br /><br />
 Od jakiegoś czasu na {{SITENAME}} nie ma aktywnych administratorów i szukamy nowych pasjonatów aby ożywić tą wiki! Jako, że {{SITENAME}} skorzystała także z Twoich edycji, może chciałbyś przejąc tę rolę.
 <br /><br />
-Adoptując wiki, otrzymasz uprawnienia administratora i biurokraty, które potrzebne będą do zarządzania zawartością i rozwiązywania problemów społeczności wiki. Będziesz mieć także możliwość nadawania uprawnień innym, aby także mogli brać udział w administrowaniu wiki. 
+Adoptując wiki, otrzymasz uprawnienia administratora i biurokraty, które potrzebne będą do zarządzania zawartością i rozwiązywania problemów społeczności wiki. Będziesz mieć także możliwość nadawania uprawnień innym, aby także mogli brać udział w administrowaniu wiki.
 <br /><br />
 Czy jesteś gotów aby pomóc {{SITENAME}}?',
 	'wikiadoption-know-more-header' => 'Chcesz wiedzieć więcej?',
@@ -1637,7 +1637,7 @@ O usuário adoção de # WIKINAME terá agora burocrata e status de administrado
 
 O <br Equipe Wikia /> <br />
 
-Você pode <a href="$3"> unsubscribe </ a> de alterações a esta lista.', # Fuzzy
+Você pode <a href="$3"> unsubscribe </a> de alterações a esta lista.', # Fuzzy
 	'tog-adoptionmails' => 'Notificar-me por correio electrónico se a $1 ficar disponível para adopção por outros utilizadores',
 	'wikiadoption-pref-label' => 'Alterar estas preferências só afectará as mensagens por correio electrónico vindas da $1.',
 	'wikiadoption-welcome-header' => 'Parabéns! Adoptou a {{SITENAME}}!',
@@ -2102,6 +2102,7 @@ Mga Kasangkapang Nakakatulong:
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -2109,6 +2110,7 @@ $messages['uk'] = array(
 	'wikiadoption-button-adopt' => 'Так, я хочу прийняти {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Дізнайтеся більше!',
 	'wikiadoption-know-more-header' => 'Хочете знати більше?',
+	'wikiadoption-adoption-successed' => 'Вітаємо! Тепер Ви адміністратор цієї вікі!',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -2142,6 +2144,7 @@ Wikia小组
 
 您可以退订本列表的改动，点击这里：$3',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME已被认领',
+	'wikiadoption-pref-label' => '变更首选项只会影响来自$1的邮件。',
 	'wikiadoption-welcome-header' => '恭喜！你已认领了{{SITENAME}}！',
 );
 

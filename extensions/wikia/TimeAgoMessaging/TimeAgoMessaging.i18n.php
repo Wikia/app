@@ -94,17 +94,24 @@ $messages['ca'] = array(
 );
 
 /** Czech (česky)
+ * @author Darth Daron
  * @author Dontlietome7
  * @author Mormegil
  * @author Reaperman
  */
 $messages['cs'] = array(
 	'timeagomessaging-desc' => 'Poskytuje i18n pro zásuvný modul jquery.timeago.js',
+	'timeago-year' => 'před {{PLURAL:$1|$1 rokem|$1 roky|$1 lety}}',
 	'timeago-month' => 'před $1 {{PLURAL:$1|měsícem|měsíci|měsíci}}',
 	'timeago-day' => 'před {{PLURAL:$1|dnem|$1 dny}}',
 	'timeago-hour' => 'před {{PLURAL:$1|hodinou|$1 hodinami}}',
 	'timeago-minute' => 'před {{PLURAL:$1|1 minutou|$1 minutami}}',
 	'timeago-second' => 'před minutou',
+	'timeago-day-from-now' => 'před {{PLURAL:$1|dnem|$1 dny}}',
+	'timeago-hour-from-now' => 'před {{PLURAL:$1|hodinou|$1 hodinami|}}',
+	'timeago-minute-from-now' => 'před {{PLURAL:$1| minutou|$1 minutami}}',
+	'timeago-month-from-now' => 'před {{PLURAL:$1|měsícem|$1 měsíci}}',
+	'timeago-second-from-now' => 'před minutou',
 );
 
 /** German (Deutsch)
@@ -364,7 +371,7 @@ $messages['pl'] = array(
 	'timeago-year' => '{{PLURAL:$1|rok|$1 lata|$1 lat}} temu',
 	'timeago-month' => '{{PLURAL:$1|miesiąc|$1 miesiące|$1 miesięcy}} temu',
 	'timeago-day' => '{{PLURAL:$1|dzień|$1 dni}} temu',
-	'timeago-hour' => '{{PLURAL:$1|godzinę|$1 godziny|$1 godzin}} temu',
+	'timeago-hour' => '{{PLURAL:$1|1 godzinę|$1 godziny|$1 godzin}} temu',
 	'timeago-minute' => '{{PLURAL:$1|minutę|$1 minuty|$1 minut}} temu',
 	'timeago-second' => 'minutę temu',
 	'timeago-day-from-now' => '{{PLURAL:$1|jutro|za $1 dni}}',
@@ -536,8 +543,14 @@ $messages['vi'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
+	'timeago-day' => '$1天前',
+	'timeago-hour' => '$1小时前',
+	'timeago-minute' => '$1分钟前',
 	'timeago-second' => '一分钟前',
+	'timeago-day-from-now' => '$1天前',
+	'timeago-second-from-now' => '一分钟前',
 );

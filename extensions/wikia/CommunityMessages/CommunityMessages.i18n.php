@@ -342,5 +342,6 @@ $messages['vi'] = array(
  * @author Dimension
  */
 $messages['zh-hans'] = array(
+	'communitymessages-desc' => '社区信息的辅助扩展',
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|社区信息已更新]]。',
 );

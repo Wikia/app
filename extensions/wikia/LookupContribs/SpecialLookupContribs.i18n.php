@@ -66,7 +66,7 @@ Check given username for possible typos.</p>',
  */
 $messages['qqq'] = array(
 	'right-lookupcontribs' => '{{doc-right|lookupcontribs}}',
-	'lookupcontribsshowpages' => 'If $1 is a number, this should support plural.', # Fuzzy
+	'lookupcontribsshowpages' => '',
 	'lookupcontribscontent' => '{{Identical|Content}}',
 );
 
@@ -1597,14 +1597,19 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
+	'lookupcontribsselectuser' => 'Виберіть користувача:',
 	'lookupcontribsgo' => 'Перейти',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikioptions' => 'Параметри',
 	'lookupcontribsrestore' => 'відновити',
 	'lookupcontribslog' => 'журнал',
 	'lookupcontribshist' => 'історія',
 	'lookupcontribsdiff' => 'різн.',
+	'lookupcontribscontent' => 'вміст',
 );
 
 /** Yiddish (ייִדיש)

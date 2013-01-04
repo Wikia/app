@@ -4,4 +4,3 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 		return array();
 	}
 }
-?>

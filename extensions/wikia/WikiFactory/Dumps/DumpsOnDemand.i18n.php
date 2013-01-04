@@ -792,6 +792,14 @@ $messages['uk'] = array(
 	'dump-database-info-more' => 'Будь ласка, ознайомтесь з детальнішою інформацією <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
 );
 
+/** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'dump-database-curr-pages' => '当前页面',
+	'dump-database-full-pages' => '当前和历史页面',
+);
+
 /** Traditional Chinese (中文（繁體）‎)
  * @author Wrightbus
  */

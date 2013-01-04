@@ -18,13 +18,20 @@ class SearchApiController extends WikiaApiController {
 	 * @requestParam string $rank [OPTIONAL] The ranking to use in fetching the list of results, one of default, newest, oldest, recently-modified, stable, most-viewed, freshest, stalest
 	 * @requestParam integer $limit [OPTIONAL] The number of items per batch
 	 * @requestParam integer $batch [OPTIONAL] The batch/page of results to fetch
-	 * @requestParam string $namespaces [OPTIONAL] A comma-separated list of namespaces to restrict the results (e.g. main, user)
+	 * @requestParam string $namespaces [OPTIONAL] A comma-separated list of namespaces to restrict the results (e.g. 0, 14)
 	 *
 	 * @responseParam array $items The list of results
 	 * @responseParam integer $total The total number of results
 	 * @responseParam integer $currentBatch The index of the current batch/page
 	 * @responseParam integer $batches The total number of batches/pages
 	 * @responseParam integer $next The amount of items in the next batch/page
+	 *
+	 * @example &query=char
+	 * @example &query=vid&type=videos
+	 * @example &query=char&rank=oldest
+	 * @example &limit=5&query=char
+	 * @example &batch=2&limit=5&query=char
+	 * @example &namespaces=14&query=char
 	 */
 	public function getList() {
 		$searchConfig = F::build('WikiaSearchConfig');

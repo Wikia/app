@@ -782,6 +782,8 @@
 		}
 
 		/**
+		 * DEPRECATED, please use DataMartService::getTopWikisByPageviews passing in the hub as a parameter
+		 *
 		 * Gets the list of top wikis for category_id and language on a monthly pageviews basis
 		 *
 		 * @param integer $categoryId A valid category_id from city_cat_mapping table
@@ -792,6 +794,9 @@
 		 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
 		 *
 		 * @return Array The list, the key contains Wiki ID's and "pageviews" number
+		 *
+		 * @deprecated
+		 * @todo replace usages with calls to DataMartService::getTopWikisByPageviews and then remove
 		 */
 		public static function getTopCategoriesWikisByPageviews( $categoryId, $startDate, $endDate, $langCode = 'en', $periodId = null, $limit = 200 ) {
 			$app = F::app();

@@ -545,7 +545,53 @@ class EditPageLayout extends EditPage {
 		$this->mIsReadOnlyPage = true;
 		$this->helper->addJsVariable( 'wgEditPageIsReadOnly', true );
 
-		parent::displayPermissionsError($permErrors);
+		$formatPermissionsErrorMessage = $this->app->wg->Out->formatPermissionsErrorMessage( $permErrors, 'edit' );
+		$content = $this->app->wg->Out->parse($formatPermissionsErrorMessage);
+		$this->mEditPagePreloads['PermissionsError'] = array(
+			'content' => $content,
+			'class' => 'permissions-errors',
+		);
+
+		// All of the following is pasted from EditPage:displayPermissionsError and pruned
+		
+		if ( $this->app->wg->Request->getBool( 'redlink' ) ) {
+			// The edit page was reached via a red link.
+			// Redirect to the article page and let them click the edit tab if
+			// they really want a permission error.
+			$this->app->wg->Out->redirect( $this->mTitle->getFullUrl() );
+			return;
+		}
+
+		$content = $this->getContent();
+
+		# Use the normal message if there's nothing to display
+		if ( $this->firsttime && $content === '' ) {
+			$action = $this->mTitle->exists() ? 'edit' :
+				( $this->mTitle->isTalkPage() ? 'createtalk' : 'createpage' );
+			throw new PermissionsError( $action, $permErrors );
+		}
+
+		$this->app->wg->Out->setPageTitle( wfMessage( 'viewsource-title', $this->getContextTitle()->getPrefixedText() ) );
+		$this->app->wg->Out->addBacklinkSubtitle( $this->getContextTitle() );
+		
+		# If the user made changes, preserve them when showing the markup
+		# (This happens when a user is blocked during edit, for instance)
+		if ( !$this->firsttime ) {
+			$content = $this->textbox1;
+			$this->app->wg->Out->addWikiMsg( 'viewyourtext' );
+		} else {
+			$this->app->wg->Out->addWikiMsg( 'viewsourcetext' );
+		}
+
+		$this->showTextbox( $content, 'wpTextbox1', array( 'readonly' ) );
+
+		$this->app->wg->Out->addHTML( Html::rawElement( 'div', array( 'class' => 'templatesUsed' ),
+			Linker::formatTemplates( $this->getTemplates() ) ) );
+
+		if ( $this->mTitle->exists() ) {
+			$this->app->wg->Out->returnToMain( null, $this->mTitle );
+		}
+		
 	}
 
 	public function isReadOnlyPage() {

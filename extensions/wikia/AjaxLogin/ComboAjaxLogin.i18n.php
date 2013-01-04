@@ -95,6 +95,13 @@ Téntalo otra vuelta o [[Special:Contact|informa d'ello]].",
 	'comboajaxlogin-ajaxerror' => 'Wikia nun ta respondiendo. Por favor, comprueba la to conexón.',
 );
 
+/** Bashkir (башҡортса)
+ * @author Ләйсән
+ */
+$messages['ba'] = array(
+	'comboajaxlogin-createlog' => 'Танылыу йәки теркәлеү',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -573,6 +580,13 @@ $messages['ko'] = array(
 	'comboajaxlogin-createlog' => '로그인하거나 계정 만들기',
 );
 
+/** Kirghiz (Кыргызча)
+ * @author Growingup
+ */
+$messages['ky'] = array(
+	'comboajaxlogin-createlog' => 'Кирүү же эсеп жазуусун жаратуу',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -917,6 +931,19 @@ $messages['ro'] = array(
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Autentificare cu Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Înapoi',
 	'comboajaxlogin-connectmarketing-forward' => 'Începeţi &raquo;',
+);
+
+/** tarandíne (tarandíne)
+ * @author Reder
+ */
+$messages['roa-tara'] = array(
+	'comboajaxlogin-desc' => "Fenèstre denameche ca conzendone a l'utinde de trasère, arrecordare 'a passsuord e fàce ccu registre le utinde",
+	'comboajaxlogin-createlog' => "Trase o ccreje 'nu cunde utende nuève",
+	'comboajaxlogin-actionmsg' => "Ce vuè ccu fàce quiste cose tu hé ddà trasè o hé ddà crejà 'nu cunde",
+	'comboajaxlogin-actionmsg-protected' => "Ce vuè ccu fàce quiste cose tu hé ddà trasè o hé ddà crejà 'nu cunde",
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Tràse cu Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Rrète',
+	'comboajaxlogin-connectmarketing-forward' => 'Ccu accumenze &raquo;',
 );
 
 /** Russian (русский)

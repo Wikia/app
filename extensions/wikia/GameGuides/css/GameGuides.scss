@@ -286,6 +286,15 @@ figure {
 	background-color: rgba(255, 255, 255, .02);
 }
 
+.lazy {
+	background-size: 70px;
+	display: none;
+
+	.js & {
+		display: inline;
+	}
+}
+
 .galPlc.img, .galPlcHld {
 	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_dark.png'); /* base64 */
 	background-repeat: no-repeat;

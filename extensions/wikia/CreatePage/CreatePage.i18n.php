@@ -2048,6 +2048,8 @@ $messages['zh-hans'] = array(
 	'createpage-dialog-format' => '标准布局',
 	'createpage-dialog-blank' => '空白页面',
 	'createpage-error-empty-title' => '请为您的页面添加标题',
+	'createpage-error-invalid-title' => '抱歉，条目名无效。
+请另行取名。',
 	'createpage-error-article-exists' => '已存在同名页面。
 您可以访问<a href="$1">$2</a>，或重命名您的页面。',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]

@@ -304,11 +304,11 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		
 		$fileName = $this->getVal('fileHandler', false);
 		if( $fileName ) {
-			$model = new MarketingToolboxModel();
-			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($fileName, $model->getThumbnailSize());
+			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($fileName, $this->toolboxModel->getThumbnailSize());
 			$this->fileUrl = $imageData->url;
 			$this->imageWidth = $imageData->width;
 			$this->imageHeight = $imageData->height;
+			$this->fileTitle = $imageData->title;
 		}
 
 		$this->wf->ProfileOut(__METHOD__);
@@ -337,6 +337,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function executeFormField() {
+		$this->formFieldPrefix = MarketingToolboxModel::FORM_FIELD_PREFIX;
 		$this->inputData = $this->getVal('inputData');
 	}
 }

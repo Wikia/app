@@ -345,6 +345,8 @@ abstract class CodeLint {
 		$results = array();
 
 		foreach($fileNames as $fileName) {
+			$fileName = realpath($fileName);
+
 			if (!$this->isBlacklisted($fileName, $blacklist)) {
 				$results[] = $this->checkFile($fileName);
 			}
@@ -418,6 +420,8 @@ abstract class CodeLint {
 		$results = array();
 
 		foreach($directoryNames as $directoryName) {
+			$directoryName = realpath($directoryName);
+
 			if (!$this->isBlacklisted($directoryName, $blacklist)) {
 				$results += $this->checkDirectory($directoryName, $blacklist);
 			}

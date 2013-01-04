@@ -14,10 +14,10 @@ class WikiaValidatorFileTitleTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testFiles($fileString, $isValid, $exists, $namespace) {
 
-		$titleMock = $this->getMock('Title', array('newFromText', 'exists', 'getNamespace'));
+		$titleMock = $this->getMock('Title', array('makeTitle', 'exists', 'getNamespace'));
 
 		$titleMock->staticExpects($this->once())
-			->method('newFromText')
+			->method('makeTitle')
 			->will($this->returnValue($titleMock));
 
 		$titleMock->expects($this->any())
@@ -36,11 +36,11 @@ class WikiaValidatorFileTitleTest extends PHPUnit_Framework_TestCase {
 
 	public function testUrlsDataProvider() {
 		return array(
-			array('File:Skyfall (2012) - Theatrical Trailer 2 for Skyfall', true, true, NS_FILE),
-			array('File:Skyfall (2012) - Theatrical Trailer 2 for Skyfall', false, false, NS_FILE),
-			array('File:Skyfall (2012) - Theatrical Trailer 2 for Skyfall', false, true, NS_MAIN),
-			array('File:James Bond', true, true, NS_FILE),
-			array('File:Skyfall (2012) - Theatrical Trailer 2 for Skyfall', false, false, NS_CATEGORY),
+			array('Skyfall (2012) - Theatrical Trailer 2 for Skyfall', true, true, NS_FILE),
+			array('Skyfall (2012) - Theatrical Trailer 2 for Skyfall', false, false, NS_FILE),
+			array('Skyfall (2012) - Theatrical Trailer 2 for Skyfall', false, true, NS_MAIN),
+			array('James Bond', true, true, NS_FILE),
+			array('Skyfall (2012) - Theatrical Trailer 2 for Skyfall', false, false, NS_CATEGORY),
 		);
 	}
 }
