@@ -318,7 +318,6 @@ class WikiaFileHelper extends Service {
 	 * TODO - this method is very specific to lightbox.  This needs to be refactored back out to lightbox, and return just the basic objects (file, user, tect)
 	 */
 	public static function getMediaDetail( $fileTitle, $config = array() ) {
-
 		$data = array(
 			'mediaType' => '',
 			'videoEmbedCode' => '',
@@ -338,7 +337,6 @@ class WikiaFileHelper extends Service {
 		);
 
 		if ( !empty($fileTitle) ) {
-
 			if ( $fileTitle->getNamespace() != NS_FILE ) {
 				$fileTitle = F::build('Title', array($fileTitle->getDBKey(), NS_FILE), 'newFromText');
 			}
@@ -349,14 +347,12 @@ class WikiaFileHelper extends Service {
 				$config = self::getMediaDetailConfig( $config );
 
 				$data['exists'] = true;
-
 				$data['mediaType'] = self::isFileTypeVideo( $file ) ? 'video' : 'image';
 
 				$width = $file->getWidth();
 				$height = $file->getHeight();
 
 				if ( $data['mediaType'] == 'video' ) {
-
 					$width  = $config['contextWidth']  ? $config['contextWidth']  : $width;
 					$height = $config['contextHeight'] ? $config['contextHeight'] : $height;
 					if ( isset( $config['maxHeight'] ) ) {
@@ -365,12 +361,9 @@ class WikiaFileHelper extends Service {
 					$data['videoEmbedCode'] = $file->getEmbedCode( $width, true, true);
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
 					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
-
-					$mediaPage = F::build( 'WikiaVideoPage', array($fileTitle) );
-
 					$data['providerName'] = $file->getProviderName();
+					$mediaPage = F::build( 'WikiaVideoPage', array($fileTitle) );
 				} else {
-
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
 					$mediaPage = F::build( 'ImagePage', array($fileTitle) );
 				}
@@ -477,6 +470,7 @@ class WikiaFileHelper extends Service {
 
 		return implode('/', $tokens);
 	}
+
 	// format duration from second to h:m:s
 	public static function formatDuration( $sec ) {
 		$hms = "";
@@ -498,8 +492,8 @@ class WikiaFileHelper extends Service {
 	 * Get the duration in ISO 8601 format for meta tag
 	 * @return string
 	 */
-	public function getISO8601Duration($hms) {
-		if (!empty($hms)) {
+	public static function getISO8601Duration( $hms ) {
+		if ( !empty($hms) ) {
 			$segments = explode(':', $hms);
 			$ret = "PT";
 			if(count($segments) == 3) {
