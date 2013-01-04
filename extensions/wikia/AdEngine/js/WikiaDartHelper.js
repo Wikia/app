@@ -1,5 +1,5 @@
 
-var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPage) {
+var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, dartUrl) {
 	'use strict';
 
 	var logGroup = 'WikiaDartHelper',
@@ -7,33 +7,16 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		ord = Math.round(Math.random() * 23456787654),
 		tile = 1,
 
-		kvStrMaxLength = 500,
 		categoryStrMaxLength = 300,
 
-		decorateAsKv,
-		trimKvs,
-		getSubdomain,
 		getCustomKeyValues,
-		getArticleKV,
+		getDomain,
 		getDomainKV,
 		getDartHubName,
+		getHostname,
 		getHostnamePrefix,
-		getTitle,
-		getLanguage,
-		getResolution,
-		getPrefooterStatus,
+		getKruxKeyValues,
 		getCategories;
-
-	trimKvs = function (kvs, limit) {
-		return kvs.substr(0, limit).replace(/;[^;]*$/, ';');
-	};
-
-	decorateAsKv = function (key, value) {
-		if (value) {
-			return key + '=' + value + ';';
-		}
-		return '';
-	};
 
 	getDartHubName = function () {
 		if (window.cscoreCat === 'Entertainment') {
@@ -45,65 +28,18 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		return 'life';
 	};
 
-	getSubdomain = function () {
-		var subdomain;
-
-		switch (Geo.getContinentCode()) {
-		case 'AF':
-		case 'EU':
-			subdomain = 'ad-emea';
-			break;
-		case 'AS':
-			switch (Geo.getCountryCode()) {
-				// Middle East
-			case 'AE':
-			case 'CY':
-			case 'BH':
-			case 'IL':
-			case 'IQ':
-			case 'IR':
-			case 'JO':
-			case 'KW':
-			case 'LB':
-			case 'OM':
-			case 'PS':
-			case 'QA':
-			case 'SA':
-			case 'SY':
-			case 'TR':
-			case 'YE':
-				subdomain = 'ad-emea';
-				break;
-			default:
-				subdomain = 'ad-apac';
-			}
-			break;
-		case 'OC':
-			subdomain = 'ad-apac';
-			break;
-		default: // NA, SA
-			subdomain = 'ad';
-		}
-
-		return subdomain;
-	};
-
 	getCustomKeyValues = function () {
 		if (window.wgDartCustomKeyValues) {
-			return trimKvs(window.wgDartCustomKeyValues + ';', kvStrMaxLength);
+			return window.wgDartCustomKeyValues + ';';
 		}
 		return '';
 	};
 
-	getArticleKV = function () {
-		return decorateAsKv('artid', window.wgArticleId);
-	};
-
-	getDomainKV = function (hostname) {
+	getDomain = function (hostname) {
 		var lhost, pieces, sld = '', np;
 		lhost = hostname.toLowerCase();
 
-		pieces = lhost.split(".");
+		pieces = lhost.split('.');
 		np = pieces.length;
 
 		if (pieces[np - 2] === 'co') {
@@ -113,62 +49,30 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			sld = pieces[np - 2] + '.' + pieces[np - 1];
 		}
 
-		return decorateAsKv('dmn', sld.replace(/\./g, ''));
+		return sld.replace(/\./g, '');
 	};
 
-	getHostnamePrefix = function (hostname) {
+	getDomainKV = function (hostname) {
+		return dartUrl.decorateParam('dmn', getDomain(hostname));
+	};
+
+	getHostname = function (hostname) {
 		var lhost = hostname.toLowerCase(),
 			pieces = lhost.split('.');
 
 		if (pieces.length) {
-			return decorateAsKv('hostpre', pieces[0]);
+			return pieces[0];
 		}
-
-		return '';
 	};
 
-	getTitle = function () {
-		if (window.wgPageName) {
-			return "wpage=" + encodeURIComponent(window.wgPageName.toLowerCase()) + ";";	// DFP lowercases values of keys
-		}
-		return "";
-	};
-
-	getLanguage = function () {
-		var lang = 'unknown';
-		if (window.wgContentLanguage) {
-			lang = window.wgContentLanguage;
-		}
-		return 'lang=' + lang + ';';
-	};
-
-	getResolution = function () {
-		var width = document.documentElement.clientWidth || document.body.clientWidth;
-		if (width > 1024) {
-			return 'dis=large;';
-		}
-		return '';
-	};
-
-	getPrefooterStatus = function () {
-		if (adLogicShortPage && adLogicShortPage.hasPreFooters()) {
-			return 'hasp=yes;';
-		}
-		return 'hasp=no;';
+	getHostnamePrefix = function (hostname) {
+		return dartUrl.decorateParam('hostpre', getHostname(hostname));
 	};
 
 	getCategories = function () {
-		var i, categories = '';
-
-		if (!window.wgCategories) {
-			return '';
+		if (window.wgCategories instanceof Array) {
+			return window.wgCategories.join('|').toLowerCase().replace(/ /g, '_').split('|');
 		}
-
-		for (i = 0; i < window.wgCategories.length; i += 1) {
-			categories += 'cat=' + encodeURIComponent(window.wgCategories[i].toLowerCase().replace(/ /g, '_')) + ';';
-		}
-
-		return trimKvs(categories, categoryStrMaxLength);
 	};
 
 	/**
@@ -176,12 +80,12 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 	 *
 	 * @param params {
 	 *   REQUIRED:
+	 *     subdomain
 	 *     slotname
 	 *     slotsize
 	 *   OPTIONAL:
 	 *     adType (default: adj, adi, jwplayer, mobile)
 	 *     src (default: driver)
-	 *     subdomain (default: by geo)
 	 *     loc, dcopt, tile, positionfixed
 	 * }
 	 * @return {String} URL of DART script
@@ -191,18 +95,15 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			size = params.slotsize,
 			adType = params.adType || 'adj',
 			pathPrefix,
-			loc = decorateAsKv('loc', params.loc),
-			dcopt = decorateAsKv('dcopt', params.dcopt),
 			src = params.src || 'driver',
 			localTile,
 			localOrd = params.ord || ord,
-			kruxKV = '',
 			url,
-			subdomain = params.subdomain || getSubdomain(),
-			endTag = params.omitEndTag ? '' : 'endtag=$;',
+			subdomain = params.subdomain,
 			site,
 			zone1,
-			zone2;
+			zone2,
+			clientWidth = document.documentElement.clientWidth || document.body.clientWidth;
 
 		if (adType === 'jwplayer') {
 			pathPrefix = 'pfadx/';
@@ -221,18 +122,14 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 			tile += 1;
 		}
 
-		if (Krux && Krux.dartKeyValues) {
-			kruxKV = trimKvs(Krux.dartKeyValues, kvStrMaxLength);
-		}
-
 		log(['getUrl', slotname, size], 5, logGroup);
 
 		if (window.wikiaPageIsHub) {
-			site = 'wka.hub';
+			site = 'hub';
 			zone1 = '_' + getDartHubName() + '_hub';
 			zone2 = 'hub';
 		} else {
-			site = 'wka.' + window.cityShort;
+			site = window.cityShort;
 			zone1 = '_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
 			zone2 = window.wikiaPageType || 'article';
 		}
@@ -250,71 +147,64 @@ var WikiaDartHelper = function (log, window, document, Geo, Krux, adLogicShortPa
 		 http://ad.doubleclick.net/adj/wka.ent/_glee/article;s0=ent;s1=_glee;s2=article;media=tv;sex=f;age=13-17;age=18-34;eth=asian;hhi=0-30;aff=fashion;aff=teens;age=teen;aff=video;aff=communities;           dmn=wikia-devcom;hostpre=glee;pos=TOP_LEADERBOARD;                           lang=en;dis=large;hasp=unknown;
 		 loc=top;                          dcopt=ist;mtfIFPath=/extensions/wikia/AdEngine/;src=driver;sz=728x90,468x60,980x130,980x65;mtfInline=true;tile=1;endtag=$;ord=21889937933?
 		 */
-		url = 'http://' +
-			subdomain +
-			'.doubleclick.net/' +
-			pathPrefix +
-			site + '/' + zone1 + '/' + zone2 + ';' +
-			's0=' + site.replace(/wka\./, '') + ';' +
-			's1=' + zone1 + ';' +
-			's2=' + zone2 + ';' +
-			getCustomKeyValues() +
-			getArticleKV() + // TODO FIXME missing in adsinhead
-			getDomainKV(window.location.hostname) + // TODO inconsistent, most func just read window.*
-			getHostnamePrefix(window.location.hostname) + // TODO inconsistent, most func just read window.*
-			'pos=' + slotname + ';' +
-			getTitle() + // TODO FIXME missing in adsinhead
-			getLanguage() +
-			getResolution() +
-			getPrefooterStatus() +
-			decorateAsKv('positionfixed', params.positionfixed) +
-			kruxKV +
-			getCategories() + // TODO FIXME missing in adsinhead
-			loc +
-			dcopt +
-			(window.AdMeldAPIClient ? window.AdMeldAPIClient.getParamForDART(slotname) : '') + // TODO FIXME missing in adsinhead
-			'src=' + src + ';' +
-			'sz=' + size + ';' +
-			'mtfIFPath=/extensions/wikia/AdEngine/;' +
-			'mtfInline=true;' +	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
-			'tile=' + localTile + ';' +
-			endTag +
-			'ord=' + localOrd + '?';
+		url = dartUrl.urlBuilder(
+			subdomain + '.doubleclick.net',
+			pathPrefix + 'wka.' + site + '/' + zone1 + '/' + zone2
+		);
+		url.addParam('s0', site);
+		url.addParam('s1', zone1);
+		url.addParam('s2', zone2);
+		url.addString(getCustomKeyValues(), true);
+		url.addParam('artid', window.wgArticleId);
+		url.addParam('dmn', getDomain(window.location.hostname)); // TODO inconsistent, most func just read window.*
+		url.addParam('hostpre', getHostname(window.location.hostname)); // TODO inconsistent, most func just read window.*
+		url.addParam('pos', params.slotname);
+		if (window.wgPageName) {
+			url.addParam('wpage', window.wgPageName.toLowerCase());
+		}
+		url.addParam('lang', window.wgContentLanguage || 'unknown');
+		if (clientWidth > 1024) {
+			url.addParam('dis', 'large');
+		}
+		if (adLogicShortPage && adLogicShortPage.hasPreFooters()) {
+			url.addParam('hasp', 'yes');
+		} else {
+			url.addParam('hasp', 'no');
+		}
+		url.addParam('positionfixed', params.positionfixed);
+		if (Krux) {
+			url.addString(Krux && Krux.dartKeyValues, true);
+		}
+		url.addParam('cat', getCategories(), categoryStrMaxLength);
+		url.addParam('loc', params.loc);
+		url.addParam('dcopt', params.dcopt);
+		url.addString(window.AdMeldAPIClient ? window.AdMeldAPIClient.getParamForDART(slotname) : ''); // TODO FIXME missing in adsinhead
+		url.addParam('src', src);
+		url.addParam('sz', size);
+		url.addString('mtfIFPath=/extensions/wikia/AdEngine/;');
+		url.addParam('mtfInline', 'true');	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
+		url.addParam('tile', localTile);
+		if (!params.omitEndTag) {
+			url.addString('endtag=$;');
+		}
+		url.addString('ord=' + localOrd + '?');
 
-		log(url, /* 7 */ 5, logGroup);
-		return url;
+		log('' + url, 5, logGroup);
+		return '' + url;
+	};
+
+	getKruxKeyValues = function () {
+		if (Krux && Krux.dartKeyValues) {
+			return dartUrl.trimParam(Krux.dartKeyValues);
+		}
+		return '';
 	};
 
 	return {
 		getUrl: getUrl,
 		getCustomKeyValues: getCustomKeyValues,
 		getDomainKV: getDomainKV,
-		getHostnamePrefix: getHostnamePrefix
-	};
-};
-
-var WikiaDartMobileHelper = function (log, window, document) {
-	'use strict';
-
-	var wikiaDartHelper = WikiaDartHelper(log, window, document);
-
-	return {
-		/**
-		 * Get URL for a mobile ad
-		 *
-		 * @param params (slotname, positionfixed, uniqueId)
-		 * @return {String} URL of DART script
-		 */
-		getMobileUrl: function (params) {
-			return wikiaDartHelper.getUrl({
-				slotname: params.slotname,
-				positionfixed: params.positionfixed,
-				subdomain: 'ad.mo',
-				adType: 'mobile',
-				src: 'mobile',
-				slotsize: '5x5',
-				omitEndTag: true
-			}) + '&csit=1&dw=1&u=' + params.uniqueId;
-		}
+		getHostnamePrefix: getHostnamePrefix,
+		getKruxKeyValues: getKruxKeyValues
 	};
 };
