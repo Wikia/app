@@ -468,7 +468,7 @@ $config['wikiamobile_js_body_full'] = array(
 
 		//platform components
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 
 		//modules

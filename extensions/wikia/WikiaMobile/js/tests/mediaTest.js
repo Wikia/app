@@ -1,15 +1,16 @@
 /*
  @test-framework Jasmine
- @test-require-asset /extensions/wikia/WikiaMobile/js/Wikia.utils.js
  @test-require-asset /extensions/wikia/WikiaTracker/js/WikiaTracker.js
  @test-require-asset /resources/wikia/libraries/modil/modil.js
-< @test-require-asset /resources/wikia/libraries/deferred/deferred.js
+ @test-require-asset /extensions/wikia/WikiaMobile/js/Wikia.utils.js
+ @test-require-asset /resources/wikia/libraries/deferred/deferred.js
  @test-require-asset /resources/wikia/libraries/deferred/deferred.api.js
  @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/throbber.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/track.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/events.js
  @test-require-asset /resources/wikia/modules/window.js
+ @test-require-asset /resources/wikia/modules/ajax.js
  @test-require-asset /resources/wikia/modules/nirvana.js
  @test-require-asset /resources/wikia/modules/loader.js
  @test-require-asset /resources/wikia/modules/querystring.js

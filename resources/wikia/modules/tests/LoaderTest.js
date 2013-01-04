@@ -6,6 +6,7 @@
  @test-require-asset /resources/wikia/libraries/deferred/deferred.api.js
  @test-require-asset /resources/wikia/modules/window.js
  @test-require-asset /resources/wikia/modules/mw.js
+ @test-require-asset /resources/wikia/modules/ajax.js
  @test-require-asset /resources/wikia/modules/nirvana.js
  @test-require-asset /resources/wikia/modules/loader.js
  */

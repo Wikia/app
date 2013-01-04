@@ -6,7 +6,7 @@
 (function (context) {
 	'use strict';
 
-	function nirvana($) {
+	function nirvana(ajax) {
 		function sendRequest(attr) {
 			var type = (attr.type || 'POST').toUpperCase(),
 				format = (attr.format || 'json').toLowerCase(),
@@ -45,7 +45,7 @@
 				sortedDict[sortedKeys[i]] = data[sortedKeys[i]];
 			}
 
-			return $.ajax({
+			return ajax({
 				url: url + '/wikia.php?' + $.param(getUrl), /* JSlint ignore */
 				dataType: format,
 				type: type,
@@ -104,11 +104,10 @@
 	}
 
 	if (context.define && context.define.amd) {
-		// TODO: use "ajax" module here
-		context.define('nirvana', ['jquery'], nirvana);
+		context.define('nirvana', ['ajax'], nirvana);
 	}
 
-	context.Nirvana = nirvana();
-
-	if(context.jQuery) context.jQuery.nirvana = context.Nirvana;
+	if(context.jQuery) {
+		context.jQuery.nirvana = nirvana(context.jQuery.ajax);
+	}
 }(this));

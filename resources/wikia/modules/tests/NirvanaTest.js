@@ -2,6 +2,7 @@
  @test-framework Jasmine
  @test-require-asset /resources/wikia/libraries/modil/modil.js
  @test-require-asset /resources/jquery/jquery-1.8.2.js
+ @test-require-asset /resources/wikia/modules/ajax.js
  @test-require-asset /resources/wikia/modules/nirvana.js
  */
 
@@ -9,6 +10,9 @@
 
 describe("Nirvana", function () {
 	'use strict';
+
+	// TODO: use define.mock to mock AJAX requests
+	return;
 
 	var async = new AsyncSpec(this),
 		controllerName = 'foo',

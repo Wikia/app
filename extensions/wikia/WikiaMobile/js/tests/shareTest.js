@@ -7,9 +7,11 @@
  @test-require-asset /resources/wikia/libraries/deferred/deferred.api.js
  @test-require-asset /resources/wikia/modules/window.js
  @test-require-asset /resources/wikia/modules/mw.js
+ @test-require-asset /resources/wikia/modules/ajax.js
  @test-require-asset /resources/wikia/modules/nirvana.js
+ @test-require-asset /resources/wikia/modules/loader.js
  @test-require-asset /resources/wikia/modules/cache.js
- @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js
+ @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/share.js
  */
 
@@ -49,7 +51,7 @@ describe("Share module", function () {
 			return dfd.promise();
 		},
 		processStyle: function(){}
-	};
+	});
 
 	async.it('should be defined', function(done){
 		require(['share'], function(share){

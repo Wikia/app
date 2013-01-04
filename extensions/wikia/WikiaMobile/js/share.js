@@ -9,7 +9,7 @@
  *
  * @author Jakub Olek
  */
-define('share', ['cache', 'JSMessages'], function (cache, msg) {
+define('share', ['cache', 'JSMessages', 'loader'], function (cache, msg, loader) {
 	'use strict';
 
 	var shrData,
@@ -38,7 +38,7 @@ define('share', ['cache', 'JSMessages'], function (cache, msg) {
 
 			if(!shrData){
 				shrData = cache.get(cacheKey);
-				Wikia.processStyle(cache.get(cacheKey + 'style'));
+				loader.processStyle(cache.get(cacheKey + 'style'));
 				shrPageTxt = msg('wikiamobile-sharing-page-text', wgTitle, wgSitename);
 				shrMailPageTxt = encodeURIComponent(msg('wikiamobile-sharing-email-text', shrPageTxt));
 				shrImgTxt = msg('wikiamobile-sharing-modal-text', msg('wikiamobile-sharing-media-image'), wgTitle, wgSitename);
@@ -48,24 +48,28 @@ define('share', ['cache', 'JSMessages'], function (cache, msg) {
 			if(shrData){
 				handle(shrData);
 			}else{
-				Wikia.getMultiTypePackage({
-					templates: [{
-						controllerName: 'WikiaMobileSharingService',
-						methodName: 'index'
-					}],
-					styles: '/extensions/wikia/WikiaMobile/css/sharing.scss',
-					ttl: 86400,
-					callback: function(res){
+				loader({
+					type: loader.MULTI,
+					resources: {
+						templates: [{
+							controller: 'WikiaMobileSharingService',
+							method: 'index'
+						}],
+						styles: '/extensions/wikia/WikiaMobile/css/sharing.scss',
+						ttl: 86400
+					}
+				}).done(
+					function(res){
 						var html = res.templates.WikiaMobileSharingService_index,
 							style = res.styles;
 
-						Wikia.processStyle(style);
+						loader.processStyle(style);
 						cache.set(cacheKey, html, 604800);/*7 days*/
 						cache.set(cacheKey + 'style', style, 604800);
 						shrData = html;
 						handle(html);
 					}
-				});
+				)
 			}
 		};
 	};

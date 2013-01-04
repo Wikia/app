@@ -266,4 +266,12 @@
 	//$ is forbackward compatability
 	w.Wikia = Wikia;
 	w.$ = Wikia;
+
+	//AMD
+	if (w.define && w.define.amd) {
+		w.define('wikia.utils', function() {
+			return Wikia;
+		});
+	}
+
 })(this, document);
