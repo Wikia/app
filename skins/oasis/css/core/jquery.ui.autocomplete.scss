@@ -16,7 +16,6 @@
 	@include border-radius-sw( 3px );
 	@include box-shadow( 3px, 3px, 6px, darken( $color-page, 9% ) );
 	border-width: 1px;
-	border-top: 0;
 	cursor: pointer;
 	list-style: none;
 	margin-top: 2px;
