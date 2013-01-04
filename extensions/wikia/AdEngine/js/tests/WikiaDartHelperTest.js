@@ -187,7 +187,7 @@ test('getUrl has pre footers', function() {
 		dartHelper2;
 
 	paramsPassed = {};
-	dartHelper1 = WikiaDartHelper(logMock, windowMock, documentMock, {}, adLogicShortPageMockTrue, dartUrlMock),
+	dartHelper1 = WikiaDartHelper(logMock, windowMock, documentMock, {}, adLogicShortPageMockTrue, dartUrlMock);
 	dartHelper1.getUrl({});
 	equal(paramsPassed.hasp, 'yes', 'yes');
 
@@ -302,6 +302,57 @@ test('getUrl Page categories', function() {
 	});
 
 	deepEqual(paramsPassed.cat, ['category', 'another_category', 'yetanother_category']);
+});
+
+test('getUrl abTest info', function() {
+	var logMock = function() {},
+		windowMock = {
+			location: {hostname: 'example.org'}
+		},
+		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+		adLogicShortPageMock,
+		paramsPassed = {},
+		urlBuilderMock = {
+			addParam: function(key, value) {
+				paramsPassed[key] = value;
+			},
+			addString: function() {}
+		},
+		dartUrlMock = {
+			urlBuilder: function() {return urlBuilderMock;}
+		},
+		abTestMock = {
+			getActiveExperiments: function() {
+				return {
+					17: 34,
+					19: 45,
+					76: 112
+				};
+			}
+		},
+		abTestMockEmpty = {getActiveExperiments: function() {return {};}},
+		dartHelper1,
+		dartHelper2,
+		paramKey,
+		abKey;
+
+	paramsPassed = {};
+	dartHelper1 = WikiaDartHelper(logMock, windowMock, documentMock, {}, adLogicShortPageMock, dartUrlMock, abTestMock);
+	dartHelper1.getUrl({});
+	equal(paramsPassed.ab17, 34, 'ab17=34');
+	equal(paramsPassed.ab19, 45, 'ab19=45');
+	equal(paramsPassed.ab76, 112, 'ab76=112');
+
+	paramsPassed = {};
+	dartHelper2 = WikiaDartHelper(logMock, windowMock, documentMock, {}, adLogicShortPageMock, dartUrlMock, abTestMockEmpty);
+	dartHelper2.getUrl({});
+	abKey = false;
+	for (paramKey in paramsPassed) {
+		if (paramsPassed.hasOwnProperty(paramKey) && paramKey.match(/^ab/)) {
+			abKey = true;
+		}
+	}
+	ok(!abKey, 'no ab param passed');
 });
 
 
