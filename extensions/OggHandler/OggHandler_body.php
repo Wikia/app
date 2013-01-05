@@ -643,7 +643,7 @@ class OggTransformOutput extends MediaTransformOutput {
 			'isVideo' => $this->isVideo ) );
 
 		$s = Xml::tags( 'div',
-			array( 'id' => $id ),
+			array( 'id' => $id, /* Wikia start - liz */ 'class' => 'ogg_player' /* Wikia end bugid-35696 */ ),
 			( $thumb ? Xml::tags( 'div', array(), $thumb ) : '' ) .
 			Xml::tags( 'div', array(),
 				Xml::tags( 'button',

@@ -85,6 +85,11 @@ var LightboxLoader = {
 
 	        return;
         }
+        
+        // ignore ogg files
+        if( target.closest('.ogg_player').length ) {
+        	return; 
+        }
 
 		// move to parent of an image -> anchor
 		if ( target.is('span') || target.is('img') ) {
