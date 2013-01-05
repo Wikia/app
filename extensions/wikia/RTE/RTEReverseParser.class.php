@@ -29,6 +29,18 @@ class RTEReverseParser {
 	// lists handling
 	private $listLevel;
 	private $listBullets;
+	
+	/**
+	 * Stores all nodes iteratively so we can associate indices to nodes, and indices to outputs
+	 * @var array
+	 */
+	private $nodes = array();
+	
+	/**
+	 * Stores the output for each node, at any level, so we can locate it easily
+	 * @var array
+	 */
+	private $nodeOutputs = array();
 
 	// node ID counter
 	private $nodeId = 0;
@@ -231,10 +243,13 @@ class RTEReverseParser {
 			}
 		}
 
+		$this->nodes[] = $node;
+		$this->nodeOutputs[] = $out;
+		
 		//wfProfileOut(__METHOD__ . "::{$node->nodeName}::{$nodeId}");
 		wfProfileOut(__METHOD__ . "::{$node->nodeName}");
 		wfProfileOut(__METHOD__);
-
+		
 		return $out;
 	}
 
@@ -434,8 +449,8 @@ class RTEReverseParser {
 				$prefix = "\n";
 			}
 			else {
-				// only add line break if there's no empty line before
-				if ( self::getEmptyLinesBefore($node) == 0 && !self::isFirstChild($node) ) {
+				// only add line break if there's no empty line before and previous sibling was not a tag
+				if ( self::getEmptyLinesBefore($node) == 0 && !self::isFirstChild($node) && !$this->wasTag( $node->previousSibling ) ) {
 					$prefix = "\n";
 				}
 
@@ -2067,6 +2082,28 @@ class RTEReverseParser {
 			return true;
 		}
 
+		return false;
+	}
+	
+	/**
+	 * Determines if a tag was either html or a parser tag hook
+	 * @param DomNode $node
+	 * @return bool
+	 */
+	private function wasTag( $node ) {
+		global $wgParser;
+		$wgParser->firstCallInit();
+		if ( self::wasHtml( $node ) ) {
+			return true;
+		}
+		for ( $i = 0; $i < count( $this->nodes ); $i++ ) {
+			if ( $this->nodes[$i]->isSameNode( $node ) ) {
+				// pull the tag name out of a single-line confused hook or get the same output back
+				// it doesn't matter, because we need an exact match to make this work
+				$stripped = preg_replace( '/^\s*<([^>\/]+)\/?+>\s*$/', '$1', $this->nodeOutputs[$i] ); 
+				return in_array( $stripped, $wgParser->getTags() );
+			}
+		}
 		return false;
 	}
 }
