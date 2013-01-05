@@ -443,6 +443,11 @@
 			this.renderDialog($.msg('preview'), options, function(contentNode) {
 				self.getContent(function(content) {
 					var summary = $('#wpSummary').val();
+					
+					// bugid-93498: IE fakes placeholder functionality by setting a real val
+					if ( summary === $('#wpSummary').attr('placeholder') ) {
+						summary = '';
+					}
 
 					// add section name when adding new section (BugId:7658)
 					if (window.wgEditPageSection == 'new') {
