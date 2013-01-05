@@ -38,7 +38,7 @@ $.getEvent = function(e, boundEl) {
  * Variables
  */
 
-var WMU_panel = null,
+var WMU_modal = null,
 	WMU_curSourceId = 0,
 	WMU_lastQuery = [],
 	WMU_asyncTransaction = null,
@@ -363,23 +363,15 @@ function WMU_loadMainFromView() {
 				document.body.appendChild(element);
 			}
 
-			WMU_panel = new YAHOO.widget.Panel('WMU_div', {
-				modal: true,
-				constraintoviewport: true,
-				draggable: false,
-				close: false,
-				fixedcenter: true,
-				underlay: "none",
-				visible: false,
-				zIndex: 900
+			WMU_modal = $(document.body).makeModal({
+				persistent: true,
+				width: 812
 			});
-			WMU_panel.render(document.body);
-			WMU_panel.show();
 
 			WMU_indicator(1, false);
 
 			WMU_indicator(1, false);
-			if($G('ImageQuery') && WMU_panel.element.style.visibility == 'visible') {
+			if($G('ImageQuery')) {
 				$G('ImageQuery').focus();
 			}
 			var cookieMsg = document.cookie.indexOf("wmumainmesg=");
@@ -510,10 +502,8 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	}
 
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
-	if(WMU_panel != null) {
-		WMU_panel.show();
-		// Recenter each time for different instances of RTE. (BugId:15589)
-		WMU_panel.center();
+	if(WMU_modal != null) {
+		WMU_modal.showModal();
 		if(WMU_refid != null && WMU_wysiwygStart == 2) {
 			WMU_loadDetails();
 		} else {
@@ -551,27 +541,11 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		}
 
 		// @see http://developer.yahoo.com/yui/container/panel/#config
-		WMU_panel = new YAHOO.widget.Panel('WMU_div', {
-			modal: true,
-			constraintoviewport: true,
-			draggable: false,
-			close: false,
-			underlay: "none",
-			visible: false,
-			zIndex: 900
+		WMU_modal = $('#WMU_div').makeModal({
+			persistent: true,
+			width: 722
 		});
 
-		// use display: block/none for YUI panels (BugId:8825)
-		WMU_panel.showEvent.subscribe(function() {
-			YAHOO.util.Dom.setStyle(this.element, "display", "block");
-		});
-		WMU_panel.hideEvent.subscribe(function() {
-			YAHOO.util.Dom.setStyle(this.element, "display", "none");
-		});
-
-		WMU_panel.render();
-		WMU_panel.show();
-		WMU_panel.center();
 		if(WMU_refid != null && WMU_wysiwygStart == 2) {
 			WMU_loadDetails();
 		} else {
@@ -587,7 +561,7 @@ function WMU_loadMain() {
 		success: function(o) {
 			$G('ImageUploadMain').innerHTML = o.responseText;
 			WMU_indicator(1, false);
-			if($G('ImageQuery') && WMU_panel.element.style.visibility == 'visible') $G('ImageQuery').focus();
+			if($G('ImageQuery')) $G('ImageQuery').focus();
 			var cookieMsg = document.cookie.indexOf("wmumainmesg=");
 			if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
 				$G('ImageUploadTextCont').style.display = 'none';
@@ -1265,7 +1239,7 @@ function WMU_close(e) {
 	if(e) {
 		YAHOO.util.Event.preventDefault(e);
 	}
-	WMU_panel.hide();
+	WMU_modal.hideModal();
 	if(typeof window.RTE == 'undefined' && $G('wpTextbox1')) $G('wpTextbox1').focus();
 	WMU_switchScreen('Main');
 	WMU_loadMain();

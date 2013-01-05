@@ -99,7 +99,6 @@ yui-overlay, .yui-panel-container {
 
 .skin-oasis {
 
-	#ImageUpload,
 	#VideoEmbed {
 		@include box-shadow(0, 10px, 60px, mix($color-page, #000));
 		border: 5px solid $color-buttons; 
@@ -116,11 +115,6 @@ yui-overlay, .yui-panel-container {
 			margin-top: 4px;
 			vertical-align: baseline;
 		}
-	}
-	#ImageUpload {
-		background: $color-page;
-		padding: 35px 5px 5px 5px !important;
-		width: auto !important;
 	}
 	#ImageUploadClose,
 	#VideoEmbedClose {
