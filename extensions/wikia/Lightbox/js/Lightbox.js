@@ -1018,7 +1018,7 @@ var Lightbox = {
 				thumbArr = cached;
 			} else {
 
-				var article = $('#WikiaArticle'),
+				var article = $('#WikiaArticle, #WikiaArticleComments'),
 					playButton = Lightbox.thumbPlayButton,
 					titles = [], // array to check for title dupes
 					thumbArr = [],
@@ -1277,7 +1277,7 @@ var Lightbox = {
 				break;
 
 			// Embeded in Article Comments
-			case 'article-comments':
+			case 'WikiaArticleComments':
 				clickSource = clickSource || VPS.EMBED;
 
 				carouselType = "articleMedia";

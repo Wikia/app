@@ -33,13 +33,12 @@ class SpecialImportFreeImages extends SpecialPage {
 
 		# Check that the user has 'upload' right and is logged in
 		if( !$wgUser->isAllowed( 'upload' ) ) {
-			if( !$wgUser->isLoggedIn() ) {
-				$wgOut->showErrorPage( 'uploadnologin', 'uploadnologintext' );
-			} else {
-				$wgOut->permissionRequired( 'upload' );
-			}
+			/* Wikia change begin */
+			$wgOut->permissionRequired( 'upload' );
+			/* Wikia change end */
 			return;
 		}
+
 
 		# Check blocks
 		if( $wgUser->isBlocked() ) {

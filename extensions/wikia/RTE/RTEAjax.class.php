@@ -157,18 +157,44 @@ class RTEAjax {
 		if(!is_array($wgRDBData) || !isset($wgRDBData['type']) || $wgRDBData['type'] == 'error') {
 			$out = array('type' => 'unknown');
 		} else {
-			if($wgRDBData['type'] == 'tpl') {
+			if ($wgRDBData['type'] == 'tpl') {
 				$out = array();
 				$out['title'] = $wgRDBData['title']->getPrefixedDBkey();
 				$out['exists'] = $wgRDBData['title']->exists() ? true : false;
-				if($out['exists']) {
+
+				if ($out['exists']) {
 					$out['availableParams'] = RTE::getTemplateParams($wgRDBData['title'], $parser);
 				}
-				for($i = 0; $i < $wgRDBData['args']->node->length; $i++) {
-					$arg = new PPNode_DOM($wgRDBData['args']->node->item($i));
-					$argSplited = $arg->splitArg();
-					$key = !empty($argSplited['index']) ? $argSplited['index'] : $argSplited['name']->node->textContent;
-					$value = $argSplited['value']->node->textContent;
+
+				for ($argIndex = 0; $argIndex < $wgRDBData['args']->node->length; $argIndex++) {
+					$argNode = new PPNode_DOM($wgRDBData['args']->node->item($argIndex));
+					$argParts = $argNode->splitArg();
+					$argExts = $argParts['value']->getChildrenOfType('ext');
+
+					$key = !empty($argParts['index']) ? $argParts['index'] : $argParts['name']->node->textContent;
+					$value = $argParts['value']->node->textContent;
+
+					// Parse extension tags (BugId:43779)
+					if ($argExts->node->length > 0) {
+						$value = "";
+
+						for ($extIndex = 0; $extIndex < $argExts->node->length; $extIndex++) {
+							$extNode = new PPNode_DOM($argExts->node->item($extIndex));
+							$extParts = $extNode->splitExt();
+
+							// Name and attr are required parameters, the others are optional.
+							$value .= "<" . $extParts['name']->node->textContent . $extParts['attr']->node->textContent . ">";
+
+							if (isset($extParts['inner'])) {
+								$value .= $extParts['inner']->node->textContent;
+							}
+
+							if (isset($extParts['close'])) {
+								$value .= $extParts['close']->node->textContent;
+							}
+						}
+					}
+
 					$out['passedParams'][ trim($key) ] = trim($value);
 				}
 			}

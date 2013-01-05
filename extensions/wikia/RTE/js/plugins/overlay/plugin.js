@@ -160,11 +160,8 @@ CKEDITOR.plugins.add('rte-overlay',
 			'mouseover': function() {
 				// don't hide this menu when hovering over it
 				self.showOverlay(node);
-			},
-			'mouseout': function() {
-				// hide this menu
-				self.hideOverlay(node);
 			}
+			// bugid-51619: mouseout was removed to prevent overlay from being hidden when mousing into the media.
 		});
 
 		// store reference to node for which this overlay is rendered (RT #84138)
