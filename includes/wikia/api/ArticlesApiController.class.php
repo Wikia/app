@@ -549,7 +549,7 @@ class ArticlesApiController extends WikiaApiController {
 
 				if ( $n === false ) {
 					if ( $caller !== null ) {
-						$this->wf->profileOut( $caller );
+						F::app()->wf->profileOut( $caller );
 					}
 
 					throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
