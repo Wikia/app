@@ -80,13 +80,15 @@ class WikiaMiniUpload {
 
 	// recently uploaded images on that wiki
 	function recentlyUploaded() {
-		global $IP, $wmu;
-		require_once($IP . '/extensions/wikia/WikiaNewFiles/SpecialNewFiles.php');
+		global $wgRequest;
 
-		$isp = new IncludableSpecialPage('Newimages', '', 1, 'wfSpecialWikiaNewFiles', $IP . '/extensions/wikia/WikiaNewFiles/SpecialNewFiles.php');
-		wfSpecialWikiaNewFiles(8, $isp);
+		$limit = 8;
+		$offset = $wgRequest->getVal('offset');
+
+		$info = $this->getImages($limit, $offset);
+
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-		$tmpl->set_vars(array('data' => $wmu));
+		$tmpl->set_vars(array('data' => $info));
 		return $tmpl->render("results_recently");
 	}
 
@@ -546,8 +548,19 @@ class WikiaMiniUpload {
 			// clear the old caption for upload
 			$caption = $wgRequest->getVal('caption');
 			$slider = $wgRequest->getVal('slider');
+
+			// Get the namesapace translations in the content language for files and videos
 			$ns_vid = $wgContLang->getFormattedNsText( NS_FILE );
 			$ns_img = ImagePlaceholderTranslateNsImage();
+
+			// Get the same as above but for english
+			$enLang = Language::factory( 'en' );
+			$en_ns_vid = $enLang->getFormattedNsText( NS_FILE );
+
+			$oldWgContLang = $wgContLang;
+			$wgContLang = $enLang;
+			$en_ns_img = ImagePlaceholderTranslateNsImage();
+			$wgContLang = $oldWgContLang;
 
 			$title_obj = Title::newFromText( $title_main, $ns );
 			$article_obj = new Article( $title_obj );
@@ -557,14 +570,18 @@ class WikiaMiniUpload {
 
 			( '' != $wgRequest->getVal( 'box' ) ) ? $box = $wgRequest->getVal( 'box' ) : $box = '' ;
 
+			// Get the placeholder text in both the content language and in english
 			$placeholder_msg = wfMsgForContent( 'imgplc-placeholder' );
+			$en_placeholder_msg = wfMsgReal( 'imgplc-placeholder', array(), 'en');
 
 			$transl_v_t = '\[\[' . $ns_vid . ':' . $placeholder_msg . '[^\]]*\]\]';
 			$transl_i_t = '\[\[' . $ns_img . ':' . $placeholder_msg . '[^\]]*\]\]';
+			$en_transl_v_t = '\[\[' . $en_ns_vid . ':' . $en_placeholder_msg . '[^\]]*\]\]';
+			$en_transl_i_t = '\[\[' . $en_ns_img . ':' . $en_placeholder_msg . '[^\]]*\]\]';
 
 			$success = false;
 
-			preg_match_all( '/' . $transl_v_t . '|' . $transl_i_t . '/si', $text, $matches, PREG_OFFSET_CAPTURE );
+			preg_match_all( '/' . $transl_v_t . '|' . $transl_i_t . '|' . $en_transl_i_t . '|' . $en_transl_v_t . '/si', $text, $matches, PREG_OFFSET_CAPTURE );
 
 			if( is_array( $matches ) && $box < count($matches[0]) ) {
 				$our_gallery = $matches[0][$box][0];
@@ -682,5 +699,87 @@ class WikiaMiniUpload {
 
 		// phpFlickr 3.x has different response structure than previous version
 		return $flickrResult['photo'];
+	}
+
+	function getImages ( $limit, $offset = 0 ) {
+
+		# Load the next set of images, eliminating images uploaded by bots as
+		# well as eliminating any video files
+		$dbr = wfGetDB( DB_SLAVE );
+		$image = $dbr->tableName( 'image' );
+		$sql = 'SELECT img_size, img_name, img_user, img_user_text, img_description, img_timestamp '.
+				"FROM $image";
+
+		$botconds = array();
+		foreach ( User::getGroupsWithPermission( 'bot' ) as $groupname ) {
+			$botconds[] = 'ug_group = ' . $dbr->addQuotes( $groupname );
+		}
+
+		$where = array();
+		if ( count($botconds) ) {
+			$isbotmember = $dbr->makeList( $botconds, LIST_OR );
+
+			# LEFT join to the user_groups table on being a bot and then make sure
+			# we get null rows back (i.e. we're not a bot)
+			$ug = $dbr->tableName( 'user_groups' );
+
+			$sql .= " LEFT JOIN $ug ON img_user=ug_user AND ($isbotmember)";
+			$where[] = 'ug_group IS NULL';
+		}
+
+		# Eliminate videos from this listing
+		$where[] = 'img_media_type != \'VIDEO\'';
+		$where[] = 'img_major_mime != \'video\'';
+		$where[] = 'img_media_type != \'swf\'';
+
+		$sql .= ' WHERE ' . $dbr->makeList( $where, LIST_AND );
+		$sql .= ' ORDER BY img_timestamp DESC ';
+		$sql .= ' LIMIT ' . ( $limit + 1 );
+		if ($offset) {
+			$sql .= " OFFSET $offset";
+		}
+
+		$res = $dbr->query( $sql, __FUNCTION__ );
+
+		$images = array();
+		while ( $s = $dbr->fetchObject( $res ) ) {
+			$images[] = $s;
+		}
+		$dbr->freeResult( $res );
+
+		# Load the images into a new gallery
+		$gallery = new WikiaPhotoGallery();
+		$gallery->parseParams( array(
+			"rowdivider"   => true,
+			"hideoverflow" => true
+			) );
+
+		$gallery->setWidths( 212 );
+
+		$foundImages = 0;
+		foreach ( $images as $s ) {
+			$foundImages++;
+			if ( $foundImages > $limit ) {
+				# One extra just to test for whether to show a page link;
+				# don't actually show it.
+				break;
+			}
+
+			$nt = Title::newFromText( $s->img_name, NS_FILE );
+			$gallery->add( $nt );
+		}
+
+		$info = array("gallery" => $gallery);
+
+		# Set pagination information
+		if ( $offset > 0 ) {
+			$info['prev'] = $offset - $limit;
+		}
+
+		if ( $foundImages > $limit ) {
+			$info['next'] = $offset + $limit;
+		}
+
+		return $info;
 	}
 }
