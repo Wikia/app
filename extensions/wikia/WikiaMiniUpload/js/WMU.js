@@ -521,7 +521,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		html += '	<div id="ImageUploadBorder"></div>';
 		html += '	<div id="ImageUploadProgress1" class="ImageUploadProgress"></div>';
 		html += '       <div id="ImageUploadBack"><img src="'+wgBlankImgUrl+'" id="fe_wmuback_img" class="sprite back" alt="' + wmu_back + '" /><a href="#">' + wmu_back + '</a></div>';
-		html += '       <div id="ImageUploadClose"><img src="'+wgBlankImgUrl+'" id="fe_wmuclose_img" class="sprite close" alt="' + wmu_close + '" /><a href="#">' + wmu_close + '</a></div>';
 		html += '	<div id="ImageUploadBody">';
 		html += '		<div id="ImageUploadError"></div>';
 		html += '		<div id="ImageUploadMain"></div>';
@@ -553,7 +552,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		}
 	}
 	YAHOO.util.Event.addListener('ImageUploadBack', 'click', WMU_back);
-	YAHOO.util.Event.addListener('ImageUploadClose', 'click', WMU_close);
 }
 
 function WMU_loadMain() {

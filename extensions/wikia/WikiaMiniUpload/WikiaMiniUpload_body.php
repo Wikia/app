@@ -51,8 +51,7 @@ class WikiaMiniUpload {
 		$out .= '<div id="ImageUploadBorder"></div>';
 		$out .= '<div id="ImageUploadProgress1" class="ImageUploadProgress"></div>';
 		$out .= '<div id="ImageUploadBack"><img src="'.$wgBlankImgUrl.'" id="fe_wmuback_img" class="sprite back" alt="'.wfMsg('wmu-back').'" /><a href="#">' . wfMsg( 'wmu-back' ) . '</a></div>' ;
-		$out .= '<div id="ImageUploadClose"><img src="'.$wgBlankImgUrl.'" id="fe_wmuclose_img" class="sprite close" alt="'.wfMsg('wmu-close').'" /><a href="#">' . wfMsg( 'wmu-close' ) . '</a></div>';
-		$out .= '<div id="ImageUploadBody">';
+		$out .= '<div id="ImageUploadBody" class="nope">';
 		$out .= '<div id="ImageUploadError"></div>';
 		$out .= '<div id="ImageUploadMain">' . $this->loadMain() . '</div>';
 		$out .= '<div id="ImageUploadDetails" style="display: none;"></div>';

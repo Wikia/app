@@ -41,20 +41,6 @@
         left: -2px;
 }
 
-#ImageUploadClose {
-        right: 30px;
-        padding-left: 18px;
-        position: absolute;
-        top: 5px;
-}
-
-#ImageUploadClose img {
-        position: absolute;
-        cursor: pointer;
-        left: 1px;
-        top: 1px;
-}
-
 #ImageUploadBack {
 	left: 10px;
 	padding-left: 18px;
@@ -63,15 +49,6 @@
 	display: none;
 }
 #ImageUploadBack a {
-	color: #FFF;
-}
-#ImageUploadClose {
-	right: 30px;
-	padding-left: 18px;
-	position: absolute;
-	top: 5px;
-}
-#ImageUploadClose a {
 	color: #FFF;
 }
 

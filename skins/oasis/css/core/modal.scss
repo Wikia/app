@@ -116,7 +116,6 @@ yui-overlay, .yui-panel-container {
 			vertical-align: baseline;
 		}
 	}
-	#ImageUploadClose,
 	#VideoEmbedClose {
 		@include border-radius(3px);
 		@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
