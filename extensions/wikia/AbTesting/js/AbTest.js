@@ -98,7 +98,7 @@
 			if ( exp.group ) {
 				activeList[expName] = exp.group.name;
 			} else if ( includeControl ) {
-				activeList[expName] = undefined;
+				activeList[expName] = false;
 			}
 		}
 
@@ -123,7 +123,7 @@
 	// with a pre-determined experiment context (which is provided on instantiation).
 	(function( prototype ) {
 		var i, length,
-			methodNames = [ 'inGroup', 'getGroup', 'getActiveExperiments', 'getGASlot', 'getUserSlot' ];
+			methodNames = [ 'inGroup', 'getGroup', 'getGASlot', 'getUserSlot' ];
 
 		for ( i = 0, length = methodNames.length; i < length; i++ ) {
 			(function( methodName ) {
@@ -173,7 +173,7 @@
 
 			// User gets treated with this treatment group only if their
 			// assigned slot is within the allotted range.
-			if ( slot >= range.min && slot <= range.max ) {
+			if ( value >= range.min && value <= range.max ) {
 				return true;
 			}
 		}
@@ -238,11 +238,11 @@
 			exp = experiments[expName];
 			slot = getSlot(expName);
 			// Skip this experiment if the group is already set or the slot couldn't have been calculated
-			if ( exp.group || slot < 0 ) {
+			if ( exp.group || !exp.current || slot < 0 ) {
 				continue;
 			}
-			for ( groupName in exp.groups ) {
-				if ( isInGroup( slot, exp.groups[groupName].ranges ) ) {
+			for ( groupName in exp.current.groups ) {
+				if ( isInRanges( slot, exp.current.groups[groupName].ranges ) ) {
 					setActiveGroup( expName, groupName );
 				}
 			}
