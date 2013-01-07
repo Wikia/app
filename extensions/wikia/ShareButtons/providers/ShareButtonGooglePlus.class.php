@@ -2,15 +2,17 @@
 
 class ShareButtonGooglePlus extends ShareButton {
 
-	// AssetsManager compliant path to assets
-	public function getAssets() {
-		return array( '//extensions/wikia/ShareButtons/js/ShareButtonGooglePlus.js' );
-	}
+	/**
+	 * AssetsManager compliant path to assets
+	 * @var array
+	 */
+	protected static $assets = array( '//extensions/wikia/ShareButtons/js/ShareButtonGooglePlus.js' );
 
 	/**
 	 * Return HTML rendering share box (with votes count)
 	 *
 	 * @see http://www.google.com/intl/en/webmasters/+1/button/index.html
+	 * @return string
 	 */
 	public function getShareBox() {
 		$html = Xml::element('div', array(
@@ -20,19 +22,5 @@ class ShareButtonGooglePlus extends ShareButton {
 		), ' ');
 
 		return $html;
-	}
-
-	/**
-	 * Return HTML rendering share button
-	 */
-	public function getShareButton() {
-
-	}
-
-	/**
-	 * Return HTML rendering share link
-	 */
-	public function getShareLink() {
-
 	}
 }
