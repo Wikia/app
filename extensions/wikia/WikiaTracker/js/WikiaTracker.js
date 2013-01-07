@@ -83,30 +83,31 @@ window.WikiaTracker = (function(){
 		trackingMethod = trackingMethod || 'none',
 		browserEvent = browserEvent || window.event,
 		mouseMiddleClick = isMiddleClick(browserEvent),
-		isRetriggeredEvent = (typeof(browserEvent) !== 'undefined' && browserEvent.target && browserEvent.target.dataset && browserEvent.target.dataset.retriggered != 'false'),
+		ctrlMouseLeftClick = isCtrlLeftClick(browserEvent),
 		isLink = (data && data.href);
 		
-		if( isLink && !mouseMiddleClick && !isRetriggeredEvent ) {
+		if( isLink && !mouseMiddleClick && !ctrlMouseLeftClick && typeof(browserEvent) !== 'undefined' ) {
 			browserEvent.preventDefault();
 		}
 
 		doTrack(logGroup, eventName, data, trackingMethod);
 		
-		if( isLink && !mouseMiddleClick && !isRetriggeredEvent ) {
-			var newEvent = document.createEvent('MouseEvent');
-			newEvent.initMouseEvent(
-				browserEvent.type, browserEvent.bubbles, browserEvent.cancelable, browserEvent.view,
-				browserEvent.detail, browserEvent.screenX, browserEvent.screenY, browserEvent.clientX, 
-				browserEvent.clientY, browserEvent.ctrlKey, browserEvent.altKey, browserEvent.shiftKey, 
-				browserEvent.metaKey, browserEvent.button, browserEvent.relatedTarget
-			);
-
-			browserEvent.target.dataset.retriggered = true;
-			browserEvent.target.dispatchEvent(newEvent);
-			browserEvent.target.dataset.retriggered = false;
+		if( isLink && !mouseMiddleClick && !ctrlMouseLeftClick ) {
+		//delay at the end to make sure all of the above was at least invoked
+			setTimeout(function() {
+				document.location = data.href;
+			}, 100);
 		}
 	}
-	
+
+	/**
+	 * Tracking-only logic -- takes care of sending tracking data to internal tracker or/and GA
+	 * 
+	 * @param string logGroup log group name used in call to Wikia.log() 
+	 * @param string eventName The name of the event, either a custom one or "trackingevent" (please speak with Tracking leads before introducing a new event name) 
+	 * @param Object data A key-value hash of parameters to pass to GA and/or the datawarehouse keys are mentioned above in description to WikiaTracker.trackEvent() method
+	 * @param trackingMethod Tracking method [both/ga/internal/none]
+	 */
 	function doTrack(logGroup, eventName, data, trackingMethod) {
 		var ga_category = data['ga_category'],
 			ga_action = data['ga_action'],
@@ -154,7 +155,35 @@ window.WikiaTracker = (function(){
 			if(window.gaTrackEvent) gaTrackEvent(ga_category, ga_action, ga_label, ga_value, true);
 		}
 	}
-	
+
+	/**
+	 * Detects if an action made on event target was left mouse button click with ctrl key pressed
+	 * 
+	 * @param browserEvent
+	 * @return Boolean
+	 */
+	function isCtrlLeftClick(browserEvent) {
+	//bugId:45483
+		var result = false;
+		
+		if( browserEvent && browserEvent.ctrlKey ) {
+			if( browserEvent.button === 1 ) {
+			//Microsoft left mouse button === 1
+				result = true;
+			} else if( browserEvent.button == 0 ) {
+				result = true;
+			}
+		}
+		
+		return result;
+	}
+
+	/**
+	 * Detects if an action made on event target was middle mouse button click in a webkit browser
+	 *
+	 * @param browserEvent
+	 * @return Boolean
+	 */
 	function isMiddleClick(browserEvent) {
 	//bugId:31900
 	//only webkit fires click event on middle mouse button click
