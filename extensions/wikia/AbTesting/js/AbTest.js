@@ -55,7 +55,7 @@
 		if ( !expName ) {
 			log( methodName, 'Missing required argument "expName".' );
 		}
-		var exp = AbTest.experiments[expName], m;
+		var exp = AbTest.experiments[expName];
 		if ( !exp ) {
 			log( methodName, 'Experiment configuration not found for "' + expName + '."' );
 		}
@@ -66,7 +66,7 @@
 	AbTest.getGroup = function( expName ) {
 		var exp = getExperiment(expName,'getGroup'),
 			group = exp && exp.group;
-		return group.name;
+		return group && group.name;
 	};
 
 	// Returns true if the user is in the treatment group, false otherwise.
