@@ -779,7 +779,7 @@
 				this.textarea = $('<textarea>')
 					.addClass('body')
 					.attr('id', 'mw_' + this.editor.instanceId)
-					.val($.trim(this.textarea.html()))
+					.val($.trim(this.textarea.text()))
 					.insertAfter(this.textarea.hide());
 			}
 
