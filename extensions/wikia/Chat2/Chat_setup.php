@@ -168,8 +168,6 @@ function chatAjaxonUserGetRights( $user, &$aRights ) {
 $wgAjaxExportList[] = 'ChatAjax';
 function ChatAjax() {
 
-	error_log(var_export($_REQUEST, true));
-
 	global $wgRequest, $wgUser, $wgMemc;
 	$method = $wgRequest->getVal('method', false);
 
