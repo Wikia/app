@@ -50,6 +50,7 @@ $app->registerClass('MarketingToolboxModuleFromthecommunityService', $dir . 'mod
 $app->registerClass('MarketingToolboxModulePollsService', $dir . 'modules/MarketingToolboxModulePollsService.class.php');
 
 $app->registerClass('WikiaValidatorToolboxUrl', $dir . 'validators/WikiaValidatorToolboxUrl.class.php');
+$app->registerClass('WikiaValidatorUsersUrl', $dir . 'validators/WikiaValidatorUsersUrl.class.php');
 
 WikiaUserPropertiesController::registerHandler('MarketingToolboxUserPropertiesHandler');
 

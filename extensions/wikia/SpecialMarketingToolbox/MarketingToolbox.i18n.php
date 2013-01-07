@@ -104,7 +104,8 @@ $messages['en'] = array(
 	'marketing-toolbox-validator-string-short' => 'Your text is too short, please write more',
 	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',
 	'marketing-toolbox-validator-wrong-url' => 'The URL you entered is not valid, please try again',
-	'marketing-toolbox-validator-wrong-file' => 'The file you chose is not valid, please try again'
+	'marketing-toolbox-validator-wrong-file' => 'The file you chose is not valid, please try again',
+	'marketing-toolbox-validator-wrong-users-url' => 'The URL you entered doesn\'t contain User\'s name or User name is not valid',
 );
 
 $messages['qqq'] = array(
