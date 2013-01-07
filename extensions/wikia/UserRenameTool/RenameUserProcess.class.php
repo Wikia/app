@@ -846,7 +846,7 @@ class RenameUserProcess {
 		$this->invalidateUser($this->mOldUsername);
 
 		$this->addLog("Invalidate user data on local Wiki ({$wgCityId}): {$this->mNewUsername}");
-		$this->invalidateUser($this->mOldUsername);
+		$this->invalidateUser($this->mNewUsername);
 
 		$wgUser = $wgOldUser;
 
