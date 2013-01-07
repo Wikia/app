@@ -329,13 +329,10 @@ class ArticleComment {
 		return $this->mTitle;
 	}
 
-	public function getData($master = false, $title = null) {
-		global $wgUser, $wgTitle, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
+	public function getData( $master = false ) {
+		global $wgUser, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
 
 		wfProfileIn( __METHOD__ );
-
-		$title = empty($title) ? $wgTitle : $title;
-		$title = empty($title) ? $this->mTitle : $title;
 
 		$comment = false;
 		if ( $this->load($master) ) {
@@ -424,7 +421,7 @@ class ArticleComment {
 			$wgMemc->set( $articleDataKey, $comment, 60*60 );
 
 			if(!($comment['title'] instanceof Title)) {
-				$comment['title'] = F::build('Title',array($comment['title'],NS_TALK),'newFromText');
+				$comment['title'] = Title::newFromText( $comment['title'], NS_TALK );
 			}
 		}
 
