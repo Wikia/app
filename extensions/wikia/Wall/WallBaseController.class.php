@@ -77,7 +77,7 @@ class WallBaseController extends WikiaController{
 		wfProfileOut( __METHOD__ );	
 	}
 
-	public function index() {
+	public function index($wallMessagesPerPage = 10) {
 		wfProfileIn( __METHOD__ );
 
 		$this->addAsset();
@@ -85,11 +85,11 @@ class WallBaseController extends WikiaController{
 		$title = $this->request->getVal('title', $this->app->wg->Title);
 		$page = $this->request->getVal('page', 1);
 
-		$wallMessagesPerPage = 10;
-		if( !empty($this->app->wg->WallMessagesPerPage) ){
-			$wallMessagesPerPage = $this->app->wg->WallMessagesPerPage;
-		};
-		
+		/* for some reason nirvana passes null to this function we need to force default value */
+		if(empty($wallMessagesPerPage)) {
+			$wallMessagesPerPage = 10;
+		}
+
 		$this->getThreads($title, $page, $wallMessagesPerPage);
 
 		$this->response->setVal('type', 'Board');
@@ -392,7 +392,9 @@ class WallBaseController extends WikiaController{
 		wfProfileIn(__METHOD__);
 
 		$this->wall = $this->getWallForIndexPage($title);
-				
+
+		/* @var $this->wall Wall */
+
 		if(!empty($perPage)) {
 			$this->wall->setMaxPerPage($perPage);
 		}
