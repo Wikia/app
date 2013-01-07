@@ -62,13 +62,13 @@ class AbTesting extends WikiaObject {
 					'startTime' => $this->getTimestampForUTCDate($ver['start_time']),
 					'endTime' => $this->getTimestampForUTCDate($ver['end_time']),
 					'gaSlot' => $ver['ga_slot'],
-					'treatmentGroups' => array(),
+					'groups' => array(),
 				);
-				$treatmentGroups = &$version['treatmentGroups'];
+				$groups = &$version['treatmentGroups'];
 				foreach ($ver['group_ranges'] as $grn) {
 					$group = $exp['groups'][$grn['group_id']];
 					$groupName = $this->normalizeName($group['name']);
-					$treatmentGroups[$groupName] = array(
+					$groups[$groupName] = array(
 						'id' => $group['id'],
 						'name' => $groupName,
 						'ranges' => $this->parseRanges($grn['ranges']),
