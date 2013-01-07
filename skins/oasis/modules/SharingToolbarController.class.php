@@ -74,8 +74,8 @@ class SharingToolbarController extends WikiaController {
 		if ( !self::$assets ) {
 			$assets = array();
 
-			foreach( self::getShareButtons() as $shareButton ) {
-				$assets = array_merge( $assets, (array) $shareButton->getAssets() );
+            foreach ( self::$shareNetworks as $network ) {
+				$assets = array_merge( $assets, ShareButton::getAssetsForNetwork( $network ) );
 			}
 
 			self::$assets = array_unique( $assets );
