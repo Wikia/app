@@ -645,7 +645,7 @@ class ArticleCommentList {
 	 * @return string The cache key
 	 */
 	static private function getCacheKey( Title $title ) {
-		return wfMemcKey( 'articlecomment', 'comm', $title->getDBkey(), $title->getNamespace(), self::CACHE_VERSION );
+		return wfMemcKey( 'articlecomment', 'comm', md5( $title->getDBkey() . $title->getNamespace() . self::CACHE_VERSION ) );
 	}
 
 	/**
