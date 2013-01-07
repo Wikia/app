@@ -34,6 +34,8 @@ Please use a different title.',
 	'createpage-error-article-blocked' => 'Sorry, you are unable to create that page at this time.',
 	'tog-createpagedefaultblank' => 'Use a blank page as default for creating a new page',
 	'tog-createpagepopupdisabled' => 'Disable "Create a new article" flow (Not Recommended)',
+	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]] Write the text of your article here!', // Includes video placeholder
+	
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Write the first paragraph of your page here.
 
@@ -43,7 +45,7 @@ Write the first section of your page here.
 
 ==Section heading==
 
-Write the second section of your page here.',
+Write the second section of your page here.', // Doesn't include video placeholder, and is overridden on messages wiki
 );
 
 /** Message documentation (Message documentation)

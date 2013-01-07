@@ -10,6 +10,12 @@ abstract class ShareButton extends WikiaObject {
 	 * @var Title
 	 */
 	protected $title;
+	
+	/**
+	 * Stores assets for a given button type
+	 * @var array
+	 */
+	protected static $assets = array();
 
 	/**
 	 * Return instance of share button for given social network
@@ -24,9 +30,24 @@ abstract class ShareButton extends WikiaObject {
 			return new $className( $title instanceof Title ? $title : F::app()->wg->Title );
 		}
 	}
+	
+	/**
+	 * Returns an array containing assets for a provided network
+	 * Will return an empty array if the class name is incorrect
+	 * @param string $name The name of the network
+	 * @return array
+	 */
+	static public function getAssetsForNetwork( $name ) {
+	    $className = 'ShareButton' . $name;
+		if ( class_exists( $className ) ) {
+			return $className::getAssets();
+		}
+		return array();
+	}
 
 	/**
 	 * Use ShareButton::factory instead
+	 * @param Title $title
 	 */
 	public function __construct( Title $title ) {
 		$this->title = $title;
@@ -34,7 +55,6 @@ abstract class ShareButton extends WikiaObject {
 
 	/**
 	 * Return color scheme name to be used based on SASS color calculation
-	 *
 	 * @return string color scheme to be used ("light" or "dark")
 	 */
 	protected function getColorScheme() {
@@ -54,19 +74,37 @@ abstract class ShareButton extends WikiaObject {
 		}
 		return str_replace( $path, implode( '/', $paths ), $this->title->getFullUrl() );
 	}
+	
+	/**
+	 * Return protected static assets from inherited class. By default this is an empty array.
+	 * Child classes can specify their own value for this property.
+	 * @return array
+	 */
+	public static function getAssets() {
+		return static::$assets;
+	}
 
 	/**
 	 * Return HTML rendering share box (with votes count)
+	 * @return string
 	 */
-	abstract public function getShareBox();
+	public function getShareBox() {
+		return '';
+	}
 
 	/**
 	 * Return HTML rendering share button
+	 * @return string
 	 */
-	abstract public function getShareButton();
+	public function getShareButton() {
+		return '';
+	}
 
 	/**
 	 * Return HTML rendering share link
+	 * @return string
 	 */
-	abstract public function getShareLink();
+	public function getShareLink() {
+		return '';
+	}
 }
