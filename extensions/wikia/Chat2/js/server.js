@@ -569,9 +569,9 @@ function chatMessage(client, socket, msg){
 		}
 		logMsg += ': ' + JSON.stringify(chatEntry);
 		logger.critical(logMsg);
-		//return;
+		return;
 	}
-	chatEntry.set({ isInlineAlert: false}); // just in case
+	//chatEntry.set({ isInlineAlert: false}); // not needed, as we ingore those messages
     monitoring.incrEventCounter('chat_messages');
 	storeAndBroadcastChatEntry(client, socket, chatEntry);
 } // end chatMessage()
