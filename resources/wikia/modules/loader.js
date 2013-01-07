@@ -43,6 +43,7 @@
 				}
 			},
 
+			// TODO: ease mocking
 			get = function(url, success, failure, type){
 				var element;
 
