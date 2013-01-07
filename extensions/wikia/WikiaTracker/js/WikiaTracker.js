@@ -83,32 +83,46 @@ window.WikiaTracker = (function(){
 		trackingMethod = trackingMethod || 'none',
 		browserEvent = browserEvent || window.event,
 		mouseMiddleClick = isMiddleClick(browserEvent),
-		ctrlMouseLeftClick = isCtrlLeftClick(browserEvent),
-		isLink = (data && data.href),
-		gaqArgs = [];
+		isLink = (data && data.href);
 		
-		// If clicking a link that will unload the page before tracking can happen,
-		// let's stop the default event and delay 100ms changing location (at the bottom)
-		// only if it's not mouse middle button click in a webkit browser or ctrl + mouse left button click
-		if( isLink && !mouseMiddleClick && typeof(browserEvent) !== 'undefined' ) {
+		if( isLink && !mouseMiddleClick && typeof(browserEvent) !== 'undefined' && !browserEvent.target.dataset.retriggered ) {
 			browserEvent.preventDefault();
 		}
 
+		doTrack(logGroup, eventName, data, trackingMethod);
+		
+		if( isLink && !mouseMiddleClick && typeof(browserEvent) !== 'undefined' && !browserEvent.target.dataset.retriggered ) {
+			var newEvent = document.createEvent('MouseEvent');
+			newEvent.initMouseEvent(
+				browserEvent.type, browserEvent.bubbles, browserEvent.cancelable, browserEvent.view,
+				browserEvent.detail, browserEvent.screenX, browserEvent.screenY, browserEvent.clientX, 
+				browserEvent.clientY, browserEvent.ctrlKey, browserEvent.altKey, browserEvent.shiftKey, 
+				browserEvent.metaKey, browserEvent.button, browserEvent.relatedTarget
+			);
+
+			browserEvent.target.dataset.retriggered = true;
+			browserEvent.target.dispatchEvent(newEvent);
+			browserEvent.target.dataset.retriggered = false;
+		}
+	}
+	
+	function doTrack(logGroup, eventName, data, trackingMethod) {
 		var ga_category = data['ga_category'],
 			ga_action = data['ga_action'],
 			ga_label = data['ga_label'],
-			ga_value = data['ga_value'];
+			ga_value = data['ga_value'],
+			gaqArgs = [];
 
 		if(
 			trackingMethod == 'none' ||
-			//"ga" or "both" are valid only for "trackingevent", this can be enabled by just uncommenting
-			//(eventName != mainEventName && trackingMethod != 'internal') ||
-			(
-				//ga info is compulsoruy for "both" and "ga"
-				trackingMethod in {both:'', ga:''} &&
-				(!ga_category || !ga_action || !actionsReverse[ga_action])
-			)
-		){
+				//"ga" or "both" are valid only for "trackingevent", this can be enabled by just uncommenting
+				//(eventName != mainEventName && trackingMethod != 'internal') ||
+				(
+					//ga info is compulsoruy for "both" and "ga"
+					trackingMethod in {both:'', ga:''} &&
+						(!ga_category || !ga_action || !actionsReverse[ga_action])
+					)
+			){
 			Wikia.log('Missing or invalid parameters', 'error', logGroup);
 			return;
 		}
@@ -138,19 +152,6 @@ window.WikiaTracker = (function(){
 			//WikiaTracker.track(null, 'main.sampled', gaqArgs);
 			if(window.gaTrackEvent) gaTrackEvent(ga_category, ga_action, ga_label, ga_value, true);
 		}
-		
-		if( isLink && ctrlMouseLeftClick && typeof(browserEvent) !== 'undefined' ) { //TODO: and it's not a mobile skin
-			$().log('==========');
-			$().log('TRIGGER THE EVENT!');
-			$().log('==========');
-		}
-
-		//delay at the end to make sure all of the above was at least invoked
-		if( isLink && !mouseMiddleClick && !ctrlMouseLeftClick ) {
-			setTimeout(function() {
-				document.location = data.href;
-			}, 100);
-		}
 	}
 	
 	function isMiddleClick(browserEvent) {
@@ -158,27 +159,6 @@ window.WikiaTracker = (function(){
 	//only webkit fires click event on middle mouse button click
 	//so, we don't care about other browsers (Microsoft has 4 assigned to middle click)
 		return (browserEvent && browserEvent.button === 1) ? true : false;
-	}
-	
-	function isCtrlLeftClick(browserEvent) {
-	//bugId:45483
-		var result = false;
-		
-		if( browserEvent && browserEvent.ctrlKey ) {
-			if( browserEvent.button === 1 ) {
-			//Microsoft left mouse button === 1
-				result = true;
-			} else if( browserEvent.button == 0 ) {
-				result = true;
-			}
-		}
-		
-		$().log('=========');
-		$().log('isCtrlLeftClick: ');
-		$().log(result);
-		$().log('=========');
-		
-		return result;
 	}
 
 	/**
