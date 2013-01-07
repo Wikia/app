@@ -41,7 +41,11 @@ $.getEvent = function(e, boundEl) {
 var WMU_modal = null,
 	WMU_curSourceId = 0,
 	WMU_lastQuery = [],
-	WMU_asyncTransaction = null,
+	WMU_jqXHR = {
+		abort: function() {
+			// empty placeholder function
+		}
+	},
 	WMU_curScreen = 'Main',
 	WMU_prevScreen = null,
 	WMU_slider = null,
@@ -105,51 +109,53 @@ function WMU_getRTETxtarea(){
 
 function WMU_loadDetails() {
 
-	YAHOO.util.Dom.setStyle('ImageUploadMain', 'display', 'none');
+	$('#ImageUploadMain').hide();
 	WMU_indicator(1, true);
 
-	var callback = {
-		success: function(o) {
-			WMU_displayDetails(o.responseText);
+	var callback = function(o) {
+		WMU_displayDetails(o.responseText);
 
-			$G('ImageUploadBack').style.display = 'none';
+		$G('ImageUploadBack').style.display = 'none';
 
-			setTimeout(function() {
-				// FIXME: FCK is mocked here so this code would still work even though we're not using FCK anymore
-				if(!FCK.wysiwygData[WMU_refid].thumb) {
-					$G('ImageUploadFullOption').click();
-				}
-				if(FCK.wysiwygData[WMU_refid].align && FCK.wysiwygData[WMU_refid].align == 'left') {
-					$G('ImageUploadLayoutLeft').click();
-				}
-				if(FCK.wysiwygData[WMU_refid].width) {
-					WMU_slider.setValue(FCK.wysiwygData[WMU_refid].width / (WMU_slider.getRealValue() / WMU_slider.getValue()), true);
-					MWU_imageWidthChanged();
-					$G( 'ImageUploadSlider' ).style.visibility = 'visible';
-					$G( 'ImageUploadInputWidth' ).style.visibility = 'visible';
-					$G( 'ImageUploadWidthCheckbox' ).checked = true;
-					$G( 'ImageUploadManualWidth' ).value = FCK.wysiwygData[WMU_refid].width;
-					WMU_manualWidthInput();
-				}
-			}, 100);
-
-			if(FCK.wysiwygData[WMU_refid].caption) {
-				$G('ImageUploadCaption').value = FCK.wysiwygData[WMU_refid].caption;
+		setTimeout(function() {
+			// FIXME: FCK is mocked here so this code would still work even though we're not using FCK anymore
+			if(!FCK.wysiwygData[WMU_refid].thumb) {
+				$G('ImageUploadFullOption').click();
 			}
-
-			if(FCK.wysiwygData[WMU_refid].link) {
-				$G('ImageUploadLink').value = FCK.wysiwygData[WMU_refid].link;
+			if(FCK.wysiwygData[WMU_refid].align && FCK.wysiwygData[WMU_refid].align == 'left') {
+				$G('ImageUploadLayoutLeft').click();
 			}
+			if(FCK.wysiwygData[WMU_refid].width) {
+				WMU_slider.setValue(FCK.wysiwygData[WMU_refid].width / (WMU_slider.getRealValue() / WMU_slider.getValue()), true);
+				MWU_imageWidthChanged();
+				$G( 'ImageUploadSlider' ).style.visibility = 'visible';
+				$G( 'ImageUploadInputWidth' ).style.visibility = 'visible';
+				$G( 'ImageUploadWidthCheckbox' ).checked = true;
+				$G( 'ImageUploadManualWidth' ).value = FCK.wysiwygData[WMU_refid].width;
+				WMU_manualWidthInput();
+			}
+		}, 100);
+
+		if(FCK.wysiwygData[WMU_refid].caption) {
+			$G('ImageUploadCaption').value = FCK.wysiwygData[WMU_refid].caption;
 		}
-	}
 
-	YAHOO.util.Connect.abort(WMU_asyncTransaction);
+		if(FCK.wysiwygData[WMU_refid].link) {
+			$G('ImageUploadLink').value = FCK.wysiwygData[WMU_refid].link;
+		}
+	};
+
+	WMU_jqXHR.abort();
+	
 
 	var params = new Array();
 	params.push('sourceId=0');
 	params.push('itemId=' + encodeURIComponent(FCK.wysiwygData[WMU_refid].href.split(":")[1]));
 
-	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + params.join('&'), callback);
+	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + params.join('&'), {
+		method: 'get',
+		complete: callback
+	});
 }
 
 // macbre: move back button inside dialog content and add before provided selector (Oasis changes)
@@ -651,17 +657,17 @@ function WMU_trySendQuery(e) {
 }
 
 function WMU_sendQuery(query, page, sourceId, pagination) {
-	var callback = {
-		success: function(o) {
-			$G('WMU_results_' + o.argument[0]).innerHTML = o.responseText;
-			WMU_indicator(2, false);
-		},
-		argument: [sourceId]
-	}
+	var callback = function(o) {
+		$G('WMU_results_' + sourceId).innerHTML = o.responseText;
+		WMU_indicator(2, false);
+	};
 	WMU_lastQuery[sourceId] = query;
 	WMU_indicator(2, true);
-	YAHOO.util.Connect.abort(WMU_asyncTransaction)
-	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId, callback);
+	WMU_jqXHR.abort();
+	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId, {
+		method: 'get',
+		complete: callback
+	});
 }
 
 function WMU_indicator(id, show) {
@@ -681,14 +687,16 @@ function WMU_indicator(id, show) {
 }
 
 function WMU_chooseImage(sourceId, itemId) {
-	var callback = {
-		success: function(o) {
-			WMU_displayDetails(o.responseText);
-		}
-	}
+	var callback = function(o) {
+		WMU_displayDetails(o.responseText);
+	};
+		
 	WMU_indicator(1, true);
-	YAHOO.util.Connect.abort(WMU_asyncTransaction)
-	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + 'sourceId=' + sourceId + '&itemId=' + itemId, callback);
+	WMU_jqXHR.abort();
+	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + 'sourceId=' + sourceId + '&itemId=' + itemId, {
+		method: 'get',
+		complete: callback
+	});
 }
 
 function WMU_upload(e) {
@@ -990,127 +998,128 @@ function WMU_insertImage(e, type) {
 		}
 	}
 
-	var callback = {
-		success: function(o) {
-
-			var screenType = o.getResponseHeader['X-screen-type'];
-			if(typeof screenType == "undefined") {
-				screenType = o.getResponseHeader['X-Screen-Type'];
-			}
-
-			switch(YAHOO.lang.trim(screenType)) {
-				case 'error':
-					o.responseText = o.responseText.replace(/<script.*script>/, "" );
-					break;
-				case 'conflict':
-					WMU_switchScreen('Conflict');
-					$G('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
-					break;
-				case 'summary':
-
-					WMU_switchScreen('Summary');
-					if (typeof RTE !== 'undefined') {
-						RTE.getInstanceEditor().getEditbox().focus();
-					}
-
-					$G('ImageUploadBack').style.display = 'none';
-					$G('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
-
-					var event = jQuery.Event("imageUploadSummary");
-					$("body").trigger(event, [$G('ImageUpload' + WMU_curScreen)]);
-					if ( event.isDefaultPrevented() ) {
-						return false;
-					}
-
-					// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
-					if (WMU_isOnSpecialPage) {
-						var $responseHTML = $(o.responseText),
-							wmuData = {
-							imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
-							imageWikiText: $responseHTML.find('#ImageUploadTag').val()
-						};
-						$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
-						return false;
-					}
-
-					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
-						if( -2 == WMU_gallery) {
-							WMU_insertPlaceholder( WMU_box );
-						} else {
-							// insert image in source mode
-							insertTags($G('ImageUploadTag').value, '', '', WMU_getRTETxtarea());
-						}
-					} else { // FCK
-						var wikitag = YAHOO.util.Dom.get('ImageUploadTag').value;
-						var options = {};
-
-						if($G('ImageUploadThumbOption').checked) {
-							options.thumb = 1;
-						} else {
-							options.thumb = null;
-						}
-						if($G('ImageUploadWidthCheckbox').checked) {
-							options.width = WMU_slider.getRealValue();
-						} else {
-							options.width = null;
-						}
-						if($G('ImageUploadLayoutLeft').checked) {
-							options.align = 'left';
-						} else {
-							options.align = null;
-						}
-						options.caption = $G('ImageUploadCaption').value;
-
-						// handle links (BugId:6506)
-						if (!options.thumb) {
-							options.link = $G('ImageUploadLink').value;
-						}
-
-						// macbre: CK support
-						if (typeof window.WMU_RTEImage != 'undefined') {
-							var image = window.WMU_RTEImage;
-
-							// modify options format
-							options.thumbnail = options.thumb;
-							delete options.thumb;
-
-							if (image) {
-								// update existing image / replace image placeholder
-								RTE.mediaEditor.update(image, wikitag, options);
-							}
-							else {
-								// add new image
-								RTE.mediaEditor.addImage(wikitag, options);
-							}
-							// Handle MiniEditor focus
-							// (BugId:18713)
-							var wikiaEditor = WikiaEditor.getInstance();
-							if(wikiaEditor.config.isMiniEditor) {
-								wikiaEditor.plugins.MiniEditor.hasFocus = false;
-							}
-
-						}
-						else  if(WMU_refid != -1) {
-							if( -2 == WMU_gallery) { // updating image placeholder
-								FCK.ProtectImageAdd(wikitag, options, WMU_refid);
-							} else { // updating edited image
-								FCK.ProtectImageUpdate(WMU_refid, wikitag, options);
-							}
-						} else {
-							FCK.ProtectImageAdd(wikitag, options);
-						}
-					}
-					break;
-				case 'existing':
-					WMU_displayDetails(o.responseText);
-					break;
-			}
-			WMU_indicator(1, false);
+	var callback = function(o) {
+		var screenType = WMU_jqXHR.getResponseHeader('X-screen-type');
+		if(typeof screenType == "undefined") {
+			screenType = WMU_jqXHR.getResponseHeader('X-Screen-Type');
 		}
-	}
+
+		switch(YAHOO.lang.trim(screenType)) {
+			case 'error':
+				o.responseText = o.responseText.replace(/<script.*script>/, "" );
+				break;
+			case 'conflict':
+				WMU_switchScreen('Conflict');
+				$G('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
+				break;
+			case 'summary':
+
+				WMU_switchScreen('Summary');
+				if (typeof RTE !== 'undefined') {
+					RTE.getInstanceEditor().getEditbox().focus();
+				}
+
+				$G('ImageUploadBack').style.display = 'none';
+				$G('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
+
+				var event = jQuery.Event("imageUploadSummary");
+				$("body").trigger(event, [$G('ImageUpload' + WMU_curScreen)]);
+				if ( event.isDefaultPrevented() ) {
+					return false;
+				}
+
+				// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
+				if (WMU_isOnSpecialPage) {
+					var $responseHTML = $(o.responseText),
+						wmuData = {
+						imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
+						imageWikiText: $responseHTML.find('#ImageUploadTag').val()
+					};
+					$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
+					return false;
+				}
+
+				if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
+					if( -2 == WMU_gallery) {
+						WMU_insertPlaceholder( WMU_box );
+					} else {
+						// insert image in source mode
+						insertTags($G('ImageUploadTag').value, '', '', WMU_getRTETxtarea());
+					}
+				} else { // FCK
+					var wikitag = YAHOO.util.Dom.get('ImageUploadTag').value;
+					var options = {};
+
+					if($G('ImageUploadThumbOption').checked) {
+						options.thumb = 1;
+					} else {
+						options.thumb = null;
+					}
+					if($G('ImageUploadWidthCheckbox').checked) {
+						options.width = WMU_slider.getRealValue();
+					} else {
+						options.width = null;
+					}
+					if($G('ImageUploadLayoutLeft').checked) {
+						options.align = 'left';
+					} else {
+						options.align = null;
+					}
+					options.caption = $G('ImageUploadCaption').value;
+
+					// handle links (BugId:6506)
+					if (!options.thumb) {
+						options.link = $G('ImageUploadLink').value;
+					}
+
+					// macbre: CK support
+					if (typeof window.WMU_RTEImage != 'undefined') {
+						var image = window.WMU_RTEImage;
+
+						// modify options format
+						options.thumbnail = options.thumb;
+						delete options.thumb;
+
+						if (image) {
+							// update existing image / replace image placeholder
+							RTE.mediaEditor.update(image, wikitag, options);
+						}
+						else {
+							// add new image
+							RTE.mediaEditor.addImage(wikitag, options);
+						}
+						// Handle MiniEditor focus
+						// (BugId:18713)
+						var wikiaEditor = WikiaEditor.getInstance();
+						if(wikiaEditor.config.isMiniEditor) {
+							wikiaEditor.plugins.MiniEditor.hasFocus = false;
+						}
+
+					}
+					else  if(WMU_refid != -1) {
+						if( -2 == WMU_gallery) { // updating image placeholder
+							FCK.ProtectImageAdd(wikitag, options, WMU_refid);
+						} else { // updating edited image
+							FCK.ProtectImageUpdate(WMU_refid, wikitag, options);
+						}
+					} else {
+						FCK.ProtectImageAdd(wikitag, options);
+					}
+				}
+				break;
+			case 'existing':
+				WMU_displayDetails(o.responseText);
+				break;
+		}
+		WMU_indicator(1, false);
+	};
+		
 	WMU_indicator(1, true);
-	YAHOO.util.Connect.abort(WMU_asyncTransaction);
-	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), callback);
+	WMU_jqXHR.abort();
+	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), {
+		method: 'get',
+		complete: callback
+	});
 }
 
 function WMU_box_in_article() {
