@@ -54,7 +54,6 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 			$fields[self::FIELD_NAME_URL . $i] = array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-from-the-community-url'),
 				'validator' => $this->getValidator($i, self::FIELD_NAME_URL),
-
 				'attributes' => array(
 					'class' => $this->getJsValidator($i, self::FIELD_NAME_URL)
 				),

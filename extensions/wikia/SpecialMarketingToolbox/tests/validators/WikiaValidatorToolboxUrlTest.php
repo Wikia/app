@@ -1,12 +1,12 @@
 <?php
 
-class WikiaValidatorUrlTest extends PHPUnit_Framework_TestCase {
+class WikiaValidatorToolboxUrlTest extends PHPUnit_Framework_TestCase {
 
 	/* @var $validator WikiaValidatorUrl */
 	private $validator;
 
 	protected function setUp () {
-		$this->validator = new WikiaValidatorUrl();
+		$this->validator = new WikiaValidatorToolboxUrl();
 	}
 
 	/**
@@ -29,11 +29,10 @@ class WikiaValidatorUrlTest extends PHPUnit_Framework_TestCase {
 			array('www.aol', true), // this is ok for regexp validation
 			array('lordoftherings.aol', true), // this is ok for regexp validation
 			array('lordoftherings.museum', true), // this is theoretically an acceptable URL
-			array('http://www.wikia.xxx', true), // .xxx is a theoretically valid domain
 			array('lordoftherings.info', true),
 			array('wikia', false),
 			array('http://wikia', false),
-
+			array('http://www.wikia.xxx', false), // .xxx is a not a valid domain for the toolbox
 		);
 	}
 }

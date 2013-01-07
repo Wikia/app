@@ -92,7 +92,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		$linkUrlField = array(
 			'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
 			'labelclass' => "wikiaUrlLabel",
-			'validator' => new WikiaValidatorUrl(
+			'validator' => new WikiaValidatorToolboxUrl(
 				array(),
 				array(
 					'wrong' => 'marketing-toolbox-hub-module-explore-link-url-invalid'
