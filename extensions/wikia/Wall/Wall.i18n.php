@@ -193,6 +193,8 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-recentchanges-restored-reply' => 'restored reply on "[[$1|$2]]" to [[$3|$4\'s wall]]',
 	'wall-recentchanges-deleted-thread' => 'deleted thread "[[$1|$2]]" from [[$3|$4\'s wall]]',
 	'wall-recentchanges-deleted-reply' => 'deleted reply from "[[$1|$2]]" from [[$3|$4\'s wall]]',
+	'wall-recentchanges-closed-thread' => 'closed thread "[[$1|$2]] on [[$3|$4\'s wall]]"',
+	'wall-recentchanges-reopened-thread' => 'reopened thread "[[$1|$2]] on [[$3|$4\'s wall]]"',
 
 	'wall-recentchanges-deleted-reply-title' => 'A reply on message wall',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Message Wall',
@@ -604,6 +606,14 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 * $4 is wall owner
 * $5 is optional username, you can use it with GENDER parameter',
 	'wall-recentchanges-deleted-reply' => 'Recent changes item. Parameters:
+* $2 is thread title
+* $4 is wall owner
+* $5 is optional username and you can use it with GENDER parameter',
+	'wall-recentchanges-closed-thread' => 'Recent changes item. Parameters:
+* $2 is thread title
+* $4 is wall owner
+* $5 is optional username and you can use it with GENDER parameter',
+	'wall-recentchanges-reopened-thread' => 'Recent changes item. Parameters:
 * $2 is thread title
 * $4 is wall owner
 * $5 is optional username and you can use it with GENDER parameter',
