@@ -164,7 +164,7 @@ class ArticleCommentsController extends WikiaController {
 		// avoid going through all this when calling the method from the same round trip for the same paramenters
 		// the real DB stuff is cached by ArticleCommentList in Memcached
 		if ( empty( $this->dataLoaded[ $key ] ) ) {
-			$commentList = F::build('ArticleCommentList', array(($title)), 'newFromTitle');
+			$commentList = ArticleCommentList::newFromTitle( $title );
 
 			if ( !empty( $perPage ) ) {
 				$commentList->setMaxPerPage( $perPage );

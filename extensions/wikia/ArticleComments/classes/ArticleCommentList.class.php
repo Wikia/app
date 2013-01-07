@@ -388,11 +388,9 @@ class ArticleCommentList {
 	 *
 	 * @return array data for comments list
 	 */
-
 	public function getData($page = 1) {
 		global $wgUser, $wgStylePath;
 
-		$groups = $wgUser->getEffectiveGroups();
 		//$isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
 		$canEdit = $wgUser->isAllowed( 'edit' );
 		$isBlocked = $wgUser->isBlocked();
@@ -414,21 +412,11 @@ class ArticleCommentList {
 		$this->preloadFirstRevId( $comments );
 		$pagination = $this->doPagination($countComments, count($comments), $page);
 
-		$commentListHTML = '';
-		if(!empty($this->mTitle)) {
-			$commentListHTML = F::app()->getView('ArticleComments', 'CommentList', array(
-				'commentListRaw' => $comments,
-				'page' => $page,
-				'useMaster' => false
-			))->render();
-		}
-
 		$retVal = array(
 			'avatar' => AvatarService::renderAvatar($wgUser->getName(), 50),
 			'userurl' => AvatarService::getUrl($wgUser->getName()),
 			'canEdit' => $canEdit,
 			'commentListRaw' => $comments,
-			'commentListHTML' => $commentListHTML,
 			'commentingAllowed' => ArticleComment::canComment( $this->mTitle ),
 			'commentsPerPage' => $this->mMaxPerPage,
 			'countComments' => $countComments,
