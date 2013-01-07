@@ -146,7 +146,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		$dependentRules = array();
 		foreach (self::$fieldNames as $fieldName) {
 			if ($actualFieldName != $fieldName) {
-				$dependentRules[] = '#' . MarketingToolboxModel::FORM_FIELD_PREFIX . $fieldName . ':filled';
+				$dependentRules[] = '#' . MarketingToolboxModel::FORM_FIELD_PREFIX . $fieldName .$i . ':filled';
 			}
 		}
 
