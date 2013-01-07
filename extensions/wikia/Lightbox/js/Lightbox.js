@@ -53,13 +53,14 @@ var Lightbox = {
 		// Add template to modal
 		Lightbox.openModal.find(".modalContent").html(LightboxLoader.templateHtml);
 
-		// Init ads in Lightbox
-		if ($('#MODAL_RECTANGLE').length) {
-			window.adslots2.push(['MODAL_RECTANGLE']);
-		}
-
 		// cache re-used DOM elements and templates for this modal instance
 		Lightbox.cacheDOM();
+
+		// Init ads in Lightbox
+		if ($('#MODAL_RECTANGLE').length && Lightbox.ads.userShowAds) {
+			Lightbox.openModal.lightbox.addClass('show-ads');
+			window.adslots2.push(['MODAL_RECTANGLE']);
+		}
 
 		// Set up carousel
 		Lightbox.setUpCarousel();
@@ -418,6 +419,8 @@ var Lightbox = {
 		}
 	},
 	ads: {
+		// should we show ads for this user?
+		userShowAds: !window.wgUserName || window.wgUserShowAds,
 		// preload ad after this number of unique images/videos are shown
 		adMediaCountPreload: 2,
 		// show an ad after this number of unique images/videos are shown
@@ -443,10 +446,10 @@ var Lightbox = {
 		},
 		// should user see ads?
 		showAds: function() {
-			if (Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB') {
-				return $('#' + this.getSlotName()).length;
-			}
-			return false;
+			return this.userShowAds
+				&& (Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB')
+				&& $('#' + this.getSlotName()).length
+				&& true;
 		},
 		preloadAds: function() {
 			if (!this.adWasPreloaded) {
@@ -912,7 +915,8 @@ var Lightbox = {
 			}
 		};
 
-		var itemsShown = Lightbox.ads.showAds() ? 6 : 9;
+		// show-ads class appears when there is going to be a MODAL_RECTANGLE ad
+		var itemsShown = Lightbox.openModal.lightbox.hasClass('show-ads') ? 6 : 9;
 
 		// Make sure we have our i18n message before initializing the carousel plugin
 		$.when.apply(this, deferredList).done(function() {
