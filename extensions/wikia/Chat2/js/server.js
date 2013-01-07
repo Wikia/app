@@ -560,6 +560,18 @@ function broadcastUserListToMediaWiki(client, removeClient){
 function chatMessage(client, socket, msg){
 	var chatEntry = new models.ChatEntry();
     chatEntry.mport(msg);
+	// messages sent from client cannot be inline, as those messages are not escaped
+	// InlineAlert messages can be broadcasted only by the server
+	if (chatEntry.get('isInlineAlert')) {
+		var logMsg = 'Possible XSS attempt from user ' + client.myUser.get('name');
+		if (client.handshake.address && client.handshake.address.address) {
+			logMsg += '/' + client.handshake.address.address;
+		}
+		logMsg += ': ' + JSON.stringify(chatEntry);
+		logger.critical(logMsg);
+		//return;
+	}
+	chatEntry.set({ isInlineAlert: false}); // just in case
     monitoring.incrEventCounter('chat_messages');
 	storeAndBroadcastChatEntry(client, socket, chatEntry);
 } // end chatMessage()
