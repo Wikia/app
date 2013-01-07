@@ -55,7 +55,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 				'validator' => new WikiaValidatorDependent(
 					array(
 						'required' => false,
-						'ownValidator' => new WikiaValidatorUrl(
+						'ownValidator' => new WikiaValidatorToolboxUrl(
 							array(
 								'required' => true
 							),
@@ -96,7 +96,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 				'validator' => new WikiaValidatorDependent(
 					array(
 						'required' => false,
-						'ownValidator' => new WikiaValidatorUrl(
+						'ownValidator' => new WikiaValidatorToolboxUrl(
 							array(
 								'required' => true
 							),
