@@ -2,10 +2,11 @@
 
 class WikiaValidatorToolboxUrlTest extends PHPUnit_Framework_TestCase {
 
-	/* @var $validator WikiaValidatorUrl */
+	/* @var $validator WikiaValidatorToolboxUrl */
 	private $validator;
 
 	protected function setUp () {
+		require_once(dirname(__FILE__) . '/../../validators/WikiaValidatorToolboxUrl.class.php');
 		$this->validator = new WikiaValidatorToolboxUrl();
 	}
 
