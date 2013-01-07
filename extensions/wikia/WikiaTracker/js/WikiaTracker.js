@@ -83,15 +83,16 @@ window.WikiaTracker = (function(){
 		trackingMethod = trackingMethod || 'none',
 		browserEvent = browserEvent || window.event,
 		mouseMiddleClick = isMiddleClick(browserEvent),
+		isRetriggeredEvent = (typeof(browserEvent) !== 'undefined' && browserEvent.target && browserEvent.target.dataset && browserEvent.target.dataset.retriggered != 'false'),
 		isLink = (data && data.href);
 		
-		if( isLink && !mouseMiddleClick && typeof(browserEvent) !== 'undefined' && !browserEvent.target.dataset.retriggered ) {
+		if( isLink && !mouseMiddleClick && !isRetriggeredEvent ) {
 			browserEvent.preventDefault();
 		}
 
 		doTrack(logGroup, eventName, data, trackingMethod);
 		
-		if( isLink && !mouseMiddleClick && typeof(browserEvent) !== 'undefined' && !browserEvent.target.dataset.retriggered ) {
+		if( isLink && !mouseMiddleClick && !isRetriggeredEvent ) {
 			var newEvent = document.createEvent('MouseEvent');
 			newEvent.initMouseEvent(
 				browserEvent.type, browserEvent.bubbles, browserEvent.cancelable, browserEvent.view,
