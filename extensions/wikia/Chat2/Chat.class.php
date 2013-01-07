@@ -457,7 +457,8 @@ class Chat {
 
 		// record the IP of the connecting user.
 		// use memcache so we order only one (user, ip) pair 3 min to avoide flooding the log
-		$ip = wfGetIP();
+		$ip = F::app()->wg->request->getIP();
+
 		$memcKey = self::getUserIPMemcKey($wgUser->getID(), $ip );
 		$entry = $wgMemc->get( $memcKey, false );
 
