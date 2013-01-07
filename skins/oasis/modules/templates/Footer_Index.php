@@ -1,7 +1,5 @@
 <footer id="WikiaFooter" class="WikiaFooter <?= $showToolbar ? '' : 'notoolbar' ?>">
 	<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_3')) ?>
-
-	<div class="FooterAd"></div>
 	<?php if( $showToolbar ): ?>
 		<div class="toolbar">
 			<?= F::app()->renderView('Notifications', 'Index'); ?>
