@@ -3,7 +3,7 @@
 		<div class="grid-3 alpha">
 			<input type="button" class="vet-show" value="<?= $wf->Msg('marketing-toolbox-edithub-add-video-button') ?>" />
 			<span class="filename-placeholder alternative">
-				<?php if( !empty($fields['video']) ): ?>
+				<?php if( !empty($fields['video']['value']) ): ?>
 				<?= $fields['video']['value']; ?>
 				<?php else: ?>
 				<?= $wf->msg('marketing-toolbox-edithub-video-name') ?>
