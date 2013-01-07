@@ -20,7 +20,11 @@
 	var log = function( methodName, message ) {
 		// Internal logging, becomes a no-op if window.console isn't present
 		if ( window.console && window.console.log ) {
-			window.console.log( 'Wikia.AbTest' + ( message ? '.' + methodName + '()' : '' ) + ':', message );
+			if ( !message ) {
+				methodName = undefined;
+				message = arguments[0];
+			}
+			window.console.log( 'Wikia.AbTest' + ( methodName ? '.' + methodName + '()' : '' ) + ':', message );
 		}
 	};
 
