@@ -30,6 +30,11 @@ class AbTesting extends WikiaObject {
 		return true;
 	}
 
+	public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
+		array_unshift( $jsAssetGroups, 'abtesting' );
+		return true;
+	}
+
 	public function onWikiaSkinTopModules( &$scriptModules, $skin ) {
 		if ( $this->app->checkSkin( 'oasis', $skin ) ) {
 			array_unshift( $scriptModules, 'wikia.ext.abtesting' );
@@ -64,7 +69,7 @@ class AbTesting extends WikiaObject {
 					'gaSlot' => $ver['ga_slot'],
 					'groups' => array(),
 				);
-				$groups = &$version['treatmentGroups'];
+				$groups = &$version['groups'];
 				foreach ($ver['group_ranges'] as $grn) {
 					$group = $exp['groups'][$grn['group_id']];
 					$groupName = $this->normalizeName($group['name']);
@@ -72,7 +77,7 @@ class AbTesting extends WikiaObject {
 						'id' => $group['id'],
 						'name' => $groupName,
 						'ranges' => $this->parseRanges($grn['ranges']),
-						'isControl' => $group['id'] === $ver['control_group_id'],
+//						'isControl' => $group['id'] === $ver['control_group_id'],
 					);
 				}
 				$versions[] = $version;

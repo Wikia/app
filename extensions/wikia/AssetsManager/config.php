@@ -156,6 +156,12 @@ $config['oasis_blocking'] = array(
 		'//resources/wikia/libraries/modil/modil.js'
 	)
 );
+$config['abtesting'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AbTesting/js/AbTest.js',
+	)
+);
 
 /** jQuery **/
 $config['jquery'] = array(
