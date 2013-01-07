@@ -16,14 +16,19 @@ EditHub.prototype = {
 		this.form = $('#marketing-toolbox-form');
 
 		$('#marketing-toolbox-clearall').click($.proxy(function(){
-			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation',this.form.data('module-name'))) == true) {
-				this.formReset(this.form);
-			}
+			this.clearSection(
+				this.form,
+				$.msg('marketing-toolbox-edithub-clearall-confirmation',this.form.data('module-name'))
+			)
 		}, this));
 
 		$(this.form).find('.clear').click($.proxy(function(event){
 			var sectionToReset = $(event.target).parents('.module-box');
-			this.formReset(sectionToReset);
+
+			this.clearSection(
+				sectionToReset,
+				$.msg('marketing-toolbox-edithub-clear-confirmation')
+			)
 		}, this));
 
 		$.validator.addMethod("wikiaUrl", function(value, element) {
@@ -156,6 +161,12 @@ EditHub.prototype = {
 					.html(response.videoFileMarkup);
 			}, this)
 		});
+	},
+
+	clearSection: function(section, msg) {
+		if (confirm(msg) == true) {
+			this.formReset(section);
+		}
 	},
 
 	formReset: function(elem) {
