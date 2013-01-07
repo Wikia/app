@@ -148,6 +148,17 @@ class ForumHooksHelper {
 		return true;
 	}
 
+	public function onOasisAddPageDeletedConfirmationMessage( Title &$title, &$message ) {
+
+		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD ) {
+
+			$pageName = $title->getPrefixedText();
+			$message = wfMsgExt( 'forum-confirmation-board-deleted', array('parseinline'), $pageName );
+		}
+
+		return true;
+	}
+
 	public function onWallContributionsLine($pageNamespace, $wallMessage, $wfMsgOptsBase, &$ret) {
 		if ( $pageNamespace != NS_WIKIA_FORUM_BOARD ) {
 			return true;

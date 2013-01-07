@@ -50,6 +50,7 @@ $app->registerHook( 'WallBeforeRenderThread', 'ForumHooksHelper', 'onWallBeforeR
 $app->registerHook( 'AfterBuildNewMessageAndPost', 'ForumHooksHelper', 'onAfterBuildNewMessageAndPost' );
 $app->registerHook( 'WallMessageDeleted', 'ForumHooksHelper', 'onWallMessageDeleted' );
 $app->registerHook( 'ContributionsLineEnding', 'ForumHooksHelper', 'onContributionsLineEnding' );
+$app->registerHook( 'OasisAddPageDeletedConfirmationMessage', 'ForumHooksHelper', 'onOasisAddPageDeletedConfirmationMessage' );
 
 //notification hooks
 $app->registerHook( 'NotificationGetNotificationMessage', 'ForumNotificationPlugin', 'onGetNotificationMessage' );

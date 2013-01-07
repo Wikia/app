@@ -232,7 +232,10 @@ class NotificationsController extends WikiaController {
 
 			$pageName = $title->getPrefixedText();
 
-			self::addConfirmation(wfMsgExt('oasis-confirmation-page-deleted', array('parseinline'), $pageName));
+			$message = wfMsgExt( 'oasis-confirmation-page-deleted', array('parseinline'), $pageName );
+			wfRunHooks( 'OasisAddPageDeletedConfirmationMessage', array( &$title, &$message ) );
+
+			self::addConfirmation( $message );
 
 			// redirect to main page
 			$wgOut->redirect(Title::newMainPage()->getFullUrl( array( 'cb' => rand( 1, 1000 ) ) ));
