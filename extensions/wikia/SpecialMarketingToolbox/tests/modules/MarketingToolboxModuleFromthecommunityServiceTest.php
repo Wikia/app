@@ -56,6 +56,8 @@ class MarketingToolboxModuleFromthecommunityServiceTest extends WikiaBaseTest {
 			array(5, 'title', 'WikiaValidatorDependent', 'WikiaValidatorString'),
 			array(1, 'url', 'WikiaValidatorUrl', null),
 			array(4, 'url', 'WikiaValidatorDependent', 'WikiaValidatorUrl'),
+			array(1, 'usersUrl', 'WikiaValidatorUsersUrl', null),
+			array(4, 'usersUrl', 'WikiaValidatorDependent', 'WikiaValidatorUsersUrl'),
 		);
 	}
 
