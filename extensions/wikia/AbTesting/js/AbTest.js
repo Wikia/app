@@ -267,6 +267,6 @@
 	})( AbTest.experiments );
 
 	// Exports
-	wikia.AbTest = AbTest;
+	Wikia.AbTest = AbTest;
 
 })( window );
