@@ -10,6 +10,8 @@ EditHub.prototype = {
 	lastActiveVetButton: undefined,
 
 	init: function () {
+		var validator;
+
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
 		$('.MarketingToolboxMain .vet-show').click($.proxy(this.vetInit, this));
 
@@ -36,7 +38,7 @@ EditHub.prototype = {
 			return this.optional(element) || reg.test(value);
 		}, $.validator.messages.url);
 
-		this.form.validate({
+		validator = this.form.validate({
 			errorElement: 'p',
 			onkeyup: false,
 			onfocusout: function(element, event) {
@@ -48,6 +50,25 @@ EditHub.prototype = {
 				return !this.checkable(element) && (element.name in this.submitted || !this.optional(element) || element === this.lastActive);
 			}
 		});
+
+		validator.focusInvalid = function() {
+			if( this.settings.focusInvalid ) {
+				try {
+					var element = $(this.errorList.length && this.errorList[0].element || [])
+
+					if (element.is(":visible")) {
+						element.focus()
+							// manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
+							.trigger("focusin");
+					} else {
+						element.parents('.module-box:first').get(0).scrollIntoView();
+					}
+
+				} catch(e) {
+					// ignore IE throwing errors when focusing hidden elements
+				}
+			}
+		}
 
 		this.wmuReady = false;
 		this.vetReady = false;
