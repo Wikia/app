@@ -32,8 +32,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 				'validator' => new WikiaValidatorString(),
 				'type' => 'textarea',
 				'attributes' => array(
-					'rows' => 3,
-					'class' => 'required'
+					'rows' => 3
 				)
 			),
 		);
