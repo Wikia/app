@@ -433,10 +433,10 @@ class BlogArticle extends Article {
 			// "User blog:Homersimpson89/Best Simpsons episode..." -> "Best Simpsons episode..."
 			$text = $title->getSubpageText();
 			$userName = $title->getBaseText();
-			$link = $catView->getSkin()->link($title, $text);
+			$link = $catView->getSkin()->link($title, $userName." - ".$text);
 
 			// blogs entries will be sorted using this key
-			$index = $wgContLang->uc("{$text}-{$userName}");
+			$index = $wgContLang->uc("{$userName}-{$text}");
 
 			$catView->blogs[$index] = $row->page_is_redirect
 				? '<span class="redirect-in-category">' . $link . '</span>'
