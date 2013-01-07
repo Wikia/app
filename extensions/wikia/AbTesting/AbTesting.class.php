@@ -83,7 +83,7 @@ class AbTesting extends WikiaObject {
 			'experiments' => $config
 		);
 
-		return sprintf("Wikia.AbTest = %s;\n",json_encode($expConfig));
+		return sprintf("Wikia.AbTestConfig = %s;\n",json_encode($expConfig));
 	}
 
 	protected function getConfig() {

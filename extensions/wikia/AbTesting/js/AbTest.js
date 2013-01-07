@@ -11,9 +11,10 @@
  * and fast (comments will be removed during minification, so please use them).
  */
 
-(function( window, Wikia, undefined ) {
+(function( window, undefined ) {
 
-	var _AbTest = Wikia.AbTest || {},
+	var Wikia = window.Wikia = (window.Wikia || {}),
+		config = Wikia.AbTestConfig || {},
 		serverTimeString = window.varnishTime,
 		serverTime = new Date( serverTimeString ).getTime() / 1000;
 
@@ -69,13 +70,13 @@
 		AbTest.experimentCount = count;
 
 		return activeExperiments;
-	})( _AbTest.experiments || {} );
+	})( config.experiments || {} );
 
 	// The experiments we have tracked for the user.
-	AbTest.tracked = _AbTest.tracked || {};
+	AbTest.tracked = config.tracked || {};
 
 	// The treatment groups the user is participating in.
-	AbTest.treatmentGroups = _AbTest.treatmentGroups || {};
+	AbTest.treatmentGroups = config.treatmentGroups || {};
 
 	// Used to uniquely identify users.
 	AbTest.uuid = (function( uuid ) {
@@ -256,4 +257,4 @@
 	Wikia.AbTest = AbTest;
 	window.Wikia = Wikia;
 
-})( window, window.Wikia || {} );
+})( window );
