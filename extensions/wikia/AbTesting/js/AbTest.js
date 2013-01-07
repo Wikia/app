@@ -15,9 +15,11 @@
 
 	var Wikia = window.Wikia = (window.Wikia || {}),
 		config = Wikia.AbTestConfig || {},
+		AbTest,
 		serverTimeString = window.varnishTime,
 		serverTime = new Date( serverTimeString ).getTime() / 1000;
 
+	// Function to log different things (could not use Wikia.Log because it may not be available yet)
 	var log = function( methodName, message ) {
 		// Internal logging, becomes a no-op if window.console isn't present
 		if ( window.console && window.console.log ) {
@@ -29,232 +31,242 @@
 		}
 	};
 
+	/* --------------------------- */
+	/* AbTest class implementation */
+
 	// The AbTest class. Instantiating is not required but it allows you to provide
 	// an experiment context to all of the function calls. You may also call all
 	// of the functions statically, providing an experiment context yourself.
-	var AbTest = function( experimentKey ) {
-		this.experimentKey = experimentKey;
-		this.methodArguments = [ experimentKey ];
+	AbTest = function( expName ) {
+		this.expName = expName;
 	};
-
-	// Define our experiments, filtering out those that are inactive.
-	AbTest.experiments = (function( experiments ) {
-		var i, experimentKey, version, versions, versionsLength,
-			activeExperiments = {},
-			count = 0;
-
-		for ( experimentKey in experiments ) {
-			var active;
-
-			versions = experiments[ experimentKey ].versions;
-			versionsLength = versions.length;
-
-			// Iterate through available versions and find out which one is active now
-			for ( i = 0; i < versionsLength; i++ ) {
-				version = versions[ i ];
-
-				if ( serverTime >= version.startTime && serverTime <= version.endTime ) {
-					active = version;
-					break;
-				}
-			}
-
-			// Active version has been found
-			if ( active ) {
-				activeExperiments[ experimentKey ] = active;
-				count++;
-			}
-		}
-
-		// Useful for checking if there are any experiments running.
-		AbTest.experimentCount = count;
-
-		return activeExperiments;
-	})( config.experiments || {} );
-
-	// The experiments we have tracked for the user.
-	AbTest.tracked = config.tracked || {};
-
-	// The treatment groups the user is participating in.
-	AbTest.treatmentGroups = config.treatmentGroups || {};
 
 	// Used to uniquely identify users.
 	AbTest.uuid = (function( uuid ) {
-		return uuid && uuid != 'ThisIsFake' ? uuid : null;
+		var ret = uuid && uuid != 'ThisIsFake' ? uuid : null;
+		if ( !ret ) {
+			log('init','UUID is not available, A/B testing will be disabled');
+		}
+		return ret;
 	})( window.beacon_id );
 
-	// Returns true if we have tracked the experiment, false otherwise.
-	AbTest.isTracked = function( experimentKey ) {
-		return !!( AbTest.tracked[ experimentKey ] );
+	// Returns the experiment configuration, emits a message to the console if it doesn't exist
+	function getExperiment( expName, methodName ) {
+		if ( !expName ) {
+			log( methodName, 'Missing required argument "expName".' );
+		}
+		var exp = AbTest.experiments[expName], m;
+		if ( !exp ) {
+			log( methodName, 'Experiment configuration not found for "' + expName + '."' );
+		}
+		return exp;
+	}
+
+	// Returns active group name for the given experiment
+	AbTest.getGroup = function( expName ) {
+		var exp = getExperiment(expName,'getGroup'),
+			group = exp && exp.group;
+		return group.name;
 	};
 
 	// Returns true if the user is in the treatment group, false otherwise.
-	AbTest.inTreatmentGroup = function( experimentKey, treatmentGroupKey ) {
-		return AbTest.getTreatmentGroup( experimentKey ) === treatmentGroupKey;
+	AbTest.inGroup = function( expName, groupName ) {
+		return AbTest.getGroup(expName) === groupName;
+	};
+
+	// Returns true if the specified group name exists in experiment
+	AbTest.isValidGroup = function( expName, groupName ) {
+		var exp = getExperiment(expName,'isValidGroup'),
+			current = exp && exp.current;
+		return !!(current && current.groups[groupName]);
 	};
 
 	// Returns the GA slot that tracking should be reported to
-	AbTest.getGaSlot = function( experimentKey ) {
-		var experiment = AbTest.experiments[ experimentKey ];
-		return experiment && experiment.gaSlot;
-	};
-
-	// Returns the treatment group the user belongs to for the given experiment.
-	// This is generally determined by the user's UUID. If the user has no UUID,
-	// or they haven't been assigned to a treatment group, the control group is
-	// used. In the case that we fail to place this user in any group whatsoever,
-	// the value 'undefined' will be returned.
-	AbTest.getTreatmentGroup = function( experimentKey ) {
-		var experiment, treatmentGroupKey,
-			methodName = 'getTreatmentGroup';
-
-		if ( experimentKey === undefined ) {
-			log( methodName, 'Missing required argument "experimentKey."' );
-
-		} else if ( ( treatmentGroupKey = AbTest.treatmentGroups[ experimentKey ] ) === undefined ) {
-			if ( ( experiment = AbTest.experiments[ experimentKey ] ) === undefined ) {
-				log( methodName, 'Experiment configuration not found for "' + experimentKey + '."' );
-
-			} else {
-				var key;
-
-				// This user doesn't have a UUID yet or no active configuration was found,
-				// treat them with the control group.
-				if ( AbTest.uuid === null || !experiment.treatmentGroups ) {
-					log( methodName, 'No uuid set, falling back to control group.' );
-
-					for ( key in experiment.treatmentGroups ) {
-						if ( experiment.treatmentGroups[ key ].isControl ) {
-							treatmentGroupKey = key;
-							break;
-						}
-					}
-
-					if ( treatmentGroupKey === undefined ) {
-						log( methodName, 'No control group defined for experiment "' + experimentKey + '."' );
-					}
-
-				// User has a uuid, figure out the treatment group based on that.
-				} else {
-					var controlGroupKey, i, range, ranges, rangesLength, treatmentGroup,
-						slot = AbTest.getUserSlot( experimentKey );
-
-					for ( key in experiment.treatmentGroups ) {
-						treatmentGroup = experiment.treatmentGroups[ key ];
-						ranges = treatmentGroup.ranges;
-
-						if ( treatmentGroup.isControl ) {
-							controlGroupKey = key;
-						}
-
-						// Try to match the user's slot to a treatment group range
-						for ( i = 0, rangesLength = ranges.length; i < rangesLength; i++ ) {
-							range = ranges[ i ];
-
-							// User gets treated with this treatment group only if their
-							// assigned slot is within the allotted range.
-							if ( slot >= range.min && slot <= range.max ) {
-								treatmentGroupKey = key;
-							}
-						}
-					}
-
-					// User isn't assigned to any treatment group.
-					// Show the user the control group, but don't log a treatment event.
-					if ( treatmentGroupKey === undefined ) {
-						treatmentGroupKey = controlGroupKey;
-						AbTest.tracked[ experimentKey ] = false;
-
-					} else {
-						// TODO: when we start tracking through GA, we will need to add the slot here.
-						window.WikiaTracker.trackEvent( 'ab_treatment', {
-							time: serverTimeString,
-							experiment: experimentKey,
-							experimentId: experiment.id,
-							treatmentGroup: treatmentGroupKey,
-							treatmentGroupId: treatmentGroup.id
-						}, 'internal' );
-
-						// Mark this experiment as tracked for this page view.
-						AbTest.tracked[ experimentKey ] = true;
-					}
-				}
-			}
-
-			// Cache the result of this lookup
-			AbTest.treatmentGroups[ experimentKey ] = treatmentGroupKey;
-		}
-
-		return treatmentGroupKey;
+	AbTest.getGASlot = function( expName, groupName ) {
+		var exp = getExperiment(expName,'getGASlot'),
+			current = exp && exp.current;
+		return current && current.gaSlot;
 	};
 
 	// Returns a hash of all the treatment groups the user is participating in,
 	// keyed by experiment id. Calling getTreatmentGroup here updates the cache.
-	AbTest.getTreatmentGroups = function() {
-		var experimentKey;
+	AbTest.getActiveExperimentsNames = function( includeControl ) {
+		var expName, exp, activeList = {};
 
-		for ( experimentKey in AbTest.experiments ) {
-			AbTest.getTreatmentGroup( experimentKey );
+		for ( expName in AbTest.experiments ) {
+			exp = AbTest.experiments[expName];
+			if ( exp.group ) {
+				activeList[expName] = exp.group.name;
+			} else if ( includeControl ) {
+				activeList[expName] = undefined;
+			}
 		}
 
-		return AbTest.treatmentGroups;
+		return activeList;
 	};
 
-	// Returns the slot the user belongs to within an experiment (0 - 99, inclusive).
-	// If the user has not been assigned a uuid yet, they will belong to slot 0.
-	AbTest.getUserSlot = function( experimentKey ) {
-		var slot = 0;
-
-		if ( AbTest.uuid !== null ) {
-			var i,
-				str = AbTest.uuid + experimentKey,
-				len = str.length;
-
-			for ( i = 0; i < len; i++ ) {
-				slot += str.charCodeAt( i ) * ( i + 1 );
+	// Returns the list of active experiments where you have been assigned groups
+	// where index and value are numeric IDs
+	// eg. { 1: 4, 2: 5 } where 1 and 2 are experiment IDs; 4 and 5 are group IDs
+	AbTest.getActiveExperimentsIds = function() {
+		var expName, exp, activeList = {};
+		for ( expName in AbTest.experiments ) {
+			exp = AbTest.experiments[expName];
+			if ( exp.group ) {
+				activeList[exp.id] = exp.group.id;
 			}
-
-			slot = Math.abs( slot ) % 100;
 		}
-
-		return slot;
+		return activeList;
 	};
 
 	// Set up instance methods for AbTest. Allows you to call any of the listed methods
 	// with a pre-determined experiment context (which is provided on instantiation).
 	(function( prototype ) {
 		var i, length,
-			methodNames = [ 'isTracked', 'inTreatmentGroup', 'getTreatmentGroup', 'getTreatmentGroups', 'getUserSlot' ];
+			methodNames = [ 'inGroup', 'getGroup', 'getActiveExperiments', 'getGASlot', 'getUserSlot' ];
 
 		for ( i = 0, length = methodNames.length; i < length; i++ ) {
 			(function( methodName ) {
 				prototype[ methodName ] = function() {
-					return AbTest[ methodName ].apply( AbTest, this.methodArguments.concat( arguments ) );
+					return AbTest[ methodName ].apply( AbTest, [ this.expName ].concat( arguments ) );
 				};
 			})( methodNames[ i ] );
 		}
 	})( AbTest.prototype );
 
-	// Allow forcing yourself into a certain treatment group for the duration of a pageview
-	// for any number of experiments simultaneously. The URL params are of the format:
-	//     AbTest.EXPERIMENT_ID=TREATMENT_GROUP_ID
-	// For example:
-	//     ?AbTest.MY_EXPERIMENT=MY_TREATMENT_GROUP
-	(function( queryString ) {
-		var experimentKey, matches,
-			rTreatmentGroups = /AbTest\.([^=]+)=([^?&]+)/gi;
+	/* ----------------------------------------- */
+	/* Initialization and configuration handling */
+
+	// Computes hash of the string
+	function hash( s ) {
+		var slot = 0, i;
+		for ( i = 0; i < s.length; i++ ) {
+			slot += s.charCodeAt( i ) * ( i + 1 );
+		}
+		return Math.abs( slot ) % 100;
+	}
+
+	// Returns slot (<0,99>) for the given experiments, -1 if UUID is not available
+	function getSlot( expName ) {
+		return AbTest.uuid
+			? hash( AbTest.uuid + expName )
+			: -1;
+	}
+
+	// Sets the active group in the experiment
+	function setActiveGroup( expName, groupName, force ) {
+		var exp = getExperiment(expName,'setActiveGroup'),
+			current = exp && exp.current,
+			group = current && current.groups[groupName];
+		if ( group && ( !exp.group || force ) ) {
+			exp.group = group;
+			return true;
+		}
+		return false;
+	}
+
+	// Returns true if value falls into provided ranges
+	function isInRanges( value, ranges ) {
+		var i, range;
+		for ( i = 0; i < ranges.length; i++ ) {
+			range = ranges[ i ];
+
+			// User gets treated with this treatment group only if their
+			// assigned slot is within the allotted range.
+			if ( slot >= range.min && slot <= range.max ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// Process experiments from configuration (remove inactive ones and select proper version of actives ones)
+	AbTest.experiments = (function( experiments ) {
+		var expName, exp, versions, version, active, i, activeExperiments = {}, count = 0;
+
+		for ( expName in experiments ) {
+			exp = experiments[expName];
+			versions = exp.versions;
+
+			// Check if any given version is active now
+			for ( i = 0; i < versions.length; i++ ) {
+				version = versions[ i ];
+
+				// If this version is active remember this information
+				if ( serverTime >= version.startTime && serverTime <= version.endTime ) {
+					exp.current = version;
+					count++;
+					break;
+				}
+			}
+
+			if ( exp.current ) {
+				activeExperiments[expName] = exp;
+			}
+		}
+
+		AbTest.experimentCount = count;
+
+		return activeExperiments;
+	})( config.experiments || {} );
+
+	// Determine active group for every experiment
+	// This is based on currrent version, however you can override it in cookies (TBD) and query string
+	(function( experiments ) {
+
+		// 1. Handle input from query string
+		// Get configuration from query string (allows overriding)
+		var matches,
+			rTreatmentGroups = /AbTest\.([^=]+)=([^?&]+)/gi,
+			queryString = window.location.search,
+			expName, groupName, exp, slot;
 
 		if ( queryString ) {
 			while ( ( matches = rTreatmentGroups.exec( queryString ) ) != null ) {
-				experimentKey = matches[ 1 ];
-				AbTest.tracked[ experimentKey ] = true;
-				AbTest.treatmentGroups[ experimentKey ] = matches[ 2 ];
+				expName = matches[ 1 ];
+				groupName = matches[2];
+				if ( !AbTest.isValidGroup( expName, groupName ) ) {
+					log('init','Invalid experiment/group specified in URL: '+expName+'/'+groupName);
+					continue;
+				}
+				setActiveGroup( expName, groupName );
 			}
 		}
-	})( window.location.search );
+
+		// 2. Compute active groups for remaining experiments
+		for ( expName in experiments ) {
+			exp = experiments[expName];
+			slot = getSlot(expName);
+			// Skip this experiment if the group is already set or the slot couldn't have been calculated
+			if ( exp.group || slot < 0 ) {
+				continue;
+			}
+			for ( groupName in exp.groups ) {
+				if ( isInGroup( slot, exp.groups[groupName].ranges ) ) {
+					setActiveGroup( expName, groupName );
+				}
+			}
+		}
+	})( AbTest.experiments );
+
+	// Track active experiments
+	(function( experiments ) {
+		var expName, exp;
+		for ( expName in experiments ) {
+			exp = experiments[expName];
+			if ( exp.group ) {
+				window.WikiaTracker.trackEvent( 'ab_treatment', {
+					time: serverTimeString,
+					experiment: exp.name,
+					experimentId: exp.id,
+					treatmentGroup: exp.group.name,
+					treatmentGroupId: exp.group.id
+				}, 'internal' );
+			}
+		}
+	})( AbTest.experiments );
 
 	// Exports
-	Wikia.AbTest = AbTest;
-	window.Wikia = Wikia;
+	wikia.AbTest = AbTest;
 
 })( window );
