@@ -113,7 +113,9 @@
 		},
 		showEditModal: function( response ) {
 			var title = this.msg('abtesting-' + response.type + '-experiment-title'),
-				modal = $.showModal( title, response.html );
+				modal = $.showModal( title, response.html, {
+					closeOnBlackoutClick: false
+				} );
 
 			modal.find('input[type=submit]').click($.proxy(this.submitEditForm, this));
 			modal.find('button[name=addTreatmentGroup]').click($.proxy(this.addTreatmentGroup, this));
@@ -148,23 +150,29 @@
 			var button = $( e.currentTarget ),
 				inputGroup = button.closest( '.input-group' ),
 				input = inputGroup.children( ':input' ),
-				name = input.attr( 'name' );
+				name = input.attr( 'name' ),
+				modal = $('#AbTestingEditForm').closest('.modalWrapper');
 
+			modal.addClass( 'warning-dismissed' );
 			input.addClass( 'dismissed' );
 			this.removeWarning( inputGroup );
 		},
 		checkVersionChange: function( e ) {
 			var input = $( e.currentTarget ),
 				inputGroup = input.parent( '.input-group' ),
-				name = input.attr( 'name' );
-
-			this.removeWarning( inputGroup );
+				name = input.attr( 'name' ),
+				modal = $('#AbTestingEditForm').closest('.modalWrapper');
 
 			// Issue warning for certain inputs if their value changes
 			if ( $.inArray( name, versionChangeWarningNames ) >= 0
 				&& !input.hasClass( 'dismissed' )
+				&& !modal.hasClass( 'warning-dismissed' )
 				&& input.val() != input.data( 'originalValue' ) ) {
-				inputGroup.addClass( 'error' ).append( templates.warningMessage );
+				if ( !inputGroup.hasClass('error') ) {
+					inputGroup.addClass( 'error' ).append( templates.warningMessage );
+				}
+			} else {
+				this.removeWarning( inputGroup );
 			}
 		},
 		removeWarning: function( inputGroup ) {
