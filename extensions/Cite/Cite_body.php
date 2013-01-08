@@ -537,6 +537,11 @@ class Cite {
 			$this->mInReferences = true;
 			$ret = $this->guardedReferences( $str, $argv, $parser );
 			$this->mInReferences = false;
+			
+			if ( trim( $str ) !== '' && !preg_match( '/<ref\b[^<]*?>/', $str ) ) {
+				return $this->error( 'cite_error_malformed_dom' );
+			}
+			
 			return $ret;
 		}
 	}
