@@ -258,7 +258,11 @@ $chevron-color: #888;
 	.module-mediabox {
 		.input-group input,
 		.input-group textarea {
-			width: 323px;
+			width: 321px;
+		}
+
+		.input-group textarea {
+			resize: vertical;
 		}
 
 		.image-placeholder {
