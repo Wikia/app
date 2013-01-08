@@ -603,6 +603,7 @@ class RenameUserProcess {
 			} 
 
 			$fakeUser->setPassword( null );
+			$fakeUser->setEmail( null );
 			$fakeUser->setRealName( '' );
 			$fakeUser->setName( $this->mOldUsername );
 			
