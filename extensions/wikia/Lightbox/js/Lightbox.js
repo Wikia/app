@@ -700,17 +700,44 @@ var Lightbox = {
 		if(!History.enabled) {
 			return false;
 		}
+		
+		var query = window.location.search.substring(1),
+			vars = query.split('&'),
+			dbKey = clear ? "" : Lightbox.getTitleDbKey(), // TODO: make sure this isn't undefined
+			file = false,
+			newQuery; 
+					
+		// Parse "file" param from url
+		for(var i = 0; i < vars.length; i++) {
+			var pair = vars[i].split('=');
+			if (pair[0] == 'file') {
+				file = true;
+				
+				if(clear) {
+					vars.splice(i, 1);
+				} else {
+					vars.splice(i, 1, "file=" + dbKey);
+				}
+				break;
+			}
+		}
+		
+		// Check if file was found
+		if(!file && !clear) {
+			// Add file param
+			newQuery = "?" + query + "&file=" + dbKey;
+		} else {
+			// Replace file param
+			newQuery = "?" + vars.join('&');
+		}
 
-		var dbKey = Lightbox.getTitleDbKey(),
-			newSearch = "?file="+dbKey;
-
-		if((window.location.search != newSearch) || clear) {
+		if(window.location.search != newQuery) {
 			var stateObj = {
 					fileTitle: dbKey
 				},
 				stateUrl = window.location.pathname;
 
-			stateUrl += clear ? "" : newSearch;
+			stateUrl += newQuery;
 
 			Lightbox.stateChangedManually = true;
 			History.replaceState(stateObj, History.options.initialTitle + ", " + Lightbox.current.title, stateUrl);
@@ -1035,6 +1062,11 @@ var Lightbox = {
 						title = (type == 'image') ? $thisParent.data('image-name') : $thisParent.data('video-name'),
 						playButtonSpan = (type == 'video') ? playButton : '';
 
+					
+					if($thisThumb.closest('.ogg_player').length) {
+						return;
+					}
+					
 					// (BugId:38144)
 					title = title || $thisThumb.attr('alt');
 
