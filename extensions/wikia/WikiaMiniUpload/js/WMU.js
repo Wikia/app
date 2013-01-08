@@ -370,6 +370,9 @@ function WMU_loadMainFromView() {
 			}
 
 			WMU_modal = $(document.body).makeModal({
+				onAfterClose: function() {
+					WMU_switchScreen('Main');
+				},
 				persistent: true,
 				width: 812
 			});
@@ -539,6 +542,9 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 
 		// @see http://developer.yahoo.com/yui/container/panel/#config
 		WMU_modal = $(html).makeModal({
+			onAfterClose: function() {
+				WMU_switchScreen('Main');
+			},
 			persistent: true,
 			width: 722
 		});
