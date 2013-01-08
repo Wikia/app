@@ -279,7 +279,7 @@ class Phalanx {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-		
+
 		if ( class_exists('WScribeClient') ) {
 			try {
 				$fields = array(
@@ -288,7 +288,7 @@ class Phalanx {
 					'blockTs' 			=> wfTimestampNow(),
 					'blockUser' 		=> $wgUser->getName(),
 					'city_id' 			=> $wgCityId,
-				);	
+				);
 				$data = json_encode( $fields );
 				WScribeClient::singleton( self::SCRIBE_KEY )->send( $data );
 			}
@@ -303,7 +303,7 @@ class Phalanx {
 				'ps_timestamp' => wfTimestampNow(),
 				'ps_blocked_user' => $wgUser->getName(),
 				'ps_wiki_id' => $wgCityId,
-			);			
+			);
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 			$dbw->insert( 'phalanx_stats', $fields );
 		}
