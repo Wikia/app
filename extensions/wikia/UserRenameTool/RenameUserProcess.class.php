@@ -603,6 +603,7 @@ class RenameUserProcess {
 			} 
 
 			$fakeUser->setPassword( null );
+			$fakeUser->setEmail( null );
 			$fakeUser->setRealName( '' );
 			$fakeUser->setName( $this->mOldUsername );
 			
@@ -613,6 +614,7 @@ class RenameUserProcess {
 			}
 
 			$fakeUser->setOption( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
+			$fakeUser->setOption( 'disabled', 1 );
 			$fakeUser->saveSettings();
 			$this->mFakeUserId = $fakeUser->getId();
 			$this->addLog("Created fake user account for {$fakeUser->getName()} with ID {$this->mFakeUserId} and renameData '{$fakeUser->getOption( 'renameData', '')}'");
