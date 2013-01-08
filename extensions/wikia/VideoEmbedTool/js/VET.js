@@ -1103,7 +1103,7 @@ var VETExtended = {
 		// attach handlers - play button (open video preview)
 		this.cachedSelectors.carousel.on('click', 'li a.video', function(event){
 			event.preventDefault();
-			var videoTitle = $("img", this).attr("data-video");
+			var videoTitle = $(".Wikia-video-thumb", this).attr("data-video");
 			that.fetchVideoPlayer(videoTitle);
 			
 			// remove in-preview class from previously check item if exists
