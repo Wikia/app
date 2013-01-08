@@ -40,6 +40,7 @@
 
 	/* Public interface */
 
+	// Object-oriented class constructor
 	AbTest = function( expName ) {
 		this.expName = expName;
 	};
@@ -127,7 +128,7 @@
 		}
 	})( AbTest.prototype );
 
-	/* Private interface */
+	/* Private functions */
 
 	// Returns the experiment configuration, emits a message to the console if it doesn't exist
 	function getExperiment( expName, methodName ) {
