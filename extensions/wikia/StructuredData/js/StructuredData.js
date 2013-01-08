@@ -33,9 +33,11 @@ var StructuredData = {
 				).then(function() {
 					WMU_skipDetails = true;
 					WMU_show();
+					WMU_openedInEditor = false;
 				});
 			} else if (wmuDeffered.state() === 'resolved') {
 				WMU_show();
+				WMU_openedInEditor = false;
 			} else {
 				 return false;
 			}
