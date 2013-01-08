@@ -1,6 +1,6 @@
 /*
  @test-framework Jasmine
- @test-require-asset /resources/wikia/libraries/modil/modil.js
+ @test-require-asset /resources/wikia/libraries/define.mock.js
  @test-require-asset /resources/wikia/modules/uniqueId.js
  */
 
@@ -9,50 +9,30 @@
 describe("uniqueId", function () {
 	'use strict';
 
-	var async = new AsyncSpec(this);
+	var uniqueId = define.getModule();
 
-	async.it('returns a string', function(done) {
-		require(['uniqueId'], function(uniqueId) {
-			var res = uniqueId();
-
-			expect(typeof res).toBe('string');
-			expect(res.length).toBe(13);
-
-			done();
-		});
+	it('returns a string', function() {
+		expect(typeof uniqueId()).toBe('string');
+		expect(uniqueId().length).toBe(13);
 	});
 
-	async.it('returns different values each time', function(done) {
-		require(['uniqueId'], function(uniqueId) {
-			var res = uniqueId();
-
-			expect(res !== uniqueId()).toBe(true);
-
-			done();
-		});
+	it('returns different values each time', function() {
+		expect(uniqueId() !== uniqueId()).toBe(true);
 	});
 
-	async.it('handles prefix', function(done) {
-		require(['uniqueId'], function(uniqueId) {
-			var res = uniqueId('foo');
+	it('handles prefix', function() {
+		var res = uniqueId('foo');
 
-			expect(typeof res).toBe('string');
-			expect(res.length).toBe(16);
-			expect(/^foo/.test(res)).toBe(true);
-
-			done();
-		});
+		expect(typeof res).toBe('string');
+		expect(res.length).toBe(16);
+		expect(/^foo/.test(res)).toBe(true);
 	});
 
-	async.it('handles more_prefix parameter', function(done) {
-		require(['uniqueId'], function(uniqueId) {
-			var res = uniqueId('foo', true);
+	it('handles more_prefix parameter', function() {
+		var res = uniqueId('foo', true);
 
-			expect(typeof res).toBe('string');
-			expect(/^foo/.test(res)).toBe(true);
-			expect(/\./.test(res)).toBe(true);
-
-			done();
-		});
+		expect(typeof res).toBe('string');
+		expect(/^foo/.test(res)).toBe(true);
+		expect(/\./.test(res)).toBe(true);
 	});
 });
