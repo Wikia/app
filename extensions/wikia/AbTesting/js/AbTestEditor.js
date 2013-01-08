@@ -29,7 +29,7 @@
 		},
 
 		// Array of input names that may trigger a 'version change' warning.
-		versionChangeWarningNames = [ 'control_group_id', 'end_time', 'ga_slot', 'groups[]', 'ranges[]', 'start_time' ];
+		versionChangeWarningNames = [ 'start_time', 'end_time', 'ga_slot', 'groups[]', 'ranges[]' ];
 
 	// TODO: does this need to be a class? Will it ever need to be
 	// instantiated more than once?
@@ -72,10 +72,6 @@
 		loadExperimentDetailsError: function( detailsEl, html ) {
 			detailsEl.find('.exp-throbber').stopThrobbing();
 			detailsEl.html(html);
-		},
-		showDetails: function( id, html ) {
-			var tr = typeof id == 'number' ? this.el.find('tr.exp[data-id='+id+']') : id;
-			tr.next().find(':first-child');
 		},
 		clickCommand: function (ev) {
 			var target = $(ev.currentTarget);
@@ -130,8 +126,6 @@
 				});
 			}
 
-			// Rebuild control groups dropdown when groups are added/removed/changed
-			modal.on('change', '[name="groups[]"]', $.proxy(this.rebuildControlGroups, this));
 			modal.on('click', 'button[name=cancel]', $.proxy(this.cancelChange, this));
 			modal.on('click', 'button[name=okay]', $.proxy(this.dismissWarning, this));
 
@@ -173,32 +167,6 @@
 				inputGroup.addClass( 'error' ).append( templates.warningMessage );
 			}
 		},
-		rebuildControlGroups: function( e ) {
-			var modal = $( e.currentTarget ).closest( '.modalWrapper' ),
-				groups = modal.find('[name="groups[]"]'),
-				select = modal.find('[name="control_group_id"]'),
-				controlGroupId = select.find(':selected').val();
-
-			select.empty();
-
-			groups.each(function(i, group) {
-				var $group = $(group),
-					$option = $(templates.option),
-					value = $group.data('id'),
-					name = $group.val();
-
-				if ( name ) {
-					if ( value == controlGroupId ) {
-						$option.attr( 'selected', true );
-					}
-
-					$option.attr( 'value', value );
-					$option.text( name );
-
-					select.append($option);
-				}
-			});
-		},
 		removeWarning: function( inputGroup ) {
 			inputGroup.removeClass( 'error' ).find( '.error-msg' ).remove();
 		},
@@ -217,7 +185,8 @@
 		},
 		editFormResponse: function(response) {
 			var form = $('#AbTestingEditForm'),
-				modal = form.closest('.modalWrapper');
+				modal = form.closest('.modalWrapper'),
+				template, errorMessage;
 
 			// Everything saved properly
 			if ( response.status ) {
@@ -226,8 +195,8 @@
 				var exp = this.el.find( '.exp[data-id=' + response.id + ']' );
 
 				if ( exp.exists() ) {
-					var template = $( response.html );
-					exp.next( '.details' ).replaceWith( template.filter( '.details' ) )
+					template = $( response.html );
+					exp.next( '.details' ).replaceWith( template.filter( '.details' ) );
 					exp.replaceWith( template.filter( '.exp' ) );
 
 				} else {
@@ -236,12 +205,12 @@
 
 			// There was an error
 			} else {
-				var template = $( templates.errorMessage ),
-					errorMessage = template.find( '.error-msg' );
+				template = $( templates.errorMessage );
+				errorMessage = template.find( '.error-msg' );
 
 				// TODO: why is errors an array of arrays? should be array of strings
 				$.each( response.errors, function( i, error ) {
-					// Not sure if the above TODO was addresed, but this now seems
+					// Not sure if the above TODO was addressed, but this now seems
 					// to be a string sometimes and not an array.
 					var str = typeof error == 'string' ? error : error.join( '<br />' );
 					errorMessage.html( errorMessage.html() + str + '<br />' );
