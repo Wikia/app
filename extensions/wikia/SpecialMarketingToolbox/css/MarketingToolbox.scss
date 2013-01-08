@@ -258,7 +258,11 @@ $chevron-color: #888;
 	.module-mediabox {
 		.input-group input,
 		.input-group textarea {
-			width: 320px;
+			width: 323px;
+		}
+
+		.image-placeholder {
+			margin-left: 3px;
 		}
 	}
 }
