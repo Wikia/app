@@ -26,7 +26,7 @@ jQuery( document ).ready( function ( $ ) {
 	}
 	$notificationsArea.find( 'div[data-type="5"]' ).each( function () {
 		var msgId = parseInt( $( this ).attr( 'id' ).substr( 4 ) );
-		$( this ).find( 'p a' ).click( function () {
+		$( this ).find( 'p a' ).click( function (e) {
 			var trackObj = {
 				ga_category: 'sitewidemessages',
 				ga_action: WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
@@ -37,7 +37,8 @@ jQuery( document ).ready( function ( $ ) {
 			WikiaTracker.trackEvent(
 				'trackingevent',
 				trackObj,
-				'internal'
+				'internal',
+				e
 			);
 		} );
 	} );
