@@ -127,6 +127,7 @@ var NodeRoomController = $.createClass(Observable,{
 	roomId: null,
 	mainController: null,
 	partTimeOuts: {},
+	logoutTimeOuts: {},
 	afterInitQueue: [],
 	banned: {},
 	userMain: null,
@@ -387,9 +388,17 @@ var NodeRoomController = $.createClass(Observable,{
 	},
 
 	onLogout: function(message) {
+		/* we display the part message after the 15 seconds to avoid flooding the channel
+		 with unnecessary part & join messages in case of refreshing chat window
+		 */
 		var logoutEvent = new models.LogoutEvent();
 		logoutEvent.mport(message.data);
-		this.onPartBase(logoutEvent.get('leavingUserName'), false);
+		if(this.partTimeOuts[logoutEvent.get('leavingUserName')]) {
+			return true;
+		}
+		this.partTimeOuts[logoutEvent.get('leavingUserName')] = setTimeout(this.proxy(function(){
+			this.onPartBase(logoutEvent.get('leavingUserName'), false);
+		}), 15000);
 	},
 
 	onKick: function(message) {
