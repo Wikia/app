@@ -94,14 +94,6 @@ Skryf die eerste afdeling van u bladsy hier.
 
 ==Opskrif==
 Skryf die tweede afdeling van u bladsy hier.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Skryf die eerste paragraaf van u artikel hier.
-
-==Opskrif==
-Skryf die eerste afdeling van u bladsy hier.
-
-==Opskrif==
-Skryf die tweede afdeling van u bladsy hier.',
 );
 
 /** Arabic (العربية)
@@ -138,16 +130,6 @@ $messages['ar'] = array(
 	'tog-createpagedefaultblank' => 'استخدم الصفحة الفارغة افتراضيا لإنشاء صفحة جديدة',
 	'tog-createpagepopupdisabled' => 'تعطيل إنبثاق منشئ الصفحات', # Fuzzy
 	'newpagelayout' => '[[ملف:Placeholder|يسار|300بك]]
-قم بكتابة الفقرة الأولى من المقالة هنا.
-
-==عنوان القسم==
-
-كتابة عنوان المقطع الأول من مقالك هنا.
-
-==عنوان القسم==
-
-كتابة عنوان المقطع الثاني من مقالك هنا.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[ملف:Placeholder|يسار|300بك]]
 قم بكتابة الفقرة الأولى من المقالة هنا.
 
 ==عنوان القسم==
@@ -267,16 +249,6 @@ Skrivit amañ rannskrid kentañ ho pennad.
 == Titl ar rannskrid ==
 
 Skrivit amañ eil rannskrid ho pennad.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Skrivit amañ rannbennad kentañ ho pennad.
-
-== Titl ar rannskrid ==
-
-Skrivit amañ rannskrid kentañ ho pennad.
-
-== Titl ar rannskrid ==
-
-Skrivit amañ eil rannskrid ho pennad.',
 );
 
 /** Catalan (català)
@@ -313,16 +285,6 @@ Si us plau, utilitzeu un títol diferent.",
 	'tog-createpagedefaultblank' => "Utilitzeu una pàgina en blanc per defecte per a la creació d'una nova pàgina",
 	'tog-createpagepopupdisabled' => 'Desactivar el procés "Crear una pàgina nova" (no recomanat)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Escriu el primer paràgraf de la pàgina aquí.
-
-== Encapçalament ==
-
-Escriu la primera secció de la pàgina aquí.
-
-== Encapçalament ==
-
-Escriu la segona secció de la pàgina aquí.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Escriu el primer paràgraf de la pàgina aquí.
 
 == Encapçalament ==
@@ -376,16 +338,6 @@ Sem napište první část stránky.
 ==Nadpis části==
 
 Sem napište druhou část stránky.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Sem napište první odstavec.
-
-==Nadpis části==
-
-Sem napište první část stránky.
-
-==Nadpis části==
-
-Sem napište druhou část stránky.',
 );
 
 /** German (Deutsch)
@@ -430,16 +382,6 @@ Schreibe den ersten Abschnitt deines Artikels hier.
 ==Überschrift des Abschnittes==
 
 Schreibe den zweiten Abschnitt deines Artikels hier.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Schreibe den ersten Absatz deines Artikels hier.
-
-==Überschrift des Abschnittes==
-
-Schreibe den ersten Abschnitt deines Artikels hier.
-
-==Überschrift des Abschnittes==
-
-Schreibe den zweiten Abschnitt deines Artikels hier.',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -464,16 +406,6 @@ Bitte verwenden Sie einen anderen Titel.',
 	'createpage-error-article-blocked' => 'Entschuldigung, wir können diesen Artikel im Moment nicht erstellen.',
 	'tog-createpagedefaultblank' => 'Eine leere Seite als Standard für neue Seiten verwenden',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Schreiben Sie den ersten Absatz Ihres Artikels hier.
-
-==Überschrift des Abschnittes==
-
-Schreiben Sie den ersten Abschnitt Ihres Artikels hier.
-
-==Überschrift des Abschnittes==
-
-Schreiben Sie den zweiten Abschnitt Ihres Artikels hier.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Schreiben Sie den ersten Absatz Ihres Artikels hier.
 
 ==Überschrift des Abschnittes==
@@ -552,16 +484,6 @@ Escribe aquí la primera sección de tu artículo.
 ==Encabezado de sección==
 
 Escribe aquí la segunda sección de tu artículo.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Escribe aquí el primer párrafo de tu artículo.
-
-==Encabezado de sección==
-
-Escribe aquí la primera sección de tu artículo.
-
-==Encabezado de sección==
-
-Escribe aquí la segunda sección de tu artículo.',
 );
 
 /** Basque (euskara)
@@ -599,16 +521,6 @@ Mesedez erabili izenburu ezberdin bat.',
 	'tog-createpagedefaultblank' => 'Erabili orrialde txuria lehenetsiz orrialde berri bat sortzean',
 	'tog-createpagepopupdisabled' => '"Artikulu berria sortu" prozesua ezgaitu (ez gomendatua)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Hemen zure artikuluaren lehen parrafoa idatz ezazu.
-
-==Atal goiburua==
-
-Hemen zure artikuluaren lehen atala idatz ezazu.
-
-==Atal goiburua==
-
-Hemen zure artikuluaren bigarren atala idatz ezazu.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Hemen zure artikuluaren lehen parrafoa idatz ezazu.
 
 ==Atal goiburua==
@@ -680,16 +592,6 @@ Kirjoita sivusi ensimmäinen osio tähän.
 ==Väliotsikko==
 
 Kirjoita sivusi toinen osio tähän.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Kirjoita sivusi ensimmäinen kappale tähän.
-
-==Väliotsikko==
-
-Kirjoita sivusi ensimmäinen osio tähän.
-
-==Väliotsikko==
-
-Kirjoita sivusi toinen osio tähän.',
 );
 
 /** French (français)
@@ -723,16 +625,6 @@ $messages['fr'] = array(
 	'tog-createpagedefaultblank' => 'Utiliser une page vierge par défaut pour créer une nouvelle page',
 	'tog-createpagepopupdisabled' => 'Désactiver le flux « Créer un nouvel article » (non recommandé)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Écrivez le premier paragraphe de votre article ici.
-
-== Titre de section ==
-
-Écrivez la première section de votre article ici.
-
-== Titre de section ==
-
-Écrivez la deuxième section de votre article ici.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Écrivez le premier paragraphe de votre article ici.
 
 == Titre de section ==
@@ -786,16 +678,6 @@ Escriba aquí a primeira sección do seu artigo.
 ==Cabeceira de sección==
 
 Escriba aquí a segunda sección do seu artigo.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Escriba aquí o primeiro parágrafo do seu artigo.
-
-==Cabeceira de sección==
-
-Escriba aquí a primeira sección do seu artigo.
-
-==Cabeceira de sección==
-
-Escriba aquí a segunda sección do seu artigo.',
 );
 
 /** Hebrew (עברית)
@@ -831,16 +713,6 @@ $messages['he'] = array(
 	'tog-createpagedefaultblank' => 'השתמש בדף ריק ליצירת מאמרים כברירת מחדל',
 	'tog-createpagepopupdisabled' => 'נטרול החלונית ליצירת דפים', # Fuzzy
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-כתוב את הפסקה הראשונה במאמר שלך כאן.
-
-==כותרת קטע==
-
-כתוב את הקטע הראשון במאמר שלך כאן.
-
-==כותרת קטע==
-
-כתוב את הקטע השני במאמר שלך כאן.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 כתוב את הפסקה הראשונה במאמר שלך כאן.
 
 ==כותרת קטע==
@@ -889,16 +761,6 @@ Kérünk, használj más címet.',
 	'tog-createpagedefaultblank' => 'Üres lap alapértelmezett használata új oldal létrehozásakor',
 	'tog-createpagepopupdisabled' => '"Új szócikk létrehozása" letiltása (nem javasolt)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Írd az oldalad első bekezdését ide.
-
-==Címsor==
-
-Írd az oldalad első szakaszát ide.
-
-==Címsor==
-
-Írd az oldalad második szakaszát ide.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Írd az oldalad első bekezdését ide.
 
 ==Címsor==
@@ -961,16 +823,6 @@ Scribe hic le prime section de tu articulo.
 ==Titulo de section==
 
 Scribe hic le secunde section de tu articulo.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px|Spatio reservate]]
-Scribe hic le prime paragrapho de tu articulo.
-
-==Titulo de section==
-
-Scribe hic le prime section de tu articulo.
-
-==Titulo de section==
-
-Scribe hic le secunde section de tu articulo.',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -1007,16 +859,6 @@ Gunakan judul yang berbeda.',
 	'tog-createpagedefaultblank' => 'Gunakan halaman kosong sebagai default untuk membuat sebuah halaman baru',
 	'tog-createpagepopupdisabled' => 'Nonaktifkan "Buat artikel baru" pop-up dialog', # Fuzzy
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Tulis paragraf pertama dari halaman Anda di sini.
-
- == Bagian judul ==
-
-Tulis bagian pertama dari halaman Anda di sini.
-
- == Bagian judul ==
-
-Tulis bagian kedua dari halaman Anda di sini.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Tulis paragraf pertama dari halaman Anda di sini.
 
  == Bagian judul ==
@@ -1072,16 +914,6 @@ Scrivi qui la prima sezione del tuo articolo.
 ==Titolo della sezione==
 
 Scrivi qui la seconda sezione del tuo articolo.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Scrivi qui il primo paragrafo del tuo articolo.
-
-==Titolo della sezione==
-
-Scrivi qui la prima sezione del tuo articolo.
-
-==Titolo della sezione==
-
-Scrivi qui la seconda sezione del tuo articolo.',
 );
 
 /** Japanese (日本語)
@@ -1113,14 +945,6 @@ $messages['ja'] = array(
 	'tog-createpagedefaultblank' => '白紙ページを新規記事の作成にデフォルトで使用する',
 	'tog-createpagepopupdisabled' => '新規記事作成支援機能を無効にする（非推奨）',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-ここに導入部分（第一段落）を書く。
-
-== 節見出し ==
-ここに1番目の節を書く。
-
-== 節見出し ==
-ここに2番目の節を書く。',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 ここに導入部分（第一段落）を書く。
 
 == 節見出し ==
@@ -1161,15 +985,6 @@ $messages['km'] = array(
 	'createpage-error-article-blocked' => 'សូមទោស។ អ្នកមិនអាចបង្កើតទំព័រនោះបានទេនាពេលនេះ។',
 	'tog-createpagedefaultblank' => 'ប្រើទំព័រទទេក្នុងលំនាំដើម ក្នុងការបង្កើតទំព័រថ្មីមួយ',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-សរសេរកឋាខណ្ឌទីមួយរបស់អ្នកនៅទីនេះ។
-
-==ចំណងជើងផ្នែក==
-
-សរសេរផ្នែកទីមួយរបស់ទំព័រអ្នកនៅទៅនេះ។
-
-==ចំណងជើងផ្នែក==
-សរសេរផ្នែកទីពីររបស់ទំព័រអ្នកនៅទៅនេះ។',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 សរសេរកឋាខណ្ឌទីមួយរបស់អ្នកនៅទីនេះ។
 
 ==ចំណងជើងផ្នែក==
@@ -1224,16 +1039,6 @@ Benotzt w.e.g. en aneren Titel.',
 	'tog-createpagedefaultblank' => 'Benotzt eng eidel Säit als Standard fir eng nei Säit unzeleeën',
 	'tog-createpagepopupdisabled' => 'De Flux  Pop-Up Dialog "En neien Artikel uleeën" ausschalten (Net geroden)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Schreiwt den éischten Abschnitt vun Ärem Artikel hei.
-
-== Iwwerschrëft vun der Sektioun ==
-
-Schreiwt déi éischt Sektioun vun Ärem Artikel hei.
-
-== Iwwerschrëft vun der Sektioun ==
-
-Schreiwt déi zweet Sektioun vun Ärem Artikel hei.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Schreiwt den éischten Abschnitt vun Ärem Artikel hei.
 
 == Iwwerschrëft vun der Sektioun ==
@@ -1310,17 +1115,6 @@ I phêk ţhen hmasa ber hetah.
 ==Ţhen hming==
 
 Hetah hian a ţhen hnihna.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-
-I phêk hläwm hmasa ber hetah hian ziak la.
-
-==Ţhen hming==
-
-I phêk ţhen hmasa ber hetah.
-
-==Ţhen hming==
-
-Hetah hian a ţhen hnihna.',
 );
 
 /** Malagasy (Malagasy)
@@ -1351,16 +1145,6 @@ $messages['mg'] = array(
 	'createpage-error-article-blocked' => "Miala tsiny, tsy afaka mamorona takelana ianao amin'izao fotoana izao.",
 	'tog-createpagedefaultblank' => 'Mampiasa pejy fotsy tsipalotra mba hamorona pejy vaovao',
 	'newpagelayout' => "[[File:Placeholder|right|300px]]
-Soraty eto ny paragrafy voalohan'ny pejinao.
-
-== Lohafizarana ==
-
-Soraty eto ny fizarana voalohan'ny pejinao.
-
-==Section heading==
-
-Soraty eto ny fizarana faharoan'ny pejinao.",
-	'createpage-with-layout' => "[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Soraty eto ny paragrafy voalohan'ny pejinao.
 
 == Lohafizarana ==
@@ -1401,16 +1185,6 @@ $messages['mk'] = array(
 	'tog-createpagedefaultblank' => 'Користи празна страница за создавање нова по основно',
 	'tog-createpagepopupdisabled' => 'Оневозможи скокачки прозорец „Создај нова статија“ (не се препорачува)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Тука напишете го првиот параграф на статијата.
-
-==Наслов на заглавие==
-
-Тука напишете го првото заглавие од статијата.
-
-==Наслов на заглавие==
-
-Тука напишете го второто заглавие од статијата.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Тука напишете го првиот параграф на статијата.
 
 ==Наслов на заглавие==
@@ -1473,16 +1247,6 @@ Isikan bahagian pertama laman anda di sini.
 ==Pengatas bahagian==
 
 Isikan bahagian kedua laman anda di sini.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Isikan perenggan pertama laman anda di sini.
-
-==Pengatas bahagian==
-
-Isikan bahagian pertama laman anda di sini.
-
-==Pengatas bahagian==
-
-Isikan bahagian kedua laman anda di sini.',
 );
 
 /** Norwegian Bokmål (norsk (bokmål)‎)
@@ -1518,16 +1282,6 @@ Vennligst bruk en annen tittel.',
 	'tog-createpagedefaultblank' => 'Bruk en blank side som standard for å opprette en ny side',
 	'tog-createpagepopupdisabled' => 'Deaktiver «Opprett en ny artikkel»-flyten (anbefales ikke)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Skriv det første avsnittet i artikkelen din her.
-
-==Seksjonsoverskrift==
-
-Skriv den første seksjonen av artikkelen din her.
-
-==Seksjonsoverskrift==
-
-Skriv den andre seksjonen av artikkelen din her.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Skriv det første avsnittet i artikkelen din her.
 
 ==Seksjonsoverskrift==
@@ -1582,14 +1336,6 @@ Schrijf hier de eerste paragraaf van uw pagina.
 
 ==Paragraafkop==
 Schrijf hier de tweede paragraaf van uw pagina.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Schrijf hier de eerste alinea van uw pagina.
-
-==Paragraafkop==
-Schrijf hier de eerste paragraaf van uw pagina.
-
-==Paragraafkop==
-Schrijf hier de tweede paragraaf van uw pagina.',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -1605,14 +1351,6 @@ Je hebt een nieuwe pagina aangemaakt!',
 Je kunt naar "<a href="$1">$2</a>" gaan of je pagina anders noemen',
 	'createpage-error-article-blocked' => "Sorry, maar je kunt op het moment geen nieuwe pagina's aanmaken.",
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Schrijf hier de eerste alinea van je pagina.
-
-==Paragraafkop==
-Schrijf hier de eerste paragraaf van je pagina.
-
-==Paragraafkop==
-Schrijf hier de tweede paragraaf van je pagina.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Schrijf hier de eerste alinea van je pagina.
 
 ==Paragraafkop==
@@ -1700,16 +1438,6 @@ Tutaj napisz treść pierwszej sekcji strony.
 ==Nagłówek sekcji==
 
 Tutaj napisz treść drugiej sekcji strony.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Tutaj umieść treść pierwszego paragrafu.
-
-==Nagłówek sekcji==
-
-Tutaj napisz treść pierwszej sekcji strony.
-
-==Nagłówek sekcji==
-
-Tutaj napisz treść drugiej sekcji strony.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1755,16 +1483,6 @@ Ch'a scriva ambelessì la prima session ëd sò artìcol.
 ==Antestassion ëd la session==
 
 Ch'a scriva ambelessì la sconda session ëd sò artìcol.",
-	'createpage-with-layout' => "[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Ch'a scriva ambelessì ël prim paràgraf ëd sò artìcol.
-
-==Antestassion ëd la session==
-
-Ch'a scriva ambelessì la prima session ëd sò artìcol.
-
-==Antestassion ëd la session==
-
-Ch'a scriva ambelessì la sconda session ëd sò artìcol.",
 );
 
 /** Pashto (پښتو)
@@ -1781,16 +1499,6 @@ $messages['ps'] = array(
 	'createpage-dialog-blank' => 'تش مخ',
 	'createpage-error-empty-title' => 'لطفاً خپل مخ ته يو سرليک وليکۍ.',
 	'newpagelayout' => '[[دوتنه:Placeholder|ښي|300px]]
-د خپل د مخ لومړی پاراګراف دلته وليکۍ.
-
-==د برخې سرليک==
-
-د خپل د مخ لومړۍ برخه دلته وليکۍ.
-
-==د برخې سرليک==
-
-د خپل د مخ دويمه برخه دلته وليکۍ.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[دوتنه:Placeholder|ښي|300px]]
 د خپل د مخ لومړی پاراګراف دلته وليکۍ.
 
 ==د برخې سرليک==
@@ -1847,16 +1555,6 @@ Escreva aqui a primeira secção da sua página.
 ==Cabeçalho de secção==
 
 Escreva aqui a segunda secção da sua página.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Escreva aqui o primeiro parágrafo da sua página.
-
-==Cabeçalho de secção==
-
-Escreva aqui a primeira secção da sua página.
-
-==Cabeçalho de secção==
-
-Escreva aqui a segunda secção da sua página.',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -1895,16 +1593,6 @@ Por favor, use um título diferente.',
 	'tog-createpagedefaultblank' => 'Usar uma página em branco como padrão para criar uma nova página',
 	'tog-createpagepopupdisabled' => 'Desactivar a janela flutuante Criar Página',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Escreva o primeiro parágrafo do seu artigo aqui.
-
-==Cabeçalho de seção==
-
-Escreva a primeira seção do seu artigo aqui.
-
-==Cabeçalho de seção==
-
-Escreva a segunda seção do seu artigo aqui.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Escreva o primeiro parágrafo do seu artigo aqui.
 
 ==Cabeçalho de seção==
@@ -1978,16 +1666,6 @@ $messages['ru'] = array(
 ==Заголовок секции==
 
 Напишите здесь вторую секцию вашей статьи.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Напишите здесь первый параграф вашей статьи.
-
-==Заголовок секции==
-
-Напишите здесь первую секцию вашей статьи.
-
-==Заголовок секции==
-
-Напишите здесь вторую секцию вашей статьи.',
 );
 
 /** Sakha (саха тыла)
@@ -2023,16 +1701,6 @@ $messages['sah'] = array(
 	'tog-createpagedefaultblank' => 'Саҥа сирэйи айар буоллахха кураанах сирэйи аһарга',
 	'tog-createpagepopupdisabled' => 'Саҥа сирэйи айарга тахсан кэлэр түннүгү таһаарыма', # Fuzzy
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Манна ыстатыйаҥ бастакы аҥаарын суруй.
-
-==Салаа баһа==
-
-Манна ыстатыйаҥ бастакы салаатын суруй.
-
-==Салаа баһа==
-
-Манна ыстатыйаҥ иккис салаатын суруй.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Манна ыстатыйаҥ бастакы аҥаарын суруй.
 
 ==Салаа баһа==
@@ -2119,16 +1787,6 @@ Skriv det första avsnittet på din sida här.
 ==Rubrik på avsnitt==
 
 Skriv det andra avsnittet på din sida här',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Skriv det första stycket på din sida här.
-
-==Rubrik på avsnitt==
-
-Skriv det första avsnittet på din sida här.
-
-==Rubrik på avsnitt==
-
-Skriv det andra avsnittet på din sida här',
 );
 
 /** Swahili (Kiswahili)
@@ -2204,16 +1862,6 @@ Isulat ang unang sekyon ng artikulo mo rito.
 ==Ulo ng seksyon==
 
 Isulat ang pangalawang ulo ng sekyon mo rito.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Isulat ang unang talata ng iyong artikulo dito.
-
-==Ulo ng seksyon==
-
-Isulat ang unang sekyon ng artikulo mo rito.
-
-==Ulo ng seksyon==
-
-Isulat ang pangalawang ulo ng sekyon mo rito.',
 );
 
 /** Turkish (Türkçe)
@@ -2265,16 +1913,6 @@ $messages['tt-cyrl'] = array(
 ==Бүлек исеме==
 
 Монда мәкаләнең киләсе бүлеген языгыз.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Монда мәкаләгезнең беренче параграфын языгыз.
-
-==Бүлек исеме==
-
-Монда мәкаләнең беренче бүлеген языгыз.
-
-==Бүлек исеме==
-
-Монда мәкаләнең киләсе бүлеген языгыз.',
 );
 
 /** Ukrainian (українська)
@@ -2310,16 +1948,6 @@ $messages['uk'] = array(
 	'tog-createpagedefaultblank' => 'Використовувати порожню сторінку за замовчуванням для створення нової сторінки',
 	'tog-createpagepopupdisabled' => 'Вимкнути виринаюче вікно "Створити нову статтю" (не рекомендовано)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Напишіть тут перший параграф вашої статті.
-
-==Заголовок розділу==
-
-Напишіть тут перший розділ вашої статті.
-
-==Заголовок розділу==
-
-Напишіть тут другий розділ вашої статті.',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Напишіть тут перший параграф вашої статті.
 
 ==Заголовок розділу==
@@ -2383,16 +2011,6 @@ Viết cho đề mục 1 tại đây
 ==Đề mục 2==
 
 Viết cho đề mục 2 tại đây',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
-Viết đoạn văn thứ nhất ở đây
-
-==Đề mục 1==
-
-Viết cho đề mục 1 tại đây
-
-==Đề mục 2==
-
-Viết cho đề mục 2 tại đây',
 );
 
 /** Chinese (中文)
@@ -2437,16 +2055,6 @@ $messages['zh-hans'] = array(
 	'createpage-error-article-exists' => '已存在同名页面。
 您可以访问<a href="$1">$2</a>，或重命名您的页面。',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-在这里撰写第一段落。
-
-==标题项==
-
-在这里撰写第一项。
-
-==标题项==
-
-在这里撰写第二项。',
-	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 在这里撰写第一段落。
 
 ==标题项==
