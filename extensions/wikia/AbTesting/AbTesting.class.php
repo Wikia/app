@@ -77,7 +77,6 @@ class AbTesting extends WikiaObject {
 						'id' => $group['id'],
 						'name' => $groupName,
 						'ranges' => $this->parseRanges($grn['ranges']),
-//						'isControl' => $group['id'] === $ver['control_group_id'],
 					);
 				}
 				$versions[] = $version;
