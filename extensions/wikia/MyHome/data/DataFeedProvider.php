@@ -398,8 +398,7 @@ class DataFeedProvider {
 
 		} elseif (defined('NS_BLOG_ARTICLE_TALK') && $res['ns'] == NS_BLOG_ARTICLE_TALK && class_exists('ArticleComment')) {
 
-			$parts = ArticleComment::explode($res['title'], $title );
-			$item['title'] = $parts['title'];
+			$item['title'] = ArticleComment::getBlogPostTitle($res['title'], $title );
 			$item['url'] = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE_TALK)->getLocalUrl();
 
  		} elseif (defined('NS_BLOG_LISTING') && $res['ns'] == NS_BLOG_LISTING) {
