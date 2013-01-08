@@ -2,7 +2,7 @@
 
 var $window = $( window ),
 	scroll = 'scroll.SharingToolbar',
-	Wikia = Wikia || {};
+	Wikia = window.Wikia || {};
 
 var SharingToolbar = {
 	offsetTop: 0,
