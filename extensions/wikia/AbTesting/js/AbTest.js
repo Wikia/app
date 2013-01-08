@@ -37,6 +37,9 @@
 	// The AbTest class. Instantiating is not required but it allows you to provide
 	// an experiment context to all of the function calls. You may also call all
 	// of the functions statically, providing an experiment context yourself.
+
+	/* Public interface */
+
 	AbTest = function( expName ) {
 		this.expName = expName;
 	};
@@ -49,18 +52,6 @@
 		}
 		return ret;
 	})( window.beacon_id );
-
-	// Returns the experiment configuration, emits a message to the console if it doesn't exist
-	function getExperiment( expName, methodName ) {
-		if ( !expName ) {
-			log( methodName, 'Missing required argument "expName".' );
-		}
-		var exp = AbTest.experiments[expName];
-		if ( !exp ) {
-			log( methodName, 'Experiment configuration not found for "' + expName + '."' );
-		}
-		return exp;
-	}
 
 	// Returns active group name for the given experiment
 	AbTest.getGroup = function( expName ) {
@@ -82,7 +73,7 @@
 	};
 
 	// Returns the GA slot that tracking should be reported to
-	AbTest.getGASlot = function( expName, groupName ) {
+	AbTest.getGASlot = function( expName ) {
 		var exp = getExperiment(expName,'getGASlot'),
 			current = exp && exp.current;
 		return current && current.gaSlot;
@@ -108,7 +99,7 @@
 	// Returns the list of active experiments where you have been assigned groups
 	// where index and value are numeric IDs
 	// eg. { 1: 4, 2: 5 } where 1 and 2 are experiment IDs; 4 and 5 are group IDs
-	AbTest.getActiveExperimentsIds = function() {
+	AbTest.getActiveExperimentsIds = function( includeControl ) {
 		var expName, exp, activeList = {};
 		for ( expName in AbTest.experiments ) {
 			exp = AbTest.experiments[expName];
@@ -136,8 +127,19 @@
 		}
 	})( AbTest.prototype );
 
-	/* ----------------------------------------- */
-	/* Initialization and configuration handling */
+	/* Private interface */
+
+	// Returns the experiment configuration, emits a message to the console if it doesn't exist
+	function getExperiment( expName, methodName ) {
+		if ( !expName ) {
+			log( methodName, 'Missing required argument "expName".' );
+		}
+		var exp = AbTest.experiments[expName];
+		if ( !exp ) {
+			log( methodName, 'Experiment configuration not found for "' + expName + '."' );
+		}
+		return exp;
+	}
 
 	// Computes hash of the string
 	function hash( s ) {
@@ -182,9 +184,12 @@
 		return false;
 	}
 
+	/* ----------------------------------------- */
+	/* Initialization and configuration handling */
+
 	// Process experiments from configuration (remove inactive ones and select proper version of actives ones)
 	AbTest.experiments = (function( experiments ) {
-		var expName, exp, versions, version, active, i, activeExperiments = {}, count = 0;
+		var expName, exp, versions, version, i, activeExperiments = {}, count = 0;
 
 		for ( expName in experiments ) {
 			exp = experiments[expName];
@@ -213,7 +218,7 @@
 	})( config.experiments || {} );
 
 	// Determine active group for every experiment
-	// This is based on currrent version, however you can override it in cookies (TBD) and query string
+	// This is based on current version, however you can override it in cookies (TBD) and query string
 	(function( experiments ) {
 
 		// 1. Handle input from query string
