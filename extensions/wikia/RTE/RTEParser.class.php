@@ -98,10 +98,18 @@ class RTEParser extends Parser {
 	 */
 	public function checkForUnclosedParserHooks( $text ) {
 		foreach ( $this->mTagHooks as $tag => $callback ) {
-			if ( preg_match( "/<{$tag}(\W[^>\/])*>/si", $text ) 
-				&& !preg_match( "/<\/[^>\w]*{$tag}>/si", $text )
-				) {
-				RTE::$edgeCases[] = 'UNCLOSED_PARSER_HOOK_TAG';
+			$opens = array();
+			$closes = array();
+			preg_match_all( "/<{$tag}\b([^>\/])*>/si", $text, $opens );
+			preg_match_all( "/<\/[^>\w]*\b{$tag}>/si", $text, $closes );
+			
+			// the number of opening tags should be identical to the number of closing tags
+			if ( count( $opens ) > 0 || count( $closes ) > 0 ) {
+				if ( ( count( $opens ) == 0 || count( $closes ) == 0 ) // no results from one
+				    || ( count( $opens[0] ) != count( $closes[0] ) ) // mismatched number
+			    ) {
+					RTE::$edgeCases[] = 'UNCLOSED_PARSER_HOOK_TAG';
+				}
 			}
 		}
 	}
