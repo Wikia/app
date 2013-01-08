@@ -18,7 +18,7 @@
 			<?= $app->renderView(
 					'MarketingToolbox',
 					'FormField',
-					array('inputData' => $fields['header'])
+					array('inputData' => $fields['module-title'])
 				);
 			?>
 			<?= $app->renderView(

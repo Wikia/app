@@ -91,7 +91,7 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-from-the-community-long-quote' => 'Quote',
 	'marketing-toolbox-hub-module-from-the-community-url' => 'Article URL',
 
-	'marketing-toolbox-hub-module-wikiaspicks-header' => 'Header',
+	'marketing-toolbox-hub-module-wikiaspicks-title' => 'Title',
 	'marketing-toolbox-hub-module-wikiaspicks-text' => 'Text',
 	'marketing-toolbox-hub-module-wikiaspicks-text-tip' => "'''Tip:''' to add a link copy the following and replace the italicized text with your own: <a href=\"''your_url_here''\">''Your Text Here''</a>",
 
