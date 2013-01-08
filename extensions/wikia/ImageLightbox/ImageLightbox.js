@@ -237,7 +237,8 @@ var ImageLightbox = {
 						'ga_value':eventValue,
 						'video_title':imageName
 					},
-					'both'
+					'both',
+					ev
 				);
 			}
 
