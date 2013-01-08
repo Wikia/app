@@ -15,14 +15,6 @@ $config['oasis_shared_core_js'] = array(
 	),
 );
 
-$config['oasis_jquery_ads_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#group_oasis_jquery',
-		'#group_oasis_ads_js'
-	)
-);
-
 $config['oasis_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -84,8 +76,8 @@ $config['adengine2_js'] = array(
 );
 
 $config['oasis_ads_js'] = array(
-    'type' => AssetsManager::TYPE_JS,
-    'assets' => array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
 		// ads
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
