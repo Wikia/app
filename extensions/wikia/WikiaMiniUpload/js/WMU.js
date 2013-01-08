@@ -64,7 +64,7 @@ var WMU_panel = null,
 	WMU_width_par = null,
 	WMU_height_par = null,
 	WMU_skipDetails = false,
-	WMU_isOnSpecialPage = false;
+	WMU_openedInEditor = true;
 
 if (typeof WMU_box_filled == 'undefined') {
 	WMU_box_filled = [];
@@ -402,6 +402,10 @@ function WMU_loadMainFromView() {
 
 
 function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
+
+	// reset mode to support normal editor usage
+	WMU_openedInEditor = true;
+
 	if (wgUserName == null && wgAction == 'edit') {
 		// handle login on edit page
 		UserLogin.rteForceLogin();
@@ -422,8 +426,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		}
 	}
 
-	// Special Case for using WMU in on Special Pages
-	WMU_isOnSpecialPage = wgNamespaceNumber === -1;
 
 	WMU_refid = null;
 	WMU_wysiwygStart = 1;
@@ -1051,13 +1053,15 @@ function WMU_insertImage(e, type) {
 					}
 
 					// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
-					if (WMU_isOnSpecialPage) {
-						var $responseHTML = $(o.responseText),
-							wmuData = {
-							imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
-							imageWikiText: $responseHTML.find('#ImageUploadTag').val()
-						};
-						$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
+					var $responseHTML = $(o.responseText),
+						wmuData = {
+						imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
+						imageWikiText: $responseHTML.find('#ImageUploadTag').val()
+					};
+					$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
+
+					// prevent checking for editor if WMU used outside of the editor context
+					if(!WMU_openedInEditor) {
 						return false;
 					}
 
