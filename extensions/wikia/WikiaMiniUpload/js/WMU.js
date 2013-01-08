@@ -936,7 +936,7 @@ function WMU_insertImage(e, type) {
 		params.push('ImageUploadLicense='+$('#ImageUploadLicense').val());
 	}
 
-	if($('#ImageUploadExtraId').length {
+	if($('#ImageUploadExtraId').length) {
 		params.push('extraId='+$('#ImageUploadExtraId').val());
 	}
 
