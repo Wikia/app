@@ -203,7 +203,7 @@ $.fn.extend({
 				}
 
 				if (persistent) {
-					wrapper.hideModal();
+					wrapper.hideModal(settings.onAfterClose);
 				} else {
 					wrapper.closeModal();
 				}
@@ -252,7 +252,7 @@ $.fn.extend({
 	},
 
 	// just hide the modal - don't remove DOM node
-	hideModal: function() {
+	hideModal: function(callback) {
 		// hide associated blackout
 		var blackout = $(this).data('blackout');
 		blackout.fadeOut("fast").addClass('blackoutHidden');
@@ -262,6 +262,9 @@ $.fn.extend({
 			opacity: 0
 		}, "fast", function() {
 			$(this).hide();
+			if($.isFunction(callback)) {
+				callback();
+			}
 		});
 
 		// BugId:7498
