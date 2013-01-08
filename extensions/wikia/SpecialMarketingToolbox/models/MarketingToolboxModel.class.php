@@ -26,6 +26,8 @@ class MarketingToolboxModel extends WikiaModel {
 	protected $specialPageClass = 'SpecialPage';
 	protected $userClass = 'User';
 
+	protected $allowedTags = array('<a>');
+
 	public function __construct($app = null) {
 		parent::__construct();
 
@@ -62,6 +64,15 @@ class MarketingToolboxModel extends WikiaModel {
 			)
 		);
 
+	}
+
+	/**
+	 * @desc Returns HTML tags which are allowed in the module's text field
+	 *
+	 * @return String
+	 */
+	public function getAllowedTags() {
+		return implode('', $this->allowedTags);
 	}
 
 	public function getThumbnailSize() {

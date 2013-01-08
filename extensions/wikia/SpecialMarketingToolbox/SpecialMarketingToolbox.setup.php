@@ -36,7 +36,6 @@ $app->registerClass('MarketingToolboxExploreModel', $dir . 'models/MarketingTool
 $app->registerClass('MarketingToolboxPollsModel', $dir . 'models/MarketingToolboxPollsModel.class.php');
 $app->registerClass('MarketingToolboxSliderModel', $dir . 'models/MarketingToolboxSliderModel.class.php');
 $app->registerClass('MarketingToolboxFromthecommunityModel', $dir . 'models/MarketingToolboxFromthecommunityModel.class.php');
-$app->registerClass('MarketingToolboxWikiaspicksModel', $dir . 'models/MarketingToolboxWikiaspicksModel.class.php');
 
 $app->registerClass('MarketingToolboxModuleService', $dir . 'modules/MarketingToolboxModuleService.class.php');
 $app->registerClass('MarketingToolboxModuleSliderService', $dir . 'modules/MarketingToolboxModuleSliderService.class.php');

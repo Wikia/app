@@ -95,7 +95,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 			'validator' => new WikiaValidatorToolboxUrl(
 				array(),
 				array(
-					'wrong' => 'marketing-toolbox-hub-module-explore-link-url-invalid'
+					'wrong' => 'marketing-toolbox-validator-wrong-url'
 				)
 			),
 			'attributes' => array(

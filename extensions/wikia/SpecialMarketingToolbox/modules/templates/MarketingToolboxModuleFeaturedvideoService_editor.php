@@ -24,6 +24,12 @@
 			<?= $app->renderView(
 			'MarketingToolbox',
 			'FormField',
+			array('inputData' => $fields['articleUrl'])
+		);
+			?>
+			<?= $app->renderView(
+			'MarketingToolbox',
+			'FormField',
 			array('inputData' => $fields['description'])
 		);
 			?>
@@ -40,5 +46,8 @@
 				<? endif ?>
 			</div>
 		</div>
+	</div>
+	<div class="module-box grid-4 alpha">
+		<p class="alternative"><?= $wf->MsgExt('marketing-toolbox-hub-module-html-text-tip', array('parseinline')); ?></p>
 	</div>
 </div>

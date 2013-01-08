@@ -54,6 +54,9 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 				'validator' => new WikiaValidatorToolboxUrl(
 					array(
 						'required' => true
+					),
+					array(
+						'wrong' => 'marketing-toolbox-validator-wrong-url'
 					)
 				),
 				'attributes' => array(
