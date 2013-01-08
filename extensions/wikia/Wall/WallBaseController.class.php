@@ -243,7 +243,7 @@ class WallBaseController extends WikiaController{
 			$this->response->setVal( 'showEditedTS',  true );
 			$editorName = $wallMessage->getEditor()->getName();
 			$this->response->setVal( 'editorName', $editorName );			
-			$editorUrl = F::build( 'Title', array( $editorName, NS_USER_WALL ), 'newFromText' )->getFullUrl();
+			$editorUrl = F::build( 'Title', array( $editorName, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK ), 'newFromText' )->getFullUrl();
 			$this->response->setVal( 'editorUrl',  $editorUrl );
 			$this->response->setVal( 'isEdited',  true);
 			
