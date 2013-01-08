@@ -381,7 +381,7 @@ var WikiaBar = {
 		return (this.wikiaBarHidden) ? 0 : wikiaBarHeight;
 	},
 	//todo: extract class
-	trackClick: function (category, action, label, value, params) {
+	trackClick: function (category, action, label, value, params, event) {
 		if (this.isSampledEvent()) {
 			var trackingObj = {
 				ga_category: category,
@@ -400,7 +400,8 @@ var WikiaBar = {
 			WikiaTracker.trackEvent(
 				'trackingevent',
 				trackingObj,
-				'ga'
+				'ga',
+				event
 			);
 		}
 	},
@@ -410,15 +411,15 @@ var WikiaBar = {
 			startTime = new Date();
 
 		if (node.hasClass('arrow')) {
-			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'arrow-hide', null, {});
+			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'arrow-hide', null, {}, e);
 		} else if (node.hasClass('wikia-bar-collapse')) {
-			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'arrow-show', null, {});
+			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'arrow-show', null, {}, e);
 		} else if (parent.hasClass('wikiabar-button')) {
 			var buttonIdx = parent.data('index');
-			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'wikiabar-button-' + buttonIdx, null, {});
+			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.CLICK_LINK_BUTTON, 'wikiabar-button-' + buttonIdx, null, {}, e);
 		} else if (parent.hasClass('message')) {
 			var messageIdx = node.data('index');
-			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'message-' + messageIdx + '-clicked', null, {});
+			this.trackClick('wikia-bar', WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'message-' + messageIdx + '-clicked', null, {}, e);
 		}
 
 		$().log('tracking took ' + (new Date() - startTime) + ' ms');
