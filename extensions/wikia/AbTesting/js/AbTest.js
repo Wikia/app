@@ -114,6 +114,8 @@
 			exp = AbTest.experiments[expName];
 			if ( exp.group ) {
 				activeList[exp.id] = exp.group.id;
+			} else if ( includeControl ) {
+				activeList[exp.id] = false;
 			}
 		}
 		return activeList;
