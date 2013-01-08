@@ -278,7 +278,6 @@ CKEDITOR.plugins.add('rte-media',
 	// image specific setup
 	setupImage: function(image) {
 		image.bind('edit.media', function(ev) {
-			console.log('hello3.2');
 			RTE.log('image clicked');
 
 			// call WikiaMiniUpload and provide WMU with image clicked
@@ -358,11 +357,9 @@ CKEDITOR.plugins.add('rte-media',
 		var images = placeholder.filter('.image-placeholder');
 		images.attr('title', RTE.getInstance().lang.imagePlaceholder.tooltip);
 		images.bind('click.placeholder edit.placeholder', function(ev) {
-			console.log('hello2.2');
 			// call WikiaMiniUpload and provide WMU with image clicked + inform it's placeholder
 			var self = this;
 			WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
-				console.log('hello2');
 				RTE.tools.callFunction(window.WMU_show,$(self), {isPlaceholder: true});
 			});
 		});
