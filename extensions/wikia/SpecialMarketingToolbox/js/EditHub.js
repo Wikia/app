@@ -63,6 +63,7 @@ EditHub.prototype = {
 			).then($.proxy(function() {
 				WMU_skipDetails = true;
 				WMU_show();
+				WMU_openedInEditor = false;
 				this.wmuReady = true;
 			}, this));
 			$(window).bind('WMU_addFromSpecialPage', $.proxy(function(event, wmuData) {
@@ -71,6 +72,7 @@ EditHub.prototype = {
 		}
 		else {
 			WMU_show();
+			WMU_openedInEditor = false;
 		}
 	},
 
