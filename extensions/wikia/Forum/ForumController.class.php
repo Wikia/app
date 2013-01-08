@@ -166,7 +166,7 @@ class ForumController extends WallBaseController {
 		} else {
 			$displayname = $name;
 			$displayname2 = '';
-			$url = F::build( 'Title', array( $name, NS_USER_WALL ), 'newFromText' )->getFullUrl();
+			$url = F::build( 'Title', array( $name, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK ), 'newFromText' )->getFullUrl();
 		}
 
 		$this->response->setVal( 'username', $name );
