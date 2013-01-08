@@ -13,8 +13,8 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
 				)
 			),
-			'header' => array(
-				'label' => $this->wf->Msg('marketing-toolbox-hub-module-wikiaspicks-header'),
+			'module-title' => array(
+				'label' => $this->wf->Msg('marketing-toolbox-hub-module-wikiaspicks-title'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
