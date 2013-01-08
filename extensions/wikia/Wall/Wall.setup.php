@@ -146,6 +146,7 @@ $app->registerHook('BeforeInitialize', 'WallHooksHelper', 'onBeforeInitialize');
 $app->registerHook( 'WikiFeatures::afterToggleFeature', 'WallHooksHelper', 'onAfterToggleFeature');
 $app->registerHook( 'AdvancedBoxSearchableNamespaces', 'WallHooksHelper', 'onAdvancedBoxSearchableNamespaces');
 
+$app->registerHook( 'HAWelcomeGetPrefixText', 'WallHooksHelper', 'onHAWelcomeGetPrefixText');
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',

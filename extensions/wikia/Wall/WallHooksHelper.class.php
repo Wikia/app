@@ -2083,4 +2083,26 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * HAWelcome
+	 *
+	 * @param String $$prefixedText
+	 * @param Title $title
+	 *
+	 * @access public
+	 * @author Tomek
+	 *
+	 * @return boolean
+	 */
+
+	static public function onHAWelcomeGetPrefixText( &$prefixedText, $title ) {
+
+		if ( $title->exists() && WallHelper::isWallNamespace($title->getNamespace()) ){
+			$threadTitle = Title::newFromText($title->getArticleID(), NS_USER_WALL_MESSAGE);
+			$prefixedText = $threadTitle->getPrefixedText();
+		}
+
+		return true;
+	}
+
 }
