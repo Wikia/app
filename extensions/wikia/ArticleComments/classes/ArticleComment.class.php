@@ -736,10 +736,7 @@ class ArticleComment {
 		$retval = $editPage->internalAttemptSave( $result, $bot );
 
 		if( $retval->value == EditPage::AS_SUCCESS_UPDATE ) {
-			/**
-			 * @var $commentsIndex CommentsIndex
-			 */
-			$commentsIndex = F::build( 'CommentsIndex', array( $article->getID() ), 'newFromId' );
+			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
 			if ( $commentsIndex instanceof CommentsIndex ) {
 				$commentsIndex->updateLastRevId( $article->getTitle()->getLatestRevID(Title::GAID_FOR_UPDATE) );
 			}
@@ -848,10 +845,8 @@ class ArticleComment {
 				'firstRevId' => $revId,
 				'lastRevId' => $revId,
 			);
-			/**
-			 * @var $commentsIndex CommentsIndex
-			 */
-			$commentsIndex = F::build( 'CommentsIndex', array($data) );
+
+			$commentsIndex = new CommentsIndex( $data );
 			$commentsIndex->addToDatabase();
 
 			// set last child comment id

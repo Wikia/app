@@ -169,9 +169,6 @@ class ArticleCommentsAjax {
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$parentId = $wgRequest->getVal( 'parentId' );
-		$page = $wgRequest->getVal( 'page', 1 );
-		$showall = $wgRequest->getText( 'showall', false );
-		$commentingAllowed = true;
 		$result = array( 'error' => 1 );
 		$title = Title::newFromID( $articleId );
 
