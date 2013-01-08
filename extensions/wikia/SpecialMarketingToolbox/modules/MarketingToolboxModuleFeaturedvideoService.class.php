@@ -27,6 +27,20 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 					'class' => 'required'
 				)
 			),
+			'articleUrl' => array(
+				'label' => $this->wf->msg('marketing-toolbox-hub-module-featured-video-article-url'),
+				'validator' => new WikiaValidatorToolboxUrl(
+					array(
+						'required' => true
+					),
+					array(
+						'wrong' => 'marketing-toolbox-validator-wrong-url'
+					)
+				),
+				'attributes' => array(
+					'class' => 'required wikiaUrl'
+				),
+			),
 			'description' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-featured-video-desc'),
 				'validator' => new WikiaValidatorString(),
@@ -46,5 +60,18 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 		}
 
 		return parent::renderEditor($data);
+	}
+
+	public function filterData($data) {
+		if( !empty($data['description']) ) {
+			$model = new MarketingToolboxModel();
+			$data['description'] = strip_tags($data['description'], $model->getAllowedTags());
+		}
+
+		if (!empty($data['articleUrl'])) {
+			$data['articleUrl'] = $this->addProtocolToLink($data['articleUrl']);
+		}
+
+		return parent::filterData($data);
 	}
 }

@@ -60,7 +60,7 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 	
 	public function filterData($data) {
 		if( !empty($data['text']) ) {
-			$model = new MarketingToolboxWikiaspicksModel();
+			$model = new MarketingToolboxModel();
 			$data['text'] = strip_tags($data['text'], $model->getAllowedTags());
 		}
 		

@@ -39,6 +39,6 @@
 		</div>
 	</div>
 	<div class="module-box grid-4 alpha">
-		<p class="alternative"><?= $wf->MsgExt('marketing-toolbox-hub-module-wikiaspicks-text-tip', array('parseinline')); ?></p>
+		<p class="alternative"><?= $wf->MsgExt('marketing-toolbox-hub-module-html-text-tip', array('parseinline')); ?></p>
 	</div>
 </div>
