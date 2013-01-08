@@ -33,6 +33,7 @@
 			array('inputData' => $fields['description'])
 		);
 			?>
+			<p class="alternative"><?= $wf->MsgExt('marketing-toolbox-hub-module-html-text-tip', array('parseinline')); ?></p>
 		</div>
 		<div class="grid-1 alpha">
 			<div class="image-placeholder video">
@@ -46,8 +47,5 @@
 				<? endif ?>
 			</div>
 		</div>
-	</div>
-	<div class="module-box grid-4 alpha">
-		<p class="alternative"><?= $wf->MsgExt('marketing-toolbox-hub-module-html-text-tip', array('parseinline')); ?></p>
 	</div>
 </div>

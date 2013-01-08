@@ -15,7 +15,7 @@ class MarketingToolboxModel extends WikiaModel {
 
 	const HUBS_TABLE_NAME = '`wikia_hub_modules`';
 
-	const FORM_THUMBNAIL_SIZE = 155;
+	const FORM_THUMBNAIL_SIZE = 149;
 	const FORM_FIELD_PREFIX = 'MarketingToolbox';
 
 	protected $statuses = array();
