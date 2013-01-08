@@ -90,6 +90,21 @@ class RTEParser extends Parser {
 			}
 		}
 	}
+	
+	/**
+	 * Registers the wikitext as an edge case with RTE stack for cases where
+	 * parser hook tags are not either self-closing or an accompanying closing tag.
+	 * @param unknown_type $text
+	 */
+	public function checkForUnclosedParserHooks( $text ) {
+		foreach ( $this->mTagHooks as $tag => $callback ) {
+			if ( preg_match( "/<{$tag}(\W[^>\/])*>/si", $text ) 
+				&& !preg_match( "/<\/[^>\w]*{$tag}>/si", $text )
+				) {
+				RTE::$edgeCases[] = 'UNCLOSED_PARSER_HOOK_TAG';
+			}
+		}
+	}
 
 	/**
 	 * Reset empty lines counter and store current line as previous one for next step of foreach
@@ -489,6 +504,7 @@ class RTEParser extends Parser {
 
 		// parse to HTML
 		$output = parent::parse($text, $title, $options, $linestart, $clearState, $revid);
+		$this->checkForUnclosedParserHooks( $text );
 
 		$wgRTEParserEnabled = false;
 
