@@ -61,7 +61,10 @@ class RTEAjax {
 
 		if (!empty($wgTitle)) {
 			// existing local URL or interwiki link
-			$exists = $wgTitle->exists() || $wgTitle->isExternal() || ( !empty($wgEnableWallEngine) && WallHelper::isWallNamespace($wgTitle->getNamespace()) );
+			$exists = $wgTitle->exists() 
+			        || $wgTitle->isSpecialPage() 
+			        || $wgTitle->isExternal() 
+			        || ( !empty($wgEnableWallEngine) && WallHelper::isWallNamespace($wgTitle->getNamespace()) );
 
 			$res = array(
 				'exists' => $exists,

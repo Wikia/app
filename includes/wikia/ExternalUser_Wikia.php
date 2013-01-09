@@ -346,4 +346,30 @@ class ExternalUser_Wikia extends ExternalUser {
 		}
 		wfProfileOut( __METHOD__ );
 	}
+
+	/** 
+	 * Removes user info from secondary clusters so that it can be regenerated from scratch
+	 *
+	 * @author mix
+	 * @author tor
+	 */
+	public static function removeFromSecondaryClusters( $id ) {
+
+		$clusters = WikiFactory::getSecondaryClusters(); // wikicities with a c1 .. cx cluster suffix.
+
+		foreach ($clusters as $clusterName) {
+			// This is a classic double-check. I do not want to delete the record from the primary cluster.
+			// No, really! I do not.
+			if ( RenameUserHelper::CLUSTER_DEFAULT != $clusterName ) {
+				$memkey = sprintf("extuser:%d:%s", $id, $clusterName);
+				$clusterName = 'wikicities_' . $clusterName;
+
+				$oDB = wfGetDB( DB_MASTER, array(), $clusterName );
+				$oDB->delete( 'user', array( 'user_id' => $id ) );
+				$oDB->commit();
+
+				$wgMemc->delete( $memkey );
+			}
+		}
+	}
 }

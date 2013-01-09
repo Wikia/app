@@ -20,7 +20,7 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController
 	public function __construct() {
 		$this->version = F::build( 'WikiaSpecialVersion' );
 		
-		parent::__construct( 'Version', 'Version', true );
+		parent::__construct( 'Version' );
 	}
 	
 	public function index() {

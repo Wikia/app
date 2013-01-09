@@ -38,7 +38,7 @@ class BloglistDeferredPurgeJob extends Job {
 		);
 
 		/**
-		 * And purge their cache.
+		 * And purge their cache and Squid URLs.
 		 */
 		while ( $oRow = $oDB->fetchObject( $oData ) ) {
 
@@ -49,6 +49,7 @@ class BloglistDeferredPurgeJob extends Job {
 			// page_props are moved somewhere or not.
 			if ( $oArticle instanceof Article ) {
 				$oArticle->doPurge();
+				$oArticle->getTitle()->purgeSquid();
 			}
 		}
 
