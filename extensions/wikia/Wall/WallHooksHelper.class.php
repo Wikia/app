@@ -1633,6 +1633,19 @@ class WallHooksHelper {
 	        WallHelper::getWallTitleData( $rc = null, $row = null, $fullUrls = false );
 	}
 
+
+	public static function onFilePageImageUsageSingleLink(&$link, &$element) {
+
+		if ( $element->page_namespace == NS_USER_WALL_MESSAGE ) {
+
+			$titleData = WallHelper::getWallTitleData(null, $element, true);
+
+			$boardText = wfMsg( 'forum-wiki-activity-msg', '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMsg( 'forum-wiki-activity-msg-name', $titleData['wallPageUrl'] ) . '</a>' );
+			$link = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ' . $boardText;
+		}
+		return true;
+	}
+
 	/**
 	 * @brief Adjusting Special:Whatlinkshere
 	 *

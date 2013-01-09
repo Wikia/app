@@ -94,6 +94,7 @@ $app->registerHook('ChangesListMakeSecureName', 'WallHooksHelper', 'onChangesLis
 $app->registerHook('WikiaRecentChangesBlockHandlerChangeHeaderBlockGroup', 'WallHooksHelper', 'onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup');
 
 $app->registerHook('ArticleDeleteComplete' , 'WallHooksHelper', 'onArticleDeleteComplete');
+$app->registerHook( 'FilePageImageUsageSingleLink', 'WallHooksHelper', 'onFilePageImageUsageSingleLink' );
 
 $app->registerHook('getUserPermissionsErrors', 'WallHooksHelper', 'onGetUserPermissionsErrors');
 $app->registerHook('ComposeCommonBodyMail', 'WallHooksHelper', 'onComposeCommonBodyMail' );
