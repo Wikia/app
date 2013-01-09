@@ -61,7 +61,7 @@
 <?= $quantServe ?>
 
 <?php
-	print '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
+	print '<script type="text/javascript">/*<![CDATA[*/while(wgAfterContentAndJS.length>0){wgAfterContentAndJS.shift()();} wgAfterContentAndJSLoaded = true;/*]]>*/</script>' . "\n";
 
 	print "<!-- BottomScripts -->\n";
 	print $bottomscripts;
