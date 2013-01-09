@@ -115,9 +115,6 @@ class RTEParser extends Parser {
 			
 			// the number of opening tags should be identical to the number of closing tags
 			if ( $opens != $closes ) {
-					Wikia::log(__METHOD__, 'tag', $tag );
-					Wikia::log(__METHOD__, 'opens', $opens );
-					Wikia::log(__METHOD__, 'closes', $closes );
 					RTE::$edgeCases[] = 'UNCLOSED_PARSER_HOOK_TAG';
 			}
 		}
