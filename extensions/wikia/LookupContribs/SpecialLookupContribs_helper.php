@@ -291,12 +291,10 @@ class LookupContribsCore {
 		$res = $dbr->select(
 			array('specials.events_local_users'),
 			array('wiki_id', 'edits'),
-			array('user_id' => $this->mUserId),
+			array( 'user_id' => $this->mUserId, 'edits <> 0' ),
 			__METHOD__,
 			array(
-				'ORDER BY' => 'edits DESC',
-				'LIMIT'  => $this->mLimit,
-				'OFFSET' => $this->mOffset
+				'ORDER BY' => 'edits DESC'
 			)
 		);
 
