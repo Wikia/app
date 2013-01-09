@@ -9,14 +9,16 @@
 	var AbTest = window.Wikia.AbTest;
 
 	if ( AbTest ) {
-		var abString = '';
+		var abString = '', abTests;
 
-		if ( !AbTest.experimentCount ) {
+		abTests = AbTest.getExperiments();
+
+		if ( abTests.length == 0 ) {
 			abString = 'No active experiments.';
 
 		} else {
 			// Make a single entry for each experiment.
-			$.each( AbTest.getExperiments(), function( i, exp ) {
+			$.each( abTests, function( i, exp ) {
 				if ( abString != '' ) {
 					abString += ', ';
 				}
