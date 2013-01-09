@@ -105,6 +105,22 @@ class ForumHooksHelper {
 				$item['wall-msg'] = wfMsg( 'forum-wiki-activity-msg', '<a href="' . $board->getFullURL() . '">' . wfMsg( 'forum-wiki-activity-msg-name', $board->getText() ) . '</a>' );
 			}
 		}
+
+		return true;
+	}
+
+	public static function onFilePageImageUsageSingleLink(&$link, &$element) {
+
+		if ( $element->page_namespace == NS_WIKIA_FORUM_BOARD_THREAD ) {
+
+			$titleThreadElement = Title::newFromText( $element->page_title, NS_WIKIA_FORUM_BOARD_THREAD );
+
+			$wm =  WallMessage::newFromId( $titleThreadElement->getArticleId() );
+			$parentId = $wm->getMessagePageId();
+			$title = Title::newFromText($parentId, NS_USER_WALL_MESSAGE);
+
+			$link = '<a href="'.$title->getFullUrl().'">'.$title->getFullText().'</a>';
+		}
 		return true;
 	}
 
@@ -370,7 +386,6 @@ class ForumHooksHelper {
 	/**
 	 * just proxy to onWallStoreRelatedTopicsInDB
 	 */
-
 	public static function onWallStoreRelatedTopicsInDB($parent, $id, $namespace) {
 		self::onWallAction(null, $parent, $id);
 		return true;
