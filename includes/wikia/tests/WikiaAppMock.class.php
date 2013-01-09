@@ -30,9 +30,13 @@ class WikiaAppMock {
 		if( in_array( 'runFunction', $this->methods ) ) {
 			$functionWrapperMock = $this->testCase->getMock( 'WikiaFunctionWrapper', array_keys($this->mockedFunctions) );
 			foreach( $this->mockedFunctions as $functionName => $functionData ) {
-				$functionWrapperMock->expects( $this->testCase->exactly( $functionData['calls'] ) )
+				$mock = $functionWrapperMock->expects( $this->testCase->exactly( $functionData['calls'] ) )
 					->method( $functionName )
 					->will( $this->testCase->returnValue( $functionData['value'] ) );
+
+				if (!empty($functionData['params'])) {
+					call_user_func_array(array($mock, 'with'), $functionData['params']);
+				}
 			}
 		}
 		$wikiaAppArgs[] = $globalRegistryMock;
@@ -56,9 +60,7 @@ class WikiaAppMock {
 	 * @param string $functionName
 	 * @param mixed $returnValue
 	 * @param int $callsNum
-	 * @param array $inputParams  // FIXME: not used
-	 *
-	 * @todo support params
+	 * @param array $inputParams array of PHPUnit_Framework_Constraints
 	 */
 	public function mockGlobalFunction($functionName, $returnValue, $callsNum = 1, $inputParams = array() ) {
 		if(!in_array( 'runFunction', $this->methods )) {
