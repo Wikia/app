@@ -94,10 +94,6 @@ class AdEngine2Controller extends WikiaController {
 			// Do nothing. oasis_shared_core_js must be present for ads to work
 			return true;
 		}
-		if ($this->wg->ShowAds === false) {
-			// Do nothing. Ads disabled in this context
-			return true;
-		}
 
 		if ($this->wg->LoadAdsInHead) {
 			// Removing oasis_shared_core_js asset group
