@@ -262,15 +262,6 @@ function WMU_readjustSlider( value ) {
 	}
 }
 
-function WMU_getFirstFree( gallery, box ) {
-	for (var i=box; i >= 0; i--) {
-		if ( ! $( '#WikiaImageGalleryPlaceholder' + gallery + 'x' + i ) ) {
-			return i + 1;
-		}
-	}
-	return box;
-}
-
 function WMU_loadMainFromView() {
 	var callback = function(data) {
 		// first, check if this is a special case for anonymous disabled...
@@ -320,7 +311,7 @@ function WMU_loadMainFromView() {
 				return;
 			}
 
-			if( !$( '#WMU_div' ) ) {
+			if( !$( '#WMU_div' ).length ) {
 				document.body.appendChild(element);
 			}
 
@@ -335,7 +326,7 @@ function WMU_loadMainFromView() {
 			WMU_indicator(1, false);
 
 			WMU_indicator(1, false);
-			if($('#ImageQuery')) {
+			if($('#ImageQuery').length) {
 				$('#ImageQuery').focus();
 			}
 			var cookieMsg = document.cookie.indexOf("wmumainmesg=");
@@ -345,7 +336,7 @@ function WMU_loadMainFromView() {
 			}
 
 			// macbre: RT #19150
-			if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
+			if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').length ) {
 				$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
 			}
 		}
@@ -367,8 +358,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		return;
 	}
 
-
-
 	// Handle MiniEditor focus
 	// (BugId:18713)
 	if (window.WikiaEditor) {
@@ -387,7 +376,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 
 	if(typeof gallery != "undefined") {
 		// if in preview mode, go away
-		if ($( '#editform' ) && !YAHOO.lang.isNumber(e) ) {
+		if ($( '#editform' ).length && !YAHOO.lang.isNumber(e) ) {
 			alert( wmu_no_preview );
 			return false;
 		}
@@ -471,7 +460,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		if(WMU_refid != null && WMU_wysiwygStart == 2) {
 			WMU_loadDetails();
 		} else {
-			if($('#ImageQuery')) $('#ImageQuery').focus();
+			if($('#ImageQuery').length) $('#ImageQuery').focus();
 		}
 		return;
 	}
@@ -518,7 +507,7 @@ function WMU_loadMain() {
 		success: function(o) {
 			$('#ImageUploadMain').html(o.responseText);
 			WMU_indicator(1, false);
-			if($('#ImageQuery')) $('#ImageQuery').focus();
+			if($('#ImageQuery').length) $('#ImageQuery').focus();
 			var cookieMsg = document.cookie.indexOf("wmumainmesg=");
 			if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
 				$('#ImageUploadTextCont').hide();
@@ -578,7 +567,7 @@ function WMU_changeSource(e) {
 			$('#WMU_results_' + WMU_curSourceId).hide();
 			$('#WMU_results_' + sourceId).show();
 
-			if($('#ImageQuery')) $('#ImageQuery').focus();
+			if($('#ImageQuery').length) $('#ImageQuery').focus();
 
 			WMU_curSourceId = sourceId;
 			WMU_trySendQuery();
@@ -754,7 +743,7 @@ function WMU_displayDetails(responseText) {
 		$('#ImageUploadFullOption').attr('checked', true);
 
 		WMU_insertImage($.getEvent(),'skip');
-	}else if($('#ImageUploadThumb')) {
+	}else if($('#ImageUploadThumb').length) {
 		WMU_orgThumbSize = null;
 		var image = $('#ImageUploadThumb').children(':first');
 		if ( null == WMU_width ) {
@@ -826,7 +815,7 @@ function WMU_displayDetails(responseText) {
 		$( '#ImageUploadLink' ).val(WMU_link);
 	}
 
-	if ( $( '#ImageUploadLicenseText' ) ) {
+	if ( $( '#ImageUploadLicenseText' ).length ) {
 		var cookieMsg = document.cookie.indexOf("wmulicensemesg=");
 		if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 15) == 0) {
 			$('#ImageUploadLicenseText').hide();
@@ -936,7 +925,7 @@ function WMU_insertImage(e, type) {
 
 	if( -2 == WMU_gallery ) { // placeholder magic
 		if( 0 == WMU_link ) {
-			if( $('#ImageUploadLink') ) {
+			if( $('#ImageUploadLink').length ) {
 				if( '' != $('#ImageUploadLink').val() ) {
 					params.push( 'link=' + encodeURIComponent( $('#ImageUploadLink').val() ) );
 				}
@@ -1111,7 +1100,7 @@ function MWU_imageWidthChanged() {
 function MWU_imageSizeChanged(size) {
 	YAHOO.util.Dom.setStyle(['ImageWidthRow'], 'display', size == 'thumb' ? '' : 'none');
 
-	if($('#ImageUploadThumb')) {
+	if($('#ImageUploadThumb').length) {
 		var image = $('#ImageUploadThumb').children(':first');
 		if(size == 'thumb') {
 			image.width(WMU_thumbSize[0]);
@@ -1155,7 +1144,7 @@ function WMU_switchScreen(to) {
 		$('#ImageUploadBack').hide();
 		WMU_loadMain();
 	}
-	if((WMU_prevScreen == 'Details' || WMU_prevScreen == 'Conflict') && WMU_curScreen == 'Main' && $('#ImageUploadName')) {
+	if((WMU_prevScreen == 'Details' || WMU_prevScreen == 'Conflict') && WMU_curScreen == 'Main' && $('#ImageUploadName').length) {
 		YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=clean&mwname=' + $('#ImageUploadMWname').val() + '&tempid=' + $( '#ImageUploadTempid' ).val() );
 	}
 
@@ -1195,7 +1184,7 @@ function WMU_close(e) {
 		YAHOO.util.Event.preventDefault(e);
 	}
 	WMU_modal.hideModal();
-	if(typeof window.RTE == 'undefined' && $('#wpTextbox1')) $('#wpTextbox1').focus();
+	if(typeof window.RTE == 'undefined' && $('#wpTextbox1').length) $('#wpTextbox1').focus();
 	WMU_switchScreen('Main');
 	WMU_loadMain();
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'block');
