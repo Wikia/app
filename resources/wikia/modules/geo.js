@@ -62,12 +62,12 @@
 	//this depends on cookies.js and will fail if window.Wikia.Cookies is not defined
 	//TODO: Can we remove the double alias in window.Geo and Wikia.geo
 	//and just stick to one?
-	context.Geo = context.Wikia.geo = geo(context.Wikia.Cookies);
+	if (context.Wikia) {
+		context.Geo = context.Wikia.geo = geo(context.Wikia.Cookies);
+	}
 
 	if (context.define && context.define.amd) {
 		//AMD
-		context.define('geo', function () {
-			return context.Wikia.geo;
-		});
+		context.define('geo', ['cookies'], geo);
 	}
 }(this));
