@@ -1409,7 +1409,6 @@ class ArticleComment {
 		return 'Wiki_' . $wgCityId . '_ArticleComments_' . $articleId;
 	}
 
-
 	/**
 	 * Checks if article comments will be loading on demand.
 	 *
