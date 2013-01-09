@@ -262,51 +262,6 @@ function WMU_readjustSlider( value ) {
 	}
 }
 
-function WMU_getCaret() {
-	if (typeof FCK == 'undefined') {
-		var control = document.getElementById(WikiaEditor.instanceId);
-	} else {
-		var control = FCK.EditingArea.Textarea;
-	}
-
-	var caretPos = 0;
-	if(YAHOO.env.ua.ie != 0) { // IE Support
-		control.focus();
-		var sel = document.selection.createRange();
-		var sel2 = sel.duplicate();
-		sel2.moveToElementText(control);
-		var caretPos = -1;
-		while(sel2.inRange(sel)) {
-			sel2.moveStart('character');
-			caretPos++;
-		}
-	} else if (control.selectionStart || control.selectionStart == '0') { // Firefox
-		caretPos = control.selectionStart;
-	}
-	return (caretPos);
-}
-
-function WMU_inGallery() {
-	var originalCaretPosition = WMU_getCaret();
-	if (typeof FCK == 'undefined') {
-		var originalText = document.getElementById(WikiaEditor.instanceId).value;
-	} else {
-		var originalText = FCK.EditingArea.Textarea.value;
-	}
-	var lastIndexOfimagegallery = originalText.substring(0, originalCaretPosition).lastIndexOf('<imagegallery>');
-
-	if(lastIndexOfimagegallery > 0) {
-		var indexOfimagegallery = originalText.substring(originalCaretPosition).indexOf('</imagegallery>');
-		if(indexOfimagegallery > 0) {
-			var textInTag = originalText.substring(lastIndexOfimagegallery + 15, indexOfimagegallery + originalCaretPosition);
-			if(textInTag.indexOf('<') == -1 && textInTag.indexOf('>') == -1) {
-				return textInTag.lastIndexOf("\n") + lastIndexOfimagegallery + 15;
-			}
-		}
-	}
-	return false;
-}
-
 function WMU_getFirstFree( gallery, box ) {
 	for (var i=box; i >= 0; i--) {
 		if ( ! $( '#WikiaImageGalleryPlaceholder' + gallery + 'x' + i ) ) {
