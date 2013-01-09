@@ -366,7 +366,7 @@ var ArticleComments = {
 					$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
 
 					if (window.skin == 'oasis') {
-						$('#WikiaPageHeader').find('.commentsbubble').html(json.counter);
+						$('#WikiaPageHeader, #WikiaUserPagesHeader').find('.commentsbubble').html(json.counter);
 
 						if (!parentId) {
 							if (!ArticleComments.mostRecentCount) {
