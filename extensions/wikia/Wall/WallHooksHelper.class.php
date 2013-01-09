@@ -1717,7 +1717,7 @@ class WallHooksHelper {
 	public function onRenderWhatLinksHereRow(&$row, &$level, &$defaultRendering) {
 		wfProfileIn(__METHOD__);
 
-		if( isset($row->page_namespace) && intval($row->page_namespace) === NS_USER_WALL_MESSAGE ) {
+		if( isset($row->page_namespace) && in_array( intval($row->page_namespace), array( NS_USER_WALL_MESSAGE, NS_WIKIA_FORUM_BOARD_THREAD )) ) {
 			$defaultRendering = false;
 			$title = F::build('Title', array($row->page_title, $row->page_namespace), 'newFromText');
 
@@ -1726,9 +1726,9 @@ class WallHooksHelper {
 			$wfMsgOptsBase = $this->getMessageOptions(null, $row, true);
 
 			$wfMsgOpts = array(
-				$wfMsgOptsBase['articleUrl'],
+				$wfMsgOptsBase['articleFullUrl'],
 				$wfMsgOptsBase['articleTitleTxt'],
-				$wfMsgOptsBase['wallPageUrl'],
+				$wfMsgOptsBase['wallPageFullUrl'],
 				$wfMsgOptsBase['wallPageName'],
 				$wfMsgOptsBase['actionUser'],
 				$wfMsgOptsBase['isThread'],
@@ -1740,7 +1740,7 @@ class WallHooksHelper {
 					$app->wf->Msg('wall-whatlinkshere-wall-line', $wfMsgOpts) .
 					' (' .
 					Xml::element('a', array(
-							'href' => $wlhTitle->getFullUrl(array('target' => $title->getPrefixedText())),
+							'href' => $wlhTitle->getFullUrl(array('target' => $wfMsgOptsBase['articleUrl'])),
 					), $app->wf->Msg('whatlinkshere-links') ) .
 					')' .
 					Xml::closeElement('li')
