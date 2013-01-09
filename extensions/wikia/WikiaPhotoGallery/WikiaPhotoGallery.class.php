@@ -1170,6 +1170,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					'class' => 'thumbimage',
 					'width' => $thumb->width,
 					'height' => $thumb->height,
+					'style' => 'border: 0px;',
 				);
 				if ( $this->mData['images'][$p]['data-caption'] != '' ) {
 					$thumbAttribs['data-caption'] = $this->mData['images'][$p]['data-caption'];
