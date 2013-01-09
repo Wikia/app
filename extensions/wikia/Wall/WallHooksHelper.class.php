@@ -1630,79 +1630,8 @@ class WallHooksHelper {
 	 *
 	 * @return Array
 	 */
-	private function getMessageOptions($rc = null, $row = null, $fullUrls = false) {
-		wfProfileIn(__METHOD__);
-
-		if( is_object($row) ) {
-			$objTitle = F::build('Title', array($row->page_title, $row->page_namespace), 'newFromText');
-			$userText = !empty($row->rev_user_text) ? $row->rev_user_text : '';
-
-			$isNew = (!empty($row->page_is_new) && $row->page_is_new === '1') ? true : false;
-
-			if( !$isNew ) {
-				$isNew = (isset($row->rev_parent_id) && $row->rev_parent_id === '0') ? true : false;
-			}
-
-		} else {
-			$objTitle = $rc->getTitle();
-			$userText = $rc->getAttribute('rc_user_text');
-			$isNew = false; //it doesn't metter for rc -- we've got there rc_log_action
-		}
-
-
-		if( !($objTitle instanceof Title) ) {
-			//it can be media wiki deletion of an article -- we ignore them
-			Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r(array($rc, $row), true));
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		$wm = WallMessage::newFromId( $objTitle->getArticleId() );
-		if( empty($wm) ) {
-			//it can be media wiki deletion of an article -- we ignore them
-			Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r(array($rc, $row), true));
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		$wm->load();
-		if(!$wm->isMain()) {
-			$wmw = $wm->getTopParentObj();
-			if( empty($wmw) ) {
-				return true;
-			}
-			$wmw->load();
-		}
-
-		$articleId = $wm->getId();
-		$wallOwnerName = $wm->getArticleTitle()->getText();
-		
-		if(!empty($wmw)) {
-			$articleTitleTxt =  $wmw->getMetaTitle();
-			$articleId = $wmw->getId();
-		} else {
-			$articleTitleTxt = $wm->getMetaTitle();
-			$articleId = $wm->getId();
-		}
-		
-		$title = Title::newFromText($articleId, NS_USER_WALL_MESSAGE);
-
-		$out = array(
-			'articleUrl' => $title->getPrefixedText(),
-			'articleFullUrl' => $wm->getMessagePageUrl(),
-			'articleTitleVal' => $articleTitleTxt,
-			'articleTitleTxt' => empty($articleTitleTxt) ? wfMsg('wall-recentchanges-deleted-reply-title'):$articleTitleTxt,
-			'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
-			'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
-			'wallPageName' => $wm->getArticleTitle()->getText(),
-			'actionUser' => $userText,
-			'isThread' => $wm->isMain(),
-			'isNew' => $isNew,
-		);
-
-		wfProfileOut(__METHOD__);
-
-		return $out;
+	public  function getMessageOptions($rc = null, $row = null, $fullUrls = false) {
+	        WallHelper::getWallTitleData( $rc = null, $row = null, $fullUrls = false );
 	}
 
 	/**
