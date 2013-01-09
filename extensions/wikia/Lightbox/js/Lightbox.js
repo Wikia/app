@@ -60,6 +60,7 @@ var Lightbox = {
 		if ($('#MODAL_RECTANGLE').length && Lightbox.ads.userShowAds) {
 			Lightbox.openModal.lightbox.addClass('show-ads');
 			window.adslots2.push(['MODAL_RECTANGLE']);
+			Lightbox.ads.adModalRectangleShown = true;
 		}
 
 		// Set up carousel
@@ -419,6 +420,8 @@ var Lightbox = {
 		}
 	},
 	ads: {
+		// is MODAL_RECTANGLE ad shown?
+		adModalRectangleShown: false,
 		// should we show ads for this user?
 		userShowAds: !window.wgUserName || window.wgUserShowAds,
 		// preload ad after this number of unique images/videos are shown
@@ -915,7 +918,7 @@ var Lightbox = {
 		};
 
 		// show-ads class appears when there is going to be a MODAL_RECTANGLE ad
-		var itemsShown = Lightbox.openModal.lightbox.hasClass('show-ads') ? 6 : 9;
+		var itemsShown = Lightbox.ads.adModalRectangleShown ? 6 : 9;
 
 		// Make sure we have our i18n message before initializing the carousel plugin
 		$.when.apply(this, deferredList).done(function() {
