@@ -98,12 +98,13 @@
 
     /**** Include A/B testing status ****/
     if ( window.Wikia && window.Wikia.AbTest ) {
-        var abList = window.Wikia.AbTest.getActiveExperimentsNames( /* includeControl */ true ), abExpName, abGroupName, abSlot;
-        for ( abExpName in abList ) {
-            abSlot = window.Wikia.AbTest.getGASlot(abExpName);
+        var abList = window.Wikia.AbTest.getExperiments( /* includeAll */ true ), abExp, abGroupName, abSlot, abIndex;
+        for ( abIndex = 0; abIndex < abList.length; abIndex++ ) {
+            abExp = abList[abIndex];
+            abSlot = window.Wikia.AbTest.getGASlot(abExp.name);
             if ( abSlot >= 40 && abSlot <= 49 ) {
-                abGroupName = abList[abExpName] || 'CONTROL';
-                _gaqWikiaPush(['_setCustomVar', abSlot, abExpName, abGroupName, 3]);
+                abGroupName = abExp.group ? abExp.group.name : 'CONTROL';
+                _gaqWikiaPush(['_setCustomVar', abSlot, abExp.name, abGroupName, 3]);
             }
         }
     }

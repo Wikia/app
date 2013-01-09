@@ -66,11 +66,11 @@ var SpecialContact = {
 
 		} else {
 			// Make a single entry for each experiment.
-			$.each( AbTest.getActiveExperimentsNames(), function( expName, groupName ) {
+			$.each( AbTest.getExperiments(), function( i, exp ) {
 				if ( abString != '' ) {
 					abString += ', ';
 				}
-				abString += '[ ' + expName + ': ' + groupName + ' ]';
+				abString += '[ ' + exp.name + ': ' + exp.group.name + ' ]';
 			});
 		}
 

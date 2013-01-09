@@ -80,37 +80,34 @@
 		return current && current.gaSlot;
 	};
 
-	// Returns a hash of all the treatment groups the user is participating in,
-	// keyed by experiment id. Calling getTreatmentGroup here updates the cache.
-	AbTest.getActiveExperimentsNames = function( includeControl ) {
-		var expName, exp, activeList = {};
+	// Returns list of active experiments with IDs and names of them and groups that user fell in
+	// in the following format:
+	//   [ {id: EXP_ID, name: EXP_NAME, group: {id: GROUP_ID, name: GROUP_NAME} }, ... ]
+	// If includeAll is true, you will also get experiments without assigned groups for the current user
+	// and then the "group" property will be missing.
+	AbTest.getExperiments = function( includeAll ) {
+		var expName, exp, group, el, list = [];
 
 		for ( expName in AbTest.experiments ) {
 			exp = AbTest.experiments[expName];
-			if ( exp.group ) {
-				activeList[expName] = exp.group.name;
-			} else if ( includeControl ) {
-				activeList[expName] = false;
+			group = exp.group;
+			if ( !group && !includeAll ) {
+				continue;
 			}
+			el = {
+				id: exp.id,
+				name: exp.name
+			};
+			if ( group ) {
+				el.group = {
+					id: group.id,
+					name: group.name
+				}
+			}
+			list.push(el);
 		}
 
-		return activeList;
-	};
-
-	// Returns the list of active experiments where you have been assigned groups
-	// where index and value are numeric IDs
-	// eg. { 1: 4, 2: 5 } where 1 and 2 are experiment IDs; 4 and 5 are group IDs
-	AbTest.getActiveExperimentsIds = function( includeControl ) {
-		var expName, exp, activeList = {};
-		for ( expName in AbTest.experiments ) {
-			exp = AbTest.experiments[expName];
-			if ( exp.group ) {
-				activeList[exp.id] = exp.group.id;
-			} else if ( includeControl ) {
-				activeList[exp.id] = false;
-			}
-		}
-		return activeList;
+		return list;
 	};
 
 	// Set up instance methods for AbTest. Allows you to call any of the listed methods
@@ -231,7 +228,7 @@
 
 		if ( queryString ) {
 			while ( ( matches = rTreatmentGroups.exec( queryString ) ) != null ) {
-				expName = matches[ 1 ];
+				expName = matches[1];
 				groupName = matches[2];
 				if ( !AbTest.isValidGroup( expName, groupName ) ) {
 					log('init','Invalid experiment/group specified in URL: '+expName+'/'+groupName);

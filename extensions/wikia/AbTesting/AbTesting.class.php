@@ -57,7 +57,7 @@ class AbTesting extends WikiaObject {
 			$expName = $this->normalizeName($exp['name']);
 
 			$config[$expName] = array(
-				'id' => $exp['id'],
+				'id' => intval($exp['id']),
 				'name' => $expName,
 				'versions' => array(),
 			);
@@ -74,7 +74,7 @@ class AbTesting extends WikiaObject {
 					$group = $exp['groups'][$grn['group_id']];
 					$groupName = $this->normalizeName($group['name']);
 					$groups[$groupName] = array(
-						'id' => $group['id'],
+						'id' => intval($group['id']),
 						'name' => $groupName,
 						'ranges' => $this->parseRanges($grn['ranges']),
 					);
