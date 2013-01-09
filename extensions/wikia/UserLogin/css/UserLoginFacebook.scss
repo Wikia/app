@@ -90,6 +90,13 @@
 .FacebookSignupConfig {
 	display: none;
 	margin: 2px 0 -7px 0;
+	legend {
+		clear: both;
+		float: left;
+		font-weight: bold;
+		padding: 12px;
+		width: 620px;
+	}
 	> fieldset {
 		@include box-shadow(0, 0, 5px, mix($color-page, #000000, 90%), true, 1px);
 		@if $is-dark-wiki {
@@ -98,23 +105,14 @@
 			background-color: mix($color-page, #000000, 95%);
 		}
 		> .input-group {
+			clear: none;
+			float: left;
 			padding: 0 12px;
 			width: 300px;
-			p {
-				font-weight: bold;
-				padding: 17px 0;
-			}
 			input[type=checkbox] {
 				margin-right: 26px;
 				padding-left: 17px;
 			}
-		}
-		> div:nth-child(even) {
-			float: left;
-		}
-		> div:nth-child(odd) {
-			clear: right;
-			float: right;
 		}
 		.indented label {
 			padding-left: 42px;
