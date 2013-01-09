@@ -141,7 +141,7 @@ class ArticleCommentList {
 			}
 		}
 
-		$titles = TitleBatch::newFromIds($commentsQueue,DB_SLAVE_BEFORE_MASTER);
+		$titles = TitleBatch::newFromIds( $commentsQueue, DB_SLAVE_BEFORE_MASTER );
 		$comments = array();
 		foreach ($commentsQueue as $id) {
 			$comments[$id] = !empty($titles[$id]) ? ArticleComment::newFromTitle($titles[$id]) : false;
@@ -199,6 +199,7 @@ class ArticleCommentList {
 			$conds = $this->getQueryWhere($dbr);
 			$options = array( 'ORDER BY' => 'page_id DESC' );
 			$join_conds = array();
+
 			if( !empty( $wgArticleCommentsEnableVoting ) ) {
 				//add votes to the result set
 				$table[] = 'page_vote';
@@ -308,7 +309,6 @@ class ArticleCommentList {
 	public function getAllCommentPages() {
 		wfProfileIn( __METHOD__ );
 
-		$pages = array();
 		$dbr = wfGetDB( DB_MASTER );
 
 		$res = $dbr->select(
@@ -718,12 +718,13 @@ class ArticleCommentList {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
 						$oComment = new ArticleComment($oCommentTitle);
-						$oComment->doDeleteComment($deleteReason);
+						//$oComment->doDeleteComment($deleteReason);
 					}
 				}
+
 				$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
 				$listing = ArticleCommentList::newFromTitle($parentTitle);
-				$listing->purge();
+				//$listing->purge();
 			} else {
 				$taskParams= array(
 					'mode' 		=> 'you',
@@ -737,6 +738,7 @@ class ArticleCommentList {
 					'user'		=> $wgUser->getName(),
 					'admin'		=> $wgUser->getName()
 				);
+
 
 				foreach (self::$mArticlesToDelete as $oComment) {
 					$oCommentTitle = $oComment->getTitle();
