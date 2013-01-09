@@ -45,17 +45,18 @@ $messages['en'] = array(
 	'marketing-toolbox-edithub-file-name' => 'File name',
 	'marketing-toolbox-edithub-video-name' => 'Video name',
 
-	'marketing-toolbox-edithub-clearall-confirmation' => 'Are you sure you want to clear the entire $1?',
+	'marketing-toolbox-edithub-clearall-confirmation' => 'Are you sure you want to clear the entire $1 module?',
+	'marketing-toolbox-edithub-clear-confirmation' => 'Are you sure you want to clear this section?',
 
 	'marketing-toolbox-hub-module-slider' => 'Slider',
 	'marketing-toolbox-hub-module-pulse' => 'Pulse',
-	'marketing-toolbox-hub-module-wikias-picks' => 'Wikia\'s picks',
-	'marketing-toolbox-hub-module-featured-video' => 'Featured video',
+	'marketing-toolbox-hub-module-wikias-picks' => 'Wikia\'s Picks',
+	'marketing-toolbox-hub-module-featured-video' => 'Featured Video',
 	'marketing-toolbox-hub-module-explore' => 'Explore',
-	'marketing-toolbox-hub-module-from-the-community' => 'From the community',
-	'marketing-toolbox-hub-module-polls' => 'Polls',
-	'marketing-toolbox-hub-module-top10-list' => 'Top 10 list',
-	'marketing-toolbox-hub-module-popular-videos' => 'Popular videos',
+	'marketing-toolbox-hub-module-from-the-community' => 'From the Community',
+	'marketing-toolbox-hub-module-polls' => 'Poll',
+	'marketing-toolbox-hub-module-top10-list' => 'Top 10 List',
+	'marketing-toolbox-hub-module-popular-videos' => 'Popular Videos',
 
 	'marketing-toolbox-hub-module-pulse-wikiurl' => 'Wiki URL',
 	'marketing-toolbox-hub-module-pulse-topic' => 'Topic',
@@ -90,7 +91,7 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-from-the-community-long-quote' => 'Quote',
 	'marketing-toolbox-hub-module-from-the-community-url' => 'Article URL',
 
-	'marketing-toolbox-hub-module-wikiaspicks-header' => 'Header',
+	'marketing-toolbox-hub-module-wikiaspicks-title' => 'Title',
 	'marketing-toolbox-hub-module-wikiaspicks-text' => 'Text',
 	'marketing-toolbox-hub-module-wikiaspicks-text-tip' => "'''Tip:''' to add a link copy the following and replace the italicized text with your own: <a href=\"''your_url_here''\">''Your Text Here''</a>",
 
@@ -98,12 +99,13 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-featured-video-desc' => 'Description',
 
 	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
-	'marketing-toolbox-module-save-ok' => '$1 saved successfully!',
+	'marketing-toolbox-module-save-ok' => '$1 module saved successfully!',
 
 	'marketing-toolbox-validator-string-short' => 'Your text is too short, please write more',
 	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',
 	'marketing-toolbox-validator-wrong-url' => 'The URL you entered is not valid, please try again',
-	'marketing-toolbox-validator-wrong-file' => 'The file you chose is not valid, please try again'
+	'marketing-toolbox-validator-wrong-file' => 'The file you chose is not valid, please try again',
+	'marketing-toolbox-validator-wrong-users-url' => 'The URL you entered doesn\'t contain User\'s name or User name is not valid',
 );
 
 $messages['qqq'] = array(

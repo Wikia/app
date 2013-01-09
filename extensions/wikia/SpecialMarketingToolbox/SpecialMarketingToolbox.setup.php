@@ -26,40 +26,43 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 //classes
-$app->registerController('MarketingToolboxController', $dir.'MarketingToolboxController.class.php');
-$app->registerClass('MarketingToolboxVideosController', $dir.'MarketingToolboxVideosController.class.php');
+$app->registerController('MarketingToolboxController', $dir . 'MarketingToolboxController.class.php');
+$app->registerClass('MarketingToolboxVideosController', $dir . 'MarketingToolboxVideosController.class.php');
 
-$app->registerClass('MarketingToolboxModel', $dir.'models/MarketingToolboxModel.class.php');
-$app->registerClass('MarketingToolboxUserPropertiesHandler', $dir.'models/MarketingToolboxUserPropertiesHandler.class.php');
-$app->registerClass('MarketingToolboxTop10listModel', $dir.'models/MarketingToolboxTop10listModel.class.php');
-$app->registerClass('MarketingToolboxExploreModel', $dir.'models/MarketingToolboxExploreModel.class.php');
-$app->registerClass('MarketingToolboxPollsModel', $dir.'models/MarketingToolboxPollsModel.class.php');
-$app->registerClass('MarketingToolboxSliderModel', $dir.'models/MarketingToolboxSliderModel.class.php');
-$app->registerClass('MarketingToolboxFromthecommunityModel', $dir.'models/MarketingToolboxFromthecommunityModel.class.php');
-$app->registerClass('MarketingToolboxWikiaspicksModel', $dir.'models/MarketingToolboxWikiaspicksModel.class.php');
+$app->registerClass('MarketingToolboxModel', $dir . 'models/MarketingToolboxModel.class.php');
+$app->registerClass('MarketingToolboxUserPropertiesHandler', $dir . 'models/MarketingToolboxUserPropertiesHandler.class.php');
+$app->registerClass('MarketingToolboxTop10listModel', $dir . 'models/MarketingToolboxTop10listModel.class.php');
+$app->registerClass('MarketingToolboxExploreModel', $dir . 'models/MarketingToolboxExploreModel.class.php');
+$app->registerClass('MarketingToolboxPollsModel', $dir . 'models/MarketingToolboxPollsModel.class.php');
+$app->registerClass('MarketingToolboxSliderModel', $dir . 'models/MarketingToolboxSliderModel.class.php');
+$app->registerClass('MarketingToolboxFromthecommunityModel', $dir . 'models/MarketingToolboxFromthecommunityModel.class.php');
+$app->registerClass('MarketingToolboxWikiaspicksModel', $dir . 'models/MarketingToolboxWikiaspicksModel.class.php');
 
-$app->registerClass('MarketingToolboxModuleService', $dir.'modules/MarketingToolboxModuleService.class.php');
-$app->registerClass('MarketingToolboxModuleSliderService', $dir.'modules/MarketingToolboxModuleSliderService.class.php');
-$app->registerClass('MarketingToolboxModulePulseService', $dir.'modules/MarketingToolboxModulePulseService.class.php');
-$app->registerClass('MarketingToolboxModuleWikiaspicksService', $dir.'modules/MarketingToolboxModuleWikiaspicksService.class.php');
-$app->registerClass('MarketingToolboxModuleTop10listService', $dir.'modules/MarketingToolboxModuleTop10listService.class.php');
-$app->registerClass('MarketingToolboxModulePopularvideosService', $dir.'modules/MarketingToolboxModulePopularvideosService.class.php');
-$app->registerClass('MarketingToolboxModuleExploreService', $dir.'modules/MarketingToolboxModuleExploreService.class.php');
-$app->registerClass('MarketingToolboxModuleFeaturedvideoService', $dir.'modules/MarketingToolboxModuleFeaturedvideoService.class.php');
-$app->registerClass('MarketingToolboxModuleFromthecommunityService', $dir.'modules/MarketingToolboxModuleFromthecommunityService.class.php');
-$app->registerClass('MarketingToolboxModulePollsService', $dir.'modules/MarketingToolboxModulePollsService.class.php');
+$app->registerClass('MarketingToolboxModuleService', $dir . 'modules/MarketingToolboxModuleService.class.php');
+$app->registerClass('MarketingToolboxModuleSliderService', $dir . 'modules/MarketingToolboxModuleSliderService.class.php');
+$app->registerClass('MarketingToolboxModulePulseService', $dir . 'modules/MarketingToolboxModulePulseService.class.php');
+$app->registerClass('MarketingToolboxModuleWikiaspicksService', $dir . 'modules/MarketingToolboxModuleWikiaspicksService.class.php');
+$app->registerClass('MarketingToolboxModuleTop10listService', $dir . 'modules/MarketingToolboxModuleTop10listService.class.php');
+$app->registerClass('MarketingToolboxModulePopularvideosService', $dir . 'modules/MarketingToolboxModulePopularvideosService.class.php');
+$app->registerClass('MarketingToolboxModuleExploreService', $dir . 'modules/MarketingToolboxModuleExploreService.class.php');
+$app->registerClass('MarketingToolboxModuleFeaturedvideoService', $dir . 'modules/MarketingToolboxModuleFeaturedvideoService.class.php');
+$app->registerClass('MarketingToolboxModuleFromthecommunityService', $dir . 'modules/MarketingToolboxModuleFromthecommunityService.class.php');
+$app->registerClass('MarketingToolboxModulePollsService', $dir . 'modules/MarketingToolboxModulePollsService.class.php');
+
+$app->registerClass('WikiaValidatorToolboxUrl', $dir . 'validators/WikiaValidatorToolboxUrl.class.php');
+$app->registerClass('WikiaValidatorUsersUrl', $dir . 'validators/WikiaValidatorUsersUrl.class.php');
 
 WikiaUserPropertiesController::registerHandler('MarketingToolboxUserPropertiesHandler');
 
 // hooks
-$app->registerClass('MarketingToolboxHooks', $dir.'hooks/MarketingToolboxHooks.class.php');
+$app->registerClass('MarketingToolboxHooks', $dir . 'hooks/MarketingToolboxHooks.class.php');
 $app->registerHook('MakeGlobalVariablesScript', 'MarketingToolboxHooks', 'onMakeGlobalVariablesScript');
 
 //special page
 $app->registerSpecialPage('MarketingToolbox', 'MarketingToolboxController', 'wikia');
 
 //message files
-$app->registerExtensionMessageFile('MarketingToolbox', $dir.'MarketingToolbox.i18n.php');
+$app->registerExtensionMessageFile('MarketingToolbox', $dir . 'MarketingToolbox.i18n.php');
 F::build('JSMessages')->registerPackage('MarketingToolbox', array('marketing-toolbox-*'));
 
 //add wikia staff tool rights to staff users

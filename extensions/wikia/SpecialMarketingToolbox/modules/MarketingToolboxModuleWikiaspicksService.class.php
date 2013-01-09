@@ -6,17 +6,15 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 			'fileName' => array(
 				'type' => 'hidden',
 				'attributes' => array(
-					'class' => 'wmu-file-name-input required'
+					'class' => 'wmu-file-name-input'
 				),
 				'validator' => new WikiaValidatorFileTitle(
-					array(
-						'required' => true
-					),
+					array(),
 					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
 				)
 			),
-			'header' => array(
-				'label' => $this->wf->Msg('marketing-toolbox-hub-module-wikiaspicks-header'),
+			'module-title' => array(
+				'label' => $this->wf->Msg('marketing-toolbox-hub-module-wikiaspicks-title'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,

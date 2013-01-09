@@ -11,7 +11,6 @@ class QuickToolsController extends WikiaController  {
 	 */
 	public function quickToolsModal() {
 		$this->setVal( 'username', $this->request->getVal( 'username' ) );
-		$this->setVal( 'timestamp', $this->wf->Timestamp( TS_DB, strtotime( '-1 week' ) ) );
 		$this->setVal( 'blocklength', '3 days' );
 		if ( in_array( 'bot', $this->wg->User->getGroups() ) ) {
 			$this->setVal( 'botflag', 'remove' );
@@ -86,15 +85,19 @@ class QuickToolsController extends WikiaController  {
 		$delete = $this->request->getBool( 'dodeletes' );
 		$markBot = $this->request->getBool( 'markbot' );
 
-		$time = $this->wf->Timestamp( TS_UNIX, $time );
 		if ( !$time ) {
-			$this->response->setVal( 'success', false );
-			$this->response->setVal( 'error', wfMessage( 'quicktools-invalidtime' )->plain() );
-			$this->wf->ProfileOut( __METHOD__ );
-			return true;
-		}
+			$time = '';
+		} else {
+			$time = $this->wf->Timestamp( TS_UNIX, $time );
+			if ( !$time ) {
+				$this->response->setVal( 'success', false );
+				$this->response->setVal( 'error', wfMessage( 'quicktools-invalidtime' )->plain() );
+				$this->wf->ProfileOut( __METHOD__ );
+				return true;
+			}
 
-		$time = $this->wf->Timestamp( TS_MW, $time );
+			$time = $this->wf->Timestamp( TS_MW, $time );
+		}
 
 		$titles = $this->getRollbackTitles( $target, $time );
 
@@ -127,15 +130,18 @@ class QuickToolsController extends WikiaController  {
 		$this->wf->ProfileIn( __METHOD__ );
 		$dbr = $this->wf->GetDB( DB_SLAVE );
 		$titles = array();
-		$time = $dbr->addQuotes( $time );
+		$where = array(
+			'page_latest = rev_id',
+			'rev_user_text' => $user,
+		);
+		if ( $time !== '' ) {
+			$time = $dbr->addQuotes( $time );
+			$where[] = "rev_timestamp >= {$time}";
+		}
 		$results = $dbr->select(
 			array( 'page', 'revision' ),
 			array( 'page_namespace', 'page_title' ),
-			array( 
-				'page_latest = rev_id', 
-				'rev_user_text' => $user,
-				"rev_timestamp >= {$time}",
-			),
+			$where,
 			__METHOD__,
 			array(
 				'ORDER BY' => 'page_namespace, page_title',
@@ -194,10 +200,10 @@ class QuickToolsController extends WikiaController  {
 		// find the newest edit done by other user
 		$revertRevId = false;
 		while ( $row = $dbr->fetchObject( $res ) ) {
-			if ( $row->rev_user_text !== $user || $row->rev_timestamp < $time ) {
+			if ( $row->rev_user_text !== $user || ( $time !== '' && $row->rev_timestamp < $time ) ) {
 				$revertRevId = $row->rev_id;
 				break;
-			} 
+			}
 		}
 		$dbr->freeResult( $res );
 

@@ -10,20 +10,27 @@ EditHub.prototype = {
 	lastActiveVetButton: undefined,
 
 	init: function () {
+		var validator;
+
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
 		$('.MarketingToolboxMain .vet-show').click($.proxy(this.vetInit, this));
 
 		this.form = $('#marketing-toolbox-form');
 
 		$('#marketing-toolbox-clearall').click($.proxy(function(){
-			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation',this.form.data('module-name'))) == true) {
-				this.formReset(this.form);
-			}
+			this.clearSection(
+				this.form,
+				$.msg('marketing-toolbox-edithub-clearall-confirmation',this.form.data('module-name'))
+			)
 		}, this));
 
 		$(this.form).find('.clear').click($.proxy(function(event){
 			var sectionToReset = $(event.target).parents('.module-box');
-			this.formReset(sectionToReset);
+
+			this.clearSection(
+				sectionToReset,
+				$.msg('marketing-toolbox-edithub-clear-confirmation')
+			)
 		}, this));
 
 		$.validator.addMethod("wikiaUrl", function(value, element) {
@@ -31,7 +38,7 @@ EditHub.prototype = {
 			return this.optional(element) || reg.test(value);
 		}, $.validator.messages.url);
 
-		this.form.validate({
+		validator = this.form.validate({
 			errorElement: 'p',
 			onkeyup: false,
 			onfocusout: function(element, event) {
@@ -43,6 +50,25 @@ EditHub.prototype = {
 				return !this.checkable(element) && (element.name in this.submitted || !this.optional(element) || element === this.lastActive);
 			}
 		});
+
+		validator.focusInvalid = function() {
+			if( this.settings.focusInvalid ) {
+				try {
+					var element = $(this.errorList.length && this.errorList[0].element || [])
+
+					if (element.is(":visible")) {
+						element.focus()
+							// manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
+							.trigger("focusin");
+					} else {
+						element.parents('.module-box:first').get(0).scrollIntoView();
+					}
+
+				} catch(e) {
+					// ignore IE throwing errors when focusing hidden elements
+				}
+			}
+		}
 
 		this.wmuReady = false;
 		this.vetReady = false;
@@ -158,11 +184,18 @@ EditHub.prototype = {
 		});
 	},
 
+	clearSection: function(section, msg) {
+		if (confirm(msg) == true) {
+			this.formReset(section);
+		}
+	},
+
 	formReset: function(elem) {
 		elem.find('input:text, input:password, input:file, input:hidden, select, textarea').val('');
 		elem.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
 		elem.find('.filename-placeholder').html($.msg('marketing-toolbox-edithub-file-name'));
-		elem.find('.image-placeholder').find('img').attr('src', wgBlankImgUrl);
+		elem.find('.image-placeholder').find('img').attr('src', wgBlankImgUrl)
+			.end().filter('.video').empty();
 	}
 };
 
