@@ -13,7 +13,7 @@
 		'label' => wfMsg('yourname'),
 		'isInvalid' => (!empty($errParam) && $errParam === 'username'),
 		'value' => htmlspecialchars($username),
-		'tabindex' => 1,
+		'tabindex' => 6,
 	);
 	$userNameInput['errorMsg'] = $userNameInput['isInvalid'] ? $msg : '';
 
@@ -24,7 +24,7 @@
 		'label' => wfMsg('yourpassword'),
 		'isInvalid' => (!empty($errParam) && $errParam === 'password'),
 		'value' => htmlspecialchars($password),
-		'tabindex' => 2,
+		'tabindex' => 7,
 	);
 	$passwordInput['errorMsg'] = $passwordInput['isInvalid'] ? $msg : '';
 
@@ -35,13 +35,14 @@
 		'value' => '1',
 		'checked' => $keeploggedin,
 		'label' => wfMsg('userlogin-remembermypassword'),
-		'tabindex' => 3,
+		'tabindex' => 8,
 	);
 
 	$createAccount = array(
 		'type' => 'custom',
 		'output' => wfMsgExt('userlogin-get-account', 'parseinline'),
-		'class' => 'get-account'
+		'class' => 'get-account',
+		'tabindex' => 0,
 	);
 
 	$form = array(
@@ -57,7 +58,7 @@
 			array(
 				'value' => wfMsg('login'),
 				'class' => 'login-button big',
-				'tabindex' => 4,
+				'tabindex' => 9,
 			),
 			array(
 				'value' => wfMsg('userlogin-forgot-password'),

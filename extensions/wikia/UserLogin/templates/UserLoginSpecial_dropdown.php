@@ -21,13 +21,15 @@
 				'type' => 'text',
 				'name' => 'username',
 				'isRequired' => true,
-				'label' => wfMsg('yourname')
+				'label' => wfMsg('yourname'),
+				'tabindex' => 1,
 			),
 			array(
 				'type' => 'password',
 				'name' => 'password',
 				'isRequired' => true,
-				'label' => wfMsg('yourpassword')
+				'label' => wfMsg('yourpassword'),
+				'tabindex' => 2,
 			),
 			array(
 				'type' => 'custom',
@@ -37,14 +39,16 @@
 				'type' => 'checkbox',
 				'name' => 'keeploggedin',
 				'value' => '1',
-				'label' => wfMsg('userlogin-remembermypassword')
+				'label' => wfMsg('userlogin-remembermypassword'),
+				'tabindex' => 3,
 			)
 		),
 		'method' => 'post',
 		'action' => $formPostAction,
 		'submits' => array(
 			array(
-				'value' => wfMsg('login')
+				'value' => wfMsg('login'),
+				'tabindex' => 4,
 			)
 		)
 	);
@@ -55,6 +59,6 @@
 	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
 
 	// 3rd party providers buttons
-	echo $app->renderView('UserLoginSpecial', 'Providers');
+	echo $app->renderView('UserLoginSpecial', 'Providers', array('dropdown' => true));
 ?>
 </div>
