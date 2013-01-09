@@ -232,7 +232,8 @@ var LightboxLoader = {
 				type:		'GET',
 				format: 'html',
 				data: {
-					lightboxVersion: 6 // update this when we change the template Lightbox_lightboxModalContent.php
+					lightboxVersion: 6, // update this when we change the template Lightbox_lightboxModalContent.php
+					userName: window.wgUserName // cache separately for each user
 				},
 				callback: function(html) {
 					LightboxLoader.templateHtml = html;
