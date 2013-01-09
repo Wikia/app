@@ -557,7 +557,7 @@ class ArticleComment {
 		}
 
 		//prevent infinite loop for blogs - userCan hooked up in BlogLockdown
-		$canEdit = self::isBlog() || $this->mTitle->userCan( "edit" );
+		$canEdit = self::isBlog( $this->mTitle ) || $this->mTitle->userCan( "edit" );
 
 		$isAllowed = $wgUser->isAllowed('commentedit');
 
