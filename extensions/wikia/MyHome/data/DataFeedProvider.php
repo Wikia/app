@@ -397,9 +397,9 @@ class DataFeedProvider {
 			$item['url'] = $title->getLocalUrl();
 
 		} elseif (defined('NS_BLOG_ARTICLE_TALK') && $res['ns'] == NS_BLOG_ARTICLE_TALK && class_exists('ArticleComment')) {
-
-			$item['title'] = ArticleComment::getBlogPostTitle($res['title'], $title );
-			$item['url'] = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE_TALK)->getLocalUrl();
+			$subpageTitle = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE_TALK);
+			$item['title'] = $subpageTitle->getSubpageText();
+			$item['url'] = $subpageTitle->getLocalUrl();
 
  		} elseif (defined('NS_BLOG_LISTING') && $res['ns'] == NS_BLOG_LISTING) {
 
