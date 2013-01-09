@@ -525,25 +525,24 @@ function WMU_loadMain() {
 function WMU_loadLicense( license ) {
 	if ( license == "" ) {
 		$('#ImageUploadLicenseText').html("");
-		return;
-	}
+	} else {
+		var title = 'File:Sample.jpg';
+		var url = wgScriptPath + '/api' + wgScriptExtension
+			+ '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
+			+ '&title=' + encodeURIComponent( title )
+			+ '&prop=text&pst&format=json';
 
-	var title = 'File:Sample.jpg';
-	var url = wgScriptPath + '/api' + wgScriptExtension
-		+ '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
-		+ '&title=' + encodeURIComponent( title )
-		+ '&prop=text&pst&format=json';
-
-	var callback = function(o) {
-		var o = eval( '(' + o.responseText + ')' );
-		$('#ImageUploadLicenseText').html(o['parse']['text']['*']);
-		WMU_indicator(1, false);
+		var callback = function(o) {
+			var o = eval( '(' + o.responseText + ')' );
+			$('#ImageUploadLicenseText').html(o['parse']['text']['*']);
+			WMU_indicator(1, false);
+		}
+		WMU_indicator(1, true);
+		$.ajax(url, {
+			method: 'get',
+			complete: callback
+		});
 	}
-	WMU_indicator(1, false);
-	$.ajax(url, {
-		method: 'get', 
-		complete: callback
-	});
 	WMU_curSourceId = 0;
 }
 
