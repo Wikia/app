@@ -1,6 +1,6 @@
 /*
  * Author: Inez Korczynski, Bartek Lapinski
- * $G = YAHOO.util.Dom.get
+ * Converted from YUI to jQuery by Hyun
  */
 
 /**
@@ -376,7 +376,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 
 	if(typeof gallery != "undefined") {
 		// if in preview mode, go away
-		if ($( '#editform' ).length && !YAHOO.lang.isNumber(e) ) {
+		if ($( '#editform' ).length && (typeof e != 'number') ) {
 			alert( wmu_no_preview );
 			return false;
 		}
@@ -405,7 +405,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	}
 
 	// TODO: FCK support - to be removed after full switch to RTE
-	if(YAHOO.lang.isNumber(e)) {
+	if(typeof e == 'number') {
 		WMU_refid = e;
 		if(WMU_refid != -1) {
 			if( (typeof(FCK) != 'undefined') && FCK.wysiwygData[WMU_refid].exists) {
@@ -416,7 +416,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			}
 		}
 
-	} else if( YAHOO.lang.isObject(e) ) { // for Opera and Chrome
+	} else if( typeof e == 'object' ) { // for Opera and Chrome
 		// macbre: CK support
 		if (typeof e.type != 'undefined' && e.type == 'rte') {
 			// get image from event data
@@ -454,7 +454,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		}
 	}
 
-	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
+	$('#header_ad').css('display', 'none');
 	if(WMU_modal != null) {
 		WMU_modal.showModal();
 		if(WMU_refid != null && WMU_wysiwygStart == 2) {
@@ -484,7 +484,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		html += '</div>';
 		html += '</div>';
 
-		// @see http://developer.yahoo.com/yui/container/panel/#config
 		WMU_modal = $(html).makeModal({
 			onAfterClose: function() {
 				WMU_switchScreen('Main');
@@ -499,29 +498,27 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			WMU_loadMain();
 		}
 	}
-	YAHOO.util.Event.addListener('ImageUploadBack', 'click', WMU_back);
+	$('#ImageUploadBack').click(WMU_back);
 }
 
 function WMU_loadMain() {
-	var callback = {
-		success: function(o) {
-			$('#ImageUploadMain').html(o.responseText);
-			WMU_indicator(1, false);
-			if($('#ImageQuery').length) $('#ImageQuery').focus();
-			var cookieMsg = document.cookie.indexOf("wmumainmesg=");
-			if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
-				$('#ImageUploadTextCont').hide();
-				$('#ImageUploadMessageLink').html('[' + wmu_show_message  + ']');
-			}
+	var callback = function(html) {
+		$('#ImageUploadMain').html(html);
+		WMU_indicator(1, false);
+		if($('#ImageQuery').length) $('#ImageQuery').focus();
+		var cookieMsg = document.cookie.indexOf("wmumainmesg=");
+		if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
+			$('#ImageUploadTextCont').hide();
+			$('#ImageUploadMessageLink').html('[' + wmu_show_message  + ']');
+		}
 
-			// macbre: RT #19150
-			if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
-				$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
-			}
+		// macbre: RT #19150
+		if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
+			$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
 		}
 	}
 	WMU_indicator(1, true);
-	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMain', callback);
+	$.get(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMain', callback);
 	WMU_curSourceId = 0;
 }
 
@@ -537,32 +534,31 @@ function WMU_loadLicense( license ) {
 		+ '&title=' + encodeURIComponent( title )
 		+ '&prop=text&pst&format=json';
 
-	var callback = {
-		success: function(o) {
-			var o = eval( '(' + o.responseText + ')' );
-			$('#ImageUploadLicenseText').html(o['parse']['text']['*']);
-			WMU_indicator(1, false);
-		}
+	var callback = function(o) {
+		var o = eval( '(' + o.responseText + ')' );
+		$('#ImageUploadLicenseText').html(o['parse']['text']['*']);
+		WMU_indicator(1, false);
 	}
 	WMU_indicator(1, false);
-	YAHOO.util.Connect.asyncRequest('GET', url, callback);
+	$.ajax(url, {
+		method: 'get', 
+		complete: callback
+	});
 	WMU_curSourceId = 0;
 }
 
 function WMU_recentlyUploaded(param, pagination) {
-	var callback = {
-		success: function(o) {
-			$('#WMU_results_0').html(o.responseText);
-			WMU_indicator(2, false);
-		}
-	}
+	var callback = function(html) {
+		$('#WMU_results_0').html(html);
+		WMU_indicator(2, false);
+	};
 	WMU_indicator(2, true);
-	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=recentlyUploaded&'+param, callback);
+	$.get(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=recentlyUploaded&'+param, callback);
 }
 
 function WMU_changeSource(e) {
 	e.preventDefault();
-	var el = YAHOO.util.Event.getTarget(e);
+	var el = e.target;
 	if(el.nodeName == 'A') {
 		var sourceId = el.id.substring(11);
 		if(WMU_curSourceId != sourceId) {
@@ -842,7 +838,7 @@ function WMU_insertPlaceholder( box ) {
 	to_update.innerHTML = $( '#ImageUploadCode' ).html();
 	//the class would need to be different if we had here the full-size...
 	to_update.className = '';
-	YAHOO.util.Connect.asyncRequest('POST', wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
+	$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 }
 
 function WMU_insertImage(e, type) {
@@ -946,7 +942,7 @@ function WMU_insertImage(e, type) {
 			screenType = WMU_jqXHR.getResponseHeader('X-Screen-Type');
 		}
 
-		switch(YAHOO.lang.trim(screenType)) {
+		switch($.trim(screenType)) {
 			case 'error':
 				o.responseText = o.responseText.replace(/<script.*script>/, "" );
 				break;
@@ -989,7 +985,7 @@ function WMU_insertImage(e, type) {
 						insertTags($('#ImageUploadTag').val(), '', '', WMU_getRTETxtarea());
 					}
 				} else { // FCK
-					var wikitag = YAHOO.util.Dom.get('ImageUploadTag').value;
+					var wikitag = $('#ImageUploadTag').val();
 					var options = {};
 
 					if($('#ImageUploadThumbOption').is(':checked')) {
@@ -1103,7 +1099,7 @@ function MWU_imageWidthChanged() {
 }
 
 function MWU_imageSizeChanged(size) {
-	YAHOO.util.Dom.setStyle(['ImageWidthRow'], 'display', size == 'thumb' ? '' : 'none');
+	$('#ImageWidthRow').css('display', 'display', size == 'thumb' ? '' : 'none');
 
 	if($('#ImageUploadThumb').length) {
 		var image = $('#ImageUploadThumb').children(':first');
@@ -1128,7 +1124,7 @@ function MWU_imageSizeChanged(size) {
 }
 
 function WMU_toggleLicenseMesg(e) {
-	YAHOO.util.Event.preventDefault(e);
+	e.preventDefault();
 	if ('none' == $('#ImageUploadLicenseText').css('display') ) {
 		$('#ImageUploadLicenseText').show();
 		$('#ImageUploadLicenseLink').html('[' + wmu_hide_license_message  + ']');
@@ -1150,7 +1146,7 @@ function WMU_switchScreen(to) {
 		WMU_loadMain();
 	}
 	if((WMU_prevScreen == 'Details' || WMU_prevScreen == 'Conflict') && WMU_curScreen == 'Main' && $('#ImageUploadName').length) {
-		YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=clean&mwname=' + $('#ImageUploadMWname').val() + '&tempid=' + $( '#ImageUploadTempid' ).val() );
+		$.get('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=clean&mwname=' + $('#ImageUploadMWname').val() + '&tempid=' + $( '#ImageUploadTempid' ).val());
 	}
 
 	// macbre: move back button on Oasis
@@ -1176,7 +1172,7 @@ function WMU_switchScreen(to) {
 }
 
 function WMU_back(e) {
-	YAHOO.util.Event.preventDefault(e);
+	e.preventDefault();
 	if(WMU_curScreen == 'Details') {
 		WMU_switchScreen('Main');
 	} else if(WMU_curScreen == 'Conflict' && WMU_prevScreen == 'Details') {
@@ -1186,13 +1182,13 @@ function WMU_back(e) {
 
 function WMU_close(e) {
 	if(e) {
-		YAHOO.util.Event.preventDefault(e);
+		e.preventDefault();
 	}
 	WMU_modal.hideModal();
 	if(typeof window.RTE == 'undefined' && $('#wpTextbox1').length) $('#wpTextbox1').focus();
 	WMU_switchScreen('Main');
 	WMU_loadMain();
-	YAHOO.util.Dom.setStyle('header_ad', 'display', 'block');
+	$('#header_ad').css('display', 'block');
 
 	// Handle MiniEditor focus
 	// (BugId:18713)
