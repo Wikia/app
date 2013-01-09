@@ -49,6 +49,7 @@ $messages['en'] = array(
 	'lookupuser-account-status' => 'Account Status: ',
 	'lookupuser-account-status-tempuser' => 'Temp User',
 	'lookupuser-account-status-realuser' => 'Real User',
+	'action-lookupuser' => 'lookup user information',
 );
 
 /** Message documentation (Message documentation)
@@ -80,6 +81,7 @@ $messages['qqq'] = array(
 	'lookupuser-account-status' => 'The user\'s account status',
 	'lookupuser-account-status-tempuser' => 'The status of a temporary user account that hasn\'t been confirmed yet',
 	'lookupuser-account-status-realuser' => 'The status of a real user account',
+	'action-lookupuser' => '{{doc-action|lookupuser}}',
 );
 
 /** Afrikaans (Afrikaans)
