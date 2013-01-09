@@ -446,10 +446,9 @@ var Lightbox = {
 		},
 		// should user see ads?
 		showAds: function() {
-			return this.userShowAds
+			return !!(this.userShowAds
 				&& (Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB')
-				&& $('#' + this.getSlotName()).length
-				&& true;
+				&& $('#' + this.getSlotName()).length);
 		},
 		preloadAds: function() {
 			if (!this.adWasPreloaded) {
