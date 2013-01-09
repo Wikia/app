@@ -607,7 +607,7 @@ class ArticleComment {
 		$isBlog = false;
 		$title = is_null( $title ) ? $wgTitle : $title;
 
-		if ( $title ) {
+		if ( !empty( $title ) ) {
 			$namespace = $title->getNamespace();
 			$isBlog =
 				( defined( 'NS_BLOG_ARTICLE' ) && $namespace == NS_BLOG_ARTICLE ) ||
