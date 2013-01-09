@@ -1,5 +1,5 @@
 <div class="UserLogin">
-<?
+<?php
 	$loginTokenInput = array(
 		'type' => 'hidden',
 		'name' => 'loginToken',
@@ -12,7 +12,8 @@
 		'isRequired' => true,
 		'label' => wfMsg('yourname'),
 		'isInvalid' => (!empty($errParam) && $errParam === 'username'),
-		'value' => htmlspecialchars($username)
+		'value' => htmlspecialchars($username),
+		'tabindex' => 1,
 	);
 	$userNameInput['errorMsg'] = $userNameInput['isInvalid'] ? $msg : '';
 
@@ -22,7 +23,8 @@
 		'isRequired' => true,
 		'label' => wfMsg('yourpassword'),
 		'isInvalid' => (!empty($errParam) && $errParam === 'password'),
-		'value' => htmlspecialchars($password)
+		'value' => htmlspecialchars($password),
+		'tabindex' => 2,
 	);
 	$passwordInput['errorMsg'] = $passwordInput['isInvalid'] ? $msg : '';
 
@@ -32,7 +34,8 @@
 		'isRequired' => false,
 		'value' => '1',
 		'checked' => $keeploggedin,
-		'label' => wfMsg('userlogin-remembermypassword')
+		'label' => wfMsg('userlogin-remembermypassword'),
+		'tabindex' => 3,
 	);
 
 	$createAccount = array(
@@ -53,12 +56,14 @@
 		'submits' => array(
 			array(
 				'value' => wfMsg('login'),
-				'class' => 'login-button big'
+				'class' => 'login-button big',
+				'tabindex' => 4,
 			),
 			array(
 				'value' => wfMsg('userlogin-forgot-password'),
 				'class' => 'forgot-password link',
-				'name' => 'action'
+				'name' => 'action',
+				'tabindex' => 0,
 			)
 		)
 	);
