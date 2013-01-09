@@ -75,20 +75,10 @@ class ContentDisplayController extends WikiaController {
 			return true;
 		}
 
-		if ($skin instanceof SkinOasis) {
-			$levelClass = ($level == '2') ? '-h2' : '';
-			$ret = "<div class=\"headline-wrapper$levelClass\">" .
-				"<h$level$attribs" .
-				" <span class=\"mw-headline\" id=\"$anchor\">$text</span>" .
-				"</h$level>" .
-				$link .
-				'</div>';
-		} else {
-			$ret = "<h$level$attribs"
-				. "<span class=\"mw-headline\" id=\"$anchor\">$text</span>"
-				. $link
-				. "</h$level>";
-		}
+		$ret = "<h$level$attribs"
+			. "<span class=\"mw-headline\" id=\"$anchor\">$text</span>"
+			. $link
+			. "</h$level>";
 
 		wfProfileOut(__METHOD__);
 		return true;
