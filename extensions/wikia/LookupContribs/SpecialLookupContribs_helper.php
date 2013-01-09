@@ -218,6 +218,9 @@ class LookupContribsCore {
 		wfProfileIn( __METHOD__ );
 		$aTemp = array();
 		$aMatches = array();
+		if ( !$order ) {
+			$order = ( $edits ? 'edits:desc' : 'lastedit:desc' );
+		}
 		if ( isset( $data['data'] ) && is_array( $data['data'] ) ) {
 
 			// order by title
@@ -228,14 +231,14 @@ class LookupContribsCore {
 			}
 
 			// order by url
-			else if ( preg_match( '/^url:(asc|desc)$/', $order, $aMatches ) ) {
+			elseif ( preg_match( '/^url:(asc|desc)$/', $order, $aMatches ) ) {
 				foreach ( $data['data'] as $aItem ) {
 					$aTemp[$aItem['url']] = $aItem;
 				}
 			}
 
 			// order by last edit
-			else if ( preg_match( '/^lastedit:(asc|desc)$/', $order, $aMatches ) ) {
+			elseif ( preg_match( '/^lastedit:(asc|desc)$/', $order, $aMatches ) ) {
 				foreach ( $data['data'] as $aItem ) {
 					// added URL part since last edits are ints and might not be unique
 					$aTemp["{$aItem['last_edit']}-{$aItem['url']}"] = $aItem;
@@ -243,7 +246,7 @@ class LookupContribsCore {
 			}
 
 			// order by edits
-			else if ( preg_match( '/^edits:(asc|desc)$/', $order, $aMatches ) && $edits) {
+			elseif ( preg_match( '/^edits:(asc|desc)$/', $order, $aMatches ) && $edits) {
 				foreach ( $data['data'] as $aItem ) {
 					// added leading zeros and URL part since edits are ints and might not be unique
 					$aTemp[ sprintf( '%010d-%s', $aItem['editcount'], $aItem['url']) ] = $aItem;
