@@ -347,7 +347,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'tog-enotifmywall-every' => 'For every message & reply',
 	'tog-enotifmywall-sincevisited' => 'Once per thread since my last visit',
 	'tog-enotifmywall-reminder' => 'With a daily reminder email',
-	'tog-enotifmywall-noemail' => 'Never. Do not send me any Message Wall emails',
+	'tog-enotifmywall-noemail' => 'Never. Do not send me any Message Wall or Forum emails',
 
 	'wallshowsource-toggle-v2' => 'Enable {{int:user-action-menu-view-source}} option on Message Wall posts',
 	'wallshowsource-toggle' => 'Enable {{int:user-action-menu-view-source}} on Message Wall posts',
