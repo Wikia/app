@@ -528,6 +528,11 @@ function WMU_loadMain() {
 }
 
 function WMU_loadLicense( license ) {
+	if ( license == "" ) {
+		$('#ImageUploadLicenseText').html("");
+		return;
+	}
+
 	var title = 'File:Sample.jpg';
 	var url = wgScriptPath + '/api' + wgScriptExtension
 		+ '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
