@@ -11,7 +11,7 @@
  * and fast (comments will be removed during minification, so please use them).
  */
 
-(function( window, undefined ) {
+(function( window ) {
 
 	var Wikia = window.Wikia = (window.Wikia || {}),
 		config = Wikia.AbTestConfig || {},
