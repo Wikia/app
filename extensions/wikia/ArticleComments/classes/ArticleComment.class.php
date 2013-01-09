@@ -511,16 +511,6 @@ class ArticleComment {
 		}
 	}
 
-	public static function getBlogPostTitle($titleText, $oTitle = null){
-		$result = self::explode($titleText, $oTitle);
-
-		$tmpArr = explode('/', $result['title']);
-		array_shift($tmpArr);
-		$title = implode('/', $tmpArr);
-
-		return $title;
-	}
-
 	public static function explode($titleText, $oTitle = null) {
 		$count = 0;
 		$titleTextStripped = str_replace(ARTICLECOMMENT_PREFIX, '', $titleText, $count);
