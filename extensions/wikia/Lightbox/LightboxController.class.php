@@ -19,7 +19,7 @@ class LightboxController extends WikiaController {
 	 */
 	public function lightboxModalContent() {
 		// TODO: refactor this to AdEngine2Controller.php
-		$showAds = $this->wg->ShowAds && !$this->wg->User->isLoggedIn() || $this->wg->User->getOption('showAds');
+		$showAds = $this->wg->ShowAds;
 		$this->showAdModalInterstitial = $showAds && $this->wg->ShowAdModalInterstitial;
 		$this->showAdModalRectangle = $showAds && $this->wg->ShowAdModalRectangle;
 
