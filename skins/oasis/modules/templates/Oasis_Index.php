@@ -92,7 +92,7 @@
 
 <?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
 
-<script type="text/javascript">/*<![CDATA[*/while(wgAfterContentAndJS.length>0){wgAfterContentAndJS.shift()();}/*]]>*/</script>
+<script type="text/javascript">/*<![CDATA[*/while(wgAfterContentAndJS.length>0){wgAfterContentAndJS.shift()();} wgAfterContentAndJSLoaded = true; /*]]>*/</script>
 
 <?= $bottomScripts ?>
 <?= $cssPrintLinks ?>

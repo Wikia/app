@@ -689,7 +689,7 @@ function getLabelFor (obj_id) {
 if (skin != 'monaco' && skin != 'oasis') {
 	//see RT#46116
 	if ( !(skin == 'answers' && !window.wgOldAnswerSkin) ) {
-		addOnloadHook(function() { for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();} });
+		addOnloadHook(function() { while(wgAfterContentAndJS.length>0){wgAfterContentAndJS.shift()();} wgAfterContentAndJSLoaded = true; });
 	}
 }
 
