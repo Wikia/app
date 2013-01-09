@@ -113,13 +113,14 @@ class ForumHooksHelper {
 
 		if ( $element->page_namespace == NS_WIKIA_FORUM_BOARD_THREAD ) {
 
-			$titleThreadElement = Title::newFromText( $element->page_title, NS_WIKIA_FORUM_BOARD_THREAD );
+			$titleThreadElement = Title::newFromText( $element->page_title, $element->page_namespace );
 
-			$wm =  WallMessage::newFromId( $titleThreadElement->getArticleId() );
+			$wm =  WallMessage::newFromId( $titleThreadElement->getArticleId() ); /* @var $wm WallMessage */
 			$parentId = $wm->getMessagePageId();
 			$title = Title::newFromText($parentId, NS_USER_WALL_MESSAGE);
-
-			$link = '<a href="'.$title->getFullUrl().'">'.$title->getFullText().'</a>';
+			$board = $wm->getArticleTitle();
+			$boardText = wfMsg( 'forum-wiki-activity-msg', '<a href="' . $board->getFullURL() . '">' . wfMsg( 'forum-wiki-activity-msg-name', $board->getText() ) . '</a>' );
+			$link = '<a href="'.$title->getFullUrl().'">'.$title->getFullText().'</a> ' . $boardText;
 		}
 		return true;
 	}
