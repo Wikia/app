@@ -529,7 +529,7 @@ class ArticleComment {
 			$partsOriginal = $partsStripped = array();
 		}
 
-		if( self::isBlog() ) {
+		if( !empty($oTitle) && self::isBlog($oTitle) ) {
 			$tmpArr = explode('/', $title);
 			array_shift($tmpArr);
 			$title = implode('/', $tmpArr);
