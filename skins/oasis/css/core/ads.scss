@@ -141,6 +141,11 @@
 			}
 		}
 	}
+	@if $oasisWidthType == 1 {
+		.FooterAd {
+			width: $width-outside;
+		}
+	}
 }
 
 /** Invisible ads **/

@@ -25,7 +25,7 @@ class ForumController extends WallBaseController {
 			if ( empty($topicTitle) || !$topicTitle->exists() ) {
 				if(!$topicTitle->exists()) {
 					$this->redirectToIndex();
-					return false;
+					return null;
 				}
 			}
 		}
@@ -55,7 +55,7 @@ class ForumController extends WallBaseController {
 
 			if ( empty( $board ) ) {
 				$this->redirectToIndex();
-				return false;
+				return true;
 			}
 
 			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads() );
@@ -65,7 +65,7 @@ class ForumController extends WallBaseController {
 			
 			$this->app->wg->Out->setPageTitle( wfMsg( 'forum-board-title', $this->wg->title->getBaseText() ) );
 		}
-
+		
 		$this->response->setVal( 'boardNamespace', NS_WIKIA_FORUM_BOARD );
 
 		//TODO: keep the varnish cache and do purging on post
@@ -76,7 +76,7 @@ class ForumController extends WallBaseController {
 
 	protected function redirectToIndex() {
 		$title = Title::newFromText( 'Forum', NS_SPECIAL );
-		$this->wg->Out->redirect( $title->getFullURL() . '?showWarning=1' );
+		$this->response->redirect( $title->getFullURL() . '?showWarning=1' );
 	}
 
 	protected function getTopicTitle() {

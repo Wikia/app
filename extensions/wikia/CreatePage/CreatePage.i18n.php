@@ -35,7 +35,7 @@ Please use a different title.',
 	'tog-createpagedefaultblank' => 'Use a blank page as default for creating a new page',
 	'tog-createpagepopupdisabled' => 'Disable "Create a new article" flow (Not Recommended)',
 	'createpage-with-layout' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]] Write the text of your article here!', // Includes video placeholder
-
+	
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Write the first paragraph of your page here.
 

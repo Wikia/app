@@ -3,7 +3,7 @@
 		<div class="grid-3 alpha">
 			<input type="button" class="wmu-show" value="<?= $wf->Msg('marketing-toolbox-hub-module-explore-add-photo') ?>" />
 			<span class="filename-placeholder alternative">
-				<?php if( !empty($fields['fileName']['value']) ): ?>
+				<?php if( !empty($fields['fileName']) ): ?>
 					<?= $fields['fileName']['value']; ?>
 				<?php else: ?>
 					<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
@@ -18,7 +18,7 @@
 			<?= $app->renderView(
 					'MarketingToolbox',
 					'FormField',
-					array('inputData' => $fields['module-title'])
+					array('inputData' => $fields['header'])
 				);
 			?>
 			<?= $app->renderView(
@@ -27,7 +27,6 @@
 					array('inputData' => $fields['text'])
 				);
 			?>
-			<p class="alternative"><?= $wf->MsgExt('marketing-toolbox-hub-module-html-text-tip', array('parseinline')); ?></p>
 		</div>
 		<div class="grid-1 alpha">
 			<div class="image-placeholder">
@@ -38,5 +37,8 @@
 				<?php endif; ?>
 			</div>
 		</div>
+	</div>
+	<div class="module-box grid-4 alpha">
+		<p class="alternative"><?= $wf->MsgExt('marketing-toolbox-hub-module-wikiaspicks-text-tip', array('parseinline')); ?></p>
 	</div>
 </div>

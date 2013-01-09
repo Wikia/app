@@ -17,6 +17,11 @@
 				outline: none;
 				padding: 0;
 				resize: none;
+				// BugId:30853
+				&.wikiaEditor {
+					font-family: Consolas,"Eupheima UCAS",Ayuthaya,Menlo,monospace;
+					font-size: 13.5px;
+				}
 			}
 
 			> br {

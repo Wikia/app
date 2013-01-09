@@ -46,8 +46,7 @@
 			@include clearfix;
 		}
 
-		.cke_source,
-		textarea { // for visual mode disabled in user preferences
+		.cke_source {
 			font-family: Consolas, "Eupheima UCAS", Ayuthaya, Menlo, monospace;
 			font-size: 13.5px;
 		}

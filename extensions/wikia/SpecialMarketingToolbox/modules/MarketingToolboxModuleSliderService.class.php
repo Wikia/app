@@ -51,12 +51,9 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleService 
 
 			$fields['url' . $i] = array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-slider-url'),
-				'validator' => new WikiaValidatorToolboxUrl(
+				'validator' => new WikiaValidatorUrl(
 					array(
 						'required' => true
-					),
-					array(
-						'wrong' => 'marketing-toolbox-validator-wrong-url'
 					)
 				),
 				'attributes' => array(

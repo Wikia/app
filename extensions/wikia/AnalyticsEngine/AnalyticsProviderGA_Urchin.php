@@ -40,6 +40,11 @@ SCRIPT2;
     return 'other';
   }
 
+  function getCustomVarAB() {
+    var ab = window.Wikia.AbTest && Wikia.AbTest.getTreatmentGroup(1);
+    return ab ? 'e1 g' + ab : 'no group';
+  }
+
   function getCustomVarSlot() {
     var slot = 'other';
 
@@ -59,6 +64,7 @@ SCRIPT2;
 
   _gaq.push(['_setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown') + ';slot=' + (getCustomVarSlot() || 'unknown'), 3]);
   _gaq.push(['_setCustomVar', 2, 'page', (getCustomVarPage() || 'unknown'), 3]);
+  _gaq.push(['_setCustomVar', 3, 'AB2',  (getCustomVarAB() || 'unknown'), 3]);
   _gaq.push(['_setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
   _gaq.push(['_setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
 
@@ -71,6 +77,7 @@ SCRIPT2;
 
   _gaq.push(['Ads._setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown') + ';slot=' + (getCustomVarSlot() || 'unknown'), 3]);
   _gaq.push(['Ads._setCustomVar', 2, 'page', (getCustomVarPage() || 'unknown'), 3]);
+  _gaq.push(['Ads._setCustomVar', 3, 'AB2',  (getCustomVarAB() || 'unknown'), 3]);
   _gaq.push(['Ads._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
   _gaq.push(['Ads._setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
 

@@ -441,8 +441,23 @@ class OasisController extends WikiaController {
 		$jsLoader = <<<EOT
 <script type="text/javascript">
 	var wsl_assets = {$assets};
-	var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
+EOT;
 
+// TODO: sort this out
+		if ($this->jsAtBottom) {
+			$jsLoader .= <<<EOT
+if ( window.Wikia.AbTest && ( window.wgLoadAdDriverOnLiftiumInit || Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "AS_WRAPPERS_ARE_RENDERED" ) ) ) {
+	toload = wsl_assets.oasis_nojquery_shared_js.concat(wsl_assets.references);
+} else {
+	toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
+}
+EOT;
+		} else {
+			$jsLoader .= <<<EOT
+var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
+EOT;
+		}
+		$jsLoader .= <<<EOT
 	(function(){ wsl.loadScript(toload); })();
 </script>
 EOT;

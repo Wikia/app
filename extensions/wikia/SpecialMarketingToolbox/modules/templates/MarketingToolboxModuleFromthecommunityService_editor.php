@@ -5,7 +5,7 @@
 		<div class="module-input-box">
 			<input type="button" class="wmu-show" value="<?= $wf->msg('marketing-toolbox-edithub-add-file-button')?>" />
 				<span class="alternative filename-placeholder">
-					<? if (!empty($fields['photo' . $i]['value'])): ?>
+					<? if (!empty($fields['photo' . $i])): ?>
 					<?= $fields['photo' . $i]['value']; ?>
 					<? else: ?>
 					<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>

@@ -16,11 +16,10 @@ test('getProvider failsafe to Later', function() {
 		, windowMock = {}
 		, documentMock = {}
 		, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
-		, abTestMock = {getTreatmentGroup: function() {return null;}}
 		, adConfig;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock
 
 		// AdProviders
 		, adProviderAdDriver2Mock
@@ -44,13 +43,12 @@ test('getProvider use AdDriver2 for high value slots', function() {
 		, windowMock = {wgHighValueCountries: {'hi-value-country': true, 'another-hi-value-country': true}}
 		, documentMock = {}
 		, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
-		, abTestMock = {getTreatmentGroup: function() {return null;}}
 		, adConfig
 		, highValueSlot = 'TOP_LEADERBOARD'
 	;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock
 
 		// AdProviders
 		, adProviderAdDriver2Mock
@@ -76,11 +74,10 @@ test('getProvider use Evolve for NZ (only if provider accepts)', function() {
 		, windowMock = {}
 		, documentMock = {}
 		, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
-		, abTestMock = {getTreatmentGroup: function() {return null;}}
 		, adConfig;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMockAU, adLogicShortPageMock, abTestMock
+		logMock, windowMock, documentMock, geoMockAU, adLogicShortPageMock
 
 		// AdProviders
 		, adProviderAdDriver2Mock
@@ -104,11 +101,10 @@ test('getProvider do not use Evolve for PL', function() {
 		, windowMock = {}
 		, documentMock = {}
 		, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
-		, abTestMock = {getTreatmentGroup: function() {return null;}}
 		, adConfig;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock
 
 		// AdProviders
 		, adProviderAdDriver2Mock
@@ -132,11 +128,10 @@ test('getProvider do not use Evolve for NZ when it cannot handle the slot', func
 		, windowMock = {}
 		, documentMock = {}
 		, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
-		, abTestMock = {getTreatmentGroup: function() {return null;}}
 		, adConfig;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock
 
 		// AdProviders
 		, adProviderAdDriver2Mock
@@ -160,11 +155,10 @@ test('getProvider use GamePro if provider says so', function() {
 		, windowMock = {wgContentLanguage: 'de'}
 		, documentMock = {}
 		, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
-		, abTestMock = {getTreatmentGroup: function() {return null;}}
 		, adConfig;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock
 
 		// AdProviders
 		, adProviderAdDriver2Mock
@@ -190,12 +184,11 @@ test('getProvider GamePro wins over Evolve', function() {
 		, windowMock = {wgContentLanguage: 'de'}
 		, documentMock = {}
 		, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
-		, abTestMock = {getTreatmentGroup: function() {return null;}}
 		, adConfig;
 
 	// First see if evolve is used for given configuration when GamePro refuses
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock
 
 		// AdProviders
 		, adProviderAdDriver2Mock
@@ -207,7 +200,7 @@ test('getProvider GamePro wins over Evolve', function() {
 	equal(adConfig.getProvider(['TOP_LEADERBOARD']), adProviderEvolveMock, 'adProviderEvolveMock TOP_LEADERBOARD');
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock
 
 		// AdProviders
 		, adProviderAdDriver2Mock
@@ -231,11 +224,10 @@ test('getProvider calls adLogicShortPageMock.isPageTooShortForSlot with proper s
 		, documentMock = {}
 		, adLogicShortPageCalledWithSlot
 		, adLogicShortPageMock = {isPageTooShortForSlot: function(slot) {adLogicShortPageCalledWithSlot = slot;}}
-		, abTestMock = {getTreatmentGroup: function() {return null;}}
 		, adConfig;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock
 
 		// AdProviders
 		, adProviderAdDriver2Mock
@@ -249,7 +241,7 @@ test('getProvider calls adLogicShortPageMock.isPageTooShortForSlot with proper s
 	equal(adLogicShortPageCalledWithSlot, 'foo');
 });
 
-test('getProvider returns Null on short page', function() {
+test('getProvider returns Null if for some slots for short pages', function() {
 	var adProviderNullMock = {name: 'NullMock'}
 		, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
 		, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
@@ -260,11 +252,10 @@ test('getProvider returns Null on short page', function() {
 		, windowMock = {}
 		, documentMock = {}
 		, adLogicShortPageMock = {isPageTooShortForSlot: function() {return true;}}
-		, abTestMock = {getTreatmentGroup: function() {return null;}}
 		, adConfig;
 
 	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
+		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock
 
 		// AdProviders
 		, adProviderAdDriver2Mock
@@ -276,34 +267,3 @@ test('getProvider returns Null on short page', function() {
 
 	equal(adConfig.getProvider(['foo']), adProviderNullMock);
 });
-
-test('getProvider returns Null for prefooters when AB group is prefooters disabled', function() {
-	var adProviderNullMock = {name: 'NullMock'}
-		, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
-		, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-		, adProviderAdDriver2Mock = {name: 'AdDriver2Mock', canHandleSlot: function() {return false;}}
-		, adProviderLaterMock = {name: 'LaterMock'}
-		, geoMock = {getCountryCode:function() {}}
-		, logMock = function() {}
-		, windowMock = {}
-		, documentMock = {}
-		, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
-		, abTestMock = {getTreatmentGroup: function() {return 'PREFOOTERS_DISABLED';}}
-		, adConfig;
-
-	adConfig = AdConfig2(
-		logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
-
-		// AdProviders
-		, adProviderAdDriver2Mock
-		, adProviderEvolveMock
-		, adProviderGameProMock
-		, adProviderLaterMock
-		, adProviderNullMock
-	);
-
-	notEqual(adConfig.getProvider(['TOP_LEADERBOARD']), adProviderNullMock, 'TOP_LEADERBOARD');
-	equal(adConfig.getProvider(['PREFOOTER_LEFT_BOXAD']), adProviderNullMock, 'PREFOOTER_LEFT_BOXAD');
-	equal(adConfig.getProvider(['PREFOOTER_RIGHT_BOXAD']), adProviderNullMock, 'PREFOOTER_RIGHT_BOXAD');
-});
-

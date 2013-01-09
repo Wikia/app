@@ -52,7 +52,6 @@ no text was provided for refs named <code>$1</code>',
 	'cite_error_references_missing_key'              => '<code>&lt;ref&gt;</code> tag with name "$1" defined in <code>&lt;references&gt;</code> is not used in prior text.',
 	'cite_error_references_no_key'                   => '<code>&lt;ref&gt;</code> tag defined in <code>&lt;references&gt;</code> has no name attribute.',
 	'cite_error_empty_references_define'             => '<code>&lt;ref&gt;</code> tag defined in <code>&lt;references&gt;</code> with name "$1" has no content.',
-	'cite_error_malformed_dom'                       => '<code>&lt;references&gt;</code> was not closed properly. Please replace this with this tag with a self-closing <code>&lt;references&gt;/</code> tag, or close it with a <code>/&lt;references&gt;</code> tag.' ,
 
 	/*
 	   Output formatting
@@ -106,7 +105,6 @@ $messages['qqq'] = array(
 	'cite_error_references_no_backlink_label' => 'Cite extension. Error message shown in the references tag when the same name is used for too many ref tags. Too many in this case is more than there are backlink labels defined in [[MediaWiki:Cite references link many format backlink labels]].
 
 It is not possible to make a clickable link to this message. "nowiki" is mandatory around [[MediaWiki:Cite references link many format backlink labels]].',
-	'cite_error_malformed_dom' => 'Cite extension. Error message shown in the references tag when an unclosed references tag is provided',
 	'cite_error_no_link_label_group' => "*'''$1''' is the name of a reference group.
 *'''$2''' is <tt>cite_link_label_group-<i>groupname</i></tt>.",
 	'cite_error_references_no_text' => 'Cite extension. This error occurs when the tag <code>&lt;ref name="something" /&gt;</code> is used with the name-option specified and no other tag specifies a cite-text for this name.',

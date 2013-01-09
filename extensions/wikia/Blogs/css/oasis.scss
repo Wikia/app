@@ -213,10 +213,13 @@
 	}
 }
 
-.WikiaArticle .WikiaBlogListingBox ul {
-	border: 1px solid $color-page-border;
-	padding: 0px 8px 8px;
-}
+.WikiaArticle .WikiaBlogListingBox {
+	width: 282px;
+		ul {
+			border: 1px solid $color-page-border;
+			padding: 0px 8px 8px;
+		}
+	}
 
 // /** styling for Create blog listing box special page **/
 

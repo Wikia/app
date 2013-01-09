@@ -2,7 +2,7 @@
 	<h1><?= wfMessage( 'quicktools-modal-title', $username )->escaped() ?></h1>
 	<div class="input-group">
 		<label for="quicktools-time"><?= wfMessage( 'quicktools-label-time' )->escaped() ?></label>
-		<input id="quicktools-time" type="text" placeholder="<?= wfMessage( 'quicktools-placeholder-time' )->escaped() ?>" />
+		<input id="quicktools-time" type="text" value="<?= htmlspecialchars( $timestamp ) ?>" />
 	</div>
 	<div class="input-group">
 		<label for="quicktools-reason"><?= wfMessage( 'quicktools-label-reason' )->escaped() ?></label>

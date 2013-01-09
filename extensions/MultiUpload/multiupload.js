@@ -55,7 +55,7 @@ function wgUploadSetup() {
 		}
 		// Insert a row where the warnings will be displayed just below the
 		// wpDestFile row
-		var optionsTable = document.getElementById( 'mw-htmlform-source' ).tBodies[0];
+		var optionsTable = document.getElementById( 'mw-htmlform-description' ).tBodies[0];
 		var row = optionsTable.insertRow( 1 );
 		var td = document.createElement( 'td' );
 		td.id = 'wpDestFile-warning';

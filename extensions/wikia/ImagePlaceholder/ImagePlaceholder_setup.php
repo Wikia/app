@@ -342,48 +342,6 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	return $out;
 }
 
-// Match a placeholder image in the given $text.  The $box parameter determines
-// which placeholder is returned if there are more than one on the page.  If
-// the namespace is not NS_FILE it can be passed via the $ns parameter.  Finally
-// if there is anything additional to match within the placeholder tag, it can
-// be passed via parameter $constrain.
-function ImagePlaceholderMatch ( $text, $box = 0, $ns = NS_FILE, $constrain = null ) {
-	global $wgContLang;
-
-	// Get the namesapace translations in the content language for files and videos
-	$ns_vid = $wgContLang->getFormattedNsText( $ns );
-	$ns_img = ImagePlaceholderTranslateNsImage();
-
-	// Get the same as above but for english
-	$en_ns_vid = MWNamespace::getCanonicalName( $ns );
-
-	$oldWgContLang = $wgContLang;
-	$wgContLang = Language::factory( 'en' );
-	$en_ns_img = ImagePlaceholderTranslateNsImage();
-	$wgContLang = $oldWgContLang;
-
-	// Get the placeholder text in both the content language and in english
-	$placeholder_msg = wfMsgForContent( 'imgplc-placeholder' );
-	$en_placeholder_msg = wfMsgReal( 'imgplc-placeholder', array(), 'en');
-
-	$placeholder = '(?:' . implode('|', array(
-			$ns_vid . ':' . $placeholder_msg,
-			$ns_img . ':' . $placeholder_msg,
-			$en_ns_vid . ':' . $en_placeholder_msg,
-			$en_ns_img . ':' . $en_placeholder_msg)) . ')';
-
-	$placeholder .= $constrain ? $constrain : '';
-
-	preg_match_all( '/\[\[' . $placeholder . '[^\]]*\]\]/si', $text, $matches, PREG_OFFSET_CAPTURE );
-
-	// Make sure we have matches and that there exists a match at index $box
-	if (is_array($matches) && count($matches[0]) > $box ) {
-		return $matches[0][$box];
-	} else {
-		return null;
-	}
-}
-
 // check if this is or not a placeholder
 function ImagePlaceholderIsPlaceholder( $text ) {
 	if ( $text == wfMsgForContent( 'imgplc-placeholder' )

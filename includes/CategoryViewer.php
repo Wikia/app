@@ -286,7 +286,7 @@ class CategoryViewer extends ContextSource {
 			/* Changed by MoLi (1.19 ugrade) */
 			wfRunHooks( 'CategoryViewer::beforeCategoryData',array( &$extraConds ) );
 			/* Wikia change end */
-
+		
 			$res = $dbr->select(
 				array( 'page', 'categorylinks', 'category' ),
 				array( 'page_id', 'page_title', 'page_namespace', 'page_len',
@@ -336,7 +336,7 @@ class CategoryViewer extends ContextSource {
 				} elseif ( $title->getNamespace() == NS_FILE ) {
 					$this->addImage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 				} else {
-					# <Wikia>
+					# <Wikia> 
 					if( wfRunHooks( "CategoryViewer::addPage", array( &$this, &$title, &$row ) ) ) {
 						$this->addPage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 					}
@@ -444,19 +444,6 @@ class CategoryViewer extends ContextSource {
 		$r = "";
 		wfRunHooks( "CategoryViewer::getOtherSection", array( &$this, &$r ) );
 		return $r;
-	}
-	/* </Wikia> */
-
-	/* <Wikia> */
-	/**
-	* Get paging links using private function getSectionPagingLinks
-	*
-	* @param $type String same like in getSectionPagingLinks function
-	* @return String: HTML output, possibly empty if there are no other pages
-	*/
-	public function getSectionPagingLinksExt( $type ) {
-		$paginationLinks = $this->getSectionPagingLinks( $type );
-		return $paginationLinks;
 	}
 	/* </Wikia> */
 	

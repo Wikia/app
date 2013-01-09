@@ -3,7 +3,7 @@
 		<div class="grid-3 alpha">
 			<input type="button" class="wmu-show" value="<?= $wf->Msg('marketing-toolbox-hub-module-explore-add-photo') ?>" />
 			<span class="filename-placeholder alternative">
-				<? if (!empty($fields['fileName']['value'])): ?>
+				<? if (!empty($fields['fileName'])): ?>
 					<?= $fields['fileName']['value']; ?>
 				<? else: ?>
 					<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>

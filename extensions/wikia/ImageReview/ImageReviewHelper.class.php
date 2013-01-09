@@ -314,7 +314,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			if (count($imageList) < self::LIMIT_IMAGES) {
 				$img = ImagesService::getImageSrc( $row->wiki_id, $row->page_id );
 
-				$extension = pathinfo( strtolower( $img['page'] ), PATHINFO_EXTENSION ); // this needs to use the page index since src for SVG ends in .svg.png :/
+				$extension = pathinfo( strtolower( $img['src'] ), PATHINFO_EXTENSION );
 
 				if ( empty( $img['src'] ) ) {
 					$invalidImages[] = $record;
@@ -349,7 +349,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$db->update(
 				'image_review',
 				array(
-					'state' => ImageReviewStatuses::STATE_QUESTIONABLE // changed from STATE_INVALID_IMAGE
+					'state' => ImageReviewStatuses::STATE_INVALID_IMAGE
 				),
 				array( implode(' OR ', $invalidImages) ),
 				__METHOD__

@@ -10,27 +10,20 @@ EditHub.prototype = {
 	lastActiveVetButton: undefined,
 
 	init: function () {
-		var validator;
-
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
 		$('.MarketingToolboxMain .vet-show').click($.proxy(this.vetInit, this));
 
 		this.form = $('#marketing-toolbox-form');
 
 		$('#marketing-toolbox-clearall').click($.proxy(function(){
-			this.clearSection(
-				this.form,
-				$.msg('marketing-toolbox-edithub-clearall-confirmation',this.form.data('module-name'))
-			)
+			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation',this.form.data('module-name'))) == true) {
+				this.formReset(this.form);
+			}
 		}, this));
 
 		$(this.form).find('.clear').click($.proxy(function(event){
 			var sectionToReset = $(event.target).parents('.module-box');
-
-			this.clearSection(
-				sectionToReset,
-				$.msg('marketing-toolbox-edithub-clear-confirmation')
-			)
+			this.formReset(sectionToReset);
 		}, this));
 
 		$.validator.addMethod("wikiaUrl", function(value, element) {
@@ -38,7 +31,7 @@ EditHub.prototype = {
 			return this.optional(element) || reg.test(value);
 		}, $.validator.messages.url);
 
-		validator = this.form.validate({
+		this.form.validate({
 			errorElement: 'p',
 			onkeyup: false,
 			onfocusout: function(element, event) {
@@ -50,25 +43,6 @@ EditHub.prototype = {
 				return !this.checkable(element) && (element.name in this.submitted || !this.optional(element) || element === this.lastActive);
 			}
 		});
-
-		validator.focusInvalid = function() {
-			if( this.settings.focusInvalid ) {
-				try {
-					var element = $(this.errorList.length && this.errorList[0].element || [])
-
-					if (element.is(":visible")) {
-						element.focus()
-							// manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
-							.trigger("focusin");
-					} else {
-						element.parents('.module-box:first').get(0).scrollIntoView();
-					}
-
-				} catch(e) {
-					// ignore IE throwing errors when focusing hidden elements
-				}
-			}
-		}
 
 		this.wmuReady = false;
 		this.vetReady = false;
@@ -184,12 +158,6 @@ EditHub.prototype = {
 					.html(response.videoFileMarkup);
 			}, this)
 		});
-	},
-
-	clearSection: function(section, msg) {
-		if (confirm(msg) == true) {
-			this.formReset(section);
-		}
 	},
 
 	formReset: function(elem) {

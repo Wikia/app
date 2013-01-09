@@ -34,8 +34,10 @@ AIC2.init = function() {
 		Liftium.d("AIC2: page long enough", 7);
 		AIC2.$placeHolder.append('<div id="INCONTENT_BOXAD_1" class="noprint" style="height: 250px; width: 300px; position: relative;"></div>');
 
-		$window.bind("scroll.AIC2", AIC2.onScroll ); // FIXME: throttle
-		$window.bind("resize.AIC2", AIC2.onScroll ); // FIXME: throttle
+		//if (!AIC2.checkFooterAd()) {
+			$window.bind("scroll.AIC2", AIC2.onScroll ); // FIXME: throttle
+			$window.bind("resize.AIC2", AIC2.onScroll ); // FIXME: throttle
+		//}
 	} else {
 		Liftium.d("AIC2: page too short", 3);
 		//WikiaTracker.trackAdEvent('liftium.varia', {'ga_category':'varia/AIC2', 'ga_action':'too short'}, 'ga');
@@ -111,17 +113,19 @@ AIC2.onScroll = function() {
 		if (!AIC2.visible) {
 			Liftium.d("AIC2.showAd", 5);
 			if (!AIC2.checkStartStopPosition()) { return; }
-			if ($incontentBoxAd.hasClass('wikia-ad') == false) {
-				window.adslots2.push(['INCONTENT_BOXAD_1', null, 'AdEngine2', null]);
-				$incontentBoxAd.addClass('wikia-ad');
-			}
-			$incontentBoxAd.css({
-				'position': 'fixed',
-				'top': '10px',
-				'visibility': 'visible'
-			});
+			//if (!AIC2.checkFooterAd()) {
+				if ($incontentBoxAd.hasClass('wikia-ad') == false) {
+					window.adslots2.push(['INCONTENT_BOXAD_1', null, 'AdEngine2', null]);
+					$incontentBoxAd.addClass('wikia-ad');
+				}
+				$incontentBoxAd.css({
+					'position': 'fixed',
+					'top': '10px',
+					'visibility': 'visible'
+				});
 
-			AIC2.visible = true;
+				AIC2.visible = true;
+			//}
 		}
 	} else {
 		if (AIC2.visible) {
@@ -160,6 +164,17 @@ AIC2.glueAd = function() {
 	}
 
 	$incontentBoxAd.css('visibility', 'visible');
+};
+
+AIC2.checkFooterAd = function() {
+	Liftium.d("AIC2: footer ad detection", 7);
+	if ($(".wikia_anchor_ad").length) {
+		Liftium.d("AIC2: footer ad detected, bailing out", 3);
+		$(window).unbind("scroll.AIC2");
+		return true;
+	}
+	Liftium.d("AIC2: footer ad not detected, proceeding", 7);
+	return false;
 };
 
 if (

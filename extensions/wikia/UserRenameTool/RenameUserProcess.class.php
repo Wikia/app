@@ -552,8 +552,25 @@ class RenameUserProcess {
 		wfRunHooks($hookName, array($this->mUserId, $this->mOldUsername, $this->mNewUsername));
 
 		// delete the record from all the secondary clusters
-		if ( class_exists( 'ExternalUser_Wikia' ) ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $this->mUserId );	
+		$clusters = WikiFactory::getSecondaryClusters(); // wikicities with a c1 .. cx cluster suffix.
+
+		foreach ($clusters as $clusterName) {
+			// This is a classic double-check. I do not want to delete the record from the primary cluster.
+			// No, really! I do not.
+			if ( RenameUserHelper::CLUSTER_DEFAULT != $clusterName ) {
+				$memkey = sprintf("extuser:%d:%s", $this->mUserId, $clusterName);
+				$clusterName = 'wikicities_' . $clusterName;
+				$oDB = wfGetDB( DB_MASTER, array(), $clusterName );
+				$oDB->delete( $this->getUserTableName($clusterName), array( 'user_id' => $this->mUserId ) );
+				if ( $oDB->affectedRows() ) {
+					$this->addLog( sprintf( '%s: deleted user data.', $clusterName ) );
+				} else {
+					$this->addLog( sprintf( '%s: nothing to do here.', $clusterName ) );
+				}
+				$oDB->commit();
+				# clear memcache
+				$wgMemc->delete( $memkey );
+			}
 		}
 
 		// rename the user on the shared cluster
@@ -831,7 +848,7 @@ class RenameUserProcess {
 		$this->invalidateUser($this->mOldUsername);
 
 		$this->addLog("Invalidate user data on local Wiki ({$wgCityId}): {$this->mNewUsername}");
-		$this->invalidateUser($this->mNewUsername);
+		$this->invalidateUser($this->mOldUsername);
 
 		$wgUser = $wgOldUser;
 
