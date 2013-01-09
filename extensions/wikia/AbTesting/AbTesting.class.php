@@ -10,7 +10,7 @@ class AbTesting extends WikiaObject {
 	const VARNISH_CACHE_TIME = 600; // 10 minutes - depends on Resource Loader settings for non-versioned requests
 	const CACHE_TTL = 3600;
 	const SECONDS_IN_HOUR = 3600;
-	const VERSION = 1;
+	const VERSION = 2;
 
 	static protected $initialized = false;
 
@@ -30,6 +30,11 @@ class AbTesting extends WikiaObject {
 		return true;
 	}
 
+	public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
+		array_unshift( $jsAssetGroups, 'abtesting' );
+		return true;
+	}
+
 	public function onWikiaSkinTopModules( &$scriptModules, $skin ) {
 		if ( $this->app->checkSkin( 'oasis', $skin ) ) {
 			array_unshift( $scriptModules, 'wikia.ext.abtesting' );
@@ -38,7 +43,7 @@ class AbTesting extends WikiaObject {
 	}
 
 	protected function getMemcKey() {
-		return $this->wf->sharedMemcKey('abtesting','config');
+		return $this->wf->sharedMemcKey('abtesting','config',self::VERSION);
 	}
 
 	public function getTimestampForUTCDate( $date ) {
@@ -52,7 +57,7 @@ class AbTesting extends WikiaObject {
 			$expName = $this->normalizeName($exp['name']);
 
 			$config[$expName] = array(
-				'id' => $exp['id'],
+				'id' => intval($exp['id']),
 				'name' => $expName,
 				'versions' => array(),
 			);
@@ -62,17 +67,16 @@ class AbTesting extends WikiaObject {
 					'startTime' => $this->getTimestampForUTCDate($ver['start_time']),
 					'endTime' => $this->getTimestampForUTCDate($ver['end_time']),
 					'gaSlot' => $ver['ga_slot'],
-					'treatmentGroups' => array(),
+					'groups' => array(),
 				);
-				$treatmentGroups = &$version['treatmentGroups'];
+				$groups = &$version['groups'];
 				foreach ($ver['group_ranges'] as $grn) {
 					$group = $exp['groups'][$grn['group_id']];
 					$groupName = $this->normalizeName($group['name']);
-					$treatmentGroups[$groupName] = array(
-						'id' => $group['id'],
+					$groups[$groupName] = array(
+						'id' => intval($group['id']),
 						'name' => $groupName,
 						'ranges' => $this->parseRanges($grn['ranges']),
-						'isControl' => $group['id'] === $ver['control_group_id'],
 					);
 				}
 				$versions[] = $version;
@@ -83,7 +87,7 @@ class AbTesting extends WikiaObject {
 			'experiments' => $config
 		);
 
-		return sprintf("Wikia.AbTest = %s;\n",json_encode($expConfig));
+		return sprintf("Wikia.AbTestConfig = %s;\n",json_encode($expConfig));
 	}
 
 	protected function getConfig() {

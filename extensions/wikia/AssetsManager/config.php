@@ -155,6 +155,12 @@ $config['oasis_blocking'] = array(
 		'//skins/wikia/js/JqueryLoader.js'
 	)
 );
+$config['abtesting'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AbTesting/js/AbTest.js',
+	)
+);
 
 /** jQuery **/
 $config['jquery'] = array(
@@ -1080,6 +1086,7 @@ $config['imagedrop_scss'] = array(
 );
 
 /** AnalyticsEngine **/
+/** Note: this group is also used in Oasis! */
 $config['analytics_gas_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array( 'wikiamobile' ),
