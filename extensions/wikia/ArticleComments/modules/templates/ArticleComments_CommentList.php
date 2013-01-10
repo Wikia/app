@@ -5,6 +5,7 @@
 		<? foreach ( $commentListRaw as $commentId => $commentArr ): ?>
 			<? $rowClass = $odd ? 'odd' : 'even' ?>
 			<? $odd = !$odd ?>
+
 			<? if ( isset( $commentArr[ 'level1' ] ) && $commentArr[ 'level1' ] instanceof ArticleComment ): ?>
 				<?= $app->getView( 'ArticleComments', 'Comment', array(
 						'comment' => $commentArr[ 'level1' ]->getData( $useMaster ),

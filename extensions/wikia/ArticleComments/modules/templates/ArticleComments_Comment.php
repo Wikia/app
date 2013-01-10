@@ -1,3 +1,4 @@
+<? if ( is_array( $comment ) ) :?>
 <li id="comm-<?=$commentId?>" class="SpeechBubble <?=$rowClass?>" data-user="<?=$comment['username']?>">
 	<div class="speech-bubble-avatar">
 		<a href="<?= $comment['userurl'] ?>">
@@ -23,3 +24,4 @@
 		</div>
 	</blockquote>
 </li>
+<? endif; ?>

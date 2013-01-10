@@ -141,10 +141,11 @@ class ArticleCommentList {
 			}
 		}
 
-		$titles = TitleBatch::newFromIds($commentsQueue,DB_SLAVE_BEFORE_MASTER);
+		$titles = Title::newFromIds( $commentsQueue );
+
 		$comments = array();
-		foreach ($commentsQueue as $id) {
-			$comments[$id] = !empty($titles[$id]) ? ArticleComment::newFromTitle($titles[$id]) : false;
+		foreach ( $titles as $title ) {
+			$comments[$title->getArticleID()] = ArticleComment::newFromTitle( $title );
 		}
 
 		// grab article contents for each comment
@@ -199,6 +200,7 @@ class ArticleCommentList {
 			$conds = $this->getQueryWhere($dbr);
 			$options = array( 'ORDER BY' => 'page_id DESC' );
 			$join_conds = array();
+
 			if( !empty( $wgArticleCommentsEnableVoting ) ) {
 				//add votes to the result set
 				$table[] = 'page_vote';
@@ -308,7 +310,6 @@ class ArticleCommentList {
 	public function getAllCommentPages() {
 		wfProfileIn( __METHOD__ );
 
-		$pages = array();
 		$dbr = wfGetDB( DB_MASTER );
 
 		$res = $dbr->select(
@@ -388,11 +389,9 @@ class ArticleCommentList {
 	 *
 	 * @return array data for comments list
 	 */
-
 	public function getData($page = 1) {
 		global $wgUser, $wgStylePath;
 
-		$groups = $wgUser->getEffectiveGroups();
 		//$isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
 		$canEdit = $wgUser->isAllowed( 'edit' );
 		$isBlocked = $wgUser->isBlocked();
@@ -414,21 +413,11 @@ class ArticleCommentList {
 		$this->preloadFirstRevId( $comments );
 		$pagination = $this->doPagination($countComments, count($comments), $page);
 
-		$commentListHTML = '';
-		if(!empty($this->mTitle)) {
-			$commentListHTML = F::app()->getView('ArticleComments', 'CommentList', array(
-				'commentListRaw' => $comments,
-				'page' => $page,
-				'useMaster' => false
-			))->render();
-		}
-
 		$retVal = array(
 			'avatar' => AvatarService::renderAvatar($wgUser->getName(), 50),
 			'userurl' => AvatarService::getUrl($wgUser->getName()),
 			'canEdit' => $canEdit,
 			'commentListRaw' => $comments,
-			'commentListHTML' => $commentListHTML,
 			'commentingAllowed' => ArticleComment::canComment( $this->mTitle ),
 			'commentsPerPage' => $this->mMaxPerPage,
 			'countComments' => $countComments,
@@ -730,12 +719,13 @@ class ArticleCommentList {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
 						$oComment = new ArticleComment($oCommentTitle);
-						$oComment->doDeleteComment($deleteReason);
+						//$oComment->doDeleteComment($deleteReason);
 					}
 				}
+
 				$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
 				$listing = ArticleCommentList::newFromTitle($parentTitle);
-				$listing->purge();
+				//$listing->purge();
 			} else {
 				$taskParams= array(
 					'mode' 		=> 'you',
@@ -749,6 +739,7 @@ class ArticleCommentList {
 					'user'		=> $wgUser->getName(),
 					'admin'		=> $wgUser->getName()
 				);
+
 
 				foreach (self::$mArticlesToDelete as $oComment) {
 					$oCommentTitle = $oComment->getTitle();
