@@ -211,4 +211,4 @@ function ChatAjax() {
 	}
 }
 
-$wgHooks['GetIP'][] = 'ChatAjax::ChatGetIP';        // used for calls from chat nodejs server
+$wgHooks['GetIP'][] = 'ChatAjax::onGetIP';        // used for calls from chat nodejs server
