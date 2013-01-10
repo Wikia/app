@@ -525,9 +525,11 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$endDate = $endYear . '-' . $endMonth . '-' . $endDay . ' 23:59:59';
 
 		$summary = array(
+			'all' => 0,
 			ImageReviewStatuses::STATE_APPROVED 	=> 0,
 			ImageReviewStatuses::STATE_REJECTED 	=> 0,
 			ImageReviewStatuses::STATE_QUESTIONABLE => 0,
+			'avg' => 0,
 		);
 		$data = array();
 		$userCount = $total = $avg = 0;
