@@ -77,14 +77,12 @@ var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, d
 	};
 
 	addAbTestInfo = function (url) {
-		var experiments, experimentId;
+		var experiments, i;
 
-		if (abTest && abTest.getActiveExperiments) {
-			experiments = abTest.getActiveExperiments();
-			for (experimentId in experiments) {
-				if (experiments.hasOwnProperty(experimentId)) {
-					url.addParam('ab' + experimentId, experiments[experimentId]);
-				}
+		if (abTest && abTest.getExperiments) {
+			experiments = abTest.getExperiments();
+			for (i=0;i<experiments.length;i++) {
+				url.addParam('ab' + experiments[i].id, experiments[i].group.id);
 			}
 		}
 	};

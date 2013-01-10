@@ -64,6 +64,7 @@
 		document,
 		Geo,
 		adLogicShortPage,
+		abTest,
 
 		// AdProviders:
 		adProviderAdDriver2,

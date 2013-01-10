@@ -176,7 +176,7 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		if ( !ArticleComment::canComment() ) {
+		if ( !ArticleComment::canComment( $title ) ) {
 			return $result;
 		}
 

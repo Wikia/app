@@ -78,7 +78,6 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-explore-header' => 'Header $1',
 	'marketing-toolbox-hub-module-explore-link-url' => 'URL',
 	'marketing-toolbox-hub-module-explore-link-text-too-short-error' => 'URL header text is too short fill or remove the URL field',
-	'marketing-toolbox-hub-module-explore-link-url-invalid' => 'Invalid URL address',
 	'marketing-toolbox-hub-module-explore-add-photo' => 'Add a photo',
 
 	'marketing-toolbox-hub-module-polls-title' => 'Header',
@@ -91,12 +90,13 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-from-the-community-long-quote' => 'Quote',
 	'marketing-toolbox-hub-module-from-the-community-url' => 'Article URL',
 
-	'marketing-toolbox-hub-module-wikiaspicks-header' => 'Header',
+	'marketing-toolbox-hub-module-wikiaspicks-title' => 'Title',
 	'marketing-toolbox-hub-module-wikiaspicks-text' => 'Text',
-	'marketing-toolbox-hub-module-wikiaspicks-text-tip' => "'''Tip:''' to add a link copy the following and replace the italicized text with your own: <a href=\"''your_url_here''\">''Your Text Here''</a>",
+	'marketing-toolbox-hub-module-html-text-tip' => "'''Tip:''' to add a link copy the following and replace the italicized text with your own: <a href=\"''your_url_here''\">''Your Text Here''</a>",
 
 	'marketing-toolbox-hub-module-featured-video-header' => 'Header',
 	'marketing-toolbox-hub-module-featured-video-desc' => 'Description',
+	'marketing-toolbox-hub-module-featured-video-article-url' => 'Article URL',
 
 	'marketing-toolbox-module-save-error' => 'There was an error while saving, please check what you entered',
 	'marketing-toolbox-module-save-ok' => '$1 module saved successfully!',
@@ -104,7 +104,8 @@ $messages['en'] = array(
 	'marketing-toolbox-validator-string-short' => 'Your text is too short, please write more',
 	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',
 	'marketing-toolbox-validator-wrong-url' => 'The URL you entered is not valid, please try again',
-	'marketing-toolbox-validator-wrong-file' => 'The file you chose is not valid, please try again'
+	'marketing-toolbox-validator-wrong-file' => 'The file you chose is not valid, please try again',
+	'marketing-toolbox-validator-wrong-users-url' => 'The URL you entered doesn\'t contain User\'s name or User name is not valid',
 );
 
 $messages['qqq'] = array(

@@ -545,22 +545,10 @@ class WikiaMiniUpload {
 			$size = $wgRequest->getVal('size');
 			$width = $wgRequest->getVal('width');
 			$layout = $wgRequest->getVal('layout');
+
 			// clear the old caption for upload
 			$caption = $wgRequest->getVal('caption');
 			$slider = $wgRequest->getVal('slider');
-
-			// Get the namesapace translations in the content language for files and videos
-			$ns_vid = $wgContLang->getFormattedNsText( NS_FILE );
-			$ns_img = ImagePlaceholderTranslateNsImage();
-
-			// Get the same as above but for english
-			$enLang = Language::factory( 'en' );
-			$en_ns_vid = $enLang->getFormattedNsText( NS_FILE );
-
-			$oldWgContLang = $wgContLang;
-			$wgContLang = $enLang;
-			$en_ns_img = ImagePlaceholderTranslateNsImage();
-			$wgContLang = $oldWgContLang;
 
 			$title_obj = Title::newFromText( $title_main, $ns );
 			$article_obj = new Article( $title_obj );
@@ -568,23 +556,13 @@ class WikiaMiniUpload {
 
 			wfRunHooks( 'WikiaMiniUpload::fetchTextForImagePlaceholder', array( &$title_obj, &$text ) );
 
-			( '' != $wgRequest->getVal( 'box' ) ) ? $box = $wgRequest->getVal( 'box' ) : $box = '' ;
+			$box = '' != $wgRequest->getVal( 'box' ) ? $wgRequest->getVal( 'box' ) : '' ;
 
-			// Get the placeholder text in both the content language and in english
-			$placeholder_msg = wfMsgForContent( 'imgplc-placeholder' );
-			$en_placeholder_msg = wfMsgReal( 'imgplc-placeholder', array(), 'en');
-
-			$transl_v_t = '\[\[' . $ns_vid . ':' . $placeholder_msg . '[^\]]*\]\]';
-			$transl_i_t = '\[\[' . $ns_img . ':' . $placeholder_msg . '[^\]]*\]\]';
-			$en_transl_v_t = '\[\[' . $en_ns_vid . ':' . $en_placeholder_msg . '[^\]]*\]\]';
-			$en_transl_i_t = '\[\[' . $en_ns_img . ':' . $en_placeholder_msg . '[^\]]*\]\]';
+			$placeholder = ImagePlaceholderMatch( $text, $box );
 
 			$success = false;
-
-			preg_match_all( '/' . $transl_v_t . '|' . $transl_i_t . '|' . $en_transl_i_t . '|' . $en_transl_v_t . '/si', $text, $matches, PREG_OFFSET_CAPTURE );
-
-			if( is_array( $matches ) && $box < count($matches[0]) ) {
-				$our_gallery = $matches[0][$box][0];
+			if ( $placeholder ) {
+				$our_gallery = $placeholder[0];
 				$gallery_split = explode( ':', $our_gallery );
 				$thumb = false;
 
@@ -610,7 +588,7 @@ class WikiaMiniUpload {
 
 				$tag .= "]]";
 
-				$text = substr_replace( $text, $tag, $matches[0][$box][1], strlen( $our_gallery ) );
+				$text = substr_replace( $text, $tag, $placeholder[1], strlen( $our_gallery ) );
 				// return the proper embed code with all fancies around it
 				$embed_code = $this->generateImage( $file, $name, $title_obj, $thumb, (int)str_replace( 'px', '', $width ), $layout, $caption );
 				$message = wfMsg( 'wmu-success' );

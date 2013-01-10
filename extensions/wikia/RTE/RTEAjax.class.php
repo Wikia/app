@@ -61,7 +61,10 @@ class RTEAjax {
 
 		if (!empty($wgTitle)) {
 			// existing local URL or interwiki link
-			$exists = $wgTitle->exists() || $wgTitle->isExternal() || ( !empty($wgEnableWallEngine) && WallHelper::isWallNamespace($wgTitle->getNamespace()) );
+			$exists = $wgTitle->exists()
+			        || $wgTitle->isSpecialPage()
+			        || $wgTitle->isExternal()
+			        || ( !empty($wgEnableWallEngine) && WallHelper::isWallNamespace($wgTitle->getNamespace()) );
 
 			$res = array(
 				'exists' => $exists,
@@ -166,21 +169,22 @@ class RTEAjax {
 					$out['availableParams'] = RTE::getTemplateParams($wgRDBData['title'], $parser);
 				}
 
+				// Get key and value for each argument
 				for ($argIndex = 0; $argIndex < $wgRDBData['args']->node->length; $argIndex++) {
 					$argNode = new PPNode_DOM($wgRDBData['args']->node->item($argIndex));
 					$argParts = $argNode->splitArg();
-					$argExts = $argParts['value']->getChildrenOfType('ext');
-
 					$key = !empty($argParts['index']) ? $argParts['index'] : $argParts['name']->node->textContent;
-					$value = $argParts['value']->node->textContent;
+					$valueNodes = $argParts['value']->getChildren();
 
-					// Parse extension tags (BugId:43779)
-					if ($argExts->node->length > 0) {
-						$value = "";
+					$value = "";
 
-						for ($extIndex = 0; $extIndex < $argExts->node->length; $extIndex++) {
-							$extNode = new PPNode_DOM($argExts->node->item($extIndex));
-							$extParts = $extNode->splitExt();
+					// Loop through all children and concatenate their contents, parsing tags if necessary
+					for ($valueIndex = 0; $valueIndex < $valueNodes->node->length; $valueIndex++) {
+						$valueNode = new PPNode_DOM($valueNodes->node->item($valueIndex));
+
+						// Parse extension tags (BugId:43779)
+						if ($valueNode->node->nodeName == 'ext') {
+							$extParts = $valueNode->splitExt();
 
 							// Name and attr are required parameters, the others are optional.
 							$value .= "<" . $extParts['name']->node->textContent . $extParts['attr']->node->textContent . ">";
@@ -192,12 +196,17 @@ class RTEAjax {
 							if (isset($extParts['close'])) {
 								$value .= $extParts['close']->node->textContent;
 							}
-						}
-					}
 
-					$out['passedParams'][ trim($key) ] = trim($value);
+						// Just use text content
+						} else {
+							$value .= $valueNode->node->textContent;
+						}
+
+						$out['passedParams'][ trim($key) ] = trim($value);
+					}
 				}
 			}
+
 			$out['type'] = $wgRDBData['type'];
 			$out['html'] = $html;
 		}

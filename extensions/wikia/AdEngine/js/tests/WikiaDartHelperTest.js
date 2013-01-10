@@ -322,12 +322,12 @@ test('getUrl abTest info', function() {
 			urlBuilder: function() {return urlBuilderMock;}
 		},
 		abTestMock = {
-			getActiveExperiments: function() {
-				return {
-					17: 34,
-					19: 45,
-					76: 112
-				};
+			getExperiments: function() {
+				return [
+					{ id: 17, group: { id: 34 } },
+					{ id: 19, group: { id: 45 } },
+					{ id: 76, group: { id: 112 } }
+				];
 			}
 		},
 		abTestMockEmpty = {getActiveExperiments: function() {return {};}},

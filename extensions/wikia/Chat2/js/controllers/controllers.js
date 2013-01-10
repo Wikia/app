@@ -670,7 +670,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 			type: 'POST',
 			url: wgScript + '?action=ajax&rs=ChatAjax&method=getPrivateRoomID',
 			data: {
-				users : users.join(',')
+				users : JSON.stringify(users)
 			},
 			success: $.proxy(function(data) {
 				$().log("Attempting create private room with users " + users.join(','));

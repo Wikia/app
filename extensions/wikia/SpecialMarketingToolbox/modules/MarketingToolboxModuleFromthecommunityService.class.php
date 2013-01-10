@@ -102,13 +102,23 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 				);
 				break;
 			case self::FIELD_NAME_URL:
-			case self::FIELD_NAME_USERSURL:
 				$validator = new WikiaValidatorUrl(
 					array(
 						'required' => true
 					),
 					array(
 						'wrong' => 'marketing-toolbox-validator-wrong-url'
+					)
+				);
+				break;
+			case self::FIELD_NAME_USERSURL:
+				$validator = new WikiaValidatorUsersUrl(
+					array(
+						'required' => true
+					),
+					array(
+						'wrong' => 'marketing-toolbox-validator-wrong-url',
+						'wrong-users-url' => 'marketing-toolbox-validator-wrong-users-url'
 					)
 				);
 				break;
@@ -146,7 +156,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		$dependentRules = array();
 		foreach (self::$fieldNames as $fieldName) {
 			if ($actualFieldName != $fieldName) {
-				$dependentRules[] = '#' . MarketingToolboxModel::FORM_FIELD_PREFIX . $fieldName . ':filled';
+				$dependentRules[] = '#' . MarketingToolboxModel::FORM_FIELD_PREFIX . $fieldName .$i . ':filled';
 			}
 		}
 
@@ -191,10 +201,10 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 				$parsedUrl = parse_url($data['usersUrl' . $i]);
 				$data['wikiUrl' . $i] = $parsedUrl['host'];
 
-				// get User Name
-				$userUrlParted = explode(':', $data['usersUrl' . $i], 3);
-				$user = User::newFromName($userUrlParted[2]);
-				$data['UserName' . $i] = $user->getName();
+				$userName = UserService::getNameFromUrl($data['usersUrl' . $i]);
+				if ($userName !== false) {
+					$data['UserName' . $i] = $userName;
+				}
 			}
 		}
 		return $data;

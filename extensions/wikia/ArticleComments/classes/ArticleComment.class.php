@@ -527,12 +527,6 @@ class ArticleComment {
 			$partsOriginal = $partsStripped = array();
 		}
 
-		if( self::isBlog() ) {
-			$tmpArr = explode('/', $title);
-			array_shift($tmpArr);
-			$title = implode('/', $tmpArr);
-		}
-
 		$result = array(
 			'title' => $title,
 			'partsOriginal' => $partsOriginal,
@@ -555,7 +549,7 @@ class ArticleComment {
 		}
 
 		//prevent infinite loop for blogs - userCan hooked up in BlogLockdown
-		$canEdit = self::isBlog() || $this->mTitle->userCan( "edit" );
+		$canEdit = self::isBlog( $this->mTitle ) || $this->mTitle->userCan( "edit" );
 
 		$isAllowed = $wgUser->isAllowed('commentedit');
 
@@ -605,7 +599,7 @@ class ArticleComment {
 		$isBlog = false;
 		$title = is_null( $title ) ? $wgTitle : $title;
 
-		if ( $title ) {
+		if ( !empty( $title ) ) {
 			$namespace = $title->getNamespace();
 			$isBlog =
 				( defined( 'NS_BLOG_ARTICLE' ) && $namespace == NS_BLOG_ARTICLE ) ||
