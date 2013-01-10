@@ -72,6 +72,9 @@ class ArticleCommentsController extends WikiaController {
 	 * if lazy loading is disabled, otherwise it is requested via AJAX.
 	 */
 	public function executeContent() {
+		//this is coming via ajax we need to set correct wgTitle ourselves
+		global $wgTitle;
+
 		$this->wf->profileIn( __METHOD__ );
 
 		$articleId = $this->request->getVal( 'articleId', null );
@@ -79,7 +82,7 @@ class ArticleCommentsController extends WikiaController {
 		$title = null;
 
 		if ( !empty( $articleId ) ) {
-			$title = Title::newFromID( $articleId );
+			$wgTitle = $title = Title::newFromID( $articleId );
 		}
 
 		if ( !( $title instanceof Title ) ) {
