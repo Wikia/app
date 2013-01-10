@@ -36,7 +36,8 @@ window.addEventListener('DOMContentLoaded', function () {
 					if(t.tagName == 'A') {
 						track.event('read-more', track.IMAGE_LINK, {
 							href: t.href
-						});
+						},
+						ev);
 					} else {
 						if (relPage.children[0].className.indexOf('open') > -1) {
 							track.event('read-more', track.CLICK, {label: 'close'});
@@ -90,17 +91,19 @@ window.addEventListener('DOMContentLoaded', function () {
 						track.event('footer', track.TEXT_LINK, {
 							label: 'link',
 							href: t.href
-						});
+						},
+						ev);
 					}
 				});
 			}
 
 			if (topBar) {
 				if (wordmark = topBar.children[0]) {
-					wordmark.addEventListener(clickEvent, function () {
+					wordmark.addEventListener(clickEvent, function (ev) {
 						track.event('wordmark', track.CLICK, {
 							href: this.href
-						});
+						},
+						ev);
 					});
 				}
 			}
@@ -112,7 +115,8 @@ window.addEventListener('DOMContentLoaded', function () {
 						track.event('category', track.TEXT_LINK, {
 							label: 'article',
 							href: t.href
-						});
+						},
+						ev);
 					}
 				});
 			}
