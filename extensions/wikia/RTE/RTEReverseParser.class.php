@@ -1386,12 +1386,12 @@ class RTEReverseParser {
 				if (self::isFirstChild($node)) {
 					// add |- before first table row when table header (thead) is present
 					$tableNode = $node->parentNode->parentNode;
-					if (self::firstChildIs($tableNode, 'thead')) {
+					if (self::firstChildIs($tableNode, 'thead') || self::firstChildIs( $tableNode, 'caption' ) ) {
 						$addRowDelimiter = true;
 					}
 
 					// don't add |- before table header row
-					if (self::isChildOf($node, 'thead')) {
+					if (self::isChildOf($node, 'thead') || self::isChildOf( $node, 'caption' ) ) {
 						$addRowDelimiter = false;
 					}
 				}
