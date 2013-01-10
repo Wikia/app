@@ -56,7 +56,9 @@ MiniEditor.Wall.Animations = {
 				}
 
 			} else {
-				wikiaEditor.fire('editorAfterActivated');
+				element.animate(animation, function() {
+					wikiaEditor.fire('editorAfterActivated');
+				});
 			}
 		}
 	},
