@@ -1,3 +1,4 @@
+alert('loaded');
 /**
  * LazyQueue module
  *
@@ -31,7 +32,7 @@
  *
  * Then, you can start handling the items pushed you do:
  *
- * myQueue.run();
+ * myQueue.start();
  *
  * The callback you passed before would be called for all the elements pushed
  * to the queue so far (so you see 3 alerts, item1, item2, item3).

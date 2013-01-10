@@ -48,7 +48,6 @@ $config['adengine2_js'] = array(
 	'assets' => array(
 		// core
 		'//resources/wikia/modules/cache.js',
-		'//resources/wikia/modules/lazyqueue.js',
 
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
@@ -152,7 +151,8 @@ $config['oasis_blocking'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//skins/wikia/js/WikiaScriptLoader.js',
-		'//skins/wikia/js/JqueryLoader.js'
+		'//skins/wikia/js/JqueryLoader.js',
+		'//resources/wikia/modules/lazyqueue.js',
 	)
 );
 
@@ -598,6 +598,7 @@ $config['monobook_js'] = array(
 //		'//resources/mediawiki/mediawiki.util.js', # instead of //skins/common/wikibits.js'
 //		'//skins/common/ajax.js',
 		'//skins/monobook/main.js',
+		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
