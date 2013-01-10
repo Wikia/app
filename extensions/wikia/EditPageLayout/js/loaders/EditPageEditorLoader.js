@@ -15,6 +15,7 @@
 
 			// Use cached data. Generally stored before login redirect.
 			if ((data = $.storage.get('WikiaEditorData')) != null) {
+
 				this.body.val(data);
 				$.storage.del('WikiaEditorData');
 			}
@@ -123,6 +124,8 @@
 			var data = this.getData();
 
 			window.WikiaEditor.create(data.plugins, data.config);
+
+			$(window).bind('UserLoginSubmit', window.WikiaEditor.storeContent);
 		}
 	});
 
