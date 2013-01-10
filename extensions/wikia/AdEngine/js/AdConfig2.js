@@ -84,8 +84,8 @@ var AdConfig2 = function (
 			return adProviderLater;
 		}
 
-		if (abTest && abTest.getGroup('PERFORMANCE_V_PREFOOTERS') == 'PREFOOTERS_DISABLED'
-			&& (slotname == 'PREFOOTER_LEFT_BOXAD' || slotname == 'PREFOOTER_RIGHT_BOXAD')
+		if (abTest && abTest.inGroup('PERFORMANCE_V_PREFOOTERS', 'PREFOOTERS_DISABLED')
+			&& (slotname === 'PREFOOTER_LEFT_BOXAD' || slotname === 'PREFOOTER_RIGHT_BOXAD')
 		) {
 			log('AB experiment PERFORMANCE_V_PREFOOTERS, group PREFOOTERS_DISABLED: ' + slotname + ' disabled', 5, log_group);
 			return adProviderNull;

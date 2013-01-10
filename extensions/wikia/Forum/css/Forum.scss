@@ -229,6 +229,9 @@
 				line-height: 15px;
 				margin: 0;
 				width: 75px;
+				&.threads {
+					width: 90px;
+				}
 
 				&.follow {
 					color: $color-links;
@@ -274,7 +277,7 @@
 			float: right;
 			margin-left: 20px;
 			text-align: right;
-			width: 225px;
+			width: 240px;
 		}
 
 		.timestamp {
