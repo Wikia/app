@@ -57,7 +57,6 @@ class RTEReverseParser {
 	 */
 	public function parse($html, $data = array()) {
 		wfProfileIn(__METHOD__);
-
 		$out = '';
 
 		$this->nodeId = 0;
@@ -127,7 +126,6 @@ class RTEReverseParser {
 		}
 
 		wfProfileOut(__METHOD__);
-
 		return $out;
 	}
 
@@ -450,7 +448,10 @@ class RTEReverseParser {
 			}
 			else {
 				// only add line break if there's no empty line before and previous sibling was not a tag
-				if ( self::getEmptyLinesBefore($node) == 0 && !self::isFirstChild($node) && !$this->wasTag( $node->previousSibling ) ) {
+				if ( self::getEmptyLinesBefore($node) == 0 
+					&& !self::isFirstChild($node) 
+					&& !$this->wasTag( $node->previousSibling ) 
+					&& $node->nodeName != 'blockquote' ) {
 					$prefix = "\n";
 				}
 
@@ -663,6 +664,19 @@ class RTEReverseParser {
 				$textContent = "\n";
 			}
 		}
+		
+		/**
+		 * bugid: 51621 -- an empty p tag preceding a blockquote should be nixed when reverse-parsing
+		 */
+		if ( self::nextSiblingIs( $node, 'blockquote' ) 
+			&& $node->hasAttribute( self::DATA_RTE_FROMPARSER )
+			&& $textContent == "\n" ) {
+			return '';
+		}
+		if ( self::previousSiblingIs( $node, 'blockquote' )
+			&& $textContent == "\n" ) {
+		    return '';
+		} 
 
 		// RT#40786: handle "filler" paragraphs added between headings
 		if ($node->hasAttribute(self::DATA_RTE_FILTER) && $textContent == "\n") {
