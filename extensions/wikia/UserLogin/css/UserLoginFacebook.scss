@@ -115,8 +115,11 @@
 				padding-left: 17px;
 			}
 		}
-		.indented input[type=checkbox] {
-			float: left;
+		.indented {
+			padding-top: 10px;
+			input[type=checkbox] {
+				float: left;
+			}
 		}
 	}
 }
