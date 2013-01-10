@@ -1631,7 +1631,7 @@ class WallHooksHelper {
 	 * @return Array
 	 */
 	public  function getMessageOptions($rc = null, $row = null, $fullUrls = false) {
-	        WallHelper::getWallTitleData( $rc = null, $row = null, $fullUrls = false );
+	        WallHelper::getWallTitleData( $rc, $row, $fullUrls);
 	}
 
 
