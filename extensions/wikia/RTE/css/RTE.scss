@@ -109,7 +109,6 @@
 
 /* image previews */
 #RTEMediaOverlays {
-	left: 11px;
 	position: absolute;
 }
 
@@ -145,7 +144,7 @@
 	left: 0;
 	line-height: 16px;
 	padding: 3px;
-	position: relative;
+	position: absolute;
 }
 
 /* template previews */
