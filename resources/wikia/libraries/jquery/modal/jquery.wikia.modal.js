@@ -140,7 +140,7 @@ $.fn.extend({
 			}
 
 			if (persistent) {
-				wrapper.hideModal();
+				wrapper.hideModal(settings.onAfterClose);
 			} else {
 				wrapper.closeModal();
 			}
@@ -158,7 +158,7 @@ $.fn.extend({
 					}
 
 					if (persistent) {
-						wrapper.hideModal();
+						wrapper.hideModal(settings.onAfterClose);
 					} else {
 						wrapper.closeModal();
 					}
