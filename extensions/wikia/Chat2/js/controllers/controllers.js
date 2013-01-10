@@ -127,7 +127,6 @@ var NodeRoomController = $.createClass(Observable,{
 	roomId: null,
 	mainController: null,
 	partTimeOuts: {},
-	logoutTimeOuts: {},
 	afterInitQueue: [],
 	banned: {},
 	userMain: null,
