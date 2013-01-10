@@ -32,7 +32,7 @@ var VET_wysiwygStart = 1;
 var VET_ratio = 1;
 var VET_shownMax = false;
 var VET_notificationTimout = 4000;
-var VET_isOnSpecialPage = false;
+var VET_isOnSpecialPageNoEditor = false;
 var VET_searchOrder = undefined;
 
 // Returns the DOM element for the RTE textarea
@@ -351,9 +351,9 @@ function VET_show( e, placeholder, box, align, thumb, size, caption, searchOrder
 		}
 	}
 
-	// this indicated that we're on a special page that doesn't have editor on
+	// this indicates that we're on a special page that doesn't have editor on
 	// (set it to false on Special:CreateBlogPost/CreatePage)
-	VET_isOnSpecialPage = (wgNamespaceNumber === -1) && (typeof window.WikiaEditor === 'undefined');
+	VET_isOnSpecialPageNoEditor = (wgNamespaceNumber === -1) && (typeof window.WikiaEditor === 'undefined');
 
 	VET_refid = null;
 	VET_wysiwygStart = 1;
@@ -800,7 +800,7 @@ function VET_insertFinalVideo(e, type) {
 					$G('VideoEmbedBack').style.display = 'none';
 					$G('VideoEmbed' + VET_curScreen).innerHTML = o.responseText;
 
-					if (VET_isOnSpecialPage) {
+					if (VET_isOnSpecialPageNoEditor) {
 						var $responseHTML = $(o.responseText),
 							vetData = {
 								videoTitle: 'missing',
