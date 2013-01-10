@@ -220,10 +220,12 @@ class ArticleCommentsAjax {
 	 * @return String - HTML
 	 */
 	static function axGetComments() {
-		global $wgRequest;
+		global $wgRequest, $wgTitle;
 
 		$page = $wgRequest->getVal('page', false);
 		$articleId = $wgRequest->getVal('article', false);
+		$wgTitle = Title::newFromID( $articleId );
+
 		$error = 0;
 		$text = $pagination = '';
 		$method = 'CommentList';
