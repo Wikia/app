@@ -80,6 +80,7 @@ $app->registerHook('AllowNotifyOnPageChange', 'WallHooksHelper', 'onAllowNotifyO
 $app->registerHook('GetPreferences', 'WallHooksHelper', 'onGetPreferences');
 
 //recent changes adjusting
+
 $app->registerHook('AC_RecentChange_Save', 'WallHooksHelper', 'onRecentChangeSave');
 $app->registerHook('ChangesListInsertFlags', 'WallHooksHelper', 'onChangesListInsertFlags');
 $app->registerHook('ChangesListInsertArticleLink', 'WallHooksHelper', 'onChangesListInsertArticleLink');
@@ -87,11 +88,13 @@ $app->registerHook('ChangesListInsertDiffHist', 'WallHooksHelper', 'onChangesLis
 $app->registerHook('ChangesListInsertRollback', 'WallHooksHelper', 'onChangesListInsertRollback');
 $app->registerHook('ChangesListInsertLogEntry', 'WallHooksHelper', 'onChangesListInsertLogEntry');
 $app->registerHook('ChangesListInsertComment', 'WallHooksHelper', 'onChangesListInsertComment');
+
 $app->registerHook('ArticleDoDeleteArticleBeforeLogEntry', 'WallHooksHelper', 'onArticleDoDeleteArticleBeforeLogEntry');
 $app->registerHook('PageArchiveUndeleteBeforeLogEntry', 'WallHooksHelper', 'onPageArchiveUndeleteBeforeLogEntry');
 $app->registerHook('OldChangesListRecentChangesLine', 'WallHooksHelper', 'onOldChangesListRecentChangesLine');
 $app->registerHook('ChangesListMakeSecureName', 'WallHooksHelper', 'onChangesListMakeSecureName');
 $app->registerHook('WikiaRecentChangesBlockHandlerChangeHeaderBlockGroup', 'WallHooksHelper', 'onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup');
+$app->registerHook('ChangesListItemGroupRegular', 'WallHooksHelper', 'onChangesListItemGroupRegular');
 
 $app->registerHook('ArticleDeleteComplete' , 'WallHooksHelper', 'onArticleDeleteComplete');
 $app->registerHook( 'FilePageImageUsageSingleLink', 'WallHooksHelper', 'onFilePageImageUsageSingleLink' );
