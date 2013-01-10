@@ -36,18 +36,12 @@ EOT;
 (function(window) {
 
 	var loadAnyClips = function(){
-		$.when(
-			$.getScript('{$jsFile}')
-		).done(function() {
+		$.getScript('{$jsFile}').done(function() {
 			window.AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}"{$autoPlayStr}}, {wmode: "opaque"}]);
 		});
 	}
-	
-	if(window.wgAfterContentAndJSLoaded === true) {
-		loadAnyClips();
-	} else {
-		window.wgAfterContentAndJS.push(loadAnyClips);
-	}
+
+	wgAfterContentAndJS.push(loadAnyClips);
 
 })(this);
 
