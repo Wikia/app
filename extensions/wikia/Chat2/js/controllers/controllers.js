@@ -397,7 +397,7 @@ var NodeRoomController = $.createClass(Observable,{
 		}
 		this.partTimeOuts[logoutEvent.get('leavingUserName')] = setTimeout(this.proxy(function(){
 			this.onPartBase(logoutEvent.get('leavingUserName'), false);
-		}), 15000);
+		}), 10000);
 	},
 
 	onKick: function(message) {
