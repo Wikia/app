@@ -24,7 +24,7 @@ $messages['en'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Your IP address is not allowed to create new accounts.',
 	'userlogin-error-userexists' => 'Someone already has this username. Try a different one!',
 	'userlogin-error-invalidemailaddress' => 'Please enter a valid email address.',
-	'userlogin-get-account' => 'Don\'t have an account? [[Special:UserSignup|Sign up]]',
+	'userlogin-get-account' => "Don't have an account? <a href=\"$1\" tabindex=\"$2\">Sign up</a>",
 
 	// signup
 	'userlogin-error-invalid-username' => 'Invalid username',
@@ -131,7 +131,7 @@ $messages['qqq'] = array(
 	'userlogin-error-cantcreateaccount-text' => "Error message upon login attempt stating that the user's IP address has been throttled because of login failures.",
 	'userlogin-error-userexists' => 'Error message upon signup attempt stating user name already exists.',
 	'userlogin-error-invalidemailaddress' => 'Error message upon signup attempt stating e-mail address is invalid.',
-	'userlogin-get-account' => 'Marketing blurb asking to sign up with wikitext internal link to usersignup page. Please append userlang as appropriate.',
+	'userlogin-get-account' => 'Marketing blurb asking to sign up with wikitext internal link to usersignup page. First parameter is the URL address to usersignup page, second parameter is the tabindex of this link tag. Please append userlang as appropriate.',
 	'userlogin-error-invalid-username' => 'Error message upon signup attempt stating username is badly formatted, or invalid',
 	'userlogin-error-userlogin-unable-info' => 'Error message upon signup attempt stating account cannot be create currently.',
 	'userlogin-error-user-not-allowed' => 'Error message upon signup attempt stating username is unacceptable.',
