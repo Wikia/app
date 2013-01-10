@@ -1,4 +1,3 @@
-alert('loaded');
 /**
  * LazyQueue module
  *
