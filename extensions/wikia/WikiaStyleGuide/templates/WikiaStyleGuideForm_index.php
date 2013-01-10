@@ -64,35 +64,38 @@
 								<button type="button" <?= $inputAttributes ?>><?=
 									( !empty( $input[ 'content' ] ) ? $input[ 'content' ] : '' )
 								?></button>
-							<? break ?>
+							<? break; ?>
+							<? case 'submit': ?>
+								<input type="submit" <?= $inputAttributes ?> />
+							<? break; ?>
 							<? case 'checkbox': ?>
 								<input type="checkbox" <?= $inputAttributes ?>><?= $label ?>
-							<? break ?>
+							<? break; ?>
 							<? case 'custom': ?>
 								<?= $input[ 'output' ] ?>
-							<? break ?>
+							<? break; ?>
 							<? case 'display': ?>
 								<? if ( $value ): ?>
 									<strong><?= $value ?></strong>
 								<? endif ?>
-							<? break ?>
+							<? break; ?>
 							<? case 'nirvana': ?>
 								<?= ( string ) F::app()->sendRequest(
 									$input[ 'controller' ],
 									$input[ 'method' ],
 									( empty( $input[ 'params' ] ) ? array() : $input[ 'params' ] )
 								) ?>
-							<? break ?>
+							<? break; ?>
 							<? case 'nirvanaview': ?>
 								<?= F::app()->getView(
 									$input[ 'controller' ],
 									$input[ 'view' ],
 									( empty( $input[ 'params' ] ) ? array() : $input[ 'params' ] )
 								) ?>
-							<? break ?>
+							<? break; ?>
 							<? case 'password': ?>
 								<input type="password" <?= $inputAttributes ?>>
-							<? break ?>
+							<? break; ?>
 							<? case 'select': ?>
 								<select <?= $inputAttributes ?>>
 									<? foreach( $input[ 'options' ] as $option ): ?>
@@ -102,13 +105,13 @@
 										?></option>
 									<? endforeach ?>
 								</select>
-							<? break ?>
+							<? break; ?>
 							<? case 'text': ?>
 								<input type="text" <?= $inputAttributes ?>>
-							<? break ?>
+							<? break; ?>
 							<? case 'textarea': ?>
 								<textarea <?= $inputAttributes ?>><?= $value ?></textarea>
-							<? break ?>
+							<? break; ?>
 						<? endswitch ?>
 
 						<? if ( $label && $wrappedByLabel ): ?>
