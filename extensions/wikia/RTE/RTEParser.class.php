@@ -80,7 +80,7 @@ class RTEParser extends Parser {
 		$tokens = array(
 				'\*',
 				'{\|',
-				'#',
+				'# ',
 				'=',
 		);
 		
