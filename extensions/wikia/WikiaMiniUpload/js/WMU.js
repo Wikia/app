@@ -247,14 +247,10 @@ function WMU_manualWidthInput() {
 
 function WMU_readjustSlider( value ) {
 	if ( 400 < value ) { // too big, hide slider
-		if ( $( '#ImageUploadSliderThumb' ).is(':hidden') ) {
-			$( '#ImageUploadSliderThumb' ).css('visibility', 'hidden');
-			WMU_slider.setValue( 200, true, true, true );
-		}
+		$( '#ImageUploadSliderThumb' ).css('visibility', 'hidden');
+		WMU_slider.setValue( 200, true, true, true );
 	} else {
-		if ( $( '#ImageUploadSliderThumb' ).is(':hidden') ) {
-			$( '#ImageUploadSliderThumb' ).css('visibility', 'visible');
-		}
+		$( '#ImageUploadSliderThumb' ).css('visibility', 'visible');
 		// get slider's max value
 		var fixed_width = Math.min( 400, WMU_width );
 		value = Math.max(2, Math.round( ( value * 200 ) / fixed_width ) );
@@ -758,9 +754,7 @@ function WMU_displayDetails(responseText) {
 			return Math.max(2, Math.round(this.getValue() * (thumbSize[0] / 200)));
 		}
 		WMU_slider.subscribe("change", function(offsetFromStart) {
-			if ( $( '#ImageUploadSliderThumb' ).is(':hidden') ) {
-				$( '#ImageUploadSliderThumb' ).css('visibility', 'visible');
-			}
+			$( '#ImageUploadSliderThumb' ).css('visibility', 'visible');
 			if (WMU_slider.initialRound) {
 				$('#ImageUploadManualWidth').val('');
 				WMU_slider.initialRound = false;
