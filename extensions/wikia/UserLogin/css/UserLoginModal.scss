@@ -36,13 +36,8 @@
 	}
 	.sso-login {
 		text-align: center;
-		> .sso-login-divider {
-			@include divider;
-			margin-top: 30px;
-			> span {
-				top: -17px;
-				line-height: 30px;
-			}
-		}
+	}
+	.sso-login-divider {
+		@include divider;
 	}
 }
