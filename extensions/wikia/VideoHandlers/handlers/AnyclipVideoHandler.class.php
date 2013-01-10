@@ -39,7 +39,7 @@ EOT;
 		$.getScript('{$jsFile}').done(function() {
 			window.AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}"{$autoPlayStr}}, {wmode: "opaque"}]);
 		});
-	}
+	};
 
 	wgAfterContentAndJS.push(loadAnyClips);
 
