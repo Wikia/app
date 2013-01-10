@@ -2616,11 +2616,10 @@ if (LiftiumOptions.error_beacon !== false ){
 
 } // \if (typeof Liftium == "undefined" ) 
 
+
 // Gentlemen, Start your optimization!
-if (Liftium.empty(LiftiumOptions.offline)
-	&& (!window.wgUserName || window.wgUserShowAds)
-	&& window.wgAdsShowableOnPage
-) {
+if (Liftium.empty(LiftiumOptions.offline)){
 	Liftium.init();
-	Liftium.addEventListener(window, 'load', Liftium.onLoadHandler);
 }
+
+Liftium.addEventListener(window, 'load', Liftium.onLoadHandler);
