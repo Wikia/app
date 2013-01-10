@@ -151,7 +151,7 @@ class ChatAjax {
 	 * webrequest->GetIP hook listener. in case of ajax requests made by nodejs server, we should use real user ip address
 	 * instead of the chat server ip
 	 */
-	static public function ChatGetIP(&$ip) {
+	static public function onGetIP(&$ip) {
 		if ( self::$chatUserIP ) $ip = self::$chatUserIP;
 		return true;
 	}
