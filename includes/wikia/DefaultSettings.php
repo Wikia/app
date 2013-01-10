@@ -1040,7 +1040,7 @@ $wgEnableMemcachedBulkMode = false;
  * WikiaSeasons flags
  */
 $wgWikiaSeasonsGlobalHeader = false;
-$wgWikiaSeasonsWikiaBar = true;
+$wgWikiaSeasonsWikiaBar = false;
 $wgWikiaSeasonsPencilUnit = false;
 
 /**
