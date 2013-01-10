@@ -1,8 +1,5 @@
 <ul class="controls">
 	<li id="article-comments-counter-recent"><?= wfMsg( 'oasis-comments-showing-most-recent', count( $commentListRaw ) ) ?></li>
-	<? if ( $countCommentsNested > 1 && $countCommentsNested <= 200 && $countComments > $commentsPerPage ): ?>
-		<li><a href="<?= $title->getFullURL( 'showall=1' ) ?>"><?= wfMsg( 'oasis-comments-show-all' ) ?></a></li>
-	<? endif ?>
 </ul>
 <h1 id="article-comments-counter-header"><?= wfMsgExt( 'oasis-comments-header', array( 'parsemag' ), $wg->Lang->FormatNum( $countCommentsNested ) ) ?></h1>
 <div id="article-comments" class="article-comments">
