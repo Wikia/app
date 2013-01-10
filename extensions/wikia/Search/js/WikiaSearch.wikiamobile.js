@@ -34,7 +34,8 @@ require(['loader', 'events', 'topbar', 'track'], function(loader, events, topbar
 			if (label) track.event('search', track.CLICK, {
 				label: label,
 				href: t.href
-			});
+			},
+			ev);
 		});
     }
 
