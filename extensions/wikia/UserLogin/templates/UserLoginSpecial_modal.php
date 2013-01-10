@@ -25,6 +25,7 @@
 			),
 			array(
 				'type' => 'password',
+				'class' => 'password-input',
 				'name' => 'password',
 				'isRequired' => true,
 				'label' => wfMsg('yourpassword'),
@@ -39,7 +40,7 @@
 				'name' => 'keeploggedin',
 				'value' => '1',
 				'label' => wfMsg('userlogin-remembermypassword'),
-				'class' => 'keeploggedin',
+				'class' => 'keep-logged-in',
 				'tabindex' => ++$tabindex,
 			),
 			array(
