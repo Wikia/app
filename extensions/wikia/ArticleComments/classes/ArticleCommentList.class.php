@@ -141,10 +141,11 @@ class ArticleCommentList {
 			}
 		}
 
-		$titles = TitleBatch::newFromIds( $commentsQueue, DB_SLAVE_BEFORE_MASTER );
+		$titles = Title::newFromIds( $commentsQueue );
+
 		$comments = array();
-		foreach ($commentsQueue as $id) {
-			$comments[$id] = !empty($titles[$id]) ? ArticleComment::newFromTitle($titles[$id]) : false;
+		foreach ( $titles as $title ) {
+			$comments[$title->getArticleID()] = ArticleComment::newFromTitle( $title );
 		}
 
 		// grab article contents for each comment
