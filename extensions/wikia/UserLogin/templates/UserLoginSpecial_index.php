@@ -21,6 +21,7 @@
 
 	$passwordInput = array(
 		'type' => 'password',
+		'class' => 'password-input',
 		'name' => 'password',
 		'isRequired' => true,
 		'label' => wfMsg('yourpassword'),
@@ -32,15 +33,17 @@
 
 	$forgotPassword = array(
 		'type' => 'custom',
-		'output' => '<a href="#" class="forgot-password" tabindex="0">'.wfMsg('userlogin-forgot-password').'</a>',
+		'class' => 'forgot-password',
+		'output' => '<a href="#" tabindex="0">'.wfMsg('userlogin-forgot-password').'</a>',
 	);
-
+	
 	$rememberMeInput = array(
 		'type' => 'checkbox',
 		'name' => 'keeploggedin',
 		'isRequired' => false,
 		'value' => '1',
 		'checked' => $keeploggedin,
+		'class' => 'keep-logged-in',
 		'label' => wfMsg('userlogin-remembermypassword'),
 		'tabindex' => ++$tabindex,
 	);

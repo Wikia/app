@@ -12,21 +12,29 @@ $input-width: 230px;
 	.WikiaForm {
 		margin: 25px auto 0;
 		width: $input-width + 30px;
-		.forgot-password {
-			margin: 10px 7px;
-		}
 		input[type=text],
 		input[type=password] {
 			width: $input-width;
 		}
-		.error-msg {
-			width: $input-width + 18px;
+		.password-input {
+			margin-bottom: 0;
+			padding-bottom: 0;
+		}
+		.forgot-password {
+			font-size: 12px;
+		}
+		.keep-logged-in .keep-logged-in {
+			margin-left: 0;
 		}
 		.login-button {
+			margin-top: 10px;
 			width: $input-width + 18px;
 		}
-		.submits {
-			margin-top: 25px;
+		.get-account {
+			padding-bottom: 0;
+		}
+		.error-msg {
+			width: $input-width + 18px;
 		}
 	}
 	> .sso-login {
