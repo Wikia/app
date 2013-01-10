@@ -105,6 +105,19 @@ class ForumHooksHelper {
 				$item['wall-msg'] = wfMsg( 'forum-wiki-activity-msg', '<a href="' . $board->getFullURL() . '">' . wfMsg( 'forum-wiki-activity-msg-name', $board->getText() ) . '</a>' );
 			}
 		}
+
+		return true;
+	}
+
+	public static function onFilePageImageUsageSingleLink(&$link, &$element) {
+
+		if ( $element->page_namespace == NS_WIKIA_FORUM_BOARD_THREAD ) {
+
+			$titleData = WallHelper::getWallTitleData(null, $element, true);
+
+			$boardText = wfMsg( 'forum-wiki-activity-msg', '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMsg( 'forum-wiki-activity-msg-name', $titleData['wallPageUrl'] ) . '</a>' );
+			$link = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ' . $boardText;
+		}
 		return true;
 	}
 
@@ -145,6 +158,17 @@ class ForumHooksHelper {
 				return $wallHooks->contributionsLineEndingProcess( $contribsPager, $ret, $row );
 			}
 		}
+		return true;
+	}
+
+	public function onOasisAddPageDeletedConfirmationMessage( Title &$title, &$message ) {
+
+		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD ) {
+
+			$pageName = $title->getPrefixedText();
+			$message = wfMsgExt( 'forum-confirmation-board-deleted', array('parseinline'), $pageName );
+		}
+
 		return true;
 	}
 
@@ -359,7 +383,6 @@ class ForumHooksHelper {
 	/**
 	 * just proxy to onWallStoreRelatedTopicsInDB
 	 */
-
 	public static function onWallStoreRelatedTopicsInDB($parent, $id, $namespace) {
 		self::onWallAction(null, $parent, $id);
 		return true;

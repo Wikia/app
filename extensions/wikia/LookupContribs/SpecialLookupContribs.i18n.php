@@ -56,7 +56,8 @@ Check given username for possible typos.</p>',
 	'lookupcontribscontribtitleforuser' => 'Contributions for user:',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'final',
-	'lookupcontribsall' => 'all'
+	'lookupcontribsall' => 'all',
+	'action-lookupcontribs' => "lookup a user's contributions on multiple wikis",
 );
 
 /** Message documentation (Message documentation)
@@ -68,6 +69,7 @@ $messages['qqq'] = array(
 	'right-lookupcontribs' => '{{doc-right|lookupcontribs}}',
 	'lookupcontribsshowpages' => '',
 	'lookupcontribscontent' => '{{Identical|Content}}',
+	'action-lookupcontribs' => '{{doc-action|lookupcontribs}}',
 );
 
 /** Afrikaans (Afrikaans)

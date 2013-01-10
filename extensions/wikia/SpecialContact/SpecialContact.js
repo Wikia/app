@@ -9,30 +9,20 @@
 	var AbTest = window.Wikia.AbTest;
 
 	if ( AbTest ) {
-		var abString = '';
+		var abString = '', abTests;
 
-		if ( !AbTest.experimentCount ) {
+		abTests = AbTest.getExperiments();
+
+		if ( abTests.length == 0 ) {
 			abString = 'No active experiments.';
 
 		} else {
-			var experiment, treatmentGroup,
-				experiments = AbTest.experiments;
-
 			// Make a single entry for each experiment.
-			$.each( AbTest.getTreatmentGroups(), function( experimentId, treatmentGroupId ) {
-				experiment = experiments[ experimentId ];
-				treatmentGroup = experiment.treatmentGroups[ treatmentGroupId ];
-
-				abString += ( abString == '' ? '[ ' : ', [ ' ) + experiment.name + ': ';
-
-				if ( treatmentGroup !== undefined ) {
-					abString += treatmentGroup.name + ( treatmentGroup.isControl ? ' (control group)' : '' );
-
-				} else {
-					abString += 'UNKNOWN GROUP (treatment-group id: ' + treatmentGroupId + ')';
+			$.each( abTests, function( i, exp ) {
+				if ( abString != '' ) {
+					abString += ', ';
 				}
-
-				abString += ' ]';
+				abString += '[ ' + exp.name + ': ' + exp.group.name + ' ]';
 			});
 		}
 

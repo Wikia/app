@@ -51,11 +51,12 @@ $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/AbTesting.i18n.php", 'AbTesti
 
 // Embed the experiment/treatment config in the head scripts.
 $app->registerHook( 'WikiaSkinTopModules', 'AbTesting', 'onWikiaSkinTopModules' );
+// Add js code in Oasis
+$app->registerHook( 'OasisSkinAssetGroupsBlocking', 'AbTesting', 'onOasisSkinAssetGroupsBlocking' );
 
 // Register Resource Loader module
 $app->wg->set( 'wgResourceModules', array(
 	'class' => 'ResourceLoaderAbTestingModule',
-	'scripts' => 'extensions/wikia/AbTesting/js/AbTest.js',
 ), 'wikia.ext.abtesting' );
 
 $app->wg->set( 'wgResourceModules', array(

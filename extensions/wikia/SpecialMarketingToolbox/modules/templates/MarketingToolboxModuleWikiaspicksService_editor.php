@@ -27,6 +27,7 @@
 					array('inputData' => $fields['text'])
 				);
 			?>
+			<p class="alternative"><?= $wf->MsgExt('marketing-toolbox-hub-module-html-text-tip', array('parseinline')); ?></p>
 		</div>
 		<div class="grid-1 alpha">
 			<div class="image-placeholder">
@@ -37,8 +38,5 @@
 				<?php endif; ?>
 			</div>
 		</div>
-	</div>
-	<div class="module-box grid-4 alpha">
-		<p class="alternative"><?= $wf->MsgExt('marketing-toolbox-hub-module-wikiaspicks-text-tip', array('parseinline')); ?></p>
 	</div>
 </div>

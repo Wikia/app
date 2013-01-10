@@ -17,7 +17,7 @@
 		        <th><?= wfMsg( 'abtesting-heading-end-time' ) ?></th>
 		        <th><?= wfMsg( 'abtesting-heading-ga-slot' ) ?></th>
 				<? foreach( $experiment[ 'groups' ] as $grp ): ?>
-		    		<th><?= $grp[ 'name' ] ?></th>
+					<th><?= $grp[ 'name' ] ?> (ID: <?= $grp[ 'id' ] ?>)</th>
 				<? endforeach ?>
 			</thead>
 			<tbody>

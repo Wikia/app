@@ -525,9 +525,11 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$endDate = $endYear . '-' . $endMonth . '-' . $endDay . ' 23:59:59';
 
 		$summary = array(
+			'all' => 0,
 			ImageReviewStatuses::STATE_APPROVED 	=> 0,
 			ImageReviewStatuses::STATE_REJECTED 	=> 0,
 			ImageReviewStatuses::STATE_QUESTIONABLE => 0,
+			'avg' => 0,
 		);
 		$data = array();
 		$userCount = $total = $avg = 0;
@@ -544,13 +546,6 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 					// invalid user id?
 					continue;
 				}
-				$data[ $reviewer ] = array(
-					'name' => $user->getName(),
-					'total' => 0,
-					ImageReviewStatuses::STATE_APPROVED => 0,
-					ImageReviewStatuses::STATE_REJECTED => 0,
-					ImageReviewStatuses::STATE_QUESTIONABLE => 0,
-				);
 
 				$query = array();
 				foreach ( array_keys( $summary ) as $review_state ) {
@@ -573,6 +568,15 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 				while ( $row = $dbr->fetchObject( $res ) ) {
 					if ( !empty( $row->review_state ) ) {
+						if ( !isset( $data[ $reviewer ] ) ) {
+							$data[ $reviewer ] = array(
+								'name' => $user->getName(),
+								'total' => 0,
+								ImageReviewStatuses::STATE_APPROVED => 0,
+								ImageReviewStatuses::STATE_REJECTED => 0,
+								ImageReviewStatuses::STATE_QUESTIONABLE => 0,
+							);
+						}
 						$data[ $reviewer ][ $row->review_state ] = $row->cnt;
 						$data[ $reviewer ][ 'total' ] += $row->cnt;
 
@@ -586,9 +590,10 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 			}
 		}
+		$activeReviewers = count( $data );
 
 		$summary[ 'all' ] = $total;
-		$summary[ 'avg' ] = $count_users > 0 ? $summary['all'] / $count_users : 0;
+		$summary[ 'avg' ] = $activeReviewers > 0 ? $summary['all'] / $activeReviewers : 0;
 
 		foreach ( $data as &$stats ) {
 			$stats['toavg'] = $stats['total'] - $summary['avg'];

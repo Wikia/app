@@ -322,37 +322,38 @@ test('getUrl abTest info', function() {
 			urlBuilder: function() {return urlBuilderMock;}
 		},
 		abTestMock = {
-			getActiveExperiments: function() {
-				return {
-					17: 34,
-					19: 45,
-					76: 112
-				};
+			getExperiments: function() {
+				return [
+					{ id: 17, group: { id: 34 } },
+					{ id: 19, group: { id: 45 } },
+					{ id: 76, group: { id: 112 } }
+				];
 			}
 		},
-		abTestMockEmpty = {getActiveExperiments: function() {return {};}},
+		abTestMockEmpty = {getExperiments: function() {return [];}},
+		abTestMockNone,
 		dartHelper1,
 		dartHelper2,
+		dartHelper3,
 		paramKey,
-		abKey;
+		abParamEmpty;
 
 	paramsPassed = {};
 	dartHelper1 = WikiaDartHelper(logMock, windowMock, documentMock, {}, adLogicShortPageMock, dartUrlMock, abTestMock);
 	dartHelper1.getUrl({});
-	equal(paramsPassed.ab17, 34, 'ab17=34');
-	equal(paramsPassed.ab19, 45, 'ab19=45');
-	equal(paramsPassed.ab76, 112, 'ab76=112');
+	deepEqual(paramsPassed.ab, ['17_34', '19_45', '76_112'], 'ab params passed');
 
 	paramsPassed = {};
 	dartHelper2 = WikiaDartHelper(logMock, windowMock, documentMock, {}, adLogicShortPageMock, dartUrlMock, abTestMockEmpty);
 	dartHelper2.getUrl({});
-	abKey = false;
-	for (paramKey in paramsPassed) {
-		if (paramsPassed.hasOwnProperty(paramKey) && paramKey.match(/^ab/)) {
-			abKey = true;
-		}
-	}
-	ok(!abKey, 'no ab param passed');
+	abParamEmpty = !paramsPassed.ab || paramsPassed.ab.length === 0;
+	ok(abParamEmpty, 'no ab param passed when no experiment is active');
+
+	paramsPassed = {};
+	dartHelper3 = WikiaDartHelper(logMock, windowMock, documentMock, {}, adLogicShortPageMock, dartUrlMock, abTestMockNone);
+	dartHelper3.getUrl({});
+	abParamEmpty = !paramsPassed.ab || paramsPassed.ab.length === 0;
+	ok(abParamEmpty, 'no ab param passed when AbTesting is not passed to module');
 });
 
 

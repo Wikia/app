@@ -868,7 +868,7 @@ if (43339 == $wgCityId) echo AnalyticsEngine::track("GA_Urchin", "lyrics");
 		$this->html('JSloader');
 		$this->html('headscripts');
 	}
-	echo '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
+	echo '<script type="text/javascript">/*<![CDATA[*/Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start(); /*]]>*/</script>' . "\n";
 
 if (array_key_exists("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders())){
 	// Reset elements with a "clear:none" to "clear:right" when the box ad is displayed

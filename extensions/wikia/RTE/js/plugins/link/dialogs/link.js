@@ -13,7 +13,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		var pageName = CKEDITOR.dialog.getCurrent().getContentElement('internal','name').getValue();
 		if ( pageName ) {
 			$(".link-type-note span").html(editor.lang.link.status.checking);
-			$(".link-type-note img")[0].className = 'sprite progress';
+			$(".link-type-note img").show()[0].className = 'sprite progress';
 
 			// check our page name for validity
 			RTE.ajax('checkInternalLink', {title: pageName}, function(data) {
@@ -26,10 +26,10 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	function setLinkExistance(exists) {
 		if ( exists ) {
 			$(".link-type-note span").html(editor.lang.link.status.exists);
-			$(".link-type-note img")[0].className = 'link-icon link-yes';
+			$(".link-type-note img").show()[0].className = 'link-icon link-yes';
 		} else {
 			$(".link-type-note span").html(editor.lang.link.status.notexists);
-			$(".link-type-note img")[0].className = 'link-icon link-no';
+			$(".link-type-note img").show()[0].className = 'link-icon link-no';
 		}
 	}
 
@@ -45,7 +45,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				radios.setValue('ext');
 			}
 			$(".link-type-note span").html(editor.lang.link.status.external);
-			$(".link-type-note img")[0].className = 'sprite external';
+			$(".link-type-note img").show()[0].className = 'sprite external';
 
 			// disable suggestions on the name box if external url
 		} else if ( mode == 'internal' ) {
@@ -269,7 +269,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 									clearTimeout(existsTimeout);
 								}
 								$(".link-type-note span").html(editor.lang.link.status.checking);
-								$(".link-type-note img")[0].className = 'sprite progress';
+								$(".link-type-note img").show()[0].className = 'sprite progress';
 								existsTimeout = setTimeout(checkStatus,1000);
 							}
 
@@ -370,7 +370,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 			// remove old page status info
 			$(".link-type-note span").html('...');
-			$(".link-type-note img")[0].className = 'sprite';
+			$(".link-type-note img").hide()[0].className = 'sprite';
 
 			// setup editor fields
 			setupDialog.apply( this, [editor, element] );

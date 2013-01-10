@@ -68,9 +68,9 @@
 				query = this.input.val();
 			if (code == 13 && query) {
 				var self = this;
-				$.when(this.getSuggestions(query)).done(function(suggestions) {
-					if(suggestions && suggestions.length) {
-						self.addSelection(suggestions[0]);
+				$.when(this.checkTopic(query)).done(function(exists) {
+					if(exists) {
+						self.addSelection(query);
 					} else {
 						self.error.html(self.errorTemplate.mustache({query: query}));
 					}
@@ -97,6 +97,20 @@
 				}
 			});
 			
+			return d.promise();
+		},
+
+		checkTopic: function(q) {
+			var d = $.Deferred();
+			$.nirvana.sendRequest({
+				controller: 'WallNotificationsController',
+				method: 'checkTopic',
+				format: 'json',
+				data: { query: q },
+				callback: function(response) {
+					d.resolve(response.exists);
+				}
+			});
 			return d.promise();
 		}
 

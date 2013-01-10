@@ -80,7 +80,6 @@ class AbTestingData extends WikiaObject {
 					'start_time' => $row->v_start_time,
 					'end_time' => $row->v_end_time,
 					'ga_slot' => $row->v_ga_slot,
-					'control_group_id' => $row->v_control_group_id,
 					'group_ranges' => array(),
 				);
 			}
@@ -120,7 +119,7 @@ class AbTestingData extends WikiaObject {
 			array( // columns
 				'e.id as e_id, e.name as e_name, e.description as e_description',
 				'g.id as g_id, g.name as g_name, g.description as g_description',
-				'v.id as v_id, v.start_time as v_start_time, v.end_time as v_end_time, v.ga_slot as v_ga_slot, v.control_group_id as v_control_group_id',
+				'v.id as v_id, v.start_time as v_start_time, v.end_time as v_end_time, v.ga_slot as v_ga_slot',
 				'r.ranges as r_ranges, r.group_id as r_group_id',
 			),
 			$where, // conditions
