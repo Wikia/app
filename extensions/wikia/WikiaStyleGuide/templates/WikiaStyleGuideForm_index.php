@@ -54,8 +54,12 @@
 
 				<? else: ?>
 					<div class="<?= WikiaStyleGuideFormHelper::getClassNamesString( array( 'input-group', $class, $error, $required ) ) ?>">
-						<? if ( $label ): ?>
+						<? if ( $label && !$wrappedByLabel ): ?>
 							<label><?= ( !$wrappedByLabel ? $label . $tooltip : '' ) ?></label>
+						<? endif ?>
+
+						<? if ( $wrappedByLabel ): ?>
+							<label>
 						<? endif ?>
 
 						<? switch( $type ):
@@ -69,7 +73,7 @@
 								<input type="submit" <?= $inputAttributes ?> />
 							<? break; ?>
 							<? case 'checkbox': ?>
-								<input type="checkbox" <?= $inputAttributes ?>><?= $label ?>
+								<input type="checkbox" <?= $inputAttributes ?>>
 							<? break; ?>
 							<? case 'custom': ?>
 								<?= $input[ 'output' ] ?>
@@ -115,7 +119,7 @@
 						<? endswitch ?>
 
 						<? if ( $label && $wrappedByLabel ): ?>
-							</label>
+							<?= $label ?></label>
 						<? endif ?>
 
 						<? if ( $error ): ?>
