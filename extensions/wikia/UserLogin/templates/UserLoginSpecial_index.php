@@ -1,5 +1,7 @@
 <div class="UserLogin">
 <?php
+	$tabindex = 5;
+	
 	$loginTokenInput = array(
 		'type' => 'hidden',
 		'name' => 'loginToken',
@@ -13,7 +15,7 @@
 		'label' => wfMsg('yourname'),
 		'isInvalid' => (!empty($errParam) && $errParam === 'username'),
 		'value' => htmlspecialchars($username),
-		'tabindex' => 6,
+		'tabindex' => ++$tabindex,
 	);
 	$userNameInput['errorMsg'] = $userNameInput['isInvalid'] ? $msg : '';
 
@@ -24,13 +26,13 @@
 		'label' => wfMsg('yourpassword'),
 		'isInvalid' => (!empty($errParam) && $errParam === 'password'),
 		'value' => htmlspecialchars($password),
-		'tabindex' => 7,
+		'tabindex' => ++$tabindex,
 	);
 	$passwordInput['errorMsg'] = $passwordInput['isInvalid'] ? $msg : '';
 
 	$forgotPassword = array(
 		'type' => 'custom',
-		'output' => '<a href="#" class="forgot-password">'.wfMsg('userlogin-forgot-password').'</a>',
+		'output' => '<a href="#" class="forgot-password" tabindex="0">'.wfMsg('userlogin-forgot-password').'</a>',
 	);
 
 	$rememberMeInput = array(
@@ -40,21 +42,20 @@
 		'value' => '1',
 		'checked' => $keeploggedin,
 		'label' => wfMsg('userlogin-remembermypassword'),
-		'tabindex' => 8,
+		'tabindex' => ++$tabindex,
 	);
 
 	$loginButton = array(
 		'type' => 'submit',
 		'value' => wfMsg('login'),
 		'class' => 'login-button big',
-		'tabindex' => 9,
+		'tabindex' => ++$tabindex,
 	);
 
 	$specialSignupLink = SpecialPage::getTitleFor('UserSignup')->getLocalURL();
-	$specialSignupLinkTabindex = 10;
 	$createAccount = array(
 		'type' => 'custom',
-		'output' => wfMsgExt('userlogin-get-account', 'content', array($specialSignupLink, $specialSignupLinkTabindex)),
+		'output' => wfMsgExt('userlogin-get-account', 'content', array($specialSignupLink, ++$tabindex)),
 		'class' => 'get-account'
 	);
 
@@ -93,6 +94,6 @@
 	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
 
 	// 3rd party providers buttons
-	if (!$isMonobookOrUncyclo) echo $app->renderView('UserLoginSpecial', 'Providers');
+	if (!$isMonobookOrUncyclo) echo $app->renderView('UserLoginSpecial', 'Providers', array('tabindex' => ++$tabindex));
 ?>
 </div>

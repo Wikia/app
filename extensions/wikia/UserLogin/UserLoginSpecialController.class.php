@@ -188,7 +188,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 	public function providers() {
 		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
-		$this->response->setVal( 'dropdown',  $this->request->getVal( 'dropdown', false ) );
+		$this->response->setVal( 'tabindex',  $this->request->getVal( 'tabindex', null ) );
 
 		// don't render FBconnect button when the extension is disabled
 		if ( empty( $this->wg->EnableFacebookConnectExt ) ) {

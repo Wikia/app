@@ -1,5 +1,7 @@
 <div id="UserLoginDropdown" class="UserLoginDropdown subnav">
-<?
+<?php
+	$tabindex = 0;
+	
 	$form = array(
 		'inputs' => array(
 			array(
@@ -22,14 +24,14 @@
 				'name' => 'username',
 				'isRequired' => true,
 				'label' => wfMsg('yourname'),
-				'tabindex' => 1,
+				'tabindex' => ++$tabindex,
 			),
 			array(
 				'type' => 'password',
 				'name' => 'password',
 				'isRequired' => true,
 				'label' => wfMsg('yourpassword'),
-				'tabindex' => 2,
+				'tabindex' => ++$tabindex,
 			),
 			array(
 				'type' => 'custom',
@@ -40,7 +42,7 @@
 				'name' => 'keeploggedin',
 				'value' => '1',
 				'label' => wfMsg('userlogin-remembermypassword'),
-				'tabindex' => 3,
+				'tabindex' => ++$tabindex,
 			)
 		),
 		'method' => 'post',
@@ -48,7 +50,7 @@
 		'submits' => array(
 			array(
 				'value' => wfMsg('login'),
-				'tabindex' => 4,
+				'tabindex' => ++$tabindex,
 			)
 		)
 	);
@@ -59,6 +61,6 @@
 	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
 
 	// 3rd party providers buttons
-	echo $app->renderView('UserLoginSpecial', 'Providers', array('dropdown' => true));
+	echo $app->renderView('UserLoginSpecial', 'Providers', array('tabindex' => ++$tabindex));
 ?>
 </div>
