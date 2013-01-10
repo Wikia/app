@@ -1067,7 +1067,6 @@ class EnhancedChangesList extends ChangesList {
 			if( $rcObj->mAttribs['rc_this_oldid'] != 0 ) {
 				$params['oldid'] = $rcObj->mAttribs['rc_this_oldid'];
 			}
-
 			# Log timestamp
 			if( $type == RC_LOG ) {
 				$link = $rcObj->timestamp;
@@ -1083,15 +1082,24 @@ class EnhancedChangesList extends ChangesList {
 					$link = $this->skin->makeKnownLinkObj( $rcObj->getTitle(), $rcObj->ownTitle, $curIdEq.'&'.$o.$rcIdEq );
 				}
 				else {
-				$link = Linker::linkKnown(
-						$rcObj->getTitle(),
-						$rcObj->timestamp,
-						array(),
-						$params
-					);
+					$link = '';
+					// Start of Wikia change
+
+					wfRunHooks( 'ChangesListItemGroupRegular', array(&$link, &$rcObj) );
+					// End of Wikia change
+
+					if(empty($link)) {
+						$link = Linker::linkKnown(
+							$rcObj->getTitle(),
+							$rcObj->timestamp,
+							array(),
+							$params
+						);
+
+						if( $this->isDeleted($rcObj,Revision::DELETED_TEXT) )
+							$link = '<span class="history-deleted">'.$link.'</span> ';
+					}
 				}
-				if( $this->isDeleted($rcObj,Revision::DELETED_TEXT) )
-					$link = '<span class="history-deleted">'.$link.'</span> ';
 			}
 
 			$r .= $link . '</span>';
@@ -1099,7 +1107,12 @@ class EnhancedChangesList extends ChangesList {
 			if ( !$type == RC_LOG || $type == RC_NEW ) {
 				$r .= ' (';
 				$r .= $rcObj->curlink;
-				$r .= $this->message['pipe-separator'];
+				/* wikia change */
+				if(!empty($rcObj->curlink) && !empty($rcObj->lastlink)) {
+					$r .= $this->message['pipe-separator'];
+				}
+				/* wikia change end */
+
 				$r .= $rcObj->lastlink;
 				$r .= ')';
 			}

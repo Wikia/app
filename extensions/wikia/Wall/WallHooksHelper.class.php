@@ -1252,7 +1252,9 @@ class WallHooksHelper {
 	public function onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup($oChangeList, $r, $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle) {
 		wfProfileIn(__METHOD__);
 
-		if( in_array(MWNamespace::getSubject($oTitle->getNamespace()), F::app()->wg->WallNS) ) {
+		$namespace = MWNamespace::getSubject($oTitle->getNamespace());
+
+		if( WallHelper::isWallNamespace($namespace) ) {
 			$changeRecentChangesHeader = true;
 
 			$wm = F::build('WallMessage', array($oTitle));
@@ -1269,8 +1271,7 @@ class WallHooksHelper {
 
 			$wm->load();
 			$wallMsgTitle = $wm->getMetaTitle();
-			$oTitle = $wm->getTitle();
-			$headerTitle = wfMsg('wall-recentchanges-thread-group', array(Xml::element('a', array('href' => $wallMsgUrl), $wallMsgTitle), $wallUrl, $wallOwnerName));
+			$headerTitle = wfMsg($this->getMessagePrefix($namespace).'-thread-group', array(Xml::element('a', array('href' => $wallMsgUrl), $wallMsgTitle), $wallUrl, $wallOwnerName));
 		}
 
 		wfProfileOut(__METHOD__);
@@ -1309,7 +1310,7 @@ class WallHooksHelper {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onChangesListMakeSecureName($changesList, &$secureName, $rc) {
-		if( intval($rc->getAttribute('rc_namespace')) === NS_USER_WALL_MESSAGE ) {
+		if( WallHelper::isWallNamespace(intval($rc->getAttribute('rc_namespace'))) ) {
 			$oTitle = $rc->getTitle();
 
 			if( $oTitle instanceof Title ) {
@@ -2093,6 +2094,22 @@ class WallHooksHelper {
 			$prefixedText = $threadTitle->getPrefixedText();
 		}
 
+		return true;
+	}
+
+
+	static public function onChangesListItemGroupRegular(&$link, &$rcObj) {
+		if( WallHelper::isWallNamespace(intval($rcObj->getAttribute('rc_namespace'))) ){
+
+			$wallMsg = WallMessage::newFromId($rcObj->getAttribute('rc_cur_id'));
+			if(!empty($wallMsg)) {
+				/* @var $wallMsg Wall */
+
+				$url = $wallMsg->getMessagePageUrl();
+				$link = '<a href="'.$url.'">'.$rcObj->timestamp.'</a>';
+				$rcObj->curlink = '<a href="'.$url.'">'.wfMsg('cur').'</a>';
+			}
+		}
 		return true;
 	}
 
