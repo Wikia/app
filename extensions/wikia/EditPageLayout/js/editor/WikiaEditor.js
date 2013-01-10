@@ -178,6 +178,14 @@
 		// set the state and submit the edit form
 		editorInstance.setState(editorInstance.states.RELOADING);
 
+		this.storeContent();
+
+		window.location.reload(true);
+	};
+
+	WE.storeContent = function(editorInstance) {
+		var editorInstance = WE.getInstance();
+
 		try {
 			// Save editor data before redirecting to prevent data loss (BugId:29754)
 			$.storage.set('WikiaEditorData', editorInstance.getContent());
@@ -186,9 +194,7 @@
 			$().log('Local Storage Exception:' + e.message);
 			$.storage.flush();
 		}
-
-		window.location.reload(true);
-	};
+	}
 
 	WE.Editor = $.createClass(Observable, {
 		states: {
