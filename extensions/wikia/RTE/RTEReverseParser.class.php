@@ -29,13 +29,13 @@ class RTEReverseParser {
 	// lists handling
 	private $listLevel;
 	private $listBullets;
-	
+
 	/**
 	 * Stores all nodes iteratively so we can associate indices to nodes, and indices to outputs
 	 * @var array
 	 */
 	private $nodes = array();
-	
+
 	/**
 	 * Stores the output for each node, at any level, so we can locate it easily
 	 * @var array
@@ -243,11 +243,11 @@ class RTEReverseParser {
 
 		$this->nodes[] = $node;
 		$this->nodeOutputs[] = $out;
-		
+
 		//wfProfileOut(__METHOD__ . "::{$node->nodeName}::{$nodeId}");
 		wfProfileOut(__METHOD__ . "::{$node->nodeName}");
 		wfProfileOut(__METHOD__);
-		
+
 		return $out;
 	}
 
@@ -504,7 +504,7 @@ class RTEReverseParser {
 				}
 			}
 		}
-		
+
 		// fix for wikitext that is context-sensitive
 		// these are escaped for regex matching
 		$lineInitialTokens = array(
@@ -1514,7 +1514,7 @@ class RTEReverseParser {
 		}
 
 		// $node must be first child of table cell / header (td/th)
-		if ( self::isFirstChild($node)) {
+		if ( self::isFirstChild($node) ) {
 			if ($node->nodeType == XML_ELEMENT_NODE) {
 				switch($node->nodeName) {
 					// link (RT #34043)
@@ -1528,11 +1528,11 @@ class RTEReverseParser {
 						// if next element is text node, don't add line break (refs RT #34043)
 						// if next element is <br />, don't add line break (refs RT #38257)
 						// if next element is <sup> or <sub>, don't add line break (ref RT #67354)
-						if (	!self::nextSiblingIsTextNode($node) &&
+						if (!self::nextSiblingIsTextNode($node) &&
 							!self::nextSiblingIs($node, 'br') &&
-							!self::nextSiblingIs($node, 'sub')  &&
-							!self::nextSiblingIs($node, 'sup') ) {
-
+							!self::nextSiblingIs($node, 'sub') &&
+							!self::nextSiblingIs($node, 'sup')
+						) {
 							$out = "{$out}\n";
 						}
 						break;
@@ -1541,18 +1541,24 @@ class RTEReverseParser {
 						// for HTML elements add extra line break before
 						$out = "\n{$out}";
 				}
-			}
-			else {
+			} else {
 				// for text nodes check what is next sibling
-				// add line break before paragraphs, tables and lists
-				if ( self::nextSiblingIs($node, array('p', 'table', 'ul', 'ol')) ) {
+				// add line break before tables and lists
+				if ( self::nextSiblingIs($node, array('table', 'ul', 'ol')) ) {
 					$out = "{$out}\n";
 				}
 			}
-		}
 
-		// add line break before lists, if previous node is text node (RT #34043)
-		if ( self::isListNode($node) && self::previousSiblingIsTextNode($node) ) {
+		// Non-child nodes
+		} else if (
+			// Break before lists if previous node is text node (RT #34043)
+			( self::isListNode( $node ) && self::previousSiblingIsTextNode( $node ) ) ||
+			// (BugId:11235) Break before paragraphs created by newlines. Exclude first-child
+			// anchor tags as they are handled as a special case in the first-child only code above.
+			( $node->nodeName == 'p' && !self::wasHtml( $node ) &&
+				!( self::previousSiblingIs( $node, 'a' ) && self::isFirstChild( $node->previousSibling ) )
+			)
+		) {
 			$out = "\n{$out}";
 		}
 
@@ -2098,7 +2104,7 @@ class RTEReverseParser {
 
 		return false;
 	}
-	
+
 	/**
 	 * Determines if a tag was either html or a parser tag hook
 	 * @param DomNode $node
@@ -2114,7 +2120,7 @@ class RTEReverseParser {
 			if ( $this->nodes[$i]->isSameNode( $node ) ) {
 				// pull the tag name out of a single-line confused hook or get the same output back
 				// it doesn't matter, because we need an exact match to make this work
-				$stripped = preg_replace( '/^\s*<([^>\/]+)\/?+>\s*$/', '$1', $this->nodeOutputs[$i] ); 
+				$stripped = preg_replace( '/^\s*<([^>\/]+)\/?+>\s*$/', '$1', $this->nodeOutputs[$i] );
 				return in_array( $stripped, $wgParser->getTags() );
 			}
 		}
