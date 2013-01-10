@@ -32,13 +32,19 @@ EOT;
 		 */
 		$html .= <<<EOT
 <script type="text/javascript">
-wgAfterContentAndJS.push(function(){
-	$.when(
-		$.getScript('{$jsFile}')
-	).done(function() {
-		AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}"{$autoPlayStr}}, {wmode: "opaque"}]);
-	});
-});
+
+(function(window) {
+
+	var loadAnyClips = function(){
+		$.getScript('{$jsFile}').done(function() {
+			window.AnyClipPlayer.load(["#AnyClipPlayer-{$this->videoId}-{$ajaxStr}", {clipID:"{$this->videoId}"{$autoPlayStr}}, {wmode: "opaque"}]);
+		});
+	};
+
+	wgAfterContentAndJS.push(loadAnyClips);
+
+})(this);
+
 </script>
 EOT;
 
