@@ -20,7 +20,7 @@
 			// render edit menu
 			if (isset($action['href'])) {
 ?>
-	<a <?= !empty($actionAccessKey) ? "accesskey=\"{$actionAccessKey}\"" : '' ?> <?= (isset($data['action']['tabindex']) && !is_null($data['action']['tabindex'])) ? "tabindex=\"{$data['action']['tabindex']}\"" : '' ?> href="<?= empty($action['href']) ? '' : htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>" <?= empty($action['id']) ? '' : 'id="'.$action['id'].'"'?>>
+	<a <?= !empty($actionAccessKey) ? "accesskey=\"{$actionAccessKey}\"" : '' ?> <?= isset($data['action']['tabindex']) ? "tabindex=\"{$data['action']['tabindex']}\"" : '' ?> href="<?= empty($action['href']) ? '' : htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>" <?= empty($action['id']) ? '' : 'id="'.$action['id'].'"'?>>
 		<?= $icon ?> <?= htmlspecialchars($action['text']) ?>
 	</a>
 <?php
