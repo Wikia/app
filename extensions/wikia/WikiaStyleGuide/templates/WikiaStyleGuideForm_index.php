@@ -21,7 +21,7 @@
 
 		<? if ( is_array( $form[ 'inputs' ] ) ): ?>
 			<? foreach( $form[ 'inputs' ] as $input ): ?>
-				<?
+				<?php
 					$inputAttributes = isset( $input[ 'attributes' ] ) ? $input[ 'attributes' ] : array();
 					$inputAttributes = WikiaStyleGuideFormHelper::getInputAttributes( $inputAttributes, $input );
 					$inputAttributes = WikiaStyleGuideFormHelper::getAttributesString( $inputAttributes );
@@ -48,18 +48,17 @@
 
 				<? if ( $type === 'hidden' ): ?>
 					<input type="hidden" <?= $inputAttributes ?>>
-
 				<? elseif ( $type === 'raw' ): ?>
 					<?= $input[ 'output' ] ?>
-
 				<? else: ?>
 					<? if ( empty($input['noDivWrapper']) ): ?>
-					<div class="<?= WikiaStyleGuideFormHelper::getClassNamesString( array( 'input-group', $class, $error, $required ) ) ?>">
+						<div class="<?= WikiaStyleGuideFormHelper::getClassNamesString( array( 'input-group', $class, $error, $required ) ) ?>">
+					<? endif; ?>
 						<? if ( $label && !$wrappedByLabel ): ?>
 							<label><?= ( !$wrappedByLabel ? $label . $tooltip : '' ) ?></label>
 						<? endif ?>
 
-						<? if ( $wrappedByLabel ): ?>
+						<? if ( $label && $wrappedByLabel ): ?>
 							<label>
 						<? endif ?>
 
@@ -120,18 +119,18 @@
 						<? endswitch ?>
 
 						<? if ( $label && $wrappedByLabel ): ?>
-							<?= $label ?></label>
+							<?= $label . $tooltip ?></label>
 						<? endif ?>
 
 						<? if ( $error ): ?>
 							<div class="error-msg"><?= $input[ 'errorMsg' ] ?></div>
 						<? endif ?>
 					<? if ( empty($input['noDivWrapper']) ): ?>
-					</div>
+						</div>
 					<? endif; ?>
-				<? endif ?>
-			<? endforeach ?>
-		<? endif ?>
+				<? endif; ?>
+			<? endforeach; ?>
+		<? endif; ?>
 	</fieldset>
 
 	<? if ( !empty( $form[ 'submits' ] ) ): ?>
