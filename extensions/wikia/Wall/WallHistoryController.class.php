@@ -168,7 +168,8 @@ class WallHistoryController extends WallController {
 			$wm = F::build('WallMessage', array($title));
 			$user = $value['user'];
 			$username = $user->getName();
-			$url = F::build( 'Title', array( $username, NS_USER_WALL ), 'newFromText' )->getFullUrl();
+
+			$url = F::build( 'Title', array( $username, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK ), 'newFromText' )->getFullUrl();
 			
 			if( $user->isAnon() ) {
 				$name = wfMsg('oasis-anon-user');
