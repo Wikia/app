@@ -28,6 +28,11 @@
 	);
 	$passwordInput['errorMsg'] = $passwordInput['isInvalid'] ? $msg : '';
 
+	$forgotPassword = array(
+		'type' => 'custom',
+		'output' => '<a href="#" class="forgot-password">'.wfMsg('userlogin-forgot-password').'</a>',
+	);
+
 	$rememberMeInput = array(
 		'type' => 'checkbox',
 		'name' => 'keeploggedin',
@@ -38,11 +43,19 @@
 		'tabindex' => 8,
 	);
 
+	$loginButton = array(
+		'type' => 'submit',
+		'value' => wfMsg('login'),
+		'class' => 'login-button big',
+		'tabindex' => 9,
+	);
+
+	$specialSignupLink = SpecialPage::getTitleFor('UserSignup')->getLocalURL();
+	$specialSignupLinkTabindex = 10;
 	$createAccount = array(
 		'type' => 'custom',
-		'output' => wfMsgExt('userlogin-get-account', 'parseinline'),
-		'class' => 'get-account',
-		'tabindex' => 0,
+		'output' => wfMsgExt('userlogin-get-account', 'content', array($specialSignupLink, $specialSignupLinkTabindex)),
+		'class' => 'get-account'
 	);
 
 	$form = array(
@@ -50,23 +63,12 @@
 			$loginTokenInput,
 			$userNameInput,
 			$passwordInput,
+			$forgotPassword,
 			$rememberMeInput,
-			$createAccount
+			$loginButton,
+			$createAccount,
 		),
 		'method' => 'post',
-		'submits' => array(
-			array(
-				'value' => wfMsg('login'),
-				'class' => 'login-button big',
-				'tabindex' => 9,
-			),
-			array(
-				'value' => wfMsg('userlogin-forgot-password'),
-				'class' => 'forgot-password link',
-				'name' => 'action',
-				'tabindex' => 0,
-			)
-		)
 	);
 
 	$form['isInvalid'] = !empty($result) && empty($errParam) && !empty($msg);
