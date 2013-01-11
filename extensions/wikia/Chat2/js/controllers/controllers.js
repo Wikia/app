@@ -387,7 +387,7 @@ var NodeRoomController = $.createClass(Observable,{
 	},
 
 	onLogout: function(message) {
-		/* we display the part message after the 15 seconds to avoid flooding the channel
+		/* we display the part message after 10 seconds to avoid flooding the channel
 		 with unnecessary part & join messages in case of refreshing chat window
 		 */
 		var logoutEvent = new models.LogoutEvent();
