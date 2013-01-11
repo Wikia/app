@@ -110,13 +110,13 @@ var ChatEntryPoint = {
 		UserLoginModal.dialog.closeModal();
 		ChatEntryPoint.chatLaunchModal = $(html).makeModal({
 			width: 450,
-			onClose: ChatEntryPoint.onCloseJoinChatModal
+			onClose: ChatEntryPoint.reloadPage
 		});
 		ChatEntryPoint.chatLaunchModal.bind('click',ChatEntryPoint.launchChatWindow);
 
 	},
 
-	onCloseJoinChatModal: function() {
+	reloadPage: function() {
 		(new Wikia.Querystring()).addCb().goTo();
 	},
 
@@ -126,7 +126,7 @@ var ChatEntryPoint = {
 		if(ChatEntryPoint.chatLaunchModal) {
 			ChatEntryPoint.chatLaunchModal.closeModal();
 		}
-		(new Wikia.Querystring()).addCb().goTo();
+		ChatEntryPoint.reloadPage();
 	}
 };
 
