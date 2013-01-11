@@ -24,9 +24,10 @@ var Lightbox = {
 	backfillCount: 0,
 	backfillCountMessage: false,
 	to: 0, // timestamp for getting wiki images
-	includeLatestPhotos: !$('#LatestPhotosModule .carousel-container').length, // if we don't have latest photos in the DOM, request them from back end
 
 	makeLightbox: function(params) {
+		Lightbox.includeLatestPhotos = !$('#LatestPhotosModule .carousel-container').length; // if we don't have latest photos in the DOM, request them from back end
+
 		// If file doesn't exist, show the error modal
 		if(!Lightbox.initialFileDetail['exists']) {
 			Lightbox.showErrorModal();
