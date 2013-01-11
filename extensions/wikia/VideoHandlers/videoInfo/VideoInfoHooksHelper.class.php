@@ -82,13 +82,9 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		if ( !VideoInfoHelper::videoInfoExists() ) {
-			return true;
-		}
-
-		// makes no sense to continue, if we're not running RelatedVideos on the wiki
 		$app = F::app();
-		if ( !$app->wg->EnableRelatedVideosExt ) {
+
+		if ( !VideoInfoHelper::videoInfoExists() ) {
 			return true;
 		}
 
@@ -103,7 +99,7 @@ class VideoInfoHooksHelper {
 
 		// related videos global list
 		$title = $article->getTitle();
-		if ( !empty($title) ) {
+		if ( !empty($title) && !$app->wg->EnableRelatedVideosExt ) {
 			$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
 			if ( !empty($relatedVideos) && $title->getNamespace() == NS_MEDIAWIKI
 				&& $title->getText() == RelatedVideosNamespaceData::GLOBAL_RV_LIST ) {
