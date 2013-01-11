@@ -29,17 +29,20 @@
 			array(
 				'type' => 'password',
 				'name' => 'password',
+				'class' => 'password-input',
 				'isRequired' => true,
 				'label' => wfMsg('yourpassword'),
 				'tabindex' => ++$tabindex,
 			),
 			array(
 				'type' => 'custom',
+				'class' => 'forgot-password',
 				'output' => '<a href="#" class="forgot-password">'.wfMsg('userlogin-forgot-password').'</a>',
 			),
 			array(
 				'type' => 'checkbox',
 				'name' => 'keeploggedin',
+				'class' => 'keep-logged-in',
 				'value' => '1',
 				'label' => wfMsg('userlogin-remembermypassword'),
 				'tabindex' => ++$tabindex,
