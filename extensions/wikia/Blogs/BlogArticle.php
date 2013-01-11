@@ -277,7 +277,7 @@ class BlogArticle extends Article {
 		$return = array();
 		$types = self::getPropsList();
 		foreach( $types as $key => $value ) {
-			$return[$key] =  (int) wfGetWikiaPageProp($value, $page_id );
+			$return[$key] =  (int) wfGetWikiaPageProp( $value, $page_id );
 		}
 
 		wfProfileOut( __METHOD__ );

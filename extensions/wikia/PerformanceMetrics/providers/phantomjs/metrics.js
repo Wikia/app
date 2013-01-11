@@ -223,12 +223,6 @@ page.onInitialized = function () {
 			window.timingOnLoad = Date.now();
 		}, false);
 	});
-
-	// AB testing setup
-	// @see /extensions/wikia/AbTesting/js/AbTest.js
-	if (abGroup) {
-		page.evaluate(new Function("window.Wikia.AbTest.treatmentGroups = {'1': '" + abGroup + "'};"));
-	}
 };
 
 // monitor requests made (BugId:26332)
@@ -518,10 +512,6 @@ function renderMetrics() {
 		return window.wgUserName !== null ? window.wgUserName : '<anon>';
 	}));
 
-	notices.push('A/B testing group: ' + page.evaluate(function() {
-		return window.Wikia.AbTest.getTreatmentGroup(1);
-	}));
-
 	// add log lines to notices
 	page.logLines.forEach(function(msg) {
 		notices.push('Console: ' + msg);
@@ -567,8 +557,7 @@ var args = parseArgs(system.args);
 
 var address = system.args[1],
 	username = args.username || false,
-	password = args.password || false,
-	abGroup = args.abGroup || false; // A/B testing group ID
+	password = args.password || false;
 
 // log me in
 if (username !== false && password !== false) {

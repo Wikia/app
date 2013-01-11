@@ -350,6 +350,7 @@ class ArticleComment {
 			$sig = ( $this->mUser->isAnon() )
 				? AvatarService::renderLink( $this->mUser->getName() )
 				: Xml::element( 'a', array ( 'href' => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
+
 			$articleId = $this->mTitle->getArticleId();
 
 			$isStaff = (int)in_array('staff', $this->mUser->getEffectiveGroups() );
@@ -359,7 +360,8 @@ class ArticleComment {
 			$buttons = array();
 			$replyButton = '';
 
-			$commentingAllowed = ArticleComment::canComment();
+			//this is for blogs we want to know if commenting on it is enabled
+			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $this->mTitle->getBaseText() ) );
 
 			if ( self::isBlog() ) {
 				$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
@@ -571,6 +573,7 @@ class ArticleComment {
 
 		if ( self::isBlog( $title ) ) {
 			$props = BlogArticle::getProps( $title->getArticleID() );
+
 			$canComment = isset( $props[ 'commenting' ] ) ? ( bool ) $props[ 'commenting' ] : true;
 		}
 
@@ -816,6 +819,7 @@ class ArticleComment {
 		 * because we save different tile via Ajax request TODO: fix it !!
 		 */
 		$wgTitle = $commentTitle;
+
 
 		if( !($commentTitle instanceof Title) ) {
 			wfProfileOut( __METHOD__ );

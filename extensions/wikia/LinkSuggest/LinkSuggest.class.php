@@ -124,7 +124,7 @@ class LinkSuggest {
 			$namespaces = array($namespaceFilter);
 		}
 
-		if (!empty($namespace) && $namespace != $namespaceFilter) {
+		if (!empty($namespaceFilter) && $namespace != $namespaceFilter) {
 			$out = self::getEmptyResponse($request->getText('format'));
 
 			wfProfileOut(__METHOD__);

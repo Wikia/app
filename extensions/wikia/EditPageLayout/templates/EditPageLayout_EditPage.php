@@ -123,14 +123,14 @@
 								<?php
 									}
 								?>
-								<?php if($isLoggedIn){ ?>
+								<?php if($canMinorEdit){ ?>
 								<label class="wpMinoredit">
 									<input type="checkbox" tabindex="10" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
 									<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
 								</label>
 								<?php } ?>
 							</div>
-							<label <?php if($isLoggedIn){ ?>class="wpSummary_loggedIn"<?php } ?> for="wpSummary"><?= $wpSummaryLabelText ?></label>
+							<label <?php if($canMinorEdit){ ?>class="wpSummary_canMinorEdit"<?php } ?> for="wpSummary"><?= $wpSummaryLabelText ?></label>
 							<div id="wpSummaryLabel">
 								<?= $summaryBox ?>
 							</div>
@@ -184,7 +184,7 @@
 		</form>
 	</article>
 
-	<? if ($wg->User->isLoggedIn()) { ?>
+	<? if ($isLoggedIn) { ?>
 		<?php if( !$wg->EnableWikiaBarExt ): ?>
 			<footer id="WikiaFooter" class="WikiaFooter">
 				<div class="toolbar">

@@ -3,6 +3,7 @@
 class ForumController extends WallBaseController {
 	private $isThreadLevel = false;
 	protected $sortingType = 'index';
+	const BOARD_PER_PAGE = 25;
 
 	public function __construct() {
 		parent::__construct();
@@ -30,7 +31,7 @@ class ForumController extends WallBaseController {
 			}
 		}
 
-		parent::index();
+		parent::index(self::BOARD_PER_PAGE);
 		$this->setIsForum();
 		
 		F::build( 'JSMessages' )->enqueuePackage( 'Wall', JSMessages::EXTERNAL );
@@ -51,7 +52,7 @@ class ForumController extends WallBaseController {
 			$this->app->wg->Out->setPageTitle( wfMsg( 'forum-board-topic-title', $this->wg->title->getBaseText() ) );
 		} else {
 			$boardId = $this->wall->getId();
-			$board = F::build( 'ForumBoard', array( $boardId ), 'newFromId' );
+			$board = ForumBoard::newFromId( $boardId );
 
 			if ( empty( $board ) ) {
 				$this->redirectToIndex();
@@ -165,7 +166,7 @@ class ForumController extends WallBaseController {
 		} else {
 			$displayname = $name;
 			$displayname2 = '';
-			$url = F::build( 'Title', array( $name, NS_USER_WALL ), 'newFromText' )->getFullUrl();
+			$url = F::build( 'Title', array( $name, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK ), 'newFromText' )->getFullUrl();
 		}
 
 		$this->response->setVal( 'username', $name );
