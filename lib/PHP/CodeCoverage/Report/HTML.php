@@ -2,7 +2,7 @@
 /**
  * PHP_CodeCoverage
  *
- * Copyright (c) 2009-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2009-2012, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,15 +37,11 @@
  * @category   PHP
  * @package    CodeCoverage
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @copyright  2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://github.com/sebastianbergmann/php-code-coverage
  * @since      File available since Release 1.0.0
  */
-
-require_once 'PHP/CodeCoverage.php';
-require_once 'PHP/CodeCoverage/Report/HTML/Node.php';
-require_once 'Text/Template.php';
 
 /**
  * Generates an HTML report from an PHP_CodeCoverage object.
@@ -53,9 +49,8 @@ require_once 'Text/Template.php';
  * @category   PHP
  * @package    CodeCoverage
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.0
+ * @copyright  2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://github.com/sebastianbergmann/php-code-coverage
  * @since      Class available since Release 1.0.0
  */
@@ -64,54 +59,51 @@ class PHP_CodeCoverage_Report_HTML
     /**
      * @var string
      */
-    public static $templatePath;
+    protected $templatePath;
 
     /**
-     * @var array
+     * @var string
      */
-    protected $options;
+    protected $charset;
+
+    /**
+     * @var string
+     */
+    protected $generator;
+
+    /**
+     * @var integer
+     */
+    protected $lowUpperBound;
+
+    /**
+     * @var integer
+     */
+    protected $highLowerBound;
+
+    /**
+     * @var boolean
+     */
+    protected $highlight;
 
     /**
      * Constructor.
      *
      * @param array $options
      */
-    public function __construct(array $options = array())
+    public function __construct($charset = 'UTF-8', $highlight = FALSE, $lowUpperBound = 35, $highLowerBound = 70, $generator = '')
     {
-        if (!isset($options['title'])) {
-            $options['title'] = '';
-        }
+        $this->charset        = $charset;
+        $this->generator      = $generator;
+        $this->highLowerBound = $highLowerBound;
+        $this->highlight      = $highlight;
+        $this->lowUpperBound  = $lowUpperBound;
 
-        if (!isset($options['charset'])) {
-            $options['charset'] = 'UTF-8';
-        }
-
-        if (!isset($options['yui'])) {
-            $options['yui'] = TRUE;
-        }
-
-        if (!isset($options['highlight'])) {
-            $options['highlight'] = FALSE;
-        }
-
-        if (!isset($options['lowUpperBound'])) {
-            $options['lowUpperBound'] = 35;
-        }
-
-        if (!isset($options['highLowerBound'])) {
-            $options['highLowerBound'] = 70;
-        }
-
-        if (!isset($options['generator'])) {
-            $options['generator'] = '';
-        }
-
-        $this->options = $options;
-
-        self::$templatePath = sprintf(
-          '%s%sHTML%sTemplate%s',
+        $this->templatePath = sprintf(
+          '%s%sHTML%sRenderer%sTemplate%s',
 
           dirname(__FILE__),
+          DIRECTORY_SEPARATOR,
           DIRECTORY_SEPARATOR,
           DIRECTORY_SEPARATOR,
           DIRECTORY_SEPARATOR
@@ -124,186 +116,59 @@ class PHP_CodeCoverage_Report_HTML
      */
     public function process(PHP_CodeCoverage $coverage, $target)
     {
-        $target     = PHP_CodeCoverage_Util::getDirectory($target);
-        $files      = $coverage->getSummary();
-        $commonPath = PHP_CodeCoverage_Util::reducePaths($files);
-        $items      = PHP_CodeCoverage_Util::buildDirectoryStructure($files);
-        $root       = new PHP_CodeCoverage_Report_HTML_Node_Directory(
-                        $commonPath, NULL
-                      );
+        $target = $this->getDirectory($target);
+        $report = $coverage->getReport();
+        unset($coverage);
 
-        $this->addItems($root, $items, $files);
-
-        $this->renderDashboard(
-          $root, $target . 'index.dashboard.html', $this->options['title']
-        );
-
-        foreach ($root as $node) {
-            if ($node instanceof PHP_CodeCoverage_Report_HTML_Node_Directory) {
-                $this->renderDashboard(
-                  $node,
-                  $target . PHP_CodeCoverage_Util::getSafeFilename(
-                              $node->getId()
-                            ) . '.dashboard.html',
-                  $node->getName(TRUE)
-                );
-            }
+        if (!isset($_SERVER['REQUEST_TIME'])) {
+            $_SERVER['REQUEST_TIME'] = time();
         }
 
-        $root->render(
-          $target,
-          $this->options['title'],
-          $this->options['charset'],
-          $this->options['lowUpperBound'],
-          $this->options['highLowerBound'],
-          $this->options['generator']
+        $date = date('D M j G:i:s T Y', $_SERVER['REQUEST_TIME']);
+
+        $dashboard = new PHP_CodeCoverage_Report_HTML_Renderer_Dashboard(
+          $this->templatePath,
+          $this->charset,
+          $this->generator,
+          $date,
+          $this->lowUpperBound,
+          $this->highLowerBound
         );
+
+        $directory = new PHP_CodeCoverage_Report_HTML_Renderer_Directory(
+          $this->templatePath,
+          $this->charset,
+          $this->generator,
+          $date,
+          $this->lowUpperBound,
+          $this->highLowerBound
+        );
+
+        $file = new PHP_CodeCoverage_Report_HTML_Renderer_File(
+          $this->templatePath,
+          $this->charset,
+          $this->generator,
+          $date,
+          $this->lowUpperBound,
+          $this->highLowerBound,
+          $this->highlight
+        );
+
+        $dashboard->render($report, $target . 'index.dashboard.html');
+        $directory->render($report, $target . 'index.html');
+
+        foreach ($report as $node) {
+            $id = $node->getId();
+
+            if ($node instanceof PHP_CodeCoverage_Report_Node_Directory) {
+                $dashboard->render($node, $target . $id . '.dashboard.html');
+                $directory->render($node, $target . $id . '.html');
+            } else {
+                $file->render($node, $target . $id . '.html');
+            }
+        }
 
         $this->copyFiles($target);
-    }
-
-    /**
-     * @param PHP_CodeCoverage_Report_HTML_Node_Directory $root
-     * @param string                                      $file
-     * @param string                                      $title
-     */
-    protected function renderDashboard(PHP_CodeCoverage_Report_HTML_Node_Directory $root, $file, $title)
-    {
-        $classes  = $this->classes($root);
-        $template = new Text_Template(
-          PHP_CodeCoverage_Report_HTML::$templatePath . 'dashboard.html'
-        );
-
-        $template->setVar(
-          array(
-            'title'                  => $title,
-            'charset'                => $this->options['charset'],
-            'date'                   => date(
-                                          'D M j G:i:s T Y',
-                                          $_SERVER['REQUEST_TIME']
-                                        ),
-            'version'                => '1.0.0',
-            'php_version'            => PHP_VERSION,
-            'generator'              => $this->options['generator'],
-            'least_tested_methods'   => $this->leastTestedMethods($classes),
-            'top_project_risks'      => $this->topProjectRisks($classes),
-            'cc_values'              => $this->classComplexity($classes),
-            'ccd_values'             => $this->classCoverageDistribution($classes),
-            'backlink'               => basename(str_replace('.dashboard', '', $file))
-          )
-        );
-
-        $template->renderTo($file);
-    }
-
-    /**
-     * @param PHP_CodeCoverage_Report_HTML_Node_Directory $root
-     * @param array                                       $items
-     * @param array                                       $files
-     */
-    protected function addItems(PHP_CodeCoverage_Report_HTML_Node_Directory $root, array $items, array $files)
-    {
-        foreach ($items as $key => $value) {
-            if (substr($key, -2) == '/f') {
-                try {
-                    $root->addFile(
-                      substr($key, 0, -2),
-                      $value,
-                      $this->options['yui'],
-                      $this->options['highlight']
-                    );
-                }
-
-                catch (RuntimeException $e) {
-                    continue;
-                }
-            } else {
-                $child = $root->addDirectory($key);
-                $this->addItems($child, $value, $files);
-            }
-        }
-    }
-
-    /**
-     * Returns the classes.
-     *
-     * @param  PHP_CodeCoverage_Report_HTML_Node_Directory $root
-     * @return array
-     */
-    protected function classes(PHP_CodeCoverage_Report_HTML_Node_Directory $root)
-    {
-        $classes = array();
-
-        foreach ($root as $node) {
-            if ($node instanceof PHP_CodeCoverage_Report_HTML_Node_File) {
-                $classes = array_merge($classes, $node->getClasses());
-            }
-        }
-
-        if (isset($classes['*'])) {
-            unset($classes['*']);
-        }
-
-        return $classes;
-    }
-
-    /**
-     * Returns the data for the Class Complexity chart.
-     *
-     * @param  array $classes
-     * @return string
-     */
-    protected function classComplexity(array $classes)
-    {
-        $data = array();
-
-        foreach ($classes as $name => $class) {
-            $data[] = array($class['coverage'], $class['ccn'], 'blue', $name);
-        }
-
-        return json_encode($data);
-    }
-
-    /**
-     * Returns the data for the Class Coverage Distribution chart.
-     *
-     * @param  array $classes
-     * @return string
-     */
-    protected function classCoverageDistribution(array $classes)
-    {
-        $data = array(
-          '0%'      => 0,
-          '0-10%'   => 0,
-          '10-20%'  => 0,
-          '20-30%'  => 0,
-          '30-40%'  => 0,
-          '40-50%'  => 0,
-          '50-60%'  => 0,
-          '60-70%'  => 0,
-          '70-80%'  => 0,
-          '80-90%'  => 0,
-          '90-100%' => 0,
-          '100%'    => 0
-        );
-
-        foreach ($classes as $class) {
-            if ($class['coverage'] == 0) {
-                $data['0%']++;
-            }
-
-            else if ($class['coverage'] == 100) {
-                $data['100%']++;
-            }
-
-            else {
-                $key = floor($class['coverage']/10)*10;
-                $key = $key . '-' . ($key + 10) . '%';
-                $data[$key]++;
-            }
-        }
-
-        return json_encode(array_values($data));
     }
 
     /**
@@ -311,109 +176,47 @@ class PHP_CodeCoverage_Report_HTML
      */
     protected function copyFiles($target)
     {
-        $files = array(
-          'butter.png',
-          'chameleon.png',
-          'close12_1.gif',
-          'container.css',
-          'container-min.js',
-          'directory.png',
-          'excanvas.compressed.js',
-          'file.png',
-          'glass.png',
-          'RGraph.bar.js',
-          'RGraph.common.js',
-          'RGraph.scatter.js',
-          'scarlet_red.png',
-          'snow.png',
-          'style.css',
-          'yahoo-dom-event.js'
-        );
+        $dir = $this->getDirectory($target . 'css');
+        copy($this->templatePath . 'css/bootstrap.min.css', $dir . 'bootstrap.min.css');
+        copy($this->templatePath . 'css/bootstrap-responsive.min.css', $dir . 'bootstrap-responsive.min.css');
+        copy($this->templatePath . 'css/style.css', $dir . 'style.css');
 
-        foreach ($files as $file) {
-            copy(self::$templatePath . $file, $target . $file);
-        }
+        $dir = $this->getDirectory($target . 'js');
+        copy($this->templatePath . 'js/bootstrap.min.js', $dir . 'bootstrap.min.js');
+        copy($this->templatePath . 'js/highcharts.js', $dir . 'highcharts.js');
+        copy($this->templatePath . 'js/jquery.min.js', $dir . 'jquery.min.js');
+        copy($this->templatePath . 'js/html5shiv.js', $dir . 'html5shiv.js');
+
+        $dir = $this->getDirectory($target . 'img');
+        copy($this->templatePath . 'img/glyphicons-halflings.png', $dir . 'glyphicons-halflings.png');
+        copy($this->templatePath . 'img/glyphicons-halflings-white.png', $dir . 'glyphicons-halflings-white.png');
     }
 
     /**
-     * Returns the least tested methods.
-     *
-     * @param  array   $classes
-     * @param  integer $max
+     * @param  string $directory
      * @return string
+     * @throws PHP_CodeCoverage_Exception
+     * @since  Method available since Release 1.2.0
      */
-    protected function leastTestedMethods(array $classes, $max = 10)
+    protected function getDirectory($directory)
     {
-        $methods = array();
-
-        foreach ($classes as $className => $class) {
-            foreach ($class['methods'] as $methodName => $method) {
-                if ($method['coverage'] < 100) {
-                    if ($className != '*') {
-                        $key = $className . '::' . $methodName;
-                    } else {
-                        $key = $methodName;
-                    }
-
-                    $methods[$key] = $method['coverage'];
-                }
-            }
+        if (substr($directory, -1, 1) != DIRECTORY_SEPARATOR) {
+            $directory .= DIRECTORY_SEPARATOR;
         }
 
-        asort($methods);
-
-        $methods = array_slice($methods, 0, min($max, count($methods)));
-        $buffer  = '';
-
-        foreach ($methods as $name => $coverage) {
-            list($class, $method) = explode('::', $name);
-
-            $buffer .= sprintf(
-              '              <li><a href="%s">%s</a> (%d%%)</li>' . "\n",
-              $classes[$class]['methods'][$method]['file'],
-              $name,
-              $coverage
-            );
+        if (is_dir($directory)) {
+            return $directory;
         }
 
-        return $buffer;
-    }
-
-    /**
-     * Returns the top project risks according to the CRAP index.
-     *
-     * @param  array   $classes
-     * @param  integer $max
-     * @return string
-     */
-    protected function topProjectRisks(array $classes, $max = 10)
-    {
-        $risks = array();
-
-        foreach ($classes as $className => $class) {
-            if ($class['coverage'] < 100 &&
-                $class['ccn'] > count($class['methods'])) {
-                $risks[$className] = $class['crap'];
-            }
+        if (@mkdir($directory, 0777, TRUE)) {
+            return $directory;
         }
 
-        asort($risks);
-
-        $risks = array_reverse(
-          array_slice($risks, 0, min($max, count($risks)))
+        throw new PHP_CodeCoverage_Exception(
+          sprintf(
+            'Directory "%s" does not exist.',
+            $directory
+          )
         );
-
-        $buffer = '';
-
-        foreach ($risks as $name => $crap) {
-            $buffer .= sprintf(
-              '              <li><a href="%s">%s</a> (%d)</li>' . "\n",
-              $classes[$name]['file'],
-              $name,
-              $crap
-            );
-        }
-
-        return $buffer;
     }
 }
