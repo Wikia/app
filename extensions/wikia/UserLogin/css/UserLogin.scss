@@ -12,6 +12,9 @@ $input-width: 230px;
 	.WikiaForm {
 		margin: 25px auto 0;
 		width: $input-width + 30px;
+		.input-group {
+			padding: 7px;
+		}
 		input[type=text],
 		input[type=password] {
 			width: $input-width;
@@ -27,7 +30,7 @@ $input-width: 230px;
 			margin-left: 0;
 		}
 		.login-button {
-			margin-top: 5px;
+			margin-top: 12px;
 			width: $input-width + 18px;
 		}
 		.get-account {
@@ -43,6 +46,11 @@ $input-width: 230px;
 		width: $input-width;
 		> .sso-login-divider {
 			@include divider;
+			margin-top: 30px;
+			> span {
+				top: -17px;
+				line-height: 30px;
+			}
 		}
 	}
 	.subheading {
