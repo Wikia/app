@@ -86,6 +86,12 @@ class VideoInfoHooksHelper {
 			return true;
 		}
 
+		// makes no sense to continue, if we're not running RelatedVideos on the wiki
+		$app = F::app();
+		if ( !$app->wg->EnableRelatedVideosExt ) {
+			return true;
+		}
+
 		$images = array();
 		$insertedImages = Wikia::getVar( 'imageInserts' );
 		foreach( $insertedImages as $img ) {
