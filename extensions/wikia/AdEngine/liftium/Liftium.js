@@ -39,7 +39,6 @@ var Liftium = {
 	slotTimer2	: [],
 	hopRegister	: [],
 	maxLoadDelay : LiftiumOptions.maxLoadDelay || 2500,
-	hasMoreCalls : LiftiumOptions.hasMoreCalls || 0,
 	slotnames	: [],
 	fingerprint	: 'a'
 };
@@ -1387,9 +1386,7 @@ Liftium.init = function (callback) {
  *	Unfortunately, nested iframes will be called "loaded"
  */
 Liftium.iframesLoaded = function(){
-	if (Liftium.hasMoreCalls) { return false; }
-
-	var iframes = document.getElementsByTagName("iframe"); 
+	var iframes = document.getElementsByTagName("iframe");
 	var l = iframes.length;
 	if (l === 0){ return true; }
 
