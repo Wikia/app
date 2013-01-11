@@ -1,3 +1,5 @@
+@import 'skins/oasis/css/core/color';
+
 #ImageUpload {
 	height: 507px;
 	padding: 25px 10px 10px;
@@ -289,6 +291,7 @@
 	width: 350px;
 }
 .ImageUploadRight {
+	background: $color-page;
 	border-bottom: 1px solid #AAA;
 	padding: 10px;
 	position: absolute;
