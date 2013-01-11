@@ -125,12 +125,26 @@ function WMU_loadDetails() {
 			if(FCK.wysiwygData[WMU_refid].align && FCK.wysiwygData[WMU_refid].align == 'left') {
 				$('#ImageUploadLayoutLeft').click();
 			}
+			
+			/* 
+			 * This is run if modifying an existing image in the article
+			 * with a precise width set.
+			 */
 			if(FCK.wysiwygData[WMU_refid].width) {
 				WMU_slider.setValue(FCK.wysiwygData[WMU_refid].width / (WMU_slider.getRealValue() / WMU_slider.getValue()), true);
 				MWU_imageWidthChanged();
-				$( '#ImageUploadSlider' ).show();
-				$( '#ImageUploadInputWidth' ).show();
+				$( '#ImageUploadSlider' ).css('visibility', 'visible');
+				$( '#ImageUploadInputWidth' ).css('visibility', 'visible');
+				$( '#ImageUploadSliderThumb' ).css('visibility', 'visible');
 				$( '#ImageUploadWidthCheckbox' ).attr('checked', true);
+
+				$('#ImageUploadManualWidth').val(WMU_slider.getRealValue());
+				if( WMU_thumbSize ) {
+					$('#ImageUploadThumb').first()
+						.width(WMU_thumbSize[0])
+						.height(WMU_thumbSize[1]);
+				}
+
 				$( '#ImageUploadManualWidth' ).val(FCK.wysiwygData[WMU_refid].width);
 				WMU_manualWidthInput();
 			}
@@ -1077,25 +1091,6 @@ function WMU_box_in_article() {
  */
 function MWU_imageWidthChanged() {
 
-	var image = $('#ImageUploadThumb').first();
-	if( !$( '#ImageUploadWidthCheckbox' ).is(':checked') ) {
-		// This will never be run
-		$('#ImageUploadManualWidth').val('');
-		$('#ImageUploadSlider').css('visibility', 'hidden');
-		$('#ImageUploadSliderThumb').css('visibility', 'hidden');
-		$('#ImageUploadInputWidth').css('visibility', 'hidden');
-		image.width = WMU_orgThumbSize[0];
-		image.height = WMU_orgThumbSize[1];
-	} else {
-		$('#ImageUploadManualWidth').val(WMU_slider.getRealValue());
-		$('#ImageUploadSlider').css('visibility', 'visible');
-		$('#ImageUploadSliderThumb').css('visibility', 'visible');
-		$('#ImageUploadInputWidth').css('visibility', 'visible');
-		if( WMU_thumbSize ) {
-			image.width = WMU_thumbSize[0];
-			image.height = WMU_thumbSize[1];
-		}
-	}
 }
 
 function MWU_imageSizeChanged(size) {
