@@ -976,15 +976,12 @@ function WMU_insertImage(e, type) {
 				}
 
 				// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
-				if (WMU_isOnSpecialPage) {
-					var $responseHTML = $(o.responseText),
-						wmuData = {
-						imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
-						imageWikiText: $responseHTML.find('#ImageUploadTag').val()
-					};
-					$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
-					return false;
-				}
+				var $responseHTML = $(o.responseText),
+					wmuData = {
+					imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
+					imageWikiText: $responseHTML.find('#ImageUploadTag').val()
+				};
+				$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
 				
 				// prevent checking for editor if WMU used outside of the editor context
 				if(!WMU_openedInEditor) {
