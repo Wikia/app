@@ -1099,7 +1099,7 @@ function MWU_imageWidthChanged() {
 }
 
 function MWU_imageSizeChanged(size) {
-	$('#ImageWidthRow').css('display', 'display', size == 'thumb' ? '' : 'none');
+	$('#ImageWidthRow').css('display', size == 'thumb' ? '' : 'none');
 
 	if($('#ImageUploadThumb').length) {
 		var image = $('#ImageUploadThumb').children(':first');
