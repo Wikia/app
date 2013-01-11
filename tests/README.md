@@ -3,7 +3,7 @@
 ## Running PHP unit tests
 
 ```
-ant -f build-wikia.xml -Dphpunitexcludegroups=Infrastructure,Integration,Broken,Stub,Monitoring,Hack phpunit
+ant -f build-wikia.xml php
 ```
 
 This command will run all tests from ``tests`` subdirectories of:
@@ -11,6 +11,8 @@ This command will run all tests from ``tests`` subdirectories of:
 * /includes/wikia
 * /extensions/FBConnect
 * /extensions/wikia
+
+excluding the following groups: Infrastructure, Integration, Broken, Stub, Monitoring, Hack.
 
 Test file needs to match ``*Test.php``.
 
