@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2001-2013, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,8 +39,8 @@
  * @author     Sean Coates <sean@caedmon.net>
  * @author     Raphael Stolt <raphael.stolt@gmail.com>
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @copyright  2001-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 3.4.0
  */
@@ -52,9 +52,8 @@
  * @subpackage Extensions_TicketListener
  * @author     Sean Coates <sean@caedmon.net>
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 3.5.0
+ * @copyright  2001-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.4.0
  */
@@ -147,7 +146,7 @@ abstract class PHPUnit_Extensions_TicketListener implements PHPUnit_Framework_Te
                 return;
             }
 
-            $name    = $test->getName();
+            $name    = $test->getName(FALSE);
             $tickets = PHPUnit_Util_Test::getTickets(get_class($test), $name);
 
             foreach ($tickets as $ticket) {
@@ -187,7 +186,7 @@ abstract class PHPUnit_Extensions_TicketListener implements PHPUnit_Framework_Te
                 return;
             }
 
-            $name    = $test->getName();
+            $name    = $test->getName(FALSE);
             $tickets = PHPUnit_Util_Test::getTickets(get_class($test), $name);
 
             foreach ($tickets as $ticket) {

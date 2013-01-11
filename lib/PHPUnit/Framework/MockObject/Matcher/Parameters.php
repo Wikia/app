@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2012, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,8 +36,8 @@
  *
  * @package    PHPUnit_MockObject
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://github.com/sebastianbergmann/phpunit-mock-objects
  * @since      File available since Release 1.0.0
  */
@@ -51,9 +51,9 @@
  *
  * @package    PHPUnit_MockObject
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.0
+ * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+ * @version    Release: 1.2.2
  * @link       http://github.com/sebastianbergmann/phpunit-mock-objects
  * @since      Class available since Release 1.0.0
  */
@@ -74,7 +74,7 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
      */
     public function __construct(array $parameters)
     {
-        foreach($parameters as $parameter) {
+        foreach ($parameters as $parameter) {
             if (!($parameter instanceof PHPUnit_Framework_Constraint)) {
                 $parameter = new PHPUnit_Framework_Constraint_IsEqual(
                   $parameter
@@ -92,7 +92,7 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
     {
         $text = 'with parameter';
 
-        foreach($this->parameters as $index => $parameter) {
+        foreach ($this->parameters as $index => $parameter) {
             if ($index > 0) {
                 $text .= ' and';
             }
@@ -117,7 +117,7 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
 
     /**
      * Checks if the invocation $invocation matches the current rules. If it
-     * does the matcher will get the invoked() method called which should check 
+     * does the matcher will get the invoked() method called which should check
      * if an expectation is met.
      *
      * @param  PHPUnit_Framework_MockObject_Invocation $invocation
@@ -145,18 +145,16 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
         }
 
         foreach ($this->parameters as $i => $parameter) {
-            if (!$parameter->evaluate($this->invocation->parameters[$i])) {
-                $parameter->fail(
-                  $this->invocation->parameters[$i],
-                  sprintf(
-                    'Parameter %s for invocation %s does not match expected ' .
-                    'value.',
+            $parameter->evaluate(
+              $this->invocation->parameters[$i],
+              sprintf(
+                'Parameter %s for invocation %s does not match expected ' .
+                'value.',
 
-                    $i,
-                    $this->invocation->toString()
-                  )
-                );
-            }
+                $i,
+                $this->invocation->toString()
+              )
+            );
         }
     }
 }
