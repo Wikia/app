@@ -29,6 +29,10 @@ $wgAutoloadClasses['QuestionTitleBlock'] = $dir.'blocks/QuestionTitleBlock.class
 $wgAutoloadClasses['RecentQuestionsBlock'] = $dir.'blocks/RecentQuestionsBlock.class.php';
 $wgAutoloadClasses['WikiCreationBlock'] = $dir.'blocks/WikiCreationBlock.class.php';
 
+// service
+$wgAutoloadClasses['PhalanxService'] = $dir.'services/PhalanxService.php';
+
+
 $wgExtensionMessagesFiles['Phalanx'] = $dir . 'Phalanx.i18n.php';
 
 $wgExtensionFunctions[] = 'efPhalanxInit';
