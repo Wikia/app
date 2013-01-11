@@ -47,6 +47,8 @@ class EditPageService extends Service {
 		wfProfileIn(__METHOD__);
 
 		$parserOptions = new ParserOptions($wgUser);
+		
+		$originalWikitext = $wikitext;
 
 		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
 		$wikitext = $wgParser->preSaveTransform($wikitext, $this->mTitle, $this->app->getGlobal('wgUser'), $parserOptions);
@@ -60,6 +62,14 @@ class EditPageService extends Service {
 		$parserOutput = $wgParser->getOutput();
 		$catbox = $this->renderCategoryBoxFromParserOutput($parserOutput);
 		$interlanglinks = $this->renderInterlangBoxFromParserOutput($parserOutput);
+		
+		/**
+		 * bugid: 47995 -- Treat JavaScript and CSS as raw text wrapped in <pre> tags
+		 * We still rely on the parser for other stuff
+		 */
+		if ( $this->mTitle->isCssOrJsPage() ) {
+			$html = '<pre>' . $originalWikitext . '</pre>';
+		}
 
 		wfProfileOut(__METHOD__);
 		return array( $html, $catbox, $interlanglinks);
