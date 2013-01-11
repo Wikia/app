@@ -39,8 +39,6 @@ var Liftium = {
 	slotTimer2	: [],
 	hopRegister	: [],
 	maxLoadDelay : LiftiumOptions.maxLoadDelay || 2500,
-	isCalledAfterOnload : LiftiumOptions.isCalledAfterOnload || 0,
-	hasMoreCalls : LiftiumOptions.hasMoreCalls || 0,
 	slotnames	: [],
 	fingerprint	: 'a'
 };
@@ -1388,14 +1386,12 @@ Liftium.init = function (callback) {
  *	Unfortunately, nested iframes will be called "loaded"
  */
 Liftium.iframesLoaded = function(){
-	if (Liftium.isCalledAfterOnload && Liftium.hasMoreCalls) { return false; }
-
-	var iframes = document.getElementsByTagName("iframe"); 
+	var iframes = document.getElementsByTagName("iframe");
 	var l = iframes.length;
 	if (l === 0){ return true; }
 
 	var b = BrowserDetect.browser;
-	if (Liftium.in_array(b, ["Firefox", "Gecko", "Mozilla"]) && !Liftium.isCalledAfterOnload && Liftium.pageLoaded){
+	if (Liftium.in_array(b, ["Firefox", "Gecko", "Mozilla"]) && Liftium.pageLoaded){
 		// Firefox/Seamonkey/Camino - no document.readyState, but load event is *after* iframes
 		return true;
 	} else if (Liftium.in_array(b, ["Explorer","Opera"]) && document.readyState == "complete") {
