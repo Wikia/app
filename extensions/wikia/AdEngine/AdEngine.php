@@ -898,6 +898,8 @@ class AdEngine {
 		}
 
 		$options['kv_domain'] = $_SERVER['HTTP_HOST'];
+		$options['hasMoreCalls'] = true;
+		$options['isCalledAfterOnload'] = true;
 		$options['maxLoadDelay'] = 6000;
 
 		$js = "LiftiumOptions = " . json_encode($options) . ";\n";
