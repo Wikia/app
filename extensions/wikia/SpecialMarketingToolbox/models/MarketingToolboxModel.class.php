@@ -15,7 +15,7 @@ class MarketingToolboxModel extends WikiaModel {
 
 	const HUBS_TABLE_NAME = '`wikia_hub_modules`';
 
-	const FORM_THUMBNAIL_SIZE = 155;
+	const FORM_THUMBNAIL_SIZE = 149;
 	const FORM_FIELD_PREFIX = 'MarketingToolbox';
 
 	protected $statuses = array();
@@ -25,6 +25,8 @@ class MarketingToolboxModel extends WikiaModel {
 
 	protected $specialPageClass = 'SpecialPage';
 	protected $userClass = 'User';
+
+	protected $allowedTags = array('<a>');
 
 	public function __construct($app = null) {
 		parent::__construct();
@@ -62,6 +64,15 @@ class MarketingToolboxModel extends WikiaModel {
 			)
 		);
 
+	}
+
+	/**
+	 * @desc Returns HTML tags which are allowed in the module's text field
+	 *
+	 * @return String
+	 */
+	public function getAllowedTags() {
+		return implode('', $this->allowedTags);
 	}
 
 	public function getThumbnailSize() {

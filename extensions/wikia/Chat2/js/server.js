@@ -517,7 +517,7 @@ function broadcastDisconnectionInfo(client, socket){
 		return true;
 	}
 
-	tracker.trackEvent(client, 'disconnection');
+	tracker.trackEvent(client, 'disconnect');
 
 	broadcastUserListToMediaWiki(client, true);
 
@@ -560,6 +560,18 @@ function broadcastUserListToMediaWiki(client, removeClient){
 function chatMessage(client, socket, msg){
 	var chatEntry = new models.ChatEntry();
     chatEntry.mport(msg);
+	// messages sent from client cannot be inline, as those messages are not escaped
+	// InlineAlert messages can be broadcasted only by the server
+	if (chatEntry.get('isInlineAlert')) {
+		var logMsg = 'Possible XSS attempt from user ' + client.myUser.get('name');
+		if (client.handshake.address && client.handshake.address.address) {
+			logMsg += '/' + client.handshake.address.address;
+		}
+		logMsg += ': ' + JSON.stringify(chatEntry);
+		logger.critical(logMsg);
+		return;
+	}
+	//chatEntry.set({ isInlineAlert: false}); // not needed, as we ingore those messages
     monitoring.incrEventCounter('chat_messages');
 	storeAndBroadcastChatEntry(client, socket, chatEntry);
 } // end chatMessage()
@@ -632,7 +644,7 @@ function ban(client, socket, msg){
 	var time = banCommand.get('time');
 	var reason = banCommand.get('reason');
 
-	mwBridge.ban(client.roomId, userToBan, time, reason, client.userKey, function(data){
+	mwBridge.ban(client.roomId, userToBan, client.handshake.address, time, reason, client.userKey, function(data){
     	var kickEvent = new models.KickEvent({
     		kickedUserName: userToBan,
     		time: time,

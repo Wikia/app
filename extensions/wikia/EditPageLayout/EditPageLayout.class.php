@@ -564,13 +564,6 @@ class EditPageLayout extends EditPage {
 
 		$content = $this->getContent();
 
-		# Use the normal message if there's nothing to display
-		if ( $this->firsttime && $content === '' ) {
-			$action = $this->mTitle->exists() ? 'edit' :
-				( $this->mTitle->isTalkPage() ? 'createtalk' : 'createpage' );
-			throw new PermissionsError( $action, $permErrors );
-		}
-
 		$this->app->wg->Out->setPageTitle( wfMessage( 'viewsource-title', $this->getContextTitle()->getPrefixedText() ) );
 		$this->app->wg->Out->addBacklinkSubtitle( $this->getContextTitle() );
 		

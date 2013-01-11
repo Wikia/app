@@ -13,8 +13,8 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
 				)
 			),
-			'header' => array(
-				'label' => $this->wf->Msg('marketing-toolbox-hub-module-wikiaspicks-header'),
+			'module-title' => array(
+				'label' => $this->wf->Msg('marketing-toolbox-hub-module-wikiaspicks-title'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
@@ -60,7 +60,7 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 	
 	public function filterData($data) {
 		if( !empty($data['text']) ) {
-			$model = new MarketingToolboxWikiaspicksModel();
+			$model = new MarketingToolboxModel();
 			$data['text'] = strip_tags($data['text'], $model->getAllowedTags());
 		}
 		

@@ -77,7 +77,7 @@ EOT;
 EOT;
 			if ($slot['load_priority'] >= self::HIGH_LOADPRIORITY_FLOOR) {
 				$out .= <<<EOT
-	if ( window.wgLoadAdDriverOnLiftiumInit || window.Wikia.AbTest && Wikia.AbTest.inTreatmentGroup( "AD_LOAD_TIMING", "AS_WRAPPERS_ARE_RENDERED" ) ) {
+	if ( window.wgLoadAdDriverOnLiftiumInit ) {
 		if (window.adDriverCanInit) {
 			AdDriverDelayedLoader.prepareSlots(AdDriverDelayedLoader.highLoadPriorityFloor);
 		}

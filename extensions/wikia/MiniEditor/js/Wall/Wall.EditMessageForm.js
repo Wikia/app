@@ -61,13 +61,11 @@ MiniEditor.Wall.EditMessageForm = $.createClass(Wall.settings.classBindings.edit
 					if (hasEdgeCases) {
 						wikiaEditor.ck.setMode('source');
 					}
-
 					wikiaEditor.setContent(data.htmlorwikitext);
 
 				} else {
-
 					// Set content on element before initializing to keep focus in editbox (BugId:24188).
-					body.html(data.htmlorwikitext).miniEditor({
+					body.text(data.htmlorwikitext).miniEditor({
 						config: {
 							animations: MiniEditor.Wall.Animations,
 

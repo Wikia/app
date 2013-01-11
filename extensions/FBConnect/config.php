@@ -205,7 +205,6 @@ if(!empty($fbEnablePushToFacebook)){
 		'FBPush_OnArticleComment',
 		'FBPush_OnBlogComment',
 		'FBPush_OnLargeEdit',
-		'FBPush_OnRateArticle',
 		'FBPush_OnWatchArticle',
 		'FBPush_OnAchBadge'
 	);

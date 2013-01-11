@@ -329,18 +329,16 @@ class ArticleComment {
 		return $this->mTitle;
 	}
 
-	public function getData($master = false, $title = null) {
-		global $wgUser, $wgTitle, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
+	public function getData( $master = false ) {
+		global $wgUser, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
 
 		wfProfileIn( __METHOD__ );
-
-		$title = empty($title) ? $wgTitle : $title;
-		$title = empty($title) ? $this->mTitle : $title;
 
 		$comment = false;
 		if ( $this->load($master) ) {
 			$articleDataKey = wfMemcKey( 'articlecomment', 'comm_data_v2', $this->mLastRevId, $wgUser->getId() );
 			$data = $wgMemc->get( $articleDataKey );
+
 			if(!empty($data)) {
 				wfProfileOut( __METHOD__ );
 				$data['timestamp'] = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $data['articleId'] ) ) . '#comm-' . $data['articleId'] . "' class='permalink'>" . wfTimeFormatAgo($data['rawmwtimestamp']) . "</a>";
@@ -352,6 +350,7 @@ class ArticleComment {
 			$sig = ( $this->mUser->isAnon() )
 				? AvatarService::renderLink( $this->mUser->getName() )
 				: Xml::element( 'a', array ( 'href' => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
+
 			$articleId = $this->mTitle->getArticleId();
 
 			$isStaff = (int)in_array('staff', $this->mUser->getEffectiveGroups() );
@@ -361,7 +360,8 @@ class ArticleComment {
 			$buttons = array();
 			$replyButton = '';
 
-			$commentingAllowed = ArticleComment::canComment();
+			//this is for blogs we want to know if commenting on it is enabled
+			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $this->mTitle->getBaseText() ) );
 
 			if ( self::isBlog() ) {
 				$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
@@ -424,7 +424,7 @@ class ArticleComment {
 			$wgMemc->set( $articleDataKey, $comment, 60*60 );
 
 			if(!($comment['title'] instanceof Title)) {
-				$comment['title'] = F::build('Title',array($comment['title'],NS_TALK),'newFromText');
+				$comment['title'] = Title::newFromText( $comment['title'], NS_TALK );
 			}
 		}
 
@@ -529,12 +529,6 @@ class ArticleComment {
 			$partsOriginal = $partsStripped = array();
 		}
 
-		if( self::isBlog() ) {
-			$tmpArr = explode('/', $title);
-			array_shift($tmpArr);
-			$title = implode('/', $tmpArr);
-		}
-
 		$result = array(
 			'title' => $title,
 			'partsOriginal' => $partsOriginal,
@@ -557,7 +551,7 @@ class ArticleComment {
 		}
 
 		//prevent infinite loop for blogs - userCan hooked up in BlogLockdown
-		$canEdit = self::isBlog() || $this->mTitle->userCan( "edit" );
+		$canEdit = self::isBlog( $this->mTitle ) || $this->mTitle->userCan( "edit" );
 
 		$isAllowed = $wgUser->isAllowed('commentedit');
 
@@ -579,6 +573,7 @@ class ArticleComment {
 
 		if ( self::isBlog( $title ) ) {
 			$props = BlogArticle::getProps( $title->getArticleID() );
+
 			$canComment = isset( $props[ 'commenting' ] ) ? ( bool ) $props[ 'commenting' ] : true;
 		}
 
@@ -607,7 +602,7 @@ class ArticleComment {
 		$isBlog = false;
 		$title = is_null( $title ) ? $wgTitle : $title;
 
-		if ( $title ) {
+		if ( !empty( $title ) ) {
 			$namespace = $title->getNamespace();
 			$isBlog =
 				( defined( 'NS_BLOG_ARTICLE' ) && $namespace == NS_BLOG_ARTICLE ) ||
@@ -739,10 +734,7 @@ class ArticleComment {
 		$retval = $editPage->internalAttemptSave( $result, $bot );
 
 		if( $retval->value == EditPage::AS_SUCCESS_UPDATE ) {
-			/**
-			 * @var $commentsIndex CommentsIndex
-			 */
-			$commentsIndex = F::build( 'CommentsIndex', array( $article->getID() ), 'newFromId' );
+			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
 			if ( $commentsIndex instanceof CommentsIndex ) {
 				$commentsIndex->updateLastRevId( $article->getTitle()->getLatestRevID(Title::GAID_FOR_UPDATE) );
 			}
@@ -828,6 +820,7 @@ class ArticleComment {
 		 */
 		$wgTitle = $commentTitle;
 
+
 		if( !($commentTitle instanceof Title) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -851,10 +844,8 @@ class ArticleComment {
 				'firstRevId' => $revId,
 				'lastRevId' => $revId,
 			);
-			/**
-			 * @var $commentsIndex CommentsIndex
-			 */
-			$commentsIndex = F::build( 'CommentsIndex', array($data) );
+
+			$commentsIndex = new CommentsIndex( $data );
 			$commentsIndex->addToDatabase();
 
 			// set last child comment id
@@ -1416,7 +1407,6 @@ class ArticleComment {
 		global $wgCityId;
 		return 'Wiki_' . $wgCityId . '_ArticleComments_' . $articleId;
 	}
-
 
 	/**
 	 * Checks if article comments will be loading on demand.

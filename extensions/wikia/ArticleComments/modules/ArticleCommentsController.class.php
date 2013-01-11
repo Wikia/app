@@ -72,6 +72,9 @@ class ArticleCommentsController extends WikiaController {
 	 * if lazy loading is disabled, otherwise it is requested via AJAX.
 	 */
 	public function executeContent() {
+		//this is coming via ajax we need to set correct wgTitle ourselves
+		global $wgTitle;
+
 		$this->wf->profileIn( __METHOD__ );
 
 		$articleId = $this->request->getVal( 'articleId', null );
@@ -79,7 +82,7 @@ class ArticleCommentsController extends WikiaController {
 		$title = null;
 
 		if ( !empty( $articleId ) ) {
-			$title = Title::newFromID( $articleId );
+			$wgTitle = $title = Title::newFromID( $articleId );
 		}
 
 		if ( !( $title instanceof Title ) ) {
@@ -164,7 +167,7 @@ class ArticleCommentsController extends WikiaController {
 		// avoid going through all this when calling the method from the same round trip for the same paramenters
 		// the real DB stuff is cached by ArticleCommentList in Memcached
 		if ( empty( $this->dataLoaded[ $key ] ) ) {
-			$commentList = F::build('ArticleCommentList', array(($title)), 'newFromTitle');
+			$commentList = ArticleCommentList::newFromTitle( $title );
 
 			if ( !empty( $perPage ) ) {
 				$commentList->setMaxPerPage( $perPage );
@@ -186,25 +189,9 @@ class ArticleCommentsController extends WikiaController {
 			Wikia::log( __METHOD__, false, 'No data, this should not happen.' );
 		}
 
-		// Hm.
-		// TODO: don't pass whole instance of Masthead object for author of current comment
-		// Did I miss something? It doesn't seem to pass the whole Masthead object anywhere... -- Federico
-		$this->avatar = $data['avatar'];
 		$this->ajaxicon = $this->wg->StylePath.'/common/images/ajax.gif';
-		$this->canEdit = $data['canEdit'];
-		$this->isBlocked = $data['isBlocked'];
-		$this->reason = $data['reason'];
-		$this->commentListRaw = $data['commentListRaw'];
-		$this->isAnon = $data['isAnon'];
-		$this->isReadOnly = $data['isReadOnly'];
-		$this->page = $data['page'];
-		$this->pagination = $data['pagination'];
-		$this->countComments = $data['countComments'];
-		$this->countCommentsNested = $data['countCommentsNested'];
-		$this->commentingAllowed = $data['commentingAllowed'];
-		$this->commentsPerPage = $data['commentsPerPage'];
 		$this->pagesCount = ( $data['commentsPerPage'] > 0 ) ? ceil( $data['countComments'] / $data['commentsPerPage'] ) : 0;
-		$this->title = $data['title'];
+		$this->response->setValues( $data );
 
 		wfProfileOut(__METHOD__);
 

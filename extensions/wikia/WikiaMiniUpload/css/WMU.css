@@ -282,7 +282,6 @@
 	position: absolute;
 }
 .ImageUploadLeftMask {
-	background: #FFF;
 	opacity: .9; 
 	filter: alpha(opacity=90);
 	height: 100px;
@@ -290,7 +289,6 @@
 	width: 350px;
 }
 .ImageUploadRight {
-	background: #EEE;
 	border-bottom: 1px solid #AAA;
 	padding: 10px;
 	position: absolute;

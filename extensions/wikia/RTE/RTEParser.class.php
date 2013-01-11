@@ -80,13 +80,42 @@ class RTEParser extends Parser {
 		$tokens = array(
 				'\*',
 				'{\|',
-				'#',
+				'# ',
 				'=',
 		);
 		
 		foreach ( $tokens as $token ) {
 			if ( preg_match( '/^<[^>]+>' . $token . '/is', $line ) ) {
 				RTE::$edgeCases[] = 'CONTEXT_SENSITIVE_TOKEN_FOLLOWING_HTML_TAG';
+			}
+		}
+	}
+	
+	/**
+	 * Registers the wikitext as an edge case with RTE stack for cases where
+	 * parser hook tags are not either self-closing or an accompanying closing tag.
+	 * @param unknown_type $text
+	 */
+	public function checkForUnclosedParserHooks( $text ) {
+		foreach ( $this->mTagHooks as $tag => $callback ) {
+			$bothMatches = array();
+			$selfclosingMatches = array();
+			$closeMatches = array();
+			preg_match_all( "/<{$tag}\b[^>]*>/Usi", $text, $bothMatches );
+			preg_match_all( "/<{$tag}\b[^>]*\/>/Usi", $text, $selfclosingMatches );
+			preg_match_all( "/<\/[^>\w]*\b{$tag}>/si", $text, $closeMatches );
+			
+			$closes = count( $closeMatches ) ? count( $closeMatches[0] ) : 0;
+			$both = count ( $bothMatches ) ? count( $bothMatches[0] ) : 0;
+			$selfclosings = count( $selfclosingMatches ) ? count( $selfclosingMatches[0] ) : 0;
+			
+			// we do this because we can identify self-closing instances, but identifying non self-closing instances 
+			// is outside of the capabilities of a regular language (e.g. <foo src="bar/baz" /> -- the regex for that is no fun
+			$opens = $both - $selfclosings;
+			
+			// the number of opening tags should be identical to the number of closing tags
+			if ( $opens != $closes ) {
+					RTE::$edgeCases[] = 'UNCLOSED_PARSER_HOOK_TAG';
 			}
 		}
 	}
@@ -489,6 +518,7 @@ class RTEParser extends Parser {
 
 		// parse to HTML
 		$output = parent::parse($text, $title, $options, $linestart, $clearState, $revid);
+		$this->checkForUnclosedParserHooks( $text );
 
 		$wgRTEParserEnabled = false;
 

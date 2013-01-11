@@ -15,18 +15,11 @@
 		display: inline-block;
 		float: left;
 		height: $height-epl-header;
+		line-height: $height-epl-header;
 		margin-right: 20px;
 		width: auto;
 		img {
-			float: left;
-			height: 45px;
-		}
-		// text wordmark should be vertically centered
-		&.text {
-			> a {
-				display: inline-block;
-				line-height: $height-epl-header;
-			}
+			max-height: $height-epl-header;
 		}
 	}
 	> h2 {

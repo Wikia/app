@@ -1,5 +1,5 @@
 
-var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, dartUrl) {
+var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, dartUrl, abTest) {
 	'use strict';
 
 	var logGroup = 'WikiaDartHelper',
@@ -16,7 +16,8 @@ var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, d
 		getHostname,
 		getHostnamePrefix,
 		getKruxKeyValues,
-		getCategories;
+		getCategories,
+		getAb;
 
 	getDartHubName = function () {
 		if (window.cscoreCat === 'Entertainment') {
@@ -73,6 +74,19 @@ var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, d
 		if (window.wgCategories instanceof Array) {
 			return window.wgCategories.join('|').toLowerCase().replace(/ /g, '_').split('|');
 		}
+	};
+
+	getAb = function () {
+		var experiments, i, ab = [];
+
+		if (abTest) {
+			experiments = abTest.getExperiments();
+			for (i = 0; i < experiments.length; i += 1) {
+				ab.push(experiments[i].id + '_' + experiments[i].group.id);
+			}
+		}
+
+		return ab;
 	};
 
 	/**
@@ -181,6 +195,7 @@ var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, d
 		url.addString(window.AdMeldAPIClient ? window.AdMeldAPIClient.getParamForDART(slotname) : ''); // TODO FIXME missing in adsinhead
 		url.addParam('src', src);
 		url.addParam('sz', size);
+		url.addParam('ab', getAb());
 		url.addString('mtfIFPath=/extensions/wikia/AdEngine/;');
 		url.addParam('mtfInline', 'true');	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
 		url.addParam('tile', localTile);
@@ -189,8 +204,8 @@ var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, d
 		}
 		url.addString('ord=' + localOrd + '?');
 
-		log('' + url, 5, logGroup);
-		return '' + url;
+		log(url.toString(), 5, logGroup);
+		return url.toString();
 	};
 
 	getKruxKeyValues = function () {

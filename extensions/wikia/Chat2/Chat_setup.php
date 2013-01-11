@@ -168,8 +168,6 @@ function chatAjaxonUserGetRights( $user, &$aRights ) {
 $wgAjaxExportList[] = 'ChatAjax';
 function ChatAjax() {
 
-	error_log(var_export($_REQUEST, true));
-
 	global $wgRequest, $wgUser, $wgMemc;
 	$method = $wgRequest->getVal('method', false);
 
@@ -189,6 +187,17 @@ function ChatAjax() {
 			}
 		}
 
+		/*
+		 ChatAjax requests come from chat nodejs server, and that's not the user ip
+		 so if the server passed the correct user ip, we try to make use of it and
+		 record it here so $wgRequest->getIP return this address
+		 */
+		$userIP = $wgRequest->getVal('userIP');
+		if ( ( $userIP !== false ) && IP::isIPAddress( $userIP ) ){
+			ChatAjax::$chatUserIP = $userIP;
+
+		}
+
 		$data = ChatAjax::$method();
 
 		// send array as JSON
@@ -201,3 +210,5 @@ function ChatAjax() {
 		return $response;
 	}
 }
+
+$wgHooks['GetIP'][] = 'ChatAjax::onGetIP';        // used for calls from chat nodejs server

@@ -37,13 +37,15 @@ $(function() {
 			imagesMap[$(e).attr('id')] = true;
 		}
 	});
+
+	// if an image has not loaded, mark it as questionable instead (unless we're in questionable review action mode)
 	if(wgImageReviewAction != 'questionable') {
 		$('#ImageReviewForm').submit(function(){
 			for(var i in imagesMap ) {
-				if(!imagesMap[i]) {					
-					$('#' + i).closest('li').find('input').attr("disabled", true);
+				if(!imagesMap[i]) {
+					$('#' + i).closest('li').find('input').attr("value", 5 /* ImageReview::STATE_QUESTIONABLE */ );
 				}
 			}
 		});	
-	}	
+	}
 });
