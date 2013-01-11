@@ -98,7 +98,7 @@ class WikiEvaluationDataSource {
 		$endDate = date( 'Y-m-d', strtotime('-1 day') );
 		
 		$res = 0;
-		$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $this->getId() );
+		$pageviews = DataMartService::getPageviewsDaily( $startDate, $endDate, $this->getId() );
 		if ( !empty( $pageviews ) && is_array( $pageviews ) ) {
 			foreach ( $pageviews as $date => $value ) {
 				$res += $value;
