@@ -194,6 +194,7 @@ $messages['qqq'] = array(
 	'autocreatewiki-info-blurry-word' => 'Message {{msg-Wikia|Autocreatewiki-blurry-word}} refers here.',
 	'autocreatewiki-title-template' => 'This will be the sitename of the wiki, i.e. the text that shows up in the TITLE element as well as in other places on the site.',
 	'autocreatewiki-subname-answers' => '"Answers sites" are  special wikis of the type answers.wikia.com, where you ask and answer questions.',
+	'autocreatewiki-language-top' => 'When the user is choosing the wiki\'s language from a dropdown menu, the most commonly chosen languages are listed in a separate section of the menu. This message is the title for that "Top Languages" section. The $1 parameter is a  basic number (ex. 7 or 12) that matches the number of languages in the "Top Languages" section.'
 );
 
 /** Afrikaans (Afrikaans)
