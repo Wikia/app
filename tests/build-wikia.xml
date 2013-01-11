@@ -32,6 +32,19 @@
         <copy file="${basedir}/config.xml.dist" tofile="${basedir}/config.xml" />
     </target>
 
+	<target name="php" depends="setup">
+		<mkdir dir="${basedir}/build/logs" />
+		<exec executable="php" dir="${basedir}" failonerror="true">
+			<env key="SERVER_ID" value="165" />
+			<arg line="run-test.php
+                       --log-junit ${basedir}/build/logs/phpunit.xml
+                       --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
+                       --configuration ${basedir}/phpunit.xml
+					   --exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack
+                       " />
+		</exec>
+	</target>
+
     <target name="phpunit" depends="setup">
 		<mkdir dir="${basedir}/build/logs" />
         <exec executable="php" dir="${basedir}" failonerror="true">

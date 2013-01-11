@@ -312,7 +312,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		);
 
 		$includeVideo = (bool) F::app()->wg->EnableVideoSitemaps;
-		if( $includeVideo && ( $this->mNamespace == NS_FILE ) ) {
+		if( $includeVideo && ( $this->mNamespace != NS_FILE ) ) {
 			$includeVideo = false;
 		}
 		$startTime = microtime(true);

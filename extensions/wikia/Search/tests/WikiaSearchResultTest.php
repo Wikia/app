@@ -327,7 +327,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( $mockThumb ) )
 		;
 
-		$this->mockGlobalFunction( 'findFile', $mockImage, 1, array( $titleMock ) );
+		$this->mockGlobalFunction( 'findFile', $mockImage, 1, array( $this->equalTo($titleMock) ) );
 		$this->mockClass( 'Title', $titleMock );
 		$this->mockClass( 'MediaTransformOutput', $mockMTO );
 		$this->mockClass( 'File', $mockImage );

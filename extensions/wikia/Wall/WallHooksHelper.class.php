@@ -1632,7 +1632,7 @@ class WallHooksHelper {
 	 * @return Array
 	 */
 	public  function getMessageOptions($rc = null, $row = null, $fullUrls = false) {
-	        WallHelper::getWallTitleData( $rc, $row, $fullUrls);
+	        return WallHelper::getWallTitleData( $rc, $row, $fullUrls);
 	}
 
 
@@ -1641,9 +1641,8 @@ class WallHooksHelper {
 		if ( $element->page_namespace == NS_USER_WALL_MESSAGE ) {
 
 			$titleData = WallHelper::getWallTitleData(null, $element, true);
-
-			$boardText = wfMsg( 'forum-wiki-activity-msg', '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMsg( 'wall-message-elseswall', $titleData['wallPageName'] ) . '</a>' );
-			$link = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ' . $boardText;
+			$a = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ';
+			$link = wfMsg( 'wall-recentchanges-thread-group', array( $a, $titleData['wallPageFullUrl'], $titleData['wallPageName'] ) );
 		}
 		return true;
 	}

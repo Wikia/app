@@ -668,11 +668,15 @@ class FeedRenderer {
 			// localised title for popup
 			$popupTitle = $wgLang->getNsText($namespace) . ':' . $item['name'];
 
+			$titleObj = F::build('Title', array($item['name'], NS_FILE), 'newFromText');
+			$fileName = $titleObj->getText(); // Pass display version of title to Lightbox
+
 			// wrapper for thumbnail
 			$attribs = array(
 				'class' => 'lightbox',
 				'rel' => 'nofollow',
-				'ref' => ($type == 'videos' ? 'Video:' : 'File:') . $item['name'], /* TODO: check that name doesn't have NS prefix */
+				'ref' => 'File:' . $item['name'], /* TODO: check that name doesn't have NS prefix */
+				'data-' . ($type == 'videos' ? 'video-name' : 'image-name') => $fileName,
 				'title' => $popupTitle,
 			);
 

@@ -115,7 +115,7 @@ class ForumHooksHelper {
 
 			$titleData = WallHelper::getWallTitleData(null, $element, true);
 
-			$boardText = wfMsg( 'forum-wiki-activity-msg', '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMsg( 'forum-wiki-activity-msg-name', $titleData['wallPageUrl'] ) . '</a>' );
+			$boardText = wfMsg( 'forum-wiki-activity-msg', '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMsg( 'forum-wiki-activity-msg-name', $titleData['wallPageName'] ) . '</a>' );
 			$link = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ' . $boardText;
 		}
 		return true;
