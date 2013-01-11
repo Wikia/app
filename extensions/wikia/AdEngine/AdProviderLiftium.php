@@ -53,10 +53,6 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 		}
 		$options['kv_domain'] = $_SERVER['HTTP_HOST'];
 		if (!empty($params)) {
-			if (isset($params['hasMoreCalls'])) {
-				$options['hasMoreCalls'] = $params['hasMoreCalls'];
-			}
-
 			if (isset($params['maxLoadDelay'])) {
 				$options['maxLoadDelay'] = $params['maxLoadDelay'];
 			}
