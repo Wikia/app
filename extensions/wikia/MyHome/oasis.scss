@@ -24,6 +24,15 @@
 	img.sprite {
 		margin-left: -30px;
 		margin-right: 8px;
+
+		// Wikia-video-play-button
+		&.play {
+			margin: 0;
+		}
+	}
+	
+	.Wikia-video-play-button {
+		margin: auto;
 	}
 
 	strong {
