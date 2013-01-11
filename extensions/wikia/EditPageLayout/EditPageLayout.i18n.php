@@ -77,7 +77,7 @@ $messages['en'] = array(
 	'userinvalidcssjstitle-notice' => "'''Warning:''' There is no skin \"$1\". [More info]",
 	'semiprotectedpagewarning-notice' => "'''Note:''' This page has been locked so that only registered users can edit it. You may need to log in to edit. [More info]",
 	'protectedpagewarning-notice' => "'''Note:''' This page has been locked so that only admins can edit it. Local admins can change this status. [More info]",
-	'titleprotectedwarning-notice' => "'''Note:''' This page has been locked so that only admins can create it. Local admins can change this status. [More info]",
+	'titleprotectedwarning-notice' => "'''Note:''' This page has been locked so that only certain users (either admins or registered users) can create it. [More info]",
 	'recreate-moveddeleted-warn-notice' => "'''Note:''' You are recreating a page that was previously deleted. [More info]",
 	'restore-edits-notice' => "Welcome back! We've restored some changes you had not published. <a class='notice-action restoreeditlink'>Delete my changes and start a new edit</a>",
 	'restore-edits-diff-notice' => "Welcome back! We've restored some changes you had not published. However, the page has been updated since then. Would you like to: <a class='notice-action restoreeditlink'>Delete my changes and start with the latest text</a> or <a class='notice-action difflink'>View a comparison of changes with the latest page</a>",
