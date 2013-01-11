@@ -164,7 +164,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 		
 		$this->tabindex = self::SPECIAL_USERLOGIN_TABINDEX_START;
-		$this->form = $this->generateForm();
+		$this->formData = $this->generateFormData();
 	}
 
 	public function getUnconfirmedUserRedirectUrl() {
@@ -191,7 +191,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->tabindex = self::DROPDOWN_TABINDEX_START;
 		$this->suppressCreateAccount = true;
 		$this->supressLogInBtnBig = true;
-		$this->form = $this->generateForm();
+		$this->formData = $this->generateFormData();
 
 		$this->returntoquery = $this->app->wf->ArrayToCGI( $query );
 	}
@@ -201,7 +201,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->signupUrl = Title::newFromText('UserSignup', NS_SPECIAL)->getFullUrl();
 
 		$this->tabindex = self::SPECIAL_USERLOGIN_TABINDEX_START;
-		$this->form = $this->generateForm();
+		$this->formData = $this->generateFormData();
 	}
 
 	public function providers() {
@@ -546,7 +546,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @desc Generates form array used in index(), modal() and dropdown() methods
 	 * @return array
 	 */
-	protected function generateForm() {
+	protected function generateFormData() {
 		$loginTokenInput = array(
 			'type' => 'hidden',
 			'name' => 'loginToken',
