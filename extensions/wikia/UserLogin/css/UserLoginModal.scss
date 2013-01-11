@@ -22,9 +22,10 @@
 	}
 	.keep-logged-in .keep-logged-in {
 		margin-left: 0;
+		vertical-align: middle;
 	}
 	input[type=submit].big {
-		margin-top: 10px;
+		margin-top: 12px;
 		width: 250px;
 	}
 	.get-account {
@@ -35,8 +36,13 @@
 	}
 	.sso-login {
 		text-align: center;
-	}
-	.sso-login-divider {
-		@include divider;
+		> .sso-login-divider {
+			@include divider;
+			margin-top: 30px;
+			> span {
+				top: -17px;
+				line-height: 30px;
+			}
+		}
 	}
 }
