@@ -160,6 +160,7 @@ $messages['qqq'] = array(
 	'blogs-searchprofile' => 'Name of a tab with blog articles and blog listings. This tab is displayed in the right column on search page',
 	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings. Tooltip displayed on hover on Blogs Tab in the right column on search page',
 	'user-blog-url-link' => 'Link - links to users Blog main page',
+        'blog-comments-label' => 'This is a checkbox label. When creating or editing a blog, the editor may enable (box is checked) or disable (box is unchecked) users to comment on the blog',
 );
 
 /** Afrikaans (Afrikaans)
