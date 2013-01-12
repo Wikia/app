@@ -706,40 +706,35 @@ var Lightbox = {
 		if(!History.enabled) {
 			return false;
 		}
-		
+
 		var query = window.location.search.substring(1),
 			vars = query.split('&'),
-			dbKey = clear ? "" : Lightbox.getTitleDbKey(), // TODO: make sure this isn't undefined
-			file = false,
-			newQuery; 
-					
-		// Parse "file" param from url
+			queryObj = {};
+
 		for(var i = 0; i < vars.length; i++) {
-			var pair = vars[i].split('=');
-			if (pair[0] == 'file') {
-				file = true;
-				
-				if(clear) {
-					vars.splice(i, 1);
-				} else {
-					vars.splice(i, 1, "file=" + dbKey);
-				}
+			if(vars[i] == "") {
 				break;
 			}
+			var pair = vars[i].split('=');
+			// Create object of query params
+			queryObj[pair[0]] = pair[1];
 		}
-		
-		// Check if file was found
-		if(!file && !clear) {
-			// Add file param
-			newQuery = "?" + query + "&file=" + dbKey;
+
+		if(clear) {
+			delete queryObj.file;
 		} else {
-			// Replace file param
-			newQuery = "?" + vars.join('&');
+			queryObj.file = Lightbox.getTitleDbKey();
+		}
+
+		var newQuery = $.param(queryObj);
+
+		if(newQuery != "") {
+			newQuery = "?" + newQuery;
 		}
 
 		if(window.location.search != newQuery) {
 			var stateObj = {
-					fileTitle: dbKey
+					fileTitle: queryObj.file || null
 				},
 				stateUrl = window.location.pathname;
 
