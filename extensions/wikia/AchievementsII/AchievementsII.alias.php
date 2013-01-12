@@ -19,3 +19,9 @@ $specialPageAliases['de'] = array(
 	'Leaderboard' => array( 'Rangliste' ),
 	'AchievementsCustomize' => array( 'HerausforderungenAnpassen' ),
 );
+
+/** Polish (Polski) */
+$specialPageAliases['de'] = array(
+	'Leaderboard' => array( 'Ranking' ),
+	'AchievementsCustomize' => array( 'Dostosuj_odznczenia' ),
+);
