@@ -59,7 +59,6 @@ $namespaces['pl'] = array(
  */
 $namespaces['ru'] = array(
 	NS_WIKIA_FORUM_BOARD	=> 'Главная тема',
-	NS_WIKIA_FORUM_TOPIC_BOARD	=> 'Topic',
 	NS_WIKIA_FORUM_BOARD_THREAD	=> 'Тема форума',
 );
 
@@ -68,7 +67,6 @@ $namespaces['ru'] = array(
  */
 $namespaces['uk'] = array(
 	NS_WIKIA_FORUM_BOARD	=> 'Головна тема',
-	NS_WIKIA_FORUM_TOPIC_BOARD	=> 'Topic',
 	NS_WIKIA_FORUM_BOARD_THREAD	=> 'Тема форума',
 );
 
