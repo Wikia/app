@@ -73,8 +73,14 @@ class MultipleUpload extends SpecialUpload {
 		// deal with session keys, if we have some pick the first one, for now
 		$vals = $request->getValues();
 		$fromSession = false;
+		$maxUploadFiles = MultipleUpload::getMaxUploadFiles();
+		$cntSessionKey = 0;
 		foreach ( $vals as $k => $v ) {
 			if ( preg_match( '@^wpSessionKey@', $k ) ) {
+				$cntSessionKey++;
+				if ( $cntSessionKey > $maxUploadFiles ) {
+					break;
+				}
 				$request->setVal( 'wpSessionKey', $v );
 				$fromSession = true;
 				$filenum = preg_replace( '@wpSessionKey@', '', $k );
@@ -92,7 +98,7 @@ class MultipleUpload extends SpecialUpload {
 				|| $request->getCheck( 'wpUploadIgnoreWarning' ) );
 
 		if ( !$fromSession ) {
-			for ( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
+			for ( $i = 0; $i < $maxUploadFiles; $i++ ) {
 				$this->mDesiredDestNames[$i] = $request->getText( 'wpDestFile'. $i );
 				if( !$this->mDesiredDestNames[$i] && $request->getFileName( 'wpUploadFile' . $i ) !== null ) {
 					$this->mDesiredDestNames[$i] = $request->getFileName( 'wpUploadFile' . $i );
@@ -250,7 +256,7 @@ class MultipleUpload extends SpecialUpload {
 
 		// store it in an array to show later
 		$this->mWarnings[] = $warningHtml;
-		$hashed = md5( $this->mDesiredDestName );
+		$hashed = md5( $this->mUpload->getTitle()->getDBKey() );
 		$this->mSessionKeys[$hashed] = $sessionKey;
 
 		# Indicate that we showed a form
