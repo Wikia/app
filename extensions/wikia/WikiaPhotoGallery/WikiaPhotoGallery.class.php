@@ -584,7 +584,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$out .= F::build('JSSnippets')->addToStack(
-			array( '/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js' ),
+			array( '/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', ),
 			array(),
 			'WikiaPhotoGalleryView.init'
 		);
