@@ -385,8 +385,8 @@ class FollowHelper {
 			'label-message' => "tog-hidefollowedpages",
 		);
 
-		global $wgEnableWallExt, $wgEnableUserPreferencesV2Ext;
-		if($wgEnableWallExt) {
+		global $wgEnableWallEngine, $wgEnableUserPreferencesV2Ext;
+		if($wgEnableWallEngine) {
 			if ($wgEnableUserPreferencesV2Ext) {
 				$section = 'emailv2/email-wall-v2';
 				$messageWallmy = 'tog-enotifmywall-v2';

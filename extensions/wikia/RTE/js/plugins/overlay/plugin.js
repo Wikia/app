@@ -60,8 +60,8 @@ CKEDITOR.plugins.add('rte-overlay',
 
 		// position overlay
 		overlay.css({
-			'left': position.left + 'px',
-			'top': parseInt(position.top + 2) + 'px'
+			'left': position.left,
+			'top': position.top
 		});
 
 		var menu = overlay.children().eq(0);
@@ -187,20 +187,14 @@ CKEDITOR.plugins.add('rte-overlay',
 		// render media caption
 		var captionContent = (typeof data.params != 'undefined') && (data.params.captionParsed || data.params.caption);
 		if (captionContent && isFramed) {
-			var captionTop = parseInt(node.outerHeight(false));
-			var captionWidth = parseInt(node.outerWidth(false) + 2);
-
-			captionTop -= 25; /* padding-top (25px) */
-			captionWidth -= 10; /* (padding (3px) + border(1px) + spacing(1px)) * 2 */
 
 			var caption = $('<div>').
 				addClass('RTEMediaCaption').
-				css({
-					top: captionTop + 'px',
-					left: '-1px'
-				}).
-				width(captionWidth).
 				html(captionContent).
+				css({
+					'top': node.outerHeight(false) - 23, // this is ghetto
+					'width': node.width()
+				}).
 				click(function(ev) {
 					// disable clicks on links inside caption
 					ev.preventDefault();
@@ -227,32 +221,6 @@ CKEDITOR.plugins.add('rte-overlay',
 			position.left += 2;
 
 		}
-		else {
-			// take image margins into consideration
-			if ( node.hasClass('thumb') || node.hasClass('frame') ) {
-				position.top += 6;
-
-				if (!node.hasClass('alignLeft')) {
-					position.left += 18;
-				}
-			}
-		}
-
-		// fix modify/remove for center aligned elements
-		if (node.hasClass('alignCenter')) {
-			var getLeftOffsetForAlignCenter = function(node) {
-				var nodeWidth = node.outerWidth(false),
-					nodeParentWidth = node.parent().outerWidth(false);
-				return (nodeParentWidth - nodeWidth) / 2 - 4;
-			};
-			position.left = getLeftOffsetForAlignCenter(node);
-			position.top -= 3;
-			if ( node.hasClass('thumb')) {
-				position.left -= 2;
-				position.top -= 3;
-			}
-		}
-
 		return position;
 	},
 

@@ -726,6 +726,9 @@ EOT
 			}
 
 			$link = Linker::linkKnown( Title::makeTitle( $element->page_namespace, $element->page_title ) );
+			/* begin wikia change bugid:70406 Fix broken "Board Thread" link on File pages */
+			wfRunHooks( "FilePageImageUsageSingleLink", array(&$link, &$element) );
+			/* end wikia change */
 			if ( !isset( $redirects[$element->page_title] ) ) {
 				$liContents = $link;
 			} else {

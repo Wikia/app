@@ -228,39 +228,49 @@ class AutoCreateWiki {
 	}
 
 	public static function checkDomainIsCorrect($sName, $sLang, $type = false ) {
-		global $wgUser;
-
 		wfProfileIn(__METHOD__);
 		$sResponse = "";
 
-		if ( strlen($sName) === 0 ) {
+		$sNameLength = strlen($sName);
+		$app = F::app();
+
+		if ( $sNameLength === 0 ) {
 			#-- empty field
-			$sResponse = wfMsg('autocreatewiki-empty-field');
-		} elseif ( strlen( $sName ) < 3 ) {
+			$sResponse = $app->wf->msg('autocreatewiki-empty-field');
+		} elseif ( $sNameLength < 3 ) {
 			#-- too short
-			$sResponse = wfMsg('autocreatewiki-name-too-short');
-		} elseif ( strlen( $sName ) > 50 ) {
+			$sResponse = $app->wf->msg('autocreatewiki-name-too-short');
+		} elseif ( $sNameLength > 50 ) {
 			#-- too short
-			$sResponse = wfMsg('autocreatewiki-name-too-long');
-		} elseif (preg_match('/[^a-z0-9-]/i', $sName)) {
+			$sResponse = $app->wf->msg('autocreatewiki-name-too-long');
+		} elseif (preg_match('/[^a-z0-9-]/i', $sName) ||
+			$sName[0] == '-' || $sName[$sNameLength - 1] == '-') {
 			#-- invalid name
-			$sResponse = wfMsg('autocreatewiki-bad-name');
-		} elseif ( in_array( $sName, array_keys( Language::getLanguageNames() )) ) {
+			$sResponse = $app->wf->msg('autocreatewiki-bad-name');
+		} elseif ( in_array( $sName, array_keys(static::getLanguageNames())) ) {
 			#-- invalid name
-			$sResponse = wfMsg('autocreatewiki-violate-policy');
-		} elseif ( !in_array('staff', $wgUser->getGroups()) && (self::checkBadWords($sName, "domain") === false) ) {
+			$sResponse = $app->wf->msg('autocreatewiki-violate-policy');
+		} elseif ( !in_array('staff', $app->wg->user->getGroups()) && (static::checkBadWords($sName, "domain") === false) ) {
 			#-- invalid name (bad words)
-			$sResponse = wfMsg('autocreatewiki-violate-policy');
+			$sResponse = $app->wf->msg('autocreatewiki-violate-policy');
 		} else {
-			$iExists = AutoCreateWiki::domainExists( $sName, $sLang, $type );
+			$iExists = static::checkDomainExists($sName, $sLang, $type);
 			if (!empty($iExists)) {
 				#--- domain exists
-				$sResponse = wfMsg('autocreatewiki-name-taken', ( !is_null($sLang) && ($sLang != 'en') ) ? sprintf("%s.%s", $sLang, $sName) : $sName );
+				$sResponse = $app->wf->msg('autocreatewiki-name-taken', ( !is_null($sLang) && ($sLang != 'en') ) ? sprintf("%s.%s", $sLang, $sName) : $sName );
 			}
 		}
 
 		wfProfileOut(__METHOD__);
 		return $sResponse;
+	}
+
+	protected static function getLanguageNames() {
+		return Language::getLanguageNames();
+	}
+
+	protected static function checkDomainExists($sName, $sLang, $type) {
+		return AutoCreateWiki::domainExists($sName, $sLang, $type);
 	}
 
 	public static function checkCategoryIsCorrect($sValue) {
@@ -279,7 +289,7 @@ class AutoCreateWiki {
 
 	public static function checkLanguageIsCorrect($sValue) {
 		wfProfileIn(__METHOD__);
-		$aLanguages = Language::getLanguageNames();
+		$aLanguages = self::getLanguageNames();
 		$sResponse = "";
 		if ($sValue == "") {
 			$sResponse = wfMsg('autocreatewiki-empty-language');

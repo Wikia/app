@@ -1,3 +1,5 @@
+@import 'skins/oasis/css/core/color';
+
 #ImageUpload {
 	height: 507px;
 	padding: 25px 10px 10px;
@@ -41,20 +43,6 @@
         left: -2px;
 }
 
-#ImageUploadClose {
-        right: 30px;
-        padding-left: 18px;
-        position: absolute;
-        top: 5px;
-}
-
-#ImageUploadClose img {
-        position: absolute;
-        cursor: pointer;
-        left: 1px;
-        top: 1px;
-}
-
 #ImageUploadBack {
 	left: 10px;
 	padding-left: 18px;
@@ -63,15 +51,6 @@
 	display: none;
 }
 #ImageUploadBack a {
-	color: #FFF;
-}
-#ImageUploadClose {
-	right: 30px;
-	padding-left: 18px;
-	position: absolute;
-	top: 5px;
-}
-#ImageUploadClose a {
 	color: #FFF;
 }
 
@@ -312,6 +291,7 @@
 	width: 350px;
 }
 .ImageUploadRight {
+	background: $color-page;
 	border-bottom: 1px solid #AAA;
 	padding: 10px;
 	position: absolute;

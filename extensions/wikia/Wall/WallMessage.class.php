@@ -495,13 +495,7 @@ class WallMessage {
 		return $res;
 	}
 
-	public function getMessagePageUrl($withoutAnchor = false) {
-		wfProfileIn(__METHOD__);
-		//local cache consider cache this in memc
-		if(!empty($this->messagePageUrl)) {
-			wfProfileOut(__METHOD__);
-			return $this->messagePageUrl[$withoutAnchor];
-		}
+	public function getMessagePageId() {
 
 		if($this->isMain()){
 			$id = $this->getId();
@@ -510,6 +504,19 @@ class WallMessage {
 			$id = $topParent->getId();
 		}
 
+		return $id;
+	}
+
+	public function getMessagePageUrl($withoutAnchor = false) {
+
+		wfProfileIn(__METHOD__);
+		//local cache consider cache this in memc
+		if(!empty($this->messagePageUrl)) {
+			wfProfileOut(__METHOD__);
+			return $this->messagePageUrl[$withoutAnchor];
+		}
+
+		$id = $this->getMessagePageId();
 
 		$postFix = $this->getPageUrlPostFix();
 		$postFix = empty($postFix) ? "":('#'.$postFix);
