@@ -26,7 +26,6 @@ class MultipleUpload extends SpecialUpload {
 	public function __construct( $request = null ) {
 		SpecialPage::__construct( 'MultipleUpload', 'upload' );
 
-		$this->loadRequest();
 		$this->mUploadHasBeenShown = false;
 		$this->mSessionKeys = array();
 		$this->mWarnings = array();
@@ -74,8 +73,14 @@ class MultipleUpload extends SpecialUpload {
 		// deal with session keys, if we have some pick the first one, for now
 		$vals = $request->getValues();
 		$fromSession = false;
+		$maxUploadFiles = MultipleUpload::getMaxUploadFiles();
+		$cntSessionKey = 0;
 		foreach ( $vals as $k => $v ) {
 			if ( preg_match( '@^wpSessionKey@', $k ) ) {
+				$cntSessionKey++;
+				if ( $cntSessionKey > $maxUploadFiles ) {
+					break;
+				}
 				$request->setVal( 'wpSessionKey', $v );
 				$fromSession = true;
 				$filenum = preg_replace( '@wpSessionKey@', '', $k );
@@ -93,7 +98,7 @@ class MultipleUpload extends SpecialUpload {
 				|| $request->getCheck( 'wpUploadIgnoreWarning' ) );
 
 		if ( !$fromSession ) {
-			for ( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
+			for ( $i = 0; $i < $maxUploadFiles; $i++ ) {
 				$this->mDesiredDestNames[$i] = $request->getText( 'wpDestFile'. $i );
 				if( !$this->mDesiredDestNames[$i] && $request->getFileName( 'wpUploadFile' . $i ) !== null ) {
 					$this->mDesiredDestNames[$i] = $request->getFileName( 'wpUploadFile' . $i );
@@ -144,7 +149,7 @@ class MultipleUpload extends SpecialUpload {
 		foreach ( $this->mSessionKeys as $f => $key ) {
 			$options['sessionkey' . $f] = $key;
 		}
-		for ( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
+		for ( $i = 0; $i < count($this->mDesiredDestNames); $i++ ) {
 			$options['destfile' . $i] = $this->mDesiredDestNames[$i];
 		}
 		$form = new MultiUploadForm( $options );
@@ -177,13 +182,13 @@ class MultipleUpload extends SpecialUpload {
 	 * Shows the "view X deleted revivions link"
 	 */
 	protected function showViewDeletedLinks() {
-		for ( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
-			$this->showViewDeletedLinksInner( $this->mDesiredDestNames[$i] );
+		foreach ( $this->mDesiredDestNames as $desiredDestName ) {
+			$this->showViewDeletedLinksInner( $desiredDestName );
 		}
 	}
 
 	protected function showViewDeletedLinksInner( $name ) {
-		$title = Title::makeTitleSafe( NS_FILE, $this->mDesiredDestName );
+		$title = Title::makeTitleSafe( NS_FILE, $name );
 		// Show a subtitle link to deleted revisions (to sysops et al only)
 		if( $title instanceof Title ) {
 			$count = $title->isDeleted();
@@ -199,11 +204,6 @@ class MultipleUpload extends SpecialUpload {
 				);
 				$this->getOutput()->addHTML( "<div id=\"contentSub2\">{$link}</div>" );
 			}
-		}
-
-		// Show the relevant lines from deletion log (for still deleted files only)
-		if( $title instanceof Title && $title->isDeletedQuick() && !$title->exists() ) {
-			$this->showDeletionLog( $this->getOutput(), $title->getPrefixedText() );
 		}
 	}
 
@@ -256,7 +256,8 @@ class MultipleUpload extends SpecialUpload {
 
 		// store it in an array to show later
 		$this->mWarnings[] = $warningHtml;
-		$this->mSessionKeys[$this->mUpload->getLocalFile()->getName()] = $sessionKey;
+		$hashed = md5( $this->mUpload->getTitle()->getDBKey() );
+		$this->mSessionKeys[$hashed] = $sessionKey;
 
 		# Indicate that we showed a form
 		return true;
@@ -337,12 +338,10 @@ class MultipleUpload extends SpecialUpload {
 	 */
 	protected function unsaveUploadedFile() {
 		$ret = true;
-		for ( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
-			if ( isset( $this->mUploads[$i] ) ) {
-				$this->mUpload = $this->mUploads[$i];
-				// return false if even one of them failed
-				$ret = $ret && parent::unsaveUploadedFile();
-			}
+		foreach ( $this->mUploads as $upload ) {
+			$this->mUpload = $upload;
+			// return false if even one of them failed
+			$ret = $ret && parent::unsaveUploadedFile();
 		}
 		return $ret;
 	}
@@ -370,7 +369,7 @@ class MultiUploadForm extends UploadForm {
 		// basically we want to map filenames to session keys here somehow
 		$this->mDestFiles = array();
 		for( $i = 0; $i < MultipleUpload::getMaxUploadFiles(); $i++ ) {
-			$this->mDestFiles[$i] = $options['destfile'. $i];
+			$this->mDestFiles[$i] = ( empty( $options['destfile'. $i] ) ) ? '' : $options['destfile'. $i];
 		}
 		$this->mSessionKeys = array();
 		foreach ( $options as $k => $v ) {
@@ -441,7 +440,7 @@ class MultiUploadForm extends UploadForm {
 	protected function getSourceSection() {
 		if ( sizeof( $this->mSessionKeys ) > 0 ) {
 			$data = array(
-				'wpSourceType' => array(
+				'SourceType' => array(
 					'type' => 'hidden',
 					'default' => 'Stash',
 				),
@@ -451,14 +450,17 @@ class MultiUploadForm extends UploadForm {
 				if ( $v == '' ) {
 					continue;
 				}
-				$data['wpDestFile' . $index] = array(
+				$data['DestFile' . $index] = array(
 					'type' => 'hidden',
 					'default' => $v,
 				);
-				$data['wpSessionKey' . $index] = array(
-					'type' => 'hidden',
-					'default' => $this->mSessionKeys['sessionkey' . $v],
-				);
+				$hashed = md5( $v );
+				if ( !empty($this->mSessionKeys['sessionkey' . $hashed]) ) {
+					$data['SessionKey' . $index] = array(
+						'type' => 'hidden',
+						'default' => $this->mSessionKeys['sessionkey' . $hashed],
+					);
+				}
 				$index++;
 			}
 			return $data;
