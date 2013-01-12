@@ -97,7 +97,7 @@ var MediaPlaceholder = {
 						$.loadYUI(),
 						$.getResources([ 
 							window.wgExtensionsPath + "/wikia/WikiaMiniUpload/js/WMU.js",
-							window.wgExtensionsPath + "/wikia/WikiaMiniUpload/css/WMU.css"
+							$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss')
 						])
 					).done(function() {
 						self.imageLoaded = true;

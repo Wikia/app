@@ -83,7 +83,7 @@ EditHub.prototype = {
 				$.loadYUI(),
 				$.getResources([
 					wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
-					wgExtensionsPath + '/wikia/WikiaMiniUpload/css/WMU.css',
+					$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
 					'/resources/wikia/libraries/aim/jquery.aim.js'
 				])
 			).then($.proxy(function() {
