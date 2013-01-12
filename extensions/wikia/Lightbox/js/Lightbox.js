@@ -736,7 +736,7 @@ var Lightbox = {
 			var stateObj = {
 					fileTitle: queryObj.file || null
 				},
-				stateUrl = window.location.pathname;
+				stateUrl = decodeURI(window.location.pathname);
 
 			stateUrl += newQuery;
 
