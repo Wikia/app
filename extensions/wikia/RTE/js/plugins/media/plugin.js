@@ -352,7 +352,7 @@ CKEDITOR.plugins.add('rte-media',
 
 			self.setupPlaceholder(target);
 		});
-
+		
 		// setup image / video placeholder separatelly
 		var images = placeholder.filter('.image-placeholder');
 		images.attr('title', RTE.getInstance().lang.imagePlaceholder.tooltip);
@@ -366,7 +366,7 @@ CKEDITOR.plugins.add('rte-media',
 
 		var videos = placeholder.filter('.video-placeholder');
 		videos.attr('title', RTE.getInstance().lang.videoPlaceholder.tooltip);
-		videos.bind('click.placeholder', function(ev) {
+		videos.bind('click.placeholder edit.placeholder', function(ev) {
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			var self = this;
 			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
