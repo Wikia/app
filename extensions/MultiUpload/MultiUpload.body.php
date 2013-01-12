@@ -199,11 +199,6 @@ class MultipleUpload extends SpecialUpload {
 				$this->getOutput()->addHTML( "<div id=\"contentSub2\">{$link}</div>" );
 			}
 		}
-
-		// Show the relevant lines from deletion log (for still deleted files only)
-		if( $title instanceof Title && $title->isDeletedQuick() && !$title->exists() ) {
-			$this->showDeletionLog( $this->getOutput(), $title->getPrefixedText() );
-		}
 	}
 
 	/**
