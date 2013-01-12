@@ -124,7 +124,7 @@ EOT
 	 * @param $target Mixed: user whose info we're looking up
 	 */
 	function showInfo( $target, $emailUser = "" ) {
-		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt, $wgEnableUserLoginExt;
+		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt, $wgEnableUserLoginExt, $wgExternalSharedDB;
 		//Small Stuff Week - adding table from Special:LookupContribs --nAndy
 		global $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgEnableLookupContribsExt;
 
@@ -137,9 +137,9 @@ EOT
 			 * find username by email
 			 */
 			$emailUser = htmlspecialchars( $emailUser );
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-			$oRes = $dbr->select( "user", "user_name", array( "user_email" => $target ), __METHOD__ );
+			$oRes = $dbr->select( '`user`', 'user_name', array( 'user_email' => $target ), __METHOD__ );
 
 			$loop = 0;
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {
