@@ -36,7 +36,7 @@ $namespaces['uk'] = array(
 );
 
 $namespaces['it'] = array(
-        NS_USER_WALL                    => 'Bacheca',
+        NS_USER_WALL                    => 'Bacheca'
 );
 
 $namespaces['ru'] = array(
