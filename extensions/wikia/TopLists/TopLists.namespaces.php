@@ -21,8 +21,8 @@ $namespaces['fr'] = array(
 );
 
 $namespaces['es'] = array(
-	NS_TOPLIST => 'Lista_de_top_10',
-	NS_TOPLIST_TALK => 'Lista_de_top_10_Discusión',
+	NS_TOPLIST => '10_Mejores',
+	NS_TOPLIST_TALK => '10_Mejores_Discusión',
 );
 
 $namespaces['ko'] = array(
@@ -32,4 +32,14 @@ $namespaces['ko'] = array(
 $namespaces['pl'] = array(
 	NS_TOPLIST => 'Lista_top_10',
 	NS_TOPLIST_TALK => 'Dyskusja_listy_top_10',
+);
+
+$namespaces['ru'] = array(
+	NS_TOPLIST => 'Список_Топ_10',
+	NS_TOPLIST_TALK => 'Обсуждение_списка_Топ_10',
+);
+
+$namespaces['uk'] = array(
+	NS_TOPLIST => 'Список_Топ_10',
+	NS_TOPLIST_TALK => 'Обговорення_списка_Топ_10',
 );
