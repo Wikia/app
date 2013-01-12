@@ -37,8 +37,6 @@ $namespaces['uk'] = array(
 
 $namespaces['it'] = array(
         NS_USER_WALL                    => 'Bacheca',
-        NS_USER_WALL_MESSAGE            => 'Thread',
-        NS_USER_WALL_MESSAGE_GREETING   => 'Message_Wall_Greeting'
 );
 
 $namespaces['ru'] = array(
