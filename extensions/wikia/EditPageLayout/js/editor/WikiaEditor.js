@@ -34,7 +34,7 @@
 				requires: [
 					$.loadYUI,
 					$.loadJQueryAIM,
-					wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/css/WMU.css',
+					$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
 					wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
 				]
 			}
