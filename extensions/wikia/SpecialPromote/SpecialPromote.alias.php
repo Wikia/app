@@ -28,6 +28,6 @@ $specialPageAliases['it'] = array(
 );
 
 /** Polish (Polski) */
-$specialPageAliases['lp'] = array(
+$specialPageAliases['pl'] = array(
 	'Promote' => array( 'Promocja' ),
 );
