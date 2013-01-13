@@ -510,6 +510,13 @@ $messages['ko'] = array(
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|더 많은 통계 보기]]',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'quickstats-header-date' => 'Dattum',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Gomada
  */

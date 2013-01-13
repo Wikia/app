@@ -3121,22 +3121,68 @@ Powód: $2',
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
+	'userrenametool' => "Cangé un nòm d'utent",
 	'renameuser' => "Arbatié n'utent",
+	'userrenametool-warning' => "<strong>Për piasì les atentament le anformassion ch'a ven-o</strong>:<p>Prima d'arbatié n'utent, për piasì sigurte che <strong>tute j'anformassion a sio giuste</strong>, e sigurte che <strong>l'utent a sapia che a peul andeje quaich temp për completé</strong>.
+<br />Për piasì fà tension che dovù a quaich fator estern la prima partdël process <strong>a podrìa finì ant na pagina bianca</strong>, che a veul pa dì che ël process a sia pa finì bin.</p><p>It peule trassé ël progress dël process via [[Special:Stafflog|registr dl'Echip]], ëdcò <strong>ël system at manderà n'email quand l'intera atività d'arbatié a sarà completà</strong>.</p>",
+	'userrenametool-desc' => "A gionta na [[Special:UserRenameTool|pagina special]] për arbatié n'utent  (necessari ël drit ''renameuser'') e për traté tùit ij dat relativ",
 	'userrenametool-old' => 'Stranòm corent:',
 	'userrenametool-new' => 'Stranòm neuv:',
 	'userrenametool-reason' => "Rason ch'as cambia stranòm:",
 	'userrenametool-move' => 'Tramuda ëdcò la pàgina utent e cola dle ciaciarade (con tute soe sotapàgine) a lë stranòm neuv',
+	'userrenametool-reserve' => 'Blòca lë stanòm vej da future utilisassion',
+	'userrenametool-notify-renamed' => "Manda un corel a l'utent arbatià quand fàit",
+	'userrenametool-warnings' => 'Atension:',
+	'userrenametool-requested-rename' => "L'utent $1 a l'ha ciamà n'arbatiagi",
+	'userrenametool-did-not-request-rename' => "L'utent $1 a l'ha pa ciamà n'arbatiagi",
+	'userrenametool-previously-renamed' => "L'utent $1 a l'ha già avù n'arbatiagi",
+	'userrenametool-phalanx-matches' => 'Filtr Phalanx corispondent a $1:',
+	'userrenametool-confirm' => "É!, arnòmina l'utent",
 	'userrenametool-submit' => 'Falo',
 	'userrenametool-errordoesnotexist' => 'A-i é pa gnun utent ch\'as ës-ciama "<nowiki>$1</nowiki>"',
 	'userrenametool-errorexists' => 'N\'utent ch\'as ës-ciama "<nowiki>$1</nowiki>" a-i é già',
 	'userrenametool-errorinvalid' => 'Lë stranòm "<nowiki>$1</nowiki>" a l\'é nen bon',
+	'userrenametool-errorinvalidnew' => '"<nowiki>$1</nowiki>" a l\'é pa un nòm utent neuv bon.',
 	'userrenametool-errortoomany' => "L'utent \"<nowiki>\$1</nowiki>\" a l'ha fait \$2 modìfiche, ch'a ten-a present che arbatié n'utent ch'a l'abia pì che \$3 modìfiche a podrìa feje un brut efet a le prestassion dël sit.",
+	'userrenametool-errorprocessing' => "Ël process d'arbatiagi për l'utent <nowiki>$1</nowiki> a <nowiki>$2</nowiki> a l'é già an camin.",
+	'userrenametool-errorblocked' => "L'utent <nowiki>$1</nowiki> a l'é blocà da <nowiki>$2</nowiki> për $3.",
+	'userrenametool-errorlocked' => "L'utent <nowiki>$1</nowiki> a l'é blocà.",
+	'userrenametool-errorbot' => "L'utent <nowiki>$1</nowiki> a l'é un trigomiro.",
+	'userrenametool-error-request' => "A l'é stàit-ie un problema con l'esecussion ëd l'arcesta.
+Për piasì torna andré e preuva torna.",
+	'userrenametool-error-same-user' => "It peule pa arbatié n'utent con ël midem nòm.",
+	'userrenametool-error-extension-abort' => "N'estension a vieta ël process d'arbatiagi.",
+	'userrenametool-error-cannot-rename-account' => "Arbatié ël cont utent dzor ël database global condivis a l'é falì.",
+	'userrenametool-error-cannot-create-block' => "Creassion dël blòch Phalanx a l'é falì.",
+	'userrenametool-warn-repeat' => 'Tension! L\'utent "<nowiki>$1</nowiki>" a l\'é già stàit arnominà an "<nowiki>$2</nowiki>".
+Continua ël tratament mach s\'it deuve agiorné quaich anformassion mancante.',
+	'userrenametool-warn-table-missing' => 'La tabela "<nowiki>$2</nowiki>" a esist pa ant ël database "<nowiki>$1</nowiki>."',
+	'userrenametool-info-started' => '$1 a l\'ha ancaminà a arbatié: $2 a $3 (registr: $4).
+Rason: "$5".',
+	'userrenametool-info-finished' => '$1 a l\'ha completà l\'arbatiagi: $2 a $3 (registr: $4).
+Rason: "$5".',
+	'userrenametool-info-failed' => '$1 A L\'HA FALI\' a arbatié: $2 a $3 (registr: $4).
+Rason: "$5".',
+	'userrenametool-info-wiki-finished' => '$1 a l\'ha arbatià $2 a $3 dzor $4.
+Rason: "$5".',
+	'userrenametool-info-wiki-finished-problems' => '$1 a l\'ha arbatià $2 a $3 dzor $4 con eror.
+Rason: "$5".',
+	'userrenametool-info-in-progress' => "Process d'arbatiagi an camin.
+Ël rest a sarà fàit an background.
+It saras notificà via corel quand a l'é completà.",
 	'userrenametool-success' => 'L\'utent "<nowiki>$1</nowiki>" a l\'é stait arbatià an "<nowiki>$2</nowiki>"',
+	'userrenametool-confirm-intro' => 'It veus-to pròpi fé sòn?',
+	'userrenametool-confirm-yes' => 'É!',
+	'userrenametool-confirm-no' => 'Nò',
 	'userrenametool-page-exists' => "La pàgina $1 a-i é già e as peul nen passe-ie dzora n'aotomàtich.",
 	'userrenametool-page-moved' => "La pàgina $1 a l'ha fait San Martin a $2.",
 	'userrenametool-page-unmoved' => "La pàgina $1 a l'é pa podusse tramudé a $2.",
+	'userrenametool-finished-email-subject' => "Process d'arbatiagi dl'utent completà për [$1]",
+	'userrenametool-finished-email-body-text' => 'Ël process ëd tramudé "<nowiki>$1</nowiki>" a "<nowiki>$2</nowiki>" a l\'é stàit completà.',
+	'userrenametool-finished-email-body-html' => 'Ël process ëd tramudé "<nowiki>$1</nowiki>" a "<nowiki>$2</nowiki>" a l\'é stàit completà.',
 	'userrenametool-logpage' => "Registr dj'arbatiagi",
 	'userrenametool-logpagetext' => "Sossì a l'é un registr dle modìfiche djë stranòm dj'utent",
 	'userrenametool-logentry' => 'a l\'ha arbatià $1 coma "$2"',
@@ -4102,6 +4148,14 @@ Lütfen geri dönüp tekrar deneyin.',
 	'userrenametool-log' => '{{PLURAL:$1|1 düzenleme|$1 düzenleme}}. Neden: $2',
 	'userrenametool-move-log' => 'Kullanıcıyı "[[User:$1|$1]]" isminden "[[User:$2|$2]]" ismine yeniden adlandırırken, sayfa otomatik olarak taşındı',
 	'right-renameuser' => 'Kullanıcıların adlarını değiştirir',
+);
+
+/** Tatar (Cyrillic script) (татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'userrenametool-confirm-yes' => 'Әйе',
+	'userrenametool-confirm-no' => 'Юк',
 );
 
 /** Ukrainian (українська)

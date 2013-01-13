@@ -162,6 +162,40 @@ $messages['ar'] = array(
 	'blog-avatar-changed-log' => 'أضاف أو غير الصورة الرمزية',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author AZISS
+ */
+$messages['az'] = array(
+	'userprofilepage-lightbox-interview-cancel' => 'İmtina',
+	'user-identity-box-edit' => 'Redaktə et',
+	'user-identity-box-avatar-choose-avatar' => 'Avatar seç',
+	'user-identity-box-avatar-cancel' => 'İmtina',
+	'user-identity-box-my-twitter' => 'Mənim Tvitterim',
+	'user-identity-box-my-website' => 'Mənim vebsaytım',
+	'user-identity-box-my-fb-page' => 'Mənim Facebookum',
+	'user-identity-box-fav-wikis' => 'Mənim sevimli vikilərim',
+	'user-identity-box-location' => '<span>Mən </span> $1<span>da yaşayıram</span>',
+	'user-identity-i-am' => '<span>Mən</span> $1',
+	'user-identity-box-group-sysop' => 'İdarəçi',
+	'user-identity-box-group-bureaucrat' => 'Bürokrat',
+	'user-identity-box-group-staff' => 'Əməkdaşlar',
+	'user-identity-box-group-helper' => 'Köməkçi',
+	'user-identity-box-zero-state-gender' => 'Cinsi',
+	'user-identity-box-zero-state-twitter' => 'Mənim Tvitterim',
+	'user-identity-box-zero-state-website' => 'Mənim vebsaytım',
+	'user-identity-box-zero-state-fb-page' => 'Mənim Facebook-um',
+	'user-identity-box-about-me' => 'Mənim haqqımda',
+	'user-identity-box-avatar' => 'Avatar',
+	'user-identity-box-about-name' => 'Sənin adın nədir?',
+	'user-identity-box-about-tweet' => 'Sənin Tvitter adın nədir?',
+	'user-identity-box-about-fav-wikis-refresh' => 'Yenilə',
+	'user-identity-box-invalid-fb-id-error' => 'Düzgün olmayan Facebook ID',
+	'userprofilepage-lightbox-about-me-cancel' => 'İmtina',
+	'userprofilepage-closing-popup-cancel' => 'İmtina',
+	'user-action-menu-delete' => 'Sil',
+	'user-action-menu-history' => 'Tarixçə',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -2586,6 +2620,28 @@ $messages['tr'] = array(
 	'user-identity-box-aka-label' => '$1 <span>olarak bilinir</span>',
 	'user-identity-box-fav-wikis' => 'Favori vikilerim',
 	'userprofilepage-closing-popup-cancel' => 'İptal',
+);
+
+/** Tatar (Cyrillic script) (татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'userprofilepage-lightbox-interview-cancel' => 'Баш тарту',
+	'user-identity-box-edit' => 'Үзгәртү',
+	'user-identity-box-avatar-cancel' => 'Баш тарту',
+	'user-identity-box-group-blocked' => 'Блоклау',
+	'user-identity-box-group-sysop' => 'Идарәче',
+	'user-identity-box-group-bureaucrat' => 'Бюрократ',
+	'user-identity-box-group-founder' => 'Нигез салучы',
+	'user-identity-box-group-staff' => 'Викия хезмәткәре',
+	'user-identity-box-zero-state-gender' => 'Җенес',
+	'user-identity-box-avatar' => 'Аватар',
+	'user-identity-box-about-fav-wikis-refresh' => 'Яңарту',
+	'userprofilepage-lightbox-about-me-cancel' => 'Баш тарту',
+	'userprofilepage-closing-popup-cancel' => 'Баш тарту',
+	'user-action-menu-edit' => 'Үзгәртү',
+	'user-action-menu-view-source' => 'Башлангыч кодны карау',
+	'user-action-menu-protect' => 'Якларга',
 );
 
 /** Ukrainian (українська)
