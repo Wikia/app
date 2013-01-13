@@ -243,8 +243,8 @@ $messages['nb'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'linksuggest-desc' => 'Verwijzingen voorstellen tijdens het bewerken',
-	'tog-disablelinksuggest' => 'Geen verwijzingssuggesties weergeven in bronmodus',
+	'linksuggest-desc' => 'Koppelingen voorstellen tijdens het bewerken',
+	'tog-disablelinksuggest' => 'Geen koppelingensuggesties weergeven in bronmodus',
 	'tog-redirected-from' => '&ndash; Doorverwezen vanaf $1',
 );
 

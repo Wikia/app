@@ -96,11 +96,13 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Shirayuki
  * @author Siebrand
  * @author Wyz
  */
 $messages['qqq'] = array(
-	'cnw-next' => 'Text for "Next" Button',
+	'cnw-next' => 'Text for "Next" Button.
+{{Identical|Next}}',
 	'cnw-back' => 'Text for "Back" Button
 {{Identical|Back}}',
 	'cnw-or' => 'Division for login or Facebook login',
@@ -143,7 +145,8 @@ Be carefull to keep it short as there are 3 successive balloon tips to display i
 	'cnw-desc-select-one' => 'Default empty label for category',
 	'cnw-desc-default-lang' => 'Letting user know which language this wiki will be in.  $1 will be wiki language',
 	'cnw-desc-change-lang' => 'Call to action to change the language',
-	'cnw-desc-lang' => 'Label for language',
+	'cnw-desc-lang' => 'Label for language.
+{{Identical|Language}}',
 	'cnw-desc-wiki-submit-error' => 'General error message for not selecting category',
 	'cnw-theme-headline' => 'H1 for this step',
 	'cnw-theme-creative' => 'Creative or instruction for this step following H1',
@@ -268,8 +271,8 @@ $messages['avk'] = array(
 	'cnw-welcome-headline' => 'Sendara ! $1 su zo redur',
 	'cnw-welcome-instruction1' => 'Ta loplekura va bu den bati wiki va vlevefo uzadjo vulegal.',
 	'cnw-welcome-instruction2' => 'Va bato uzadjo dene bati wiki witil, ta loplekura va warzafu bu kotviele rozanudal.',
-	'cnw-error-general' => 'Rotaca sokiyir bak redura va wiki. Vay fure gire laredul.',
-	'cnw-error-general-heading' => 'Rokla va redura va warzafi wiki',
+	'cnw-error-general' => 'Rotaca sokiyir bak redura va wiki. Vay fure gire laredul.', # Fuzzy
+	'cnw-error-general-heading' => 'Rokla va redura va warzafi wiki', # Fuzzy
 	'cnw-badword-header' => '"Whoa" batlize',
 	'cnw-error-wiki-limit-header' => 'Kima ke wiki zomena',
 	'cnw-error-wiki-limit' => 'Vieleafa kimara tir {{PLURAL:$1|$1 ta redura va wiki|$1 ta redura va wiki}}. Va tanoy viel abdi redura va ari wiki kel.',
@@ -438,8 +441,8 @@ Hizivait dre PayPal evit kaout ur wiki nevez ouzhpenn evit $4.95 ar miz nemetken
 	'cnw-welcome-instruction1' => "Klikit war ar bouton amañ dindan evit kregiñ da ouzhpennañ pajennoù d'ho wiki.",
 	'cnw-welcome-instruction2' => "Gwelet a reot ar bouton-mañ hed-ha-hed ho wiki, grit gantañ bep tro ha ma fello deoc'h ouzhpennañ ur bajenn nevez.",
 	'cnw-welcome-help' => 'Kavout a reot respontoù, kuzulioù ha kement zo war <a href="http://community.wikia.com">Kalonenn ar gumuniezh</a>.',
-	'cnw-error-general' => "Un dra bennak a zo aet a-dreuz pa veze krouet ho wiki. Mar plij adklaskit diwezhatoc'h.",
-	'cnw-error-general-heading' => "Ur fazi 'zo bet e-pad krouidigezh ur wiki nevez",
+	'cnw-error-general' => "Un dra bennak a zo aet a-dreuz pa veze krouet ho wiki. Mar plij adklaskit diwezhatoc'h.", # Fuzzy
+	'cnw-error-general-heading' => "Ur fazi 'zo bet e-pad krouidigezh ur wiki nevez", # Fuzzy
 	'cnw-badword-msg' => "Ac'hanta, mar plij chomit hep implijout gerioù vil pe difennet e deskrivadur ho wiki : $1",
 	'cnw-error-wiki-limit-header' => 'Bevenn ar wikioù bet tizhet',
 	'cnw-error-wiki-limit' => "Ac'hanta, bevennet eo ar c'hrouiñ wikioù da $1 wiki dre zen ha dre zevezh. Gortozit 24 eurvezh a-benn gellout krouiñ unan all.", # Fuzzy
@@ -492,6 +495,7 @@ $messages['cs'] = array(
  * @author Geitost
  * @author George Animal
  * @author LWChris
+ * @author Metalhead64
  * @author Quedel
  * @author Tiin
  */
@@ -558,8 +562,8 @@ Upgrade mit PayPal um ein werbefreies Wiki für nur $4,95 pro Monat zu bekommen!
 	'cnw-welcome-instruction1' => 'Klick auf die Schaltfläche unten, um Seiten zu deinem Wiki hinzufügen.',
 	'cnw-welcome-instruction2' => 'Du wirst diese Schaltfläche in deinem ganzen Wiki sehen, nutze sie jedes Mal wenn du eine neue Seite hinzufügen willst.',
 	'cnw-welcome-help' => 'Finde Antworten, Ratschläge und mehr auf <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Bei der Erstellung deines Wikis ist etwas schief gelaufen. Bitte versuche es später erneut.',
-	'cnw-error-general-heading' => 'Neues Wiki Erstellen Fehler',
+	'cnw-error-general' => 'Huch! Etwas ist auf unserer Website schief gelaufen. Bitte versuche es erneut oder <a href="/Special:Contact">kontaktiere uns</a>, wenn du Hilfe brauchst.',
+	'cnw-error-general-heading' => 'Wir bitten um Entschuldigung',
 	'cnw-badword-header' => 'Ganz ruhig',
 	'cnw-badword-msg' => 'Hallo, bitte verwende keines der folgenden Schimpfwörter oder unerlaubten Begriffe in deiner Wiki-Beschreibung: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki Limit erreicht',
@@ -696,8 +700,8 @@ Actualizar a través de PayPal para conseguir una wiki sin publicidad ¡por solo
 	'cnw-welcome-instruction1' => 'Ahora haz clic al botón de abajo para empezar a llenar tu wiki con información.',
 	'cnw-welcome-instruction2' => 'Verás este botón a través de tu wiki. Úsalo en cualquier momento cuando quieras agregar una página nueva.',
 	'cnw-welcome-help' => 'Encuentra respuestas, consejos, y más en la <a href="http://es.wikia.com">Comunidad Central</a>.',
-	'cnw-error-general' => 'Algo salió mal al crear tu wiki. Por favor, inténtalo de nuevo más tarde.',
-	'cnw-error-general-heading' => 'Error',
+	'cnw-error-general' => 'Algo salió mal al crear tu wiki. Por favor, inténtalo de nuevo más tarde.', # Fuzzy
+	'cnw-error-general-heading' => 'Error', # Fuzzy
 	'cnw-badword-header' => '¡Oops!',
 	'cnw-badword-msg' => 'Hola, por favor abstente de usar estas malas palabras o palabras prohibidas en la descripción de tu wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Has alcanzado el límite de wikis',
@@ -800,8 +804,8 @@ Päivitä PayPal avulla saadaksesi mainoksettoman wikin ainoastaan $4.95 kuukaud
 	'cnw-welcome-instruction1' => 'Klikkaa painiketta alta aloittaaksesi sivujen lisäämisen wikiisi.',
 	'cnw-welcome-instruction2' => 'Näet tämän painikkeen joka puolella wikissäsi, käytä sitä kun haluat lisätä uuden sivun.',
 	'cnw-welcome-help' => 'Löydä vastauksia, neuvoa, ja muuta <a href="http://community.wikia.com">Community Central:sta</a>',
-	'cnw-error-general' => 'Jokin meni vikaan wikin luonnissasi. Yritä uudestaan myöhemmin.',
-	'cnw-error-general-heading' => 'Virhe uuden wikin luonnissa',
+	'cnw-error-general' => 'Jokin meni vikaan wikin luonnissasi. Yritä uudestaan myöhemmin.', # Fuzzy
+	'cnw-error-general-heading' => 'Virhe uuden wikin luonnissa', # Fuzzy
 	'cnw-badword-header' => 'Hei siellä',
 	'cnw-badword-msg' => 'Hei, vältä käyttämästä näitä rumia sanoja tai kiellettyjä sanoja Wikisi kuvauksesta: $1',
 	'cnw-error-wiki-limit-header' => 'Wikien enimmäis määrä saavutettu',
@@ -883,8 +887,8 @@ Mettez à niveau via PayPal pour obtenir un wiki sans publicité pour seulement 
 	'cnw-welcome-instruction1' => 'Cliquez sur le bouton ci-dessous pour commencer à ajouter des pages à votre wiki.',
 	'cnw-welcome-instruction2' => 'Vous verrez ce bouton partout sur votre wiki, utilisez-le chaque fois que vous souhaitez ajouter une nouvelle page.',
 	'cnw-welcome-help' => 'Trouvez des réponses, conseils et plus sur sur <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Quelque chose s’est mal passé lors de la création de votre wiki. Veuillez réessayer plus tard.',
-	'cnw-error-general-heading' => 'Erreur lors de la création d’un nouveau wiki',
+	'cnw-error-general' => 'Quelque chose s’est mal passé lors de la création de votre wiki. Veuillez réessayer plus tard.', # Fuzzy
+	'cnw-error-general-heading' => 'Erreur lors de la création d’un nouveau wiki', # Fuzzy
 	'cnw-badword-header' => 'Eh Oh',
 	'cnw-badword-msg' => 'Bonjour, veuillez éviter d’utiliser des mots grossiers ou interdits dans la description de votre wiki : $1',
 	'cnw-error-wiki-limit-header' => 'Limite de wikis atteinte',
@@ -962,8 +966,8 @@ Faga a actualización a través do PayPal para conseguir un wiki libre de anunci
 	'cnw-welcome-instruction1' => 'Prema no botón que hai a continuación para comezar a engadir páxinas ao seu wiki.',
 	'cnw-welcome-instruction2' => 'Verá este botón ao longo do wiki; úseo cada vez que queira engadir unha nova páxina.',
 	'cnw-welcome-help' => 'Atope respostas, consellos e máis cousas na <a href="http://community.wikia.com">central da comunidade</a>.',
-	'cnw-error-general' => 'Algo foi mal durante a creación do seu wiki. Inténteo de novo máis tarde.',
-	'cnw-error-general-heading' => 'Erro durante a creación do novo wiki',
+	'cnw-error-general' => 'Vaites! Fixemos algo mal pola nosa parte! Inténteo de novo ou <a href="/Special:Contact">póñase en contacto con nós</a> para solicitar axuda.',
+	'cnw-error-general-heading' => 'Sentímolo',
 	'cnw-badword-header' => 'Vaites!',
 	'cnw-badword-msg' => 'Por favor, abstéñase de empregar palabras groseiras na descrición do seu wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Alcanzouse o límite de wikis',
@@ -1107,8 +1111,8 @@ Válts a PayPal használatával, hogy havi 4.95 dollárért hirdetésmentes wiki
 	'cnw-welcome-instruction1' => 'Kattints a lenti gombra, hogy elkezdd a lapok hozzáadását a wikidhez.',
 	'cnw-welcome-instruction2' => 'Ezt a gombot wiki-szerte láthatod, és bármikor használhatod új lap létrehozásához.',
 	'cnw-welcome-help' => 'Keress válaszokat, tanácsot és sok mást a <a href="http://community.wikia.com">Community Central</a> wikin.',
-	'cnw-error-general' => 'Valami hiba történt a wikid létrehozása közben. Kérlek, próbáld újra később.',
-	'cnw-error-general-heading' => 'Hiba új wiki létrehozásakor',
+	'cnw-error-general' => 'Valami hiba történt a wikid létrehozása közben. Kérlek, próbáld újra később.', # Fuzzy
+	'cnw-error-general-heading' => 'Hiba új wiki létrehozásakor', # Fuzzy
 	'cnw-badword-header' => 'Hoppácska',
 	'cnw-badword-msg' => 'Szia, légyszíves tartózkodj a csúnya és tiltott szavak használatától a Wiki leírásban: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki korlátot elérte',
@@ -1186,8 +1190,8 @@ Compra le actualisation per PayPal pro obtener un wiki sin publicitate pro solme
 	'cnw-welcome-instruction1' => 'Clicca sur le button hic infra pro comenciar a adder paginas a tu wiki.',
 	'cnw-welcome-instruction2' => 'Tu videra iste button ubique in tu wiki. Usa lo cata vice que tu vole adder un nove pagina.',
 	'cnw-welcome-help' => 'Trova responsas, consilios e plus in <a href="http://community.wikia.com">le centro del communitate</a>.',
-	'cnw-error-general' => 'Qualcosa errava durante le creation de tu wiki. Per favor reproba plus tarde.',
-	'cnw-error-general-heading' => 'Error de creation de nove wiki',
+	'cnw-error-general' => 'Qualcosa errava durante le creation de tu wiki. Per favor reproba plus tarde.', # Fuzzy
+	'cnw-error-general-heading' => 'Error de creation de nove wiki', # Fuzzy
 	'cnw-badword-header' => 'Stop!',
 	'cnw-badword-msg' => 'Salute, per favor abstine te de usar le sequente parolas improprie o bannite in le description de tu wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Limite de wikis attingite',
@@ -1273,8 +1277,8 @@ Effettua l'aggiornamento tramite PayPal per avere una wiki senza pubblicità a s
 	'cnw-welcome-instruction1' => 'Clicca il pulsante sottostante per iniziare a creare pagine nella tua wiki.',
 	'cnw-welcome-instruction2' => 'Vedrai questo pulsante in tutta la wiki: utilizzalo ogni volta che vuoi creare una nuova pagina.',
 	'cnw-welcome-help' => 'Puoi trovare risposte, consigli e altro nella <a href="http://it.community.wikia.com/wiki/Wiki_della_Community">Wiki della Community</a>.',
-	'cnw-error-general' => 'Qualcosa è andato storto durante la creazione della tua wiki. Si prega di riprovare più tardi.',
-	'cnw-error-general-heading' => 'Errore nella creazione di una nuova wiki',
+	'cnw-error-general' => 'Qualcosa è andato storto durante la creazione della tua wiki. Si prega di riprovare più tardi.', # Fuzzy
+	'cnw-error-general-heading' => 'Errore nella creazione di una nuova wiki', # Fuzzy
 	'cnw-badword-header' => 'Hey!',
 	'cnw-badword-msg' => 'Ciao, per favore non utilizzare parole non consone o proibite nella descrizione della tua wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Raggiunto il limite di wiki',
@@ -1337,8 +1341,8 @@ $messages['ja'] = array(
 	'cnw-welcome-instruction1' => '下のボタンをクリックすると、新しいページを作成できます。',
 	'cnw-welcome-instruction2' => 'このボタンはウィキ上の様々な場所にも設置されており、いつでも新しいページを作成できます。',
 	'cnw-welcome-help' => '助言を求めたいとき、質問したい時などは <a href="http://ja.wikia.com/">Community Central 日本語版</a> までお越しください。',
-	'cnw-error-general' => 'ウィキの作成中に問題が発生しました。時間をおいてもう一度お試しください。',
-	'cnw-error-general-heading' => 'ウィキ作成エラー',
+	'cnw-error-general' => 'ウィキの作成中に問題が発生しました。時間をおいてもう一度お試しください。', # Fuzzy
+	'cnw-error-general-heading' => 'ウィキ作成エラー', # Fuzzy
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1390,8 +1394,8 @@ $messages['km'] = array(
 	'cnw-welcome-instruction1' => 'ចុចលើប៊ូតុងខាងក្រោមដើម្បីចាប់ផ្ដើមបន្ថែមទំព័រទៅលើវិគីរបស់អ្នក។',
 	'cnw-welcome-instruction2' => 'អ្នកនឹងឃើញប៊ូតុងនេះគ្រប់ទីកន្លែងលើវិគីរបស់អ្នក។ សូមប្រើវានៅពេលណាក៏បានដើម្បីបន្ថែមទំព័រថ្មីមួយ។',
 	'cnw-welcome-help' => 'រកចំលើយ ដំបូន្មាន និង អ្វីៗបន្ថែមទៀតនៅលើ<a href="http://community.wikia.com">មជ្ឍមណ្ឌលសហគមន៍</a>។',
-	'cnw-error-general' => 'មានបញ្ហាពេលបង្កើតវិគីរបស់អ្នក។ សូមព្យាយាមម្ដងទៀតនៅពេលក្រោយ។',
-	'cnw-error-general-heading' => 'បញ្ហាក្នុងការបង្កើតវិគីថ្មី',
+	'cnw-error-general' => 'មានបញ្ហាពេលបង្កើតវិគីរបស់អ្នក។ សូមព្យាយាមម្ដងទៀតនៅពេលក្រោយ។', # Fuzzy
+	'cnw-error-general-heading' => 'បញ្ហាក្នុងការបង្កើតវិគីថ្មី', # Fuzzy
 );
 
 /** Korean (한국어)
@@ -1438,7 +1442,7 @@ $messages['ko'] = array(
 	'cnw-upgrade-now' => '지금 업그레이드합니다',
 	'cnw-upgrade-decline' => '괜찮습니다, 위키를 계속합니다',
 	'cnw-welcome-headline' => '축하합니다! $1(을)를 만들었습니다',
-	'cnw-error-general-heading' => '새 위키 만들기 오류',
+	'cnw-error-general-heading' => '새 위키 만들기 오류', # Fuzzy
 	'cnw-error-wiki-limit-header' => '위키 제한에 도달함',
 	'cnw-error-blocked-header' => '계정이 차단됨',
 );
@@ -1573,8 +1577,8 @@ $messages['mk'] = array(
 	'cnw-welcome-instruction1' => 'Стиснете на копчето подолу за да почнете да додавате страници на викито.',
 	'cnw-welcome-instruction2' => 'Ова копче ќе биде присутно ширум целото вики. Користете го секогаш кога сакате да додадете нова страница.',
 	'cnw-welcome-help' => 'Одговори на прашања, совети и друго ќе добиете на <a href="http://community.wikia.com">Центарот на заедницата</a>.',
-	'cnw-error-general' => 'Нешто тргна наопаку при создавањето на вашето вики. Обидете се подоцна.',
-	'cnw-error-general-heading' => 'Грешка при создавање на ново вики',
+	'cnw-error-general' => 'Нешто тргна наопаку од кај вас! Обидете се подоцна или <a href="/Special:Contact">конрактирајте нè</a> за помош.',
+	'cnw-error-general-heading' => 'Се извинуваме',
 	'cnw-badword-header' => 'Предупредување',
 	'cnw-badword-msg' => 'Здраво. Ве молиме да се воздржите од употреба на непристојни зборови или забранетите зборови наведени во описот на викито: $1',
 	'cnw-error-wiki-limit-header' => 'Границата на создадени викија е достигната',
@@ -1682,8 +1686,8 @@ Naik taraf wiki anda kepada wiki tanpa iklan dengan membayar $4.95 (USD) sebulan
 	'cnw-welcome-instruction1' => 'Klik butang di bawah untuk mulai membuka laman pada wiki anda.',
 	'cnw-welcome-instruction2' => 'Anda akan melihat butang ini di seluruh wiki. Gunakannya pada bila-bila masa anda ingin menambahkan laman baru.',
 	'cnw-welcome-help' => 'Cari jawapan, nasihat, dan banyak lagi di <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Kami menghadapi masalah ketika memproseskan penciptaan wiki anda. Sila cuba lagi lain kali.',
-	'cnw-error-general-heading' => 'Ralat Penciptaan Wiki Baru',
+	'cnw-error-general' => 'Kami menghadapi masalah ketika memproseskan penciptaan wiki anda. Sila cuba lagi lain kali.', # Fuzzy
+	'cnw-error-general-heading' => 'Ralat Penciptaan Wiki Baru', # Fuzzy
 	'cnw-badword-header' => 'Nanti kejap',
 	'cnw-badword-msg' => 'Hai, sila hindari penggunaan kata-kata kesat/terlarang dalam Penerangan Wiki anda: $1',
 	'cnw-error-wiki-limit-header' => 'Had wiki dicapai',
@@ -1762,8 +1766,8 @@ Oppgrader gjennom PayPal for å få en reklamefri wiki til kun $4,95 per måned!
 	'cnw-welcome-instruction1' => 'Trykk på knappen under for å begynne å legge til siden på wikien din.',
 	'cnw-welcome-instruction2' => 'Du vil se denne knappen på wikien din, bruk den når du vil legge til en ny side.',
 	'cnw-welcome-help' => 'Finn svar, råd, og mer på <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Noe gikk galt under opprettning av wikien din. Vennligst prøv igjen senere.',
-	'cnw-error-general-heading' => 'Opprett ny wiki-feil',
+	'cnw-error-general' => 'Noe gikk galt under opprettning av wikien din. Vennligst prøv igjen senere.', # Fuzzy
+	'cnw-error-general-heading' => 'Opprett ny wiki-feil', # Fuzzy
 	'cnw-badword-header' => 'Hei der',
 	'cnw-badword-msg' => 'Hei, vennligst unngå å bruke disse grove eller forbudte ordene i beskrivelsen av wikien: $1',
 	'cnw-error-wiki-limit-header' => 'Wikigrense nådd',
@@ -1841,8 +1845,8 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 	'cnw-welcome-instruction1' => "Klik op de onderstaande knop om pagina's aan uw wiki toe te voegen.",
 	'cnw-welcome-instruction2' => 'U ziet deze knop overal in uw wiki. Gebruik hem als u een nieuwe pagina wilt toevoegen.',
 	'cnw-welcome-help' => 'Antwoorden, advies en meer op <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van uw wiki. Probeer het later opnieuw.',
-	'cnw-error-general-heading' => 'Fout bij het aanmaken van een nieuwe wiki',
+	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van uw wiki. Probeer het later opnieuw of <a href="/Special:Contact">neem contact met ons op</a> voor hulp.',
+	'cnw-error-general-heading' => 'Fout tijdens het aanmaken van een nieuwe wiki',
 	'cnw-badword-header' => 'Pas op!',
 	'cnw-badword-msg' => 'Hallo. Probeer u te onthouden van het gebruiken van ongewenste woorden in uw wikibeschrijving: $1',
 	'cnw-error-wiki-limit-header' => 'De wikilimiet is bereikt',
@@ -1878,7 +1882,7 @@ $messages['nl-informal'] = array(
 	'cnw-upgrade-headline' => 'Wil je upgraden?',
 	'cnw-welcome-instruction1' => "Klik op de onderstaande knop om pagina's aan je wiki toe te voegen.",
 	'cnw-welcome-instruction2' => 'Je ziet deze knop overal in je wiki. Gebruik hem als je een nieuwe pagina wilt toevoegen.',
-	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van je wiki. Probeer het later opnieuw.',
+	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van je wiki. Probeer het later opnieuw.', # Fuzzy
 	'cnw-error-wiki-limit' => "Hoi. Je mag maximaal $1 {{PLURAL:$1|wiki|wiki's}} per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
 );
 
@@ -1957,8 +1961,8 @@ Uaktualnij poprzez PayPal aby utworzyć wiki wolną od reklam za jedyne $4.95 na
 	'cnw-welcome-instruction1' => 'Kliknij na poniższy przycisk aby zacząć dodawanie stron do Twojej wiki',
 	'cnw-welcome-instruction2' => 'Znajdziesz ten przycisk w wielu miejscach na Twojej wiki, użyj go, jeżeli chcesz dodać nową stronę.',
 	'cnw-welcome-help' => 'Znajdź odpowiedzi, porady i więcej w <a href="http://spolecznosc.wikia.com">Centrum Społeczności</a>.',
-	'cnw-error-general' => 'Coś poszło nie tak podczas tworzenia wiki. Proszę spróbuj ponownie później.',
-	'cnw-error-general-heading' => 'Błąd kreatora wiki',
+	'cnw-error-general' => 'Coś poszło nie tak podczas tworzenia wiki. Spróbuj ponownie później lub <a href="/Special:Contact">skontaktuj się z nami</a>.',
+	'cnw-error-general-heading' => 'Przepraszamy',
 	'cnw-badword-header' => 'Uwaga',
 	'cnw-badword-msg' => 'Witaj, proszę nie używaj tych niedozwolonych słów w opisie wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Osiągnięto limit wiki',
@@ -1968,6 +1972,85 @@ Uaktualnij poprzez PayPal aby utworzyć wiki wolną od reklam za jedyne $4.95 na
 	'cnw-error-torblock' => 'Tworzenie wiki za pośrednictwem Tor Network nie jest dozwolone.',
 	'cnw-error-bot' => 'Wykryto, że to konto może być botem. Jeżeli popełniono błąd, proszę daj nam znać: [http://www.wikia.com/Special:Contact/general Kontakt]',
 	'cnw-error-bot-header' => 'Zostałeś zidentyfikowany jako bot',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|Creassion guidà ëd Wiki]]',
+	'cnw-next' => 'Apress',
+	'cnw-back' => 'André',
+	'cnw-or' => 'o',
+	'cnw-title' => 'Crea Neuva Wiki',
+	'cnw-name-wiki-headline' => 'Ancamin-a na Wiki',
+	'cnw-name-wiki-creative' => "Wikia a l'é ël mej pòst për fé un sit dla Ragnà e chërse na comunità d'antorn a lòn ch'at pias.",
+	'cnw-name-wiki-label' => 'Daje un nòm a toa wiki',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => "Daje n'adrëssa a toa wiki",
+	'cnw-name-wiki-submit-error' => 'Contacc! It deuve vempì tute doe le casele dzora për andé anans.',
+	'cnw-login' => 'Intra',
+	'cnw-signup' => 'Creé un Cont',
+	'cnw-signup-prompt' => "Dabzògn d'un cont?",
+	'cnw-call-to-signup' => 'Registr-te belessì',
+	'cnw-login-prompt' => 'Ha-lo già un cont?',
+	'cnw-call-to-login' => 'Intra belessì',
+	'cnw-auth-headline' => 'Intra',
+	'cnw-auth-headline2' => "Ch'as Anscriva",
+	'cnw-auth-creative' => 'Intra con tò cont për continué a fé toa wiki.',
+	'cnw-auth-signup-creative' => "It l'has dabzògn d'un cont për continué a fé toa wiki.<br />A-i và mach na minuta për iscrivte!",
+	'cnw-auth-facebook-signup' => 'Anscriv-se con Facebook',
+	'cnw-auth-facebook-login' => "Ch'a intra con Facebook",
+	'cnw-userauth-headline' => "A l'ha-lo un cont?",
+	'cnw-userauth-creative' => 'Intra',
+	'cnw-userauth-marketing-heading' => 'Ha-lo nen un cont?',
+	'cnw-userauth-marketing-body' => "It l'has dabzògn d'un cont për creé na wiki dzor Wikia. A-i và mach na minuta për [[Special:UserSignup|registrete]]!",
+	'cnw-userauth-signup-button' => "Ch'as anscriva",
+	'cnw-desc-headline' => "A propòsit ëd còs a l'é-lo toa wiki?",
+	'cnw-desc-creative' => 'Descriv tò argoment',
+	'cnw-desc-placeholder' => 'Sòn a aparirà dzor la pagina prinsipal ëd toa wiki.',
+	'cnw-desc-tip1' => 'Sugeriment',
+	'cnw-desc-tip1-creative' => 'Dòvra sto spassi për parlé a la gent a propòsit ëd toa wiki ant na fras o doe',
+	'cnw-desc-tip2' => 'Psst',
+	'cnw-desc-tip2-creative' => 'Daje ai tò visitador quaich detaj specìfich a propòsit ëd tò soget',
+	'cnw-desc-tip3' => 'Për sugeriment',
+	'cnw-desc-tip3-creative' => "Faje savèj a la gent ch'a peulo giuté toa wiki a chërse modificand e giontand pagine",
+	'cnw-desc-choose' => 'Sern na categorìa',
+	'cnw-desc-select-one' => 'Sern-ne un-a',
+	'cnw-desc-default-lang' => 'Toa wiki a sarà an $1',
+	'cnw-desc-change-lang' => 'cambia',
+	'cnw-desc-lang' => 'Lenga',
+	'cnw-desc-wiki-submit-error' => 'Për piasì sërn na categorìa',
+	'cnw-theme-headline' => 'Sern un tema',
+	'cnw-theme-creative' => 'Sern un tema sota, it podras vëdde na peuva ëd minca tema an selessionandlo.',
+	'cnw-theme-instruction' => 'It peule ëdcò disegné tò tema pi tard andand su "Ij mè utiss".',
+	'cnw-upgrade-headline' => 'It veus-to agiorné?',
+	'cnw-upgrade-creative' => 'Agiorné a Wikia Plus al përmëtt ëd gavé la reclam da <span class="wiki-name"></span>, oferta ëd na vòta sola mach disponibla ai neuv fondator.',
+	'cnw-upgrade-marketing' => "Wikia Plus a l'é na gransolussion për:<ul>
+<li>Wiki Professionaj</li>
+<li>Sensa profit</li>
+<li>Famije</li>
+<li>Scòle</li>
+<li>Proget përsonaj</li>
+</ul>
+Agiorna via PayPal për avèj na wiki libra da reclam për mach $4.95 al mèis!",
+	'cnw-upgrade-now' => 'Agiorna adess',
+	'cnw-upgrade-decline' => 'Nò mersì, continua dzor mia wiki',
+	'cnw-welcome-headline' => "Congratulassion! $1 a l'é stàita creà",
+	'cnw-welcome-instruction1' => 'Sgnaca ël boton sota për ancaminé a gionté pagine a toa wiki.',
+	'cnw-welcome-instruction2' => 'It vëddras sto boton travers toa wiki, dòvrlo minca vira it veule gionté na neuva pagina.',
+	'cnw-welcome-help' => 'treuva arspòste, avis, e pi dzor <a href="http://community.wikia.com">Comunità Central</a>.',
+	'cnw-error-general' => 'Contacc, quaicòs a l\'é andàit da toa banda! mal an creand toa wiki. Për piasì preuva torna pi tard, o <a href="/Special:Contact">contatne</a> për agiut.',
+	'cnw-error-general-heading' => 'Scus-ne',
+	'cnw-badword-header' => 'Hey là',
+	'cnw-badword-msg' => 'Cerea, për piasì astente da dovré ste brute paròle o paròle vietà ant toa Descrission ëd Wiki: $1',
+	'cnw-error-wiki-limit-header' => 'Rivà al lìmit ëd Wiki',
+	'cnw-error-wiki-limit' => "Cerea, it ses limità a {{PLURAL:$1|$1 creassion ëd wiki}} për di. Speta 24 ore prima ëd creé n'àutra wiki.",
+	'cnw-error-blocked-header' => 'Cont blocà',
+	'cnw-error-blocked' => "It ses stàit blocà da $1. La rason dàita a l'era: $2. (ID blòch për arferiment: $3)",
+	'cnw-error-torblock' => "Creé Wiki via la Rej Tor a l'é pa përmëttù.",
+	'cnw-error-bot' => "I l'oma trovà che it peule esse un trigomiro. S'i l'oma fàit n'eror, për piasì contatne dëscrivend ch'it ses stàit falsament andividuà com un trigomiro, e it giuteroma a creé toa wiki: [http://www.wikia.com/Special:Contact/general ContatNe]",
+	'cnw-error-bot-header' => 'It ses stàit andividuà com un trigomiro',
 );
 
 /** Pashto (پښتو)
@@ -2079,8 +2162,8 @@ Adopte esta versão através do PayPal para ter uma wiki livre de anúncios por 
 	'cnw-welcome-instruction1' => 'Clique o botão abaixo para começar a criar páginas na sua wiki.',
 	'cnw-welcome-instruction2' => 'Verá este botão em todas as páginas da wiki; use-o em qualquer altura para criar uma página nova.',
 	'cnw-welcome-help' => 'Encontrará respostas, conselhos e mais na <a href="http://pt.wikia.com">Comunidade Central</a>.',
-	'cnw-error-general' => 'Ocorreu um erro não identificado ao criar a sua wiki. Tente novamente mais tarde, por favor.',
-	'cnw-error-general-heading' => 'Erro ao Criar Wiki Nova',
+	'cnw-error-general' => 'Ocorreu um erro não identificado ao criar a sua wiki. Tente novamente mais tarde, por favor.', # Fuzzy
+	'cnw-error-general-heading' => 'Erro ao Criar Wiki Nova', # Fuzzy
 	'cnw-badword-header' => 'Atenção',
 	'cnw-badword-msg' => 'Não use estas palavras impróprias ou proibidas na Descrição da Wiki, por favor: $1',
 	'cnw-error-wiki-limit-header' => 'O limite de wikis foi atingido',
@@ -2158,8 +2241,8 @@ Adote esta versão através do PayPal para ter uma wiki livre de anúncios por a
 	'cnw-welcome-instruction1' => 'Clique o botão abaixo para começar a criar páginas na sua wiki.',
 	'cnw-welcome-instruction2' => 'Verá este botão em toda a wiki; use-o em qualquer altura para criar uma página nova.',
 	'cnw-welcome-help' => 'Encontrará respostas, conselhos e mais na <a href="http://pt.wikia.com">Comunidade Central</a>.',
-	'cnw-error-general' => 'Algo deu errado ao criar a sua wiki. Por favor, tente novamente mais tarde.',
-	'cnw-error-general-heading' => 'Erro ao Criar uma Wiki Nova',
+	'cnw-error-general' => 'Algo deu errado ao criar a sua wiki. Por favor, tente novamente mais tarde.', # Fuzzy
+	'cnw-error-general-heading' => 'Erro ao Criar uma Wiki Nova', # Fuzzy
 	'cnw-badword-header' => 'Atenção',
 	'cnw-badword-msg' => 'Olá, por favor não use estas palavras grosseiras ou banidas na sua Descrição da Wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Limite de Wikis atingido',
@@ -2218,6 +2301,7 @@ Actualizează prin PayPal pentru a obţine un wiki cu reclame gratis pentru doar
 
 /** Russian (русский)
  * @author DCamer
+ * @author Ignatus
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -2283,8 +2367,8 @@ $messages['ru'] = array(
 	'cnw-welcome-instruction1' => 'Нажмите на кнопку ниже, чтобы начать добавлять страницы на вики.',
 	'cnw-welcome-instruction2' => 'Вы будете видеть эту кнопку всегда и можете использовать её в любое время, когда захотите добавить новую страницу.',
 	'cnw-welcome-help' => 'Найти ответы, советы и многое другое на <a href="http://community.wikia.com">Центральной вики</a>.',
-	'cnw-error-general' => 'Что-то пошло не так при создании вики. Пожалуйста, повторите попытку позже.',
-	'cnw-error-general-heading' => 'Ошибка при создании новой вики',
+	'cnw-error-general' => 'Оппаньки, что-то тут не сработало с нашей стороны!  Пожалуйста, попробуйте еще раз или <a href="/Special:Contact">свяжитесь с нами</a> для поддержки.',
+	'cnw-error-general-heading' => 'Наши извинения',
 	'cnw-badword-header' => 'Эй там',
 	'cnw-badword-msg' => 'Пожалуйста, воздержитесь от использования плохих или запрещенных слов в описании вики: $1',
 	'cnw-error-wiki-limit-header' => 'Лимит создания вики',
@@ -2357,8 +2441,8 @@ $messages['sr-ec'] = array(
 	'cnw-welcome-instruction1' => 'Кликните на дугме испод да почнете с додавањем страница на вики.',
 	'cnw-welcome-instruction2' => 'Ово дугме ће бити присутно широм викија. Користите га сваки пут када желите да додате нову страницу.',
 	'cnw-welcome-help' => 'Одговори на питања, савети и друго се налазе на <a href="http://community.wikia.com">Центру заједнице</a>.',
-	'cnw-error-general' => 'Дошло је до грешке при стварању викија. Покушајте касније.',
-	'cnw-error-general-heading' => 'Грешка при стварању новог викија',
+	'cnw-error-general' => 'Дошло је до грешке при стварању викија. Покушајте касније.', # Fuzzy
+	'cnw-error-general-heading' => 'Грешка при стварању новог викија', # Fuzzy
 	'cnw-badword-header' => 'Упозорење',
 	'cnw-badword-msg' => 'Здраво. Молимо вас да се уздржите од употребе непристојних и забрањених речи које се налазе у опису викија: $1',
 	'cnw-error-wiki-limit-header' => 'Достигнуто је ограничење направљених викија',
@@ -2439,8 +2523,8 @@ Uppgradera via PayPal för att få en reklamfri wiki för endast $4,95 per måna
 	'cnw-welcome-instruction1' => 'Klicka på knappen nedan för att börja lägga till sidor på din wiki.',
 	'cnw-welcome-instruction2' => 'Du kommer att se den här knappen på din wiki, använd den när du vill lägga till en ny sida.',
 	'cnw-welcome-help' => 'Hitta svar, råd och mer på <a href="http://community.wikia.com">Community Central</a> .',
-	'cnw-error-general' => 'Någonting gick fel när du skapade din wiki. Var god försök igen senare.',
-	'cnw-error-general-heading' => 'Skapa ny Wiki-fel',
+	'cnw-error-general' => 'Hoppsan, någonting gick fel på vår sida! Var god försök igen eller <a href="/Special:Contact">kontakta oss</a> för hjälp.',
+	'cnw-error-general-heading' => 'Vi beklagar',
 	'cnw-badword-header' => 'Hallå där',
 	'cnw-badword-msg' => 'Hej, var god avstå från att använda dessa grova eller fula ord i beskrivningen av din wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki-gräns nådd',
@@ -2546,8 +2630,8 @@ Magpataas ng antas sa pamamagitan ng PayPal upang makakuha ng wiking walang anun
 	'cnw-welcome-instruction1' => 'Pindutin ang pindutang nasa ibaba upang makapagsimulang magdagdag ng mga pahina sa wiki mo.',
 	'cnw-welcome-instruction2' => 'Makikita mo ang pindutang ito sa kabuuan ng wiki mo, gamitin ito anumang oras na nais mong magdagdag ng isang bagong pahina.',
 	'cnw-welcome-help' => 'Maghanap ng mga sagot, mga payo, at marami pa sa <a href="http://community.wikia.com">Lunduyan ng Pamayanan</a>.',
-	'cnw-error-general' => 'May masamang bagay na nangyari habang nililikha ang wiki mo. Paki subukan ulit mamaya.',
-	'cnw-error-general-heading' => 'Kamalian sa Paglikha ng Bagong Wiki',
+	'cnw-error-general' => 'May masamang bagay na nangyari habang nililikha ang wiki mo. Paki subukan ulit mamaya.', # Fuzzy
+	'cnw-error-general-heading' => 'Kamalian sa Paglikha ng Bagong Wiki', # Fuzzy
 	'cnw-badword-header' => 'Aba riyan',
 	'cnw-badword-msg' => 'Hoy, paki tumigil mula sa paggamit ng ganitong masasamang mga salita o ipinagbabawal na mga salita sa loob ng iyong Paglalarawan ng Wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Naabot na ang hangganan ng wiki',
@@ -2629,11 +2713,18 @@ $messages['tt-cyrl'] = array(
 	'cnw-desc-tip2' => 'Псс',
 	'cnw-desc-tip2-creative' => 'Вики кунакларына сезнең теманың кайбер үзенчәлекләрен сөйләп китегез.',
 	'cnw-desc-tip3' => 'Киңәш',
+	'cnw-desc-tip3-creative' => 'Кешеләр, мәкаләләр өстәп һәм аларны төзәтеп, сезнең викинең үсешенә ярдәм итә алуларын белергә тиеш.',
+	'cnw-desc-choose' => 'Төркем сайлагыз',
+	'cnw-desc-select-one' => 'Берсен сайлагыз',
+	'cnw-desc-default-lang' => 'Сезнең вики $1 бүлегендә булачак',
 	'cnw-desc-change-lang' => 'үзгәртү',
 	'cnw-desc-lang' => 'Тел',
 	'cnw-desc-wiki-submit-error' => 'Зинһар өчен, төркем сайлагыз',
 	'cnw-theme-headline' => 'Тема сайлау',
+	'cnw-theme-creative' => 'Теманы астарак сайлагыз; сез төгәл карар кабул иткәнче, бөтен теманы да карап чыга аласыз.',
+	'cnw-theme-instruction' => 'Соңрак, "Минем коралларым"а кереп, сез үзегезнең темаларыгызны ясый аласыз.',
 	'cnw-upgrade-headline' => 'Сез яңартырга телисезме?',
+	'cnw-upgrade-creative' => 'Wikia Plus дәрәҗәсенә кадәр яңарту <span class="wiki-name"></span> проектыннан рекламаны бетерәчәк, бу тәкъдим бары тик яңа нигезләүчеләр өчен генә гамәлдә.',
 	'cnw-upgrade-marketing' => 'Wikia Plus түбәндәгеләр өчен иң уңай нәрсә:<ul>
 <li>Профессиональ викилар </li>
 <li>Табышсыз оешмалар</li>
@@ -2643,6 +2734,22 @@ $messages['tt-cyrl'] = array(
 </ul>
 Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-upgrade-now' => 'Хәзер яңартырга',
+	'cnw-upgrade-decline' => 'Юк, кирәкми, рәхмәт; вики ясауны дәвам итәргә',
+	'cnw-welcome-headline' => 'Котлыйбыз! $1 ачылды!',
+	'cnw-welcome-instruction1' => 'Викигә мәкаләләр өстәр өчен, астагы төймәгә басыгыз',
+	'cnw-welcome-instruction2' => 'Сез бу төймәне һәрвакыт күрәчәксез һәм яңа мәкалә өстәргә теләгәндә куллана аласыз',
+	'cnw-welcome-help' => 'Җаваплар, киңәшләр һәм башка бик күп кирәк нәрсәләрне <a href="http://community.wikia.com">Үзәк викидә</a> табарсыз.',
+	'cnw-error-general' => 'Викине ясаганда ниндидер хата киткән. Зинһар өчен, соңрак кабатлап карагыз.', # Fuzzy
+	'cnw-error-general-heading' => 'Яңа вики ясаганда хата', # Fuzzy
+	'cnw-badword-header' => 'Әй, кем анда!',
+	'cnw-badword-msg' => 'Зинһар өчен, викине тасвирлаганда начар яки тыелган сүзләр кулланудан сакланыгыз: $1',
+	'cnw-error-wiki-limit-header' => 'Вики ясау лимиты',
+	'cnw-error-wiki-limit' => 'Сәлам, сез бер көнгә {{PLURAL:$1|$1 вики}} ясауның чигенә килеп җиттегез. Яңа вики ясаганчы, 24 сәгать сабыр итеп торыгыз...',
+	'cnw-error-blocked-header' => 'Хисап язмасы тыелды',
+	'cnw-error-blocked' => 'Сезне $1 тыйды. Сәбәбе: $2. (Мәгълүмат өчен: $3)',
+	'cnw-error-torblock' => 'Tor челтәре аша вики ясау рөхсәт ителми.',
+	'cnw-error-bot' => 'Без сезне бот дип уйлыйбыз. Әгәр ялгышабыз икән, зинһар өчен, безнең белән элемтәгә керегез һәм бот булмавыгызны дәлилләгез, аннары без сезгә яңа вики ясарга ярдәм итәрбез: [http://www.wikia.com/Special:Contact/general безнең белән элемтә]',
+	'cnw-error-bot-header' => 'Сез бот буларак танылдыгыз',
 );
 
 /** Ukrainian (українська)
@@ -2702,8 +2809,8 @@ $messages['uk'] = array(
 	'cnw-welcome-instruction1' => 'Натисніть на кнопку нижче, щоб почати додавати сторінки на вікі.',
 	'cnw-welcome-instruction2' => 'Ви будете бачити цю кнопку завжди і можете використовувати її в будь-який час, коли захочете додати нову сторінку.',
 	'cnw-welcome-help' => 'Знайті відповіді, поради та багато іншого на <a href="http://community.wikia.com">Центральній вікі</a>.',
-	'cnw-error-general' => 'Сталась якась лажа. Спробуйте пізніше.',
-	'cnw-error-general-heading' => 'Система облажалася',
+	'cnw-error-general' => 'Сталась якась лажа. Спробуйте пізніше.', # Fuzzy
+	'cnw-error-general-heading' => 'Система облажалася', # Fuzzy
 	'cnw-badword-header' => 'Шо за фігня?',
 	'cnw-badword-msg' => 'Будь ласка, не вживайте русизмів на $1 !',
 	'cnw-error-wiki-limit-header' => 'Ліміт створення вікі',
@@ -2792,8 +2899,8 @@ Nâng cấp thông qua PayPal để có được một quảng cáo wiki miễn 
 	'cnw-welcome-instruction1' => 'Nhấn vào nút dưới đây để bắt đầu thêm các trang cho wiki của bạn.',
 	'cnw-welcome-instruction2' => 'Bạn sẽ thấy nút này trong suốt wiki của bạn, sử dụng nó bất cứ lúc nào bạn muốn thêm một trang mới.',
 	'cnw-welcome-help' => 'Tìm câu trả lời, lời khuyên và nhiều hơn trên <a href="http://vi.wikia.com/wiki/Trang_Chính">Wikia Tiếng Việt</a>.',
-	'cnw-error-general' => 'Một cái gì đó đã xảy ra trong khi tạo ra wiki của bạn. Xin vui lòng thử lại sau.',
-	'cnw-error-general-heading' => 'Lỗi tạo Wiki mới',
+	'cnw-error-general' => 'Một cái gì đó đã xảy ra trong khi tạo ra wiki của bạn. Xin vui lòng thử lại sau.', # Fuzzy
+	'cnw-error-general-heading' => 'Lỗi tạo Wiki mới', # Fuzzy
 	'cnw-badword-header' => 'Whoa có rồi',
 	'cnw-badword-msg' => 'Chào bạn, xin vui lòng tránh sử dụng những từ ngữ xấu hoặc từ bị cấm trong các mô tả Wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki đã đạt đến giới hạn',
@@ -2974,8 +3081,8 @@ $messages['zh-hant'] = array(
 	'cnw-welcome-instruction1' => '按一下下面的按鈕以開始將頁面添加到你的 wiki。',
 	'cnw-welcome-instruction2' => '你會在你的 wiki 各頁面看到此按鈕，任何時候可使用它來新加頁面。',
 	'cnw-welcome-help' => '要找尋解答、建議以及其他，可到 <a href="http://community.wikia.com">社群中心</a>.',
-	'cnw-error-general' => '創建你的 wiki 時發生錯誤，請稍後再試。',
-	'cnw-error-general-heading' => '創建新Wiki時發生錯誤',
+	'cnw-error-general' => '創建你的 wiki 時發生錯誤，請稍後再試。', # Fuzzy
+	'cnw-error-general-heading' => '創建新Wiki時發生錯誤', # Fuzzy
 	'cnw-badword-msg' => '嗨，請不要使用這些不好的、被禁止的字詞在您的 Wiki 描述：$1',
 	'cnw-error-wiki-limit-header' => '到達 Wiki 限制',
 	'cnw-error-wiki-limit' => '您好，您受限於每天的 {{PLURAL:$1|$1 wiki creation|$1 wiki創建}} 數量。 請等待24小時之後再創建另一個wiki。.',

@@ -387,11 +387,17 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'timeagomessaging-desc' => 'A forniss i18n për ël plugin jquery.timeago.js',
+	'timeago-year' => '{{PLURAL:$1|un di|$1 di}} da adess',
 	'timeago-month' => '{{PLURAL:$1|un mèis|$1 mèis}} fà',
 	'timeago-day' => '{{PLURAL:$1|un di|$1 di}} fà',
 	'timeago-hour' => "{{PLURAL:$1|n'ora|$1 ore}} fà",
 	'timeago-minute' => '{{PLURAL:$1|na minuta|$1 minute}} fà',
 	'timeago-second' => 'na minuta fà',
+	'timeago-day-from-now' => '{{PLURAL:$1|un di|$1 di}} da adess',
+	'timeago-hour-from-now' => "{{PLURAL:$1|n'ora|$1 ore}} da adess",
+	'timeago-minute-from-now' => '{{PLURAL:$1|na minuta|$1 minute}} da adess',
+	'timeago-month-from-now' => '{{PLURAL:$1|un mèis|$1 mèis}} da adess',
+	'timeago-second-from-now' => 'na minuta da adess',
 );
 
 /** Pashto (پښتو)

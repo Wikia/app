@@ -523,6 +523,31 @@ $messages['pl'] = array(
 	'error-json-parse' => 'Aplikacja otrzymała błędne dane z serwera.\\nSpróbuj ponownie.',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'activityindicator-message' => 'A caria ...',
+	'window-wikis-title' => 'Guide dij Gieugh Wikia',
+	'window-wikis-wikilist-search-hint' => 'Serca nòst Mej Gieugh...',
+	'window-category-load-batch' => 'Pi',
+	'window-article-button-close' => 'Sara',
+	'window-article-button-back' => 'André',
+	'window-article-menu-search-label' => 'Sërca',
+	'window-article-menu-dashboard-label' => 'Contnù dla guida',
+	'window-article-menu-cancel-label' => 'Scancela',
+	'searchview-no-results' => 'Gnun arzultà për "%s"',
+	'searchview-button-back-list' => 'André a la lista',
+	'searchview-button-back-article' => 'André a la vos',
+	'searchbar-hint' => 'Sërché %s...',
+	'alert-download-updated-wikis-message' => 'La lista dle guide disponìbij a sarà agiornà.',
+	'alert-download-updated-wikis-button-ok' => 'Va bin',
+	'error-update-required' => "N'agiornament për sta app a l'é disponìbil e obligatòri.",
+	'error-no-connection' => 'Gnun-e conession sla Ragnà dosponìbij.\\nPër piasì preuva torna.',
+	'error-server' => "Ij nòst sërvent a l'han arspondù con n'eror, spiasent.\\nPër piasì preuva torna.",
+	'error-json-parse' => "A l'é stàit-ie un problem con ij dat artornà dai nòst sërvent, spiasent.\\nPër piasì preuva torna.",
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */

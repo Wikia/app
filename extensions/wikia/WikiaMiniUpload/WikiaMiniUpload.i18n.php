@@ -1704,7 +1704,6 @@ $messages['lb'] = array(
 	'wmu-insert3' => 'Dëst Bild drasetzen',
 	'wmu-recent-inf' => 'Rezent eropgeluede Biller',
 	'wmu-back' => 'Eng aner Foto eraussichen',
-
 	'wmu-imagelink' => '<b>Nei!</b> Biller derbäisetzenimages',
 	'wmu-imagebutton' => 'Biller derbäisetzen',
 	'wmu-gallery' => 'Galerie',
@@ -2022,7 +2021,7 @@ $messages['nl'] = array(
 	'wmu-width' => 'Breedte',
 	'wmu-layout' => 'Vormgeving',
 	'wmu-caption' => 'Bijschrift',
-	'wmu-link' => 'Verwijzing',
+	'wmu-link' => 'Koppeling',
 	'wmu-optional' => '(optioneel)',
 	'wmu-insert2' => 'Bestand toevoegen',
 	'wmu-prev' => 'Vorige 8',
@@ -2890,6 +2889,7 @@ $messages['yi'] = array(
  * @author Gaoxuewei
  * @author Hydra
  * @author Xiaomingyan
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'wmu-upload-image' => '上载图片',
@@ -2936,7 +2936,7 @@ $messages['zh-hans'] = array(
 	'wmu-warn3' => '您需要首先确定文件名！',
 	'wmu-imagelink' => '<b>新！</b>增加图片',
 	'wmu-imagebutton' => '增加图片',
-	'wmu-license-cc' => '采用知识共享署名-相同方式共享 3.0许可协议授权',
+	'wmu-license-cc' => '采用知识共享 署名-相同方式共享 3.0许可协议授权',
 	'wmu-bad-extension' => '您上传的文件类型不被支持。请再试一次。',
 	'wmu-filetype-missing' => '本次上传丢失了文件扩展信息',
 	'wmu-filetype-incorrect' => '本次上传遇到了不正确的文件扩展名',

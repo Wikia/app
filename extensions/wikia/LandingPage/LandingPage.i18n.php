@@ -163,6 +163,14 @@ $messages['gl'] = array(
 	'landingpage-start-exploring-text' => 'Busque o seu tema preferido ou navegue por entre os favoritos da comunidade.',
 	'landingpage-readfaq' => 'Ten preguntas? Lea as nosas preguntas máis frecuentes &gt;',
 	'landingpage-text' => 'En Wikia pode <strong>conectar coas persoas</strong> que comparten as súas <strong>paixóns e intereses</strong>. Atope o seu grupo, deixe comentarios e edicións, mesmo <strong>comece a súa propia páxina web</strong> e comunidade.',
+	'landingpage-language-links' => '* Català|ca
+* Deutsch|de
+* English|en
+* Español|es
+* Euskara|eu
+* Français|fr
+* Galego|gl
+* Português|pt',
 	'landingpage-buttons-learn-more' => 'Máis información &gt;',
 );
 
