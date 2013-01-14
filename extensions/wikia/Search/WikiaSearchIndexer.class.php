@@ -19,6 +19,13 @@ class WikiaSearchIndexer extends WikiaObject {
 	protected $client;
 	
 	/**
+	 * Used to store pages when we make multiple invocations for the same page ID
+	 * @var array
+	 */
+	protected $articles = array();
+	
+	
+	/**
 	 * Handles dependency injection for solarium client
 	 * @param Solarium_Client $client
 	 */
@@ -67,20 +74,27 @@ class WikiaSearchIndexer extends WikiaObject {
 	 */
 	public function getPage( $pageId ) {
 		wfProfileIn(__METHOD__);
-
-		$result = array();
+		// these will eventually be broken out into their own atomic updates
+		$result = array_merge( 
+				$this->getPageDefaultValues( $pageId ), 
+				$this->getPageMetaData( $pageId ), 
+				$this->getMediaMetadata( $pageId ),
+				$this->getWikiPromoData(),
+				$this->getRedirectTitles( $pageId ),
+				$this->getWikiViews( $pageId ),
+				$this->getBacklinksCount( $pageId ),
+				$this->getWamForWiki()
+		);
+		wfProfileOut(__METHOD__);
+		return $result;
+	}
 	
-		$page = Article::newFromID( $pageId );
-	
-		if( $page === null ) {
-			throw new WikiaException( 'Invalid Article ID' );
-		}
-
-		if( $page->isRedirect() ) {
-			$page = new Article( $page->getRedirectTarget() );
-		}
+	public function getPageDefaultValues( $pageId ) {
+		wfProfileIn(__METHOD__);
 		
-		$pageId		= $page->getID();
+		$page = $this->getPageFromPageId( $pageId );
+		
+		$pageId = $page->getID();
 	
 		$apiService = F::build( 'ApiService' );
 		$response = $apiService->call( array(
@@ -121,17 +135,6 @@ class WikiaSearchIndexer extends WikiaObject {
 		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
 		$result['is_main_page']	= ( $pageId == F::build( 'Title', array( 'newMainPage' ) )->getArticleId() ) ? 'true' : 'false';
 		
-		// these will eventually be broken out into their own atomic updates
-		$result = array_merge( 
-				$result, 
-				$this->getPageMetaData( $pageId ), 
-				$this->getMediaMetadata( $title ),
-				$this->getWikiPromoData(),
-				$this->getRedirectTitles( $page ),
-				$this->getWikiViews( $page ),
-				$this->getBacklinksCount( $title ),
-				$this->getWamForWiki()
-		);
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
@@ -140,12 +143,14 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * Perform the indexing logic with respect to videos
 	 * This is separated out so that we can eventually handle 
 	 * it separate from the main indexing pipeline
-	 * @todo determine whether we expose the result array via a JSON service or perform atomic update here  
-	 * @param Title $title
+	 * @param $pageId
 	 * @return array
 	 */
-	public function getMediaMetadata( Title $title )
+	public function getMediaMetadata( $pageId )
 	{
+		$page = $this->getPageFromPageId( $pageId );
+		$title = $page->getTitle();
+		
 		$results = array();
 		
 		if ( $title->getNamespace() != NS_FILE ) {
@@ -472,11 +477,13 @@ class WikiaSearchIndexer extends WikiaObject {
 	
 	/**
 	 * Returns an array keyed for a solr schema field for backlinks
-	 * @param Title $title
+	 * @param int $pageId
 	 * @return array
 	 */
-	protected function getBacklinksCount( Title $title ) {
+	protected function getBacklinksCount( $pageId ) {
 		wfProfileIn(__METHOD__);
+		$page = $this->getPageFromPageId( $pageId );
+		$title = $page->getTitle();
 		$apiService = F::build( 'ApiService' );
 		$data = $apiService->call( array(
 				'titles'	=> $title,
@@ -496,11 +503,13 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * Provided an Article, queries the database for all titles that are redirects to that page.
 	 * @see    WikiaSearchIndexerTest::testGetRedirectTitlesNoResults
 	 * @see    WikiaSearchIndexerTest::testGetRedirectTitlesWithResults
-	 * @param  Article $page
+	 * @param  int $pageId
 	 * @return string the pipe-joined redirect titles with underscores replaced with spaces
 	 */
-	protected function getRedirectTitles( Article $page ) {
+	protected function getRedirectTitles( $pageId ) {
 		wfProfileIn(__METHOD__);
+		
+		$page = $this->getPageFromPageId( $pageId );
 	
 		$dbr = $this->wf->GetDB(DB_SLAVE);
 	
@@ -523,13 +532,39 @@ class WikiaSearchIndexer extends WikiaObject {
 	}
 	
 	/**
+	 * Standard interface for this class's services to access a page
+	 * @param int $pageId
+	 * @return Article
+	 * @throws WikiaException
+	 */
+	protected function getPageFromPageId( $pageId ) {
+		
+		if ( isset( $this->articles[$pageId] ) ) {
+			return $this->articles[$pageId];
+		}
+		
+	    $page = Article::newFromID( $pageId );
+	
+		if( $page === null ) {
+			throw new WikiaException( 'Invalid Article ID' );
+		}
+		if( $page->isRedirect() ) {
+			$page = new Article( $page->getRedirectTarget() );
+			$this->articles[$page->getID()] = $page;
+		}
+		
+		$this->articles[$pageId] = $page;
+		
+		return $page;
+	}
+	
+	/**
 	 * Provided an Article, queries the database for weekly and monthly pageviews. 
 	 * @see   WikiaSearchIndexerTest::testGetWikiViewsWithCache
 	 * @see   WikiaSearchIndexerTest::testGetWikiViewsNoCacheYesDb
 	 * @see   WikiaSearchIndexerTest::testGetWikiViewsNoCacheNoDb
-	 * @param Article $page
 	 */
-	protected function getWikiViews( Article $page ) {
+	protected function getWikiViews() {
 		wfProfileIn(__METHOD__);
 		$key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
 
