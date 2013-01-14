@@ -13,10 +13,12 @@
 	 */
 	WE.plugins.leaveconfirm = $.createClass(WE.plugin,{
 
+		disableLeaveConfirm: false,
 		isDirtyFlag: false,
 		initialContent: false,
 		dialogShown: false,
 		leaveMessage: false,
+
 
 		init: function() {
 			this.leaveMessage = $.msg('wikia-editor-leaveconfirm-message');
@@ -30,6 +32,7 @@
 
 			$(window).bind('beforeunload.leaveconfirm', this.proxy(this.onBeforeUnload));
 			$(window).bind('unload.leaveconfirm', this.proxy(this.onUnload));
+			$(window).bind('UserLoginSubmit', this.proxy(this.onUserLoginSubmit))
 		},
 
 		onEditorReady: function() {
@@ -56,7 +59,7 @@
 
 		// @see https://developer.mozilla.org/en/DOM/window.onbeforeunload
 		onBeforeUnload: function(ev) {
-			if (this.isDirty()) {
+			if (this.shouldDisplayConfirm()) {
 				this.track('init');
 				this.dialogShown = true;
 
@@ -73,6 +76,10 @@
 			if (this.dialogShown) {
 				this.track('ok');
 			}
+		},
+
+		onUserLoginSubmit: function() {
+			this.disableLeaveConfirm = true;
 		},
 
 		track: function(ev) {
@@ -92,6 +99,10 @@
 		// was any change to the page made?
 		isDirty: function() {
 			return this.isDirtyFlag || this.isEditorDirty();
+		},
+
+		shouldDisplayConfirm: function() {
+			return (!this.disableLeaveConfirm && this.isDirty());
 		}
 	});
 })(this,jQuery);
