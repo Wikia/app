@@ -103,7 +103,7 @@
                        --configuration ${basedir}/phpunit.xml
                        --coverage-html ${basedir}/build/coverage
                        --log-json ${basedir}/build/coverage/coverage.json
-                       --exclude-group ${phpunitexcludegroups}
+                       --exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack
                        " />
         </exec>
     </target>
