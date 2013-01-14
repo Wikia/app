@@ -46,7 +46,8 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 				track.event('category', track.IMAGE_LINK, {
 					label: 'exhibition',
 					href: t.href
-				});
+				},
+				ev);
 			}
 
 		});
@@ -61,7 +62,8 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 				track.event('category', track.TEXT_LINK, {
 					label: 'category',
 					href: t.href
-				});
+				},
+				ev);
 			} else if(t.className.indexOf('pag') > -1) {
 				onClick.call(t, ev);
 			}

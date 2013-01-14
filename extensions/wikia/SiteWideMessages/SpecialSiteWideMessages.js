@@ -19,7 +19,7 @@ $(document).ready(function(){
 			impTrackObj,
 			'internal'
 		);
-		$( this ).find( 'p a' ).click( function () {
+		$( this ).find( 'p a' ).click( function (e) {
 			var trackObj = {
 				ga_category: 'sitewidemessages',
 				ga_action: WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
@@ -30,7 +30,8 @@ $(document).ready(function(){
 			WikiaTracker.trackEvent(
 				'trackingevent',
 				trackObj,
-				'internal'
+				'internal',
+				e
 			);
 		} );
 	} );
