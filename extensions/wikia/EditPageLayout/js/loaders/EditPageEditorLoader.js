@@ -9,15 +9,16 @@
 
 		constructor: function() {
 			var data;
+			var storageKey;
 
 			this.element = $('#EditPage');
 			this.body = $('#wpTextbox1');
 
 			// Use cached data. Generally stored before login redirect.
-			if ((data = $.storage.get('WikiaEditorData')) != null) {
-
+			storageKey = window.WikiaEditor.getStoreContentKey();
+			if ((data = $.storage.get(storageKey)) != null) {
 				this.body.val(data);
-				$.storage.del('WikiaEditorData');
+				$.storage.del(storageKey);
 			}
 		},
 
