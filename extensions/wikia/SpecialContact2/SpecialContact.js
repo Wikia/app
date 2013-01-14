@@ -11,25 +11,25 @@ var SpecialContact = {
 			SpecialContact.trackClick( trackLabel, trackUrl );
 		} );
 
-		$( '#SpecialContactFooterPicker a' ).click( function () {
+		$( '#SpecialContactFooterPicker a' ).click( function (e) {
 			var	trackLabel = 'footer-picker',
 				trackUrl = $( this ).attr( 'href' );
-			SpecialContact.trackClick( trackLabel, trackUrl );
+			SpecialContact.trackClick( trackLabel, trackUrl, e );
 		} );
-		$( '#SpecialContactFooterNoForm a' ).click( function () {
+		$( '#SpecialContactFooterNoForm a' ).click( function (e) {
 			var	trackLabel = 'footer-noform',
 				trackUrl = $( this ).attr( 'href' );
-			SpecialContact.trackClick( trackLabel, trackUrl );
+			SpecialContact.trackClick( trackLabel, trackUrl, e );
 		} );
-		$( '#SpecialContactIntroNoForm a' ).click( function () {
+		$( '#SpecialContactIntroNoForm a' ).click( function (e) {
 			var	trackLabel = 'intro-noform',
 				trackUrl = $( this ).attr( 'href' );
-			SpecialContact.trackClick( trackLabel, trackUrl );
+			SpecialContact.trackClick( trackLabel, trackUrl, e );
 		} );
-		$( '#SpecialContactIntroForm a' ).click( function () {
+		$( '#SpecialContactIntroForm a' ).click( function (e) {
 			var	trackLabel = 'intro-form',
 				trackUrl = $( this ).attr( 'href' );
-			SpecialContact.trackClick( trackLabel, trackUrl );
+			SpecialContact.trackClick( trackLabel, trackUrl, e );
 		} );
 
 		$('input[type=file]').change(function() {
@@ -37,7 +37,7 @@ var SpecialContact = {
 		});
 	},
 
-	trackClick: function ( trackLabel, trackUrl ) {
+	trackClick: function ( trackLabel, trackUrl, event ) {
 		var trackObj = {
 			ga_category: 'specialcontact',
 			ga_action: WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
@@ -47,7 +47,8 @@ var SpecialContact = {
 		WikiaTracker.trackEvent(
 			'trackingevent',
 			trackObj,
-			'internal'
+			'internal',
+			event
 		);
 	}
 };
