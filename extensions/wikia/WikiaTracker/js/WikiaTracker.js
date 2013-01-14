@@ -65,7 +65,8 @@ window.WikiaTracker = (function(){
 	 * @param Object data (required) A key-value hash of parameters to pass to GA and/or the datawarehouse
 	 *        keys:
 	 *		       ga_category - GA Category (required for GA tracking)
-	 *		       ga_action - GA Action (required for GA tracking), use one of the values from WikiaTracker.ACTIONS and ping the Tracking leads *                         before adding a new one
+	 *		       ga_action - GA Action (required for GA tracking), use one of the values from WikiaTracker.ACTIONS and ping the Tracking leads
+	 *                         before adding a new one
 	 *		       ga_label - GA Label (optional)
 	 *		       ga_value - GA Value (optional, integer)
 	 *		       href - (optional) if present, delay following outbound link of 100ms (to ensure tracking execution)
@@ -86,13 +87,13 @@ window.WikiaTracker = (function(){
 		ctrlMouseLeftClick = isCtrlLeftClick(browserEvent),
 		isLink = (data && data.href),
 		isTrackableClick = (isLink && !mouseMiddleClick && !ctrlMouseLeftClick);
-		
+
 		if( isTrackableClick && typeof(browserEvent) !== 'undefined' ) {
 			browserEvent.preventDefault();
 		}
-		
+
 		doTrack(logGroup, eventName, data, trackingMethod);
-		
+
 		if( isTrackableClick ) {
 		//delay at the end to make sure all of the above was at least invoked
 			setTimeout(function() {
@@ -102,10 +103,35 @@ window.WikiaTracker = (function(){
 	}
 
 	/**
+	 * Convenience function for tracking click events.
+	 *
+	 * @params Object options (required) A key-value hash of parameters to pass on to the trackEvent method.
+	 *         keys: (see trackEvent for more information)
+	 *             action, category, event, label, params, trackingMethod, value
+	 */
+	function trackClickEvent( options ) {
+		var data = {
+			ga_category: options.category,
+			ga_action: options.action,
+			ga_label: options.label
+		};
+
+		if ( options.value ) {
+			data[ 'ga_value' ] = options.value;
+		}
+
+		if ( options.params ) {
+			$.extend( data, options.params );
+		}
+
+		return WikiaTracker.trackEvent( 'trackingevent', data, options.trackingMethod, options.event );
+	}
+
+	/**
 	 * Tracking-only logic -- takes care of sending tracking data to internal tracker or/and GA
-	 * 
-	 * @param string logGroup log group name used in call to Wikia.log() 
-	 * @param string eventName The name of the event, either a custom one or "trackingevent" (please speak with Tracking leads before introducing a new event name) 
+	 *
+	 * @param string logGroup log group name used in call to Wikia.log()
+	 * @param string eventName The name of the event, either a custom one or "trackingevent" (please speak with Tracking leads before introducing a new event name)
 	 * @param Object data A key-value hash of parameters to pass to GA and/or the datawarehouse keys are mentioned above in description to WikiaTracker.trackEvent() method
 	 * @param trackingMethod Tracking method [both/ga/internal/none]
 	 */
@@ -159,14 +185,14 @@ window.WikiaTracker = (function(){
 
 	/**
 	 * Detects if an action made on event target was left mouse button click with ctrl key pressed
-	 * 
+	 *
 	 * @param browserEvent
 	 * @return Boolean
 	 */
 	function isCtrlLeftClick(browserEvent) {
-	//bugId:45483
+		//bugId:45483
 		var result = false;
-		
+
 		if( browserEvent && browserEvent.ctrlKey ) {
 			if( browserEvent.button === 1 ) {
 			//Microsoft left mouse button === 1
@@ -175,7 +201,7 @@ window.WikiaTracker = (function(){
 				result = true;
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -186,9 +212,9 @@ window.WikiaTracker = (function(){
 	 * @return Boolean
 	 */
 	function isMiddleClick(browserEvent) {
-	//bugId:31900
-	//only webkit fires click event on middle mouse button click
-	//so, we don't care about other browsers (Microsoft has 4 assigned to middle click)
+		//bugId:31900
+		//only webkit fires click event on middle mouse button click
+		//so, we don't care about other browsers (Microsoft has 4 assigned to middle click)
 		return (browserEvent && browserEvent.button === 1) ? true : false;
 	}
 
@@ -231,7 +257,7 @@ window.WikiaTracker = (function(){
 			'beacon': window.beacon_id || '',
 			'cb': Math.floor(Math.random()*99999)
 		};
-		
+
 		// Add data object to params object
 		extendObject(params, data);
 		var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement,
@@ -316,6 +342,7 @@ window.WikiaTracker = (function(){
 	return {
 		ACTIONS: actions,
 		ACTIONS_REVERSE: actionsReverse,
+		trackClick: trackClickEvent,
 		trackEvent: trackEvent
 	};
 })();
@@ -336,49 +363,30 @@ WikiaTracker._track = function(page, profile, sample, events) {
 
 // TODO refactor back into trackEvent
 WikiaTracker.trackAdEvent = function(eventName, data, trackingMethod) {
-		var logGroup = 'WikiaTracker',
-		gaqArgs = [];
+	var logGroup = 'WikiaTracker',
+	gaqArgs = [];
 
-		var ga_category = data['ga_category'],
-			ga_action = data['ga_action'],
-			ga_label = data['ga_label'],
-			ga_value = data['ga_value'];
+	var ga_category = data['ga_category'],
+		ga_action = data['ga_action'],
+		ga_label = data['ga_label'],
+		ga_value = data['ga_value'];
 
-		//GA parameters need to be enqueued in the correct order
-		if(ga_category)
-			gaqArgs.push(ga_category);
+	//GA parameters need to be enqueued in the correct order
+	if(ga_category)
+		gaqArgs.push(ga_category);
 
-		if(ga_action)
-			gaqArgs.push(ga_action);
+	if(ga_action)
+		gaqArgs.push(ga_action);
 
-		if(ga_label)
-			gaqArgs.push(ga_label);
+	if(ga_label)
+		gaqArgs.push(ga_label);
 
-		if(ga_value)
-			gaqArgs.push(ga_value);
+	if(ga_value)
+		gaqArgs.push(ga_value);
 
-		if(trackingMethod == 'ga' || trackingMethod == 'both') {
-			Wikia.log(eventName + ' ' + gaqArgs.join('/') + ' [GA track]', 'info', logGroup);
+	if(trackingMethod == 'ga' || trackingMethod == 'both') {
+		Wikia.log(eventName + ' ' + gaqArgs.join('/') + ' [GA track]', 'info', logGroup);
 
-			window.gaTrackAdEvent(ga_category, ga_action, ga_label, ga_value, true);
-		}
-};
-
-WikiaTracker.trackClick = function (paramObject) {
-	var trackingObj = {
-		ga_category: paramObject.category,
-		ga_action: paramObject.action,
-		ga_label: paramObject.label
-	};
-	if (paramObject.value) {
-		trackingObj['ga_value'] = paramObject.value;
+		window.gaTrackAdEvent(ga_category, ga_action, ga_label, ga_value, true);
 	}
-	if (paramObject.params) {
-		$.extend(trackingObj, paramObject.params);
-	}
-	WikiaTracker.trackEvent(
-		'trackingevent',
-		trackingObj,
-		paramObject.trackingMethod
-	);
 };
