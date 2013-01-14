@@ -61,84 +61,89 @@ var WikiaPhotoGalleryView = {
 			this.log('found ' + galleries.length + ' galleries');
 		}
 
-		var addButtonSelector = (window.skin == 'oasis') ? '.wikia-photogallery-add' : '.wikia-gallery-add';
+		// BugID: 93490 - Only show the add button in oasis
+		if (window.skin == 'oasis') {
+			var addButtonSelector = '.wikia-photogallery-add'
 
-		galleries.addClass("inited").
-			children(addButtonSelector).
-				// show "Add a picture to this gallery" button
-				show().
+			galleries.addClass("inited").
+				children(addButtonSelector).
+					// show "Add a picture to this gallery" button
+					show().
 
-					// show editor after click on a link
-					click(function(ev) {
-						ev.preventDefault();
-						var event = jQuery.Event( "beforeGalleryShow" );
-						$("body").trigger(event, [$(ev.target)]);
-						if ( event.isDefaultPrevented() ) {
-						    return false;
-						}
+						// show editor after click on a link
+						click(function(ev) {
+							ev.preventDefault();
+							var event = jQuery.Event( "beforeGalleryShow" );
+							$("body").trigger(event, [$(ev.target)]);
+							if ( event.isDefaultPrevented() ) {
+							    return false;
+							}
 
-						// BugId:7453
-						if (self.forceLogIn()) {
-							return;
-						}
+							// BugId:7453
+							if (self.forceLogIn()) {
+								return;
+							}
 
-						var gallery = $(this).closest('.wikia-gallery'),
-							hash = gallery.attr('hash'),
-							id = gallery.attr('id');
+							var gallery = $(this).closest('.wikia-gallery'),
+								hash = gallery.attr('hash'),
+								id = gallery.attr('id');
 
-						self.loadEditorJS(function() {
-							WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, articleId:wgArticleId}, function(data) {
-								if (data && data.info == 'ok') {
-									data.gallery.id = id;
-									$().log('data');
-									$().log(data.gallery);
-									WikiaPhotoGallery.showEditor({
-										from: 'view',
-										gallery: data.gallery,
-										target: $(ev.target).closest('.wikia-gallery')
-									});
-								} else {
-									// something went wrong - gallery not found / user not allowed to edit
-									WikiaPhotoGallery.showAlert(
-										data.errorCaption,
-										data.error
-									);
-								}
+							self.loadEditorJS(function() {
+								WikiaPhotoGallery.ajax('getGalleryData', {hash:hash, articleId:wgArticleId}, function(data) {
+									if (data && data.info == 'ok') {
+										data.gallery.id = id;
+										$().log('data');
+										$().log(data.gallery);
+										WikiaPhotoGallery.showEditor({
+											from: 'view',
+											gallery: data.gallery,
+											target: $(ev.target).closest('.wikia-gallery')
+										});
+									} else {
+										// something went wrong - gallery not found / user not allowed to edit
+										WikiaPhotoGallery.showAlert(
+											data.errorCaption,
+											data.error
+										);
+									}
+								});
 							});
-						});
-					}).
+						}).
 
-					// highlight gallery
-					hover(
-						// onmousein - highlight the gallery
-						function(ev) {
-							if (window.skin == 'oasis') { return; }
+						// highlight gallery
+						hover(
+							// onmousein - highlight the gallery
+							function(ev) {
+								if (window.skin == 'oasis') { return; }
 
-							var gallery = $(this).closest('.wikia-gallery');
+								var gallery = $(this).closest('.wikia-gallery');
 
-							gallery.
-								css({
-									'border-style': 'solid',
-									'border-width': '1px',
-									'padding': 0
-								}).
-								addClass('accent');
-						},
+								gallery.
+									css({
+										'border-style': 'solid',
+										'border-width': '1px',
+										'padding': 0
+									}).
+									addClass('accent');
+							},
 
-						// onmouseout
-						function (ev) {
-							if (window.skin == 'oasis') { return; }
+							// onmouseout
+							function (ev) {
+								if (window.skin == 'oasis') { return; }
 
-							var gallery = $(this).closest('.wikia-gallery');
+								var gallery = $(this).closest('.wikia-gallery');
 
-							gallery.
-								css({
-									'border': '',
-									'padding': '1px'
-								}).
-								removeClass('accent');
-						}
-					);
+								gallery.
+									css({
+										'border': '',
+										'padding': '1px'
+									}).
+									removeClass('accent');
+							}
+						);
+		} else {
+			galleries.addClass("inited");
+		}
 	},
 
 	lazyLoadCache: {},

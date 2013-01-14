@@ -45,7 +45,8 @@ function wgUploadSetup() {
 	}
 
 	// AJAX wpDestFile warnings
-	if ( wgAjaxUploadDestCheck ) {
+	var htmlFormSource = document.getElementById( 'mw-htmlform-source' );
+	if ( wgAjaxUploadDestCheck && htmlFormSource ) {
 		// Insert an event handler that fetches upload warnings when wpDestFile
 		// has been changed
 		for ( i = 0; i < wgMaxUploadFiles; i++ ) {
@@ -55,8 +56,8 @@ function wgUploadSetup() {
 		}
 		// Insert a row where the warnings will be displayed just below the
 		// wpDestFile row
-		var optionsTable = document.getElementById( 'mw-htmlform-source' ).tBodies[0];
-		var row = optionsTable.insertRow( 1 );
+		var optionsTable = htmlFormSource.tBodies[0];
+		var row = optionsTable.insertRow( 0 );
 		var td = document.createElement( 'td' );
 		td.id = 'wpDestFile-warning';
 		td.colSpan = 2;

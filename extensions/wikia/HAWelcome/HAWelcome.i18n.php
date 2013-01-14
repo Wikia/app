@@ -1079,6 +1079,7 @@ Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!",
  */
 $messages['nl'] = array(
 	'welcome-user-page' => "==Over mij==
+
 ''Dit is uw gebruikerspagina. Bewerk deze pagina alstublieft en vertel de gemeenschap iets over uzelf''
 
 ==Mijn bijdragen==
@@ -1087,7 +1088,7 @@ $messages['nl'] = array(
 
 ==Mijn favoriete pagina's==
 
-* Voeg hier verwijzingen toe naar uw favoriete pagina's op deze wiki!
+* Voeg hier koppelingen toe naar uw favoriete pagina's op deze wiki!
 * Favoriete pagina #2
 * Favoriete pagina #3",
 	'welcome-message-user' => 'Hallo, welkom bij {{SITENAME}}! Bedankt voor uw bewerking van de pagina [[:$1]].
@@ -1146,7 +1147,7 @@ $messages['nl-informal'] = array(
 * [[Special:Contributions/$1|Je eigen bijdragen]]
 
 ==Mijn favoriete pagina's==
-* Voeg hier verwijzingen toe naar je favoriete pagina's op deze wiki!
+* Voeg hier koppelingen toe naar je favoriete pagina's op deze wiki!
 * Favoriete pagina #2
 * Favoriete pagina #3",
 	'welcome-message-user' => 'Hoi, welkom bij {{SITENAME}}! Bedankt voor je bewerking van de pagina [[:$1]].
@@ -1279,13 +1280,13 @@ $messages['pms'] = array(
 
 ==Mie contribussion==
 
- [[Special:Contributions/{{PAGENAME}}|Contribussion ëd l'utent]]
+ [[Special:Contributions/$1|Contribussion ëd l'utent]]
 
 ==Mie pàgine preferìe==
 
 * Ch'a gionta ambelessì j'anliure a soe pàgine preferìe dzora a la wiki!
 * Pàgina preferìa #2
-* Pàgina preferìa #3", # Fuzzy
+* Pàgina preferìa #3",
 	'welcome-message-user' => "Cerea, bin ëvnù a {{SITENAME}}! Mersì për soe modìfiche a la pàgina [[:$1]].
 
 Për piasì ch'a lassa un mëssagi dzora a [[$2|mia pàgina ëd discussion]] se i peuss giuté con cheicòs! $3",
@@ -1310,6 +1311,24 @@ Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]
 S'a l'has dabzògn d'agiut, e a-i é gnun aministrator locaj ambelessì, a peul visité le [[wikia:Forum:Community Central Forum|piasse ëd la Wiki Sentral ëd la Comunità]] $3",
 	'staffsig-text' => "$1<staff /> <small>([[w:forums|piassa d'agiut]] | [[w:sblog|blog]])</small>",
 	'hawelcomeedit' => 'HAWelcomeEdit',
+	'welcome-message-wall-user' => "Cerea, bin ëvnù a {{SITENAME}}! Mersì për soe modìfiche a la pàgina [[:$1]].
+
+Për piasì ch'am lassa un mëssagi se i peuss giuté con cheicòs!",
+	'welcome-message-wall-user-staff' => "Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pagina [[:$1]].
+
+S'a l'ha dabzògn d'agiut, e a-i é gnun admin locaj sì, a peul visité ij [[wikia:Forum:Community Central Forum|forum dzor la Community Central Wiki]]. A peul ëdcò controlé nòst [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] për mantense agiornà con j'ùltime neuve e event d'antorn a Wikia.
+
+Bon-e modìfiche!",
+	'welcome-message-wall-anon' => "Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]].
+
+'''[[Special:Userlogin|Per piasì ch'a intra e ch'a crea un nòm utent]]'''. A l'é na manera belfé ëd manten-e na marca ëd soe contribussion e a lo giuta a comuniché con ël rest ëd la comunità.
+
+Për piasì ch'am lassa un mëssagi s'i peuss giuté con cheicòs!",
+	'welcome-message-wall-anon-staff' => "Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]].
+
+'''[[Special:Userlogin|Per piasì ch'a intra e ch'a crea un nòm utent]]'''. A l'é na manera belfé ëd manten-e na marca ëd soe contribussion e a lo giuta a comuniché con ël rest ëd la comunità.
+
+Për piasì ch'am lassa un mëssagi s'i peuss giuté con cheicòs!",
 );
 
 /** Pashto (پښتو)

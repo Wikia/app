@@ -124,15 +124,18 @@ $messages['en'] = array(
  * @author Kghbln
  * @author LWChris
  * @author McDutchie
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'multiwikiedit_task_link' => '',
 	'multiwikiedit_on' => '',
+	'multiwikiedit_success_subtitle' => '{{Identical|For $1}}',
 	'action-multiwikiedit' => '{{doc-action|multiwikiedit}}',
 	'multidelete_button' => '{{Identical|Delete}}',
 	'multidelete_task_link' => '',
 	'multidelete_reason' => '{{Identical|Reason for deletion}}',
+	'multidelete_success_subtitle' => '{{Identical|For $1}}',
 	'multidelete_split_results' => '',
 	'multidelete_max_display_size' => '',
 	'action-multidelete' => '{{doc-action|multidelete}}',
@@ -1771,7 +1774,7 @@ $messages['ms'] = array(
 	'multiwikiedit_button' => 'SUNTING',
 	'multiwikiedit_confirm' => 'SAHKAN',
 	'multiwikiedit_help' => 'Sunting satu kelompok laman sekali. Anda boleh menyunting laman-laman yang tersenarai dalam petak teks. Pilih satu pengguna yang akan ditunjukkan dalam log penghapusan. Fail yang dimuat naik harus mengandungi nama laman dan sebab (tak wajib) yang dipisahkan oleh aksara | di setiap baris.',
-	'multiwikiedit_caption' => 'Senarai laman',
+	'multiwikiedit_caption' => 'Senarai halaman',
 	'multiwikiedit_title' => 'Sunting Berbilang Wiki',
 	'multiwikiedit_as' => 'Jalankan skrip sebagai',
 	'multiwikiedit_both_modes' => 'Sila pilih salah satu laman atau senarai laman yang disediakan',
@@ -1819,7 +1822,7 @@ $messages['ms'] = array(
 	'multidelete' => 'Hapuskan kelompok laman',
 	'multidelete_button' => 'HAPUS',
 	'multidelete_help' => 'Hapuskan kelompok laman melalui tugas latar belakang. Anda boleh melakukannya untuk wiki ini, semua wiki daripada pangkalan data kongsian, wiki-wiki terpilih, atau bahasa-bahasa terpilih. Anda boleh memilih untuk menghapuskannya di bawah nama ANDA atau akaun skrip yang tersedia.',
-	'multidelete_caption' => 'Senarai laman',
+	'multidelete_caption' => 'Senarai halaman',
 	'multidelete_title' => 'Penghapusan Berbilang Wiki',
 	'multidelete_both_modes' => 'Sila pilih salah satu laman atau senarai laman yang disediakan',
 	'multidelete_or' => '<b>ATAU</b>',

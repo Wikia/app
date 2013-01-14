@@ -1,6 +1,6 @@
 /*
  * Author: Inez Korczynski, Bartek Lapinski
- * $G = YAHOO.util.Dom.get
+ * Converted from YUI to jQuery by Hyun
  */
 
 /**
@@ -38,10 +38,14 @@ $.getEvent = function(e, boundEl) {
  * Variables
  */
 
-var WMU_panel = null,
+var WMU_modal = null,
 	WMU_curSourceId = 0,
 	WMU_lastQuery = [],
-	WMU_asyncTransaction = null,
+	WMU_jqXHR = {
+		abort: function() {
+			// empty placeholder function
+		}
+	},
 	WMU_curScreen = 'Main',
 	WMU_prevScreen = null,
 	WMU_slider = null,
@@ -105,51 +109,67 @@ function WMU_getRTETxtarea(){
 
 function WMU_loadDetails() {
 
-	YAHOO.util.Dom.setStyle('ImageUploadMain', 'display', 'none');
+	$('#ImageUploadMain').hide();
 	WMU_indicator(1, true);
 
-	var callback = {
-		success: function(o) {
-			WMU_displayDetails(o.responseText);
+	var callback = function(o) {
+		WMU_displayDetails(o.responseText);
 
-			$G('ImageUploadBack').style.display = 'none';
+		$('#ImageUploadBack').hide();
 
-			setTimeout(function() {
-				// FIXME: FCK is mocked here so this code would still work even though we're not using FCK anymore
-				if(!FCK.wysiwygData[WMU_refid].thumb) {
-					$G('ImageUploadFullOption').click();
-				}
-				if(FCK.wysiwygData[WMU_refid].align && FCK.wysiwygData[WMU_refid].align == 'left') {
-					$G('ImageUploadLayoutLeft').click();
-				}
-				if(FCK.wysiwygData[WMU_refid].width) {
-					WMU_slider.setValue(FCK.wysiwygData[WMU_refid].width / (WMU_slider.getRealValue() / WMU_slider.getValue()), true);
-					MWU_imageWidthChanged();
-					$G( 'ImageUploadSlider' ).style.visibility = 'visible';
-					$G( 'ImageUploadInputWidth' ).style.visibility = 'visible';
-					$G( 'ImageUploadWidthCheckbox' ).checked = true;
-					$G( 'ImageUploadManualWidth' ).value = FCK.wysiwygData[WMU_refid].width;
-					WMU_manualWidthInput();
-				}
-			}, 100);
-
-			if(FCK.wysiwygData[WMU_refid].caption) {
-				$G('ImageUploadCaption').value = FCK.wysiwygData[WMU_refid].caption;
+		setTimeout(function() {
+			// FIXME: FCK is mocked here so this code would still work even though we're not using FCK anymore
+			if(!FCK.wysiwygData[WMU_refid].thumb) {
+				$('#ImageUploadFullOption').click();
 			}
-
-			if(FCK.wysiwygData[WMU_refid].link) {
-				$G('ImageUploadLink').value = FCK.wysiwygData[WMU_refid].link;
+			if(FCK.wysiwygData[WMU_refid].align && FCK.wysiwygData[WMU_refid].align == 'left') {
+				$('#ImageUploadLayoutLeft').click();
 			}
+			
+			/* 
+			 * This is run if modifying an existing image in the article
+			 * with a precise width set.
+			 */
+			if(FCK.wysiwygData[WMU_refid].width) {
+				WMU_slider.setValue(FCK.wysiwygData[WMU_refid].width / (WMU_slider.getRealValue() / WMU_slider.getValue()), true);
+				MWU_imageWidthChanged();
+				$( '#ImageUploadSlider' ).css('visibility', 'visible');
+				$( '#ImageUploadInputWidth' ).css('visibility', 'visible');
+				$( '#ImageUploadSliderThumb' ).css('visibility', 'visible');
+				$( '#ImageUploadWidthCheckbox' ).attr('checked', true);
+
+				$('#ImageUploadManualWidth').val(WMU_slider.getRealValue());
+				if( WMU_thumbSize ) {
+					$('#ImageUploadThumb').first()
+						.width(WMU_thumbSize[0])
+						.height(WMU_thumbSize[1]);
+				}
+
+				$( '#ImageUploadManualWidth' ).val(FCK.wysiwygData[WMU_refid].width);
+				WMU_manualWidthInput();
+			}
+		}, 100);
+
+		if(FCK.wysiwygData[WMU_refid].caption) {
+			$('#ImageUploadCaption').val(FCK.wysiwygData[WMU_refid].caption);
 		}
-	}
 
-	YAHOO.util.Connect.abort(WMU_asyncTransaction);
+		if(FCK.wysiwygData[WMU_refid].link) {
+			$('#ImageUploadLink').val(FCK.wysiwygData[WMU_refid].link);
+		}
+	};
+
+	WMU_jqXHR.abort();
+	
 
 	var params = new Array();
 	params.push('sourceId=0');
 	params.push('itemId=' + encodeURIComponent(FCK.wysiwygData[WMU_refid].href.split(":")[1]));
 
-	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + params.join('&'), callback);
+	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + params.join('&'), {
+		method: 'get',
+		complete: callback
+	});
 }
 
 // macbre: move back button inside dialog content and add before provided selector (Oasis changes)
@@ -206,8 +226,8 @@ function WMU_licenseSelectorCheck() {
 }
 
 function WMU_manualWidthInput() {
-	var image = $G( 'ImageUploadThumb' ).firstChild;
-	var val = parseInt( $G( 'ImageUploadManualWidth' ).value );
+	var image = $( '#ImageUploadThumb' ).children(':first');
+	var val = parseInt( $( '#ImageUploadManualWidth' ).val() );
 	if ( isNaN( val ) ) {
 		return false;
 	}
@@ -217,18 +237,18 @@ function WMU_manualWidthInput() {
 	}
 	if ( val > WMU_width ) {
 		if (!WMU_shownMax) {
-			image.width = WMU_width;
-			image.height = WMU_width / WMU_ratio;
-			WMU_thumbSize = [image.width, image.height];
-			$G( 'ImageUploadManualWidth' ).value = image.width;
-			WMU_readjustSlider( image.width );
+			image.width(WMU_width);
+			image.height(WMU_width / WMU_ratio);
+			WMU_thumbSize = [image.width(), image.height()];
+			$( '#ImageUploadManualWidth' ).val(image.width());
+			WMU_readjustSlider( image.width() );
 			WMU_shownMax = true;
 		}
 	} else {
-		image.height = val / WMU_ratio;
-		image.width = val;
-		WMU_thumbSize = [image.width, image.height];
-		$G( 'ImageUploadManualWidth' ).value = val;
+		image.height(val / WMU_ratio);
+		image.width(val);
+		WMU_thumbSize = [image.width(), image.height()];
+		$( '#ImageUploadManualWidth' ).val(val);
 		WMU_readjustSlider( val );
 		WMU_shownMax = false;
 	}
@@ -241,73 +261,15 @@ function WMU_manualWidthInput() {
 
 function WMU_readjustSlider( value ) {
 	if ( 400 < value ) { // too big, hide slider
-		if ( 'hidden' != $G( 'ImageUploadSliderThumb' ).style.visibility ) {
-			$G( 'ImageUploadSliderThumb' ).style.visibility = 'hidden';
-			WMU_slider.setValue( 200, true, true, true );
-		}
+		$( '#ImageUploadSliderThumb' ).css('visibility', 'hidden');
+		WMU_slider.setValue( 200, true, true, true );
 	} else {
-		if ( 'hidden' == $G( 'ImageUploadSliderThumb' ).style.visibility ) {
-			$G( 'ImageUploadSliderThumb' ).style.visibility = 'visible';
-		}
+		$( '#ImageUploadSliderThumb' ).css('visibility', 'visible');
 		// get slider's max value
 		var fixed_width = Math.min( 400, WMU_width );
 		value = Math.max(2, Math.round( ( value * 200 ) / fixed_width ) );
 		WMU_slider.setValue( value, true, true, true );
 	}
-}
-
-function WMU_getCaret() {
-	if (typeof FCK == 'undefined') {
-		var control = document.getElementById(WikiaEditor.instanceId);
-	} else {
-		var control = FCK.EditingArea.Textarea;
-	}
-
-	var caretPos = 0;
-	if(YAHOO.env.ua.ie != 0) { // IE Support
-		control.focus();
-		var sel = document.selection.createRange();
-		var sel2 = sel.duplicate();
-		sel2.moveToElementText(control);
-		var caretPos = -1;
-		while(sel2.inRange(sel)) {
-			sel2.moveStart('character');
-			caretPos++;
-		}
-	} else if (control.selectionStart || control.selectionStart == '0') { // Firefox
-		caretPos = control.selectionStart;
-	}
-	return (caretPos);
-}
-
-function WMU_inGallery() {
-	var originalCaretPosition = WMU_getCaret();
-	if (typeof FCK == 'undefined') {
-		var originalText = document.getElementById(WikiaEditor.instanceId).value;
-	} else {
-		var originalText = FCK.EditingArea.Textarea.value;
-	}
-	var lastIndexOfimagegallery = originalText.substring(0, originalCaretPosition).lastIndexOf('<imagegallery>');
-
-	if(lastIndexOfimagegallery > 0) {
-		var indexOfimagegallery = originalText.substring(originalCaretPosition).indexOf('</imagegallery>');
-		if(indexOfimagegallery > 0) {
-			var textInTag = originalText.substring(lastIndexOfimagegallery + 15, indexOfimagegallery + originalCaretPosition);
-			if(textInTag.indexOf('<') == -1 && textInTag.indexOf('>') == -1) {
-				return textInTag.lastIndexOf("\n") + lastIndexOfimagegallery + 15;
-			}
-		}
-	}
-	return false;
-}
-
-function WMU_getFirstFree( gallery, box ) {
-	for (var i=box; i >= 0; i--) {
-		if ( ! $G( 'WikiaImageGalleryPlaceholder' + gallery + 'x' + i ) ) {
-			return i + 1;
-		}
-	}
-	return box;
 }
 
 function WMU_loadMainFromView() {
@@ -359,37 +321,32 @@ function WMU_loadMainFromView() {
 				return;
 			}
 
-			if( !$G( 'WMU_div' ) ) {
+			if( !$( '#WMU_div' ).length ) {
 				document.body.appendChild(element);
 			}
 
-			WMU_panel = new YAHOO.widget.Panel('WMU_div', {
-				modal: true,
-				constraintoviewport: true,
-				draggable: false,
-				close: false,
-				fixedcenter: true,
-				underlay: "none",
-				visible: false,
-				zIndex: 900
+			WMU_modal = $(document.body).makeModal({
+				onAfterClose: function() {
+					WMU_switchScreen('Main');
+				},
+				persistent: true,
+				width: 812
 			});
-			WMU_panel.render(document.body);
-			WMU_panel.show();
 
 			WMU_indicator(1, false);
 
 			WMU_indicator(1, false);
-			if($G('ImageQuery') && WMU_panel.element.style.visibility == 'visible') {
-				$G('ImageQuery').focus();
+			if($('#ImageQuery').length) {
+				$('#ImageQuery').focus();
 			}
 			var cookieMsg = document.cookie.indexOf("wmumainmesg=");
 			if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
-				$G('ImageUploadTextCont').style.display = 'none';
-				$G('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
+				$('#ImageUploadTextCont').hide();
+				$('#ImageUploadMessageLink').html('[' + wmu_show_message  + ']');
 			}
 
 			// macbre: RT #19150
-			if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
+			if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').length ) {
 				$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
 			}
 		}
@@ -415,8 +372,6 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		return;
 	}
 
-
-
 	// Handle MiniEditor focus
 	// (BugId:18713)
 	if (window.WikiaEditor) {
@@ -433,7 +388,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 
 	if(typeof gallery != "undefined") {
 		// if in preview mode, go away
-		if ($G ( 'editform' ) && !YAHOO.lang.isNumber(e) ) {
+		if ($( '#editform' ).length && (typeof e != 'number') ) {
 			alert( wmu_no_preview );
 			return false;
 		}
@@ -462,7 +417,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	}
 
 	// TODO: FCK support - to be removed after full switch to RTE
-	if(YAHOO.lang.isNumber(e)) {
+	if(typeof e == 'number') {
 		WMU_refid = e;
 		if(WMU_refid != -1) {
 			if( (typeof(FCK) != 'undefined') && FCK.wysiwygData[WMU_refid].exists) {
@@ -473,7 +428,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			}
 		}
 
-	} else if( YAHOO.lang.isObject(e) ) { // for Opera and Chrome
+	} else if( typeof e == 'object' ) { // for Opera and Chrome
 		// macbre: CK support
 		if (typeof e.type != 'undefined' && e.type == 'rte') {
 			// get image from event data
@@ -511,15 +466,13 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		}
 	}
 
-	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
-	if(WMU_panel != null) {
-		WMU_panel.show();
-		// Recenter each time for different instances of RTE. (BugId:15589)
-		WMU_panel.center();
+	$('#header_ad').css('display', 'none');
+	if(WMU_modal != null) {
+		WMU_modal.showModal();
 		if(WMU_refid != null && WMU_wysiwygStart == 2) {
 			WMU_loadDetails();
 		} else {
-			if($G('ImageQuery')) $G('ImageQuery').focus();
+			if($('#ImageQuery').length) $('#ImageQuery').focus();
 		}
 		return;
 	}
@@ -528,12 +481,11 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	if( -1 != WMU_gallery  ) {
 		WMU_loadMainFromView();
 	} else {
-		var html = '';
+		var html = '<div id="WMU_div" style="width:722px;height:587px;">';
 		html += '<div class="reset" id="ImageUpload">';
 		html += '	<div id="ImageUploadBorder"></div>';
 		html += '	<div id="ImageUploadProgress1" class="ImageUploadProgress"></div>';
 		html += '       <div id="ImageUploadBack"><img src="'+wgBlankImgUrl+'" id="fe_wmuback_img" class="sprite back" alt="' + wmu_back + '" /><a href="#">' + wmu_back + '</a></div>';
-		html += '       <div id="ImageUploadClose"><img src="'+wgBlankImgUrl+'" id="fe_wmuclose_img" class="sprite close" alt="' + wmu_close + '" /><a href="#">' + wmu_close + '</a></div>';
 		html += '	<div id="ImageUploadBody">';
 		html += '		<div id="ImageUploadError"></div>';
 		html += '		<div id="ImageUploadMain"></div>';
@@ -542,115 +494,92 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		html += '		<div id="ImageUploadSummary" style="display: none;"></div>';
 		html += '	</div>';
 		html += '</div>';
+		html += '</div>';
 
-		var element = document.createElement('div');
-		element.id = 'WMU_div';
-		element.style.width = '722px';
-		element.style.height = '587px';
-		element.innerHTML = html;
-		if( !$G( 'WMU_div' ) ) {
-			document.body.appendChild(element);
-		}
-
-		// @see http://developer.yahoo.com/yui/container/panel/#config
-		WMU_panel = new YAHOO.widget.Panel('WMU_div', {
-			modal: true,
-			constraintoviewport: true,
-			draggable: false,
-			close: false,
-			underlay: "none",
-			visible: false,
-			zIndex: 900
+		WMU_modal = $(html).makeModal({
+			onAfterClose: function() {
+				WMU_switchScreen('Main');
+			},
+			persistent: true,
+			width: 722
 		});
 
-		// use display: block/none for YUI panels (BugId:8825)
-		WMU_panel.showEvent.subscribe(function() {
-			YAHOO.util.Dom.setStyle(this.element, "display", "block");
-		});
-		WMU_panel.hideEvent.subscribe(function() {
-			YAHOO.util.Dom.setStyle(this.element, "display", "none");
-		});
-
-		WMU_panel.render();
-		WMU_panel.show();
-		WMU_panel.center();
 		if(WMU_refid != null && WMU_wysiwygStart == 2) {
 			WMU_loadDetails();
 		} else {
 			WMU_loadMain();
 		}
 	}
-	YAHOO.util.Event.addListener('ImageUploadBack', 'click', WMU_back);
-	YAHOO.util.Event.addListener('ImageUploadClose', 'click', WMU_close);
+	$('#ImageUploadBack').click(WMU_back);
 }
 
 function WMU_loadMain() {
-	var callback = {
-		success: function(o) {
-			$G('ImageUploadMain').innerHTML = o.responseText;
-			WMU_indicator(1, false);
-			if($G('ImageQuery') && WMU_panel.element.style.visibility == 'visible') $G('ImageQuery').focus();
-			var cookieMsg = document.cookie.indexOf("wmumainmesg=");
-			if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
-				$G('ImageUploadTextCont').style.display = 'none';
-				$G('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
-			}
+	var callback = function(html) {
+		$('#ImageUploadMain').html(html);
+		WMU_indicator(1, false);
+		if($('#ImageQuery').length) $('#ImageQuery').focus();
+		var cookieMsg = document.cookie.indexOf("wmumainmesg=");
+		if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
+			$('#ImageUploadTextCont').hide();
+			$('#ImageUploadMessageLink').html('[' + wmu_show_message  + ']');
+		}
 
-			// macbre: RT #19150
-			if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
-				$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
-			}
+		// macbre: RT #19150
+		if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
+			$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
 		}
 	}
 	WMU_indicator(1, true);
-	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMain', callback);
+	$.get(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMain', callback);
 	WMU_curSourceId = 0;
 }
 
 function WMU_loadLicense( license ) {
-	var title = 'File:Sample.jpg';
-	var url = wgScriptPath + '/api' + wgScriptExtension
-		+ '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
-		+ '&title=' + encodeURIComponent( title )
-		+ '&prop=text&pst&format=json';
+	if ( license == "" ) {
+		$('#ImageUploadLicenseText').html("");
+	} else {
+		var title = 'File:Sample.jpg';
+		var url = wgScriptPath + '/api' + wgScriptExtension
+			+ '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
+			+ '&title=' + encodeURIComponent( title )
+			+ '&prop=text&pst&format=json';
 
-	var callback = {
-		success: function(o) {
+		var callback = function(o) {
 			var o = eval( '(' + o.responseText + ')' );
-			$G('ImageUploadLicenseText').innerHTML = o['parse']['text']['*'];
-			//$G('ImageUploadLicenseText').innerHTML = o.responseText;
+			$('#ImageUploadLicenseText').html(o['parse']['text']['*']);
 			WMU_indicator(1, false);
 		}
+		WMU_indicator(1, true);
+		$.ajax(url, {
+			method: 'get',
+			complete: callback
+		});
 	}
-	WMU_indicator(1, false);
-	YAHOO.util.Connect.asyncRequest('GET', url, callback);
 	WMU_curSourceId = 0;
 }
 
 function WMU_recentlyUploaded(param, pagination) {
-	var callback = {
-		success: function(o) {
-			$G('WMU_results_0').innerHTML = o.responseText;
-			WMU_indicator(2, false);
-		}
-	}
+	var callback = function(html) {
+		$('#WMU_results_0').html(html);
+		WMU_indicator(2, false);
+	};
 	WMU_indicator(2, true);
-	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=recentlyUploaded&'+param, callback);
+	$.get(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=recentlyUploaded&'+param, callback);
 }
 
 function WMU_changeSource(e) {
 	e.preventDefault();
-	var el = YAHOO.util.Event.getTarget(e);
+	var el = e.target;
 	if(el.nodeName == 'A') {
 		var sourceId = el.id.substring(11);
 		if(WMU_curSourceId != sourceId) {
-			$G('WMU_source_' + WMU_curSourceId).style.fontWeight = '';
-			$G('WMU_source_' + sourceId).style.fontWeight = 'bold';
+			$('#WMU_source_' + WMU_curSourceId).css('fontWeight', '');
+			$('#WMU_source_' + sourceId).css('fontWeight', 'bold');
 
-			$G('WMU_results_' + WMU_curSourceId).style.display = 'none';
-			$G('WMU_results_' + sourceId).style.display = '';
+			$('#WMU_results_' + WMU_curSourceId).hide();
+			$('#WMU_results_' + sourceId).show();
 
-			if($G('ImageQuery')) $G('ImageQuery').focus();
+			if($('#ImageQuery').length) $('#ImageQuery').focus();
 
 			WMU_curSourceId = sourceId;
 			WMU_trySendQuery();
@@ -665,7 +594,7 @@ function WMU_trySendQuery(e) {
 		}
 	}
 
-	var query = $G('ImageQuery').value;
+	var query = $('#ImageQuery').val();
 
 	if(!e && WMU_lastQuery[WMU_curSourceId] == query) {
 		return;
@@ -681,52 +610,54 @@ function WMU_trySendQuery(e) {
 }
 
 function WMU_sendQuery(query, page, sourceId, pagination) {
-	var callback = {
-		success: function(o) {
-			$G('WMU_results_' + o.argument[0]).innerHTML = o.responseText;
-			WMU_indicator(2, false);
-		},
-		argument: [sourceId]
-	}
+	var callback = function(o) {
+		$('#WMU_results_' + sourceId).html(o.responseText);
+		WMU_indicator(2, false);
+	};
 	WMU_lastQuery[sourceId] = query;
 	WMU_indicator(2, true);
-	YAHOO.util.Connect.abort(WMU_asyncTransaction)
-	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId, callback);
+	WMU_jqXHR.abort();
+	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId, {
+		method: 'get',
+		complete: callback
+	});
 }
 
 function WMU_indicator(id, show) {
 	if(show) {
 		if(id == 1) {
-			$G('ImageUploadProgress1').style.display = 'block';
+			$('#ImageUploadProgress1').show();
 		} else if(id == 2) {
-			$G('ImageUploadProgress2').style.visibility = 'visible';
+			$('#ImageUploadProgress2').css('visibility', 'visible');
 		}
 	} else {
 		if(id == 1) {
-			$G('ImageUploadProgress1').style.display = '';
+			$('#ImageUploadProgress1').hide();
 		} else if(id == 2) {
-			$G('ImageUploadProgress2').style.visibility = 'hidden';
+			$('#ImageUploadProgress2').css('visibility', 'hidden');
 		}
 	}
 }
 
 function WMU_chooseImage(sourceId, itemId) {
-	var callback = {
-		success: function(o) {
-			WMU_displayDetails(o.responseText);
-		}
-	}
+	var callback = function(o) {
+		WMU_displayDetails(o.responseText);
+	};
+		
 	WMU_indicator(1, true);
-	YAHOO.util.Connect.abort(WMU_asyncTransaction)
-	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + 'sourceId=' + sourceId + '&itemId=' + itemId, callback);
+	WMU_jqXHR.abort();
+	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + 'sourceId=' + sourceId + '&itemId=' + itemId, {
+		method: 'get',
+		complete: callback
+	});
 }
 
 function WMU_upload(e) {
-	if($G('ImageUploadFile').value == '') {
+	if($('#ImageUploadFile').val() == '') {
 		alert(wmu_warn2);
 		return false;
 	} else {
-		if (WMU_initialCheck( $G('ImageUploadFile').value )) {
+		if (WMU_initialCheck( $('#ImageUploadFile').val() )) {
 			WMU_indicator(1, true);
 			return true;
 		} else {
@@ -799,9 +730,9 @@ function WMU_displayDetails(responseText) {
 	WMU_switchScreen('Details');
 	WMU_width = null;
 
-	$G('ImageUploadBack').style.display = 'inline';
+	$('#ImageUploadBack').css('display', 'inline');
 
-	$G('ImageUpload' + WMU_curScreen).innerHTML = responseText;
+	$('#ImageUpload' + WMU_curScreen).html(responseText);
 
 	$('#ImageUploadLicense').bind('change', WMU_licenseSelectorCheck);
 
@@ -819,19 +750,19 @@ function WMU_displayDetails(responseText) {
 	});
 
 	if( WMU_skipDetails ){
-		$G('ImageUpload' + WMU_curScreen).style.display = 'none';
-		$G('ImageUploadLayoutLeft').checked = 'checked';
-		$G('ImageUploadFullOption').checked = 'checked';
+		$('#ImageUpload' + WMU_curScreen).hide();
+		$('#ImageUploadLayoutLeft').attr('checked', true);
+		$('#ImageUploadFullOption').attr('checked', true);
 
 		WMU_insertImage($.getEvent(),'skip');
-	}else if($G('ImageUploadThumb')) {
+	}else if($('#ImageUploadThumb').length) {
 		WMU_orgThumbSize = null;
-		var image = $G('ImageUploadThumb').firstChild;
+		var image = $('#ImageUploadThumb').children(':first');
 		if ( null == WMU_width ) {
-			WMU_width = $G( 'ImageRealWidth' ).value;
-			WMU_height = $G( 'ImageRealHeight' ).value;
+			WMU_width = $( '#ImageRealWidth' ).val();
+			WMU_height = $( '#ImageRealHeight' ).val();
 		}
-		var thumbSize = [image.width, image.height];
+		var thumbSize = [image.width(), image.height()];
 		WMU_orgThumbSize = null;
 		WMU_slider = YAHOO.widget.Slider.getHorizSlider('ImageUploadSlider', 'ImageUploadSliderThumb', 0, 200);
 		WMU_slider.initialRound = true;
@@ -839,72 +770,66 @@ function WMU_displayDetails(responseText) {
 			return Math.max(2, Math.round(this.getValue() * (thumbSize[0] / 200)));
 		}
 		WMU_slider.subscribe("change", function(offsetFromStart) {
-			if ( 'hidden' == $G( 'ImageUploadSliderThumb' ).style.visibility ) {
-				$G( 'ImageUploadSliderThumb' ).style.visibility = 'visible';
-			}
+			$( '#ImageUploadSliderThumb' ).css('visibility', 'visible');
 			if (WMU_slider.initialRound) {
-				$G('ImageUploadManualWidth').value = '';
+				$('#ImageUploadManualWidth').val('');
 				WMU_slider.initialRound = false;
 			} else {
-				$G('ImageUploadManualWidth').value = WMU_slider.getRealValue();
+				$('#ImageUploadManualWidth').val(WMU_slider.getRealValue());
 
 				if ($("#ImageUploadWidthCheckbox").val() == "false") {
 					$("#ImageUploadWidthCheckbox").val("true").attr('checked', true);
 				}
 			}
-			image.width = WMU_slider.getRealValue();
-			$G('ImageUploadManualWidth').value = image.width;
-			image.height = image.width / (thumbSize[0] / thumbSize[1]);
+			image.width(WMU_slider.getRealValue());
+			$('#ImageUploadManualWidth').val(image.width());
+			image.height(image.width() / (thumbSize[0] / thumbSize[1]));
 			if(WMU_orgThumbSize == null) {
-				WMU_orgThumbSize = [image.width, image.height];
+				WMU_orgThumbSize = [image.width(), image.height()];
 				WMU_ratio = WMU_width / WMU_height;
 			}
-			WMU_thumbSize = [image.width, image.height];
+			WMU_thumbSize = [image.width(), image.height()];
 		});
 
-		if(image.width < 250) {
+		if(image.width() < 250) {
 			WMU_slider.setValue(200, true);
 		} else {
 			WMU_slider.setValue(125, true);
 		}
-		$G('ImageLinkRow').style.display = 'none';
+		$('#ImageLinkRow').hide();
 
 	}
-	if ($G( 'WMU_error_box' )) {
-		alert( $G( 'WMU_error_box' ).innerHTML );
+	if ($( '#WMU_error_box' ).html()) {
+		alert( $( '#WMU_error_box' ).html() );
 	}
 
 	if( 0 < WMU_align ) {
 		if( 1 == WMU_align ) {
-			$G( 'ImageUploadLayoutLeft' ).checked = 'checked';
+			$( '#ImageUploadLayoutLeft' ).attr('checked', true);
 		} else {
-			$G( 'ImageUploadLayoutRight' ).checked = 'checked';
+			$( '#ImageUploadLayoutRight' ).attr('checked', true);
 		}
 	}
 
 	if( 0 < WMU_size ) {
-		$G( 'ImageUploadWidthCheckbox' ).click();
-		$G( 'ImageUploadManualWidth' ).value = WMU_size;
+		$( '#ImageUploadWidthCheckbox' ).click();
+		$( '#ImageUploadManualWidth' ).val(WMU_size);
 		WMU_manualWidthInput();
-	} else {
-		if ( $G( 'ImageUploadSlider' ) ) {
-			//$G( 'ImageUploadSlider' ).style.visibility = 'hidden';
-			//$G( 'ImageUploadInputWidth' ).style.visibility = 'hidden';
-		}
 	}
+	
 	if( '' != WMU_caption ) {
-		$G( 'ImageUploadCaption' ).value = WMU_caption;
+		$( '#ImageUploadCaption' ).val(WMU_caption);
 	}
 
 	if( '' != WMU_link ) {
-		$G( 'ImageUploadLink' ).value = WMU_link;
+		$( '#ImageUploadLink' ).val(WMU_link);
 	}
 
-	if ( $G( 'ImageUploadLicenseText' ) ) {
+	if ( $( '#ImageUploadLicenseText' ).length ) {
 		var cookieMsg = document.cookie.indexOf("wmulicensemesg=");
 		if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 15) == 0) {
-			$G('ImageUploadLicenseText').style.display = 'none';
-			$G('ImageUploadLicenseLink').innerHTML = '[' + wmu_show_license_message  + ']';
+			$('#ImageUploadLicenseText').hide();
+			$('#ImageUploadLicenseLink').html('[' + wmu_show_license_message  + ']');
 		}
 	}
 
@@ -918,18 +843,18 @@ function WMU_displayDetails(responseText) {
 
 function WMU_insertPlaceholder( box ) {
 	WMU_box_filled.push(box);
-	var to_update = $G( 'WikiaImagePlaceholder' + box );
-	to_update.innerHTML = $G( 'ImageUploadCode' ).innerHTML;
+	var to_update = $( '#WikiaImagePlaceholder' + box );
+	to_update.innerHTML = $( '#ImageUploadCode' ).html();
 	//the class would need to be different if we had here the full-size...
 	to_update.className = '';
-	YAHOO.util.Connect.asyncRequest('POST', wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
+	$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 }
 
 function WMU_insertImage(e, type) {
 	var params = Array();
 	params.push('type='+type);
-	params.push('mwname='+$G('ImageUploadMWname').value);
-	params.push('tempid='+$G('ImageUploadTempid').value);
+	params.push('mwname='+$('#ImageUploadMWname').val());
+	params.push('tempid='+$('#ImageUploadTempid').val());
 
 	var captionUpdateInput = $('#ImageUploadReplaceDefault');
 	if (captionUpdateInput.is(':hidden')) {
@@ -940,60 +865,60 @@ function WMU_insertImage(e, type) {
 	}
 
 	if(type == 'overwrite') {
-		params.push('name='+ encodeURIComponent( $G('ImageUploadExistingName').value ) );
+		params.push('name='+ encodeURIComponent( $('#ImageUploadExistingName').val() ) );
 	} else if(type == 'rename') {
-		if( '' == $G( 'ImageUploadRenameName' ).value ) {
+		if( '' == $( '#ImageUploadRenameName' ).val() ) {
 			alert( wmu_warn3 );
 			return;
 		}
-		params.push('name='+ encodeURIComponent( $G('ImageUploadRenameName').value ) + '.' + $G( 'ImageUploadRenameExtension' ).value );
+		params.push('name='+ encodeURIComponent( $('#ImageUploadRenameName').val() ) + '.' + $( '#ImageUploadRenameExtension' ).val() );
 	} else {
-		if($G('ImageUploadName')) {
-			if( '' == $G( 'ImageUploadName' ).value ) {
+		if($('#ImageUploadName').length) {
+			if( '' == $( '#ImageUploadName' ).val() ) {
 				alert( wmu_warn3 );
 				return;
 			}
 			// for RT #24050 - Bartek
-
-			if( $G( 'ImageUploadName' ).value.indexOf( '/' ) > 0 )  {
-				var parts = $G( 'ImageUploadName' ).value.split( '/' );
+			var uploadName = $( '#ImageUploadName' ).val();
+			if( uploadName && uploadName.indexOf( '/' ) > 0 )  {
+				var parts = $( '#ImageUploadName' ).val().split( '/' );
 				var lastname = parts.pop();
-				$G( 'ImageUploadName' ).value = lastname;
+				$( '#ImageUploadName' ).val(lastname);
 				alert( badfilename.replace( '$1', lastname ) );
 				return;
 			}
 
-			params.push('name='+ encodeURIComponent( $G('ImageUploadName').value ) + '.' + $G('ImageUploadExtension').value);
+			params.push('name='+ encodeURIComponent( $('#ImageUploadName').val() ) + '.' + $('#ImageUploadExtension').val());
 		}
 	}
 
-	if($G('ImageUploadLicense')) {
-		params.push('ImageUploadLicense='+$G('ImageUploadLicense').value);
+	if($('#ImageUploadLicense').length) {
+		params.push('ImageUploadLicense='+$('#ImageUploadLicense').val());
 	}
 
-	if($G('ImageUploadExtraId')) {
-		params.push('extraId='+$G('ImageUploadExtraId').value);
+	if($('#ImageUploadExtraId').length) {
+		params.push('extraId='+$('#ImageUploadExtraId').val());
 	}
 
-	if($G('ImageUploadThumb')) {
-		if( $G('ImageUploadThumbOption').checked ) {
+	if($('#ImageUploadThumb').length) {
+		if( $('#ImageUploadThumbOption').is(':checked') ) {
 			params.push( 'size=thumb' );
 
 			// refs RT #35575
-			var width = parseInt( $G( 'ImageUploadManualWidth' ).value );
+			var width = parseInt( $( '#ImageUploadManualWidth' ).val() );
 			if (width > 0) {
 				params.push( 'width=' + width + 'px' );
 			}
 		} else {
 			params.push( 'size=full' );
 		}
-		params.push('layout=' + ($G('ImageUploadLayoutLeft').checked ? 'left' : 'right'));
-		params.push('caption=' + encodeURIComponent( $G('ImageUploadCaption').value ) );
+		params.push('layout=' + ($('#ImageUploadLayoutLeft').is(':checked') ? 'left' : 'right'));
+		params.push('caption=' + encodeURIComponent( $('#ImageUploadCaption').val() ) );
 		params.push('slider=' + $('#ImageUploadWidthCheckbox').val());
 	}
 
 	// support links (BugId:6506)
-	var link = $G('ImageUploadLink').value;
+	var link = $('#ImageUploadLink').val();
 	if (link != '') {
 		params.push( 'link=' + link );
 	}
@@ -1010,9 +935,9 @@ function WMU_insertImage(e, type) {
 
 	if( -2 == WMU_gallery ) { // placeholder magic
 		if( 0 == WMU_link ) {
-			if( $G('ImageUploadLink') ) {
-				if( '' != $G('ImageUploadLink').value ) {
-					params.push( 'link=' + encodeURIComponent( $G('ImageUploadLink').value ) );
+			if( $('#ImageUploadLink').length ) {
+				if( '' != $('#ImageUploadLink').val() ) {
+					params.push( 'link=' + encodeURIComponent( $('#ImageUploadLink').val() ) );
 				}
 			}
 		} else  {
@@ -1020,129 +945,130 @@ function WMU_insertImage(e, type) {
 		}
 	}
 
-	var callback = {
-		success: function(o) {
-
-			var screenType = o.getResponseHeader['X-screen-type'];
-			if(typeof screenType == "undefined") {
-				screenType = o.getResponseHeader['X-Screen-Type'];
-			}
-
-			switch(YAHOO.lang.trim(screenType)) {
-				case 'error':
-					o.responseText = o.responseText.replace(/<script.*script>/, "" );
-					break;
-				case 'conflict':
-					WMU_switchScreen('Conflict');
-					$G('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
-					break;
-				case 'summary':
-
-					WMU_switchScreen('Summary');
-					if (typeof RTE !== 'undefined') {
-						RTE.getInstanceEditor().getEditbox().focus();
-					}
-
-					$G('ImageUploadBack').style.display = 'none';
-					$G('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
-
-					var event = jQuery.Event("imageUploadSummary");
-					$("body").trigger(event, [$G('ImageUpload' + WMU_curScreen)]);
-					if ( event.isDefaultPrevented() ) {
-						return false;
-					}
-
-					// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
-					var $responseHTML = $(o.responseText),
-						wmuData = {
-						imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
-						imageWikiText: $responseHTML.find('#ImageUploadTag').val()
-					};
-					$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
-
-					// prevent checking for editor if WMU used outside of the editor context
-					if(!WMU_openedInEditor) {
-						return false;
-					}
-
-					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
-						if( -2 == WMU_gallery) {
-							WMU_insertPlaceholder( WMU_box );
-						} else {
-							// insert image in source mode
-							insertTags($G('ImageUploadTag').value, '', '', WMU_getRTETxtarea());
-						}
-					} else { // FCK
-						var wikitag = YAHOO.util.Dom.get('ImageUploadTag').value;
-						var options = {};
-
-						if($G('ImageUploadThumbOption').checked) {
-							options.thumb = 1;
-						} else {
-							options.thumb = null;
-						}
-						if($G('ImageUploadWidthCheckbox').checked) {
-							options.width = WMU_slider.getRealValue();
-						} else {
-							options.width = null;
-						}
-						if($G('ImageUploadLayoutLeft').checked) {
-							options.align = 'left';
-						} else {
-							options.align = null;
-						}
-						options.caption = $G('ImageUploadCaption').value;
-
-						// handle links (BugId:6506)
-						if (!options.thumb) {
-							options.link = $G('ImageUploadLink').value;
-						}
-
-						// macbre: CK support
-						if (typeof window.WMU_RTEImage != 'undefined') {
-							var image = window.WMU_RTEImage;
-
-							// modify options format
-							options.thumbnail = options.thumb;
-							delete options.thumb;
-
-							if (image) {
-								// update existing image / replace image placeholder
-								RTE.mediaEditor.update(image, wikitag, options);
-							}
-							else {
-								// add new image
-								RTE.mediaEditor.addImage(wikitag, options);
-							}
-							// Handle MiniEditor focus
-							// (BugId:18713)
-							var wikiaEditor = WikiaEditor.getInstance();
-							if(wikiaEditor.config.isMiniEditor) {
-								wikiaEditor.plugins.MiniEditor.hasFocus = false;
-							}
-
-						}
-						else  if(WMU_refid != -1) {
-							if( -2 == WMU_gallery) { // updating image placeholder
-								FCK.ProtectImageAdd(wikitag, options, WMU_refid);
-							} else { // updating edited image
-								FCK.ProtectImageUpdate(WMU_refid, wikitag, options);
-							}
-						} else {
-							FCK.ProtectImageAdd(wikitag, options);
-						}
-					}
-					break;
-				case 'existing':
-					WMU_displayDetails(o.responseText);
-					break;
-			}
-			WMU_indicator(1, false);
+	var callback = function(o) {
+		var screenType = WMU_jqXHR.getResponseHeader('X-screen-type');
+		if(typeof screenType == "undefined") {
+			screenType = WMU_jqXHR.getResponseHeader('X-Screen-Type');
 		}
-	}
+
+		switch($.trim(screenType)) {
+			case 'error':
+				o.responseText = o.responseText.replace(/<script.*script>/, "" );
+				break;
+			case 'conflict':
+				WMU_switchScreen('Conflict');
+				$('#ImageUpload' + WMU_curScreen).html(o.responseText);
+				break;
+			case 'summary':
+
+				WMU_switchScreen('Summary');
+				if (typeof RTE !== 'undefined') {
+					RTE.getInstanceEditor().getEditbox().focus();
+				}
+
+				$('#ImageUploadBack').hide();
+				$('#ImageUpload' + WMU_curScreen).html(o.responseText);
+
+				var event = jQuery.Event("imageUploadSummary");
+				$("body").trigger(event, [$('#ImageUpload' + WMU_curScreen)]);
+				if ( event.isDefaultPrevented() ) {
+					return false;
+				}
+
+				// Special Case for using WMU in SDSObject Special Page - returns the file name of chosen image
+				var $responseHTML = $(o.responseText),
+					wmuData = {
+					imageTitle: $responseHTML.find('#ImageUploadFileName').val(),
+					imageWikiText: $responseHTML.find('#ImageUploadTag').val()
+				};
+				$(window).trigger('WMU_addFromSpecialPage', [wmuData]);
+				
+				// prevent checking for editor if WMU used outside of the editor context
+				if(!WMU_openedInEditor) {
+					return false;
+				}
+				
+				if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
+					if( -2 == WMU_gallery) {
+						WMU_insertPlaceholder( WMU_box );
+					} else {
+						// insert image in source mode
+						insertTags($('#ImageUploadTag').val(), '', '', WMU_getRTETxtarea());
+					}
+				} else { // FCK
+					var wikitag = $('#ImageUploadTag').val();
+					var options = {};
+
+					if($('#ImageUploadThumbOption').is(':checked')) {
+						options.thumb = 1;
+					} else {
+						options.thumb = null;
+					}
+					if($('#ImageUploadWidthCheckbox').is(':checked')) {
+						options.width = WMU_slider.getRealValue();
+					} else {
+						options.width = null;
+					}
+					if($('#ImageUploadLayoutLeft').is(':checked')) {
+						options.align = 'left';
+					} else {
+						options.align = null;
+					}
+					options.caption = $('#ImageUploadCaption').val();
+
+					// handle links (BugId:6506)
+					if (!options.thumb) {
+						options.link = $('#ImageUploadLink').val();
+					}
+
+					// macbre: CK support
+					if (typeof window.WMU_RTEImage != 'undefined') {
+						var image = window.WMU_RTEImage;
+
+						// modify options format
+						options.thumbnail = options.thumb;
+						delete options.thumb;
+
+						if (image) {
+							// update existing image / replace image placeholder
+							RTE.mediaEditor.update(image, wikitag, options);
+						}
+						else {
+							// add new image
+							RTE.mediaEditor.addImage(wikitag, options);
+						}
+						// Handle MiniEditor focus
+						// (BugId:18713)
+						var wikiaEditor = WikiaEditor.getInstance();
+						if(wikiaEditor.config.isMiniEditor) {
+							wikiaEditor.plugins.MiniEditor.hasFocus = false;
+						}
+
+					}
+					else  if(WMU_refid != -1) {
+						if( -2 == WMU_gallery) { // updating image placeholder
+							FCK.ProtectImageAdd(wikitag, options, WMU_refid);
+						} else { // updating edited image
+							FCK.ProtectImageUpdate(WMU_refid, wikitag, options);
+						}
+					} else {
+						FCK.ProtectImageAdd(wikitag, options);
+					}
+				}
+				break;
+			case 'existing':
+				WMU_displayDetails(o.responseText);
+				break;
+		}
+		WMU_indicator(1, false);
+	};
+		
 	WMU_indicator(1, true);
-	YAHOO.util.Connect.abort(WMU_asyncTransaction);
-	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), callback);
+	WMU_jqXHR.abort();
+	WMU_jqXHR = $.ajax(wgScriptPath + '/index.php?action=ajax&rs=WMU&method=insertImage&' + params.join('&'), {
+		method: 'get',
+		complete: callback
+	});
 }
 
 function WMU_box_in_article() {
@@ -1162,61 +1088,42 @@ function WMU_box_in_article() {
  */
 function MWU_imageWidthChanged() {
 
-	var image = $G('ImageUploadThumb').firstChild;
-	if( !$G( 'ImageUploadWidthCheckbox' ).checked ) {
-		// This will never be run
-		$G('ImageUploadManualWidth').value = '';
-		$G('ImageUploadSlider').style.visibility = 'hidden';
-		$G('ImageUploadSliderThumb').style.visibility = 'hidden';
-		$G('ImageUploadInputWidth').style.visibility = 'hidden';
-		image.width = WMU_orgThumbSize[0];
-		image.height = WMU_orgThumbSize[1];
-	} else {
-		$G('ImageUploadManualWidth').value = WMU_slider.getRealValue();
-		$G('ImageUploadSlider').style.visibility = 'visible';
-		$G('ImageUploadSliderThumb').style.visibility = 'visible';
-		$G('ImageUploadInputWidth').style.visibility = 'visible';
-		if( WMU_thumbSize ) {
-			image.width = WMU_thumbSize[0];
-			image.height = WMU_thumbSize[1];
-		}
-	}
 }
 
 function MWU_imageSizeChanged(size) {
-	YAHOO.util.Dom.setStyle(['ImageWidthRow'], 'display', size == 'thumb' ? '' : 'none');
+	$('#ImageWidthRow').css('display', size == 'thumb' ? '' : 'none');
 
-	if($G('ImageUploadThumb')) {
-		var image = $G('ImageUploadThumb').firstChild;
+	if($('#ImageUploadThumb').length) {
+		var image = $('#ImageUploadThumb').children(':first');
 		if(size == 'thumb') {
-			image.width = WMU_thumbSize[0];
-			image.height = WMU_thumbSize[1];
-			$G('ImageUploadManualWidth').value = WMU_thumbSize[0];
-			$G('ImageLinkRow').style.display = 'none';
+			image.width(WMU_thumbSize[0]);
+			image.height(WMU_thumbSize[1]);
+			$('#ImageUploadManualWidth').val(WMU_thumbSize[0]);
+			$('#ImageLinkRow').hide();
 		} else if (size == 'full') {
-			image.width = WMU_orgThumbSize[0];
-			image.height = WMU_orgThumbSize[1];
-			$G('ImageUploadManualWidth').value = WMU_orgThumbSize[0];
+			image.width(WMU_orgThumbSize[0]);
+			image.height(WMU_orgThumbSize[1]);
+			$('#ImageUploadManualWidth').val(WMU_orgThumbSize[0]);
 			if( 0 == WMU_link ) {
-				$G('ImageLinkRow').style.display = '';
+				$('#ImageLinkRow').show();
 			}
 		} else {
 			if( 0 == WMU_link ) {
-				$G('ImageLinkRow').style.display = '';
+				$('#ImageLinkRow').show();
 			}
 		}
 	}
 }
 
 function WMU_toggleLicenseMesg(e) {
-	YAHOO.util.Event.preventDefault(e);
-	if ('none' == $G('ImageUploadLicenseText').style.display) {
-		$G('ImageUploadLicenseText').style.display = '';
-		$G('ImageUploadLicenseLink').innerHTML = '[' + wmu_hide_license_message  + ']';
+	e.preventDefault();
+	if ('none' == $('#ImageUploadLicenseText').css('display') ) {
+		$('#ImageUploadLicenseText').show();
+		$('#ImageUploadLicenseLink').html('[' + wmu_hide_license_message  + ']');
 		document.cookie = "wmulicensemesg=1";
 	} else {
-		$G('ImageUploadLicenseText').style.display = 'none';
-		$G('ImageUploadLicenseLink').innerHTML = '[' + wmu_show_license_message  + ']';
+		$('#ImageUploadLicenseText').hide();
+		$('#ImageUploadLicenseLink').html('[' + wmu_show_license_message  + ']');
 		document.cookie = "wmulicensemesg=0";
 	}
 }
@@ -1224,14 +1131,14 @@ function WMU_toggleLicenseMesg(e) {
 function WMU_switchScreen(to) {
 	WMU_prevScreen = WMU_curScreen;
 	WMU_curScreen = to;
-	$G('ImageUpload' + WMU_prevScreen).style.display = 'none';
-	$G('ImageUpload' + WMU_curScreen).style.display = '';
+	$('#ImageUpload' + WMU_prevScreen).hide();
+	$('#ImageUpload' + WMU_curScreen).show();
 	if(WMU_curScreen == 'Main') {
-		$G('ImageUploadBack').style.display = 'none';
+		$('#ImageUploadBack').hide();
 		WMU_loadMain();
 	}
-	if((WMU_prevScreen == 'Details' || WMU_prevScreen == 'Conflict') && WMU_curScreen == 'Main' && $G('ImageUploadName')) {
-		YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=clean&mwname=' + $G('ImageUploadMWname').value + '&tempid=' + $G( 'ImageUploadTempid' ).value );
+	if((WMU_prevScreen == 'Details' || WMU_prevScreen == 'Conflict') && WMU_curScreen == 'Main' && $('#ImageUploadName').length) {
+		$.get('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=clean&mwname=' + $('#ImageUploadMWname').val() + '&tempid=' + $( '#ImageUploadTempid' ).val());
 	}
 
 	// macbre: move back button on Oasis
@@ -1257,7 +1164,7 @@ function WMU_switchScreen(to) {
 }
 
 function WMU_back(e) {
-	YAHOO.util.Event.preventDefault(e);
+	e.preventDefault();
 	if(WMU_curScreen == 'Details') {
 		WMU_switchScreen('Main');
 	} else if(WMU_curScreen == 'Conflict' && WMU_prevScreen == 'Details') {
@@ -1267,13 +1174,13 @@ function WMU_back(e) {
 
 function WMU_close(e) {
 	if(e) {
-		YAHOO.util.Event.preventDefault(e);
+		e.preventDefault();
 	}
-	WMU_panel.hide();
-	if(typeof window.RTE == 'undefined' && $G('wpTextbox1')) $G('wpTextbox1').focus();
+	WMU_modal.hideModal();
+	if(typeof window.RTE == 'undefined' && $('#wpTextbox1').length) $('#wpTextbox1').focus();
 	WMU_switchScreen('Main');
 	WMU_loadMain();
-	YAHOO.util.Dom.setStyle('header_ad', 'display', 'block');
+	$('#header_ad').css('display', 'block');
 
 	// Handle MiniEditor focus
 	// (BugId:18713)

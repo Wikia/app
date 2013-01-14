@@ -24,8 +24,6 @@ $messages['en'] = array(
 	"autocreatewiki-blurry-word" => "Blurry word:",
 	"autocreatewiki-remember" => "Remember me",
 	"autocreatewiki-create-account" => "Create an account",
-	"autocreatewiki-done" => "done",
-	"autocreatewiki-error" => "error",
 	"autocreatewiki-haveaccount-question" => "Do you already have a Wikia account?",
 	"autocreatewiki-success-title-default" => "Your wiki has been created!",
 	"autocreatewiki-success-title-answers" => "Your answers site has been created!",
@@ -187,6 +185,7 @@ This is a brand-new project, so please write to us if you have any questions!
 $messages['qqq'] = array(
 	'autocreatewiki-desc' => '{{desc}}',
 	'autocreatewiki-page-title-answers' => '"Answers sites" are  special wikis of the type answers.wikia.com, where you ask and answer questions.',
+	'autocreatewiki-language-top' => 'When the user is choosing the wiki\'s language from a dropdown menu, the most commonly chosen languages are listed in a separate section of the menu. This message is the title for that "Top Languages" section. The $1 parameter is a  basic number (ex. 7 or 12) that matches the number of languages in the "Top Languages" section.',
 	'autocreatewiki-blurry-word' => 'Message {{msg-Wikia|Autocreatewiki-info-blurry-word}} refers here.',
 	'autocreatewiki-create-account' => '{{Identical|Create an account}}',
 	'autocreatewiki-success-title-answers' => '"Answers sites" are  special wikis of the type answers.wikia.com, where you ask and answer questions.',
@@ -215,8 +214,6 @@ $messages['af'] = array(
 	'autocreatewiki-blurry-word' => 'Wasige woord:',
 	'autocreatewiki-remember' => 'Onthou my',
 	'autocreatewiki-create-account' => "Skep 'n rekening",
-	'autocreatewiki-done' => 'gedoen',
-	'autocreatewiki-error' => 'fout',
 	'autocreatewiki-success-get-started' => 'Begin',
 	'autocreatewiki-info-staff-username' => '<b>Slegs vir personeel:</b> die gespesifiseerde gebruiker sal as die stigter gelys word.',
 	'autocreatewiki-title-template' => '$1 wiki',
@@ -266,8 +263,6 @@ $messages['ar'] = array(
 	'autocreatewiki-blurry-word' => 'كلمة غامضة:',
 	'autocreatewiki-remember' => 'تذكرني',
 	'autocreatewiki-create-account' => 'إنشاء حساب',
-	'autocreatewiki-done' => 'تم',
-	'autocreatewiki-error' => 'خطأ',
 	'autocreatewiki-haveaccount-question' => 'هل لديك حساب على ويكيا؟',
 	'autocreatewiki-success-title-default' => 'تم إنشاء الويكي !',
 	'autocreatewiki-success-title-answers' => 'تم إنشاء موقع الأجوبة!',
@@ -327,8 +322,6 @@ $messages['as'] = array(
 	'autocreatewiki-birthdate' => 'জন্ম তাৰিখ:',
 	'autocreatewiki-remember' => 'মোৰ প্ৰৱেশ মনত ৰাখক',
 	'autocreatewiki-create-account' => 'নতুন একাউণ্ট খোলক',
-	'autocreatewiki-done' => 'কৰা হ’ল',
-	'autocreatewiki-error' => 'ভুল',
 	'autocreatewiki-success-title-default' => 'আপোনাৰ ৱিকি সৃষ্টি ক’ৰা হ’ল',
 	'autocreatewiki-success-has-been-created' => 'সৃষ্টি কৰা হ’ল!',
 	'autocreatewiki-success-get-started' => 'যাত্ৰা আৰম্ভ কৰক',
@@ -353,8 +346,6 @@ $messages['az'] = array(
 	'autocreatewiki-web-address' => 'Veb ünvanı:',
 	'autocreatewiki-language-all' => 'Bütün dillər',
 	'autocreatewiki-birthdate' => 'Doğum tarixi:',
-	'autocreatewiki-done' => 'heç biri',
-	'autocreatewiki-error' => 'xəta',
 	'autocreatewiki-title-template' => '$1 Viki',
 	'autocreatewiki-category-label' => 'Kateqoriya:',
 	'autocreatewiki-category-other' => 'Digər',
@@ -365,7 +356,6 @@ $messages['az'] = array(
  * @author E THP
  */
 $messages['azb'] = array(
-	'autocreatewiki-done' => 'گوتولدو',
 	'autocreatewiki-success-has-been-created' => 'یارادیلیب دیر',
 	'autocreatewiki-success-get-started' => 'باشلا',
 );
@@ -392,8 +382,6 @@ $messages['bg'] = array(
 	'autocreatewiki-language-all' => 'Всички езици',
 	'autocreatewiki-birthdate' => 'Дата на раждане:',
 	'autocreatewiki-create-account' => 'Създаване на сметка',
-	'autocreatewiki-done' => 'готово',
-	'autocreatewiki-error' => 'грешка',
 	'autocreatewiki-success-title-default' => 'Вашето уики беше създадено!',
 	'autocreatewiki-bad-name' => 'Името не може да съдържа специални символи (като $ или @) и е необходимо да е една дума, изписана с малки букви и без интервали.',
 	'autocreatewiki-violate-policy' => 'Името на уикито съдържа дума, която нарушава политиката ни за наименуване',
@@ -444,8 +432,6 @@ $messages['br'] = array(
 	'autocreatewiki-blurry-word' => 'Gerioù dispis  :',
 	'autocreatewiki-remember' => "Derc'hel soñj ac'hanon",
 	'autocreatewiki-create-account' => 'Krouiñ ur gont',
-	'autocreatewiki-done' => 'graet',
-	'autocreatewiki-error' => 'fazi',
 	'autocreatewiki-haveaccount-question' => 'Hag ur gont Wikia ho peus dija ?',
 	'autocreatewiki-success-title-default' => 'Krouet eo bet ho wiki !',
 	'autocreatewiki-success-title-answers' => "Krouet eo bet ho lec'hienn respontoù.",
@@ -603,8 +589,6 @@ $messages['cs'] = array(
 	'autocreatewiki-blurry-word' => 'Rozmazané slovo:',
 	'autocreatewiki-remember' => 'Pamatuj si mě',
 	'autocreatewiki-create-account' => 'Založit účet',
-	'autocreatewiki-done' => 'hotovo',
-	'autocreatewiki-error' => 'chyba',
 	'autocreatewiki-haveaccount-question' => 'Máte již Wikia účet?',
 	'autocreatewiki-success-title-default' => 'Vaše wiki byla vytvořena!',
 	'autocreatewiki-success-title-answers' => 'Vaše web s odpověďmi byl vytvořen!',
@@ -701,8 +685,6 @@ $messages['de'] = array(
 	'autocreatewiki-blurry-word' => 'Spam-Schutz:',
 	'autocreatewiki-remember' => 'Dauerhaft anmelden',
 	'autocreatewiki-create-account' => 'Benutzerkonto erstellen',
-	'autocreatewiki-done' => 'Fertig',
-	'autocreatewiki-error' => 'Fehler',
 	'autocreatewiki-haveaccount-question' => 'Hast du bereits ein Benutzerkonto bei Wikia?',
 	'autocreatewiki-success-title-default' => 'Dein Wiki wurde erstellt!',
 	'autocreatewiki-success-title-answers' => 'Deine Frage-Antwort-Site wurde erstellt!',
@@ -948,8 +930,6 @@ $messages['diq'] = array(
 	'autocreatewiki-blurry-word' => 'Çekuyo herşık:',
 	'autocreatewiki-remember' => 'Mı biya xo viri',
 	'autocreatewiki-create-account' => 'Yew hesab vıraze',
-	'autocreatewiki-done' => 'Vırazi ya',
-	'autocreatewiki-error' => 'Xırab',
 	'autocreatewiki-haveaccount-question' => 'Xora yew hesabê şımayê Wikia esto?',
 	'autocreatewiki-success-title-default' => 'Wikiaya şıma vıraziyê!',
 	'autocreatewiki-success-has-been-created' => 'vıraşt',
@@ -1007,8 +987,6 @@ $messages['el'] = array(
 	'autocreatewiki-blurry-word' => 'Ασαφής λέξη:',
 	'autocreatewiki-remember' => 'Αποθήκευση',
 	'autocreatewiki-create-account' => 'Δημιουργία λογαριασμού',
-	'autocreatewiki-done' => 'έγινε',
-	'autocreatewiki-error' => 'σφάλμα',
 	'autocreatewiki-haveaccount-question' => 'Έχετε ήδη ένα λογαριασμό Wikia;',
 	'autocreatewiki-success-title-default' => 'Το wiki σας έχει δημιουργηθεί!',
 	'autocreatewiki-success-title-answers' => 'Η ιστοσελίδα σας για απαντήσεις έχει δημιουργηθεί!',
@@ -1055,8 +1033,6 @@ $messages['eo'] = array(
 	'autocreatewiki-language-top' => '$1 plej gravaj lingvoj',
 	'autocreatewiki-language-all' => 'Ĉiuj lingvoj',
 	'autocreatewiki-create-account' => 'Registri sin',
-	'autocreatewiki-done' => 'farita',
-	'autocreatewiki-error' => 'eraro',
 	'autocreatewiki-haveaccount-question' => 'Ĉu vi jam havas Wikia-konton?',
 	'autocreatewiki-success-title-default' => 'Via vikio estas kreita!',
 	'autocreatewiki-success-has-been-created' => 'kreis!',
@@ -1115,8 +1091,6 @@ $messages['es'] = array(
 	'autocreatewiki-blurry-word' => 'Palabra borrosa:',
 	'autocreatewiki-remember' => 'Recordarme',
 	'autocreatewiki-create-account' => 'Crear una Cuenta',
-	'autocreatewiki-done' => 'hecho',
-	'autocreatewiki-error' => 'error',
 	'autocreatewiki-haveaccount-question' => '¿Tienes ya cuenta en Wikia?',
 	'autocreatewiki-success-title-default' => '¡Tu wiki ha sido creado!',
 	'autocreatewiki-success-title-answers' => '¡Su sitio de respuestas ha sido creada!',
@@ -1269,8 +1243,6 @@ $messages['et'] = array(
 	'autocreatewiki-blurry-word' => 'Ebaselge sõna:',
 	'autocreatewiki-remember' => 'Pea mind meeles',
 	'autocreatewiki-create-account' => 'Loo konto',
-	'autocreatewiki-done' => 'valmis',
-	'autocreatewiki-error' => 'tõrge',
 	'autocreatewiki-haveaccount-question' => 'Kas sul on juba Wikias konto?',
 	'autocreatewiki-success-title-default' => 'Sinu viki on loodud!',
 	'autocreatewiki-success-title-answers' => 'Sinu küsimuste sait on loodud!',
@@ -1297,8 +1269,6 @@ $messages['eu'] = array(
 	'autocreatewiki-birthdate' => 'Jaiotza data:',
 	'autocreatewiki-remember' => 'Gogora nazazu',
 	'autocreatewiki-create-account' => 'Kontua sortu',
-	'autocreatewiki-done' => 'egina',
-	'autocreatewiki-error' => 'errorea',
 	'autocreatewiki-category-label' => 'Kategoria:',
 	'autocreatewiki-congratulation' => 'Zorionak!',
 	'autocreatewiki-subname-answers' => 'Erantzunak',
@@ -1327,8 +1297,6 @@ $messages['fa'] = array(
 	'autocreatewiki-blurry-word' => 'لغت نامعلوم:',
 	'autocreatewiki-remember' => 'مرا به خاطر بسپار',
 	'autocreatewiki-create-account' => 'ایجاد حساب کاربری',
-	'autocreatewiki-done' => 'تمام شد',
-	'autocreatewiki-error' => 'خطا',
 	'autocreatewiki-haveaccount-question' => 'آیا از قبل در ویکیا حساب کاربری دارید؟',
 	'autocreatewiki-success-title-default' => 'ویکی شما ایجاد شد!',
 	'autocreatewiki-success-title-answers' => 'وبگاه پاسخ‌های شما ایجاد شده است!',
@@ -1460,8 +1428,6 @@ $messages['fi'] = array(
 	'autocreatewiki-blurry-word' => 'Sumea sana:',
 	'autocreatewiki-remember' => 'Muista minut',
 	'autocreatewiki-create-account' => 'Luo tunnus',
-	'autocreatewiki-done' => 'tehty',
-	'autocreatewiki-error' => 'virhe',
 	'autocreatewiki-haveaccount-question' => 'Onko sinulla jo Wikia-tili?',
 	'autocreatewiki-success-title-default' => 'Wikisi on luotu!',
 	'autocreatewiki-success-title-answers' => 'Vastaussivusi on luotu!',
@@ -1625,8 +1591,6 @@ $messages['fr'] = array(
 	'autocreatewiki-blurry-word' => 'Mot flouté :',
 	'autocreatewiki-remember' => 'Se souvenir de moi',
 	'autocreatewiki-create-account' => 'Créer un compte',
-	'autocreatewiki-done' => 'fait',
-	'autocreatewiki-error' => 'erreur',
 	'autocreatewiki-haveaccount-question' => 'Avez-vous déjà un compte Wikia ?',
 	'autocreatewiki-success-title-default' => 'Votre wiki a bien été créé !',
 	'autocreatewiki-success-title-answers' => 'Votre site de réponses a été créé.',
@@ -1778,8 +1742,6 @@ $messages['gl'] = array(
 	'autocreatewiki-blurry-word' => 'Palabra borrosa:',
 	'autocreatewiki-remember' => 'Lembrádeme',
 	'autocreatewiki-create-account' => 'Crear unha conta',
-	'autocreatewiki-done' => 'feito',
-	'autocreatewiki-error' => 'erro',
 	'autocreatewiki-haveaccount-question' => 'Xa ten unha conta Wikia?',
 	'autocreatewiki-success-title-default' => 'Creouse o seu wiki!',
 	'autocreatewiki-success-title-answers' => 'Creouse o seu sitio de respostas!',
@@ -1928,8 +1890,6 @@ $messages['he'] = array(
 	'autocreatewiki-blurry-word' => 'מילה מטושטשת:',
 	'autocreatewiki-remember' => 'זכור אותי',
 	'autocreatewiki-create-account' => 'יצירת חשבון',
-	'autocreatewiki-done' => 'הושלם',
-	'autocreatewiki-error' => 'שגיאה',
 	'autocreatewiki-haveaccount-question' => 'האם יש לך כבר חשבון בוויקיה?',
 	'autocreatewiki-success-title-default' => 'אתר הוויקי שלך נוצר!',
 	'autocreatewiki-success-subtitle' => 'אתה יכול להתחיל לעבוד על אתר הוויקי שלך בכתובת:',
@@ -1965,8 +1925,6 @@ $messages['hu'] = array(
 	'autocreatewiki-blurry-word' => 'Elmosott szó:',
 	'autocreatewiki-remember' => 'Emlékezzen rám',
 	'autocreatewiki-create-account' => 'Fiók létrehozása',
-	'autocreatewiki-done' => 'Kész.',
-	'autocreatewiki-error' => 'hiba',
 	'autocreatewiki-haveaccount-question' => 'Már van Wikia-fiókod?',
 	'autocreatewiki-success-title-default' => 'A wiki elkészült!',
 	'autocreatewiki-success-subtitle' => 'Elkezdhetsz dolgozni a wikin a következő címre való látogatás után:',
@@ -2107,8 +2065,6 @@ $messages['ia'] = array(
 	'autocreatewiki-blurry-word' => 'Parola brumose:',
 	'autocreatewiki-remember' => 'Memorar me',
 	'autocreatewiki-create-account' => 'Crear un conto',
-	'autocreatewiki-done' => 'finite',
-	'autocreatewiki-error' => 'error',
 	'autocreatewiki-haveaccount-question' => 'Ha tu ja un conto Wiki?',
 	'autocreatewiki-success-title-default' => 'Tu wiki ha essite create!',
 	'autocreatewiki-success-title-answers' => 'Tu sito de responsas ha essite create!',
@@ -2252,8 +2208,6 @@ $messages['id'] = array(
 	'autocreatewiki-blurry-word' => 'Kata tersamar:',
 	'autocreatewiki-remember' => 'Ingat saya',
 	'autocreatewiki-create-account' => 'Buat akun',
-	'autocreatewiki-done' => 'Selesai',
-	'autocreatewiki-error' => 'kesalahan',
 	'autocreatewiki-haveaccount-question' => 'Apakah anda sudah memiliki akun Wikia?',
 	'autocreatewiki-success-title-default' => 'Wiki anda telah dibuat!',
 	'autocreatewiki-success-title-answers' => 'Situs answers anda terlah dibuat!',
@@ -2419,8 +2373,6 @@ $messages['it'] = array(
 	'autocreatewiki-blurry-word' => 'Parola sfocata:',
 	'autocreatewiki-remember' => 'Ricordami',
 	'autocreatewiki-create-account' => 'Crea un account',
-	'autocreatewiki-done' => 'fatto',
-	'autocreatewiki-error' => 'errore',
 	'autocreatewiki-haveaccount-question' => 'Hai già un account Wikia?',
 	'autocreatewiki-success-title-default' => 'La tua wiki è stata creata!',
 	'autocreatewiki-success-title-answers' => 'Il tuo sito di Risposte è stato creato!',
@@ -2563,8 +2515,6 @@ $messages['ja'] = array(
 	'autocreatewiki-blurry-word' => '画像認証:',
 	'autocreatewiki-remember' => 'パスワードを記憶',
 	'autocreatewiki-create-account' => 'アカウントを作成する',
-	'autocreatewiki-done' => '完了',
-	'autocreatewiki-error' => 'エラー',
 	'autocreatewiki-haveaccount-question' => 'すでにウィキアのアカウントをお持ちですか？',
 	'autocreatewiki-success-title-default' => 'ウィキが作成されました！',
 	'autocreatewiki-success-title-answers' => 'Q&amp;Aサイトが作成されました！',
@@ -2694,8 +2644,6 @@ $messages['km'] = array(
 	'autocreatewiki-birthdate' => 'ថ្ងៃ​ខែ​ឆ្នាំកំណើត​៖',
 	'autocreatewiki-remember' => 'ចងចាំខ្ញុំ',
 	'autocreatewiki-create-account' => 'បង្កើតគណនីមួយ',
-	'autocreatewiki-done' => 'រួចរាល់',
-	'autocreatewiki-error' => 'បញ្ហា',
 	'autocreatewiki-haveaccount-question' => 'តើអ្នកមានគណនី Wikia មួយហើយឬនៅ?',
 	'autocreatewiki-success-title-default' => 'វិគីរបស់អ្នកត្រូវបានបង្កើតហើយ!',
 	'autocreatewiki-success-subtitle' => 'ឥលូវនេះអ្នកអាចចាប់ផ្ដើមធ្វើការងារលើវិគីរបស់អ្នកដោយចូលទៅទស្សនា៖',
@@ -2728,7 +2676,6 @@ $messages['ko'] = array(
 	'createwiki' => '새 위키 만들기',
 	'autocreatewiki-language-all' => '모든 언어',
 	'autocreatewiki-create-account' => '계정 만들기',
-	'autocreatewiki-error' => '오류',
 	'autocreatewiki-haveaccount-question' => '이미 위키아 계정이 있습니까?',
 	'autocreatewiki-success-title-default' => '위키를 만들었습니다!',
 	'autocreatewiki-success-subtitle' => '지금 위키에 방문해서 활동을 시작할 수 있습니다:',
@@ -2757,8 +2704,6 @@ $messages['ksh'] = array(
 	'autocreatewiki-blurry-word' => 'Verwaggelt Wood:',
 	'autocreatewiki-remember' => 'Op Duur enlogge',
 	'autocreatewiki-create-account' => 'Ene neue Metmaacher aanmelde',
-	'autocreatewiki-done' => 'jedonn',
-	'autocreatewiki-error' => 'Fähler',
 	'autocreatewiki-haveaccount-question' => 'Häß De ald ene Zohjang op Wikia?',
 	'autocreatewiki-success-title-default' => 'Ding Wiki es jäz aanjelaat!',
 	'autocreatewiki-success-title-answers' => 'Ding ẞait met Antwoote es jäz aanjelaat!',
@@ -2853,7 +2798,6 @@ Dat es e brandneu Projäk, un wann De Froore häß, schriiv ons dovun!
  */
 $messages['ku-latn'] = array(
 	'autocreatewiki-language-all' => 'Hemû ziman',
-	'autocreatewiki-done' => 'çêbû',
 	'autocreatewiki-category-label' => 'Kategorî:',
 	'autocreatewiki-subname-answers' => 'Bersiv',
 );
@@ -2864,7 +2808,6 @@ $messages['ku-latn'] = array(
 $messages['ky'] = array(
 	'autocreatewiki-remember' => 'Мени эске сактоо',
 	'autocreatewiki-create-account' => 'Эсеп жазуусун жаратуу',
-	'autocreatewiki-error' => 'ката',
 	'autocreatewiki-category-label' => 'Категория:',
 	'autocreatewiki-category-other' => 'Башка',
 );
@@ -2889,8 +2832,6 @@ $messages['lb'] = array(
 	'autocreatewiki-language-all' => 'All Sproochen',
 	'autocreatewiki-birthdate' => 'Gebuertsdatum:',
 	'autocreatewiki-remember' => 'Sech u mech erënneren',
-	'autocreatewiki-done' => 'fäerdeg',
-	'autocreatewiki-error' => 'Feeler',
 	'autocreatewiki-success-get-started' => 'Ufänken',
 	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-invalid-username' => 'Dëse Benotzernumm ass net valabel.',
@@ -2936,8 +2877,6 @@ $messages['lt'] = array(
 	'autocreatewiki-blurry-word' => 'Neryškus žodis:',
 	'autocreatewiki-remember' => 'Prisiminti mane',
 	'autocreatewiki-create-account' => 'Sukurti sąskaitą',
-	'autocreatewiki-done' => 'atlikta',
-	'autocreatewiki-error' => 'klaida',
 	'autocreatewiki-haveaccount-question' => 'Ar jau turite Wikia sąskaitą?',
 	'autocreatewiki-success-title-default' => 'Jūsų wiki buvo sukurta!',
 	'autocreatewiki-success-title-answers' => 'Jūsų atsakymų svetainė buvo sukurta!',
@@ -2990,8 +2929,6 @@ $messages['mk'] = array(
 	'autocreatewiki-blurry-word' => 'Заматен збор:',
 	'autocreatewiki-remember' => 'Запомни ме',
 	'autocreatewiki-create-account' => 'Направи сметка',
-	'autocreatewiki-done' => 'готово',
-	'autocreatewiki-error' => 'грешка',
 	'autocreatewiki-haveaccount-question' => 'Дали веќе имате сметка на Викија?',
 	'autocreatewiki-success-title-default' => 'Вашето вики е создадено!',
 	'autocreatewiki-success-title-answers' => 'Вашата страница за одговори е создадена!',
@@ -3134,8 +3071,6 @@ $messages['ml'] = array(
 	'autocreatewiki-birthdate' => 'ജനന തീയതി:',
 	'autocreatewiki-remember' => 'എന്നെ ഓർത്തുവെയ്ക്കുക',
 	'autocreatewiki-create-account' => 'ഒരംഗത്വമെടുക്കുക',
-	'autocreatewiki-done' => 'ചെയ്തു കഴിഞ്ഞു',
-	'autocreatewiki-error' => 'പിഴവ്',
 	'autocreatewiki-haveaccount-question' => 'താങ്കൾക്ക് വിക്കിയ അംഗത്വമുണ്ടോ?',
 	'autocreatewiki-success-title-default' => 'താങ്കളുടെ വിക്കി സൃഷ്ടിക്കപ്പെട്ടിരിക്കുന്നു!',
 	'autocreatewiki-title-template' => '$1 വിക്കി',
@@ -3168,8 +3103,6 @@ $messages['ms'] = array(
 	'autocreatewiki-blurry-word' => 'Kata kabur:',
 	'autocreatewiki-remember' => 'Ingati saya',
 	'autocreatewiki-create-account' => 'Buka akaun baru',
-	'autocreatewiki-done' => 'siap',
-	'autocreatewiki-error' => 'ralat',
 	'autocreatewiki-haveaccount-question' => 'Adakah anda mempunyai akaun Wikia?',
 	'autocreatewiki-success-title-default' => 'Wiki anda telah dicipta!',
 	'autocreatewiki-success-title-answers' => 'Tapak jawapan anda telah dicipta!',
@@ -3332,8 +3265,6 @@ $messages['nb'] = array(
 	'autocreatewiki-blurry-word' => 'Forvrengt ord:',
 	'autocreatewiki-remember' => 'Husk meg',
 	'autocreatewiki-create-account' => 'Opprett en konto',
-	'autocreatewiki-done' => 'ferdig',
-	'autocreatewiki-error' => 'feil',
 	'autocreatewiki-haveaccount-question' => 'Har du allerede en Wikia-konto?',
 	'autocreatewiki-success-title-default' => 'Din wiki har blitt opprettet!',
 	'autocreatewiki-success-title-answers' => 'Svar-siden din har blitt opprettet!',
@@ -3491,8 +3422,6 @@ $messages['nl'] = array(
 	'autocreatewiki-blurry-word' => 'Wazige woord:',
 	'autocreatewiki-remember' => 'Aanmeldgegevens onthouden',
 	'autocreatewiki-create-account' => 'Registreren',
-	'autocreatewiki-done' => 'afgerond',
-	'autocreatewiki-error' => 'fout',
 	'autocreatewiki-haveaccount-question' => 'Hebt u al een Wikia-gebruiker?',
 	'autocreatewiki-success-title-default' => 'Uw wiki is aangemaakt!',
 	'autocreatewiki-success-title-answers' => 'Uw Antwoordensite is aangemaakt!',
@@ -3574,7 +3503,7 @@ Kies een taal uit de lijst.',
 
 Uw wiki is aangemaakt! Ga maar kijken op <$1>
 
-Bent u klaar om te beginnen? We hebben een aantal verwijzingen op uw overlegpagina toegevoegd (<$5>) om u op weg te helpen en om u aan te moedigen om de vele handige bronnen rondom Wikia te verkennen. Als u vragen hebt of een beetje de weg kwijt bent, antwoord dan op deze e-mail of kijk op onze hulpppagina's: <http://help.wikia.com>.
+Bent u klaar om te beginnen? We hebben een aantal koppelingen op uw overlegpagina toegevoegd (<$5>) om u op weg te helpen en om u aan te moedigen om de vele handige bronnen rondom Wikia te verkennen. Als u vragen hebt of een beetje de weg kwijt bent, antwoord dan op deze e-mail of kijk op onze hulpppagina's: <http://help.wikia.com>.
 
 U kunt ook op onze blog voor Oprichters en beheerders kijken <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> of op de blog van Wikiamedewerkers <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog>. Daar vindt u tips en trucs, informatie over nieuwe functies en ander nieuws over Wikia.
  
@@ -3582,7 +3511,10 @@ Succes met uw project!
 
 $3
 Wikia Gemeenschapsondersteuning
-<http://community.wikia.com/wiki/User:$4>",
+<http://community.wikia.com/wiki/User:$4>
+
+___________________________________________
+* Wilt u minder berichten van ons ontvangen? U kunt hier uitschrijven of uw e-mailvoorjeuren wijzigen: http://community.wikia.com/Special:Preferences",
 	'autocreatewiki-welcometalk-wall-title' => 'Welkom!',
 	'autocreatewiki-welcometalk-wall' => "Hallo!
 We zijn blij dat {{subst:SITENAME}} nu onderdeel is van de Wikiagemeenschap. Er is nog veel te doen, dus hier zijn wat handige tips om uw wiki verder te helpen:
@@ -3593,7 +3525,7 @@ We zijn blij dat {{subst:SITENAME}} nu onderdeel is van de Wikiagemeenschap. Er 
 * Ga op ontdekkingstocht op de [[w:c:community:Admin_Central:Forum|forums]] op de Hub voor Oprichters en Beheerders om de ontdekken wat andere wikibeheerders vragen.
 * Tenslotte kunt u onze [[w:c:community:Help:Contents|Hulppagina's]] bekijken om snel vragen beantwoord te krijgen waar u mee zit.
 
-Alle bovenstaande verwijzingen zijn een prima plaats om te beginnen met het verkennen van Wikia. Als u vast komt te zitten, of een antwoord niet kunt vinden, [[Special:Contact|neem dan alstublieft contact met ons op]]. En het meest belangrijke: maak plezier!
+Alle bovenstaande koppelingen zijn een prima plaats om te beginnen met het verkennen van Wikia. Als u vast komt te zitten, of een antwoord niet kunt vinden, [[Special:Contact|neem dan alstublieft contact met ons op]]. En het meest belangrijke: maak plezier!
 
 Veel plezier met bewerken!",
 	'autocreatewiki-welcometalk' => "== Welkom! ==
@@ -3649,23 +3581,19 @@ $messages['nl-informal'] = array(
 	'autocreatewiki-blocked-username' => 'Je kunt geen gebruiker aanmaken.',
 	'autocreatewiki-user-notloggedin' => 'Je gebruiker is gemaakt maar je bent niet aangemeld!',
 	'autocreatewiki-log-title' => 'Je wiki wordt aangemaakt',
-	'autocreatewiki-welcomebody' => 'Hoi $2!
+	'autocreatewiki-welcomebody' => "Hoi $2!
 
-De Wikia die je hebt aangevraagd is nu beschikbaar op de volgende URL: <$1>. We hopen dat je daar snel gaat bewerken!
+Je wiki is aangemaakt! Ga maar kijken op <$1>
 
-We hebben informatie en tips op je overlegpagina toegevoegd (<$5>) om je op weg te helpen.
+Ben je klaar om te beginnen? We hebben een aantal koppelingen op je overlegpagina toegevoegd (<$5>) om je op weg te helpen en om je aan te moedigen om de vele handige bronnen rondom Wikia te verkennen. Als je vragen hebt of een beetje de weg kwijt bent, antwoord dan op deze e-mail of kijk op onze hulpppagina's: <http://help.wikia.com>.
 
-Als je problemen ondervindt kunt je de gemeenschap om hulp vragen op de wiki (<http://www.wikia.com/wiki/Forum:Help_desk>), of via een e-mail naar community@wikia.com. Je kunt ook ons live IRC-chatkanaal bezoeken via <http://irc.wikia.com>.
-
-Je kunt ook direct contact met mij opnemen per e-mail of op mijn overlegpagina bij vragen of zorgen.
-
+Je kunt ook op onze blog voor Oprichters en beheerders kijken <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> of op de blog van Wikiamedewerkers <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog>. Daar vindt je tips en trucs, informatie over nieuwe functies en ander nieuws over Wikia.
+ 
 Succes met je project!
 
 $3
-
-Wikia Gemeenschapsteam
-
-<http://www.wikia.com/wiki/User:$4>', # Fuzzy
+Wikia Gemeenschapsondersteuning
+<http://community.wikia.com/wiki/User:$4>",
 	'autocreatewiki-welcometalk' => "== Welkom! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Hallo \$1 -- we zijn erg blij dat '''\$4''' onderdeel is geworden van de Wikia-gemeenschap!
 
@@ -3705,8 +3633,6 @@ $messages['pfl'] = array(
 	'autocreatewiki-page-title-answers' => 'Ä naiji Oandwoad-Said mache',
 	'createwiki' => 'Ä naijes Wiki grinde',
 	'autocreatewiki-birthdate' => 'Gbuadsdaach:',
-	'autocreatewiki-done' => 'Ferdisch',
-	'autocreatewiki-error' => 'Fehla',
 	'autocreatewiki-success-get-started' => 'Alla, fong oa!',
 	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-invalid-username' => 'De Benudzanoame isch ugildisch.',
@@ -3755,8 +3681,6 @@ $messages['pl'] = array(
 	'autocreatewiki-blurry-word' => 'Zamazane słowo:',
 	'autocreatewiki-remember' => 'Zapamiętaj mnie',
 	'autocreatewiki-create-account' => 'Zarejestruj się',
-	'autocreatewiki-done' => 'gotowe',
-	'autocreatewiki-error' => 'błąd',
 	'autocreatewiki-haveaccount-question' => 'Masz już konto na Wikii?',
 	'autocreatewiki-success-title-default' => 'Twoja wiki została utworzona!',
 	'autocreatewiki-success-title-answers' => 'Twoja wiki Zapytaj została utworzona!',
@@ -3933,8 +3857,6 @@ $messages['pms'] = array(
 	'autocreatewiki-blurry-word' => 'Paròla confondùa:',
 	'autocreatewiki-remember' => 'Arcòrdme',
 	'autocreatewiki-create-account' => 'Crea un Cont',
-	'autocreatewiki-done' => 'fàit',
-	'autocreatewiki-error' => 'eror',
 	'autocreatewiki-haveaccount-question' => 'Ha-lo già un cont Wikia?',
 	'autocreatewiki-success-title-default' => "Toa wiki a l'é stàita creà!",
 	'autocreatewiki-success-title-answers' => "Tò sit d'arspòste a l'é stàit creà!",
@@ -4085,8 +4007,6 @@ $messages['ps'] = array(
 	'autocreatewiki-blurry-word' => 'تته ويکه:',
 	'autocreatewiki-remember' => 'ما په ياد لره',
 	'autocreatewiki-create-account' => 'يو ګڼون جوړول',
-	'autocreatewiki-done' => 'ترسره شو',
-	'autocreatewiki-error' => 'تېروتنه',
 	'autocreatewiki-haveaccount-question' => 'آيا تاسې له پخوا نه په ويکييا کې يو کارن-حساب لرۍ؟',
 	'autocreatewiki-success-title-default' => 'ستاسې ويکي جوړ شو!',
 	'autocreatewiki-success-has-been-created' => 'جوړ شو!',
@@ -4130,8 +4050,6 @@ $messages['pt'] = array(
 	'autocreatewiki-blurry-word' => 'Palavra distorcida:',
 	'autocreatewiki-remember' => 'Recordar-me entre sessões',
 	'autocreatewiki-create-account' => 'Criar uma conta',
-	'autocreatewiki-done' => 'finalizado',
-	'autocreatewiki-error' => 'erro',
 	'autocreatewiki-haveaccount-question' => 'Já tem uma conta Wikia?',
 	'autocreatewiki-success-title-default' => 'A sua wiki foi criada!',
 	'autocreatewiki-success-title-answers' => 'O seu site de Respostas foi criado!',
@@ -4281,8 +4199,6 @@ $messages['pt-br'] = array(
 	'autocreatewiki-blurry-word' => 'Palavra borrada:',
 	'autocreatewiki-remember' => 'Me lembre',
 	'autocreatewiki-create-account' => 'Crie uma conta',
-	'autocreatewiki-done' => 'feito',
-	'autocreatewiki-error' => 'erro',
 	'autocreatewiki-haveaccount-question' => 'Você já tem uma conta Wikia?',
 	'autocreatewiki-success-title-default' => 'Sua wiki foi criada!',
 	'autocreatewiki-success-title-answers' => 'O seu site de Respostas foi criado!',
@@ -4440,8 +4356,6 @@ $messages['ro'] = array(
 	'autocreatewiki-blurry-word' => 'Cuvânt neclar:',
 	'autocreatewiki-remember' => 'Ține-mă minte',
 	'autocreatewiki-create-account' => 'Creați-vă un cont',
-	'autocreatewiki-done' => 'rezolvat',
-	'autocreatewiki-error' => 'eroare',
 	'autocreatewiki-haveaccount-question' => 'Aveți deja un cont Wikia?',
 	'autocreatewiki-success-title-default' => 'Site-ul dumneavoastră de tip wiki a fost creat cu succes!',
 	'autocreatewiki-success-title-answers' => 'Site-ul dumneavoastră de răspunsuri a fost creat!',
@@ -4476,8 +4390,16 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
-	'autocreatewiki-done' => 'fatte',
-	'autocreatewiki-error' => 'errore',
+	'autocreatewiki-required' => '$1 = richieste',
+	'autocreatewiki-category-select' => 'Scacchie une',
+	'autocreatewiki-language-all' => 'Tutte le lènghe',
+	'autocreatewiki-create-account' => "Ccreje 'nu cunde utende",
+	'autocreatewiki-success-title-default' => "'A uicchi toje ha state ccrejate!",
+	'autocreatewiki-success-has-been-created' => 'ha state ccrejate!',
+	'autocreatewiki-success-get-started' => 'Accuminze',
+	'autocreatewiki-title-template' => '$1 Uicchi',
+	'autocreatewiki-category-label' => 'Categorije:',
+	'autocreatewiki-category-other' => 'otre',
 );
 
 /** Russian (русский)
@@ -4504,8 +4426,6 @@ $messages['ru'] = array(
 	'autocreatewiki-blurry-word' => 'Размытое слово:',
 	'autocreatewiki-remember' => 'Запомнить меня',
 	'autocreatewiki-create-account' => 'Создание учётной записи',
-	'autocreatewiki-done' => 'выполнено',
-	'autocreatewiki-error' => 'ошибка',
 	'autocreatewiki-haveaccount-question' => 'У вас уже есть учётная записи в Викиа?',
 	'autocreatewiki-success-title-default' => 'Ваша вики была создана!',
 	'autocreatewiki-success-title-answers' => 'Ваши сайт ответов был создан!',
@@ -4659,8 +4579,6 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-blurry-word' => 'Мутна реч:',
 	'autocreatewiki-remember' => 'Запамти ме',
 	'autocreatewiki-create-account' => 'Отвори налог',
-	'autocreatewiki-done' => 'готово',
-	'autocreatewiki-error' => 'грешка',
 	'autocreatewiki-haveaccount-question' => 'Имате ли налог на Викији?',
 	'autocreatewiki-success-title-default' => 'Ваша викија је направљена!',
 	'autocreatewiki-success-has-been-created' => 'је направљена!',
@@ -4739,8 +4657,6 @@ $messages['sv'] = array(
 	'autocreatewiki-blurry-word' => 'Suddigt ord:',
 	'autocreatewiki-remember' => 'Kom ihåg mig',
 	'autocreatewiki-create-account' => 'Skapa ett konto',
-	'autocreatewiki-done' => 'klar',
-	'autocreatewiki-error' => 'fel',
 	'autocreatewiki-haveaccount-question' => 'Har du redan ett konto hos Wikia?',
 	'autocreatewiki-success-title-default' => 'Din wiki har skapats!',
 	'autocreatewiki-success-title-answers' => 'Din Svar-sida har skapats!',
@@ -4882,7 +4798,6 @@ Detta är ett helt nytt projekt, så skriv till oss om du har några frågor!
  */
 $messages['sw'] = array(
 	'autocreatewiki-create-account' => 'Sajili akaunti',
-	'autocreatewiki-error' => 'hitilafu',
 	'autocreatewiki-category-label' => 'Jamii:',
 	'autocreatewiki-category-other' => 'Nyingine',
 );
@@ -4898,8 +4813,6 @@ $messages['ta'] = array(
 	'autocreatewiki-birthdate' => 'பிறந்த நாள்:',
 	'autocreatewiki-remember' => 'என்னை நினைவில் வைத்துக்கொள்ளவும்',
 	'autocreatewiki-create-account' => 'கணக்கு ஒன்றை உருவாக்கவும்',
-	'autocreatewiki-done' => 'செய்துமுடிக்கப்பட்டது',
-	'autocreatewiki-error' => 'தவறு',
 	'autocreatewiki-success-title-default' => 'தங்களது விக்கி உருவாக்கப்பட்டுவிட்டது',
 	'autocreatewiki-title-template' => '$1 விக்கி',
 	'autocreatewiki-category-label' => 'பகுப்பு:',
@@ -4947,8 +4860,6 @@ $messages['tl'] = array(
 	'autocreatewiki-blurry-word' => 'Malabong salita:',
 	'autocreatewiki-remember' => 'Tandaan ako',
 	'autocreatewiki-create-account' => 'Lumikha ng isang akawnt',
-	'autocreatewiki-done' => 'nagawa na',
-	'autocreatewiki-error' => 'kamalian',
 	'autocreatewiki-haveaccount-question' => 'Mayroon ka na bang isang akawnt sa Wikia',
 	'autocreatewiki-success-title-default' => 'Nalikha na ang wiki mo!',
 	'autocreatewiki-success-title-answers' => 'Nalikha na ang iyong sityo ng mga sagot!',
@@ -5082,7 +4993,6 @@ $messages['tly'] = array(
 	'autocreatewiki-page-title-default' => 'Тожә вики сохте',
 	'createwiki' => 'Тожә вики сохте',
 	'autocreatewiki-category-select' => 'Бывыжнән',
-	'autocreatewiki-error' => 'сәһв',
 );
 
 /** Turkish (Türkçe)
@@ -5101,8 +5011,6 @@ $messages['tr'] = array(
 	'autocreatewiki-birthdate' => 'Doğum günü:',
 	'autocreatewiki-remember' => 'Beni hatırla',
 	'autocreatewiki-create-account' => 'Bir hesap oluştur',
-	'autocreatewiki-done' => 'yapıldı',
-	'autocreatewiki-error' => 'hata',
 	'autocreatewiki-haveaccount-question' => 'Zaten bir Wikia hesabınız var mı?',
 	'autocreatewiki-success-title-answers' => 'Cevap siteniz oluşturuldu!',
 	'autocreatewiki-success-subtitle' => 'Bu linki tıklayarak wikiniz üzerinde çalışmaya başlayabilirsiniz:',
@@ -5155,8 +5063,6 @@ $messages['tt-cyrl'] = array(
 	'autocreatewiki-blurry-word' => 'Ярымсөртелгән сүз:',
 	'autocreatewiki-remember' => 'Мине истә калдыру',
 	'autocreatewiki-create-account' => 'Яңа кулланучы теркәү',
-	'autocreatewiki-done' => 'Эшләнде',
-	'autocreatewiki-error' => 'Хата',
 	'autocreatewiki-haveaccount-question' => 'Сезнең Викиядә хисап язмасы бармы?',
 	'autocreatewiki-success-title-default' => 'Сезнең вики ясалган!',
 	'autocreatewiki-success-title-answers' => 'Сезнең җаваплар сайты эшләнгән!',
@@ -5307,8 +5213,6 @@ $messages['uk'] = array(
 	'autocreatewiki-blurry-word' => 'Розмите слово:',
 	'autocreatewiki-remember' => "Запам'ятати мене",
 	'autocreatewiki-create-account' => 'Створити обліковий запис',
-	'autocreatewiki-done' => 'готово',
-	'autocreatewiki-error' => 'помилка',
 	'autocreatewiki-haveaccount-question' => 'Ви вже маєте обліковий запис у Вікії?',
 	'autocreatewiki-success-title-default' => 'Вашу вікі створено!',
 	'autocreatewiki-success-subtitle' => 'Тепер ви можете почати працювати в вашій вікі відвідавши:',
@@ -5425,7 +5329,6 @@ $messages['vep'] = array(
 	'autocreatewiki-page-title-default' => "Säta uz' wiki",
 	'createwiki' => "Säta uz' wiki",
 	'autocreatewiki-birthdate' => 'Sündunddat:',
-	'autocreatewiki-error' => 'petuz',
 	'autocreatewiki-success-get-started' => 'Radon augotiž',
 	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-category-label' => 'Kategorii:',
@@ -5494,8 +5397,6 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-blurry-word' => '模糊的词：',
 	'autocreatewiki-remember' => '记住我',
 	'autocreatewiki-create-account' => '创建帐户',
-	'autocreatewiki-done' => '完成',
-	'autocreatewiki-error' => '错误',
 	'autocreatewiki-haveaccount-question' => '您已经有一个 Wikia 帐户吗？',
 	'autocreatewiki-success-title-default' => '您维基已创建！',
 	'autocreatewiki-success-title-answers' => '您的问答网站已创建！',
@@ -5612,8 +5513,6 @@ $messages['zh-hant'] = array(
 	'autocreatewiki-blurry-word' => '模糊的詞：',
 	'autocreatewiki-remember' => '記住我：',
 	'autocreatewiki-create-account' => '創建帳戶',
-	'autocreatewiki-done' => '完成',
-	'autocreatewiki-error' => '錯誤',
 	'autocreatewiki-haveaccount-question' => '你已經有一個 Wikia 帳戶嗎？',
 	'autocreatewiki-success-title-default' => '您的wiki已經創建了',
 	'autocreatewiki-success-title-answers' => '您的問答網站已經創建了',

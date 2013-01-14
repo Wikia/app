@@ -386,6 +386,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
  * @author Metalhead64
  * @author PtM
  * @author SandroHc
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -409,7 +410,8 @@ $messages['qqq'] = array(
 	'wall-message-update-highlight-summary' => 'Added as auto summery when highlighted message',
 	'wall-message-update-removed-highlight-summary' => 'Added as auto summery when removed highlight from message',
 	'wall-message-mywall' => 'It is display when you are on thread page which is on your own wall',
-	'wall-toolbar-history' => 'Link in the toolbar to see the history of the wall or thread',
+	'wall-toolbar-history' => 'Link in the toolbar to see the history of the wall or thread.
+{{Identical|History}}',
 	'wall-message-notify' => 'In the remove/delete-message modal box, checkbox for telling the admin about the removal',
 	'wall-message-remove' => 'Menu item to remove a message',
 	'wall-message-rev-delete' => 'Dropdown menu for staff, option to revision-delete the message',
@@ -440,7 +442,8 @@ $messages['qqq'] = array(
 	'wall-button-cancel-changes' => 'Button to cancel an edit to a message',
 	'wall-button-done-source' => 'Button to close the source view for a message',
 	'wall-message-edit' => 'Menu item to edit a message',
-	'wall-message-more' => 'Top of the menu for each message',
+	'wall-message-more' => 'Top of the menu for each message.
+{{Identical|More}}',
 	'wall-message-delete' => 'Menu item to delete a message',
 	'wall-message-close-thread' => 'Menu item to close a thread or message',
 	'wall-message-reopen-thread' => 'Menu item to reopen a thread',
@@ -494,7 +497,8 @@ $messages['qqq'] = array(
 	'wall-action-move-topics-summary' => 'Summery for change in user contribution',
 	'wall-action-move-thread-ok' => 'Confirmation button for moving thread',
 	'wall-action-move-board-label' => 'Label for list of board dropdown',
-	'wall-notifications' => 'Title of notification dropdown',
+	'wall-notifications' => 'Title of notification dropdown.
+{{Identical|Notification}}',
 	'wall-notifications-all' => 'Text in notification dropdown menu',
 	'wall-notifications-markasread' => 'Option in notification dropdown menu to mark all threads as read',
 	'wall-notifications-markasread-all-wikis' => 'Option to mark all cross-wiki notifications as read',
@@ -637,8 +641,10 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 * $4 is wall owner',
 	'wall-message-not-found' => "Error message if user tries to visit a thread that doesn't exist",
 	'wall-message-staff-text' => 'tooltip for Wikia staff signature',
-	'wall-ipballowusertalk' => 'checkbox on Special:Block',
-	'wall-ipbwatchuser' => 'checkbox on Special:Block',
+	'wall-ipballowusertalk' => '{{doc-singularthey}}
+checkbox on Special:Block',
+	'wall-ipbwatchuser' => '{{doc-singularthey}}
+checkbox on Special:Block',
 	'wall-wiki-activity-on' => 'Wiki Activity item. Parameters:
 * $1 is wall owner',
 	'wall-wiki-activity-wall-owner' => 'Wiki Activity item. Parameters:
@@ -653,7 +659,8 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 	'wall-deleted-reply-undo' => 'Confirmation message after deleting a reply. Parameters:
 * $1 is Undo link',
 	'wall-deleted-reply' => 'Confirmation message after deleting a reply',
-	'wall-history' => 'toolbar link to wall history',
+	'wall-history' => 'toolbar link to wall history.
+{{Identical|History}}',
 	'wall-history-username-full' => 'username on wall history page. Parameters:
 * $1 is preferred name
 * $2 is username',
@@ -1176,6 +1183,8 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
 	'wall-recentchanges-restored-reply' => 'Antwort zu "[[$1|$2]]" auf [[$3|$4]]s Nachrichtenseite wiederhergestellt',
 	'wall-recentchanges-deleted-thread' => 'Diskussion "[[$1|$2]]" auf [[$3|$4]]s Nachrichtenseite gelöscht',
 	'wall-recentchanges-deleted-reply' => 'Antwort zu "[[$1|$2]]" auf [[$3|$4]]s Nachrichtenseite gelöscht',
+	'wall-recentchanges-closed-thread' => 'schloss den Thread „[[$1|$2]]“ auf der Nachrichtenseite von [[$3|$4]]',
+	'wall-recentchanges-reopened-thread' => 'hat den Thread „[[$1|$2]]“ auf der Nachrichtenseite von [[$3|$4]] wiedereröffnet',
 	'wall-recentchanges-deleted-reply-title' => 'Antwort auf Nachrichtenseite',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Nachrichtenseite',
 	'wall-recentchanges-thread-group' => '$1 auf <a href="$2">$3s Nachrichtenseite</a>',
@@ -1273,10 +1282,10 @@ ___________________________________________<br />
 	'tog-enotifmywall-every' => 'Für jede Nachricht & Antwort',
 	'tog-enotifmywall-sincevisited' => 'Einmal pro Diskussion seit meinem letzten Besuch',
 	'tog-enotifmywall-reminder' => 'Mit einer täglichen E-Mail-Erinnerung',
-	'tog-enotifmywall-noemail' => 'niemals. Sende mir keine Nachrichtenseiten-Mails.',
-	'wallshowsource-toggle-v2' => 'Aktiviere Option {{int:user-action-menu-view-source}} auf Nachrichtenseiten-Posts',
+	'tog-enotifmywall-noemail' => 'niemals. Sende mir keine Nachrichtenseiten- oder Foren-Mails.',
+	'wallshowsource-toggle-v2' => 'Aktiviere „{{int:user-action-menu-view-source}}“ in Threads',
 	'wallshowsource-toggle' => 'Aktiviere {{int:user-action-menu-view-source}} für Nachrichtenseiten-Posts',
-	'walldelete-toggle' => 'Aktiviere Versionslöschung für Nachrichtenseiten-Posts',
+	'walldelete-toggle' => 'Aktiviere Versionslöschung für Threads',
 	'wall-notifications-notifyeveryone' => 'Hervorgehoben von $1',
 	'wall-message-notifyeveryone' => 'Thread hervorheben',
 	'wall-message-unnotifyeveryone' => 'Hervorhebung aufheben',
@@ -1620,6 +1629,8 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-recentchanges-restored-reply' => 'restaurada la respuesta "[[$1|$2]]" en el muro de [[$3|$4]]',
 	'wall-recentchanges-deleted-thread' => 'borrado el tema "[[$1|$2]]" del muro de [[$3|$4]]',
 	'wall-recentchanges-deleted-reply' => "borró en el [[$3|muro de $4]] un mensaje del tema ''[[$1|$2]]''",
+	'wall-recentchanges-closed-thread' => 'cerró el tema "[[$1|$2]] en el muro de [[$3|$4]]"',
+	'wall-recentchanges-reopened-thread' => 'restauró el tema "[[$1|$2]] en el muro de [[$3|$4]]"',
 	'wall-recentchanges-deleted-reply-title' => 'Una respuesta en el muro de mensajes',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Muro de mensajes',
 	'wall-recentchanges-thread-group' => '$1 en el <a href="$2">Muro de $3</a>',
@@ -1731,10 +1742,10 @@ ___________________________________________<br />
 	'tog-enotifmywall-every' => 'Para cada mensaje y respuesta',
 	'tog-enotifmywall-sincevisited' => 'Una vez por cada tema desde mi última visita',
 	'tog-enotifmywall-reminder' => 'Con un recordatorio diario',
-	'tog-enotifmywall-noemail' => 'Nunca. No mandarme ningún email sobre el Muro de mensajes',
-	'wallshowsource-toggle-v2' => 'Activar la opción {{int:user-action-menu-view-source}} en publicaciones en el Muro de Mensajes',
+	'tog-enotifmywall-noemail' => 'Nunca. No mandarme ningún email sobre el Muro de mensajes', # Fuzzy
+	'wallshowsource-toggle-v2' => 'Activar la opción {{int:user-action-menu-view-source}} en publicaciones en el Muro de Mensajes', # Fuzzy
 	'wallshowsource-toggle' => 'Activar el {{int:user-action-menu-view-source}} en las publicaciones en el Muro de Mensajes',
-	'walldelete-toggle' => 'Activar el borrado de revisiones en publicaciones en el Muro de Mensajes',
+	'walldelete-toggle' => 'Activar el borrado de revisiones en publicaciones en el Muro de Mensajes', # Fuzzy
 	'wall-notifications-notifyeveryone' => 'Resaltado por $1',
 	'wall-message-notifyeveryone' => 'Resaltar este tema',
 	'wall-message-unnotifyeveryone' => 'Dejar de resaltar este tema',
@@ -2084,6 +2095,8 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-recentchanges-restored-reply' => 'a restauré une réponse à « [[$1|$2]]» sur le [[$3|mur de $4]]',
 	'wall-recentchanges-deleted-thread' => 'a supprimé le fil « [[$1|$2]] » du [[$3|mur de $4]]',
 	'wall-recentchanges-deleted-reply' => 'a supprimé une réponse à « [[$1|$2]] » du [[$3|mur de $4]]',
+	'wall-recentchanges-closed-thread' => 'fil fermé "[[$1|$2]] sur [[$3|le mut de $4]]"',
+	'wall-recentchanges-reopened-thread' => 'fil réouvert "[[$1|$2]] sur [[$3|le mur de $4]]"',
 	'wall-recentchanges-deleted-reply-title' => 'Une réponse sur le mur',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mur de discussion',
 	'wall-recentchanges-thread-group' => '« $1 » sur le <a href="$2">mur de $3</a>',
@@ -2194,10 +2207,10 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'tog-enotifmywall-every' => 'Pour chaque message et réponse',
 	'tog-enotifmywall-sincevisited' => 'Un par fil depuis ma dernière visite',
 	'tog-enotifmywall-reminder' => 'Avec un courriel de rappel quotidien',
-	'tog-enotifmywall-noemail' => 'Jamais. Ne m’envoyer aucun courriel de Mur de discussion.',
-	'wallshowsource-toggle-v2' => "Activer l'option « {{int:user-action-menu-view-source}} » pour les messages de Mur de discussion",
+	'tog-enotifmywall-noemail' => 'Jamais. Ne m’envoyer aucun courriel de Mur de discussion.', # Fuzzy
+	'wallshowsource-toggle-v2' => "Activer l'option « {{int:user-action-menu-view-source}} » pour les messages de Mur de discussion", # Fuzzy
 	'wallshowsource-toggle' => 'Activer «  {{int:user-action-menu-view-source}} » pour les messages de Mur de discussion',
-	'walldelete-toggle' => 'Permettre la suppression des versions pour les messages du Mur de discussion',
+	'walldelete-toggle' => 'Permettre la suppression des versions pour les messages du Mur de discussion', # Fuzzy
 	'wall-notifications-notifyeveryone' => 'Mis en valeur par $1',
 	'wall-message-notifyeveryone' => 'Mettre en valeur ce fil',
 	'wall-message-unnotifyeveryone' => 'Ne plus mettre en valeur ce fil',
@@ -2387,6 +2400,8 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-recentchanges-restored-reply' => 'restaurou a resposta "[[$1|$2]]" no [[$3|muro de $4]]',
 	'wall-recentchanges-deleted-thread' => 'borrou o fío "[[$1|$2]]" do [[$3|muro de $4]]',
 	'wall-recentchanges-deleted-reply' => 'borrou a resposta "[[$1|$2]]" do [[$3|muro de $4]]',
+	'wall-recentchanges-closed-thread' => 'pechou o fío "[[$1|$2]]" do [[$3|muro de $4]]',
+	'wall-recentchanges-reopened-thread' => 'reabriu o fío "[[$1|$2]]" no [[$3|muro de $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Unha resposta no muro de mensaxes',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Muro de mensaxes',
 	'wall-recentchanges-thread-group' => '"$1" no <a href="$2">muro de $3</a>',
@@ -2500,10 +2515,10 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'tog-enotifmywall-every' => 'Por cada mensaxe e resposta',
 	'tog-enotifmywall-sincevisited' => 'Unha por fío desde a miña última visita',
 	'tog-enotifmywall-reminder' => 'Cun correo electrónico recordatorio diario',
-	'tog-enotifmywall-noemail' => 'Nunca. Non me enviedes correos sobre o muro de mensaxes',
-	'wallshowsource-toggle-v2' => 'Activar a opción "{{int:user-action-menu-view-source}}" nas mensaxes do muro',
+	'tog-enotifmywall-noemail' => 'Nunca. Non me enviedes correos sobre o muro de mensaxes ou o foro',
+	'wallshowsource-toggle-v2' => 'Activar a opción "{{int:user-action-menu-view-source}}" nos fíos',
 	'wallshowsource-toggle' => 'Activar "{{int:user-action-menu-view-source}}" nas mensaxes do muro',
-	'walldelete-toggle' => 'Activar o borrado de revisións nas mensaxes do muro',
+	'walldelete-toggle' => 'Activar o borrado de revisións nos fíos',
 	'wall-notifications-notifyeveryone' => 'Destacado por $1',
 	'wall-message-notifyeveryone' => 'Destacar este fío',
 	'wall-message-unnotifyeveryone' => 'Retirar a marca de destacado deste fío',
@@ -2767,8 +2782,8 @@ ___________________________________________<br />
 	'tog-enotifmywall-every' => 'Minden üzenet és válasz után',
 	'tog-enotifmywall-sincevisited' => 'Beszélgetésfolyamonként egyszer, az utolsó látogatásom után',
 	'tog-enotifmywall-reminder' => 'Napi emlékeztető e-mailben',
-	'tog-enotifmywall-noemail' => 'Soha. Ne küldjön semmilyen üzenőfallal kapcsolatos e-mailt',
-	'wallshowsource-toggle-v2' => '"{{int:user-action-menu-view-source}}" lehetőség engedélyezése az üzenőfali bejegyzéseken',
+	'tog-enotifmywall-noemail' => 'Soha. Ne küldjön semmilyen üzenőfallal kapcsolatos e-mailt', # Fuzzy
+	'wallshowsource-toggle-v2' => '"{{int:user-action-menu-view-source}}" lehetőség engedélyezése az üzenőfali bejegyzéseken', # Fuzzy
 	'wallshowsource-toggle' => '"{{int:user-action-menu-view-source}}" lehetőség engedélyezése az üzenőfali bejegyzéseken',
 	'wall-notifications-notifyeveryone' => '$1 által kiemelve',
 	'wall-message-notifyeveryone' => 'Beszélgetésfolyam kiemelése',
@@ -3019,10 +3034,10 @@ tue preferentias de e-mail: http://community.wikia.com/Special:Preferences',
 	'tog-enotifmywall-every' => 'Pro cata message e responsa',
 	'tog-enotifmywall-sincevisited' => 'Un vice per discussion depost mi ultime visita',
 	'tog-enotifmywall-reminder' => 'Con un rememoration quotidian',
-	'tog-enotifmywall-noemail' => 'Nunquam. Non invia me alcun e-mail concernente le muro de discussion',
-	'wallshowsource-toggle-v2' => 'Activar le option "{{int:user-action-menu-view-source}}" pro le messages sur le muro',
+	'tog-enotifmywall-noemail' => 'Nunquam. Non invia me alcun e-mail concernente le muro de discussion', # Fuzzy
+	'wallshowsource-toggle-v2' => 'Activar le option "{{int:user-action-menu-view-source}}" pro le messages sur le muro', # Fuzzy
 	'wallshowsource-toggle' => 'Activar "{{int:user-action-menu-view-source}}" pro le messages sur le muro',
-	'walldelete-toggle' => 'Activar "Deler versiones" pro le messages sur le muro',
+	'walldelete-toggle' => 'Activar "Deler versiones" pro le messages sur le muro', # Fuzzy
 	'wall-notifications-notifyeveryone' => 'Mittite in evidentia per $1',
 	'wall-message-notifyeveryone' => 'Mitter iste discussion in evidentia',
 	'wall-message-unnotifyeveryone' => 'Non plus mitter iste discussion in evidentia',
@@ -3300,10 +3315,10 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 	'tog-enotifwallthread-v2' => 'メール通知の設定',
 	'tog-enotifmywall-every' => 'すべてのメッセージと返信を通知',
 	'tog-enotifmywall-sincevisited' => '各スレッドについて最後の閲覧後に一度だけ通知する',
-	'tog-enotifmywall-noemail' => 'メッセージウォールに関して通知を行わない',
-	'wallshowsource-toggle-v2' => 'メッセージウォールで「{{int:user-action-menu-view-source}}」オプションを有効にする',
+	'tog-enotifmywall-noemail' => 'メッセージウォールに関して通知を行わない', # Fuzzy
+	'wallshowsource-toggle-v2' => 'メッセージウォールで「{{int:user-action-menu-view-source}}」オプションを有効にする', # Fuzzy
 	'wallshowsource-toggle' => 'メッセージウォールで「{{int:user-action-menu-view-source}}」オプションを有効にする',
-	'walldelete-toggle' => 'メッセージウォール上のメッセージに対する版指定削除を有効にする',
+	'walldelete-toggle' => 'メッセージウォール上のメッセージに対する版指定削除を有効にする', # Fuzzy
 	'wall-notifications-notifyeveryone' => '$1 がハイライトしました',
 	'wall-message-notifyeveryone' => 'このスレッドをハイライトする',
 	'wall-message-unnotifyeveryone' => 'このスレッドのハイライトを解除',
@@ -3612,6 +3627,8 @@ $messages['mk'] = array(
 	'wall-recentchanges-restored-reply' => 'го врати одговорот „[[$1|$2]]“ на [[$3|ѕидот на $4]]',
 	'wall-recentchanges-deleted-thread' => 'ја избриша нишката „[[$1|$2]]“ од [[$3|ѕидот на $4]]',
 	'wall-recentchanges-deleted-reply' => 'избриша одговор од „[[$1|$2]]“ на [[$3|ѕидот на $4]]',
+	'wall-recentchanges-closed-thread' => 'ја затвори нишката „[[$1|$2]] на [[$3|ѕидот на $4]]“',
+	'wall-recentchanges-reopened-thread' => 'потвторно ја отвори нишката „[[$1|$2]] на [[$3|ѕидот на $4]]“',
 	'wall-recentchanges-deleted-reply-title' => 'Одговор на ѕидот за пораки',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Ѕид за пораки',
 	'wall-recentchanges-thread-group' => '$1 на <a href="$2">ѕидот на $3</a>',
@@ -3725,10 +3742,10 @@ ___________________________________________<br />
 	'tog-enotifmywall-every' => 'За секоја порака и одговор',
 	'tog-enotifmywall-sincevisited' => 'Еднаш на секоја нишка појавена од мојата последна посета',
 	'tog-enotifmywall-reminder' => 'Со потсетник еднаш дневно',
-	'tog-enotifmywall-noemail' => 'Никогаш. Не ми испраќај е-пошта за пораки на Ѕидот',
-	'wallshowsource-toggle-v2' => 'Овозможи ја можноста {{int:user-action-menu-view-source}} на објавите на Ѕидот за пораки',
+	'tog-enotifmywall-noemail' => 'Никогаш. Не ми испраќај е-пошта за пораки на мојот ѕидот или форумот',
+	'wallshowsource-toggle-v2' => 'Овозможи {{int:user-action-menu-view-source}} на објавите',
 	'wallshowsource-toggle' => 'Овозможи {{int:user-action-menu-view-source}} на пораките на Ѕидот за пораки',
-	'walldelete-toggle' => 'Овозможи бришење на ревизии на објави на Ѕидот за пораки',
+	'walldelete-toggle' => 'Овозможи бришење на верзии на нишки',
 	'wall-notifications-notifyeveryone' => 'Истакнал: $1',
 	'wall-message-notifyeveryone' => 'Истакни ја нишкава',
 	'wall-message-unnotifyeveryone' => 'Одистакни ја нишкава',
@@ -4031,10 +4048,10 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'tog-enotifmywall-every' => 'Untuk setiap pesanan & balasan',
 	'tog-enotifmywall-sincevisited' => 'Sekali setred sejak kunjungan terkini saya',
 	'tog-enotifmywall-reminder' => 'Dengan e-mel peringatan harian',
-	'tog-enotifmywall-noemail' => 'Jangan sesekali hantar e-mel Papan Pesanan kepada saya',
-	'wallshowsource-toggle-v2' => 'Hidupkan pilihan {{int:user-action-menu-view-source}} pada pos-pos Papan Pesanan',
+	'tog-enotifmywall-noemail' => 'Jangan sesekali hantar e-mel Papan Pesanan kepada saya', # Fuzzy
+	'wallshowsource-toggle-v2' => 'Hidupkan pilihan {{int:user-action-menu-view-source}} pada pos-pos Papan Pesanan', # Fuzzy
 	'wallshowsource-toggle' => 'Hidupkan {{int:user-action-menu-view-source}} pada pos-pos Papan Pesanan',
-	'walldelete-toggle' => 'Hidupkan ciri Hapus semakan pada pos-pos Papan Pesanan',
+	'walldelete-toggle' => 'Hidupkan ciri Hapus semakan pada pos-pos Papan Pesanan', # Fuzzy
 	'wall-notifications-notifyeveryone' => 'Disorotkan oleh $1',
 	'wall-message-notifyeveryone' => 'Sorotkan tred ini',
 	'wall-message-unnotifyeveryone' => 'Padamkan sorotan tred ini',
@@ -4321,10 +4338,10 @@ endre e-post-innstillingene dine her: http://community.wikia.com/Special:Prefere
 	'tog-enotifmywall-every' => 'For hver melding og hvert svar',
 	'tog-enotifmywall-sincevisited' => 'En gang per tråd siden mitt siste besøk',
 	'tog-enotifmywall-reminder' => 'Med en daglig e-post-påminnelse',
-	'tog-enotifmywall-noemail' => 'Aldri. Ikke send meg e-poster om beskjedtavla',
-	'wallshowsource-toggle-v2' => 'Aktiver {{int:user-action-menu-view-source}}-valget på tavlebeskjeder',
+	'tog-enotifmywall-noemail' => 'Aldri. Ikke send meg e-poster om beskjedtavla', # Fuzzy
+	'wallshowsource-toggle-v2' => 'Aktiver {{int:user-action-menu-view-source}}-valget på tavlebeskjeder', # Fuzzy
 	'wallshowsource-toggle' => 'Aktiver {{int:user-action-menu-view-source}} på tavlebeskjeder',
-	'walldelete-toggle' => 'Aktiver revisjonssletting av tavlebeskjeder',
+	'walldelete-toggle' => 'Aktiver revisjonssletting av tavlebeskjeder', # Fuzzy
 	'wall-notifications-notifyeveryone' => 'Fremhevet av $1',
 	'wall-message-notifyeveryone' => 'Fremhev denne tråden',
 	'wall-message-unnotifyeveryone' => 'Av-fremhev denne tråden',
@@ -4519,6 +4536,8 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-recentchanges-restored-reply' => 'heeft een antwoord in de draad "[[$1|$2]]" op het [[$3|prikbord van $4]] teruggeplaatst',
 	'wall-recentchanges-deleted-thread' => 'heeft de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] verwijderd',
 	'wall-recentchanges-deleted-reply' => 'heeft een antwoord uit de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] verwijderd',
+	'wall-recentchanges-closed-thread' => 'heeft de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] gesloten',
+	'wall-recentchanges-reopened-thread' => 'heeft de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] heropend',
 	'wall-recentchanges-deleted-reply-title' => 'Een antwoord op het prikbord',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Prikbord',
 	'wall-recentchanges-thread-group' => '$1 op het <a href="$2">prikbord van $3</a>',
@@ -4613,10 +4632,10 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'tog-enotifmywall-every' => 'Bij elk bericht en antwoord',
 	'tog-enotifmywall-sincevisited' => 'Een keer per draad sinds mijn laatste bezoek',
 	'tog-enotifmywall-reminder' => 'Met een dagelijkse e-mail',
-	'tog-enotifmywall-noemail' => 'Nooit. Stuur mij geen e-mails over mijn prikbord',
-	'wallshowsource-toggle-v2' => 'De optie {{int:user-action-menu-view-source}} inschakelen voor berichten op het prikbord',
+	'tog-enotifmywall-noemail' => 'Nooit. Stuur mij geen e-mails over mijn prikbord of het forum',
+	'wallshowsource-toggle-v2' => 'De optie {{int:user-action-menu-view-source}} inschakelen voor berichten',
 	'wallshowsource-toggle' => '{{int:user-action-menu-view-source}} inschakelen voor prikbordberichten',
-	'walldelete-toggle' => 'Volledig verwijderen inschakelen voor berichten op prikborden',
+	'walldelete-toggle' => 'Volledig verwijderen inschakelen voor berichten',
 	'wall-notifications-notifyeveryone' => 'Uitgelicht door $1',
 	'wall-message-notifyeveryone' => 'Deze draad uitlichten',
 	'wall-message-unnotifyeveryone' => 'Uitlichten voor deze draad verwijderen',
@@ -4839,6 +4858,8 @@ Ten wątek i jego historia nadal będą dostępne w historii wiki.',
 	'wall-recentchanges-restored-reply' => 'przywrócił(a) odpowiedź w "[[$1|$2]]" na [[$3|tablicy użytkownika $4]]',
 	'wall-recentchanges-deleted-thread' => 'skasował(a) wątek "[[$1|$2]]" z [[$3|tablicy użytkownika $4]]',
 	'wall-recentchanges-deleted-reply' => 'skasował(a) odpowiedź w "[[$1|$2]]" z [[$3|tablicy użytkownika $4]]',
+	'wall-recentchanges-closed-thread' => 'zamknął/zamknęła wątek "[[$1|$2]]" na [[$3|tablicy użytkownika $4]]',
+	'wall-recentchanges-reopened-thread' => 'reaktywował(a) wątek "[[$1|$2]]" na [[$3|tablicy użytkownika $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Odpowiedź na tablicy wiadomości',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Tablica Wiadomości',
 	'wall-recentchanges-thread-group' => '$1 na <a href="$2">tablicy $3</a>',
@@ -4950,10 +4971,10 @@ ___________________________________________<br />
 	'tog-enotifmywall-every' => 'Dla każdej wiadomości i odpowiedzi',
 	'tog-enotifmywall-sincevisited' => 'Raz na każdy zmieniony wątek od moich ostatnich odwiedzin',
 	'tog-enotifmywall-reminder' => 'Z przypomnieniem raz na dzień',
-	'tog-enotifmywall-noemail' => 'Nigdy. Nie wysyłaj powiadomień dotyczących zmian na tablicy wiadomości',
-	'wallshowsource-toggle-v2' => 'Włącz "{{int:user-action-menu-view-source}}" dla wpisów na tablicy wiadomości',
+	'tog-enotifmywall-noemail' => 'Nigdy. Nie wysyłaj powiadomień dotyczących zmian na tablicy wiadomości lub forum',
+	'wallshowsource-toggle-v2' => 'Włącz "{{int:user-action-menu-view-source}}" dla wątków',
 	'wallshowsource-toggle' => 'Włącz {{int:user-action-menu-view-source}} dla wpisów na tablicy wiadomości',
-	'walldelete-toggle' => 'Włącz opcję usuwania pełnych wersji wiadomości na tablicy wiadomości',
+	'walldelete-toggle' => 'Włącz opcję usuwania pełnych wersji wątków',
 	'wall-notifications-notifyeveryone' => 'Wyróżniono przez $1',
 	'wall-message-notifyeveryone' => 'Wyróżnij',
 	'wall-message-unnotifyeveryone' => 'Usuń wyróżnienie tego wątku',
@@ -5214,7 +5235,7 @@ suas preferências de e-mail aqui: http://community.wikia.com/Special:Preference
 	'tog-enotifmywall-every' => 'Para cada mensagem & resposta',
 	'tog-enotifmywall-sincevisited' => 'Uma vez por tópico desde a minha última visita',
 	'tog-enotifmywall-reminder' => 'Com um e-mail diário',
-	'tog-enotifmywall-noemail' => 'Nunca. Não me envie nenhum e-mail do Mural de Mensagens',
+	'tog-enotifmywall-noemail' => 'Nunca. Não me envie nenhum e-mail do Mural de Mensagens', # Fuzzy
 	'wall-notifications-notifyeveryone' => 'Destacado por $1',
 	'wall-message-notifyeveryone' => 'Destacar este tópico',
 	'wall-message-unnotifyeveryone' => 'Retirar Destaque deste tópico',
@@ -5386,6 +5407,34 @@ suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferên
 	'tog-enotifwallthread-v2' => 'Enviar-me um email...',
 	'wall-quote-author' => '$1 escreveu:',
 	'wall-quote-reply-to' => 'responder a #$1',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wall-no-title' => 'Nisciune titole',
+	'wall-message-wall' => 'Mure de le Messàgge',
+	'wall-message-wall-shorten' => 'mure',
+	'wall-message-undoremove' => 'Annulle',
+	'wall-message-mywall' => "'U mure mije",
+	'wall-toolbar-history' => 'Cunde',
+	'wall-thread-removed' => 'Luate',
+	'wall-thread-isnotifyeveryone' => 'Evidenziate',
+	'wall-thread-deleted' => 'Scangellate',
+	'wall-thread-closed' => 'Achiuse',
+	'wall-default-title' => 'Messàgge da $1',
+	'wall-button-to-preview-comment' => 'Andeprime',
+	'wall-button-to-cancel-preview' => 'Cange',
+	'wall-button-to-submit-comment' => 'Manne',
+	'wall-button-to-submit-reply' => 'Respunne',
+	'wall-button-cancel-changes' => 'Annulle',
+	'wall-button-done-source' => 'Fatte',
+	'wall-message-edit' => 'Cange',
+	'wall-message-more' => 'De cchiù',
+	'wall-message-delete' => 'Scangille',
+	'wall-topic-edit-save' => 'Reggistre',
+	'wall-topic-edit-cancel' => 'Annulle',
 );
 
 /** Russian (русский)
@@ -5657,10 +5706,10 @@ ___________________________________________<br />
 	'tog-enotifmywall-every' => 'о каждом сообщении и ответе',
 	'tog-enotifmywall-sincevisited' => 'только о теме, которую я посещал последней',
 	'tog-enotifmywall-reminder' => 'с ежедневным напоминанием',
-	'tog-enotifmywall-noemail' => 'не отправлять мне эл. письма со Стены обсуждения',
-	'wallshowsource-toggle-v2' => 'Включить {{int:user-action-menu-view-source}} опцию для сообщений на Стене обсуждения',
+	'tog-enotifmywall-noemail' => 'не отправлять мне эл. письма со Стены обсуждения', # Fuzzy
+	'wallshowsource-toggle-v2' => 'Включить {{int:user-action-menu-view-source}} опцию для сообщений на Стене обсуждения', # Fuzzy
 	'wallshowsource-toggle' => 'Включить {{int:user-action-menu-view-source}} для сообщений на Стене обсуждения',
-	'walldelete-toggle' => 'Включить просмотр постов, удалённых со Стены обсуждения',
+	'walldelete-toggle' => 'Включить просмотр постов, удалённых со Стены обсуждения', # Fuzzy
 	'wall-notifications-notifyeveryone' => '$1 сообщил об этом',
 	'wall-message-notifyeveryone' => 'Сообщить всем об этой теме',
 	'wall-message-unnotifyeveryone' => 'Отменить сообщение об этой теме',
@@ -5849,6 +5898,8 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'wall-recentchanges-restored-reply' => 'återställde svaret på "[[$1|$2]]" på [[$3|$4s vägg]]',
 	'wall-recentchanges-deleted-thread' => 'tog bort tråden "[[$1|$2]]" från [[$3|$4s vägg]]',
 	'wall-recentchanges-deleted-reply' => 'tog bort svar från "[[$1|$2]]" från [[$3|$4s vägg]]',
+	'wall-recentchanges-closed-thread' => 'stängde tråden "[[$1|$2]] på [[$3|$4s vägg]]"',
+	'wall-recentchanges-reopened-thread' => 'återöppnade tråden "[[$1|$2]] på [[$3|$4s vägg]]"',
 	'wall-recentchanges-deleted-reply-title' => 'Ett svar på meddelandeväggen',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Meddelandevägg',
 	'wall-recentchanges-thread-group' => '$1 på <a href="$2">$3s vägg</a>',
@@ -5962,10 +6013,10 @@ dina e-postinställningar här: http://community.wikia.com/Special:Preferences',
 	'tog-enotifmywall-every' => 'För varje meddelande & svar',
 	'tog-enotifmywall-sincevisited' => 'En gång per tråd sedan mitt senaste besök',
 	'tog-enotifmywall-reminder' => 'Med en daglig påminnelse via e-post',
-	'tog-enotifmywall-noemail' => 'Aldrig. Skicka inte någon e-post om meddelandeväggen',
-	'wallshowsource-toggle-v2' => 'Aktivera alternativet {{int:user-action-menu-view-source}} på inlägg i meddelandeväggen',
+	'tog-enotifmywall-noemail' => 'Aldrig. Skicka inte någon e-post om meddelandeväggen eller forumet',
+	'wallshowsource-toggle-v2' => 'Aktivera {{int:user-action-menu-view-source}} på trådar',
 	'wallshowsource-toggle' => 'Aktivera {{int:user-action-menu-view-source}} på inlägg i meddelandeväggen',
-	'walldelete-toggle' => 'Aktivera revisionsradering på inlägg i meddelandeväggen',
+	'walldelete-toggle' => 'Aktivera revisionsradering för trådar',
 	'wall-notifications-notifyeveryone' => 'Belyst av $1',
 	'wall-message-notifyeveryone' => 'Belys denna tråd',
 	'wall-message-unnotifyeveryone' => 'Avbelys denna tråd',
@@ -6278,10 +6329,10 @@ ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/S
 	'tog-enotifmywall-every' => 'Para sa bawat mensahe at sagot',
 	'tog-enotifmywall-sincevisited' => 'Isa bawat sinulid magmula noong huling pagdalaw ko',
 	'tog-enotifmywall-reminder' => 'Na mayroong isang pang-araw-araw na e-liham na paalala',
-	'tog-enotifmywall-noemail' => 'Huwag kailanman. Huwag akong padalhan ng anumang mga e-liham ng Dingding ng Mensahe',
-	'wallshowsource-toggle-v2' => 'Paganahin ang maaaring piliin na {{int:user-action-menu-view-source}} sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe',
+	'tog-enotifmywall-noemail' => 'Huwag kailanman. Huwag akong padalhan ng anumang mga e-liham ng Dingding ng Mensahe', # Fuzzy
+	'wallshowsource-toggle-v2' => 'Paganahin ang maaaring piliin na {{int:user-action-menu-view-source}} sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe', # Fuzzy
 	'wallshowsource-toggle' => 'Paganahin ang {{int:user-action-menu-view-source}} sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe',
-	'walldelete-toggle' => 'Paganahin ang pagbura ng Rebisyon sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe',
+	'walldelete-toggle' => 'Paganahin ang pagbura ng Rebisyon sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe', # Fuzzy
 	'wall-notifications-notifyeveryone' => 'Pinagliwanag ni $1',
 	'wall-message-notifyeveryone' => 'Pagliwanagin ang sinulid na ito',
 	'wall-message-unnotifyeveryone' => 'Huwag nang pagliwanagin ang sinulid na ito',
@@ -6325,6 +6376,30 @@ $messages['tr'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'wall-message-undoremove' => 'Кире кайтару',
+	'wall-toolbar-history' => 'Тарих',
+	'wall-message-remove' => 'Бетерү',
+	'wall-message-quote-button' => 'Өземтә китерү',
+	'wall-thread-removed' => 'Бетерелде',
+	'wall-thread-deleted' => 'Бетерү',
+	'wall-thread-closed' => 'Ябырга',
+	'wall-placeholder-reply' => 'Җавап бирергә',
+	'wall-button-to-preview-comment' => 'Алдан карау',
+	'wall-button-to-cancel-preview' => 'Үзгәртү',
+	'wall-button-to-submit-comment' => 'Хәбәр калдырырга',
+	'wall-button-to-submit-reply' => 'Җавап калдырырга',
+	'wall-button-save-changes' => 'Үзгәртүләрне сакларга',
+	'wall-button-cancel-changes' => 'Баш тарту',
+	'wall-button-done-source' => 'Эшләнде',
+	'wall-message-edit' => 'Үзгәртү',
+	'wall-message-more' => 'Тагын',
+	'wall-message-delete' => 'Бетерү',
+	'wall-action-all-confirm-cancel' => 'Баш тарту',
+	'wall-delete-error-title' => 'Хата',
+	'wall-action-remove-confirm-ok' => 'Бетерү',
+	'wall-action-admin-confirm-ok' => 'Бетерү',
+	'wall-action-restore-confirm-ok' => 'Торгызу',
+	'wall-notifications-markasread-all-wikis' => 'Барлык викиләр',
 	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
 	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'mail-notification-subject' => '$1 -- $2',
@@ -6593,10 +6668,10 @@ ___________________________________________<br />
 	'tog-enotifmywall-every' => 'про кожне повідомлення і відповідь',
 	'tog-enotifmywall-sincevisited' => 'тільки про обговорення, яке я переглядав останнім',
 	'tog-enotifmywall-reminder' => 'з щоденними нагадуваннями',
-	'tog-enotifmywall-noemail' => 'ніколи не відправляти мені повідомлення зі Стіни Обговорення',
-	'wallshowsource-toggle-v2' => 'Увімкнути {{int:user-action-menu-view-source}} опцію для повідомлень на Стіні обговорення',
+	'tog-enotifmywall-noemail' => 'ніколи не відправляти мені повідомлення зі Стіни Обговорення', # Fuzzy
+	'wallshowsource-toggle-v2' => 'Увімкнути {{int:user-action-menu-view-source}} опцію для повідомлень на Стіні обговорення', # Fuzzy
 	'wallshowsource-toggle' => 'Увімкнути {{int:user-action-menu-view-source}} для повідомлень на Стіні обговорення',
-	'walldelete-toggle' => 'Увімкнути перегляд повідомолень, видалених зі Стіни обговорення',
+	'walldelete-toggle' => 'Увімкнути перегляд повідомолень, видалених зі Стіни обговорення', # Fuzzy
 	'wall-notifications-notifyeveryone' => 'Про це повідомив $1',
 	'wall-message-notifyeveryone' => 'Повідомити всіх про це обговорення',
 	'wall-message-unnotifyeveryone' => 'Скасувати розсилку повідомлень про це обговорення',
@@ -6856,10 +6931,10 @@ ___________________________________________<br />
 	'tog-enotifmywall-every' => 'Cho mỗi tin nhắn & hồi âm',
 	'tog-enotifmywall-sincevisited' => 'Mỗi lần một luồng kể từ lần cuối cùng tôi đăng nhập',
 	'tog-enotifmywall-reminder' => 'Với thư điện tử thông báo hằng ngày',
-	'tog-enotifmywall-noemail' => 'Không. Đừng gửi cho tôi bất kỳ email nào về Tường tin nhắn',
-	'wallshowsource-toggle-v2' => 'Kích hoạt {{int:user-action-menu-view-source}} tùy chọn những tin gửi trên Tường tin nhắn',
+	'tog-enotifmywall-noemail' => 'Không. Đừng gửi cho tôi bất kỳ email nào về Tường tin nhắn', # Fuzzy
+	'wallshowsource-toggle-v2' => 'Kích hoạt {{int:user-action-menu-view-source}} tùy chọn những tin gửi trên Tường tin nhắn', # Fuzzy
 	'wallshowsource-toggle' => 'Kích hoạt {{int:user-action-menu-view-source}} những tin gửi trên Tường tin nhắn',
-	'walldelete-toggle' => 'Kích hoạt Xem lại bản xóa những tin gửi trên Tường tin nhắn',
+	'walldelete-toggle' => 'Kích hoạt Xem lại bản xóa những tin gửi trên Tường tin nhắn', # Fuzzy
 );
 
 /** Walloon (walon)
@@ -7021,7 +7096,7 @@ $messages['zh-hans'] = array(
 	'prefs-email-wall-v2' => '留言墙和论坛',
 	'tog-enotifwallthread-v2' => '邮件通知我…',
 	'tog-enotifmywall-reminder' => '以每日提醒邮件',
-	'tog-enotifmywall-noemail' => '从不。不向我发送任何留言墙邮件',
+	'tog-enotifmywall-noemail' => '从不。不向我发送任何留言墙邮件', # Fuzzy
 	'wall-preview-modal-title' => '预览',
 	'wall-preview-modal-button-back' => '返回',
 	'wall-topic-edit-cancel' => '取消',

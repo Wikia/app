@@ -178,11 +178,22 @@ RTE.templateEditor = {
 	generateWikitext: function(name, params) {
 		var wikitext,
 			paramsCount = 0,
-			currentData = this.placeholder ? this.placeholder.getData() : false;
+			currentData = this.placeholder ? this.placeholder.getData() : false,
+			bracketPattern = /\[\[(.*?)\]\]/g;
+
+		// Check for any bracketed syntax and mark the pipes within (BugID: 2264 and 69126)			
+		if ( bracketPattern.test( currentData.wikitext ) ) {
+			var	results = currentData.wikitext.match( bracketPattern ),
+				i = 0,
+				replacement;
+			for ( i = 0; i < results.length; i++ ) {
+				replacement = results[i].replace( /\|/g, '\x7f' );
+				currentData.wikitext = currentData.wikitext.replace( results[i], replacement );
+			}
+		}
 
 		// "parse" current wikitext
 		var wikitextParts = currentData.wikitext.
-			replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, '[[$1\x7f$2]]').	// mark pipes inside internal links syntax [[Foo|Bar]] (BugID: 2264)
 			substring(2, currentData.wikitext.length - 2).				// remove {{ and }}
 			split('|');													// split by pipe
 

@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2012, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,8 @@
  * @package    PHPUnit_MockObject
  * @author     Giorgio Sironi <piccoloprincipeazzurro@gmail.com>
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://github.com/sebastianbergmann/phpunit-mock-objects
  * @since      File available since Release 1.0.0
  */
@@ -49,8 +49,8 @@
  * @package    PHPUnit_MockObject
  * @author     Giorgio Sironi <piccoloprincipeazzurro@gmail.com>
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://github.com/sebastianbergmann/phpunit-mock-objects
  * @since      File available since Release 1.0.0
  */
@@ -97,6 +97,11 @@ class PHPUnit_Framework_MockObject_MockBuilder
     protected $autoload = TRUE;
 
     /**
+     * @var boolean
+     */
+    protected $cloneArguments = FALSE;
+
+    /**
      * @param PHPUnit_Framework_TestCase
      * @param string
      */
@@ -120,17 +125,37 @@ class PHPUnit_Framework_MockObject_MockBuilder
           $this->mockClassName,
           $this->originalConstructor,
           $this->originalClone,
-          $this->autoload
+          $this->autoload,
+          $this->cloneArguments
+        );
+    }
+
+    /**
+     * Creates a mock object for an abstract class using a fluent interface.
+     *
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    public function getMockForAbstractClass()
+    {
+        return $this->testCase->getMockForAbstractClass(
+          $this->className,
+          $this->constructorArgs,
+          $this->mockClassName,
+          $this->originalConstructor,
+          $this->originalClone,
+          $this->autoload,
+          $this->methods,
+          $this->cloneArguments
         );
     }
 
     /**
      * Specifies the subset of methods to mock. Default is to mock all of them.
      *
-     * @param  array $methods
+     * @param  array|null $methods
      * @return PHPUnit_Framework_MockObject_MockBuilder
      */
-    public function setMethods(array $methods)
+    public function setMethods($methods)
     {
         $this->methods = $methods;
 
@@ -164,7 +189,7 @@ class PHPUnit_Framework_MockObject_MockBuilder
     }
 
     /**
-     * Suppresses the invocation of the original constructor.
+     * Disables the invocation of the original constructor.
      *
      * @return PHPUnit_Framework_MockObject_MockBuilder
      */
@@ -173,10 +198,23 @@ class PHPUnit_Framework_MockObject_MockBuilder
         $this->originalConstructor = FALSE;
 
         return $this;
-    } 
+    }
 
     /**
-     * Suppresses the invocation of the original clone constructor.
+     * Enables the invocation of the original constructor.
+     *
+     * @return PHPUnit_Framework_MockObject_MockBuilder
+     * @since  Method available since Release 1.2.0
+     */
+    public function enableOriginalConstructor()
+    {
+        $this->originalConstructor = TRUE;
+
+        return $this;
+    }
+
+    /**
+     * Disables the invocation of the original clone constructor.
      *
      * @return PHPUnit_Framework_MockObject_MockBuilder
      */
@@ -185,16 +223,68 @@ class PHPUnit_Framework_MockObject_MockBuilder
         $this->originalClone = FALSE;
 
         return $this;
-    } 
+    }
 
     /**
-     * Suppresses the use of class autoloading while creating the mock object.
+     * Enables the invocation of the original clone constructor.
+     *
+     * @return PHPUnit_Framework_MockObject_MockBuilder
+     * @since  Method available since Release 1.2.0
+     */
+    public function enableOriginalClone()
+    {
+        $this->originalClone = TRUE;
+
+        return $this;
+    }
+
+    /**
+     * Disables the use of class autoloading while creating the mock object.
      *
      * @return PHPUnit_Framework_MockObject_MockBuilder
      */
     public function disableAutoload()
     {
         $this->autoload = FALSE;
+
+        return $this;
+    }
+
+    /**
+     * Enables the use of class autoloading while creating the mock object.
+     *
+     * @return PHPUnit_Framework_MockObject_MockBuilder
+     * @since  Method available since Release 1.2.0
+     */
+    public function enableAutoload()
+    {
+        $this->autoload = TRUE;
+
+        return $this;
+    }
+
+    /**
+     * Disables the cloning of arguments passed to mocked methods.
+     *
+     * @return PHPUnit_Framework_MockObject_MockBuilder
+     * @since  Method available since Release 1.2.0
+     */
+    public function disableArgumentCloning()
+    {
+        $this->cloneArguments = FALSE;
+
+        return $this;
+    }
+
+    /**
+     * Enables the cloning of arguments passed to mocked methods.
+     *
+     * @return PHPUnit_Framework_MockObject_MockBuilder
+     * @since  Method available since Release 1.2.0
+     */
+    public function enableArgumentCloning()
+    {
+        $this->cloneArguments = TRUE;
 
         return $this;
     }

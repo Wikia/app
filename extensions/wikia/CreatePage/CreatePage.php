@@ -108,7 +108,7 @@ function wfCreatePageLoadPreformattedContent( $editpage ) {
 	
 	if ( $wgRequest->getCheck( 'useFormat' ) && !$editpage->textbox1 ) {
 		if ( $wgEnableVideoToolExt ) {
-			$editpage->textbox1 = wfMsgForContentNoTrans( 'createpage-with-layout' );
+			$editpage->textbox1 = wfMsgForContentNoTrans( 'createpage-with-video' );
 		} else {
 			$editpage->textbox1 = wfMsgForContentNoTrans( 'newpagelayout' );
 		}

@@ -63,9 +63,11 @@ $messages['br'] = array(
 );
 
 /** Catalan (català)
+ * @author BroOk
  * @author Ciencia Al Poder
  */
 $messages['ca'] = array(
+	'communitymessages-desc' => "Extensió d'ajuda per a missatges de la comunitat",
 	'communitymessages-notice-msg' => "[[Special:WikiActivity|S'han actualitzat els Missatges de la Comunitat]].",
 );
 

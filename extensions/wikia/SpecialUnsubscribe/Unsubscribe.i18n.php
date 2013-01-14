@@ -374,10 +374,10 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'unsubscribe' => 'Uitschrijven',
-	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg alstublieft de verwijzing in uw e-mail.',
+	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg alstublieft de koppeling in uw e-mail.',
 	'unsubscribe-badtoken' => 'Er is een probleem met het beveiligingstoken.',
 	'unsubscribe-bademail' => 'Er is een probleem met het e-mailbericht.',
-	'unsubscribe-badtime' => 'De verwijzing is verlopen. Gebruik een verwijzing die maximaal zeven dagen oud is.',
+	'unsubscribe-badtime' => 'De koppeling is verlopen. Gebruik een koppeling die maximaal zeven dagen oud is.',
 	'unsubscribe-nousers' => 'Er zijn geen gebruikers met dat e-mailadres.',
 	'unsubscribe-noconfusers' => 'Er zijn geen bevestigde gebruikers met dat e-mailadres.',
 	'unsubscribe-confirm-legend' => 'Bevestigen',
@@ -394,7 +394,7 @@ $messages['nl'] = array(
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
-	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg alsjeblieft de verwijzing in je e-mail.',
+	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg alsjeblieft de koppeling in je e-mail.',
 );
 
 /** Polish (polski)
@@ -417,6 +417,27 @@ $messages['pl'] = array(
 	'unsubscribe-working-done' => 'Ukończono.',
 	'unsubscribe-preferences-toggle' => 'Zakończyć subskrypcję wszystkich kont e-mail z Wikii (odznacz tę opcję, aby uzyskać dostęp do opcji poniżej)',
 	'unsubscribe-preferences-notice' => 'Wiadomości e-mail na to konto zostały wyłączone. Odwiedź kartę profilu użytkownika, aby włączyć je ponownie.',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'unsubscribe' => 'Disiscrivte',
+	'unsubscribe-badaccess' => 'Spiasent, sta pagina a peul pa esse dovrà diretament. Për piasì và dré al colegament da toa e-mail.',
+	'unsubscribe-badtoken' => "Spiasent, a l'é stàit-ie un problem con ël geton ëd sicurëssa.",
+	'unsubscribe-bademail' => "Spiasent, a l'é stàit-ie un problem con ël corel.",
+	'unsubscribe-badtime' => "Spiasent, ël colegament a l'é scadù. Për piasì dòvra un colegament che a l'ha men che 7 di.",
+	'unsubscribe-nousers' => "Gnun utent trovà con l'adrëssa ëd corel.",
+	'unsubscribe-noconfusers' => 'Gnun utent confirmà trovà con cola adrëssa ëd corel.',
+	'unsubscribe-confirm-legend' => 'Conferma',
+	'unsubscribe-confirm-text' => 'Disiscrivse da tùit ij cont con <code>$1</code>?',
+	'unsubscribe-confirm-button' => "E'!, i son sigur",
+	'unsubscribe-working' => 'Disiscriv $1 {{PLURAL:$1|cont}} për $2',
+	'unsubscribe-working-problem' => 'problem cariand anformassion utent për: $1',
+	'unsubscribe-working-done' => 'Completa.',
+	'unsubscribe-preferences-toggle' => "Disiscriv da tùit ij corej da Wikia (deselession-a sòn da acede a j'opsion sota)",
+	'unsubscribe-preferences-notice' => "Ij corej a l'han stàit disabilità për tò cont. Vìsita la scheda dël Profil Utent për riabiliteje.",
 );
 
 /** Pashto (پښتو)
@@ -485,6 +506,13 @@ $messages['ru'] = array(
 	'unsubscribe-working-done' => 'Готово.',
 	'unsubscribe-preferences-toggle' => 'Отписаться от всех писем от Викия (снимите это для доступа к параметрам ниже)',
 	'unsubscribe-preferences-notice' => 'Получение писем было отключено для вашей учётной записи. Посетите вкладку Личные данные, чтобы снова включить это.',
+);
+
+/** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['si'] = array(
+	'unsubscribe' => 'සාමාජිකත්වයෙන් ඉවත්වන්න',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)

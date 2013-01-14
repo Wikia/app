@@ -126,11 +126,13 @@ $messages['en'] = array(
  * @author Claudia Hattitten
  * @author Lloffiwr
  * @author Sean Colombo
+ * @author Shirayuki
  * @author Siebrand
  * @author VezonThunder
  */
 $messages['qqq'] = array(
-	'chat' => 'shown in Special:Specialpages as the link label.',
+	'chat' => 'shown in Special:Specialpages as the link label.
+{{Identical|Chat}}',
 	'chat-welcome-message' => 'sent to a user when he join chat',
 	'chat-private-messages' => 'Header in right user list for private messages section',
 	'chat-kick-you-need-permission' => 'shown to the user when he tries to kick someone, but does not have a required rights',
@@ -158,11 +160,15 @@ $messages['qqq'] = array(
 	'chat-ban-modal-change-ban-heading' => "Heading text for the modal for changing or ending a user's ban.",
 	'chat-ban-modal-change-ban-label' => 'This is the form label displayed when an admin user wants to change a chat ban of another user.',
 	'chat-ban-modal-end-ban' => "Option inside a select menu.  Choose this option if you want the end a user's ban.",
+	'chat-log-reason-banchange' => '{{Identical|No reason given}}',
+	'chat-log-reason-banremove' => '{{Identical|No reason given}}',
+	'chat-kick-log-reason' => '{{doc-singularthey}}',
 	'chat-edit-count' => '$1 is the number of edits made by the user',
 	'chat-member-since' => '$1 tells both the month and the year, month abbreviated. E.g. "Apr 2008".',
 	'chat-user-menu-give-chat-mod' => 'ChatMod = chat moderator',
 	'chat-user-menu-ban' => 'Click here to ban a user (from the user dropdown menu).',
-	'chat-ban-option-list' => 'This is used for setting the options for expiration time when banning a user from chat. The value before the colon (:) is what the user will see.  The value after the color will translate to the amount of time the user is banned.  Do not change the value after the colon unless you actually want to change the options presented for expiring a ban. Another way of writing this would be: "The banned user will be banned for 2 hours:2 hours; The banned user will be banned for 3 days:3 days;" So, as you can see, it is very important that the time values on either side of the colon match up.',
+	'chat-ban-option-list' => 'This is used for setting the options for expiration time when banning a user from chat. The value before the colon (:) is what the user will see.  The value after the color will translate to the amount of time the user is banned.  Do not change the value after the colon unless you actually want to change the options presented for expiring a ban. Another way of writing this would be: "The banned user will be banned for 2 hours:2 hours; The banned user will be banned for 3 days:3 days;" So, as you can see, it is very important that the time values on either side of the colon match up.
+{{Identical|Infinite}',
 	'chat-ban-log-change-ban-link' => 'shown in Special:Log',
 	'chat-chatconnect-log' => 'Name for Chat connection log entry',
 	'chat-chatconnect-log-entry' => 'Chat connection log entry description; $1 is the Chat page url, $2 is the user address',
@@ -498,8 +504,12 @@ $messages['cs'] = array(
 	'chat-user-menu-private-block' => 'Zablokovat soukromé zprávy',
 	'chat-user-menu-private-allow' => 'Povolit soukromé zprávy',
 	'chat-user-menu-private-close' => 'Uzavřít soukromý chat',
+	'group-chatmoderator' => 'Moderátoři chatu',
+	'group-chatmoderator-member' => 'Moderátor chatu',
+	'group-bannedfromchat' => 'Zablokován z chatu',
 	'chat-ban-option-list' => '2 hodiny:2 hours,1 den:1 day,3 dny:3 days,1 týden:1 week,2 týdny:2 weeks,1 měsíc:1 month,3 měsíce:3 months,6 měsíců:6 months,1 rok:1 year,navždy:infinite',
 	'chat-ban-log-change-ban-link' => 'Změnit ban',
+	'chat-checkuser-join-action' => 'Připojen k chatu',
 	'chat-status-away' => 'Pryč',
 );
 
@@ -2002,6 +2012,97 @@ $messages['pl'] = array(
 	'chat-status-away' => 'Zaraz wracam',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'chat' => 'Ciaciaré',
+	'chat-desc' => '[[Special:Chat|Ciaciaré dal viv]]',
+	'chat-no-login' => 'It deuve esse intrà për ciaciaré.',
+	'chat-no-login-text' => 'Për piasì intra për ciaciaré.',
+	'chat-default-topic' => 'Bin ëvnù a la chat $1',
+	'chat-welcome-message' => 'Bin ëvnù a la chat $1',
+	'chat-user-joined' => "$1 a l'é intrà an chat.",
+	'chat-read-only' => "La chat a l'é temporaneament pa disponibla mente la wiki a l'é mach an letura.",
+	'chat-private-messages' => 'Mëssagi Privà',
+	'chat-user-parted' => "$1 a l'ha lassà la chat.",
+	'chat-user-blocked' => "$1 a l'ha blocà $2.",
+	'chat-user-allow' => "$1 a l'ha përmëttù $2.",
+	'chat-kick-you-need-permission' => "It l'has pa ël përmëss dë slontané n'utent.",
+	'chat-kick-cant-kick-moderator' => "It peule pa slontané n'àutr Moderador ëd Chat.",
+	'chat-user-was-kicked' => "$1 a l'é stàit slontanà da $2.",
+	'chat-you-were-kicked' => 'It ses stàit slontanà da $1.',
+	'chat-user-was-banned' => "$1 a l'é stàit banà da $2 $3.",
+	'chat-you-were-banned' => 'It ses stàit banà da $1.',
+	'chat-user-was-unbanned' => "$2 a l'ha eliminà ël ban da Chat për $1.",
+	'chat-ban-cannt-undo' => "Ël ban a l'é già stàit eliminà",
+	'chat-user-permanently-disconnected' => 'It ses stàit scolegà, contròla toa conession ëd Ragnà e rinfrësca la fnesta dël navigator',
+	'chat-inlinealert-a-made-b-chatmod' => "$1 a l'ha fàit <strong>$2</strong> moderator ëd chat.",
+	'chat-err-connected-from-another-browser' => "It l'has colegate da n'àutr navigator. Sta conession a sarà sarà.",
+	'chat-err-communicating-with-mediawiki' => 'Eror comunicand con ël sërvent MediaWiki.',
+	'chat-ban-contributions-heading' => 'Ban da chat',
+	'chat-ban-modal-heading' => 'Bané sto utent da chat',
+	'chat-ban-modal-label-expires' => 'Scadensa',
+	'chat-ban-modal-label-reason' => 'Rason',
+	'chat-log-reason-banadd' => 'Mal comportament an chat',
+	'chat-log-reason-undo' => "buta 'me ch'a l'era",
+	'chat-ban-undolink' => "buta 'me ch'a l'era",
+	'chat-ban-modal-button-ok' => "Bané st'utent",
+	'chat-ban-modal-button-change-ban' => 'Cangé Ban',
+	'chat-ban-modal-button-cancel' => 'Scancela',
+	'chat-ban-modal-change-ban-heading' => "Cangé ban ëd chet dë st'utent",
+	'chat-ban-modal-change-ban-label' => 'Cangé a',
+	'chat-ban-modal-end-ban' => 'Eliminé Ban',
+	'chat-log-reason-banchange' => 'Gnun-e rason dàite',
+	'chat-log-reason-banremove' => 'Gnun-e rason dàite',
+	'chat-ban-cant-ban-moderator' => "It peule pa slontané/bané n'àutr Moderador ëd Chat.",
+	'chat-ban-already-banned' => "$1 a l'é già banè da chat dzor sta wiki.",
+	'chat-ban-you-need-permission' => "It l'has pa ëd përmess $1 dont a-i é dabzògn për slontané/bané n'utent.",
+	'chat-missing-required-parameter' => "'$1' a l'é obligatòri a as truva pa ant l'arcesta.",
+	'chat-err-already-chatmod' => 'Eror: "$1" a l\'é già ant la partìa "$2".',
+	'chat-err-no-permission-to-add-chatmod' => 'Eror: It l\'has pa ël përmess ëd gionté la partìa "$1" a st\'utent.',
+	'chat-userrightslog-a-made-b-chatmod' => "$1 a l'ha promovù $2 a moderator ëd chat dzor sta wiki.",
+	'chat-err-invalid-username-chatmod' => 'Eror: As peul pa trové l\'utent "$1"',
+	'chat-you-are-banned' => 'Eror ant ij përmess.',
+	'chat-you-are-banned-text' => "Spiasent, it l'has pa ël përmess ëd chaté dzor sta wiki. S'it pense che sòn a sia n'eror o it veule esse riconsiderà, për piasì contata n'aministrador.",
+	'chat-room-is-not-on-this-wiki' => "La sala ëd chat anté it preuve a intré a smija ch'a esista pa dzor sta wiki.",
+	'chat-kick-log-reason' => 'Slontanà/banà da la chat për sta wiki da $1. Për piasì contatlo për pi anformassion.',
+	'chat-live2' => 'Viv! Chat',
+	'chat-start-a-chat' => 'Ancamin-a na Chat',
+	'chat-join-the-chat' => 'Intra an Chat',
+	'chat-edit-count' => '{{PLURAL:$1|$1 modìfica|$1 modìfiche}}',
+	'chat-member-since' => 'Mémber dal $1',
+	'chat-great-youre-logged-in' => 'Bon! It ses intrà.',
+	'chat-user-menu-message-wall' => 'Mur dij Mëssagi',
+	'chat-user-menu-talk-page' => 'Pàgina ëd Discussion',
+	'chat-user-menu-contribs' => 'Contribussion',
+	'chat-user-menu-private' => 'Mëssagi Privà',
+	'chat-user-menu-give-chat-mod' => 'Dà lë Stat ChatMod',
+	'chat-user-menu-kick' => 'Slontan-a',
+	'chat-user-menu-ban' => 'Vieta',
+	'chat-user-menu-private-block' => 'Blòca Mëssagi Privà',
+	'chat-user-menu-private-allow' => 'Përmëtt Mëssagi Privà',
+	'chat-user-menu-private-close' => 'Sara Sala Privà',
+	'chat-private-headline' => 'Chat privà con $1',
+	'right-chatmoderator' => 'It peule slontané/bané da [[Help:Chat|Chat]]',
+	'group-chatmoderator' => 'Moderator ëd chat',
+	'group-chatmoderator-member' => 'Moderator ëd chat',
+	'group-bannedfromchat' => 'Banà da chat',
+	'group-bannedfromchat-member' => 'Banà da chat',
+	'chat-ban-option-list' => "2 ore:2 hours,1 di:1 day,3 di:3 days,na sman-a:1 week,2 sman-e:2 weeks,1 mèis:1 month,3 mèis:3 months,6 mèis:6 months,n'ann:1 year,për sempe:infinite",
+	'chat-ban-log-change-ban-link' => 'cangé ban',
+	'chat-chatconnect-log' => 'Registr ëd conession ëd chat',
+	'chat-chatconnect-log-entry' => "Conetù a $1 da l'adrëssa $2",
+	'chat-chatban-log' => 'Registr ëd ban ëd chat',
+	'chat-chatbanadd-log-entry' => 'banà $1 da chat con na scadensa ëd $2, a finiss a $3',
+	'chat-chatbanremove-log-entry' => 'eliminà ban $1 da chat',
+	'chat-chatbanchange-log-entry' => "cambià j'ampostassion dël blocagi për $1 con na scadensa ëd $2, a finiss a $3",
+	'chat-contributions-ban-notice' => "St'utent-sì a l'é al moment blocà da chat. L'ùltima vos dël registr dij blocagi da chat a l'é butà sì-sota 'me arferiment:",
+	'chat-browser-is-notsupported' => 'Tò navigador a l\'é pa apogià. Për na mej esperiensa, dòvra un <a href="http://community.wikia.com/wiki/Help:Supported_browsers">navigador pi neuv</a>.',
+	'chat-checkuser-join-action' => 'Intrà an Chat',
+	'chat-status-away' => 'Assent',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -2609,6 +2710,7 @@ $messages['vep'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Timothy Quievryn
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
@@ -2686,7 +2788,7 @@ $messages['vi'] = array(
 	'group-chatmoderator-member' => 'Điều phối viên Tán gẫu',
 	'group-bannedfromchat' => 'Bị cấm tán gẫu',
 	'group-bannedfromchat-member' => 'Bị cấm tán gẫu',
-	'chat-ban-option-list' => '2 giờ:2 giờ,1 ngày:1 ngày,3 ngày:3 ngày,1 tuần:1 tuần,2 tuần:2 tuần,1 tháng:1 tháng,3 tháng:3 tháng,6 tháng:6 tháng,1 năm:1 năm,vô hạn:vô hạn',
+	'chat-ban-option-list' => '2 giờ:2 hours,1 ngày:1 day,3 ngày:3 days,1 tuần:1 week,2 tuần:2 weeks,1 tháng:1 month,3 tháng:3 months,6 tháng:6 months,1 năm:1 year,vô hạn:infinite',
 	'chat-ban-log-change-ban-link' => 'thay đổi lệnh cấm',
 	'chat-chatconnect-log' => 'Nhật trình kết nối tán gẫu',
 	'chat-chatconnect-log-entry' => 'kết nối với $1 từ địa chỉ $2',

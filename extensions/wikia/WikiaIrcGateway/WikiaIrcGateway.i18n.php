@@ -53,10 +53,12 @@ $messages['ar'] = array(
 );
 
 /** Azerbaijani (azərbaycanca)
+ * @author AZISS
  * @author Cekli829
  */
 $messages['az'] = array(
 	'ircgate-username' => 'İstifadəçi adı:',
+	'ircgate-channel' => 'Kanal:',
 );
 
 /** Bashkir (башҡортса)

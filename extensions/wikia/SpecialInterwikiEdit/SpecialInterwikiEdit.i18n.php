@@ -366,7 +366,7 @@ $messages['nl'] = array(
 	'iwedit-all-interwikis' => "alle interwiki's",
 	'iwedit-update' => 'Bijwerken',
 	'iwedit-error' => '<p>Er is een fout opgetreden.</p>',
-	'iwedit-success' => '<p>De verwijzing is aangemaakt.</p>',
+	'iwedit-success' => '<p>De koppeling is aangemaakt.</p>',
 );
 
 /** Occitan (occitan)

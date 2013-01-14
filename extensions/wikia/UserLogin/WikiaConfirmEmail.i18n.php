@@ -163,7 +163,7 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Lege bevestigingscode',
 	'wikiaconfirmemail-error-invalid-code' => 'Ongeldige bevestigingscode',
-	'wikiaconfirmemail-error-user-not-match' => 'De bevestigingsverwijzing komt niet overeen met de ingevoerde gebruikersnaam. Zorg ervoor dat u de juiste gebruikersnaam invoert. U kunt ook <a href="{{fullurl:{{ns:special}}:UserLogin}}">aanmelden met een andere gebruiker</a>.',
+	'wikiaconfirmemail-error-user-not-match' => 'De bevestigingskoppeling komt niet overeen met de ingevoerde gebruikersnaam. Zorg ervoor dat u de juiste gebruikersnaam invoert. U kunt ook <a href="{{fullurl:{{ns:special}}:UserLogin}}">aanmelden met een andere gebruiker</a>.',
 	'wikiaconfirmemail-login-button' => 'Bevestigen en aanmelden',
 	'wikiaconfirmemail-heading' => 'Bijna klaar!',
 	'wikiaconfirmemail-subheading' => 'Meld aan met uw gebruikersnaam en wachtwoord, zodat we weten dat u de e-mail hebt ontvangen.',
@@ -181,6 +181,19 @@ $messages['pl'] = array(
 	'wikiaconfirmemail-heading' => 'Prawie!',
 	'wikiaconfirmemail-subheading' => 'Zaloguj się korzystając ze swojej nazwy użytkownika i hasła abyśmy wiedzieli, że otrzymałeś e-maila.',
 	'wikiaconfirmemail-username' => 'Nazwa użytkownika',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'wikiaconfirmemail-error-empty-code' => 'Còdes ëd conferma veuid',
+	'wikiaconfirmemail-error-invalid-code' => 'Còdes ëd conferma pa bon',
+	'wikiaconfirmemail-error-user-not-match' => "Contacc, sto colegament ëd conferma a corispond pa con ël nòm utent ch'it l'has anserì. Sigurte d'avèj anserì ël nòm utent giust. S'it veule intré con un cont diferent, sgnaca <a href=\"{{fullurl:{{ns:special}}:UserLogin}}\">ambelessì</a>",
+	'wikiaconfirmemail-login-button' => 'Confirma e intra',
+	'wikiaconfirmemail-heading' => 'Almanch sì!',
+	'wikiaconfirmemail-subheading' => "Intra con tò nòm utent e ciav parèj noi i savoma ch'it l'has arseivù ël corel.",
+	'wikiaconfirmemail-username' => 'Stranòm',
 );
 
 /** Pashto (پښتو)

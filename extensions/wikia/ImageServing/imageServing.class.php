@@ -284,11 +284,11 @@ class ImageServing {
 		// make sure these are numeric and nonzero (BugId:20644, BugId:25965)
 		$width = max(1, intval($width));
 		$height = max(1, intval($height));
-
-		// in case we're missing some propotions, maintain the original aspect ratio
-		if (!$this->proportion['h']) {
+		// in case we're missing some proportions, maintain the original aspect ratio
+		if (empty($this->proportion['h']) && !empty($this->proportion['w'])) {
 			$this->proportion['h'] = (float)$height * $this->proportion['w'] / $width;
-		} else if (!$this->proportion['w']) {
+		}
+		if (empty($this->proportion['w']) && !empty($this->proportion['h'])) {
 			$this->proportion['w'] = (float)$width * $this->proportion['h'] / $height;
 		}
 

@@ -1,7 +1,7 @@
 {prologue}{class_declaration}
 {
-    protected static $staticInvocationMocker;
-    protected $invocationMocker;
+    private static $__phpunit_staticInvocationMocker;
+    private $__phpunit_invocationMocker;
 
 {clone}{mocked_methods}
     public function expects(PHPUnit_Framework_MockObject_Matcher_Invocation $matcher)
@@ -16,20 +16,26 @@
 
     public function __phpunit_getInvocationMocker()
     {
-        if ($this->invocationMocker === NULL) {
-            $this->invocationMocker = new PHPUnit_Framework_MockObject_InvocationMocker($this);
+        if ($this->__phpunit_invocationMocker === NULL) {
+            $this->__phpunit_invocationMocker = new PHPUnit_Framework_MockObject_InvocationMocker;
         }
 
-        return $this->invocationMocker;
+        return $this->__phpunit_invocationMocker;
     }
 
     public static function __phpunit_getStaticInvocationMocker()
     {
-        if (self::$staticInvocationMocker === NULL) {
-            self::$staticInvocationMocker = new PHPUnit_Framework_MockObject_InvocationMocker;
+        if (self::$__phpunit_staticInvocationMocker === NULL) {
+            self::$__phpunit_staticInvocationMocker = new PHPUnit_Framework_MockObject_InvocationMocker;
         }
 
-        return self::$staticInvocationMocker;
+        return self::$__phpunit_staticInvocationMocker;
+    }
+
+    public function __phpunit_hasMatchers()
+    {
+        return self::__phpunit_getStaticInvocationMocker()->hasMatchers() ||
+               $this->__phpunit_getInvocationMocker()->hasMatchers();
     }
 
     public function __phpunit_verify()
@@ -40,7 +46,7 @@
 
     public function __phpunit_cleanup()
     {
-        self::$staticInvocationMocker = NULL;
-        $this->invocationMocker = NULL;
+        self::$__phpunit_staticInvocationMocker = NULL;
+        $this->__phpunit_invocationMocker       = NULL;
     }
-}
+}{epilogue}

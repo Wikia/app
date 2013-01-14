@@ -343,6 +343,22 @@ $messages['pl'] = array(
 	'browser-loading-message' => 'Trwa ładowanie...',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'main-tab-discover' => 'Dëscoaté',
+	'main-tab-personal' => 'Mia Wikia',
+	'main-tab-search' => 'Sërca',
+	'main-tab-offline' => 'Fòra linia',
+	'tab-discover-loading-message' => 'A caria ...',
+	'tab-discover-no-network-dialog-title' => 'Rej pa disponìbila',
+	'tab-discover-no-network-dialog-message' => 'Gnun-a conession ëd rej trovà',
+	'tab-discover-no-network-dialog-close-button' => 'Va bin',
+	'tab-search-loading-message' => 'Sërché...',
+	'browser-loading-message' => 'A caria ...',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
