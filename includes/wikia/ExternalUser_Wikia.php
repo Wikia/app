@@ -354,6 +354,7 @@ class ExternalUser_Wikia extends ExternalUser {
 	 * @author tor
 	 */
 	public static function removeFromSecondaryClusters( $id ) {
+		global $wgMemc;
 
 		$clusters = WikiFactory::getSecondaryClusters(); // wikicities with a c1 .. cx cluster suffix.
 
