@@ -284,6 +284,19 @@ class WikiaSearchIndexer extends WikiaObject {
 		return true;
 	}
 	
+    /**
+	 * Sends an update query to the client, provided a document set
+	 * @param array $documents
+	 * @return boolean
+	 */
+	public function getUpdateXmlForDocuments( array $documents = array() ) {
+		$updateHandler = $this->client->createUpdate()
+		                              ->addDocuments( $documents )
+		                              ->addCommit();
+		return $this->client->createRequest( $updateHandler )->getRawData( $updateHandler );
+		
+	}
+	
 	/**
 	 * Emits scribe events for each page to be reindexed by the search backend
 	 * @param int $wid

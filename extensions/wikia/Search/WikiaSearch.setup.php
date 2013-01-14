@@ -30,6 +30,7 @@ $app->registerClass('WikiaSearch', 					$dir . 'WikiaSearch.class.php');
 $app->registerClass('WikiaSearchIndexer', 			$dir . 'WikiaSearchIndexer.class.php');
 $app->registerClass('WikiaSearchConfig', 			$dir . 'WikiaSearchConfig.class.php');
 $app->registerClass('WikiaSearchController', 		$dir . 'WikiaSearchController.class.php');
+$app->registerClass('WikiaSearchIndexerController', $dir . 'WikiaSearchIndexerController.class.php');
 $app->registerClass('WikiaSearchResult', 			$dir . 'WikiaSearchResult.class.php');
 $app->registerClass('WikiaSearchResultSet', 		$dir . 'WikiaSearchResultSet.class.php');
 $app->registerClass('WikiaSearchArticleMatch',		$dir . 'WikiaSearchArticleMatch.class.php');
