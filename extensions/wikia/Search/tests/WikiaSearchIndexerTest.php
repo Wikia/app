@@ -2294,4 +2294,42 @@ class WikiaSearchIndexerTest extends WikiaSearchBaseTest {
 				$articles
 		);
 	}
+	
+    /**
+	 * @covers WikiaSearchIndexer::getPageFromPageId
+	 */
+	public function testGetPageFromPageIdCachedArticle() {
+		$mockIndexer = $this->getMockBuilder( 'WikiaSearchIndexer' )
+		                    ->disableOriginalConstructor()
+		                    ->getMock();
+		
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->disableOriginalConstructor()
+		                    ->setMethods( array( 'isRedirect' ) )
+		                    ->getMock();
+		
+		$pageId = 123;
+		
+		$this->proxyClass( 'Article', $mockArticle, 'newFromId' );
+		$this->mockApp();
+		
+		$mockArticle
+		    ->expects ( $this->never() )
+		    ->method  ( 'isRedirect' )
+		;
+		
+		$reflArt = new ReflectionProperty( 'WikiaSearchIndexer', 'articles' );
+		$reflArt->setAccessible( true );
+		$articles = $reflArt->setValue( $mockIndexer, array( $pageId => $mockArticle ) );
+		
+		$reflMeth = new ReflectionMethod( 'WikiaSearchIndexer', 'getPageFromPageId' );
+		$reflMeth->setAccessible( true );
+		$result = $reflMeth->invoke( $mockIndexer, $pageId );
+		
+		$this->assertEquals(
+				$mockArticle,
+				$result
+		);
+	}
+	
 }
