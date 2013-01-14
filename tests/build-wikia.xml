@@ -16,6 +16,7 @@
     <property name="seleniumHost" value="localhost" />
     <property name="seleniumPort" value="4444" />
     <property name="browser" value="*firefox" />
+    <property name="localsettings" value="/usr/wikia/docroot/wiki.factory/LocalSettings.php" />
 
     <property name="groups" value="" />
     <property name="excludegroups" value="destructive,broken,answers,central" />
@@ -28,8 +29,8 @@
     <property name="noCloseAfterFail" value="0" />
 
     <target name="setup">
-        <copy file="${basedir}/phpunit.xml.dist" tofile="${basedir}/phpunit.xml" />
-        <copy file="${basedir}/config.xml.dist" tofile="${basedir}/config.xml" />
+		<copy file="${basedir}/phpunit.xml.dist" tofile="${basedir}/phpunit.xml" />
+		<copy file="${basedir}/config.xml.dist" tofile="${basedir}/config.xml" />
     </target>
 
 	<target name="php" depends="setup">
@@ -38,7 +39,7 @@
 			<env key="SERVER_ID" value="165" />
 			<arg line="run-test.php
                        --log-junit ${basedir}/build/logs/phpunit.xml
-                       --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
+                       --conf ${localsettings}
                        --configuration ${basedir}/phpunit.xml
 					   --exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack
                        " />
