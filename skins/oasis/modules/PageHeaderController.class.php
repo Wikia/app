@@ -202,7 +202,7 @@ class PageHeaderController extends WikiaController {
 			}
 
 			// number of pages on this wiki
-			$this->tallyMsg = (wfMessage('oasis-total-articles-mainpage', SiteStats::articles() )->parse());
+			$this->tallyMsg = wfMessage('oasis-total-articles-mainpage', SiteStats::articles() )->parse();
 
 		}
 
