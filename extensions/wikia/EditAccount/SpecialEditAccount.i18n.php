@@ -62,8 +62,8 @@ $messages['en'] = array(
 	'editaccount-status-confirmed' => 'Confirmed',
 	'editaccount-status-unconfirmed' => 'Unconfirmed',
 	'editaccount-status-realuser' => 'Real User',
-	'editaccount-status-tempuser' => 'Temp User',
-	'editaccount-error-tempuser-email' => 'Temp users cannot have blank email address field, please enter an email address.',
+	'editaccount-status-tempuser' => 'Temporary User',
+	'editaccount-error-tempuser-email' => 'Temporary users cannot have blank email address field, please enter an email address.',
 	'editaccount-email-change-requested' => 'User requested email change via Preferences to $1. To confirm the requested email address change for the user, enter the requested email address into the field below and click "Save and confirm."',
 
 	# logging
@@ -104,6 +104,10 @@ Per [[Thread:Support/About_Wikia:Editaccount-status-realuser/ms_and_Wikia:Editac
 	'editaccount-status-tempuser' => 'This is the status of the account in the Wikia UserLogin system – a "real user" means an active account, while a "temp user" means it\'s an inactive account. Accounts are activated once the user clicks on a link in an e-mail we send them.',
 	'right-editaccount' => '{{doc-right|editaccount|ns=Wikia}}',
 	'action-editaccount' => '{{doc-action|editaccount}}',
+        'editaccount-title' => 'Name of the "EditAccount" extension. This message is displayed as the H1 page title of the special page.',
+        'editaccount-frame-usage' => 'Label for note field. In this context, "note" refers to extra information about the extension and its functionality',
+        'editaccount-status-tempuser' => '"Temporary user" indicates an account is inactive. An account is activated and becomes a "real user" once the user clicks on a link in an e-mail we send them.',
+
 );
 
 /** Afrikaans (Afrikaans)
