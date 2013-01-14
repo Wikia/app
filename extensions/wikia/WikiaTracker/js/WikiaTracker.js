@@ -84,15 +84,16 @@ window.WikiaTracker = (function(){
 		browserEvent = browserEvent || window.event,
 		mouseMiddleClick = isMiddleClick(browserEvent),
 		ctrlMouseLeftClick = isCtrlLeftClick(browserEvent),
-		isLink = (data && data.href);
+		isLink = (data && data.href),
+		isTrackableClick = (isLink && !mouseMiddleClick && !ctrlMouseLeftClick);
 		
-		if( isLink && !mouseMiddleClick && !ctrlMouseLeftClick && typeof(browserEvent) !== 'undefined' ) {
+		if( isTrackableClick && typeof(browserEvent) !== 'undefined' ) {
 			browserEvent.preventDefault();
 		}
-
+		
 		doTrack(logGroup, eventName, data, trackingMethod);
 		
-		if( isLink && !mouseMiddleClick && !ctrlMouseLeftClick ) {
+		if( isTrackableClick ) {
 		//delay at the end to make sure all of the above was at least invoked
 			setTimeout(function() {
 				document.location = data.href;
