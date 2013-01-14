@@ -227,7 +227,7 @@ The Wikia Community Team
 www.wikia.com
 ",
 'enotif_lastvisited' => 'To see all changes to this page since your last visit, click here: $1',
-'fileexists'		=> '$1 has already been uploaded to the wiki. If you upload it again, it will replace the existing photo and may take up to 2 minutes to be visible.',
+'fileexists'		=> '$1 has already been uploaded to the wiki. If you upload it again, it will replace the existing photo and may take a few minutes to be visible.',
 'enotif_body' => 'Dear $WATCHINGUSERNAME,
 
 There has been an edit to a page you are watching on {{SITENAME}}.
