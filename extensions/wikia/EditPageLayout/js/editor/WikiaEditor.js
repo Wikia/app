@@ -188,12 +188,17 @@
 
 		try {
 			// Save editor data before redirecting to prevent data loss (BugId:29754)
-			$.storage.set('WikiaEditorData', editorInstance.getContent());
+
+			$.storage.set(WE.getStoreContentKey(), editorInstance.getContent());
 
 		} catch(e) {
 			$().log('Local Storage Exception:' + e.message);
 			$.storage.flush();
 		}
+	}
+
+	WE.getStoreContentKey = function() {
+		return 'WikiaEditorData/ArticleId-' + wgArticleId;
 	}
 
 	WE.Editor = $.createClass(Observable, {
