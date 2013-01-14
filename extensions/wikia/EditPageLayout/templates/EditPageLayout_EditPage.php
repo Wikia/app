@@ -125,7 +125,7 @@
 								?>
 								<?php if($isLoggedIn){ ?>
 								<label class="wpMinoredit">
-									<input type="checkbox" tabindex="10" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
+									<input type="checkbox" tabindex="12" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
 									<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
 								</label>
 								<?php } ?>
@@ -144,7 +144,7 @@
 	 	switch ($buttonType) {
 	 		case 'save':
 ?>
-								<input class="<?=$buttonClasses?>" tabindex="12" id="wpSave" name="wpSave" type="submit" value="<?= wfMsg('savearticle') ?>" accesskey="<?=wfMsg('accesskey-save');?>" />
+								<input class="<?=$buttonClasses?>" tabindex="14" id="wpSave" name="wpSave" type="submit" value="<?= wfMsg('savearticle') ?>" accesskey="<?=wfMsg('accesskey-save');?>" />
 								<!-- If JavaScript is enabled, disable the save button immediately. -->
 								<script type="text/javascript">document.getElementById('wpSave').disabled=true;</script>
 <?php
@@ -161,7 +161,7 @@
 								<?= F::app()->renderView('MenuButton',
 										'Index',
 										array(
-											'action' => array("href" => "#", "text" => wfMsg('preview'), "id" => "wpPreview", "tabindex" => 11),
+											'action' => array("href" => "#", "text" => wfMsg('preview'), "id" => "wpPreview", "tabindex" => 13),
 											'class' => 'secondary '.$buttonClasses,
 											'dropdown' => $dropdown
 										)
