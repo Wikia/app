@@ -202,7 +202,7 @@ class PageHeaderController extends WikiaController {
 			}
 
 			// number of pages on this wiki
-			$this->tallyMsg = wfMsgExt('oasis-total-articles-mainpage', array( 'parsemag' ), SiteStats::articles() );
+			$this->tallyMsg = (wfMessage('oasis-total-articles-mainpage', SiteStats::articles() )->parse());
 
 		}
 
@@ -296,7 +296,7 @@ class PageHeaderController extends WikiaController {
 				if($wgTitle->isSpecial('Videos')) {
 					$this->isSpecialVideos = true;
 					$mediaService = F::build( 'MediaQueryService' );
-					$this->tallyMsg = wfMsgExt('specialvideos-wiki-videos-tally', array( 'parsemag' ), $mediaService->getTotalVideos() );
+					$this->tallyMsg = wfMessage('specialvideos-wiki-videos-tally',$mediaService->getTotalVideos())->parse();
 				}
 
 				break;
