@@ -49,7 +49,8 @@ var WikiaNotificationsApp = {
 					WikiaTracker.trackEvent(
 						'trackingevent',
 						trackObj,
-						'internal'
+						'internal',
+						ev
 					);
 
 					// remove <div>
@@ -67,7 +68,8 @@ var WikiaNotificationsApp = {
 						WikiaTracker.trackEvent(
 							'trackingevent',
 							impTrackObj,
-							'internal'
+							'internal',
+							ev
 						);
 					}
 					break;

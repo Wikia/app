@@ -441,9 +441,9 @@ tabberObj.prototype.navClearActive = function(tabberIndex)
 };
 
 
-tabberObj.prototype.clickTrackingHandler = function(e) {
-	var node = $(e.target);
-	var button = e.button;
+tabberObj.prototype.clickTrackingHandler = function(event) {
+	var node = $(event.target);
+	var button = event.button;
 	var startTime = new Date();
 
 	if (node.closest('.tabbernav').length > 0) {
@@ -458,7 +458,8 @@ tabberObj.prototype.clickTrackingHandler = function(e) {
 				ga_label: 'tab',
 				ga_value: tabIndex
 			},
-			'internal'
+			'internal',
+			event
 		);
 	} else if (node.is('img') && node.hasParent('a')) {
 		var url = node.closest('a').attr('href');
@@ -468,10 +469,10 @@ tabberObj.prototype.clickTrackingHandler = function(e) {
 				ga_category: 'Tabber',
 				ga_action: WikiaTracker.ACTIONS.CLICK_LINK_IMAGE,
 				ga_label: 'image',
-				href:url,
-				button: button
+				href:url
 			},
-			'internal'
+			'internal',
+			event
 		);
 	} else if (node.is('a') || node.hasParent('a')) {
 		var url = node.closest('a').attr('href');
@@ -481,10 +482,10 @@ tabberObj.prototype.clickTrackingHandler = function(e) {
 				ga_category: 'Tabber',
 				ga_action: WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
 				ga_label: 'content',
-				href:url,
-				button: button
+				href:url
 			},
-			'internal'
+			'internal',
+			event
 		);
 	}
 
