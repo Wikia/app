@@ -54,6 +54,7 @@ $messages['qqq'] = array(
 	'categoryselect-code-view-placeholder' => "This is the message shown in the category form in the source mode of the editor. The link doesn't exist, it's just an example text to show how to add the category.",
 	'categoryselect-button-save' => '{{Identical|Save}}',
 	'categoryselect-button-cancel' => '{{Identical|Cancel}}',
+	'categoryselect-infobox-sortkey' => 'Allows the user to enter alternate text to change an article\'s alphabetical placement in a particular caetgory. $1 is the plaintext name of the Category the alternate placement value is being modified on.',
 );
 
 /** Afrikaans (Afrikaans)
