@@ -114,8 +114,6 @@
 		init: function() {
 			var data = this.getData();
 
-			$(window).trigger('beforeWikiaEditorCreate', [data]);
-
 			window.WikiaEditor.create(data.plugins, data.config);
 
 			$(window).bind('UserLoginSubmit', window.WikiaEditor.storeContent);

@@ -4,6 +4,7 @@ WikiaEditorStorage.prototype = {
 	categories: undefined,
 	summary: undefined,
 	content: undefined,
+	editorMode: undefined,
 	articleId: undefined,
 
 	store: function() {
@@ -11,9 +12,10 @@ WikiaEditorStorage.prototype = {
 			var editorInstance = window.WikiaEditor.getInstance();
 			var summary = $('#wpSummary');
 
-			toStore = {
+			var toStore = {
 				articleId: wgArticleId,
 				content: editorInstance.getContent(),
+				editorMode: editorInstance.mode,
 				summary: summary.exists() ? summary.val() : undefined
 
 				// TODO
@@ -33,11 +35,12 @@ WikiaEditorStorage.prototype = {
 	init: function() {
 		this.fetchData();
 
-		$(window).bind('beforeWikiaEditorCreate', $.proxy(function(event, data){
-				this.modifyEditorContent(data);
-			},
-			this)
-		);
+		this.modifySummary();
+
+		editor = window.WikiaEditor.getInstance();
+		editor.on('ck-instanceReady', $.proxy(function(){
+			this.modifyEditorContent(editor);
+		}, this));
 	},
 
 	fetchData: function() {
@@ -48,14 +51,18 @@ WikiaEditorStorage.prototype = {
 			this.summary = storageData.summary;
 			this.articleId = storageData.articleId;
 			this.content = storageData.content;
+			this.editorMode = storageData.editorMode;
 		}
 		$.storage.del(storageKey);
 	},
 
-	modifyEditorContent: function(data) {
+	modifyEditorContent: function(editor) {
 		var content = this.getContent();
-		if (content != undefined) {
-			data.config.body.val(content);
+		var editorMode = this.getEditorMode();
+		if (content != undefined && editorMode != undefined) {
+			console.log(content);
+			console.log(editorMode);
+			editor.setContent(content, editorMode);
 		}
 	},
 
@@ -74,13 +81,16 @@ WikiaEditorStorage.prototype = {
 		return this.summary;
 	},
 
+	getEditorMode: function() {
+		return this.editorMode;
+	},
+
 	getStoreContentKey: function() {
 		return 'WikiaEditorData';
 	}
 };
 
 var WikiaEditorStorage = new WikiaEditorStorage();
-WikiaEditorStorage.init();
 $(function(){
-	WikiaEditorStorage.modifySummary();
+	WikiaEditorStorage.init();
 });

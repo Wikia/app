@@ -974,17 +974,15 @@
 		},
 
 		setContent: function(content, datamode) {
-			var ckeditor = this.editor.ck,
-				isWysiwyg = ckeditor.mode == 'wysiwyg',
-				dataKey = isWysiwyg ? 'wikitext' : 'html',
-				params = { title: wgPageName };
-
-			params[dataKey] = content;
+			var ckeditor = this.editor.ck;
 
 			// Needs conversion
 			if (datamode && ckeditor.mode != datamode) {
-				RTE.ajax(isWysiwyg ? 'html2wiki' : 'wiki2html', params, function(data) {
-					ckeditor.setData(data[dataKey]);
+				var params = { title: wgPageName };
+				params[isWysiwyg ? 'wikitext' : 'html'] = content;
+
+				RTE.ajax(isWysiwyg ? 'wiki2html' : 'html2wiki', params, function(data) {
+					ckeditor.setData(data[isWysiwyg ? 'html' : 'wikitext']);
 				});
 
 			} else {
