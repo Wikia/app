@@ -2,7 +2,17 @@
 
 ## Running PHP unit tests
 
+### Running a single tests
+
 ```
+cd /usr/wikia/source/wiki/tests
+ant -f build-wikia.xml -Dunittest=../extensions/wikia/AssetsManager/tests/AssetsManagerTest.php phpunit-single
+```
+
+### Running all tests
+
+```
+cd /usr/wikia/source/wiki/tests
 ant -f build-wikia.xml php
 ```
 
@@ -19,6 +29,7 @@ Test file needs to match ``*Test.php``.
 ## Running JS unit tests
 
 ```
+cd /usr/wikia/source/wiki/tests
 ant -f build-wikia.xml js
 ```
 
