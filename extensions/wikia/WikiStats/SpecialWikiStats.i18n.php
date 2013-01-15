@@ -270,6 +270,7 @@ $messages['qqq'] = array(
 	'wikistats_daterange_from' => '{{Identical|From}}',
 	'wikistats_latest_userviews_pages' => '',
 	'wikistats_latest_pageviews_subtitle' => '',
+	'wikistats_distrib_article_counting' => '{{Optional}}',
 	'wikistats_active_wikians_date' => 'Seen on the "Editor activity" page, the selections being "1 month", "2 months" ... "6 months".',
 	'wikistats_images' => '{{Identical|Image}}',
 	'wikistats_uploaded_images' => '{{Identical|Uploaded}}',
@@ -283,6 +284,8 @@ $messages['qqq'] = array(
 	'wikistats_register' => 'Abbreviation for "Registered users"',
 	'wikistats_unregister' => 'Abbreviation for "Unregistered users" (anonymous)',
 	'wikistats_more_txt' => '{{Identical|More}}',
+	'wikistats_prev_rank' => '{{Optional}}',
+	'wikistats_prev_rank_xls' => '{{Optional}}',
 	'wikistats_days_ago' => '',
 	'wikistats_wikilang' => '{{Identical|Language}}',
 	'wikistats_trend_ordered' => 'Typo: wiki -> wikis',
@@ -291,6 +294,8 @@ $messages['qqq'] = array(
 	'wikistats_ns_statistics_legend' => '{{Identical|Namespaces}}',
 	'wikistats_date_of_generate' => 'If $1 is a time stamp, split date and time',
 	'wikistats_show_nbr_wikis_check' => 'Should support plural for $1',
+	'wikistats_help_stats' => '{{Optional}}',
+	'wikistats_language_toplist' => '{{Optional}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -7413,10 +7418,13 @@ $messages['roa-tara'] = array(
 	'wikistats_wikia' => 'Uicchia',
 	'wikistats_pagetitle' => 'Uicchia Statisteche',
 	'wikistats_showstats_btn' => 'Fà vedè le statisteche',
+	'wikistats_showcharts' => 'Fa vedè le grafece',
 	'wikistats_export_xls' => "Esporte jndr'à XLS",
 	'wikistats_panel_close_btn' => 'Achiude',
 	'wikistats_daterange_from' => 'Da:',
 	'wikistats_daterange_to' => 'A:',
+	'wikistats_active_useredits' => "Attività d'a lènghe",
+	'wikistats_latest_userviews_pages' => '$1 pàggene visitate',
 	'wikistats_active_day' => 'sciurne',
 	'wikistats_active_month' => 'mese',
 	'wikistats_active_year' => 'anne',
@@ -7435,7 +7443,15 @@ $messages['roa-tara'] = array(
 	'wikistats_wikiid' => 'ID:',
 	'wikistats_username' => 'Utende',
 	'wikistats_usernames' => 'Utinde',
+	'wikistats_main_namespace' => 'prengepàle',
 	'wikistats_image_namespace' => 'immaggine',
+	'wikistats_more_txt' => 'de cchiù',
+	'wikistats_now' => 'mò',
+	'wikistats_wikiurl' => 'URL:',
+	'wikistats_wikicreated' => 'Ccrejate:',
+	'wikistats_wikilang' => 'Lènghe:',
+	'wikistats_history_mainstats_value1' => 'x &lt; 0%',
+	'wikistats_history_mainstats_value4' => '&gt; 75%',
 );
 
 /** Russian (русский)

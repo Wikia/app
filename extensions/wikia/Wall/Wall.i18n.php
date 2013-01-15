@@ -470,7 +470,8 @@ $messages['qqq'] = array(
 	'wall-confirm-monobook-remove' => "Explanation of the remove modal box for Monobook users, puts extra info in because Monobook users don't see the complete modal box",
 	'wall-confirm-monobook-admin' => "Explanation of the delete modal box for Monobook users, puts extra info in because Monobook users don't see the complete modal box",
 	'wall-confirm-monobook-restore' => 'Asks for a summary for restoring a message or reply for Monoboo users',
-	'wall-delete-error-title' => 'Title of error message for Monobook',
+	'wall-delete-error-title' => 'Title of error message for Monobook.
+{{Identical|Error}}',
 	'wall-delete-error-content' => 'Error message for trying to delete a message that has already been deleted',
 	'wall-confirm-monobook-lack-of-reason' => 'Error message for Monobook users who try to remove a message without writing a summary',
 	'wall-action-remove-confirm' => 'Asks for summary in the remove modal box',
@@ -1468,6 +1469,7 @@ $messages['el'] = array(
  * @author Benfutbol10
  * @author Bola
  * @author VegaDark
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'wall-no-title' => 'Sin título',
@@ -1742,10 +1744,10 @@ ___________________________________________<br />
 	'tog-enotifmywall-every' => 'Para cada mensaje y respuesta',
 	'tog-enotifmywall-sincevisited' => 'Una vez por cada tema desde mi última visita',
 	'tog-enotifmywall-reminder' => 'Con un recordatorio diario',
-	'tog-enotifmywall-noemail' => 'Nunca. No mandarme ningún email sobre el Muro de mensajes', # Fuzzy
-	'wallshowsource-toggle-v2' => 'Activar la opción {{int:user-action-menu-view-source}} en publicaciones en el Muro de Mensajes', # Fuzzy
+	'tog-enotifmywall-noemail' => 'Nunca. No mandarme ningún correo electrónico sobre el muro de mensajes o el foro',
+	'wallshowsource-toggle-v2' => 'Activar la opción {{int:user-action-menu-view-source}} en los hilos',
 	'wallshowsource-toggle' => 'Activar el {{int:user-action-menu-view-source}} en las publicaciones en el Muro de Mensajes',
-	'walldelete-toggle' => 'Activar el borrado de revisiones en publicaciones en el Muro de Mensajes', # Fuzzy
+	'walldelete-toggle' => 'Activar el borrado de revisiones en publicaciones en los hilos',
 	'wall-notifications-notifyeveryone' => 'Resaltado por $1',
 	'wall-message-notifyeveryone' => 'Resaltar este tema',
 	'wall-message-unnotifyeveryone' => 'Dejar de resaltar este tema',
@@ -2080,7 +2082,7 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-sorting-most-active' => 'Du plus actif au moins actif',
 	'wall-sorting-archived' => 'Archivées',
 	'tog-enotifwallthread' => '…quelqu’un répond à un fil de mur que je suis',
-	'tog-enotifmywall' => '…quelqu’un envoie un nouveau message sur mon mur',
+	'tog-enotifmywall' => '…quelqu’un poste un nouveau message sur mon mur',
 	'wall-deleted-msg-pagetitle' => 'Message supprimé',
 	'wall-deleted-msg-text' => 'Le message que vous essayez de consulter a été effacé.',
 	'wall-deleted-msg-return-to' => 'Revenir au mur de $1.',
@@ -2095,8 +2097,8 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-recentchanges-restored-reply' => 'a restauré une réponse à « [[$1|$2]]» sur le [[$3|mur de $4]]',
 	'wall-recentchanges-deleted-thread' => 'a supprimé le fil « [[$1|$2]] » du [[$3|mur de $4]]',
 	'wall-recentchanges-deleted-reply' => 'a supprimé une réponse à « [[$1|$2]] » du [[$3|mur de $4]]',
-	'wall-recentchanges-closed-thread' => 'fil fermé "[[$1|$2]] sur [[$3|le mut de $4]]"',
-	'wall-recentchanges-reopened-thread' => 'fil réouvert "[[$1|$2]] sur [[$3|le mur de $4]]"',
+	'wall-recentchanges-closed-thread' => 'a fermé le fil « [[$1|$2]] » sur le [[$3|mur de $4]]',
+	'wall-recentchanges-reopened-thread' => 'a rouvert le fil « [[$1|$2]] » sur le [[$3|mur de $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Une réponse sur le mur',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mur de discussion',
 	'wall-recentchanges-thread-group' => '« $1 » sur le <a href="$2">mur de $3</a>',
@@ -2207,10 +2209,10 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'tog-enotifmywall-every' => 'Pour chaque message et réponse',
 	'tog-enotifmywall-sincevisited' => 'Un par fil depuis ma dernière visite',
 	'tog-enotifmywall-reminder' => 'Avec un courriel de rappel quotidien',
-	'tog-enotifmywall-noemail' => 'Jamais. Ne m’envoyer aucun courriel de Mur de discussion.', # Fuzzy
-	'wallshowsource-toggle-v2' => "Activer l'option « {{int:user-action-menu-view-source}} » pour les messages de Mur de discussion", # Fuzzy
+	'tog-enotifmywall-noemail' => 'Jamais. Ne m’envoyer aucun courriel de mur de discussion ou de forum.',
+	'wallshowsource-toggle-v2' => "Activer l'option {{int:user-action-menu-view-source}} sur les fils",
 	'wallshowsource-toggle' => 'Activer «  {{int:user-action-menu-view-source}} » pour les messages de Mur de discussion',
-	'walldelete-toggle' => 'Permettre la suppression des versions pour les messages du Mur de discussion', # Fuzzy
+	'walldelete-toggle' => 'Permettre la suppression des révisions sur les fils',
 	'wall-notifications-notifyeveryone' => 'Mis en valeur par $1',
 	'wall-message-notifyeveryone' => 'Mettre en valeur ce fil',
 	'wall-message-unnotifyeveryone' => 'Ne plus mettre en valeur ce fil',
@@ -3935,6 +3937,8 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-recentchanges-restored-reply' => 'memulihkan balasan "[[$1|$2]]" pada [[$3|papan $4]]',
 	'wall-recentchanges-deleted-thread' => 'menghapuskan tred "[[$1|$2]]" dari [[$3|papan $4]]',
 	'wall-recentchanges-deleted-reply' => 'menghapuskan balasan "[[$1|$2]]" dari [[$3|papan $4]]',
+	'wall-recentchanges-closed-thread' => 'menutup tred "[[$1|$2]]" pada [[$3|papan $4]]',
+	'wall-recentchanges-reopened-thread' => 'membuka semula tred "[[$1|$2]]" pada [[$3|papan $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Satu balasan di papan pesanan',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Papan Pesanan',
 	'wall-recentchanges-thread-group' => '$1 di <a href="$2">papan $3</a>',
@@ -4048,10 +4052,10 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'tog-enotifmywall-every' => 'Untuk setiap pesanan & balasan',
 	'tog-enotifmywall-sincevisited' => 'Sekali setred sejak kunjungan terkini saya',
 	'tog-enotifmywall-reminder' => 'Dengan e-mel peringatan harian',
-	'tog-enotifmywall-noemail' => 'Jangan sesekali hantar e-mel Papan Pesanan kepada saya', # Fuzzy
-	'wallshowsource-toggle-v2' => 'Hidupkan pilihan {{int:user-action-menu-view-source}} pada pos-pos Papan Pesanan', # Fuzzy
+	'tog-enotifmywall-noemail' => 'Jangan sesekali hantar e-mel Papan Pesanan atau Forum kepada saya',
+	'wallshowsource-toggle-v2' => 'Hidupkan {{int:user-action-menu-view-source}} pada tred',
 	'wallshowsource-toggle' => 'Hidupkan {{int:user-action-menu-view-source}} pada pos-pos Papan Pesanan',
-	'walldelete-toggle' => 'Hidupkan ciri Hapus semakan pada pos-pos Papan Pesanan', # Fuzzy
+	'walldelete-toggle' => 'Hidupkan ciri Hapus semakan pada tred',
 	'wall-notifications-notifyeveryone' => 'Disorotkan oleh $1',
 	'wall-message-notifyeveryone' => 'Sorotkan tred ini',
 	'wall-message-unnotifyeveryone' => 'Padamkan sorotan tred ini',

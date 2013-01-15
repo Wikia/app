@@ -169,7 +169,6 @@ $messages['qqq'] = array(
 	'autocreatewiki-info-realname' => '{{Identical|Real name attribution}}',
 	'autocreatewiki-info-blurry-word' => 'Message {{msg-Wikia|Autocreatewiki-blurry-word}} refers here.',
 	'autocreatewiki-title-template' => 'This will be the sitename of the wiki, i.e. the text that shows up in the TITLE element as well as in other places on the site.',
-	'autocreatewiki-subname-answers' => '"Answers sites" are  special wikis of the type answers.wikia.com, where you ask and answer questions.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -278,7 +277,6 @@ $messages['ar'] = array(
 
 -- [[مستخدم:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'ويكيات جديدة',
-	'autocreatewiki-subname-answers' => 'إجابات',
 );
 
 /** Assamese (অসমীয়া)
@@ -310,7 +308,6 @@ $messages['as'] = array(
 	'autocreatewiki-welcometalk-log' => 'আদৰণি বাৰ্তা',
 	'autocreatewiki-welcomesubject' => '$1 সৃষ্টি কৰা হ’ল!',
 	'newwikis' => 'নতুন ৱিকিসমূহ',
-	'autocreatewiki-subname-answers' => 'উত্তৰসমূহ',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -323,7 +320,6 @@ $messages['az'] = array(
 	'autocreatewiki-title-template' => '$1 Viki',
 	'autocreatewiki-category-label' => 'Kateqoriya:',
 	'autocreatewiki-category-other' => 'Digər',
-	'autocreatewiki-subname-answers' => 'Cavablar',
 );
 
 /** South Azerbaijani (تورکجه)
@@ -382,7 +378,6 @@ $messages['bg'] = array(
 	'autocreatewiki-congratulation' => 'Поздравления!',
 	'autocreatewiki-step2-error' => 'Базата данни съществува!',
 	'newwikis' => 'Нови уикита',
-	'autocreatewiki-subname-answers' => 'Отговори',
 );
 
 /** Breton (brezhoneg)
@@ -509,7 +504,6 @@ M'ho peus goulennoù da sevel e c'hallit skrivañ ur gerig dimp war ar bajenn  [
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Wikioù nevez',
 	'newwikisstart' => 'Diskouez ar Wikioù adal :',
-	'autocreatewiki-subname-answers' => 'Respontoù',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -610,7 +604,6 @@ Prosím, vyberte hodnotu ze seznamu.',
 	'autocreatewiki-welcomesubject' => '$1 bylo vytvořeno!',
 	'newwikis' => 'Nová wiki',
 	'newwikisstart' => 'Zobrazit wiki založené od:',
-	'autocreatewiki-subname-answers' => 'Odpovědi',
 );
 
 /** Welsh (Cymraeg)
@@ -758,7 +751,6 @@ Wenn du Fragen hast, kannst du uns eine Mail über unser [[Special:Contact|Konta
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Neue Wikis',
 	'newwikisstart' => 'Zeige Wikis ab:',
-	'autocreatewiki-subname-answers' => 'Fragen',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -879,7 +871,6 @@ $messages['diq'] = array(
 	'autocreatewiki-welcometalk-wall-title' => 'Xeyr amey!',
 	'newwikis' => 'Wikiyo newe',
 	'newwikisstart' => 'Asengeya wikiya seroknê :',
-	'autocreatewiki-subname-answers' => 'cewab',
 );
 
 /** Ewe (eʋegbe)
@@ -946,7 +937,6 @@ $messages['el'] = array(
 	'autocreatewiki-welcometalk-log' => 'Χαιρετιστήριο Μήνυμα',
 	'autocreatewiki-step2-error' => 'Η βάση δεδομένων υπάρχει!',
 	'newwikis' => 'Νέα wiki',
-	'autocreatewiki-subname-answers' => 'Απαντήσεις',
 );
 
 /** Esperanto (Esperanto)
@@ -998,6 +988,7 @@ Teamo de Wikia
  * @author Peter17
  * @author Translationista
  * @author VegaDark
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'autocreatewiki' => 'Crear nuevo Wiki',
@@ -1026,7 +1017,7 @@ $messages['es'] = array(
 	'autocreatewiki-info-category-default' => 'Esto ayudará a los visitantes a encontrar su wiki.',
 	'autocreatewiki-info-category-answers' => 'Esto ayudará a los visitantes a encontrar su sitio de Respuestas.',
 	'autocreatewiki-info-language' => 'Este será el idioma por defecto para los visitantes de tu wiki.',
-	'autocreatewiki-info-email-address' => 'Tu dirección de email no se mostrará a nadie en Wikia.',
+	'autocreatewiki-info-email-address' => 'Nunca se mostrará a nadie tu dirección de correo electrónico en Wikia.',
 	'autocreatewiki-info-realname' => 'Si optas por proporcionarlo, se usará para dar atribución a tu trabajo.',
 	'autocreatewiki-info-birthdate' => 'Wikia solicita a todos los usuarios que pongan su fecha real de nacimiento como una medida de seguridad y como una forma de preservar la integridad del sitio mientras cumple con las regulaciones federales.',
 	'autocreatewiki-info-blurry-word' => 'Para ayudar protegernos contra la creación de cuentas automáticas, escribe la palabra borrosa que ves en el campo que hay, por favor.',
@@ -1074,7 +1065,7 @@ $messages['es'] = array(
 	'autocreatewiki-step8' => 'Configurando grupos de usuarios y categorías ...',
 	'autocreatewiki-step9' => 'Configurando las variables para el nuevo wiki ...',
 	'autocreatewiki-step10' => 'Configurando páginas de la central de Wikia ...',
-	'autocreatewiki-step11' => 'Enviando email al usuario ...',
+	'autocreatewiki-step11' => 'Enviando el correo electrónico al usuario...',
 	'autocreatewiki-redirect' => 'Redirigiendo al nuevo Wiki: $1 ...',
 	'autocreatewiki-congratulation' => '¡Felicidades!',
 	'autocreatewiki-welcometalk-log' => 'Bienvenida al nuevo sysop',
@@ -1128,7 +1119,6 @@ Si tienes algunas dudas, envíanos un correo electrónico a través de nuestro [
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nuevos wikis',
 	'newwikisstart' => 'Mostrar wikis comenzando por:',
-	'autocreatewiki-subname-answers' => 'Respuestas',
 );
 
 /** Estonian (eesti)
@@ -1178,7 +1168,6 @@ $messages['eu'] = array(
 	'autocreatewiki-create-account' => 'Kontua sortu',
 	'autocreatewiki-category-label' => 'Kategoria:',
 	'autocreatewiki-congratulation' => 'Zorionak!',
-	'autocreatewiki-subname-answers' => 'Erantzunak',
 );
 
 /** Persian (فارسی)
@@ -1299,7 +1288,6 @@ $3
 </div>',
 	'newwikis' => 'ویکی‌های جدید',
 	'newwikisstart' => 'نمایش ویکی‌هایی که شروع می‌شوند در:',
-	'autocreatewiki-subname-answers' => 'پاسخ‌ها',
 );
 
 /** Finnish (suomi)
@@ -1431,7 +1419,6 @@ Jos sinulla on kysyttävää, [[Special:Contact|lähetä sähköpostia]] Wikian 
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Uudet wikit',
 	'newwikisstart' => 'Näytä wikit alkaen:',
-	'autocreatewiki-subname-answers' => 'Vastaukset',
 );
 
 /** Faroese (føroyskt)
@@ -1586,7 +1573,6 @@ Si vous avez des questions, vous pouvez nous écrire par cette page [[Special:Co
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nouveaux wikis',
 	'newwikisstart' => 'Afficher les wikis depuis :',
-	'autocreatewiki-subname-answers' => 'Réponses',
 );
 
 /** Galician (galego)
@@ -1716,7 +1702,6 @@ Se ten algunha dúbida ou pregunta, pódenos enviar un correo electrónico a tra
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Novos wikis',
 	'newwikisstart' => 'Mostrar os wikis que comecen por:',
-	'autocreatewiki-subname-answers' => 'Respostas',
 );
 
 /** Hebrew (עברית)
@@ -1874,7 +1859,6 @@ Ha kérdéseid vannak, küldhetsz nekünk e-mailt a [[Special:Contact|kapcsolatf
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Új wikik',
 	'newwikisstart' => 'Wikik megjelenítése a következőtől:',
-	'autocreatewiki-subname-answers' => 'Válaszok',
 );
 
 /** Interlingua (interlingua)
@@ -1998,7 +1982,6 @@ Si tu ha questiones, invia nos e-mail per nostre [[Special:Contact|formulario de
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nove wikis',
 	'newwikisstart' => 'Monstrar wikis a partir de:',
-	'autocreatewiki-subname-answers' => 'Responsas',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -2127,7 +2110,6 @@ Jika Anda punya pertanyaan, Anda dapat mengirim kami sur-el melalui [[Special:Co
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Wiki baru',
 	'newwikisstart' => 'Tampilkan wiki diawali dengan:',
-	'autocreatewiki-subname-answers' => 'Answers',
 );
 
 /** Igbo (Igbo)
@@ -2137,7 +2119,6 @@ $messages['ig'] = array(
 	'autocreatewiki-category-select' => 'Kpàtá otụ',
 	'autocreatewiki-category-label' => 'Ébéonọr:',
 	'newwikis' => 'Wiki ne ohụru',
-	'autocreatewiki-subname-answers' => 'Nza okwu',
 );
 
 /** Ingush (ГӀалгӀай)
@@ -2146,7 +2127,6 @@ $messages['ig'] = array(
 $messages['inh'] = array(
 	'autocreatewiki-category-label' => 'Цатег:',
 	'newwikis' => 'Керда ВIикIаш',
-	'autocreatewiki-subname-answers' => 'Жопдалараш',
 );
 
 /** Italian (italiano)
@@ -2287,7 +2267,6 @@ Buona fortuna!
 [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 	'newwikis' => 'Nuove wiki',
 	'newwikisstart' => 'Mostra le wiki a partire da:',
-	'autocreatewiki-subname-answers' => 'Risposte',
 );
 
 /** Japanese (日本語)
@@ -2409,7 +2388,6 @@ $3
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => '新しいウィキ',
 	'newwikisstart' => '次の文字列から始まるウィキを表示:',
-	'autocreatewiki-subname-answers' => 'Answers',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -2567,7 +2545,6 @@ Donn eine ööhndlesch uß dä Leß ußwähle.
 	'autocreatewiki-welcomesubject' => '$1 es aanjelaat woode!',
 	'newwikis' => 'Neu Wikis',
 	'newwikisstart' => 'Wikis aanzeije af:',
-	'autocreatewiki-subname-answers' => 'Antwoote',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -2576,7 +2553,6 @@ Donn eine ööhndlesch uß dä Leß ußwähle.
 $messages['ku-latn'] = array(
 	'autocreatewiki-language-all' => 'Hemû ziman',
 	'autocreatewiki-category-label' => 'Kategorî:',
-	'autocreatewiki-subname-answers' => 'Bersiv',
 );
 
 /** Kirghiz (Кыргызча)
@@ -2624,7 +2600,6 @@ $messages['lb'] = array(
 	'autocreatewiki-welcometalk-log' => 'Wëllkommensmessage',
 	'autocreatewiki-step2-error' => "D'Datebank gëtt et!",
 	'newwikis' => 'Nei Wikien',
-	'autocreatewiki-subname-answers' => 'Äntwerten',
 );
 
 /** Lezghian (лезги)
@@ -2684,7 +2659,6 @@ $messages['lt'] = array(
 	'autocreatewiki-congratulation' => 'Sveikinimai!',
 	'autocreatewiki-welcometalk-log' => 'Sveikinimo Žinutė',
 	'autocreatewiki-welcomesubject' => '$1 buvo sukurta!',
-	'autocreatewiki-subname-answers' => 'Atsakymai',
 );
 
 /** Macedonian (македонски)
@@ -2811,7 +2785,6 @@ $3
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Нови викија',
 	'newwikisstart' => 'Прикажи викија со почеток во:',
-	'autocreatewiki-subname-answers' => 'Одговори',
 );
 
 /** Malayalam (മലയാളം)
@@ -2840,7 +2813,6 @@ $messages['ml'] = array(
 	'autocreatewiki-invalid-birthday' => 'അസാധുവായ ജനന തീയതി',
 	'autocreatewiki-congratulation' => 'അഭിനന്ദനങ്ങൾ!',
 	'autocreatewiki-welcometalk-log' => 'സ്വാഗതസന്ദേശം',
-	'autocreatewiki-subname-answers' => 'ഉത്തരങ്ങൾ',
 );
 
 /** Malay (Bahasa Melayu)
@@ -2908,6 +2880,7 @@ Sila pilih yang sewajarnya dari senarai juntai bawah.',
 	'autocreatewiki-invalid-language' => 'Nilai bahasa tidak sah.
 Sila pilih yang sewajarnya dari senarai juntai bawah.',
 	'autocreatewiki-invalid-retype-passwd' => 'Sila taip semula kata laluan yang sama seperti di atas',
+	'autocreatewiki-invalid-birthday' => 'Tarikh lahir tidak sah',
 	'autocreatewiki-log-title' => 'Wiki anda sedang dicipta',
 	'autocreatewiki-step0' => 'Proses dimulakan ...',
 	'autocreatewiki-stepdefault' => 'Proses sedang berjalan, sila tunggu ...',
@@ -2976,7 +2949,6 @@ Jika anda ada apa-apa masalah, anda boleh memberitahu kami dengan mengisi [[Spec
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Wiki baru',
 	'newwikisstart' => 'Paparkan wiki bermula dengan:',
-	'autocreatewiki-subname-answers' => 'Jawapan',
 );
 
 /** Mazanderani (مازِرونی)
@@ -3121,7 +3093,6 @@ Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Conta
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nye wikier',
 	'newwikisstart' => 'Vis wikier fra og med:',
-	'autocreatewiki-subname-answers' => 'Svar',
 );
 
 /** Dutch (Nederlands)
@@ -3266,7 +3237,6 @@ Als u vragen hebt, e-mail ons dan via het [[Special:Contact|contactformulier]]. 
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => "Nieuwe wiki's",
 	'newwikisstart' => "Wiki's weergeven vanaf:",
-	'autocreatewiki-subname-answers' => 'Antwoorden',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -3512,7 +3482,6 @@ Powodzenia!
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nowe wiki',
 	'newwikisstart' => 'Wyświetl wiki rozpoczynając od:',
-	'autocreatewiki-subname-answers' => 'Zapytaj',
 );
 
 /** Piedmontese (Piemontèis)
@@ -3649,7 +3618,6 @@ S'a l'ha ëd chestion, a peul mandeje për pòsta eletrònica a nòstr [[Special
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'neuve wiki',
 	'newwikisstart' => 'Visualisa Wiki partend da:',
-	'autocreatewiki-subname-answers' => 'Rispòste',
 );
 
 /** Pashto (پښتو)
@@ -3688,7 +3656,6 @@ $messages['ps'] = array(
 	'autocreatewiki-welcometalk-log' => 'د ښه راغلاست پيغام',
 	'autocreatewiki-welcomesubject' => '$1 جوړ شو!',
 	'newwikis' => 'نوې ويکي ګانې',
-	'autocreatewiki-subname-answers' => 'ځوابونه',
 );
 
 /** Portuguese (português)
@@ -3816,7 +3783,6 @@ Se tiver alguma questão, pode contactar-nos por correio electrónico usando o [
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Wikis novas',
 	'newwikisstart' => 'Mostrar wikis, começando por:',
-	'autocreatewiki-subname-answers' => 'Respostas',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -3957,7 +3923,6 @@ Se você tiver alguma dúvida, você pode nos contatar através do nosso [[Speci
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Novas wikis',
 	'newwikisstart' => 'Mostrar Wikis começando com:',
-	'autocreatewiki-subname-answers' => 'Respostas',
 );
 
 /** Romanian (română)
@@ -4008,7 +3973,6 @@ $messages['ro'] = array(
 	'autocreatewiki-welcometalk-log' => 'Mesaj de bun venit',
 	'autocreatewiki-step2-error' => 'Baza de date există!',
 	'newwikis' => 'Wiki-uri noi',
-	'autocreatewiki-subname-answers' => 'Răspunsuri',
 );
 
 /** tarandíne (tarandíne)
@@ -4168,7 +4132,6 @@ ___________________________________________
 — [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Новые вики',
 	'newwikisstart' => 'Показать вики, начиная с:',
-	'autocreatewiki-subname-answers' => 'Ответы',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -4228,7 +4191,6 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-protect-reason' => 'Део званичног сучеља',
 	'autocreatewiki-welcomesubject' => '$1 је направљена!',
 	'newwikis' => 'Нови викији',
-	'autocreatewiki-subname-answers' => 'Одговори',
 );
 
 /** Swedish (svenska)
@@ -4368,7 +4330,6 @@ Om du har några frågor kan du alltid skicka ett e-post till oss via vårt [[Sp
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nya wikis',
 	'newwikisstart' => 'Visa wikis som börjar med:',
-	'autocreatewiki-subname-answers' => 'Svar',
 );
 
 /** Swahili (Kiswahili)
@@ -4415,7 +4376,6 @@ $messages['te'] = array(
 	'autocreatewiki-congratulation' => 'అభినందనలు!',
 	'autocreatewiki-welcometalk-log' => 'స్వాగత సందేశం',
 	'newwikis' => 'కొత్త వికీలు',
-	'autocreatewiki-subname-answers' => 'జవాబులు',
 );
 
 /** Tagalog (Tagalog)
@@ -4541,7 +4501,6 @@ Kung mayroong kang mga katanungan, mapapadalhan mo kami ng e-liham sa pamamagita
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Bagong mga wiki',
 	'newwikisstart' => 'Ipakita ang mga wiki na nagsisimula sa:',
-	'autocreatewiki-subname-answers' => 'Mga sagot',
 );
 
 /** толышә зывон (толышә зывон)
@@ -4726,7 +4685,6 @@ ___________________________________________
 
 — [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Яңа викилар',
-	'autocreatewiki-subname-answers' => 'Җаваплар',
 );
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
@@ -4867,7 +4825,6 @@ $messages['uk'] = array(
 — [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Нові вікі',
 	'newwikisstart' => 'Показати вікі, починаючи з:',
-	'autocreatewiki-subname-answers' => 'Відповіді',
 );
 
 /** Veps (vepsän kel’)
@@ -5022,7 +4979,6 @@ $messages['zh-hans'] = array(
 祝您编辑快乐！', # Fuzzy
 	'newwikis' => '新的维基',
 	'newwikisstart' => '以此页面打开维基：',
-	'autocreatewiki-subname-answers' => '问答网站',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -5115,7 +5071,6 @@ $messages['zh-hant'] = array(
 	'autocreatewiki-welcomesubject' => '$1已創建 ！',
 	'newwikis' => '新的 wiki',
 	'newwikisstart' => '顯示從此處開始的wiki:',
-	'autocreatewiki-subname-answers' => '問答網站',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)
