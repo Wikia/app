@@ -613,9 +613,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$rememberMeInput,
 				$loginButton,
 			),
+			'action' => $this->formPostAction,
 			'method' => 'post',
 		);
-
+		
 		if( empty($this->suppressCreateAccount) ) {
 			$specialSignupLink = SpecialPage::getTitleFor('UserSignup')->getLocalURL();
 			$createAccount = array(
