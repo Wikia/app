@@ -24,7 +24,7 @@ class WikiEvaluationDataSource {
 
 		$db = wfGetDB(DB_SLAVE,array(),$wgExternalSharedDB);
 		$timestamp = $db->selectField('city_list','city_created',array(
-			'city_id' => $this->id,
+			'city_id' => $this->getId(),
 		),__METHOD__);
 		if ( !empty($timestamp) ) {
 			$timestamp = wfTimestamp( TS_UNIX, $timestamp );
