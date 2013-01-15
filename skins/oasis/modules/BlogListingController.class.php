@@ -20,11 +20,7 @@ class BlogListingController extends WikiaController {
 			$result['avatar'] = AvatarService::renderAvatar($result['username'], 48);
 			$result['userpage'] = AvatarService::getUrl($result['username']);
 			$result['date'] = $wgLang->date(wfTimestamp(TS_MW, $result['timestamp']));
-
-			// "read more" handling
-			if (strpos($result['text'], $cutSign) !== false) {
-				$result['readmore'] = true;
-			}
+			$result['readmore'] = true; // BugID: 9280 - read more link should be always visible
 		}
 
 		//print_pre($results);
