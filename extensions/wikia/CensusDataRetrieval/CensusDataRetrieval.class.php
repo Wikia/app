@@ -79,30 +79,6 @@ class CensusDataRetrieval {
 		return true;
 	}
 
-        /**
-	 * retrieveForUpdate
-         * Retrieves, prepares and returns infobox template code
-         * 
-         * @param Title $title is used to form a query to Census
-         * @param String $type is used to make sure retrieved data is the same type
-         * @return String $templateCode
-	 */
-        public static function retrieveForUpdate($title, $type = null) {
-		wfProfileIn(__METHOD__);
-		$cdr = new self( $title );
-		if ( !$cdr->fetchData() ) {
-			// no data in Census or something went wrong, quit
-                        wfProfileOut(__METHOD__);
-			return false;
-		}
-		if ( $type && $type != $this->type) {
-			wfProfileOut(__METHOD__);
-			return null;
-		}
-		wfProfileOut(__METHOD__);
-                return $cdr->getData();
-        }
-
 	public function __construct( Title $title = null ) {
 		$this->app = F::App();
 		if ( $title ) {
@@ -130,7 +106,7 @@ class CensusDataRetrieval {
 
 		$text .= $this->getLayout();
 
-		$text .= "\n[[" . $this->getFlagCategoryTitle()->getPrefixedText() . ']]';
+		$text .= "\n[[" . self::getFlagCategoryTitle()->getPrefixedText() . ']]';
                 wfProfileOut(__METHOD__);
                 return $text;
 	}
@@ -507,7 +483,7 @@ class CensusDataRetrieval {
          * 
          * @return Title
 	 */
-        public function getFlagCategoryTitle () {
+        public static function getFlagCategoryTitle () {
                 return Title::newFromText( wfMsgForContent( self::FLAG_CATEGORY ), NS_CATEGORY );
         }
 	

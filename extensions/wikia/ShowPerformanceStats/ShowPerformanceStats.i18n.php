@@ -282,9 +282,19 @@ $messages['tl'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'performancestat-total' => 'Всього: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'ЦП: $1s',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  */
 $messages['zh-hans'] = array(
+	'performancestat-total' => '总计：$1秒',
 	'performancestat-cpu' => 'CPU: $1秒',
 );

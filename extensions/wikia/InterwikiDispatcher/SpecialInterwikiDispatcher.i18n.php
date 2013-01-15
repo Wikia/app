@@ -196,7 +196,7 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'interwikidispatcher' => 'Interwikiverdeler',
-	'interwikidispatcher-desc' => 'Lost interwikiverwijzingen op om Apachedoorverwijzingen te verminderen',
+	'interwikidispatcher-desc' => 'Lost interwikikoppelingen op om Apachedoorverwijzingen te verminderen',
 );
 
 /** Occitan (occitan)

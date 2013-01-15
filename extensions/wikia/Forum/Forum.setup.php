@@ -49,6 +49,9 @@ $app->registerHook( 'ArticleInsertComplete', 'ForumHooksHelper', 'onArticleInser
 $app->registerHook( 'WallBeforeRenderThread', 'ForumHooksHelper', 'onWallBeforeRenderThread' );
 $app->registerHook( 'AfterBuildNewMessageAndPost', 'ForumHooksHelper', 'onAfterBuildNewMessageAndPost' );
 $app->registerHook( 'WallMessageDeleted', 'ForumHooksHelper', 'onWallMessageDeleted' );
+$app->registerHook( 'ContributionsLineEnding', 'ForumHooksHelper', 'onContributionsLineEnding' );
+$app->registerHook( 'OasisAddPageDeletedConfirmationMessage', 'ForumHooksHelper', 'onOasisAddPageDeletedConfirmationMessage' );
+$app->registerHook( 'FilePageImageUsageSingleLink', 'ForumHooksHelper', 'onFilePageImageUsageSingleLink' );
 
 //notification hooks
 $app->registerHook( 'NotificationGetNotificationMessage', 'ForumNotificationPlugin', 'onGetNotificationMessage' );

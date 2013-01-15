@@ -93,8 +93,8 @@ $messages['qqq'] = array(
 	'userrenametool-desc' => 'Short description of the Renameuser extension, shown on [[Special:Version]]. Do not translate or change links.',
 	'userrenametool-reserve' => 'Option to block the old username (after it has been renamed) from being used again.',
 	'userrenametool-submit' => '{{Identical|Submit}}',
-	'userrenametool-error-cannot-create-block' => 'Needs context.', # Fuzzy
-	'userrenametool-info-wiki-finished' => 'Needs data/tie split ($4, right?)', # Fuzzy
+	'userrenametool-error-cannot-create-block' => '',
+	'userrenametool-info-wiki-finished' => '',
 	'userrenametool-confirm-yes' => '{{Identical|Yes}}',
 	'userrenametool-confirm-no' => '{{Identical|No}}',
 	'userrenametool-logentry' => 'Used in [[Special:Log/renameuser]].
@@ -721,6 +721,7 @@ $messages['crh-latn'] = array(
 /** Czech (česky)
  * @author Chmee2
  * @author Danny B.
+ * @author Darth Daron
  * @author Dontlietome7
  * @author Li-sung
  * @author Martin Kozák
@@ -740,6 +741,10 @@ Protokoly viz [[Special:Stafflog]].',
 	'userrenametool-reserve' => 'Zabránit nové registraci původního uživatelského jména',
 	'userrenametool-notify-renamed' => 'Poslat přejmenovanému uživateli email až bude hotovo',
 	'userrenametool-warnings' => 'Upozornění:',
+	'userrenametool-requested-rename' => 'Uživatel $1 požádal o přejmenování',
+	'userrenametool-did-not-request-rename' => 'Uživatel $1 nepožádal o přejmenování',
+	'userrenametool-previously-renamed' => 'Uživatel $1 již byl přejmenován',
+	'userrenametool-phalanx-matches' => 'Phalanx filtry odpovídající $1:',
 	'userrenametool-confirm' => 'Ano, přejmenovat uživatele',
 	'userrenametool-submit' => 'Přejmenovat',
 	'userrenametool-errordoesnotexist' => 'Uživatel se jménem „<nowiki>$1</nowiki>“ neexistuje',
@@ -755,7 +760,7 @@ Protokoly viz [[Special:Stafflog]].',
 	'userrenametool-error-same-user' => 'Nové uživatelské jméno je stejné jako dosavadní.',
 	'userrenametool-error-extension-abort' => 'Rozšíření brání procesu přejmenování.',
 	'userrenametool-error-cannot-rename-account' => 'Přejmenování uživatelského účtu na sdílené globální databázi se nezdařilo.',
-	'userrenametool-error-cannot-create-block' => 'Vytvoření blokace přihlášení se nezdařilo.', # Fuzzy
+	'userrenametool-error-cannot-create-block' => 'Vytvoření Phalanx blokace se nezdařilo.',
 	'userrenametool-warn-repeat' => 'Pozor! Uživatel "<nowiki>$1</nowiki>" již byl přejmenován na "<nowiki>$2</nowiki>".
 Pokračujte, pouze pokud potřebujete doplnit chybějící informace.',
 	'userrenametool-warn-table-missing' => 'Tabulka "<nowiki>$2</nowiki>" neexistuje v databázi "<nowiki>$1</nowiki>".',
@@ -3116,22 +3121,68 @@ Powód: $2',
 
 /** Piedmontese (Piemontèis)
  * @author Bèrto 'd Sèra
+ * @author Dragonòt
  */
 $messages['pms'] = array(
+	'userrenametool' => "Cangé un nòm d'utent",
 	'renameuser' => "Arbatié n'utent",
+	'userrenametool-warning' => "<strong>Për piasì les atentament le anformassion ch'a ven-o</strong>:<p>Prima d'arbatié n'utent, për piasì sigurte che <strong>tute j'anformassion a sio giuste</strong>, e sigurte che <strong>l'utent a sapia che a peul andeje quaich temp për completé</strong>.
+<br />Për piasì fà tension che dovù a quaich fator estern la prima partdël process <strong>a podrìa finì ant na pagina bianca</strong>, che a veul pa dì che ël process a sia pa finì bin.</p><p>It peule trassé ël progress dël process via [[Special:Stafflog|registr dl'Echip]], ëdcò <strong>ël system at manderà n'email quand l'intera atività d'arbatié a sarà completà</strong>.</p>",
+	'userrenametool-desc' => "A gionta na [[Special:UserRenameTool|pagina special]] për arbatié n'utent  (necessari ël drit ''renameuser'') e për traté tùit ij dat relativ",
 	'userrenametool-old' => 'Stranòm corent:',
 	'userrenametool-new' => 'Stranòm neuv:',
 	'userrenametool-reason' => "Rason ch'as cambia stranòm:",
 	'userrenametool-move' => 'Tramuda ëdcò la pàgina utent e cola dle ciaciarade (con tute soe sotapàgine) a lë stranòm neuv',
+	'userrenametool-reserve' => 'Blòca lë stanòm vej da future utilisassion',
+	'userrenametool-notify-renamed' => "Manda un corel a l'utent arbatià quand fàit",
+	'userrenametool-warnings' => 'Atension:',
+	'userrenametool-requested-rename' => "L'utent $1 a l'ha ciamà n'arbatiagi",
+	'userrenametool-did-not-request-rename' => "L'utent $1 a l'ha pa ciamà n'arbatiagi",
+	'userrenametool-previously-renamed' => "L'utent $1 a l'ha già avù n'arbatiagi",
+	'userrenametool-phalanx-matches' => 'Filtr Phalanx corispondent a $1:',
+	'userrenametool-confirm' => "É!, arnòmina l'utent",
 	'userrenametool-submit' => 'Falo',
 	'userrenametool-errordoesnotexist' => 'A-i é pa gnun utent ch\'as ës-ciama "<nowiki>$1</nowiki>"',
 	'userrenametool-errorexists' => 'N\'utent ch\'as ës-ciama "<nowiki>$1</nowiki>" a-i é già',
 	'userrenametool-errorinvalid' => 'Lë stranòm "<nowiki>$1</nowiki>" a l\'é nen bon',
+	'userrenametool-errorinvalidnew' => '"<nowiki>$1</nowiki>" a l\'é pa un nòm utent neuv bon.',
 	'userrenametool-errortoomany' => "L'utent \"<nowiki>\$1</nowiki>\" a l'ha fait \$2 modìfiche, ch'a ten-a present che arbatié n'utent ch'a l'abia pì che \$3 modìfiche a podrìa feje un brut efet a le prestassion dël sit.",
+	'userrenametool-errorprocessing' => "Ël process d'arbatiagi për l'utent <nowiki>$1</nowiki> a <nowiki>$2</nowiki> a l'é già an camin.",
+	'userrenametool-errorblocked' => "L'utent <nowiki>$1</nowiki> a l'é blocà da <nowiki>$2</nowiki> për $3.",
+	'userrenametool-errorlocked' => "L'utent <nowiki>$1</nowiki> a l'é blocà.",
+	'userrenametool-errorbot' => "L'utent <nowiki>$1</nowiki> a l'é un trigomiro.",
+	'userrenametool-error-request' => "A l'é stàit-ie un problema con l'esecussion ëd l'arcesta.
+Për piasì torna andré e preuva torna.",
+	'userrenametool-error-same-user' => "It peule pa arbatié n'utent con ël midem nòm.",
+	'userrenametool-error-extension-abort' => "N'estension a vieta ël process d'arbatiagi.",
+	'userrenametool-error-cannot-rename-account' => "Arbatié ël cont utent dzor ël database global condivis a l'é falì.",
+	'userrenametool-error-cannot-create-block' => "Creassion dël blòch Phalanx a l'é falì.",
+	'userrenametool-warn-repeat' => 'Tension! L\'utent "<nowiki>$1</nowiki>" a l\'é già stàit arnominà an "<nowiki>$2</nowiki>".
+Continua ël tratament mach s\'it deuve agiorné quaich anformassion mancante.',
+	'userrenametool-warn-table-missing' => 'La tabela "<nowiki>$2</nowiki>" a esist pa ant ël database "<nowiki>$1</nowiki>."',
+	'userrenametool-info-started' => '$1 a l\'ha ancaminà a arbatié: $2 a $3 (registr: $4).
+Rason: "$5".',
+	'userrenametool-info-finished' => '$1 a l\'ha completà l\'arbatiagi: $2 a $3 (registr: $4).
+Rason: "$5".',
+	'userrenametool-info-failed' => '$1 A L\'HA FALI\' a arbatié: $2 a $3 (registr: $4).
+Rason: "$5".',
+	'userrenametool-info-wiki-finished' => '$1 a l\'ha arbatià $2 a $3 dzor $4.
+Rason: "$5".',
+	'userrenametool-info-wiki-finished-problems' => '$1 a l\'ha arbatià $2 a $3 dzor $4 con eror.
+Rason: "$5".',
+	'userrenametool-info-in-progress' => "Process d'arbatiagi an camin.
+Ël rest a sarà fàit an background.
+It saras notificà via corel quand a l'é completà.",
 	'userrenametool-success' => 'L\'utent "<nowiki>$1</nowiki>" a l\'é stait arbatià an "<nowiki>$2</nowiki>"',
+	'userrenametool-confirm-intro' => 'It veus-to pròpi fé sòn?',
+	'userrenametool-confirm-yes' => 'É!',
+	'userrenametool-confirm-no' => 'Nò',
 	'userrenametool-page-exists' => "La pàgina $1 a-i é già e as peul nen passe-ie dzora n'aotomàtich.",
 	'userrenametool-page-moved' => "La pàgina $1 a l'ha fait San Martin a $2.",
 	'userrenametool-page-unmoved' => "La pàgina $1 a l'é pa podusse tramudé a $2.",
+	'userrenametool-finished-email-subject' => "Process d'arbatiagi dl'utent completà për [$1]",
+	'userrenametool-finished-email-body-text' => 'Ël process ëd tramudé "<nowiki>$1</nowiki>" a "<nowiki>$2</nowiki>" a l\'é stàit completà.',
+	'userrenametool-finished-email-body-html' => 'Ël process ëd tramudé "<nowiki>$1</nowiki>" a "<nowiki>$2</nowiki>" a l\'é stàit completà.',
 	'userrenametool-logpage' => "Registr dj'arbatiagi",
 	'userrenametool-logpagetext' => "Sossì a l'é un registr dle modìfiche djë stranòm dj'utent",
 	'userrenametool-logentry' => 'a l\'ha arbatià $1 coma "$2"',
@@ -4099,6 +4150,14 @@ Lütfen geri dönüp tekrar deneyin.',
 	'right-renameuser' => 'Kullanıcıların adlarını değiştirir',
 );
 
+/** Tatar (Cyrillic script) (татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'userrenametool-confirm-yes' => 'Әйе',
+	'userrenametool-confirm-no' => 'Юк',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author AS
@@ -4366,6 +4425,7 @@ $messages['yue'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Gzdavidwong
  * @author Hydra
  */
@@ -4378,6 +4438,7 @@ $messages['zh-hans'] = array(
 	'userrenametool-move' => '移动用户页及其对话页（包括各子页）到新的名字',
 	'userrenametool-reserve' => '封禁旧用户名，使之不能在日后使用',
 	'userrenametool-warnings' => '警告:',
+	'userrenametool-requested-rename' => '用户$1要求重命名',
 	'userrenametool-confirm' => '是，为用户重命名',
 	'userrenametool-submit' => '提交',
 	'userrenametool-errordoesnotexist' => '用户"<nowiki>$1</nowiki>"不存在',

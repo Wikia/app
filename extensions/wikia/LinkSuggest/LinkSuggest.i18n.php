@@ -50,6 +50,7 @@ $messages['ca'] = array(
  * @author Mormegil
  */
 $messages['cs'] = array(
+	'linksuggest-desc' => 'Navrhuje editorům odkazy při editování',
 	'tog-disablelinksuggest' => 'Nezobrazovat návrhy odkazů ve zdrojovém módu',
 	'tog-redirected-from' => '&ndash; přesměrováno z $1',
 );
@@ -90,7 +91,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
-	'linksuggest-desc' => 'Propose des liens aux éditeurs dans la vue de modification',
+	'linksuggest-desc' => 'Propose des liens aux contributeurs en édition',
 	'tog-disablelinksuggest' => 'Ne pas afficher la suggestion de lien en mode source',
 	'tog-redirected-from' => '&ndash; Redirigé depuis $1',
 );
@@ -242,8 +243,8 @@ $messages['nb'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'linksuggest-desc' => 'Verwijzingen voorstellen tijdens het bewerken',
-	'tog-disablelinksuggest' => 'Geen verwijzingssuggesties weergeven in bronmodus',
+	'linksuggest-desc' => 'Koppelingen voorstellen tijdens het bewerken',
+	'tog-disablelinksuggest' => 'Geen koppelingensuggesties weergeven in bronmodus',
 	'tog-redirected-from' => '&ndash; Doorverwezen vanaf $1',
 );
 
@@ -276,6 +277,7 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'linksuggest-desc' => "A sugeriss dj'anliure a j'editor ant la fnestra dle modìfiche",
 	'tog-disablelinksuggest' => "Nen ësmon-e ij sugeriment ëd j'anliure an modalità Sorgiss",
 	'tog-redirected-from' => '&ndash; ridiressionà da $1',
 );

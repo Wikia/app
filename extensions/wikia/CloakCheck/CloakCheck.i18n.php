@@ -725,6 +725,19 @@ $messages['tt-cyrl'] = array(
 	'cloakcheck-process-edits-no' => 'Кулланучы тарафыннан тиешле күләмдә төзәтмәләр эшләнмәгән.',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'cloakcheck-form-username' => 'Ім’я користувача:',
+	'cloakcheck-form-check' => "Перевірити ім'я користувача",
+	'cloakcheck-process-empty' => "Ім'я користувача не повинно бути порожнім.",
+	'cloakcheck-process-notexist' => 'Користувача з таким іменем не існує',
+	'cloakcheck-process-username' => "Ім'я користувача: $1",
+	'cloakcheck-process-emailconf-yes' => 'Адреса електронної пошти підтверджена.',
+	'cloakcheck-process-emailconf-no' => 'Адреса електронної пошти не підтверджена.',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
@@ -738,5 +751,6 @@ $messages['zh-hans'] = array(
 	'cloakcheck-process-accountage-yes' => '用户够旧',
 	'cloakcheck-process-accountage-no' => '用户太新',
 	'cloakcheck-process-emailconf-yes' => '电子邮件地址已确认。',
+	'cloakcheck-process-emailconf-no' => '电子邮件地址未确认。',
 	'cloakcheck-process-edits-no' => '用户编辑数不足。',
 );

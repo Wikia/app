@@ -5,6 +5,18 @@
 	 <dt><h3><?= $method['method']; ?></h3></d3t>
 	 <dd>
 	 	<?= $method['description']; ?>
+		 <? if ( !empty( $method['examples'] ) ) :?>
+		 <dl>
+			 <dt><h4>Examples</h4></dt>
+			 <dd><ul>
+				 <? foreach ( $method['examples'] as $item ) :?>
+				 <li>
+					 <strong><a href="<?= $item ;?>"><?= $item ?></a></strong><br/>
+				 </li>
+				 <? endforeach ;?>
+			 </ul></dd>
+		 </dl>
+		 <?	endif ;?>
 	 	<? foreach( array( 'request', 'response' ) as $section ) :?>
 		 	<? if ( !empty( $method[$section] ) ) :?>
 				<dl>

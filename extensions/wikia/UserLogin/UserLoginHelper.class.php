@@ -132,7 +132,7 @@ class UserLoginHelper extends WikiaModel {
 	 */
 	public function getRandomWikis( $require=self::LIMIT_WIKIS ) {
 		return array();
-
+/**
 		$memKey = $this->wf->SharedMemcKey( 'userlogin', 'random_wikis' );
 		$wikis = $this->wg->Memc->get( $memKey );
 		if ( !is_array($wikis) ) {
@@ -154,6 +154,7 @@ class UserLoginHelper extends WikiaModel {
 		}
 
 		return $wikis;
+ **/
 	}
 
 	/**
@@ -234,6 +235,7 @@ class UserLoginHelper extends WikiaModel {
 			return $result;
 		}
 
+		/* @var $tempUser TempUser */
 		$tempUser = F::build( 'TempUser', array( $username ), 'getTempUserFromName' );
 		if ( $tempUser == false ) {
 			$user = F::build( 'User', array( $username ), 'newFromName' );
@@ -279,7 +281,7 @@ class UserLoginHelper extends WikiaModel {
 		$tempUser->saveSettingsTempUserToUser( $user );
 		if( !$response->isGood() ) {
 			$result['result'] = 'error';
-			$result['msg'] = $this->wf->Msg( 'userlogin-error-mail-error', $result->getMessage() );
+			$result['msg'] = $this->wf->Msg( 'userlogin-error-mail-error' );
 		} else {
 			$result['result'] = 'ok';
 			$result['msg'] = $this->wf->MsgExt( 'usersignup-confirmation-email-sent', array('parseinline'), htmlspecialchars($tempUser->getEmail()) );

@@ -180,8 +180,8 @@ class ArticleComment {
 			}
 
 			$memckey = wfMemcKey( 'articlecomment', 'basedata', $this->mLastRevId );
-			$acData = $wgMemc->get( $memckey );	
-			
+			$acData = $wgMemc->get( $memckey );
+
 			if (!empty( $acData ) && is_array( $acData ) ) {
 				$this->mText = $acData['text'];
 				$this->mMetadata = empty( $this->mMetadata ) ? $acData['metadata'] : $this->mMetadata;
@@ -206,7 +206,7 @@ class ArticleComment {
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
-			
+
 			// get revision objects
 			if ( $this->mFirstRevId ) {
 				$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
@@ -329,18 +329,16 @@ class ArticleComment {
 		return $this->mTitle;
 	}
 
-	public function getData($master = false, $title = null) {
-		global $wgUser, $wgTitle, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
+	public function getData( $master = false ) {
+		global $wgUser, $wgBlankImgUrl, $wgMemc, $wgArticleCommentsEnableVoting;
 
 		wfProfileIn( __METHOD__ );
-
-		$title = empty($title) ? $wgTitle : $title;
-		$title = empty($title) ? $this->mTitle : $title;
 
 		$comment = false;
 		if ( $this->load($master) ) {
 			$articleDataKey = wfMemcKey( 'articlecomment', 'comm_data_v2', $this->mLastRevId, $wgUser->getId() );
 			$data = $wgMemc->get( $articleDataKey );
+
 			if(!empty($data)) {
 				wfProfileOut( __METHOD__ );
 				$data['timestamp'] = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $data['articleId'] ) ) . '#comm-' . $data['articleId'] . "' class='permalink'>" . wfTimeFormatAgo($data['rawmwtimestamp']) . "</a>";
@@ -352,6 +350,7 @@ class ArticleComment {
 			$sig = ( $this->mUser->isAnon() )
 				? AvatarService::renderLink( $this->mUser->getName() )
 				: Xml::element( 'a', array ( 'href' => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
+
 			$articleId = $this->mTitle->getArticleId();
 
 			$isStaff = (int)in_array('staff', $this->mUser->getEffectiveGroups() );
@@ -361,10 +360,10 @@ class ArticleComment {
 			$buttons = array();
 			$replyButton = '';
 
-			$commentingAllowed = true;
-			if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) {
-				$props = BlogArticle::getProps($title->getArticleID());
-				$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
+			//this is for blogs we want to know if commenting on it is enabled
+			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $this->mTitle->getBaseText() ) );
+
+			if ( self::isBlog() ) {
 				$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
 			}
 
@@ -425,7 +424,7 @@ class ArticleComment {
 			$wgMemc->set( $articleDataKey, $comment, 60*60 );
 
 			if(!($comment['title'] instanceof Title)) {
-				$comment['title'] = F::build('Title',array($comment['title'],NS_TALK),'newFromText');
+				$comment['title'] = Title::newFromText( $comment['title'], NS_TALK );
 			}
 		}
 
@@ -457,38 +456,10 @@ class ArticleComment {
 	}
 
 	/**
-	 * render -- generate HTML for displaying comment
-	 *
-	 * @deprecated not used in Oasis
-	 * @return String -- generated HTML text
-	 */
-
-	/*
-	public function render($master = false) {
-
-		wfProfileIn( __METHOD__ );
-
-		$template = new EasyTemplate( dirname( __FILE__ ) . '/../templates/' );
-		$template->set_vars(
-			array (
-				'comment' => $this->getData($master)
-			)
-		);
-		$text = $template->render( 'comment' );
-
-		wfProfileOut( __METHOD__ );
-
-		return $text;
-	}
-	 */
-
-
-	/**
 	 * delete article with out any confirmation (used by wall)
 	 *
 	 * @access public
 	 */
-
 	public function doDeleteComment( $reason, $suppress = false ){
 		global $wgUser;
 		if(empty($this->mArticle)) {
@@ -536,8 +507,7 @@ class ArticleComment {
 			return false;
 		}
 
-		if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE ||
-			defined('NS_BLOG_ARTICLE_TALK') && $title->getNamespace() == NS_BLOG_ARTICLE_TALK) {
+		if ( self::isBlog() ) {
 			return true;
 		} else {
 			return strpos(end(explode('/', $title->getText())), ARTICLECOMMENT_PREFIX) === 0;
@@ -557,12 +527,6 @@ class ArticleComment {
 			//not a comment - fallback
 			$title = $titleText;
 			$partsOriginal = $partsStripped = array();
-		}
-
-		if( !empty($oTitle) && defined('NS_BLOG_ARTICLE_TALK') && $oTitle->getNamespace() == NS_BLOG_ARTICLE_TALK ) {
-			$tmpArr = explode('/', $title);
-			array_shift($tmpArr);
-			$title = implode('/', $tmpArr);
 		}
 
 		$result = array(
@@ -586,16 +550,34 @@ class ArticleComment {
 			$isAuthor = $this->mFirstRevision->getUser( Revision::RAW ) == $wgUser->getId() && !$wgUser->isAnon();
 		}
 
-		$canEdit =
-				//prevent infinite loop for blogs - userCan hooked up in BlogLockdown
-				defined('NS_BLOG_ARTICLE_TALK') && !empty($this->mTitle) && $this->mTitle->getNamespace() == NS_BLOG_ARTICLE_TALK ||
-				$this->mTitle->userCan( "edit" );
+		//prevent infinite loop for blogs - userCan hooked up in BlogLockdown
+		$canEdit = self::isBlog( $this->mTitle ) || $this->mTitle->userCan( "edit" );
 
 		$isAllowed = $wgUser->isAllowed('commentedit');
 
 		$res = $isAuthor || ( $isAllowed && $canEdit );
 
 		return $res;
+	}
+
+	/**
+	 * Check if current user can comment
+	 *
+	 * @returns boolean
+	 */
+	public static function canComment( Title $title = null ) {
+		global $wgTitle;
+
+		$canComment = true;
+		$title = is_null( $title ) ? $wgTitle : $title;
+
+		if ( self::isBlog( $title ) ) {
+			$props = BlogArticle::getProps( $title->getArticleID() );
+
+			$canComment = isset( $props[ 'commenting' ] ) ? ( bool ) $props[ 'commenting' ] : true;
+		}
+
+		return $canComment;
 	}
 
 	/**
@@ -607,6 +589,27 @@ class ArticleComment {
 			return $this->mUser->getId() == $user->getId() && !$user->isAnon();
 		}
 		return false;
+	}
+
+	/**
+	 * Whether or not the current page is a blog page
+	 *
+	 * @return boolean
+	 */
+	public static function isBlog( Title $title = null ) {
+		global $wgTitle;
+
+		$isBlog = false;
+		$title = is_null( $title ) ? $wgTitle : $title;
+
+		if ( !empty( $title ) ) {
+			$namespace = $title->getNamespace();
+			$isBlog =
+				( defined( 'NS_BLOG_ARTICLE' ) && $namespace == NS_BLOG_ARTICLE ) ||
+				( defined( 'NS_BLOG_ARTICLE_TALK' ) && $namespace == NS_BLOG_ARTICLE_TALK );
+		}
+
+		return $isBlog;
 	}
 
 	/**
@@ -731,10 +734,7 @@ class ArticleComment {
 		$retval = $editPage->internalAttemptSave( $result, $bot );
 
 		if( $retval->value == EditPage::AS_SUCCESS_UPDATE ) {
-			/**
-			 * @var $commentsIndex CommentsIndex
-			 */
-			$commentsIndex = F::build( 'CommentsIndex', array( $article->getID() ), 'newFromId' );
+			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
 			if ( $commentsIndex instanceof CommentsIndex ) {
 				$commentsIndex->updateLastRevId( $article->getTitle()->getLatestRevID(Title::GAID_FOR_UPDATE) );
 			}
@@ -820,6 +820,7 @@ class ArticleComment {
 		 */
 		$wgTitle = $commentTitle;
 
+
 		if( !($commentTitle instanceof Title) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -843,10 +844,8 @@ class ArticleComment {
 				'firstRevId' => $revId,
 				'lastRevId' => $revId,
 			);
-			/**
-			 * @var $commentsIndex CommentsIndex
-			 */
-			$commentsIndex = F::build( 'CommentsIndex', array($data) );
+
+			$commentsIndex = new CommentsIndex( $data );
 			$commentsIndex->addToDatabase();
 
 			// set last child comment id
@@ -915,6 +914,7 @@ class ArticleComment {
 		}
 
 		/*
+		// TODO: use this when surrogate key purging works correctly
 		$parentTitle = Title::newFromText( $commentTitle->getBaseText() );
 
 		if ($parentTitle) {
@@ -1017,7 +1017,7 @@ class ArticleComment {
 			$wgUser->addWatch( $oArticlePage );
 		}
 
-		if ( !empty($wgBlogsEnableStaffAutoFollow) && defined('NS_BLOG_ARTICLE') && $comment->mTitle->getNamespace() == NS_BLOG_ARTICLE ) {
+		if ( !empty($wgBlogsEnableStaffAutoFollow) && self::isBlog() ) {
 			$owner = BlogArticle::getOwner($oArticlePage);
 			$oUser = User::newFromName($owner);
 			if ( $oUser instanceof User ) {
@@ -1407,7 +1407,6 @@ class ArticleComment {
 		global $wgCityId;
 		return 'Wiki_' . $wgCityId . '_ArticleComments_' . $articleId;
 	}
-
 
 	/**
 	 * Checks if article comments will be loading on demand.

@@ -896,5 +896,18 @@ $messages['uk'] = array(
  */
 $messages['zh-hans'] = array(
 	'globalwatchlist-digest-email-subject' => '每周文摘',
+	'globalwatchlist-digest-email-body' => '亲爱的$1，
+以下是您的监视列表中上次访问后被改动的页面。
+$2
+
+以下是您的监视列表中上次访问后被改动或评论的博客。
+$3
+请常来编辑哦
+
+Wikia
+
+* 变更您监视列表通知的首选项，请访问http://www.wikia.com/wiki/Special:Preferences
+* 标记全部本周摘要为已读，参见首选项中的“监视列表”选项',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2条评论)',
 	'globalwatchlist-no-page-found' => '未找到页面。',
 );

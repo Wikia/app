@@ -2,19 +2,17 @@
 
 class ShareButtonTwitter extends ShareButton {
 
-	public function __construct(WikiaApp $app) {
-		parent::__construct($app);
-	}
-
-	// AssetsManager compliant path to assets
-	public function getAssets() {
-		return array( '//extensions/wikia/ShareButtons/js/ShareButtonTwitter.js' );
-	}
+	/**
+	 * AssetsManager compliant path to assets
+	 * @var array
+	 */
+	protected static $assets = array( '//extensions/wikia/ShareButtons/js/ShareButtonTwitter.js' );
 
 	/**
 	 * Return HTML rendering share box (with votes count)
 	 *
 	 * @see http://twitter.com/goodies/tweetbutton
+	 * @return string
 	 */
 	public function getShareBox() {
 		global $wgNoExternals;
@@ -32,17 +30,4 @@ class ShareButtonTwitter extends ShareButton {
 		return $html;
 	}
 
-	/**
-	 * Return HTML rendering share button
-	 */
-	public function getShareButton() {
-
-	}
-
-	/**
-	 * Return HTML rendering share link
-	 */
-	public function getShareLink() {
-
-	}
 }

@@ -15,7 +15,8 @@ class MarketingToolboxModel extends WikiaModel {
 
 	const HUBS_TABLE_NAME = '`wikia_hub_modules`';
 
-	const FORM_THUMBNAIL_SIZE = 155;
+	const FORM_THUMBNAIL_SIZE = 149;
+	const FORM_FIELD_PREFIX = 'MarketingToolbox';
 
 	protected $statuses = array();
 	protected $modules = array();
@@ -24,6 +25,8 @@ class MarketingToolboxModel extends WikiaModel {
 
 	protected $specialPageClass = 'SpecialPage';
 	protected $userClass = 'User';
+
+	protected $allowedTags = array('<a>');
 
 	public function __construct($app = null) {
 		parent::__construct();
@@ -61,6 +64,15 @@ class MarketingToolboxModel extends WikiaModel {
 			)
 		);
 
+	}
+
+	/**
+	 * @desc Returns HTML tags which are allowed in the module's text field
+	 *
+	 * @return String
+	 */
+	public function getAllowedTags() {
+		return implode('', $this->allowedTags);
 	}
 
 	public function getThumbnailSize() {
@@ -258,14 +270,14 @@ class MarketingToolboxModel extends WikiaModel {
 			'lang_code' => $langCode,
 			'vertical_id' => $verticalId,
 			'hub_date' => $sdb->timestamp($timestamp),
-	);
+		);
 		$table = $this->getTablesBySectionId($sectionId);
 		$fields = array('module_id', 'module_status', 'module_data', 'last_edit_timestamp', 'last_editor_id');
 
 		$results = $sdb->select($table, $fields, $conds, __METHOD__);
 
 		$out = array();
-		while( $row = $sdb->fetchRow($results) ) {
+		while ($row = $sdb->fetchRow($results)) {
 			$out[$row['module_id']] = array(
 				'status' => $row['module_status'],
 				'lastEditTime' => $row['last_edit_timestamp'],
@@ -366,6 +378,50 @@ class MarketingToolboxModel extends WikiaModel {
 
 		return $result;
 	}
+
+	/**
+	 * Method to extract textual filename from VET-generated
+	 * wikitext (i.e. [[File:Batman - Following|thumb|right|335 px]]
+	 * returns false if not found
+	 *
+	 * @param $wikiText string
+	 *
+	 * @return $fileName string|false
+	 */
+	public function extractTitleFromVETWikitext($wikiText) {
+		$this->wf->profileIn(__METHOD__);
+
+		$fileName = false;
+
+		$tmpString = ltrim($wikiText, '[');
+		$tmpString = rtrim($tmpString, ']');
+		$fragments = mb_split('\|', $tmpString);
+		if (!empty($fragments[0])) {
+			$fileText = mb_split(':', $fragments[0]);
+			if (!empty($fileText[1])) {
+				$fileName = $fileText[1];
+			}
+		}
+
+		$this->wf->profileOut(__METHOD__);
+
+		return $fileName;
+	}
+
+	/**
+	 *
+	 */
+	public function getFileMarkup($fileName) {
+		$this->wf->profileIn(__METHOD__);
+
+		$videoDataHelper = new RelatedVideosData();
+		$videoData = $videoDataHelper->getVideoData($fileName, self::FORM_THUMBNAIL_SIZE);
+		$markup = $this->app->renderView('MarketingToolboxVideos', 'index', array('video' => $videoData));
+
+		$this->wf->profileOut(__METHOD__);
+		return $markup;
+	}
+
 
 	/**
 	 * Get table name by section Id

@@ -141,10 +141,11 @@ class ArticleCommentList {
 			}
 		}
 
-		$titles = TitleBatch::newFromIds($commentsQueue,DB_SLAVE_BEFORE_MASTER);
+		$titles = Title::newFromIds( $commentsQueue );
+
 		$comments = array();
-		foreach ($commentsQueue as $id) {
-			$comments[$id] = !empty($titles[$id]) ? ArticleComment::newFromTitle($titles[$id]) : false;
+		foreach ( $titles as $title ) {
+			$comments[$title->getArticleID()] = ArticleComment::newFromTitle( $title );
 		}
 
 		// grab article contents for each comment
@@ -199,6 +200,7 @@ class ArticleCommentList {
 			$conds = $this->getQueryWhere($dbr);
 			$options = array( 'ORDER BY' => 'page_id DESC' );
 			$join_conds = array();
+
 			if( !empty( $wgArticleCommentsEnableVoting ) ) {
 				//add votes to the result set
 				$table[] = 'page_vote';
@@ -308,7 +310,6 @@ class ArticleCommentList {
 	public function getAllCommentPages() {
 		wfProfileIn( __METHOD__ );
 
-		$pages = array();
 		$dbr = wfGetDB( DB_MASTER );
 
 		$res = $dbr->select(
@@ -388,11 +389,9 @@ class ArticleCommentList {
 	 *
 	 * @return array data for comments list
 	 */
-
 	public function getData($page = 1) {
-		global $wgUser, $wgTitle, $wgStylePath;
+		global $wgUser, $wgStylePath;
 
-		$groups = $wgUser->getEffectiveGroups();
 		//$isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
 		$canEdit = $wgUser->isAllowed( 'edit' );
 		$isBlocked = $wgUser->isBlocked();
@@ -414,25 +413,12 @@ class ArticleCommentList {
 		$this->preloadFirstRevId( $comments );
 		$pagination = $this->doPagination($countComments, count($comments), $page);
 
-		$commentListHTML = '';
-		if(!empty($wgTitle)) {
-			$commentListHTML = F::app()->getView('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false  ))->render();
-		}
-
-		$commentingAllowed = true;
-
-		if (defined('NS_BLOG_ARTICLE') && $wgTitle && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
-			$props = BlogArticle::getProps($wgTitle->getArticleID());
-			$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
-		}
-
 		$retVal = array(
 			'avatar' => AvatarService::renderAvatar($wgUser->getName(), 50),
 			'userurl' => AvatarService::getUrl($wgUser->getName()),
 			'canEdit' => $canEdit,
 			'commentListRaw' => $comments,
-			'commentListHTML' => $commentListHTML,
-			'commentingAllowed' => $commentingAllowed,
+			'commentingAllowed' => ArticleComment::canComment( $this->mTitle ),
 			'commentsPerPage' => $this->mMaxPerPage,
 			'countComments' => $countComments,
 			'countCommentsNested' => $countCommentsNested,
@@ -444,7 +430,7 @@ class ArticleCommentList {
 			'pagination' => $pagination,
 			'reason' => $isBlocked ? $this->blockedPage() : '',
 			'stylePath' => $wgStylePath,
-			'title' => $wgTitle
+			'title' => $this->mTitle
 		);
 
 		return $retVal;
@@ -648,7 +634,7 @@ class ArticleCommentList {
 	 * @return string The cache key
 	 */
 	static private function getCacheKey( Title $title ) {
-		return wfMemcKey( 'articlecomment', 'comm', $title->getDBkey(), $title->getNamespace(), self::CACHE_VERSION );
+		return wfMemcKey( 'articlecomment', 'comm', md5( $title->getDBkey() . $title->getNamespace() . self::CACHE_VERSION ) );
 	}
 
 	/**
@@ -733,12 +719,13 @@ class ArticleCommentList {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
 						$oComment = new ArticleComment($oCommentTitle);
-						$oComment->doDeleteComment($deleteReason);
+						//$oComment->doDeleteComment($deleteReason);
 					}
 				}
+
 				$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
 				$listing = ArticleCommentList::newFromTitle($parentTitle);
-				$listing->purge();
+				//$listing->purge();
 			} else {
 				$taskParams= array(
 					'mode' 		=> 'you',
@@ -752,6 +739,7 @@ class ArticleCommentList {
 					'user'		=> $wgUser->getName(),
 					'admin'		=> $wgUser->getName()
 				);
+
 
 				foreach (self::$mArticlesToDelete as $oComment) {
 					$oCommentTitle = $oComment->getTitle();
@@ -885,8 +873,7 @@ class ArticleCommentList {
 				$namespace = $title->getNamespace();
 				$title = Title::newFromText($title->getText(), MWNamespace::getSubject($namespace));
 
-				if( (defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) ||
-					defined('NS_BLOG_ARTICLE_TALK') && $namespace == NS_BLOG_ARTICLE_TALK ) {
+				if ( ArticleComment::isBlog() ) {
 					$messageKey = 'article-comments-rc-blog-comments';
 				} else {
 					$messageKey = 'article-comments-rc-comments';
@@ -1030,8 +1017,7 @@ class ArticleCommentList {
 
 			//fb#15143
 			if( $titleMainArticle instanceof Title ) {
-				if( (defined('NS_BLOG_ARTICLE') && $rcNamespace == NS_BLOG_ARTICLE)
-				  || defined('NS_BLOG_ARTICLE_TALK') && $rcNamespace == NS_BLOG_ARTICLE_TALK ) {
+				if ( ArticleComment::isBlog() ) {
 					$messageKey = 'article-comments-rc-blog-comment';
 				} else {
 					$messageKey = 'article-comments-rc-comment';

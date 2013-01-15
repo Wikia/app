@@ -622,17 +622,22 @@ class MediaWiki {
 		if( function_exists( 'newrelic_name_transaction' ) ) {
 			global $wgUser, $wgVersion;
 			global $wgContLang;
+			global $wgExtraNamespaces;
 
 			$loggedIn = $wgUser->isLoggedIn() ? 'user' : 'anon';
 			$ns = $title->getNamespace();
-			$nsKey = MWNamespace::getCanonicalName( $ns );
-			if ( $nsKey === false ) {
-				$nsKey = $ns;
+			if( $wgExtraNamespaces[$ns] ) {
+				$nsKey = 'custom';
 			} else {
-				$nsKey = $wgContLang->lc( $nsKey );
-			}
-			if ( $nsKey == '' ) {
-				$nsKey = 'main';
+				$nsKey = MWNamespace::getCanonicalName( $ns );
+				if ( $nsKey === false ) {
+					$nsKey = $ns;
+				} else {
+					$nsKey = $wgContLang->lc( $nsKey );
+				}
+				if ( $nsKey == '' ) {
+					$nsKey = 'main';
+				}
 			}
 
 			if( $title->isSpecialPage() ) {

@@ -12,7 +12,7 @@ define('track', function () {
 	var ACTIONS = WikiaTracker.ACTIONS;
 
 	return {
-		event: function (category, action, options) {
+		event: function (category, action, options, ev) {
 			options = options || {};
 			var obj = {
 				ga_category: 'wikiamobile-' + category,
@@ -31,7 +31,7 @@ define('track', function () {
 				obj.href = options.href;
 			}
 
-			!window.wgGameGuides && WikiaTracker.trackEvent('trackingevent', obj, 'ga');
+			!window.wgGameGuides && WikiaTracker.trackEvent('trackingevent', obj, 'ga', ev);
 		},
 		//if anything happens to WikiaTracker it'll be much easier to fix it in one place
 		CLICK: ACTIONS.CLICK,

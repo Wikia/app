@@ -39,7 +39,7 @@
  *
  * @author macbre
  *
- * TODO: "connect" it with $.loadFacebookAPI loader function
+ * This function is executed when loading FB SDK using $.loadFacebookAPI()
  */
 window.onFBloaded = function() {
 	var fbAppId = window.fbAppId,

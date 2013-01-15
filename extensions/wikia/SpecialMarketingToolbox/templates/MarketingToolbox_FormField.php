@@ -15,7 +15,7 @@
 	<? switch ($inputData['type']):
 		case 'text':
 		case 'hidden': ?>
-		<input type="<?=$inputData['type']?>" <?=$inputData['attributes']?> id="MarketingToolbox<?=$inputData['name']?>" name="<?=$inputData['name']?>" value="<?= htmlspecialchars($inputData['value'])?>" />
+		<input type="<?=$inputData['type']?>" <?=$inputData['attributes']?> id="<?=$formFieldPrefix?><?=$inputData['name']?>" name="<?=$inputData['name']?>" value="<?= htmlspecialchars($inputData['value'])?>" />
 			<? break ?>
 		<? case 'textarea': ?>
 			<textarea <?=$inputData['attributes']?> name="<?=$inputData['name']?>"><?= htmlspecialchars($inputData['value'])?></textarea>

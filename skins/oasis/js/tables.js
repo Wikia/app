@@ -1,14 +1,17 @@
 (function($) {
 var WikiaWideTables = {
 	settings: {
-		article: $("#WikiaArticle"),
+		article: "#WikiaArticle",
 		tables: [],
 		popouts: null
 	},
+	article: undefined,
 
 	init: function() {
 
 		var that = this;
+
+		this.article = $(this.settings.article);
 
 		//Get tables
 		this.getTables();
@@ -87,16 +90,16 @@ var WikiaWideTables = {
 
 		var that = this;
 
-		this.settings.article.find("table").each(function() {
+		this.article.find("table").each(function() {
 			var table = $(this);
 
 			//If the table isn't very wide and doesn't have class="popout", ignore it
-			if (table.width() <= that.settings.article.width() && !table.hasClass('popout')) {
+			if (table.width() <= that.article.width() && !table.hasClass('popout')) {
 				return;
 			}
 
 			//Is table wider than article area?
-			if (table.width() > that.settings.article.width()) {
+			if (table.width() > that.article.width()) {
 				table.attr("data-overflow", "true");
 			}
 

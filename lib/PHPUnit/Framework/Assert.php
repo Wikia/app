@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2001-2013, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,8 @@
  * @package    PHPUnit
  * @subpackage Framework
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @copyright  2001-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 2.0.0
  */
@@ -49,9 +49,8 @@
  * @package    PHPUnit
  * @subpackage Framework
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 3.5.0
+ * @copyright  2001-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 2.0.0
  */
@@ -66,15 +65,20 @@ abstract class PHPUnit_Framework_Assert
      * Asserts that an array has a specified key.
      *
      * @param  mixed  $key
-     * @param  array  $array
+     * @param  array|ArrayAccess  $array
      * @param  string $message
      * @since  Method available since Release 3.0.0
      */
-    public static function assertArrayHasKey($key, array $array, $message = '')
+    public static function assertArrayHasKey($key, $array, $message = '')
     {
         if (!(is_integer($key) || is_string($key))) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(
               1, 'integer or string'
+            );
+        }
+        if (!(is_array($array) || $array instanceof ArrayAccess)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(
+              2, 'array or ArrayAccess'
             );
         }
 
@@ -87,15 +91,20 @@ abstract class PHPUnit_Framework_Assert
      * Asserts that an array does not have a specified key.
      *
      * @param  mixed  $key
-     * @param  array  $array
+     * @param  array|ArrayAccess  $array
      * @param  string $message
      * @since  Method available since Release 3.0.0
      */
-    public static function assertArrayNotHasKey($key, array $array, $message = '')
+    public static function assertArrayNotHasKey($key, $array, $message = '')
     {
         if (!(is_integer($key) || is_string($key))) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(
               1, 'integer or string'
+            );
+        }
+        if (!(is_array($array) || $array instanceof ArrayAccess)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(
+              2, 'array or ArrayAccess'
             );
         }
 
@@ -113,14 +122,15 @@ abstract class PHPUnit_Framework_Assert
      * @param  mixed   $haystack
      * @param  string  $message
      * @param  boolean $ignoreCase
+     * @param  boolean $checkForObjectIdentity
      * @since  Method available since Release 2.1.0
      */
-    public static function assertContains($needle, $haystack, $message = '', $ignoreCase = FALSE)
+    public static function assertContains($needle, $haystack, $message = '', $ignoreCase = FALSE, $checkForObjectIdentity = TRUE)
     {
         if (is_array($haystack) ||
             is_object($haystack) && $haystack instanceof Traversable) {
             $constraint = new PHPUnit_Framework_Constraint_TraversableContains(
-              $needle
+              $needle, $checkForObjectIdentity
             );
         }
 
@@ -148,15 +158,17 @@ abstract class PHPUnit_Framework_Assert
      * @param  mixed   $haystackClassOrObject
      * @param  string  $message
      * @param  boolean $ignoreCase
+     * @param  boolean $checkForObjectIdentity
      * @since  Method available since Release 3.0.0
      */
-    public static function assertAttributeContains($needle, $haystackAttributeName, $haystackClassOrObject, $message = '', $ignoreCase = FALSE)
+    public static function assertAttributeContains($needle, $haystackAttributeName, $haystackClassOrObject, $message = '', $ignoreCase = FALSE, $checkForObjectIdentity = TRUE)
     {
         self::assertContains(
           $needle,
           self::readAttribute($haystackClassOrObject, $haystackAttributeName),
           $message,
-          $ignoreCase
+          $ignoreCase,
+          $checkForObjectIdentity
         );
     }
 
@@ -167,14 +179,17 @@ abstract class PHPUnit_Framework_Assert
      * @param  mixed   $haystack
      * @param  string  $message
      * @param  boolean $ignoreCase
+     * @param  boolean $checkForObjectIdentity
      * @since  Method available since Release 2.1.0
      */
-    public static function assertNotContains($needle, $haystack, $message = '', $ignoreCase = FALSE)
+    public static function assertNotContains($needle, $haystack, $message = '', $ignoreCase = FALSE, $checkForObjectIdentity = TRUE)
     {
         if (is_array($haystack) ||
             is_object($haystack) && $haystack instanceof Traversable) {
             $constraint = new PHPUnit_Framework_Constraint_Not(
-              new PHPUnit_Framework_Constraint_TraversableContains($needle)
+              new PHPUnit_Framework_Constraint_TraversableContains(
+                $needle, $checkForObjectIdentity
+              )
             );
         }
 
@@ -204,15 +219,17 @@ abstract class PHPUnit_Framework_Assert
      * @param  mixed   $haystackClassOrObject
      * @param  string  $message
      * @param  boolean $ignoreCase
+     * @param  boolean $checkForObjectIdentity
      * @since  Method available since Release 3.0.0
      */
-    public static function assertAttributeNotContains($needle, $haystackAttributeName, $haystackClassOrObject, $message = '', $ignoreCase = FALSE)
+    public static function assertAttributeNotContains($needle, $haystackAttributeName, $haystackClassOrObject, $message = '', $ignoreCase = FALSE, $checkForObjectIdentity = TRUE)
     {
         self::assertNotContains(
           $needle,
           self::readAttribute($haystackClassOrObject, $haystackAttributeName),
           $message,
-          $ignoreCase
+          $ignoreCase,
+          $checkForObjectIdentity
         );
     }
 
@@ -244,6 +261,31 @@ abstract class PHPUnit_Framework_Assert
             $type, $isNativeType
           ),
           $message
+        );
+    }
+
+    /**
+     * Asserts that a haystack contains only instances of a given classname
+     *
+     * @param string $classname
+     * @param array|Traversable $haystack
+     * @param string $message
+     */
+    public static function assertContainsOnlyInstancesOf($classname, $haystack, $message = '')
+    {
+        if (!(is_array($haystack) ||
+            is_object($haystack) && $haystack instanceof Traversable)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(
+              2, 'array or iterator'
+            );
+        }
+
+        self::assertThat(
+            $haystack,
+            new PHPUnit_Framework_Constraint_TraversableContainsOnly(
+                $classname, FALSE
+            ),
+            $message
         );
     }
 
@@ -319,6 +361,96 @@ abstract class PHPUnit_Framework_Assert
           $type,
           self::readAttribute($haystackClassOrObject, $haystackAttributeName),
           $isNativeType,
+          $message
+        );
+    }
+
+    /**
+     * Asserts the number of elements of an array, Countable or Iterator.
+     *
+     * @param integer $expectedCount
+     * @param mixed   $haystack
+     * @param string  $message
+     */
+    public static function assertCount($expectedCount, $haystack, $message = '')
+    {
+        if (!is_int($expectedCount)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
+        }
+
+        if (!$haystack instanceof Countable &&
+            !$haystack instanceof Iterator &&
+            !is_array($haystack)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'countable');
+        }
+
+        self::assertThat(
+          $haystack,
+          new PHPUnit_Framework_Constraint_Count($expectedCount),
+          $message
+        );
+    }
+
+    /**
+     * Asserts the number of elements of an array, Countable or Iterator
+     * that is stored in an attribute.
+     *
+     * @param integer $expectedCount
+     * @param string  $haystackAttributeName
+     * @param mixed   $haystackClassOrObject
+     * @param string  $message
+     * @since Method available since Release 3.6.0
+     */
+    public static function assertAttributeCount($expectedCount, $haystackAttributeName, $haystackClassOrObject, $message = '')
+    {
+        self::assertCount(
+          $expectedCount,
+          self::readAttribute($haystackClassOrObject, $haystackAttributeName),
+          $message
+        );
+    }
+
+    /**
+     * Asserts the number of elements of an array, Countable or Iterator.
+     *
+     * @param integer $expectedCount
+     * @param mixed   $haystack
+     * @param string  $message
+     */
+    public static function assertNotCount($expectedCount, $haystack, $message = '')
+    {
+        if (!is_int($expectedCount)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
+        }
+
+        if (!$haystack instanceof Countable &&
+            !$haystack instanceof Iterator &&
+            !is_array($haystack)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'countable');
+        }
+
+        $constraint = new PHPUnit_Framework_Constraint_Not(
+          new PHPUnit_Framework_Constraint_Count($expectedCount)
+        );
+
+        self::assertThat($haystack, $constraint, $message);
+    }
+
+    /**
+     * Asserts the number of elements of an array, Countable or Iterator
+     * that is stored in an attribute.
+     *
+     * @param integer $expectedCount
+     * @param string  $haystackAttributeName
+     * @param mixed   $haystackClassOrObject
+     * @param string  $message
+     * @since Method available since Release 3.6.0
+     */
+    public static function assertAttributeNotCount($expectedCount, $haystackAttributeName, $haystackClassOrObject, $message = '')
+    {
+        self::assertNotCount(
+          $expectedCount,
+          self::readAttribute($haystackClassOrObject, $haystackAttributeName),
           $message
         );
     }
@@ -1195,123 +1327,6 @@ abstract class PHPUnit_Framework_Assert
     }
 
     /**
-     * Asserts that a variable is of a given type.
-     *
-     * @param  string $expected
-     * @param  mixed  $actual
-     * @param  string $message
-     */
-    public static function assertType($expected, $actual, $message = '')
-    {
-        if (is_string($expected)) {
-            if (PHPUnit_Util_Type::isType($expected)) {
-                if (class_exists($expected) || interface_exists($expected)) {
-                    throw new InvalidArgumentException(
-                      sprintf('"%s" is ambigious', $expected)
-                    );
-                }
-
-                $constraint = new PHPUnit_Framework_Constraint_IsType(
-                  $expected
-                );
-            }
-
-            else if (class_exists($expected) || interface_exists($expected)) {
-                $constraint = new PHPUnit_Framework_Constraint_IsInstanceOf(
-                  $expected
-                );
-            }
-
-            else {
-                throw PHPUnit_Util_InvalidArgumentHelper::factory(
-                  1, 'class or interface name'
-                );
-            }
-        } else {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
-        }
-
-        self::assertThat($actual, $constraint, $message);
-    }
-
-    /**
-     * Asserts that an attribute is of a given type.
-     *
-     * @param  string  $expected
-     * @param  string  $attributeName
-     * @param  mixed   $classOrObject
-     * @param  string  $message
-     * @since  Method available since Release 3.4.0
-     */
-    public static function assertAttributeType($expected, $attributeName, $classOrObject, $message = '')
-    {
-        self::assertType(
-          $expected,
-          self::readAttribute($classOrObject, $attributeName),
-          $message
-        );
-    }
-
-    /**
-     * Asserts that a variable is not of a given type.
-     *
-     * @param  string $expected
-     * @param  mixed  $actual
-     * @param  string $message
-     * @since  Method available since Release 2.2.0
-     */
-    public static function assertNotType($expected, $actual, $message = '')
-    {
-        if (is_string($expected)) {
-            if (PHPUnit_Util_Type::isType($expected)) {
-                if (class_exists($expected) || interface_exists($expected)) {
-                    throw new InvalidArgumentException(
-                      sprintf('"%s" is ambigious', $expected)
-                    );
-                }
-
-                $constraint = new PHPUnit_Framework_Constraint_Not(
-                  new PHPUnit_Framework_Constraint_IsType($expected)
-                );
-            }
-
-            else if (class_exists($expected) || interface_exists($expected)) {
-                $constraint = new PHPUnit_Framework_Constraint_Not(
-                  new PHPUnit_Framework_Constraint_IsInstanceOf($expected)
-                );
-            }
-
-            else {
-                throw PHPUnit_Util_InvalidArgumentHelper::factory(
-                  1, 'class or interface name'
-                );
-            }
-        } else {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
-        }
-
-        self::assertThat($actual, $constraint, $message);
-    }
-
-    /**
-     * Asserts that an attribute is of a given type.
-     *
-     * @param  string  $expected
-     * @param  string  $attributeName
-     * @param  mixed   $classOrObject
-     * @param  string  $message
-     * @since  Method available since Release 3.4.0
-     */
-    public static function assertAttributeNotType($expected, $attributeName, $classOrObject, $message = '')
-    {
-        self::assertNotType(
-          $expected,
-          self::readAttribute($classOrObject, $attributeName),
-          $message
-        );
-    }
-
-    /**
      * Asserts that a string matches a given regular expression.
      *
      * @param  string $pattern
@@ -1356,6 +1371,64 @@ abstract class PHPUnit_Framework_Assert
         );
 
         self::assertThat($string, $constraint, $message);
+    }
+
+    /**
+     * Assert that the size of two arrays (or `Countable` or `Iterator` objects)
+     * is the same.
+     *
+     * @param array|Countable|Iterator $expected
+     * @param array|Countable|Iterator $actual
+     * @param string $message
+     */
+    public static function assertSameSize($expected, $actual, $message = '')
+    {
+        if (!$expected instanceof Countable &&
+            !$expected instanceof Iterator &&
+            !is_array($expected)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'countable');
+        }
+
+        if (!$actual instanceof Countable &&
+            !$actual instanceof Iterator &&
+            !is_array($actual)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'countable');
+        }
+
+        self::assertThat(
+          $actual,
+          new PHPUnit_Framework_Constraint_SameSize($expected),
+          $message
+        );
+    }
+
+    /**
+     * Assert that the size of two arrays (or `Countable` or `Iterator` objects)
+     * is not the same.
+     *
+     * @param array|Countable|Iterator $expected
+     * @param array|Countable|Iterator $actual
+     * @param string $message
+     */
+    public static function assertNotSameSize($expected, $actual, $message = '')
+    {
+        if (!$expected instanceof Countable &&
+            !$expected instanceof Iterator &&
+            !is_array($expected)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'countable');
+        }
+
+        if (!$actual instanceof Countable &&
+            !$actual instanceof Iterator &&
+            !is_array($actual)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'countable');
+        }
+
+        $constraint = new PHPUnit_Framework_Constraint_Not(
+          new PHPUnit_Framework_Constraint_SameSize($expected)
+        );
+
+        self::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -1689,38 +1762,38 @@ abstract class PHPUnit_Framework_Assert
     }
 
     /**
-     * Asserts that a hierarchy of DOMNodes matches.
+     * Asserts that a hierarchy of DOMElements matches.
      *
-     * @param DOMNode $expectedNode
-     * @param DOMNode $actualNode
+     * @param DOMElement $expectedElement
+     * @param DOMElement $actualElement
      * @param boolean $checkAttributes
      * @param string  $message
      * @author Mattis Stordalen Flister <mattis@xait.no>
      * @since  Method available since Release 3.3.0
      */
-    public static function assertEqualXMLStructure(DOMNode $expectedNode, DOMNode $actualNode, $checkAttributes = FALSE, $message = '')
+    public static function assertEqualXMLStructure(DOMElement $expectedElement, DOMElement $actualElement, $checkAttributes = FALSE, $message = '')
     {
         self::assertEquals(
-          $expectedNode->tagName,
-          $actualNode->tagName,
+          $expectedElement->tagName,
+          $actualElement->tagName,
           $message
         );
 
         if ($checkAttributes) {
             self::assertEquals(
-              $expectedNode->attributes->length,
-              $actualNode->attributes->length,
+              $expectedElement->attributes->length,
+              $actualElement->attributes->length,
               sprintf(
                 '%s%sNumber of attributes on node "%s" does not match',
                 $message,
                 !empty($message) ? "\n" : '',
-                $expectedNode->tagName
+                $expectedElement->tagName
               )
             );
 
-            for ($i = 0 ; $i < $expectedNode->attributes->length; $i++) {
-                $expectedAttribute = $expectedNode->attributes->item($i);
-                $actualAttribute   = $actualNode->attributes->getNamedItem(
+            for ($i = 0 ; $i < $expectedElement->attributes->length; $i++) {
+                $expectedAttribute = $expectedElement->attributes->item($i);
+                $actualAttribute   = $actualElement->attributes->getNamedItem(
                   $expectedAttribute->name
                 );
 
@@ -1731,31 +1804,31 @@ abstract class PHPUnit_Framework_Assert
                         $message,
                         !empty($message) ? "\n" : '',
                         $expectedAttribute->name,
-                        $expectedNode->tagName
+                        $expectedElement->tagName
                       )
                     );
                 }
             }
         }
 
-        PHPUnit_Util_XML::removeCharacterDataNodes($expectedNode);
-        PHPUnit_Util_XML::removeCharacterDataNodes($actualNode);
+        PHPUnit_Util_XML::removeCharacterDataNodes($expectedElement);
+        PHPUnit_Util_XML::removeCharacterDataNodes($actualElement);
 
         self::assertEquals(
-          $expectedNode->childNodes->length,
-          $actualNode->childNodes->length,
+          $expectedElement->childNodes->length,
+          $actualElement->childNodes->length,
           sprintf(
             '%s%sNumber of child nodes of "%s" differs',
             $message,
             !empty($message) ? "\n" : '',
-            $expectedNode->tagName
+            $expectedElement->tagName
           )
         );
 
-        for ($i = 0; $i < $expectedNode->childNodes->length; $i++) {
+        for ($i = 0; $i < $expectedElement->childNodes->length; $i++) {
             self::assertEqualXMLStructure(
-              $expectedNode->childNodes->item($i),
-              $actualNode->childNodes->item($i),
+              $expectedElement->childNodes->item($i),
+              $actualElement->childNodes->item($i),
               $checkAttributes,
               $message
             );
@@ -1837,7 +1910,7 @@ abstract class PHPUnit_Framework_Assert
         // assert specific number of elements
         if (is_numeric($count)) {
             $counted = $tags ? count($tags) : 0;
-            self::assertEquals($count, $counted);
+            self::assertEquals($count, $counted, $message);
         }
 
         // assert any elements exist if true, assert no elements exist if false
@@ -1873,7 +1946,7 @@ abstract class PHPUnit_Framework_Assert
                 self::assertTrue($counted <= $count['<='], $message);
             }
         } else {
-            throw new InvalidArgumentException();
+            throw new PHPUnit_Framework_Exception;
         }
     }
 
@@ -1922,7 +1995,7 @@ abstract class PHPUnit_Framework_Assert
      *
      * // Matcher that asserts that there is a "span" tag with content matching
      * // the regular expression pattern.
-     * $matcher = array('tag' => 'span', 'content' => '/Try P(HP|ython)/');
+     * $matcher = array('tag' => 'span', 'content' => 'regexp:/Try P(HP|ython)/');
      *
      * // Matcher that asserts that there is a "span" with an "list" class
      * // attribute.
@@ -2058,9 +2131,164 @@ abstract class PHPUnit_Framework_Assert
     {
         self::$count += count($constraint);
 
-        if (!$constraint->evaluate($value)) {
-            $constraint->fail($value, $message);
+        $constraint->evaluate($value, $message);
+    }
+
+    /**
+     * Asserts that two given JSON encoded objects or arrays are equal.
+     *
+     * @param string $expectedJson
+     * @param string $actualJson
+     * @param string $message
+     */
+    public static function assertJsonStringEqualsJsonString($expectedJson, $actualJson, $message = '')
+    {
+        $expected = json_decode($expectedJson);
+        if ($jsonError = json_last_error()) {
+            $message .=
+                PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider::determineJsonError(
+                    $jsonError,
+                    PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider::translateTypeToPrefix('expected')
+                );
         }
+
+        $actual   = json_decode($actualJson);
+        if ($jsonError = json_last_error()) {
+            $message .=
+                PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider::determineJsonError(
+                    $jsonError,
+                    PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider::translateTypeToPrefix('actual')
+                );
+        }
+        return self::assertEquals($expected, $actual, $message);
+    }
+
+    /**
+     * Asserts that two given JSON encoded objects or arrays are not equal.
+     *
+     * @param string $expectedJson
+     * @param string $actualJson
+     * @param string $message
+     */
+    public static function assertJsonStringNotEqualsJsonString($expectedJson, $actualJson, $message = '')
+    {
+        $expected = json_decode($expectedJson);
+        if ($jsonError = json_last_error()) {
+            $message .=
+                PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider::determineJsonError(
+                    $jsonError,
+                    PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider::translateTypeToPrefix('expected')
+                );
+        }
+
+        $actual   = json_decode($actualJson);
+        if ($jsonError = json_last_error()) {
+            $message .=
+                PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider::determineJsonError(
+                    $jsonError,
+                    PHPUnit_Framework_Constraint_JsonMatches_ErrorMessageProvider::translateTypeToPrefix('actual')
+                );
+        }
+
+        self::assertNotEquals($expected, $actual, $message);
+    }
+
+    /**
+     * Asserts that the generated JSON encoded object and the content of the given file are equal.
+     *
+     * @param string $expectedFile
+     * @param string $actualJson
+     * @param string $message
+     */
+    public static function assertJsonStringEqualsJsonFile($expectedFile, $actualJson, $message = '')
+    {
+        self::assertFileExists($expectedFile, $message);
+
+        if (!is_string($actualJson)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'string');
+        }
+
+        // call constraint
+        $constraint = new PHPUnit_Framework_Constraint_JsonMatches(
+            file_get_contents($expectedFile)
+        );
+
+        self::assertThat($actualJson, $constraint, $message);
+    }
+
+    /**
+     * Asserts that the generated JSON encoded object and the content of the given file are not equal.
+     *
+     * @param string $expectedFile
+     * @param string $actualJson
+     * @param string $message
+     */
+    public static function assertJsonStringNotEqualsJsonFile($expectedFile, $actualJson, $message = '')
+    {
+        self::assertFileExists($expectedFile, $message);
+
+        if (!is_string($actualJson)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(2, 'string');
+        }
+
+        // call constraint
+        $constraint = new PHPUnit_Framework_Constraint_JsonMatches(
+            file_get_contents($expectedFile)
+        );
+
+        self::assertThat($actualJson, new PHPUnit_Framework_Constraint_Not($constraint), $message);
+    }
+
+    /**
+     * Asserts that two JSON files are not equal.
+     *
+     * @param  string $expectedFile
+     * @param  string $actualFile
+     * @param  string $message
+     */
+    public static function assertJsonFileNotEqualsJsonFile($expectedFile, $actualFile, $message = '')
+    {
+        self::assertFileExists($expectedFile, $message);
+        self::assertFileExists($actualFile, $message);
+
+        $actualJson = file_get_contents($actualFile);
+        $expectedJson = file_get_contents($expectedFile);
+
+        // call constraint
+        $constraintExpected = new PHPUnit_Framework_Constraint_JsonMatches(
+            file_get_contents($expectedFile)
+        );
+
+        $constraintActual = new PHPUnit_Framework_Constraint_JsonMatches($actualJson);
+
+        self::assertThat($expectedJson, new PHPUnit_Framework_Constraint_Not($constraintActual), $message);
+        self::assertThat($actualJson, new PHPUnit_Framework_Constraint_Not($constraintExpected), $message);
+    }
+
+    /**
+     * Asserts that two JSON files are equal.
+     *
+     * @param  string $expectedFile
+     * @param  string $actualFile
+     * @param  string $message
+     */
+    public static function assertJsonFileEqualsJsonFile($expectedFile, $actualFile, $message = '')
+    {
+        self::assertFileExists($expectedFile, $message);
+        self::assertFileExists($actualFile, $message);
+
+        $actualJson = file_get_contents($actualFile);
+        $expectedJson = file_get_contents($expectedFile);
+
+        // call constraint
+        $constraintExpected = new PHPUnit_Framework_Constraint_JsonMatches(
+            file_get_contents($expectedFile)
+        );
+
+        $constraintActual = new PHPUnit_Framework_Constraint_JsonMatches($actualJson);
+
+        self::assertThat($expectedJson, $constraintActual, $message);
+        self::assertThat($actualJson, $constraintExpected, $message);
     }
 
     /**
@@ -2146,6 +2374,17 @@ abstract class PHPUnit_Framework_Assert
     }
 
     /**
+     * Returns a PHPUnit_Framework_Constraint_Callback matcher object.
+     *
+     * @param callable $callback
+     * @return PHPUnit_Framework_Constraint_Callback
+     */
+    public static function callback($callback)
+    {
+        return new PHPUnit_Framework_Constraint_Callback($callback);
+    }
+
+    /**
      * Returns a PHPUnit_Framework_Constraint_IsFalse matcher object.
      *
      * @return PHPUnit_Framework_Constraint_IsFalse
@@ -2186,13 +2425,14 @@ abstract class PHPUnit_Framework_Assert
      * Returns a PHPUnit_Framework_Constraint_TraversableContains matcher
      * object.
      *
-     * @param  mixed $value
+     * @param  mixed   $value
+     * @param  boolean $checkForObjectIdentity
      * @return PHPUnit_Framework_Constraint_TraversableContains
      * @since  Method available since Release 3.0.0
      */
-    public static function contains($value)
+    public static function contains($value, $checkForObjectIdentity = TRUE)
     {
-        return new PHPUnit_Framework_Constraint_TraversableContains($value);
+        return new PHPUnit_Framework_Constraint_TraversableContains($value, $checkForObjectIdentity);
     }
 
     /**
@@ -2206,6 +2446,18 @@ abstract class PHPUnit_Framework_Assert
     public static function containsOnly($type)
     {
         return new PHPUnit_Framework_Constraint_TraversableContainsOnly($type);
+    }
+
+    /**
+     * Returns a PHPUnit_Framework_Constraint_TraversableContainsOnly matcher
+     * object.
+     *
+     * @param string $classname
+     * @return PHPUnit_Framework_Constraint_TraversableContainsOnly
+     */
+    public static function containsOnlyInstancesOf($classname)
+    {
+        return new PHPUnit_Framework_Constraint_TraversableContainsOnly($classname, FALSE);
     }
 
     /**
@@ -2493,27 +2745,13 @@ abstract class PHPUnit_Framework_Assert
     }
 
     /**
-     * Fails a test with a synthetic error.
-     *
-     * @param  string  $message
-     * @param  string  $file
-     * @param  integer $line
-     * @param  array   $trace
-     * @throws PHPUnit_Framework_SyntheticError
-     */
-    public static function syntheticFail($message = '', $file = '', $line = 0, $trace = array())
-    {
-        throw new PHPUnit_Framework_SyntheticError($message, 0, $file, $line, $trace);
-    }
-
-    /**
      * Returns the value of an attribute of a class or an object.
      * This also works for attributes that are declared protected or private.
      *
      * @param  mixed   $classOrObject
      * @param  string  $attributeName
      * @return mixed
-     * @throws InvalidArgumentException
+     * @throws PHPUnit_Framework_Exception
      */
     public static function readAttribute($classOrObject, $attributeName)
     {

@@ -45,7 +45,8 @@ function wgUploadSetup() {
 	}
 
 	// AJAX wpDestFile warnings
-	if ( wgAjaxUploadDestCheck ) {
+	var htmlFormSource = document.getElementById( 'mw-htmlform-source' );
+	if ( wgAjaxUploadDestCheck && htmlFormSource ) {
 		// Insert an event handler that fetches upload warnings when wpDestFile
 		// has been changed
 		for ( i = 0; i < wgMaxUploadFiles; i++ ) {
@@ -55,8 +56,8 @@ function wgUploadSetup() {
 		}
 		// Insert a row where the warnings will be displayed just below the
 		// wpDestFile row
-		var optionsTable = document.getElementById( 'mw-htmlform-description' ).tBodies[0];
-		var row = optionsTable.insertRow( 1 );
+		var optionsTable = htmlFormSource.tBodies[0];
+		var row = optionsTable.insertRow( 0 );
 		var td = document.createElement( 'td' );
 		td.id = 'wpDestFile-warning';
 		td.colSpan = 2;
@@ -379,3 +380,31 @@ var wgUploadLicenseObj = {
 }
 
 addOnloadHook( wgUploadSetup );
+
+/**
+ * WIKIA CHANGE
+ * Disables submit button until one file is selected.
+ * Depends on jQuery
+ * This is not a critical component, just a user convenience.  Remove if necessary.
+ */
+$(function() {
+	(function($) {
+		var inputs = $('#mw-upload-form input[type=file]'),
+			submit = $('#mw-upload-form input[name=wpUpload]'),
+			empty = true;
+		submit.attr('disabled', 'true');
+		inputs.on('change.multiupload', function(e) {
+			if(empty) {
+				inputs.each(function(i) {
+					if($(this).val()) {
+						empty = false;
+					}
+				});
+				if(!empty) {
+					submit.removeAttr('disabled');
+					inputs.off('.multiupload');
+				}
+			}
+		})
+	})(jQuery);
+});

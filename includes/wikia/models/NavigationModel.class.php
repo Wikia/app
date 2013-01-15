@@ -47,6 +47,8 @@ class NavigationModel extends WikiaModel {
 	);
 
 	private $forContent = false;
+	private $shouldTranslateContent = true;
+
 	private $useSharedMemcKey = false;
 
 	// list of errors encountered when parsing the wikitext
@@ -91,6 +93,14 @@ class NavigationModel extends WikiaModel {
 		);
 	}
 
+	private function setShouldTranslateContent($shouldTranslateContent) {
+		$this->shouldTranslateContent = $shouldTranslateContent;
+	}
+
+	private function getShouldTranslateContent() {
+		return $this->shouldTranslateContent;
+	}
+
 	/**
 	 * Return list of errors encountered when parsing the wikitext
 	 *
@@ -115,6 +125,7 @@ class NavigationModel extends WikiaModel {
 			true
 		);
 
+		$this->setShouldTranslateContent(false);
 		if( !empty( $msgName ) && $msgName == self::WIKI_LOCAL_MESSAGE && !empty( $wikiText ) ) {
 			 $wiki = $this->parseText(
 				 $wikiText,
@@ -139,6 +150,7 @@ class NavigationModel extends WikiaModel {
 					true // $forContent
 				) : array() );
 		}
+		$this->setShouldTranslateContent(true);
 
 		return array(
 			'wikia' => $wikia,
@@ -382,9 +394,14 @@ class NavigationModel extends WikiaModel {
 			}
 		}
 
-		$text = $this->forContent ? $this->wf->MsgForContent( $desc ) : $this->wf->Msg( $desc );
 
-		if ( $this->wf->EmptyMsg( $desc, $text ) ) {
+		$text = null;
+
+		if ($this->getShouldTranslateContent()) {
+			$text = $this->forContent ? $this->wf->MsgForContent( $desc ) : $this->wf->Msg( $desc );
+		}
+
+		if ( empty($text) || $this->wf->EmptyMsg( $desc, $text ) ) {
 			$text = $desc;
 		}
 

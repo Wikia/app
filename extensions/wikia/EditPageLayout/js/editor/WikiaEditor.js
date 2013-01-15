@@ -37,7 +37,7 @@
 				requires: [
 					$.loadYUI,
 					$.loadJQueryAIM,
-					wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/css/WMU.css',
+					$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
 					wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
 				]
 			}
@@ -782,7 +782,7 @@
 				this.textarea = $('<textarea>')
 					.addClass('body')
 					.attr('id', 'mw_' + this.editor.instanceId)
-					.val($.trim(this.textarea.html()))
+					.val($.trim(this.textarea.text()))
 					.insertAfter(this.textarea.hide());
 			}
 

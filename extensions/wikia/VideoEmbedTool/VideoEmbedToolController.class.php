@@ -84,6 +84,7 @@ class VideoEmbedToolController extends WikiaController {
 		$trimTitle = $this->request->getInt( 'trimTitle', 0 );
 		$phrase = $this->request->getVal( 'phrase' );
 		$searchType = $this->request->getVal( 'type', 'local' );
+		$searchOrder = $this->request->getVal( 'order', 'default' );
 
 		$svSize = $svSize < 1 ? 1 : $svSize;
 
@@ -91,7 +92,8 @@ class VideoEmbedToolController extends WikiaController {
 		$wikiaSearchConfig  ->setStart( $svStart )
 							->setLength( $svSize*2 )   // fetching more results to make sure we will get desired number of results in the end
 							->setVideoSearch( true )
-							->setNamespaces( array( NS_FILE ) );
+							->setNamespaces( array( NS_FILE ) )
+							->setRank($searchOrder);
 
 		if($searchType == 'premium') {
 			$wikiaSearchConfig->setCityID( WikiaSearch::VIDEO_WIKI_ID );

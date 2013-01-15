@@ -2,19 +2,17 @@
 
 class ShareButtonFacebook extends ShareButton {
 
-	public function __construct(WikiaApp $app) {
-		parent::__construct($app);
-	}
-
-	// AssetsManager compliant path to assets
-	public function getAssets() {
-		return array( '//extensions/wikia/ShareButtons/js/ShareButtonFacebook.js' );
-	}
+    /**
+	 * AssetsManager compliant path to assets
+	 * @var array
+	 */
+	protected static $assets =  array( '//extensions/wikia/ShareButtons/js/ShareButtonFacebook.js' );
 
 	/**
 	 * Return HTML rendering share box (with votes count)
 	 *
 	 * @see https://developers.facebook.com/docs/reference/plugins/like/
+	 * @return string
 	 */
 	public function getShareBox() {
 		global $wgNoExternals;
@@ -32,19 +30,5 @@ class ShareButtonFacebook extends ShareButton {
 		), ' ');
 
 		return $html;
-	}
-
-	/**
-	 * Return HTML rendering share button
-	 */
-	public function getShareButton() {
-
-	}
-
-	/**
-	 * Return HTML rendering share link
-	 */
-	public function getShareLink() {
-
 	}
 }

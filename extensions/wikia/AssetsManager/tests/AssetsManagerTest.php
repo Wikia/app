@@ -63,15 +63,6 @@ class AssetsManagerTest extends WikiaBaseTest {
 			$dataSets[] = array( $name, $files );
 		}
 
-		// standard oasis splits
-		$dataSets[] = array(
-			'oasis_jquery_ads_js + oasis_nojquery_shared_js',
-			array_merge(
-				$config->resolve('oasis_jquery_ads_js',/*combine*/false,/*minify*/false),
-				$config->resolve('oasis_nojquery_shared_js',/*combine*/false,/*minify*/false)
-			)
-		);
-
 		return $dataSets;
 	}
 }

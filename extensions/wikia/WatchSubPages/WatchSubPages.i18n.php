@@ -273,6 +273,14 @@ $messages['tt-cyrl'] = array(
 	'tog-watchlistsubpages' => 'Астмәкаләләргә күчү',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'wikia-watchsubpages-desc' => 'Автоматичний перехід на підсторінки',
+	'tog-watchlistsubpages' => 'Перехід на підсторінки',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */

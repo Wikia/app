@@ -167,7 +167,7 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
-	'categorygalleries-desc' => 'Menunjukkan galeri laman di laman kategori',
+	'categorygalleries-desc' => 'Memaparkan galeri halaman pada halaman kategori',
 );
 
 /** Norwegian Bokmål (norsk (bokmål)‎)
@@ -185,10 +185,11 @@ $messages['nl'] = array(
 );
 
 /** Polish (polski)
+ * @author Matma Rex
  * @author Sovq
  */
 $messages['pl'] = array(
-	'categorygalleries-desc' => 'Wyświetla galerię artykułów na stornach kategorii',
+	'categorygalleries-desc' => 'Wyświetla galerię artykułów na stronach kategorii',
 );
 
 /** Piedmontese (Piemontèis)

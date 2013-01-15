@@ -1059,10 +1059,6 @@ $messages['es'] = array(
 	'oasis-upload-photos-fewer-options' => 'Menos Opciones',
 	'oasis-upload-photos-force' => 'Subir igualmente',
 	'oasis-upload-photos-caption' => 'Comentario',
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
-	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes',
 	'oasis-modal-error-headline' => 'Por favor, corrige los siguientes errores',
 	'oasis-skip-to-content' => 'Saltar al contenido',
 	'oasis-skip-to-wiki-navigation' => 'Saltar al Navegación Wiki',
@@ -1095,7 +1091,8 @@ $1 te ha enviado esta página de {{SITENAME}} en Wikia:
 	'hub-Lifestyle' => 'Estilo de vida',
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://es.wikia.com/Entretenimiento',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://es.wikia.com/Videojuegos',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://es.wikia.com/Estilo_de_vida'
+	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://es.wikia.com/Estilo_de_vida',
+	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes',
 );
 
 /** Persian (فارسی)

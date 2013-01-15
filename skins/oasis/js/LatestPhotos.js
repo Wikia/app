@@ -36,7 +36,8 @@ var UploadPhotos = {
 				UploadPhotos.destfile = UploadPhotos.d.find("input[name=wpDestFile]");
 				UploadPhotos.filepath = UploadPhotos.d.find("input[name=wpUploadFile]");
 				UploadPhotos.status = UploadPhotos.d.find("div.status");
-				UploadPhotos.advanced = UploadPhotos.d.find(".advanced a");
+				UploadPhotos.advanced = UploadPhotos.d.find(".advanced");
+				UploadPhotos.advancedA = UploadPhotos.d.find(".advanced a");
 				UploadPhotos.advancedChevron = UploadPhotos.d.find(".advanced .chevron");
 				UploadPhotos.options = UploadPhotos.d.find(".options");
 				UploadPhotos.uploadbutton = UploadPhotos.d.find("input[type=submit]");
@@ -57,15 +58,15 @@ var UploadPhotos = {
 				UploadPhotos.d.find('form').submit(function() {
 					$.AIM.submit(this, UploadPhotos.uploadCallback);
 				});
-				UploadPhotos.advanced.click(function(evt) {
+				UploadPhotos.advancedA.click(function(evt) {
 					evt.preventDefault();
 
 					//set correct text for link and arrow direction
 					if (UploadPhotos.options.is(":visible")) {
-						UploadPhotos.advanced.text(UploadPhotos.advanced.data("more"));
+						UploadPhotos.advancedA.text(UploadPhotos.advancedA.data("more"));
 						UploadPhotos.advancedChevron.removeClass("up");
 					} else {
-						UploadPhotos.advanced.text(UploadPhotos.advanced.data("fewer"));
+						UploadPhotos.advancedA.text(UploadPhotos.advancedA.data("fewer"));
 						UploadPhotos.advancedChevron.addClass("up");
 					}
 
@@ -121,6 +122,7 @@ var UploadPhotos = {
 					window.location = wgArticlePath.replace('$1', 'Special:NewFiles');
 				} else if(json['status'] == -2) {	// show conflict dialog
 					UploadPhotos.step1.hide(400, function() {
+						UploadPhotos.advanced.hide();
 						UploadPhotos.conflict.html(json['statusMessage']);
 						UploadPhotos.step2.show(400, function() {
 							UploadPhotos.uploadbutton.removeAttr("disabled").show();

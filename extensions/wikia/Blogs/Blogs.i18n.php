@@ -137,20 +137,25 @@ Avatar6.jpg",
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Lloffiwr
+ * @author Shirayuki
  * @author Siebrand
  * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'create-blog-post-recent-listing-log' => 'Edit summary, maybe.',
 	'create-blog-empty-article-log' => 'Edit summary',
+	'create-blog-invalid-title-error' => '{{Identical|Invalid title}}',
+	'create-blog-no-login' => '{{Identical|Not logged in}}',
 	'create-blog-listing-preview' => 'This is an H2 level header above a preview.',
-	'create-blog-listing-matches-info' => 'Looks like this message may have a leading number. Please check. If so, integrate in message.', # Fuzzy
-	'blog-last-edited' => 'If $1 is a time stamp, split date and time to $2 and $3.', # Fuzzy
+	'create-blog-listing-matches-info' => '',
+	'blog-last-edited' => '',
 	'blog-added' => 'This is the possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-edited' => 'This is a possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-comments' => '{{Identical|Comment}}',
+	'blog-comments-label' => 'This is a checkbox label. When creating or editing a blog, the editor may enable (box is checked) or disable (box is unchecked) users to comment on the blog',
 	'blog-voting-label' => 'This is a checkbox label. Given the description, I would assume that checking it enables voting for a (new) blog post.',
 	'blog-comment-delete' => '{{Identical|Delete}}',
+	'blog-comment-hide' => '{{Identical|Hide}}',
 	'blog-comment-history' => '{{Identical|History}}',
 	'right-blog-comments-toggle' => '{{doc-right|blog-comments-toggle}}',
 	'right-blog-comments-delete' => '{{doc-right|blog-comments-delete}}',
@@ -617,43 +622,108 @@ $messages['ca'] = array(
 	'create-blog-post-title' => 'Crea una entrada nova',
 	'create-blog-post-title-edit' => "Editar l'entrada de bloc",
 	'create-blog-form-title' => 'Què és una entrada de bloc?',
-	'create-blog-form-post-text' => 'Text de bloc',
+	'create-blog-form-post-text' => "Contingut de l'entrada",
+	'create-blog-form-info' => 'Les entrades de bloc són una bona manera per a compartir notícies, opinions i elements creatius amb la comunitat.',
+	'create-blog-form-post-title' => "Títol de l'entrada",
+	'create-blog-empty-title-error' => 'Títol requerit',
+	'create-blog-empty-post-error' => "El contingut de l'entrada està buit",
+	'create-blog-empty-article-log' => 'Article creat per a la llista de blocs',
+	'create-blog-invalid-title-error' => 'Títol invàlid',
+	'create-listing-confirm-info' => 'Copia i enganxa el següent codi:',
+	'create-blog-no-login' => 'No has iniciat sessió',
+	'create-blog-login-required' => 'Has de [{{fullurl:Special:Signup|$1}} iniciar sessió] per a crear una entrada o una llista de blocs.',
+	'create-blog-categories-title' => 'Afegir aquesta entrada de bloc a aquesta categories (fes clic per a seleccionar-les)',
 	'create-blog-categories-textinput' => 'Afegir una nova categoria',
 	'create-blog-categories-submit' => 'Acceptar',
 	'create-blog-save' => 'Desa la pàgina',
+	'create-blog-preview' => 'Previsualitza',
+	'create-blog-updated' => 'Entrada de bloc creada o actualitzada.',
+	'create-blog-permission-denied' => 'Error mentre es desava la pàgina del bloc: Permisos Denegats',
+	'create-blog-article-already-exists' => 'Ja existeix una entrada amb aquest nom. Si us plau, tria un nom diferent.',
+	'create-blog-listing-title' => 'Crear una nova pàgina amb una llista de blocs',
+	'create-blog-listing-form-title' => 'Què és una llista de blocs?',
+	'create-blog-listing-form-info' => 'Les llistes de blocs es fan servir per afegir entrades de diferents autors en una mateixa pàgina. Es poden crear pàgines de llistes de blocs per categories com ara "Barack Obama" o "Humor", o combinar diferents categories a la vegada.',
+	'create-blog-listing-page-title' => 'Títol de la llista de blocs',
+	'create-blog-listing-preview' => 'Previsualització',
+	'create-blog-listing-authors' => 'Obtenir les entrades creades per aquests autors (separats per comes)',
+	'create-blog-listing-blog-post-categories-title' => "Obtenir les entrades d'aquestes categories",
+	'create-blog-listing-page-categories-title' => 'Afegir aquesta llista de blocs a aquestes categories',
+	'create-blog-listing-matches' => 'Marcats',
+	'create-blog-listing-matches-calculate' => 'Calcular',
+	'create-blog-listing-matches-recalculate' => 'Recomptar',
+	'create-blog-listing-matches-info' => "marcant {{PLURAL:$1|l'entrada trobada|les entrades trobades}}",
 	'create-blog-listing-sortby' => 'Classificar per',
+	'create-blog-listing-sortby-date' => 'Més recents',
 	'create-blog-listing-sortby-author' => 'Autor',
+	'create-blog-listing-sortby-comments' => 'Comptador de comentaris',
+	'create-blog-listing-output-as-box' => 'Generar un codi per copiar i enganxar',
+	'create-blog-listing-output-as-page' => 'Crear llista en una pàgina nova',
+	'create-blog-listing-tag-format-not-recognized-on-page' => 'Etiqueta de llista de blocs no reconeguda',
+	'blog-header' => 'Entrades de blocs a la categoria "$1"',
+	'blog-subheader' => '{{PLURAL:$1|Hi ha una entrada|Els següents $1 articles de bloc estan}} en aquesta categoria.',
+	'blog-subheader-all' => "{{PLURAL:$1|Hi ha un article del bloc en aquesta categoria.|El següents $1 articles del bloc són en aquesta categoria, d'un total de $2.}}",
+	'blog-invalidparam' => "Paràmetre desconegut '$1' ignorat. Si us plau, fes servir un dels paràmetres disponibles: <code>$2</code>.",
+	'blog-emptyparam' => 'El nom del paràmetre no pot estar buit',
 	'blog-defaulttitle' => 'Blocs',
+	'blog-continuereading' => 'Continua llegint &raquo;',
 	'blog-readfullpost' => 'Llegir més',
+	'blog-olderposts' => 'Entrades antigues',
+	'blog-newerposts' => 'Entrades noves',
+	'blog-nbrcomments' => '{{PLURAL:$1|un comentari|$1 comentaris}}',
+	'blog-nopostfound' => 'Entrades no trobades.',
+	'blog-writeone' => 'Escriu-ne un!',
+	'blog-empty-user-blog' => 'Aquest usuari encara no ha escrit cap entrada en el seu bloc!',
+	'blog-last-edited' => '<strong>Última edició:</strong> $1',
 	'blog-added' => 'afegit',
 	'blog-edited' => 'editat',
 	'blog-page' => 'Bloc',
 	'blog-zero-comments' => 'Encara no hi ha comentaris!',
-	'blog-comment-post' => 'Publicar comentari',
+	'blog-comment-post' => 'Comentar',
 	'blog-comments' => 'Comentaris',
 	'blog-rc-comments' => 'Comentaris del bloc',
 	'blog-comments-new' => 'Nou comentari al bloc',
 	'blog-comments-save' => 'Guardar comentari al bloc',
 	'blog-comments-label' => 'Comentaris',
+	'blog-voting-label' => 'Votació',
+	'blog-comments-info' => 'Fes servir aquesta caixa per a deixar un comentari. Li pots donar estil de wikitext.',
+	'blog-comments-login' => '<a href="$1" rel="nofollow">Inicia sessió</a> per a deixar un comentari',
+	'blog-comments-dsc' => 'Nous comentaris al principi',
+	'blog-comments-asc' => 'Nous comentaris al final',
 	'blog-comments-anonymous' => 'Usuari anònim',
 	'blog-comment-delete' => 'eliminar',
 	'blog-comment-hide' => 'amagar',
 	'blog-comment-unhide' => 'mostrar',
 	'blog-comment-history' => 'historial',
 	'blog-comment-edit' => 'editar',
-	'blog-comment-error' => "El comentari no s'ha pogut guardar",
+	'blog-comment-error' => "El comentari no s'ha pogut desar",
 	'blog-comment-cannot-add' => 'No pots afegir un comentari al bloc.',
 	'blog-avatar-preferences-title' => 'Avatar',
+	'blog-page-rate' => 'Valora aquesta entrada:',
+	'blog-create-post-label' => 'Crear una entrada',
+	'blog-create-label' => 'Crear una entrada',
+	'blog-create-next-label' => 'Crea una nova entrada del bloc',
+	'blog-create-listing-label' => 'Crea una llista de blocs',
+	'blog-refresh-label' => 'Actualizar',
+	'blog-widgets-label' => 'Tauler de widgets',
+	'blog-listing-zero-other' => 'Aquest usuari encara no ha escrit cap entrada en el seu bloc!',
+	'blog-listing-created' => 'Pàgina de llistat de blocs creada',
 	'blog-userblog' => 'Bloc de $1',
 	'blog-fromsitename' => 'De $1',
+	'blogs-reportproblem' => 'Informar sobre un problema',
 	'blogs-comment-hidden' => 'Comentari amagat',
-	'right-blog-comments-toggle' => 'Activar comentaris a articles del bloc',
-	'right-blog-comments-delete' => 'Esborrar comentaris en articles de bloc',
+	'right-blog-comments-toggle' => 'Alternar comentaris a articles del bloc',
+	'right-blog-comments-delete' => 'Esborrar comentaris en articles del bloc',
+	'right-blog-articles-edit' => 'Modifica articles del bloc',
 	'right-blog-articles-move' => 'Moure articles del bloc',
-	'blogs-recent-url-text' => 'Entrades de Bloc recents',
+	'blogs-undeleted-comment' => 'Comentari no eliminat de la pàgina del bloc $1',
+	'blogs-recent-url-text' => 'Entrades de bloc recents',
+	'blog-desc' => 'Articles del bloc',
+	'blog-movepage-badtitle' => "Títol de l'entrada del bloc invàlid",
 	'blog-comment-sending' => 'Enviant...',
 	'blog-by' => '$1 per $2',
 	'blogs-searchprofile' => 'Blocs',
+	'blogs-searchprofile-tooltip' => 'Cercar en articles de bloc i llistes de bloc',
+	'user-blog-url-link' => 'Usuari bloc:$1',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -1380,7 +1450,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
 	'blog-listing-created' => 'Blogi-luettelointisivu luotu',
 	'blog-userblog' => 'Käyttäjän $1 blogi',
 	'blog-fromsitename' => 'Tuotu $1',
-	'blogs-reportproblem' => 'Raportoi ongelmasta',
+	'blogs-reportproblem' => 'Ilmoita ongelmasta',
 	'blogs-comment-hidden' => 'Kommentti piilotettu.',
 	'right-blog-comments-toggle' => 'Kytkeä blogikirjoitusten kommentteja päälle/pois',
 	'right-blog-comments-delete' => 'Poistaa kommentteja blogiartikkeleista',
@@ -1643,6 +1713,14 @@ Cree páxinas de listas de blogues para categorías como "Barack Obama", "Galici
 	'blogs-searchprofile' => 'Blogues',
 	'blogs-searchprofile-tooltip' => 'Procurar nos artigos e listas de blogue',
 	'user-blog-url-link' => 'Blogue de usuario:$1',
+);
+
+/** Gujarati (ગુજરાતી)
+ * @author Dsvyas
+ */
+$messages['gu'] = array(
+	'blog-added' => 'ઉમેર્યું',
+	'blog-edited' => 'બદલ્યું',
 );
 
 /** Hausa (Hausa)
@@ -3456,6 +3534,7 @@ $messages['pms'] = array(
 	'blog-by' => '$1 da $2',
 	'blogs-searchprofile' => 'Scartari',
 	'blogs-searchprofile-tooltip' => "Sërché ant j'artìcoj e le Liste dë Scartari",
+	'user-blog-url-link' => 'Startari utent:$1',
 );
 
 /** Pashto (پښتو)
@@ -3918,6 +3997,13 @@ $messages['ru'] = array(
 	'blogs-searchprofile' => 'Блоги',
 	'blogs-searchprofile-tooltip' => 'Поиск в блогах и в списках блогов',
 	'user-blog-url-link' => 'Блог участника:$1',
+);
+
+/** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['si'] = array(
+	'blog-userblog' => '$1 ගේ බ්ලොගය',
 );
 
 /** Slovenian (slovenščina)
@@ -4516,6 +4602,7 @@ $messages['tzm'] = array(
 /** Ukrainian (українська)
  * @author A1
  * @author Prima klasy4na
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -4530,17 +4617,29 @@ $messages['uk'] = array(
 	'create-blog-save' => 'Зберегти сторінку',
 	'create-blog-preview' => 'Попередній перегляд',
 	'create-blog-listing-preview' => 'Попередній перегляд',
+	'create-blog-listing-matches-calculate' => 'Обчислити',
+	'create-blog-listing-matches-recalculate' => 'Перерахувати',
 	'create-blog-listing-sortby' => 'Сортувати за',
 	'create-blog-listing-sortby-author' => 'автором',
+	'blog-defaulttitle' => 'Блоги',
 	'blog-readfullpost' => 'Читати далі',
+	'blog-added' => 'додано',
+	'blog-page' => 'Блог',
+	'blog-comment-post' => 'Залишити коментар',
 	'blog-comments' => 'Коментарі',
+	'blog-voting-label' => 'Голосування',
+	'blog-comments-anonymous' => 'Анонімний користувач',
 	'blog-comment-delete' => 'вилучити',
 	'blog-comment-hide' => 'сховати',
 	'blog-comment-unhide' => 'показати',
 	'blog-comment-history' => 'історія',
 	'blog-comment-edit' => 'редагувати',
+	'blog-page-rate' => 'Оцініть цю статтю:',
 	'blog-refresh-label' => 'Оновити',
+	'blog-fromsitename' => 'З $1',
 	'blogs-reportproblem' => 'Повідомити про проблему',
+	'blog-comment-sending' => 'Надсилання...',
+	'blogs-searchprofile' => 'Блоги',
 );
 
 /** Uzbek (oʻzbekcha)
@@ -4825,6 +4924,7 @@ $messages['zh-hans'] = array(
 	'blog-movepage-badtitle' => '无效的博客帖子标题。',
 	'blog-comment-sending' => '正在发送...',
 	'blog-by' => '$1由$2',
+	'blogs-searchprofile' => '博客',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

@@ -479,6 +479,14 @@ $messages['tt-cyrl'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Хата: мәкалә тексты кирәк',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Заголовок',
+	'contentfeeds-firstfewarticles-tag-next' => 'Далі',
+);
+
 /** Veps (vepsän kel’)
  * @author Игорь Бродский
  */

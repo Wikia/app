@@ -113,6 +113,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -150,7 +151,8 @@ $messages['qqq'] = array(
 	'userlogin-error-unconfirmed-user' => 'Error message stating that user needs to be confirmed first.',
 	'userlogin-password-page-title' => 'Heading for change password page.',
 	'userlogin-oldpassword' => 'Label for old password field',
-	'userlogin-newpassword' => 'Label for new password field',
+	'userlogin-newpassword' => 'Label for new password field.
+{{Identical|New password}}',
 	'userlogin-retypenew' => 'Label for retype password field',
 	'userlogin-password-email-subject' => 'Subject line for Forgot password email',
 	'userlogin-password-email-greeting' => 'Email body heading. $USERNAME is a special wikia magic word, so re-use it without changing. This may contain html markup, and is placed onto a template.',
@@ -1310,6 +1312,80 @@ Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:
 	'wikiamobile-facebook-connect-fail' => 'Przepraszamy, Twoje konto na Facebooku nie jest obecnie połączone z kontem na Wikii.',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'userlogin-login-heading' => 'Intra',
+	'userlogin-forgot-password' => 'Dësmentià soa ciav?',
+	'userlogin-remembermypassword' => 'Resta an drinta',
+	'userlogin-error-noname' => 'Contacc, për piasì vemp ël camp dël nòm utent.',
+	'userlogin-error-sessionfailure' => "Toa session a l'é andàita an timeout. Për piasì intra torna.",
+	'userlogin-error-nosuchuser' => 'Hm, i arconossoma pa sto nòm. Dësmentia pa che ij nòm utent a son sensìbij al maiuscolin.',
+	'userlogin-error-wrongpassword' => 'Contacc, ciav pa bon-a. Sigurte che ël maiuscolin a sia dëstiss e preuva torna.',
+	'userlogin-error-wrongpasswordempty' => 'Contacc, për piasì vemp ël camp dla ciav.',
+	'userlogin-error-resetpass_announce' => "A smija ch'it l'abie dovrà na ciav temporanea. Selession-a na ciav neuva belessì për continué a intré.",
+	'userlogin-error-login-throttled' => "It l'has provà a intré con la ciav pa bon-a tròpe vire. Speta un pòch prima ëd torna prové.",
+	'userlogin-error-login-userblocked' => "Tò nòm utent a l'é stàit blocà e a peul pa esse dovrà për intré.",
+	'userlogin-error-edit-account-closed-flag' => "Tò cont a l'é stàit disabilità da Wikia.",
+	'userlogin-error-cantcreateaccount-text' => 'Toa adrëssa IP a peul pa creé cont neuv.',
+	'userlogin-error-userexists' => "Quaidun a l'ha già sto nòm utent. Preuvne un diferent!",
+	'userlogin-error-invalidemailaddress' => "Për piasì anseriss n'adrëssa ëd pòsta eletrònica bon-a.",
+	'userlogin-get-account' => "It l'has-to pa un cont? [[Special:UserSignup|Registr-te]]",
+	'userlogin-error-invalid-username' => 'Stranòm pa bon',
+	'userlogin-error-userlogin-unable-info' => 'Spiasent, i podoma pa registré tò cont al moment.',
+	'userlogin-error-user-not-allowed' => "Sto nòm utent a l'é pa përmëttù.",
+	'userlogin-error-captcha-createaccount-fail' => "la paròla ch'it l'has anserì a corispond pa la paròla ant la casela, preuva torna!",
+	'userlogin-error-userlogin-bad-birthday' => 'Contacc, për piasì vemp mèis, di, e ann.',
+	'userlogin-error-externaldberror' => "Spiasen! Nòst sit a l'ha al moment un problem, për piasì preuva torna pi tard.",
+	'userlogin-error-noemailtitle' => "Për piasì anseriss n'adrëssa ëd pòsta eletrònica bon-a.",
+	'userlogin-error-acct_creation_throttle_hit' => "Spiasent, st'adrëssa IP a l'ha creà tròpi cont ancheuj. Për piasì preuva torna pi tard.",
+	'userlogin-error-resetpass_forbidden' => 'Le ciav as peulo pa cambiesse',
+	'userlogin-error-blocked-mailpassword' => "It peule pa ciamé na neuva ciav përchè st'adrëssa IP a l'é blocà da Wikia.",
+	'userlogin-error-throttled-mailpassword' => "I l'oma già mandà na memòria ëd ciav për sto cont ant {{PLURAL:$1|l'ùltima ora|j'ùltime $1 ore}}. Për piasì contròla toa email.",
+	'userlogin-error-mail-error' => 'Contacc, a-i era un problem a mandé tò corel. Për piasì [[Special:Contact/general|contatne]].',
+	'userlogin-password-email-sent' => "I l'oma mandà na neuva ciav a l'adrëssa email për $1.",
+	'userlogin-error-unconfirmed-user' => "Spiasent, it l'has pa confirmà toa email. Për piasì confirma prima toa email.",
+	'userlogin-password-page-title' => 'Cangia toa ciav',
+	'userlogin-oldpassword' => 'Veja ciav',
+	'userlogin-newpassword' => 'Neuva ciav',
+	'userlogin-retypenew' => 'Che a scriva torna la neuva ciav',
+	'userlogin-password-email-subject' => 'Arcesta dla ciav dësmentià',
+	'userlogin-password-email-greeting' => 'Cerea $USERNAME,',
+	'userlogin-password-email-content' => 'Për piasì dòvra sta ciav temporanea për intré an Wikia: "$NEWPASSWORD"
+<br /><br />
+S\'it l\'has pa ciamà na neuva ciav, sagrinte pa! Tò cont a l\'é an salute e sigur. It peule ignoré sta email e continué a intré an Wikia con toa veja ciav.
+<br /><br />
+Custion o dùbit? Sente lìber ëd contatene.',
+	'userlogin-password-email-signature' => 'Apògg dla Comunità Wikia',
+	'userlogin-password-email-body' => "Cerea \$2,
+
+Për piasì dòvra sta ciav temporanea për intré an Wikia: \"\$3\"
+
+S'it l'has pa ciamà na neuva ciav, sagrinte pa! Tò cont a l'é an salute e sigur. It peule ignoré sto corel e continué a intré an Wikia con toa veja ciav.
+
+Custion o dùbit? Sent-te lìber ëd contatene.
+
+L'Apògg dla Comunità Wikia
+
+
+___________________________________________
+
+Për controlé l'ùltime neuve an Wikia, vìsita http://community.wikia.com
+It veus-to controlé che email it arseive? Và a: {{fullurl:{{ns:special}}:Preferences}}",
+	'userlogin-email-footer-line1' => 'Për controlé l\'ùltime neuve dzor Wikia, vìsita <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line2' => 'It veus-to controlé che email it arseive? Và ai tò <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Gust</a>',
+	'userlogin-provider-or' => 'O',
+	'userlogin-provider-tooltip-facebook' => 'Sgnaca ël boton për intré con Facebook',
+	'userlogin-provider-tooltip-facebook-signup' => 'Sgnaca ël boton për registrete con Facebook',
+	'userlogin-facebook-show-preferences' => 'Mosta ij gust dij feed ëd Facebook',
+	'userlogin-facebook-hide-preferences' => 'Stërma ij gust dij feed ëd Facebook',
+	'userlogin-loginreqlink' => 'rintré ant ël sistema',
+	'userlogin-changepassword-needlogin' => "It l'has dabzògn ëd $1 për cangé toa ciav.",
+	'wikiamobile-sendpassword-label' => 'Manda neuva ciav',
+	'wikiamobile-facebook-connect-fail' => "Spiasent, tò cont Facebook a l'é pa colegà al moment con un cont Wikia.",
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -1399,6 +1475,24 @@ $messages['pt-br'] = array(
 	'userlogin-provider-or' => 'Ou',
 	'userlogin-loginreqlink' => 'entrar',
 	'wikiamobile-sendpassword-label' => 'Enviar nova senha',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'userlogin-login-heading' => 'Tràse',
+	'userlogin-forgot-password' => "T'è scurdate 'a passuord?",
+	'userlogin-error-invalid-username' => "Nome de l'utende invalide",
+	'userlogin-error-user-not-allowed' => "Stu nome de utende non g'è permesse.",
+	'userlogin-password-page-title' => "Cange 'a passuord toje",
+	'userlogin-oldpassword' => 'Vécchia passuord',
+	'userlogin-newpassword' => 'Nova passuord',
+	'userlogin-retypenew' => "Scrive n'otra vota 'a passuord nova",
+	'userlogin-password-email-subject' => 'Richieste pa passuord scurdate',
+	'userlogin-password-email-greeting' => 'Cià $USERNAME,',
+	'userlogin-provider-or' => 'O',
+	'userlogin-loginreqlink' => 'trase',
 );
 
 /** Russian (русский)
@@ -1695,15 +1789,29 @@ $messages['te'] = array(
 );
 
 /** Thai (ไทย)
+ * @author Horus
  * @author Saipetch
+ * @author TMo3289
  */
 $messages['th'] = array(
 	'userlogin-login-heading' => 'ล็อกอิน',
+	'userlogin-forgot-password' => 'ลืมรหัสผ่าน',
+	'userlogin-remembermypassword' => 'คงสถานะอยู่ในระบบ (แม้ปิดเบราว์เซอร์แล้ว)',
+	'userlogin-error-noname' => 'ขออภัย โปรดกรอกชื่อผู้ใช้งานของท่าน',
+	'userlogin-error-sessionfailure' => 'การเข้าระบบครั้งก่อนของท่านหมดเวลาแล้ว โปรดเข้าระบบใหม่',
+	'userlogin-error-nosuchuser' => 'ขออภัย ชื่อผู้ใช้นี้ไม่ได้มีในฐานข้อมูลชื่อผู้ใช้ ลองตรวจสอบตัวพิมพ์ใหญ่-เล็กอีกครั้งหนึ่ง',
+	'userlogin-error-wrongpassword' => 'ขออภัย รหัสผ่านผิด โปรดตรวจสอบว่าปุ่ม caps lock ปิดแล้ว จากนั้นลองใหม่อีกครั้ง',
+	'userlogin-get-account' => 'ไม่มีบัญชีใช่ไหม โปรด[[Special:UserSignup|สมัครบัญชีผู้ใช้]]',
 	'userlogin-password-page-title' => 'เปลี่ยนรหัสผ่าน',
 	'userlogin-oldpassword' => 'รหัสผ่านเดิม',
 	'userlogin-newpassword' => 'รหัสผ่านใหม่',
 	'userlogin-retypenew' => 'พิมพ์รหัสผ่านใหม่อีกครั้ง',
+	'userlogin-password-email-greeting' => 'สวัสดี $USERNAME',
 	'userlogin-provider-or' => 'หรือ',
+	'userlogin-loginreqlink' => 'เข้าสู่ระบบ',
+	'userlogin-changepassword-needlogin' => 'ท่านต้อง $1 เพื่อที่จะเปลี่ยนรหัสผ่าน',
+	'wikiamobile-sendpassword-label' => 'ส่งรหัสผ่านใหม่',
+	'wikiamobile-facebook-connect-fail' => 'ขออภัยที่บัญชีเฟสบุ๊คของท่านไม่ได้เชื่อมโยงกับบัญชีวิเกีย',
 );
 
 /** Tagalog (Tagalog)
@@ -1778,6 +1886,22 @@ Nais mong kontrolin ang tinatanggap mong mga e-liham? Pumunta sa: {{fullurl:{{ns
 	'userlogin-changepassword-needlogin' => 'Kailangan mong $1 upang mabago ang hudyat mo.',
 	'wikiamobile-sendpassword-label' => 'Ipadala ang bagong hudyat',
 	'wikiamobile-facebook-connect-fail' => 'Paumanhin, ang iyong akawnt ng Facebook ay kasalukuyang hindi nakakawing sa isang akawnt ng Wikia.',
+);
+
+/** Tatar (Cyrillic script) (татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'userlogin-login-heading' => 'Керү',
+	'userlogin-error-invalidemailaddress' => 'Зинһар,  электрон почтагызның дөрес юлламасын кертегез',
+	'userlogin-error-invalid-username' => 'Кулланучының исеме дөрес түгел',
+	'userlogin-error-user-not-allowed' => 'Мондый кулланучы исеме тыела',
+	'userlogin-error-noemailtitle' => 'Зинһар,  электрон почтагызның дөрес юлламасын кертегез',
+	'userlogin-error-resetpass_forbidden' => 'Серсүз үзгәртелә алмый',
+	'userlogin-oldpassword' => 'Иске серсүз:',
+	'userlogin-newpassword' => 'Яңа серсүз',
+	'userlogin-retypenew' => 'Яңа серсүзне кабатлагыз',
+	'userlogin-loginreqlink' => 'керү',
 );
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
@@ -1858,6 +1982,20 @@ ___________________________________________
 	'userlogin-changepassword-needlogin' => 'Вам необхідно  $1  щоб змінити свій пароль.',
 	'wikiamobile-sendpassword-label' => 'Надіслати новий пароль',
 	'wikiamobile-facebook-connect-fail' => "На жаль, ваш обліковий запис на Facebook наразі не пов'язаний з обліковим записом Wikia.",
+);
+
+/** Uzbek (oʻzbekcha)
+ * @author Akmalzhon
+ */
+$messages['uz'] = array(
+	'userlogin-login-heading' => 'Kirish',
+	'userlogin-forgot-password' => 'Maxfiy so‘zni qayta kiriting:',
+	'userlogin-error-unconfirmed-user' => 'Sizning elektron pochta manzilingiz tasdiqlanmagan. Iltimos elektron pochta manzilingizni tasdiqlang.',
+	'userlogin-password-page-title' => "Hisob mahfiy so'zini o'zgartirish",
+	'userlogin-oldpassword' => "Eski mahfiy so'z:",
+	'userlogin-newpassword' => "Yangi mahfiy so'z:",
+	'userlogin-retypenew' => "Yangi mahfiy so'zni qayta tering:",
+	'userlogin-loginreqlink' => 'Kirish',
 );
 
 /** Vietnamese (Tiếng Việt)

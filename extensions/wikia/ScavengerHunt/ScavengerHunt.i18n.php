@@ -185,9 +185,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
+	'scavengerhunt-label-general' => '{{Identical|General}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -477,7 +479,7 @@ $messages['diq'] = array(
 	'scavengerhunt-list-enabled' => 'Aktifiyaye',
 	'scavengerhunt-list-disabled' => 'Astengın',
 	'scavengerhunt-list-edit' => 'bıvurne',
-	'scavengerhunt-label-general' => 'Heran',
+	'scavengerhunt-label-general' => 'Bıngeh',
 	'scavengerhunt-label-name' => 'Name:',
 	'scavengerhunt-button-save' => 'Star ke',
 	'scavengerhunt-button-disable' => 'Bikefilne',
@@ -1787,7 +1789,7 @@ $messages['nl'] = array(
 	'scavengerhunt-editor-tip-name' => 'Dit is de naam die wordt weergegeven in de lijst met alle speurtochten.',
 	'scavengerhunt-editor-tip-landing-title' => 'Dit is de pagina waar gebruikers heengaan om met een speurtocht te beginnen.',
 	'scavengerhunt-editor-tip-landing-button-text' => 'Dit is het tekstlabel voor de knop "Start", bijvoorbeeld "Klik hier om te beginnen!".',
-	'scavengerhunt-editor-tip-sprite-img' => 'Dit is de verwijzing naar het spritebestand dat alle afbeeldingen voor de speurtocht bevat. Om te voorkomen dat wikigebruikers de afbeelding kunnen zien, kunt u hiervoor het beste een externe URL opgeven.',
+	'scavengerhunt-editor-tip-sprite-img' => 'Dit is de koppeling naar het spritebestand dat alle afbeeldingen voor de speurtocht bevat. Om te voorkomen dat wikigebruikers de afbeelding kunnen zien, kunt u hiervoor het beste een externe URL opgeven.',
 	'scavengerhunt-editor-tip-progressBarBackgroundSprite' => 'Gebruik deze coördinaten om aan te geven:<br />
 (1) waar het spritebestand weergegeven moet worden<br />
 (2) welk gedeelte van het spritebestand de actieve afbeelding is.',
@@ -2629,6 +2631,7 @@ $messages['tly'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  */
 $messages['uk'] = array(
 	'scavengerhunt-list-header-name' => 'Назва гри',
@@ -2639,9 +2642,22 @@ $messages['uk'] = array(
 	'scavengerhunt-label-image-check' => '(показати зображення)',
 	'scavengerhunt-label-general' => 'Основні',
 	'scavengerhunt-label-name' => 'Назва:',
+	'scavengerhunt-button-save' => 'Зберегти',
+	'scavengerhunt-button-disable' => 'Вимкнути',
+	'scavengerhunt-button-enable' => 'Увімкнути',
+	'scavengerhunt-button-delete' => 'Видалити',
+	'scavengerhunt-entry-form-name' => "Ваше ім'я:",
+	'scavengerhunt-entry-form-email' => 'Ваша адреса електронної пошти:',
+	'scavengerhunt-quit-game-button-quit' => 'Вихід',
+	'scavengerhunt-quit-game-button-cancel' => 'Скасувати',
+	'scavengerhunt-label-entry-form-email' => 'Електронна адреса користувача',
+	'scavengerhunt-label-entry-form-username' => 'Ім’я користувача',
+	'scavengerhunt-label-clue-color' => 'Колір шрифту',
+	'scavengerhunt-label-clue-size' => 'Розмір шрифту',
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hydra
  * @author Sam Wang
  */
@@ -2657,6 +2673,7 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
 	'scavengerhunt-quit-game-button-quit' => '退出',
 	'scavengerhunt-quit-game-button-cancel' => '取消',
+	'scavengerhunt-label-entry-form-username' => '用户名',
 	'scavengerhunt-label-clue-color' => '字体颜色',
 	'scavengerhunt-label-clue-size' => '字体大小',
 );

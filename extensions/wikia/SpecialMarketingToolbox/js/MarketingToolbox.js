@@ -26,14 +26,6 @@ MarketingToolbox.prototype = {
 			this.verticalId = selectedVertical.data('vertical-id');
 		}
 
-		this.interactionsHandler();
-
-		this.langCode = this.regionSelect.val();
-		var selectedVertical = this.verticalInputs.filter(':not(.secondary)');
-		if (selectedVertical.length) {
-			this.verticalId = selectedVertical.data('vertical-id');
-		}
-
 		$.when(
 			// jQuery UI datepicker plugin
 			mw.loader.use(['jquery.ui.datepicker'])

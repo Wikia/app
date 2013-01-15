@@ -69,16 +69,6 @@ figure{
 	}
 }
 
-.lazy {
-	background-size: 70px;
-	display: none;
-	background-color: $imagePlaceholderBackground;
-
-	.js & {
-		display: inline;
-	}
-}
-
 noscript img {
 	height: auto;
 }

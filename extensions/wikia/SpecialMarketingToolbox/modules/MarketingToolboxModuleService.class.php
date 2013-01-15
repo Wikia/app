@@ -37,7 +37,6 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 
 				if( $field['validator'] instanceof WikiaValidatorDependent ) {
 					$field['validator']->setFormData($data);
-					$field['validator']->setFormFields($fields);
 				}
 
 				if (!$field['validator']->isValid($fieldData) && (($validationError = $field['validator']->getError()) instanceof WikiaValidationError)) {
@@ -90,6 +89,12 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return $out;
 	}
 
-}
+	protected function addProtocolToLink($link) {
+		if (strpos($link, 'http://') === false) {
+			$link = 'http://' . $link;
+		}
 
-?>
+		return $link;
+	}
+
+}

@@ -200,6 +200,18 @@ $messages['pl'] = array(
 	'minieditor-placeholder-reply' => 'Odpowiedz na wiadomość tutaj',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'minieditor-specialpage-title' => 'Pagina ëd Demo dël MiniEditor',
+	'minieditor-new-heading' => 'Creé un neuv mëssagi',
+	'minieditor-placeholder-new' => 'Anseriss tò mëssagi sì',
+	'minieditor-message-edit' => "Cost a l'é un mëssagi esistent",
+	'minieditor-reply' => 'Arspond',
+	'minieditor-placeholder-reply' => 'Arspond al mëssagi sì',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -263,4 +275,20 @@ $messages['tl'] = array(
 $messages['tzm'] = array(
 	'minieditor-new-heading' => 'ⴰⵔⴰ ⵜⴰⴱⵔⴰⵜ ⵜⴰⵎⴰⵢⵏⵓⵜ',
 	'minieditor-reply' => 'ⵔⴰⵔ',
+);
+
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'minieditor-new-heading' => 'Створити нове повідомлення',
+	'minieditor-placeholder-new' => 'Введіть ваше повідомлення тут',
+	'minieditor-reply' => 'Відповісти',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'minieditor-reply' => '回复',
 );

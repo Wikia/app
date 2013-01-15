@@ -122,6 +122,10 @@ class WallRelatedPages extends WikiaModel {
 		//Loading from cache 
 		$db = $this->wf->GetDB( $db );
 		
+		if ( ! $db->tableExists('wall_related_pages') && $this->wf->ReadOnly() ) {
+			return array();
+		}
+		
 		if($this->createTable()) {
 			$db = $this->wf->GetDB( $db );	
 		}
@@ -256,6 +260,10 @@ class WallRelatedPages extends WikiaModel {
 		
 		//Loading from cache 
 		$db = $this->wf->GetDB( DB_SLAVE );
+		
+	    if ( ! $db->tableExists('wall_related_pages') && $this->wf->ReadOnly() ) {
+			return array();
+		}
 		
 		if($this->createTable()) {
 			$db = $this->wf->GetDB( DB_MASTER );	

@@ -6,12 +6,18 @@ class WikiaValidatorFileTitle extends WikiaValidator {
 		$this->setMsg( 'wrong-file', 'wikia-validator-wrong-file' );
 	}
 
+	protected function getApp() {
+		return F::app();
+	}
+
 	public function isValidInternal($value = null) {
 		$titleClass = $this->getTitleClass();
 
-		$title = $titleClass::newFromText($value);
+		$title = $titleClass::newFromText($value, NS_FILE);
 
-		if ($title instanceof Title && $title->exists() && $title->getNamespace() == NS_FILE) {
+		$file = $this->getApp()->wf->findFile( $title );
+
+		if ($file instanceof File && $file->exists()) {
 			return true;
 		} else {
 			$this->createError( 'wrong-file' );

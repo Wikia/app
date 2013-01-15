@@ -132,6 +132,12 @@ foreach( $fbHooksToAddImmediately as $hookName ) {
 	$wgHooks[$hookName][] = "FBConnectHooks::$hookName";
 }
 
+// ResourceLoader support (MW 1.17+)
+$wgResourceModules['ext.facebook.FBXML'] = array(
+	'scripts' => 'fbconnect.FBXML.js',
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'FBConnect'
+);
 
 /**
  * Class FBConnect
@@ -256,12 +262,12 @@ class FBConnect {
 
 
 		$statusError = array('status' => "error", "msg" => wfMsg('fbconnect-unknown-error') );
-		
+
 		if(!($user instanceof User)) {
 			return $statusError;
 		}
-		
-		
+
+
 		if($user->getId() == 0) {
 			return $statusError;
 		}
@@ -282,7 +288,7 @@ class FBConnect {
 		} else {
 			$res = $loginForm->mailPasswordInternal( $user, true, 'fbconnect-passwordremindertitle', 'fbconnect-passwordremindertext' );
 		}
-	
+
 		if( WikiError::isError( $res ) ) {
 			return $statusError;
 		}

@@ -1,27 +1,16 @@
 <?php
 
+	/**
+	 * Realgravity test
+	 *
+	 * @category Wikia
+	 * @group Integration
+	 */
 	class RealgravityVideoHandlerTest extends WikiaBaseTest {
-		const TEST_CITY_ID = 79860;
 
 		public function setUp() {
 			$this->setupFile = dirname(__FILE__) . '/../VideoHandlers.setup.php';
 			parent::setUp();
-		}
-
-		protected function setUpMock( $cache_value = false ) {
-			$mock_cache = $this->getMock( 'stdClass', array('set', 'delete', 'get') );
-			$mock_cache->expects( $this->any() )
-						->method( 'set' );
-			$mock_cache->expects( $this->any() )
-						->method( 'delete' );
-			$mock_cache->expects( $this->any() )
-						->method( 'get' )
-						->will( $this->returnValue($cache_value) );
-
-			$this->mockGlobalVariable( 'wgMemc', $mock_cache );
-			$this->mockGlobalVariable( 'wgCityId', self::TEST_CITY_ID );
-
-			$this->mockApp();
 		}
 
 		/**
@@ -29,9 +18,6 @@
 		 * please contact video team if test is failed
 		 */
 		public function testEmbedCode() {
-			// setup
-			$this->setUpMock();
-
 			// test
 			$url = 'http://api.realgravity.com/v1/widgets/single.json?video_id=124624&player_id=733&api_key='.$this->app->wg->RealgravityApiKey;
 			$req = MWHttpRequest::factory( $url );

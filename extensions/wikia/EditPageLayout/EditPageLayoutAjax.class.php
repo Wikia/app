@@ -32,6 +32,19 @@ class EditPageLayoutAjax {
 
 						// allow extensions to modify preview (BugId:6721)
 						wfRunHooks('EditPageLayoutModifyPreview', array($wgTitle, &$html, $wikitext));
+						
+						/**
+						 * bugid: 11407
+						 * Provide an appropriate preview for a redirect, based on wikitext, not revision.
+						 */
+						if ( preg_match( '/^#REDIRECT /m', $wikitext ) ) {
+							$article = Article::newFromTitle( $wgTitle, RequestContext::getMain() );
+							$matches = array();
+							if ( preg_match_all( '/^#REDIRECT \[\[([^\]]+)\]\]/Um', $wikitext, $matches ) ) {
+    							$redirectTitle = Title::newFromText( $matches[1][0] );
+    							$html = $article->viewRedirect( array( $redirectTitle ) );
+							}
+						}
 
 					} elseif($method == 'diff') {
 						$html = $service->getDiff($wikitext, intval($section));

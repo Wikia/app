@@ -5,7 +5,7 @@
 			<div class="module-input-box">
 				<input type="button" class="wmu-show" value="<?= $wf->msg('marketing-toolbox-edithub-add-file-button')?>" />
 				<span class="alternative filename-placeholder">
-					<? if (!empty($fields['photo' . $i])): ?>
+					<? if (!empty($fields['photo' . $i]['value'])): ?>
 						<?= $fields['photo' . $i]['value']; ?>
 					<? else: ?>
 						<?= $wf->msg('marketing-toolbox-edithub-file-name') ?>
@@ -42,7 +42,7 @@
 			<div class="module-image-box">
 				<div class="image-placeholder">
 					<? if (!empty($photos[$i])): ?>
-						<img src="<?=$photos[$i]?>" />
+						<img width="<?= $photos[$i]['imageWidth']; ?>" height="<?= $photos[$i]['imageHeight']; ?>" src="<?= $photos[$i]['url']; ?>" />
 					<? else: ?>
 						<img src="<?= $wg->BlankImgUrl; ?>" />
 					<? endif ?>

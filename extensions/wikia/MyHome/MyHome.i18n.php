@@ -104,11 +104,13 @@ For example, you could:
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author McDutchie
+ * @author Shirayuki
  * @author Siebrand
  * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'myhome-activity-feed' => 'This the title of the list/summary of recent activity in "My home page" in Wikia. "Feed" here does not refer to an RSS/Atom-type feed.',
+	'myhome-watchlist-feed' => '{{Identical|My watchlist}}',
 	'tog-userlandingpage' => 'Label next to selectbox when user can choose her landing page will be one of: Main Page, WikiActivity, RecentChanges',
 	'myhome-feed-newpage' => '{{Identical|New page}}',
 	'myhome-feed-edit' => '{{Identical|Edit}}',
@@ -118,6 +120,7 @@ $messages['qqq'] = array(
 	'myhome-feed-new-blog-comment-details' => '{{Identical|Comment}}',
 	'myhome-feed-new-article-comment-details' => '{{Identical|Comment}}',
 	'myhome-feed-redirect-details' => '{{Identical|Redirect}}',
+	'myhome-community-corner-edit' => '{{Identical|Edit message}}',
 	'myhome-default-view-checkbox' => "In the list of recent wiki activity (Special:WikiActivity), this is a checkbox button to toggle between viewing a summary of all activity and a summary of activity in pages on the user's watchlist.
 
 The parameter $1 is replaced by either:
@@ -563,6 +566,7 @@ Svůj seznam sledovaných stránek můžete použít pro zobrazení změn na str
 	'myhome-hot-spots-feed-empty' => "Tato wiki čeká, až se zapojíte.
 Klepněte na '''[[Special:CreatePage|Nová stránka]]''' a začněte psát!",
 	'myhome-hot-spots-newest' => 'Nové stránky na wiki',
+	'tog-userlandingpage' => 'Vstupní stránka:',
 	'prefs-myhome' => 'Moje domovská stránka',
 	'myhome-feed-newpage' => 'nová stránka',
 	'myhome-feed-edit' => 'editovat',
@@ -1209,7 +1213,7 @@ Vous pouvez vous servir de votre liste de suivi pour garder une trace des dernie
 	'myhome-hot-spots-feed-empty' => "Vous n'avez pas encore participé à ce wiki.
 Cliquez sur '''[[Special:CreatePage|Nouvelle page]]''' pour commencer à écrire !",
 	'myhome-hot-spots-newest' => 'Nouvelles pages du wiki',
-	'tog-userlandingpage' => "Page d'accueil:",
+	'tog-userlandingpage' => 'Page d’arrivée :',
 	'prefs-myhome' => 'Mon accueil',
 	'myhome-feed-newpage' => 'nouvelle page',
 	'myhome-feed-edit' => 'modifier',
@@ -2282,7 +2286,7 @@ $messages['nl'] = array(
 	'myhome-activity-feed-empty' => "Werk nu mee aan deze wiki.
 Klik op '''[[Special:CreatePage|Nieuwe pagina]]''' om te beginnen met schrijven!",
 	'myhome-watchlist-feed' => 'Volglijst',
-	'myhome-watchlist-feed-empty' => 'U kunt pagina\'s toevoegen aan uw volglijst door op de verwijzing "{{int:watch}}" te klikken in de balk bovenaan de pagina.
+	'myhome-watchlist-feed-empty' => 'U kunt pagina\'s toevoegen aan uw volglijst door op de koppeling "{{int:watch}}" te klikken in de balk bovenaan de pagina.
 U kunt uw volglijst gebruiken om de laatste wijzigingen aan pagina\'s waar u bij betrokken bent te bekijken.',
 	'myhome-user-contributions-feed' => 'Bijdragen',
 	'myhome-hot-spots-feed' => "Populaire pagina's",
@@ -2361,7 +2365,7 @@ Als u de oprichter of een beheerder van deze wiki bent, kunt u dit bericht gebru
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
-	'myhome-watchlist-feed-empty' => 'Je kunt pagina\'s toevoegen aan uw volglijst door op de verwijzing "{{int:watch}}" te klikken in de balk bovenaan de pagina.
+	'myhome-watchlist-feed-empty' => 'Je kunt pagina\'s toevoegen aan uw volglijst door op de koppeling "{{int:watch}}" te klikken in de balk bovenaan de pagina.
 Je kunt je volglijst gebruiken om de laatste wijzigingen aan pagina\'s waar je bij betrokken bent te bekijken.',
 	'myhome-user-contributions-empty' => 'Je kunt meewerken aan deze wiki door op "bewerken" te klikken op een pagina en daarna toe te voegen wat je weet.
 Iedereen kan wijzigingen maken, informatie toevoegen of een fout verbeteren.
@@ -2577,6 +2581,7 @@ $messages['pms'] = array(
 	'myhome-hot-spots-feed' => 'Ròba Càuda',
 	'myhome-hot-spots-feed-empty' => "Sta wiki-sì a speta che chiel a ancamin-a. Ch'a sgnaca dzora a '''[[Special:CreatePage|Pàgina neuva]]''' për ancaminé a scrive!",
 	'myhome-hot-spots-newest' => 'Pàgine neuve an sla wiki',
+	'tog-userlandingpage' => "Pàgina d'ariv:",
 	'prefs-myhome' => 'Mia Intrada',
 	'myhome-feed-newpage' => 'pàgina neuva',
 	'myhome-feed-edit' => 'modifiché',

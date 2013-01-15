@@ -124,20 +124,22 @@ $messages['en'] = array(
  * @author Kghbln
  * @author LWChris
  * @author McDutchie
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'multiwikiedit_task_link' => ' "check" as in "verify" or as in "select"?', # Fuzzy
-	'multiwikiedit_on' => 'Lego. Probably has leading and trailing parameters. Please add this to the message...', # Fuzzy
+	'multiwikiedit_task_link' => '',
+	'multiwikiedit_on' => '',
+	'multiwikiedit_success_subtitle' => '{{Identical|For $1}}',
 	'action-multiwikiedit' => '{{doc-action|multiwikiedit}}',
 	'multidelete_button' => '{{Identical|Delete}}',
-	'multidelete_task_link' => ' "check" as in "verify" or as in "select"?', # Fuzzy
+	'multidelete_task_link' => '',
 	'multidelete_reason' => '{{Identical|Reason for deletion}}',
-	'multidelete_split_results' => 'Needs plural support for $1 and $2.
-No, the message won\'t be displayed of $1 or $2 was just "1".', # Fuzzy
-	'multidelete_max_display_size' => 'Needs plural support for $1', # Fuzzy
+	'multidelete_success_subtitle' => '{{Identical|For $1}}',
+	'multidelete_split_results' => '',
+	'multidelete_max_display_size' => '',
 	'action-multidelete' => '{{doc-action|multidelete}}',
-	'multiwikirecords' => 'If $1 is a number, add plural support', # Fuzzy
+	'multiwikirecords' => '',
 	'action-multiwikifinder' => '{{doc-action|multiwikifinder}}',
 );
 
@@ -1772,7 +1774,7 @@ $messages['ms'] = array(
 	'multiwikiedit_button' => 'SUNTING',
 	'multiwikiedit_confirm' => 'SAHKAN',
 	'multiwikiedit_help' => 'Sunting satu kelompok laman sekali. Anda boleh menyunting laman-laman yang tersenarai dalam petak teks. Pilih satu pengguna yang akan ditunjukkan dalam log penghapusan. Fail yang dimuat naik harus mengandungi nama laman dan sebab (tak wajib) yang dipisahkan oleh aksara | di setiap baris.',
-	'multiwikiedit_caption' => 'Senarai laman',
+	'multiwikiedit_caption' => 'Senarai halaman',
 	'multiwikiedit_title' => 'Sunting Berbilang Wiki',
 	'multiwikiedit_as' => 'Jalankan skrip sebagai',
 	'multiwikiedit_both_modes' => 'Sila pilih salah satu laman atau senarai laman yang disediakan',
@@ -1820,7 +1822,7 @@ $messages['ms'] = array(
 	'multidelete' => 'Hapuskan kelompok laman',
 	'multidelete_button' => 'HAPUS',
 	'multidelete_help' => 'Hapuskan kelompok laman melalui tugas latar belakang. Anda boleh melakukannya untuk wiki ini, semua wiki daripada pangkalan data kongsian, wiki-wiki terpilih, atau bahasa-bahasa terpilih. Anda boleh memilih untuk menghapuskannya di bawah nama ANDA atau akaun skrip yang tersedia.',
-	'multidelete_caption' => 'Senarai laman',
+	'multidelete_caption' => 'Senarai halaman',
 	'multidelete_title' => 'Penghapusan Berbilang Wiki',
 	'multidelete_both_modes' => 'Sila pilih salah satu laman atau senarai laman yang disediakan',
 	'multidelete_or' => '<b>ATAU</b>',
@@ -3169,10 +3171,20 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Base
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
+	'multitasks-link-back-label' => 'тут',
+	'multiwikiedit_button' => 'РЕДАГУВАТИ',
+	'multiwikiedit_confirm' => 'ПІДТВЕРДИТИ',
+	'multiwikiedit_caption' => 'Список сторінок',
+	'multiwikiedit_or' => '<b>АБО</b>',
+	'multiwikiedit_select_yourself' => 'Ви',
 	'multidelete_button' => 'ВИЛУЧИТИ',
+	'multidelete_select_all' => 'Вибрати всі',
+	'multidelete_this_wiki' => 'ця вікі',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -3207,6 +3219,7 @@ $messages['zh-hans'] = array(
 	'multidelete_select_all' => '选择全部',
 	'multidelete_page' => '待删除页面',
 	'multidelete_reason' => '删除原因',
+	'multidelete_processing' => '页面删除中',
 	'multidelete_this_wiki' => '这个维基',
 	'multidelete_inbox_caption' => '或以逗号隔开',
 	'multidelete_all_wikis' => '所有维基',

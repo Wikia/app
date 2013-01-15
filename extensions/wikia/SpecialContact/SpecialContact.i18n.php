@@ -718,6 +718,40 @@ Jeżeli wolisz skorzystać ze zwykłego sposobu kontaktu e-mail lub posiadasz za
 	'specialcontact-submitcomplete' => 'Dziękujemy za skontaktowanie się z Wikią.',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'contact' => 'Contata Wikia',
+	'specialcontact-wikia' => 'Contata Wikia',
+	'specialcontact-pagetitle' => 'Contata Wikia',
+	'specialcontact-intro' => "It peule contaté l'[[w:project:Staff|Echip Wikia]] dovrand sto formolari. J'admin dë sta wiki a peulo esse trovà [[Special:ListAdmins|belessì]].
+
+Anformassion adissionaj dzor com arporté problem a Wikia a peul esse trovà [[w:project:Report_a_problem|belessì]], o it peule posté dzor [[w:Forum:Index|Wikia Community Forums]] për apògg utent.
+
+S'it preferisse dovré un corel regolar o avèj dj'alegà, it peule contatene a [mailto:community@wikia.com community@wikia.com].",
+	'specialcontact-username' => 'Stranòm',
+	'specialcontact-wikiname' => 'Che wiki',
+	'specialcontact-realname' => 'Sò nòm',
+	'specialcontact-yourmail' => 'Adrëssa ëd pòsta eletrònica',
+	'specialcontact-problem' => 'Soget',
+	'specialcontact-problemdesc' => 'Mëssagi',
+	'specialcontact-mail' => 'Mandà a Wikia',
+	'specialcontact-filledin' => "Sta anformassion a l'é stàita anserìa dai gust ëd tò cont",
+	'specialcontact-ccme' => 'Mandme na còpia dë sto mëssagi',
+	'specialcontact-ccdisabled' => 'Disabilità: Për piasì vàlida toa adrëssa e-mail për dovré sta funsion',
+	'specialcontact-notyou' => 'Pa ti?',
+	'specialcontact-captchainfo' => 'Për piasì anseriss ël test ant la figura.',
+	'specialcontact-captchatitle' => 'Paròla confondùa',
+	'specialcontact-formtitle' => "Contata l'Echip d'Apògg Wikia",
+	'specialcontact-nomessage' => 'Për piasì anseriss un mëssagi',
+	'specialcontact-captchafail' => "Ël còdes ëd verìfica ò ch'a manca d'autut ò ch'a l'é pa bon.",
+	'specialcontact-mailsub' => 'Adrëssa ëd Contat Wikia',
+	'specialcontact-mailsubcc' => "Còpia dl'Adrëssa ëd Contat Wikia",
+	'specialcontact-ccheader' => "Costa a l'é na còpia ëd tò mëssagi che a l'é stàit mandà a l'Apògg Wikia",
+	'specialcontact-submitcomplete' => 'Mersì për avej contatà Wikia',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -966,6 +1000,20 @@ $messages['tt-cyrl'] = array(
 	'specialcontact-username' => 'Кулланучы исеме',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'specialcontact-username' => "Ім'я користувача",
+	'specialcontact-realname' => "Ваше ім'я",
+	'specialcontact-yourmail' => 'Адреса електронної пошти',
+	'specialcontact-problem' => 'Тема',
+	'specialcontact-problemdesc' => 'Повідомлення',
+	'specialcontact-ccme' => 'Надіслати мені копію цього повідомлення',
+	'specialcontact-notyou' => 'Не Ви?',
+	'specialcontact-captchainfo' => 'Будь ласка, введіть текст на зображенні.',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
@@ -1004,6 +1052,7 @@ Nếu bạn thích sử dụng thư điện tử thường xuyên hoặc có t�
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -1016,6 +1065,7 @@ $messages['zh-hans'] = array(
 	'specialcontact-yourmail' => '电子邮件地址',
 	'specialcontact-problemdesc' => '信息',
 	'specialcontact-notyou' => '不是您？',
+	'specialcontact-submitcomplete' => '感谢您联系Wikia',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

@@ -35,11 +35,12 @@ Please try again or [[Special:Contact|report this]].",
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
 	'comboajaxlogin-connectmarketing' => 'A message that appears on the login dialog which prompts the user to start the Facebook account connection process.',
-	'comboajaxlogin-connectmarketing-oasis' => "A message that appears on the login dialog which prompts the user to start the Facebook account connection process.  Similar to {{msg-mw|comboajaxlogin-connectmarketing|notext=yes}} except that it explicitly calls out that the connection is for Facebook Connect.  This is necessary because the login dialog box does not have other mentions of Facebook Connect on it, so it wouldn't be clear otherwise.",
+	'comboajaxlogin-connectmarketing-oasis' => "A message that appears on the login dialog which prompts the user to start the Facebook account connection process.  Similar to {{msg-wikia|comboajaxlogin-connectmarketing|notext=yes}} except that it explicitly calls out that the connection is for Facebook Connect.  This is necessary because the login dialog box does not have other mentions of Facebook Connect on it, so it wouldn't be clear otherwise.",
 );
 
 /** Arabic (العربية)
@@ -93,6 +94,13 @@ Téntalo otra vuelta o [[Special:Contact|informa d'ello]].",
 <br />
 (Si yá tienes una cuenta, pues <a href="#">entrar</a> de mou normal, pero nun podrás editar.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia nun ta respondiendo. Por favor, comprueba la to conexón.',
+);
+
+/** Bashkir (башҡортса)
+ * @author Ләйсән
+ */
+$messages['ba'] = array(
+	'comboajaxlogin-createlog' => 'Танылыу йәки теркәлеү',
 );
 
 /** Bulgarian (български)
@@ -573,6 +581,13 @@ $messages['ko'] = array(
 	'comboajaxlogin-createlog' => '로그인하거나 계정 만들기',
 );
 
+/** Kirghiz (Кыргызча)
+ * @author Growingup
+ */
+$messages['ky'] = array(
+	'comboajaxlogin-createlog' => 'Кирүү же эсеп жазуусун жаратуу',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -917,6 +932,19 @@ $messages['ro'] = array(
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Autentificare cu Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Înapoi',
 	'comboajaxlogin-connectmarketing-forward' => 'Începeţi &raquo;',
+);
+
+/** tarandíne (tarandíne)
+ * @author Reder
+ */
+$messages['roa-tara'] = array(
+	'comboajaxlogin-desc' => "Fenèstre denameche ca conzendone a l'utinde de trasère, arrecordare 'a passsuord e fàce ccu registre le utinde",
+	'comboajaxlogin-createlog' => "Trase o ccreje 'nu cunde utende nuève",
+	'comboajaxlogin-actionmsg' => "Ce vuè ccu fàce quiste cose tu hé ddà trasè o hé ddà crejà 'nu cunde",
+	'comboajaxlogin-actionmsg-protected' => "Ce vuè ccu fàce quiste cose tu hé ddà trasè o hé ddà crejà 'nu cunde",
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Tràse cu Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Rrète',
+	'comboajaxlogin-connectmarketing-forward' => 'Ccu accumenze &raquo;',
 );
 
 /** Russian (русский)

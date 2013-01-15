@@ -82,7 +82,7 @@ class WikiaPollTest extends WikiaBaseTest {
 
 		$result = $poll->get();
 
-		$this->assertType("array", $result, "Get result is an array");
+		$this->assertInternalType("array", $result, "Get result is an array");
 		$this->assertEquals(true, $result["exists"], "Get a poll that exists");
 
 	}
@@ -126,7 +126,7 @@ class WikiaPollTest extends WikiaBaseTest {
 		$poll = new WikiaPollAjax;
 		$result = $poll->update();
 
-		$this->assertType("array", $result, "Update result is array");
+		$this->assertInternalType("array", $result, "Update result is array");
 		$this->assertEquals(true, $result["success"], "Update result is success");
 
 }
@@ -174,14 +174,14 @@ class WikiaPollTest extends WikiaBaseTest {
 
 		$result = $poll->vote();
 
-		$this->assertType("array", $result, "Vote result is array");
-		$this->assertType("string", $result["html"], "Vote result[html] is a block of HTML");
+		$this->assertInternalType("array", $result, "Vote result is array");
+		$this->assertInternalType("string", $result["html"], "Vote result[html] is a block of HTML");
 		$this->assertRegExp('/1 person voted/', $result["html"], "Vote result[html] says someone voted");
 
 		// Fifth part of test is for checking to see if the user has voted
 
 		$result = $poll->hasVoted();
-		$this->assertType("array", $result, "HasVoted result is array");
+		$this->assertInternalType("array", $result, "HasVoted result is array");
 		$this->assertEquals(true, $result['hasVoted'], "HasVoted result is true");
 
 	}
@@ -201,9 +201,9 @@ class WikiaPollTest extends WikiaBaseTest {
 		// If the poll exists, it's a dupe
 		$result = $poll->create();
 
-		$this->assertType("array", $result, "Create duplicate result is array");
+		$this->assertInternalType("array", $result, "Create duplicate result is array");
 		$this->assertEquals(false, $result["success"], "Create duplicate Poll success flag is false");
-		$this->assertType("string", $result["error"], "Create duplicate Poll results in an error");
+		$this->assertInternalType("string", $result["error"], "Create duplicate Poll results in an error");
 
 	}
 }

@@ -134,6 +134,6 @@ class UncyclopediaTemplate extends MonoBookTemplate {
 	<div id="f-hosting"><i>Wikia</i>&reg; is a registered service mark of Wikia, Inc. All rights reserved.</div>
 
 	<!-- RT #79534 -->
-	<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>
+	<script type="text/javascript">/*<![CDATA[*/Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start();}/*]]>*/</script>
 <?php	}
 }

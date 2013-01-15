@@ -37,14 +37,16 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Shirayuki
  * @author Siebrand
  * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'specialmultiplelookup-desc' => '{{desc}}',
+	'multilookupgo' => '{{Identical|Go}}',
 	'multilookupnext' => '{{Identical|Next}}',
 	'multilookupprevious' => '{{Identical|Previous}}',
-	'right-multilookup' => '{{doc-right|multilookup}}',
+	'right-multilookup' => '{{doc-right|multilookup|ns=Wikia}}',
 	'action-multilookup' => '{{doc-action|multilookup}}',
 );
 
@@ -620,7 +622,7 @@ $messages['nl'] = array(
 	'multilookupinvalidresults' => 'Ongeldige resultaten!',
 	'multilookupnoresultfound' => 'Geen resultaten gevonden!',
 	'multilookupwiki' => 'Wiki',
-	'multilookuplink' => 'Bijdragenverwijzing',
+	'multilookuplink' => 'Koppeling naar bijdragen',
 	'multilookupdetails' => 'Details weergeven',
 	'multilookuplistwikiainfo' => "Lijst van wiki's waar pagina's door gebruikers van IP-adres <b>$1</b> bewerkt zijn.",
 	'multilookupinvaliduser' => '<p class="error">Het IP-adres "<b>$1</b>" bestaat niet.
@@ -972,6 +974,7 @@ $messages['ttt'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -981,7 +984,9 @@ $messages['uk'] = array(
 	'multilookupnbrresult' => 'Кількість результатів:',
 	'multilookupnoresultfound' => 'Нічого не знайдено!',
 	'multilookupwiki' => 'Вікі',
+	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Назва',
+	'multilookupwikioptions' => 'Параметри',
 	'multilookuplastedithdr' => 'Останнє редагування',
 );
 

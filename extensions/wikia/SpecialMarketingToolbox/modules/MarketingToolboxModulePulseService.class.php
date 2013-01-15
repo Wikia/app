@@ -4,7 +4,12 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 		return array(
 			'boardUrl' => array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-pulse-wikiurl'),
-				'validator' => new WikiaValidatorUrl(),
+				'validator' => new WikiaValidatorToolboxUrl(
+					array(),
+					array(
+						'wrong' => 'marketing-toolbox-validator-wrong-url'
+					)
+				),
 				'attributes' => array(
 					'class' => 'wikiaUrl'
 				)
@@ -111,11 +116,10 @@ class MarketingToolboxModulePulseService extends MarketingToolboxModuleService {
 	public function filterData($data) {
 		$data = parent::filterData($data);
 
-		if (!empty($data['boardUrl']) && strpos($data['boardUrl'], 'http://') === false) {
-			$data['boardUrl'] = 'http://' . $data['boardUrl'];
+		if (!empty($data['boardUrl'])) {
+			$data['boardUrl'] = $this->addProtocolToLink($data['boardUrl']);
 		}
 
 		return $data;
 	}
 }
-?>

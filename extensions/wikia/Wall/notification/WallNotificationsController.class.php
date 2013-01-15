@@ -258,5 +258,23 @@ class WallNotificationsController extends WikiaController {
 		if( User::isIP($username) ) return wfMsg('oasis-anon-user');
 		return $username;
 	}
+
+	public function checkTopic() {
+		// force json format
+		$this->getResponse()->setFormat( 'json' );
+
+		$result = false;
+
+		$topic = $this->getRequest()->getVal( 'query' );
+		if( !empty( $topic ) ) {
+			/** @var $title title */
+			$title = F::build( 'Title', array( 'text' => $topic ), 'newFromText' );
+
+			$result = (bool) $title->exists();
+		}
+
+		$this->response->setVal( 'exists' , $result );
+	}
+
 }
 

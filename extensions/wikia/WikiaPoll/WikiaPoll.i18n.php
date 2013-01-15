@@ -598,6 +598,30 @@ $messages['pl'] = array(
 	'wikiamobile-wikiapoll-user-voted' => 'Oddano głos na $1',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'wikiapoll-desc' => 'A dà na manera belfé ëd creé e gestì dij sondagi',
+	'wikiapoll-people-voted' => "{{PLURAL:$1|$1 përson-a|$1 përson-e}} a l'han votà",
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Mersì!',
+	'wikiapoll-vote' => "Ch'a vota!",
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 vot}}',
+	'wikiapoll-createpoll-headline' => 'Crea Sondagi',
+	'wikiapoll-editpoll-headline' => 'Modìfica Sondagi',
+	'wikiapoll-question-label' => 'Domanda',
+	'wikiapoll-addnewitem-label' => "Gionta n'element neuv",
+	'wikiapoll-cancel-label' => 'Scancela',
+	'wikiapoll-publish-label' => 'Pùblica',
+	'wikiapoll-error-duplicate' => 'Un sondagi con col nòm a esist già.',
+	'wikiapoll-error-invalid-title' => "Test ëd la custion a l'é pa bon.",
+	'wikiamobile-wikiapoll-open-poll' => "Lòn ch'it pensës-to?",
+	'wikiamobile-wikiapoll-thanks-voting' => 'Mersì për avèj votà!',
+	'wikiamobile-wikiapoll-poll' => 'Sondagi',
+	'wikiamobile-wikiapoll-user-voted' => "It l'has votà për $1",
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -850,15 +874,31 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Steve.rusyn
  */
 $messages['uk'] = array(
+	'wikiapoll-desc' => 'Забезпечує простий спосіб створення та керування опитуваннями',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 особа проголосувала|$1 осіб проголосувало}}',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Дякуємо!',
+	'wikiapoll-vote' => 'Проголосувати!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 голос|$1 голоси|$1 голосів}}',
+	'wikiapoll-createpoll-headline' => 'Створити опитування',
+	'wikiapoll-editpoll-headline' => 'Редагувати опитування',
+	'wikiapoll-question-label' => 'Запитання',
+	'wikiapoll-addnewitem-label' => 'Додати новий пункт',
 	'wikiapoll-cancel-label' => 'Скасувати',
 	'wikiapoll-publish-label' => 'Опублікувати',
 	'wikiapoll-error-duplicate' => 'Опитування з такою назвою вже існує.',
+	'wikiapoll-error-invalid-title' => 'Текст запитання є неприпустимим.',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Дякуємо за участь у голосуванні!',
+	'wikiamobile-wikiapoll-poll' => 'Опитування',
+	'wikiamobile-wikiapoll-user-voted' => 'Ви проголосували за $1',
 );
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Hydra
  * @author Hzy980512
  */
@@ -875,6 +915,7 @@ $messages['zh-hans'] = array(
 	'wikiapoll-cancel-label' => '取消',
 	'wikiapoll-publish-label' => '发表',
 	'wikiapoll-error-invalid-title' => '问题文本无效。',
+	'wikiamobile-wikiapoll-user-voted' => '您投给了$1',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

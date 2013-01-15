@@ -138,11 +138,22 @@ class ChatAjax {
 		$roomName = 'private room name';
 		$roomTopic = 'private room topic';
 
-		$users = explode( ',', $wgRequest->getVal('users'));
+		$users = json_decode($wgRequest->getVal('users'));
 		$roomId = NodeApiClient::getDefaultRoomId($roomName, $roomTopic, 'private', $users );
 
 		wfProfileOut( __METHOD__ );
 		return array("id" => $roomId);
+	}
+
+	static $chatUserIP = null;  // this is set by ChatAjax function
+
+	/**
+	 * webrequest->GetIP hook listener. in case of ajax requests made by nodejs server, we should use real user ip address
+	 * instead of the chat server ip
+	 */
+	static public function onGetIP(&$ip) {
+		if ( self::$chatUserIP ) $ip = self::$chatUserIP;
+		return true;
 	}
 
 	/**
@@ -150,7 +161,7 @@ class ChatAjax {
 	 */
 
 	static public function blockOrBanChat(){
-		global $wgRequest, $wgUser, $wgMemc;
+		global $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		$kickingUser = $wgUser;

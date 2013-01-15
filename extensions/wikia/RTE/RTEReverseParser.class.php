@@ -30,6 +30,18 @@ class RTEReverseParser {
 	private $listLevel;
 	private $listBullets;
 
+	/**
+	 * Stores all nodes iteratively so we can associate indices to nodes, and indices to outputs
+	 * @var array
+	 */
+	private $nodes = array();
+
+	/**
+	 * Stores the output for each node, at any level, so we can locate it easily
+	 * @var array
+	 */
+	private $nodeOutputs = array();
+
 	// node ID counter
 	private $nodeId = 0;
 
@@ -45,7 +57,6 @@ class RTEReverseParser {
 	 */
 	public function parse($html, $data = array()) {
 		wfProfileIn(__METHOD__);
-
 		$out = '';
 
 		$this->nodeId = 0;
@@ -115,7 +126,6 @@ class RTEReverseParser {
 		}
 
 		wfProfileOut(__METHOD__);
-
 		return $out;
 	}
 
@@ -230,6 +240,9 @@ class RTEReverseParser {
 				$this->handleListClose($node);
 			}
 		}
+
+		$this->nodes[] = $node;
+		$this->nodeOutputs[] = $out;
 
 		//wfProfileOut(__METHOD__ . "::{$node->nodeName}::{$nodeId}");
 		wfProfileOut(__METHOD__ . "::{$node->nodeName}");
@@ -434,8 +447,11 @@ class RTEReverseParser {
 				$prefix = "\n";
 			}
 			else {
-				// only add line break if there's no empty line before
-				if ( self::getEmptyLinesBefore($node) == 0 && !self::isFirstChild($node) ) {
+				// only add line break if there's no empty line before and previous sibling was not a tag
+				if ( self::getEmptyLinesBefore($node) == 0 
+					&& !self::isFirstChild($node) 
+					&& !$this->wasTag( $node->previousSibling ) 
+					&& $node->nodeName != 'blockquote' ) {
 					$prefix = "\n";
 				}
 
@@ -489,6 +505,20 @@ class RTEReverseParser {
 			}
 		}
 
+		// fix for wikitext that is context-sensitive
+		// these are escaped for regex matching
+		$lineInitialTokens = array(
+				'\*',
+				'{\|',
+				'#',
+				'=',
+		);
+		foreach ( $lineInitialTokens as $token ) {
+			if ( preg_match( "/^{$token}/is", $textContent ) ) {
+				$beforeText = "\n";
+			}
+		}
+
 		// special handling of headings in <div> tags (BugId:4908)
 		if (self::isHeadingNode($node) && self::isChildOf($node, 'div') && !self::isFirstChild($node)) {
 			$prefix = '';
@@ -522,37 +552,7 @@ class RTEReverseParser {
 		wfProfileIn(__METHOD__);
 
 		$entity = $node->getAttribute(self::DATA_RTE_ENTITY);
-
-		// convert text content back to HTML entity
-		$textEncoded = htmlentities($textContent, ENT_COMPAT, 'UTF-8');
-
-		//RTE::log(__METHOD__, array($entity, $textContent, $textEncoded));
-
-		// compare stored entity with text content
-		if ($entity{0} == '#') {
-			// get ASCII code of entity (&#x5f; / &#58;) and compare it with textContent
-			$code = ($entity{1} == 'x') ? hexdec(substr($entity, 2)) : intval(substr($entity, 1));
-			$matches = $code == ord($textContent);
-
-			// special handling for &nbsp; (#160)
-			if (($code == 160) && ($textContent == '&nbsp;')) {
-				$matches = true;
-			}
-		}
-		else {
-			// &nbsp;
-			$matches = in_array("&{$entity};", array($textEncoded, $textContent));
-		}
-
-		RTE::log(__METHOD__ . '::compare', $matches ? 'true' : "false ({$entity})");
-
-		if ($matches) {
-			// return entity marker
-			$out = self::getEntityMarker($entity);
-		}
-		else {
-			$out = $textContent;
-		}
+		$out = self::getEntityMarker($entity);
 
 		wfProfileOut(__METHOD__);
 
@@ -617,7 +617,7 @@ class RTEReverseParser {
 
 		// remove trailing space from text node which is followed by <!-- RTE_LINE_BREAK --> comment
 		if (self::nextCommentIs($node, 'LINE_BREAK')) {
-			$out = ltrim( $out, ' ' );
+			$out = rtrim( $out, ' ' );
 		}
 
 		// fix for tables created in CK
@@ -664,6 +664,19 @@ class RTEReverseParser {
 				$textContent = "\n";
 			}
 		}
+		
+		/**
+		 * bugid: 51621 -- an empty p tag preceding a blockquote should be nixed when reverse-parsing
+		 */
+		if ( self::nextSiblingIs( $node, 'blockquote' ) 
+			&& $node->hasAttribute( self::DATA_RTE_FROMPARSER )
+			&& $textContent == "\n" ) {
+			return '';
+		}
+		if ( self::previousSiblingIs( $node, 'blockquote' )
+			&& $textContent == "\n" ) {
+		    return '';
+		} 
 
 		// RT#40786: handle "filler" paragraphs added between headings
 		if ($node->hasAttribute(self::DATA_RTE_FILTER) && $textContent == "\n") {
@@ -1371,15 +1384,10 @@ class RTEReverseParser {
 				$addRowDelimiter = false;
 
 				if (self::isFirstChild($node)) {
-					// add |- before first table row when table header (thead) is present
+					// add |- before first table row when table header (caption) is present
 					$tableNode = $node->parentNode->parentNode;
-					if (self::firstChildIs($tableNode, 'thead')) {
+					if (self::firstChildIs($tableNode, 'thead') || self::firstChildIs( $tableNode, 'caption' ) ) {
 						$addRowDelimiter = true;
-					}
-
-					// don't add |- before table header row
-					if (self::isChildOf($node, 'thead')) {
-						$addRowDelimiter = false;
 					}
 				}
 				else {
@@ -1501,7 +1509,7 @@ class RTEReverseParser {
 		}
 
 		// $node must be first child of table cell / header (td/th)
-		if ( self::isFirstChild($node)) {
+		if ( self::isFirstChild($node) ) {
 			if ($node->nodeType == XML_ELEMENT_NODE) {
 				switch($node->nodeName) {
 					// link (RT #34043)
@@ -1515,11 +1523,11 @@ class RTEReverseParser {
 						// if next element is text node, don't add line break (refs RT #34043)
 						// if next element is <br />, don't add line break (refs RT #38257)
 						// if next element is <sup> or <sub>, don't add line break (ref RT #67354)
-						if (	!self::nextSiblingIsTextNode($node) &&
+						if (!self::nextSiblingIsTextNode($node) &&
 							!self::nextSiblingIs($node, 'br') &&
-							!self::nextSiblingIs($node, 'sub')  &&
-							!self::nextSiblingIs($node, 'sup') ) {
-
+							!self::nextSiblingIs($node, 'sub') &&
+							!self::nextSiblingIs($node, 'sup')
+						) {
 							$out = "{$out}\n";
 						}
 						break;
@@ -1528,18 +1536,24 @@ class RTEReverseParser {
 						// for HTML elements add extra line break before
 						$out = "\n{$out}";
 				}
-			}
-			else {
+			} else {
 				// for text nodes check what is next sibling
-				// add line break before paragraphs, tables and lists
-				if ( self::nextSiblingIs($node, array('p', 'table', 'ul', 'ol')) ) {
+				// add line break before tables and lists
+				if ( self::nextSiblingIs($node, array('table', 'ul', 'ol')) ) {
 					$out = "{$out}\n";
 				}
 			}
-		}
 
-		// add line break before lists, if previous node is text node (RT #34043)
-		if ( self::isListNode($node) && self::previousSiblingIsTextNode($node) ) {
+		// Non-child nodes
+		} else if (
+			// Break before lists if previous node is text node (RT #34043)
+			( self::isListNode( $node ) && self::previousSiblingIsTextNode( $node ) ) ||
+			// (BugId:11235) Break before paragraphs created by newlines. Exclude first-child
+			// anchor tags as they are handled as a special case in the first-child only code above.
+			( $node->nodeName == 'p' && !self::wasHtml( $node ) &&
+				!( self::previousSiblingIs( $node, 'a' ) && self::isFirstChild( $node->previousSibling ) )
+			)
+		) {
 			$out = "\n{$out}";
 		}
 
@@ -2083,6 +2097,28 @@ class RTEReverseParser {
 			return true;
 		}
 
+		return false;
+	}
+
+	/**
+	 * Determines if a tag was either html or a parser tag hook
+	 * @param DomNode $node
+	 * @return bool
+	 */
+	private function wasTag( $node ) {
+		global $wgParser;
+		$wgParser->firstCallInit();
+		if ( self::wasHtml( $node ) ) {
+			return true;
+		}
+		for ( $i = 0; $i < count( $this->nodes ); $i++ ) {
+			if ( $this->nodes[$i]->isSameNode( $node ) ) {
+				// pull the tag name out of a single-line confused hook or get the same output back
+				// it doesn't matter, because we need an exact match to make this work
+				$stripped = preg_replace( '/^\s*<([^>\/]+)\/?+>\s*$/', '$1', $this->nodeOutputs[$i] );
+				return in_array( $stripped, $wgParser->getTags() );
+			}
+		}
 		return false;
 	}
 }

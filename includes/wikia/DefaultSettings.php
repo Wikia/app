@@ -154,6 +154,7 @@ $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiCon
 $app->registerApiController( 'DiscoverApiController', "{$IP}/includes/wikia/api/DiscoverApiController.class.php" );
 $app->registerApiController( 'NavigationApiController', "{$IP}/includes/wikia/api/NavigationApiController.class.php" );
 $app->registerApiController( 'ArticlesApiController', "{$IP}/includes/wikia/api/ArticlesApiController.class.php" );
+$app->registerApiController( 'StatsApiController', "{$IP}/includes/wikia/api/StatsApiController.class.php" );
 
 //Wikia Api exceptions classes
 $app->registerClass( 'BadRequestApiException', "{$IP}/includes/wikia/api/ApiExceptions.php" );
@@ -259,6 +260,7 @@ $wgAutoloadClasses['WikiService'] = $IP . '/includes/wikia/services/WikiService.
 $wgAutoloadClasses['DataMartService'] = $IP . '/includes/wikia/services/DataMartService.class.php';
 $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoService.class.php';
 $wgAutoloadClasses['SassService']  =  $IP.'/includes/wikia/services/SassService.php';
+$wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.class.php';
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
@@ -1038,7 +1040,7 @@ $wgEnableMemcachedBulkMode = false;
  * WikiaSeasons flags
  */
 $wgWikiaSeasonsGlobalHeader = false;
-$wgWikiaSeasonsWikiaBar = true;
+$wgWikiaSeasonsWikiaBar = false;
 $wgWikiaSeasonsPencilUnit = false;
 
 /**

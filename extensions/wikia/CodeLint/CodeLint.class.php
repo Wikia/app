@@ -64,6 +64,10 @@ abstract class CodeLint {
 	 * @param string $pattern - pattern to glob for
 	 */
 	protected function findFiles($dir, $pattern) {
+		if ($dir === false) {
+			return array();
+		}
+
 		wfProfileIn(__METHOD__);
 
 		// escape any character in a string that might be used to trick
@@ -345,6 +349,8 @@ abstract class CodeLint {
 		$results = array();
 
 		foreach($fileNames as $fileName) {
+			$fileName = realpath($fileName);
+
 			if (!$this->isBlacklisted($fileName, $blacklist)) {
 				$results[] = $this->checkFile($fileName);
 			}
@@ -418,6 +424,8 @@ abstract class CodeLint {
 		$results = array();
 
 		foreach($directoryNames as $directoryName) {
+			$directoryName = realpath($directoryName);
+
 			if (!$this->isBlacklisted($directoryName, $blacklist)) {
 				$results += $this->checkDirectory($directoryName, $blacklist);
 			}

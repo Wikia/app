@@ -44,12 +44,7 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		$commentingAllowed = true;
-		if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) {
-			$props = BlogArticle::getProps($title->getArticleID());
-			$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
-		}
-		if (!$commentingAllowed) {
+		if (!ArticleComment::canComment()) {
 			return $result;
 		}
 
@@ -174,9 +169,6 @@ class ArticleCommentsAjax {
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$parentId = $wgRequest->getVal( 'parentId' );
-		$page = $wgRequest->getVal( 'page', 1 );
-		$showall = $wgRequest->getText( 'showall', false );
-		$commentingAllowed = true;
 		$result = array( 'error' => 1 );
 		$title = Title::newFromID( $articleId );
 
@@ -184,12 +176,7 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		if ( defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE ) {
-			$props = BlogArticle::getProps( $title->getArticleID() );
-			$commentingAllowed = ( isset( $props['commenting'] ) ) ? (bool)$props['commenting'] : true;
-		}
-
-		if ( !$commentingAllowed ) {
+		if ( !ArticleComment::canComment( $title ) ) {
 			return $result;
 		}
 
@@ -233,10 +220,12 @@ class ArticleCommentsAjax {
 	 * @return String - HTML
 	 */
 	static function axGetComments() {
-		global $wgRequest;
+		global $wgRequest, $wgTitle;
 
 		$page = $wgRequest->getVal('page', false);
 		$articleId = $wgRequest->getVal('article', false);
+		$wgTitle = Title::newFromID( $articleId );
+
 		$error = 0;
 		$text = $pagination = '';
 		$method = 'CommentList';

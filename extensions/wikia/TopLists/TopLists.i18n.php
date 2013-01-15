@@ -342,10 +342,12 @@ $messages['cs'] = array(
 	'toplists-error-add-item-permission' => 'Chyba oprávnění: Vašemu účetu nebylo uděleno právo k vytvoření nových položek.',
 	'toplists-error-add-item-list-not-exists' => 'Top 10 seznam s názvem "$1" neexistuje.',
 	'toplists-upload-error-unknown' => 'Došlo k chybě při nahrávání. Opakujte akci.',
+	'action-toplists-create-edit-list' => 'vytvářet a upravovat stránky Top 10 seznamů',
 	'toplists-editor-title-label' => 'Název seznamu',
 	'toplists-editor-title-placeholder' => 'Zadejte název seznamu',
 	'toplists-editor-related-article-label' => 'Související stránka <small>(nepovinné, ale vybere obrázek)</small>',
 	'toplists-editor-related-article-placeholder' => 'Zadejte existující název stránky',
+	'toplists-editor-description-label' => 'Krátký popis Vašeho Top 10 seznamu',
 	'toplists-editor-description-placeholder' => 'Zadejte popis',
 	'toplists-editor-image-browser-tooltip' => 'Přidat obrázek',
 	'toplists-editor-remove-item-tooltip' => 'Odstranit položku',
@@ -394,6 +396,7 @@ Oznamování změn seznamu si můžete <a href="$4">odhlásit</a>.',
 	'toplists-msg-fb-OnRateArticle-short' => 'hlasoval na Top 10 seznamu na $WIKINAME!',
 	'toplists-create-heading' => '<em>Novinka!</em> Vytvořte si vlastní Top 10 seznam',
 	'toplists-create-button-msg' => 'Vytvořit seznam',
+	'toplists-oasis-only' => 'Vytváření a úprava Top 10 seznamů není možná v Monobooku. Pokud chcete používat tuto funkcí, přepněte prosím v nastavení na Wikia skin.',
 );
 
 /** German (Deutsch)
@@ -2244,16 +2247,29 @@ $messages['tr'] = array(
 
 /** Ukrainian (українська)
  * @author Pig1995z
+ * @author Steve.rusyn
  */
 $messages['uk'] = array(
 	'toplists-desc' => 'Список Топ 10',
 	'right-toplists-create-edit-list' => 'Створення і редагування сторінок списку топ-10',
 	'right-toplists-create-item' => 'Створення і додавання елементів на сторінку списку топ-10',
+	'toplists-editor-title-label' => "Ім'я списку",
+	'toplists-editor-title-placeholder' => "Введіть ім'я списку",
+	'toplists-editor-description-placeholder' => 'Введіть опис',
+	'toplists-editor-image-browser-tooltip' => 'Додати зображення',
+	'toplists-editor-remove-item-tooltip' => 'Видалити елемент',
+	'toplists-editor-add-item-label' => 'Додати новий елемент',
+	'toplists-editor-add-item-tooltip' => 'Додати новий елемент до списку',
+	'toplists-create-button' => 'Створити список',
+	'toplists-update-button' => 'Зберегти список',
+	'toplists-cancel-button' => 'Скасувати',
+	'toplists-image-browser-upload-btn' => 'Вибрати',
 	'toplists-seconds' => '$1 {{PLURAL:$1|секунда|секунди|секунд}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|хвилина|хвилини|хвилин}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|година|години|годин}}',
 	'toplists-days' => '$1 {{PLURAL:$1|день|дні|днів}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|тиждень|тижня|тижнів}}',
+	'toplists-create-button-msg' => 'Створити список',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -2262,9 +2278,12 @@ $messages['uk'] = array(
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'toplists-error-duplicated-entry' => '该名称不可重复使用。',
 	'toplists-editor-title-label' => '列表名称',
 	'toplists-editor-title-placeholder' => '为列表命名',
+	'toplists-editor-description-placeholder' => '输入描述',
 	'toplists-editor-image-browser-tooltip' => '添加图片',
+	'toplists-editor-drag-item-tooltip' => '拖拽以改变顺序',
 	'toplists-create-button' => '创建列表',
 	'toplists-update-button' => '保存列表',
 	'toplists-cancel-button' => '取消',

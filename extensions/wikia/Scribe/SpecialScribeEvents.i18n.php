@@ -250,6 +250,14 @@ $messages['tt-cyrl'] = array(
 	'scribeeventsrecords' => 'Язмалар',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'scribeevents' => 'Останні події',
+	'scribeeventsrecords' => 'Записи',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */

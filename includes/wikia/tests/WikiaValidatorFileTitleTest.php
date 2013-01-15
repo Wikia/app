@@ -2,45 +2,51 @@
 
 class WikiaValidatorFileTitleTest extends PHPUnit_Framework_TestCase {
 
-	/* @var $validator WikiaValidatorUrl */
-	private $validator;
-
-	protected function setUp() {
-		$this->validator = new WikiaValidatorFileTitle();
-	}
-
 	/**
-	 * @dataProvider testUrlsDataProvider
+	 * @dataProvider filesDataProvider
 	 */
-	public function testFiles($fileString, $isValid, $exists, $namespace) {
+	public function testFiles($fileString, $isValid, $exists) {
 
-		$titleMock = $this->getMock('Title', array('newFromText', 'exists', 'getNamespace'));
+		$fileMock = $this->getMock('WikiaLocalFile', array('exists'), array(), '', false);
+		$fileMock->expects($this->once())
+			->method('exists')
+			->will($this->returnValue($exists));
 
-		$titleMock->staticExpects($this->once())
+		$appMock = new stdClass();
+		$appMock->wf = $this->getMock('stdClass', array('findFile'));
+		$appMock->wf->expects($this->once())
+			->method('findFile')
+			->will($this->returnValue($fileMock));
+
+		$validator = $this->getMock('WikiaValidatorFileTitle', array('getApp'));
+		$validator->expects($this->once())
+			->method('getApp')
+			->will($this->returnValue($appMock));
+
+		$titleMock = $this->getMock('Title', array('newFromText'));
+
+		$titleMock->staticExpects($this->any())
 			->method('newFromText')
+			->with($this->equalTo($fileString), $this->equalTo(NS_FILE))
 			->will($this->returnValue($titleMock));
 
 		$titleMock->expects($this->any())
 			->method('exists')
 			->will($this->returnValue($exists));
 
-		$titleMock->expects($this->any())
-			->method('getNamespace')
-			->will($this->returnValue($namespace));
+		$validator->setTitleClass($titleMock);
 
-		$this->validator->setTitleClass($titleMock);
-
-		$result = $this->validator->isValid($fileString);
+		$result = $validator->isValid($fileString);
 		$this->assertEquals($isValid, $result);
 	}
 
-	public function testUrlsDataProvider() {
+	public function filesDataProvider() {
 		return array(
-			array('File:Skyfall (2012) - Theatrical Trailer 2 for Skyfall', true, true, NS_FILE),
-			array('File:Skyfall (2012) - Theatrical Trailer 2 for Skyfall', false, false, NS_FILE),
-			array('File:Skyfall (2012) - Theatrical Trailer 2 for Skyfall', false, true, NS_MAIN),
-			array('File:James Bond', true, true, NS_FILE),
-			array('File:Skyfall (2012) - Theatrical Trailer 2 for Skyfall', false, false, NS_CATEGORY),
+			array('Skyfall (2012) - Theatrical Trailer 2 for Skyfall', true, true),
+			array('Skyfall (2012) - Theatrical Trailer 2 for Skyfall', false, false),
+			array('Skyfall (2012) - Theatrical Trailer 2 for Skyfall', false, false),
+			array('James Bond', true, true),
+			array('Skyfall (2012) - Theatrical Trailer 2 for Skyfall', false, false),
 		);
 	}
 }

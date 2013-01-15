@@ -338,6 +338,23 @@ $messages['pl'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Sugestie pisowni dla " $1 ":$2',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'spellchecker-desc' => "A dà n'antërfacia për ël contròl ortogràfich për ël mòdul PHP d'ancant",
+	'enablespellchecker' => 'Abìlita spellchecker an manera visual',
+	'spellchecker-info' => 'Anformassion dël coretor ortogràfich',
+	'spellchecker-info-languages' => 'Lenghe disponìbij ($1)',
+	'spellchecker-info-provider' => 'Fornidor',
+	'spellchecker-info-dictionaries' => 'Dissionari disponìbij',
+	'spellchecker-info-spellcheck-text' => 'Test da controlé',
+	'spellchecker-info-spellcheck-languages' => 'Lenga',
+	'spellchecker-info-spellcheck-submit' => 'Contròl ortogràfich',
+	'spellchecker-info-spellcheck-is-correct' => 'La paròla "$1" a l\'é scrivùa giusta',
+	'spellchecker-info-spellcheck-suggestions' => 'Sugeriment ortogràfich për "$1": $2',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -460,6 +477,16 @@ $messages['tt-cyrl'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Тел',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'spellchecker-info-languages' => 'Доступні мови ($1)',
+	'spellchecker-info-provider' => 'Постачальник',
+	'spellchecker-info-spellcheck-languages' => 'Мова',
+	'spellchecker-info-spellcheck-submit' => 'Перевірка правопису',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
@@ -496,8 +523,10 @@ $messages['wa'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'spellchecker-info-spellcheck-languages' => '语言',
+	'spellchecker-info-spellcheck-submit' => '拼写检查',
 );

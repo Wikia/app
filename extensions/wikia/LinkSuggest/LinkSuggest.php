@@ -82,7 +82,7 @@ function getLinkSuggestImage() {
 	wfProfileIn(__METHOD__);
 
 	$res = LinkSuggest::getLinkSuggestImage($wgRequest->getText('imageName'));
-	
+
 	$ar = new AjaxResponse($res);
 	$ar->setCacheDuration(60 * 60);
 	$ar->setContentType('text/plain; charset=utf-8');

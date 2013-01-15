@@ -47,7 +47,6 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		$formId = 'AbTestingEditForm';
 		$fields = array();
 		$groups = array();
-		$controlGroupOptions = array();
 
 		$fields['id'] = array(
 			'type' => 'hidden',
@@ -124,24 +123,12 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 				'value' => $ranges,
 			);
 
-			$controlGroupOptions[] = array(
-				'value' => $group['id'],
-				'content' => $group['name'],
-			);
 		}
 
 		$groups[] = array(
 			'type' => 'button',
 			'name' => 'addTreatmentGroup',
 			'content' => $this->wf->msg('abtesting-add-treatment-group'),
-		);
-
-		$fields['control_group_id'] = array (
-			'type' => 'select',
-			'name' => 'control_group_id',
-			'label' => $this->wf->msg('abtesting-heading-control-group'),
-			'options' => $controlGroupOptions,
-			'value' => $lastVersion ? $lastVersion['control_group_id'] : '',
 		);
 
 		$fields[] = array(
@@ -310,7 +297,6 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		$this->checkValueChanged(@$info['lastVersion']['ga_slot'],$data['ga_slot'],$versionChanged);
 		$this->checkValueChanged(@$info['lastVersion']['start_time'],$data['start_time'],$versionChanged);
 		$this->checkValueChanged(@$info['lastVersion']['end_time'],$data['end_time'],$versionChanged);
-		$this->checkValueChanged(@$info['lastVersion']['control_group_id'],$data['control_group_id'],$versionChanged);
 
 		$startTime = null;
 		$endTime = null;
@@ -340,14 +326,6 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 				$grp['experiment_id'] = $expId;
 				$abData->saveGroup($grp);
 				$existingGroups[$normalizedName] = $grp['id'];
-			}
-
-			// Despite the key name, this can actually be a name not an ID
-			if (is_numeric($data['control_group_id'])) {
-				$control_group_id = $data['control_group_id'];
-			} else {
-				$control_group_name = $abTesting->normalizeName($data['control_group_id']);
-				$control_group_id = $existingGroups[$control_group_name];
 			}
 
 			// if ranges configuration has changed
@@ -380,7 +358,6 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 				// save the current version of experiment
 				$current = array_merge( $current, array(
 					'experiment_id' => $expId,
-					'control_group_id' => $control_group_id,
 					'start_time' => $data['start_time'],
 					'end_time' => $data['end_time'],
 					'ga_slot' => $data['ga_slot'],

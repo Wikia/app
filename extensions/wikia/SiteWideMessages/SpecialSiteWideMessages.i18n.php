@@ -149,7 +149,7 @@ $messages['qqq'] = array(
 	'swm-button-save' => '{{Identical|Save}}',
 	'swm-button-new' => '{{Identical|New}}',
 	'swm-msg-sent-task' => 'Message to display when a task is created in order to send a message. $1 is a link to the created task.',
-	'swm-expire-info' => 'If $1 is a time stamp, split date and time.', # Fuzzy
+	'swm-expire-info' => '',
 	'swm-list-table-group' => '{{Identical|Group}}',
 	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.',
 	'swm-list-table-content' => '{{Identical|Content}}',
@@ -2291,16 +2291,23 @@ $messages['pms'] = array(
 	'swm-label-recipient-wikis' => 'Wiki',
 	'swm-label-recipient-users' => 'Utent',
 	'swm-label-expiration' => 'Temp ëd fin',
+	'swm-label-expiration-hint' => "<i>Selession-a n'ora ëd fin dal menù a tendin-a e scriv n'ora a man për coaté la selession dël menù a tendin-a. L'ora scrivùa manualment a deuv esse ant la forma 2012-04-01 00:00:00</i>",
 	'swm-label-mode-wikis-all' => 'Tute le wiki',
 	'swm-label-mode-wikis-hub' => 'Pòrt selessionà',
 	'swm-label-mode-wikis-cluster' => 'Baron selessionà',
 	'swm-label-mode-wikis-wiki' => 'Wiki selessionà',
+	'swm-label-mode-wikis-wiki-multi' => 'Lista ëd wiki',
+	'swm-label-mode-wikis-wiki-multi-hint' => '<i>Anseriss na wiki për linia.</i>',
 	'swm-label-mode-users-all' => "Tùit j'utent",
 	'swm-label-mode-users-active' => 'Utent ativ',
 	'swm-label-mode-users-group' => 'Utent apartenent a la partìa',
 	'swm-label-mode-users-group-hint' => '<i>Pija na partìa da la lista o scriv un nòm a man për coaté la selession ëd la lista.</i>',
 	'swm-label-mode-users-user' => 'Utent selessionà',
 	'swm-label-mode-users-user-hint' => '<i>St\'opsion-sì a ignora le selession ant la partìa "Wiki".</i>',
+	'swm-label-mode-users-user-multi' => "Lista d'utent",
+	'swm-label-mode-users-user-multi-hint' => '<i>Anseriss un nòm utent për linia. Sta opsion a ignora le selession ant la partìa "Wikis".</i>',
+	'swm-label-mode-users-anon' => "Tùit j'utent anònim",
+	'swm-label-mode-users-anon-hint' => '<i>Sta opsion al moment a travaja mach o con l\'opsion "Tute le wiki", "Lista ëd wiki" o la "Selession-a wiki".</i>',
 	'swm-label-content' => 'Contnù',
 	'swm-label-comment' => 'Coment',
 	'swm-label-dismissed' => 'Arfudà',
@@ -2314,6 +2321,7 @@ $messages['pms'] = array(
 	'swm-button-new' => '[ Neuv ]',
 	'swm-msg-sent-ok' => "<h3>Ël mëssagi a l'é stàit mandà.</h3>",
 	'swm-msg-sent-err' => "<h3>Ël mëssagi a l'é PA stàit mandà.</h3>Varda ël registr ëd j'eror për pi d'anformassion.",
+	'swm-msg-sent-task' => 'Travaj creà për mandé mëssagi: $1',
 	'swm-msg-remove' => 'É-lo sigur ëd vorèj gavé sto mëssagi-sì? As peul pa tornesse andré!',
 	'swm-expire-info' => 'Sto mëssagi a scad ai $1.',
 	'swm-link-dismiss' => 'arfudé ës mëssagi',
@@ -2330,14 +2338,37 @@ $messages['pms'] = array(
 	'swm-list-table-content' => 'Contnù',
 	'swm-list-table-tools' => 'Utiss',
 	'swm-list-table-lang' => 'Lenghe',
+	'swm-list-table-hub' => 'Hub',
 	'swm-yes' => 'É!',
 	'swm-no' => 'Nò',
 	'swm-error-no-such-wiki' => 'Na wiki parèj a-i é pa!',
+	'swm-error-no-wiki-list' => 'Almanch na wiki a deuv esse dàita',
 	'swm-error-no-such-user' => "L'utent spessificà a esist pa.",
+	'swm-error-no-user-list' => "Almanch n'utent a deuv esse dàit",
 	'swm-error-empty-message' => "Ch'a anserissa ël contnù dël mëssagi.",
 	'swm-error-long-message' => 'Ij mëssagi a son limità a 500 caràter.',
 	'swm-error-empty-group' => "Ch'a anserissa ël nòm ëd la partìa.",
+	'swm-error-invalid-time' => 'Ora pa bon-a dàita.',
 	'swm-lang-other' => "tute j'àutre lenghe",
+	'action-messagetool' => 'manda mëssagi a livel ëd sit',
+	'swm-label-mode-users-registration' => 'Data registrassion',
+	'swm-mode-users-registration-after' => "D'apress",
+	'swm-mode-users-registration-before' => 'Prima',
+	'swm-mode-users-registration-between' => 'Tra',
+	'swm-label-mode-users-registration-hint' => '<i>Le date a deuvo esse an la forma 2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => "La data fin dla registrassion utent a l'é prima dla data inissi.",
+	'swm-label-mode-users-editcount' => 'Conteur ëd modìfiche',
+	'swm-mode-users-editcount-more' => 'Pi',
+	'swm-mode-users-editcount-less' => 'Men',
+	'swm-mode-users-editcount-between' => 'Tra',
+	'swm-error-editcount-tolessthanfrom' => "Lìmit superior dël conteur ëd modifiche utent a l'é men dël limit inferior.",
+	'swm-error-editcount-notnumber' => 'Conteur ëd modìfiche a deuv esse un nùmer bon.',
+	'swm-label-mode-wikis-created' => 'Data ëd creassion wiki.',
+	'swm-mode-wikis-created-after' => "D'apress",
+	'swm-mode-wikis-created-before' => 'Prima',
+	'swm-mode-wikis-created-between' => 'Tra',
+	'swm-label-mode-wikis-created-hint' => '<i>Le date a deuvo esse an la forma 2012-04-01 00:00:00</i>',
+	'swm-error-created-tobeforefrom' => "La data fin dla creassion wiki a l'é prima dla data inissi.",
 );
 
 /** Pashto (پښتو)
@@ -3056,6 +3087,7 @@ $messages['tzm'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
@@ -3068,8 +3100,13 @@ $messages['uk'] = array(
 	'swm-label-sent' => 'Надіслане',
 	'swm-label-list' => 'Список',
 	'swm-label-recipient-users' => 'Користувачі',
+	'swm-label-mode-wikis-cluster' => 'Вибраний кластер',
+	'swm-label-mode-wikis-wiki' => 'Вибрана вікі',
 	'swm-label-mode-users-all' => 'Всі користувачі',
 	'swm-label-mode-users-active' => 'Активні користувачі',
+	'swm-label-mode-users-user' => 'Вибраний користувач',
+	'swm-label-mode-users-user-multi' => 'Список користувачів',
+	'swm-label-content' => 'Вміст',
 	'swm-label-comment' => 'Коментар',
 	'swm-label-language' => 'Мова',
 	'swm-button-preview' => '[ Попередній перегляд ]',
@@ -3078,6 +3115,8 @@ $messages['uk'] = array(
 	'swm-button-new' => '[ Нове ]',
 	'swm-msg-sent-ok' => '<h3>Повідомлення надіслане.</h3>',
 	'swm-list-no-messages' => 'Немає повідомлень.',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-sender' => 'Відправник',
 	'swm-list-table-wiki' => 'Вікі',
 	'swm-list-table-group' => 'Група',
 	'swm-list-table-date' => 'Дата надсилання',
@@ -3086,6 +3125,12 @@ $messages['uk'] = array(
 	'swm-yes' => 'Так',
 	'swm-no' => 'Ні',
 	'swm-error-no-such-wiki' => 'Немає такої вікі!',
+	'swm-mode-users-editcount-more' => 'Більше',
+	'swm-mode-users-editcount-less' => 'Менше',
+	'swm-mode-users-editcount-between' => 'Між',
+	'swm-mode-wikis-created-after' => 'Після',
+	'swm-mode-wikis-created-before' => 'До',
+	'swm-mode-wikis-created-between' => 'Між',
 );
 
 /** Volapük (Volapük)
@@ -3103,6 +3148,7 @@ $messages['yi'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hydra
  * @author Sam Wang
  * @author Xiaomingyan
@@ -3118,6 +3164,8 @@ $messages['zh-hans'] = array(
 	'swm-label-recipient-users' => '用户',
 	'swm-label-mode-wikis-all' => '所有维基',
 	'swm-label-mode-users-all' => '所有用户',
+	'swm-label-mode-users-active' => '活跃用户',
+	'swm-label-mode-users-user-multi' => '用户列表',
 	'swm-label-content' => '内容',
 	'swm-label-comment' => '评语',
 	'swm-label-language' => '语言',
@@ -3130,6 +3178,7 @@ $messages['zh-hans'] = array(
 	'swm-list-table-recipient' => '受信者',
 	'swm-list-table-group' => '用户组',
 	'swm-list-table-content' => '内容',
+	'swm-list-table-lang' => '语言',
 	'swm-yes' => '是',
 	'swm-no' => '不是',
 	'swm-error-no-such-wiki' => '没有这个维基！',

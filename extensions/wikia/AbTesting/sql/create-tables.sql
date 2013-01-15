@@ -42,19 +42,12 @@ CREATE  TABLE IF NOT EXISTS `ab_experiment_versions` (
   `start_time` DATETIME NOT NULL ,
   `end_time` DATETIME NOT NULL ,
   `ga_slot` VARCHAR(45) NOT NULL ,
-  `control_group_id` INT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `experiment_id` (`experiment_id` ASC) ,
-  INDEX `control_group_id` (`control_group_id` ASC) ,
   CONSTRAINT `fk_version_experiment`
     FOREIGN KEY (`experiment_id` )
     REFERENCES `ab_experiments` (`id` )
     ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_version_control_group`
-    FOREIGN KEY (`control_group_id` )
-    REFERENCES `ab_experiment_groups` (`id` )
-    ON DELETE SET NULL
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 

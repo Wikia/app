@@ -24,9 +24,10 @@ var Lightbox = {
 	backfillCount: 0,
 	backfillCountMessage: false,
 	to: 0, // timestamp for getting wiki images
-	includeLatestPhotos: !$('#LatestPhotosModule .carousel-container').length, // if we don't have latest photos in the DOM, request them from back end
 
 	makeLightbox: function(params) {
+		Lightbox.includeLatestPhotos = !$('#LatestPhotosModule .carousel-container').length; // if we don't have latest photos in the DOM, request them from back end
+
 		// If file doesn't exist, show the error modal
 		if(!Lightbox.initialFileDetail['exists']) {
 			Lightbox.showErrorModal();
@@ -53,13 +54,15 @@ var Lightbox = {
 		// Add template to modal
 		Lightbox.openModal.find(".modalContent").html(LightboxLoader.templateHtml);
 
-		// Init ads in Lightbox
-		if ($('#MODAL_RECTANGLE').length) {
-			window.adslots2.push(['MODAL_RECTANGLE']);
-		}
-
 		// cache re-used DOM elements and templates for this modal instance
 		Lightbox.cacheDOM();
+
+		// Init ads in Lightbox
+		if ($('#MODAL_RECTANGLE').length && Lightbox.ads.userShowAds) {
+			Lightbox.openModal.lightbox.addClass('show-ads');
+			window.adslots2.push(['MODAL_RECTANGLE']);
+			Lightbox.ads.adModalRectangleShown = true;
+		}
 
 		// Set up carousel
 		Lightbox.setUpCarousel();
@@ -418,6 +421,10 @@ var Lightbox = {
 		}
 	},
 	ads: {
+		// is MODAL_RECTANGLE ad shown?
+		adModalRectangleShown: false,
+		// should we show ads for this user?
+		userShowAds: !window.wgUserName || window.wgUserShowAds,
 		// preload ad after this number of unique images/videos are shown
 		adMediaCountPreload: 2,
 		// show an ad after this number of unique images/videos are shown
@@ -443,10 +450,9 @@ var Lightbox = {
 		},
 		// should user see ads?
 		showAds: function() {
-			if (Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB') {
-				return $('#' + this.getSlotName()).length;
-			}
-			return false;
+			return !!(this.userShowAds
+				&& (Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB')
+				&& $('#' + this.getSlotName()).length);
 		},
 		preloadAds: function() {
 			if (!this.adWasPreloaded) {
@@ -701,16 +707,38 @@ var Lightbox = {
 			return false;
 		}
 
-		var dbKey = Lightbox.getTitleDbKey(),
-			newSearch = "?file="+dbKey;
+		var query = window.location.search.substring(1),
+			vars = query.split('&'),
+			queryObj = {};
 
-		if((window.location.search != newSearch) || clear) {
+		for(var i = 0; i < vars.length; i++) {
+			if(vars[i] == "") {
+				break;
+			}
+			var pair = vars[i].split('=');
+			// Create object of query params
+			queryObj[pair[0]] = pair[1];
+		}
+
+		if(clear) {
+			delete queryObj.file;
+		} else {
+			queryObj.file = Lightbox.getTitleDbKey();
+		}
+
+		var newQuery = $.param(queryObj);
+
+		if(newQuery != "") {
+			newQuery = "?" + newQuery;
+		}
+
+		if(window.location.search != newQuery) {
 			var stateObj = {
-					fileTitle: dbKey
+					fileTitle: queryObj.file || null
 				},
-				stateUrl = window.location.pathname;
+				stateUrl = decodeURI(window.location.pathname);
 
-			stateUrl += clear ? "" : newSearch;
+			stateUrl += newQuery;
 
 			Lightbox.stateChangedManually = true;
 			History.replaceState(stateObj, History.options.initialTitle + ", " + Lightbox.current.title, stateUrl);
@@ -885,7 +913,8 @@ var Lightbox = {
 			}
 		};
 
-		var itemsShown = Lightbox.ads.showAds() ? 6 : 9;
+		// show-ads class appears when there is going to be a MODAL_RECTANGLE ad
+		var itemsShown = Lightbox.ads.adModalRectangleShown ? 6 : 9;
 
 		// Make sure we have our i18n message before initializing the carousel plugin
 		$.when.apply(this, deferredList).done(function() {
@@ -1018,7 +1047,7 @@ var Lightbox = {
 				thumbArr = cached;
 			} else {
 
-				var article = $('#WikiaArticle'),
+				var article = $('#WikiaArticle, #WikiaArticleComments'),
 					playButton = Lightbox.thumbPlayButton,
 					titles = [], // array to check for title dupes
 					thumbArr = [],
@@ -1035,6 +1064,11 @@ var Lightbox = {
 						title = (type == 'image') ? $thisParent.data('image-name') : $thisParent.data('video-name'),
 						playButtonSpan = (type == 'video') ? playButton : '';
 
+					
+					if($thisThumb.closest('.ogg_player').length) {
+						return;
+					}
+					
 					// (BugId:38144)
 					title = title || $thisThumb.attr('alt');
 
@@ -1277,7 +1311,7 @@ var Lightbox = {
 				break;
 
 			// Embeded in Article Comments
-			case 'article-comments':
+			case 'WikiaArticleComments':
 				clickSource = clickSource || VPS.EMBED;
 
 				carouselType = "articleMedia";

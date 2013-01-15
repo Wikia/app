@@ -163,7 +163,7 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Lege bevestigingscode',
 	'wikiaconfirmemail-error-invalid-code' => 'Ongeldige bevestigingscode',
-	'wikiaconfirmemail-error-user-not-match' => 'De bevestigingsverwijzing komt niet overeen met de ingevoerde gebruikersnaam. Zorg ervoor dat u de juiste gebruikersnaam invoert. U kunt ook <a href="{{fullurl:{{ns:special}}:UserLogin}}">aanmelden met een andere gebruiker</a>.',
+	'wikiaconfirmemail-error-user-not-match' => 'De bevestigingskoppeling komt niet overeen met de ingevoerde gebruikersnaam. Zorg ervoor dat u de juiste gebruikersnaam invoert. U kunt ook <a href="{{fullurl:{{ns:special}}:UserLogin}}">aanmelden met een andere gebruiker</a>.',
 	'wikiaconfirmemail-login-button' => 'Bevestigen en aanmelden',
 	'wikiaconfirmemail-heading' => 'Bijna klaar!',
 	'wikiaconfirmemail-subheading' => 'Meld aan met uw gebruikersnaam en wachtwoord, zodat we weten dat u de e-mail hebt ontvangen.',
@@ -181,6 +181,19 @@ $messages['pl'] = array(
 	'wikiaconfirmemail-heading' => 'Prawie!',
 	'wikiaconfirmemail-subheading' => 'Zaloguj się korzystając ze swojej nazwy użytkownika i hasła abyśmy wiedzieli, że otrzymałeś e-maila.',
 	'wikiaconfirmemail-username' => 'Nazwa użytkownika',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'wikiaconfirmemail-error-empty-code' => 'Còdes ëd conferma veuid',
+	'wikiaconfirmemail-error-invalid-code' => 'Còdes ëd conferma pa bon',
+	'wikiaconfirmemail-error-user-not-match' => "Contacc, sto colegament ëd conferma a corispond pa con ël nòm utent ch'it l'has anserì. Sigurte d'avèj anserì ël nòm utent giust. S'it veule intré con un cont diferent, sgnaca <a href=\"{{fullurl:{{ns:special}}:UserLogin}}\">ambelessì</a>",
+	'wikiaconfirmemail-login-button' => 'Confirma e intra',
+	'wikiaconfirmemail-heading' => 'Almanch sì!',
+	'wikiaconfirmemail-subheading' => "Intra con tò nòm utent e ciav parèj noi i savoma ch'it l'has arseivù ël corel.",
+	'wikiaconfirmemail-username' => 'Stranòm',
 );
 
 /** Pashto (پښتو)
@@ -229,6 +242,17 @@ $messages['tl'] = array(
 	'wikiaconfirmemail-username' => 'Pangalan ng tagagamit',
 );
 
+/** Ukrainian (українська)
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'wikiaconfirmemail-error-empty-code' => 'Порожній код підтвердження',
+	'wikiaconfirmemail-error-invalid-code' => 'Код підтвердження невірний',
+	'wikiaconfirmemail-login-button' => 'Підтвердити й увійти',
+	'wikiaconfirmemail-heading' => 'Майже готово',
+	'wikiaconfirmemail-username' => "Ім'я користувача",
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */
@@ -240,4 +264,15 @@ $messages['vi'] = array(
 	'wikiaconfirmemail-heading' => 'Hầu như có!',
 	'wikiaconfirmemail-subheading' => 'Đăng nhập bằng tên người dùng và mật khẩu của bạn để chúng tôi biết rằng bạn đã nhận được email.',
 	'wikiaconfirmemail-username' => 'Tên người dùng',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'wikiaconfirmemail-error-empty-code' => '验证码为空',
+	'wikiaconfirmemail-error-invalid-code' => '验证码无效。',
+	'wikiaconfirmemail-login-button' => '确认并登录',
+	'wikiaconfirmemail-heading' => '马上好了。',
+	'wikiaconfirmemail-username' => '用户名',
 );

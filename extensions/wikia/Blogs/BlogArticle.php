@@ -277,7 +277,7 @@ class BlogArticle extends Article {
 		$return = array();
 		$types = self::getPropsList();
 		foreach( $types as $key => $value ) {
-			$return[$key] =  (int) wfGetWikiaPageProp($value, $page_id );
+			$return[$key] =  (int) wfGetWikiaPageProp( $value, $page_id );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -318,7 +318,9 @@ class BlogArticle extends Article {
 			$r = "<div id=\"mw-pages\">\n";
 			$r .= '<h2>' . wfMsg( "blog-header", $ti ) . "</h2>\n";
 			$r .= $countmsg;
+			$r .= $catView->getSectionPagingLinksExt( 'page' );
 			$r .= $catView->formatList( array_values($catView->blogs), $catView->blogs_start_char );
+			$r .= $catView->getSectionPagingLinksExt( 'page' );
 			$r .= "\n</div>";
 		}
 		$output = $r;
@@ -329,7 +331,7 @@ class BlogArticle extends Article {
 
 	static public function blogsInCategory ( $cat ) {
 		global $wgMemc;
-		$titleText = $cat->getTitle()->getText();
+		$titleText = $cat->getTitle()->getDBkey();
 		$memKey = self::getCountKey( $titleText );
 
 		$count = $wgMemc->get( $memKey );
@@ -431,10 +433,10 @@ class BlogArticle extends Article {
 			// "User blog:Homersimpson89/Best Simpsons episode..." -> "Best Simpsons episode..."
 			$text = $title->getSubpageText();
 			$userName = $title->getBaseText();
-			$link = $catView->getSkin()->link($title, $text);
+			$link = $catView->getSkin()->link($title, $userName." - ".$text);
 
 			// blogs entries will be sorted using this key
-			$index = $wgContLang->uc("{$text}-{$userName}");
+			$index = $wgContLang->uc("{$userName}-{$text}");
 
 			$catView->blogs[$index] = $row->page_is_redirect
 				? '<span class="redirect-in-category">' . $link . '</span>'

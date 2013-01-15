@@ -8,15 +8,14 @@ var app = require('express').createServer()
     , Backbone = require('backbone')
     , storage = require('./storage').redisFactory()
     , models = require('./models/models')
-	, mwBridge = require('./WMBridge.js').WMBridge
-	, loggerModule = require('./logger.js')
-	, logger = loggerModule.logger;
+    , mwBridge = require('./WMBridge.js').WMBridge
+    , loggerModule = require('./logger.js')
+    , tracker = require('./tracker.js')
+    , logger = loggerModule.logger;
 var http = require("http");
 
 var monitoring = require('./monitoring.js');
 monitoring.startMonitoring(50000, storage);
-
-
 // TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
 //process.on('uncaughtException', function (err) {
 //  logger.error('Caught exception: ' + err, 'Stacktrace: ', err.stack, 'Full, raw error: ', err);
@@ -32,7 +31,7 @@ require("./server_api.js");
 
 // Start the Node Chat server (which browsers connect to).
 logger.info("== Starting Node Chat Server ==");
-
+tracker.trackServerStart();
 //configure express to use jade
 app.set('view engine', 'jade');
 app.set('view options', {layout: false});
@@ -171,6 +170,7 @@ function messageDispatcher(client, socket, data){
 			case 'chat':
 				logger.debug("Dispatching to message handler.");
 				chatMessage(client, socket, data);
+				client.msgCount++;
 				break;
 			case 'command':
 				switch(dataObj.attrs.command){ // all commands should be in lowercase
@@ -288,6 +288,7 @@ function authConnection(handshakeData, authcallback){
 				if(users.length == 0 || _.indexOf(users, data.username) !== -1 ) { //
 					var client = {};
 					client.userKey = key;
+					client.msgCount = 0;
 					client.username = data.username;
 					client.avatarSrc = data.avatarSrc;
 					client.isChatMod = data.isChatMod;
@@ -297,7 +298,7 @@ function authConnection(handshakeData, authcallback){
 					client.isStaff = data.isStaff;
 					client.roomId = roomId;
 					client.cityId = data.wgCityId;
-					client.privateRoom = (users.length == 0);
+					client.privateRoom = !(users.length == 0);
 					// TODO: REFACTOR THIS TO TAKE ANY FIELDS THAT data GIVES IT.
 					client.ATTEMPTED_NAME = data.username;
 					// User has been approved & their data has been set on the client. Put them into the chat.
@@ -413,6 +414,9 @@ function finishConnectingUser(client, socket ){
 
 		if(oldClient && oldClient.userKey != client.userKey ){
 			oldClient.donotSendPart = true;
+			if(!oldClient.logout) {
+				tracker.trackEvent(client, 'disconnect');
+			}
 			// Send the old client a notice that they're about to be disconnected and why.
 			sendInlineAlertToClient(oldClient, '', 'chat-err-connected-from-another-browser', [], function(){
 				// Looks like we're kicking ourself, but since we're not in the sessionIdsByKey map yet,
@@ -430,6 +434,7 @@ function finishConnectingUser(client, socket ){
 			//we have double connection for the same window
 			if(oldClient){
 				monitoring.incrEventCounter('double_connects');
+				tracker.trackEvent(client, 'disconnect');
 				oldClient.donotSendPart = true;
                                 setTimeout(function(){
                                         if(oldClient){
@@ -453,6 +458,8 @@ function formallyAddClient(client, socket, connectedUser){
 	// Add the user to the set of users in the room in redis.
 	var userData = client.myUser.attributes;
 	delete userData.id;
+	logger.debug("clientConencted");
+	tracker.trackEvent(client, 'connect');
 	sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)] = client.sessionId;
 	storage.setUserData(client.roomId, client.myUser.get('name'), userData,
 		null,
@@ -464,7 +471,8 @@ function formallyAddClient(client, socket, connectedUser){
 				event: 'join',
 				joinData: connectedUser.xport()
 			});
-			broadcastUserListToMediaWiki(client, false);		
+			broadcastUserListToMediaWiki(client, false);
+			//Conenction complted
 		}
 	);	
 } // end formallyAddClient()
@@ -508,7 +516,9 @@ function broadcastDisconnectionInfo(client, socket){
 	if(client.donotSendPart) {
 		return true;
 	}
-	
+
+	tracker.trackEvent(client, 'disconnect');
+
 	broadcastUserListToMediaWiki(client, true);
 
 	broadcastToRoom(client, socket, {
@@ -535,7 +545,7 @@ function broadcastUserListToMediaWiki(client, removeClient){
 			}
 		}
 		logger.debug("Sending status update to media wiki")
-		if(client.privateRoom) {
+		if(!client.privateRoom) {
 			mwBridge.setUsersList(client.roomId, users);	
 		}
 	});
@@ -550,6 +560,18 @@ function broadcastUserListToMediaWiki(client, removeClient){
 function chatMessage(client, socket, msg){
 	var chatEntry = new models.ChatEntry();
     chatEntry.mport(msg);
+	// messages sent from client cannot be inline, as those messages are not escaped
+	// InlineAlert messages can be broadcasted only by the server
+	if (chatEntry.get('isInlineAlert')) {
+		var logMsg = 'Possible XSS attempt from user ' + client.myUser.get('name');
+		if (client.handshake.address && client.handshake.address.address) {
+			logMsg += '/' + client.handshake.address.address;
+		}
+		logMsg += ': ' + JSON.stringify(chatEntry);
+		logger.critical(logMsg);
+		return;
+	}
+	//chatEntry.set({ isInlineAlert: false}); // not needed, as we ingore those messages
     monitoring.incrEventCounter('chat_messages');
 	storeAndBroadcastChatEntry(client, socket, chatEntry);
 } // end chatMessage()
@@ -559,6 +581,8 @@ function logout(client, socket, msg) {
 		leavingUserName: client.myUser.get('name')
 	});
 	monitoring.incrEventCounter('logouts');
+	tracker.trackEvent(client, 'logout');
+	client.logout = true;
 	// I'm still not sure if we should call kickUserFromRoom here or not...
 	broadcastToRoom(client, socket, {
 			event: 'logout', 
@@ -620,7 +644,7 @@ function ban(client, socket, msg){
 	var time = banCommand.get('time');
 	var reason = banCommand.get('reason');
 
-	mwBridge.ban(client.roomId, userToBan, time, reason, client.userKey, function(data){
+	mwBridge.ban(client.roomId, userToBan, client.handshake.address, time, reason, client.userKey, function(data){
     	var kickEvent = new models.KickEvent({
     		kickedUserName: userToBan,
     		time: time,

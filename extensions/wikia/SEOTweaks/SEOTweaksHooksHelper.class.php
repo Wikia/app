@@ -9,6 +9,12 @@
 
 class SEOTweaksHooksHelper extends WikiaModel {
 	const DELETED_PAGES_STATUS_CODE = 410;
+	
+	/**
+	 * List of hosts associated with external sharing services
+	 * @var unknown_type
+	 */
+	const SHARING_HOSTS_REGEX = '/\.(facebook)|(twitter)|(google)\./is';
 
 	/**
 	 * @author mech
@@ -92,6 +98,33 @@ class SEOTweaksHooksHelper extends WikiaModel {
 		
 		return true;
 		
+	}
+	
+	/**
+	 * Attempts to recover a URL that was truncated by an external service (e.g. /wiki/Wanted! --> /wiki/Wanted)
+	 * @param Article $article
+	 * @param bool $outputDone
+	 * @param bool $pcache
+	 */
+	public function onArticleViewHeader( &$article, &$outputDone, &$pcache )
+	{
+		$title = $article->getTitle();
+		if ( ( ! $title->exists() ) 
+			&& ( isset( $_SERVER['HTTP_REFERER'] ) ) 
+			&& preg_match( self::SHARING_HOSTS_REGEX, parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_HOST ) ) 
+		    ) {
+		    
+			$dbr = $this->wf->GetDB( DB_SLAVE );
+			$sql = sprintf( 'SELECT page_title FROM page WHERE page_title REGEXP "^%s[[:punct:]]+" ORDER BY CHAR_LENGTH( page_title ) LIMIT 1', $title->getDBKey() );
+			$result = $dbr->query( $sql );
+			
+			if ( $row = $dbr->fetchObject( $result ) ) {
+				$title = Title::newFromText( $row->page_title );
+				$this->wg->Out->redirect( $title->getFullUrl() );
+			    $outputDone = true;
+			}
+		}
+		return true;
 	}
 
 }

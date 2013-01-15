@@ -114,23 +114,23 @@
 						<div class="module_content">
 							<div class="checkboxes">
 								<?php
-									foreach($customCheckboxes as $checkbox) {
+									foreach($customCheckboxes as $i=>$checkbox) {
 								?>
 								<label class="<?= $checkbox['name'] ?>">
-									<input type="checkbox" name="<?= $checkbox['name'] ?>" id="<?= $checkbox['name'] ?>" <?= $checkbox['checked'] ? ' checked="checked"' : '' ?> />
+									<input type="checkbox" name="<?= $checkbox['name'] ?>" tabindex="<?= $i + 2 ?>" id="<?= $checkbox['name'] ?>" <?= $checkbox['checked'] ? ' checked="checked"' : '' ?> />
 									<?= $checkbox['label'] ?>
 								</label>
 								<?php
 									}
 								?>
-								<?php if($isLoggedIn){ ?>
+								<?php if($canMinorEdit){ ?>
 								<label class="wpMinoredit">
-									<input type="checkbox" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
+									<input type="checkbox" tabindex="10" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
 									<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
 								</label>
 								<?php } ?>
 							</div>
-							<label <?php if($isLoggedIn){ ?>class="wpSummary_loggedIn"<?php } ?> for="wpSummary"><?= $wpSummaryLabelText ?></label>
+							<label <?php if($canMinorEdit){ ?>class="wpSummary_canMinorEdit"<?php } ?> for="wpSummary"><?= $wpSummaryLabelText ?></label>
 							<div id="wpSummaryLabel">
 								<?= $summaryBox ?>
 							</div>
@@ -144,7 +144,7 @@
 	 	switch ($buttonType) {
 	 		case 'save':
 ?>
-								<input class="<?=$buttonClasses?>" id="wpSave" name="wpSave" type="submit" value="<?= wfMsg('savearticle') ?>" accesskey="<?=wfMsg('accesskey-save');?>" />
+								<input class="<?=$buttonClasses?>" tabindex="12" id="wpSave" name="wpSave" type="submit" value="<?= wfMsg('savearticle') ?>" accesskey="<?=wfMsg('accesskey-save');?>" />
 								<!-- If JavaScript is enabled, disable the save button immediately. -->
 								<script type="text/javascript">document.getElementById('wpSave').disabled=true;</script>
 <?php
@@ -161,7 +161,7 @@
 								<?= F::app()->renderView('MenuButton',
 										'Index',
 										array(
-											'action' => array("href" => "#", "text" => wfMsg('preview'), "id" => "wpPreview"),
+											'action' => array("href" => "#", "text" => wfMsg('preview'), "id" => "wpPreview", "tabindex" => 11),
 											'class' => 'secondary '.$buttonClasses,
 											'dropdown' => $dropdown
 										)
@@ -184,7 +184,7 @@
 		</form>
 	</article>
 
-	<? if ($wg->User->isLoggedIn()) { ?>
+	<? if ($isLoggedIn) { ?>
 		<?php if( !$wg->EnableWikiaBarExt ): ?>
 			<footer id="WikiaFooter" class="WikiaFooter">
 				<div class="toolbar">

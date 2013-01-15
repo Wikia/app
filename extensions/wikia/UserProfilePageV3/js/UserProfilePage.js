@@ -76,10 +76,12 @@ var UserProfilePage = {
 				// Synthesize a click on the tab to hide/show the right panels
 				$('[data-tab=' + tabName + '] a').click();
 
-				if(typeof FB != 'undefined'){
-					// parse FBXML login button
-					FB.XFBML.parse();
-				}
+				$.loadFacebookAPI(function() {
+					if(window.FB && FB.XFBML) {
+						// parse FBXML login button
+						FB.XFBML.parse(document.getElementById('UPPLightboxWrapper'));
+					}
+				});
 
 				UserProfilePage.isLightboxGenerating = false;
 			}).error(function(data) {
