@@ -13,7 +13,7 @@ $wgShowExceptionDetails = true;
 
 $wgWikiaDatacenter = 'sjc';
 $IP = '/usr/wikia/source/wiki';
-$wgWikiaLocalSettingsPath  = __FILE__;
+$wgWikiaLocalSettingsPath  = '/usr/wikia/docroot/wiki.factory/LocalSettings.php';
 $wgWikiaAdminSettingsPath = dirname( $wgWikiaLocalSettingsPath ) . "/../AdminSettings.php";
 
 $wgDevelEnvironment = true;
@@ -118,7 +118,7 @@ if (empty($wgRunningUnitTests)) {
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
-// The list of cached i18n files is "fixed" too early as a side effect 
+// The list of cached i18n files is "fixed" too early as a side effect
 // of extension init functions which check user options (like FBConnect)
 // this speeds up devboxes a lot because init() is faster than recache()
 // TODO: I think this affects production also
