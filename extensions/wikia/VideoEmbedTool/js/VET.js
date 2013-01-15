@@ -12,7 +12,11 @@
 var VET_panel = null;
 var VET_curSourceId = 0;
 var VET_lastQuery = new Array();
-var VET_asyncTransaction = null;
+var VET_jqXHR = {
+	abort: function() {
+		// empty function so if statements will not have to be embedded everywhere
+	}
+};
 var VET_curScreen = 'Main';
 var VET_prevScreen = null;
 var VET_slider = null;
@@ -45,61 +49,59 @@ function VET_getTextareaValue() {
 
 // macbre: show edit video screen (wysiwyg edit)
 function VET_editVideo() {
-	YAHOO.util.Dom.setStyle('VideoEmbedMain', 'display', 'none');
+	$('#VideoEmbedMain').css('display', 'none');
 
-	var callback = {
-		success: function(o) {
-			var data = VET_embedPresets;
+	var callback = function(o) {
+		var data = VET_embedPresets;
 
-			VET_displayDetails(o.responseText, data);
+		VET_displayDetails(o.responseText, data);
 
-			$('#VideoEmbedBack').css('display', 'none');
+		$('#VideoEmbedBack').css('display', 'none');
 
-			setTimeout(function() {
-				if ( (typeof (data.thumbnail) != "undefined" && data.thumbnail ) ||
-		             (typeof (data.thumb) != "undefined" && data.thumb ) ) {
+		setTimeout(function() {
+			if ( (typeof (data.thumbnail) != "undefined" && data.thumbnail ) ||
+	             (typeof (data.thumb) != "undefined" && data.thumb ) ) {
 
-		             $("#VideoEmbedThumbOption").attr('checked', 'checked');
-		             $('#VET_StyleThumb').addClass('selected');
-		        }  else {
-		        	 $('#VideoEmbedSizeRow > div').children('input').removeClass('show');
-					 $('#VideoEmbedSizeRow > div').children('p').addClass('show');
-		        	 $("#VideoEmbedThumbOption").attr('checked', '');
-		             $("#VideoEmbedNoThumbOption").attr('checked', 'checked');
-		             $('#VET_StyleThumb').removeClass('selected');
-		             $('#VET_StyleNoThumb').addClass('selected');
-		        }
+	             $("#VideoEmbedThumbOption").attr('checked', 'checked');
+	             $('#VET_StyleThumb').addClass('selected');
+	        }  else {
+	        	 $('#VideoEmbedSizeRow > div').children('input').removeClass('show');
+				 $('#VideoEmbedSizeRow > div').children('p').addClass('show');
+	        	 $("#VideoEmbedThumbOption").attr('checked', '');
+	             $("#VideoEmbedNoThumbOption").attr('checked', 'checked');
+	             $('#VET_StyleThumb').removeClass('selected');
+	             $('#VET_StyleNoThumb').addClass('selected');
+	        }
 
-				if(data.align && data.align == 'left') {
-					$('#VideoEmbedLayoutLeft').attr('checked', 'checked').parent().addClass('selected');
-				} else if (data.align && data.align == 'center') {
-					$('#VideoEmbedLayoutCenter').attr('checked', 'checked').parent().addClass('selected');
-				} else {
-					$('#VideoEmbedLayoutRight').attr('checked', 'checked').parent().addClass('selected');
-				}
-
-				if(data.width) {
-					VET_readjustSlider( data.width );
-					$('#VideoEmbedManualWidth').val( data.width );
-				}
-
-			}, 200);
-			if(data.caption) {
-				$('#VideoEmbedCaption').val(data.caption);
+			if(data.align && data.align == 'left') {
+				$('#VideoEmbedLayoutLeft').attr('checked', 'checked').parent().addClass('selected');
+			} else if (data.align && data.align == 'center') {
+				$('#VideoEmbedLayoutCenter').attr('checked', 'checked').parent().addClass('selected');
+			} else {
+				$('#VideoEmbedLayoutRight').attr('checked', 'checked').parent().addClass('selected');
 			}
 
-			// show width slider
-			VET_toggleSizing(true);
+			if(data.width) {
+				VET_readjustSlider( data.width );
+				$('#VideoEmbedManualWidth').val( data.width );
+			}
 
-			// show alignment row
-			$( '#VideoEmbedLayoutRow' ).css('display', '');
-
-			// make replace video link to open in new window / tab
-			$('#VideoReplaceLink a').first().attr('target', '_blank');
+		}, 200);
+		if(data.caption) {
+			$('#VideoEmbedCaption').val(data.caption);
 		}
+
+		// show width slider
+		VET_toggleSizing(true);
+
+		// show alignment row
+		$( '#VideoEmbedLayoutRow' ).css('display', '');
+
+		// make replace video link to open in new window / tab
+		$('#VideoReplaceLink a').first().attr('target', '_blank');
 	};
 
-	YAHOO.util.Connect.abort(VET_asyncTransaction);
+	VET_jqXHR.abort();
 	var params = [];
 	var escTitle = "";
 	if ( typeof(VET_embedPresets.href) == "undefined" ) {
@@ -110,8 +112,16 @@ function VET_editVideo() {
 	escTitle = encodeURIComponent(escTitle);
 	params.push( 'itemTitle='+escTitle );
 
-	YAHOO.util.Connect.initHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=editVideo&' + params.join('&'), callback);
+	VET_jqXHR = $.ajax(
+		wgScriptPath + '/index.php?action=ajax&rs=VET&method=editVideo&' + params.join('&'), 
+		{
+			method: 'get',
+			complete: callback,
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+			}
+		}
+	);
 }
 
 // macbre: update video in wysiwyg mode
@@ -322,15 +332,19 @@ function VET_recentlyUploaded(param, pagination) {
 }
 
 function VET_sendQuery(query, page, sourceId, pagination) {
-	var callback = {
-		success: function(o) {
-			$('#VET_results_' + o.argument[0]).html(o.responseText);
-		},
-		argument: [sourceId]
-	}
+	var callback = function(o) {
+		$('#VET_results_' + o.argument[0]).html(o.responseText);
+	};
 	VET_lastQuery[sourceId] = query;
-	YAHOO.util.Connect.abort(VET_asyncTransaction);
-	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId, callback);
+	VET_jqXHR.abort();
+	VET_jqXHR = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId, callback);
+	VET_jqXHR = $.ajax(
+		wgScriptPath + '/index.php?action=ajax&rs=VET&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId,
+		{
+			method: 'get',
+			complete: callback
+		}
+	);
 }
 
 /*
@@ -482,11 +496,13 @@ function VET_insertFinalVideo(e, type) {
 		params.push('caption=' + encodeURIComponent( $('#VideoEmbedCaption').val() ) );
 	}
 
-	var callback = {
-		success: function(o) {
-			var screenType = o.getResponseHeader['X-screen-type'];
+	var callback = function(o, status) {
+		if(status == 'error') {
+			GlobalNotification.show( $.msg('vet-insert-error'), 'error', null, VET_notificationTimout );
+		} else if (status == 'success') {
+			var screenType = VET_jqXHR.getResponseHeader('X-screen-type');
 			if(typeof screenType == "undefined") {
-				screenType = o.getResponseHeader['X-Screen-Type'];
+				screenType = VET_jqXHR.getResponseHeader('X-Screen-Type');
 			}
 			switch(YAHOO.lang.trim(screenType)) {
 				case 'error':
@@ -497,7 +513,7 @@ function VET_insertFinalVideo(e, type) {
 					VET_switchScreen('Summary');
 					$('#VideoEmbedBack').css('display', 'none');
 					$('#VideoEmbed' + VET_curScreen).html(o.responseText);
-
+	
 					if (VET_isOnSpecialPageNoEditor) {
 						var $responseHTML = $(o.responseText),
 							vetData = {
@@ -507,7 +523,7 @@ function VET_insertFinalVideo(e, type) {
 						$(window).trigger('VET_addFromSpecialPage', [vetData]);
 						return false;
 					}
-
+	
 					if ( !$( '#VideoEmbedCreate'  ).length && !$( '#VideoEmbedReplace' ).length ) {
 						//if(VET_refid == null) {
 							/* impossible code because RTE cannot exist with VET_refid being null
@@ -525,26 +541,26 @@ function VET_insertFinalVideo(e, type) {
 									to_update = placeholders.filter('[data-id='+VET_box+']'),
 									// get thumbnail code from hidden div in success modal
 									html = $('#VideoEmbedCode').html();
-
+	
 								to_update.parent().parent().replaceWith(html);
-
+	
 								// update data id so we can match DOM placeholders to parsed wikitext placeholders
 								placeholders.each(function() {
 									var $this = $(this),
 										id = $this.attr('data-id');
-
+	
 									if(id > VET_box) {
 										$this.attr('data-id', id-1);
 									}
 								});
-
+	
 								// purge cache of article so video will show up on reload
 								$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 							}*/
 						//} else { 
 							//var wikitag = YAHOO.util.Dom.get('VideoEmbedTag').value;
 							var options = {};
-
+	
 							if($('#VideoEmbedThumbOption').is(':checked')) {
 								options.thumb = 1;
 							} else {
@@ -558,7 +574,7 @@ function VET_insertFinalVideo(e, type) {
 								options.align = null;
 							}
 							options.caption = $('#VideoEmbedCaption').val();
-
+	
 							// macbre: CK support
 							if(VET_callbackAfterEmbed) {
 								VET_callbackAfterEmbed(options);
@@ -583,14 +599,17 @@ function VET_insertFinalVideo(e, type) {
 				default:
 					break;
 			}
-		},
-		failure: function(o) {
-			GlobalNotification.show( $.msg('vet-insert-error'), 'error', null, VET_notificationTimout );
 		}
-	}
+	};
 
-	YAHOO.util.Connect.abort(VET_asyncTransaction);
-	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=insertFinalVideo&' + params.join('&'), callback);
+	VET_jqXHR.abort();
+	VET_jqXHR = $.ajax(
+		wgScriptPath + '/index.php?action=ajax&rs=VET&method=insertFinalVideo&' + params.join('&'),
+		{
+			method: 'get',
+			complete: callback
+		}
+	);
 }
 
 function VET_switchScreen(to) {
@@ -685,27 +704,32 @@ function VET_sendQueryEmbed(query) {
 	if(VET_callbackAfterSelect) {
 		VET_callbackAfterSelect(query);
 	} else {
-		var callback = {
-			success: function(o) {
-				var screenType = o.getResponseHeader['X-screen-type'];
-				if(typeof screenType == "undefined") {
-					screenType = o.getResponseHeader['X-Screen-Type'];
-				}
-	
-				if( 'error' == YAHOO.lang.trim(screenType) ) {
-					GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
-				} else {
-					// attach handlers - close preview on VET modal close (IE bug fix)
-					VETExtended.cachedSelectors.closePreviewBtn.click();
-					VET_displayDetails(o.responseText);
-				}
-				
-				
-				
+		var callback = function(o) {
+			var screenType = VET_jqXHR.getResponseHeader('X-screen-type');
+			if(typeof screenType == "undefined") {
+				screenType = VET_jqXHR.getResponseHeader('X-Screen-Type');
 			}
-		}
-		YAHOO.util.Connect.abort(VET_asyncTransaction);
-		VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('POST', wgScriptPath + '/index.php', callback, 'action=ajax&rs=VET&method=insertVideo&url=' + escape(query));
+
+			if( 'error' == YAHOO.lang.trim(screenType) ) {
+				GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
+			} else {
+				// attach handlers - close preview on VET modal close (IE bug fix)
+				VETExtended.cachedSelectors.closePreviewBtn.click();
+				VET_displayDetails(o.responseText);
+			}
+			
+			
+			
+		};
+		VET_jqXHR.abort();
+		VET_jqXHR = $.ajax(
+			wgScriptPath + '/index.php',
+			{
+				method: 'post',
+				data: 'action=ajax&rs=VET&method=insertVideo&url=' + escape(query),
+				complete: callback
+			}
+		);
 	}
 }
 
