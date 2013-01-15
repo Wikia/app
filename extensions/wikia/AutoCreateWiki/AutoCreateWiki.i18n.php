@@ -149,31 +149,6 @@ If you've got questions, you can e-mail us through our [[Special:Contact|contact
 	"newwikis" => "New wikis",
 	"newwikisstart" => "Display wikis starting at:",
 
-// retention emails
-	"autocreatewiki-reminder-subject" => "{{SITENAME}}",
-	"autocreatewiki-reminder-body" => "
-Dear $1:
-
-Congratulations on starting your new wiki, {{SITENAME}}! You can come back and add more to your wiki by visiting $2.
-
-This is a brand-new project, so please write to us if you have any questions!
-
-
--- Wikia Community Team",
-	"autocreatewiki-reminder-body-HTML" => "
-<p>Dear $1:</p>
-
-<p>Congratulations on starting your new wiki, {{SITENAME}}! You can come back and add more to your wiki by visiting
-<a href=\"$2\">$2</a>.</p>
-
-<p>This is a brand-new project, so please write to us if you have any questions!</p>
-
-<p>-- Wikia Community Team</p>",
-	'autocreatewiki-subname-answers' => 'Answers',
-
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,nl,no,pl,pt,pt-br,ru,zh',
-);
-
 /** Message documentation (Message documentation)
  * @author Prima klasy4na
  * @author Purodha
@@ -238,7 +213,6 @@ $messages['af'] = array(
 	'autocreatewiki-welcomesubject' => '$1 is geskep!',
 	'newwikis' => "Nuwe wiki's",
 	'newwikisstart' => "Wys wiki's, beginnende by:",
-	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
 );
 
 /** Arabic (العربية)
@@ -534,21 +508,7 @@ M'ho peus goulennoù da sevel e c'hallit skrivañ ur gerig dimp war ar bajenn  [
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Wikioù nevez',
 	'newwikisstart' => 'Diskouez ar Wikioù adal :',
-	'autocreatewiki-reminder-body' => "$1 ker :
-
-Plijet omp o c'houzout hoc'h eus da sevel ho wiki nevez, {{SITENAME}} ! Gourc'hemennoù ! Gallout a rit distreiñ warni hag ouzhpennañ traoù all war ho wiki en ur weladenniñ $2.
-
-Ur raktres nevez-flamm an hini eo. Skrivit dimp, mar plij, m'hoc'h eus tra goulenn pe c'houlenn !
-
--- Skipailh ar gumuniezh Wikia",
-	'autocreatewiki-reminder-body-HTML' => "<p>$1 ker :</p>
-
-<p>Plijet omp o c'houzout hoc'h eus kroget da sevel ho wiki nevez, {{SITENAME}} ! Gourc'hemennoù ! Gallout a rit distreiñ warni hag ouzhpennañ traoù all war ho wiki en ur weladenniñ $2.</a>.</p>
-
-<p>Ur raktres nevez-flamm an hini eo. Skrivit dimp, mar plij, m'hoc'h eus tra goulenn pe c'houlenn !</p>
-
-</p>-- Skipailh ar gumuniezh Wikia</p>",
-	'autocreatewiki-subname-answers' => 'Respontoù',
+	'autocreatewiki-subname-answers' => 'Respontoù'
 );
 
 /** Sorani Kurdish (کوردی)
@@ -797,22 +757,6 @@ Wenn du Fragen hast, kannst du uns eine Mail über unser [[Special:Contact|Konta
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Neue Wikis',
 	'newwikisstart' => 'Zeige Wikis ab:',
-	'autocreatewiki-reminder-body' => 'Hallo $1,
-
-Herzlichen Glückwunsch zu deinem neuen Wiki, {{SITENAME}}! Du kannst zurückkommen und mehr zu deinem Wiki hinzufügen indem du $2 besuchst.
-
-Dies ist ein brandneues Projekt, wenn du also Fragen hast, lass sie uns wissen!
-
-
--- Wikia Community Team',
-	'autocreatewiki-reminder-body-HTML' => '<p>Hallo $1,</p>
-
-<p>Herzlichen Glückwunsch zu deinem neuen Wiki, {{SITENAME}}! Du kannst zurückkommen und mehr zu deinem Wiki hinzufügen
-indem du <a href="$2">$2</a> besuchst.</p>
-
-<p>Dies ist ein brandneues Projekt, wenn du also Fragen hast, lass sie uns wissen!</p>
-
-<p>-- Wikia Community Team</p>',
 	'autocreatewiki-subname-answers' => 'Fragen',
 );
 
@@ -888,22 +832,6 @@ Machen Sie im Anschluss einfach weiter! Leute mögen große Wikis, in denen man 
 Wenn Sie Fragen haben, können Sie uns eine Mail über unser [[Special:Contact|Kontaktformular]] schreiben. Viel Spaß!
 
 -- [[User:\$2|\$3]] <staff /></div>",
-	'autocreatewiki-reminder-body' => 'Hallo $1,
-
-Herzlichen Glückwunsch zu Ihrem neuen Wiki, {{SITENAME}}! Sie können zurückkommen und mehr zu Ihrem Wiki hinzufügen indem Sie $2 besuchen.
-
-Dies ist ein ganz neues Projekt, wenn Sie also Fragen haben, lassen Sie sie uns wissen!
-
-
--- Ihr Wikia Community Team',
-	'autocreatewiki-reminder-body-HTML' => '<p>Hallo $1,</p>
-
-<p>Herzlichen Glückwunsch zu Ihrem neuen Wiki, {{SITENAME}}! Sie können zurückkommen und mehr zu Ihrem Wiki hinzufügen
-indem Sie <a href="$2">$2</a> besuchen.</p>
-
-<p>Dies ist ein ganz neues Projekt, wenn Sie also Fragen haben, lassen Sie sie uns wissen!</p>
-
-<p>-- Ihr Wikia Community Team</p>',
 );
 
 /** Zazaki (Zazaki)
@@ -1199,22 +1127,6 @@ Si tienes algunas dudas, envíanos un correo electrónico a través de nuestro [
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nuevos wikis',
 	'newwikisstart' => 'Mostrar wikis comenzando por:',
-	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
-	'autocreatewiki-reminder-body' => '
-Estimado/a $1,
-
-Felicidades por comenzar tu nuevo wiki, Messaging Wiki! Puedes regresar a tu wiki y añadir más contenido visitando $2.
-
-Esto es un nuevo proyecto de wiki, así que por favor, ¡escríbenos si tienes cualquier pregunta!
-
--- Equipo Comunitario de Wikia',
-	'autocreatewiki-reminder-body-HTML' => '<p>Estimado/a $1,</p>
-
-<p>¡Felicidades por comenzar tu nuevo wiki, {{SITENAME}}! Puedes regresar a tu wiki y añadir más contenido visitando <a href="$2">$2</a>.</p>
-
-<p>Esto es un nuevo proyecto de wiki, así que por favor, ¡escríbenos si tienes cualquier pregunta!</p>
-
-<p>-- Equipo Comunitario de Wikia</p>',
 	'autocreatewiki-subname-answers' => 'Respuestas',
 );
 
@@ -1386,13 +1298,6 @@ $3
 </div>',
 	'newwikis' => 'ویکی‌های جدید',
 	'newwikisstart' => 'نمایش ویکی‌هایی که شروع می‌شوند در:',
-	'autocreatewiki-reminder-body' => '$1 گرامی:
-
-آغاز ویکی جدیدتان {{SITENAME}} را تبریک می‌گوییم! شما می‌توانید با بازدید از $2، بازگشته و چیزهای بیش‌تری به ویکی‌تان بیفزایید.
-
-این یک پروژهٔ کاملاً تازه است، پس لطفاً اگر پرسشی دارید از ما بپرسید!
-
--- گروه جامعهٔ ویکیا',
 	'autocreatewiki-subname-answers' => 'پاسخ‌ها',
 );
 
@@ -1525,22 +1430,6 @@ Jos sinulla on kysyttävää, [[Special:Contact|lähetä sähköpostia]] Wikian 
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Uudet wikit',
 	'newwikisstart' => 'Näytä wikit alkaen:',
-	'autocreatewiki-reminder-body' => 'Hyvä $1:
-
-Onnittelut uuden wikisi, {{SITENAME}}n aloittamisen johdosta! Voit tulla takaisin ja lisätä muuta wikiisi jos vierailet sivustolla: $2.
-
-Tämä on uusi projekti, joten ystävällisesti kirjoita meille jos sinulla on kysymyksiä!
-
-
--- Wikian Community Team',
-	'autocreatewiki-reminder-body-HTML' => '<p>Hyvä $1:</p>
-
-<p>Onnittelut siitä, etttä käynnistit uuden wiki-sivuston, {{SITENAME}}! Voit palata ja lisätä lisää wiki-tekstiä vierailemalla osoitteessa
-<a href="$2">$2</a>.</p>
-
-<p>Tämä on uposuusi projekti, joten kirjoita meille, jos sinulla on jotain kysyttävä!</p>
-
-<p>-- Wikia-yhteistöryhmä</p>',
 	'autocreatewiki-subname-answers' => 'Vastaukset',
 );
 
@@ -1696,21 +1585,6 @@ Si vous avez des questions, vous pouvez nous écrire par cette page [[Special:Co
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nouveaux wikis',
 	'newwikisstart' => 'Afficher les wikis depuis :',
-	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
-	'autocreatewiki-reminder-body' => 'Cher $1 :
-
-Félicitations pour le commencement de votre nouveau wiki, {{SITENAME}} ! Vous pouvez revenir et ajouter plus à votre wiki en visitant $2.
-
-Ceci est un tout nouveau projet, veuillez nous écrire si avec une quelconque question !
-
-— Équipe de la communauté Wikia',
-	'autocreatewiki-reminder-body-HTML' => '<p>Cher $1 :</p>
-
-<p>Félicitations pour avoir commencer votre nouveau wiki, {{SITENAME}} ! Vous pouvez revenir et ajouter plus à votre wiki en visitant <a href="$2">$2</a>.</p>
-
-<p>Ceci est un tout nouveau projet, veuillez nous écrire si vous avez une quelconque question !</p>
-
-<p>— Équipe de la communauté Wikia</p>',
 	'autocreatewiki-subname-answers' => 'Réponses',
 );
 
@@ -1841,23 +1715,6 @@ Se ten algunha dúbida ou pregunta, pódenos enviar un correo electrónico a tra
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Novos wikis',
 	'newwikisstart' => 'Mostrar os wikis que comecen por:',
-	'autocreatewiki-reminder-body' => '
-Estimado $1:
-
-Parabéns por comezar o seu novo wiki, {{SITENAME}}! Pode vir cando queira e engadir máis contidos ao seu wiki visitando $2.
-
-Este é un proxecto completamente novo, así que escríbanos se ten algunha dúbida!
-
-
--- O equipo comunitario de Wikia',
-	'autocreatewiki-reminder-body-HTML' => '<p>Estimado $1:</p>
-
-<p>Parabéns por comezar o seu novo wiki, {{SITENAME}}! Pode vir cando queira e engadir máis contidos ao seu wiki visitando <a href="$2">$2</a>.</p>
-
-<p>Este é un proxecto completamente novo, así que escríbanos se ten algunha dúbida!</p>
-
-
-<p>-- O equipo comunitario de Wikia</p>',
 	'autocreatewiki-subname-answers' => 'Respostas',
 );
 
@@ -2016,22 +1873,6 @@ Ha kérdéseid vannak, küldhetsz nekünk e-mailt a [[Special:Contact|kapcsolatf
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Új wikik',
 	'newwikisstart' => 'Wikik megjelenítése a következőtől:',
-	'autocreatewiki-reminder-body' => 'Kedves $1!
-
-Gratulálunk az új wikid, a {{SITENAME}} létrehozásához! A(z) $2 felkeresésével térhetsz vissza a wikidhez, hogy több tartalmat adjál neki.
-
-Ez egy vadonatúj projekt, úgyhogy írj nekünk, ha bármi kérdésed van!
-
-
--- Wikia közösségi támogatás',
-	'autocreatewiki-reminder-body-HTML' => '<p>Kedves $1!</p>
-
-<p>Gratulálunk az új wikid, a {{SITENAME}} létrehozásához! A(z) <a href="$2">$2</a> felkeresésével térhetsz vissza a wikidhez, hogy több tartalmat adjál neki.</p>
-
-<p>Ez egy vadonatúj projekt, úgyhogy írj nekünk, ha bármi kérdésed van!</p>
-
-
-<p>-- Wikia közösségi támogatás</p>',
 	'autocreatewiki-subname-answers' => 'Válaszok',
 );
 
@@ -2156,22 +1997,6 @@ Si tu ha questiones, invia nos e-mail per nostre [[Special:Contact|formulario de
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nove wikis',
 	'newwikisstart' => 'Monstrar wikis a partir de:',
-	'autocreatewiki-reminder-body' => '
-Car $1,
-
-Felicitationes pro comenciar tu nove wiki, {{SITENAME}}! Tu pote revenir e adder plus a tu wiki per visitar $2.
-
-Isto es un projecto totalmente nove, dunque per favor scribe nos si tu ha alcun question!
-
-
--- Equipa communitari de Wikia',
-	'autocreatewiki-reminder-body-HTML' => '<p>Car $1,</p>
-
-<p>Felicitationes pro comenciar tu nove wiki, {{SITENAME}}! Tu pote revenir e adder plus a tu wiki per visitar <a href="$2">$2</a>.</p>
-
-<p>Isto es un projecto totalmente nove, dunque per favor scribe nos si tu ha alcun question!</p>
-
-<p>-- Equipa communitari de Wikia</p>',
 	'autocreatewiki-subname-answers' => 'Responsas',
 );
 
@@ -2301,21 +2126,6 @@ Jika Anda punya pertanyaan, Anda dapat mengirim kami sur-el melalui [[Special:Co
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Wiki baru',
 	'newwikisstart' => 'Tampilkan wiki diawali dengan:',
-	'autocreatewiki-reminder-body' => 'Wahai $1:
-
-Selamat atas dimulainya wiki, {{SITENAME}} baru Anda! Anda dapat kembali dan menambahkan lagi ke wiki Anda dengan mengunjungi $2.
-
-Ini adalah proyek baru, jadi silahkan menulis kepada kami jika Anda memiliki pertanyaan!
-
--- Tim Komunitas Wikia',
-	'autocreatewiki-reminder-body-HTML' => '<p>Wahai $1:</p>
-
-<p>Selamat atas dimulainya wiki, {{SITENAME}} baru Anda! Anda dapat kembali dan menambahkan lagi ke wiki Anda dengan mengunjungi
-<a href="$2">$2</a>.</p>
-
-<p>Ini adalah proyek baru, jadi silahkan menulis kepada kami jika Anda memiliki pertanyaan!</p>
-
-<p>-- Tim Komunitas Wikia</p>',
 	'autocreatewiki-subname-answers' => 'Answers',
 );
 
@@ -2598,17 +2408,6 @@ $3
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => '新しいウィキ',
 	'newwikisstart' => '次の文字列から始まるウィキを表示:',
-	'autocreatewiki-reminder-body' => '$1 さん、
-
-新しいウィキの開始おめでとうございます。$1 さんが作成した $2 には、いつでも戻って情報を追加することができます。
-
-このプロジェクトはできたばかりの状態です。もし、何か質問があれば、私たちまでおたずねください。
-
--- Wikia Community Team',
-	'autocreatewiki-reminder-body-HTML' => '<p>$1 さん、</p>
-<p>新しいウィキの開始おめでとうございます。$1 さんが作成した <a href="$2">$2</a> には、いつでも戻って情報を追加することができます。</p>
-<p>このプロジェクトはできたばかりの状態です。もし、何か質問があれば、私たちまでおたずねください。</p>
-<p>-- Wikia Community Team</p>',
 	'autocreatewiki-subname-answers' => 'Answers',
 );
 
@@ -2767,13 +2566,6 @@ Donn eine ööhndlesch uß dä Leß ußwähle.
 	'autocreatewiki-welcomesubject' => '$1 es aanjelaat woode!',
 	'newwikis' => 'Neu Wikis',
 	'newwikisstart' => 'Wikis aanzeije af:',
-	'autocreatewiki-reminder-body' => 'Hallo $1,
-
-Uns Jlöckwönsch för {{SITENAME}}! Ding neu Wiki e opjesaz. Do kann widder kumme u mieh en Ding Wiki eren schriive, endämm dat De op $2 jeihß.
-
-Dat es e brandneu Projäk, un wann De Froore häß, schriiv ons dovun!
-
--- Et Wikia Jmeinschaffs-Team',
 	'autocreatewiki-subname-answers' => 'Antwoote',
 );
 
@@ -3018,23 +2810,6 @@ $3
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Нови викија',
 	'newwikisstart' => 'Прикажи викија со почеток во:',
-	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
-	'autocreatewiki-reminder-body' => 'Почитуван(а) $1:
-
-Ви го честитаме започнувањето на вашето ново вики, {{SITENAME}}! Можете да се навратите и да додавате уште нешта на викито со посета на страницата $2.
-
-Ова е сосем нов проект, и затоа би ве замолиме да ни пишете ако имате било какви прашања!
-
-
--- Екипата на Викија-заедницата',
-	'autocreatewiki-reminder-body-HTML' => '<p>Почитуван(а) $1:</p>
-
-<p>Ви честитаме на започнувањето на вашето ново вики, {{SITENAME}}! Можете да се навратите и да додавате уште нешта на викито со посета на
-<a href="$2">$2</a>.</p>
-
-<p>Ова е сосем нов проект, и затоа би ве замолиле да ни пишете ако имате вило какви прашања!</p>
-
-<p>-- Екипата на Викија-заедницата</p>',
 	'autocreatewiki-subname-answers' => 'Одговори',
 );
 
@@ -3200,21 +2975,6 @@ Jika anda ada apa-apa masalah, anda boleh memberitahu kami dengan mengisi [[Spec
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Wiki baru',
 	'newwikisstart' => 'Paparkan wiki bermula dengan:',
-	'autocreatewiki-reminder-body' => '$1,
-
-Syabas kerana membuka wiki baru anda, {{SITENAME}}! Anda boleh kembali dan menambah isi kandungan wiki anda dengan melawat $2.
-
-Ini ialah projek serba baru; jika anda ada apa-apa soalan, sila maklumkan kepada kami!
-
-
--- Pasukan Komuniti Wikia',
-	'autocreatewiki-reminder-body-HTML' => '<p>$1,</p>
-
-<p>Syabas kerana membuka wiki baru anda, {{SITENAME}}! Anda boleh kembali dan menambah isi kandungan wiki anda dengan melawat <a href="$2">$2</a>.</p>
-
-<p>Ini ialah projek serba baru; jika anda ada apa-apa soalan, sila maklumkan kepada kami!</p>
-
-<p>-- Pasukan Komuniti Wikia</p>',
 	'autocreatewiki-subname-answers' => 'Jawapan',
 );
 
@@ -3360,24 +3120,6 @@ Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Conta
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nye wikier',
 	'newwikisstart' => 'Vis wikier fra og med:',
-	'autocreatewiki-reminder-body' => '
-Kjære $1: 
-
-Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke $2. 
-
-Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spørsmål! 
-
-
--- Wikia Community Teamet',
-	'autocreatewiki-reminder-body-HTML' => '
-<p>Kjære $1:</p> 
-
-<p>Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke 
-<a href="$2">$2</a>.</p> 
-
-<p>Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har spørsmål!</p>
-
-<p>-- Wikia Community Teamet</p>',
 	'autocreatewiki-subname-answers' => 'Svar',
 );
 
@@ -3523,20 +3265,6 @@ Als u vragen hebt, e-mail ons dan via het [[Special:Contact|contactformulier]]. 
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => "Nieuwe wiki's",
 	'newwikisstart' => "Wiki's weergeven vanaf:",
-	'autocreatewiki-reminder-body' => 'Beste $1.
-
-Van harte gefeliciteerd met het starten van uw nieuwe wiki {{SITENAME}}! Kom vooral vaak terug om meer inhoud aan uw wiki toe te voegen op $2.
-
-Dit is een volledig nieuw project, dus laat het ons weten als u met vragen zit.
-
--- Wikia gemeenschapsteam',
-	'autocreatewiki-reminder-body-HTML' => '<p>Beste $1.</p>
-
-<p>Van harte gefeliciteerd met het starten van uw nieuwe wiki {{SITENAME}}! Kom vooral vaak terug om meer inhoud aan uw wiki toe te voegen op <a href="$2">$2</a>.</p>
-
-<p>Dit is een volledig nieuw project, dus laat het ons weten als u met vragen zit.</p>
-
-<p>-- Wikia gemeenschapsteam</p>',
 	'autocreatewiki-subname-answers' => 'Antwoorden',
 );
 
@@ -3587,20 +3315,6 @@ En daarna vooral volhouden! De wiki's waar veel te lezen en te zien is zijn het 
 Als je vragen hebt, e-mail ons dan via het [[Special:Contact|contactformulier]]. Veel plezier!
 
 -- [[User:\$2|\$3]] <staff /></div>",
-	'autocreatewiki-reminder-body' => 'Hoi $1.
-
-Van harte gefeliciteerd met het starten van je nieuwe wiki {{SITENAME}}! Kom vooral vaak terug om meer inhoud aan uw wiki toe te voegen op $2.
-
-Dit is een volledig nieuw project, dus laat het ons weten als je met vragen zit.
-
--- Wikia gemeenschapsteam',
-	'autocreatewiki-reminder-body-HTML' => '<p>Hoi $1.</p>
-
-<p>Van harte gefeliciteerd met het starten van je nieuwe wiki {{SITENAME}}! Kom vooral vaak terug om meer inhoud aan je wiki toe te voegen op <a href="$2">$2</a>.</p>
-
-<p>Dit is een volledig nieuw project, dus laat het ons weten als je met vragen zit.</p>
-
-<p>-- Wikia gemeenschapsteam</p>',
 );
 
 /** Pälzisch (Pälzisch)
@@ -3797,21 +3511,6 @@ Powodzenia!
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nowe wiki',
 	'newwikisstart' => 'Wyświetl wiki rozpoczynając od:',
-	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
-	'autocreatewiki-reminder-body' => 'Drogi $1!
-
-Gratulujemy utworzenia „{{SITENAME}}”! Możesz teraz wejść na swoją wiki odwiedzając $2 i dodać informacje.
-
-Jest to zupełnie nowy projekt, więc napisz do nas, jeżeli masz jakiekolwiek pytania!
-
--- Zespół Wikii',
-	'autocreatewiki-reminder-body-HTML' => '<p>Drogi $1,</p>
-
-<p>Gratulujemy Ci utworzenia „{{SITENAME}}”! Możesz teraz wejść na swoją wiki odwiedzając <a href="$2">$2</a> i dodać nowe informacje..</p>
-
-<p>Jest to zupełnie nowy projekt, więc napisz do nas jeśli masz jakieś pytania!</p>
-
-<p>–– Zespół Wikii</p>',
 	'autocreatewiki-subname-answers' => 'Zapytaj',
 );
 
@@ -3949,22 +3648,7 @@ S'a l'ha ëd chestion, a peul mandeje për pòsta eletrònica a nòstr [[Special
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'neuve wiki',
 	'newwikisstart' => 'Visualisa Wiki partend da:',
-	'autocreatewiki-reminder-body' => "Car $1:
-
-Congratulassion për la partensa ëd soa neuva wiki, {{SITENAME}}! A peul torné andré e gionté ròbe a soa wiki an visitand $2.
-
-Cost-sì a l'é un proget neuv, antlora për piasì ch'a na scriva s'a l'ha qualsëssìa chestion!
-
--- L'Echip dla Comunità Wikia",
-	'autocreatewiki-reminder-body-HTML' => '<p>Car $1:</p>
-
-<p>Congratulassion për la partensa ëd soa neuva wiki, {{SITENAME}}! A peul torné andré e gionté ròbe a soa wiki an visitand 
-<a href="$2">$2</a>.</p>
-
-<p>Cost-sì a l\'é un proget neuv, antlora për piasì ch\'a na scriva s\'a l\'ha qualsëssìa chestion!</p>
-
-<p>-- L\'Echip dla Comunità Wikia</p>',
-	'autocreatewiki-subname-answers' => 'Rispòste',
+	'autocreatewiki-subname-answers' => 'Rispòste'
 );
 
 /** Pashto (پښتو)
@@ -4131,24 +3815,6 @@ Se tiver alguma questão, pode contactar-nos por correio electrónico usando o [
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Wikis novas',
 	'newwikisstart' => 'Mostrar wikis, começando por:',
-	'autocreatewiki-reminder-body' => '
-Caro(a) $1:
-
-Parabéns por ter iniciado a nova wiki, {{SITENAME}}! Pode regressar e adicionar mais conteúdos à sua wiki, visitando $2.
-
-Este é um projecto acabado de estrear, por isso contacte-nos se tiver qualquer questão!
-
-
--- A Equipa da Comunidade Wikia',
-	'autocreatewiki-reminder-body-HTML' => '
-<p>Caro(a) $1:</p>
-
-<p>Parabéns por ter iniciado a nova wiki, {{SITENAME}}! Pode regressar e adicionar mais conteúdos à sua wiki, visitando
-<a href="$2">$2</a>.</p>
-
-<p>Este é um projecto acabado de estrear, por isso contacte-nos se tiver qualquer questão!</p>
-
-<p>-- A Equipa da Comunidade Wikia</p>',
 	'autocreatewiki-subname-answers' => 'Respostas',
 );
 
@@ -4290,23 +3956,6 @@ Se você tiver alguma dúvida, você pode nos contatar através do nosso [[Speci
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Novas wikis',
 	'newwikisstart' => 'Mostrar Wikis começando com:',
-	'autocreatewiki-reminder-body' => '
-Caro(a) $1:
-
-Parabéns por começar a seu nova wiki, {{SITENAME}}! Você pode voltar e adicionar mais informações a sua wiki visitando $2.
-
-Esse é um projeto novo, então, por favor, nos escreva caso você tenha alguma dúvida!
-
-
--- Equipe da comunidade do Wikia (Wikia Community Team)',
-	'autocreatewiki-reminder-body-HTML' => '<p>Caro(a) $1:</p>
-
-<p>Parabéns por começar a seu nova wiki, {{SITENAME}}! Você pode voltar e adicionar mais informações a sua wiki visitando
-<a href="$2">$2</a>.</p>
-
-<p>Este é um projeto novo, então, por favor, nos escreva se você tiver alguma dúvida!</p>
-
-<p>-- Equipe da comunidade do Wikia (Wikia Community Team)</p>',
 	'autocreatewiki-subname-answers' => 'Respostas',
 );
 
@@ -4518,20 +4167,6 @@ ___________________________________________
 — [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Новые вики',
 	'newwikisstart' => 'Показать вики, начиная с:',
-	'autocreatewiki-reminder-body' => 'Здравствуйте, $1.
-
-Поздравляем с началом работы вашей новой вики, {{SITENAME}}! Вы можете вернуться и добавить ещё вики, посетив $2.
-
-Это совершенно новый проект, поэтому, пожалуйста, напишите нам, если у вас есть какие-либо вопросы!
-
--- Команда сообщества Wikia',
-	'autocreatewiki-reminder-body-HTML' => '<p>Здравствуйте, $1.</p>
-
-<p>Поздравляем с началом работы вашей новой вики, translatewiki.net! Вы можете вернуться и добавить ещё вики, посетив <a href="$2">$2</a>.</p>
-
-<p>Это совершенно новый проект, поэтому, пожалуйста, напишите нам, если у вас есть какие-либо вопросы!</p>
-
-<p>-- Команда сообщества Wikia</p>',
 	'autocreatewiki-subname-answers' => 'Ответы',
 );
 
@@ -4592,22 +4227,6 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-protect-reason' => 'Део званичног сучеља',
 	'autocreatewiki-welcomesubject' => '$1 је направљена!',
 	'newwikis' => 'Нови викији',
-	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
-	'autocreatewiki-reminder-body' => 'Драги $1:
-
-Честитамо вам на прављењу нове викије, {{SITENAME}}! Много тога можете додати кликом на $2.
-
-Ово је нов новцат пројекат, зато вас молимо да нам пишете уколико имате било каквих питања.
-
-– Тим Викија заједнице',
-	'autocreatewiki-reminder-body-HTML' => '<p>Драги $1:</p>
-
-<p>Честитамо вам на прављењу нове викије, {{SITENAME}}! Доста тога можете додати кликом на
-<a href="$2">$2</a>.</p>
-
-<p>Ово је нов новцат пројекат, зато вас молимо да нам пишете уколико имате било каквих питања.</p>
-
-<p>– Тим Викија заједнице</p>',
 	'autocreatewiki-subname-answers' => 'Одговори',
 );
 
@@ -4748,22 +4367,6 @@ Om du har några frågor kan du alltid skicka ett e-post till oss via vårt [[Sp
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nya wikis',
 	'newwikisstart' => 'Visa wikis som börjar med:',
-	'autocreatewiki-reminder-body' => 'Kära $1:
-
-Vi vill gratulera dig till din nya wiki, {{SITENAME}}! Du kan komma tillbaka och lägga till mer till din wiki genom att besöka $2.
-
-Detta är ett helt nytt projekt, så skriv till oss om du har några frågor!
-
-
--- Wikia Community Team',
-	'autocreatewiki-reminder-body-HTML' => '<p>Kära $1:</p>
-
-<p>Vi vill gratulera dig till din nya wiki, {{SITENAME}}! Du kan komma tillbaka och lägga till mer till din wiki genom att besöka
-<a href="$2">$2</a>.</p>
-
-<p>Detta är ett helt nytt projekt, så skriv till oss om du har några frågor!</p>
-
-<p>-- Wikia Community Team</p>',
 	'autocreatewiki-subname-answers' => 'Svar',
 );
 
@@ -4937,23 +4540,6 @@ Kung mayroong kang mga katanungan, mapapadalhan mo kami ng e-liham sa pamamagita
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Bagong mga wiki',
 	'newwikisstart' => 'Ipakita ang mga wiki na nagsisimula sa:',
-	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
-	'autocreatewiki-reminder-body' => "Minamahal na $1:
-
-Maligayang bati sa pagsisimula ng bago mong wiki, ang {{SITENAME}}! Maaari kang bumalik at magdagdag pa sa wiki mo sa pamamagitan ng pagdalaw sa $2.
-
-Isang itong bagung-bagong proyekto, kung kaya't sumulat sa amin kung mayroon kang anumang mga katanungan!
-
-
--- Pangkat ng Pamayanan ng Wikia",
-	'autocreatewiki-reminder-body-HTML' => "<p>Minamahal na $1:</p>
-
-<p>Maligayang bati sa pagsisimula ng bago mong wiki, ang {{SITENAME}}! Maaari kang bumalik at magdagdag pa sa wiki mo sa pamamagitan ng pagdalaw sa $2.</p>
-
-<p>Isang itong bagung-bagong proyekto, kung kaya't sumulat sa amin kung mayroon kang anumang mga katanungan!</p>
-
-
-<p>-- Pangkat ng Pamayanan ng Wikia</p>",
 	'autocreatewiki-subname-answers' => 'Mga sagot',
 );
 
@@ -5139,7 +4725,6 @@ ___________________________________________
 
 — [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Яңа викилар',
-	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
 	'autocreatewiki-subname-answers' => 'Җаваплар',
 );
 
@@ -5281,13 +4866,6 @@ $messages['uk'] = array(
 — [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Нові вікі',
 	'newwikisstart' => 'Показати вікі, починаючи з:',
-	'autocreatewiki-reminder-body' => 'Шановний $1:
-
-Вітаємо вас з початком роботи вашої нової вікі, {{SITENAME}}! Ви можете повернутися і додати більше до вашої вікі відвідавши $2.
-
-Це зовсім новий проект тому, будь ласка, напишіть нам, коли у вас виникнуть які-небудь питання!
-
-— Команда спільноти Wikia',
 	'autocreatewiki-subname-answers' => 'Відповіді',
 );
 
@@ -5443,23 +5021,6 @@ $messages['zh-hans'] = array(
 祝您编辑快乐！', # Fuzzy
 	'newwikis' => '新的维基',
 	'newwikisstart' => '以此页面打开维基：',
-	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
-	'autocreatewiki-reminder-body' => '亲爱的$1:
-
-恭喜您创建了自己的维基，{{SITENAME}}! 您可以访问$2返回并为您的维基添加更多信息。
-
-这是一个全新的项目，如果您有任何疑问，请给我们致函!
-
-
--- Wikia社区小组',
-	'autocreatewiki-reminder-body-HTML' => '<p>亲爱的$1:</p>
-
-<p>恭喜您创建了自己的维基，{{SITENAME}}! 您可以访问<a href="$2">$2</a>返回并为您的维基添加更多信息。</p>
-
-<p>这是一个全新的项目，如果您有任何疑问，请给我们致函！</p>
-
-
-<p>-- Wikia社区小组</p>',
 	'autocreatewiki-subname-answers' => '问答网站',
 );
 
