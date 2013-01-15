@@ -1,4 +1,4 @@
-/*global WikiaTracker_ABtests: true, _gaq: true */
+/*global _gaq: true */
 window.WikiaTracker = (function(){
 	/** @private **/
 
@@ -49,9 +49,9 @@ window.WikiaTracker = (function(){
 		// View
 		VIEW: 'view'
 	},
+	actionsReverse = {},
 	mainEventName = "trackingevent",
-	actionsReverse = {};
-
+	slice = [].slice;
 
 	for(var key in actions) {
 		actionsReverse[actions[key]] = key;
@@ -103,28 +103,78 @@ window.WikiaTracker = (function(){
 	}
 
 	/**
-	 * Convenience function for tracking click events.
+	 * Wrapper for trackEvent that allows for hashed parameters and option extending.
+	 * Use this instead of creating yet another wrapper inside your plugin/module.
 	 *
-	 * @params Object options (required) A key-value hash of parameters to pass on to the trackEvent method.
+	 *     var defaults = {
+	 *         trackingMethod: 'ga',
+	 *         category: 'myCategory'
+	 *     };
+	 *
+	 *     WikiaTracker.track(defaults, {
+	 *         label: 'myLabel'
+	 *     });
+	 *
+	 * @params Object options (required) ... optionsN
+	 *         A key-value hash of parameters that will be passed to the trackEvent method. If multiple
+	 *         hashes are passed in with matching keys, the values in the later hash will be used.
 	 *         keys: (see trackEvent for more information)
-	 *             action, category, event, label, params, trackingMethod, value
+	 *             action, browserEvent, category, eventName, label, params, trackingMethod, value
+	 *
+	 * @author Kyle Florence <kflorence@wikia-inc.com>
 	 */
-	function trackClickEvent( options ) {
-		var data = {
-			ga_category: options.category,
-			ga_action: options.action,
-			ga_label: options.label
+	var track = (function() {
+		var map = {
+			action: 'ga_action',
+			category: 'ga_category',
+			label: 'ga_label',
+			value: 'ga_value'
 		};
 
-		if ( options.value ) {
-			data[ 'ga_value' ] = options.value;
-		}
+		return function( options /* , ..., optionsN */ ) {
+			var key, i, l, value,
+				args = slice.call( arguments, 1 ),
+				data = {};
 
-		if ( options.params ) {
-			$.extend( data, options.params );
-		}
+			for ( i = 0, l = args.length; i < l; i++ ) {
+				extendObject( options, args[ i ] );
+			}
 
-		return WikiaTracker.trackEvent( 'trackingevent', data, options.trackingMethod, options.event );
+			for ( key in map ) {
+				if ( ( value = options[ key ] ) != undefined ) {
+					data[ map[ key ] ] = value;
+				}
+			}
+
+			return trackEvent( options.eventName, data, options.trackingMethod, options.browserEvent );
+		}
+	})();
+
+	/**
+	 * Function factory for building custom tracking methods with default parameters.
+	 *
+	 *     var track = WikiaTracker.buildTrackWithDefaults({
+	 *         category: 'myCategory',
+	 *         trackingMethod: 'ga'
+	 *     });
+	 *
+	 *     track({
+	 *         label: 'myLabel'
+	 *     });
+	 *
+	 * @params Object defaults
+	 *         A key-value hash of parameters that will be used as default values for the generated method.
+	 *         keys: (see trackEvent for more information)
+	 *             action, browserEvent, category, eventName, label, params, trackingMethod, value
+	 *
+	 * @author Kyle Florence <kflorence@wikia-inc.com>
+	 */
+	function buildTrackWithDefaults( defaults ) {
+		defaults = [ defaults || {} ];
+
+		return function() {
+			return track.apply( null, defaults.concat( slice.call( arguments ) ) );
+		};
 	}
 
 	/**
@@ -177,8 +227,6 @@ window.WikiaTracker = (function(){
 		if( trackingMethod == 'ga' || trackingMethod == 'both' ) {
 			Wikia.log(eventName + ' ' + gaqArgs.join('/') + ' [GA track]', 'info', logGroup);
 
-			// uncomment the next line later when GA is re-implemented
-			//WikiaTracker.track(null, 'main.sampled', gaqArgs);
 			if(window.gaTrackEvent) gaTrackEvent(ga_category, ga_action, ga_label, ga_value, true);
 		}
 	}
@@ -320,6 +368,8 @@ window.WikiaTracker = (function(){
 		for(var p in ext){
 			obj[p] = ext[p];
 		}
+
+		return obj;
 	}
 
 	//init
@@ -342,24 +392,11 @@ window.WikiaTracker = (function(){
 	return {
 		ACTIONS: actions,
 		ACTIONS_REVERSE: actionsReverse,
-		trackClick: trackClickEvent,
+		buildTrackWithDefaults: buildTrackWithDefaults,
+		track: track,
 		trackEvent: trackEvent
 	};
 })();
-
-// TODO remove if really unused
-WikiaTracker.track = function(page, profile, events) {
-	WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/wikiatracker', 'ga_action':'track', 'ga_label':page}, 'ga');
-
-	return false;
-};
-
-// TODO remove if really unused
-WikiaTracker._track = function(page, profile, sample, events) {
-	WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/wikiatracker', 'ga_action':'_track', 'ga_label':page}, 'ga');
-
-	return false;
-};
 
 // TODO refactor back into trackEvent
 WikiaTracker.trackAdEvent = function(eventName, data, trackingMethod) {
