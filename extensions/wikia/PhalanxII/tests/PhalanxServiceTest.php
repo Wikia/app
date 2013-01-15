@@ -7,15 +7,19 @@ class PhalanxServiceTest extends WikiaBaseTest {
 	 */
 	public function setUp() {
 		$this->setupFile =  dirname(__FILE__) . '/../Phalanx_setup.php';
+		error_log( __CLASS__ . '::' . __FUNCTION__ . ' '  .$this->setupFile );
 		parent::setUp();
-		$this->isPhalanxAlive();
 	}
 
 	public function isPhalanxAlive( ) {
-		$service = $this->getMockBuilder( 'PhalanxService' )
-			->disableOriginalConstructor()
-			->setMethods( array( 'check' ) )
-			->getMock();
-		print $service->status();
+		error_log( __CLASS__ . '::' . __FUNCTION__ );
+		$service = new PhalanxService();
+		return $service->status();
+	}
+
+	public function testPhalanxServiceCheck() {
+		error_log( __CLASS__ . '::' . __FUNCTION__ );
+		$status = $this->isPhalanxAlive();
+		$this->assertEquals(1, count( $status ) );
 	}
 }

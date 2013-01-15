@@ -2,10 +2,6 @@
 
 class PhalanxService extends Service {
 
-	private $mModule;
-	private $mLang;
-	private $mType;
-
 	/**
 	 * check service status
 	 */
@@ -53,7 +49,7 @@ class PhalanxService extends Service {
 			$action
 		);
 		if( sizeof( $parameters ) ) {
-			$url .= "?" . http_build_query( $parameters )
+			$url .= "?" . http_build_query( $parameters );
 		}
 
 		/**
@@ -68,7 +64,6 @@ class PhalanxService extends Service {
 		else {
 			return Http::post( $url );
 		}
-
 	}
 
 };
