@@ -9,6 +9,9 @@
 $messages = array();
 
 $messages['en'] = array(
+	'article-comments-file-page' => "<a href='$1'>Comment from $2</a> on <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Comment from $2</a> on <a href='$3'>$4's</a> blog on <a href='$5'>$6</a> post",
+
 	'article-comments-anonymous' => 'Anonymous user',
 	'article-comments-comments' => 'Comments ($1)',
 	'article-comments-post' => 'Post comment',
@@ -78,6 +81,8 @@ ___________________________________________
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'article-comments-file-page' => "Message displayed on File page when this foto is used on an article",
+	'article-blog-comments-file-page' => 'Message displayed on File page when this foto is used on a blog post comment' ,
 	'article-comments-anonymous' => 'Anonymous users are logged out / un-authenticated users.',
 	'article-comments-post' => 'This is the text of a submit button to post a new article comment.',
 	'article-comments-cancel' => 'Cancel/stop editing an article comment.',

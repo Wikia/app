@@ -362,4 +362,43 @@ class ArticleCommentInit {
 
 		return true;
 	}
+
+	public static function onFilePageImageUsageSingleLink( &$link, &$element ) {
+		$app = F::app();
+
+		$ns = $element->page_namespace;
+
+		//comments and talk pages
+		if ( $ns == NS_TALK ) {
+			$title = Title::newFromText( $element->page_title, $ns );
+
+			$link = $app->wf->Msg(
+				'article-comments-file-page',
+				$title->getLocalURL(),
+				User::newFromId( Revision::newFromId( $title->getLatestRevID() )->getUser() )->getName(),
+				Title::newFromText( $title->getBaseText() )->getLocalURL(),
+				$title->getBaseText()
+			);
+
+		//comments on blog posts
+		} else if ( $ns == NS_BLOG_ARTICLE_TALK ) {
+			$blogPostComment = Title::newFromText( $element->page_title, $ns );
+
+			$baseText = $blogPostComment->getBaseText();
+			$titleNames = explode( '/', $baseText );
+			$userBlog = Title::newFromText( $titleNames[0], NS_BLOG_ARTICLE );
+
+			$link = $app->wf->Msg(
+				'article-blog-comments-file-page',
+				$blogPostComment->getLocalURL(),
+				User::newFromId( Revision::newFromId( $blogPostComment->getLatestRevID() )->getUser() )->getName(),
+				$userBlog->getLocalURL(),
+				$userBlog->getBaseText(),
+				Title::newFromText( $baseText, NS_BLOG_ARTICLE ),
+				$titleNames[1]
+			);
+		}
+
+		return true;
+	}
 }
