@@ -2,6 +2,8 @@
 
 ## Running PHP unit tests
 
+Please note that **DevBoxSettings.php is not included** when unit tests are executed.
+
 ### Running a single tests
 
 ```
