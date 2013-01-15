@@ -13,7 +13,7 @@ Parameters:
 
 * $1 prints the <nowiki>{{PAGENAME}}</nowiki> of the page the user is on
 * $2 prints the <nowiki>{{SITENAME}}</nowiki> of the wiki the user is reading the page on',
-        'campfire-licensed-under' => 'Message that prints what copyright the content is licensed under. Is more or less the same as [[MediaWiki:Copyright]]. 
+        'campfire-licensed-under' => 'Message that prints what copyright the content is licensed under. It serves the same purpose as [[MediaWiki:Copyright]]. 
 Parameters:
 
 * $1 pulls in the name of the copyright license the wiki uses.',
