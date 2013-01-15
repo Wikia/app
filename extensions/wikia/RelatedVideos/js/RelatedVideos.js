@@ -400,6 +400,9 @@ var RelatedVideos = {
 				RelatedVideos.regroup();
 			}
 		);
+		if (UserLogin.forceLoggedIn) {
+			(new Wikia.Querystring()).addCb().goTo();
+		}
 	},
 
 	// Remove Video

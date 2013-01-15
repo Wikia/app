@@ -53,27 +53,14 @@
 		var loginWrapper = function ( callback ){
 			var message = 'protected';
 			if(( wgUserName == null ) && ( !alreadyLoggedIn )){
-				if (window.wgComboAjaxLogin) {
-					showComboAjaxForPlaceHolder( false, "", function() {
-						AjaxLogin.doSuccess = function() {
-							$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
-							alreadyLoggedIn = true;
-							callback();
-						};
-						AjaxLogin.close = function() {
-							$('#AjaxLoginBoxWrapper').closeModal();
-							$( window ).scrollTop( element.offset().top + 100 );
-						}
-					}, false, message );
-				} else {
-					UserLoginModal.show({
-						callback: function() {
-							$( window ).scrollTop( element.offset().top + 100 );
-							alreadyLoggedIn = true;
-							callback();
-						}
-					});
-				}
+				UserLoginModal.show({
+					callback: function() {
+						$( window ).scrollTop( element.offset().top + 100 );
+						alreadyLoggedIn = true;
+						UserLogin.forceLoggedIn = true;
+						callback();
+					}
+				});
 			} else {
 				callback();
 			}
