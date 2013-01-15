@@ -1057,3 +1057,8 @@ $wgWikiaSeasonsPencilUnit = false;
  * Enables QuickTools extension
  */
 $wgEnableQuickToolsExt = true;
+
+/**
+ * use phalanx external service
+ */
+$wgPhalanxService = false;
