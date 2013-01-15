@@ -112,6 +112,7 @@ class NavMessageHandler {
 			$articleText = mb_ereg_replace($message, wfMessage($message)->text(), $articleText);
 		}
 		$page = $article->getPage();
+		wfWaitForSlaves();
 		$page->doEdit($articleText, '', 0, false, $this->user);
 	}
 
@@ -125,6 +126,7 @@ class NavMessageHandler {
 		echo " / Removing article\n";
 		$page = $article->getPage();
 		$errors = '';
+		wfWaitForSlaves();
 		$page->doDeleteArticle('', false, 0, true, $errors, $this->user);
 	}
 }
