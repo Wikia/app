@@ -148,6 +148,7 @@ If you've got questions, you can e-mail us through our [[Special:Contact|contact
 // new wikis - special page
 	"newwikis" => "New wikis",
 	"newwikisstart" => "Display wikis starting at:",
+);
 
 /** Message documentation (Message documentation)
  * @author Prima klasy4na
