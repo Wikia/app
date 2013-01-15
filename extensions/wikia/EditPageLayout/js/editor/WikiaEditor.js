@@ -183,22 +183,8 @@
 		window.location.reload(true);
 	};
 
-	WE.storeContent = function(editorInstance) {
-		var editorInstance = WE.getInstance();
-
-		try {
-			// Save editor data before redirecting to prevent data loss (BugId:29754)
-
-			$.storage.set(WE.getStoreContentKey(), editorInstance.getContent());
-
-		} catch(e) {
-			$().log('Local Storage Exception:' + e.message);
-			$.storage.flush();
-		}
-	}
-
-	WE.getStoreContentKey = function() {
-		return 'WikiaEditorData/ArticleId-' + wgArticleId;
+	WE.storeContent = function() {
+		WikiaEditorStorage.store();
 	}
 
 	WE.Editor = $.createClass(Observable, {
