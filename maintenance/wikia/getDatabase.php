@@ -11,18 +11,19 @@
  */
 
 // include chef generated variables: $wgWikiaDatacenter
-require_once('/usr/wikia/devbox/DevBoxVariables.php');
+// require_once('/usr/wikia/devbox/DevBoxVariables.php');
 
 switch($wgWikiaDatacenter) {
-	case 'sjc':
-		$wgDBdevboxServer1 = 'dev-db-a1';
-		$wgDBdevboxServer2 = 'dev-db-b1';
-		break;
-
 	case 'poz':
 		$wgDBdevboxServer1 = 'dev-db-a1-p1';
 		$wgDBdevboxServer2 = 'dev-db-a1-p1';
 		break;
+	case 'sjc':
+	default:
+		$wgDBdevboxServer1 = 'dev-db-a1';
+		$wgDBdevboxServer2 = 'dev-db-b1';
+		break;
+
 }
 
 $wgDBdevboxUser = 'devbox';
