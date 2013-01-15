@@ -26,6 +26,7 @@ echo date("Y-m-d H:i:s");
 echo " / Script finished running!\n";
 
 class NavMessageHandler {
+	const DEFAULT_USER_NAME = 'Default';
 	private $messagesToReplace = array(
 		'blogs-recent-url-text',
 		'blogs-recent-url',
@@ -58,7 +59,7 @@ class NavMessageHandler {
 		$revision = $article->getRevisionFetched();
 
 		if ($revision != null) {
-			$this->processExistingArticle($article);
+			$this->processExistingArticle($article, $revision);
 		}
 	}
 
@@ -68,8 +69,9 @@ class NavMessageHandler {
 	 * message keys in the Article text with their translations
 	 *
 	 * @param $article Article
+	 * @param $revision Revision
 	 */
-	private function processExistingArticle ($article) {
+	private function processExistingArticle ($article, $revision) {
 		echo date("Y-m-d H:i:s");
 		echo " / Processing article\n";
 
@@ -78,20 +80,20 @@ class NavMessageHandler {
 		$this->user = $user = User::newFromName($wikiaBotName);
 
 		/**
-		 * We want to replace messages in all cases
-		 * - there can be a Nav Article with only one revision,
-		 * if it was created before MediaWiki:Wiki-navigation
-		 * was moved to starter
-		 * Otherwise, we would delete such article:
-		 *
-		 * $previousRevision = $revision->getPrevious();
-		 * if ($previousRevision != null) {
-		 * 		$this->replaceMessages($article);
-		 * } else {
-		 * 		$this->deleteArticle($article);
-		 * }
+		 * We want to replace messages in all cases except
+		 * when there is a Nav Article with only one revision
+		 * edited by user Default - which means it is an
+		 * import from starter Wiki
 		 */
-		$this->replaceMessages($article);
+		$previousRevision = $revision->getPrevious();
+		if (
+			($previousRevision == null)
+			&& ($revision->getRawUserText() == self::DEFAULT_USER_NAME)
+		) {
+			$this->deleteArticle($article);
+		} else {
+			$this->replaceMessages($article);
+		}
 	}
 
 	/**
@@ -114,11 +116,9 @@ class NavMessageHandler {
 	}
 
 	/**
-	 * Currently unused;
 	 * Removes the Article containing Navigation
 	 *
 	 * @param $article Article
-	 * @deprecated
 	 */
 	private function deleteArticle ($article) {
 		echo date("Y-m-d H:i:s");
