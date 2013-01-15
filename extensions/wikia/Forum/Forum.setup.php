@@ -3,13 +3,13 @@
 /**
  * Forum
  *
- * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
+ * @author Hyun Lim, Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  *
  */
 
-$wgExtensionCredits['specialpage'][] = array( '
-	name' => 'Forum', 
-	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ) 
+$wgExtensionCredits['specialpage'][] = array(
+	'name' => 'Forum',
+	'author' => array( 'Hyun Lim', 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ),
 );
 
 $dir = dirname( __FILE__ ) . '/';
