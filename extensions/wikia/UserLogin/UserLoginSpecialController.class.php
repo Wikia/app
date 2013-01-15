@@ -7,8 +7,8 @@
  *
  */
 class UserLoginSpecialController extends WikiaSpecialPageController {
-	const DROPDOWN_TABINDEX_START =  0;
-	const SPECIAL_USERLOGIN_TABINDEX_START = 5;
+	const DROPDOWN_TABINDEX_START =  2;
+	const SPECIAL_USERLOGIN_TABINDEX_START = 7;
 
 	private $userLoginHelper = null;
 
