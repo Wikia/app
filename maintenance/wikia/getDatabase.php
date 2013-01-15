@@ -17,11 +17,13 @@ switch($wgWikiaDatacenter) {
 	case 'poz':
 		$wgDBdevboxServer1 = 'dev-db-a1-p1';
 		$wgDBdevboxServer2 = 'dev-db-a1-p1';
+		$wgDBdevboxCentral = 'dev-db-a1-p1'; // FIXME: is this correct?
 		break;
 	case 'sjc':
 	default:
 		$wgDBdevboxServer1 = 'dev-db-a1';
 		$wgDBdevboxServer2 = 'dev-db-b1';
+		$wgDBdevboxCentral = 'dev-db-central';
 		break;
 
 }
@@ -177,12 +179,12 @@ if (array_key_exists( 'i', $opts )) {
 		$dbname = $matches[1];
 	}
 
-	// Figure out which cluster we need to load this into	$response =  `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
+	// Figure out which cluster we need to load this into by connecting to central directly
 
 	if ($dbname == 'wikicities') {
 		$wgDBdevboxServer = $wgDBdevboxServer1;
 	} else {
-		$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
+		$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
 		if (trim($response) != "" && substr($response, 0, 5) != 'ERROR') {
 			$cluster_name = trim($response);
 		} else {
