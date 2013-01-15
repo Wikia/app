@@ -398,8 +398,10 @@ class DataFeedProvider {
 
 		} elseif (defined('NS_BLOG_ARTICLE_TALK') && $res['ns'] == NS_BLOG_ARTICLE_TALK && class_exists('ArticleComment')) {
 			$subpageTitle = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE_TALK);
-			$item['title'] = $subpageTitle->getSubpageText();
-			$item['url'] = $subpageTitle->getLocalUrl();
+			$articleText = explode("/", $title->getText());
+			(count($articleText) > 2) ? $articleTitleText = $articleText[1] : $articleTitleText = $subpageTitle->getSubpageText();
+			$item['title'] = $articleTitleText;
+			$item['url'] = $subpageTitle->getLocalUrl();;
 
  		} elseif (defined('NS_BLOG_LISTING') && $res['ns'] == NS_BLOG_LISTING) {
 
