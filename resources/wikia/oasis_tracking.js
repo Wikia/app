@@ -1,21 +1,9 @@
 /* tracking for oasis skin */
-$(function(){
-
-	var tracker = window.WikiaTracker || {trackEvent:function(){/* null function */}},
-		track = function(category, action, label, event) {
-			WikiaTracker.trackEvent(
-				'trackingevent',
-				{
-					ga_category: category,
-					ga_action: action,
-					ga_label: label
-				},
-				'ga',
-				event
-			);
-		},
-		clickAction = WikiaTracker.ACTIONS.CLICK,
-		viewAction = WikiaTracker.ACTIONS.VIEW;
+jQuery(function($){
+	var track = WikiaTracker.buildTrackWithDefaults({
+		action: WikiaTracker.ACTIONS.CLICK,
+		trackingMethod: 'ga'
+	});
 
 	$('#WikiaHeader').on('click', 'a', function(e) {
 		var el = $(e.target);
@@ -24,27 +12,46 @@ $(function(){
 			return true;
 		}
 
-		var category = 'top-nav';
+		var options = {
+			browserEvent: e,
+			category: 'top-nav'
+		};
 
 		if(el.hasClass('logo')) {
-			track(category, clickAction, 'wikia-logo', e);
+			track(options, {
+				label: 'wikia-logo'
+			});
 		} else if(el.parent().hasClass('start-a-wiki')) {
-			track(category, clickAction, 'start-a-wiki');
+			track(options, {
+				label: 'start-a-wiki'
+			});
 		} else if(el.closest('.topNav').length > 0) {
-			track(category, clickAction, 'hub-item', e);
+			track(options, {
+				label: 'hub-item'
+			});
 		} else if(el.data('id') == 'mytalk') {
 			if(el.hasClass('message-wall-item')) {
-				track(category, clickAction, 'user-menu-message-wall', e);
+				track(options, {
+					label: 'user-menu-message-wall'
+				});
 			} else {
-				track(category, clickAction, 'user-menu-talk', e);
+				track(options, {
+					label: 'user-menu-talk'
+				});
 			}
 		} else if(el.attr('accesskey') == '.') {
-			track(category, clickAction, 'user-menu-profile', e);
+			track(options, {
+				label: 'user-menu-profile'
+			});
 		} else if(el.closest('.notifications-for-wiki').length > 0) {
 			if($(el.closest('.notifications-for-wiki')).data('wiki-id') == window.wgCityId) {
-				track(category, clickAction, 'notification-item-local', e);
+				track(options, {
+					label: 'notification-item-local'
+				});
 			} else {
-				track(category, clickAction, 'notification-item-cross-wiki', e);
+				track(options, {
+					label: 'notification-item-cross-wiki'
+				});
 			}
 		}
 	});
@@ -56,36 +63,55 @@ $(function(){
 			return true;
 		}
 
-		var category = 'wiki-nav';
+		var options = {
+			browserEvent: e,
+			category: 'wiki-nav'
+		};
 
 		if(el.closest('.wordmark').length > 0) {
-			track(category, clickAction, 'wordmark', e);
+			track(options, {
+				label: 'wordmark'
+			});
 		} else if(el.data('canonical')) {
 			var canonical = el.data('canonical');
 			switch(canonical) {
 				case 'wikiactivity':
-					track(category, clickAction, 'on-the-wiki-activity', e);
+					track(options, {
+						label: 'on-the-wiki-activity'
+					});
 					break;
 				case 'random':
-					track(category, clickAction, 'on-the-wiki-random', e);
+					track(options, {
+						label: 'on-the-wiki-random'
+					});
 					break;
 				case 'newfiles':
-					track(category, clickAction, 'on-the-wiki-new-photos', e);
+					track(options, {
+						label: 'on-the-wiki-new-photos'
+					});
 					break;
 				case 'chat':
-					track(category, clickAction, 'on-the-wiki-chat', e);
+					track(options, {
+						label: 'on-the-wiki-chat'
+					});
 					break;
 				case 'forum':
-					track(category, clickAction, 'on-the-wiki-forum', e);
+					track(options, {
+						label: 'on-the-wiki-forum'
+					});
 					break;
 				case 'videos':
-					track(category, clickAction, 'on-the-wiki-videos', e);
+					track(options, {
+						label: 'on-the-wiki-videos'
+					});
 					break;
 				default:
 					break;
 			}
 		} else if(el.closest('.WikiNav').length > 0) {
-			track(category, clickAction, 'custom', e);
+			track(options, {
+				label: 'custom'
+			});
 		}
 	});
 
@@ -96,15 +122,24 @@ $(function(){
 			return true;
 		}
 
-		var category = 'article';
+		var options = {
+			browserEvent: e,
+			category: 'article'
+		};
 
 		if((el.data('id') || el.parent().data('id')) == 'edit') {
-			track(category, clickAction, 'edit', e);
+			track(options, {
+				label: 'edit'
+			});
 		} else if((el.data('id') || el.parent().data('id')) == 'comment') {
 			if(el.hasClass('talk') || el.parent().hasClass('talk')) {
-				track(category, clickAction, 'talk', e);
+				track(options, {
+					label: 'talk'
+				});
 			} else {
-				track(category, clickAction, 'comment', e);
+				track(options, {
+					label: 'comment'
+				});
 			}
 		}
 	});
@@ -116,10 +151,12 @@ $(function(){
 			return true;
 		}
 
-		var category = 'article';
-
 		if(el.closest('.editsection').length > 0) {
-			track(category, clickAction, 'section-edit', e);
+			track({
+				browserEvent: e,
+				category: 'article',
+				label: 'section-edit'
+			});
 		}
 	});
 
@@ -130,23 +167,37 @@ $(function(){
 			return true;
 		}
 
-		var category = 'article';
+		var options = {
+			browserEvent: e,
+			category: 'article'
+		};
 
 		if(el.parent().hasClass('image')) {
 			if(el.parent().hasClass('video')) {
-				track(category, clickAction, 'video', e);
+				track(options, {
+					label: 'video'
+				});
 			} else {
-				track(category, clickAction, 'image', e);
+				track(options, {
+					label: 'image'
+				});
 			}
 		} else if(el.closest('.RelatedPagesModule').length > 0) {
-			track(category, clickAction, 'related-pages', e);
+			track(options, {
+				label: 'related-pages'
+			});
 		} else if(el.closest('.category-gallery').length > 0) {
-			track('category', clickAction, 'category-gallery', e);
+			track(options, {
+				label: 'category-gallery'
+			});
 		}
 	});
 
 	$('#WikiaArticleCategories').on('click', 'a', function(e) {
-		track('article', clickAction, 'category-name', e);
+		track({
+			category: 'article',
+			label: 'category-name'
+		});
 	});
 
 	$('#WikiaRail').on('click', '.WikiaActivityModule a, .LatestPhotosModule a, .ChatModule button', function(e) {
@@ -157,27 +208,52 @@ $(function(){
 		}
 
 		if(el.closest('.edited-by').length > 0) {
-			track('recent-wiki-activity', clickAction, 'activity-username', e);
+			track({
+				category: 'recent-wiki-activity',
+				label: 'activity-username'
+			});
 		} else if(el.closest('.WikiaActivityModule').length > 0) {
-			track('recent-wiki-activity', clickAction, 'activity-title', e);
+			track({
+				category: 'recent-wiki-activity',
+				label: 'activity-title'
+			});
 		} else if(el.hasClass('thumbimage')) {
-			track('photos-module', clickAction, 'photos-module-thumbnail', e);
+			track({
+				category: 'photos-module',
+				label: 'photos-module-thumbnail'
+			});
 		} else if(el.closest('.chat-join').length > 0) {
-			track('chat-module', clickAction, 'chat-join', e);
+			track({
+				category: 'chat-module',
+				label: 'chat-join'
+			});
 		}
 	});
 
 	$('#WikiaSearch').on('click', '.autocomplete', function(e) {
-		track('search', clickAction, 'search-suggest', e);
+		track({
+			category: 'search',
+			label: 'search-suggest'
+		});
 	}).on('submit', '', function(e) {
-		track('search', clickAction, 'search-enter', e);
+		track({
+			category: 'search',
+			label: 'search-enter'
+		});
 	});
 
 	if($('body.editor').length > 0) {
-		// edit page view event
-		track('edit', viewAction, 'edit-page');
+		track({
+			action: WikiaTracker.ACTIONS.VIEW,
+			category: 'edit',
+			label: 'edit-page'
+		});
+
 		$('#wpSave').on('click', '', function(e) {
-			track('edit', clickAction, 'publish', e);
+			track({
+				category: 'edit',
+				label: 'publish'
+			});
 		});
 	}
 
@@ -188,15 +264,23 @@ $(function(){
 			return true;
 		}
 
-		var category = 'thread-module';
+		var options = {
+			browserEvent: e,
+			category: 'thread-module'
+		};
 
 		if(el.hasClass('forum-thread-title')) {
-			track(category, clickAction, 'title', e);
+			track(options, {
+				label: 'title'
+			});
 		} else if(el.hasClass('forum-new-post')) {
-			track(category, clickAction, 'start-discussion', e);
+			track(options, {
+				label: 'start-discussion'
+			});
 		} else if(el.closest('.forum-see-more').length > 0) {
-			track(category, clickAction, 'see-more', e);
+			track(options, {
+				label: 'see-more'
+			});
 		}
 	});
-
 });
