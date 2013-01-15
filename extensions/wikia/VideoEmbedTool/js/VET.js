@@ -280,8 +280,8 @@ function VET_show( options ) {
 	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'open');
 
 	if(VET_wysiwygStart == 2) {
-		if(size) {
-			VET_thumbSize = size;
+		if(options.size) {
+			VET_thumbSize = options.size;
 		}
 		VET_editVideo();
 	} else {
