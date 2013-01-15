@@ -12,6 +12,11 @@ namespace Wikia\Search\IndexService;
 class Factory
 {
 	/**
+	 * Solarium client for DI
+	 * @var Solarium_Client
+	 */
+	protected $client;
+	/**
 	 * Singleton instance
 	 * @var 
 	 */

@@ -1,5 +1,8 @@
 <?php 
-
+/**
+ * Class definition for WikiaSearchIndexer
+ */
+use \Wikia\Search\IndexService\Factory;
 /**
  * This class is responsible for handling all the methods needed to serve up document data for indexing.
  * @author Robert Elwell
@@ -106,7 +109,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		if ( isset( $this->services[$serviceName] ) ) {
 			return $this->services[$serviceName];
 		}
-		$serviceName = \Wikia\Search\IndexService\Factory::get( $serviceName );
+		$serviceName = Factory::getInstance()->get( $serviceName );
 		return new $serviceName( $this->client );
 	}
 	
