@@ -1266,6 +1266,15 @@ $messages['pl'] = array(
 	'founderprogressbar-browse-page-name' => 'Przeglądaj',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'founderprogressbar-progress-see-full-list' => 'Varda la lista completa',
+	'founderprogressbar-progress-hide-full-list' => 'Stërma la lista completa',
+	'founderprogressbar-task-completed' => 'Completà',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */

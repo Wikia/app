@@ -3138,6 +3138,21 @@ $messages['pt-br'] = array(
 	'usersignup-account-creation-email-greeting' => 'Olá,',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'usersignup-page-title' => 'Join Uicchia',
+	'usersignup-confirm-email-new-email-label' => 'Mail nove',
+	'usersignup-confirm-email-update' => 'Aggiorne',
+	'usersignup-confirm-page-heading-confirmed-user' => 'Comblimende!',
+	'usersignup-confirmation-heading-email-resent' => 'Email nove mannate',
+	'usersignup-confirmation-subheading' => "Condrolle l'email toje",
+	'usersignup-confirmation-email-greeting' => 'Cià $USERNAME,',
+	'usersignup-marketing-community-heading' => 'Collabbore',
+	'usersignup-marketing-global-heading' => 'Ccreje',
+);
+
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura
