@@ -32,7 +32,6 @@ class NavMessageHandler {
 		'portal-url',
 		'forum-url'
 	);
-	private $wikiaBotId = 4663069;
 	private $user = null;
 
 	/**
@@ -73,7 +72,10 @@ class NavMessageHandler {
 	private function processExistingArticle ($article) {
 		echo date("Y-m-d H:i:s");
 		echo " / Processing article\n";
-		$this->user = $user = User::newFromId($this->wikiaBotId);
+
+		// predefined global config variable
+		$wikiaBotName = F::app()->wg->wikiaBotUsers['bot']['username'];
+		$this->user = $user = User::newFromName($wikiaBotName);
 
 		/**
 		 * We want to replace messages in all cases
@@ -95,7 +97,7 @@ class NavMessageHandler {
 	/**
 	 * Replace known message keys in Article containing
 	 * Navigation with their respective translations
-	 * Save and purge the Article.
+	 * Save the Article.
 	 *
 	 * @param $article Article
 	 *
@@ -109,7 +111,6 @@ class NavMessageHandler {
 		}
 		$page = $article->getPage();
 		$page->doEdit($articleText, '', 0, false, $this->user);
-		$page->doPurge();
 	}
 
 	/**
@@ -122,7 +123,6 @@ class NavMessageHandler {
 	private function deleteArticle ($article) {
 		echo date("Y-m-d H:i:s");
 		echo " / Removing article\n";
-		$user = User::newFromId($this->wikiaBotId);
 		$page = $article->getPage();
 		$errors = '';
 		$page->doDeleteArticle('', false, 0, true, $errors, $this->user);
