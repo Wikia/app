@@ -12,6 +12,7 @@ $app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 require_once( 'Solarium/Autoloader.php' );
+require_once( dirname(__FILE__). '/../../../lib/simplehtmldom/simple_html_dom.php' );
 Solarium_Autoloader::register();
 
 /**

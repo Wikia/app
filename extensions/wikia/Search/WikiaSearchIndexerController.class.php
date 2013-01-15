@@ -19,6 +19,7 @@ class WikiaSearchIndexerController extends WikiaController
 	
 	public function getPageDefaults()
 	{
+		$this->wg->AppStripsHtml = true;
 		$ids = $this->getVal( 'ids' );
 	    if ( !empty( $ids ) ) {
 	        $this->response->setData( $this->callForPages( 'getPageDefaultValues', explode( '|', $ids ) ) );
@@ -47,6 +48,14 @@ class WikiaSearchIndexerController extends WikiaController
 				$document = new Solarium_Document_AtomicUpdate( $responseArray );
 				$pageIdKey = $document->pageid ?: sprintf( '%s_%s', $this->wg->CityId, $pageId );
 				$document->setKey( 'pageid', $pageIdKey );
+				
+				foreach ( $document->getFields() as $field => $value ) {
+					// for now multivalued fields will be exclusively fully written. keep that in mind
+					if ( $field != 'pageid' && !in_array( $field, WikiaSearch::$multiValuedFields ) ) {
+						// we may eventually need to specify for some fields whether we should use ADD
+    					$document->setModifierForField( $field, Solarium_Document_AtomicUpdate::MODIFIER_SET );
+					}
+				}
 				
 				$documents[] = $document;
 
