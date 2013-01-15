@@ -53,7 +53,7 @@ function VET_editVideo() {
 
 			VET_displayDetails(o.responseText, data);
 
-			$G('VideoEmbedBack').style.display = 'none';
+			$('#VideoEmbedBack').css('display', 'none');
 
 			setTimeout(function() {
 				if ( (typeof (data.thumbnail) != "undefined" && data.thumbnail ) ||
@@ -85,17 +85,17 @@ function VET_editVideo() {
 
 			}, 200);
 			if(data.caption) {
-				$G('VideoEmbedCaption').value = data.caption;
+				$('#VideoEmbedCaption').val(data.caption);
 			}
 
 			// show width slider
 			VET_toggleSizing(true);
 
 			// show alignment row
-			$G( 'VideoEmbedLayoutRow' ).style.display = '';
+			$( '#VideoEmbedLayoutRow' ).css('display', '');
 
 			// make replace video link to open in new window / tab
-			$G('VideoReplaceLink').getElementsByTagName('a')[0].setAttribute('target', '_blank');
+			$('#VideoReplaceLink a').first().attr('target', '_blank');
 		}
 	};
 
@@ -122,25 +122,25 @@ function VET_doEditVideo() {
 	// setup metadata
 	var extraData = {};
 
-	extraData.href = $G('VideoEmbedHref').value;
-	extraData.width= $G('VideoEmbedManualWidth').value;
+	extraData.href = $('#VideoEmbedHref').val();
+	extraData.width= $('#VideoEmbedManualWidth').val();
 
-	if ($G('VideoEmbedThumbOption').checked) {
+	if ($('#VideoEmbedThumbOption').is(':checked')) {
 		extraData.thumb = 1;
 	}
 
 	//if (extraData.thumb) { // bugId:26619
-		if( $G('VideoEmbedLayoutLeft').checked ) {
+		if( $('#VideoEmbedLayoutLeft').is(':checked') ) {
 			extraData.align = 'left';
-		} else if ($G('VideoEmbedLayoutCenter').checked ) {
+		} else if ($('#VideoEmbedLayoutCenter').is(':checked') ) {
 			extraData.align = 'center';
 		} else {
 			extraData.align = 'right';
 		}
 	//}
 
-	if ($G('VideoEmbedCaption').value) {
-		 extraData.caption = $G('VideoEmbedCaption').value;
+	if ($('#VideoEmbedCaption').val()) {
+		 extraData.caption = $('#VideoEmbedCaption').val();
 	}
 	
 	if(VET_callbackAfterEmbed) {
@@ -188,26 +188,26 @@ function VET_moveBackButton(selector) {
 
 function VET_toggleSizing( enable ) {
 	if( enable ) {
-		$G( 'VideoEmbedThumbOption' ).disabled = false;
-		$G( 'VideoEmbedNoThumbOption' ).disabled = false;
-		$G( 'VideoEmbedWidthRow' ).style.display = '';
-		$G( 'VideoEmbedSizeRow' ).style.display = '';
+		$( '#VideoEmbedThumbOption' ).attr('disabled', false);
+		$( '#VideoEmbedNoThumbOption' ).attr('disabled', false);
+		$( '#VideoEmbedWidthRow' ).css('display', '');
+		$( '#VideoEmbedSizeRow' ).css('display', '');
 	} else {
-		$G( 'VideoEmbedThumbOption' ).disabled = true;
-		$G( 'VideoEmbedNoThumbOption' ).disabled = true;
-		$G( 'VideoEmbedWidthRow' ).style.display = 'none';
-		$G( 'VideoEmbedSizeRow' ).style.display = 'none';
+		$( '#VideoEmbedThumbOption' ).attr('disabled', true);
+		$( '#VideoEmbedNoThumbOption' ).css('disabled', true);
+		$( '#VideoEmbedWidthRow' ).css('display', 'none');
+		$( '#VideoEmbedSizeRow' ).css('display', 'none');
 	}
 }
 
 function VET_manualWidthInput( elem ) {
     var val = parseInt( elem.value );
     if ( isNaN( val ) ) {
-		$G( 'VideoEmbedManualWidth' ).value = VET_thumbSize;
+		$( '#VideoEmbedManualWidth' ).val(VET_thumbSize);
 		VET_readjustSlider( VET_thumbSize );
 		return false;
     }
-	$G( 'VideoEmbedManualWidth' ).value = val;
+	$( 'VideoEmbedManualWidth' ).val(val);
 	VET_readjustSlider( val );
 }
 
@@ -294,7 +294,7 @@ function VET_show( options ) {
 function VET_loadMain(searchOrder) {
 	var callback = {
 		success: function(o) {
-			$G('VideoEmbedMain').innerHTML = o.responseText;
+			$('#VideoEmbedMain').html(o.responseText);
 			$('#VideoEmbedUrl').focus();
 
 			// macbre: RT #19150
@@ -315,7 +315,7 @@ function VET_loadMain(searchOrder) {
 function VET_recentlyUploaded(param, pagination) {
 	var callback = {
 		success: function(o) {
-			$G('VET_results_0').innerHTML = o.responseText;
+			$('#VET_results_0').html(o.responseText);
 		}
 	}
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=recentlyUploaded&'+param, callback);
@@ -324,7 +324,7 @@ function VET_recentlyUploaded(param, pagination) {
 function VET_sendQuery(query, page, sourceId, pagination) {
 	var callback = {
 		success: function(o) {
-			$G('VET_results_' + o.argument[0]).innerHTML = o.responseText;
+			$('#VET_results_' + o.argument[0]).html(o.responseText);
 		},
 		argument: [sourceId]
 	}
@@ -350,11 +350,11 @@ function VET_onVideoEmbedUrlKeypress(e) {
  * note: VET_preQuery is called from a template, and from VET_onVideoEmbedUrlKeypress
  */
 function VET_preQuery(e) {
-	if($G('VideoEmbedUrl').value == '') {
+	if($('#VideoEmbedUrl').val('')) {
 		GlobalNotification.show( $.msg('vet-warn2'), 'error', null, VET_notificationTimout );
 		return false;
 	} else {
-		var query = $G('VideoEmbedUrl').value;
+		var query = $('#VideoEmbedUrl').val();
 		VET_sendQueryEmbed( query );
 		return false;
 	}
@@ -365,15 +365,15 @@ function VET_preQuery(e) {
  */
 function VET_displayDetails(responseText, dataFromEditMode) {
 	VET_switchScreen('Details');
-	$G('VideoEmbedBack').style.display = 'inline';
+	$('#VideoEmbedBack').css('display', 'inline');
 
 	// wlee: responseText could include <script>. Use jQuery to parse
 	// and execute this script
 	$('#VideoEmbed' + VET_curScreen).html(responseText);
 
-	if($G('VideoEmbedThumb')) {
+	if($('#VideoEmbedThumb').length) {
 		VET_orgThumbSize = null;
-		var image = $G('VideoEmbedThumb').firstChild;
+		var image = $('#VideoEmbedThumb').children(':first');
 		var thumbSize = [image.width, image.height];
 		VET_orgThumbSize = null;
 	}
@@ -412,11 +412,11 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 		initSlider();
 	}
 
-	if ($G( 'VET_error_box' )) {
-		GlobalNotification.show( $G( 'VET_error_box' ).innerHTML, 'error', null, VET_notificationTimout );
+	if ($( '#VET_error_box' ).length) {
+		GlobalNotification.show( $( '#VET_error_box' ).html(), 'error', null, VET_notificationTimout );
 	}
 
-	if ( $G('VideoEmbedMain').innerHTML == '' ) {
+	if ( $('#VideoEmbedMain').html() == '' ) {
 		VET_loadMain();
 	}
 
@@ -431,9 +431,9 @@ function VET_insertFinalVideo(e, type) {
 	var params = new Array();
 	params.push('type='+type);
 
-	if(!$G('VideoEmbedName')) {
-		if ($G( 'VideoEmbedOname' ) ) {
-			if ('' == $G( 'VideoEmbedOname' ).value) {
+	if(!$('#VideoEmbedName').length) {
+		if ($( 'VideoEmbedOname' ).length ) {
+			if ('' == $( '#VideoEmbedOname' ).val()) {
 				GlobalNotification.show( $.msg('vet-warn3'), 'error', null, VET_notificationTimout );
 				return false;
 			}
@@ -441,17 +441,17 @@ function VET_insertFinalVideo(e, type) {
 			GlobalNotification.show( $.msg('vet-warn3'), 'error', null, VET_notificationTimout );
 			return false;
 		}
-	} else if ('' == $G( 'VideoEmbedName' ).value ) {
+	} else if ('' == $( '#VideoEmbedName' ).val() ) {
 		GlobalNotification.show( $.msg('vet-warn3'), 'error', null, VET_notificationTimout );
 		return false;
 	}
 
-	params.push('id='+$G('VideoEmbedId').value);
-	params.push('provider='+$G('VideoEmbedProvider').value);
+	params.push('id='+$('#VideoEmbedId').val());
+	params.push('provider='+$('#VideoEmbedProvider').val());
 
-	if( $G( 'VideoEmbedMetadata' ) ) {
+	if( $( '#VideoEmbedMetadata' ).length ) {
 		var metadata = new Array();
-		metadata = $G( 'VideoEmbedMetadata' ).value.split( "," );
+		metadata = $( '#VideoEmbedMetadata' ).val().split( "," );
 		for( var i=0; i < metadata.length; i++ ) {
 			params.push( 'metadata' + i  + '=' + metadata[i] );
 		}
@@ -464,22 +464,22 @@ function VET_insertFinalVideo(e, type) {
 		params.push( 'ns='+wgNamespaceNumber );
 	*/
 
-	params.push('oname='+encodeURIComponent( $G('VideoEmbedOname').value ) );
-	params.push('name='+encodeURIComponent( $G('VideoEmbedName').value) );
+	params.push('oname='+encodeURIComponent( $('#VideoEmbedOname').val() ) );
+	params.push('name='+encodeURIComponent( $('#VideoEmbedName').val() ) );
 
-	if($G('VideoEmbedThumb')) {
-		params.push('size=' + ($G('VideoEmbedThumbOption').checked ? 'thumb' : 'full'));
-		params.push( 'width=' + $G( 'VideoEmbedManualWidth' ).value );
-		if( $G('VideoEmbedLayoutLeft').checked ) {
+	if($('#VideoEmbedThumb').length) {
+		params.push('size=' + ($('#VideoEmbedThumbOption').is(':checked') ? 'thumb' : 'full'));
+		params.push( 'width=' + $( '#VideoEmbedManualWidth' ).val() );
+		if( $('#VideoEmbedLayoutLeft').is(':checked') ) {
 			params.push( 'layout=left' );
-		} else if( $G('VideoEmbedLayoutGallery').checked ) {
+		} else if( $('#VideoEmbedLayoutGallery').is(':checked') ) {
 			params.push( 'layout=gallery' );
-		} else if ( $G('VideoEmbedLayoutCenter').checked ) {
+		} else if ( $('#VideoEmbedLayoutCenter').is(':checked') ) {
 			params.push( 'layout=center' )
 		} else {
 			params.push( 'layout=right' );
 		}
-		params.push('caption=' + encodeURIComponent( $G('VideoEmbedCaption').value ) );
+		params.push('caption=' + encodeURIComponent( $('#VideoEmbedCaption').val() ) );
 	}
 
 	var callback = {
@@ -495,8 +495,8 @@ function VET_insertFinalVideo(e, type) {
 					break;
 				case 'summary':
 					VET_switchScreen('Summary');
-					$G('VideoEmbedBack').style.display = 'none';
-					$G('VideoEmbed' + VET_curScreen).innerHTML = o.responseText;
+					$('#VideoEmbedBack').css('display', 'none');
+					$('#VideoEmbed' + VET_curScreen).html(o.responseText);
 
 					if (VET_isOnSpecialPageNoEditor) {
 						var $responseHTML = $(o.responseText),
@@ -508,14 +508,14 @@ function VET_insertFinalVideo(e, type) {
 						return false;
 					}
 
-					if ( !$G( 'VideoEmbedCreate'  ) && !$G( 'VideoEmbedReplace' ) ) {
+					if ( !$( '#VideoEmbedCreate'  ).length && !$( '#VideoEmbedReplace' ).length ) {
 						//if(VET_refid == null) {
 							/* impossible code because RTE cannot exist with VET_refid being null
 							if (typeof RTE !== 'undefined') {
 								RTE.getInstanceEditor().getEditbox().focus();
 							}
 							VET_getTextarea().focus();
-							insertTags( $G('VideoEmbedTag').value, '', '', VET_getTextarea());
+							insertTags( $('#VideoEmbedTag').val(), '', '', VET_getTextarea());
 							*/
 							
 							/* move into media-placeholder callback 
@@ -545,19 +545,19 @@ function VET_insertFinalVideo(e, type) {
 							//var wikitag = YAHOO.util.Dom.get('VideoEmbedTag').value;
 							var options = {};
 
-							if($G('VideoEmbedThumbOption').checked) {
+							if($('#VideoEmbedThumbOption').is(':checked')) {
 								options.thumb = 1;
 							} else {
 								options.thumb = null;
 							}
-							if($G('VideoEmbedLayoutLeft').checked) {
+							if($('#VideoEmbedLayoutLeft').is(':checked')) {
 								options.align = 'left';
-							} else if ($G('VideoEmbedLayoutCenter').checked) {
+							} else if ($('#VideoEmbedLayoutCenter').is(':checked')) {
 								options.align = 'center';
 							} else {
 								options.align = null;
 							}
-							options.caption = $G('VideoEmbedCaption').value;
+							options.caption = $('#VideoEmbedCaption').val();
 
 							// macbre: CK support
 							if(VET_callbackAfterEmbed) {
@@ -575,9 +575,9 @@ function VET_insertFinalVideo(e, type) {
 							}*/
 						//}
 					} else {
-						$G( 'VideoEmbedSuccess' ).style.display = 'none';
-						$G( 'VideoEmbedTag' ).style.display = 'none';
-						$G( 'VideoEmbedPageSuccess' ).style.display = 'block';
+						$( '#VideoEmbedSuccess' ).css('display', 'none');
+						$( '#VideoEmbedTag' ).css('display', 'none');
+						$( '#VideoEmbedPageSuccess' ).css('display', 'block');
 					}
 					break;
 				default:
@@ -596,13 +596,13 @@ function VET_insertFinalVideo(e, type) {
 function VET_switchScreen(to) {
 	VET_prevScreen = VET_curScreen;
 	VET_curScreen = to;
-	$G('VideoEmbed' + VET_prevScreen).style.display = 'none';
-	$G('VideoEmbed' + VET_curScreen).style.display = '';
+	$('#VideoEmbed' + VET_prevScreen).css('display', 'none');
+	$('#VideoEmbed' + VET_curScreen).css('display', '');
 	// this is called in both cases - when hitting 'back' and when closing the dialog.
 	// in any case we want to stop the video
 	$('#VideoEmbedThumb').children().remove();
 	if(VET_curScreen == 'Main') {
-		$G('VideoEmbedBack').style.display = 'none';
+		$('#VideoEmbedBack').css('display', 'none');
 	}
 
 	// macbre: move back button on Oasis
@@ -649,8 +649,8 @@ function VET_close(e) {
 	/*
 	VET_panel.hide();
 	if ( 400 == wgNamespaceNumber ) {
-		if( $G( 'VideoEmbedPageWindow' ) ) {
-			$G( 'VideoEmbedPageWindow' ).style.visibility = '';
+		if( $( '#VideoEmbedPageWindow' ).length ) {
+			$( '#VideoEmbedPageWindow' ).css('visibility', '');
 		}
 	}
 	*/
