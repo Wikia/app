@@ -30,7 +30,7 @@ $wgAutoloadClasses['RecentQuestionsBlock'] = $dir.'blocks/RecentQuestionsBlock.c
 $wgAutoloadClasses['WikiCreationBlock'] = $dir.'blocks/WikiCreationBlock.class.php';
 
 // service
-$wgAutoloadClasses['PhalanxService'] = $dir.'services/PhalanxService.php';
+$wgAutoloadClasses['PhalanxService'] = $dir.'services/PhalanxService.class.php';
 
 
 $wgExtensionMessagesFiles['Phalanx'] = $dir . 'Phalanx.i18n.php';

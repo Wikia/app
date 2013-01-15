@@ -20,6 +20,6 @@ class PhalanxServiceTest extends WikiaBaseTest {
 	public function testPhalanxServiceCheck() {
 		error_log( __CLASS__ . '::' . __FUNCTION__ );
 		$status = $this->isPhalanxAlive();
-		$this->assertEquals(1, count( $status ) );
+		$this->assertEquals(1, $status );
 	}
 }

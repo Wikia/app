@@ -43,6 +43,8 @@ class PhalanxService extends Service {
 	private function sendToPhalanxDaemon( $action, $parameters ) {
 		global $wgPhalanxServiceUrl;
 
+		wfProfileIn( __METHOD__  );
+
 		// but for now we just build test url
 		$url = sprintf("%s/%s",
 			"http://localhost:8080/",
@@ -56,14 +58,15 @@ class PhalanxService extends Service {
 		 * for status we're sending GET
 		 */
 		if( $action == "status" ) {
-			return Http::get( $url );
+			$response = Http::get( $url, array( "noProxy" => true ) );
 		}
 		/**
 		 * for any other we're sending POST
 		 */
 		else {
-			return Http::post( $url );
+			$response = Http::post( $url, array( "noProxy" => true ) );
 		}
+		wfProfileOut( __METHOD__  );
 	}
 
 };

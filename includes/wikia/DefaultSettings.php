@@ -1061,4 +1061,4 @@ $wgEnableQuickToolsExt = true;
 /**
  * use phalanx external service
  */
-$wgPhalanxService = false;
+$wgPhalanxService = true;
