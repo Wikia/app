@@ -104,8 +104,7 @@ $app->registerHook( 'LinkerMakeThumbLink2FileOriginalSize', 'VideoHandlerHooks',
 $app->registerHook( 'ParserAfterStrip', 'VideoHandlerHooks', 'convertOldInterwikiToNewInterwiki' );
 $app->registerHook( 'File::checkExtensionCompatibilityResult', 'VideoHandlerHooks', 'checkExtensionCompatibilityResult' );
 
-// (BugId:44086) hiding front end for now while back end if being worked on
-//$app->registerHook( 'SkinTemplateNavigation', 'VideoHandlerHooks', 'onSkinTemplateNavigation' );
+$app->registerHook( 'SkinTemplateNavigation', 'VideoHandlerHooks', 'onSkinTemplateNavigation' );
 
 $app->registerHook( 'FileUpload', 'VideoInfoHooksHelper', 'onFileUpload' );
 $app->registerHook( 'ArticleSaveComplete', 'VideoInfoHooksHelper', 'onArticleSaveComplete' );

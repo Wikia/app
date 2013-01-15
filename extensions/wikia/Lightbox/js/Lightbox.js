@@ -27,6 +27,7 @@ var Lightbox = {
 
 	makeLightbox: function(params) {
 		Lightbox.includeLatestPhotos = !$('#LatestPhotosModule .carousel-container').length; // if we don't have latest photos in the DOM, request them from back end
+		Lightbox.openModal = params.modal;
 
 		// If file doesn't exist, show the error modal
 		if(!Lightbox.initialFileDetail['exists']) {
@@ -36,7 +37,6 @@ var Lightbox = {
 
 		var trackingObj = this.getClickSource(params);
 
-		Lightbox.openModal = params.modal;
 		Lightbox.current.title = params.title.toString(); // Added toString() for edge cases where titles are numbers
 
 		Lightbox.current.carouselType = trackingObj.carouselType;

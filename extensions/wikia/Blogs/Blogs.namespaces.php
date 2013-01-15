@@ -59,3 +59,15 @@ $namespaces['pl'] = array(
         NS_BLOG_LISTING => 'Blog',
         NS_BLOG_LISTING_TALK => 'Dyskusja_blogu'
 );
+
+$namespaces['uk'] = array(
+        NS_BLOG_ARTICLE => 'Блог_користувача',
+        NS_BLOG_ARTICLE_TALK => 'Коментар_до_блога_користувача',
+        NS_BLOG_LISTING => 'Блог',
+        NS_BLOG_LISTING_TALK => 'Обговорення_блога'
+);
+
+$namespaces['it'] = array(
+        NS_BLOG_ARTICLE => 'Blog_utente'
+);
+
