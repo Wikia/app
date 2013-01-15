@@ -140,7 +140,7 @@ function WMU_loadDetails() {
 
 				$('#ImageUploadManualWidth').val(WMU_slider.getRealValue());
 				if( WMU_thumbSize ) {
-					$('#ImageUploadThumb').first()
+					$('#ImageUploadThumb').children(':first')
 						.width(WMU_thumbSize[0])
 						.height(WMU_thumbSize[1]);
 				}
