@@ -25,8 +25,6 @@
 		padding: 15px 10px 10px 15px;
 		position: relative;
 
-		$current-color: mix($color-speech-bubble, $color-page-opposite, 50%);
-
 		p {
 			margin-bottom: 1em;
 		}
@@ -61,24 +59,24 @@
 		border-color: transparent $color-page-border $color-page-border transparent;
 		border-style: solid;
 		border-width: 11px;
-		content: " ";
-		height: 0px;
+		content: "";
+		height: 0;
 		position: absolute;
 		top: 14px;
 		left: -22px;
-		width: 0px;
+		width: 0;
 	}
 
 	.speech-bubble-message:after {
 		border-color: transparent $color-speech-bubble $color-speech-bubble transparent;
 		border-style: solid;
 		border-width: 10px;
-		content: " ";
-		height: 0px;
+		content: "";
+		height: 0;
 		position: absolute;
 		top: 15px;
 		left: -20px;
-		width: 0px;
+		width: 0;
 	}
 
 	&.even, &.owner { 
@@ -91,15 +89,13 @@
 		}
 	}
 
-	//TODO: uncomment when you have colors!
-	//.speech-bubble-message.current {
-	//	//background: $current-color;
-	//	//color: mix($color-text,$color-page-opposite, 30%);
-	//
-	//	&::before, &::after {
-	//	//	border-color: transparent $current-color $current-color transparent;
-	//	}
-	//}
+	.speech-bubble-message.current {
+		background: $color-speech-bubble-current;
+
+		&:after {
+			border-color: transparent $color-speech-bubble-current $color-speech-bubble-current transparent;
+		}
+	}
 
 	.speech-bubble-message:hover .tools {
 		visibility: visible;
