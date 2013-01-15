@@ -22,7 +22,6 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'mostvisitedpageslatest' => '',
-
 );
 
 /** Afrikaans (Afrikaans)

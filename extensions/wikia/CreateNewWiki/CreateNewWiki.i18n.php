@@ -700,8 +700,8 @@ Actualizar a través de PayPal para conseguir una wiki sin publicidad ¡por solo
 	'cnw-welcome-instruction1' => 'Ahora haz clic al botón de abajo para empezar a llenar tu wiki con información.',
 	'cnw-welcome-instruction2' => 'Verás este botón a través de tu wiki. Úsalo en cualquier momento cuando quieras agregar una página nueva.',
 	'cnw-welcome-help' => 'Encuentra respuestas, consejos, y más en la <a href="http://es.wikia.com">Comunidad Central</a>.',
-	'cnw-error-general' => 'Algo salió mal al crear tu wiki. Por favor, inténtalo de nuevo más tarde.', # Fuzzy
-	'cnw-error-general-heading' => 'Error', # Fuzzy
+	'cnw-error-general' => '¡Algo salió mal en nuestro sistema! Por favor inténtalo de nuevo o <a href="/Special:Contact">contáctanos</a> para obtener ayuda.',
+	'cnw-error-general-heading' => 'Lo sentimos',
 	'cnw-badword-header' => '¡Oops!',
 	'cnw-badword-msg' => 'Hola, por favor abstente de usar estas malas palabras o palabras prohibidas en la descripción de tu wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Has alcanzado el límite de wikis',
@@ -887,8 +887,8 @@ Mettez à niveau via PayPal pour obtenir un wiki sans publicité pour seulement 
 	'cnw-welcome-instruction1' => 'Cliquez sur le bouton ci-dessous pour commencer à ajouter des pages à votre wiki.',
 	'cnw-welcome-instruction2' => 'Vous verrez ce bouton partout sur votre wiki, utilisez-le chaque fois que vous souhaitez ajouter une nouvelle page.',
 	'cnw-welcome-help' => 'Trouvez des réponses, conseils et plus sur sur <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Quelque chose s’est mal passé lors de la création de votre wiki. Veuillez réessayer plus tard.', # Fuzzy
-	'cnw-error-general-heading' => 'Erreur lors de la création d’un nouveau wiki', # Fuzzy
+	'cnw-error-general' => 'Oups, quelque chose s’est mal passé de notre côté ! Veuillez réessayer plus tard ou <a href="/Special:Contact">nous contacter</a> pour obtenir de l’aide.',
+	'cnw-error-general-heading' => 'Toutes nos excuses',
 	'cnw-badword-header' => 'Eh Oh',
 	'cnw-badword-msg' => 'Bonjour, veuillez éviter d’utiliser des mots grossiers ou interdits dans la description de votre wiki : $1',
 	'cnw-error-wiki-limit-header' => 'Limite de wikis atteinte',
@@ -1686,8 +1686,8 @@ Naik taraf wiki anda kepada wiki tanpa iklan dengan membayar $4.95 (USD) sebulan
 	'cnw-welcome-instruction1' => 'Klik butang di bawah untuk mulai membuka laman pada wiki anda.',
 	'cnw-welcome-instruction2' => 'Anda akan melihat butang ini di seluruh wiki. Gunakannya pada bila-bila masa anda ingin menambahkan laman baru.',
 	'cnw-welcome-help' => 'Cari jawapan, nasihat, dan banyak lagi di <a href="http://community.wikia.com">Community Central</a>.',
-	'cnw-error-general' => 'Kami menghadapi masalah ketika memproseskan penciptaan wiki anda. Sila cuba lagi lain kali.', # Fuzzy
-	'cnw-error-general-heading' => 'Ralat Penciptaan Wiki Baru', # Fuzzy
+	'cnw-error-general' => 'Maaf, kami berdepan dengan maslaah! Sila cuba lagi atau <a href="/Special:Contact">hubungi kami</a> untuk meminta tolong.',
+	'cnw-error-general-heading' => 'Harap maaf',
 	'cnw-badword-header' => 'Nanti kejap',
 	'cnw-badword-msg' => 'Hai, sila hindari penggunaan kata-kata kesat/terlarang dalam Penerangan Wiki anda: $1',
 	'cnw-error-wiki-limit-header' => 'Had wiki dicapai',
@@ -3023,6 +3023,7 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Anakmalaysia
  * @author Ffaarr
  * @author Oapbtommy
  * @author Wrightbus
@@ -3082,7 +3083,7 @@ $messages['zh-hant'] = array(
 	'cnw-welcome-instruction2' => '你會在你的 wiki 各頁面看到此按鈕，任何時候可使用它來新加頁面。',
 	'cnw-welcome-help' => '要找尋解答、建議以及其他，可到 <a href="http://community.wikia.com">社群中心</a>.',
 	'cnw-error-general' => '創建你的 wiki 時發生錯誤，請稍後再試。', # Fuzzy
-	'cnw-error-general-heading' => '創建新Wiki時發生錯誤', # Fuzzy
+	'cnw-error-general-heading' => '抱歉',
 	'cnw-badword-msg' => '嗨，請不要使用這些不好的、被禁止的字詞在您的 Wiki 描述：$1',
 	'cnw-error-wiki-limit-header' => '到達 Wiki 限制',
 	'cnw-error-wiki-limit' => '您好，您受限於每天的 {{PLURAL:$1|$1 wiki creation|$1 wiki創建}} 數量。 請等待24小時之後再創建另一個wiki。.',
