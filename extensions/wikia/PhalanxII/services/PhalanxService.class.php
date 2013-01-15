@@ -6,9 +6,33 @@ class PhalanxService extends Service {
 	private $mLang;
 	private $mType;
 
+	/**
+	 * check service status
+	 */
+	public function status() {
+		$response = $this->sendToPhalanxDaemon( "status", array() );
+	}
 
-	public function check() {
-		$this->sendToPhalanxDaemon( "check", array( "type" => "test", "content" => "fuckąężźćńół") );
+	/**
+	 * service for check function
+	 *
+	 * @param string $type     one of: content, summary, title, user, question_title, recent_questions, wiki_creation, cookie, email
+	 * @param string $content  text to be checked
+	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
+	 */
+	public function check( $type, $content, $lang = "en" ) {
+		$this->sendToPhalanxDaemon( "check", array( "type" => $test, "content" => $content, "lang" => $lang ) );
+	}
+
+	/**
+	 * service for match function
+	 *
+	 * @param string $type     one of: content, summary, title, user, question_title, recent_questions, wiki_creation, cookie, email
+	 * @param string $content  text to be checked
+	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
+	 */
+	public function match( $type, $content, $lang = "en" ) {
+		$this->sendToPhalanxDaemon( "match", array( "type" => $test, "content" => $content, "lang" => $lang ) );
 	}
 
 	/**
@@ -24,13 +48,27 @@ class PhalanxService extends Service {
 		global $wgPhalanxServiceUrl;
 
 		// but for now we just build test url
-		$url = sprintf("%s/%s?%s",
+		$url = sprintf("%s/%s",
 			"http://localhost:8080/",
-			$action,
-			http_build_query( $parameters )
+			$action
 		);
+		if( sizeof( $parameters ) ) {
+			$url .= "?" . http_build_query( $parameters )
+		}
 
-		return Http::post( $url );
+		/**
+		 * for status we're sending GET
+		 */
+		if( $action == "status" ) {
+			return Http::get( $url );
+		}
+		/**
+		 * for any other we're sending POST
+		 */
+		else {
+			return Http::post( $url );
+		}
+
 	}
 
 };
