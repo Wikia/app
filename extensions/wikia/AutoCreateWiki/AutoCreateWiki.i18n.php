@@ -508,7 +508,7 @@ M'ho peus goulennoù da sevel e c'hallit skrivañ ur gerig dimp war ar bajenn  [
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Wikioù nevez',
 	'newwikisstart' => 'Diskouez ar Wikioù adal :',
-	'autocreatewiki-subname-answers' => 'Respontoù'
+	'autocreatewiki-subname-answers' => 'Respontoù',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -3648,7 +3648,7 @@ S'a l'ha ëd chestion, a peul mandeje për pòsta eletrònica a nòstr [[Special
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'neuve wiki',
 	'newwikisstart' => 'Visualisa Wiki partend da:',
-	'autocreatewiki-subname-answers' => 'Rispòste'
+	'autocreatewiki-subname-answers' => 'Rispòste',
 );
 
 /** Pashto (پښتو)
