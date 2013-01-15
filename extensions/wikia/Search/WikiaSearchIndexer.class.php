@@ -7,12 +7,6 @@
 class WikiaSearchIndexer extends WikiaObject {
 	
 	/**
-	 * Time to cache the wikipages value, used in indexing, in seconds -- 7 days.
-	 * @var int
-	 */
-	const WIKIPAGES_CACHE_TTL	= 604800;
-	
-	/**
 	 * Used for querying Solr
 	 * @var Solarium_Client
 	 */
@@ -24,6 +18,19 @@ class WikiaSearchIndexer extends WikiaObject {
 	 */
 	protected $articles = array();
 	
+	/**
+	 * Used to determine which services to invoke during WikiaSearchIndexer::getPage()
+	 * @var array
+	 */
+	protected $serviceNames = array(
+			'DefaultContent',
+			'Metadata',
+			'MediaData',
+			'Redirects',
+			'Wam',
+			'WikiPromoData',
+			'WikiViews'
+	);
 	
 	/**
 	 * Handles dependency injection for solarium client
@@ -75,218 +82,32 @@ class WikiaSearchIndexer extends WikiaObject {
 	public function getPage( $pageId ) {
 		wfProfileIn(__METHOD__);
 		// these will eventually be broken out into their own atomic updates
-		$result = array_merge( 
-				$this->getPageDefaultValues( $pageId ), 
-				$this->getPageMetaData( $pageId ), 
-				$this->getMediaMetadata( $pageId ),
-				$this->getWikiPromoData(),
-				$this->getRedirectTitles( $pageId ),
-				$this->getWikiViews( $pageId ),
-				$this->getBacklinksCount( $pageId ),
-				$this->getWamForWiki()
-		);
-		wfProfileOut(__METHOD__);
-		return $result;
-	}
-	
-	public function getPageDefaultValues( $pageId ) {
-		wfProfileIn(__METHOD__);
-		
-		$page = $this->getPageFromPageId( $pageId );
-		
-		$pageId = $page->getID();
-	
-		$apiService = F::build( 'ApiService' );
-		$response = $apiService->call( array(
-					'pageid'	=> $pageId,
-					'action'	=> 'parse',
-		));
-		
-		$title		= $page->getTitle();
-		$titleStr	= $this->getTitleString( $title );
-		$html 		= $response['parse']['text']['*'];
-
-		$categories = array();
-		foreach ( $response['parse']['categories'] as $category ) {
-			$categories[] = str_replace( '_', ' ', $category['*'] );
-		}
-		
-		$headings = array();
-		foreach( $response['parse']['sections'] as $section ) {
-			$headings[] = $section['line'];
-		}
-		
-		if ( $this->wg->AppStripsHtml ) {
-			$result = $this->prepValuesFromHtml( $html );
-		} else {
-			$result = array( 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
-		}
-		
-		$result['wid']			= empty( $this->wg->ExternalSharedDB ) ? $this->wg->SearchWikiId : (int) $this->wg->CityId;
-		$result['pageid']		= $pageId;
-		$result['id']			= $result['wid'] . '_' . $result['pageid'];
-		$result['title']		= $titleStr;
-		$result['titleStrict']	= $titleStr;
-		$result['url']			= $title->getFullUrl();
-		$result['ns']			= $title->getNamespace();
-		$result['host']			= substr($this->wg->Server, 7);
-		$result['lang']			= preg_replace( '/-.*$/', '', $this->wg->ContLang->mCode );
-		$result['wikititle']	= $this->wg->Sitename;
-		$result['categories']	= $categories;
-		$result['page_images']	= count( $response['parse']['images'] );
-		$result['headings']		= $headings;
-	
-		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
-		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
-		$result['is_main_page']	= ( $pageId == F::build( 'Title', array( 'newMainPage' ) )->getArticleId() ) ? 'true' : 'false';
-		
-		wfProfileOut(__METHOD__);
-		return $result;
-	}
-	
-	/**
-	 * Allows us to strip and parse HTML
-	 * By the way, if every document on the site was as big as the Jim Henson page,
-	 * then it would take under two minutes to parse them all using this function. 
-	 * So this scales on the application side. I promise. I mathed it.
-	 * @param string $html
-	 * @return array
-	 */
-	protected function prepValuesFromHtml( $html ) {
-		wfProfileIn(__METHOD__);
-		$dom = new simple_html_dom( $html );
 		$result = array();
 		
-		$infoboxes = $dom->find( 'table.infobox' );
-		if ( count( $infoboxes ) > 0 ) {
-			$infobox = $infoboxes[0];
-			$infoboxRows = $infobox->find( 'tr' );
+		foreach ( $this->serviceNames as $serviceName ) {
+			$serviceResult = $this->getService( $serviceName )
+			                      ->setPageId( $pageId )
+			                      ->execute();
 			
-			if ( $infoboxRows ) {
-				foreach ( $infoboxRows as $row ) {
-					$infoboxCells = $row->find( 'td' );
-					// we only care about key-value pairs in infoboxes
-					if ( count( $infoboxCells ) == 2 ) {
-						$keyName = preg_replace( '/_+/', '_', sprintf( 'box_%s_txt', strtolower( preg_replace( '/\W+/', '_', $infoboxCells[0]->plaintext ) ) ) );
-						$result[$keyName] = preg_replace( '/\s+/', ' ', $infoboxCells[1]->plaintext  );
-					}
-				}
+			if ( is_array( $serviceResult ) ) {
+    			$result = array_merge( $result, $serviceResult );
 			}
 		}
-		
-		// content in these selectors should be removed
-		$garbageSelectors  = array(
-				'span.editsection',
-				'img',
-				'noscript',
-				'div.picture-attribution',
-				'table#toc',
-				'ol.references',
-				'sup.reference',
-				'script',
-				'style',
-				'table',
-				);
-		foreach ( $garbageSelectors as $selector ) {
-			foreach ( $dom->find( $selector ) as $node ) {
-				$node->outertext = ' ';
-			}
-		}
-
-		$dom->load( $dom->save() );
-		
-		$paragraphs = array();
-		foreach ( $dom->find( 'p' ) as $pNode ) {
-			$paragraphs[] = $pNode->plaintext;
-		}
-		
-		$plaintext = $dom->plaintext;
-		$plaintext = preg_replace( '/\s+/', ' ', $plaintext );
-		$paragraphString = preg_replace( '/\s+/', ' ', implode( ' ', $paragraphs ) );
-		// regex for grabbing the first 500 words separate by white space
-		$first500 = preg_replace( '/^((\S+ ){0,500}).*$/m', '$1', $paragraphString ); 
-		
-		$result[WikiaSearch::field( 'html' )] = $plaintext;
-		$result['nolang_txt'] = $first500;
-		$result['words'] = substr_count( $paragraphString, ' ' );
-
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
 	
 	/**
-	 * Perform the indexing logic with respect to videos
-	 * This is separated out so that we can eventually handle 
-	 * it separate from the main indexing pipeline
-	 * @param $pageId
-	 * @return array
+	 * Helper for instantiating or retrieving stored services
+	 * @param string $serviceName
+	 * @return WikiaSearchIndexServiceAbstract
 	 */
-	public function getMediaMetadata( $pageId )
-	{
-		$page = $this->getPageFromPageId( $pageId );
-		$title = $page->getTitle();
-		
-		$results = array();
-		
-		if ( $title->getNamespace() != NS_FILE ) {
-			return $results;
+	public function getService( $serviceName ) {
+		if ( isset( $this->services[$serviceName] ) ) {
+			return $this->services[$serviceName];
 		}
-		
-		$file = $this->wf->findFile( $title->getText() );
-		if ( empty( $file ) ) {
-			return $results;
-		}
-	
-		$fileHelper	= F::build( 'WikiaFileHelper' );
-		$detail		= $fileHelper->getMediaDetail( $title );
-		$metadata	= $file->getMetadata();
-
-		$results['is_video'] = $fileHelper->isVideoFile( $file ) ? 'true' : 'false';
-		$results['is_image'] = ( ($detail['mediaType'] == 'image') && $results['is_video'] == 'false' ) ? 'true' : 'false';
-
-		if ( $metadata != "0" ) {
-			$metadata = unserialize( $metadata );
-			$fileParams = array( 'description', 'keywords' );
-			if ( $results['is_video'] ) {
-				$fileParams = array_merge( $fileParams, array( 'movieTitleAndYear', 'videoTitle', 'title', 'tags', 'category' ) );
-				
-				/**
-				 * This maps video metadata field keys to dynamic fields
-				 */
-				$videoMetadataMapper = array(
-						'duration'		=>	'video_duration_i',
-						'provider'		=>	'video_provider_s',
-						'videoId'		=>	'video_id_s',
-						'altVideoId'	=>	'video_altid_s',
-						'aspectRatio'	=>	'video_aspectratio_s'
-						);
-				
-				foreach ( $videoMetadataMapper as $key => $field ) {
-					if ( isset( $metadata[$key] ) ) {
-						$results[$field] = $metadata[$key];
-					}
-				}
-				// special cases
-				if ( isset( $metadata['hd'] ) ) {
-					$results['video_hd_b'] = empty( $metadata['hd'] ) ? 'false' : 'true';
-				}
-				if ( isset( $metadata['genres'] ) ) {
-					$results['video_genres_txt'] = preg_split( '/, ?/', $metadata['genres'] );
-				}
-				if ( isset( $metadata['actors'] ) ) {
-					$results['video_actors_txt'] = preg_split( '/, ?/', $metadata['actors'] );
-				}
-			}
-			
-			$results['html_media_extras_txt'] = array();
-			foreach ( $fileParams as $datum ) {
-				if ( isset( $metadata[$datum] ) ) {
-					$results['html_media_extras_txt'][] = $metadata[$datum];
-				} 
-			}
-		}
-		
-		return $results;
+		$serviceName = \Wikia\Search\IndexService\Factory::get( $serviceName );
+		return new $serviceName( $this->client );
 	}
 	
 	/**
@@ -357,19 +178,6 @@ class WikiaSearchIndexer extends WikiaObject {
 			F::build( 'Wikia' )->Log( __METHOD__, '', $e);
 		}
 		return true;
-	}
-	
-    /**
-	 * Sends an update query to the client, provided a document set
-	 * @param array $documents
-	 * @return boolean
-	 */
-	public function getUpdateXmlForDocuments( array $documents = array() ) {
-		$updateHandler = $this->client->createUpdate()
-		                              ->addDocuments( $documents )
-		                              ->addCommit();
-		return $this->client->createRequest( $updateHandler )->getRawData( $updateHandler );
-		
 	}
 	
 	/**
@@ -474,230 +282,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		
 		return true;
 	}
-	
-	/**
-	 * Access the promo text for a given wiki and set it in the document
-	 * @todo these need to be updated any time one of these values change for a wiki. could get dicey. will def need atomic update.
-	 * @param int $wid the wiki id
-	 * @return array containing result data
-	 */
-	public function getWikiPromoData() {
-		wfProfileIn(__METHOD__);
-		$homepageHelper = new WikiaHomePageHelper();
-		$detail = $homepageHelper->getWikiInfoForVisualization( $this->wg->CityId, $this->wg->ContLang->getCode() );
-		wfProfileOut(__METHOD__);
-		return array(
-				'wiki_description_txt' => $detail['description'],
-				'wiki_new_b' => empty( $detail['new'] ) ? 'false' : 'true',
-				'wiki_hot_b' => empty( $detail['hot'] ) ? 'false' : 'true',
-				'wiki_official_b' => empty( $detail['official'] ) ? 'false' : 'true',
-				'wiki_promoted_b' => empty( $detail['promoted'] ) ? 'false' : 'true',
-		);
-	}
-	
-	/**
-	 * Provided a page, returns the string value of that page's title
-	 * This allows us to accommodate unconventional locations for titles
-	 * @param Title $title
-	 * @return string
-	 */
-	protected function getTitleString( Title $title ) {
-		if ( in_array( $title->getNamespace(), array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
-			$wm = WallMessage::newFromId( $title->getArticleID() );
-			$wm->load();
-			
-			if ( !$wm->isMain() && ( $main = $wm->getTopParentObj() ) && !empty( $main ) ) {
-				$main->load();
-				$wm = $main;
-			}
-			
-			return (string) $wm->getMetaTitle();
-		}
-		return (string) $title;
-	}
-	
-	/**
-	 * Makes a handful of MediaWiki API requests to get metadata about a page
-	 * @see WikiaSearchIndexer::getPage()
-	 * @param int $pageId
-	 * @return array
-	 */
-	protected function getPageMetaData( $pageId ) {
-		wfProfileIn(__METHOD__);
-		$result = array();
-	
-		$apiService = F::build( 'ApiService' );
-		if (! empty( $this->wg->ExternalSharedDB ) ) {
-			$data = $apiService->call( array(
-					'pageids'	=> $pageId,
-					'action'	=> 'query',
-					'prop'		=> 'info',
-					'inprop'	=> 'url|created|views|revcount',
-					'meta'		=> 'siteinfo',
-					'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
-			));
-			if( isset( $data['query']['pages'][$pageId] ) ) {
-				$pageData = $data['query']['pages'][$pageId];
-				$result['views']	= $pageData['views'];
-				$result['revcount']	= $pageData['revcount'];
-				$result['created']	= $pageData['created'];
-				$result['touched']	= $pageData['touched'];
-			}
-			
-			$result['hub'] 			= isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
-		}
-	
-		wfProfileOut(__METHOD__);
-		return $result;
-	}
-	
-	/**
-	 * Provides Wam score in an array keyed with 'wam'
-	 * @return array
-	 */
-	protected function getWamForWiki() {
-		wfProfileIn(__METHOD__);
-		$wam = F::build( 'DataMartService' )->getCurrentWamScoreForWiki( $this->wg->CityId );
-		$wam = $wam > 0 ? ceil( $wam ) : 1; //mapped here for computational cheapness
-		wfProfileOut(__METHOD__);
-		return array( 'wam' => $wam );
-	}
-	
-	/**
-	 * Returns an array keyed for a solr schema field for backlinks
-	 * @param int $pageId
-	 * @return array
-	 */
-	protected function getBacklinksCount( $pageId ) {
-		wfProfileIn(__METHOD__);
-		$page = $this->getPageFromPageId( $pageId );
-		$title = $page->getTitle();
-		$apiService = F::build( 'ApiService' );
-		$data = $apiService->call( array(
-				'titles'	=> $title,
-				'bltitle'	=> $title,
-				'action'	=> 'query',
-				'list'		=> 'backlinks',
-				'blcount'	=> 1
-		));
-		wfProfileOut(__METHOD__);
-		return array(
-				'backlinks' => isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0
-		);
-	}
-	
-	
-	/**
-	 * Provided an Article, queries the database for all titles that are redirects to that page.
-	 * @see    WikiaSearchIndexerTest::testGetRedirectTitlesNoResults
-	 * @see    WikiaSearchIndexerTest::testGetRedirectTitlesWithResults
-	 * @param  int $pageId
-	 * @return string the pipe-joined redirect titles with underscores replaced with spaces
-	 */
-	protected function getRedirectTitles( $pageId ) {
-		wfProfileIn(__METHOD__);
-		
-		$page = $this->getPageFromPageId( $pageId );
-	
-		$dbr = $this->wf->GetDB(DB_SLAVE);
-	
-		$result = array( 'redirect_titles' => array() );
-		$query = $dbr->select(
-				array( 'redirect', 'page' ),
-				array( 'page_title' ),
-				array(),
-				__METHOD__,
-				array( 'GROUP'=>'rd_title' ),
-				array( 'page' => array( 'INNER JOIN', array('rd_title'=>$page->getTitle()->getDbKey(), 'page_id = rd_from' ) ) )
-				);
-		
-		while ( $row = $dbr->fetchObject( $query ) ) {
-			$result['redirect_titles'][] = str_replace( '_', '_', $row->page_title );
-		}
-		
-		wfProfileOut(__METHOD__);
-		return $result;
-	}
-	
-	/**
-	 * Standard interface for this class's services to access a page
-	 * @param int $pageId
-	 * @return Article
-	 * @throws WikiaException
-	 */
-	protected function getPageFromPageId( $pageId ) {
-		
-		if ( isset( $this->articles[$pageId] ) ) {
-			return $this->articles[$pageId];
-		}
-		
-	    $page = Article::newFromID( $pageId );
-	
-		if( $page === null ) {
-			throw new WikiaException( 'Invalid Article ID' );
-		}
-		if( $page->isRedirect() ) {
-			$page = new Article( $page->getRedirectTarget() );
-			$this->articles[$page->getID()] = $page;
-		}
-		
-		$this->articles[$pageId] = $page;
-		
-		return $page;
-	}
-	
-	/**
-	 * Provided an Article, queries the database for weekly and monthly pageviews. 
-	 * @see   WikiaSearchIndexerTest::testGetWikiViewsWithCache
-	 * @see   WikiaSearchIndexerTest::testGetWikiViewsNoCacheYesDb
-	 * @see   WikiaSearchIndexerTest::testGetWikiViewsNoCacheNoDb
-	 */
-	protected function getWikiViews() {
-		wfProfileIn(__METHOD__);
-		$key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
 
-		// should probably re-poll for wikis without much love
-		if ( ( $result = $this->wg->Memc->get( $key ) ) && ( $result->weekly > 0 || $result->monthly > 0 ) ) {
-			wfProfileOut(__METHOD__);
-			return array(
-					'wikiviews_weekly' => (int) $result->weekly,
-					'wikiviews_monthly' => (int) $result->monthly, 
-			);
-		}
-
-		$row = new stdClass();	
-		$row->weekly = 0;
-		$row->monthly = 0;
-		
-		$datamart = F::build( 'DataMartService' );
-		
-		$startDate = date( 'Y-m-d', strtotime('-1 week') );
-		$endDate = date( 'Y-m-01', strtotime('now') );	
-		$pageviews_weekly = $datamart->getPageviewsWeekly( $startDate, $endDate, (int) $this->wg->CityId );
-
-		if (! empty( $pageviews_weekly ) ) {
-			foreach ( $pageviews_weekly as $pview ) {
-				$row->weekly += $pview;
-			}
-		}
-			
-		$startDate = date( 'Y-m-01', strtotime('-1 month') );
-		$pageviews_monthly = $datamart->getPageviewsMonthly( $startDate, $endDate, (int) $this->wg->CityId );
-		if (! empty( $pageviews_monthly ) ) {
-			foreach ( $pageviews_monthly as $pview ) {
-				$row->monthly += $pview;
-			}
-		}
-	
-		$this->wg->Memc->set( $key, $row, self::WIKIPAGES_CACHE_TTL );
-		
-		wfProfileOut(__METHOD__);
-		return array(
-				'wikiviews_weekly' => (int) $row->weekly,
-				'wikiviews_monthly' => (int) $row->monthly, 
-		);
-	}
-	
 	/**
 	 * MediaWiki Hooks
 	 */

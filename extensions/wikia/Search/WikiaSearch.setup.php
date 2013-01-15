@@ -38,6 +38,17 @@ $app->registerClass('WikiaSearchArticleMatch',		$dir . 'WikiaSearchArticleMatch.
 $app->registerClass('WikiaSearchAjaxController',	$dir . 'WikiaSearchAjaxController.class.php');
 $app->registerClass('WikiaVideoSearchController',	$dir . 'WikiaVideoSearchController.class.php');
 
+// autoloads values in the search namespace
+spl_autoload_register( function( $class ) {
+	if ( substr_count( $class, 'Wikia\\Search\\' ) > 0 ) {
+		$class = preg_replace( '/\\\\?Wikia\\\\Search\\\\/', '', $class );
+		$file = __DIR__ . '/classes/'.strtr( $class, '\\', '/' ).'.php';
+		require_once( $file );
+		return true;
+	}  
+});
+
+
 /**
  * special pages
  */

@@ -1,0 +1,155 @@
+<?php
+/**
+ * Class definition for \Wikia\Search\IndexService\DefaultContent
+ * @author relwell
+ */
+namespace Wikia\Search\IndexService;
+/**
+ * This is intended to provide core article content
+ * @author relwell
+ */
+class DefaultContent extends AbstractService
+{
+	/**
+	 * Returns the fields required to make the document searchable (specifically, wid and title and body content)
+	 * @see \Wikia\Search\IndexService\AbstractService::execute()
+	 * @return array
+	 */
+	public function execute() {
+		wfProfileIn(__METHOD__);
+		
+		$page = $this->getPageFromPageId( $this->currentPageId );
+		$pageId = $page->getID();
+	
+		$apiService = new \ApiService();
+		$response = $apiService->call( array(
+					'pageid'	=> $pageId,
+					'action'	=> 'parse',
+		));
+		
+		$title		= $page->getTitle();
+		$titleStr	= $this->getTitleString( $title );
+		$html 		= $response['parse']['text']['*'];
+
+		$categories = array();
+		foreach ( $response['parse']['categories'] as $category ) {
+			$categories[] = str_replace( '_', ' ', $category['*'] );
+		}
+		
+		$headings = array();
+		foreach( $response['parse']['sections'] as $section ) {
+			$headings[] = $section['line'];
+		}
+		
+		if ( $this->wg->AppStripsHtml ) {
+			$result = $this->prepValuesFromHtml( $html );
+			$titleKey = \WikiaSearch::field( 'title' );
+    		$wikiTitleKey = \WikiaSearch::field( 'wikititle' );
+    		$categoriesKey = \WikiaSearch::field( 'categories' );
+    		$headingsKey = \WikiaSearch::field( 'headings' );
+		} else {
+			// backwards compatibility
+			$result = array( \WikiaSearch::field( 'html' ) => html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
+			$titleKey = 'title';
+    		$wikiTitleKey = 'wikititle';
+    		$categoriesKey = 'categories';
+    		$headingsKey = 'headings';
+		}
+		
+		
+		
+		$result['wid']			= empty( $this->wg->ExternalSharedDB ) ? $this->wg->SearchWikiId : (int) $this->wg->CityId;
+		$result['pageid']		= $pageId;
+		$result['id']			= $result['wid'] . '_' . $result['pageid'];
+		$result[$titleKey]		= $titleStr;
+		$result['titleStrict']	= $titleStr;
+		$result['url']			= $title->getFullUrl();
+		$result['ns']			= $title->getNamespace();
+		$result['host']			= substr($this->wg->Server, 7);
+		$result['lang']			= preg_replace( '/-.*$/', '', $this->wg->ContLang->mCode );
+		$result[$wikiTitleKey]	= $this->wg->Sitename;
+		$result[$categoriesKey]	= $categories;
+		$result['page_images']	= count( $response['parse']['images'] );
+		$result[$headingsKey]	= $headings;
+	
+		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
+		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
+	    $result['is_main_page'] = 'false';
+		if ( \Title::newMainPage()->getArticleId() == $pageId ) {
+			$result['is_main_page'] = 'true';
+		}
+		
+		wfProfileOut(__METHOD__);
+		return $result;
+	}
+	
+    /**
+	 * Allows us to strip and parse HTML
+	 * By the way, if every document on the site was as big as the Jim Henson page,
+	 * then it would take under two minutes to parse them all using this function. 
+	 * So this scales on the application side. I promise. I mathed it.
+	 * @param string $html
+	 * @return array
+	 */
+	protected function prepValuesFromHtml( $html ) {
+		wfProfileIn(__METHOD__);
+		$dom = new \simple_html_dom( $html );
+		$result = array();
+		
+		$infoboxes = $dom->find( 'table.infobox' );
+		if ( count( $infoboxes ) > 0 ) {
+			$infobox = $infoboxes[0];
+			$infoboxRows = $infobox->find( 'tr' );
+			
+			if ( $infoboxRows ) {
+				foreach ( $infoboxRows as $row ) {
+					$infoboxCells = $row->find( 'td' );
+					// we only care about key-value pairs in infoboxes
+					if ( count( $infoboxCells ) == 2 ) {
+						$keyName = preg_replace( '/_+/', '_', sprintf( 'box_%s_txt', strtolower( preg_replace( '/\W+/', '_', $infoboxCells[0]->plaintext ) ) ) );
+						$result[$keyName] = preg_replace( '/\s+/', ' ', $infoboxCells[1]->plaintext  );
+					}
+				}
+			}
+		}
+		
+		// content in these selectors should be removed
+		$garbageSelectors  = array(
+				'span.editsection',
+				'img',
+				'noscript',
+				'div.picture-attribution',
+				'table#toc',
+				'ol.references',
+				'sup.reference',
+				'script',
+				'style',
+				'table',
+				);
+		foreach ( $garbageSelectors as $selector ) {
+			foreach ( $dom->find( $selector ) as $node ) {
+				$node->outertext = ' ';
+			}
+		}
+
+		$dom->load( $dom->save() );
+		
+		$paragraphs = array();
+		foreach ( $dom->find( 'p' ) as $pNode ) {
+			$paragraphs[] = $pNode->plaintext;
+		}
+		
+		$plaintext = $dom->plaintext;
+		$plaintext = preg_replace( '/\s+/', ' ', $plaintext );
+		$paragraphString = preg_replace( '/\s+/', ' ', implode( ' ', $paragraphs ) );
+		// regex for grabbing the first 500 words separate by white space
+		$first500 = preg_replace( '/^((\S+ ){0,500}).*$/m', '$1', $paragraphString ); 
+		
+		$result[\WikiaSearch::field( 'html' )] = $plaintext;
+		$result['nolang_txt'] = $first500;
+		$result['words'] = substr_count( $paragraphString, ' ' );
+
+		wfProfileOut(__METHOD__);
+		return $result;
+	}
+}
