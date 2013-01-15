@@ -10,10 +10,23 @@
  * TODO: Importing section is not finished yet
  */
 
+// include chef generated variables: $wgWikiaDatacenter
+require_once('/usr/wikia/devbox/DevBoxVariables.php');
+
+switch($wgWikiaDatacenter) {
+	case 'sjc':
+		$wgDBdevboxServer1 = 'dev-db-a1';
+		$wgDBdevboxServer2 = 'dev-db-b1';
+		break;
+
+	case 'poz':
+		$wgDBdevboxServer1 = 'dev-db-a1-p1';
+		$wgDBdevboxServer2 = 'dev-db-a1-p1';
+		break;
+}
+
 $wgDBdevboxUser = 'devbox';
 $wgDBdevboxPass = 'devbox';
-$wgDBdevboxServer1 = 'dev-db-a1';
-$wgDBdevboxServer2 = 'dev-db-b1';
 $databaseDirectories = array ("database_A", "database_B", "database_C", "database_D");
 
 $USAGE =
@@ -74,7 +87,7 @@ if (array_key_exists( 'f', $opts )) {
 			// otherwise, find out if we got some directories that look like database dumps
 			$dir_list = explode("\n", $response);
 			echo "Found " . count($dir_list) . " backup directories in $databaseDirectory...\n";
-	
+
 			$date_list = array();
 			foreach ($dir_list as $dir) {
 				if ($dir == "") continue;
@@ -106,7 +119,7 @@ if (array_key_exists( 'f', $opts )) {
 				krsort($arr, SORT_NUMERIC);
 			}
 			//print_r($date_list);
-	
+
 			// now we have a sorted list of directories by most recent date.  how many dumps are in there?
 			echo "THIS STEP CAN TAKE A WHILE...\n";
 			foreach ($date_list as $year => $day_of_year) {
@@ -124,7 +137,7 @@ if (array_key_exists( 'f', $opts )) {
 						$file = $file[3];
 						if(strpos($file, $dbname.".sql.gz") > 0 || strpos($file, $dbname."_") > 0 ) {
 							$filename = $filedir.$dbname.".sql.gz";
-							
+
 							echo "Found a match: $file\n";
 									echo "Saving to local filesystem:".$filename."\n";
 							shell_exec("s3cmd get --skip-existing ".$file." ".$filename);
@@ -136,12 +149,12 @@ if (array_key_exists( 'f', $opts )) {
 						echo "Database file not found...\n";
 						return false;
 					}
-					
+
 				}
 			}
-		}	
+		}
 	}
-	
+
 	$filename = getFile($databaseDirectories, $dbname, $filedir);
 	if(empty($filename)) {
 		exit;
