@@ -401,7 +401,7 @@ class DataFeedProvider {
 			$articleText = explode("/", $title->getText());
 			(count($articleText) > 2) ? $articleTitleText = $articleText[1] : $articleTitleText = $subpageTitle->getSubpageText();
 			$item['title'] = $articleTitleText;
-			$item['url'] = $subpageTitle->getLocalUrl();;
+			$item['url'] = $subpageTitle->getLocalUrl();
 
  		} elseif (defined('NS_BLOG_LISTING') && $res['ns'] == NS_BLOG_LISTING) {
 
