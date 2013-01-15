@@ -11,7 +11,9 @@ error_reporting(E_ALL & ~ E_STRICT);
 ini_set('display_errors', '1');
 $wgShowExceptionDetails = true;
 
-$wgWikiaDatacenter = 'sjc';
+// include chef generated variables: $wgWikiaDatacenter
+require_once('/usr/wikia/devbox/DevBoxVariables.php');
+
 $IP = '/usr/wikia/source/wiki';
 $wgWikiaLocalSettingsPath  = '/usr/wikia/docroot/wiki.factory/LocalSettings.php';
 $wgWikiaAdminSettingsPath = dirname( $wgWikiaLocalSettingsPath ) . "/../AdminSettings.php";
@@ -40,32 +42,45 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' );
  * If you remove / comment / change order of the servers, the hash will miss
  * and that can result in bad performance for the cluster!
  */
-$wgMemCachedServers = array(
-	# ACTIVE LIST
-	# PLEASE MOVE SERVERS TO THE DOWN LIST RATHER THAN COMMENTING THEM OUT IN-PLACE
-	# If a server goes down, you must replace its slot with another server
-	# You can take a server for the spare list
+switch($wgWikiaDatacenter) {
+	case 'sjc':
+		$wgMemCachedServers = array(
+			# ACTIVE LIST
+			# PLEASE MOVE SERVERS TO THE DOWN LIST RATHER THAN COMMENTING THEM OUT IN-PLACE
+			# If a server goes down, you must replace its slot with another server
+			# You can take a server for the spare list
 
-	# SLOT	HOST
-	0 => "10.8.44.110:11000", # dev-memcached1
-	1 => "10.8.36.107:11000", # dev-memcached2
+			# SLOT	HOST
+			0 => "10.8.44.110:11000", # dev-memcached1
+			1 => "10.8.36.107:11000", # dev-memcached2
+		);
 
-/**** DOWN *****
+		$wgSessionMemCachedServers = array(
+			# SLOT	HOST
+			0 => "10.8.44.110:11000", # dev-memcached1
+			1 => "10.8.36.107:11000", # dev-memcached2
+		);
+		break;
 
-***** SPARE ****
-	X => "10.8.2.65:11000",		# memcached6
-	X => "10.8.2.61:11000",		# memcached4
-	X => "10.8.2.182:11000",	# memcached1
-	X => "10.8.2.44:11000",		# memcached2
-	X => "10.8.2.62:11000",		# memcached5
-****************/
-);
+	case 'poz':
+		$wgMemCachedServers = array(
+			# ACTIVE LIST
+			# PLEASE MOVE SERVERS TO THE DOWN LIST RATHER THAN COMMENTING THEM OUT IN-PLACE
+			# If a server goes down, you must replace its slot with another server
+			# You can take a server for the spare list
 
-$wgSessionMemCachedServers = array(
-	# SLOT	HOST
-	0 => "10.8.44.110:11000", # dev-memcached1
-	1 => "10.8.36.107:11000", # dev-memcached2
-);
+			# SLOT	HOST
+			0 => "10.14.30.143:11000", # dev-memcached-p1
+			1 => "10.14.30.143:11000", # dev-memcached-p2
+		);
+
+		$wgSessionMemCachedServers = array(
+			# SLOT	HOST
+			0 => "10.14.30.143:11000", # dev-memcached-p1
+			1 => "10.14.30.143:11000", # dev-memcached-p2
+		);
+		break;
+}
 
 # NOTE: THIS MUST BE DONE _BEFORE_ CALLING WikiFactory::execute IF WIKIFACTORY IS BEING USED.
 include("$IP/extensions/wikia/Development/SpecialDevBoxPanel/Special_DevBoxPanel.php");
