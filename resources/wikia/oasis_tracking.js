@@ -30,7 +30,7 @@ jQuery(function($){
 				label: 'hub-item'
 			});
 		} else if(el.data('id') == 'mytalk') {
-			if(el.hasClass('message-wall-item')) {
+			if(el.hasClass('message-wall')) {
 				track(options, {
 					label: 'user-menu-message-wall'
 				});
