@@ -36,6 +36,8 @@ $messages['en'] = array(
 	'abtesting-save-button' => 'Save',
 
 	'abtesting-flag-set-short' => 'YES',
+
+	'action-abtestpanel' => 'configure A/B tests',
 );
 
 
