@@ -62,19 +62,6 @@ $messages['en'] = array(
 	'cnw-theme-headline' => 'Choose a theme',
 	'cnw-theme-creative' => 'Choose a theme below, you\'ll be able to see a preview of each theme as you select it.',
 	'cnw-theme-instruction' => 'You can also design your own theme later by going to "My Tools".',
-	// step5 - upgrade
-	'cnw-upgrade-headline' => 'Do you want to upgrade?',
-	'cnw-upgrade-creative' => 'Upgrading to Wikia Plus allows you to remove ads from <span class="wiki-name"></span>, a one time offer only available to new founders.',
-	'cnw-upgrade-marketing' => 'Wikia Plus is a great solution for:<ul>
-<li>Professional Wikis</li>
-<li>Non-profits</li>
-<li>Families</li>
-<li>Schools</li>
-<li>Personal projects</li>
-</ul>
-Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
-	'cnw-upgrade-now' => 'Upgrade Now',
-	'cnw-upgrade-decline' => 'No thanks, continue to my wiki',
 	// wiki welcome message
 	'cnw-welcome-headline' => 'Congratulations! $1 has been created',
 	'cnw-welcome-instruction1' => 'Click the button below to start adding pages to your wiki.',
