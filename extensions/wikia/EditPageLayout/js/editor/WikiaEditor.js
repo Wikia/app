@@ -823,13 +823,26 @@
 
 			// Needs conversion
 			if (datamode == 'wysiwyg') {
-				RTE.ajax('html2wiki', { html: content, title: wgPageName }, function(data) {
+				this.html2wiki({ html: content, title: wgPageName }, function(data) {
 					editbox.val(data.wikitext);
 				});
 
 			} else {
 				editbox.val(content);
 			}
+		},
+
+		html2wiki: function(params, callback) {
+			if (typeof params != 'object') {
+				params = {};
+			}
+			params.method = 'html2wiki';
+
+			jQuery.post(window.wgScript + '?action=ajax&rs=RTEAjax', params, function(data) {
+				if (typeof callback == 'function') {
+					callback(data);
+				}
+			}, 'json');
 		},
 
 		editorFocused: function() {
@@ -979,6 +992,8 @@
 			// Needs conversion
 			if (datamode && ckeditor.mode != datamode) {
 				var params = { title: wgPageName };
+				var isWysiwyg = ckeditor.mode == 'wysiwyg';
+
 				params[isWysiwyg ? 'wikitext' : 'html'] = content;
 
 				RTE.ajax(isWysiwyg ? 'wiki2html' : 'html2wiki', params, function(data) {
