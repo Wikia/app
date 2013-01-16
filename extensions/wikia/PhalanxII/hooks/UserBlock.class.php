@@ -9,7 +9,8 @@
  * @author Marooned <marooned at wikia-inc.com>
  * @author Lucas Garczewski <tor@wikia-inc.com>
  * @author Władysław Bodzek
- * @date 2010-06-09
+ * @author Piotr Molski <moli@wikia-inc.com>
+ * @date 2013-01-16
  */
 
 class UserBlock {

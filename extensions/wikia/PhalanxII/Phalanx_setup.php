@@ -23,8 +23,6 @@ $app = F::app();
 $classes = array(
 	/* controllers */ 
 	'Phalanx' 						=> $dir . 'PhalanxController.class.php',
-	'PhalanxSpecialController' 		=> $dir . 'PhalanxSpecialController.class.php',
-	'PhalanxStatsSpecialController' => $dir . 'PhalanxStatsSpecialController.class.php',
 	/* models */
 	'PhalanxModel'					=> $dir . 'models/PhalanxModel.php',
 	/* services */
