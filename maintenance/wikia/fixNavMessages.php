@@ -113,7 +113,7 @@ class NavMessageHandler {
 		}
 		$page = $article->getPage();
 		wfWaitForSlaves();
-		$page->doEdit($articleText, '', 0, false, $this->user);
+		$page->doEdit($articleText, '/* Automated replacement of messages */', 0, false, $this->user);
 	}
 
 	/**
@@ -127,6 +127,6 @@ class NavMessageHandler {
 		$page = $article->getPage();
 		$errors = '';
 		wfWaitForSlaves();
-		$page->doDeleteArticle('', false, 0, true, $errors, $this->user);
+		$page->doDeleteArticle('/* Automated deletion of deprecated messages */', false, 0, true, $errors, $this->user);
 	}
 }
