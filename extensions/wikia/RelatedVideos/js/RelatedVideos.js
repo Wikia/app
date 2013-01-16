@@ -390,7 +390,7 @@ var RelatedVideos = {
 		RelatedVideos.scroll(
 			scrollLength,
 			function(){
-				$( html ).hide() /* JSlint ignore */
+				$( html ).hide()
 					.prependTo( RelatedVideos.rvContainer )
 					.fadeIn( 'slow', function(){
 						var totalVideos = $(this).data('total-count');
