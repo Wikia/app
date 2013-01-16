@@ -42,6 +42,7 @@ CREATE  TABLE IF NOT EXISTS `ab_experiment_versions` (
   `start_time` DATETIME NOT NULL ,
   `end_time` DATETIME NOT NULL ,
   `ga_slot` VARCHAR(45) NOT NULL ,
+  `flags` INT NOT NULL DEFAULT 3,
   PRIMARY KEY (`id`) ,
   INDEX `experiment_id` (`experiment_id` ASC) ,
   CONSTRAINT `fk_version_experiment`

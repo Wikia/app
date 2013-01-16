@@ -12,6 +12,15 @@ class AbTesting extends WikiaObject {
 	const SECONDS_IN_HOUR = 3600;
 	const VERSION = 2;
 
+	const FLAG_GA_TRACKING = 1;
+	const FLAG_DW_TRACKING = 2;
+	const DEFAULT_FLAGS = 3;
+
+	static public $flags = array(
+		self::FLAG_GA_TRACKING => 'ga_tracking',
+		self::FLAG_DW_TRACKING => 'dw_tracking',
+	);
+
 	static protected $initialized = false;
 
 	function __construct() {
@@ -46,6 +55,14 @@ class AbTesting extends WikiaObject {
 		return $this->wf->sharedMemcKey('abtesting','config',self::VERSION);
 	}
 
+	protected function getFlagsInObject( $flags ) {
+		$obj = new stdClass();
+		foreach (self::$flags as $flag => $key) {
+			$obj->$key = $flags & $flag ? 1 : 0;
+		}
+		return $obj;
+	}
+
 	public function getTimestampForUTCDate( $date ) {
 		return strtotime($date);
 	}
@@ -67,6 +84,7 @@ class AbTesting extends WikiaObject {
 					'startTime' => $this->getTimestampForUTCDate($ver['start_time']),
 					'endTime' => $this->getTimestampForUTCDate($ver['end_time']),
 					'gaSlot' => $ver['ga_slot'],
+					'flags' => $this->getFlagsInObject( $ver['flags'] ),
 					'groups' => array(),
 				);
 				$groups = &$version['groups'];
@@ -170,6 +188,10 @@ class AbTesting extends WikiaObject {
 		$name = strtoupper( preg_replace( '/[^a-z0-9_]/i', '', $name ) );
 
 		return $name;
+	}
+
+	public function getFlagState( $flags, $flag ) {
+		return ($flags & $flag) > 0;
 	}
 
 }

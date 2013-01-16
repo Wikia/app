@@ -101,6 +101,9 @@
         var abList = window.Wikia.AbTest.getExperiments( /* includeAll */ true ), abExp, abGroupName, abSlot, abIndex;
         for ( abIndex = 0; abIndex < abList.length; abIndex++ ) {
             abExp = abList[abIndex];
+			if ( !abExp.flags.ga_tracking ) {
+				continue;
+			}
             abSlot = window.Wikia.AbTest.getGASlot(abExp.name);
             if ( abSlot >= 40 && abSlot <= 49 ) {
                 abGroupName = abExp.group ? abExp.group.name : 'CONTROL';

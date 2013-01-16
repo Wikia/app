@@ -29,7 +29,7 @@
 		},
 
 		// Array of input names that may trigger a 'version change' warning.
-		versionChangeWarningNames = [ 'start_time', 'end_time', 'ga_slot', 'groups[]', 'ranges[]' ];
+		REGEX_versionChangeWarningNames = /^(start_time|end_time|ga_slot|groups\[\]|ranges\[\]|flag_.*)$/;
 
 	// TODO: does this need to be a class? Will it ever need to be
 	// instantiated more than once?
@@ -122,9 +122,10 @@
 
 			// Cache current experiment values and track changes to those values
 			if (modal.find('.edit').exists()) {
-				modal.find(':input').bind( 'change keyup', $.proxy(this.checkVersionChange, this)).each(function(i, input) {
+				modal.find(':input :checkbox').bind( 'change keyup', $.proxy(this.checkVersionChange, this)).each(function(i, input) {
 					var $input = $( input );
-					$input.data( 'originalValue', $input.val() );
+					var val = !$input.is(':checkbox') ? $input.val() : $input.prop('checked');
+					$input.data( 'originalValue', val );
 				});
 			}
 
@@ -161,13 +162,15 @@
 			var input = $( e.currentTarget ),
 				inputGroup = input.parent( '.input-group' ),
 				name = input.attr( 'name' ),
-				modal = $('#AbTestingEditForm').closest('.modalWrapper');
+				modal = $('#AbTestingEditForm').closest('.modalWrapper'),
+				val = !input.is(':checkbox') ? input.val() : input.prop('checked');
+			;
 
 			// Issue warning for certain inputs if their value changes
-			if ( $.inArray( name, versionChangeWarningNames ) >= 0
+			if ( REGEX_versionChangeWarningNames.test(name)
 				&& !input.hasClass( 'dismissed' )
 				&& !modal.hasClass( 'warning-dismissed' )
-				&& input.val() != input.data( 'originalValue' ) ) {
+				&& val != input.data( 'originalValue' ) ) {
 				if ( !inputGroup.hasClass('error') ) {
 					inputGroup.addClass( 'error' ).append( templates.warningMessage );
 				}
@@ -179,6 +182,7 @@
 			inputGroup.removeClass( 'error' ).find( '.error-msg' ).remove();
 		},
 		submitEditForm: function() {
+			var self = this;
 			$.nirvana.sendRequest({
 				controller: 'SpecialAbTesting',
 				method: 'save',
@@ -187,7 +191,7 @@
 				callback: $.proxy(this.editFormResponse,this),
 				onErrorCallback: function() {
 					// todo: php error - show the message to the user about internal error
-					this.log(arguments);
+					self.log(arguments);
 				}
 			});
 		},
