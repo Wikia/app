@@ -169,6 +169,7 @@ $messages['qqq'] = array(
 	'blogs-searchprofile' => 'Name of a tab with blog articles and blog listings. This tab is displayed in the right column on search page',
 	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings. Tooltip displayed on hover on Blogs Tab in the right column on search page',
 	'user-blog-url-link' => 'Link - links to users Blog main page',
+	'blogs-comment-hidden' => 'If a tool like RevisionDelete has made the text of a comment inaccessible to the public, this message informs the reader the comment has been hidden',
 );
 
 /** Afrikaans (Afrikaans)
