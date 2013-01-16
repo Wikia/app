@@ -112,7 +112,6 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$flagFieldConf = array(
 				'type' => 'checkbox',
 				'name' => self::FLAG_FIELD_PREFIX.$name,
-				'noDivWrapper' => true,
 				'label' => $this->wf->msg('abtesting-heading-long-flag-'.$name),
 			);
 			if ( $abTesting->getFlagState($lastFlags,$flag) ) {

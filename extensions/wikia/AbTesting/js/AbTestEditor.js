@@ -124,7 +124,7 @@
 			if (modal.find('.edit').exists()) {
 				modal.find(':input').bind( 'change keyup', $.proxy(this.checkVersionChange, this)).each(function(i, input) {
 					var $input = $( input );
-					var val = !$input.is('[type=checkbox]') ? $input.val() : $input.prop('checked');
+					var val = !$input.is('[type=checkbox]') ? $input.val() : $input.attr('checked');
 					$input.data( 'originalValue', val );
 				});
 			}
@@ -141,29 +141,36 @@
 		cancelChange: function( e ) {
 			var button = $( e.currentTarget ),
 				inputGroup = button.closest( '.input-group' ),
-				input = inputGroup.children( ':input' ),
+				input = inputGroup.find( ':input' ),
 				name = input.attr( 'name' );
 
-			input.val( input.data( 'originalValue' ) );
+			if ( !input.is('[type=checkbox]') ) {
+				input.val( input.data( 'originalValue' ) );
+			} else {
+				input.data( 'originalValue' ) ? input.attr('checked','checked') : input.attr('checked',false);
+			}
 			this.removeWarning( inputGroup );
 		},
 		dismissWarning: function( e ) {
-			var button = $( e.currentTarget ),
-				inputGroup = button.closest( '.input-group' ),
-				input = inputGroup.children( ':input' ),
-				name = input.attr( 'name' ),
-				modal = $('#AbTestingEditForm').closest('.modalWrapper');
+			var modal = $('#AbTestingEditForm').closest('.modalWrapper'),
+				warnings = modal.find('.input-group > .error-msg'),
+				inputGroup, input,
+				self = this;
 
-			modal.addClass( 'warning-dismissed' );
-			input.addClass( 'dismissed' );
-			this.removeWarning( inputGroup );
+			modal.addClass('warning-dismissed');
+			warnings.each(function(i,warning){
+				inputGroup = $(warning).closest( '.input-group' );
+				input = inputGroup.children( ':input' );
+				input.addClass('dismissed');
+				self.removeWarning( inputGroup );
+			});
 		},
 		checkVersionChange: function( e ) {
 			var input = $( e.currentTarget ),
 				inputGroup = input.closest( '.input-group' ),
 				name = input.attr( 'name' ),
 				modal = $('#AbTestingEditForm').closest('.modalWrapper'),
-				val = !input.is('[type=checkbox]') ? input.val() : input.prop('checked');
+				val = !input.is('[type=checkbox]') ? input.val() : input.attr('checked');
 
 			console.log('AbTestEditor-checkVersionChange()',e,input,val,input.data( 'originalValue' ));
 			// Issue warning for certain inputs if their value changes
