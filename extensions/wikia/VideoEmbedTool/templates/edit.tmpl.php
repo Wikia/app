@@ -1,3 +1,7 @@
+
+<? // TODO: Delete this template ?>
+
+
 <h1 id="VideoEmbedTitle2" ><?=wfMsg('vet-details-inf2') ?></h1>
 <form class="VideoEmbedOptionsTable WikiaForm" id="VET-display-options-update">
 <?php

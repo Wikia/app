@@ -65,8 +65,8 @@ class VideoEmbedTool {
 		}
 
 		$embedCode = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
+
 		$props['id'] = $file->getVideoId();
-		$props['oname'] = '';
 		$props['vname'] = $file->getTitle()->getText();
 		$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
 		$props['metadata'] = '';
@@ -74,8 +74,8 @@ class VideoEmbedTool {
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
-		$tmpl->set_vars(array('props' => $props));
-		return $tmpl->render('edit');
+		$tmpl->set_vars(array('props' => $props, 'screenType' => 'edit'));
+		return $tmpl->render('details');
 	}
 
 	function insertVideo() {
@@ -110,7 +110,6 @@ class VideoEmbedTool {
 			$props['provider'] = $provider;
 
 			$props['code'] = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
-			$props['oname'] = '';
 		} else { // if not a partner video try to parse link for File:
 			$file = null;
 			// get the video name
@@ -160,7 +159,7 @@ class VideoEmbedTool {
 			$props['vname'] = $file->getTitle()->getText();
 			$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
 			$props['metadata'] = '';
-			$props['oname'] = '';
+			$props['premiumVideo'] = ($wgRequest->getVal( 'searchType' ) == 'premium');		
 		}
 
 		wfProfileOut(__METHOD__);
@@ -170,7 +169,7 @@ class VideoEmbedTool {
 	function detailsPage($props) {
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
-		$tmpl->set_vars(array('props' => $props));
+		$tmpl->set_vars(array('props' => $props, 'screenType' => 'details'));
 		return $tmpl->render('details');
 	}
 
@@ -185,11 +184,7 @@ class VideoEmbedTool {
 		$ns_file = $wgContLang->getFormattedNsText( NS_FILE );
 
 		$name = urldecode( $wgRequest->getVal('name') );
-		$oname = urldecode( $wgRequest->getVal('oname') );
-		if ('' == $name) {
-			$name = $oname;
-		}
-
+		
 		$embed_code = '';
 		$tag = '';
 		$message = '';

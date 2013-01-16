@@ -364,7 +364,7 @@ function VET_onVideoEmbedUrlKeypress(e) {
  * note: VET_preQuery is called from a template, and from VET_onVideoEmbedUrlKeypress
  */
 function VET_preQuery(e) {
-	if($('#VideoEmbedUrl').val('')) {
+	if($('#VideoEmbedUrl').val() == '') {
 		GlobalNotification.show( $.msg('vet-warn2'), 'error', null, VET_notificationTimout );
 		return false;
 	} else {
@@ -445,18 +445,8 @@ function VET_insertFinalVideo(e, type) {
 	var params = new Array();
 	params.push('type='+type);
 
-	if(!$('#VideoEmbedName').length) {
-		if ($( 'VideoEmbedOname' ).length ) {
-			if ('' == $( '#VideoEmbedOname' ).val()) {
-				GlobalNotification.show( $.msg('vet-warn3'), 'error', null, VET_notificationTimout );
-				return false;
-			}
-		} else {
-			GlobalNotification.show( $.msg('vet-warn3'), 'error', null, VET_notificationTimout );
-			return false;
-		}
-	} else if ('' == $( '#VideoEmbedName' ).val() ) {
-		GlobalNotification.show( $.msg('vet-warn3'), 'error', null, VET_notificationTimout );
+	if( !$('#VideoEmbedName') || $('#VideoEmbedName').val() == '' ) {
+ 		GlobalNotification.show( $.msg('vet-warn3'), 'error', null, VET_notificationTimout );
 		return false;
 	}
 
@@ -721,12 +711,14 @@ function VET_sendQueryEmbed(query) {
 			
 			
 		};
+		var searchType = VETExtended.searchCachedStuff.searchType;
+
 		VET_jqXHR.abort();
 		VET_jqXHR = $.ajax(
 			wgScriptPath + '/index.php',
 			{
 				method: 'post',
-				data: 'action=ajax&rs=VET&method=insertVideo&url=' + escape(query),
+				data: 'action=ajax&rs=VET&method=insertVideo&url=' + escape(query) + '&searchType=' + searchType,
 				complete: callback
 			}
 		);
