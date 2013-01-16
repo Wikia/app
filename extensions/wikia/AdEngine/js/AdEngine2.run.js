@@ -1,6 +1,4 @@
-require(['lazyqueue', 'cache'], function(LazyQueue, Cache) {
-
-(function(log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Krux) {
+(function(log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Cookies, Cache, Krux) {
 	var module = 'AdEngine2.run'
 		, adConfig
 		, adEngine
@@ -111,5 +109,4 @@ require(['lazyqueue', 'cache'], function(LazyQueue, Cache) {
 		}
 	};
 
-}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, LazyQueue, Wikia.Cookies, Cache, Krux));
-});
+}(Wikia.log, WikiaTracker, window, ghostwriter, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux));
