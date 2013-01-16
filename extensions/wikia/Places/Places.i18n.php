@@ -39,6 +39,7 @@ $messages['qqq'] = array(
 	'places-modal-go-to-special' => 'Shows below map in the modal and links to Special:Places. $1 is number of places shown on a map',
 	'places-editor-title-create-new' => 'Title of places editor modal when creating a new geotag',
 	'places-editor-title-edit' => 'Title of places editor modal when editing an existing geotag',
+        'places-editor-search' => 'Label for submit button that handles a search string. {{Identical|Search}}',
 );
 
 /** Breton (brezhoneg)
