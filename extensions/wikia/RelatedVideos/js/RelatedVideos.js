@@ -400,7 +400,7 @@ var RelatedVideos = {
 				RelatedVideos.regroup();
 			}
 		);
-		UserLogin.forceLoggedInCheck();
+		UserLogin.refreshAfterForceLogin();
 	},
 
 	// Remove Video
