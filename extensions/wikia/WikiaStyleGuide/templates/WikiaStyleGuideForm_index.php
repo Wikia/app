@@ -53,9 +53,12 @@
 					<?= $input[ 'output' ] ?>
 
 				<? else: ?>
+					<? if ( empty($input['noDivWrapper']) ): ?>
 					<div class="<?= WikiaStyleGuideFormHelper::getClassNamesString( array( 'input-group', $class, $error, $required ) ) ?>">
+					<? endif; ?>
 						<? if ( $label ): ?>
-							<label><?= ( !$wrappedByLabel ? $label . $tooltip : '' ) ?></label>
+							<label><?= ( !$wrappedByLabel ? $label . $tooltip : '' ) ?>
+							<? if (!$wrappedByLabel): ?></label><? endif; ?>
 						<? endif ?>
 
 						<? switch( $type ):
@@ -118,7 +121,9 @@
 						<? if ( $error ): ?>
 							<div class="error-msg"><?= $input[ 'errorMsg' ] ?></div>
 						<? endif ?>
+					<? if ( empty($input['noDivWrapper']) ): ?>
 					</div>
+					<? endif; ?>
 				<? endif ?>
 			<? endforeach ?>
 		<? endif ?>

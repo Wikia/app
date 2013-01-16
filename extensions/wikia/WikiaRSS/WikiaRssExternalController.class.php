@@ -1,4 +1,4 @@
-<?php 
+<?php
 class WikiaRssExternalController extends WikiaController {
 
 	/**
@@ -79,17 +79,17 @@ class WikiaRssExternalController extends WikiaController {
 
 	/**
 	 * @brief Depending on given options it returns an array with full data of a rss feed
-	 * 
+	 *
 	 * @param Array $items an array with feeds' data returned from magpierss (3rd-part ext)
 	 * @param Array $options an array with displaying options given with a parser tag <rss>
-	 * 
+	 *
 	 * @return Array
 	 */
 	private function getFullItemList($items, $options) {
 		$app = F::app();
 		$result = array();
 
-		$charset = empty($options['charset'])?$options['charset']:array();
+		$charset = !empty( $options['charset'] ) ? $options['charset'] : array();
 		$date = $options['dateFormat'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
@@ -97,7 +97,7 @@ class WikiaRssExternalController extends WikiaController {
 		$maxheads = $options['maxheads'];
 
 		$headcnt = 0;
-		$outputEncoding = $app->wg->OutputEncoding;
+		$outputEncoding = 'UTF-8';
 
 		foreach( $items as $i => $item ) {
 			$d_text = true;
@@ -154,17 +154,17 @@ class WikiaRssExternalController extends WikiaController {
 
 	/**
 	 * @brief Depending on given options it returns an array with short data of a rss feed
-	 * 
+	 *
 	 * @param Array $items an array with feeds' data returned from magpierss (3rd-part ext)
 	 * @param Array $options an array with displaying options given with a parser tag <rss>
-	 * 
+	 *
 	 * @return Array
 	 */
 	private function getShortItemList($items, $options) {
 		$app = F::app();
 		$result = array();
 
-		$charset = $options['charset'];
+		$charset = !empty( $options['charset'] ) ? $options['charset'] : array();
 		$date = $options['dateFormat'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
@@ -173,7 +173,7 @@ class WikiaRssExternalController extends WikiaController {
 
 		$displayed = array();
 		$headcnt = 0;
-		$outputEncoding = $app->wg->OutputEncoding;
+		$outputEncoding = 'UTF-8';
 
 		foreach( $items as $i => $item ) {
 			$href = htmlspecialchars( trim( mb_convert_encoding( $item['link'], $outputEncoding, $charset ) ) );
@@ -218,10 +218,10 @@ class WikiaRssExternalController extends WikiaController {
 
 	/**
 	 * @brief Returns true if user wants to display the feed; false otherwise
-	 * 
+	 *
 	 * @param String $text rss feed's title/text
 	 * @param Array an array with texts which should be filtered
-	 * 
+	 *
 	 * @return Boolean
 	 */
 	private function doRssFilter($text, $rssFilter) {
@@ -245,10 +245,10 @@ class WikiaRssExternalController extends WikiaController {
 
 	/**
 	 * @brief Returns true if user doesn't want to display the feed; false otherwise
-	 * 
+	 *
 	 * @param String $text rss feed's title/text
 	 * @param Array an array with texts which should be filtered
-	 * 
+	 *
 	 * @return Boolean
 	 */
 	private function doRssFilterOut($text, $rssFilterout) {
@@ -270,10 +270,10 @@ class WikiaRssExternalController extends WikiaController {
 
 	/**
 	 * @brief Changes old text to highlighted text
-	 * 
+	 *
 	 * @param String $text rss feed's title/text
 	 * @param Array an array with texts which should be highlighted
-	 * 
+	 *
 	 * @return String
 	 */
 	private function doRssHighlight($text, $rssHighlight) {

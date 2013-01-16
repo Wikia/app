@@ -10,10 +10,26 @@
  * TODO: Importing section is not finished yet
  */
 
+// include chef generated variables: $wgWikiaDatacenter
+// require_once('/usr/wikia/devbox/DevBoxVariables.php');
+
+switch($wgWikiaDatacenter) {
+	case 'poz':
+		$wgDBdevboxServer1 = 'dev-db-a1-p1';
+		$wgDBdevboxServer2 = 'dev-db-a1-p1';
+		$wgDBdevboxCentral = 'dev-db-a1-p1'; // FIXME: is this correct?
+		break;
+	case 'sjc':
+	default:
+		$wgDBdevboxServer1 = 'dev-db-a1';
+		$wgDBdevboxServer2 = 'dev-db-b1';
+		$wgDBdevboxCentral = 'dev-db-central';
+		break;
+
+}
+
 $wgDBdevboxUser = 'devbox';
 $wgDBdevboxPass = 'devbox';
-$wgDBdevboxServer1 = 'dev-db-a1';
-$wgDBdevboxServer2 = 'dev-db-b1';
 $databaseDirectories = array ("database_A", "database_B", "database_C", "database_D");
 
 $USAGE =
@@ -74,7 +90,7 @@ if (array_key_exists( 'f', $opts )) {
 			// otherwise, find out if we got some directories that look like database dumps
 			$dir_list = explode("\n", $response);
 			echo "Found " . count($dir_list) . " backup directories in $databaseDirectory...\n";
-	
+
 			$date_list = array();
 			foreach ($dir_list as $dir) {
 				if ($dir == "") continue;
@@ -106,7 +122,7 @@ if (array_key_exists( 'f', $opts )) {
 				krsort($arr, SORT_NUMERIC);
 			}
 			//print_r($date_list);
-	
+
 			// now we have a sorted list of directories by most recent date.  how many dumps are in there?
 			echo "THIS STEP CAN TAKE A WHILE...\n";
 			foreach ($date_list as $year => $day_of_year) {
@@ -124,7 +140,7 @@ if (array_key_exists( 'f', $opts )) {
 						$file = $file[3];
 						if(strpos($file, $dbname.".sql.gz") > 0 || strpos($file, $dbname."_") > 0 ) {
 							$filename = $filedir.$dbname.".sql.gz";
-							
+
 							echo "Found a match: $file\n";
 									echo "Saving to local filesystem:".$filename."\n";
 							shell_exec("s3cmd get --skip-existing ".$file." ".$filename);
@@ -136,12 +152,12 @@ if (array_key_exists( 'f', $opts )) {
 						echo "Database file not found...\n";
 						return false;
 					}
-					
+
 				}
 			}
-		}	
+		}
 	}
-	
+
 	$filename = getFile($databaseDirectories, $dbname, $filedir);
 	if(empty($filename)) {
 		exit;
@@ -163,12 +179,12 @@ if (array_key_exists( 'i', $opts )) {
 		$dbname = $matches[1];
 	}
 
-	// Figure out which cluster we need to load this into	$response =  `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
+	// Figure out which cluster we need to load this into by connecting to central directly
 
 	if ($dbname == 'wikicities') {
 		$wgDBdevboxServer = $wgDBdevboxServer1;
 	} else {
-		$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxServer1 -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
+		$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral -s -N -e "SELECT city_cluster from wikicities.city_list where city_dbname = '$dbname';" 2>&1`;
 		if (trim($response) != "" && substr($response, 0, 5) != 'ERROR') {
 			$cluster_name = trim($response);
 		} else {
@@ -178,11 +194,13 @@ if (array_key_exists( 'i', $opts )) {
 				die ("Database error: " . $response);
 			}
 		}
-		if ($cluster_name == "NULL") $cluster_name = null;  // whee!
-		if ($cluster_name == null) {
+		if ( $cluster_name == 'c1' ) {
 			$wgDBdevboxServer = $wgDBdevboxServer1;
-		} else {
+		} else if ( $cluster_name != null ) {
 			$wgDBdevboxServer = $wgDBdevboxServer2;
+		} else {
+			print "Cluster was NULL in wikicities, aborting.";
+			exit();
 		}
 	}
 

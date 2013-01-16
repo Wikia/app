@@ -343,6 +343,7 @@ $messages['diq'] = array(
 /** Spanish (español)
  * @author Peter17
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'lookupcontribs' => 'Búsqueda de Contribuciones',
@@ -392,6 +393,7 @@ $messages['es'] = array(
 	'lookupcontribsnormal' => 'reciente',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'todo',
+	'action-lookupcontribs' => 'Busca las contribuciones de un usuario en múltiples wikis',
 );
 
 /** Basque (euskara)
@@ -496,6 +498,7 @@ $messages['fr'] = array(
 	'lookupcontribsnormal' => 'récent',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'tout',
+	'action-lookupcontribs' => 'recherche des contributions d’un utilisateur sur plusieurs wikis',
 );
 
 /** Galician (galego)
@@ -904,6 +907,7 @@ Tolong semak ejaan nama pengguna itu.</p>',
 	'lookupcontribsnormal' => 'terkini',
 	'lookupcontribsfinal' => 'akhir',
 	'lookupcontribsall' => 'semua',
+	'action-lookupcontribs' => 'menyemak sumbangan seseorang pengguna pada pelbagai wiki',
 );
 
 /** Burmese (မြန်မာဘာသာ)

@@ -396,6 +396,7 @@ class SpecialCustomEditPage extends SpecialPage {
 
 		$this->mEditPage->mSpecialPage = $this;
 
+
 		// render edit form
 		$this->mEditPage->lastSaveStatus = null;
 

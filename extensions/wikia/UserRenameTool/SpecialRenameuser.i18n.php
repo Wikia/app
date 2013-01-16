@@ -86,12 +86,14 @@ Reason: $2',
  * @author Jon Harald Søby
  * @author Meno25
  * @author SPQRobin
+ * @author Shirayuki
  * @author Siebrand
  * @author Тест
  */
 $messages['qqq'] = array(
 	'userrenametool-desc' => 'Short description of the Renameuser extension, shown on [[Special:Version]]. Do not translate or change links.',
 	'userrenametool-reserve' => 'Option to block the old username (after it has been renamed) from being used again.',
+	'userrenametool-warnings' => '{{Identical|Warning}}',
 	'userrenametool-submit' => '{{Identical|Submit}}',
 	'userrenametool-error-cannot-create-block' => '',
 	'userrenametool-info-wiki-finished' => '',

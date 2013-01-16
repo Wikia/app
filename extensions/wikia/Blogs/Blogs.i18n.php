@@ -6,6 +6,8 @@
 $messages = array();
 
 $messages['en'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> post on <a href='$3'>$4's</a> blog",
+
 	'createblogpage' => 'Create blog',
 	'createbloglistingpage' => 'Create blog listing',
 	"create-blog-spam" => "Looks like spam",
@@ -60,7 +62,7 @@ Create blog listing pages for categories such as "Barack Obama", "Fan Fiction", 
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Blog listing tag not recognized on page',
 	'blog-header' => "Blog articles in category \"$1\"",
 	'blog-subheader' => "{{PLURAL:$1|There is one blog post|The following $1 blog articles are}} in this category.",
-	'blog-subheader-all' => "{{PLURAL:$1|There is one blog article in this category|The following $1 blog articles are in this category, out of $2 total.}}",
+	'blog-subheader-all' => "{{PLURAL:$1|There is one blog article in this category.|The following $1 blog articles are in this category, out of $2 total.}}",
 	'blog-invalidparam' => "Unknown parameter '$1' is ignored. Please use one of available parameters: <code>$2</code>.",
 	'blog-emptyparam' => "Name of parameter cannot be empty",
 	'blog-defaulttitle' => "Blogs",
@@ -142,6 +144,7 @@ Avatar6.jpg",
  * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'blog-file-page' => 'Message on a file page about where file is being used',
 	'create-blog-post-recent-listing-log' => 'Edit summary, maybe.',
 	'create-blog-empty-article-log' => 'Edit summary',
 	'create-blog-invalid-title-error' => '{{Identical|Invalid title}}',
@@ -152,11 +155,12 @@ $messages['qqq'] = array(
 	'blog-added' => 'This is the possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-edited' => 'This is a possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-comments' => '{{Identical|Comment}}',
-	'blog-comments-label' => 'This is a checkbox label. When creating or editing a blog, the editor may enable (box is checked) or disable (box is unchecked) users to comment on the blog',
-	'blog-voting-label' => 'This is a checkbox label. Given the description, I would assume that checking it enables voting for a (new) blog post.',
+	'blog-comments-label' => 'This is a checkbox label. If checked by the blog author, users will be able to leave comments on the blog.',
+	'blog-voting-label' => 'This is a checkbox label. If checked by the blog author, users will be able to vote on a blog post. Note: The voting functionality was never fully implemented into the Blogs feature. It may be implemented at a later date.',
 	'blog-comment-delete' => '{{Identical|Delete}}',
 	'blog-comment-hide' => '{{Identical|Hide}}',
 	'blog-comment-history' => '{{Identical|History}}',
+	'blog-fromsitename' => 'Prints the name of the wiki the blog is from into an RSS feed. The $1 parameter is <nowiki>{{SITENAME}}</nowiki>.',
 	'right-blog-comments-toggle' => '{{doc-right|blog-comments-toggle}}',
 	'right-blog-comments-delete' => '{{doc-right|blog-comments-delete}}',
 	'right-blog-articles-edit' => '{{doc-right|blog-articles-edit}}',
@@ -165,6 +169,9 @@ $messages['qqq'] = array(
 	'blogs-searchprofile' => 'Name of a tab with blog articles and blog listings. This tab is displayed in the right column on search page',
 	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings. Tooltip displayed on hover on Blogs Tab in the right column on search page',
 	'user-blog-url-link' => 'Link - links to users Blog main page',
+	'blogs-comment-hidden' => 'If a tool like RevisionDelete has made the text of a comment inaccessible to the public, this message informs the reader the comment has been hidden',
+      'create-blog-listing-matches-calculate' => 'Button label. User presses to calculate how many blogs would be included in the blog listing given the user-selected criteria. After button is triggered, message gets switched to [[Wikia:Create-blog-listing-matches-recalculate]].',
+        'create-blog-listing-matches-recalculate' => 'Button label. Appears after [[Wikia:Create-blog-listing-matches-calculate]] has been triggered. Allows user to re-calculate the number of blogs that meet the user-selected criteria if the user changes the criteria since initial calculation.',
 );
 
 /** Afrikaans (Afrikaans)

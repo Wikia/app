@@ -167,6 +167,15 @@ $app->registerClass( 'NotFoundApiException', "{$IP}/includes/wikia/api/ApiExcept
  * Wikia API end
  */
 
+/**
+ * Wikia Skins
+ *
+ * this need to be autoloaded to avoid PHPUnit replacing the classes definition with mocks
+ * and brake the world; Monobook is already autoloaded in /includes/DefaultSettings.php
+ */
+$app->registerClass( 'SkinOasis', "{$IP}/skins/Oasis.php" );
+$app->registerClass( 'SkinWikiaMobile', "{$IP}/skins/WikiaMobile.php" );
+
 $wgAutoloadClasses['SpamBlacklist'] = $IP . '/extensions/SpamBlacklist/SpamBlacklist_body.php';
 $wgAutoloadClasses['BaseBlacklist'] = $IP . '/extensions/SpamBlacklist/BaseBlacklist.php';
 $wgAutoloadClasses['SpamRegexBatch'] = $IP . '/extensions/SpamBlacklist/SpamRegexBatch.php';
@@ -1048,3 +1057,9 @@ $wgWikiaSeasonsPencilUnit = false;
  * Enables QuickTools extension
  */
 $wgEnableQuickToolsExt = true;
+
+/**
+ * @name $wgPhalanxService
+ * Use phalanx external service
+ */
+$wgPhalanxService = false;
