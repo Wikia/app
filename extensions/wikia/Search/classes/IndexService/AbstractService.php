@@ -4,23 +4,26 @@
  * @author relwell
  */
 namespace Wikia\Search\IndexService;
+use Wikia\Search\MediaWikiInterface;
 /**
  * This class allows us to define a standard API for indexing services
  * @author relwell
  */
-abstract class AbstractService extends \WikiaObject
+abstract class AbstractService
 {
-	/**
-	 * Allows us to memoize article instantiation based on pageid
-	 * @var array
-	 */
-	public static $articles = array();
-	
 	/**
 	 * We use this client as an interface for building documents and writing XML
 	 * @var Solarium_Client
 	 */
 	protected $client;
+	
+	/**
+	 * This allows us to abstract out logic core to MediaWiki. 
+	 * Eventually, we could have other 'drivers' for our logic interface here.
+	 * Sorry I didn't have a better name for this one -- maybe "driver"?
+	 * @var Wikia\Search\MediaWikiInterface
+	 */
+	protected $interface;
 	
 	/**
 	 * Stores page ids so that we don't need to pass it to execute method
@@ -43,7 +46,7 @@ abstract class AbstractService extends \WikiaObject
 	public function __construct( \Solarium_Client $client, array $pageIds = array() ) {
 	    $this->client = $client;
 	    $this->pageIds = $pageIds;
-	    parent::__construct();
+	    $this->interface = MediaWikiInterface::getInstance();
 	}
 	
 	/**
@@ -75,32 +78,6 @@ abstract class AbstractService extends \WikiaObject
 	abstract public function execute();
 	
     /**
-	 * Standard interface for this class's services to access a page
-	 * @param int $pageId
-	 * @return Article
-	 * @throws WikiaException
-	 */
-	protected function getPageFromPageId( $pageId ) {
-		wfProfileIn( __METHOD__ );
-		if ( isset( self::$articles[$pageId] ) ) {
-			return self::$articles[$pageId];
-		}
-	    $page = \Article::newFromID( $pageId );
-	
-		if( $page === null ) {
-			throw new \WikiaException( 'Invalid Article ID' );
-		}
-		if( $page->isRedirect() ) {
-			$page = new \Article( $page->getRedirectTarget() );
-			self::$articles[$page->getID()] = $page;
-		}
-		self::$articles[$pageId] = $page;
-		
-		wfProfileOut(__METHOD__);
-		return $page;
-	}
-	
-    /**
 	 * Allows us to reuse the same basic JSON structure for any number of service calls
 	 * @param string $fname
 	 * @param array $pageIds
@@ -118,7 +95,7 @@ abstract class AbstractService extends \WikiaObject
 				$responseArray = $this->execute();
 				
 				$document = new \Solarium_Document_AtomicUpdate( $responseArray );
-				$pageIdKey = $document->pageid ?: sprintf( '%s_%s', $this->wg->CityId, $pageId );
+				$pageIdKey = $document->pageid ?: sprintf( '%s_%s', $this->interface->getGlobal( 'CityId' ), $pageId );
 				$document->setKey( 'pageid', $pageIdKey );
 				
 				foreach ( $document->getFields() as $field => $value ) {
@@ -153,26 +130,5 @@ abstract class AbstractService extends \WikiaObject
 		                              ->addCommit();
 		return $this->client->createRequest( $updateHandler )->getRawData( $updateHandler );
 		
-	}
-	
-    /**
-	 * Provided a page, returns the string value of that page's title
-	 * This allows us to accommodate unconventional locations for titles
-	 * @param Title $title
-	 * @return string
-	 */
-	protected function getTitleString( \Title $title ) {
-		if ( in_array( $title->getNamespace(), array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
-			$wm = \WallMessage::newFromId( $title->getArticleID() );
-			$wm->load();
-			
-			if ( !$wm->isMain() && ( $main = $wm->getTopParentObj() ) && !empty( $main ) ) {
-				$main->load();
-				$wm = $main;
-			}
-			
-			return (string) $wm->getMetaTitle();
-		}
-		return (string) $title;
 	}
 }

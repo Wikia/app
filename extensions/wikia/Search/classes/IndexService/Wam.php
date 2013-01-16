@@ -22,9 +22,10 @@ class Wam extends AbstractService
 	 */
 	public function execute() {
 		wfProfileIn(__METHOD__);
+		// note that we don't need the interface for this because it uses the data mart service, which is our own thing.
 		if ( $this->result === null ) {
 			$datamart = new \DataMartService();
-			$wam = $datamart->getCurrentWamScoreForWiki( $this->wg->CityId );
+			$wam = $datamart->getCurrentWamScoreForWiki( $this->interface->getWikiId() );
 			$wam = $wam > 0 ? ceil( $wam ) : 1; //mapped here for computational cheapness
 			$this->result = array( 'wam' => $wam );
 		}

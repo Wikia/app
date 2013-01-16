@@ -18,25 +18,7 @@ class Redirects extends AbstractService
 	 */
 	public function execute() {
 		wfProfileIn(__METHOD__);
-		
-		$page = $this->getPageFromPageId( $this->currentPageId );
-	
-		$dbr = $this->wf->GetDB(DB_SLAVE);
-	
-		$result = array( 'redirect_titles' => array() );
-		$query = $dbr->select(
-				array( 'redirect', 'page' ),
-				array( 'page_title' ),
-				array(),
-				__METHOD__,
-				array( 'GROUP'=>'rd_title' ),
-				array( 'page' => array( 'INNER JOIN', array('rd_title'=>$page->getTitle()->getDbKey(), 'page_id = rd_from' ) ) )
-		);
-		// look how ugly this is without assignment in condition!
-		while ( $row = $dbr->fetchObject( $query ) ) { 
-				$result['redirect_titles'][] = str_replace( '_', '_', $row->page_title );
-		}
-		
+		$result = array( 'redirect_titles' => $this->interface->getRedirectTitlesForPageId( $this->currentPageId ) );
 		wfProfileOut(__METHOD__);
 		return $result;
 	}

@@ -27,7 +27,7 @@ class WikiPromoData extends AbstractService
 		wfProfileIn(__METHOD__);
 		if ( $this->result == null ) {
 			$homepageHelper = new \WikiaHomePageHelper();
-			$detail = $homepageHelper->getWikiInfoForVisualization( $this->wg->CityId, $this->wg->ContLang->getCode() );
+			$detail = $homepageHelper->getWikiInfoForVisualization( $this->interface->getWikiId(), $this->interface->getLanguageCode() );
 			$this->result = array(
 				'wiki_description_txt' => $detail['description'],
 				'wiki_new_b' => empty( $detail['new'] ) ? 'false' : 'true',

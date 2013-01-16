@@ -19,31 +19,26 @@ class Metadata extends AbstractService
 		wfProfileIn(__METHOD__);
 		$result = array();
 	
+		$sharedDb = $this->interface->getGlobal( 'ExternalSharedDB' );
+		if (! empty( $sharedDb ) ) {
+			return array();
+		}
+		
 		$pageId = $this->currentPageId;
 		if ( $pageId === null ) {
 			throw new \WikiaException( 'A pageId-dependent indexer service was executed without a page ID queued' );
 		}
-		
-		$apiService = new \ApiService();
-		if (! empty( $this->wg->ExternalSharedDB ) ) {
-			$data = $apiService->call( array(
-					'pageids'  => $pageId,
-					'action'   => 'query',
-					'prop'     => 'info',
-					'inprop'   => 'url|created|views|revcount',
-					'meta'     => 'siteinfo',
-					'siprop'   => 'statistics|wikidesc|variables|namespaces|category'
-			));
-			if( isset( $data['query']['pages'][$pageId] ) ) {
-				$pageData = $data['query']['pages'][$pageId];
-				$result['views'] = $pageData['views'];
-				$result['revcount'] = $pageData['revcount'];
-				$result['created'] = $pageData['created'];
-				$result['touched'] = $pageData['touched'];
-			}
-			
-			$result['hub'] = isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
+
+		$data = $this->interface->getApiStatsForPageId( $pageId );
+		if( isset( $data['query']['pages'][$pageId] ) ) {
+			$pageData = $data['query']['pages'][$pageId];
+			$result['views'] = $pageData['views'];
+			$result['revcount'] = $pageData['revcount'];
+			$result['created'] = $pageData['created'];
+			$result['touched'] = $pageData['touched'];
 		}
+			
+		$result['hub'] = isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
 	
 		wfProfileOut(__METHOD__);
 		return $result;

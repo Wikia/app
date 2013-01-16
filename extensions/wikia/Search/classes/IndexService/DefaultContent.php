@@ -18,30 +18,24 @@ class DefaultContent extends AbstractService
 	public function execute() {
 		wfProfileIn(__METHOD__);
 		
-		$page = $this->getPageFromPageId( $this->currentPageId );
-		$pageId = $page->getID();
-	
-		$apiService = new \ApiService();
-		$response = $apiService->call( array(
-					'pageid'	=> $pageId,
-					'action'	=> 'parse',
-		));
-		
-		$title		= $page->getTitle();
-		$titleStr	= $this->getTitleString( $title );
-		$html 		= $response['parse']['text']['*'];
+		$pageId = $this->interface->getCanonicalPageIdFromPageId( $this->currentPageId );
+
+		// we still assume the response is the same format as MediaWiki's
+		$response = $this->interface->getParseResponseFromPageId( $pageId ); 
+		$titleStr = $this->interface->getTitleStringFromPageId( $pageId );
+		$html     = $response['parse']['text']['*'];
 
 		$categories = array();
 		foreach ( $response['parse']['categories'] as $category ) {
 			$categories[] = str_replace( '_', ' ', $category['*'] );
 		}
-		
+
 		$headings = array();
 		foreach( $response['parse']['sections'] as $section ) {
 			$headings[] = $section['line'];
 		}
-		
-		if ( $this->wg->AppStripsHtml ) {
+
+		if ( $this->interface->getGlobal( 'AppStripsHtml' ) ) {
 			$result = $this->prepValuesFromHtml( $html );
 			$titleKey = \WikiaSearch::field( 'title' );
     		$wikiTitleKey = \WikiaSearch::field( 'wikititle' );
@@ -55,27 +49,25 @@ class DefaultContent extends AbstractService
     		$categoriesKey = 'categories';
     		$headingsKey = 'headings';
 		}
-		
-		
-		
-		$result['wid']			= empty( $this->wg->ExternalSharedDB ) ? $this->wg->SearchWikiId : (int) $this->wg->CityId;
+
+		$result['wid']			= $this->interface->getWikiId();
 		$result['pageid']		= $pageId;
 		$result['id']			= $result['wid'] . '_' . $result['pageid'];
 		$result[$titleKey]		= $titleStr;
 		$result['titleStrict']	= $titleStr;
-		$result['url']			= $title->getFullUrl();
-		$result['ns']			= $title->getNamespace();
-		$result['host']			= substr($this->wg->Server, 7);
-		$result['lang']			= preg_replace( '/-.*$/', '', $this->wg->ContLang->mCode );
-		$result[$wikiTitleKey]	= $this->wg->Sitename;
+		$result['url']			= $this->interface->getUrlFromPageId( $pageId );
+		$result['ns']			= $this->interface->getNamespaceFromPageId( $pageId );
+		$result['host']			= substr( $this->interface->getGlobal( 'Server' ), 7);
+		$result['lang']			= $this->interface->getSimpleLanguageCode();
+		$result[$wikiTitleKey]	= $this->interface->getGlobal( 'Sitename' );
 		$result[$categoriesKey]	= $categories;
 		$result['page_images']	= count( $response['parse']['images'] );
 		$result[$headingsKey]	= $headings;
 	
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
-		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
+		$result['iscontent']	= $this->interface->isPageIdContent( $pageId ) ? 'true' : 'false';
 	    $result['is_main_page'] = 'false';
-		if ( \Title::newMainPage()->getArticleId() == $pageId ) {
+		if ( $this->interface->getMainPageArticleId() == $pageId ) {
 			$result['is_main_page'] = 'true';
 		}
 		

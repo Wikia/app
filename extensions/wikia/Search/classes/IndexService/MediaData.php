@@ -16,25 +16,18 @@ class MediaData extends AbstractService
 	 * @return array
 	 */
 	public function execute() {
-		$page = $this->getPageFromPageId( $this->currentPageId );
-		$title = $page->getTitle();
-		
 		$results = array();
 		
-		if ( $title->getNamespace() != NS_FILE ) {
-			return $results;
-		}
-		
-		$file = $this->wf->findFile( $title->getText() );
-		if ( empty( $file ) ) {
+		if ( $this->interface->getNamespaceFromPageId( $this->currentPageId ) != NS_FILE
+			|| $this->interface->pageIdHasFile( $this->currentPageId ) ) {
 			return $results;
 		}
 	
-		$fileHelper	= new \WikiaFileHelper();
-		$detail		= $fileHelper->getMediaDetail( $title );
-		$metadata	= $file->getMetadata();
+		$fileHelper = new \WikiaFileHelper();
+		$detail     = $this->interface->getMediaDetailFromPageId( $this->currentPageId );
+		$metadata   = $this->interface->getMetadataFromPageId( $this->currentPageId );
 
-		$results['is_video'] = $fileHelper->isVideoFile( $file ) ? 'true' : 'false';
+		$results['is_video'] = $this->interface->pageIdIsVideoFile( $this->currentPageId ) ? 'true' : 'false';
 		$results['is_image'] = ( ($detail['mediaType'] == 'image') && $results['is_video'] == 'false' ) ? 'true' : 'false';
 
 		if ( $metadata != "0" ) {

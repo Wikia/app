@@ -17,19 +17,8 @@ class BacklinkCount extends AbstractService
 	 */
 	public function execute() {
 		wfProfileIn(__METHOD__);
-		$page = $this->getPageFromPageId( $this->currentPageId );
-		$title = $page->getTitle();
-		$apiService = new \ApiService();
-		$data = $apiService->call( array(
-				'titles'	=> $title,
-				'bltitle'	=> $title,
-				'action'	=> 'query',
-				'list'		=> 'backlinks',
-				'blcount'	=> 1
-		));
+		$response = array( 'backlinks' => $this->interface->getBacklinksCountFromPageId( $this->currentPageId ) );
 		wfProfileOut(__METHOD__);
-		return array(
-				'backlinks' => isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0
-		);
+		return $response;
 	}
 }
