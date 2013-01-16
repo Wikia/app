@@ -20,10 +20,16 @@
 	</form>
 <? if(!$isMonobookOrUncyclo) { ?>
 	<p>
-		<span class="change-email-msg">
-			<?= wfMsg('usersignup-confirm-email-change-email-content') ?>
-			<span class="email-tooltip" rel="tooltip" title="<?= wfMsg('usersignup-confirm-email-tooltip') ?>">?</span>
-		</span>
+		<?= $app->sendRequest(
+				'WikiaStyleGuideTooltipIconController',
+				'index',
+				array(
+					'text' => wfMsg('usersignup-confirm-email-change-email-content'),
+					'class' => 'email-tooltip',
+					'tooltipIconTitle' => wfMsg('usersignup-confirm-email-tooltip'),
+				)
+			);
+		?>
 	</p>
 
 	<a href="#" class="change-email-link"><?= wfMsg('usersignup-confirm-email-change-email') ?></a>

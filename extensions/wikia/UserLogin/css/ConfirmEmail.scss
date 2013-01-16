@@ -1,4 +1,4 @@
-@import "../mixins/email-tooltip";
+@import "../mixins/tooltip-icon";
 
 .ConfirmEmail {
 	margin-bottom: 200px;
@@ -25,10 +25,10 @@
 			margin: 0;
 		}
 	}
-	.change-email-msg {
+	.tooltip-icon-wrapper {
 		position: relative;
-		.email-tooltip {
-			@include email-tooltip;
+		.tooltip-icon {
+			@include tooltip-icon;
 		}
 	}
 	.ResendConfirmation {
