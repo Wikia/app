@@ -350,6 +350,7 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
 			// >> editor core
 			'extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
+			'extensions/wikia/EditPageLayout/js/editor/WikiaEditorStorage.js',
 			'extensions/wikia/EditPageLayout/js/editor/Buttons.js',
 			'extensions/wikia/EditPageLayout/js/editor/Modules.js',
 			// >> Wikia specific editor plugins
