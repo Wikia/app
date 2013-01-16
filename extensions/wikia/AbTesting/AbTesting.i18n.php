@@ -37,6 +37,7 @@ $messages['en'] = array(
 
 	'abtesting-flag-set-short' => 'YES',
 
+	'abtesting-ranges-info' => '(0-99)',
 	'action-abtestpanel' => 'configure A/B tests',
 );
 

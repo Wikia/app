@@ -8,7 +8,7 @@
 						'<input type="text" name="groups[]">',
 					'</div>',
 					'<div class="input-group">',
-						'<label>Range</label>',
+						'<label>Range (0--99)</label>',
 						'<input type="text" name="ranges[]">',
 					'</div>',
 				'</div>'
