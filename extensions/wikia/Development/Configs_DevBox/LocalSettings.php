@@ -31,7 +31,15 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonSettings.php' );
 #
 # initialize Connection Poll
 #
-require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' );
+switch ($wgWikiaDatacenter) {
+	case 'poz':
+		require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.poz-dev.php' );
+		break;
+
+	default:
+		require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' );
+		break;
+}
 
 /**
  * Definition of global memcached servers
