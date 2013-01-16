@@ -60,8 +60,11 @@ class Wall extends WikiaModel {
 		return $this->mTitle;
 	}
 	
-	public function getDescription() {
+	public function getDescription ( $bParse = true ) {
 		$oArticle = new Article( $this->getTitle() );
+		if ( !$bParse ) {
+			return $oArticle->getText();
+		}
 		$oApp = F::App();
 		$oParserOptions = $oApp->wg->Out->parserOptions();
 		$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
