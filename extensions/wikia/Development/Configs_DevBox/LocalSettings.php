@@ -158,8 +158,14 @@ $wgLocalisationCacheConf[ "manualRecache" ] = false;
 // disable irc feed
 $wgRC2UDPEnabled = false;
 
-// fetch SASS files from devboxes (BugId:8545)
-$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
+// static assets host
+switch($wgWikiaDatacenter) {
+	case 'poz':
+		$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.pl.wikia-dev.com";
+		break;
+	default:
+		$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
+}
 
 // macbre: generate proper paths for static assets on devboxes (BugId:6809)
 $wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images requested from CSS/SASS
