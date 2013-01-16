@@ -31,7 +31,7 @@ $namespaces['es'] = array(
 
 $namespaces['fr'] = array(
         NS_USER_WALL                    => 'Mur',
-        NS_USER_WALL_MESSAGE            => 'Fil',
+        NS_USER_WALL_MESSAGE            => 'Fil'
 );
 
 $namespaces['uk'] = array(
