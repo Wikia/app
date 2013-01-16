@@ -287,29 +287,4 @@ class RelatedVideosService {
 		return array_merge( array_flip( $keys ) , $videos );
 	}
 
-	public function  inflateWithVideoData( &$arr, Title $title, $width=150, $height=75 ) {
-
-		$arr['ns'] = $title->getNamespace();
-		$arr['nsText'] = $title->getNsText();
-		$arr['dbKey'] = $title->getDbKey();
-		$arr['title'] = $title->getText();
-
-		if ( $title instanceof GlobalTitle ) { //wfFindFile works with Title only
-			$oTitle = Title::newFromText( $arr['nsText'].':'.$arr['dbKey'] );
-		} else {
-			$oTitle = $title;
-		}
-
-		$file = wfFindFile( $oTitle );
-		if (! empty( $file ) ) {
-			$thumb = $file->transform( array( 'width'=>$width, 'height'=>$height ) );
-			if ( ! empty( $thumb ) ) {
-				$arr['thumbnail'] = $thumb->toHtml( array( 'custom-title-link' => $oTitle,
-		                                           'duration' => true,
-			                                   'linkAttribs' => array( 'class' => 'video-thumbnail' )
-							) );
-			}
-		}
-	}
-
 }
