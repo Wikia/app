@@ -170,6 +170,13 @@ $messages['qqq'] = array(
         'autocreatewiki-set-username' => 'If user does not provide a username when attempting to log in, an error message appears prompting a username to be provided',
 	'autocreatewiki-info-blurry-word' => 'Message {{msg-Wikia|Autocreatewiki-blurry-word}} refers here.',
 	'autocreatewiki-title-template' => 'This will be the sitename of the wiki, i.e. the text that shows up in the TITLE element as well as in other places on the site.',
+  	'autocreatewiki-welcometalk' => 'Text of the welcome message left for wiki founder upon wiki creation. 
+Parameters:
+
+* $1 - User name of wiki founder
+* $2 - <NO LONGER IN USE>
+* $3 - Name of Wikia Community Support member who is signing the welcome message
+* $4 - <nowiki>{{SITENAME}}</nowiki> of the wiki welcome message is being left on',
 );
 
 /** Afrikaans (Afrikaans)
