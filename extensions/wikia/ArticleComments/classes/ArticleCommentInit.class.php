@@ -372,31 +372,35 @@ class ArticleCommentInit {
 		if ( $ns == NS_TALK ) {
 			$title = Title::newFromText( $element->page_title, $ns );
 
-			$link = $app->wf->Msg(
-				'article-comments-file-page',
-				$title->getLocalURL(),
-				User::newFromId( Revision::newFromId( $title->getLatestRevID() )->getUser() )->getName(),
-				Title::newFromText( $title->getBaseText() )->getLocalURL(),
-				$title->getBaseText()
-			);
+			if( !empty( $title ) ) {
+				$link = $app->wf->Msg(
+					'article-comments-file-page',
+					$title->getLocalURL(),
+					User::newFromId( Revision::newFromId( $title->getLatestRevID() )->getUser() )->getName(),
+					Title::newFromText( $title->getBaseText() )->getLocalURL(),
+					$title->getBaseText()
+				);
+			}
 
 		//comments on blog posts
 		} else if ( $ns == NS_BLOG_ARTICLE_TALK ) {
 			$blogPostComment = Title::newFromText( $element->page_title, $ns );
 
-			$baseText = $blogPostComment->getBaseText();
-			$titleNames = explode( '/', $baseText );
-			$userBlog = Title::newFromText( $titleNames[0], NS_BLOG_ARTICLE );
+			if( !empty( $blogPostComment ) ) {
+				$baseText = $blogPostComment->getBaseText();
+				$titleNames = explode( '/', $baseText );
+				$userBlog = Title::newFromText( $titleNames[0], NS_BLOG_ARTICLE );
 
-			$link = $app->wf->Msg(
-				'article-blog-comments-file-page',
-				$blogPostComment->getLocalURL(),
-				User::newFromId( Revision::newFromId( $blogPostComment->getLatestRevID() )->getUser() )->getName(),
-				Title::newFromText( $baseText, NS_BLOG_ARTICLE ),
-				$titleNames[1],
-				$userBlog->getLocalURL(),
-				$userBlog->getBaseText()
-			);
+				$link = $app->wf->Msg(
+					'article-blog-comments-file-page',
+					$blogPostComment->getLocalURL(),
+					User::newFromId( Revision::newFromId( $blogPostComment->getLatestRevID() )->getUser() )->getName(),
+					Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getLocalURL(),
+					$titleNames[1],
+					$userBlog->getLocalURL(),
+					$userBlog->getBaseText()
+				);
+			}
 		}
 
 		return true;
