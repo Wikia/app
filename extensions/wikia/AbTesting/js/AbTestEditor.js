@@ -172,7 +172,6 @@
 				modal = $('#AbTestingEditForm').closest('.modalWrapper'),
 				val = !input.is('[type=checkbox]') ? input.val() : input.attr('checked');
 
-			console.log('AbTestEditor-checkVersionChange()',e,input,val,input.data( 'originalValue' ));
 			// Issue warning for certain inputs if their value changes
 			if ( REGEX_versionChangeWarningNames.test(name)
 				&& !input.hasClass( 'dismissed' )
