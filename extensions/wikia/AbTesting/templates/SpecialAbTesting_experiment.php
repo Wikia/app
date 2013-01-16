@@ -1,3 +1,8 @@
+<?
+	/** @var $abTesting AbTesting */
+	$abTesting = F::build('AbTesting');
+	$yes = wfMsg('abtesting-flag-set-short');
+?>
 <tr class="exp<?= empty( $showDetails ) ? ' collapsed' : '' ?>" data-id="<?= $experiment[ 'id' ] ?>">
     <td class="arrow-nav"><img class="arrow" src="<?= $wg->BlankImgUrl ?>" /></td>
     <td><?= $experiment[ 'id' ] ?></td>
@@ -16,6 +21,9 @@
 		    	<th><?= wfMsg( 'abtesting-heading-start-time' ) ?></th>
 		        <th><?= wfMsg( 'abtesting-heading-end-time' ) ?></th>
 		        <th><?= wfMsg( 'abtesting-heading-ga-slot' ) ?></th>
+				<? foreach( AbTesting::$flags as $flag => $name ): ?>
+                	<th><?= wfMsg( 'abtesting-heading-flag-'.$name ) ?></th>
+				<? endforeach ?>
 				<? foreach( $experiment[ 'groups' ] as $grp ): ?>
 					<th><?= $grp[ 'name' ] ?> (ID: <?= $grp[ 'id' ] ?>)</th>
 				<? endforeach ?>
@@ -26,6 +34,12 @@
 			            <td><?= htmlspecialchars( $ver[ 'start_time' ] ) ?></td>
 			            <td><?= htmlspecialchars( $ver[ 'end_time' ] ) ?></td>
 			            <td><?= htmlspecialchars( $ver[ 'ga_slot' ] ) ?></td>
+						<? foreach( AbTesting::$flags as $flag => $name ): ?>
+							<?
+								$state = $abTesting->getFlagState($ver['flags'],$flag)
+							?>
+							<td><?= $state ? $yes : '' ?></td>
+						<? endforeach ?>
 						<? foreach( $experiment[ 'groups' ] as $grp ): ?>
 							<? $grn = @$ver[ 'group_ranges' ][ $grp[ 'id' ] ] ?>
 				            <td><?= htmlspecialchars( $grn[ 'ranges' ] ) ?></td>
