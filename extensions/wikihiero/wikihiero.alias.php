@@ -57,3 +57,5 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['es'] = array(
 	'Hieroglyphs' => array( 'Jeroglíficos' ),
 );
+
+
