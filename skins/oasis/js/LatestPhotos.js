@@ -7,13 +7,25 @@ var UploadPhotos = {
 	libinit: false,
 	init: function() {
 		// Special:NewFiles and LatestPhotos module
-		if(!($(".upphotoslogin").exists())) {
-			$(".upphotos").click(UploadPhotos.showDialog);
-		}
+		$(".upphotos").click($.proxy(this.loginBeforeShowDialog, this));
 		// LatestPhotos module only
 		$('#LatestPhotosModule').find('.upphotos, .upphotoslogin').tooltip({
 			delay: { show: 500, hide: 100 }
 		});
+	},
+	loginBeforeShowDialog: function(evt) {
+		if (( wgUserName == null ) && ( !UserLogin.forceLoggedIn )) {
+			UserLoginModal.show({
+				callback: $.proxy(function() {
+					UserLogin.forceLoggedIn = true;
+					this.showDialog(evt);
+				}, this)
+			});
+		}
+		else {
+			this.showDialog(evt);
+		}
+		evt.preventDefault();
 	},
 	showDialog: function(evt) {
 		if(evt) {
@@ -32,7 +44,10 @@ var UploadPhotos = {
 			type: 'get',
 			callback: function(html) {
 				// pre-cache dom elements
-				UploadPhotos.d = $(html).makeModal(UploadPhotos.doptions);
+				var extendedOptions = $.extend(UploadPhotos.doptions, {
+					onClose: function() {UserLogin.refreshIfAfterForceLogin()}
+				});
+				UploadPhotos.d = $(html).makeModal(extendedOptions);
 				UploadPhotos.destfile = UploadPhotos.d.find("input[name=wpDestFile]");
 				UploadPhotos.filepath = UploadPhotos.d.find("input[name=wpUploadFile]");
 				UploadPhotos.status = UploadPhotos.d.find("div.status");
