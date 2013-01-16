@@ -407,7 +407,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 */
 	public function mailPassword() {
-		$loginForm = F::build( 'LoginForm', array(&$this->wg->request) );
+		$loginForm = F::build( 'LoginForm', array(&$this->wg->request) ); /** @var LoginForm $loginForm */
 		if ( $this->wg->request->getText( 'username', '' ) != '' ) {
 			$loginForm->mUsername = $this->wg->request->getText( 'username' );
 		}
