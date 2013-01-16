@@ -122,9 +122,9 @@
 
 			// Cache current experiment values and track changes to those values
 			if (modal.find('.edit').exists()) {
-				modal.find(':input :checkbox').bind( 'change keyup', $.proxy(this.checkVersionChange, this)).each(function(i, input) {
+				modal.find(':input').bind( 'change keyup', $.proxy(this.checkVersionChange, this)).each(function(i, input) {
 					var $input = $( input );
-					var val = !$input.is(':checkbox') ? $input.val() : $input.prop('checked');
+					var val = !$input.is('[type=checkbox]') ? $input.val() : $input.prop('checked');
 					$input.data( 'originalValue', val );
 				});
 			}
@@ -160,12 +160,12 @@
 		},
 		checkVersionChange: function( e ) {
 			var input = $( e.currentTarget ),
-				inputGroup = input.parent( '.input-group' ),
+				inputGroup = input.closest( '.input-group' ),
 				name = input.attr( 'name' ),
 				modal = $('#AbTestingEditForm').closest('.modalWrapper'),
-				val = !input.is(':checkbox') ? input.val() : input.prop('checked');
-			;
+				val = !input.is('[type=checkbox]') ? input.val() : input.prop('checked');
 
+			console.log('AbTestEditor-checkVersionChange()',e,input,val,input.data( 'originalValue' ));
 			// Issue warning for certain inputs if their value changes
 			if ( REGEX_versionChangeWarningNames.test(name)
 				&& !input.hasClass( 'dismissed' )
