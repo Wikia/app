@@ -1,7 +1,5 @@
 <?php
 class WikiaStyleGuideTooltipIconController extends WikiaController {
-	const DEFAULT_ICON_SIGN = '?';
-
 	/**
 	 * @desc Renders simple markup for a circle with a sign within it
 	 * 
@@ -15,6 +13,6 @@ class WikiaStyleGuideTooltipIconController extends WikiaController {
 		
 		$this->text = $this->request->getVal('text', '');
 		$this->classes = $this->request->getVal('classes', '');
-		$this->tooltipIconSign = $this->request->getVal('tooltipIconSign', self::DEFAULT_ICON_SIGN);
+		$this->tooltipIconSign = $this->request->getVal('tooltipIconSign', $this->wf->Msg('wikiastyleguide-tooltip-icon-question-mark'));
 	}
 }
