@@ -82,6 +82,10 @@ $messages['qqq'] = array(
 	'photopop-setup-watermark-tip' => 'https://play.google.com/store/apps/details?id=com.wikia.app.PhotoPop',
 	'photopop-game-total' => '{{Identical|Total}}',
 	'photopop-game-date' => '{{Identical|Date}}',
+	'photopop-setup-submit-label' => 'Button label that submits form. Appears on special page that allows sysops to control what images and pages appear in the PhotoPop game and then save the changes.',
+	'photopop-game-correct' => 'Message shown if user guesses image correct.',
+        'photopop-game-points' => 'Unit of measurement for score. The default EN version is "points", which is a noun.',
+
 );
 
 /** Breton (brezhoneg)
