@@ -224,17 +224,6 @@ class BlogTemplateClass {
 		),
 
 		/*
-		 * Additional CSS styles
-		 *
-		 * type: 	string,
-		 * default: ""
-		 */
-		'style' => array (
-			'type' 		=> 'string',
-			'default' 	=> 'float:right;clear:left;',
-		),
-
-		/*
 		 * Additional CSS class
 		 *
 		 * type: 	string,
@@ -278,7 +267,6 @@ class BlogTemplateClass {
         '/<td[^>]*>(.*?)<\/td>/i',
         '/<th[^>]*>(.*?)<\/th>/ie',
 		'/<div[^>]*>.*<\/div>/siU',
-		'/<style[^>]*>.*<\/style>/siU',
 		'/<script[^>]*>.*<\/script>/siU',
 		'/<h\d>.*<\/h\d>/siU',
 		'/[\n]{2,}/siU',
@@ -292,7 +280,6 @@ class BlogTemplateClass {
         '', //td
         '', //th
 		'', //div
-		'', //style
 		'', //script
 		'', //<h\d>
 		'<br/>', //\n
@@ -538,12 +525,6 @@ class BlogTemplateClass {
 		/* title */
 		if ( !isset(self::$aOptions['title']) ) {
 			self::__makeStringOption('title', wfMsg('blog-defaulttitle'));
-		}
-		/* style */
-		if ( !isset(self::$aOptions['style']) ) {
-			if (self::$aOptions['type'] == 'box') {
-				self::__makeStringOption('style', self::$aBlogParams['style']['default']);
-			}
 		}
 		/* see more */
 		if ( !isset(self::$aOptions['seemore']) ) {
@@ -1123,9 +1104,9 @@ class BlogTemplateClass {
 					case 'seemore'  :
 					case 'title'	:
 					case 'class'	:
-					case 'style'	:
 						if ( !empty($aParamValues) && is_array($aParamValues) ) {
 							list ($sParamValue) = $aParamValues;
+
 							self::__makeStringOption($sParamName, $sParamValue);
 						}
 						break;
@@ -1150,7 +1131,6 @@ class BlogTemplateClass {
 				if ( !in_array($sParamName, array_keys(self::$aBlogParams)) ) {
 					throw new Exception( wfMsg('blog-invalidparam', $sParamName, implode(", ", array_keys(self::$aBlogParams))) );
 				}
-
 				/* parse value of parameter */
 				switch ($sParamName) {
 					case 'order'		:
@@ -1175,7 +1155,6 @@ class BlogTemplateClass {
 					case 'seemore'      :
 					case 'title' 		:
 					case 'class'		:
-					case 'style'		:
 						self::__makeStringOption($sParamName, $sParamValue);
 						break;
 				}
