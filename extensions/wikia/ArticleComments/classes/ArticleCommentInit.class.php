@@ -392,10 +392,10 @@ class ArticleCommentInit {
 				'article-blog-comments-file-page',
 				$blogPostComment->getLocalURL(),
 				User::newFromId( Revision::newFromId( $blogPostComment->getLatestRevID() )->getUser() )->getName(),
-				$userBlog->getLocalURL(),
-				$userBlog->getBaseText(),
 				Title::newFromText( $baseText, NS_BLOG_ARTICLE ),
-				$titleNames[1]
+				$titleNames[1],
+				$userBlog->getLocalURL(),
+				$userBlog->getBaseText()
 			);
 		}
 
