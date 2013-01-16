@@ -9,7 +9,7 @@ namespace Wikia\Search;
  * This will allow us to abstract our behavior away from MediaWiki if we want
  * Public functions should not return instances of classes defined in MediaWiki core.
  * @author relwell
- * @todo a bunch of these methods should probably be defined in an actual interface
+ * @todo a bunch of these methods should probably be defined in an actual interface, but until we have another "backend" the point is moot
  */
 class MediaWikiInterface
 {
@@ -228,6 +228,17 @@ class MediaWikiInterface
 	 */
 	public function getGlobal( $global ) {
 		return $this->app->wg->{$global};
+	}
+	
+	/**
+	 * Sets a global param, abstracted away from MediaWiki
+	 * @param string $global
+	 * @param mixed $value
+	 * @return \Wikia\Search\MediaWikiInterface
+	 */
+	public function setGlobal( $global, $value ) {
+		$this->app->wg->{$global} = $value;
+		return $this;
 	}
 	
 	/**

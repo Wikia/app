@@ -12,6 +12,11 @@ use Wikia\Search\MediaWikiInterface;
 abstract class AbstractService
 {
 	/**
+	 * Allows us to reuse an atomic update for multiple documents on the backend, if it applies to a wiki and not a page.
+	 */
+	const PAGEID_PLACEHOLDER = '#WIKIA_PAGE_ID_VALUE#';
+	
+	/**
 	 * We use this client as an interface for building documents and writing XML
 	 * @var Solarium_Client
 	 */
@@ -81,7 +86,7 @@ abstract class AbstractService
 	 * Allows us to reuse the same basic JSON structure for any number of service calls
 	 * @param string $fname
 	 * @param array $pageIds
-	 * @return Ambigous <multitype:multitype: , unknown>
+	 * @return string
 	 */
 	public function getResponseForPageIds() {
 		wfProfileIn(__METHOD__);
@@ -90,24 +95,9 @@ abstract class AbstractService
 		$documents = array();
 		
 		foreach ( $this->pageIds as $pageId ) {
+			$this->currentPageId = $pageId;
 			try {
-				$this->currentPageId = $pageId;
-				$responseArray = $this->execute();
-				
-				$document = new \Solarium_Document_AtomicUpdate( $responseArray );
-				$pageIdKey = $document->pageid ?: sprintf( '%s_%s', $this->interface->getGlobal( 'CityId' ), $pageId );
-				$document->setKey( 'pageid', $pageIdKey );
-				
-				foreach ( $document->getFields() as $field => $value ) {
-					// for now multivalued fields will be exclusively fully written. keep that in mind
-					if ( $field != 'pageid' && !in_array( array_shift( explode( '_', $field ) ), \WikiaSearch::$multiValuedFields ) ) {
-						// we may eventually need to specify for some fields whether we should use ADD
-    					$document->setModifierForField( $field, \Solarium_Document_AtomicUpdate::MODIFIER_SET );
-					}
-				}
-				
-				$documents[] = $document;
-				
+				$documents[] = $this->getDocumentFromResponse( $this->execute() );
 			} catch ( \WikiaException $e ) {
 				$result['errors'][] = $pageId;
 			}
@@ -119,12 +109,52 @@ abstract class AbstractService
 		return $result;
 	}
 	
+	/**
+	 * Writes an XML response without the <add> wrapper and a placeholder for pageid
+	 * Assumes that we are not operating on a provided page ID
+	 * @todo this ought to be a trait
+	 * @throws \Exception
+	 * @return string
+	 */
+	public function getStubbedWikiResponse() {
+		if ( $this->currentPageId !== null ) {
+			throw new \Exception( 'A stubbed response is not appropriate for services interacting with page IDs' );
+		}
+		
+		$updateXml = $this->getUpdateXmlForDocuments( array( $this->getDocumentFromResponse( $this->execute() ) ) );
+		$updateXml = str_replace( '<update>', '', str_replace( '</update>', '', $updateXml ) );
+		
+		return array( 'contents' => $updateXml );
+	}
+	
+	/**
+	 * Given an array, creates an appropriately formatted Solarium document
+	 * @param array $responseArray
+	 * @return \Solarium_Document_AtomicUpdate
+	 */
+	protected function getDocumentFromResponse( array $responseArray ) {
+		$document = new \Solarium_Document_AtomicUpdate( $responseArray );
+		
+		$pageIdValue = $this->currentPageId ?: self::PAGEID_PLACEHOLDER;
+		$pageIdKey = $document->pageid ?: sprintf( '%s_%s', $this->interface->getGlobal( 'CityId' ), $pageIdValue );
+		$document->setKey( 'pageid', $pageIdKey );
+		
+		foreach ( $document->getFields() as $field => $value ) {
+			// for now multivalued fields will be exclusively fully written. keep that in mind
+			if ( $field != 'pageid' && !in_array( array_shift( explode( '_', $field ) ), \WikiaSearch::$multiValuedFields ) ) {
+				// we may eventually need to specify for some fields whether we should use ADD
+				$document->setModifierForField( $field, \Solarium_Document_AtomicUpdate::MODIFIER_SET );
+			}
+		}
+		return $document;
+	}
+	
     /**
 	 * Sends an update query to the client, provided a document set
 	 * @param array $documents
 	 * @return boolean
 	 */
-	public function getUpdateXmlForDocuments( array $documents = array() ) {
+	protected function getUpdateXmlForDocuments( array $documents = array() ) {
 		$updateHandler = $this->client->createUpdate()
 		                              ->addDocuments( $documents )
 		                              ->addCommit();
