@@ -356,6 +356,7 @@ class ExternalUser_Wikia extends ExternalUser {
 	public static function removeFromSecondaryClusters( $id ) {
 		global $wgMemc;
 
+		wfProfileIn( __METHOD__ );
 		$clusters = WikiFactory::getSecondaryClusters(); // wikicities with a c1 .. cx cluster suffix.
 
 		foreach ($clusters as $clusterName) {
@@ -366,11 +367,16 @@ class ExternalUser_Wikia extends ExternalUser {
 				$clusterName = 'wikicities_' . $clusterName;
 
 				$oDB = wfGetDB( DB_MASTER, array(), $clusterName );
-				$oDB->delete( '`user`', array( 'user_id' => $id ) );
+				$oDB->delete(
+					'`user`',
+					array( 'user_id' => $id ),
+					__METHOD__
+				);
 				$oDB->commit();
 
 				$wgMemc->delete( $memkey );
 			}
 		}
+		wfProfileOut( __METHOD__ );
 	}
 }
