@@ -6,6 +6,8 @@
 $messages = array();
 
 $messages['en'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> post on <a href='$3'>$4's</a> blog",
+
 	'createblogpage' => 'Create blog',
 	'createbloglistingpage' => 'Create blog listing',
 	"create-blog-spam" => "Looks like spam",
@@ -142,6 +144,7 @@ Avatar6.jpg",
  * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'blog-file-page' => 'Message on a file page about where file is being used',
 	'create-blog-post-recent-listing-log' => 'Edit summary, maybe.',
 	'create-blog-empty-article-log' => 'Edit summary',
 	'create-blog-invalid-title-error' => '{{Identical|Invalid title}}',
