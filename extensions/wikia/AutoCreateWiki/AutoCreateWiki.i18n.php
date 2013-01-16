@@ -167,6 +167,7 @@ $messages['qqq'] = array(
 	'autocreatewiki-success-has-been-created' => 'Used as a subtitle to complete the page title, which displays the domain name of the created wiki.',
 	'autocreatewiki-info-category-answers' => '"Answers sites" are  special wikis of the type answers.wikia.com, where you ask and answer questions.',
 	'autocreatewiki-info-realname' => '{{Identical|Real name attribution}}',
+        'autocreatewiki-set-username' => 'If user does not provide a username when attempting to log in, an error message appears prompting a username to be provided',
 	'autocreatewiki-info-blurry-word' => 'Message {{msg-Wikia|Autocreatewiki-blurry-word}} refers here.',
 	'autocreatewiki-title-template' => 'This will be the sitename of the wiki, i.e. the text that shows up in the TITLE element as well as in other places on the site.',
 );
