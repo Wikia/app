@@ -373,12 +373,14 @@ class ArticleCommentInit {
 			$title = Title::newFromText( $element->page_title, $ns );
 
 			if( !empty( $title ) ) {
+				$parentTitle = reset( explode( '/', $element->page_title) ); // getBaseText returns me parent comment for subcomment
+
 				$link = $app->wf->Msg(
 					'article-comments-file-page',
 					$title->getLocalURL(),
 					User::newFromId( Revision::newFromId( $title->getLatestRevID() )->getUser() )->getName(),
-					Title::newFromText( $title->getBaseText() )->getLocalURL(),
-					$title->getBaseText()
+					Title::newFromText( $parentTitle )->getLocalURL(),
+					$parentTitle
 				);
 			}
 
