@@ -13,6 +13,9 @@ $abTesting-color-text-warning: #c27500;
 		float: none;
 		display: inline-block;
 		width: 400px;
+		> .input-group {
+			width: 360px;
+		}
 		&.error {
 			color: $abTesting-color-text-warning;
 			.error-msg {
