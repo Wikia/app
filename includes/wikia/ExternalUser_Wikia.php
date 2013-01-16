@@ -13,7 +13,7 @@ class ExternalUser_Wikia extends ExternalUser {
 
 		return $this->initFromCond( array( 'user_name' => $name ) );
 	}
-	
+
 	protected function initFromId( $id ) {
 		wfDebug( __METHOD__ . ": init User from id: $id \n" );
 		return $this->initFromCond( array( 'user_id' => $id ) );
@@ -347,7 +347,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/** 
+	/**
 	 * Removes user info from secondary clusters so that it can be regenerated from scratch
 	 *
 	 * @author mix
@@ -366,7 +366,7 @@ class ExternalUser_Wikia extends ExternalUser {
 				$clusterName = 'wikicities_' . $clusterName;
 
 				$oDB = wfGetDB( DB_MASTER, array(), $clusterName );
-				$oDB->delete( 'user', array( 'user_id' => $id ) );
+				$oDB->delete( '`user`', array( 'user_id' => $id ) );
 				$oDB->commit();
 
 				$wgMemc->delete( $memkey );
