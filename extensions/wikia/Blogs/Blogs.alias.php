@@ -25,3 +25,16 @@ $specialPageAliases['pl'] = array(
 	'CreateBlogPage'	=> array( 'Utwórz wpis na blogu', 'CreateBlogPage' ),
 	'CreateBlogListingPage' => array( 'Utwórz listę wpisów na blogach', 'CreateBlogListingPage' )
 );
+
+/** Spanish (Espanol)
+ */
+$specialPageAliases['es'] = array(
+	'CreateBlogPage'	=> array( 'PublicarEnBlog', 'CreateBlogPage' ),
+	'CreateBlogListingPage' => array( 'CrearListaDeBlogs', 'CreateBlogListingPage' )
+);
+
+/** Italian (Italiano)
+ */
+$specialPageAliases['it'] = array(
+	'CreateBlogPage'	=> array( 'CreaNuovoPost', 'CreateBlogPage' )
+);
