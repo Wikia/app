@@ -76,7 +76,7 @@
 					initModalScroll();
 				},
 				onClose: function() {
-					UserLogin.refreshAfterForceLogin();
+					UserLogin.refreshIfAfterForceLogin();
 				}
 			});		
 		};
