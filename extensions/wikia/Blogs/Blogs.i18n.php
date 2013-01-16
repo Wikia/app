@@ -170,6 +170,8 @@ $messages['qqq'] = array(
 	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings. Tooltip displayed on hover on Blogs Tab in the right column on search page',
 	'user-blog-url-link' => 'Link - links to users Blog main page',
 	'blogs-comment-hidden' => 'If a tool like RevisionDelete has made the text of a comment inaccessible to the public, this message informs the reader the comment has been hidden',
+      'create-blog-listing-matches-calculate' => 'Button label. User presses to calculate how many blogs would be included in the blog listing given the user-selected criteria. After button is triggered, message gets switched to [[Wikia:Create-blog-listing-matches-recalculate]].',
+        'create-blog-listing-matches-recalculate' => 'Button label. Appears after [[Wikia:Create-blog-listing-matches-calculate]] has been triggered. Allows user to re-calculate the number of blogs that meet the user-selected criteria if the user changes the criteria since initial calculation.',
 );
 
 /** Afrikaans (Afrikaans)
