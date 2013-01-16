@@ -8,6 +8,7 @@
  */
 class HelloWorldSpecialController extends WikiaSpecialPageController {
 
+	/* @var HelloWorld */
 	private $helper = null;
 	private $privateData = array();
 
@@ -42,6 +43,7 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 		// adding custom css and js for this extension
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->response->addAsset( 'extensions/wikia/templates/HelloWorld/css/HelloWorld_Oasis.scss' );
+		$this->response->addAsset( 'extensions/wikia/templates/HelloWorld/js/modules/hello.js' );
 		$this->response->addAsset( 'extensions/wikia/templates/HelloWorld/js/HelloWorld.js' );
 
 		// getting request data
