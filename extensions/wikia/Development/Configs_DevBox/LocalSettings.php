@@ -162,9 +162,12 @@ $wgRC2UDPEnabled = false;
 switch($wgWikiaDatacenter) {
 	case 'poz':
 		$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.pl.wikia-dev.com";
+		$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.pl.wikia-dev.com";
 		break;
+
 	default:
 		$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
+		$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 }
 
 // macbre: generate proper paths for static assets on devboxes (BugId:6809)
@@ -172,7 +175,6 @@ $wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images r
 $wgStylePath = "{$wgCdnStylePath}/skins";
 $wgExtensionsPath = "{$wgCdnStylePath}/extensions";
 $wgResourceBasePath = $wgCdnStylePath;
-$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
 // fetch GoogleMaps resources from devboxes
 $wgGoogleMapsUrlPath = $wgExtensionsPath . '/3rdparty/GoogleMaps';
