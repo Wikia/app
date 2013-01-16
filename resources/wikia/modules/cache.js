@@ -133,6 +133,14 @@
 		};
 	}
 
+	//UMD inclusive
+	if (!context.Wikia) {
+		context.Wikia = {};
+	}
+
+	//namespace
+	context.Wikia.Cache = cache(window.localStorage);
+
 	if (context.define && context.define.amd) {
 		context.define('cache', ['localStorage'], cache);
 	}

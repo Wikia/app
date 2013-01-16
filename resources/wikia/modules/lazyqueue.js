@@ -82,6 +82,14 @@
 		};
 	}
 
+	//UMD inclusive
+	if (!context.Wikia) {
+		context.Wikia = {};
+	}
+
+	//namespace
+	context.Wikia.LazyQueue = lazyQueue();
+
 	if (context.define && context.define.amd) {
 		context.define('lazyqueue', lazyQueue);
 	}
