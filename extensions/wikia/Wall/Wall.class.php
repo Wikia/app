@@ -60,23 +60,15 @@ class Wall extends WikiaModel {
 		return $this->mTitle;
 	}
 	
-	public function getDescription($parse = true) {
-		$article = new Article($this->getTitle());
-		if(!$parse) {
-			return $article->getText();
-		}
-
-		return preg_replace_callback('/(\[\[[^\[\]\r\n\t]*\]\])/i', function($match) {
-			$app = F::App();
-			$options = $app->wg->Out->parserOptions();
-			$desc = str_replace('[[', '[[:', $match[0] );
-			$parserOut = $app->wg->Parser->parse($desc, $app->wg->Title, $options );
-			$desc = $parserOut->getText();
-			//TODO: maybe there is some parser option to not wrap everything in <p>
-			$desc = str_replace('<p>', '', $desc );
-			$desc = str_replace('</p>', '', $desc );
-			return trim($desc); 			
-		}, $article->getText() );
+	public function getDescription() {
+		$oArticle = new Article( $this->getTitle() );
+		$oApp = F::App();
+		$oParserOptions = $oApp->wg->Out->parserOptions();
+		$oParserOut = $oApp->wg->Parser->parse( $oArticle->getText(), $oApp->wg->Title, $oParserOptions );
+		$aOutput = array();
+		// Take the content out of an HTML P element and strip whitespace from the beginning and end.
+		preg_match( '/^<p>\\s*(.*)\\s*<\/p>$/su', $oParserOut->getText(), $aOutput );
+		return $aOutput[1];
 	}
 
 	public function getRelatedPageId() {
