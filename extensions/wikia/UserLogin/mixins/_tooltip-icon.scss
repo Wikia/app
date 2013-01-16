@@ -1,7 +1,7 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/border-radius";
 
-@mixin email-tooltip {
+@mixin tooltip-icon {
 	@include border-radius(6px);
 	background-color: $color-buttons;
 	color: white;
