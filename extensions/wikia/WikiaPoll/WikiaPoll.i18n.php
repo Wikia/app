@@ -24,7 +24,7 @@ $messages['en'] = array(
 	'wikiamobile-wikiapoll-open-poll' => 'What do you think?',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Thanks for voting!',
 	'wikiamobile-wikiapoll-poll' => 'Poll',
-	'wikiamobile-wikiapoll-user-voted' => 'You voted for $1'
+	'wikiamobile-wikiapoll-user-voted' => 'You voted for "$1"'
 );
 
 /** Message documentation (Message documentation)
