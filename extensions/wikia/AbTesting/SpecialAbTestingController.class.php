@@ -334,7 +334,9 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 				// find previous and current versions
 				$versions = array_slice($exp['versions'],-2);
 				if ( !$hasFutureVersion ) {
-					array_shift($versions);
+					if (count($versions) > 1) {
+						array_shift($versions);
+					}
 					array_push($versions,$abData->newVersion());
 				}
 
