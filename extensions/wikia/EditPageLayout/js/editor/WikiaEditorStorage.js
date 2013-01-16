@@ -11,15 +11,14 @@ WikiaEditorStorage.prototype = {
 		if (typeof(wgArticleId) != undefined) {
 			var editorInstance = window.WikiaEditor.getInstance();
 			var summary = $('#wpSummary');
+			var categorySelect = $('#CategorySelect').data('categorySelect');
 
 			var toStore = {
 				articleId: wgArticleId,
 				content: editorInstance.getContent(),
 				editorMode: editorInstance.mode,
-				summary: summary.exists() ? summary.val() : undefined
-
-				// TODO
-				//categories: categories
+				summary: summary.exists() ? summary.val() : undefined,
+				categories: categorySelect != undefined ? categorySelect.getData() : undefined
 			};
 
 			try {
@@ -34,6 +33,13 @@ WikiaEditorStorage.prototype = {
 
 	init: function() {
 		this.fetchData();
+
+		$(function () {
+			$('#CategorySelect').on('ready', function(event, categorySelect) {
+				WikiaEditorStorage.modifyCategories(categorySelect);
+				})
+		});
+
 
 		GlobalTriggers.bind('WikiaEditorReady', $.proxy(function(editor){
 			this.modifySummary();
@@ -50,6 +56,7 @@ WikiaEditorStorage.prototype = {
 			this.articleId = storageData.articleId;
 			this.content = storageData.content;
 			this.editorMode = storageData.editorMode;
+			this.categories = storageData.categories;
 		}
 		$.storage.del(storageKey);
 	},
@@ -70,6 +77,26 @@ WikiaEditorStorage.prototype = {
 		}
 	},
 
+	modifyCategories: function(categorySelect) {
+		var categories = this.getCategories();
+		if (categories != undefined) {
+			var actualCategories = categorySelect.getCategories();
+
+			var promises = [];
+
+			for (var i = 0; i < actualCategories.length; i++) {
+				promises.push(categorySelect.removeCategory(actualCategories[i]));
+			}
+
+			$.when.apply(null, promises).done(function(){
+				for (var i = 0; i < categories.length; i++) {
+					categorySelect.addCategory(categories[i]);
+				}
+			});
+
+		}
+	},
+
 	getContent: function() {
 		return this.content;
 	},
@@ -80,6 +107,10 @@ WikiaEditorStorage.prototype = {
 
 	getEditorMode: function() {
 		return this.editorMode;
+	},
+
+	getCategories: function() {
+		return this.categories;
 	},
 
 	getStoreContentKey: function() {

@@ -132,6 +132,8 @@
 					}
 				}));
 		}
+
+		element.trigger('ready', self);
 	};
 
 	/**
@@ -604,7 +606,6 @@
 			new CategorySelect( this, options );
 		});
 	};
-
 	// Exports
 	Wikia.CategorySelect = CategorySelect;
 	window.Wikia = Wikia;
