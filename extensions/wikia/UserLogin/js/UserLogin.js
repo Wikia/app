@@ -2,7 +2,7 @@
 var UserLogin = {
 	forceLoggedIn: false,
 
-	forceLoggedInCheck: function() {
+	refreshIfAfterForceLogin: function() {
 		if (this.forceLoggedIn) {
 			(new Wikia.Querystring()).addCb().goTo();
 		}
