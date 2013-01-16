@@ -12,6 +12,11 @@ namespace Wikia\Search\IndexService;
  */
 abstract class AbstractWikiService extends AbstractService
 {
+	/**
+	 * Allows us to reuse an atomic update for multiple documents on the backend, if it applies to a wiki and not a page.
+	 */
+	const PAGEID_PLACEHOLDER = '#WIKIA_PAGE_ID_VALUE#';
+	
     /**
 	 * Writes an XML response without the <add> wrapper and a placeholder for pageid
 	 * Assumes that we are not operating on a provided page ID
@@ -28,5 +33,13 @@ abstract class AbstractWikiService extends AbstractService
 		$updateXml = str_replace( '<update>', '', str_replace( '</update>', '', $updateXml ) );
 		
 		return array( 'contents' => $updateXml );
+	}
+	
+    /**
+	 * Helps us set the "primary key" for the solr document -- here we provide a value to be replaced by the backend script with a pageid
+	 * @return int
+	 */
+	protected function getPageIdForDocumentKey() {
+		return self::PAGEID_PLACEHOLDER;
 	}
 }

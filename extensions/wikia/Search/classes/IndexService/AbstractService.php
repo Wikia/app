@@ -12,11 +12,6 @@ use Wikia\Search\MediaWikiInterface;
 abstract class AbstractService
 {
 	/**
-	 * Allows us to reuse an atomic update for multiple documents on the backend, if it applies to a wiki and not a page.
-	 */
-	const PAGEID_PLACEHOLDER = '#WIKIA_PAGE_ID_VALUE#';
-	
-	/**
 	 * We use this client as an interface for building documents and writing XML
 	 * @var Solarium_Client
 	 */
@@ -117,7 +112,7 @@ abstract class AbstractService
 	protected function getDocumentFromResponse( array $responseArray ) {
 		$document = new \Solarium_Document_AtomicUpdate( $responseArray );
 		
-		$pageIdValue = $this->currentPageId ?: self::PAGEID_PLACEHOLDER;
+		$pageIdValue = $this->getPageIdForDocumentKey();
 		$pageIdKey = $document->pageid ?: sprintf( '%s_%s', $this->interface->getGlobal( 'CityId' ), $pageIdValue );
 		$document->setKey( 'pageid', $pageIdKey );
 		
@@ -129,6 +124,14 @@ abstract class AbstractService
 			}
 		}
 		return $document;
+	}
+	
+	/**
+	 * Helps us set the "primary key" for the solr document
+	 * @return int
+	 */
+	protected function getPageIdForDocumentKey() {
+		return $this->currentPageId;
 	}
 	
     /**
