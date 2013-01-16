@@ -113,7 +113,7 @@ $messages['en'] = array(
     'chat-chatbanadd-log-entry' => 'banned $1 from chat with an expiry time of $2, ends $3',
     'chat-chatbanremove-log-entry' => 'unbanned $1 from chat',
     'chat-chatbanchange-log-entry' => 'changed ban settings for $1 with an expiry time of $2, ends $3',
-    'chat-contributions-ban-notice' => 'This user is currently banned from chat. The latest chat ban log entry is provided below for reference:',
+    'chat-contributions-ban-notice' => '{{GENDER:$1|This user}} is currently banned from chat. The latest chat ban log entry is provided below for reference:',
     
     'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
     'chat-checkuser-join-action' => 'Joined Chat',
@@ -177,6 +177,9 @@ $messages['qqq'] = array(
 	'chat-browser-is-notsupported' => 'shown when user broser is not supported',
 	'chat-checkuser-join-action' => 'Shown in CheckUser extension for chat-join events',
 	'chat-status-away' => 'Display when user chnages his status to away',
+	'chat-contributions-ban-notice' => 'When going to a contributions page for a banned user, this message informs the reader that the user is currently banned from chat. It then prints the log data about the chat ban. 
+Paramaters:
+* $1 - User name is passed to the message for gender purposes.'
 );
 
 /** Afrikaans (Afrikaans)
