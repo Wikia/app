@@ -11,7 +11,7 @@
  */
 
 // include chef generated variables: $wgWikiaDatacenter
-// require_once('/usr/wikia/devbox/DevBoxVariables.php');
+require_once('/usr/wikia/devbox/DevBoxVariables.php');
 
 switch($wgWikiaDatacenter) {
 	case 'poz':
