@@ -35,10 +35,8 @@ WikiaEditorStorage.prototype = {
 	init: function() {
 		this.fetchData();
 
-		this.modifySummary();
-
-		editor = window.WikiaEditor.getInstance();
-		editor.on('ck-instanceReady', $.proxy(function(){
+		GlobalTriggers.bind('WikiaEditorReady', $.proxy(function(editor){
+			this.modifySummary();
 			this.modifyEditorContent(editor);
 		}, this));
 	},
@@ -59,9 +57,8 @@ WikiaEditorStorage.prototype = {
 	modifyEditorContent: function(editor) {
 		var content = this.getContent();
 		var editorMode = this.getEditorMode();
+
 		if (content != undefined && editorMode != undefined) {
-			console.log(content);
-			console.log(editorMode);
 			editor.setContent(content, editorMode);
 		}
 	},
@@ -91,6 +88,4 @@ WikiaEditorStorage.prototype = {
 };
 
 var WikiaEditorStorage = new WikiaEditorStorage();
-$(function(){
-	WikiaEditorStorage.init();
-});
+WikiaEditorStorage.init();
