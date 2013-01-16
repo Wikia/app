@@ -81,8 +81,8 @@ ___________________________________________
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'article-comments-file-page' => "Message displayed on File page when this foto is used on an article",
-	'article-blog-comments-file-page' => 'Message displayed on File page when this foto is used on a blog post comment' ,
+	'article-comments-file-page' => 'Message displayed on File page when this foto is used on an article',
+	'article-blog-comments-file-page' => 'Message displayed on File page when this foto is used on a blog post comment',
 	'article-comments-anonymous' => 'Anonymous users are logged out / un-authenticated users.',
 	'article-comments-post' => 'This is the text of a submit button to post a new article comment.',
 	'article-comments-cancel' => 'Cancel/stop editing an article comment.',
@@ -1830,6 +1830,8 @@ ___________________________________________
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'article-comments-file-page' => "<a href='$1'>Reactie van $2</a> op <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Reactie van $2</a> op bericht <a href='$3'>$4</a> op het blog van <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Anonieme gebruiker',
 	'article-comments-comments' => 'Opmerkingen ($1)',
 	'article-comments-post' => 'Opmerking plaatsen',
