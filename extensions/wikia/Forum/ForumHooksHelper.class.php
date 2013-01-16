@@ -91,9 +91,32 @@ class ForumHooksHelper {
 	public function onAfterWallWikiActivityFilter(&$item, $wmessage) {
 		if ( !empty( $item['ns'] ) && MWNamespace::getSubject( $item['ns'] ) == NS_WIKIA_FORUM_BOARD ) {
 			$app = F::App();
+			if ( $item['ns'] == NS_WIKIA_FORUM_BOARD ) {
+				// new board - we build Title object from current article id
+				$board = Title::newFromID( $item['article-id'] );
+				$item['title'] = $board->getBaseText();
+				$item['url'] = $board->getFullURL();
+				$item['new_board'] = true;
+				$item['wall-msg'] = '';
+				$item['wall-url'] = '';
+			} else {
+				// new comments on existing board - we build Title object based on id from WallMessage class logic ( getting parent )
+				$board = $wmessage->getArticleTitle();
+				$item['wall-msg'] = wfMsg( 'forum-wiki-activity-msg', '<a href="' . $board->getFullURL() . '">' . wfMsg( 'forum-wiki-activity-msg-name', $board->getText() ) . '</a>' );
+			}
+		}
 
-			$board = $wmessage->getArticleTitle();
-			$item['wall-msg'] = wfMsg( 'forum-wiki-activity-msg', '<a href="' . $board->getFullURL() . '">' . wfMsg( 'forum-wiki-activity-msg-name', $board->getText() ) . '</a>' );
+		return true;
+	}
+
+	public static function onFilePageImageUsageSingleLink(&$link, &$element) {
+
+		if ( $element->page_namespace == NS_WIKIA_FORUM_BOARD_THREAD ) {
+
+			$titleData = WallHelper::getWallTitleData(null, $element, true);
+
+			$boardText = wfMsg( 'forum-wiki-activity-msg', '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMsg( 'forum-wiki-activity-msg-name', $titleData['wallPageName'] ) . '</a>' );
+			$link = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ' . $boardText;
 		}
 		return true;
 	}
@@ -111,6 +134,42 @@ class ForumHooksHelper {
 
 		$result = array( 'protectedpagetext' );
 		return false;
+	}
+
+	/**
+	 * @brief Adjusting Special:Contributions
+	 *
+	 * @param ContribsPager $contribsPager
+	 * @param String $ret string passed to wgOutput
+	 * @param Object $row Std Object with values from database table
+	 *
+	 * @return true
+	 */
+	public function onContributionsLineEnding(&$contribsPager, &$ret, $row) {
+
+		if( isset( $row->page_namespace ) && in_array( MWNamespace::getSubject($row->page_namespace), array(NS_WIKIA_FORUM_BOARD) ) ) {
+
+			if ( $row->page_namespace == NS_WIKIA_FORUM_BOARD ) {
+				return true;
+			}
+
+			if ( class_exists('WallHooksHelper') ) {
+				$wallHooks = new WallHooksHelper();
+				return $wallHooks->contributionsLineEndingProcess( $contribsPager, $ret, $row );
+			}
+		}
+		return true;
+	}
+
+	public function onOasisAddPageDeletedConfirmationMessage( Title &$title, &$message ) {
+
+		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD ) {
+
+			$pageName = $title->getPrefixedText();
+			$message = wfMsgExt( 'forum-confirmation-board-deleted', array('parseinline'), $pageName );
+		}
+
+		return true;
 	}
 
 	public function onWallContributionsLine($pageNamespace, $wallMessage, $wfMsgOptsBase, &$ret) {
@@ -324,7 +383,6 @@ class ForumHooksHelper {
 	/**
 	 * just proxy to onWallStoreRelatedTopicsInDB
 	 */
-
 	public static function onWallStoreRelatedTopicsInDB($parent, $id, $namespace) {
 		self::onWallAction(null, $parent, $id);
 		return true;

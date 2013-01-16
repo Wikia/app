@@ -56,18 +56,23 @@ Check given username for possible typos.</p>',
 	'lookupcontribscontribtitleforuser' => 'Contributions for user:',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'final',
-	'lookupcontribsall' => 'all'
+	'lookupcontribsall' => 'all',
+	'action-lookupcontribs' => "lookup a user's contributions on multiple wikis",
 );
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Shirayuki
  * @author Siebrand
  * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'right-lookupcontribs' => '{{doc-right|lookupcontribs}}',
+	'lookupcontribsgo' => '{{Identical|Go}}',
+	'lookupcontribsnext' => '{{Identical|Next}}',
+	'right-lookupcontribs' => '{{doc-right|lookupcontribs|ns=Wikia}}',
 	'lookupcontribsshowpages' => '',
 	'lookupcontribscontent' => '{{Identical|Content}}',
+	'action-lookupcontribs' => '{{doc-action|lookupcontribs}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -252,6 +257,7 @@ Zkontrolujte dané uživatelské jméno pro případné překlepy.</p>',
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Metalhead64
  * @author SVG
  * @author The Evil IP address
  */
@@ -305,6 +311,7 @@ Bitte überprüfe den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
 	'lookupcontribsnormal' => 'kürzlich',
 	'lookupcontribsfinal' => 'letzte',
 	'lookupcontribsall' => 'alle',
+	'action-lookupcontribs' => 'Benutzerbeiträge auf mehreren Wikis einzusehen',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -542,6 +549,7 @@ $messages['gl'] = array(
 	'lookupcontribsnormal' => 'recentes',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'todas',
+	'action-lookupcontribs' => 'procurar as contribucións dun usuario en varios wikis',
 );
 
 /** Hungarian (magyar)
@@ -815,6 +823,7 @@ $messages['mk'] = array(
 	'lookupcontribsnormal' => 'скорешни',
 	'lookupcontribsfinal' => 'последни',
 	'lookupcontribsall' => 'сите',
+	'action-lookupcontribs' => 'проверка на придонесите на корисникот на повеќе викија',
 );
 
 /** Malayalam (മലയാളം)
@@ -998,7 +1007,7 @@ Geef hieronder een gebruikersnaam op om de lijst weer te geven.",
 	'lookupcontribsselectmodefinal' => 'laatste bijdragen voor die gebruiker',
 	'lookupcontribsselectmodeall' => 'alle bijdragen voor die gebruiker',
 	'lookupcontribsfullurls' => 'volledige URLs',
-	'lookupcontribslinks' => 'bijdragenverwijzingen',
+	'lookupcontribslinks' => 'koppeling naar bijdragen',
 	'lookupcontribsgo' => 'OK',
 	'lookupcontribsinvaliduser' => '<p class="error">Gebruiker "<b>$1</b>" bestaat niet.
 Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
@@ -1013,7 +1022,7 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Paginanaam',
 	'lookupcontribswikioptions' => 'Instellingen',
-	'lookupcontribscontribslink' => 'Bijdragenverwijzing',
+	'lookupcontribscontribslink' => 'Koppeling naar bijdragen',
 	'lookupcontribsdetails' => 'Details bekijken voor:',
 	'lookupcontribslastedited' => 'Laatste bewerking',
 	'lookupcontribsrecordspager' => "Regels '''$1''' tot '''$2''' van '''$3''' worden weergegeven.",
@@ -1033,6 +1042,7 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'laatste',
 	'lookupcontribsall' => 'alle',
+	'action-lookupcontribs' => 'globale bewerkingen van een gebruiker te bekijken',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -1134,6 +1144,7 @@ Sprawdź nazwę użytkownika.</p>',
 	'lookupcontribsnormal' => 'ostatnie',
 	'lookupcontribsfinal' => 'ostateczne',
 	'lookupcontribsall' => 'wszystko',
+	'action-lookupcontribs' => 'Przeglądanie edycji użytkownika na wielu wiki',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1188,6 +1199,7 @@ $messages['pms'] = array(
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'tuti',
+	'action-lookupcontribs' => "serca le contribussion ëd n'utent dzor wiki mùltiple",
 );
 
 /** Pashto (پښتو)
@@ -1483,6 +1495,7 @@ Kolla efter möjliga stavfel i det angivna användarnamnet.</p>',
 	'lookupcontribsnormal' => 'senaste',
 	'lookupcontribsfinal' => 'sista',
 	'lookupcontribsall' => 'alla',
+	'action-lookupcontribs' => 'kolla upp en användares bidrag på flera wikis',
 );
 
 /** Swahili (Kiswahili)

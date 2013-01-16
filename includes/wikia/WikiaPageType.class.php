@@ -111,7 +111,7 @@ class WikiaPageType {
 	public static function isActionPage() {
 		return (
 			F::app()->wg->Request->getVal('action', 'view') !== 'view'
-			|| F::app()->wg->Request->getVal('diff')
+			|| F::app()->wg->Request->getVal('diff') !== null
 		);
 	}
 

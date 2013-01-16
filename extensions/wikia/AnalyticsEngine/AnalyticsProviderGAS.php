@@ -54,12 +54,18 @@ class AnalyticsProviderGAS implements iAnalyticsProvider {
 		$app = F::app();
 
 		//do not proceed if skin is WikiaMobile, see onWikiaMobileAssetsPackages
-		if ( !( $app->checkSkin( 'wikiamobile', $skin ) ) ) {
+		if ( !( $app->checkSkin( array( 'wikiamobile', 'oasis' ), $skin ) ) ) {
 			//needs to be added unprocessed as per Cardinal Path's request
 			//so AssetsManager is not an option here
 			$scripts .= "\n<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/AnalyticsEngine/js/analytics_prod.js\"></script>";
 		}
 
+		return true;
+	}
+
+	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
+		// this is only called in Oasis, so there's no need to double-check it
+		$jsAssetGroups[] = 'analytics_gas_js';
 		return true;
 	}
 

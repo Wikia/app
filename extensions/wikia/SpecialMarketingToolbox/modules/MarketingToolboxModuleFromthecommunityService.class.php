@@ -1,5 +1,13 @@
 <?php
 class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModuleService {
+	const FIRST_SECTION_INDEX = 1;
+
+	const FIELD_NAME_PHOTO = 'photo';
+	const FIELD_NAME_TITLE = 'title';
+	const FIELD_NAME_USERSURL = 'usersUrl';
+	const FIELD_NAME_QUOTE = 'quote';
+	const FIELD_NAME_URL = 'url';
+
 	static $fieldNames = array('photo', 'title', 'usersUrl', 'quote', 'url');
 
 	protected function getFormFields() {
@@ -9,112 +17,48 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		$model = new MarketingToolboxFromthecommunityModel();
 		$boxesCount = $model->getBoxesCount();
 
-		for ($i = 1; $i <= $boxesCount; $i++) {
-			$fields['photo' . $i] = array(
+		for ($i = self::FIRST_SECTION_INDEX; $i <= $boxesCount; $i++) {
+			$fields[self::FIELD_NAME_PHOTO . $i] = array(
 				'type' => 'hidden',
-				'validator' => new WikiaValidatorDependent(
-					array(
-						'required' => false,
-						'ownValidator' => new WikiaValidatorFileTitle(
-							array(
-								'required' => true
-							),
-							array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
-						),
-						'dependentFields' => $this->getDependentFields($i, 'photo')
-					)
-				),
+				'validator' => $this->getValidator($i, self::FIELD_NAME_PHOTO),
 				'attributes' => array(
-					'class' => "{required: {$this->getJsRequiredValidator($i, 'photo')}} wmu-file-name-input"
+					'class' => $this->getJsValidator($i, self::FIELD_NAME_PHOTO) . ' wmu-file-name-input'
 				),
 				'class' => 'hidden'
 			);
 
-			$fields['title' . $i] = array(
+			$fields[self::FIELD_NAME_TITLE . $i] = array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-from-the-community-title'),
-				'validator' => new WikiaValidatorDependent(
-					array(
-						'required' => false,
-						'ownValidator' => new WikiaValidatorString(
-							array(
-								'required' => true,
-								'min' => 1
-							),
-							array('too_short' => 'marketing-toolbox-validator-string-short')
-						),
-						'dependentFields' => $this->getDependentFields($i, 'title')
-					)
-				),
+				'validator' => $this->getValidator($i, self::FIELD_NAME_TITLE),
 				'attributes' => array(
-					'class' => "{required: {$this->getJsRequiredValidator($i, 'title')}}"
+					'class' => $this->getJsValidator($i, self::FIELD_NAME_TITLE)
 				)
 			);
 
-			$fields['usersUrl' . $i] = array(
+			$fields[self::FIELD_NAME_USERSURL . $i] = array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-from-the-community-users-url'),
-				'validator' => new WikiaValidatorDependent(
-					array(
-						'required' => false,
-						'ownValidator' => new WikiaValidatorUrl(
-							array(
-								'required' => true
-							),
-							array(
-								'wrong' => 'marketing-toolbox-validator-wrong-url'
-							)
-						),
-						'dependentFields' => $this->getDependentFields($i, 'usersUrl')
-					)
-				),
+				'validator' => $this->getValidator($i, self::FIELD_NAME_USERSURL),
 				'attributes' => array(
-					'class' => "{required: {$this->getJsRequiredValidator($i, 'usersUrl')}, wikiaUrl: true}"
+					'class' => $this->getJsValidator($i, self::FIELD_NAME_USERSURL)
 				)
 			);
 
-			$fields['quote' . $i] = array(
+			$fields[self::FIELD_NAME_QUOTE . $i] = array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-from-the-community-long-quote'),
-				'validator' => new WikiaValidatorDependent(
-					array(
-						'required' => false,
-						'ownValidator' => new WikiaValidatorString(
-							array(
-								'required' => true,
-								'min' => 1
-							),
-							array('too_short' => 'marketing-toolbox-validator-string-short')
-						),
-						'dependentFields' => $this->getDependentFields($i, 'quote')
-					)
-				),
+				'validator' => $this->getValidator($i, self::FIELD_NAME_QUOTE),
 				'attributes' => array(
-					'class' => "{required: {$this->getJsRequiredValidator($i, 'quote')}}"
+					'class' => $this->getJsValidator($i, self::FIELD_NAME_QUOTE)
 				)
 			);
 
-			$fields['url' . $i] = array(
+			$fields[self::FIELD_NAME_URL . $i] = array(
 				'label' => $this->wf->msg('marketing-toolbox-hub-module-from-the-community-url'),
-				'validator' => new WikiaValidatorDependent(
-					array(
-						'required' => false,
-						'ownValidator' => new WikiaValidatorUrl(
-							array(
-								'required' => true
-							),
-							array(
-								'wrong' => 'marketing-toolbox-validator-wrong-url'
-							)
-						),
-						'dependentFields' => $this->getDependentFields($i, 'url')
-					)
-				),
-
+				'validator' => $this->getValidator($i, self::FIELD_NAME_URL),
 				'attributes' => array(
-					'class' => "{required: {$this->getJsRequiredValidator($i, 'url')}, wikiaUrl: true}"
+					'class' => $this->getJsValidator($i, self::FIELD_NAME_URL)
 				),
 				'class' => 'borderNone'
 			);
-
-
 		}
 
 		return $fields;
@@ -135,11 +79,84 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		return $out;
 	}
 
+	protected function getValidator($index, $fieldName) {
+		$validator = null;
+		
+		switch ($fieldName) {
+			case self::FIELD_NAME_PHOTO:
+				$validator = new WikiaValidatorFileTitle(
+					array(
+						'required' => true
+					),
+					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
+				);
+				break;
+			case self::FIELD_NAME_TITLE:
+			case self::FIELD_NAME_QUOTE:
+				$validator = new WikiaValidatorString(
+					array(
+						'required' => true,
+						'min' => 1
+					),
+					array('too_short' => 'marketing-toolbox-validator-string-short')
+				);
+				break;
+			case self::FIELD_NAME_URL:
+				$validator = new WikiaValidatorUrl(
+					array(
+						'required' => true
+					),
+					array(
+						'wrong' => 'marketing-toolbox-validator-wrong-url'
+					)
+				);
+				break;
+			case self::FIELD_NAME_USERSURL:
+				$validator = new WikiaValidatorUsersUrl(
+					array(
+						'required' => true
+					),
+					array(
+						'wrong' => 'marketing-toolbox-validator-wrong-url',
+						'wrong-users-url' => 'marketing-toolbox-validator-wrong-users-url'
+					)
+				);
+				break;
+		}
+
+		if ($index != self::FIRST_SECTION_INDEX) {
+			$validator = new WikiaValidatorDependent(
+				array(
+					'required' => false,
+					'ownValidator' => $validator,
+					'dependentFields' => $this->getDependentFields($index, $fieldName)
+				)
+			);
+		}
+
+		return $validator;
+	}
+
+	protected function getJsValidator($index, $fieldName) {
+		$out = '';
+		if ($index == self::FIRST_SECTION_INDEX) {
+			$out .= 'required';
+		} else {
+			$out .= "{required: {$this->getJsRequiredValidator($index, $fieldName)}}";
+		}
+
+		if (in_array($fieldName, array('url', 'usersUrl'))) {
+			$out .= ' wikiaUrl';
+		}
+
+		return $out;
+	}
+
 	protected function getJsRequiredValidator($i, $actualFieldName) {
 		$dependentRules = array();
 		foreach (self::$fieldNames as $fieldName) {
 			if ($actualFieldName != $fieldName) {
-				$dependentRules[] = '#' . MarketingToolboxModel::FORM_FIELD_PREFIX . $fieldName . ':filled';
+				$dependentRules[] = '#' . MarketingToolboxModel::FORM_FIELD_PREFIX . $fieldName .$i . ':filled';
 			}
 		}
 
@@ -180,11 +197,16 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 			if (!empty($data['usersUrl' . $i])) {
 				$data['usersUrl' . $i] = $this->addProtocolToLink($data['usersUrl' . $i]);
 
+				// get Wiki URL
 				$parsedUrl = parse_url($data['usersUrl' . $i]);
 				$data['wikiUrl' . $i] = $parsedUrl['host'];
+
+				$userName = UserService::getNameFromUrl($data['usersUrl' . $i]);
+				if ($userName !== false) {
+					$data['UserName' . $i] = $userName;
+				}
 			}
 		}
-
 		return $data;
 	}
 }

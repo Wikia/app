@@ -464,6 +464,11 @@ class BodyController extends WikiaController {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialUpload.scss'));
 		}
 
+		// load CSS for Special:MultipleUpload
+		if (!empty($wgTitle) && $wgTitle->isSpecial('MultipleUpload')) {
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialMultipleUpload.scss'));
+		}
+
 		// load CSS for Special:Allpages
 		if (!empty($wgTitle) && $wgTitle->isSpecial('Allpages')) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialAllpages.scss'));

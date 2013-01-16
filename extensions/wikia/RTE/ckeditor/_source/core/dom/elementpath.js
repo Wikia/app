@@ -46,7 +46,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					this.lastElement = e;
 
 				var elementName = e.getName();
-				if ( CKEDITOR.env.ie && e.$.scopeName != 'HTML' )
+				if ( CKEDITOR.env.ie && CKEDITOR.env.ieVersion < 10 && e.$.scopeName != 'HTML' ) // Wikia change - added ieVersion (bugid:94726)
 					elementName = e.$.scopeName.toLowerCase() + ':' + elementName;
 
 				if ( !blockLimit )

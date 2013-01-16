@@ -15,14 +15,6 @@ $config['oasis_shared_core_js'] = array(
 	),
 );
 
-$config['oasis_jquery_ads_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#group_oasis_jquery',
-		'#group_oasis_ads_js'
-	)
-);
-
 $config['oasis_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -56,7 +48,6 @@ $config['adengine2_js'] = array(
 	'assets' => array(
 		// core
 		'//resources/wikia/modules/cache.js',
-		'//resources/wikia/modules/lazyqueue.js',
 
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
@@ -64,6 +55,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 
 		// high prio
+		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/AdProviderAdDriver2.js',
@@ -73,6 +65,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdLogicShortPage.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
+		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
 
@@ -82,8 +75,8 @@ $config['adengine2_js'] = array(
 );
 
 $config['oasis_ads_js'] = array(
-    'type' => AssetsManager::TYPE_JS,
-    'assets' => array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
 		// ads
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
@@ -158,7 +151,14 @@ $config['oasis_blocking'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//skins/wikia/js/WikiaScriptLoader.js',
-		'//skins/wikia/js/JqueryLoader.js'
+		'//skins/wikia/js/JqueryLoader.js',
+		'//resources/wikia/modules/lazyqueue.js',
+	)
+);
+$config['abtesting'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
 );
 
@@ -508,7 +508,9 @@ $config['wikiamobile_js_ads'] = array(
 		'//resources/wikia/libraries/DOMwriter/domwriter.js',
 
 		//advertisement "core"
+		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
 
 		//modules
 		'//resources/wikia/modules/geo.js',
@@ -602,6 +604,7 @@ $config['monobook_js'] = array(
 //		'//resources/mediawiki/mediawiki.util.js', # instead of //skins/common/wikibits.js'
 //		'//skins/common/ajax.js',
 		'//skins/monobook/main.js',
+		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
@@ -1084,6 +1087,7 @@ $config['imagedrop_scss'] = array(
 );
 
 /** AnalyticsEngine **/
+/** Note: this group is also used in Oasis! */
 $config['analytics_gas_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array( 'wikiamobile' ),

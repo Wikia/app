@@ -26,6 +26,8 @@ describe("Media Gallery module", function () {
 	window.Features = {};
 
 	async.it('should be defined', function(done){
+		document.body.innerHTML = '<div id="wkPage"><section id="mw-content-text"></section></div>';
+
 		require(['mediagallery'], function(mg){
 
 			expect(mg).toBeDefined();

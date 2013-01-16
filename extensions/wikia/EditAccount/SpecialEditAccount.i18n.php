@@ -62,8 +62,8 @@ $messages['en'] = array(
 	'editaccount-status-confirmed' => 'Confirmed',
 	'editaccount-status-unconfirmed' => 'Unconfirmed',
 	'editaccount-status-realuser' => 'Real User',
-	'editaccount-status-tempuser' => 'Temp User',
-	'editaccount-error-tempuser-email' => 'Temp users cannot have blank email address field, please enter an email address.',
+	'editaccount-status-tempuser' => 'Temporary User',
+	'editaccount-error-tempuser-email' => 'Temporary users cannot have blank email address field, please enter an email address.',
 	'editaccount-email-change-requested' => 'User requested email change via Preferences to $1. To confirm the requested email address change for the user, enter the requested email address into the field below and click "Save and confirm."',
 
 	# logging
@@ -82,6 +82,7 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author Lloffiwr
  * @author Michał Roszka (Mix) <michal@wikia-inc.com>
+ * @author Shirayuki
  * @author Siebrand
  * @author The Evil IP address
  * @author Umherirrender
@@ -101,8 +102,12 @@ $messages['qqq'] = array(
 
 Per [[Thread:Support/About_Wikia:Editaccount-status-realuser/ms_and_Wikia:Editaccount-status-tempuser/ms/reply|user TOR on support]]',
 	'editaccount-status-tempuser' => 'This is the status of the account in the Wikia UserLogin system – a "real user" means an active account, while a "temp user" means it\'s an inactive account. Accounts are activated once the user clicks on a link in an e-mail we send them.',
-	'right-editaccount' => '{{doc-right|editaccount}}',
+	'right-editaccount' => '{{doc-right|editaccount|ns=Wikia}}',
 	'action-editaccount' => '{{doc-action|editaccount}}',
+        'editaccount-title' => 'Name of the "EditAccount" extension. This message is displayed as the H1 page title of the special page.',
+        'editaccount-frame-usage' => 'Label for note field. In this context, "note" refers to extra information about the extension and its functionality',
+        'editaccount-status-tempuser' => '"Temporary user" indicates an account is inactive. An account is activated and becomes a "real user" once the user clicks on a link in an e-mail we send them.',
+
 );
 
 /** Afrikaans (Afrikaans)
@@ -278,6 +283,7 @@ $messages['ca'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -296,12 +302,14 @@ $messages['cs'] = array(
 	'editaccount-label-pass' => 'Nastavit nové heslo',
 	'editaccount-label-realname' => 'Nastavit novoé skutečné jméno',
 	'editaccount-label-clearunsub' => 'Odhlášeno',
+	'editaccount-label-reason' => 'Důvod:',
 	'editaccount-submit-email' => 'Uložit e-mailovou adresu',
 	'editaccount-submit-pass' => 'Uložit heslo',
 	'editaccount-submit-realname' => 'Uložit skutečné jméno',
 	'editaccount-submit-clearunsub' => 'Pročistit odhlášené',
 	'editaccount-submit-cleardisable' => 'Pročistit zakázané vlajky',
 	'editaccount-submit-close' => 'Zavřít účet',
+	'editaccount-submit-button' => 'Uložit',
 	'editaccount-usage-close' => 'Uživatelský účet můžete také zakázat vytvořením náhodného hesla a odebíráním e-mailové adresy. Data však budou nevratně ztracena.',
 	'editaccount-warning-close' => '<b>Pozor!</b> Chystáte se trvale zakázat účet uživatele <b>$1</b>. To nelze vrátit. Jste si jisti, že to chcete udělat?',
 	'editaccount-status' => 'Zpráva o stavu',
@@ -1494,12 +1502,17 @@ $messages['pms'] = array(
 	'editaccount-label-pass' => 'Ampòsta neuva ciav',
 	'editaccount-label-realname' => 'Ampòsta neuv nòm ver',
 	'editaccount-label-clearunsub' => "Anulà l'abonament",
+	'editaccount-label-toggleadopt' => "Modìfica lë stat d'adotator (për AutomaticWikiAdopt):",
+	'editaccount-label-toggleadopt-prevent' => 'Evité auto adossion',
+	'editaccount-label-toggleadopt-allow' => 'Përmëtte auto adossion',
+	'editaccount-label-reason' => 'Rason:',
 	'editaccount-submit-email' => "Salvé l'adrëssa ëd pòsta eletrònica",
 	'editaccount-submit-pass' => 'Salva Ciav',
 	'editaccount-submit-realname' => 'Salva Nòm Ver',
 	'editaccount-submit-clearunsub' => "Scancelé l'anulament ëd l'abonament",
 	'editaccount-submit-cleardisable' => 'Gavé la marca ëd disabilitassion',
 	'editaccount-submit-close' => 'Sara Cont',
+	'editaccount-submit-button' => 'Salva',
 	'editaccount-usage-close' => "A peul ëdcò disabilité a un cont utent an cripté soa ciav e gavand soa adrëssa ëd pòsta eletrònica. Ch'a fasa atension che sto dat a l'é përdù e a l'é pa arcuperàbil.",
 	'editaccount-warning-close' => "<b>Atension!</b> A l'é an camin ch'a disabìlita për sempe ël cont ëd l'utent <b>$1</b>. As peul pa torné andré. É-lo sigur ëd vorèj felo?",
 	'editaccount-status' => 'Mëssagi dë stat',
@@ -1536,6 +1549,7 @@ $messages['pms'] = array(
 	'editaccount-log-entry-close' => 'disabilità cont $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Sto cont-sì a l\'é stàit disabilità globalment da Wikia.</div>',
 	'right-editaccount' => "Modifiché ij gust ëd j'àutri utent",
+	'action-editaccount' => "modifiché j'anformassion ëd j'àutri utent",
 );
 
 /** Pashto (پښتو)
@@ -1701,6 +1715,7 @@ $messages['ro'] = array(
 
 /** Russian (русский)
  * @author Eleferen
+ * @author Ignatus
  * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
@@ -1720,12 +1735,17 @@ $messages['ru'] = array(
 	'editaccount-label-pass' => 'Установка нового пароля',
 	'editaccount-label-realname' => 'Установка нового настоящего имени',
 	'editaccount-label-clearunsub' => 'Отписаться',
+	'editaccount-label-toggleadopt' => 'Изменить статус удочерителя (для AutomaticWikiAdopt):',
+	'editaccount-label-toggleadopt-prevent' => 'Предотвратить автоматическое удочерение',
+	'editaccount-label-toggleadopt-allow' => 'Разрешить автоматическое удочерение',
+	'editaccount-label-reason' => 'Причина:',
 	'editaccount-submit-email' => 'Сохранить адрес эл. почты',
 	'editaccount-submit-pass' => 'Сохранить пароль',
 	'editaccount-submit-realname' => 'Сохранить настоящее имя',
 	'editaccount-submit-clearunsub' => 'Снять отказ от подписки',
 	'editaccount-submit-cleardisable' => 'Очистить отключённый флаг',
 	'editaccount-submit-close' => 'Закрыть учётную запись',
+	'editaccount-submit-button' => 'Сохранить',
 	'editaccount-usage-close' => 'Вы также можете приостановить действие учётной записи, заменив её пароль и удалив адрес электронной почты. Обратите внимание, что эти данные будет невозможно восстановить.',
 	'editaccount-warning-close' => '<b>Внимание!</b> Вы собираетесь навсегда отключить учётную запись пользователя <b>$1</b>. Это действие не может быть отменено. Вы уверены, что хотите сделать именно это?',
 	'editaccount-status' => 'Статусное сообщение',
@@ -1762,6 +1782,7 @@ $messages['ru'] = array(
 	'editaccount-log-entry-close' => 'отключил учётную запись $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Эта учётная запись была отключена на всей Викия.</div>',
 	'right-editaccount' => 'Редактировать настройки других участников',
+	'action-editaccount' => 'редактировать информацию других пользователей',
 );
 
 /** Sakha (саха тыла)

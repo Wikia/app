@@ -244,6 +244,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-related-discussion-total-replies' => '$1 messages',
 	'forum-related-discussion-zero-state-creative' => 'You can find discussions about everything related to this wiki on [[Special:Forum|{{SITENAME}} Forum!]]',
 	'forum-related-discussion-see-more' => 'See more discussions',
+	'forum-confirmation-board-deleted' => '"$1" has been deleted.',
 );
 
 $messages['qqq'] = array(
@@ -332,4 +333,5 @@ $messages['qqq'] = array(
 	
 	
 	'forum-discussion-placeholder-message-short' => 'Display on topic page inside new discussion body testarea',
+	'forum-confirmation-board-deleted' => 'Board delete confirmation message. $1 is board name',
 );

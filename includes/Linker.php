@@ -179,7 +179,7 @@ class Linker {
 		// Create a unique key from the arguments and cache the results of this
 		// method call for the rest of this request
 		static $linkCache = array();
-		$key = serialize( array( $target->getDBkey(), $target->getNamespace(), $target->getFragment(), $html, $customAttribs, $query, $options ) );
+		$key = serialize( array( $target->getDBkey(), $target->getNamespace(), $target->getFragment(), $target->getInterwiki(), $html, $customAttribs, $query, $options ) );
 
 		if ( array_key_exists($key, $linkCache) ) {
 			wfProfileOut( __METHOD__ );
@@ -243,7 +243,7 @@ class Linker {
 		}
 
 		/* Wikia change begin - @author: garth */
-		$linkCache[$key] = $ret;	
+		$linkCache[$key] = $ret;
 		/* Wikia change - end */
 
 		wfProfileOut( __METHOD__ );
@@ -292,7 +292,7 @@ class Linker {
 		# (i.e., for a nonexistent special page).
 		if ( in_array( 'broken', $options ) && empty( $query['action'] )
 			&& !$isAutoPageCreateEnabled # added by wikia
-			&& !$target->isSpecialPage() 
+			&& !$target->isSpecialPage()
 			&& $target->getNamespace() != NS_USER ) {
 
 			$query['action'] = 'edit';
@@ -949,7 +949,7 @@ class Linker {
 				. ' title="' . htmlspecialchars( $title->getPrefixedText(), ENT_QUOTES ) . '"'
 				. $nofollow # wikia change
 				. '>'
-				. $encLabel . '</a>'; 
+				. $encLabel . '</a>';
 			// Wikia change end
 		} else {
 			wfProfileOut( __METHOD__ );

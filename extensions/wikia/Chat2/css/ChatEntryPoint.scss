@@ -14,6 +14,18 @@ body.skin-oasis .ChatMonobookEntryPoint {
 	display: none;
 }
 
+.chat-join {
+	button:before {
+		@include sprite-Chat-full('icon-chat_bubble');
+		content: "";
+		display: inline-block;
+		height: 15px;
+		margin-right: 5px;
+		vertical-align: middle;
+		width: 17px;
+	}
+}
+
 .ChatModule {
 	.chat-contents {
 		position: relative;
@@ -69,16 +81,6 @@ body.skin-oasis .ChatMonobookEntryPoint {
 		position: absolute;
 		top: 0;
 		right: 0;
-
-		button:before {
-			@include sprite-Chat-full('icon-chat_bubble');
-			content: "";
-			display: inline-block;
-			height: 15px;
-			margin-right: 5px;
-			vertical-align: middle;
-			width: 17px;
-		}
 	}
 
 	.chat-whos-here {

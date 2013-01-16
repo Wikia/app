@@ -678,6 +678,16 @@ $messages['ro'] = array(
 	'wva-protected' => 'Acest clip este protejat.',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wva-name' => "Nome d'u video:",
+	'wva-url' => "URL d'u video:",
+	'wva-add' => 'Aggiunge',
+	'wva-protected' => 'Stu video jè prutette.',
+);
+
 /** Russian (русский)
  * @author Eleferen
  * @author Kuzura

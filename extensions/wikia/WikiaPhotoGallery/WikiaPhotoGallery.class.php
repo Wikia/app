@@ -145,16 +145,16 @@ class WikiaPhotoGallery extends ImageGallery {
 	}
 
 	/**
-	 * set parser cache key 
+	 * set parser cache key
 	 */
-	 
+
 	public function recordParserOption(&$parser) {
 		if($this->mType == self::WIKIA_PHOTO_SLIDER) {
-			/** 
-			 * because slider tag contains elements of interface we need to 
+			/**
+			 * because slider tag contains elements of interface we need to
 			 * inform parser to vary parser cache key by user lang option
 			 **/
-			$parser->mOutput->recordOption('userlang');	
+			$parser->mOutput->recordOption('userlang');
 		}
 	}
 
@@ -463,7 +463,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		if(empty($this->mData['id'] )) {
 			$this->mData['id'] = self::$galleriesCounter++;
 		}
-		
+
 		if(!empty($parser)) {
 			$this->recordParserOption($parser);
 		}
@@ -584,7 +584,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$out .= F::build('JSSnippets')->addToStack(
-			array( '/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js' ),
+			array( '/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', ),
 			array(),
 			'WikiaPhotoGalleryView.init'
 		);
@@ -1170,6 +1170,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					'class' => 'thumbimage',
 					'width' => $thumb->width,
 					'height' => $thumb->height,
+					'style' => 'border: 0px;',
 				);
 				if ( $this->mData['images'][$p]['data-caption'] != '' ) {
 					$thumbAttribs['data-caption'] = $this->mData['images'][$p]['data-caption'];
@@ -1318,8 +1319,6 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 		/* end temp transistion code */
 
-		$imageServingForImages = new ImageServing(null, $imagesDimensions['w'], $imagesDimensions);
-
 		// setup image serving for navigation thumbnails
 		if ( $orientation == 'mosaic' ) {
 			$sliderClass = 'mosaic';
@@ -1366,9 +1365,28 @@ class WikiaPhotoGallery extends ImageGallery {
 			$img = wfFindFile( $nt, $time );
 			if ( !WikiaFileHelper::isFileTypeVideo($img) && is_object($img) && ($nt->getNamespace() == NS_FILE)) {
 
-				if( F::app()->checkSkin( 'wikiamobile' ) ){
+				$aspect = $img->getWidth() / $img->getHeight();
+				$adjWidth = $img->getWidth();
+				$adjHeight = $img->getHeight();
+
+				// If the image extends beyond the slider's viewing box in either dimention
+				// scaled down the image
+				if (($img->getWidth() > $imagesDimensions['w']) || ($img->getHeight() > $imagesDimensions['h'])) {
+					if (($img->getWidth() - $imagesDimensions['w']) > ($img->getHeight() - $imagesDimensions['h'])) {
+						// Oversized image, constrain on width
+						$adjWidth = $imagesDimensions['w'];
+						$adjHeight = intval($adjWidth / $aspect);
+					} else {
+						// Oversized image, constrain on height
+						$adjHeight = $imagesDimensions['h'];
+						$adjWidth = intval($adjHeight * $aspect);
+					}
+				}
+
+				if ( F::app()->checkSkin( 'wikiamobile' ) ){
 					$imageUrl = wfReplaceImageServer( $img->getUrl(), $img->getTimestamp() );
-				}else{
+				} else {
+					$imageServingForImages = new ImageServing(null, $imagesDimensions['w'], array("w" => $adjWidth, "h" => $adjHeight));
 					// generate cropped version of big image (fit within 660x360 box)
 					// BugId:9678 image thumbnailer does not always land on 360px height since we scale on width
 					// so this also scales image UP if it is too small (stretched is better than blank)
@@ -1386,6 +1404,10 @@ class WikiaPhotoGallery extends ImageGallery {
 					'imageLink' => !empty($link) ? $linkAttribs['href'] : '',
 					'imageDescription' => Sanitizer::removeHTMLtags($linkText),
 					'imageThumbnail' => $thumbUrl,
+					'adjWidth' => $adjWidth,
+					'adjHeight' => $adjHeight,
+					'centerTop' => ($imagesDimensions['h'] > $adjHeight) ? intval(($imagesDimensions['h'] - $adjHeight)/2) : 0,
+					'centerLeft' => ($imagesDimensions['w'] > $adjWidth) ? intval(($imagesDimensions['w'] - $adjWidth)/2) : 0,
 				);
 
 				if ( F::app()->checkSkin( 'wikiamobile' ) ) {

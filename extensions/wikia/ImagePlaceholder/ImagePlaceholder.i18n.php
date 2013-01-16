@@ -10,6 +10,13 @@ $messages['en'] = array(
 	'imgplc-notinhistory-video' => 'You cannot add a video in history mode.',
 );
 
+/** Message documentation (Message documentation)
+ * @author Shirayuki
+ */
+$messages['qqq'] = array(
+	'imgplc-image' => '{{Identical|Image}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */

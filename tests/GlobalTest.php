@@ -3,10 +3,10 @@
 class GlobalTest extends PHPUnit_Framework_TestCase {
 	function setUp() {
 	}
-	
+
 	function tearDown() {
 	}
-	
+
 	function testRandom() {
 		# This could hypothetically fail, but it shouldn't ;)
 		$this->assertFalse(
@@ -22,7 +22,7 @@ class GlobalTest extends PHPUnit_Framework_TestCase {
 	function testReadOnlyEmpty() {
 		global $wgReadOnly;
 		$wgReadOnly = null;
-		
+
 		$this->assertFalse( wfReadOnly() );
 		$this->assertFalse( wfReadOnly() );
 	}
@@ -35,7 +35,7 @@ class GlobalTest extends PHPUnit_Framework_TestCase {
 
 	function testTime() {
 		$start = wfTime();
-		$this->assertType( 'float', $start );
+		$this->assertInternalType( 'float', $start );
 		$end = wfTime();
 		$this->assertTrue( $end > $start, "Time is running backwards!" );
 	}
@@ -152,7 +152,7 @@ class GlobalTest extends PHPUnit_Framework_TestCase {
 			wfTimestamp( TS_DB, '2001-01-15 12:34:56' ),
 			'TS_DB to TS_DB' );
 	}
-	
+
 	function testBasename() {
 		$sets = array(
 			'' => '',

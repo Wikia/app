@@ -4,7 +4,7 @@
  *
  * @author Władysław Bodzek
  */
-class ResourceLoaderAbTestingModule extends ResourceLoaderFileModule {
+class ResourceLoaderAbTestingModule extends ResourceLoaderModule {
 
 	protected $abTesting = null;
 
@@ -16,11 +16,7 @@ class ResourceLoaderAbTestingModule extends ResourceLoaderFileModule {
 	}
 
 	public function getScript(ResourceLoaderContext $context) {
-		/** @var $abTesting AbTesting */
-		$config = $this->getAbTesting()->getConfigScript();
-		$code = parent::getScript($context);
-
-		return "$config;\n$code";
+		return $this->getAbTesting()->getConfigScript();
 	}
 
 	/**
@@ -31,8 +27,10 @@ class ResourceLoaderAbTestingModule extends ResourceLoaderFileModule {
 	}
 
 	public function getModifiedTime( ResourceLoaderContext $context ) {
-		$modifiedTime = parent::getModifiedTime($context);
-		$modifiedTime = max($modifiedTime,$this->getAbTesting()->getConfigModifiedTime());
+		$modifiedTime = $this->getAbTesting()->getConfigModifiedTime();
+		if ( empty($modifiedTime) ) {
+			$modifiedTime = 1;
+		}
 		return $modifiedTime;
 	}
 

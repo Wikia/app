@@ -167,6 +167,15 @@ $app->registerClass( 'NotFoundApiException', "{$IP}/includes/wikia/api/ApiExcept
  * Wikia API end
  */
 
+/**
+ * Wikia Skins
+ *
+ * this need to be autoloaded to avoid PHPUnit replacing the classes definition with mocks
+ * and brake the world; Monobook is already autoloaded in /includes/DefaultSettings.php
+ */
+$app->registerClass( 'SkinOasis', "{$IP}/skins/Oasis.php" );
+$app->registerClass( 'SkinWikiaMobile', "{$IP}/skins/WikiaMobile.php" );
+
 $wgAutoloadClasses['SpamBlacklist'] = $IP . '/extensions/SpamBlacklist/SpamBlacklist_body.php';
 $wgAutoloadClasses['BaseBlacklist'] = $IP . '/extensions/SpamBlacklist/BaseBlacklist.php';
 $wgAutoloadClasses['SpamRegexBatch'] = $IP . '/extensions/SpamBlacklist/SpamRegexBatch.php';
@@ -260,6 +269,7 @@ $wgAutoloadClasses['WikiService'] = $IP . '/includes/wikia/services/WikiService.
 $wgAutoloadClasses['DataMartService'] = $IP . '/includes/wikia/services/DataMartService.class.php';
 $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoService.class.php';
 $wgAutoloadClasses['SassService']  =  $IP.'/includes/wikia/services/SassService.php';
+$wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.class.php';
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
@@ -1039,7 +1049,7 @@ $wgEnableMemcachedBulkMode = false;
  * WikiaSeasons flags
  */
 $wgWikiaSeasonsGlobalHeader = false;
-$wgWikiaSeasonsWikiaBar = true;
+$wgWikiaSeasonsWikiaBar = false;
 $wgWikiaSeasonsPencilUnit = false;
 
 /**

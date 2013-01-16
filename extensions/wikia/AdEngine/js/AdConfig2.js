@@ -1,6 +1,6 @@
 var AdConfig2 = function (
 	// regular dependencies
-	log, window, document, Geo, adLogicShortPage
+	log, window, document, Geo, adLogicShortPage, abTest
 
 	// adProviders
 	, adProviderAdDriver2
@@ -82,6 +82,13 @@ var AdConfig2 = function (
 		}
 		if (slot[2] === 'Liftium2Dom') {
 			return adProviderLater;
+		}
+
+		if (abTest && abTest.inGroup('PERFORMANCE_V_PREFOOTERS', 'PREFOOTERS_DISABLED')
+			&& (slotname === 'PREFOOTER_LEFT_BOXAD' || slotname === 'PREFOOTER_RIGHT_BOXAD')
+		) {
+			log('AB experiment PERFORMANCE_V_PREFOOTERS, group PREFOOTERS_DISABLED: ' + slotname + ' disabled', 5, log_group);
+			return adProviderNull;
 		}
 
 		// TODO refactor highValueSlots check to the top of the whole config

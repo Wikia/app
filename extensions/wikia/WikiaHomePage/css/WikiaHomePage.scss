@@ -775,8 +775,17 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					&.wikiahomepage-community-image-de {
 						background-position: 0px -170px;
 						height: 55px;
-						left: 85px;
+						left: 78px;
 						top: 26px;
+					}
+					&.wikiahomepage-community-image-es {
+						background-position: 0px -300px;
+						height: 50px;
+					}
+					&.wikiahomepage-community-image-fr {
+						background-position: 0px -435px;
+						height: 50px;
+						width: 272px;
 					}
 					&.wikiahomepage-highlight-image {
 						background-position: 0px -50px;
@@ -787,6 +796,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					}
 					&.wikiahomepage-highlight-image-de {
 						background-position: 0 -225px;
+					}
+					&.wikiahomepage-highlight-image-es {
+						background-position: 0 -350px;
 					}
 				}
 			}

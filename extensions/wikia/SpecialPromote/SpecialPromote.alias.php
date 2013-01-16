@@ -21,3 +21,13 @@ $specialPageAliases['fr'] = array(
 $specialPageAliases['es'] = array(
 	'Promote' => array( 'Promocionar' ),
 );
+
+/** Italian (Italiano) */
+$specialPageAliases['it'] = array(
+	'Promote' => array( 'Promuovi' ),
+);
+
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'Promote' => array( 'Promocja' ),
+);

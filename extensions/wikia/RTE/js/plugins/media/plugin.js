@@ -255,7 +255,7 @@ CKEDITOR.plugins.add('rte-media',
 		mediaWithCaption.each(function() {
 			$(this).css('backgroundPosition', '5px ' + parseInt($(this).attr('height') + 10)  + 'px');
 		});
-
+		
 		// images / videos / poll specific setup
 		var image = media.filter('img.image');
 		self.setupImage(image);
@@ -270,6 +270,9 @@ CKEDITOR.plugins.add('rte-media',
 		if (RTE.config.disableDragDrop) {
 			RTE.tools.disableDragDrop(media);
 		}
+		
+		// Modifications to the DOM will register as content changes. Reset the dirty state.		
+		editor.resetDirty();		
 	},
 
 	// image specific setup
@@ -349,7 +352,7 @@ CKEDITOR.plugins.add('rte-media',
 
 			self.setupPlaceholder(target);
 		});
-
+		
 		// setup image / video placeholder separatelly
 		var images = placeholder.filter('.image-placeholder');
 		images.attr('title', RTE.getInstance().lang.imagePlaceholder.tooltip);
@@ -363,7 +366,7 @@ CKEDITOR.plugins.add('rte-media',
 
 		var videos = placeholder.filter('.video-placeholder');
 		videos.attr('title', RTE.getInstance().lang.videoPlaceholder.tooltip);
-		videos.bind('click.placeholder', function(ev) {
+		videos.bind('click.placeholder edit.placeholder', function(ev) {
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			var self = this;
 			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {

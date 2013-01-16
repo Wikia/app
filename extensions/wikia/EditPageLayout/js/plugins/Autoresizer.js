@@ -107,8 +107,8 @@
 				wikiaBarOffset = window.WikiaBar.getWikiaBarOffset(),
 				newEditAreaHeight = parseInt( (nodeHeight - editorBottomBorder - wikiaBarOffset), 10);
 
-			//bugId:49405; quick fix for edit page with a really, really long diff
-			return (newEditAreaHeight <= 0) ? this.minPageHeight : newEditAreaHeight;
+			//bugId:49405 & 51876; quick fix for edit page with diffs
+			return (newEditAreaHeight <= this.minPageHeight) ? this.minPageHeight : newEditAreaHeight;
 		},
 
 		resize: function() {

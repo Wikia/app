@@ -71,41 +71,61 @@ window.WikiaTracker = (function(){
 	 *		       href - (optional) if present, delay following outbound link of 100ms (to ensure tracking execution)
 	 *             [more custom parameters] - please ping the Tracking leads before adding a new ones
 	 * @param string trackingMethod Tracking method [both/ga/internal/none] (optional, default:none)
+	 * @param Object browserEvent (optional) browser event object in example an object created on click (basically all click-tracking should have this parameter passed otherwise it'll try to get it from window.event)
 	 *
 	 * @author Hyun Lim <hyun(at)wikia-inc.com>
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
-	function trackEvent(eventName, data, trackingMethod){
+	function trackEvent(eventName, data, trackingMethod, browserEvent) {
 		var logGroup = 'WikiaTracker',
 		eventName = eventName || mainEventName,
 		data = data || {},
 		trackingMethod = trackingMethod || 'none',
+		browserEvent = browserEvent || window.event,
+		mouseMiddleClick = isMiddleClick(browserEvent),
+		ctrlMouseLeftClick = isCtrlLeftClick(browserEvent),
 		isLink = (data && data.href),
-		isMiddleClick = (data.button && data.button === 1),
-		gaqArgs = [];
-
-		// If clicking a link that will unload the page before tracking can happen,
-		// let's stop the default event and delay 100ms changing location (at the bottom)
-		// FIXME: this doesn't work in Firefox (there is no global event object there).
-		if( isLink && typeof event != 'undefined' && !isMiddleClick ) {
-			event.preventDefault();
+		isTrackableClick = (isLink && !mouseMiddleClick && !ctrlMouseLeftClick);
+		
+		if( isTrackableClick && typeof(browserEvent) !== 'undefined' ) {
+			browserEvent.preventDefault();
 		}
+		
+		doTrack(logGroup, eventName, data, trackingMethod);
+		
+		if( isTrackableClick ) {
+		//delay at the end to make sure all of the above was at least invoked
+			setTimeout(function() {
+				document.location = data.href;
+			}, 100);
+		}
+	}
 
+	/**
+	 * Tracking-only logic -- takes care of sending tracking data to internal tracker or/and GA
+	 * 
+	 * @param string logGroup log group name used in call to Wikia.log() 
+	 * @param string eventName The name of the event, either a custom one or "trackingevent" (please speak with Tracking leads before introducing a new event name) 
+	 * @param Object data A key-value hash of parameters to pass to GA and/or the datawarehouse keys are mentioned above in description to WikiaTracker.trackEvent() method
+	 * @param trackingMethod Tracking method [both/ga/internal/none]
+	 */
+	function doTrack(logGroup, eventName, data, trackingMethod) {
 		var ga_category = data['ga_category'],
 			ga_action = data['ga_action'],
 			ga_label = data['ga_label'],
-			ga_value = data['ga_value'];
+			ga_value = data['ga_value'],
+			gaqArgs = [];
 
 		if(
 			trackingMethod == 'none' ||
-			//"ga" or "both" are valid only for "trackingevent", this can be enabled by just uncommenting
-			//(eventName != mainEventName && trackingMethod != 'internal') ||
-			(
-				//ga info is compulsoruy for "both" and "ga"
-				trackingMethod in {both:'', ga:''} &&
-				(!ga_category || !ga_action || !actionsReverse[ga_action])
-			)
-		){
+				//"ga" or "both" are valid only for "trackingevent", this can be enabled by just uncommenting
+				//(eventName != mainEventName && trackingMethod != 'internal') ||
+				(
+					//ga info is compulsoruy for "both" and "ga"
+					trackingMethod in {both:'', ga:''} &&
+						(!ga_category || !ga_action || !actionsReverse[ga_action])
+					)
+			){
 			Wikia.log('Missing or invalid parameters', 'error', logGroup);
 			return;
 		}
@@ -123,25 +143,53 @@ window.WikiaTracker = (function(){
 		if(ga_value)
 			gaqArgs.push(ga_value);
 
-		if(trackingMethod == 'internal' || trackingMethod == 'both') {
+		if( trackingMethod == 'internal' || trackingMethod == 'both' ) {
 			Wikia.log(eventName + ' ' + gaqArgs.join('/') + ' [internal track]', 'info', logGroup);
 			internalTrack(eventName, data);
 		}
 
-		if(trackingMethod == 'ga' || trackingMethod == 'both') {
+		if( trackingMethod == 'ga' || trackingMethod == 'both' ) {
 			Wikia.log(eventName + ' ' + gaqArgs.join('/') + ' [GA track]', 'info', logGroup);
 
 			// uncomment the next line later when GA is re-implemented
 			//WikiaTracker.track(null, 'main.sampled', gaqArgs);
 			if(window.gaTrackEvent) gaTrackEvent(ga_category, ga_action, ga_label, ga_value, true);
 		}
+	}
 
-		//delay at the end to make sure all of the above was at least invoked
-		if( isLink && !isMiddleClick ) {
-			setTimeout(function() {
-				document.location = data.href;
-			}, 100);
+	/**
+	 * Detects if an action made on event target was left mouse button click with ctrl key pressed
+	 * 
+	 * @param browserEvent
+	 * @return Boolean
+	 */
+	function isCtrlLeftClick(browserEvent) {
+	//bugId:45483
+		var result = false;
+		
+		if( browserEvent && browserEvent.ctrlKey ) {
+			if( browserEvent.button === 1 ) {
+			//Microsoft left mouse button === 1
+				result = true;
+			} else if( browserEvent.button == 0 ) {
+				result = true;
+			}
 		}
+		
+		return result;
+	}
+
+	/**
+	 * Detects if an action made on event target was middle mouse button click in a webkit browser
+	 *
+	 * @param browserEvent
+	 * @return Boolean
+	 */
+	function isMiddleClick(browserEvent) {
+	//bugId:31900
+	//only webkit fires click event on middle mouse button click
+	//so, we don't care about other browsers (Microsoft has 4 assigned to middle click)
+		return (browserEvent && browserEvent.button === 1) ? true : false;
 	}
 
 	/**

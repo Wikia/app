@@ -387,9 +387,17 @@ var NodeRoomController = $.createClass(Observable,{
 	},
 
 	onLogout: function(message) {
+		/* we display the part message after 10 seconds to avoid flooding the channel
+		 with unnecessary part & join messages in case of refreshing chat window
+		 */
 		var logoutEvent = new models.LogoutEvent();
 		logoutEvent.mport(message.data);
-		this.onPartBase(logoutEvent.get('leavingUserName'), false);
+		if(this.partTimeOuts[logoutEvent.get('leavingUserName')]) {
+			return true;
+		}
+		this.partTimeOuts[logoutEvent.get('leavingUserName')] = setTimeout(this.proxy(function(){
+			this.onPartBase(logoutEvent.get('leavingUserName'), false);
+		}), 10000);
 	},
 
 	onKick: function(message) {
@@ -670,7 +678,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 			type: 'POST',
 			url: wgScript + '?action=ajax&rs=ChatAjax&method=getPrivateRoomID',
 			data: {
-				users : users.join(',')
+				users : JSON.stringify(users)
 			},
 			success: $.proxy(function(data) {
 				$().log("Attempting create private room with users " + users.join(','));

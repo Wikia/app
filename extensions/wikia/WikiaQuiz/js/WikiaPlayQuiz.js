@@ -57,7 +57,7 @@ var WikiaQuiz = {
 
 		WikiaQuiz.ui.thanksScreen.add(WikiaQuiz.ui.emailScreen).find('.more-info').click(function(e) {
 			$().log('more info');
-			WikiaQuiz.trackEvent('click-link-text', 'moreinfo', -1, $(e.target).attr('href') );
+			WikiaQuiz.trackEvent('click-link-text', 'moreinfo', -1, $(e.target).attr('href'), e );
 		});
 
 
@@ -287,7 +287,7 @@ var WikiaQuiz = {
 	toggleSound: function() {
 		WikiaQuiz.isMuted = $(this).find('input').attr('checked');
 	},
-	trackEvent: function(action, label, value, href) {
+	trackEvent: function(action, label, value, href, event) {
 		var params = {
 			ga_category: 'wikia-quiz',
 			ga_action: action,
@@ -303,7 +303,8 @@ var WikiaQuiz = {
 		WikiaTracker.trackEvent(
 			'trackingevent',
 			params,
-			'both'
+			'both',
+			event
 		);
 	}
 };

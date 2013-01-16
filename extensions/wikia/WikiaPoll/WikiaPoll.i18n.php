@@ -598,6 +598,30 @@ $messages['pl'] = array(
 	'wikiamobile-wikiapoll-user-voted' => 'Oddano głos na $1',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'wikiapoll-desc' => 'A dà na manera belfé ëd creé e gestì dij sondagi',
+	'wikiapoll-people-voted' => "{{PLURAL:$1|$1 përson-a|$1 përson-e}} a l'han votà",
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Mersì!',
+	'wikiapoll-vote' => "Ch'a vota!",
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 vot}}',
+	'wikiapoll-createpoll-headline' => 'Crea Sondagi',
+	'wikiapoll-editpoll-headline' => 'Modìfica Sondagi',
+	'wikiapoll-question-label' => 'Domanda',
+	'wikiapoll-addnewitem-label' => "Gionta n'element neuv",
+	'wikiapoll-cancel-label' => 'Scancela',
+	'wikiapoll-publish-label' => 'Pùblica',
+	'wikiapoll-error-duplicate' => 'Un sondagi con col nòm a esist già.',
+	'wikiapoll-error-invalid-title' => "Test ëd la custion a l'é pa bon.",
+	'wikiamobile-wikiapoll-open-poll' => "Lòn ch'it pensës-to?",
+	'wikiamobile-wikiapoll-thanks-voting' => 'Mersì për avèj votà!',
+	'wikiamobile-wikiapoll-poll' => 'Sondagi',
+	'wikiamobile-wikiapoll-user-voted' => "It l'has votà për $1",
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */

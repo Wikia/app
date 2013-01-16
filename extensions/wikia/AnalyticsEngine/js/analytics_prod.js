@@ -96,6 +96,19 @@
                   ['_setCustomVar', 9, 'CityId', window.wgCityId, 3],
                   ['_setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3]);
 
+    /**** Include A/B testing status ****/
+    if ( window.Wikia && window.Wikia.AbTest ) {
+        var abList = window.Wikia.AbTest.getExperiments( /* includeAll */ true ), abExp, abGroupName, abSlot, abIndex;
+        for ( abIndex = 0; abIndex < abList.length; abIndex++ ) {
+            abExp = abList[abIndex];
+            abSlot = window.Wikia.AbTest.getGASlot(abExp.name);
+            if ( abSlot >= 40 && abSlot <= 49 ) {
+                abGroupName = abExp.group ? abExp.group.name : 'CONTROL';
+                _gaqWikiaPush(['_setCustomVar', abSlot, abExp.name, abGroupName, 3]);
+            }
+        }
+    }
+
     // Unleash
     _gaqWikiaPush(['_trackPageview']);
 

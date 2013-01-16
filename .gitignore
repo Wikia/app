@@ -12,3 +12,4 @@
 /mysql-connector-license.txt
 .DS_Store
 .buildpath
+sftp-config.json

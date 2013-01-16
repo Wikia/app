@@ -29,13 +29,15 @@ var StructuredData = {
 				wmuDeffered = $.when(
 					$.loadYUI(),
 					$.loadJQueryAIM(),
-					$.getResource([wgExtensionsPath + '/wikia/WikiaMiniUpload/css/WMU.css', wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js'])
+					$.getResource([$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'), wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js'])
 				).then(function() {
 					WMU_skipDetails = true;
 					WMU_show();
+					WMU_openedInEditor = false;
 				});
 			} else if (wmuDeffered.state() === 'resolved') {
 				WMU_show();
+				WMU_openedInEditor = false;
 			} else {
 				 return false;
 			}

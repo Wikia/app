@@ -187,9 +187,7 @@ class CreateNewWikiController extends WikiaController {
 			$cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($cityId)) {
 				$this->status = 'backenderror';
-				$this->statusMsg = $this->app->runFunction('wfMsg', 'cnw-error-database', $error_code).
-					'<br>'.
-					$this->app->runFunction('wfMsg', 'cnw-error-general');
+				$this->statusMsg = $this->app->runFunction('wfMsg', 'cnw-error-general');
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
 				trigger_error("Failed to create new wiki: $error_code " . $params['wName'] . " " . $params['wLanguage'] . " " . $wgRequest->getIP(), E_USER_WARNING);
 			} else {

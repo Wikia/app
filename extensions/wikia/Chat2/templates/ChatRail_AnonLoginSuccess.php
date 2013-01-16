@@ -1,7 +1,6 @@
-<p>
+<p class="chat-join">
 	<?= wfMsg('chat-great-youre-logged-in') ?>
-	<button onclick="<?= $chatClickAction ?>">
-		<img width="17" height="15" src="<?= $buttonIconUrl ?>">
+	<button id="modal-join-chat-button" data-chat-page="<?= $linkToSpecialChat ?>">
 		<?= $buttonText ?>
 	</button>
 </p>

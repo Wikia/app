@@ -59,28 +59,23 @@
 
 <?php
 	// print out FB feed preferences
-	$newOptions[] = array(
-		'type' => 'custom',
-		'output' => '<p>'.wfMsg('fbconnect-prefs-post').'</p>',
-	);
-	$newOptions[] = array(
-		'type' => 'custom',
-		'output' => '',
-	);
 	foreach ($fbFeedOptions as $option) {
 		$optionElement = array(
 			'type' => 'checkbox',
 			'name' => $option['name'],
 			'label' => $option['shortText'],
-			'checked' => true
+			'attributes' => array(
+				'checked' => true
+			)
 		);
-		if ($optionElement['label'] == wfMsg('tog-fbconnect-push-allow-never')) {
-			$optionElement['checked'] = false;
+		if ($optionElement['name'] == 'fbconnect-push-allow-never') {
+			$optionElement['attributes'] = array();
 			$optionElement['class'] = 'indented';
 		}
 		$newOptions[] = $optionElement;
 	}
 	$formFb = array(
+		'legend' => wfMsg('fbconnect-prefs-post'),
 		'class' => 'FacebookSignupConfig',
 		'inputs' => $newOptions,
 		'method' => 'post',

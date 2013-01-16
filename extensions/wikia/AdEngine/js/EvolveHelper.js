@@ -1,17 +1,15 @@
 var EvolveHelper = function (log, window) {
 	'use strict';
 
-	var logGroup = 'EvolveHelper'
-		, getSect
-	;
+	var logGroup = 'EvolveHelper',
+		getSect;
 
-	getSect = function() {
+	getSect = function () {
 		log('getSect', 5, logGroup);
 
-		var kv = window.wgDartCustomKeyValues || ''
-			, hub = window.cscoreCat || ''
-			, sect
-		;
+		var kv = window.wgDartCustomKeyValues || '',
+			hub = window.cscoreCat || '',
+			sect;
 
 		if (window.wgDBname === 'wikiaglobal') {
 			sect = 'home';

@@ -43,11 +43,11 @@ class ServiceTest extends WikiaBaseTest {
 
 		$service = new PageStatsService($articleId);
 
-		$this->assertType('int', $service->getCommentsCount());
-		$this->assertType('int', $service->getLikesCount());
-		$this->assertType('array', $service->getCurrentRevision());
-		$this->assertType('array', $service->getPreviousEdits());
-		$this->assertType('string', $service->getFirstRevisionTimestamp());
+		$this->assertInternalType('int', $service->getCommentsCount());
+		$this->assertInternalType('int', $service->getLikesCount());
+		$this->assertInternalType('array', $service->getCurrentRevision());
+		$this->assertInternalType('array', $service->getPreviousEdits());
+		$this->assertInternalType('string', $service->getFirstRevisionTimestamp());
 
 		// comments counter regenerating
 		$comments = $service->getCommentsCount();
@@ -89,9 +89,9 @@ class ServiceTest extends WikiaBaseTest {
 		$service = new UserStatsService($user->getId());
 		$stats = $service->getStats();
 
-		$this->assertType('int', $stats['edits']);
-		$this->assertType('int', $stats['likes']);
-		$this->assertType('string', $stats['date']);
+		$this->assertInternalType('int', $stats['edits']);
+		$this->assertInternalType('int', $stats['likes']);
+		$this->assertInternalType('string', $stats['date']);
 
 		// edits increase - perform fake edit
 		$edits = $stats['edits'];

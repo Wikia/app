@@ -3,13 +3,13 @@
 /**
  * Forum
  *
- * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
+ * @author Hyun Lim, Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  *
  */
 
-$wgExtensionCredits['specialpage'][] = array( '
-	name' => 'Forum', 
-	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ) 
+$wgExtensionCredits['specialpage'][] = array(
+	'name' => 'Forum',
+	'author' => array( 'Hyun Lim', 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ),
 );
 
 $dir = dirname( __FILE__ ) . '/';
@@ -49,6 +49,9 @@ $app->registerHook( 'ArticleInsertComplete', 'ForumHooksHelper', 'onArticleInser
 $app->registerHook( 'WallBeforeRenderThread', 'ForumHooksHelper', 'onWallBeforeRenderThread' );
 $app->registerHook( 'AfterBuildNewMessageAndPost', 'ForumHooksHelper', 'onAfterBuildNewMessageAndPost' );
 $app->registerHook( 'WallMessageDeleted', 'ForumHooksHelper', 'onWallMessageDeleted' );
+$app->registerHook( 'ContributionsLineEnding', 'ForumHooksHelper', 'onContributionsLineEnding' );
+$app->registerHook( 'OasisAddPageDeletedConfirmationMessage', 'ForumHooksHelper', 'onOasisAddPageDeletedConfirmationMessage' );
+$app->registerHook( 'FilePageImageUsageSingleLink', 'ForumHooksHelper', 'onFilePageImageUsageSingleLink' );
 
 //notification hooks
 $app->registerHook( 'NotificationGetNotificationMessage', 'ForumNotificationPlugin', 'onGetNotificationMessage' );

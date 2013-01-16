@@ -7,22 +7,30 @@ EditHub.prototype = {
 	wmuDeffered: undefined,
 	vetDeffered: undefined,
 	lastActiveWmuButton: undefined,
+	lastActiveVetButton: undefined,
 
 	init: function () {
+		var validator;
+
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
 		$('.MarketingToolboxMain .vet-show').click($.proxy(this.vetInit, this));
 
 		this.form = $('#marketing-toolbox-form');
 
 		$('#marketing-toolbox-clearall').click($.proxy(function(){
-			if (confirm($.msg('marketing-toolbox-edithub-clearall-confirmation',this.form.data('module-name'))) == true) {
-				this.formReset(this.form);
-			}
+			this.clearSection(
+				this.form,
+				$.msg('marketing-toolbox-edithub-clearall-confirmation',this.form.data('module-name'))
+			)
 		}, this));
 
 		$(this.form).find('.clear').click($.proxy(function(event){
 			var sectionToReset = $(event.target).parents('.module-box');
-			this.formReset(sectionToReset);
+
+			this.clearSection(
+				sectionToReset,
+				$.msg('marketing-toolbox-edithub-clear-confirmation')
+			)
 		}, this));
 
 		$.validator.addMethod("wikiaUrl", function(value, element) {
@@ -30,7 +38,7 @@ EditHub.prototype = {
 			return this.optional(element) || reg.test(value);
 		}, $.validator.messages.url);
 
-		this.form.validate({
+		validator = this.form.validate({
 			errorElement: 'p',
 			onkeyup: false,
 			onfocusout: function(element, event) {
@@ -42,6 +50,25 @@ EditHub.prototype = {
 				return !this.checkable(element) && (element.name in this.submitted || !this.optional(element) || element === this.lastActive);
 			}
 		});
+
+		validator.focusInvalid = function() {
+			if( this.settings.focusInvalid ) {
+				try {
+					var element = $(this.errorList.length && this.errorList[0].element || [])
+
+					if (element.is(":visible")) {
+						element.focus()
+							// manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
+							.trigger("focusin");
+					} else {
+						element.parents('.module-box:first').get(0).scrollIntoView();
+					}
+
+				} catch(e) {
+					// ignore IE throwing errors when focusing hidden elements
+				}
+			}
+		}
 
 		this.wmuReady = false;
 		this.vetReady = false;
@@ -56,12 +83,13 @@ EditHub.prototype = {
 				$.loadYUI(),
 				$.getResources([
 					wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
-					wgExtensionsPath + '/wikia/WikiaMiniUpload/css/WMU.css',
+					$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
 					'/resources/wikia/libraries/aim/jquery.aim.js'
 				])
 			).then($.proxy(function() {
 				WMU_skipDetails = true;
 				WMU_show();
+				WMU_openedInEditor = false;
 				this.wmuReady = true;
 			}, this));
 			$(window).bind('WMU_addFromSpecialPage', $.proxy(function(event, wmuData) {
@@ -70,10 +98,12 @@ EditHub.prototype = {
 		}
 		else {
 			WMU_show();
+			WMU_openedInEditor = false;
 		}
 	},
 
 	vetInit: function(event) {
+		this.lastActiveVetButton = $(event.target);
 		if (!this.vetReady) {
 			this.vetDeffered = $.when(
 				$.loadYUI(),
@@ -84,15 +114,23 @@ EditHub.prototype = {
 					$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
 					$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
 				])
-			).then(function() {
-				VET_show();
-			});
+			).then(
+				$.proxy(function(event) {
+						this.showVet(event);
+					},
+					this
+				)
+			);
 			$(window).bind('VET_addFromSpecialPage', $.proxy(this.addVideo, this));
 			this.vetReady = true;
 		}
 		else {
-			VET_show();
+			this.showVet(event);
 		}
+	},
+
+	showVet: function(event) {
+		VET_show(event, VET_placeholder, true, true, true, window.wgMarketingToolboxThumbnailSize, undefined, 'newest');
 	},
 
 	addImage: function(wmuData) {
@@ -132,17 +170,34 @@ EditHub.prototype = {
 			data: {
 				'wikiText': vetData.videoWikiText
 			},
-			callback: function(response) {
-				$('.MarketingToolboxMain').append(response.fileName);
-			}
+			callback: $.proxy(function(response) {
+				var box = this.lastActiveVetButton.parents('.module-box:first');
+				if (!box.length) {
+					box = $('.MarketingToolboxMain');
+				}
+
+				box.find('.filename-placeholder').html(response.videoFileName);
+				box.find('.wmu-file-name-input').val(response.videoFileName).valid();
+
+				box.find('.image-placeholder')
+					.empty()
+					.html(response.videoFileMarkup);
+			}, this)
 		});
+	},
+
+	clearSection: function(section, msg) {
+		if (confirm(msg) == true) {
+			this.formReset(section);
+		}
 	},
 
 	formReset: function(elem) {
 		elem.find('input:text, input:password, input:file, input:hidden, select, textarea').val('');
 		elem.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
 		elem.find('.filename-placeholder').html($.msg('marketing-toolbox-edithub-file-name'));
-		elem.find('.image-placeholder').find('img').attr('src', wgBlankImgUrl);
+		elem.find('.image-placeholder').find('img').attr('src', wgBlankImgUrl)
+			.end().filter('.video').empty();
 	}
 };
 

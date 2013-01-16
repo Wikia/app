@@ -9,8 +9,8 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-    echo "This is MediaWiki extension named LookupContribs.\n";
-    exit( 1 ) ;
+	echo "This is MediaWiki extension named LookupContribs.\n";
+	exit( 1 ) ;
 }
 
 class LookupContribsCore {
@@ -125,152 +125,155 @@ class LookupContribsCore {
 			'cnt' => 0
 		);
 
-                if ( $addEditCount ) {
+		if ( $addEditCount ) {
 			$sMemKey = __METHOD__ . ":{$this->mUserId}:dataWithEdits";
 		} else {
 			$sMemKey = __METHOD__ . ":{$this->mUserId}:data";
 		}
 
-                $data = $wgMemc->get( $sMemKey );
+		$data = $wgMemc->get( $sMemKey );
 
 		if ( ( !is_array( $data ) || LOOKUPCONTRIBS_NO_CACHE ) && !empty( $wgStatsDBEnabled ) ) {
 
-                    $dbr = wfGetDB( DB_SLAVE, "stats", $wgStatsDB );
-                    if ( !is_null( $dbr ) ) {
-                        //bugId:6196
-                        $excludedWikis = $this->getExclusionList();
+			$dbr = wfGetDB( DB_SLAVE, "stats", $wgStatsDB );
+			if ( !is_null( $dbr ) ) {
+				//bugId:6196
+				$excludedWikis = $this->getExclusionList();
 
-                        $where = array (
-                            'user_id'    => $this->mUserId,
-                            'event_type' => array(1,2)
-                        );
+				$where = array (
+					'user_id'    => $this->mUserId,
+					'event_type' => array(1,2)
+				);
 
-                        if( !empty( $excludedWikis ) && is_array( $excludedWikis ) ) {
-                            $where[] = 'wiki_id NOT IN (' . $dbr->makeList( $excludedWikis ) . ')';
-                        }
+				if( !empty( $excludedWikis ) && is_array( $excludedWikis ) ) {
+					$where[] = 'wiki_id NOT IN (' . $dbr->makeList( $excludedWikis ) . ')';
+				}
 
-                        $options = array( 'GROUP BY' => 'wiki_id' );
+				$options = array( 'GROUP BY' => 'wiki_id' );
 
-                        if( $addEditCount === true ) {
-                            $wikisIds = array();
-                            $wikiEdits = $this->getEditCount( $wikisIds );
-                            $where['wiki_id'] = $wikisIds;
-                        }
+				if( $addEditCount === true ) {
+					$wikisIds = array();
+					$wikiEdits = $this->getEditCount( $wikisIds );
+					$where['wiki_id'] = $wikisIds;
+				}
 
-                        /* rows */
-                        $res = $dbr->select(
-                            array('events'),
-                            array(
-                                'wiki_id',
-                                'max(unix_timestamp(rev_timestamp)) as last_edit'
-                            ),
-                            $where,
-                            __METHOD__,
-                            $options
-                        );
+				/* rows */
+				$res = $dbr->select(
+					array('events'),
+					array(
+						'wiki_id',
+						'max(unix_timestamp(rev_timestamp)) as last_edit'
+					),
+					$where,
+					__METHOD__,
+					$options
+				);
 
-                        if ( empty( $wikisIds ) ) {
-                            $wikisIds = array();
-                            while ( $row = $dbr->fetchObject( $res ) ) {
-                                $wikisIds[] = $row->wiki_id;
-                            }
-                            $dbr->dataSeek( $res, 0 );
-                        }
+				if ( empty( $wikisIds ) ) {
+					$wikisIds = array();
+					while ( $row = $dbr->fetchObject( $res ) ) {
+						$wikisIds[] = $row->wiki_id;
+					}
+					$dbr->dataSeek( $res, 0 );
+				}
 
-                        $wData = WikiFactory::getWikisByID( $wikisIds );
-                        $i = 0;
-                        while ( $row = $dbr->fetchObject( $res ) ) {
-                            if ( !isset( $wData[$row->wiki_id] ) ) {
-                                continue;
-                            }
+				$wData = WikiFactory::getWikisByID( $wikisIds );
+				$i = 0;
+				while ( $row = $dbr->fetchObject( $res ) ) {
+					if ( !isset( $wData[$row->wiki_id] ) ) {
+						continue;
+					}
 
-                            $aItem = array(
-                                'id'         =>  $row->wiki_id,
-                                'url'        =>  $wData[$row->wiki_id]->city_url,
-                                'dbname'     =>  $wData[$row->wiki_id]->city_dbname,
-                                'title'      =>  $wData[$row->wiki_id]->city_title,
-                                'active'     =>  $wData[$row->wiki_id]->city_public,
-                                'last_edit'  =>  $row->last_edit,
-                                'edit_count' => 0
-                            );
+					$aItem = array(
+						'id'         =>  $row->wiki_id,
+						'url'        =>  $wData[$row->wiki_id]->city_url,
+						'dbname'     =>  $wData[$row->wiki_id]->city_dbname,
+						'title'      =>  $wData[$row->wiki_id]->city_title,
+						'active'     =>  $wData[$row->wiki_id]->city_public,
+						'last_edit'  =>  $row->last_edit,
+						'edit_count' => 0
+					);
 
-                            if ( isset( $wikiEdits[$row->wiki_id]->edits ) ) {
-                                $aItem['editcount'] = $wikiEdits[$row->wiki_id]->edits;
-                            }
+					if ( isset( $wikiEdits[$row->wiki_id]->edits ) ) {
+						$aItem['editcount'] = $wikiEdits[$row->wiki_id]->edits;
+					}
 
-                            $userActivity['data'][] = $aItem;
-                        }
+					$userActivity['data'][] = $aItem;
+				}
 
-                        $dbr->freeResult( $res );
-                        if ( !LOOKUPCONTRIBS_NO_CACHE ) {
-                            $wgMemc->set( $sMemKey, $userActivity, 60*10 );
-                        }
-                    }
-                } else {
-                    $userActivity = $data;
-                }
+				$dbr->freeResult( $res );
+				if ( !LOOKUPCONTRIBS_NO_CACHE ) {
+					$wgMemc->set( $sMemKey, $userActivity, 60*10 );
+				}
+			}
+		} else {
+			$userActivity = $data;
+		}
 
-                wfProfileOut( __METHOD__ );
-                return $this->orderData( $userActivity, $order, $addEditCount );
-        }
+		wfProfileOut( __METHOD__ );
+		return $this->orderData( $userActivity, $order, $addEditCount );
+	}
 
-        private function orderData( &$data, $order, $edits ) {
-            wfProfileIn( __METHOD__ );
-            $aTemp = array();
-            $aMatches = array();
-            if ( isset( $data['data'] ) && is_array( $data['data'] ) ) {
+	private function orderData( &$data, $order, $edits ) {
+		wfProfileIn( __METHOD__ );
+		$aTemp = array();
+		$aMatches = array();
+		if ( !$order ) {
+			$order = ( $edits ? 'edits:desc' : 'lastedit:desc' );
+		}
+		if ( isset( $data['data'] ) && is_array( $data['data'] ) ) {
 
-                // order by title
-                if ( preg_match( '/^title:(asc|desc)$/', $order, $aMatches ) ) {
-                    foreach ( $data['data'] as $aItem ) {
-                        $aTemp[$aItem['title']] = $aItem;
-                    }
-                }
+			// order by title
+			if ( preg_match( '/^title:(asc|desc)$/', $order, $aMatches ) ) {
+				foreach ( $data['data'] as $aItem ) {
+					$aTemp[$aItem['title']] = $aItem;
+				}
+			}
 
-                // order by url
-                else if ( preg_match( '/^url:(asc|desc)$/', $order, $aMatches ) ) {
-                    foreach ( $data['data'] as $aItem ) {
-                        $aTemp[$aItem['url']] = $aItem;
-                    }
-                }
+			// order by url
+			elseif ( preg_match( '/^url:(asc|desc)$/', $order, $aMatches ) ) {
+				foreach ( $data['data'] as $aItem ) {
+					$aTemp[$aItem['url']] = $aItem;
+				}
+			}
 
-                // order by last edit
-                else if ( preg_match( '/^lastedit:(asc|desc)$/', $order, $aMatches ) ) {
-                    foreach ( $data['data'] as $aItem ) {
-                        // added URL part since last edits are ints and might not be unique
-                        $aTemp["{$aItem['last_edit']}-{$aItem['url']}"] = $aItem;
-                    }
-                }
+			// order by last edit
+			elseif ( preg_match( '/^lastedit:(asc|desc)$/', $order, $aMatches ) ) {
+				foreach ( $data['data'] as $aItem ) {
+					// added URL part since last edits are ints and might not be unique
+					$aTemp["{$aItem['last_edit']}-{$aItem['url']}"] = $aItem;
+				}
+			}
 
-                // order by edits
-                else if ( preg_match( '/^edits:(asc|desc)$/', $order, $aMatches ) && $edits) {
-                    foreach ( $data['data'] as $aItem ) {
-                        // added leading zeros and URL part since edits are ints and might not be unique
-                        $aTemp[ sprintf( '%010d-%s', $aItem['editcount'], $aItem['url']) ] = $aItem;
-                    }
-                }
+			// order by edits
+			elseif ( preg_match( '/^edits:(asc|desc)$/', $order, $aMatches ) && $edits) {
+				foreach ( $data['data'] as $aItem ) {
+					// added leading zeros and URL part since edits are ints and might not be unique
+					$aTemp[ sprintf( '%010d-%s', $aItem['editcount'], $aItem['url']) ] = $aItem;
+				}
+			}
 
-                // order if necessary
-                if ( !empty( $aTemp ) ) {
+			// order if necessary
+			if ( !empty( $aTemp ) ) {
 
-                    // descending order
-                    if ( isset( $aMatches[1] ) && 'desc' == $aMatches[1] ) {
-                        krsort( $aTemp );
+				// descending order
+				if ( isset( $aMatches[1] ) && 'desc' == $aMatches[1] ) {
+					krsort( $aTemp );
 
-                    // ascending order
-                    } else {
-                        ksort( $aTemp );
-                    }
+				// ascending order
+				} else {
+					ksort( $aTemp );
+				}
 
-                    // records count
-                    $data['cnt'] = count( $aTemp );
-                    // reindex and apply offset and limit
-                    $data['data'] = array_slice( $aTemp, $this->mOffset, $this->mLimit, false );
-                }
-            }
-            wfProfileOut( __METHOD__ );
-            return $data;
-        }
+				// records count
+				$data['cnt'] = count( $aTemp );
+				// reindex and apply offset and limit
+				$data['data'] = array_slice( $aTemp, $this->mOffset, $this->mLimit, false );
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return $data;
+	}
 
 	/**
 	 * @brief Gets an array with wikis' ids and user's editcount on those wikis
@@ -291,12 +294,10 @@ class LookupContribsCore {
 		$res = $dbr->select(
 			array('specials.events_local_users'),
 			array('wiki_id', 'edits'),
-			array('user_id' => $this->mUserId),
+			array( 'user_id' => $this->mUserId, 'edits <> 0' ),
 			__METHOD__,
 			array(
-				'ORDER BY' => 'edits DESC',
-				'LIMIT'  => $this->mLimit,
-				'OFFSET' => $this->mOffset
+				'ORDER BY' => 'edits DESC'
 			)
 		);
 

@@ -1,7 +1,6 @@
 /*
  @test-framework Jasmine
  @test-require-asset /resources/wikia/libraries/modil/modil.js
- @test-require-asset /resources/wikia/libraries/zepto/zepto-0.8.js
  @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/events.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/sections.js
@@ -34,7 +33,7 @@ describe("Sections module", function () {
 
 	async.it('should init sections', function(done){
 
-		document.body.innerHTML = '<div id="mw-content-text"><h2>one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div>';
+		document.body.innerHTML = '<div id="wkPage"><div id="mw-content-text"><h2>one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div></div>';
 
 		require(['sections'], function(sections){
 			sections.init();
@@ -56,7 +55,7 @@ describe("Sections module", function () {
 
 	async.it('should open/close/toggle section', function(done){
 
-		document.body.innerHTML = '<div id="mw-content-text"><div></div><h2 id="one">one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div>';
+		document.body.innerHTML = '<div id="wkPage"><div id="mw-content-text"><div></div><h2 id="one">one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div></div>';
 
 		require(['sections'], function(sections){
 			sections.init();
@@ -101,7 +100,7 @@ describe("Sections module", function () {
 	});
 
 	async.it('should fire events', function(done){
-		document.body.innerHTML = '<div id="mw-content-text"><h2>one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div>';
+		document.body.innerHTML = '<div id="wkPage"><div id="mw-content-text"><h2>one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div></div>';
 
 		require(['sections'], function(sections){
 			sections.init();

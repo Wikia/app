@@ -162,7 +162,7 @@ setInterval(function() {
 	}
 }, 5000);
 
-WMBridge.prototype.ban = function(roomId, name, time, reason, key, success, error) {
+WMBridge.prototype.ban = function(roomId, name, userAddress ,time, reason, key, success, error) {
 	clearAuthenticateCache(roomId, name);
 	var requestUrl = getUrl('blockOrBanChat', {
 		roomId: roomId,
@@ -170,7 +170,8 @@ WMBridge.prototype.ban = function(roomId, name, time, reason, key, success, erro
 		time: urlencode(time),
 		reason: urlencode(reason),
 		mode: 'global',
-		key: key
+		key: key,
+		userIP: (userAddress && userAddress.address) || ''
 	});
 
 	requestMW('GET', roomId, {}, requestUrl, function(data){

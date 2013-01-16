@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2001-2013, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,8 @@
  * @package    PHPUnit
  * @subpackage Util_Log
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @copyright  2001-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 3.0.0
  */
@@ -49,9 +49,8 @@
  * @package    PHPUnit
  * @subpackage Util_Log
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 3.5.0
+ * @copyright  2001-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.0.0
  */
@@ -85,12 +84,9 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
         $this->writeCase(
           'error',
           $time,
-          PHPUnit_Util_Filter::getFilteredStacktrace(
-            $e,
-            TRUE,
-            FALSE
-          ),
-          $e->getMessage()
+          PHPUnit_Util_Filter::getFilteredStacktrace($e, FALSE),
+          $e->getMessage(),
+          $test
         );
 
         $this->currentTestPass = FALSE;
@@ -108,12 +104,9 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
         $this->writeCase(
           'fail',
           $time,
-          PHPUnit_Util_Filter::getFilteredStacktrace(
-            $e,
-            TRUE,
-            FALSE
-          ),
-          $e->getMessage()
+          PHPUnit_Util_Filter::getFilteredStacktrace($e, FALSE),
+          $e->getMessage(),
+          $test
         );
 
         $this->currentTestPass = FALSE;
@@ -128,7 +121,13 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
      */
     public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
-        $this->writeCase('error', $time, array(), 'Incomplete Test');
+        $this->writeCase(
+          'error',
+          $time,
+          PHPUnit_Util_Filter::getFilteredStacktrace($e, FALSE),
+          'Incomplete Test: ' . $e->getMessage(),
+          $test
+        );
 
         $this->currentTestPass = FALSE;
     }
@@ -142,7 +141,13 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
      */
     public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
-        $this->writeCase('error', $time, array(), 'Skipped Test');
+        $this->writeCase(
+          'error',
+          $time,
+          PHPUnit_Util_Filter::getFilteredStacktrace($e, FALSE),
+          'Skipped Test: ' . $e->getMessage(),
+          $test
+        );
 
         $this->currentTestPass = FALSE;
     }
@@ -205,7 +210,7 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
     public function endTest(PHPUnit_Framework_Test $test, $time)
     {
         if ($this->currentTestPass) {
-            $this->writeCase('pass', $time);
+            $this->writeCase('pass', $time, array(), '', $test);
         }
     }
 
@@ -215,8 +220,12 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
      * @param array  $trace
      * @param string $message
      */
-    protected function writeCase($status, $time, array $trace = array(), $message = '')
+    protected function writeCase($status, $time, array $trace = array(), $message = '', $test = NULL)
     {
+        $output = '';
+        if ($test !== NULL && $test->hasOutput()) {
+            $output = $test->getActualOutput();
+        }
         $this->write(
           array(
             'event'   => 'test',
@@ -225,7 +234,8 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
             'status'  => $status,
             'time'    => $time,
             'trace'   => $trace,
-            'message' => $message
+            'message' => PHPUnit_Util_String::convertToUtf8($message),
+            'output'  => $output,
           )
         );
     }
@@ -235,6 +245,10 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
      */
     public function write($buffer)
     {
-        parent::write(json_encode($buffer));
+        if (defined('JSON_PRETTY_PRINT')) {
+            parent::write(json_encode($buffer, JSON_PRETTY_PRINT));
+        } else {
+            parent::write(json_encode($buffer));
+        }
     }
 }

@@ -2,7 +2,7 @@
 /**
  * Text_Template
  *
- * Copyright (c) 2009, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2009-2012, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,9 +37,9 @@
  * @category   Text
  * @package    Template
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @link       http://www.phpunit.de/
+ * @copyright  2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+ * @link       http://github.com/sebastianbergmann/php-text-template
  * @since      File available since Release 1.0.0
  */
 
@@ -49,10 +49,10 @@
  * @category   Text
  * @package    Template
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.0
- * @link       http://www.phpunit.de/
+ * @copyright  2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+ * @version    Release: 1.1.4
+ * @link       http://github.com/sebastianbergmann/php-text-template
  * @since      Class available since Release 1.0.0
  */
 class Text_Template
@@ -147,8 +147,18 @@ class Text_Template
             fwrite($fp, $this->render());
             fclose($fp);
         } else {
-            throw new RuntimeException('Could not write to ' . $target . '.');
+            $error = error_get_last();
+
+            throw new RuntimeException(
+              sprintf(
+                'Could not write to %s: %s',
+                $target,
+                substr(
+                  $error['message'],
+                  strpos($error['message'], ':') + 2
+                )
+              )
+            );
         }
     }
 }
-?>

@@ -254,7 +254,8 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 			track.event('article-comments', track.IMAGE_LINK, {
 				label: 'avatar',
 				href: t.parentElement.href
-			});
+			},
+			ev);
 		}
 	});
 

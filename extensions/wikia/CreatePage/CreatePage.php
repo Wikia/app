@@ -104,13 +104,16 @@ function wfCreatePageSetupVars(Array &$vars ) {
 }
 
 function wfCreatePageLoadPreformattedContent( $editpage ) {
-	global $wgRequest;
-
-	if ( $wgRequest->getCheck( 'useFormat' ) ) {
-                if ( !$editpage->textbox1 ) {
-                        $editpage->textbox1 = wfMsgForContentNoTrans( 'newpagelayout' );
-                }
+	global $wgRequest, $wgEnableVideoToolExt;
+	
+	if ( $wgRequest->getCheck( 'useFormat' ) && !$editpage->textbox1 ) {
+		if ( $wgEnableVideoToolExt ) {
+			$editpage->textbox1 = wfMsgForContentNoTrans( 'createpage-with-video' );
+		} else {
+			$editpage->textbox1 = wfMsgForContentNoTrans( 'newpagelayout' );
+		}
 	}
+
 	return true ;
 }
 
@@ -132,7 +135,7 @@ function wfCreatePageOnGetPreferences( $user, &$preferences ) {
 }
 
 function wfCreatePageAjaxGetDialog() {
-	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions, $wgExtensionsPath, $wgScript;
+	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions, $wgExtensionsPath, $wgScript, $wgEnableVideoToolExt;
 
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$options = array();
@@ -141,7 +144,7 @@ function wfCreatePageAjaxGetDialog() {
 	$standardOptions['format'] = array(
 		'namespace' => NS_MAIN,
 		'label' => wfMsg( 'createpage-dialog-format' ),
-		'icon' => "{$wgExtensionsPath}/wikia/CreatePage/images/thumbnail_format.png",
+		'icon' => $wgEnableVideoToolExt ? "{$wgExtensionsPath}/wikia/CreatePage/images/thumbnail_format_video.png" : "{$wgExtensionsPath}/wikia/CreatePage/images/thumbnail_format.png",
 		'trackingId' => 'standardlayout',
 		'submitUrl' => "{$wgScript}?title=$1&action=edit&useFormat=1"
 	);

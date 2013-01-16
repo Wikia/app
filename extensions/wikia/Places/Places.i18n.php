@@ -433,6 +433,34 @@ $messages['pl'] = array(
 	'places-category-switch-off' => 'Włącz geotagowanie',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'places' => 'Pòst dzor sta wiki',
+	'places-desc' => 'A dà <nowiki><place> e <places></nowiki> ganci ëd parser për geo tichëtté dle pagine e na [[Special:Places|carta ëd tute le pagine tichëttà]]',
+	'places-in-category' => 'A piassa an $1 categorìe',
+	'places-on-map' => '{{PLURAL:$1|$1 pòst}} dzor sta carta',
+	'places-modal-go-to-special' => 'Mosté {{PLURAL:$1|$1 pòst}} ([[Special:Places|varda tut]])',
+	'places-toolbar-button-tooltip' => 'Sgnaca për gionté na geo tichëtta a sta pagina',
+	'places-toolbar-button-address' => "Për piasì dà l'adrëssa da dovré com na geo tichëtta për sta pagina",
+	'places-editor-search' => 'Sërca',
+	'places-editor-title-create-new' => 'Gionta na geotichëtta',
+	'places-editor-title-edit' => 'Modìfica na geotichëtta',
+	'places-editor-show-my-location' => 'Pòrtme a mia locassion',
+	'places-editor-geoposition' => 'Geolocassion corenta:',
+	'places-geolocation-button-label' => 'Gionté na locassion',
+	'places-geolocation-modal-add-title' => 'Gionté na locassion',
+	'places-geolocation-modal-error-title' => 'Eror',
+	'places-geolocation-modal-error' => "A j'era n'eror an provand a determiné toa posission:<br />$1",
+	'places-geolocation-modal-not-available' => "Contacc! Sta funsion a l'é al moment disponibla mach su dispositis sacociàbij.<br /><br />It veus-to deje na preuva? Vìsita mach sta pagina dovrand tò dispositiv sacociàbil ch'it veule.",
+	'places-error-no-article' => 'It deuve specifiché na pagina',
+	'places-error-place-already-exists' => "Sta pagina a l'é già geo tichëttà",
+	'places-updated-geolocation' => 'Geotichëtta sta pagina',
+	'places-category-switch' => 'Disabìlita geotichëttatura',
+	'places-category-switch-off' => 'Abìlita geotichëttatura',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */

@@ -143,6 +143,12 @@ class GlobalWatchlistBot {
 					continue;
 				}
 
+				# check is email unsubscribed
+				if ( $oUser->getBoolOption('unsubscribed') ) {
+					$this->printDebug( "Email is unsubcribed: {$oResultRow->gwa_user_id} " );
+					continue;
+				}
+
 				# check is email confirmed
 				if ( ! $oUser->isEmailConfirmed() ) {
 					$this->printDebug( "Email is not confirmed for user ID: {$oResultRow->gwa_user_id} " );

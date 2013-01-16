@@ -11,78 +11,24 @@ class ArticlesApiController extends WikiaApiController {
 
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
-	const CLIENT_CACHE_VALIDITY = 86400;//24h
+	const TOP_WIKIS_FOR_HUB = 10;
+
 	const PARAMETER_ARTICLES = 'ids';
 	const PARAMETER_ABSTRACT = 'abstract';
 	const PARAMETER_NAMESPACES = 'namespaces';
 	const PARAMETER_CATEGORY = 'category';
+	const PARAMETER_HUB = 'hub';
 
+	const CLIENT_CACHE_VALIDITY = 86400;//24h
 	const CATEGORY_CACHE_ID = 'category';
 	const ARTICLE_CACHE_ID = 'article';
 	const DETAILS_CACHE_ID = 'details';
 	const PAGE_CACHE_ID = 'page';
 
 	/**
-	 * @private
-	 */
-	static function onArticleUpdateCategoryCounts( $this, $added, $deleted ) {
-		foreach ( $added + $deleted as $cat) {
-			WikiaDataAccess::cachePurge( self::getCacheKey( $cat, self::CATEGORY_CACHE_ID ) );
-
-			$param = array(
-				'category' => $cat
-			);
-
-			self::purgeMethod(
-				'getTop',
-				$param
-			);
-
-			self::purgeMethod(
-				'getList',
-				$param
-			);
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param $category
-	 * @return array|null|string
-	 */
-	private static function getCategoryMembers( $category, $limit = 5000, $offset = '', $namespaces = '', $sort = 'sortkey', $dir = 'asc' ){
-		return WikiaDataAccess::cache(
-			self::getCacheKey( $category, self::CATEGORY_CACHE_ID, [ $limit, $offset, $namespaces, $dir ] ),
-			self::CLIENT_CACHE_VALIDITY,
-			function() use ( $category, $limit, $offset, $namespaces, $sort, $dir ) {
-				$ids = ApiService::call(
-					array(
-						'action' => 'query',
-						'list' => 'categorymembers',
-						'cmprop' => 'ids|title',
-						'cmsort' => $sort,
-						'cmnamespace' => $namespaces,
-						'cmdir' => $dir,
-						'cmtitle' => $category,
-						'cmlimit' => $limit,
-						'cmcontinue' => $offset
-					)
-				);
-
-				if ( !empty( $ids ) ) {
-					return array( $ids['query']['categorymembers'], !empty( $ids['query-continue']) ? $ids['query-continue']['categorymembers']['cmcontinue'] : null );
-				} else {
-					return null;
-				}
-			}
-		);
-	}
-
-	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
 	 *
-	 * @requestParam array $namespaces [OPTIONAL] The name of the namespaces (e.g. 0, 14, 6, etc.) to use as a filter, comma separated
+	 * @requestParam array $namespaces [OPTIONAL] The ID's of the namespaces (e.g. 0, 14, 6, etc.) to use as a filter, comma separated
 	 * @requestParam string $category [OPTIONAL] The name of a category (e.g. Characters) to use as a filter
 	 *
 	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
@@ -96,7 +42,7 @@ class ArticlesApiController extends WikiaApiController {
 	public function getTop() {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$namespaces = $this->request->getArray( self::PARAMETER_NAMESPACES, null );
+		$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
 		$ids = null;
 
@@ -114,16 +60,6 @@ class ArticlesApiController extends WikiaApiController {
 					$ret[] = $item['pageid'];
 					return $ret;
 				});
-			}
-		}
-
-		if ( !empty( $namespaces ) ) {
-			foreach ( $namespaces as &$n ) {
-				$n = is_numeric( $n ) ? (int) $n : false;
-
-				if ( $n === false ) {
-					throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
-				}
 			}
 		}
 
@@ -151,25 +87,29 @@ class ArticlesApiController extends WikiaApiController {
 				if ( !is_array( $cache ) ) {
 					$ids[] = $i;
 				} else {
-					$collection[$i] = $cache;
+					$collection[] = $cache;
 				}
 			}
 
 			$articles = null;
 
-			if ( count( $ids) > 0 ) {
+			if ( count( $ids ) > 0 ) {
 				$titles = Title::newFromIDs( $ids );
 
 				if ( !empty( $titles ) ) {
 					foreach ( $titles as $t ) {
 						$id = $t->getArticleID();
-						$collection[$id] = array(
+
+						$article = array(
+							'id' => $id,
 							'title' => $t->getText(),
 							'url' => $t->getLocalURL(),
 							'ns' => $t->getNamespace()
 						);
 
-						$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $collection[$id], 86400 );
+						$collection[] = $article;
+
+						$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $article, 86400 );
 					}
 				}
 
@@ -194,6 +134,100 @@ class ArticlesApiController extends WikiaApiController {
 
 		$batches = null;
 		$this->wf->ProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Get the top articles by pageviews for a hub optionally filtering by namespace and/or language,
+	 * available only on the www.wikia.com main domain (see examples)
+	 *
+	 * @requestParam string $hub The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter
+	 * @requestParam string $lang [OPTIONAL] The language code (e.g. en, de, fr, es, it, etc.) to use as a filter
+	 * @requestParam array $namespaces [OPTIONAL] The ID's of the namespaces (e.g. 0, 14, 6, etc.) to use as a filter, comma separated
+	 *
+	 * @responseParam array $items The list of top 10 wikis, each with a collection of top articles, the schema is as follows:[ [ wiki => [ id, name, language, domain ], articles => [ id, ns ] ] ]
+	 *
+	 * @example http://www.wikia.com/wikia.php?controller=ArticlesApi&method=getTopByHub&hub=Gaming
+	 * @example http://www.wikia.com/wikia.php?controller=ArticlesApi&method=getTopByHub&hub=Gaming&namespaces=0,14
+	 * @example http://www.wikia.com/wikia.php?controller=ArticlesApi&method=getTopByHub&hub=Gaming&lang=de
+	 */
+	public function getTopByHub() {
+		$this->wf->profileIn( __METHOD__ );
+
+		if ( $this->wg->DBname == 'wikiaglobal' ) {
+			$hub = trim( $this->request->getVal( self::PARAMETER_HUB, null ) );
+			$lang = trim( $this->request->getVal( 'lang', null ) );
+			$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
+
+			if ( empty( $hub ) ) {
+				$this->wf->profileOut( __METHOD__ );
+				throw new MissingParameterApiException( self::PARAMETER_HUB );
+			}
+
+			//fetch the top 10 wikis on a weekly pageviews basis
+			//this has it's own cache
+			$wikis = DataMartService::getTopWikisByPageviews(
+				DataMartService::PERIOD_ID_WEEKLY,
+				self::TOP_WIKIS_FOR_HUB,
+				$lang,
+				$hub,
+				1 /* only pubic */
+			);
+
+			$found = 0;
+			$articlesPerWiki = ceil( self::MAX_ITEMS / count( $wikis ) );
+			$res = array();
+
+			//fetch $articlesPerWiki articles from each wiki
+			//see FB#73094 for performance review
+			foreach ( $wikis as $wikiId => $data ) {
+				//this has it's own cache
+				$articles = DataMartService::getTopArticlesByPageview(
+					$wikiId,
+					null,
+					$namespaces,
+					false,
+					$articlesPerWiki
+				);
+
+				if ( count( $articles ) == 0 ) {
+					continue;
+				}
+
+				$item = array(
+					'wiki' => array(
+						'id' => $wikiId,
+						//WF data has it's own cache
+						'name' => WikiFactory::getVarValueByName( 'wgSitename', $wikiId ),
+						'language' => WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId ),
+						'domain' => WikiFactory::getVarValueByName( 'wgServer', $wikiId )
+					),
+					'articles' => array()
+				);
+
+				foreach ( $articles as $articleId => $article ) {
+					$found++;
+					$item['articles'][] = array(
+						'id' => $articleId,
+						'ns' => $article['namespace_id']
+					);
+				}
+
+				$res[] = $item;
+				$articles = null;
+			}
+
+			$wikis = null;
+			$this->wf->profileOut( __METHOD__ );
+
+			if ( $found == 0 ) {
+				throw new NotFoundApiException();
+			}
+
+			$this->response->setVal( 'items', $res );
+		} else {
+			$this->wf->profileOut( __METHOD__ );
+			throw new BadRequestApiException();
+		}
 	}
 
 	/**
@@ -254,7 +288,7 @@ class ArticlesApiController extends WikiaApiController {
 				//is empty string
 				$namespace === '' ||
 				//or is an array with more than one value
-				is_array($namespaces) && count($namespaces ) > 1
+				is_array( $namespaces ) && count( $namespaces ) > 1
 			) {
 				//throw an error as for now this method accepts only one namespace
 				throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
@@ -295,7 +329,8 @@ class ArticlesApiController extends WikiaApiController {
 				$title = Title::newFromText( $article['title'] );
 
 				if ( $title ) {
-					$ret[ $article['pageid'] ] = [
+					$ret[] = [
+						'id' => $article['pageid'],
 						'title' => $title->getText(),
 						'url' => $title->getLocalURL(),
 						'ns' => $article['ns']
@@ -335,7 +370,8 @@ class ArticlesApiController extends WikiaApiController {
 	 * @requestParam integer $width [OPTIONAL] The desired width for the thumbnail, defaults to 200, 0 for no thumbnail
 	 * @requestParam integer $height [OPTIONAL] The desired height for the thumbnail, defaults to 200, 0 for no thumbnail
 	 *
-	 * @responseParam array A list of results with the article ID as the index, each item has a revision, namespace (id, text), comments (if ArticleComments is enabled on the wiki), abstract (if available), thumbnail (if available) property
+	 * @responseParam array $items A list of results with the article ID as the index, each item has a title, url, revision, namespace ID, comments (if ArticleComments is enabled on the wiki), abstract (if available), thumbnail (if available) property
+	 * @responseParam string $basepath domain of a wiki to create a url for an article
 	 *
 	 * @example &ids=2187,23478&abstract=200&width=300&height=150
 	 */
@@ -381,6 +417,8 @@ class ArticlesApiController extends WikiaApiController {
 						$id = $t->getArticleID();
 
 						$collection[$id] = [
+							'title' => $t->getText(),
+							'url' => $t->getLocalURL(),
 							'revision' => $t->getLatestRevID(),
 							'ns' => $t->getNamespace()
 						];
@@ -436,9 +474,90 @@ class ArticlesApiController extends WikiaApiController {
 		 */
 
 		$this->response->setVal( 'items', $collection );
+		$this->response->setVal( 'basepath', $this->wg->Server );
 
 		$collection = null;
 		$this->wf->ProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @private
+	 */
+	static function onArticleUpdateCategoryCounts( $this, $added, $deleted ) {
+		foreach ( $added + $deleted as $cat) {
+			WikiaDataAccess::cachePurge( self::getCacheKey( $cat, self::CATEGORY_CACHE_ID ) );
+
+			$param = array(
+				'category' => $cat
+			);
+
+			self::purgeMethod(
+				'getTop',
+				$param
+			);
+
+			self::purgeMethod(
+				'getList',
+				$param
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param $category
+	 * @return array|null|string
+	 */
+	static private function getCategoryMembers( $category, $limit = 5000, $offset = '', $namespaces = '', $sort = 'sortkey', $dir = 'asc' ){
+		return WikiaDataAccess::cache(
+			self::getCacheKey( $category, self::CATEGORY_CACHE_ID, [ $limit, $offset, $namespaces, $dir ] ),
+			self::CLIENT_CACHE_VALIDITY,
+			function() use ( $category, $limit, $offset, $namespaces, $sort, $dir ) {
+				$ids = ApiService::call(
+					array(
+						'action' => 'query',
+						'list' => 'categorymembers',
+						'cmprop' => 'ids|title',
+						'cmsort' => $sort,
+						'cmnamespace' => $namespaces,
+						'cmdir' => $dir,
+						'cmtitle' => $category,
+						'cmlimit' => $limit,
+						'cmcontinue' => $offset
+					)
+				);
+
+				if ( !empty( $ids ) ) {
+					return array( $ids['query']['categorymembers'], !empty( $ids['query-continue']) ? $ids['query-continue']['categorymembers']['cmcontinue'] : null );
+				} else {
+					return null;
+				}
+			}
+		);
+	}
+
+	/**
+	 * @param Array $namespaces
+	 *
+	 * @return Array
+	 */
+	static private function processNamespaces( $namespaces, $caller = null ) {
+		if ( !empty( $namespaces ) ) {
+			foreach ( $namespaces as &$n ) {
+				$n = is_numeric( $n ) ? (int) $n : false;
+
+				if ( $n === false ) {
+					if ( $caller !== null ) {
+						F::app()->wf->profileOut( $caller );
+					}
+
+					throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
+				}
+			}
+		}
+
+		return $namespaces;
 	}
 
 	static private function getCacheKey( $name, $type, $params = '' ) {

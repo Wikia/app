@@ -301,6 +301,18 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'wikiagameguides-desc' => "Mòdoj ëd l'aplicassion mòbil Wikia Games Guides",
+	'wikiagameguides-preview-description' => "Costa a l'é mach na preuva ëd com le pagine a dovrìo smijé ant n'aplicassion Wikia Game Guides.",
+	'wikiagameguides-content-title' => 'Utis ëd gestion dël contnù ëd Wikia Game Guides.',
+	'wikiagameguides-content-category' => 'Categorìa',
+	'wikiagameguides-content-category-desc' => "Anseriss le categorìe dzor toa wiki ch'at piaserìa anclude an Game Guides.",
+	'wikiagameguides-content-tag' => 'Tichëtta ëd categorìa (opsional)',
+	'wikiagameguides-content-tag-desc' => 'Organisa toe categorìe ëd gara dasendje dle tichëtte.',
+	'wikiagameguides-content-name' => 'Game Guide Name (opsional)',
+	'wikiagameguides-content-name-desc' => 'Arnòmina le categorìe wiki com at piaserìa che a smijèisso dzor Game Guide',
+	'wikiagameguides-content-add' => 'Gionta',
+	'wikiagameguides-content-save' => 'Salva',
+	'wikiagameguides-content-category-error' => 'La categorìa a esist pa',
+	'wikiagameguides-content-duplicate-entry' => "Sto valor a l'é duplicà",
 );
 
 /** Pashto (پښتو)
@@ -351,6 +363,13 @@ $messages['ru'] = array(
 	'wikiagameguides-content-save' => 'Сохранить',
 	'wikiagameguides-content-category-error' => 'Категория не существует',
 	'wikiagameguides-content-duplicate-entry' => 'Это значение является дубликатом',
+);
+
+/** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['si'] = array(
+	'wikiagameguides-content-add' => 'එක් කරන්න',
 );
 
 /** Slovenian (slovenščina)
