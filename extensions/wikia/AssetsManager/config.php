@@ -152,7 +152,8 @@ $config['oasis_blocking'] = array(
 	'assets' => array(
 		'//skins/wikia/js/WikiaScriptLoader.js',
 		'//skins/wikia/js/JqueryLoader.js',
-		'//resources/wikia/libraries/modil/modil.js'
+		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/wikia/modules/lazyqueue.js',
 	)
 );
 $config['abtesting'] = array(
