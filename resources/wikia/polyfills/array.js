@@ -48,6 +48,7 @@
 	}
 
 	// add Array.lastIndexOf function in IE8
+	// @see https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/lastIndexOf
 	if (!Array.prototype.lastIndexOf) {
 		Array.prototype.lastIndexOf = function (searchElement /*, fromIndex*/) {
 			"use strict";
