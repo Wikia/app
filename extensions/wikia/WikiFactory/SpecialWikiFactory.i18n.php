@@ -1453,7 +1453,7 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'closewiki' => 'Wiki racnê',
-	'wf_city_url' => 'Adres',
+	'wf_city_url' => 'Adrese',
 	'wf_city_id' => 'id',
 	'wf_city_title' => 'Sername',
 	'wf_city_created' => 'Vıraziya',
