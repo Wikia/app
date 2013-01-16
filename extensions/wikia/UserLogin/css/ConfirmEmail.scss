@@ -1,5 +1,4 @@
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/core/color";
+@import "../mixins/email-tooltip";
 
 .ConfirmEmail {
 	margin-bottom: 200px;
@@ -29,19 +28,7 @@
 	.change-email-msg {
 		position: relative;
 		.email-tooltip {
-			@include border-radius(6px);
-			background-color: $color-buttons;
-			color: white;
-			cursor: default;
-			display: block;
-			font-size: 10px;
-			height: 12px;
-			line-height: 12px;
-			position: absolute;
-			right: -13px;
-			text-align: center;
-			top: -4px;
-			width: 12px;
+			@include email-tooltip;
 		}
 	}
 	.ResendConfirmation {
