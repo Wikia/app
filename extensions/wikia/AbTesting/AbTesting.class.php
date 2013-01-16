@@ -129,8 +129,22 @@ class AbTesting extends WikiaObject {
 		$rangesArray = array();
 
 		if ( strlen( $ranges ) ) {
+			$min = $max = 0;
 			foreach ( explode( ',', $ranges ) as $i => $range ) {
-				if ( !preg_match( '/^(\d+)-(\d+)$/', $range, $matches ) ) {
+				$hasError = false;
+				if ( preg_match( '/^(\d+)-(\d+)$/', $range, $matches ) ) {
+					$min = intval( $matches[1] );
+					$max = intval( $matches[2] );
+				} elseif ( preg_match( '/^(\d+)$/', $range, $matches ) ) {
+					$min = $max = intval( $matches[1] );
+				} else {
+					$hasError = true;
+				}
+				if ( $min < 0 || $min > 99 ) $hasError = true;
+				if ( $max < 0 || $max > 99 ) $hasError = true;
+				if ( $min > $max ) $hasError = true;
+
+				if ( $hasError ) {
 					if ( $failOnError ) {
 						return false;
 					}
@@ -138,8 +152,8 @@ class AbTesting extends WikiaObject {
 				}
 
 				$rangesArray[] = array(
-					'min' => intval( $matches[ 1 ] ),
-					'max' => intval( $matches[ 2 ] )
+					'min' => $min,
+					'max' => $max
 				);
 			}
 		}
