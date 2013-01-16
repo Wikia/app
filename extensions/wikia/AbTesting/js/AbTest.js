@@ -198,7 +198,7 @@
 				version = versions[ i ];
 
 				// If this version is active remember this information
-				if ( serverTime >= version.startTime && serverTime <= version.endTime ) {
+				if ( serverTime >= version.startTime && serverTime < version.endTime ) {
 					exp.current = version;
 					count++;
 					break;
