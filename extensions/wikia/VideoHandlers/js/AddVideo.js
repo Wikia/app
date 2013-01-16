@@ -74,6 +74,9 @@
 					self.addModal = $('#add-video-modal');
 					enableVideoSubmit();
 					initModalScroll();
+				},
+				onClose: function() {
+					UserLogin.refreshIfAfterForceLogin();
 				}
 			});		
 		};

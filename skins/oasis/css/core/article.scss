@@ -11,6 +11,14 @@
 	position: relative;
 	min-height: 250px;
 	z-index: 1;
+
+	//whatever article has we should clear it so it won't collapse into comments or other features underneeth it
+	&::after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+
 	h1, h2, h3, h4, h5, h6 {
 		margin: .5em 0 .2em;
 	}

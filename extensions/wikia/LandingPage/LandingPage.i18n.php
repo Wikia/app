@@ -24,6 +24,13 @@ $messages['en'] = array(
 			* http://poptarts.wikia.com|Pop Tarts Wikii|landingpage-wikis-en.png",
 );
 
+/** Message documentation (Message documentation)
+ * @author Shirayuki
+ */
+$messages['qqq'] = array(
+	'landingpage-language-links' => '{{Optional}}',
+);
+
 /** Arabic (العربية)
  * @author Malhargan
  */

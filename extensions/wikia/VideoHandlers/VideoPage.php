@@ -25,12 +25,14 @@ class WikiaVideoPage extends ImagePage {
 		} else {
 			$img = $this->getDisplayedFile();
 		}
-		
+
+		$autoplay = F::app()->wg->VideoPageAutoPlay;
+
 		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
 		
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/VideoHandlers/js/VideoPage.js\"></script>\n" );
 
-		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth ).$this->getVideoInfoLine().'</div>' );
+		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>' );
 		wfProfileOut( __METHOD__ );
 	}
 	

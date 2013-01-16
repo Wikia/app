@@ -95,4 +95,25 @@ class BlogsHelper {
 		// Always...
 		return true; // ... to the single purpose of the moment.
 	}
+
+	public static function onFilePageImageUsageSingleLink( &$link, &$element ) {
+		$ns = $element->page_namespace;
+
+		if( $ns == NS_BLOG_ARTICLE ) {
+			$app = F::app();
+
+			$title = Title::newFromText( $element->page_title, $ns );
+			$userBlog = Title::newFromText( $title->getBaseText(), $ns );
+
+			$link = $app->wf->Msg(
+				'blog-file-page',
+				$title->getLocalURL(),
+				$title->getSubpageText(),
+				$userBlog->getLocalURL(),
+				$userBlog->getText()
+			);
+		}
+
+		return true;
+	}
 }
