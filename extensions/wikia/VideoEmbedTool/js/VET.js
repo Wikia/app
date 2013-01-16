@@ -445,7 +445,7 @@ function VET_insertFinalVideo(e, type) {
 	var params = new Array();
 	params.push('type='+type);
 
-	if( !$('#VideoEmbedName') || $('#VideoEmbedName').val() == '' ) {
+	if( !$('#VideoEmbedName').length || $('#VideoEmbedName').val() == '' ) {
  		GlobalNotification.show( $.msg('vet-warn3'), 'error', null, VET_notificationTimout );
 		return false;
 	}
