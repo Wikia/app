@@ -305,7 +305,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$endTime = $abTesting->getTimestampForUTCDate($data['end_time']);
 
 			if ( $startTime < $nowPlusCache ) {
-				$status->error("Start time must be at least 10 minutes in the future");
+				$status->error("Start time must be at least 15 minutes in the future");
 			}
 
 			if ( $startTime >= $endTime ) {
