@@ -127,8 +127,6 @@ function VET_editVideo() {
 // macbre: update video in wysiwyg mode
 function VET_doEditVideo() {
 
-	YAHOO.util.Event.preventDefault( YAHOO.util.Event.getEvent() );
-
 	// setup metadata
 	var extraData = {};
 
@@ -240,24 +238,6 @@ function VET_readjustSlider( value ) {
 		}
 }
 
-function VET_getCaret() {
-  var caretPos = 0, control = VET_getTextarea();
-	if(YAHOO.env.ua.ie != 0) { // IE Support
-    control.focus();
-    var sel = document.selection.createRange();
-    var sel2 = sel.duplicate();
-    sel2.moveToElementText(control);
-    var caretPos = -1;
-    while(sel2.inRange(sel)) {
-      sel2.moveStart('character');
-      caretPos++;
-    }
-  } else if (control.selectionStart || control.selectionStart == '0') { // Firefox
-    caretPos = control.selectionStart;
-  }
-  return (caretPos);
-}
-
 function VET_show( options ) {
 	if (wgUserName == null && wgAction == 'edit') {
 		// handle login on edit page
@@ -298,37 +278,42 @@ function VET_show( options ) {
 		VET_loadMain(options.searchOrder);
 	}
 
-	YAHOO.util.Event.addListener('VideoEmbedBack', 'click', VET_back);
+	$('#VideoEmbedBack').click(VET_back);
 }
 
 function VET_loadMain(searchOrder) {
-	var callback = {
-		success: function(o) {
-			$('#VideoEmbedMain').html(o.responseText);
-			$('#VideoEmbedUrl').focus();
+	var callback = function(o) {
+		$('#VideoEmbedMain').html(o.responseText);
+		$('#VideoEmbedUrl').focus();
 
-			// macbre: RT #19150
-			if ( window.wgEnableAjaxLogin == true && $('#VideoEmbedLoginMsg').exists() ) {
-				$('#VideoEmbedLoginMsg').click(openLogin).css('cursor', 'pointer').log('VET: ajax login enabled');
-			}
-
-			// Add suggestions and search to VET
-			VETExtended.init({
-				searchOrder: searchOrder
-			});
+		// macbre: RT #19150
+		if ( window.wgEnableAjaxLogin == true && $('#VideoEmbedLoginMsg').exists() ) {
+			$('#VideoEmbedLoginMsg').click(openLogin).css('cursor', 'pointer').log('VET: ajax login enabled');
 		}
-	}
-	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=loadMain', callback);
+
+		// Add suggestions and search to VET
+		VETExtended.init({
+			searchOrder: searchOrder
+		});
+	};
+	$.ajax(
+		wgScriptPath + '/index.php?action=ajax&rs=VET&method=loadMain',
+		{
+			method: 'get',
+			complete: callback
+		}
+	);
 	VET_curSourceId = 0;
 }
 
 function VET_recentlyUploaded(param, pagination) {
-	var callback = {
-		success: function(o) {
-			$('#VET_results_0').html(o.responseText);
-		}
-	}
-	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=recentlyUploaded&'+param, callback);
+	var callback = function(html) {
+		$('#VET_results_0').html(html);
+	};
+	$.get(
+		wgScriptPath + '/index.php?action=ajax&rs=VET&method=recentlyUploaded&'+param,
+		callback
+	);
 }
 
 function VET_sendQuery(query, page, sourceId, pagination) {
@@ -337,7 +322,6 @@ function VET_sendQuery(query, page, sourceId, pagination) {
 	};
 	VET_lastQuery[sourceId] = query;
 	VET_jqXHR.abort();
-	VET_jqXHR = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId, callback);
 	VET_jqXHR = $.ajax(
 		wgScriptPath + '/index.php?action=ajax&rs=VET&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId,
 		{
@@ -351,9 +335,8 @@ function VET_sendQuery(query, page, sourceId, pagination) {
  * note: VET_onVideoEmbedUrlKeypress is called from template
  */
 function VET_onVideoEmbedUrlKeypress(e) {
-	var event = YAHOO.util.Event.getEvent();
-	if (YAHOO.util.Event.getCharCode(event) == 13){
-		YAHOO.util.Event.preventDefault( event );
+	if (e.which == 13){
+		e.preventDefault();
 		VET_preQuery(null);
 		return false;
 	}
@@ -364,7 +347,7 @@ function VET_onVideoEmbedUrlKeypress(e) {
  * note: VET_preQuery is called from a template, and from VET_onVideoEmbedUrlKeypress
  */
 function VET_preQuery(e) {
-	if($('#VideoEmbedUrl').val() == '') {
+	if(!$('#VideoEmbedUrl').val()) {
 		GlobalNotification.show( $.msg('vet-warn2'), 'error', null, VET_notificationTimout );
 		return false;
 	} else {
@@ -439,8 +422,8 @@ function VET_displayDetails(responseText, dataFromEditMode) {
 
 function VET_insertFinalVideo(e, type) {
 	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'complete');
-
-	YAHOO.util.Event.preventDefault(e);
+	
+	e.preventDefault();
 
 	var params = new Array();
 	params.push('type='+type);
@@ -494,7 +477,7 @@ function VET_insertFinalVideo(e, type) {
 			if(typeof screenType == "undefined") {
 				screenType = VET_jqXHR.getResponseHeader('X-Screen-Type');
 			}
-			switch(YAHOO.lang.trim(screenType)) {
+			switch($.trim(screenType)) {
 				case 'error':
 					o.responseText = o.responseText.replace(/<script.*script>/, "" );
 					GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
@@ -548,7 +531,7 @@ function VET_insertFinalVideo(e, type) {
 								$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 							}*/
 						//} else { 
-							//var wikitag = YAHOO.util.Dom.get('VideoEmbedTag').value;
+							//var wikitag = $('#VideoEmbedTag').val();
 							var options = {};
 	
 							if($('#VideoEmbedThumbOption').is(':checked')) {
@@ -632,8 +615,7 @@ function VET_switchScreen(to) {
 }
 
 function VET_back(e) {
-
-	YAHOO.util.Event.preventDefault(e);
+	e.preventDefault();
 
 	if(VET_curScreen == 'Details') {
 		VET_switchScreen('Main');
@@ -644,7 +626,7 @@ function VET_back(e) {
 
 function VET_previewClose(e) {
 	if(e) {
-		YAHOO.util.Event.preventDefault(e);
+		e.preventDefault();
 	}
 
 	VET_previewPanel.hide();
@@ -652,7 +634,7 @@ function VET_previewClose(e) {
 
 function VET_close(e) {
 	if(e) {
-		YAHOO.util.Event.preventDefault(e);
+		e.preventDefault();
 	}
 
 	/*
@@ -700,7 +682,7 @@ function VET_sendQueryEmbed(query) {
 				screenType = VET_jqXHR.getResponseHeader('X-Screen-Type');
 			}
 
-			if( 'error' == YAHOO.lang.trim(screenType) ) {
+			if( 'error' == $.trim(screenType) ) {
 				GlobalNotification.show( o.responseText, 'error', null, VET_notificationTimout );
 			} else {
 				// attach handlers - close preview on VET modal close (IE bug fix)
