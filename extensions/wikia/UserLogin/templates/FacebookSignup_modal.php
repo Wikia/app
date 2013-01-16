@@ -19,10 +19,8 @@
 				'label' => wfMsg('yourpassword'),
 			),
 			array(
-				'type' => 'display',
-				'label' => wfMsg('email'),
-				'value' => $fbEmail,
-				'tooltip' => wfMsg('usersignup-facebook-email-tooltip'),
+				'type' => 'custom',
+				'output' => '<span class="email-wrapper">' . wfMsg('email') . '<span class="email-tooltip" rel="tooltip" title="' . wfMsg('usersignup-facebook-email-tooltip') . '">?</span></span><strong class="fb-email">' . $fbEmail . '</strong>',
 			),
 			array(
 				'type' => 'hidden',
