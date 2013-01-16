@@ -325,7 +325,7 @@ function WMU_loadMainFromView() {
 				document.body.appendChild(element);
 			}
 
-			WMU_modal = $(document.body).makeModal({
+			WMU_modal = $(element).makeModal({
 				onAfterClose: function() {
 					WMU_switchScreen('Main');
 				},
