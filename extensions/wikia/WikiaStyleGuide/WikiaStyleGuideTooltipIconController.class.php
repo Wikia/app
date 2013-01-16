@@ -4,6 +4,7 @@ class WikiaStyleGuideTooltipIconController extends WikiaController {
 	
 	public function index() {
 		$this->text = $this->request->getVal('text', '');
+		$this->class = $this->request->getVal('class', '');
 		$this->tooltipIconTitle = $this->request->getVal('tooltipIconTitle', '');
 		$this->tooltipIconSign = $this->request->getVal('tooltipIconSign', self::DEFAULT_ICON_SIGN);
 	}
