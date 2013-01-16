@@ -7,7 +7,9 @@
 return array(
 	// AMD library
 	'amd' => array(
-		'scripts' => 'resources/wikia/libraries/modil/modil.js',
+		// modil.js is loaded using at the top of the page (using AssetsManager)
+		// this file will make ResourceLoader think that amd module is loaded - via mw.loader.setState
+		'scripts' => 'resources/wikia/libraries/modil/modil.setState.js',
 	),
 
 	// AMD modules

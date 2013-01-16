@@ -158,7 +158,8 @@ $config['oasis_blocking'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//skins/wikia/js/WikiaScriptLoader.js',
-		'//skins/wikia/js/JqueryLoader.js'
+		'//skins/wikia/js/JqueryLoader.js',
+		'//resources/wikia/libraries/modil/modil.js'
 	)
 );
 
