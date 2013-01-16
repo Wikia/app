@@ -155,18 +155,36 @@ EOT
 			$count = $loop;
 		}
 
-		$user = User::newFromName( (!empty($userTarget)) ? $userTarget : $target );
+		$targetUserName = ( !empty($userTarget) ? $userTarget : $target );
+		$user = User::newFromName( $targetUserName );
 		$tempUser = false;
 		if ( $user == null || $user->getId() == 0 ) {
-			// Check if a temporary user is at this name
-			if ( !empty( $wgEnableUserLoginExt ) ) {
-				$tempUser = TempUser::getTempUserFromName( ( !empty( $userTarget ) ) ? $userTarget : $target );
+			// User didn't exist on first load, trying External User
+			$extUser = null;
+			if ( class_exists( 'ExternalUser_Wikia' ) ) {
+				$extUser = ExternalUser::newFromName( $targetUserName );
 			}
-			if ( $tempUser ) {
-				$user = $tempUser->mapTempUserToUser( false );;
+			if ( is_object( $extUser ) && ( $extUser->getId() != 0 ) ) {
+				// User does exist, so try from the External User object
+				// This leads to loading the user data from master,
+				// so it should be there now...
+				$user = $extUser->getLocalUser();
+				if ( $user == null || $user->getId() == 0 ) {
+					// Still not loaded, let user know to try reloading page
+					$wgOut->addWikiText( '<span class="error">' . wfMessage( 'lookupuser-not-loaded' )->plain() . '</span>' );
+					return;
+				}
 			} else {
-				$wgOut->addWikiText( '<span class="error">' . wfMsg( 'lookupuser-nonexistent', $target ) . '</span>' );
-				return;
+				// Check if a temporary user is at this name
+				if ( !empty( $wgEnableUserLoginExt ) ) {
+					$tempUser = TempUser::getTempUserFromName( $targetUserName );
+				}
+				if ( $tempUser ) {
+					$user = $tempUser->mapTempUserToUser( false );;
+				} else {
+					$wgOut->addWikiText( '<span class="error">' . wfMsg( 'lookupuser-nonexistent', $target ) . '</span>' );
+					return;
+				}
 			}
 		}
 		if ( $count > 1 ) {

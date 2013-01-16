@@ -17,6 +17,7 @@ $messages['en'] = array(
 	'lookupuser-intro' => 'Enter a username to view the preferences of that user.',
 	'lookupuser-nonexistent' => 'Error: User does not exist',
 	'lookupuser-nonexistent-id' => 'Error: User with ID #$1 does not exist',
+	'lookupuser-not-loaded' => 'Error: User data failed to load properly, please try reloading the page.',
 	'lookupuser-authenticated' => 'authenticated on $1',
 	'lookupuser-not-authenticated' => 'not authenticated',
 	'lookupuser-id' => 'User ID: <tt>#$1</tt>',
