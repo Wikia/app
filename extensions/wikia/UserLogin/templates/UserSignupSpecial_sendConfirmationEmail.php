@@ -25,7 +25,7 @@
 				'index',
 				array(
 					'text' => wfMsg('usersignup-confirm-email-change-email-content'),
-					'class' => 'email-tooltip',
+					'classes' => 'email-tooltip',
 					'tooltipIconTitle' => wfMsg('usersignup-confirm-email-tooltip'),
 				)
 			);
