@@ -127,6 +127,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		);
 
 		// Treatment Groups
+		$rangesInfo = wfMsg( 'abtesting-ranges-info' );
 		foreach ($experiment['groups'] as $group) {
 			$ranges = '';
 			$groupId = $group['id'];
@@ -147,7 +148,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$groups[] = array(
 				'type' => 'text',
 				'name' => 'ranges[]',
-				'label' => $group['name'],
+				'label' => $group['name'] . ' ' . $rangesInfo,
 				'value' => $ranges,
 			);
 
