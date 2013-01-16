@@ -8,7 +8,7 @@ namespace Wikia\Search\IndexService;
  * Reponsible for retrieving WAM score for a given wiki
  * @author relwell
  */
-class Wam extends AbstractService
+class Wam extends AbstractWikiService
 {
 	/**
 	 * Allows us to cache within a request

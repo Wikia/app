@@ -53,7 +53,7 @@ class WikiaSearchIndexerController extends WikiaController
 	 * The response includes the wiki ID, the URL of the wiki, and the stubbed-out XML
 	 * It is the responsibility of the back-end script to access all page IDs using the appropriate API 
 	 * and replace placeholder values with
-	 * @throws Exception 
+	 * @todo needs better error handling
 	 */
 	public function getForWiki()
 	{

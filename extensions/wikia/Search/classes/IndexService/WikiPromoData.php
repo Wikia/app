@@ -9,7 +9,7 @@ namespace Wikia\Search\IndexService;
  * Responsible for wiki promo info for a wiki
  * @author relwell
  */
-class WikiPromoData extends AbstractService
+class WikiPromoData extends AbstractWikiService
 {
 	/**
 	 * Allows us to cache the result after requesting once

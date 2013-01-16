@@ -8,7 +8,7 @@ namespace Wikia\Search\IndexService;
  * Retrieves wikiviews from the data mart
  * @author relwell
  */
-class WikiViews extends AbstractService
+class WikiViews extends AbstractWikiService
 {
 	/**
 	 * Time to cache the wikipages value, used in indexing, in seconds -- 7 days.

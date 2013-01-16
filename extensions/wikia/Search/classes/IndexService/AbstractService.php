@@ -110,24 +110,6 @@ abstract class AbstractService
 	}
 	
 	/**
-	 * Writes an XML response without the <add> wrapper and a placeholder for pageid
-	 * Assumes that we are not operating on a provided page ID
-	 * @todo this ought to be a trait
-	 * @throws \Exception
-	 * @return string
-	 */
-	public function getStubbedWikiResponse() {
-		if ( $this->currentPageId !== null ) {
-			throw new \Exception( 'A stubbed response is not appropriate for services interacting with page IDs' );
-		}
-		
-		$updateXml = $this->getUpdateXmlForDocuments( array( $this->getDocumentFromResponse( $this->execute() ) ) );
-		$updateXml = str_replace( '<update>', '', str_replace( '</update>', '', $updateXml ) );
-		
-		return array( 'contents' => $updateXml );
-	}
-	
-	/**
 	 * Given an array, creates an appropriately formatted Solarium document
 	 * @param array $responseArray
 	 * @return \Solarium_Document_AtomicUpdate
