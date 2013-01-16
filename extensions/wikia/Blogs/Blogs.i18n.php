@@ -169,6 +169,10 @@ $messages['qqq'] = array(
 	'right-blog-articles-edit' => '{{doc-right|blog-articles-edit}}',
 	'right-blog-articles-move' => '{{doc-right|blog-articles-move}}',
 	'blog-desc' => '{{desc}}',
+        'blog-userblog' => 'Appears in an RSS feed.
+Parameters:
+
+$1 - Username of blog author. GENDER is supported.',
 	'blogs-searchprofile' => 'Name of a tab with blog articles and blog listings. This tab is displayed in the right column on search page',
 	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings. Tooltip displayed on hover on Blogs Tab in the right column on search page',
 	'user-blog-url-link' => 'Link - links to users Blog main page',
