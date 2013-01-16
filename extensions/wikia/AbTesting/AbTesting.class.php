@@ -7,7 +7,7 @@
 
 class AbTesting extends WikiaObject {
 
-	const VARNISH_CACHE_TIME = 600; // 10 minutes - depends on Resource Loader settings for non-versioned requests
+	const VARNISH_CACHE_TIME = 900; // 15 minutes - depends on Resource Loader settings for non-versioned requests
 	const CACHE_TTL = 3600;
 	const SECONDS_IN_HOUR = 3600;
 	const VERSION = 2;
