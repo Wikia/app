@@ -1080,7 +1080,7 @@ class BlogTemplateClass {
 								$relationArray[$sParamName] = $aParamValues;
 								$aTmpWhere = array();
 								foreach ( $aParamValues as $id => $sParamValue ) {
-									$sParamValue = str_replace(" ", "_", $sParamValue);
+									$sParamValue = str_replace(" ", "\\_", $sParamValue);
 									$aTmpWhere[] = "page_title like '".addslashes($sParamValue)."/%'";
 								}
 								if ( !empty($aTmpWhere) ) {
