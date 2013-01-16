@@ -62,6 +62,9 @@ $abTesting-color-text-warning: #c27500;
 		input, textarea {
 			width: 380px;
 		}
+		input[type=checkbox] {
+			width: auto;
+		}
 		select {
 			width: 396px;
 		}
@@ -135,4 +138,7 @@ $abTesting-color-text-warning: #c27500;
 
 #ui-datepicker-div .ui-datepicker-buttonpane button {
 	line-height: normal;
+	&.ui-datepicker-current {
+		display: none;
+	}
 }
