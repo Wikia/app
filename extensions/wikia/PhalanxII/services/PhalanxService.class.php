@@ -58,13 +58,13 @@ class PhalanxService extends Service {
 		 * for status we're sending GET
 		 */
 		if( $action == "status" ) {
-			$response = Http::get( $url, array( "noProxy" => true ) );
+			$response = Http::get( $url, 'default', array( "noProxy" => true ) );
 		}
 		/**
 		 * for any other we're sending POST
 		 */
 		else {
-			$response = Http::post( $url, array( "noProxy" => true ) );
+			$response = Http::post( $url, 'default', array( "noProxy" => true ) );
 		}
 		wfProfileOut( __METHOD__  );
 	}
