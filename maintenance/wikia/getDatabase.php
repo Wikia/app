@@ -194,11 +194,13 @@ if (array_key_exists( 'i', $opts )) {
 				die ("Database error: " . $response);
 			}
 		}
-		if ($cluster_name == "NULL") $cluster_name = null;  // whee!
-		if ($cluster_name == null) {
+		if ( $cluster_name == 'c1' ) {
 			$wgDBdevboxServer = $wgDBdevboxServer1;
-		} else {
+		} else if ( $cluster_name != null ) {
 			$wgDBdevboxServer = $wgDBdevboxServer2;
+		} else {
+			print "Cluster was NULL in wikicities, aborting.";
+			exit();
 		}
 	}
 
