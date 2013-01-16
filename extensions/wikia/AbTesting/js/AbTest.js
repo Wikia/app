@@ -255,6 +255,7 @@
 	})( AbTest.experiments );
 
 	// Track active experiments
+/*	// disabled temporarily due to Jonathan's request
 	(function( experiments ) {
 		var expName, exp;
 		for ( expName in experiments ) {
@@ -270,7 +271,7 @@
 			}
 		}
 	})( AbTest.experiments );
-
+*/
 	// Exports
 	Wikia.AbTest = AbTest;
 

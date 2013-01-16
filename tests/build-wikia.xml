@@ -92,9 +92,6 @@
     </target>
 
     <target name="phpunit-coverage" depends="setup">
-		<delete includeemptydirs="true">
-			<fileset dir="${basedir}/build" defaultexcludes="false"/>
-		</delete>
 		<mkdir dir="${basedir}/build/coverage" />
         <exec executable="php" dir="${basedir}" failonerror="true">
             <env key="SERVER_ID" value="165" />
@@ -102,8 +99,7 @@
                        --conf ${localsettings}
                        --configuration ${basedir}/phpunit.xml
                        --coverage-html ${basedir}/build/coverage
-                       --log-json ${basedir}/build/coverage/coverage.json
-                       --exclude-group ${phpunitexcludegroups}
+                       --exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack
                        " />
         </exec>
     </target>

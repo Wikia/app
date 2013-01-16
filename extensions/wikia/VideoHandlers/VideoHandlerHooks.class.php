@@ -241,20 +241,23 @@ class VideoHandlerHooks extends WikiaObject{
 		if($wgCityId == self::VIDEO_WIKI) {
 			return true;
 		}
-		
+
 		if(WikiaFileHelper::isTitleVideo($wgTitle)) {
 			$file = wfFindFile( $wgTitle );
 
 			if(!$file->isLocal()) {
-				$tabs['actions']['remove'] = array(
-					'class' => 'remove',
-					'text' => wfMsg('videohandler-remove'),
-					'href' => '#',
-				);
+			// (BugId:44086) hiding front end for now while back end is being worked on
+			//	$tabs['actions']['remove'] = array(
+			//		'class' => 'remove',
+			//		'text' => wfMsg('videohandler-remove'),
+			//		'href' => '#',
+			//	);
 
+				// Prevent move tab being shown.
+				unset( $tabs['actions']['move'] );
 			}
-		}		
+		}
+	
 		return true;
 	}
-	
 }

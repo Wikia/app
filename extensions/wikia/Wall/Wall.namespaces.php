@@ -23,3 +23,25 @@ $namespaces['pl'] = array(
         NS_USER_WALL_MESSAGE_GREETING   => 'Nagłówek_tablicy'
 );
 
+$namespaces['es'] = array(
+        NS_USER_WALL                    => 'Muro',
+        NS_USER_WALL_MESSAGE            => 'Hilo',
+        NS_USER_WALL_MESSAGE_GREETING   => 'Bienvenida_del_Muro'
+);
+
+$namespaces['uk'] = array(
+        NS_USER_WALL                    => 'Стіна_обговорення',
+        NS_USER_WALL_MESSAGE            => 'Тема',
+        NS_USER_WALL_MESSAGE_GREETING   => 'Привітання_на_стіні_обговорення'
+);
+
+$namespaces['it'] = array(
+        NS_USER_WALL                    => 'Bacheca'
+);
+
+$namespaces['ru'] = array(
+        NS_USER_WALL                    => 'Стена_обсуждения',
+        NS_USER_WALL_MESSAGE            => 'Тема',
+        NS_USER_WALL_MESSAGE_GREETING   => 'Приветствие_стены_обсуждения'
+);
+

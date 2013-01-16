@@ -1,4 +1,8 @@
 <?php
+/**
+ * NOTE: PLEASE TAKE CARE WHILE EDITING THIS FILE.
+ *       BAD CHANGE AND WE CAN CLOSE MANY WIKIS BY ACCIDENT.
+ */
 
 /**
  * @package MediaWiki

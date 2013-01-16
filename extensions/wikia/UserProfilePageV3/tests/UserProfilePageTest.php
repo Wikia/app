@@ -21,8 +21,6 @@ class UserProfilePageTest extends WikiaBaseTest {
 	}
 
 	protected function setUpMobileSkin( $mobileSkin ) {
-		$this->markTestSkipped('Skin RequestContext::setSkin() must be an instance of Skin');
-
 		$this->skinOrg = RequestContext::getMain()->getSkin();
 		RequestContext::getMain()->setSkin( $mobileSkin );
 	}

@@ -40,9 +40,79 @@ $classes = array(
 	'PhalanxHook'					=> $dir . 'hooks/PhalanxHook.class.php'
 );
 
+<<<<<<< HEAD
 foreach ( $classes as $class_name => $class_path ) {
 	$app->registerClass( $class_name, $class_path );
 }
+=======
+$wgAutoloadClasses['Phalanx'] = $dir.'Phalanx.class.php';
+
+$wgAutoloadClasses['UserBlock'] = $dir.'blocks/UserBlock.class.php';
+$wgAutoloadClasses['UserCookieBlock'] = $dir.'blocks/UserCookieBlock.class.php';
+$wgAutoloadClasses['ContentBlock'] = $dir.'blocks/ContentBlock.class.php';
+$wgAutoloadClasses['TitleBlock'] = $dir.'blocks/TitleBlock.class.php';
+$wgAutoloadClasses['QuestionTitleBlock'] = $dir.'blocks/QuestionTitleBlock.class.php';
+$wgAutoloadClasses['RecentQuestionsBlock'] = $dir.'blocks/RecentQuestionsBlock.class.php';
+$wgAutoloadClasses['WikiCreationBlock'] = $dir.'blocks/WikiCreationBlock.class.php';
+
+// service
+$wgAutoloadClasses['PhalanxService'] = $dir.'services/PhalanxService.class.php';
+
+
+$wgExtensionMessagesFiles['Phalanx'] = $dir . 'Phalanx.i18n.php';
+
+$wgExtensionFunctions[] = 'efPhalanxInit';
+
+// log type
+global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
+$wgLogTypes[]                       = 'phalanx';
+$wgLogNames['phalanx']              = 'phalanx-rule-log-name';
+$wgLogHeaders['phalanx']            = 'phalanx-rule-log-header';
+$wgLogRestrictions['phalanx']       = 'phalanx';
+$wgLogActions['phalanx/add']        = 'phalanx-rule-log-add';
+$wgLogActions['phalanx/edit']       = 'phalanx-rule-log-edit';
+$wgLogActions['phalanx/delete']     = 'phalanx-rule-log-delete';
+
+$wgLogTypes[]                       = 'phalanxemail';
+$wgLogNames['phalanxemail']         = 'phalanx-email-rule-log-name';
+$wgLogHeaders['phalanxemail']       = 'phalanx-email-rule-log-header';
+$wgLogRestrictions['phalanxemail']  = 'phalanxemailblock';
+$wgLogActions['phalanxemail/add']   = 'phalanx-rule-log-add';
+$wgLogActions['phalanxemail/edit']  = 'phalanx-rule-log-edit';
+$wgLogActions['phalanxemail/delete'] = 'phalanx-rule-log-delete';
+
+function efPhalanxInit() {
+	global $wgUser, $wgHooks, $wgPhalanxDisableContent;
+
+	// these need to be initialized for UI-level checks to work
+	// former RegexBlock (TYPE_USER)
+	$wgHooks['GetBlockedStatus'][] = 'UserBlock::blockCheck';
+	$wgHooks['GetBlockedStatus'][] = 'UserCookieBlock::blockCheck';
+
+	// don't bother initializing hooks if user is immune to Phalanx
+	if ( $wgUser->isAllowed( 'phalanxexempt' ) ) {
+		wfDebug(__METHOD__.": user has 'phalanxexempt' right - no block will be applied\n");
+		return;
+	}
+
+	// allow for per wiki disable the content checks
+		// (mainly for vstf wiki, causes pain when reporting block issues)
+	if( empty($wgPhalanxDisableContent) ) {
+		// former SpamRegex (TYPE_SUMMARY and TYPE_CONTENT)
+		$wgHooks['EditFilter'][] = 'ContentBlock::onEditFilter';
+		$wgHooks['AbortMove'][] = 'ContentBlock::onAbortMove';
+	}
+
+	// former TitleBlackList (TYPE_TITLE)
+	$wgHooks['SpecialMovepageBeforeMove'][] = 'TitleBlock::beforeMove';
+	$wgHooks['EditFilter'][] = 'TitleBlock::listCallback';
+	$wgHooks['ApiCreateMultiplePagesBeforeCreation'][] = 'TitleBlock::newWikiBuilder';
+	$wgHooks['CreateDefaultQuestionPageFilter'][] = 'TitleBlock::genericTitleCheck';
+	$wgHooks['CreatePageTitleCheck'][] = 'TitleBlock::genericTitleCheck';
+
+	// former BadWords list (TYPE_ANSWERS_QUESTION_TITLE)
+	$wgHooks['CreateDefaultQuestionPageFilter'][] = 'QuestionTitleBlock::badWordsTest';
+>>>>>>> a5fb61dfdb17501fc3e3efed967c31509fb897e3
 
 /*
  * hooks
