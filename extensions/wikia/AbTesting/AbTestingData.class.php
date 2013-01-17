@@ -245,10 +245,8 @@ class AbTestingData extends WikiaObject {
 	}
 
 	public function updateModifiedTime() {
-		$this->saveAnonRow(self::TABLE_CONFIG,array('id'),array(
-			'id' => 1,
-			'updated = current_timestamp',
-		),__METHOD__);
+		$dbw = $this->getDb(DB_MASTER);
+		$dbw->query("REPLACE INTO ".self::TABLE_CONFIG." (id, updated) VALUES (1, current_timestamp);");
 	}
 
 	public function newExperiment() {
