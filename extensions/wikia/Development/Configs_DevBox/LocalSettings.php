@@ -122,6 +122,9 @@ if ( is_null( $wgDBcluster ) ) {
 // default LB section for database connection
 $wgLBDefaultSection = 'c1';
 
+//disabling TorBlock on devboxes because it is soooooo slow
+$wgEnableTorBlockExt = false;
+
 ##### /MAKE ANY CHANGES _BEFORE_ HERE THAT YOU  WANT TO SHOW UP ON DEVBOXES BY DEFAULT BUT STILL BE OVERRIDABLE #####
 // don't include DevBoxSettings when running unit tests (BugId:93186)
 if (empty($wgRunningUnitTests)) {

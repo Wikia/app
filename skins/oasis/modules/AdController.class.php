@@ -125,11 +125,6 @@ class AdController extends WikiaController {
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
 				self::$config['TOP_BUTTON_WIDE'] = true;
-			} else if($namespace == NS_FORUM) {
-				self::$config['TOP_LEADERBOARD'] = true;
-				self::$config['TOP_RIGHT_BOXAD'] = true;
-				self::$config['TOP_BUTTON'] = true;
-				self::$config['TOP_BUTTON_WIDE'] = true;
 			} else if( BodyController::isBlogListing() ) {
 				self::$config['TOP_LEADERBOARD'] = true;
 				self::$config['TOP_RIGHT_BOXAD'] = true;

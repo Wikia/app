@@ -375,7 +375,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-topic-input-heading' => 'Topic',
 	'wall-topic-input-placeholder' => 'Add a Topic (optional)',
 	'wall-topic-input-error' => 'There is no article named "$1". Please use an existing article name as a Topic.',
-	'wall-topic-input-error-limit' => 'A thread can only have $1 Topics maximum.',
+	'wall-topic-input-error-limit' => 'A thread can only have $1 {{PLURAL:$1|Topic|Topics}} maximum.',
 	'wall-topic-heading' => 'Topics for this thread:',
 	'wall-topic-edit' => 'Edit Topics',
 	'wall-topic-edit-save' => 'Save',
@@ -1294,7 +1294,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Andere zeigen, die Lob gaben',
 	'wall-votes-modal-title' => 'Lob',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Eine Person|$1 Leute}} lobten diese Nachricht',
-	'wall-votes-number' => '$1 Lobe',
+	'wall-votes-number' => '$1 Lobe', # Fuzzy
 	'wall-votes-number-tooltip' => 'Lobende für diesen Beitrag zeigen',
 	'wall-votes-vote-tooltip' => 'Diesen Beitrag loben',
 	'wall-votes-voted-tooltip' => 'Beitrag gelobt!',
@@ -1384,7 +1384,7 @@ $messages['diq'] = array(
 	'tog-enotifwallthread-v2' => 'E-postay me...',
 	'wall-notifications-notifyeveryone' => 'Xulasaya $1',
 	'wall-votes-modal-title' => 'Nam',
-	'wall-votes-number' => 'Namê $1',
+	'wall-votes-number' => 'Namê $1', # Fuzzy
 	'wall-quote-author' => 'Nusnayışê $1:',
 	'wall-quote-reply-to' => 'cewabê #$1',
 	'wall-preview-modal-title' => 'Verasayış',
@@ -1459,7 +1459,7 @@ $messages['el'] = array(
 	'tog-enotifmywall-every' => 'Για κάθε μήνυμα & απάντηση',
 	'tog-enotifmywall-sincevisited' => 'Μία φορά ανά νήμα από την τελευταία μου επίσκεψη',
 	'tog-enotifmywall-reminder' => 'Με ένα ημερήσιο email υπενθύμισης',
-	'wall-votes-number' => '$1 Kudos',
+	'wall-votes-number' => '$1 Kudos', # Fuzzy
 	'wall-votes-number-tooltip' => 'Δείτε ποιος έδωσε Kudos σε αυτό το μήνυμα',
 );
 
@@ -1755,7 +1755,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Ver a otros que les gusta',
 	'wall-votes-modal-title' => 'Valoraciones',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Una persona dio|$1 personas dieron}} me gusta a este mensaje',
-	'wall-votes-number' => '$1 me gusta',
+	'wall-votes-number' => '$1 me gusta', # Fuzzy
 	'wall-votes-number-tooltip' => 'Ver quién dio me gusta a este mensaje',
 	'wall-votes-vote-tooltip' => 'Dar me gusta a este mensaje',
 	'wall-votes-voted-tooltip' => '¡Te gusta este mensaje!',
@@ -2220,7 +2220,7 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'wall-votes-modal-showmore' => 'Voir d’autres personnes qui l’ont sélectionné',
 	'wall-votes-modal-title' => 'Sélectionné',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Une personne a|$1 personnes ont}} sélectionné ce message',
-	'wall-votes-number' => '$1 sélections',
+	'wall-votes-number' => '$1 sélections', # Fuzzy
 	'wall-votes-number-tooltip' => 'Voir qui a sélectionné ce message',
 	'wall-votes-vote-tooltip' => 'Sélectionner ce message',
 	'wall-votes-voted-tooltip' => 'Vous avez sélectionné ce message !',
@@ -2528,7 +2528,7 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'wall-votes-modal-showmore' => 'Ollar outras persoas que eloxiaron isto',
 	'wall-votes-modal-title' => 'Eloxio',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Unha persoa eloxiou|$1 persoas eloxiaron}} esta mensaxe',
-	'wall-votes-number' => '$1 eloxios',
+	'wall-votes-number' => '$1 eloxios', # Fuzzy
 	'wall-votes-number-tooltip' => 'Ollar as persoas que eloxiaron esta mensaxe',
 	'wall-votes-vote-tooltip' => 'Dea o seu eloxio a esta mensaxe',
 	'wall-votes-voted-tooltip' => 'Deu o seu eloxio a esta mensaxe!',
@@ -3047,7 +3047,7 @@ tue preferentias de e-mail: http://community.wikia.com/Special:Preferences',
 	'wall-votes-modal-showmore' => 'Vider alteres que dava complimentos',
 	'wall-votes-modal-title' => 'Complimentos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Un persona|$1 personas}} dava complimentos a iste message',
-	'wall-votes-number' => '$1 complimentos',
+	'wall-votes-number' => '$1 complimentos', # Fuzzy
 	'wall-votes-number-tooltip' => 'Vide qui ha date complimentos a iste message',
 	'wall-votes-vote-tooltip' => 'Dar complimentos a iste message',
 	'wall-votes-voted-tooltip' => 'Tu ha date complimentos a iste message!',
@@ -3327,7 +3327,7 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 	'wall-message-notifyeveryone-tooltip' => 'このウィキを閲覧している全ての登録利用者に対してこのスレッドに関する通知が行われます',
 	'wall-votes-modal-title' => 'いいね',
 	'wall-votes-modal-title-desc' => '$1人の利用者がこのメッセージに「いいね」を付けました。',
-	'wall-votes-number' => '$1 いいね',
+	'wall-votes-number' => '$1 いいね', # Fuzzy
 	'wall-votes-number-tooltip' => '誰がこのメッセージに「いいね」を付けたのかをみる。',
 	'wall-votes-vote-tooltip' => 'このメッセージに「いいね」を付ける',
 	'wall-votes-voted-tooltip' => 'このメッセージには既に「いいね」を付けています',
@@ -3755,7 +3755,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Погледајте ги другите што дале кудос',
 	'wall-votes-modal-title' => 'Кудос',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Едно лице|$1 лица}} ѝ дале кудос на поракава',
-	'wall-votes-number' => '$1 кудоси',
+	'wall-votes-number' => '$1 кудоси', # Fuzzy
 	'wall-votes-number-tooltip' => 'Погледајте кој сè ѝ дал кудос на поракава',
 	'wall-votes-vote-tooltip' => 'Дај ѝ кудос на поракава',
 	'wall-votes-voted-tooltip' => 'На поракава ѝ дадовте кудос!',
@@ -4063,7 +4063,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wall-votes-modal-showmore' => 'Lihat orang lain yang memberikan Pujian',
 	'wall-votes-modal-title' => 'Pujian',
 	'wall-votes-modal-title-desc' => 'Pesanan ini dipuji oleh {{PLURAL:$1|seorang|$1 orang}} ahli',
-	'wall-votes-number' => '$1 Pujian',
+	'wall-votes-number' => '$1 Pujian', # Fuzzy
 	'wall-votes-number-tooltip' => 'Lihat siapa yang memuji pesanan ini',
 	'wall-votes-vote-tooltip' => 'Puji pesanan ini',
 	'wall-votes-voted-tooltip' => 'Anda telah memuji pesanan ini!',
@@ -4353,7 +4353,7 @@ endre e-post-innstillingene dine her: http://community.wikia.com/Special:Prefere
 	'wall-votes-modal-showmore' => 'Se andre som har gitt ros',
 	'wall-votes-modal-title' => 'Ros',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Én person|$1 personer}} ga denne meldingen ros',
-	'wall-votes-number' => '$1 rosinger',
+	'wall-votes-number' => '$1 rosinger', # Fuzzy
 	'wall-votes-number-tooltip' => 'Se hvem som ga ros til denne meldingen',
 	'wall-votes-vote-tooltip' => 'Gi ros til denne meldingen',
 	'wall-votes-voted-tooltip' => 'Du har gitt denne meldingen ros!',
@@ -4647,7 +4647,7 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'wall-votes-modal-showmore' => 'Andere gebruikers die Kudos hebben gegeven bekijken',
 	'wall-votes-modal-title' => 'Kudos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Eén gebruiker|$1 gebruikers}} hebben dit bericht Kudos gegeven',
-	'wall-votes-number' => '$1 Kudos',
+	'wall-votes-number' => '$1 Kudos', # Fuzzy
 	'wall-votes-number-tooltip' => 'Bekijken wie Kudos aan dit bericht hebben gegeven',
 	'wall-votes-vote-tooltip' => 'Kudus aan dit bericht geven',
 	'wall-votes-voted-tooltip' => 'U heeft Kudos aan dit bericht gegeven!',
@@ -4986,7 +4986,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Zobacz kto jeszcze dał OKejkę',
 	'wall-votes-modal-title' => 'OKejka',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Jedna osoba dała|$1 osoby dały|$1 osób dało}} OKejkę tej wiadomości',
-	'wall-votes-number' => '$1 {{PLURAL:$1|OKejka|OKejki|OKejek}}',
+	'wall-votes-number' => '$1 {{PLURAL:$1|OKejka|OKejki|OKejek}}', # Fuzzy
 	'wall-votes-number-tooltip' => 'Zobacz kto dał OKejkę tej wiadomości',
 	'wall-votes-vote-tooltip' => 'Daj OKejkę tej wiadomości',
 	'wall-votes-voted-tooltip' => 'Przyznano OKejkę tej wiadomości!',
@@ -5246,7 +5246,7 @@ suas preferências de e-mail aqui: http://community.wikia.com/Special:Preference
 	'wall-message-notifyeveryone-tooltip' => 'Todas as pessoas logadas na wiki irão ser notificadas deste tópico',
 	'wall-votes-modal-title' => 'Gostos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Uma pessoa|$1 pessoas}} deram "Gosto" a esta mensagem',
-	'wall-votes-number' => '$1 Gostos',
+	'wall-votes-number' => '$1 Gostos', # Fuzzy
 	'wall-votes-number-tooltip' => 'Veja quem deu "Gosto" a esta mensagem',
 	'wall-votes-vote-tooltip' => 'Dar um "Gosto" a esta mensagem',
 	'wall-votes-voted-tooltip' => 'Você deu um "Gosto" a esta mensagem!',
@@ -5721,7 +5721,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Посмотреть, кто ещё добавил "Мне нравится"',
 	'wall-votes-modal-title' => 'Мне нравится',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один участник|$1 участника|$1 участников}} добавили "Мне нравится" к этому сообщению',
-	'wall-votes-number' => '$1 "Мне нравится"',
+	'wall-votes-number' => '$1 "Мне нравится"', # Fuzzy
 	'wall-votes-number-tooltip' => 'Посмотреть, кто добавил "Мне нравится"',
 	'wall-votes-vote-tooltip' => 'Мне нравится это сообщение',
 	'wall-votes-voted-tooltip' => 'Вам понравилось это сообщение!',
@@ -6028,7 +6028,7 @@ dina e-postinställningar här: http://community.wikia.com/Special:Preferences',
 	'wall-votes-modal-showmore' => 'Se alla som gav beröm',
 	'wall-votes-modal-title' => 'Beröm',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|En person|$1 personer}} gav beröm till detta meddelande',
-	'wall-votes-number' => '$1 beröm',
+	'wall-votes-number' => '$1 beröm', # Fuzzy
 	'wall-votes-number-tooltip' => 'Se vem som gav beröm till detta meddelande',
 	'wall-votes-vote-tooltip' => 'Ge beröm till detta meddelande',
 	'wall-votes-voted-tooltip' => 'Du har givit beröm till detta meddelande!',
@@ -6344,7 +6344,7 @@ ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/S
 	'wall-votes-modal-showmore' => 'Tingnan ang iba pa na nagbigay ng Kudos',
 	'wall-votes-modal-title' => 'Kudos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Isang tao|$1 mga tao}} ang nagbigay ng Kudos sa mensaheng ito',
-	'wall-votes-number' => '$1 Kudos',
+	'wall-votes-number' => '$1 Kudos', # Fuzzy
 	'wall-votes-number-tooltip' => 'Tingnan kung sino ang nagbigay ng Kudos sa mensaheng ito',
 	'wall-votes-vote-tooltip' => 'Magbigay ng Kudos sa mensaheng ito',
 	'wall-votes-voted-tooltip' => 'Binigyan mo ng Kudos ang mensaheng ito!',
@@ -6683,7 +6683,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Переглянути, хто додав "Мені подобається"',
 	'wall-votes-modal-title' => 'Мені подобається',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|одному користувачу|$1 користувачам}} сподобалось це повідомлення',
-	'wall-votes-number' => '$1 "Мені подобається"',
+	'wall-votes-number' => '$1 "Мені подобається"', # Fuzzy
 	'wall-votes-number-tooltip' => 'Подивитися, хто додав "Мені подобається" до цього повідомлення',
 	'wall-votes-vote-tooltip' => 'Мені подобається це повідомлення!',
 	'wall-votes-voted-tooltip' => 'Вам сподобалось це повідомлення!',

@@ -111,6 +111,14 @@ $color-secondary-button-border: mix($color-page, #000000, 80%);
 $color-speech-bubble: mix($color-text, $color-page, 5%);
 $color-speech-bubble-alt: mix($color-links, $color-page, 5%);
 
+$color-speech-bubble-current: $color-speech-bubble;
+
+@if $is-dark-wiki {
+	$color-speech-bubble-current: mix(#ff63f6, $color-speech-bubble, 10%);
+} @else {
+	$color-speech-bubble-current: mix(#ff4481, $color-speech-bubble, 10%);
+}
+
 // TOC
 $color-article-toc-background: transparent;
 $color-article-toc-border: darken(lighten($color-page, 100%), 15%);

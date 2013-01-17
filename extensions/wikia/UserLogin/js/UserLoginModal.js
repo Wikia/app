@@ -1,5 +1,6 @@
 var UserLoginModal = {
 	loginAjaxForm: false,
+	isModalOpened: false,
 
 	/**
 	 * options (optional):
@@ -7,16 +8,20 @@ var UserLoginModal = {
 	 * returns: true if modal is shown, false if it is not
 	 */
 	show: function(options) {
-		if (!window.wgComboAjaxLogin && window.wgEnableUserLoginExt) {
+		if (!window.wgComboAjaxLogin && window.wgEnableUserLoginExt && !this.isModalOpened) {
+			this.isModalOpened = true;
 			options = options || {};
 			$.get(wgScriptPath + '/wikia.php', {
 				controller: 'UserLoginSpecial',
 				method: 'modal',
 				format: 'html',
 				uselang: window.wgUserLanguage
-			}, function(res) {
+			}, $.proxy(function(res) {
 				UserLoginModal.dialog = $(res).makeModal({
-					width: 350
+					width: 350,
+					onClose: $.proxy(function() {
+						this.isModalOpened = false;
+					}, this)
 				});
 				UserLoginModal.loginAjaxForm = new UserLoginAjaxForm(UserLoginModal.dialog, {
 					ajaxLogin: true,
@@ -57,7 +62,7 @@ var UserLoginModal = {
 				});
 
 				UserLoginFacebook.init();
-			});
+			}, this));
 			$.getResources([$.getSassCommonURL('/extensions/wikia/UserLogin/css/UserLoginModal.scss')]);
 
 			return true;

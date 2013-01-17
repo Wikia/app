@@ -78,17 +78,38 @@ class EditAccount extends SpecialPage {
 				}
 
 				if ( empty( $id ) ) {
-					if ( !empty($wgEnableUserLoginExt) ) {
-						$this->mTempUser = TempUser::getTempUserFromName( $userName );
+					// User didn't exist on first load, trying External User
+					$extUser = null;
+					if ( class_exists( 'ExternalUser_Wikia' ) ) {
+						$extUser = ExternalUser::newFromName( $userName );
 					}
-
-					if ( $this->mTempUser ) {
-						$id = $this->mTempUser->getId();
-						$this->mUser = User::newFromId( $id );
+					if ( is_object( $extUser ) && ( $extUser->getId() != 0 ) ) {
+						// User does exist, so try from the External User object
+						// This leads to loading the user data from master,
+						// so it should be there now...
+						$user = $extUser->getLocalUser();
+						if ( $user == null || $user->getId() == 0 ) {
+							// Still not loaded, let user know to try reloading page
+							$this->mStatus = false;
+							$this->mStatusMsg = wfMessage( 'editaccount-not-loaded' )->plain();
+							$action = '';
+						} else {
+							$id = $user->getId();
+							$this->mUser = $user;
+						}
 					} else {
-						$this->mStatus = false;
-						$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
-						$action = '';
+						if ( !empty($wgEnableUserLoginExt) ) {
+							$this->mTempUser = TempUser::getTempUserFromName( $userName );
+						}
+
+						if ( $this->mTempUser ) {
+							$id = $this->mTempUser->getId();
+							$this->mUser = User::newFromId( $id );
+						} else {
+							$this->mStatus = false;
+							$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
+							$action = '';
+						}
 					}
 				}
 			}

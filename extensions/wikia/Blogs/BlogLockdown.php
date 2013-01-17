@@ -52,7 +52,6 @@ class BlogLockdown {
 		$username = $user->getName();
 		if ( $namespace == NS_BLOG_ARTICLE_TALK && class_exists('ArticleComment')) {
 			$oComment = ArticleComment::newFromTitle( $title );
-//			$oComment->load();
 			$canEdit = $oComment->canEdit();
 			$isOwner = (bool) ( $canEdit && !in_array($action, array('watch', 'protect') ) );
 			$isArticle = false; //if this is TALK it is not article
@@ -112,8 +111,8 @@ class BlogLockdown {
 
 			case "delete":
 				if( !$isArticle && $user->isAllowed( "blog-comments-delete" ) ) {
+					//this is a blog page and user have right to delete a comment let's move on
 					$result = true;
-					$return = true;
 				}
 				if( $user->isAllowed( 'delete' ) ) {
 					$result = true;
