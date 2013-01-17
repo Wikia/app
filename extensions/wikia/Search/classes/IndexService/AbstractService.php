@@ -112,8 +112,9 @@ abstract class AbstractService
 	protected function getDocumentFromResponse( array $responseArray ) {
 		$document = new \Solarium_Document_AtomicUpdate( $responseArray );
 		
+		// set the ID key for the appropriate document. none of the services will work without this
 		$pageIdValue = $this->getPageIdForDocumentKey();
-		$idKey = $document->id ?: sprintf( '%s_%s', $this->interface->getGlobal( 'CityId' ), $pageIdValue );
+		$idKey = sprintf( '%s_%s', $this->interface->getGlobal( 'CityId' ), $pageIdValue );
 		$document->setKey( 'id', $idKey );
 		
 		foreach ( $document->getFields() as $field => $value ) {

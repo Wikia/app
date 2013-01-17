@@ -52,7 +52,6 @@ class DefaultContent extends AbstractService
 
 		$result['wid']			= $this->interface->getWikiId();
 		$result['pageid']		= $pageId;
-		$result['id']			= $result['wid'] . '_' . $result['pageid'];
 		$result[$titleKey]		= $titleStr;
 		$result['titleStrict']	= $titleStr;
 		$result['url']			= $this->interface->getUrlFromPageId( $pageId );
