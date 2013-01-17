@@ -180,7 +180,7 @@ EOT
 					$tempUser = TempUser::getTempUserFromName( $targetUserName );
 				}
 				if ( $tempUser ) {
-					$user = $tempUser->mapTempUserToUser( false );;
+					$user = $tempUser->mapTempUserToUser( false );
 				} else {
 					$wgOut->addWikiText( '<span class="error">' . wfMsg( 'lookupuser-nonexistent', $target ) . '</span>' );
 					return;
