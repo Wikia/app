@@ -375,6 +375,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 					);
 					$abData->saveGroupRange($grn);
 				}
+				$abData->updateModifiedTime();
 			}
 		}
 
