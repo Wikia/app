@@ -311,6 +311,9 @@ body.ajax * {
 	display: inline-block;
 	padding: 0 3px 0 0;
 }
+.wikia-paginator li .active {
+    font-weight: bold;
+}
 .wikia-paginator .button {
 	background: transparent;
 	color: #002bb8;
