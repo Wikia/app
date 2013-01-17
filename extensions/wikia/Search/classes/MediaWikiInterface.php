@@ -133,7 +133,7 @@ class MediaWikiInterface
 	 * @return int
 	 */
 	public function getNamespaceFromPageId( $pageId ) {
-		return $this->getTitleFromPageId( $pageId )->getFullUrl();
+		return $this->getTitleFromPageId( $pageId )->getNamespace();
 	}
 	
 	/**
