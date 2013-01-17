@@ -9,9 +9,7 @@ jQuery(function($){
 	});
 
 	var trackWithEventData = function(e) {
-		track($.extend({
-			browserEvent: e
-		}, e.data));
+		track({ browserEvent: e }, e.data);
 	};
 
 	/** article **/
@@ -120,7 +118,7 @@ jQuery(function($){
 
 	/** photos-module **/
 
-	$wikiaRail.find('.LatestPhotosModule')on('click', 'a', function(e) {
+	$wikiaRail.find('.LatestPhotosModule').on('click', 'a', function(e) {
 		var label,
 			el = $(e.target);
 
@@ -234,50 +232,84 @@ jQuery(function($){
 
 	/** top-nav **/
 
-	$('#WikiaHeader').on('click', 'a', function(e) {
-		var label,
-			el = $(e.target),
-			id = el.data('id');
+	(function() {
+		var category = 'top-nav';
 
-		if (id !== undefined) {
+		$('#WikiaHeader').on('click', 'a', function(e) {
+			var label,
+				el = $(e.target),
+				id = el.data('id');
+
+			if (id !== undefined) {
+				switch(id) {
+					case 'facebook':
+					case 'register': {
+						label = id;
+						break;
+					}
+					case 'help':
+					case 'logout':
+					case 'preferences': {
+						label = 'user-menu-' + id;
+						break;
+					}
+					case 'mytalk': {
+						label = 'user-menu-' + el.hasClass('message-wall') ? 'message-wall' : 'talk';
+						break;
+					}
+				}
+			} else if(el.hasClass('logo')) {
+				label = 'wikia-logo';
+			} else if(el.parent().hasClass('start-a-wiki')) {
+				label = 'start-a-wiki';
+			} else if(el.closest('.topNav').length > 0) {
+				label = 'hub-item';
+			} else if(el.attr('accesskey') == '.') {
+				label = 'user-menu-profile';
+			} else if(el.closest('.notifications-for-wiki').length > 0) {
+				if($(el.closest('.notifications-for-wiki')).data('wiki-id') == window.wgCityId) {
+					label = 'notification-item-local';
+				} else {
+					label = 'notification-item-cross-wiki';
+				}
+			}
+
+			if (label !== undefined) {
+				track({
+					browserEvent: e,
+					category: category,
+					label: label
+				});
+			}
+		});
+
+		$('#UserLoginDropdown input[type=submit]').on('click', {
+			category: category,
+			label: 'login'
+		}, trackWithEventData);
+
+		$('#wall-notifications-markasread').on('click', 'span', function(e) {
+			var label,
+				el = $(e.target),
+				id = el.attr('id');
+
 			switch(id) {
-				case 'login': {
-					label = 'login';
-					break;
-				}
-				case 'mytalk': {
-					label = 'user-menu' + el.hasClass('message-wall') ? 'message-wall' : 'talk';
-					break;
-				}
-				case 'register': {
-					label = 'signup';
+				case 'wall-notifications-markasread-this-wiki':
+				case 'wall-notifications-markasread-all-wikis': {
+					label = id;
 					break;
 				}
 			}
-		} else if(el.hasClass('logo')) {
-			label = 'wikia-logo';
-		} else if(el.parent().hasClass('start-a-wiki')) {
-			label = 'start-a-wiki';
-		} else if(el.closest('.topNav').length > 0) {
-			label = 'hub-item';
-		} else if(el.attr('accesskey') == '.') {
-			label = 'user-menu-profile';
-		} else if(el.closest('.notifications-for-wiki').length > 0) {
-			if($(el.closest('.notifications-for-wiki')).data('wiki-id') == window.wgCityId) {
-				label = 'notification-item-local';
-			} else {
-				label = 'notification-item-cross-wiki';
-			}
-		}
 
-		if (label !== undefined) {
-			track({
-				browserEvent: e,
-				category: 'top-nav',
-				label: label
-			});
-		}
-	});
+			if (label !== undefined) {
+				track({
+					browserEvent: e,
+					category: category,
+					label: label
+				});
+			}
+		});
+	})();
 
 	/** wiki-nav **/
 
@@ -285,32 +317,38 @@ jQuery(function($){
 		var label,
 			el = $(e.target);
 
-		if(el.closest('.wordmark').length > 0) {
+		if (el.closest('.wordmark').length > 0) {
 			label = 'wordmark';
-		} else if(el.data('canonical')) {
+		} else if (el.closest('.WikiNav').length > 0) {
 			var canonical = el.data('canonical');
-			switch(canonical) {
-				case 'wikiactivity':
-					label = 'on-the-wiki-activity';
-					break;
-				case 'random':
-					label = 'on-the-wiki-random';
-					break;
-				case 'newfiles':
-					label = 'on-the-wiki-new-photos';
-					break;
-				case 'chat':
-					label = 'on-the-wiki-chat';
-					break;
-				case 'forum':
-					label = 'on-the-wiki-forum';
-					break;
-				case 'videos':
-					label = 'on-the-wiki-videos';
-					break;
+			if (canonical !== undefined) {
+				switch(canonical) {
+					case 'wikiactivity':
+						label = 'on-the-wiki-activity';
+						break;
+					case 'random':
+						label = 'on-the-wiki-random';
+						break;
+					case 'newfiles':
+						label = 'on-the-wiki-new-photos';
+						break;
+					case 'chat':
+						label = 'on-the-wiki-chat';
+						break;
+					case 'forum':
+						label = 'on-the-wiki-forum';
+						break;
+					case 'videos':
+						label = 'on-the-wiki-videos';
+						break;
+				}
+			} else if (el.parent().hasClass('nav-item')) {
+				label = 'custom-level-1';
+			} else if (el.hasClass('subnav-2a')) {
+				label = 'custom-level-2';
+			} else if (el.hasClass('subnav-3a')) {
+				label = 'custom-level-3';
 			}
-		} else if(el.closest('.WikiNav').length > 0) {
-			label = 'custom';
 		}
 
 		if (label !== undefined) {
