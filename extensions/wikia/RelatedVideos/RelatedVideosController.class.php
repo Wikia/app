@@ -28,13 +28,14 @@ class RelatedVideosController extends WikiaController {
 		if( $this->app->checkSkin( 'wikiamobile' ) || Wikia::isMainPage() || ( !$this->app->wg->title instanceof Title ) || !$this->app->wg->title->exists() ) {
 			return false;
 		}
+
 		$rvs = new RelatedVideosService();
 		$videos = $rvs->getRVforArticleId( $this->app->wg->title->getArticleId() );
 
 		$this->linkToSeeMore = !empty($this->app->wg->EnableSpecialVideosExt) ? SpecialPage::getTitleFor("Videos")->escapeLocalUrl() : Title::newFromText(WikiaVideoPage::getVideosCategory())->getFullUrl();
 		$this->videos = $videos;
-
 		$this->totalVideos = $this->getTotalVideos();
+		$this->canAddVideo = $this->wg->User->isAllowed( 'relatedvideosedit' );
 	}
 	
 	public function getTotalVideos(){
@@ -211,6 +212,11 @@ class RelatedVideosController extends WikiaController {
 
 		if ( !$this->wg->User->isLoggedIn() ) {
 			$this->error = $this->wf->Msg( 'videos-error-not-logged-in' );
+			return;
+		}
+
+		if ( !$this->wg->User->isAllowed( 'relatedvideosedit' ) ) {
+			$this->error = $this->wf->Msg( 'related-videos-add-video-error-permission-video' );
 			return;
 		}
 
