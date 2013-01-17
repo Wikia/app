@@ -398,7 +398,12 @@ class DataFeedProvider {
 
 		} elseif (defined('NS_BLOG_ARTICLE_TALK') && $res['ns'] == NS_BLOG_ARTICLE_TALK && class_exists('ArticleComment')) {
 			$subpageTitle = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE_TALK);
-			$item['title'] = $subpageTitle->getSubpageText();
+			/*
+			* Unfortunately $subpageTitle->getSubpageText() don't grab the blog article title text for for subcomments.
+			* So considering blog structure reasonable way to get it, is to grab second title text part from full title text.
+			*/
+			$articleText = explode("/", $title->getText());
+			$item['title'] = (count($articleText) > 2) ? $articleText[1] : $subpageTitle->getSubpageText();
 			$item['url'] = $subpageTitle->getLocalUrl();
 
  		} elseif (defined('NS_BLOG_LISTING') && $res['ns'] == NS_BLOG_LISTING) {
