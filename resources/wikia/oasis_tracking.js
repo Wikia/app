@@ -20,15 +20,24 @@ jQuery(function($){
 
 		$('#WikiaPageHeader').on('click', 'a', function(e) {
 			var label,
-				el = $(e.target);
+				el = $(e.currentTarget),
+				id = el.data('id');
 
-			if((el.data('id') || el.parent().data('id')) == 'edit') {
-				label = 'edit';
-			} else if((el.data('id') || el.parent().data('id')) == 'comment') {
-				if(el.hasClass('talk') || el.parent().hasClass('talk')) {
-					label = 'talk';
-				} else {
-					label = 'comment';
+			switch(id) {
+				case 'comment': {
+					label = el.hasClass('talk') ? 'talk' : 'comment';
+					break;
+				}
+				case 'edit': {
+					label = id;
+					break;
+				}
+				case 'delete':
+				case 'history':
+				case 'move':
+				case 'protect': {
+					label = 'edit-' + id;
+					break;
 				}
 			}
 
@@ -41,14 +50,20 @@ jQuery(function($){
 			}
 		});
 
-		$wikiaArticle.on('click', 'a.image', function(e) {
+		$wikiaArticle.on('click', 'a', function(e) {
 			var label,
-				el = $(e.target);
+				el = $(e.currentTarget);
 
-			if (el.closest('.video').length > 0) {
+			if (el.hasClass('video')) {
 				label = 'video';
-			} else {
+			} else if (el.hasClass('image')) {
 				label = 'image';
+			} else if (el.hasClass('external')) {
+				label = 'link-external';
+			} else if (el.hasClass('wikia-photogallery-add')) {
+				label = 'add-photo-to-gallery';
+			} else if (el.prop('className') == '') {
+				label = 'link-internal';
 			}
 
 			if (label !== undefined) {
