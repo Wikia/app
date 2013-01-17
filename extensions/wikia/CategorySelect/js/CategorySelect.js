@@ -132,8 +132,6 @@
 					}
 				}));
 		}
-
-		element.trigger('ready', self);
 	};
 
 	/**

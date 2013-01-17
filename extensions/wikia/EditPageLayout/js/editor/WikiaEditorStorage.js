@@ -34,16 +34,10 @@ WikiaEditorStorage.prototype = {
 	init: function() {
 		this.fetchData();
 
-		$(function () {
-			$('#CategorySelect').on('ready', function(event, categorySelect) {
-				WikiaEditorStorage.modifyCategories(categorySelect);
-				})
-		});
-
-
 		GlobalTriggers.bind('WikiaEditorReady', $.proxy(function(editor){
 			this.modifySummary();
 			this.modifyEditorContent(editor);
+			this.modifyCategories($('#CategorySelect').data('categorySelect'));
 		}, this));
 	},
 
@@ -119,4 +113,6 @@ WikiaEditorStorage.prototype = {
 };
 
 var WikiaEditorStorage = new WikiaEditorStorage();
+window.WikiaEditorStorage = WikiaEditorStorage;
+
 WikiaEditorStorage.init();
