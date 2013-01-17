@@ -10,6 +10,7 @@ class FacebookButtonController extends WikiaController {
 	public function index() {
 		$this->class = $this->request->getVal('class', '');
 		$this->text = $this->request->getVal('text', '');
+		$this->tabindex = $this->request->getVal('tabindex', null);
 		$this->tooltip = $this->request->getVal('tooltip');
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
