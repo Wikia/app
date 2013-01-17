@@ -37,7 +37,7 @@ class ApiFetchBlob extends ApiBase {
 	 * @access public
 	 */
 	public function __construct( $main, $action ) {
-		self::$messageMap[ "cantrunjobs" ] = array( "code" => "cantrunjobs", 'info' => "You don't have permission to run jobs" );
+		self::$messageMap[ "cantrunjobs" ] = array( "code" => "cantrunjobs", 'info' => "You don't have permission to fetch blob from store" );
 		parent :: __construct( $main, $action );
 	}
 
@@ -114,6 +114,9 @@ class ApiFetchBlob extends ApiBase {
 			'store' => array(
 				ApiBase :: PARAM_TYPE => "string"
 			),
+			'token' => array(
+				ApiBase :: PARAM_TYPE => "string"
+			),
 			'id' => array(
 				ApiBase :: PARAM_TYPE => "integer"
 			)
@@ -122,8 +125,9 @@ class ApiFetchBlob extends ApiBase {
 
 	public function getParamDescription() {
 		return array (
+			'token' => 'secret token',
 			'store' => 'blob store',
-			'id' => 'identifier for blob'
+			'id'    => 'identifier for blob'
 		);
 	}
 
