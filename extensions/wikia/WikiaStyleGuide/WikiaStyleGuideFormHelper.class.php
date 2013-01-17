@@ -47,4 +47,8 @@ class WikiaStyleGuideFormHelper {
 	public static function isWrappedByLabel( $inputType ) {
 		return in_array( $inputType, self::$inputTypesToWrapWithLabel );
 	}
+
+	public static function getLabelPosition( $input ) {
+
+	}
 }

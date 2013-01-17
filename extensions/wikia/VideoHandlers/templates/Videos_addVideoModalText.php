@@ -16,7 +16,3 @@
 </form>
 <div class="notifyHolder messageHolder"><?= wfMsg('videos-notify') ?></div>
 <div class="somethingWentWrong messageHolder"><?= wfMsg('videos-something-went-wrong') ?></div>
-<?
-    if ( $wg->EnableRelatedVideosSuggestions && !$suppressSuggestions ) {
-        echo F::app()->sendRequest( "RelatedVideos", "getSuggestedVideos", array('pageTitle'=>$pageTitle) );
-    }

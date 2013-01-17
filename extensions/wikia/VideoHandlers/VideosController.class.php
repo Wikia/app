@@ -4,9 +4,8 @@ class VideosController extends WikiaController {
 
 	public function getAddVideoModal() {
 		$pgTitle = $this->request->getVal( 'title', '' );
-		$suppressSuggestions = $this->request->getVal( 'suppressSuggestions', true );
 
-		$html = $this->app->renderView( 'Videos', 'addVideoModalText', array('pageTitle'=>$pgTitle, 'suppressSuggestions' => $suppressSuggestions) );
+		$html = $this->app->renderView( 'Videos', 'addVideoModalText', array('pageTitle'=>$pgTitle) );
 
 		$this->setVal( 'pageTitle', $pgTitle );
 		$this->setVal( 'html', $html );
@@ -14,7 +13,6 @@ class VideosController extends WikiaController {
 	}
 
 	public function addVideoModalText() {
-		$this->setVal( 'suppressSuggestions', $this->request->getVal('suppressSuggestions', true) );
 		$this->setVal( 'pageTitle', $this->request->getVal('pageTitle', '') );
 	}
 

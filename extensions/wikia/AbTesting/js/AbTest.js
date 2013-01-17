@@ -96,7 +96,8 @@
 			}
 			el = {
 				id: exp.id,
-				name: exp.name
+				name: exp.name,
+				flags: exp.flags
 			};
 			if ( group ) {
 				el.group = {
@@ -198,8 +199,9 @@
 				version = versions[ i ];
 
 				// If this version is active remember this information
-				if ( serverTime >= version.startTime && serverTime <= version.endTime ) {
+				if ( serverTime >= version.startTime && serverTime < version.endTime ) {
 					exp.current = version;
+					exp.flags = version.flags;
 					count++;
 					break;
 				}
@@ -255,12 +257,11 @@
 	})( AbTest.experiments );
 
 	// Track active experiments
-/*	// disabled temporarily due to Jonathan's request
 	(function( experiments ) {
 		var expName, exp;
 		for ( expName in experiments ) {
 			exp = experiments[expName];
-			if ( exp.group ) {
+			if ( exp.flags.dw_tracking && exp.group ) {
 				window.WikiaTracker.trackEvent( 'ab_treatment', {
 					time: serverTimeString,
 					experiment: exp.name,
@@ -271,7 +272,7 @@
 			}
 		}
 	})( AbTest.experiments );
-*/
+
 	// Exports
 	Wikia.AbTest = AbTest;
 

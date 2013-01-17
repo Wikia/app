@@ -34,8 +34,12 @@ class RelatedVideosController extends WikiaController {
 		$this->linkToSeeMore = !empty($this->app->wg->EnableSpecialVideosExt) ? SpecialPage::getTitleFor("Videos")->escapeLocalUrl() : Title::newFromText(WikiaVideoPage::getVideosCategory())->getFullUrl();
 		$this->videos = $videos;
 
+		$this->totalVideos = $this->getTotalVideos();
+	}
+	
+	public function getTotalVideos(){
 		$mediaService = new MediaQueryService();
-		$this->totalVideos = $this->wg->Lang->formatNum( $mediaService->getTotalVideos() );
+		return $this->wg->Lang->formatNum( $mediaService->getTotalVideos() );	
 	}
 
 	public function getVideo(){
@@ -186,6 +190,8 @@ class RelatedVideosController extends WikiaController {
 			$this->video = $video;
 			$this->preloaded = $preloaded;
 			$this->isAdmin = $isAdmin;
+			$this->totalVideos = $this->getTotalVideos();
+
 		} else {
 			Wikia::log(__METHOD__, false, 'A video file not found. ID: '.$video['id']);
 		}
@@ -197,7 +203,6 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getAddVideoModal(){
-		$this->request->setVal( 'suppressSuggestions', false );
 		$this->forward( 'VideosController', 'getAddVideoModal' );
 	}
 
@@ -253,13 +258,6 @@ class RelatedVideosController extends WikiaController {
 		}
 	}
 
-	public function searchVideos() {
-
-
-		$search = F::build( 'WikiaSearch' ); /* @var $search WikiaSearch */
-		//$search->doSearch();
-	}
-
 	public function getVideoPreview() {
 
 		$sVideoTitle =  $this->request->getVal('vTitle');
@@ -282,96 +280,4 @@ class RelatedVideosController extends WikiaController {
 		$this->setVal( "dbkey", $this->request->getVal( "dbkey" ) );
 	}
 
-	public function getSuggestedVideos() {
-
-		$searchConfig = F::build( 'WikiaSearchConfig' );
-		$searchConfig	->setCityId	( WikiaSearch::VIDEO_WIKI_ID )
-						->setStart	( 0 )
-						->setSize	( 20 )
-		;
-
-		$relatedVideosParams = array( 'video_wiki_only'=>true, 'start'=>0, 'size'=>20 );
-
-		$sTitle = $this->request->getVal('pageTitle');
-		$articleId = 0;
-
-		if ( !empty( $sTitle ) ) {
-			$oTitle = Title::newFromText( $sTitle );
-			if ( !empty( $oTitle ) && $oTitle->exists() ) {
-				$articleId = $oTitle->getArticleId();
-			}
-		}
-
-		if ( $articleId > 0 ) {
-			$searchConfig->setPageId( $articleId );
-		}
-
-		$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
-
-		$resultCount = 0;
-		if ( $this->wg->ContLang->mCode == 'en' ) {
-			// we can't use MoreLikeThis outside of English because we can't reconcile different language fields
-			// if we were given a title, then search against that title; if not, then search against the wiki's name, minus the term "wiki"
-
-			$searchResultSet = $search->getRelatedVideos( $searchConfig );
-
-			if ( $searchResultSet->getResultsFound() == 0 && $searchConfig->getPageId() && $this->request->getVal('debug') != 1 ) {
-
-			    // if nothing for specify article, do general search
-			    $searchConfig->setPageId( false );
-			    $solariumResultSet = $search->getRelatedVideos( $searchConfig );
-			}
-
-			$resultCount = $searchResultSet->getResultsNum();
-		}
-
-		if ( $resultCount == 0 ) {
-			$searchConfig	->setQuery		( (! empty( $sTitle ) ) ? $sTitle : preg_replace( '/ wiki\b/i', '', $this->wg->SiteName ) )
-							->setVideoSearch( true )
-							->setPageId		( false )
-			;
-
-			$searchResultSet = $search->doSearch( $searchConfig );
-			$resultCount = $searchResultSet->getResultsNum();
-		}
-
-
-		Wikia::Log( __METHOD__, '', $resultCount );
-
-		$rvService = F::build( 'RelatedVideosService' ); /* @var $rvService RelatedVideosService */
-
-		$currentVideos = $rvService->getRVforArticleId( $articleId );
-		// reorganize array to index by video title
-		$currentVideosByTitle = array();
-		foreach( $currentVideos as $vid ) {
-			$currentVideosByTitle[$vid['title']] = $vid;
-		}
-
-		$response = array();
-		foreach ( $searchResultSet as $document ) {
-			$globalTitle = F::build( 'GlobalTitle', explode( '_', $document['id'] ), 'newFromId' );
-			if ( !empty( $globalTitle ) ) {
-
-				$title = $globalTitle->getText();
-				if( isset( $currentVideosByTitle[$title] ) ) {
-					// don't suggest videos that are already in RelatedVideos
-					continue;
-				}
-
-				$response[ $document['url'] ] = $document->getFields();
-
-				$rvService->inflateWithVideoData(
-								$document->getFields(),
-								$globalTitle,
-								$this->getVal( 'videoWidth', 160 ),
-								$this->getVal( 'videoHeight', 90 )
-				);
-
-			} else {
-				unset( $response[ $document['url'] ] );
-			}
-		}
-
-		$this->setVal( 'suggested_videos', $response );
-	}
 }

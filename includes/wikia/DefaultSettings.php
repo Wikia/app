@@ -1059,6 +1059,7 @@ $wgWikiaSeasonsPencilUnit = false;
 $wgEnableQuickToolsExt = true;
 
 /**
- * use phalanx external service
+ * @name $wgPhalanxService
+ * Use phalanx external service
  */
-$wgPhalanxService = true;
+$wgPhalanxService = false;

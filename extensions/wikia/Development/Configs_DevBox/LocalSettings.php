@@ -31,7 +31,7 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonSettings.php' );
 #
 # initialize Connection Poll
 #
-require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' );
+require_once( dirname( $wgWikiaLocalSettingsPath ) . "/../DB.{$wgWikiaDatacenter}-dev.php" );
 
 /**
  * Definition of global memcached servers
@@ -158,15 +158,23 @@ $wgLocalisationCacheConf[ "manualRecache" ] = false;
 // disable irc feed
 $wgRC2UDPEnabled = false;
 
-// fetch SASS files from devboxes (BugId:8545)
-$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
+// static assets host
+switch($wgWikiaDatacenter) {
+	case 'poz':
+		$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.pl.wikia-dev.com";
+		$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.pl.wikia-dev.com";
+		break;
+
+	default:
+		$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
+		$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
+}
 
 // macbre: generate proper paths for static assets on devboxes (BugId:6809)
 $wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images requested from CSS/SASS
 $wgStylePath = "{$wgCdnStylePath}/skins";
 $wgExtensionsPath = "{$wgCdnStylePath}/extensions";
 $wgResourceBasePath = $wgCdnStylePath;
-$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
 // fetch GoogleMaps resources from devboxes
 $wgGoogleMapsUrlPath = $wgExtensionsPath . '/3rdparty/GoogleMaps';

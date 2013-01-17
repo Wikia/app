@@ -11,7 +11,7 @@ var RelatedVideos = {
 	isHubExtEnabled: false,
 	isHubExtPage: false,
 	gaCat: 'related-videos',
-	totalVideos: null,
+	rvItemCount: null,
 
 	// Lazy Loading
 	loadedCount: 0,
@@ -35,14 +35,14 @@ var RelatedVideos = {
 		if ( this.rvModule.closest('.WikiaRail').size() > 0 ) {
 			// Right rail 
 			this.onRightRail = true;
-			this.totalVideos = window.RelatedVideosIds.length;
+			this.rvItemCount = window.RelatedVideosIds.length;
 			this.rvContainer.on('click', '.remove', this.removeVideoLoginWrapper);
 			
 			// If we don't have any items to lazy load, add the see-more-placeholder on init
 			this.handleSeeMorePlaceholder();
 		} else {
 			// Hubs
-			this.totalVideos = this.loadedCount;
+			this.rvItemCount = this.loadedCount;
 		}
 
 		if( this.rvModule.hasClass('RelatedHubsVideos') ) {
@@ -318,7 +318,7 @@ var RelatedVideos = {
 	},
 
 	handleSeeMorePlaceholder: function() {
-		if(!this.seeMorePlaceholderAdded && $('.item', this.rvModule).length == this.totalVideos) {
+		if(!this.seeMorePlaceholderAdded && $('.item', this.rvModule).length == this.rvItemCount) {
 			var seeMorePlaceholder = $('.seeMorePlaceholder', this.rvModule).addClass('item');
 			this.doLazyInsert(seeMorePlaceholder);
 			this.seeMorePlaceholderAdded = true;
@@ -338,15 +338,14 @@ var RelatedVideos = {
 		}
 	},
 
-	recalculateLength: function(increment){
+	recalculateLength: function(totalCount, increment){
 		// Update video tally text
-		var numberElem = this.rvTallyCount;
-		numberElem.text( parseInt(numberElem.text()) + increment );
+		this.rvTallyCount.text( totalCount );
 
-		this.totalVideos = this.totalVideos + increment;
+		this.rvItemCount = this.rvItemCount + increment;
 
 		// Update carousel progress
-		var numberItems = this.totalVideos;
+		var numberItems = this.rvItemCount;
 		
 		// Account for placeholder item
 		if(this.onRightRail) {
@@ -391,11 +390,12 @@ var RelatedVideos = {
 		RelatedVideos.scroll(
 			scrollLength,
 			function(){
-				$( html ).css('display', 'inline-block') /* JSlint ignore */
+				$( html ).hide()
 					.prependTo( RelatedVideos.rvContainer )
-					.fadeOut( 0 )
 					.fadeIn( 'slow', function(){
-						RelatedVideos.recalculateLength(1);
+						// Get the updated total number of videos on the wiki from the response html
+						var totalVideos = $(this).data('total-count');
+						RelatedVideos.recalculateLength(totalVideos, 1);
 					});
 				RelatedVideos.regroup();
 			}
