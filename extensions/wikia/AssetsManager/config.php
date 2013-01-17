@@ -707,6 +707,7 @@ $config['mini_editor_js'] = array(
 		'//resources/mediawiki.action/mediawiki.action.edit.js',
 		// Edit Page Layout
 		'//extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
+		'//extensions/wikia/EditPageLayout/js/editor/WikiaEditorStorage.js',
 		'//extensions/wikia/EditPageLayout/js/editor/Buttons.js',
 		'//extensions/wikia/EditPageLayout/js/editor/Modules.js',
 		'//extensions/wikia/EditPageLayout/js/plugins/MiniEditor.js',

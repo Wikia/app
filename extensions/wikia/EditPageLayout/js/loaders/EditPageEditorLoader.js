@@ -8,16 +8,8 @@
 		element: false,
 
 		constructor: function() {
-			var data;
-
 			this.element = $('#EditPage');
 			this.body = $('#wpTextbox1');
-
-			// Use cached data. Generally stored before login redirect.
-			if ((data = $.storage.get('WikiaEditorData')) != null) {
-				this.body.val(data);
-				$.storage.del('WikiaEditorData');
-			}
 		},
 
 		getToolbarsConfig: function() {
@@ -123,6 +115,8 @@
 			var data = this.getData();
 
 			window.WikiaEditor.create(data.plugins, data.config);
+
+			$(window).bind('UserLoginSubmit', window.WikiaEditor.storeContent);
 		}
 	});
 
