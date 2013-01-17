@@ -189,7 +189,7 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 		if ( (! isset( $this->thumbnailObject ) ) && ( $this['ns'] == NS_FILE ) ) {
 			$img = F::app()->wf->FindFile( $this->getTitleObject() );
 			if (! empty( $img ) ) {
-				$thumb = $img->transform( array( 'width' => 120, 'height' => 120 ) );
+				$thumb = $img->transform( array( 'width' => 160 ) ); // WikiaGrid 1 column width
 				if (! empty( $thumb ) ) {
 					$this->thumbnailObject = $thumb;
 				}

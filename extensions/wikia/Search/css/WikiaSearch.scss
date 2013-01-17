@@ -161,8 +161,9 @@ $form-negative-side-padding: $form-side-padding*-1;
 			color: $color-alternate-text;
 		}
 		a.image {
-			float: left;
-			margin: 0 10px 5px 0;
+			position: relative;
+			//float: left;
+			//margin: 0 10px 5px 0;
 		}
 	}
 	.searchmatch {
@@ -369,10 +370,13 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 	.result {
 		margin-bottom: 13px;
 		word-wrap: break-word;
+		.media-text {
+			float: left;
+		}
 		h1 {
 			font-size: 14px;
 			font-weight: bold;
-			margin-bottom:8px;
+			//margin-bottom:8px;
 		}
 		li {
 			float: none;
@@ -383,6 +387,9 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 		.redirect-title .result-link,
 		ul .result-link {
 			color: $color-alternate-text;
+		}
+		.subtle {
+			font-size: 12px;
 		}
 	}
 	.wikia-paginator ul {
