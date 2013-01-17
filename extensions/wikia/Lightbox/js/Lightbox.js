@@ -1027,7 +1027,8 @@ var Lightbox = {
 			type:		'GET',
 			format: 'html',
 			data: {
-				lightboxVersion: 2 // update this when we change the template
+				lightboxVersion: 2, // update this when we change the template
+				userLang: window.wgUserLanguage // just in case user changes language prefs
 			},
 			callback: function(html) {
 				$(html).makeModal({
