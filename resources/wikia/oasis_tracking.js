@@ -2,6 +2,7 @@
 jQuery(function($){
 	var $wikiaArticle = $('#WikiaArticle');
 	var $wikiaRail = $('#WikiaRail');
+	var $wikiHeader = $('#WikiHeader');
 
 	var track = WikiaTracker.buildTrackWithDefaults({
 		action: WikiaTracker.ACTIONS.CLICK,
@@ -94,6 +95,49 @@ jQuery(function($){
 		label: 'chat-join'
 	}, trackWithEventData);
 
+	/** contribute **/
+
+	$wikiHeader.find('.buttons .contribute').on('click', 'a', function(e) {
+		var label,
+			el = $(e.target),
+			id = el.data('id');
+
+		switch(id) {
+			case 'createpage': {
+				label = 'add-a-page';
+				break;
+			}
+			case 'edit': {
+				label = 'edit-a-page';
+				break;
+			}
+			case 'upload': {
+				label = 'add-a-photo';
+				break;
+			}
+			case 'wikiavideoadd': {
+				label = 'add-a-video';
+				break;
+			}
+			case 'wikiactivity': {
+				label = 'wiki-activity';
+				break;
+			}
+			case 'wikinavedit': {
+				label = 'edit-wiki-navigation';
+				break;
+			}
+		}
+
+		if (label !== undefined) {
+			track({
+				browserEvent: e,
+				category: 'contribute',
+				label: label
+			});
+		}
+	});
+
 	/** edit **/
 
 	(function() {
@@ -122,10 +166,12 @@ jQuery(function($){
 		var label,
 			el = $(e.target);
 
-		if(el.hasClass('thumbimage')) {
+		if (el.hasClass('thumbimage')) {
 			label = 'photos-module-thumbnail';
-		} else if(el.hasClass('upphotos')) {
-			label ='photos-module-add';
+		} else if (el.hasClass('upphotos')) {
+			label = 'photos-module-add';
+		} else if (el.hasClass('more')) {
+			label = 'photos-module-more';
 		}
 
 		if (label !== undefined) {
@@ -143,7 +189,9 @@ jQuery(function($){
 		var label,
 			el = $(e.target);
 
-		if(el.closest('.edited-by').length > 0) {
+		if (el.hasClass('more')) {
+			label = 'activity-more';
+		} else if(el.closest('.edited-by').length > 0) {
 			label = 'activity-username';
 		} else if(el.closest('em').length > 0) {
 			label = 'activity-title';
@@ -172,6 +220,22 @@ jQuery(function($){
 		}, trackWithEventData).on('submit', {
 			category: category,
 			label: 'search-enter'
+		}, trackWithEventData);
+	})();
+
+	/** share **/
+
+	(function() {
+		var category = 'share';
+
+		$wikiHeader.on('click', '.share-button', {
+			category: category,
+			label: 'share-button'
+		}, trackWithEventData);
+
+		$wikiHeader.on('click', '.SharingToolbar .email-link', {
+			category: category,
+			label: 'email'
 		}, trackWithEventData);
 	})();
 
@@ -206,13 +270,11 @@ jQuery(function($){
 			name = el.data('name');
 
 		switch(name) {
+			case 'customize':
 			case 'follow':
-			case 'history': {
-				label = name;
-				break;
-			}
+			case 'history':
 			case 'whatlinkshere': {
-				label = 'what-links-here';
+				label = name;
 				break;
 			}
 			default: {
@@ -313,7 +375,7 @@ jQuery(function($){
 
 	/** wiki-nav **/
 
-	$('#WikiHeader').on('click', 'a', function(e) {
+	$wikiHeader.on('click', 'a', function(e) {
 		var label,
 			el = $(e.target);
 
