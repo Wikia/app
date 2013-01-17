@@ -18,6 +18,11 @@ jQuery(function($){
 	(function() {
 		var category = 'article';
 
+		// Not special pages
+		if ($('body.ns-special').length > 0) {
+			return;
+		}
+
 		$('#WikiaPageHeader').on('click', 'a', function(e) {
 			var label,
 				el = $(e.currentTarget),
@@ -224,18 +229,52 @@ jQuery(function($){
 	/** search **/
 
 	(function() {
-		var category = 'search';
+		var category = 'search',
+			$wikiaSearch = $('.WikiaSearch');
 
-		$('#WikiaSearch').on('click', '.autocomplete', {
+		$wikiaSearch.on('click', '.autocomplete', {
 			category: category,
 			label: 'search-suggest'
-		}, trackWithEventData).on('click', '.wikia-button', {
-			category: category,
-			label: 'search-button'
-		}, trackWithEventData).on('submit', {
-			category: category,
-			label: 'search-enter'
-		}, trackWithEventData);
+		}, trackWithEventData).on('click', '.wikia-button', function(e) {
+			// Prevent tracking 'fake' form submission clicks
+			if (e.clientX > 0) {
+				track({
+					category: category,
+					label: 'search-button'
+				});
+			}
+		}).on('keypress', function(e) {
+			if (e.which === 13) {
+				track({
+					category: category,
+					label: 'search-enter'
+				});
+			}
+		});
+
+		if ($('body.page-Special_Search').length > 0) {
+			$wikiaSearch.on('click', '.search-tabs a', function(e) {
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'sidebar-' + $(e.currentTarget).prop('className')
+				});
+			}).on('click', '.Results .result-link', function(e) {
+				var el = $(e.currentTarget);
+
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'result-' + (el.hasClass('search_click_match') ? 'push-top' : 'item-' + el.data('pos'))
+				});
+			}).on('click', '.image', function(e) {
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'result-' + ($(e.currentTarget).hasClass('video') ? 'video' : 'photo')
+				});
+			});
+		}
 	})();
 
 	/** share **/
