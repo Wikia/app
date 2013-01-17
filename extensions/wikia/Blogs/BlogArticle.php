@@ -788,10 +788,13 @@ class BlogArticle extends Article {
 		}
 		if($oTitle->getNamespace() == NS_BLOG_ARTICLE && $oTitle->isSubpage() && empty($oEditPage->isCreateBlogPage) ) {
 			$oSpecialPageTitle = Title::newFromText('CreateBlogPage', NS_SPECIAL);
-			if ($wgRequest->getVal('oldid'))
-			{
+			if ($wgRequest->getVal('oldid')) {
 				$url = $oSpecialPageTitle->getFullUrl("pageId=" . $oTitle->getArticleId() . "&oldid=" . $wgRequest->getVal('oldid'));
-			} else {
+			}
+			else if ($wgRequest->getVal('undoafter') && $wgRequest->getVal('undo')) {
+				$url = $oSpecialPageTitle->getFullUrl("pageId=" . $oTitle->getArticleId() . "&undoafter=" . $wgRequest->getVal('undoafter') . "&undo=" . $wgRequest->getVal('undo'));
+			}
+			else {
 				$url = $oSpecialPageTitle->getFullUrl("pageId=" . $oTitle->getArticleId() );
 			}
 			$wgOut->redirect($url);
