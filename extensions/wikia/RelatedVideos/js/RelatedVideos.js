@@ -393,6 +393,7 @@ var RelatedVideos = {
 				$( html ).hide()
 					.prependTo( RelatedVideos.rvContainer )
 					.fadeIn( 'slow', function(){
+						// Get the updated total number of videos on the wiki from the response html
 						var totalVideos = $(this).data('total-count');
 						RelatedVideos.recalculateLength(totalVideos, 1);
 					});
