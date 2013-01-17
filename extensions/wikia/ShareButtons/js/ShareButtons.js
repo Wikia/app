@@ -47,7 +47,12 @@ var ShareButtons = {
 		head.resolve();
 
 		return dfd.promise();
-	}
+	},
+	track: window.WikiaTracker.buildTrackWithDefaults({
+		action: window.WikiaTracker.ACTIONS.CLICK,
+		category: 'share',
+		trackingMethod: 'ga'
+	})
 };
 
 // Exports

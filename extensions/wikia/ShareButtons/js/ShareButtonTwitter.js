@@ -12,6 +12,14 @@ if ( ShareButtons ) {
 			// Resolve when contents have finished loading
 			$( '.twitter-share-button' ).load( dfd.resolve );
 
+			twttr.ready(function(twttr) {
+				twttr.events.bind('click', function(event) {
+					ShareButtons.track({
+						label: 'twitter-' + event.region
+					});
+				});
+			});
+
 			return dfd.promise();
 		}
 	});
