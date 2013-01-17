@@ -113,12 +113,12 @@ abstract class AbstractService
 		$document = new \Solarium_Document_AtomicUpdate( $responseArray );
 		
 		$pageIdValue = $this->getPageIdForDocumentKey();
-		$pageIdKey = $document->pageid ?: sprintf( '%s_%s', $this->interface->getGlobal( 'CityId' ), $pageIdValue );
-		$document->setKey( 'pageid', $pageIdKey );
+		$idKey = $document->id ?: sprintf( '%s_%s', $this->interface->getGlobal( 'CityId' ), $pageIdValue );
+		$document->setKey( 'id', $idKey );
 		
 		foreach ( $document->getFields() as $field => $value ) {
 			// for now multivalued fields will be exclusively fully written. keep that in mind
-			if ( $field != 'pageid' && !in_array( array_shift( explode( '_', $field ) ), \WikiaSearch::$multiValuedFields ) ) {
+			if ( $field != 'id' && !in_array( array_shift( explode( '_', $field ) ), \WikiaSearch::$multiValuedFields ) ) {
 				// we may eventually need to specify for some fields whether we should use ADD
 				$document->setModifierForField( $field, \Solarium_Document_AtomicUpdate::MODIFIER_SET );
 			}
@@ -141,8 +141,7 @@ abstract class AbstractService
 	 */
 	protected function getUpdateXmlForDocuments( array $documents = array() ) {
 		$updateHandler = $this->client->createUpdate()
-		                              ->addDocuments( $documents )
-		                              ->addCommit();
+		                              ->addDocuments( $documents );
 		return $this->client->createRequest( $updateHandler )->getRawData( $updateHandler );
 		
 	}
