@@ -22,11 +22,13 @@
 	<? endif; ?>
 	
 	<? if ($result->getVar('ns') == NS_FILE): ?>
-		<? if (!$result->getVar('created_30daysago')) : ?>
-		<span class="timeago abstimeago subtle" title="<?= $result->getVar('fmt_timestamp') ?>" alt="<?= $result->getVar('fmt_timestamp') ?>">&nbsp;</span>
-		<? else : ?>
-		<span class="timeago-fmt subtle"><?= $result->getVar('fmt_timestamp') ?></span>
-		<? endif; ?>
+		<p>
+			<? if (!$result->getVar('created_30daysago')) : ?>
+			<span class="timeago abstimeago subtle" title="<?= $result->getVar('fmt_timestamp') ?>" alt="<?= $result->getVar('fmt_timestamp') ?>">&nbsp;</span>
+			<? else : ?>
+			<span class="timeago-fmt subtle"><?= $result->getVar('fmt_timestamp') ?></span>
+			<? endif; ?>
+		</p>
 	<? endif; ?>
 	<?= $result->getText(); ?>
 	
