@@ -54,6 +54,7 @@ $messages['en'] = array(
 	'editaccount-error-close' => 'A problem occurred when closing account. Try again or contact the Tech Team.',
 	'editaccount-invalid-email' => '"$1" is not a valid email address!',
 	'editaccount-nouser' => 'Account "$1" does not exist!',
+	'editaccount-not-loaded' => 'Error: User data failed to load properly, please try reloading the page.',
 	'editaccount-remove-avatar-fail' => 'Problem auto-removing avatar.',
 	'editaccount-requested' => 'Note: User has requested an account closure',
 	'editaccount-not-requested' => 'CAUTION: User has not requested an account closure',
@@ -106,6 +107,7 @@ Per [[Thread:Support/About_Wikia:Editaccount-status-realuser/ms_and_Wikia:Editac
 	'editaccount-status-tempuser' => '"Temporary user" indicates an account is inactive. An account is activated and becomes a "real user" once the user clicks on a link in an e-mail we send them.',
 	'right-editaccount' => '{{doc-right|editaccount|ns=Wikia}}',
 	'action-editaccount' => '{{doc-action|editaccount}}',
+	'editaccount-not-loaded' => 'Error message which is shown when selected user exists but the user data failed to load.',
 );
 
 /** Afrikaans (Afrikaans)
