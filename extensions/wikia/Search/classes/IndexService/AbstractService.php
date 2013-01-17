@@ -119,7 +119,7 @@ abstract class AbstractService
 		
 		foreach ( $document->getFields() as $field => $value ) {
 			// for now multivalued fields will be exclusively fully written. keep that in mind
-			if ( $field != 'id' && !in_array( array_shift( explode( '_', $field ) ), \WikiaSearch::$multiValuedFields ) ) {
+			if ( $field != 'id' && substr_count( $field, '_mv_' ) == 0 ) {
 				// we may eventually need to specify for some fields whether we should use ADD
 				$document->setModifierForField( $field, \Solarium_Document_AtomicUpdate::MODIFIER_SET );
 			}

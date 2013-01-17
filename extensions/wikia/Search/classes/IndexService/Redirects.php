@@ -18,7 +18,8 @@ class Redirects extends AbstractService
 	 */
 	public function execute() {
 		wfProfileIn(__METHOD__);
-		$result = array( 'redirect_titles' => $this->interface->getRedirectTitlesForPageId( $this->currentPageId ) );
+		$key = $this->interface->getGlobal( 'AppStripsHtml' ) ? \WikiaSearch::field( 'redirect_titles' ) : 'redirect_titles';
+		$result = array( $key => $this->interface->getRedirectTitlesForPageId( $this->currentPageId ) );
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
