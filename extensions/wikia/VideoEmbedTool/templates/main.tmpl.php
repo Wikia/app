@@ -25,11 +25,11 @@
 			<label for="VideoEmbedUrl" class="with-info-p"><?= wfMsg('vet-url-label') ?></label>
 			<div>
 				<p><?= wfMsg( 'vet-description' ) ?> <a href="http://help.wikia.com/wiki/Help:Video_Embed_Tool" target="_blank"><?= wfMsg( 'vet-see-all' ) ?></a></p>
-				<input id="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" onkeypress="VET_onVideoEmbedUrlKeypress(event);" />
+				<input id="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" />
 			</div>
 		</div>
 	<?php } ?>
-		<a id="VideoEmbedUrlSubmit" class="wikia-button" style="display: block; " onclick="return VET_preQuery(event);" ><?= wfMsg('vet-upload-btn') ?></a>
+		<a id="VideoEmbedUrlSubmit" class="wikia-button" style="display: block; "><?= wfMsg('vet-upload-btn') ?></a>
 	</form>
 	<form action="" class="WikiaForm VET-search" id="VET-search-form">
 		<div class="input-group">
