@@ -318,8 +318,8 @@ class OoyalaApiWrapper extends ApiWrapper {
 			return $this->metadata['startDate'];
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['startdate']) ) {
-			return strtotime( $this->interfaceObj['metadata']['startdate'] );
+		if ( !empty($this->interfaceObj['time_restrictions']['start_date']) ) {
+			return strtotime( $this->interfaceObj['time_restrictions']['start_date'] );
 		}
 
 		return '';
