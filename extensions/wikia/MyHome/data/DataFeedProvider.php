@@ -400,7 +400,7 @@ class DataFeedProvider {
 			$subpageTitle = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE_TALK);
 			/*
 			* Unfortunately $subpageTitle->getSubpageText() don't grab the blog article title text for for subcomments.
-			* So considering blog structure is seems only reasonable way to get it, is to grab second title text part from full title text.
+			* So considering blog structure reasonable way to get it, is to grab second title text part from full title text.
 			*/
 			$articleText = explode("/", $title->getText());
 			$item['title'] = (count($articleText) > 2) ? $articleText[1] : $subpageTitle->getSubpageText();
