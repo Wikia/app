@@ -469,6 +469,7 @@ include_once( "$IP/extensions/wikia/ImageServing/imageServing.setup.php" );
 include_once( "$IP/extensions/wikia/ImageServing/Test/ImageServingTest.setup.php" );
 include_once( "$IP/extensions/wikia/MostVisitedPages/SpecialMostVisitedPages.php" );
 include_once( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
+include_once( "$IP/extensions/wikia/LoaderQueue/LoaderQueue.setup.php" );
 
 /**
  * @name $wgSkipSkins
