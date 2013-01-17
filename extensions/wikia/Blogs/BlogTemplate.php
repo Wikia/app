@@ -1120,6 +1120,10 @@ class BlogTemplateClass {
 				self::$aWhere = array("page_id in (" . self::$dbr->makeList($showOnlyPage) . ")");
 			}
 
+			//style attribute is deprecated but we cannot afford braking existing bloglist just because
+			//they have style attribute
+			unset($aParams['style']);
+
 			/* parse parameters */
 			foreach ($aParams as $sParamName => $sParamValue) {
 				/* ignore empty lines */
