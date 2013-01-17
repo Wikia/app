@@ -1121,7 +1121,7 @@ class BlogTemplateClass {
 			}
 
 			//style attribute is deprecated but we cannot afford braking existing bloglist just because
-			//they have style attribute
+			//they have style attribute - bugID: 68203 https://wikia.fogbugz.com/default.asp?68203
 			unset($aParams['style']);
 
 			/* parse parameters */
