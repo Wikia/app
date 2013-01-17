@@ -361,14 +361,14 @@ $color-related-videos-background: darken($color-page, 20%);
 			.wrapper {
 				width: 298px;
 				position: static;
-				left: 0;
+				margin: 5px 0;
 				div.item {
 					@include clearfix;
 					display: block;
 					float: none;
 					width: auto;
 					height: 90px;
-					padding: 5px 0 0 0;
+					padding: 0;
 					margin: 0 0 15px 0;
 					.new {
 						top: 14px;
@@ -376,7 +376,7 @@ $color-related-videos-background: darken($color-page, 20%);
 					.video-thumbnail {
 						display: block;
 						float: left;
-						margin-right: 10px;
+						margin-right: 12px;
 						width: 150px;
 						.playButton {
 							width: 150px;
@@ -386,10 +386,15 @@ $color-related-videos-background: darken($color-page, 20%);
 						display: block;
 						float: left;
 						max-height: 80px;
-						width: 118px;
+						width: 135px;
 						padding-top: 2px;
 						font-size: 11px;
 						margin: 0;
+						
+						// Video title next to thumbnail
+						a {
+							font-size: 12px;
+						}
 					}
 					.see-more-videos-placeholder {
 						background: $color-see-more-videos-placeholder;
