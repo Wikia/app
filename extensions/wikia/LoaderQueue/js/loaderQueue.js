@@ -1,3 +1,4 @@
+/**
 require(['lazyQueue', 'mw'], function(lazyQueue, mw) {
 	function callback(item) {
 		if (!item || !item.deps || !item.callback) {
@@ -15,3 +16,4 @@ require(['lazyQueue', 'mw'], function(lazyQueue, mw) {
 		window.wgLoaderQueue.start();
 	}
 });
+**/
