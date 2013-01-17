@@ -64,7 +64,12 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isForum() {
-		return (F::app()->wg->EnableForumExt && F::app()->wg->IsForum);
+		$namespace = F::app()->wg->Title->getNamespace();
+
+		return (
+			(F::app()->wg->EnableForumExt && F::app()->wg->IsForum) // new forum
+			|| (defined('NS_FORUM') && $namespace === NS_FORUM)     // old forum
+		);
 	}
 
 	/**
