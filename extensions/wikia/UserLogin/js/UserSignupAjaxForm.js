@@ -48,7 +48,7 @@ UserSignupAjaxForm.prototype.validateBirthdate = function(e) {
 	}
 
 	var params = this.getDefaultParamsForAjax();
-	params = $.extend(params, {
+	$.extend(params, {
 		field: 'birthdate',
 		birthyear: this.wikiaForm.inputs['birthyear'].val(),
 		birthmonth: this.wikiaForm.inputs['birthmonth'].val(),
@@ -71,17 +71,17 @@ UserSignupAjaxForm.prototype.getDefaultParamsForAjax = function() {
 };
 
 UserSignupAjaxForm.prototype.checkFieldsValid = function() {
-	var isInvalid = false;
+	var isValid = true;
 	var inputsToValidate = this.notEmptyFields;
 
 	for(var i = 0; i < inputsToValidate.length; i++) {
 		if(this.checkFieldEmpty(this.wikiaForm.inputs[inputsToValidate[i]])
 			|| this.wikiaForm.getInputGroup(inputsToValidate[i]).hasClass('error')) {
-			isInvalid = true;
+			isValid = false;
 			break;
 		}
 	}
-	return isInvalid;
+	return isValid;
 };
 
 UserSignupAjaxForm.prototype.checkFieldEmpty = function(field) {
@@ -89,10 +89,10 @@ UserSignupAjaxForm.prototype.checkFieldEmpty = function(field) {
 };
 
 UserSignupAjaxForm.prototype.activateSubmit = function() {
-	var isInvalid = this.checkFieldsValid();
-	if(isInvalid) {
-		this.submitButton.attr('disabled', 'disabled');
-	} else {
+	var isvalid = this.checkFieldsValid();
+	if(isvalid) {
 		this.submitButton.removeAttr('disabled');
+	} else {
+		this.submitButton.attr('disabled', 'disabled');
 	}
 };
