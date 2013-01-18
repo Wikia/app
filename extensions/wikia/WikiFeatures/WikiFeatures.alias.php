@@ -22,3 +22,13 @@ $specialPageAliases['de'] = array(
 $specialPageAliases['pl'] = array(
 	'WikiFeatures' => array( 'Rozszerzenia wiki', 'WikiFeatures' ),
 );
+
+/** Italian (Italiano) */
+$specialPageAliases['it'] = array(
+	'WikiFeatures' => array( 'WikiFunzioni', 'WikiFeatures' ),
+);
+
+/** Spanish (Espanol) */
+$specialPageAliases['es'] = array(
+	'WikiFeatures' => array( ' FuncionalidadesDeWikia', 'WikiFeatures' ),
+);
