@@ -352,11 +352,6 @@ class EditAccount extends SpecialPage {
 
 		$id = $this->mUser->getId();
 
-		// delete the record from all the secondary clusters
-		if ( class_exists( 'ExternalUser_Wikia' ) ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
-		}
-
 		// Reload user
 		$this->mUser = User::newFromId( $id );
 
@@ -379,6 +374,11 @@ class EditAccount extends SpecialPage {
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );
 			$log->addEntry( 'closeaccnt', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
+
+			// delete the record from all the secondary clusters
+			if ( class_exists( 'ExternalUser_Wikia' ) ) {
+				ExternalUser_Wikia::removeFromSecondaryClusters( $id );
+			}
 
 			// All clear!
 			$this->mStatusMsg = wfMsg( 'editaccount-success-close', $this->mUser->mName );
