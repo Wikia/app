@@ -366,6 +366,12 @@ class EditAccount extends SpecialPage {
 			$this->mUser->setOption( 'disabled', 1 );
 			// BugId:18085 - setting a new token causes the user to be logged out.
 			$this->mUser->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
+
+			// BugID:95369 This forces saveSettings() to commit the transaction
+			// FIXME: this is a total hack, we should add a commit=true flag to saveSettings
+			global $wgRequest;
+			$wgRequest->setVal('action', 'ajax');
+
 			// Need to save these additional changes
 			$this->mUser->saveSettings();
 
