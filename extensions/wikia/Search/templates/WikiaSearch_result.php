@@ -5,7 +5,8 @@
 <article>
 
 	<?php if($result->getThumbnail() != null): ?>
-		<?= $result->getThumbnail()->toHtml(array('desc-link'=>true, 'img-class'=>'thumbimage')); ?>
+		<div class="grid-1 alpha"><?= $result->getThumbnail()->toHtml(array('desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true)); ?></div>
+		<div class="media-text grid-2"> <? // Open media-text div when there's a thumbnail ?>
 	<?php endif; ?>
 	
 	<h1>
@@ -22,11 +23,18 @@
 	<? endif; ?>
 	
 	<? if ($result->getVar('ns') == NS_FILE): ?>
-		<? if (!$result->getVar('created_30daysago')) : ?>
-		<span class="timeago abstimeago subtle" title="<?= $result->getVar('fmt_timestamp') ?>" alt="<?= $result->getVar('fmt_timestamp') ?>">&nbsp;</span>
-		<? else : ?>
-		<span class="timeago-fmt subtle"><?= $result->getVar('fmt_timestamp') ?></span>
-		<? endif; ?>
+		<p class="subtle">
+			<? if (!$result->getVar('created_30daysago')) : ?>
+			<span class="timeago abstimeago " title="<?= $result->getVar('fmt_timestamp') ?>" alt="<?= $result->getVar('fmt_timestamp') ?>">&nbsp;</span>
+			<? else : ?>
+			<span class="timeago-fmt"><?= $result->getVar('fmt_timestamp') ?></span>
+			<? endif; ?>
+			<?php
+				if ( $videoViews = $result->getVideoViews() ) {
+					echo '&bull; '.$videoViews;
+				}
+			?>
+		</p>
 	<? endif; ?>
 	<?= $result->getText(); ?>
 	
@@ -43,6 +51,10 @@
 		<i>[id: <?=$result->getId();?>, score: <?=$result->getVar('score', '?');?>, backlinks: <?=$result->getVar('backlinks', '?');?>, views: <?=$result->getVar('views', '?');?>]</i><br />
 		<i>Categories: <?=implode(" | ", $result->getVar('categories', array("NONE")))?></i><br/>
 	<?php endif; //debug ?>
+
+	<?php if($result->getThumbnail() != null): ?>
+		</div> <? // Close media-text div when there's a thumbnail ?>
+	<?php endif; ?>
 
 </article>
 
