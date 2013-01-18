@@ -7,7 +7,7 @@ jQuery(function($){
 		rHrefDiff = /&diff=\d+/,
 		rHrefHistory = /&action=history/;
 
-	var track = WikiaTracker.buildTrackWithDefaults({
+	var track = WikiaTracker.buildTrackingFunction({
 		action: WikiaTracker.ACTIONS.CLICK,
 		trackingMethod: 'ga'
 	});

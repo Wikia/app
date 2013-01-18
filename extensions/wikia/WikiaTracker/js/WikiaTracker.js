@@ -153,7 +153,7 @@ window.WikiaTracker = (function(){
 	/**
 	 * Function factory for building custom tracking methods with default parameters.
 	 *
-	 *     var track = WikiaTracker.buildTrackWithDefaults({
+	 *     var track = WikiaTracker.buildTrackingFunction({
 	 *         category: 'myCategory',
 	 *         trackingMethod: 'ga'
 	 *     });
@@ -169,7 +169,7 @@ window.WikiaTracker = (function(){
 	 *
 	 * @author Kyle Florence <kflorence@wikia-inc.com>
 	 */
-	function buildTrackWithDefaults( defaults ) {
+	function buildTrackingFunction( defaults ) {
 		defaults = [ defaults || {} ];
 
 		return function() {
@@ -392,7 +392,7 @@ window.WikiaTracker = (function(){
 	return {
 		ACTIONS: actions,
 		ACTIONS_REVERSE: actionsReverse,
-		buildTrackWithDefaults: buildTrackWithDefaults,
+		buildTrackingFunction: buildTrackingFunction,
 		track: track,
 		trackEvent: trackEvent
 	};

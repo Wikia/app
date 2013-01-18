@@ -48,7 +48,7 @@ var ShareButtons = {
 
 		return dfd.promise();
 	},
-	track: window.WikiaTracker.buildTrackWithDefaults({
+	track: window.WikiaTracker.buildTrackingFunction({
 		action: window.WikiaTracker.ACTIONS.CLICK,
 		category: 'share',
 		trackingMethod: 'ga'
