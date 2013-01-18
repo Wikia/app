@@ -44,9 +44,7 @@ class BlogArticle extends Article {
 	 * overwritten Article::view function
 	 */
 	public function view() {
-		global $wgOut, $wgUser, $wgRequest, $wgTitle, $wgContLang;
-		global $wgStylePath, $wgLang;
-		global $wgProblemReportsEnable, $wgNotificationEnableSend;
+		global $wgOut, $wgRequest, $wgTitle;
 
 		$feed = $wgRequest->getText( "feed", false );
 		if( $feed && in_array( $feed, array( "rss", "atom" ) ) ) {

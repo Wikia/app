@@ -97,6 +97,7 @@ class BlogsHelper {
 	}
 
 	public static function onFilePageImageUsageSingleLink( &$link, &$element ) {
+		wfProfileIn( __METHOD__ );
 		$ns = $element->page_namespace;
 
 		if( $ns == NS_BLOG_ARTICLE ) {
@@ -114,6 +115,7 @@ class BlogsHelper {
 			);
 		}
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 }

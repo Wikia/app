@@ -8,6 +8,27 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	protected static $FEED_URL = 'https://api.ooyala.com';
 
 	public function import( $content = '', $params = array() ) {
+		$params['now'] = time();
+
+		// by created date
+		$params['cond'] = array(
+			"created_at >= '$params[startDate]'",
+			"created_at < '$params[endDate]'",
+		);
+		$articlesCreated = $this->importVideos( $content, $params );
+
+		// by time restrictions
+		$params['cond'] = array(
+			"created_at < '$params[startDate]'",
+			"time_restrictions.start_date >= '$params[startDate]'",
+			"time_restrictions.start_date < '".gmdate( 'Y-m-d H:i:s', $params['now'] )."'",
+		);
+		$articlesCreated += $this->importVideos( $content, $params );
+
+		return $articlesCreated;
+	}
+
+	public function importVideos( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
@@ -15,18 +36,12 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			$addlCategories = array_merge( $addlCategories, $params['extraCategories'] );
 		}
 		$debug = !empty($params['debug']);
-			
+
 		$articlesCreated = 0;
 		$nextPage = '';
 
 		// ingest only live video
-		$cond = array( "status = 'live'" );
-		if ( !empty($params['startDate']) ) {
-			$cond[] = "created_at >= '$params[startDate]'";
-		}
-		if ( !empty($params['endDate']) ) {
-			$cond[] = "created_at < '$params[endDate]'";
-		}
+		$cond = array_merge( array( "status = 'live'" ), $params['cond'] );
 
 		$apiParams = array(
 			'limit' => self::API_PAGE_SIZE,
@@ -61,6 +76,10 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			print("Found $numVideos videos...\n");
 
 			foreach( $videos as $video ) {
+				if ( !empty($video['time_restrictions']['start_date']) && strtotime($video['time_restrictions']['start_date']) > $params['now'] ) {
+					continue;
+				}
+
 				$clipData = array();
 				$clipData['titleName'] = trim($video['name']);
 				$clipData['videoId'] = $video['embed_code'];
@@ -82,7 +101,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['language'] =  empty($video['metadata']['lang']) ? '' : $video['metadata']['lang'];
 				$clipData['genres'] = empty($video['metadata']['genres']) ? '' : $video['metadata']['genres'];
 				$clipData['actors'] = empty($video['metadata']['actors']) ? '' : $video['metadata']['actors'];
-				$clipData['startDate'] = empty($video['metadata']['startdate']) ? '' : $video['metadata']['startdate'];
+				$clipData['startDate'] = empty($video['time_restrictions']['start_date']) ? '' : $video['time_restrictions']['start_date'];
 				$clipData['expirationDate'] = empty($video['metadata']['expirationdate']) ? '' : $video['metadata']['expirationdate'];
 
 				$msg = '';

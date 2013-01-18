@@ -162,6 +162,10 @@ $messages['qqq'] = array(
 	'blog-comment-delete' => '{{Identical|Delete}}',
 	'blog-comment-hide' => '{{Identical|Hide}}',
 	'blog-comment-history' => '{{Identical|History}}',
+	'blog-userblog' => 'Appears in an RSS feed.
+Parameters:
+
+$1 - Username of blog author. GENDER is supported.',
 	'blog-fromsitename' => 'Prints the name of the wiki the blog is from into an RSS feed. The $1 parameter is <nowiki>{{SITENAME}}</nowiki>.',
 	'blogs-comment-hidden' => 'If a tool like RevisionDelete has made the text of a comment inaccessible to the public, this message informs the reader the comment has been hidden',
 	'right-blog-comments-toggle' => '{{doc-right|blog-comments-toggle}}',
@@ -169,10 +173,6 @@ $messages['qqq'] = array(
 	'right-blog-articles-edit' => '{{doc-right|blog-articles-edit}}',
 	'right-blog-articles-move' => '{{doc-right|blog-articles-move}}',
 	'blog-desc' => '{{desc}}',
-        'blog-userblog' => 'Appears in an RSS feed.
-Parameters:
-
-$1 - Username of blog author. GENDER is supported.',
 	'blogs-searchprofile' => 'Name of a tab with blog articles and blog listings. This tab is displayed in the right column on search page',
 	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings. Tooltip displayed on hover on Blogs Tab in the right column on search page',
 	'user-blog-url-link' => 'Link - links to users Blog main page',
@@ -833,6 +833,7 @@ $messages['cs'] = array(
  * @author The Evil IP address
  */
 $messages['de'] = array(
+	'blog-file-page' => "Beitrag von <a href='$1'>$2</a> im Blog von <a href='$3'>$4</a>",
 	'createblogpage' => 'Blog anlegen',
 	'createbloglistingpage' => 'Erstelle Blog-Aggregationsseite',
 	'create-blog-spam' => 'Sieht aus wie Spam',
@@ -1485,6 +1486,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
  * @author Wyz
  */
 $messages['fr'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> publié sur le blog de <a href='$3'>$4</a>",
 	'createblogpage' => 'Créer un blog',
 	'createbloglistingpage' => 'Créer une liste de blogs',
 	'create-blog-spam' => 'Ressemble à du spam',
@@ -1608,6 +1610,7 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
  * @author Toliño
  */
 $messages['gl'] = array(
+	'blog-file-page' => "Publicación <a href='$1'>$2</a> no blogue de <a href='$3'>$4</a>",
 	'createblogpage' => 'Crear un blogue',
 	'createbloglistingpage' => 'Lista de blogues creados',
 	'create-blog-spam' => 'Semella spam',
@@ -2731,6 +2734,7 @@ $messages['mai'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'blog-file-page' => "Објава од <a href='$1'>$2</a> на блогот на <a href='$3'>$4</a>",
 	'createblogpage' => 'Создавање на блог',
 	'createbloglistingpage' => 'Создавање на попис на блогови',
 	'create-blog-spam' => 'Личи на спам',
@@ -3309,6 +3313,7 @@ $messages['pfl'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
+	'blog-file-page' => "Wpis <a href='$1'>$2</a> na blogu <a href='$3'>$4's</a>",
 	'createblogpage' => 'Utwórz blog',
 	'createbloglistingpage' => 'Utwórz listę wpisów na blogach',
 	'create-blog-spam' => 'Wygląda jak spam',

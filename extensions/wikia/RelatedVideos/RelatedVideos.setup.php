@@ -29,20 +29,18 @@ $app->registerClass('RelatedHubsVideosController', $dir . '/RelatedHubsVideosCon
 /**
  * hooks
  */
-if ( empty( $wgRelatedVideosPartialRelease ) ){
-	$app->registerHook('BeforePageDisplay', 'RelatedVideosHookHandler', 'onBeforePageDisplay' );
+$app->registerHook('BeforePageDisplay', 'RelatedVideosHookHandler', 'onBeforePageDisplay' );
 
-	define('RELATEDVIDEOS_POSITION', 'RELATEDVIDEOS_POSITION');
-	$app->registerHook('LanguageGetMagic', 'RelatedVideosHookHandler', 'onLanguageGetMagic' );
-	$app->registerHook('InternalParseBeforeLinks', 'RelatedVideosHookHandler', 'onInternalParseBeforeLinks' );
+define('RELATEDVIDEOS_POSITION', 'RELATEDVIDEOS_POSITION');
+$app->registerHook('LanguageGetMagic', 'RelatedVideosHookHandler', 'onLanguageGetMagic' );
+$app->registerHook('InternalParseBeforeLinks', 'RelatedVideosHookHandler', 'onInternalParseBeforeLinks' );
 
-	if( !empty( $wgRelatedVideosOnRail ) ) {
-		$app->registerHook('GetRailModuleList', 'RelatedVideosHookHandler', 'onGetRailModuleList');
-	} else {
-		array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedVideosHookHandler::onOutputPageBeforeHTML' );
-	}
-
+if( !empty( $wgRelatedVideosOnRail ) ) {
+	$app->registerHook('GetRailModuleList', 'RelatedVideosHookHandler', 'onGetRailModuleList');
+} else {
+	array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedVideosHookHandler::onOutputPageBeforeHTML' );
 }
+
 $app->registerHook('ArticleSaveComplete', 'RelatedVideosHookHandler', 'onArticleSaveComplete');
 $app->registerHook( 'FileDeleteComplete', 'RelatedVideosHookHandler', 'onFileDeleteComplete' );
 $app->registerHook( 'FileUndeleteComplete', 'RelatedVideosHookHandler', 'onFileUndeleteComplete' );
@@ -74,3 +72,12 @@ $wgGroupPermissions['user']['relatedvideos'] = true;
 //$wgGroupPermissions['staff']['relatedvideos'] = true;
 $wgNamespaceProtection[ NS_RELATED_VIDEOS ] = array( 'relatedvideos' );
 $wgNonincludableNamespaces[] = NS_RELATED_VIDEOS;
+
+$wgAvailableRights[] = 'relatedvideosedit';
+if ( empty($wgRelatedVideosAdminOnly) ) {
+	$wgGroupPermissions['*']['relatedvideosedit'] = true;
+} else {
+	$wgGroupPermissions['*']['relatedvideosedit'] = false;
+	$wgGroupPermissions['staff']['relatedvideosedit'] = true;
+	$wgGroupPermissions['sysop']['relatedvideosedit'] = true;
+}

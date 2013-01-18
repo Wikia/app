@@ -534,6 +534,8 @@ $messages['da'] = array(
  * @author SVG
  */
 $messages['de'] = array(
+	'article-comments-file-page' => "<a href='$1'>Kommentar von $2</a> auf <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Kommentar von $2</a> auf den Beitrag von <a href='$3'>$4</a> im Blog von <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Unangemeldeter Benutzer',
 	'article-comments-comments' => 'Kommentare ($1)',
 	'article-comments-post' => 'Kommentieren',
@@ -964,6 +966,8 @@ $messages['fo'] = array(
  * @author Zetud
  */
 $messages['fr'] = array(
+	'article-comments-file-page' => "<a href='$1'>Commentaire de $2</a> sur <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Commentaire de $2</a> sur <a href='$3'>$4</a> publié sur le blog de <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Utilisateur anonyme',
 	'article-comments-comments' => 'Commentaires ($1)',
 	'article-comments-post' => 'Ajouter un commentaire',
@@ -1031,6 +1035,8 @@ Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Ut
  * @author Toliño
  */
 $messages['gl'] = array(
+	'article-comments-file-page' => "<a href='$1'>Comentario desde $2</a> en <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Comentario desde $2</a> en <a href='$3'>$4</a>, publicado no blogue de <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Usuario anónimo',
 	'article-comments-comments' => 'Comentarios ($1)',
 	'article-comments-post' => 'Publicar un comentario',
@@ -1604,6 +1610,8 @@ $messages['lus'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'article-comments-file-page' => "<a href='$1'>Коментар од $2</a> на <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Коментар од $2</a> на објава од <a href='$3'>$4</a> на блогот на <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Анонимен корисник',
 	'article-comments-comments' => 'Коментари ($1)',
 	'article-comments-post' => 'Објави коментар',
@@ -1932,6 +1940,8 @@ $messages['pfl'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
+	'article-comments-file-page' => "<a href='$1'>Komentarz użytkownika $2</a> w artykule <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Komentarz użytkownika $2</a> we wpisie <a href='$3'>$4</a> na blogu użytkownika <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Anonimowy użytkownik',
 	'article-comments-comments' => 'Komentarze ($1)',
 	'article-comments-post' => 'Wyślij komentarz',
@@ -2424,6 +2434,8 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'article-comments-file-page' => "<a href='$1'>Kommentar från $2</a> on <a href='$3'>$4</a>", # Fuzzy
+	'article-blog-comments-file-page' => "<a href='$1'>Kommentar från $2</a> on <a href='$3'>$4</a> inlägg på <a href='$5'>$6s</a> blogg", # Fuzzy
 	'article-comments-anonymous' => 'Anonym användare',
 	'article-comments-comments' => 'Kommentarer ($1)',
 	'article-comments-post' => 'Skicka kommentar',

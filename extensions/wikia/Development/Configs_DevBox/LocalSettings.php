@@ -109,6 +109,9 @@ $wgExternalUserEnabled = true;
 // antispoof extension needs statsdb setup, only on prod for now
 $wgEnableAntiSpoofExt = false;
 
+//disabling TorBlock on devboxes because it is soooooo slow
+$wgEnableTorBlockExt = false;
+
 // Google Maps key for wikia-dev.com (different than the key for wikia.com).
 $wgGoogleMapsKey = 'ABQIAAAAH6bdoxGNhXgildFjnRAQjBTsndpDQKTEb03AQ6hTlU-KPVq60xQdoVVgLuXn-IrTw3LW8MYBMaYx9Q';
 
@@ -159,16 +162,8 @@ $wgLocalisationCacheConf[ "manualRecache" ] = false;
 $wgRC2UDPEnabled = false;
 
 // static assets host
-switch($wgWikiaDatacenter) {
-	case 'poz':
-		$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.pl.wikia-dev.com";
-		$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.pl.wikia-dev.com";
-		break;
-
-	default:
-		$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
-		$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
-}
+$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
+$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
 // macbre: generate proper paths for static assets on devboxes (BugId:6809)
 $wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images requested from CSS/SASS
