@@ -1,8 +1,11 @@
 /* tracking for oasis skin */
 jQuery(function($){
-	var $wikiaArticle = $('#WikiaArticle');
-	var $wikiaRail = $('#WikiaRail');
-	var $wikiHeader = $('#WikiHeader');
+	var $body = $('body'),
+		$wikiaArticle = $('#WikiaArticle'),
+		$wikiaRail = $('#WikiaRail'),
+		$wikiHeader = $('#WikiHeader'),
+		rHrefDiff = /&diff=\d+/,
+		rHrefHistory = /&action=history/;
 
 	var track = WikiaTracker.buildTrackWithDefaults({
 		action: WikiaTracker.ACTIONS.CLICK,
@@ -19,7 +22,7 @@ jQuery(function($){
 		var category = 'article';
 
 		// Not special pages
-		if ($('body.ns-special').length > 0) {
+		if ($body.hasClass('ns-special')) {
 			return;
 		}
 
@@ -164,7 +167,7 @@ jQuery(function($){
 		var category = 'edit';
 
 		// Stop here if not an edit page
-		if(!$('body.editor').length) {
+		if(!$body.hasClass('editor')) {
 			return;
 		}
 
@@ -202,6 +205,34 @@ jQuery(function($){
 			});
 		}
 	});
+
+	/** recent-changes **/
+
+	if ($body.hasClass('page-Special_RecentChanges')) {
+		$wikiaArticle.find('.rc-conntent').on('click', 'a', function(e) {
+			var label, parent,
+				el = $(e.target),
+				href = el.attr('href');
+
+			if (rHrefDiff.test(href)) {
+				label = 'diff';
+			} else if (rHrefHistory.test(href)) {
+				label = 'history';
+			} else if (el.hasClass('mw-userlink')) {
+				label = 'username';
+			} else if (!el.parent().is('span')) {
+				label = 'title';
+			}
+
+			if (label !== undefined) {
+				track({
+					browserEvent: e,
+					category: 'recent-changes',
+					label: label
+				});
+			}
+		});
+	}
 
 	/** recent-wiki-activity **/
 
@@ -252,7 +283,7 @@ jQuery(function($){
 			}
 		});
 
-		if ($('body.page-Special_Search').length > 0) {
+		if ($body.hasClass('page-Special_Search')) {
 			$wikiaSearch.on('click', '.search-tabs a', function(e) {
 				track({
 					browserEvent: e,
