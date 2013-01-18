@@ -100,7 +100,6 @@ $wgWikiaEnableWikiFactoryExt = true;
 
 $wgEnableUserChangesHistoryExt = false;
 
-$wgAllInOne = false;
 $wgEnableFixRecoveredUsersExt = false;
 
 // enable ExternalUsers
@@ -160,6 +159,9 @@ $wgLocalisationCacheConf[ "manualRecache" ] = false;
 
 // disable irc feed
 $wgRC2UDPEnabled = false;
+
+// set allinone to 1 by default (you can always overwrite this value in DevBoxSettings.php)
+$wgAllInOne = true;
 
 // static assets host
 $wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
