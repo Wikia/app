@@ -198,6 +198,10 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 		return $this->thumbnailObject;
 	}
 
+	/**
+	 * get video views
+	 * @return string $videoViews
+	 */
 	public function getVideoViews() {
 		$videoViews = '';
 		$title = $this->getTitleObject();
