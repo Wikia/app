@@ -8,7 +8,7 @@ module('WikiaDartHelper');
 test('getUrl returns whatever comes from dartUrl.urlBuilder.toString method', function() {
 	var logMock = function() {},
 		windowMock = {
-			location: {hostname: 'an.example.org'},
+			location: {hostname: 'example.org'},
 			cityShort: 'vertical',
 			wgDBname: 'dbname',
 			wgContentLanguage: 'xx'
@@ -35,7 +35,7 @@ test('getUrl returns whatever comes from dartUrl.urlBuilder.toString method', fu
 test('getUrl Domain and prefix correct', function() {
 	var logMock = function() {},
 		windowMock = {
-			location: {hostname: 'an.example.org'},
+			location: {hostname: 'example.org'},
 			cityShort: 'vertical',
 			wgDBname: 'dbname'
 		},
@@ -64,7 +64,7 @@ test('getUrl Domain and prefix correct', function() {
 test('getUrl Simple params correct', function() {
 	var logMock = function() {},
 		windowMock = {
-			location: {hostname: 'an.example.org'},
+			location: {hostname: 'example.org'},
 			cityShort: 'vertical',
 			wgDBname: 'dbname',
 			wgContentLanguage: 'xx'
@@ -90,14 +90,108 @@ test('getUrl Simple params correct', function() {
 	equal(paramsPassed.s0, 'vertical');
 	equal(paramsPassed.s1, '_dbname');
 	equal(paramsPassed.s2, 'article');
-	equal(paramsPassed.dmn, 'exampleorg');
-	equal(paramsPassed.hostpre, 'an');
 	equal(paramsPassed.pos, 'SLOT_NAME');
 	equal(paramsPassed.lang, 'xx');
 	equal(paramsPassed.dis, 'large');
 	equal(paramsPassed.src, 'driver');
 	equal(paramsPassed.sz, '100x200');
 	equal(paramsPassed.tile, 3);
+});
+
+test('getUrl hostprefix and domain params', function() {
+	var logMock = function() {},
+		windowMock = {location: {}},
+		paramsPassed = {},
+		urlBuilderMock = {
+			addParam: function(key, value) {
+				paramsPassed[key] = value;
+			},
+			addString: function() {}
+		},
+		dartUrlMock = {urlBuilder: function() {return urlBuilderMock;}},
+		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+		adLogicShortPageMock,
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, adLogicShortPageMock, dartUrlMock);
+
+
+	windowMock.location.hostname = 'an.example.org';
+	paramsPassed = {};
+	dartHelper.getUrl({});
+	equal(paramsPassed.dmn, 'exampleorg');
+	equal(paramsPassed.hostpre, 'an');
+
+	windowMock.location.hostname = 'fallout.wikia.com';
+	paramsPassed = {};
+	dartHelper.getUrl({});
+	equal(paramsPassed.dmn, 'wikiacom');
+	equal(paramsPassed.hostpre, 'fallout');
+
+	windowMock.location.hostname = 'www.wikia.com';
+	paramsPassed = {};
+	dartHelper.getUrl({});
+	equal(paramsPassed.dmn, 'wikiacom');
+	equal(paramsPassed.hostpre, 'www');
+
+	windowMock.location.hostname = 'www.wowwiki.com';
+	paramsPassed = {};
+	dartHelper.getUrl({});
+	equal(paramsPassed.dmn, 'wowwikicom');
+	equal(paramsPassed.hostpre, 'www');
+
+	windowMock.location.hostname = 'wowwiki.com';
+	paramsPassed = {};
+	dartHelper.getUrl({});
+	equal(paramsPassed.dmn, 'wowwikicom');
+	equal(paramsPassed.hostpre, 'wowwiki');
+
+	windowMock.location.hostname = 'www.bbc.co.uk';
+	paramsPassed = {};
+	dartHelper.getUrl({});
+	equal(paramsPassed.dmn, 'bbccouk');
+	equal(paramsPassed.hostpre, 'www');
+
+	windowMock.location.hostname = 'externaltest.fallout.wikia.com';
+	paramsPassed = {};
+	dartHelper.getUrl({});
+	equal(paramsPassed.dmn, 'wikiacom');
+	equal(paramsPassed.hostpre, 'externaltest');
+});
+
+
+test('getUrl wpage param', function() {
+	var undef,
+		logMock = function() {},
+		windowMock = {location: {hostname: 'an.example.org'}},
+		paramsPassed = {},
+		urlBuilderMock = {
+			addParam: function(key, value) {
+				paramsPassed[key] = value;
+			},
+			addString: function() {}
+		},
+		dartUrlMock = {urlBuilder: function() {return urlBuilderMock;}},
+		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+		adLogicShortPageMock,
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, adLogicShortPageMock, dartUrlMock);
+
+	paramsPassed = {};
+	dartHelper.getUrl({});
+	equal(paramsPassed.wpage, undef, 'undef');
+
+	windowMock.wgPageName = 'Muppet_Wiki';
+	paramsPassed = {};
+	dartHelper.getUrl({});
+	equal(paramsPassed.wpage, 'muppet_wiki', 'Muppet_Wiki');
+
+	windowMock.wgPageName = 'Assassin\'s_Creed_Wiki';
+	paramsPassed = {};
+	dartHelper.getUrl({});
+	equal(paramsPassed.wpage, 'assassin\'s_creed_wiki', 'Assassin\'s_Creed_Wiki');
+
+	windowMock.wgPageName = 'Военная_база_Марипоза';
+	paramsPassed = {};
+	dartHelper.getUrl({});
+	equal(paramsPassed.wpage, 'военная_база_марипоза', 'Военная_база_Марипоза');
 });
 
 test('getUrl default DB name', function() {
@@ -128,6 +222,39 @@ test('getUrl default DB name', function() {
 
 	equal(paramsPassed.s1, '_wikia', 'in keyword');
 	equal(prefixPassed, 'adj/wka.vertical/_wikia/article', 'in prefix');
+});
+
+
+test('getUrl language', function() {
+	var logMock = function() {},
+		windowMock = {
+			location: {hostname: 'an.example.org'},
+			cityShort: 'vertical'
+		},
+		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+		adLogicShortPageMock,
+		paramsPassed = {},
+		urlBuilderMock = {
+			addParam: function(key, value) {
+				paramsPassed[key] = value;
+			},
+			addString: function() {}
+		},
+		dartUrlMock = {
+			urlBuilder: function(domain, prefix) {
+				return urlBuilderMock;
+			}
+		},
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, adLogicShortPageMock, dartUrlMock);
+
+	paramsPassed = {};
+	dartHelper.getUrl({});
+	equal(paramsPassed.lang, 'unknown', 'unknown');
+
+	windowMock.wgContentLanguage = 'xyz';
+	paramsPassed = {};
+	dartHelper.getUrl({});
+	equal(paramsPassed.lang, 'xyz', 'xyz');
 });
 
 test('getUrl page type', function() {
@@ -161,6 +288,33 @@ test('getUrl page type', function() {
 
 	equal(paramsPassed.s2, 'pagetype', 'in keyword');
 	equal(prefixPassed, 'adj/wka.vertical/_dbname/pagetype', 'in prefix');
+});
+
+test('getUrl article id', function() {
+	var logMock = function() {},
+		windowMock = {
+			location: {hostname: 'example.org'},
+			wgArticleId: 678
+		},
+		documentMock = {documentElement: {}, body: {clientWidth: 1300}},
+		adLogicShortPageMock,
+		paramsPassed = {},
+		urlBuilderMock = {
+			addParam: function(key, value) {
+				paramsPassed[key] = value;
+			},
+			addString: function() {}
+		},
+		dartUrlMock = {
+			urlBuilder: function(domain, prefix) {
+				return urlBuilderMock;
+			}
+		},
+		dartHelper = WikiaDartHelper(logMock, windowMock, documentMock, {}, adLogicShortPageMock, dartUrlMock);
+
+	dartHelper.getUrl({});
+
+	equal(paramsPassed.artid, 678, 'artid=678');
 });
 
 test('getUrl has pre footers', function() {
