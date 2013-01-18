@@ -138,12 +138,12 @@ window.WikiaTracker = (function(){
 		}
 
 		// Get rid of unnecessary data
-		for ( i = 0; l = purgeFromData.length; i < l; i++ ) {
+		for ( i = 0, l = purgeFromData.length; i < l; i++ ) {
 			delete data[ purgeFromData[ i ] ];
 		}
 
 		// Enqueue GA parameters in the proper order
-		for ( i = 0; l = gaPushOrder.length; i < l; i++ ) {
+		for ( i = 0, l = gaPushOrder.length; i < l; i++ ) {
 			gaqArgs.push( ga[ gaPushOrder[ i ] ] );
 		}
 
