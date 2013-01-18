@@ -106,11 +106,10 @@ class WikiaSearchIndexer extends WikiaObject {
 	 * @return WikiaSearchIndexServiceAbstract
 	 */
 	public function getService( $serviceName ) {
-		if ( isset( $this->services[$serviceName] ) ) {
-			return $this->services[$serviceName];
+		if (! isset( $this->services[$serviceName] ) ) {
+			$this->services[$serviceName] = Factory::getInstance()->get( $serviceName ); 
 		}
-		$serviceName = Factory::getInstance()->get( $serviceName );
-		return new $serviceName( $this->client );
+		return $this->services[$serviceName]; 
 	}
 	
 	/**
