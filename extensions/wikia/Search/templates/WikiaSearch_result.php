@@ -29,7 +29,11 @@
 			<? else : ?>
 			<span class="timeago-fmt"><?= $result->getVar('fmt_timestamp') ?></span>
 			<? endif; ?>
-			&bull;
+			<?php
+				if ( $videoViews = $result->getVideoViews() ) {
+					echo '&bull; '.$videoViews;
+				}
+			?>
 		</p>
 	<? endif; ?>
 	<?= $result->getText(); ?>

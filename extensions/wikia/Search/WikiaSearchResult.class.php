@@ -198,6 +198,20 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 		return $this->thumbnailObject;
 	}
 
+	public function getVideoViews() {
+		$videoViews = '';
+		$title = $this->getTitleObject();
+		if ( $this['ns'] == NS_FILE && $title instanceof Title ) {
+			$file = F::app()->wf->FindFile( $title );
+			if ( WikiaFileHelper::isFileTypeVideo($file) ) {
+				$videoViews = MediaQueryService::getTotalVideoViewsByTitle( $title->getDBKey() );
+				$videoViews = F::app()->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), F::app()->wg->Lang->formatNum($videoViews) );
+			}
+		}
+
+		return $videoViews;
+	}
+
 	/**
 	 * Helper method for turning results into nested arrays for JSON encoding
 	 * @param array $keys list of fields you want in your json output
