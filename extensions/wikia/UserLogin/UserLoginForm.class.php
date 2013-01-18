@@ -115,6 +115,30 @@ class UserLoginForm extends LoginForm {
 			return false;
 		}
 
+		$app = F::app();
+		$result = $app->wf->ValidateUserName( $this->mUsername );
+
+		if ( $result === true ) {
+			$msgKey = '';
+			if ( !$app->wf->RunHooks('cxValidateUserName', array($this->mUsername, &$msgKey)) ) {
+				$result = $msgKey;
+			}
+		}
+
+		if ( $result !== true ) {
+			$msg = '';
+			if ( $result == 'userlogin-bad-username-taken' ) {
+				$msg = $app->wf->Msg('userlogin-error-userexists');
+			} else if ( $result == 'userlogin-bad-username-character' ) {
+				$msg = $app->wf->Msg('usersignup-error-symbols-in-username');
+			} else if ( $result == 'userlogin-bad-username-length' ) {
+				$msg = $app->wf->Msg('usersignup-error-username-length', $app->wg->WikiaMaxNameChars);
+			}
+
+			$this->mainLoginForm( $msg, 'error', 'username' );
+			return false;
+		}
+
 		return true;
 	}
 

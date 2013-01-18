@@ -1,5 +1,6 @@
 var UserSignup = {
 	inputsToValidate: ['username', 'email', 'password', 'birthday'],
+	notEmptyFields: ['username', 'email', 'password', 'birthday', 'birthmonth', 'birthyear', 'wpCaptchaWord'],
 	invalidInputs: {},
 	init: function() {
 		$('.extiw').click(function(e) {
@@ -16,33 +17,23 @@ var UserSignup = {
 			});
 		});
 		
-		UserSignup.wikiaForm = new WikiaForm('#WikiaSignupForm');
-		UserSignup.signupAjaxForm = new UserSignupAjaxForm(UserSignup.wikiaForm, UserSignup.inputsToValidate, UserSignup.wikiaForm.inputs['submit']); 
-		UserSignup.wikiaForm.el
+		this.wikiaForm = new WikiaForm('#WikiaSignupForm');
+		this.signupAjaxForm = new UserSignupAjaxForm(
+			this.wikiaForm,
+			this.inputsToValidate,
+			this.wikiaForm.inputs['submit'],
+			this.notEmptyFields
+		);
+		this.wikiaForm.el
 			.find('input[name=username], input[name=email], input[name=password]')
-			.bind('blur.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, UserSignup.signupAjaxForm));
-		UserSignup.wikiaForm.el
+			.bind('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, this.signupAjaxForm));
+		this.wikiaForm.el
 			.find('select[name=birthday], select[name=birthmonth], select[name=birthyear]')
-			.bind('change.UserSignup', UserSignup.validateBirthdate);
+			.bind('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateBirthdate, this.signupAjaxForm));
 			
 		// dom pre-cache
-		UserSignup.submitButton = UserSignup.wikiaForm.inputs['submit'];
-	},
-	validateBirthdate: function(e) {
-		var el = $(e.target);
-		var proxyObj = {'paramName':el.attr('name'), 'form':UserSignup.signupAjaxForm};
-		if(UserSignup.deferred && typeof UserSignup.deferred.reject === 'function') {
-			UserSignup.deferred.reject();
-		}
-		UserSignup.deferred = $.post(wgScriptPath + '/wikia.php', {
-			controller: 'UserSignupSpecial',
-			method: 'formValidation',
-			format: 'json',
-			field: 'birthdate',
-			birthyear: UserSignup.wikiaForm.inputs['birthyear'].val(),
-			birthmonth: UserSignup.wikiaForm.inputs['birthmonth'].val(),
-			birthday: UserSignup.wikiaForm.inputs['birthday'].val()
-		}, $.proxy(UserSignup.signupAjaxForm.validationHandler, proxyObj));
+		this.submitButton = this.wikiaForm.inputs['submit'];
+		this.wikiaForm.inputs['wpCaptchaWord'].bind('keyup.UserSignup', $.proxy(UserSignup.signupAjaxForm.activateSubmit, this.signupAjaxForm));
 	}
 };
 
