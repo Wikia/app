@@ -33,7 +33,7 @@ $namespaces['es'] = array(
 $namespaces['fr'] = array(
 	NS_WIKIA_FORUM_BOARD	=> 'Sous-forum',
 	NS_WIKIA_FORUM_TOPIC_BOARD	=> 'Sujet',
-	NS_WIKIA_FORUM_BOARD_THREAD	=> 'Fil_forum',
+	NS_WIKIA_FORUM_BOARD_THREAD	=> 'Fil_de_forum',
 );
 
 /**
