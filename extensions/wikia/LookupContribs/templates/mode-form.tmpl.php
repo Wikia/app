@@ -37,18 +37,14 @@ $(document).ready(function() {
 		"aoColumns": [
 			{ "sName": "id" },
 			{ "sName": "title" },
-			{ "sName": "diff" },
-			{ "sName": "history" },
-			{ "sName": "contribution" },
-			{ "sName": "edit" },
+			{ "sName": "links" },
+			{ "sName": "edit" }
 		],
 		"aoColumnDefs": [
 			{ "bVisible": true,  "aTargets": [ 0 ], "bSortable" : false },
 			{ "bVisible": true,  "aTargets": [ 1 ], "bSortable" : false },
 			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false },
-			{ "bVisible": true,  "aTargets": [ 3 ], "bSortable" : false },
-			{ "bVisible": true,  "aTargets": [ 4 ], "bSortable" : false },
-			{ "bVisible": true,  "aTargets": [ 5 ], "bSortable" : false }
+			{ "sClass": "lc-datetime", "bVisible": true,  "aTargets": [ 3 ], "bSortable" : false }
 		],
 		"bProcessing": true,
 		"bServerSide": true,
@@ -141,9 +137,9 @@ $(document).ready(function() {
 	<thead>
 		<tr>
 			<th width="2%">#</th>
-			<th width="65%"><?=wfMsg('lookupcontribswikititle')?></th>
-			<th width="18%" colspan="3"><?=wfMsg('lookupcontribswikioptions')?></th>
-			<th width="15%" style="white-space:nowrap"><?=wfMsg('lookupcontribslastedited')?></th>
+			<th width="58%"><?= wfMessage( 'lookupcontribswikititle' )->parse() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupcontribswikioptions' )->parse() ?></th>
+			<th width="20%" style="white-space:nowrap"><?= wfMessage( 'lookupcontribslastedited' )->parse() ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -154,9 +150,9 @@ $(document).ready(function() {
 	<tfoot>
 		<tr>
 			<th width="2%">#</th>
-			<th><?=wfMsg('lookupcontribswikititle')?></th>
-			<th colspan="3"><?=wfMsg('lookupcontribswikioptions')?></th>
-			<th style="white-space:nowrap"><?=wfMsg('lookupcontribslastedited')?></th>
+			<th><?= wfMessage( 'lookupcontribswikititle' )->parse() ?></th>
+			<th><?= wfMessage( 'lookupcontribswikioptions' )->parse() ?></th>
+			<th style="white-space:nowrap"><?= wfMessage( 'lookupcontribslastedited' )->parse() ?></th>
 		</tr>
 	</tfoot>
 </table>

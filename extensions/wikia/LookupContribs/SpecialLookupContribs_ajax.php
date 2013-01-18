@@ -91,7 +91,7 @@ class LookupContribsAjax {
 				if ( !empty($data) && is_array($data) ) {
 					$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
 					$result['iTotalDisplayRecords'] = intval($data['cnt']);
-					$result['sColumns'] = 'id,title,diff,history,contribution,edit';
+					$result['sColumns'] = 'id,title,links,edit';
 					$rows = array();
 					if ( isset($data['data']) ) {
 						$loop = 1;
@@ -100,9 +100,7 @@ class LookupContribsAjax {
 							$rows[] = array(
 								$loop + $offset, // id
 								$link, // title
-								$diff, // diff
-								$hist, // history
-								$contrib, //user contribution (link to special page)
+								$diff . ' ' . $hist . ' ' . $contrib, // links to diff, history and user contribution (link to special page)
 								$edit
 							);
 							$loop++;
