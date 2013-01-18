@@ -328,7 +328,6 @@ $config['gameguides_js'] = array(
 		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
 
 		//tracker
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 
 		//platform components
