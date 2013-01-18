@@ -233,7 +233,6 @@ var LightboxLoader = {
 				format: 'html',
 				data: {
 					lightboxVersion: 6, // update this when we change the template Lightbox_lightboxModalContent.php
-					userName: window.wgUserName, // cache separately for each user
 					userLang: window.wgUserLanguage // just in case user changes language prefs
  				},
 				callback: function(html) {
