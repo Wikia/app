@@ -447,11 +447,7 @@ $wgAPIModules[ "wdelete"           ] = "WikiaApiQueryWrite";
 $wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "runjob"            ] = "ApiRunJob";
-
-
-if( $wgUseFakeExternalStoreDB !== true ) {
-	$wgAPIModules[ "blob"              ] = "WikiaApiQueryBlob";
-}
+$wgAPIModules[ "fetchblob"         ] = "ApiFetchBlob";
 
 $wgUseAjax                = true;
 $wgValidateUserName       = true;

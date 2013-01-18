@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Created on Sep 16, 2010
+ * Created on Jan 18, 2013, based on previous class WikiaApiQueryBlob
  *
  * API for MediaWiki 1.14+
  *
@@ -50,10 +50,11 @@ class ApiFetchBlob extends ApiBase {
 	public function execute() {
 		global $wgUser, $wgTheSchwartzSecretToken, $wgLBFactoryConf;
 
+		wfProfileIn( __METHOD__ );
+
 		ini_set( "memory_limit", -1 );
 		ini_set( "max_execution_time", 0 );
 
-		$result = array();
 		$params = $this->extractRequestParams();
 
 		#
@@ -80,15 +81,29 @@ class ApiFetchBlob extends ApiBase {
 			if( isset( $wgLBFactoryConf[ "externalLoads" ][ $store ] ) ) {
 				wfDebug( __METHOD__ . ": getting $id from $store\n" );
 
+				$url = sprintf( "DB://%s/%d", $store, $id );
+				$text = ExternalStore::fetchFromURL( $url );
+				if ( $text === false ) {
+					wfProfileOut( __METHOD__ );
+					$this->dieUsage( 'Text not found', 3, 404 );
+				}
 			}
 			else {
 				wfDebug( __METHOD__ . ": store $store is not defined in wgLBFactoryConf\n" );
+				wfProfileOut( __METHOD__ );
+				$this->dieUsage( 'Text not found', 3, 404 );
 			}
 		}
 
-		$this->getResult()->addValue( null, $this->getModuleName(), $result );
+		$result = $this->getResult();
+		$result->setRawMode();
+		$result->disableSizeCheck();
+		$result->reset();
+		$result->addValue( null, 'text', $text );
+		$result->addValue( null, 'mime', 'text/plain' );
+		$result->enableSizeCheck();
 
-		$result = array();
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -121,6 +136,10 @@ class ApiFetchBlob extends ApiBase {
 				ApiBase :: PARAM_TYPE => "integer"
 			)
 		);
+	}
+
+	public function getCustomPrinter() {
+		return new ApiFormatRaw( $this->getMain(), $this->getMain()->createPrinterByName( 'txt' ) );
 	}
 
 	public function getParamDescription() {
