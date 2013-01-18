@@ -210,7 +210,7 @@ jQuery(function($){
 
 	if ($body.hasClass('page-Special_RecentChanges')) {
 		$wikiaArticle.find('.rc-conntent').on('click', 'a', function(e) {
-			var label, parent,
+			var label,
 				el = $(e.target),
 				href = el.attr('href');
 
@@ -457,6 +457,44 @@ jQuery(function($){
 			}
 		});
 	})();
+
+	/** wiki-activity **/
+
+	if ($body.hasClass('page-Special_WikiActivity')) {
+		$wikiaArticle.find('.activityfeed').on('click', 'a', function(e) {
+			var label, type,
+				el = $(e.target),
+				parent = el.parent();
+
+			if (el.hasClass('title')) {
+				label = 'title';
+			} else if (el.hasClass('username') ||
+				el.hasClass('real-name') ||
+				parent.hasClass('wall-owner') ||
+				parent.hasClass('subtle')
+			) {
+				label = 'username';
+			} else if (parent.hasClass('activityfeed-diff')) {
+				label = 'diff';
+			} else {
+				type = el.closest('tr').data('type');
+
+				if (type == 'inserted-image') {
+					label = 'thumbnail-photo';
+				} else if (type == 'inserted-video') {
+					label = 'thumbnail-video';
+				}
+			}
+
+			if (label !== undefined) {
+				track({
+					browserEvent: e,
+					category: 'wiki-activity',
+					label: label
+				});
+			}
+		});
+	}
 
 	/** wiki-nav **/
 
