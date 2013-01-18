@@ -28,14 +28,10 @@
 							Xml::closeElement('span');
 
 					// if blog post rendered text ends with </p>
-					if (!empty($post['readmore'])) {
-						if (substr($post['text'], -4) == '</p>') {
-							$post['text'] = substr($post['text'], 0, -4) . '<br>' . $readMoreLink . '</p>';
-						} else {
-							$post['text'] .=  '' .$readMoreLink;
-						}
+					if (substr($post['text'], -4) == '</p>') {
+						$post['text'] = substr($post['text'], 0, -4) . '<br>' . $readMoreLink . '</p>';
 					} else {
-						$post['text'] .= '';
+						$post['text'] .=  '' .$readMoreLink;
 					}
 
 					echo $post['text'];
