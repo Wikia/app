@@ -12,18 +12,12 @@ class BlogListingController extends WikiaController {
 		/* @var $wgLang Language */
 		global $wgLang;
 
-		// get message for "read more" link
-		$cutSign = wfMsg('blug-cut-sign');
-
 		foreach($results as &$result) {
 			$result['likes'] = false;
 			$result['avatar'] = AvatarService::renderAvatar($result['username'], 48);
 			$result['userpage'] = AvatarService::getUrl($result['username']);
 			$result['date'] = $wgLang->date(wfTimestamp(TS_MW, $result['timestamp']));
-			$result['readmore'] = true; // BugID: 9280 - read more link should be always visible
 		}
-
-		//print_pre($results);
 
 		wfProfileOut(__METHOD__);
 		return true;
