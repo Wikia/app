@@ -135,7 +135,7 @@
 		 * Builds and returns the memcached key
 		 */
 		protected function getMemcKey() {
-			return wfMemcKey('category-gallery-articles_0',$this->categoryPage->mTitle->getDBkey(),$this->configHash);
+			return wfMemcKey('category-gallery-articles_0', md5($this->categoryPage->mTitle->getDBkey()),$this->configHash);
 		}
 
 		/**
@@ -199,9 +199,9 @@
 		 */
 		protected function merge( $articles, $images ) {
 			global $wgDevelEnvironment;
-			
+
 			wfProfileIn(__METHOD__);
-			
+
 			$data = array();
 			$n = 0;
 			foreach ($articles as $id => $title) {
@@ -224,7 +224,7 @@
 				}
 				$data[$id] = $entry;
 			}
-			
+
 			wfProfileOut(__METHOD__);
 			return $data;
 		}
@@ -236,20 +236,20 @@
 		 */
 		protected function getData() {
 			global $wgMemc;
-			
+
 			wfProfileIn(__METHOD__);
 
 			$cacheKey = $this->getMemcKey();
 			$this->articles = $wgMemc->get($cacheKey);
 			if (!is_array($this->articles)) {
 				$articles = $this->getArticles();
-				$wgMemc->set($cacheKey,$this->data,self::CACHE_TTL);	
+				$wgMemc->set($cacheKey,$this->data,self::CACHE_TTL);
 			}
 			$images = $this->findImages($articles);
 			$this->articles = $this->merge($articles,$images);
-			
+
 			wfProfileOut(__METHOD__);
-			
+
 			return $this->articles;
 		}
 
