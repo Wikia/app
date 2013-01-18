@@ -62,10 +62,6 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wgAdsShowableOnPage'] = self::areAdsShowableOnPage();
 		$vars['wgShowAds'] = $this->wg->ShowAds;
 
-		$disableOldAdDriver = $req->getCookie('newadsonly', '', $this->wg->DisableOldAdDriver);
-		$disableOldAdDriver = $req->getBool('newadsonly', $disableOldAdDriver);
-		$vars['wgDisableOldAdDriver'] = (bool) $disableOldAdDriver;
-
 		// Used to hop by DART ads
 		$vars['adDriverLastDARTCallNoAds'] = array();
 
