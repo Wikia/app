@@ -19,7 +19,7 @@ $messages['en'] = array(
 	'specialvideos-uploadby' => 'by $1',
 	'specialvideos-posted-in' => 'Posted in $1',
 	'special-videos-add-video' => 'Add a Video',
-	'specialvideos-meta-description' => '$1 has new videos that include the latest video clips, video reviews, video interviews and trailers. Watch now!"',
+	'specialvideos-meta-description' => '$1 has new videos that include the latest video clips, video reviews, video interviews and trailers. Watch now!',
 );
 
 $messages['qqq'] = array(
