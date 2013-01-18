@@ -103,8 +103,7 @@ window.WikiaTracker = (function(){
 	}
 
 	/**
-	 * Wrapper for trackEvent that allows for hashed parameters and option extending.
-	 * Use this instead of creating yet another wrapper inside your plugin/module.
+	 * Wrapper function for trackEvent that allows for hashed parameters.
 	 *
 	 *     var defaults = {
 	 *         trackingMethod: 'ga',
@@ -115,7 +114,7 @@ window.WikiaTracker = (function(){
 	 *         label: 'myLabel'
 	 *     });
 	 *
-	 * @params Object options (required) ... optionsN
+	 * @params Object options (required) ... optionsN (optional)
 	 *         A key-value hash of parameters that will be passed to the trackEvent method. If multiple
 	 *         hashes are passed in with matching keys, the values in the later hash will be used.
 	 *         keys: (see trackEvent for more information)
