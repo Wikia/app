@@ -184,16 +184,17 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 */
 	public function dropdown() {
 		$query = $this->app->wg->Request->getValues();
-		if (isset($query['title'])) {
+		if( isset($query['title']) ) {
+			$this->returnto = $query['title'];
 			unset($query['title']);
 		}
-
+		
 		$this->tabindex = self::DROPDOWN_TABINDEX_START;
 		$this->suppressCreateAccount = true;
 		$this->supressLogInBtnBig = true;
-		$this->formData = $this->generateFormData();
-
 		$this->returntoquery = $this->app->wf->ArrayToCGI( $query );
+
+		$this->formData = $this->generateFormData();
 	}
 
 	public function modal() {
@@ -629,7 +630,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		$form['isInvalid'] = !empty($result) && empty($errParam) && !empty($msg);
 		$form['errorMsg'] = !empty($msg) ? $msg : '';
-
+		
 		if( !empty($this->returnto) ) {
 			$form['inputs'][] = array(
 				'type' => 'hidden',
