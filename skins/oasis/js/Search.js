@@ -46,7 +46,6 @@ var WikiaSearchApp = {
 	// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
 	initSuggest: function() {
 		$.when(
-			//$.getMessages('LinkSuggest'), // FIXME: doesn't seem to be used here
 			$.loadJQueryAutocomplete()
 		).then($.proxy(function() {
 			this.searchField.autocomplete({
