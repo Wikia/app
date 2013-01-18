@@ -2860,7 +2860,7 @@ class WikiFactory {
 			$dbr = self::db( DB_SLAVE );
 			$oRes = $dbr->select(
 				array( "city_list" ),
-				array( "IFNULL(city_cluster,'c1') as cluster" ),
+				array( "city_cluster as cluster" ),
 				'',
 				__METHOD__,
 				array( "GROUP BY" => "city_cluster" )
