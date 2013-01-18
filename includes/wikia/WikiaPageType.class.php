@@ -64,11 +64,11 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isForum() {
-		$namespace = F::app()->wg->Title->getNamespace();
+		$wg = F::app()->wg;
 
 		return (
-			(F::app()->wg->EnableForumExt && F::app()->wg->IsForum) // new forum
-			|| (defined('NS_FORUM') && $namespace === NS_FORUM)     // old forum
+			(defined('NS_FORUM') && $wg->Title && $wg->Title->getNamespace() === NS_FORUM) // old forum
+			|| ($wg->EnableForumExt && $wg->IsForum)                                       // new forum
 		);
 	}
 
