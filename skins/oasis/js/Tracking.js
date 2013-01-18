@@ -401,7 +401,7 @@ jQuery(function($){
 						break;
 					}
 					case 'mytalk': {
-						label = 'user-menu-' + el.hasClass('message-wall') ? 'message-wall' : 'talk';
+						label = 'user-menu-' + (el.hasClass('message-wall') ? 'message-wall' : 'talk');
 						break;
 					}
 				}
