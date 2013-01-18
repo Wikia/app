@@ -20,7 +20,6 @@ abstract class AbstractWikiService extends AbstractService
     /**
 	 * Writes an XML response without the <add> wrapper and a placeholder for pageid
 	 * Assumes that we are not operating on a provided page ID
-	 * @todo this ought to be a trait
 	 * @throws \Exception
 	 * @return string
 	 */
@@ -28,18 +27,18 @@ abstract class AbstractWikiService extends AbstractService
 		if ( $this->currentPageId !== null ) {
 			throw new \Exception( 'A stubbed response is not appropriate for services interacting with page IDs' );
 		}
-		
-		$updateXml = $this->getUpdateXmlForDocuments( array( $this->getDocumentFromResponse( $this->execute() ) ) );
-		$updateXml = str_replace( '<update>', '', str_replace( '</update>', '', $updateXml ) );
-		
-		return array( 'contents' => $updateXml );
+		$response = $this->getJsonDocumentFromResponse( $this->execute() );
+		// let the backend insert the id
+		unset( $response['id'] );
+		return array( 'contents' => $response, 'wid' => $this->interface->getWikiId() );
 	}
 	
-    /**
-	 * Helps us set the "primary key" for the solr document -- here we provide a value to be replaced by the backend script with a pageid
-	 * @return int
+	/**
+	 * Returns a placeholder if there isn't a current page ID
+	 * @see \Wikia\Search\IndexService\AbstractService::getCurrentDocumentId()
+	 * @return string
 	 */
-	protected function getPageIdForDocumentKey() {
-		return self::PAGEID_PLACEHOLDER;
-	}
+    public function getCurrentDocumentId() {
+    	return sprintf( '%s_%s', $this->interface->getWikiId(), $this->currentPageId  ?: self::PAGEID_PLACEHOLDER );
+    }
 }

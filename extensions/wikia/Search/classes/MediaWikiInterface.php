@@ -289,6 +289,24 @@ class MediaWikiInterface
 			));
 	}
 	
+	/**
+	 * Determines whether or not a page "exists"
+	 * @param unknown_type $pageId
+	 * @return boolean
+	 */
+	public function pageIdExists( $pageId ) {
+		try {
+			return $this->getPageFromPageId( $pageId )->exists();
+		} catch ( \Exception $e ) {
+			return false;
+		}
+	}
+	
+	/**
+	 * Provides redirect title text for canonical pages
+	 * @param int $pageId
+	 * @return array
+	 */
 	public function getRedirectTitlesForPageId( $pageId ) {
 		$dbr = $this->app->wf->GetDB(DB_SLAVE);
 		$result = array();
@@ -302,7 +320,7 @@ class MediaWikiInterface
 		);
 		// look how ugly this is without assignment in condition!
 		while ( $row = $dbr->fetchObject( $query ) ) { 
-				$result[] = str_replace( '_', '_', $row->page_title );
+				$result[] = str_replace( '_', ' ', $row->page_title );
 		}
 		
 		return $result;

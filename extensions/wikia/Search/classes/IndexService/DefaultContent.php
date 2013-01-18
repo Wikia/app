@@ -138,7 +138,10 @@ class DefaultContent extends AbstractService
 		$plaintext = preg_replace( '/\s+/', ' ', $plaintext );
 		$paragraphString = preg_replace( '/\s+/', ' ', implode( ' ', $paragraphs ) );
 		// regex for grabbing the first 500 words separate by white space
-		$first500 = preg_replace( '/^((\S+ ){0,500}).*$/m', '$1', $paragraphString ); 
+		$first500 = preg_replace( '/^((\S+ ){0,500}).*$/m', '$1', $paragraphString );
+		if ( empty( $first500 ) ) {
+			preg_replace( '/^((\S+ ){0,500}).*$/m', '$1', $plaintext );
+		} 
 		
 		$result[\WikiaSearch::field( 'html' )] = $plaintext;
 		$result['nolang_txt'] = $first500;

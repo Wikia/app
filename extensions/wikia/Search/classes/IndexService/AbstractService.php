@@ -12,12 +12,6 @@ use Wikia\Search\MediaWikiInterface;
 abstract class AbstractService
 {
 	/**
-	 * We use this client as an interface for building documents and writing XML
-	 * @var Solarium_Client
-	 */
-	protected $client;
-	
-	/**
 	 * This allows us to abstract out logic core to MediaWiki. 
 	 * Eventually, we could have other 'drivers' for our logic interface here.
 	 * Sorry I didn't have a better name for this one -- maybe "driver"?
@@ -40,11 +34,10 @@ abstract class AbstractService
 	protected $currentPageId;
 	
     /**
-	 * Handles dependency injection for solarium client
-	 * @param \Solarium_Client $client
+	 * Allows us to instantiate a service with pageIds already set
+	 * @param array $pageIds
 	 */
-	public function __construct( \Solarium_Client $client, array $pageIds = array() ) {
-	    $this->client = $client;
+	public function __construct( array $pageIds = array() ) {
 	    $this->pageIds = $pageIds;
 	    $this->interface = MediaWikiInterface::getInstance();
 	}
@@ -69,7 +62,6 @@ abstract class AbstractService
 		return $this;
 	}
 	
-	
 	/**
 	 * We should return an associative array that keys document fields to values
 	 * If this operates within the scope of an entire wiki  
@@ -91,59 +83,45 @@ abstract class AbstractService
 		
 		foreach ( $this->pageIds as $pageId ) {
 			$this->currentPageId = $pageId;
+		    if (! $this->interface->pageIdExists( $pageId ) ) {
+				$documents[] = array( "delete" => array( "id" => $this->getCurrentDocumentId() ) );
+				continue;
+			}
 			try {
-				$documents[] = $this->getDocumentFromResponse( $this->execute() );
+				$response = $this->execute();
+				if (! empty( $response ) ) {
+				    $documents[] = $this->getJsonDocumentFromResponse( $response );
+				}
 			} catch ( \WikiaException $e ) {
 				$result['errors'][] = $pageId;
 			}
 		}
-		
-		$result['contents'] = $this->getUpdateXmlForDocuments( $documents );
-		
+		$result['contents'] = $documents;
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
 	
 	/**
-	 * Given an array, creates an appropriately formatted Solarium document
-	 * @param array $responseArray
-	 * @return \Solarium_Document_AtomicUpdate
+	 * Generates a unique ID based on wiki ID and page ID
+	 * @return string
 	 */
-	protected function getDocumentFromResponse( array $responseArray ) {
-		$document = new \Solarium_Document_AtomicUpdate( $responseArray );
-		
-		// set the ID key for the appropriate document. none of the services will work without this
-		$pageIdValue = $this->getPageIdForDocumentKey();
-		$idKey = sprintf( '%s_%s', $this->interface->getGlobal( 'CityId' ), $pageIdValue );
-		$document->setKey( 'id', $idKey );
-		
-		foreach ( $document->getFields() as $field => $value ) {
-			// for now multivalued fields will be exclusively fully written. keep that in mind
-			if ( $field != 'id' && substr_count( $field, '_mv_' ) == 0 ) {
-				// we may eventually need to specify for some fields whether we should use ADD
-				$document->setModifierForField( $field, \Solarium_Document_AtomicUpdate::MODIFIER_SET );
-			}
-		}
-		return $document;
+	public function getCurrentDocumentId() {
+		return sprintf( '%s_%s', $this->interface->getWikiId(), $this->currentPageId );
 	}
 	
 	/**
-	 * Helps us set the "primary key" for the solr document
-	 * @return int
+	 * Returns an array formatted for the JSON response
+	 * @param array $response
+	 * @return array
 	 */
-	protected function getPageIdForDocumentKey() {
-		return $this->currentPageId;
-	}
-	
-    /**
-	 * Sends an update query to the client, provided a document set
-	 * @param array $documents
-	 * @return boolean
-	 */
-	protected function getUpdateXmlForDocuments( array $documents = array() ) {
-		$updateHandler = $this->client->createUpdate()
-		                              ->addDocuments( $documents );
-		return $this->client->createRequest( $updateHandler )->getRawData( $updateHandler );
-		
+	public function getJsonDocumentFromResponse( array $response )
+	{
+		$toJson = array( 'id' => $this->getCurrentDocumentId() );
+		foreach ( $response as $field => $value ) {
+		    if ( $field !== 'id' ) {
+		    	$toJson[$field] = array( 'set' => $value ); 
+		    }
+		}
+		return $toJson;
 	}
 }
