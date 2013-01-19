@@ -34,7 +34,30 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->getContext()->getOutput()->setHTMLTitle( $this->wf->Msg('specialvideos-html-title') );
 
 		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
-		$this->getContext()->getOutput()->addMeta( 'description', $this->wf->Msg('specialvideos-meta-description', $this->wg->Sitename) );
+
+
+		$catInfo = HubService::getComscoreCategory($this->wg->CityId);
+
+
+
+		$descriptionKey = 'specialvideos-meta-description';
+
+		switch ($catInfo->cat_id) {
+			case WikiFactoryHub::CATEGORY_ID_GAMING:
+				$descriptionKey .= '-gaming';
+				break;
+			case WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT:
+				$descriptionKey .= '-entertainment';
+				break;
+			case WikiFactoryHub::CATEGORY_ID_LIFESTYLE:
+				$descriptionKey .= '-lifestyle';
+				break;
+			case WikiFactoryHub::CATEGORY_ID_CORPORATE:
+				$descriptionKey .= '-corporate';
+				break;
+		}
+
+		$this->getContext()->getOutput()->addMeta( 'description', $this->wf->Msg($descriptionKey, $this->wg->Sitename) );
 
 		$sort = $this->request->getVal( 'sort', 'trend' );
 		$page = $this->request->getVal( 'page', 1 );

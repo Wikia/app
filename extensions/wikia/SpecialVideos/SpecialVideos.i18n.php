@@ -19,7 +19,11 @@ $messages['en'] = array(
 	'specialvideos-uploadby' => 'by $1',
 	'specialvideos-posted-in' => 'Posted in $1',
 	'special-videos-add-video' => 'Add a Video',
-	'specialvideos-meta-description' => '$1 has new videos that include the latest video clips, video reviews, video interviews and trailers. Watch now!',
+	'specialvideos-meta-description-gaming' => '$1 has new videos that include the latest walk throughs, game reviews, game guides and game trailers. Watch now!',
+	'specialvideos-meta-description-entertainment' => '$1 has new videos that include the latest TV clips, movie trailers, music videos, actor interviews and episodes. Watch now!',
+	'specialvideos-meta-description-lifestyle' => '$1 has new videos that include how to videos, travel guides, cooking shows, recipe and crafting videos. Watch now!',
+	'specialvideos-meta-description-corporate' => '$1 has new videos that include the latest video clips, video reviews, video interviews and trailers. Watch now!',
+
 );
 
 $messages['qqq'] = array(
@@ -34,7 +38,10 @@ $messages['qqq'] = array(
 	'specialvideos-uploadby' => 'text displayed below a video to indicate which user uploaded the video',
 	'specialvideos-posted-in' => 'text displayed below a video to indicate which articles the video is posted in.  Can be a truncated list.',
 	'special-videos-add-video' => 'Button text to click to add a video to a wiki.',
-	'specialvideos-meta-description' => 'Description of videos page placed in the description meta tag for better SEO.  Placeholder is the wiki name',
+	'specialvideos-meta-description-gaming' => 'Gaming hub description of videos page placed in the description meta tag for better SEO.  Placeholder is the wiki name',
+	'specialvideos-meta-description-entertainment' => 'Entertainment hub description of videos page placed in the description meta tag for better SEO.  Placeholder is the wiki name',
+	'specialvideos-meta-description-lifestyle' => 'Lifestyle hub description of videos page placed in the description meta tag for better SEO.  Placeholder is the wiki name',
+	'specialvideos-meta-description-corporate' => 'Corporate hub description of videos page placed in the description meta tag for better SEO.  Placeholder is the wiki name',
 );
 
 $messages['de'] = array(
