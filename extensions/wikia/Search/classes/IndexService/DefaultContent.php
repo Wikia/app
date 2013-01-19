@@ -88,7 +88,7 @@ class DefaultContent extends AbstractService
 	 */
 	protected function prepValuesFromHtml( $html ) {
 		wfProfileIn(__METHOD__);
-		$dom = new \simple_html_dom( $html );
+		$dom = new \simple_html_dom( html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
 		$result = array();
 		
 		$infoboxes = $dom->find( 'table.infobox' );
