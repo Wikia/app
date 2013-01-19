@@ -48,6 +48,7 @@ $config['adengine2_js'] = array(
 	'assets' => array(
 		// core
 		'//resources/wikia/modules/cache.js',
+		'//resources/wikia/modules/lazyqueue.js',
 
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
