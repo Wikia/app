@@ -51,6 +51,12 @@ window.WikiaTracker = (function(){
 			VIEW: 'view'
 		},
 		actionsReverse = {},
+		dataKeyMap = {
+			action: 'ga_action',
+			category: 'ga_category',
+			label: 'ga_label',
+			value: 'ga_value'
+		},
 		gaPushOrder = [ 'ga_category', 'ga_action', 'ga_label', 'ga_value' ],
 		logGroup = 'WikiaTracker',
 		purgeFromData = [ 'browserEvent', 'eventName' ],
@@ -104,9 +110,7 @@ window.WikiaTracker = (function(){
 		var args = slice.call( arguments, 1 ),
 			browserEvent,
 			eventName,
-			ga = {},
 			gaqArgs = [],
-			logGroup,
 			key,
 			i,
 			l,
@@ -119,11 +123,16 @@ window.WikiaTracker = (function(){
 			extendObject( data, args[ i ] );
 		}
 
+		// Remap keys for data consistency
+		for ( key in dataKeyMap ) {
+			if ( ( value = data[ key ] ) !== undefined ) {
+				data[ dataKeyMap[ key ] ] = value;
+				delete data[ key ];
+			}
+		}
+
 		browserEvent = data.browserEvent || window.event;
 		eventName = data.eventName || 'trackingevent';
-		ga.action = data.ga_action || data.action;
-		ga.category = data.ga_category || data.category;
-		ga.label = data.ga_label || data.label;
 		trackingMethod = data.trackingMethod || 'none';
 
 		tracking[ trackingMethod ] = true;
@@ -132,7 +141,9 @@ window.WikiaTracker = (function(){
 		}
 
 		// Verify parameters; category and action are compulsory for "both" and "ga"
-		if ( tracking.none || ( tracking.ga && ( !ga.category || !ga.action || !actionsReverse[ ga.action ] ) ) ) {
+		if ( tracking.none ||
+			( tracking.ga && ( !data.ga_category || !data.ga_action || !actionsReverse[ data.ga_action ] ) )
+		) {
 			Wikia.log( 'Missing or invalid parameters', 'error', logGroup );
 			return;
 		}
@@ -144,7 +155,7 @@ window.WikiaTracker = (function(){
 
 		// Enqueue GA parameters in the proper order
 		for ( i = 0, l = gaPushOrder.length; i < l; i++ ) {
-			gaqArgs.push( ga[ gaPushOrder[ i ] ] );
+			gaqArgs.push( data[ gaPushOrder[ i ] ] );
 		}
 
 		Wikia.log( eventName + ' ' +
