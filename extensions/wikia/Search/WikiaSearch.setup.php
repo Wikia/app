@@ -12,6 +12,7 @@ $app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 require_once( 'Solarium/Autoloader.php' );
+require_once( dirname(__FILE__). '/../../../lib/simplehtmldom/simple_html_dom.php' );
 Solarium_Autoloader::register();
 
 /**
@@ -30,11 +31,23 @@ $app->registerClass('WikiaSearch', 					$dir . 'WikiaSearch.class.php');
 $app->registerClass('WikiaSearchIndexer', 			$dir . 'WikiaSearchIndexer.class.php');
 $app->registerClass('WikiaSearchConfig', 			$dir . 'WikiaSearchConfig.class.php');
 $app->registerClass('WikiaSearchController', 		$dir . 'WikiaSearchController.class.php');
+$app->registerClass('WikiaSearchIndexerController', $dir . 'WikiaSearchIndexerController.class.php');
 $app->registerClass('WikiaSearchResult', 			$dir . 'WikiaSearchResult.class.php');
 $app->registerClass('WikiaSearchResultSet', 		$dir . 'WikiaSearchResultSet.class.php');
 $app->registerClass('WikiaSearchArticleMatch',		$dir . 'WikiaSearchArticleMatch.class.php');
 $app->registerClass('WikiaSearchAjaxController',	$dir . 'WikiaSearchAjaxController.class.php');
 $app->registerClass('WikiaVideoSearchController',	$dir . 'WikiaVideoSearchController.class.php');
+
+// autoloads values in the search namespace
+spl_autoload_register( function( $class ) {
+	if ( substr_count( $class, 'Wikia\\Search\\' ) > 0 ) {
+		$class = preg_replace( '/\\\\?Wikia\\\\Search\\\\/', '', $class );
+		$file = __DIR__ . '/classes/'.strtr( $class, '\\', '/' ).'.php';
+		require_once( $file );
+		return true;
+	}  
+});
+
 
 /**
  * special pages
