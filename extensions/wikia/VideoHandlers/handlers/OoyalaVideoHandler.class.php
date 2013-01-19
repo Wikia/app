@@ -57,3 +57,78 @@ class WarnerbrothersVideoHandler extends OoyalaVideoHandler {
 
 class FoxVideoHandler extends OoyalaVideoHandler {
 }
+
+class AllianceVideoHandler extends OoyalaVideoHandler {
+}
+
+class BiowareVideoHandler extends OoyalaVideoHandler {
+}
+
+class SquareenixVideoHandler extends OoyalaVideoHandler {
+}
+
+class TrionVideoHandler extends OoyalaVideoHandler {
+}
+
+class MadhouseVideoHandler extends OoyalaVideoHandler {
+}
+
+class BandaiVideoHandler extends OoyalaVideoHandler {
+}
+
+class CapcomVideoHandler extends OoyalaVideoHandler {
+}
+
+class GamesworkshopVideoHandler extends OoyalaVideoHandler {
+}
+
+class JagexVideoHandler extends OoyalaVideoHandler {
+}
+
+class PerfectworldVideoHandler extends OoyalaVideoHandler {
+}
+
+class WaltdisneyVideoHandler extends OoyalaVideoHandler {
+}
+
+class DreamworksVideoHandler extends OoyalaVideoHandler {
+}
+
+class PixarVideoHandler extends OoyalaVideoHandler {
+}
+
+class TatemultimediaVideoHandler extends OoyalaVideoHandler {
+}
+
+class EpktvVideoHandler extends OoyalaVideoHandler {
+}
+
+class LionsgateVideoHandler extends OoyalaVideoHandler {
+}
+
+class SummitVideoHandler extends OoyalaVideoHandler {
+}
+
+class CbsfilmsVideoHandler extends OoyalaVideoHandler {
+}
+
+class WeinsteincoVideoHandler extends OoyalaVideoHandler {
+}
+
+class GamespressVideoHandler extends OoyalaVideoHandler {
+}
+
+class SegaVideoHandler extends OoyalaVideoHandler {
+}
+
+class OpenroadfilmsVideoHandler extends OoyalaVideoHandler {
+}
+
+class UbisoftVideoHandler extends OoyalaVideoHandler {
+}
+
+class NamcoVideoHandler extends OoyalaVideoHandler {
+}
+
+class GrindinggearVideoHandler extends OoyalaVideoHandler {
+}
