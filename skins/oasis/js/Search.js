@@ -4,13 +4,7 @@ var WikiaSearchApp = {
 
 	ads: false,
 
-	trackInternal: function(event, params) {
-		WikiaTracker.trackEvent(
-			event,
-			params,
-			'internal'
-		);
-	},
+	track: window.WikiaTracker.buildTrackingFunction('internal'),
 
 	init : function() {
 		this.searchForm = $('#WikiaSearch');
@@ -57,9 +51,10 @@ var WikiaSearchApp = {
 							replace(/\$1/, valueEncoded).
 							replace(encodeURIComponent('/'), '/');
 
-					this.trackInternal('search_start_suggest', {
-						'sterm': valueEncoded,
-						'rver': 0
+					this.track({
+						eventName: 'search_start_suggest',
+						sterm: valueEncoded,
+						rver: 0
 					});
 
 					// Respect modifier keys to allow opening in a new window (BugId:29401)

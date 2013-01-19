@@ -71,7 +71,7 @@ JS
 
 	/**
 	 * Returns a string that contains minified javascript of a small function stub which will
-	 * spool any calls to WikiaTracker.trackEvent until the code is actually loaded for doing the tracking (at
+	 * spool any calls to WikiaTracker.track until the code is actually loaded for doing the tracking (at
 	 * which point the calls will be replayed).
 	 */
 	public static function getTrackerSpoolingJs() {
@@ -82,11 +82,14 @@ JS
 		// The wikiatracker implememtation will be replaced directly as soon as the correct file will load.
 		ob_start();
 		?>
-		window.WikiaTracker = window.WikiaTracker || {
-			trackEvent: function(eventName, params, method){
-				wikiaTrackingSpool.push([eventName, params, method]);
-			}
-		};
+		(function() {
+			var slice = [].slice;
+			window.WikiaTracker = window.WikiaTracker || {
+				track: function() {
+					wikiaTrackingSpool.push(slice.call(arguments));
+				}
+			};
+		})();
 		<?php
 		$jsString = ob_get_clean();
 

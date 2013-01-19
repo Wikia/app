@@ -982,11 +982,11 @@ function VET_close(e) {
 }
 
 function VET_tracking(action, label, value) {
-	WikiaTracker.trackEvent(null, {
-		ga_category: 'vet',
-		ga_action: action,
-		ga_label: label || ''
-	}, 'internal');
+	WikiaTracker.track('internal', {
+		action: action,
+		category: 'vet',
+		label: label || ''
+	});
 }
 
 function VET_sendQueryEmbed(query) {
@@ -1046,11 +1046,11 @@ var VETExtended = {
 	},
 
 	track: function(action, label, data) {
-		window.WikiaTracker.trackEvent('trackingevent', $.extend({
-			ga_category: 'vet',
-			ga_action: action,
-			ga_label: label
-		}, data || {}), 'internal');
+		window.WikiaTracker.track('internal', {
+			action: action,
+			category: 'vet',
+			label: label
+		}, data);
 	},
 
 	init: function(searchSettings) {
@@ -1363,14 +1363,14 @@ var VETExtended = {
 				that.showVideoPreview(data);
 
 				// video play tracking
-				window.WikiaTracker.trackEvent('trackingevent', {
-					ga_category: 'Lightbox',	// yeah, Lightbox so we can roll up all the data
-					ga_action: window.WikiaTracker.ACTIONS.VIEW,
-					ga_label: 'video-inline',
+				window.WikiaTracker.track('internal', {
+					action: window.WikiaTracker.ACTIONS.VIEW,
+					category: 'Lightbox',	// yeah, Lightbox so we can roll up all the data
+					label: 'video-inline',
 					title: title,
 					provider: data.providerName,
 					clickSource: (that.carouselMode === 'suggestion' ? 'VET-Suggestion' : 'VET-Search')
-				}, 'internal');
+				});
 			}
 		});
 

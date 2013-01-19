@@ -4,8 +4,13 @@ var WikiaNotificationsApp = {
 			$.post(wgScript, {action: 'purge', title: wgPageName});
 	},
 
+	track: window.WikiaTracker.buildTrackingFunction('internal', {
+		category: 'sitewidemessages'
+	}),
+
 	init: function() {
-		var notifications = $('#WikiaNotifications');
+		var self = this,
+			notifications = $('#WikiaNotifications');
 
 		// handle clicks on dismiss icons
 		notifications.find('.close-notification').click(function(ev) {
@@ -40,37 +45,25 @@ var WikiaNotificationsApp = {
 					$.post(wgScript, {title: 'Special:SiteWideMessages', action: 'dismiss', mID: messageId}, WikiaNotificationsApp.purgeCurrentPage);
 
 					// SWM click tracking (BugID: 45402)
-					var trackObj = {
-						ga_category: 'sitewidemessages',
-						ga_action: WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
-						ga_label: 'swm-dismiss',
-						ga_value: messageId
-					};
-					WikiaTracker.trackEvent(
-						'trackingevent',
-						trackObj,
-						'internal',
-						ev
-					);
+					self.track({
+						action: window.WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
+						browserEvent: ev,
+						label: 'swm-dismiss',
+						value: messageId
+					});
 
 					// remove <div>
 					notification.remove();
 					nextNotification.css("display", "block");
 					// Track impression for the next SWM being displayed after a previous one was dismissed
 					if ( nextNotification.length ) {
-						var	nextMessageId = parseInt( nextNotification.attr( 'id' ).substr( 4 ) ),
-							impTrackObj = {
-								ga_category: 'sitewidemessages',
-								ga_action: WikiaTracker.ACTIONS.IMPRESSION,
-								ga_label: 'swm-impression',
-								ga_value: nextMessageId
-							};
-						WikiaTracker.trackEvent(
-							'trackingevent',
-							impTrackObj,
-							'internal',
-							ev
-						);
+						var	nextMessageId = parseInt( nextNotification.attr( 'id' ).substr( 4 ) );
+
+						self.track({
+							action: WikiaTracker.ACTIONS.IMPRESSION,
+							label: 'swm-impression',
+							value: nextMessageId
+						});
 					}
 					break;
 

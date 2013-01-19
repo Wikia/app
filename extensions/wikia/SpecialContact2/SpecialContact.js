@@ -38,18 +38,12 @@ var SpecialContact = {
 	},
 
 	trackClick: function ( trackLabel, trackUrl, event ) {
-		var trackObj = {
-			ga_category: 'specialcontact',
-			ga_action: WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
-			ga_label: trackLabel,
+		WikiaTracker.track('internal', {
+			action: WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
+			category: 'specialcontact',
+			label: trackLabel,
 			href: trackUrl
-		};
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			trackObj,
-			'internal',
-			event
-		);
+		});
 	}
 };
 

@@ -1,3 +1,7 @@
+var track = window.WikiaTracker.buildTrackingFunction('internal', {
+	category: 'sitewidemessages'
+});
+
 $(document).ready(function(){
 	$("span.SWM_dismiss a").each(function(){
 		var rxId = new RegExp(/&mID=(\d+)/);
@@ -7,32 +11,20 @@ $(document).ready(function(){
 		}
 	});
 	$( '.SWM_message' ).each( function() {
-		var msgId = parseInt( $( this ).attr( 'id' ).substr( 4 ) ),
-			impTrackObj = {
-				ga_category: 'sitewidemessages',
-				ga_action: WikiaTracker.ACTIONS.IMPRESSION,
-				ga_label: 'swm-impression',
-				ga_value: msgId
-			};
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			impTrackObj,
-			'internal'
-		);
+		track({
+			action: WikiaTracker.ACTIONS.IMPRESSION,
+			label: 'swm-impression',
+			value: parseInt( $( this ).attr( 'id' ).substr( 4 ) )
+		});
+
 		$( this ).find( 'p a' ).click( function (e) {
-			var trackObj = {
-				ga_category: 'sitewidemessages',
-				ga_action: WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
-				ga_label: 'swm-link',
-				ga_value: msgId,
-				href: $( this ).attr( 'href' )
-			};
-			WikiaTracker.trackEvent(
-				'trackingevent',
-				trackObj,
-				'internal',
-				e
-			);
+			track({
+				action: WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
+				browserEvent: e,
+				href: $( this ).attr( 'href' ),
+				label: 'swm-link',
+				value: msgId
+			});
 		} );
 	} );
 });
@@ -43,16 +35,11 @@ function SWMAjaxDismiss( e ) {
 		ajaxUrl = wgServer + wgScript + "?title=" + wgPageName + "&action=ajax&rs=SiteWideMessagesAjaxDismiss&rsargs[]=" + id,
 		request = $.get(ajaxUrl,function(data){
 			$("#msg_"+id).remove();
-		}),
-		trackObj = {
-			ga_category: 'sitewidemessages',
-			ga_action: WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
-			ga_label: 'swm-dismiss',
-			ga_value: id
-		};
-	WikiaTracker.trackEvent(
-		'trackingevent',
-		trackObj,
-		'internal'
-	);
+		});
+
+	track({
+		action: WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
+		label: 'swm-dismiss',
+		value: id
+	});
 }
