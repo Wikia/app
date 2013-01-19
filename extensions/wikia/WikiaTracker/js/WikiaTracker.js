@@ -59,7 +59,7 @@ window.WikiaTracker = (function(){
 		},
 		gaPushOrder = [ 'ga_category', 'ga_action', 'ga_label', 'ga_value' ],
 		logGroup = 'WikiaTracker',
-		purgeFromData = [ 'browserEvent', 'eventName' ],
+		purgeFromData = [ 'browserEvent', 'eventName', 'trackingMethod' ],
 		rDoubleSlash = /\/\//g,
 		slice = [].slice;
 
@@ -70,57 +70,77 @@ window.WikiaTracker = (function(){
 	/**
 	 * Unique entry point to track events to the internal datawarehouse and GA.
 	 *
-	 *     WikiaTracker.track({
+	 *     WikiaTracker.track('ga', {
 	 *         category: 'myCategory',
-	 *         label: 'myLabel',
-	 *         trackingMethod: 'ga'
+	 *         label: 'myLabel'
 	 *     });
 	 *
-	 * @params Object data (required) ... dataN (optional)
-	 *         A key-value hash of parameters. If multiple hashes are passed in
-	 *         with matching keys, the values in the later hashes will override
-	 *         the previous values.
+	 * @param String trackingMethod (required)
+	 *        Where to track the event to ("both", "ga", "internal").
+	 *        This can optionally be passed in the data object instead.
+	 * @param String eventName (required)
+	 *        The name of the event. Defaults to "trackingevent".
+	 *        This can optionally be passed in the data object instead.
+	 *        Please speak with a tracking team lead before introducing new event names.
+	 * @param Object data (optional) ... dataN (optional)
+	 *        A key-value hash of parameters. If multiple hashes are passed in
+	 *        with matching keys, the values in the later hashes will override
+	 *        the previous values.
 	 *
-	 *         keys: (Please ping tracking team leads before adding new ones)
-	 *             action (required for GA tracking)
-	 *                 One of the values in WikiaTracker.ACTIONS.
-	 *             browserEvent (optional)
-	 *                 The browser event object that triggered this tracking call.
-	 *             category (required for GA tracking)
-	 *                 The category for the event.
-	 *             eventName (optional)
-	 *                 The name of the event. Uses "trackingevent" by default.
-	 *                 Please speak with a tracking team lead before introducing
-	 *                 new event names.
-	 *             href (optional)
-	 *                 The href string for a link. This should be used by outbound links
-	 *                 to ensure tracking execution.
-	 *             label (optional for GA tracking)
-	 *                 The label for the event.
-	 *             trackingMethod
-	 *                 Where to track the event to ("both", "ga", "internal" or "none")
-	 *             value (optional for GA tracking)
-	 *                 The integer value for the event.
+	 *        keys: (Please ping tracking team leads before adding new ones)
+	 *            action (required for GA tracking)
+	 *                One of the values in WikiaTracker.ACTIONS.
+	 *            browserEvent (optional)
+	 *                The browser event object that triggered this tracking call.
+	 *            category (required for GA tracking)
+	 *                The category for the event.
+	 *            eventName (optional)
+	 *                See @param String eventname
+	 *            href (optional)
+	 *                The href string for a link. This should be used by outbound links
+	 *                to ensure tracking execution.
+	 *            label (optional for GA tracking)
+	 *                The label for the event.
+	 *            trackingMethod (optional)
+	 *                See @param String trackingMethod
+	 *            value (optional for GA tracking)
+	 *                The integer value for the event.
 	 *
 	 * @author Kyle Florence <kflorence@wikia-inc.com>
 	 * @author Hyun Lim <hyun(at)wikia-inc.com>
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
-	function track( data /* , ..., dataN */ ) {
-		var args = slice.call( arguments, 1 ),
+	function track( trackingMethod, eventName, data /* , ..., dataN */ ) {
+		var additionalData,
 			browserEvent,
-			eventName,
 			gaqArgs = [],
 			key,
 			i,
 			l,
+			sliceAt = 3,
 			tracking = {},
-			trackingMethod,
 			value;
 
+		// Args: data
+		if ( typeof trackingMethod === 'object' ) {
+			data = trackingMethod;
+			eventName = undefined;
+			trackingMethod = undefined;
+			sliceAt = 1;
+
+		// Args: trackingMethod, data
+		} else if ( typeof eventName === 'object' ) {
+			data = eventName;
+			eventName = undefined;
+			sliceAt = 2;
+		}
+
 		data = data || {};
-		for ( i = 0, l = args.length; i < l; i++ ) {
-			extendObject( data, args[ i ] );
+		additionalData = slice.call( arguments, sliceAt );
+
+		// Merge in additional data
+		for ( i = 0, l = additionalData.length; i < l; i++ ) {
+			extendObject( data, additionalData[ i ] );
 		}
 
 		// Remap keys for data consistency
@@ -131,9 +151,10 @@ window.WikiaTracker = (function(){
 			}
 		}
 
+		// Set defaults
 		browserEvent = data.browserEvent || window.event;
-		eventName = data.eventName || 'trackingevent';
-		trackingMethod = data.trackingMethod || 'none';
+		eventName = eventName || data.eventName || 'trackingevent';
+		trackingMethod = trackingMethod || data.trackingMethod || 'none';
 
 		tracking[ trackingMethod ] = true;
 		if ( tracking.both ) {
@@ -201,11 +222,11 @@ window.WikiaTracker = (function(){
 	 *
 	 * @author Kyle Florence <kflorence@wikia-inc.com>
 	 */
-	function buildTrackingFunction( defaults ) {
-		defaults = [ defaults || {} ];
+	function buildTrackingFunction() {
+		var args = slice.call( arguments );
 
 		return function() {
-			return track.apply( null, defaults.concat( slice.call( arguments ) ) );
+			return track.apply( null, args.concat( slice.call( arguments ) ) );
 		};
 	}
 
