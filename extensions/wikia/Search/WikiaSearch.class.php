@@ -109,7 +109,7 @@ class WikiaSearch extends WikiaObject {
 	 * @see WikiaSearch::field
 	 * @staticvar array
 	 */
-	private static $multiValuedFields = array('categories', 'redirect_titles', 'headings');
+	public static $multiValuedFields = array('categories', 'redirect_titles', 'headings');
 
 	/**
 	 * Search client
