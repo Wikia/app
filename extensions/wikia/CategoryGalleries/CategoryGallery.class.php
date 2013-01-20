@@ -184,7 +184,7 @@
 		protected function getArticleSnippet( $articleId, $length = 150 ) {
 			wfProfileIn(__METHOD__);
 			$articleService = new ArticleService( $articleId );
-			$result = $articleService->getTextSnippet( $length );
+			$result = htmlspecialchars( $articleService->getTextSnippet( $length ) );
 			wfProfileOut(__METHOD__);
 			return $result;
 		}
