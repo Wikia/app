@@ -9,7 +9,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @var WikiaSearch
 	 */
 	protected $wikiaSearch;
-	
+
 	/**
 	 * Responsible for building data used in indexing
 	 * @var WikiaSearchIndexer
@@ -17,13 +17,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected $wikiaSearchIndexer;
 
 	/**
-	 * Handles dependency-building and special page routing before calling controller actions 
+	 * Handles dependency-building and special page routing before calling controller actions
 	 */
 	public function __construct() {
         // note: this is required since we haven't constructed $this->wg yet
 		global $wgWikiaSearchIsDefault;
 		// Solarium_Client dependency handled in class constructor call in WikiaSearch.setup.php
-		$this->wikiaSearch			= F::build('WikiaSearch'); 
+		$this->wikiaSearch			= F::build('WikiaSearch');
 		$this->wikiaSearchIndexer	= F::build('WikiaSearchIndexer');
 		$specialPageName 			= $wgWikiaSearchIsDefault ? 'Search' : 'WikiaSearch';
 
@@ -33,7 +33,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	/**
 	 * Controller Actions
 	 *---------------------------------------------------------------------------------*/
-	
+
 	/**
 	 * This is the main search action. Special:Search points here.
 	 */
@@ -76,13 +76,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			$this->wikiaSearch->doSearch( $searchConfig );
 
-			$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', 
+			$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query',
 												array( ucwords( $searchConfig->getQuery( WikiaSearchConfig::QUERY_RAW ) ), $this->wg->Sitename) )  );
 		} else {
 			if( $searchConfig->getIsInterWiki() ) {
 				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
 			} else {
-				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki', 
+				$this->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki',
 													array($this->wg->Sitename) )  );
 			}
 		}
@@ -96,18 +96,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$searchConfig->setResults( $searchConfig->getResults()->toNestedArray() );
 		}
 
-		$tabsArgs = array( 
-				'config'		=> $searchConfig, 
-				'by_category'	=> $this->getVal('by_category', false) 
+		$tabsArgs = array(
+				'config'		=> $searchConfig,
+				'by_category'	=> $this->getVal('by_category', false)
 				);
-		
+
 		$this->setVal( 'results',				$searchConfig->getResults() );
 		$this->setVal( 'resultsFound',			$searchConfig->getResultsFound() );
 		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $searchConfig->getTruncatedResultsNum() ) );
 		$this->setVal( 'isOneResultsPageOnly',	$searchConfig->getNumPages() < 2 );
 		$this->setVal( 'pagesCount', 			$searchConfig->getNumPages() );
-		$this->setVal( 'currentPage', 			$searchConfig->getPage() ); 
-		$this->setVal( 'paginationLinks',		$this->sendSelfRequest( 'pagination', $tabsArgs ) ); 
+		$this->setVal( 'currentPage', 			$searchConfig->getPage() );
+		$this->setVal( 'paginationLinks',		$this->sendSelfRequest( 'pagination', $tabsArgs ) );
 		$this->setVal( 'tabs', 					$this->sendSelfRequest( 'tabs', $tabsArgs ) );
 		$this->setVal( 'query',					$searchConfig->getQuery( WikiaSearchConfig::QUERY_ENCODED ) );
 		$this->setVal( 'resultsPerPage',		$searchConfig->getLimit() );
@@ -122,7 +122,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isMonobook',			($this->wg->User->getSkin() instanceof SkinMonobook) );
 		$this->setVal( 'isCorporateWiki',		$this->isCorporateWiki() );
 	}
-	
+
 	/**
 	 * Called by a view script to generate the advanced tab link in search.
 	 */
@@ -133,43 +133,44 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $tooltip = $this->getVal('tooltip');
 	    $params = $this->getVal('params');
 	    $redirs = $this->getVal('redirs');
-	
+
 	    $opt = $params;
 	    foreach( $namespaces as $n ) {
 	        $opt['ns' . $n] = 1;
 	    }
-	
+
 	    $opt['redirs'] = !empty($redirs) ? 1 : 0;
 	    $stParams = array_merge( array( 'search' => $term ), $opt );
-	
+
 	    $title = F::build('SpecialPage', array( 'WikiaSearch' ), 'getTitleFor');
-	
+
+	    $this->setVal( 'class',     str_replace( ' ', '-', strtolower( $label ) ) );
 	    $this->setVal( 'href',		$title->getLocalURL( $stParams ) );
 	    $this->setVal( 'title',		$tooltip );
 	    $this->setVal( 'label',		$label );
 	    $this->setVal( 'tooltip',	$tooltip );
 	}
-	
+
 	/**
 	 * Service-level actions -- no view templates, just JSON responses.
 	 *---------------------------------------------------------------------------------*/
-	
+
 	/**
 	 * Used during indexing to retrieve data for a single page in JSON format.
 	 */
 	public function getPage() {
 	    $pageId = $this->getVal( 'id' );
-	
+
 	    if( !empty( $pageId ) ) {
 	        $page = $this->wikiaSearchIndexer->getPage( $pageId );
-	
+
 	        $this->response->setData( $page );
 	    }
-	
+
 	    // force output format as there's no template file (BugId:18831)
 	    $this->getResponse()->setFormat( 'json' );
 	}
-	
+
 	/**
 	 * Used during indexing to retrieve multiple pages in JSON format.
 	 */
@@ -181,32 +182,32 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    }
 	    $this->getResponse()->setFormat('json');
 	}
-	
+
 	/**
 	 * Delivers related videos in JSON format.
 	 */
 	public function getRelatedVideos() {
 	    $searchConfig = F::build('WikiaSearchConfig');
-	     
+
 	    if ( $this->getVal('id', false) ) {
 	        $searchConfig->setPageId( $this->getVal('id') );
 	    }
-	     
+
 	    $searchConfig
 	    	->setStart	(  0 )
 	    	->setSize	( 20 );
-	     
+
 	    $mltResult = $this->wikiaSearch->getRelatedVideos( $searchConfig );
-	    
+
 	    $responseData = array();
 	    foreach ( $mltResult as $document ) {
 	    	$responseData[$document['url']] = $document->getFields();
 	    }
-	    
+
 	    $this->response->setData($responseData);
 	    $this->response->setFormat('json');
 	}
-	
+
 	/**
 	 * Delivers a JSON response for video searches
 	 */
@@ -218,16 +219,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    	->setNamespaces		( array(NS_FILE) )
 	    	->setVideoSearch	( true )
 	    ;
-	    
+
 	    $this->wikiaSearch->doSearch( $searchConfig );
 	    // up to whoever's using this service as to what they want from here. I'm just going to return JSON.
 	    // if you just want to search for only videos in the traditional video interface, then you should
 	    // be setting 'videoSearch' in the query string of the search index page
 	    $this->getResponse()->setFormat( 'json' );
 	    $this->getResponse()->setData( ( $searchConfig->getResults() ) ? $searchConfig->getResults()->toNestedArray() : array() );
-	
+
 	}
-	
+
 	/**
 	 * Delivers a JSON response with similar pages to a stream or URL.
 	 * @throws Exception
@@ -246,11 +247,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    } else {
 	        throw new Exception('Please provide a query, url or stream contents');
 	    }
-	    
+
 	    $this->response->setData( $this->wikiaSearch->getSimilarPages( $searchConfig ) );
 	    $this->response->setFormat('json');
 	}
-	
+
 	/**
 	 * Delivers a JSON response with keywords from the page ID
 	 */
@@ -265,8 +266,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $this->response	->setData		( $responseData );
 	    $this->response	->setFormat		( 'json' );
 	}
-	
-	
+
+
 	/**
 	 * Controller Helper Methods
 	 *----------------------------------------------------------------------------------*/
@@ -280,14 +281,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function handleArticleMatchTracking( WikiaSearchConfig $searchConfig, Track $track ) {
 		$articleMatch	=	$searchConfig->getArticleMatch();
-		
+
 		if ( (! empty($articleMatch) ) && $this->getVal('fulltext', '0') === '0') {
 		    $article = $articleMatch->getArticle();
-		    
+
 		    $title = $article->getTitle();
-		
+
 		    $this->wf->RunHooks( 'SpecialSearchIsgomatch', array( &$title, $searchConfig->getOriginalQuery() ) );
-		
+
 		    $track->event( 'search_start_gomatch', array( 'sterm' => $searchConfig->getOriginalQuery(), 'rver' => 0 ) );
 		    $this->response->redirect( $title->getFullURL() );
 		}
@@ -299,7 +300,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		        $this->wf->RunHooks( 'SpecialSearchNogomatch', array( &$title ) );
 		    }
 		}
-		
+
 		return true;
 	}
 
@@ -327,13 +328,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		    	$defaultProfile = !empty( $this->wg->DefaultSearchProfile ) ? $this->wg->DefaultSearchProfile : 'default';
 		    	$namespaces = $profiles[$defaultProfile]['namespaces'];
 		    }
-		    
+
 		}
 		$searchConfig->setNamespaces( $namespaces );
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Called in index action to manipulate the view based on the user's skin
 	 * @see    WikiaSearchControllerTest::testSkinSettings
@@ -341,7 +342,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @return boolean true
 	 */
 	protected function handleSkinSettings( $skin ) {
-	
+
 		if ( $skin instanceof SkinMonoBook ) {
 		    $this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
 		}
@@ -351,7 +352,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $skin instanceof SkinWikiaMobile ) {
 		    $this->overrideTemplate( 'WikiaMobileIndex' );
 		}
-		
+
 		return true;
 	}
 
@@ -362,11 +363,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected function  isCorporateWiki() {
 	    return !empty($this->wg->EnableWikiaHomePageExt);
 	}
-	
+
 	/**
-	 * Self-requests -- these shouldn't be directly called from the browser 
+	 * Self-requests -- these shouldn't be directly called from the browser
 	 */
-	
+
 	/**
 	 * This is how we generate the subtemplate for the advanced search box.
 	 * @see    WikiaSearchControllerTest::testAdvancedBox
@@ -397,15 +398,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	public function tabs() {
 		$config = $this->getVal('config', false);
-		
+
 		if (! $config || (! $config instanceOf WikiaSearchConfig ) ) {
 		    throw new Exception("This should not be called outside of self-request context.");
 		}
-		
+
 		$filters = $config->getFilterQueries();
 		$rank = $config->getRank();
 		$is_video_wiki = $this->wg->CityId == WikiaSearch::VIDEO_WIKI_ID;
-		
+
 		$form = array(
 				'by_category' =>        $this->getVal('by_category', false),
 				'cat_videogames' =>     isset( $filters['cat_videogames'] ),
@@ -435,28 +436,28 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * This handles pagination via a template script. 
+	 * This handles pagination via a template script.
 	 * @see    WikiaSearchControllerTest::testPagination
 	 * @throws Exception
-	 * @return boolean|null (false if we don't want pagination, fully routed to view via sendSelfRequest if we do want pagination) 
+	 * @return boolean|null (false if we don't want pagination, fully routed to view via sendSelfRequest if we do want pagination)
 	 */
 	public function pagination() {
 		$config = $this->getVal('config', false);
 		if (! $config || (! $config instanceOf WikiaSearchConfig ) ) {
 			throw new Exception("This should not be called outside of self-request context.");
 		}
-		
+
 		if (! $config->getResultsFound() ) {
 			return false;
 		}
-		
+
 		$page = $config->getPage();
-		
-		$windowFirstPage = ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) 
-						? ( $page - self::PAGES_PER_WINDOW ) 
+
+		$windowFirstPage = ( ( $page - self::PAGES_PER_WINDOW ) > 0 )
+						? ( $page - self::PAGES_PER_WINDOW )
 						: 1;
-		
-		$windowLastPage = ( ( ( $page + self::PAGES_PER_WINDOW ) < $config->getNumPages() ) 
+
+		$windowLastPage = ( ( ( $page + self::PAGES_PER_WINDOW ) < $config->getNumPages() )
 						? ( $page + self::PAGES_PER_WINDOW )
 						: $config->getNumPages() ) ;
 
@@ -464,10 +465,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'pagesNum', 			$config->getNumPages() );
 		$this->setVal( 'currentPage', 		$page );
 		$this->setVal( 'windowFirstPage', 	$windowFirstPage );
-		$this->setVal( 'windowLastPage', 	$windowLastPage ); 
+		$this->setVal( 'windowLastPage', 	$windowLastPage );
 		$this->setVal( 'pageTitle', 		$this->wg->Title );
 		$this->setVal( 'crossWikia', 		$config->getIsInterWiki() );
-		$this->setVal( 'resultsCount', 		$config->getResultsFound() ); 
+		$this->setVal( 'resultsCount', 		$config->getResultsFound() );
 		$this->setVal( 'skipCache', 		$config->getSkipCache() );
 		$this->setVal( 'debug', 			$config->getDebug() );
 		$this->setVal( 'namespaces', 		$config->getNamespaces() );
@@ -483,7 +484,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	/**
 	 * Controller-level Hooks
 	 */
-	
+
 	/**
 	 * WikiaMobile hook to add assets so they are minified and concatenated
 	 * @see    WikiaSearchControllerTest::testOnWikiaMobileAssetsPackages

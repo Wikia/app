@@ -273,10 +273,6 @@ class AdEngine {
 		// If loading the ads inline, call the set up html for each provider.
 		// If loading delayed, this is done in getDelayedAdLoading method instead.
 		if ($this->loadType == 'inline'){
-			// for loadType set to inline we have to load AdEngine.js here
-			// for loadType set to delayed AdEngine.js should be inside of allinone.js
-			$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js"></script>'. "\n";
-
 			foreach($this->slots as $slotname => $slot) {
 				$AdProvider = $this->getAdProvider($slotname);
 				// Get setup HTML for each provider. May be empty.

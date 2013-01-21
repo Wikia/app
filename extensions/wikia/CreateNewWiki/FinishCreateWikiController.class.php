@@ -1,5 +1,7 @@
 <?php
 class FinishCreateWikiController extends WikiaController {
+
+	const COOKIE_NAME = 'createnewwiki';
 	
 	// form field values
 	var $params;
@@ -9,11 +11,17 @@ class FinishCreateWikiController extends WikiaController {
 	 */
 	protected function LoadState() {
 		wfProfileIn(__METHOD__);
-		if(!empty($_COOKIE['createnewwiki'])) {
-			$this->params = json_decode($_COOKIE['createnewwiki'], true);
+		if(!empty($_COOKIE[self::COOKIE_NAME])) {
+			$this->params = json_decode($_COOKIE[self::COOKIE_NAME], true);
 		} else {
 			$this->params = array();
 		}
+		wfProfileOut(__METHOD__);
+	}
+
+	protected function clearState() {
+		wfProfileIn(__METHOD__);
+		setcookie(self::COOKIE_NAME, '', time() - 3600, $this->app->wg->cookiePath, $this->app->wg->cookieDomain);
 		wfProfileOut(__METHOD__);
 	}
 	
@@ -72,6 +80,9 @@ class FinishCreateWikiController extends WikiaController {
 		}
 		
 		$wgOut->enableClientCache(false);
+
+		$this->clearState();
+
 		$wgOut->redirect($mainPage.'?wiki-welcome=1');
 	}
 

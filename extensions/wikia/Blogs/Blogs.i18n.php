@@ -150,6 +150,8 @@ $messages['qqq'] = array(
 	'create-blog-invalid-title-error' => '{{Identical|Invalid title}}',
 	'create-blog-no-login' => '{{Identical|Not logged in}}',
 	'create-blog-listing-preview' => 'This is an H2 level header above a preview.',
+	'create-blog-listing-matches-calculate' => 'Button label. User presses to calculate how many blogs would be included in the blog listing given the user-selected criteria. After button is triggered, message gets switched to [[Wikia:Create-blog-listing-matches-recalculate]].',
+	'create-blog-listing-matches-recalculate' => 'Button label. Appears after [[Wikia:Create-blog-listing-matches-calculate]] has been triggered. Allows user to re-calculate the number of blogs that meet the user-selected criteria if the user changes the criteria since initial calculation.',
 	'create-blog-listing-matches-info' => '',
 	'blog-last-edited' => '',
 	'blog-added' => 'This is the possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
@@ -160,7 +162,12 @@ $messages['qqq'] = array(
 	'blog-comment-delete' => '{{Identical|Delete}}',
 	'blog-comment-hide' => '{{Identical|Hide}}',
 	'blog-comment-history' => '{{Identical|History}}',
+	'blog-userblog' => 'Appears in an RSS feed.
+Parameters:
+
+$1 - Username of blog author. GENDER is supported.',
 	'blog-fromsitename' => 'Prints the name of the wiki the blog is from into an RSS feed. The $1 parameter is <nowiki>{{SITENAME}}</nowiki>.',
+	'blogs-comment-hidden' => 'If a tool like RevisionDelete has made the text of a comment inaccessible to the public, this message informs the reader the comment has been hidden',
 	'right-blog-comments-toggle' => '{{doc-right|blog-comments-toggle}}',
 	'right-blog-comments-delete' => '{{doc-right|blog-comments-delete}}',
 	'right-blog-articles-edit' => '{{doc-right|blog-articles-edit}}',
@@ -169,9 +176,6 @@ $messages['qqq'] = array(
 	'blogs-searchprofile' => 'Name of a tab with blog articles and blog listings. This tab is displayed in the right column on search page',
 	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings. Tooltip displayed on hover on Blogs Tab in the right column on search page',
 	'user-blog-url-link' => 'Link - links to users Blog main page',
-	'blogs-comment-hidden' => 'If a tool like RevisionDelete has made the text of a comment inaccessible to the public, this message informs the reader the comment has been hidden',
-      'create-blog-listing-matches-calculate' => 'Button label. User presses to calculate how many blogs would be included in the blog listing given the user-selected criteria. After button is triggered, message gets switched to [[Wikia:Create-blog-listing-matches-recalculate]].',
-        'create-blog-listing-matches-recalculate' => 'Button label. Appears after [[Wikia:Create-blog-listing-matches-calculate]] has been triggered. Allows user to re-calculate the number of blogs that meet the user-selected criteria if the user changes the criteria since initial calculation.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -829,6 +833,7 @@ $messages['cs'] = array(
  * @author The Evil IP address
  */
 $messages['de'] = array(
+	'blog-file-page' => "Beitrag von <a href='$1'>$2</a> im Blog von <a href='$3'>$4</a>",
 	'createblogpage' => 'Blog anlegen',
 	'createbloglistingpage' => 'Erstelle Blog-Aggregationsseite',
 	'create-blog-spam' => 'Sieht aus wie Spam',
@@ -1481,6 +1486,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
  * @author Wyz
  */
 $messages['fr'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> publié sur le blog de <a href='$3'>$4</a>",
 	'createblogpage' => 'Créer un blog',
 	'createbloglistingpage' => 'Créer une liste de blogs',
 	'create-blog-spam' => 'Ressemble à du spam',
@@ -1604,6 +1610,7 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
  * @author Toliño
  */
 $messages['gl'] = array(
+	'blog-file-page' => "Publicación <a href='$1'>$2</a> no blogue de <a href='$3'>$4</a>",
 	'createblogpage' => 'Crear un blogue',
 	'createbloglistingpage' => 'Lista de blogues creados',
 	'create-blog-spam' => 'Semella spam',
@@ -2727,6 +2734,7 @@ $messages['mai'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'blog-file-page' => "Објава од <a href='$1'>$2</a> на блогот на <a href='$3'>$4</a>",
 	'createblogpage' => 'Создавање на блог',
 	'createbloglistingpage' => 'Создавање на попис на блогови',
 	'create-blog-spam' => 'Личи на спам',
@@ -3125,6 +3133,7 @@ $messages['ne'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> bericht op het blog van <a href='$3'>$4</a>",
 	'createblogpage' => 'Blog aanmaken',
 	'createbloglistingpage' => 'Bloglijst aanmaken',
 	'create-blog-spam' => 'Ziet eruit al spam',
@@ -3304,6 +3313,7 @@ $messages['pfl'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
+	'blog-file-page' => "Wpis <a href='$1'>$2</a> na blogu <a href='$3'>$4's</a>",
 	'createblogpage' => 'Utwórz blog',
 	'createbloglistingpage' => 'Utwórz listę wpisów na blogach',
 	'create-blog-spam' => 'Wygląda jak spam',

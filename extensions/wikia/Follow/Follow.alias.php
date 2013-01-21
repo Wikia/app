@@ -18,3 +18,17 @@ $specialPageAliases['de'] = array(
 $specialPageAliases['pl'] = array(
 	'Following' => array( 'Obserwowane strony' )
 );
+
+/**
+ * Spanish
+ */
+$specialPageAliases['es'] = array(
+	'Following' => array( 'Siguiendo' )
+);
+
+/**
+ * Italian
+ */
+$specialPageAliases['it'] = array(
+	'Following' => array( 'PagineSeguite' )
+);

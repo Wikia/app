@@ -261,12 +261,13 @@ $messages['cs'] = array(
  * @author Inkowik
  * @author Jan Luca
  * @author LWChris
+ * @author Metalhead64
  * @author PtM
  */
 $messages['de'] = array(
 	'categoryselect-desc' => 'Stellt eine Oberfläche zur Verwaltung der Kategorien in einem Artikel ohne Bearbeitung des ganzen Artikels zur Verfügung.',
 	'categoryselect-code-view' => 'Quelltext',
-	'categoryselect-code-view-placeholder' => 'Hier Kategorie hinzufügen, z. B. [[Kategorie:Name]]', # Fuzzy
+	'categoryselect-code-view-placeholder' => 'Hier Kategorie hinzufügen, z. B. [[{{ns:category}}:Name]]',
 	'categoryselect-visual-view' => 'Grafische Ansicht',
 	'categoryselect-infobox-caption' => 'Kategorie-Optionen',
 	'categoryselect-infobox-category' => 'Gib den Namen der Kategorie an:',
@@ -330,11 +331,12 @@ $messages['el'] = array(
  * @author Pertile
  * @author Translationista
  * @author VegaDark
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'categoryselect-desc' => 'Proporciona una interfaz para gestionar las categorías de los artículos sin editar todo el artículo.',
 	'categoryselect-code-view' => 'Vista de código',
-	'categoryselect-code-view-placeholder' => 'Añadir categorías aquí, por ejemplo, [[Category:Nombre]]', # Fuzzy
+	'categoryselect-code-view-placeholder' => 'Añadir categorías aquí, por ejemplo, [[{{ns:category}}:Name]]',
 	'categoryselect-visual-view' => 'Vista visual',
 	'categoryselect-infobox-caption' => 'Opciones de categoría',
 	'categoryselect-infobox-category' => 'Pon el nombre de la categoría:',
@@ -416,7 +418,7 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'categoryselect-desc' => "Fournit une interface permettant de gérer les catégories d'un article sans avoir à éditer tout l'article.",
 	'categoryselect-code-view' => 'Voir le code',
-	'categoryselect-code-view-placeholder' => 'Ajoutez les catégories ici, par exemple [[Category:Name]]', # Fuzzy
+	'categoryselect-code-view-placeholder' => 'Ajoutez les catégories ici, par ex. [[{{ns:category}}:Name]]',
 	'categoryselect-visual-view' => 'Vue visuelle',
 	'categoryselect-infobox-caption' => 'Options de la catégorie',
 	'categoryselect-infobox-category' => 'Ecrivez le nom de la catégorie :',
@@ -440,11 +442,12 @@ $messages['fr'] = array(
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
 	'categoryselect-desc' => 'Proporciona unha interface para xestionar as categorías dos artigos sen editar todo o artigo.',
 	'categoryselect-code-view' => 'Vista do código',
-	'categoryselect-code-view-placeholder' => 'Engadir categorías aquí, por exemplo, [[Category:Name]]', # Fuzzy
+	'categoryselect-code-view-placeholder' => 'Engadir categorías aquí, por exemplo, [[{{ns:category}}:Name]]',
 	'categoryselect-visual-view' => 'Vista visual',
 	'categoryselect-infobox-caption' => 'Opcións de categoría',
 	'categoryselect-infobox-category' => 'Escriba o nome da categoría:',
@@ -708,7 +711,7 @@ $messages['lt'] = array(
 $messages['mk'] = array(
 	'categoryselect-desc' => 'Дава посредник за раководење со категориите во една статија без да треба да се уредува целата статија.',
 	'categoryselect-code-view' => 'Коден изглед',
-	'categoryselect-code-view-placeholder' => 'Тука додавајте категории (на пр. [[Category:Name]])', # Fuzzy
+	'categoryselect-code-view-placeholder' => 'Тука додавајте категории (на пр. [[{{ns:category}}:Name]])',
 	'categoryselect-visual-view' => 'Визуелен изглед',
 	'categoryselect-infobox-caption' => 'Нагодувања за категории',
 	'categoryselect-infobox-category' => 'Наведете го името на категоријата:',
@@ -874,7 +877,7 @@ $messages['pfl'] = array(
 $messages['pl'] = array(
 	'categoryselect-desc' => 'Umożliwia zarządzanie kategoriami bez potrzeby edytowania całego artykułu',
 	'categoryselect-code-view' => 'Tryb źródłowy',
-	'categoryselect-code-view-placeholder' => 'Dodaj kategorie tutaj, np. [[Kategoria:Nazwa]]', # Fuzzy
+	'categoryselect-code-view-placeholder' => 'Dodaj kategorie tutaj, np. [[{{ns:category}}:Nazwa]]',
 	'categoryselect-visual-view' => 'Tryb wizualny',
 	'categoryselect-infobox-caption' => 'Opcje kategorii',
 	'categoryselect-infobox-category' => 'Podaj nazwę kategorii:',
@@ -1077,7 +1080,7 @@ $messages['sr-ec'] = array(
 $messages['sv'] = array(
 	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article',
 	'categoryselect-code-view' => 'Kodvy',
-	'categoryselect-code-view-placeholder' => 'Lägg till kategorier här, t.ex. [[Category:Name]]', # Fuzzy
+	'categoryselect-code-view-placeholder' => 'Lägg till kategorier här, t.ex. [[{{ns:category}}:Namn]]',
 	'categoryselect-visual-view' => 'Visuell vy',
 	'categoryselect-infobox-caption' => 'Kategori-alternativ',
 	'categoryselect-infobox-category' => 'Ge namnet på kategorin:',

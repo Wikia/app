@@ -1626,14 +1626,14 @@ Liftium.markChain = function (slotname){
 
 Liftium.markLastAdAsRejected = function (slotname){
 	var i = Liftium.currents[slotname];
-	var tag_id = Liftium.chain[slotname][i].tag_id;
-	Liftium.d("Marking last ad as rejected for " + slotname + " (#" + tag_id + ")", 3);
-
 	if (typeof i == "undefined") {
 		Liftium.d("No chain for " + slotname + " found. Bailing out.", 1);
 		WikiaTracker.trackAdEvent('liftium.errors', {'ga_category':'errors/no_chain', 'ga_action':slotname}, 'ga');
 		return;
 	}
+
+	var tag_id = Liftium.chain[slotname][i].tag_id;
+	Liftium.d("Marking last ad as rejected for " + slotname + " (#" + tag_id + ")", 3);
 
 	Liftium.chain[slotname][i].rejected = true;
 	Liftium.setTagStat(tag_id, "r");

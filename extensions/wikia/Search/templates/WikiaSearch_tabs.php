@@ -53,9 +53,9 @@
 						<option value="newest" <? if($form['sort_newest']){ ?>selected<? } ?>><?= wfMessage('wikiasearch2-sort-publish-date') ?></option>
 						<option value="longest" <? if($form['sort_longest']){ ?>selected<? } ?>><?= wfMessage('wikiasearch2-sort-duration') ?></option>
 					</select>
-					
+
 				</div>
-			
+
 			<? endif; ?>
 		</li>
 	<?php endforeach; ?>

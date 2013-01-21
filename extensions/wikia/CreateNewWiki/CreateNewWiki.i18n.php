@@ -138,11 +138,6 @@ Be carefull to keep it short as there are 3 successive balloon tips to display i
 	'cnw-theme-headline' => 'H1 for this step',
 	'cnw-theme-creative' => 'Creative or instruction for this step following H1',
 	'cnw-theme-instruction' => 'Details on how Toolbar can be used as an alternative later',
-	'cnw-upgrade-headline' => 'H1 for this step',
-	'cnw-upgrade-creative' => 'Creative for this step. Leave the span in there for wiki name',
-	'cnw-upgrade-marketing' => 'Marketing Pitch for Wikia plus upgrade',
-	'cnw-upgrade-now' => 'Call to action button to upgrade to Wikia plus',
-	'cnw-upgrade-decline' => 'Wikia plus rejection',
 	'cnw-welcome-headline' => 'Headliner for modal. $1 is wikiname',
 	'cnw-welcome-instruction1' => 'First line of instruction to add a page',
 	'cnw-welcome-instruction2' => 'Second line of instruction to add a page after the button',
@@ -180,8 +175,6 @@ $messages['af'] = array(
 	'cnw-desc-lang' => 'Taal',
 	'cnw-desc-wiki-submit-error' => "Kies 'n kategorie",
 	'cnw-theme-headline' => 'Ontwerp u wiki',
-	'cnw-upgrade-headline' => 'Wil u opgradeer?',
-	'cnw-upgrade-now' => 'Opgradeer nou',
 	'cnw-badword-header' => 'Pas op!',
 );
 
@@ -253,8 +246,6 @@ $messages['avk'] = array(
 	'cnw-desc-lang' => 'Ava',
 	'cnw-desc-wiki-submit-error' => 'Va loma vay kiblal',
 	'cnw-theme-headline' => 'Kiblara va watsa',
-	'cnw-upgrade-headline' => 'Kas djufabdul ?',
-	'cnw-upgrade-now' => 'Dure fabdura',
 	'cnw-welcome-headline' => 'Sendara ! $1 su zo redur',
 	'cnw-welcome-instruction1' => 'Ta loplekura va bu den bati wiki va vlevefo uzadjo vulegal.',
 	'cnw-welcome-instruction2' => 'Va bato uzadjo dene bati wiki witil, ta loplekura va warzafu bu kotviele rozanudal.',
@@ -343,15 +334,6 @@ $messages['bg'] = array(
 	'cnw-theme-headline' => 'Избиране на тема',
 	'cnw-theme-creative' => 'Изберете тема от списъка по-долу; можете да видите предварителен преглед на всяка тема, като я изберете.',
 	'cnw-theme-instruction' => 'Също така можете да направите своя тема по-късно като отидете в „Моите инструменти“.',
-	'cnw-upgrade-marketing' => 'Уикия Плюс е страхотно решение за:<ul>
-<li>Професионални уикита</li>
-<li>Некомерсиални организации</li>
-<li>Семейства</li>
-<li>Училища</li>
-<li>Лични проекти</li>
-</ul>
-Преминаването към Уикия Плюс се извършва чрез PayPal за получаване на уики без реклами само за $4.95 месечно!',
-	'cnw-upgrade-decline' => 'Не благодаря, продължаване към моето уики',
 	'cnw-welcome-headline' => 'Поздравления! Уикито $1 беше създадено',
 	'cnw-welcome-instruction1' => 'Щракнете върху бутона по-долу, за да започнете да добавяте страници към вашето уики.',
 	'cnw-welcome-instruction2' => 'Ще виждате този бутон навсякъде във вашето уики, използвайте го по всяко време, когато желаете да добавите нова страница.',
@@ -412,18 +394,6 @@ $messages['br'] = array(
 	'cnw-theme-headline' => 'Krouit ho wiki',
 	'cnw-theme-creative' => "Dibabit un dodenn amañ dindan, gellout a reoc'h rakwelet pep dodenn en ur ziuzañ anezhi.",
 	'cnw-theme-instruction' => 'Gellout a rit ivez krouiñ ho todenn hiniennel un tamm diwezhatoc\'h en ur vont e "Ma ostilhoù".',
-	'cnw-upgrade-headline' => "C'hoant hoc'h eus da lakaat a-live ?",
-	'cnw-upgrade-creative' => "Hizivaat war-zu Wikia Plus a aotre ac'hanoc'h da dennañ ar bruderezhioù eus <span class=\"wiki-name\"></span>, ur c'hinnig dibar evit an diazezourien nevez hepken.",
-	'cnw-upgrade-marketing' => 'Un diskoulm a-feson eo Wikia Plus evit :<ul>
-<li>Wikioù a-vicher</li>
-<li>Kevredigezhioù</li>
-<li>Familhoù</li>
-<li>Skolioù</li>
-<li>Raktresoù personel</li>
-</ul>
-Hizivait dre PayPal evit kaout ur wiki nevez ouzhpenn evit $4.95 ar miz nemetken !',
-	'cnw-upgrade-now' => 'Lakaat a-live bremañ',
-	'cnw-upgrade-decline' => "N'eo ket dav, kenderc'hel gant ma wiki",
 	'cnw-welcome-headline' => "Gourc'hemennoù, krouet hoc'h eus $1",
 	'cnw-welcome-instruction1' => "Klikit war ar bouton amañ dindan evit kregiñ da ouzhpennañ pajennoù d'ho wiki.",
 	'cnw-welcome-instruction2' => "Gwelet a reot ar bouton-mañ hed-ha-hed ho wiki, grit gantañ bep tro ha ma fello deoc'h ouzhpennañ ur bajenn nevez.",
@@ -533,18 +503,6 @@ $messages['de'] = array(
 	'cnw-theme-headline' => 'Wähle ein Theme',
 	'cnw-theme-creative' => 'Wähle unten ein Theme, du wirst eine Vorschau jedes Themes sehen sobald du es auswählst.',
 	'cnw-theme-instruction' => 'Du kannst später auch dein eigenes Theme entwerfen, indem du auf "Werkzeugkasten" klickst.',
-	'cnw-upgrade-headline' => 'Möchtest du ein Upgrade?',
-	'cnw-upgrade-creative' => 'Ein Upgrade auf Wikia Plus ermöglicht es dir, Anzeigen von <span class="wiki-name"></span> zu entfernen, ein einmaliges Angebot, nur für neue Gründer verfügbar.',
-	'cnw-upgrade-marketing' => 'Wikia Plus ist eine großartige Lösung für:<ul>
-<li>Professionelle Wikis</li>
-<li>Nicht kommerzielle</li>
-<li>Familien</li>
-<li>Schulen</li>
-<li>Persönliche Projekte</li>
-</ul>
-Upgrade mit PayPal um ein werbefreies Wiki für nur $4,95 pro Monat zu bekommen!',
-	'cnw-upgrade-now' => 'Jetzt upgraden',
-	'cnw-upgrade-decline' => 'Nein danke, weiter zu meinem Wiki',
 	'cnw-welcome-headline' => 'Herzlichen Glückwunsch! $1 wurde erstellt',
 	'cnw-welcome-instruction1' => 'Klick auf die Schaltfläche unten, um Seiten zu deinem Wiki hinzufügen.',
 	'cnw-welcome-instruction2' => 'Du wirst diese Schaltfläche in deinem ganzen Wiki sehen, nutze sie jedes Mal wenn du eine neue Seite hinzufügen willst.',
@@ -603,16 +561,6 @@ $messages['diq'] = array(
 	'cnw-desc-lang' => 'Zıwan',
 	'cnw-desc-wiki-submit-error' => 'Reca kenime, yew kategoriye weçine',
 	'cnw-theme-headline' => 'tema weçinê',
-	'cnw-upgrade-headline' => 'Şıma qayılê ke berz kerê?',
-	'cnw-upgrade-marketing' => 'Qandê Wikia Plusi rê tewr zaf aguznayış:<ul>
-<li>Wikiyê Profesyoneli</li>
-<li>Nê-kari</li>
-<li>Kufleti</li>
-<li>Mektebi</li>
-<li>Proceyê şexsiy</li>
-</ul>
-Aşme de tenya 4,95 $ gırewtışê wikiyê bêreklami be PayPali berz ke!',
-	'cnw-upgrade-now' => 'Nıka berz ke',
 	'cnw-badword-header' => 'Oha',
 	'cnw-error-wiki-limit-header' => 'Reşt sinorê wikiy',
 	'cnw-error-blocked-header' => 'Hesab biyo kılit',
@@ -671,18 +619,6 @@ $messages['es'] = array(
 	'cnw-theme-headline' => 'Diseña tu wiki',
 	'cnw-theme-creative' => 'Escoge un tema que se ajuste a tu wiki.',
 	'cnw-theme-instruction' => 'Puedes cambiar el tema o diseñar tu propio en cualquier momento usando "Mis Herramientas" situada en la barra de herramientas en la parte inferior de la página.',
-	'cnw-upgrade-headline' => '¿Deseas actualizar?',
-	'cnw-upgrade-creative' => 'Actualizarte a Wikia Plus te permite eliminar la publicidad de <span class="wiki-name"></span>, oferta única disponible a los nuevos fundadores',
-	'cnw-upgrade-marketing' => 'Wikia Plus es una gran solución para:<ul>
-<li>Wiki profesionales</li>
-<li>Sin fines de lucro</li>
-<li>Familias</li>
-<li>Escuelas</li>
-<li>Proyectos personales</li>
-</ul>
-Actualizar a través de PayPal para conseguir una wiki sin publicidad ¡por solo $4.95 al mes!',
-	'cnw-upgrade-now' => 'Actualizar ahora',
-	'cnw-upgrade-decline' => 'No, gracias, ir a mi wiki',
 	'cnw-welcome-headline' => '¡Enhorabuena! Has creado $1',
 	'cnw-welcome-instruction1' => 'Ahora haz clic al botón de abajo para empezar a llenar tu wiki con información.',
 	'cnw-welcome-instruction2' => 'Verás este botón a través de tu wiki. Úsalo en cualquier momento cuando quieras agregar una página nueva.',
@@ -775,18 +711,6 @@ $messages['fi'] = array(
 	'cnw-theme-headline' => 'Valitse teema',
 	'cnw-theme-creative' => 'Valitse alta teema, näet esikatselun jokaisesta teemasta kun valitset sen.',
 	'cnw-theme-instruction' => 'Pystyt myös suunnittelemaan oman teema myöhemmin menemällä "Omiin työkaluihin".',
-	'cnw-upgrade-headline' => 'Haluatko päivittää?',
-	'cnw-upgrade-creative' => 'Päivittämällä Wikia Plus:san pystyt poistamaan mainokset <span class="wiki-name"></span>, ainutkertainen mahdollisuus ainoastaan uusille perustajille.',
-	'cnw-upgrade-marketing' => 'Wikia Plus on hyvä valinta:<ul>
-<li>Ammattilais-Wikeille</li>
-<li>Voittoatavoittelemattomille</li>
-<li>Perheille</li>
-<li>Kouluille</li>
-<li>Yksityisille projekteille</li>
-</ul>
-Päivitä PayPal avulla saadaksesi mainoksettoman wikin ainoastaan $4.95 kuukaudessa!',
-	'cnw-upgrade-now' => 'Päivitä nyt',
-	'cnw-upgrade-decline' => 'Ei kiitos, jatka wikiini',
 	'cnw-welcome-headline' => 'Onnittelut! $1 on luotu',
 	'cnw-welcome-instruction1' => 'Klikkaa painiketta alta aloittaaksesi sivujen lisäämisen wikiisi.',
 	'cnw-welcome-instruction2' => 'Näet tämän painikkeen joka puolella wikissäsi, käytä sitä kun haluat lisätä uuden sivun.',
@@ -858,18 +782,6 @@ $messages['fr'] = array(
 	'cnw-theme-headline' => 'Choisissez un thème',
 	'cnw-theme-creative' => 'Choisissez un thème ci-dessous, vous pourrez voir un aperçu de chaque thème lorsque vous le sélectionnerez.',
 	'cnw-theme-instruction' => 'Vous pouvez aussi concevoir votre propre thème plus tard via « Mes outils ».',
-	'cnw-upgrade-headline' => 'Souhaitez-vous mettre à niveau ?',
-	'cnw-upgrade-creative' => 'Mettre à niveau vers Wikia Plus vous permet de retirer les publicités de <span class="wiki-name"></span>, une offre unique disponible uniquement aux nouveaux fondateurs.',
-	'cnw-upgrade-marketing' => 'Wikia Plus est une solution idéale pour :<ul>
-<li>Les wikis professionnels</li>
-<li>Les projets à but non lucratif</li>
-<li>Les familles</li>
-<li>Les écoles</li>
-<li>Les projets personnels</li>
-</ul>
-Mettez à niveau via PayPal pour obtenir un wiki sans publicité pour seulement 4,95 $ par mois !',
-	'cnw-upgrade-now' => 'Mettre à niveau maintenant',
-	'cnw-upgrade-decline' => 'Non merci, continuer vers mon wiki',
 	'cnw-welcome-headline' => 'Félicitations ! $1 a été créé.',
 	'cnw-welcome-instruction1' => 'Cliquez sur le bouton ci-dessous pour commencer à ajouter des pages à votre wiki.',
 	'cnw-welcome-instruction2' => 'Vous verrez ce bouton partout sur votre wiki, utilisez-le chaque fois que vous souhaitez ajouter une nouvelle page.',
@@ -937,18 +849,6 @@ $messages['gl'] = array(
 	'cnw-theme-headline' => 'Escolla un tema visual',
 	'cnw-theme-creative' => 'Escolla un dos temas visuais que hai a continuación; verá unha vista previa do tema cando o seleccione.',
 	'cnw-theme-instruction' => 'Tamén pode deseñar o seu propio tema visual máis tarde indo ata "As miñas ferramentas".',
-	'cnw-upgrade-headline' => 'Quere realizar a actualización?',
-	'cnw-upgrade-creative' => 'Se actualiza a Wikia Plus poderá eliminar os anuncios de <span class="wiki-name"></span>, unha oferta única dispoñible para os novos fundadores.',
-	'cnw-upgrade-marketing' => 'Wikia Plus é a solución ideal para:<ul>
-<li>Wikis profesionais</li>
-<li>Organizacións sen fins de lucro</li>
-<li>Familias</li>
-<li>Escolas</li>
-<li>Proxectos persoais</li>
-</ul>
-Faga a actualización a través do PayPal para conseguir un wiki libre de anuncios por 4,95$ ao mes!',
-	'cnw-upgrade-now' => 'Actualizar agora',
-	'cnw-upgrade-decline' => 'Non, grazas. Quero continuar ata o meu wiki',
 	'cnw-welcome-headline' => 'Parabéns! Creouse $1',
 	'cnw-welcome-instruction1' => 'Prema no botón que hai a continuación para comezar a engadir páxinas ao seu wiki.',
 	'cnw-welcome-instruction2' => 'Verá este botón ao longo do wiki; úseo cada vez que queira engadir unha nova páxina.',
@@ -1012,18 +912,6 @@ $messages['he'] = array(
 	'cnw-theme-headline' => 'נא לבחור ערכת עיצוב',
 	'cnw-theme-creative' => 'נא לבחור באחת מערכות העיצוב להלן. אפשר יהיה לראות תצוגה מקדימה של כל ערכה תוך כדי הבחירה.',
 	'cnw-theme-instruction' => 'אפשר גם לעצב ערכת עיצוב משלכם דרך "הכלים שלי".',
-	'cnw-upgrade-headline' => 'לשדרג?',
-	'cnw-upgrade-creative' => 'שדרוג ל־Wikia Plus מאפשר להסיר פרסומות מעל <span class="wiki-name"></span>, הצעה חד־פעמית למייסדי ויקי חדש.',
-	'cnw-upgrade-marketing' => 'Wikia Plus – פתרון נהדר בשביל:<ul>
-<li>אתרי ויקי מקצועיים</li>
-<li>מוסדות ללא כוונת רווח</li>
-<li>משפחות</li>
-<li>מוסדות חינוך</li>
-<li>מיזמים אישיים</li>
-</ul>
-שדרגו באמצעות פייפאל כדי לקבל ויקי נקי מפרסומות עבוק 4.95 דולר לחודש בלבד!',
-	'cnw-upgrade-now' => 'לשדרג עכשיו',
-	'cnw-upgrade-decline' => 'לא, תודה, אני רוצה ללכת לוויקי שלי',
 	'cnw-welcome-headline' => 'ברכות! הוויקי $1 נוצר',
 	'cnw-welcome-instruction1' => 'לחצו על הכפתור להלן כדי להתחיל להוסיף דפים לוויקי שלכם.',
 	'cnw-welcome-instruction2' => 'הכפתור הזה יופיע בכל דף בוויקי, אפשר להשתמש בו בכל זמן שאתם רוצים להוסיף עמוד חדש.',
@@ -1082,18 +970,6 @@ $messages['hu'] = array(
 	'cnw-theme-headline' => 'Válassz egy témát',
 	'cnw-theme-creative' => 'Válassz az alábbi témák közöl. Ha kiválasztasz egy témát, akkor annak látható lesz az előnézeti képe.',
 	'cnw-theme-instruction' => 'Saját stílusodat később is megtervezheted a "My Tools" eszköztáron keresztül.',
-	'cnw-upgrade-headline' => 'Szeretnél frissíteni?',
-	'cnw-upgrade-creative' => 'A Wikia Plus szolgáltatásra váltás lehetővé teszi a hirdetések eltávolítását a <span class="wiki-name"></span> wikiről; ez egy egyszeri lehetőség csak új alapítók számára.',
-	'cnw-upgrade-marketing' => 'A Wikia Plus remek megoldás:<ul>
-<li>professzionális wikinek,</li>
-<li>nonprofit szervezeteknek,</li>
-<li>családoknak,</li>
-<li>iskoláknak,</li>
-<li>személyes projekteknek.</li>
-</ul>
-Válts a PayPal használatával, hogy havi 4.95 dollárért hirdetésmentes wikit kapj!',
-	'cnw-upgrade-now' => 'Válts most',
-	'cnw-upgrade-decline' => 'Nem, köszönöm, menjen tovább a wikihez',
 	'cnw-welcome-headline' => 'Gratulálunk!A(z) $1 létrehozása sikerült.',
 	'cnw-welcome-instruction1' => 'Kattints a lenti gombra, hogy elkezdd a lapok hozzáadását a wikidhez.',
 	'cnw-welcome-instruction2' => 'Ezt a gombot wiki-szerte láthatod, és bármikor használhatod új lap létrehozásához.',
@@ -1161,18 +1037,6 @@ $messages['ia'] = array(
 	'cnw-theme-headline' => 'Designar tu wiki',
 	'cnw-theme-creative' => 'Selige un apparentia hic infra. Tu videra un previsualisation de cata apparentia quando tu lo selige.',
 	'cnw-theme-instruction' => 'Es equalmente possibile designar tu proprie apparentia usante "Mi instrumentos".',
-	'cnw-upgrade-headline' => 'Vole tu actualisar?',
-	'cnw-upgrade-creative' => 'Le actualisation a Wikia Plus permitte remover le publicitate de <span class="wiki-name"></span>. Iste offerta es disponibile solmente pro le nove fundatores.',
-	'cnw-upgrade-marketing' => 'Wikia Plus es un ideal solution pro:<ul>
-<li>Wikis professional</li>
-<li>Organisationes sin scopo lucrative</li>
-<li>Familias</li>
-<li>Scholas</li>
-<li>Projectos personal</li>
-</ul>
-Compra le actualisation per PayPal pro obtener un wiki sin publicitate pro solmente 4,95$ per mense!',
-	'cnw-upgrade-now' => 'Actualisar ora',
-	'cnw-upgrade-decline' => 'No gratias, continuar a mi wiki',
 	'cnw-welcome-headline' => 'Felicitationes, tu ha create $1',
 	'cnw-welcome-instruction1' => 'Clicca sur le button hic infra pro comenciar a adder paginas a tu wiki.',
 	'cnw-welcome-instruction2' => 'Tu videra iste button ubique in tu wiki. Usa lo cata vice que tu vole adder un nove pagina.',
@@ -1248,18 +1112,6 @@ $messages['it'] = array(
 	'cnw-theme-headline' => 'Scegli un tema',
 	'cnw-theme-creative' => "Scegli uno dei temi qui sotto. Puoi vedere l'anteprima di ogni tema quando lo selezioni.",
 	'cnw-theme-instruction' => 'Puoi anche creare il tuo tema personalizzato più avanti tramite "I miei strumenti".',
-	'cnw-upgrade-headline' => "Vuoi effettuare l'aggiornamento?",
-	'cnw-upgrade-creative' => 'L\'aggiornamento a Wikia Plus ti permette di rimuovere la pubblicità da <span class="wiki-name"></span>; si tratta di un\'offerta disponibile una volta solo per i nuovi fondatori.',
-	'cnw-upgrade-marketing' => "Wikia Plus è un'ottima soluzione per:<ul>
-<li>Le wiki professionali</li>
-<li>Le associazioni no-profit</li>
-<li>Le famiglie</li>
-<li>Le scuole</li>
-<li>I progetti personali</li>
-</ul>
-Effettua l'aggiornamento tramite PayPal per avere una wiki senza pubblicità a soli 4,95\$ al mese!",
-	'cnw-upgrade-now' => "Effettua l'aggiornamento ora",
-	'cnw-upgrade-decline' => 'No grazie, voglio continuare con la mia wiki',
 	'cnw-welcome-headline' => 'Complimenti! $1 è stata creata',
 	'cnw-welcome-instruction1' => 'Clicca il pulsante sottostante per iniziare a creare pagine nella tua wiki.',
 	'cnw-welcome-instruction2' => 'Vedrai questo pulsante in tutta la wiki: utilizzalo ogni volta che vuoi creare una nuova pagina.',
@@ -1376,7 +1228,6 @@ $messages['km'] = array(
 	'cnw-theme-headline' => 'ជ្រើសរើសរចនាបថ',
 	'cnw-theme-creative' => 'ជ្រើសរើសរចនាបថខាងក្រោម។ អ្នកនឹងអាចមើលរចនាបថនោះជាមុនពេលដែលជ្រើសរើសវា។',
 	'cnw-theme-instruction' => 'អ្នកក៏អាចធ្វើការឌីស្សាញរចនាបថដោយខ្លួនអ្នកនាពេលក្រោយដោយចូលទៅ"ឧបករណ៍"។',
-	'cnw-upgrade-decline' => 'ទេ។ បន្តទៅវិគីរបស់ខ្ញុំ',
 	'cnw-welcome-headline' => 'សូមអបអរសាទរ! $1 ត្រូវបានបង្កើតហើយ',
 	'cnw-welcome-instruction1' => 'ចុចលើប៊ូតុងខាងក្រោមដើម្បីចាប់ផ្ដើមបន្ថែមទំព័រទៅលើវិគីរបស់អ្នក។',
 	'cnw-welcome-instruction2' => 'អ្នកនឹងឃើញប៊ូតុងនេះគ្រប់ទីកន្លែងលើវិគីរបស់អ្នក។ សូមប្រើវានៅពេលណាក៏បានដើម្បីបន្ថែមទំព័រថ្មីមួយ។',
@@ -1425,9 +1276,6 @@ $messages['ko'] = array(
 	'cnw-desc-lang' => '언어',
 	'cnw-desc-wiki-submit-error' => '분류를 선택하세요',
 	'cnw-theme-headline' => '테마 선택',
-	'cnw-upgrade-headline' => '업그레이드하겠습니까?',
-	'cnw-upgrade-now' => '지금 업그레이드합니다',
-	'cnw-upgrade-decline' => '괜찮습니다, 위키를 계속합니다',
 	'cnw-welcome-headline' => '축하합니다! $1(을)를 만들었습니다',
 	'cnw-error-general-heading' => '새 위키 만들기 오류', # Fuzzy
 	'cnw-error-wiki-limit-header' => '위키 제한에 도달함',
@@ -1461,8 +1309,6 @@ $messages['lb'] = array(
 	'cnw-desc-select-one' => 'Een/Eng eraussichen',
 	'cnw-desc-change-lang' => 'änneren',
 	'cnw-desc-lang' => 'Sprooch',
-	'cnw-upgrade-headline' => 'Wëllt Dir en Upgrade maachen?',
-	'cnw-upgrade-now' => 'Elo aktualiséieren',
 );
 
 /** Lithuanian (lietuvių)
@@ -1548,18 +1394,6 @@ $messages['mk'] = array(
 	'cnw-theme-headline' => 'Уредете го изгледот на викито',
 	'cnw-theme-creative' => 'Подолу изберете изглед. За секој избран изглед ќе се прикаже преглед .',
 	'cnw-theme-instruction' => 'Подоцна можете да изработите свој изглед преку „Мои алатки“.',
-	'cnw-upgrade-headline' => 'Сакате да се надградите?',
-	'cnw-upgrade-creative' => 'Надградуваќи се на Викија Плус добивате можност да ги отстраните рекламите од <span class="wiki-name"></span> - еднократна понуда само за нови основачи',
-	'cnw-upgrade-marketing' => 'Викија Плус е одлично решение за:<ul>
-<li>Стручни деловни викија</li>
-<li>Непрофитни организации</li>
-<li>Семејства</li>
-<li>Училишта</li>
-<li>Лични проекти</li>
-</ul>
-Надградете се преку PayPal и вашето вики ќе биде без реклами за само $4,95 месечно!',
-	'cnw-upgrade-now' => 'Надгради веднаш',
-	'cnw-upgrade-decline' => 'Не, благодарам. Однеси ме на викито.',
 	'cnw-welcome-headline' => 'Честитаме! Го создадовте $1',
 	'cnw-welcome-instruction1' => 'Стиснете на копчето подолу за да почнете да додавате страници на викито.',
 	'cnw-welcome-instruction2' => 'Ова копче ќе биде присутно ширум целото вики. Користете го секогаш кога сакате да додадете нова страница.',
@@ -1657,18 +1491,6 @@ $messages['ms'] = array(
 	'cnw-theme-headline' => 'Pilih tema',
 	'cnw-theme-creative' => 'Pilih tema di bawah. Anda boleh melihat pralihat untuk setiap tema yang anda pilih.',
 	'cnw-theme-instruction' => 'Anda boleh mereka tema anda lain kali dengan menggunakan "Alatan Saya".',
-	'cnw-upgrade-headline' => 'Nak naik taraf?',
-	'cnw-upgrade-creative' => 'Jika anda naik taraf ke Wikia Plus, anda boleh gugurkan iklan dari <span class="wiki-name"></span>, tawaran sekali sahaja buat pengasas baru.',
-	'cnw-upgrade-marketing' => 'Wikia Plus merupakan yang terbaik untuk:<ul>
-<li>Wiki Profesional</li>
-<li>Pertubuhan bukan untang</li>
-<li>Keluarga</li>
-<li>Sekolah</li>
-<li>Projek peribadi</li>
-</ul>
-Naik taraf wiki anda kepada wiki tanpa iklan dengan membayar $4.95 (USD) sebulan melalui PayPal!',
-	'cnw-upgrade-now' => 'Naik Taraf Sekarang',
-	'cnw-upgrade-decline' => 'Tak apalah, terus ke wiki saya',
 	'cnw-welcome-headline' => 'Bagus! $1 telah dicipta',
 	'cnw-welcome-instruction1' => 'Klik butang di bawah untuk mulai membuka laman pada wiki anda.',
 	'cnw-welcome-instruction2' => 'Anda akan melihat butang ini di seluruh wiki. Gunakannya pada bila-bila masa anda ingin menambahkan laman baru.',
@@ -1737,18 +1559,6 @@ $messages['nb'] = array(
 	'cnw-theme-headline' => 'Velg et tema',
 	'cnw-theme-creative' => 'Velg et tema under. Du vil kunne se en forhåndsvisning av hvert tema når du markerer det.',
 	'cnw-theme-instruction' => 'Du kan også utforme ditt eget tema senere ved å gå til «Mine verktøy».',
-	'cnw-upgrade-headline' => 'Vil du oppgradere?',
-	'cnw-upgrade-creative' => 'Å oppgradere til Wikia Pluss lar deg fjerne annonser fra <span class="wiki-name"></span>. Et engangstilbud er tilgjengelig kun for nye grunnleggere.',
-	'cnw-upgrade-marketing' => 'Wikia Pluss er en flott løsning for:<ul>
-<li>Profesjonelle wikier</li>
-<li>Ideelle prosjekter</li>
-<li>Familier</li>
-<li>Skoler</li>
-<li>Personlige prosjekter</li>
-</ul>
-Oppgrader gjennom PayPal for å få en reklamefri wiki til kun $4,95 per måned!',
-	'cnw-upgrade-now' => 'Oppgrader nå',
-	'cnw-upgrade-decline' => 'Nei takk, fortsett til wikien min',
 	'cnw-welcome-headline' => 'Gratulerer! $1 har blitt opprettet',
 	'cnw-welcome-instruction1' => 'Trykk på knappen under for å begynne å legge til siden på wikien din.',
 	'cnw-welcome-instruction2' => 'Du vil se denne knappen på wikien din, bruk den når du vil legge til en ny side.',
@@ -1816,18 +1626,6 @@ $messages['nl'] = array(
 	'cnw-theme-headline' => 'Ontwerp uw wiki',
 	'cnw-theme-creative' => 'Kies hieronder een vormgeving. Als u een vormgeving selecteert, wordt een voorvertoning weergegeven.',
 	'cnw-theme-instruction' => 'U kunt uw thema of ontwerp altijd later aanpassen via "Mijn hulpmiddelen".',
-	'cnw-upgrade-headline' => 'Wilt u upgraden?',
-	'cnw-upgrade-creative' => 'Upgraden naar Wikia Plus maakt het mogelijk om advertenties te verwijderen van <span class="wiki-name"></span>. Deze aanbieding is alleen beschikbaar voor nieuwe oprichters.',
-	'cnw-upgrade-marketing' => "Wikia Plus is prima oplossing voor:<ul>
-<li>Professionele wiki's</li>
-<li>Organisaties zonder winstoogmerk</li>
-<li>Families</li>
-<li>Scholen</li>
-<li>Persoonlijke projecten</li>
-</ul>
-Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
-	'cnw-upgrade-now' => 'Nu upgraden',
-	'cnw-upgrade-decline' => 'Nee, bedankt. Ik wil naar mijn wiki',
 	'cnw-welcome-headline' => 'Gefeliciteerd. U hebt de wiki $1 aangemaakt',
 	'cnw-welcome-instruction1' => "Klik op de onderstaande knop om pagina's aan uw wiki toe te voegen.",
 	'cnw-welcome-instruction2' => 'U ziet deze knop overal in uw wiki. Gebruik hem als u een nieuwe pagina wilt toevoegen.',
@@ -1866,7 +1664,6 @@ $messages['nl-informal'] = array(
 	'cnw-desc-default-lang' => 'De hoofdtaal van je wiki is: $1',
 	'cnw-theme-creative' => 'Kies hieronder een vormgeving. Als je een vormgeving selecteert, wordt een voorvertoning weergegeven.',
 	'cnw-theme-instruction' => 'Je kunt je thema of ontwerp altijd later aanpassen via "Mijn hulpmiddelen".',
-	'cnw-upgrade-headline' => 'Wil je upgraden?',
 	'cnw-welcome-instruction1' => "Klik op de onderstaande knop om pagina's aan je wiki toe te voegen.",
 	'cnw-welcome-instruction2' => 'Je ziet deze knop overal in je wiki. Gebruik hem als je een nieuwe pagina wilt toevoegen.',
 	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van je wiki. Probeer het later opnieuw.', # Fuzzy
@@ -1932,18 +1729,6 @@ $messages['pl'] = array(
 	'cnw-theme-headline' => 'Wybierz motyw',
 	'cnw-theme-creative' => 'Wybierz jeden z poniższych motywów aby zobaczyć podgląd i zdecydować o wyborze.',
 	'cnw-theme-instruction' => 'Możesz także zaprojektować motyw później, korzystając z menu "Moje narzędzia".',
-	'cnw-upgrade-headline' => 'Czy chcesz uaktualnić?',
-	'cnw-upgrade-creative' => 'Uaktualnienie do Wikia Plus umożliwia usunięcie reklam z <span class="wiki-name"> </span>, jest jednorazową ofertą skierowaną do nowych założycieli wiki.',
-	'cnw-upgrade-marketing' => 'Wikia Plus jest idealną propozycją dla:<ul>
-<li>Profesjonalnych wiki</li>
-<li>Organizacji non-profit</li>
-<li>Rodzin</li>
-<li>Szkół</li>
-<li>Osobistych projektów</li>
-</ul>
-Uaktualnij poprzez PayPal aby utworzyć wiki wolną od reklam za jedyne $4.95 na miesiąc!',
-	'cnw-upgrade-now' => 'Uaktualnij teraz',
-	'cnw-upgrade-decline' => 'Nie, dziękuję, przejdź dalej',
 	'cnw-welcome-headline' => 'Gratulacje! $1 została utworzona',
 	'cnw-welcome-instruction1' => 'Kliknij na poniższy przycisk aby zacząć dodawanie stron do Twojej wiki',
 	'cnw-welcome-instruction2' => 'Znajdziesz ten przycisk w wielu miejscach na Twojej wiki, użyj go, jeżeli chcesz dodać nową stronę.',
@@ -2011,18 +1796,6 @@ $messages['pms'] = array(
 	'cnw-theme-headline' => 'Sern un tema',
 	'cnw-theme-creative' => 'Sern un tema sota, it podras vëdde na peuva ëd minca tema an selessionandlo.',
 	'cnw-theme-instruction' => 'It peule ëdcò disegné tò tema pi tard andand su "Ij mè utiss".',
-	'cnw-upgrade-headline' => 'It veus-to agiorné?',
-	'cnw-upgrade-creative' => 'Agiorné a Wikia Plus al përmëtt ëd gavé la reclam da <span class="wiki-name"></span>, oferta ëd na vòta sola mach disponibla ai neuv fondator.',
-	'cnw-upgrade-marketing' => "Wikia Plus a l'é na gransolussion për:<ul>
-<li>Wiki Professionaj</li>
-<li>Sensa profit</li>
-<li>Famije</li>
-<li>Scòle</li>
-<li>Proget përsonaj</li>
-</ul>
-Agiorna via PayPal për avèj na wiki libra da reclam për mach $4.95 al mèis!",
-	'cnw-upgrade-now' => 'Agiorna adess',
-	'cnw-upgrade-decline' => 'Nò mersì, continua dzor mia wiki',
 	'cnw-welcome-headline' => "Congratulassion! $1 a l'é stàita creà",
 	'cnw-welcome-instruction1' => 'Sgnaca ël boton sota për ancaminé a gionté pagine a toa wiki.',
 	'cnw-welcome-instruction2' => 'It vëddras sto boton travers toa wiki, dòvrlo minca vira it veule gionté na neuva pagina.',
@@ -2133,18 +1906,6 @@ $messages['pt'] = array(
 	'cnw-theme-headline' => 'Escolha uma variante do tema',
 	'cnw-theme-creative' => 'Escolha uma variante do tema; pode ver uma antevisão de cada variante, clicando-a.',
 	'cnw-theme-instruction' => 'Também pode criar uma variante personalizada mais tarde, usando "As Minhas Ferramentas".',
-	'cnw-upgrade-headline' => 'Pretende a versão melhorada?',
-	'cnw-upgrade-creative' => 'A versão Wikia Plus permite-lhe remover os anúncios da <span class="wiki-name"></span>, uma oferta única só disponível para novos fundadores.',
-	'cnw-upgrade-marketing' => 'A versão Wikia Plus é excelente para:<ul>
-<li>Wikis Profissionais</li>
-<li>Organizações sem Fins Lucrativos</li>
-<li>Famílias</li>
-<li>Escolas</li>
-<li>Projectos Pessoais</li>
-</ul>
-Adopte esta versão através do PayPal para ter uma wiki livre de anúncios por apenas $4.95 por mês!',
-	'cnw-upgrade-now' => 'Usar a Versão Melhorada',
-	'cnw-upgrade-decline' => 'Não obrigado, continuar para a minha wiki',
 	'cnw-welcome-headline' => 'Parabéns! A $1 foi criada',
 	'cnw-welcome-instruction1' => 'Clique o botão abaixo para começar a criar páginas na sua wiki.',
 	'cnw-welcome-instruction2' => 'Verá este botão em todas as páginas da wiki; use-o em qualquer altura para criar uma página nova.',
@@ -2212,18 +1973,6 @@ $messages['pt-br'] = array(
 	'cnw-theme-headline' => 'Escolha um Compositor de temas',
 	'cnw-theme-creative' => 'Escolha uma compositor de temas abaixo; verá uma antevisão de cada compositor à medida que a escolher.',
 	'cnw-theme-instruction' => 'Tambem poderá criar um compositor personalizado mais tarde, usando "As Minhas Ferramentas".',
-	'cnw-upgrade-headline' => 'Pretende a versão melhorada?',
-	'cnw-upgrade-creative' => 'A versão Wikia Plus permite-lhe remover os anúncios da <span class="wiki-name"></span>, uma oferta única só disponível para novos fundadores.',
-	'cnw-upgrade-marketing' => 'A versão Wikia Plus é excelente para:<ul>
-<li>Wikis Profissionais</li>
-<li>Organizações sem Fins Lucrativos</li>
-<li>Famílias</li>
-<li>Escolas</li>
-<li>Projetos Pessoais</li>
-</ul>
-Adote esta versão através do PayPal para ter uma wiki livre de anúncios por apenas $4.95 por mês!',
-	'cnw-upgrade-now' => 'Usar a Versão Melhorada',
-	'cnw-upgrade-decline' => 'Não obrigado, continuar para a minha wiki',
 	'cnw-welcome-headline' => 'Parabéns! A $1 foi criada',
 	'cnw-welcome-instruction1' => 'Clique o botão abaixo para começar a criar páginas na sua wiki.',
 	'cnw-welcome-instruction2' => 'Verá este botão em toda a wiki; use-o em qualquer altura para criar uma página nova.',
@@ -2272,17 +2021,6 @@ $messages['ro'] = array(
 	'cnw-desc-lang' => 'Limbă',
 	'cnw-desc-wiki-submit-error' => 'Te rugăm alege o categorie',
 	'cnw-theme-headline' => 'Alege o temă',
-	'cnw-upgrade-headline' => 'Doriţi să realizaţi o actualizare?',
-	'cnw-upgrade-marketing' => 'Wikia Plus este o soluţie nemaipomenită pentru:<ul>
-<li>Wiki-urile profesionale</li>
-<li>Acţiunile nonprofit</li>
-<li>Familii</li>
-<li>Școli</li>
-<li>Proiecte personale</li>
-</ul>
-Actualizează prin PayPal pentru a obţine un wiki cu reclame gratis pentru doar 4.95$ pe lună!',
-	'cnw-upgrade-now' => 'Actualizează acum',
-	'cnw-upgrade-decline' => 'Nu, mulţumesc. Continuă spre wiki-ul meu',
 	'cnw-welcome-instruction1' => 'Apasă pe butonul de mai jos pentru a începe să adaugi pagini wiki-ului tău.',
 );
 
@@ -2338,18 +2076,6 @@ $messages['ru'] = array(
 	'cnw-theme-headline' => 'Выбрать тему',
 	'cnw-theme-creative' => 'Выберите тему ниже; вы можете просмотреть каждую тему до того, как сделать окончательный выбор.',
 	'cnw-theme-instruction' => 'Вы также можете создавать свои собственные темы позже, перейдя в "Мои инструменты".',
-	'cnw-upgrade-headline' => 'Вы хотите обновить?',
-	'cnw-upgrade-creative' => 'Обновление до Wikia Plus позволяет удалит рекламу с <span class="wiki-name"></span>, единовременное предложение доступно только для новых основателей.',
-	'cnw-upgrade-marketing' => 'Wikia Plus — это великолепное решение для:<ul>
-<li>Профессиональных вики</li>
-<li>Некоммерческих организаций</li>
-<li>Семей</li>
-<li>Школ</li>
-<li>Личных проектов</li>
-</ul>
-Обновитесь через PayPal и получить вики без рекламы всего за $4 95 в месяц!',
-	'cnw-upgrade-now' => 'Обновить сейчас',
-	'cnw-upgrade-decline' => 'Нет, спасибо; продолжить создание моей вики',
 	'cnw-welcome-headline' => 'Поздравляем! $1 создана',
 	'cnw-welcome-instruction1' => 'Нажмите на кнопку ниже, чтобы начать добавлять страницы на вики.',
 	'cnw-welcome-instruction2' => 'Вы будете видеть эту кнопку всегда и можете использовать её в любое время, когда захотите добавить новую страницу.',
@@ -2412,18 +2138,6 @@ $messages['sr-ec'] = array(
 	'cnw-theme-headline' => 'Изаберите тему',
 	'cnw-theme-creative' => 'Изаберите неку од тема испод. Преглед ће се појавити истог тренутка.',
 	'cnw-theme-instruction' => 'Касније можете да израдите сопствену тему преко „Мојих алатки“.',
-	'cnw-upgrade-headline' => 'Желите ли да доградите?',
-	'cnw-upgrade-creative' => 'Викија плус вам омогућава да уклоните огласе са <span class="wiki-name"></span>. Ово је једнократна понуда која је доступна само за нове осниваче.',
-	'cnw-upgrade-marketing' => 'Викија плус је одлично решење за:<ul>
-<li>професионалне викије</li>
-<li>непрофитне организације</li>
-<li>породицу</li>
-<li>школе</li>
-<li>личне пројекте</li>
-</ul>
-Доградите налог преко Пејпала и опростите се од огласа. Само 4,95 долара месечно!',
-	'cnw-upgrade-now' => 'Догради',
-	'cnw-upgrade-decline' => 'Не, хвала. Одведи ме на вики.',
 	'cnw-welcome-headline' => 'Честитамо! Вики $1 је направљен',
 	'cnw-welcome-instruction1' => 'Кликните на дугме испод да почнете с додавањем страница на вики.',
 	'cnw-welcome-instruction2' => 'Ово дугме ће бити присутно широм викија. Користите га сваки пут када желите да додате нову страницу.',
@@ -2494,18 +2208,6 @@ $messages['sv'] = array(
 	'cnw-theme-headline' => 'Designa din wiki',
 	'cnw-theme-creative' => 'Välj ett tema nedan. Du kommer att se en förhandsgranskning av varje tema när du markerar det.',
 	'cnw-theme-instruction' => 'Du kan också utforma ditt egna tema senare på "Mina verktyg".',
-	'cnw-upgrade-headline' => 'Vill du uppgradera?',
-	'cnw-upgrade-creative' => 'Om du uppgraderar till Wikia Plus kan du ta bort annonser från <span class="wiki-name"></span>. Ett engångserbjudande endast tillgängligt för nya grundare.',
-	'cnw-upgrade-marketing' => 'Wikia Plus är en bra lösning för:<ul>
-<li>Professionella Wikis</li>
-<li>Ideella organisationer</li>
-<li>Familjer</li>
-<li>Skolor</li>
-<li>Personliga projekt</li>
-</ul>
-Uppgradera via PayPal för att få en reklamfri wiki för endast $4,95 per månad!',
-	'cnw-upgrade-now' => 'Uppgradera nu',
-	'cnw-upgrade-decline' => 'Nej tack, fortsätt till min wiki',
 	'cnw-welcome-headline' => 'Gratulerar, har du skapat $1',
 	'cnw-welcome-instruction1' => 'Klicka på knappen nedan för att börja lägga till sidor på din wiki.',
 	'cnw-welcome-instruction2' => 'Du kommer att se den här knappen på din wiki, använd den när du vill lägga till en ny sida.',
@@ -2601,18 +2303,6 @@ $messages['tl'] = array(
 	'cnw-theme-headline' => 'Pumili ng isang tema',
 	'cnw-theme-creative' => 'Pumili ng isang temang nasa ibaba, magagawa mong makakita ng isang paunang pagtanaw ng bawat tema habang pinipili mo ito.',
 	'cnw-theme-instruction' => 'Makakapagdisenyo ka rin ng sarili mong tema paglaon sa pamamagitan ng pagpunta sa "Mga Kasangkapan Ko".',
-	'cnw-upgrade-headline' => 'Nais mo bang magpataas ng antas?',
-	'cnw-upgrade-creative' => 'Ang pagpapataas upang maging Wikia Plus ay nagpapahintulot sa iyong matanggal ang mga anunsiyo mula sa <span class="wiki-name"></span>, isang pang-isang ulit lamang na alok na makukuha ng bagong mga tagapagtatag.',
-	'cnw-upgrade-marketing' => 'Ang Wikia Plus ay isang mahusay na tugon para sa:<ul>
-<li>Mga Wiking Pangdalubhasa</li>
-<li>Hindi nakikinabang</li>
-<li>Mga mag-anak</li>
-<li>Mga paaralan</li>
-<li>Mga proyektong pansarili</li>
-</ul>
-Magpataas ng antas sa pamamagitan ng PayPal upang makakuha ng wiking walang anunsiyo sa halagang $4.95 lang bawat buwan!',
-	'cnw-upgrade-now' => 'Itaas na ang Antas Ngayon',
-	'cnw-upgrade-decline' => 'Salamat ngunit ayaw ko, magpatuloy sa aking wiki',
 	'cnw-welcome-headline' => 'Maligayang bati! Nalikha na ang $1',
 	'cnw-welcome-instruction1' => 'Pindutin ang pindutang nasa ibaba upang makapagsimulang magdagdag ng mga pahina sa wiki mo.',
 	'cnw-welcome-instruction2' => 'Makikita mo ang pindutang ito sa kabuuan ng wiki mo, gamitin ito anumang oras na nais mong magdagdag ng isang bagong pahina.',
@@ -2710,18 +2400,6 @@ $messages['tt-cyrl'] = array(
 	'cnw-theme-headline' => 'Тема сайлау',
 	'cnw-theme-creative' => 'Теманы астарак сайлагыз; сез төгәл карар кабул иткәнче, бөтен теманы да карап чыга аласыз.',
 	'cnw-theme-instruction' => 'Соңрак, "Минем коралларым"а кереп, сез үзегезнең темаларыгызны ясый аласыз.',
-	'cnw-upgrade-headline' => 'Сез яңартырга телисезме?',
-	'cnw-upgrade-creative' => 'Wikia Plus дәрәҗәсенә кадәр яңарту <span class="wiki-name"></span> проектыннан рекламаны бетерәчәк, бу тәкъдим бары тик яңа нигезләүчеләр өчен генә гамәлдә.',
-	'cnw-upgrade-marketing' => 'Wikia Plus түбәндәгеләр өчен иң уңай нәрсә:<ul>
-<li>Профессиональ викилар </li>
-<li>Табышсыз оешмалар</li>
-<li>Гаиләләр</li>
-<li>Мәктәпләр</li>
-<li>Шәхси проектлар</li>
-</ul>
-Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
-	'cnw-upgrade-now' => 'Хәзер яңартырга',
-	'cnw-upgrade-decline' => 'Юк, кирәкми, рәхмәт; вики ясауны дәвам итәргә',
 	'cnw-welcome-headline' => 'Котлыйбыз! $1 ачылды!',
 	'cnw-welcome-instruction1' => 'Викигә мәкаләләр өстәр өчен, астагы төймәгә басыгыз',
 	'cnw-welcome-instruction2' => 'Сез бу төймәне һәрвакыт күрәчәксез һәм яңа мәкалә өстәргә теләгәндә куллана аласыз',
@@ -2788,10 +2466,6 @@ $messages['uk'] = array(
 	'cnw-theme-headline' => 'Обрати тему',
 	'cnw-theme-creative' => 'Виберіть тему нижче, ви можете переглянути кожну тему до того, як зробити остаточний вибір',
 	'cnw-theme-instruction' => 'Ви також можете створювати свої власні теми пізніше, перейшовши в "Мої інструменти".',
-	'cnw-upgrade-headline' => 'Хочете оновити?',
-	'cnw-upgrade-marketing' => 'Wikia Plus це рішення для крутеликів! Викиньте якихось там  $4.95 в місяць через PayPal і ви в шоколаді!',
-	'cnw-upgrade-now' => 'Оновити зараз',
-	'cnw-upgrade-decline' => 'Дякую, але я продовжу створювати власну вікі',
 	'cnw-welcome-headline' => 'Вітаємо! $1 створена',
 	'cnw-welcome-instruction1' => 'Натисніть на кнопку нижче, щоб почати додавати сторінки на вікі.',
 	'cnw-welcome-instruction2' => 'Ви будете бачити цю кнопку завжди і можете використовувати її в будь-який час, коли захочете додати нову сторінку.',
@@ -2870,18 +2544,6 @@ $messages['vi'] = array(
 	'cnw-theme-headline' => 'Chọn một chủ đề',
 	'cnw-theme-creative' => 'Chọn một chủ đề dưới đây, bạn sẽ có thể xem thử từng chủ đề như bạn đã chọn nó.',
 	'cnw-theme-instruction' => 'Bạn cũng có thể thiết kế chủ đề sau này bằng cách vào "Công cụ của tôi".',
-	'cnw-upgrade-headline' => 'Bạn có muốn nâng cấp?',
-	'cnw-upgrade-creative' => 'Nâng cấp lên Wikia Cộng cho phép bạn để loại bỏ quảng cáo từ <span class="wiki-name"></span> , một thời gian cung cấp chỉ dành cho những sáng lập viên mới.',
-	'cnw-upgrade-marketing' => 'Wikia Cộng là một giải pháp tuyệt vời cho:<ul>
-<li>Wiki chuyên nghiệp</li>
-<li>Phi lợi nhuận</li>
-<li>Gia đình</li>
-<li>Trường học</li>
-<li>Dự án cá nhân</li>
-</ul>
-Nâng cấp thông qua PayPal để có được một quảng cáo wiki miễn phí với chỉ $4,95 cho một tháng!',
-	'cnw-upgrade-now' => 'Nâng cấp ngay',
-	'cnw-upgrade-decline' => 'Không, cảm ơn, tiếp tục wiki của tôi',
 	'cnw-welcome-headline' => 'Chúc mừng! $1 đã được tạo ra',
 	'cnw-welcome-instruction1' => 'Nhấn vào nút dưới đây để bắt đầu thêm các trang cho wiki của bạn.',
 	'cnw-welcome-instruction2' => 'Bạn sẽ thấy nút này trong suốt wiki của bạn, sử dụng nó bất cứ lúc nào bạn muốn thêm một trang mới.',
@@ -2943,18 +2605,6 @@ $messages['zh'] = array(
 	'cnw-theme-headline' => 'Choose a theme',
 	'cnw-theme-creative' => "Choose a theme below, you'll be able to see a preview of each theme as you select it.",
 	'cnw-theme-instruction' => 'You can also design your own theme later by going to "My Tools".',
-	'cnw-upgrade-headline' => 'Do you want to upgrade?',
-	'cnw-upgrade-creative' => 'Upgrading to Wikia Plus allows you to remove ads from <span class="wiki-name"></span>, a one time offer only available to new founders.',
-	'cnw-upgrade-marketing' => 'Wikia Plus is a great solution for:<ul>
-<li>Professional Wikis</li>
-<li>Non-profits</li>
-<li>Families</li>
-<li>Schools</li>
-<li>Personal projects</li>
-</ul>
-Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
-	'cnw-upgrade-now' => 'Upgrade Now',
-	'cnw-upgrade-decline' => 'No thanks, continue to my wiki',
 	'cnw-welcome-headline' => 'Congratulations! $1 has been created',
 	'cnw-welcome-instruction1' => 'Click the button below to start adding pages to your wiki.',
 	'cnw-welcome-instruction2' => "You'll see this button throughout your wiki, use it any time you want to add a new page.",
@@ -3001,9 +2651,6 @@ $messages['zh-hans'] = array(
 	'cnw-desc-wiki-submit-error' => '请选一个分类',
 	'cnw-theme-headline' => '选择一个主题',
 	'cnw-theme-instruction' => '您也可以在“我的工具”里设计自己的主题。',
-	'cnw-upgrade-headline' => '您是否希望升级？',
-	'cnw-upgrade-now' => '立即升级',
-	'cnw-upgrade-decline' => '不了谢谢，请继续到我的维基',
 	'cnw-welcome-headline' => '恭喜！$1 已创建',
 	'cnw-error-blocked-header' => '帐户被封禁',
 	'cnw-error-bot-header' => '您已被识别为机器人',
@@ -3061,10 +2708,6 @@ $messages['zh-hant'] = array(
 	'cnw-theme-headline' => '選擇一個主題',
 	'cnw-theme-creative' => '選擇下面其中一個樣式，選擇之後您可以看到每個樣式的預覽。',
 	'cnw-theme-instruction' => '您還可以稍後通過"我的工具"設計您自己的樣式。',
-	'cnw-upgrade-headline' => '是否要升級？',
-	'cnw-upgrade-creative' => '升級到 Wikia Plus 允許您從<span class="wiki-name"></span>，刪除廣告，該功能僅提供於新的創始人，且只能使用一次。',
-	'cnw-upgrade-now' => '立即升級',
-	'cnw-upgrade-decline' => '不，謝謝，繼續我的 wiki',
 	'cnw-welcome-headline' => '恭喜 ！ $1 已創建',
 	'cnw-welcome-instruction1' => '按一下下面的按鈕以開始將頁面添加到你的 wiki。',
 	'cnw-welcome-instruction2' => '你會在你的 wiki 各頁面看到此按鈕，任何時候可使用它來新加頁面。',

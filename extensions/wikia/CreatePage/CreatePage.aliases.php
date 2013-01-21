@@ -10,11 +10,11 @@ $specialPageAliases['en'] = array(
  * German
  */
 $specialPageAliases['de'] = array(
-    'CreatePage' => array( 'SiteErstellen', 'CreatePage' ),
+    'CreatePage' => array( 'Seite_erstellen', 'Seiteerstellen', 'Seite_Erstellen', 'SiteErstellen', 'CreatePage' ),
 );
 /**
  * Polish
  */
 $specialPageAliases['pl'] = array(
-	'CreatePage' => array( 'Utwórz stronę', 'CreatePage' ),
+	'CreatePage' => array( 'Utwórz_stronę', 'CreatePage' ),
 );

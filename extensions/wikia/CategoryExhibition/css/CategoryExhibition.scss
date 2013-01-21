@@ -291,22 +291,18 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		display: block;
 	}
 
-	img {
+	a > img {
 		@include box-shadow(0, 0, 5px, mix($color-page, #000, 60%));
 		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
 		background-color: $color-page;
 		margin-left: auto;
 		margin-right: auto;
 	}
-	.category-gallery-item-play {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		background: transparent url(/extensions/wikia/MyHome/images/play.png) no-repeat 50% 50%; /* $wgCdnStylePath */
-		z-index: 100;
-		top: $thumb-border-top - 30px ;
+	
+	.Wikia-video-play-button {
+		margin: 5px;
 	}
-
+	
 	.title {
 		position: relative;
 		text-align: left;

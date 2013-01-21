@@ -54,6 +54,7 @@ include($dir . '/notification/WallNotifications.setup.php');
 
 $app->registerExtensionMessageFile('Wall', $dir . '/Wall.i18n.php');
 
+$app->registerHook('AccountNavigationModuleAfterDropdownItems', 'WallHooksHelper', 'onAccountNavigationModuleAfterDropdownItems');
 $app->registerHook('ArticleViewHeader', 'WallHooksHelper', 'onArticleViewHeader');
 $app->registerHook('SkinTemplateTabs', 'WallHooksHelper', 'onSkinTemplateTabs');
 $app->registerHook('AlternateEdit', 'WallHooksHelper', 'onAlternateEdit');

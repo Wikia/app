@@ -11,13 +11,13 @@
  */
 
 // include chef generated variables: $wgWikiaDatacenter
-// require_once('/usr/wikia/devbox/DevBoxVariables.php');
+require_once('/usr/wikia/devbox/DevBoxVariables.php');
 
 switch($wgWikiaDatacenter) {
 	case 'poz':
 		$wgDBdevboxServer1 = 'dev-db-a1-p1';
 		$wgDBdevboxServer2 = 'dev-db-a1-p1';
-		$wgDBdevboxCentral = 'dev-db-a1-p1'; // FIXME: is this correct?
+		$wgDBdevboxCentral = 'dev-db-central-p1';
 		break;
 	case 'sjc':
 	default:

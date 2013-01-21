@@ -123,7 +123,8 @@ class BodyController extends WikiaController {
 			$wgEnableCorporatePageExt,
 			$wgEnableWikiAnswers,
 			$wgSalesTitles, $wgEnableHuluVideoPanel,
-			$wgEnableGamingCalendarExt, $wgEnableWallEngine, $wgRequest;
+			$wgEnableGamingCalendarExt, $wgEnableWallEngine, $wgRequest,
+			$wgEnableForumExt, $wgIsForum;
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
@@ -135,7 +136,7 @@ class BodyController extends WikiaController {
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		// Forum Extension
-		if (WikiaPageType::isForum()) {
+		if ($wgEnableForumExt && $wgIsForum) {
 			$railModuleList = array (
 				1500 => array('Search', 'Index', null),
 				1002 => array('Forum', 'forumRelatedThreads', null),
