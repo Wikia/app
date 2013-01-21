@@ -203,10 +203,6 @@ class RelatedVideosController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	public function getAddVideoModal(){
-		$this->forward( 'VideosController', 'getAddVideoModal' );
-	}
-
 	public function addVideo() {
 		global $wgRelatedVideosOnRail;
 

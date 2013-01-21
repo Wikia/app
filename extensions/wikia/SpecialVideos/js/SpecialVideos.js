@@ -11,12 +11,31 @@ var SpecialVideos = {
 				}
 			}
 		});
-		
+
 		$('.addVideo').addVideoButton({
 			callbackAfterSelect: function(url) {
-				AddVideo.addVideoCallbackFunction(url, 'VideosController', function() {
-					window.location.search = "?sort=recent"; 
-				});
+				$.nirvana.postJson(
+					// controller
+					'VideosController',
+					// method
+					'addVideo',
+					// data
+					{ url: url },
+					// success callback
+					function( formRes ) {
+						GlobalNotification.hide();
+						if ( formRes.error ) {
+							GlobalNotification.show( formRes.error, 'error' );
+						} else {
+							VET_loader.modal.closeModal();
+							window.location.search = "?sort=recent";
+						}
+					},
+					// error callback
+					function() {
+						GlobalNotification.show( $('.errorWhileLoading').html(), 'error' );
+					}
+				);
 			}
 		});
 	}

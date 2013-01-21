@@ -2,23 +2,8 @@
 
 class VideosController extends WikiaController {
 
-	public function getAddVideoModal() {
-		$pgTitle = $this->request->getVal( 'title', '' );
-
-		$html = $this->app->renderView( 'Videos', 'addVideoModalText', array('pageTitle'=>$pgTitle) );
-
-		$this->setVal( 'pageTitle', $pgTitle );
-		$this->setVal( 'html', $html );
-		$this->setVal( 'title',	$this->wf->Msg('videos-add-video-to-this-wiki') );
-	}
-
-	public function addVideoModalText() {
-		$this->setVal( 'pageTitle', $this->request->getVal('pageTitle', '') );
-	}
-
 	/**
 	 * add video
-	 * @requestParam integer articleId
 	 * @requestParam string url
 	 * @responseParam string html
 	 * @responseParam string error - error message
@@ -43,11 +28,7 @@ class VideosController extends WikiaController {
 		$videoService = F::build( 'VideoService' );
 		$retval = $videoService->addVideo( $url );
 
-		if ( is_array($retval) ) {
-			$this->html = '<div></div>';
-			$this->error = null;
-		} else {
-			$this->html = null;
+		if ( !is_array($retval) ) {
 			$this->error = $retval;
 		}
 	}
