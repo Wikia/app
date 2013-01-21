@@ -1,6 +1,6 @@
 // TODO: move WikiaTracker outside
 
-var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, adLogicDartSubdomain) {
+var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, adLogicDartSubdomain, abTest) {
 	'use strict';
 
 	var logGroup = 'AdProviderAdDriver2',
@@ -122,20 +122,23 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 			, hopTimer, hopTime
 		;
 
-		if (!isHighValueCountry) {
-			error();
-			return;
-		}
-
-		// Always have an ad for MODAL_INTERSTITIAL
-		if (!slotname.match(/^MODAL_INTERSTITIAL/)) {
-			// Otherwise check if there was ad last time
-			// If not, check if desired number of DART calls were made
-			if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
-				log('There was no ad for this slot last time and reached max number of calls to DART', 5, logGroup);
-				log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 6, logGroup);
+		// Always have an ad when user is in the LEADERBOARD_TESTS experiment
+		if (!(abTest && abTest.getGroup('LEADERBOARD_TESTS') && slotname.match(/.*TOP_LEADERBOARD/))) {
+			if (!isHighValueCountry) {
 				error();
 				return;
+			}
+
+			// Always have an ad for MODAL_INTERSTITIAL
+			if (!slotname.match(/^MODAL_INTERSTITIAL/)) {
+				// Otherwise check if there was ad last time
+				// If not, check if desired number of DART calls were made
+				if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
+					log('There was no ad for this slot last time and reached max number of calls to DART', 5, logGroup);
+					log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 6, logGroup);
+					error();
+					return;
+				}
 			}
 		}
 
