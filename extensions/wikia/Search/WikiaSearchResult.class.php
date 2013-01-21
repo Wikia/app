@@ -205,12 +205,10 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 	public function getVideoViews() {
 		$videoViews = '';
 		$title = $this->getTitleObject();
-		if ( $this['ns'] == NS_FILE && $title instanceof Title ) {
-			$file = F::app()->wf->FindFile( $title );
-			if ( WikiaFileHelper::isFileTypeVideo($file) ) {
-				$videoViews = MediaQueryService::getTotalVideoViewsByTitle( $title->getDBKey() );
-				$videoViews = F::app()->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), F::app()->wg->Lang->formatNum($videoViews) );
-			}
+		
+		if ( F::build( 'WikiaFileHelper' )->isFileTypeVideo( $title ) ) {
+			$videoViews = F::build( 'MediaQueryService' )->getTotalVideoViewsByTitle( $title->getDBKey() );
+			$videoViews = F::app()->wf->MsgExt( 'videohandler-video-views', array( 'parsemag' ), F::app()->wg->Lang->formatNum($videoViews) );
 		}
 
 		return $videoViews;
