@@ -127,16 +127,6 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 			return;
 		}
 
-		if (window.wgUserName && !window.wgUserShowAds) {
-			dcopt = false;
-		}
-
-		// Random ord for MODAL_INTERSTITIAL
-		// This disables synchronisation of Lightbox ads, but allows ads to repeat
-		if (slotname.match(/^MODAL_INTERSTITIAL/)) {
-			ord = Math.floor(Math.random() * 100000000000);
-		}
-
 		// Always have an ad for MODAL_INTERSTITIAL
 		if (!slotname.match(/^MODAL_INTERSTITIAL/)) {
 			// Otherwise check if there was ad last time
@@ -147,6 +137,17 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 				error();
 				return;
 			}
+		}
+
+		// Don't show skin ads for logged in users
+		if (window.wgUserName && !window.wgUserShowAds) {
+			dcopt = false;
+		}
+
+		// Random ord for MODAL_INTERSTITIAL
+		// This disables synchronisation of Lightbox ads, but allows ads to repeat
+		if (slotname.match(/^MODAL_INTERSTITIAL/)) {
+			ord = Math.floor(Math.random() * 100000000000);
 		}
 
 		WikiaTracker.track({
