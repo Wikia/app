@@ -413,7 +413,7 @@ class ArticleCommentList {
 		$this->preloadFirstRevId( $comments );
 		$pagination = $this->doPagination($countComments, count($comments), $page);
 
-		$retVal = array(
+		return array(
 			'avatar' => AvatarService::renderAvatar($wgUser->getName(), 50),
 			'userurl' => AvatarService::getUrl($wgUser->getName()),
 			'canEdit' => $canEdit,
@@ -432,8 +432,6 @@ class ArticleCommentList {
 			'stylePath' => $wgStylePath,
 			'title' => $this->mTitle
 		);
-
-		return $retVal;
 	} // end getData();
 
 	/**
