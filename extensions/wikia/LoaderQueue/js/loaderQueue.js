@@ -1,3 +1,13 @@
+/**
+ // Example:
+wgLoaderQueue.push({
+	deps: ['wikia.log', 'wikia.aim'],
+	callback: function(log, aim) {
+		console.log('loaded')
+	}
+});
+ */
+
 require(['lazyqueue', 'mw'], function(lazyQueue, mw) {
 	function callback(item) {
 		if (!item || !item.deps || !item.callback) {

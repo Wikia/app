@@ -541,7 +541,7 @@ var Mustache = (typeof module !== "undefined" && module.exports) || {};
 	context.Mustache = Mustache;
 
 	if (context.define && context.define.amd) {
-		context.define('mustache', Mustache);
+		context.define('wikia.mustache', Mustache);
 	}
 }(window));
 // Wikia change - end

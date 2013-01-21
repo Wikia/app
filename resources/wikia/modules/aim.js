@@ -77,7 +77,7 @@
 	}
 
 	if (context.define && context.define.amd) {
-		context.define('aim', ['jquery'], aim);
+		context.define('wikia.aim', ['jquery'], aim);
 	}
 
 	if (context.jQuery) {

@@ -3,15 +3,6 @@
 /**
  * Implements queue that will wait for AMD modules being available
  *
- * Example:
- *
- * wgLoaderQueue.push({
- *  deps: ['jquery', 'wikia.log'], // names of AMD modules that will be passed to the callback
- *  callback: function($, log) {
- *
- *  }
- * });
- *
  * @author Macbre
  */
 
