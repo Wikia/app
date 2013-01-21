@@ -12,7 +12,6 @@
 			<? } else { ?>
 			<span class="category-gallery-item-image">
 				<a href="<?=$row['url'] ?>" data-ref="<?=$row['data-ref']; ?>" class="<?=$row['class']; ?>" title="<?=htmlspecialchars($row['title']); ?>">
-					<? if( $row['class'] != 'lightbox' ): ?><div class="category-gallery-item-play"></div><? endif ?>
 					<? if( $row['useVideoOverlay'] == true ) {
 						echo WikiaFileHelper::videoPlayButtonOverlay( $row['dimensions']['w'], $row['dimensions']['h'] );
 					} ?>
