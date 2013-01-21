@@ -23,10 +23,15 @@
 		var mode = 'create';
 		var embedPresets = {};
 		var exists = false;
-		var element = event.data.element || false;
 		var startPoint = 1;
 		
-		if (event && event.type === 'rte') {
+		var element = false;
+		if (event && event.data && event.data.element) {
+			element = event.data.element;
+		}
+		
+		var triggeredFromRTE = event && event.type === 'rte';
+		if (triggeredFromRTE) {
 			// get video from event data
 			if (element) {
 				// edit a video
@@ -48,7 +53,16 @@
 		if(mode === 'create') {
 			callback = function(embedData) {
 				var wikitag = $('#VideoEmbedTag').val();
-				if (element && element.hasClass('media-placeholder')) {
+				if(!triggeredFromRTE) {
+					// I don't know what this is for - hyun
+					if (typeof RTE !== 'undefined') {
+						RTE.getInstanceEditor().getEditbox().focus();
+					} // end of I don't know
+					var editorTextArea = WikiaEditor.getInstance().getEditbox()[0];
+					editorTextArea.focus();
+					insertTags( wikitag, '', '', editorTextArea);
+				}
+				else if (element && element.hasClass('media-placeholder')) {
 					// replace "Add Video" placeholder
 					RTE.mediaEditor.update(element, wikitag, embedData);
 				}

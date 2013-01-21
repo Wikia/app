@@ -56,11 +56,6 @@ CKEDITOR.plugins.add('rte-media',
 					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
 						RTE.tools.callFunction(window.VET_load_in_editor);
 					});
-					/*
-					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-						RTE.tools.callFunction(window.VET_show);
-					});
-					*/
 				}
 			});
 
@@ -315,11 +310,6 @@ CKEDITOR.plugins.add('rte-media',
 				WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
 					RTE.tools.callFunction(window.VET_load_in_editor, $(self));
 				});
-				/*
-				WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-					RTE.tools.callFunction(window.VET_show, $(self));
-				});
-				*/
 			}
 		});
 	},
@@ -379,7 +369,6 @@ CKEDITOR.plugins.add('rte-media',
 		videos.bind('click.placeholder edit.placeholder', function(ev) {
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			var self = this;
-			console.log('hi 1');
 			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
 				RTE.tools.callFunction(window.VET_show,$(self), {isPlaceholder: true});
 			});

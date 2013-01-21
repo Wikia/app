@@ -33,11 +33,6 @@
 	var VET_callbackAfterEmbed = false;
 	var VET_isOnSpecialPageNoEditor = false;
 	
-	// Returns the DOM element for the RTE textarea
-	function VET_getTextarea() {
-		return WikiaEditor.getInstance().getEditbox()[0];
-	}
-	
 	// macbre: show edit video screen (wysiwyg edit)
 	function VET_editVideo() {
 		$('#VideoEmbedMain').css('display', 'none');
@@ -480,13 +475,6 @@
 		
 						if ( !$( '#VideoEmbedCreate'  ).length && !$( '#VideoEmbedReplace' ).length ) {
 							//if(VET_refid == null) {
-								/* impossible code because RTE cannot exist with VET_refid being null
-								if (typeof RTE !== 'undefined') {
-									RTE.getInstanceEditor().getEditbox().focus();
-								}
-								VET_getTextarea().focus();
-								insertTags( $('#VideoEmbedTag').val(), '', '', VET_getTextarea());
-								*/
 								
 								/* move into media-placeholder callback 
 								} else if( VET_placeholder == -2 ) {
