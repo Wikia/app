@@ -47,9 +47,9 @@ foreach ( $classes as $class_name => $class_path ) {
  */
 /* UserBlock */
 $app->registerHook( 'GetBlockedStatus', 'UserBlock', 'blockCheck' );
-$app->registerHook( 'UserCanSendEmail', 'UserBlock', 'onUserCanSendEmail' ); #RT#93196
-$app->registerHook( 'AbortNewAccount', 'UserBlock', 'onAbortNewAccount' ); #FB#5311
-$app->registerHook( 'cxValidateUserName', 'UserBlock', 'onValidateUserName' );
+$app->registerHook( 'UserCanSendEmail', 'UserBlock', 'userCanSendEmail' ); #RT#93196
+$app->registerHook( 'AbortNewAccount', 'UserBlock', 'abortNewAccount' ); #FB#5311
+$app->registerHook( 'cxValidateUserName', 'UserBlock', 'validateUserName' );
 /* UserCookieBlock */
 $app->registerHook( 'GetBlockedStatus', 'UserCookieBlock', 'blockCheck' );
 /* ContentBlock */

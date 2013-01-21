@@ -2,6 +2,9 @@
 
 class PhalanxService extends Service {
 
+	const RES_OK = 'ok';
+	const RES_FAILURE = 'failure';
+
 	/**
 	 * check service status
 	 */
@@ -17,7 +20,7 @@ class PhalanxService extends Service {
 	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
 	 */
 	public function check( $type, $content, $lang = "en" ) {
-		$this->sendToPhalanxDaemon( "check", array( "type" => $test, "content" => $content, "lang" => $lang ) );
+		return $this->sendToPhalanxDaemon( "check", array( "type" => $type, "content" => $content, "lang" => $lang ) );
 	}
 
 	/**
@@ -28,7 +31,7 @@ class PhalanxService extends Service {
 	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
 	 */
 	public function match( $type, $content, $lang = "en" ) {
-		$this->sendToPhalanxDaemon( "match", array( "type" => $test, "content" => $content, "lang" => $lang ) );
+		return $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
 	}
 
 	/**
@@ -66,7 +69,15 @@ class PhalanxService extends Service {
 		else {
 			$response = Http::post( $url, 'default', array( "noProxy" => true ) );
 		}
+		
+		if ( $response !== false && stripos( $response, self::RES_OK  ) !== false ) {
+			$ret = true;
+		} else {
+			$ret = false;
+		}
+		
 		wfProfileOut( __METHOD__  );
+				
+		return $ret; 
 	}
-
 };
