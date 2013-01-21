@@ -539,21 +539,6 @@ $color-related-videos-background: darken($color-page, 20%);
 		.seeMorePlaceholder {
 			display: none;
 		}
-	}
-	
-	// temporary video survey code bugid-68723
-	.video-survey {
-		a {
-			border-top: 1px solid $color-page-border;
-			display: block;
-			margin-top: 15px;
-			padding: 15px 0 0;
-			text-align: center;
-		}
-		span {
-			display: none;
-		}
-	}
-
+	}	
 }
 
