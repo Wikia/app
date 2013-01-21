@@ -13,17 +13,17 @@ return array(
 	),
 
 	// AMD modules
-	'wikia.amd.aim' => array(
+	'wikia.aim' => array(
 		'scripts' => 'resources/wikia/modules/aim.js',
 		'dependencies' => 'amd',
 	),
 
-	'wikia.amd.uniqueId' => array(
+	'wikia.uniqueId' => array(
 		'scripts' => 'resources/wikia/modules/uniqueId.js',
 		'dependencies' => 'amd',
 	),
 
-	'wikia.amd.modernizr' => array(
+	'wikia.modernizr' => array(
 		'scripts' => 'resources/wikia/modules/modernizr.js',
 		'dependencies' => array(
 			'amd',
@@ -31,7 +31,7 @@ return array(
 		)
 	),
 
-	'wikia.amd.mustache' => array(
+	'wikia.mustache' => array(
 		'scripts' => 'resources/wikia/libraries/mustache/mustache.js',
 		'dependencies' => 'amd'
 	),

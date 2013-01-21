@@ -78,7 +78,7 @@
 				yui: 'wikia.yui',
 				mustache: 'jquery.mustache',
 				jqueryAutocomplete: 'jquery.autocomplete',
-				jqueryAIM: 'wikia.amd.aim',
+				jqueryAIM: 'wikia.aim',
 				twitter: {
 					file: '//platform.twitter.com/widgets.js',
 					check: function(){ return typeof (w.twttr && w.twttr.widgets) }
