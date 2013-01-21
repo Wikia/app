@@ -17,10 +17,8 @@ describe("Media Gallery module", function () {
 	// ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 'track']
 	mg = define.getModule(mediaMock, modalMock);
 
-	async.it('should be defined', function(done){
+	it('should be defined', function(done){
 		document.body.innerHTML = '<div id="wkPage"><section id="mw-content-text"></section></div>';
-
-		require(['mediagallery'], function(mg){
 
 		expect(typeof mg.init).toBe('function');
 		expect(typeof mg.open).toBe('function');

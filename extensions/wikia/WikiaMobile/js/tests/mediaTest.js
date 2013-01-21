@@ -61,6 +61,5 @@ describe("Media module", function () {
 		expect(document.getElementById('wkMdlWrp').className).toBe(' imgMdl');
 		expect(document.getElementById('wkMdlTlBar').childElementCount).toBe(2);
 	});
-<<<<<<< HEAD
 **/
 });
