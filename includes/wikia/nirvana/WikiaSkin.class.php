@@ -212,10 +212,10 @@ abstract class WikiaSkin extends SkinTemplate {
 	public function buildNavUrls() {
 		return parent::buildNavUrls();
 	}
-	
+
 	public function subPageSubtitle() {
 		// bugid: 51048 -- don't show subpage link for blog content
-		if ( $this->wg->Title->getNamespace() > 599 || $this->wg->Title->getNamespace() < 500 ) { 
+		if ( $this->wg->Title->getNamespace() > 599 || $this->wg->Title->getNamespace() < 500 ) {
 			return parent::subPageSubtitle();
 		}
 		return '';
@@ -244,5 +244,8 @@ abstract class WikiaSkin extends SkinTemplate {
 	public function initPage( OutputPage $out ) {
 		$out->topScripts = $this->getTopScripts();
 		parent::initPage($out);
+
+		// because of dependency resolving this module needs to be loaded via JavaScript
+		$out->addModules( 'amd.shared' );
 	}
 }

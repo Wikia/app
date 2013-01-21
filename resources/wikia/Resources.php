@@ -7,12 +7,88 @@
 return array(
 	// AMD library
 	'amd' => array(
-		// modil.js is loaded using at the top of the page (using AssetsManager)
+		// modil.js is loaded at the top of the page (using AssetsManager)
 		// this file will make ResourceLoader think that amd module is loaded - via mw.loader.setState
 		'scripts' => 'resources/wikia/libraries/modil/modil.setState.js',
 	),
 
-	// AMD modules
+	// shared AMD modules loaded on each page
+	'amd.shared' => array(
+		'dependencies' => array(
+			'wikia.window',
+			'wikia.ajax',
+			'wikia.nirvana',
+			'wikia.mw',
+			'wikia.loader',
+			'wikia.querystring',
+			'wikia.cookies',
+			'wikia.log',
+			'wikia.thumbnailer',
+			'wikia.geo',
+		)
+	),
+
+	// core AMD modules (see amd.shared module)
+	'wikia.window' => array(
+		'scripts' => 'resources/wikia/modules/window.js',
+		'dependencies' => 'amd',
+	),
+	'wikia.ajax' => array(
+		'scripts' => 'resources/wikia/modules/ajax.js',
+		'dependencies' => 'amd',
+	),
+	'wikia.nirvana' => array(
+		'scripts' => 'resources/wikia/modules/nirvana.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.ajax'
+		)
+	),
+	'wikia.mw' => array(
+		'scripts' => 'resources/wikia/modules/mw.js',
+		'dependencies' => 'amd',
+	),
+	'wikia.loader' => array(
+		'scripts' => 'resources/wikia/modules/loader.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.window',
+			'wikia.mw',
+			'wikia.nirvana'
+		)
+	),
+	'wikia.querystring' => array(
+		'scripts' => 'resources/wikia/modules/querystring.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.window',
+		)
+	),
+	'wikia.cookies' => array(
+		'scripts' => 'resources/wikia/modules/cookies.js',
+		'dependencies' => 'amd'
+	),
+	'wikia.log' => array(
+		'scripts' => 'resources/wikia/modules/log.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.querystring',
+			'wikia.cookies',
+		)
+	),
+	'wikia.thumbnailer' => array(
+		'scripts' => 'resources/wikia/modules/thumbnailer.js',
+		'dependencies' => 'amd',
+	),
+	'wikia.geo' => array(
+		'scripts' => 'resources/wikia/modules/geo.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.cookies'
+		)
+	),
+
+	// AMD modules loaded on demand
 	'wikia.aim' => array(
 		'scripts' => 'resources/wikia/modules/aim.js',
 		'dependencies' => 'amd',
@@ -59,7 +135,7 @@ return array(
 	// libraries and jQuery plugins
 	'jquery.mustache' => array(
 		'scripts' => 'resources/wikia/libraries/mustache/jquery.mustache.js',
-		'dependencies' => 'wikia.amd.mustache'
+		'dependencies' => 'wikia.mustache'
 	),
 
 	'jquery.autocomplete' => array(

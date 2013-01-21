@@ -205,20 +205,7 @@ $config['oasis_wikia_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// classes
-		'//resources/wikia/libraries/my.class/my.class.js',
-
-		// AMD modules
-		'//resources/wikia/modules/jquery.js',
-		'//resources/wikia/modules/window.js',
-		'//resources/wikia/modules/ajax.js',
-		'//resources/wikia/modules/nirvana.js',
-		'//resources/wikia/modules/mw.js',
-		'//resources/wikia/modules/loader.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/log.js',
-		'//resources/wikia/modules/thumbnailer.js',
-		'//resources/wikia/modules/geo.js',
+		'//resources/wikia/libraries/my.class/my.class.js'
 	)
 );
 
