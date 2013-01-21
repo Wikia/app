@@ -4,6 +4,6 @@
  *  * jQuery.ajax (the rest)
  */
 
-define('ajax', [require.optional('jquery'), require.optional('wikia.utils')], function($, Wikia) {
+define('wikia.ajax', [require.optional('jquery'), require.optional('wikia.utils')], function($, Wikia) {
 	return (typeof $ !== 'undefined') ? $.ajax : Wikia.ajax;
 });

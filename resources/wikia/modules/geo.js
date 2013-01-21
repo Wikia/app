@@ -68,6 +68,6 @@
 
 	if (context.define && context.define.amd) {
 		//AMD
-		context.define('geo', ['cookies'], geo);
+		context.define('wikia.geo', ['wikia.cookies'], geo);
 	}
 }(this));

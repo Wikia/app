@@ -11,7 +11,7 @@
  @test-require-asset /extensions/wikia/WikiaTracker/js/WikiaTracker.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/events.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/track.js
- @test-require-asset /extensions/wikia/WikiaMobile/js/loader.js
+ @test-require-asset /extensions/wikia/WikiaMobile/js/throbber.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/sections.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/toc.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/topbar.js

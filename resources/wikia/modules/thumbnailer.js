@@ -132,7 +132,7 @@
 	}
 
 	if (context.define && context.define.amd) {
-		context.define('thumbnailer', thumbnailer);
+		context.define('wikia.thumbnailer', thumbnailer);
 	}
 	context.Wikia = context.Wikia || {};
 	context.Wikia.Thumbnailer = thumbnailer();

@@ -1,4 +1,4 @@
-define('hello', ['nirvana'], function(nirvana) {
+define('hello', ['wikia.nirvana'], function(nirvana) {
 	function getContent(callback) {
 		nirvana.sendRequest({
 			controller: 'HelloWorld',

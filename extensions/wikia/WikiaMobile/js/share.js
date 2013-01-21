@@ -9,7 +9,7 @@
  *
  * @author Jakub Olek
  */
-define('share', ['cache', 'JSMessages', 'loader'], function (cache, msg, loader) {
+define('share', ['wikia.cache', 'JSMessages', 'wikia.loader'], function (cache, msg, loader) {
 	'use strict';
 
 	var shrData,

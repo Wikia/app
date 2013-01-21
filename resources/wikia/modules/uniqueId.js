@@ -10,7 +10,7 @@
  * example 3: uniqid('bar', true);
  * returns 3: 'bara20285b23dfd1.31879087'
  */
-define('uniqueId', function() {
+define('wikia.uniqueId', function() {
 	var uniqidSeed;
 
 	 function formatSeed(seed, reqWidth) {

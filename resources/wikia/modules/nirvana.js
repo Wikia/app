@@ -104,7 +104,7 @@
 	}
 
 	if (context.define && context.define.amd) {
-		context.define('nirvana', ['ajax'], nirvana);
+		context.define('wikia.nirvana', ['wikia.ajax'], nirvana);
 	}
 
 	if(context.jQuery) {

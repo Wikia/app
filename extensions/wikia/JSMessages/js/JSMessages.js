@@ -107,6 +107,6 @@
 
 	if (context.define && context.define.amd) {
 		//AMD
-		context.define('JSMessages', ['nirvana'], JSMessages);
+		context.define('JSMessages', ['wikia.nirvana'], JSMessages);
 	}
 })(this, this.jQuery);

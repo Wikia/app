@@ -260,7 +260,7 @@
 	}
 
 	if (context.define && context.define.amd) {
-		context.define('querystring', ['location'], querystring);
+		context.define('wikia.querystring', ['wikia.location'], querystring);
 	}
 	context.Wikia = context.Wikia || {};
 	context.Wikia.Querystring = querystring(context.location);

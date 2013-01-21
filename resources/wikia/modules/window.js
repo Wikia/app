@@ -6,15 +6,15 @@
 (function(context) {
 	'use strict';
 
-	define('window', function() {
+	define('wikia.window', function() {
 		return context;
 	});
 
-	define('localStorage', function() {
+	define('wikia.localStorage', function() {
 		return context.localStorage;
 	});
 
-	define('location', function() {
+	define('wikia.location', function() {
 		return context.location;
 	});
 

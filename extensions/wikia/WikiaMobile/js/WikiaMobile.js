@@ -1,7 +1,7 @@
 //init
 window.addEventListener('DOMContentLoaded', function () {
 	'use strict';
-	require(['querystring', require.optional('topbar'), require.optional('toc'), 'events', require.optional('share'), require.optional('popover'), require.optional('cookies'), 'track', 'lazyload', 'sections'],
+	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), 'events', require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'lazyload', 'sections'],
 		function (qs, topbar, toc, events, share, popover, cookies, track, lazyload, sections) {
 			var d = document,
 				clickEvent = events.click,

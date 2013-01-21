@@ -4,7 +4,7 @@
  * Image lazy loading
  */
 /*global define*/
-define('lazyload', ['thumbnailer', 'layout'], function (thumbnailer, layout) {
+define('lazyload', ['wikia.thumbnailer', 'layout'], function (thumbnailer, layout) {
 	'use strict';
 
 	return function(elements, background) {

@@ -449,6 +449,6 @@
 
 	if (context.define && context.define.amd) {
 		//there is no mw module in WikiaMobile
-		context.define('loader', ['window', require.optional('mw'), 'nirvana'], loader);
+		context.define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nirvana'], loader);
 	}
 })(this);
