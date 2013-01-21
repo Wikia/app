@@ -413,7 +413,7 @@ class ArticleCommentList {
 		$this->preloadFirstRevId( $comments );
 		$pagination = $this->doPagination($countComments, count($comments), $page);
 
-		$retVal = array(
+		return array(
 			'avatar' => AvatarService::renderAvatar($wgUser->getName(), 50),
 			'userurl' => AvatarService::getUrl($wgUser->getName()),
 			'canEdit' => $canEdit,
@@ -432,8 +432,6 @@ class ArticleCommentList {
 			'stylePath' => $wgStylePath,
 			'title' => $this->mTitle
 		);
-
-		return $retVal;
 	} // end getData();
 
 	/**
@@ -869,17 +867,31 @@ class ArticleCommentList {
 			if ($parts['title'] != '') {
 				$changeRecentChangesHeader = true;
 
-				$title = Title::newFromText($parts['title']);
-				$namespace = $title->getNamespace();
-				$title = Title::newFromText($title->getText(), MWNamespace::getSubject($namespace));
+				$title = Title::newFromText( $parts['title'] );
 
-				if ( ArticleComment::isBlog() ) {
-					$messageKey = 'article-comments-rc-blog-comments';
+				if ( $title instanceof Title ) {
+					$namespace = $title->getNamespace();
+
+					$text = $title->getText();
+
+					$title = Title::newFromText( $text, MWNamespace::getSubject( $namespace ) );
+
+					if ( $title instanceof Title ) {
+						if ( ArticleComment::isBlog() ) {
+							$messageKey = 'article-comments-rc-blog-comments';
+						} else {
+							$messageKey = 'article-comments-rc-comments';
+						}
+
+						$headerTitle = wfMsgExt($messageKey, array('parseinline'), $title->getPrefixedText());
+					} else {
+						Wikia::log( __METHOD__, '2', 'Title does not exist: ' . $text, true );
+					}
 				} else {
-					$messageKey = 'article-comments-rc-comments';
+					Wikia::log( __METHOD__, '1', 'Title does not exist: ' . $parts['title'], true );
 				}
 
-				$headerTitle = wfMsgExt($messageKey, array('parseinline'), $title->getPrefixedText());
+
 			}
 		}
 

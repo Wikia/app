@@ -72,6 +72,10 @@ class AdEngine2Controller extends WikiaController {
 		$cat = AdEngine::getCachedCategory();
 		$vars['cityShort'] = $cat['short'];
 
+		if (!empty($this->wg->DFPid)) {
+			$vars['wgDFPid'] = $this->wg->DFPid;
+		}
+
 		wfProfileOut(__METHOD__);
 
 		return true;
