@@ -20,7 +20,7 @@ $wgResourceModules['ext.wikia.loaderQueue'] = array(
 	'scripts' => 'js/loaderQueue.js',
 	'dependencies' => array(
 		'amd',
-		'wikia.lazyQueue',
+		//'wikia.lazyQueue',
 		'wikia.mw',
 	),
 	'localBasePath' => __DIR__,
@@ -29,4 +29,3 @@ $wgResourceModules['ext.wikia.loaderQueue'] = array(
 
 $app->registerClass('LoaderQueueHooks', __DIR__ . '/LoaderQueueHooks.class.php');
 $app->registerHook('WikiaSkinTopScripts', 'LoaderQueueHooks', 'onWikiaSkinTopScripts');
-$app->registerHook('ResourceLoaderGetStartupModules', 'LoaderQueueHooks', 'onResourceLoaderGetStartupModules');

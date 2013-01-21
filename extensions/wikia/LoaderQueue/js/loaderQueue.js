@@ -1,5 +1,4 @@
-/**
-require(['lazyQueue', 'mw'], function(lazyQueue, mw) {
+require(['lazyqueue', 'mw'], function(lazyQueue, mw) {
 	function callback(item) {
 		if (!item || !item.deps || !item.callback) {
 			throw new Error('LoaderQueue requires both deps and callback fields to be defined');
@@ -16,4 +15,3 @@ require(['lazyQueue', 'mw'], function(lazyQueue, mw) {
 		window.wgLoaderQueue.start();
 	}
 });
-**/

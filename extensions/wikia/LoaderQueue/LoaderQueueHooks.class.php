@@ -8,17 +8,7 @@ class LoaderQueueHooks extends WikiaController {
 	 */
 	public function onWikiaSkinTopScripts(Array &$vars) {
 		$vars['wgLoaderQueue'] = array();
-		return true;
-	}
-
-	/**
-	 * Add lazy queue handling in JavaScript
-	 *
-	 * @param $modules Array
-	 * @return bool
-	 */
-	public static function onResourceLoaderGetStartupModules(&$modules) {
-		$modules[] = 'ext.wikia.loaderQueue';
+		F::app()->wg->Out->addModules('ext.wikia.loaderQueue');
 		return true;
 	}
 }
