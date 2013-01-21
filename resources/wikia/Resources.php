@@ -25,7 +25,8 @@ return array(
 			'wikia.log',
 			'wikia.thumbnailer',
 			'wikia.geo',
-		)
+		),
+		'position' => 'top', // needs to be loaded before AssetsManager files
 	),
 
 	// core AMD modules (see amd.shared module)

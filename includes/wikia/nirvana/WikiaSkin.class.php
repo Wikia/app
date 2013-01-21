@@ -244,8 +244,5 @@ abstract class WikiaSkin extends SkinTemplate {
 	public function initPage( OutputPage $out ) {
 		$out->topScripts = $this->getTopScripts();
 		parent::initPage($out);
-
-		// because of dependency resolving this module needs to be loaded via JavaScript
-		$out->addModules( 'amd.shared' );
 	}
 }
