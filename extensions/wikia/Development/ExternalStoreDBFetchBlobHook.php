@@ -22,8 +22,9 @@
  */
 
 global $wgFetchBlobApiURL;
-$wgFetchBlobApiURL = "http://community.wikia.com/api.php";
+// $wgFetchBlobApiURL = "http://community.wikia.com/api.php";
 // $app->registerHook( "ExternalStoreDB::fetchBlob", "ExternalStoreDBFetchBlobHook" );
+$wgFetchBlobApiURL = "http://community.eloy.wikia-dev.com/api.php";
 $wgHooks[ "ExternalStoreDB::fetchBlob"][ ] = "ExternalStoreDBFetchBlobHook";
 
 /**
