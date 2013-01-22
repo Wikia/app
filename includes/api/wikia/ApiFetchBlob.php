@@ -89,6 +89,8 @@ class ApiFetchBlob extends ApiBase {
 					wfProfileOut( __METHOD__ );
 					$this->dieUsage( 'Text not found', 3, 404 );
 				}
+				$hash = md5( $blob );
+				$blob = unpack( "H*", $blob)[1];
 			}
 			else {
 				wfDebug( __METHOD__ . ": store $store is not defined in wgLBFactoryConf\n" );
@@ -97,7 +99,7 @@ class ApiFetchBlob extends ApiBase {
 			}
 		}
 		$result[ "blob" ] = $blob;
-		$result[ "hash" ] = md5( $blob );
+		$result[ "hash" ] = $hash;
 		$this->getResult()->addValue( null, $this->getModuleName(), $result );
 		wfProfileOut( __METHOD__ );
 	}
