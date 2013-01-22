@@ -1,5 +1,4 @@
 <?php
-
 	/**
 	* Maintenance script to get number of RelatedVideos (NS 1100) articles on the wiki with wgRelatedVideosPartialRelease = false
 	* This is one time use script
@@ -27,6 +26,47 @@
 
 		$cnt = ( $row ) ? $row->cnt : 0 ;
 		echo "\tTotal RelatedVideos articles (NS1100): $cnt\n";
+
+		return $cnt;
+	}
+
+	/**
+	 * Remove RelatedVideos articles on the wiki
+	 * @param string $dbname
+	 */
+	function removeRVArticles( $dryRun, $dbname, $wikiId ) {
+		$db = wfGetDB( DB_MASTER, array(), $dbname );
+
+		$res = $db->select(
+			array( 'page' ),
+			array( 'page_title' ),
+			array(
+				'page_namespace' => 1100
+			),
+			__METHOD__
+		);
+		
+		while ( $res && $row = $db->fetchRow( $res ) ) {
+			$title = $row['page_title'];
+
+			$prog = '/usr/wikia/slot1/code/maintenance/nukePage.php';
+			$conf = '/usr/wikia/slot1/docroot/LocalSettings.php';
+			$delete = $dryRun ? '' : '--delete';
+
+			$title = preg_match("/'/", $title) ? '"'.$title.'"' : "'".$title."'";
+
+			$cmd = "SERVER_ID=$wikiId php $prog --conf $conf --ns=1100 $delete $title";
+
+			echo "\tRunning: $cmd\n";
+			$result = wfShellExec( $cmd, $retval );
+			if ( $retval ) {
+				echo "Error code $retval: $result \n";
+			} else {
+				echo "$result \n";
+			}
+		}
+
+		$db->freeResult($res);
 	}
 
 	/**
@@ -99,6 +139,7 @@
 	// ----------------------------- Main ------------------------------------
 
 	ini_set( "include_path", dirname( __FILE__ )."/../" );
+	ini_set('display_errors', 1);
 
 	require_once( "commandLine.inc" );
 
@@ -108,6 +149,7 @@
 		--setupVideoInfo               set up video info table
 		--enableSpecialVideosExt       enable Special Video Ext
 		--copyRVtoGlobalList           copy videos from RelatedVideo articles to GlabalList
+		--removeRVPages                remove the RelatedVideo namespace pages
 		--dry-run                      dry run (for setupVideoInfo, copyRVtoGlobalList)
 		--quiet                        show summary result only (for setupVideoInfo, copyRVtoGlobalList)
 		--help                         you are reading it right now\n\n" );
@@ -119,6 +161,7 @@
 	$dryRun = ( isset($options['dry-run']) );
 	$quiet = ( isset($options['quiet']) );
 	$copyRVtoGlobalList = ( isset($options['copyRVtoGlobalList']) );
+	$removeRVPages = ( isset($options['removeRVPages']) );
 
 	if ( empty($wgCityId) ) {
 		die( "Error: Invalid wiki id." );
@@ -150,6 +193,13 @@
 			// get number of RelatedVideos articles on the wiki
 			if ( $getTotalRV ) {
 				getTotalRV( $dbname );
+			}
+
+			// Remove the RelatedVideos articles
+			if ( $removeRVPages ) {
+				if (getTotalRV( $dbname )) {
+					removeRVArticles( $dryRun, $dbname, $wikiId );
+				}
 			}
 
 			// set up video info
