@@ -10,7 +10,12 @@ class ExternalStoreDBFetchBlobHookTest extends WikiaBaseTest {
 	public function testApiCall() {
 		$result = false;
 
+		$mockApiURL = "http://community.eloy.wikia-dev.com/api.php";
+		$this->mockGlobalVariable( "wgFetchBlobApiURL", $mockApiURL);
+		$this->mockApp();
+
 		$expectedHash = "b5088eed4e6c1a2188fc32213b2715dc";
+
 		ExternalStoreDBFetchBlobHook( "archive1", "34", null, $result );
 		$resultHash = md5( $result );
 

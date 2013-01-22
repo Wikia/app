@@ -38,15 +38,13 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 	// wikia doesn't use $itemID
 	wfProfileIn( __METHOD__ );
 	$url = sprintf( "%s?action=fetchblob&store=%s&id=%d&token=%s&format=json",
-		$wgFetchBlobApiURL,
+		F::app()->wg->FetchBlobApiURL,
 		$cluster,
 		$id,
 		$wgTheSchwartzSecretToken
 	);
 
 	$response = json_decode( Http::get( $url, "default", array( 'noProxy' => true ) ) );
-
-	print_r( $response );
 
 
 	if( isset( $response->fetchblob ) ) {
