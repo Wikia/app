@@ -499,6 +499,7 @@ $messages['ca'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Treure la galeria de fotos?',
 	'rte-ck-photoGallery-tooltip' => 'Això és una galeria.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Això és un slideshow.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Això és un slider.',
 	'rte-ck-poll-add' => 'Afegir una enquesta',
 	'rte-ck-poll-poll' => 'Enquesta',
 	'rte-ck-signature-add' => 'Afegeix la teva signatura',
@@ -534,6 +535,8 @@ $messages['ca'] = array(
 	'rte-ck-videoPlaceholder-confirmDelete' => "Estàs segur que vols suprimir el marcador de posició de vídeos d'aquesta pàgina?",
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Eliminar aquest marcador de posició de vídeo?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Això és un marcador de posició de vídeo.',
+	'rte-ck-mut-add' => 'Afegir un vídeo (beta)',
+	'rte-ck-mut-mut' => 'Vídeo (beta)',
 	'rte-ck-widescreen-toggle' => 'Activar pantalla completa',
 	'rte-ck-poll-confirmDelete' => "Estàs segur que vols eliminar l'enquesta d'aquesta pàgina?",
 	'rte-ck-poll-confirmDeleteTitle' => 'Eliminar aquesta enquesta?',
@@ -814,7 +817,7 @@ $messages['diq'] = array(
 	'rte-ck-bucket-controls' => 'Qontroli',
 	'rte-ck-errorPopupTitle' => 'Xırab',
 	'rte-ck-hoverPreview-comment-title' => 'Vatış',
-	'rte-ck-hoverPreview-delete' => 'besterne',
+	'rte-ck-hoverPreview-delete' => 'bestere',
 	'rte-ck-hoverPreview-edit' => 'bıvurne',
 	'rte-ck-image-add' => 'Resim Deke',
 	'rte-ck-image-photo' => 'Fotraf',
@@ -2215,12 +2218,12 @@ $messages['nl'] = array(
 	'rte-ck-bucket-textAppearance' => 'Tekstuiterlijk',
 	'rte-ck-bucket-insert' => 'Invoegen',
 	'rte-ck-bucket-controls' => 'Besturing',
-	'rte-ck-commentEditor-title' => 'Tekstverwerker voor opmerkingen',
+	'rte-ck-commentEditor-title' => 'Tekstverwerker voor reacties',
 	'rte-ck-errorPopupTitle' => 'Fout!',
 	'rte-ck-hoverPreview-codedElement-intro' => 'Schakel naar de broncodemodus om te bewerken.',
 	'rte-ck-hoverPreview-codedElement-title' => 'Gecodeerd element',
 	'rte-ck-hoverPreview-comment-intro' => 'Dit is alleen te zien tijdens het bewerken.',
-	'rte-ck-hoverPreview-comment-title' => 'Opmerking',
+	'rte-ck-hoverPreview-comment-title' => 'Reactie',
 	'rte-ck-hoverPreview-confirmDelete' => 'Weet u zeker dat u dit van deze pagina wilt verwijderen?',
 	'rte-ck-hoverPreview-delete' => 'verwijderen',
 	'rte-ck-hoverPreview-edit' => 'bewerken',
@@ -2277,12 +2280,12 @@ $messages['nl'] = array(
 	'rte-ck-poll-add' => 'Peiling toevoegen',
 	'rte-ck-poll-poll' => 'Peiling',
 	'rte-ck-signature-add' => 'Handtekening toevoegen',
-	'rte-ck-signature-label' => 'Handtekening',
+	'rte-ck-signature-label' => 'handtekening',
 	'rte-ck-table-alignNotSet' => 'Niet ingesteld',
 	'rte-ck-table-invalidCols' => 'Het aantal kolommen moet groter zijn dan 0.',
 	'rte-ck-table-invalidRows' => 'Het aantal rijen moet groter zijn dan 0.',
 	'rte-ck-table-toolbarTooltip' => 'Tabel toevoegen',
-	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Ander sjabloon /magisch woord',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Ander sjabloon of magisch woord',
 	'rte-ck-templateDropDown-showUsedList' => 'Lijst van gebruikte sjablonen weergeven',
 	'rte-ck-templateDropDown-makeLayout' => 'Van deze pagina een vormgeving maken',
 	'rte-ck-templateDropDown-label' => 'Sjabloon',
@@ -2855,6 +2858,18 @@ $messages['ro'] = array(
 	'rte-ck-templateEditor-editor-parameters' => 'Parametri',
 	'rte-ck-unlink' => 'Elimină legătura',
 	'rte-ck-video-add' => 'Adaugă un videoclip',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'rte-ck-bucket-textAppearance' => "Aspette d'u teste",
+	'rte-ck-bucket-controls' => 'Condrolle',
+	'rte-ck-errorPopupTitle' => 'Errore!',
+	'rte-ck-hoverPreview-delete' => 'scangille',
+	'rte-ck-hoverPreview-edit' => 'cange',
+	'rte-ck-link-error-title' => 'Errore',
 );
 
 /** Russian (русский)

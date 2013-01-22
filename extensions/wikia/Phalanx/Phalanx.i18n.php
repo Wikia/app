@@ -2116,6 +2116,16 @@ $messages['pt-br'] = array(
 	'phalanx-stats-table-reason' => 'Motivo',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'phalanx-type-title' => "Titole d'a pàgene",
+	'phalanx-type-user' => 'utende',
+	'phalanx-type-user-email' => 'e-mail',
+	'phalanx-test-submit' => 'Test',
+);
+
 /** Russian (русский)
  * @author Byulent
  * @author DCamer

@@ -620,6 +620,7 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
  * @author SMP
  */
 $messages['ca'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> publicació en el bloc de <a href='$3'>$4</a>",
 	'createblogpage' => 'Crear un bloc',
 	'createbloglistingpage' => 'Crear una llista de blocs',
 	'create-blog-spam' => 'Sembla spam',
@@ -1007,7 +1008,7 @@ $messages['diq'] = array(
 	'blog-comments-label' => 'Vatışkerden',
 	'blog-voting-label' => 'Deya',
 	'blog-comments-anonymous' => 'Karbero anonim',
-	'blog-comment-delete' => 'besterne',
+	'blog-comment-delete' => 'bestere',
 	'blog-comment-hide' => 'bınımne',
 	'blog-comment-unhide' => 'menımne',
 	'blog-comment-history' => 'werenayış',
@@ -1102,6 +1103,13 @@ $messages['el'] = array(
 	'right-blog-articles-move' => 'Μετακίνηση άρθρων του blog',
 );
 
+/** Esperanto (Esperanto)
+ * @author Objectivesea
+ */
+$messages['eo'] = array(
+	'blog-comment-history' => 'historio',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
@@ -1113,6 +1121,7 @@ $messages['el'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> publicación en el blog de <a href='$3'>$4</a>",
 	'createblogpage' => 'Crear blog',
 	'createbloglistingpage' => 'Crear lista de blogs',
 	'create-blog-spam' => 'Parece spam',
@@ -3437,6 +3446,7 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> mëssagi dzor lë scartari ëd <a href='$3'>$4's</a>",
 	'createblogpage' => 'Crea Scartari',
 	'createbloglistingpage' => 'Creé na Lista djë Scartari',
 	'create-blog-spam' => "A smija a 'd rumenta",
@@ -3888,6 +3898,22 @@ $messages['ro'] = array(
 	'blog-refresh-label' => 'Reîmprospătare',
 	'blog-desc' => 'Articole pe blog',
 	'blog-comment-sending' => 'Se trimite...',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'create-blog-categories-submit' => 'Conferme',
+	'create-blog-listing-sortby-author' => 'Autore',
+	'blog-added' => 'aggiunde',
+	'blog-edited' => 'cangiate',
+	'blog-comments-anonymous' => 'Utende anonime',
+	'blog-comment-delete' => 'scangille',
+	'blog-comment-hide' => 'scunne',
+	'blog-comment-unhide' => 'fà vedè',
+	'blog-comment-history' => 'cunde',
+	'blog-comment-edit' => 'cange',
 );
 
 /** Russian (русский)
@@ -4942,6 +4968,7 @@ $messages['zh-hans'] = array(
 	'blog-comment-sending' => '正在发送...',
 	'blog-by' => '$1由$2',
 	'blogs-searchprofile' => '博客',
+	'user-blog-url-link' => '用户博客:$1',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

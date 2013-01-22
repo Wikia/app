@@ -95,7 +95,8 @@ $messages['qqq'] = array(
 	'wikiamobile-article-comments-view' => 'Message to open all replies to a comment. Parameters: $1 is the number of comments.',
 	'wikiamobile-article-comments-replies' => 'Messege in Top Bar in a modal with all replies to comment',
 	'wikiamobile-article-comments-show' => 'Label for the link that will reveal the list of comments, keep it as short as possible',
-	'enotif_body_article_comment' => 'This is an email sent to inform a user that a page they are following has a new comment posted.',
+	'enotif_body_article_comment' => '{{doc-singularthey}}
+This is an email sent to inform a user that a page they are following has a new comment posted.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -721,6 +722,8 @@ $messages['eo'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'article-comments-file-page' => "<a href='$1'>Comentario de $2</a> en <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Comentario de $2</a> en la publicación <a href='$3'>$4</a> en el blog de <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Usuario anónimo',
 	'article-comments-comments' => 'Comentarios ($1)',
 	'article-comments-post' => 'Dejar comentario',
@@ -1921,6 +1924,24 @@ ___________________________________________
 </p>',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'article-comments-anonymous' => 'Utilizaire anonim',
+	'article-comments-comments' => 'Comentaris ($1)',
+	'article-comments-post' => 'Apondre un comentari',
+	'article-comments-cancel' => 'Anullar',
+	'article-comments-delete' => 'suprimir',
+	'article-comments-edit' => 'modificar',
+	'article-comments-history' => 'istoric',
+	'article-comments-vote' => 'Interessant',
+	'article-comments-reply' => 'Respondre',
+	'article-comments-prev-page' => 'Precedent',
+	'article-comments-next-page' => 'Seguent',
+	'article-comments-page-spacer' => '&#160...&#160',
+);
+
 /** Pälzisch (Pälzisch)
  * @author Manuae
  */
@@ -2007,6 +2028,8 @@ ___________________________________________
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'article-comments-file-page' => "<a href='$1'>Coment da $2</a> ai <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Coment da $2</a> ai <a href='$3'>$4</a> spedì dzor lë scartari ëd <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Utent anònim',
 	'article-comments-comments' => 'Coment ($1)',
 	'article-comments-post' => "Coment a l'artìcol",

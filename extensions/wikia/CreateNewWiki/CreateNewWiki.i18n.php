@@ -1277,7 +1277,7 @@ $messages['ko'] = array(
 	'cnw-desc-wiki-submit-error' => '분류를 선택하세요',
 	'cnw-theme-headline' => '테마 선택',
 	'cnw-welcome-headline' => '축하합니다! $1(을)를 만들었습니다',
-	'cnw-error-general-heading' => '새 위키 만들기 오류', # Fuzzy
+	'cnw-error-general-heading' => '사과드립니다',
 	'cnw-error-wiki-limit-header' => '위키 제한에 도달함',
 	'cnw-error-blocked-header' => '계정이 차단됨',
 );
