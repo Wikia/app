@@ -74,7 +74,7 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 							$store->getTable( $dbw ),
 							array( "blob_id" => $id, "blob_text" => $ret ),
 							__METHOD__,
-							array( "IGNORE" => true )
+							array( "IGNORE" )
 						);
 					}
 				}
