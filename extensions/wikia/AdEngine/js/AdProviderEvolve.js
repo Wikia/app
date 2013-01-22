@@ -50,7 +50,7 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 		var slotname = slot[0],
 			slotsize = slot[1] || slotMap[slotname].size;
 
-		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category': 'slot2/' + slotsize.replace(/,.*$/, ''), 'ga_action': slotname, 'ga_label': 'evolve'}, 'ga');
+		WikiaTracker.track('ad', 'liftium.slot2', {'ga_category': 'slot2/' + slotsize.replace(/,.*$/, ''), 'ga_action': slotname, 'ga_label': 'evolve'});
 
 		slotTimer2[slotname] = new Date().getTime();
 		log('slotTimer2 start for ' + slotname, 7, 'AdProviderEvolve');
@@ -160,11 +160,11 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 		hoppedSlots[slotname] = true;
 
 		log('slotTimer2 end for ' + slotname + ' after ' + time + ' ms', 7, 'AdProviderEvolve');
-		WikiaTracker.trackAdEvent('liftium.hop2', {
+		WikiaTracker.track('ad', 'liftium.hop2', {
 			'ga_category': 'hop2/evolve',
 			'ga_action': 'slot ' + slotname,
 			'ga_label': formatTrackTime(time, 5)
-		}, 'ga');
+		});
 
 		window.adslots2.push([slotname, size, 'Liftium2Dom', null]);
 	};

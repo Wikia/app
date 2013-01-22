@@ -149,7 +149,7 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 			}
 		}
 
-		WikiaTracker.trackAdEvent('liftium.slot2', {ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''), ga_action: slotname, ga_label: 'addriver2'}, 'ga');
+		WikiaTracker.track('ad', 'liftium.slot2', {ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''), ga_action: slotname, ga_label: 'addriver2'});
 
 		hopTimer = new Date().getTime();
 		log('hopTimer start for ' + slotname, 7, logGroup);
@@ -181,11 +181,11 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 				// Track hop time
 				hopTime = new Date().getTime() - hopTimer;
 				log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms', 7, logGroup);
-				WikiaTracker.trackAdEvent('liftium.hop2', {
+				WikiaTracker.track('ad', 'liftium.hop2', {
 					ga_category: 'hop2/addriver2',
 					ga_action: 'slot ' + slotname,
 					ga_label: formatTrackTime(hopTime, 5)
-				}, 'ga');
+				});
 
 				error();
 			} else {
