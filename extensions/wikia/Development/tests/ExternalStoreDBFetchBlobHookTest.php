@@ -9,7 +9,11 @@ class ExternalStoreDBFetchBlobHookTest extends WikiaBaseTest {
 
 	public function testApiCall() {
 		$result = false;
+
+		$expectedHash = "b5088eed4e6c1a2188fc32213b2715dc";
 		ExternalStoreDBFetchBlobHook( "archive1", "34", null, $result );
-		print $result;
+		$resultHash = md5( $result );
+
+		$this->assertEquals( $expectedHash, $resultHash );
 	}
 }

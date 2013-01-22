@@ -34,13 +34,38 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 	global $wgTheSchwartzSecretToken;
 	// wikia doesn't use $itemID
 	wfProfileIn( __METHOD__ );
-	$url = sprintf( "http://community.wikia.com/api.php?store=%s&id=%d&token=%s&format=json",
+	$url = sprintf( "http://community.eloy.wikia-dev.com/api.php?action=fetchblob&store=%s&id=%d&token=%s&format=json",
 		$cluster,
 		$id,
 		$wgTheSchwartzSecretToken
 	);
-	$response = json_encode( Http::get( $url, "default", array( noProxy => true ) ) );
 
+	$response = json_decode( Http::get( $url, "default", array( 'noProxy' => true ) ) );
+
+	print_r( $response );
+
+
+	if( isset( $response->fetchblob ) ) {
+		$blob = isset( $response->fetchblob->blob ) ? $response->fetchblob->blob : false;
+		$hash = isset( $response->fetchblob->hash ) ? $response->fetchblob->hash : null;
+
+		if( $blob ) {
+			// pack to binary
+			$blob = pack( "H*", $blob );
+			$hash = md5( $blob );
+			// check md5 sum for binary
+			if(  $hash == $response->fetchblob->hash ) {
+				wfDebug( __METHOD__ . ": md5 sum match\n" );
+				$ret = $blob;
+			}
+			else {
+				wfDebug( __METHOD__ . ": md5 sum not match, $hash != $response->fetchblob->hash\n" );
+			}
+		}
+	}
+	else {
+		wfDebug( __METHOD__ . ": malformed response from API call\n" );
+	}
 	wfProfileOut( __METHOD__ );
 
 	return true;
