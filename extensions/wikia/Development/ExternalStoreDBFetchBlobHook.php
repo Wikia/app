@@ -69,7 +69,7 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 					if( $dbw ) {
 						$dbw->insert(
 							$store->getTable( $dbw ),
-							array( "id" => $id, "text" => $ret ),
+							array( "blob_id" => $id, "blob_text" => $ret ),
 							array( "IGNORE" => true ),
 							__METHOD__
 						);
