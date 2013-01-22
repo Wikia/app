@@ -81,7 +81,7 @@ $messages['en'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Note:''' You are recreating a page that was previously deleted. [More info]",
 	'restore-edits-notice' => "Welcome back! We've restored some changes you had not published. <a class='notice-action restoreeditlink'>Delete my changes and start a new edit</a>",
 	'restore-edits-diff-notice' => "Welcome back! We've restored some changes you had not published. However, the page has been updated since then. Would you like to: <a class='notice-action restoreeditlink'>Delete my changes and start with the latest text</a> or <a class='notice-action difflink'>View a comparison of changes with the latest page</a>",
-	'mainpagewarning-notice' => "Learn more about [[w:c:community:Help:Main_page|editing the main page.]]",
+	'mainpagewarning-notice' => "Learn more about [[w:c:community:Help:Main_page|editing the main page]].",
 	'explainconflict-notice' => "'''Warning!''' Someone else has changed this page since you started editing it! [More info]",
 
 	// "editing" preferences sections
@@ -379,6 +379,8 @@ $messages['ca'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Nota:''' Estàs recreant una pàgina que abans va ser eliminada. [Més informació]",
 	'restore-edits-notice' => "Benvingut de nou! Hem restaurat alguns canvis que no havies publicat. <a class='notice-action restoreeditlink'>Suprimeix els meus canvis i comença una nova edició</a>",
 	'restore-edits-diff-notice' => "Benvingut de nou! Hem restaurat alguns canvis que no havies publicat. No obstant això, aquesta pàgina s'ha actualitzat des d'aleshores. Vols: <a class='notice-action restoreeditlink'>Suprimir els meus canvis i començar amb l'últim text</a> o <a class='notice-action difflink'>Veure una comparació dels canvis amb l'última pàgina</a>",
+	'mainpagewarning-notice' => "Més informació sobre [[w:c:community:Help:Main_page|l'edició de la pàgina principal.]]",
+	'explainconflict-notice' => "'''Atenció!''' Algú ha canviat la pàgina des de que has començat a editar. [Més informació]",
 	'prefs-general' => 'General',
 	'prefs-starting-an-edit' => 'Comença una edició',
 	'prefs-editing-experience' => "L'experiència d'editar",
@@ -644,7 +646,7 @@ $messages['es'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Nota:''' Estás creando una página que fue borrada previamente. [Más información]",
 	'restore-edits-notice' => "¡Bienvenido! Hemos restaurado algunos cambios que no has publicado. <a class='notice-action restoreeditlink'>Borrar mis cambios y comenzar una nueva edición</a>",
 	'restore-edits-diff-notice' => "¡Bienvenido! Hemos restaurado algunos cambios que no has publicado. Sin embargo, la página se ha actualizado desde entonces. ¿Te gustaría <a class='notice-action restoreeditlink'>borrar mis cambios y comenzar con el texto más reciente</a> o <a class='notice-action difflink'>ver una comparación de los cambios con la última página</a>?",
-	'mainpagewarning-notice' => 'Más información sobre [[w:c:community:Help:Main_page|cómo editar la página principal.]]',
+	'mainpagewarning-notice' => 'Aprende más acerca de cómo [[w:c:demo-portada:Demostración_de_Portada|editar la portada]].', # Fuzzy
 	'explainconflict-notice' => "'''Aviso''' Alguien ha cambiado esta página desde que empezaste a editar. [Más info]",
 	'prefs-general' => 'General',
 	'prefs-starting-an-edit' => 'Comenzar una edición',
@@ -2578,6 +2580,7 @@ $messages['zh-hans'] = array(
 	'editpagelayout-pageControls-back' => '返回编辑器',
 	'editpagelayout-pageControls-changes' => '更改',
 	'editpagelayout-blocked-user' => '您的用户名或IP地址已被封禁',
+	'editpagelayout-edit-summary-label' => '编辑摘要',
 	'editpagelayout-subject-headline-label' => '标题：',
 	'wikia-editor-media-image' => '照片',
 	'wikia-editor-media-gallery' => '图库',
@@ -2610,9 +2613,10 @@ $messages['zh-hans'] = array(
 	'userinvalidcssjstitle-notice' => "'''警告：''' 皮肤\"\$1\"不存在。 [更多信息]",
 	'semiprotectedpagewarning-notice' => "'''注：''' 本页面已被锁定，仅注册用户可以编辑。您可能需要登录以进行编辑。[详细内容]",
 	'protectedpagewarning-notice' => "'''注：''' 本页面已被锁定，只有管理员可以编辑。本地管理员可以更改此状态。[详细内容]",
-	'titleprotectedwarning-notice' => "'''注：''' 本页面已被锁定，只有管理员可以创建。本地管理员可以更改此状态。[详细内容]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''注：''' 本页面已被锁定，只有特定用户（管理员、注册用户）可以创建。[详细内容]",
 	'recreate-moveddeleted-warn-notice' => "'''注：'''您正在重新创建一个已删除页面。[详细内容]",
 	'restore-edits-notice' => "欢迎回来！我们保存了一些您尚未发布的更改。<a class='notice-action restoreeditlink'>删除我的更改，开始新的编辑</a>",
+	'explainconflict-notice' => "'''警告!'''其他用户在您开始编辑后已对此页做出了改动！[详细信息]",
 	'prefs-general' => '简单介绍',
 	'prefs-starting-an-edit' => '开始编辑',
 	'tog-minordefault' => '默认将所有编辑标为“小编辑”',

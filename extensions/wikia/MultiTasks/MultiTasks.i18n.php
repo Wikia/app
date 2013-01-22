@@ -784,7 +784,7 @@ $messages['es'] = array(
 	'multiwikiedit_select_yourself' => 'tu',
 	'multiwikiedit_no_page' => 'Por favor especificar al menos úna página a editar O escoger un archivo conteniendo una lista de páginas',
 	'multiwikiedit_split_results' => "Su número de artículos era demasiado grande para realizarse en una simple tarea. Por lo tanto se ha divido en '''$1''' tareas, con un tamaño máximo de '''$2''' artículos por bloque.",
-	'multiwikiedit_max_display_size' => 'Actualmente la edición en varias wikis tiene un número máximo de artículos en la fase de confirmación. Tu petición se ha limitado a {{PLURAL:$1|artículo|artículos}}. Elige tus artículos y guarda la tarea. Después de eso, podrás ejecutarla otra vez para los artículos restantes.',
+	'multiwikiedit_max_display_size' => "Actualmente multiwikiedit tiene un número máximo de artículos en la fase de confirmación. Tu petición se ha limitado a '''$1''' {{PLURAL:$1|artículo|artículos}}. Elige tus artículos y guarda la tarea. Después de eso, podrás ejecutarla otra vez para los artículos restantes.",
 	'multiwikiedit_add_text' => 'Especificar texto de artículo primero',
 	'multiwikiedit_supply_wikis' => 'por favor proveer la lista de wikis seleccionados',
 	'multiwikiedit_tasks_list' => 'lista de tareas a ejecutar',
@@ -823,7 +823,7 @@ $messages['es'] = array(
 	'multidelete_file_missing' => 'Incapaz de leer el archivo dado',
 	'multidelete_select_script' => 'cuenta de script designada',
 	'multidelete_no_page' => 'Por favor especificar al menos una página a ser borrada O escoger un archivo conteniendo una lista de páginas.',
-	'multidelete_split_results' => 'Tu número de artículos era demasiado grande para realizarse en una única tarea. Por lo tanto se ha divido en {{PLURAL:$1|tarea|tareas}}, con un tamaño máximo de {{PLURAL:$2|artículo|artículos}}.',
+	'multidelete_split_results' => "Tu número de artículos era demasiado grande para realizarse en una sola tarea. Se ha divido en '''$1''' {{PLURAL:$1|tarea|tareas}}, con un tamaño máximo de '''$2''' {{PLURAL:$2|artículo|artículos}}.",
 	'multidelete_max_display_size' => "Multiwikiedit tiene un número máximo de artículos actualmente en la fase de confirmación. Su petición se ha limitado a '''$1''' artículos. Elige tus artículos y guarda la tarea. Después de eso, tenga en cuenta que tendrá que poner todo en marcha de nuevo para los artículos restantes.",
 	'multidelete_brazilian_portuguese_wikis' => 'todas las wikis de portugués brasilero',
 	'multidelete_hebrew_wikis' => 'todas las wikis en hebreo',
@@ -845,7 +845,7 @@ $messages['es'] = array(
 	'multiwikifinder' => 'Buscador de Títulos Multiwiki',
 	'multiwikifindpagenames' => 'Encontara nombres de página',
 	'multiwikienterpagename' => 'Ingresar un nombre de página:',
-	'multiwikirecords' => '{{PLURAL:$1|Se encontraó $1 wiki|Se encontraron $1 wikis}}',
+	'multiwikirecords' => '$1 {{PLURAL:$1|wiki encontrado|wikis encontrados}}',
 	'action-multiwikifinder' => 'Buscador de Títulos Multiwiki',
 );
 
@@ -911,6 +911,7 @@ $messages['fi'] = array(
  * @author IAlex
  * @author McDutchie
  * @author Peter17
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'multitasks-link-back-label' => 'ici',
@@ -994,7 +995,7 @@ $messages['fr'] = array(
 	'multidelete_file_missing' => 'Impossible de lire le fichier donné',
 	'multidelete_select_script' => 'compte script désigné',
 	'multidelete_no_page' => 'Veuillez spécifier soit au moins une page à supprimer OU choisissez un fichier contenant la liste des pages.',
-	'multidelete_split_results' => "Votre nombre d'articles est trop grand pour être effectué dans une seule tâche. Elle a été divisée, à la place, en '''$1''' {{PLURAL:$1|tâche|tâches}}, avec des parties d’au maximum '''$2''' {{PLURAL:$2|article|articles}}.",
+	'multidelete_split_results' => "Le nombre d’articles est trop important pour être effectué en une seule tâche. Elle a été par conséquent été répartie en '''$1''' {{PLURAL:$1|tâche composée|tâches composées}} d’au maximum '''$2''' {{PLURAL:$2|article|articles}}.",
 	'multidelete_max_display_size' => "La suppression multiple a actuellement un nombre maximal d'articles dans la phase de confirmation. Votre requête a été acceptée mais a été coupée à '''$1''' articles. Choisissez les articles et sauvegardez la tâche. Après cela, vous pouvez l'exécuter à nouveau pour les articles restants.",
 	'multidelete_brazilian_portuguese_wikis' => 'tous les wikis en portugais brésilien',
 	'multidelete_hebrew_wikis' => 'tous les wikis en hébreu',
@@ -1016,7 +1017,7 @@ $messages['fr'] = array(
 	'multiwikifinder' => 'Chercheur de titres multi wikis',
 	'multiwikifindpagenames' => 'Trouver des noms de pages',
 	'multiwikienterpagename' => 'Entrez un nom de page :',
-	'multiwikirecords' => '$1 {{PLURAL:$1|wiki|wikis}} trouvés',
+	'multiwikirecords' => '$1 {{PLURAL:$1|wiki trouvé|wikis trouvés}}',
 	'action-multiwikifinder' => 'rechercher un titre spécifique dans Wikia',
 );
 
@@ -2301,7 +2302,7 @@ $messages['pms'] = array(
 	'multiwikiedit_task_added' => "L'atività ëd modìfica Multi Wiki #$1 a l'é stàita giontà.",
 	'multiwikiedit_task_error' => "A l'é staje n'eror an giontand l'atività ëd modìfica multi wiki.",
 	'multiwikiedit_task_none_selected' => "It l'has pa selessionà gnun artìcoj. L'atività a l'é pa stàita giontà.",
-	'multiwikiedit_on' => 'anvisch', # Fuzzy
+	'multiwikiedit_on' => 'Fà giré lë script dzor',
 	'multiwikiedit_page' => 'Pàgine da modifiché',
 	'multiwikiedit_page_text' => 'Test da salvé',
 	'multiwikiedit_reason' => 'Rason dla modìfica',
@@ -2330,7 +2331,7 @@ $messages['pms'] = array(
 	'multiwikiedit_select_yourself' => 'ti',
 	'multiwikiedit_no_page' => "Për piasì ch'a spessìfica almanch na pàgina da modifiché O ch'a serna n'archivi contenent na lista ëd pàgine.",
 	'multiwikiedit_split_results' => "Tò conteur d'artìcoj a l'é tròp àut da fé ant na sìngola atività. Belavans a l'é stàit dividù an '''$1''' atività, con al pi na dimension ëd '''$2''' artìcoj.",
-	'multiwikiedit_max_display_size' => "Multiwikiedit a l'ha al moment un nùmer màssim d'artìcoj ant la fas ëd conferma. Soa arcesta a l'é stàita tajà a '''$1''' artìcoj. Ch'a serna ij sò artìcoj e ch'a salva l'atività. Apress sòn, a peul felo torna core për pijé tùit j'articoj restant.", # Fuzzy
+	'multiwikiedit_max_display_size' => "Multiwikiedit a l'ha al moment un nùmer màssim d'artìcoj ant la fas ëd conferma. Soa arcesta a l'é stàita tajà a '''$1''' {{PLURAL:$1|artìcol|artìcoj}}. Ch'a serna ij sò artìcoj e ch'a salva l'atività. Apress sòn, a peul felo torna core për pijé tùit j'articoj restant.",
 	'multiwikiedit_add_text' => "Spessìfica prima ël test ëd l'artìcol",
 	'multiwikiedit_supply_wikis' => 'Për piasì dà la lista dle wiki selessionà',
 	'multiwikiedit_tasks_list' => "Lista dj'atività da fé",
@@ -2369,7 +2370,7 @@ $messages['pms'] = array(
 	'multidelete_file_missing' => "L'archivi dàit as peul pa les-se",
 	'multidelete_select_script' => 'cont ëd senari andicà',
 	'multidelete_no_page' => "Për piasì specìfica almanch na pàgina da scancelé O sern n'archivi ch'a conten-a na lista ëd pàgine.",
-	'multidelete_split_results' => "To conteur d'artìcoj a l'é tròp àut për esse fàit ant na sìngola atività. Belavans a l'é stàit dividù an '''$1''' atività, con al pi na dimension ëd '''$2''' artìcoj.", # Fuzzy
+	'multidelete_split_results' => "To conteur d'artìcoj a l'é tròp àut për esse fàit ant na sìngola atività. Belavans a l'é stàit dividù an '''$1''' {{PLURAL:$1|atività}}, con al pi na dimension ëd '''$2''' {{PLURAL:$2|artìcol|artìcoj}}.",
 	'multidelete_max_display_size' => "Multidelete a l'ha al moment un nùmer màssim d'artìcoj ant la fas ëd conferma. Soa arcesta a l'é stàita tajà a '''$1''' artìcoj. ch'a serna ij sò artìcol e ch'a salva l'atività. Apress ëd lòn, a peul torna felo core për pijé tùit j'artìcoj restant.",
 	'multidelete_brazilian_portuguese_wikis' => 'tute le wiki an portughèis brasilian',
 	'multidelete_hebrew_wikis' => 'tute le wiki an ebreo',
@@ -2391,7 +2392,7 @@ $messages['pms'] = array(
 	'multiwikifinder' => 'Arserca Tìtoj Multiwiki',
 	'multiwikifindpagenames' => 'Trové nòm ëd pàgine',
 	'multiwikienterpagename' => "Ch'a anserissa un nòm ëd pàgina:",
-	'multiwikirecords' => 'trovà $1 wiki', # Fuzzy
+	'multiwikirecords' => 'trovà $1 {{PLURAL:$1|wiki}}',
 	'action-multiwikifinder' => 'serché un tìtol specìfich a travers Wikia',
 );
 
