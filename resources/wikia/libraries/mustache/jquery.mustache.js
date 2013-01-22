@@ -1,7 +1,7 @@
 /*
  * Mustache integration for jQuery
  */
-require(['jquery', 'mustache'], function($, Mustache) {
+require(['jquery', 'wikia.mustache'], function($, Mustache) {
 
 	$.mustache = function (template, view, partials) {
 		return Mustache.render(template, view, partials);

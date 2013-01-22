@@ -19,7 +19,7 @@ describe("Mustache", function () {
 		};
 
 	async.it('registers AMD module', function(done) {
-		require(['mustache'], function(mustache) {
+		require(['wikia.mustache'], function(mustache) {
 			expect(typeof mustache).toBe('object');
 			expect(typeof mustache.render).toBe('function');
 
