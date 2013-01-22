@@ -259,27 +259,4 @@ class RelatedVideosController extends WikiaController {
 			$this->setVal( 'error', null );
 		}
 	}
-
-	public function getVideoPreview() {
-
-		$sVideoTitle =  $this->request->getVal('vTitle');
-		if ( !empty( $sVideoTitle ) ) {
-
-			$oTitle = Title::newFromText( $sVideoTitle, NS_FILE );
-			$oFile = wfFindFile( $oTitle );
-
-			if ( !empty( $oFile ) ) {
-			     $embedCode = $oFile->getEmbedCode( 350, true, true);
-
-			     $this->setVal( "html", $this->app->renderView( 'RelatedVideos', 'getVideoPreviewForm', array( 'embedCode' => $embedCode, 'dbkey'=>$oTitle->getDBkey() )  ) );
-			}
-		}
-	}
-
-	public function getVideoPreviewForm() {
-
-		$this->setVal( "embedCode", $this->request->getVal( "embedCode" ) );
-		$this->setVal( "dbkey", $this->request->getVal( "dbkey" ) );
-	}
-
 }
