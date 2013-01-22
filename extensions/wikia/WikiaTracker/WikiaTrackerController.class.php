@@ -4,6 +4,7 @@
  *
  */
 class WikiaTrackerController extends WikiaController {
+	const VERSION = 1;
 
 	/**
 	 * Implementation of new WikiaSkinTopScripts hook since we want it to be
@@ -96,9 +97,9 @@ JS
 
 		// We're embedding this in every page, so minify it. Minifying takes a while, so cache it in memcache (BugzId 43421).
 		if(!empty($wgDevelEnvironment)){
-			$memcKey = wfMemcKey( 'tracker_spooling_js' ); // cachebuster changes on every pageview in dev... this will cache on devboxes anyway.
+			$memcKey = wfMemcKey( 'tracker_spooling_js', static::VERSION ); // cachebuster changes on every pageview in dev... this will cache on devboxes anyway.
 		} else {
-			$memcKey = wfMemcKey( 'tracker_spooling_js', $wgCacheBuster );
+			$memcKey = wfMemcKey( 'tracker_spooling_js', static::VERSION, $wgCacheBuster );
 		}
 		$cachedValue = $wgMemc->get( $memcKey );
 		if( !$cachedValue ){
