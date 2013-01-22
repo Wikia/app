@@ -284,6 +284,7 @@ $messages['qqq'] = array(
 	'wikistats_prev_rank' => '{{Optional}}',
 	'wikistats_prev_rank_xls' => '{{Optional}}',
 	'wikistats_days_ago' => '',
+	'wikistats_main_namespace' => 'Name of the main namespace (ns:0)',
 	'wikistats_wikilang' => '{{Identical|Language}}',
 	'wikistats_trend_ordered' => 'Typo: wiki -> wikis',
 	'wikistats_xls_cancel' => '{{Identical|Cancel}}',
