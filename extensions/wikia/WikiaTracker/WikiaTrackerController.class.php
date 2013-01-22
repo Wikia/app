@@ -85,8 +85,9 @@ JS
 		(function() {
 			var slice = [].slice;
 			window.WikiaTracker = window.WikiaTracker || {
+				spool: [],
 				track: function() {
-					wikiaTrackingSpool.push(slice.call(arguments));
+					this.spool.push(slice.call(arguments));
 				}
 			};
 		})();
@@ -106,7 +107,7 @@ JS
 			// This code doesn't look like it should change almost at all, so we give it a long duration (cachebuster also purges it because that's in the key).
 			// Warning: Memcached expirations work strangely around the one-month boundary (if the duration is too long, it interprets it as a timestamp instead of a duration).
 			$TWO_WEEKS = 60*60*24*14; // in seconds.
-			$wgMemc->set( $memcKey, $jsString, $TWO_WEEKS);
+			$wgMemc->set( $memcKey, $jsString, $TWO_WEEKS );
 		} else {
 			$jsString = $cachedValue;
 		}

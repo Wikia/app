@@ -1,13 +1,12 @@
 /*global _gaq: true */
-window.WikiaTracker = (function(){
+window.WikiaTracker = (function( window ) {
 	/** @private **/
 
 	/**
 	 * DO NOT ADD TO THIS LIST WITHOUT CONSULTATION FROM TRACKING TEAM LEADS
 	 * Keep it in alphabetical order
 	 */
-	var key,
-		actions = {
+	var actions = {
 			// Generic add
 			ADD: 'add',
 
@@ -50,39 +49,57 @@ window.WikiaTracker = (function(){
 			// View
 			VIEW: 'view'
 		},
-		actionsReverse = {},
+		actionsReverse = (function() {
+			var obj = {},
+				key;
+
+			for ( key in actions ) {
+				obj[ actions[ key ] ] = key;
+			}
+
+			return obj;
+		})(),
 		dataKeyMap = {
 			action: 'ga_action',
 			category: 'ga_category',
 			label: 'ga_label',
 			value: 'ga_value'
 		},
-		gaPushOrder = [ 'ga_category', 'ga_action', 'ga_label', 'ga_value' ],
+		gaPushOrder = [
+			'ga_category',
+			'ga_action',
+			'ga_label',
+			'ga_value'
+		],
+		// @see /extensions/wikia/AnalyticsEngine/js/analytics_prod.js
+		gaTrackAdEvent = window.gaTrackAdEvent,
+		gaTrackEvent = window.gaTrackEvent,
 		logGroup = 'WikiaTracker',
-		purgeFromData = [ 'browserEvent', 'eventName', 'trackingMethod' ],
+		purgeFromData = [
+			'browserEvent',
+			'eventName',
+			'trackingMethod'
+		],
 		rDoubleSlash = /\/\//g,
 		slice = [].slice;
 
-	for ( key in actions ) {
-		actionsReverse[ actions[ key ] ] = key;
-	}
-
 	/**
 	 * Unique entry point to track events to the internal datawarehouse and GA.
+	 * PLEASE DO NOT DUPLICATE THIS LOGIC IN OTHER FUNCTIONS.
 	 *
 	 *     WikiaTracker.track('ga', {
 	 *         category: 'myCategory',
 	 *         label: 'myLabel'
 	 *     });
 	 *
-	 * @param String trackingMethod (required)
-	 *        Where to track the event to ("both", "ga", "internal").
+	 * @param String trackingMethod (optional)
+	 *        Where to track the event to ("ad", "both", "ga", "internal").
 	 *        This can optionally be passed in the data object instead.
-	 * @param String eventName (required)
+	 * @param String eventName (optional)
 	 *        The name of the event. Defaults to "trackingevent".
 	 *        This can optionally be passed in the data object instead.
 	 *        Please speak with a tracking team lead before introducing new event names.
-	 * @param Object data (optional) ... dataN (optional)
+	 * @param Object data (required) ... dataN (optional)
 	 *        A key-value hash of parameters. If multiple hashes are passed in
 	 *        with matching keys, the values in the later hashes will override
 	 *        the previous values.
@@ -106,41 +123,39 @@ window.WikiaTracker = (function(){
 	 *            value (optional for GA tracking)
 	 *                The integer value for the event.
 	 *
+	 * NOTE: For GA tracking "eventName", "trackingMethod" and "action" must be
+	 * provided either as parameters to this method or inside of the data parameter.
+	 *
 	 * @author Kyle Florence <kflorence@wikia-inc.com>
 	 * @author Hyun Lim <hyun(at)wikia-inc.com>
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
-	function track( trackingMethod, eventName, data /* , ..., dataN */ ) {
-		var additionalData,
+	function track( trackingMethod, eventName, data /* [ , ..., dataN ] */ ) {
+		var args = slice.call( arguments ),
 			browserEvent,
 			gaqArgs = [],
+			i = 3,
 			key,
-			i,
-			l,
-			sliceAt = 3,
+			l = args.length,
 			tracking = {},
 			value;
 
 		// Args: data
 		if ( typeof trackingMethod === 'object' ) {
 			data = trackingMethod;
-			eventName = undefined;
-			trackingMethod = undefined;
-			sliceAt = 1;
+			eventName = trackingMethod = undefined;
+			i = 1;
 
 		// Args: trackingMethod, data
 		} else if ( typeof eventName === 'object' ) {
 			data = eventName;
 			eventName = undefined;
-			sliceAt = 2;
+			i = 2;
 		}
 
-		data = data || {};
-		additionalData = slice.call( arguments, sliceAt );
-
 		// Merge in additional data
-		for ( i = 0, l = additionalData.length; i < l; i++ ) {
-			extendObject( data, additionalData[ i ] );
+		for ( ; i < l; i++ ) {
+			extendObject( data, args[ i ] );
 		}
 
 		// Remap keys for data consistency
@@ -161,11 +176,12 @@ window.WikiaTracker = (function(){
 			tracking.ga = tracking.internal = true;
 		}
 
-		// Verify parameters; category and action are compulsory for "both" and "ga"
-		if ( tracking.none ||
-			( tracking.ga && ( !data.ga_category || !data.ga_action || !actionsReverse[ data.ga_action ] ) )
-		) {
+		if ( tracking.none || ( tracking.ga &&
+			// Category and action are compulsory for GA tracking
+			( !data.ga_category || !data.ga_action || !actionsReverse[ data.ga_action ] )
+		) ) {
 			Wikia.log( 'Missing or invalid parameters', 'error', logGroup );
+			Wikia.log( data, 'trace', logGroup );
 			return;
 		}
 
@@ -183,11 +199,17 @@ window.WikiaTracker = (function(){
 			gaqArgs.join( '/' ).replace( rDoubleSlash, '/' ) +
 			' [' + trackingMethod + ' track]', 'info', logGroup );
 
-		if ( tracking.ga && window.gaTrackEvent ) {
-			window.gaTrackEvent.apply( null, gaqArgs.concat( true ) );
-		}
+		// No-interactive = true
+		// @see /extensions/wikia/AnalyticsEngine/js/analytics_prod.js
+		gaqArgs.push( true );
 
-		if ( tracking.internal ) {
+		if ( tracking.ad && gaTrackAdEvent ) {
+			gaTrackAdEvent.apply( null, gaqArgs );
+
+		} else if ( tracking.ga && gaTrackEvent ) {
+			gaTrackEvent.apply( null, gaqArgs );
+
+		} else if ( tracking.internal ) {
 			internalTrack( eventName, data );
 		}
 
@@ -201,7 +223,7 @@ window.WikiaTracker = (function(){
 			// FIXME: there must be a better way to do this that avoids using setTimeout.
 			setTimeout(function() {
 				document.location = data.href;
-			}, 100);
+			}, 100 );
 		}
 	}
 
@@ -331,8 +353,9 @@ window.WikiaTracker = (function(){
 				script.onload = script.onreadystatechange = null;
 
 				//Remove the script
-				if(head && script.parentNode)
+				if(head && script.parentNode) {
 					head.removeChild(script);
+				}
 
 				//Dereference the script
 				script = undefined;
@@ -353,8 +376,9 @@ window.WikiaTracker = (function(){
 
 		if(timeout > 0){
 			setTimeout(function(){
-					if(script)
+					if(script) {
 						script.onload(true);
+					}
 				},
 				timeout
 			);
@@ -372,19 +396,21 @@ window.WikiaTracker = (function(){
 	}
 
 	//init
-	//if there were any tracking events in the spool from before this file loaded, replay them.
-	if (typeof wikiaTrackingSpool !== 'undefined') {
-		for(var x = 0, y = wikiaTrackingSpool.length; x < y; x++){
-			eventData = wikiaTrackingSpool[x];
+	(function( spool ) {
+		var data,
+			i = 0,
+			l = spool.length;
 
-			Wikia.log('Sending previously-spooled tracking event', 'trace', 'WikiaTracker');
-			Wikia.log(eventData, 'trace', 'WikiaTracker');
+		//if there were any tracking events in the spool from before this file loaded, replay them.
+		for( ; i < l; i++ ) {
+			data = spool[ i ];
 
-			trackEvent.apply(this, eventData);
+			Wikia.log( 'Sending previously-spooled tracking event', 'trace', logGroup );
+			Wikia.log( data, 'trace', logGroup );
+
+			track.apply( null, data );
 		}
-
-		wikiaTrackingSpool = null;
-	}
+	})( window.WikiaTracker.spool );
 
 	/** @public **/
 
@@ -394,34 +420,4 @@ window.WikiaTracker = (function(){
 		buildTrackingFunction: buildTrackingFunction,
 		track: track
 	};
-})();
-
-// TODO refactor back into trackEvent
-WikiaTracker.trackAdEvent = function(eventName, data, trackingMethod) {
-	var logGroup = 'WikiaTracker',
-	gaqArgs = [];
-
-	var ga_category = data['ga_category'],
-		ga_action = data['ga_action'],
-		ga_label = data['ga_label'],
-		ga_value = data['ga_value'];
-
-	//GA parameters need to be enqueued in the correct order
-	if(ga_category)
-		gaqArgs.push(ga_category);
-
-	if(ga_action)
-		gaqArgs.push(ga_action);
-
-	if(ga_label)
-		gaqArgs.push(ga_label);
-
-	if(ga_value)
-		gaqArgs.push(ga_value);
-
-	if(trackingMethod == 'ga' || trackingMethod == 'both') {
-		Wikia.log(eventName + ' ' + gaqArgs.join('/') + ' [GA track]', 'info', logGroup);
-
-		window.gaTrackAdEvent(ga_category, ga_action, ga_label, ga_value, true);
-	}
-};
+})( window );
