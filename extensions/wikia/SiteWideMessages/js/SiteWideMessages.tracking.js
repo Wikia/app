@@ -9,8 +9,9 @@ jQuery( document ).ready( function ( $ ) {
 		$firstNotification = $notificationsArea.find( 'div[data-type="5"]' ).first(),
 		firstMsgId,
 		impTrackObj,
-		track = window.WikiaTracker.buildTrackingFunction('internal', {
-			category: 'sitewidemessages'
+		track = window.WikiaTracker.buildTrackingFunction({
+			category: 'sitewidemessages',
+			trackingMethod: 'internal'
 		});
 
 	if ( $firstNotification.length ) {

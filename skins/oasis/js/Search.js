@@ -4,7 +4,9 @@ var WikiaSearchApp = {
 
 	ads: false,
 
-	track: window.WikiaTracker.buildTrackingFunction('internal'),
+	track: window.WikiaTracker.buildTrackingFunction({
+		trackingMethod: 'internal'
+	}),
 
 	init : function() {
 		this.searchForm = $('#WikiaSearch');

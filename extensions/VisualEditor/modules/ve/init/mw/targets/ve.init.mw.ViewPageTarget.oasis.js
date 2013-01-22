@@ -963,8 +963,9 @@ ve.init.mw.ViewPageTarget.prototype.hideSpinner = function () {
 	// Not implemented yet
 };
 
-ve.init.mw.ViewPageTarget.prototype.track = window.WikiaEditor.buildTrackingFunction('both', {
-	category: 'visual-editor'
+ve.init.mw.ViewPageTarget.prototype.track = window.WikiaEditor.buildTrackingFunction({
+	category: 'visual-editor',
+	trackingMethod: 'both'
 });
 
 /* Initialization */

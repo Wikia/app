@@ -4,8 +4,9 @@ var WikiaNotificationsApp = {
 			$.post(wgScript, {action: 'purge', title: wgPageName});
 	},
 
-	track: window.WikiaTracker.buildTrackingFunction('internal', {
-		category: 'sitewidemessages'
+	track: window.WikiaTracker.buildTrackingFunction({
+		category: 'sitewidemessages',
+		trackingMethod: 'internal'
 	}),
 
 	init: function() {

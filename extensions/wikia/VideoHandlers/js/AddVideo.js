@@ -28,9 +28,10 @@
 	// run on dom ready
 	$(addSurveyLink);
 
-	var track = window.WikiaTracker.buildTrackingFunction('both', {
+	var track = window.WikiaTracker.buildTrackingFunction({
 		action: WikiaTracker.ACTIONS.ADD,
 		category: null,
+		trackingMethod: 'both'
 	});
 
 	var AddVideo = function(element, options) {

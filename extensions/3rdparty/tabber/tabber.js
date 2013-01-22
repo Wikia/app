@@ -440,8 +440,9 @@ tabberObj.prototype.navClearActive = function(tabberIndex)
 	return this;
 };
 
-var track = window.WikiaTracker.buildTrackingFunction('internal', {
-	category: 'Tabber'
+var track = window.WikiaTracker.buildTrackingFunction({
+	category: 'Tabber',
+	trackingMethod: 'internal'
 });
 
 tabberObj.prototype.clickTrackingHandler = function(event) {
