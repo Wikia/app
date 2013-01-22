@@ -164,6 +164,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 		
 		$this->tabindex = self::SPECIAL_USERLOGIN_TABINDEX_START;
+		$this->makeInputFieldForForgotPassword = true;
 		$this->formData = $this->generateFormData();
 	}
 
@@ -193,7 +194,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->suppressCreateAccount = true;
 		$this->supressLogInBtnBig = true;
 		$this->returntoquery = $this->app->wf->ArrayToCGI( $query );
-
 		$this->formData = $this->generateFormData();
 	}
 
@@ -559,7 +559,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			'name' => 'username',
 			'isRequired' => true,
 			'label' => wfMsg('yourname'),
-			'isInvalid' => (!empty($errParam) && $errParam === 'username'),
+			'isInvalid' => (!empty($this->errParam) && $this->errParam === 'username'),
 			'value' => htmlspecialchars($this->username),
 			'tabindex' => ++$this->tabindex,
 		);
@@ -571,17 +571,27 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			'name' => 'password',
 			'isRequired' => true,
 			'label' => wfMsg('yourpassword'),
-			'isInvalid' => (!empty($errParam) && $errParam === 'password'),
+			'isInvalid' => (!empty($this->errParam) && $this->errParam === 'password'),
 			'value' => htmlspecialchars($this->password),
 			'tabindex' => ++$this->tabindex,
 		);
 		$passwordInput['errorMsg'] = $passwordInput['isInvalid'] ? $this->msg : '';
-
-		$forgotPassword = array(
-			'type' => 'custom',
-			'class' => 'forgot-password',
-			'output' => '<a href="#" tabindex="0">'.wfMsg('userlogin-forgot-password').'</a>',
-		);
+		
+		if( !empty($this->makeInputFieldForForgotPassword) ) {
+			$forgotPassword = array(
+				'name' => 'action',
+				'type' => 'submit',
+				'class' => 'forgot-password link',
+				'value' => wfMsg('userlogin-forgot-password'),
+				'tabindex' => 0,
+			);
+		} else {
+			$forgotPassword = array(
+				'type' => 'custom',
+				'class' => 'forgot-password',
+				'output' => '<a href="#" tabindex="0">' . wfMsg('userlogin-forgot-password') . '</a>',
+			);
+		}
 
 		$rememberMeInput = array(
 			'type' => 'checkbox',
@@ -627,10 +637,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			);
 			$form['inputs'][] = $createAccount;
 		}
-
-		$form['isInvalid'] = !empty($result) && empty($errParam) && !empty($msg);
-		$form['errorMsg'] = !empty($msg) ? $msg : '';
 		
+		$form['isInvalid'] = !empty($this->result) && empty($this->errParam) && !empty($this->msg);
+		$form['errorMsg'] = !empty($this->msg) ? $this->msg : '';
+
 		if( !empty($this->returnto) ) {
 			$form['inputs'][] = array(
 				'type' => 'hidden',
