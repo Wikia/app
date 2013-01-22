@@ -178,17 +178,14 @@
 		// set the state and submit the edit form
 		editorInstance.setState(editorInstance.states.RELOADING);
 
-		try {
-			// Save editor data before redirecting to prevent data loss (BugId:29754)
-			$.storage.set('WikiaEditorData', editorInstance.getContent());
-
-		} catch(e) {
-			$().log('Local Storage Exception:' + e.message);
-			$.storage.flush();
-		}
+		this.storeContent();
 
 		window.location.reload(true);
 	};
+
+	WE.storeContent = function() {
+		window.WikiaEditorStorage.store();
+	}
 
 	WE.Editor = $.createClass(Observable, {
 		states: {
@@ -826,13 +823,26 @@
 
 			// Needs conversion
 			if (datamode == 'wysiwyg') {
-				RTE.ajax('html2wiki', { html: content, title: wgPageName }, function(data) {
+				this.html2wiki({ html: content, title: wgPageName }, function(data) {
 					editbox.val(data.wikitext);
 				});
 
 			} else {
 				editbox.val(content);
 			}
+		},
+
+		html2wiki: function(params, callback) {
+			if (typeof params != 'object') {
+				params = {};
+			}
+			params.method = 'html2wiki';
+
+			jQuery.post(window.wgScript + '?action=ajax&rs=RTEAjax', params, function(data) {
+				if (typeof callback == 'function') {
+					callback(data);
+				}
+			}, 'json');
 		},
 
 		editorFocused: function() {
@@ -977,17 +987,17 @@
 		},
 
 		setContent: function(content, datamode) {
-			var ckeditor = this.editor.ck,
-				isWysiwyg = ckeditor.mode == 'wysiwyg',
-				dataKey = isWysiwyg ? 'wikitext' : 'html',
-				params = { title: wgPageName };
-
-			params[dataKey] = content;
+			var ckeditor = this.editor.ck;
 
 			// Needs conversion
 			if (datamode && ckeditor.mode != datamode) {
-				RTE.ajax(isWysiwyg ? 'html2wiki' : 'wiki2html', params, function(data) {
-					ckeditor.setData(data[dataKey]);
+				var params = { title: wgPageName };
+				var isWysiwyg = ckeditor.mode == 'wysiwyg';
+
+				params[isWysiwyg ? 'wikitext' : 'html'] = content;
+
+				RTE.ajax(isWysiwyg ? 'wiki2html' : 'html2wiki', params, function(data) {
+					ckeditor.setData(data[isWysiwyg ? 'html' : 'wikitext']);
 				});
 
 			} else {
