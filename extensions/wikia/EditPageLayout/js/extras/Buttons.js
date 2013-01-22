@@ -167,8 +167,7 @@
 				imageId: 'mw-editbutton-vet',
 				onclick: function( event ) {
 					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-						console.log('point 6');
-						VET_show( event );
+						window.VET_load_in_editor( event );
 					});
 				}
 			});
