@@ -22,8 +22,9 @@ class AdminDashboardController extends WikiaController {
 		$this->response->addAsset('extensions/wikia/AdminDashboard/js/AdminDashboard.js');
 
 		if( $this->wg->EnableVideoToolExt && $this->wg->EnableSpecialVideosExt ) {
-		//FB#68272
-			$this->response->addAsset('extensions/wikia/VideoHandlers/js/AddVideo.js');
+// TODO - liz: make this work again
+			//FB#68272
+			//$this->response->addAsset('extensions/wikia/VideoHandlers/js/AddVideo.js');
 		}
 		
 		$this->adminDashboardUrl = Title::newFromText('AdminDashboard', NS_SPECIAL)->getFullURL("tab=$this->tab");
