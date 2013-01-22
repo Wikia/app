@@ -160,12 +160,12 @@ WikiaHomePageRemix.prototype = {
 		$().log('WikiaHomePageRemix initialised');
 	},
 	track: function(action, label, params, event) {
-		WikiaTracker.track('internal', $.extend({
+		WikiaTracker.track('internal', {
 			action: action,
 			browserEvent: event,
 			category: 'wikiaHomePage',
 			label: label
-		}, params));
+		}, params);
 	},
 	trackClick: function(ev) {
 		var node = $(ev.target);
