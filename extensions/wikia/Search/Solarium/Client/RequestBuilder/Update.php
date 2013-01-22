@@ -119,7 +119,7 @@ class Solarium_Client_RequestBuilder_Update extends Solarium_Client_RequestBuild
 
             foreach ($doc->getFields() AS $name => $value) {
                 $boost = $doc->getFieldBoost($name);
-                $modifier = $doc instanceof Solarium_Document_AtomicUpdate ? $doc->getFieldModifier($name) : null;
+                $modifier = $doc instanceof Solarium_Document_AtomicUpdate ? $doc->getModifierForField($name) : null;
                 if (is_array($value)) {
                     foreach ($value AS $multival) {
                         $xml .= $this->_buildFieldXml($name, $boost, $multival, $modifier);

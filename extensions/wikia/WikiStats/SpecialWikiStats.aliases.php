@@ -18,3 +18,9 @@ $specialPageAliases['de'] = array(
 $specialPageAliases['pl'] = array(
 	'WikiStats' => array( 'StatystykiWiki', 'WikiStats' ),
 );
+/**
+ * Spanish
+ */
+$specialPageAliases['es'] = array(
+	'WikiStats' => array( 'WikiEstadísticas', 'WikiStats' ),
+);

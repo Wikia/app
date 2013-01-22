@@ -72,6 +72,9 @@ $app->registerHook( 'WallAfterStoreRelatedTopicsInDB', 'ForumHooksHelper', 'onWa
 
 $app->registerHook( 'ArticleFromTitle', 'ForumHooksHelper', 'onArticleFromTitle' );
 
+// For activity module tag
+$app->registerHook( 'ParserFirstCallInit', 'ForumHooksHelper', 'onParserFirstCallInit' );
+
 include ($dir . '/Forum.namespace.setup.php');
 
 //add this namespace to list of wall namespaces
@@ -87,6 +90,7 @@ $wgGroupPermissions['*']['forum'] = false;
 $wgGroupPermissions['staff']['forum'] = true;
 $wgGroupPermissions['sysop']['forum'] = true;
 $wgGroupPermissions['bureaucrat']['forum'] = true;
+$wgGroupPermissions['helper']['forum'] = true;
 
 $wgRevokePermissions['vstf']['forum'] = true;
 
@@ -98,11 +102,13 @@ $wgGroupPermissions['staff']['forumoldedit'] = true;
 $wgGroupPermissions['helper']['forumoldedit'] = true;
 $wgGroupPermissions['sysop']['forumoldedit'] = true;
 $wgGroupPermissions['bureaucrat']['forumoldedit'] = true;
+$wgGroupPermissions['helper']['forumoldedit'] = true;
 
 $wgGroupPermissions['*']['forumadmin'] = false;
 $wgGroupPermissions['staff']['forumadmin'] = true;
 $wgGroupPermissions['helper']['forumadmin'] = true;
 $wgGroupPermissions['sysop']['forumadmin'] = true;
+$wgGroupPermissions['helper']['forumadmin'] = true;
 
 
 F::build('JSMessages')->registerPackage('Forum', array(

@@ -28,8 +28,8 @@ h1, h2, h3{
 	}
 
 	ul {
-		//there is already a padding so if this is not 0 it gets way too big
-		padding: 0;
+		//setting to 20px makes it narrower but still nicely indented
+		padding-left: 20px;
 	}
 
 	&::after{

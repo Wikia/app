@@ -204,6 +204,15 @@ $messages['diq'] = array(
 	'lightbox-share-email-error-caption' => 'Xırab',
 );
 
+/** Esperanto (Esperanto)
+ * @author Objectivesea
+ */
+$messages['eo'] = array(
+	'lightbox-share-button-email' => 'Retpoŝto',
+	'lightbox-share-email-page-label-address' => 'Retpoŝtadreso',
+	'lightbox-visit-the-wiki' => 'Viziti la vikion:',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10

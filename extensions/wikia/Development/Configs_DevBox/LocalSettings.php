@@ -60,6 +60,7 @@ switch($wgWikiaDatacenter) {
 			0 => "10.8.44.110:11000", # dev-memcached1
 			1 => "10.8.36.107:11000", # dev-memcached2
 		);
+
 		break;
 
 	case 'poz':
@@ -79,6 +80,7 @@ switch($wgWikiaDatacenter) {
 			0 => "10.14.30.143:11000", # dev-memcached-p1
 			1 => "10.14.30.143:11000", # dev-memcached-p2
 		);
+		require_once( "$IP/extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php" );
 		break;
 }
 

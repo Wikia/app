@@ -269,9 +269,18 @@ window.WikiaTracker = (function( window ) {
 	 */
 	function isMiddleClick(browserEvent) {
 		//bugId:31900
-		//only webkit fires click event on middle mouse button click
-		//so, we don't care about other browsers (Microsoft has 4 assigned to middle click)
-		return (browserEvent && browserEvent.button === 1) ? true : false;
+		var result = false;
+
+		if( browserEvent && browserEvent.button === 4 ) {
+		//Microsoft middle mouse button === 4
+			result = true;
+		} else if( browserEvent && browserEvent.button == 1 && !browserEvent.ctrlKey ) {
+		//just-in-case we check if the ctrlKey button isn't pressed to avoid the function
+		//returning true in IE when it's not middle click but ctrl + left mouse button click
+			result = true;
+		}
+
+		return result;
 	}
 
 	/**

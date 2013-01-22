@@ -6,28 +6,31 @@ WikiaEditorStorage.prototype = {
 	content: undefined,
 	editorMode: undefined,
 	articleId: undefined,
+	editorDirty: false,
 
 	store: function() {
 		if (typeof(wgArticleId) != undefined) {
 			var editorInstance = window.WikiaEditor.getInstance();
-			var summary = $('#wpSummary');
+			if (editorInstance.plugins.leaveconfirm == undefined || editorInstance.plugins.leaveconfirm.isDirty()) {
+				var summary = $('#wpSummary');
 
-			var toStore = {
-				articleId: wgArticleId,
-				content: editorInstance.getContent(),
-				editorMode: editorInstance.mode,
-				summary: summary.exists() ? summary.val() : undefined
+				var toStore = {
+					articleId: wgArticleId,
+					content: editorInstance.getContent(),
+					editorMode: editorInstance.mode,
+					summary: summary.exists() ? summary.val() : undefined
 
-				// TODO
-				//categories: categories
-			};
+					// TODO
+					//categories: categories
+				};
 
-			try {
-				$.storage.set(this.getStoreContentKey(), toStore);
+				try {
+					$.storage.set(this.getStoreContentKey(), toStore);
 
-			} catch(e) {
-				$().log('Local Storage Exception:' + e.message);
-				$.storage.flush();
+				} catch(e) {
+					$().log('Local Storage Exception:' + e.message);
+					$.storage.flush();
+				}
 			}
 		}
 	},
@@ -36,8 +39,11 @@ WikiaEditorStorage.prototype = {
 		this.fetchData();
 
 		GlobalTriggers.bind('WikiaEditorReady', $.proxy(function(editor){
-			this.modifySummary();
-			this.modifyEditorContent(editor);
+			if (this.getEditorDirty()) {
+				editor.fire('markDirty');
+				this.modifySummary();
+				this.modifyEditorContent(editor);
+			}
 		}, this));
 	},
 
@@ -46,6 +52,7 @@ WikiaEditorStorage.prototype = {
 		var storageData = $.storage.get(storageKey);
 
 		if (storageData != null && storageData.articleId == wgArticleId) {
+			this.editorDirty = true;
 			this.summary = storageData.summary;
 			this.articleId = storageData.articleId;
 			this.content = storageData.content;
@@ -80,6 +87,10 @@ WikiaEditorStorage.prototype = {
 
 	getEditorMode: function() {
 		return this.editorMode;
+	},
+
+	getEditorDirty: function() {
+		return this.editorDirty;
 	},
 
 	getStoreContentKey: function() {

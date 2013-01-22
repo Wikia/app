@@ -190,6 +190,8 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
 	'scavengerhunt-label-general' => '{{Identical|General}}',
+	'scavengerhunt-editor-tip-entry-form-email' => '{{doc-singularthey}}',
+	'scavengerhunt-editor-tip-entry-form-username' => '{{doc-singularthey}}',
 );
 
 /** Afrikaans (Afrikaans)

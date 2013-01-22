@@ -1711,9 +1711,6 @@ Liftium.markChain = function (slotname){
 
 Liftium.markLastAdAsRejected = function (slotname){
 	var i = Liftium.currents[slotname];
-	var tag_id = Liftium.chain[slotname][i].tag_id;
-	Liftium.d("Marking last ad as rejected for " + slotname + " (#" + tag_id + ")", 3);
-
 	if (typeof i == "undefined") {
 		Liftium.d("No chain for " + slotname + " found. Bailing out.", 1);
 		WikiaTracker.track({
@@ -1724,6 +1721,9 @@ Liftium.markLastAdAsRejected = function (slotname){
 		});
 		return;
 	}
+
+	var tag_id = Liftium.chain[slotname][i].tag_id;
+	Liftium.d("Marking last ad as rejected for " + slotname + " (#" + tag_id + ")", 3);
 
 	Liftium.chain[slotname][i].rejected = true;
 	Liftium.setTagStat(tag_id, "r");

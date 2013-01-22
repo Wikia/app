@@ -47,3 +47,15 @@ $specialPageAliases['mk'] = array(
 $specialPageAliases['nl'] = array(
 	'Hieroglyphs' => array( 'Hierogliefen' ),
 );
+
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'Hieroglyphs' => array( 'Hieroglify' ),
+);
+
+/** Spanish (Espanol) */
+$specialPageAliases['es'] = array(
+	'Hieroglyphs' => array( 'Jeroglíficos' ),
+);
+
+

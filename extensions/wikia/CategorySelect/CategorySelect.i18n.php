@@ -336,7 +336,7 @@ $messages['el'] = array(
 $messages['es'] = array(
 	'categoryselect-desc' => 'Proporciona una interfaz para gestionar las categorías de los artículos sin editar todo el artículo.',
 	'categoryselect-code-view' => 'Vista de código',
-	'categoryselect-code-view-placeholder' => 'Añadir categorías aquí, por ejemplo, [[{{ns:category}}:Name]]',
+	'categoryselect-code-view-placeholder' => 'Añadir categorías aquí, por ejemplo, [[:{{ns:category}}:Name]]',
 	'categoryselect-visual-view' => 'Vista visual',
 	'categoryselect-infobox-caption' => 'Opciones de categoría',
 	'categoryselect-infobox-category' => 'Pon el nombre de la categoría:',
@@ -1268,7 +1268,7 @@ $messages['zh'] = array(
  */
 $messages['zh-hans'] = array(
 	'categoryselect-code-view' => '代码视图',
-	'categoryselect-code-view-placeholder' => '在此添加分类，例如[[Category:名称]]', # Fuzzy
+	'categoryselect-code-view-placeholder' => '在此添加分类，例如[[{{ns:category}}:Name]]',
 	'categoryselect-visual-view' => '预览视图',
 	'categoryselect-infobox-category' => '输入类别的名称：',
 	'categoryselect-addcategory-button' => '添加分类',

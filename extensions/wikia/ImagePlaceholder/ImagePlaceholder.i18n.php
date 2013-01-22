@@ -105,6 +105,13 @@ $messages['diq'] = array(
 	'imgplc-image' => 'Resım',
 );
 
+/** Esperanto (Esperanto)
+ * @author Objectivesea
+ */
+$messages['eo'] = array(
+	'imgplc-image' => 'Bildo',
+);
+
 /** Spanish (español)
  * @author Translationista
  * @author VegaDark
