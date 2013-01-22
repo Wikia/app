@@ -197,6 +197,8 @@ class LightboxController extends WikiaController {
 
 		// set cache control to 1 hour
 		$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+		// Make sure that a request with missing &format=json does not throw a "template not found" exception
+		$this->response->setFormat('json');
 	}
 
 	/**
