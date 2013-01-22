@@ -187,8 +187,8 @@ Alternatively, you can click "$2" to see the page in its updated form.',
 
 	'wikiaPhotoGallery-search-tooltip' => 'Search photos on this wiki',
 
-	'wikiaPhotoGallery-upload-image-size-error' => 'Wrong image size. Photos should be 660px by 360px or larger',
-	'wikiaPhotoGallery-upload-image-size' => 'Photos should be 660px by 360px or larger',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Wrong image size. Photos should be 670px by 360px or larger',
+	'wikiaPhotoGallery-upload-image-size' => 'Photos should be 670px by 360px or larger',
 	'wikiaPhotoGallery-not-displayed' => 'Not displayed',
 	'galery-slider-read-more' => ' Read more >'
 );
