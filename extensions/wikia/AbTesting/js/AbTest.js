@@ -262,11 +262,12 @@
 		for ( expName in experiments ) {
 			exp = experiments[expName];
 			if ( exp.flags && exp.flags.dw_tracking && exp.group ) {
-				window.WikiaTracker.track( 'internal', {
+				window.WikiaTracker.track({
 					eventName: 'ab_treatment',
 					experiment: exp.name,
 					experimentId: exp.id,
 					time: serverTimeString,
+					trackingMethod: 'internal',
 					treatmentGroup: exp.group.name,
 					treatmentGroupId: exp.group.id
 				});

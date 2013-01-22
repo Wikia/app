@@ -32,11 +32,12 @@ var WikiaHubs = {
 	},
 
 	trackClick: function (category, action, label, value, params, event) {
-		WikiaTracker.track('internal', {
+		WikiaTracker.track({
 			action: action,
 			browserEvent: event,
 			category: category,
 			label: label,
+			trackingMethod: 'internal',
 			value: value
 		}, params);
 	},

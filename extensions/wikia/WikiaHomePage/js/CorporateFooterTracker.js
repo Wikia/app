@@ -5,11 +5,12 @@ var CorporateFooter = {
 		);
 	},
 	track: function(action, label, params, event) {
-		WikiaTracker.track('internal', {
+		WikiaTracker.track({
 			action: action,
 			browserEvent: event,
 			category: 'corporateFooter',
-			label: label
+			label: label,
+			trackingMethod: 'internal'
 		}, params);
 	},
 	trackClick: function(ev) {

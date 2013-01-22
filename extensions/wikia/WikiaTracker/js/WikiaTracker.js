@@ -87,19 +87,8 @@ window.WikiaTracker = (function( window ) {
 	 * Unique entry point to track events to the internal datawarehouse and GA.
 	 * PLEASE DO NOT DUPLICATE THIS LOGIC IN OTHER FUNCTIONS.
 	 *
-	 *     WikiaTracker.track('ga', {
-	 *         category: 'myCategory',
-	 *         label: 'myLabel'
-	 *     });
-	 *
-	 * @param String trackingMethod (required)
-	 *        Where to track the event to ("ad", "both", "ga", "internal").
-	 *        This can optionally be passed in the data object instead.
-
-	 * @param Object data (required) ... dataN (optional)
-	 *        A key-value hash of parameters. If multiple hashes are passed in
-	 *        with matching keys, the values in the later hashes will override
-	 *        the previous values.
+	 * @param {Object} data
+	 *        A key-value hash of parameters.
 	 *
 	 *        keys: (Please ping tracking team leads before adding new ones)
 	 *            action (required for GA tracking)
@@ -116,39 +105,43 @@ window.WikiaTracker = (function( window ) {
 	 *                to ensure tracking execution.
 	 *            label (optional for GA tracking)
 	 *                The label for the event.
-	 *            trackingMethod (optional)
-	 *                See @param String trackingMethod
+	 *            trackingMethod (required)
+	 *                Where to track the event to ("ad", "both", "ga", "internal").
 	 *            value (optional for GA tracking)
 	 *                The integer value for the event.
 	 *
-	 * NOTE: For GA tracking "eventName", "trackingMethod" and "action" must be
-	 * provided either as parameters to this method or inside of the data parameter.
+	 * @param {...Object} [dataN]
+	 *        Any number of additional hashes that will be merged into the first.
+	 *
+	 * @example
+	 *
+	 *     var defaults = {
+	 *         trackingMethod: 'ga',
+	 *         category: 'myCategory'
+	 *     };
+	 *
+	 *     WikiaTracker.track( defaults, {
+	 *         label: 'myLabel',
+	 *     });
 	 *
 	 * @author Kyle Florence <kflorence@wikia-inc.com>
 	 * @author Hyun Lim <hyun(at)wikia-inc.com>
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
-	function track( trackingMethod, data /* [ , ..., dataN ] */ ) {
-		var args = slice.call( arguments ),
-			browserEvent,
-			eventName,
+	function track( data /* , ..., dataN */ ) {
+		var additionalData = slice.call( arguments, 1 ),
+			browserEvent = window.event,
+			eventName = 'trackingevent',
 			gaqArgs = [],
-			i = 2,
+			i = 0,
 			key,
-			l = args.length,
+			l = additionalData.length,
 			tracking = {},
+			trackingMethod = 'none',
 			value;
 
-		// Args: data
-		if ( typeof trackingMethod === 'object' ) {
-			data = trackingMethod;
-			i = 1;
-			trackingMethod = undefined;
-		}
-
-		// Merge in additional data
 		for ( ; i < l; i++ ) {
-			extendObject( data, args[ i ] );
+			extendObject( data, additionalData[ i ] );
 		}
 
 		// Remap keys for data consistency
@@ -159,12 +152,11 @@ window.WikiaTracker = (function( window ) {
 			}
 		}
 
-		// Set defaults
-		browserEvent = data.browserEvent || window.event;
-		eventName = data.eventName || 'trackingevent';
-		trackingMethod = trackingMethod || data.trackingMethod || 'none';
-
+		browserEvent = data.browserEvent || browserEvent;
+		eventName = data.eventName || eventName;
+		trackingMethod = data.trackingMethod || trackingMethod;
 		tracking[ trackingMethod ] = true;
+
 		if ( tracking.both ) {
 			tracking.ga = tracking.internal = true;
 		}
@@ -232,8 +224,10 @@ window.WikiaTracker = (function( window ) {
 	 *         label: 'myLabel'
 	 *     });
 	 *
-	 * @params Object defaults (required)
-	 *         See the track method above for hash key parameter information.
+	 * @params {Object} defaults
+	 *         A key-value hash of parameters.
+	 *
+	 * @see The track method above for hash key information.
 	 *
 	 * @author Kyle Florence <kflorence@wikia-inc.com>
 	 */

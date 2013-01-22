@@ -228,11 +228,12 @@ var ImageLightbox = {
 				var clickedIndex = (localGroupIndex * RelatedVideos.videosPerPage) + localItemIndex;
 				eventValue = clickedIndex+1;	// tracked values must be one-indexed
 
-				WikiaTracker.track('both', {
+				WikiaTracker.track({
 					action: WikiaTracker.ACTIONS.PLAY_VIDEO,
 					browserEvent: ev,
 					category: RelatedVideos.gaCat,
 					label: (target.hasClass('video-thumbnail') ? 'thumbnail' : 'title'),
+					trackingMethod: 'both',
 					value: eventValue,
 					video_title: imageName
 				});
@@ -478,10 +479,11 @@ var ImageLightbox = {
 	// @param data - any extra params we want to pass to internal tracking
 	// Don't add willy nilly though... check with Jonathan.
 	track: function(action, label, value, data) {
-		WikiaTracker.track('internal', {
+		WikiaTracker.track({
 			action: action,
 			category: 'lightbox',
 			label: label || '',
+			trackingMethod: 'internal',
 			value: value || 0
 		}, data);
 	},

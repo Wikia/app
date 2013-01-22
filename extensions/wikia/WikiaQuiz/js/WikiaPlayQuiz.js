@@ -288,12 +288,13 @@ var WikiaQuiz = {
 		WikiaQuiz.isMuted = $(this).find('input').attr('checked');
 	},
 	trackEvent: function(action, label, value, href, event) {
-		WikiaTracker.track('both', {
+		WikiaTracker.track({
 			action: action,
 			browserEvent: event,
 			category: 'wikia-quiz',
 			href: href,
 			label: WikiaQuiz.trackerLabelPrefix + label,
+			trackingMethod: 'both',
 			value: value
 		}, params);
 	}

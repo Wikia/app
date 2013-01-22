@@ -16,12 +16,13 @@ define('track', function () {
 			options = options || {};
 
 			if (!window.wgGameGuides) {
-				WikiaTracker.track('ga', {
+				WikiaTracker.track({
 					action: action,
 					browserEvent: ev,
 					category: 'wikiamobile-' + category,
 					href: options.href,
 					label: options.label,
+					trackingMethod: 'ga',
 					value: options.value
 				});
 			}

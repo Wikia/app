@@ -379,10 +379,11 @@ LightboxTracker = {
 	// @param data - any extra params we want to pass to internal tracking
 	// Don't add willy nilly though... check with Jonathan.
 	track: function(action, label, value, data) {
-		WikiaTracker.track('internal', {
+		WikiaTracker.track({
 			action: action,
 			category: 'lightbox',
 			label: label || '',
+			trackingMethod: 'internal',
 			value: value || 0
 		}, data);
 	},

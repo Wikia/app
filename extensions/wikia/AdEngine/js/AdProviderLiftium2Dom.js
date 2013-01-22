@@ -84,11 +84,12 @@ var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, 
 		;
 
 		// not needed, liftium got its own tracking (but pls keep it for reference)
-		//WikiaTracker.track('ad', {
+		//WikiaTracker.track({
 		//	eventName: 'liftium.slot2',
 		//	ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''),
 		//	ga_action: slotname,
-		//	ga_label: 'liftium2'
+		//	ga_label: 'liftium2',
+		//	trackingMethod: 'ad'
 		//});
 
 		if (useGw) {

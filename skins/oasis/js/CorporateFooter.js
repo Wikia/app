@@ -17,10 +17,12 @@
 					ev.stopPropagation();
 
 					Wikia.Cookies.set('mobilefullsite', null);//invalidate cookie
-					WikiaTracker.track('both', {
+
+					WikiaTracker.track({
 						category: 'corporate-footer',
 						action: WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
-						label: 'mobile-switch'
+						label: 'mobile-switch',
+						trackingMethod: 'both'
 					});
 
 					(new Wikia.Querystring()).setVal('useskin', 'wikiamobile').addCb().goTo();

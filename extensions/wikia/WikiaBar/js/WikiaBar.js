@@ -383,10 +383,11 @@ var WikiaBar = {
 	//todo: extract class
 	trackClick: function (category, action, label, value, params, event) {
 		if (this.isSampledEvent()) {
-			WikiaTracker.track('ga', {
+			WikiaTracker.track({
 				action: action,
 				category: category,
 				label: label,
+				trackingMethod: 'ga',
 				value: value
 			}, params);
 		}
