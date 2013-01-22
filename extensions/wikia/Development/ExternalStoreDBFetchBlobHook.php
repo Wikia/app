@@ -70,7 +70,7 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 					$store = new ExternalStoreDB();
 					$dbw = $store->getMaster( $cluster );
 					if( $dbw ) {
-						wfDebug( __METHOD__ . ": storing blob on local storage\n" );
+						wfDebug( __METHOD__ . ": storing blob $id on local storage $cluster\n" );
 						$dbw->insert(
 							$store->getTable( $dbw ),
 							array( "blob_id" => $id, "blob_text" => $ret ),
