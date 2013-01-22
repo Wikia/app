@@ -18,7 +18,8 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 	afterAttach: function() {
 		var $categories = $( '#categories' ),
 			$categorySelect = $( '#CategorySelect' ),
-			namespace = 'categorySelect';
+			namespace = 'categorySelect',
+			editor = WikiaEditor.getInstance();
 
 		// Move to the right rail
 		this.el.replaceWith( $categorySelect );
@@ -49,7 +50,9 @@ WikiaEditor.modules.Categories = $.createClass( WikiaEditor.modules.base,{
 
 		}).on( 'update.' + namespace, function( event ) {
 			$categories.val( JSON.stringify(
-				$categorySelect.data( 'categorySelect' ).getData() ) );
+				$categorySelect.data( 'categorySelect' ).getData() )
+			);
+			editor.fire('markDirty');
 		});
 	}
 });
