@@ -21,6 +21,9 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
+global $wgFetchBlobApiURL;
+$wgFetchBlobApiURL = "http://community.wikia.com/api.php";
+
 /**
  * hook for ExternalStoreDB::FetchBlob
  *
@@ -31,10 +34,11 @@
  */
 function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 
-	global $wgTheSchwartzSecretToken;
+	global $wgTheSchwartzSecretToken, $wgFetchBlobApiURL;
 	// wikia doesn't use $itemID
 	wfProfileIn( __METHOD__ );
-	$url = sprintf( "http://community.eloy.wikia-dev.com/api.php?action=fetchblob&store=%s&id=%d&token=%s&format=json",
+	$url = sprintf( "%s?action=fetchblob&store=%s&id=%d&token=%s&format=json",
+		$wgFetchBlobApiURL,
 		$cluster,
 		$id,
 		$wgTheSchwartzSecretToken
