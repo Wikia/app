@@ -43,31 +43,31 @@ $messages['en'] = array(
 	// feature message list
 	
 	'wikifeatures-feature-heading-wgEnableForumExt' => 'Forum',
-	'wikifeatures-feature-description-wgEnableForumExt' => "Stay on top of every discussion on your wiki by utilizing Wikia's new Forums. Attract new people to participate in conversations about your wiki's content, and keep dedicated wiki editors efficient and engaged with all of the current topics. ",	
+	'wikifeatures-feature-description-wgEnableForumExt' => "Stay on top of every discussion on your wiki by utilizing Wikia's new [[w:c:community:Help:Forum|Forums]]. Attract new people to participate in conversations about your wiki's content, and keep dedicated wiki editors efficient and engaged with all of the current topics. ",	
 	
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Top 10 Lists',
-	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Top 10 Lists allow anyone on your wiki to create a votable list. If you\'re looking for a great way to get junior editors to interact with the wiki, this is it! Enabling this feature will add "Top 10 List" as an option when you click "Add a Page"',
+	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => '[[w:c:community:Help:Top 10 Lists|Top 10 Lists]] allow anyone on your wiki to create a votable list. If you\'re looking for a great way to get junior editors to interact with the wiki, this is it! Enabling this feature will add "Top 10 List" as an option when you click "Add a Page"',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Achievements',
-	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Achievements will help your wiki to grow by incentivizing editors to contribute a variety of content. You can create your own challenges that are unique to your wiki, and even upload your own images for the badges.',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => '[[w:c:community:Help:Achievements|Achievements]] will help your wiki to grow by incentivizing editors to contribute a variety of content. You can create your own challenges that are unique to your wiki, and even upload your own images for the badges.',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Article Comments',
-	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'This extension will let people write comments at the bottom of article pages. Other users can reply to the comments, and signatures and timestamps are automatically assigned. This will replace talk pages on your wiki.',
+	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'This extension will let people write [[w:c:community:Help:Comments|comments]] at the bottom of article pages. Other users can reply to the comments, and signatures and timestamps are automatically assigned. This will replace talk pages on your wiki.',
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Category Exhibition',
-	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'The most popular eight pages in your categories are already displayed as images, but this feature will list all of your pages as image links sortable by name, recency, or popularity!',
+	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'The most popular eight pages in your [[w:c:community:Help:Category#Category_Displays|categories]] are already displayed as images, but this feature will list all of your pages as image links sortable by name, recency, or popularity!',
 	'wikifeatures-feature-heading-wgEnableChat' => 'Chat',
-	'wikifeatures-feature-description-wgEnableChat' => 'Instantaneously communicate with other people who love your wiki and your wiki\'s topic as much as you do! Anyone with a Wikia account can join chat via the "Join the Chat" button in the right navigational area of your site.',
+	'wikifeatures-feature-description-wgEnableChat' => 'Instantaneously communicate with other people who love your wiki and your wiki\'s topic as much as you do! Anyone with a Wikia account can join [[w:c:community:Help:Chat|chat]] via the "Join the Chat" button in the right navigational area of your site.',
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikia Editor Redesign',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Editing is at the heart of a wiki and having a great editor is key to having an easy and fun experience when adding content. To improve your experience, we have redesigned our edit pages.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Polls',
-	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Allow anyone on your wiki to create a poll! With Polls enabled your users can use the [http://help.wikia.com/wiki/Help:Poll poll tag] to add this neat feature to any page. This feature is a great way to increase contribution on your wiki.',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Allow anyone on your wiki to create a poll! With [[w:c:community:Help:Poll|Polls]] enabled your users can use the poll tag to add this neat feature to any page. This feature is a great way to increase contribution on your wiki.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
-	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogs allow users on your wiki to create their own blog posts on their profile page and can also be used as a great way to communicate news and events to your wiki community.',
+	'wikifeatures-feature-description-wgEnableBlogArticles' => '[[w:c:community:Help:Blogs|Blogs]] allow users on your wiki to create their own blog posts on their profile page and can also be used as a great way to communicate news and events to your wiki community.',
 
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Message Wall',
-	'wikifeatures-feature-description-wgEnableWallExt' => "Communicating with the contributors on your wiki is an essential part of building and maintaining your community. The Message Wall uses a threaded conversation format and notification system that lets you control which conversations you're interested in following. No more missed messages!",
+	'wikifeatures-feature-description-wgEnableWallExt' => "Communicating with the contributors on your wiki is an essential part of building and maintaining your community. The [[w:c:community:Help:Message Wall|Message Wall]] uses a threaded conversation format and notification system that lets you control which conversations you're interested in following. No more missed messages!",
 
 
 	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => 'Game Guides Content',
-	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Use the Special:GameGuidesContent page of your wiki to manage which categories appear in the Game Guides mobile app. Expand your potential audience!',
+	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Use the Special:GameGuidesContent page of your wiki to manage which categories appear in the [[w:c:community:Help:Game Guides|Game Guides]] mobile app. Expand your potential audience!',
 
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
 	'wikifeatures-feature-description-emptylabs' => 'Our tech scientists are hard at work bubbling up new features for you to try out. Look for more labs here soon!',
