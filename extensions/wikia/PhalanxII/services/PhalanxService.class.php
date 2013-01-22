@@ -20,7 +20,22 @@ class PhalanxService extends Service {
 	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
 	 */
 	public function check( $type, $content, $lang = "en" ) {
-		return $this->sendToPhalanxDaemon( "check", array( "type" => $type, "content" => $content, "lang" => $lang ) );
+		$response = $this->sendToPhalanxDaemon( "check", array( "type" => $type, "content" => $content, "lang" => $lang ) );
+		if ( $response !== false ) {
+			if ( stripos( $response, self::RES_OK  ) !== false ) {
+				$ret = 1;
+			} elseif ( stripos( $response, self::RES_FAILURE ) !== false ) {
+				$ret = 0;
+			} else {
+				/* invalid response */
+				$ret = false;
+			}
+		} else {
+			/* service doesn't work */
+			$ret = false;
+		}
+		
+		return $ret;
 	}
 
 	/**
@@ -31,7 +46,26 @@ class PhalanxService extends Service {
 	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
 	 */
 	public function match( $type, $content, $lang = "en" ) {
-		return $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
+		$response = $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
+		if ( $response !== false ) {
+			$res = json_decode( $response );
+			if ( is_null( $res ) ) {
+				/* don't match any blocks */
+				$ret = true;
+			} else {
+				if ( is_array( $res ) ) {
+					/* first block ID ? */
+					reset( $res ); $ret = current( $res );
+				} else {
+					$ret = $res;
+				}
+			}
+		} else {
+			/* service doesn't work */
+			$ret = false;
+		}
+		
+		return $ret;
 	}
 
 	/**
@@ -70,14 +104,8 @@ class PhalanxService extends Service {
 			$response = Http::post( $url, 'default', array( "noProxy" => true ) );
 		}
 		
-		if ( $response !== false && stripos( $response, self::RES_OK  ) !== false ) {
-			$ret = true;
-		} else {
-			$ret = false;
-		}
-		
 		wfProfileOut( __METHOD__  );
 				
-		return $ret; 
+		return $response; 
 	}
 };

@@ -28,7 +28,7 @@ $classes = array(
 	/* services */
 	'PhalanxService'				=> $dir . 'services/PhalanxService.php',
 	/* hooks */
-	'UserBlock' 					=> $dir . 'hooks/UserBlock.class.php',
+	'PhalanxUserBlock' 				=> $dir . 'hooks/PhalanxUserBlock.class.php',
 	'UserCookieBlock'				=> $dir . 'hooks/UserCookieBlock.class.php',
 	'ContentBlock'					=> $dir . 'hooks/ContentBlock.class.php',
 	'TitleBlock'					=> $dir . 'hooks/TitleBlock.class.php',
@@ -46,12 +46,12 @@ foreach ( $classes as $class_name => $class_path ) {
  * hooks
  */
 /* UserBlock */
-$app->registerHook( 'GetBlockedStatus', 'UserBlock', 'blockCheck' );
-$app->registerHook( 'UserCanSendEmail', 'UserBlock', 'userCanSendEmail' ); #RT#93196
-$app->registerHook( 'AbortNewAccount', 'UserBlock', 'abortNewAccount' ); #FB#5311
-$app->registerHook( 'cxValidateUserName', 'UserBlock', 'validateUserName' );
+$app->registerHook( 'GetBlockedStatus', 'PhalanxUserBlock', 'blockCheck' );
+$app->registerHook( 'UserCanSendEmail', 'PhalanxUserBlock', 'userCanSendEmail' ); #RT#93196
+$app->registerHook( 'AbortNewAccount', 'PhalanxUserBlock', 'abortNewAccount' ); #FB#5311
+$app->registerHook( 'cxValidateUserName', 'PhalanxUserBlock', 'validateUserName' );
 /* UserCookieBlock */
-$app->registerHook( 'GetBlockedStatus', 'UserCookieBlock', 'blockCheck' );
+$app->registerHook( 'GetBlockedStatus', 'PhalanxUserCookieBlock', 'blockCheck' );
 /* ContentBlock */
 $app->registerHook( 'EditFilter', 'ContentBlock', 'onEditFilter' );
 $app->registerHook( 'AbortMove', 'ContentBlock', 'onAbortMove' );
