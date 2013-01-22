@@ -65,7 +65,12 @@ MiniEditor.Wall.EditMessageForm = $.createClass(Wall.settings.classBindings.edit
 
 				} else {
 					// Set content on element before initializing to keep focus in editbox (BugId:24188).
-					body.text(data.htmlorwikitext).miniEditor({
+					if (typeof RTE === 'object') {
+						body.html(data.htmlorwikitext);
+					} else {
+						body.text(data.htmlorwikitext);
+					}
+					body.miniEditor({
 						config: {
 							animations: MiniEditor.Wall.Animations,
 
