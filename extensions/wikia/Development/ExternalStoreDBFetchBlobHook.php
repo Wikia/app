@@ -59,6 +59,24 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 			if(  $hash == $response->fetchblob->hash ) {
 				wfDebug( __METHOD__ . ": md5 sum match\n" );
 				$ret = $blob;
+
+				// now store blob in local database but only when it's Poznan's devbox
+				$isPoznanDevbox = ( F::app()->wg->DevelEnvironment === true && F::app()->wg->WikiaDatacenter == "poz" );
+				if( $isPoznanDevbox ) {
+					wfDebug( __METHOD__ . ": this is poznań devbox\n" );
+					$store = new ExternalStoreDB();
+					$dbw = $store->getMaster( $cluster );
+					if( $dbw ) {
+						$dbw->insert(
+							$store->getTable( $dbw ),
+							array(
+								"id" => $id,
+								"text" => $ret
+							),
+							__METHOD__
+						);
+					}
+				}
 			}
 			else {
 				wfDebug( __METHOD__ . ": md5 sum not match, $hash != $response->fetchblob->hash\n" );
