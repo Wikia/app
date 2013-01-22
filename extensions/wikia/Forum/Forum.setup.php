@@ -72,6 +72,9 @@ $app->registerHook( 'WallAfterStoreRelatedTopicsInDB', 'ForumHooksHelper', 'onWa
 
 $app->registerHook( 'ArticleFromTitle', 'ForumHooksHelper', 'onArticleFromTitle' );
 
+// For activity module tag
+$app->registerHook( 'ParserFirstCallInit', 'ForumHooksHelper', 'onParserFirstCallInit' );
+
 include ($dir . '/Forum.namespace.setup.php');
 
 //add this namespace to list of wall namespaces
