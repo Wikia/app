@@ -1,20 +1,14 @@
-var HelloWorld = {
-	init: function() {
+require(['jquery', 'hello'], function($, hello) {
+	function init() {
 		// Bind click to button
 		$('#HelloWorldAjax button').click(function() {
-			$.nirvana.sendRequest({
-				controller: 'HelloWorld',
-				method: 'index',
-				format: 'html',
-				type: 'get',
-				callback: function(html) {
-					$('#HelloWorldAjax').append(html);
-				}
+			hello(function(html) {
+				$('#HelloWorldAjax').append(html);
 			});
 		});
 	}
-};
 
-$(function() {
-	HelloWorld.init();
+	$(function() {
+		init();
+	});
 });

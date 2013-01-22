@@ -14,7 +14,7 @@
  */
 
 /*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, AdConfig*/
-define('ads', ['events', 'domwriter', 'cookies', 'track', 'log'], function (ev, dw, ck, track, log) {
+define('ads', ['events', 'domwriter', 'wikia.cookies', 'track', 'wikia.log'], function (ev, dw, ck, track, log) {
 	'use strict';
 
 	var AD_TYPES = {

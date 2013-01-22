@@ -1,5 +1,5 @@
 $(function(){
-	require(['modal', 'loader'], function(modal, loader){
+	require(['modal', 'throbber'], function(modal, throbber){
 		var d = document,
 			body = d.body,
 			toolbar = '<span class=modalTitle>' + $.msg('wikiamobile-wikiapoll-poll') + '</span>',
@@ -53,7 +53,7 @@ $(function(){
 					checked = modalWrapper.querySelector(':checked');
 
 				if(checked) {
-					loader.show(form, {center: true});
+					throbber.show(form, {center: true});
 
 					$.ajax({
 						url: wgScript,
@@ -68,7 +68,7 @@ $(function(){
 						dataType: 'json',
 						success: function (res) {
 							if (res && res.html) {
-								loader.hide(form);
+								throbber.hide(form);
 								form.removeChild(t);
 								form.insertAdjacentHTML('afterend', thanks);
 								form.className += ' voted';
