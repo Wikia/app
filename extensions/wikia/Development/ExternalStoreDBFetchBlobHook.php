@@ -21,8 +21,6 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace extensions\wikia\Development;
-
 /**
  * hook for ExternalStoreDB::FetchBlob
  *
