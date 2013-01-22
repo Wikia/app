@@ -7,10 +7,9 @@ class ExternalStoreDBFetchBlobHookTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	public function apiTest() {
-
+	public function testApiCall() {
 		$result = false;
-		extensions\wikia\Development\ExternalStoreDBFetchBlobHook( "archive1", "34", null, $result );
+		ExternalStoreDBFetchBlobHook( "archive1", "34", null, $result );
 		print $result;
 	}
 }
