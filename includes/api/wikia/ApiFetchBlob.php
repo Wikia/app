@@ -84,8 +84,8 @@ class ApiFetchBlob extends ApiBase {
 				wfDebug( __METHOD__ . ": getting $id from $store\n" );
 
 				$url = sprintf( "DB://%s/%d", $store, $id );
-				$text = ExternalStore::fetchFromURL( $url );
-				if ( $text === false ) {
+				$blob = ExternalStore::fetchFromURL( $url );
+				if ( $blob === false ) {
 					wfProfileOut( __METHOD__ );
 					$this->dieUsage( 'Text not found', 3, 404 );
 				}
