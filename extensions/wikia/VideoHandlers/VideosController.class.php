@@ -32,10 +32,5 @@ class VideosController extends WikiaController {
 			$this->error = $retval;
 		}
 	}
-	
-	// temporary video survey code bugid-68723
-	public function videoSurvey() {
-		// just returns html
-	}
 
 }
