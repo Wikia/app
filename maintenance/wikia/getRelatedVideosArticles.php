@@ -10,7 +10,12 @@
 	 * @param string $dbname
 	 */
 	function getTotalRV( $dbname ) {
-		$db = wfGetDB( DB_SLAVE, array(), $dbname );
+		try {
+			$db = wfGetDB( DB_SLAVE, array(), $dbname );
+		} catch (Exception $e) {
+			echo "Could not connect to database: ".$e->getMessage()."\n";
+			return;
+		}
 
 		$row = $db->selectRow(
 			array( 'page' ),
@@ -35,7 +40,12 @@
 	 * @param string $dbname
 	 */
 	function removeRVArticles( $dryRun, $dbname, $wikiId ) {
-		$db = wfGetDB( DB_MASTER, array(), $dbname );
+		try {
+			$db = wfGetDB( DB_MASTER, array(), $dbname );
+		} catch (Exception $e) {
+			echo "Could not connect to database: ".$e->getMessage()."\n";
+			return;
+		}
 
 		$res = $db->select(
 			array( 'page' ),
@@ -47,7 +57,7 @@
 		);
 		
 		while ( $res && $row = $db->fetchRow( $res ) ) {
-			$title = $row['page_title'];
+			$title = 'RelatedVideos:'.$row['page_title'];
 
 			$prog = '/usr/wikia/slot1/code/maintenance/nukePage.php';
 			$conf = '/usr/wikia/slot1/docroot/LocalSettings.php';
@@ -55,7 +65,7 @@
 
 			$title = preg_match("/'/", $title) ? '"'.$title.'"' : "'".$title."'";
 
-			$cmd = "SERVER_ID=$wikiId php $prog --conf $conf --ns=1100 $delete $title";
+			$cmd = "SERVER_ID=$wikiId php $prog --conf $conf $delete $title";
 
 			echo "\tRunning: $cmd\n";
 			$result = wfShellExec( $cmd, $retval );
