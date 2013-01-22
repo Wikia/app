@@ -92,13 +92,10 @@ window.WikiaTracker = (function( window ) {
 	 *         label: 'myLabel'
 	 *     });
 	 *
-	 * @param String trackingMethod (optional)
+	 * @param String trackingMethod (required)
 	 *        Where to track the event to ("ad", "both", "ga", "internal").
 	 *        This can optionally be passed in the data object instead.
-	 * @param String eventName (optional)
-	 *        The name of the event. Defaults to "trackingevent".
-	 *        This can optionally be passed in the data object instead.
-	 *        Please speak with a tracking team lead before introducing new event names.
+
 	 * @param Object data (required) ... dataN (optional)
 	 *        A key-value hash of parameters. If multiple hashes are passed in
 	 *        with matching keys, the values in the later hashes will override
@@ -112,7 +109,8 @@ window.WikiaTracker = (function( window ) {
 	 *            category (required for GA tracking)
 	 *                The category for the event.
 	 *            eventName (optional)
-	 *                See @param String eventname
+	 *                The name of the event. Defaults to "trackingevent".
+	 *                Please speak with a tracking team lead before introducing new event names.
 	 *            href (optional)
 	 *                The href string for a link. This should be used by outbound links
 	 *                to ensure tracking execution.
@@ -130,11 +128,12 @@ window.WikiaTracker = (function( window ) {
 	 * @author Hyun Lim <hyun(at)wikia-inc.com>
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
-	function track( trackingMethod, eventName, data /* [ , ..., dataN ] */ ) {
+	function track( trackingMethod, data /* [ , ..., dataN ] */ ) {
 		var args = slice.call( arguments ),
 			browserEvent,
+			eventName,
 			gaqArgs = [],
-			i = 3,
+			i = 2,
 			key,
 			l = args.length,
 			tracking = {},
@@ -143,14 +142,8 @@ window.WikiaTracker = (function( window ) {
 		// Args: data
 		if ( typeof trackingMethod === 'object' ) {
 			data = trackingMethod;
-			eventName = trackingMethod = undefined;
 			i = 1;
-
-		// Args: trackingMethod, data
-		} else if ( typeof eventName === 'object' ) {
-			data = eventName;
-			eventName = undefined;
-			i = 2;
+			trackingMethod = undefined;
 		}
 
 		// Merge in additional data
@@ -168,7 +161,7 @@ window.WikiaTracker = (function( window ) {
 
 		// Set defaults
 		browserEvent = data.browserEvent || window.event;
-		eventName = eventName || data.eventName || 'trackingevent';
+		eventName = data.eventName || 'trackingevent';
 		trackingMethod = trackingMethod || data.trackingMethod || 'none';
 
 		tracking[ trackingMethod ] = true;
