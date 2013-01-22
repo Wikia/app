@@ -21,7 +21,7 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace wikia;
+namespace extensions\wikia\Development;
 
 /**
  * hook for ExternalStoreDB::FetchBlob
@@ -35,11 +35,15 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 
 	global $wgTheSchwartzSecretToken;
 	// wikia doesn't use $itemID
-
-	$url = sprintf( "http://community.wikia.com/api.php?store=%s&id=%d&token=%s",
+	wfProfileIn( __METHOD__ );
+	$url = sprintf( "http://community.wikia.com/api.php?store=%s&id=%d&token=%s&format=json",
 		$cluster,
 		$id,
 		$wgTheSchwartzSecretToken
 	);
-	$response = Http::get( $url, "default", array( noProxy => true ) );
+	$response = json_encode( Http::get( $url, "default", array( noProxy => true ) ) );
+
+	wfProfileOut( __METHOD__ );
+
+	return true;
 }
