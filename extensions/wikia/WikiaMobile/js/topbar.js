@@ -96,7 +96,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 		if(navBar.className.indexOf('srhOpn') > -1){
 			closeDropDown();
 		}else{
-            initAutocomplete();
+			initAutocomplete();
 			openSearch();
 		}
 	});
@@ -251,12 +251,12 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 	}
 	//end profile/login setup
 
-    function initAutocomplete(){
-        if(!searchInit){
-            loader({
+	function initAutocomplete(){
+		if(!searchInit){
+			loader({
 				type: loader.AM_GROUPS,
 				resources: 'wikiamobile_autocomplete_js'
-            }).done(
+			}).done(
 				function(){
 					require(['autocomplete'], function(sug){
 						sug({
@@ -268,9 +268,9 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 					});
 				}
 			);
-            searchInit = true;
-        }
-    }
+			searchInit = true;
+		}
+	}
 
 	//hash - hash to be set to after returnto query
 	//used in ie. ArticleComments.wikiamobile.js
@@ -362,7 +362,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 	}
 
 	return {
-        initAutocomplete: initAutocomplete,
+		initAutocomplete: initAutocomplete,
 		openLogin: openLogin,
 		openProfile: openProfile,
 		openSearch: openSearch,
