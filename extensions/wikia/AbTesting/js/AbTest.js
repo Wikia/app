@@ -97,7 +97,7 @@
 			el = {
 				id: exp.id,
 				name: exp.name,
-				flags: exp.flags
+				flags: exp.flags || {}
 			};
 			if ( group ) {
 				el.group = {
