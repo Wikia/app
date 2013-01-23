@@ -59,6 +59,7 @@
 			sendRequest: sendRequest,
 			getJson: function(controller, method, data, callback, onErrorCallback) {
 				if(typeof data == 'function') {
+					data = {};
 					callback = data;
 					onErrorCallback = callback;
 				}
@@ -73,6 +74,7 @@
 			},
 			postJson: function (controller, method, data, callback, onErrorCallback) {
 				if(typeof data == 'function') {
+					data = {};
 					callback = data;
 					onErrorCallback = callback;
 				}
