@@ -20,7 +20,6 @@
 		category: {
 			data: {
 				blankImageUrl: window.wgBlankImgUrl,
-				className: 'normal',
 				messages: {
 					edit: cached.messages.categoryEdit,
 					remove: $.msg( 'categoryselect-category-remove' )

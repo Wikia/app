@@ -78,9 +78,11 @@ class CategorySelectController extends WikiaController {
 	 * The template for a category in the category list.
 	 */
 	public function category() {
+		$category = $this->request->getVal( 'category', array() );
+
 		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
-		$this->response->setVal( 'category', $this->request->getVal( 'category', array() ) );
-		$this->response->setVal( 'className', $this->request->getVal( 'className', 'normal' ) );
+		$this->response->setVal( 'category', $category );
+		$this->response->setVal( 'className', !empty( $category[ 'type' ] ) ? $category[ 'type' ] : 'normal' );
 		$this->response->setVal( 'edit', $this->wf->Msg( 'categoryselect-category-edit' ) );
 		$this->response->setVal( 'index', $this->request->getVal( 'index', 0 ) );
 		$this->response->setVal( 'remove', $this->wf->Msg( 'categoryselect-category-remove' ) );

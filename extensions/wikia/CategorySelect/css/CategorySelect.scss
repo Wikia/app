@@ -5,10 +5,11 @@
 // These styles are for view pages only
 .CategorySelect.articlePage {
 	@include clear-linear-gradient();
-	border: 0;
+	@include clearfix;
 	line-height: normal;
-	margin: 0;
-	padding-bottom: 40px;
+	margin: 0 0 40px 0;
+	padding: 10px 20px 4px 20px;
+	position: relative;
 
 	&.modified .container > .toolbar {
 		display: block;
@@ -18,35 +19,25 @@
 		display: block;
 	}
 
-	h2 {
-		border-bottom: 1px solid $color-page-border;
-		font-size: 18px;
-		padding-bottom: 6px;
-	}
-
+	.add,
 	.category,
-	.input,
 	.placeholder {
-		@include border-radius( 4px );
-		background-color: $color-speech-bubble;
-		border: 1px solid $color-page-border;
+		float: left;
 		display: block;
-		float: left;
-		margin: 6px 6px 0 0;
-		padding: 2px 6px;
-	}
-
-	.add {
-		float: left;
+		margin: 0 6px 6px 0;
 	}
 
 	.categories {
-		@include clearfix;
 		margin: 0;
+		overflow: hidden;
 		padding: 0;
 	}
 
 	.category {
+		border-right: 1px solid $color-page-border;
+		margin-top: 4px;
+		padding-right: 6px;
+
 		&.hidden {
 			display: none;
 		}
@@ -62,32 +53,37 @@
 		}
 	}
 
-	.container {
-		padding: 4px 10px 10px 10px;
-		position: relative;
-
-		> .toolbar {
-			margin-top: 10px;
-			text-align: right;
-
-			.wikia-button {
-				margin-left: 6px;
-			}
-		}
+	.categoryselect-add {
+		@include clear-linear-gradient();
+		background-color: $color-speech-bubble;
 	}
 
 	.input {
 		background-color: $color-page;
 		border-color: $color-page;
 		color: $color-text;
+		display: none;
 		font-size: 12px;
 		outline: none;
 		padding-top: 1px;
 		width: 245px;
 	}
 
+	.new,
+	.placeholder {
+		@include border-radius( 4px );
+		background-color: $color-speech-bubble;
+		border: 1px solid $color-page-border;
+		padding: 2px 6px;
+	}
+
 	.placeholder {
 		@include opacity( 35 );
+	}
+
+	.special-categories {
+		float: left;
+		padding: 4px 6px 0 0;
 	}
 
 	.sprite-small {
@@ -109,6 +105,15 @@
 
 	.toolbar {
 		display: none;
+	}
+
+	> .toolbar {
+		margin-top: 10px;
+		text-align: right;
+
+		.wikia-button {
+			margin-left: 6px;
+		}
 	}
 }
 
