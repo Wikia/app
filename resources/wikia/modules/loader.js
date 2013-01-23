@@ -334,7 +334,15 @@
 					},
 					// This will be called everytime a resource is loaded
 					complete = function(ev, res) {
-						(res) && (result = res);
+						/*
+							res is saved locally and the only function here that returns it is getMultiTypePackage
+							but I can not ensure that this is last to be loaded
+
+							This means there is lack for multiple getMultiTypePackage calls - but should be discouraged
+						 */
+						if(res){
+							result = res;
+						}
 						onEnd();
 					};
 
@@ -388,6 +396,21 @@
 								continue;
 						}
 
+						/*
+							this is for letting the loader know that current function will fire more onEnd callbacks than 1
+
+							used by getLibrary which is called once but might load more files
+
+							~~ is an 'better' version of parseInt as it'll return 0 instead of a NaN
+							when unexpected value is passed to it ie. undefined or 'string'
+
+							ie. loader({
+									type: loader.LIBRARY,
+									resources: ['googlemaps', 'facebook']
+								});
+
+							before I run function that loads files I don't know how many files will be loaded
+						 */
 						remaining += ~~func(files, complete, failure({type: type, resources: files}), type);
 
 					} else {
