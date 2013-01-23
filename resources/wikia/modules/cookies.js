@@ -139,8 +139,6 @@
 	context.Wikia.Cookies = cookies();
 
 	if (context.define && context.define.amd) {
-		context.define('cookies', function () {
-			return context.Wikia.Cookies;
-		});
+		context.define('wikia.cookies', cookies);
 	}
 }(this));

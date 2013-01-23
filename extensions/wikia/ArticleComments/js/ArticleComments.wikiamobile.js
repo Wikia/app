@@ -5,7 +5,7 @@
  * @author Jakub 'Student' Olek
  **/
 
-require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(loader, toast, modal, events, track, msg){
+require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(throbber, toast, modal, events, track, msg){
 	"use strict";
 	/** @private **/
 
@@ -49,7 +49,7 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 
 		if(condition){
 			elm.className += ' active';
-			loader.show(elm, {size: '30px'});
+			throbber.show(elm, {size: '30px'});
 
 			Wikia.ajax({
 				url: ajaxUrl + '&page=' + ~~pageIndex,
@@ -63,7 +63,7 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 					commsUl.innerHTML = result.text;
 
 					elm.className = elm.className.replace(' active', '');
-					loader.hide(elm);
+					throbber.hide(elm);
 
 					//there's a good reason to use display instead of show/hide in the following lines
 					if(finished) {
@@ -114,7 +114,7 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 
 			if(text !== '') {
 				submit.disabled =  true;
-				loader.show(form, {size: '35px', center: true});
+				throbber.show(form, {size: '35px', center: true});
 
 				var data = {
 					action: 'ajax',
@@ -161,7 +161,7 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 						}
 
 						submit.disabled = false;
-						loader.hide(form);
+						throbber.hide(form);
 					}
 				});
 			}

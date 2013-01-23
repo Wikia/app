@@ -29,6 +29,8 @@ $wgHooks['UserMailerSend']           [] = "Wikia::onUserMailerSend";
 $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['PageHistoryLineEnding']    [] = "Wikia::onPageHistoryLineEnding";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
+$wgHooks['ResourceLoaderGetStartupModules'][] = 'Wikia::onResourceLoaderGetStartupModules';
+$wgHooks['AjaxAddScript'][] = 'Wikia::onAjaxAddScript';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -384,7 +386,7 @@ class Wikia {
 		if (function_exists("wfDebug")) {
 			wfDebug( $method . ": " . $message . "\n" );
 		} else {
-			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . "wfDebug is not defined");			
+			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . "wfDebug is not defined");
 		}
 	}
 
@@ -432,7 +434,7 @@ class Wikia {
 
 			if( !empty( $call['class'] ) ) $msg .= $call['class'] . '::';
 			$msg .= $call['function'] . '()';
-			
+
 			Wikia::log($method, false, $msg, true /* $force */);
 		}
 		$msg = "***** END *****";
@@ -1897,6 +1899,29 @@ class Wikia {
 		$modifiedTimes['wikia_app'] = filemtime("$IP/includes/specials/SpecialVersion.php");
 		$modifiedTimes['wikia_config'] = filemtime("$wgWikiaConfigDirectory/CommonSettings.php");
 
+		return true;
+	}
+
+	/**
+	 * Add AMD framework
+	 *
+	 * @param $modules Array
+	 * @return bool
+	 */
+	public static function onResourceLoaderGetStartupModules(&$modules) {
+		array_unshift($modules, 'amd');
+		return true;
+	}
+
+	/**
+	 * Add shared AMD modules
+	 *
+	 * @param $out OutputPage
+	 * @return bool
+	 */
+	public static function onAjaxAddScript(OutputPage $out) {
+		// because of dependency resolving this module needs to be loaded via JavaScript
+		$out->addModules( 'amd.shared' );
 		return true;
 	}
 

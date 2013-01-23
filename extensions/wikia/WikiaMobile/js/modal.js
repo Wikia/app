@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('modal', ['loader', 'events', require.optional('ads')], function modal(loader, events, ads){
+define('modal', ['throbber', 'events', require.optional('ads')], function modal(throbber, events, ads){
 	var d = document,
 		w = window,
 		html = d.documentElement,
@@ -149,14 +149,10 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 		//move topbar along with scroll manually for browsers with no support for position fixed
 		scrollable && !positionfixed && w.addEventListener('scroll', fixTopBar);
 
-		loader.show(content, {center: true});
+		throbber.show(content, {center: true});
 
-		if(con){
-			if(typeof con == 'object'){
-				Wikia.getMultiTypePackage(con);
-			}else if(typeof con == 'string'){
-				setContent(con);
-			}
+		if(typeof con == 'string'){
+			setContent(con);
 		}
 
 		if(classes && wrapper.className.indexOf(classes) == -1){
@@ -223,7 +219,7 @@ define('modal', ['loader', 'events', require.optional('ads')], function modal(lo
 	}
 
 	function setContent(con){
-		loader.remove(content);
+		throbber.remove(content);
 		if(typeof con === 'string'){
 			content.innerHTML = con;
 		}
