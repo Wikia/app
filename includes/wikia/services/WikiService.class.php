@@ -7,6 +7,11 @@ class WikiService extends WikiaModel {
 	/**
 	 * get list of wiki founder/admin/bureaucrat id
 	 * Note: also called from maintenance script.
+	 *
+	 * @param integer $wikiId
+	 * @param bool    $useMaster
+	 * @param bool    $excludeBots
+	 *
 	 * @return array of $userIds
 	 */
 	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false ) {
@@ -22,7 +27,7 @@ class WikiService extends WikiaModel {
 
 				// get admin and bureaucrat
 				if ( empty($this->wg->EnableAnswers) ) {
-					$memKey = $this->getMemKeyAdminIds( $wikiId );
+					$memKey = $this->getMemKeyAdminIds( $wikiId, $excludeBots );
 					$adminIds = null;//$this->wg->Memc->get( $memKey );
 					if ( !is_array($adminIds) ) {
 						$dbname = $wiki->city_dbname;
@@ -64,11 +69,14 @@ class WikiService extends WikiaModel {
 
 	/**
 	 * Get memcache key for list of admin_ids
+	 *
 	 * @param integer $wikiId
+	 * @param bool    $excludeBots
+	 *
 	 * @return string memcache key
 	 */
-	public function getMemKeyAdminIds( $wikiId ) {
-		return $this->wf->SharedMemcKey( 'wiki_admin_ids', $wikiId );
+	public function getMemKeyAdminIds( $wikiId, $excludeBots ) {
+		return $this->wf->SharedMemcKey( 'wiki_admin_ids', $wikiId, $excludeBots );
 	}
 
 	/**
@@ -162,7 +170,11 @@ class WikiService extends WikiaModel {
 
 	/**
 	 * get list of top editors
+	 *
+	 * @param integer $wikiId
 	 * @param integer $limit
+	 * @param bool    $excludeBots
+	 *
 	 * @return array topEditors [ array( user_id => edits ) ]
 	 */
 	public function getTopEditors( $wikiId = 0, $limit = 30, $excludeBots = false ) {
