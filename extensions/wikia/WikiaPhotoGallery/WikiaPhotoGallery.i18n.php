@@ -187,8 +187,8 @@ Alternatively, you can click "$2" to see the page in its updated form.',
 
 	'wikiaPhotoGallery-search-tooltip' => 'Search photos on this wiki',
 
-	'wikiaPhotoGallery-upload-image-size-error' => 'Wrong image size. Photos should be 660px by 360px or larger',
-	'wikiaPhotoGallery-upload-image-size' => 'Photos should be 660px by 360px or larger',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Wrong image size. Photos should be 670px by 360px or larger',
+	'wikiaPhotoGallery-upload-image-size' => 'Photos should be 670px by 360px or larger',
 	'wikiaPhotoGallery-not-displayed' => 'Not displayed',
 	'galery-slider-read-more' => ' Read more >'
 );
@@ -1480,7 +1480,7 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-upload-select-images' => 'Weçine',
 	'wikiaPhotoGallery-photooptions-done' => 'Qeyd kerd',
 	'wikiaPhotoGallery-preview-hover-modify' => 'bıvurne',
-	'wikiaPhotoGallery-preview-hover-delete' => 'besterne',
+	'wikiaPhotoGallery-preview-hover-delete' => 'bestere',
 	'wikiaPhotoGallery-preview-add-photo' => 'Fotraf deke',
 	'wikiaPhotoGallery-preview-tab-layout' => 'Ca gınayiş',
 	'wikiaPhotoGallery-preview-px' => 'px',

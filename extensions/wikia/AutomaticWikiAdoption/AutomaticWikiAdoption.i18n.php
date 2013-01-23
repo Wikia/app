@@ -2238,6 +2238,7 @@ $messages['uk'] = array(
  */
 $messages['zh-hans'] = array(
 	'wikiadoption' => '制动维基领养',
+	'wikiadoption-desc' => '供MediaWiki使用的“自动维基认领”扩展程序',
 	'wikiadoption-header' => '领养这个维基',
 	'wikiadoption-button-adopt' => '是，我想要领养{{SITENAME}}！',
 	'wikiadoption-adopt-inquiry' => '了解更多！',

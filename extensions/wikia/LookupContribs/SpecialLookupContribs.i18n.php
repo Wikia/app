@@ -340,6 +340,28 @@ $messages['diq'] = array(
 	'lookupcontribsall' => 'pêro',
 );
 
+/** Esperanto (Esperanto)
+ * @author Objectivesea
+ */
+$messages['eo'] = array(
+	'lookupcontribsfullurls' => 'plenaj URL-oj',
+	'lookupcontribslinks' => 'ligiloj al la kontribuaj',
+	'lookupcontribsgo' => 'Ek',
+	'lookupcontribsinvalidresults' => 'Nevalidaj rezultoj!',
+	'lookupcontribswiki' => 'Vikio',
+	'lookupcontribswikidbname' => 'Datenbaznomo',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Titolo',
+	'lookupcontribswikioptions' => 'Opcioj',
+	'lookupcontribscontribslink' => 'Ligilo al la kontribuaj',
+	'lookupcontribsnext' => 'posten',
+	'lookupcontribsprevious' => 'antaŭen',
+	'lookupcontribslog' => 'loglibro',
+	'lookupcontribscontribs' => 'kontribuoj',
+	'lookupcontribshist' => 'historio',
+	'lookupcontribsdiff' => 'malsamoj',
+);
+
 /** Spanish (español)
  * @author Peter17
  * @author Translationista

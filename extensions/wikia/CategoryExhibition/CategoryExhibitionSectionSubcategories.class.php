@@ -146,7 +146,7 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 				}
 				if ( empty($snippetText) ){
 					$snippetService = new ArticleService ( $item['page_id'] );
-					$snippetText = $snippetService->getTextSnippet();;
+					$snippetText = htmlspecialchars( $snippetService->getTextSnippet() );
 				}
 				$counter++;
 			}

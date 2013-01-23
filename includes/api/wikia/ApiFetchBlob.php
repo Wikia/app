@@ -56,7 +56,7 @@ class ApiFetchBlob extends ApiBase {
 		ini_set( "max_execution_time", 0 );
 
 		$params = $this->extractRequestParams();
-
+		$result = array();
 		#
 		# check token first
 		#
@@ -69,6 +69,8 @@ class ApiFetchBlob extends ApiBase {
 			}
 		}
 
+		$blob = null;
+		$hash = null;
 		#
 		# check for store and id parameters
 		#
@@ -82,11 +84,13 @@ class ApiFetchBlob extends ApiBase {
 				wfDebug( __METHOD__ . ": getting $id from $store\n" );
 
 				$url = sprintf( "DB://%s/%d", $store, $id );
-				$text = ExternalStore::fetchFromURL( $url );
-				if ( $text === false ) {
+				$blob = ExternalStore::fetchFromURL( $url );
+				if ( $blob === false ) {
 					wfProfileOut( __METHOD__ );
 					$this->dieUsage( 'Text not found', 3, 404 );
 				}
+				$hash = md5( $blob );
+				$blob = unpack( "H*", $blob)[1];
 			}
 			else {
 				wfDebug( __METHOD__ . ": store $store is not defined in wgLBFactoryConf\n" );
@@ -94,15 +98,9 @@ class ApiFetchBlob extends ApiBase {
 				$this->dieUsage( 'Text not found', 3, 404 );
 			}
 		}
-
-		$result = $this->getResult();
-		$result->setRawMode();
-		$result->disableSizeCheck();
-		$result->reset();
-		$result->addValue( null, 'text', $text );
-		$result->addValue( null, 'mime', 'text/plain' );
-		$result->enableSizeCheck();
-
+		$result[ "blob" ] = $blob;
+		$result[ "hash" ] = $hash;
+		$this->getResult()->addValue( null, $this->getModuleName(), $result );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -138,10 +136,6 @@ class ApiFetchBlob extends ApiBase {
 		);
 	}
 
-	public function getCustomPrinter() {
-		return new ApiFormatRaw( $this->getMain(), $this->getMain()->createPrinterByName( 'txt' ) );
-	}
-
 	public function getParamDescription() {
 		return array (
 			'token' => 'secret token',
@@ -158,7 +152,7 @@ class ApiFetchBlob extends ApiBase {
 
 	public function getExamples() {
 		return array(
-			'api.php?action=fetchblob&store=archive1&id=34&token=<secret token>'
+			'api.php?action=fetchblob&store=archive1&id=34&token=secret-token'
 		);
 	}
 

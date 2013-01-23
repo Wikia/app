@@ -93,9 +93,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'founderprogressbar-list-description1' => '{{doc-singularthey}}',
 	'founderprogressbar-photo-add10-label' => 'Goal.',
 	'founderprogressbar-category-add3-label' => '',
 );
@@ -1270,9 +1272,25 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'founderprogressbar-credits' => "Un perno d'atività e guida për fondator ëd neuve wiki",
+	'founderprogressbar-widget-label' => 'Progress ëd {{SITENAME}}',
+	'founderprogressbar-progress-label' => 'Atività fàite',
 	'founderprogressbar-progress-see-full-list' => 'Varda la lista completa',
 	'founderprogressbar-progress-hide-full-list' => 'Stërma la lista completa',
+	'founderprogressbar-skip-for-now' => 'Sàuta për adess',
 	'founderprogressbar-task-completed' => 'Completà',
+	'founderprogressbar-list-label' => 'Atività ëd {{SITENAME}}',
+	'founderprogressbar-list-description1' => "Pront a possé toa wiki an sla strà dël sucess? Completa tute toe atività listà sota për porté la bara dij tò progress al 100%! Mincadun dzor toa wiki a peul giuté e mincadun-a ëd soe contribussion a sarà contà ansema a j'atività dë sta lista.",
+	'founderprogressbar-list-description2' => "L'area dj'atività a lista tute j'atività ch'it deuve completé. S'it sàute n'atività, a sarà tramudà ant la session Atività Sautà e a resterà disponibla përchè ch'it la complete an qualsëssìa moment. A-i é-lo n'atività ant la lista ch'it pense a sarà mai giusta për toa wiki? Sagrinte pa -- quand che mach j'Atività Sautà a resto da completé i dësblocheroma toe Atività Bonus. Completa j'atività bonus për aussé ij pont ëd persentual për j'atività ch'it sauteras për sempe e riva a coaté ël 100%.",
+	'founderprogressbar-list-task-label' => 'Atività',
+	'founderprogressbar-list-skipped-task-label' => 'Atività Sautà',
+	'founderprogressbar-list-skipped-task-desc' => 'It peule completeje an qualsëssìa moment.',
+	'founderprogressbar-list-bonus-task-label' => 'Atività Bonus',
+	'founderprogressbar-list-bonus-task-desc' => "Completa la lista dj'atività për dësbloché j'atività bonus",
+	'founderprogressbar-task-call-to-action' => "Và a l'atività",
+	'founderprogressbar-completion-message' => "Congratulassion! It l'has fàit un travaj anciarmant e completà tute j'atività al 100%. Toa wiki a l'é bin an sla stra dël sucess, o a-i é già. Continua l'incredìbil travaj!",
+	'founderprogressbar-bonus-task-notice' => "Nòta: Minca atività bonus a peul esse continuà pi che na vòta. Completa pi ch'it peule për rivé al 100%",
+	'founderprogressbar-page-add10-label' => 'Rivà a $1 {{PLURAL:$1|pagina|pagine}}',
 );
 
 /** Pashto (پښتو)
