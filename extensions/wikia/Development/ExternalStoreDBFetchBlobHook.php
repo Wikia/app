@@ -76,6 +76,7 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 							__METHOD__,
 							array( "IGNORE" )
 						);
+						$dbw->commit();
 					}
 				}
 			}

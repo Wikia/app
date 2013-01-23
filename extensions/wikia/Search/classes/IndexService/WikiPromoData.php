@@ -15,7 +15,7 @@ class WikiPromoData extends AbstractWikiService
 	 * Allows us to cache the result after requesting once
 	 * @var array
 	 */
-	protected $result;
+	protected $result = array();
 
     /**
 	 * Access the promo text for a given wiki and set it in the document
@@ -25,7 +25,7 @@ class WikiPromoData extends AbstractWikiService
 	 */
 	public function execute() {
 		wfProfileIn(__METHOD__);
-		if ( $this->result == null && !empty(\F::app()->wg->EnableWikiaHomePageExt) ) {
+		if ( $this->result == array() && $this->interface->getGlobal( 'EnableWikiaHomePageExt' ) ) {
 			$homepageHelper = new \WikiaHomePageHelper();
 			$detail = $homepageHelper->getWikiInfoForVisualization( $this->interface->getWikiId(), $this->interface->getLanguageCode() );
 			$this->result = array(

@@ -1,7 +1,7 @@
 /*global showComboAjaxForPlaceHolder, UserLoginModal*/
 
 /*
- * Function for adding a video via video modal 
+ * Function for adding a video via video modal
  *
  */
 (function($, window) {
@@ -13,39 +13,44 @@
 	// temporary video survey code bugid-68723
 	var addSurveyLink = function() {
 		var surveyLink = $('#video-survey');
-		
+
 		if(!surveyLink.length){
 			return;
 		}
-		
+
 		var messages = surveyLink.find('span'),
 			count = messages.length,
 			chosen = Math.floor(Math.random() * count);
 
 		messages.eq(chosen).fadeIn();
 	};
-	
+
 	// run on dom ready
 	$(addSurveyLink);
 
+	var track = window.WikiaTracker.buildTrackingFunction({
+		action: WikiaTracker.ACTIONS.ADD,
+		category: null,
+		trackingMethod: 'both'
+	});
+
 	var AddVideo = function(element, options) {
-		
+
 		var self = this,
 			alreadyLoggedIn = false,
 			assetsLoaded = false;
-		
+
 		options = options || {};
 
 		var settings = {
 			modalWidth: 666,
-			gaCat: null,
 			callback: null
 		}
 
 		settings = $.extend(settings, options);
 
 		var controllerName = 'VideosController';
-		
+
 		if ( wgIsArticle == true ) {
 			controllerName = 'RelatedVideosController';
 		}
@@ -78,27 +83,21 @@
 				onClose: function() {
 					UserLogin.refreshIfAfterForceLogin();
 				}
-			});		
+			});
 		};
 
 		var getVideoModal = function(){
-			WikiaTracker.trackEvent(
-				'trackingevent',
-				{
-					'ga_category': settings.gaCat,
-					'ga_action': WikiaTracker.ACTIONS.ADD,
-					'ga_label': 'add-video'
-				},
-				'both'
-			);
-			
+			track({
+				label: 'add-video'
+			});
+
 			if(assetsLoaded) {
 				showVideoModal();
 			} else {
 				$.when(
 					$.nirvana.sendRequest({
-						controller: controllerName, 
-						method: 'getAddVideoModal', 
+						controller: controllerName,
+						method: 'getAddVideoModal',
 						type: 'GET',
 						format: 'json',
 						data: {
@@ -120,7 +119,7 @@
 				.fail(showError);
 			}
 		};
-		
+
 		var initModalScroll = function( modal ) {
 			self.addPos = 1;
 			self.addMax = Math.ceil(($('.item',self.addModal).length)/3);
@@ -132,39 +131,39 @@
 		};
 
 		var updateModalScrollButtons = function() {
-	
+
 	        if ( self.addPos == 1 ) {
 	            $('.scrollleft', self.addModal).addClass("inactive");
 	        } else {
 	            $('.scrollleft', self.addModal).removeClass("inactive");
 	        }
-	
+
 	        if ( self.addPos == self.addMax ) {
 	            $('.scrollright', self.addModal).addClass("inactive");
 	        } else {
 	            $('.scrollright', self.addModal).removeClass("inactive");
 	        }
 	    };
-	
+
 		var modalScrollLeft = function() {
 			modalScroll(-1);
 	        updateModalScrollButtons();
 		};
-	
+
 		var modalScrollRight = function() {
 			modalScroll(1);
 	        updateModalScrollButtons();
 		};
-	
+
 		var modalScroll = function( param, callback ) {
 			//setup variables
-	
+
 			var scroll_by = parseInt( $('.item', self.addModal).outerWidth(true) * 3 );
 			var anim_time = 500;
-	
+
 			// button vertical secondary left
 			var futureState = self.addPos + param;
-	
+
 			if( futureState >= 1 && futureState <= self.addMax ) {
 				var scroll_to = (futureState-1) * scroll_by;
 				self.addPos = futureState;
@@ -211,15 +210,9 @@
 					url: self.addModal.find('input').val()
 				},
 				function( formRes ) {
-					WikiaTracker.trackEvent(
-						'trackingevent',
-						{
-							'ga_category': settings.gaCat,
-							'ga_action': WikiaTracker.ACTIONS.ADD,
-							'ga_label': 'add-video-success'
-						},
-						'both'
-					);
+					track({
+						label: 'add-video-success'
+					});
 					GlobalNotification.hide();
 					if ( formRes.error ) {
 						enableVideoSubmit();
@@ -263,49 +256,49 @@
 	        );
 	        return false;
 	    };
-	
+
 	    var bindPreviewActions = function() {
-	
+
 	        self.addModal.delegate( '.preview_back', 'click', function() {
-	
+
 	            $("div.RVSuggestPreviewVideo .preview_container", self.addModal).remove();
 	            $("div.RVSuggestionCont", self.addModal).show();
 	            return false;
 	        } );
 	        self.addModal.delegate( '.insert', 'click', modalAddVideo );
-	
+
 	    };
-	
+
 		var modalAddVideo = function(ev) {
 			var video = 'File:'+$(ev.target).closest('.item').children('.item-title').attr('data-dbkey');
 			$('.videoUrl', self.addModal).val(video);
 			addVideoConfirm(ev);
 		};
-		
+
 		var showError = function(error) {
 			// check if error is a string because it could be xhr response or undefined
 			error = typeof error == 'string' ? error : $('.errorWhileLoading').html();
 			GlobalNotification.dom.stop(true, true);
 			GlobalNotification.show(error, 'error');
 		};
-	
+
 		var handleClick = function(e) {
 			e.preventDefault();
 			loginWrapper(getVideoModal);
-		};	
+		};
 
 		element.on('click', handleClick);
 
 	};
 
 	$.fn.addVideoButton = function(options) {
-	
+
 		return this.each(function() {
 			$(this).data('plugin_AddVideo', new AddVideo($(this), options));
 		});
-	
+
 	};
-	
+
 	window.AddVideo = AddVideo;
 
 })(jQuery, this);

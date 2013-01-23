@@ -103,6 +103,9 @@
 			abCustomVarsForAds = [];
         for ( abIndex = 0; abIndex < abList.length; abIndex++ ) {
             abExp = abList[abIndex];
+			if ( !abExp || !abExp.flags) {
+				continue;
+			}
 			if ( !abExp.flags.ga_tracking ) {
 				continue;
 			}
@@ -215,7 +218,7 @@
      * @param {number=0} opt_value Event Value. Have to be an integer.
      * @param {boolean=false} opt_noninteractive Event noInteractive.
      */
-    window.gaTrackEvent = function(category, action, opt_label, opt_value, 
+    window.gaTrackEvent = function(category, action, opt_label, opt_value,
                                    opt_noninteractive) {
         var args = Array.prototype.slice.call(arguments);
         args.unshift('_trackEvent');

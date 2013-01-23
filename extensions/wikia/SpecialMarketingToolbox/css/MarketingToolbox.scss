@@ -272,4 +272,13 @@ $chevron-color: #888;
 			margin-left: 3px;
 		}
 	}
+
+	.grid-4.alpha.sponsored-image {
+		border-bottom: 1px solid $vertical-border-color;
+		margin-bottom: 20px;
+		padding-bottom: 20px;
+		.filename-placeholder {
+			width: 330px;
+		}
+	}
 }

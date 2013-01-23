@@ -428,7 +428,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	}
 	
 	/**
-	 * @covers \WikiaSearch\MediaWikiInterface::getCacheResult
+	 * @covers \Wikia\Search\MediaWikiInterface::getCacheResult
 	 */
 	public function testGetCacheResult() {
 		
@@ -462,7 +462,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	}
 	
 	/**
-	 * @covers \WikiaSearch\MediaWikiInterface::getCacheResultFromString
+	 * @covers \Wikia\Search\MediaWikiInterface::getCacheResultFromString
 	 */
 	public function testGetCacheResultFromString() {
 		$interface = $this->interface->setMethods( array( 'getCacheResult', 'getCacheKey' ) )->getMock();
@@ -490,7 +490,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	}
 	
     /**
-	 * @covers \WikiaSearch\MediaWikiInterface::setCacheFromStringKey
+	 * @covers \Wikia\Search\MediaWikiInterface::setCacheFromStringKey
 	 */
 	public function testSetCacheFromStringKey() {
 		
@@ -531,7 +531,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	
 	/**
 	 * One day this test will actually work as advertised.
-	 * @covers \WikiaSearch\MediaWikiInterface::getBacklinksCountFromPageId
+	 * @covers \Wikia\Search\MediaWikiInterface::getBacklinksCountFromPageId
 	 */
 	public function testGetBacklinksCountFromPageId() {
 		$interface = $this->interface->setMethods( array( 'getTitleStringFromPageId' ) )->getMock();
@@ -566,7 +566,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	}
 	
 	/**
-	 * @covers \WikiaSearch\MediaWikiInterface::getGlobal
+	 * @covers \Wikia\Search\MediaWikiInterface::getGlobal
 	 */
 	public function testGetGlobal() {
 		$interface = MediaWikiInterface::getInstance();
@@ -581,7 +581,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	}
 	
     /**
-	 * @covers \WikiaSearch\MediaWikiInterface::setGlobal
+	 * @covers \Wikia\Search\MediaWikiInterface::setGlobal
 	 */
 	public function testSetGlobal() {
 		$interface = MediaWikiInterface::getInstance();
@@ -599,7 +599,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	}
 	
 	/**
-	 * @covers \WikiaSearch\MediaWikiInterface::getWikiId
+	 * @covers \Wikia\Search\MediaWikiInterface::getWikiId
 	 */
 	public function testGetWikiId() {
 		$interface = $this->interface->setMethods( array( 'getGlobal' ) )->getMock();
@@ -639,7 +639,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	}
 	
 	/**
-	 * @covers \WikiaSearch\MediaWikiInterface::getMediaDataFromPageId
+	 * @covers \Wikia\Search\MediaWikiInterface::getMediaDataFromPageId
 	 */
 	public function testGetMediaDataFromPageId() {
 		$interface = $this->interface->setMethods( array( 'pageIdHasFile', 'getFileForPageId' ) )->getMock();
@@ -688,7 +688,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	}
 
     /**
-     * @covers\WikiaSearch\MediaWikiInterface::pageIdHasFile 
+     * @covers\Wikia\Search\MediaWikiInterface::pageIdHasFile 
      */	
 	public function testPageIdHasFile() {
 		$interface = $this->interface->setMethods( array( 'getFileForPageId' ) )->getMock();
@@ -718,7 +718,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	}
 	
 	/**
-	 * @covers \WikiaSearch\MediaWikiInterface::getApiStatsForPageId 
+	 * @covers \Wikia\Search\MediaWikiInterface::getApiStatsForPageId 
 	 */
 	public function testGetApiStatsForPageId() {
 		$this->assertEquals(
@@ -735,7 +735,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	}
 	
 	/**
-	 * @covers \WikiaSearch\MediaWikiInterface::pageExists 
+	 * @covers \Wikia\Search\MediaWikiInterface::pageIdExists 
 	 */
 	public function testPageIdExists() {
 		$interface = $this->interface->setMethods( array( 'getPageFromPageId' ) )->getMock();
@@ -789,7 +789,7 @@ class MediaWikiInterfaceTest extends \WikiaSearchBasetest
 	}
 	
 	/**
-	 * @covers \WikiaSearch\MediaWikiInterface::getRedirectTitlesForPageId
+	 * @covers \Wikia\Search\MediaWikiInterface::getRedirectTitlesForPageId
 	 */
 	public function testGetRedirectTitlesForPageID() {
 		$interface = $this->interface->setMethods( array( 'getTitleKeyFromPageId' ) )->getMock();
