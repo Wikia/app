@@ -66,5 +66,6 @@ $app->registerSpecialPage('Promote', 'SpecialPromoteController');
 $wgAvailableRights[] = 'promote';
 $wgGroupPermissions['*']['promote'] = false;
 $wgGroupPermissions['staff']['promote'] = true;
+$wgGroupPermissions['helper']['promote'] = true;
 $wgGroupPermissions['sysop']['promote'] = true;
 $wgGroupPermissions['bureaucrat']['promote'] = true;
