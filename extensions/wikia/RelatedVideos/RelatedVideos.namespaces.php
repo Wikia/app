@@ -27,10 +27,10 @@ $namespaces['it'] = array(
 );
 
 $namespaces['ru'] = array(
-        NS_RELATED_VIDEOS => 'Похожее видео',
+        NS_RELATED_VIDEOS => 'Похожее_видео',
 );
 
 $namespaces['uk'] = array(
-        NS_RELATED_VIDEOS => 'Схоже відео',
+        NS_RELATED_VIDEOS => 'Схоже_відео',
 );
 
