@@ -39,7 +39,7 @@ describe("throbber module", function () {
 			throbber.show(body);
 
 			expect(body.children.length).toBe(1);
-			expect(body.children[0].className).toBe('wkMblLdr');
+			expect(body.children[0].className).toBe('wkMblThrobber');
 
 			throbber.remove(body);
 
