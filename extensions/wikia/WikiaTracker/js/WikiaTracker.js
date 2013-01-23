@@ -87,7 +87,7 @@ window.WikiaTracker = (function( window ) {
 	 * Unique entry point to track events to the internal datawarehouse and GA.
 	 * PLEASE DO NOT DUPLICATE THIS LOGIC IN OTHER FUNCTIONS.
 	 *
-	 * @param {Object} data
+	 * @param {Object} options
 	 *        A key-value hash of parameters.
 	 *
 	 *        keys: (Please ping tracking team leads before adding new ones)
@@ -110,7 +110,7 @@ window.WikiaTracker = (function( window ) {
 	 *            value (optional for GA tracking)
 	 *                The integer value for the event.
 	 *
-	 * @param {...Object} [dataN]
+	 * @param {...Object} [optionsN]
 	 *        Any number of additional hashes that will be merged into the first.
 	 *
 	 * @example
@@ -128,20 +128,22 @@ window.WikiaTracker = (function( window ) {
 	 * @author Hyun Lim <hyun(at)wikia-inc.com>
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
-	function track( data /* , ..., dataN */ ) {
-		var additionalData = slice.call( arguments, 1 ),
+	function track( /* options [ , ..., optionsN ] */ ) {
+		var args = slice.call( arguments ),
 			browserEvent = window.event,
+			data = {},
 			eventName = 'trackingevent',
 			gaqArgs = [],
 			i = 0,
 			key,
-			l = additionalData.length,
+			l = args.length,
 			tracking = {},
 			trackingMethod = 'none',
 			value;
 
+		// Merge options
 		for ( ; i < l; i++ ) {
-			extendObject( data, additionalData[ i ] );
+			extendObject( data, args[ i ] );
 		}
 
 		// Remap keys for data consistency
@@ -167,6 +169,7 @@ window.WikiaTracker = (function( window ) {
 		) ) {
 			Wikia.log( 'Missing or invalid parameters', 'error', logGroup );
 			Wikia.log( data, 'trace', logGroup );
+			console.log(trackingMethod);
 			return;
 		}
 
