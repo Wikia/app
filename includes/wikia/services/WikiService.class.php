@@ -28,34 +28,39 @@ class WikiService extends WikiaModel {
 				// get admin and bureaucrat
 				if ( empty($this->wg->EnableAnswers) ) {
 					$memKey = $this->getMemKeyAdminIds( $wikiId, $excludeBots );
-					$adminIds = $this->wg->Memc->get( $memKey );
-					if ( !is_array($adminIds) ) {
-						$dbname = $wiki->city_dbname;
-						$dbType = ( $useMaster ) ? DB_MASTER : DB_SLAVE;
-						$db = $this->wf->GetDB( $dbType, array(), $dbname );
 
-						$conditions = array("ug_group in ('sysop','bureaucrat')");
+					$adminIds = WikiaDataAccess::cache(
+						$memKey,
+						60 * 60 * 3,
+						function() use ($wiki, $useMaster, $excludeBots) {
+							$dbname = $wiki->city_dbname;
+							$dbType = ( $useMaster ) ? DB_MASTER : DB_SLAVE;
+							$db = $this->wf->GetDB( $dbType, array(), $dbname );
 
-						if ($excludeBots) {
-							$conditions[] = "ug_group not in (" .
-								$db->makeList(self::$botGroups) .
-								")";
+							$conditions = array("ug_group in ('sysop','bureaucrat')");
+
+							if ($excludeBots) {
+								$conditions[] = "ug_group not in (" .
+									$db->makeList(self::$botGroups) .
+									")";
+							}
+
+							$result = $db->select(
+								'user_groups',
+								'distinct ug_user',
+								array ("ug_group in ('sysop','bureaucrat')"),
+								__METHOD__
+							);
+
+							$adminIds = array();
+							while ( $row = $db->fetchObject($result) ) {
+								$adminIds[] = $row->ug_user;
+							}
+							$db->freeResult( $result );
+							return $adminIds;
 						}
+					);
 
-						$result = $db->select(
-							'user_groups',
-							'distinct ug_user',
-							array ("ug_group in ('sysop','bureaucrat')"),
-							__METHOD__
-						);
-
-						$adminIds = array();
-						while ( $row = $db->fetchObject($result) ) {
-							$adminIds[] = $row->ug_user;
-						}
-						$db->freeResult( $result );
-						$this->wg->Memc->set( $memKey, $adminIds, 60*60*3 );
-					}
 					$userIds = array_unique( array_merge($userIds, $adminIds) );
 				}
 			}
@@ -181,29 +186,32 @@ class WikiService extends WikiaModel {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
-		$memKey = $this->wf->SharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots );
-		$topEditors = $this->wg->Memc->get( $memKey );
-		if ( !is_array($topEditors) ) {
-			$topEditors = array();
 
-			$db = $this->wf->GetDB( DB_SLAVE, array(), 'specials' );
+		$topEditors = WikiaDataAccess::cache(
+			$this->wf->SharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots ),
+			60 * 60 * 3,
+			function() use ($wikiId, $limit, $excludeBots) {
+				$topEditors = array();
 
-			$result = $db->select(
-				array( 'events_local_users' ),
-				array( 'user_id', 'edits', 'all_groups' ),
-				array( 'wiki_id' => $wikiId, 'edits != 0' ),
-				__METHOD__,
-				array( 'ORDER BY' => 'edits desc', 'LIMIT' => $limit )
-			);
+				$db = $this->wf->GetDB( DB_SLAVE, array(), 'specials' );
 
-			while( $row = $db->fetchObject($result) ) {
-				if (!($excludeBots && $this->isBotGroup($row->all_groups))) {
-					$topEditors[$row->user_id] = intval( $row->edits );
+				$result = $db->select(
+					array( 'events_local_users' ),
+					array( 'user_id', 'edits', 'all_groups' ),
+					array( 'wiki_id' => $wikiId, 'edits != 0' ),
+					__METHOD__,
+					array( 'ORDER BY' => 'edits desc', 'LIMIT' => $limit )
+				);
+
+				while( $row = $db->fetchObject($result) ) {
+					if (!($excludeBots && $this->isBotGroup($row->all_groups))) {
+						$topEditors[$row->user_id] = intval( $row->edits );
+					}
 				}
-			}
 
-			$this->wg->Memc->set( $memKey, $topEditors, 60*60*3 );
-		}
+				return $topEditors;
+			}
+		);
 
 		$this->wf->ProfileOut( __METHOD__ );
 
