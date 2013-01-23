@@ -27,7 +27,6 @@ class WikiaTrackerController extends WikiaController {
 	 * @return boolean return true
 	 */
 	public function onMakeGlobalVariablesScript(Array &$vars) {
-		$vars['wikiaTrackingSpool'] = array();
 
 		// TODO: REMOVE? (PERFORMANCE?) We probably won't need these queues once the new system is done (since all calls will use wikiaTrackingSpool).
 		// There are a few usages around the code-base that would need to be removed if they really aren't needed & migrated otherwise.
@@ -56,16 +55,6 @@ class WikiaTrackerController extends WikiaController {
 		// Create a small stub which will spool up any event calls that happen before the real code is loaded.
 		$scripts .= "\n\n<!-- Spool any early event-tracking calls -->\n" .
 			Html::inlineScript( self::getTrackerSpoolingJs() ) . "\n";
-
-		// debug
-		/**
-		$scripts .= Html::inlineScript(<<<JS
-_wtq.push('/1_wikia/foo/bar');
-_wtq.push(['/1_wikia/foo/bar', 'profil1']);
-_wtq.push([['1_wikia', 'user', 'foo', 'bar'], 'profil1']);
-JS
-);
-		**/
 
 		return true;
 	}

@@ -1,4 +1,3 @@
-/*global _gaq: true */
 window.WikiaTracker = (function( window ) {
 	/** @private **/
 
