@@ -39,6 +39,12 @@ abstract class AbstractService
 	 */
 	protected $currentPageId;
 	
+	/**
+	 * Allows us to avoid duplication
+	 * @var array
+	 */
+	protected $processedDocIds = array();
+	
     /**
 	 * Allows us to instantiate a service with pageIds already set
 	 * @param array $pageIds
@@ -96,8 +102,12 @@ abstract class AbstractService
 				$documents[] = array( "delete" => array( "id" => $this->getCurrentDocumentId() ) );
 				continue;
 			}
+			if ( in_array( $this->getCurrentDocumentId(), $this->processedDocIds ) ) {
+				continue;
+			}
 			try {
 				$response = $this->execute();
+				$this->processedDocIds[] = $this->getCurrentDocumentId();
 				$time = microtime(true);
 				if (! empty( $response ) ) {
 				    $documents[] = $this->getJsonDocumentFromResponse( $response );
@@ -120,7 +130,7 @@ abstract class AbstractService
 	 * @return string
 	 */
 	public function getCurrentDocumentId() {
-		return sprintf( '%s_%s', $this->interface->getWikiId(), $this->currentPageId );
+		return sprintf( '%s_%s', $this->interface->getWikiId(), $this->interface->getCanonicalPageIdFromPageId( $this->currentPageId ) );
 	}
 	
 	/**
