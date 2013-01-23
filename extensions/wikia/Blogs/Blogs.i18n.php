@@ -165,6 +165,7 @@ $messages['qqq'] = array(
 Parameters:
 
 $1 - Username of blog author. GENDER is supported.',
+	'create-blog-listing-matches-info' => 'Informs the user of the number of blog posts (number is printed by AJAX) that meet the current criteria',
 	'blog-fromsitename' => 'Prints the name of the wiki the blog is from into an RSS feed. The $1 parameter is <nowiki>{{SITENAME}}</nowiki>.',
 	'blogs-comment-hidden' => 'If a tool like RevisionDelete has made the text of a comment inaccessible to the public, this message informs the reader the comment has been hidden',
 	'right-blog-comments-toggle' => '{{doc-right|blog-comments-toggle}}',
