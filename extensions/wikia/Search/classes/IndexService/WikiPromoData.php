@@ -16,7 +16,7 @@ class WikiPromoData extends AbstractWikiService
 	 * @var array
 	 */
 	protected $result;
-	
+
     /**
 	 * Access the promo text for a given wiki and set it in the document
 	 * @todo these need to be updated any time one of these values change for a wiki. could get dicey. will def need atomic update.
@@ -25,7 +25,7 @@ class WikiPromoData extends AbstractWikiService
 	 */
 	public function execute() {
 		wfProfileIn(__METHOD__);
-		if ( $this->result == null ) {
+		if ( $this->result == null && !empty(\F::app()->wg->EnableWikiaHomePageExt) ) {
 			$homepageHelper = new \WikiaHomePageHelper();
 			$detail = $homepageHelper->getWikiInfoForVisualization( $this->interface->getWikiId(), $this->interface->getLanguageCode() );
 			$this->result = array(
