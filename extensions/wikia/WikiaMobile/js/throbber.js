@@ -5,7 +5,7 @@
  */
 
 define('throbber', function throbber(){
-	var CLASS = 'wkMblLdr';
+	var CLASS = 'wkMblThrobber';
 
 	return {
 		show: function(elm, options) {
