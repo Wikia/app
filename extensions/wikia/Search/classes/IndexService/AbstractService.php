@@ -20,6 +20,12 @@ abstract class AbstractService
 	protected $interface;
 	
 	/**
+	 * Allows us to provide timing diagnostics for different services
+	 * @var bool
+	 */
+	protected $verbose = false;
+	
+	/**
 	 * Stores page ids so that we don't need to pass it to execute method
 	 * This allows us to reuse wiki-scoped logic
 	 * @var array
@@ -80,6 +86,9 @@ abstract class AbstractService
 		
 		$result = array( 'contents' => '', 'errors' => array() );
 		$documents = array();
+		if ( $this->verbose ) {
+    		$result['diagnostics'] = array();
+		}
 		
 		foreach ( $this->pageIds as $pageId ) {
 			$this->currentPageId = $pageId;
@@ -89,8 +98,13 @@ abstract class AbstractService
 			}
 			try {
 				$response = $this->execute();
+				$time = microtime();
 				if (! empty( $response ) ) {
 				    $documents[] = $this->getJsonDocumentFromResponse( $response );
+				    if ( $this->verbose ) {
+				    	$timeDiff = microtime() - $time;
+			    	    $result['diagnostics'][$this->currentPageId] = $timeDiff;
+				    }
 				}
 			} catch ( \WikiaException $e ) {
 				$result['errors'][] = $pageId;
@@ -123,5 +137,9 @@ abstract class AbstractService
 		    }
 		}
 		return $toJson;
+	}
+	
+	public function setVerbose( $verbose ) {
+		$this->verbose = $verbose;
 	}
 }
