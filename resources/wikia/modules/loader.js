@@ -81,15 +81,21 @@
 				jqueryAIM: 'wikia.aim',
 				twitter: {
 					file: '//platform.twitter.com/widgets.js',
-					check: function(){ return typeof (w.twttr && w.twttr.widgets) }
+					check: function(){
+						return typeof (w.twttr && w.twttr.widgets);
+					}
 				},
 				googleplus: {
 					file: '//apis.google.com/js/plusone.js',
-					check: function(){ return typeof (w.gapi && w.gapi.plusone) }
+					check: function(){
+						return typeof (w.gapi && w.gapi.plusone);
+					}
 				},
 				facebook: {
 					file: w.fbScript || '//connect.facebook.net/en_US/all.js',
-					check: function(){ return typeof w.FB },
+					check: function(){
+						return typeof w.FB;
+					},
 					addition: function(callbacks) {
 						// always initialize FB API when SDK is loaded on-demand
 						if (typeof w.onFBloaded === 'function') {
@@ -105,7 +111,9 @@
 				},
 				googlemaps: {
 					file: 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
-					check: function(){ return typeof (w.google && w.google.maps) },
+					check: function(){
+						return typeof (w.google && w.google.maps);
+					},
 					addition: function(callbacks){
 						w.onGoogleMapsLoaded = (function(callback) {
 							return function(){
