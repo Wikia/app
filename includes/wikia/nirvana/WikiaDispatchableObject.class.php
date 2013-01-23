@@ -10,7 +10,7 @@
  * @author Owen Davis <owen(at)wikia-inc.com>
  */
 abstract class WikiaDispatchableObject extends WikiaObject {
-	
+
 	/**
 	 * Mediawiki RequestContext object
 	 * @var $context RequestContext
@@ -22,13 +22,13 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 * @var $request WikiaRequest
 	 */
 	protected $request = null;
-	
+
 	/**
 	 * response object
 	 * @var $response WikiaResponse
 	 */
 	protected $response = null;
-	
+
 	/**
 	 * wether the class accepts external requests
 	 * @return boolean
@@ -118,18 +118,18 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	public function init() {}
 
 	/**
-	 * set context 
+	 * set context
 	 * @param RequestContext $context
 	 */
 
 	public function setContext(RequestContext $context) {
 		$this->context = $context;
 	}
-	
+
 	public function getContext() {
 		return $this->context;
 	}
-	
+
 	/**
 	 * set request
 	 * @param WikiaRequest $request
@@ -166,7 +166,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	// NOTE: This is the opposite behavior of the Oasis Module
 	// In a module, a public member variable goes to the template
 	// In a controller, a public member variable does NOT go to the template, it's a local var
-	
+
 	public function __set($propertyName, $value) {
 		if (property_exists($this, $propertyName)) {
 			$this->$propertyName = $value;
@@ -174,7 +174,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 			$this->response->setVal( $propertyName, $value );
 		}
 	}
-	
+
 	// Returns a reference now, allowing for better syntax during set operations
 	public function &__get($propertyName) {
 		if (property_exists($this, $propertyName)) {
@@ -183,7 +183,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 			return $this->response->getVal( $propertyName );
 		}
 	}
-	
+
 	public function __isset($propertyName) {
 		if (property_exists($this, $propertyName)) {
 			return isset($this->$propertyName);
@@ -193,23 +193,26 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 			return isset( $value );
 		}
 	}
-	
+
 	public function __unset($propertyName) {
 		if (property_exists($this, $propertyName)) {
 			unset ($this->$propertyName);
 		} else {
 			$this->response->unsetVal($propertyName);
-		}		
+		}
 	}
 
 	/**
-	 * get URL that would be used from Ajax Nirvana call to access this method
-	 * primary intended use is for Purging those URLs in Varnish
-	 * @return String url
+	 * Returns the URL that would be used for an Ajax or API call (Nirvana) to access this method
+	 *
+	 * @param string $method The method name
+	 * @param array $params An hash with the parameters for the request and their possible values,
+	 * schema ['paramName' => 'value', ...]
+	 *
+	 * @return string The absolute URL
 	 */
-	public static function getUrl( $method, $params = array() ) {
+	public static function getUrl( $method, Array $params = null ) {
 		$app = F::app();
-
 		$basePath = $app->wf->ExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
 
 		$baseParams = array(
@@ -217,45 +220,70 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 			'method' => $method
 		);
 
-		ksort( $params );
-
-		return $app->wf->AppendQuery(
-			$basePath,
-			array_merge( $baseParams, $params ) // all params
-		);
-	}
-
-	/**
-	 * purge external method call from caches
-	 */
-	public static function purgeMethod( $method, $params = array() ) {
-		$squidUpdate = new SquidUpdate(
-			array(
-				self::getUrl( $method, $params )
-			)
-		);
-		$squidUpdate->doUpdate();
-	}
-
-	/**
-	 *  purge external method with multiple sets of parameters 
-	 * 
-	 *  For example we have method which get some information about article: 
-	 *  controller=somectr&method=getSomeData&articleId=2 
-	 * 
-	 *  Now after some action in system we want to purge this method for articleId=1 and articleId=2
-	 * 
-	 *  we can call somectr::purgeMethodWithMultipleInputs('getSomeData', 'html', array( array('articleId' => 1), array('articleId' => 2) ) );
-	 *   
-	 */
-	public static function purgeMethodWithMultipleInputs($method, $paramsArray = array() ) {
-		$urls = array();
-		foreach($paramsArray as $params) {
-			$url = self::getUrl( $method, $params );
-			$urls[] = $url;			
+		if ( !empty( $params ) ) {
+			//WikiaAPI requests accept only sorted params
+			//to cut down caching variants
+			ksort( $params );
+			$baseParams = array_merge( $baseParams, $params );
 		}
 
-		$squidUpdate = new SquidUpdate( $urls );
-		$squidUpdate->doUpdate();		
+		return $app->wf->AppendQuery( $basePath, $baseParams );
+	}
+
+	/**
+	 * Purges URL's for multiple methods at once
+	 *
+	 * @param array $map A map with the schema [['methodName', ['paramName' => 'value', ...]], ...]
+	 *
+	 * @return array A list of the urls purged
+	 */
+	public static function purgeMethods( Array $map ){
+		$urls = [];
+
+		foreach ( $map as $data ) {
+			$urls[] = self::getUrl( $data[0], $data[1] );
+		}
+
+		if ( !empty( $urls ) ) {
+			$squidUpdate = new SquidUpdate( $urls );
+			$squidUpdate->doUpdate();
+		}
+
+		//returning the processed URL's
+		//more than for a practical reason
+		//this is a work-around for PHPunit's
+		//issues with mocking/spying chained static methods
+		return $urls;
+	}
+
+	/**
+	 * Purges the URL for a single method
+	 *
+	 * @param string $method The method name
+	 * @param array $params [OPTIONAL] An hash of the request's parameters with the schema ['paramName' => 'value', ...]
+	 *
+	 * @return array A list of the urls purged
+	 */
+	public static function purgeMethod( $method, Array $params = [] ) {
+		return self::purgeMethods( [[$method, $params]] );
+	}
+
+	/**
+	 * Purges multiple URL variants for a method, e.g. in case of different parameter values
+	 *
+	 * @param string $method The method name
+	 * @param array $paramsArray [OPTIONAL] An array of hashes with all the parameters variations,
+	 * schema [['paramName' => 'value1', ...], ['paramName' => 'value2', ...], ...]
+	 *
+	 * @return array A list of the urls purged
+	 */
+	public static function purgeMethodVariants( $method, Array $paramsArray = [] ) {
+		$map = [];
+
+		foreach ( $paramsArray as $params ) {
+			$map[] = [$method, $params];
+		}
+
+		return self::purgeMethods( $map );
 	}
 }

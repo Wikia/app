@@ -491,15 +491,7 @@ class ArticlesApiController extends WikiaApiController {
 				'category' => $cat
 			);
 
-			self::purgeMethod(
-				'getTop',
-				$param
-			);
-
-			self::purgeMethod(
-				'getList',
-				$param
-			);
+			self::purgeMethods( [['getTop', $param], ['getList', $param]] );
 		}
 
 		return true;
@@ -564,6 +556,7 @@ class ArticlesApiController extends WikiaApiController {
 		if ( $params !== '' ) {
 			$params = md5( implode( '|', $params ) );
 		}
+
 		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, $type, $name, $params );
 	}
 
