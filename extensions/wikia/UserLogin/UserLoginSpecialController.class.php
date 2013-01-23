@@ -67,6 +67,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string editToken - token for changing password
 	 */
 	public function index() {
+		//new, probably temp asset as a fix for P2, bugId:96140
+		$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginSpecial.js' );
+		
 		// redirect if signup
 		$type = $this->request->getVal('type', '');
 		if($type === 'signup') {
@@ -559,7 +562,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			'name' => 'username',
 			'isRequired' => true,
 			'label' => wfMsg('yourname'),
-			'isInvalid' => (!empty($errParam) && $errParam === 'username'),
+			'isInvalid' => (!empty($this->errParam) && $this->errParam === 'username'),
 			'value' => htmlspecialchars($this->username),
 			'tabindex' => ++$this->tabindex,
 		);
@@ -571,7 +574,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			'name' => 'password',
 			'isRequired' => true,
 			'label' => wfMsg('yourpassword'),
-			'isInvalid' => (!empty($errParam) && $errParam === 'password'),
+			'isInvalid' => (!empty($this->errParam) && $this->errParam === 'password'),
 			'value' => htmlspecialchars($this->password),
 			'tabindex' => ++$this->tabindex,
 		);
@@ -580,7 +583,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$forgotPassword = array(
 			'type' => 'custom',
 			'class' => 'forgot-password',
-			'output' => '<a href="#" tabindex="0">'.wfMsg('userlogin-forgot-password').'</a>',
+			'output' => '<a href="#" tabindex="0" class="forgot-your-password-link">' . wfMsg('userlogin-forgot-password') . '</a>',
 		);
 
 		$rememberMeInput = array(
@@ -628,8 +631,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$form['inputs'][] = $createAccount;
 		}
 
-		$form['isInvalid'] = !empty($result) && empty($errParam) && !empty($msg);
-		$form['errorMsg'] = !empty($msg) ? $msg : '';
+		$form['isInvalid'] = !empty($this->result) && empty($this->errParam) && !empty($this->msg);
+		$form['errorMsg'] = !empty($this->msg) ? $this->msg : '';
 		
 		if( !empty($this->returnto) ) {
 			$form['inputs'][] = array(
