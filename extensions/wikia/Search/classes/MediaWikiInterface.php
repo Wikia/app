@@ -263,7 +263,7 @@ class MediaWikiInterface
 			return '';
 		}
 		
-		return $this->getFileForPageId( $pageId )->getMetadata();
+		return ( $file = $this->getFileForPageId( $pageId ) ) ? $file->getMetadata() : array();
 	}
 	
 	/**
