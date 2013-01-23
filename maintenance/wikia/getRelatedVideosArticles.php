@@ -23,10 +23,7 @@
 			array(
 				'page_namespace' => 1100
 			),
-			__METHOD__,
-			array(
-				'GROUP BY' => 'page_namespace'
-			)
+			__METHOD__
 		);
 
 		$cnt = ( $row ) ? $row->cnt : 0 ;
@@ -49,7 +46,7 @@
 
 		$res = $db->select(
 			array( 'page' ),
-			array( 'page_title' ),
+			array( 'page_id, page_title' ),
 			array(
 				'page_namespace' => 1100
 			),
@@ -57,26 +54,53 @@
 		);
 		
 		while ( $res && $row = $db->fetchRow( $res ) ) {
-			$title = 'RelatedVideos:'.$row['page_title'];
+			echo "\tRemoving page 'RelatedVideos:".$row['page_title']."' (id: ".$row['page_id'].")\n";
 
-			$prog = '/usr/wikia/slot1/code/maintenance/nukePage.php';
-			$conf = '/usr/wikia/slot1/docroot/LocalSettings.php';
-			$delete = $dryRun ? '' : '--delete';
-
-			$title = preg_match("/'/", $title) ? '"'.$title.'"' : "'".$title."'";
-
-			$cmd = "SERVER_ID=$wikiId php $prog --conf $conf $delete $title";
-
-			echo "\tRunning: $cmd\n";
-			$result = wfShellExec( $cmd, $retval );
-			if ( $retval ) {
-				echo "Error code $retval: $result \n";
-			} else {
-				echo "$result \n";
-			}
+			nukePage($dryRun, $dbname, $row['page_id']);
 		}
 
 		$db->freeResult($res);
+	}
+
+	function nukePage ( $dryRun, $dbname, $id ) {
+		try {
+			$dbw = wfGetDB( DB_MASTER, array(), $dbname );
+		} catch (Exception $e) {
+			echo "Could not connect to database: ".$e->getMessage()."\n";
+			return;
+		}
+
+		$tbl_pag = $dbw->tableName( 'page' );
+		$tbl_rec = $dbw->tableName( 'recentchanges' );
+		$tbl_rev = $dbw->tableName( 'revision' );
+
+		# Get corresponding revisions
+		echo "\tSearching for revisions...";
+		$res = $dbw->query( "SELECT rev_id FROM $tbl_rev WHERE rev_page = $id" );
+		$revs = array();
+		foreach ( $res as $row ) {
+			$revs[] = $row->rev_id;
+		}
+		$count = count( $revs );
+		echo "found $count.\n";
+
+		# Delete the page record and associated recent changes entries
+		if ( !$dryRun ) {
+			echo "\tDeleting page record...";
+			$dbw->query( "DELETE FROM $tbl_pag WHERE page_id = $id" );
+			echo "done.\n";
+			echo "\tCleaning up recent changes...";
+			$dbw->query( "DELETE FROM $tbl_rec WHERE rc_cur_id = $id" );
+			echo "done.\n";
+
+			if ( $count ) {
+				echo "\tDeleting revisions...";
+				$tbl_rev = $dbw->tableName( 'revision' );
+				$set = implode( ', ', $revs );
+				$dbw->query( "DELETE FROM $tbl_rev WHERE rev_id IN ( $set )" );
+				echo "done.\n";
+			}
+		}
 	}
 
 	/**
