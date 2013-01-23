@@ -1,5 +1,4 @@
 <?php
-
 	/**
 	* Maintenance script to get number of RelatedVideos (NS 1100) articles on the wiki with wgRelatedVideosPartialRelease = false
 	* This is one time use script
@@ -11,7 +10,12 @@
 	 * @param string $dbname
 	 */
 	function getTotalRV( $dbname ) {
-		$db = wfGetDB( DB_SLAVE, array(), $dbname );
+		try {
+			$db = wfGetDB( DB_SLAVE, array(), $dbname );
+		} catch (Exception $e) {
+			echo "Could not connect to database: ".$e->getMessage()."\n";
+			return;
+		}
 
 		$row = $db->selectRow(
 			array( 'page' ),
@@ -19,14 +23,84 @@
 			array(
 				'page_namespace' => 1100
 			),
-			__METHOD__,
-			array(
-				'GROUP BY' => 'page_namespace'
-			)
+			__METHOD__
 		);
 
 		$cnt = ( $row ) ? $row->cnt : 0 ;
 		echo "\tTotal RelatedVideos articles (NS1100): $cnt\n";
+
+		return $cnt;
+	}
+
+	/**
+	 * Remove RelatedVideos articles on the wiki
+	 * @param string $dbname
+	 */
+	function removeRVArticles( $dryRun, $dbname, $wikiId ) {
+		try {
+			$db = wfGetDB( DB_MASTER, array(), $dbname );
+		} catch (Exception $e) {
+			echo "Could not connect to database: ".$e->getMessage()."\n";
+			return;
+		}
+
+		$res = $db->select(
+			array( 'page' ),
+			array( 'page_id, page_title' ),
+			array(
+				'page_namespace' => 1100
+			),
+			__METHOD__
+		);
+		
+		while ( $res && $row = $db->fetchRow( $res ) ) {
+			echo "\tRemoving page 'RelatedVideos:".$row['page_title']."' (id: ".$row['page_id'].")\n";
+
+			nukePage($dryRun, $dbname, $row['page_id']);
+		}
+
+		$db->freeResult($res);
+	}
+
+	function nukePage ( $dryRun, $dbname, $id ) {
+		try {
+			$dbw = wfGetDB( DB_MASTER, array(), $dbname );
+		} catch (Exception $e) {
+			echo "Could not connect to database: ".$e->getMessage()."\n";
+			return;
+		}
+
+		$tbl_pag = $dbw->tableName( 'page' );
+		$tbl_rec = $dbw->tableName( 'recentchanges' );
+		$tbl_rev = $dbw->tableName( 'revision' );
+
+		# Get corresponding revisions
+		echo "\tSearching for revisions...";
+		$res = $dbw->query( "SELECT rev_id FROM $tbl_rev WHERE rev_page = $id" );
+		$revs = array();
+		foreach ( $res as $row ) {
+			$revs[] = $row->rev_id;
+		}
+		$count = count( $revs );
+		echo "found $count.\n";
+
+		# Delete the page record and associated recent changes entries
+		if ( !$dryRun ) {
+			echo "\tDeleting page record...";
+			$dbw->query( "DELETE FROM $tbl_pag WHERE page_id = $id" );
+			echo "done.\n";
+			echo "\tCleaning up recent changes...";
+			$dbw->query( "DELETE FROM $tbl_rec WHERE rc_cur_id = $id" );
+			echo "done.\n";
+
+			if ( $count ) {
+				echo "\tDeleting revisions...";
+				$tbl_rev = $dbw->tableName( 'revision' );
+				$set = implode( ', ', $revs );
+				$dbw->query( "DELETE FROM $tbl_rev WHERE rev_id IN ( $set )" );
+				echo "done.\n";
+			}
+		}
 	}
 
 	/**
@@ -99,6 +173,7 @@
 	// ----------------------------- Main ------------------------------------
 
 	ini_set( "include_path", dirname( __FILE__ )."/../" );
+	ini_set('display_errors', 1);
 
 	require_once( "commandLine.inc" );
 
@@ -108,6 +183,7 @@
 		--setupVideoInfo               set up video info table
 		--enableSpecialVideosExt       enable Special Video Ext
 		--copyRVtoGlobalList           copy videos from RelatedVideo articles to GlabalList
+		--removeRVPages                remove the RelatedVideo namespace pages
 		--dry-run                      dry run (for setupVideoInfo, copyRVtoGlobalList)
 		--quiet                        show summary result only (for setupVideoInfo, copyRVtoGlobalList)
 		--help                         you are reading it right now\n\n" );
@@ -119,6 +195,7 @@
 	$dryRun = ( isset($options['dry-run']) );
 	$quiet = ( isset($options['quiet']) );
 	$copyRVtoGlobalList = ( isset($options['copyRVtoGlobalList']) );
+	$removeRVPages = ( isset($options['removeRVPages']) );
 
 	if ( empty($wgCityId) ) {
 		die( "Error: Invalid wiki id." );
@@ -150,6 +227,13 @@
 			// get number of RelatedVideos articles on the wiki
 			if ( $getTotalRV ) {
 				getTotalRV( $dbname );
+			}
+
+			// Remove the RelatedVideos articles
+			if ( $removeRVPages ) {
+				if (getTotalRV( $dbname )) {
+					removeRVArticles( $dryRun, $dbname, $wikiId );
+				}
 			}
 
 			// set up video info
