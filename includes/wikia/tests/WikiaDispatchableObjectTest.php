@@ -49,7 +49,7 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 		$squidMock =  $this->getMockBuilder( 'SquidUpdate' )
 			->disableOriginalConstructor()
 			->getMock();
-		$squidMock->expects( $this->exactly( 4 ) )
+		$squidMock->expects( $this->exactly( 5 ) )
 			->method( 'doUpdate' );
 		$this->proxyClass( 'SquidUpdate', $squidMock);
 
@@ -74,6 +74,10 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 		$this->assertEquals(
 			[$baseURI . 'testMultiple1&a=1&b=2', $baseURI . 'testMultiple2&c=3&d=4'],
 			$className::purgeMethods( [['testMultiple1', ['a' => 1, 'b' => 2]], ['testMultiple2', ['c' => 3, 'd' => 4]]] )
+		);
+		$this->assertEquals(
+			[$baseURI . 'testMultiple3', $baseURI . 'testMultiple4'],
+			$className::purgeMethods( ['testMultiple3', 'testMultiple4'] )
 		);
 	}
 }

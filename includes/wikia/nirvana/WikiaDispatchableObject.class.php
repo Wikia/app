@@ -234,6 +234,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 * Purges URL's for multiple methods at once
 	 *
 	 * @param array $map A map with the schema [['methodName', ['paramName' => 'value', ...]], ...]
+	 * or ['methodName', 'methodName2', ...]
 	 *
 	 * @return array A list of the urls purged
 	 */
@@ -241,12 +242,22 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 		$urls = [];
 
 		foreach ( $map as $data ) {
-			$urls[] = self::getUrl( $data[0], $data[1] );
+			if ( is_array( $data ) ) {
+				$method = $data[0];
+				$params = $data[1];
+			} else {
+				$method = $data;
+				$params = null;
+			}
+
+			$urls[] = self::getUrl( $method, $params );
 		}
 
 		if ( !empty( $urls ) ) {
 			$squidUpdate = new SquidUpdate( $urls );
 			$squidUpdate->doUpdate();
+		} else {
+			return false;
 		}
 
 		//returning the processed URL's
