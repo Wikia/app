@@ -82,7 +82,7 @@ class AbstractServiceTest extends \WikiaSearchBasetest
 	}
 	
 	/**
-	 * @covers \Wikia\Search\IndexService\AbstractService::getDocumentFromresponse
+	 * @covers \Wikia\Search\IndexService\AbstractService::getJsonDocumentFromResponse
 	 */
 	public function testGetJsonDocumentFromResponse() {
 		$service = $this->service->getMockForAbstractClass();
