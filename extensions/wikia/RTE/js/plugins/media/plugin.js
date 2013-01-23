@@ -370,7 +370,7 @@ CKEDITOR.plugins.add('rte-media',
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			var self = this;
 			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-				RTE.tools.callFunction(window.VET_show,$(self), {isPlaceholder: true});
+				RTE.tools.callFunction(window.VET_load_in_editor, $(self), {isPlaceholder: true});
 			});
 		});
 

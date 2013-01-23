@@ -72,29 +72,34 @@
 
 			};
 		} else if(mode === 'edit') {
-
 			callback = function (embedData) {
-				// generate wikitext
-				var wikitext = '[[' + embedData.href;
-			
-				if (embedData.thumb) {
-					wikitext += '|thumb';
-				}
-			
-				if (embedData.align) {
-					wikitext += '|' + embedData.align;
-				}
-			
-				if (embedData.width) {
-					wikitext += '|' + embedData.width + 'px';
-				}
-			
-				if (embedData.caption) {
-					wikitext += '|' + embedData.caption;
-				}
-			
-				wikitext += ']]';
 				if (element != 'undefined') {
+					var wikitext = '';
+					if(element.hasClass('media-placeholder')) {
+						wikitext = embedData.wikitext;
+					} else {
+						
+						// generate wikitext
+						wikitext = '[[' + embedData.href;
+					
+						if (embedData.thumb) {
+							wikitext += '|thumb';
+						}
+					
+						if (embedData.align) {
+							wikitext += '|' + embedData.align;
+						}
+					
+						if (embedData.width) {
+							wikitext += '|' + embedData.width + 'px';
+						}
+					
+						if (embedData.caption) {
+							wikitext += '|' + embedData.caption;
+						}
+					
+						wikitext += ']]';
+					}
 					if (element) {
 						// update existing video
 						RTE.mediaEditor.update(element, wikitext, embedData);
@@ -105,6 +110,7 @@
 						RTE.mediaEditor.addVideo(wikitext, embedData);
 					}
 				}
+				
 			};
 		}
 		

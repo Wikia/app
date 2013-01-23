@@ -500,9 +500,12 @@
 									$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 								}*/
 							//} else { 
-								//var wikitag = $('#VideoEmbedTag').val();
+								var wikitext = $('#VideoEmbedTag').val();
 								var options = {};
 		
+								if(wikitext) {
+									options.wikitext = wikitext;
+								}
 								if($('#VideoEmbedThumbOption').is(':checked')) {
 									options.thumb = 1;
 								} else {
