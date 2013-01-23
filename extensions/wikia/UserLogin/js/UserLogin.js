@@ -1,5 +1,13 @@
 /*global WikiaEditor:true */
 var UserLogin = {
+	forceLoggedIn: false,
+
+	refreshIfAfterForceLogin: function() {
+		if (this.forceLoggedIn) {
+			(new Wikia.Querystring()).addCb().goTo();
+		}
+	},
+
 	rteForceLogin: function() {
 		if (!window.wgComboAjaxLogin) {
 			//prevent onbeforeunload from being called when user is loging in

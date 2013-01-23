@@ -167,6 +167,7 @@ $messages['qqq'] = array(
 	'wikifactory-label-tags' => '{{Identical|Tag}}',
 	'wikifactory-label-masstags' => 'Label for a tab that contains a form, allowing staff to apply tags in bulk. [http://translatewiki.net/w/i.php?title=Thread:Translating_talk:Wikia/MassTag%3F_FindTag%3F/reply source]',
 	'wikifactory-label-findtags' => 'Label for a tab that contains a form, allowing staff to find wikis by tag. [http://translatewiki.net/w/i.php?title=Thread:Translating_talk:Wikia/MassTag%3F_FindTag%3F/reply source]',
+	'wikifactory-label-eznamespace' => '{{Optional}}',
 	'right-wikifactory' => '{{doc-right|wikifactory|ns=Wikia}}',
 	'action-wikifactory' => '{{doc-action|wikifactory}}',
 	'closewiki-nbr-wiki' => '',
@@ -176,9 +177,14 @@ $messages['qqq'] = array(
 	'awc-metrics-close' => '{{Identical|Close}}',
 	'awc-metrics-active' => '{{Identical|Active}}',
 	'awc-metrics-closed' => '{{Identical|Closed}}',
-	'awc-metrics-fewer-than' => '',
-	'awc-metrics-edits-label' => '',
-	'awc-metrics-pageviews-label' => 'Needs plural support for $1 and $2',
+	'awc-metrics-fewer-than' => 'Form text. Explains that the script will look for values fewer than the numeric input data. http://images.wikia.com/mixtestwiki/images/9/90/2013-01-TWN_WikiFactory_Metrics.png',
+	'awc-metrics-edits-label' => 'Label for input box. User puts in a number next to this label to match the number of edits the tool will use as a maximum threshold. For a visual explanation, please see: http://images.wikia.com/mixtestwiki/images/9/90/2013-01-TWN_WikiFactory_Metrics.png',
+	'awc-metrics-pageviews-label' => 'Form label. For a visual explanation: http://images.wikia.com/mixtestwiki/images/9/90/2013-01-TWN_WikiFactory_Metrics.png .
+Parameters:
+* $1 is the number of pageviews the tool will set as the maximum number of pageviews.
+* $2 is the number of days the tool will set at the maximum timeframe. 
+
+The fact that these are maximum values is explained by [[Wikia:Awc-metrics-fewer-than]].',
 	'awc-metrics-exact-match' => '{{Identical|Exact match}}',
 	'awc-metrics-recordspager' => 'Recordspager message. This message cannot support PLURAL for now, because it is used in JavaScript. Parameters:
 * $1 is the number of the first displayed record
@@ -1452,7 +1458,7 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'closewiki' => 'Wiki racnê',
-	'wf_city_url' => 'Adres',
+	'wf_city_url' => 'Adrese',
 	'wf_city_id' => 'id',
 	'wf_city_title' => 'Sername',
 	'wf_city_created' => 'Vıraziya',

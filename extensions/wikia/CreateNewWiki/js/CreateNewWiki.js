@@ -388,7 +388,7 @@ var WikiBuilder = {
 		for(var key in data) {
 			c[key] = data[key];
 		}
-		$.cookies.set('createnewwiki', JSON.stringify(c), {hoursToLive: 0, domain: wgCookieDomain, path: wgCookiePath});
+		$.cookies.set('createnewwiki', JSON.stringify(c), {hoursToLive: 24, domain: wgCookieDomain, path: wgCookiePath});
 		if(callback) {
 			callback();
 		}

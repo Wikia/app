@@ -2,6 +2,8 @@
 
 class SpecialAbTestingController extends WikiaSpecialPageController {
 
+	const FLAG_FIELD_PREFIX = 'flag_';
+
 	protected $abData;
 	protected $abTesting;
 
@@ -38,6 +40,8 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 	public function modal() {
 		$this->checkPermissions();
 
+		$abTesting = $this->getAbTesting();
+
 		$id = $this->getVal('id',0);
 		$type = $this->getVal('type','add');
 		$experiment = $this->getExperiment($id,true);
@@ -47,6 +51,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		$formId = 'AbTestingEditForm';
 		$fields = array();
 		$groups = array();
+		$lastFlags = $lastVersion ? $lastVersion['flags'] : AbTesting::DEFAULT_FLAGS;
 
 		$fields['id'] = array(
 			'type' => 'hidden',
@@ -98,7 +103,30 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'value' => $lastVersion ? $lastVersion['ga_slot'] : '',
 		);
 
+		$fields['flags_before'] = array(
+			'type' => 'raw',
+			'output' => '<div class="input-group">'
+		);
+
+		foreach (AbTesting::$flags as $flag => $name) {
+			$flagFieldConf = array(
+				'type' => 'checkbox',
+				'name' => self::FLAG_FIELD_PREFIX.$name,
+				'label' => $this->wf->msg('abtesting-heading-long-flag-'.$name),
+			);
+			if ( $abTesting->getFlagState($lastFlags,$flag) ) {
+				$flagFieldConf['attributes']['checked'] = 'checked';
+			}
+			$fields[self::FLAG_FIELD_PREFIX.$name] = $flagFieldConf;
+		}
+
+		$fields['flags_after'] = array(
+			'type' => 'raw',
+			'output' => '</div>'
+		);
+
 		// Treatment Groups
+		$rangesInfo = wfMsg( 'abtesting-ranges-info' );
 		foreach ($experiment['groups'] as $group) {
 			$ranges = '';
 			$groupId = $group['id'];
@@ -119,7 +147,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$groups[] = array(
 				'type' => 'text',
 				'name' => 'ranges[]',
-				'label' => $group['name'],
+				'label' => $group['name'] . ' ' . $rangesInfo,
 				'value' => $ranges,
 			);
 
@@ -164,6 +192,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		$data = $this->request->getParams();
 
 		$id = $data['id'];
+		$this->packFlags($data);
 		$experiment = $this->getExperiment($id, true);
 		if ( empty($experiment) ) {
 			return $this->error('The experiment has not been found');
@@ -194,6 +223,19 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'class' => 'edit-pencil sprite',
 			'text' => $this->wf->msg('abtesting-edit-button'),
 		);
+	}
+
+	protected function packFlags( &$data ) {
+		$flags = 0;
+		foreach (AbTesting::$flags as $flag => $name) {
+			$field =  self::FLAG_FIELD_PREFIX.$name ;
+			if ( !empty($data[ $field ]) ) {
+				$flags |= $flag;
+			}
+			unset( $data[ $field ] );
+		}
+		$data['flags'] = $flags;
+		return $flags;
 	}
 
 	protected function checkValueChanged( $old, $new, &$changed = false ) {
@@ -294,9 +336,10 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 
 		}
 
-		$this->checkValueChanged(@$info['lastVersion']['ga_slot'],$data['ga_slot'],$versionChanged);
 		$this->checkValueChanged(@$info['lastVersion']['start_time'],$data['start_time'],$versionChanged);
 		$this->checkValueChanged(@$info['lastVersion']['end_time'],$data['end_time'],$versionChanged);
+		$this->checkValueChanged(@$info['lastVersion']['ga_slot'],$data['ga_slot'],$versionChanged);
+		$this->checkValueChanged(@$info['lastVersion']['flags'],$data['flags'],$versionChanged);
 
 		$startTime = null;
 		$endTime = null;
@@ -305,7 +348,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$endTime = $abTesting->getTimestampForUTCDate($data['end_time']);
 
 			if ( $startTime < $nowPlusCache ) {
-				$status->error("Start time must be at least 10 minutes in the future");
+				$status->error("Start time must be at least 15 minutes in the future");
 			}
 
 			if ( $startTime >= $endTime ) {
@@ -334,7 +377,9 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 				// find previous and current versions
 				$versions = array_slice($exp['versions'],-2);
 				if ( !$hasFutureVersion ) {
-					array_shift($versions);
+					if (count($versions) > 1) {
+						array_shift($versions);
+					}
 					array_push($versions,$abData->newVersion());
 				}
 
@@ -361,6 +406,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 					'start_time' => $data['start_time'],
 					'end_time' => $data['end_time'],
 					'ga_slot' => $data['ga_slot'],
+					'flags' => $data['flags'],
 				) );
 				$abData->saveVersion($current);
 				$verId = $current['id'];
@@ -375,6 +421,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 					);
 					$abData->saveGroupRange($grn);
 				}
+				$abData->updateModifiedTime();
 			}
 		}
 

@@ -4,6 +4,7 @@
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/transition";
 @import "../mixins/submitpane";
+@import "../mixins/tooltip-icon";
 
 .UserLoginFacebook {
 	@include transition-shorthand(200ms opacity ease-in-out);
@@ -31,6 +32,17 @@
 			input[type=password] {
 				width: 238px;
 			}
+			.tooltip-icon-wrapper {
+				position: relative;
+				line-height: 15px;
+				.tooltip-icon {
+					@include tooltip-icon;
+					right: -15px;
+				}
+			}
+		}
+		.email {
+			margin-bottom: 0;
 		}
 	}
 }

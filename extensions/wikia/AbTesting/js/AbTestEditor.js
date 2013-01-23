@@ -8,7 +8,7 @@
 						'<input type="text" name="groups[]">',
 					'</div>',
 					'<div class="input-group">',
-						'<label>Range</label>',
+						'<label>Range (0--99)</label>',
 						'<input type="text" name="ranges[]">',
 					'</div>',
 				'</div>'
@@ -29,7 +29,7 @@
 		},
 
 		// Array of input names that may trigger a 'version change' warning.
-		versionChangeWarningNames = [ 'start_time', 'end_time', 'ga_slot', 'groups[]', 'ranges[]' ];
+		REGEX_versionChangeWarningNames = /^(start_time|end_time|ga_slot|groups\[\]|ranges\[\]|flag_.*)$/;
 
 	// TODO: does this need to be a class? Will it ever need to be
 	// instantiated more than once?
@@ -124,7 +124,8 @@
 			if (modal.find('.edit').exists()) {
 				modal.find(':input').bind( 'change keyup', $.proxy(this.checkVersionChange, this)).each(function(i, input) {
 					var $input = $( input );
-					$input.data( 'originalValue', $input.val() );
+					var val = !$input.is('[type=checkbox]') ? $input.val() : $input.attr('checked');
+					$input.data( 'originalValue', val );
 				});
 			}
 
@@ -140,34 +141,42 @@
 		cancelChange: function( e ) {
 			var button = $( e.currentTarget ),
 				inputGroup = button.closest( '.input-group' ),
-				input = inputGroup.children( ':input' ),
+				input = inputGroup.find( ':input' ),
 				name = input.attr( 'name' );
 
-			input.val( input.data( 'originalValue' ) );
+			if ( !input.is('[type=checkbox]') ) {
+				input.val( input.data( 'originalValue' ) );
+			} else {
+				input.data( 'originalValue' ) ? input.attr('checked','checked') : input.attr('checked',false);
+			}
 			this.removeWarning( inputGroup );
 		},
 		dismissWarning: function( e ) {
-			var button = $( e.currentTarget ),
-				inputGroup = button.closest( '.input-group' ),
-				input = inputGroup.children( ':input' ),
-				name = input.attr( 'name' ),
-				modal = $('#AbTestingEditForm').closest('.modalWrapper');
+			var modal = $('#AbTestingEditForm').closest('.modalWrapper'),
+				warnings = modal.find('.input-group > .error-msg'),
+				inputGroup, input,
+				self = this;
 
-			modal.addClass( 'warning-dismissed' );
-			input.addClass( 'dismissed' );
-			this.removeWarning( inputGroup );
+			modal.addClass('warning-dismissed');
+			warnings.each(function(i,warning){
+				inputGroup = $(warning).closest( '.input-group' );
+				input = inputGroup.children( ':input' );
+				input.addClass('dismissed');
+				self.removeWarning( inputGroup );
+			});
 		},
 		checkVersionChange: function( e ) {
 			var input = $( e.currentTarget ),
-				inputGroup = input.parent( '.input-group' ),
+				inputGroup = input.closest( '.input-group' ),
 				name = input.attr( 'name' ),
-				modal = $('#AbTestingEditForm').closest('.modalWrapper');
+				modal = $('#AbTestingEditForm').closest('.modalWrapper'),
+				val = !input.is('[type=checkbox]') ? input.val() : input.attr('checked');
 
 			// Issue warning for certain inputs if their value changes
-			if ( $.inArray( name, versionChangeWarningNames ) >= 0
+			if ( REGEX_versionChangeWarningNames.test(name)
 				&& !input.hasClass( 'dismissed' )
 				&& !modal.hasClass( 'warning-dismissed' )
-				&& input.val() != input.data( 'originalValue' ) ) {
+				&& val != input.data( 'originalValue' ) ) {
 				if ( !inputGroup.hasClass('error') ) {
 					inputGroup.addClass( 'error' ).append( templates.warningMessage );
 				}
@@ -179,6 +188,7 @@
 			inputGroup.removeClass( 'error' ).find( '.error-msg' ).remove();
 		},
 		submitEditForm: function() {
+			var self = this;
 			$.nirvana.sendRequest({
 				controller: 'SpecialAbTesting',
 				method: 'save',
@@ -187,7 +197,7 @@
 				callback: $.proxy(this.editFormResponse,this),
 				onErrorCallback: function() {
 					// todo: php error - show the message to the user about internal error
-					this.log(arguments);
+					self.log(arguments);
 				}
 			});
 		},

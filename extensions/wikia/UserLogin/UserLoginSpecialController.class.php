@@ -7,6 +7,8 @@
  *
  */
 class UserLoginSpecialController extends WikiaSpecialPageController {
+	const DROPDOWN_TABINDEX_START =  2;
+	const SPECIAL_USERLOGIN_TABINDEX_START = 7;
 
 	private $userLoginHelper = null;
 
@@ -160,6 +162,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->overrideTemplate( 'WikiaMobileIndex' );
 			}
 		}
+		
+		$this->tabindex = self::SPECIAL_USERLOGIN_TABINDEX_START;
+		$this->makeInputFieldForForgotPassword = true;
+		$this->formData = $this->generateFormData();
 	}
 
 	public function getUnconfirmedUserRedirectUrl() {
@@ -179,15 +185,29 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 */
 	public function dropdown() {
 		$query = $this->app->wg->Request->getValues();
-		if (isset($query['title'])) {
+		if( isset($query['title']) ) {
+			$this->returnto = $query['title'];
 			unset($query['title']);
 		}
-
+		
+		$this->tabindex = self::DROPDOWN_TABINDEX_START;
+		$this->suppressCreateAccount = true;
+		$this->supressLogInBtnBig = true;
 		$this->returntoquery = $this->app->wf->ArrayToCGI( $query );
+		$this->formData = $this->generateFormData();
+	}
+
+	public function modal() {
+		$this->loginToken = UserLoginHelper::getLoginToken();
+		$this->signupUrl = Title::newFromText('UserSignup', NS_SPECIAL)->getFullUrl();
+
+		$this->tabindex = self::SPECIAL_USERLOGIN_TABINDEX_START;
+		$this->formData = $this->generateFormData();
 	}
 
 	public function providers() {
 		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
+		$this->response->setVal( 'tabindex',  $this->request->getVal( 'tabindex', null ) );
 
 		// don't render FBconnect button when the extension is disabled
 		if ( empty( $this->wg->EnableFacebookConnectExt ) ) {
@@ -210,11 +230,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$this->overrideTemplate( 'WikiaMobileProviders' );
 		}
-	}
-
-	public function modal() {
-		$this->loginToken = UserLoginHelper::getLoginToken();
-		$this->signupUrl = Title::newFromText('UserSignup', NS_SPECIAL)->getFullUrl();
 	}
 
 	/**
@@ -526,6 +541,123 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->userLoginHelper->doRedirect();
 			}
 		}
+	}
+
+	/**
+	 * @desc Generates form array used in index(), modal() and dropdown() methods
+	 * @return array
+	 */
+	protected function generateFormData() {
+		$loginTokenInput = array(
+			'type' => 'hidden',
+			'name' => 'loginToken',
+			'value' => $this->loginToken
+		);
+
+		$userNameInput = array(
+			'type' => 'text',
+			'name' => 'username',
+			'isRequired' => true,
+			'label' => wfMsg('yourname'),
+			'isInvalid' => (!empty($this->errParam) && $this->errParam === 'username'),
+			'value' => htmlspecialchars($this->username),
+			'tabindex' => ++$this->tabindex,
+		);
+		$userNameInput['errorMsg'] = $userNameInput['isInvalid'] ? $this->msg : '';
+
+		$passwordInput = array(
+			'type' => 'password',
+			'class' => 'password-input',
+			'name' => 'password',
+			'isRequired' => true,
+			'label' => wfMsg('yourpassword'),
+			'isInvalid' => (!empty($this->errParam) && $this->errParam === 'password'),
+			'value' => htmlspecialchars($this->password),
+			'tabindex' => ++$this->tabindex,
+		);
+		$passwordInput['errorMsg'] = $passwordInput['isInvalid'] ? $this->msg : '';
+		
+		if( !empty($this->makeInputFieldForForgotPassword) ) {
+			$forgotPassword = array(
+				'name' => 'action',
+				'type' => 'submit',
+				'class' => 'forgot-password link',
+				'value' => wfMsg('userlogin-forgot-password'),
+				'tabindex' => 0,
+			);
+		} else {
+			$forgotPassword = array(
+				'type' => 'custom',
+				'class' => 'forgot-password',
+				'output' => '<a href="#" tabindex="0">' . wfMsg('userlogin-forgot-password') . '</a>',
+			);
+		}
+
+		$rememberMeInput = array(
+			'type' => 'checkbox',
+			'name' => 'keeploggedin',
+			'isRequired' => false,
+			'value' => '1',
+			'checked' => $this->keeploggedin,
+			'class' => 'keep-logged-in',
+			'label' => wfMsg('userlogin-remembermypassword'),
+			'tabindex' => ++$this->tabindex,
+		);
+
+		$loginButton = array(
+			'type' => 'submit',
+			'value' => wfMsg('login'),
+			'class' => 'login-button',
+			'tabindex' => ++$this->tabindex,
+		);
+		
+		if( empty($this->supressLogInBtnBig) ) {
+			$loginButton['class'] .= ' big';
+		}
+
+		$form = array(
+			'inputs' => array(
+				$loginTokenInput,
+				$userNameInput,
+				$passwordInput,
+				$forgotPassword,
+				$rememberMeInput,
+				$loginButton,
+			),
+			'action' => $this->formPostAction,
+			'method' => 'post',
+		);
+		
+		if( empty($this->suppressCreateAccount) ) {
+			$specialSignupLink = SpecialPage::getTitleFor('UserSignup')->getLocalURL();
+			$createAccount = array(
+				'type' => 'custom',
+				'output' => wfMsgExt('userlogin-get-account', 'content', array($specialSignupLink, ++$this->tabindex)),
+				'class' => 'get-account'
+			);
+			$form['inputs'][] = $createAccount;
+		}
+		
+		$form['isInvalid'] = !empty($this->result) && empty($this->errParam) && !empty($this->msg);
+		$form['errorMsg'] = !empty($this->msg) ? $this->msg : '';
+
+		if( !empty($this->returnto) ) {
+			$form['inputs'][] = array(
+				'type' => 'hidden',
+				'name' => 'returnto',
+				'value' => $this->returnto
+			);
+		}
+
+		if( !empty($this->returntoquery) ) {
+			$form['inputs'][] = array(
+				'type' => 'hidden',
+				'name' => 'returntoquery',
+				'value' => $this->returntoquery
+			);
+		}
+		
+		return $form;
 	}
 
 }

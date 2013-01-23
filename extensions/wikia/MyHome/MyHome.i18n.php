@@ -785,6 +785,7 @@ $messages['diq'] = array(
 	'myhome-user-contributions-feed' => 'İştıraqi',
 	'prefs-myhome' => 'Keyey me',
 	'myhome-feed-edit' => 'bıvurne',
+	'myhome-feed-delete' => 'esteriya',
 	'myhome-feed-created-by' => "$1'i vıraşt",
 	'myhome-feed-added-by' => "$1'i Dekerd de",
 	'myhome-feed-edited-by' => "$1'i vurna",

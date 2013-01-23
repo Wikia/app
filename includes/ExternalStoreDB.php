@@ -130,6 +130,11 @@ class ExternalStoreDB {
 				wfDebugLog( 'ExternalStoreDB', "ExternalStoreDB::fetchBlob master failed to find $cacheID\n" );
 			}
 		}
+
+		// start wikia change
+		wfRunHooks( "ExternalStoreDB::fetchBlob", array($cluster, $id, $itemID, &$ret ) );
+		// end wikia change
+		
 		if( $itemID !== false && $ret !== false ) {
 			// Unserialise object; caller extracts item
 			$ret = unserialize( $ret );

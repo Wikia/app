@@ -81,7 +81,7 @@ $messages['en'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Note:''' You are recreating a page that was previously deleted. [More info]",
 	'restore-edits-notice' => "Welcome back! We've restored some changes you had not published. <a class='notice-action restoreeditlink'>Delete my changes and start a new edit</a>",
 	'restore-edits-diff-notice' => "Welcome back! We've restored some changes you had not published. However, the page has been updated since then. Would you like to: <a class='notice-action restoreeditlink'>Delete my changes and start with the latest text</a> or <a class='notice-action difflink'>View a comparison of changes with the latest page</a>",
-	'mainpagewarning-notice' => "Learn more about [[w:c:community:Help:Main_page|editing the main page.]]",
+	'mainpagewarning-notice' => "Learn more about [[w:c:community:Help:Main_page|editing the main page]].",
 	'explainconflict-notice' => "'''Warning!''' Someone else has changed this page since you started editing it! [More info]",
 
 	// "editing" preferences sections
@@ -379,6 +379,8 @@ $messages['ca'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Nota:''' Estàs recreant una pàgina que abans va ser eliminada. [Més informació]",
 	'restore-edits-notice' => "Benvingut de nou! Hem restaurat alguns canvis que no havies publicat. <a class='notice-action restoreeditlink'>Suprimeix els meus canvis i comença una nova edició</a>",
 	'restore-edits-diff-notice' => "Benvingut de nou! Hem restaurat alguns canvis que no havies publicat. No obstant això, aquesta pàgina s'ha actualitzat des d'aleshores. Vols: <a class='notice-action restoreeditlink'>Suprimir els meus canvis i començar amb l'últim text</a> o <a class='notice-action difflink'>Veure una comparació dels canvis amb l'última pàgina</a>",
+	'mainpagewarning-notice' => "Més informació sobre [[w:c:community:Help:Main_page|l'edició de la pàgina principal.]]",
+	'explainconflict-notice' => "'''Atenció!''' Algú ha canviat la pàgina des de que has començat a editar. [Més informació]",
 	'prefs-general' => 'General',
 	'prefs-starting-an-edit' => 'Comença una edició',
 	'prefs-editing-experience' => "L'experiència d'editar",
@@ -575,6 +577,7 @@ $messages['diq'] = array(
  * @author Ciencia Al Poder
  * @author DJ Nietzsche
  * @author VegaDark
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'editpagelayout-more' => 'más',
@@ -639,7 +642,7 @@ $messages['es'] = array(
 	'userinvalidcssjstitle-notice' => '\'\'\'Aviso: No hay piel "$1". [Más información]',
 	'semiprotectedpagewarning-notice' => "'''Nota:''' Esta página ha sido protegida para que sólo usuarios registrados puedan editarla. Por favor, inicia sesión para editar. [Más información]",
 	'protectedpagewarning-notice' => "'''Aviso:''' Esta página ha sido protegida para que sólo los administradores puedan editarla. Los administradores del wiki pueden cambiar esta situación. [Más información]",
-	'titleprotectedwarning-notice' => "'''Aviso:''' Esta página ha sido protegida para que sólo los administradores puedan crearla. Los administradores del wiki pueden cambiar esta situación. [Más información]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''Nota:''' Esta página ha sido bloqueada para que sólo ciertos usuarios (administradores o usuarios registrados) puedan crearla. [Más información]",
 	'recreate-moveddeleted-warn-notice' => "'''Nota:''' Estás creando una página que fue borrada previamente. [Más información]",
 	'restore-edits-notice' => "¡Bienvenido! Hemos restaurado algunos cambios que no has publicado. <a class='notice-action restoreeditlink'>Borrar mis cambios y comenzar una nueva edición</a>",
 	'restore-edits-diff-notice' => "¡Bienvenido! Hemos restaurado algunos cambios que no has publicado. Sin embargo, la página se ha actualizado desde entonces. ¿Te gustaría <a class='notice-action restoreeditlink'>borrar mis cambios y comenzar con el texto más reciente</a> o <a class='notice-action difflink'>ver una comparación de los cambios con la última página</a>?",
@@ -801,12 +804,12 @@ $messages['fr'] = array(
 	'userinvalidcssjstitle-notice' => "'''Attention :''' l’habillage « $1 » n’existe pas. [Plus d’infos]",
 	'semiprotectedpagewarning-notice' => "'''Note :''' Cette page a été verrouillée de sorte que seuls les utilisateurs inscrits peuvent la modifier. Veuillez vous connecter pour la modifier. [Plus d’infos]",
 	'protectedpagewarning-notice' => "'''Remarque:''' Cette page a été verrouillée de sorte que seuls les administrateurs puissent la modifier. Les administrateurs locaux peuvent modifier cet état. [Plus d’infos]",
-	'titleprotectedwarning-notice' => "'''Remarque:''' Cette page a été verrouillée de sorte que seuls certains administrateurs peuvent la créer. Les administrateurs peuvent modifier cet état. [Plus d’infos]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''Remarque:''' Cette page a été verrouillée de sorte que seuls certains utilisateurs (administrateurs ou utilisateurs enregistrés) peuvent la créer. [Plus d’informations]",
 	'recreate-moveddeleted-warn-notice' => "'''Note :''' vous êtes en train de recréer une page qui a été précédemment supprimée. [Plus d’infos]",
 	'restore-edits-notice' => "Bienvenue ! Nous avons restauré certaines modifications que vous n’avez pas mises en ligne. <a class='notice-action restoreeditlink'>Supprimez mes modifications et recommencer</a>",
 	'restore-edits-diff-notice' => "Bienvenue ! Nous avons restauré certaines modifications que vous n’avez pas mises en ligne. Toutefois, la page a été mise à jour depuis. Que souhaitez-vous faire : <a class='notice-action restoreeditlink'>Supprimer mes modifications et commencer avec la dernière version à date</a> or <a class='notice-action difflink'>Afficher une comparaison des modifications avec la dernière version à date</a>",
 	'mainpagewarning-notice' => 'En savoir plus sur [[w:c:community:Help:Main_page|la modification de la page principale.]]',
-	'explainconflict-notice' => "'''Attention!''' Quelqu’un d’autre a modifié cette page depuis que vous avez commencé à la modifier! [Plus d’information]",
+	'explainconflict-notice' => "'''Attention !''' Quelqu’un d’autre a modifié cette page depuis que vous avez commencé à la modifier ! [Plus d’informations]",
 	'prefs-general' => 'Général',
 	'prefs-starting-an-edit' => 'Commencer à modifier',
 	'prefs-editing-experience' => 'Expérience de modification',
@@ -1557,11 +1560,12 @@ $messages['ms'] = array(
 	'userinvalidcssjstitle-notice' => "'''Amaran:''' Tiada kulit \"\$1\". [Maklumat lanjut]",
 	'semiprotectedpagewarning-notice' => "'''Perhatian:''' Laman ini telah dikunci. Hanya pengguna berdaftar boleh menyuntingnya. Sila log masuk untuk menyunting. [Maklumat lanjut]",
 	'protectedpagewarning-notice' => "'''Perhatian:''' Laman ini telah dikunci supaya pentadbir sahaja yang boleh menyuntingnya. Pentadbir tempatan boleh mengubah status ini. [Maklumat lanjut]",
-	'titleprotectedwarning-notice' => "'''Perhatian:''' Laman ini telah dikunci supaya pentadbir sahaja yang boleh menciptanya. Pentadbir tempatan boleh mengubah status ini. [Maklumat lanjut]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''Perhatian:''' Halaman ini telah dikunci dan hanya boleh diwujudkan oleh pengguna-pengguna yang tertentu (pentadbir atau pengguna berdaftar). [Maklumat lanjut]",
 	'recreate-moveddeleted-warn-notice' => "'''Perhatian:''' Anda sedang mencipta semula laman yang pernah dihapuskan. [Maklumat lanjut].",
 	'restore-edits-notice' => "Selamat kembali! Kami telah memulihkan beberapa perubahan yang anda belum terbitkan. <a class='notice-action restoreeditlink'>Padamkan perubahan saya dan mulakan suntingan baru</a>",
 	'restore-edits-diff-notice' => "Selamat kembali! Kami telah memulihkan beberapa perubahan yang anda belum terbitkan. Bagaimanapun, laman ini telah dikemaskinikan lagi sejak itu. Adakah anda ingin: <a class='notice-action restoreeditlink'>Padamkan perubahan saya dan mulakan dengan teks terbaru</a> atau <a class='notice-action difflink'>Lihat perbandingan perubahan dengan laman terkini</a>",
 	'mainpagewarning-notice' => 'Ketahui lebih lanjut tentang [[w:c:community:Help:Main_page|menyunting halaman utama.]]',
+	'explainconflict-notice' => "'''Amaran!''' Ada orang lain yang sudah menyunting halaman ini semenjak anda menyunting halaman ini! [Maklumat lanjut]",
 	'prefs-general' => 'Umum',
 	'prefs-starting-an-edit' => 'Bermula menyunting',
 	'prefs-editing-experience' => 'Pengalaman ketika menyunting',
@@ -2576,6 +2580,7 @@ $messages['zh-hans'] = array(
 	'editpagelayout-pageControls-back' => '返回编辑器',
 	'editpagelayout-pageControls-changes' => '更改',
 	'editpagelayout-blocked-user' => '您的用户名或IP地址已被封禁',
+	'editpagelayout-edit-summary-label' => '编辑摘要',
 	'editpagelayout-subject-headline-label' => '标题：',
 	'wikia-editor-media-image' => '照片',
 	'wikia-editor-media-gallery' => '图库',
@@ -2608,9 +2613,10 @@ $messages['zh-hans'] = array(
 	'userinvalidcssjstitle-notice' => "'''警告：''' 皮肤\"\$1\"不存在。 [更多信息]",
 	'semiprotectedpagewarning-notice' => "'''注：''' 本页面已被锁定，仅注册用户可以编辑。您可能需要登录以进行编辑。[详细内容]",
 	'protectedpagewarning-notice' => "'''注：''' 本页面已被锁定，只有管理员可以编辑。本地管理员可以更改此状态。[详细内容]",
-	'titleprotectedwarning-notice' => "'''注：''' 本页面已被锁定，只有管理员可以创建。本地管理员可以更改此状态。[详细内容]", # Fuzzy
+	'titleprotectedwarning-notice' => "'''注：''' 本页面已被锁定，只有特定用户（管理员、注册用户）可以创建。[详细内容]",
 	'recreate-moveddeleted-warn-notice' => "'''注：'''您正在重新创建一个已删除页面。[详细内容]",
 	'restore-edits-notice' => "欢迎回来！我们保存了一些您尚未发布的更改。<a class='notice-action restoreeditlink'>删除我的更改，开始新的编辑</a>",
+	'explainconflict-notice' => "'''警告!'''其他用户在您开始编辑后已对此页做出了改动！[详细信息]",
 	'prefs-general' => '简单介绍',
 	'prefs-starting-an-edit' => '开始编辑',
 	'tog-minordefault' => '默认将所有编辑标为“小编辑”',

@@ -74,3 +74,12 @@ $wgGroupPermissions['user']['relatedvideos'] = true;
 //$wgGroupPermissions['staff']['relatedvideos'] = true;
 $wgNamespaceProtection[ NS_RELATED_VIDEOS ] = array( 'relatedvideos' );
 $wgNonincludableNamespaces[] = NS_RELATED_VIDEOS;
+
+$wgAvailableRights[] = 'relatedvideosedit';
+if ( empty($wgRelatedVideosAdminOnly) ) {
+	$wgGroupPermissions['*']['relatedvideosedit'] = true;
+} else {
+	$wgGroupPermissions['*']['relatedvideosedit'] = false;
+	$wgGroupPermissions['staff']['relatedvideosedit'] = true;
+	$wgGroupPermissions['sysop']['relatedvideosedit'] = true;
+}

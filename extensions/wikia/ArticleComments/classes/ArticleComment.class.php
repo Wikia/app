@@ -336,7 +336,14 @@ class ArticleComment {
 
 		$comment = false;
 		if ( $this->load($master) ) {
-			$articleDataKey = wfMemcKey( 'articlecomment', 'comm_data_v2', $this->mLastRevId, $wgUser->getId() );
+			$canDelete = $wgUser->isAllowed( 'delete' );
+
+			if ( self::isBlog() ) {
+				$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
+			}
+
+			//vary cache on permision as well so it changes we can show it to a user
+			$articleDataKey = wfMemcKey( 'articlecomment', 'comm_data_v2', $this->mLastRevId, $wgUser->getId(), $canDelete );
 			$data = $wgMemc->get( $articleDataKey );
 
 			if(!empty($data)) {
@@ -344,8 +351,6 @@ class ArticleComment {
 				$data['timestamp'] = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $data['articleId'] ) ) . '#comm-' . $data['articleId'] . "' class='permalink'>" . wfTimeFormatAgo($data['rawmwtimestamp']) . "</a>";
 				return $data;
 			}
-
-			$canDelete = $wgUser->isAllowed( 'delete' );
 
 			$sig = ( $this->mUser->isAnon() )
 				? AvatarService::renderLink( $this->mUser->getName() )
@@ -362,10 +367,6 @@ class ArticleComment {
 
 			//this is for blogs we want to know if commenting on it is enabled
 			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $this->mTitle->getBaseText() ) );
-
-			if ( self::isBlog() ) {
-				$canDelete = $canDelete || $wgUser->isAllowed( 'blog-comments-delete' );
-			}
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</button>';

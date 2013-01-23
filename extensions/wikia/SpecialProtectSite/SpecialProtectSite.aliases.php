@@ -12,3 +12,10 @@ $specialPageAliases['en'] = array(
 $specialPageAliases['pl'] = array(
 	'Protectsite' => array( 'Zabezpiecz', 'Protectsite' )
 );
+
+/**
+ * Spanish (Espanol)
+ */
+$specialPageAliases['es'] = array(
+	'Protectsite' => array( 'ProtegerWiki', 'Protectsite' )
+);

@@ -2,7 +2,14 @@
 var WikiaHubs = {
 	init: function () {
 		WikiaHubs.el = $('#WikiaHubs');
-		WikiaHubs.el.click(WikiaHubs.clickTrackingHandler);
+		
+		if( typeof(WikiaHubs.el.ontouchstart) === 'function') {
+		//possibly only mobile devices (phones, tablets)
+			WikiaHubs.el.bind('touchstart', WikiaHubs.clickTrackingHandler);
+		} else {
+		//possibly only desktops
+			WikiaHubs.el.mousedown(WikiaHubs.clickTrackingHandler);
+		}
 
 		// Featured Video
 		$('#WikiaHubs .wikiahubs-sponsored-video .thumbinner').mousedown(function (e) {

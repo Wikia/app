@@ -190,6 +190,8 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
 	'scavengerhunt-label-general' => '{{Identical|General}}',
+	'scavengerhunt-editor-tip-entry-form-email' => '{{doc-singularthey}}',
+	'scavengerhunt-editor-tip-entry-form-username' => '{{doc-singularthey}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -2122,6 +2124,24 @@ $messages['ro'] = array(
 	'scavengerhunt-button-add' => 'Adaugă un joc',
 	'scavengerhunt-entry-form-name' => 'Numele tău:',
 	'scavengerhunt-entry-form-email' => 'Adresa ta de e-mail:',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'scavengerhunt-list-header-actions' => 'Aziune',
+	'scavengerhunt-list-enabled' => 'Abbilitate',
+	'scavengerhunt-list-disabled' => 'Disabbilitate',
+	'scavengerhunt-list-edit' => 'cange',
+	'scavengerhunt-label-general' => 'Generale',
+	'scavengerhunt-label-name' => 'Nome:',
+	'scavengerhunt-label-entry-form-button-text' => "Teste d'u buttone:",
+	'scavengerhunt-button-save' => 'Reggìstre',
+	'scavengerhunt-button-delete' => 'Scangìlle',
+	'scavengerhunt-button-export' => "Esporte jndr'à CSV",
+	'scavengerhunt-entry-form-name' => "'U nome tue:",
+	'scavengerhunt-quit-game-button-cancel' => 'Annulle',
 );
 
 /** Russian (русский)

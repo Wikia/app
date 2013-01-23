@@ -15,7 +15,7 @@ $wgShowExceptionDetails = true;
 require_once('/usr/wikia/devbox/DevBoxVariables.php');
 
 $IP = '/usr/wikia/source/wiki';
-$wgWikiaLocalSettingsPath  = __FILE__;
+$wgWikiaLocalSettingsPath  = '/usr/wikia/docroot/wiki.factory/LocalSettings.php';
 $wgWikiaAdminSettingsPath = dirname( $wgWikiaLocalSettingsPath ) . "/../AdminSettings.php";
 
 $wgDevelEnvironment = true;
@@ -31,7 +31,7 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonSettings.php' );
 #
 # initialize Connection Poll
 #
-require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' );
+require_once( dirname( $wgWikiaLocalSettingsPath ) . "/../DB.{$wgWikiaDatacenter}-dev.php" );
 
 /**
  * Definition of global memcached servers
@@ -79,6 +79,8 @@ switch($wgWikiaDatacenter) {
 			0 => "10.14.30.143:11000", # dev-memcached-p1
 			1 => "10.14.30.143:11000", # dev-memcached-p2
 		);
+
+		require_once( "$IP/extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php" );
 		break;
 }
 
@@ -100,7 +102,6 @@ $wgWikiaEnableWikiFactoryExt = true;
 
 $wgEnableUserChangesHistoryExt = false;
 
-$wgAllInOne = false;
 $wgEnableFixRecoveredUsersExt = false;
 
 // enable ExternalUsers
@@ -108,6 +109,9 @@ $wgExternalUserEnabled = true;
 
 // antispoof extension needs statsdb setup, only on prod for now
 $wgEnableAntiSpoofExt = false;
+
+//disabling TorBlock on devboxes because it is soooooo slow
+$wgEnableTorBlockExt = false;
 
 // Google Maps key for wikia-dev.com (different than the key for wikia.com).
 $wgGoogleMapsKey = 'ABQIAAAAH6bdoxGNhXgildFjnRAQjBTsndpDQKTEb03AQ6hTlU-KPVq60xQdoVVgLuXn-IrTw3LW8MYBMaYx9Q';
@@ -133,7 +137,7 @@ if (empty($wgRunningUnitTests)) {
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
-// The list of cached i18n files is "fixed" too early as a side effect 
+// The list of cached i18n files is "fixed" too early as a side effect
 // of extension init functions which check user options (like FBConnect)
 // this speeds up devboxes a lot because init() is faster than recache()
 // TODO: I think this affects production also
@@ -158,15 +162,18 @@ $wgLocalisationCacheConf[ "manualRecache" ] = false;
 // disable irc feed
 $wgRC2UDPEnabled = false;
 
-// fetch SASS files from devboxes (BugId:8545)
+// set allinone to 1 by default (you can always overwrite this value in DevBoxSettings.php)
+$wgAllInOne = true;
+
+// static assets host
 $wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
+$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
 // macbre: generate proper paths for static assets on devboxes (BugId:6809)
 $wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images requested from CSS/SASS
 $wgStylePath = "{$wgCdnStylePath}/skins";
 $wgExtensionsPath = "{$wgCdnStylePath}/extensions";
 $wgResourceBasePath = $wgCdnStylePath;
-$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
 // fetch GoogleMaps resources from devboxes
 $wgGoogleMapsUrlPath = $wgExtensionsPath . '/3rdparty/GoogleMaps';

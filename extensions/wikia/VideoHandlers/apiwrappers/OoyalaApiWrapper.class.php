@@ -43,7 +43,7 @@ class OoyalaApiWrapper extends ApiWrapper {
 		}
 
 		$provider = self::getProviderName( $this->interfaceObj['labels'] );
-		$provider = str_replace( ' ', '', $provider );
+		$provider = preg_replace( '/[\s\W]+/', '', $provider );
 
 		return strtolower( $provider );
 	}
@@ -318,8 +318,8 @@ class OoyalaApiWrapper extends ApiWrapper {
 			return $this->metadata['startDate'];
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['startdate']) ) {
-			return strtotime( $this->interfaceObj['metadata']['startdate'] );
+		if ( !empty($this->interfaceObj['time_restrictions']['start_date']) ) {
+			return strtotime( $this->interfaceObj['time_restrictions']['start_date'] );
 		}
 
 		return '';
@@ -373,4 +373,79 @@ class WarnerbrothersApiWrapper extends OoyalaApiWrapper {
 }
 
 class FoxApiWrapper extends OoyalaApiWrapper {
+}
+
+class AllianceApiWrapper extends OoyalaApiWrapper {
+}
+
+class BiowareApiWrapper extends OoyalaApiWrapper {
+}
+
+class SquareenixApiWrapper extends OoyalaApiWrapper {
+}
+
+class TrionApiWrapper extends OoyalaApiWrapper {
+}
+
+class MadhouseApiWrapper extends OoyalaApiWrapper {
+}
+
+class BandaiApiWrapper extends OoyalaApiWrapper {
+}
+
+class CapcomApiWrapper extends OoyalaApiWrapper {
+}
+
+class GamesworkshopApiWrapper extends OoyalaApiWrapper {
+}
+
+class JagexApiWrapper extends OoyalaApiWrapper {
+}
+
+class PerfectworldApiWrapper extends OoyalaApiWrapper {
+}
+
+class WaltdisneyApiWrapper extends OoyalaApiWrapper {
+}
+
+class DreamworksApiWrapper extends OoyalaApiWrapper {
+}
+
+class PixarApiWrapper extends OoyalaApiWrapper {
+}
+
+class TatemultimediaApiWrapper extends OoyalaApiWrapper {
+}
+
+class EpktvApiWrapper extends OoyalaApiWrapper {
+}
+
+class LionsgateApiWrapper extends OoyalaApiWrapper {
+}
+
+class SummitApiWrapper extends OoyalaApiWrapper {
+}
+
+class CbsfilmsApiWrapper extends OoyalaApiWrapper {
+}
+
+class WeinsteincoApiWrapper extends OoyalaApiWrapper {
+}
+
+class GamespressApiWrapper extends OoyalaApiWrapper {
+}
+
+class SegaApiWrapper extends OoyalaApiWrapper {
+}
+
+class OpenroadfilmsApiWrapper extends OoyalaApiWrapper {
+}
+
+class UbisoftApiWrapper extends OoyalaApiWrapper {
+}
+
+class NamcoApiWrapper extends OoyalaApiWrapper {
+}
+
+class GrindinggearApiWrapper extends OoyalaApiWrapper {
 }

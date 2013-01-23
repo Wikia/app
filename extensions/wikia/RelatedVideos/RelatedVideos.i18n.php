@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'related-videos-tally' => 'Related Videos',
+	'related-videos-tally' => 'Videos',
 	'related-videos-tally-article' => 'Videos on this article',
 	'related-videos-tally-wiki' => 'Videos on this wiki',
 	'related-videos-added-by' => 'Added by',
@@ -16,7 +16,7 @@ $messages['en'] = array(
 	'related-videos-add-video-error-bad-url' => 'The supplied URL is invalid.',
 	'related-videos-add-video-error-nonexisting' => 'This video does not exist.',
 	'related-videos-add-video-error-bad-name' => 'The name of the video contains illegal characters. Please select another URL.',
-	'related-videos-add-video-error-permission-video' => 'You do not have privileges to add video to this wiki.',
+	'related-videos-add-video-error-permission-video' => 'This wiki only allows permitted users to add videos to this module.',
 	'related-videos-add-video-error-protected-video' => 'You cannot add a video to this wiki.',
 	'related-videos-add-video-error-duplicate' => 'This video has already been added.',
 	'related-videos-error-unknown' => 'An unknown error occurred. Code: $1.',

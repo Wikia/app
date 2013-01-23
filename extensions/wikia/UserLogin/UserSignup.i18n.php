@@ -241,6 +241,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 
 /** Message documentation (Message documentation)
  * @author McDutchie
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -281,7 +282,8 @@ $messages['qqq'] = array(
 	'usersignup-confirm-email-change-email' => 'Action link to open a dialog to change email.',
 	'usersignup-confirm-email-new-email-label' => 'Label for email input.',
 	'usersignup-confirm-email-update' => 'Button to submit e-mail address update form.',
-	'usersignup-confirm-email-tooltip' => 'Tooltip letting user know they can change their email.  Tooltip is on the same line as usersignup-confirm-email-change-email-content',
+	'usersignup-confirm-email-tooltip' => '{{doc-singularthey}}
+Tooltip letting user know they can change their email.  Tooltip is on the same line as {{msg-w|usersignup-confirm-email-change-email-content}}',
 	'usersignup-resend-email-heading-success' => 'Validation message telling the user the email has been re-sent.',
 	'usersignup-resend-email-heading-failure' => 'Error message telling the user email has not been re-sent',
 	'usersignup-confirm-page-heading-confirmed-user' => 'Congratulatory message when user has confirm email on confirmation page.',
@@ -334,11 +336,10 @@ $messages['qqq'] = array(
 	'usersignup-account-creation-heading' => 'Page heading for confirm page when byemail=1 is used.',
 	'usersignup-account-creation-subheading' => 'Page subheading for confirm page when byemail=1 is used. Parameters:
 * $1 is an e-mail address.',
-	'usersignup-account-creation-email-sent' => 'Page content for confirm page when byemail=1 is used.  Parameters:
+	'usersignup-account-creation-email-sent' => '{{doc-singularthey}}
+Page content for confirm page when byemail=1 is used.  Parameters:
 * $1 is e-mail address sent to,
-* $2 is the user name that the account has been created for.
-
-{{doc-singularthey}}',
+* $2 is the user name that the account has been created for.',
 	'usersignup-account-creation-email-subject' => 'Confirmation email subject for people receiving the account when byemail=1 is used.',
 	'usersignup-account-creation-email-greeting' => 'Confirmation email greeting for people receiving the account when byemail=1 is used.',
 	'usersignup-account-creation-email-content' => 'Confirmation email body for people receiving the account when byemail=1 is used.  $USERNAME is user name, $NEWPASSWORD is new password for the user to use.',
@@ -3136,6 +3137,21 @@ $messages['pt-br'] = array(
 	'usersignup-marketing-global-heading' => 'Criar',
 	'usersignup-marketing-creativity-heading' => 'Seja original',
 	'usersignup-account-creation-email-greeting' => 'Olá,',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'usersignup-page-title' => 'Join Uicchia',
+	'usersignup-confirm-email-new-email-label' => 'Mail nove',
+	'usersignup-confirm-email-update' => 'Aggiorne',
+	'usersignup-confirm-page-heading-confirmed-user' => 'Comblimende!',
+	'usersignup-confirmation-heading-email-resent' => 'Email nove mannate',
+	'usersignup-confirmation-subheading' => "Condrolle l'email toje",
+	'usersignup-confirmation-email-greeting' => 'Cià $USERNAME,',
+	'usersignup-marketing-community-heading' => 'Collabbore',
+	'usersignup-marketing-global-heading' => 'Ccreje',
 );
 
 /** Russian (русский)

@@ -6,6 +6,8 @@
 $messages = array();
 
 $messages['en'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> post on <a href='$3'>$4's</a> blog",
+
 	'createblogpage' => 'Create blog',
 	'createbloglistingpage' => 'Create blog listing',
 	"create-blog-spam" => "Looks like spam",
@@ -60,7 +62,7 @@ Create blog listing pages for categories such as "Barack Obama", "Fan Fiction", 
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Blog listing tag not recognized on page',
 	'blog-header' => "Blog articles in category \"$1\"",
 	'blog-subheader' => "{{PLURAL:$1|There is one blog post|The following $1 blog articles are}} in this category.",
-	'blog-subheader-all' => "{{PLURAL:$1|There is one blog article in this category|The following $1 blog articles are in this category, out of $2 total.}}",
+	'blog-subheader-all' => "{{PLURAL:$1|There is one blog article in this category.|The following $1 blog articles are in this category, out of $2 total.}}",
 	'blog-invalidparam' => "Unknown parameter '$1' is ignored. Please use one of available parameters: <code>$2</code>.",
 	'blog-emptyparam' => "Name of parameter cannot be empty",
 	'blog-defaulttitle' => "Blogs",
@@ -122,7 +124,6 @@ Avatar6.jpg",
 	"right-blog-comments-delete" => "Delete comments on blog articles",
 	"right-blog-articles-edit" => "Edit blog articles",
 	"right-blog-articles-move" => "Move blog articles",
-	"blogs-undeleted-comment" => "Undeleted comment for blog page $1",
 	"blogs-recent-url" => "Blog:Recent_posts",
 	"blogs-recent-url-text" => "Recent blog posts",
 	"blog-desc" => "Blog articles",
@@ -142,21 +143,30 @@ Avatar6.jpg",
  * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'blog-file-page' => 'Message on a file page about where file is being used',
 	'create-blog-post-recent-listing-log' => 'Edit summary, maybe.',
 	'create-blog-empty-article-log' => 'Edit summary',
 	'create-blog-invalid-title-error' => '{{Identical|Invalid title}}',
 	'create-blog-no-login' => '{{Identical|Not logged in}}',
 	'create-blog-listing-preview' => 'This is an H2 level header above a preview.',
+	'create-blog-listing-matches-calculate' => 'Button label. User presses to calculate how many blogs would be included in the blog listing given the user-selected criteria. After button is triggered, message gets switched to [[Wikia:Create-blog-listing-matches-recalculate]].',
+	'create-blog-listing-matches-recalculate' => 'Button label. Appears after [[Wikia:Create-blog-listing-matches-calculate]] has been triggered. Allows user to re-calculate the number of blogs that meet the user-selected criteria if the user changes the criteria since initial calculation.',
 	'create-blog-listing-matches-info' => '',
 	'blog-last-edited' => '',
 	'blog-added' => 'This is the possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-edited' => 'This is a possible value of $CHANGEDORCREATED in {{msg-mw|enotif_subject}} and {{msg-mw|enotif_body|notext=1}}.',
 	'blog-comments' => '{{Identical|Comment}}',
-	'blog-comments-label' => 'This is a checkbox label. When creating or editing a blog, the editor may enable (box is checked) or disable (box is unchecked) users to comment on the blog',
-	'blog-voting-label' => 'This is a checkbox label. Given the description, I would assume that checking it enables voting for a (new) blog post.',
+	'blog-comments-label' => 'This is a checkbox label. If checked by the blog author, users will be able to leave comments on the blog.',
+	'blog-voting-label' => 'This is a checkbox label. If checked by the blog author, users will be able to vote on a blog post. Note: The voting functionality was never fully implemented into the Blogs feature. It may be implemented at a later date.',
 	'blog-comment-delete' => '{{Identical|Delete}}',
 	'blog-comment-hide' => '{{Identical|Hide}}',
 	'blog-comment-history' => '{{Identical|History}}',
+	'blog-userblog' => 'Appears in an RSS feed.
+Parameters:
+
+$1 - Username of blog author. GENDER is supported.',
+	'blog-fromsitename' => 'Prints the name of the wiki the blog is from into an RSS feed. The $1 parameter is <nowiki>{{SITENAME}}</nowiki>.',
+	'blogs-comment-hidden' => 'If a tool like RevisionDelete has made the text of a comment inaccessible to the public, this message informs the reader the comment has been hidden',
 	'right-blog-comments-toggle' => '{{doc-right|blog-comments-toggle}}',
 	'right-blog-comments-delete' => '{{doc-right|blog-comments-delete}}',
 	'right-blog-articles-edit' => '{{doc-right|blog-articles-edit}}',
@@ -609,6 +619,7 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
  * @author SMP
  */
 $messages['ca'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> publicació en el bloc de <a href='$3'>$4</a>",
 	'createblogpage' => 'Crear un bloc',
 	'createbloglistingpage' => 'Crear una llista de blocs',
 	'create-blog-spam' => 'Sembla spam',
@@ -822,6 +833,7 @@ $messages['cs'] = array(
  * @author The Evil IP address
  */
 $messages['de'] = array(
+	'blog-file-page' => "Beitrag von <a href='$1'>$2</a> im Blog von <a href='$3'>$4</a>",
 	'createblogpage' => 'Blog anlegen',
 	'createbloglistingpage' => 'Erstelle Blog-Aggregationsseite',
 	'create-blog-spam' => 'Sieht aus wie Spam',
@@ -995,7 +1007,7 @@ $messages['diq'] = array(
 	'blog-comments-label' => 'Vatışkerden',
 	'blog-voting-label' => 'Deya',
 	'blog-comments-anonymous' => 'Karbero anonim',
-	'blog-comment-delete' => 'besterne',
+	'blog-comment-delete' => 'bestere',
 	'blog-comment-hide' => 'bınımne',
 	'blog-comment-unhide' => 'menımne',
 	'blog-comment-history' => 'werenayış',
@@ -1090,6 +1102,13 @@ $messages['el'] = array(
 	'right-blog-articles-move' => 'Μετακίνηση άρθρων του blog',
 );
 
+/** Esperanto (Esperanto)
+ * @author Objectivesea
+ */
+$messages['eo'] = array(
+	'blog-comment-history' => 'historio',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
@@ -1101,6 +1120,7 @@ $messages['el'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> publicación en el blog de <a href='$3'>$4</a>",
 	'createblogpage' => 'Crear blog',
 	'createbloglistingpage' => 'Crear lista de blogs',
 	'create-blog-spam' => 'Parece spam',
@@ -1474,6 +1494,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
  * @author Wyz
  */
 $messages['fr'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> publié sur le blog de <a href='$3'>$4</a>",
 	'createblogpage' => 'Créer un blog',
 	'createbloglistingpage' => 'Créer une liste de blogs',
 	'create-blog-spam' => 'Ressemble à du spam',
@@ -1597,6 +1618,7 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
  * @author Toliño
  */
 $messages['gl'] = array(
+	'blog-file-page' => "Publicación <a href='$1'>$2</a> no blogue de <a href='$3'>$4</a>",
 	'createblogpage' => 'Crear un blogue',
 	'createbloglistingpage' => 'Lista de blogues creados',
 	'create-blog-spam' => 'Semella spam',
@@ -2720,6 +2742,7 @@ $messages['mai'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'blog-file-page' => "Објава од <a href='$1'>$2</a> на блогот на <a href='$3'>$4</a>",
 	'createblogpage' => 'Создавање на блог',
 	'createbloglistingpage' => 'Создавање на попис на блогови',
 	'create-blog-spam' => 'Личи на спам',
@@ -3118,6 +3141,7 @@ $messages['ne'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> bericht op het blog van <a href='$3'>$4</a>",
 	'createblogpage' => 'Blog aanmaken',
 	'createbloglistingpage' => 'Bloglijst aanmaken',
 	'create-blog-spam' => 'Ziet eruit al spam',
@@ -3297,6 +3321,7 @@ $messages['pfl'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
+	'blog-file-page' => "Wpis <a href='$1'>$2</a> na blogu <a href='$3'>$4's</a>",
 	'createblogpage' => 'Utwórz blog',
 	'createbloglistingpage' => 'Utwórz listę wpisów na blogach',
 	'create-blog-spam' => 'Wygląda jak spam',
@@ -3420,6 +3445,7 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> mëssagi dzor lë scartari ëd <a href='$3'>$4's</a>",
 	'createblogpage' => 'Crea Scartari',
 	'createbloglistingpage' => 'Creé na Lista djë Scartari',
 	'create-blog-spam' => "A smija a 'd rumenta",
@@ -3871,6 +3897,22 @@ $messages['ro'] = array(
 	'blog-refresh-label' => 'Reîmprospătare',
 	'blog-desc' => 'Articole pe blog',
 	'blog-comment-sending' => 'Se trimite...',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'create-blog-categories-submit' => 'Conferme',
+	'create-blog-listing-sortby-author' => 'Autore',
+	'blog-added' => 'aggiunde',
+	'blog-edited' => 'cangiate',
+	'blog-comments-anonymous' => 'Utende anonime',
+	'blog-comment-delete' => 'scangille',
+	'blog-comment-hide' => 'scunne',
+	'blog-comment-unhide' => 'fà vedè',
+	'blog-comment-history' => 'cunde',
+	'blog-comment-edit' => 'cange',
 );
 
 /** Russian (русский)
@@ -4925,6 +4967,7 @@ $messages['zh-hans'] = array(
 	'blog-comment-sending' => '正在发送...',
 	'blog-by' => '$1由$2',
 	'blogs-searchprofile' => '博客',
+	'user-blog-url-link' => '用户博客:$1',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

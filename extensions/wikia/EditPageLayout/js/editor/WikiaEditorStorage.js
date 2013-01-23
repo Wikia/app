@@ -11,6 +11,7 @@ WikiaEditorStorage.prototype = {
 	store: function() {
 		if (typeof wgArticleId !== 'undefined') {
 			var editorInstance = window.WikiaEditor.getInstance();
+
 			if (typeof editorInstance.plugins.leaveconfirm === 'undefined' || editorInstance.plugins.leaveconfirm.isDirty()) {
 				var summary = $('#wpSummary');
 				var categorySelect = $('#CategorySelect').data('categorySelect');

@@ -29,6 +29,11 @@ $namespaces['es'] = array(
         NS_USER_WALL_MESSAGE_GREETING   => 'Bienvenida_del_Muro'
 );
 
+$namespaces['fr'] = array(
+        NS_USER_WALL                    => 'Mur',
+        NS_USER_WALL_MESSAGE            => 'Fil'
+);
+
 $namespaces['uk'] = array(
         NS_USER_WALL                    => 'Стіна_обговорення',
         NS_USER_WALL_MESSAGE            => 'Тема',

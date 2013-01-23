@@ -78,17 +78,38 @@ class EditAccount extends SpecialPage {
 				}
 
 				if ( empty( $id ) ) {
-					if ( !empty($wgEnableUserLoginExt) ) {
-						$this->mTempUser = TempUser::getTempUserFromName( $userName );
+					// User didn't exist on first load, trying External User
+					$extUser = null;
+					if ( class_exists( 'ExternalUser_Wikia' ) ) {
+						$extUser = ExternalUser::newFromName( $userName );
 					}
-
-					if ( $this->mTempUser ) {
-						$id = $this->mTempUser->getId();
-						$this->mUser = User::newFromId( $id );
+					if ( is_object( $extUser ) && ( $extUser->getId() != 0 ) ) {
+						// User does exist, so try from the External User object
+						// This leads to loading the user data from master,
+						// so it should be there now...
+						$user = $extUser->getLocalUser();
+						if ( $user == null || $user->getId() == 0 ) {
+							// Still not loaded, let user know to try reloading page
+							$this->mStatus = false;
+							$this->mStatusMsg = wfMessage( 'editaccount-not-loaded' )->plain();
+							$action = '';
+						} else {
+							$id = $user->getId();
+							$this->mUser = $user;
+						}
 					} else {
-						$this->mStatus = false;
-						$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
-						$action = '';
+						if ( !empty($wgEnableUserLoginExt) ) {
+							$this->mTempUser = TempUser::getTempUserFromName( $userName );
+						}
+
+						if ( $this->mTempUser ) {
+							$id = $this->mTempUser->getId();
+							$this->mUser = User::newFromId( $id );
+						} else {
+							$this->mStatus = false;
+							$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
+							$action = '';
+						}
 					}
 				}
 			}
@@ -352,11 +373,6 @@ class EditAccount extends SpecialPage {
 
 		$id = $this->mUser->getId();
 
-		// delete the record from all the secondary clusters
-		if ( class_exists( 'ExternalUser_Wikia' ) ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
-		}
-
 		// Reload user
 		$this->mUser = User::newFromId( $id );
 
@@ -366,6 +382,12 @@ class EditAccount extends SpecialPage {
 			$this->mUser->setOption( 'disabled', 1 );
 			// BugId:18085 - setting a new token causes the user to be logged out.
 			$this->mUser->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
+
+			// BugID:95369 This forces saveSettings() to commit the transaction
+			// FIXME: this is a total hack, we should add a commit=true flag to saveSettings
+			global $wgRequest;
+			$wgRequest->setVal('action', 'ajax');
+
 			// Need to save these additional changes
 			$this->mUser->saveSettings();
 
@@ -373,6 +395,11 @@ class EditAccount extends SpecialPage {
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );
 			$log->addEntry( 'closeaccnt', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
+
+			// delete the record from all the secondary clusters
+			if ( class_exists( 'ExternalUser_Wikia' ) ) {
+				ExternalUser_Wikia::removeFromSecondaryClusters( $id );
+			}
 
 			// All clear!
 			$this->mStatusMsg = wfMsg( 'editaccount-success-close', $this->mUser->mName );

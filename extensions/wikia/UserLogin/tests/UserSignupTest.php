@@ -3,6 +3,7 @@
 	class UserSignupTest extends WikiaBaseTest {
 		const TEST_CITY_ID = 79860;
 		const TEST_USERNAME = 'WikiaUser';
+		const TEST_DNE_USER = 'UserNameThatDoesNotExist';
 		const TEST_EMAIL = 'devbox+test@wikia-inc.com';
 
 		public function setUp() {
@@ -187,7 +188,7 @@
 
 			// error - empty password
 			$reqParams5 = array(
-				'username' => self::TEST_USERNAME,
+				'username' => self::TEST_DNE_USER,
 				'email' => self::TEST_EMAIL,
 				'password' => '',
 			);
@@ -196,7 +197,7 @@
 
 			// error - password length exceed limit
 			$reqParams6 = array(
-				'username' => self::TEST_USERNAME,
+				'username' => self::TEST_DNE_USER,
 				'email' => self::TEST_EMAIL,
 				'password' => 'testPasswordtestPasswordtestPasswordtestPasswordtestPasswordtestPassword',
 			);
@@ -204,7 +205,7 @@
 
 			// error - empty email
 			$reqParams7 = array(
-				'username' => self::TEST_USERNAME,
+				'username' => self::TEST_DNE_USER,
 				'email' => '',
 			);
 			$expMsg7 = wfMsg( 'usersignup-error-empty-email' );
@@ -212,14 +213,14 @@
 
 			// error - invalid email ( isValidEmailAddr() = false )
 			$reqParams8 = array(
-				'username' => self::TEST_USERNAME,
+				'username' => self::TEST_DNE_USER,
 				'email' => 'testEmail',
 			);
 			$expMsg8 = wfMsg( 'userlogin-error-invalidemailaddress' );
 
 			// error - birthdate not select
 			$reqParams9 = array(
-				'username' => self::TEST_USERNAME,
+				'username' => self::TEST_DNE_USER,
 				'password' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => -1,
@@ -231,7 +232,7 @@
 
 			// error - birthday not select
 			$reqParams10 = array(
-				'username' => self::TEST_USERNAME,
+				'username' => self::TEST_DNE_USER,
 				'password' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => 2012,
@@ -241,7 +242,7 @@
 
 			// error - birthmonth not select
 			$reqParams11 = array(
-				'username' => self::TEST_USERNAME,
+				'username' => self::TEST_DNE_USER,
 				'password' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => 2012,
@@ -251,7 +252,7 @@
 
 			// error - birthyear not select
 			$reqParams12 = array(
-				'username' => self::TEST_USERNAME,
+				'username' => self::TEST_DNE_USER,
 				'password' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => -1,
@@ -261,7 +262,7 @@
 
 			// error - invalid age
 			$reqParams13 = array(
-				'username' => self::TEST_USERNAME,
+				'username' => self::TEST_DNE_USER,
 				'password' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => 2011,
@@ -269,10 +270,10 @@
 				'birthday' => 22,
 			);
 			$expMsg13 = wfMsg( 'userlogin-error-userlogin-unable-info' );
-			
+
 			// not pass byemail -- call addNewAccount()
 			$reqParams14 = array(
-				'username' => self::TEST_USERNAME,
+				'username' => self::TEST_DNE_USER,
 				'password' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => 1999,
@@ -293,7 +294,7 @@
 
 			// pass byemail -- call addNewAccountMailPassword()
 			$reqParams15 = array(
-				'username' => self::TEST_USERNAME,
+				'username' => self::TEST_DNE_USER,
 				'password' => 'testPassword',
 				'email' => self::TEST_EMAIL,
 				'birthyear' => 1999,
@@ -701,7 +702,7 @@
 			);
 			$mockCache107 = 1;
 			$expMsg107 = wfMsg( 'usersignup-error-throttled-email' );
-			
+
 			// error - email sent == limit ( POST + action = resendconfirmation )
 			$mockCache108 = 0;
 

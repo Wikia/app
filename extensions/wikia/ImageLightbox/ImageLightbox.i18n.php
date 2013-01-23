@@ -45,6 +45,7 @@ $messages['qqq'] = array(
 * $1 is a username.',
 	'lightbox-share-email-body' => 'Parameters:
 * $1 is a link to the suggested image.',
+	'lightbox-share-email-error-caption' => '{{Identical|Error}}',
 	'lightbox-share-email-error-content' => 'Parameters:
 * $1 is the numer of sent e-mails
 * $2 is are the error details.',
@@ -201,6 +202,15 @@ $messages['diq'] = array(
 	'lightbox-share-email-page-label-address' => 'Adresê e-posta',
 	'lightbox-share-email-ok-caption' => 'Tesdiqiye',
 	'lightbox-share-email-error-caption' => 'Xırab',
+);
+
+/** Esperanto (Esperanto)
+ * @author Objectivesea
+ */
+$messages['eo'] = array(
+	'lightbox-share-button-email' => 'Retpoŝto',
+	'lightbox-share-email-page-label-address' => 'Retpoŝtadreso',
+	'lightbox-visit-the-wiki' => 'Viziti la vikion:',
 );
 
 /** Spanish (español)

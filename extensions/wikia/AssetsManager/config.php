@@ -79,8 +79,6 @@ $config['oasis_ads_js'] = array(
 	'assets' => array(
 		// ads
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
-		'//extensions/wikia/AdEngine/AdConfig.js',
-		'//extensions/wikia/AdEngine/AdEngine.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 
@@ -94,9 +92,6 @@ $config['oasis_ads_js'] = array(
 		'#group_liftium_ads_js',
 
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
-
-		'//extensions/wikia/AdEngine/AdDriver.js',
-		'//extensions/wikia/AdEngine/AdDriverGP.js',
 	),
 );
 
@@ -259,7 +254,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 
 		// oasis specific files
-		'//resources/wikia/oasis_tracking.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
 		'//skins/oasis/js/hoverMenu.js',
@@ -277,6 +271,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/isTouchScreen.js',
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/SharingToolbar/SharingToolbarLoader.js',
+		'//skins/oasis/js/Tracking.js',
 	)
 );
 
