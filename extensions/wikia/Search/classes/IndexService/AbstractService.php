@@ -98,11 +98,11 @@ abstract class AbstractService
 			}
 			try {
 				$response = $this->execute();
-				$time = microtime();
+				$time = microtime(true);
 				if (! empty( $response ) ) {
 				    $documents[] = $this->getJsonDocumentFromResponse( $response );
 				    if ( $this->verbose ) {
-				    	$timeDiff = microtime() - $time;
+				    	$timeDiff = microtime(true) - $time;
 			    	    $result['diagnostics'][$this->currentPageId] = $timeDiff;
 				    }
 				}
