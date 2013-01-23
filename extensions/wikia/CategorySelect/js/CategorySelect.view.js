@@ -20,6 +20,14 @@
 
 		function initialize( event ) {
 			$.when(
+				$.nirvana.sendRequest({
+					controller: 'CategorySelectController',
+					data: {
+						articleId: articleId,
+					},
+					method: 'getArticleCategories'
+
+				}),
 				mw.loader.use( 'jquery.ui.autocomplete' ),
 				mw.loader.use( 'jquery.ui.sortable' ),
 				$.getResources([
@@ -27,9 +35,9 @@
 					wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js'
 				])
 
-			).done(function() {
+			).done(function( response ) {
 				$wrapper.categorySelect({
-					categories: wgCategorySelect.categories,
+					categories: response[ 0 ].categories,
 					placement: 'right',
 					sortable: {
 						axis: false,

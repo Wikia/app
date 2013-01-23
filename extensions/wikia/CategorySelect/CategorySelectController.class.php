@@ -116,6 +116,26 @@ class CategorySelectController extends WikiaController {
 	}
 
 	/**
+	 * Rerturns all of the categories for the given article.
+	 */
+	public function getArticleCategories() {
+		$articleId = $this->request->getVal( 'articleId', 0 );
+		$categories = array();
+
+		$title = Title::newFromID( $articleId );
+
+		if ( !empty( $title ) ) {
+			$article = new Article( $title );
+			$wikitext = $article->fetchContent();
+
+			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
+			$categories = $data[ 'categories' ];
+		}
+
+		$this->response->setVal( 'categories', $categories );
+	}
+
+	/**
 	 * Returns all of the categories on the current wiki.
 	 */
 	public function getWikiCategories() {

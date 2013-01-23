@@ -1,5 +1,5 @@
+/* global Mustache:true */
 (function( window, $, undefined ) {
-	/* global Mustache:true */
 	'use strict';
 
 	var cached = {},
