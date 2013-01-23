@@ -144,6 +144,7 @@ $app->registerHook( 'MessageCacheReplace', 'ApiHooks', 'onMessageCacheReplace' )
 $app->registerHook( 'ArticleDeleteComplete', 'ApiHooks', 'onArticleDeleteComplete' );
 $app->registerHook( 'ArticleSaveComplete', 'ApiHooks', 'onArticleSaveComplete' );
 $app->registerHook( 'ArticleRollbackComplete', 'ApiHooks', 'onArticleRollbackComplete' );
+$app->registerHook( 'TitleMoveComplete', 'ApiHooks', 'onTitleMoveComplete' );
 $app->registerHook( 'ArticleCommentListPurgeComplete', 'ApiHooks', 'ArticleCommentListPurgeComplete' );
 
 
