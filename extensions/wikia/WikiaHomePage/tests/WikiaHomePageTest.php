@@ -436,7 +436,7 @@ TXT;
 		);
 
 		// 3 - user not found
-		$mockWikiServiceParam2 = array(
+		$mockWikiServiceParam3 = array(
 			'getWikiAdminIds' => array('123'),
 		);
 		$mockUserParam3 = false;
@@ -507,7 +507,7 @@ TXT;
 			// 2 - no admins
 			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam1, $mockAvatarServiceParam1, $expAdminAvatars1),
 			// 3 - user not found
-			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam3, $mockAvatarServiceParam1, $expAdminAvatars1),
+			array($mockWikiId2, $mockWikiServiceParam3, $mockUserParam3, $mockAvatarServiceParam1, $expAdminAvatars1),
 			// 4 - don't have avatar
 			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam4, $mockAvatarServiceParam1, $expAdminAvatars1),
 			// 5 - admins have avatar < LIMIT_ADMIN_AVATARS + user edits = 0

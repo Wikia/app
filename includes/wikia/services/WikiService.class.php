@@ -2,12 +2,14 @@
 
 class WikiService extends WikiaModel {
 
+	static $botGroups = array('bot', 'bot-global');
+
 	/**
 	 * get list of wiki founder/admin/bureaucrat id
 	 * Note: also called from maintenance script.
 	 * @return array of $userIds
 	 */
-	public function getWikiAdminIds( $wikiId = 0, $useMaster = false ) {
+	public function getWikiAdminIds( $wikiId = 0, $useMaster = false, $excludeBots = false ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$userIds = array();
@@ -21,11 +23,20 @@ class WikiService extends WikiaModel {
 				// get admin and bureaucrat
 				if ( empty($this->wg->EnableAnswers) ) {
 					$memKey = $this->getMemKeyAdminIds( $wikiId );
-					$adminIds = $this->wg->Memc->get( $memKey );
+					$adminIds = null;//$this->wg->Memc->get( $memKey );
 					if ( !is_array($adminIds) ) {
 						$dbname = $wiki->city_dbname;
 						$dbType = ( $useMaster ) ? DB_MASTER : DB_SLAVE;
 						$db = $this->wf->GetDB( $dbType, array(), $dbname );
+
+						$conditions = array("ug_group in ('sysop','bureaucrat')");
+
+						if ($excludeBots) {
+							$conditions[] = "ug_group not in (" .
+								"'" . implode("', '", self::$botGroups) . "'" .
+								")";
+						}
+
 						$result = $db->select(
 							'user_groups',
 							'distinct ug_user',
@@ -154,11 +165,11 @@ class WikiService extends WikiaModel {
 	 * @param integer $limit
 	 * @return array topEditors [ array( user_id => edits ) ]
 	 */
-	public function getTopEditors( $wikiId = 0, $limit = 30 ) {
+	public function getTopEditors( $wikiId = 0, $limit = 30, $excludeBots = false ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
-		$memKey = $this->wf->SharedMemcKey( 'wiki_top_editors', $wikiId );
+		$memKey = $this->wf->SharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots );
 		$topEditors = $this->wg->Memc->get( $memKey );
 		if ( !is_array($topEditors) ) {
 			$topEditors = array();
@@ -167,14 +178,16 @@ class WikiService extends WikiaModel {
 
 			$result = $db->select(
 				array( 'events_local_users' ),
-				array( 'user_id', 'edits' ),
+				array( 'user_id', 'edits', 'all_groups' ),
 				array( 'wiki_id' => $wikiId, 'edits != 0' ),
 				__METHOD__,
 				array( 'ORDER BY' => 'edits desc', 'LIMIT' => $limit )
 			);
 
 			while( $row = $db->fetchObject($result) ) {
-				$topEditors[$row->user_id] = intval( $row->edits );
+				if (!($excludeBots && $this->isBotGroup($row->all_groups))) {
+					$topEditors[$row->user_id] = intval( $row->edits );
+				}
 			}
 
 			$this->wg->Memc->set( $memKey, $topEditors, 60*60*3 );
@@ -183,6 +196,18 @@ class WikiService extends WikiaModel {
 		$this->wf->ProfileOut( __METHOD__ );
 
 		return $topEditors;
+	}
+
+	public function isBotGroup($groups) {
+		$isBot = false;
+		$groups = explode(';', $groups);
+		foreach (self::$botGroups as $botGroup) {
+			if (in_array($botGroup, $groups)) {
+				$isBot = true;
+				break;
+			}
+		}
+		return $isBot;
 	}
 
 	/**
