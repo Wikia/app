@@ -98,18 +98,39 @@
 
     /**** Include A/B testing status ****/
     if ( window.Wikia && window.Wikia.AbTest ) {
-        var abList = window.Wikia.AbTest.getExperiments( /* includeAll */ true ), abExp, abGroupName, abSlot, abIndex;
+        var abList = window.Wikia.AbTest.getExperiments( /* includeAll */ true ), abExp, abGroupName, abSlot, abIndex,
+			abForceTrackOnLoad = false,
+			abCustomVarsForAds = [];
         for ( abIndex = 0; abIndex < abList.length; abIndex++ ) {
             abExp = abList[abIndex];
 			if ( !abExp.flags.ga_tracking ) {
 				continue;
 			}
+			if ( abExp.flags.forced_ga_tracking_on_load && abExp.group ) {
+				abForceTrackOnLoad = true;
+			}
             abSlot = window.Wikia.AbTest.getGASlot(abExp.name);
             if ( abSlot >= 40 && abSlot <= 49 ) {
                 abGroupName = abExp.group ? abExp.group.name : 'CONTROL';
                 _gaqWikiaPush(['_setCustomVar', abSlot, abExp.name, abGroupName, 3]);
+				abCustomVarsForAds.push(['ads._setCustomVar', abSlot, abExp.name, abGroupName, 3]);
             }
         }
+		if ( abForceTrackOnLoad ) {
+			var abRenderStart = window.wgNow || (new Date());
+			var abOnLoadHandler = function() {
+				var renderTime = (new Date()).getTime() - abRenderStart.getTime();
+				setTimeout(function(){
+					window.gaTrackEvent('ABtest', 'ONLOAD', 'TIME', renderTime);
+				},10);
+			};
+			// @see: http://stackoverflow.com/questions/3763080/javascript-add-events-cross-browser-function-implementation-use-attachevent-add
+			if ( window.attachEvent ) {
+				window.attachEvent("onload", abOnLoadHandler);
+			} else if ( window.addEventListener ) {
+				window.addEventListener("load", abOnLoadHandler, false);
+			}
+		}
     }
 
     // Unleash
@@ -143,6 +164,12 @@
               ['ads._setCustomVar', 9, 'CityId', window.wgCityId, 3],
               ['ads._setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3]);
 
+	/**** Include A/B testing status ****/
+	if ( window.Wikia && window.Wikia.AbTest ) {
+		if (abCustomVarsForAds.length) {
+			window._gaq.push.apply(window._gaq, abCustomVarsForAds);
+		}
+	}
 
     /**
      * Function used by the backend to trigger advertisement events

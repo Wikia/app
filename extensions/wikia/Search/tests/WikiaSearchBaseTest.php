@@ -15,6 +15,12 @@ class WikiaSearchBaseTest extends WikiaBaseTest {
 	 */
 	public function setUp() {
 	    $this->setupFile = dirname(__FILE__) . '/../WikiaSearch.setup.php';
+	    
+	    // hack to overwrite irritating static logging functions
+	    $wikia = $this->getMock( 'Wikia', array( 'log', 'logBacktrace' ) );
+	    $this->proxyClass( 'Wikia', $wikia, 'logBacktrace' );
+	    $this->proxyClass( 'Wikia', $wikia, 'log' );
+	    
 	    parent::setUp();
 	}
 	

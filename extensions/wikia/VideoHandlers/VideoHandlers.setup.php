@@ -253,6 +253,106 @@ $app->registerClass( 'FoxVideoHandler', $dir . '/handlers/OoyalaVideoHandler.cla
 $app->registerClass( 'FoxApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
 $wgMediaHandlers['video/fox'] = 'FoxVideoHandler';
 
+$app->registerClass( 'AllianceVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'AllianceApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/alliance'] = 'AllianceVideoHandler';
+
+$app->registerClass( 'BiowareVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'BiowareApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/bioware'] = 'BiowareVideoHandler';
+
+$app->registerClass( 'SquareenixVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'SquareenixApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/squareenix'] = 'SquareenixVideoHandler';
+
+$app->registerClass( 'TrionVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'TrionApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/trion'] = 'TrionVideoHandler';
+
+$app->registerClass( 'MadhouseVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'MadhouseApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/madhouse'] = 'MadhouseVideoHandler';
+
+$app->registerClass( 'BandaiVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'BandaiApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/bandai'] = 'BandaiVideoHandler';
+
+$app->registerClass( 'CapcomVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'CapcomApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/capcom'] = 'CapcomVideoHandler';
+
+$app->registerClass( 'GamesworkshopVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'GamesworkshopApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/gamesworkshop'] = 'GamesworkshopVideoHandler';
+
+$app->registerClass( 'JagexVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'JagexApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/jagex'] = 'JagexVideoHandler';
+
+$app->registerClass( 'PerfectworldVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'PerfectworldApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/perfectworld'] = 'PerfectworldVideoHandler';
+
+$app->registerClass( 'WaltdisneyVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'WaltdisneyApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/waltdisney'] = 'WaltdisneyVideoHandler';
+
+$app->registerClass( 'DreamworksVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'DreamworksApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/dreamworks'] = 'DreamworksVideoHandler';
+
+$app->registerClass( 'PixarVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'PixarApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/pixar'] = 'PixarVideoHandler';
+
+$app->registerClass( 'TatemultimediaVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'TatemultimediaApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/tatemultimedia'] = 'TatemultimediaVideoHandler';
+
+$app->registerClass( 'EpktvVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'EpktvApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/epktv'] = 'EpktvVideoHandler';
+
+$app->registerClass( 'LionsgateVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'LionsgateApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/lionsgate'] = 'LionsgateVideoHandler';
+
+$app->registerClass( 'SummitVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'SummitApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/summit'] = 'SummitVideoHandler';
+
+$app->registerClass( 'CbsfilmsVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'CbsfilmsApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/cbsfilms'] = 'CbsfilmsVideoHandler';
+
+$app->registerClass( 'WeinsteincoVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'WeinsteincoApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/weinsteinco'] = 'WeinsteincoVideoHandler';
+
+$app->registerClass( 'GamespressVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'GamespressApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/gamespress'] = 'GamespressVideoHandler';
+
+$app->registerClass( 'SegaVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'SegaApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/sega'] = 'SegaVideoHandler';
+
+$app->registerClass( 'OpenroadfilmsVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'OpenroadfilmsApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/openroadfilms'] = 'OpenroadfilmsVideoHandler';
+
+$app->registerClass( 'UbisoftVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'UbisoftApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/ubisoft'] = 'UbisoftVideoHandler';
+
+$app->registerClass( 'NamcoVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'NamcoApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/namco'] = 'NamcoVideoHandler';
+
+$app->registerClass( 'GrindinggearVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
+$app->registerClass( 'GrindinggearApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
+$wgMediaHandlers['video/grindinggear'] = 'GrindinggearVideoHandler';
+
 /**
  * Feed ingesters
  */
@@ -297,6 +397,31 @@ $wgVideoMigrationProviderMap = array(
 	38 => 'Universal',
 	39 => 'Warnerbrothers',
 	40 => 'Fox',
+	41 => 'Alliance',
+	42 => 'Bioware',
+	43 => 'Squareenix',
+	44 => 'Trion',
+	45 => 'Madhouse',
+	46 => 'Bandai',
+	47 => 'Capcom',
+	48 => 'Gamesworkshop',
+	49 => 'Jagex',
+	50 => 'Perfectworld',
+	51 => 'Waltdisney',
+	52 => 'Dreamworks',
+	53 => 'Pixar',
+	54 => 'Tatemultimedia',
+	55 => 'Epktv',
+	56 => 'Lionsgate',
+	57 => 'Summit',
+	58 => 'Cbsfilms',
+	59 => 'Weinsteinco',
+	60 => 'Gamespress',
+	61 => 'Sega',
+	62 => 'Openroadfilms',
+	63 => 'Ubisoft',
+	64 => 'Namco',
+	65 => 'Grindinggear',
 );
 
 

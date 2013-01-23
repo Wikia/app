@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ads'), 'track'], function (qs, loader, toc, events, ads, track) {
+define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.optional('ads'), 'track', 'throbber'], function (qs, loader, toc, events, ads, track, throbber) {
 	'use strict';
 	var w = window,
 		d = document,
@@ -253,21 +253,21 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 
     function initAutocomplete(){
         if(!searchInit){
-            Wikia.getMultiTypePackage({
-                scripts: 'wikiamobile_autocomplete_js',
-                ttl: 604800,
-                callback: function(res){
-                    Wikia.processScript(res.scripts[0]);
-                    require(['autocomplete'], function(sug){
-                        sug({
-                            url: wgServer + '/api.php' + '?action=opensearch',
-                            input: searchInput,
-                            list: searchSug,
-                            clear: d.getElementById('wkClear')
-                        });
-                    });
-                }
-            });
+            loader({
+				type: loader.AM_GROUPS,
+				resources: 'wikiamobile_autocomplete_js'
+            }).done(
+				function(){
+					require(['autocomplete'], function(sug){
+						sug({
+							url: wgServer + '/api.php?action=opensearch',
+							input: searchInput,
+							list: searchSug,
+							clear: d.getElementById('wkClear')
+						});
+					});
+				}
+			);
             searchInit = true;
         }
     }
@@ -288,7 +288,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 
 	function openLogin(hash){
 		if(wkPrf.className.indexOf('loaded') == -1){
-			loader.show(wkPrf, {center: true});
+			throbber.show(wkPrf, {center: true});
 			Wikia.getMultiTypePackage({
 				templates: [{
 					controllerName: 'UserLoginSpecialController',
@@ -301,7 +301,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 					useskin: w.skin
 				},
 				callback: function(res){
-					loader.remove(wkPrf);
+					throbber.remove(wkPrf);
 
 					Wikia.processStyle(res.styles);
 					wkPrf.insertAdjacentHTML('beforeend', res.templates['UserLoginSpecialController_index']);

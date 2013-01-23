@@ -124,7 +124,6 @@ Avatar6.jpg",
 	"right-blog-comments-delete" => "Delete comments on blog articles",
 	"right-blog-articles-edit" => "Edit blog articles",
 	"right-blog-articles-move" => "Move blog articles",
-	"blogs-undeleted-comment" => "Undeleted comment for blog page $1",
 	"blogs-recent-url" => "Blog:Recent_posts",
 	"blogs-recent-url-text" => "Recent blog posts",
 	"blog-desc" => "Blog articles",
@@ -162,6 +161,10 @@ $messages['qqq'] = array(
 	'blog-comment-delete' => '{{Identical|Delete}}',
 	'blog-comment-hide' => '{{Identical|Hide}}',
 	'blog-comment-history' => '{{Identical|History}}',
+	'blog-userblog' => 'Appears in an RSS feed.
+Parameters:
+
+$1 - Username of blog author. GENDER is supported.',
 	'blog-fromsitename' => 'Prints the name of the wiki the blog is from into an RSS feed. The $1 parameter is <nowiki>{{SITENAME}}</nowiki>.',
 	'blogs-comment-hidden' => 'If a tool like RevisionDelete has made the text of a comment inaccessible to the public, this message informs the reader the comment has been hidden',
 	'right-blog-comments-toggle' => '{{doc-right|blog-comments-toggle}}',
@@ -169,10 +172,6 @@ $messages['qqq'] = array(
 	'right-blog-articles-edit' => '{{doc-right|blog-articles-edit}}',
 	'right-blog-articles-move' => '{{doc-right|blog-articles-move}}',
 	'blog-desc' => '{{desc}}',
-        'blog-userblog' => 'Appears in an RSS feed.
-Parameters:
-
-$1 - Username of blog author. GENDER is supported.',
 	'blogs-searchprofile' => 'Name of a tab with blog articles and blog listings. This tab is displayed in the right column on search page',
 	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings. Tooltip displayed on hover on Blogs Tab in the right column on search page',
 	'user-blog-url-link' => 'Link - links to users Blog main page',
@@ -620,6 +619,7 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
  * @author SMP
  */
 $messages['ca'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> publicació en el bloc de <a href='$3'>$4</a>",
 	'createblogpage' => 'Crear un bloc',
 	'createbloglistingpage' => 'Crear una llista de blocs',
 	'create-blog-spam' => 'Sembla spam',
@@ -833,6 +833,7 @@ $messages['cs'] = array(
  * @author The Evil IP address
  */
 $messages['de'] = array(
+	'blog-file-page' => "Beitrag von <a href='$1'>$2</a> im Blog von <a href='$3'>$4</a>",
 	'createblogpage' => 'Blog anlegen',
 	'createbloglistingpage' => 'Erstelle Blog-Aggregationsseite',
 	'create-blog-spam' => 'Sieht aus wie Spam',
@@ -1006,7 +1007,7 @@ $messages['diq'] = array(
 	'blog-comments-label' => 'Vatışkerden',
 	'blog-voting-label' => 'Deya',
 	'blog-comments-anonymous' => 'Karbero anonim',
-	'blog-comment-delete' => 'besterne',
+	'blog-comment-delete' => 'bestere',
 	'blog-comment-hide' => 'bınımne',
 	'blog-comment-unhide' => 'menımne',
 	'blog-comment-history' => 'werenayış',
@@ -1101,6 +1102,13 @@ $messages['el'] = array(
 	'right-blog-articles-move' => 'Μετακίνηση άρθρων του blog',
 );
 
+/** Esperanto (Esperanto)
+ * @author Objectivesea
+ */
+$messages['eo'] = array(
+	'blog-comment-history' => 'historio',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
@@ -1112,6 +1120,7 @@ $messages['el'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> publicación en el blog de <a href='$3'>$4</a>",
 	'createblogpage' => 'Crear blog',
 	'createbloglistingpage' => 'Crear lista de blogs',
 	'create-blog-spam' => 'Parece spam',
@@ -1485,6 +1494,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit 
  * @author Wyz
  */
 $messages['fr'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> publié sur le blog de <a href='$3'>$4</a>",
 	'createblogpage' => 'Créer un blog',
 	'createbloglistingpage' => 'Créer une liste de blogs',
 	'create-blog-spam' => 'Ressemble à du spam',
@@ -1608,6 +1618,7 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
  * @author Toliño
  */
 $messages['gl'] = array(
+	'blog-file-page' => "Publicación <a href='$1'>$2</a> no blogue de <a href='$3'>$4</a>",
 	'createblogpage' => 'Crear un blogue',
 	'createbloglistingpage' => 'Lista de blogues creados',
 	'create-blog-spam' => 'Semella spam',
@@ -2731,6 +2742,7 @@ $messages['mai'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'blog-file-page' => "Објава од <a href='$1'>$2</a> на блогот на <a href='$3'>$4</a>",
 	'createblogpage' => 'Создавање на блог',
 	'createbloglistingpage' => 'Создавање на попис на блогови',
 	'create-blog-spam' => 'Личи на спам',
@@ -3309,6 +3321,7 @@ $messages['pfl'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
+	'blog-file-page' => "Wpis <a href='$1'>$2</a> na blogu <a href='$3'>$4's</a>",
 	'createblogpage' => 'Utwórz blog',
 	'createbloglistingpage' => 'Utwórz listę wpisów na blogach',
 	'create-blog-spam' => 'Wygląda jak spam',
@@ -3432,6 +3445,7 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> mëssagi dzor lë scartari ëd <a href='$3'>$4's</a>",
 	'createblogpage' => 'Crea Scartari',
 	'createbloglistingpage' => 'Creé na Lista djë Scartari',
 	'create-blog-spam' => "A smija a 'd rumenta",
@@ -3883,6 +3897,22 @@ $messages['ro'] = array(
 	'blog-refresh-label' => 'Reîmprospătare',
 	'blog-desc' => 'Articole pe blog',
 	'blog-comment-sending' => 'Se trimite...',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'create-blog-categories-submit' => 'Conferme',
+	'create-blog-listing-sortby-author' => 'Autore',
+	'blog-added' => 'aggiunde',
+	'blog-edited' => 'cangiate',
+	'blog-comments-anonymous' => 'Utende anonime',
+	'blog-comment-delete' => 'scangille',
+	'blog-comment-hide' => 'scunne',
+	'blog-comment-unhide' => 'fà vedè',
+	'blog-comment-history' => 'cunde',
+	'blog-comment-edit' => 'cange',
 );
 
 /** Russian (русский)
@@ -4937,6 +4967,7 @@ $messages['zh-hans'] = array(
 	'blog-comment-sending' => '正在发送...',
 	'blog-by' => '$1由$2',
 	'blogs-searchprofile' => '博客',
+	'user-blog-url-link' => '用户博客:$1',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

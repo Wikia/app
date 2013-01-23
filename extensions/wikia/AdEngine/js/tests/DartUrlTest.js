@@ -24,6 +24,16 @@ test('addParam single value', function() {
 	equal(url.toString(), 'http://example.com/some/path;key=val;');
 });
 
+test('addParam escaping value', function() {
+	var domain = 'example.com',
+		path = 'some/path',
+		dartUrl = DartUrl(),
+		url = dartUrl.urlBuilder(domain, path);
+
+	url.addParam('key', '\'&#,');
+	equal(url.toString(), 'http://example.com/some/path;key=\'%26%23%2C;');
+});
+
 test('addParam two params', function() {
 	var domain = 'example.com',
 		path = 'some/path',

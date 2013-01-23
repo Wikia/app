@@ -171,8 +171,8 @@
 		}
 
 		//init
-		if (context.require && context.define && context.define.amd) {
-			context.require(['querystring', 'cookies'], init);
+		if (context.define && context.define.amd) {
+			context.require(['wikia.querystring', 'wikia.cookies'], init);
 		} else {
 			init(context.Wikia.Querystring, context.Wikia.Cookies);
 		}
@@ -191,7 +191,7 @@
 
 	if (context.define && context.define.amd) {
 		//AMD
-		context.define('log', function () {
+		context.define('wikia.log', function () {
 			return context.Wikia.log;
 		});
 	}

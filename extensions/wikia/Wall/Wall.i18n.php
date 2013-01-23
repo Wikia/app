@@ -375,7 +375,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-topic-input-heading' => 'Topic',
 	'wall-topic-input-placeholder' => 'Add a Topic (optional)',
 	'wall-topic-input-error' => 'There is no article named "$1". Please use an existing article name as a Topic.',
-	'wall-topic-input-error-limit' => 'A thread can only have $1 Topics maximum.',
+	'wall-topic-input-error-limit' => 'A thread can only have $1 {{PLURAL:$1|Topic|Topics}} maximum.',
 	'wall-topic-heading' => 'Topics for this thread:',
 	'wall-topic-edit' => 'Edit Topics',
 	'wall-topic-edit-save' => 'Save',
@@ -388,6 +388,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
  * @author SandroHc
  * @author Shirayuki
  * @author Siebrand
+ * @author Wyz
  */
 $messages['qqq'] = array(
 	'wall-no-title' => 'fallback wall message title for deleted message which are not accessible in archive',
@@ -462,7 +463,16 @@ $messages['qqq'] = array(
 	'wall-delete-reason' => 'default user/admin action',
 	'wall-user-talk-page-archive-anchor' => "Link on a Message Wall page to the user's old talk page archive",
 	'wall-user-talk-archive-page-title' => "Title on a user's talk page archive",
-	'wall-ipb-disableusertalk' => 'checkbox on Special:Block',
+	'wall-ipb-disableusertalk' => '{{doc-singularthey}}
+Used as label for checkbox in [[Special:Block]].
+
+See also:
+* {{msg-mw|ipbemailban}}
+* {{msg-mw|ipbenableautoblock}}
+* {{msg-mw|ipbhidename}}
+* {{msg-mw|ipbwatchuser}}
+* {{msg-mw|ipb-hardblock}}
+* {{msg-mw|ipb-disableusertalk}}',
 	'wall-action-all-confirm-cancel' => 'Button to cancel on a remove or delete message modal box',
 	'wall-action-all-confirm-notify' => 'Option to notify an admin on a remove or deleted reply modal box',
 	'wall-action-remove-reply-title' => 'Title of the modal box for removing a reply',
@@ -1294,7 +1304,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Andere zeigen, die Lob gaben',
 	'wall-votes-modal-title' => 'Lob',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Eine Person|$1 Leute}} lobten diese Nachricht',
-	'wall-votes-number' => '$1 Lobe',
+	'wall-votes-number' => '{{PLURAL:$1|Ein Lob|$1 Lobe}}',
 	'wall-votes-number-tooltip' => 'Lobende für diesen Beitrag zeigen',
 	'wall-votes-vote-tooltip' => 'Diesen Beitrag loben',
 	'wall-votes-voted-tooltip' => 'Beitrag gelobt!',
@@ -1306,7 +1316,7 @@ ___________________________________________<br />
 	'wall-topic-input-heading' => 'Thema',
 	'wall-topic-input-placeholder' => 'Ein Thema hinzufügen (optional)',
 	'wall-topic-input-error' => 'Es gibt keinen Artikel namens „$1“. Bitte wähle einen vorhandenen Artikeltitel als Thema aus.',
-	'wall-topic-input-error-limit' => 'Ein Thread kann nur maximal $1 Themen haben.',
+	'wall-topic-input-error-limit' => 'Ein Thread kann nur maximal {{PLURAL:$1|ein Thema|$1 Themen}} haben.',
 	'wall-topic-heading' => 'Themen für diesen Thread:',
 	'wall-topic-edit' => 'Themen bearbeiten',
 	'wall-topic-edit-save' => 'Speichern',
@@ -1384,7 +1394,7 @@ $messages['diq'] = array(
 	'tog-enotifwallthread-v2' => 'E-postay me...',
 	'wall-notifications-notifyeveryone' => 'Xulasaya $1',
 	'wall-votes-modal-title' => 'Nam',
-	'wall-votes-number' => 'Namê $1',
+	'wall-votes-number' => 'Namê $1', # Fuzzy
 	'wall-quote-author' => 'Nusnayışê $1:',
 	'wall-quote-reply-to' => 'cewabê #$1',
 	'wall-preview-modal-title' => 'Verasayış',
@@ -1459,7 +1469,7 @@ $messages['el'] = array(
 	'tog-enotifmywall-every' => 'Για κάθε μήνυμα & απάντηση',
 	'tog-enotifmywall-sincevisited' => 'Μία φορά ανά νήμα από την τελευταία μου επίσκεψη',
 	'tog-enotifmywall-reminder' => 'Με ένα ημερήσιο email υπενθύμισης',
-	'wall-votes-number' => '$1 Kudos',
+	'wall-votes-number' => '$1 Kudos', # Fuzzy
 	'wall-votes-number-tooltip' => 'Δείτε ποιος έδωσε Kudos σε αυτό το μήνυμα',
 );
 
@@ -1745,9 +1755,9 @@ ___________________________________________<br />
 	'tog-enotifmywall-sincevisited' => 'Una vez por cada tema desde mi última visita',
 	'tog-enotifmywall-reminder' => 'Con un recordatorio diario',
 	'tog-enotifmywall-noemail' => 'Nunca. No mandarme ningún correo electrónico sobre el muro de mensajes o el foro',
-	'wallshowsource-toggle-v2' => 'Activar la opción {{int:user-action-menu-view-source}} en los hilos',
+	'wallshowsource-toggle-v2' => 'Activar la opción {{int:user-action-menu-view-source}} en los temas',
 	'wallshowsource-toggle' => 'Activar el {{int:user-action-menu-view-source}} en las publicaciones en el Muro de Mensajes',
-	'walldelete-toggle' => 'Activar el borrado de revisiones en publicaciones en los hilos',
+	'walldelete-toggle' => 'Activar el borrado de revisiones en publicaciones en los temas',
 	'wall-notifications-notifyeveryone' => 'Resaltado por $1',
 	'wall-message-notifyeveryone' => 'Resaltar este tema',
 	'wall-message-unnotifyeveryone' => 'Dejar de resaltar este tema',
@@ -1755,7 +1765,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Ver a otros que les gusta',
 	'wall-votes-modal-title' => 'Valoraciones',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Una persona dio|$1 personas dieron}} me gusta a este mensaje',
-	'wall-votes-number' => '$1 me gusta',
+	'wall-votes-number' => '$1 {{PLURAL:$1|a favor}}',
 	'wall-votes-number-tooltip' => 'Ver quién dio me gusta a este mensaje',
 	'wall-votes-vote-tooltip' => 'Dar me gusta a este mensaje',
 	'wall-votes-voted-tooltip' => '¡Te gusta este mensaje!',
@@ -1767,7 +1777,7 @@ ___________________________________________<br />
 	'wall-topic-input-heading' => 'Tema',
 	'wall-topic-input-placeholder' => 'Añadir un Tema (opcional)',
 	'wall-topic-input-error' => 'No hay ningún artículo llamado "$1". Por favor usa un nombre de artículo existente como un Tema.',
-	'wall-topic-input-error-limit' => 'Un hilo solo puede tener $1 temas como máximo.',
+	'wall-topic-input-error-limit' => 'Un hilo solo puede tener $1 temas como máximo.', # Fuzzy
 	'wall-topic-heading' => 'Temas para este hilo:',
 	'wall-topic-edit' => 'Editar temas',
 	'wall-topic-edit-save' => 'Guardar',
@@ -1994,7 +2004,7 @@ $messages['fr'] = array(
 	'wall-delete-reason' => 'Action admin/utilisateur',
 	'wall-user-talk-page-archive-anchor' => 'Voir la page de discussion archivée',
 	'wall-user-talk-archive-page-title' => 'archive_discussion_utilisateur',
-	'wall-ipb-disableusertalk' => 'Empêchez cet utilisateur de publier sur leur propre mur de messages quand il est bloqué',
+	'wall-ipb-disableusertalk' => 'Empêcher l’utilisateur de publier sur son mur de discussion pendant le blocage',
 	'wall-action-all-confirm-cancel' => 'Annuler',
 	'wall-action-all-confirm-notify' => 'Avertir un administrateur',
 	'wall-action-remove-reply-title' => 'Retirer cette réponse',
@@ -2220,7 +2230,7 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'wall-votes-modal-showmore' => 'Voir d’autres personnes qui l’ont sélectionné',
 	'wall-votes-modal-title' => 'Sélectionné',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Une personne a|$1 personnes ont}} sélectionné ce message',
-	'wall-votes-number' => '$1 sélections',
+	'wall-votes-number' => '$1 {{PLURAL:$1|Kudos}}',
 	'wall-votes-number-tooltip' => 'Voir qui a sélectionné ce message',
 	'wall-votes-vote-tooltip' => 'Sélectionner ce message',
 	'wall-votes-voted-tooltip' => 'Vous avez sélectionné ce message !',
@@ -2232,7 +2242,7 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'wall-topic-input-heading' => 'Rubrique',
 	'wall-topic-input-placeholder' => 'Ajouter une rubrique (optionnel)',
 	'wall-topic-input-error' => 'Il n’y aucun article intitulé « $1 ». Veuillez utiliser un nom d’article existant comme rubrique.',
-	'wall-topic-input-error-limit' => 'Un fil ne peut avoir que $1 rubriques au maximum.',
+	'wall-topic-input-error-limit' => 'Un fil ne peut avoir que $1 {{PLURAL:$1|rubrique|rubriques}} au maximum.',
 	'wall-topic-heading' => 'Rubriques pour ce fil :',
 	'wall-topic-edit' => 'Modifier les rubriques',
 	'wall-topic-edit-save' => 'Enregistrer',
@@ -2241,6 +2251,7 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
 	'wall-no-title' => 'Sen título',
@@ -2528,7 +2539,7 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'wall-votes-modal-showmore' => 'Ollar outras persoas que eloxiaron isto',
 	'wall-votes-modal-title' => 'Eloxio',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Unha persoa eloxiou|$1 persoas eloxiaron}} esta mensaxe',
-	'wall-votes-number' => '$1 eloxios',
+	'wall-votes-number' => '$1 {{PLURAL:$1|eloxio|eloxios}}',
 	'wall-votes-number-tooltip' => 'Ollar as persoas que eloxiaron esta mensaxe',
 	'wall-votes-vote-tooltip' => 'Dea o seu eloxio a esta mensaxe',
 	'wall-votes-voted-tooltip' => 'Deu o seu eloxio a esta mensaxe!',
@@ -2540,7 +2551,7 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'wall-topic-input-heading' => 'Tema',
 	'wall-topic-input-placeholder' => 'Engadir un tema (opcional)',
 	'wall-topic-input-error' => 'Non hai ningún artigo chamado "$1". Use o nome dun artigo existente como tema.',
-	'wall-topic-input-error-limit' => 'Un fío pode ter un máximo de $1 temas.',
+	'wall-topic-input-error-limit' => 'Un fío pode ter un máximo de $1 {{PLURAL:$1|tema|temas}}.',
 	'wall-topic-heading' => 'Temas deste fío:',
 	'wall-topic-edit' => 'Editar os temas',
 	'wall-topic-edit-save' => 'Gardar',
@@ -3047,7 +3058,7 @@ tue preferentias de e-mail: http://community.wikia.com/Special:Preferences',
 	'wall-votes-modal-showmore' => 'Vider alteres que dava complimentos',
 	'wall-votes-modal-title' => 'Complimentos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Un persona|$1 personas}} dava complimentos a iste message',
-	'wall-votes-number' => '$1 complimentos',
+	'wall-votes-number' => '$1 complimentos', # Fuzzy
 	'wall-votes-number-tooltip' => 'Vide qui ha date complimentos a iste message',
 	'wall-votes-vote-tooltip' => 'Dar complimentos a iste message',
 	'wall-votes-voted-tooltip' => 'Tu ha date complimentos a iste message!',
@@ -3327,7 +3338,7 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 	'wall-message-notifyeveryone-tooltip' => 'このウィキを閲覧している全ての登録利用者に対してこのスレッドに関する通知が行われます',
 	'wall-votes-modal-title' => 'いいね',
 	'wall-votes-modal-title-desc' => '$1人の利用者がこのメッセージに「いいね」を付けました。',
-	'wall-votes-number' => '$1 いいね',
+	'wall-votes-number' => '$1 いいね', # Fuzzy
 	'wall-votes-number-tooltip' => '誰がこのメッセージに「いいね」を付けたのかをみる。',
 	'wall-votes-vote-tooltip' => 'このメッセージに「いいね」を付ける',
 	'wall-votes-voted-tooltip' => 'このメッセージには既に「いいね」を付けています',
@@ -3752,13 +3763,13 @@ ___________________________________________<br />
 	'wall-message-notifyeveryone' => 'Истакни ја нишкава',
 	'wall-message-unnotifyeveryone' => 'Одистакни ја нишкава',
 	'wall-message-notifyeveryone-tooltip' => 'За оваа нишка ќе биде известен секој што е најавен на викито.',
-	'wall-votes-modal-showmore' => 'Погледајте ги другите што дале кудос',
-	'wall-votes-modal-title' => 'Кудос',
-	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Едно лице|$1 лица}} ѝ дале кудос на поракава',
-	'wall-votes-number' => '$1 кудоси',
-	'wall-votes-number-tooltip' => 'Погледајте кој сè ѝ дал кудос на поракава',
-	'wall-votes-vote-tooltip' => 'Дај ѝ кудос на поракава',
-	'wall-votes-voted-tooltip' => 'На поракава ѝ дадовте кудос!',
+	'wall-votes-modal-showmore' => 'Погледајте ги другите што бендисале',
+	'wall-votes-modal-title' => 'Ме бендисува',
+	'wall-votes-modal-title-desc' => 'На {{PLURAL:$1|едно лице му се|$1 лица им се}} бендисала поракава',
+	'wall-votes-number' => '$1 {{PLURAL:$1|бендисување|бендисувања}}',
+	'wall-votes-number-tooltip' => 'Погледајте кому сè му се бендисала поракава',
+	'wall-votes-vote-tooltip' => 'Бендисајте ја поракава',
+	'wall-votes-voted-tooltip' => 'Веќе ви се бендисува поракава!',
 	'wall-quote-author' => '$1 напиша:',
 	'wall-quote-reply-to' => 'одговори на бр. $1',
 	'wall-preview-modal-title' => 'Преглед',
@@ -3767,7 +3778,7 @@ ___________________________________________<br />
 	'wall-topic-input-heading' => 'Тема',
 	'wall-topic-input-placeholder' => 'Додај тема (незадолжително)',
 	'wall-topic-input-error' => 'Нема статија со наслов „$1“. Темата мора да има наслов на статија што постои.',
-	'wall-topic-input-error-limit' => 'Нишката може да има највеќе $1 теми.',
+	'wall-topic-input-error-limit' => 'Нишката може да има највеќе {{PLURAL:$1|една тема|$1 теми}}.',
 	'wall-topic-heading' => 'Теми во оваа нишка:',
 	'wall-topic-edit' => 'Уреди теми',
 	'wall-topic-edit-save' => 'Зачувај',
@@ -4063,7 +4074,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wall-votes-modal-showmore' => 'Lihat orang lain yang memberikan Pujian',
 	'wall-votes-modal-title' => 'Pujian',
 	'wall-votes-modal-title-desc' => 'Pesanan ini dipuji oleh {{PLURAL:$1|seorang|$1 orang}} ahli',
-	'wall-votes-number' => '$1 Pujian',
+	'wall-votes-number' => '$1 Pujian', # Fuzzy
 	'wall-votes-number-tooltip' => 'Lihat siapa yang memuji pesanan ini',
 	'wall-votes-vote-tooltip' => 'Puji pesanan ini',
 	'wall-votes-voted-tooltip' => 'Anda telah memuji pesanan ini!',
@@ -4075,7 +4086,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wall-topic-input-heading' => 'Topik',
 	'wall-topic-input-placeholder' => 'Tambahkan Topik (tidak wajib)',
 	'wall-topic-input-error' => 'Tiada rencana bertajuk "$1". Sila gunakan nama rencana yang sedia ada sebagai Topik.',
-	'wall-topic-input-error-limit' => 'Tred tidak boleh melebihi $1 Topik.',
+	'wall-topic-input-error-limit' => 'Tred tidak boleh melebihi $1 Topik.', # Fuzzy
 	'wall-topic-heading' => 'Topik untuk tred ini:',
 	'wall-topic-edit' => 'Ubah Topik',
 	'wall-topic-edit-save' => 'Simpan',
@@ -4353,7 +4364,7 @@ endre e-post-innstillingene dine her: http://community.wikia.com/Special:Prefere
 	'wall-votes-modal-showmore' => 'Se andre som har gitt ros',
 	'wall-votes-modal-title' => 'Ros',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Én person|$1 personer}} ga denne meldingen ros',
-	'wall-votes-number' => '$1 rosinger',
+	'wall-votes-number' => '$1 rosinger', # Fuzzy
 	'wall-votes-number-tooltip' => 'Se hvem som ga ros til denne meldingen',
 	'wall-votes-vote-tooltip' => 'Gi ros til denne meldingen',
 	'wall-votes-voted-tooltip' => 'Du har gitt denne meldingen ros!',
@@ -4365,7 +4376,7 @@ endre e-post-innstillingene dine her: http://community.wikia.com/Special:Prefere
 	'wall-topic-input-heading' => 'Emne',
 	'wall-topic-input-placeholder' => 'Legg til et emne (valgfritt)',
 	'wall-topic-input-error' => 'Det finnes ingen artikkel med navnet «$1». Vennligst bruk et eksisterende artikkelnavn som emne.',
-	'wall-topic-input-error-limit' => 'En tråd kan maksimalt ha $1 emner.',
+	'wall-topic-input-error-limit' => 'En tråd kan maksimalt ha $1 emner.', # Fuzzy
 	'wall-topic-heading' => 'Emner i denne tråden:',
 	'wall-topic-edit' => 'Rediger emner',
 	'wall-topic-edit-save' => 'Lagre',
@@ -4647,7 +4658,7 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'wall-votes-modal-showmore' => 'Andere gebruikers die Kudos hebben gegeven bekijken',
 	'wall-votes-modal-title' => 'Kudos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Eén gebruiker|$1 gebruikers}} hebben dit bericht Kudos gegeven',
-	'wall-votes-number' => '$1 Kudos',
+	'wall-votes-number' => '$1 {{PLURAL:$1|kudos}}',
 	'wall-votes-number-tooltip' => 'Bekijken wie Kudos aan dit bericht hebben gegeven',
 	'wall-votes-vote-tooltip' => 'Kudus aan dit bericht geven',
 	'wall-votes-voted-tooltip' => 'U heeft Kudos aan dit bericht gegeven!',
@@ -4986,7 +4997,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Zobacz kto jeszcze dał OKejkę',
 	'wall-votes-modal-title' => 'OKejka',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Jedna osoba dała|$1 osoby dały|$1 osób dało}} OKejkę tej wiadomości',
-	'wall-votes-number' => '$1 {{PLURAL:$1|OKejka|OKejki|OKejek}}',
+	'wall-votes-number' => '$1 {{PLURAL:$1|OKejka|OKejki|OKejek}}', # Fuzzy
 	'wall-votes-number-tooltip' => 'Zobacz kto dał OKejkę tej wiadomości',
 	'wall-votes-vote-tooltip' => 'Daj OKejkę tej wiadomości',
 	'wall-votes-voted-tooltip' => 'Przyznano OKejkę tej wiadomości!',
@@ -4998,7 +5009,7 @@ ___________________________________________<br />
 	'wall-topic-input-heading' => 'Temat',
 	'wall-topic-input-placeholder' => 'Dodaj temat (opcjonalne)',
 	'wall-topic-input-error' => 'Artykuł o nazwie "$1" nie istnieje. Użyj nazwy istniejącego artykułu.',
-	'wall-topic-input-error-limit' => 'Wątek może mieć nie więcej niż $1 tematów.',
+	'wall-topic-input-error-limit' => 'Wątek może mieć nie więcej niż $1 tematów.', # Fuzzy
 	'wall-topic-heading' => 'Tematy tego wątku:',
 	'wall-topic-edit' => 'Edytuj tematy',
 	'wall-topic-edit-save' => 'Zapisz zmiany',
@@ -5246,7 +5257,7 @@ suas preferências de e-mail aqui: http://community.wikia.com/Special:Preference
 	'wall-message-notifyeveryone-tooltip' => 'Todas as pessoas logadas na wiki irão ser notificadas deste tópico',
 	'wall-votes-modal-title' => 'Gostos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Uma pessoa|$1 pessoas}} deram "Gosto" a esta mensagem',
-	'wall-votes-number' => '$1 Gostos',
+	'wall-votes-number' => '$1 Gostos', # Fuzzy
 	'wall-votes-number-tooltip' => 'Veja quem deu "Gosto" a esta mensagem',
 	'wall-votes-vote-tooltip' => 'Dar um "Gosto" a esta mensagem',
 	'wall-votes-voted-tooltip' => 'Você deu um "Gosto" a esta mensagem!',
@@ -5721,7 +5732,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Посмотреть, кто ещё добавил "Мне нравится"',
 	'wall-votes-modal-title' => 'Мне нравится',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один участник|$1 участника|$1 участников}} добавили "Мне нравится" к этому сообщению',
-	'wall-votes-number' => '$1 "Мне нравится"',
+	'wall-votes-number' => '$1 "Мне нравится"', # Fuzzy
 	'wall-votes-number-tooltip' => 'Посмотреть, кто добавил "Мне нравится"',
 	'wall-votes-vote-tooltip' => 'Мне нравится это сообщение',
 	'wall-votes-voted-tooltip' => 'Вам понравилось это сообщение!',
@@ -5733,7 +5744,7 @@ ___________________________________________<br />
 	'wall-topic-input-heading' => 'Topic',
 	'wall-topic-input-placeholder' => 'Add a Topic (optional)',
 	'wall-topic-input-error' => 'There is no article named "$1". Please use an existing article name as a Topic.',
-	'wall-topic-input-error-limit' => 'A thread can only have $1 Topics maximum.',
+	'wall-topic-input-error-limit' => 'A thread can only have $1 Topics maximum.', # Fuzzy
 	'wall-topic-heading' => 'Topics for this thread:',
 	'wall-topic-edit' => 'Edit Topics',
 );
@@ -6028,7 +6039,7 @@ dina e-postinställningar här: http://community.wikia.com/Special:Preferences',
 	'wall-votes-modal-showmore' => 'Se alla som gav beröm',
 	'wall-votes-modal-title' => 'Beröm',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|En person|$1 personer}} gav beröm till detta meddelande',
-	'wall-votes-number' => '$1 beröm',
+	'wall-votes-number' => '$1 {{PLURAL:$1|beröm}}',
 	'wall-votes-number-tooltip' => 'Se vem som gav beröm till detta meddelande',
 	'wall-votes-vote-tooltip' => 'Ge beröm till detta meddelande',
 	'wall-votes-voted-tooltip' => 'Du har givit beröm till detta meddelande!',
@@ -6040,7 +6051,7 @@ dina e-postinställningar här: http://community.wikia.com/Special:Preferences',
 	'wall-topic-input-heading' => 'Ämne',
 	'wall-topic-input-placeholder' => 'Lägg till ett ämne (valfritt)',
 	'wall-topic-input-error' => 'Det finns ingen artikel med namnet "$1". Var god använd ett existerande artikelnamn som ämne.',
-	'wall-topic-input-error-limit' => 'En tråd kan bara maximalt ha $1 ämnen.',
+	'wall-topic-input-error-limit' => 'En tråd kan bara maximalt ha $1 {{PLURAL:$1|ämne|ämnen}}.',
 	'wall-topic-heading' => 'Ämnen för denna tråd:',
 	'wall-topic-edit' => 'Redigera ämnen',
 	'wall-topic-edit-save' => 'Spara',
@@ -6344,7 +6355,7 @@ ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/S
 	'wall-votes-modal-showmore' => 'Tingnan ang iba pa na nagbigay ng Kudos',
 	'wall-votes-modal-title' => 'Kudos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Isang tao|$1 mga tao}} ang nagbigay ng Kudos sa mensaheng ito',
-	'wall-votes-number' => '$1 Kudos',
+	'wall-votes-number' => '$1 Kudos', # Fuzzy
 	'wall-votes-number-tooltip' => 'Tingnan kung sino ang nagbigay ng Kudos sa mensaheng ito',
 	'wall-votes-vote-tooltip' => 'Magbigay ng Kudos sa mensaheng ito',
 	'wall-votes-voted-tooltip' => 'Binigyan mo ng Kudos ang mensaheng ito!',
@@ -6683,7 +6694,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Переглянути, хто додав "Мені подобається"',
 	'wall-votes-modal-title' => 'Мені подобається',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|одному користувачу|$1 користувачам}} сподобалось це повідомлення',
-	'wall-votes-number' => '$1 "Мені подобається"',
+	'wall-votes-number' => '$1 "Мені подобається"', # Fuzzy
 	'wall-votes-number-tooltip' => 'Подивитися, хто додав "Мені подобається" до цього повідомлення',
 	'wall-votes-vote-tooltip' => 'Мені подобається це повідомлення!',
 	'wall-votes-voted-tooltip' => 'Вам сподобалось це повідомлення!',

@@ -60,6 +60,7 @@ switch($wgWikiaDatacenter) {
 			0 => "10.8.44.110:11000", # dev-memcached1
 			1 => "10.8.36.107:11000", # dev-memcached2
 		);
+
 		break;
 
 	case 'poz':
@@ -79,6 +80,7 @@ switch($wgWikiaDatacenter) {
 			0 => "10.14.30.143:11000", # dev-memcached-p1
 			1 => "10.14.30.143:11000", # dev-memcached-p2
 		);
+		require_once( "$IP/extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php" );
 		break;
 }
 
@@ -100,7 +102,6 @@ $wgWikiaEnableWikiFactoryExt = true;
 
 $wgEnableUserChangesHistoryExt = false;
 
-$wgAllInOne = false;
 $wgEnableFixRecoveredUsersExt = false;
 
 // enable ExternalUsers
@@ -108,6 +109,9 @@ $wgExternalUserEnabled = true;
 
 // antispoof extension needs statsdb setup, only on prod for now
 $wgEnableAntiSpoofExt = false;
+
+//disabling TorBlock on devboxes because it is soooooo slow
+$wgEnableTorBlockExt = false;
 
 // Google Maps key for wikia-dev.com (different than the key for wikia.com).
 $wgGoogleMapsKey = 'ABQIAAAAH6bdoxGNhXgildFjnRAQjBTsndpDQKTEb03AQ6hTlU-KPVq60xQdoVVgLuXn-IrTw3LW8MYBMaYx9Q';
@@ -158,17 +162,12 @@ $wgLocalisationCacheConf[ "manualRecache" ] = false;
 // disable irc feed
 $wgRC2UDPEnabled = false;
 
-// static assets host
-switch($wgWikiaDatacenter) {
-	case 'poz':
-		$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.pl.wikia-dev.com";
-		$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.pl.wikia-dev.com";
-		break;
+// set allinone to 1 by default (you can always overwrite this value in DevBoxSettings.php)
+$wgAllInOne = true;
 
-	default:
-		$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
-		$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
-}
+// static assets host
+$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
+$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
 // macbre: generate proper paths for static assets on devboxes (BugId:6809)
 $wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images requested from CSS/SASS

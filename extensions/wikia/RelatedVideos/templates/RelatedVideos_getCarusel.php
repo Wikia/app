@@ -9,7 +9,9 @@
 			<em><?=count($videos);?></em>
 			<span class="fixedwidth"><?=wfMsg('related-videos-tally') ?></span>
 		</div>
+		<? if ( $canAddVideo ) { ?>
 		<a class="button addVideo"><img src="<?=wfBlankImgUrl();?>" class="sprite addRelatedVideo" /> <?=wfMsg('related-videos-add-video')?></a>
+		<? } ?>
 		<a class="beta"><?=wfMsg('related-videos-beta-feature')?></a>
 		<a class="feedback" target="_blank" href="<?=RelatedVideosController::SURVEY_URL?>"><?=wfMsg('related-videos-leave-feedback')?></a>
 	</div>

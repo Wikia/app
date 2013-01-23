@@ -755,15 +755,7 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 ?>
 	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco wikiaSkinLyricsMinimal<?=$isMainpage?> <?= $body_css_action ?><?php print " ".implode($this->extraBodyClasses, " "); ?>" id="body">
-	<?php
-	// Sometimes we need an ad delivered at the very top of the page (like for a skin)
-	// This sucks to have a blocking call at the top of the page, but they promised
-	// to only do it if they needed. Only use DART or Google (fast Ad Providers with good infrastructure)
-	global $wgOut;
-	if (WikiaPageType::isMainPage() || ($wgOut->isArticle() && WikiaPageType::isContentPage())){
-		echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
-	}
-?>
+
 <?php
 	// this hook allows adding extra HTML just after <body> opening tag
 	// append your content to $html variable instead of echoing

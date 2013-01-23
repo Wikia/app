@@ -13,14 +13,14 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 ############################## Ajax ##################################
-class LookupContribsAjax {	
+class LookupContribsAjax {
 	function __construct() { /* not used */ }
 
 	function axData() {
 		global $wgRequest, $wgUser,	$wgCityId, $wgDBname, $wgLang;
-		
-        wfProfileIn( __METHOD__ );
-	
+
+		wfProfileIn( __METHOD__ );
+
 		$username 	= $wgRequest->getVal('username');
 		$dbname		= $wgRequest->getVal('wiki');
 		$mode 		= $wgRequest->getVal('mode');
@@ -33,15 +33,15 @@ class LookupContribsAjax {
 		$lookupUser = $wgRequest->getBool('lookupUser');
 
 		$result = array(
-			'sEcho' => intval($loop), 
-			'iTotalRecords' => 0, 
-			'iTotalDisplayRecords' => 0, 
+			'sEcho' => intval($loop),
+			'iTotalRecords' => 0,
+			'iTotalDisplayRecords' => 0,
 			'sColumns' => '',
 			'aaData' => array()
 		);
-				
+
 		//$dbname, $username, $mode, $limit = 25, $offset = 0, $nspace = -1
-		
+
 		if ( empty($wgUser) ) {
 			wfProfileOut(__METHOD__);
 			return "";
@@ -55,20 +55,20 @@ class LookupContribsAjax {
 			return "";
 		}
 		if ( !$wgUser->isAllowed( 'lookupcontribs' ) ) {
-			wfProfileOut( __METHOD__ );			
-			return json_encode($result); 
+			wfProfileOut( __METHOD__ );
+			return json_encode($result);
 		}
-	
+
 		$oLC = new LookupContribsCore($username);
 		if ( $oLC->checkUser() ) {
 			if ( empty($mode) ) {
 				$oLC->setLimit($limit);
 				$oLC->setOffset($offset);
-				$activity = $oLC->checkUserActivity($lookupUser, $order); 
+				$activity = $oLC->checkUserActivity($lookupUser, $order);
 				if ( !empty($activity) ) {
 					$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
 					$result['iTotalDisplayRecords'] = intval($activity['cnt']);
-					
+
 					if( $lookupUser === true ) {
 						$result['sColumns'] = 'id,title,url,lastedit,edits,userrights,blocked';
 						$result['aaData'] = LookupContribsAjax::prepareLookupUserData($activity['data'], $username);
@@ -91,7 +91,7 @@ class LookupContribsAjax {
 				if ( !empty($data) && is_array($data) ) {
 					$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
 					$result['iTotalDisplayRecords'] = intval($data['cnt']);
-					$result['sColumns'] = 'id,title,diff,history,contribution,edit';
+					$result['sColumns'] = 'id,title,links,edit';
 					$rows = array();
 					if ( isset($data['data']) ) {
 						$loop = 1;
@@ -99,10 +99,8 @@ class LookupContribsAjax {
 							list ($link, $diff, $hist, $contrib, $edit, $removed) = array_values($oLC->produceLine( $row ));
 							$rows[] = array(
 								$loop + $offset, // id
-								$link, // title 
-								$diff, // diff 
-								$hist, // history
-								$contrib, //user contribution (link to special page)
+								$link, // title
+								$diff . ' ' . $hist . ' ' . $contrib, // links to diff, history and user contribution (link to special page)
 								$edit
 							);
 							$loop++;
@@ -112,63 +110,63 @@ class LookupContribsAjax {
 				}
 			}
 		}
-		
-		wfProfileOut( __METHOD__ );			
-		return json_encode($result); 
+
+		wfProfileOut( __METHOD__ );
+		return json_encode($result);
 	}
-	
+
 	/**
 	 * @brief Generates row data for user if ajax call was sent from Special:LookupContribs
-	 * 
+	 *
 	 * @param array $activityData data retrieved from LookupContribsCore::checkUserActivity()
-	 * 
+	 *
 	 * @return array
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public static function prepareLookupContribsData($activityData) {
 		global $wgLang;
-		
+
 		$rows = array();
 		foreach( $activityData as $row ) {
 			$rows[] = array(
 				$row['id'], // wiki Id
 				$row['dbname'], // wiki dbname
 				$row['title'], //wiki title
-				$row['url'], // wiki url 
+				$row['url'], // wiki url
 				$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), //last edited
 				'' //options
 			);
 		}
-		
+
 		return $rows;
 	}
-	
+
 	/**
 	 * @brief Generates row data for user if ajax call was sent from Special:LookupUser
-	 * 
+	 *
 	 * @param array $activityData data retrieved from LookupContribsCore::checkUserActivity()
-	 * 
+	 *
 	 * @return array
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public static function prepareLookupUserData($activityData, $username) {
 		global $wgLang, $wgContLang;
-		
+
 		$rows = array();
 		foreach( $activityData as $row ) {
 			$rows[] = array(
 				$row['id'], // wiki Id
 				$row['title'], //wiki title
-				$row['url'], // wiki url 
+				$row['url'], // wiki url
 				$wgLang->timeanddate( wfTimestamp( TS_MW, $row['last_edit'] ), true ), //last edited
 				$wgContLang->formatNum($row['editcount']),
 				LookupUserPage::getUserData($username, $row['id'], $row['url']), //user rights
 				LookupUserPage::getUserData($username, $row['id'], $row['url'], true), //blocked
 			);
 		}
-		
+
 		return $rows;
 	}
 }

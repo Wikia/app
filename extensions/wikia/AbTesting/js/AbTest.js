@@ -261,7 +261,7 @@
 		var expName, exp;
 		for ( expName in experiments ) {
 			exp = experiments[expName];
-			if ( exp.flags.dw_tracking && exp.group ) {
+			if ( exp.flags && exp.flags.dw_tracking && exp.group ) {
 				window.WikiaTracker.trackEvent( 'ab_treatment', {
 					time: serverTimeString,
 					experiment: exp.name,

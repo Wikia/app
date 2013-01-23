@@ -15,12 +15,12 @@
 (function(){
 	if(define){
 		//AMD
-		define('popover', ['loader'], popover);//late binding
+		define('popover', ['throbber'], popover);//late binding
 	}else{
-		window.Popover = popover(Loader);//late binding
+		window.Popover = popover(throbber);//late binding
 	}
 
-	function popover(loader){
+	function popover(throbber){
 		return function(options){
 			options = options || {};
 
@@ -70,7 +70,7 @@
 
 			function changeContent(onCreate){
 				cnt.innerHTML = '';
-				loader.show(cnt, {center: true, size: '20px'});
+				throbber.show(cnt, {center: true, size: '20px'});
 				onCreate(cnt);
 			}
 

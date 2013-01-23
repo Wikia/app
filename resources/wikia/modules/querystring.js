@@ -8,8 +8,8 @@
 (function (context) {
 	'use strict';
 
-	function querystring() {
-		var l = context.location,
+	function querystring(location) {
+		var l = location,
 			p,
 			u;
 
@@ -102,7 +102,7 @@
 		 * Return a string representation of a QueryString instance
 		 *
 		 * @public
-		 * 
+		 *
 		 * @example new Querystring().toString()
 		 * @example new Querystring() + 'some string'
 		 *
@@ -143,7 +143,7 @@
 		 * Sets a parameter by name
 		 *
 		 * @public
-		 * 
+		 *
 		 * to remove key=value use removeVal(key)
 		 *
 		 * @param {String} name The parameter's name
@@ -214,7 +214,7 @@
 		 * Gets the path of the URL
 		 *
 		 * @public
-		 * 
+		 *
 		 * @return {String} a path part of URL
 		 */
 		p.getPath = function () {
@@ -223,11 +223,11 @@
 
 		/**
 		 * Sets the path of the URL
-		 * 
+		 *
 		 * @public
-		 * 
+		 *
 		 * @param p String a path to set
-		 * 
+		 *
 		 * @return {Querystring}
 		 */
 		p.setPath = function (p) {
@@ -239,7 +239,7 @@
 		 * Adds a cachebuster to the querystring
 		 *
 		 * @public
-		 * 
+		 *
 		 * @return {Querystring}
 		 */
 		p.addCb = function () {
@@ -259,14 +259,9 @@
 		return Querystring;
 	}
 
-	//UMD exclusive
 	if (context.define && context.define.amd) {
-		context.define('querystring', querystring);
-	} else {
-		if (!context.Wikia) {
-			context.Wikia = {};
-		}
-
-		context.Wikia.Querystring = querystring();
+		context.define('wikia.querystring', ['wikia.location'], querystring);
 	}
+	context.Wikia = context.Wikia || {};
+	context.Wikia.Querystring = querystring(context.location);
 }(this));

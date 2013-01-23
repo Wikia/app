@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  *
  */
-define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer', 'lazyload', 'track'], function(med, mod, pag, thumbnailer, lazyload, track) {
+define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyload', 'track'], function(med, mod, pag, thumbnailer, lazyload, track) {
 	'use strict';
 
 	var MAX_THUMB_SIZE = 140,

@@ -21,7 +21,7 @@
 
 		<? if ( is_array( $form[ 'inputs' ] ) ): ?>
 			<? foreach( $form[ 'inputs' ] as $input ): ?>
-				<?
+				<?php
 					$inputAttributes = isset( $input[ 'attributes' ] ) ? $input[ 'attributes' ] : array();
 					$inputAttributes = WikiaStyleGuideFormHelper::getInputAttributes( $inputAttributes, $input );
 					$inputAttributes = WikiaStyleGuideFormHelper::getAttributesString( $inputAttributes );
@@ -48,17 +48,18 @@
 
 				<? if ( $type === 'hidden' ): ?>
 					<input type="hidden" <?= $inputAttributes ?>>
-
 				<? elseif ( $type === 'raw' ): ?>
 					<?= $input[ 'output' ] ?>
-
 				<? else: ?>
 					<? if ( empty($input['noDivWrapper']) ): ?>
-					<div class="<?= WikiaStyleGuideFormHelper::getClassNamesString( array( 'input-group', $class, $error, $required ) ) ?>">
+						<div class="<?= WikiaStyleGuideFormHelper::getClassNamesString( array( 'input-group', $class, $error, $required ) ) ?>">
 					<? endif; ?>
-						<? if ( $label ): ?>
-							<label><?= ( !$wrappedByLabel ? $label . $tooltip : '' ) ?>
-							<? if (!$wrappedByLabel): ?></label><? endif; ?>
+						<? if ( $label && !$wrappedByLabel ): ?>
+							<label><?= ( !$wrappedByLabel ? $label . $tooltip : '' ) ?></label>
+						<? endif ?>
+
+						<? if ( $label && $wrappedByLabel ): ?>
+							<label>
 						<? endif ?>
 
 						<? switch( $type ):
@@ -67,35 +68,38 @@
 								<button type="button" <?= $inputAttributes ?>><?=
 									( !empty( $input[ 'content' ] ) ? $input[ 'content' ] : '' )
 								?></button>
-							<? break ?>
+							<? break; ?>
+							<? case 'submit': ?>
+								<input type="submit" <?= $inputAttributes ?> />
+							<? break; ?>
 							<? case 'checkbox': ?>
-								<input type="checkbox" <?= $inputAttributes ?>><?= $label ?>
-							<? break ?>
+								<input type="checkbox" <?= $inputAttributes ?>>
+							<? break; ?>
 							<? case 'custom': ?>
 								<?= $input[ 'output' ] ?>
-							<? break ?>
+							<? break; ?>
 							<? case 'display': ?>
 								<? if ( $value ): ?>
 									<strong><?= $value ?></strong>
 								<? endif ?>
-							<? break ?>
+							<? break; ?>
 							<? case 'nirvana': ?>
 								<?= ( string ) F::app()->sendRequest(
 									$input[ 'controller' ],
 									$input[ 'method' ],
 									( empty( $input[ 'params' ] ) ? array() : $input[ 'params' ] )
 								) ?>
-							<? break ?>
+							<? break; ?>
 							<? case 'nirvanaview': ?>
 								<?= F::app()->getView(
 									$input[ 'controller' ],
 									$input[ 'view' ],
 									( empty( $input[ 'params' ] ) ? array() : $input[ 'params' ] )
 								) ?>
-							<? break ?>
+							<? break; ?>
 							<? case 'password': ?>
 								<input type="password" <?= $inputAttributes ?>>
-							<? break ?>
+							<? break; ?>
 							<? case 'select': ?>
 								<select <?= $inputAttributes ?>>
 									<? foreach( $input[ 'options' ] as $option ): ?>
@@ -105,32 +109,32 @@
 										?></option>
 									<? endforeach ?>
 								</select>
-							<? break ?>
+							<? break; ?>
 							<? case 'text': ?>
 								<input type="text" <?= $inputAttributes ?>>
-							<? break ?>
+							<? break; ?>
 							<? case 'textarea': ?>
 								<textarea <?= $inputAttributes ?>><?= $value ?></textarea>
-							<? break ?>
+							<? break; ?>
 						<? endswitch ?>
 
 						<? if ( $label && $wrappedByLabel ): ?>
-							</label>
+							<?= $label . $tooltip ?></label>
 						<? endif ?>
 
 						<? if ( $error ): ?>
 							<div class="error-msg"><?= $input[ 'errorMsg' ] ?></div>
 						<? endif ?>
 					<? if ( empty($input['noDivWrapper']) ): ?>
-					</div>
+						</div>
 					<? endif; ?>
-				<? endif ?>
-			<? endforeach ?>
-		<? endif ?>
+				<? endif; ?>
+			<? endforeach; ?>
+		<? endif; ?>
 	</fieldset>
 
+	<? if ( !empty( $form[ 'submits' ] ) ): ?>
 	<div class="submits">
-		<? if ( !empty( $form[ 'submits' ] ) ): ?>
 			<? foreach( $form[ 'submits' ] as $submit ): ?>
 				<?
 					$submitAttributes = isset( $submit[ 'attributes' ] ) ? $submit[ 'attributes' ] : array();
@@ -139,6 +143,6 @@
 				?>
 				<input type="submit" <?= $submitAttributes ?>>
 			<? endforeach ?>
-		<? endif ?>
 	</div>
+	<? endif ?>
 </form>

@@ -4,7 +4,7 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optional('popover'), 'track', 'events', require.optional('share'), require.optional('cache')], function(msg, modal, loader, qs, popover, track, events, share, cache){
+define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', 'events', require.optional('share'), require.optional('wikia.cache')], function(msg, modal, throbber, qs, popover, track, events, share, cache){
 	'use strict';
 	/** @private **/
 
@@ -152,7 +152,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 
 	function setupImage(){
 		var image = images[current];
-		loader.remove(currentImage);
+		throbber.remove(currentImage);
 
 		modal.setCaption(getCaption(current));
 
@@ -167,7 +167,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 				if(videoCache[imgTitle]){
 					currentImage.innerHTML = '<table class=wkVi><tr><td>'+videoCache[imgTitle]+'</td></tr></table>';
 				}else{
-					loader.show(currentImage, {
+					throbber.show(currentImage, {
 						center: true
 					});
 
@@ -182,7 +182,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 							width: window.innerWidth - 100
 						},
 						callback: function(data) {
-							loader.remove(currentImage);
+							throbber.remove(currentImage);
 
 							if(data.error){
 								handleError(data.error);
@@ -200,7 +200,7 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 
 			if(!img.complete){
 				img.onload = function(){
-					loader.hide(currentImage);
+					throbber.hide(currentImage);
 
 					var image = currentImage.getElementsByTagName('img')[0];
 					origW = image.width;
@@ -208,11 +208,11 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 				};
 
 				img.onerror = function(){
-					loader.hide(currentImage);
+					throbber.hide(currentImage);
 					handleError(msg('wikiamobile-image-not-loaded'));
 				};
 
-				loader.show(currentImage, {
+				throbber.show(currentImage, {
 					center: true
 				});
 			}else{

@@ -384,31 +384,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		switch( $field ) {
 			case 'username' :
 				$response = $signupForm->initValidationUsername();
-				if ( $signupForm->msgType != 'error' ) {
-					$result = $this->wf->ValidateUserName( $signupForm->mUsername );
-
-					if ( $result === true ) {
-						$msgKey = '';
-						if ( !$this->wf->RunHooks('cxValidateUserName', array($signupForm->mUsername, &$msgKey)) ) {
-							$result = $msgKey;
-						}
-					}
-
-					if ( $result !== true ) {
-						$msg = '';
-						if ( $result == 'userlogin-bad-username-taken' ) {
-							$msg = $this->wf->Msg('userlogin-error-userexists');
-						} else if ( $result == 'userlogin-bad-username-character' ) {
-							$msg = $this->wf->Msg('usersignup-error-symbols-in-username');
-						} else if ( $result == 'userlogin-bad-username-length' ) {
-							$msg = $this->wf->Msg('usersignup-error-username-length', $this->wg->WikiaMaxNameChars);
-						}
-
-						$signupForm->msgType = 'error';
-						$signupForm->msg = empty($msg) ? $result : $msg;
-						$signupForm->errParam = 'username';
-					}
-				}
 				break;
 			case 'password' :
 				$response = $signupForm->initValidationPassword();

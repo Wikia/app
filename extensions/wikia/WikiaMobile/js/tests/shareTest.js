@@ -2,8 +2,16 @@
  @test-framework Jasmine
  @test-require-asset /resources/wikia/libraries/modil/modil.js
  @test-require-asset /resources/wikia/libraries/zepto/zepto-0.8.js
+ @test-require-asset /extensions/wikia/WikiaMobile/js/Wikia.utils.js
+ @test-require-asset /resources/wikia/libraries/deferred/deferred.js
+ @test-require-asset /resources/wikia/libraries/deferred/deferred.api.js
+ @test-require-asset /resources/wikia/modules/window.js
+ @test-require-asset /resources/wikia/modules/mw.js
+ @test-require-asset /resources/wikia/modules/ajax.js
+ @test-require-asset /resources/wikia/modules/nirvana.js
+ @test-require-asset /resources/wikia/modules/loader.js
  @test-require-asset /resources/wikia/modules/cache.js
- @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js
+ @test-require-asset /extensions/wikia/JSMessages/js/JSMessages.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/share.js
  */
 
@@ -29,17 +37,21 @@ describe("Share module", function () {
 		get: function(){return false}
 	});
 
-	window.Wikia = {
-		getMultiTypePackage: function(obj){
-			obj.callback({
+	define.mock('nirvana', {
+		getJson: function(obj){
+			var dfd = new Wikia.Deferred();
+
+			dfd.resolve({
 				templates: {
 					WikiaMobileSharingService_index: '<ul class=wkLst><li class=facebookShr><a href="http://www.facebook.com/sharer.php?u=__1__&t=__2__" target=_blank>&nbsp;</a></li><li class=twitterShr><a href="http://twitter.com/home?status=__1__%20__2__\" target=_blank>&nbsp;</a></li><li class=plusoneShr><a href="https://plusone.google.com/_/+1/confirm?hl=pl&url=__1__" target=_blank>&nbsp;</a></li><li class=emailShr><a href="mailto:?body=__3__%20__1__&subject=__4__" target=_blank>&nbsp;</a></li></ul>'
 				},
 				styles: ''
 			});
+
+			return dfd.promise();
 		},
 		processStyle: function(){}
-	};
+	});
 
 	async.it('should be defined', function(done){
 		require(['share'], function(share){
@@ -57,24 +69,6 @@ describe("Share module", function () {
 			expect(typeof share('link to share')).toBe('function');
 			expect(typeof share()).toBe('function');
 			expect(typeof share(true)).toBe('function');
-
-			done();
-		});
-	});
-
-	async.it('should throw', function(done){
-		document.body.innerHTML = '<div id="sharePlace"></div>';
-
-		require(['share'], function(share){
-
-			expect(function(){
-				share('TESTTEST')();
-			}).toThrow();
-
-			expect(function(){
-				share('TESTTEST')(document.getElementById('nope'));
-			}).toThrow();
-
 
 			done();
 		});

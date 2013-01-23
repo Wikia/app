@@ -133,11 +133,15 @@
 		};
 	}
 
-	//UMD exclusive
+	//UMD inclusive
+	if (!context.Wikia) {
+		context.Wikia = {};
+	}
+
+	//namespace
+	context.Wikia.Cache = cache(window.localStorage);
+
 	if (context.define && context.define.amd) {
-		context.define('cache', cache);
-	} else {
-		context.Wikia = context.Wikia || {};
-		context.Wikia.Cache = cache();
+		context.define('wikia.cache', ['wikia.localStorage'], cache);
 	}
 }(this));

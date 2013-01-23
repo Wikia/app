@@ -89,8 +89,9 @@
 		module = definitions[id];
 
 		if (module && module.def) {
+			dependencies = [];
+
 			if (module.dep instanceof arrType) {
-				dependencies = [];
 				moduleDependencies = module.dep;
 
 				for (x = 0, y = moduleDependencies.length; x < y; x += 1) {
