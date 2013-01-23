@@ -18,8 +18,8 @@ class MediaData extends AbstractService
 	public function execute() {
 		$results = array();
 		
-		if ( $this->interface->getNamespaceFromPageId( $this->currentPageId ) != NS_FILE
-			|| $this->interface->pageIdHasFile( $this->currentPageId ) ) {
+		if (! ( $this->interface->getNamespaceFromPageId( $this->currentPageId ) == NS_FILE
+			    && $this->interface->pageIdHasFile( $this->currentPageId ) ) ) {
 			return $results;
 		}
 	
