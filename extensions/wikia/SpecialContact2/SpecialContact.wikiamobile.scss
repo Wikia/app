@@ -1,0 +1,38 @@
+@import "../WikiaMobile/css/variables.scss";
+
+.wkForm {
+	border-top: 1px solid $border-color;
+	padding-top: 15px;
+}
+
+#wgCC {
+	width: auto;
+	height: auto;
+
+	& + label {
+		display: inline-block;
+		margin-left: 10px;
+	}
+}
+
+#wpConctactDesc{
+	height: 150px;
+}
+
+input[type=file]{
+	font-size: 1em;
+	height: auto;
+	margin: 0;
+}
+
+.captcha img {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+
+	box-shadow: 0 0 15px 0 $border-color;
+
+	-webkit-transition:-webkit-transform .5s;
+
+	&.large {
+		-webkit-transform: scale(3) rotate(90deg);
+	}
+}

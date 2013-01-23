@@ -53,9 +53,11 @@ class ContactForm extends SpecialPage {
 		global $wgRequest, $wgOut;
 		global $wgUser, $wgCaptchaClass, $wgServer;
 
+		$app = F::app();
+
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
-		$extPath = F::app()->wg->extensionsPath;
-		F::app()->wg->out->addScript( "<script src=\"{$extPath}/wikia/SpecialContact2/SpecialContact.js\"></script>" );
+		$extPath = $app->wg->extensionsPath;
+		$wgOut->addScript( "<script src=\"{$extPath}/wikia/SpecialContact2/SpecialContact.js\"></script>" );
 		$this->mUserName = null;
 		$this->mRealName = null;
 		$this->mWhichWiki = null;
@@ -151,14 +153,48 @@ class ContactForm extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
-		if( $this->isAuthorizedSub( $par ) ) {
-			# sub was one we know about, so use it
-			$this->doSub( $par );
-		}
-		else {
-			$this->ContactFormPicker();
-		}
+		if ( $app->checkSkin( 'wikiamobile') ) {
 
+			$wgOut->setPageTitle( wfMsg( 'contact' ) );
+
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+			$vars = array(
+				'isLoggedIn' => $wgUser->isLoggedIn(),
+				'intro' => wfMsgExt( 'specialcontact-intro-content-issue', array( 'parse' ) ),
+				'encName' => $wgUser->getName(),
+				'encEmail' => $wgUser->getEmail(),
+				'hasEmailConf' => $wgUser->isEmailConfirmed(),
+				'subject' => $this->mProblem,
+				'content' => $this->mProblemDesc,
+				'cc' => $this->mCCme,
+				'userName' => $this->mUserName,
+				'email' => $this->mEmail,
+				'captchaForm' => ($wgUser->isAnon() && class_exists( $wgCaptchaClass )) ? (new $wgCaptchaClass())->getForm() : '',
+				'errors' => $this->errInputs
+
+			);
+
+			$oTmpl->set_vars( $vars );
+			$wgOut->addHTML( $oTmpl->render( "mobile-form" ) );
+
+			foreach ( AssetsManager::getInstance()->getURL( 'special_contact_wikiamobile_scss' ) as $s ) {
+				$wgOut->addStyle( $s );
+			}
+
+			foreach ( AssetsManager::getInstance()->getURL( 'special_contact_wikiamobile_js' ) as $s ) {
+				$wgOut->addScript( "<script src=" . $s . ">" );
+			}
+
+		} else {
+			if( $this->isAuthorizedSub( $par ) ) {
+				# sub was one we know about, so use it
+				$this->doSub( $par );
+			}
+			else {
+				$this->ContactFormPicker();
+			}
+		}
 	}
 
 	/**
@@ -211,7 +247,7 @@ class ContactForm extends SpecialPage {
 		}
 
 		$mail_user = new MailAddress($this->mEmail);
-		$mail_community = new MailAddress($wgSpecialContactEmail, 'Wikia Support');
+		$mail_community = new MailAddress(/*$wgSpecialContactEmail*/'jolek@wikia-inc.com', 'Wikia Support');
 
 		$errors = '';
 
