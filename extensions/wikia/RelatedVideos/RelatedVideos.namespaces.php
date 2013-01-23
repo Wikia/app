@@ -31,6 +31,6 @@ $namespaces['ru'] = array(
 );
 
 $namespaces['uk'] = array(
-i        NS_RELATED_VIDEOS => 'Схоже_відео',
+        NS_RELATED_VIDEOS => 'Схоже_відео',
 );
 
