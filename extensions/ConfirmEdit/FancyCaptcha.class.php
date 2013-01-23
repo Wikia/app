@@ -41,7 +41,7 @@ class FancyCaptcha extends SimpleCaptcha {
 	/**
 	 * Insert the captcha prompt into the edit form.
 	 */
-	function getForm() {
+	function getForm(/*Wikia change */ $class = null /*Wikia change end*/) {
 		$info = $this->pickImage();
 		if ( !$info ) {
 			throw new MWException( "Ran out of captcha images" );
@@ -76,6 +76,7 @@ class FancyCaptcha extends SimpleCaptcha {
 				'autocorrect' => 'off',
 				'autocapitalize' => 'off',
 				'required',
+				'class' => $class,
 				'placeholder' => wfMsg('captcha-input-placeholder') ) ) .
 			"</p>\n";
 		/* Wikia change - end */
