@@ -338,4 +338,10 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->formFieldPrefix = MarketingToolboxModel::FORM_FIELD_PREFIX;
 		$this->inputData = $this->getVal('inputData');
 	}
+
+	public function sponsoredImage() {
+		$mockedData = array();
+		$mockedData['fileName']['value'] = '';
+		$this->fields = $mockedData;
+	}
 }
