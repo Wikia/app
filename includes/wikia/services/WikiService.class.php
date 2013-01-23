@@ -28,7 +28,7 @@ class WikiService extends WikiaModel {
 				// get admin and bureaucrat
 				if ( empty($this->wg->EnableAnswers) ) {
 					$memKey = $this->getMemKeyAdminIds( $wikiId, $excludeBots );
-					$adminIds = null;//$this->wg->Memc->get( $memKey );
+					$adminIds = $this->wg->Memc->get( $memKey );
 					if ( !is_array($adminIds) ) {
 						$dbname = $wiki->city_dbname;
 						$dbType = ( $useMaster ) ? DB_MASTER : DB_SLAVE;
@@ -38,7 +38,7 @@ class WikiService extends WikiaModel {
 
 						if ($excludeBots) {
 							$conditions[] = "ug_group not in (" .
-								"'" . implode("', '", self::$botGroups) . "'" .
+								$db->makeList(self::$botGroups) .
 								")";
 						}
 
