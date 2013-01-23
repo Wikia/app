@@ -338,55 +338,58 @@
 						onEnd();
 					};
 
-					// Nothing to load
-					(!l) && complete();
+				// Nothing to load
+				if (!l) {
+					complete();
+				}
 
-					while (l--) {
-						var resource = arguments[l],
-							files,
-							type;
+				while (l--) {
+					var resource = arguments[l],
+						files,
+						type;
 
-						// URI string
-						if (typeof resource == 'string') {
-							matches = resource.match(rExtension);
+					// URI string
+					if (typeof resource == 'string') {
+						matches = resource.match(rExtension);
 
-							type = matches ? matches[0] : loader.UNKNOWN;
-							files = resource;
+						type = matches ? matches[0] : loader.UNKNOWN;
+						files = resource;
 
-						} else {
-							type = resource.type;
-							files  = resource.resources || resource.url
+					} else {
+						type = resource.type;
+						files  = resource.resources || resource.url
+					}
+
+					func = get;
+
+					if (type && files) {
+						switch(type) {
+							case loader.MULTI:
+								func = getMultiTypePackage;
+								break;
+							case loader.LIBRARY:
+								func = getLibrary;
+								break;
+							case loader.JS:
+								files = getURL(files, 'one');
+								break;
+							case loader.AM_GROUPS:
+								files = getURL(files, 'groups');
+								break;
+							case loader.CSS:
+								files = getURL(files, 'one');
+								break;
+							case loader.SCSS:
+								files = getURL(files, 'sass');
+								break;
+							case loader.UNKNOWN:
+							default:
+								failure({type: type, resources: files})();
+								continue;
 						}
 
-						func = get;
-
-						if (type && files) {
-							switch(type) {
-								case loader.MULTI:
-									func = getMultiTypePackage;
-									break;
-								case loader.LIBRARY:
-									func = getLibrary;
-									break;
-								case loader.JS:
-									files = getURL(files, 'one');
-									break;
-								case loader.AM_GROUPS:
-									files = getURL(files, 'groups');
-									break;
-								case loader.CSS:
-									files = getURL(files, 'one');
-									break;
-								case loader.SCSS:
-									files = getURL(files, 'sass');
-									break;
-								case loader.UNKNOWN:
-								default:
-									failure({type: type, resources: files})();
-									continue;
-							}
-
 						remaining += ~~func(files, complete, failure({type: type, resources: files}), type);
+
 					} else {
 						dfd.reject({
 							error: loader.CORRUPT_FORMAT,
