@@ -1,5 +1,6 @@
 /**
  * @test-framework QUnit
+ * @test-require-asset resources/wikia/libraries/define.mock.js
  * @test-require-asset resources/wikia/modules/lazyqueue.js
  */
 
@@ -16,7 +17,7 @@ test('Queue callback is called for every item in array', function() {
 		callbackCalledWithArgument.push(arg);
 	};
 
-	Wikia.LazyQueue.makeQueue(queue, callback);
+	define.getModule().makeQueue(queue, callback);
 	queue.start();
 
 	equal(callbackCalledTimes, 3);
@@ -32,7 +33,7 @@ test('Queue callback is not called when queue is empty', function() {
 	callback = function() {
 		callbackCalled = true;
 	};
-	Wikia.LazyQueue.makeQueue(queue, callback);
+	define.getModule().makeQueue(queue, callback);
 	queue.start();
 	equal(callbackCalled, false);
 });
@@ -48,7 +49,7 @@ test('Queue callback is called for each element pushed after start()', function(
 		callbackCalledWithArguments.push(arg);
 	};
 
-	Wikia.LazyQueue.makeQueue(queue, callback);
+	define.getModule().makeQueue(queue, callback);
 	queue.start();
 	equal(callbackCalledTimes, 0, 'Callback not called after start');
 
@@ -65,31 +66,32 @@ test('LazyQueue throws if queue is not array', function() {
 		, undefinedQueue
 		, stringQueue = 'some string'
 		, intQueue = 7
-		, callback = function() {};
+		, callback = function() {}
+		, lazyQueue = define.getModule();
 
 	try {
-		Wikia.LazyQueue.makeQueue(nullQueue);
+		lazyqueue.makeQueue(nullQueue);
 	} catch (e1) {
 		thrown = true;
 	}
 	equal(thrown, true, 'Throws on null');
 
 	try {
-		Wikia.LazyQueue.makeQueue(undefinedQueue);
+		lazyqueue.makeQueue(undefinedQueue);
 	} catch (e2) {
 		thrown = true;
 	}
 	equal(thrown, true, 'Throws on undefined');
 
 	try {
-		Wikia.LazyQueue.makeQueue(stringQueue);
+		lazyqueue.makeQueue(stringQueue);
 	} catch (e3) {
 		thrown = true;
 	}
 	equal(thrown, true, 'Throws on stringQueue');
 
 	try {
-		Wikia.LazyQueue.makeQueue(intQueue);
+		lazyqueue.makeQueue(intQueue);
 	} catch (e4) {
 		thrown = true;
 	}

@@ -1,63 +1,63 @@
 /*
  @test-framework Jasmine
  @test-require-asset /resources/wikia/libraries/modil/modil.js
- @test-require-asset /extensions/wikia/WikiaMobile/js/loader.js
+ @test-require-asset /extensions/wikia/WikiaMobile/js/throbber.js
  */
 
 /*global describe, it, runs, waitsFor, expect, require, document*/
-describe("Loader module", function () {
+describe("throbber module", function () {
 	'use strict';
 	var async = new AsyncSpec(this);
 
 	async.it('should be defined', function(done){
-		require(['loader'], function(loader){
-			expect(loader).toBeDefined();
+		require(['throbber'], function(throbber){
+			expect(throbber).toBeDefined();
 
-			expect(typeof loader.show).toBe('function');
-			expect(typeof loader.hide).toBe('function');
-			expect(typeof loader.remove).toBe('function');
+			expect(typeof throbber.show).toBe('function');
+			expect(typeof throbber.hide).toBe('function');
+			expect(typeof throbber.remove).toBe('function');
 
 			done();
 		});
 	});
 
-	async.it('should show/hide/remove loader', function(done){
+	async.it('should show/hide/remove throbber', function(done){
 
 		var body = document.body;
 
-		require(['loader'], function(loader){
+		require(['throbber'], function(throbber){
 			expect(body.children.length).toBe(0);
 
-			loader.show(body);
+			throbber.show(body);
 
 			expect(body.children.length).toBe(1);
 
-			loader.remove(body);
+			throbber.remove(body);
 
 			expect(body.children.length).toBe(0);
 
-			loader.show(body);
+			throbber.show(body);
 
 			expect(body.children.length).toBe(1);
 			expect(body.children[0].className).toBe('wkMblLdr');
 
-			loader.remove(body);
+			throbber.remove(body);
 
 			done();
 		});
 	});
 
 	async.it('should throw', function(done){
-		require(['loader'], function(loader){
+		require(['throbber'], function(throbber){
 			expect(function(){
-				loader.show();
+				throbber.show();
 			}).toThrow();
 
 			expect(function(){
-				loader.show(document.body);
+				throbber.show(document.body);
 			}).not.toThrow();
 
-			loader.remove(document.body);
+			throbber.remove(document.body);
 
 			done();
 		});
@@ -67,34 +67,34 @@ describe("Loader module", function () {
 
 		var body = document.body;
 
-		require(['loader'], function(loader){
-			loader.show(body, {
+		require(['throbber'], function(throbber){
+			throbber.show(body, {
 				center: true
 			});
 
 			expect(body.children[0].className).toMatch('cntr');
 
-			loader.remove(body);
+			throbber.remove(body);
 
-			loader.show(body, {
+			throbber.show(body, {
 				size: '50px'
 			});
 
 			expect(body.children[0].children[0].style.width).toMatch('50px');
 			expect(body.children[0].children[0].style.height).toMatch('50px');
 
-			loader.remove(body);
+			throbber.remove(body);
 
-			loader.show(body, {
+			throbber.show(body, {
 				size: '10px'
 			});
 
 			expect(body.children[0].children[0].style.width).toMatch('10px');
 			expect(body.children[0].children[0].style.height).toMatch('10px');
 
-			loader.remove(body);
+			throbber.remove(body);
 
-			loader.show(body, {
+			throbber.show(body, {
 				center: true,
 				size: '20px'
 			});
@@ -103,7 +103,7 @@ describe("Loader module", function () {
 			expect(body.children[0].children[0].style.width).toMatch('20px');
 			expect(body.children[0].children[0].style.height).toMatch('20px');
 
-			loader.remove(body);
+			throbber.remove(body);
 
 			done();
 		});

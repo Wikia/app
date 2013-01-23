@@ -2,11 +2,11 @@
  * module used to handle category pages pagination
  *
  * @param events.js events
- * @param loader.js loader
+ * @param throbber.js throbber
  * @param track.js track
  */
 /* global wgTitle */
-require(['events', 'loader', 'track'], function (events, loader, track) {
+require(['events', 'throbber', 'track'], function (events, throbber, track) {
 	'use strict';
 
 	var d = document,
@@ -90,7 +90,7 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 		prev.setAttribute('data-batch', prevBatch + add);
 		next.setAttribute('data-batch', nextBatch + add);
 
-		loader.show(self, {size: '40px'});
+		throbber.show(self, {size: '40px'});
 
 		self.className += ' active';
 
@@ -116,7 +116,7 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 					track.event('category', track.PAGINATE, {label: 'previous'});
 				}
 
-				loader.hide(self);
+				throbber.hide(self);
 
 				prev.className = 'pagLess' + (batch > 1 ? ' visible' : '');
 				next.className = 'pagMore' + (batch < ~~(parent.getAttribute('data-batches')) ? ' visible' : '');

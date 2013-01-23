@@ -99,6 +99,8 @@ function onPageLoaded( status ) {
 }
 
 function processTest( test ) {
+	console.log('Running '+ test.replace(/^\.+/, ''));
+
 	//reset page
 	page = createPage();
 

@@ -1,6 +1,6 @@
 var UserLoginFacebook;
 
-require(['track', 'events', 'querystring', 'toast'], function(track, events, qs, toast){
+require(['track', 'events', 'wikia.querystring', 'toast'], function(track, events, qs, toast){
 	/** @private **/
 
 	//init

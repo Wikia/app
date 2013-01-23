@@ -83,9 +83,8 @@
 			success = attr.success || function(){},
 			error = attr.error || function(){},
 			url = attr.url || wgScriptPath,
-			async = (attr.async !== false);
-
-		var req = new XMLHttpRequest();
+			async = (attr.async !== false),
+			req = new XMLHttpRequest();
 
 		if(type === 'GET' && data){
 			url += (url.indexOf('?') > -1 ? '&' : '?') + Wikia.param(data);
@@ -267,4 +266,12 @@
 	//$ is forbackward compatability
 	w.Wikia = Wikia;
 	w.$ = Wikia;
+
+	//AMD
+	if (w.define && w.define.amd) {
+		w.define('wikia.utils', function() {
+			return Wikia;
+		});
+	}
+
 })(this, document);

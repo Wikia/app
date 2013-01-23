@@ -8,6 +8,8 @@
  * @author macbre
  */
 
+Wikia = window.Wikia || {};
+
 (function (deferred, Wikia) {
 	'use strict';
 
@@ -17,26 +19,15 @@
 	};
 
 	// jQuery's done() = deferred.js's then() with just a first parameter past
-	Wikia.Deferred.prototype.done = Wikia.Deferred.prototype.then;
+	deferred.Deferred.prototype.done = deferred.Deferred.prototype.then;
 
-	// jQuery specific "wrapping" promise object
-	Wikia.Deferred.prototype.promise = function () {
-		var self = this;
+	// jQuery specific methods from "wrapping" promise object
+	deferred.Deferred.prototype.always = deferred.Deferred.prototype.both;
+	deferred.Deferred.prototype.done = deferred.Deferred.prototype.then;
 
-		return {
-			always: function (callback) {
-				return self.both(callback);
-			},
-			done: function (callback) {
-				return self.then(callback);
-			},
-			fail: function (errback) {
-				return self.fail(errback);
-			},
-			then: function (callback, errback) {
-				return self.then(callback, errback);
-			}
-		};
+	// deferred.all requires full API to be available via promise object
+	deferred.Deferred.prototype.promise = function () {
+		return this;
 	};
 
 }(deferred, Wikia));
