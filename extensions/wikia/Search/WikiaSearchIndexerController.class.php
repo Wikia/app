@@ -44,7 +44,7 @@ class WikiaSearchIndexerController extends WikiaController
 		
 		$ids = $this->getVal( 'ids' );
 	    if ( !empty( $ids ) ) {
-	        $this->response->setData( $service->getResponseForPageIds( 'getPageDefaultValues' ) );
+	        $this->response->setData( $service->getResponseForPageIds() );
 	    }
 	}
 	
