@@ -14,6 +14,7 @@
 class WikiaMockProxy {
 
 	public $_mockClassName = null;
+	public $_constructorArguments = null;
 	public static $instances = array();
 	public static $redefined_functions = array();
 	public static $instance = null;  // temporary holder for instance reference during construction
@@ -61,11 +62,11 @@ class WikiaMockProxy {
 	}
 
 	// If something calls new on a MockProxy object, we return our mock object instance
-	// The instance var is stored by overload()
-	// Before returning, we store a "pointer" to our original class type so that __call can find it
+	// The instance var is stored by overload() and will be lost on the next use of this class
+	// We store our original class name so that __call can find it
 	public function __construct() {
 		$this->_mockClassName = get_class(self::$instance);
-		return self::$instance;
+		$this->_constructorArguments = func_get_args();
 	}
 
 	// PHP thinks that it is dealing with a MockProxy object, which has no useful functions
