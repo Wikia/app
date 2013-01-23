@@ -1,5 +1,6 @@
-/* globals Zepto */
 (function(context, jQuery){
+	var shift = Array.prototype.shift,
+		join = Array.prototype.join;
 
 	/**
 	 * JS version of wfMsg()
@@ -32,7 +33,7 @@
 		var JSMessages = function(){
 			// get the first function parameter
 			// then the rest are parameters to a message
-			var key = Array.prototype.shift.call(arguments),
+			var key = shift.call(arguments),
 			// default value to be returned
 				ret = key;
 
@@ -40,7 +41,7 @@
 				ret = wgMessages[key] || ret;
 
 				// replace $1, $2, $3, ...  with parameters provided
-				if (arguments && ret !== key && arguments.length) {
+				if (ret !== key && arguments.length) {
 					for(var i = 0, l = arguments.length; i < l; i++){
 						ret = ret.replace(new RegExp('\\$' + (i+1), 'g'), arguments[i]);
 					}
@@ -60,7 +61,7 @@
 		JSMessages.get = function(packages, callback, language) {
 			// list of packages was given
 			if (typeof packages != 'string') {
-				packages = Array.prototype.join.call(packages, ',');
+				packages = join.call(packages, ',');
 			}
 
 			// by default use user language
