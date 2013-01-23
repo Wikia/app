@@ -1,18 +1,37 @@
 (function(d){
 	var form = d.getElementById('wkContactForm'),
 		submit = d.getElementById('contactSub'),
-		inputs = d.querySelectorAll('#wpSubject, #wpConctactDesc, #wpUserName, #wpEmail, #wpCaptchaWord'),
+		inputs = d.querySelectorAll('#wpConctactDesc, #wpEmail, #wpCaptchaWord'),
 		captcha = d.querySelector('.captcha img'),
 		inputsLength = inputs.length,
-		input;
+		errReg = /\s*inpErr/gi,
+		input,
+		fileUploadImpossible = (function(d) {
+			var el = d.createElement("input");
+			el.setAttribute("type", "file");
+			return el.disabled;
+		})(d);
+
+	//hide file upload for devices that do not support it
+	if(fileUploadImpossible) {
+		d.querySelector('.filesUpload').style.display = 'none';
+	}
 
 	for(var i = 0; i < inputsLength; i++) {
 		input = inputs[i];
 
 		if(input) {
 			input.addEventListener('focus', function(){
-				this.className = this.className.replace(' inpErr', '');
+				this.className = this.className.replace(errReg, '');
 			})
+		}
+	}
+
+	function scrollToErr(){
+		var elem = d.getElementsByClassName('inpErr')[0];
+
+		if(elem) {
+			(elem.previousElementSibling || elem).scrollIntoView();
 		}
 	}
 
@@ -27,7 +46,9 @@
 				input.value = input.value.trim();
 
 				if(input.value == '') {
-					~input.className.indexOf(' inpErr') || (input.className += ' inpErr');
+					if(!~input.className.indexOf(' inpErr')) {
+						input.className += ' inpErr';
+					}
 					result = false;
 				} else{
 					input.className = input.className.replace(' inpErr', '');
@@ -40,10 +61,10 @@
 
 	if(form) {
 		form.addEventListener('submit', function(ev){
-			/*if(!checkInputs()) {
-				d.getElementsByClassName('inpErr')[0].previousElementSibling.scrollIntoView();
+			if(!checkInputs()) {
+				scrollToErr();
 				ev.preventDefault();
-			}*/
+			}
 		})
 	}
 
@@ -56,4 +77,7 @@
 			}
 		});
 	}
+
+	scrollToErr();
+
 })(document);
