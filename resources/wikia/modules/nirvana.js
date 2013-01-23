@@ -55,51 +55,35 @@
 			});
 		}
 
-		// "private" (used by getJson and postJson)
-		function ajaxJson(controller, method, data, callback, onErrorCallback, requestType) {
-			// data parameter can be omitted
-			if ( typeof data === 'function' ) {
-				callback = data;
-				data = {};
-			}
-
-			return sendRequest({
-				controller: controller,
-				method: method,
-				data: data,
-				type: requestType,
-				format: 'json',
-				callback: callback,
-				onErrorCallback: onErrorCallback
-			});
-		}
-
-		function getJson(controller, method, data, callback, onErrorCallback) {
-			return ajaxJson(
-				controller,
-				method,
-				data,
-				callback,
-				onErrorCallback,
-				'GET'
-			);
-		}
-
-		function postJson(controller, method, data, callback, onErrorCallback) {
-			return ajaxJson(
-				controller,
-				method,
-				data,
-				callback,
-				onErrorCallback,
-				'POST'
-			);
-		}
-
 		return {
 			sendRequest: sendRequest,
-			getJson: getJson,
-			postJson: postJson
+			getJson: function(controller, method, data, callback, onErrorCallback) {
+				if(typeof data == 'function') {
+					callback = data;
+					onErrorCallback = callback;
+				}
+				return sendRequest({
+					controller: controller,
+					method: method,
+					data: data,
+					type: 'GET',
+					callback: callback,
+					onErrorCallback: onErrorCallback
+				});
+			},
+			postJson: function (controller, method, data, callback, onErrorCallback) {
+				if(typeof data == 'function') {
+					callback = data;
+					onErrorCallback = callback;
+				}
+				return sendRequest({
+					controller: controller,
+					method: method,
+					data: data,
+					callback: callback,
+					onErrorCallback: onErrorCallback
+				});
+			}
 		};
 	}
 
