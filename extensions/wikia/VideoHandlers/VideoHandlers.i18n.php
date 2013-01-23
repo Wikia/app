@@ -40,7 +40,8 @@ $messages['en'] = array(
 	'videos-error-unknown' => 'An unknown error occurred. Code: $1.',
 	'videos-error-old-type-video' => 'Old type of videos no longer supported (VideoPage)',
 	'videos-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refesh the page.',
-	'videos-initial-upload-edit-summary' => 'created video',
+	'videos-initial-upload-edit-summary' => 'created video'
+	'videos-supported-sites-help-link' => 'http://community.wikia.com/wiki/Help:Videos#Supported_sites',
 );
 
 /** Message documentation (Message documentation) */
@@ -480,9 +481,10 @@ $messages['pl'] = array(
 	'videohandler-category' => 'Filmy',
 	'videohandler-description' => 'Opis',
 	'videos-error-while-loading' => 'Wystąpił błąd podczas ładowania danych. Sprawdź ponownie połączenie i odśwież stronę.',
-	'videos-add-video-label-name' => 'Wpisz pełny adres URL, z jednej z obsługiwanych witryn.',
+	'videos-add-video-label-name' => 'Wprowadź pełny adres URL jednej z obsługiwanych witryn.',
 	'videos-add-video-ok' => 'Dodaj',
-	'videos-add-video-label-all' => 'Pokaż wszystko',
+	'videos-add-video-label-all' => 'Zobacz wszystkie'
+	'videos-supported-sites-help-link' => 'http://spolecznosc.wikia.com/wiki/Pomoc:Video_Embed_Tool#Serwisy',
 );
 
 /** Piedmontese (Piemontèis)
