@@ -32,7 +32,6 @@ class VideoEmbedTool {
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array(
-				'result' => '',
 				'error'  => $error,
 				'vet_premium_videos_search_enabled' => ($wgContLanguageCode == 'en') || $wgVETNonEnglishPremiumSearch
 				)
@@ -251,8 +250,8 @@ class VideoEmbedTool {
 		$button_message = wfMessage('vet-return');
 
 		// Adding a video from article view page
-		$editingFromView = ($wgRequest->getVal( 'placeholder' ) == -2);
-		if( $editingFromView ) {
+		$editingFromArticle = $wgRequest->getVal( 'placeholder' );
+		if( $editingFromArticle ) {
 			Wikia::setVar('EditFromViewMode', true);
 			
 			$article_title = $wgRequest->getVal( 'article' );

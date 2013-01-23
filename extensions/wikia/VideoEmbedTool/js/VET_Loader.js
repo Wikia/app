@@ -1,5 +1,9 @@
 (function(window, $) {
 
+	if( window.VET_loader ) {
+		return;
+	}
+	
 	var resourcesLoaded = false,
 		templateHtml = '',
 		VET_loader = {};
@@ -15,7 +19,8 @@
 			thumb: true
 			width: 335
 		},
-		startPoint: 1 | 2
+		startPoint: 1 | 2,
+		searchOrder: "newest" // Used in MarketingToolbox
 	}
 	*/
 	
@@ -23,6 +28,8 @@
 		var mode = 'create';
 		var embedPresets = {};
 		var exists = false;
+		
+		// Start on first or second screen of VET
 		var startPoint = 1;
 		
 		var element = false;
@@ -170,13 +177,12 @@
 		$.when.apply(this, deferredList).done(function() {
 			VET_loader.modal = $(templateHtml).makeModal({width:1000});
 			VET_show(options);
-			VETExtended.init(); // TODO on 2013: find the place where edit mode needs to call VETExtended.init() and abstract it, you shouldn't need this when startscreen == 2
+			//VETExtended.init(); // TODO on 2013: find the place where edit mode needs to call VETExtended.init() and abstract it, you shouldn't need this when startscreen == 2
 			resourcesLoaded = true;
 		});			
 	};
 
 	$.fn.addVideoButton = function(options) {
-	
 		return this.each(function() {
 			$(this).on('click.VETLoader', function(e) {
 				e.preventDefault();

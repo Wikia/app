@@ -246,6 +246,8 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	if( $isvideo ) {
 		$additionalClass .= ' wikiaVideoPlaceholder';
+	} else {
+		$additionalClass .= ' wikiaImagePlaceholder';	
 	}
 
 	// render HTML (RT #21087)
@@ -288,13 +290,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 			'data-width' => $width, // set only for images, let VET slider determine width for video
 		));
 	}
-	
-	if( !empty($onclick) ) { // error event
-		$linkAttrs = array_merge($linkAttrs, array(
-			'onclick' =>  $onclick,
-		));
-	}
-	
+
 	$out .= Xml::openElement('a', $linkAttrs);
 
 	$out .= $isvideo ? wfMsg('imgplc-add-video') : wfMsg('imgplc-add-image');
@@ -332,7 +328,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		));
 	} else {
 		$out .= F::build('JSSnippets')->addToStack(
-			array( '/extensions/wikia/ImagePlaceholder/js/MediaPlaceholder.js' ),
+			array( '/extensions/wikia/VideoEmbedTool/js/VET_Loader.js', '/extensions/wikia/ImagePlaceholder/js/MediaPlaceholder.js' ),
 			array(),
 			'MediaPlaceholder.init'
 		);

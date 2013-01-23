@@ -22,7 +22,6 @@
 	var VET_slider = null;
 	var VET_orgThumbSize = null;
 	var VET_thumbSize = 335;
-	var VET_box = -1;
 	var VET_height = null;
 	var VET_wysiwygStart = 1;
 	var VET_ratio = 1;
@@ -381,29 +380,13 @@
 		$('#VideoEmbedCaption').placeholder();
 	}
 	
-	function VET_insertFinalVideo(e, type) {
-		switch($(e.target).attr('id')) {
-			case 'VideoEmbedRenameButton':
-				type = 'rename';
-				break;
-			case 'VideoEmbedExistingButton':
-				type = 'existing';
-				break;
-			case 'VideoEmbedOverwriteButton':
-				type = 'overwrite';
-				break;
-			default:
-				// do nothing
-				break;
-		}
-	
+	function VET_insertFinalVideo(e) {
 		VET_tracking(WikiaTracker.ACTIONS.CLICK, 'complete');
 		
 		e.preventDefault();
 	
 		var params = new Array();
-		params.push('type='+type);
-	
+
 		if( !$('#VideoEmbedName').length || $('#VideoEmbedName').val() == '' ) {
 	 		GlobalNotification.show( $.msg('vet-warn3'), 'error', null, VET_notificationTimout );
 			return false;
@@ -419,13 +402,9 @@
 				params.push( 'metadata' + i  + '=' + metadata[i] );
 			}
 		}
-	
-		/* should go into media-placeholder call back
-			params.push( 'placeholder=' + VET_placeholder );
-			params.push( 'box=' + VET_box );
-			params.push( 'article='+encodeURIComponent( wgTitle ) );
-			params.push( 'ns='+wgNamespaceNumber );
-		*/
+		
+		// Add article placeholder specific params to ajax call 
+		$(window).trigger('VET_insertFinalParams', [params, VET_embedPresets.placeholderIndex]);
 	
 		params.push('oname='+encodeURIComponent( $('#VideoEmbedOname').val() ) );
 		params.push('name='+encodeURIComponent( $('#VideoEmbedName').val() ) );
@@ -474,67 +453,42 @@
 						}
 		
 						if ( !$( '#VideoEmbedCreate'  ).length && !$( '#VideoEmbedReplace' ).length ) {
-							//if(VET_refid == null) {
-								
-								/* move into media-placeholder callback 
-								} else if( VET_placeholder == -2 ) {
-									// handle article view - replace video placeholders with video
-									var placeholders = $('#WikiaArticle').find('.wikiaVideoPlaceholder a'),
-										to_update = placeholders.filter('[data-id='+VET_box+']'),
-										// get thumbnail code from hidden div in success modal
-										html = $('#VideoEmbedCode').html();
-		
-									to_update.parent().parent().replaceWith(html);
-		
-									// update data id so we can match DOM placeholders to parsed wikitext placeholders
-									placeholders.each(function() {
-										var $this = $(this),
-											id = $this.attr('data-id');
-		
-										if(id > VET_box) {
-											$this.attr('data-id', id-1);
-										}
-									});
-		
-									// purge cache of article so video will show up on reload
-									$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
-								}*/
-							//} else { 
-								var wikitext = $('#VideoEmbedTag').val();
-								var options = {};
-		
-								if(wikitext) {
-									options.wikitext = wikitext;
+							var wikitext = $('#VideoEmbedTag').val();
+							var options = {};
+	
+							if(wikitext) {
+								options.wikitext = wikitext;
+							}
+							if($('#VideoEmbedThumbOption').is(':checked')) {
+								options.thumb = 1;
+							} else {
+								options.thumb = null;
+							}
+							if($('#VideoEmbedLayoutLeft').is(':checked')) {
+								options.align = 'left';
+							} else if ($('#VideoEmbedLayoutCenter').is(':checked')) {
+								options.align = 'center';
+							} else {
+								options.align = null;
+							}
+
+							options.caption = $('#VideoEmbedCaption').val();
+							
+							options.placeholderIndex = VET_embedPresets.placeholderIndex;
+	
+							if(VET_callbackAfterEmbed) {
+								VET_callbackAfterEmbed(options);
+							}
+							/* move to VET_Loader.load from editor 
+							if (typeof window.VET_RTEVideo != 'undefined') {
+								if (window.VET_RTEVideo && window.VET_RTEVideo.hasClass('media-placeholder')) {
+									// replace "Add Video" placeholder
+									RTE.mediaEditor.update(window.VET_RTEVideo, wikitag, options);
 								}
-								if($('#VideoEmbedThumbOption').is(':checked')) {
-									options.thumb = 1;
-								} else {
-									options.thumb = null;
+								else {
+									RTE.mediaEditor.addVideo(wikitag, options);
 								}
-								if($('#VideoEmbedLayoutLeft').is(':checked')) {
-									options.align = 'left';
-								} else if ($('#VideoEmbedLayoutCenter').is(':checked')) {
-									options.align = 'center';
-								} else {
-									options.align = null;
-								}
-								options.caption = $('#VideoEmbedCaption').val();
-		
-								// macbre: CK support
-								if(VET_callbackAfterEmbed) {
-									VET_callbackAfterEmbed(options);
-								}
-								/* move to VET_Loader.load from editor 
-								if (typeof window.VET_RTEVideo != 'undefined') {
-									if (window.VET_RTEVideo && window.VET_RTEVideo.hasClass('media-placeholder')) {
-										// replace "Add Video" placeholder
-										RTE.mediaEditor.update(window.VET_RTEVideo, wikitag, options);
-									}
-									else {
-										RTE.mediaEditor.addVideo(wikitag, options);
-									}
-								}*/
-							//}
+							}*/
 						} else {
 							$( '#VideoEmbedSuccess' ).css('display', 'none');
 							$( '#VideoEmbedTag' ).css('display', 'none');
@@ -653,9 +607,7 @@
 					VETExtended.cachedSelectors.closePreviewBtn.click();
 					VET_displayDetails(o.responseText);
 				}
-				
-				
-				
+
 			};
 			var searchType = VETExtended.searchCachedStuff.searchType;
 	
@@ -709,7 +661,6 @@
 		},
 	
 		init: function(searchSettings) {
-	
 			var that = this;
 	
 			// reset cached stuff on init if some old values preserved
@@ -1160,7 +1111,7 @@
 		.on('change.VET, keyup.VET', '#VideoEmbedManualWidth', VET_manualWidthInput)
 		.on('keypress.VET', '#VideoEmbedUrl', VET_onVideoEmbedUrlKeypress)
 		.on('click.VET', '#VideoEmbedUrlSubmit', VET_preQuery)
-		.on('click.VET', '#VideoEmbedRenameButton, #VideoExistingButton, #VideoEmbedOverwriteButton', VET_insertFinalVideo)
+		.on('click.VET', '#VideoEmbedRenameButton, #VideoEmbedExistingButton, #VideoEmbedOverwriteButton', VET_insertFinalVideo)
 		.on('click.VET', '#VideoEmbedCloseButton, #VideoEmbedBody .bottom-close-button', VET_close);
 	
 	

@@ -1,15 +1,9 @@
 <?php
-	$uploadmesg = wfMsgExt( 'vet-uploadtext', 'parse' );
-	$uploadmesg = preg_replace( '/(<a[^>]+)/', '$1 target="_blank" ', $uploadmesg );
-?>
-
-<?php
 	global $wgStylePath, $wgUser, $wgScript, $wgExtensionsPath;
 ?>
 
 <h1 id="VideoEmbedTitle"><?= wfMsg( 'vet-title' ) ?></h1>
 <section>
-	<img src="<?= $wgStylePath; ?>/common/images/ajax.gif" id="VideoEmbedProgress2" style="display: none;"/>
 	<form action="<?= $wgScript ?>?action=ajax&rs=VET&method=insertVideo" id="VideoEmbedForm" class="WikiaForm" method="POST">
 	<?php if( !$wgUser->isAllowed( 'upload' ) ) {
 		if( !$wgUser->isLoggedIn() ) {
@@ -91,14 +85,3 @@
 	</div>
 </section>
 <a href="" id="bottom-close-button" class="wikia-button secondary"><?= wfMsg('vet-close') ?></a>
-<div id="VET_results_0">
-	<?= $result ?>
-</div>
-
-<div id="VET_results_1" style="display: none;">
-<br/><br/><br/><br/><br/>
-	<div style="text-align: center;">
-		<img src="<?= $wgExtensionsPath ?>/wikia/VideoEmbedTool/images/flickr_logo.gif" />
-		<div class="VideoEmbedSourceNote"><?= wfMsg('vet-flickr-inf') ?></div>
-	</div>
-</div>
