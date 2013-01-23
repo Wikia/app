@@ -1,5 +1,5 @@
 $(function() {
-	if( (typeof window.wgEnableUserLoginExt != 'undefined') && wgEnableUserLoginExt ) {
+	if( window.wgEnableUserLoginExt ) {
 		new UserLoginAjaxForm($('.UserLogin'));
 	}
 });
