@@ -34,14 +34,14 @@
 	
 	// macbre: show edit video screen (wysiwyg edit)
 	function VET_editVideo() {
-		$('#VideoEmbedMain').css('display', 'none');
+		$('#VideoEmbedMain').hide();
 	
 		var callback = function(o) {
 			var data = VET_embedPresets;
 	
 			VET_displayDetails(o.responseText, data);
 	
-			$('#VideoEmbedBack').css('display', 'none');
+			$('#VideoEmbedBack').hide();
 	
 			setTimeout(function() {
 				if ( (typeof (data.thumbnail) != "undefined" && data.thumbnail ) ||

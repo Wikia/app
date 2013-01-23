@@ -10,8 +10,9 @@
 	
 	/* Sample input json for options
 	{
-		callbackAfterSelect: function() {},
-		callbackAfterEmbed: function() {},
+		callbackAfterSelect: function() {}, // callback after video is selected (first screen).  If defined, second screen will not show.
+		callbackAfterEmbed: function() {}, // callback after video formating (second screen).
+		callbackAfterLoaded: function() {}, // callback after VET assets are loaded
 		embedPresets: {
 			align: "right"
 			caption: ""
@@ -19,7 +20,7 @@
 			thumb: true
 			width: 335
 		},
-		startPoint: 1 | 2,
+		startPoint: 1 | 2, // display first or second screen when VET opens
 		searchOrder: "newest" // Used in MarketingToolbox
 	}
 	*/
@@ -175,6 +176,11 @@
 		}
 		
 		$.when.apply(this, deferredList).done(function() {
+			if($.isFunction(options.callbackAfterLoaded)) {
+				options.callbackAfterLoaded();
+				delete options.callbackAfterLoaded;
+			}
+			
 			VET_loader.modal = $(templateHtml).makeModal({width:1000});
 			VET_show(options);
 			//VETExtended.init(); // TODO on 2013: find the place where edit mode needs to call VETExtended.init() and abstract it, you shouldn't need this when startscreen == 2
@@ -183,9 +189,21 @@
 	};
 
 	$.fn.addVideoButton = function(options) {
+		$.preloadThrobber();
+
 		return this.each(function() {
-			$(this).on('click.VETLoader', function(e) {
+			var $this = $(this);
+			
+			$this.on('click.VETLoader', function(e) {
 				e.preventDefault();
+				
+				// Provide immediate feedback once button is clicked
+				$this.startThrobbing();
+				
+				options.callbackAfterLoaded = function() {
+					$this.stopThrobbing();				
+				}
+				
 				VET_loader.load(options);
 			});
 		});

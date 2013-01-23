@@ -274,6 +274,20 @@ $.fn.startThrobbing = function() {
 $.fn.stopThrobbing = function() {
 	this.find('.wikiaThrobber').remove();
 };
+$.preloadThrobber = function() {
+	if($('#throbber_preload').length) {
+		return;
+	}
+	
+	$('<div id="throbber_preload"></div>')
+		.css({
+			'visibility': 'hidden',
+			'position': 'absolute',
+			'top': "-99999999px"
+		})
+		.append('<img src="' + wgCdnRootUrl + '/skins/common/images/ajax.gif" />')
+		.appendTo('body');
+};
 
 /*
 	Generate URL to thumbnail from different URL to thumbnail :)
