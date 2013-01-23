@@ -169,7 +169,6 @@ window.WikiaTracker = (function( window ) {
 		) ) {
 			Wikia.log( 'Missing or invalid parameters', 'error', logGroup );
 			Wikia.log( data, 'trace', logGroup );
-			console.log(trackingMethod);
 			return;
 		}
 
