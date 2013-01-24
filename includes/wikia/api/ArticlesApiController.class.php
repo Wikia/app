@@ -7,7 +7,7 @@
 
 class ArticlesApiController extends WikiaApiController {
 
-	const CACHE_VERSION = 12;
+	const CACHE_VERSION = 13;
 
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
@@ -363,7 +363,7 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Get details about one or more articles
+	 * Get details about one or more articles, , those in the Special namespace (NS_SPECIAL) won't produce any result
 	 *
 	 * @requestParam string $ids A string with a comma-separated list of article ID's
 	 * @requestParam integer $abstract [OPTIONAL] The desired length for the article's abstract, defaults to 100, maximum 500, 0 for no abstract
