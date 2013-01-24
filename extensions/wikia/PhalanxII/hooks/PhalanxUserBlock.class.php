@@ -16,12 +16,12 @@ class PhalanxUserBlock extends WikiaObject {
 	 * @desc blockCheck() will return false if user is blocked. The reason why it was
 	 * written in such way is below when you look at method UserBlock::onUserCanSendEmail().
 	 */
-	public function blockCheck(User $user) {
+	public function blockCheck( User $user ) {
 		$this->wf->profileIn( __METHOD__ );
 		
-		$phalanxModel = F::build('PhalanxModel', array( $user ), 'newFromUser' );
+		$phalanxModel = F::build('PhalanxUserModel', array( $user ) );
 		 
-		if ( $phalanxModel->allowedCheck() ) {
+		if ( !$phalanxModel->isOk() ) {
 			wfDebug ( __METHOD__ . ": user has 'phalanxexempt' right - no block will be applied\n" );
 			$this->wf->profileIn( __METHOD__ );
 			return true;
@@ -33,7 +33,7 @@ class PhalanxUserBlock extends WikiaObject {
 				/* user is blocked - we have block ID */
 				$phalanxModel->setBlockId( $result );
 				// set block data ...
-				$phalanxModel->blockData( $user->isAnon() ? 'ip' : 'exact' );
+				$phalanxModel->userBlock( $user->isAnon() ? 'ip' : 'exact' );
 				// ... and assign to user
 				$user = $phalanxModel->getUser();
 				$ret = false;

@@ -83,10 +83,8 @@ class PhalanxService extends Service {
 		wfProfileIn( __METHOD__  );
 
 		// but for now we just build test url
-		$url = sprintf("%s/%s",
-			"http://localhost:8080/",
-			$action
-		);
+		$url = sprintf("%s/%s", "http://localhost:8080/", $action );
+		
 		if( sizeof( $parameters ) ) {
 			$url .= "?" . http_build_query( $parameters );
 		}

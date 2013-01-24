@@ -3,69 +3,80 @@
 /**
  * ContentBlock
  *
- * This filter blocks an edit from being saved,
- * if its content or the summary given
+ * This filter blocks an edit from being saved, if its content or the summary given
  * matches any of the blacklisted phrases.
  */
 
-class ContentBlock {
+class PhalanxContentBlock extends WikiaObject {
 	private static $whitelist = null;
 
-	public static function onEditFilter( $editpage ) {
-		global $wgOut, $wgTitle;
-		wfProfileIn( __METHOD__ );
+	function __construct() {
+		parent::__construct();
+		F::setInstance( __CLASS__, $this );
+	}
 
-		//allow blocked words to be added to whitelist
-		if ($wgTitle->getPrefixedText() == 'MediaWiki:Spam-whitelist') {
-			wfProfileOut( __METHOD__ );
+	public function editFilter( $editpage ) {
+		$this->wf->profileIn( __METHOD__ );
+
+		$phalanxModel = F::build('PhalanxContentModel', array( $this->wg->Title ) );
+
+		/* allow blocked words to be added to whitelist */
+		if ( $phalanxModel->isOk() ) {
+			$this->wf->profileOut( __METHOD__ );
 			return true;
 		}
-
-		// here we get only the phrases for blocking in summaries...
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_SUMMARY );
+		
+		/* summary */
 		$summary = $editpage->summary;
-		if ( !empty($blocksData) && $summary != '' ) {
-			$summary = self::applyWhitelist($summary);
-
-			$blockData = null;
-			$result = Phalanx::findBlocked($summary, $blocksData, true, $blockData);
-			if ( $result['blocked'] ) {
-
-				$wgOut->setPageTitle( wfMsg( 'spamprotectiontitle' ) );
-				$wgOut->setRobotPolicy( 'noindex,nofollow' );
-				$wgOut->setArticleRelated( false );
-				$wgOut->addHTML( '<div id="spamprotected_summary">' );
-				$wgOut->addWikiMsg( 'spamprotectiontext' );
-				$wgOut->addHTML( '<p>( Call #3 )</p>' );
-				$wgOut->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$result['msg']}</nowiki>" );
-				$wgOut->addWikiMsg( 'phalanx-content-spam-summary' );
-
-				$wgOut->returnToMain( false, $wgTitle );
-				$wgOut->addHTML( '</div>' );
-				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$summary'.");
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
-		}
-
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_CONTENT );
+		
+		/* content */
 		$textbox = $editpage->textbox1;
-		if ( !empty($blocksData) && $textbox != '' ) {
-			$textbox = self::applyWhitelist($textbox);
-
-			$blockData = null;
-			$result = Phalanx::findBlocked($textbox, $blocksData, true, $blockData);
-			if ( $result['blocked'] ) {
-				$editpage->spamPageWithContent( $result['msg'] );
-				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$textbox'.");
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
+		
+		/* compare summary with spam-whitelist */
+		if ( !empty( $summary ) && !empty( $textbox ) && !empty(self::$whitelist) ) {
+			self::$whitelist = $phalanxModel->buildWhiteList();
+		}
+		
+		/* check summary */
+		if ( !empty( self::$whitelist ) ) {
+			$summary = preg_replace( self::$whitelist, '', $summary );
 		}
 
-		//no spam detected
-		wfProfileOut( __METHOD__ );
-		return true;
+		$result = PhalanxService::match( "summary", $summary );
+		if ( $result !== false ) {
+			if ( is_numeric( $result ) ) {
+				/* user is blocked - we have block ID */
+				$phalanxModel->setBlockId( $result );
+				// set output with block info
+				$phalanxModel->contentBlock( $summary );
+				$ret = false;
+			} else {
+				if ( !empty( self::$whitelist ) ) {
+					$textbox = preg_replace( self::$whitelist, '', $textbox );
+				}
+				$result = PhalanxService::match( "content", $textbox );
+				if ( $result !== false ) {
+					if ( is_numeric( $result ) ) {
+						$editpage->spamPageWithContent( "Block #{$result}" );
+						Wikia::log(__METHOD__, __LINE__, "Block '#{$result}' blocked '$textbox'.");
+						$ret = false;
+					} else {
+						$ret = true;
+					}
+				}
+			}
+		} 
+		
+		/* if some problems with Phalanx service - use old version of extension */
+		if ( $result === false ) {
+			// TO DO
+			/* problem with Phalanx service? */
+			// include_once( dirname(__FILE__) . '/../prev_hooks/ContentBlock.class.php';
+			// $ret = ContentBlock::onEditFilter( $editpage );		
+		}
+		
+		$this->wf->profileOut( __METHOD__ );
+		return $ret;
 	}
 
 	/*

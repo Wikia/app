@@ -25,6 +25,8 @@ $classes = array(
 	'Phalanx' 						=> $dir . 'PhalanxController.class.php',
 	/* models */
 	'PhalanxModel'					=> $dir . 'models/PhalanxModel.php',
+	'PhalanxUserModel'				=> $dir . 'models/PhalanxUserModel.php',
+	'PhalanxContentModel'			=> $dir . 'models/PhalanxContentModel.php',
 	/* services */
 	'PhalanxService'				=> $dir . 'services/PhalanxService.php',
 	/* hooks */
@@ -53,8 +55,8 @@ $app->registerHook( 'cxValidateUserName', 'PhalanxUserBlock', 'validateUserName'
 /* UserCookieBlock */
 $app->registerHook( 'GetBlockedStatus', 'PhalanxUserCookieBlock', 'blockCheck' );
 /* ContentBlock */
-$app->registerHook( 'EditFilter', 'ContentBlock', 'onEditFilter' );
-$app->registerHook( 'AbortMove', 'ContentBlock', 'onAbortMove' );
+$app->registerHook( 'EditFilter', 'PhalanxContentBlock', 'editFilter' );
+$app->registerHook( 'AbortMove', 'PhalanxContentBlock', 'abortMove' );
 /* TitleBlock */
 $app->registerHook( 'SpecialMovepageBeforeMove', 'TitleBlock', 'beforeMove' );
 $app->registerHook( 'EditFilter', 'TitleBlock', 'listCallback' );
