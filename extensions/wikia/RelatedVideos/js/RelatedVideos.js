@@ -108,7 +108,7 @@ var RelatedVideos = {
 						},
 						// error callback
 						function() {
-							RelatedVideos.showError();
+							RelatedVideos.showError( $.msg('vet-error-while-loading') );
 						}
 					);
 				}

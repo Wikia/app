@@ -81,23 +81,25 @@
 		precondition: checkGallery
 	};
 
-	buttons['InsertVideo'] = {
-		type: 'button',
-		labelId: 'wikia-editor-media-video',
-		titleId: 'wikia-editor-media-video-tooltip',
-		className: 'RTEVideoButton',
-		forceLogin: true,
-		clicksource: function() {
-			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-				window.VET_load_in_editor({
-					target: {
-						id: 'mw-editbutton-vet'
-					}
+	if( window.wgEnableVideoToolExt ) {
+		buttons['InsertVideo'] = {
+			type: 'button',
+			labelId: 'wikia-editor-media-video',
+			titleId: 'wikia-editor-media-video-tooltip',
+			className: 'RTEVideoButton',
+			forceLogin: true,
+			clicksource: function() {
+				WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+					window.VET_load_in_editor({
+						target: {
+							id: 'mw-editbutton-vet'
+						}
+					});
 				});
-			});
-		},
-		ckcommand: 'addvideo'
-	};
+			},
+			ckcommand: 'addvideo'
+		};
+	}
 
 	buttons['SourceBold'] = {
 		type: 'button',

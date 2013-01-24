@@ -102,9 +102,9 @@ function VETSetup($editform) {
  * @return bool
  */
 function VETSetupVars(Array &$vars) {
-	global $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgFileExtensions;
+	global $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgFileExtensions, $wgEnableVideoToolExt;
 
-	$vars['wgEnableVideoToolExt'] = true;
+	$vars['wgEnableVideoToolExt'] = $wgEnableVideoToolExt;
 	$vars['file_extensions'] = $wgFileExtensions;
 	$vars['file_blacklist'] = $wgFileBlacklist;
 	$vars['check_file_extensions'] = $wgCheckFileExtensions;

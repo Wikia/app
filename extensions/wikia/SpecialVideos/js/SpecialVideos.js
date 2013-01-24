@@ -33,7 +33,7 @@ var SpecialVideos = {
 					},
 					// error callback
 					function() {
-						GlobalNotification.show( $('.errorWhileLoading').html(), 'error' );
+						GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
 					}
 				);
 			}

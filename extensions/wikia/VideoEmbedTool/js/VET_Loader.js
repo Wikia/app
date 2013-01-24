@@ -1,3 +1,23 @@
+/* VET_loader
+ *
+ * Final callback should include VET_loader.modal.closeModal() in success case.
+ * Sample input json for options:
+ *	{
+ *		callbackAfterSelect: function() {}, // callback after video is selected (first screen).  If defined, second screen will not show.
+ *		callbackAfterEmbed: function() {}, // callback after video formating (second screen).
+ *		callbackAfterLoaded: function() {}, // callback after VET assets are loaded
+ *		embedPresets: {
+ *			align: "right"
+ *			caption: ""
+ *			thumbnail: true
+ *			thumb: true
+ *			width: 335
+ *		},
+ *		startPoint: 1 | 2, // display first or second screen when VET opens
+ *		searchOrder: "newest" // Used in MarketingToolbox
+ *	}
+ */
+
 (function(window, $) {
 
 	if( window.VET_loader ) {
@@ -7,24 +27,7 @@
 	var resourcesLoaded = false,
 		templateHtml = '',
 		VET_loader = {};
-	
-	/* Sample input json for options
-	{
-		callbackAfterSelect: function() {}, // callback after video is selected (first screen).  If defined, second screen will not show.
-		callbackAfterEmbed: function() {}, // callback after video formating (second screen).
-		callbackAfterLoaded: function() {}, // callback after VET assets are loaded
-		embedPresets: {
-			align: "right"
-			caption: ""
-			thumbnail: true
-			thumb: true
-			width: 335
-		},
-		startPoint: 1 | 2, // display first or second screen when VET opens
-		searchOrder: "newest" // Used in MarketingToolbox
-	}
-	*/
-	
+
 	window.VET_load_in_editor = function(event) {
 		var mode = 'create';
 		var embedPresets = {};

@@ -94,7 +94,8 @@ $messages['en'] = array(
 	'vet-search-results-WVL' => 'We found $1 {{PLURAL:$1|result|results}} for "$2" on Wikia Video Library',
 	'vet-search-results-local' => 'We found $1 {{PLURAL:$1|result|results}} for "$2" on this Wiki',
 	'vet-search-filter-caption' => 'Search filter',
-	'vet-video-add-intro' => 'Looking for videos for your wiki? Try searching at [http://video.wikia.com Wikia Video Library] for high quality videos licensed by Wikia.'
+	'vet-video-add-intro' => 'Looking for videos for your wiki? Try searching at [http://video.wikia.com Wikia Video Library] for high quality videos licensed by Wikia.',
+	'vet-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refesh the page.',
 );
 
 /** Message documentation (Message documentation)
