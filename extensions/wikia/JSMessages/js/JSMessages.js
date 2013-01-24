@@ -98,7 +98,7 @@
 
 	//UMD inclusive
 	if(jQuery){
-		var msg = JSMessages(window.Nirvana);
+		var msg = JSMessages(jQuery.nirvana);
 		jQuery.extend(jQuery, {
 			msg: msg,
 			getMessages: msg.get,
