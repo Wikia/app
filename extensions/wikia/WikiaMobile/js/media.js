@@ -201,7 +201,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 
 			if(!img.complete){
 				img.onload = function(){
-					throbber.hide(currentImage);
+					throbber.remove(currentImage);
 
 					var image = currentImage.getElementsByTagName('img')[0];
 					origW = image.width;
@@ -209,7 +209,14 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				};
 
 				img.onerror = function(){
-					throbber.hide(currentImage);
+					throbber.remove(currentImage);
+
+					var image = currentImage.getElementsByTagName('img')[0];
+
+					if(image) {
+						image.parentElement.removeChild(image);
+					}
+
 					handleError(msg('wikiamobile-image-not-loaded'));
 				};
 
