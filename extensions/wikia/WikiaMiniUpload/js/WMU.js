@@ -845,7 +845,7 @@ function WMU_displayDetails(responseText) {
 function WMU_insertPlaceholder( box ) {
 	WMU_box_filled.push(box);
 	var to_update = $( '#WikiaImagePlaceholder' + box );
-	to_update.innerHTML = $( '#ImageUploadCode' ).html();
+	to_update.html($( '#ImageUploadCode' ).html());
 	//the class would need to be different if we had here the full-size...
 	to_update.className = '';
 	$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
@@ -961,7 +961,6 @@ function WMU_insertImage(e, type) {
 				$('#ImageUpload' + WMU_curScreen).html(o.responseText);
 				break;
 			case 'summary':
-
 				WMU_switchScreen('Summary');
 				if (typeof RTE !== 'undefined') {
 					RTE.getInstanceEditor().getEditbox().focus();
