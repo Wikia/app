@@ -282,9 +282,8 @@ function WMU_loadMainFromView() {
 		}
 		var element = document.createElement('div');
 		element.id = 'WMU_div';
-		element.style.width = '812px';
+		element.style.width = '722px';
 		element.style.height = '587px';
-		element.innerHTML = unescape( data.html );
 
 		wmu_back = unescape( data.wmu_back );
 		wmu_imagebutton = unescape( data.wmu_imagebutton );
@@ -330,8 +329,9 @@ function WMU_loadMainFromView() {
 					WMU_switchScreen('Main');
 				},
 				persistent: true,
-				width: 812
+				width: 722
 			});
+			$('#WMU_div').html(unescape( data.html ));
 
 			WMU_indicator(1, false);
 
