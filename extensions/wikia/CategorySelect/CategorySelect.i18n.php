@@ -36,6 +36,7 @@ $messages[ 'en' ] = array(
 	'categoryselect-error-user-rights' => 'User does not have permission to perform this action.',
 	'categoryselect-modal-category-name' => 'Provide the name of the category:',
 	'categoryselect-modal-category-sortkey' => 'Alphabetize this article on the "$1" category page under the name:',
+	'categoryselect-tooltip-add' => 'Press the Enter or Return key when done',
 	'tog-disablecategoryselect' => 'Disable Category module (only applies if editing in visual mode has been disabled)',
 	'tog-disablecategoryselect-v2' => 'Disable Category module (only applies if visual mode editing is disabled)'
 );
@@ -63,6 +64,7 @@ $messages[ 'qqq' ] = array(
 	'categoryselect-error-user-rights' => 'The error message shown when trying to save changes without proper user permissions.',
 	'categoryselect-modal-category-name' => 'The text shown above the category input field in the modal dialog.',
 	'categoryselect-modal-category-sortkey' => 'The text shown above the sortkey input field in the modal dialog.',
+	'categoryselect-tooltip-add' => 'A tooltip explaining to users how to submit the category they typed in the input field.',
 	'tog-disablecategoryselect' => 'The text displayed in user preferences for disabling the CategorySelect extension',
 	'tog-disablecategoryselect-v2' => 'The text displayed in user preferences for disabling the CategorySelect extension when the UserPreferencesV2 extension is enabled.'
 );

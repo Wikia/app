@@ -44,4 +44,5 @@ F::build( 'JSMessages' )->registerPackage( 'CategorySelect', array(
 	'categoryselect-error-duplicate-category-name',
 	'categoryselect-modal-category-name',
 	'categoryselect-modal-category-sortkey',
+	'categoryselect-tooltip-add',
 ));
