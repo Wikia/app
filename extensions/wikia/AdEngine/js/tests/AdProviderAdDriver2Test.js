@@ -12,7 +12,7 @@ test('Leaderboard experiment works as expected in low value countries', function
 		scriptWriterMock = {injectScriptByUrl: function() {
 			dartCalled = true;
 		}},
-		wikiaTrackerMock = {trackAdEvent: function() {}},
+		wikiaTrackerMock = {track: function() {}},
 		logMock = function() {},
 		windowMock = {adslots2: {push: function() {liftiumCalled = true;}}},
 		GeoMock = {getCountryCode: function() {}},
@@ -68,7 +68,7 @@ test('Leaderboard experiment works as expected in high value countries', functio
 		scriptWriterMock = {injectScriptByUrl: function() {
 			dartCalled = true;
 		}},
-		wikiaTrackerMock = {trackAdEvent: function() {}},
+		wikiaTrackerMock = {track: function() {}},
 		logMock = function() {},
 		windowMock = {adslots2: {push: function() {liftiumCalled = true;}}},
 		GeoMock = {getCountryCode: function() {}},
