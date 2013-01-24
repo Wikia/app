@@ -12,7 +12,8 @@
 	cached.messages = {
 		buttonSave: $.msg( 'categoryselect-button-save' ),
 		categoryEdit: $.msg( 'categoryselect-category-edit' ),
-		errorEmptyCategoryName: $.msg( 'categoryselect-error-empty-category-name' )
+		errorEmptyCategoryName: $.msg( 'categoryselect-error-empty-category-name' ),
+		tooltipAdd: $.msg( 'categoryselect-tooltip-add' )
 	};
 
 	// Static template cache
@@ -120,6 +121,26 @@
 					elements.input.popover( 'hide' );
 				})
 				.popover( options.popover ).data( 'popover' );
+
+			if ( options.popover.hint ) {
+				elements.input
+					.on( 'focus.' + namespace + ' keyup.' + namespace, function() {
+						if ( elements.input.val() === '' ) {
+							$.extend( self.popover.options, {
+								content: cached.messages.tooltipAdd,
+								placement: 'bottom',
+								type: 'add'
+							});
+
+							elements.input.popover( 'show' );
+
+						// Only hide popovers of the same type
+						} else if ( self.popover.options.type === 'add' ) {
+							elements.input.popover( 'hide' );
+						}
+					})
+					.trigger( 'focus' );
+			}
 		}
 
 		if ( typeof options.sortable === 'object' ) {
@@ -166,8 +187,11 @@
 					input.val( category.name );
 
 					if ( options.popover ) {
-						self.popover.options.content = $.msg(
-							'categoryselect-error-duplicate-category-name', category.name );
+						$.extend( self.popover.options, {
+							content: $.msg( 'categoryselect-error-duplicate-category-name', category.name ),
+							placement: 'right',
+							type: 'error'
+						});
 
 						input.popover( 'show' );
 					}
@@ -313,8 +337,7 @@
 		 *			The categories, or an empty jQuery object if not found.
 		 */
 		getCategories: function( filter ) {
-			var $category, data,
-				categories = this.elements.categories;
+			var categories = this.elements.categories;
 
 			// Rebuild categories cache if it has been modified
 			if ( this.dirty ) {
@@ -328,9 +351,21 @@
 					categories.eq( filter ) :
 					// By category name, selector string, jQuery object or DOM Element
 					categories.filter(function() {
-						$category = $( this );
-						return $category.is( filter ) ||
-							( data = $category.data( 'category' ) ) && data.name === filter;
+						var $category = $( this ),
+							data = $category.data( 'category' ),
+							match = data && data.name === filter;
+
+						// Try to match a selector string, jQuery object or DOM Element
+						if ( !match ) {
+
+							// Sizzle can throw a syntax error here if filter is an invalid expression
+							try {
+								match = $category.is( filter );
+
+							} catch( e ) {}
+						}
+
+						return match;
 					})
 				) : categories;
 		},
@@ -536,6 +571,9 @@
 							category.sortKey = pieces[ 3 ];
 						}
 					}
+
+					// Uppercase the first letter in name to match MediaWiki article titles
+					category.name = category.name[ 0 ].toUpperCase() + category.name.slice( 1 );
 				}
 
 				return category;
@@ -564,7 +602,11 @@
 			},
 			categories: [],
 			popover: {
-				trigger: 'manual'
+				trigger: 'manual',
+
+				// Non-standard
+				// Set to true to enable the category add tooltip
+				hint: false
 			},
 			selectors: {
 				categories: '.categories',
@@ -573,7 +615,7 @@
 				input: '.input',
 				removeCategory: '.removeCategory',
 
-				// uses options.selectors.categories by default
+				// Uses options.selectors.categories by default
 				sortable: undefined
 			},
 			sortable: {
@@ -603,6 +645,7 @@
 			new CategorySelect( this, options );
 		});
 	};
+
 	// Exports
 	Wikia.CategorySelect = CategorySelect;
 	window.Wikia = Wikia;
