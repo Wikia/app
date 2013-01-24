@@ -76,13 +76,13 @@ class AbstractServiceTest extends \WikiaSearchBasetest
 		$service = $this->service->getMockForAbstractClass();
 		$service->setPageId( 123 );
 		$this->assertEquals(
-				sprintf( '%s_%s', MediaWikiInterface::getInstance()->getWikiId(), 123 ),
+				sprintf( '%s_%s', MediaWikiInterface::getInstance()->getWikiId(), MediaWikiInterface::getInstance()->getCanonicalPageIdFromPageId( 123 ) ),
 				$service->getCurrentDocumentId()
 		);
 	}
 	
 	/**
-	 * @covers \Wikia\Search\IndexService\AbstractService::getDocumentFromresponse
+	 * @covers \Wikia\Search\IndexService\AbstractService::getJsonDocumentFromResponse
 	 */
 	public function testGetJsonDocumentFromResponse() {
 		$service = $this->service->getMockForAbstractClass();
@@ -110,21 +110,21 @@ class AbstractServiceTest extends \WikiaSearchBasetest
 		                  ->getMock();
 		
 		$executeResponse = array( 'foo' => 'bar' );
-		$jsonResponse = array( 'id' => '321_123', 'foo' => array( 'set' => 'bar' ) );
-		$service->setPageIds( array( 123 ) );
+		$jsonResponse = array( 'id' => '321_234', 'foo' => array( 'set' => 'bar' ) );
+		$service->setPageIds( array( 234 ) );
 		$interface
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'pageIdExists' )
-		    ->with   ( 123 )
+		    ->with   ( 234 )
 		    ->will   ( $this->returnValue( true ) )
 		;
 		$service
-		    ->expects( $this->at( 0 ) )
+		    ->expects( $this->any() )
 		    ->method ( 'execute' )
 		    ->will   ( $this->returnValue( $executeResponse ) )
 		;
 		$service
-		    ->expects( $this->at( 1 ) )
+		    ->expects( $this->any() )
 		    ->method ( 'getJsonDocumentFromResponse' )
 		    ->with   ( $executeResponse )
 		    ->will   ( $this->returnValue( $jsonResponse ) )
@@ -133,10 +133,11 @@ class AbstractServiceTest extends \WikiaSearchBasetest
 		$reflIf->setAccessible( true );
 		$reflIf->setValue( $service, $interface );
 		
+		$actualResponse = $service->getResponseForPageIds();
 		$expectedResponse = array( 'contents' => array( $jsonResponse ), 'errors' => array() );
 		$this->assertEquals(
 				$expectedResponse,
-				$service->getResponseForPageIds()
+				$actualResponse
 		);
 	}
 	
@@ -167,7 +168,7 @@ class AbstractServiceTest extends \WikiaSearchBasetest
 		    ->will   ( $this->returnValue( true ) )
 		;
 		$service
-		    ->expects( $this->at( 0 ) )
+		    ->expects( $this->any() )
 		    ->method ( 'execute' )
 		    ->will   ( $this->throwException( $exception ) )
 		;

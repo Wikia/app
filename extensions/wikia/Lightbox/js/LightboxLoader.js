@@ -85,10 +85,10 @@ var LightboxLoader = {
 
 	        return;
         }
-        
+
         // ignore ogg files
         if( target.closest('.ogg_player').length ) {
-        	return; 
+        	return;
         }
 
 		// move to parent of an image -> anchor
@@ -375,19 +375,16 @@ var LightboxLoader = {
 
 LightboxTracker = {
 	inlineVideoTrackingTimeout: 0,
+	// @param data - any extra params we want to pass to internal tracking
+	// Don't add willy nilly though... check with Jonathan.
 	track: function(action, label, value, data) {
-		// @param data - any extra params we want to pass to internal tracking
-		// Don't add willy nilly though... check with Jonathan.
-		var ga_params  = {
-			ga_category: 'lightbox',
-			ga_action: action,
-			ga_label: label || '',
-			ga_value: value || 0
-		}
-
-		var trackParams = $.extend({}, data || {}, ga_params);
-
-		WikiaTracker.trackEvent(null, trackParams, 'internal');
+		WikiaTracker.track({
+			action: action,
+			category: 'lightbox',
+			label: label || '',
+			trackingMethod: 'internal',
+			value: value || 0
+		}, data);
 	},
 
 	// Constants for tracking the source of a click

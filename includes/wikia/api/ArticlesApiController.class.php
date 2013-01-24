@@ -7,7 +7,7 @@
 
 class ArticlesApiController extends WikiaApiController {
 
-	const CACHE_VERSION = 8;
+	const CACHE_VERSION = 12;
 
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
@@ -415,12 +415,18 @@ class ArticlesApiController extends WikiaApiController {
 				if ( !empty( $titles ) ) {
 					foreach ( $titles as $t ) {
 						$id = $t->getArticleID();
+						$revId = $t->getLatestRevID();
+						$rev = Revision::newFromId( $revId );
 
 						$collection[$id] = [
 							'title' => $t->getText(),
+							'ns' => $t->getNamespace(),
 							'url' => $t->getLocalURL(),
-							'revision' => $t->getLatestRevID(),
-							'ns' => $t->getNamespace()
+							'revision' => [
+								'id' => $revId,
+								'user' => $rev->getUserText( Revision::FOR_PUBLIC ),
+								'timestamp' => $this->wf->Timestamp( TS_UNIX, $rev->getTimestamp() )
+							]
 						];
 
 						$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
@@ -491,15 +497,7 @@ class ArticlesApiController extends WikiaApiController {
 				'category' => $cat
 			);
 
-			self::purgeMethod(
-				'getTop',
-				$param
-			);
-
-			self::purgeMethod(
-				'getList',
-				$param
-			);
+			self::purgeMethods( [['getTop', $param], ['getList', $param]] );
 		}
 
 		return true;
@@ -564,6 +562,7 @@ class ArticlesApiController extends WikiaApiController {
 		if ( $params !== '' ) {
 			$params = md5( implode( '|', $params ) );
 		}
+
 		return F::app()->wf->MemcKey( __CLASS__, self::CACHE_VERSION, $type, $name, $params );
 	}
 

@@ -4,6 +4,7 @@
  *
  */
 class WikiaTrackerController extends WikiaController {
+	const VERSION = 1;
 
 	/**
 	 * Implementation of new WikiaSkinTopScripts hook since we want it to be
@@ -26,7 +27,6 @@ class WikiaTrackerController extends WikiaController {
 	 * @return boolean return true
 	 */
 	public function onMakeGlobalVariablesScript(Array &$vars) {
-		$vars['wikiaTrackingSpool'] = array();
 
 		// TODO: REMOVE? (PERFORMANCE?) We probably won't need these queues once the new system is done (since all calls will use wikiaTrackingSpool).
 		// There are a few usages around the code-base that would need to be removed if they really aren't needed & migrated otherwise.
@@ -56,22 +56,12 @@ class WikiaTrackerController extends WikiaController {
 		$scripts .= "\n\n<!-- Spool any early event-tracking calls -->\n" .
 			Html::inlineScript( self::getTrackerSpoolingJs() ) . "\n";
 
-		// debug
-		/**
-		$scripts .= Html::inlineScript(<<<JS
-_wtq.push('/1_wikia/foo/bar');
-_wtq.push(['/1_wikia/foo/bar', 'profil1']);
-_wtq.push([['1_wikia', 'user', 'foo', 'bar'], 'profil1']);
-JS
-);
-		**/
-
 		return true;
 	}
 
 	/**
 	 * Returns a string that contains minified javascript of a small function stub which will
-	 * spool any calls to WikiaTracker.trackEvent until the code is actually loaded for doing the tracking (at
+	 * spool any calls to WikiaTracker.track until the code is actually loaded for doing the tracking (at
 	 * which point the calls will be replayed).
 	 */
 	public static function getTrackerSpoolingJs() {
@@ -82,19 +72,23 @@ JS
 		// The wikiatracker implememtation will be replaced directly as soon as the correct file will load.
 		ob_start();
 		?>
-		window.WikiaTracker = window.WikiaTracker || {
-			trackEvent: function(eventName, params, method){
-				wikiaTrackingSpool.push([eventName, params, method]);
-			}
-		};
+		(function() {
+			var slice = [].slice;
+			window.WikiaTracker = window.WikiaTracker || {
+				spool: [],
+				track: function() {
+					this.spool.push(slice.call(arguments));
+				}
+			};
+		})();
 		<?php
 		$jsString = ob_get_clean();
 
 		// We're embedding this in every page, so minify it. Minifying takes a while, so cache it in memcache (BugzId 43421).
 		if(!empty($wgDevelEnvironment)){
-			$memcKey = wfMemcKey( 'tracker_spooling_js' ); // cachebuster changes on every pageview in dev... this will cache on devboxes anyway.
+			$memcKey = wfMemcKey( 'tracker_spooling_js', static::VERSION ); // cachebuster changes on every pageview in dev... this will cache on devboxes anyway.
 		} else {
-			$memcKey = wfMemcKey( 'tracker_spooling_js', $wgCacheBuster );
+			$memcKey = wfMemcKey( 'tracker_spooling_js', static::VERSION, $wgCacheBuster );
 		}
 		$cachedValue = $wgMemc->get( $memcKey );
 		if( !$cachedValue ){
@@ -103,7 +97,7 @@ JS
 			// This code doesn't look like it should change almost at all, so we give it a long duration (cachebuster also purges it because that's in the key).
 			// Warning: Memcached expirations work strangely around the one-month boundary (if the duration is too long, it interprets it as a timestamp instead of a duration).
 			$TWO_WEEKS = 60*60*24*14; // in seconds.
-			$wgMemc->set( $memcKey, $jsString, $TWO_WEEKS);
+			$wgMemc->set( $memcKey, $jsString, $TWO_WEEKS );
 		} else {
 			$jsString = $cachedValue;
 		}

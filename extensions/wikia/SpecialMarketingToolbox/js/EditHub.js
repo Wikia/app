@@ -81,10 +81,10 @@ EditHub.prototype = {
 			var $input = $(this).prev();
 			this.wmuDeffered = $.when(
 				$.loadYUI(),
+				$.loadJQueryAIM(),
 				$.getResources([
 					wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
-					$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
-					'/resources/wikia/libraries/aim/jquery.aim.js'
+					$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss')
 				])
 			).then($.proxy(function() {
 				WMU_skipDetails = true;

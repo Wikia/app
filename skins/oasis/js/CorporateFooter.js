@@ -17,15 +17,13 @@
 					ev.stopPropagation();
 
 					Wikia.Cookies.set('mobilefullsite', null);//invalidate cookie
-					WikiaTracker.trackEvent(
-						'trackingevent',
-						{
-							ga_category: 'corporate-footer',
-							ga_action: WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
-							ga_label: 'mobile-switch'
-						},
-						'both'
-					);
+
+					WikiaTracker.track({
+						category: 'corporate-footer',
+						action: WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
+						label: 'mobile-switch',
+						trackingMethod: 'both'
+					});
 
 					(new Wikia.Querystring()).setVal('useskin', 'wikiamobile').addCb().goTo();
 				});
