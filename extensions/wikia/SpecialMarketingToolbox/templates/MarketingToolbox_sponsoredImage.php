@@ -23,4 +23,5 @@
 			<?php endif; ?>
 		</div>
 	</div>
+	<input class="secondary remove-sponsored-image" type="button" value="<?= $wf->Msg('marketing-toolbox-edithub-sponsored-image-remove') ?>" />
 </div>
