@@ -49,7 +49,7 @@
 						categories: response[ 0 ].categories,
 						placement: 'right',
 						popover: {
-							addCategoryHint: true
+							hint: true
 						},
 						sortable: {
 							axis: false,
