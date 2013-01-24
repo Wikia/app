@@ -1,21 +1,17 @@
 <?php
 class WikiaValidatorImageSize extends WikiaValidatorFileTitle {
-	protected $options = array('compare-way' => '', 'width' => '', 'height' => '');
-	protected $msgs = array('wrong-size' => '', 'wrong-width' => '', 'wrong-height' => '', 'not-an-image' => '');
-	
-	const COMPARE_EQUALS = '==';
-	const COMPARE_LOWER = '<';
-	const COMPARE_GREATER = '>';
-	const COMPARE_GTE = '>=';
-	const COMPARE_LTE = '<=';
-	
-	protected $validCompareWays = array(
-		self::COMPARE_EQUALS,
-		self::COMPARE_LOWER,
-		self::COMPARE_GREATER,
-		self::COMPARE_GTE,
-		self::COMPARE_LTE,
+	protected $options = array(
+		'minWidth' => null,
+		'maxWidth' => null,
+		'minHeight' => null,
+		'maxHeight' => null,
 	);
+	protected $msgs = array(
+		'min-width' => 'wikia-validator-min-width-error',
+		'max-width' => 'wikia-validator-max-width-error',
+		'min-height' => 'wikia-validator-min-height-error',
+		'max-height' => 'wikia-validator-max-height-error',
+		'not-an-image' => 'wikia-validator-not-an-image-error');
 	
 	protected $validMimeTypes = array(
 		'image/gif', 
@@ -33,113 +29,38 @@ class WikiaValidatorImageSize extends WikiaValidatorFileTitle {
 		$this->imageWidth = intval( $image->getWidth() );
 		$this->imageHeight = intval( $image->getHeight() );
 		
-		$compareWay = $this->getOption('compare-way');
-		if( !in_array($compareWay, $this->validCompareWays) ) {
-			$this->throwException( 'WikiaValidatorImageSize: passed compare-way is invalid' );
-		}
-		
 		if( !in_array($image->getMimeType(), $this->validMimeTypes) ) {
-			$this->generateError('not-an-image');
+			$this->createError('not-an-image');
 			return false;
 		}
 
-		$this->validWidth = intval( $this->getOption('width') );
-		$this->validHeight = intval( $this->getOption('height') );
-		
-		$isValid = false;
-		switch($compareWay) {
-			case self::COMPARE_EQUALS:
-				$isValid = $this->compareSizeAsEqual();
-				break;
-			case self::COMPARE_LTE:
-				$isValid = $this->compareSizeAsLowerOrEqual();
-				break;
-			case COMPARE_GTE:
-				$isValid = $this->compareSizeAsGreaterOrEqual();
-				break;
-			case COMPARE_LOWER:
-				$isValid = $this->compareSizeAsLower();
-				break;
-			case COMPARE_GREATER:
-				$isValid = $this->compareSizeAsGreater();
-				break;
+		$this->minWidth = $this->getOption('minWidth');
+		$this->maxWidth = $this->getOption('maxWidth');
+		$this->minHeight = $this->getOption('minHeight');
+		$this->maxHeight = $this->getOption('maxHeight');
+
+		$isValid = true;
+
+		if ($this->minWidth !== null && $this->imageWidth < $this->minWidth) {
+			$isValid = false;
+			$this->createError('min-width', array($this->minWidth));
 		}
-		
+
+		if ($this->maxWidth !== null && $this->maxWidth < $this->imageWidth) {
+			$isValid = false;
+			$this->createError('max-width');
+		}
+
+		if ($this->minHeight !== null && $this->imageWidth < $this->minHeight) {
+			$isValid = false;
+			$this->createError('min-height');
+		}
+
+		if ($this->maxHeight !== null && $this->maxHeight < $this->imageWidth) {
+			$isValid = false;
+			$this->createError('max-height');
+		}
+
 		return $isValid;
-	}
-	
-	protected function compareSizeAsEqual() {
-		if( $this->imageWidth !== $this->validWidth && $this->imageHeight !== $this->validHeight ) {
-			$this->createError('wrong-size');
-			return false;
-		} else if( $this->imageWidth !== $this->validWidth ) {
-			$this->createError('wrong-width');
-			return false;
-		} else if( $this->imageHeight !== $this->validHeight ) {
-			$this->createError('wrong-height');
-			return false;
-		}
-
-		return true;
-	}
-	
-	protected function compareSizeAsLowerOrEqual() {
-		if( $this->imageWidth > $this->validWidth && $this->imageHeight > $this->validHeight ) {
-			$this->createError('wrong-size');
-			return false;
-		} else if( $this->imageWidth > $this->validWidth ) {
-			$this->createError('wrong-width');
-			return false;
-		} else if( $this->imageHeight > $this->validHeight ) {
-			$this->createError('wrong-height');
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
-	protected function compareSizeAsGreaterOrEqual() {
-		if( $this->imageWidth < $this->validWidth && $this->imageHeight < $this->validHeight ) {
-			$this->createError('wrong-size');
-			return false;
-		} else if( $this->imageWidth < $this->validWidth ) {
-			$this->createError('wrong-width');
-			return false;
-		} else if( $this->imageHeight < $this->validHeight ) {
-			$this->createError('wrong-height');
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	protected function compareSizeAsLower() {
-		if( $this->imageWidth >= $this->validWidth && $this->imageHeight >= $this->validHeight ) {
-			$this->createError('wrong-size');
-			return false;
-		} else if( $this->imageWidth >= $this->validWidth ) {
-			$this->createError('wrong-width');
-			return false;
-		} else if( $this->imageHeight >= $this->validHeight ) {
-			$this->createError('wrong-height');
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	protected function compareSizeAsGreater() {
-		if( $this->imageWidth <= $this->validWidth && $this->imageHeight <= $this->validHeight ) {
-			$this->createError('wrong-size');
-			return false;
-		} else if( $this->imageWidth <= $this->validWidth ) {
-			$this->createError('wrong-width');
-			return false;
-		} else if( $this->imageHeight <= $this->validHeight ) {
-			$this->createError('wrong-height');
-			return false;
-		} else {
-			return true;
-		}
 	}
 }

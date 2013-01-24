@@ -9,15 +9,13 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 				),
 				'validator' => new WikiaValidatorImageSize(
 					array(
-						'compare-way' => WikiaValidatorImageSize::COMPARE_LTE,
-						'width' => 85,
-						'height' => 15,
+						'maxWidth' => 85,
+						'maxHeight' => 15,
 					),
 					array(
 						'wrong-file' => 'marketing-toolbox-validator-wrong-file',
-						'wrong-size' => 'marketing-toolbox-validator-wrong-file-size',
-						'wrong-width' => 'marketing-toolbox-validator-wrong-file-size-width',
-						'wrong-height' => 'marketing-toolbox-validator-wrong-file-size-height',
+						'max-width' => 'marketing-toolbox-validator-wrong-file-size-width',
+						'max-height' => 'marketing-toolbox-validator-wrong-file-size-height',
 						'not-an-image' => 'marketing-toolbox-validator-wrong-file-not-an-image',
 					)
 				)
