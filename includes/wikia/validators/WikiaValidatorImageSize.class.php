@@ -100,7 +100,7 @@ class WikiaValidatorImageSize extends WikiaValidatorFileTitle {
 	
 	protected function compareSizeAsGreaterOrEqual() {
 		if( $this->imageWidth < $this->validWidth && $this->imageHeight < $this->validHeight ) {
-			$this->createError('wrong-width');
+			$this->createError('wrong-size');
 			return false;
 		} else if( $this->imageWidth < $this->validWidth ) {
 			$this->createError('wrong-width');
@@ -115,7 +115,7 @@ class WikiaValidatorImageSize extends WikiaValidatorFileTitle {
 
 	protected function compareSizeAsLower() {
 		if( $this->imageWidth >= $this->validWidth && $this->imageHeight >= $this->validHeight ) {
-			$this->createError('wrong-width');
+			$this->createError('wrong-size');
 			return false;
 		} else if( $this->imageWidth >= $this->validWidth ) {
 			$this->createError('wrong-width');
@@ -130,7 +130,7 @@ class WikiaValidatorImageSize extends WikiaValidatorFileTitle {
 
 	protected function compareSizeAsGreater() {
 		if( $this->imageWidth <= $this->validWidth && $this->imageHeight <= $this->validHeight ) {
-			$this->createError('wrong-width');
+			$this->createError('wrong-size');
 			return false;
 		} else if( $this->imageWidth <= $this->validWidth ) {
 			$this->createError('wrong-width');
