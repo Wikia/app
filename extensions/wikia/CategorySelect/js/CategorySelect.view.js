@@ -10,57 +10,73 @@
 	$(function() {
 		var $wrapper = $( '#WikiaArticleCategories' ),
 			$add = $wrapper.find( '.add' ),
+			$cancel = $wrapper.find( '.cancel' ),
 			$categories = $wrapper.find( '.categories' ),
 			$container = $wrapper.find( '.container' ),
 			$input = $wrapper.find( '.input' ),
+			$last = $wrapper.find( '.last' ),
+			$save = $wrapper.find( '.save' ),
 			articleId = window.wgArticleId,
 			categoryLinkPrefix = wgCategorySelect.defaultNamespace +
 				wgCategorySelect.defaultSeparator,
+			loaded = false,
 			namespace = 'categorySelect';
 
-		function initialize( event ) {
-			$.when(
-				$.nirvana.sendRequest({
-					controller: 'CategorySelectController',
-					data: {
-						articleId: articleId,
-					},
-					method: 'getArticleCategories'
+		$add.on( 'click.' + namespace, function() {
+			$wrapper.addClass( 'editMode' );
+			$input.focus();
 
-				}),
-				mw.loader.use( 'jquery.ui.autocomplete' ),
-				mw.loader.use( 'jquery.ui.sortable' ),
-				$.getResources([
-					wgResourceBasePath + '/resources/wikia/libraries/mustache/mustache.js',
-					wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js'
-				])
+			if ( !loaded ) {
+				loaded = true;
 
-			).done(function( response ) {
-				$wrapper.categorySelect({
-					categories: response[ 0 ].categories,
-					placement: 'right',
-					sortable: {
-						axis: false,
-						forcePlaceholderSize: true,
-						items: '.new',
-						revert: 200
-					}
+				$.when(
+					$.nirvana.sendRequest({
+						controller: 'CategorySelectController',
+						data: {
+							articleId: articleId,
+						},
+						method: 'getArticleCategories'
+					}),
+					mw.loader.use( 'jquery.ui.autocomplete' ),
+					mw.loader.use( 'jquery.ui.sortable' ),
+					$.getResources([
+						wgResourceBasePath + '/resources/wikia/libraries/mustache/mustache.js',
+						wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js'
+					])
 
-				}).on( 'add.' + namespace, function( event, cs, data ) {
-					$add.before( data.element );
+				).done(function( response ) {
+					$wrapper.categorySelect({
+						categories: response[ 0 ].categories,
+						placement: 'right',
+						popover: {
+							addCategoryHint: true
+						},
+						sortable: {
+							axis: false,
+							forcePlaceholderSize: true,
+							items: '.new',
+							revert: 200
+						}
 
-				}).on( 'update.' + namespace, function( event ) {
-					$wrapper.toggleClass( 'modified', $categories.find( '.new' ).length > 0 );
+					}).on( 'add.' + namespace, function( event, cs, data ) {
+						$last.before( data.element );
+
+					}).on( 'update.' + namespace, function() {
+						var modified = $categories.find( '.new' ).length > 0;
+
+						$wrapper.toggleClass( 'modified', modified );
+						$save.prop( 'disabled', !modified );
+					});
 				});
-			});
-		}
-
-		$wrapper.find( '.cancel' ).on( 'click.' + namespace, function( event ) {
-			$categories.find( '.new' ).remove();
-			$wrapper.removeClass( 'modified' ).trigger( 'reset' );
+			}
 		});
 
-		$wrapper.find( '.save' ).on( 'click.' + namespace, function( event ) {
+		$cancel.on( 'click.' + namespace, function( event ) {
+			$categories.find( '.new' ).remove();
+			$wrapper.removeClass( 'editMode' ).trigger( 'reset' );
+		});
+
+		$save.on( 'click.' + namespace, function( event ) {
 			var $saveButton = $( this ).attr( 'disabled', true );
 
 			$container.startThrobbing();
@@ -82,7 +98,7 @@
 					alert( response.error );
 
 				} else {
-					$wrapper.removeClass( 'modified' );
+					$wrapper.removeClass( 'editMode' );
 
 					// Linkify the new categories
 					$categories.find( '.new' ).each(function( i ) {
@@ -103,8 +119,6 @@
 				}
 			});
 		});
-
-		$input.one( 'focus.' + namespace, initialize );
 	});
 
 })( window, window.jQuery, window.mw );
