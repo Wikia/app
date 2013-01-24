@@ -5,26 +5,34 @@
 // These styles are for view pages only
 .CategorySelect.articlePage {
 	@include clear-linear-gradient();
-	@include clearfix;
 	line-height: normal;
 	margin: 0 0 40px 0;
-	padding: 10px 20px 4px 20px;
+	padding: 0;
 	position: relative;
 
-	&.modified .container > .toolbar {
-		display: block;
+	&.editMode {
+		margin-bottom: 6px;
+
+		.add {
+			display: none;
+		}
+
+		.input {
+			display: inline-block;
+		}
+
+		> .toolbar {
+			display: block;
+		}
 	}
 
 	&.showHidden .hidden {
 		display: block;
 	}
 
-	.add,
-	.category,
-	.placeholder {
-		float: left;
-		display: block;
-		margin: 0 6px 6px 0;
+	.add {
+		@include clear-linear-gradient();
+		background-color: $color-speech-bubble;
 	}
 
 	.categories {
@@ -33,9 +41,17 @@
 		padding: 0;
 	}
 
+	.category,
+	.last,
+	.placeholder {
+		float: left;
+		display: block;
+		margin: 0 6px 6px 0;
+	}
+
 	.category {
 		border-right: 1px solid $color-page-border;
-		margin-top: 4px;
+		margin-top: 3px;
 		padding-right: 6px;
 
 		&.hidden {
@@ -43,6 +59,9 @@
 		}
 
 		&.new {
+			margin-top: 0;
+			margin-bottom: 3px;
+
 			.name {
 				cursor: move;
 			}
@@ -53,19 +72,20 @@
 		}
 	}
 
-	.categoryselect-add {
-		@include clear-linear-gradient();
-		background-color: $color-speech-bubble;
+	.container {
+		@include clearfix;
+		padding: 10px 20px 4px 20px;
 	}
 
 	.input {
 		background-color: $color-page;
-		border-color: $color-page;
+		border: 0;
 		color: $color-text;
 		display: none;
 		font-size: 12px;
+		margin: 3px 0;
 		outline: none;
-		padding-top: 1px;
+		padding: 0;
 		width: 245px;
 	}
 
@@ -75,6 +95,7 @@
 		background-color: $color-speech-bubble;
 		border: 1px solid $color-page-border;
 		padding: 2px 6px;
+		margin-top: 0;
 	}
 
 	.placeholder {
@@ -83,7 +104,8 @@
 
 	.special-categories {
 		float: left;
-		padding: 4px 6px 0 0;
+		padding: 3px 0;
+		margin-right: 6px;
 	}
 
 	.sprite-small {
@@ -108,7 +130,9 @@
 	}
 
 	> .toolbar {
-		margin-top: 10px;
+		background-color: $color-speech-bubble;
+		border-top: 1px solid $color-page-border;
+		padding: 6px 10px;
 		text-align: right;
 
 		.wikia-button {
