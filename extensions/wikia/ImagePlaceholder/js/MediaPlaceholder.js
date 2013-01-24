@@ -94,10 +94,11 @@ var MediaPlaceholder = {
 				if(!self.imageLoaded) {
 					// open WMU
 					$.when(
-						$.loadYUI(),
-						$.getResources([ 
-							window.wgExtensionsPath + "/wikia/WikiaMiniUpload/js/WMU.js",
-							$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss')
+						$.getResources([
+							$.loadYUI,
+							$.loadJQueryAIM,
+							$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
+							wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
 						])
 					).done(function() {
 						self.imageLoaded = true;
