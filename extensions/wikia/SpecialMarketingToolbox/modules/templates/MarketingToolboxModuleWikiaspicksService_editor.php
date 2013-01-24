@@ -4,9 +4,9 @@
 			'sponsoredImage',
 			array(
 				'inputData' => $fields['sponsoredImage'],
-				'fileUrl' => $sponsoredImageUrl,
-				'imageWidth' => $sponsoredImageWidth,
-				'imageHeight' => $sponsoredImageHeight,
+				'fileUrl' => (isset($sponsoredImageUrl) ? $sponsoredImageUrl : ''),
+				'imageWidth' => (isset($sponsoredImageWidth) ? $sponsoredImageWidth : ''),
+				'imageHeight' => (isset($sponsoredImageHeight) ? $sponsoredImageHeight : ''),
 			)
 		); 
 	?>
