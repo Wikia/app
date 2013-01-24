@@ -235,6 +235,7 @@ function WMU_manualWidthInput() {
 	if(!window.WMU_orgThumbSize) {
 		WMU_orgThumbSize = [image.width, image.height];
 	}
+	WMU_ratio = WMU_width / WMU_height;
 	if ( val > WMU_width ) {
 		if (!WMU_shownMax) {
 			image.width(WMU_width);
