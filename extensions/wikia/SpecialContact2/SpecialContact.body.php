@@ -72,7 +72,7 @@ class ContactForm extends SpecialPage {
 		$this->mBrowser = $wgRequest->getText( 'wpBrowser' );
 		$this->mAbTestInfo = $wgRequest->getText( 'wpAbTesting' );
 		$this->mCCme = $wgRequest->getCheck( 'wgCC' );
-		$this->mReferral = $wgRequest->getText( 'wpReferral' );
+		$this->mReferral = $wgRequest->getText( 'wpReferral', ( !empty( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null ) );
 
 		if( $wgRequest->wasPosted() ) {
 
@@ -180,7 +180,7 @@ class ContactForm extends SpecialPage {
 				'captchaForm' => ($wgUser->isAnon() && class_exists( $wgCaptchaClass )) ? (new $wgCaptchaClass())->getForm( $captchaErr ) : '',
 				'errMessages' => $this->err,
 				'errors' => $this->errInputs,
-				'referral' => !empty( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null
+				'referral' => $this->mReferral
 
 			);
 
@@ -260,7 +260,7 @@ class ContactForm extends SpecialPage {
 		}
 
 		$mail_user = new MailAddress($this->mEmail);
-		$mail_community = new MailAddress(/*$wgSpecialContactEmail*/'jolek@wikia-inc.com', 'Wikia Support');
+		$mail_community = new MailAddress( $wgSpecialContactEmail, 'Wikia Support');
 
 		$errors = '';
 
