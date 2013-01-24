@@ -203,7 +203,7 @@ class CategorySelectController extends WikiaController {
 
 			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
 
-			$categories = array_merge( $categories, $data[ 'categories' ] );
+			$categories = array_merge( $data[ 'categories' ], $categories );
 			$categories = CategorySelect::getUniqueCategories( $categories, 'array', 'wikitext' );
 
 			$wikitext = $data[ 'wikitext' ] . $categories;
