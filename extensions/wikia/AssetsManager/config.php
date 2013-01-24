@@ -554,6 +554,23 @@ $config['wikiapoll_wikiamobile_js'] = array(
 	)
 );
 
+
+$config['special_contact_wikiamobile_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/SpecialContact2/SpecialContact.wikiamobile.scss',
+	)
+);
+
+$config['special_contact_wikiamobile_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/SpecialContact2/SpecialContact.wikiamobile.js',
+	)
+);
+
 /** WikiaApp **/
 $config['wikiaapp_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,

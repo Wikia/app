@@ -1,0 +1,39 @@
+@import "../../WikiaMobile/css/variables";
+
+.wkForm {
+	text-align: center;
+
+	input, textarea {
+		width: 100%;
+		border: 1px solid $border-color;
+		background-color: $input-bg-color;
+		font-weight: 100;
+	}
+
+	input {
+		padding: 0 10px;
+		height: 40px;
+		margin: 0 0 20px 0;
+		font-size: large;
+	}
+
+	label {
+		color: $page-text-alternate-color;
+		display: block;
+		font-size: medium;
+		text-align: left;
+	}
+
+	textarea {
+		font-size: large;
+		padding: 10px;
+	}
+
+	.inpErr {
+		border: 2px solid $error-bg-color;
+	}
+
+	.wkErr{
+		border: 1px solid red;
+	}
+}

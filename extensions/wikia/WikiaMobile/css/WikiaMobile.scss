@@ -20,6 +20,7 @@
 @import 'search';
 @import 'image_placeholder';
 @import 'loader';
+@import "form";
 
 //mixins
 @import "mixins/transition.scss";
@@ -157,20 +158,6 @@ blockquote {
 			width: 0;
 		}
 
-		&.top {
-			&::after {
-				border-color: white transparent transparent transparent;
-				top:-16px;
-				left:50%;
-				margin-left:-10px;
-			}
-			&::before {
-				border-color: $link-color transparent transparent transparent;
-				top: -15px;
-				left:50%;
-				margin-left:-11px;
-			}
-		}
 		&.bottom {
 			&::after {
 				border-color: transparent transparent white transparent;
@@ -181,6 +168,21 @@ blockquote {
 			&::before {
 				border-color: transparent transparent $link-color transparent;
 				bottom:-15px;
+				left:50%;
+				margin-left:-11px;
+			}
+		}
+		/* currently we only use bottom class - uncomment whatever you need, but when you need it
+		&.top {
+			&::after {
+				border-color: white transparent transparent transparent;
+				top:-16px;
+				left:50%;
+				margin-left:-10px;
+			}
+			&::before {
+				border-color: $link-color transparent transparent transparent;
+				top: -15px;
 				left:50%;
 				margin-left:-11px;
 			}
@@ -206,7 +208,7 @@ blockquote {
 				border-color: transparent $link-color transparent transparent;
 				right: -15px;
 			}
-		}
+		}*/
 	}
 }
 
