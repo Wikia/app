@@ -341,5 +341,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 	public function sponsoredImage() {
 		$this->inputData = $this->request->getVal('inputData');
+		$this->fileUrl = $this->request->getVal('fileUrl', '');
+		$this->imageWidth = $this->request->getVal('imageWidth', '');
+		$this->imageHeight = $this->request->getVal('imageHeight', '');
 	}
 }

@@ -2,7 +2,12 @@
 	<?= $app->renderView(
 			'MarketingToolbox',
 			'sponsoredImage',
-			array('inputData' => $fields['sponsoredImage'])
+			array(
+				'inputData' => $fields['sponsoredImage'],
+				'fileUrl' => $sponsoredImageUrl,
+				'imageWidth' => $sponsoredImageWidth,
+				'imageHeight' => $sponsoredImageHeight,
+			)
 		); 
 	?>
 	<div class="module-box grid-4 alpha">

@@ -74,6 +74,15 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 			$data['imageWidth'] = $imageData->width;
 			$data['imageHeight'] = $imageData->height;
 		}
+
+		if( !empty($data['values']['sponsoredImage']) ) {
+			$model = new MarketingToolboxModel();
+			//TODO: ImagesService::getLocalFileThumbUrlAndSizes isn't good here because it takes only destination width in consideration
+			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['values']['sponsoredImage'], $model->getSponsoredImageWidth());
+			$data['sponsoredImageUrl'] = $imageData->url;
+			$data['sponsoredImageWidth'] = $imageData->width;
+			$data['sponsoredImageHeight'] = $imageData->height;
+		}
 		
 		return parent::renderEditor($data);
 	}
