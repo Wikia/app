@@ -1,9 +1,15 @@
 <div class="module-mediabox">
 	<?= $app->renderView(
-		'MarketingToolbox',
-		'sponsoredImage',
-		array('inputData' => 'test')
-	); ?>
+			'MarketingToolbox',
+			'sponsoredImage',
+			array(
+				'inputData' => $fields['sponsoredImage'],
+				'fileUrl' => (isset($sponsoredImageUrl) ? $sponsoredImageUrl : ''),
+				'imageWidth' => (isset($sponsoredImageWidth) ? $sponsoredImageWidth : ''),
+				'imageHeight' => (isset($sponsoredImageHeight) ? $sponsoredImageHeight : ''),
+			)
+		); 
+	?>
 	<div class="module-box grid-4 alpha">
 		<div class="grid-3 alpha">
 			<input type="button" class="wmu-show" value="<?= $wf->Msg('marketing-toolbox-hub-module-explore-add-photo') ?>" />
