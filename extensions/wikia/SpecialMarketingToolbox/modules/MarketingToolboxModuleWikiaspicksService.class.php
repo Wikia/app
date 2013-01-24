@@ -3,6 +3,26 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 	
 	protected function getFormFields() {
 		$fields = array(
+			'sponsoredImage' => array(
+				'type' => 'hidden',
+				'attributes' => array(
+					'class' => 'wmu-file-name-input'
+				),
+				'validator' => new WikiaValidatorImageSize(
+					array(
+						'compare-way' => WikiaValidatorImageSize::COMPARE_LTE,
+						'width' => 85,
+						'height' => 15,
+					),
+					array(
+						'wrong-file' => 'marketing-toolbox-validator-wrong-file',
+						'wrong-size' => 'marketing-toolbox-validator-wrong-file-size',
+						'wrong-width' => 'marketing-toolbox-validator-wrong-file-size-width',
+						'wrong-height' => 'marketing-toolbox-validator-wrong-file-size-height',
+						'not-an-image' => 'marketing-toolbox-validator-wrong-file-not-an-image',
+					)
+				)
+			),
 			'fileName' => array(
 				'type' => 'hidden',
 				'attributes' => array(
