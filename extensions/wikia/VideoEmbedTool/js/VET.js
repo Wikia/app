@@ -139,9 +139,6 @@
 		if(VET_callbackAfterEmbed) {
 			VET_callbackAfterEmbed(extraData);
 		}
-	
-		// close dialog
-		VET_close();
 	}
 	
 	// macbre: move back button inside dialog content and add before provided selector (Oasis changes)
@@ -554,19 +551,9 @@
 		if(e) {
 			e.preventDefault();
 		}
-	
-		/*
-		VET_panel.hide();
-		if ( 400 == wgNamespaceNumber ) {
-			if( $( '#VideoEmbedPageWindow' ).length ) {
-				$( '#VideoEmbedPageWindow' ).css('visibility', '');
-			}
-		}
-		*/
-	
-		//VET_switchScreen('Main');
-		//VET_loadMain();
-	
+
+		VET_loader.modal.closeModal();
+
 		// Handle MiniEditor focus
 		// (BugId:18713)
 		if (window.WikiaEditor) {
