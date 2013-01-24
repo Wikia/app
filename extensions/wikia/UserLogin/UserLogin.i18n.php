@@ -58,7 +58,7 @@ $messages['en'] = array(
 <br /><br />
 If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
 <br /><br />
-Questions or concerns? Feel free to contact us.',
+Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">contact us</a>.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
 	'userlogin-password-email-body' => 'Hi $2,
 
@@ -66,7 +66,7 @@ Please use this temporary password to log in to Wikia: "$3"
 
 If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
 
-Questions or concerns? Feel free to contact us.
+Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
 
 Wikia Community Support
 
