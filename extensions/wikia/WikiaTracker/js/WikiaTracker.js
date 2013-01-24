@@ -80,7 +80,9 @@ window.WikiaTracker = (function( window ) {
 			'trackingMethod'
 		],
 		rDoubleSlash = /\/\//g,
-		slice = [].slice;
+		slice = [].slice,
+		// Fake tracker object containing spooled events from before this file was loaded
+		tracker = window.WikiaTracker;
 
 	/**
 	 * Unique entry point to track events to the internal datawarehouse and GA.
@@ -393,21 +395,17 @@ window.WikiaTracker = (function( window ) {
 	}
 
 	//init
-	(function( spool ) {
-		var data,
-			i = 0,
-			l = spool.length;
-
-		//if there were any tracking events in the spool from before this file loaded, replay them.
-		for( ; i < l; i++ ) {
-			data = spool[ i ];
+	//if there were any tracking events in the spool from before this file loaded, replay them.
+	if ( tracker && tracker.spool ) {
+		for ( var data, i = 0, l = tracker.spool.length; i < l; i++ ) {
+			data = tracker.spool[ i ];
 
 			Wikia.log( 'Sending previously-spooled tracking event', 'trace', logGroup );
 			Wikia.log( data, 'trace', logGroup );
 
 			track.apply( null, data );
 		}
-	})( window.WikiaTracker.spool );
+	}
 
 	/** @public **/
 
