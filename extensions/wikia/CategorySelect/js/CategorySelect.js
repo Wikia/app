@@ -553,6 +553,7 @@
 					category = undefined;
 
 				} else {
+					category.name = $.trim( category.name );
 
 					// Get rid of unecessary properties
 					for ( prop in category ) {
