@@ -162,6 +162,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 			var imgTitle = image.name;
 			currentImageStyle.backgroundImage = '';
 
+			zoomable = false;
+
 			if(videoCache[imgTitle]){
 				currentImage.innerHTML = videoCache[imgTitle];
 			}else{
@@ -194,6 +196,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		}else{
 			var img = new Image();
 			img.src = image.url;
+
+			zoomable = true;
 
 			if(!img.complete){
 				img.onload = function(){
@@ -430,8 +434,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				heightFll = ev.height;
 
 				var image = currentImage.getElementsByTagName('img')[0];
-				origW = image.width;
-				origH = image.height;
+
+				if(image) {
+					origW = image.width;
+					origH = image.height;
+				}
 
 				sx = sy = dx = dy = 0;
 
