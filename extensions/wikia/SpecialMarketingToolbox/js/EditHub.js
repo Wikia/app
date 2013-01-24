@@ -84,14 +84,9 @@ EditHub.prototype = {
 				$.loadJQueryAIM(),
 				$.getResources([
 					wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
-<<<<<<< HEAD
-					$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss')
-				])
-=======
 					$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
 				]),
 				$.loadJQueryAIM()
->>>>>>> quick fix for AIM in WMU
 			).then($.proxy(function() {
 				WMU_skipDetails = true;
 				WMU_show();
