@@ -11,24 +11,14 @@ var WikiaMosaicSliderMasterControl = {
 		sliders.click(WikiaMosaicSliderMasterControl.clickTrackingHandler);
 	},
 	trackClick: function(category, action, label, value, params, event) {
-		var trackingObj = {
-			ga_category: category,
-			ga_action: action,
-			ga_label: label
-		};
-
-		if(value)
-			trackingObj['ga_value'] = value;
-
-		if(params)
-			$.extend(trackingObj, params);
-
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			trackingObj,
-			'internal',
-			event
-		);
+		WikiaTracker.track({
+			action: action,
+			browserEvent: event,
+			category: category,
+			label: label,
+			trackingMethod: 'internal',
+			value: value
+		});
 	},
 
 	clickTrackingHandler: function(e) {
@@ -73,18 +63,18 @@ WikiaMosaicSlider.prototype.init = function() {
 	this.sliderPanorama = this.sliderRegion.find('.wikia-mosaic-slider-panorama');
 	this.sliderDescription = this.sliderRegion.find('.wikia-mosaic-slider-description');
 	this.sliderRegionLink = this.sliderRegion.find('.wikia-mosaic-link');
-	
+
 	// build slider region (DOM op)
 	this.sliderPanorama.append(this.largeThumbs);
-	
+
 	// other variables
 	this.timerIndex = 0;
 	this.timer = 5000;	// 3 seconds
-	
+
 	// attach event handler
 	this.slides.hover($.proxy(this.handleSlideClick, this), function() {});
 	this.timerHandle = setInterval($.proxy(this.timedSlide, this), this.timer);
-	
+
 	// display
 	this.showSlide(0);
 	this.el.show();
@@ -105,10 +95,10 @@ WikiaMosaicSlider.prototype.showSlide = function(index) {
 	this.sliderPanorama.stop(true, true);
 
 	this.slides.removeClass('selected');
-	
+
 	var slide = $(this.slides[index]);
 	slide.addClass('selected');
-	
+
 	this.sliderRegionLink.attr('href', $(this.slideLinks[index]).attr('href'));
 
 	this.sliderDescription.fadeTo(100, 0, $.proxy(function() {
