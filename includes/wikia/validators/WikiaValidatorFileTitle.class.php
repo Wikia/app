@@ -11,11 +11,7 @@ class WikiaValidatorFileTitle extends WikiaValidator {
 	}
 
 	public function isValidInternal($value = null) {
-		$titleClass = $this->getTitleClass();
-
-		$title = $titleClass::newFromText($value, NS_FILE);
-
-		$file = $this->getApp()->wf->findFile( $title );
+		$file = $this->getFileFromName($value);
 
 		if ($file instanceof File && $file->exists()) {
 			return true;
@@ -29,7 +25,14 @@ class WikiaValidatorFileTitle extends WikiaValidator {
 		return $this->titleClass;
 	}
 
-	public function  setTitleClass($titleClass) {
+	public function setTitleClass($titleClass) {
 		$this->titleClass = $titleClass;
+	}
+	
+	public function getFileFromName($name) {
+		$titleClass = $this->getTitleClass();
+		$title = $titleClass::newFromText($name, NS_FILE);
+		
+		return $this->getApp()->wf->findFile( $title );
 	}
 }
