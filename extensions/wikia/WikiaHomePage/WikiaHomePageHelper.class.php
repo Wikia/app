@@ -351,7 +351,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			try {
 				//this try-catch block is here because of devbox environments
 				//where we don't have all wikis imported
-				$admins = $wikiService->getWikiAdminIds($wikiId);
+				$admins = $wikiService->getWikiAdminIds($wikiId, false, true);
 				shuffle($admins);
 			} catch (Exception $e) {
 				$admins = array();
@@ -391,7 +391,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			try {
 				//this try-catch block is here because of devbox environments
 				//where we don't have all wikis imported
-				$topEditors = $wikiService->getTopEditors($wikiId, 100);
+				$topEditors = $wikiService->getTopEditors($wikiId, 100, true);
 			} catch (Exception $e) {
 				$topEditors = array();
 			}
@@ -424,7 +424,6 @@ class WikiaHomePageHelper extends WikiaModel {
 	public function getUserInfo($userId, $wikiId) {
 		$userInfo = array();
 		$user = F::build('User', array($userId), 'newFromId');
-
 
 		if ($user instanceof User && $this->isValidUserForInterstitial($user)) {
 			$username = $user->getName();
