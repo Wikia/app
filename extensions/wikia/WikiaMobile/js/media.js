@@ -151,48 +151,45 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 	}
 
 	function setupImage(){
-		var image = images[current];
+		var image = images[current],
+			video;
+
 		throbber.remove(currentImage);
 
 		modal.setCaption(getCaption(current));
 
-		//inject the content only if it was not already there in the page
-		//to avoid refresh the contents (it triggers a full
-		//reload of iframe contents for videos)
 		if(image.isVideo) {// video
-			if(!pager.getCurrent().querySelector('table.wkVi')) {
-				var imgTitle = image.name;
-				currentImageStyle.backgroundImage = '';
+			var imgTitle = image.name;
+			currentImageStyle.backgroundImage = '';
 
-				if(videoCache[imgTitle]){
-					currentImage.innerHTML = '<table class=wkVi><tr><td>'+videoCache[imgTitle]+'</td></tr></table>';
-				}else{
-					throbber.show(currentImage, {
-						center: true
-					});
+			if(videoCache[imgTitle]){
+				currentImage.innerHTML = videoCache[imgTitle];
+			}else{
+				throbber.show(currentImage, {
+					center: true
+				});
 
-					Wikia.nirvana.sendRequest({
-						type: 'get',
-						format: 'json',
-						controller: 'VideoHandler',
-						method: 'getEmbedCode',
-						data: {
-							articleId: wgArticleId,
-							fileTitle: imgTitle,
-							width: window.innerWidth - 100
-						},
-						callback: function(data) {
-							throbber.remove(currentImage);
+				Wikia.nirvana.getJson(
+					'VideoHandler',
+					'getEmbedCode',
+					{
+						articleId: window.wgArticleId,
+						fileTitle: imgTitle,
+						width: window.innerWidth - 100
+					},
+					function(data) {
+						throbber.remove(currentImage);
 
-							if(data.error){
-								handleError(data.error);
-							}else{
-								videoCache[imgTitle] = data.embedCode;
-								currentImage.innerHTML = '<table class=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
-							}
+						if(data.error){
+							handleError(data.error);
+						}else{
+							var video = '<table class=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
+
+							videoCache[imgTitle] = video;
+							currentImage.innerHTML = video;
 						}
-					});
-				}
+					}
+				);
 			}
 		}else{
 			var img = new Image();
@@ -220,6 +217,12 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				origW = img.width;
 				origH = img.height;
 			}
+		}
+
+		//remove any left videos from DOM
+		//videos tend to be heavy on resources we shouldn't have more than one at a time
+		if(video = document.querySelector('.swiperPage:not(.current) .wkVi')) {
+			video.parentElement.removeChild(video);
 		}
 	}
 
@@ -574,3 +577,5 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		cleanup: removeZoom
 	};
 });
+
+
