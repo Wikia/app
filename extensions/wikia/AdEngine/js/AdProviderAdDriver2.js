@@ -123,7 +123,7 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 		;
 
 		// Always have an ad when user is in the LEADERBOARD_TESTS experiment
-		if (!(abTest && abTest.getGroup('LEADERBOARD_TESTS') && slotname.match(/.*TOP_LEADERBOARD/))) {
+		if (!(abTest && abTest.getGroup('LEADERBOARD_TESTS') && slotname === 'TOP_LEADERBOARD')) {
 			if (!isHighValueCountry) {
 				error();
 				return;
