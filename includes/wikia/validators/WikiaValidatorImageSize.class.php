@@ -20,8 +20,12 @@ class WikiaValidatorImageSize extends WikiaValidatorFileTitle {
 		'image/png'
 	);
 	
+	protected function isFileNameValid($value) {
+		return parent::isValidInternal($value);
+	}
+	
 	public function isValidInternal($value = null) {
-		if( !parent::isValidInternal($value) ) {
+		if( !$this->isFileNameValid($value) ) {
 			return false;
 		}
 
@@ -51,12 +55,12 @@ class WikiaValidatorImageSize extends WikiaValidatorFileTitle {
 			$this->createError('max-width');
 		}
 
-		if ($this->minHeight !== null && $this->imageWidth < $this->minHeight) {
+		if ($this->minHeight !== null && $this->imageHeight < $this->minHeight) {
 			$isValid = false;
 			$this->createError('min-height');
 		}
 
-		if ($this->maxHeight !== null && $this->maxHeight < $this->imageWidth) {
+		if ($this->maxHeight !== null && $this->maxHeight < $this->imageHeight) {
 			$isValid = false;
 			$this->createError('max-height');
 		}

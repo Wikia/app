@@ -87,7 +87,7 @@ class ImagesService extends Service {
 		if( $foundFile ) {
 			$imageWidth = $foundFile->getWidth();
 			$sizes = ($destImageWidth > 0) ?
-				self::calculateScaledImageSizes($destImageWidth, $foundFile->getWidth(), $foundFile->getHeight()) :
+				self::calculateScaledImageSizes($destImageWidth, $imageWidth, $foundFile->getHeight()) :
 				self::calculateScaledImageSizes($imageWidth, $imageWidth, $foundFile->getHeight());
 
 			$results->url = $foundFile->getThumbUrl( $foundFile->thumbName( array( 'width' => $sizes->width) ) );
