@@ -1,5 +1,8 @@
 <?php
 
+
+$wgPhalanxServiceUrl = "http://dev-$wgDevelEnvironmentName:8080";
+
 class PhalanxService extends Service {
 
 	const RES_OK = 'ok';
@@ -34,7 +37,7 @@ class PhalanxService extends Service {
 			/* service doesn't work */
 			$ret = false;
 		}
-		
+
 		return $ret;
 	}
 
@@ -64,7 +67,7 @@ class PhalanxService extends Service {
 			/* service doesn't work */
 			$ret = false;
 		}
-		
+
 		return $ret;
 	}
 
@@ -82,9 +85,8 @@ class PhalanxService extends Service {
 
 		wfProfileIn( __METHOD__  );
 
-		// but for now we just build test url
-		$url = sprintf("%s/%s", "http://localhost:8080/", $action );
-		
+		$url = sprintf( "%s/%s", $wgPhalanxServiceUrl, $action != "status" ? $action : "" );
+
 		if( sizeof( $parameters ) ) {
 			$url .= "?" . http_build_query( $parameters );
 		}
@@ -99,11 +101,11 @@ class PhalanxService extends Service {
 		 * for any other we're sending POST
 		 */
 		else {
-			$response = Http::post( $url, 'default', array( "noProxy" => true ) );
+			$response = Http::post( $url, array( "noProxy" => true ) );
 		}
-		
+
 		wfProfileOut( __METHOD__  );
-				
-		return $response; 
+
+		return $response;
 	}
 };
