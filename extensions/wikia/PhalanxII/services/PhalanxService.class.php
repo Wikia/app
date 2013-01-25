@@ -57,7 +57,7 @@ class PhalanxService extends Service {
 			$res = json_decode( $response );
 			if ( is_null( $res ) ) {
 				/* don't match any blocks */
-				$ret = true;
+				$ret = 0;
 			} else {
 				if ( is_array( $res ) ) {
 					/* first block ID ? */
