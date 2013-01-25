@@ -70,6 +70,10 @@
 				display: inline-block;
 			}
 		}
+
+		&:last-child {
+			border-right: 0;
+		}
 	}
 
 	.container {
