@@ -375,8 +375,9 @@ class ArticleCommentInit {
 			if( !empty( $title ) ) {
 				$parentTitle = reset( explode( '/', $element->page_title) ); // getBaseText returns me parent comment for subcomment
 
-				$link = $app->wf->Msg(
+				$link = $app->wf->MsgExt(
 					'article-comments-file-page',
+					array ('parsemag'),
 					$title->getLocalURL(),
 					User::newFromId( Revision::newFromId( $title->getLatestRevID() )->getUser() )->getName(),
 					Title::newFromText( $parentTitle )->getLocalURL(),
@@ -393,8 +394,9 @@ class ArticleCommentInit {
 				$titleNames = explode( '/', $baseText );
 				$userBlog = Title::newFromText( $titleNames[0], NS_BLOG_ARTICLE );
 
-				$link = $app->wf->Msg(
+				$link = $app->wf->MsgExt(
 					'article-blog-comments-file-page',
+					array ('parsemag'),
 					$blogPostComment->getLocalURL(),
 					User::newFromId( Revision::newFromId( $blogPostComment->getLatestRevID() )->getUser() )->getName(),
 					Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getLocalURL(),

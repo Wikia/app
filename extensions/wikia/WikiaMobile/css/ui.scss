@@ -47,13 +47,9 @@ object {
 // Button
 .wkBtn {
 	display: inline-block;
-	-webkit-box-flex: 1;
-	-moz-box-flex: 1;
-	box-flex: 1;
 	font-size: medium;
 	padding: 5px 10px;
 	border: 1px solid $border-color;
-	border-radius: 5px;
 	font-weight: 100;
 	margin: 10px;
 	color: #6A6A6A;
@@ -63,21 +59,14 @@ object {
 		@include linear-gradient(rgb(38,148,225), rgb(17,105,178));
 		color: white;
 	}
-}
 
-.wkInp {
-	display: block;
-	-webkit-box-flex: 50;
-	-moz-box-flex: 50;
-	box-flex: 50;
-	-webkit-appearance: none;
-	border-radius: 0;
-	padding: 0 10px;
-	border: 1px solid $border-color;
-	background-color: $input-bg-color;
-	font-size: 1em;
-	font-weight: 100;
-	height: 40px;
+	&.round {
+		border-radius: 5px;
+	}
+
+	&[disabled] {
+		background: grey;
+	}
 }
 
 ::-webkit-input-placeholder {

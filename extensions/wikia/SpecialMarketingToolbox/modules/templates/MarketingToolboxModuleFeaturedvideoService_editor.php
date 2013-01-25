@@ -1,4 +1,15 @@
 <div class="module-mediabox">
+	<?= $app->renderView(
+		'MarketingToolbox',
+		'sponsoredImage',
+		array(
+			'inputData' => $fields['sponsoredImage'],
+			'fileUrl' => (isset($sponsoredImageUrl) ? $sponsoredImageUrl : ''),
+			'imageWidth' => (isset($sponsoredImageWidth) ? $sponsoredImageWidth : ''),
+			'imageHeight' => (isset($sponsoredImageHeight) ? $sponsoredImageHeight : ''),
+		)
+	);
+	?>
 	<div class="module-box grid-4 alpha">
 		<div class="grid-3 alpha">
 			<input type="button" class="vet-show" value="<?= $wf->Msg('marketing-toolbox-edithub-add-video-button') ?>" />
@@ -10,28 +21,28 @@
 				<?php endif ?>
 			</span>
 			<?= $app->renderView(
-			'MarketingToolbox',
-			'FormField',
-			array('inputData' => $fields['video'])
-		);
+					'MarketingToolbox',
+					'FormField',
+					array('inputData' => $fields['video'])
+				);
 			?>
 			<?= $app->renderView(
-			'MarketingToolbox',
-			'FormField',
-			array('inputData' => $fields['header'])
-		);
+					'MarketingToolbox',
+					'FormField',
+					array('inputData' => $fields['header'])
+				);
 			?>
 			<?= $app->renderView(
-			'MarketingToolbox',
-			'FormField',
-			array('inputData' => $fields['articleUrl'])
-		);
+					'MarketingToolbox',
+					'FormField',
+					array('inputData' => $fields['articleUrl'])
+				);
 			?>
 			<?= $app->renderView(
-			'MarketingToolbox',
-			'FormField',
-			array('inputData' => $fields['description'])
-		);
+					'MarketingToolbox',
+					'FormField',
+					array('inputData' => $fields['description'])
+				);
 			?>
 			<p class="alternative"><?= $wf->MsgExt('marketing-toolbox-hub-module-html-text-tip', array('parseinline')); ?></p>
 		</div>

@@ -88,6 +88,7 @@ class WikiaMobileMediaService extends WikiaService {
 
 					if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
 						$info['type'] = 'video';
+						$info['provider'] = $file->getProviderName();
 					}
 
 					if ( !empty( $item['caption'] ) ) {

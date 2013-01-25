@@ -18,7 +18,7 @@ if ( !empty( $result ) ) {
 	}
 }
 ?>
-<div id=wkLgn>
+<div class=wkForm id=wkLgn>
 	<? if ( $toastErr ) : ?>
 	<div id=wkLgnMsg><?= $msg ;?></div>
 	<? endif;?>

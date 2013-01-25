@@ -340,11 +340,9 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function sponsoredImage() {
-		$mockedData = array();
-		$mockedData['fileName']['value'] = '';
-		$mockedData['fileName']['type'] = 'hidden';
-		$mockedData['fileName']['name'] = 'sponsoredImage';
-		$mockedData['fileName']['attributes'] = 'class="wmu-file-name-input"';
-		$this->fields = $mockedData;
+		$this->inputData = $this->request->getVal('inputData');
+		$this->fileUrl = $this->request->getVal('fileUrl', '');
+		$this->imageWidth = $this->request->getVal('imageWidth', '');
+		$this->imageHeight = $this->request->getVal('imageHeight', '');
 	}
 }
