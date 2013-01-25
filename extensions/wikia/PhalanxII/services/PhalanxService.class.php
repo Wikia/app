@@ -7,12 +7,14 @@ class PhalanxService extends Service {
 
 	const RES_OK = 'ok';
 	const RES_FAILURE = 'failure';
+	const RES_STATUS = 'PHALANX ALIVE';
 
 	/**
 	 * check service status
 	 */
 	public function status() {
 		$response = $this->sendToPhalanxDaemon( "status", array() );
+		return ( stripos( $response, self::RES_STATUS  ) !== false ) ? true : false;
 	}
 
 	/**
@@ -89,7 +91,7 @@ class PhalanxService extends Service {
 		if( sizeof( $parameters ) ) {
 			$url .= "?" . http_build_query( $parameters );
 		}
-		print_r( $url );
+		wfDebug( __METHOD__ . ": calling $url\n" );
 
 		/**
 		 * for status we're sending GET
@@ -103,6 +105,7 @@ class PhalanxService extends Service {
 		else {
 			$response = Http::post( $url, array( "noProxy" => true ) );
 		}
+
 
 		wfProfileOut( __METHOD__  );
 

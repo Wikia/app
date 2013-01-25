@@ -2,6 +2,7 @@
 
 class PhalanxServiceTest extends WikiaBaseTest {
 
+	public $service;
 	/**
 	 * setup tests
 	 */
@@ -11,20 +12,35 @@ class PhalanxServiceTest extends WikiaBaseTest {
 
 		parent::setUp();
 
+		$this->mockGlobalVariable( "wgPhalanxServiceUrl", "http://dev-eloy:8080" );
+		$this->mockApp();
 	}
 
 	public function isPhalanxAlive( ) {
 		error_log( __CLASS__ . '::' . __FUNCTION__ );
-		$this->mockGlobalVariable( "wgPhalanxServiceUrl", "http://dev-eloy:8080" );
-		$this->mockApp();
 
-		$service = new PhalanxService();
-		return $service->status();
+		global $wgDebugLogFile;
+	//	$wgDebugLogFile = "php://stdout";
+
+		$this->service = new PhalanxService();
+		return $this->service->status();
 	}
 
 	public function testPhalanxServiceCheck() {
 		error_log( __CLASS__ . '::' . __FUNCTION__ );
-		$status = $this->isPhalanxAlive();
-		$this->assertEquals(1, $status );
+		if( $this->isPhalanxAlive() ) {
+///			$this->assertEquals(1, $status );
+			$ret = $this->service->check( "content", "hello world" );
+			$this->assertEquals( 1, $ret );
+
+			$ret = $this->service->check( "doesn not matter", "hello world" );
+			$this->assertEquals( false, $ret );
+
+			$ret = $this->service->check( "content", "pornhub.com" );
+			$this->assertEquals( 0, $ret );
+		}
+		else {
+			$this->markTestSkipped( sprintf( "Can't contact with phalanx service on %s.\n", F::app()->wg->PhalanxServiceUrl ) );
+		}
 	}
 }
