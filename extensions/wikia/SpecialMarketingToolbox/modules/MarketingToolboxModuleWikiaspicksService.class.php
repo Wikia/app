@@ -1,6 +1,5 @@
 <?php
 class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleService {
-	
 	protected function getFormFields() {
 		$fields = array(
 			'sponsoredImage' => array(
@@ -69,12 +68,12 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 
 		if( !empty($data['values']['fileName']) ) {
 			$imageModel = new MarketingToolboxImageModel($data['values']['fileName']);
-			$data['file'] = $imageModel->getImageData($model->getThumbnailSize());
+			$data['file'] = $imageModel->getImageThumbData($model->getThumbnailSize());
 		}
 
 		if( !empty($data['values']['sponsoredImage']) ) {
 			$imageModel = new MarketingToolboxImageModel($data['values']['sponsoredImage']);
-			$data['sponsoredImage'] = $imageModel->getImageData($data['values']['sponsoredImage']);
+			$data['sponsoredImage'] = $imageModel->getImageThumbData($model->getSponsoredImgThumbnailSize());
 		}
 		
 		return parent::renderEditor($data);

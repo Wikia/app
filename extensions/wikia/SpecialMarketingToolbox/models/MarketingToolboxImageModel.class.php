@@ -16,18 +16,9 @@ class MarketingToolboxImageModel extends WikiaModel {
 
 	/**
 	 * @param integer $destImageWidth
-	 * @return stdClass (simple stdObject with fields: url, width and height)
+	 * @return stdClass (simple stdObject with fields: title, url, width and height)
 	 */
-	public function getImageData($destImageWidth) {
-		$tmpData = ImagesService::getLocalFileThumbUrlAndSizes($this->getFileName(), $destImageWidth);
-		
-		$data = new stdClass();
-		$data->url = $tmpData->url;
-		
-		//if the file is not found in repo with equals string with the title that's why intval() here
-		$data->width = intval($tmpData->width);
-		$data->height = intval($tmpData->height);
-		
-		return $data;
+	public function getImageThumbData($destImageWidth) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($this->getFileName(), $destImageWidth);
 	}
 }
