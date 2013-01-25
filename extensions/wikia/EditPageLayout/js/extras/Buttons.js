@@ -90,7 +90,7 @@
 			forceLogin: true,
 			clicksource: function() {
 				WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-					window.VET_load_in_editor({
+					window.VET_WikiaEditor({
 						target: {
 							id: 'mw-editbutton-vet'
 						}
@@ -169,7 +169,7 @@
 				imageId: 'mw-editbutton-vet',
 				onclick: function( event ) {
 					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-						window.VET_load_in_editor( event );
+						window.VET_WikiaEditor( event );
 					});
 				}
 			});

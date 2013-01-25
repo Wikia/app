@@ -22,117 +22,11 @@
 	if( window.VET_loader ) {
 		return;
 	}
-	
+
 	var resourcesLoaded = false,
 		templateHtml = '',
 		VET_loader = {};
 
-	window.VET_load_in_editor = function(event) {
-		var mode = 'create';
-		var embedPresets = {};
-		var exists = false;
-		
-		// Start on first or second screen of VET
-		var startPoint = 1;
-		
-		var element = false;
-		if (event && event.data && event.data.element) {
-			element = event.data.element;
-		}
-		
-		var triggeredFromRTE = event && event.type === 'rte';
-		if (triggeredFromRTE) {
-			// get video from event data
-			if (element) {
-				// edit a video
-				mode = 'edit';
-				embedPresets = element.getData();
-				
-				if (!event.data.isPlaceholder) {
-					// "regular" video
-					$.extend(embedPresets, embedPresets.params);
-					delete embedPresets.params;
-					
-					startPoint = 2;
-				}
-			}
-		}
-		
-		var callback = null;
-		
-		if(mode === 'create') {
-			callback = function(embedData) {
-				var wikitag = $('#VideoEmbedTag').val();
-				if(!triggeredFromRTE) {
-					// I don't know what this is for - hyun
-					if (typeof RTE !== 'undefined') {
-						RTE.getInstanceEditor().getEditbox().focus();
-					} // end of I don't know
-					var editorTextArea = WikiaEditor.getInstance().getEditbox()[0];
-					editorTextArea.focus();
-					insertTags( wikitag, '', '', editorTextArea);
-				}
-				else if (element && element.hasClass('media-placeholder')) {
-					// replace "Add Video" placeholder
-					RTE.mediaEditor.update(element, wikitag, embedData);
-				}
-				else {
-					RTE.mediaEditor.addVideo(wikitag, embedData);
-				}
-
-			};
-		} else if(mode === 'edit') {
-			callback = function (embedData) {
-				if (element != 'undefined') {
-					var wikitext = '';
-					if(element.hasClass('media-placeholder')) {
-						wikitext = embedData.wikitext;
-					} else {
-						
-						// generate wikitext
-						wikitext = '[[' + embedData.href;
-					
-						if (embedData.thumb) {
-							wikitext += '|thumb';
-						}
-					
-						if (embedData.align) {
-							wikitext += '|' + embedData.align;
-						}
-					
-						if (embedData.width) {
-							wikitext += '|' + embedData.width + 'px';
-						}
-					
-						if (embedData.caption) {
-							wikitext += '|' + embedData.caption;
-						}
-					
-						wikitext += ']]';
-					}
-					if (element) {
-						// update existing video
-						RTE.mediaEditor.update(element, wikitext, embedData);
-						VET_loader.modal.closeModal();
-					}
-					else {
-						// add new video
-						RTE.mediaEditor.addVideo(wikitext, embedData);
-					}
-				}
-				
-			};
-		}
-		
-		var options = {
-			embedPresets: embedPresets,
-			callbackAfterEmbed: callback,
-			startPoint: startPoint
-		};
-		
-		VET_loader.load(options);
-	}
-	
 	VET_loader.load = function(options) {
 		
 		var deferredList = [];
