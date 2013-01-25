@@ -38,7 +38,7 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt;
+		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt, $wgExternalAuthType;
 
 		// Set page title and other stuff
 		$this->setHeaders();
@@ -80,7 +80,7 @@ class EditAccount extends SpecialPage {
 				if ( empty( $id ) ) {
 					// User didn't exist on first load, trying External User
 					$extUser = null;
-					if ( class_exists( 'ExternalUser_Wikia' ) ) {
+					if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
 						$extUser = ExternalUser::newFromName( $userName );
 					}
 					if ( is_object( $extUser ) && ( $extUser->getId() != 0 ) ) {
@@ -345,6 +345,7 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true on success, false on failure
 	 */
 	function closeAccount( $changeReason = '' ) {
+		global $wgExternalAuthType;
 		# Set flag for Special:Contributions
 		# NOTE: requires FlagClosedAccounts.php to be included separately
 		if ( defined( 'CLOSED_ACCOUNT_FLAG' ) ) {
@@ -397,7 +398,7 @@ class EditAccount extends SpecialPage {
 			$log->addEntry( 'closeaccnt', $wgTitle, $changeReason, array( $this->mUser->getUserPage() ) );
 
 			// delete the record from all the secondary clusters
-			if ( class_exists( 'ExternalUser_Wikia' ) ) {
+			if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
 				ExternalUser_Wikia::removeFromSecondaryClusters( $id );
 			}
 
