@@ -18,6 +18,8 @@ class MarketingToolboxModel extends WikiaModel {
 	const FORM_THUMBNAIL_SIZE = 149;
 	const FORM_FIELD_PREFIX = 'MarketingToolbox';
 
+	const SPONSORED_IMAGE_WIDTH = 85;
+
 	protected $statuses = array();
 	protected $modules = array();
 	protected $sections = array();
@@ -79,6 +81,10 @@ class MarketingToolboxModel extends WikiaModel {
 		return self::FORM_THUMBNAIL_SIZE;
 	}
 
+	public function getSponsoredImgThumbnailSize() {
+		return self::SPONSORED_IMAGE_WIDTH;
+	}
+	
 	public function getModuleName($moduleId) {
 		return $this->wf->msg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
 	}
