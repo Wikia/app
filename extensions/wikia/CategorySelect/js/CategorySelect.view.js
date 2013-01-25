@@ -100,21 +100,29 @@
 				} else {
 					$wrapper.removeClass( 'editMode' );
 
-					// Linkify the new categories
-					$categories.find( '.new' ).each(function( i ) {
+					// Update the saved categories
+					$categories.find( '.new' ).each(function() {
 						var $category = $( this ),
 							category = $category.data( 'category' ),
-							$link = $( '<a>' );
+							current = response.categories[ $category.index() ],
+							$link;
 
-						$link
-							.addClass( 'name' )
-							.attr( 'href', mw.util.wikiGetlink( categoryLinkPrefix + category.name ) )
-							.text( category.name );
+						// Category has been removed
+						if ( !current || current.name !== category.name ) {
+							$category.remove();
 
-						$category
-							.removeClass( 'new' )
-							.find( '.name' )
-							.replaceWith( $link )
+						// Linkify the category
+						} else {
+							$link = $( '<a>' )
+								.addClass( 'name' )
+								.attr( 'href', mw.util.wikiGetlink( categoryLinkPrefix + category.name ) )
+								.text( category.name );
+
+							$category
+								.removeClass( 'new' )
+								.find( '.name' )
+								.replaceWith( $link );
+						}
 					});
 				}
 			});
