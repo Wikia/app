@@ -9,7 +9,6 @@
  *		embedPresets: {
  *			align: "right"
  *			caption: ""
- *			thumbnail: true
  *			thumb: true
  *			width: 335
  *		},

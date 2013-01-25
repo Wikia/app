@@ -43,9 +43,7 @@
 			$('#VideoEmbedBack').hide();
 	
 			setTimeout(function() {
-				if ( (typeof (data.thumbnail) != "undefined" && data.thumbnail ) ||
-		             (typeof (data.thumb) != "undefined" && data.thumb ) ) {
-	
+				if ( data.thumb ) {
 		             $("#VideoEmbedThumbOption").attr('checked', 'checked');
 		             $('#VET_StyleThumb').addClass('selected');
 		        }  else {
@@ -108,33 +106,31 @@
 		);
 	}
 	
-	// macbre: update video in wysiwyg mode
+	// Collect embed settings from form and send to callbackAfterEmbed
 	function VET_doEditVideo() {
-	
+
 		// setup metadata
 		var extraData = {};
-	
+
 		extraData.href = $('#VideoEmbedHref').val();
 		extraData.width= $('#VideoEmbedManualWidth').val();
-	
+
 		if ($('#VideoEmbedThumbOption').is(':checked')) {
 			extraData.thumb = 1;
 		}
-	
-		//if (extraData.thumb) { // bugId:26619
-			if( $('#VideoEmbedLayoutLeft').is(':checked') ) {
-				extraData.align = 'left';
-			} else if ($('#VideoEmbedLayoutCenter').is(':checked') ) {
-				extraData.align = 'center';
-			} else {
-				extraData.align = 'right';
-			}
-		//}
-	
+
+		if( $('#VideoEmbedLayoutLeft').is(':checked') ) {
+			extraData.align = 'left';
+		} else if ($('#VideoEmbedLayoutCenter').is(':checked') ) {
+			extraData.align = 'center';
+		} else {
+			extraData.align = 'right';
+		}
+
 		if ($('#VideoEmbedCaption').val()) {
 			 extraData.caption = $('#VideoEmbedCaption').val();
 		}
-		
+
 		if(VET_callbackAfterEmbed) {
 			VET_callbackAfterEmbed(extraData);
 		}
