@@ -18,15 +18,24 @@
 
 
 #wkSrhSub {
-	margin: 0 0 0 -27px;
-	height: 40px;
 	border: 0;
+
+	border-radius: 5px;
+
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	box-flex: 1;
 }
 
 #wkSrhInp {
-	height: 40px;
-	padding: 10px;
 	display: block;
+
+	-webkit-box-flex: 50;
+	-moz-box-flex: 50;
+	box-flex: 50;
+
+	//bring input and submit closer
+	margin: 0 -25px 0 -5px;
 }
 
 #wkSrhSug {
