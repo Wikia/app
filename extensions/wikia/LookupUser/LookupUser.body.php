@@ -43,8 +43,8 @@ class LookupUserPage extends SpecialPage {
 		$byIdInvalidUser = false;
 		if( $wgRequest->getText( 'mode' ) == 'by_id' ) {
 			$id = $target;
-			$u = User::newFromId($id); #create
-			if ( $u->loadFromId() ) {
+			$u = ExternalUser::newFromId( $id );
+			if ( is_object( $u ) && ( $u->getId() != 0 ) ) {
 				#overwrite text
 				$target = $u->getName();
 			} else {
@@ -156,35 +156,20 @@ EOT
 		}
 
 		$targetUserName = ( !empty($userTarget) ? $userTarget : $target );
-		$user = User::newFromName( $targetUserName );
+		$extUser = ExternalUser::newFromName( $targetUserName );
 		$tempUser = false;
-		if ( $user == null || $user->getId() == 0 ) {
-			// User didn't exist on first load, trying External User
-			$extUser = null;
-			if ( class_exists( 'ExternalUser_Wikia' ) ) {
-				$extUser = ExternalUser::newFromName( $targetUserName );
+		if ( is_object( $extUser ) && ( $extUser->getId() != 0 ) ) {
+			$user = $extUser->mapToUser();
+		} else {
+			// Check if a temporary user is at this name
+			if ( !empty( $wgEnableUserLoginExt ) ) {
+				$tempUser = TempUser::getTempUserFromName( $targetUserName );
 			}
-			if ( is_object( $extUser ) && ( $extUser->getId() != 0 ) ) {
-				// User does exist, so try from the External User object
-				// This leads to loading the user data from master,
-				// so it should be there now...
-				$user = $extUser->getLocalUser();
-				if ( $user == null || $user->getId() == 0 ) {
-					// Still not loaded, let user know to try reloading page
-					$wgOut->addWikiText( '<span class="error">' . wfMessage( 'lookupuser-not-loaded' )->plain() . '</span>' );
-					return;
-				}
+			if ( $tempUser ) {
+				$user = $tempUser->mapTempUserToUser( false );
 			} else {
-				// Check if a temporary user is at this name
-				if ( !empty( $wgEnableUserLoginExt ) ) {
-					$tempUser = TempUser::getTempUserFromName( $targetUserName );
-				}
-				if ( $tempUser ) {
-					$user = $tempUser->mapTempUserToUser( false );
-				} else {
-					$wgOut->addWikiText( '<span class="error">' . wfMsg( 'lookupuser-nonexistent', $target ) . '</span>' );
-					return;
-				}
+				$wgOut->addWikiText( '<span class="error">' . wfMsg( 'lookupuser-nonexistent', $target ) . '</span>' );
+				return;
 			}
 		}
 		if ( $count > 1 ) {
