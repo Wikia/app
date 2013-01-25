@@ -275,18 +275,8 @@ $.fn.stopThrobbing = function() {
 	this.find('.wikiaThrobber').remove();
 };
 $.preloadThrobber = function() {
-	if($('#throbber_preload').length) {
-		return;
-	}
-	
-	$('<div id="throbber_preload"></div>')
-		.css({
-			'visibility': 'hidden',
-			'position': 'absolute',
-			'top': "-99999999px"
-		})
-		.append('<img src="' + wgCdnRootUrl + '/skins/common/images/ajax.gif" />')
-		.appendTo('body');
+	var img = new Image();
+	img.src= wgCdnRootUrl + '/skins/common/images/ajax.gif';
 };
 
 /*
