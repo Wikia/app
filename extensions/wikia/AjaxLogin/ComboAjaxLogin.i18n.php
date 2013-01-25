@@ -42,6 +42,7 @@ $messages['qqq'] = array(
 	'comboajaxlogin-connectmarketing' => 'A message that appears on the login dialog which prompts the user to start the Facebook account connection process.',
 	'comboajaxlogin-connectmarketing-oasis' => "A message that appears on the login dialog which prompts the user to start the Facebook account connection process.  Similar to {{msg-wikia|comboajaxlogin-connectmarketing|notext=yes}} except that it explicitly calls out that the connection is for Facebook Connect.  This is necessary because the login dialog box does not have other mentions of Facebook Connect on it, so it wouldn't be clear otherwise.",
 	'comboajaxlogin-readonlytext' => 'Message that appears when database is in read-only mode and account creation can not be completed. Please keep the links to Wikia Twitter and Facebook pages in the message. $1 is the specific reason given for the read-only mode',
+	'comboajaxlogin-createlog' => ' Prompts the user to log in order create an account to proceed. Appears to the user when they reach a page that requires a "user" or higher permission.',
 );
 
 /** Arabic (العربية)

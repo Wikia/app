@@ -2244,7 +2244,7 @@ var WikiaPhotoGallery = {
 				]),
 
 				// jQuery UI (autocomplete with CSS and slider plugin) and AIM plugin
-				mw.loader.use(['jquery.ui.autocomplete', 'jquery.ui.slider', 'jquery.aim']),
+				mw.loader.use(['jquery.ui.autocomplete', 'jquery.ui.slider', 'wikia.aim']),
 
 				// fetch dialog content
 				this.ajax('getEditorDialog', {title: wgPageName})

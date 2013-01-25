@@ -47,7 +47,9 @@ $wgResourceModules['ext.quickTools'] = $qtResourceTemplate + array(
 	),
 	'messages' => array(
 		'quicktools-bot-reason',
-		'quicktools-botflag-remove'
+		'quicktools-botflag-remove',
+		'quicktools-adopt-success',
+		'quicktools-adopt-error'
 	)
 );
 $wgResourceModules['ext.createUserPage'] = $qtResourceTemplate + array(

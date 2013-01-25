@@ -81,8 +81,20 @@ ___________________________________________
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'article-comments-file-page' => 'Message displayed on File page when this foto is used on an article',
-	'article-blog-comments-file-page' => 'Message displayed on File page when this foto is used on a blog post comment',
+	'article-comments-file-page' => 'Format of the file usage (see [[MediaWiki:Linkstoimage]]) entry on the file page if the file is used in an article comment.
+Parameters:
+* $1 - Full URL link to the comment that includes the image. $1 is placed inside an anchor tag, please do not alter.
+* $2 - Username of the user who left the comment that includes the image. This should be placed within the link of the anchor tag created by $1. Supports GENDER
+* $3 - Full URL of the parent article that has the specific comment. $3 is placed inside an anchor tag, please do not alter.
+* $4 - Page name of parent article. This should be placed within the link of the the anchor tag created by $3.',
+	'article-blog-comments-file-page' => 'Format of the file usage (see [[MediaWiki:Linkstoimage]]) entry on the file page if the file is used in a blog comment.
+Parameters:
+* $1 - Full URL link to the comment that includes the image. $1 is placed inside an anchor tag, please do not alter.
+* $2 - Username of the user who left the comment that includes the image. This should placed within the link of the anchor tag created by $1. Supports GENDER
+* $3 - Full URL link to the blog that has the specific comment. $3 is placed inside an anchor tag, please do not alter.
+* $4 - Name of the blog post.  This should be placed within the link of the the anchor tag created by $3.
+* $5 - Full URL link to the blog page of the author of the blog post (not the blog comment). $5 is placed inside an anchor tag, please do not alter.
+* $6 - Username of the author of the blog post (not the blog comment). This should placed within the link of the anchor tag created by $5. Supports GENDER.',
 	'article-comments-anonymous' => 'Anonymous users are logged out / un-authenticated users.',
 	'article-comments-post' => 'This is the text of a submit button to post a new article comment.',
 	'article-comments-cancel' => 'Cancel/stop editing an article comment.',

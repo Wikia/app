@@ -106,8 +106,9 @@ class BlogsHelper {
 			$title = Title::newFromText( $element->page_title, $ns );
 			$userBlog = Title::newFromText( $title->getBaseText(), $ns );
 
-			$link = $app->wf->Msg(
+			$link = $app->wf->MsgExt(
 				'blog-file-page',
+				array ('parsemag'),
 				$title->getLocalURL(),
 				$title->getSubpageText(),
 				$userBlog->getLocalURL(),

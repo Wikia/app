@@ -47,8 +47,17 @@ $commentBg: rgb(246,246,246);
 		clear: both;
 	}
 
-	.wkInp {
+	.commText {
+		display: block;
 		padding: 9px;
+		border-radius: 0;
+		-webkit-appearance: none;
+
+		-webkit-box-flex: 50;
+		-moz-box-flex: 50;
+		box-flex: 50;
+
+		height: 40px;
 
 		&:focus{
 			height: 96px;
@@ -72,6 +81,12 @@ $commentBg: rgb(246,246,246);
 	height: 40px;
 	font-size: small;
 	margin: 0;
+
+	border-radius: 0 5px 5px 0;
+
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	box-flex: 1;
 }
 
 .rpl {
