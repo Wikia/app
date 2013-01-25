@@ -204,9 +204,10 @@ class CategorySelectController extends WikiaController {
 			$data = CategorySelect::extractCategoriesFromWikitext( $wikitext, true );
 
 			$categories = array_merge( $data[ 'categories' ], $categories );
-			$categories = CategorySelect::getUniqueCategories( $categories, 'array', 'wikitext' );
+			$categories = CategorySelect::getUniqueCategories( $categories );
 
-			$wikitext = $data[ 'wikitext' ] . $categories;
+			$response[ 'categories' ] = $categories;
+			$wikitext = $data[ 'wikitext' ] . CategorySelect::changeFormat( $categories, 'array', 'wikitext' );
 
 			$dbw = $this->wf->GetDB( DB_MASTER );
 			$dbw->begin();
