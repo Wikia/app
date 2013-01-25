@@ -38,7 +38,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * This is the main search action. Special:Search points here.
 	 */
 	public function index() {
-		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/js/WikiaSearch.js" ) ) );
+		$this->getResponse()->addAsset('/extensions/wikia/Search/js/WikiaSearch.js');
 		$this->wg->SuppressRail = true;
 
 		$this->handleSkinSettings( $this->wg->User->getSkin() );
