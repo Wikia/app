@@ -84,4 +84,4 @@
 		</div>
 	</div>
 </section>
-<a href="" id="bottom-close-button" class="wikia-button secondary"><?= wfMsg('vet-close') ?></a>
+<a href="" class="bottom-close-button wikia-button secondary vet-close"><?= wfMsg('vet-close') ?></a>

@@ -71,7 +71,7 @@ global $wgExtensionsPath;
 	</div>
 	<? if( $screenType == 'details' ): ?>
 		<div class="input-group VideoEmbedNoBorder addVideoDetailsFormControls">
-			<input class="wikia-button" type="submit" style="float:right" value="<?= wfMsg('vet-insert2') ?>" />
+			<input class="wikia-button v-float-right" type="submit" value="<?= wfMsg('vet-insert2') ?>" />
 		</div>
 		<input id="VideoEmbedId" type="hidden" value="<?= isset($props['id']) ? urlencode($props['id']) : '' ?>" />
 		<input id="VideoEmbedProvider" type="hidden" value="<?= urlencode($props['provider']) ?>" />

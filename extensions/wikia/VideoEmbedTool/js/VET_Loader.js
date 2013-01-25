@@ -77,9 +77,12 @@
 				delete options.callbackAfterLoaded;
 			}
 			
-			VET_loader.modal = $(templateHtml).makeModal({width:1000});
+			VET_loader.modal = $(templateHtml).makeModal({
+				width:1000,
+				onClose: VET_close
+			});
+			
 			VET_show(options);
-			//VETExtended.init(); // TODO on 2013: find the place where edit mode needs to call VETExtended.init() and abstract it, you shouldn't need this when startscreen == 2
 			resourcesLoaded = true;
 		});			
 	};

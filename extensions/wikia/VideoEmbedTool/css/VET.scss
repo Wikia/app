@@ -531,9 +531,9 @@ VideoEmbedOptionsTable img {
 .VET-preview {
 	clear: both;
 }
-#bottom-close-button {
+.modalWrapper a.bottom-close-button {
 	float: right;
-	margin-right: 20px;
+	margin: 20px 0 0 0;
 }
 
 #VideoEmbedConflict,

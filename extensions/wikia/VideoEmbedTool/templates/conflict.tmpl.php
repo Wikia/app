@@ -15,7 +15,7 @@ echo wfMsg( 'vet-conflict-inf', $name );
 			<h2><?= wfMsg('vet-rename') ?></h2>
 			<div style="margin: 5px 0;">
 				<input type="text" id="VideoEmbedRenameName" value="<?= $name ?>" />
-				<input type="button" value="<?= wfMsg('vet-insert') ?>" id="VideoEmbedRenameButton" />
+				<input type="button" value="<?= wfMsg('vet-insert') ?>" id="VideoEmbedRenameButton" class="vet-close" />
 			</div>
 		</td>
 		<td>

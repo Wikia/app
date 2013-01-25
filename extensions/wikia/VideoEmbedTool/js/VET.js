@@ -138,10 +138,6 @@
 	
 	// macbre: move back button inside dialog content and add before provided selector (Oasis changes)
 	function VET_moveBackButton(selector) {
-		if (window.skin != 'oasis') {
-			return;
-		}
-	
 		// store back button
 		if (typeof window.VETbackButton == 'undefined') {
 			var backButtonOriginal = $('#VideoEmbedBack');
@@ -502,20 +498,18 @@
 		}
 	
 		// macbre: move back button on Oasis
-		if (window.skin == 'oasis') {
-			setTimeout(function() {
-				$().log(to, 'VET_switchScreen');
-				switch(to) {
-					case 'Details':
-						VET_moveBackButton($('.VideoEmbedNoBorder.addVideoDetailsFormControls').find('input'));
-						break;
-	
-					case 'Conflict':
-						VET_moveBackButton($('#VideoEmbedConflictOverwriteButton'));
-						break;
-				}
-			}, 50);
-		}
+		setTimeout(function() {
+			$().log(to, 'VET_switchScreen');
+			switch(to) {
+				case 'Details':
+					VET_moveBackButton($('.VideoEmbedNoBorder.addVideoDetailsFormControls').find('input'));
+					break;
+
+				case 'Conflict':
+					VET_moveBackButton($('#VideoEmbedConflictOverwriteButton'));
+					break;
+			}
+		}, 50);
 	}
 	
 	function VET_back(e) {
@@ -528,11 +522,9 @@
 		}
 	}
 	
-	function VET_close(e) {
-		if(e) {
-			e.preventDefault();
-		}
-
+	function VET_close() {
+		VET_switchScreen('Main');
+		
 		VET_loader.modal.closeModal();
 
 		// Handle MiniEditor focus
@@ -756,12 +748,6 @@
 					var label = that.searchCachedStuff.searchType === 'local' ? 'find-local' : 'find-wikia-library';
 					that.track(window.WikiaTracker.ACTIONS.CLICK, label);
 				}
-			});
-	
-			// attach handlers - bottom close modal button
-			$('#bottom-close-button').click(function(event){
-				event.preventDefault();
-				VET_close();
 			});
 	
 			// attach handlers - selection border around position options in video display options tab
@@ -1067,7 +1053,7 @@
 	};
 	
 	
-	// event handlers
+	// event handlers taken from inline js.  TODO: integrate these better with rest of code
 	$(document)
 		.on('click.VET', '#VideoEmbedLayoutLeft, #VideoEmbedLayoutCenter, #VideoEmbedLayoutRight, #VideoEmbedLayoutGallery', function(e) {
 			var toggleTo = true;
@@ -1080,10 +1066,14 @@
 		.on('keypress.VET', '#VideoEmbedUrl', VET_onVideoEmbedUrlKeypress)
 		.on('click.VET', '#VideoEmbedUrlSubmit', VET_preQuery)
 		.on('click.VET', '#VideoEmbedRenameButton, #VideoEmbedExistingButton, #VideoEmbedOverwriteButton', VET_insertFinalVideo)
-		.on('click.VET', '#VideoEmbedCloseButton, #VideoEmbedBody .bottom-close-button', VET_close);
+		.on('click.VET', '.vet-close', function(e) {
+			e.preventDefault();
+			VET_close();
+		});
 	
 	
 	// globally available functions
 	window.VET_show = VET_show;
+	window.VET_close = VET_close;
 	window.VETExtended = VETExtended;
 })(jQuery, window);
