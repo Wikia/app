@@ -148,23 +148,29 @@ var JSSnippets = (function(){
 			dependencies = unique(dependencies);
 
 			// load all dependencies in parallel and then fire all callbacks
-			$.getResources(dependencies, function(){
-				try{
-					for(var id in callbacks){
-						for(x = 0, l = options[id].length; x < l; x++){
-							callbacks[id](options[id][x]);
+			require(['loader'], function(loader){
+				loader(
+					dependencies
+				).done(
+					function(){
+						try{
+							for(var id in callbacks){
+								for(x = 0, l = options[id].length; x < l; x++){
+									callbacks[id](options[id][x]);
+								}
+							}
+						}catch(e){
+							var msg = 'Skipping running callback, cause: ' + e;
+
+							//mobile skin doesn't have jQuery + extensions and can rely on console
+							if(window.console){
+								console.warn(msg);
+							}else{
+								$().log(msg);
+							}
 						}
 					}
-				}catch(e){
-					var msg = 'Skipping running callback, cause: ' + e;
-
-					//mobile skin doesn't have jQuery + extensions and can rely on console
-					if(window.console){
-						console.warn(msg);
-					}else{
-						$().log(msg);
-					}
-				}
+				)
 			});
 
 			clear();
