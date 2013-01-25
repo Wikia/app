@@ -1,7 +1,7 @@
 <?php
 
 
-$wgPhalanxServiceUrl = "http://dev-$wgDevelEnvironmentName:8080";
+#$wgPhalanxServiceUrl = "http://dev-$wgDevelEnvironmentName:8080";
 
 class PhalanxService extends Service {
 
@@ -81,15 +81,15 @@ class PhalanxService extends Service {
 	 * @param $parameters Array additional parameters as hash table
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
-		global $wgPhalanxServiceUrl;
 
 		wfProfileIn( __METHOD__  );
 
-		$url = sprintf( "%s/%s", $wgPhalanxServiceUrl, $action != "status" ? $action : "" );
+		$url = sprintf( "%s/%s", F::app()->wg->PhalanxServiceUrl, $action != "status" ? $action : "" );
 
 		if( sizeof( $parameters ) ) {
 			$url .= "?" . http_build_query( $parameters );
 		}
+		print_r( $url );
 
 		/**
 		 * for status we're sending GET
