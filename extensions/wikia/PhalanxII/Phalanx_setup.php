@@ -47,31 +47,53 @@ foreach ( $classes as $class_name => $class_path ) {
 /*
  * hooks
  */
-/* UserBlock */
-$app->registerHook( 'GetBlockedStatus', 'PhalanxUserBlock', 'blockCheck' );
-$app->registerHook( 'UserCanSendEmail', 'PhalanxUserBlock', 'userCanSendEmail' ); #RT#93196
-$app->registerHook( 'AbortNewAccount', 'PhalanxUserBlock', 'abortNewAccount' ); #FB#5311
-$app->registerHook( 'cxValidateUserName', 'PhalanxUserBlock', 'validateUserName' );
-/* UserCookieBlock */
-$app->registerHook( 'GetBlockedStatus', 'PhalanxUserCookieBlock', 'blockCheck' );
-/* ContentBlock */
-$app->registerHook( 'EditFilter', 'PhalanxContentBlock', 'editFilter' );
-$app->registerHook( 'AbortMove', 'PhalanxContentBlock', 'abortMove' );
-/* TitleBlock */
-$app->registerHook( 'SpecialMovepageBeforeMove', 'TitleBlock', 'beforeMove' );
-$app->registerHook( 'EditFilter', 'TitleBlock', 'listCallback' );
-$app->registerHook( 'ApiCreateMultiplePagesBeforeCreation', 'TitleBlock', 'newWikiBuilder' );
-$app->registerHook( 'CreateDefaultQuestionPageFilter', 'TitleBlock', 'genericTitleCheck' );
-$app->registerHook( 'CreatePageTitleCheck', 'TitleBlock', 'genericTitleCheck' );
-$app->registerHook( 'NewsiteCreationFilter', 'TitleBlock', 'genericTitleCheck' );
-/* QuestionTitleBlock */
-$app->registerHook( 'CreateDefaultQuestionPageFilter', 'QuestionTitleBlock', 'badWordsTest' );
-/* RecentQuestionsBlock */
-$app->registerHook( 'DefaultQuestion::filterWordsTest', 'RecentQuestionsBlock', 'filterWordsTest' );
-/* WikiCreationBlock */
-$app->registerHook( 'AutoCreateWiki::checkBadWords', 'WikiCreationBlock', 'isAllowedText' );
-/* PhalanxHook */
-$app->registerHook( 'ContributionsToolLinks', 'PhalanxHook', 'loadLinks' ); #efLoadPhalanxLink
+$phalanxhooks = array(
+	'PhalanxUserBlock' => 
+		array(
+			'GetBlockedStatus'   => 'blockCheck',
+			'UserCanSendEmail'   => 'userCanSendEmail',
+			'AbortNewAccount'    => 'abortNewAccount',
+			'cxValidateUserName' => 'validateUserName'
+		),
+	'PhalanxUserCookieBlock' =>
+		array(
+			'GetBlockedStatus'   => 'blockCheck',
+		),
+	'PhalanxContentBlock' =>
+		array(
+			'EditFilter'         => 'editFilter',
+			'AbortMove'          => 'abortMove',
+		),
+	'PhalanxTitleBlock' =>
+		array(
+			'SpecialMovepageBeforeMove'            => 'beforeMove',
+			'EditFilter'                           => 'listCallback',
+			'CreateDefaultQuestionPageFilter'      => 'checkTitle',
+			'CreatePageTitleCheck'                 => 'checkTitle'
+		),
+	'PhalanxQuestionTitleBlock' =>
+		array(
+			'CreateDefaultQuestionPageFilter'      => 'badWordsTest'
+		),
+	'PhalanxRecentQuestionsBlock' => 
+		array(
+			'DefaultQuestion::filterWordsTest'     => 'filterWordsTest'
+		),
+	'PhalanxWikiCreationBlock' => 
+		array(
+			'AutoCreateWiki::checkBadWords'        => 'isAllowedText'
+		),
+	'PhalanxHook' =>
+		array(
+			'ContributionsToolLinks'               => 'loadLinks' #efLoadPhalanxLink
+		)
+); 
+		
+foreach ( $phalanxhooks as $class => $hooks ) {
+	foreach ( $hooks as $name => $method ) {
+		$app->registerHook( $name, $class, $method );
+	}
+}
 
 /**
  * messages

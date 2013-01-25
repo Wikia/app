@@ -20,7 +20,6 @@ class PhalanxContentBlock extends WikiaObject {
 
 		$phalanxModel = F::build('PhalanxContentModel', array( $this->wg->Title ) );
 
-		/* allow blocked words to be added to whitelist */
 		if ( $phalanxModel->isOk() ) {
 			$this->wf->profileOut( __METHOD__ );
 			return true;
@@ -48,7 +47,7 @@ class PhalanxContentBlock extends WikiaObject {
 				/* user is blocked - we have block ID */
 				$phalanxModel->setBlockId( $result );
 				// set output with block info
-				$phalanxModel->contentBlock( $summary );
+				$phalanxModel->displayBlock( $summary );
 				$ret = false;
 			} else {
 				/* check content */

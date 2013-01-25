@@ -9,7 +9,7 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 	
 	public function isOk() {
-		return $this->title->getPrefixedText() == self::SPAM_WHITELIST_NS_TITLE;
+		return ( !( $this->title instanceof Title ) || ( $this->title->getPrefixedText() == self::SPAM_WHITELIST_NS_TITLE ) );
 	}
 
 	public function setTitle( $title ) {
@@ -51,7 +51,7 @@ class PhalanxContentModel extends PhalanxModel {
 		return $whitelist;
 	}
 	
-	public function summaryBlock( $text ) {
+	public function displayBlock( $text ) {
 		$this->wg->Out->setPageTitle( $this->wf->msg( 'spamprotectiontitle' ) );
 		$this->wg->Out->setRobotPolicy( 'noindex,nofollow' );
 		$this->wg->Out->setArticleRelated( false );
