@@ -8,7 +8,7 @@
 	}
 
 	$(function() {
-		var $wrapper = $( '#WikiaArticleCategories' ),
+		var $wrapper = $( '#WikiaArticleCategories' )
 			$add = $wrapper.find( '.add' ),
 			$cancel = $wrapper.find( '.cancel' ),
 			$categories = $wrapper.find( '.categories' ),
@@ -21,6 +21,11 @@
 				wgCategorySelect.defaultSeparator,
 			loaded = false,
 			namespace = 'categorySelect';
+
+		// User can't edit, no need to bind anything
+		if ( !$wrapper.hasClass( 'userCanEdit' ) ) {
+			return;
+		}
 
 		$add.on( 'click.' + namespace, function() {
 			$wrapper.addClass( 'editMode' );
