@@ -18,7 +18,10 @@ describe("Loader Module", function () {
 		},
 		mwMock = undefined,
 		nirvanaMock = {},
-		loader = define.getModule(windowMock, mwMock, nirvanaMock);
+		logMock = function() {},
+		loader = define.getModule(windowMock, mwMock, nirvanaMock, logMock);
+
+	logMock.levels = {};
 
 	window.wgCdnRootUrl = '';
 	window.wgAssetsManagerQuery = "/__am/%4$d/%1$s/%3$s/%2$s";
@@ -107,7 +110,7 @@ describe("Loader Module", function () {
 				}
 			}
 		},
-		loader = define.getModule(windowMock, mwMock, nirvanaMock);
+		loader = define.getModule(windowMock, mwMock, nirvanaMock, logMock);
 
 		// check calls to this function
 		spyOn(mwMock.loader, 'use').andCallThrough();
@@ -127,7 +130,7 @@ describe("Loader Module", function () {
 			document: window.document,
 			onFBloaded:  function() {}
 		},
-		loader = define.getModule(windowMock, mwMock, nirvanaMock);
+		loader = define.getModule(windowMock, mwMock, nirvanaMock,logMock);
 
 		// check calls to this function
 		spyOn(windowMock, 'onFBloaded').andCallThrough();
