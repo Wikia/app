@@ -74,7 +74,6 @@ Create blog listing pages for categories such as "Barack Obama", "Fan Fiction", 
 	'blog-nopostfound' => "No posts found.",
 	'blog-writeone' => "Write one!",
 	'blog-empty-user-blog' => "This user has not written any blog posts yet!",
-	"blog-last-edited" => "<strong>Last edited:</strong> $1",
 	"blog-added" => "added",
 	"blog-edited" => "edited",
 	"blog-page" => "Blog",
@@ -165,6 +164,7 @@ $messages['qqq'] = array(
 Parameters:
 
 $1 - Username of blog author. GENDER is supported.',
+	'create-blog-listing-matches-info' => 'Informs the user of the number of blog posts (number is printed by AJAX) that meet the current criteria',
 	'blog-fromsitename' => 'Prints the name of the wiki the blog is from into an RSS feed. The $1 parameter is <nowiki>{{SITENAME}}</nowiki>.',
 	'blogs-comment-hidden' => 'If a tool like RevisionDelete has made the text of a comment inaccessible to the public, this message informs the reader the comment has been hidden',
 	'right-blog-comments-toggle' => '{{doc-right|blog-comments-toggle}}',
@@ -175,6 +175,12 @@ $1 - Username of blog author. GENDER is supported.',
 	'blogs-searchprofile' => 'Name of a tab with blog articles and blog listings. This tab is displayed in the right column on search page',
 	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings. Tooltip displayed on hover on Blogs Tab in the right column on search page',
 	'user-blog-url-link' => 'Link - links to users Blog main page',
+        'blog-file-page' => 'Format of the file usage (see [[MediaWiki:Linkstoimage]]) entry on the file page if the file is used on a Blog article. To explain the parameters, use the following example - An image is used on the blog article "User blog:Foo/First post".
+Parameters:
+* $1 - Full URL link to the blog post (ex. User blog:Foo/First post). This is wrapped in an HTML anchor tag, do not alter.
+* $2 - Name of the blog post (ex. First post). This is appears as the link text from the anchor created by $1.
+* $3 - Full URL link to the blog page of the user (ex. User blog:Foo)  whose post (ex. User blog:Foo/First post) includes the file.. This is wrapped in an HTML anchor tag, do not alter.
+* $4 - User name of the user whose blog includes the file. This appears as the link text from the anchor created by $3. In the example, this simply returns "Foo". GENDER is supported.',
 );
 
 /** Afrikaans (Afrikaans)

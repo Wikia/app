@@ -14,24 +14,18 @@ define('track', function () {
 	return {
 		event: function (category, action, options, ev) {
 			options = options || {};
-			var obj = {
-				ga_category: 'wikiamobile-' + category,
-				ga_action: action
-			};
 
-			if (options.label) {
-				obj.ga_label = options.label;
+			if (!window.wgGameGuides) {
+				WikiaTracker.track({
+					action: action,
+					browserEvent: ev,
+					category: 'wikiamobile-' + category,
+					href: options.href,
+					label: options.label,
+					trackingMethod: 'ga',
+					value: options.value
+				});
 			}
-
-			if (options.value !== undefined) {
-				obj.ga_value = options.value;
-			}
-
-			if (options.href) {
-				obj.href = options.href;
-			}
-
-			!window.wgGameGuides && WikiaTracker.trackEvent('trackingevent', obj, 'ga', ev);
 		},
 		//if anything happens to WikiaTracker it'll be much easier to fix it in one place
 		CLICK: ACTIONS.CLICK,

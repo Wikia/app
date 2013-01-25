@@ -209,6 +209,8 @@ $.postJSON = function(u, d, callback) {
 };
 
 //see http://jquery-howto.blogspot.com/2009/09/get-url-parameters-values-with-jquery.html
+// deprecated - use querystring AMD module
+// @see /resources/wikia/modules/querystring.js
 $.extend({
 	_urlVars: null,
 	getUrlVars: function() {
@@ -267,6 +269,8 @@ $.fn.hasParent = function(selector) {
  * Plugin for easy creating Ajax Loading visualization.
  * after using it selected elements content will apply proper css class
  * and in the middle of it throbber will be displayed.
+ *
+ * TODO: convert to AMD module (see mobile's "throbber" module)
  */
 $.fn.startThrobbing = function() {
 	return this.append('<div class="wikiaThrobber"></div>');

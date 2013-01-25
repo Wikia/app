@@ -4,7 +4,7 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optional('popover'), 'track', 'events', require.optional('share'), require.optional('cache')], function(msg, modal, loader, qs, popover, track, events, share, cache){
+define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', 'events', require.optional('share'), require.optional('wikia.cache')], function(msg, modal, throbber, qs, popover, track, events, share, cache){
 	'use strict';
 	/** @private **/
 
@@ -151,56 +151,57 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 	}
 
 	function setupImage(){
-		var image = images[current];
-		loader.remove(currentImage);
+		var image = images[current],
+			video;
+
+		throbber.remove(currentImage);
 
 		modal.setCaption(getCaption(current));
 
-		//inject the content only if it was not already there in the page
-		//to avoid refresh the contents (it triggers a full
-		//reload of iframe contents for videos)
 		if(image.isVideo) {// video
-			if(!pager.getCurrent().querySelector('table.wkVi')) {
-				var imgTitle = image.name;
-				currentImageStyle.backgroundImage = '';
+			var imgTitle = image.name;
+			currentImageStyle.backgroundImage = '';
 
-				if(videoCache[imgTitle]){
-					currentImage.innerHTML = '<table class=wkVi><tr><td>'+videoCache[imgTitle]+'</td></tr></table>';
-				}else{
-					loader.show(currentImage, {
-						center: true
-					});
+			zoomable = false;
 
-					Wikia.nirvana.sendRequest({
-						type: 'get',
-						format: 'json',
-						controller: 'VideoHandler',
-						method: 'getEmbedCode',
-						data: {
-							articleId: wgArticleId,
-							fileTitle: imgTitle,
-							width: window.innerWidth - 100
-						},
-						callback: function(data) {
-							loader.remove(currentImage);
+			if(videoCache[imgTitle]){
+				currentImage.innerHTML = videoCache[imgTitle];
+			}else{
+				throbber.show(currentImage, {
+					center: true
+				});
 
-							if(data.error){
-								handleError(data.error);
-							}else{
-								videoCache[imgTitle] = data.embedCode;
-								currentImage.innerHTML = '<table class=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
-							}
+				Wikia.nirvana.getJson(
+					'VideoHandler',
+					'getEmbedCode',
+					{
+						articleId: window.wgArticleId,
+						fileTitle: imgTitle,
+						width: window.innerWidth - 100
+					},
+					function(data) {
+						throbber.remove(currentImage);
+
+						if(data.error){
+							handleError(data.error);
+						}else{
+							var video = '<table class=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
+
+							videoCache[imgTitle] = video;
+							currentImage.innerHTML = video;
 						}
-					});
-				}
+					}
+				);
 			}
 		}else{
 			var img = new Image();
 			img.src = image.url;
 
+			zoomable = true;
+
 			if(!img.complete){
 				img.onload = function(){
-					loader.hide(currentImage);
+					throbber.remove(currentImage);
 
 					var image = currentImage.getElementsByTagName('img')[0];
 					origW = image.width;
@@ -208,11 +209,18 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 				};
 
 				img.onerror = function(){
-					loader.hide(currentImage);
+					throbber.remove(currentImage);
+
+					var image = currentImage.getElementsByTagName('img')[0];
+
+					if(image) {
+						image.parentElement.removeChild(image);
+					}
+
 					handleError(msg('wikiamobile-image-not-loaded'));
 				};
 
-				loader.show(currentImage, {
+				throbber.show(currentImage, {
 					center: true
 				});
 			}else{
@@ -220,6 +228,12 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 				origW = img.width;
 				origH = img.height;
 			}
+		}
+
+		//remove any left videos from DOM
+		//videos tend to be heavy on resources we shouldn't have more than one at a time
+		if(video = document.querySelector('.swiperPage:not(.current) .wkVi')) {
+			video.parentElement.removeChild(video);
 		}
 	}
 
@@ -427,8 +441,11 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 				heightFll = ev.height;
 
 				var image = currentImage.getElementsByTagName('img')[0];
-				origW = image.width;
-				origH = image.height;
+
+				if(image) {
+					origW = image.width;
+					origH = image.height;
+				}
 
 				sx = sy = dx = dy = 0;
 
@@ -574,3 +591,5 @@ define('media', ['JSMessages', 'modal', 'loader', 'querystring', require.optiona
 		cleanup: removeZoom
 	};
 });
+
+

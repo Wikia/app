@@ -7,7 +7,7 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  **/
 
-require(['loader', 'querystring', 'events'], function(loader, qs, events){
+require(['throbber', 'wikia.querystring', 'events'], function(throbber, qs, events){
 	var hash = (new qs()).getHash(),
 		wkArtCom,
 		collSec,
@@ -26,7 +26,7 @@ require(['loader', 'querystring', 'events'], function(loader, qs, events){
 	//TODO: refactor when Deferreds will be pulled in in the mobile skin code
 	function show(){
 		if(++responseCounter >= 2){
-			loader.remove(wkArtCom);
+			throbber.remove(wkArtCom);
 
 			Wikia.processStyle(styles);
 			wkComm.insertAdjacentHTML('beforeend', commentsHTML);
@@ -56,7 +56,7 @@ require(['loader', 'querystring', 'events'], function(loader, qs, events){
 	}
 
 	function init(){
-		loader.show(wkArtCom, {center: true, size:'40px'});
+		throbber.show(wkArtCom, {center: true, size:'40px'});
 
 		Wikia.nirvana.sendRequest({
 			controller: 'ArticleCommentsController',

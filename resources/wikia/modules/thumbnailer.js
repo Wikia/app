@@ -13,7 +13,7 @@
 
 	function thumbnailer() {
 		//targets the image file extension
-		var extRegExp = new RegExp('\\.(jpg|jpeg|gif|bmp|png|svg)$', 'i'),
+		var extRegExp = /\.(jpg|jpeg|gif|bmp|png|svg)$/i,
 			imagePath = '/images/',
 			thumbPath = '/images/thumb/';
 
@@ -131,14 +131,9 @@
 		};
 	}
 
-	//UMD exclusive
 	if (context.define && context.define.amd) {
-		context.define('thumbnailer', thumbnailer);
-	} else {
-		if (!context.Wikia) {
-			context.Wikia = {};
-		}
-
-		context.Wikia.Thumbnailer = thumbnailer();
+		context.define('wikia.thumbnailer', thumbnailer);
 	}
+	context.Wikia = context.Wikia || {};
+	context.Wikia.Thumbnailer = thumbnailer();
 }(this));

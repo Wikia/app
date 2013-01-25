@@ -235,6 +235,7 @@ function WMU_manualWidthInput() {
 	if(!window.WMU_orgThumbSize) {
 		WMU_orgThumbSize = [image.width, image.height];
 	}
+	WMU_ratio = WMU_width / WMU_height;
 	if ( val > WMU_width ) {
 		if (!WMU_shownMax) {
 			image.width(WMU_width);
@@ -282,9 +283,8 @@ function WMU_loadMainFromView() {
 		}
 		var element = document.createElement('div');
 		element.id = 'WMU_div';
-		element.style.width = '812px';
+		element.style.width = '722px';
 		element.style.height = '587px';
-		element.innerHTML = unescape( data.html );
 
 		wmu_back = unescape( data.wmu_back );
 		wmu_imagebutton = unescape( data.wmu_imagebutton );
@@ -330,8 +330,9 @@ function WMU_loadMainFromView() {
 					WMU_switchScreen('Main');
 				},
 				persistent: true,
-				width: 812
+				width: 722
 			});
+			$('#WMU_div').html(unescape( data.html ));
 
 			WMU_indicator(1, false);
 
@@ -844,7 +845,7 @@ function WMU_displayDetails(responseText) {
 function WMU_insertPlaceholder( box ) {
 	WMU_box_filled.push(box);
 	var to_update = $( '#WikiaImagePlaceholder' + box );
-	to_update.innerHTML = $( '#ImageUploadCode' ).html();
+	to_update.html($( '#ImageUploadCode' ).html());
 	//the class would need to be different if we had here the full-size...
 	to_update.className = '';
 	$.post(wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
@@ -960,7 +961,6 @@ function WMU_insertImage(e, type) {
 				$('#ImageUpload' + WMU_curScreen).html(o.responseText);
 				break;
 			case 'summary':
-
 				WMU_switchScreen('Summary');
 				if (typeof RTE !== 'undefined') {
 					RTE.getInstanceEditor().getEditbox().focus();

@@ -41,10 +41,11 @@ class WikiaSearchIndexerController extends WikiaController
 		$serviceName = $this->getVal( 'service', 'DefaultContent' );
 		$ids = explode( '|', $this->getVal( 'ids', '' ) );
 		$service = Factory::getInstance()->get( $serviceName, $ids );
+		$service->setVerbose( $this->getVal( 'verbose', false ) );
 		
 		$ids = $this->getVal( 'ids' );
 	    if ( !empty( $ids ) ) {
-	        $this->response->setData( $service->getResponseForPageIds( 'getPageDefaultValues' ) );
+	        $this->response->setData( $service->getResponseForPageIds() );
 	    }
 	}
 	

@@ -11,6 +11,8 @@ class ContactForm extends SpecialPage {
 	var $err, $errInputs;
 	var $secDat;
 
+	private $mReferral;
+
 	var $customForms = array(
 		'account-issue' => array(
 			'format' => "User reports a problem with his account (%s) on this wiki:\n%s\n\nDescription of issue:\n%s",
@@ -53,9 +55,13 @@ class ContactForm extends SpecialPage {
 		global $wgRequest, $wgOut;
 		global $wgUser, $wgCaptchaClass, $wgServer;
 
+		$app = F::app();
+
+		$isMobile = $app->checkSkin( 'wikiamobile');
+
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
-		$extPath = F::app()->wg->extensionsPath;
-		F::app()->wg->out->addScript( "<script src=\"{$extPath}/wikia/SpecialContact2/SpecialContact.js\"></script>" );
+		$extPath = $app->wg->extensionsPath;
+		$wgOut->addScript( "<script src=\"{$extPath}/wikia/SpecialContact2/SpecialContact.js\"></script>" );
 		$this->mUserName = null;
 		$this->mRealName = null;
 		$this->mWhichWiki = null;
@@ -66,12 +72,13 @@ class ContactForm extends SpecialPage {
 		$this->mBrowser = $wgRequest->getText( 'wpBrowser' );
 		$this->mAbTestInfo = $wgRequest->getText( 'wpAbTesting' );
 		$this->mCCme = $wgRequest->getCheck( 'wgCC' );
+		$this->mReferral = $wgRequest->getText( 'wpReferral', ( !empty( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null ) );
 
 		if( $wgRequest->wasPosted() ) {
 
 			if( $wgUser->isAnon() && class_exists( $wgCaptchaClass ) ){
 				$captchaObj = new $wgCaptchaClass();
-				$captchaObj->retrieveCaptcha();
+				//$captchaObj->retrieveCaptcha();
 				$info = $captchaObj->retrieveCaptcha();
 			}
 
@@ -129,7 +136,7 @@ class ContactForm extends SpecialPage {
 			}
 
 			#captcha
-			if(!$wgUser->isLoggedIn()){ // logged in users don't need the captcha (RT#139647)
+			if($wgUser->isAnon()){ // logged in users don't need the captcha (RT#139647)
 				if( class_exists( $wgCaptchaClass ) && !( !empty($info) &&  $captchaObj->keyMatch( $wgRequest->getVal('wpCaptchaWord'), $info )))  {
 					$this->err[] = wfMsg('specialcontact-captchafail');
 					$this->errInputs['wpCaptchaWord'] = true;
@@ -151,14 +158,52 @@ class ContactForm extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
-		if( $this->isAuthorizedSub( $par ) ) {
-			# sub was one we know about, so use it
-			$this->doSub( $par );
-		}
-		else {
-			$this->ContactFormPicker();
-		}
+		if ( $isMobile ) {
 
+			$wgOut->setPageTitle( wfMsg( 'contact' ) );
+
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+			$captchaErr = !empty( $this->errInputs['wpCaptchaWord'] ) ? 'inpErr' : null;
+
+			$vars = array(
+				'isLoggedIn' => $wgUser->isLoggedIn(),
+				'intro' => wfMsgExt( 'specialcontact-intro-content-issue', array( 'parse' ) ),
+				'encName' => $wgUser->getName(),
+				'encEmail' => $wgUser->getEmail(),
+				'hasEmailConf' => $wgUser->isEmailConfirmed(),
+				'subject' => $this->mProblem,
+				'content' => $this->mProblemDesc,
+				'cc' => $this->mCCme,
+				'userName' => $this->mUserName,
+				'email' => $this->mEmail,
+				'captchaForm' => ($wgUser->isAnon() && class_exists( $wgCaptchaClass )) ? (new $wgCaptchaClass())->getForm( $captchaErr ) : '',
+				'errMessages' => $this->err,
+				'errors' => $this->errInputs,
+				'referral' => $this->mReferral
+
+			);
+
+			$oTmpl->set_vars( $vars );
+			$wgOut->addHTML( $oTmpl->render( "mobile-form" ) );
+
+			foreach ( AssetsManager::getInstance()->getURL( 'special_contact_wikiamobile_scss' ) as $s ) {
+				$wgOut->addStyle( $s );
+			}
+
+			foreach ( AssetsManager::getInstance()->getURL( 'special_contact_wikiamobile_js' ) as $s ) {
+				$wgOut->addScript( "<script src=" . $s . ">" );
+			}
+
+		} else {
+			if( $this->isAuthorizedSub( $par ) ) {
+				# sub was one we know about, so use it
+				$this->doSub( $par );
+			}
+			else {
+				$this->ContactFormPicker();
+			}
+		}
 	}
 
 	/**
@@ -197,6 +242,10 @@ class ContactForm extends SpecialPage {
 			$items[] = 'uLang: ' . $wgUser->getOption('language');
 		}
 
+		if ( !empty( $this->mReferral ) ) {
+			$items[] = 'referral: ' . $this->mReferral;
+		}
+
 		//smush it all together
 		$info = $this->mBrowser . "\n";
 		$info .= "A/B Tests: " . $this->mAbTestInfo . "\n"; // giving it its own line so that it stands out more
@@ -211,11 +260,16 @@ class ContactForm extends SpecialPage {
 		}
 
 		$mail_user = new MailAddress($this->mEmail);
-		$mail_community = new MailAddress($wgSpecialContactEmail, 'Wikia Support');
+		$mail_community = new MailAddress( $wgSpecialContactEmail, 'Wikia Support');
 
 		$errors = '';
 
 		#to us, from user
+		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+			//We want an easy way to know that feedback comes from a mobile
+			$this->mProblem = 'Mobile: ' . $this->mProblem;
+		}
+
 		$subject = wfMsg('specialcontact-mailsub') . (( !empty($this->mProblem) )? ' - ' . $this->mProblem : '');
 
 		$screenshot = $wgRequest->getFileTempname( 'wpScreenshot' );

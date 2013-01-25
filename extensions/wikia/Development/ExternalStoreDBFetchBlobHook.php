@@ -22,10 +22,9 @@
  */
 
 global $wgFetchBlobApiURL;
-// $wgFetchBlobApiURL = "http://community.wikia.com/api.php";
+$wgFetchBlobApiURL = "http://community.wikia.com/api.php";
 // $app->registerHook( "ExternalStoreDB::fetchBlob", "ExternalStoreDBFetchBlobHook" );
-$wgFetchBlobApiURL = "http://community.eloy.wikia-dev.com/api.php";
-$wgHooks[ "ExternalStoreDB::fetchBlob"][ ] = "ExternalStoreDBFetchBlobHook";
+$wgHooks[ "ExternalStoreDB::fetchBlob" ][ ] = "ExternalStoreDBFetchBlobHook";
 
 /**
  * hook for ExternalStoreDB::FetchBlob
@@ -77,6 +76,7 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 							__METHOD__,
 							array( "IGNORE" )
 						);
+						$dbw->commit();
 					}
 				}
 			}

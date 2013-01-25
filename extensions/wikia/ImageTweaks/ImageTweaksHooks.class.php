@@ -264,6 +264,7 @@ class ImageTweaksHooks extends WikiaObject {
 
 			$imageParams = array(
 				'type' => 'video',
+				'provider' => $file->getProviderName(),
 				'full' => $imageAttribs['src']
 			);
 

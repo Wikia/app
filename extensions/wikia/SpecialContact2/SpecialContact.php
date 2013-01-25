@@ -9,7 +9,6 @@ if ( !defined('MEDIAWIKI') ) {
  * @subpackage SpecialPage
  */
 
-
 require_once('UserMailer.php');
 
 $dir = dirname(__FILE__) . '/';

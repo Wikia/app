@@ -43,7 +43,7 @@ class DefaultContent extends AbstractService
     		$headingsKey = \WikiaSearch::field( 'headings' );
 		} else {
 			// backwards compatibility
-			$result = array( \WikiaSearch::field( 'html' ) => html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
+			$result = array( 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
 			$titleKey = 'title';
     		$wikiTitleKey = 'wikititle';
     		$categoriesKey = 'categories';

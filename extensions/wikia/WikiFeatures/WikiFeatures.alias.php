@@ -30,5 +30,5 @@ $specialPageAliases['it'] = array(
 
 /** Spanish (Espanol) */
 $specialPageAliases['es'] = array(
-	'WikiFeatures' => array( ' FuncionalidadesDeWikia', 'WikiFeatures' ),
+	'WikiFeatures' => array( 'FuncionalidadesDeWikia', 'WikiFeatures' ),
 );

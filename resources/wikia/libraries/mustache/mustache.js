@@ -530,7 +530,21 @@ var Mustache = (typeof module !== "undefined" && module.exports) || {};
    * compiled function.
    */
   function render(template, view, partials) {
+
+
+
     return compile(template)(view, partials);
   }
 
 })(Mustache);
+
+// Wikia change - begin
+// register AMD module
+(function (context) {
+	context.Mustache = Mustache;
+
+	if (context.define && context.define.amd) {
+		context.define('wikia.mustache', Mustache);
+	}
+}(window));
+// Wikia change - end
