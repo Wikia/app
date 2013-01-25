@@ -19,8 +19,6 @@ class PhalanxServiceTest extends WikiaBaseTest {
 	public function isPhalanxAlive( ) {
 		error_log( __CLASS__ . '::' . __FUNCTION__ );
 
-		global $wgDebugLogFile;
-	//	$wgDebugLogFile = "php://stdout";
 
 		$this->service = new PhalanxService();
 		return $this->service->status();
@@ -29,15 +27,31 @@ class PhalanxServiceTest extends WikiaBaseTest {
 	public function testPhalanxServiceCheck() {
 		error_log( __CLASS__ . '::' . __FUNCTION__ );
 		if( $this->isPhalanxAlive() ) {
-///			$this->assertEquals(1, $status );
 			$ret = $this->service->check( "content", "hello world" );
 			$this->assertEquals( 1, $ret );
 
-			$ret = $this->service->check( "doesn not matter", "hello world" );
+			$ret = $this->service->check( "invalid type", "hello world" );
 			$this->assertEquals( false, $ret );
 
 			$ret = $this->service->check( "content", "pornhub.com" );
 			$this->assertEquals( 0, $ret );
+		}
+		else {
+			$this->markTestSkipped( sprintf( "Can't contact with phalanx service on %s.\n", F::app()->wg->PhalanxServiceUrl ) );
+		}
+	}
+
+	public function testPhalanxServiceReload() {
+//		global $wgDebugLogFile;
+//		$wgDebugLogFile = "php://stdout";
+
+		if( $this->isPhalanxAlive() ) {
+			$ret = $this->service->reload();
+			$this->assertEquals( 1, $ret );
+
+			$ret = $this->service->reload( array( 1, 2, 3 ) );
+			$this->assertEquals( 1, $ret );
+
 		}
 		else {
 			$this->markTestSkipped( sprintf( "Can't contact with phalanx service on %s.\n", F::app()->wg->PhalanxServiceUrl ) );

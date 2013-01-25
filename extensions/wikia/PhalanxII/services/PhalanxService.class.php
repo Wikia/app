@@ -9,6 +9,7 @@ class PhalanxService extends Service {
 	const RES_FAILURE = 'failure';
 	const RES_STATUS = 'PHALANX ALIVE';
 
+
 	/**
 	 * check service status
 	 */
@@ -64,6 +65,38 @@ class PhalanxService extends Service {
 				} else {
 					$ret = $res;
 				}
+			}
+		} else {
+			/* service doesn't work */
+			$ret = false;
+		}
+
+		return $ret;
+	}
+
+	/**
+	 * service for reload function
+	 *
+	 * @example curl "http://localhost:8080/reload?changed=1,2,3"
+	 *
+	 * @param array $changed -- list of rules to reload, default empty array so reload all
+	 *
+	 */
+	public function reload( $changed = array() ) {
+		$response = $this->sendToPhalanxDaemon( "reload",
+			is_array( $changed ) && sizeof( $changed )
+				? array( "changed" => implode( ",", $changed ) )
+				: array()
+		);
+
+		if ( $response !== false ) {
+			if ( stripos( $response, self::RES_OK  ) !== false ) {
+				$ret = 1;
+			} elseif ( stripos( $response, self::RES_FAILURE ) !== false ) {
+				$ret = 0;
+			} else {
+				/* invalid response */
+				$ret = false;
 			}
 		} else {
 			/* service doesn't work */
