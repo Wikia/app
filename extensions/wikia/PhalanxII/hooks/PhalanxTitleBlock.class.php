@@ -8,10 +8,10 @@
  *
  * It does not prevent a pre-existing page from being edited.
  *
- * @date 2010-06-09
+ * @date 2013-01-25
  */
 
-class TitleBlock {
+class PhalanxTitleBlock {
 	static private $blocksData = null;
 
 	static public function beforeMove( &$move ) {

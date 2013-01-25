@@ -29,7 +29,7 @@ class PhalanxUserBlock extends WikiaObject {
 
 		$result = PhalanxService::match( "user", $user->getName() );
 		if ( $result !== false ) {
-			if ( is_numeric( $result ) ) {
+			if ( is_numeric( $result ) && $result > 0 ) {
 				/* user is blocked - we have block ID */
 				$phalanxModel->setBlockId( $result );
 				// set block data ...
@@ -65,7 +65,7 @@ class PhalanxUserBlock extends WikiaObject {
 			$result = PhalanxService::match( "email", $user->getEmail() );
 		}
 		
-		if ( $result !== false && is_numeric( $result  ) ) {
+		if ( $result !== false && ( is_numeric( $result ) && $result > 0 ) ) {
 			$abortError = $this->wf->Msg( 'phalanx-user-block-new-account' );
 			$ret = false;
 		} elseif ( $result === false ) {

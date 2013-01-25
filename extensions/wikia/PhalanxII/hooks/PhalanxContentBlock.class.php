@@ -33,7 +33,7 @@ class PhalanxContentBlock extends WikiaObject {
 		$textbox = $editpage->textbox1;
 		
 		/* compare summary with spam-whitelist */
-		if ( !empty( $summary ) && !empty( $textbox ) && !empty(self::$whitelist) ) {
+		if ( !empty( $summary ) && !empty( $textbox ) && empty(self::$whitelist) ) {
 			self::$whitelist = $phalanxModel->buildWhiteList();
 		}
 		
@@ -44,21 +44,24 @@ class PhalanxContentBlock extends WikiaObject {
 
 		$result = PhalanxService::match( "summary", $summary );
 		if ( $result !== false ) {
-			if ( is_numeric( $result ) ) {
+			if ( is_numeric( $result ) && $result > 0 ) {
 				/* user is blocked - we have block ID */
 				$phalanxModel->setBlockId( $result );
 				// set output with block info
 				$phalanxModel->contentBlock( $summary );
 				$ret = false;
 			} else {
+				/* check content */
 				if ( !empty( self::$whitelist ) ) {
 					$textbox = preg_replace( self::$whitelist, '', $textbox );
 				}
 				$result = PhalanxService::match( "content", $textbox );
 				if ( $result !== false ) {
 					if ( is_numeric( $result ) ) {
-						$editpage->spamPageWithContent( "Block #{$result}" );
-						Wikia::log(__METHOD__, __LINE__, "Block '#{$result}' blocked '$textbox'.");
+						/* user is blocked - we have block ID */
+						$phalanxModel->setBlockId( $result );
+						// set output with block info
+						$editpage->spamPageWithContent( $phalanxModel->contentBlock( $textbox ) );
 						$ret = false;
 					} else {
 						$ret = true;
@@ -80,103 +83,54 @@ class PhalanxContentBlock extends WikiaObject {
 	}
 
 	/*
-	 * onAbortMove
+	 * abortMove
 	 *
 	 * Aborts a page move if the summary given matches
 	 * any blacklisted phrase.
 	 */
-	public static function onAbortMove( $oldtitle, $newtitle, $user, &$error ) {
-		global $wgRequest;
-		wfProfileIn( __METHOD__ );
+	public function abortMove( $oldtitle, $newtitle, $user, &$error ) {
+		$this->wf->profileIn( __METHOD__ );
+		
+		$phalanxModel = F::build('PhalanxContentModel', array( $newtitle ) );
 
-		$reason = $wgRequest->getText( 'wpReason' );
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_SUMMARY );
-		if ( !empty($blocksData) && $reason != '' ) {
-			$reason = self::applyWhitelist($reason);
-
-			$blockData = null;
-			$result = Phalanx::findBlocked($reason, $blocksData, true, $blockData);
-			if ( $result['blocked'] ) {
-				$error .= wfMsgExt( 'phalanx-title-move-summary', 'parseinline' );
-				$error .= wfMsgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$result['msg']}</nowiki>" );
-				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$reason'.");
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
+		/* allow blocked words to be added to whitelist */
+		if ( $phalanxModel->isOk() ) {
+			$this->wf->profileOut( __METHOD__ );
+			return true;
+		}
+		
+		/* content to check */
+		$reason = $this->wg->request->getText( 'wpReason' );
+		
+		/* compare summary with spam-whitelist */
+		if ( !empty( $reason ) && empty(self::$whitelist) ) {
+			self::$whitelist = $phalanxModel->buildWhiteList();
+		}
+		
+		/* check summary */
+		if ( !empty( self::$whitelist ) ) {
+			$summary = preg_replace( self::$whitelist, '', $reason );
 		}
 
-		wfProfileOut( __METHOD__ );
+		$result = PhalanxService::match( "summary", $reason );
+		if ( $result !== false ) {
+			if ( is_numeric( $result ) && $result > 0 ) {
+				/* user is blocked - we have block ID */
+				$phalanxModel->setBlockId( $result );
+				// set output with block info
+				$error .= $phalanxModel->reasonBlock( $reason );
+				$ret = false;
+			} else {
+				$ret = true;
+			}
+		} else {
+			// TO DO
+			/* problem with Phalanx service? */
+			// include_once( dirname(__FILE__) . '/../prev_hooks/ContentBlock.class.php';
+			// $ret = ContentBlock::onAbortMove( $oldtitle, $newtitle, $user, $error );		
+		}
+
+		$this->wf->profileOut( __METHOD__ );
 		return true;
-	}
-
-	/*
-	 * genericContentCheck
-	 *
-	 * @author Macbre
-	 *
-	 * Generic content checking to be used by extensions
-	 */
-	static public function genericContentCheck( $content ) {
-		wfProfileIn( __METHOD__ );
-
-		$blocksData = Phalanx::getFromFilter( Phalanx::TYPE_CONTENT );
-		if ( !empty($blocksData) && $content != '' ) {
-			$content = self::applyWhitelist($content);
-
-			$blockData = null;
-			$result = Phalanx::findBlocked($content, $blocksData, true, $blockData);
-			if ( $result['blocked'] ) {
-				Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$content'.");
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-	/*
-	 * applyWhitelist
-	 *
-	 * @author Marooned <marooned at wikia-inc.com>
-	 *
-	 * @param $
-	 * @return
-	 */
-	private static function applyWhitelist($text) {
-		wfProfileIn( __METHOD__ );
-
-		//TODO: add short memcache here?
-		if (is_null(self::$whitelist)) {
-			$whitelist = wfMsgForContent('Spam-whitelist');
-			if (wfEmptyMsg('Spam-whitelist', $whitelist)) {
-				wfProfileOut( __METHOD__ );
-				return $text;
-			}
-			$whitelist = array_filter(array_map('trim', preg_replace('/#.*$/', '', explode("\n", $whitelist))));
-
-			foreach ($whitelist as $regex) {
-				$regex = str_replace('/', '\/', preg_replace('|\\\*/|', '/', $regex));
-				$regex = "/https?:\/\/+[a-z0-9_.-]*$regex/i";
-				wfSuppressWarnings();
-				$regexValid = preg_match($regex, '');
-				wfRestoreWarnings();
-				if ($regexValid === false) {
-					continue;
-				}
-				//escape slashes uses as regex delimiter
-				self::$whitelist[] = $regex;
-			}
-
-			Wikia::log(__METHOD__, __LINE__, count(self::$whitelist) . ' whitelist entries loaded.');
-		}
-
-		if (!empty(self::$whitelist)) {
-			$text = preg_replace(self::$whitelist, '', $text);
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $text;
 	}
 }

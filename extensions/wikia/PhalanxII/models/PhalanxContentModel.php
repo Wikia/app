@@ -51,7 +51,7 @@ class PhalanxContentModel extends PhalanxModel {
 		return $whitelist;
 	}
 	
-	public function contentBlock( $text ) {
+	public function summaryBlock( $text ) {
 		$this->wg->Out->setPageTitle( $this->wf->msg( 'spamprotectiontitle' ) );
 		$this->wg->Out->setRobotPolicy( 'noindex,nofollow' );
 		$this->wg->Out->setArticleRelated( false );
@@ -63,5 +63,20 @@ class PhalanxContentModel extends PhalanxModel {
 		$this->wg->Out->returnToMain( false, $this->title );
 		$this->wg->Out->addHTML( Html::closeElement( 'div' ) );
 		Wikia::log( __METHOD__, __LINE__, "Block '#{$this->blockId}' blocked '{$text}'." );
+	}
+	
+	public function contentBlock( $text ) {
+		$msg = "Block #{$this->blockId}";
+		Wikia::log(__METHOD__, __LINE__, "Block '#{$this->blockId}' blocked '{$text}'.");
+		
+		return $msg;
+	}
+	
+	public function reasonBlock( $text ) {
+		$msg = $this->wf->msgExt( 'phalanx-title-move-summary', 'parseinline' );
+		$msg .= $this->wf->msgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{Block #{$this->blockId}</nowiki>" );
+		Wikia::log( __METHOD__, __LINE__, "Block '#{$this->blockId}' blocked '{$text}'." );
+		
+		return $msg;
 	}
 }

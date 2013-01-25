@@ -32,7 +32,7 @@ class PhalanxUserCookieBlock extends PhalanxUserBlock {
 			foreach ( $hashes as $hash ) {
 				$result = PhalanxService::match( "cookie", $hash );
 				if ( $result !== false ) {
-					if ( is_numeric( $result ) ) {
+					if ( is_numeric( $result ) && $result > 0 ) {
 						$phalanxModel = F::build('PhalanxModel', array( $user, $result ) );
 						// set block data ...
 						$phalanxModel->userBlock( 'exact' );
