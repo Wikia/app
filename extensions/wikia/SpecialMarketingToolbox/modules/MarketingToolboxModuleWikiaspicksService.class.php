@@ -65,21 +65,16 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 	}
 
 	public function renderEditor($data) {
+		$model = new MarketingToolboxModel();
+
 		if( !empty($data['values']['fileName']) ) {
-			$model = new MarketingToolboxModel();
-			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['values']['fileName'], $model->getThumbnailSize());
-			$data['fileUrl'] = $imageData->url;
-			$data['imageWidth'] = $imageData->width;
-			$data['imageHeight'] = $imageData->height;
+			$imageModel = new MarketingToolboxImageModel($data['values']['fileName']);
+			$data['file'] = $imageModel->getImageData($model->getThumbnailSize());
 		}
 
 		if( !empty($data['values']['sponsoredImage']) ) {
-			$model = new MarketingToolboxModel();
-			//TODO: ImagesService::getLocalFileThumbUrlAndSizes isn't good here because it takes only destination width in consideration
-			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['values']['sponsoredImage'], $model->getSponsoredImageWidth());
-			$data['sponsoredImageUrl'] = $imageData->url;
-			$data['sponsoredImageWidth'] = $imageData->width;
-			$data['sponsoredImageHeight'] = $imageData->height;
+			$imageModel = new MarketingToolboxImageModel($data['values']['sponsoredImage']);
+			$data['sponsoredImage'] = $imageModel->getImageData($data['values']['sponsoredImage']);
 		}
 		
 		return parent::renderEditor($data);
