@@ -185,11 +185,17 @@ class CategorySelect {
 			$categories = self::changeFormat( $categories, $format, 'array' );
 		}
 
-		// Remove duplicates by category name
 		foreach( $categories as $category ) {
-			if ( !is_null( $category ) && !in_array( $category[ 'name' ], $categoryNames ) ) {
-				$categoryNames[] = $category[ 'name' ];
-				$uniqueCategories[] = $category;
+			if ( !empty( $category ) ) {
+
+				// Normalize the category name
+				$title = Title::newFromText( $category[ 'name' ], NS_CATEGORY );
+				$category[ 'name' ] = $title->getText();
+
+				if ( !in_array( $category[ 'name' ], $categoryNames ) ) {
+					$categoryNames[] = $category[ 'name' ];
+					$uniqueCategories[] = $category;
+				}
 			}
 		}
 
