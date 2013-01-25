@@ -1,19 +1,56 @@
+/*global VET_loader, WMU_skipDetails:true, WMU_show, WMU_openedInEditor:true, confirm */
+
 var EditHub = function() {};
 
 EditHub.prototype = {
 	form: undefined,
 	wmuReady: undefined,
-	vetReady: undefined,
 	wmuDeffered: undefined,
-	vetDeffered: undefined,
 	lastActiveWmuButton: undefined,
-	lastActiveVetButton: undefined,
 
 	init: function () {
 		var validator;
 
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
-		$('.MarketingToolboxMain .vet-show').click($.proxy(this.vetInit, this));
+		$('.MarketingToolboxMain .vet-show').each(function() {
+			var $this = $(this);
+			
+			$this.addVideoButton({
+				callbackAfterSelect: function(url) {
+
+					$.nirvana.sendRequest({
+						controller: 'MarketingToolboxController',
+						method: 'getVideoDetails',
+						type: 'get',
+						data: {
+							'url': url
+						},
+						callback: function(response) {
+							GlobalNotification.hide();
+							if ( response.error ) {
+								GlobalNotification.show( response.error, 'error' );
+							} else {
+								var box = $this.parents('.module-box:first');
+								if (!box.length) {
+									box = $('.MarketingToolboxMain');
+								}
+				
+								box.find('.filename-placeholder').html(response.videoFileName);
+								box.find('.wmu-file-name-input').val(response.videoFileName).valid();
+				
+								box.find('.image-placeholder')
+									.empty()
+									.html(response.videoFileMarkup);
+								
+								// Close VET modal
+								VET_loader.modal.closeModal();
+							}
+						}
+					});
+				},
+				searchOrder: 'newest'
+			});
+		});
 
 		this.form = $('#marketing-toolbox-form');
 
@@ -21,7 +58,7 @@ EditHub.prototype = {
 			this.clearSection(
 				this.form,
 				$.msg('marketing-toolbox-edithub-clearall-confirmation',this.form.data('module-name'))
-			)
+			);
 		}, this));
 
 		$(this.form).find('.clear').click($.proxy(function(event){
@@ -30,7 +67,7 @@ EditHub.prototype = {
 			this.clearSection(
 				sectionToReset,
 				$.msg('marketing-toolbox-edithub-clear-confirmation')
-			)
+			);
 		}, this));
 
 		$.validator.addMethod("wikiaUrl", function(value, element) {
@@ -54,7 +91,7 @@ EditHub.prototype = {
 		validator.focusInvalid = function() {
 			if( this.settings.focusInvalid ) {
 				try {
-					var element = $(this.errorList.length && this.errorList[0].element || [])
+					var element = $( (this.errorList.length && this.errorList[0].element) || []);
 
 					if (element.is(":visible")) {
 						element.focus()
@@ -68,10 +105,9 @@ EditHub.prototype = {
 					// ignore IE throwing errors when focusing hidden elements
 				}
 			}
-		}
+		};
 
 		this.wmuReady = false;
-		this.vetReady = false;
 	},
 
 	wmuInit: function(event) {
@@ -102,37 +138,6 @@ EditHub.prototype = {
 		}
 	},
 
-	vetInit: function(event) {
-		this.lastActiveVetButton = $(event.target);
-		if (!this.vetReady) {
-			this.vetDeffered = $.when(
-				$.loadYUI(),
-				$.loadMustache(),
-				$.getResources([
-					wgExtensionsPath + '/wikia/WikiaStyleGuide/js/Dropdown.js',
-					wgExtensionsPath + '/wikia/VideoEmbedTool/js/VET.js',
-					$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
-					$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
-				])
-			).then(
-				$.proxy(function(event) {
-						this.showVet(event);
-					},
-					this
-				)
-			);
-			$(window).bind('VET_addFromSpecialPage', $.proxy(this.addVideo, this));
-			this.vetReady = true;
-		}
-		else {
-			this.showVet(event);
-		}
-	},
-
-	showVet: function(event) {
-		VET_show(event, VET_placeholder, true, true, true, window.wgMarketingToolboxThumbnailSize, undefined, 'newest');
-	},
-
 	addImage: function(wmuData) {
 		var fileName = wmuData.imageTitle;
 		$.nirvana.sendRequest({
@@ -145,7 +150,7 @@ EditHub.prototype = {
 			callback: $.proxy(function(response) {
 				var tempImg = new Image();
 				tempImg.src = response.fileUrl;
-				tempImg.height = response.imageHeight
+				tempImg.height = response.imageHeight;
 				tempImg.width = response.imageWidth;
 
 				var box = this.lastActiveWmuButton.parents('.module-box:first');
@@ -158,30 +163,6 @@ EditHub.prototype = {
 				imagePlaceholder.append(tempImg);
 				box.find('.filename-placeholder').html(response.fileTitle);
 				box.find('.wmu-file-name-input').val(response.fileTitle).valid();
-			}, this)
-		});
-	},
-
-	addVideo: function(event, vetData) {
-		$.nirvana.sendRequest({
-			controller: 'MarketingToolbox',
-			method: 'getVideoDetails',
-			type: 'get',
-			data: {
-				'wikiText': vetData.videoWikiText
-			},
-			callback: $.proxy(function(response) {
-				var box = this.lastActiveVetButton.parents('.module-box:first');
-				if (!box.length) {
-					box = $('.MarketingToolboxMain');
-				}
-
-				box.find('.filename-placeholder').html(response.videoFileName);
-				box.find('.wmu-file-name-input').val(response.videoFileName).valid();
-
-				box.find('.image-placeholder')
-					.empty()
-					.html(response.videoFileMarkup);
 			}, this)
 		});
 	},

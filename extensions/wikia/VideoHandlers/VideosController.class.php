@@ -30,6 +30,8 @@ class VideosController extends WikiaController {
 
 		if ( !is_array($retval) ) {
 			$this->error = $retval;
+		} else {
+			$this->videoInfo = $retval;
 		}
 	}
 

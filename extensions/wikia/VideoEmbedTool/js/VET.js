@@ -1,7 +1,7 @@
 /*global UserLogin, WikiaEditor*/
 
 /*
- * Author: Inez Korczynski, Bartek Lapinski
+ * Author: Inez Korczynski, Bartek Lapinski, Hyun Lim, Liz Lee
  */
 
 
@@ -30,7 +30,6 @@
 	var VET_embedPresets = false;
 	var VET_callbackAfterSelect = false;
 	var VET_callbackAfterEmbed = false;
-	var VET_isOnSpecialPageNoEditor = false;
 	
 	// macbre: show edit video screen (wysiwyg edit)
 	function VET_editVideo() {
@@ -238,11 +237,7 @@
 				wikiaEditor.plugins.MiniEditor.hasFocus = true;
 			}
 		}
-	
-		// this indicates that we're on a special page that doesn't have editor on
-		// (set it to false on Special:CreateBlogPost/CreatePage)
-		VET_isOnSpecialPageNoEditor = (wgNamespaceNumber === -1) && (typeof window.WikiaEditor === 'undefined');
-	
+
 		/* set options */
 		VET_embedPresets = options.embedPresets;
 		VET_wysiwygStart = options.startPoint || 1;
@@ -438,17 +433,7 @@
 						VET_switchScreen('Summary');
 						$('#VideoEmbedBack').css('display', 'none');
 						$('#VideoEmbed' + VET_curScreen).html(o.responseText);
-		
-						if (VET_isOnSpecialPageNoEditor) {
-							var $responseHTML = $(o.responseText),
-								vetData = {
-									videoTitle: 'missing',
-									videoWikiText: $responseHTML.find('#VideoEmbedTag').val()
-								};
-							$(window).trigger('VET_addFromSpecialPage', [vetData]);
-							return false;
-						}
-		
+
 						if ( !$( '#VideoEmbedCreate'  ).length && !$( '#VideoEmbedReplace' ).length ) {
 							var wikitext = $('#VideoEmbedTag').val();
 							var options = {};
