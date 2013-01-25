@@ -7,32 +7,27 @@
 describe('LazyQueue', function(){
 
 	it('Queue callback is called for every item in array', function() {
-		var queue = ['item0', 'item1', 'item2']
-			, callback
-			, callbackCalledTimes = 0
-			, callbackCalledWithArgument = [];
+		var queue = ['item0', 'item1', 'item2'],
+			c = {
+				callback: function() {}
+			};
 
-		callback = function(arg) {
-			callbackCalledTimes += 1;
-			callbackCalledWithArgument.push(arg);
-		};
+		spyOn(c, 'callback').andCallThrough();
 
-		define.getModule().makeQueue(queue, callback);
+		define.getModule().makeQueue(queue, c.callback);
 		queue.start();
 
-		expect(callbackCalledTimes).toEqual( 3);
-		expect(callbackCalledWithArgument[0]).toEqual('item0');
-		expect(callbackCalledWithArgument[1]).toEqual('item1');
-		expect(callbackCalledWithArgument[2]).toEqual('item2');
+		expect(c.callback.calls.length).toEqual(3);
+		expect(c.callback.calls[0].args[0]).toEqual('item0');
+		expect(c.callback.calls[1].args[0]).toEqual('item1');
+		expect(c.callback.calls[2].args[0]).toEqual('item2');
 	});
 
 	it('Queue callback is not called when queue is empty', function() {
-		var queue = []
-			, callbackCalled = false;
-
-		var c = {
-			callback: function() {}
-		};
+		var queue = [],
+			c = {
+				callback: function() {}
+			};
 
 		spyOn(c, 'callback').andCallThrough();
 
@@ -42,12 +37,10 @@ describe('LazyQueue', function(){
 	});
 
 	it('Queue callback is called for each element pushed after start()', function() {
-		var queue = []
-			, callback;
-
-		var c = {
-			callback: function() {}
-		};
+		var queue = [],
+			c = {
+				callback: function() {}
+			};
 
 		spyOn(c, 'callback').andCallThrough();
 
