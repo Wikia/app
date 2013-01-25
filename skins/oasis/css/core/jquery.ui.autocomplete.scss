@@ -38,6 +38,7 @@
 
 			&.ui-state-active,
 			&.ui-state-hover {
+				background-color: $color-menu-highlight;
 				margin: 0;
 			}
 		}
