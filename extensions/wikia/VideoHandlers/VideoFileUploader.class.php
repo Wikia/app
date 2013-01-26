@@ -219,8 +219,15 @@ class VideoFileUploader {
 		}
 
 		if ( !empty($this->sProvider ) ) {
+			if ( strstr( $this->sProvider, '/' ) ) {
+				$provider = explode( '/', $this->sProvider );
+				$apiWrapperPrefix = $provider[0];
+			} else {
+				$apiWrapperPrefix = $this->sProvider;
+			}
+
 			$this->oApiWrapper = F::build(
-				ucfirst( $this->sProvider ) . 'ApiWrapper',
+				ucfirst( $apiWrapperPrefix ) . 'ApiWrapper',
 				array(
 					$this->sVideoId,
 					$this->aOverrideMetadata
