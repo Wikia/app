@@ -29,14 +29,15 @@ $messages[ 'en' ] = array(
 	'categoryselect-category-remove' => 'Remove category',
 	'categoryselect-edit-summary' => 'Adding categories',
 	'categoryselect-error-article-doesnt-exist' => 'Article [id=$1] does not exist.',
+	'categoryselect-error-category-name-length' => 'The maximum length for a category name has been reached.',
 	'categoryselect-error-db-locked' => 'Database is locked.',
+	'categoryselect-error-duplicate-category-name' => 'Category "$1" already exists.',
 	'categoryselect-error-edit-abort' => 'The modifications you tried to make were aborted by an extension hook.',
 	'categoryselect-error-empty-category-name' => 'Please provide a category name.',
-	'categoryselect-error-duplicate-category-name' => 'Category "$1" already exists.',
 	'categoryselect-error-user-rights' => 'User does not have permission to perform this action.',
 	'categoryselect-modal-category-name' => 'Provide the name of the category:',
 	'categoryselect-modal-category-sortkey' => 'Alphabetize this article on the "$1" category page under the name:',
-	'categoryselect-tooltip-add' => 'Press the Enter or Return key when done',
+	'categoryselect-tooltip-add' => 'Press the Enter or Return key when done.',
 	'tog-disablecategoryselect' => 'Disable Category module (only applies if editing in visual mode has been disabled)',
 	'tog-disablecategoryselect-v2' => 'Disable Category module (only applies if visual mode editing is disabled)'
 );
@@ -56,11 +57,12 @@ $messages[ 'qqq' ] = array(
 	'categoryselect-edit-summary' => 'The summary used for revisions created when saving category updates on view pages.',
 	'categoryselect-error-article-doesnt-exist' => 'The error message shown when trying to add categories to an article that doesn\'t exist. Parameters:
 * $1: The ID of the article.',
+	'categoryselect-error-category-name-length' => 'The error message shown when typing in a category name when the maximum allowable length is exceeded.',
 	'categoryselect-error-db-locked' => 'The error message shown when saving changes when the site is in read only mode.',
-	'categoryselect-error-edit-abort' => 'The error message shown when saving changes is cancelled by an extension hook.',
-	'categoryselect-error-empty-category-name' => 'The error message shown when trying to add a category without a category name.',
 	'categoryselect-error-duplicate-category-name' => 'The error message shown when trying to add a category with the same name as an existing category. Parameters:
 * $1: The name of the category the user is trying to add.',
+	'categoryselect-error-edit-abort' => 'The error message shown when saving changes is cancelled by an extension hook.',
+	'categoryselect-error-empty-category-name' => 'The error message shown when trying to add a category without a category name.',
 	'categoryselect-error-user-rights' => 'The error message shown when trying to save changes without proper user permissions.',
 	'categoryselect-modal-category-name' => 'The text shown above the category input field in the modal dialog.',
 	'categoryselect-modal-category-sortkey' => 'The text shown above the sortkey input field in the modal dialog.',

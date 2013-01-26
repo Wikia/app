@@ -12,6 +12,7 @@
 	cached.messages = {
 		buttonSave: $.msg( 'categoryselect-button-save' ),
 		categoryEdit: $.msg( 'categoryselect-category-edit' ),
+		errorCategoryNameLength: $.msg( 'categoryselect-error-category-name-length' ),
 		errorEmptyCategoryName: $.msg( 'categoryselect-error-empty-category-name' ),
 		tooltipAdd: $.msg( 'categoryselect-tooltip-add' )
 	};
@@ -77,11 +78,32 @@
 
 		// Handle keypresses on the input element
 		elements.input = element.find( options.selectors.input )
-			.on( 'keypress.' + namespace, function( event ) {
-				if ( event.which === 13 ) {
-					event.preventDefault();
-					self.addCategory( elements.input.val() );
-				}
+			.attr( 'maxlength', options.maxLength )
+			.on( 'keypress.' + namespace + ' paste.' + namespace, function( event ) {
+				// Defer processing until the pasted value is set on the input
+				setTimeout(function() {
+					var value = elements.input.val();
+
+					// Enforce maxLength
+					if ( value.length >= options.maxLength ) {
+						elements.input.val( value.substr( 0, options.maxLength ) );
+
+						if ( options.popover ) {
+							$.extend( self.popover.options, {
+								content: cached.messages.errorCategoryNameLength,
+								placement: 'right',
+								type: 'error'
+							});
+
+							elements.input.popover( 'show' );
+						}
+
+					// Enter or Return key
+					} else if ( event.which === 13 ) {
+						event.preventDefault();
+						self.addCategory( value );
+					}
+				}, 0 );
 			});
 
 		elements.list = element.find( options.selectors.categories );
@@ -179,10 +201,11 @@
 			category = CategorySelect.normalize( category );
 
 			if ( category ) {
-				data = self.getData( category.name )[ 0 ];
+				data = self.getData( category.name );
 
-				if ( data ) {
-					category = data;
+				// Category already exists
+				if ( data.length ) {
+					category = data[ 0 ];
 
 					input.val( category.name );
 
@@ -602,6 +625,9 @@
 				limit: 6
 			},
 			categories: [],
+
+			// Based on Title max length
+			maxLength: 255,
 			popover: {
 				trigger: 'manual',
 
