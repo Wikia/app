@@ -79,7 +79,7 @@
 		// Handle keypresses on the input element
 		elements.input = element.find( options.selectors.input )
 			.attr( 'maxlength', options.maxLength )
-			.on( 'keypress.' + namespace + ' paste.' + namespace, function( event ) {
+			.on( 'keydown.' + namespace + ' paste.' + namespace, function( event ) {
 				// Defer processing until the pasted value is set on the input
 				setTimeout(function() {
 					var value = elements.input.val();
