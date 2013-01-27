@@ -170,6 +170,19 @@ $messages['nl'] = array(
 	'wikiaconfirmemail-username' => 'Gebruikersnaam',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiaconfirmemail-error-empty-code' => 'Còde de confirmacion void',
+	'wikiaconfirmemail-error-invalid-code' => 'Còde de confirmacion invalid',
+	'wikiaconfirmemail-error-user-not-match' => 'Ops, aqueste ligam de confirmacion correspond pas al nom d’utilizaire qu\'avètz picat. Asseguratz-vos qu’avètz picat lo bon nom d’utilizaire. Se vos volètz connectar amb un compte diferent, clicatz <a href="{{fullurl:{{ns:special}}:UserLogin}}">aicí</a>.',
+	'wikiaconfirmemail-login-button' => 'Confirmar e se connectar',
+	'wikiaconfirmemail-heading' => 'I sèm gaireben !',
+	'wikiaconfirmemail-subheading' => "Connectatz-vos amb vòstres nom d’utilizaire e senhal per tal que sapiam qu'avètz recebut lo corrièl.",
+	'wikiaconfirmemail-username' => "Nom d'utilizaire",
+);
+
 /** Polish (polski)
  * @author Sovq
  */

@@ -30,6 +30,13 @@ $messages['ast'] = array(
 	'categorygalleries-desc' => 'Amuesa una galería de páxines nes páxines de categoría',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author AZISS
+ */
+$messages['az'] = array(
+	'categorygalleries-desc' => 'Kateqoriyalar səhifəsində, səhifələrin qalereyasını göstərir',
+);
+
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
