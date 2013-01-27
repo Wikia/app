@@ -3,6 +3,7 @@
 abstract class PhalanxModel extends WikiaObject {
 	protected $blockId = 0;
 	protected $model = null;
+	protected $text = "";
 	
 	public function __construct( $model, $data = array() ) {
 		parent::contruct();
@@ -30,5 +31,25 @@ abstract class PhalanxModel extends WikiaObject {
 	
 	public function setBlockId( $id ) {
 		$this->blockId = ( int ) $id;
+	}
+	
+	public function setText( $text ) {
+		$this->text = $text;
+	}
+	
+	public function getText() {
+		return $this->text;
+	}
+
+	public function logBlock() {
+		Wikia::log( __METHOD__, __LINE__, "Block '#{$this->blockId}' blocked '{$this->text}'." );		
+	}
+
+	public function match( $type, $language = "en" ) {
+		return PhalanxService::match( $type, $this->text, $language );
+	}
+	
+	public function check( $type, $language = "en" ) {
+		return PhalanxService::check( $type, $this->text, $language );		
 	}
 }

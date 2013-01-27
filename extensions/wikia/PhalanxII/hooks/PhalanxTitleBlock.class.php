@@ -12,8 +12,6 @@
  */
 
 class PhalanxTitleBlock extends WikiaObject {
-	static private $blocksData = null;
-
 	function __construct() {
 		parent::__construct();
 		F::setInstance( __CLASS__, $this );
@@ -62,6 +60,7 @@ class PhalanxTitleBlock extends WikiaObject {
 	}
 
 	public function checkTitle( $title ) {
+		$this->wf->profileIn( __METHOD__ );
 		$phalanxModel = F::build('PhalanxTitleModel', array( $title ) );
 
 		if ( $phalanxModel->isOk() ) {
@@ -72,13 +71,14 @@ class PhalanxTitleBlock extends WikiaObject {
 		/* check title name */
 		$text = $title->getFullText();
 
-		$result = PhalanxService::match( "title", $text );
+		$phalanxModel->setText( $text );
+		$result = $phalanxModel->match( "title" );
 		if ( $result !== false ) {
 			if ( is_numeric( $result ) && $result > 0 ) {
 				/* user is blocked - we have block ID */
 				$phalanxModel->setBlockId( $result );
 				// set output with block info
-				$phalanxModel->displayBlock( $text );
+				$phalanxModel->displayBlock();
 				$ret = false;
 			}
 		} else {
@@ -88,6 +88,7 @@ class PhalanxTitleBlock extends WikiaObject {
 			// $ret = TitleBlock::genericTitleCheck( $title );		
 		}
 		
+		$this->wf->profileOut( __METHOD__ );
 		return $ret;
 	}
 }

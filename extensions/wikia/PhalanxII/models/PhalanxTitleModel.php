@@ -4,7 +4,7 @@ class PhalanxTitleModel extends PhalanxContentModel {
 		return ( !( $this->title instanceof Title ) );
 	}
 
-	public function displayBlock( $text ) {
+	public function displayBlock() {
 		$this->wg->Out->setPageTitle( $this->wf->msg( 'spamprotectiontitle' ) );
 		$this->wg->Out->setRobotPolicy( 'noindex,nofollow' );
 		$this->wg->Out->setArticleRelated( false );
@@ -12,6 +12,7 @@ class PhalanxTitleModel extends PhalanxContentModel {
 		$this->wg->Out->addHTML( Html::element( 'p', array(), wfMsg( '( Call #9 )' ) ) );
 		$this->wg->Out->addWikiMsg( 'spamprotectionmatch', "<nowiki>{Block #{$this->blockId}</nowiki>" );
 		$this->wg->Out->returnToMain( false, $this->title );
-		Wikia::log( __METHOD__, __LINE__, "Block '#{$this->blockId}' blocked '{$text}'." );
+		/* send info to logger */
+		$this->logBlock();
 	}
 }

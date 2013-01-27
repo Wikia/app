@@ -22,22 +22,23 @@ $app = F::app();
 
 $classes = array(
 	/* controllers */ 
-	'Phalanx'                => $dir . 'PhalanxController.class.php',
+	'Phalanx'                  => $dir . 'PhalanxController.class.php',
 	/* models */
-	'PhalanxModel'           => $dir . 'models/PhalanxModel.php',
-	'PhalanxUserModel'       => $dir . 'models/PhalanxUserModel.php',
-	'PhalanxContentModel'    => $dir . 'models/PhalanxContentModel.php',
+	'PhalanxModel'             => $dir . 'models/PhalanxModel.php',
+	'PhalanxUserModel'         => $dir . 'models/PhalanxUserModel.php',
+	'PhalanxContentModel'      => $dir . 'models/PhalanxContentModel.php',
+	'PhalanxTitleModel'        => $dir . 'models/PhalanxTitleModel.php',
+	'PhalanxTextModel'         => $dir . 'models/PhalanxTextModel.php',
 	/* services */
-	'PhalanxService'         => $dir . 'services/PhalanxService.class.php',
+	'PhalanxService'           => $dir . 'services/PhalanxService.class.php',
 	/* hooks */
-	'PhalanxUserBlock'       => $dir . 'hooks/PhalanxUserBlock.class.php',
-	'PhalanxUserCookieBlock' => $dir . 'hooks/PhalanxUserCookieBlock.class.php',
-	'PhalanxContentBlock'	 => $dir . 'hooks/PhalanxContentBlock.class.php',
-	'PhalanxTitleBlock'	     => $dir . 'hooks/PhalanxTitleBlock.class.php',
-	'QuestionTitleBlock'     => $dir . 'hooks/QuestionTitleBlock.class.php',
-	'RecentQuestionsBlock'   => $dir . 'hooks/RecentQuestionsBlock.class.php',
-	'WikiCreationBlock'      => $dir . 'hooks/WikiCreationBlock.class.php',
-	'PhalanxHook'	         => $dir . 'hooks/PhalanxHook.class.php'
+	'PhalanxUserBlock'         => $dir . 'hooks/PhalanxUserBlock.class.php',
+	'PhalanxUserCookieBlock'   => $dir . 'hooks/PhalanxUserCookieBlock.class.php',
+	'PhalanxContentBlock'	   => $dir . 'hooks/PhalanxContentBlock.class.php',
+	'PhalanxTitleBlock'	       => $dir . 'hooks/PhalanxTitleBlock.class.php',
+	'PhalanxAnswersBlock'      => $dir . 'hooks/PhalanxAnswersBlock.class.php',
+	'PhalanxWikiCreationBlock' => $dir . 'hooks/PhalanxWikiCreationBlock.class.php',
+	'PhalanxHook'	           => $dir . 'hooks/PhalanxHook.class.php'
 );
 
 foreach ( $classes as $class_name => $class_path ) {
@@ -71,12 +72,9 @@ $phalanxhooks = array(
 			'CreateDefaultQuestionPageFilter'      => 'checkTitle',
 			'CreatePageTitleCheck'                 => 'checkTitle'
 		),
-	'PhalanxQuestionTitleBlock' =>
+	'PhalanxAnswersBlock' =>
 		array(
 			'CreateDefaultQuestionPageFilter'      => 'badWordsTest'
-		),
-	'PhalanxRecentQuestionsBlock' => 
-		array(
 			'DefaultQuestion::filterWordsTest'     => 'filterWordsTest'
 		),
 	'PhalanxWikiCreationBlock' => 
@@ -85,7 +83,7 @@ $phalanxhooks = array(
 		),
 	'PhalanxHook' =>
 		array(
-			'ContributionsToolLinks'               => 'loadLinks' #efLoadPhalanxLink
+			'ContributionsToolLinks'               => 'loadLinks'
 		)
 ); 
 		

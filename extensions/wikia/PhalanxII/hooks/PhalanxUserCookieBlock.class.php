@@ -27,16 +27,19 @@ class PhalanxUserCookieBlock extends PhalanxUserBlock {
 		$tracker = F::build( 'AccountCreationTracker' );
 		$hashes = $tracker->getHashesByUser( $user );
 
+		$phalanxModel = F::build('PhalanxUserModel', array( $user ) );
+
 		$ret = true;
 		if ( !empty( $hashes ) ) {
 			foreach ( $hashes as $hash ) {
-				$result = PhalanxService::match( "cookie", $hash );
+				$phalanxModel->setText( $hash );
+				$result = $phalanxModel->match( "cookie" );
 				if ( $result !== false ) {
 					if ( is_numeric( $result ) && $result > 0 ) {
-						$phalanxModel = F::build('PhalanxModel', array( $user, $result ) );
-						// set block data ...
+						$phalanxModel->setBlockId( $result );
+						/* set block data ... */
 						$phalanxModel->userBlock( 'exact' );
-						// ... and assign to user
+						/* ... and assign to user */
 						$user = $phalanxModel->getUser();
 						$ret = false;
 					} 

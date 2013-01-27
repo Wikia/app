@@ -27,7 +27,7 @@ class PhalanxUserBlock extends WikiaObject {
 			return true;
 		}
 
-		$result = PhalanxService::match( "user", $user->getName() );
+		$result = $phalanxModel->match( "user" );
 		if ( $result !== false ) {
 			if ( is_numeric( $result ) && $result > 0 ) {
 				/* user is blocked - we have block ID */
@@ -59,10 +59,13 @@ class PhalanxUserBlock extends WikiaObject {
 	public function abortNewAccount( $user, &$abortError ) {
 		$this->wf->profileIn( __METHOD__ );
 		
-		$result = PhalanxService::match( "user", $user->getName() );
+		$phalanxModel = F::build('PhalanxUserModel', array( $user ) );
+
+		$result = $phalanxModel->match( "user" );
 		if ( $result !== false && !is_numeric( $result ) ) {
 			/* check also user email */
-			$result = PhalanxService::match( "email", $user->getEmail() );
+			$phalanxModel->setText( $user->getEmail() );
+			$result = $phalanxModel->match( "email" );
 		}
 		
 		if ( $result !== false && ( is_numeric( $result ) && $result > 0 ) ) {

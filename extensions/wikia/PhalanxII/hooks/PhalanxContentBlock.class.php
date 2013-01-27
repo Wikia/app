@@ -41,26 +41,28 @@ class PhalanxContentBlock extends WikiaObject {
 			$summary = preg_replace( self::$whitelist, '', $summary );
 		}
 
-		$result = PhalanxService::match( "summary", $summary );
+		$phalanxModel->setText( $summary );
+		$result = $phalanxModel->match( "summary" );
 		if ( $result !== false ) {
 			if ( is_numeric( $result ) && $result > 0 ) {
 				/* user is blocked - we have block ID */
 				$phalanxModel->setBlockId( $result );
 				// set output with block info
-				$phalanxModel->displayBlock( $summary );
+				$phalanxModel->displayBlock();
 				$ret = false;
 			} else {
 				/* check content */
 				if ( !empty( self::$whitelist ) ) {
 					$textbox = preg_replace( self::$whitelist, '', $textbox );
 				}
-				$result = PhalanxService::match( "content", $textbox );
+				$phalanxModel->setText( $textbox );
+				$result = $phalanxModel->match( "content" );
 				if ( $result !== false ) {
 					if ( is_numeric( $result ) ) {
 						/* user is blocked - we have block ID */
 						$phalanxModel->setBlockId( $result );
 						// set output with block info
-						$editpage->spamPageWithContent( $phalanxModel->contentBlock( $textbox ) );
+						$editpage->spamPageWithContent( $phalanxModel->contentBlock() );
 						$ret = false;
 					} else {
 						$ret = true;
@@ -111,13 +113,14 @@ class PhalanxContentBlock extends WikiaObject {
 			$summary = preg_replace( self::$whitelist, '', $reason );
 		}
 
-		$result = PhalanxService::match( "summary", $reason );
+		$phalanxModel->setText( $reason );
+		$result = $phalanxModel->match( "summary" );
 		if ( $result !== false ) {
 			if ( is_numeric( $result ) && $result > 0 ) {
 				/* user is blocked - we have block ID */
 				$phalanxModel->setBlockId( $result );
 				// set output with block info
-				$error .= $phalanxModel->reasonBlock( $reason );
+				$error .= $phalanxModel->reasonBlock();
 				$ret = false;
 			} else {
 				$ret = true;
