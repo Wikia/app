@@ -5277,7 +5277,7 @@ z naszych ulubionych: <a style="color:#2a87d5;text-decoration:none;" href="http:
 	'founderemails-email-3-day-explore-button' => 'Eksploruj',
 	'founderemails-email-3-day-wikiahelps-text' => 'Potrzebujesz pomocy w poznaniu, jak coś działa?  Jesteśmy zawsze dla Ciebie!  Poproś nas o pomoc i poradę na <a style="color:#2a87d5;text-decoration:none;" href="http://spolecznosc.wikia.com">spolecznosc.wikia.com</a>.',
 	'founderemails-email-3-day-wikiahelps-signature' => 'Pracuj dalej tak wspaniale!<br />Zespół Wikii',
-	'founderemails-email-10-day-heading' => 'Jak ci idzie, $USERNAME?',
+	'founderemails-email-10-day-heading' => 'Jak Ci idzie, $USERNAME?',
 	'founderemails-email-10-day-congratulations' => 'Ale ten czas leci!  To już 10 dni od momentu rozpoczęcia $HDWIKINAME.',
 	'founderemails-email-10-day-tips-heading' => 'Zachęć innych by uczestniczyli w projekcie i pokaż wszystkim wspaniałą pracę, jaka już została wykonana!  Oto kilka sposobów rozprzestrzeniania:',
 	'founderemails-email-10-day-share-heading' => 'Nie mówiono Ci, że trzeba się dzielić?',

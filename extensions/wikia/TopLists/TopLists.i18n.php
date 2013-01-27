@@ -121,6 +121,7 @@ Head to Wikia to check out the changes! $1
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -129,6 +130,7 @@ $messages['qqq'] = array(
 	'action-toplists-create-edit-list' => '{{doc-action|toplists-create-edit}}',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
 	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!',
+	'toplists-minutes' => '{{Identical|Minute}}',
 	'toplists-oasis-only' => 'Displayed to users who try to edit or create Top 10 lists in a skin other than the Wikia skin.',
 );
 

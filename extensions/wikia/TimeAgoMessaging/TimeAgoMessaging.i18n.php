@@ -167,14 +167,21 @@ $messages['es'] = array(
 /** Finnish (suomi)
  * @author Ilkea
  * @author Tofu II
+ * @author VezonThunder
  */
 $messages['fi'] = array(
 	'timeagomessaging-desc' => 'Antaa i18n jquery.timeago.js lisäosan',
+	'timeago-year' => '{{PLURAL:$1|vuosi|$1 vuotta}} sitten',
 	'timeago-month' => '{{PLURAL:$1|kuukausi|$1 kuukautta}} sitten',
 	'timeago-day' => '{{PLURAL:$1|päivä|$1 päivää}} sitten',
 	'timeago-hour' => '{{PLURAL:$1|tunti|$1 tuntia}} sitten',
 	'timeago-minute' => '{{PLURAL:$1|minuutti|$1 minuuttia}} sitten',
 	'timeago-second' => 'minuutti sitten',
+	'timeago-day-from-now' => '{{PLURAL:$1|päivä|$1 päivää}} sitten',
+	'timeago-hour-from-now' => '{{PLURAL:$1|tunti|$1 tuntia}} sitten',
+	'timeago-minute-from-now' => '{{PLURAL:$1|minuutti|$1 minuuttia}} sitten',
+	'timeago-month-from-now' => '{{PLURAL:$1|kuukausi|$1 kuukautta}} sitten',
+	'timeago-second-from-now' => 'minuutti sitten',
 );
 
 /** French (français)

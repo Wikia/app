@@ -396,6 +396,13 @@ Isto não terá qualquer efeito.
 Será permitida a execução do resto da página apenas para que você possa verificar se não foi possível carregar algum dos usuários.',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'batchuserrights-userload-error' => "Non ge pozze carecà l'utende \"'''\$1'''\".",
+);
+
 /** Russian (русский)
  * @author Eleferen
  * @author Александр Сигачёв

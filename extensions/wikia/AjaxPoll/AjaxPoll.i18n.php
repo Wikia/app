@@ -126,6 +126,7 @@ $messages['cs'] = array(
 
 /** Welsh (Cymraeg)
  * @author Pwyll
+ * @author Robin Owain
  */
 $messages['cy'] = array(
 	'ajaxpoll-percentVotes' => "$1%&nbsp; o'r holl bleidleisiau",
@@ -134,7 +135,7 @@ $messages['cy'] = array(
 	'ajaxpoll-summary' => 'Crëwyd y bleidlais am $1 ar $2, ac mae $3 o bobl wedi pleidleisio hyd yn hyn.',
 	'ajaxpoll-submit' => 'Pleidleisiwch!',
 	'ajaxpoll-closed' => "Mae'r bleidlais bellach ar gau. Mwynhewch y canlyniadau.",
-	'ajaxpoll-submitting' => "Arhoswch os gwelwch yn dda, yn cyflwyno'ch pleidlais...",
+	'ajaxpoll-submitting' => "Arhoswch os gwelwch yn dda, rydym yn cyflwyno'ch pleidlais...",
 );
 
 /** Danish (dansk)
