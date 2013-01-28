@@ -19,27 +19,25 @@
 
 $messages = array();
 
-$messages['en'] = array(
+$messages[ 'en' ] = array(
 	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article',
-	'categoryselect-code-view' => 'Code view',
-	'categoryselect-code-view-placeholder' => 'Add categories here, e.g. [[{{ns:category}}:Name]]',
-	'categoryselect-visual-view' => 'Visual view',
-	'categoryselect-infobox-caption' => 'Category options',
-	'categoryselect-infobox-category' => 'Provide the name of the category:',
-	'categoryselect-infobox-sortkey' => 'Alphabetize this article on the "$1" category page under the name:',
-	'categoryselect-addcategory-button' => 'Add category',
-	'categoryselect-addcategory-edit' => 'Add a category',
-	'categoryselect-suggest-hint' => 'Press Enter when done',
-	'categoryselect-tooltip' => "'''New!''' Category tagging toolbar. Try it out or see [[Help:CategorySelect|help]] to learn more",
-	'categoryselect-unhandled-syntax' => 'Unhandled syntax detected - switching back to visual mode impossible.',
-	'categoryselect-edit-summary' => 'Adding categories',
-	'categoryselect-empty-name' => 'Provide category name (part before |)',
-	'categoryselect-button-save' => 'Save',
+	'categoryselect-button-add' => 'Add category',
 	'categoryselect-button-cancel' => 'Cancel',
-	'categoryselect-error-not-exist' => 'Article [id=$1] does not exist.',
-	'categoryselect-error-user-rights' => 'User rights error.',
+	'categoryselect-button-save' => 'Save',
+	'categoryselect-category-add' => 'Add category...',
+	'categoryselect-category-edit' => 'Edit category',
+	'categoryselect-category-remove' => 'Remove category',
+	'categoryselect-edit-summary' => 'Adding categories',
+	'categoryselect-error-article-doesnt-exist' => 'Article [id=$1] does not exist.',
+	'categoryselect-error-category-name-length' => 'The maximum length for a category name has been reached.',
 	'categoryselect-error-db-locked' => 'Database is locked.',
-	'categoryselect-edit-abort' => 'The modification you tried to make was aborted by an extension hook',
+	'categoryselect-error-duplicate-category-name' => 'Category "$1" already exists.',
+	'categoryselect-error-edit-abort' => 'The modifications you tried to make were aborted by an extension hook.',
+	'categoryselect-error-empty-category-name' => 'Please provide a category name.',
+	'categoryselect-error-user-rights' => 'User does not have permission to perform this action.',
+	'categoryselect-modal-category-name' => 'Provide the name of the category:',
+	'categoryselect-modal-category-sortkey' => 'Alphabetize this article on the "$1" category page under the name:',
+	'categoryselect-tooltip-add' => 'Press the Enter or Return key when done.',
 	'tog-disablecategoryselect' => 'Disable Category module (only applies if editing in visual mode has been disabled)',
 	'tog-disablecategoryselect-v2' => 'Disable Category module (only applies if visual mode editing is disabled)'
 );
@@ -49,12 +47,28 @@ $messages['en'] = array(
  * @author Nemo bis
  * @author Umherirrender
  */
-$messages['qqq'] = array(
+$messages[ 'qqq' ] = array(
 	'categoryselect-desc' => '{{desc}}',
-	'categoryselect-code-view-placeholder' => "This is the message shown in the category form in the source mode of the editor. The link doesn't exist, it's just an example text to show how to add the category.",
-	'categoryselect-infobox-sortkey' => "Allows the user to enter alternate text to change an article's alphabetical placement in a particular caetgory. $1 is the plaintext name of the Category the alternate placement value is being modified on.",
-	'categoryselect-button-save' => '{{Identical|Save}}',
-	'categoryselect-button-cancel' => '{{Identical|Cancel}}',
+	'categoryselect-button-save' => 'The text displayed for the save button on article pages.',
+	'categoryselect-button-cancel' => 'The text displayed for the cancel button on article pages.',
+	'categoryselect-category-add' => 'The placeholder text displayed in the category input field when it is empty.',
+	'categoryselect-category-edit' => 'Title text for the edit icon and the heading for category edit modals.',
+	'categoryselect-category-remove' => 'Title text for the remove icon.',
+	'categoryselect-edit-summary' => 'The summary used for revisions created when saving category updates on view pages.',
+	'categoryselect-error-article-doesnt-exist' => 'The error message shown when trying to add categories to an article that doesn\'t exist. Parameters:
+* $1: The ID of the article.',
+	'categoryselect-error-category-name-length' => 'The error message shown when typing in a category name when the maximum allowable length is exceeded.',
+	'categoryselect-error-db-locked' => 'The error message shown when saving changes when the site is in read only mode.',
+	'categoryselect-error-duplicate-category-name' => 'The error message shown when trying to add a category with the same name as an existing category. Parameters:
+* $1: The name of the category the user is trying to add.',
+	'categoryselect-error-edit-abort' => 'The error message shown when saving changes is cancelled by an extension hook.',
+	'categoryselect-error-empty-category-name' => 'The error message shown when trying to add a category without a category name.',
+	'categoryselect-error-user-rights' => 'The error message shown when trying to save changes without proper user permissions.',
+	'categoryselect-modal-category-name' => 'The text shown above the category input field in the modal dialog.',
+	'categoryselect-modal-category-sortkey' => 'The text shown above the sortkey input field in the modal dialog.',
+	'categoryselect-tooltip-add' => 'A tooltip explaining to users how to submit the category they typed in the input field.',
+	'tog-disablecategoryselect' => 'The text displayed in user preferences for disabling the CategorySelect extension',
+	'tog-disablecategoryselect-v2' => 'The text displayed in user preferences for disabling the CategorySelect extension when the UserPreferencesV2 extension is enabled.'
 );
 
 /** Afrikaans (Afrikaans)

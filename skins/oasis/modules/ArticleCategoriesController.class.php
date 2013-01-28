@@ -7,19 +7,18 @@
 
 class ArticleCategoriesController extends WikiaController {
 
-	public function executeIndex() {
-		wfProfileIn(__METHOD__);
-		$this->catlinks = $this->wg->User->getSkin()->getCategories();
-		$catlinks = $this->request->getVal('catlinks');
-		if(!empty($catlinks)) {
-			$this->catlinks = $catlinks;
+	public function index() {
+		wfProfileIn( __METHOD__ );
+
+		$categoryLinks = $this->request->getVal( 'categoryLinks', $this->wg->User->getSkin()->getCategories() );
+
+		// MW1.19 always returns non empty $catlinks
+		if ( strpos( $categoryLinks, ' catlinks-allhidden\'></div>' ) !== false ) {
+			$categoryLinks = '';
 		}
 
-		// MW1.16 always returns non empty $catlinks
-		if (strpos($this->catlinks, ' catlinks-allhidden\'></div>') !== false) {
-			$this->catlinks = '';
-		}
+		$this->response->setVal( 'categoryLinks', $categoryLinks );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 }

@@ -245,7 +245,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
-		'//extensions/wikia/CategorySelect/CategorySelect.view.js',
+		'//extensions/wikia/CategorySelect/js/CategorySelect.view.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 
 		// oasis specific files
@@ -1185,6 +1185,18 @@ $config['sharingtoolbar_js'] = array(
 		'//skins/oasis/js/SharingToolbar/SharingToolbar.js',
 		'//extensions/wikia/ShareButtons/js/ShareButtons.js',
 		'#function_SharingToolbarController::getAssets'
+	)
+);
+
+/* CategorySelect */
+$config['categoryselect_edit_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/jquery.ui/jquery.ui.core.js',
+		'//resources/jquery.ui/jquery.ui.widget.js',
+		'//resources/jquery.ui/jquery.ui.mouse.js',
+		'//resources/jquery.ui/jquery.ui.sortable.js',
+		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
 	)
 );
 
