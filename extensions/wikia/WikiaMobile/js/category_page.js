@@ -6,7 +6,7 @@
  * @param track.js track
  */
 /* global wgTitle */
-require(['events', 'throbber', 'track', 'nirvana'], function (events, throbber, track, nirvana) {
+require(['events', 'throbber', 'track', 'wikia.nirvana'], function (events, throbber, track, nirvana) {
 	'use strict';
 
 	var d = document,
