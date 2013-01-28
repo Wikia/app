@@ -6,7 +6,7 @@
  * @param track.js track
  */
 /* global wgTitle */
-require(['events', 'throbber', 'track'], function (events, throbber, track) {
+require(['events', 'throbber', 'track', 'nirvana'], function (events, throbber, track, nirvana) {
 	'use strict';
 
 	var d = document,
@@ -94,8 +94,8 @@ require(['events', 'throbber', 'track'], function (events, throbber, track) {
 
 		self.className += ' active';
 
-		Wikia.nirvana.sendRequest({
-			controller: 'WikiaMobileController',
+		nirvana.sendRequest({
+			controller: 'WikiaMobile',
 			method: 'getCategoryBatch',
 			format: 'html',
 			type: 'GET',

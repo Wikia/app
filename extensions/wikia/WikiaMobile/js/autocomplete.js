@@ -1,14 +1,14 @@
 define('autocomplete', function(){
-var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
-	input,
-	list,
-	clear,
-	suggestions = [],
-	currentValue,
-	cachedResponse = [],
-	serviceUrl,
-	regExp,
-	t, a;
+	var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
+		input,
+		list,
+		clear,
+		suggestions = [],
+		currentValue,
+		cachedResponse = [],
+		serviceUrl,
+		regExp,
+		t, a;
 
 	function getSuggestions() {
 		clearTimeout(t);

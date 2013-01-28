@@ -7,7 +7,7 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  **/
 
-require(['throbber', 'wikia.querystring', 'events'], function(throbber, qs, events){
+require(['throbber', 'wikia.querystring', 'events', 'loader', 'nirvana'], function(throbber, qs, events, loader, nirvana){
 	var hash = (new qs()).getHash(),
 		wkArtCom,
 		collSec,
@@ -28,9 +28,9 @@ require(['throbber', 'wikia.querystring', 'events'], function(throbber, qs, even
 		if(++responseCounter >= 2){
 			throbber.remove(wkArtCom);
 
-			Wikia.processStyle(styles);
+			loader.processStyle(styles);
 			wkComm.insertAdjacentHTML('beforeend', commentsHTML);
-			Wikia.processScript(scripts);
+			loader.processScript(scripts);
 
 			if(open){
 				var elm = document.getElementById(open);
@@ -58,8 +58,8 @@ require(['throbber', 'wikia.querystring', 'events'], function(throbber, qs, even
 	function init(){
 		throbber.show(wkArtCom, {center: true, size:'40px'});
 
-		Wikia.nirvana.sendRequest({
-			controller: 'ArticleCommentsController',
+		nirvana.sendRequest({
+			controller: 'ArticleComments',
 			method: 'WikiaMobileCommentsPage',
 			data: {
 				articleID: wgArticleId,
@@ -73,20 +73,23 @@ require(['throbber', 'wikia.querystring', 'events'], function(throbber, qs, even
 			}
 		});
 
-		Wikia.getMultiTypePackage({
-			styles: '/extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss',
-			messages: 'WikiaMobileComments',
-			scripts: 'articlecomments_js_wikiamobile',
-			params: {
-				uselang: wgUserLanguage//ensure per-language Varnish cache
-			},
-			//ttl: 86400,
-			callback: function(res){
+		loader({
+			type: loader.MULTI,
+			resources: {
+				styles: '/extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss',
+				messages: 'WikiaMobileComments',
+				scripts: 'articlecomments_js_wikiamobile',
+				params: {
+					uselang: wgUserLanguage//ensure per-language Varnish cache
+				}
+			}
+		}).done(
+			function(res){
 				styles = res.styles;
 				scripts = res.scripts.join('');
 				show();
 			}
-		});
+		);
 	}
 
 	Wikia(function(){

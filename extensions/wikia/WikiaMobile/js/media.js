@@ -4,7 +4,8 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', 'events', require.optional('share'), require.optional('wikia.cache')], function(msg, modal, throbber, qs, popover, track, events, share, cache){
+define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', 'events', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'nirvana'],
+	function(msg, modal, throbber, qs, popover, track, events, share, cache, loader, nirvana){
 	'use strict';
 	/** @private **/
 
@@ -171,11 +172,11 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 					center: true
 				});
 
-				Wikia.nirvana.getJson(
+				nirvana.getJson(
 					'VideoHandler',
 					'getEmbedCode',
 					{
-						articleId: window.wgArticleId,
+						articleId: wgArticleId,
 						fileTitle: imgTitle,
 						width: window.innerWidth - 100
 					},
@@ -465,29 +466,33 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 				galleryData = cache && cache.get(cacheKey);
 
 				if(galleryData){
-					Wikia.processStyle(galleryData[0]);
-					Wikia.processScript(galleryData[1]);
+					loader.processStyle(galleryData[0]);
+					loader.processScript(galleryData[1]);
 					require(['mediagallery'], function(mg){
 						mg.init();
 					});
 				}else{
-					Wikia.getMultiTypePackage({
-						styles: '/extensions/wikia/WikiaMobile/css/mediagallery.scss',
-						scripts: 'wikiamobile_mediagallery_js',
-						ttl: ttl,
-						callback: function(res){
+					loader({
+						type: loader.MULTI,
+						resources: {
+							styles: '/extensions/wikia/WikiaMobile/css/mediagallery.scss',
+							scripts: 'wikiamobile_mediagallery_js',
+							ttl: ttl
+						}
+					}).done(
+						function(res){
 							var script = res.scripts[0],
 								style = res.styles;
 
-							Wikia.processStyle(style);
-							Wikia.processScript(script);
+							loader.processStyle(style);
+							loader.processScript(script);
 
 							cache && cache.set(cacheKey, [style, script], ttl);
 							require(['mediagallery'], function(mg){
 								mg.init();
 							});
 						}
-					});
+					);
 				}
 			}
 
@@ -591,5 +596,3 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		cleanup: removeZoom
 	};
 });
-
-

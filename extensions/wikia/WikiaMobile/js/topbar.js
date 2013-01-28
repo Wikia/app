@@ -289,23 +289,28 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 	function openLogin(hash){
 		if(wkPrf.className.indexOf('loaded') == -1){
 			throbber.show(wkPrf, {center: true});
-			Wikia.getMultiTypePackage({
-				templates: [{
-					controllerName: 'UserLoginSpecialController',
-					methodName: 'index'
-				}],
-				messages: 'fblogin',
-				styles: '/extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss',
-				scripts: 'userlogin_facebook_js_wikiamobile',
-				params: {
-					useskin: w.skin
-				},
-				callback: function(res){
+
+			loader({
+				type: loader.MULTI,
+				resources: {
+					templates: [{
+						controller: 'UserLoginSpecial',
+						method: 'index'
+					}],
+					messages: 'fblogin',
+					styles: '/extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss',
+					scripts: 'userlogin_facebook_js_wikiamobile',
+					params: {
+						useskin: w.skin
+					}
+				}
+			}).done(
+				function(res){
 					throbber.remove(wkPrf);
 
-					Wikia.processStyle(res.styles);
-					wkPrf.insertAdjacentHTML('beforeend', res.templates['UserLoginSpecialController_index']);
-					Wikia.processScript(res.scripts);
+					loader.processStyle(res.styles);
+					wkPrf.insertAdjacentHTML('beforeend', res.templates['UserLoginSpecial_index']);
+					loader.processScript(res.scripts);
 
 					wkPrf.className += ' loaded';
 
@@ -314,12 +319,12 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 
 					form.setAttribute('action',
 						(new qs(form.getAttribute('action')))
-						.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName))
-						.setHash(hash)
-						.toString()
+							.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName))
+							.setHash(hash)
+							.toString()
 					);
 				}
-			});
+			);
 		}
 		//track('login/open');
 	}
