@@ -433,9 +433,7 @@ SpecialPromote.prototype = {
 };
 
 $(function () {
-	$.when(
-		$.loadJQueryAIM()
-	).done(function() {
+	$.loadJQueryAIM().done(function() {
 		var SpecialPromoteInstance = new SpecialPromote();
 		SpecialPromoteInstance.init();
 	});
