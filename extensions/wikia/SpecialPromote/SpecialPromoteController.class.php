@@ -43,7 +43,6 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 			return true;
 		}
 
-		$this->response->addAsset('resources/wikia/libraries/aim/jquery.aim.js');
 		$this->response->addAsset('extensions/wikia/SpecialPromote/js/SpecialPromote.js');
 
 		F::build('JSMessages')->enqueuePackage('SpecialPromote', JSMessages::EXTERNAL);
