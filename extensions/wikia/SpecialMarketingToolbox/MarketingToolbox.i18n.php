@@ -49,6 +49,7 @@ $messages['en'] = array(
 
 	'marketing-toolbox-edithub-clearall-confirmation' => 'Are you sure you want to clear the entire $1 module?',
 	'marketing-toolbox-edithub-clear-confirmation' => 'Are you sure you want to clear this section?',
+	'marketing-toolbox-edithub-clear-sponsored-image' => 'Are you sure you want to remove sponsored image?',
 
 	'marketing-toolbox-hub-module-slider' => 'Slider',
 	'marketing-toolbox-hub-module-pulse' => 'Pulse',
