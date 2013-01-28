@@ -53,8 +53,9 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 
 			Wikia.ajax({
 				url: ajaxUrl + '&page=' + ~~pageIndex,
-				dataType: 'json',
-				success: function(result){
+				dataType: 'json'
+			}).done(
+				function(result){
 					var finished;
 
 					currentPage = pageIndex;
@@ -74,7 +75,7 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 
 					wkArtCom.scrollIntoView();
 				}
-			});
+			);
 		}
 	}
 
@@ -134,8 +135,9 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 					url: wgScript,
 					data: data,
 					dataType: 'json',
-					type: 'POST',
-					success: function(json) {
+					type: 'POST'
+				}).done(
+					function(json) {
 						textArea.value = '';
 
 						if(!json.error && json.text){
@@ -163,7 +165,7 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 						submit.disabled = false;
 						throbber.hide(form);
 					}
-				});
+				);
 			}
 		}
 	}

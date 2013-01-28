@@ -66,12 +66,13 @@ require(['throbber', 'wikia.querystring', 'events', 'wikia.loader', 'wikia.nirva
 				page: 1
 			},
 			format: 'html',
-			type: 'GET',
-			callback: function(res){
+			type: 'GET'
+		}).done(
+			function(res){
 				commentsHTML = res;
 				show();
 			}
-		});
+		);
 
 		loader({
 			type: loader.MULTI,
