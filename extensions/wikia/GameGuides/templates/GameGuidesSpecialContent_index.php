@@ -17,15 +17,18 @@
 		<?
 		if ( is_array( $tags ) ):
 			foreach( $tags as $tag ):
+
+				echo "<li class=tag><input value='{$tag['title']}'/></li>";
+
 				foreach( $tag['categories'] as $category ): ?>
-			<li><input class=category placeholder="<?= $wf->Msg('wikiagameguides-content-category');?>" value="<?= $category['title']; ?>"/><input class=tag placeholder="<?= $wf->Msg('wikiagameguides-content-tag');?>" value="<?= isset( $tag['title'] ) ? $tag['title'] : ''; ?>"/><input class=name placeholder="<?= $wf->Msg('wikiagameguides-content-name');?>" value="<?= isset( $category['label'] ) ? $category['label'] : ''; ?>"/><button class="remove secondary">X</button></li>
+			<li class=category><input value="<?= $category['title']; ?>"/><input class=name value="<?= isset( $category['label'] ) ? $category['label'] : ''; ?>"/></li>
 				<? endforeach;
 			endforeach;
 		else: ?>
-			<li><input class=category placeholder="<?= $wf->Msg('wikiagameguides-content-category');?>" /><input class=tag placeholder="<?= $wf->Msg('wikiagameguides-content-tag');?>" /><input class=name placeholder="<?= $wf->Msg('wikiagameguides-content-name');?>" /><button class="remove secondary">X</button></li>
 		<? endif; ?>
 		</ul>
-    <button class=secondary id=addCategory><?= $wf->Msg('wikiagameguides-content-add');?></button>
+    <button class=secondary id=addTag><?= $wf->Msg('wikiagameguides-content-add-tag');?></button>
+    <button class=secondary id=addCategory><?= $wf->Msg('wikiagameguides-content-add-category');?></button>
 	<button id=save disabled><?= $wf->Msg('wikiagameguides-content-save');?></button>
 	<span id=status>&#10003;</span>
 </div>

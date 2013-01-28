@@ -1,5 +1,4 @@
 #contentManagmentForm {
-	text-align: center;
 	counter-reset: categories;
 	margin: 100px 0;
 	position: relative;
@@ -82,6 +81,11 @@
 			box-shadow: 0 0 6px red;
 			color: rgb(255,100,100);
 		}
+	}
+
+	.tag ~ .category {
+		counter-reset: categories;
+		margin-left: 50px;
 	}
 }
 

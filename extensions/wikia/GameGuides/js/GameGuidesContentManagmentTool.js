@@ -3,19 +3,22 @@ $(function(){
 	'use strict';
 
 	//be sure this module is ready to be used
-	mw.loader.using('jquery.autocomplete', function(){
+	mw.loader.using(['jquery.autocomplete', 'jquery.ui.sortable'], function(){
 		var d = document,
-			add = d.getElementById('addCategory'),
+			addCategory = d.getElementById('addCategory'),
+			addTag = d.getElementById('addTag'),
 			save = d.getElementById('save'),
 			form = d.getElementById('contentManagmentForm'),
 			$form = $(form),
 			status = d.getElementById('status'),
 			ul = form.getElementsByTagName('ul')[0],
+			$ul = $(ul),
 			//it looks better if we display in input category name without Category:
 			categoryId = window.wgNamespaceIds.category,
 			categoryName = window.wgFormattedNamespaces[categoryId] + ':',
 			//prepare html to be injected in ul
-			row = '<li><input class=category placeholder="' + $.msg('wikiagameguides-content-category') + '" /><input class=tag placeholder="' + $.msg('wikiagameguides-content-tag') + '" /><input class=name placeholder="' + $.msg('wikiagameguides-content-name') + '" /><button class="remove secondary">X</button></li>',
+			category = '<li class=category><input class=category placeholder="' + $.msg('wikiagameguides-content-category') + '" /><input class=name placeholder="' + $.msg('wikiagameguides-content-name') + '" /><div class=delete></div><div class=handle></div></li>',
+			tag = '<li class=tag><input placeholder="tag"/><div class=delete></div><div class=handle></div></li>',
 			//list of all tags, so we can suggest them to a user
 			tags = [],
 			setup = function(last){
@@ -73,10 +76,11 @@ $(function(){
 					if(ev.keyCode === 13) addNew();
 				});
 			},
-			addNew = function(){
+			addNew = function(row){
 				ul.insertAdjacentHTML('beforeend', row);
 				setup(true);
-				$(ul).find('.category').last().focus();
+				$ul.find('.category').last().focus();
+				$ul.sortable("refresh");
 			},
 			grabTags = function(){
 				tags.length = 0;
@@ -140,7 +144,12 @@ $(function(){
 				checkSave();
 			});
 
-		add.addEventListener('click', addNew);
+		addCategory.addEventListener('click', function(){
+			addNew(category);
+		});
+		addTag.addEventListener('click', function(){
+			addNew(tag);
+		});
 
 		save.addEventListener('click', function(){
 			var categories = form.getElementsByTagName('li'),
@@ -195,6 +204,12 @@ $(function(){
 					}
 				}
 			});
+		});
+
+		$(ul).sortable({
+			opacity: 0.5,
+			axis: 'y',
+			containment: "#contentManagmentForm"
 		});
 
 		grabTags();

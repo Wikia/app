@@ -18,7 +18,10 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( $title );
 		$this->wg->Out->setHTMLTitle( $title );
 
-		$this->wg->Out->addModules( 'jquery.autocomplete' );
+		$this->wg->Out->addModules([
+			'jquery.autocomplete',
+			'jquery.ui.sortable'
+		]);
 
 		$assetManager = AssetsManager::getInstance();
 
