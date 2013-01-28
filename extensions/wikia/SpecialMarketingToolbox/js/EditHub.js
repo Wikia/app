@@ -147,10 +147,11 @@ EditHub.prototype = {
 			callback: $.proxy(function(response) {
 				var tempImg = new Image();
 				tempImg.src = response.fileUrl;
-				tempImg.height = response.imageHeight
-				tempImg.width = response.imageWidth;
-
 				var box = this.lastActiveWmuButton.parents('.module-box:first');
+				if (!box.hasClass('sponsored-image')) { //define dimensions if it's not sponsored image
+					tempImg.height = response.imageHeight
+					tempImg.width = response.imageWidth;
+				}
 				if (!box.length) {
 					box = $('.MarketingToolboxMain');
 				}

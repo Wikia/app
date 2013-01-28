@@ -283,11 +283,8 @@ $chevron-color: #888;
 		.image-placeholder {
 			float: right;
 			height: 15px;
+			overflow: hidden;
 			width: 85px;
-			img {
-				height: 15px;
-				width: 85px;
-			}
 		}
 		.remove-sponsored-image {
 			clear: both;
