@@ -18,7 +18,7 @@ class MarketingToolboxImageModel extends WikiaModel {
 	 * @param integer $destImageWidth
 	 * @return stdClass (simple stdObject with fields: title, url, width and height)
 	 */
-	public function getImageThumbData($destImageWidth) {
+	public function getImageThumbData($destImageWidth = 0) {
 		return ImagesService::getLocalFileThumbUrlAndSizes($this->getFileName(), $destImageWidth);
 	}
 }
