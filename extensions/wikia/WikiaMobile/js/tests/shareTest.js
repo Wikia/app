@@ -36,25 +36,27 @@ describe("Share module", function () {
 		}
 	});
 
-	define.mock('cache', {
+	define.mock('wikia.cache', {
 		get: function(){return false}
 	});
 
-	define.mock('nirvana', {
-		getJson: function(obj){
-			var dfd = new Wikia.Deferred();
 
-			dfd.resolve({
-				templates: {
-					WikiaMobileSharingService_index: '<ul class=wkLst><li class=facebookShr><a href="http://www.facebook.com/sharer.php?u=__1__&t=__2__" target=_blank>&nbsp;</a></li><li class=twitterShr><a href="http://twitter.com/home?status=__1__%20__2__\" target=_blank>&nbsp;</a></li><li class=plusoneShr><a href="https://plusone.google.com/_/+1/confirm?hl=pl&url=__1__" target=_blank>&nbsp;</a></li><li class=emailShr><a href="mailto:?body=__3__%20__1__&subject=__4__" target=_blank>&nbsp;</a></li></ul>'
-				},
-				styles: ''
-			});
+	var loader = function(obj){
+		var dfd = new Wikia.Deferred();
 
-			return dfd.promise();
-		},
-		processStyle: function(){}
-	});
+		dfd.resolve({
+			templates: {
+				WikiaMobileSharingService_index: '<ul class=wkLst><li class=facebookShr><a href="http://www.facebook.com/sharer.php?u=__1__&t=__2__" target=_blank>&nbsp;</a></li><li class=twitterShr><a href="http://twitter.com/home?status=__1__%20__2__\" target=_blank>&nbsp;</a></li><li class=plusoneShr><a href="https://plusone.google.com/_/+1/confirm?hl=pl&url=__1__" target=_blank>&nbsp;</a></li><li class=emailShr><a href="mailto:?body=__3__%20__1__&subject=__4__" target=_blank>&nbsp;</a></li></ul>'
+			},
+			styles: ''
+		});
+
+		return dfd.promise();
+	};
+
+	loader.processStyle = function(){};
+
+	define.mock('wikia.loader', loader);
 
 	async.it('should be defined', function(done){
 		require(['share'], function(share){
@@ -85,6 +87,7 @@ describe("Share module", function () {
 		require(['share'], function(share){
 			share('TESTTEST')(sharePlace);
 
+throw sharePlace.children.length;
 			expect(sharePlace.children.length).toBe(1);
 			expect(sharePlace.children[0].className).toBe('wkLst');
 			expect(sharePlace.querySelector('.wkLst').children.length).toBe(4);
