@@ -6,18 +6,10 @@ require(['track', 'events', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMe
 	//init
 	var btn = document.getElementById('ssoFbBtn');
 
-	//see fbconnect.js
-	FB.init({
-		appId : window.fbAppId,
-		oauth : true,
-		status : true, // Check login status
-		cookie : true, // Enable cookies to allow the server to access the session
-		xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
-	});
-
 	btn.addEventListener(events.click, function(){
 		UserLoginFacebook.login();
 	});
+
 	btn.disabled = false;
 
 	/** @public **/

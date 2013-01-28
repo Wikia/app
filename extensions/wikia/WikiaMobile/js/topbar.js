@@ -328,6 +328,15 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 							.setHash(hash)
 							.toString()
 					);
+
+					//see fbconnect.js
+					FB.init({
+						appId : window.fbAppId,
+						oauth : true,
+						status : true, // Check login status
+						cookie : true, // Enable cookies to allow the server to access the session
+						xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
+					});
 				}
 			);
 		}
