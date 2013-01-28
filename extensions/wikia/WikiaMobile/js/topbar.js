@@ -304,7 +304,12 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 						useskin: w.skin
 					}
 				}
-			}).done(
+			},
+			{
+				type: loader.LIBRARY,
+				resources: 'facebook'
+			}
+			).done(
 				function(res){
 					throbber.remove(wkPrf);
 
