@@ -17,10 +17,9 @@ $(function(){
 			categoryId = window.wgNamespaceIds.category,
 			categoryName = window.wgFormattedNamespaces[categoryId] + ':',
 			//prepare html to be injected in ul
-			category = '<li class=category><input class=category placeholder="' + $.msg('wikiagameguides-content-category') + '" /><input class=name placeholder="' + $.msg('wikiagameguides-content-name') + '" /><div class=delete></div><div class=handle></div></li>',
-			tag = '<li class=tag><input placeholder="tag"/><div class=delete></div><div class=handle></div></li>',
+			category = '<li class=category><input class=category placeholder="' + $.msg('wikiagameguides-content-category') + '" /><input class=name placeholder="' + $.msg('wikiagameguides-content-name') + '" /><span class=delete></span><span class="sprite drag"></span></li>',
+			tag = '<li class=tag><input placeholder="tag"/><span class=delete></span><span class="sprite drag"></span></li>',
 			//list of all tags, so we can suggest them to a user
-			tags = [],
 			setup = function(last){
 				$form.find('.category' + (last ? ':last': '')).autocomplete({
 					serviceUrl: wgServer + wgScript,
@@ -83,7 +82,6 @@ $(function(){
 				$ul.sortable("refresh");
 			},
 			grabTags = function(){
-				tags.length = 0;
 				$('.tag').each(function(){
 					var val = this.value;
 					if(val && tags.indexOf(val) === -1) tags.push(val);
@@ -209,7 +207,10 @@ $(function(){
 		$(ul).sortable({
 			opacity: 0.5,
 			axis: 'y',
-			containment: "#contentManagmentForm"
+			containment: '#contentManagmentForm',
+			cursor: 'move',
+			handle: '.drag',
+			placeholder: 'drop'
 		});
 
 		grabTags();

@@ -1,5 +1,7 @@
+
+
 #contentManagmentForm {
-	counter-reset: categories;
+	counter-reset: first second;
 	margin: 100px 0;
 	position: relative;
 
@@ -24,9 +26,12 @@
 		list-style: none;
 	}
 
+	.tag::before, .category::before {
+		counter-increment: first;
+		content: "#"counter(first);
+	}
+
 	li::before{
-		counter-increment: categories;
-		content: "#"counter(categories);
 		width: 30px;
 		display: inline-block;
 	}
@@ -57,7 +62,7 @@
 		-webkit-transition: all .3s;
 	}
 
-	.error {
+	.error input{
 		box-shadow: inset -2px 2px 10px -5px black, 0 0 5px red;
 		border: 1px solid red;
 	}
@@ -83,9 +88,25 @@
 		}
 	}
 
+	.tag + .category {
+		counter-reset: second;
+	}
+
 	.tag ~ .category {
-		counter-reset: categories;
 		margin-left: 50px;
+
+		&::before{
+			counter-increment: second;
+			content: "#"counter(second);
+		}
+	}
+
+	.drop {
+		border: dashed yellow 1px;
+	}
+
+	.drag {
+		display: inline-block;
 	}
 }
 
