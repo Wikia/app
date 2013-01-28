@@ -148,23 +148,23 @@ var JSSnippets = (function(){
 			dependencies = unique(dependencies);
 
 			// load all dependencies in parallel and then fire all callbacks
-			$.getResources(dependencies, function(){
-				try{
-					for(var id in callbacks){
-						for(x = 0, l = options[id].length; x < l; x++){
-							callbacks[id](options[id][x]);
+			require(['wikia.loader', 'wikia.log'], function(loader, log){
+				loader.apply(
+					loader,
+					dependencies
+				).done(
+					function(){
+						try{
+							for(var id in callbacks){
+								for(x = 0, l = options[id].length; x < l; x++){
+									callbacks[id](options[id][x]);
+								}
+							}
+						}catch(e){
+							log('Skipping running callback, cause: ' + e, log.levels.error);
 						}
 					}
-				}catch(e){
-					var msg = 'Skipping running callback, cause: ' + e;
-
-					//mobile skin doesn't have jQuery + extensions and can rely on console
-					if(window.console){
-						console.warn(msg);
-					}else{
-						$().log(msg);
-					}
-				}
+				)
 			});
 
 			clear();

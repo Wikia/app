@@ -20,6 +20,13 @@ $messages['ar'] = array(
 	'centralhelpsearch-placeholder' => 'مساعدة على البحث...',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author AZISS
+ */
+$messages['az'] = array(
+	'centralhelpsearch-placeholder' => 'Arayış üzrə axtarış...',
+);
+
 /** Breton (brezhoneg)
  * @author Gwenn-Ael
  */
@@ -189,11 +196,12 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (русский)
+ * @author AZISS
  * @author Kuzura
  */
 $messages['ru'] = array(
 	'centralhelpsearch-desc' => 'Разрешить включение формы для поиска по Справке Вики Сообщества',
-	'centralhelpsearch-placeholder' => 'Поиск по Справке&hellip;',
+	'centralhelpsearch-placeholder' => 'Поиск по Справке...',
 );
 
 /** Swedish (svenska)

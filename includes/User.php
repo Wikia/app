@@ -519,6 +519,7 @@ class User {
 				$mExtUser = ExternalUser::newFromName( $nt->getText() );
 				if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 					$mExtUser->linkToLocal( $mExtUser->getId() );
+					$s = $mExtUser->getLocalUser( false );
 				}
 			}
 		}
@@ -1173,7 +1174,7 @@ class User {
 		} else {
 			$all = false;
 		}
-	
+
 		// Wikia. The following if/else statement has been added to reflect our user table layout.
 		if ( isset( $row->user_birthdate ) ) {
 			$this->mBirthDate = wfTimestampOrNull( TS_MW, $row->user_birthdate );
@@ -3011,7 +3012,7 @@ class User {
 				}
 			}
 		}
-                
+
                 /**
                  * @author Michał Roszka (Mix)
                  * trap for BugId:17012
@@ -3021,7 +3022,7 @@ class User {
                     UserMailer::send( $oTo, $oFrom, 'BugId:17012 Occurrence Report', serialize( wfDebugBacktrace() ) );
                 }
 		// wikia change end
-                
+
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user',
 			array( /* SET */
@@ -3531,7 +3532,7 @@ class User {
 			$wantHTML = $this->isAnon() || $this->getOption( 'htmlemails' );
 
 			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $message, $this->getOption('language'), array(), $args, $wantHTML );
-			
+
 			if ( !empty($emailTextTemplate) && $wantHTML ) {
 				$emailParams = array(
 					'$USERNAME' => $name,
@@ -4111,17 +4112,17 @@ class User {
 				array( 'user_id' => $this->getId() ),
 				__METHOD__ );
 			$dbw->commit();
-			
-			
+
+
 			/*
 			 * Wikia Change By Tomek
-			 * at this point we do not want to run 
-			 * other logic because is not truth in our system 
+			 * at this point we do not want to run
+			 * other logic because is not truth in our system
 			 * (local table of revision on every wiki)
-			 * 
+			 *
 			 *  false && to skip runing this part of code
 			 */
-			
+
 			// Lazy initialization check...
 			if( false && $dbw->affectedRows() == 0 ) {
 				// Pull from a slave to be less cruel to servers

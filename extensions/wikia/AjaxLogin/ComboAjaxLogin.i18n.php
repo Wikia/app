@@ -39,10 +39,10 @@ Please try again or [[Special:Contact|report this]].",
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
+	'comboajaxlogin-createlog' => ' Prompts the user to log in order create an account to proceed. Appears to the user when they reach a page that requires a "user" or higher permission.',
 	'comboajaxlogin-connectmarketing' => 'A message that appears on the login dialog which prompts the user to start the Facebook account connection process.',
 	'comboajaxlogin-connectmarketing-oasis' => "A message that appears on the login dialog which prompts the user to start the Facebook account connection process.  Similar to {{msg-wikia|comboajaxlogin-connectmarketing|notext=yes}} except that it explicitly calls out that the connection is for Facebook Connect.  This is necessary because the login dialog box does not have other mentions of Facebook Connect on it, so it wouldn't be clear otherwise.",
 	'comboajaxlogin-readonlytext' => 'Message that appears when database is in read-only mode and account creation can not be completed. Please keep the links to Wikia Twitter and Facebook pages in the message. $1 is the specific reason given for the read-only mode',
-	'comboajaxlogin-createlog' => ' Prompts the user to log in order create an account to proceed. Appears to the user when they reach a page that requires a "user" or higher permission.',
 );
 
 /** Arabic (العربية)
@@ -993,6 +993,30 @@ $messages['ru'] = array(
 <br />
 (Если у вас уже есть учётная запись, вы можете <a href="#">войти</a> как обычно, но вы не сможете редактировать.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Викия не отвечает. Пожалуйста, проверьте подключение к сети.',
+);
+
+/** Somali (Soomaaliga)
+ * @author Abshirdheere
+ */
+$messages['so'] = array(
+	'comboajaxlogin-desc' => 'Qaanada dinamicada ee u suura galineeysa gadegaleyaasha isdiiwwn gelinta sidoo kale waxa uu xasuusinayaa ereysirta iyo gudageleyssha diiwaan gashan.',
+	'comboajaxlogin-createlog' => 'Gudaha gal ama sameyso akoon',
+	'comboajaxlogin-actionmsg' => 'Si aad hoowshaan uqabto waxaa lagaa doonayaa marka hore inaad gudegelaada isticmaasho ama aad sameeysato akoon cusub',
+	'comboajaxlogin-actionmsg-protected' => 'Si aad howshaan usii wado waxaad ugu horayn ubaahanatahay inaad gudaha gashid ama aad sameeysid akoon cusub',
+	'comboajaxlogin-connectmarketing' => '<h1>Ku xiriri akoonkaada</h1>
+<ul>
+<li>Ku ilaali magacaan aad adeegsato, Taariikhda, isbedelada... wax isbedel ah ma jiraan oo aan ka ahayn habka gudagalista</li>
+<li>uga  qayb qal dhaqdhaqaada Wikiga asxaabtaada ee ku jirta Facebook</li>
+<li>Ilaali waxa lagu soo bandhiyo Facebook aad isticmaasho</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Ku fur xiriirka facebook</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>isku xir labada akoon wikiga iyo Facebook</h1>
+<ul>
+<li>Ku ilaali magacaan aad adeegsato, Taariikhda, isbedelada... wax isbedel ah ma jiraan oo aan ka ahayn habka gudagalista</li>
+<li>uga  qayb qal dhaqdhaqaada Wikiga asxaabtaada ee ku jirta Facebook, Ilaali waxa lagu soo bandhiyo Facebook aad isticmaasho</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Ka noqo',
+	'comboajaxlogin-connectmarketing-forward' => 'Biloow &raquo;',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)

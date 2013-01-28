@@ -1384,6 +1384,7 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
@@ -1438,6 +1439,7 @@ $messages['ru'] = array(
 	'lookupcontribsnormal' => 'последние',
 	'lookupcontribsfinal' => 'последняя',
 	'lookupcontribsall' => 'все',
+	'action-lookupcontribs' => 'поиск вклада участника на нескольких вики',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)

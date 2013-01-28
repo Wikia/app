@@ -514,10 +514,12 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Reasno
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'main-tab-personal' => '我的Wikia',
+	'main-tab-search' => '搜索',
 	'tab-discover-no-network-dialog-close-button' => '确认',
 	'browser-loading-message' => '载入中...',
 );

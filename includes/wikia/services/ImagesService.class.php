@@ -83,16 +83,16 @@ class ImagesService extends Service {
 		$fileName = str_replace($app->wg->ContLang->getNsText(NS_FILE) . ':', '', $fileName);
 		$title = Title::newFromText($fileName, NS_FILE);
 		$foundFile = $app->wf->FindFile($title);
-		
+
 		if( $foundFile ) {
 			$imageWidth = $foundFile->getWidth();
 			$sizes = ($destImageWidth > 0) ?
-				self::calculateScaledImageSizes($destImageWidth, $foundFile->getWidth(), $foundFile->getHeight()) :
+				self::calculateScaledImageSizes($destImageWidth, $imageWidth, $foundFile->getHeight()) :
 				self::calculateScaledImageSizes($imageWidth, $imageWidth, $foundFile->getHeight());
 
 			$results->url = $foundFile->getThumbUrl( $foundFile->thumbName( array( 'width' => $sizes->width) ) );
-			$results->width = $sizes->width;
-			$results->height = $sizes->height;
+			$results->width = intval($sizes->width);
+			$results->height = intval($sizes->height);
 			$results->title = $title->getText();
 		}
 		

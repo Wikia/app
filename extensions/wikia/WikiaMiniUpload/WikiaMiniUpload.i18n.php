@@ -641,6 +641,7 @@ $messages['cs'] = array(
 
 /** Welsh (Cymraeg)
  * @author Lloffiwr
+ * @author Robin Owain
  * @author Xxglennxx
  */
 $messages['cy'] = array(
@@ -684,7 +685,7 @@ $messages['cy'] = array(
 	'wmu-warn2' => 'Mae angen dewis ffeil yn gyntaf!',
 	'wmu-warn3' => "Mae angen enwi'r ffeil yn gyntaf!",
 	'wmu-imagelink' => '<b>Newydd!</b> Ychwanegu delweddau',
-	'wmu-imagebutton' => 'Ychwaneger y delweddau',
+	'wmu-imagebutton' => 'Ychwaneger delweddau',
 	'wmu-license-cc' => 'Trwydded Creative Commons Attribution-Share Alike 3.0 ganddo',
 	'wmu-bad-extension' => 'Rydych wedi ceisio uwchlwytho ffeil o fath na chaniateir. Ceisiwch eto os gwelwch yn dda.',
 	'wmu-filetype-missing' => "Mae'r estyniad ffeil yn eisiau ar y ffeil yr ydych am ei huwchlwytho",
@@ -701,7 +702,7 @@ $messages['cy'] = array(
 	'wmu-added-from-plc' => 'Ychwanegwyd y ffeil drwy ddalfan delwedd',
 	'wmu-uploaddisabled' => 'Heb alluogi uwchlwytho ffeiliau ar y wici hwn',
 	'wmu-gallery-success' => 'Rydych wedi ychwanegu llun at oriel newydd. Cliciwch isod i ychwanegu rhagor o luniau neu i osod yr oriel.',
-	'wmu-gallery-btn1' => 'Ychwanegu Delwedd Arall',
+	'wmu-gallery-btn1' => 'Ychwanegu delwedd Arall',
 	'wmu-gallery-btn2' => 'Mewnosod yr oriel ar y dudalen',
 	'wmu-no-preview' => 'Ni allwch ychwanegu llun o ragolwg o dudalen',
 	'wmu-no-protect' => "Mae'r dudalen hon wedi ei diogelu, ac ni allwch ychwanegu llun ati",

@@ -196,7 +196,7 @@ $messages['bg'] = array(
 	'right-editaccount' => 'Редактиране на настройките на други потребители',
 );
 
-/** Bihari (भोजपुरी)
+/** bh (भोजपुरी)
  * @author Ganesh
  */
 $messages['bh'] = array(
@@ -665,7 +665,7 @@ $messages['fr'] = array(
 	'editaccount-error-close' => "Un problème est survenu lors de la fermeture du compte. Veuillez ré-essayer ou contacter l'équipe technique.",
 	'editaccount-invalid-email' => "« $1 » n'est pas une adresse électronique valide !",
 	'editaccount-nouser' => "Le compte « $1 » n'existe pas !",
-	'editaccount-not-loaded' => 'Erreur: Impossible de charger correctement les données utilisateur, veuillez essayer de recharger la page.',
+	'editaccount-not-loaded' => 'Erreur : Impossible de charger correctement les données utilisateur, veuillez essayer de recharger la page.',
 	'editaccount-remove-avatar-fail' => 'Problème à l’auto-suppression de l’avatar.',
 	'editaccount-requested' => 'Note : l’utilisateur a demandé la fermeture de son compte',
 	'editaccount-not-requested' => 'ATTENTION : l’utilisateur n’a pas demandé la fermeture de son compte',
@@ -1467,6 +1467,7 @@ $messages['pl'] = array(
 	'editaccount-error-close' => 'Wystąpił błąd podczas zamykania konta. Spróbuj ponownie lub skontaktuj się z zespołem technicznym.',
 	'editaccount-invalid-email' => '"$1" nie jest prawidłowym adresem e-mail!',
 	'editaccount-nouser' => 'Konto "$1" nie istnieje!',
+	'editaccount-not-loaded' => 'Błąd: Nie udało się pobrać danych użytkownika, spróbuj odświeżyć stronę.',
 	'editaccount-remove-avatar-fail' => 'Wystąpił błąd podczas usuwania avataru.',
 	'editaccount-requested' => 'Uwaga: Użytkownik poprosił o zamknięcia konta',
 	'editaccount-not-requested' => 'UWAGA: Użytkownik nie prosił o zamknięcia konta',
@@ -1720,6 +1721,7 @@ $messages['ro'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Eleferen
  * @author Ignatus
  * @author Kuzura
@@ -1769,6 +1771,7 @@ $messages['ru'] = array(
 	'editaccount-error-close' => 'Возникла проблема при закрытии учётной записи. Попробуйте ещё раз или свяжитесь с технической командой.',
 	'editaccount-invalid-email' => '«$1» не является допустимым адресом электронной почты!',
 	'editaccount-nouser' => 'Учётная запись «$1» не существует!',
+	'editaccount-not-loaded' => 'Ошибка: Данные пользователя не удалось загрузить правильно, попробуйте перезагрузить страницу.',
 	'editaccount-remove-avatar-fail' => 'Проблема с перезагрузкой аватара',
 	'editaccount-requested' => 'Примечание: участник запросил закрытие учётной записи',
 	'editaccount-not-requested' => 'ВНИМАНИЕ: участник не запрашивал закрытие учётной записи',

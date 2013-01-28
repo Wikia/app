@@ -96,7 +96,11 @@ class MediaWikiInterface
 		wfProfileIn( __METHOD__ );
 		
 		// make sure we have the right values cached
-		$this->getPageFromPageId( $pageId );
+		try {
+    		$this->getPageFromPageId( $pageId );
+		} catch ( \Exception $e ) {
+			return $pageId;
+		}
 		
 		if ( isset( $this->redirectsToCanonicalIds[$pageId] ) ) {
 			$pageId = $this->redirectsToCanonicalIds[$pageId];

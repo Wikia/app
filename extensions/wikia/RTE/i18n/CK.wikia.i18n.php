@@ -1150,7 +1150,7 @@ $messages['fr'] = array(
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Les plus souvent utilisés',
 	'rte-ck-templateEditor-dialog-search' => 'Rechercher un modèle',
 	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Choisir un autre modèle',
-	'rte-ck-templateEditor-editor-intro' => 'Modifier les valeurs de gauche et cliquer pour prévisualiser. Une fois les modifications terminées, cliquer sur « OK ».',
+	'rte-ck-templateEditor-editor-intro' => 'Modifiez les valeurs à gauche et cliquez pour prévisualiser. Une fois les modifications terminées, cliquez sur « OK ».',
 	'rte-ck-templateEditor-editor-parameters' => 'Paramètres',
 	'rte-ck-templateEditor-editor-previewButton' => 'Prévisualiser',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Prévisualiser',
@@ -2873,6 +2873,7 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
@@ -2940,6 +2941,7 @@ $messages['ru'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Удалить эту галерею?',
 	'rte-ck-photoGallery-tooltip' => 'Это галерея фотографий.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Это слайд-шоу.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Это слайдер.',
 	'rte-ck-poll-add' => 'Добавить опрос',
 	'rte-ck-poll-poll' => 'Голосование',
 	'rte-ck-signature-add' => 'Добавить подпись',

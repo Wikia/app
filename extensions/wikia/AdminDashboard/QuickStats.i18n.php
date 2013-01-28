@@ -828,6 +828,23 @@ $messages['si'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Somali (Soomaaliga)
+ * @author Abshirdheere
+ */
+$messages['so'] = array(
+	'quickstats-header-label' => 'Tirakoob degdeg ah',
+	'quickstats-header-date' => 'Taariikh',
+	'quickstats-header-views' => 'Muuqaalka',
+	'quickstats-header-edits' => 'Isbedelada',
+	'quickstats-header-photos' => 'Sawirro',
+	'quickstats-header-likes' => 'Waan ka helay',
+	'quickstats-totals-label' => 'Wadarta',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|sii eeg tirakoobyeda]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+);
+
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
@@ -996,8 +1013,10 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
+ * @author Reasno
  */
 $messages['zh-hans'] = array(
+	'quickstats-header-label' => '简明统计',
 	'quickstats-header-date' => '日期',
 	'quickstats-header-views' => '浏览量',
 	'quickstats-header-edits' => '编辑量',

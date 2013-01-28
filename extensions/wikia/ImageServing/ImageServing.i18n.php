@@ -25,6 +25,13 @@ $messages['ast'] = array(
 	'imageserving-desc' => "Esbilla imaxes d'un conxuntu de páxines conseñáu basándose nos requisitos visuales",
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author AZISS
+ */
+$messages['az'] = array(
+	'imageserving-desc' => 'Vizual tələblər əsasında göstərilən səhifələrin massivindən şəkilləri seçir',
+);
+
 /** Breton (brezhoneg)
  */
 $messages['br'] = array(

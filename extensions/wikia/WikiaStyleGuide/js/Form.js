@@ -103,7 +103,7 @@ WikiaForm.prototype.showErrorMsg = function(inputGroup, msg) {
 		inputGroup.append(errorMsg);
 		errorMsg = inputGroup.find('.error-msg');
 	}
-	errorMsg.text(msg);
+	errorMsg.html(msg);
 };
 
 WikiaForm.prototype.showSuccessMsg = function(inputGroup, msg) {

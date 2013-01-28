@@ -7,6 +7,8 @@
  @test-require-asset /resources/wikia/modules/querystring.js
  @test-require-asset /resources/wikia/modules/ajax.js
  @test-require-asset /resources/wikia/modules/nirvana.js
+ @test-require-asset /resources/wikia/modules/cookies.js
+ @test-require-asset /resources/wikia/modules/log.js
  @test-require-asset /resources/wikia/modules/loader.js
  @test-require-asset /extensions/wikia/WikiaTracker/js/WikiaTracker.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/events.js

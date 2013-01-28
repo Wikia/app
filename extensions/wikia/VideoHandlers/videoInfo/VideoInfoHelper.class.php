@@ -2,7 +2,7 @@
 
 /**
  * VideosInfo Helper
- * @author Liz Lee, Saipetch Kongkatong
+ * @author Garth Webb, Hyun Lim, Liz Lee, Saipetch Kongkatong
  */
 class VideoInfoHelper extends WikiaModel {
 
@@ -76,6 +76,35 @@ class VideoInfoHelper extends WikiaModel {
 		$app->wf->ProfileOut( __METHOD__ );
 
 		return $video;
+	}
+
+	/**
+	 * get total view from database
+	 * @return array $videoList
+	 */
+	public static function getTotalViewsFromDB() {
+		$videoList = array();
+
+		if ( !self::videoInfoExists() ) {
+			return $videoList;
+		}
+
+		$db = F::app()->wf->GetDB( DB_SLAVE );
+
+		$result = $db->select(
+			array( 'video_info' ),
+			array( 'video_title, views_total' ),
+			array( 'views_total != 0' ),
+			__METHOD__
+		);
+
+		while ( $row = $db->fetchObject($result) ) {
+			$hashTitle = md5( $row->video_title );
+			$key = substr( $hashTitle, 0, 2 );
+			$videoList[$key][$hashTitle] = $row->views_total;
+		}
+
+		return $videoList;
 	}
 
 	/**
