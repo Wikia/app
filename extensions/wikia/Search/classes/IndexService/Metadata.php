@@ -20,7 +20,7 @@ class Metadata extends AbstractService
 		$result = array();
 	
 		$sharedDb = $this->interface->getGlobal( 'ExternalSharedDB' );
-		if (! empty( $sharedDb ) ) {
+		if ( empty( $sharedDb ) ) {
 			return array();
 		}
 		

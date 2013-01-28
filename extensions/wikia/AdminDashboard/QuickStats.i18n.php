@@ -23,9 +23,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'quickstats-date-format' => 'Follow this guide: http://php.net/manual/en/function.date.php.',
+	'quickstats-totals-label' => '{{Identical|Total}}',
 	'quickstats-number-shortening' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 10.000 are rendered using this message (as thousands rounded up to the first decimal fraction). K stands for thousands (1.000)',
 	'quickstats-number-shortening-millions' => 'This is a shortend number abbreviation shown in a stats table. Number between 1.000.000 and 999.999.999.999 are rendered using this message (as millions rounded up to the first decimal fraction). M stands for millions (1.000.000)',
 	'quickstats-number-shortening-billions' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
@@ -639,6 +641,23 @@ $messages['nl'] = array(
 	'quickstats-number-shortening-billions' => '$1*10ˆ9',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'quickstats-header-label' => 'Estat. rapidas',
+	'quickstats-header-date' => 'Data',
+	'quickstats-header-views' => 'Vistas',
+	'quickstats-header-edits' => 'Modificacions',
+	'quickstats-header-photos' => 'Imatges',
+	'quickstats-header-likes' => "M'agrada",
+	'quickstats-totals-label' => 'Totals',
+	'quickstats-see-more-stats-link' => "[[Special:WikiStats|Veire mai d'estat.]]",
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1 M',
+	'quickstats-number-shortening-billions' => '$1 Mrd',
+);
+
 /** Pälzisch (Pälzisch)
  * @author Manuae
  */
@@ -809,6 +828,23 @@ $messages['si'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Somali (Soomaaliga)
+ * @author Abshirdheere
+ */
+$messages['so'] = array(
+	'quickstats-header-label' => 'Tirakoob degdeg ah',
+	'quickstats-header-date' => 'Taariikh',
+	'quickstats-header-views' => 'Muuqaalka',
+	'quickstats-header-edits' => 'Isbedelada',
+	'quickstats-header-photos' => 'Sawirro',
+	'quickstats-header-likes' => 'Waan ka helay',
+	'quickstats-totals-label' => 'Wadarta',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|sii eeg tirakoobyeda]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+);
+
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
@@ -977,8 +1013,10 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
+ * @author Reasno
  */
 $messages['zh-hans'] = array(
+	'quickstats-header-label' => '简明统计',
 	'quickstats-header-date' => '日期',
 	'quickstats-header-views' => '浏览量',
 	'quickstats-header-edits' => '编辑量',

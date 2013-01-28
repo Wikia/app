@@ -43,7 +43,7 @@ class DefaultContent extends AbstractService
     		$headingsKey = \WikiaSearch::field( 'headings' );
 		} else {
 			// backwards compatibility
-			$result = array( \WikiaSearch::field( 'html' ) => html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
+			$result = array( 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
 			$titleKey = 'title';
     		$wikiTitleKey = 'wikititle';
     		$categoriesKey = 'categories';
@@ -90,62 +90,70 @@ class DefaultContent extends AbstractService
 		wfProfileIn(__METHOD__);
 		$dom = new \simple_html_dom( html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
 		$result = array();
-		
-		$infoboxes = $dom->find( 'table.infobox' );
-		if ( count( $infoboxes ) > 0 ) {
-			$infobox = $infoboxes[0];
-			$infoboxRows = $infobox->find( 'tr' );
-			
-			if ( $infoboxRows ) {
-				foreach ( $infoboxRows as $row ) {
-					$infoboxCells = $row->find( 'td' );
-					// we only care about key-value pairs in infoboxes
-					if ( count( $infoboxCells ) == 2 ) {
-						$keyName = preg_replace( '/_+/', '_', sprintf( 'box_%s_txt', strtolower( preg_replace( '/\W+/', '_', $infoboxCells[0]->plaintext ) ) ) );
-						$result[$keyName] = preg_replace( '/\s+/', ' ', $infoboxCells[1]->plaintext  );
-					}
-				}
-			}
+		if ( $dom->root ) {
+    		$infoboxes = $dom->find( 'table.infobox' );
+    		if ( count( $infoboxes ) > 0 ) {
+    			$infobox = $infoboxes[0];
+    			$infoboxRows = $infobox->find( 'tr' );
+    			
+    			if ( $infoboxRows ) {
+    				foreach ( $infoboxRows as $row ) {
+    					$infoboxCells = $row->find( 'td' );
+    					// we only care about key-value pairs in infoboxes
+    					if ( count( $infoboxCells ) == 2 ) {
+    						$keyName = preg_replace( '/_+/', '_', sprintf( 'box_%s_txt', strtolower( preg_replace( '/\W+/', '_', $infoboxCells[0]->plaintext ) ) ) );
+    						$result[$keyName] = preg_replace( '/\s+/', ' ', $infoboxCells[1]->plaintext  );
+    					}
+    				}
+    			}
+    		}
+    		
+    		// content in these selectors should be removed
+    		$garbageSelectors  = array(
+    				'span.editsection',
+    				'img',
+    				'noscript',
+    				'div.picture-attribution',
+    				'table#toc',
+    				'ol.references',
+    				'sup.reference',
+    				'script',
+    				'style',
+    				'table',
+    				);
+    		foreach ( $garbageSelectors as $selector ) {
+    			foreach ( $dom->find( $selector ) as $node ) {
+    				$node->outertext = ' ';
+    			}
+    		}
+    
+    		$dom->load( $dom->save() );
+    		
+    		$paragraphs = array();
+    		foreach ( $dom->find( 'p' ) as $pNode ) {
+    			$paragraphs[] = $pNode->plaintext;
+    		}
+    		
+    		$plaintext = $dom->plaintext;
+		} else {
+			$plaintext = html_entity_decode( strip_tags( $html ), ENT_COMPAT, 'UTF-8' );
 		}
+		$plaintext = preg_replace( '/\s+/', ' ', $plaintext );
 		
-		// content in these selectors should be removed
-		$garbageSelectors  = array(
-				'span.editsection',
-				'img',
-				'noscript',
-				'div.picture-attribution',
-				'table#toc',
-				'ol.references',
-				'sup.reference',
-				'script',
-				'style',
-				'table',
-				);
-		foreach ( $garbageSelectors as $selector ) {
-			foreach ( $dom->find( $selector ) as $node ) {
-				$node->outertext = ' ';
+		if (! empty( $paragraphs ) ) {
+			$paragraphString = preg_replace( '/\s+/', ' ', implode( ' ', $paragraphs ) );
+			// regex for grabbing the first 500 words separate by white space
+			$first500 = preg_replace( '/^((\S+ ){0,500}).*$/m', '$1', $paragraphString );
+			if ( empty( $first500 ) ) {
+				preg_replace( '/^((\S+ ){0,500}).*$/m', '$1', $plaintext );
+				$result['nolang_txt'] = $first500;
 			}
+			$result['words'] = substr_count( $paragraphString, ' ' );
+		} else {
+			$result['words'] = substr_count( $plaintext, ' ' );
 		}
 
-		$dom->load( $dom->save() );
-		
-		$paragraphs = array();
-		foreach ( $dom->find( 'p' ) as $pNode ) {
-			$paragraphs[] = $pNode->plaintext;
-		}
-		
-		$plaintext = $dom->plaintext;
-		$plaintext = preg_replace( '/\s+/', ' ', $plaintext );
-		$paragraphString = preg_replace( '/\s+/', ' ', implode( ' ', $paragraphs ) );
-		// regex for grabbing the first 500 words separate by white space
-		$first500 = preg_replace( '/^((\S+ ){0,500}).*$/m', '$1', $paragraphString );
-		if ( empty( $first500 ) ) {
-			preg_replace( '/^((\S+ ){0,500}).*$/m', '$1', $plaintext );
-		} 
-		
 		$result[\WikiaSearch::field( 'html' )] = $plaintext;
-		$result['nolang_txt'] = $first500;
-		$result['words'] = substr_count( $paragraphString, ' ' );
 
 		wfProfileOut(__METHOD__);
 		return $result;

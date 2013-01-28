@@ -77,12 +77,13 @@ $messages['cs'] = array(
 );
 
 /** Welsh (Cymraeg)
+ * @author Robin Owain
  */
 $messages['cy'] = array(
 	'contentfeeds-desc' => 'Yn darparu gwybodaeth gyfoethog gyfamserol drwy dagiau neu "borthiant" gwahanol',
 	'contentfeeds-newimages-rss-title' => 'Porthiant RSS o {{#Special:NewFiles}}',
 	'contentfeeds-newimages-rss-desc' => 'Porthiant o $1',
-	'contentfeeds-firstfewarticles-tag-header' => 'Gwnewch eich tudalennau cyntaf!',
+	'contentfeeds-firstfewarticles-tag-header' => 'Lluniwch eich tudalennau cyntaf!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Teitl',
 	'contentfeeds-firstfewarticles-tag-next' => 'Nesaf',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Gwall: Mae angen teitl ar y dudalen',

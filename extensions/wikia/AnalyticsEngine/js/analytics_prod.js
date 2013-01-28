@@ -99,9 +99,13 @@
     /**** Include A/B testing status ****/
     if ( window.Wikia && window.Wikia.AbTest ) {
         var abList = window.Wikia.AbTest.getExperiments( /* includeAll */ true ), abExp, abGroupName, abSlot, abIndex,
-			abForceTrackOnLoad = false;
+			abForceTrackOnLoad = false,
+			abCustomVarsForAds = [];
         for ( abIndex = 0; abIndex < abList.length; abIndex++ ) {
             abExp = abList[abIndex];
+			if ( !abExp || !abExp.flags) {
+				continue;
+			}
 			if ( !abExp.flags.ga_tracking ) {
 				continue;
 			}
@@ -112,6 +116,7 @@
             if ( abSlot >= 40 && abSlot <= 49 ) {
                 abGroupName = abExp.group ? abExp.group.name : 'CONTROL';
                 _gaqWikiaPush(['_setCustomVar', abSlot, abExp.name, abGroupName, 3]);
+				abCustomVarsForAds.push(['ads._setCustomVar', abSlot, abExp.name, abGroupName, 3]);
             }
         }
 		if ( abForceTrackOnLoad ) {
@@ -162,6 +167,12 @@
               ['ads._setCustomVar', 9, 'CityId', window.wgCityId, 3],
               ['ads._setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3]);
 
+	/**** Include A/B testing status ****/
+	if ( window.Wikia && window.Wikia.AbTest ) {
+		if (abCustomVarsForAds.length) {
+			window._gaq.push.apply(window._gaq, abCustomVarsForAds);
+		}
+	}
 
     /**
      * Function used by the backend to trigger advertisement events
@@ -207,7 +218,7 @@
      * @param {number=0} opt_value Event Value. Have to be an integer.
      * @param {boolean=false} opt_noninteractive Event noInteractive.
      */
-    window.gaTrackEvent = function(category, action, opt_label, opt_value, 
+    window.gaTrackEvent = function(category, action, opt_label, opt_value,
                                    opt_noninteractive) {
         var args = Array.prototype.slice.call(arguments);
         args.unshift('_trackEvent');

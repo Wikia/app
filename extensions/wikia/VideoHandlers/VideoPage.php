@@ -42,6 +42,10 @@ class WikiaVideoPage extends ImagePage {
 		$img = $this->getDisplayedFile();
 		$detailUrl = $img->getProviderDetailUrl();
 		$provider = $img->getProviderName();
+		if ( !empty($provider) ) {
+			$providerName = explode( '/', $provider );
+			$provider = array_pop( $providerName );
+		}
 		$providerUrl = $img->getProviderHomeUrl();
 		
 		$link = '<a href="' . $detailUrl . '" class="external" target="_blank">' . $this->mTitle->getText() . '</a>';

@@ -2116,6 +2116,16 @@ $messages['pt-br'] = array(
 	'phalanx-stats-table-reason' => 'Motivo',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'phalanx-type-title' => "Titole d'a pàgene",
+	'phalanx-type-user' => 'utende',
+	'phalanx-type-user-email' => 'e-mail',
+	'phalanx-test-submit' => 'Test',
+);
+
 /** Russian (русский)
  * @author Byulent
  * @author DCamer
@@ -2592,6 +2602,7 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Reasno
  * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
@@ -2603,6 +2614,7 @@ $messages['zh-hans'] = array(
 	'phalanx-label-expiry' => '截止日期：',
 	'phalanx-label-type' => '类型：',
 	'phalanx-label-lang' => '语言：',
+	'phalanx-format-text' => '纯文本',
 	'phalanx-stats-table-type' => '类型',
 	'phalanx-stats-table-create' => '以创造',
 	'phalanx-stats-table-expire' => '到期',

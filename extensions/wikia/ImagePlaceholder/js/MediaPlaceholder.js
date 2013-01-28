@@ -108,6 +108,25 @@ var MediaPlaceholder = {
 
 			if(id > embedData.placeholderIndex) {
 				$this.attr('data-id', id-1);
+				if(!self.imageLoaded) {
+					// open WMU
+					$.when(
+						$.getResources([
+							$.loadYUI,
+							$.loadJQueryAIM,
+							$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
+							wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
+						])
+					).done(function() {
+						self.imageLoaded = true;
+						
+						$this.text(oText);
+						WMU_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption, props.link);
+					});
+				} else {
+					$this.text(oText);
+					WMU_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption, props.link);				
+				}
 			}
 		});
 

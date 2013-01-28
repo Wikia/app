@@ -5,20 +5,13 @@ var CorporateFooter = {
 		);
 	},
 	track: function(action, label, params, event) {
-		var trackObj = {
-			ga_category: 'corporateFooter',
-			ga_action: action,
-			ga_label: label
-		};
-		if(params) {
-			$.extend(trackObj, params);
-		}
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			trackObj,
-			'internal',
-			event
-		);
+		WikiaTracker.track({
+			action: action,
+			browserEvent: event,
+			category: 'corporateFooter',
+			label: label,
+			trackingMethod: 'internal'
+		}, params);
 	},
 	trackClick: function(ev) {
 		var node = $(ev.target);

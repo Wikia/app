@@ -6,7 +6,7 @@
  * Layout handling of WikiaMobile
  * ie. Sections, Images, Galleries etc.
  */
-define('layout', ['sections', 'media', require.optional('cache')], function(sections, media, cache) {
+define('layout', ['sections', 'media', require.optional('cache'), 'wikia.loader'], function(sections, media, cache, loader) {
 	'use strict';
 
 	//init sections
@@ -30,10 +30,10 @@ define('layout', ['sections', 'media', require.optional('cache')], function(sect
 					l = scripts.length,
 					i = 0;
 
-				Wikia.processStyle(res.styles);
+				loader.processStyle(res.styles);
 
 				for(; i < l; i++ ){
-					Wikia.processScript(scripts[i]);
+					loader.processScript(scripts[i]);
 				}
 			}
 
@@ -58,12 +58,14 @@ define('layout', ['sections', 'media', require.optional('cache')], function(sect
 		if(Features.gameguides || assets){
 			process(assets);
 		}else{
-			Wikia.getMultiTypePackage({
-				scripts: 'wikiamobile_tables_js' + (Features.overflow ? '' : ',wikiamobile_scroll_js'),
-				styles: '/extensions/wikia/WikiaMobile/css/tables.scss',
-				ttl: ttl,
-				callback: process
-			});
+			loader({
+				type: loader.MULTI,
+				resources: {
+					scripts: 'wikiamobile_tables_js' + (Features.overflow ? '' : ',wikiamobile_scroll_js'),
+					styles: '/extensions/wikia/WikiaMobile/css/tables.scss',
+					ttl: ttl
+				}
+			}).done(process);
 		}
 	}
 

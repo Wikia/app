@@ -780,21 +780,23 @@ Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachri
  * @author Mirzali
  */
 $messages['diq'] = array(
-	'myhome' => 'Keyey me',
+	'myhome' => 'Keyeyê mı',
 	'myhome-watchlist-feed' => 'Lista seyrkerdışi',
 	'myhome-user-contributions-feed' => 'İştıraqi',
-	'prefs-myhome' => 'Keyey me',
+	'prefs-myhome' => 'Keyeyê mı',
 	'myhome-feed-edit' => 'bıvurne',
-	'myhome-feed-created-by' => "$1'i vıraşt",
-	'myhome-feed-added-by' => "$1'i Dekerd de",
-	'myhome-feed-edited-by' => "$1'i vurna",
-	'myhome-feed-posted-by' => "$1'i rışt",
-	'myhome-feed-comment-by' => '$1 ra xulasa',
-	'myhome-feed-deleted-by' => "$1'i besterna",
-	'myhome-feed-moved-by' => "$1'i berd",
-	'myhome-feed-article-comment-created-by' => '$1 ra yew vatışo newe ame',
-	'myhome-feed-article-comment-edited-by' => "$1' xulasa vurne",
-	'myhome-feed-by' => '$1 kerden ra',
+	'myhome-feed-delete' => 'esteriya',
+	'myhome-feed-created-by' => 'hetê $1 ra vıraziya',
+	'myhome-feed-added-by' => 'terefê $1 ra bi cı',
+	'myhome-feed-edited-by' => 'terefê $1 ra vuriya',
+	'myhome-feed-posted-by' => 'terefê $1 ra rışiya',
+	'myhome-feed-comment-by' => 'terefê $1 ra xulasa',
+	'myhome-feed-deleted-by' => 'terefê $1 ra esteriya',
+	'myhome-feed-moved-by' => 'terefê $1 ra berd',
+	'myhome-feed-article-comment-created-by' => 'terefê $1 ra vatışo newe',
+	'myhome-feed-article-comment-edited-by' => 'terefê $1 ra xulasa vurnê',
+	'myhome-feed-by' => 'terefê $1 ra',
+	'myhome-feed-new-page-details' => 'Pela newiye',
 	'myhome-feed-summary-details' => 'Xulasa',
 	'myhome-feed-new-blog-comment-details' => 'Vatış',
 	'myhome-feed-new-article-comment-details' => 'Vacayış',
@@ -2916,6 +2918,7 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Eleferen
  * @author G0rn
  * @author Kuzura
@@ -2936,6 +2939,7 @@ $messages['ru'] = array(
 	'myhome-hot-spots-feed' => '«Горячие точки»',
 	'myhome-hot-spots-feed-empty' => "Эта вики ждёт от вас участия! Нажмите на ссылку '''[[Special:CreatePage|Новая страница]]''' и начните писать!",
 	'myhome-hot-spots-newest' => 'Новые страницы на вики',
+	'tog-userlandingpage' => 'Целевая страница:',
 	'prefs-myhome' => 'Личный кабинет',
 	'myhome-feed-newpage' => 'новая страница',
 	'myhome-feed-edit' => 'правка',

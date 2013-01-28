@@ -1,0 +1,67 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+// Note: a lot of this is borrowed from .WikiaRail .module
+// Shared Monobook and Oasis styling
+.mw-content-ltr .ForumActivityModule {
+	margin: 0 auto;
+	margin-bottom: 10px;
+	padding: 16px 8px 8px;
+	position: relative;
+	width: 284px;
+	word-wrap: break-word;
+	ul {
+		list-style: none;
+		margin: 10px 0;
+	}
+	h1 {
+		border-bottom: 0;
+		font-size: 18px;
+		font-weight: bold;
+		margin-top: 0px;
+		margin-bottom: 15px;
+		padding-left: 2px;
+	}
+	em {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		a {
+			white-space: nowrap;
+		}
+	}
+	.subtle {
+		font-size: 11px;
+		margin-left: 3px;
+	}
+}
+
+// Oasis-specific styling
+.WikiaArticle .ForumActivityModule {
+	@include clearfix;
+	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
+	background: $color-page;
+	border: 1px solid $color-page-border;
+	@if lightness($color-page) < 50 {
+		@include box-shadow(0px, 2px, 5px, darken($color-page,7%));
+		background: $color-module-background;
+		border: 1px solid $color-page-border;
+	}
+	em {
+		display: inherit;
+	}
+	.avatar {
+		left: 0;
+		position: absolute;
+		top: 7px;
+	}
+	.subtle {
+		color: $color-text;
+	}
+}
+
+// use full width on main pages using grid
+.main-page-tag-lcs .ForumActivityModule,
+.main-page-tag-rcs .ForumActivityModule {
+	width: auto;
+}

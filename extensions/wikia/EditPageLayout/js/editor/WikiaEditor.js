@@ -181,7 +181,7 @@
 	};
 
 	WE.storeContent = function() {
-		WikiaEditorStorage.store();
+		window.WikiaEditorStorage.store();
 	}
 
 	WE.Editor = $.createClass(Observable, {

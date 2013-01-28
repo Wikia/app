@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ads'), 'track'], function (qs, loader, toc, events, ads, track) {
+define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.optional('ads'), 'track', 'throbber'], function (qs, loader, toc, events, ads, track, throbber) {
 	'use strict';
 	var w = window,
 		d = document,
@@ -96,7 +96,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 		if(navBar.className.indexOf('srhOpn') > -1){
 			closeDropDown();
 		}else{
-            initAutocomplete();
+			initAutocomplete();
 			openSearch();
 		}
 	});
@@ -251,26 +251,26 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 	}
 	//end profile/login setup
 
-    function initAutocomplete(){
-        if(!searchInit){
-            Wikia.getMultiTypePackage({
-                scripts: 'wikiamobile_autocomplete_js',
-                ttl: 604800,
-                callback: function(res){
-                    Wikia.processScript(res.scripts[0]);
-                    require(['autocomplete'], function(sug){
-                        sug({
-                            url: wgServer + '/api.php' + '?action=opensearch',
-                            input: searchInput,
-                            list: searchSug,
-                            clear: d.getElementById('wkClear')
-                        });
-                    });
-                }
-            });
-            searchInit = true;
-        }
-    }
+	function initAutocomplete(){
+		if(!searchInit){
+			loader({
+				type: loader.AM_GROUPS,
+				resources: 'wikiamobile_autocomplete_js'
+			}).done(
+				function(){
+					require(['autocomplete'], function(sug){
+						sug({
+							url: wgServer + '/api.php?action=opensearch',
+							input: searchInput,
+							list: searchSug,
+							clear: d.getElementById('wkClear')
+						});
+					});
+				}
+			);
+			searchInit = true;
+		}
+	}
 
 	//hash - hash to be set to after returnto query
 	//used in ie. ArticleComments.wikiamobile.js
@@ -288,24 +288,34 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 
 	function openLogin(hash){
 		if(wkPrf.className.indexOf('loaded') == -1){
-			loader.show(wkPrf, {center: true});
-			Wikia.getMultiTypePackage({
-				templates: [{
-					controllerName: 'UserLoginSpecialController',
-					methodName: 'index'
-				}],
-				messages: 'fblogin',
-				styles: '/extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss',
-				scripts: 'userlogin_facebook_js_wikiamobile',
-				params: {
-					useskin: w.skin
-				},
-				callback: function(res){
-					loader.remove(wkPrf);
+			throbber.show(wkPrf, {center: true});
 
-					Wikia.processStyle(res.styles);
-					wkPrf.insertAdjacentHTML('beforeend', res.templates['UserLoginSpecialController_index']);
-					Wikia.processScript(res.scripts);
+			loader({
+				type: loader.MULTI,
+				resources: {
+					templates: [{
+						controller: 'UserLoginSpecial',
+						method: 'index'
+					}],
+					messages: 'fblogin',
+					styles: '/extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss',
+					scripts: 'userlogin_facebook_js_wikiamobile',
+					params: {
+						useskin: w.skin
+					}
+				}
+			},
+			{
+				type: loader.LIBRARY,
+				resources: 'facebook'
+			}
+			).done(
+				function(res){
+					throbber.remove(wkPrf);
+
+					loader.processStyle(res.styles);
+					wkPrf.insertAdjacentHTML('beforeend', res.templates['UserLoginSpecial_index']);
+					loader.processScript(res.scripts);
 
 					wkPrf.className += ' loaded';
 
@@ -314,12 +324,21 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 
 					form.setAttribute('action',
 						(new qs(form.getAttribute('action')))
-						.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName))
-						.setHash(hash)
-						.toString()
+							.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName))
+							.setHash(hash)
+							.toString()
 					);
+
+					//see fbconnect.js
+					FB.init({
+						appId : window.fbAppId,
+						oauth : true,
+						status : true, // Check login status
+						cookie : true, // Enable cookies to allow the server to access the session
+						xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
+					});
 				}
-			});
+			);
 		}
 		//track('login/open');
 	}
@@ -362,7 +381,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'events', require.optional('ad
 	}
 
 	return {
-        initAutocomplete: initAutocomplete,
+		initAutocomplete: initAutocomplete,
 		openLogin: openLogin,
 		openProfile: openProfile,
 		openSearch: openSearch,

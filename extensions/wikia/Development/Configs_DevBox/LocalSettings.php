@@ -79,6 +79,8 @@ switch($wgWikiaDatacenter) {
 			0 => "10.14.30.143:11000", # dev-memcached-p1
 			1 => "10.14.30.143:11000", # dev-memcached-p2
 		);
+
+		require_once( "$IP/extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php" );
 		break;
 }
 
@@ -94,6 +96,9 @@ $wgCityId = $oWiki->execute();
 ##### MAKE ANY CHANGES HERE THAT YOU  WANT TO SHOW UP ON DEVBOXES BY DEFAULT BUT STILL BE OVERRIDABLE #####
 $wgCookieDomain = ".wikia-dev.com";
 $wgCheckSerialized = true;
+
+// set allinone to 1 by default (you can always overwrite this value in DevBoxSettings.php)
+$wgAllInOne = true;
 
 // Life is easier if we have Special:WikiFactory
 $wgWikiaEnableWikiFactoryExt = true;
@@ -159,9 +164,6 @@ $wgLocalisationCacheConf[ "manualRecache" ] = false;
 
 // disable irc feed
 $wgRC2UDPEnabled = false;
-
-// set allinone to 1 by default (you can always overwrite this value in DevBoxSettings.php)
-$wgAllInOne = true;
 
 // static assets host
 $wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";

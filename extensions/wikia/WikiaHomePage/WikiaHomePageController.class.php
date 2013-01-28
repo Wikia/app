@@ -478,8 +478,12 @@ class WikiaHomePageController extends WikiaController {
 
 	protected function getRawArticleContent($hubname) {
 		$title = F::build('Title', array($hubname), 'newFromText');
-		$article = F::build('Article', array($title));
-		$content = $article->getRawText();
+		if($title instanceof Title && $title->exists()) {
+		    $article = F::build('Article', array($title));
+		    $content = $article->getRawText();
+		} else {
+		    $content = null;
+		}
 		return $content;
 	}
 

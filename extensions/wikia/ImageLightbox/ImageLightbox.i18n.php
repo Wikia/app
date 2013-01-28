@@ -204,6 +204,15 @@ $messages['diq'] = array(
 	'lightbox-share-email-error-caption' => 'Xırab',
 );
 
+/** Esperanto (Esperanto)
+ * @author Objectivesea
+ */
+$messages['eo'] = array(
+	'lightbox-share-button-email' => 'Retpoŝto',
+	'lightbox-share-email-page-label-address' => 'Retpoŝtadreso',
+	'lightbox-visit-the-wiki' => 'Viziti la vikion:',
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
@@ -721,6 +730,18 @@ $messages['pt-br'] = array(
 	'lightbox-send' => 'Enviar',
 	'lightbox-share-email-ok-caption' => 'Confirmação',
 	'lightbox-share-email-error-caption' => 'Erro',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'lightbox-forum' => 'Forum',
+	'lightbox-share-button-email' => 'E-mail',
+	'lightbox-share-button-www' => 'Condivide',
+	'lightbox-share-email-page-label-address' => 'Indirizze e-mail',
+	'lightbox-share-email-error-caption' => 'Errore',
+	'lightbox-visit-the-wiki' => "Visite 'a uicchi:",
 );
 
 /** Russian (русский)

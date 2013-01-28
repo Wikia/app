@@ -793,7 +793,6 @@
 					}
 				}
 			});
-	
 		},
 	
 		// METHOD: Remove selected state from in-preview thumbnail

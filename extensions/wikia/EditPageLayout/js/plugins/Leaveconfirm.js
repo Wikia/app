@@ -32,7 +32,9 @@
 
 			$(window).bind('beforeunload.leaveconfirm', this.proxy(this.onBeforeUnload));
 			$(window).bind('unload.leaveconfirm', this.proxy(this.onUnload));
-			$(window).bind('UserLoginSubmit', this.proxy(this.onUserLoginSubmit))
+			$(window).bind('UserLoginSubmit', this.proxy(this.onUserLoginSubmit));
+
+			$('#wpSummary').on('change', $.proxy(function() {this.editor.fire('markDirty')}, this));
 		},
 
 		onEditorReady: function() {

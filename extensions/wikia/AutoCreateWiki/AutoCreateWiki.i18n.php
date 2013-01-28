@@ -888,8 +888,10 @@ $messages['el'] = array(
  * @author Tradukisto
  */
 $messages['eo'] = array(
+	'autocreatewiki' => 'Krei novan vikion',
 	'autocreatewiki-language-top' => '$1 plej gravaj lingvoj',
 	'autocreatewiki-language-all' => 'Ĉiuj lingvoj',
+	'autocreatewiki-remember' => 'Memori min:',
 	'autocreatewiki-create-account' => 'Registri sin',
 	'autocreatewiki-haveaccount-question' => 'Ĉu vi jam havas Wikia-konton?',
 	'autocreatewiki-info-topic' => 'Aldoni mallongan priskribon, ekzemple "Stelaj Militoj" aŭ "Televidaj programoj".',
@@ -900,23 +902,29 @@ $messages['eo'] = array(
 	'autocreatewiki-limit-creation' => 'Vi superis la ĉiutage maksimuman nombron da vikikreaĵoj ($1).',
 	'autocreatewiki-invalid-wikiname' => 'La nomo ne povas enhavi specialajn signojn (ekzemple $ aŭ @) aŭ esti malplena.',
 	'autocreatewiki-violate-policy' => 'Ĉi tiu vikinomo entenas vorton kiu malobservas nian nompolitikon',
-	'autocreatewiki-name-too-long' => 'La adreso estas tro longa. Elektu adreson kun maksimume 50 signoj.',
+	'autocreatewiki-name-too-short' => 'Ĉi tiu adreso estas tro mallonga. Bonvolu elekti adreson kun minimume 3 signoj.',
+	'autocreatewiki-name-too-long' => 'Ĉi tiu adreso estas tro longa. Bonvolu elekti adreson kun maksimume 50 signoj.',
+	'autocreatewiki-invalid-username' => 'Ĉi tiu uzantnomo estas nevalida.',
+	'autocreatewiki-empty-wikiname' => 'La vikia nomo ne rajtas esti malplena.',
+	'autocreatewiki-empty-username' => 'Uzantnomo ne rajtas esti malplena.',
 	'autocreatewiki-category-label' => 'Kategorio:',
+	'autocreatewiki-category-other' => 'Alia',
+	'autocreatewiki-log-title' => 'Via vikio kreiĝas',
+	'autocreatewiki-step1' => 'Kreas dosierujon de bildoj ...',
+	'autocreatewiki-step2' => 'Kreas datenbazon ...',
 	'autocreatewiki-welcomebody' => 'Saluton, $2!
 
-La vikio, kiun vi volas krei, estas akcesebla ĉe <$1>. Ni esperas, ke vi redaktos tion!
+Via vikio kreiĝis! Rigardu ĝin ĉe <$1>.
 
-Ni donis iom da informoj kaj konsiloj ĉe via diskuta paĝo (<$5>) por helpi al vi komenci.
+Ĉu vi emas komenci? Ni aldonis iom da ligiloj sur vian diskutan paĝon (<$5>) por helpi vin komenci kaj instigi vin esplori la multajn utilajn zonojn ĉirkaŭ Wikia. Se vi havos iujn ajn demandojn aŭ vi sentas iomete senkomprena, vi povos respondi ĉi tiun retpoŝton aŭ rigardi niajn rethelpajn paĝojn <http://helpo.wikia.com>.
 
-Se vi havos iujn ajn problemojn, vi povas peti por helpo ĉe via vikio ĉe <http://www.wikia.com/wiki/Forum:Help_desk> (angle) aŭ via retpoŝtadreso al community@wikia.com. Vi ankaŭ povas viziti nian babilejon ĉe <http://irc.wikia.com> (angle).
+Vi povos ankaŭ rigardi la loglibron de fondintojn kaj estraro <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> kaj la loglibron de Wikia-oficistoj <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog> (angle), kie vi trovos sugestojn, rimedojn, kaj informojn pri nova trajtaro kaj novaj okazoj ĉe Wikia.
 
-Sukceson kun la projekto!
+Feliĉan redaktadon!
 
 $3
-
-Teamo de Wikia
-
-<http://www.wikia.com/wiki/User:$4>', # Fuzzy
+Wikia-komunuma asistaro
+<http://community.wikia.com/wiki/Uzanto:$4>',
 );
 
 /** Spanish (español)
@@ -951,7 +959,7 @@ $messages['es'] = array(
 	'autocreatewiki-info-category-default' => 'Esto ayudará a los visitantes a encontrar su wiki.',
 	'autocreatewiki-info-category-answers' => 'Esto ayudará a los visitantes a encontrar su sitio de Respuestas.',
 	'autocreatewiki-info-language' => 'Este será el idioma por defecto para los visitantes de tu wiki.',
-	'autocreatewiki-info-email-address' => 'Nunca se mostrará a nadie tu dirección de correo electrónico en Wikia.',
+	'autocreatewiki-info-email-address' => 'Tu dirección de correo electrónico no se mostrará a nadie en Wikia.',
 	'autocreatewiki-info-realname' => 'Si optas por proporcionarlo, se usará para dar atribución a tu trabajo.',
 	'autocreatewiki-info-birthdate' => 'Wikia solicita a todos los usuarios que pongan su fecha real de nacimiento como una medida de seguridad y como una forma de preservar la integridad del sitio mientras cumple con las regulaciones federales.',
 	'autocreatewiki-info-blurry-word' => 'Para ayudar protegernos contra la creación de cuentas automáticas, escribe la palabra borrosa que ves en el campo que hay, por favor.',
@@ -999,7 +1007,7 @@ $messages['es'] = array(
 	'autocreatewiki-step8' => 'Configurando grupos de usuarios y categorías ...',
 	'autocreatewiki-step9' => 'Configurando las variables para el nuevo wiki ...',
 	'autocreatewiki-step10' => 'Configurando páginas de la central de Wikia ...',
-	'autocreatewiki-step11' => 'Enviando el correo electrónico al usuario...',
+	'autocreatewiki-step11' => 'Enviando correo electrónico al usuario...',
 	'autocreatewiki-redirect' => 'Redirigiendo al nuevo Wiki: $1 ...',
 	'autocreatewiki-congratulation' => '¡Felicidades!',
 	'autocreatewiki-welcometalk-log' => 'Bienvenida al nuevo sysop',
@@ -1272,7 +1280,7 @@ $messages['fi'] = array(
 Valitse asianmukainen nimi avattavasta luettelosta.',
 	'autocreatewiki-invalid-language' => 'Valitse kelvollinen kieli alasvetovalikosta.',
 	'autocreatewiki-invalid-retype-passwd' => 'Kirjoita sama salasana kuin edellä',
-	'autocreatewiki-invalid-birthday' => 'Virheellinen syntymäaik',
+	'autocreatewiki-invalid-birthday' => 'Virheellinen syntymäaika',
 	'autocreatewiki-log-title' => 'Wikisi on nyt luotu.',
 	'autocreatewiki-step0' => 'Alustetaan prosessia...',
 	'autocreatewiki-stepdefault' => 'Prosessi on käynnissä, odota...',
@@ -3737,13 +3745,17 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'autocreatewiki-page-title-default' => "Ccreje 'na uicchi nove",
 	'autocreatewiki-required' => '$1 = richieste',
+	'autocreatewiki-web-address' => 'Indirizze web:',
 	'autocreatewiki-category-select' => 'Scacchie une',
 	'autocreatewiki-language-all' => 'Tutte le lènghe',
+	'autocreatewiki-remember' => 'Arrecuèrdeme',
 	'autocreatewiki-create-account' => "Ccreje 'nu cunde utende",
 	'autocreatewiki-title-template' => '$1 Uicchi',
 	'autocreatewiki-category-label' => 'Categorije:',
 	'autocreatewiki-category-other' => 'otre',
+	'autocreatewiki-step2' => "Stoche a ccreje l'archivije ...",
 );
 
 /** Russian (русский)
@@ -4616,6 +4628,7 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-info-email-address' => '您的电子邮件地址不会显示给Wikia上的任何人。',
 	'autocreatewiki-info-realname' => '如果提供这将用于为您提供了归因你的工作。',
 	'autocreatewiki-title-template' => '$1 维基',
+	'autocreatewiki-limit-day' => 'Wikia今日新维基创建数已超出上限($1)。',
 	'autocreatewiki-limit-creation' => '您在24小时内超越了维基创建数目上限($1)。',
 	'autocreatewiki-invalid-wikiname' => '名称不能包含特殊字符（如$或@）且不能为空。',
 	'autocreatewiki-violate-policy' => '此维基名中含有违反命名策略的词语',

@@ -26,7 +26,7 @@ var UserSignup = {
 		);
 		this.wikiaForm.el
 			.find('input[name=username], input[name=email], input[name=password]')
-			.bind('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, this.signupAjaxForm));
+			.bind('blur.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, this.signupAjaxForm));
 		this.wikiaForm.el
 			.find('select[name=birthday], select[name=birthmonth], select[name=birthyear]')
 			.bind('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateBirthdate, this.signupAjaxForm));

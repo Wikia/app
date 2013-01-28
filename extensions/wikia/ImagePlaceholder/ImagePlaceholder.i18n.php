@@ -105,6 +105,13 @@ $messages['diq'] = array(
 	'imgplc-image' => 'Resım',
 );
 
+/** Esperanto (Esperanto)
+ * @author Objectivesea
+ */
+$messages['eo'] = array(
+	'imgplc-image' => 'Bildo',
+);
+
 /** Spanish (español)
  * @author Translationista
  * @author VegaDark
@@ -412,6 +419,7 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -420,6 +428,7 @@ $messages['ru'] = array(
 	'imgplc-placeholder' => 'Заполнитель',
 	'imgplc-image' => 'Изображение',
 	'imgplc-notinhistory' => 'Вы не можете добавить изображение в режиме истории.',
+	'imgplc-notinhistory-video' => 'Вы не можете добавлять видео в режиме истории.',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)

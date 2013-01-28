@@ -471,7 +471,7 @@ $messages['nl'] = array(
 	'window-category-load-batch' => 'Meer',
 	'window-article-button-close' => 'Sluiten',
 	'window-article-button-back' => 'Terug',
-	'window-article-menu-search-label' => 'Zoek',
+	'window-article-menu-search-label' => 'Zoeken',
 	'window-article-menu-dashboard-label' => 'Inhoud Gids',
 	'window-article-menu-cancel-label' => 'Annuleren',
 	'searchview-no-results' => 'Geen resultaten voor "%s"',
@@ -711,6 +711,7 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Reasno
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
@@ -719,6 +720,7 @@ $messages['zh-hans'] = array(
 	'window-article-button-close' => '关闭',
 	'window-article-button-back' => '返回',
 	'window-article-menu-search-label' => '查找',
+	'window-article-menu-cancel-label' => '取消',
 	'searchview-button-back-article' => '返回条目',
 	'alert-download-updated-wikis-button-ok' => '确认',
 );

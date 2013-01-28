@@ -32,26 +32,14 @@ var WikiaHubs = {
 	},
 
 	trackClick: function (category, action, label, value, params, event) {
-		var trackingObj = {
-			ga_category: category,
-			ga_action: action,
-			ga_label: label
-		};
-
-		if (value) {
-			trackingObj['ga_value'] = value;
-		}
-
-		if (params) {
-			$.extend(trackingObj, params);
-		}
-
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			trackingObj,
-			'internal',
-			event
-		);
+		WikiaTracker.track({
+			action: action,
+			browserEvent: event,
+			category: category,
+			label: label,
+			trackingMethod: 'internal',
+			value: value
+		}, params);
 	},
 
 	clickTrackingHandler: function (e) {

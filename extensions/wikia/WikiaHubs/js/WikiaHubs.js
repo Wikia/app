@@ -2,7 +2,14 @@
 var WikiaHubs = {
 	init: function () {
 		WikiaHubs.el = $('#WikiaHubs');
-		WikiaHubs.el.click(WikiaHubs.clickTrackingHandler);
+		
+		if( typeof(WikiaHubs.el.ontouchstart) === 'function') {
+		//possibly only mobile devices (phones, tablets)
+			WikiaHubs.el.bind('touchstart', WikiaHubs.clickTrackingHandler);
+		} else {
+		//possibly only desktops
+			WikiaHubs.el.mousedown(WikiaHubs.clickTrackingHandler);
+		}
 
 		// Featured Video
 		$('#WikiaHubs .wikiahubs-sponsored-video .thumbinner').mousedown(function (e) {
@@ -33,26 +40,14 @@ var WikiaHubs = {
 	},
 
 	trackClick: function( category, action, label, value, params, event ) {
-		var trackingObj = {
-			ga_category: category,
-			ga_action: action,
-			ga_label: label
-		};
-
-		if (value) {
-			trackingObj['ga_value'] = value;
-		}
-
-		if (params) {
-			$.extend(trackingObj, params);
-		}
-
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			trackingObj,
-			'internal',
-			event
-		);
+		WikiaTracker.track({
+			action: action,
+			browserEvent: event,
+			category: category,
+			label: label,
+			trackingMethod: 'internal',
+			value: value
+		});
 	},
 
 	clickTrackingHandler: function (e) {
@@ -203,7 +198,7 @@ var SuggestModal = {
 			}
 		});
 	},
-	
+
 	suggestArticle: function () {
 		$.nirvana.sendRequest({
 			controller: 'WikiaHubsSuggestController',
@@ -213,10 +208,10 @@ var SuggestModal = {
 			callback: function (html) {
 				var modal = $(html).makeModal({width: 490, onClose: SuggestModal.closeModal});
 				var wikiaForm = new WikiaForm(modal.find('form'));
-				
+
 				// show submit button
 				SuggestModal.showSubmit(modal);
-				
+
 				modal.find('button.submit').click(function (e) {
 					e.preventDefault();
 					var articleurl = modal.find('input[name=articleurl]').val();
@@ -246,7 +241,7 @@ var SuggestModal = {
 						}
 					});
 				});
-	
+
 				modal.find('button.cancel').click(function (e) {
 					e.preventDefault();
 					SuggestModal.closeModal(modal);
@@ -264,12 +259,12 @@ var SuggestModal = {
 			callback: function (html) {
 				var modal = $(html).makeModal({width: 490, onClose: SuggestModal.closeModal});
 				var wikiaForm = new WikiaForm(modal.find('form'));
-				
+
 				modal.find('input[name=videourl], input[name=wikiname]').placeholder();
-						
+
 				// show submit button
 				SuggestModal.showSubmit(modal);
-	
+
 				modal.find('button.submit').click(function (e) {
 					e.preventDefault();
 					var videourl = modal.find('input[name=videourl]').val();
@@ -299,12 +294,12 @@ var SuggestModal = {
 						}
 					});
 				});
-	
+
 				modal.find('button.cancel').click(function (e) {
 					e.preventDefault();
 					SuggestModal.closeModal(modal);
 				});
-			}		
+			}
 		});
 	},
 

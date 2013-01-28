@@ -373,8 +373,21 @@ You can always head over to wiki activity to view all of the exciting changes be
 $messages['qqq'] = array(
 	'founderemails-desc' => '{{desc}}',
 	'founderemails-email-user-registered-body' => '{{doc-singularthey}}',
+	'founderemails-email-user-registered-content' => '{{doc-singularthey}}',
 	'founderemails-email-user-registered-body-HTML' => '{{doc-singularthey}}',
-	'founderemails-email-first-edit-headline' => '* "they" is a [[w:Singular they|singular they]]',
+	'founderemails-email-page-edited-reg-user-first-edit-body' => '{{doc-singularthey}}',
+	'founderemails-email-first-edit-headline' => '{{doc-singularthey}}',
+	'founderemails-email-first-edit-content' => '{{doc-singularthey}}',
+	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => '{{doc-singularthey}}',
+	'founderemails-email-page-edited-reg-user-body' => '{{doc-singularthey}}',
+	'founderemails-email-general-edit-content' => '{{doc-singularthey}}',
+	'founderemails-email-page-edited-reg-user-body-HTML' => '{{doc-singularthey}}',
+	'founderemails-answers-email-user-registered-body' => '{{doc-singularthey}}',
+	'founderemails-answers-email-user-registered-body-HTML' => '{{doc-singularthey}}',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => '{{doc-singularthey}}',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => '{{doc-singularthey}}',
+	'founderemails-answers-email-page-edited-reg-user-body' => '{{doc-singularthey}}',
+	'founderemails-answers-email-page-edited-reg-user-body-HTML' => '{{doc-singularthey}}',
 	'founderemails-email-views-digest-subject' => '"views" means site views/visits.',
 	'founderemails-pref-views-digest' => 'Parameters:
 * $1 is a wiki name',
@@ -5264,7 +5277,7 @@ z naszych ulubionych: <a style="color:#2a87d5;text-decoration:none;" href="http:
 	'founderemails-email-3-day-explore-button' => 'Eksploruj',
 	'founderemails-email-3-day-wikiahelps-text' => 'Potrzebujesz pomocy w poznaniu, jak coś działa?  Jesteśmy zawsze dla Ciebie!  Poproś nas o pomoc i poradę na <a style="color:#2a87d5;text-decoration:none;" href="http://spolecznosc.wikia.com">spolecznosc.wikia.com</a>.',
 	'founderemails-email-3-day-wikiahelps-signature' => 'Pracuj dalej tak wspaniale!<br />Zespół Wikii',
-	'founderemails-email-10-day-heading' => 'Jak ci idzie, $USERNAME?',
+	'founderemails-email-10-day-heading' => 'Jak Ci idzie, $USERNAME?',
 	'founderemails-email-10-day-congratulations' => 'Ale ten czas leci!  To już 10 dni od momentu rozpoczęcia $HDWIKINAME.',
 	'founderemails-email-10-day-tips-heading' => 'Zachęć innych by uczestniczyli w projekcie i pokaż wszystkim wspaniałą pracę, jaka już została wykonana!  Oto kilka sposobów rozprzestrzeniania:',
 	'founderemails-email-10-day-share-heading' => 'Nie mówiono Ci, że trzeba się dzielić?',
@@ -7177,6 +7190,9 @@ Wikia团队',
 	'founderemails-email-user-registered-greeting' => '嗨！$USERNAME，',
 	'founderemails-email-user-registered-headline' => '恭喜！$EDITORNAME刚刚加入了$WIKINAME。',
 	'founderemails-email-user-registered-signature' => 'Wikia团队',
+	'founderemails-email-user-registered-body-HTML' => '嗨$USERNAME,<br /><br />
+$EDITORNAME在你的维基上注册了！何不访问一下新成员的<a href="$EDITORTALKPAGEURL">对话页</a>去打个招呼呢？<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Wikia团队</div>',
 	'founderemails-email-0-days-passed-subject' => '欢迎来到Wikia！',
 	'founderemails-email-10-days-passed-subject' => '“10天纪念日”快乐！',
 	'founderemails-email-10-days-passed-body' => '$USERNAME，最近如何？
@@ -7260,6 +7276,7 @@ Wikia团队',
 	'founderemails-email-3-day-addphotos-button' => '添加照片',
 	'founderemails-email-3-day-explore-heading' => '寻找灵感。',
 	'founderemails-email-3-day-wikiahelps-signature' => '继续努力吧！<br />Wikia团队',
+	'founderemails-email-10-day-heading' => '$USERNAME，最近如何?',
 	'founderemails-email-10-day-congratulations' => '哇哦，时光飞逝！您建立$HDWIKINAME已逾10日。',
 	'founderemails-email-10-day-share-heading' => '妈妈一定和你说过“独乐乐不如众乐乐”的道理吧？',
 	'founderemails-email-10-day-join-heading' => '链接同类网站。',
@@ -7273,6 +7290,25 @@ Wikia团队',
 	'founderemails-email-views-digest-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-views-digest-button' => '添加更多页面',
 	'founderemails-email-complete-digest-subject' => '$WIKINAME上的最新活动',
+	'founderemails-email-complete-digest-body' => '嘿，$USERNAME,
+
+又到了每日反馈时间，您的$WIKINAME, $WIKIURL
+
+访问量：$1 位用户。
+
+继续努力，为读者提供更多、更有趣的内容吧！
+
+编辑量：$2 次编辑。
+
+快乐的编者铸造快乐的维基。记得要不时联络联络编者们，向他们致以感谢。
+
+新用户：$3 位用户加入了你的维基。
+
+欢迎新编者的到来，给他们留言吧。
+
+你可以随时查看维基活动，发现$WIKINAME上激动人心的变化。请常来访问。作为创始人，整个社区期望你协助引导、运作本维基。
+
+Wikia团队',
 	'founderemails-email-complete-digest-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-complete-digest-content-heading1' => '$1{{PLURAL:$1|人|人}}次访问了你的维基。',
 	'founderemails-email-complete-digest-content-heading2' => '已做出$1 {{PLURAL:$1|处编辑|处编辑}}。',

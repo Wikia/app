@@ -1,130 +1,113 @@
-/**
- * JavaScript support for JSMessages
- *
- * Allows on-demand fetching of packages with messages and rendering of messages
- *
- * @see https://internal.wikia-inc.com/wiki/JSMessages
- */
-(function($) {
-	var loadedPackages = [];
+(function(context, jQuery){
+	var shift = Array.prototype.shift,
+		join = Array.prototype.join;
 
-	$.extend({
-		/**
-		 * JS version of wfMsg()
-		 *
-		 * Examples:
-		 *
-		 *  $.msg('foo');
-		 *  $.msg('bar', 'test', 'foo');
-		 *
-		 * @param string key - message name
-		 * @param string param - message parameter #1
-		 * @param string param - message parameter #2
-		 * ...
-		 * @return string - localised message
-		 */
-		msg: function() {
+	/**
+	 * JS version of wfMsg()
+	 *
+	 * Examples:
+	 *
+	 *  require('JSMessages', function(msg){
+	 *
+	 *  	msg('foo');
+	 *  	msg('bar', 'test', 'foo');
+	 *
+	 *		msg.get();
+	 *
+	 *		msg.getForContent();
+	 *  })
+	 *
+	 * or as a compatability support
+	 *
+	 * $.msg();
+	 * $.getMessages();
+	 * $.getMessagesForContent();
+	 *
+	 * @param key string - message name
+	 * @param param string - message parameter #1
+	 * @param param string - message parameter #2
+	 * ...
+	 * @return string - localised message
+	 */
+	function JSMessages(nirvana) {
+		var JSMessages = function(){
 			// get the first function parameter
-			var key = Array.prototype.shift.call(arguments),
-				// then the rest of parameters as message arguments
-				params = arguments;
-
+			// then the rest are parameters to a message
+			var key = shift.call(arguments),
 			// default value to be returned
-			var ret = false;
+				ret = key;
 
-			if (typeof wgMessages != 'undefined') {
+			if (window.wgMessages) {
 				ret = wgMessages[key] || ret;
 
 				// replace $1, $2, $3, ...  with parameters provided
-				if (ret !== false && params && params.length) {
-					$.each(params, function(i, param) {
-						ret = ret.replace(new RegExp('\\$' + parseInt(i+1), 'g'), param);
-					});
+				if (ret !== key && arguments.length) {
+					for(var i = 0, l = arguments.length; i < l; i++){
+						ret = ret.replace(new RegExp('\\$' + (i+1), 'g'), arguments[i]);
+					}
 				}
 			}
 
-			return ret !== false ? ret : ('<' + key + '>');
-		},
+			return ret;
+		};
 
 		/**
 		 * Load messages from given package(s)
 		 *
-		 * @param string/array packages - package name or list of packages
-		 * @param function callback - function to call when request is completed
-		 * @param string language - optionally language code (fallbacks to user language)
-		 * @return $.Deferred - promise object
+		 * @param packages string/array - package name or list of packages
+		 * @param callback function - function to call when request is completed
+		 * @param language string - optionally language code (fallbacks to user language)
 		 */
-		getMessages: function(packages, callback, language) {
-			// set up deferred object
-			var dfd = new jQuery.Deferred();
-
-			// single of the single package was given
-			if (typeof packages == 'string') {
-				packages = [packages];
+		JSMessages.get = function(packages, callback, language) {
+			// list of packages was given
+			if (typeof packages != 'string') {
+				packages = join.call(packages, ',');
 			}
 
 			// by default use user language
 			language = language || window.wgUserLanguage;
 
-			$().log('loading ' + packages.join(',') + ' package(s) for "' + language + '"', 'JSMessages');
-
-			// create a list of packages to be loaded
-			// check the list of requested packages against already loaded
-			var packagesToLoad = [];
-
-			for (var i = 0, len = packages.length; i < len; i++) {
-				if (loadedPackages.indexOf(packages[i]) === -1) {
-					packagesToLoad.push(packages[i]);
-				}
-			}
-
-			// load packages (if needed)
-			if (packagesToLoad.length == 0) {
-				$().log('package(s) are already loaded', 'JSMessages');
-
-				if (typeof callback == 'function') {
-					callback();
-				}
-
-				// resolve deferred object
-				dfd.resolve();
-			}
-			else {
-				$.get(wgScriptPath + '/wikia.php', {
-					controller: 'JSMessages',
-					method: 'getMessages',
-					format: 'html',
-					packages: packagesToLoad.join(','),
+			nirvana.sendRequest({
+				type: 'GET',
+				controller: 'JSMessages',
+				method: 'getMessages',
+				data: {
+					packages: packages,
 					uselang: language,
 					cb: window.wgJSMessagesCB
 				},
-				function() {
-					$().log(packagesToLoad.join(',') + ' package(s) loaded', 'JSMessages');
+				callback: function(result) {
+					window.wgMessages = $.extend(window.wgMessages || {}, result.messages);
 
 					if (typeof callback == 'function') {
 						callback();
 					}
-
-					// resolve deferred object
-					dfd.resolve();
-
-					// these packages are loaded
-					loadedPackages = loadedPackages.concat(packagesToLoad);
-				}, 'script').error(function() {
-					// error handling
-					dfd.reject();
-				});
-			}
-
-			return dfd.promise();
-		},
+				}
+			});
+		};
 
 		/**
 		 * Load messages from given package(s) using content language
 		 */
-		getMessagesForContent: function(packages, callback) {
-			return this.getMessages(packages, callback, window.wgContentLanguage);
-		}
-	});
+		JSMessages.getForContent = function(packages, callback) {
+			JSMessages.get(packages, callback, window.wgContentLanguage);
+		};
 
-})(jQuery);
+		return JSMessages;
+	}
+
+	//UMD inclusive
+	if(jQuery){
+		var msg = JSMessages(jQuery.nirvana);
+		jQuery.extend(jQuery, {
+			msg: msg,
+			getMessages: msg.get,
+			getMessagesForContent: msg.getForContent
+		})
+	}
+
+	if (context.define && context.define.amd) {
+		//AMD
+		context.define('JSMessages', ['wikia.nirvana'], JSMessages);
+	}
+})(this, this.jQuery);

@@ -525,6 +525,7 @@ $messages['cs'] = array(
  * @author Geitost
  * @author Jan Luca
  * @author LWChris
+ * @author Metalhead64
  * @author MtaÄ
  * @author PtM
  * @author SVG
@@ -615,7 +616,7 @@ Wenn du dies für einen Fehler hältst oder möchtest, dass die Entscheidung üb
 	'chat-chatbanadd-log-entry' => 'verbannte $1 aus dem Chat für $2, bis $3',
 	'chat-chatbanremove-log-entry' => 'entbannte $1 zum Chat',
 	'chat-chatbanchange-log-entry' => 'änderte Chat-Bann von $1 auf $2, bis $3',
-	'chat-contributions-ban-notice' => 'Dieser Benutzer ist derzeit vom Chat verbannt. Es folgt der jüngste Chat-Bann-Logbucheintrag:', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Dieser Benutzer|Diese Benutzerin}} ist derzeit vom Chat verbannt. Es folgt der jüngste Chat-Bann-Logbucheintrag:',
 	'chat-browser-is-notsupported' => 'Dein Internet-Browser wird nicht unterstützt. Bitte benutze für den Chat einen <a href="http://community.wikia.com/wiki/Help:Supported_browsers">aktuelleren Browser</a>.',
 	'chat-checkuser-join-action' => 'Betrat Chat',
 	'chat-status-away' => 'Abwesend',
@@ -762,7 +763,7 @@ Por favor, contáctalo para más información.',
 	'chat-chatbanadd-log-entry' => 'baneado del chat el usuario $1 con un plazo de $2, termina el $3',
 	'chat-chatbanremove-log-entry' => 'desbaneado el usuario $1 del chat',
 	'chat-chatbanchange-log-entry' => 'cambiado el ban para el usuario $1 con un plazo de $2, termina el $3',
-	'chat-contributions-ban-notice' => 'Este usuario está baneado del chat. La última entrada en el registro se proporciona a continuación:', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Este usuario está baneado|Esta usuaria está baneada}} del chat. La última entrada del registro de baneados del chat se proporciona a continuación:',
 	'chat-browser-is-notsupported' => 'Tu navegador no es compatible. Para una mejor experiencia usa un mejor navegador, usa un <a href="http://ayuda.wikia.com/wiki/Ayuda:Navegadores_soportados">navegador nuevo</a>.',
 	'chat-checkuser-join-action' => 'Se unió al chat',
 	'chat-status-away' => 'Ausente',
@@ -958,7 +959,7 @@ $messages['fr'] = array(
 	'chat-chatbanadd-log-entry' => 'a banni $1 du tchat avec une durée d’expiration de $2, prend fin le $3',
 	'chat-chatbanremove-log-entry' => 'a levé le bannissement du tchat de $1',
 	'chat-chatbanchange-log-entry' => 'a modifié les paramètres de bannissement pour $1 avec une durée d’expiration de $2, prend fin le $3',
-	'chat-contributions-ban-notice' => 'Cet utilisateur est actuellement banni du tchat. La dernière entrée du journal de bannissement du tchat est indiquée ci-dessous pour référence :', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Cet utilisateur|Cette utilisatrice}} est actuellement {{GENDER:$1|banni|bannie}} du tchat. La dernière entrée du journal de bannissement du tchat est indiquée ci-dessous pour référence :',
 	'chat-browser-is-notsupported' => 'Votre navigateur n’est pas supporté. Pour la meilleur expérience possible, veuillez utiliser un <a href="http://communaute.wikia.com/wiki/Aide:Navigateurs_supportés">navigateur plus récent</a>.',
 	'chat-checkuser-join-action' => 'A rejoint le tchat',
 	'chat-status-away' => 'Absent',
@@ -1049,7 +1050,7 @@ $messages['gl'] = array(
 	'chat-chatbanadd-log-entry' => 'vetou a $1 do chat cunha caducidade de $2, remata o $3',
 	'chat-chatbanremove-log-entry' => 'retirou o veto do chat a $1',
 	'chat-chatbanchange-log-entry' => 'cambiou as configuracións do veto de $1 cunha caducidade de $2, remata o $3',
-	'chat-contributions-ban-notice' => 'Este usuario está vetado do chat. Velaquí está a última entrada do rexistro de vetos do chat, por se quere consultala:', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Este usuario|Esta usuaria}} está {{GENDER:$1|vetado|vetada}} do chat. Velaquí está a última entrada do rexistro de vetos do chat, por se quere consultala:',
 	'chat-browser-is-notsupported' => 'O seu navegador non está soportado. Para obter a mellor experiencia, utilice un <a href="http://community.wikia.com/wiki/Help:Supported_browsers">navegador máis recente</a>.',
 	'chat-checkuser-join-action' => 'Chat unido',
 	'chat-status-away' => 'Ausente',
@@ -1610,7 +1611,7 @@ $messages['mk'] = array(
 	'chat-chatbanadd-log-entry' => 'корисникот $1 забранет од разговор со траење од $2; истекува $3',
 	'chat-chatbanremove-log-entry' => 'отповикана забрана на корисникот $1',
 	'chat-chatbanchange-log-entry' => 'изменети поставките за забрана на пристап на корисникот $1 со траење од $2; истекува $3',
-	'chat-contributions-ban-notice' => 'На овој корисник моментално му е забранет пристапот во разговор. Последните ставки во дневникот на забрани, за ваша информација се дадени подолу:', # Fuzzy
+	'chat-contributions-ban-notice' => 'На {{GENDER:$1|овој корисник}} моментално му е забранет пристапот во разговор. Последните ставки во дневникот на забрани, за ваша информација се дадени подолу:',
 	'chat-browser-is-notsupported' => 'Вашиот прелистувач не е поддржан. Најдобро е да користите <a href="http://community.wikia.com/wiki/Help:Supported_browsers">понов прелистувач</a>.',
 	'chat-checkuser-join-action' => 'Се приклучил во разговорот',
 	'chat-status-away' => 'Отсутен',
@@ -1901,8 +1902,8 @@ Neem alstublieft contact op met deze gebruiker voor meer informatie.',
 	'chat-chatbanadd-log-entry' => 'heeft $1 verbannen uit de chat met een verlooptijd van $2; eindigt $3',
 	'chat-chatbanremove-log-entry' => 'heeft de verbanning van $1 uit de chat beëindigd',
 	'chat-chatbanchange-log-entry' => 'heeft de verbanningsinstellingen voor $1 gewijzigd naar een verlooptijd van $2; eindigt $3.',
-	'chat-contributions-ban-notice' => 'Deze gebruiker is op het moment verbannen uit de chat.
-De laatste regel uit het logboek chatverbanningen wordt hieronder ter referentie weergegeven:', # Fuzzy
+	'chat-contributions-ban-notice' => 'Deze gebruik{{GENDER:$1|er|ster}} is op het moment verbannen uit de chat.
+De laatste regel uit het logboek chatverbanningen wordt hieronder ter referentie weergegeven:',
 	'chat-browser-is-notsupported' => 'Uw browser wordt niet ondersteund. Gebruik een <a href="http://community.wikia.com/wiki/Help:Supported_browsers">nieuwere browser</a> voor de beste ervaring.',
 	'chat-checkuser-join-action' => 'Verbonden met chat',
 	'chat-status-away' => 'Weg',
@@ -2334,7 +2335,15 @@ $messages['ro'] = array(
 $messages['roa-tara'] = array(
 	'chat' => 'Ciat',
 	'chat-desc' => "[[Special:Chat|Ciat da 'u vive]]",
+	'chat-no-login-text' => "Pe piacere tràse jndr'à ciat.",
+	'chat-default-topic' => "Bovègne jndr'à ciat $1",
+	'chat-welcome-message' => "Bovègne jndr'à ciat $1",
 	'chat-user-blocked' => '$1 ave bloccate $2.',
+	'chat-ban-modal-label-reason' => 'Mutive',
+	'chat-log-reason-undo' => 'annulle',
+	'chat-ban-undolink' => 'annulle',
+	'chat-log-reason-banchange' => 'Nisciune mutive date',
+	'chat-log-reason-banremove' => 'Nisciune mutive date',
 	'chat-start-a-chat' => "Accuminze 'na Chat",
 	'chat-join-the-chat' => "Tràse jndr'à Chat",
 	'chat-edit-count' => '{{PLURAL: $1|$1 cangiamende|$1 cangiaminde}}',
@@ -2428,7 +2437,7 @@ $messages['ru'] = array(
 	'chat-chatbanadd-log-entry' => '$1 забанен в чате на $2, оканчивается $3',
 	'chat-chatbanremove-log-entry' => '$1 разбанен в чате',
 	'chat-chatbanchange-log-entry' => 'изменены настройки бана для $1 на срок $2, заканчивается $3',
-	'chat-contributions-ban-notice' => 'Этот участник в данный момент забанен в чате. Ниже приведена последняя запись из журнала банов в чате:', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Этот участник}} в данный момент забанен в чате. Ниже приведена последняя запись из журнала банов в чате:',
 	'chat-browser-is-notsupported' => 'Ваш браузер не поддерживается. Используйте <a href="http://community.wikia.com/wiki/Help:Supported_browsers">другой браузер или другую версию браузера</a>.',
 	'chat-checkuser-join-action' => 'Присоединиться',
 	'chat-status-away' => 'Отсутствует',
@@ -2537,7 +2546,7 @@ $messages['sv'] = array(
 	'chat-chatbanadd-log-entry' => 'förbjud $1 från chatten med en varaktighet på $2, som upphör $3',
 	'chat-chatbanremove-log-entry' => 'upphävde förbud från chatten för $1',
 	'chat-chatbanchange-log-entry' => 'ändrade förbudsinställningar för $1 med en varaktighet på $2, som upphör $3',
-	'chat-contributions-ban-notice' => 'Denna användare är för tillfället förbjuden från chatten. Den senaste inlägget i chattförbudsloggen finns nedan för referens:', # Fuzzy
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Denna användare}} är för tillfället förbjuden från chatten. Den senaste inlägget i chattförbudsloggen finns nedan som referens:',
 	'chat-browser-is-notsupported' => 'Din webbläsare stöds inte. För den bästa upplevelsen, använd en <a href="http://community.wikia.com/wiki/Help:Supported_browsers">nyare webbläsare</a>.',
 	'chat-checkuser-join-action' => 'Gick med i chatten',
 	'chat-status-away' => 'Bort',
@@ -2825,6 +2834,7 @@ $messages['zh-hans'] = array(
 	'chat-user-parted' => '$1 已经离开聊天。',
 	'chat-user-blocked' => '$1 已经屏蔽了 $2。',
 	'chat-user-allow' => '$1 已经允许了 $2。',
+	'chat-user-was-banned' => '$1已被$2封禁   $3.',
 	'chat-you-were-banned' => '您已被$1封禁',
 	'chat-user-permanently-disconnected' => '您已经断开，检查网络连接并刷新浏览器窗口',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 升级 <strong>$2</strong> 为聊天主持人。',
@@ -2837,6 +2847,8 @@ $messages['zh-hans'] = array(
 	'chat-ban-modal-button-cancel' => '取消',
 	'chat-ban-modal-change-ban-label' => '变更为',
 	'chat-ban-modal-end-ban' => '终止封禁',
+	'chat-log-reason-banchange' => '未给出原因。',
+	'chat-log-reason-banremove' => '未给出原因。',
 	'chat-ban-cant-ban-moderator' => '您不能踢出另一个聊天主持人。',
 	'chat-ban-already-banned' => '$1 已经在此维基的聊天中被禁止。',
 	'chat-ban-you-need-permission' => '您没有$1权限，不能踢出/封禁用户。',
@@ -2849,6 +2861,7 @@ $messages['zh-hans'] = array(
 	'chat-you-are-banned-text' => '对不起，您没有权限在本维基上聊天。如果您觉得这是一个错误，或想重新考虑，请联系管理员。',
 	'chat-room-is-not-on-this-wiki' => '您正试图进入的聊天室似乎在本维基上并不存在。',
 	'chat-kick-log-reason' => '已经从维基聊天中被 $1 踢出/禁止。更多信息，请联系他们。',
+	'chat-live2' => '在线交流！',
 	'chat-start-a-chat' => '开始聊天',
 	'chat-join-the-chat' => '加入聊天',
 	'chat-edit-count' => '{{PLURAL:$1|$1 次编辑|$1 次编辑}}',

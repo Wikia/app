@@ -2,6 +2,24 @@
 class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleService {
 	protected function getFormFields() {
 		return array(
+			'sponsoredImage' => array(
+				'type' => 'hidden',
+				'attributes' => array(
+					'class' => 'wmu-file-name-input'
+				),
+				'validator' => new WikiaValidatorImageSize(
+					array(
+						'maxWidth' => 85,
+						'maxHeight' => 15,
+					),
+					array(
+						'wrong-file' => 'marketing-toolbox-validator-wrong-file',
+						'max-width' => 'marketing-toolbox-validator-wrong-file-size-width',
+						'max-height' => 'marketing-toolbox-validator-wrong-file-size-height',
+						'not-an-image' => 'marketing-toolbox-validator-wrong-file-not-an-image',
+					)
+				)
+			),
 			'video' => array(
 				'type' => 'hidden',
 				'attributes' => array(
@@ -53,10 +71,16 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 	}
 
 	public function renderEditor($data) {
-		if (!empty($data['values']['video'])) {
-			$model = new MarketingToolboxModel();
+		$model = new MarketingToolboxModel();
+		
+		if( !empty($data['values']['video']) ) {
 			$videoDataHelper = new RelatedVideosData();
 			$data['videoData'] = $videoDataHelper->getVideoData($data['values']['video'], $model->getThumbnailSize());
+		}
+
+		if( !empty($data['values']['sponsoredImage']) ) {
+			$imageModel = new MarketingToolboxImageModel($data['values']['sponsoredImage']);
+			$data['sponsoredImage'] = $imageModel->getImageThumbData();
 		}
 
 		return parent::renderEditor($data);

@@ -23,9 +23,9 @@ class ImagesService extends Service {
 			'imgSize' => $imgSize,
 			'imgFailOnFileNotFound' => 'true',
 		);
-		
+
 		$response = ApiService::foreignCall($dbname, $param);
-		
+
 		$imageSrc = (empty($response['image']['imagecrop'])) ? '' : $response['image']['imagecrop'];
 		$imagePage = (empty($response['imagepage']['imagecrop'])) ? '' : $response['imagepage']['imagecrop'];
 
@@ -39,7 +39,7 @@ class ImagesService extends Service {
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
 		$title = GlobalTitle::newFromId( $pageId, $wikiId );
-		
+
 		$param = array(
 			'action' => 'query',
 			'prop' => 'imageinfo',
@@ -49,7 +49,7 @@ class ImagesService extends Service {
 
 		$imagePage = $title->getFullUrl();
 		$response = ApiService::foreignCall($dbname, $param);
-		
+
 		if( !empty($response['query']['pages']) ) {
 			$imagePageData = array_shift($response['query']['pages']);
 			$imageInfo = array_shift($imagePageData['imageinfo']);
@@ -64,49 +64,50 @@ class ImagesService extends Service {
 
 	/**
 	 * @desc Returns image's thumbnail's url and its sizes if $destImageWidth given it can be scaled
-	 * 
+	 *
 	 * @param String $fileName filename with or without namespace string
-	 * @param Integer $imageWidth optional parameter 
-	 * 
+	 * @param Integer $imageWidth optional parameter
+	 *
 	 * @return stdClass to the image's thumbnail
 	 */
 	public static function getLocalFileThumbUrlAndSizes($fileName, $destImageWidth = 0) {
 		$app = F::app();
-		
+
 		$results = new stdClass();
 		$results->url = '';
 		$results->title = '';
 		$results->width = 0;
 		$results->height = 0;
-		
+
 		//remove namespace string
 		$fileName = str_replace($app->wg->ContLang->getNsText(NS_FILE) . ':', '', $fileName);
 		$title = Title::newFromText($fileName, NS_FILE);
 		$foundFile = $app->wf->FindFile($title);
-		
+
 		if( $foundFile ) {
 			$imageWidth = $foundFile->getWidth();
 			$sizes = ($destImageWidth > 0) ?
-				self::calculateScaledImageSizes($destImageWidth, $foundFile->getWidth(), $foundFile->getHeight()) :
+				self::calculateScaledImageSizes($destImageWidth, $imageWidth, $foundFile->getHeight()) :
 				self::calculateScaledImageSizes($imageWidth, $imageWidth, $foundFile->getHeight());
 
-			$results->url = $foundFile->getThumbUrl( $foundFile->thumbName( array( 'width' => $sizes->width) ) );
-			$results->width = $sizes->width;
-			$results->height = $sizes->height;
+			$results->url = $foundFile->createThumb($sizes->width);
+
+			$results->width = intval($sizes->width);
+			$results->height = intval($sizes->height);
 			$results->title = $title->getText();
 		}
-		
+
 		return $results;
 	}
 
 	/**
 	 * @desc Depending on image original width&height we calculate or not new width based on passed $destImageWidth
-	 * 
+	 *
 	 * @param Integer $destImageSize
 	 * @param Integer $imageWidth
 	 * @param Integer $imageHeight
-	 * 
-	 * @return float
+	 *
+	 * @return object
 	 */
 	public static function calculateScaledImageSizes($destImageSize, $imageWidth, $imageHeight) {
 		if( $imageWidth > $imageHeight ) {
@@ -121,11 +122,11 @@ class ImagesService extends Service {
 			$calculatedWidth = $destImageSize;
 			$calculatedHeight = $destImageSize;
 		}
-		
+
 		$result = new StdClass();
 		$result->width = $calculatedWidth;
 		$result->height = $calculatedHeight;
-		
+
 		return $result;
 	}
 
@@ -218,7 +219,7 @@ class ImagesService extends Service {
 	}
 
 	/**
-	 * @param File $file
+	 * @param LocalFile $file
 	 * @param String $tmpPath
 	 * @param StdClass $imageData
 	 * @param User|null $user

@@ -20,6 +20,12 @@ class MediaWikiInterface
 	protected static $instance;
 	
 	/**
+	 * Application interface
+	 * @var \WikiaApp
+	 */
+	protected $app;
+	
+	/**
 	 * Constructor method
 	 */
 	protected function __construct() {
@@ -72,10 +78,12 @@ class MediaWikiInterface
 	 * @return Title
 	 */
 	protected function getTitleFromPageId( $pageId ) {
+		wfProfileIn( __METHOD__ );
 		if (! isset( $this->pageIdsToTitles[$pageId] ) ) {
 			$page = $this->getPageFromPageId( $pageId );
 			$this->pageIdsToTitles[$pageId] = $page->getTitle();
 		}
+		wfProfileOut( __METHOD__ );
 		return $this->pageIdsToTitles[$pageId];
 	}
 	
@@ -88,15 +96,14 @@ class MediaWikiInterface
 		wfProfileIn( __METHOD__ );
 		
 		// make sure we have the right values cached
-		$this->getPageFromPageId( $pageId );
+		try {
+    		$this->getPageFromPageId( $pageId );
+		} catch ( \Exception $e ) {
+			return $pageId;
+		}
 		
 		if ( isset( $this->redirectsToCanonicalIds[$pageId] ) ) {
-			wfProfileOut(__METHOD__);
-			return $this->redirectsToCanonicalIds[$pageId];
-		}
-		if ( isset( $this->pageIdsToArticles[$pageId] ) ) {
-			wfProfileOut(__METHOD__);
-			return $pageId;
+			$pageId = $this->redirectsToCanonicalIds[$pageId];
 		}
 		wfProfileOut(__METHOD__);
 		return $pageId;
@@ -115,7 +122,7 @@ class MediaWikiInterface
 	 * Returns the two-letter language code set globally
 	 */
 	public function getLanguageCode() {
-		return $this->app->wg->ContLang->getCode();
+		return $this->getGlobal( 'ContLang' )->getCode();
 	}
 	
 	/**
@@ -158,8 +165,7 @@ class MediaWikiInterface
 	 * @return array
 	 */
 	public function getParseResponseFromPageId( $pageId ) {
-		$apiService = new \ApiService();
-		return $apiService->call( array(
+		return \ApiService::call( array(
 					'pageid'	=> $pageId,
 					'action'	=> 'parse',
 				));
@@ -180,7 +186,7 @@ class MediaWikiInterface
 	 * @return array
 	 */
 	public function getCacheResult( $key ) {
-		return $this->app->wg->Memc->get( $key );
+		return $this->getGlobal( 'Memc' )->get( $key );
 	}
 	
 	/**
@@ -197,20 +203,21 @@ class MediaWikiInterface
 	 * @param string $key
 	 * @param mixed $value
 	 * @param int $ttl
+	 * @return \Wikia\Search\MediaWikiInterface
 	 */
 	public function setCacheFromStringKey( $key, $value, $ttl ) {
-		$this->app->wg->Memc->set( $this->getCacheKey( $key ), $value, $ttl );
+		$this->getGlobal( 'Memc' )->set( $this->getCacheKey( $key ), $value, $ttl );
+		return $this;
 	}
 	
 	/**
 	 * Performs an API request, but still returns the data 
 	 * @param unknown_type $pageId
 	 * @return multitype:
-	 */
+	 **/
 	public function getBacklinksCountFromPageId( $pageId ) {
-		$apiService = new \ApiService();
 		$title = $this->getTitleStringFromPageId( $pageId );
-		$data = $apiService->call( array(
+		$data = \ApiService::call( array(
 				'titles'	=> $title,
 				'bltitle'	=> $title,
 				'action'	=> 'query',
@@ -246,7 +253,8 @@ class MediaWikiInterface
 	 * @return int
 	 */
 	public function getWikiId() {
-		return empty( $this->app->wg->ExternalSharedDB ) ? $this->app->wg->SearchWikiId : (int) $this->app->wg->CityId;
+		$shared = $this->getGlobal( 'ExternalSharedDB' );
+		return (int) ( empty( $shared ) ? $this->getGlobal( 'SearchWikiId' ) : $this->getGlobal( 'CityId' ) );
 	}
 	
 	/**
@@ -254,12 +262,12 @@ class MediaWikiInterface
 	 * @param int $pageId
 	 * @return string
 	 */
-	public function getMedataFromPageId( $pageId ) {
+	public function getMediaDataFromPageId( $pageId ) {
 		if (! $this->pageIdHasFile( $pageId ) ) {
-			return array();
+			return '';
 		}
 		
-		return $this->getFileForPageId( $pageId )->getMetadata();
+		return ( $file = $this->getFileForPageId( $pageId ) ) ? $file->getMetadata() : array();
 	}
 	
 	/**
@@ -278,8 +286,7 @@ class MediaWikiInterface
 	 * @return multitype:
 	 */
 	public function getApiStatsForPageId( $pageId ) {
-		$apiService = new \ApiService();
-		return $apiService->call( array(
+		return \ApiService::call( array(
 					'pageids'  => $pageId,
 					'action'   => 'query',
 					'prop'     => 'info',
@@ -318,7 +325,6 @@ class MediaWikiInterface
 				array( 'GROUP'=>'rd_title' ),
 				array( 'page' => array( 'INNER JOIN', array('rd_title'=> $this->getTitleKeyFromPageId( $pageId ), 'page_id = rd_from' ) ) )
 		);
-		// look how ugly this is without assignment in condition!
 		while ( $row = $dbr->fetchObject( $query ) ) { 
 				$result[] = str_replace( '_', ' ', $row->page_title );
 		}
@@ -332,8 +338,7 @@ class MediaWikiInterface
 	 * @return array
 	 */
 	public function getMediaDetailFromPageId( $pageId ) {
-		$fileHelper = new \WikiaFileHelper();
-		return $fileHelper->getMediaDetail( $this->getTitleFromPageId( $pageId ) );
+		return \WikiaFileHelper::getMediaDetail( $this->getTitleFromPageId( $pageId ) );
 	}
 	
 	/**
@@ -342,8 +347,7 @@ class MediaWikiInterface
 	 * @return boolean
 	 */
 	public function pageIdIsVideoFile( $pageId ) {
-		$fileHelper = new \WikiaFileHelper();
-		return $fileHelper->isVideoFile( $this->getFileForPageId( $pageId ) );
+		return \WikiaFileHelper::isVideoFile( $this->getFileForPageId( $pageId ) );
 	}
 
 	/**

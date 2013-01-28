@@ -95,7 +95,7 @@ $messages['qqq'] = array(
 	'userrenametool-reserve' => 'Option to block the old username (after it has been renamed) from being used again.',
 	'userrenametool-warnings' => '{{Identical|Warning}}',
 	'userrenametool-submit' => '{{Identical|Submit}}',
-	'userrenametool-error-cannot-create-block' => '',
+	'userrenametool-error-cannot-create-block' => 'When this user rename tool is running, a block is supposed to be put in place to prevent the user from being able to edit to prevent data corruption. This message appears as a warning that the block was not able to be added automatically and that the user will need to be blocked manually.',
 	'userrenametool-info-wiki-finished' => '',
 	'userrenametool-confirm-yes' => '{{Identical|Yes}}',
 	'userrenametool-confirm-no' => '{{Identical|No}}',
@@ -370,7 +370,7 @@ $messages['ba'] = array(
 	'right-renameuser' => 'Ҡатнашыусыларҙың исемен үҙгәртеү',
 );
 
-/** Samogitian (žemaitėška)
+/** bat-smg (žemaitėška)
  * @author Hugo.arg
  */
 $messages['bat-smg'] = array(
@@ -2830,7 +2830,7 @@ $messages['nds'] = array(
 	'right-renameuser' => 'Brukers ne’en Naam geven',
 );
 
-/** Nedersaksies (Nedersaksies)
+/** Low Saxon (Netherlands) (Nedersaksies)
  */
 $messages['nds-nl'] = array(
 	'renameuser' => 'Gebruker herneumen',

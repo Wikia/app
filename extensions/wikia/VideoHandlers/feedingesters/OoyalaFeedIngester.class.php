@@ -96,7 +96,12 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['trailerRating'] = empty($video['metadata']['trailerrating']) ? '' : $video['metadata']['trailerrating'];
 
 				$clipData['categoryName'] = OoyalaApiWrapper::getProviderName( $video['labels'] );
-				$clipData['provider'] = strtolower( preg_replace( '/[\s\W]+/', '', $clipData['categoryName'] ) );
+				// check for videos under '/Providers/' labels
+				if ( empty($clipData['categoryName']) ) {
+					print "Skipping {$clipData['titleName']} - {$clipData['description']}. No provider name.\n";
+					continue;
+				}
+				$clipData['provider'] = OoyalaApiWrapper::formatProviderName( $clipData['categoryName'] );
 
 				$clipData['language'] =  empty($video['metadata']['lang']) ? '' : $video['metadata']['lang'];
 				$clipData['genres'] = empty($video['metadata']['genres']) ? '' : $video['metadata']['genres'];

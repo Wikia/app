@@ -26,7 +26,6 @@ $config['oasis_extensions_js'] = array(
 $config['oasis_tracker_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 	)
 );
@@ -147,6 +146,7 @@ $config['oasis_blocking'] = array(
 	'assets' => array(
 		'//skins/wikia/js/WikiaScriptLoader.js',
 		'//skins/wikia/js/JqueryLoader.js',
+		'//resources/wikia/libraries/modil/modil.js',
 		'//resources/wikia/modules/lazyqueue.js',
 	)
 );
@@ -181,7 +181,6 @@ $config['oasis_jquery'] = array(
 
 		// Wikia plugins
 		'//resources/wikia/jquery.wikia.js',
-		'//resources/wikia/libraries/jquery/nirvana/jquery.wikia.nirvana.js',
 		'//resources/wikia/libraries/jquery/carousel/jquery.wikia.carousel.js',
 		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
 		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
@@ -199,12 +198,8 @@ $config['oasis_jquery'] = array(
 $config['oasis_wikia_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//resources/wikia/libraries/my.class/my.class.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/cookies.js',
-		'//resources/wikia/modules/log.js',
-		'//resources/wikia/modules/thumbnailer.js',
-		'//resources/wikia/modules/geo.js',
+		// classes
+		'//resources/wikia/libraries/my.class/my.class.js'
 	)
 );
 
@@ -250,7 +245,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
-		'//extensions/wikia/CategorySelect/CategorySelect.view.js',
+		'//extensions/wikia/CategorySelect/js/CategorySelect.view.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 
 		// oasis specific files
@@ -313,27 +308,30 @@ $config['gameguides_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		//set js class as fast as possible to make styling as fast as possible
-		'//extensions/wikia/WikiaMobile/js/html_js_class.js',
+		'#group_wikiamobile_js_head',
 
 		//libraries/frameworks
 		'//resources/wikia/libraries/Ponto/ponto.js',
 		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
-		'//extensions/wikia/WikiaMobile/js/Wikia.getcss.js',
 		'//resources/wikia/libraries/modil/modil.js',
 
+		// deferred.js - jQuery-free implementation (BugId:34943)
+		'//resources/wikia/libraries/deferred/deferred.js',
+		'//resources/wikia/libraries/deferred/deferred.api.js',
+
 		//core modules
+		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/nirvana.js',
+		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
 
 		//tracker
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'#group_oasis_tracker_js',
 
 		//platform components
-		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 
 		//feature detection
@@ -341,10 +339,6 @@ $config['gameguides_js'] = array(
 		'//extensions/wikia/WikiaMobile/js/feature-detects/positionfixed.wikiamobile.js',
 		'//extensions/wikia/WikiaMobile/js/feature-detects/overflow.wikiamobile.js',
 		'//extensions/wikia/GameGuides/js/isGameGuides.js',
-
-		// deferred.js - jQuery-free implementation (BugId:34943)
-		'//resources/wikia/libraries/deferred/deferred.js',
-		'//resources/wikia/libraries/deferred/deferred.api.js',
 
 		//polyfills
 		'//resources/wikia/polyfills/outerhtml.js',
@@ -360,7 +354,7 @@ $config['gameguides_js'] = array(
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
 		'//extensions/wikia/WikiaMobile/js/events.js',
-		'//extensions/wikia/WikiaMobile/js/loader.js',
+		'//extensions/wikia/WikiaMobile/js/throbber.js',
 		'//extensions/wikia/WikiaMobile/js/toast.js',
 		'//extensions/wikia/WikiaMobile/js/pager.js',
 		'//extensions/wikia/WikiaMobile/js/modal.js',
@@ -416,11 +410,15 @@ $config['wikiamobile_js_body_minimal'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		//libraries/frameworks
-		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
-		'//extensions/wikia/WikiaMobile/js/Wikia.getcss.js',
 		'//resources/wikia/libraries/modil/modil.js',
+		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
+
+		// deferred.js - jQuery-free implementation (BugId:34943)
+		'//resources/wikia/libraries/deferred/deferred.js',
+		'//resources/wikia/libraries/deferred/deferred.api.js',
 
 		//core modules
+		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
@@ -429,15 +427,13 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//extensions/wikia/WikiaMobile/js/features.js',
 		'//extensions/wikia/WikiaMobile/js/feature-detects/positionfixed.wikiamobile.js',
 
-		// deferred.js - jQuery-free implementation (BugId:34943)
-		'//resources/wikia/libraries/deferred/deferred.js',
-		'//resources/wikia/libraries/deferred/deferred.api.js',
-
 		//tracker
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'#group_oasis_tracker_js',
 
 		//modules
+		'//resources/wikia/modules/ajax.js',
+		'//resources/wikia/modules/nirvana.js',
+		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/cache.js'
 	)
 );
@@ -458,18 +454,15 @@ $config['wikiamobile_js_body_full'] = array(
 
 		//platform components
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
-
-		//framework extensions
-
 
 		//modules
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
 		'//extensions/wikia/WikiaMobile/js/events.js',
 		'//extensions/wikia/WikiaMobile/js/toc.js',
-		'//extensions/wikia/WikiaMobile/js/loader.js',
+		'//extensions/wikia/WikiaMobile/js/throbber.js',
 		'//extensions/wikia/WikiaMobile/js/toast.js',
 		'//extensions/wikia/WikiaMobile/js/pager.js',
 		'//extensions/wikia/WikiaMobile/js/modal.js',
@@ -561,6 +554,23 @@ $config['wikiapoll_wikiamobile_js'] = array(
 	)
 );
 
+
+$config['special_contact_wikiamobile_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/SpecialContact2/SpecialContact.wikiamobile.scss',
+	)
+);
+
+$config['special_contact_wikiamobile_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/SpecialContact2/SpecialContact.wikiamobile.js',
+	)
+);
+
 /** WikiaApp **/
 $config['wikiaapp_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,
@@ -585,6 +595,7 @@ $config['monobook_js'] = array(
 		'#group_oasis_wikia_js',
 		'#group_oasis_jquery',
 		'#group_articlecomments_js',
+		'#group_oasis_tracker_js',
 
 		// TODO: remove dependency on YUI (see BugId:3116)
 		'//resources/wikia/libraries/yui/utilities/utilities.js',
@@ -608,8 +619,7 @@ $config['monobook_js'] = array(
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.src.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
@@ -785,9 +795,9 @@ $config['theme_designer_js'] = array(
 		'//resources/jquery.ui/jquery.ui.mouse.js',
 		'//resources/jquery.ui/jquery.ui.slider.js',
 		'//resources/jquery.ui/jquery.ui.core.js',
+		'//resources/wikia/modules/aim.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
-		'//resources/wikia/libraries/aim/jquery.aim.js',
 		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
 	)
 );
@@ -807,8 +817,7 @@ $config['photopop'] = array(
 		'//extensions/wikia/PhotoPop/shared/lib/classlist.js',
 		'//extensions/wikia/PhotoPop/shared/lib/wikia.js',
 		'//extensions/wikia/PhotoPop/shared/lib/require.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'#group_oasis_tracker_js',
 	)
 );
 
@@ -1176,6 +1185,18 @@ $config['sharingtoolbar_js'] = array(
 		'//skins/oasis/js/SharingToolbar/SharingToolbar.js',
 		'//extensions/wikia/ShareButtons/js/ShareButtons.js',
 		'#function_SharingToolbarController::getAssets'
+	)
+);
+
+/* CategorySelect */
+$config['categoryselect_edit_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/jquery.ui/jquery.ui.core.js',
+		'//resources/jquery.ui/jquery.ui.widget.js',
+		'//resources/jquery.ui/jquery.ui.mouse.js',
+		'//resources/jquery.ui/jquery.ui.sortable.js',
+		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
 	)
 );
 

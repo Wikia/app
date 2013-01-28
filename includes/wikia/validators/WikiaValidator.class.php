@@ -91,9 +91,9 @@ abstract class WikiaValidator {
 		$options = $this->options;
 		$options['value'] = $this->value;
 
-		foreach ($this->options as $key => $value) {
+		foreach ($options as $key => $value) {
 			if( is_string($value) || is_numeric($value) ) {
-				$msg = str_replace( '$' + $key, $value, $msg );
+				$msg = str_replace( '$' . $key, $value, $msg );
 			}
 		}
 

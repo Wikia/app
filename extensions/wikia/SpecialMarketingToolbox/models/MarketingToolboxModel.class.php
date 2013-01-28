@@ -74,11 +74,11 @@ class MarketingToolboxModel extends WikiaModel {
 	public function getAllowedTags() {
 		return implode('', $this->allowedTags);
 	}
-
+	
 	public function getThumbnailSize() {
 		return self::FORM_THUMBNAIL_SIZE;
 	}
-
+	
 	public function getModuleName($moduleId) {
 		return $this->wf->msg('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
 	}

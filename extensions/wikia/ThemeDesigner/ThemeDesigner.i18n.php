@@ -62,6 +62,7 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Sam Wang
+ * @author Shirayuki
  * @author Siebrand
  * @author The Evil IP address
  */
@@ -78,6 +79,9 @@ $messages['qqq'] = array(
 	'themedesigner-large' => '{{Identical|Large}}',
 	'themedesigner-tile-background' => 'Used in Theme Designer, and can be triggered to allow the current background graphic to tile, repeating itself around the page.',
 	'themedesigner-tab-theme' => '{{Identical|Theme}}',
+	'themedesigner-button-upload' => '{{Identical|Upload}}',
+	'themedesigner-button-upload-wordmark' => '{{Identical|Upload}}',
+	'themedesigner-default' => '{{Identical|Default}}',
 	'themedesigner-rules-favicon-learn-more-link' => 'Learn more about favicons (link)',
 	'themedesigner-history-item' => 'Parameters:
 * $1 is "how long ago"

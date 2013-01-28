@@ -51,6 +51,7 @@ EditHub.prototype = {
 				searchOrder: 'newest'
 			});
 		});
+		$('.remove-sponsored-image').click($.proxy(this.confirmRemoveSponsoredImage, this));
 
 		this.form = $('#marketing-toolbox-form');
 
@@ -117,11 +118,12 @@ EditHub.prototype = {
 			var $input = $(this).prev();
 			this.wmuDeffered = $.when(
 				$.loadYUI(),
+				$.loadJQueryAIM(),
 				$.getResources([
 					wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
 					$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
-					'/resources/wikia/libraries/aim/jquery.aim.js'
-				])
+				]),
+				$.loadJQueryAIM()
 			).then($.proxy(function() {
 				WMU_skipDetails = true;
 				WMU_show();
@@ -150,10 +152,11 @@ EditHub.prototype = {
 			callback: $.proxy(function(response) {
 				var tempImg = new Image();
 				tempImg.src = response.fileUrl;
-				tempImg.height = response.imageHeight;
-				tempImg.width = response.imageWidth;
-
 				var box = this.lastActiveWmuButton.parents('.module-box:first');
+				if (!box.hasClass('sponsored-image')) { //define dimensions if it's not sponsored image
+					tempImg.height = response.imageHeight
+					tempImg.width = response.imageWidth;
+				}
 				if (!box.length) {
 					box = $('.MarketingToolboxMain');
 				}
@@ -179,6 +182,22 @@ EditHub.prototype = {
 		elem.find('.filename-placeholder').html($.msg('marketing-toolbox-edithub-file-name'));
 		elem.find('.image-placeholder').find('img').attr('src', wgBlankImgUrl)
 			.end().filter('.video').empty();
+		this.removeSponsoredImage();
+	},
+
+	confirmRemoveSponsoredImage: function() {
+		if (confirm($.msg('marketing-toolbox-edithub-clear-sponsored-image')) == true) {
+			this.removeSponsoredImage();
+		}
+	},
+
+	removeSponsoredImage: function() {
+		$('.sponsored-image')
+			.find('#MarketingToolboxsponsoredImage').val('')
+			.end()
+			.find('.image-placeholder img').remove()
+			.end()
+			.find('span.filename-placeholder').text('');
 	}
 };
 

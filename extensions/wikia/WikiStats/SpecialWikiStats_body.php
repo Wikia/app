@@ -174,8 +174,6 @@ class WikiStatsPage extends IncludableSpecialPage
 		# main page
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
-		$wgOut->setSubtitle( $oTmpl->render("subtitle") );
-
         $oTmpl->set_vars( array(
         	"mTitle"			=> $this->mTitle,
         	"wgContLang"		=> $wgContLang,
