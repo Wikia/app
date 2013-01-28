@@ -110,7 +110,7 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 				parent = form.previousElementSibling,
 				parentId = (parent) ? parent.id : false,
 				submit = form.getElementsByTagName('input')[0],
-				textArea = form.getElementsByClassName('wkInp')[0],
+				textArea = form.getElementsByClassName('commText')[0],
 				text = textArea.value;
 
 			if(text !== '') {
@@ -218,7 +218,7 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 						otherwise scroll to top
 					*/
 					function(content){
-						var input = content.getElementsByClassName('wkInp')[0];
+						var input = content.getElementsByClassName('commText')[0];
 						if(input){
 							input.scrollIntoView();
 							input.focus();
