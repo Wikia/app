@@ -36,6 +36,8 @@ class AssetsManagerController extends WikiaController {
 	public function getMultiTypePackage() {
 		$this->wf->profileIn( __METHOD__ );
 
+		$this->response->setFormat( 'json' );
+
 		$key = null;
 		$data = null;
 		$templates = $this->request->getVal( 'templates', null );
@@ -56,8 +58,8 @@ class AssetsManagerController extends WikiaController {
 
 			foreach( $templates as $template ) {
 				$params = !empty( $template['params'] ) ? $template['params'] : array();
-				$res = $this->sendRequest( $template['controllerName'], $template['methodName'], $params );
-				$templatesOutput["{$template['controllerName']}_{$template['methodName']}"] = $res->__toString();
+				$res = $this->sendRequest( $template['controller'], $template['method'], $params );
+				$templatesOutput["{$template['controller']}_{$template['method']}"] = $res->__toString();
 			}
 
 			$this->response->setVal( 'templates', $templatesOutput );
