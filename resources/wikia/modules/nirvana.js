@@ -35,14 +35,22 @@
 
 			(type == 'POST' ? getUrl : data).format = format;
 
-			var sortedKeys = [];
-			for(var key in data) {
-				sortedKeys[sortedKeys.length] = key;
-			}
-			sortedKeys.sort();
-			var sortedDict = {};
-			for(var i = 0; i < sortedKeys.length; i++) {
-				sortedDict[sortedKeys[i]] = data[sortedKeys[i]];
+			// If data is a string just pass it directly along as is.  Otherwise
+			// sort the structured data so that the URL is consistant (for cache
+			// busting purposes)
+			var sortedDict;
+			if (typeof data == 'string') {
+				sortedDict = data;
+			} else {
+				var sortedKeys = [];
+				for(var key in data) {
+					sortedKeys[sortedKeys.length] = key;
+				}
+				sortedKeys.sort();
+				var sortedDict = {};
+				for(var i = 0; i < sortedKeys.length; i++) {
+					sortedDict[sortedKeys[i]] = data[sortedKeys[i]];
+				}
 			}
 
 			return ajax({
