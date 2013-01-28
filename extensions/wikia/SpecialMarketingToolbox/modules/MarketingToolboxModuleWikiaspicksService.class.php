@@ -65,15 +65,14 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 
 	public function renderEditor($data) {
 		$model = new MarketingToolboxModel();
+		$imageModel = new MarketingToolboxImageModel($data['values']['fileName']);
 
 		if( !empty($data['values']['fileName']) ) {
-			$imageModel = new MarketingToolboxImageModel($data['values']['fileName']);
 			$data['file'] = $imageModel->getImageThumbData($model->getThumbnailSize());
 		}
 
 		if( !empty($data['values']['sponsoredImage']) ) {
-			$imageModel = new MarketingToolboxImageModel($data['values']['sponsoredImage']);
-			$data['sponsoredImage'] = $imageModel->getImageThumbData($model->getSponsoredImgThumbnailSize());
+			$data['sponsoredImage'] = $imageModel->getImageThumbData();
 		}
 		
 		return parent::renderEditor($data);
