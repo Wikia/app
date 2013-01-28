@@ -14,6 +14,15 @@
 	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ThemeDesigner/css/ThemeDesigner.scss') ?>">
 	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/skins/oasis/css/core/WikiaSlider.scss') ?>">
 	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/resources/wikia/libraries/bootstrap/tooltip.scss') ?>">
+<?php
+	// load modil.js at the top of the page (BugId:96412)
+	// AMD "framework" is a part of "blocking" AM group loaded at the top of Oasis
+	$srcs = AssetsManager::getInstance()->getURL('/resources/wikia/libraries/modil/modil.js');
+
+	foreach($srcs as $src) {
+		echo "\n\t" . Html::linkedScript($src);
+	}
+?>
 
 	<?= $globalVariablesScript ?>
 
