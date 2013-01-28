@@ -113,10 +113,14 @@
 
 			</div>
 
-			<?php
-			if (empty($wg->SuppressArticleCategories)) {
-				echo $app->renderView('ArticleCategories', 'Index');
-			} ?>
+			<? if ( empty( $wg->SuppressArticleCategories ) ): ?>
+				<? if ( !empty( $wg->EnableCategorySelectExt ) && CategorySelect::isEnabled() ): ?>
+					<?= $app->renderView( 'CategorySelect', 'articlePage' ) ?>
+				<? else: ?>
+					<?= $app->renderView( 'ArticleCategories', 'Index' ) ?>
+				<? endif ?>
+			<? endif ?>
+
 			<?php
 			if (empty( $wg->InterlangOnTop ) ) {
 				 echo $app->renderView('ArticleInterlang', 'Index');

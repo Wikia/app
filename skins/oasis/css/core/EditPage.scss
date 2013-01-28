@@ -4,7 +4,6 @@
 @import "../mixins/box-shadow";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
-@import "../mixins/yui-suggest";
 
 .skin-oasis {
 	.cke_browser_gecko{
@@ -14,7 +13,7 @@
 			}
 		}
 	}
-	 
+
 	#cke_top_wpTextbox1 {
 		@include linear-gradient($color-module-shadow, top, $color-page, 50%, $color-module-shadow, 100%);
 		border: 1px solid $color-page-border;
@@ -23,7 +22,7 @@
 			top: 25px;
 		}
 	}
-	
+
 	.cke_toolbar_tab_tabs{
 		span {
 			border: 1px solid $color-page-border;
@@ -36,9 +35,9 @@
 				background-color: $color-page;
 				border-bottom-color: $color-page;
 			}
-		}	
+		}
 	}
-	
+
 	.cke_skin_wikia .cke_contents {
 		border-color: $color-page-border;
 		border-top: none;
@@ -90,7 +89,7 @@
 	.edit_enhancements_toolbar_static #scroll_down_arrow {
 		display: none;
 	}
-	
+
 	#csMainContainer {
 		@include clearfix;
 		background-color: mix($color-buttons, $color-page, 5%);
@@ -334,18 +333,11 @@
 	margin-bottom: 20px !important;
 }
 
-// LinkSuggest
-.link-suggest-container {
-	position: absolute;
-	.navigation-hover {
-		background: $color-menu-highlight;
-	}
-}
-
 #editpage-copywarn {
 	margin-top: 30px;
 }
-// /** faking a text link **/
+
+// faking a text link
 .editButtons {
 	#wpDiff {
 		background-color: transparent;
@@ -361,8 +353,7 @@
 	}
 }
 
-// /** Blog Posts **/
-
+// Blog Posts
 #blogPostForm {
 	#blogPostCheckboxes {
 		float: right;
@@ -370,16 +361,7 @@
 	}
 }
 
-
-// /** Footer-toolbar should never float on EditPage **/
+// Don't show footer on edit pages
 #WikiaFooter {
-	display: none; // /** removing footer from all edit pages **/
-	.float {
-			position: inherit;
-	}
-}
-
-// RT #74340: add styling for LinkSuggest
-.link-suggest-container {
-	@include yui-suggest;
+	display: none;
 }

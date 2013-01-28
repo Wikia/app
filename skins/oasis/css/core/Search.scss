@@ -12,6 +12,11 @@
 	margin-bottom: 10px;
 	position: relative;
 
+	.autocomplete {
+		border-top: 0;
+		width: 275px;
+	}
+
 	input[type="text"] {
 		@include input-field;
 		background: lighten($color-page, 5%);
