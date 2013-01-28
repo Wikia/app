@@ -28,15 +28,16 @@ define('autocomplete', function(){
 						data: {
 							search: curVal
 						},
-						success: function(resp) {
+						dataType: 'json'
+					}).done(
+						function(resp) {
 							if(!resp.error){
 								suggestions = resp[1];
 								cachedResponse[curVal] = resp;
 								suggest();
 							}
-						},
-						dataType: 'json'
-					});
+						}
+					);
 				}, 250);
 			}
 		}
