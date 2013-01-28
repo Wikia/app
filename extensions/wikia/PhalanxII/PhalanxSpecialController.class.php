@@ -1,12 +1,55 @@
 <?php
 
-class SpecialPhalanx extends SpecialPage {
+class PhalanxSpecialController extends WikiaSpecialPageController {
+	private $mDefaultExpire = '1 year';
 
-	var $mDefaultExpire;
+	public function __construct() {
+		parent::__construct('Phalanx');
+		$this->includable(false);
+	}
+	
+	public function index() {
+		$this->wf->profileIn( __METHOD__ );
+		
+		$this->wg->Out->setPageTitle( $this->wf->Msg('phalanx-title') );
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->displayRestrictionError();
+			$this->wf->profileOut( __METHOD__ );
+			return false;
+		}
+		
+		$this->response->addAsset('extensions/wikia/Phalanx/css/Phalanx.css');
+		$this->response->addAsset('extensions/wikia/Phalanx/js/Phalanx.js');
+		//$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css");
 
-	function __construct() {
-		$this->mDefaultExpire = '1 year';
-		parent::__construct('Phalanx', 'phalanx' /* restrictions */, true /* listed */);
+		$pager = new PhalanxPager();
+		$listing = $pager->getNavigationBar();
+		$listing .= $pager->getBody();
+		$listing .= $pager->getNavigationBar();
+
+		$data = $this->prefillForm();
+
+		$template->set_vars(array(
+			'expiries' => Phalanx::getExpireValues(),
+			'languages' => $wgPhalanxSupportedLanguages,
+			'listing' => $listing,
+			'data' => $data,
+			'action' => $wgTitle->getFullURL(),
+			'showEmail' => $wgUser->isAllowed( 'phalanxemailblock' )
+		));
+		
+		$this->setVal( 'url', $oPlaceModel->getStaticMapUrl() );
+		$this->setVal( 'align', $oPlaceModel->getAlign() );
+		$this->setVal( 'width', $oPlaceModel->getWidth() );
+		$this->setVal( 'height', $oPlaceModel->getHeight() );
+		$this->setVal( 'lat', $oPlaceModel->getLat() );
+		$this->setVal( 'lon', $oPlaceModel->getLon() );
+		$this->setVal( 'zoom', $oPlaceModel->getZoom() );
+		$this->setVal( 'categories', $oPlaceModel->getCategoriesAsText() );
+		$this->setVal( 'caption', $oPlaceModel->getCaption() );
+		$this->setVal( 'rteData', $rteData );
+		
+		$this->wf->profileOut( __METHOD__ );
 	}
 
 	function execute( $par ) {
@@ -20,6 +63,7 @@ class SpecialPhalanx extends SpecialPage {
 			wfProfileOut(__METHOD__);
 			return;
 		}
+
 
 		$this->setHeaders();
 		$wgOut->addStyle( "$wgExtensionsPath/wikia/Phalanx/css/Phalanx.css" );
@@ -98,94 +142,3 @@ class SpecialPhalanx extends SpecialPage {
 	}
 }
 
-class PhalanxPager extends ReverseChronologicalPager {
-	public function __construct() {
-		global $wgExternalSharedDB, $wgRequest;
-
-		parent::__construct();
-		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-
-		$this->mSearchText = $wgRequest->getText( 'wpPhalanxCheckBlocker', null );
-		$this->mSearchFilter = $wgRequest->getArray( 'wpPhalanxTypeFilter' );
-		$this->mSearchId = $wgRequest->getInt( 'id' );
-	}
-
-	function getQueryInfo() {
-		$query['tables'] = 'phalanx';
-		$query['fields'] = '*';
-
-		if ($this->mSearchId) {
-			$query['conds'][] = "p_id = {$this->mSearchId}";
-		} else {
-			if ( !empty( $this->mSearchText ) ) {
-				$query['conds'][] = '(p_text like "%' . $this->mDb->escapeLike( $this->mSearchText ) . '%")';
-			}
-
-			if ( !empty( $this->mSearchFilter ) ) {
-				$typemask = 0;
-				foreach ($this->mSearchFilter as $type ) {
-					$typemask |= $type;
-				}
-
-				$query['conds'][] = "p_type & $typemask <> 0";
-			}
-		}
-
-		return $query;
-	}
-
-	function getIndexField() {
-		return 'p_timestamp';
-	}
-
-	function getStartBody() {
-		return '<ul>';
-	}
-
-	function getEndBody() {
-		return '</ul>';
-	}
-
-	function formatRow( $row ) {
-		global $wgLang, $wgUser;
-
-		// hide e-mail filters
-		if ( $row->p_type & Phalanx::TYPE_EMAIL && !$wgUser->isAllowed( 'phalanxemailblock' ) ) {
-			return '';
-		}
-
-		$author = User::newFromId( $row->p_author_id );
-		$authorName = $author->getName();
-		$authorUrl = $author->getUserPage()->getFullUrl();
-
-		$phalanxUrl = Title::newFromText( 'Phalanx', NS_SPECIAL )->getFullUrl( array( 'id' => $row->p_id ) );
-		$statsUrl = Title::newFromText( 'PhalanxStats', NS_SPECIAL )->getFullUrl() . '/' . $row->p_id;
-
-		$html = '<li id="phalanx-block-' . $row->p_id . '">';
-
-		$html .= '<b>' . htmlspecialchars( $row->p_text ) . '</b> (' ;
-
-		$html .= $row->p_regex ? 'regex' : 'plain';
-		if( $row->p_case ) {
-			$html .= ',case';
-		}
-		if( $row->p_exact ) {
-			$html .= ',exact';
-		}
-		$html .= ') ';
-
-		// control links
-		$html .= " &bull; <a class='unblock' href='{$phalanxUrl}'>" . wfMsg('phalanx-link-unblock') . '</a>';
-		$html .= " &bull; <a class='modify' href='{$phalanxUrl}'>" . wfMsg('phalanx-link-modify') . '</a>';
-		$html .= " &bull; <a class='stats' href='{$statsUrl}'>" . wfMsg('phalanx-link-stats') . '</a>';
-
-		// types
-		$html .= '<br /> ' . wfMsg('phalanx-display-row-blocks', implode( ', ', Phalanx::getTypeNames( $row->p_type ) ) );
-
-		$html .= ' &bull; ' . wfMsgExt('phalanx-display-row-created', array('parseinline'), $authorName, $wgLang->timeanddate( $row->p_timestamp ));
-
-		$html .= '</li>';
-
-		return $html;
-	}
-}

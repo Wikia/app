@@ -23,7 +23,7 @@ class PhalanxUserBlock extends WikiaObject {
 		 
 		if ( !$phalanxModel->isOk() ) {
 			wfDebug ( __METHOD__ . ": user has 'phalanxexempt' right - no block will be applied\n" );
-			$this->wf->profileIn( __METHOD__ );
+			$this->wf->profileOut( __METHOD__ );
 			return true;
 		}
 

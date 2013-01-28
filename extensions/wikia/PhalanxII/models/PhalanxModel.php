@@ -46,10 +46,12 @@ abstract class PhalanxModel extends WikiaObject {
 	}
 
 	public function match( $type, $language = "en" ) {
-		return PhalanxService::match( $type, $this->text, $language );
+		$service = new PhalanxService();
+		return $service->match( $type, $this->text, $language );
 	}
 	
 	public function check( $type, $language = "en" ) {
-		return PhalanxService::check( $type, $this->text, $language );		
+		$service = new PhalanxService();
+		return $service->check( $type, $this->text, $language );		
 	}
 }

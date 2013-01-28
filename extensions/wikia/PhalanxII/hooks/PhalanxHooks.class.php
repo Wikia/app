@@ -32,6 +32,7 @@ class PhalanxHooks extends WikiaObject {
 			);
 		}
 		
+		$this->wf->profileOut( __METHOD__ );
 		return true;
 	}
 }
