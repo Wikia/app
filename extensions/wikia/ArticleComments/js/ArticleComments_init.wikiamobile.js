@@ -7,7 +7,7 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  **/
 
-require(['throbber', 'wikia.querystring', 'events', 'loader', 'wikia.nirvana'], function(throbber, qs, events, loader, nirvana){
+require(['throbber', 'wikia.querystring', 'events', 'wikia.loader', 'wikia.nirvana'], function(throbber, qs, events, loader, nirvana){
 	var hash = (new qs()).getHash(),
 		wkArtCom,
 		collSec,
