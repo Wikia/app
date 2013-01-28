@@ -80,7 +80,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 
 		if( !empty($data['values']['sponsoredImage']) ) {
 			$imageModel = new MarketingToolboxImageModel($data['values']['sponsoredImage']);
-			$data['sponsoredImage'] = $imageModel->getImageThumbData($model->getSponsoredImgThumbnailSize());
+			$data['sponsoredImage'] = $imageModel->getImageThumbData();
 		}
 
 		return parent::renderEditor($data);
