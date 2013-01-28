@@ -3,11 +3,6 @@ class ImagesServingTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider calculateScaledImageSizesDataProvider
-	 * 
-	 * @param $desiredImageSize
-	 * @param $originalWidth
-	 * @param $originalHeight
-	 * @param $results
 	 */
 	public function testCalculateScaledImageSizes($desiredImageSize, $originalSizes, $results) {
 		$expected = new stdClass();
@@ -103,6 +98,75 @@ class ImagesServingTest extends WikiaBaseTest {
 				'results' => array(
 					'width' => 29,
 					'height' => 155,
+				),
+			),
+		);
+	}
+
+	/**
+	 * @dataProvider getLocalFileThumbUrlAndSizesDataProvider
+	 */
+	public function testGetLocalFileThumbUrlAndSizes($destImageWidth, $image, $results) {
+		$titleGetTextResult = 'TEST TEXT';
+		$fileGetThumbUrlResult = 'TEST_URL';
+
+		$titleMock = $this->getMock('Title', array('getText'), array(), '', false);
+		$titleMock->expects($this->any())
+			->method('getText')
+			->will($this->returnValue($titleGetTextResult));
+
+		$fileMock = $this->getMock('WikiaLocalFile', array('getWidth', 'getHeight', 'thumbName', 'getThumbUrl'), array(), '', false);
+		$fileMock->expects($this->once())
+			->method('getWidth')
+			->will($this->returnValue($image['width']));
+		$fileMock->expects($this->once())
+			->method('getHeight')
+			->will($this->returnValue($image['height']));
+		$fileMock->expects($this->once())
+			->method('getThumbUrl')
+			->will($this->returnValue($fileGetThumbUrlResult));
+		$fileMock->expects($this->once())
+			->method('thumbName')
+			->will($this->returnValue($fileGetThumbUrlResult));
+
+		$this->mockGlobalFunction('findFile', $fileMock);
+		$this->mockApp();
+
+		$expected = new stdClass();
+		$expected->width = $results['width'];
+		$expected->height = $results['height'];
+		$expected->title = $titleGetTextResult;
+		$expected->url = $fileGetThumbUrlResult;
+
+		$result = ImagesService::getLocalFileThumbUrlAndSizes($titleGetTextResult, $destImageWidth);
+
+		$this->assertEquals($result, $expected);
+	}
+	
+	public function getLocalFileThumbUrlAndSizesDataProvider() {
+		return array(
+			//destination image width given, so the result will be different than original
+			array(
+				'destImageWidth' => 85,
+				'image' => array(
+					'width' => 60,
+					'height' => 10,
+				),
+				'results' => array(
+					'width' => 85,
+					'height' => 14,
+				),
+			),
+			//destination image width not given, so the result will be the same as original
+			array(
+				'destImageWidth' => 0,
+				'image' => array(
+					'width' => 60,
+					'height' => 10,
+				),
+				'results' => array(
+					'width' => 60,
+					'height' => 10,
 				),
 			),
 		);
