@@ -104,8 +104,9 @@ require(['events', 'throbber', 'track', 'wikia.nirvana'], function (events, thro
 				batch: batch,
 				//this is already encoded and $.ajax encode all data
 				index: decodeURIComponent(id.slice(8))
-			},
-			callback: function (result) {
+			}
+		}).done(
+			function (result) {
 				container.parentElement.removeChild(container);
 				next.insertAdjacentHTML('beforebegin', result);
 
@@ -121,6 +122,6 @@ require(['events', 'throbber', 'track', 'wikia.nirvana'], function (events, thro
 				prev.className = 'pagLess' + (batch > 1 ? ' visible' : '');
 				next.className = 'pagMore' + (batch < ~~(parent.getAttribute('data-batches')) ? ' visible' : '');
 			}
-		});
+		);
 	}
 });
