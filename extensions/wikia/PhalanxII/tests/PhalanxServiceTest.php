@@ -3,13 +3,14 @@
 class PhalanxServiceTest extends WikiaBaseTest {
 
 	public $service;
+
 	/**
 	 * setup tests
 	 */
 	public function setUp() {
-		$this->setupFile =  dirname(__FILE__) . '/../Phalanx_setup.php';
-		error_log( __CLASS__ . '::' . __FUNCTION__ . ' '  .$this->setupFile );
 
+		$this->setupFile =  dirname(__FILE__) . '/../Phalanx_setup.php';
+		wfDebug( __METHOD__ . ': '  .$this->setupFile );
 		parent::setUp();
 
 		$this->mockGlobalVariable( "wgPhalanxServiceUrl", "http://dev-eloy:8080" );
