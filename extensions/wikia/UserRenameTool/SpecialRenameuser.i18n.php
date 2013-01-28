@@ -370,7 +370,7 @@ $messages['ba'] = array(
 	'right-renameuser' => 'Ҡатнашыусыларҙың исемен үҙгәртеү',
 );
 
-/** Samogitian (žemaitėška)
+/** bat-smg (žemaitėška)
  * @author Hugo.arg
  */
 $messages['bat-smg'] = array(
@@ -2830,7 +2830,7 @@ $messages['nds'] = array(
 	'right-renameuser' => 'Brukers ne’en Naam geven',
 );
 
-/** Nedersaksies (Nedersaksies)
+/** Low Saxon (Netherlands) (Nedersaksies)
  */
 $messages['nds-nl'] = array(
 	'renameuser' => 'Gebruker herneumen',

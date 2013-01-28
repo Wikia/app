@@ -8,7 +8,7 @@
 (function(context){
 	'use strict';
 
-	function loader(w, mw, nirvana){
+	function loader(w, mw, nirvana, log){
 		var loader,
 			doc = w.document,
 			head = doc.head || doc.getElementsByTagName('head')[0],
@@ -45,7 +45,8 @@
 
 			// TODO: ease mocking
 			get = function(url, success, failure, type){
-				var element;
+				var element,
+					timer;
 
 				if(type == loader.CSS || type == loader.SCSS){
 					element = doc.createElement('link');
@@ -57,11 +58,7 @@
 					element.src = url;
 				}
 
-				// If onload is available, use it
-				if(element.onload === null) {
-					element.onload = success;
-					element.onerror = function(){failure()};
-				}else{
+				if (element.readyState) {
 					element.onreadystatechange = function () {
 						if (loadedCompleteRegExp.test(element.readyState)) {
 							success();
@@ -69,6 +66,50 @@
 						}
 					};
 				}
+				// If onload is available, use it
+				// don't use it when loading CSS in WebKit
+				else if(element.onload === null && (element.all /* exclude WebKit */ || type !== loader.CSS)) {
+					element.onload = success;
+					element.onerror = function(){failure()};
+				}
+				// use polling when loading CSS in Webkit :(
+				else if (type === loader.CSS) {
+					timer = w.setInterval(function () {
+						var stylesheet,
+							stylesheets = doc.styleSheets,
+							i = stylesheets.length;
+
+						while (i--) {
+							stylesheet = stylesheets[i];
+							if ((url == stylesheet.href)) {
+								try {
+									// We store so that minifiers don't remove the code
+									var r = stylesheet.cssRules;
+									// Webkit:
+									// Webkit browsers don't create the stylesheet object
+									// before the link has been loaded.
+									// When requesting rules for crossDomain links
+									// they simply return nothing (no exception thrown)
+									// Gecko:
+									// NS_ERROR_DOM_INVALID_ACCESS_ERR thrown if the stylesheet is not loaded
+									// If the stylesheet is loaded:
+									//  * no error thrown for same-domain
+									//  * NS_ERROR_DOM_SECURITY_ERR thrown for cross-domain
+									throw 'SECURITY';
+								} catch(e) {
+									// Gecko: catch NS_ERROR_DOM_SECURITY_ERR
+									// Webkit: catch SECURITY
+									if (/SECURITY/.test(e) || /SECURITY/i.test(e.name)) {
+										timer = w.clearInterval(timer);
+										success();
+									}
+								}
+							}
+						}
+					}, 13);
+				}
+
+				log('[' + type + '] ' + url, log.levels.info, 'loader');
 
 				head.appendChild(element);
 			},
@@ -311,6 +352,8 @@
 					onEnd = function(){
 						remaining--;
 
+						log(remaining + ' remaining...', log.levels.info, 'loader');
+
 						// All files have been downloaded
 						if ( remaining < 1 ) {
 
@@ -327,6 +370,8 @@
 						}
 					},
 					failure = function(res){
+						log(res, log.levels.error, 'loader');
+
 						return function(override){
 							failed.push(override || res);
 							onEnd();
@@ -357,13 +402,21 @@
 						type;
 
 					// URI string
-					if (typeof resource == 'string') {
+					if (typeof resource === 'string') {
 						matches = resource.match(rExtension);
 
 						type = matches ? matches[0] : loader.UNKNOWN;
 						files = resource;
+					}
+					// function returning a promise
+					else if (typeof resource === 'function') {
+						resource().
+							done(complete).
+							fail(failure);
 
-					} else {
+						continue;
+					}
+					else {
 						type = resource.type;
 						files  = resource.resources || resource.url
 					}
@@ -478,11 +531,11 @@
 	}
 
 	if (context.jQuery) {
-		context.Loader = loader(context, context.mw, jQuery.nirvana);
+		context.Loader = loader(context, context.mw, jQuery.nirvana, context.Wikia.log);
 	}
 
 	if (context.define && context.define.amd) {
 		//there is no mw module in WikiaMobile
-		context.define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nirvana'], loader);
+		context.define('wikia.loader', ['wikia.window', require.optional('wikia.mw'), 'wikia.nirvana', 'wikia.log'], loader);
 	}
 })(this);

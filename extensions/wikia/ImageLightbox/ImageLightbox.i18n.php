@@ -732,6 +732,18 @@ $messages['pt-br'] = array(
 	'lightbox-share-email-error-caption' => 'Erro',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'lightbox-forum' => 'Forum',
+	'lightbox-share-button-email' => 'E-mail',
+	'lightbox-share-button-www' => 'Condivide',
+	'lightbox-share-email-page-label-address' => 'Indirizze e-mail',
+	'lightbox-share-email-error-caption' => 'Errore',
+	'lightbox-visit-the-wiki' => "Visite 'a uicchi:",
+);
+
 /** Russian (русский)
  * @author Kuzura
  */

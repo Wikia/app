@@ -494,6 +494,14 @@ SQL;
 	}
 
 	/**
+	 * get memcache key for total video views
+	 * @return string
+	 */
+	public static function getMemKeyTotalVideoViews() {
+		return F::app()->wf->MemcKey( 'videos', 'total_video_views', 'v4' );
+	}
+
+	/**
 	 * get total video views by title
 	 * @param string $title
 	 * @return integer $videoViews
@@ -503,33 +511,26 @@ SQL;
 
 		$app->wf->ProfileIn( __METHOD__ );
 
-		$memKey = $app->wf->MemcKey( 'videos', 'total_video_views', 'v3' );
-		$videoList = $app->wg->Memc->get( $memKey );
+		$hashTitle = md5( $title );
+		$memKeyBucket = substr( $hashTitle, 0, 2 );
+		$memKeyBase = self::getMemKeyTotalVideoViews();
+		$videoList = $app->wg->Memc->get( $memKeyBase.'-'.$memKeyBucket );
 		if ( !is_array($videoList) ) {
-			if ( !VideoInfoHelper::videoInfoExists() ) {
-				$videoList = DataMartService::getVideoListViewsByTitleTotal();
-			} else {
-				$db = $app->wf->GetDB( DB_SLAVE );
+			$videoListTotal = VideoInfoHelper::getTotalViewsFromDB();
+			foreach( $videoListTotal as $memKeyBucket => $list ) {
+				$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $list, 60*60*2 );
+			}
 
-				$result = $db->select(
-					array( 'video_info' ),
-					array( 'video_title, views_total' ),
-					array( 'views_total != 0' ),
-					__METHOD__
-				);
-
+			// cache empty list into the bucket so that we don't need to do query again when video has 0 views.
+			if ( empty($videoListTotal[$memKeyBucket]) ) {
 				$videoList = array();
-				while ( $row = $db->fetchObject($result) ) {
-					$hashTitle = md5( $row->video_title );
-					$videoList[$hashTitle] = $row->views_total;
-				}
-
-				$app->wg->Memc->set( $memKey, $videoList, 60*60*2 );
+				$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $videoList, 60*60*2 );
+			} else {
+				$videoList = $videoListTotal[$memKeyBucket];
 			}
 		}
 
-		$hashTitle = md5( $title );
-		$videoViews = ( isset($videoList[$hashTitle]) ) ? $videoList[$hashTitle] : 0;
+		$videoViews = isset($videoList[$hashTitle]) ? $videoList[$hashTitle] : 0;
 
 		$app->wf->ProfileOut( __METHOD__ );
 

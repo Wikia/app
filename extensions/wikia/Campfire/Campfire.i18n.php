@@ -21,6 +21,14 @@ Parameters:
 * $1 pulls in the name of the copyright license the wiki uses.',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author AZISS
+ */
+$messages['az'] = array(
+	'campfire-page-header' => '$1 dən $2',
+	'campfire-licensed-under' => '$1 lisenziyası altındadır',
+);
+
 /** Breton (brezhoneg)
  * @author Y-M D
  */

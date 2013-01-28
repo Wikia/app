@@ -95,7 +95,8 @@ Parameters:
 * $4 - Name of the blog post.  This should be placed within the link of the the anchor tag created by $3.
 * $5 - Full URL link to the blog page of the author of the blog post (not the blog comment). $5 is placed inside an anchor tag, please do not alter.
 * $6 - Username of the author of the blog post (not the blog comment). This should placed within the link of the anchor tag created by $5. Supports GENDER.',
-	'article-comments-anonymous' => 'Anonymous users are logged out / un-authenticated users.',
+	'article-comments-anonymous' => 'Anonymous users are logged out / un-authenticated users.
+{{Identical|Anonymous user}}',
 	'article-comments-post' => 'This is the text of a submit button to post a new article comment.',
 	'article-comments-cancel' => 'Cancel/stop editing an article comment.',
 	'article-comments-delete' => 'Click this button to delete the comment. It will take you to a page where you can confirm the deletion.',
@@ -547,8 +548,8 @@ $messages['da'] = array(
  * @author SVG
  */
 $messages['de'] = array(
-	'article-comments-file-page' => "<a href='$1'>Kommentar von $2</a> auf <a href='$3'>$4</a>",
-	'article-blog-comments-file-page' => "<a href='$1'>Kommentar von $2</a> auf den Beitrag von <a href='$3'>$4</a> im Blog von <a href='$5'>$6</a>",
+	'article-comments-file-page' => "<a href='$1'>Kommentar von $2</a> zu <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Kommentar von $2</a> zum Artikel <a href='$3'>$4</a> im Blog von <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Unangemeldeter Benutzer',
 	'article-comments-comments' => 'Kommentare ($1)',
 	'article-comments-post' => 'Kommentieren',
@@ -1050,8 +1051,8 @@ Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Ut
  * @author Toliño
  */
 $messages['gl'] = array(
-	'article-comments-file-page' => "<a href='$1'>Comentario desde $2</a> en <a href='$3'>$4</a>",
-	'article-blog-comments-file-page' => "<a href='$1'>Comentario desde $2</a> en <a href='$3'>$4</a>, publicado no blogue de <a href='$5'>$6</a>",
+	'article-comments-file-page' => "<a href='$1'>Comentario de $2</a> en <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Comentario de $2</a> en <a href='$3'>$4</a>, publicado no blogue de <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Usuario anónimo',
 	'article-comments-comments' => 'Comentarios ($1)',
 	'article-comments-post' => 'Publicar un comentario',
@@ -2315,10 +2316,13 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Express2000
  * @author Kuzura
  */
 $messages['ru'] = array(
+	'article-comments-file-page' => "<a href='$1'>Комментарий от $2</a> на <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Комментарий от $2</a> на пост <a href='$3'>$4</> в блоге <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Анонимный участник',
 	'article-comments-comments' => 'Комментарии ($1)',
 	'article-comments-post' => 'Оставить комментарий',
@@ -2469,8 +2473,8 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'article-comments-file-page' => "<a href='$1'>Kommentar från $2</a> on <a href='$3'>$4</a>", # Fuzzy
-	'article-blog-comments-file-page' => "<a href='$1'>Kommentar från $2</a> on <a href='$3'>$4</a> inlägg på <a href='$5'>$6s</a> blogg", # Fuzzy
+	'article-comments-file-page' => "<a href='$1'>Kommentar från $2</a> den <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Kommentar från $2</a> den <a href='$3'>$4</a> som inlägg på <a href='$5'>$6s</a> blogg",
 	'article-comments-anonymous' => 'Anonym användare',
 	'article-comments-comments' => 'Kommentarer ($1)',
 	'article-comments-post' => 'Skicka kommentar',

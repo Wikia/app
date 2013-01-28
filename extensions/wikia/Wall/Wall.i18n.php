@@ -2230,7 +2230,7 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'wall-votes-modal-showmore' => 'Voir d’autres personnes qui l’ont sélectionné',
 	'wall-votes-modal-title' => 'Sélectionné',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Une personne a|$1 personnes ont}} sélectionné ce message',
-	'wall-votes-number' => '$1 {{PLURAL:$1|Kudos}}',
+	'wall-votes-number' => '$1 {{PLURAL:$1|sélection|sélections}}',
 	'wall-votes-number-tooltip' => 'Voir qui a sélectionné ce message',
 	'wall-votes-vote-tooltip' => 'Sélectionner ce message',
 	'wall-votes-voted-tooltip' => 'Vous avez sélectionné ce message !',
@@ -5507,6 +5507,7 @@ $messages['ru'] = array(
 	'wall-message-removed-thread-because' => '$1 удалил эту тему, причина:',
 	'wall-message-deleted-thread-because' => '$1 удалил эту тему, причина:',
 	'wall-message-restore-thread' => 'Восстановить тему',
+	'wall-message-move-thread' => 'Переместить эту тему',
 	'wall-message-removed-reply-because' => '$1 удалил этот ответ, причина:',
 	'wall-message-deleted-reply-because' => '$1 удалил этот ответ, причина:',
 	'wall-message-closed-by' => '[[$2|$1]] закрыл эту тему',
@@ -5548,6 +5549,11 @@ $messages['ru'] = array(
 	'wall-action-rev-reply-confirm' => 'Вы уверены, что хотите удалить это сообщение?',
 	'wall-action-rev-thread-confirm' => 'Вы уверены, что хотите удалить эту тему и всю историю её изменений из вики? Это действие нельзя будет отменить.',
 	'wall-action-rev-confirm-ok' => 'Да, удалить',
+	'wall-action-move-thread-heading' => 'Переместить эту тему',
+	'wall-action-move-validation-select-wall' => 'Пожалуйста, выберите форум',
+	'wall-action-move-topics-summary' => 'Тема перемещена',
+	'wall-action-move-thread-ok' => 'Переместить тему',
+	'wall-action-move-board-label' => 'Выберите форум для перемещения',
 	'wall-notifications' => 'Уведомления',
 	'wall-notifications-all' => 'Все уведомления',
 	'wall-notifications-markasread' => 'Отметить всё, как прочитанное',
@@ -5602,6 +5608,7 @@ $messages['ru'] = array(
 	'wall-deleted-msg-text' => 'Сообщение, которое вы пытаетесь найти, было удалено.',
 	'wall-deleted-msg-return-to' => 'Вернуться на стену участника $1.',
 	'wall-deleted-msg-view' => '(Просмотреть/Восстановить)',
+	'wall-recentchanges-wall-thread' => 'Стена темы',
 	'wall-recentchanges-new-message' => 'на <a href="$1">стене $2</a>',
 	'wall-recentchanges-edit' => '(сообщение исправлено)',
 	'wall-recentchanges-summary' => '($1)',
@@ -5611,6 +5618,8 @@ $messages['ru'] = array(
 	'wall-recentchanges-restored-reply' => 'восстановлен ответ в теме "[[$1|$2]]" на [[$3|стене $4]]',
 	'wall-recentchanges-deleted-thread' => 'удалена тема "[[$1|$2]]" на [[$3|стене $4]]',
 	'wall-recentchanges-deleted-reply' => 'удалён ответ в теме "[[$1|$2]]" на [[$3|стене $4]]',
+	'wall-recentchanges-closed-thread' => 'закрыта тема "[[$1|$2]]" на [[$3|стене $4]]',
+	'wall-recentchanges-reopened-thread' => 'открыта тема "[[$1|$2]]" на [[$3|стене $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Ответ на стене обсуждения',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Стена обсуждения',
 	'wall-recentchanges-thread-group' => 'Тема $1 на <a href="$2">стене $3</a>',
@@ -5654,6 +5663,7 @@ $messages['ru'] = array(
 	'wall-thread-history-reply-created' => '$1 $2 оставил сообщение',
 	'wall-thread-history-thread-removed' => '$1 $2 удалил эту тему',
 	'wall-thread-history-reply-removed' => '$1 $2 удалил $3 сообщение $5',
+	'wall-thread-history-reply-deleted' => '$1 $2 удалил ответ $3',
 	'wall-thread-history-thread-restored' => '$1 $2 удалил эту тему',
 	'wall-thread-history-reply-restored' => '$1 $2 восстановил $3 ответ $5',
 	'wall-thread-history-thread-deleted' => '$1 $2 удалил эту тему',
@@ -5716,15 +5726,15 @@ ___________________________________________
 ___________________________________________<br />
 * Найти помощь и совет можно на Community Central: http://community.wikia.com
 * Хотите уменьшить количество данных писем? Вы можете отписаться от рассылки или внести в неё коррективы на странице личных настроек: http://community.wikia.com/Special:Preferences',
-	'prefs-email-wall-v2' => 'Стена обсуждения', # Fuzzy
+	'prefs-email-wall-v2' => 'Стена обсуждения и форум',
 	'tog-enotifwallthread-v2' => 'Отправлять мне email...',
 	'tog-enotifmywall-every' => 'о каждом сообщении и ответе',
 	'tog-enotifmywall-sincevisited' => 'только о теме, которую я посещал последней',
 	'tog-enotifmywall-reminder' => 'с ежедневным напоминанием',
-	'tog-enotifmywall-noemail' => 'не отправлять мне эл. письма со Стены обсуждения', # Fuzzy
-	'wallshowsource-toggle-v2' => 'Включить {{int:user-action-menu-view-source}} опцию для сообщений на Стене обсуждения', # Fuzzy
+	'tog-enotifmywall-noemail' => 'Не отправлять мне эл. письма со Стены обсуждения или форума',
+	'wallshowsource-toggle-v2' => 'Включить {{int:user-action-menu-view-source}} для тем',
 	'wallshowsource-toggle' => 'Включить {{int:user-action-menu-view-source}} для сообщений на Стене обсуждения',
-	'walldelete-toggle' => 'Включить просмотр постов, удалённых со Стены обсуждения', # Fuzzy
+	'walldelete-toggle' => 'Включить просмотр постов, удалённых из тем',
 	'wall-notifications-notifyeveryone' => '$1 сообщил об этом',
 	'wall-message-notifyeveryone' => 'Сообщить всем об этой теме',
 	'wall-message-unnotifyeveryone' => 'Отменить сообщение об этой теме',
@@ -5732,7 +5742,7 @@ ___________________________________________<br />
 	'wall-votes-modal-showmore' => 'Посмотреть, кто ещё добавил "Мне нравится"',
 	'wall-votes-modal-title' => 'Мне нравится',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Один участник|$1 участника|$1 участников}} добавили "Мне нравится" к этому сообщению',
-	'wall-votes-number' => '$1 "Мне нравится"', # Fuzzy
+	'wall-votes-number' => '$1 {{PLURAL:$1|мне нравится|мне нравится}}', # Fuzzy
 	'wall-votes-number-tooltip' => 'Посмотреть, кто добавил "Мне нравится"',
 	'wall-votes-vote-tooltip' => 'Мне нравится это сообщение',
 	'wall-votes-voted-tooltip' => 'Вам понравилось это сообщение!',
@@ -5744,9 +5754,11 @@ ___________________________________________<br />
 	'wall-topic-input-heading' => 'Topic',
 	'wall-topic-input-placeholder' => 'Add a Topic (optional)',
 	'wall-topic-input-error' => 'There is no article named "$1". Please use an existing article name as a Topic.',
-	'wall-topic-input-error-limit' => 'A thread can only have $1 Topics maximum.', # Fuzzy
+	'wall-topic-input-error-limit' => 'В форуме может быть максимум $1 {{PLURAL:$1|тема|темы|тем}}.',
 	'wall-topic-heading' => 'Topics for this thread:',
 	'wall-topic-edit' => 'Edit Topics',
+	'wall-topic-edit-save' => 'Сохранить',
+	'wall-topic-edit-cancel' => 'Отмена',
 );
 
 /** Swedish (svenska)
@@ -5775,7 +5787,7 @@ $messages['sv'] = array(
 	'wall-message-elseswall' => '$1s vägg',
 	'wall-message-no-permission' => 'Du har inte behörighet att utföra denna åtgärd på meddelandet',
 	'wall-thread-removed' => 'Togs bort',
-	'wall-thread-isnotifyeveryone' => 'Belys',
+	'wall-thread-isnotifyeveryone' => 'Belyst',
 	'wall-thread-deleted' => 'Raderades',
 	'wall-thread-closed' => 'Stängd',
 	'wall-default-title' => 'Meddelande från $1',

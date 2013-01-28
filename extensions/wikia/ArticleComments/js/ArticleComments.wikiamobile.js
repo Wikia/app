@@ -29,7 +29,7 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 		replies = msg('wikiamobile-article-comments-replies'),
 		postComm = d.getElementsByClassName('commFrm')[0].cloneNode(true);
 
-	postComm.getElementsByClassName('wkInp')[0].setAttribute('placeholder', postReply);
+	postComm.getElementsByClassName('commText')[0].setAttribute('placeholder', postReply);
 
 	function clickHandler(event){
 		event.preventDefault();
@@ -53,8 +53,9 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 
 			Wikia.ajax({
 				url: ajaxUrl + '&page=' + ~~pageIndex,
-				dataType: 'json',
-				success: function(result){
+				dataType: 'json'
+			}).done(
+				function(result){
 					var finished;
 
 					currentPage = pageIndex;
@@ -74,7 +75,7 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 
 					wkArtCom.scrollIntoView();
 				}
-			});
+			);
 		}
 	}
 
@@ -109,7 +110,7 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 				parent = form.previousElementSibling,
 				parentId = (parent) ? parent.id : false,
 				submit = form.getElementsByTagName('input')[0],
-				textArea = form.getElementsByClassName('wkInp')[0],
+				textArea = form.getElementsByClassName('commText')[0],
 				text = textArea.value;
 
 			if(text !== '') {
@@ -134,8 +135,9 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 					url: wgScript,
 					data: data,
 					dataType: 'json',
-					type: 'POST',
-					success: function(json) {
+					type: 'POST'
+				}).done(
+					function(json) {
 						textArea.value = '';
 
 						if(!json.error && json.text){
@@ -163,7 +165,7 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 						submit.disabled = false;
 						throbber.hide(form);
 					}
-				});
+				);
 			}
 		}
 	}
@@ -216,7 +218,7 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 						otherwise scroll to top
 					*/
 					function(content){
-						var input = content.getElementsByClassName('wkInp')[0];
+						var input = content.getElementsByClassName('commText')[0];
 						if(input){
 							input.scrollIntoView();
 							input.focus();

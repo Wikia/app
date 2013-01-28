@@ -198,6 +198,11 @@ class ExternalUser_Wikia extends ExternalUser {
 		return null;
 	}
 
+	public function mapToUser() {
+		wfDebug( __METHOD__ . " \n" );
+		return User::newFromRow( $this->mRow );
+	}
+
 	protected function addToDatabase( $User, $password, $email, $realname ) {
 		global $wgExternalSharedDB, $wgEnableUserLoginExt;
 		wfProfileIn( __METHOD__ );
@@ -292,7 +297,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function getLocalUser() {
+	public function getLocalUser( $obj = true ) {
 		$uid = $this->getId();
 		wfDebug( __METHOD__ . ": get local user: $uid \n" );
 
@@ -302,7 +307,12 @@ class ExternalUser_Wikia extends ExternalUser {
 			'*',
 			array( 'user_id' => $uid )
 		);
-		return $row ? User::newFromId( $row->user_id ) : null;
+		if ( $obj ) {
+			$res = $row ? User::newFromId( $row->user_id ) : null;
+		} else {
+			$res = $row;
+		}
+		return $res;
 	}
 
 	public function updateUser() {

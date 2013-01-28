@@ -71,10 +71,16 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 	}
 
 	public function renderEditor($data) {
-		if (!empty($data['values']['video'])) {
-			$model = new MarketingToolboxModel();
+		$model = new MarketingToolboxModel();
+		
+		if( !empty($data['values']['video']) ) {
 			$videoDataHelper = new RelatedVideosData();
 			$data['videoData'] = $videoDataHelper->getVideoData($data['values']['video'], $model->getThumbnailSize());
+		}
+
+		if( !empty($data['values']['sponsoredImage']) ) {
+			$imageModel = new MarketingToolboxImageModel($data['values']['sponsoredImage']);
+			$data['sponsoredImage'] = $imageModel->getImageThumbData();
 		}
 
 		return parent::renderEditor($data);

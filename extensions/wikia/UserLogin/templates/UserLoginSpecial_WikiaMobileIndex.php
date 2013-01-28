@@ -44,7 +44,7 @@ if ( !empty( $result ) ) {
 		<a id=wkLgnRcvLnk
 		   href="<?= $recoverLink ;?>"<?= ( $recoverPassword ) ? ' class=hide' : null ?>><?= $wf->Msg( 'userlogin-forgot-password' ) ;?></a>
 		<input id=wkLgnBtn name=action type=submit value='<?= $wf->Msg( 'login' ) ?>'
-		       class='wkBtn main<?= ( $recoverPassword ) ? ' hide' : null ?>'>
+		       class='wkBtn main<?= ( $recoverPassword ) ? ' hide' : null ?> round'>
 		<input id=wkLgnRcvBtn name=action type=submit value='<?= $wf->Msg( 'wikiamobile-sendpassword-label' ) ?>'
 		       class='wkBtn<?= ( $recoverPassword ) ? ' show' : null ?>'>
 	</form>

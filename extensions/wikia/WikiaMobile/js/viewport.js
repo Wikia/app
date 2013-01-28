@@ -15,9 +15,7 @@
 
 	var //some shortcuts to help minify JS
 		ADD = 'addEventListener',
-		REMOVE = 'removeEventListener',
 		CREATE = 'createEvent',
-		LOAD = 'load',
 
 	//browser sniffing this is actually what I need here...
 		ua = w.navigator.userAgent.toLowerCase(),

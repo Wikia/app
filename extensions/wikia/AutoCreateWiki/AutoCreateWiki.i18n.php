@@ -3745,13 +3745,17 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'autocreatewiki-page-title-default' => "Ccreje 'na uicchi nove",
 	'autocreatewiki-required' => '$1 = richieste',
+	'autocreatewiki-web-address' => 'Indirizze web:',
 	'autocreatewiki-category-select' => 'Scacchie une',
 	'autocreatewiki-language-all' => 'Tutte le lènghe',
+	'autocreatewiki-remember' => 'Arrecuèrdeme',
 	'autocreatewiki-create-account' => "Ccreje 'nu cunde utende",
 	'autocreatewiki-title-template' => '$1 Uicchi',
 	'autocreatewiki-category-label' => 'Categorije:',
 	'autocreatewiki-category-other' => 'otre',
+	'autocreatewiki-step2' => "Stoche a ccreje l'archivije ...",
 );
 
 /** Russian (русский)

@@ -148,8 +148,9 @@ var JSSnippets = (function(){
 			dependencies = unique(dependencies);
 
 			// load all dependencies in parallel and then fire all callbacks
-			require(['loader'], function(loader){
-				loader(
+			require(['wikia.loader', 'wikia.log'], function(loader, log){
+				loader.apply(
+					loader,
 					dependencies
 				).done(
 					function(){
@@ -160,14 +161,7 @@ var JSSnippets = (function(){
 								}
 							}
 						}catch(e){
-							var msg = 'Skipping running callback, cause: ' + e;
-
-							//mobile skin doesn't have jQuery + extensions and can rely on console
-							if(window.console){
-								console.warn(msg);
-							}else{
-								$().log(msg);
-							}
+							log('Skipping running callback, cause: ' + e, log.levels.error);
 						}
 					}
 				)
