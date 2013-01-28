@@ -53,37 +53,37 @@ class PhalanxPager extends ReverseChronologicalPager {
 			return '';
 		}
 
-		$author = User::newFromId( $row->p_author_id );
+		$author = F::build('User', array( $row->p_author_id ), 'newFromId');
 		$authorName = $author->getName();
 		$authorUrl = $author->getUserPage()->getFullUrl();
 
-		$phalanxUrl = Title::newFromText( 'Phalanx', NS_SPECIAL )->getFullUrl( array( 'id' => $row->p_id ) );
-		$statsUrl = Title::newFromText( 'PhalanxStats', NS_SPECIAL )->getFullUrl() . '/' . $row->p_id;
+		$phalanxPage = F::build( 'Title', array( 'Phalanx', NS_SPECIAL ), 'newFromText' );
+		$phalanxUrl = $phalanxPage->getFullUrl( array( 'id' => $row->p_id ) );
 
-		$html = '<li id="phalanx-block-' . $row->p_id . '">';
+		$phalanxStatsPage = F::build( 'Title', array( 'PhalanxStats', NS_SPECIAL ), 'newFromText' );
+		$statsUrl = sprintf( "%s/%s", $phalanxStatsPage->getFullUrl(), $row->p_id );
 
-		$html .= '<b>' . htmlspecialchars( $row->p_text ) . '</b> (' ;
+		$html  = Html::openElement( 'li', array( 'id' => 'phalanx-block-' . $row->p_id ) );
+		$html .= Html::element( 'b', array(), htmlspecialchars( $row->p_text ) ); 
+		$html .= sprintf( " (%s%s%s) ", 
+			( $row->p_regex ? 'regex' : 'plain' ),
+			( $row->p_case  ? ',case' : '' ),
+			( $row->p_exact ? ',exact': '' )
+		);
 
-		$html .= $row->p_regex ? 'regex' : 'plain';
-		if( $row->p_case ) {
-			$html .= ',case';
-		}
-		if( $row->p_exact ) {
-			$html .= ',exact';
-		}
-		$html .= ') ';
+		/* control links */
+		$html .= sprintf( " &bull; %s &bull; %s &bull; %s <br />", 
+			Html::element( 'a', array( 'class' => 'unblock', 'href' => $phalanxUrl ), $this->wf->Msg('phalanx-link-unblock') ),
+			Html::element( 'a', array( 'class' => 'modify', 'href' => $phalanxUrl ), $this->wf->Msg('phalanx-link-modify') ),			  
+			Html::element( 'a', array( 'class' => 'stats', 'href' => $statsUrl ), $this->wf->Msg('phalanx-link-stats') )
+		);
+		
+		/* types */
+		$html .= $this->wf->Msg('phalanx-display-row-blocks', implode( ', ', Phalanx::getTypeNames( $row->p_type ) ) );
 
-		// control links
-		$html .= " &bull; <a class='unblock' href='{$phalanxUrl}'>" . wfMsg('phalanx-link-unblock') . '</a>';
-		$html .= " &bull; <a class='modify' href='{$phalanxUrl}'>" . wfMsg('phalanx-link-modify') . '</a>';
-		$html .= " &bull; <a class='stats' href='{$statsUrl}'>" . wfMsg('phalanx-link-stats') . '</a>';
+		$html .= sprintf( " &bull; %s ", $this->wf->MsgExt( 'phalanx-display-row-created', array('parseinline'), $authorName, $this->wg->Lang->timeanddate( $row->p_timestamp ) ) );
 
-		// types
-		$html .= '<br /> ' . wfMsg('phalanx-display-row-blocks', implode( ', ', Phalanx::getTypeNames( $row->p_type ) ) );
-
-		$html .= ' &bull; ' . wfMsgExt('phalanx-display-row-created', array('parseinline'), $authorName, $wgLang->timeanddate( $row->p_timestamp ));
-
-		$html .= '</li>';
+		$html .= Html::closeElement( "li" );
 
 		return $html;
 	}
