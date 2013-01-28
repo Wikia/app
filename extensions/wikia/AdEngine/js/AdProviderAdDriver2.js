@@ -38,7 +38,7 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
 		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
 		'TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130', 'tile':2, 'loc':'top', 'dcopt':'ist'},
-		'TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
+		'TOP_RIGHT_BOXAD': {'size':'300x250,300x600,300x100', 'tile':1, 'loc':'top'},
 		'WIKIA_BAR_BOXAD_1': {'size':'320x50', 'tile': 4, 'loc':'bottom'}
 	};
 
@@ -120,10 +120,14 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 			, url
 
 			, hopTimer, hopTime
+			, inLeaderboardTest = abTest && abTest.getGroup('LEADERBOARD_TESTS')
+			, inMedRecTest = abTest && abTest.getGroup('MEDREC_TESTS')
 		;
 
 		// Always have an ad when user is in the LEADERBOARD_TESTS experiment
-		if (!(abTest && abTest.getGroup('LEADERBOARD_TESTS') && slotname === 'TOP_LEADERBOARD')) {
+		if (!(inLeaderboardTest && slotname === 'TOP_LEADERBOARD')
+			&& !(inMedRecTest && slotname === 'TOP_RIGHT_BOXAD')
+		) {
 			if (!isHighValueCountry) {
 				error();
 				return;
