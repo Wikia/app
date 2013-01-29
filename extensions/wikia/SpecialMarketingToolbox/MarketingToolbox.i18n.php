@@ -108,7 +108,6 @@ $messages['en'] = array(
 	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',
 	'marketing-toolbox-validator-wrong-url' => 'The URL you entered is not valid, please try again',
 	'marketing-toolbox-validator-wrong-file' => 'The file you chose is not valid, please try again',
-	'marketing-toolbox-validator-wrong-file-size' => 'Wrong size of the file you chose, please try again',
 	'marketing-toolbox-validator-wrong-file-size-width' => 'Wrong width of the file you chose, please try again (Max width is: $maxWidthpx)',
 	'marketing-toolbox-validator-wrong-file-size-height' => 'Wrong height of the file you chose, please try again (Max height is: $maxHeightpx)',
 	'marketing-toolbox-validator-wrong-file-not-an-image' => 'The file you chose is not an image, please try again',
