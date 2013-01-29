@@ -44,14 +44,20 @@ class UserTwoTagsStrategy extends UserTagsStrategyBase {
 	 * @return string
 	 */
 	protected function getFirstTag() {
-		$tag = '';
+		$groupNameSuffix = null;
 		if( $this->isUserInGroup(self::WIKIA_GROUP_STAFF_NAME) ) {
-			$tag = $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_STAFF_NAME);
+			$groupNameSuffix = self::WIKIA_GROUP_STAFF_NAME;
 		} else if( $this->isUserInGroup(self::WIKIA_GROUP_AUTHENTICATED_NAME) ) {
-			$tag = $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_AUTHENTICATED_NAME);
+			$groupNameSuffix = self::WIKIA_GROUP_AUTHENTICATED_NAME;
+		} else if( $this->isUserInGroup(self::WIKIA_GROUP_WIKIA_STAR) ) {
+			$groupNameSuffix = self::WIKIA_GROUP_WIKIA_STAR;
 		}
 
-		return $tag;
+		if( !is_null($groupNameSuffix) ) {
+			return $this->app->wf->Msg('user-identity-box-group-' . $groupNameSuffix);
+		}
+
+		return '';
 	}
 
 	/**
