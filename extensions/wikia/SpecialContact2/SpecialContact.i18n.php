@@ -175,7 +175,7 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	'specialcontact-noform-footer' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Forum:Community_Central_Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
 
 	/* form */
-	'specialcontact-username' => 'Please enter your username',
+	'specialcontact-username' => 'Your username',
 	'specialcontact-wikiname' => 'Which wiki',
 	'specialcontact-realname' => 'Your name',
 	'specialcontact-yourmail' => 'Your email',
