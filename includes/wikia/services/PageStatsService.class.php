@@ -101,7 +101,7 @@ class PageStatsService extends Service {
 		$wgMemc->delete($this->getKey('previous-edits'));
 
 		// invalidate cached data from getCommentsCount()
-		$title = Title::newFromId($this->pageId, Title::GAID_FOR_UPDATE /* fix for slave lag */);
+		$title = $this->getTitle();
 
 		if (!empty($title)) {
 			$pageName = $title->getPrefixedText();
