@@ -410,7 +410,7 @@
 			$app = F::app();
 			$app->wf->ProfileIn( __METHOD__ );
 
-			$cacheVersion = 1;
+			$cacheVersion = 2;
 			$limitDefault = 200;
 			$limitUsed = ( $limit > $limitDefault ) ? $limit : $limitDefault ;
 
@@ -419,8 +419,11 @@
 				$startDate = '2012-10-07';
 				$endDate = '2012-10-14';
 			} else {
-				$startDate = date( 'Y-m-d', strtotime( 'last week last monday' ) );
-				$endDate = date( 'Y-m-d', strtotime( 'last week next sunday' ) );
+				//Temporary fix for BugId:96479
+				//mine older data
+				//TODO: restore to fresher data after data will be back
+				$startDate = date( 'Y-m-d', strtotime( '4 weeks ago last monday' ) );
+				$endDate = date( 'Y-m-d', strtotime( '4 weeks ago next sunday' ) );
 			}
 
 			$keyToken = '';
