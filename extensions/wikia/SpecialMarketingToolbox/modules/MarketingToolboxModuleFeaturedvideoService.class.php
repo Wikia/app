@@ -14,6 +14,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleS
 					),
 					array(
 						'wrong-file' => 'marketing-toolbox-validator-wrong-file',
+						'wrong-size' => 'marketing-toolbox-validator-wrong-file-size',
 						'max-width' => 'marketing-toolbox-validator-wrong-file-size-width',
 						'max-height' => 'marketing-toolbox-validator-wrong-file-size-height',
 						'not-an-image' => 'marketing-toolbox-validator-wrong-file-not-an-image',
