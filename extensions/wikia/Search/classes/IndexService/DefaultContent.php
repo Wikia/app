@@ -23,16 +23,20 @@ class DefaultContent extends AbstractService
 		// we still assume the response is the same format as MediaWiki's
 		$response = $this->interface->getParseResponseFromPageId( $pageId ); 
 		$titleStr = $this->interface->getTitleStringFromPageId( $pageId );
-		$html     = $response['parse']['text']['*'];
+		$html     = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
 
 		$categories = array();
-		foreach ( $response['parse']['categories'] as $category ) {
-			$categories[] = str_replace( '_', ' ', $category['*'] );
+		if (! empty( $response['parse']['categories'] ) ) {
+			foreach ( $response['parse']['categories'] as $category ) {
+				$categories[] = str_replace( '_', ' ', $category['*'] );
+			}
 		}
 
 		$headings = array();
-		foreach( $response['parse']['sections'] as $section ) {
-			$headings[] = $section['line'];
+		if (! empty( $response['parse']['sections'] ) ) {
+			foreach( $response['parse']['sections'] as $section ) {
+				$headings[] = $section['line'];
+			}
 		}
 
 		if ( $this->interface->getGlobal( 'AppStripsHtml' ) ) {
