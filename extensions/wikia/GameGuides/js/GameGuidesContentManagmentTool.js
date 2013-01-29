@@ -1,5 +1,5 @@
 /* global wgNamespaceIds, wgFormattedNamespaces, mw, wgServer, wgScript */
-$(function(){
+require(['jquery', 'wikia.nirvana'], function($, nirvana){
 	'use strict';
 
 	//be sure this module is ready to be used
@@ -137,6 +137,7 @@ $(function(){
 		addCategory.addEventListener('click', function(){
 			addNew(category);
 		});
+
 		addTag.addEventListener('click', function(){
 			addNew(tag);
 		});
@@ -162,7 +163,7 @@ $(function(){
 
 			status.className = '';
 
-			$.nirvana.sendRequest({
+			nirvana.sendRequest({
 				controller: 'GameGuidesSpecialContent',
 				method: 'save',
 				data: {

@@ -20,7 +20,8 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		$this->wg->Out->addModules([
 			'jquery.autocomplete',
-			'jquery.ui.sortable'
+			'jquery.ui.sortable',
+			'wikia.mw'
 		]);
 
 		$assetManager = AssetsManager::getInstance();
