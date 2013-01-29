@@ -97,7 +97,7 @@ $.getScript(stylepath + '/oasis/js/touchScreen.js?' + wgStyleVersion);
 // use promise pattern here - avoid "nested" callbacks
 var obj = {
 	foo: function() {
-		$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories', function(data){
+		$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments', function(data){
 			$.loadYUI(function() {
 				// ...
 			});

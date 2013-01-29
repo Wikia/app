@@ -145,7 +145,7 @@ class SpecialCreatePage extends SpecialEditPage {
 
 		// CategorySelect compatibility (add categories to article body)
 		if ( $this->mCategorySelectEnabled ) {
-			CategorySelectImportFormData( $this->mEditPage, $wgRequest );
+			CategorySelectHooksHelper::onEditPageImportFormData( $this->mEditPage, $wgRequest );
 		}
 
 		$sPostBody = $this->mEditPage->textbox1;

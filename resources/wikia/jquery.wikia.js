@@ -273,10 +273,11 @@ $.fn.hasParent = function(selector) {
  * TODO: convert to AMD module (see mobile's "throbber" module)
  */
 $.fn.startThrobbing = function() {
-	this.append('<div class="wikiaThrobber"></div>');
+	return this.append('<div class="wikiaThrobber"></div>');
 };
+
 $.fn.stopThrobbing = function() {
-	this.find('.wikiaThrobber').remove();
+	return this.find('.wikiaThrobber').remove();
 };
 
 /*

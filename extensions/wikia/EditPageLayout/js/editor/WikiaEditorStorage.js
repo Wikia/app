@@ -9,19 +9,19 @@ WikiaEditorStorage.prototype = {
 	editorDirty: false,
 
 	store: function() {
-		if (typeof(wgArticleId) != undefined) {
+		if (typeof wgArticleId !== 'undefined') {
 			var editorInstance = window.WikiaEditor.getInstance();
-			if (editorInstance.plugins.leaveconfirm == undefined || editorInstance.plugins.leaveconfirm.isDirty()) {
+
+			if (typeof editorInstance.plugins.leaveconfirm === 'undefined' || editorInstance.plugins.leaveconfirm.isDirty()) {
 				var summary = $('#wpSummary');
+				var categorySelect = $('#CategorySelect').data('categorySelect');
 
 				var toStore = {
 					articleId: wgArticleId,
 					content: editorInstance.getContent(),
 					editorMode: editorInstance.mode,
-					summary: summary.exists() ? summary.val() : undefined
-
-					// TODO
-					//categories: categories
+					summary: summary.exists() ? summary.val() : undefined,
+					categories: typeof categorySelect !== 'undefined' ? categorySelect.getData() : undefined
 				};
 
 				try {
@@ -43,6 +43,7 @@ WikiaEditorStorage.prototype = {
 				editor.fire('markDirty');
 				this.modifySummary();
 				this.modifyEditorContent(editor);
+				this.modifyCategories($('#CategorySelect').data('categorySelect'));
 			}
 		}, this));
 	},
@@ -57,6 +58,7 @@ WikiaEditorStorage.prototype = {
 			this.articleId = storageData.articleId;
 			this.content = storageData.content;
 			this.editorMode = storageData.editorMode;
+			this.categories = storageData.categories;
 		}
 		$.storage.del(storageKey);
 	},
@@ -65,15 +67,35 @@ WikiaEditorStorage.prototype = {
 		var content = this.getContent();
 		var editorMode = this.getEditorMode();
 
-		if (content != undefined && editorMode != undefined) {
+		if (typeof content !== 'undefined' && typeof editorMode !== 'undefined') {
 			editor.setContent(content, editorMode);
 		}
 	},
 
 	modifySummary: function() {
 		var summary = this.getSummary();
-		if (summary != undefined) {
+		if (typeof summary !== 'undefined') {
 			$('#wpSummary').val(summary);
+		}
+	},
+
+	modifyCategories: function(categorySelect) {
+		var categories = this.getCategories();
+		if (typeof categories !== 'undefined') {
+			var actualCategories = categorySelect.getCategories();
+
+			var promises = [];
+
+			for (var i = 0; i < actualCategories.length; i++) {
+				promises.push(categorySelect.removeCategory(actualCategories[i]));
+			}
+
+			$.when.apply(null, promises).done(function(){
+				for (var i = 0; i < categories.length; i++) {
+					categorySelect.addCategory(categories[i]);
+				}
+			});
+
 		}
 	},
 
@@ -89,6 +111,10 @@ WikiaEditorStorage.prototype = {
 		return this.editorMode;
 	},
 
+	getCategories: function() {
+		return this.categories;
+	},
+
 	getEditorDirty: function() {
 		return this.editorDirty;
 	},
@@ -99,4 +125,6 @@ WikiaEditorStorage.prototype = {
 };
 
 var WikiaEditorStorage = new WikiaEditorStorage();
+window.WikiaEditorStorage = WikiaEditorStorage;
+
 WikiaEditorStorage.init();

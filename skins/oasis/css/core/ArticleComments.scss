@@ -5,10 +5,8 @@
 
 // While these styles are used primarily for the Oasis skin,
 // they are also used by Monobook, so please test there also.
-
 .WikiaArticleComments {
 	border-top: 1px solid $color-page-border;
-	margin: 10px;
 	padding-top: 10px;
 
 	h1 {
@@ -169,6 +167,10 @@
 		margin-bottom: 10px;
 		border-top: 1px solid $color-page-border;
 	}
+}
+
+.skin-monobook .WikiaArticleComments {
+	margin-top: 10px;
 }
 
 #article-comments-pagination-link-prev {

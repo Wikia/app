@@ -1,0 +1,1 @@
+<input type="hidden" id="categories" name="categories" value="<?= $categories ?>">
