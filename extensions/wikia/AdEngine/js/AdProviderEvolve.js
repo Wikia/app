@@ -20,6 +20,7 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 	slotMap = {
 		'HOME_TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
 		'HOME_TOP_RIGHT_BOXAD': {'tile': 2, 'size': '300x250,300x600'},
+		'HUB_TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
 		'LEFT_SKYSCRAPER_2': {'tile': 3, 'size': '160x600'},
 		'TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
 		'TOP_RIGHT_BOXAD': {'tile': 2, 'size': '300x250,300x600'},
