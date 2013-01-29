@@ -60,11 +60,15 @@ class PageStatsService extends Service {
 	static function onArticleDeleteComplete(&$article, &$user, $reason, $articleId) {
 		wfProfileIn(__METHOD__);
 
-		// tell service to invalidate cached data for deleted page
-		$service = new self($articleId);
-		$service->regenerateData();
+		$title = $article->getTitle();
 
-		wfDebug(__METHOD__ . ": cache cleared for page #{$articleId}\n");
+		// tell service to invalidate cached data for deleted page
+		if (!empty($title)) {
+			$service = self::newFromTitle($title);
+			$service->regenerateData();
+
+			wfDebug(__METHOD__ . ": cache cleared for page #{$articleId}\n");
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;
