@@ -1,9 +1,15 @@
 <?php
 
 class PhalanxStatsSpecialController extends WikiaSpecialPageController {
-	privatet $blockId = 0;
+	private $blockId = 0;
+	private $phalanxTitle = null;
+	private $title = null;
+	private $wikiId = 0;
+	
 	function __construct( ) {
 		parent::__construct( 'PhalanxStats', 'phalanx', false );
+		$this->title = Title::newFromText( 'PhalanxStats', NS_SPECIAL );
+		$this->phalanxTitle = Title::newFromText( 'Phalanx', NS_SPECIAL );
 	}
 	
 	public function index() {
@@ -20,13 +26,9 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 
 		$this->blockId = $this->wg->Request->getInt( 'blockId' );
 		if ( empty( $this->blockId ) ) {
-			$this->showForms();
-			return true;
-		}
-
-		// show block id or blocks for Wikia
-		if ( strpos( $this->blockId, 'wiki' ) !== false ) {
-			list ( , $this->blockId ) = explode( "/", $this->blockId );
+			$this->form();
+		} elseif ( strpos( $this->blockId, 'wiki' ) !== false ) {
+			list ( , $this->wikiId ) = explode( "/", $this->blockId );
 			$this->blockWikia();
 		} else {
 			$this->blockStats();
@@ -34,55 +36,51 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function blockStats() {
-		$this->wg->Out->setPageTitle( $this->wf->Msg('phalanx-stats-title') . ' #' . $par);
+		$this->wg->Out->setPageTitle( sprintf( "%s#%s", $this->wf->Msg('phalanx-stats-title'), $this->blockId ) );
 
 		$block = array();
-		$block = Phalanx::getFromId( intval($par) );
+		$data = Phalanx::newFromId( $this->blockId );
 
-		if ( empty( $block ) ) {
-			$wgOut->addWikiMsg( 'phalanx-stats-block-notfound', $par );
+		if ( !isset( $data["id"] ) ) {
+			$this->wg->Out->addWikiMsg( 'phalanx-stats-block-notfound', $this->blockId );
 			return true;
 		}
 
-		// process block data for display
-		$data = array();
-		$data['id'] = $block['id'];
-		$data['author_id'] = User::newFromId( $block['author_id'] )->getName();
-		$data['type'] = implode( ', ', Phalanx::getTypeNames( $block['type'] ) );
-
-		$data['timestamp'] = $wgLang->timeanddate( $block['timestamp'] );
-		if ( $block['expire'] == null ) {
+		$phalanxUrl = $this->phalanxTitle->getFullUrl( array( 'id' => $data['id'] ) );
+		
+		$data['author_id'] = User::newFromId( $data['author_id'] )->getName();
+		$data['type'] = implode( ', ', Phalanx::getTypeNames( $data['type'] ) );
+		$data['timestamp'] = $this->wg->Lang->timeanddate( $data['timestamp'] );
+		
+		if ( $data['expire'] == null ) {
 			$data['expire'] = 'infinite';
 		} else {
-			$data['expire'] = $wgLang->timeanddate( $block['expire'] );
+			$data['expire'] = $this->wg->Lang->timeanddate( $data['expire'] );
 		}
-		$data['regex'] = $block['regex'] ? 'Yes' : 'No';
-		$data['case']  = $block['case']  ? 'Yes' : 'No';
-		$data['exact'] = $block['exact'] ? 'Yes' : 'No';
-		$data['lang'] = empty($block['lang']) ? '*' : $block['lang'];
+		
+		$data['regex'] = $data['regex'] ? 'Yes' : 'No';
+		$data['case']  = $data['case']  ? 'Yes' : 'No';
+		$data['exact'] = $data['exact'] ? 'Yes' : 'No';
+		$data['lang'] = empty( $data['lang'] ) ? '*' : $data['lang'];
 
-		#pull these out of the array, so they dont get used in the top rows
-		if ( $block['type'] & Phalanx::TYPE_EMAIL && !$wgUser->isAllowed( 'phalanxemailblock' ) ) {
-			// hide email from non-privildged users
-			$data2['text'] = wfMsg( 'phalanx-email-filter-hidden' );
-		} else {
-			$data2['text'] = $block['text'];
-		}
-		$data2['reason'] = $block['reason'];
+		/* pull these out of the array, so they dont get used in the top rows */
+		if ( $data['type'] & Phalanx::TYPE_EMAIL && !$this->wg->User->isAllowed( 'phalanxemailblock' ) ) {
+			/* hide email from non-privildged users */
+			$data['text'] = $this->wf->Msg( 'phalanx-email-filter-hidden' );
+		} 
 
+		/* stats table */
 		$headers = array(
-			wfMsg('phalanx-stats-table-id'),
-			wfMsg('phalanx-stats-table-user'),
-			wfMsg('phalanx-stats-table-type'),
-			wfMsg('phalanx-stats-table-create'),
-			wfMsg('phalanx-stats-table-expire'),
-			wfMsg('phalanx-stats-table-regex'),
-			wfMsg('phalanx-stats-table-case'),
-			wfMsg('phalanx-stats-table-exact'),
-			wfMsg('phalanx-stats-table-language'),
+			$this->wf->Msg('phalanx-stats-table-id'),
+			$this->wf->Msg('phalanx-stats-table-user'),
+			$this->wf->Msg('phalanx-stats-table-type'),
+			$this->wf->Msg('phalanx-stats-table-create'),
+			$this->wf->Msg('phalanx-stats-table-expire'),
+			$this->wf->Msg('phalanx-stats-table-regex'),
+			$this->wf->Msg('phalanx-stats-table-case'),
+			$this->wf->Msg('phalanx-stats-table-exact'),
+			$this->wf->Msg('phalanx-stats-table-language'),
 		);
-
-		$html = '';
 
 		$tableAttribs = array(
 			'border' => 1,
@@ -90,60 +88,46 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			'style' => "font-family:monospace;",
 		);
 
-		#use magic to build it
-		$table = Xml::buildTable( array( $data ), $tableAttribs, $headers );
-		#rip off bottom
-		$table = str_replace("</table>", "", $table);
-		#add some stuff
-		$table .= "<tr><th>".wfMsg('phalanx-stats-table-text')."</th><td colspan='8'>" . htmlspecialchars($data2['text']) . "</td></tr>";
-		$table .= "<tr><th>".wfMsg('phalanx-stats-table-reason')."</th><td colspan='8'>{$data2['reason']}</td></tr>";
-		#seal it back up
+		$table  = Xml::buildTable( array( $data ), $tableAttribs, $headers );
+		$table  = str_replace("</table>", "", $table);
+		$table .= "<tr><th>" . $this->wf->Msg('phalanx-stats-table-text') . "</th><td colspan='8'>" . htmlspecialchars( $data['text'] ) . "</td></tr>";
+		$table .= "<tr><th>" . $this->wf->Msg('phalanx-stats-table-reason')  ."</th><td colspan='8'>{$data['reason']}</td></tr>";
 		$table .= "</table>";
 
-		$html .=  $table . "\n";
+		$link = Html::element( 'a', array( 'class' => 'modify', 'href' => $phalanxUrl ), $this->wf->Msg('phalanx-link-modify') );
+		$html = $table . "\n&bull; " . $link . "<br/>\n";
+		$this->wg->Out->addHTML( $html );
 
-		$phalanxUrl = Title::newFromText( 'Phalanx', NS_SPECIAL )->getFullUrl( array( 'id' => $block['id'] ) );
-		$html .= " &bull; <a class='modify' href='{$phalanxUrl}'>" . wfMsg('phalanx-link-modify') . "</a><br/>\n";
-
-		$html .=  "<br/>\n";
-		$wgOut->addHTML( $html );
-
-		$pager = new PhalanxStatsPager( $par );
-
-		$html = '';
-		$html .= $pager->getNavigationBar();
+		/* pager */
+		$pager = new PhalanxStatsPager( $this->blockId );
+		$html  = $pager->getNavigationBar();
 		$html .= $pager->getBody();
 		$html .= $pager->getNavigationBar();
-
-		$wgOut->addHTML( $html );
+		$this->wg->Out->addHTML( $html );
 	}
 
-	private function block_wikia($par) {
-		global $wgOut, $wgLang, $wgUser, $wgRequest;
-
-		$oWiki = WikiFactory::getWikiById( $par );
+	private function blockWikia() {
+		$oWiki = WikiFactory::getWikiById( $this->wikiId );
 		if ( !is_object($oWiki) ) {
 			return false;
 		}
-		$url = WikiFactory::getVarValueByName( "wgServer", $oWiki->city_id );
-		$sitename = WikiFactory::getVarValueByName( "wgSitename", $oWiki->city_id );
-
-		#we have a valid id, change title to use it
-		$wgOut->setPageTitle( wfMsg('phalanx-stats-title') . ': ' . $url );
-
-		// process block data for display
-		$data['wiki_id'] = $oWiki->city_id;
-		$data['sitename'] = $sitename;
-		$data['url'] = $url;
-		$data['last_timestamp'] = $wgLang->timeanddate( $oWiki->city_last_timestamp );
-
-		$html = '';
+		
+		/* process block data for display */
+		$data = array(
+			'wiki_id'         => $oWiki->city_id,
+			'sitename'        => WikiFactory::getVarValueByName( "wgSitename", $oWiki->city_id ),
+			'url'             => WikiFactory::getVarValueByName( "wgServer", $oWiki->city_id ),
+			'last_timestamp'  => $this->wg->Lang->timeanddate( $oWiki->city_last_timestamp ),
+		);
+		
+		/* we have a valid id, change title to use it */
+		$this->wg->Out->setPageTitle( $this->wf->Msg( 'phalanx-stats-title' ) . ': ' . $data['url'] );
 
 		$headers = array(
-			wfMsg('phalanx-stats-table-wiki-id'),
-			wfMsg('phalanx-stats-table-wiki-name'),
-			wfMsg('phalanx-stats-table-wiki-url'),
-			wfMsg('phalanx-stats-table-wiki-last-edited'),
+			$this->wf->Msg('phalanx-stats-table-wiki-id'),
+			$this->wf->Msg('phalanx-stats-table-wiki-name'),
+			$this->wf->Msg('phalanx-stats-table-wiki-url'),
+			$this->wf->Msg('phalanx-stats-table-wiki-last-edited'),
 		);
 
 		$tableAttribs = array(
@@ -152,61 +136,18 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			'style' => "font-family:monospace;",
 		);
 
-		#use magic to build it
 		$table = Xml::buildTable( array( $data ), $tableAttribs, $headers );
-		$html .=  $table . "<br />\n";
+		$wgOut->addHTML( $table . "<br />\n" );
 
-		$wgOut->addHTML( $html );
-
-		$pager = new PhalanxWikiStatsPager( $par );
-
-		$html = '';
-		$html .= $pager->getNavigationBar();
+		$pager = new PhalanxStatsWikiaPager( $this->wikiId );
+		$html  = $pager->getNavigationBar();
 		$html .= $pager->getBody();
 		$html .= $pager->getNavigationBar();
-
 		$wgOut->addHTML( $html );
 	}
 
-	private function showForms() {
-		global $wgOut;
-		# TODO: move text to i18n (will do after coding is finished and text/flow is finalized)
-
-		$PSurl = Title::newFromText( 'PhalanxStats', NS_SPECIAL )->getFullUrl();
-
-		//-------------------------------------------------
-		$formParam = array('method'=>'GET', 'action'=>$PSurl);
-
-		$content = '';
-		$content .= Xml::openElement( 'form', $formParam ) . "\n";
-		$content .= "ID" . ": ";
-		$content .= Xml::input( 'blockId', 5, '', array() );
-		$content .= Xml::submitButton( 'load' ) . "\n";
-		$content .= Xml::closeElement( 'form' ) . "\n";
-		$content .= "Example:\n<ul>\n";
-		$content .= "<li>http://community.wikia.com/wiki/Special:PhalanxStats/123456</li>\n";
-		$content .= "<li>http://community.wikia.com/wiki/Special:PhalanxStats?blockId=123456</li>\n";
-		$content .= "</ul>\n";
-
-		$wgOut->addHTML( Xml::fieldset( "Recent triggers of a block", $content, array() ) );
-
-		//-------------------------------------------------
-		$formParam = array('method'=>'GET', 'action'=>$PSurl);
-
-		$content = '';
-		#commented out until wikiId is supported in the execute logic
-		// $content .= Xml::openElement( 'form', $formParam ) . "\n";
-		// $content .= "ID" . ": ";
-		// $content .= Xml::input( 'wikiId', 5, '', array() );
-		// $content .= Xml::submitButton( 'load' ) . "\n";
-		// $content .= Xml::closeElement( 'form' ) . "\n";
-			$content .= "<i>form coming soon</i><br/>\n";
-		$content .= "Example:\n<ul>\n";
-		$content .= "<li>http://community.wikia.com/wiki/Special:PhalanxStats/wiki/123456</li>\n";
-		$content .= "</ul>\n";
-
-		$wgOut->addHTML( Xml::fieldset( "Recent blocks on a wiki", $content, array() ) );
-
-		return;
+	private function form() {
+		$this->setVal( 'title', $this->title );
+		$this->setVal( 'phalanxTitle', $this->phalanxTitle );
 	}
 }
