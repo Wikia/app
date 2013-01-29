@@ -96,7 +96,8 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-wikiaspicks-title' => 'Title',
 	'marketing-toolbox-hub-module-wikiaspicks-text' => 'Text',
 	'marketing-toolbox-hub-module-html-text-tip' => "'''Tip:''' to add a link copy the following and replace the italicized text with your own: <a href=\"''your_url_here''\">''Your Text Here''</a>",
-
+	'marketing-toolbox-hub-module-sponsored-image-tip' => "'''Tip:''' You can not upload an image larger than 85px x 15px.",
+	
 	'marketing-toolbox-hub-module-featured-video-header' => 'Header',
 	'marketing-toolbox-hub-module-featured-video-desc' => 'Description',
 	'marketing-toolbox-hub-module-featured-video-article-url' => 'Article URL',
