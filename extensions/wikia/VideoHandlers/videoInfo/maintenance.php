@@ -89,7 +89,7 @@ if ( !$createTable && !$alterTableV1 && !$addVideos && !$removeVideos ) {
 	$removeVideos = true;
 }
 
-echo "Wiki $wgCityId:\n";
+printText("Wiki $wgCityId:\n");
 
 $db = $app->wf->GetDB( DB_MASTER );
 
@@ -115,7 +115,7 @@ if ( $createTable ) {
 	if ( !$dryrun ) {
 		$video->createTableVideoInfo();
 	}
-	echo "Create video_info table.\n";
+	printText("Create video_info table.\n");
 }
 
 // update schema v1
@@ -123,7 +123,7 @@ if ( $alterTableV1 ) {
 	if ( !$dryrun ) {
 		$video->alterTableVideoInfoV1();
 	}
-	echo "Update video_info table schema (v1).\n";
+	printText("Update video_info table schema (v1).\n");
 }
 
 // remove deleted local videos
