@@ -5,7 +5,6 @@
  *	{
  *		callbackAfterSelect: function() {}, // callback after video is selected (first screen).  If defined, second screen will not show.
  *		callbackAfterEmbed: function() {}, // callback after video formating (second screen).
- *		callbackAfterLoaded: function() {}, // callback after VET assets are loaded
  *		embedPresets: {
  *			align: "right"
  *			caption: ""
@@ -28,7 +27,18 @@
 		VET_loader = {};
 
 	VET_loader.load = function(options) {
-		
+
+		if (wgUserName == null && wgAction == 'edit') {
+			// handle login on edit page
+			UserLogin.rteForceLogin();
+			$('.wikiaThrobber').parent().stopThrobbing();
+			return;
+		} else if (UserLogin.isForceLogIn()) {
+			$('.wikiaThrobber').parent().stopThrobbing();
+			// handle login on article page
+			return;
+		}
+
 		var deferredList = [];
 		
 		if(!resourcesLoaded) {
@@ -60,11 +70,8 @@
 		}
 		
 		$.when.apply(this, deferredList).done(function() {
-			if($.isFunction(options.callbackAfterLoaded)) {
-				options.callbackAfterLoaded();
-				delete options.callbackAfterLoaded;
-			}
-			
+			$.stopThrobbing();
+
 			VET_loader.modal = $(templateHtml).makeModal({
 				width:1000,
 				onClose: VET_close
@@ -75,6 +82,10 @@
 		});			
 	};
 
+	/* Extends jQuery to make any element an add video button
+	 *
+	 * @param object options - options to be passed to VET_loader.load(). See above for example.
+	 */ 
 	$.fn.addVideoButton = function(options) {
 		$.preloadThrobber();
 
@@ -86,11 +97,7 @@
 				
 				// Provide immediate feedback once button is clicked
 				$this.startThrobbing();
-				
-				options.callbackAfterLoaded = function() {
-					$this.stopThrobbing();				
-				}
-				
+
 				VET_loader.load(options);
 			});
 		});

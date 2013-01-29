@@ -211,16 +211,7 @@
 			}
 	}
 	
-	function VET_show( options ) {
-		if (wgUserName == null && wgAction == 'edit') {
-			// handle login on edit page
-			UserLogin.rteForceLogin();
-			return;
-		} else if (UserLogin.isForceLogIn()) {
-			// handle login on article page
-			return;
-		}
-		
+	function VET_show( options ) {		
 		// Handle MiniEditor focus
 		// (BugId:18713)
 		if (window.WikiaEditor) {
