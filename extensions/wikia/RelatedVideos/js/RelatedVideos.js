@@ -79,15 +79,11 @@ var RelatedVideos = {
 			relatedVideosModule.find('.addVideo').addVideoButton({
 				callbackAfterSelect: function(url) {
 
-					WikiaTracker.trackEvent(
-						'trackingevent',
-						{
-							'ga_category': 'related-videos',
-							'ga_action': WikiaTracker.ACTIONS.ADD,
-							'ga_label': 'add-video-success'
-						},
-						'both'
-					);
+					RelatedVideos.track({
+						action: WikiaTracker.ACTIONS.ADD,
+						label: 'add-video-success',
+						trackingMethod: 'both'
+					});
 					
 					$.nirvana.postJson(
 						// controller

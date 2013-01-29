@@ -48,18 +48,6 @@
 			});
 			deferredList.push(templateDeferred);
 
-			// Get VET i18n messages 
-			$.getJSON( 
-				window.wgScriptPath + "index.php?action=ajax&rs=VET&method=getMsgVars", 
-				function(VETMessages) {
-					for (var v in VETMessages) {
-						wgMessages[v] = VETMessages[v];
-					}
-					deferredMessages.resolve();
-				}
-			);
-			deferredList.push(deferredMessages);
-
 			// Get JS and CSS
 			var resourcePromise = $.getResources([
 				$.loadYUI,
