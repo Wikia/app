@@ -96,7 +96,8 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-wikiaspicks-title' => 'Title',
 	'marketing-toolbox-hub-module-wikiaspicks-text' => 'Text',
 	'marketing-toolbox-hub-module-html-text-tip' => "'''Tip:''' to add a link copy the following and replace the italicized text with your own: <a href=\"''your_url_here''\">''Your Text Here''</a>",
-
+	'marketing-toolbox-hub-module-sponsored-image-tip' => "'''Tip:''' You can not upload an image larger than 85px x 15px.",
+	
 	'marketing-toolbox-hub-module-featured-video-header' => 'Header',
 	'marketing-toolbox-hub-module-featured-video-desc' => 'Description',
 	'marketing-toolbox-hub-module-featured-video-article-url' => 'Article URL',
@@ -108,6 +109,7 @@ $messages['en'] = array(
 	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',
 	'marketing-toolbox-validator-wrong-url' => 'The URL you entered is not valid, please try again',
 	'marketing-toolbox-validator-wrong-file' => 'The file you chose is not valid, please try again',
+	'marketing-toolbox-validator-wrong-file-size' => 'Wrong size of the file you chose, please try again',
 	'marketing-toolbox-validator-wrong-file-size-width' => 'Wrong width of the file you chose, please try again (Max width is: $maxWidthpx)',
 	'marketing-toolbox-validator-wrong-file-size-height' => 'Wrong height of the file you chose, please try again (Max height is: $maxHeightpx)',
 	'marketing-toolbox-validator-wrong-file-not-an-image' => 'The file you chose is not an image, please try again',

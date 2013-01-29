@@ -15,6 +15,7 @@ abstract class UserTagsStrategyBase {
 	const WIKIA_GROUP_AUTHENTICATED_NAME = 'authenticated';
 	const WIKIA_GROUP_SYSOP_NAME = 'sysop';
 	const WIKIA_GROUP_BUREAUCRAT_NAME = 'bureaucrat';
+	const WIKIA_GROUP_WIKIA_STAR = 'star';
 
 	/**
 	 * Used to compare user groups
