@@ -67,7 +67,12 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 				'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
 				function () {
 					log('(invisible triggertag) ghostwriter done', 5, logGroup);
-					ScriptWriter.injectScriptByText(slotname, getReskinAndSilverScript(slotname));
+					ScriptWriter.injectScriptByText(slotname, getReskinAndSilverScript(slotname), function () {
+						// gorrilla skin is suppressed by body.mediawiki !important so make it !important too
+						if (document.body.style.backgroundImage.search(/http:\/\/cdn\.assets\.gorillanation\.com/) !== -1) {
+							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundImage, document.body.style.backgroundImage + ' !important');
+						}
+					});
 				}
 			);
 		} else {
