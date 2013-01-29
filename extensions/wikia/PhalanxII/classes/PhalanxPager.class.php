@@ -42,11 +42,11 @@ class PhalanxPager extends ReverseChronologicalPager {
 	}
 
 	function getStartBody() {
-		return '<ul>';
+		return Html::openElement( 'ul',array() );
 	}
 
 	function getEndBody() {
-		return '</ul>';
+		return Html::closeElement( 'ul' );
 	}
 
 	function formatRow( $row ) {

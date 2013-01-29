@@ -88,7 +88,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		return htmlspecialchars( str_replace( '_', ' ', urldecode( $input ) ) );
 	}
 	
-	private function postForm() {
+	private function post() {
 		$this->wf->profileIn( __METHOD__ );
 
 		$phalanx = F::build( 'Phalanx', array( F::app() ) );
