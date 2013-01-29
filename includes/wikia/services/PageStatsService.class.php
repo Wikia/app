@@ -33,6 +33,16 @@ class PageStatsService extends Service {
 	}
 
 	/**
+	 * Get title or create new from id
+	 */
+	private function getTitle() {
+		if(empty($this->mTitle)){
+			$this->mTitle = Title::newFromId($this->pageId, Title::GAID_FOR_UPDATE /* fix for slave lag */);
+		}
+		return $this->mTitle;
+	}
+
+	/**
 	 * Refresh cache when article is edited
 	 *
 	 * @param WikiPage $article
