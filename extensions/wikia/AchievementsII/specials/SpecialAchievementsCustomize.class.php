@@ -125,7 +125,7 @@ class SpecialAchievementsCustomize extends SpecialPage {
 		// FIXME: create a module with all these JS files
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/scrollto/jquery.scrollTo-1.4.2.js\"></script>\n");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/aim/jquery.aim.js\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/modules/aim.js\"></script>\n");
 
 		wfProfileOut(__METHOD__);
 	}
