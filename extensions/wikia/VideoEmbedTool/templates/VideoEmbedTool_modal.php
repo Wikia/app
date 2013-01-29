@@ -3,7 +3,8 @@
 	<a href="#"><?= wfMsg( 'vet-back' ) ?></a>
 </div>
 <div id="VideoEmbedBody">
-	<div id="VideoEmbedMain"><?= $html ?></div>
+	<h1 id="VideoEmbedHeader"></h1>
+	<div id="VideoEmbedMain"></div>
 	<div id="VideoEmbedDetails" style="display: none;"></div>
 	<div id="VideoEmbedConflict" style="display: none;"></div>
 	<div id="VideoEmbedSummary" style="display: none;"></div>

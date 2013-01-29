@@ -31,7 +31,7 @@
 	var VET_callbackAfterSelect = false;
 	var VET_callbackAfterEmbed = false;
 	
-	// macbre: show edit video screen (wysiwyg edit)
+	// ajax call for 2nd screen (aka embed screen)
 	function VET_editVideo() {
 		$('#VideoEmbedMain').hide();
 	
@@ -250,11 +250,13 @@
 		$('#VideoEmbedBack').click(VET_back);
 	}
 	
+	/* ajax call for first screen (aka video search) */
 	function VET_loadMain(searchOrder) {
 		var callback = function(o) {
 			$('#VideoEmbedMain').html(o.responseText);
 			$('#VideoEmbedUrl').focus();
-	
+			VET_updateHeader();
+			
 			// macbre: RT #19150
 			if ( window.wgEnableAjaxLogin == true && $('#VideoEmbedLoginMsg').exists() ) {
 				$('#VideoEmbedLoginMsg').click(openLogin).css('cursor', 'pointer').log('VET: ajax login enabled');
@@ -311,6 +313,8 @@
 		// wlee: responseText could include <script>. Use jQuery to parse
 		// and execute this script
 		$('#VideoEmbed' + VET_curScreen).html(responseText);
+		VET_updateHeader();
+		
 	
 		if($('#VideoEmbedThumb').length) {
 			VET_orgThumbSize = null;
@@ -490,6 +494,9 @@
 		VET_curScreen = to;
 		$('#VideoEmbed' + VET_prevScreen).css('display', 'none');
 		$('#VideoEmbed' + VET_curScreen).css('display', '');
+		
+		VET_updateHeader();
+		
 		// this is called in both cases - when hitting 'back' and when closing the dialog.
 		// in any case we want to stop the video
 		$('#VideoEmbedThumb').children().remove();
@@ -582,6 +589,12 @@
 				}
 			);
 		}
+	}
+	
+	function VET_updateHeader() {
+		var $header = $('#VideoEmbed' + VET_curScreen + ' h1:first');
+		$('#VideoEmbedHeader').html($header.html());
+		$header.hide();
 	}
 	
 	//***********************************************
