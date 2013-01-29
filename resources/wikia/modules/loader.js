@@ -244,7 +244,7 @@
 			/**
 			 *	request - json of key value pairs
 			 *  keys:
-			 *		templates - an array of objects with the following fields: controllerName, methodName and an optional params (parameters for the controller method)
+			 *		templates - an array of objects with the following fields: controller, method and an optional params (parameters for the controller method)
 			 *		styles - comma-separated list of SASS files
 			 *		scripts - comma-separated list of AssetsManager groups
 			 *		messages - comma-separated list of JSMessages packages (messages are registered automagically)
@@ -399,7 +399,8 @@
 				while (l--) {
 					var resource = arguments[l],
 						files,
-						type;
+						type,
+						params;
 
 					// URI string
 					if (typeof resource === 'string') {
@@ -418,7 +419,8 @@
 					}
 					else {
 						type = resource.type;
-						files  = resource.resources || resource.url
+						files  = resource.resources || resource.url;
+						params = resource.params;
 					}
 
 					func = get;
@@ -432,16 +434,16 @@
 								func = getLibrary;
 								break;
 							case loader.JS:
-								files = getURL(files, 'one');
+								files = getURL(files, 'one', params);
 								break;
 							case loader.AM_GROUPS:
-								files = getURL(files, 'groups');
+								files = getURL(files, 'groups', params);
 								break;
 							case loader.CSS:
-								files = getURL(files, 'one');
+								files = getURL(files, 'one', params);
 								break;
 							case loader.SCSS:
-								files = getURL(files, 'sass');
+								files = getURL(files, 'sass', params);
 								break;
 							case loader.UNKNOWN:
 							default:
