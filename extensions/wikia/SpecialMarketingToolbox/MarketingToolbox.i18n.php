@@ -46,6 +46,7 @@ $messages['en'] = array(
 	'marketing-toolbox-edithub-video-name' => 'Video name',
 	'marketing-toolbox-edithub-sponsored-image' => 'Add a Sponsored Image',
 	'marketing-toolbox-edithub-sponsored-image-remove' => 'Remove',
+	'marketing-toolbox-hub-module-sponsored-image-tip' => "'''Tip:''' You can not upload an image larger than 85px x 15px.",
 
 	'marketing-toolbox-edithub-clearall-confirmation' => 'Are you sure you want to clear the entire $1 module?',
 	'marketing-toolbox-edithub-clear-confirmation' => 'Are you sure you want to clear this section?',
