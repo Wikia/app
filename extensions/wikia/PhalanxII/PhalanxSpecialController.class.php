@@ -22,123 +22,60 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset('extensions/wikia/Phalanx/js/Phalanx.js');
 		//$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css");
 
+		/* set pager */
 		$pager = new PhalanxPager();
-		$listing = $pager->getNavigationBar();
+		$listing  = $pager->getNavigationBar();
 		$listing .= $pager->getBody();
 		$listing .= $pager->getNavigationBar();
 
-		$data = $this->prefillForm();
-
-		$template->set_vars(array(
-			'expiries' => Phalanx::getExpireValues(),
-			'languages' => $wgPhalanxSupportedLanguages,
-			'listing' => $listing,
-			'data' => $data,
-			'action' => $wgTitle->getFullURL(),
-			'showEmail' => $wgUser->isAllowed( 'phalanxemailblock' )
-		));
-		
-		$this->setVal( 'url', $oPlaceModel->getStaticMapUrl() );
-		$this->setVal( 'align', $oPlaceModel->getAlign() );
-		$this->setVal( 'width', $oPlaceModel->getWidth() );
-		$this->setVal( 'height', $oPlaceModel->getHeight() );
-		$this->setVal( 'lat', $oPlaceModel->getLat() );
-		$this->setVal( 'lon', $oPlaceModel->getLon() );
-		$this->setVal( 'zoom', $oPlaceModel->getZoom() );
-		$this->setVal( 'categories', $oPlaceModel->getCategoriesAsText() );
-		$this->setVal( 'caption', $oPlaceModel->getCaption() );
-		$this->setVal( 'rteData', $rteData );
+		$this->setVal( 'expiries', Phalanx::getExpireValues(),
+		$this->setVal( 'languages', $this->wg->PhalanxSupportedLanguages );
+		$this->setVal( 'listing', $listing );
+		$this->setVal( 'data', $this->formData() );
+		$this->setVal( 'action', $this->wg->Title->getFullUrl() );
+		$this->setVal( 'showEmail', $this->wg->User->isAllowed( 'phalanxemailblock' ) );
 		
 		$this->wf->profileOut( __METHOD__ );
 	}
 
-	function execute( $par ) {
-		wfProfileIn(__METHOD__);
-		global $wgOut, $wgRequest, $wgExtensionsPath, $wgStylePath;
-		global $wgPhalanxSupportedLanguages, $wgUser, $wgTitle;
-
-		// check restrictions
-		if ( !$this->userCanExecute( $wgUser ) ) {
-			$this->displayRestrictionError();
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
-
-		$this->setHeaders();
-		$wgOut->addStyle( "$wgExtensionsPath/wikia/Phalanx/css/Phalanx.css" );
-		$wgOut->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/Phalanx/js/Phalanx.js'></script>\n");
-		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css");
-		$wgOut->setPageTitle( wfMsg('phalanx-title') );
-
-		$template = new EasyTemplate(dirname(__FILE__).'/templates');
-
-		$pager = new PhalanxPager();
-
-		$listing = $pager->getNavigationBar();
-		$listing .= $pager->getBody();
-		$listing .= $pager->getNavigationBar();
-
-		$data = $this->prefillForm();
-
-		$template->set_vars(array(
-			'expiries' => Phalanx::getExpireValues(),
-			'languages' => $wgPhalanxSupportedLanguages,
-			'listing' => $listing,
-			'data' => $data,
-			'action' => $wgTitle->getFullURL(),
-			'showEmail' => $wgUser->isAllowed( 'phalanxemailblock' )
-		));
-
-		$wgOut->addHTML($template->render('phalanx'));
-
-		wfProfileOut(__METHOD__);
-
-	}
-
-	function prefillForm() {
-		global $wgRequest;
-
+	function formData() {
 		$data = array();
 
-		$id = $wgRequest->getInt( 'id' );
+		$id = $this->wg->Request->getInt( 'id' );
 		if ( $id ) {
-			$data = Phalanx::getFromId( $id );
+			$data = Phalanx::newFromId( $id );
 			$data['type'] = Phalanx::getTypeNames( $data['type'] );
 			$data['checkBlocker'] = '';
 			$data['typeFilter'] = array();;
 		} else {
-			$data['type'] = array_fill_keys( $wgRequest->getArray( 'type', array() ), true );
-			$data['checkBlocker'] = $wgRequest->getText( 'wpPhalanxCheckBlocker', '' );
-			$data['typeFilter'] = array_fill_keys( $wgRequest->getArray( 'wpPhalanxTypeFilter', array() ), true );
+			$data['type'] = array_fill_keys( $this->wg->Request->getArray( 'type', array() ), true );
+			$data['checkBlocker'] = $this->wg->Request->getText( 'wpPhalanxCheckBlocker', '' );
+			$data['typeFilter'] = array_fill_keys( $this->wg->Request->getArray( 'wpPhalanxTypeFilter', array() ), true );
 		}
 
 		$data['checkId'] = $id;
 
-		$data['text'] = $wgRequest->getText( 'ip' );
-		$data['text'] = $wgRequest->getText( 'target', $data['text'] );
-		$data['text'] = $wgRequest->getText( 'text', $data['text'] );
+		$data['text'] = $this->wg->Request->getText( 'ip' );
+		$data['text'] = $this->wg->Request->getText( 'target', $data['text'] );
+		$data['text'] = $this->wg->Request->getText( 'text', $data['text'] );
+		$data['text'] = $this->decodeValue( $data['text'] ) ;
 
-		$data['text'] = self::decodeValue( $data['text'] ) ;
+		$data['case'] = $this->wg->Request->getCheck( 'case' );
+		$data['regex'] = $this->wg->Request->getCheck( 'regex' );
+		$data['exact'] = $this->wg->Request->getCheck( 'exact' );
 
-		$data['case'] = $wgRequest->getCheck( 'case' );
-		$data['regex'] = $wgRequest->getCheck( 'regex' );
-		$data['exact'] = $wgRequest->getCheck( 'exact' );
+		$data['expire'] = $this->wg->Request->getText( 'expire', $this->mDefaultExpire );
 
-		$data['expire'] = $wgRequest->getText( 'expire', $this->mDefaultExpire );
+		$data['lang'] = $this->wg->Request->getText( 'lang', 'all' );
 
-		$data['lang'] = $wgRequest->getText( 'lang', 'all' );
+		$data['reason'] = $this->decodeValue( $this->wg->Request->getText( 'reason' ) );
 
-		$data['reason'] = self::decodeValue( $wgRequest->getText( 'reason' ) );
-
-		// test form input
-		$data['test'] = self::decodeValue( $wgRequest->getText( 'test' ) );
+		$data['test'] = $this->decodeValue( $this->wg->Request->getText( 'test' ) );
 
 		return $data;
 	}
 
-	static function decodeValue( $input ) {
+	private function decodeValue( $input ) {
 		return htmlspecialchars( str_replace( '_', ' ', urldecode( $input ) ) );
 	}
 }
-

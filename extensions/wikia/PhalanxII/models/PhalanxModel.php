@@ -4,16 +4,17 @@ abstract class PhalanxModel extends WikiaObject {
 	protected $blockId = 0;
 	protected $model = null;
 	protected $text = "";
+	private $service = null;
 	
 	public function __construct( $model, $data = array() ) {
 		parent::contruct();
 		$this->model = $model;
-		$oModel = F::build( $this->model );
 		if ( !empty( $data ) ) {
 			foreach ( $data as $key => $value ) {
-				$oModel->setter( $key, $value );		
+				$this->setter( $key, $value );		
 			}
 		}
+		$this->service = F::build("PhalanxService");
 	}
 
 	abstract public static function isOk();
@@ -46,12 +47,10 @@ abstract class PhalanxModel extends WikiaObject {
 	}
 
 	public function match( $type, $language = "en" ) {
-		$service = new PhalanxService();
-		return $service->match( $type, $this->text, $language );
+		return $this->service->match( $type, $this->text, $language );
 	}
 	
 	public function check( $type, $language = "en" ) {
-		$service = new PhalanxService();
-		return $service->check( $type, $this->text, $language );		
+		return $this->service->check( $type, $this->text, $language );		
 	}
 }

@@ -1,57 +1,40 @@
 <?php
 
-class PhalanxStats extends UnlistedSpecialPage {
+class PhalanxStatsSpecialController extends WikiaSpecialPageController {
+	privatet $blockId = 0;
 	function __construct( ) {
-		parent::__construct( 'PhalanxStats', 'phalanx' );
+		parent::__construct( 'PhalanxStats', 'phalanx', false );
 	}
+	
+	public function index() {
+		$this->wf->profileIn( __METHOD__ );
 
-	function execute( $par ) {
-		global $wgOut, $wgLang, $wgUser, $wgRequest;
-
-		#set base title
-		$wgOut->setPageTitle( wfMsg('phalanx-stats-title') );
-
-		global $wgExtensionsPath;
-		$wgOut->addStyle( "$wgExtensionsPath/wikia/Phalanx/css/Phalanx.css" );
-
-		// check restrictions
-		if ( !$this->userCanExecute( $wgUser ) ) {
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->wg->Out->setPageTitle( $this->wf->Msg('phalanx-stats-title') );
 			$this->displayRestrictionError();
-			return;
+			$this->wf->profileOut( __METHOD__ );
+			return false;
 		}
 
-		#TODO: refactor this mode/id detection to support 'wikiId' url param to trigger blockWiki mode
+		$this->response->addAsset('extensions/wikia/Phalanx/css/Phalanx.css');		
 
-		if ( empty( $par ) ) {
-			$par = $wgRequest->getInt( 'blockId' );
-		}
-
-		// give up if no block ID is given
-		if ( empty( $par ) ) {
+		$this->blockId = $this->wg->Request->getInt( 'blockId' );
+		if ( empty( $this->blockId ) ) {
 			$this->showForms();
 			return true;
 		}
 
 		// show block id or blocks for Wikia
-		if ( strpos( $par, 'wiki' ) !== false ) {
-			list ( , $par ) = explode( "/", $par );
-			$show = 'blockWiki';
+		if ( strpos( $this->blockId, 'wiki' ) !== false ) {
+			list ( , $this->blockId ) = explode( "/", $this->blockId );
+			$this->blockWikia();
 		} else {
-			$show = 'blockId';
-		}
-
-		if ( $show == 'blockId' ) {
-			$this->block_stats($par);
-		} else {
-			$this->block_wikia($par);
+			$this->blockStats();
 		}
 	}
 
-	private function block_stats($par) {
-		global $wgOut, $wgLang, $wgUser, $wgRequest;
-
-		#we have a valid id, change title to use it
-		$wgOut->setPageTitle( wfMsg('phalanx-stats-title') . ' #' . $par);
+	private function blockStats() {
+		$this->wg->Out->setPageTitle( $this->wf->Msg('phalanx-stats-title') . ' #' . $par);
 
 		$block = array();
 		$block = Phalanx::getFromId( intval($par) );
@@ -225,147 +208,5 @@ class PhalanxStats extends UnlistedSpecialPage {
 		$wgOut->addHTML( Xml::fieldset( "Recent blocks on a wiki", $content, array() ) );
 
 		return;
-	}
-}
-
-class PhalanxStatsPager extends ReverseChronologicalPager {
-	public function __construct( $id ) {
-		global $wgExternalDatawareDB;
-
-		parent::__construct();
-		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-
-		$this->mBlockId = (int) $id;
-                $this->mDefaultQuery['blockId'] = (int) $id;
-
-	}
-
-	function getQueryInfo() {
-		$query['tables'] = 'phalanx_stats';
-		$query['fields'] = '*';
-		$query['conds'] = array(
-			'ps_blocker_id' => $this->mBlockId,
-		);
-
-		return $query;
-	}
-
-	function getPagingQueries() {
-		$queries = parent::getPagingQueries();
-
-		foreach ( $queries as $type => $query ) {
-			if ( $query === false ) {
-				continue;
-			}
-			$query['blockId'] = $this->mBlockId;
-			$queries[$type] = $query;
-		}
-
-		return $queries;
-	}
-
-	function getIndexField() {
-		return 'ps_timestamp';
-	}
-
-	function getStartBody() {
-		return '<ul id="phalanx-block-' . $this->mBlockId . '-stats">';
-	}
-
-	function getEndBody() {
-		return '</ul>';
-	}
-
-	function formatRow( $row ) {
-		global $wgLang;
-
-		$type = implode( Phalanx::getTypeNames( $row->ps_blocker_type ) );
-
-		$username = $row->ps_blocked_user;
-
-		$timestamp = $wgLang->timeanddate( $row->ps_timestamp );
-
-		$oWiki = WikiFactory::getWikiById( $row->ps_wiki_id );
-		$url = $oWiki->city_url;
-
-		$html = '<li>';
-		$html .= wfMsgExt( 'phalanx-stats-row', array('parseinline'), $type, $username, $url, $timestamp );
-		$html .= '</li>';
-
-		return $html;
-	}
-}
-
-class PhalanxWikiStatsPager extends ReverseChronologicalPager {
-	public function __construct( $id ) {
-		global $wgExternalDatawareDB;
-
-		parent::__construct();
-		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-
-		$this->mWikiId = (int) $id;
-		$this->mTitle = Title::newFromText( 'Phalanx', NS_SPECIAL );
-		$this->mTitleStats = Title::newFromText( 'PhalanxStats', NS_SPECIAL );
-		$this->mSkin = RequestContext::getMain()->getSkin();
-	}
-
-	function getQueryInfo() {
-		$query['tables'] = 'phalanx_stats';
-		$query['fields'] = '*';
-		$query['conds'] = array(
-			'ps_wiki_id' => $this->mWikiId,
-		);
-
-		return $query;
-	}
-
-	function getPagingQueries() {
-		$queries = parent::getPagingQueries();
-
-		foreach ( $queries as $type => $query ) {
-			if ( $query === false ) {
-				continue;
-			}
-			$query['wikiId'] = $this->mWikiId;
-			$queries[$type] = $query;
-		}
-
-		return $queries;
-	}
-
-	function getIndexField() {
-		return 'ps_timestamp';
-	}
-
-	function getStartBody() {
-		return '<ul id="phalanx-block-wiki-' . $this->mWikiId . '-stats">';
-	}
-
-	function getEndBody() {
-		return '</ul>';
-	}
-
-	function formatRow( $row ) {
-		global $wgLang;
-
-		$type = implode( Phalanx::getTypeNames( $row->ps_blocker_type ) );
-
-		$username = $row->ps_blocked_user;
-
-		$timestamp = $wgLang->timeanddate( $row->ps_timestamp );
-
-		$blockId = (int) $row->ps_blocker_id;
-
-		# block
-		$phalanxUrl = $this->mSkin->makeLinkObj( $this->mTitle, $blockId, 'id=' . $blockId );
-
-		# stats
-		$statsUrl = $this->mSkin->makeLinkObj( $this->mTitleStats, wfMsg('phalanx-link-stats'), 'blockId=' . $blockId );
-
-		$html = '<li>';
-		$html .= wfMsgExt( 'phalanx-stats-row-per-wiki', array('parseinline', 'replaceafter'), $type, $username, $phalanxUrl, $timestamp, $statsUrl );
-		$html .= '</li>';
-
-		return $html;
 	}
 }

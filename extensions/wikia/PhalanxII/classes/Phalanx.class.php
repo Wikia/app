@@ -20,7 +20,11 @@ class Phalanx implements arrayaccess {
 
 	private $blockId = 0;
 	private $db_table = 'phalanx';
-	static $typeNames = array(
+
+	public $moduleData = array();
+	public $moduleDataShort = array();
+
+	private static $typeNames = array(
 		1   => 'content',
 		2   => 'summary',
 		4   => 'title',
@@ -31,12 +35,8 @@ class Phalanx implements arrayaccess {
 		128 => 'cookie',
 		256 => 'email'
 	);
-
-	public $moduleData = array();
-	public $moduleDataShort = array();
-
-	private $expiry_values = 'phalanx-expire-durations';
-	private $expiry_text = array(
+	private static $expiry_values = 'phalanx-expire-durations';
+	private static $expiry_text = array(
 		"1 hour",
 		"2 hours",
 		"4 hours",
@@ -115,13 +115,11 @@ class Phalanx implements arrayaccess {
 	}
 	
 	/* get the values for the expire select */
-	public function getExpireValues() {
-		return array_combine( $this->expiry_text, explode(",", $this->wf->Msg( $this->expiry_values ) ) );
+	public static function getExpireValues() {
+		return array_combine( self::$expiry_text, explode(",", wfMsg( self::$expiry_values ) ) );
 	}
 
 	/*
-	 * getTypeNames
-	 *
 	 * @author tor <tor@wikia-inc.com>
 	 * @author Marooned <marooned at wikia-inc.com>
 	 *
