@@ -41,11 +41,10 @@ class CreateBlogPage extends SpecialBlogPage {
 		$this->mTitle = ($pageId > 0) ? Title::newFromId($pageId) : Title::makeTitle( NS_SPECIAL, 'CreateBlogPage' );
 
 		// force CategorySelect initialisation if available
-		if(function_exists('CategorySelectInitializeHooks') && ($wgUser->getOption('disablecategoryselect', false) == false)) {
+		if (class_exists('CategorySelectHooksHelper') && ($wgUser->getOption('disablecategoryselect', false) == false)) {
 			$this->mCategorySelectEnabled = true;
 			$wgRequest->setVal('action', 'edit');
-			CategorySelectInit(true);
-			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null, null);
+			CategorySelectHooksHelper::onMediaWikiPerformAction(null, null, $this->mTitle, null, null, null);
 		}
 
 		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
@@ -99,7 +98,7 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		// CategorySelect compatibility (add categories to article body)
 		if($this->mCategorySelectEnabled) {
-			CategorySelectImportFormData($this->mEditPage, $wgRequest);
+			CategorySelectHooksHelper::onEditPageImportFormData($this->mEditPage, $wgRequest);
 		}
 
 		$sPostBody = $this->mEditPage->textbox1;
@@ -237,7 +236,7 @@ class CreateBlogPage extends SpecialBlogPage {
 
 			// CategorySelect compatibility (add categories to article body)
 			if($this->mCategorySelectEnabled) {
-				CategorySelectImportFormData( $this->mEditPage, $wgRequest );
+				CategorySelectHooksHelper::onEditPageImportFormData($this->mEditPage, $wgRequest);
 			}
 		}
 
@@ -333,7 +332,7 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		// CategorySelect compatibility (restore categories from article body)
 		if ($this->mCategorySelectEnabled) {
-			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
+			CategorySelectHooksHelper::onEditPageGetContentEnd($this->mEditPage, $this->mEditPage->textbox1);
 		}
 
 		return $oArticle;

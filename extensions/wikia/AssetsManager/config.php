@@ -245,7 +245,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		// shared libraries
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
-		'//extensions/wikia/CategorySelect/CategorySelect.view.js',
+		'//extensions/wikia/CategorySelect/js/CategorySelect.view.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 
 		// oasis specific files
@@ -609,6 +609,9 @@ $config['monobook_js'] = array(
 
 //		'//resources/mediawiki/mediawiki.util.js', # instead of //skins/common/wikibits.js'
 //		'//skins/common/ajax.js',
+
+		'//resources/wikia/libraries/modil/modil.js',//before this there should not be any AMD-dependent code
+
 		'//skins/monobook/main.js',
 		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
@@ -619,6 +622,7 @@ $config['monobook_js'] = array(
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.src.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
+		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
@@ -1184,6 +1188,18 @@ $config['sharingtoolbar_js'] = array(
 		'//skins/oasis/js/SharingToolbar/SharingToolbar.js',
 		'//extensions/wikia/ShareButtons/js/ShareButtons.js',
 		'#function_SharingToolbarController::getAssets'
+	)
+);
+
+/* CategorySelect */
+$config['categoryselect_edit_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/jquery.ui/jquery.ui.core.js',
+		'//resources/jquery.ui/jquery.ui.widget.js',
+		'//resources/jquery.ui/jquery.ui.mouse.js',
+		'//resources/jquery.ui/jquery.ui.sortable.js',
+		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
 	)
 );
 

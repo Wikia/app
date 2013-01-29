@@ -8,17 +8,17 @@ class ImagesServingTest extends WikiaBaseTest {
 		$expected = new stdClass();
 		$expected->width = $results['width'];
 		$expected->height = $results['height'];
-		
+
 		$result = ImagesService::calculateScaledImageSizes($desiredImageSize, $originalSizes['width'], $originalSizes['height']);
-		
+
 		$this->assertEquals($result, $expected);
 	}
-	
+
 	public function calculateScaledImageSizesDataProvider() {
 		return array(
 			//edge case #1
 			array(
-				'desiredImageSize' => 0, 
+				'desiredImageSize' => 0,
 				'orginalSize' => array(
 					'width' => 0,
 					'height' => 0,
@@ -115,7 +115,7 @@ class ImagesServingTest extends WikiaBaseTest {
 			->method('getText')
 			->will($this->returnValue($titleGetTextResult));
 
-		$fileMock = $this->getMock('WikiaLocalFile', array('getWidth', 'getHeight', 'thumbName', 'getThumbUrl'), array(), '', false);
+		$fileMock = $this->getMock('WikiaLocalFile', array('getWidth', 'getHeight', 'createThumb'), array(), '', false);
 		$fileMock->expects($this->once())
 			->method('getWidth')
 			->will($this->returnValue($image['width']));
@@ -123,10 +123,7 @@ class ImagesServingTest extends WikiaBaseTest {
 			->method('getHeight')
 			->will($this->returnValue($image['height']));
 		$fileMock->expects($this->once())
-			->method('getThumbUrl')
-			->will($this->returnValue($fileGetThumbUrlResult));
-		$fileMock->expects($this->once())
-			->method('thumbName')
+			->method('createThumb')
 			->will($this->returnValue($fileGetThumbUrlResult));
 
 		$this->mockGlobalFunction('findFile', $fileMock);
@@ -142,7 +139,7 @@ class ImagesServingTest extends WikiaBaseTest {
 
 		$this->assertEquals($result, $expected);
 	}
-	
+
 	public function getLocalFileThumbUrlAndSizesDataProvider() {
 		return array(
 			//destination image width given, so the result will be different than original

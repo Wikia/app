@@ -28,11 +28,9 @@ abstract class SpecialEditPage extends SpecialPage {
 		$wgRequest->setVal( 'action', 'edit' );
 
 		// force CategorySelect initialisation if available
-		if ( function_exists( 'CategorySelectInit' ) && function_exists( 'CategorySelectInitializeHooks' ) && ( $wgUser->getOption( 'disablecategoryselect', false ) == false ) ) {
+		if ( class_exists( 'CategorySelectHooksHelper' ) && ( $wgUser->getOption( 'disablecategoryselect', false ) == false ) ) {
 			$this->mCategorySelectEnabled = true;
-			$FORCE_INIT = true;
-			CategorySelectInit( $FORCE_INIT );
-			CategorySelectInitializeHooks( null, null, $this->mTitle, null, null, null );
+			CategorySelectHooksHelper::onMediaWikiPerformAction( null, null, $this->mTitle, null, null, null );
 		}
 	}
 
@@ -92,7 +90,7 @@ abstract class SpecialEditPage extends SpecialPage {
 
 		// CategorySelect compatibility (restore categories from article body)
 		if ( $this->mCategorySelectEnabled ) {
-			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
+			CategorySelectHooksHelper::onEditPageGetContentEnd( $this->mEditPage, $this->mEditPage->textbox1 );
 		}
 
 		$this->mEditPage->showEditForm( array( $this, 'renderFormHeader' ) );
@@ -116,7 +114,7 @@ abstract class SpecialEditPage extends SpecialPage {
 
 			// CategorySelect compatibility (add categories to article body)
 			if ( $this->mCategorySelectEnabled ) {
-				CategorySelectImportFormData( $this->mEditPage, $wgRequest );
+				CategorySelectHooksHelper::onEditPageImportFormData( $this->mEditPage, $wgRequest );
 			}
 		}
 

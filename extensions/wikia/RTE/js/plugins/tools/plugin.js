@@ -110,7 +110,7 @@ window.RTE.tools = {
 
 	// get height of editor's iframe
 	getEditorHeight: function() {
-		return $('#cke_contents_wpTextbox1').height();
+		return $('#cke_contents_' + WikiaEditor.instanceId).height();
 	},
 
 	// get editor's document scroll offsets
