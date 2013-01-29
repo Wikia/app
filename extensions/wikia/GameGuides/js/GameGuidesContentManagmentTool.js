@@ -14,8 +14,8 @@ $(function(){
 			ul = form.getElementsByTagName('ul')[0],
 			$ul = $(ul),
 			//it looks better if we display in input category name without Category:
-			categoryId = window.wgNamespaceIds.category,
-			categoryName = window.wgFormattedNamespaces[categoryId] + ':',
+			categoryId = wgNamespaceIds.category,
+			categoryName = wgFormattedNamespaces[categoryId] + ':',
 			//prepare html to be injected in ul
 			category = '<li class=category><input class=category placeholder="' + $.msg('wikiagameguides-content-category') + '" /><input class=name placeholder="' + $.msg('wikiagameguides-content-name') + '" /><span class="sprite remove"></span><span class="sprite drag"></span></li>',
 			tag = '<li class=tag><input placeholder="tag"/><span class="sprite remove"></span><span class="sprite drag"></span></li>',
@@ -61,19 +61,8 @@ $(function(){
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
 
-				$form.find('.tag' + (last ? ':last' : '')).autocomplete({
-					lookup: tags,
-					appendTo: form,
-					onSelect: function(){
-						$form.find('input:focus').next().focus();
-					},
-					zIndex: 9999,
-					width: 200,
-					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
-				});
-
 				$form.find('.name' + (last ? ':last' : '')).on('keydown', function(ev){
-					if(ev.keyCode === 13) addNew();
+					if(ev.keyCode === 13) addNew(category);
 				});
 			},
 			addNew = function(row){
@@ -121,7 +110,9 @@ $(function(){
 				ul.removeChild(this.parentElement);
 			})
 			.on('blur', '.tag', function(){
-				grabTags();
+				findDuplicates($form.find('.tag input'));
+
+				checkSave();
 			})
 			.on('blur', '.category', function(){
 				this.value = $.trim(this.value).replace(/ /g, '_');
