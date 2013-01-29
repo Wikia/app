@@ -594,8 +594,8 @@ class AssetsManager {
 	 * 		'mustache' => 'path/to/MyController_index.mustache',
 	 *		'templates' => array(
 	 *			array(
-	 *				'controllerName' => 'UserLoginSpecialController',
-	 *				'methodName' => 'index',
+	 *				'controller' => 'UserLoginSpecialController',
+	 *				'method' => 'index',
 	 *				'param' => array(
 	 *					'useskin' => 'wikiamobile'
 	 *				)

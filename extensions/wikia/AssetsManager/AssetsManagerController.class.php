@@ -18,7 +18,7 @@ class AssetsManagerController extends WikiaController {
 	/**
 	 * Return different type of assets in a single request
 	 *
-	 * @requestParam string templates - JSON encoded array of controllerName / methodName and optional params used to render a template
+	 * @requestParam string templates - JSON encoded array of controller / method and optional params used to render a template
 	 * @requestParam string styles - comma-separated list of SASS files
 	 * @requestParam string scripts - comma-separated list of AssetsManager groups
 	 * @requestParam string messages - comma-separated list of JSMessages packages
