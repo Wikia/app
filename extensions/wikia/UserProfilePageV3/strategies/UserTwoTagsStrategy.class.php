@@ -44,6 +44,8 @@ class UserTwoTagsStrategy extends UserTagsStrategyBase {
 	 * @return string
 	 */
 	protected function getFirstTag() {
+		$this->app->wf->ProfileIn(__METHOD__);
+		$tag = '';
 		$groupNameSuffix = null;
 		if( $this->isUserInGroup(self::WIKIA_GROUP_STAFF_NAME) ) {
 			$groupNameSuffix = self::WIKIA_GROUP_STAFF_NAME;
@@ -54,10 +56,11 @@ class UserTwoTagsStrategy extends UserTagsStrategyBase {
 		}
 
 		if( !is_null($groupNameSuffix) ) {
-			return $this->app->wf->Msg('user-identity-box-group-' . $groupNameSuffix);
+			$tag = $this->app->wf->Msg('user-identity-box-group-' . $groupNameSuffix);
 		}
+		$this->app->wf->ProfileOut(__METHOD__);
 
-		return '';
+		return $tag;
 	}
 
 	/**
