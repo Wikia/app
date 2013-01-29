@@ -23,6 +23,7 @@
 	}
 
 	var resourcesLoaded = false,
+		modalOnScreen = false,
 		templateHtml = '',
 		VET_loader = {};
 
@@ -38,6 +39,13 @@
 			// handle login on article page
 			return;
 		}
+		
+		// if modal is already on screen or is about to be, don't do anything
+		if(modalOnScreen) {
+			return;
+		}
+		
+		modalOnScreen = true;	// modal is now loading
 
 		var deferredList = [];
 		
@@ -74,7 +82,10 @@
 
 			VET_loader.modal = $(templateHtml).makeModal({
 				width:1000,
-				onClose: VET_close
+				onClose: function() {
+					VET_close();
+					modalOnScreen = false;	// release modal lock
+				}
 			});
 			
 			VET_show(options);
