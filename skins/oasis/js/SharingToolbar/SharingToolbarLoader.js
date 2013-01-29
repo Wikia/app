@@ -7,15 +7,17 @@ jQuery(function( $ ) {
 	$button.one( 'click', function( event ) {
 		$button.addClass('share-enabled');
 
-		require(['wikia.loader'], function(loader) {
+		require(['wikia.loader', 'mw'], function(loader, mw) {
 			loader({
 				type: loader.MULTI,
 				resources: {
 					scripts: 'sharingtoolbar_js',
 					templates: [{
-						controller: 'SharingToolbarController',
+						controller: 'SharingToolbar',
 						method: 'Index',
-						params: {pagename: window.mw.config.get('wgPageName')}
+						params: {
+							pagename: mw.config.get('wgPageName')
+						}
 					}]
 				}
 			},{
@@ -26,11 +28,10 @@ jQuery(function( $ ) {
 				}
 			}).done(
 				function( response ) {
-					loader.processStyle( response.styles );
 					loader.processScript( response.scripts );
 
 					// Attach toolbar to DOM
-					$toolbar = $( response.templates.SharingToolbarController_Index );
+					$toolbar = $( response.templates.SharingToolbar_Index );
 					$header.append( $toolbar.addClass('loading') );
 
 					// Initialize the Sharing Toolbar
