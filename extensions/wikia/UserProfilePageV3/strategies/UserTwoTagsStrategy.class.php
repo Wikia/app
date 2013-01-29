@@ -49,6 +49,8 @@ class UserTwoTagsStrategy extends UserTagsStrategyBase {
 			$tag = $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_STAFF_NAME);
 		} else if( $this->isUserInGroup(self::WIKIA_GROUP_AUTHENTICATED_NAME) ) {
 			$tag = $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_AUTHENTICATED_NAME);
+		} else if( $this->isUserInGroup(self::WIKIA_GROUP_WIKIA_STAR) ) {
+			$tag = $this->app->wf->Msg('user-identity-box-group-' . self::WIKIA_GROUP_WIKIA_STAR);
 		}
 
 		return $tag;
