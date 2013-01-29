@@ -24,8 +24,7 @@
 			<li class=category><input value="<?= $category['title']; ?>"/><input class=name value="<?= isset( $category['label'] ) ? $category['label'] : ''; ?>"/></li>
 				<? endforeach;
 			endforeach;
-		else: ?>
-		<? endif; ?>
+		endif; ?>
 		</ul>
     <button class=secondary id=addTag><?= $wf->Msg('wikiagameguides-content-add-tag');?></button>
     <button class=secondary id=addCategory><?= $wf->Msg('wikiagameguides-content-add-category');?></button>

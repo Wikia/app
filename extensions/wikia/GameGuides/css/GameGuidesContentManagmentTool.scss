@@ -1,6 +1,6 @@
-
-
 #contentManagmentForm {
+	text-align: center;
+
 	counter-reset: first second;
 	margin: 100px 0;
 	position: relative;
@@ -20,10 +20,15 @@
 
 	ul {
 		margin: 0;
+		text-align: left;
+
+		width: 600px;
 	}
 
 	li {
 		list-style: none;
+
+		position: relative;
 	}
 
 	.tag::before, .category::before {
@@ -106,6 +111,9 @@
 	}
 
 	.drag {
+		position: absolute;
+		top: 16px;
+		right: 30px;
 		display: inline-block;
 	}
 }
