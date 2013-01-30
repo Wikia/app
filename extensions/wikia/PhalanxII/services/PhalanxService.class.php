@@ -79,22 +79,20 @@ class PhalanxService extends Service {
 
 		$url = sprintf( "%s/%s", F::app()->wg->PhalanxServiceUrl, $action != "status" ? $action : "" );
 
-		if( sizeof( $parameters ) ) {
-			$url .= "?" . http_build_query( $parameters );
-		}
-		wfDebug( __METHOD__ . ": calling $url\n" );
 
 		/**
 		 * for status we're sending GET
 		 */
 		if( $action == "status" ) {
+			wfDebug( __METHOD__ . ": calling $url\n" );
 			$response = Http::get( $url, 'default', array( "noProxy" => true ) );
 		}
 		/**
 		 * for any other we're sending POST
 		 */
 		else {
-			$response = Http::post( $url, array( "noProxy" => true ) );
+			wfDebug( __METHOD__ . ": calling $url with POST data " . wfArrayToCGI( $parameters ) ."\n" );
+			$response = Http::post( $url, array( "noProxy" => true, "postData" => wfArrayToCGI( $parameters ) ) );
 		}
 
 		if ( $response === false ) {

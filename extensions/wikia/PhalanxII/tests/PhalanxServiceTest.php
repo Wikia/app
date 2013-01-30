@@ -78,6 +78,9 @@ class PhalanxServiceTest extends WikiaBaseTest {
 	}
 
 	public function testPhalanxServiceValidate() {
+		global $wgDebugLogFile;
+	//	$wgDebugLogFile = "php://stdout";
+
 		if( $this->isPhalanxAlive() ) {
 			$ret = $this->service->validate( '^alamakota$' );
 			$this->assertEquals( 1, $ret, "Valid regex" );
