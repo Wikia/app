@@ -4,6 +4,7 @@
 #$wgPhalanxServiceUrl = "http://dev-$wgDevelEnvironmentName:8080";
 
 class PhalanxService extends Service {
+	private $response = null;
 
 	const RES_OK = 'ok';
 	const RES_FAILURE = 'failure';
@@ -14,8 +15,7 @@ class PhalanxService extends Service {
 	 * check service status
 	 */
 	public function status() {
-		$response = $this->sendToPhalanxDaemon( "status", array() );
-		return ( stripos( $response, self::RES_STATUS  ) !== false ) ? true : false;
+		return $this->sendToPhalanxDaemon( "status", array() );
 	}
 
 	/**
@@ -27,20 +27,6 @@ class PhalanxService extends Service {
 	 */
 	public function check( $type, $content, $lang = "en" ) {
 		$response = $this->sendToPhalanxDaemon( "check", array( "type" => $type, "content" => $content, "lang" => $lang ) );
-		if ( $response !== false ) {
-			if ( stripos( $response, self::RES_OK  ) !== false ) {
-				$ret = 1;
-			} elseif ( stripos( $response, self::RES_FAILURE ) !== false ) {
-				$ret = 0;
-			} else {
-				/* invalid response */
-				$ret = false;
-			}
-		} else {
-			/* service doesn't work */
-			$ret = false;
-		}
-
 		return $ret;
 	}
 
@@ -52,26 +38,7 @@ class PhalanxService extends Service {
 	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
 	 */
 	public function match( $type, $content, $lang = "en" ) {
-		$response = $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
-		if ( $response !== false ) {
-			$res = json_decode( $response );
-			if ( is_null( $res ) ) {
-				/* don't match any blocks */
-				$ret = 0;
-			} else {
-				if ( is_array( $res ) ) {
-					/* first block ID ? */
-					reset( $res ); $ret = current( $res );
-				} else {
-					$ret = $res;
-				}
-			}
-		} else {
-			/* service doesn't work */
-			$ret = false;
-		}
-
-		return $ret;
+		return $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
 	}
 
 	/**
@@ -83,27 +50,7 @@ class PhalanxService extends Service {
 	 *
 	 */
 	public function reload( $changed = array() ) {
-		$response = $this->sendToPhalanxDaemon( "reload",
-			is_array( $changed ) && sizeof( $changed )
-				? array( "changed" => implode( ",", $changed ) )
-				: array()
-		);
-
-		if ( $response !== false ) {
-			if ( stripos( $response, self::RES_OK  ) !== false ) {
-				$ret = 1;
-			} elseif ( stripos( $response, self::RES_FAILURE ) !== false ) {
-				$ret = 0;
-			} else {
-				/* invalid response */
-				$ret = false;
-			}
-		} else {
-			/* service doesn't work */
-			$ret = false;
-		}
-
-		return $ret;
+		return $this->sendToPhalanxDaemon( "reload", is_array( $changed ) && sizeof( $changed ) ? array( "changed" => implode( ",", $changed ) ) : array() );
 	}
 
 	/**
@@ -115,23 +62,7 @@ class PhalanxService extends Service {
 	 *
 	 */
 	public function validate( $regex ) {
-		$response = $this->sendToPhalanxDaemon( "validate", array( "regex" => $regex ) );
-
-		if ( $response !== false ) {
-			if ( stripos( $response, self::RES_OK  ) !== false ) {
-				$ret = 1;
-			} elseif ( stripos( $response, self::RES_FAILURE ) !== false ) {
-				$ret = 0;
-			} else {
-				/* invalid response */
-				$ret = false;
-			}
-		} else {
-			/* service doesn't work */
-			$ret = false;
-		}
-
-		return $ret;
+		return $this->sendToPhalanxDaemon( "validate", array( "regex" => $regex ) );
 	}
 
 	/**
@@ -167,9 +98,42 @@ class PhalanxService extends Service {
 			$response = Http::post( $url, array( "noProxy" => true ) );
 		}
 
+		if ( $response === false ) {
+			/* service doesn't work */
+			$res = false;
+		} else {
+			switch ( $action ) {
+				case "status": 
+					$res = ( stripos( $response, self::RES_STATUS  ) !== false ) ? true : false; break;
+				case "match" : 
+					$ret = json_decode( $response );
+					if ( is_null( $ret ) ) {
+						/* don't match any blocks */
+						$res = 0;
+					} else {
+						if ( is_array( $ret ) ) {
+							/* first block ID ? */
+							reset( $ret ); $res = current( $res );
+						} else {
+							$res = $ret;
+						}
+					}
+					break;
+				default:
+					if ( stripos( $response, self::RES_OK  ) !== false ) {
+						$res = 1;
+					} elseif ( stripos( $response, self::RES_FAILURE ) !== false ) {
+						$res = 0;
+					} else {
+						/* invalid response */
+						$res = false;
+					}
+					break;
+			}
+		}
 
 		wfProfileOut( __METHOD__  );
 
-		return $response;
+		return $res;
 	}
 };
