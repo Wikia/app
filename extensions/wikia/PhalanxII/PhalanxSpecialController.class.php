@@ -8,7 +8,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct('Phalanx');
 		$this->includable(false);
-		$this->title = Title::newFromText( 'Phalanx', NS_SPECIAL );
+		$this->title = F::build( 'Title', array('Phalanx', NS_SPECIAL), 'newFromText' );
 	}
 	
 	public function index() {
@@ -22,9 +22,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		}
 		
 		if ( $this->wg->Request->wasPosted() ) {
-			$id = $this->postForm();
-			$this->response->redirect( $this->title->getFullUrl( array( 'id' => $id ) ) );
-			return true;
+			$res = $this->post();
 		}
 		
 		$this->response->addAsset('extensions/wikia/Phalanx/css/Phalanx.css');
@@ -52,7 +50,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		$id = $this->wg->Request->getInt( 'id' );
 		if ( $id ) {
-			$data = Phalanx::newFromId( $id );
+			$data = F::build( 'Phalanx', array( $id ), 'newFromId' );
 			$data['type'] = Phalanx::getTypeNames( $data['type'] );
 			$data['checkBlocker'] = '';
 			$data['typeFilter'] = array();;
@@ -91,104 +89,80 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	private function post() {
 		$this->wf->profileIn( __METHOD__ );
 
-		$phalanx = F::build( 'Phalanx', array( F::app() ) );
-		$values = $this->wg->Request->getValues();
+		$id = $this->wg->Request->getVal( 'id', 0 );
+		$multitext = $this->wg->Request->getText( 'wpPhalanxFilterBulk' );
+		
+		/* init Phalanx helper class */
+		$phalanx = F::build( 'Phalanx', array( $id ) );
+		
+		$phalanx['text'] = $this->wg->Request->getText( 'wpPhalanxFilter' );
+		$phalanx['exact'] = $this->wg->Request->getCheck( 'wpPhalanxFormatExact' ) ? 1 : 0;
+		$phalanx['case'] = $this->wg->Request->getCheck( 'wpPhalanxFormatCase' ) ? 1 : 0;
+		$phalanx['regex'] = $this->wg->Request->getCheck( 'wpPhalanxFormatRegex' ) ? 1 : 0;
+		$phalanx['timestamp'] = wfTimestampNow();
+		$phalanx['expire'] = $this->wg->Request->getText( 'wpPhalanxExpire' );
+		$phalanx['author_id'] = $this->wg->User->getId();
+		$phalanx['reason'] = $this->wg->Request->getText( 'wpPhalanxReason' );
+		$phalanx['lang'] = $this->wg->Request->getVal( 'wpPhalanxLanguages', null );
+		$phalanx['type'] = $this->wg->Request->getArray( 'wpPhalanxType' );
 		
 		$typemask = 0;
-		foreach( $values['wpPhalanxType'] as $type ) {
-			$typemask |= $type;
+		if ( is_array( $phalanx['type'] ) ) { 
+			foreach ( $phalanx['type'] as $type ) {
+				$typemask |= $type;
+			}
 		}
 
-		if ( ( empty( $values['wpPhalanxFilter'] ) && empty( $values['wpPhalanxFilterBulk'] ) ) || empty( $typemask ) ) {
+		if ( ( empty( $phalanx['text'] ) && empty( $multitext ) ) || empty( $typemask ) ) {
 			$this->wf->profileOut( __METHOD__ );
 			$this->errorMsg = $this->wf->Msg( 'phalanx-block-failure' );
 			return false;
 		}
 
-		if ( $values['wpPhalanxLanguages'] == 'all' ) {
-			$values['wpPhalanxLanguages'] = null;
+		if ( $phalanx['lang'] == 'all' ) {
+			$phalanx['lang'] = null;
 		}
 
-		if ( $values['wpPhalanxExpire'] != 'infinite' ) {
-			$expire = strtotime( $values['wpPhalanxExpire'] );
+		if ( $phalanx['expire'] != 'infinite' ) {
+			$expire = strtotime( $phalanx['expire'] );
 			if ( $expire < 0 || $expire === false ) {
 				$this->wf->profileOut( __METHOD__ );
 				$this->errorMsg = $this->wf->Msg( 'phalanx-block-failure' );
 				return false;
 			}
-			$values['wpPhalanxExpire'] = wfTimestamp( TS_MW, $expire );
+			$phalanx['expire'] = wfTimestamp( TS_MW, $expire );
 		} else {
-			$values['wpPhalanxExpire'] = null ;
+			$phalanx['expire'] = null ;
 		}
 		
-		if ( empty( $values['wpPhalanxFilterBulk'] ) ) {
-			//single mode
-			if ( empty( $values['id'] ) ) {
-				$status = PhalanxHelper::save( $values );
-				$reason = $status ? wfMsg( 'phalanx-block-success' ) : wfMsg( 'phalanx-block-failure' );
-			} else {
-				$data['id'] = $id;
-				$status = PhalanxHelper::update( $data );
-				$reason = $status ? wfMsg( 'phalanx-modify-success' ) : wfMsg( 'phalanx-block-failure' );
-			}
+		if ( empty( $multitext ) ) {
+			/* single mode - insert/update record */
+			$id = $phalanx->save();
+			$result = $id ? array( "success" => array( $id ), "failed" => 0 ) : false;
 		}
 		else {
-			// non-empty bulk field
-			$bulkdata = explode("\n", $filterbulk);
-			if( count($bulkdata) ) {
-				$reasons = array('s' => 0, 'f' => 0);
-				foreach($bulkdata as $bulkrow)
-				{
+			/* non-empty bulk field */
+			$bulkdata = explode( "\n", $multitext );
+			if ( count($bulkdata) > 0 ) {
+				$result = array( 'success' => array(), 'failed' => 0 );
+				foreach ( $multitext as $bulkrow ) {
 					$bulkrow = trim($bulkrow);
-					$data['text'] = $bulkrow;
+					$phalanx['text'] = $bulkrow;
 
-					$bstatus = PhalanxHelper::save( $data );
-					if($bstatus) {
-						$reasons[ 's' ] ++;
+					$id = $phalanx->save();
+					if ( $id ) {
+						$result[ 'success' ][] = $id;
 					} else {
-						$reasons[ 'f' ] ++;
+						$result[ 'failed' ]++;
 					}
-
 				}
-				$status = true;
-				$reason = "[" . $reasons['s'] . "] success and [" . $reasons['f'] . "] fails";
-			}
-			else
-			{
-				$status = false;
-				$reason = "nothing to block";
+			} else {
+				$result = false;
 			}
 		}
 
-		$id = $this->wg->Request->getVal( 'id', false ); 
-		$filter = $this->wg->Request->getText( 'wpPhalanxFilter' );
-		$filterbulk = $wgRequest->getText( 'wpPhalanxFilterBulk' );
-		$regex = $wgRequest->getCheck( 'wpPhalanxFormatRegex' ) ? 1 : 0;
-		$exact = $wgRequest->getCheck( 'wpPhalanxFormatExact' ) ? 1 : 0;
-		$case = $wgRequest->getCheck( 'wpPhalanxFormatCase' ) ? 1 : 0;
-		$expiry = $wgRequest->getText( 'wpPhalanxExpire' );
-		$types = $wgRequest->getArray( 'wpPhalanxType' );
-		$reason = $wgRequest->getText( 'wpPhalanxReason' );
-		$lang = $wgRequest->getVal( 'wpPhalanxLanguages', null );
-
-		$data = array(
-			'text' => $filter,
-			'exact' => $exact,
-			'case' => $case,
-			'regex' => $regex,
-			'timestamp' => wfTimestampNow(),
-			'expire' => $expire,
-			'author_id' => $wgUser->getId(),
-			'reason' => $reason,
-			'lang' => $lang,
-			'type' => $typemask
-		);
-
-
-		wfProfileOut( __METHOD__ );
-		return array(
-			'error' => !$status,
-			'text'  => $reason
-		);
+		$this->wf->profileOut( __METHOD__ );
+		
+		return $result;
 	}
 }

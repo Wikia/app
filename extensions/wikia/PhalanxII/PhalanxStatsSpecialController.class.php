@@ -8,8 +8,8 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	
 	function __construct( ) {
 		parent::__construct( 'PhalanxStats', 'phalanx', false );
-		$this->title = Title::newFromText( 'PhalanxStats', NS_SPECIAL );
-		$this->phalanxTitle = Title::newFromText( 'Phalanx', NS_SPECIAL );
+		$this->title = F::build( 'Title', array( 'PhalanxStats', NS_SPECIAL ), 'newFromText' );
+		$this->phalanxTitle = F::build( 'Title', array( 'Phalanx', NS_SPECIAL ), 'newFromText' );
 	}
 	
 	public function index() {
@@ -39,7 +39,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( sprintf( "%s#%s", $this->wf->Msg('phalanx-stats-title'), $this->blockId ) );
 
 		$block = array();
-		$data = Phalanx::newFromId( $this->blockId );
+		$data = F::build( 'Phalanx', array( $this->blockId ), 'newFromId' );
 
 		if ( !isset( $data["id"] ) ) {
 			$this->wg->Out->addWikiMsg( 'phalanx-stats-block-notfound', $this->blockId );
@@ -48,7 +48,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 
 		$phalanxUrl = $this->phalanxTitle->getFullUrl( array( 'id' => $data['id'] ) );
 		
-		$data['author_id'] = User::newFromId( $data['author_id'] )->getName();
+		$data['author_id'] = F::build( 'User', array( $data['author_id'] ), 'newFromId' )->getName();
 		$data['type'] = implode( ', ', Phalanx::getTypeNames( $data['type'] ) );
 		$data['timestamp'] = $this->wg->Lang->timeanddate( $data['timestamp'] );
 		

@@ -32,10 +32,12 @@ abstract class PhalanxModel extends WikiaObject {
 	
 	public function setBlockId( $id ) {
 		$this->blockId = ( int ) $id;
+		return $this;
 	}
 	
 	public function setText( $text ) {
 		$this->text = $text;
+		return $this;
 	}
 	
 	public function getText() {

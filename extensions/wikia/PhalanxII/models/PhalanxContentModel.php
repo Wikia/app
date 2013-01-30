@@ -14,6 +14,7 @@ class PhalanxContentModel extends PhalanxModel {
 
 	public function setTitle( $title ) {
 		$this->title = $title;
+		return $this;
 	}
 	
 	public function getTitle() {

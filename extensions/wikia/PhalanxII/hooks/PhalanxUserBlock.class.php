@@ -30,12 +30,7 @@ class PhalanxUserBlock extends WikiaObject {
 		$result = $phalanxModel->match( "user" );
 		if ( $result !== false ) {
 			if ( is_numeric( $result ) && $result > 0 ) {
-				/* user is blocked - we have block ID */
-				$phalanxModel->setBlockId( $result );
-				// set block data ...
-				$phalanxModel->userBlock( $user->isAnon() ? 'ip' : 'exact' );
-				// ... and assign to user
-				$user = $phalanxModel->getUser();
+				$user = $phalanxModel->setBlockId( $result )->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
 				$ret = false;
 			} else {
 				$ret = true;
@@ -64,8 +59,7 @@ class PhalanxUserBlock extends WikiaObject {
 		$result = $phalanxModel->match( "user" );
 		if ( $result !== false && !is_numeric( $result ) ) {
 			/* check also user email */
-			$phalanxModel->setText( $user->getEmail() );
-			$result = $phalanxModel->match( "email" );
+			$result = $phalanxModel->setText( $user->getEmail() )->match( "email" );
 		}
 		
 		if ( $result !== false && ( is_numeric( $result ) && $result > 0 ) ) {

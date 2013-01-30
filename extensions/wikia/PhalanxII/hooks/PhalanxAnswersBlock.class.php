@@ -29,14 +29,11 @@ class PhalanxAnswersBlock extends WikiaObject {
 		$text = preg_replace('/[^\PP]+/', '', $title->getText());
 		$text = preg_replace('/\s+/', ' ', $text);
 		
-		$phalanxModel->setText( $text ); 
-		$result = $phalanxModel->match( "question_title", $this->wg->LangugeCode );
+		$result = $phalanxModel->setText( $text )->match( "question_title", $this->wg->LangugeCode );
 		if ( $result !== false ) {
 			if ( is_numeric( $result ) && $result > 0 ) {
-				/* user is blocked - we have block ID */
-				$phalanxModel->setBlockId( $result );
-				/* send information to logger */
-				$phalanxModel->logBlock();
+				/* user is blocked - we have block ID and send information to logger */
+				$phalanxModel->setBlockId( $result )->logBlock();
 				$ret = false;
 			}
 		} else {
@@ -65,14 +62,11 @@ class PhalanxAnswersBlock extends WikiaObject {
 		$text = preg_replace('/[^\PP]+/', '', $question );
 		$text = preg_replace('/\s+/', ' ', $text);
 		
-		$phalanxModel->setText( $text ); 
-		$result = $phalanxModel->match( "recent_questions", $this->wg->LangugeCode );
+		$result = $phalanxModel->setText( $text )->match( "recent_questions", $this->wg->LangugeCode );
 		if ( $result !== false ) {
 			if ( is_numeric( $result ) && $result > 0 ) {
 				/* user is blocked - we have block ID */
-				$phalanxModel->setBlockId( $result );
-				// logging block ID
-				$this->logBlock( $text );
+				$phalanxModel->setBlockId( $result )->logBlock( $text );
 				$ret = false;
 			}
 		} else {

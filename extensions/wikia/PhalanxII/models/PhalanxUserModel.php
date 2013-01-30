@@ -14,6 +14,7 @@ class PhalanxUserModel extends PhalanxModel {
 	public function setUser( $user ) {
 		$this->user = $user;
 		$this->setText( $this->user->getName() );
+		return $this;
 	}
 	
 	public function getUser() {

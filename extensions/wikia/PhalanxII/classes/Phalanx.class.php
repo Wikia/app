@@ -52,14 +52,14 @@ class Phalanx implements arrayaccess {
 		"infinite"
 	);
 
-	public function __construct( WikiaApp $app, $blockId = 0 ) {
-		$this->app = $app;
+	public function __construct( $blockId = 0 ) {
+		$this->app = F::app();
 		$this->blockId = intval( $blockId );
 		$this->data = array();
 	}
 
 	public static function newFromId( $blockId ) {
-		$instance = F::build( 'Phalanx', array( 'app' => F::app(), 'blockId' => $blockId ) );
+		$instance = F::build( 'Phalanx', array( 'blockId' => $blockId ) );
 
 		/* read data from database */
 		$instance->load();
@@ -73,12 +73,15 @@ class Phalanx implements arrayaccess {
             $this->data[$offset] = $value;
         }
     }
+    
     public function offsetExists($offset) {
         return isset($this->data[$offset]);
     }
+    
     public function offsetUnset($offset) {
         unset($this->data[$offset]);
     }
+    
     public function offsetGet($offset) {
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
     }
@@ -88,12 +91,7 @@ class Phalanx implements arrayaccess {
 
 		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
 		
-		$row = $dbr->selectRow(
-			$this->db_table,
-			'*',
-			array( 'p_id' => $this->blockId ),
-			__METHOD__
-		);
+		$row = $dbr->selectRow( $this->db_table, '*', array( 'p_id' => $this->blockId ), __METHOD__ );
 
 		if ( is_object( $row ) ) {
 			$this->data = array(
@@ -108,12 +106,59 @@ class Phalanx implements arrayaccess {
 				'case'      => $row->p_case,
 				'reason'    => $row->p_reason,
 				'lang'      => $row->p_lang,
+				'ip_hex'    => $row->p_ip_hex
 			);
 		}
 		
 		$this->wf->profileOut( __METHOD__ );
 	}
 	
+	public function save() {
+		$this->wf->profileIn( __METHOD__ );
+
+		$action = "";
+
+		if ( ( $this->data['type'] & self::TYPE_USER ) && User::isIP( $this->data['text'] ) ) {
+			$this->data['ip_hex'] = IP::toHex( $this->data['text'] );
+		}
+
+		$dbw = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );		
+		if ( empty( $this->data['id'] ) ) {
+			/* add block */
+			$dbw->insert( $this->db_table, $this->mapToDB(), __METHOD__ );
+			$action = 'add';
+		} else {
+			$dbw->update( $this->db_table, $this->mapToDB(), array( 'p_id' => $this->data['id'] ), __METHOD__ );
+			$action = 'edit';
+		};
+		
+		if ( $dbw->affectedRows() ) {
+			if ( $action == 'add' ) {
+				$this->data['id'] = $dbw->insertId();
+			}
+			$this->log( $action );
+		} else {
+			$action = '';
+		}
+		
+		$this->wf->profileOut( __METHOD__ );
+		return ( $action ) ? $this->data['id'] : false;
+	}
+	
+	public function delete() {
+		$this->wf->profileIn( __METHOD__ );
+
+		$dbw = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
+		$dbw->delete( $this->db_table, array( 'p_id' => $this->data['id'] ), __METHOD__ );
+
+		if ( $removed = $dbw->affectedRows() ) {
+			$this->log( 'delete' );
+		}
+
+		$this->wf->profileOut( __METHOD__ );
+		return ( $removed ) ? $this->data['id'] : false;
+	}
+		
 	/* get the values for the expire select */
 	public static function getExpireValues() {
 		return array_combine( self::$expiry_text, explode(",", wfMsg( self::$expiry_values ) ) );
@@ -136,5 +181,32 @@ class Phalanx implements arrayaccess {
 		}
 
 		return $types;
+	}
+
+	/* map array keys to fields in phalanx table */
+	private function mapToDB() {
+		$fields = array();
+		foreach( $this->data as $key => $field  ) {
+			$fields[ 'p_' . $key ] = $field;
+		}
+		return $fields;
+	}
+	
+	private function log( $action ) {
+		$title = F::build( 'Title', array('PhalanxStats/' . $this->data['id'], NS_SPECIAL), 'newFromText' );
+		$types = implode( ',', Phalanx::getTypeNames( $this->data['type'] ) );
+
+		if ( $this->data['type'] & Phalanx::TYPE_EMAIL ) {
+			$logType = 'phalanxemail';
+		} else {
+			$logType = 'phalanx';
+		}
+
+		$log = F::build( 'LogPage', array( $logType ) );
+		$log->addEntry( 
+			$action, 
+			$title, 
+			$this->wf->MsgExt( 'phalanx-rule-log-details', array( 'parsemag', 'content' ), $this->data['text'], $types, $this->data['reason'] ) 
+		);
 	}
 }

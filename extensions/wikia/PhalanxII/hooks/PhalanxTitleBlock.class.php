@@ -71,14 +71,11 @@ class PhalanxTitleBlock extends WikiaObject {
 		/* check title name */
 		$text = $title->getFullText();
 
-		$phalanxModel->setText( $text );
-		$result = $phalanxModel->match( "title" );
+		$result = $phalanxModel->setText( $text )->match( "title" );
 		if ( $result !== false ) {
 			if ( is_numeric( $result ) && $result > 0 ) {
 				/* user is blocked - we have block ID */
-				$phalanxModel->setBlockId( $result );
-				// set output with block info
-				$phalanxModel->displayBlock();
+				$phalanxModel->setBlockId( $result )->displayBlock();
 				$ret = false;
 			}
 		} else {
