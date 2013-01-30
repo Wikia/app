@@ -63,7 +63,7 @@ $messages['en'] = array(
 	'vet-max-thumb' => 'maximum thumbnail size exceeded, reverting to original size',
 	'vet-notallowed' => 'You cannot insert videos on this wiki',
 	'vet-title' => 'Add a video to your article',
-	'vet-description' => 'Enter the full URL from any of the supported sites. See',
+	'vet-description' => 'Enter the full URL from any of the supported sites.',
 	'vet-supported' => 'Supported video sites:',
 	'vet-preview' => '<i>This preview is not to scale</i>',
 	'vet-bad-url' => 'The supplied URL is invalid',
@@ -73,7 +73,7 @@ $messages['en'] = array(
 	'vet-add-button' => 'Add video',
 	'vet-added-from-gallery' => 'video added from video gallery',
 	'vet-added-from-placeholder' => 'Video added from video placeholder',
-	'vet-see-all' => 'all',
+	'vet-see-all' => 'See all',
 	'vet-bad-search' => 'Error loading search query.',
 	'vet-no-preview' => 'You cannot add video from article in preview mode.',
 	'vet-single-success' => 'Your video has been added to the article.',
@@ -94,7 +94,8 @@ $messages['en'] = array(
 	'vet-search-results-WVL' => 'We found $1 {{PLURAL:$1|result|results}} for "$2" on Wikia Video Library',
 	'vet-search-results-local' => 'We found $1 {{PLURAL:$1|result|results}} for "$2" on this Wiki',
 	'vet-search-filter-caption' => 'Search filter',
-	'vet-video-add-intro' => 'Looking for videos for your wiki? Try searching at [http://video.wikia.com Wikia Video Library] for high quality videos licensed by Wikia.'
+	'vet-video-add-intro' => 'Looking for videos for your wiki? Try searching at [http://video.wikia.com Wikia Video Library] for high quality videos licensed by Wikia.',
+	'vet-supported-sites-help-link' => 'http://community.wikia.com/wiki/Help:Videos#Supported_sites'
 );
 
 /** Message documentation (Message documentation)
@@ -1919,7 +1920,7 @@ Podaj nazwę tego filmu. Może to być np. opis jego zawartości.',
 	'vet-imagebutton' => 'Wstaw filmy',
 	'vet-license-cc' => 'Udostępniane na licencji Creative Commons Uznanie autorstwa – Na tych samych warunkach 3.0',
 	'vet-name-incorrect' => 'Nazwa filmu zawiera niedozwolone znaki, jak #',
-	'vet-description' => 'Wprowadź pełny adres URL jednej z obsługiwanych witryn. Zobacz',
+	'vet-description' => 'Wprowadź pełny adres URL jednej z obsługiwanych witryn.',
 	'vet-uploadtext' => "'''Ten formularz umożliwia szybkie przesyłanie i zamieszczanie plików w artykułach.'''
 
 ''Zobacz również [[Special:Log/upload|rejestr przesyłania]] oraz [[Special:ImageList|spis wszystkich przesłanych plików]].''",
@@ -1938,7 +1939,7 @@ Podaj nazwę tego filmu. Może to być np. opis jego zawartości.',
 	'vet-page-success' => 'Strona filmu została zaktualizowana. Być może trzeba będzie odświeżyć stronę, aby zobaczyć zmianę.',
 	'vet-add-button' => 'Dodaj film',
 	'vet-added-from-gallery' => 'dodano film z galerii',
-	'vet-see-all' => 'wszystko',
+	'vet-see-all' => 'Zobacz wszystkie',
 	'vet-bad-search' => 'Błąd podczas ładowania zapytania.',
 	'vet-no-preview' => 'Nie możesz w trybie podglądu dodać filmu z artykułu.',
 	'vet-single-success' => 'Film został pomyślnie dodany do artykułu.',
@@ -1948,6 +1949,7 @@ Podaj nazwę tego filmu. Może to być np. opis jego zawartości.',
 	'vet-right' => 'Prawo',
 	'vet-gallery' => 'Galeria',
 	'vet-protected' => 'Ten film jest zabezpieczony.',
+	'vet-supported-sites-help-link' => 'http://spolecznosc.wikia.com/wiki/Pomoc:Video_Embed_Tool#Serwisy'
 );
 
 /** Piedmontese (Piemontèis)
