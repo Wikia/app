@@ -13,6 +13,9 @@ class AbTestingData extends WikiaObject {
 	const TABLE_GROUPS = 'ab_experiment_groups';
 	const TABLE_RANGES = 'ab_experiment_group_ranges';
 
+	const MIN = 'min';
+	const MAX = 'max';
+
 	protected $blacklistedColumns = array(
 		self::TABLE_EXPERIMENTS => array(
 			'groups',
@@ -247,6 +250,42 @@ class AbTestingData extends WikiaObject {
 	public function updateModifiedTime() {
 		$dbw = $this->getDb(DB_MASTER);
 		$dbw->query("REPLACE INTO ".self::TABLE_CONFIG." (id, updated) VALUES (1, current_timestamp);");
+	}
+
+	protected function getEffectiveChangeTime( $aggregate, $startTimeBuffer ) {
+		if ( !in_array( $aggregate, array( self::MIN, self::MAX ) ) ) {
+			return null;
+		}
+
+		$op = $aggregate == self::MIN ? '>' : '<=';
+		$startExpr = "start_time - interval {$startTimeBuffer} second";
+		$endExpr = "end_time";
+		$startConds = array(
+			"{$startExpr} {$op} current_timestamp"
+		);
+		$endConds = array(
+			"{$endExpr} {$op} current_timestamp"
+		);
+
+		$dbr = $this->getDb(DB_MASTER);
+		$val1 = $dbr->selectField(self::TABLE_VERSIONS,"{$aggregate}({$startExpr})",$startConds);
+		$val2 = $dbr->selectField(self::TABLE_VERSIONS,"{$aggregate}({$endExpr})",$endConds);
+
+		if ( is_null($val1) ) {
+			return $val2;
+		} else if ( is_null($val2) ) {
+			return $val1;
+		} else {
+			return call_user_func_array($aggregate,array($val1,$val2));
+		}
+	}
+
+	public function getLastEffectiveChangeTime( $bufferTime ) {
+		return $this->getEffectiveChangeTime(self::MAX,$bufferTime);
+	}
+
+	public function getNextEffectiveChangeTime( $bufferTime ) {
+		return $this->getEffectiveChangeTime(self::MIN,$bufferTime);
 	}
 
 	public function newExperiment() {

@@ -9,7 +9,7 @@ window.Wikia = window.Wikia || {};
 /**
  *	request - json of key value pairs
  *  keys:
- *		templates - an array of objects with the following fields: controllerName, methodName and an optional params (parameters for the controller method)
+ *		templates - an array of objects with the following fields: controller, method and an optional params (parameters for the controller method)
  *		styles - comma-separated list of SASS files
  *		scripts - comma-separated list of AssetsManager groups
  *		messages - comma-separated list of JSMessages packages (messages are registered automagically)
@@ -28,8 +28,8 @@ window.Wikia = window.Wikia || {};
  *		styles: 'path/to/style/file'
  *		mustache: 'extensions/wikia/MyExy/templates/index.mustache',
  *		templates: [{
- *			controllerName: 'MyController',
- *			methodName: 'getPage',
+ *			controller: 'MyController',
+ *			method: 'getPage',
  *			params: {
  *				page: 1
  *			}

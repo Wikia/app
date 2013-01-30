@@ -30,7 +30,7 @@ class SpecialPlatinum extends SpecialPage {
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/platinum.css\n");
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AchievementsII/css/oasis.scss'));
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/platinum.js\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/aim/jquery.aim.js\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/modules/aim.js\"></script>\n");
 
 		// call service to get needed data
 		$badges = AchPlatinumService::getList();

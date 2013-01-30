@@ -14,6 +14,7 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 					),
 					array(
 						'wrong-file' => 'marketing-toolbox-validator-wrong-file',
+						'wrong-size' => 'marketing-toolbox-validator-wrong-file-size',
 						'max-width' => 'marketing-toolbox-validator-wrong-file-size-width',
 						'max-height' => 'marketing-toolbox-validator-wrong-file-size-height',
 						'not-an-image' => 'marketing-toolbox-validator-wrong-file-not-an-image',
@@ -65,13 +66,14 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 
 	public function renderEditor($data) {
 		$model = new MarketingToolboxModel();
-		$imageModel = new MarketingToolboxImageModel($data['values']['fileName']);
 
 		if( !empty($data['values']['fileName']) ) {
+			$imageModel = new MarketingToolboxImageModel($data['values']['fileName']);
 			$data['file'] = $imageModel->getImageThumbData($model->getThumbnailSize());
 		}
 
 		if( !empty($data['values']['sponsoredImage']) ) {
+			$imageModel = new MarketingToolboxImageModel($data['values']['sponsoredImage']);
 			$data['sponsoredImage'] = $imageModel->getImageThumbData();
 		}
 		

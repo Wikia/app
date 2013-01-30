@@ -115,7 +115,7 @@ class WikiaHomePageTest extends WikiaBaseTest {
 	 */
 	public function testGetHubImages($mockRawText, $mockFileParams, $mockImageServingParams, $expHubImages) {
 		// setup
-		$this->setUpMockObject('Title', array('newFromText' => null), true);
+		$this->setUpMockObject('Title', array('newFromText' => null, 'exists' => true), true);
 		$this->setUpMockObject('Article', array('getRawText' => $mockRawText), true, null, false);
 		$this->setUpMockObject('ImageServing', $mockImageServingParams, true, null, false);
 		$mockFile = $this->setUpMockObject('File', $mockFileParams, true, null, false);

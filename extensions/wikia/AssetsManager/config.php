@@ -312,8 +312,8 @@ $config['gameguides_js'] = array(
 
 		//libraries/frameworks
 		'//resources/wikia/libraries/Ponto/ponto.js',
-		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
 		'//resources/wikia/libraries/modil/modil.js',
+		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
 
 		// deferred.js - jQuery-free implementation (BugId:34943)
 		'//resources/wikia/libraries/deferred/deferred.js',
@@ -350,6 +350,7 @@ $config['gameguides_js'] = array(
 		'#group_wikiamobile_mediagallery_js',
 
 		//modules
+		'//resources/wikia/modules/ajax.js',
 		'//extensions/wikia/WikiaMobile/js/toc.js',
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
@@ -609,6 +610,9 @@ $config['monobook_js'] = array(
 
 //		'//resources/mediawiki/mediawiki.util.js', # instead of //skins/common/wikibits.js'
 //		'//skins/common/ajax.js',
+
+		'//resources/wikia/libraries/modil/modil.js',//before this there should not be any AMD-dependent code
+
 		'//skins/monobook/main.js',
 		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
