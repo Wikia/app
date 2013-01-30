@@ -119,24 +119,11 @@ class MarketingToolboxModel extends WikiaModel {
 
 		$out = array();
 		while ($row = $sdb->fetchRow($results)) {
-			if (!isset($out[$row['hub_date']]) || $out[$row['hub_date']] == $this->statuses['NOT_PUBLISHED']) {
-				$out[$row['hub_date']] = $this->calculateDateStatus($row);
-			}
+			$out[$row['hub_date']] = $row['module_status'];
 		}
 
 		return $out;
 
-	}
-
-	protected function calculateDateStatus($dayData) {
-		if ($dayData['module_status'] == $this->statuses['PUBLISHED']
-			&& $this->getModulesCount() == $dayData['count(1)']
-		) {
-			$status = $this->statuses['PUBLISHED'];
-		} else {
-			$status = $this->statuses['NOT_PUBLISHED'];
-		}
-		return $status;
 	}
 
 	public function getAvailableStatuses() {

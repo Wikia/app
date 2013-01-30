@@ -530,7 +530,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			array(
 				'hub_date' => '2012-12-25',
 				'module_status' => $statuses['PUBLISHED'],
-				'count(1)' => $model->getModulesCount(),
 			)
 		);
 
@@ -573,7 +572,6 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			array(
 				'hub_date' => '2012-12-25',
 				'module_status' => $statuses['NOT_PUBLISHED'],
-				'count(1)' => 3,
 			)
 		);
 
@@ -642,17 +640,14 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			array(
 				'hub_date' => '2012-12-25',
 				'module_status' => $statuses['PUBLISHED'],
-				'count(1)' => $model->getModulesCount(),
 			),
 			array(
 				'hub_date' => '2013-01-05',
 				'module_status' => $statuses['NOT_PUBLISHED'],
-				'count(1)' => 1,
 			),
 			array(
 				'hub_date' => '2013-01-08',
 				'module_status' => $statuses['NOT_PUBLISHED'],
-				'count(1)' => 4,
 			)
 		);
 
