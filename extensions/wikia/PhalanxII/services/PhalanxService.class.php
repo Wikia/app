@@ -102,9 +102,9 @@ class PhalanxService extends Service {
 			$res = false;
 		} else {
 			switch ( $action ) {
-				case "status": 
+				case "status":
 					$res = ( stripos( $response, self::RES_STATUS  ) !== false ) ? true : false; break;
-				case "match" : 
+				case "match" :
 					$ret = json_decode( $response );
 					if ( is_null( $ret ) ) {
 						/* don't match any blocks */
