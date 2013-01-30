@@ -29,8 +29,12 @@ class PhalanxUserBlock extends WikiaObject {
 
 		$result = $phalanxModel->match( "user" );
 		if ( $result !== false ) {
-			if ( is_numeric( $result ) && $result > 0 ) {
-				$user = $phalanxModel->setBlockId( $result )->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
+			if ( 
+				is_object( $result ) && 
+				isset( $result->id ) && 
+				$result > 0 
+			) {
+				$user = $phalanxModel->setBlockId( $result->id )->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
 				$ret = false;
 			} else {
 				$ret = true;
@@ -57,13 +61,21 @@ class PhalanxUserBlock extends WikiaObject {
 		$phalanxModel = F::build('PhalanxUserModel', array( $user ) );
 
 		$result = $phalanxModel->match( "user" );
-		if ( $result !== false && !is_numeric( $result ) ) {
-			/* check also user email */
-			$result = $phalanxModel->setText( $user->getEmail() )->match( "email" );
+		if ( $result !== false ) {
+			if ( empty( $result ) ) {
+				/* check also user email */
+				$result = $phalanxModel->setText( $user->getEmail() )->match( "email" );
+			}
 		}
 		
-		if ( $result !== false && ( is_numeric( $result ) && $result > 0 ) ) {
+		if ( 
+			$result !== false &&
+			is_object( $result ) && 
+			isset( $result->id ) && 
+			$result->id > 0 
+		) {			
 			$abortError = $this->wf->Msg( 'phalanx-user-block-new-account' );
+			$phalanxModel->setBlockId( $result->id )->logBlock();
 			$ret = false;
 		} elseif ( $result === false ) {
 			// TO DO

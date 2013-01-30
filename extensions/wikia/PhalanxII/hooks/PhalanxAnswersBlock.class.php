@@ -31,9 +31,12 @@ class PhalanxAnswersBlock extends WikiaObject {
 		
 		$result = $phalanxModel->setText( $text )->match( "question_title", $this->wg->LangugeCode );
 		if ( $result !== false ) {
-			if ( is_numeric( $result ) && $result > 0 ) {
-				/* user is blocked - we have block ID and send information to logger */
-				$phalanxModel->setBlockId( $result )->logBlock();
+			if ( 
+				is_object( $result ) && 
+				isset( $result->id ) && 
+				$result->id > 0 
+			) {
+				$phalanxModel->setBlockId( $result->id )->logBlock();
 				$ret = false;
 			}
 		} else {
@@ -64,9 +67,12 @@ class PhalanxAnswersBlock extends WikiaObject {
 		
 		$result = $phalanxModel->setText( $text )->match( "recent_questions", $this->wg->LangugeCode );
 		if ( $result !== false ) {
-			if ( is_numeric( $result ) && $result > 0 ) {
-				/* user is blocked - we have block ID */
-				$phalanxModel->setBlockId( $result )->logBlock( $text );
+			if ( 
+				is_object( $result ) && 
+				isset( $result->id ) && 
+				$result->id > 0 
+			) {
+				$phalanxModel->setBlockId( $result->id )->logBlock( $text );
 				$ret = false;
 			}
 		} else {

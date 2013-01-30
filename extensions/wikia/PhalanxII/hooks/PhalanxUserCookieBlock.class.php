@@ -34,8 +34,12 @@ class PhalanxUserCookieBlock extends PhalanxUserBlock {
 			foreach ( $hashes as $hash ) {
 				$result = $phalanxModel->setText( $hash )->match( "cookie" );
 				if ( $result !== false ) {
-					if ( is_numeric( $result ) && $result > 0 ) {
-						$user = $phalanxModel->setBlockId( $result )->userBlock( 'exact' )->getUser();
+					if ( 
+						is_object( $result ) && 
+						isset( $result->id ) &&
+						$result->id > 0 
+					) {
+						$user = $phalanxModel->setBlockId( $result->id )->userBlock( 'exact' )->getUser();
 						$ret = false;
 					} 
 				} else {

@@ -26,8 +26,12 @@ class PhalanxWikiCreationBlock extends WikiaObject {
 
 		$result = $phalanxModel->match( "wiki_creation" );
 		if ( $result !== false ) {
-			if ( is_numeric( $result ) && $result > 0 ) {
-				$phalanxModel->setBlockId( $result )->logBlock();
+			if ( 
+				is_object( $result ) && 
+				isset( $result->id ) &&
+				$result->id > 0 
+			) {
+				$phalanxModel->setBlockId( $result->id )->logBlock();
 				$ret = false;
 			}
 		} else {

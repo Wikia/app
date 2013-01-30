@@ -43,9 +43,13 @@ class PhalanxContentBlock extends WikiaObject {
 
 		$result = $phalanxModel->setText( $summary )->match( "summary" );
 		if ( $result !== false ) {
-			if ( is_numeric( $result ) && $result > 0 ) {
+			if ( 
+				is_object( $result ) && 
+				isset( $result->id ) &&
+				$result->id > 0 
+			) {
 				/* user is blocked - we have block ID */
-				$phalanxModel->setBlockId( $result )->displayBlock();
+				$phalanxModel->setBlockId( $result->id )->displayBlock();
 				$ret = false;
 			} else {
 				/* check content */
@@ -54,8 +58,12 @@ class PhalanxContentBlock extends WikiaObject {
 				}
 				$result = $phalanxModel->setText( $textbox )->match( "content" );
 				if ( $result !== false ) {
-					if ( is_numeric( $result ) ) {
-						$editpage->spamPageWithContent( $phalanxModel->setBlockId( $result )->contentBlock() );
+					if ( 
+						is_object( $result ) &&
+						isset( $result->id ) &&
+						$result->id > 0
+					) {
+						$editpage->spamPageWithContent( $phalanxModel->setBlockId( $result->id )->contentBlock() );
 						$ret = false;
 					} else {
 						$ret = true;
@@ -108,8 +116,12 @@ class PhalanxContentBlock extends WikiaObject {
 
 		$result = $phalanxModel->setText( $reason )->match( "summary" );
 		if ( $result !== false ) {
-			if ( is_numeric( $result ) && $result > 0 ) {
-				$error .= $phalanxModel->setBlockId( $result )->reasonBlock();
+			if ( 
+				is_object( $result ) && 
+				isset( $result->id ) &&
+				$result->id > 0 
+			) {
+				$error .= $phalanxModel->setBlockId( $result->id )->reasonBlock();
 				$ret = false;
 			} else {
 				$ret = true;
