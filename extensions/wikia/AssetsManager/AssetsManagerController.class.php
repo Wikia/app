@@ -18,7 +18,7 @@ class AssetsManagerController extends WikiaController {
 	/**
 	 * Return different type of assets in a single request
 	 *
-	 * @requestParam string templates - JSON encoded array of controllerName / methodName and optional params used to render a template
+	 * @requestParam string templates - JSON encoded array of controller / method and optional params used to render a template
 	 * @requestParam string styles - comma-separated list of SASS files
 	 * @requestParam string scripts - comma-separated list of AssetsManager groups
 	 * @requestParam string messages - comma-separated list of JSMessages packages
@@ -58,8 +58,13 @@ class AssetsManagerController extends WikiaController {
 
 			foreach( $templates as $template ) {
 				$params = !empty( $template['params'] ) ? $template['params'] : array();
-				$res = $this->sendRequest( $template['controller'], $template['method'], $params );
-				$templatesOutput["{$template['controller']}_{$template['method']}"] = $res->__toString();
+
+				if ( !empty( $template['controller'] ) && !empty( $template['method'] ) ) {
+					$res = $this->sendRequest( $template['controller'], $template['method'], $params );
+					$templatesOutput["{$template['controller']}_{$template['method']}"] = $res->__toString();
+				} else {
+					$templatesOutput[] = "Controller or method not given";
+				}
 			}
 
 			$this->response->setVal( 'templates', $templatesOutput );
