@@ -63,10 +63,8 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	public function explore() {
 		$exploreData = $this->model->getDataForModuleExplore();
 		$this->headline = $exploreData['headline'];
-		$this->article = $exploreData['article'];
 		$this->image = $exploreData['imagelink'];
 		$this->linkgroups = $exploreData['linkgroups'];
-		$this->link = $exploreData['link'];
 	}
 
 	public function pulse() {

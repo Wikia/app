@@ -42,6 +42,18 @@ class WikiaHubsV2Model extends WikiaModel {
 	public function getDate() {
 		return $this->date;
 	}
+	
+	public function getTimestamp() {
+		$datetime = new DateTime($this->date);
+
+		$timestamp = $datetime->getTimestamp();
+		if( $datetime->format('H') != 0 || $datetime->format('i') != 0 || $datetime->format('s') != 0) {
+			$datetime->setTime(0, 0, 0);
+			$timestamp = $datetime->getTimestamp();
+		}
+		
+		return $timestamp;
+	}
 
 	public function setVertical($vertical) {
 		$this->vertical = $vertical;
@@ -99,95 +111,59 @@ class WikiaHubsV2Model extends WikiaModel {
 	}
 
 	public function getDataForModuleExplore() {
-		// mock data
-		$data = array(
-			'headline' => 'Explore',
-			'article' => 'Article content which is very long because it is so long that it is too long',
-			'image' => 'Marvel320.jpg',
-			'linkgroups' =>
-			array(
-				array(
-					'headline' => 'Group 1',
-					'links' =>
-					array(
-						array(
-							'anchor' => 'WoWwiki',
-							'href' => 'http://www.wowwiki.com'
-						),
-						array(
-							'anchor' => 'WoWwiki',
-							'href' => 'http://www.wowwiki.com'
-						),
-						array(
-							'anchor' => 'WoWwiki',
-							'href' => 'http://www.wowwiki.com'
-						),
-					),
-				),
-				array(
-					'headline' => 'Group 2',
-					'links' =>
-					array(
-						array(
-							'anchor' => 'WoWwiki',
-							'href' => 'http://www.wowwiki.com'
-						),
-						array(
-							'anchor' => 'WoWwiki',
-							'href' => 'http://www.wowwiki.com'
-						),
-						array(
-							'anchor' => 'WoWwiki',
-							'href' => 'http://www.wowwiki.com'
-						),
-					)
-				),
-				array(
-					'headline' => 'Group 3',
-					'links' =>
-					array(
-						array(
-							'anchor' => 'WoWwiki',
-							'href' => 'http://www.wowwiki.com'
-						),
-						array(
-							'anchor' => 'WoWwiki',
-							'href' => 'http://www.wowwiki.com'
-						),
-						array(
-							'anchor' => 'WoWwiki',
-							'href' => 'http://www.wowwiki.com'
-						),
-					)
-				),
-				array(
-					'headline' => 'Group 4',
-					'links' =>
-					array(
-						array(
-							'anchor' => 'WoWwiki',
-							'href' => 'http://www.wowwiki.com'
-						),
-						array(
-							'anchor' => 'WoWwiki',
-							'href' => 'http://www.wowwiki.com'
-						),
-						array(
-							'anchor' => 'WoWwiki',
-							'href' => 'http://www.wowwiki.com'
-						),
-					)
-				)
-			),
-			'link' => array(
-				'anchor' => 'See more...',
-				'href' => 'http://www.wowwiki.com'
-			),
-		);
-
-		$data['imagelink'] = $this->getMiniThumbnailUrl($data['image']);
+		try {
+			$response = F::app()->sendRequest('WikiaHubsApi', 'getExploreModule', array(
+				'vertical' => $this->getVertical(),
+				'timestamp' => $this->getTimestamp(),
+				//'lang' => $this->getLang(), //TODO: returns 80433 -- why?
+			));
+			
+			$data = array();
+			$responseData = $response->getVal('data');
+			$data['headline'] = $responseData['exploreTitle'];
+			$data['image'] = $responseData['fileName'];
+			$data['linkgroups'] = $this->getLinkGroupsFromApiResponse($responseData);
+			$data['imagelink'] = $this->getMiniThumbnailUrl($data['image']);
+		} catch (Exception $e) {
+			$data = array(
+				'headline' => 'NO DATA FOUND!',
+				'linkgroups' => array(),
+				'imagelink' => '',
+			);
+		}
 
 		return $data;
+	}
+	
+	//TODO: just temp method we'll probably get rid of it
+	protected function getLinkGroupsFromApiResponse($responseData) {
+		$groups = array(1, 2, 3);
+		$links = array('a', 'b', 'c', 'd');
+		
+		$headerPrefix = 'exploreSectionHeader';
+		$linkTextPrefix = 'exploreLinkText';
+		$linkUrlPrefix = '"exploreLinkUrl';
+
+		$groupNo = 0;
+		$linkgroups = array();
+		foreach($groups as $group) {
+			if( !empty($responseData[$headerPrefix . $group]) ) {
+				$linkgroups[$groupNo]['headline'] = $responseData[$headerPrefix . $group];
+
+				$linkNo = 0;
+				foreach($links as $linkIdx) {
+					if( !empty($responseData[$linkTextPrefix . $linkIdx]) ) {
+						$linkgroups[$groupNo]['links'][$linkNo]['anchor'] = $responseData[$linkTextPrefix . $linkIdx];
+
+						if( !empty($responseData[$linkUrlPrefix . $linkIdx]) ) {
+							$linkgroups[$groupNo]['links'][$linkNo]['href'] = $responseData[$linkTextPrefix . $linkIdx];
+						}
+					}
+				}
+			}
+		}
+		
+		return $linkgroups;
 	}
 
 	public function getDataForModulePulse() {
