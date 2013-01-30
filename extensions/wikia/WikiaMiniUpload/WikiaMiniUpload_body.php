@@ -538,6 +538,8 @@ class WikiaMiniUpload {
 			return 'File was not found!';
 		}
 
+		$ns_img = $wgContLang->getFormattedNsText( NS_IMAGE );
+
 		if( ( -2 == $gallery ) && !$fck ) {
 			// this went in from the single placeholder...
 			$name = $title->getText();
@@ -555,9 +557,9 @@ class WikiaMiniUpload {
 
 			wfRunHooks( 'WikiaMiniUpload::fetchTextForImagePlaceholder', array( &$title_obj, &$text ) );
 
-			$box = '' != $wgRequest->getVal( 'box' ) ? $wgRequest->getVal( 'box' ) : '' ;
+			$box = $wgRequest->getVal( 'box', '' );
 
-			$placeholder = ImagePlaceholderMatch( $text, $box );
+			$placeholder = MediaPlaceholderMatch( $text, $box );
 
 			$success = false;
 			if ( $placeholder ) {
@@ -602,7 +604,8 @@ class WikiaMiniUpload {
 				header('X-screen-type: summary');
 			} else {
 				// failure signal opens js alert (BugId:4935)
-				// header('X-screen-type: error');
+				header('X-screen-type: error');
+				return;
 			}
 		} else {
 			header('X-screen-type: summary');
@@ -612,8 +615,6 @@ class WikiaMiniUpload {
 			$layout = $wgRequest->getVal('layout');
 			$caption = $wgRequest->getVal('caption');
 			$slider = $wgRequest->getVal('slider');
-
-			$ns_img = $wgContLang->getFormattedNsText( NS_IMAGE );
 
 			$tag = '[[' . $ns_img . ':'.$title->getDBkey();
 			if($size != 'full' && ($file->getMediaType() == 'BITMAP' || $file->getMediaType() == 'DRAWING')) {
