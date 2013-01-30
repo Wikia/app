@@ -5,13 +5,13 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	private $phalanxTitle = null;
 	private $title = null;
 	private $wikiId = 0;
-	
+
 	function __construct( ) {
 		parent::__construct( 'PhalanxStats', 'phalanx', false );
 		$this->title = F::build( 'Title', array( 'PhalanxStats', NS_SPECIAL ), 'newFromText' );
 		$this->phalanxTitle = F::build( 'Title', array( 'Phalanx', NS_SPECIAL ), 'newFromText' );
 	}
-	
+
 	public function index() {
 		$this->wf->profileIn( __METHOD__ );
 
@@ -22,9 +22,9 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		$this->response->addAsset('extensions/wikia/Phalanx/css/Phalanx.css');		
+		$this->response->addAsset('extensions/wikia/Phalanx/css/Phalanx.css');
 
-		$this->blockId = $this->wg->Request->getInt( 'blockId' );
+		$this->blockId = intval($this->getPar());
 		if ( empty( $this->blockId ) ) {
 			$this->form();
 		} elseif ( strpos( $this->blockId, 'wiki' ) !== false ) {
@@ -47,17 +47,17 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		}
 
 		$phalanxUrl = $this->phalanxTitle->getFullUrl( array( 'id' => $data['id'] ) );
-		
+
 		$data['author_id'] = F::build( 'User', array( $data['author_id'] ), 'newFromId' )->getName();
 		$data['type'] = implode( ', ', Phalanx::getTypeNames( $data['type'] ) );
 		$data['timestamp'] = $this->wg->Lang->timeanddate( $data['timestamp'] );
-		
+
 		if ( $data['expire'] == null ) {
 			$data['expire'] = 'infinite';
 		} else {
 			$data['expire'] = $this->wg->Lang->timeanddate( $data['expire'] );
 		}
-		
+
 		$data['regex'] = $data['regex'] ? 'Yes' : 'No';
 		$data['case']  = $data['case']  ? 'Yes' : 'No';
 		$data['exact'] = $data['exact'] ? 'Yes' : 'No';
@@ -67,7 +67,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		if ( $data['type'] & Phalanx::TYPE_EMAIL && !$this->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 			/* hide email from non-privildged users */
 			$data['text'] = $this->wf->Msg( 'phalanx-email-filter-hidden' );
-		} 
+		}
 
 		/* stats table */
 		$headers = array(
@@ -88,7 +88,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			'style' => "font-family:monospace;",
 		);
 
-		$table  = Xml::buildTable( array( $data ), $tableAttribs, $headers );
+		$table  = Xml::buildTable( array( (array) $data ), $tableAttribs, $headers );
 		$table  = str_replace("</table>", "", $table);
 		$table .= "<tr><th>" . $this->wf->Msg('phalanx-stats-table-text') . "</th><td colspan='8'>" . htmlspecialchars( $data['text'] ) . "</td></tr>";
 		$table .= "<tr><th>" . $this->wf->Msg('phalanx-stats-table-reason')  ."</th><td colspan='8'>{$data['reason']}</td></tr>";
@@ -111,7 +111,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		if ( !is_object($oWiki) ) {
 			return false;
 		}
-		
+
 		/* process block data for display */
 		$data = array(
 			'wiki_id'         => $oWiki->city_id,
@@ -119,7 +119,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			'url'             => WikiFactory::getVarValueByName( "wgServer", $oWiki->city_id ),
 			'last_timestamp'  => $this->wg->Lang->timeanddate( $oWiki->city_last_timestamp ),
 		);
-		
+
 		/* we have a valid id, change title to use it */
 		$this->wg->Out->setPageTitle( $this->wf->Msg( 'phalanx-stats-title' ) . ': ' . $data['url'] );
 

@@ -1,7 +1,7 @@
-<?php 
+<?php
 class PhalanxStatsPager extends PhalanxPager {
 	private $qCond = '';
-	
+
 	public function __construct( $id ) {
 		parent::__construct();
 		$this->id = (int) $id;
@@ -18,6 +18,10 @@ class PhalanxStatsPager extends PhalanxPager {
 		);
 
 		return $query;
+	}
+
+	function getIndexField() {
+		return 'ps_timestamp';
 	}
 
 	function getPagingQueries() {

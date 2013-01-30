@@ -1,7 +1,7 @@
 <?
 
 class PhalanxPager extends ReverseChronologicalPager {
-	private $app = null;
+	protected  $app = null;
 	private $id = 0;
 	private $pInx = '';
 
