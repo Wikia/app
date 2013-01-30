@@ -1,8 +1,8 @@
 <div id="phalanx-mainframe">
-	<div class="wikia-tabs" id="phalanx-nav-area">
+	<div class="tabs" id="phalanx-nav-area">
 		<ul>
-			<li class="accent selected" id="phalanx-main-tab"><a href="#main" ><?php echo wfMsg( 'phalanx-tab-main' ) ?></a></li>
-			<li class="accent" id="phalanx-test-tab"><a href="#test"><?php echo wfMsg( 'phalanx-tab-secondary' ) ?></a></li>
+			<li class="selected" id="phalanx-main-tab"><a href="#main" ><?php echo wfMsg( 'phalanx-tab-main' ) ?></a></li>
+			<li id="phalanx-test-tab"><a href="#test"><?php echo wfMsg( 'phalanx-tab-secondary' ) ?></a></li>
 		</ul>
 	</div>
 
@@ -31,10 +31,10 @@
 								<div class="left-spacer">&nbsp;</div>
 								<?= Xml::check( 'wpPhalanxFormatRegex', !empty( $data['regex'] ), array( 'id' => 'wpPhalanxFormatRegex' ) ) ?>
 								<label for="wpPhalanxFormatRegex"><?php echo wfMsg( 'phalanx-format-regex' ) ?></label>
-								
+
 								<?= Xml::check( 'wpPhalanxFormatCase', !empty( $data['case'] ), array( 'id' => 'wpPhalanxFormatCase' ) ) ?>
 								<label for="wpPhalanxFormatCase"><?php echo wfMsg( 'phalanx-format-case' ) ?></label>
-								
+
 								<?= Xml::check( 'wpPhalanxFormatExact', !empty( $data['exact'] ), array( 'id' => 'wpPhalanxFormatExact' ) ) ?>
 								<label for="wpPhalanxFormatExact"><?php echo wfMsg( 'phalanx-format-exact' ) ?></label>
 							</div>
