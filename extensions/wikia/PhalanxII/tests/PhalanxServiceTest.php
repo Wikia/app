@@ -61,16 +61,14 @@ class PhalanxServiceTest extends WikiaBaseTest {
 
 	public function testPhalanxServiceMatch() {
 		if( $this->isPhalanxAlive() ) {
-			// lang=en&type=content&content=hello
+
 			$ret = $this->service->match( "content", "hello" );
 			$this->assertEquals( 0, $ret );
 
-			// lang=en&type=content&content=pornhub.com
-			$ret = $this->service->match( "content", "pornhub.com" );
-			print_r( $ret );
-			$val = is_integer( $ret ) && $ret > 1;
-			$this->assertEquals( true, $val, "pornhub.com should be matched as spam content" );
 
+			$ret = $this->service->match( "content", "pornhub.com" );
+			$val = is_integer( $ret->id ) && $ret->id > 1;
+			$this->assertEquals( true, $val, "pornhub.com should be matched as spam content" );
 		}
 		else {
 			$this->markTestSkipped( sprintf( "Can't contact with phalanx service on %s.\n", F::app()->wg->PhalanxServiceUrl ) );

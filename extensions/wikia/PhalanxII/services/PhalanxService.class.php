@@ -105,9 +105,10 @@ class PhalanxService extends Service {
 				case "match" :
 					$ret = json_decode( $response );
 					if ( is_null( $ret ) ) {
-						/* don't match any blocks */
+						/* it could not match any blocks */
 						$res = 0;
-					} else {
+					}
+					else {
 						if ( is_array( $ret ) ) {
 							/* first block ID ? */
 							reset( $ret ); $res = current( $ret );
