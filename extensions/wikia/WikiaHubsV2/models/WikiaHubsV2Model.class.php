@@ -262,8 +262,10 @@ class WikiaHubsV2Model extends WikiaModel {
 
 		$results['sponsorthumb']['src'] = $this->getThumbnailUrl($results['sponsor'], self::SPONSORED_IMAGE_WIDTH, self::SPONSORED_IMAGE_HEIGHT);
 		$sponsorThumbSizes = $this->getImageThumbSize();
-		$results['sponsorthumb']['width'] = $sponsorThumbSizes['width'];
-		$results['sponsorthumb']['height'] = $sponsorThumbSizes['height'];
+		if (!empty($sponsorThumbSizes)) {
+			$results['sponsorthumb']['width'] = $sponsorThumbSizes['width'];
+			$results['sponsorthumb']['height'] = $sponsorThumbSizes['height'];
+		}
 
 		return $results;
 	}
@@ -609,11 +611,15 @@ No
 	}
 
     public function generateImageXml($image) {
-		return Xml::element('img', array(
-			'src' => $image['src'],
-			'width' => $image['width'],
-			'height' => $image['height'],
-		), '', true);
+		$xmlElement = '';
+		if ($image['src']) {
+			$xmlElement = Xml::element('img', array(
+				'src' => $image['src'],
+				'width' => $image['width'],
+				'height' => $image['height'],
+			), '', true);
+		}
+		return $xmlElement;
 	}
 
 	public function parseVideoData($videoData) {
