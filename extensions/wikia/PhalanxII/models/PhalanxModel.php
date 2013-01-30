@@ -17,7 +17,7 @@ abstract class PhalanxModel extends WikiaObject {
 		$this->service = F::build("PhalanxService");
 	}
 
-	abstract public static function isOk();
+	abstract public function isOk();
 
 	private function setter( $key, $val ) {
 		$method = sprintf( "set%s", ucfirst( $key ) );
