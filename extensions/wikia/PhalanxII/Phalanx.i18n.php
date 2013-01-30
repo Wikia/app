@@ -33,6 +33,7 @@ $messages['en'] = array(
 	'phalanx-format-exact' => 'exact',
 	'phalanx-tab-main' => 'Manage Filters',
 	'phalanx-tab-secondary' => 'Test Filters',
+	'phalanx-tab-stats' => 'Filters statistics',
 
 	'phalanx-block-success' => 'The block was successfully added',
 	'phalanx-block-failure' => 'There was an error during adding the block',
@@ -1242,7 +1243,7 @@ $messages['mk'] = array(
 	'phalanx-help-type-answers-question-title' => 'Овој филтер блокира создавање на прашање (страница) ако насловот одговара на некој од изразите наведени на црниот список.
 
 Напомена: работи само на викија за одговорање на прашања',
-	'phalanx-help-type-answers-recent-questions' => 'Овој филтер спречува приказ на прашања (страници) во низа изводи (посреднички елементи, списоци, пописи направени со ознаки). 
+	'phalanx-help-type-answers-recent-questions' => 'Овој филтер спречува приказ на прашања (страници) во низа изводи (посреднички елементи, списоци, пописи направени со ознаки).
 Филтерот не спречува создавање на таквите страници.
 
 Напомена: работи само на викија за одговорање на прашања',
@@ -1505,7 +1506,7 @@ Note: fungerer kun på Svar-wikier.',
 	'phalanx-help-type-user-email' => 'Dette filteret hindrer kontoopprettelse med en blokkert e-postadresse.',
 	'phalanx-user-block-reason-ip' => 'Denne IP-adressen er forhindret i å redigere over hele Wikia-nettverket  grunnet vandalisme eller annt hærverk fra deg eller noen som deler din IP-adresse.
 Om du mener dette er en feil, vennligst [[Special:Contact|kontakt Wikia]].',
-	'phalanx-user-block-reason-exact' => 'Dette brukernavnet eller IP-adressen er forhindret i år redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk. 
+	'phalanx-user-block-reason-exact' => 'Dette brukernavnet eller IP-adressen er forhindret i år redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk.
 Om du mener dette er en feil, vennligst [[Special:Contact|kontakt Wikia]].',
 	'phalanx-user-block-reason-similar' => 'Dette brukernavnet er forhindret i å redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk av en bruker med lignende navn.
 Vennligst opprett et alternativt brukernavn eller [[Special:Contact|kontakt Wikia]] om problemet.',
@@ -1857,7 +1858,7 @@ $messages['pms'] = array(
 	'phalanx-block-failure' => "A l'é stàit-ie n'eron an giontand ël blòch",
 	'phalanx-modify-success' => "Ël blòch a l'é stàit modificà da bin",
 	'phalanx-modify-failure' => "A l'é stàit-ie n'eron an modificand ël blòch",
-	'phalanx-modify-warning' => 'It të stas modificand l\'ID blòch #$1. 
+	'phalanx-modify-warning' => 'It të stas modificand l\'ID blòch #$1.
 Sgnacand "{{int:phalanx-edit-block}}" it salveras ij tò cambi!',
 	'phalanx-test-description' => 'Preuva ël test dàit con ij blòch corent.',
 	'phalanx-test-submit' => 'Preuva',
@@ -1881,7 +1882,7 @@ A vieta pa che na pagina pre-esistenta a sia modificà.',
 	'phalanx-help-type-answers-question-title' => 'Sto filtr a blòca la creassion ëd na custion (pagina), se sò tìtol a corispond a quaich fras dla lista nèira.
 
 Nòta: a travaja mach dzor wiki ëd sòrt-Arspòste.',
-	'phalanx-help-type-answers-recent-questions' => 'Sto filtr a vieta ëd visualisé na custion (pagina) ant un nùmer ëd surtìe (widget, liste, liste generà da tichëtte). 
+	'phalanx-help-type-answers-recent-questions' => 'Sto filtr a vieta ëd visualisé na custion (pagina) ant un nùmer ëd surtìe (widget, liste, liste generà da tichëtte).
 A vieta pa che coste pagine a sio creà.
 
 Nòta: a travaja mach dzor le wiki ëd sòrt Arspòste',

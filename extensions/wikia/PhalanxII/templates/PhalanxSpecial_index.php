@@ -1,13 +1,14 @@
 <div id="phalanx-mainframe">
-	<div class="tabs" id="phalanx-nav-area">
-		<ul>
-			<li class="selected" id="phalanx-main-tab"><a href="#main" ><?php echo wfMsg( 'phalanx-tab-main' ) ?></a></li>
-			<li id="phalanx-test-tab"><a href="#test"><?php echo wfMsg( 'phalanx-tab-secondary' ) ?></a></li>
+	<div id="phalanx-nav-area">
+		<ul class="tabs">
+			<li class="selected" data-tab="main"><a href="#"><?php echo wfMsg( 'phalanx-tab-main' ) ?></a></li>
+			<li data-tab="test"><a href="#"><?php echo wfMsg( 'phalanx-tab-secondary' ) ?></a></li>
+			<li data-tab="stats"><a href="#"><?php echo wfMsg( 'phalanx-tab-stats' ) ?></a></li>
 		</ul>
 	</div>
 
 	<div id="phalanx-content-area">
-		<div id="phalanx-main-tab-content">
+		<div class="tabBody selected" data-tab-body="main">
 			<div id="phalanx-filter-area">
 				<fieldset id="phalanx-input-filter">
 					<legend><?php echo wfMsg( 'phalanx-legend-input' ) ?></legend>
@@ -175,7 +176,7 @@
 			</div>
 		</div>
 
-		<div id="phalanx-test-tab-content">
+		<div class="tabBody" data-tab-body="test">
 			<fieldset>
 				<form id="phalanx-block-test" action="#test">
 					<label for="phalanx-block-text"><?php echo wfMsg( 'phalanx-test-description' ) ?></label>
