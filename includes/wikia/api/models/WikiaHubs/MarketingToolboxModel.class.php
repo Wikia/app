@@ -160,6 +160,17 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
+	 * Get vertical ids
+	 *
+	 * @param int $sectionId section id
+	 *
+	 * @return array vertical ids
+	 */
+	public function getVerticalsIds($sectionId = self::SECTION_HUBS) {
+		return array_keys($this->verticals[$sectionId]);
+	}
+
+	/**
 	 * Get available verticals for selected section
 	 *
 	 * @param int $sectionId
