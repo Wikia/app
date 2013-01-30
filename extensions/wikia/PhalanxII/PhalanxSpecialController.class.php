@@ -4,11 +4,16 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	private $mDefaultExpire = '1 year';
 	private $title = null;
 	private $errorMsg = '';
+	private $valid = false;
 
 	public function __construct() {
 		parent::__construct('Phalanx');
 		$this->includable(false);
 		$this->title = F::build( 'Title', array('Phalanx', NS_SPECIAL), 'newFromText' );
+	}
+	
+	public function isValid() {
+		return $this->valid;
 	}
 	
 	public function index() {
@@ -145,7 +150,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$bulkdata = explode( "\n", $multitext );
 			if ( count($bulkdata) > 0 ) {
 				$result = array( 'success' => array(), 'failed' => 0 );
-				foreach ( $multitext as $bulkrow ) {
+				foreach ( $bulkdata as $bulkrow ) {
 					$bulkrow = trim($bulkrow);
 					$phalanx['text'] = $bulkrow;
 
@@ -161,6 +166,10 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
+		if ( $result !== false ) {
+			$this->refresh( $result["success"] );
+		}
+
 		$this->wf->profileOut( __METHOD__ );
 		
 		return $result;
@@ -171,6 +180,19 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		
 		$phalanx = F::build( 'Phalanx', array( $id ) );
 		
+		if ( $token != $this->wg->User->getEditToken() ) {
+			$this->displayRestrictionError();
+			$this->wf->profileOut( __METHOD__ );
+			return false;
+		}
+		
+		$id = $phalanx->delete();
+		if ( $id ) {
+			$result = array( "success" => array( $id ), "failed" => 0 );
+			$this->refresh( $result["success"] );
+		} else {
+			$result = false;
+		}
 		
 		$this->wf->profileOut( __METHOD__ );
 		
@@ -178,7 +200,19 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	}
 	
 	public function check() {
-		$this->request->getVal( 'blockId' );
-		$this->request->getVal( 'token' );
+		$block = $this->request->getVal( 'block' );
+		$token = $this->request->getVal( 'token' );
+		
+		if ( $token != $this->wg->User->getEditToken() ) {
+			$this->wf->profileOut( __METHOD__ );
+			return false;
+		}
+		$phalanxService = F::build('PhalanxService'); 
+		$this->valid = $phalanxService->validate( $block );
+	}
+	
+	private function refresh( /*Array*/ $ids )  {
+		$phalanxService = F::build('PhalanxService');
+		$this->valid = $phalanxService->reload( $ids );
 	}
 }

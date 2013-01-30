@@ -107,6 +107,34 @@ class PhalanxService extends Service {
 	}
 
 	/**
+	 * service for validate regex in service
+	 *
+	 * @example curl "http://localhost:8080/validate?regex=^alamakota$"
+	 *
+	 * @param $regex String
+	 *
+	 */
+	public function validate( $regex ) {
+		$response = $this->sendToPhalanxDaemon( "validate", array( "regex" => $regex ) );
+
+		if ( $response !== false ) {
+			if ( stripos( $response, self::RES_OK  ) !== false ) {
+				$ret = 1;
+			} elseif ( stripos( $response, self::RES_FAILURE ) !== false ) {
+				$ret = 0;
+			} else {
+				/* invalid response */
+				$ret = false;
+			}
+		} else {
+			/* service doesn't work */
+			$ret = false;
+		}
+
+		return $ret;
+	}
+
+	/**
 	 * Send prepared request request to phalanx daemon
 	 *
 	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
