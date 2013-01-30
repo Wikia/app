@@ -49,13 +49,11 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		$tags = WikiFactory::getVarValueByName( self::WIKI_FACTORY_VARIABLE_NAME, $this->wg->CityId );
 
-
 		$this->response->setVal( 'descriptions', [
 			$this->wf->Msg('wikiagameguides-content-description-categories'),
 			$this->wf->Msg('wikiagameguides-content-description-tag'),
 			$this->wf->Msg('wikiagameguides-content-description-organize')
 		] );
-
 
 		$this->response->setVal( 'addTag', $this->wf->Msg( 'wikiagameguides-content-add-tag' ) );
 		$this->response->setVal( 'addCategory', $this->wf->Msg( 'wikiagameguides-content-add-category' ) );
@@ -65,7 +63,7 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 		$this->response->setVal( 'category_placeholder', $this->wf->Msg( 'wikiagameguides-content-category' ) );
 		$this->response->setVal( 'name_placeholder', $this->wf->Msg( 'wikiagameguides-content-name' ) );
 
-		if( !empty( $tags ) ) {
+		if ( !empty( $tags ) ) {
 			$this->response->setVal( 'tags', $tags );
 		} else {
 			$this->response->setVal( 'tag', $this->sendSelfRequest( 'tag' ) );
