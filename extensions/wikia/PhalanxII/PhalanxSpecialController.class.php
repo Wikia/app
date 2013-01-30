@@ -165,4 +165,20 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		
 		return $result;
 	}
+	
+	public function delete( $id, $token ) {
+		$this->wf->profileIn( __METHOD__ );
+		
+		$phalanx = F::build( 'Phalanx', array( $id ) );
+		
+		
+		$this->wf->profileOut( __METHOD__ );
+		
+		return $result;
+	}
+	
+	public function check() {
+		$this->request->getVal( 'blockId' );
+		$this->request->getVal( 'token' );
+	}
 }

@@ -22,8 +22,8 @@ $app->registerClass( 'PhalanxSpecialController', $dir . 'PhalanxSpecialControlle
 $app->registerClass( 'PhalanxStatsSpecialController', $dir . 'PhalanxStatsSpecialController.class.php' );
 $app->registerClass( 'Phalanx', $dir . 'classes/Phalanx.class.php' );
 $app->registerClass( 'PhalanxPager', $dir . 'classes/PhalanxPager.class.php' );
-$app->registerClass( 'PhalanxStatsPager', $dir . 'classes/PhalanxPager.class.php' );
-$app->registerClass( 'PhalanxStatsWikiaPager', $dir . 'classes/PhalanxPager.class.php' );
+$app->registerClass( 'PhalanxStatsPager', $dir . 'classes/PhalanxStatsPager.class.php' );
+$app->registerClass( 'PhalanxStatsWikiaPager', $dir . 'classes/PhalanxStatsWikiaPager.class.php' );
 $app->registerSpecialPage( 'Phalanx', 'PhalanxSpecialController', 'wikia' );
 $app->registerSpecialPage( 'PhalanxStats', 'PhalanxStatsSpecialController', 'wikia' );
 
