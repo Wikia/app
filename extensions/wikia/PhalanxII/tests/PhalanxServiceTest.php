@@ -67,8 +67,23 @@ class PhalanxServiceTest extends WikiaBaseTest {
 
 			// lang=en&type=content&content=pornhub.com
 			$ret = $this->service->match( "content", "pornhub.com" );
+			print_r( $ret );
 			$val = is_integer( $ret ) && $ret > 1;
-			$this->assertEquals( true, $val );
+			$this->assertEquals( true, $val, "pornhub.com should be matched as spam content" );
+
+		}
+		else {
+			$this->markTestSkipped( sprintf( "Can't contact with phalanx service on %s.\n", F::app()->wg->PhalanxServiceUrl ) );
+		}
+	}
+
+	public function testPhalanxServiceValidate() {
+		if( $this->isPhalanxAlive() ) {
+			$ret = $this->service->validate( '^alamakota$' );
+			$this->assertEquals( 1, $ret, "Valid regex" );
+
+			$ret = $this->service->validate( '^alama(((kota$' );
+			$this->assertEquals( 0, $ret, "Invalid regex" );
 
 		}
 		else {
