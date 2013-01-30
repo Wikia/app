@@ -79,14 +79,10 @@ class SDElementProperty extends SDRenderableObject implements SplObserver {
 		elseif ( in_array('xsd:boolean', $rangeClasses) ) {
 			return ($value == -1) ? null : ( (bool) $value );
 		}
-		else {
-			$valueObject = new stdClass();
-			$valueObject->id = $value;
-			$valueObject->object = null;
-			return $valueObject;
-
-		}
-		return $value;
+		$valueObject = new stdClass();
+		$valueObject->id = $value;
+		$valueObject->object = null;
+		return $valueObject;
 	}
 
 	/**
