@@ -1,0 +1,24 @@
+<div id=contentManagmentForm>
+	<ol class=header>
+		{{#descriptions}}
+		<li>{{.}}</li>
+		{{/descriptions}}
+	</ol>
+	<ul>
+		{{#tags}}
+			<li class=tag><input placeholder="{{tag_placeholder}}" value="{{title}}"/></li>
+			{{#categories}}
+				<li class=category><input placeholder="{{category_placeholder}}" value="{{title}}"/><input class=name placeholder="{{name_placeholder}}" value="{{label}}"/></li>
+			{{/categories}}
+		{{/tags}}
+		{{^tags}}
+			{{{tag}}}
+			{{{category}}}
+			{{{category}}}
+		{{/tags}}
+	</ul>
+    <button class=secondary id=addTag>{{addTag}}</button>
+    <button class=secondary id=addCategory>{{addCategory}}</button>
+	<button id=save disabled>{{save}}</button>
+	<span id=status>&#10003;</span>
+</div>

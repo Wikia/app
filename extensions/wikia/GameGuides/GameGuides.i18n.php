@@ -20,13 +20,21 @@ $messages['en'] = array(
 	'wikiagameguides-content-add-category' => 'Add Category',
 	'wikiagameguides-content-save' => 'Save',
 	'wikiagameguides-content-category-error' => 'Category does not exists',
-	'wikiagameguides-content-duplicate-entry' => 'This value is duplicated'
+	'wikiagameguides-content-duplicate-entry' => 'This value is duplicated',
+
+	'wikiagameguides-content-description-categories' => 'Add wiki "Categories" and rename them as you\'d like them to appear in Game Guides with "Game Guide Names".',
+	'wikiagameguides-content-description-tag' => 'Does it make sense to group categories under a game series installment? Add a category "Tag," and drag and drop wiki categories under it.',
+	'wikiagameguides-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.'
 );
 
 /** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides is the name of a product, do not translate on a per-word basis',
+
+	'wikiagameguides-content-categories' => '',
+	'wikiagamegides-content-description-tag' => '',
+	'wikiagameguides-content-description-organize' => ''
 );
 
 /** Asturian (asturianu)

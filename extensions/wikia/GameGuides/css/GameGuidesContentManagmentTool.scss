@@ -7,40 +7,42 @@
 	margin: 100px 0;
 	position: relative;
 
-	.header > div {
-		display: inline-block;
-		width: 200px;
-		margin: 0 15px;
-
-		font-weight: 800;
-
-		div {
-			font-weight: 100;
-			font-size: 90%;
-		}
+	.header {
+		text-align: left;
 	}
 
 	ul {
 		margin: 0 auto;
 		text-align: left;
 
-		width: 600px;
-	}
+		width: 700px;
 
-	li {
-		list-style: none;
+		li {
+			list-style: none;
 
-		position: relative;
-	}
+			position: relative;
 
-	.tag::before, .category::before {
-		counter-increment: first;
-		content: "#"counter(first);
-	}
+			&::before {
+				counter-increment: first;
+				content: "#"counter(first);
 
-	li::before{
-		width: 30px;
-		display: inline-block;
+				width: 30px;
+				display: inline-block;
+			}
+		}
+
+		.tag + .category {
+			counter-reset: second;
+		}
+
+		.tag ~ .category {
+			margin-left: 50px;
+
+			&::before{
+				counter-increment: second;
+				content: counter(second)")";
+			}
+		}
 	}
 
 	.autocomplete {
@@ -78,19 +80,6 @@
 		border: 3px solid grey;
 	}
 
-	.tag + .category {
-		counter-reset: second;
-	}
-
-	.tag ~ .category {
-		margin-left: 50px;
-
-		&::before{
-			counter-increment: second;
-			content: "#"counter(second);
-		}
-	}
-
 	.drop {
 		border: dashed $color-alternate-text 2px;
 		padding: 20px;
@@ -107,6 +96,10 @@
 
 	.drag {
 		right: 10px;
+	}
+
+	.photo {
+		right: 55px;
 	}
 }
 
