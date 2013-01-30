@@ -1,14 +1,14 @@
 <div id="phalanx-mainframe">
 	<div id="phalanx-nav-area">
 		<ul class="tabs">
-			<li class="selected" data-tab="main"><a href="#"><?php echo wfMsg( 'phalanx-tab-main' ) ?></a></li>
-			<li data-tab="test"><a href="#"><?php echo wfMsg( 'phalanx-tab-secondary' ) ?></a></li>
-			<li data-tab="stats"><a href="#"><?php echo wfMsg( 'phalanx-tab-stats' ) ?></a></li>
+			<li <?= $currentTab === 'main' ? 'class="selected" ' : '' ?>data-tab="main"><a href="#"><?php echo wfMsg( 'phalanx-tab-main' ) ?></a></li>
+			<li <?= $currentTab === 'test' ? 'class="selected" ' : '' ?>data-tab="test"><a href="#"><?php echo wfMsg( 'phalanx-tab-secondary' ) ?></a></li>
+			<li <?= $currentTab === 'stats' ? 'class="selected" ' : '' ?>data-tab="stats"><a href="#"><?php echo wfMsg( 'phalanx-tab-stats' ) ?></a></li>
 		</ul>
 	</div>
 
 	<div id="phalanx-content-area">
-		<div class="tabBody selected" data-tab-body="main">
+		<div class="tabBody<?= $currentTab === 'main' ? ' selected' : '' ?>" data-tab-body="main">
 			<div id="phalanx-filter-area">
 				<fieldset id="phalanx-input-filter">
 					<legend><?php echo wfMsg( 'phalanx-legend-input' ) ?></legend>
@@ -120,11 +120,28 @@
 					</form>
 				</fieldset>
 			</div>
+		</div>
 
-			<div id="phalanx-check-area">
-				<fieldset>
+		<div class="tabBody<?= $currentTab === 'test' ? ' selected' : '' ?>" data-tab-body="test">
+			<fieldset>
+				<form id="phalanx-block-test" action="<?= $action ?>/test">
+					<label>
+						<?php echo wfMsg( 'phalanx-test-description' ) ?>
+						<input type="text" id="phalanx-block-text" value="<?= $data['test'] ?>">
+					</label>
+					<input type="submit" value="<?php echo wfMsg( 'phalanx-test-submit' ) ?>">
+				</form>
+			</fieldset>
+			<fieldset>
+				<legend><?php echo wfMsg( 'phalanx-test-results-legend' ); ?></legend>
+				<div id="phalanx-block-test-result"></div>
+			</fieldset>
+		</div>
+
+		<div class="tabBody<?= $currentTab === 'stats' ? ' selected' : '' ?>" data-tab-body="stats">
+			<fieldset>
 				<legend><?php echo wfMsg( 'phalanx-legend-listing' ) ?></legend>
-				<form id="phalanx-filters" method="get" action="<?= $action ?>">
+				<form id="phalanx-filters" method="get" action="<?= $action ?>/stats">
 					<div id="phalanx-check-options">
 						<label for="wpPhalanxCheckBlocker"><?php echo wfMsg( 'phalanx-view-blocker' ) ?></label>
 						<input type="text" id="wpPhalanxCheckBlocker" name="wpPhalanxCheckBlocker" class="blue" size="30" value="<?= $data['checkBlocker'] ?>" />
@@ -172,21 +189,6 @@
 						<?= $listing ?>
 					</div>
 				</form>
-				</fieldset>
-			</div>
-		</div>
-
-		<div class="tabBody" data-tab-body="test">
-			<fieldset>
-				<form id="phalanx-block-test" action="#test">
-					<label for="phalanx-block-text"><?php echo wfMsg( 'phalanx-test-description' ) ?></label>
-					<input type="textarea" id="phalanx-block-text" value="<?= $data['test'] ?>" /><br />
-					<input type="submit" value="<?php echo wfMsg( 'phalanx-test-submit' ) ?>" />
-				</form>
-			</fieldset>
-			<fieldset>
-				<legend><?php echo wfMsg( 'phalanx-test-results-legend' ); ?></legend>
-				<div id="phalanx-block-test-result"></div>
 			</fieldset>
 		</div>
 	</div>

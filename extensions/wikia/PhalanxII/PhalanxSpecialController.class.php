@@ -9,7 +9,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct('Phalanx');
 		$this->includable(false);
-		$this->title = F::build( 'Title', array('Phalanx', NS_SPECIAL), 'newFromText' );
+		$this->title = SpecialPage::getTitleFor('Phalanx');
 	}
 
 	public function isValid() {
@@ -26,8 +26,26 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
+		// select the current tab
+		switch($this->getPar()) {
+			case 'stats':
+				$currentTab = 'stats';
+				break;
+
+			case 'test':
+				$currentTab = 'test';
+				break;
+
+			default:
+				$currentTab = 'main';
+		}
+
+		$this->setVal('currentTab', $currentTab);
+
 		if ( $this->wg->Request->wasPosted() ) {
-			$res = $this->post();
+			$res = $this->post($currentTab);
+
+			// TODO: handle errors
 		}
 
 		$this->response->addAsset('extensions/wikia/Phalanx/css/Phalanx.css');
@@ -42,52 +60,24 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'expiries', Phalanx::getExpireValues() );
 		$this->setVal( 'languages', $this->wg->PhalanxSupportedLanguages );
 		$this->setVal( 'listing', $listing );
-		$this->setVal( 'data', $this->formData() );
-		$this->setVal( 'action', $this->wg->Title->getFullUrl() );
+		$this->setVal( 'data', $this->blockDataForForm() );
+		$this->setVal( 'action', $this->title->getLocalURL() );
 		$this->setVal( 'showEmail', $this->wg->User->isAllowed( 'phalanxemailblock' ) );
 
 		$this->wf->profileOut( __METHOD__ );
 	}
 
-	function formData() {
+	function blockDataForForm() {
 		$data = array();
 
 		$id = $this->wg->Request->getInt( 'id' );
 		if ( $id ) {
-			$data = F::build( 'Phalanx', array( $id ), 'newFromId' );
+			$data = Phalanx::newFromId($id);
 			$data['type'] = Phalanx::getTypeNames( $data['type'] );
 			$data['checkBlocker'] = '';
-			$data['typeFilter'] = array();;
-		} else {
-			$data['type'] = array_fill_keys( $this->wg->Request->getArray( 'type', array() ), true );
-			$data['checkBlocker'] = $this->wg->Request->getText( 'wpPhalanxCheckBlocker', '' );
-			$data['typeFilter'] = array_fill_keys( $this->wg->Request->getArray( 'wpPhalanxTypeFilter', array() ), true );
+			$data['typeFilter'] = array();
 		}
-
-		$data['checkId'] = $id;
-
-		$data['text'] = $this->wg->Request->getText( 'ip' );
-		$data['text'] = $this->wg->Request->getText( 'target', $data['text'] );
-		$data['text'] = $this->wg->Request->getText( 'text', $data['text'] );
-		$data['text'] = $this->decodeValue( $data['text'] ) ;
-
-		$data['case'] = $this->wg->Request->getCheck( 'case' );
-		$data['regex'] = $this->wg->Request->getCheck( 'regex' );
-		$data['exact'] = $this->wg->Request->getCheck( 'exact' );
-
-		$data['expire'] = $this->wg->Request->getText( 'expire', $this->mDefaultExpire );
-
-		$data['lang'] = $this->wg->Request->getText( 'lang', 'all' );
-
-		$data['reason'] = $this->decodeValue( $this->wg->Request->getText( 'reason' ) );
-
-		$data['test'] = $this->decodeValue( $this->wg->Request->getText( 'test' ) );
-
 		return $data;
-	}
-
-	private function decodeValue( $input ) {
-		return htmlspecialchars( str_replace( '_', ' ', urldecode( $input ) ) );
 	}
 
 	private function post() {

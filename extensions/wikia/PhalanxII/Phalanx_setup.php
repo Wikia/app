@@ -17,13 +17,14 @@ $wgExtensionCredits['other'][] = array(
 	)
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = __DIR__ . '/';
 $app = F::app();
 
 $classes = array(
-	/* controllers */ 
-	'Phalanx'                  => $dir . 'PhalanxController.class.php',
+	/* controllers */
+	'PhalanxController'        => $dir . 'PhalanxController.class.php',
 	/* models */
+	'Phalanx'                  => $dir . 'classes/Phalanx.class.php',
 	'PhalanxModel'             => $dir . 'models/PhalanxModel.php',
 	'PhalanxUserModel'         => $dir . 'models/PhalanxUserModel.php',
 	'PhalanxContentModel'      => $dir . 'models/PhalanxContentModel.php',
@@ -49,7 +50,7 @@ foreach ( $classes as $class_name => $class_path ) {
  * hooks
  */
 $phalanxhooks = array(
-	'PhalanxUserBlock' => 
+	'PhalanxUserBlock' =>
 		array(
 			'GetBlockedStatus'   => 'blockCheck',
 			'UserCanSendEmail'   => 'userCanSendEmail',
@@ -77,7 +78,7 @@ $phalanxhooks = array(
 			'CreateDefaultQuestionPageFilter'      => 'badWordsTest',
 			'DefaultQuestion::filterWordsTest'     => 'filterWordsTest'
 		),
-	'PhalanxWikiCreationBlock' => 
+	'PhalanxWikiCreationBlock' =>
 		array(
 			'AutoCreateWiki::checkBadWords'        => 'isAllowedText'
 		),
@@ -85,8 +86,8 @@ $phalanxhooks = array(
 		array(
 			'ContributionsToolLinks'               => 'loadLinks'
 		)
-); 
-		
+);
+
 foreach ( $phalanxhooks as $class => $hooks ) {
 	foreach ( $hooks as $name => $method ) {
 		$app->registerHook( $name, $class, $method );

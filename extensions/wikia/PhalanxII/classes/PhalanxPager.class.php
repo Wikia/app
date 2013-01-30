@@ -14,7 +14,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 		$this->mSearchFilter = $this->app->wg->Request->getArray( 'wpPhalanxTypeFilter' );
 		$this->mSearchId = $this->app->wg->Request->getInt( 'id' );
 
-		$this->mTitle = F::build( 'Title', array( 'Phalanx', NS_SPECIAL ), 'newFromText' );
+		$this->mTitle = F::build( 'Title', array( 'Phalanx/stats', NS_SPECIAL ), 'newFromText' );
 		$this->mTitleStats = F::build( 'Title', array( 'PhalanxStats', NS_SPECIAL ), 'newFromText' );
 		$this->mSkin = RequestContext::getMain()->getSkin();
 	}
@@ -65,11 +65,11 @@ class PhalanxPager extends ReverseChronologicalPager {
 		$authorName = $author->getName();
 		$authorUrl = $author->getUserPage()->getFullUrl();
 
-		$phalanxPage = F::build( 'Title', array( 'Phalanx', NS_SPECIAL ), 'newFromText' );
-		$phalanxUrl = $phalanxPage->getFullUrl( array( 'id' => $row->p_id ) );
+		$phalanxPage = SpecialPage::getTitleFor('Phalanx');
+		$phalanxModifyPage = SpecialPage::getTitleFor('Phalanx', 'edit');
 
 		$phalanxStatsPage = F::build( 'Title', array( 'PhalanxStats', NS_SPECIAL ), 'newFromText' );
-		$statsUrl = sprintf( "%s/%s", $phalanxStatsPage->getFullUrl(), $row->p_id );
+		$statsUrl = sprintf( "%s/%s", $phalanxStatsPage->getLocalUrl(), $row->p_id );
 
 		$html  = Html::openElement( 'li', array( 'id' => 'phalanx-block-' . $row->p_id ) );
 		$html .= Html::element( 'b', array(), htmlspecialchars( $row->p_text ) );
@@ -81,9 +81,18 @@ class PhalanxPager extends ReverseChronologicalPager {
 
 		/* control links */
 		$html .= sprintf( " &bull; %s &bull; %s &bull; %s <br />",
-			Html::element( 'a', array( 'class' => 'unblock', 'href' => $phalanxUrl ), $this->app->wf->Msg('phalanx-link-unblock') ),
-			Html::element( 'a', array( 'class' => 'modify', 'href' => $phalanxUrl ), $this->app->wf->Msg('phalanx-link-modify') ),
-			Html::element( 'a', array( 'class' => 'stats', 'href' => $statsUrl ), $this->app->wf->Msg('phalanx-link-stats') )
+			Html::element( 'a', array(
+				'class' => 'unblock',
+				'href' => $phalanxPage->getLocalUrl( array( 'id' => $row->p_id ) )
+			), $this->app->wf->Msg('phalanx-link-unblock') ),
+			Html::element( 'a', array(
+				'class' => 'modify',
+				'href' => $phalanxModifyPage->getLocalUrl( array( 'id' => $row->p_id ) )
+			), $this->app->wf->Msg('phalanx-link-modify') ),
+			Html::element( 'a', array(
+				'class' => 'stats',
+				'href' => $statsUrl
+			), $this->app->wf->Msg('phalanx-link-stats') )
 		);
 
 		/* types */

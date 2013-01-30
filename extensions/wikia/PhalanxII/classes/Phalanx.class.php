@@ -10,10 +10,10 @@ class Phalanx implements arrayaccess {
 	const TYPE_WIKI_CREATION = 64;
 	const TYPE_COOKIE = 128;
 	const TYPE_EMAIL = 256;
-	
+
 	const SCRIBE_KEY = 'log_phalanx';
 	const LAST_UPDATE_KEY = 'phalanx:last-update';
-	
+
 	const FLAG_EXACT = 1;
 	const FLAG_REGEX = 2;
 	const FLAG_CASE = 4;
@@ -54,6 +54,8 @@ class Phalanx implements arrayaccess {
 
 	public function __construct( $blockId = 0 ) {
 		$this->app = F::app();
+		$this->wf = $this->app->wf;
+		$this->wg = $this->app->wg;
 		$this->blockId = intval( $blockId );
 		$this->data = array();
 	}
@@ -73,24 +75,24 @@ class Phalanx implements arrayaccess {
             $this->data[$offset] = $value;
         }
     }
-    
+
     public function offsetExists($offset) {
         return isset($this->data[$offset]);
     }
-    
+
     public function offsetUnset($offset) {
         unset($this->data[$offset]);
     }
-    
+
     public function offsetGet($offset) {
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
     }
-    
+
 	public function load() {
 		$this->wf->profileIn( __METHOD__ );
 
 		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
-		
+
 		$row = $dbr->selectRow( $this->db_table, '*', array( 'p_id' => $this->blockId ), __METHOD__ );
 
 		if ( is_object( $row ) ) {
@@ -109,10 +111,10 @@ class Phalanx implements arrayaccess {
 				'ip_hex'    => $row->p_ip_hex
 			);
 		}
-		
+
 		$this->wf->profileOut( __METHOD__ );
 	}
-	
+
 	public function save() {
 		$this->wf->profileIn( __METHOD__ );
 
@@ -122,7 +124,7 @@ class Phalanx implements arrayaccess {
 			$this->data['ip_hex'] = IP::toHex( $this->data['text'] );
 		}
 
-		$dbw = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );		
+		$dbw = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
 		if ( empty( $this->data['id'] ) ) {
 			/* add block */
 			$dbw->insert( $this->db_table, $this->mapToDB(), __METHOD__ );
@@ -131,7 +133,7 @@ class Phalanx implements arrayaccess {
 			$dbw->update( $this->db_table, $this->mapToDB(), array( 'p_id' => $this->data['id'] ), __METHOD__ );
 			$action = 'edit';
 		};
-		
+
 		if ( $dbw->affectedRows() ) {
 			if ( $action == 'add' ) {
 				$this->data['id'] = $dbw->insertId();
@@ -140,11 +142,11 @@ class Phalanx implements arrayaccess {
 		} else {
 			$action = '';
 		}
-		
+
 		$this->wf->profileOut( __METHOD__ );
 		return ( $action ) ? $this->data['id'] : false;
 	}
-	
+
 	public function delete() {
 		$this->wf->profileIn( __METHOD__ );
 
@@ -158,7 +160,7 @@ class Phalanx implements arrayaccess {
 		$this->wf->profileOut( __METHOD__ );
 		return ( $removed ) ? $this->data['id'] : false;
 	}
-		
+
 	/* get the values for the expire select */
 	public static function getExpireValues() {
 		return array_combine( self::$expiry_text, explode(",", wfMsg( self::$expiry_values ) ) );
@@ -176,7 +178,7 @@ class Phalanx implements arrayaccess {
 
 		/* iterate for each module for which block is saved */
 		for ( $bit = $typemask & 1, $type = 1; $typemask; $typemask >>= 1, $bit = $typemask & 1, $type <<= 1 ) {
-			if (!$bit) continue; 
+			if (!$bit) continue;
 			$types[$type] = self::$typeNames[$type];
 		}
 
@@ -191,7 +193,7 @@ class Phalanx implements arrayaccess {
 		}
 		return $fields;
 	}
-	
+
 	private function log( $action ) {
 		$title = F::build( 'Title', array('PhalanxStats/' . $this->data['id'], NS_SPECIAL), 'newFromText' );
 		$types = implode( ',', Phalanx::getTypeNames( $this->data['type'] ) );
@@ -203,10 +205,10 @@ class Phalanx implements arrayaccess {
 		}
 
 		$log = F::build( 'LogPage', array( $logType ) );
-		$log->addEntry( 
-			$action, 
-			$title, 
-			$this->wf->MsgExt( 'phalanx-rule-log-details', array( 'parsemag', 'content' ), $this->data['text'], $types, $this->data['reason'] ) 
+		$log->addEntry(
+			$action,
+			$title,
+			$this->wf->MsgExt( 'phalanx-rule-log-details', array( 'parsemag', 'content' ), $this->data['text'], $types, $this->data['reason'] )
 		);
 	}
 }
