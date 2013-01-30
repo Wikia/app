@@ -65,8 +65,6 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 		$this->response->setVal( 'category_placeholder', $this->wf->Msg( 'wikiagameguides-content-category' ) );
 		$this->response->setVal( 'name_placeholder', $this->wf->Msg( 'wikiagameguides-content-name' ) );
 
-		var_dump($tags);
-
 		if( !empty( $tags ) ) {
 			$this->response->setVal( 'tags', $tags );
 		} else {
