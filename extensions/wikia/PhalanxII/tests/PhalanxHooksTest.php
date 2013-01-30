@@ -13,11 +13,22 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @dataProvider getMockServiceMatchResponses
+	 */
 	public function testPhalanxUserBlock() {
 		$serviceMock = $this->getMock( "PhalanxService", array( "match" ), array(), "", false );
 		$serviceMock->expects( $this->any() )
 			->method( "match" )
 			->will( $this->returnValue( 0 ) ); // no match
 
+	}
+
+	public function getMockServiceMatchResponses() {
+		return array(
+			array( false ),
+			array( 0 ),
+			array( 403 )
+		);
 	}
 }
