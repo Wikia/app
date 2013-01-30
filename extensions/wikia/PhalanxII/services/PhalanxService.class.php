@@ -26,8 +26,7 @@ class PhalanxService extends Service {
 	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
 	 */
 	public function check( $type, $content, $lang = "en" ) {
-		$response = $this->sendToPhalanxDaemon( "check", array( "type" => $type, "content" => $content, "lang" => $lang ) );
-		return $ret;
+		return $this->sendToPhalanxDaemon( "check", array( "type" => $type, "content" => $content, "lang" => $lang ) );
 	}
 
 	/**
@@ -113,7 +112,7 @@ class PhalanxService extends Service {
 					} else {
 						if ( is_array( $ret ) ) {
 							/* first block ID ? */
-							reset( $ret ); $res = current( $res );
+							reset( $ret ); $res = current( $ret );
 						} else {
 							$res = $ret;
 						}
