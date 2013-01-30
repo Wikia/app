@@ -22,6 +22,7 @@ class MarketingToolboxModel extends WikiaModel {
 	protected $modules = array();
 	protected $sections = array();
 	protected $verticals = array();
+	protected $modulesCount;
 
 	protected $specialPageClass = 'SpecialPage';
 	protected $userClass = 'User';
@@ -52,6 +53,8 @@ class MarketingToolboxModel extends WikiaModel {
 			self::MODULE_POPULAR_VIDEOS => 'popular-videos'
 		);
 
+		$this->modulesCount = count($this->modules);
+
 		$this->sections = array(
 			self::SECTION_HUBS => $this->wf->msg('marketing-toolbox-section-hubs-button')
 		);
@@ -64,6 +67,10 @@ class MarketingToolboxModel extends WikiaModel {
 			)
 		);
 
+	}
+
+	public function getModulesCount() {
+		return $this->modulesCount;
 	}
 
 	/**
@@ -87,23 +94,49 @@ class MarketingToolboxModel extends WikiaModel {
 		return ucfirst(str_replace('-', '', $this->modules[$moduleId]));
 	}
 
-	public function getData($langCode, $verticalId, $beginTimestamp, $endTimestamp) {
-		return $this->getMockData($langCode, $verticalId, $beginTimestamp, $endTimestamp);
+	public function getCalendarData($langCode, $verticalId, $beginTimestamp, $endTimestamp) {
+		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$conds = array(
+			'lang_code' => $langCode,
+			'vertical_id' => $verticalId,
+		);
+
+		$conds = $sdb->makeList($conds, LIST_AND);
+		$conds .= ' AND hub_date >= ' . $sdb->timestamp($beginTimestamp)
+			. ' AND hub_date <= ' . $sdb->timestamp($endTimestamp);
+
+		$table = $this->getTablesBySectionId(self::SECTION_HUBS);
+		$fields = array('hub_date', 'module_status');
+
+		$options = array(
+			'GROUP BY' => array(
+				'hub_date',
+				'module_status'
+			)
+		);
+
+		$results = $sdb->select($table, $fields, $conds, __METHOD__, $options);
+
+		$out = array();
+		while ($row = $sdb->fetchRow($results)) {
+			if (!isset($out[$row['hub_date']]) || $out[$row['hub_date']] == $this->statuses['NOT_PUBLISHED']) {
+				$out[$row['hub_date']] = $this->calculateDateStatus($row);
+			}
+		}
+
+		return $out;
+
 	}
 
-	protected function getMockData($langCode, $verticalId, $beginTimestamp, $endTimestamp) {
-		return array(
-			date('Y-m-d', $beginTimestamp - 13 * 24 * 60 * 60) => $this->statuses['NOT_PUBLISHED'],
-			date('Y-m-d', $beginTimestamp - 11 * 24 * 60 * 60) => $this->statuses['NOT_PUBLISHED'],
-			date('Y-m-d', $beginTimestamp - 7 * 24 * 60 * 60) => $this->statuses['PUBLISHED'],
-			date('Y-m-d', $beginTimestamp - 4 * 24 * 60 * 60) => $this->statuses['NOT_PUBLISHED'],
-			date('Y-m-d', $beginTimestamp + 4 * 24 * 60 * 60) => $this->statuses['NOT_PUBLISHED'],
-			date('Y-m-d', $beginTimestamp + 7 * 24 * 60 * 60) => $this->statuses['PUBLISHED'],
-			date('Y-m-d', $beginTimestamp + 11 * 24 * 60 * 60) => $this->statuses['PUBLISHED'],
-			date('Y-m-d', $beginTimestamp + 13 * 24 * 60 * 60) => $this->statuses['PUBLISHED'],
-			date('Y-m-d', $beginTimestamp + 19 * 24 * 60 * 60) => $this->statuses['NOT_PUBLISHED'],
-			date('Y-m-d', $beginTimestamp + 23 * 24 * 60 * 60) => $this->statuses['PUBLISHED']
-		);
+	protected function calculateDateStatus($dayData) {
+		if ($dayData['module_status'] == $this->statuses['PUBLISHED']
+			&& $this->getModulesCount() == $dayData['count(1)']
+		) {
+			$status = $this->statuses['PUBLISHED'];
+		} else {
+			$status = $this->statuses['NOT_PUBLISHED'];
+		}
+		return $status;
 	}
 
 	public function getAvailableStatuses() {
