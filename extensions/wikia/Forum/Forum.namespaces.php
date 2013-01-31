@@ -13,7 +13,7 @@ $namespaces['en'] = array(
  * German
  */
 $namespaces['de'] = array(
-	NS_WIKIA_FORUM_BOARD	=> 'Forum',
+	NS_WIKIA_FORUM_BOARD	=> 'Diskussionsforum',
 	NS_WIKIA_FORUM_TOPIC_BOARD	=> 'Thema',
 	NS_WIKIA_FORUM_BOARD_THREAD	=> 'Forum-Diskussionsfaden',
 );
