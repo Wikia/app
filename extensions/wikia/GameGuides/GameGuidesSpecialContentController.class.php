@@ -47,8 +47,6 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		F::build( 'JSMessages' )->enqueuePackage( 'GameGuidesContentMsg', JSMessages::INLINE );
 
-		$tags = WikiFactory::getVarValueByName( self::WIKI_FACTORY_VARIABLE_NAME, $this->wg->CityId );
-
 		$this->response->setVal( 'descriptions', [
 			$this->wf->Msg( 'wikiagameguides-content-description-categories' ),
 			$this->wf->Msg( 'wikiagameguides-content-description-tag' ),
@@ -64,6 +62,8 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 		$this->response->setVal( 'category_placeholder', $this->wf->Msg( 'wikiagameguides-content-category' ) );
 		$this->response->setVal( 'name_placeholder', $this->wf->Msg( 'wikiagameguides-content-name' ) );
 
+		$tags = WikiFactory::getVarValueByName( self::WIKI_FACTORY_VARIABLE_NAME, $this->wg->CityId );
+
 		if ( !empty( $tags ) ) {
 			$list = '';
 
@@ -72,11 +72,13 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 					'value' => $tag['title']
 				] );
 
-				foreach( $tag['categories'] as $category ) {
-					$list .= $this->sendSelfRequest( 'category', [
-						'category_value' => $category['title'],
-						'name_value' => !empty( $category['label'] ) ? $category['label'] : '',
-					] );
+				if ( !empty( $tag['categories'] ) ) {
+					foreach( $tag['categories'] as $category ) {
+						$list .= $this->sendSelfRequest( 'category', [
+							'category_value' => $category['title'],
+							'name_value' => !empty( $category['label'] ) ? $category['label'] : '',
+						] );
+					}
 				}
 			}
 
@@ -113,37 +115,26 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 		}
 		$this->response->setFormat( 'json' );
 
-		$categories = $this->getVal( 'categories' );
-		$err = array();
-		$tags = array();
+		$tags = $this->request->getArray( 'tags' );
+		$err = [];
 
-		if( !empty( $categories ) ) {
-			//check if categories exists
-			foreach ( $categories as $categoryName => $values) {
-				$category = Category::newFromName( $categoryName );
+		if( !empty( $tags ) ) {
+			foreach ( $tags as &$tag ) {
 
-				if ( !( $category instanceof Category ) || $category->getPageCount() === 0 ) {
-					$err[] = $categoryName;
-				} else if ( empty( $err ) ) {
+				if( !empty( $tag['categories'] ) ) {
 
-					$category = array(
-						'title' => $categoryName,
-						'id' => $category->getTitle()->getArticleID()
-					);
 
-					if ( !empty( $values['name'] ) ) {
-						$category['label'] = $values['name'];
-					}
+					foreach ( $tag['categories'] as &$cat ) {
 
-					if ( array_key_exists( $values['tag'], $tags ) ) {
-						$tags[$values['tag']]['categories'][] = $category;
-					} else {
-						$tags[$values['tag']] = array(
-							'title' => $values['tag'],
-							'categories' => array(
-								$category
-							)
-						);
+						$catTitle = $cat['title'];
+
+						$category = Category::newFromName( $catTitle );
+						//check if categories exists
+						if ( !( $category instanceof Category ) || $category->getPageCount() === 0 ) {
+							$err[] = $catTitle;
+						} else if ( empty( $err ) ) {
+							$cat['id'] = $category->getTitle()->getArticleID();
+						}
 					}
 				}
 			}
@@ -154,8 +145,8 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 			}
 		}
 
-		//$status = WikiFactory::setVarByName( self::WIKI_FACTORY_VARIABLE_NAME, $this->wg->CityId, array_values( $tags ) );
-		$this->response->setVal( 'status', '' );
+		$status = WikiFactory::setVarByName( self::WIKI_FACTORY_VARIABLE_NAME, $this->wg->CityId, $tags );
+		$this->response->setVal( 'status', $status );
 
 		if ( $status ) {
 			$this->wf->RunHooks( 'GameGuidesContentSave' );

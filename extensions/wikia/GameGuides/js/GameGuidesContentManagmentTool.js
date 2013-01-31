@@ -9,12 +9,12 @@ $(function(){
 			duplicateError = msg('wikiagameguides-content-duplicate-entry'),
 			requiredError = msg('wikiagameguides-content-required-entry'),
 			emptyTagError = msg('wikiagameguides-content-empty-tag'),
+			categoryError = msg('wikiagameguides-content-category-error'),
 			addCategory = d.getElementById('addCategory'),
 			addTag = d.getElementById('addTag'),
-			save = d.getElementById('save'),
+			$save = $(d.getElementById('save')),
 			form = d.getElementById('contentManagmentForm'),
 			$form = $(form),
-			$status = $(d.getElementById('status')),
 			ul = form.getElementsByTagName('ul')[0],
 			$ul = $(ul),
 			//it looks better if we display in input category name without Category:
@@ -118,10 +118,10 @@ $(function(){
 				});
 
 				if(d.getElementsByClassName('error').length > 0){
-					save.setAttribute('disabled', true);
+					$save.attr('disabled', true);
 					return false;
 				}else{
-					save.removeAttribute('disabled');
+					$save.attr('disabled', false);
 					return true;
 				}
 			};
@@ -172,7 +172,7 @@ $(function(){
 			}
 		}
 
-		save.addEventListener('click', function(){
+		$save.click(function(){
 			var data = [],
 				nonames = [];
 
@@ -198,15 +198,17 @@ $(function(){
 					}
 				});
 
-				data.push({title: '', categories: nonames});
+				if(nonames) {
+					data.push({title: '', categories: nonames});
+				}
 
-				$status.removeClass();
+				$save.removeClass();
 
 				nirvana.sendRequest({
 					controller: 'GameGuidesSpecialContent',
 					method: 'save',
 					data: {
-						categories: data
+						tags: data
 					}
 				}).done(
 					function(data){
@@ -216,13 +218,14 @@ $(function(){
 								categories = $form.find('.cat-input');
 
 							while(i--){
+								//I cannot use value CSS selector as I want to use current value
 								categories.each(function(){
 									if(this.value === err[i]){
 										$(this)
 											.addClass('error')
 											.popover('destroy')
 											.popover({
-												content: msg('wikiagameguides-content-category-error')
+												content: categoryError
 											});
 
 										return false;
@@ -230,12 +233,14 @@ $(function(){
 									return true;
 								});
 							}
+
+							$save.addClass('err');
 						}else if(data.status){
-							$status.addClass('ok');
+							$save.addClass('ok');
 						}
 				}).fail(
 					function(){
-						$status.addClass('error');
+						$save.addClass('err');
 					}
 				);
 			}

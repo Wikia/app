@@ -104,13 +104,32 @@
 	}
 }
 
-#status {
-	color: green;
-	opacity: 0;
+#save {
+	position: relative;
 
-	-webkit-transition: all .5s;
+	&::after {
+		font-size: 2em;
 
-	&.ok {
+		-webkit-transition: all .5s;
+		opacity: 0;
+
+		position: absolute;
+		right: -25px;
+	}
+
+	&.ok::after {
+		color: green;
+
+		content: '✓';
+
+		opacity: 1;
+	}
+
+	&.err::after {
+		color: red;
+
+		content: 'X';
+
 		opacity: 1;
 	}
 }
