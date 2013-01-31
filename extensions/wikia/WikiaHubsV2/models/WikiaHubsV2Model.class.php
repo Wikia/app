@@ -135,28 +135,32 @@ class WikiaHubsV2Model extends WikiaModel {
 		return $data;
 	}
 	
-	//TODO: just temp method we'll probably get rid of it
+	//TODO: probably just temp method we might get rid of it; it depends on the fact we decide if API should return flat data or not
 	protected function getLinkGroupsFromApiResponse($responseData) {
-		$groups = array(1, 2, 3);
+		$groups = array(1, 2, 3, 4);
 		$links = array('a', 'b', 'c', 'd');
 		
 		$headerPrefix = 'exploreSectionHeader';
 		$linkTextPrefix = 'exploreLinkText';
-		$linkUrlPrefix = '"exploreLinkUrl';
+		$linkUrlPrefix = 'exploreLinkUrl';
 
-		$groupNo = 0;
 		$linkgroups = array();
+		
 		foreach($groups as $group) {
-			if( !empty($responseData[$headerPrefix . $group]) ) {
-				$linkgroups[$groupNo]['headline'] = $responseData[$headerPrefix . $group];
+			$headerIdx = $headerPrefix . $group;
+			if( !empty($responseData[$headerIdx]) ) {
+				$linkgroups[$group]['headline'] = $responseData[$headerIdx];
 
-				$linkNo = 0;
 				foreach($links as $linkIdx) {
-					if( !empty($responseData[$linkTextPrefix . $linkIdx]) ) {
-						$linkgroups[$groupNo]['links'][$linkNo]['anchor'] = $responseData[$linkTextPrefix . $linkIdx];
-
-						if( !empty($responseData[$linkUrlPrefix . $linkIdx]) ) {
-							$linkgroups[$groupNo]['links'][$linkNo]['href'] = $responseData[$linkTextPrefix . $linkIdx];
+					$linkIdx = $group . $linkIdx;
+					$linkTextIdx = $linkTextPrefix . $linkIdx;
+					
+					if( !empty($responseData[$linkTextIdx]) ) {
+						$linkgroups[$group]['links'][$linkIdx]['anchor'] = $responseData[$linkTextIdx];
+						$linkUrlIdx = $linkUrlPrefix . $linkIdx;
+						
+						if( !empty($responseData[$linkUrlIdx]) ) {
+							$linkgroups[$group]['links'][$linkIdx]['href'] = $responseData[$linkUrlIdx];
 						}
 					}
 				}

@@ -15,7 +15,11 @@
 				<ul>
 					<? foreach ($linkgroup['links'] as $singlelink): ?>
 					<li>
-						<a href='<?= $singlelink['href']; ?>'><?= $singlelink['anchor']; ?></a>
+						<?php if( !empty($singlelink['href']) ): ?>
+							<a href="<?= $singlelink['href']; ?>"><?= $singlelink['anchor']; ?></a>
+						<?php else: ?>
+							<?= $singlelink['anchor']; ?>
+						<?php endif; ?>
 					</li>
 					<? endforeach; ?>
 				</ul>
