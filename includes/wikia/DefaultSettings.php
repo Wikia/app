@@ -277,16 +277,6 @@ $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
 $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationModel.class.php";
 
-// WikiaHubs models
-$app->registerClass('MarketingToolboxModel', $IP . '/includes/wikia/api/models/WikiaHubs/MarketingToolboxModel.class.php');
-$app->registerClass('MarketingToolboxUserPropertiesHandler', $IP . '/includes/wikia/api/models/WikiaHubs/MarketingToolboxUserPropertiesHandler.class.php');
-$app->registerClass('MarketingToolboxTop10listModel', $IP . '/includes/wikia/api/models/WikiaHubs/MarketingToolboxTop10listModel.class.php');
-$app->registerClass('MarketingToolboxExploreModel', $IP . '/includes/wikia/api/models/WikiaHubs/MarketingToolboxExploreModel.class.php');
-$app->registerClass('MarketingToolboxPollsModel', $IP . '/includes/wikia/api/models/WikiaHubs/MarketingToolboxPollsModel.class.php');
-$app->registerClass('MarketingToolboxSliderModel', $IP . '/includes/wikia/api/models/WikiaHubs/MarketingToolboxSliderModel.class.php');
-$app->registerClass('MarketingToolboxFromthecommunityModel', $IP . '/includes/wikia/api/models/WikiaHubs/MarketingToolboxFromthecommunityModel.class.php');
-$app->registerClass('MarketingToolboxImageModel', $IP . '/includes/wikia/api/models/WikiaHubs/MarketingToolboxImageModel.class.php');
-
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
 $wgAutoloadClasses['BodyController'] = $IP.'/skins/oasis/modules/BodyController.class.php';
