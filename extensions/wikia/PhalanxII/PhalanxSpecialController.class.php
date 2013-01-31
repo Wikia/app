@@ -78,8 +78,13 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$data['typeFilter'] = array();
 		}
 		else {
+			// empty form - adding new block
 			$data['checkBlocker'] = '';
 			$data['checkId'] = '';
+			$data['text'] = '';
+			$data['expire'] = '';
+			$data['lang'] = '';
+			$data['reason'] = '';
 		}
 		return $data;
 	}

@@ -127,7 +127,7 @@
 				<form id="phalanx-block-test" action="<?= $action ?>/test">
 					<label>
 						<?php echo wfMsg( 'phalanx-test-description' ) ?>
-						<input type="text" id="phalanx-block-text" value="<?= $data['test'] ?>">
+						<input type="text" id="phalanx-block-text" value="<?= isset($data['test']) ? $data['test'] : '' ?>">
 					</label>
 					<input type="submit" value="<?php echo wfMsg( 'phalanx-test-submit' ) ?>">
 				</form>
