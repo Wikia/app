@@ -88,7 +88,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			'style' => "font-family:monospace;",
 		);
 
-		$table  = Xml::buildTable( array( (array) $data ), $tableAttribs, $headers );
+		$table  = Xml::buildTable( array( $data->toArray() ), $tableAttribs, $headers );
 		$table  = str_replace("</table>", "", $table);
 		$table .= "<tr><th>" . $this->wf->Msg('phalanx-stats-table-text') . "</th><td colspan='8'>" . htmlspecialchars( $data['text'] ) . "</td></tr>";
 		$table .= "<tr><th>" . $this->wf->Msg('phalanx-stats-table-reason')  ."</th><td colspan='8'>{$data['reason']}</td></tr>";

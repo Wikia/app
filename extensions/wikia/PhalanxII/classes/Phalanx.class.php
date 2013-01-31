@@ -68,6 +68,10 @@ class Phalanx implements arrayaccess {
 		return $instance;
 	}
 
+	public function toArray() {
+		return $this->data;
+	}
+
     public function offsetSet($offset, $value) {
         if (is_null($offset)) {
             $this->data[] = $value;
