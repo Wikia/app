@@ -266,7 +266,7 @@ $(function(){
 
 		//be sure this module is ready to be used
 		mw.loader.using(['jquery.autocomplete', 'jquery.ui.sortable'], function(){
-			$(ul).sortable({
+			$ul.sortable({
 				opacity: 0.5,
 				axis: 'y',
 				containment: '#contentManagmentForm',
