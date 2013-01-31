@@ -112,62 +112,23 @@ class WikiaHubsV2Model extends WikiaModel {
 
 	public function getDataForModuleExplore() {
 		try {
-			$response = F::app()->sendRequest('WikiaHubsApi', 'getExploreModule', array(
+			$response = F::app()->sendRequest('WikiaHubsApi', 'getModuleData', array(
+				'module' => MarketingToolboxModel::MODULE_EXPLORE,
 				'vertical' => $this->getVertical(),
-				'timestamp' => $this->getTimestamp(),
+				'ts' => $this->getTimestamp(),
 				//'lang' => $this->getLang(), //TODO: returns 80433 -- why?
 			));
 			
-			$data = array();
-			$responseData = $response->getVal('data');
-			$data['headline'] = $responseData['exploreTitle'];
-			$data['image'] = $responseData['fileName'];
-			$data['linkgroups'] = $this->getLinkGroupsFromApiResponse($responseData);
-			$data['imagelink'] = $this->getMiniThumbnailUrl($data['image']);
+			$data = $response->getVal('data');
 		} catch (Exception $e) {
 			$data = array(
-				'headline' => 'NO DATA FOUND!',
+				'headline' => $e->getMessage(),
 				'linkgroups' => array(),
 				'imagelink' => '',
 			);
 		}
 
 		return $data;
-	}
-	
-	//TODO: probably just temp method we might get rid of it; it depends on the fact we decide if API should return flat data or not
-	protected function getLinkGroupsFromApiResponse($responseData) {
-		$groups = array(1, 2, 3, 4);
-		$links = array('a', 'b', 'c', 'd');
-		
-		$headerPrefix = 'exploreSectionHeader';
-		$linkTextPrefix = 'exploreLinkText';
-		$linkUrlPrefix = 'exploreLinkUrl';
-
-		$linkgroups = array();
-		
-		foreach($groups as $group) {
-			$headerIdx = $headerPrefix . $group;
-			if( !empty($responseData[$headerIdx]) ) {
-				$linkgroups[$group]['headline'] = $responseData[$headerIdx];
-
-				foreach($links as $linkIdx) {
-					$linkIdx = $group . $linkIdx;
-					$linkTextIdx = $linkTextPrefix . $linkIdx;
-					
-					if( !empty($responseData[$linkTextIdx]) ) {
-						$linkgroups[$group]['links'][$linkIdx]['anchor'] = $responseData[$linkTextIdx];
-						$linkUrlIdx = $linkUrlPrefix . $linkIdx;
-						
-						if( !empty($responseData[$linkUrlIdx]) ) {
-							$linkgroups[$group]['links'][$linkIdx]['href'] = $responseData[$linkUrlIdx];
-						}
-					}
-				}
-			}
-		}
-		
-		return $linkgroups;
 	}
 
 	public function getDataForModulePulse() {

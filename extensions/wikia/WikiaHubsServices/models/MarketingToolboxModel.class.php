@@ -3,6 +3,9 @@
 class MarketingToolboxModel extends WikiaModel {
 	const SECTION_HUBS = 1;
 
+	/**
+	 * Wikia Hubs modules ids
+	 */
 	const MODULE_SLIDER = 1;
 	const MODULE_PULSE = 2;
 	const MODULE_WIKIAS_PICKS = 3;
@@ -77,6 +80,10 @@ class MarketingToolboxModel extends WikiaModel {
 	
 	public function getThumbnailSize() {
 		return self::FORM_THUMBNAIL_SIZE;
+	}
+	
+	public function getModulesIds() {
+		return array_keys($this->modules);
 	}
 	
 	public function getModuleName($moduleId) {
@@ -256,7 +263,7 @@ class MarketingToolboxModel extends WikiaModel {
 		} else {
 			$out = $this->getDefaultModuleList();
 		}
-
+		
 		$actualData = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp);
 		$out = $actualData + $out;
 
@@ -296,6 +303,7 @@ class MarketingToolboxModel extends WikiaModel {
 				'data' => json_decode($row['module_data'], true)
 			);
 		}
+		
 		return $out;
 	}
 

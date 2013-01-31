@@ -6,44 +6,51 @@ class WikiaHubsApiController extends WikiaApiController {
 	const DEFAULT_LANG = 'en';
 	const CLIENT_CACHE_VALIDITY = 86400; //24*60*60 = 24h
 
+	const PARAMETER_MODULE = 'module';
 	const PARAMETER_VERTICAL = 'vertical';
-	const PARAMETER_TIMESTAMP = 'timestamp';
+	const PARAMETER_TIMESTAMP = 'ts';
 
 	/**
 	 * Get explore module data from given date and vertical
 	 *
-	 * @requestParam integer $vertical [REQUIRED] vertical id see 
-	 * @requestParam integer $timestamp [REQUIRED]
+	 * @requestParam integer $module [REQUIRED] module id see MarketingToolboxModel.class.php from line 9 to 17
+	 * @requestParam integer $vertical [REQUIRED] vertical id see WikiFactoryHub::CATEGORY_ID_GAMING, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+	 * @requestParam integer $timestamp [REQUIRED] unix timestamp
 	 * @requestParam string $lang [OPTIONAL] default set to EN
 	 *
 	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
 	 * @responseParam string $basepath domain of a wiki to create a url for an article
 	 *
 	 * @example
-	 * @example &vertical=2&date=1359504000
-	 * @example &vertical=2&date=1359504000&lang=de
+	 * @example &module=1&vertical=2&ts=1359504000
+	 * @example &module=1&vertical=2&ts=1359504000&lang=de
 	 */
-	public function getExploreModule() {
+	public function getModuleData() {
 		$this->wf->ProfileIn( __METHOD__ );
 		
-		$moduleId = MarketingToolboxModel::MODULE_EXPLORE;
+		$moduleId = $this->request->getInt('module');
 		$verticalId = $this->request->getInt('vertical');
-		$timestamp = $this->request->getInt('timestamp');
+		$timestamp = $this->request->getInt('ts');
 		$lang = $this->request->getVal('lang', self::DEFAULT_LANG);
 		$model = new MarketingToolboxModel($this->app);
+
+		if( !$this->isValidModule($model, $moduleId) || $moduleId <= 0 ) {
+			throw new InvalidParameterApiException( self::PARAMETER_MODULE );
+		}
 		
-		if( !in_array($verticalId, $model->getVerticalsIds()) || $verticalId <= 0 ) {
+		if( !$this->isValidVertical($model, $verticalId) || $verticalId <= 0 ) {
 			throw new InvalidParameterApiException( self::PARAMETER_VERTICAL );
 		}
 
 		if( $timestamp <= 0 ) {
-			throw new InvalidParameterApiException( self::PARAMETER_VERTICAL );
+			throw new InvalidParameterApiException( self::PARAMETER_TIMESTAMP );
 		}
 		
-		$allModulesData = $model->getModulesData($lang, MarketingToolboxModel::SECTION_HUBS, $verticalId, $timestamp);
+		$moduleName = $model->getModuleName($moduleId);
+		$moduleService = MarketingToolboxModuleService::getModuleByName($moduleName, $lang, MarketingToolboxModel::SECTION_HUBS, $verticalId);
 		
-		if( !empty($allModulesData['moduleList'][$moduleId]['data']) ) {
-			$this->response->setVal('data', $allModulesData['moduleList'][$moduleId]['data']);
+		if( $moduleService instanceof MarketingToolboxModuleService) {
+			$this->response->setVal('data', $moduleService->loadData($model, $timestamp));
 		} else {
 			throw new NotFoundApiException();
 		}
@@ -58,6 +65,14 @@ class WikiaHubsApiController extends WikiaApiController {
 		);
 		
 		$this->wf->ProfileOut( __METHOD__ );
+	}
+	
+	protected function isValidModule(MarketingToolboxModel $model, $moduleId) {
+		return in_array($moduleId, $model->getModulesIds());
+	}
+
+	protected function isValidVertical(WikiaModel $model, $verticalId) {
+		return in_array($verticalId, $model->getVerticalsIds());
 	}
 	
 }
