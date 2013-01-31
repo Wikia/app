@@ -150,6 +150,11 @@ class Phalanx implements arrayaccess {
 	public function delete() {
 		$this->wf->profileIn( __METHOD__ );
 
+		if (empty($this->data)) {
+			$this->wf->profileOut( __METHOD__ );
+			return false;
+		}
+
 		$dbw = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
 		$dbw->delete( $this->db_table, array( 'p_id' => $this->data['id'] ), __METHOD__ );
 

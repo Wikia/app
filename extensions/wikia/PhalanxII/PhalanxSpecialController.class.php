@@ -208,7 +208,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		}
 
 		// delete a block
-		$phalanx = F::build( 'Phalanx', array( $id ) );
+		$phalanx = Phalanx::newFromId($id);
 
 		$id = $phalanx->delete();
 		if ( $id ) {
