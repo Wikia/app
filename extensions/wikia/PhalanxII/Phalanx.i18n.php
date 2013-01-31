@@ -33,7 +33,6 @@ $messages['en'] = array(
 	'phalanx-format-exact' => 'exact',
 	'phalanx-tab-main' => 'Manage Filters',
 	'phalanx-tab-secondary' => 'Test Filters',
-	'phalanx-tab-stats' => 'Current Filters',
 
 	'phalanx-block-success' => 'The block was successfully added',
 	'phalanx-block-failure' => 'There was an error during adding the block',
@@ -1739,7 +1738,6 @@ $messages['pl'] = array(
 	'phalanx-format-exact' => 'dokładny',
 	'phalanx-tab-main' => 'Zarządzanie filtrami',
 	'phalanx-tab-secondary' => 'Testuj filtry',
-	'phalanx-tab-stats' => 'Aktualne filtry',
 	'phalanx-block-success' => 'Pomyślnie dodano blokadę',
 	'phalanx-block-failure' => 'Wystąpił błąd podczas dodawania blokady',
 	'phalanx-modify-success' => 'Blokada została pomyślnie zmodyfikowana',

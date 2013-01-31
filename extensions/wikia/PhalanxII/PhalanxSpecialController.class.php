@@ -28,10 +28,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		// select the current tab
 		switch($this->getPar()) {
-			case 'stats':
-				$currentTab = 'stats';
-				break;
-
 			case 'test':
 				$currentTab = 'test';
 				break;
@@ -43,7 +39,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal('currentTab', $currentTab);
 
 		if ( $this->wg->Request->wasPosted() ) {
-			$res = $this->post($currentTab);
+			$res = $this->handlePost($currentTab);
 
 			// TODO: handle errors
 		}
@@ -67,32 +63,36 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->wf->profileOut( __METHOD__ );
 	}
 
-	function blockDataForForm() {
+	private function blockDataForForm() {
 		$data = array();
 
 		$id = $this->wg->Request->getInt( 'id' );
-		if ( $id ) {
+		if ( $id > 0 ) {
+			// block edit
 			$data = Phalanx::newFromId($id);
 			$data['type'] = Phalanx::getTypeNames( $data['type'] );
+			$data['checkId'] = $this->wg->Request->getIntOrNull( 'id' );
 			$data['checkBlocker'] = '';
 			$data['typeFilter'] = array();
 		}
 		else {
-			// empty form - adding new block
-			$data['checkBlocker'] = '';
-			$data['checkId'] = '';
+			// block search
+			$data['checkBlocker'] = $this->wg->Request->getText( 'wpPhalanxCheckBlocker' , '');
+			$data['checkId'] = $this->wg->Request->getIntOrNull( 'id' );
+			$data['type'] = $this->wg->Request->getArray( 'wpPhalanxType' );
+			$data['typeFilter'] = $this->wg->Request->getArray( 'wpPhalanxTypeFilter' );
 			$data['text'] = '';
-			$data['expire'] = '';
 			$data['lang'] = '';
+			$data['expire'] = '';
 			$data['reason'] = '';
 		}
 		return $data;
 	}
 
-	private function post() {
+	private function handlePost() {
 		$this->wf->profileIn( __METHOD__ );
 
-		$id = $this->wg->Request->getVal( 'id', 0 );
+		$id = $this->wg->Request->getInt( 'id', 0 );
 		$multitext = $this->wg->Request->getText( 'wpPhalanxFilterBulk' );
 
 		/* init Phalanx helper class */

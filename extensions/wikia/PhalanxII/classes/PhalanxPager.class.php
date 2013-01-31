@@ -66,7 +66,6 @@ class PhalanxPager extends ReverseChronologicalPager {
 		$authorUrl = $author->getUserPage()->getFullUrl();
 
 		$phalanxPage = SpecialPage::getTitleFor('Phalanx');
-		$phalanxModifyPage = SpecialPage::getTitleFor('Phalanx', 'edit');
 
 		$phalanxStatsPage = F::build( 'Title', array( 'PhalanxStats', NS_SPECIAL ), 'newFromText' );
 		$statsUrl = sprintf( "%s/%s", $phalanxStatsPage->getLocalUrl(), $row->p_id );
@@ -87,7 +86,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 			), $this->app->wf->Msg('phalanx-link-unblock') ),
 			Html::element( 'a', array(
 				'class' => 'modify',
-				'href' => $phalanxModifyPage->getLocalUrl( array( 'id' => $row->p_id ) )
+				'href' => $phalanxPage->getLocalUrl( array( 'id' => $row->p_id ) )
 			), $this->app->wf->Msg('phalanx-link-modify') ),
 			Html::element( 'a', array(
 				'class' => 'stats',
