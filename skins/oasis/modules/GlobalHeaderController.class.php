@@ -23,7 +23,7 @@ class GlobalHeaderController extends WikiaController {
 			NavigationModel::TYPE_MESSAGE,
 			$messageName,
 			array(3, 4, 5),
-			10800 /* 3 hours */
+			1800 /* 3 hours */
 		);
 
 		wfRunHooks('AfterGlobalHeader', array(&$menuNodes, $category, $messageName));
