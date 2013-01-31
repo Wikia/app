@@ -65,6 +65,16 @@ class PhalanxService extends Service {
 	}
 
 	/**
+	 * service for stats method
+	 *
+	 * @example curl "http://localhost:8080/stats"
+	 *
+	 */
+	public function stats(  ) {
+		return $this->sendToPhalanxDaemon( "stats", array() );
+	}
+
+	/**
 	 * Send prepared request request to phalanx daemon
 	 *
 	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
@@ -100,8 +110,12 @@ class PhalanxService extends Service {
 			$res = false;
 		} else {
 			switch ( $action ) {
+				case "stats":
+					$res = ( is_null( $response ) ) ? false : $response;
+					break;
 				case "status":
-					$res = ( stripos( $response, self::RES_STATUS  ) !== false ) ? true : false; break;
+					$res = ( stripos( $response, self::RES_STATUS  ) !== false ) ? true : false;
+					break;
 				case "match" :
 					$ret = json_decode( $response );
 					if ( is_null( $ret ) ) {

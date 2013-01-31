@@ -25,6 +25,17 @@ class PhalanxServiceTest extends WikiaBaseTest {
 		return $this->service->status();
 	}
 
+	/**
+	 * check for defined methods in service
+	 */
+	public function testPhalanxServiceMethod() {
+		error_log( __CLASS__ . '::' . __FUNCTION__ );
+		$this->service = new PhalanxService();
+		foreach( array( "check", "match", "status", "reload", "validate", "stats" ) as $method ) {
+			$this->assertEquals( true, method_exists( $this->service, $method ), "Method '$method' doesnt exist in PhalanxService" );
+		}
+	}
+
 	public function testPhalanxServiceCheck() {
 		error_log( __CLASS__ . '::' . __FUNCTION__ );
 		if( $this->isPhalanxAlive() ) {
@@ -91,4 +102,19 @@ class PhalanxServiceTest extends WikiaBaseTest {
 			$this->markTestSkipped( sprintf( "Can't contact with phalanx service on %s.\n", F::app()->wg->PhalanxServiceUrl ) );
 		}
 	}
+
+	public function testPhalanxServiceStats() {
+		global $wgDebugLogFile;
+	//	$wgDebugLogFile = "php://stdout";
+
+		if( $this->isPhalanxAlive() ) {
+			$ret = $this->service->stats( );
+			// check for known strings
+			$this->assertRegexp( "/email|wiki_creation|summary/", $ret );
+		}
+		else {
+			$this->markTestSkipped( sprintf( "Can't contact with phalanx service on %s.\n", F::app()->wg->PhalanxServiceUrl ) );
+		}
+	}
+
 }
