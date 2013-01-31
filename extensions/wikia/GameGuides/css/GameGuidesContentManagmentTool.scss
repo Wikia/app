@@ -89,6 +89,8 @@
 	.sprite {
 		position: absolute;
 		top: 16px;
+
+		cursor: pointer
 	}
 
 	.remove {
@@ -97,6 +99,8 @@
 
 	.drag {
 		right: 10px;
+
+		cursor: move;
 	}
 
 	.photo {
