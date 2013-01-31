@@ -92,6 +92,9 @@ jQuery(function($){
 		$('#WikiaArticleCategories').on('click', 'a', {
 			category: category,
 			label: 'category-name'
+		}, trackWithEventData).on('click', '.add', {
+			category: category,
+			label: 'add-category'
 		}, trackWithEventData);
 	})();
 
