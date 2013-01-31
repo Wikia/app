@@ -56,7 +56,7 @@ $messages['en'] = array(
 	'user-identity-box-group-authenticated' => 'Authenticated',
 	'user-identity-box-group-council' => 'Councilor',
 	'user-identity-box-group-adminmentor' => 'Admin Mentor',
-	'user-identity-box-group-star' => 'Wikia Star',
+	'user-identity-box-group-WikiaStars' => 'Wikia Star',
 
 	'user-identity-box-zero-state-location' => 'Location',
 	'user-identity-box-zero-state-birthday' => 'Birthday',
