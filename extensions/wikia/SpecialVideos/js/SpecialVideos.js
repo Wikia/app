@@ -7,7 +7,7 @@ var SpecialVideos = {
 
 				if(currSort != newSort) {
 					var sort = $target.data('sort');
-					window.location.search = "?sort="+sort;
+					(new Wikia.Querystring(window.wgEditHubUrl)).setVal('sort', sort).goTo();
 				}
 			}
 		});

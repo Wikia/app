@@ -284,7 +284,7 @@ $.stopThrobbing = function() {
 }
 $.preloadThrobber = function() {
 	var img = new Image();
-	img.src= wgCdnRootUrl + '/skins/common/images/ajax.gif';
+	img.src = stylepath + '/skins/common/images/ajax.gif';
 };
 
 /*
