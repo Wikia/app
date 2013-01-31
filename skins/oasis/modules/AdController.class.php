@@ -118,6 +118,8 @@ class AdController extends WikiaController {
 				self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
 				self::$config['MIDDLE_RIGHT_BOXAD'] = true;
 				self::$config['LEFT_SKYSCRAPER_2'] = true;
+				self::$config['INVISIBLE_1'] = true;
+				self::$config['INVISIBLE_2'] = true;
 				self::$config['PREFOOTER_LEFT_BOXAD'] = true;
 				self::$config['PREFOOTER_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
