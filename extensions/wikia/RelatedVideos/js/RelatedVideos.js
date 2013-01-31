@@ -23,6 +23,12 @@ var RelatedVideos = {
 	init: function(relatedVideosModule) {
 		// DOM caching
 		this.rvModule = $(relatedVideosModule);
+
+		// Stop execution if there's no RV on this page
+		if(!this.rvModule.length) {
+			return;
+		}
+		
 		this.rvContainer = $('.container', this.rvModule);
 		this.rvScrollRight = $('.scrollright', this.rvModule);
 		this.rvScrollLeft = $('.scrollleft', this.rvModule);
