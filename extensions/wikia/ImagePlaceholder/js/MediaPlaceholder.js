@@ -81,11 +81,7 @@ var MediaPlaceholder = {
 
 			$this.removeAddVideoButton().addVideoButton({
 				embedPresets: props,
-				callbackAfterSelect: function() {
-					window.VET_insertFinalVideoParams = ['placeholder=1', 'box=' + props.placeholderIndex, 'article='+encodeURIComponent( wgTitle ), 'ns='+wgNamespaceNumber];
-					// Continue on to second VET screen by returning true
-					return true;
-				},
+				insertFinalVideoParams: ['placeholder=1', 'box=' + props.placeholderIndex, 'article='+encodeURIComponent( wgTitle ), 'ns='+wgNamespaceNumber],
 				callbackAfterEmbed: self.videoEmbedCallback
 			});
 		});	

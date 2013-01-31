@@ -27,6 +27,7 @@
 	var VET_ratio = 1;
 	var VET_shownMax = false;
 	var VET_notificationTimout = 4000;
+	var VET_options = {};
 	var VET_embedPresets = false;
 	var VET_callbackAfterSelect = $.noop;
 	var VET_callbackAfterEmbed = $.noop;
@@ -222,6 +223,7 @@
 		}
 
 		/* set options */
+		VET_options = options;
 		VET_embedPresets = options.embedPresets;
 		VET_wysiwygStart = options.startPoint || 1;
 		VET_callbackAfterSelect = options.callbackAfterSelect || $.noop;
@@ -405,7 +407,7 @@
 		 * Making this event driven is tricky because there can be more than 'add video' element on a page. 
 		 *   ex: MiniEditor and Article Placeholder 
 		 */
-		params = params.concat(window.VET_insertFinalVideoParams);
+		params = params.concat(VET_options.insertFinalVideoParams || []);
 
 		var callback = function(o, status) {
 			if(status == 'error') {
@@ -1074,5 +1076,4 @@
 	window.VET_show = VET_show;
 	window.VET_close = VET_close;
 	window.VETExtended = VETExtended;
-	window.VET_insertFinalVideoExtraParams = [];
 })(jQuery, window);
