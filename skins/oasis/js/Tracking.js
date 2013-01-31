@@ -287,6 +287,13 @@ jQuery(function($){
 		}
 	});
 
+	/** related-videos-module **/
+
+	$wikiaRail.find('.RelatedVideosModule').on('click', 'a', {
+		category: 'related-videos-module',
+		label: 'video-thumbnail'
+	}, trackWithEventData);
+
 	/** search **/
 
 	(function() {
