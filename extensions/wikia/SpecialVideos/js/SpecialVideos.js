@@ -36,6 +36,8 @@ var SpecialVideos = {
 						GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
 					}
 				);
+				// Don't move on to second VET screen.  We're done.
+				return false; 
 			}
 		});
 	}

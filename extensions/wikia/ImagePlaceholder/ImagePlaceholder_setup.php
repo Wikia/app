@@ -328,7 +328,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		));
 	} else {
 		$out .= F::build('JSSnippets')->addToStack(
-			array( '/extensions/wikia/VideoEmbedTool/js/VET_Loader.js', '/extensions/wikia/ImagePlaceholder/js/MediaPlaceholder.js' ),
+			array( '/extensions/wikia/ImagePlaceholder/js/MediaPlaceholder.js' ),
 			array(),
 			'MediaPlaceholder.init'
 		);

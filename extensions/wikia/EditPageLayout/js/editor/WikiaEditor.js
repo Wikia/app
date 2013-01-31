@@ -22,7 +22,6 @@
 			VideoEmbedTool: {
 				loaded: false,
 				requires: [
-					wgResourceBasePath + '/extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
 					wgResourceBasePath + '/extensions/wikia/VideoEmbedTool/js/VET_WikiaEditor.js',
 				]
 			},

@@ -47,6 +47,8 @@ EditHub.prototype = {
 							}
 						}
 					});
+					// Don't move on to second VET screen.  We're done.
+					return false;
 				},
 				searchOrder: 'newest'
 			});

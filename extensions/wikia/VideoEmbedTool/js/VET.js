@@ -28,9 +28,9 @@
 	var VET_shownMax = false;
 	var VET_notificationTimout = 4000;
 	var VET_embedPresets = false;
-	var VET_callbackAfterSelect = false;
-	var VET_callbackAfterEmbed = false;
-	
+	var VET_callbackAfterSelect = $.noop;
+	var VET_callbackAfterEmbed = $.noop;
+
 	// ajax call for 2nd screen (aka embed screen)
 	function VET_editVideo() {
 		$('#VideoEmbedMain').hide();
@@ -224,8 +224,8 @@
 		/* set options */
 		VET_embedPresets = options.embedPresets;
 		VET_wysiwygStart = options.startPoint || 1;
-		VET_callbackAfterSelect = options.callbackAfterSelect || false;
-		VET_callbackAfterEmbed = options.callbackAfterEmbed || false;
+		VET_callbackAfterSelect = options.callbackAfterSelect || $.noop;
+		VET_callbackAfterEmbed = options.callbackAfterEmbed || $.noop;
 	
 		VET_tracking(WikiaTracker.ACTIONS.CLICK, 'open');
 	
@@ -382,9 +382,6 @@
 			}
 		}
 		
-		// Add article placeholder specific params to ajax call 
-		$(window).trigger('VET_insertFinalParams', [params, VET_embedPresets.placeholderIndex]);
-	
 		params.push('oname='+encodeURIComponent( $('#VideoEmbedOname').val() ) );
 		params.push('name='+encodeURIComponent( $('#VideoEmbedName').val() ) );
 	
@@ -403,6 +400,13 @@
 			params.push('caption=' + encodeURIComponent( $('#VideoEmbedCaption').val() ) );
 		}
 	
+		/* Allow extensions to add extra params to ajax call
+		 * So far only used by article placeholders 
+		 * Making this event driven is tricky because there can be more than 'add video' element on a page. 
+		 *   ex: MiniEditor and Article Placeholder 
+		 */
+		params = params.concat(window.VET_insertFinalVideoParams);
+
 		var callback = function(o, status) {
 			if(status == 'error') {
 				GlobalNotification.show( $.msg('vet-insert-error'), 'error', null, VET_notificationTimout );
@@ -445,19 +449,7 @@
 							
 							options.placeholderIndex = VET_embedPresets.placeholderIndex;
 	
-							if(VET_callbackAfterEmbed) {
-								VET_callbackAfterEmbed(options);
-							}
-							/* move to VET_Loader.load from editor 
-							if (typeof window.VET_RTEVideo != 'undefined') {
-								if (window.VET_RTEVideo && window.VET_RTEVideo.hasClass('media-placeholder')) {
-									// replace "Add Video" placeholder
-									RTE.mediaEditor.update(window.VET_RTEVideo, wikitag, options);
-								}
-								else {
-									RTE.mediaEditor.addVideo(wikitag, options);
-								}
-							}*/
+							VET_callbackAfterEmbed(options);
 						} else {
 							$( '#VideoEmbedSuccess' ).css('display', 'none');
 							$( '#VideoEmbedTag' ).css('display', 'none');
@@ -550,9 +542,8 @@
 	 * todo: rename this function, because it does not only send query to embed
 	 */
 	function VET_sendQueryEmbed(query) {
-		if(VET_callbackAfterSelect) {
-			VET_callbackAfterSelect(query);
-		} else {
+		// If callbackAfterSelect returns false, end here. Otherwise, move on to the next screen. 
+		if(VET_callbackAfterSelect(query) !== false) {
 			var callback = function(o) {
 				var screenType = VET_jqXHR.getResponseHeader('X-screen-type');
 				if(typeof screenType == "undefined") {
@@ -1079,7 +1070,9 @@
 	
 	
 	// globally available functions
+	// TODO: Create VET namespace for these
 	window.VET_show = VET_show;
 	window.VET_close = VET_close;
 	window.VETExtended = VETExtended;
+	window.VET_insertFinalVideoExtraParams = [];
 })(jQuery, window);

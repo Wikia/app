@@ -3,7 +3,7 @@
  * Final callback should include VET_loader.modal.closeModal() in success case.
  * Sample input json for options:
  *	{
- *		callbackAfterSelect: function() {}, // callback after video is selected (first screen).  If defined, second screen will not show.
+ *		callbackAfterSelect: function() {}, // callback after video is selected (first screen).  If it returns false, second screen will not show.
  *		callbackAfterEmbed: function() {}, // callback after video formating (second screen).
  *		embedPresets: {
  *			align: "right"
@@ -32,20 +32,21 @@
 		if (wgUserName == null && wgAction == 'edit') {
 			// handle login on edit page
 			UserLogin.rteForceLogin();
-			$('.wikiaThrobber').parent().stopThrobbing();
+			$.stopThrobbing();
 			return;
 		} else if (UserLogin.isForceLogIn()) {
-			$('.wikiaThrobber').parent().stopThrobbing();
+			$.stopThrobbing();
 			// handle login on article page
 			return;
 		}
 		
 		// if modal is already on screen or is about to be, don't do anything
 		if(modalOnScreen) {
+			$.stopThrobbing();
 			return;
 		}
 		
-		modalOnScreen = true;	// modal is now loading
+		//modalOnScreen = true;	// modal is now loading
 
 		var deferredList = [];
 		
@@ -69,8 +70,7 @@
 			// Get JS and CSS
 			var resourcePromise = $.getResources([
 				$.loadYUI,
-				window.wgExtensionsPath + '/wikia/WikiaStyleGuide/js/Dropdown.js',
-				window.wgExtensionsPath + '/wikia/VideoEmbedTool/js/VET.js', 
+				$.getAssetManagerGroupUrl('VET_js'),
 				$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
 				$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
 			]);
@@ -114,6 +114,12 @@
 		});
 	
 	};
+	
+	$.fn.removeAddVideoButton = function() {
+		return this.each(function() {
+			$(this).off('click.VETLoader');
+		});
+	}
 	
 	window.VET_loader = VET_loader;
 	

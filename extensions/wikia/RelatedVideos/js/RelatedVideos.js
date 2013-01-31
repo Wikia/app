@@ -110,6 +110,8 @@ var RelatedVideos = {
 							RelatedVideos.showError( $.msg('vet-error-while-loading') );
 						}
 					);
+					// Don't move on to second VET screen.  We're done.
+					return false;
 				}
 			}).tooltip({
 				delay: { show: 500, hide: 100 }

@@ -28,13 +28,6 @@ var MediaPlaceholder = {
 
 		var self = this;
 
-		$(window).on('VET_insertFinalParams', function(e, params, placeholderIndex) {
-			params.push( 'placeholder=1' );
-			params.push( 'box=' + placeholderIndex );
-			params.push( 'article='+encodeURIComponent( wgTitle ) );
-			params.push( 'ns='+wgNamespaceNumber );			
-		});
-		
 		this.setupVideoPlaceholders();
 
 		// TODO: use .wikiaImagePlaceholder instead of .wikiaPlaceholder after 
@@ -59,10 +52,11 @@ var MediaPlaceholder = {
 			if(!self.imageLoaded) {
 				// open WMU
 				$.when(
-					$.loadYUI(),
-					$.getResources([ 
-						window.wgExtensionsPath + "/wikia/WikiaMiniUpload/js/WMU.js",
-						$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss')
+					$.getResources([
+						$.loadYUI,
+						$.loadJQueryAIM,
+						$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
+						wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
 					])
 				).done(function() {
 					self.imageLoaded = true;
@@ -80,13 +74,18 @@ var MediaPlaceholder = {
 	setupVideoPlaceholders: function() {
 		var self = this;
 		
-		self.WikiaArticle.find('.wikiaVideoPlaceholder a').off('click.VETLoader').each(function() {
+		self.WikiaArticle.find('.wikiaVideoPlaceholder a').each(function() {
 			
 			var $this = $(this),
 				props = self.getProps($this);
 
-			$this.addVideoButton({
+			$this.removeAddVideoButton().addVideoButton({
 				embedPresets: props,
+				callbackAfterSelect: function() {
+					window.VET_insertFinalVideoParams = ['placeholder=1', 'box=' + props.placeholderIndex, 'article='+encodeURIComponent( wgTitle ), 'ns='+wgNamespaceNumber];
+					// Continue on to second VET screen by returning true
+					return true;
+				},
 				callbackAfterEmbed: self.videoEmbedCallback
 			});
 		});	
@@ -108,25 +107,6 @@ var MediaPlaceholder = {
 
 			if(id > embedData.placeholderIndex) {
 				$this.attr('data-id', id-1);
-				if(!self.imageLoaded) {
-					// open WMU
-					$.when(
-						$.getResources([
-							$.loadYUI,
-							$.loadJQueryAIM,
-							$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
-							wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
-						])
-					).done(function() {
-						self.imageLoaded = true;
-						
-						$this.text(oText);
-						WMU_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption, props.link);
-					});
-				} else {
-					$this.text(oText);
-					WMU_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption, props.link);				
-				}
 			}
 		});
 

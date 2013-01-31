@@ -32,8 +32,7 @@ var AdminDashboard = {
 		var addVideoButton = AdminDashboard.cc.find('.addVideoButton'),
 			addVideoButtonReturnUrl = addVideoButton.data('return-url');
 
-		if( $.fn.addVideoButton ) {
-		//FB#68272
+		if( $.fn.addVideoButton ) { //FB#68272
 			addVideoButton.addVideoButton({
 				callbackAfterSelect: function(url) {
 					$.nirvana.postJson(
@@ -58,6 +57,8 @@ var AdminDashboard = {
 							GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
 						}
 					);
+					// Don't move on to second VET screen.  We're done.
+					return false;
 				}
 			});
 		}
