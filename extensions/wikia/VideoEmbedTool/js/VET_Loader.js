@@ -46,7 +46,7 @@
 			return;
 		}
 		
-		//modalOnScreen = true;	// modal is now loading
+		modalOnScreen = true;	// modal is now loading
 
 		var deferredList = [];
 		
@@ -84,6 +84,8 @@
 				width:1000,
 				onClose: function() {
 					VET_close();
+				},
+				onAfterClose: function() {
 					modalOnScreen = false;	// release modal lock
 				}
 			});
