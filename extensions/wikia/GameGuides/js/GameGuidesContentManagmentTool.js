@@ -199,47 +199,46 @@ $(function(){
 				});
 
 				data.push({title: '', categories: nonames});
-				console.log(data);
+
 				$status.removeClass();
+
+				nirvana.sendRequest({
+					controller: 'GameGuidesSpecialContent',
+					method: 'save',
+					data: {
+						categories: data
+					}
+				}).done(
+					function(data){
+						if(data.error) {
+							var err = data.error,
+								i = err.length,
+								categories = $form.find('.cat-input');
+
+							while(i--){
+								categories.each(function(){
+									if(this.value === err[i]){
+										$(this)
+											.addClass('error')
+											.popover('destroy')
+											.popover({
+												content: msg('wikiagameguides-content-category-error')
+											});
+
+										return false;
+									}
+									return true;
+								});
+							}
+						}else if(data.status){
+							$status.addClass('ok');
+						}
+				}).fail(
+					function(){
+						$status.addClass('error');
+					}
+				);
 			}
-
-
-
-//			nirvana.sendRequest({
-//				controller: 'GameGuidesSpecialContent',
-//				method: 'save',
-//				data: {
-//					categories: cat
-//				},
-//				callback: function(data){
-//					if(data.error) {
-//						var err = data.error,
-//							i = err.length,
-//							categories = $form.find('.cat-input');
-//
-//						while(i--){
-//							categories.each(function(){
-//								if(this.value === err[i]){
-//									$(this)
-//										.addClass('error')
-//										.popover('destroy')
-//										.popover({
-//											content: msg('wikiagameguides-content-category-error')
-//										});
-//
-//									return false;
-//								}
-//								return true;
-//							});
-//						}
-//					}else if(data.status){
-//						$status.addClass('ok');
-//						setTimeout(function(){
-//							$status.removeClass();
-//						},5000);
-//					}
-//				}
-//			});
 		});
 
 		loader({
