@@ -321,6 +321,7 @@ jQuery(function($){
 		});
 
 		if ($body.hasClass('page-Special_Search')) {
+			category = 'special-' + category;
 			$wikiaSearch.on('click', '.search-tabs a', function(e) {
 				track({
 					browserEvent: e,
