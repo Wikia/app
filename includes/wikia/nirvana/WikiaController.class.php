@@ -36,7 +36,7 @@ abstract class WikiaController extends WikiaDispatchableObject {
 		$methods    = $reflection->getMethods(ReflectionMethod::IS_PUBLIC);
 		$help       = array();
 
-		foreach ($methods as $index => $method) {
+		foreach ($methods as $method) {
 			if ( !in_array( $method->name, $skipMethods ) ) {
 				$comment = $method->getDocComment();
 

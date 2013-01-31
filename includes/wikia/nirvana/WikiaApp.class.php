@@ -142,7 +142,7 @@ class WikiaApp {
 	 * This helper gets the "base" controller name from the request object built by sendRequest
 	 * unfortunately, this needs to handle calls which also append "Controller" or "Service"
 	 * So: sendRequest("Foo") and sendRequest("FooController") can both work.
-	 *  @param String name
+	 *  @param String $controllerName
 	 *  @return String name
 	 */
 	public function getBaseName( $controllerName ) {
@@ -669,8 +669,8 @@ class WikiaApp {
 		if(is_array($key)) {
 			$key = implode("_", $key);
 		}
-		
-		
+
+
 		if(empty(self::$viewCache["P_". $controllerName . $method . $key])) {
 			self::$viewCache["P_". $controllerName . $method . $key] =  $this->renderPartial($controllerName, $method, $params);
 		}
