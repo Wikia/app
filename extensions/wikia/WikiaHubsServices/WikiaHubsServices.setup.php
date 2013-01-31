@@ -12,7 +12,6 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
 $app->registerClass('MarketingToolboxModel', $dir . 'models/MarketingToolboxModel.class.php');
-$app->registerClass('MarketingToolboxUserPropertiesHandler', $dir . 'models/MarketingToolboxUserPropertiesHandler.class.php');
 $app->registerClass('MarketingToolboxTop10listModel', $dir . 'models/MarketingToolboxTop10listModel.class.php');
 $app->registerClass('MarketingToolboxExploreModel', $dir . 'models/MarketingToolboxExploreModel.class.php');
 $app->registerClass('MarketingToolboxPollsModel', $dir . 'models/MarketingToolboxPollsModel.class.php');

@@ -25,6 +25,9 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => 1.0
 );
 
+//models
+$app->registerClass('MarketingToolboxUserPropertiesHandler', $dir . 'models/MarketingToolboxUserPropertiesHandler.class.php');
+
 //classes
 $app->registerController('MarketingToolboxController', $dir . 'MarketingToolboxController.class.php');
 $app->registerClass('MarketingToolboxVideosController', $dir . 'MarketingToolboxVideosController.class.php');
