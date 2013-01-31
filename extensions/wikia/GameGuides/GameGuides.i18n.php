@@ -11,20 +11,20 @@ $messages['en'] = array(
 	//Content Managment tool
 	'wikiagameguides-content-title' => 'Wikia Game Guides content managment tool',
 	'wikiagameguides-content-category' => 'Category',
-	'wikiagameguides-content-category-desc' => 'Enter the categories on your wiki that you would like to include in Game Guides.',
 	'wikiagameguides-content-tag' => 'Category Tag (optional)',
-	'wikiagameguides-content-tag-desc' => 'Organize your game categories by giving them tags.',
 	'wikiagameguides-content-name' => 'Game Guide Name (optional)',
-	'wikiagameguides-content-name-desc' => 'Rename the wiki categories as you\'d like them to appear on Game Guides',
 	'wikiagameguides-content-add-tag' => 'Add Tag',
 	'wikiagameguides-content-add-category' => 'Add Category',
 	'wikiagameguides-content-save' => 'Save',
 	'wikiagameguides-content-category-error' => 'Category does not exists',
+	'wikiagameguides-content-required-entry' => 'Category is required',
 	'wikiagameguides-content-duplicate-entry' => 'This value is duplicated',
+	'wikiagameguides-content-empty-tag' => 'This tag needs some categories',
 
 	'wikiagameguides-content-description-categories' => 'Add wiki "Categories" and rename them as you\'d like them to appear in Game Guides with "Game Guide Names".',
 	'wikiagameguides-content-description-tag' => 'Does it make sense to group categories under a game series installment? Add a category "Tag," and drag and drop wiki categories under it.',
-	'wikiagameguides-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.'
+	'wikiagameguides-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
+	'wikiagameguides-content-description-no-tag' => 'Categories without tag or with empty tag will be shown as last in Game Guides.'
 );
 
 /** Message documentation (Message documentation)
