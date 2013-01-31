@@ -313,7 +313,7 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'group-reviewer-member' => 'Image Reviewer',
 'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
 
-'group-wikiastars' => 'Wikia Star',
+'group-wikiastars' => 'Wikia Stars',
 'group-wikiastars-member' => 'Wikia Star',
 'grouppage-wikiastars' => 'wikia:Help:WikiaStars',
 
