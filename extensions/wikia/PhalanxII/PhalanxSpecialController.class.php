@@ -4,7 +4,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	private $mDefaultExpire = '1 year';
 	private $title = null;
 	private $errorMsg = '';
-	private $valid = false;
 
 	public function __construct() {
 		parent::__construct('Phalanx');
@@ -44,8 +43,9 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			// TODO: handle errors
 		}
 
-		$this->response->addAsset('extensions/wikia/Phalanx/css/Phalanx.css');
-		//$this->response->addAsset('extensions/wikia/Phalanx/js/Phalanx.js');
+		// load resource loader module
+		$this->wg->Out->addModules('ext.wikia.Phalanx');
+		$this->wg->Out->addJsConfigVars('wgPhalanxToken', $this->getToken());
 
 		/* set pager */
 		$pager = new PhalanxPager();
@@ -173,16 +173,42 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		return $result;
 	}
 
-	public function delete( $id, $token ) {
+	/**
+	 * Method called via AJAX from Special:Phalanx
+	 *
+	 * @return array|bool
+	 */
+	public function unblock() {
 		$this->wf->profileIn( __METHOD__ );
+		$this->setVal('success', false);
 
-		$phalanx = F::build( 'Phalanx', array( $id ) );
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->setVal('error', 'permission');
 
-		if ( $token != $this->wg->User->getEditToken() ) {
-			$this->displayRestrictionError();
 			$this->wf->profileOut( __METHOD__ );
-			return false;
+			return;
 		}
+
+		$id = $this->request->getInt( 'blockId' );
+		$token = $this->request->getVal( 'token' );
+
+		// validate input
+		if (!$id) {
+			$this->setVal('error', 'id');
+
+			$this->wf->profileOut( __METHOD__ );
+			return;
+		}
+
+		if ($token != $this->getToken()) {
+			$this->setVal('error', 'token');
+
+			$this->wf->profileOut( __METHOD__ );
+			return;
+		}
+
+		// delete a block
+		$phalanx = F::build( 'Phalanx', array( $id ) );
 
 		$id = $phalanx->delete();
 		if ( $id ) {
@@ -192,9 +218,8 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$result = false;
 		}
 
+		$this->setVal('success', $result !== false);
 		$this->wf->profileOut( __METHOD__ );
-
-		return $result;
 	}
 
 	public function check() {
@@ -203,14 +228,18 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		if ( $token != $this->wg->User->getEditToken() ) {
 			$this->wf->profileOut( __METHOD__ );
-			return false;
+			return;
 		}
 		$phalanxService = F::build('PhalanxService');
-		$this->valid = $phalanxService->validate( $block );
+		$this->setVal('valid', $phalanxService->validate( $block ));
 	}
 
 	private function refresh( /*Array*/ $ids )  {
 		$phalanxService = F::build('PhalanxService');
-		$this->valid = $phalanxService->reload( $ids );
+		$this->setVal('valid', $phalanxService->reload( $ids ));
+	}
+
+	private function getToken() {
+		return $this->wg->User->getEditToken();
 	}
 }

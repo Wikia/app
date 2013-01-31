@@ -79,11 +79,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 		);
 
 		/* control links */
-		$html .= sprintf( " &bull; %s &bull; %s &bull; %s <br />",
-			Html::element( 'a', array(
-				'class' => 'unblock',
-				'href' => $phalanxPage->getLocalUrl( array( 'id' => $row->p_id ) )
-			), $this->app->wf->Msg('phalanx-link-unblock') ),
+		$html .= sprintf( " &bull; %s &bull; %s",
 			Html::element( 'a', array(
 				'class' => 'modify',
 				'href' => $phalanxPage->getLocalUrl( array( 'id' => $row->p_id ) )
@@ -93,6 +89,14 @@ class PhalanxPager extends ReverseChronologicalPager {
 				'href' => $statsUrl
 			), $this->app->wf->Msg('phalanx-link-stats') )
 		);
+
+		/* remove block button - handled via AJAX */
+		$html .= Html::element( 'button', array(
+			'class' => 'unblock',
+			'data-id' => $row->p_id,
+		), $this->app->wf->Msg('phalanx-link-unblock') );
+
+		$html .= Html::element('br');
 
 		/* types */
 		$html .= $this->app->wf->Msg('phalanx-display-row-blocks', implode( ', ', Phalanx::getTypeNames( $row->p_type ) ) );

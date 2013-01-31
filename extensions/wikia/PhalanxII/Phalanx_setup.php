@@ -17,6 +17,23 @@ $wgExtensionCredits['other'][] = array(
 	)
 );
 
+// Resources Loader module
+$wgResourceModules['ext.wikia.Phalanx'] = array(
+	'scripts' => array(
+		'js/modules/phalanx.js',
+		'js/SpecialPhalanx.js',
+	),
+	'styles' => array(
+		'css/Phalanx.css'
+	),
+	'dependencies' => array(
+		'wikia.log',
+		'wikia.nirvana'
+	),
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/PhalanxII'
+);
+
 $dir = __DIR__ . '/';
 $app = F::app();
 

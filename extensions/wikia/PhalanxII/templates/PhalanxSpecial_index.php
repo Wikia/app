@@ -163,10 +163,11 @@
 							</div>
 
 						</div>
-						<div id="phalanx-check-results">
-							<?= $listing ?>
-						</div>
 					</form>
+
+					<div id="phalanx-check-results">
+						<?= $listing ?>
+					</div>
 				</fieldset>
 			</div>
 		</div>

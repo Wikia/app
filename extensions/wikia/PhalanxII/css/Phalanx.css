@@ -71,6 +71,10 @@
 	padding-bottom: 2px;
 }
 
+#phalanx-check-results .removed {
+	opacity: 0.2;
+}
+
 #phalanx-test-tab-content {
 	display: none;
 }
@@ -82,4 +86,8 @@
 
 #phalanx-mainframe #bulkmode {
 	display: none;
+}
+
+#phalanx-check-results .unblock {
+	float: right;
 }
