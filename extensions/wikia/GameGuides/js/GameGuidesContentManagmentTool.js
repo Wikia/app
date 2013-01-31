@@ -98,6 +98,8 @@ $(function(){
 			},
 			checkForm = function(){
 
+				$save.removeClass();
+
 				checkInputs($ul.find('.tag-input'), true);
 				checkInputs($ul.find('.cat-input'), true, true);
 
@@ -198,7 +200,7 @@ $(function(){
 					}
 				});
 
-				if(nonames) {
+				if(nonames.length > 0) {
 					data.push({title: '', categories: nonames});
 				}
 

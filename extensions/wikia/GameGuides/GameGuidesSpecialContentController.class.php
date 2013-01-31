@@ -123,7 +123,6 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 				if( !empty( $tag['categories'] ) ) {
 
-
 					foreach ( $tag['categories'] as &$cat ) {
 
 						$catTitle = $cat['title'];
