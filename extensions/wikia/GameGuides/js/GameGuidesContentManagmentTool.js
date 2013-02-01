@@ -245,6 +245,7 @@ $(function(){
 							}
 
 							$save.addClass('err');
+							$save.attr('disabled', true);
 						}else if(data.status){
 							$save.addClass('ok');
 						}
