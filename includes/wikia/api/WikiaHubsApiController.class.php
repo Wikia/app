@@ -48,7 +48,7 @@ class WikiaHubsApiController extends WikiaApiController {
 			throw new InvalidParameterApiException( self::PARAMETER_TIMESTAMP );
 		}
 		
-		$moduleName = $model->getModuleName($moduleId);
+		$moduleName = $model->getNotTranslatedModuleName($moduleId);
 		$moduleService = MarketingToolboxModuleService::getModuleByName($moduleName, $lang, MarketingToolboxModel::SECTION_HUBS, $verticalId);
 		
 		if( $this->isValidModuleService($moduleService) ) {

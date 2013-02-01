@@ -222,7 +222,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 	
 	public function loadData($model, $timestamp) {
 		$allModulesData = $model->getModulesData($this->langCode, MarketingToolboxModel::SECTION_HUBS, $this->verticalId, $timestamp);
-		
+
 		if( !empty($allModulesData['moduleList'][$this->model->getModuleId()]['data']) ) {
 			$moduleData = $allModulesData['moduleList'][$this->model->getModuleId()]['data'];
 		} else {
@@ -234,39 +234,30 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 	
 	protected function getStructuredData($data) {
 		$structuredData = array();
-		$structuredData['headline'] = $data['exploreTitle'];
-		$structuredData['imagelink'] = $data['fileName'];
+		$structuredData['headline'] = isset($data['exploreTitle']) ? $data['exploreTitle'] : '';
+		$structuredData['imagelink'] = isset($data['fileName']) ? $data['fileName']: '';
 		$structuredData['linkgroups'] = $this->getLinkGroupsFromApiResponse($data);
 		
 		return $structuredData;
 	}
 
-	//TODO: refactor use const
 	protected function getLinkGroupsFromApiResponse($responseData) {
-		$groups = array(1, 2, 3, 4);
-		$links = array('a', 'b', 'c', 'd');
-
-		$headerPrefix = 'exploreSectionHeader';
-		$linkTextPrefix = 'exploreLinkText';
-		$linkUrlPrefix = 'exploreLinkUrl';
-
 		$linkgroups = array();
 
-		foreach($groups as $group) {
-			$headerIdx = $headerPrefix . $group;
+		for ($sectionIdx = 1; $sectionIdx <= $this->sectionsLimit; $sectionIdx++) {
+			$headerIdx = self::SECTION_FIELD_PREFIX . $sectionIdx;
 			if( !empty($responseData[$headerIdx]) ) {
-				$linkgroups[$group]['headline'] = $responseData[$headerIdx];
+				$linkgroups[$sectionIdx]['headline'] = $responseData[$headerIdx];
 
-				foreach($links as $linkIdx) {
-					$linkIdx = $group . $linkIdx;
-					$linkTextIdx = $linkTextPrefix . $linkIdx;
+				for ($linkIdx = 0; $linkIdx < $this->linksLimit; $linkIdx++) {
+					$linkTextIdx = $this->generateHeaderFieldName($sectionIdx, $linkIdx);
 
 					if( !empty($responseData[$linkTextIdx]) ) {
-						$linkgroups[$group]['links'][$linkIdx]['anchor'] = $responseData[$linkTextIdx];
-						$linkUrlIdx = $linkUrlPrefix . $linkIdx;
+						$linkgroups[$sectionIdx]['links'][$linkIdx]['anchor'] = $responseData[$linkTextIdx];
+						$linkUrlIdx = $this->generateUrlFieldName($sectionIdx, $linkIdx);
 
 						if( !empty($responseData[$linkUrlIdx]) ) {
-							$linkgroups[$group]['links'][$linkIdx]['href'] = $responseData[$linkUrlIdx];
+							$linkgroups[$sectionIdx]['links'][$linkIdx]['href'] = $responseData[$linkUrlIdx];
 						}
 					}
 				}
