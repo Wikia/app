@@ -62,9 +62,9 @@ describe("Loader Module", function () {
 	});
 
 	it('support deferred', function() {
-			expect(typeof loader('some/path').then).toBe('function');
-			expect(typeof loader('some/path').done).toBe('function');
-			expect(typeof loader('some/path').fail).toBe('function');
+		expect(typeof loader('some/path').then).toBe('function');
+		expect(typeof loader('some/path').done).toBe('function');
+		expect(typeof loader('some/path').fail).toBe('function');
 	});
 
 	async.it('should fire on fail callback', function(done) {
@@ -92,24 +92,24 @@ describe("Loader Module", function () {
 
 	async.it('RL module is properly loaded', function(done) {
 		var mwMock = {
-			loader: {
-				use: function(use) {
-					expect(JSON.stringify(use)).toEqual('["jquery.mustache"]');
+				loader: {
+					use: function(use) {
+						expect(JSON.stringify(use)).toEqual('["jquery.mustache"]');
 
-					// mock and return deferred object
-					return {
-						done: function(cb) {
-							cb();
+						// mock and return deferred object
+						return {
+							done: function(cb) {
+								cb();
 
-							return {
-								fail:function() {}
-							};
-						}
-					};
+								return {
+									fail:function() {}
+								};
+							}
+						};
+					}
 				}
-			}
-		},
-		loader = define.getModule(windowMock, mwMock, nirvanaMock, logMock);
+			},
+			loader = define.getModule(windowMock, mwMock, nirvanaMock, logMock);
 
 		// check calls to this function
 		spyOn(mwMock.loader, 'use').andCallThrough();
@@ -118,18 +118,22 @@ describe("Loader Module", function () {
 			type: loader.LIBRARY,
 			resources: ['mustache']
 		}).
-		done(function() {
-			expect(mwMock.loader.use).toHaveBeenCalled();
-			done();
-		});
+			done(function() {
+				expect(mwMock.loader.use).toHaveBeenCalled();
+				done();
+			});
 	});
 
 	async.it('Facebook library is properly initialized when lazy loaded', function(done) {
 		var windowMock = {
-			document: window.document,
-			onFBloaded:  function() {}
-		},
-		loader = define.getModule(windowMock, mwMock, nirvanaMock,logMock);
+				document: window.document,
+				onFBloaded:  function() {}
+			},
+			loader = define.getModule(windowMock, mwMock, nirvanaMock, logMock);
+
+		document.head.appendChild = function(script){
+			script.onload();
+		};
 
 		// check calls to this function
 		spyOn(windowMock, 'onFBloaded').andCallThrough();

@@ -50,6 +50,14 @@ phantom.injectJs('lib/js/TestResult.js');
 phantom.injectJs('lib/js/Xml.js');
 phantom.injectJs('lib/js/JUnitReport.js');
 
+function log(msg) {
+	if(!options.s) console.log(msg);
+}
+
+function warn(msg) {
+	if(!options.s) console.warn(msg);
+}
+
 function nextTest() {
 	try {
 		fs.remove(RUNNER_TEMP_PATH);
@@ -100,7 +108,7 @@ function onPageLoaded( status ) {
 }
 
 function processTest( test ) {
-	console.log('Running '+ test.replace(/^\.+/, ''));
+	log('Running '+ test.replace(/^\.+/, ''));
 
 	//reset page
 	page = createPage();
@@ -135,9 +143,9 @@ function processTest( test ) {
 				t = tokens[0];
 
 			if(t == 'exclude'){
-				console.warn( stylize('[WARN]', 'yellow'), 'Test excluded, skipping... Path: ' + test);
+				warn( stylize('[WARN]', 'yellow'), 'Test excluded, skipping... Path: ' + test);
 				//if there is something after exclude take it as a reason of exclusion
-				tokens[1] && console.log( stylize( '\tReason: ', 'magenta' ), matches[x].replace(/^@test-exclude /i, ''));
+				tokens[1] && log( stylize( '\tReason: ', 'magenta' ), matches[x].replace(/^@test-exclude /i, ''));
 				nextTest();
 				return;
 			}else if( t == 'require-asset' && tokens[1] ){
@@ -159,7 +167,7 @@ function processTest( test ) {
 
 	if(testOptions['require-asset'] instanceof Array){
 		testOptions['require-asset'].forEach(function(item){
-			scanDirectory('../' + item, requiredFiles, function(arg) {return true;});
+			scanDirectory('../' + item.trim(), requiredFiles, function(arg) {return true;});
 		});
 	}
 
@@ -297,7 +305,7 @@ function outputTestsResult() {
 
 		for (var suiteName in testResult.suites) {
 
-			console.log(stylize(suiteName, 'bold'));
+			log(stylize(suiteName, 'bold'));
 
 			var suite = testResult.suites[suiteName];
 
@@ -319,11 +327,11 @@ function outputTestsResult() {
 						assertions = stylize('no assertions', 'yellow');
 					}
 
-					console.log('\t' + testName + '\t' + stylize( '[OK]', 'green' ) + ' (' + assertions + ')' );
+					log('\t' + testName + '\t' + stylize( '[OK]', 'green' ) + ' (' + assertions + ')' );
 
 				} else {
 
-					console.log('\t'+testName+'\t'+stylize('[FAIL]', 'lightred'));
+					log('\t'+testName+'\t'+stylize('[FAIL]', 'lightred'));
 
 					if ( test.messages && test.messages.length > 0 ) {
 						var messages = test.messages.split('\n');
@@ -374,14 +382,6 @@ function outputTestsResult() {
 
 function createPage(){
 	var page = require('webpage').create({
-		onError : function(msg, trace) {
-			console.error('Error:', msg);
-
-			trace.forEach(function(item) {
-				console.error('\t-', item.file, ':', item.line);
-			});
-		},
-
 		settings : {
 			loadPlugins : true,
 			localToRemoteUrlAccessEnabled : true,
@@ -412,6 +412,18 @@ function createPage(){
 				nextTest();
 				break;
 		}
+	};
+
+	page.onConsoleMessage = function(msg){
+		console.log( '>>> ' + msg );
+	};
+
+	page.onError = function(msg, trace) {
+		console.error('Error:', msg);
+
+		trace.forEach(function(item) {
+			console.error('\t-', item.file, ':', item.line);
+		});
 	};
 
 	return page;
