@@ -57,12 +57,6 @@ var SharingToolbar = {
 		}
 	},
 	showEmailModal: function(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel) {
-		var refreshPage = function() {
-			if (UserLogin.forceLoggedIn) {
-				(new Wikia.Querystring()).addCb().goTo();
-			}
-		};
-
 		$.showCustomModal(
 			lightboxShareEmailLabel,
 			'<label>'+lightboxShareEmailLabelAddress+'<br/>'
@@ -87,25 +81,24 @@ var SharingToolbar = {
 								$.showModal(result['info-caption'], result['info-content'], {
 									onClose: function() {
 										if (result.success) {
-											refreshPage();
+											UserLogin.refreshIfAfterForceLogin();
 										}
 									}
 								});
 								// close email modal when share is successful (BugId:16061)
 								if (result.success) {
 									$('#shareEmailModal').closeModal();
-									refreshPage();
+									UserLogin.refreshIfAfterForceLogin();
 								}
 							}
 						});
 					}},
 					{id:'cancel', message:'Cancel', handler:function(){
-							$('#shareEmailModal').hideModal();
-							refreshPage();
-						}
-					}
+						$('#shareEmailModal').hideModal();
+						UserLogin.refreshIfAfterForceLogin();
+					}}
 				],
-				onClose: refreshPage
+				onClose: $.proxy(UserLogin.refreshIfAfterForceLogin, UserLogin)
 			}
 		);
 	},
