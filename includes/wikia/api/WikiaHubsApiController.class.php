@@ -29,10 +29,10 @@ class WikiaHubsApiController extends WikiaApiController {
 	public function getModuleData() {
 		$this->wf->ProfileIn( __METHOD__ );
 		
-		$moduleId = $this->request->getInt('module');
-		$verticalId = $this->request->getInt('vertical');
-		$timestamp = $this->request->getInt('ts');
-		$lang = $this->request->getVal('lang', self::DEFAULT_LANG);
+		$moduleId = $this->request->getInt(self::PARAMETER_MODULE);
+		$verticalId = $this->request->getInt(self::PARAMETER_VERTICAL);
+		$timestamp = $this->request->getInt(self::PARAMETER_TIMESTAMP);
+		$lang = $this->request->getVal(self::PARAMETER_LANG, self::DEFAULT_LANG);
 		
 		$model = $this->getModel();
 
