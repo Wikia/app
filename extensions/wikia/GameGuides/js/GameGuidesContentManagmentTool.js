@@ -59,9 +59,12 @@ $(function(){
 				});
 			},
 			addNew = function(row, elem){
-				elem = elem || $ul.children(':last');
+				if(elem) {
+					elem.after(row);
+				}else{
+					$ul.append(row);
+				}
 
-				elem.after(row);
 				setup(elem.next().find('.cat-input'));
 				elem.next().find('input').first().focus();
 				$ul.sortable('refresh');
