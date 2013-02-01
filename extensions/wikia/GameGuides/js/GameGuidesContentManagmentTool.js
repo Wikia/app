@@ -59,14 +59,19 @@ $(function(){
 				});
 			},
 			addNew = function(row, elem){
+				var cat;
+
 				if(elem) {
 					elem.after(row);
+					cat = elem.next().find('.cat-input');
 				}else{
 					$ul.append(row);
+					cat = $ul.find('.cat-input:last');
 				}
 
-				setup(elem.next().find('.cat-input'));
-				elem.next().find('input').first().focus();
+				setup(cat);
+				cat.focus();
+
 				$ul.sortable('refresh');
 			},
 			checkInputs = function(elements, checkEmpty, required){
