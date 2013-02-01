@@ -102,14 +102,6 @@
 	&::after {
 		font-size: 2em;
 
-		-webkit-transition: all .5s;
-		-moz-transition: all .5s;
-		-ms-transition: all .5s;
-		-o-transition: all .5s;
-		transition: all .5s;
-
-		opacity: 0;
-
 		position: absolute;
 		right: -25px;
 	}
@@ -118,15 +110,11 @@
 		color: green;
 
 		content: '✓';
-
-		opacity: 1;
 	}
 
 	&.err::after {
 		color: red;
 
 		content: 'X';
-
-		opacity: 1;
 	}
 }
