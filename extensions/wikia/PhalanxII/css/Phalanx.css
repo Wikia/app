@@ -84,10 +84,6 @@
 	font-size:12px;
 }
 
-#phalanx-mainframe #bulkmode {
-	display: none;
-}
-
 #phalanx-check-results .unblock {
 	float: right;
 }

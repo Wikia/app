@@ -166,6 +166,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 				$result = array( 'success' => array(), 'failed' => 0 );
 				foreach ( $bulkdata as $bulkrow ) {
 					$bulkrow = trim($bulkrow);
+					$phalanx['id'] = null;
 					$phalanx['text'] = $bulkrow;
 
 					$id = $phalanx->save();
