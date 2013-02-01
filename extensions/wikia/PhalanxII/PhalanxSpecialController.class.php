@@ -9,7 +9,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		parent::__construct('Phalanx', 'phalanx' /* restrictions */);
 		$this->includable(false);
 		$this->title = SpecialPage::getTitleFor('Phalanx');
-		$this->service = F::build('PhalanxService');
+		$this->service = new PhalanxService();
 	}
 
 	public function isValid() {
@@ -191,7 +191,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Method called via AJAX from Special:Phalanx
+	 * Method called via AJAX from Special:Phalanx to remove blocks
 	 */
 	public function unblock() {
 		$this->wf->profileIn( __METHOD__ );
@@ -239,16 +239,19 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->wf->profileOut( __METHOD__ );
 	}
 
-	public function check() {
-		$block = $this->request->getVal( 'block' );
+	/**
+	 * Method called via AJAX from Special:Phalanx to validate regexp
+	 */
+	public function validate() {
+		$regexp = $this->request->getVal( 'regexp' );
 		$token = $this->request->getVal( 'token' );
 
-		if ( $token != $this->getToken() ) {
-			$this->wf->profileOut( __METHOD__ );
-			return;
+		if ( $token == $this->getToken() ) {
+			$this->setVal( 'valid', $this->service->validate( $regexp ) );
 		}
-
-		$this->setVal( 'valid', $this->validate( $block ) );
+		else {
+			$this->setVal( 'valid', false);
+		}
 	}
 
 	public function matchBlock() {
@@ -256,23 +259,15 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$token = $this->request->getVal( 'token' );
 		$block = $this->request->getVal( 'block' );
 
-		if ( $token == $this->wg->User->getEditToken() ) {
+		if ( $token == $this->getToken() ) {
 			foreach ( Phalanx::getAllTypeNames() as $type => $typeName ) {
-				$blocks = $this->match( $type, $block );
+				$blocks = $this->service->match( $type, $block );
 				if ( !empty( $blocks ) ) {
 					$result[$type] = $blocks;
 				}
 			}
 		}
 		$this->setVal('blocks', $result);
-	}
-
-	private function validate( $block ) {
-		return $this->service->validate( $block );
-	}
-
-	private function match( $type, $block ) {
-		return $this->service->match( $type, $block );
 	}
 
 	private function refresh( /*Array*/ $ids )  {
