@@ -137,7 +137,7 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 						$category = Category::newFromName( $catTitle );
 						//check if categories exists
-						if ( !( $category instanceof Category ) || $category->getPageCount() === 0 ) {
+						if ( !( $category instanceof Category ) ) {
 							$err[] = $catTitle;
 						} else if ( empty( $err ) ) {
 							$cat['id'] = $category->getTitle()->getArticleID();
