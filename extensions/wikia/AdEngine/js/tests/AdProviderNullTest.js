@@ -1,22 +1,22 @@
 /**
- * @test-framework QUnit
+ * @test-framework Jasmine
  * @test-require-asset extensions/wikia/AdEngine/js/AdProviderNull.js
  */
 
-module('AdProviderNull');
+describe('AdProviderNull', function(){
+	it('canHandleSlot', function() {
+		// setup
+		var logMock = function() {}
+			, adProviderNull = AdProviderNull(logMock);
 
-test('canHandleSlot', function() {
-	// setup
-	var logMock = function() {}
-		, adProviderNull = AdProviderNull(logMock);
+		expect(adProviderNull.canHandleSlot(['foo'])).toBeTruthy('canHandleSlot returns true');
+	});
 
-	equal(adProviderNull.canHandleSlot(['foo']), true, 'canHandleSlot returns true');
-});
+	it('fillInSlot', function() {
+		// setup
+		var logMock = function() {}
+			, adProviderNull = AdProviderNull(logMock);
 
-test('fillInSlot', function() {
-	// setup
-	var logMock = function() {}
-		, adProviderNull = AdProviderNull(logMock);
-
-	equal(typeof(adProviderNull.fillInSlot), 'function', 'fillInSlot method defined');
+		expect(typeof(adProviderNull.fillInSlot)).toBe('function', 'fillInSlot method defined');
+	});
 });
