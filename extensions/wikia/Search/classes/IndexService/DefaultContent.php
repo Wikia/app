@@ -123,22 +123,25 @@ class DefaultContent extends AbstractService
     				'sup.reference',
     				'script',
     				'style',
-    				'table',
     				);
     		foreach ( $garbageSelectors as $selector ) {
     			foreach ( $dom->find( $selector ) as $node ) {
     				$node->outertext = ' ';
     			}
     		}
-    
+    		
+    		$plaintext = '';
+    		foreach( $dom->find( 'table' ) as $table ) {
+    			$plaintext .= $table->plaintext;
+    			$table->outertext = ' '; 
+    		}
     		$dom->load( $dom->save() );
     		
     		$paragraphs = array();
     		foreach ( $dom->find( 'p' ) as $pNode ) {
     			$paragraphs[] = $pNode->plaintext;
     		}
-    		
-    		$plaintext = $dom->plaintext;
+    		$plaintext = $dom->plaintext . ' ' . $plaintext;
 		} else {
 			$plaintext = html_entity_decode( strip_tags( $html ), ENT_COMPAT, 'UTF-8' );
 		}
