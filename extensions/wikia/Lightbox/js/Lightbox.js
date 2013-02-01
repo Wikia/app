@@ -1250,7 +1250,6 @@ var Lightbox = {
 		}
 
 		// render carousel
-console.log('called');
 		var carouselThumbs = Lightbox.openModal.carouselTemplate.mustache({
 			liClass: liClass,
 			thumbs: thumbs
