@@ -20,7 +20,7 @@ class PhalanxService extends Service {
 		return $this;
 	}
 
-	public function user ( User $user ) {
+	public function user ( $user ) {
 		$this->user = $user; 
 		return $this;
 	}

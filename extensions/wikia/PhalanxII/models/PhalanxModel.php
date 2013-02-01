@@ -48,11 +48,14 @@ abstract class PhalanxModel extends WikiaObject {
 		Wikia::log( __METHOD__, __LINE__, "Block '#{$this->blockId}' blocked '{$this->text}'." );		
 	}
 
-	public function match( $type, $language = "en" ) {
-		return $this->service->limit(1)->match( $type, $this->text, $language );
+	protected function match( $type, $language = "en" ) {
+		return $this->service->
+			limit(1)->
+			user( ( ( isset( $this->user ) && ( $this->user->getName() == $this->wg->User->getName() ) ) ) ? $this->user : null )->
+			match( $type, $this->text, $language );
 	}
 	
-	public function check( $type, $language = "en" ) {
+	protected function check( $type, $language = "en" ) {
 		return $this->service->check( $type, $this->text, $language );		
 	}
 }
