@@ -33,5 +33,18 @@ require(['jquery', 'mw', 'phalanx', 'wikia.log'], function($, mw, phalanx, log) 
 
 			singleModeWrapper.slideUp();
 			bulkModeWrapper.slideDown();
+		}).
+
+		// handle "validate regex" button
+		on('click', '#validate', function(ev) {
+			var regex = $('#wpPhalanxFilter').val();
+
+			phalanx.validate(regex).
+				done(function(isValid) {
+					alert(isValid === true ? 'Valid' : 'Invalid');
+				}).
+				fail(function() {
+					alert('Request failed');
+				});
 		});
 });
