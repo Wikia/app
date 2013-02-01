@@ -27,17 +27,31 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		if($this->format == 'json') {
-			$this->slider = $this->model->getDataForModuleSlider();
-			$this->pulse = $this->model->getDataForModulePulse();
-			$this->tabber = $this->model->getDataForModuleTabber();
-			$this->explore = $this->model->getDataForModuleExplore();
-			$this->featuredvideo = $this->model->getDataForModuleFeaturedVideo();
-			$this->wikitextmoduledata = $this->model->getDataForModuleWikitext();
-			$this->topwikis = $this->model->getDataForModuleTopWikis();
-			$this->popularvideos = $this->model->getDataForModulePopularVideos();
-			$this->fromthecommunity = $this->model->getDataForModuleFromTheCommunity();
+		$toolboxModel = new MarketingToolboxModel();
+		$modulesData = $toolboxModel->getModulesData(
+			$this->wg->ContLang->getCode(),
+			MarketingToolboxModel::SECTION_HUBS,
+			$this->verticalId,
+			1359676800 // TODO change to current timestamp when model will be finished
+		);
+
+		$this->modules = array();
+
+		foreach ($toolboxModel->getModulesIds() as $moduleId) {
+			// TODO remove this if when other modules would be ready
+			if ($moduleId == MarketingToolboxModel::MODULE_EXPLORE) {
+				$moduleData = !empty($modulesData['moduleList'][$moduleId]['data'])
+					? $modulesData['moduleList'][$moduleId]['data']
+					: array();
+				$this->modules[$moduleId] = $this->renderModule(
+					$this->wg->ContLang->getCode(),
+					$this->verticalId,
+					$toolboxModel->getNotTranslatedModuleName($moduleId),
+					$moduleData
+				);
+			}
 		}
+
 		$this->response->addAsset('wikiahubs_v2');
 		$this->response->addAsset('wikiahubs_v2_modal');
 		$this->response->addAsset('wikiahubs_v2_scss');
@@ -47,20 +61,17 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		}
 	}
 
-	public function renderModule() {
-		$toolboxModel = new MarketingToolboxModel();
-
+	protected function renderModule($langCode, $verticalId, $moduleName, $moduleData) {
 		$module = MarketingToolboxModuleService::getModuleByName(
-			$toolboxModel->getNotTranslatedModuleName($this->getRequest()->getVal('moduleId')),
-			$this->wg->ContLang->getCode(),
+			$moduleName,
+			$langCode,
 			MarketingToolboxModel::SECTION_HUBS,
-			$this->verticalId
+			$verticalId
 		);
 
-		// TODO remove mocked timestamp when model will be finished
-		$moduleData = $module->loadData($toolboxModel, 1359676800);
+		$moduleData = $module->getStructuredData($moduleData);
 
-		$this->response->setBody($module->render($moduleData));
+		return $module->render($moduleData);
 	}
 
 	public function slider() {
