@@ -28,16 +28,15 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		$assetManager = AssetsManager::getInstance();
 
-		$styles = $assetManager->getURL(
+		$styles = $assetManager->getURL([
 			'extensions/wikia/GameGuides/css/GameGuidesContentManagmentTool.scss'
-		);
+		]);
 
 		foreach( $styles as $s ) {
 			$this->wg->Out->addStyle( $s );
 		}
 
 		$scripts = $assetManager->getURL([
-			'/resources/wikia/libraries/mustache/mustache.js',
 			'/extensions/wikia/GameGuides/js/GameGuidesContentManagmentTool.js'
 		]);
 
@@ -62,6 +61,15 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 		$this->response->setVal( 'category_placeholder', $this->wf->Msg( 'wikiagameguides-content-category' ) );
 		$this->response->setVal( 'name_placeholder', $this->wf->Msg( 'wikiagameguides-content-name' ) );
 
+
+		$categoryTemplate = $this->sendSelfRequest( 'category' )->toString();
+		$tagTemplate = $this->sendSelfRequest( 'tag' )->toString();
+
+		$this->wg->Out->addJsConfigVars([
+			'categoryTemplate' => $categoryTemplate,
+			'tagTemplate' => $tagTemplate
+		]);
+
 		$tags = WikiFactory::getVarValueByName( self::WIKI_FACTORY_VARIABLE_NAME, $this->wg->CityId );
 
 		if ( !empty( $tags ) ) {
@@ -84,8 +92,8 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 			$this->response->setVal( 'list', $list );
 		} else {
-			$this->response->setVal( 'tag', $this->sendSelfRequest( 'tag' ) );
-			$this->response->setVal( 'category', $this->sendSelfRequest( 'category' ) );
+			$this->response->setVal( 'tag', $tagTemplate );
+			$this->response->setVal( 'category', $categoryTemplate );
 		}
 
 		return true;

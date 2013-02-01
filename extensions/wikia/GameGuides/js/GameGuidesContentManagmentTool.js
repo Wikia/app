@@ -1,11 +1,11 @@
 /* global wgNamespaceIds, wgFormattedNamespaces, mw, wgServer, wgScript */
 $(function(){
-	require(['jquery', 'wikia.nirvana', 'JSMessages', 'wikia.loader', 'wikia.mustache'], function($, nirvana, msg, loader, mustache){
+	require(['jquery', 'wikia.nirvana', 'JSMessages'], function($, nirvana, msg){
 		'use strict';
 
 		var d = document,
-			category,
-			tag,
+			category = mw.config.get('categoryTemplate'),
+			tag = mw.config.get('tagTemplate'),
 			duplicateError = msg('wikiagameguides-content-duplicate-entry'),
 			requiredError = msg('wikiagameguides-content-required-entry'),
 			emptyTagError = msg('wikiagameguides-content-empty-tag'),
@@ -248,28 +248,6 @@ $(function(){
 			}
 		});
 
-		loader({
-			type: loader.MULTI,
-			resources: {
-				mustache: '/extensions/wikia/GameGuides/templates/GameGuidesSpecialContent_category.mustache,/extensions/wikia/GameGuides/templates/GameGuidesSpecialContent_tag.mustache'
-			}
-		}).done(
-			function(res){
-				//prepare html to be injected in ul
-				category = mustache.render(res.mustache[0], {
-					category_placeholder: msg('wikiagameguides-content-category'),
-					name_placeholder: msg('wikiagameguides-content-name')
-				});
-
-				tag = mustache.render(res.mustache[1], {
-					tag_placeholder:  msg('wikiagameguides-content-tag')
-				});
-
-				addTag.removeAttribute('disabled');
-				addCategory.removeAttribute('disabled');
-			}
-		);
-
 		//be sure this module is ready to be used
 		mw.loader.using(['jquery.autocomplete', 'jquery.ui.sortable'], function(){
 			$ul.sortable({
@@ -283,37 +261,6 @@ $(function(){
 					checkForm();
 				}
 			});
-
-	//		var openWMU = function(){
-	//			loader(
-	//				{
-	//					type: loader.LIBRARY,
-	//					resources: ['yui', 'jqueryAIM']
-	//				},
-	//				'/extensions/wikia/WikiaMiniUpload/css/WMU.scss',
-	//				'/extensions/wikia/WikiaMiniUpload/js/WMU.js'
-	//			).done(
-	//				function() {
-	//					openWMU = function(){
-	//						WMU_skipDetails = true;
-	//						WMU_show();
-	//						WMU_openedInEditor = false;
-	//					};
-	//
-	//					openWMU();
-	//				}
-	//			);
-	//		};
-	//
-	//
-	//		$form.on('click', '.photo', openWMU);
-	//
-	//		$(window).bind('WMU_addFromSpecialPage', function(event, wmuData) {
-	//			var filePageUrl = window.location.protocol + '//' + window.location.host + '/' + wmuData.imageTitle;
-	//
-	//			console.log(wmuData);
-	//			console.log(filePageUrl)
-	//		});
 
 			setup();
 		});
