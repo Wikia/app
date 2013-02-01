@@ -48,9 +48,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 	}
 
 	public function renderModule() {
-		// TODO
-		$exploreData = $this->model->getDataForModuleExplore();
-
 		$toolboxModel = new MarketingToolboxModel();
 
 		$module = MarketingToolboxModuleService::getModuleByName(
@@ -60,7 +57,10 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 			$this->verticalId
 		);
 
-		$this->response->setBody($module->render($exploreData));
+		// TODO remove mocked timestamp when model will be finished
+		$moduleData = $module->loadData($toolboxModel, 1359676800);
+
+		$this->response->setBody($module->render($moduleData));
 	}
 
 	public function slider() {
