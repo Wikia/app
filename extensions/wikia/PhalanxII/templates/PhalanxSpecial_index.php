@@ -12,9 +12,9 @@
 				<fieldset id="phalanx-input-filter">
 					<legend><?php echo wfMsg( 'phalanx-legend-input' ) ?></legend>
 					<form id="phalanx-block" method="post" action="<?= $action ?>">
-						<?php if ( !empty( $data['id'] ) ) { ?>
+						<?php if (!empty($editMode)): ?>
 						<input type="hidden" name="id" value="<?= $data['id'] ?>"/>
-						<?php } ?>
+						<?php endif; ?>
 						<!-- Filter -->
 						<div id="phalanx-block-texts">
 							<div id="phalanx-feedback-msg" class="clearfix"></div>
@@ -39,13 +39,23 @@
 								<label for="wpPhalanxFormatExact"><?php echo wfMsg( 'phalanx-format-exact' ) ?></label>
 							</div>
 							<div class="clearfix">
-								<label for="wpPhalanxExpire" class="left"><?php echo wfMsg( 'phalanx-label-expiry' ) ?></label>
-								<select name="wpPhalanxExpire" id="wpPhalanxExpire" class="blue" >
-									<? foreach ($expiries as $k => $v) { ?>
-										<option <?=($k == $data['expire']) ? "selected" : ""?> value="<?=$k?>"><?=$v?></option>
-									<? } ?>
-								</select>
-								<span id="phalanx-expire-old"></span>
+								<label>
+									<strong><?= wfMsg( 'phalanx-label-expiry' ) ?></strong>
+									<?php if (!empty($editMode)): ?>
+									<span class="expires"><?=
+										($data['expire'] === null)
+										?
+										wfMsg('phalanx-expires-infinite')
+										:
+										wfMsg('phalanx-expires', $app->wg->Lang->timeanddate($data['expire']))
+									?></span>
+									<?php endif; ?>
+									<select name="wpPhalanxExpire" id="wpPhalanxExpire" class="blue" >
+										<? foreach ($expiries as $k => $v) { ?>
+										<option value="<?=$k?>"><?=$v?></option>
+										<? } ?>
+									</select>
+								</label>
 							</div>
 						</div>
 						<!-- Type -->

@@ -54,10 +54,19 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$listing .= $pager->getBody();
 		$listing .= $pager->getNavigationBar();
 
-		$this->setVal( 'expiries', Phalanx::getExpireValues() );
+		$data = $this->blockDataForForm();
+		$editMode = !empty($data['id']);
+
+		$expiries = Phalanx::getExpireValues();
+		if ($editMode) {
+			$expiries = array_merge(array('' => wfMsg('phalanx-expiries-select')), $expiries);
+		}
+
+		$this->setVal( 'expiries', $expiries );
 		$this->setVal( 'languages', $this->wg->PhalanxSupportedLanguages );
 		$this->setVal( 'listing', $listing );
-		$this->setVal( 'data', $this->blockDataForForm() );
+		$this->setVal( 'data',  $data);
+		$this->setVal( 'editMode',  $editMode);
 		$this->setVal( 'action', $this->title->getLocalURL() );
 		$this->setVal( 'showEmail', $this->wg->User->isAllowed( 'phalanxemailblock' ) );
 
@@ -72,7 +81,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			// block edit
 			$data = Phalanx::newFromId($id);
 			$data['type'] = Phalanx::getTypeNames( $data['type'] );
-			$data['checkId'] = $this->wg->Request->getIntOrNull( 'id' );
+			$data['checkId'] = $id;
 			$data['checkBlocker'] = '';
 			$data['typeFilter'] = array();
 		}
@@ -98,7 +107,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$multitext = $this->wg->Request->getText( 'wpPhalanxFilterBulk' );
 
 		/* init Phalanx helper class */
-		$phalanx = F::build( 'Phalanx', array( $id ) );
+		$phalanx = Phalanx::newFromId($id);
 
 		$phalanx['text'] = $this->wg->Request->getText( 'wpPhalanxFilter' );
 		$phalanx['exact'] = $this->wg->Request->getCheck( 'wpPhalanxFormatExact' ) ? 1 : 0;
@@ -144,6 +153,8 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		} else {
 			$phalanx['expire'] = null ;
 		}
+
+		#var_dump($phalanx); die();
 
 		if ( empty( $multitext ) ) {
 			/* single mode - insert/update record */
