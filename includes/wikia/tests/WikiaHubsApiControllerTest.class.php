@@ -10,19 +10,25 @@ class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider getModuleDataExceptionsProvider
 	 */
 	public function testGetModuleDataExceptions($requestParams, $exceptionDetailsMsg) {
+		$requestGetIntMap = array(
+			array(
+				WikiaHubsApiController::PARAMETER_MODULE,
+				$requestParams[WikiaHubsApiController::PARAMETER_MODULE],
+			),
+			array(
+				WikiaHubsApiController::PARAMETER_VERTICAL,
+				$requestParams[WikiaHubsApiController::PARAMETER_VERTICAL]
+			),
+			array(
+				WikiaHubsApiController::PARAMETER_TIMESTAMP,
+				$requestParams[WikiaHubsApiController::PARAMETER_TIMESTAMP],
+			),
+		);
+		
 		$requestMock = $this->getMock('WikiaRequest', array('getInt', 'getVal'), array(), '', false);
-		$requestMock->expects($this->at(0))
+		$requestMock->expects($this->any())
 			->method('getInt')
-			->with($this->equalTo(WikiaHubsApiController::PARAMETER_MODULE))
-			->will($this->returnValue($requestParams[WikiaHubsApiController::PARAMETER_MODULE]));
-		$requestMock->expects($this->at(1))
-			->method('getInt')
-			->with($this->equalTo(WikiaHubsApiController::PARAMETER_VERTICAL))
-			->will($this->returnValue($requestParams[WikiaHubsApiController::PARAMETER_VERTICAL]));
-		$requestMock->expects($this->at(2))
-			->method('getInt')
-			->with($this->equalTo(WikiaHubsApiController::PARAMETER_TIMESTAMP))
-			->will($this->returnValue($requestParams[WikiaHubsApiController::PARAMETER_TIMESTAMP]));
+			->will($this->returnValueMap($requestGetIntMap));
 		$requestMock->expects($this->once())
 			->method('getVal')
 			->with($this->equalTo(WikiaHubsApiController::PARAMETER_LANG))
