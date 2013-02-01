@@ -58,7 +58,7 @@ class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
 					WikiaHubsApiController::PARAMETER_VERTICAL => 4,
 					WikiaHubsApiController::PARAMETER_TIMESTAMP => 1359676800,
 				),
-				'exceptionDetailsMsg' => $this->getExceptionDetails(WikiaHubsApiController::PARAMETER_MODULE)
+				'exceptionDetailsMsg' => InvalidParameterApiException::getDetailsMsg(WikiaHubsApiController::PARAMETER_MODULE),
 			),
 			array(
 				'requestParams' => array(
@@ -66,7 +66,7 @@ class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
 					WikiaHubsApiController::PARAMETER_VERTICAL => null,
 					WikiaHubsApiController::PARAMETER_TIMESTAMP => 1359676800,
 				),
-				'exceptionDetailsMsg' => $this->getExceptionDetails(WikiaHubsApiController::PARAMETER_VERTICAL)
+				'exceptionDetailsMsg' => InvalidParameterApiException::getDetailsMsg(WikiaHubsApiController::PARAMETER_VERTICAL),
 			),
 			array(
 				'requestParams' => array(
@@ -74,7 +74,7 @@ class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
 					WikiaHubsApiController::PARAMETER_VERTICAL => 5,
 					WikiaHubsApiController::PARAMETER_TIMESTAMP => null,
 				),
-				'exceptionDetailsMsg' => $this->getExceptionDetails(WikiaHubsApiController::PARAMETER_TIMESTAMP)
+				'exceptionDetailsMsg' => InvalidParameterApiException::getDetailsMsg(WikiaHubsApiController::PARAMETER_TIMESTAMP),
 			),
 			array(
 				'requestParams' => array(
@@ -82,7 +82,7 @@ class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
 					WikiaHubsApiController::PARAMETER_VERTICAL => 6,
 					WikiaHubsApiController::PARAMETER_TIMESTAMP => 1359676800,
 				),
-				'exceptionDetailsMsg' => $this->getExceptionDetails(WikiaHubsApiController::PARAMETER_MODULE)
+				'exceptionDetailsMsg' => InvalidParameterApiException::getDetailsMsg(WikiaHubsApiController::PARAMETER_MODULE),
 			),
 			array(
 				'requestParams' => array(
@@ -90,7 +90,7 @@ class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
 					WikiaHubsApiController::PARAMETER_VERTICAL => 0,
 					WikiaHubsApiController::PARAMETER_TIMESTAMP => 1359676800,
 				),
-				'exceptionDetailsMsg' => $this->getExceptionDetails(WikiaHubsApiController::PARAMETER_VERTICAL)
+				'exceptionDetailsMsg' => InvalidParameterApiException::getDetailsMsg(WikiaHubsApiController::PARAMETER_VERTICAL),
 			),
 			array(
 				'requestParams' => array(
@@ -98,12 +98,8 @@ class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
 					WikiaHubsApiController::PARAMETER_VERTICAL => 6,
 					WikiaHubsApiController::PARAMETER_TIMESTAMP => 0,
 				),
-				'exceptionDetailsMsg' => $this->getExceptionDetails(WikiaHubsApiController::PARAMETER_TIMESTAMP)
+				'exceptionDetailsMsg' => InvalidParameterApiException::getDetailsMsg(WikiaHubsApiController::PARAMETER_TIMESTAMP),
 			),
 		);
-	}
-	
-	protected function getExceptionDetails($paramName) {
-		return "Parameter '{$paramName}' is invalid";
 	}
 }
