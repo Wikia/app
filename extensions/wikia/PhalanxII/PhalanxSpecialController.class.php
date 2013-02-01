@@ -1,7 +1,6 @@
 <?php
 
 class PhalanxSpecialController extends WikiaSpecialPageController {
-	private $mDefaultExpire = '1 year';
 	private $title = null;
 	private $errorMsg = '';
 
@@ -175,8 +174,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * Method called via AJAX from Special:Phalanx
-	 *
-	 * @return array|bool
 	 */
 	public function unblock() {
 		$this->wf->profileIn( __METHOD__ );
@@ -226,7 +223,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$block = $this->request->getVal( 'block' );
 		$token = $this->request->getVal( 'token' );
 
-		if ( $token != $this->wg->User->getEditToken() ) {
+		if ( $token != $this->getToken() ) {
 			$this->wf->profileOut( __METHOD__ );
 			return;
 		}

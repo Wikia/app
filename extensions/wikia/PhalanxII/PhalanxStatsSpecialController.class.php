@@ -22,7 +22,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		$this->response->addAsset('extensions/wikia/Phalanx/css/Phalanx.css');
+		$this->response->addAsset('extensions/wikia/PhalanxII/css/Phalanx.css');
 
 		$this->blockId = intval($this->getPar());
 		if ( empty( $this->blockId ) ) {
@@ -73,6 +73,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$headers = array(
 			$this->wf->Msg('phalanx-stats-table-id'),
 			$this->wf->Msg('phalanx-stats-table-user'),
+			$this->wf->Msg('phalanx-stats-table-email'),
 			$this->wf->Msg('phalanx-stats-table-type'),
 			$this->wf->Msg('phalanx-stats-table-create'),
 			$this->wf->Msg('phalanx-stats-table-expire'),
@@ -83,9 +84,8 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		);
 
 		$tableAttribs = array(
-			'border' => 1,
 			'class' => 'wikitable',
-			'style' => "font-family:monospace;",
+			'width' => '100%',
 		);
 
 		$table  = Xml::buildTable( array( $data->toArray() ), $tableAttribs, $headers );
