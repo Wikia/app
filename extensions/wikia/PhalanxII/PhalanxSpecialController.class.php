@@ -105,7 +105,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$phalanx['case'] = $this->wg->Request->getCheck( 'wpPhalanxFormatCase' ) ? 1 : 0;
 		$phalanx['regex'] = $this->wg->Request->getCheck( 'wpPhalanxFormatRegex' ) ? 1 : 0;
 		$phalanx['timestamp'] = wfTimestampNow();
-		$phalanx['expire'] = $this->wg->Request->getText( 'wpPhalanxExpire' );
 		$phalanx['author_id'] = $this->wg->User->getId();
 		$phalanx['reason'] = $this->wg->Request->getText( 'wpPhalanxReason' );
 		$phalanx['lang'] = $this->wg->Request->getVal( 'wpPhalanxLanguages', null );
@@ -125,6 +124,10 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		}
 
 		$phalanx['type'] = $typemask;
+		$expire = $this->wg->Request->getText( 'wpPhalanxExpire', null );
+		if ( is_null( $expire ) ) {
+			$phalanx['expire'] = $expire;
+		}
 
 		if ( $phalanx['lang'] == 'all' ) {
 			$phalanx['lang'] = null;
