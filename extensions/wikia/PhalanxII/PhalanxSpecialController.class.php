@@ -5,7 +5,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	private $errorMsg = '';
 
 	public function __construct() {
-		parent::__construct('Phalanx');
+		parent::__construct('Phalanx', 'phalanx' /* restrictions */);
 		$this->includable(false);
 		$this->title = SpecialPage::getTitleFor('Phalanx');
 	}
@@ -177,6 +177,8 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	 */
 	public function unblock() {
 		$this->wf->profileIn( __METHOD__ );
+
+		$this->response->setFormat('json');
 		$this->setVal('success', false);
 
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
