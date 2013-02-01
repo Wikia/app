@@ -116,7 +116,7 @@ MarketingToolbox.prototype = {
 		$.when(
 			$.proxy(function(){
 				var tmpDate = new Date();
-				this.getModel().collectData(tmpDate.getFullYear(), tmpDate.getMonth() + 1);
+				return this.getModel().collectData(tmpDate.getFullYear(), tmpDate.getMonth() + 1);
 			}, this)()
 		).done($.proxy(function() {
 			if (this.isCalendarReady) {
