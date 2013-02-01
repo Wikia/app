@@ -47,6 +47,22 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		}
 	}
 
+	public function renderModule() {
+		// TODO
+		$exploreData = $this->model->getDataForModuleExplore();
+
+		$toolboxModel = new MarketingToolboxModel();
+
+		$module = MarketingToolboxModuleService::getModuleByName(
+			$toolboxModel->getNotTranslatedModuleName($this->getRequest()->getVal('moduleId')),
+			$this->wg->ContLang->getCode(),
+			MarketingToolboxModel::SECTION_HUBS,
+			$this->verticalId
+		);
+
+		$this->response->setBody($module->render($exploreData));
+	}
+
 	public function slider() {
 		/** @var $sliderModule WikiaHubsV2SliderModule */
 		$sliderModule = F::build('WikiaHubsV2SliderModule');
@@ -58,13 +74,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		} else {
 			$this->slider = $this->model->generateSliderWikiText($sliderData['images']);
 		}
-	}
-
-	public function explore() {
-		$exploreData = $this->model->getDataForModuleExplore();
-		$this->headline = $exploreData['headline'];
-		$this->image = $exploreData['imagelink'];
-		$this->linkgroups = $exploreData['linkgroups'];
 	}
 
 	public function pulse() {
