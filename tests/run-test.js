@@ -330,8 +330,9 @@ function outputTestsResult() {
 					log('\t' + testName + '\t' + stylize( '[OK]', 'green' ) + ' (' + assertions + ')' );
 
 				} else {
+					if(options.s) console.log(stylize(suiteName, 'bold'));
 
-					log('\t'+testName+'\t'+stylize('[FAIL]', 'lightred'));
+					console.log('\t'+testName+'\t'+stylize('[FAIL]', 'lightred'));
 
 					if ( test.messages && test.messages.length > 0 ) {
 						var messages = test.messages.split('\n');
