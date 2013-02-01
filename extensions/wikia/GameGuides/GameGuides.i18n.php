@@ -11,21 +11,42 @@ $messages['en'] = array(
 	//Content Managment tool
 	'wikiagameguides-content-title' => 'Wikia Game Guides content managment tool',
 	'wikiagameguides-content-category' => 'Category',
-	'wikiagameguides-content-category-desc' => 'Enter the categories on your wiki that you would like to include in Game Guides.',
 	'wikiagameguides-content-tag' => 'Category Tag (optional)',
-	'wikiagameguides-content-tag-desc' => 'Organize your game categories by giving them tags.',
 	'wikiagameguides-content-name' => 'Game Guide Name (optional)',
-	'wikiagameguides-content-name-desc' => 'Rename the wiki categories as you\'d like them to appear on Game Guides',
-	'wikiagameguides-content-add' => 'Add',
+	'wikiagameguides-content-add-tag' => 'Add Tag',
+	'wikiagameguides-content-add-category' => 'Add Category',
 	'wikiagameguides-content-save' => 'Save',
-	'wikiagameguides-content-category-error' => 'Category does not exists',
-	'wikiagameguides-content-duplicate-entry' => 'This value is duplicated'
+	'wikiagameguides-content-category-error' => 'Category does not exists or is empty',
+	'wikiagameguides-content-required-entry' => 'Category is required',
+	'wikiagameguides-content-duplicate-entry' => 'This value is duplicated',
+	'wikiagameguides-content-empty-tag' => 'This tag needs some categories',
+
+	'wikiagameguides-content-description-categories' => 'Add wiki "Categories" and rename them as you\'d like them to appear in Game Guides with "Game Guide Names".',
+	'wikiagameguides-content-description-tag' => 'Does it make sense to group categories under a game series installment? Add a category "Tag," and drag and drop wiki categories under it.',
+	'wikiagameguides-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
+	'wikiagameguides-content-description-no-tag' => 'Categories without tag or with empty tag will be shown as last in Game Guides.'
 );
 
 /** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides is the name of a product, do not translate on a per-word basis',
+
+	'wikiagameguides-content-title' => 'tilte of a page',
+	'wikiagameguides-content-tag' => 'placeholder for a tag input',
+	'wikiagameguides-content-name' => 'placeholder for a name input',
+	'wikiagameguides-content-add-tag' => 'message on a button',
+	'wikiagameguides-content-add-category' => 'message on a button',
+	'wikiagameguides-content-save' => 'message on a save button',
+	'wikiagameguides-content-category-error' => 'Error displayed when empty category is being added',
+	'wikiagameguides-content-required-entry' => 'Error if input with a category has been left empty',
+	'wikiagameguides-content-duplicate-entry' => 'Error for a duplicate entry',
+	'wikiagameguides-content-empty-tag' => 'Error for an empty tag (Tag with no categories in it)',
+
+	'wikiagameguides-content-description-categories' => 'message on top of the tool describing purpose of adding category',
+	'wikiagameguides-content-description-tag' => 'Message describing purpose of a tag',
+	'wikiagameguides-content-description-organize' => 'Message describing adding deleting and ordering of content',
+	'wikiagameguides-content-description-no-tag' => 'Message telling that categories without tag will be displayed last'
 );
 
 /** Asturian (asturianu)
