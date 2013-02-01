@@ -106,6 +106,7 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'phalanx-stats-table-reason' => 'Reason',
 	'phalanx-stats-row' => "at $4, filter type '''$1''' blocked '''$2''' on $3",
 	'phalanx-stats-row-per-wiki' => "user '''$2''' was blocked on '''$4''' by filter ID '''$3''' ($5) (type: '''$1''')",
+	'phalanx-stats-not-implemented' => 'This feature is not yet implemented',
 
 	'phalanx-rule-log-name' => 'Phalanx rules log',
 	'phalanx-rule-log-header' => 'This is a log of changes to phalanx rules.',
@@ -1801,6 +1802,7 @@ Prosimy [[Special:Contact|skontaktuj się z nami]] w sprawie problemu.<br />Blok
 	'phalanx-stats-table-reason' => 'Powód',
 	'phalanx-stats-row' => "w $4, typ filtru '''$1''' zablokowano '''$2''' na $3",
 	'phalanx-stats-row-per-wiki' => "użytkownik '''$2''' zablokował na '''$4''' wedle ID filtru '''$3''' ($5) (typ: '''$1''')",
+	'phalanx-stats-not-implemented' => 'Ta funkcjonalnośc nie została jeszcze zaimplementowana',
 	'phalanx-rule-log-name' => 'Rejestr Phalanx',
 	'phalanx-rule-log-header' => 'Jest to rejestr zmian reguł Phalanx.',
 	'phalanx-email-rule-log-name' => 'rejestr filtrów e-mailowych Phalanx',
