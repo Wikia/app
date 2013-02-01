@@ -193,6 +193,11 @@ class Phalanx implements arrayaccess {
 
 		return $types;
 	}
+	
+	/* get all phalanx types */
+	public static function getAllTypeNames() {
+		return self::$typeNames;
+	}
 
 	/* map array keys to fields in phalanx table */
 	private function mapToDB() {

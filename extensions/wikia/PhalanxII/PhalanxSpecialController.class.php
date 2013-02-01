@@ -4,11 +4,13 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	private $mDefaultExpire = '1 year';
 	private $title = null;
 	private $errorMsg = '';
+	private $service = null;
 
 	public function __construct() {
 		parent::__construct('Phalanx');
 		$this->includable(false);
 		$this->title = SpecialPage::getTitleFor('Phalanx');
+		$this->service = F::build('PhalanxService');
 	}
 
 	public function isValid() {
@@ -230,13 +232,36 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$this->wf->profileOut( __METHOD__ );
 			return;
 		}
-		$phalanxService = F::build('PhalanxService');
-		$this->setVal('valid', $phalanxService->validate( $block ));
+
+		$this->setVal( 'valid', $this->validate( $block ) );
+	}
+
+	public function matchBlock() {
+		$result = array();
+		$token = $this->request->getVal( 'token' );
+		$block = $this->request->getVal( 'block' );
+
+		if ( $token == $this->wg->User->getEditToken() ) {
+			foreach ( Phalanx::getAllTypeNames() as $type => $typeName ) {
+				$blocks = $this->match( $type, $block );
+				if ( !empty( $blocks ) ) {
+					$result[$type] = $blocks;
+				}
+			}
+		}
+		$this->setVal('blocks', $result);
+	}
+
+	private function validate( $block ) {
+		return $this->service->validate( $block );
+	}
+
+	private function match( $type, $block ) {
+		return $this->service->match( $type, $block );
 	}
 
 	private function refresh( /*Array*/ $ids )  {
-		$phalanxService = F::build('PhalanxService');
-		$this->setVal('valid', $phalanxService->reload( $ids ));
+		$this->setVal('valid', $this->service->reload( $ids ));
 	}
 
 	private function getToken() {

@@ -5,11 +5,18 @@
 
 class PhalanxService extends Service {
 	private $response = null;
+	private $limit = 0;
 
 	const RES_OK = 'ok';
 	const RES_FAILURE = 'failure';
 	const RES_STATUS = 'PHALANX ALIVE';
 
+	/**
+	 * limit of blocks 
+	 */
+	public function setLimit( $limit = 1 ) {
+		$this->limit = $limit; return $this;
+	}
 
 	/**
 	 * check service status
@@ -70,7 +77,7 @@ class PhalanxService extends Service {
 	 * @example curl "http://localhost:8080/stats"
 	 *
 	 */
-	public function stats(  ) {
+	public function stats() {
 		return $this->sendToPhalanxDaemon( "stats", array() );
 	}
 
@@ -88,7 +95,6 @@ class PhalanxService extends Service {
 		wfProfileIn( __METHOD__  );
 
 		$url = sprintf( "%s/%s", F::app()->wg->PhalanxServiceUrl, $action != "status" ? $action : "" );
-
 
 		/**
 		 * for status we're sending GET
@@ -124,8 +130,14 @@ class PhalanxService extends Service {
 					}
 					else {
 						if ( is_array( $ret ) ) {
-							/* first block ID ? */
-							reset( $ret ); $res = current( $ret );
+							reset( $ret );
+							if ( $this->limit == 1 ) {
+								$res = current( $ret );
+							} elseif ( $this->limit > 1 ) {
+								$res = array_slice( $ret, 0, $this->limit );
+							} else {
+								$res = $ret;
+							}
 						} else {
 							$res = $ret;
 						}

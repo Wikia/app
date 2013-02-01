@@ -49,7 +49,7 @@ abstract class PhalanxModel extends WikiaObject {
 	}
 
 	public function match( $type, $language = "en" ) {
-		return $this->service->match( $type, $this->text, $language );
+		return $this->service->limit(1)->match( $type, $this->text, $language );
 	}
 	
 	public function check( $type, $language = "en" ) {
