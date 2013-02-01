@@ -1,86 +1,87 @@
 /**
- * @test-framework QUnit
+ * @test-framework Jasmine
  * @test-require-asset extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js
  */
 
-module('AdLogicHighValueCountry');
+describe('AdLogicHighValueCountry', function(){
 
-test('wgHighValueCountries present in window', function() {
-	var windowMock = {wgHighValueCountries: {'XX': 5, 'YY': 7, 'ZZ': 0, 'aa': 7}},
-		adLogicHighValueCountry = AdLogicHighValueCountry(windowMock),
-		undef;
+	it('wgHighValueCountries present in window', function() {
+		var windowMock = {wgHighValueCountries: {'XX': 5, 'YY': 7, 'ZZ': 0, 'aa': 7}},
+			adLogicHighValueCountry = AdLogicHighValueCountry(windowMock),
+			undef;
 
-	equal(adLogicHighValueCountry.isHighValueCountry('aa'), false, 'aa isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('aa')).toBeFalsy('aa isHighValueCountry');
 
-	equal(adLogicHighValueCountry.isHighValueCountry('XX'), true, 'XX isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('xx'), true, 'xx isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('YY'), true, 'YY isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('yy'), true, 'yy isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('ZZ'), false, 'ZZ isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('zz'), false, 'zz isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('BB'), false, 'BB isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('bb'), false, 'bb isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('CC'), false, 'CC isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('cc'), false, 'cc isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('XX')).toBeTruthy('XX isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('xx')).toBeTruthy('xx isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('YY')).toBeTruthy('YY isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('yy')).toBeTruthy('yy isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('ZZ')).toBeFalsy('ZZ isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('zz')).toBeFalsy('zz isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('BB')).toBeFalsy('BB isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('bb')).toBeFalsy('bb isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('CC')).toBeFalsy('CC isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('cc')).toBeFalsy('cc isHighValueCountry');
 
-	equal(adLogicHighValueCountry.isHighValueCountry(undef), false, 'undefined isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry(null), false, 'null isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('unknown'), false, 'unknown isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry(undef)).toBeFalsy('undefined isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry(null)).toBeFalsy('null isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('unknown')).toBeFalsy('unknown isHighValueCountry');
 
-	equal(adLogicHighValueCountry.getMaxCallsToDART('aa'), 0, 'aa getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('aa')).toBe(0, 'aa getMaxCallsToDART');
 
-	equal(adLogicHighValueCountry.getMaxCallsToDART('XX'), 5, 'XX getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('xx'), 5, 'xx getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('YY'), 7, 'YY getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('yy'), 7, 'yy getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('ZZ'), 0, 'ZZ getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('zz'), 0, 'zz getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('BB'), 0, 'BB getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('bb'), 0, 'bb getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('CC'), 0, 'CC getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('cc'), 0, 'cc getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('XX')).toBe(5, 'XX getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('xx')).toBe(5, 'xx getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('YY')).toBe(7, 'YY getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('yy')).toBe(7, 'yy getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('ZZ')).toBe(0, 'ZZ getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('zz')).toBe(0, 'zz getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('BB')).toBe(0, 'BB getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('bb')).toBe(0, 'bb getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('CC')).toBe(0, 'CC getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('cc')).toBe(0, 'cc getMaxCallsToDART');
 
-	equal(adLogicHighValueCountry.getMaxCallsToDART(undef), 0, 'undefined getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART(null), 0, 'null getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('unknown'), 0, 'unknown getMaxCallsToDART');
-});
+		expect(adLogicHighValueCountry.getMaxCallsToDART(undef)).toBeFalsy('undefined getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART(null)).toBeFalsy('null getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('unknown')).toBe(0, 'unknown getMaxCallsToDART');
+	});
 
-test('wgHighValueCountries not present in window', function() {
-	var windowMock = {},
-		adLogicHighValueCountry = AdLogicHighValueCountry(windowMock),
-		undef;
+	it('wgHighValueCountries not present in window', function() {
+		var windowMock = {},
+			adLogicHighValueCountry = AdLogicHighValueCountry(windowMock),
+			undef;
 
-	equal(adLogicHighValueCountry.isHighValueCountry('CA'), true, 'CA isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('ca'), true, 'ca isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('US'), true, 'US isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('us'), true, 'us isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('UK'), true, 'UK isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('uk'), true, 'uk isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('RU'), false, 'RU isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('ru'), false, 'ru isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('BG'), false, 'BG isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('bg'), false, 'bg isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('RO'), false, 'RO isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('ro'), false, 'ro isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('CA')).toBeTruthy('CA isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('ca')).toBeTruthy('ca isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('US')).toBeTruthy('US isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('us')).toBeTruthy('us isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('UK')).toBeTruthy('UK isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('uk')).toBeTruthy('uk isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('RU')).toBeFalsy('RU isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('ru')).toBeFalsy('ru isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('BG')).toBeFalsy('BG isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('bg')).toBeFalsy('bg isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('RO')).toBeFalsy('RO isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('ro')).toBeFalsy('ro isHighValueCountry');
 
-	equal(adLogicHighValueCountry.isHighValueCountry(undef), false, 'undefined isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry(null), false, 'null isHighValueCountry');
-	equal(adLogicHighValueCountry.isHighValueCountry('unknown'), false, 'unknown isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry(undef)).toBeFalsy('undefined isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry(null)).toBeFalsy('null isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry('unknown')).toBeFalsy('unknown isHighValueCountry');
 
-	equal(adLogicHighValueCountry.getMaxCallsToDART('CA'), 3, 'CA getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('ca'), 3, 'ca getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('US'), 3, 'US getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('us'), 3, 'us getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('UK'), 3, 'UK getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('uk'), 3, 'uk getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('RU'), 0, 'RU getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('ru'), 0, 'ru getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('BG'), 0, 'BG getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('bg'), 0, 'bg getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('RO'), 0, 'RO getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('ro'), 0, 'ro getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('CA')).toBe(3, 'CA getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('ca')).toBe(3, 'ca getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('US')).toBe(3, 'US getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('us')).toBe(3, 'us getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('UK')).toBe(3, 'UK getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('uk')).toBe(3, 'uk getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('RU')).toBe(0, 'RU getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('ru')).toBe(0, 'ru getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('BG')).toBe(0, 'BG getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('bg')).toBe(0, 'bg getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('RO')).toBe(0, 'RO getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('ro')).toBe(0, 'ro getMaxCallsToDART');
 
-	equal(adLogicHighValueCountry.getMaxCallsToDART(undef), 0, 'undefined getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART(null), 0, 'null getMaxCallsToDART');
-	equal(adLogicHighValueCountry.getMaxCallsToDART('unknown'), 0, 'unknown getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART(undef)).toBeFalsy('undefined getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART(null)).toBeFalsy('null getMaxCallsToDART');
+		expect(adLogicHighValueCountry.getMaxCallsToDART('unknown')).toBe(0, 'unknown getMaxCallsToDART');
+	});
 });
