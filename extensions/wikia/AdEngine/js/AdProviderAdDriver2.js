@@ -21,25 +21,25 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 	// TODO: tile is not used, keys without apostrophes
 
 	slotMap = {
-		'CORP_TOP_LEADERBOARD': {'size': '728x90,468x60,980x130,1030x130', 'tile':2, 'loc': 'top', 'dcopt': 'ist'},
-		'CORP_TOP_RIGHT_BOXAD': {'size': '300x250,300x600', 'tile':1, 'loc': 'top'},
-		'EXIT_STITIAL_BOXAD_1': {'size':'600x400,300x250', 'tile':2, 'loc': "exit"},
-		'HOME_TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130', 'tile':2, 'loc':'top', 'dcopt':'ist'},
-		'HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
-		'HUB_TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130', 'tile':2, 'loc':'top', 'dcopt':'ist'},
-		'LEFT_SKYSCRAPER_2': {'size':'160x600,120x600', 'tile':3, 'loc':'middle'},
-		'LEFT_SKYSCRAPER_3': {'size': '160x600', 'tile':6, 'loc':'footer'},
-		'MODAL_INTERSTITIAL': {'size':'600x400,300x250','tile':2,'loc':'modal'},
-		'MODAL_INTERSTITIAL_1': {'size':'600x400,300x250','tile':2,'loc':'modal'},
-		'MODAL_INTERSTITIAL_2': {'size':'600x400,300x250','tile':2,'loc':'modal'},
-		'MODAL_INTERSTITIAL_3': {'size':'600x400,300x250','tile':2,'loc':'modal'},
-		'MODAL_INTERSTITIAL_4': {'size':'600x400,300x250','tile':2,'loc':'modal'},
-		'MODAL_RECTANGLE': {'size':'300x100','tile':2,'loc':'modal'},
-		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
-		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
-		'TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130', 'tile':2, 'loc':'top', 'dcopt':'ist'},
-		'TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
-		'WIKIA_BAR_BOXAD_1': {'size':'320x50', 'tile': 4, 'loc':'bottom'}
+		'CORP_TOP_LEADERBOARD': {'size': '728x90,468x60,980x130,1030x130,1x1', 'tile':2, 'loc': 'top', 'dcopt': 'ist'},
+		'CORP_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,1x1', 'tile':1, 'loc': 'top'},
+		'EXIT_STITIAL_BOXAD_1': {'size':'600x400,300x250,1x1', 'tile':2, 'loc': "exit"},
+		'HOME_TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130,1x1', 'tile':2, 'loc':'top', 'dcopt':'ist'},
+		'HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600,1x1', 'tile':1, 'loc':'top'},
+		'HUB_TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130,1x1', 'tile':2, 'loc':'top', 'dcopt':'ist'},
+		'LEFT_SKYSCRAPER_2': {'size':'160x600,120x600,1x1', 'tile':3, 'loc':'middle'},
+		'LEFT_SKYSCRAPER_3': {'size': '160x600,1x1', 'tile':6, 'loc':'footer'},
+		'MODAL_INTERSTITIAL': {'size':'600x400,300x250,1x1','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL_1': {'size':'600x400,300x250,1x1','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL_2': {'size':'600x400,300x250,1x1','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL_3': {'size':'600x400,300x250,1x1','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL_4': {'size':'600x400,300x250,1x1','tile':2,'loc':'modal'},
+		'MODAL_RECTANGLE': {'size':'300x100,1x1','tile':2,'loc':'modal'},
+		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250,300x600,1x1', 'tile':1, 'loc':'top'},
+		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600,1x1', 'tile':1, 'loc':'top'},
+		'TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130,1x1', 'tile':2, 'loc':'top', 'dcopt':'ist'},
+		'TOP_RIGHT_BOXAD': {'size':'300x250,300x600,300x100,1x1', 'tile':1, 'loc':'top'},
+		'WIKIA_BAR_BOXAD_1': {'size':'320x50,1x1', 'tile': 4, 'loc':'bottom'}
 	};
 
 // FORMER SLOTS {
@@ -120,10 +120,14 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 			, url
 
 			, hopTimer, hopTime
+			, inLeaderboardTest = abTest && abTest.getGroup('LEADERBOARD_TESTS')
+			, inMedRecTest = abTest && abTest.getGroup('MEDREC_TESTS')
 		;
 
 		// Always have an ad when user is in the LEADERBOARD_TESTS experiment
-		if (!(abTest && abTest.getGroup('LEADERBOARD_TESTS') && slotname === 'TOP_LEADERBOARD')) {
+		if (!(inLeaderboardTest && slotname === 'TOP_LEADERBOARD')
+			&& !(inMedRecTest && slotname === 'TOP_RIGHT_BOXAD')
+		) {
 			if (!isHighValueCountry) {
 				error();
 				return;

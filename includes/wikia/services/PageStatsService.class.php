@@ -33,6 +33,16 @@ class PageStatsService extends Service {
 	}
 
 	/**
+	 * Get title or create new from id
+	 */
+	private function getTitle() {
+		if(empty($this->mTitle)){
+			$this->mTitle = Title::newFromId($this->pageId, Title::GAID_FOR_UPDATE /* fix for slave lag */);
+		}
+		return $this->mTitle;
+	}
+
+	/**
 	 * Refresh cache when article is edited
 	 *
 	 * @param WikiPage $article
@@ -60,11 +70,15 @@ class PageStatsService extends Service {
 	static function onArticleDeleteComplete(&$article, &$user, $reason, $articleId) {
 		wfProfileIn(__METHOD__);
 
-		// tell service to invalidate cached data for deleted page
-		$service = new self($articleId);
-		$service->regenerateData();
+		$title = $article->getTitle();
 
-		wfDebug(__METHOD__ . ": cache cleared for page #{$articleId}\n");
+		// tell service to invalidate cached data for deleted page
+		if (!empty($title)) {
+			$service = self::newFromTitle($title);
+			$service->regenerateData();
+
+			wfDebug(__METHOD__ . ": cache cleared for page #{$articleId}\n");
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -87,7 +101,7 @@ class PageStatsService extends Service {
 		$wgMemc->delete($this->getKey('previous-edits'));
 
 		// invalidate cached data from getCommentsCount()
-		$title = Title::newFromId($this->pageId, Title::GAID_FOR_UPDATE /* fix for slave lag */);
+		$title = $this->getTitle();
 
 		if (!empty($title)) {
 			$pageName = $title->getPrefixedText();

@@ -410,7 +410,7 @@
 			$app = F::app();
 			$app->wf->ProfileIn( __METHOD__ );
 
-			$cacheVersion = 1;
+			$cacheVersion = 2;
 			$limitDefault = 200;
 			$limitUsed = ( $limit > $limitDefault ) ? $limit : $limitDefault ;
 

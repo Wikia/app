@@ -129,7 +129,13 @@ EOT;
 				$script = <<<EOT
 if (!window.wgUserName || window.wgUserShowAds) {
 	var wikiaDartHelper = WikiaDartHelper(Wikia.log, window, document, Krux, AdLogicShortPage(document), DartUrl());
-	var jwplayer_ad_tag = wikiaDartHelper.getUrl({slotname:'JWPLAYER', slotsize:'320x240', adType:'pfadx', src:'jwplayer'});
+	var jwplayer_ad_tag = wikiaDartHelper.getUrl({
+		slotname: 'JWPLAYER',
+		slotsize: '320x240',
+		adType: 'pfadx',
+		src: 'jwplayer',
+		subdomain: AdLogicDartSubdomain(Geo).getSubdomain()
+	});
 	$googimaDataVariable = {
         'ad.position': 'pre',
         'ad.bandwidth': 'high',

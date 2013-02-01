@@ -10,7 +10,7 @@ class ExternalStoreDBFetchBlobHookTest extends WikiaBaseTest {
 	public function testApiCall() {
 		$result = false;
 
-		$mockApiURL = "http://community.eloy.wikia-dev.com/api.php";
+		$mockApiURL = "http://community.wikia.com/api.php";
 		$this->mockGlobalVariable( "wgFetchBlobApiURL", $mockApiURL);
 		$this->mockApp();
 

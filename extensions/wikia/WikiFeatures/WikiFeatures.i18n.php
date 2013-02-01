@@ -43,7 +43,7 @@ $messages['en'] = array(
 	// feature message list
 	
 	'wikifeatures-feature-heading-wgEnableForumExt' => 'Forum',
-	'wikifeatures-feature-description-wgEnableForumExt' => "Stay on top of every discussion on your wiki by utilizing Wikia's new [[w:c:community:Help:Forum|Forums]]. Attract new people to participate in conversations about your wiki's content, and keep dedicated wiki editors efficient and engaged with all of the current topics. ",	
+	'wikifeatures-feature-description-wgEnableForumExt' => "Stay on top of every discussion on your wiki by utilizing Wikia's new [[w:c:community:Help:Forum|Forum]]. Attract new people to participate in conversations about your wiki's content, and keep dedicated wiki editors efficient and engaged with all of the current topics. ",	
 	
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Top 10 Lists',
 	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => '[[w:c:community:Help:Top 10 Lists|Top 10 Lists]] allow anyone on your wiki to create a votable list. If you\'re looking for a great way to get junior editors to interact with the wiki, this is it! Enabling this feature will add "Top 10 List" as an option when you click "Add a Page"',

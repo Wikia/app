@@ -717,13 +717,13 @@ class ArticleCommentList {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
 						$oComment = new ArticleComment($oCommentTitle);
-						//$oComment->doDeleteComment($deleteReason);
+						$oComment->doDeleteComment($deleteReason);
 					}
 				}
 
 				$wgRC2UDPEnabled = $irc_backup; //restore to whatever it was
 				$listing = ArticleCommentList::newFromTitle($parentTitle);
-				//$listing->purge();
+				$listing->purge();
 			} else {
 				$taskParams= array(
 					'mode' 		=> 'you',

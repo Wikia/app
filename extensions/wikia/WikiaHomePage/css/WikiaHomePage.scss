@@ -77,11 +77,10 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 	/* page header */
 	.wikiahomepage-header {
 		@include clearfix;
-		margin-top: 25px;
 		position: relative;
 		.wikiahompage-heading-group {
 			float: left;
-			margin-left: 0;
+			margin-left: 15px;
 			h1 {
 				font-size: 27px;
 				font-weight: bold;

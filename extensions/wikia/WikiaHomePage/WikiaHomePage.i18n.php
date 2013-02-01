@@ -109,7 +109,6 @@ __NOEDITSECTION__',
 *[http://mediakit.wikia.com/Solutions/Audience Audience]
 *[http://mediakit.wikia.com/Solutions Solutions]
 *[http://mediakit.wikia.com/Advertising-Products Ad products]
-*[https://wikia.sl.advertising.com/admin/advertisers/indexPl.jsp Self Service]
 __NOEDITSECTION__',
 
 	'wikia-home-page-hot' => 'Hot',
@@ -230,8 +229,7 @@ $messages['de'] = array(
 	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Auf Wikia werben]===
 *[http://mediakit.wikia.com/Solutions/Audience Zielgruppe]
 *[http://mediakit.wikia.com/Solutions Lösungen]
-*[http://mediakit.wikia.com/Advertising-Products Produkte]
-*[https://wikia.sl.advertising.com/admin/advertisers/indexPl.jsp Self Service]',
+*[http://mediakit.wikia.com/Advertising-Products Produkte]',
 
 	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' Seite|'''$1''' Seiten }}",
 	'wikiahome-preview-stats-photos' => "{{PLURAL:$1|'''1''' Foto|'''$1''' Fotos}}",
@@ -350,7 +348,6 @@ __NOEDITSECTION__',
 *[http://mediakit.wikia.com/Solutions/Audience Audiencia]
 *[http://mediakit.wikia.com/Solutions Soluciones]
 *[http://mediakit.wikia.com/Advertising-Products Anuncios]
-*[https://wikia.sl.advertising.com/admin/advertisers/indexPl.jsp Autoservicio]
 __NOEDITSECTION__',
 
 	'wikia-home-page-hot' => 'Calentito',
@@ -462,7 +459,6 @@ __NOEDITSECTION__',
 *[http://mediakit.wikia.com/Solutions/Audience Taux d’écoute]
 *[http://mediakit.wikia.com/Solutions Solutions]
 *[http://mediakit.wikia.com/Advertising-Products Produits publicitaires]
-*[https://wikia.sl.advertising.com/admin/advertisers/indexPl.jsp Libre-service]
 __NOEDITSECTION__',
 	'wikia-home-page-hot' => 'Chaud',
 	'wikia-home-page-new' => 'Nouveau',

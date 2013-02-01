@@ -42,7 +42,7 @@ class LightboxController extends WikiaController {
 	*/
 	public function getThumbImages() {
 		$count = $this->request->getVal('count', 20);
-		$to = $this->request->getVal( 'to', 0 );
+		$to = $this->request->getInt( 'to', 0 );
 		$includeLatestPhotos = $this->request->getVal( 'inclusive', '' );
 
 		$thumbs = array();

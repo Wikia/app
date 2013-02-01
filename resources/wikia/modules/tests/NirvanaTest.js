@@ -182,4 +182,25 @@ describe("Nirvana", function () {
 			}
 		);
 	});
+
+	async.it('data can be a string', function(done) {
+		// mock the request
+		var urlParams = 'value=1&abc=xyz'
+			ajaxMock = function(params) {
+				expect(params.data).toBe(urlParams);
+
+				// fire callback
+				params.success();
+			},
+			nirvana = define.getModule(ajaxMock);
+
+		nirvana.getJson(
+			controllerName,
+			methodName,
+			urlParams,
+			function() {
+				done();
+			}
+		);
+	});
 });

@@ -318,11 +318,6 @@ class SpecialCustomEditPage extends SpecialPage {
 			'required' => true
 		));
 
-		// TODO: call appriopriate hook instead of a function
-		if( function_exists('CategorySelectInitializeHooks') ) {
-			CategorySelectInitializeHooks($this->out, $this->getEditedArticle(), $this->getEditedArticle()->getTitle(), $this->user, $this->request, null, true );
-		}
-
 		$pageTitle = $this->getPageTitle();
 		if( !empty($pageTitle) ) {
 			$this->setPageTitle($pageTitle);
@@ -459,6 +454,17 @@ class SpecialCustomEditPage extends SpecialPage {
 				$wikitext = $this->getWikitextFromField('content');
 			} else {
 				$wikitext = $this->getWikitextFromField('wpTextbox1');
+			}
+		}
+
+		// Add categories to wikitext
+		if ( !empty( $this->app->wg->EnableCategorySelectExt ) ) {
+			$categories = $this->request->getVal( 'categories', '' );
+			$section = $this->request->getVal( 'section', '' );
+
+			// Only add if editing entire article (not section)
+			if ( empty( $section ) && !empty( $categories ) ) {
+				$wikitext .= CategorySelect::changeFormat( $categories, 'json', 'wikitext' );
 			}
 		}
 

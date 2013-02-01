@@ -14,7 +14,7 @@ EditHub.prototype = {
 
 		$('.MarketingToolboxMain .wmu-show').click($.proxy(this.wmuInit, this));
 		$('.MarketingToolboxMain .vet-show').click($.proxy(this.vetInit, this));
-		$('.remove-sponsored-image').click($.proxy(this.removeSponsoredImage, this));
+		$('.remove-sponsored-image').click($.proxy(this.confirmRemoveSponsoredImage, this));
 
 		this.form = $('#marketing-toolbox-form');
 
@@ -202,6 +202,12 @@ EditHub.prototype = {
 		elem.find('.image-placeholder').find('img').attr('src', wgBlankImgUrl)
 			.end().filter('.video').empty();
 		this.removeSponsoredImage();
+	},
+
+	confirmRemoveSponsoredImage: function() {
+		if (confirm($.msg('marketing-toolbox-edithub-clear-sponsored-image')) == true) {
+			this.removeSponsoredImage();
+		}
 	},
 
 	removeSponsoredImage: function() {

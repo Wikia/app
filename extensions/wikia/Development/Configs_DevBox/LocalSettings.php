@@ -60,7 +60,6 @@ switch($wgWikiaDatacenter) {
 			0 => "10.8.44.110:11000", # dev-memcached1
 			1 => "10.8.36.107:11000", # dev-memcached2
 		);
-
 		break;
 
 	case 'poz':
@@ -80,6 +79,7 @@ switch($wgWikiaDatacenter) {
 			0 => "10.14.30.143:11000", # dev-memcached-p1
 			1 => "10.14.30.143:11000", # dev-memcached-p2
 		);
+
 		require_once( "$IP/extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php" );
 		break;
 }
@@ -140,12 +140,6 @@ if (empty($wgRunningUnitTests)) {
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
-// The list of cached i18n files is "fixed" too early as a side effect
-// of extension init functions which check user options (like FBConnect)
-// this speeds up devboxes a lot because init() is faster than recache()
-// TODO: I think this affects production also
-Language::getLocalisationCache()->unloadAll();
-
 $wgArticlePath = "/wiki/$1";
 
 // Just in case this has been reset somewhere else in here.
@@ -159,8 +153,8 @@ $wgDefaultExternalStore = array( "DB://dev-archive");
 // OpenXSPC
 $wgEnableOpenXSPC = true;
 
-// generate cache on every request
-$wgLocalisationCacheConf[ "manualRecache" ] = false;
+//rebulild message cache when ?rebuildmessages is appended to url
+$wgLocalisationCacheConf[ "manualRecache" ] = !array_key_exists( 'rebuildmessages', $_GET );
 
 // disable irc feed
 $wgRC2UDPEnabled = false;

@@ -12,6 +12,11 @@
 //SpecialPromote needs log on onload
 $.fn.log = function(){return true;}
 
+$.loadJQueryAIM = function() {
+	var dfd = new $.Deferred();
+	return dfd.promise();
+};
+
 function specialPromoteSetup() {
 	// create a SpecialPromote instance and mock methods
 	$.showModal = function() {return true;}

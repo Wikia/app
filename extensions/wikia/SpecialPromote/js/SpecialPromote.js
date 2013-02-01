@@ -432,7 +432,9 @@ SpecialPromote.prototype = {
 	}
 };
 
-var SpecialPromoteInstance = new SpecialPromote();
 $(function () {
-	SpecialPromoteInstance.init();
+	$.loadJQueryAIM().done(function() {
+		var SpecialPromoteInstance = new SpecialPromote();
+		SpecialPromoteInstance.init();
+	});
 });
