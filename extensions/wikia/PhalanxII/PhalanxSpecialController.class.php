@@ -40,8 +40,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		if ( $this->wg->Request->wasPosted() ) {
 			$res = $this->handlePost($currentTab);
-
-			// TODO: handle errors
+			$message = wfMsg( ($res !== false) ? 'phalanx-block-success' : 'phalanx-block-failure' );
 		}
 
 		// load resource loader module
@@ -69,6 +68,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'editMode',  $editMode);
 		$this->setVal( 'action', $this->title->getLocalURL() );
 		$this->setVal( 'showEmail', $this->wg->User->isAllowed( 'phalanxemailblock' ) );
+		$this->setVal( 'message', isset($message) ? $message : '' );
 
 		$this->wf->profileOut( __METHOD__ );
 	}

@@ -12,12 +12,13 @@
 				<fieldset id="phalanx-input-filter">
 					<legend><?php echo wfMsg( 'phalanx-legend-input' ) ?></legend>
 					<form id="phalanx-block" method="post" action="<?= $action ?>">
-						<?php if (!empty($editMode)): ?>
-						<input type="hidden" name="id" value="<?= $data['id'] ?>"/>
-						<?php endif; ?>
 						<!-- Filter -->
 						<div id="phalanx-block-texts">
-							<div id="phalanx-feedback-msg" class="clearfix"></div>
+							<div id="phalanx-feedback-msg" class="clearfix"><?= $message ?></div>
+							<?php if (!empty($editMode)): ?>
+							<input type="hidden" name="id" value="<?= $data['id'] ?>"/>
+							<strong>ID:</strong> <?= $data['id'] ?>
+							<?php endif; ?>
 							<div class="clearfix singlemode" id="singlemode">
 								<label for="wpPhalanxFilter" class="left"><?php echo wfMsg( 'phalanx-label-filter' ) ?></label>
 								<input type="text" id="wpPhalanxFilter" name="wpPhalanxFilter" class="blue" size="40" value="<?= $data['text'] ?>" />
