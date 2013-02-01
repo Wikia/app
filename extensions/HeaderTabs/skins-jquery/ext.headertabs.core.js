@@ -31,13 +31,18 @@ outer:
 for (s = 0; s < sheets.length; s++ ) {
 	var cursheet = sheets[s];
 	var rules = cursheet.cssRules? cursheet.cssRules: cursheet.rules // Yay IE
-	
-	for (r = 0; r < rules.length; r++){
-		if(rules[r].selectorText.toLowerCase()==".unselected"){ //find ".unselected" rule
-			cursheet.deleteRule?cursheet.deleteRule(r):cursheet.removeRule(r); // Yay IE
-			break outer;
+
+	// Wikia change - begin - @author: kflorence
+	if ( rules !== null && typeof rules === 'object' && rules.length ) {
+		var selectorText;
+		for (var r = 0; r < rules.length; r++){
+			if((selectorText = rules[r].selectorText) && selectorText.toLowerCase()==".unselected"){ //find ".unselected" rule
+				cursheet.deleteRule?cursheet.deleteRule(r):cursheet.removeRule(r); // Yay IE
+				break outer;
+			}
 		}
 	}
+	// Wikia change - end
 }
 
 /* follow a # anchor to a tab OR a heading */
