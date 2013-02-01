@@ -133,8 +133,8 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		}
 
 		$phalanx['type'] = $typemask;
-		$expire = $this->wg->Request->getText( 'wpPhalanxExpire', null );
-		if ( is_null( $expire ) ) {
+		$expire = $this->wg->Request->getText('wpPhalanxExpire');
+		if ( !empty( $expire ) ) {
 			$phalanx['expire'] = $expire;
 		}
 
@@ -153,8 +153,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		} else {
 			$phalanx['expire'] = null ;
 		}
-
-		#var_dump($phalanx); die();
 
 		if ( empty( $multitext ) ) {
 			/* single mode - insert/update record */
