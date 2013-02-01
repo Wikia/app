@@ -232,6 +232,21 @@ class MarketingToolboxModel extends WikiaModel {
 		return $modulesData;
 	}
 
+	/**
+	 * Get modules data for last published hub
+	 *
+	 * @param code $langCode
+	 * @param int  $sectionId
+	 * @param int  $verticalId
+	 * @param int  $timestamp
+	 *
+	 * @return array
+	 */
+	public function getPublishedData($langCode, $sectionId, $verticalId, $timestamp = null) {
+		$lastPublishTimestamp = $this->getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp);
+		return $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $lastPublishTimestamp);
+	}
+
 	public function getModuleUrl($langCode, $sectionId, $verticalId, $timestamp, $moduleId) {
 		$specialPage = $this->getSpecialPageClass();
 		return $specialPage::getTitleFor('MarketingToolbox', 'editHub')->getLocalURL(
@@ -377,10 +392,14 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @param string $langCode
 	 * @param int $sectionId
 	 * @param int $verticalId
+	 * @param int $timestamp - max timestamp that we should search for published hub
 	 *
 	 * @return int timestamp
 	 */
-	protected function getLastPublishedTimestamp($langCode, $sectionId, $verticalId) {
+	protected function getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp = null) {
+		if ($timestamp === null) {
+			$timestamp = time();
+		}
 		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$table = $this->getTablesBySectionId($sectionId);
 
@@ -391,7 +410,7 @@ class MarketingToolboxModel extends WikiaModel {
 		);
 
 		$conds = $sdb->makeList($conds, LIST_AND);
-		$conds .= ' AND hub_date <= CURDATE()';
+		$conds .= ' AND hub_date <= ' . $sdb->timestamp($timestamp);
 
 		$result = $sdb->selectField($table, 'unix_timestamp(max(hub_date))', $conds, __METHOD__);
 

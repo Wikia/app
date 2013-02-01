@@ -28,11 +28,10 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 
 	public function index() {
 		$toolboxModel = new MarketingToolboxModel();
-		$modulesData = $toolboxModel->getModulesData(
+		$modulesData = $toolboxModel->getPublishedData(
 			$this->wg->ContLang->getCode(),
 			MarketingToolboxModel::SECTION_HUBS,
-			$this->verticalId,
-			1359676800 // TODO change to current timestamp when model will be finished
+			$this->verticalId
 		);
 
 		$this->modules = array();
@@ -40,8 +39,8 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		foreach ($toolboxModel->getModulesIds() as $moduleId) {
 			// TODO remove this if when other modules would be ready
 			if ($moduleId == MarketingToolboxModel::MODULE_EXPLORE) {
-				$moduleData = !empty($modulesData['moduleList'][$moduleId]['data'])
-					? $modulesData['moduleList'][$moduleId]['data']
+				$moduleData = !empty($modulesData[$moduleId]['data'])
+					? $modulesData[$moduleId]['data']
 					: array();
 				$this->modules[$moduleId] = $this->renderModule(
 					$this->wg->ContLang->getCode(),
