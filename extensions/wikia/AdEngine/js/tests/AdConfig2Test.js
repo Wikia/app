@@ -1,7 +1,6 @@
 /**
  * @test-framework Jasmine
  * @test-require-asset extensions/wikia/AdEngine/js/AdConfig2.js
- * @test-require-asset extensions/wikia/AdEngine/js/AdProviderGamePro.js
  */
 
 describe('AdConfig2', function(){
@@ -276,66 +275,5 @@ describe('AdConfig2', function(){
 		);
 
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderNullMock);
-	});
-
-	it('getProvider returns Null for prefooters when AB group is prefooters disabled', function() {
-		var adProviderNullMock = {name: 'NullMock'}
-			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
-			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderAdDriver2Mock = {name: 'AdDriver2Mock', canHandleSlot: function() {return false;}}
-			, adProviderLaterMock = {name: 'LaterMock'}
-			, geoMock = {getCountryCode:function() {}}
-			, logMock = function() {}
-			, windowMock = {}
-			, documentMock = {}
-			, adLogicShortPageMock = {isPageTooShortForSlot: function() {return false;}}
-			, abTestMock = {inGroup: function(exp, group) {return exp === 'PERFORMANCE_V_PREFOOTERS' && group === 'PREFOOTERS_DISABLED';}}
-			, adConfig;
-
-		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adLogicShortPageMock, abTestMock
-
-			// AdProviders
-			, adProviderAdDriver2Mock
-			, adProviderEvolveMock
-			, adProviderGameProMock
-			, adProviderLaterMock
-			, adProviderNullMock
-		);
-
-		expect(adConfig.getProvider(['TOP_LEADERBOARD'])).not.toBe(adProviderNullMock, 'TOP_LEADERBOARD');
-		expect(adConfig.getProvider(['PREFOOTER_LEFT_BOXAD'])).toBe(adProviderNullMock, 'PREFOOTER_LEFT_BOXAD (disabled)');
-		expect(adConfig.getProvider(['PREFOOTER_RIGHT_BOXAD'])).toBe(adProviderNullMock, 'PREFOOTER_RIGHT_BOXAD (disabled)');
-
-		abTestMock.inGroup = function(exp, group) {return exp === 'PERFORMANCE_V_PREFOOTERS' && group === 'PREFOOTERS_ENABLED';};
-		expect(adConfig.getProvider(['TOP_LEADERBOARD'])).not.toBe(adProviderNullMock, 'TOP_LEADERBOARD');
-		expect(adConfig.getProvider(['PREFOOTER_LEFT_BOXAD'])).not.toBe(adProviderNullMock, 'PREFOOTER_LEFT_BOXAD (enabled)');
-		expect(adConfig.getProvider(['PREFOOTER_RIGHT_BOXAD'])).not.toBe(adProviderNullMock, 'PREFOOTER_RIGHT_BOXAD (enabled)');
-	});
-
-	it('canHandleSlot GamePro outside de', function() {
-		var logMock = function() {}
-			, scriptWriterMock
-			, wikiaTrackerMock
-			, windowMock = {wgInsideUnitTest: true}
-			, documentMock
-			, adProviderGamePro
-			, wikiaDartMock;
-
-		adProviderGamePro = AdProviderGamePro(
-			wikiaDartMock, scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
-		);
-
-		windowMock.wgContentLanguage = 'pl';
-
-		expect(adProviderGamePro.canHandleSlot(['HOME_TOP_LEADERBOARD'])).toBeTruthy('pl slot HOME_TOP_LEADERBOARD');
-		expect(adProviderGamePro.canHandleSlot(['HOME_TOP_RIGHT_BOXAD'])).toBeTruthy('pl slot HOME_TOP_RIGHT_BOXAD');
-		expect(adProviderGamePro.canHandleSlot(['INCONTENT_BOXAD_1'])).toBeFalsy('pl slot INCONTENT_BOXAD_1');
-
-		windowMock.wgContentLanguage = 'en';
-
-		expect(adProviderGamePro.canHandleSlot(['HOME_TOP_LEADERBOARD'])).toBeTruthy('en slot HOME_TOP_LEADERBOARD');
-		expect(adProviderGamePro.canHandleSlot(['HOME_TOP_RIGHT_BOXAD'])).toBeTruthy('en slot HOME_TOP_RIGHT_BOXAD');
-		expect(adProviderGamePro.canHandleSlot(['INCONTENT_BOXAD_1'])).toBeFalsy('en slot INCONTENT_BOXAD_1');
 	});
 });
