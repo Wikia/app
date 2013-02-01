@@ -13,7 +13,7 @@ var EvolveHelper = function (log, window) {
 
 		if (window.wgDBname === 'wikiaglobal') {
 			sect = 'home';
-			if (window.wgPageName == 'Video_Games') {
+			if (window.wgPageName === 'Video_Games') {
 				sect = 'gaming';
 			}
 		} else if (kv.indexOf('movie') !== -1) {
