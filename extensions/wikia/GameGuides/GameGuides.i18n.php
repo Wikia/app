@@ -32,9 +32,21 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides is the name of a product, do not translate on a per-word basis',
 
-	'wikiagameguides-content-categories' => '',
-	'wikiagamegides-content-description-tag' => '',
-	'wikiagameguides-content-description-organize' => ''
+	'wikiagameguides-content-title' => 'tilte of a page',
+	'wikiagameguides-content-tag' => 'placeholder for a tag input',
+	'wikiagameguides-content-name' => 'placeholder for a name input',
+	'wikiagameguides-content-add-tag' => 'message on a button',
+	'wikiagameguides-content-add-category' => 'message on a button',
+	'wikiagameguides-content-save' => 'message on a save button',
+	'wikiagameguides-content-category-error' => 'Error displayed when empty category is being added',
+	'wikiagameguides-content-required-entry' => 'Error if input with a category has been left empty',
+	'wikiagameguides-content-duplicate-entry' => 'Error for a duplicate entry',
+	'wikiagameguides-content-empty-tag' => 'Error for an empty tag (Tag with no categories in it)',
+
+	'wikiagameguides-content-description-categories' => 'message on top of the tool describing purpose of adding category',
+	'wikiagameguides-content-description-tag' => 'Message describing purpose of a tag',
+	'wikiagameguides-content-description-organize' => 'Message describing adding deleting and ordering of content',
+	'wikiagameguides-content-description-no-tag' => 'Message telling that categories without tag will be displayed last'
 );
 
 /** Asturian (asturianu)
