@@ -1,50 +1,24 @@
 /**
- * @test-framework QUnit
+ * @test-framework Jasmine
  * @test-require-asset extensions/wikia/AdEngine/js/AdProviderGamePro.js
  */
 
-module('AdProviderGamePro');
+describe('AdProviderGamePro', function(){
+	it('canHandleSlot GamePro de', function() {
+		var logMock = function() {}
+			, scriptWriterMock
+			, wikiaDartMock
+			, wikiaTrackerMock
+			, windowMock = {wgInsideUnitTest: true, wgContentLanguage: 'de'}
+			, documentMock
+			, adProviderGamePro;
 
-test('canHandleSlot GamePro de', function() {
-	var logMock = function() {}
-		, scriptWriterMock
-		, wikiaDartMock
-		, wikiaTrackerMock
-		, windowMock = {wgInsideUnitTest: true, wgContentLanguage: 'de'}
-		, documentMock
-		, adProviderGamePro;
+		adProviderGamePro = AdProviderGamePro(
+			wikiaDartMock, scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
+		);
 
-	adProviderGamePro = AdProviderGamePro(
-		wikiaDartMock, scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
-	);
-
-	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_LEADERBOARD']), true, 'de slot HOME_TOP_LEADERBOARD');
-	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_RIGHT_BOXAD']), true, 'de slot HOME_TOP_RIGHT_BOXAD');
-	equal(adProviderGamePro.canHandleSlot(['INCONTENT_BOXAD_1']), false, 'de slot INCONTENT_BOXAD_1');
+		expect(adProviderGamePro.canHandleSlot(['HOME_TOP_LEADERBOARD'])).toBeTruthy('de slot HOME_TOP_LEADERBOARD');
+		expect(adProviderGamePro.canHandleSlot(['HOME_TOP_RIGHT_BOXAD'])).toBeTruthy('de slot HOME_TOP_RIGHT_BOXAD');
+		expect(adProviderGamePro.canHandleSlot(['INCONTENT_BOXAD_1'])).toBeFalsy('de slot INCONTENT_BOXAD_1');
+	});
 });
-
-// TODO move to AdConfig2Test.js
-/*test('canHandleSlot GamePro outside de', function() {
-	var logMock = function() {}
-		, scriptWriterMock
-		, wikiaTrackerMock
-		, windowMock = {wgInsideUnitTest: true}
-		, documentMock
-		, adProviderGamePro;
-
-	adProviderGamePro = AdProviderGamePro(
-		scriptWriterMock, wikiaTrackerMock, logMock, windowMock, documentMock
-	);
-
-	windowMock.wgContentLanguage = 'pl';
-
-	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_LEADERBOARD']), false, 'pl slot HOME_TOP_LEADERBOARD');
-	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_RIGHT_BOXAD']), false, 'pl slot HOME_TOP_RIGHT_BOXAD');
-	equal(adProviderGamePro.canHandleSlot(['INCONTENT_BOXAD_1']), false, 'pl slot INCONTENT_BOXAD_1');
-
-	windowMock.wgContentLanguage = 'en';
-
-	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_LEADERBOARD']), false, 'en slot HOME_TOP_LEADERBOARD');
-	equal(adProviderGamePro.canHandleSlot(['HOME_TOP_RIGHT_BOXAD']), false, 'en slot HOME_TOP_RIGHT_BOXAD');
-	equal(adProviderGamePro.canHandleSlot(['INCONTENT_BOXAD_1']), false, 'en slot INCONTENT_BOXAD_1');
-});*/
