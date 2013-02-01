@@ -243,15 +243,26 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	 * Method called via AJAX from Special:Phalanx to validate regexp
 	 */
 	public function validate() {
+		$this->wf->profileIn( __METHOD__ );
+
+		$this->response->setFormat('json');
+		$this->setVal( 'valid', false);
+
 		$regexp = $this->request->getVal( 'regexp' );
 		$token = $this->request->getVal( 'token' );
+
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->setVal('error', 'permission');
+
+			$this->wf->profileOut( __METHOD__ );
+			return;
+		}
 
 		if ( $token == $this->getToken() ) {
 			$this->setVal( 'valid', $this->service->validate( $regexp ) );
 		}
-		else {
-			$this->setVal( 'valid', false);
-		}
+
+		$this->wf->profileOut( __METHOD__ );
 	}
 
 	public function matchBlock() {
