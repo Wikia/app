@@ -6,6 +6,7 @@
 class PhalanxService extends Service {
 	private $response = null;
 	private $limit = 0;
+	private $user = null;
 
 	const RES_OK = 'ok';
 	const RES_FAILURE = 'failure';
@@ -14,8 +15,14 @@ class PhalanxService extends Service {
 	/**
 	 * limit of blocks 
 	 */
-	public function setLimit( $limit = 1 ) {
-		$this->limit = $limit; return $this;
+	public function limit( $limit = 1 ) {
+		$this->limit = $limit; 
+		return $this;
+	}
+
+	public function user ( User $user ) {
+		$this->user = $user; 
+		return $this;
 	}
 
 	/**
@@ -91,7 +98,6 @@ class PhalanxService extends Service {
 	 * @param $parameters Array additional parameters as hash table
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
-
 		wfProfileIn( __METHOD__  );
 
 		$url = sprintf( "%s/%s", F::app()->wg->PhalanxServiceUrl, $action != "status" ? $action : "" );
@@ -107,6 +113,10 @@ class PhalanxService extends Service {
 		 * for any other we're sending POST
 		 */
 		else {
+			$parameters[ 'wiki' ] = F::app()->wg->CityId;
+			if ( !is_null( $this->user ) ) {
+				$parameters[ 'user' ] = $this->user->getName();
+			}
 			wfDebug( __METHOD__ . ": calling $url with POST data " . wfArrayToCGI( $parameters ) ."\n" );
 			$response = Http::post( $url, array( "noProxy" => true, "postData" => wfArrayToCGI( $parameters ) ) );
 		}
