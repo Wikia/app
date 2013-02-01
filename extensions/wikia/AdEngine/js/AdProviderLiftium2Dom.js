@@ -10,8 +10,6 @@ var AdProviderLiftium2Dom = function (wikiaTracker, log, document, slotTweaker, 
 	;
 
 	slotMap = {
-		'CORP_TOP_LEADERBOARD': {'size': '728x90'},
-		'CORP_TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'EXIT_STITIAL_BOXAD_1': {'size':'300x250'},
 		'HOME_TOP_LEADERBOARD':{'size':'728x90'},
 		'HOME_TOP_RIGHT_BOXAD':{'size':'300x250'},
