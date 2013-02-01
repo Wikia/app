@@ -1,13 +1,12 @@
 <?php
 
 class PhalanxSpecialController extends WikiaSpecialPageController {
-	private $mDefaultExpire = '1 year';
 	private $title = null;
 	private $errorMsg = '';
 	private $service = null;
 
 	public function __construct() {
-		parent::__construct('Phalanx');
+		parent::__construct('Phalanx', 'phalanx' /* restrictions */);
 		$this->includable(false);
 		$this->title = SpecialPage::getTitleFor('Phalanx');
 		$this->service = F::build('PhalanxService');
@@ -177,11 +176,11 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * Method called via AJAX from Special:Phalanx
-	 *
-	 * @return array|bool
 	 */
 	public function unblock() {
 		$this->wf->profileIn( __METHOD__ );
+
+		$this->response->setFormat('json');
 		$this->setVal('success', false);
 
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
@@ -228,7 +227,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$block = $this->request->getVal( 'block' );
 		$token = $this->request->getVal( 'token' );
 
-		if ( $token != $this->wg->User->getEditToken() ) {
+		if ( $token != $this->getToken() ) {
 			$this->wf->profileOut( __METHOD__ );
 			return;
 		}
