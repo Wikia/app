@@ -1,5 +1,4 @@
 /*
- @test-framework Jasmine
  @test-require-asset /extensions/wikia/WikiaMobile/js/features.js
  */
 

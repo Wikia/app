@@ -1,5 +1,4 @@
 /**
- * @test-framework Jasmine
  * @test-require-asset extensions/wikia/AdEngine/js/DartUrl.js
  * @test-require-asset extensions/wikia/AdEngine/js/WikiaDartHelper.js
  * @test-require-asset extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js

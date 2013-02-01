@@ -1,5 +1,4 @@
 /*
- @test-framework Jasmine
  // Include jQuery and jQuery.wikia and specialPromote
  @test-require-asset /resources/wikia/libraries/modil/modil.js
  @test-require-asset resources/jquery/jquery-1.7.2.js

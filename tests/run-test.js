@@ -41,7 +41,8 @@ var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',
 	},
 	optionsCounter = 0,
 	timer,
-	page;
+	page,
+	runner = 'lib/jasmine/test-runner.html';
 
 //load Unit test runner dependancies
 phantom.injectJs('lib/js/JTR.js');
@@ -105,14 +106,17 @@ function processTest( test ) {
 	page = createPage();
 
 	var testSource,
-		requiredFiles = [],
+		requiredFiles = [
+			'lib/jasmine/jasmine.js',
+			'lib/jasmine/jasmine.async.js',
+			'lib/jasmine/phantom_reporter.js'
+		],
 		deps = '',
 		testOptions = {
 			'require-asset': [],
 			'screen-resolution': options['screen-resolution'],
 			'user-agent': options['user-agent']
 		},
-		runner,
 		matches,
 		htmlTemplate;
 	try {
@@ -151,28 +155,6 @@ function processTest( test ) {
 				testOptions[tokens[0]] = tokens[1] || true;
 			}
 		}
-	}
-
-	if(testOptions.framework) {
-		switch(testOptions.framework.toLowerCase()) {
-			case 'qunit':
-				requiredFiles.push('lib/qunit/qunit.js');
-				requiredFiles.push('lib/qunit/phantom_reporter.js');
-				runner = 'lib/qunit/test-runner.html';
-				break;
-			case 'jasmine':
-				requiredFiles.push('lib/jasmine/jasmine.js');
-				requiredFiles.push('lib/jasmine/jasmine.async.js');
-				requiredFiles.push('lib/jasmine/phantom_reporter.js');
-				runner = 'lib/jasmine/test-runner.html';
-				break;
-		}
-	}
-
-	if( !runner ) {
-		console.error( stylize('[ERROR]', 'lightred'), 'Missing or unrecognized framework declaration. Path: ' + test )
-		nextTest();
-		return;
 	}
 
 	if(testOptions['require-asset'] instanceof Array){
@@ -276,7 +258,7 @@ var styles = {
 
 function stylize(str, style) {
 	return '\033[' + styles[style][0] + 'm' + str + '\033[' + styles[style][1] + 'm';
-};
+}
 
 function outputTestsResult() {
 	/*
@@ -311,7 +293,7 @@ function outputTestsResult() {
 
 		var testResult = testResults[i];
 
-		console.log( '\nRunning ' + stylize( testResult.name, 'bold' ) );
+		//console.log( '\nRunning ' + stylize( testResult.name, 'bold' ) );
 
 		for (var suiteName in testResult.suites) {
 
@@ -391,33 +373,7 @@ function outputTestsResult() {
 }
 
 function createPage(){
-	return require('webpage').create({
-		onConsoleMessage : function(msg) {
-			try {
-				msg = JSON.parse(msg);
-				switch(msg.command) {
-					case 'startTest':
-						testResult.startTest( msg.name, msg.extra );
-						break;
-					case 'stopTest':
-						testResult.stopTest( JTR.status[msg.status], msg.assertions, msg.messages );
-						break;
-					case 'startSuite':
-						testResult.startSuite( msg.name, msg.extra );
-						break;
-					case 'stopSuite':
-						testResult.stopSuite();
-						break;
-					case EXIT_SIGNAL:
-						testResults.push( testResult );
-						testResult = null;
-						nextTest();
-						break;
-				}
-				return;
-			}catch(e){};
-		},
-
+	var page = require('webpage').create({
 		onError : function(msg, trace) {
 			console.error('Error:', msg);
 
@@ -435,6 +391,30 @@ function createPage(){
 
 		viewportSize : options['screen-resolution']
 	});
+
+	page.onCallback = function(data){
+		switch(data.command) {
+			case 'startTest':
+				testResult.startTest( data.name, data.extra );
+				break;
+			case 'stopTest':
+				testResult.stopTest( JTR.status[data.status], data.assertions, data.messages );
+				break;
+			case 'startSuite':
+				testResult.startSuite( data.name, data.extra );
+				break;
+			case 'stopSuite':
+				testResult.stopSuite();
+				break;
+			case EXIT_SIGNAL:
+				testResults.push( testResult );
+				testResult = null;
+				nextTest();
+				break;
+		}
+	};
+
+	return page;
 }
 
 //begin tests
