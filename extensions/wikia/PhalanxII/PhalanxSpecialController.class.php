@@ -87,6 +87,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$data['expire'] = '';
 			$data['reason'] = '';
 		}
+
 		return $data;
 	}
 
@@ -122,6 +123,8 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$this->errorMsg = $this->wf->Msg( 'phalanx-block-failure' );
 			return false;
 		}
+
+		$phalanx['type'] = $typemask;
 
 		if ( $phalanx['lang'] == 'all' ) {
 			$phalanx['lang'] = null;
