@@ -9,6 +9,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	const PARAMETER_MODULE = 'module';
 	const PARAMETER_VERTICAL = 'vertical';
 	const PARAMETER_TIMESTAMP = 'ts';
+	const PARAMETER_LANG = 'lang';
 
 	/**
 	 * Get explore module data from given date and vertical
@@ -32,27 +33,29 @@ class WikiaHubsApiController extends WikiaApiController {
 		$verticalId = $this->request->getInt('vertical');
 		$timestamp = $this->request->getInt('ts');
 		$lang = $this->request->getVal('lang', self::DEFAULT_LANG);
-		$model = new MarketingToolboxModel($this->app);
+		
+		$model = $this->getModel();
 
-		if( !$this->isValidModule($model, $moduleId) || $moduleId <= 0 ) {
+		if( !$this->isValidModule($model, $moduleId) ) {
 			throw new InvalidParameterApiException( self::PARAMETER_MODULE );
 		}
 		
-		if( !$this->isValidVertical($model, $verticalId) || $verticalId <= 0 ) {
+		if( !$this->isValidVertical($model, $verticalId) ) {
 			throw new InvalidParameterApiException( self::PARAMETER_VERTICAL );
 		}
 
-		if( $timestamp <= 0 ) {
+		if( !$this->isValidTimestamp($timestamp) ) {
 			throw new InvalidParameterApiException( self::PARAMETER_TIMESTAMP );
 		}
 		
 		$moduleName = $model->getModuleName($moduleId);
 		$moduleService = MarketingToolboxModuleService::getModuleByName($moduleName, $lang, MarketingToolboxModel::SECTION_HUBS, $verticalId);
 		
-		if( $moduleService instanceof MarketingToolboxModuleService) {
-			$this->response->setVal('data', $moduleService->loadData($model, $timestamp));
+		if( $this->isValidModuleService($moduleService) ) {
+			$data = $moduleService->loadData($model, $timestamp);
+			$this->response->setVal('data', $data);
 		} else {
-			throw new NotFoundApiException();
+			throw new BadRequestApiException();
 		}
 		
 		$this->response->setCacheValidity(
@@ -67,12 +70,36 @@ class WikiaHubsApiController extends WikiaApiController {
 		$this->wf->ProfileOut( __METHOD__ );
 	}
 	
+	protected function getModel() {
+		return new MarketingToolboxModel($this->app);
+	}
+	
 	protected function isValidModule(MarketingToolboxModel $model, $moduleId) {
-		return in_array($moduleId, $model->getModulesIds());
+		if( $moduleId > 0 ) { 
+			return in_array($moduleId, $model->getModulesIds());
+		}
+		
+		return false;
 	}
 
-	protected function isValidVertical(WikiaModel $model, $verticalId) {
-		return in_array($verticalId, $model->getVerticalsIds());
+	protected function isValidVertical(MarketingToolboxModel $model, $verticalId) {
+		if( $verticalId > 0 ) {
+			return in_array($verticalId, $model->getVerticalsIds());
+		}
+		
+		return false;
+	}
+
+	protected function isValidTimestamp($timestamp) {
+		if( $timestamp > 0 ) {
+			return true;
+		}
+
+		return false;
+	}
+	
+	protected function isValidModuleService($moduleService) {
+		return ($moduleService instanceof MarketingToolboxModuleService);
 	}
 	
 }

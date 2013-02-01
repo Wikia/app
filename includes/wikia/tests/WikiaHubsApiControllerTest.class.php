@@ -1,0 +1,109 @@
+<?php
+include( "../../../extensions/wikia/WikiaHubsV2/WikiaHubsV2.setup.php" );
+include( "../../../extensions/wikia/WikiaHubsServices/WikiaHubsServices.setup.php" );
+
+class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
+	protected $modulesIds = array(1, 2, 3);
+	protected $verticalIds = array(4, 5, 6);
+
+	/**
+	 * @dataProvider getModuleDataExceptionsProvider
+	 */
+	public function testGetModuleDataExceptions($requestParams, $exceptionDetailsMsg) {
+		$requestMock = $this->getMock('WikiaRequest', array('getInt', 'getVal'), array(), '', false);
+		$requestMock->expects($this->at(0))
+			->method('getInt')
+			->with($this->equalTo(WikiaHubsApiController::PARAMETER_MODULE))
+			->will($this->returnValue($requestParams[WikiaHubsApiController::PARAMETER_MODULE]));
+		$requestMock->expects($this->at(1))
+			->method('getInt')
+			->with($this->equalTo(WikiaHubsApiController::PARAMETER_VERTICAL))
+			->will($this->returnValue($requestParams[WikiaHubsApiController::PARAMETER_VERTICAL]));
+		$requestMock->expects($this->at(2))
+			->method('getInt')
+			->with($this->equalTo(WikiaHubsApiController::PARAMETER_TIMESTAMP))
+			->will($this->returnValue($requestParams[WikiaHubsApiController::PARAMETER_TIMESTAMP]));
+		$requestMock->expects($this->once())
+			->method('getVal')
+			->with($this->equalTo(WikiaHubsApiController::PARAMETER_LANG))
+			->will($this->returnValue('en'));
+		
+		$modelMock = $this->getMock('MarketingToolboxModel', array('getModulesIds', 'getVerticalsIds'));
+		$modelMock->expects($this->any())
+			->method('getModulesIds')
+			->will($this->returnValue($this->modulesIds));
+		$modelMock->expects($this->any())
+			->method('getVerticalsIds')
+			->will($this->returnValue($this->verticalIds));
+		
+		$apiMock = $this->getMock('WikiaHubsApiController', array('getModel'));
+		$apiMock->expects($this->once())
+			->method('getModel')
+			->will($this->returnValue($modelMock));
+		$apiMock->setRequest($requestMock);
+		
+		try {
+			$apiMock->getModuleData();
+			$this->fail('We expected an exception here...');
+		} catch( Exception $e ) {
+			$this->assertEquals($exceptionDetailsMsg, $e->getDetails());
+		}
+	}
+	
+	public function getModuleDataExceptionsProvider() {
+		return array(
+			array(
+				'requestParams' => array(
+					WikiaHubsApiController::PARAMETER_MODULE => null,
+					WikiaHubsApiController::PARAMETER_VERTICAL => 4,
+					WikiaHubsApiController::PARAMETER_TIMESTAMP => 1359676800,
+				),
+				'exceptionDetailsMsg' => $this->getExceptionDetails(WikiaHubsApiController::PARAMETER_MODULE)
+			),
+			array(
+				'requestParams' => array(
+					WikiaHubsApiController::PARAMETER_MODULE => 1,
+					WikiaHubsApiController::PARAMETER_VERTICAL => null,
+					WikiaHubsApiController::PARAMETER_TIMESTAMP => 1359676800,
+				),
+				'exceptionDetailsMsg' => $this->getExceptionDetails(WikiaHubsApiController::PARAMETER_VERTICAL)
+			),
+			array(
+				'requestParams' => array(
+					WikiaHubsApiController::PARAMETER_MODULE => 2,
+					WikiaHubsApiController::PARAMETER_VERTICAL => 5,
+					WikiaHubsApiController::PARAMETER_TIMESTAMP => null,
+				),
+				'exceptionDetailsMsg' => $this->getExceptionDetails(WikiaHubsApiController::PARAMETER_TIMESTAMP)
+			),
+			array(
+				'requestParams' => array(
+					WikiaHubsApiController::PARAMETER_MODULE => 0,
+					WikiaHubsApiController::PARAMETER_VERTICAL => 6,
+					WikiaHubsApiController::PARAMETER_TIMESTAMP => 1359676800,
+				),
+				'exceptionDetailsMsg' => $this->getExceptionDetails(WikiaHubsApiController::PARAMETER_MODULE)
+			),
+			array(
+				'requestParams' => array(
+					WikiaHubsApiController::PARAMETER_MODULE => 3,
+					WikiaHubsApiController::PARAMETER_VERTICAL => 0,
+					WikiaHubsApiController::PARAMETER_TIMESTAMP => 1359676800,
+				),
+				'exceptionDetailsMsg' => $this->getExceptionDetails(WikiaHubsApiController::PARAMETER_VERTICAL)
+			),
+			array(
+				'requestParams' => array(
+					WikiaHubsApiController::PARAMETER_MODULE => 3,
+					WikiaHubsApiController::PARAMETER_VERTICAL => 6,
+					WikiaHubsApiController::PARAMETER_TIMESTAMP => 0,
+				),
+				'exceptionDetailsMsg' => $this->getExceptionDetails(WikiaHubsApiController::PARAMETER_TIMESTAMP)
+			),
+		);
+	}
+	
+	protected function getExceptionDetails($paramName) {
+		return "Parameter '{$paramName}' is invalid";
+	}
+}
