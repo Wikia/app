@@ -1,5 +1,7 @@
 /* VET_loader
  *
+ * @author Hyun Lim, Liz Lee
+ *
  * Final callback should include VET_loader.modal.closeModal() in success case.
  * Sample input json for options:
  *	{
@@ -70,7 +72,6 @@
 
 			// Get JS and CSS
 			var resourcePromise = $.getResources([
-				$.loadYUI,
 				$.getAssetManagerGroupUrl('VET_js'),
 				$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
 				$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
