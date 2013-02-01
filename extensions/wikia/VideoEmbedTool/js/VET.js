@@ -44,7 +44,7 @@
 			$('#VideoEmbedBack').hide();
 	
 			setTimeout(function() {
-				if ( data.thumb ) {
+				if ( data.thumb || data.thumbnail ) {
 		             $("#VideoEmbedThumbOption").attr('checked', 'checked');
 		             $('#VET_StyleThumb').addClass('selected');
 		        }  else {
