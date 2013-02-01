@@ -83,7 +83,7 @@
 			$.stopThrobbing();
 
 			VET_loader.modal = $(templateHtml).makeModal({
-				width: 940,
+				width: 939,
 				onClose: function() {
 					VET_close();
 				},
