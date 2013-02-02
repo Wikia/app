@@ -283,6 +283,11 @@ class VideoEmbedTool {
 			$image_data = $image_service->getData();
 			$embed_code = $image_data['tag'];
 
+			// Make output match what's in a saved article
+			if($layout == 'center') {
+				$embed_code = '<div class="center">'.$embed_code.'</div>';
+			}
+
 			$summary = wfMsg( 'vet-added-from-placeholder' );
 
 			$text = substr_replace( $text, $tag, $matches[0][$box][1], strlen( $placeholder_tag ) );
