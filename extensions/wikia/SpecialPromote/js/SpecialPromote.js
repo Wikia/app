@@ -377,7 +377,7 @@ SpecialPromote.prototype = {
 			method: 'saveData',
 			data: data,
 			callback: function (response) {
-				(new Wikia.Querystring())
+				Wikia.Querystring()
 					.addCb()
 					.goTo();
 			},
