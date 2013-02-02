@@ -45,6 +45,7 @@
 			if(!(this instanceof Querystring)) {
 				return new Querystring(url);
 			}
+
 			var srh,
 				link,
 				tmp,
@@ -153,8 +154,18 @@
 		 * @param {Mixed} val The parameter's value
 		 */
 		p.setVal = function (name, val) {
-			if (name && val) {
-				this.cache[name] = encodeURIComponent(val);
+			if (name) {
+				if(typeof name === 'object') {
+					val = val || '';
+
+					for(var key in name) {
+						if(name.hasOwnProperty(key)) {
+							this.cache[val + key] = encodeURIComponent(name[key]);
+						}
+					}
+				} else if(val){
+					this.cache[name] = encodeURIComponent(val);
+				}
 			}
 			return this;
 		};

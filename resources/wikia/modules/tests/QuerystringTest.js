@@ -105,11 +105,42 @@ describe("Querystring", function () {
 
 		qs.setVal({
 			test: 'test',
-			test1: 'test'
+			test1: 'test1'
 		});
 
 		expect(qs.getVal('test')).toBe('test');
 		expect(qs.getVal('test1')).toBe('test1');
+
+		qs.setVal({
+			test: 'test',
+			test1: 'test1'
+		});
+
+		expect(qs.getVal('test')).toBe('test');
+		expect(qs.getVal('test1')).toBe('test1');
+
+		qs.setVal(
+			{
+				A: 'a',
+				B: 'b'
+			},
+			'prefix'
+		);
+
+		expect(qs.getVal('prefixA')).toBe('a');
+		expect(qs.getVal('prefixB')).toBe('b');
+
+		qs.setVal(['val1' , 'val2']);
+
+		expect(qs.getVal('0')).toBe('val1');
+		expect(qs.getVal('1')).toBe('val2');
+
+		qs.setVal(['val1' , 'val2'], 'prefix');
+
+		expect(qs.getVal('prefix0')).toBe('val1');
+		expect(qs.getVal('prefix1')).toBe('val2');
+
+		expect(qs.toString()).toBe('http//poznan.wikia.com/wiki/Gzik?test=test&test1=test1&prefixA=a&prefixB=b&0=val1&1=val2&prefix0=val1&prefix1=val2');
 
 	});
 
