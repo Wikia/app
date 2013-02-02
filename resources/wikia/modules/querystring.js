@@ -42,6 +42,9 @@
 		 * @param {String} url The URL to parse for parameters
 		 */
 		function Querystring(url) {
+			if(!(this instanceof Querystring)) {
+				return new Querystring(url);
+			}
 			var srh,
 				link,
 				tmp,

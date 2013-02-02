@@ -43,6 +43,17 @@ describe("Querystring", function () {
 		expect(qs.goTo).toBeFunction('goTo');
 	});
 
+	it('works with new and without new operand', function(){
+
+		expect(function(){
+			new querystring()
+		}).not.toThrow();
+
+		expect(function(){
+			querystring()
+		}).not.toThrow();
+	});
+
 	it('changes location with goTo()', function() {
 		var qs = new querystring();
 		qs.goTo();
@@ -191,11 +202,5 @@ describe("Querystring", function () {
 
 		expect(qs + '').toBe('http//poznan.wikia.com/wiki/Gzik');
 		expect(qs.toString()).toBe('http//poznan.wikia.com/wiki/Gzik');
-	});
-
-	it('works with new and without new operand', function(){
-		new querystring();
-
-		querystring();
 	});
 });
