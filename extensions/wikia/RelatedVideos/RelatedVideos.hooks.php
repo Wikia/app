@@ -54,11 +54,9 @@ class RelatedVideosHookHandler {
 					$relatedVideosNSData->purge();
 					break;
 				case NS_MEDIAWIKI:
-					if ( empty( F::app()->wg->relatedVideosPartialRelease ) ){
-						if ( $title->getText() == RelatedVideosNamespaceData::GLOBAL_RV_LIST ){
-							$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle($title);
-							$relatedVideosNSData->purge();
-						}
+					if ( $title->getText() == RelatedVideosNamespaceData::GLOBAL_RV_LIST ){
+						$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle($title);
+						$relatedVideosNSData->purge();
 					}
 				break;
 			}
