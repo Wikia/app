@@ -214,18 +214,27 @@ describe("Querystring", function () {
 		expect(qs.getVal('uselang')).toBe('en');
 		expect(qs.getHash()).toBe('sectionA');
 		expect(qs.getPath()).toBe('/Mobile');
+
+		qs = querystring('https://wikia.com/Mobile?url=http://wikia.com&url2=http://glee.wikia.com');
+
+		expect(qs.getVal('url')).toBe('http://wikia.com');
+		expect(qs.getVal('url2')).toBe('http://glee.wikia.com');
+		expect(qs.getPath()).toBe('/Mobile');
 	});
 
 	it('is chainable', function(){
-		expect(
-			querystring()
-				.setPath('/wiki/Wodna')
-				.setVal('action', 'purge')
-				.setHash('sectionA')
-				.toString()
-		).toBe(
-			'http//poznan.wikia.com/wiki/Wodna?action=purge#sectionA'
-		);
+		expect(function(){
+			expect(
+				querystring()
+					.setPath('/wiki/Wodna')
+					.setVal('action', 'purge')
+					.setVal([1,2])
+					.setHash('sectionA')
+					.toString()
+			).toBe(
+				'http//poznan.wikia.com/wiki/Wodna?action=purge&0=1&1=2#sectionA'
+			);
+		}).not.toThrow();
 	});
 
 	it('can cast itself toString', function(){
