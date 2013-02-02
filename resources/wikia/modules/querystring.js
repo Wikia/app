@@ -192,7 +192,7 @@
 		p.setHash = function (h) {
 			this.hash = h;
 			return this;
-		}
+		};
 
 		/**
 		 *
