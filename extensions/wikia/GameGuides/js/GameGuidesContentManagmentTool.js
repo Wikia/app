@@ -165,11 +165,11 @@ $(function(){
 				if(ev.keyCode === 13) $(this).next().focus();
 			});
 
-		addCategory.addEventListener('click', function(){
+		$(addCategory).on('click', function(){
 			addNew(category);
 		});
 
-		addTag.addEventListener('click', function(){
+		$(addTag).on('click', function(){
 			addNew(tag);
 		});
 
@@ -182,7 +182,7 @@ $(function(){
 			}
 		}
 
-		$save.click(function(){
+		$save.on('click', function(){
 			var data = [],
 				nonames = [];
 
