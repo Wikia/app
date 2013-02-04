@@ -46,6 +46,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		// load resource loader module
 		$this->wg->Out->addModules('ext.wikia.Phalanx');
 		$this->wg->Out->addJsConfigVars('wgPhalanxToken', $this->getToken());
+		F::build('JSMessages')->enqueuePackage('PhalanxSpecial', JSMessages::INLINE);
 
 		/* set pager */
 		$pager = new PhalanxPager();

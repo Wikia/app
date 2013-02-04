@@ -36,3 +36,8 @@ $wgAvailableRights[] = 'phalanxemailblock';
  * messages
  */
 $app->registerExtensionMessageFile('Phalanx', $dir . 'Phalanx.i18n.php');
+
+F::build('JSMessages')->registerPackage('PhalanxSpecial', array(
+	'phalanx-validate-regexp-valid',
+	'phalanx-validate-regexp-invalid'
+));

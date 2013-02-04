@@ -37,6 +37,8 @@ $messages['en'] = array(
 	'phalanx-tab-main' => 'Manage Filters',
 	'phalanx-tab-secondary' => 'Test Filters',
 	'phalanx-validate-regexp' => 'Validate regex',
+	'phalanx-validate-regexp-valid' => 'Regex is valid',
+	'phalanx-validate-regexp-invalid' => 'Regex is invalid',
 
 	'phalanx-block-success' => 'The block was successfully added',
 	'phalanx-block-failure' => 'There was an error during adding the block',
@@ -1747,6 +1749,8 @@ $messages['pl'] = array(
 	'phalanx-tab-main' => 'Zarządzanie filtrami',
 	'phalanx-tab-secondary' => 'Testuj filtry',
 	'phalanx-validate-regexp' => 'Sprawdź regexa',
+	'phalanx-validate-regexp-valid' => 'Regex jest poprawny',
+	'phalanx-validate-regexp-invalid' => 'Regex jest niepoprawny',
 	'phalanx-block-success' => 'Pomyślnie dodano blokadę',
 	'phalanx-block-failure' => 'Wystąpił błąd podczas dodawania blokady',
 	'phalanx-modify-success' => 'Blokada została pomyślnie zmodyfikowana',

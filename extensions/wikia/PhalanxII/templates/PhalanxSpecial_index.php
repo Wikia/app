@@ -25,11 +25,14 @@
 								<input type="button" id="validate" value="<?php echo wfMsg( 'phalanx-validate-regexp' ) ?>" />
 								<?php if (empty($editMode)): ?>
 								<input type="button" id="enterbulk" value="Bulkmode" />
-								<?php endif; ?>
 							</div>
 							<div id="bulkmode" style="display: none">
 								<label for="wpPhalanxFilterBulk" class="left">Bulk<br/><?php echo wfMsg( 'phalanx-label-filter' ) ?></label>
 								<textarea type="text" id="wpPhalanxFilterBulk" name="wpPhalanxFilterBulk" class="blue" rows="10" cols="40" value="" ></textarea>
+							<?php endif; ?>
+							</div>
+							<div>
+								<span id="validateMessage"></span>
 							</div>
 							<div class="clearfix">
 								<div class="left-spacer">&nbsp;</div>
