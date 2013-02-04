@@ -522,4 +522,176 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		);
 	}
 
+	public function testGetDataPublished() {
+		$model = new MarketingToolboxModel();
+
+		$statuses = $model->getAvailableStatuses();
+		$selectData = array(
+			array(
+				'hub_date' => '2012-12-25',
+				'module_status' => $statuses['PUBLISHED'],
+			)
+		);
+
+		$dbMock = $this->getMock('DatabaseMysql', array('makeList', 'select', 'fetchRow'));
+
+		$dbMock->expects($this->any())
+			->method('makeList')
+			->will($this->returnValue(''));
+
+		$dbMock->expects($this->at(2))
+			->method('fetchRow')
+			->will($this->returnValue($selectData[0]));
+
+		$dbMock->expects($this->at(3))
+			->method('fetchRow')
+			->will($this->returnValue(false));
+
+		$dbMock->expects($this->once())
+			->method('select')
+			->will($this->returnValue(array()));
+
+		$this->mockGlobalFunction('GetDB', $dbMock);
+		$this->mockApp();
+
+		// create object second time to use mocked F:app()
+		$model = new MarketingToolboxModel();
+
+
+		$data = $model->getCalendarData('en', 2, 1351728000, 1364774400);
+
+		$this->assertArrayHasKey('2012-12-25', $data);
+		$this->assertEquals($statuses['PUBLISHED'], $data['2012-12-25']);
+	}
+
+	public function testGetCalendarDataNotPublished() {
+		$model = new MarketingToolboxModel();
+
+		$statuses = $model->getAvailableStatuses();
+		$selectData = array(
+			array(
+				'hub_date' => '2012-12-25',
+				'module_status' => $statuses['NOT_PUBLISHED'],
+			)
+		);
+
+		$dbMock = $this->getMock('DatabaseMysql', array('makeList', 'select', 'fetchRow'));
+
+		$dbMock->expects($this->any())
+			->method('makeList')
+			->will($this->returnValue(''));
+
+		$dbMock->expects($this->at(2))
+			->method('fetchRow')
+			->will($this->returnValue($selectData[0]));
+
+		$dbMock->expects($this->at(3))
+			->method('fetchRow')
+			->will($this->returnValue(false));
+
+		$dbMock->expects($this->once())
+			->method('select')
+			->will($this->returnValue(array()));
+
+		$this->mockGlobalFunction('GetDB', $dbMock);
+		$this->mockApp();
+
+		// create object second time to use mocked F:app()
+		$model = new MarketingToolboxModel();
+
+
+		$data = $model->getCalendarData('en', 2, 1351728000, 1364774400);
+
+		$this->assertArrayHasKey('2012-12-25', $data);
+		$this->assertEquals($statuses['NOT_PUBLISHED'], $data['2012-12-25']);
+	}
+
+	public function testGetCalendarDataEmptyData() {
+
+		$dbMock = $this->getMock('DatabaseMysql', array('makeList', 'select', 'fetchRow'));
+
+		$dbMock->expects($this->any())
+			->method('makeList')
+			->will($this->returnValue(''));
+
+		$dbMock->expects($this->at(2))
+			->method('fetchRow')
+			->will($this->returnValue(false));
+
+		$dbMock->expects($this->once())
+			->method('select')
+			->will($this->returnValue(array()));
+
+		$this->mockGlobalFunction('GetDB', $dbMock);
+		$this->mockApp();
+
+		$model = new MarketingToolboxModel();
+
+		$data = $model->getCalendarData('en', 2, 1351728000, 1364774400);
+
+		$this->assertEmpty($data);
+	}
+
+	public function testGetCalendarDataComplex() {
+		$model = new MarketingToolboxModel();
+
+		$statuses = $model->getAvailableStatuses();
+		$selectData = array(
+			array(
+				'hub_date' => '2012-12-25',
+				'module_status' => $statuses['PUBLISHED'],
+			),
+			array(
+				'hub_date' => '2013-01-05',
+				'module_status' => $statuses['NOT_PUBLISHED'],
+			),
+			array(
+				'hub_date' => '2013-01-08',
+				'module_status' => $statuses['NOT_PUBLISHED'],
+			)
+		);
+
+		$dbMock = $this->getMock('DatabaseMysql', array('makeList', 'select', 'fetchRow'));
+
+		$dbMock->expects($this->any())
+			->method('makeList')
+			->will($this->returnValue(''));
+
+		$dbMock->expects($this->at(2))
+			->method('fetchRow')
+			->will($this->returnValue($selectData[0]));
+
+		$dbMock->expects($this->at(3))
+			->method('fetchRow')
+			->will($this->returnValue($selectData[1]));
+
+		$dbMock->expects($this->at(4))
+			->method('fetchRow')
+			->will($this->returnValue($selectData[2]));
+
+		$dbMock->expects($this->at(5))
+			->method('fetchRow')
+			->will($this->returnValue(false));
+
+		$dbMock->expects($this->once())
+			->method('select')
+			->will($this->returnValue(array()));
+
+		$this->mockGlobalFunction('GetDB', $dbMock);
+		$this->mockApp();
+
+		// create object second time to use mocked F:app()
+		$model = new MarketingToolboxModel();
+
+
+		$data = $model->getCalendarData('en', 2, 1351728000, 1364774400);
+
+		$this->assertArrayHasKey('2012-12-25', $data);
+		$this->assertArrayHasKey('2013-01-05', $data);
+		$this->assertArrayHasKey('2013-01-08', $data);
+		$this->assertEquals($statuses['PUBLISHED'], $data['2012-12-25']);
+		$this->assertEquals($statuses['NOT_PUBLISHED'], $data['2013-01-05']);
+		$this->assertEquals($statuses['NOT_PUBLISHED'], $data['2013-01-08']);
+	}
+
 }

@@ -313,6 +313,10 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'group-reviewer-member' => 'Image Reviewer',
 'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
 
+'group-wikiastars' => 'Wikia Stars',
+'group-wikiastars-member' => 'Wikia Star',
+'grouppage-wikiastars' => 'wikia:Help:WikiaStars',
+
 # AjaxLogin
 'ajaxLogin1' => 'To complete your log in, you must enter a new password.  This will take you away from this edit page and you may lose your current edit.',
 'ajaxLogin2' => 'Are you sure? You may lose your edits if you leave this page now.',

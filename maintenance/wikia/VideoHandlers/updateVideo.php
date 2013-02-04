@@ -35,63 +35,55 @@
 	$dryRun = isset($options['dry-run']);
 
 	echo "Change from '$old' to '$new'.\n";
-	echo "Wiki: ".$wgCityId;
+	echo "Wiki: $wgCityId ($wgDBname)\n";
 
-	$wiki = WikiFactory::getWikiById( $wgCityId );
-	if ( !empty($wiki) && $wiki->city_public == 1 ) {
-		$dbname = $wiki->city_dbname;
+	$dbw = wfGetDB( DB_MASTER );
 
-		echo " ($dbname): \n";
+	$result = $dbw->select(
+		array( 'image' ),
+		array( 'img_name', 'img_metadata' ),
+		array(
+			'img_media_type' => 'VIDEO',
+			'img_minor_mime' => $old,
+		),
+		__METHOD__
+	);
 
-		$dbw = wfGetDB( DB_MASTER, array(), $dbname );
+	$total = $result->numRows();
+	$success = 0;
+	$failed = 0;
+	while ( $row = $dbw->fetchObject($result) ) {
+		$name = $row->img_name;
+		echo "Name: $name";
 
-		$result = $dbw->select(
-			array( 'image' ),
-			array( 'img_name', 'img_metadata' ),
-			array(
-				'img_media_type' => 'VIDEO',
-				'img_minor_mime' => $old,
-			),
-			__METHOD__,
-			array( 'LIMIT' => 1 )
-		);
-
-		$total = $result->numRows();
-		$success = 0;
-		$failed = 0;
-		while ( $row = $dbw->fetchObject($result) ) {
-			$name = $row->img_name;
-			echo "Name: $name";
-
-			$title = Title::newFromText( $name, NS_FILE );
-			if ( !$title instanceof Title ) {
-				$failed++;
-				echo "...FAILED. (Error: Title NOT found)\n";
-				continue;
-			}
-
-			$file = wfFindFile( $title );
-			if ( empty($file) ) {
-				$failed++;
-				echo "...FAILED. (Error: File NOT found)\n";
-				continue;
-			}
-
-			if ( !$dryRun ) {
-				// update database
-				$dbw->update( 'image',
-					array( 'img_minor_mime' => $new ),
-					array( 'img_name' => $name ),
-					__METHOD__
-				);
-
-				// clear cache
-				$file->purgeEverything();
-			}
-
-			$success++;
-			echo "...DONE.\n";
+		$title = Title::newFromText( $name, NS_FILE );
+		if ( !$title instanceof Title ) {
+			$failed++;
+			echo "...FAILED. (Error: Title NOT found)\n";
+			continue;
 		}
+
+		$file = wfFindFile( $title );
+		if ( empty($file) ) {
+			$failed++;
+			echo "...FAILED. (Error: File NOT found)\n";
+			continue;
+		}
+
+		if ( !$dryRun ) {
+			// update database
+			$dbw->update( 'image',
+				array( 'img_minor_mime' => $new ),
+				array( 'img_name' => $name ),
+				__METHOD__
+			);
+
+			// clear cache
+			$file->purgeEverything();
+		}
+
+		$success++;
+		echo "...DONE.\n";
 	}
 
 	echo "Total Videos: {$total}, Success: {$success}, Failed: {$failed}.\n\n";

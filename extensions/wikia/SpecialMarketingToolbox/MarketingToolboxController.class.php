@@ -253,7 +253,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$verticalId = $this->getVal('verticalId');
 		$beginTimestamp = $this->getVal('beginTimestamp', time());
 		$endTimestamp = $this->getVal('endTimestamp', time());
-		$this->calendarData = $this->toolboxModel->getData($langCode, $verticalId, $beginTimestamp, $endTimestamp);
+		$this->calendarData = $this->toolboxModel->getCalendarData($langCode, $verticalId, $beginTimestamp, $endTimestamp);
 	}
 
 	/**

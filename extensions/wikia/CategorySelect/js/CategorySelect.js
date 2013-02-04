@@ -80,30 +80,35 @@
 		elements.input = element.find( options.selectors.input )
 			.attr( 'maxlength', options.maxLength )
 			.on( 'keydown.' + namespace + ' paste.' + namespace, function( event ) {
-				// Defer processing until the pasted value is set on the input
-				setTimeout(function() {
-					var value = elements.input.val();
+				var value = elements.input.val();
 
-					// Enforce maxLength
-					if ( value.length >= options.maxLength ) {
-						elements.input.val( value.substr( 0, options.maxLength ) );
+				// Enter or Return key
+				if ( event.which === 13 ) {
+					event.preventDefault();
+					self.addCategory( value );
 
-						if ( options.popover ) {
-							$.extend( self.popover.options, {
-								content: cached.messages.errorCategoryNameLength,
-								placement: 'right',
-								type: 'error'
-							});
+				// Enforce maxLength
+				} else if ( options.maxLength ) {
 
-							elements.input.popover( 'show' );
+					// Defer processing so we can catch pasted values
+					setTimeout(function() {
+						value = elements.input.val();
+
+						if ( value.length >= options.maxLength ) {
+							elements.input.val( value.substr( 0, options.maxLength ) );
+
+							if ( options.popover ) {
+								$.extend( self.popover.options, {
+									content: cached.messages.errorCategoryNameLength,
+									placement: 'right',
+									type: 'error'
+								});
+
+								elements.input.popover( 'show' );
+							}
 						}
-
-					// Enter or Return key
-					} else if ( event.which === 13 ) {
-						event.preventDefault();
-						self.addCategory( value );
-					}
-				}, 0 );
+					}, 0 );
+				}
 			});
 
 		elements.list = element.find( options.selectors.categories );
