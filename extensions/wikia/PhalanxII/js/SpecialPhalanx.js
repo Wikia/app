@@ -1,4 +1,4 @@
-require(['jquery', 'mw', 'phalanx', 'wikia.log'], function($, mw, phalanx, log) {
+require(['jquery', 'mw', 'JSMessages', 'phalanx', 'wikia.log'], function($, mw, msg, phalanx, log) {
 	// edit token is required by Phalanx API
 	phalanx.init(mw.config.get('wgPhalanxToken'));
 
@@ -33,5 +33,26 @@ require(['jquery', 'mw', 'phalanx', 'wikia.log'], function($, mw, phalanx, log) 
 
 			singleModeWrapper.slideUp();
 			bulkModeWrapper.slideDown();
+		}).
+
+		// handle "validate regex" button
+		on('click', '#validate', function(ev) {
+			var regex = $('#wpPhalanxFilter').val(),
+				buttonNode = $(this),
+				msgNode = $('#validateMessage').hide();
+
+			buttonNode.attr('disabled', true);
+
+			phalanx.validate(regex).
+				done(function(isValid) {
+					msgNode.
+						text(isValid ? msg('phalanx-validate-regexp-valid') : msg('phalanx-validate-regexp-invalid')).
+						slideDown();
+
+					buttonNode.attr('disabled', false);
+				}).
+				fail(function() {
+					buttonNode.attr('disabled', false);
+				});
 		});
 });

@@ -9,7 +9,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		parent::__construct('Phalanx', 'phalanx' /* restrictions */);
 		$this->includable(false);
 		$this->title = SpecialPage::getTitleFor('Phalanx');
-		$this->service = F::build('PhalanxService');
+		$this->service = new PhalanxService();
 	}
 
 	public function isValid() {
@@ -46,6 +46,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		// load resource loader module
 		$this->wg->Out->addModules('ext.wikia.Phalanx');
 		$this->wg->Out->addJsConfigVars('wgPhalanxToken', $this->getToken());
+		F::build('JSMessages')->enqueuePackage('PhalanxSpecial', JSMessages::INLINE);
 
 		/* set pager */
 		$pager = new PhalanxPager();
@@ -166,6 +167,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 				$result = array( 'success' => array(), 'failed' => 0 );
 				foreach ( $bulkdata as $bulkrow ) {
 					$bulkrow = trim($bulkrow);
+					$phalanx['id'] = null;
 					$phalanx['text'] = $bulkrow;
 					
 					$id = $phalanx->save();
@@ -190,7 +192,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Method called via AJAX from Special:Phalanx
+	 * Method called via AJAX from Special:Phalanx to remove blocks
 	 */
 	public function unblock() {
 		$this->wf->profileIn( __METHOD__ );
@@ -238,16 +240,30 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->wf->profileOut( __METHOD__ );
 	}
 
-	public function check() {
-		$block = $this->request->getVal( 'block' );
+	/**
+	 * Method called via AJAX from Special:Phalanx to validate regexp
+	 */
+	public function validate() {
+		$this->wf->profileIn( __METHOD__ );
+
+		$this->response->setFormat('json');
+		$this->setVal( 'valid', false);
+
+		$regexp = $this->request->getVal( 'regexp' );
 		$token = $this->request->getVal( 'token' );
 
-		if ( $token != $this->getToken() ) {
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->setVal('error', 'permission');
+
 			$this->wf->profileOut( __METHOD__ );
 			return;
 		}
 
-		$this->setVal( 'valid', $this->validate( $block ) );
+		if ( $token == $this->getToken() ) {
+			$this->setVal( 'valid', $this->service->validate( $regexp ) );
+		}
+
+		$this->wf->profileOut( __METHOD__ );
 	}
 
 	public function matchBlock() {
@@ -255,23 +271,15 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$token = $this->request->getVal( 'token' );
 		$block = $this->request->getVal( 'block' );
 
-		if ( $token == $this->wg->User->getEditToken() ) {
+		if ( $token == $this->getToken() ) {
 			foreach ( Phalanx::getAllTypeNames() as $type => $typeName ) {
-				$blocks = $this->match( $type, $block );
+				$blocks = $this->service->match( $type, $block );
 				if ( !empty( $blocks ) ) {
 					$result[$type] = $blocks;
 				}
 			}
 		}
 		$this->setVal('blocks', $result);
-	}
-
-	private function validate( $block ) {
-		return $this->service->validate( $block );
-	}
-
-	private function match( $type, $block ) {
-		return $this->service->match( $type, $block );
 	}
 
 	private function refresh( /*Array*/ $ids )  {

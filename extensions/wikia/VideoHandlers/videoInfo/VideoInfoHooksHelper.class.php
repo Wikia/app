@@ -82,48 +82,22 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		$app = F::app();
-
 		if ( !VideoInfoHelper::videoInfoExists() ) {
 			return true;
 		}
 
-		$images = array();
 		$insertedImages = Wikia::getVar( 'imageInserts' );
-		foreach( $insertedImages as $img ) {
-			$key = md5( $img['il_to'] );
-			if ( !array_key_exists($key, $images) ) {
-				$images[$key] = $img['il_to'];
-			}
-		}
-
-		// related videos global list
-		$title = $article->getTitle();
-		if ( !empty($title) && !$app->wg->EnableRelatedVideosExt ) {
-			$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
-			if ( !empty($relatedVideos) && $title->getNamespace() == NS_MEDIAWIKI
-				&& $title->getText() == RelatedVideosNamespaceData::GLOBAL_RV_LIST ) {
-				$data = $relatedVideos->getData();
-				if ( isset($data['lists'])
-					&& isset($data['lists'][RelatedVideosNamespaceData::WHITELIST_MARKER]) ) {
-					foreach( $data['lists'][RelatedVideosNamespaceData::WHITELIST_MARKER] as $page ) {
-						$key = md5( $page['title'] );
-						if ( !array_key_exists($key, $images) ) {
-							$images[$key] = $page['title'];
-						}
-					}
-				}
-			}
-		}
 
 		$affected = false;
 		$userId = $user->getId();
 		$videoInfoHelper = new VideoInfoHelper();
-		foreach( $images as $img ) {
-			$videoData = $videoInfoHelper->getVideoDataByTitle( $img, true );
+		foreach( $insertedImages as $img ) {
+			$videoData = $videoInfoHelper->getVideoDataByTitle( $img['il_to'], true );
 			if ( !empty($videoData) ) {
 				$videoInfo = new VideoInfo( $videoData );
-				$affected = $videoInfo->addPremiumVideo( $userId );
+				if ( $videoInfo->addPremiumVideo( $userId ) ) {
+					$affected = true;
+				}
 			}
 		}
 

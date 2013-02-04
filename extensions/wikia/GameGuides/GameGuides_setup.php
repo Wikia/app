@@ -53,7 +53,9 @@ F::build( 'JSMessages' )->registerPackage( 'GameGuidesContentMsg', array(
 	'wikiagameguides-content-tag',
 	'wikiagameguides-content-name',
 	'wikiagameguides-content-duplicate-entry',
-	'wikiagameguides-content-category-error'
+	'wikiagameguides-content-category-error',
+	'wikiagameguides-content-required-entry',
+	'wikiagameguides-content-empty-tag'
 ) );
 
 //hooks

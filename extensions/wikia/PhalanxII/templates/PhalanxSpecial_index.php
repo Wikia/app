@@ -19,14 +19,20 @@
 							<input type="hidden" name="id" value="<?= $data['id'] ?>"/>
 							<strong>ID:</strong> <?= $data['id'] ?>
 							<?php endif; ?>
-							<div class="clearfix singlemode" id="singlemode">
+							<div id="singlemode">
 								<label for="wpPhalanxFilter" class="left"><?php echo wfMsg( 'phalanx-label-filter' ) ?></label>
 								<input type="text" id="wpPhalanxFilter" name="wpPhalanxFilter" class="blue" size="40" value="<?= $data['text'] ?>" />
+								<input type="button" id="validate" value="<?php echo wfMsg( 'phalanx-validate-regexp' ) ?>" />
+								<?php if (empty($editMode)): ?>
 								<input type="button" id="enterbulk" value="Bulkmode" />
 							</div>
-							<div class="clearfix bulkmode" id="bulkmode">
+							<div id="bulkmode" style="display: none">
 								<label for="wpPhalanxFilterBulk" class="left">Bulk<br/><?php echo wfMsg( 'phalanx-label-filter' ) ?></label>
 								<textarea type="text" id="wpPhalanxFilterBulk" name="wpPhalanxFilterBulk" class="blue" rows="10" cols="40" value="" ></textarea>
+							<?php endif; ?>
+							</div>
+							<div>
+								<span id="validateMessage"></span>
 							</div>
 							<div class="clearfix">
 								<div class="left-spacer">&nbsp;</div>
@@ -93,6 +99,7 @@
 									<label for="wpPhalanxTypeEmail"><?php echo wfMsg( 'phalanx-type-user-email' ) ?></label>
 								</div>
 							</div>
+							<!--
 							<div id="phalanx-help">
 								<div id="phalanx-help-1" class="accent"><?php echo wfMsg( 'phalanx-help-type-content' ) ?></div>
 								<div id="phalanx-help-2" class="accent"><?php echo wfMsg( 'phalanx-help-type-summary' ) ?></div>
@@ -103,6 +110,7 @@
 								<div id="phalanx-help-32" class="accent"><?php echo wfMsg( 'phalanx-help-type-answers-recent-questions' ) ?></div>
 								<div id="phalanx-help-256" class="accent"><?php echo wfMsg( 'phalanx-help-type-user-email' ) ?></div>
 							</div>
+							-->
 						</div>
 						<!-- Reason -->
 						<div id="phalanx-block-optionals" class="clearfix">
