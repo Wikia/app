@@ -163,7 +163,6 @@ function processTest( test ) {
 			case 'jasmine':
 				requiredFiles.push('lib/jasmine/jasmine.js');
 				requiredFiles.push('lib/jasmine/jasmine.async.js');
-				requiredFiles.push('lib/jasmine/jasmine.wikia.matchers.js');
 				requiredFiles.push('lib/jasmine/phantom_reporter.js');
 				runner = 'lib/jasmine/test-runner.html';
 				break;

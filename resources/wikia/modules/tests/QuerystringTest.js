@@ -19,28 +19,28 @@ describe("Querystring", function () {
 
 	it('registers AMD module', function() {
 		expect(querystring).toBeDefined();
-		expect(querystring).toBeFunction('querystring');
+		expect(typeof querystring).toBe('function', 'querystring');
 	});
 
 	it('exposes itself to Wikia namespace', function() {
 		expect(Wikia.Querystring).toBeDefined();
-		expect(Wikia.Querystring).toBeFunction('Wikia.Querystring');
+		expect(typeof Wikia.Querystring).toBe('function', 'Wikia.Querystring');
 	});
 
 	it('gives nice and clean API', function() {
 		var qs = new querystring();
 
-		expect(qs.getPath).toBeFunction('getPath');
-		expect(qs.setPath).toBeFunction('setPath');
-		expect(qs.getVal).toBeFunction('getVal');
-		expect(qs.setVal).toBeFunction('setVal');
-		expect(qs.removeVal).toBeFunction('removeVal');
-		expect(qs.getHash).toBeFunction('getHash');
-		expect(qs.setHash).toBeFunction('setHash');
-		expect(qs.removeHash).toBeFunction('removeHash');
-		expect(qs.addCb).toBeFunction('addCb');
-		expect(qs.toString).toBeFunction('toString');
-		expect(qs.goTo).toBeFunction('goTo');
+		expect(typeof qs.getPath).toBe('function', 'getPath');
+		expect(typeof qs.setPath).toBe('function', 'setPath');
+		expect(typeof qs.getVal).toBe('function', 'getVal');
+		expect(typeof qs.setVal).toBe('function', 'setVal');
+		expect(typeof qs.removeVal).toBe('function', 'removeVal');
+		expect(typeof qs.getHash).toBe('function', 'getHash');
+		expect(typeof qs.setHash).toBe('function', 'setHash');
+		expect(typeof qs.removeHash).toBe('function', 'removeHash');
+		expect(typeof qs.addCb).toBe('function', 'addCb');
+		expect(typeof qs.toString).toBe('function', 'toString');
+		expect(typeof qs.goTo).toBe('function', 'goTo');
 	});
 
 	it('works with new and without new operand', function(){
