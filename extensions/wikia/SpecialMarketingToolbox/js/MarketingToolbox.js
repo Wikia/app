@@ -106,7 +106,7 @@ MarketingToolbox.prototype = {
 			tmpDate.setTime(date);
 			Wikia.Querystring(window.wgEditHubUrl)
 				.setVal({
-					data: tmpDate.getTime() / 1000 - tmpDate.getTimezoneOffset() * 60,
+					date: tmpDate.getTime() / 1000 - tmpDate.getTimezoneOffset() * 60,
 					region: $('#marketingToolboxRegionSelect').val(),
 					verticalId: $('.vertical input:not(.secondary)').data('vertical-id'),
 					sectionId: $('.section input:not(.secondary)').data('section-id')
