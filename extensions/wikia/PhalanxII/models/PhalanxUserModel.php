@@ -38,12 +38,12 @@ class PhalanxUserModel extends PhalanxModel {
 		// set expiry information
 		$this->user->mBlock = new Block();
 		// protected
-		$this->user->mBlock->setId( $this->blockId );
+		$this->user->mBlock->setId( $this->block->id );
 		$this->user->mBlock->setBlockEmail( true );
 		// public
-		$this->user->mBlock->mExpiry = 'infinity'; // is_null($blockData['expire']) ? 'infinity' : $blockData['expire'];
-		$this->user->mBlock->mTimestamp = $this->wf->TimestampNow(); //wfTimestamp( TS_MW, $blockData['timestamp'] );
-		$this->user->mBlock->mAddress = ''; //$blockData['text'];
+		$this->user->mBlock->mExpiry = ( isset( $this->block->expires ) && !empty( $this->block->expires ) ) ? $this->block->expires : 'infinity';
+		$this->user->mBlock->mTimestamp = $this->wf->TimestampNow();
+		$this->user->mBlock->mAddress = $this->block->text;
 
 		if ( $type == 'ip' ) {
 			$this->user->mBlock->setCreateAccount( 1 );

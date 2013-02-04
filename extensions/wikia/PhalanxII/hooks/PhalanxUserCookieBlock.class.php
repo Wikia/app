@@ -39,7 +39,7 @@ class PhalanxUserCookieBlock extends PhalanxUserBlock {
 						isset( $result->id ) &&
 						$result->id > 0 
 					) {
-						$user = $phalanxModel->setBlockId( $result->id )->userBlock( 'exact' )->getUser();
+						$user = $phalanxModel->setBlock( $result )->userBlock( 'exact' )->getUser();
 						$ret = false;
 					} 
 				} else {

@@ -4,6 +4,7 @@ abstract class PhalanxModel extends WikiaObject {
 	protected $blockId = 0;
 	protected $model = null;
 	protected $text = "";
+	protected $block = null;
 	private $service = null;
 	
 	public function __construct( $model, $data = array() ) {
@@ -42,6 +43,17 @@ abstract class PhalanxModel extends WikiaObject {
 	
 	public function getText() {
 		return $this->text;
+	}
+
+	public function setBlock( $block ) {
+		$this->block = $block;
+		if ( !empty( $this->block->id ) ) {
+			$this->setBlockId( $this->block->id );
+		}
+	}
+	
+	public function getBlock() {
+		return $this->block;
 	}
 
 	public function logBlock() {

@@ -34,7 +34,7 @@ class PhalanxUserBlock extends WikiaObject {
 				isset( $result->id ) && 
 				$result > 0 
 			) {
-				$user = $phalanxModel->setBlockId( $result->id )->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
+				$user = $phalanxModel->setBlock( $result )->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
 				$ret = false;
 			} else {
 				$ret = true;
@@ -75,7 +75,7 @@ class PhalanxUserBlock extends WikiaObject {
 			$result->id > 0 
 		) {			
 			$abortError = $this->wf->Msg( 'phalanx-user-block-new-account' );
-			$phalanxModel->setBlockId( $result->id )->logBlock();
+			$phalanxModel->setBlock( $result )->logBlock();
 			$ret = false;
 		} elseif ( $result === false ) {
 			// TO DO
