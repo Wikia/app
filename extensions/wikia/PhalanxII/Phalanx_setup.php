@@ -52,8 +52,8 @@ $classes = array(
 	/* hooks */
 	'PhalanxUserBlock'         => $dir . 'hooks/PhalanxUserBlock.class.php',
 	'PhalanxUserCookieBlock'   => $dir . 'hooks/PhalanxUserCookieBlock.class.php',
-	'PhalanxContentBlock'	   => $dir . 'hooks/PhalanxContentBlock.class.php',
-	'PhalanxTitleBlock'	       => $dir . 'hooks/PhalanxTitleBlock.class.php',
+	'PhalanxContentBlock'      => $dir . 'hooks/PhalanxContentBlock.class.php',
+	'PhalanxTitleBlock'        => $dir . 'hooks/PhalanxTitleBlock.class.php',
 	'PhalanxAnswersBlock'      => $dir . 'hooks/PhalanxAnswersBlock.class.php',
 	'PhalanxWikiCreationBlock' => $dir . 'hooks/PhalanxWikiCreationBlock.class.php',
 	'PhalanxHook'	           => $dir . 'hooks/PhalanxHook.class.php'
