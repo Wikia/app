@@ -5,7 +5,7 @@
  *
  */
 
-/*global VET_show, WMU_show */
+/*global WMU_show */
  
 (function($, window) {
 var MediaPlaceholder = {
@@ -18,111 +18,111 @@ var MediaPlaceholder = {
 		}
 
 		this.loaded = true;
-		this.videoLoaded = false;
 		this.imageLoaded = false;
+		this.WikiaArticle = $('#WikiaArticle');
 
 		// Don't allow editing on history or diff pages
-		this.disabled = ( $.getUrlVar('diff') || $.getUrlVar('oldid') );
+		if( $.getUrlVar('diff') || $.getUrlVar('oldid') ){
+			return false;
+		}
 
 		var self = this;
 
+		this.setupVideoPlaceholders();
+
+		// TODO: use .wikiaImagePlaceholder instead of .wikiaPlaceholder after 
+		// all articles have purged (after 14 days)
+		// Then we can remove wikiaVideoPlaceholder check below
 		$('#WikiaArticle').on('click', '.wikiaPlaceholder a', function(e) {
-			e.preventDefault();
+			var $this = $(this);
 
-			// cache jquery object
-			var $this = $(this),
-				props;
-
-			// For now, make this somewhat backwards compatible with unpurged saved placholders
-			if($this.prop('onclick')) {
+			// video placeholders handled differently
+			if($this.parent().parent().hasClass('wikiaVideoPlaceholder')) {
 				return;
 			}
+			
+			e.preventDefault();
 
 			// Provide immediate feedback once button is clicked
 			var oText = $this.text();
 			$this.startThrobbing();
 
-			// handle video placeholder
-			if($this.parent().parent().hasClass('wikiaVideoPlaceholder')) {
+			var props = self.getProps($this);
 
-				// Don't allow editing on history pages
-				if(self.disabled) {
-					GlobalNotification.show( $.msg('imgplc-notinhistory-video'), 'warn' );
+			if(!self.imageLoaded) {
+				// open WMU
+				$.when(
+					$.getResources([
+						$.loadYUI,
+						$.loadJQueryAIM,
+						$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
+						wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
+					])
+				).done(function() {
+					self.imageLoaded = true;
+					
 					$this.text(oText);
-					return;
-				}
-
-				props = self.getProps($this);
-
-				if(!self.videoLoaded) {
-					// open VET
-					$.when(
-						$.getJSON( window.wgScriptPath + "index.php?action=ajax&rs=VET&method=getMsgVars"), // leave this in first position
-						$.loadYUI(),
-						$.getResources([ 
-							$.getSassCommonURL("/extensions/wikia/VideoEmbedTool/css/VET.scss" ),
-							$.getSassCommonURL("/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss" ),
-							window.wgExtensionsPath + "/wikia/VideoEmbedTool/js/VET.js",
-							window.wgExtensionsPath + "/wikia/WikiaStyleGuide/js/Dropdown.js"
-						])
-					).done(function(VETMessages) {
-						// VET i18n messages 
-						for (var v in VETMessages) {
-							wgMessages[v] = VETMessages[v];
-						}
-						
-						self.videoLoaded = true;
-	
-						$this.text(oText);
-						VET_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption); 
-					});
-				} else {
-					$this.text(oText);
-					VET_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption); 				
-				}
-			// handle image placeholder
+					WMU_show( self.getEvent(), -2, props.placeholderIndex, props.align, props.thumb, props.width, props.caption, props.link);
+				});
 			} else {
-
-				// Don't allow editing on history pages
-				if(self.disabled) {
-					GlobalNotification.show( $.msg('imgplc-notinhistory'), 'warn' );			
-					return;
-				}
-
-				props = self.getProps($this);
-
-				if(!self.imageLoaded) {
-					// open WMU
-					$.when(
-						$.getResources([
-							$.loadYUI,
-							$.loadJQueryAIM,
-							$.getSassCommonURL( 'extensions/wikia/WikiaMiniUpload/css/WMU.scss'),
-							wgResourceBasePath + '/extensions/wikia/WikiaMiniUpload/js/WMU.js'
-						])
-					).done(function() {
-						self.imageLoaded = true;
-						
-						$this.text(oText);
-						WMU_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption, props.link);
-					});
-				} else {
-					$this.text(oText);
-					WMU_show( self.getEvent(), -2, props.id, props.align, props.thumb, props.width, props.caption, props.link);				
-				}
+				$this.text(oText);
+				WMU_show( self.getEvent(), -2, props.placeholderIndex, props.align, props.thumb, props.width, props.caption, props.link);				
 			}
 		});
 	},
+	
+	setupVideoPlaceholders: function() {
+		var self = this;
+		
+		self.WikiaArticle.find('.wikiaVideoPlaceholder a').each(function() {
+			
+			var $this = $(this),
+				props = self.getProps($this);
+
+			$this.removeAddVideoButton().addVideoButton({
+				embedPresets: props,
+				insertFinalVideoParams: ['placeholder=1', 'box=' + props.placeholderIndex, 'article='+encodeURIComponent( wgTitle ), 'ns='+wgNamespaceNumber],
+				callbackAfterEmbed: self.videoEmbedCallback
+			});
+		});	
+	},
+	
+	videoEmbedCallback: function(embedData) {
+		var placeholders = MediaPlaceholder.WikiaArticle.find('.wikiaVideoPlaceholder a'),
+			// get placeholder to turn into a video thumbnail
+			to_update = placeholders.filter('[data-id='+embedData.placeholderIndex+']'),
+			// get thumbnail code from hidden div in success modal
+			html = $('#VideoEmbedCode').html();
+
+		to_update.parent().parent().replaceWith(html);
+
+		// update data id so we can match DOM placeholders to parsed wikitext placeholders
+		placeholders.each(function() {
+			var $this = $(this),
+				id = $this.attr('data-id');
+
+			if(id > embedData.placeholderIndex) {
+				$this.attr('data-id', id-1);
+			}
+		});
+
+		// purge cache of article so video will show up on reload
+		$.post(wgScript, {title: wgPageName, action: 'purge'});
+
+		// re-bind events
+		MediaPlaceholder.setupVideoPlaceholders();
+	},
+
 
 	// Get data for WMU / VET from placeholder element
 	getProps: function(elem) {
 		return {
-			id: elem.data('id'),
-			align: elem.data('align'),
-			width: elem.data('width') || null,
-			thumb: elem.data('thumb'),
-			link: elem.data('link'),
-			caption: elem.data('caption')
+			placeholderIndex: elem.attr('data-id'),
+			align: elem.attr('data-align'),
+			width: elem.attr('data-width'),
+			thumb: elem.attr('data-thumb'),
+			link: elem.attr('data-link'),
+			caption: elem.attr('data-caption')
 		}
 	},
 

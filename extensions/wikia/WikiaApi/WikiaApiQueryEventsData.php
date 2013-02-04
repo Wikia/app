@@ -715,7 +715,6 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 	}
 
 	private function getMediaType($ns) {
-		global $wgEnableVideoToolExt;
 		wfProfileIn( __METHOD__ );
 		$result = 0;
 

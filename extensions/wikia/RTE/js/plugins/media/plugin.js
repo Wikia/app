@@ -15,21 +15,6 @@ CKEDITOR.plugins.add('rte-media',
 			self.setupPlaceholder(placeholders);
 		});
 
-		// handle clicks on WMU/VET buttons in source mode (RT #35276)
-		editor.on('toolbarReady', function(toolbar) {
-			$('#mw-toolbar').children('#mw-editbutton-wmu').click(function(ev) {
-				WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
-					window.WMU_show(ev);
-				});
-			});
-
-			$('#mw-toolbar').children('#mw-editbutton-vet').click(function(ev) {
-				WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-					window.VET_show(ev);
-				});
-			});
-		});
-
 		// register "Add Image" command
 		editor.addCommand('addimage', {
 			exec: function(editor) {
@@ -54,7 +39,7 @@ CKEDITOR.plugins.add('rte-media',
 			editor.addCommand('addvideo', {
 				exec: function(editor) {
 					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-						RTE.tools.callFunction(window.VET_show);
+						RTE.tools.callFunction(window.VET_WikiaEditor);
 					});
 				}
 			});
@@ -308,7 +293,7 @@ CKEDITOR.plugins.add('rte-media',
 			if (!UserLogin.isForceLogIn()) {
 				var self = this;
 				WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-					RTE.tools.callFunction(window.VET_show,$(self));
+					RTE.tools.callFunction(window.VET_WikiaEditor, $(self));
 				});
 			}
 		});
@@ -370,7 +355,7 @@ CKEDITOR.plugins.add('rte-media',
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			var self = this;
 			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-				RTE.tools.callFunction(window.VET_show,$(self), {isPlaceholder: true});
+				RTE.tools.callFunction(window.VET_WikiaEditor, $(self), {isPlaceholder: true});
 			});
 		});
 

@@ -62,8 +62,9 @@ $app->registerApiController( 'SearchApiController', "{$dir}SearchApiController.c
 
 global $wgSolrProxy, $wgSolrHost, $wgWikiaSearchUseProxy, $wgExternalSharedDB, $wgEnableRelatedVideoSearch, $wgSolrMaster;
 
+// Special:VideoSearch - Page for testing different search methods.  Has nothing to do with RelatedVideos
 if (! empty( $wgEnableRelatedVideoSearch ) ) {
-	$app->registerSpecialPage('VideoSearch',	'WikiaVideoSearchController');
+	$app->registerSpecialPage('VideoSearch', 'WikiaVideoSearchController');
 }
 
 

@@ -22,11 +22,7 @@
 			VideoEmbedTool: {
 				loaded: false,
 				requires: [
-					$.loadYUI,
-					$.getSassCommonURL( 'extensions/wikia/VideoEmbedTool/css/VET.scss' ),
-					$.getSassCommonURL( 'extensions/wikia/WikiaStyleGuide/css/Dropdown.scss' ),
-					wgResourceBasePath + '/extensions/wikia/VideoEmbedTool/js/VET.js',
-					wgResourceBasePath + '/extensions/wikia/WikiaStyleGuide/js/Dropdown.js'
+					wgResourceBasePath + '/extensions/wikia/VideoEmbedTool/js/VET_WikiaEditor.js',
 				]
 			},
 			WikiaMiniUpload: {
