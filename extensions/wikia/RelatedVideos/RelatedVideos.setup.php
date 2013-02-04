@@ -29,20 +29,18 @@ $app->registerClass('RelatedHubsVideosController', $dir . '/RelatedHubsVideosCon
 /**
  * hooks
  */
-if ( empty( $wgRelatedVideosPartialRelease ) ){
-	$app->registerHook('BeforePageDisplay', 'RelatedVideosHookHandler', 'onBeforePageDisplay' );
+$app->registerHook('BeforePageDisplay', 'RelatedVideosHookHandler', 'onBeforePageDisplay' );
 
-	define('RELATEDVIDEOS_POSITION', 'RELATEDVIDEOS_POSITION');
-	$app->registerHook('LanguageGetMagic', 'RelatedVideosHookHandler', 'onLanguageGetMagic' );
-	$app->registerHook('InternalParseBeforeLinks', 'RelatedVideosHookHandler', 'onInternalParseBeforeLinks' );
+define('RELATEDVIDEOS_POSITION', 'RELATEDVIDEOS_POSITION');
+$app->registerHook('LanguageGetMagic', 'RelatedVideosHookHandler', 'onLanguageGetMagic' );
+$app->registerHook('InternalParseBeforeLinks', 'RelatedVideosHookHandler', 'onInternalParseBeforeLinks' );
 
-	if( !empty( $wgRelatedVideosOnRail ) ) {
-		$app->registerHook('GetRailModuleList', 'RelatedVideosHookHandler', 'onGetRailModuleList');
-	} else {
-		array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedVideosHookHandler::onOutputPageBeforeHTML' );
-	}
-
+if( !empty( $wgRelatedVideosOnRail ) ) {
+	$app->registerHook('GetRailModuleList', 'RelatedVideosHookHandler', 'onGetRailModuleList');
+} else {
+	array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedVideosHookHandler::onOutputPageBeforeHTML' );
 }
+
 $app->registerHook('ArticleSaveComplete', 'RelatedVideosHookHandler', 'onArticleSaveComplete');
 $app->registerHook( 'FileDeleteComplete', 'RelatedVideosHookHandler', 'onFileDeleteComplete' );
 $app->registerHook( 'FileUndeleteComplete', 'RelatedVideosHookHandler', 'onFileUndeleteComplete' );

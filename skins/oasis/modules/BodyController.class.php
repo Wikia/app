@@ -269,12 +269,7 @@ class BodyController extends WikiaController {
 				$railModuleList = array();
 			}
 			else if (self::isHubPage()) {
-				if ($useTestBoxad) {
-					$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'TEST_TOP_RIGHT_BOXAD'));
-				}
-				else {
-					$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD'));
-				}
+				$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD'));
 				$railModuleList[1480] = array('CorporateSite', 'HotSpots', null);
 			//	$railModuleList[1470] = array('CorporateSite', 'PopularHubPosts', null);  // temp disabled - data not updating
 				$railModuleList[1460] = array('CorporateSite', 'TopHubUsers', null);

@@ -5,7 +5,7 @@ class CorporateFooterController extends WikiaController {
 	public function index() {
 		global $wgCityId, $wgLang, $wgContLang, $wgMemc;
 		$catId = WikiFactoryHub::getInstance()->getCategoryId( $wgCityId );
-		$mKey = wfSharedMemcKey( 'mOasisFooterLinks', $wgContLang->getCode(), $wgLang->getCode(), $catId );
+		$mKey = wfMemcKey( 'mOasisFooterLinks', $wgContLang->getCode(), $wgLang->getCode(), $catId );
 
 		$this->footer_links = $wgMemc->get( $mKey );
 		$this->copyright = RequestContext::getMain()->getSkin()->getCopyright();

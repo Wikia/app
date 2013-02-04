@@ -40,9 +40,10 @@ Class WikiFactoryChangedHooks {
 	 */
 	static public function recipesTweaks($cv_name, $city_id, $value) {
 		wfProfileIn(__METHOD__);
-		Wikia::log(__METHOD__, $city_id, "{$cv_name} = {$value}");
+
 		if ($cv_name == "wgEnableRecipesTweaksExt" && $value == true) {
 
+			Wikia::log(__METHOD__, $city_id, "{$cv_name} = {$value}");
 			// Detect if this is a recipes site...
 			$isAlreadyRecipes = false;
 			$dbName = WikiFactory::IDtoDB($city_id);
@@ -172,9 +173,10 @@ Class WikiFactoryChangedHooks {
 	// Initialize schema if not already initialized
 	static public function FounderProgressBar($cv_name, $wiki_id, $value) {
 
-		Wikia::log(__METHOD__, $wiki_id, "{$cv_name} = {$value}");
 		// Initialize data if extension is enabled. Safe to do multiple times, just gives a warning
 		if ($cv_name == 'wgEnableFounderProgressBarExt' && $value == true) {
+			Wikia::log(__METHOD__, $wiki_id, "{$cv_name} = {$value}");
+
 			$app = F::app();
 			$dbw = $app->wf->GetDB(DB_MASTER, array(), $app->wg->ExternalSharedDB);
 
@@ -193,8 +195,8 @@ Class WikiFactoryChangedHooks {
 
 
 	static public function BlogArticle($cv_name, $city_id, $value) {
-		Wikia::log(__METHOD__, $city_id, "{$cv_name} = {$value}");
 		if ($cv_name == "wgEnableBlogArticles" && $value == true) {
+			Wikia::log(__METHOD__, $city_id, "{$cv_name} = {$value}");
 			/**
 			 * add task to TaskManager
 			 */

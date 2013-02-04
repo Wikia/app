@@ -154,7 +154,7 @@ function processTest( test ) {
 	}
 
 	if(testOptions.framework) {
-		switch(testOptions.framework.toLowerCase()) {
+		switch(testOptions.framework.toLowerCase().trim()) {
 			case 'qunit':
 				requiredFiles.push('lib/qunit/qunit.js');
 				requiredFiles.push('lib/qunit/phantom_reporter.js');
@@ -177,7 +177,7 @@ function processTest( test ) {
 
 	if(testOptions['require-asset'] instanceof Array){
 		testOptions['require-asset'].forEach(function(item){
-			scanDirectory('../' + item, requiredFiles, function(arg) {return true;});
+			scanDirectory('../' + item.trim(), requiredFiles, function(arg) {return true;});
 		});
 	}
 

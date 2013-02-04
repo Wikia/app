@@ -46,7 +46,6 @@ class RelatedVideosHookHandler {
 		wfProfileIn(__METHOD__);
 
 		$title = $article->getTitle();
-
 		if ( !empty( $title ) ) {
 			switch ( $title->getNamespace() ) {
 				case NS_RELATED_VIDEOS:
@@ -54,17 +53,53 @@ class RelatedVideosHookHandler {
 					$relatedVideosNSData->purge();
 					break;
 				case NS_MEDIAWIKI:
-					if ( empty( F::app()->wg->relatedVideosPartialRelease ) ){
-						if ( $title->getText() == RelatedVideosNamespaceData::GLOBAL_RV_LIST ){
-							$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle($title);
-							$relatedVideosNSData->purge();
+					if ( $title->getText() == RelatedVideosNamespaceData::GLOBAL_RV_LIST ) {
+						$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle($title);
+						$relatedVideosNSData->purge();
+
+						if ( VideoInfoHelper::videoInfoExists() ) {
+							$relatedVideos = RelatedVideosNamespaceData::newFromGeneralMessage();
+							if ( !empty($relatedVideos) ) {
+								$data = $relatedVideos->getData();
+								if ( !empty($data['lists'][RelatedVideosNamespaceData::WHITELIST_MARKER]) ) {
+									$images = array();
+									foreach( $data['lists'][RelatedVideosNamespaceData::WHITELIST_MARKER] as $page ) {
+										$key = md5( $page['title'] );
+										if ( !array_key_exists($key, $images) ) {
+											$images[$key] = $page['title'];
+										}
+									}
+
+									if ( !empty($images) ) {
+										$affected = false;
+										$userId = $user->getId();
+										$videoInfoHelper = new VideoInfoHelper();
+										foreach( $images as $img ) {
+											$videoData = $videoInfoHelper->getVideoDataByTitle( $img, true );
+											if ( !empty($videoData) ) {
+												$videoInfo = new VideoInfo( $videoData );
+												if ( $videoInfo->addPremiumVideo( $userId ) ) {
+													$affected = true;
+												}
+											}
+										}
+
+										if ( $affected ) {
+											$mediaService = new MediaQueryService();
+											$mediaService->clearCacheTotalVideos();
+											$mediaService->clearCacheTotalPremiumVideos();
+										}
+									}
+								}
+							}
 						}
 					}
-				break;
+					break;
 			}
 		}
 
 		wfProfileOut(__METHOD__);
+
 		return true;
 	}
 
