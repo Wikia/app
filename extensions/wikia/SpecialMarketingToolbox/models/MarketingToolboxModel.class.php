@@ -429,21 +429,6 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
-	 *
-	 */
-	public function getFileMarkup($fileName) {
-		$this->wf->profileIn(__METHOD__);
-
-		$videoDataHelper = new RelatedVideosData();
-		$videoData = $videoDataHelper->getVideoData($fileName, self::FORM_THUMBNAIL_SIZE);
-		$markup = $this->app->renderView('MarketingToolboxVideos', 'index', array('video' => $videoData));
-
-		$this->wf->profileOut(__METHOD__);
-		return $markup;
-	}
-
-
-	/**
 	 * Get table name by section Id
 	 *
 	 * @param int $sectionId

@@ -99,44 +99,13 @@ yui-overlay, .yui-panel-container {
 
 .skin-oasis {
 
-	#VideoEmbed {
-		@include box-shadow(0, 10px, 60px, mix($color-page, #000));
-		border: 5px solid $color-buttons; 
-		border-color: transparentize($color-buttons, 0.7); // for browser that do support RGBa
-		padding: 35px 5px 5px 5px;
-		position: absolute;
-		width: auto;
-		h1 {
-			color: $color-links;
-			font-size: 22px;
-		}
-		.close {
-			position: static;
-			margin-top: 4px;
-			vertical-align: baseline;
-		}
-	}
-	#VideoEmbedClose {
-		@include border-radius(3px);
-		@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
-		height: 19px;
-		padding: 0;
-		right: 5px;
-		text-align: center;
-		width: 19px;
-		a {
-			display: none;
-		}
-	}
-	#ImageUploadBorder,
-	#VideoEmbedBorder {
+	#ImageUploadBorder {
 		display: none;
 	}
 	#ImageUploadBody {
 		height: 480px;
 	}
-	#ImageUploadProgress1,
-	#VideoEmbedProgress1 {
+	#ImageUploadProgress1 {
 		visibility: hidden;
 	}
 	.yui-back {
