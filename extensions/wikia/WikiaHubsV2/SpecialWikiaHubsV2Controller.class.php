@@ -26,6 +26,10 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		parent::__construct('WikiaHubsV2','',false);
 	}
 
+
+	/**
+	 * Main method for displaying hub pages
+	 */
 	public function index() {
 		$toolboxModel = new MarketingToolboxModel();
 		$modulesData = $toolboxModel->getPublishedData(
@@ -60,6 +64,16 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		}
 	}
 
+	/**
+	 * Render one module with given data
+	 *
+	 * @param string $langCode
+	 * @param int    $verticalId
+	 * @param string $moduleName
+	 * @param array  $moduleData
+	 *
+	 * @return string
+	 */
 	protected function renderModule($langCode, $verticalId, $moduleName, $moduleData) {
 		$module = MarketingToolboxModuleService::getModuleByName(
 			$moduleName,

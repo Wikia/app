@@ -233,12 +233,12 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
-	 * Get modules data for last published hub
+	 * Get modules data for last published hub before selected timestamp
 	 *
-	 * @param code $langCode
-	 * @param int  $sectionId
-	 * @param int  $verticalId
-	 * @param int  $timestamp
+	 * @param string $langCode
+	 * @param int    $sectionId
+	 * @param int    $verticalId
+	 * @param int    $timestamp
 	 *
 	 * @return array
 	 */
@@ -387,7 +387,7 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
-	 * Get last timestamp when vertical was published
+	 * Get last timestamp when vertical was published (before selected timestamp)
 	 *
 	 * @param string $langCode
 	 * @param int $sectionId
@@ -422,9 +422,9 @@ class MarketingToolboxModel extends WikiaModel {
 	 * wikitext (i.e. [[File:Batman - Following|thumb|right|335 px]]
 	 * returns false if not found
 	 *
-	 * @param $wikiText string
+	 * @param string $wikiText
 	 *
-	 * @return $fileName string|false
+	 * @return string|false $fileName
 	 */
 	public function extractTitleFromVETWikitext($wikiText) {
 		$this->wf->profileIn(__METHOD__);
