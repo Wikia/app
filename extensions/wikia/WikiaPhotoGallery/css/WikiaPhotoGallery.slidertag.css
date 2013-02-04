@@ -18,14 +18,14 @@
 .wikiaPhotoGallery-slider-body ul{
 	margin-left: 0;
 }
-.wikiaPhotoGallery-slider-body .nav img {
+.wikiaPhotoGallery-slider-body .nav > img, .wikiaPhotoGallery-slider-body .nav p > img {
 	border: 1px solid #555;
 	cursor: pointer;
 	display: inline-block;
 	filter: alpha(opacity = 80);
 	opacity: .8;
 }
-.wikiaPhotoGallery-slider-body .selected img {
+.wikiaPhotoGallery-slider-body .selected > img, .wikiaPhotoGallery-slider-body .selected p > img {
 	opacity: 1;
 	border: 1px solid #FFF;
 }
@@ -33,6 +33,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
+	z-index: 50;
 }
 .wikiaPhotoGallery-slider-body .horizontal .description {
 	bottom: 0px;
@@ -85,7 +86,7 @@
 }
 .wikiaPhotoGallery-slider-body .horizontal .nav {
 	bottom: 1px !important;
-	padding: 16px 5px 0;
+	padding: 16px 5px 5px;
 	position: absolute;
 	z-index: 100;
 }
@@ -114,10 +115,14 @@
 }
 
 .wikiaPhotoGallery-slider-body .vertical .nav {
-	padding: 16px 5px 0;
+	margin-top: 5px;
+	padding: 0 5px;
 	position: absolute;
 	right: 5px;
 	z-index: 100;
+}
+.wikiaPhotoGallery-slider-body .nav p {
+	margin: 0;
 }
 .vertical .wikiaPhotoGallery-slider-0 .nav {
 	bottom: 185px;
