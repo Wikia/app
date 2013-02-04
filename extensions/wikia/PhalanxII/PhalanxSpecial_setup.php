@@ -33,11 +33,26 @@ $wgAvailableRights[] = 'phalanx';
 $wgAvailableRights[] = 'phalanxemailblock';
 
 /**
- * messages
+ * messages for Special:Phalanx UI
  */
-$app->registerExtensionMessageFile('Phalanx', $dir . 'Phalanx.i18n.php');
-
 F::build('JSMessages')->registerPackage('PhalanxSpecial', array(
 	'phalanx-validate-regexp-valid',
 	'phalanx-validate-regexp-invalid'
 ));
+
+// Resources Loader module
+$wgResourceModules['ext.wikia.Phalanx'] = array(
+	'scripts' => array(
+		'js/modules/phalanx.js',
+		'js/SpecialPhalanx.js',
+	),
+	'styles' => array(
+		'css/Phalanx.css'
+	),
+	'dependencies' => array(
+		'wikia.log',
+		'wikia.nirvana'
+	),
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/PhalanxII'
+);
