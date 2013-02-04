@@ -396,7 +396,6 @@
 				'SpecialPage:MostLinkedFiles',
 				'SpecialPage:MostLinkedTemplates',
 				'SpecialPage:Mostpopularcategories',
-				'SpecialPage:Mostvisitedpages',
 				'SpecialPage:NewPages',
 				'SpecialPage:NewFiles',
 				'SpecialPage:AncientPages',
