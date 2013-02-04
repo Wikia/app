@@ -107,7 +107,7 @@ class WikiaVideoAddForm extends SpecialPage {
 			if ( is_array($retval) ) {
 				list( $title, $videoPageId, $videoProvider ) = $retval;
 			} else {
-				$errors['videoUrl'] = wfMsg( 'wva-failure' );
+				$errors['videoUrl'] = $retval;
 				$this->showForm($errors);
 				return;
 			}

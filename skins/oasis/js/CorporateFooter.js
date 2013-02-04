@@ -25,7 +25,7 @@
 						trackingMethod: 'both'
 					});
 
-					(new Wikia.Querystring()).setVal('useskin', 'wikiamobile').addCb().goTo();
+					Wikia.Querystring().setVal('useskin', 'wikiamobile').addCb().goTo();
 				});
 
 				linksWrapper.prepend(mobileSwitch.wrap('<li></li>'));

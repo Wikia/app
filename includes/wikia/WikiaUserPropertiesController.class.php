@@ -43,7 +43,7 @@ class WikiaUserPropertiesController extends WikiaController {
 
 	protected function throwExceptionForAnons() {
 		if (!$this->wg->User->isLoggedIn()) {
-			throw new Exception('User not logged-in', self::EXCEPTION_USER_NOT_LOGGED_IN_CODE);
+			throw new Exception('User not logged-in');
 		}
 	}
 }

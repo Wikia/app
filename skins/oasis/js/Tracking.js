@@ -92,6 +92,9 @@ jQuery(function($){
 		$('#WikiaArticleCategories').on('click', 'a', {
 			category: category,
 			label: 'category-name'
+		}, trackWithEventData).on('click', '.add', {
+			category: category,
+			label: 'add-category'
 		}, trackWithEventData);
 	})();
 
@@ -284,6 +287,13 @@ jQuery(function($){
 		}
 	});
 
+	/** related-videos-module **/
+
+	$wikiaRail.find('.RelatedVideosModule').on('click', 'a', {
+		category: 'related-videos-module',
+		label: 'video-thumbnail'
+	}, trackWithEventData);
+
 	/** search **/
 
 	(function() {
@@ -311,6 +321,7 @@ jQuery(function($){
 		});
 
 		if ($body.hasClass('page-Special_Search')) {
+			category = 'special-' + category;
 			$wikiaSearch.on('click', '.search-tabs a', function(e) {
 				track({
 					browserEvent: e,
@@ -323,7 +334,7 @@ jQuery(function($){
 				track({
 					browserEvent: e,
 					category: category,
-					label: 'result-' + (el.hasClass('search_click_match') ? 'push-top' : 'item-' + el.data('pos'))
+					label: 'result-' + (el.data('event') === 'search_click_match' ? 'push-top' : 'item-' + el.data('pos'))
 				});
 			}).on('click', '.image', function(e) {
 				track({

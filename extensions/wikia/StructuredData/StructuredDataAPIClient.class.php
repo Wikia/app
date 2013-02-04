@@ -87,19 +87,16 @@ class StructuredDataAPIClient extends WikiaObject {
 			$this->log( 'Headers are ' . json_encode( $httpRequest->getResponseHeader() ) );
 			$this->log( 'Response (' . $httpRequest->getResponseCode() .') is ' . $response);
 			$decodedResponse = json_decode ( $response );
-			if ( empty($decodedResponse) && in_array( $httpRequest->getResponseCode(), array( 500, 501 ) ) ) {
-				return '{"error":"Internal Server Error","message":""}';
-			}
-			else {
-				return $response;
-			}
-			$this->closeLog();
-
 		} catch (Exception $e) {
 			$this->log('Error: ' . $e);
 			$this->closeLog();
 			throw $e;
 		}
+		$this->closeLog();
+		if ( empty($decodedResponse) && in_array( $httpRequest->getResponseCode(), array( 500, 501 ) ) ) {
+			return '{"error":"Internal Server Error","message":""}';
+		}
+		return $response;
 	}
 
 	private function getApiPath() {

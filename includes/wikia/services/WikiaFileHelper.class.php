@@ -96,6 +96,11 @@ class WikiaFileHelper extends Service {
 			$videoStr = 's:'.strlen($videoId).':"'.$videoId.'"';
 		}
 
+		if ( strstr($provider, '/') ) {
+			$providers = explode( '/', $provider );
+			$provider = $providers[0];
+		}
+
 		$rows = $dbr->select(
 			'image',
 			'*',

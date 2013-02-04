@@ -52,7 +52,7 @@ no text was provided for refs named <code>$1</code>',
 	'cite_error_references_missing_key'              => '<code>&lt;ref&gt;</code> tag with name "$1" defined in <code>&lt;references&gt;</code> is not used in prior text.',
 	'cite_error_references_no_key'                   => '<code>&lt;ref&gt;</code> tag defined in <code>&lt;references&gt;</code> has no name attribute.',
 	'cite_error_empty_references_define'             => '<code>&lt;ref&gt;</code> tag defined in <code>&lt;references&gt;</code> with name "$1" has no content.',
-	'cite_error_malformed_dom'                       => '<code>&lt;references&gt;</code> was not closed properly. Please replace this with this tag with a self-closing <code>&lt;references&gt;/</code> tag, or close it with a <code>/&lt;references&gt;</code> tag.' ,
+	'cite_error_malformed_dom'                       => '<code>&lt;references&gt;</code> was not closed properly. Please replace this with this tag with a self-closing <code>&lt;references/&gt;</code> tag, or close it with a <code>&lt;/references&gt;</code> tag.' ,
 
 	/*
 	   Output formatting

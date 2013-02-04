@@ -116,6 +116,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js', // WikiaBar is enabled sitewide
 		'//extensions/wikia/Chat2/js/ChatEntryPoint.js', // Chat is enabled sitewide
 		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js', // Related Forum Discussion is on all article pages
+		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
 	)
 );
 
@@ -312,8 +313,8 @@ $config['gameguides_js'] = array(
 
 		//libraries/frameworks
 		'//resources/wikia/libraries/Ponto/ponto.js',
-		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
 		'//resources/wikia/libraries/modil/modil.js',
+		'//extensions/wikia/WikiaMobile/js/Wikia.utils.js',
 
 		// deferred.js - jQuery-free implementation (BugId:34943)
 		'//resources/wikia/libraries/deferred/deferred.js',
@@ -350,6 +351,7 @@ $config['gameguides_js'] = array(
 		'#group_wikiamobile_mediagallery_js',
 
 		//modules
+		'//resources/wikia/modules/ajax.js',
 		'//extensions/wikia/WikiaMobile/js/toc.js',
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
@@ -733,8 +735,6 @@ $config['mini_editor_js'] = array(
 		'//extensions/wikia/EditPageLayout/js/modules/InsertMiniEditor.js',
 		'//extensions/wikia/EditPageLayout/js/modules/ModeSwitch.js',
 		// Photo and Video tools
-		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
-		'//extensions/wikia/VideoEmbedTool/js/VET.js',
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
 		// Third Party
@@ -898,7 +898,6 @@ $config['relatedvideos_js'] = array(
 	'skin' => array( 'oasis' ), //we have no support for relatedvideos in wikiamobile and monobook as for now
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/VideoHandlers/js/AddVideo.js',
 		'//extensions/wikia/RelatedVideos/js/RelatedVideos.js'
 	)
 );
@@ -908,6 +907,15 @@ $config['relatedvideos_scss'] = array(
 	'skin' => array( 'oasis' ), //we have no support for relatedvideos in wikiamobile and monobook as for now
 	'assets' => array(
 		'//extensions/wikia/RelatedVideos/css/RelatedVideos.scss'
+	)
+);
+
+$config['VET_js'] = array(
+	'skin' => array( 'oasis' ),
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
+		'//extensions/wikia/VideoEmbedTool/js/VET.js',
 	)
 );
 
@@ -1158,7 +1166,6 @@ $config['special_videos_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array( 'oasis', 'monobook' ),
 	'assets' => array(
-		'//extensions/wikia/VideoHandlers/js/AddVideo.js',
 		'//extensions/wikia/SpecialVideos/js/SpecialVideos.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
 	)

@@ -253,7 +253,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$verticalId = $this->getVal('verticalId');
 		$beginTimestamp = $this->getVal('beginTimestamp', time());
 		$endTimestamp = $this->getVal('endTimestamp', time());
-		$this->calendarData = $this->toolboxModel->getData($langCode, $verticalId, $beginTimestamp, $endTimestamp);
+		$this->calendarData = $this->toolboxModel->getCalendarData($langCode, $verticalId, $beginTimestamp, $endTimestamp);
 	}
 
 	/**
@@ -315,12 +315,32 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function getVideoDetails() {
-		$fileName = $this->toolboxModel->extractTitleFromVETWikitext(
-			$this->getVal('wikiText')
-		);
+		$url = $this->getVal('url');
+
+		$response = $this->sendRequest('VideosController', 'addVideo', array( 'url' => $url ) );
+
+		$error = $response->getVal('error');
+		if( $error ) {
+			$this->error = $error;
+			return;
+		}
+
+		$videoInfo = $response->getVal('videoInfo');
+		$fileName = $videoInfo[0]->getText();
+
+		$file = wfFindFile( $fileName );
+		if( !empty($file) ) {
+			$thumbSize = $this->toolboxModel->getThumbnailSize();
+			$htmlParams = array(
+				'file-link' => true,
+				'duration' => true,
+				'linkAttribs' => array( 'class' => 'video-thumbnail lightbox' )
+			);
+			$thumb = $file->transform( array('width'=>$thumbSize ) )->toHtml( $htmlParams );
+		}
 
 		$this->videoFileName = $fileName;
-		$this->videoFileMarkup =$this->toolboxModel->getFileMarkup($fileName);
+		$this->videoFileMarkup = $thumb;
 	}
 
 	// TODO extract this code somewhere

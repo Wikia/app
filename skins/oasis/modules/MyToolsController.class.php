@@ -191,7 +191,6 @@ class MyToolsController extends WikiaController {
 			'MostLinkedTemplates',
 			'Mostpopularcategories',
 			'Mostpopulararticles',
-			'Mostvisitedpages',
 			'NewPages',
 			'NewFiles',
 			'AncientPages',

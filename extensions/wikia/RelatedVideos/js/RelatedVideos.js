@@ -83,8 +83,42 @@ var RelatedVideos = {
 			relatedVideosModule.on( 'click', '.scrollleft', this.scrollleft );
 
 			relatedVideosModule.find('.addVideo').addVideoButton({
-				gaCat: RelatedVideos.gaCat,
-				callback: RelatedVideos.injectCaruselElement
+				callbackAfterSelect: function(url) {
+
+					RelatedVideos.track({
+						action: WikiaTracker.ACTIONS.ADD,
+						label: 'add-video-success',
+						trackingMethod: 'both'
+					});
+					
+					$.nirvana.postJson(
+						// controller
+						'RelatedVideosController',
+						// method
+						'addVideo',
+						// data
+						{
+							articleId: wgArticleId,
+							url: url
+						},
+						// success callback
+						function( formRes ) {
+							GlobalNotification.hide();
+							if ( formRes.error ) {
+								RelatedVideos.showError( formRes.error );
+							} else {
+								VET_loader.modal.closeModal();
+								RelatedVideos.injectCaruselElement( formRes.html );
+							}
+						},
+						// error callback
+						function() {
+							RelatedVideos.showError( $.msg('vet-error-while-loading') );
+						}
+					);
+					// Don't move on to second VET screen.  We're done.
+					return false;
+				}
 			}).tooltip({
 				delay: { show: 500, hide: 100 }
 			});
@@ -375,13 +409,12 @@ var RelatedVideos = {
 
 	// general helper functions
 
-	showError: function(){
-		GlobalNotification.show( $('.errorWhileLoading').html(), 'error' );
+	showError: function(error){
+		GlobalNotification.show( error || $('.errorWhileLoading').html(), 'error' );
 	},
 
 	// Inject newly added video into carousel - different from lazy loading
 	injectCaruselElement: function( html ){
-		$( '#add-video-modal' ).closest('.modalWrapper').closeModal();
 		var scrollLength = -1 * ( RelatedVideos.currentRoom - 1 );
 		RelatedVideos.scroll(
 			scrollLength,

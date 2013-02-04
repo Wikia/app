@@ -22,7 +22,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		imagesLength = 0,
 		wkMdlImages,
 		current = 0,
-		shrImg = (new qs()).getVal('file'),
+		shrImg = qs().getVal('file'),
 		shareBtn,
 		clickEvent = events.click,
 		sharePopOver,
@@ -179,7 +179,8 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 						articleId: wgArticleId,
 						fileTitle: imgTitle,
 						width: window.innerWidth - 100
-					},
+					}
+				).done(
 					function(data) {
 						throbber.remove(currentImage);
 

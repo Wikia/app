@@ -323,7 +323,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 						form = wkLgn.getElementsByTagName('form')[0];
 
 					form.setAttribute('action',
-						(new qs(form.getAttribute('action')))
+						qs(form.getAttribute('action'))
 							.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName))
 							.setHash(hash)
 							.toString()
