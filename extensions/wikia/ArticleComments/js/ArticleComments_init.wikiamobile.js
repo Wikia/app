@@ -8,7 +8,7 @@
  **/
 
 require(['throbber', 'wikia.querystring', 'events', 'wikia.loader', 'wikia.nirvana'], function(throbber, qs, events, loader, nirvana){
-	var hash = (new qs()).getHash(),
+	var hash = qs().getHash(),
 		wkArtCom,
 		collSec,
 		open,

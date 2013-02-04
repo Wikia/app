@@ -117,7 +117,7 @@ var ChatEntryPoint = {
 	},
 
 	reloadPage: function() {
-		(new Wikia.Querystring()).addCb().goTo();
+		Wikia.Querystring().addCb().goTo();
 	},
 
 	launchChatWindow: function(event) {
