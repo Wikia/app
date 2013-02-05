@@ -237,8 +237,12 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 		
 		if( !empty($data['exploreTitle']) ) {
 			$structuredData['headline'] = $data['exploreTitle'];
-			$structuredData['imagelink'] = isset($data['fileName']) ? $data['fileName']: '';
 			$structuredData['linkgroups'] = $this->getLinkGroupsFromApiResponse($data);
+			
+			if( !empty($data['fileName']) ) {
+				$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['fileName']);
+				$structuredData['imagelink'] = $imageData->url;
+			}
 		}
 		
 		return $structuredData;
