@@ -20,7 +20,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider phalanxUserBlockDataProvider
 	 */
-	public function testPhalanxUserBlockBlockCheck( $isAnon, $userName, $email, $block, $isOk, $result, $error_msg ) {		
+	public function testPhalanxUserBlockBlockCheck( $isAnon, $userName, $email, $block, $isOk, $result, $errorMsg ) {		
 		// User 
 		$userMock = $this->getMock( 'User', array( 'isAnon', 'getName' ) ); 
 		$userMock
@@ -65,7 +65,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider phalanxUserBlockDataProvider
 	 */
-	public function testPhalanxUserBlockUserCanSendEmail( $isAnon, $userName, $email, $block, $isOk, $result, $error_msg) {		
+	public function testPhalanxUserBlockUserCanSendEmail( $isAnon, $userName, $email, $block, $isOk, $result, $errorMsg) {		
 		// User 
 		$userMock = $this->getMock( 'User', array( 'isAnon', 'getName' ) ); 
 		$userMock
@@ -112,7 +112,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider phalanxUserBlockDataProvider
 	 */
-	public function testPhalanxUserBlockUserAbortNewAccount( $isAnon, $userName, $email, $block, $isOk, $result, $error_msg ) {		
+	public function testPhalanxUserBlockUserAbortNewAccount( $isAnon, $userName, $email, $block, $isOk, $result, $errorMsg ) {		
 		// User 
 		$userMock = $this->getMock( 'User', array( 'isAnon', 'getName', 'getEmail' ) ); 
 		$userMock
@@ -152,9 +152,56 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		$abortError = '';
 		$ret = (int) $hook->abortNewAccount( $userMock, $abortError );
 
-error_log ( "abortError = $abortError \n", 3, "/tmp/moli.log" );
 		$this->assertEquals( $result, $ret );
-		$this->assertEquals( $error_msg, $abortError );
+		$this->assertEquals( $errorMsg, $abortError );
+	}
+	
+	/* validateUserName method */
+	/**
+	 * @dataProvider phalanxUserBlockDataProvider
+	 */
+	public function testPhalanxUserBlockUserValidateUserName( $isAnon, $userName, $email, $block, $isOk, $result, $errorMsg ) {		
+		// User 
+		$userMock = $this->getMock( 'User', array( 'isAnon', 'getName', 'getEmail' ) ); 
+		$userMock
+			->expects( $this->any() )
+			->method( 'isAnon' )
+			->will( $this->returnValue( $isAnon ) );
+		$userMock
+			->expects( $this->any() )
+			->method( 'getName' )
+			->will( $this->returnValue( $userName ) );
+		$userMock
+			->expects( $this->any() )
+			->method( 'getEmail' )
+			->will( $this->returnValue( $email ) );
+			
+		$this->mockClass('User', $userMock);
+		$this->proxyClass('User', $userMock);
+
+		$this->mockGlobalVariable('wgUser', $userMock);
+
+		// PhalanxUserModel 
+		$modelMock = $this->getMock( 'PhalanxUserModel', array('match', 'getUser'), array( $userMock ) );
+		
+		$modelMock
+			->expects( $this->any() )
+			->method( 'match' )
+			->will( $this->returnValue( $block ) );
+
+		$modelMock
+			->expects( $this->any() )
+			->method('getUser')
+			->will( $this->returnValue( $userMock ));	
+
+		$this->proxyClass( 'PhalanxUserModel', $modelMock );
+		$this->mockClass('PhalanxUserModel', $modelMock );
+
+		$hook = new PhalanxUserBlock();
+		$abortError = '';
+		$ret = (int) $hook->validateUserName( $userName, $abortError );
+		
+		$this->assertEquals( $result, $ret );
 	}
 	
 	/* data providers */

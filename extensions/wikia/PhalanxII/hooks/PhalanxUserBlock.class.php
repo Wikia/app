@@ -60,7 +60,6 @@ class PhalanxUserBlock extends WikiaObject {
 		$this->wf->profileIn( __METHOD__ );
 		
 		$phalanxModel = F::build('PhalanxUserModel', array( $user ) );
-
 		$result = $phalanxModel->match( "user" );
 		if ( $result !== false ) {
 			if ( empty( $result ) ) {
@@ -97,10 +96,14 @@ class PhalanxUserBlock extends WikiaObject {
 		$message = '';
 		
 		$user = User::newFromName($userName);
-		if ( !$user || !$this->abortNewAccount( $user, $abortError ) ) {
-			$ret = false;
+		if ( $user instanceof User ) {
+			$ret = $this->abortNewAccount( $user, $abortError );
+			if ( !$ret ) {
+				// shouldn't be other message here?
+				$abortError = $this->wf->Msg( 'phalanx-user-block-new-account' );
+			}
 		} else { 
-			$ret = true;
+			$ret = false;
 		}
 		
 		$this->wf->profileOut( __METHOD__ );
