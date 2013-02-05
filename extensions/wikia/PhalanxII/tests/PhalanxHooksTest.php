@@ -108,6 +108,55 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		$this->assertEquals( $result, $canSend );
 	}
 	
+	/* abortNewAccount method */
+	/**
+	 * @dataProvider phalanxUserBlockDataProvider
+	 */
+	public function testPhalanxUserBlockUserAbortNewAccount( $isAnon, $userName, $email, $block, $isOk, $result, $error_msg ) {		
+		// User 
+		$userMock = $this->getMock( 'User', array( 'isAnon', 'getName', 'getEmail' ) ); 
+		$userMock
+			->expects( $this->any() )
+			->method( 'isAnon' )
+			->will( $this->returnValue( $isAnon ) );
+		$userMock
+			->expects( $this->any() )
+			->method( 'getName' )
+			->will( $this->returnValue( $userName ) );
+		$userMock
+			->expects( $this->any() )
+			->method( 'getEmail' )
+			->will( $this->returnValue( $email ) );
+			
+		$this->mockClass('User', $userMock);
+
+		$this->mockGlobalVariable('wgUser', $userMock);
+
+		// PhalanxUserModel 
+		$modelMock = $this->getMock( 'PhalanxUserModel', array('match', 'getUser'), array( $userMock ) );
+		
+		$modelMock
+			->expects( $this->any() )
+			->method( 'match' )
+			->will( $this->returnValue( $block ) );
+
+		$modelMock
+			->expects( $this->any() )
+			->method('getUser')
+			->will( $this->returnValue( $userMock ));	
+
+		$this->proxyClass( 'PhalanxUserModel', $modelMock );
+		$this->mockClass('PhalanxUserModel', $modelMock );
+
+		$hook = new PhalanxUserBlock();
+		$abortError = '';
+		$ret = (int) $hook->abortNewAccount( $userMock, $abortError );
+
+error_log ( "abortError = $abortError \n", 3, "/tmp/moli.log" );
+		$this->assertEquals( $result, $ret );
+		$this->assertEquals( $error_msg, $abortError );
+	}
+	
 	/* data providers */
 	public function phalanxUserBlockDataProvider() {
 		/* valid user */
@@ -118,7 +167,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 			'block'     => 0,
 			'isOk'      => 0,
 			'result'    => 1,
-			'error'		=> wfMsg( 'phalanx-user-block-new-account' )
+			'error'		=> ''
 		);
 
 		/* invalid user */
@@ -171,9 +220,9 @@ class PhalanxHooksTest extends WikiaBaseTest {
 			'block'     => 0,
 			'isOk'      => 1,
 			'result'    => 1,
-			'error'		=> wfMsg( 'phalanx-user-block-new-account' )
+			'error'		=> ''
 		);
 	
-		return array( $validUser, $invalidUser, $okUser );
+		return array( $validUser, $invalidUser, $invalidUserEmail, $okUser );
 	}
 }
