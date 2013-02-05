@@ -38,12 +38,12 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		
 		if ( !$isOk ) {
 			$modelMock
-				->expects( $this->once() )
+				->expects( $this->any() )
 				->method( 'match' )
 				->will( $this->returnValue( $block ) );
 
 			$modelMock
-				->expects( $this->once() )
+				->expects( $this->any() )
 				->method('getUser')
 				->will( $this->returnValue( $userMock ));	
 		}
