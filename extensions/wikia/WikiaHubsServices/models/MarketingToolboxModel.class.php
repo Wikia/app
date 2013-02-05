@@ -288,22 +288,42 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
+	 * @param $moduleId
+	 * @param $langCode
+	 * @param $sectionId
+	 * @param $verticalId
+	 * @param $timestamp
+	 * 
+	 * @return array
+	 */
+	public function getModuleDataFromDb($moduleId, $langCode, $sectionId, $verticalId, $timestamp) {
+		$data = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp, $moduleId);
+		return isset($data[$moduleId]) ? $data[$moduleId] : array();
+	}
+
+	/**
 	 * Get data for module list from DB
 	 *
 	 * @param string $langCode
 	 * @param int $sectionId
 	 * @param int $verticalId
 	 * @param int $timestamp
+	 * @param int $moduleId (optional) returns data only for specified module
 	 *
 	 * @return array
 	 */
-	protected function getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp) {
+	protected function getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp, $moduleId = null) {
 		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$conds = array(
 			'lang_code' => $langCode,
 			'vertical_id' => $verticalId,
 			'hub_date' => $sdb->timestamp($timestamp),
 		);
+		
+		if( is_int($moduleId) ) {
+			$conds['module_id'] = $moduleId; 
+		}
+		
 		$table = $this->getTablesBySectionId($sectionId);
 		$fields = array('module_id', 'module_status', 'module_data', 'last_edit_timestamp', 'last_editor_id');
 

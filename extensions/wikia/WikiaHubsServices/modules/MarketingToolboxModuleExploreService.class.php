@@ -221,12 +221,12 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 	}
 	
 	public function loadData($model, $timestamp) {
-		$allModulesData = $model->getModulesData($this->langCode, MarketingToolboxModel::SECTION_HUBS, $this->verticalId, $timestamp);
-
-		if( !empty($allModulesData['moduleList'][$this->model->getModuleId()]['data']) ) {
-			$moduleData = $allModulesData['moduleList'][$this->model->getModuleId()]['data'];
-		} else {
+		$moduleData = $model->getModuleDataFromDb($this->model->getModuleId(), $this->langCode, MarketingToolboxModel::SECTION_HUBS, $this->verticalId, $timestamp);
+		
+		if( empty($moduleData['data']) ) {
 			$moduleData = array();
+		} else {
+			$moduleData = $moduleData['data'];
 		}
 		
 		return $this->getStructuredData($moduleData);
