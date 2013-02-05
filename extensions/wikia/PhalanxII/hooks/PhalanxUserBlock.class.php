@@ -32,7 +32,7 @@ class PhalanxUserBlock extends WikiaObject {
 			if ( 
 				is_object( $result ) && 
 				isset( $result->id ) && 
-				$result > 0 
+				$result->id > 0 
 			) {
 				$user = $phalanxModel->setBlock( $result )->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
 				$ret = false;
