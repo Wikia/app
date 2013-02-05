@@ -21,7 +21,7 @@ class PhalanxUserBlock extends WikiaObject {
 		$ret = true;
 		$phalanxModel = F::build('PhalanxUserModel', array( $user ) );
 		 
-		if ( !$phalanxModel->isOk() ) {
+		if ( $phalanxModel->isOk() ) {
 			wfDebug ( __METHOD__ . ": user has 'phalanxexempt' right - no block will be applied\n" );
 			$this->wf->profileOut( __METHOD__ );
 			return true;

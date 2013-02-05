@@ -14,8 +14,8 @@ class PhalanxHooksTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider phalanxUserBlockBlockCheckDataProvider
 	 */
-	public function testPhalanxUserBlockBlockCheck( $isAnon, $userName, $block, $result ) {		
-		// valid User Mock
+	public function testPhalanxUserBlockBlockCheck( $isAnon, $userName, $block, $isOk, $result ) {		
+		// User 
 		$userMock = $this->getMock( 'User', array( 'isAnon', 'getName' ) ); 
 		$userMock
 			->expects( $this->any() )
@@ -25,18 +25,33 @@ class PhalanxHooksTest extends WikiaBaseTest {
 			->expects( $this->any() )
 			->method( 'getName' )
 			->will( $this->returnValue( $userName ) );
+		$this->mockClass('User', $userMock);
 
-		$modelMock = $this->getMock( 'PhalanxUserModel', array('match'), array( $userMock ) );
+		$this->mockGlobalVariable('wgUser', $userMock);
+
+		// PhalanxUserModel 
+		$modelMock = $this->getMock( 'PhalanxUserModel', array('isOk', 'match', 'getUser'), array( $userMock ) );
 		$modelMock
-			->expects( $this->any() )
-			->method( 'match' )
-			->will( $this->returnValue( $block ) );
-	
-		$this->proxyClass( 'PhalanxUserModel', $modelMock );
+			->expects( $this->once() )
+			->method( 'isOk' )
+			->will( $this->returnValue( $isOk ) );
 		
+		if ( !$isOk ) {
+			$modelMock
+				->expects( $this->once() )
+				->method( 'match' )
+				->will( $this->returnValue( $block ) );
+
+			$modelMock
+				->expects( $this->once() )
+				->method('getUser')
+				->will( $this->returnValue( $userMock ));	
+		}
+
 		$hook = new PhalanxUserBlock();
-error_log ( "check = ". $hook->blockCheck( $userMock ) . "\n", 3, "/tmp/moli.log" );
-		$this->assertEquals( $result, $hook->blockCheck( $userMock ) );
+		$ret = $hook->blockCheck( $userMock );
+error_log ( "check = ". $ret . "\n", 3, "/tmp/moli.log" );
+		$this->assertEquals( $result, $ret );
 	}
 	
 	public function phalanxUserBlockBlockCheckDataProvider() {
@@ -45,7 +60,8 @@ error_log ( "check = ". $hook->blockCheck( $userMock ) . "\n", 3, "/tmp/moli.log
 			'isAnon'    => false,
 			'getName'   => self::VALID_USERNAME,
 			'block'     => 0,
-			'result'    => true
+			'isOk'      => 0,
+			'result'    => 1
 		);
 
 		/* invalid user */
@@ -62,10 +78,20 @@ error_log ( "check = ". $hook->blockCheck( $userMock ) . "\n", 3, "/tmp/moli.log
 				'id' => 4009,
 				'language' => '', 
 				'authorId' => 184532,
-							),
-			'result'    => false 
+			),
+			'isOk'      => 0,
+			'result'    => 0 
+		);
+
+		/* phalanxexempt */
+		$okUser = array(                         
+			'isAnon'    => false,
+                        'getName'   => self::VALID_USERNAME,
+                        'block'     => 0,
+                        'isOk'      => 1,
+                        'result'    => 1
 		);
 	
-		return array( $validUser, $invalidUser );
+		return array( $validUser, $invalidUser, $okUser );
 	}
 }
