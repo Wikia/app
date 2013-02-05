@@ -3,6 +3,8 @@ include( "../../../extensions/wikia/WikiaHubsV2/WikiaHubsV2.setup.php" );
 include( "../../../extensions/wikia/WikiaHubsServices/WikiaHubsServices.setup.php" );
 
 class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
+	const WIKIAREQUEST_DEFAULT_VALUE = 0;
+	
 	protected $modulesIds = array(1, 2, 3);
 	protected $verticalIds = array(4, 5, 6);
 
@@ -13,17 +15,17 @@ class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
 		$requestGetIntMap = array(
 			array(
 				WikiaHubsApiController::PARAMETER_MODULE,
-				0,
+				self::WIKIAREQUEST_DEFAULT_VALUE,
 				$requestParams[WikiaHubsApiController::PARAMETER_MODULE],
 			),
 			array(
 				WikiaHubsApiController::PARAMETER_VERTICAL,
-				0,
+				self::WIKIAREQUEST_DEFAULT_VALUE,
 				$requestParams[WikiaHubsApiController::PARAMETER_VERTICAL]
 			),
 			array(
 				WikiaHubsApiController::PARAMETER_TIMESTAMP,
-				0,
+				self::WIKIAREQUEST_DEFAULT_VALUE,
 				$requestParams[WikiaHubsApiController::PARAMETER_TIMESTAMP],
 			),
 		);
