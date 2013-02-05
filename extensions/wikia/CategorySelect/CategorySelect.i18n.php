@@ -43,12 +43,11 @@ $messages[ 'en' ] = array(
 );
 
 /** Message documentation (Message documentation)
- * @author EugeneZelenko
- * @author Nemo bis
- * @author Umherirrender
+ * @author Kflorence
  */
 $messages[ 'qqq' ] = array(
 	'categoryselect-desc' => '{{desc}}',
+	'categoryselect-button-add' => 'The text displayed for the add category button on article pages.',
 	'categoryselect-button-save' => 'The text displayed for the save button on article pages.',
 	'categoryselect-button-cancel' => 'The text displayed for the cancel button on article pages.',
 	'categoryselect-category-add' => 'The placeholder text displayed in the category input field when it is empty.',
