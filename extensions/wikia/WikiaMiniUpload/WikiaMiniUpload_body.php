@@ -538,6 +538,8 @@ class WikiaMiniUpload {
 			return 'File was not found!';
 		}
 
+		$ns_img = $wgContLang->getFormattedNsText( NS_IMAGE );
+
 		if( ( -2 == $gallery ) && !$fck ) {
 			// this went in from the single placeholder...
 			$name = $title->getText();
@@ -612,8 +614,6 @@ class WikiaMiniUpload {
 			$layout = $wgRequest->getVal('layout');
 			$caption = $wgRequest->getVal('caption');
 			$slider = $wgRequest->getVal('slider');
-
-			$ns_img = $wgContLang->getFormattedNsText( NS_IMAGE );
 
 			$tag = '[[' . $ns_img . ':'.$title->getDBkey();
 			if($size != 'full' && ($file->getMediaType() == 'BITMAP' || $file->getMediaType() == 'DRAWING')) {

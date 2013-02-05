@@ -104,11 +104,13 @@ MarketingToolbox.prototype = {
 		if (window.wgEditHubUrl) {
 			var tmpDate = new Date();
 			tmpDate.setTime(date);
-			(new Wikia.Querystring(window.wgEditHubUrl))
-				.setVal('date', tmpDate.getTime() / 1000 - tmpDate.getTimezoneOffset() * 60)
-				.setVal('region', $('#marketingToolboxRegionSelect').val())
-				.setVal('verticalId', $('.vertical input:not(.secondary)').data('vertical-id'))
-				.setVal('sectionId', $('.section input:not(.secondary)').data('section-id'))
+			Wikia.Querystring(window.wgEditHubUrl)
+				.setVal({
+					date: tmpDate.getTime() / 1000 - tmpDate.getTimezoneOffset() * 60,
+					region: $('#marketingToolboxRegionSelect').val(),
+					verticalId: $('.vertical input:not(.secondary)').data('vertical-id'),
+					sectionId: $('.section input:not(.secondary)').data('section-id')
+				})
 				.goTo();
 		}
 	},

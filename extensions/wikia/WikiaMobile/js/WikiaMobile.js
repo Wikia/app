@@ -52,7 +52,7 @@ window.addEventListener('DOMContentLoaded', function () {
 					event.stopPropagation();
 					cookies.set('mobilefullsite', 'true');
 
-					(new qs()).setVal('useskin', this.getAttribute('data-skin')).addCb().goTo();
+					qs().setVal('useskin', this.getAttribute('data-skin')).addCb().goTo();
 				});
 			}
 
