@@ -234,9 +234,12 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 	
 	public function getStructuredData($data) {
 		$structuredData = array();
-		$structuredData['headline'] = isset($data['exploreTitle']) ? $data['exploreTitle'] : '';
-		$structuredData['imagelink'] = isset($data['fileName']) ? $data['fileName']: '';
-		$structuredData['linkgroups'] = $this->getLinkGroupsFromApiResponse($data);
+		
+		if( !empty($data['exploreTitle']) ) {
+			$structuredData['headline'] = $data['exploreTitle'];
+			$structuredData['imagelink'] = isset($data['fileName']) ? $data['fileName']: '';
+			$structuredData['linkgroups'] = $this->getLinkGroupsFromApiResponse($data);
+		}
 		
 		return $structuredData;
 	}
