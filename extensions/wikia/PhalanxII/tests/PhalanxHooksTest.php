@@ -5,6 +5,9 @@ class PhalanxHooksTest extends WikiaBaseTest {
 
 	const INVALID_USERNAME = '75.246.151.75';
 	const INVALID_EMAIL = 'test@porn.com';
+	
+	const VALID_TITLE = 'This_is_good_article';
+	const INVALID_TITLE = 'Porn_article';
 
 	/***
 	 * setup tests
@@ -204,6 +207,49 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		$this->assertEquals( $result, $ret );
 	}
 	
+	/* PhalanxAnswersBlock class */
+	
+	/* badWordsTest method */
+	/**
+	 * @dataProvider phalanxAnswersBlockDataProvider
+	 */
+	public function testPhalanxAnswersBlockBadWordsTest( $title, $block, $language, $isOk, $result ) {
+		// Title 
+		$titleMock = $this->getMock( 'Title', array( 'getText' ) ); 
+		$titleMock
+			->expects( $this->once() )
+			->method( 'getText' )
+			->will( $this->returnValue( $title ) );
+			
+		$this->mockClass('Title', $titleMock);
+		$this->proxyClass('Title', $titleMock);
+		$this->mockGlobalVariable('wgTitle', $titleMock);
+
+		// language
+		$this->mockGlobalVariable('wgLangugeCode', $language);
+
+		// PhalanxTitleModel 
+		$modelMock = $this->getMock( 'PhalanxTitleModel', array('match'), array( $titleMock ) );
+		$modelMock
+			->expects( $this->once() )
+			->method( 'isOk' )
+			->will( $this->returnValue( $isOk ) );
+			
+		$modelMock
+			->expects( $this->any() )
+			->method( 'match' )
+			->will( $this->returnValue( $block ) );
+
+		$this->proxyClass( 'PhalanxTitleModel', $modelMock );
+		$this->mockClass('PhalanxTitleModel', $modelMock );
+	
+		// AnswersBlock
+		$hook = new PhalanxAnswersBlock();
+		$ret = (int) $hook->badWordsTest( $titleMock );
+		
+		$this->assertEquals( $result, $ret );	
+	}
+	
 	/* data providers */
 	public function phalanxUserBlockDataProvider() {
 		/* valid user */
@@ -271,5 +317,37 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		);
 	
 		return array( $validUser, $invalidUser, $invalidUserEmail, $okUser );
+	}
+
+	public function phalanxAnswersBlockDataProvider() {
+		/* valid title */
+		$validTitle = array(
+			'title'		=> self::VALID_TITLE,
+			'block'     => 0,
+			'language'  => 'en',
+			'isOk'      => 0,
+			'result'    => 1,
+		);
+	
+		/* invalid title */
+		$invalidTitle = array(
+			'title'		=> self::INVALID_TITLE,
+			'block'     => (object) array(
+				'regex' => 0,
+				'expires' => '',
+				'text' => self::INVALID_TITLE,
+				'reason' => 'Test answers block',
+				'exact' => '',
+				'caseSensitive' => '', 
+				'id' => 4011,
+				'language' => 'en', 
+				'authorId' => 184532,
+			),
+			'language'  => 'en',
+			'isOk'      => 0,
+			'result'    => 0,
+		);
+		
+		return array( $validTitle, $invalidTitle );
 	}
 }
