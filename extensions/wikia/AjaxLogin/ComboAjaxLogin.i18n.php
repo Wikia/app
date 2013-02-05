@@ -19,8 +19,8 @@ $messages['en'] = array(
 <li>Keep your current username, history, edits... nothing changes except how you log in</li>
 <li>Share your activity on Wikia with your friends on Facebook, with complete control of what is published</li>
 </ul>",
-	"comboajaxlogin-connectmarketing-back" => "&laquo; Back",
-	"comboajaxlogin-connectmarketing-forward" => "Get started &raquo;",
+	"comboajaxlogin-connectmarketing-back" => "« Back",
+	"comboajaxlogin-connectmarketing-forward" => "Get started »",
 	"comboajaxlogin-connectdirections" => "Enter your Wikia username and password here - we will magically connect your Wikia and Facebook accounts in the background.
 
 Once you are done, you can log in easily using any Facebook Connect button.",
