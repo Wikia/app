@@ -48,6 +48,9 @@ class PhalanxHooksTest extends WikiaBaseTest {
 				->will( $this->returnValue( $userMock ));	
 		}
 
+		$this->proxyClass( 'PhalanxUserModel', $modelMock );
+		$this->mockClass('PhalanxUserModel', $modelMock );
+
 		$hook = new PhalanxUserBlock();
 		$ret = $hook->blockCheck( $userMock );
 error_log ( "check = ". $ret . "\n", 3, "/tmp/moli.log" );
