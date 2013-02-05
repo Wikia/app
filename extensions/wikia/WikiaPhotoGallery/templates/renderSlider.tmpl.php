@@ -31,9 +31,12 @@
 						<? endif; ?>
 					</div>
 
-					<p class='nav'>
-						<img width='<?= $thumbDimensions['w'] ?>' height='<?= $thumbDimensions['h'] ?>' src='<?= $val['imageThumbnail'] ?>'>
-					</p>
+					<div class='nav'>
+						<? if( !empty( $val['videoPlayButton'] ) ): ?>
+							<?= $val['videoPlayButton'] ?>
+						<? endif; ?>
+						<img width='<?= $thumbDimensions['w'] ?>' height='<?= $thumbDimensions['h'] ?>' src='<?= $val['imageThumbnail'] ?>'> 
+					</div>
 				</li>
 			<? endforeach; ?>
 			</ul>

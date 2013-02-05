@@ -1386,19 +1386,25 @@ class WikiaPhotoGallery extends ImageGallery {
 					$imageUrl = $imageServingForImages->getUrl($file, max($imagesDimensions['w'], $file->getWidth()), max($imagesDimensions['h'], $file->getHeight()));
 				}
 
+				// generate navigation thumbnails
+				$thumbUrl = $imageServingForThumbs->getUrl($file, $file->getWidth(), $file->getHeight());
+
 				// Handle videos
 				$videoHtml = false;
+				$videoPlayButton = false;
 				if( WikiaFileHelper::isFileTypeVideo($file) ) {
+					// Get HTML for main video image
 					$htmlParams = array(
 						'file-link' => true,
 						'linkAttribs' => array( 'class' => 'video-thumbnail lightbox wikiaPhotoGallery-slider' ),
 						'hideOverlay' => true,
 					);
 					$videoHtml = $file->transform( array( 'width' => $imagesDimensions['w'] ) )->toHtml( $htmlParams );
-				}
 
-				// generate navigation thumbnails
-				$thumbUrl = $imageServingForThumbs->getUrl($file, $file->getWidth(), $file->getHeight());
+					// Get play button overlay for video thumb
+					$videoPlayButton = WikiaFileHelper::videoPlayButtonOverlay( $thumbDimensions['w'], $thumbDimensions['h'] );
+
+				}
 
 				$data = array(
 					'imageUrl' => $imageUrl,
@@ -1412,6 +1418,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					'centerTop' => ($imagesDimensions['h'] > $adjHeight) ? intval(($imagesDimensions['h'] - $adjHeight)/2) : 0,
 					'centerLeft' => ($imagesDimensions['w'] > $adjWidth) ? intval(($imagesDimensions['w'] - $adjWidth)/2) : 0,
 					'videoHtml' => $videoHtml,
+					'videoPlayButton' => $videoPlayButton,
 				);
 
 				if ( F::app()->checkSkin( 'wikiamobile' ) ) {
