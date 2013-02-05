@@ -50,6 +50,7 @@ abstract class PhalanxModel extends WikiaObject {
 		if ( !empty( $this->block->id ) ) {
 			$this->setBlockId( $this->block->id );
 		}
+		return $this;
 	}
 	
 	public function getBlock() {
