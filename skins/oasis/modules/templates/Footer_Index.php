@@ -12,5 +12,6 @@
 	<?php elseif( $showNotifications ) : // show notifications for anons (BugId:20730) ?>
 		<?= F::app()->renderView('Notifications', 'Index'); ?>
 	<?php endif; ?>
-	<?= F::app()->renderView('Spotlights', 'Index', array('mode'=>'FOOTER', 'adslots'=>array( 'SPOTLIGHT_FOOTER_1', 'SPOTLIGHT_FOOTER_2', 'SPOTLIGHT_FOOTER_3' ), 'adGroupName'=>'SPOTLIGHT_FOOTER')) ?>
+
+	<?= F::app()->renderView('Spotlights', 'Index'); ?>
 </footer>
