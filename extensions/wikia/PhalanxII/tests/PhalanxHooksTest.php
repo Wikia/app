@@ -1,9 +1,12 @@
 <?php
 class PhalanxHooksTest extends WikiaBaseTest {
 	const VALID_USERNAME = 'WikiaUser';
-	const INVALID_USERNAME = '75.246.151.75';
+	const VALID_EMAIL = 'moli@wikia-inc.com';
 
-	/**
+	const INVALID_USERNAME = '75.246.151.75';
+	const INVALID_EMAIL = 'test@porn.com';
+
+	/***
 	 * setup tests
 	 */
 	public function setUp() {
@@ -17,7 +20,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider phalanxUserBlockDataProvider
 	 */
-	public function testPhalanxUserBlockBlockCheck( $isAnon, $userName, $block, $isOk, $result ) {		
+	public function testPhalanxUserBlockBlockCheck( $isAnon, $userName, $email, $block, $isOk, $result, $error_msg ) {		
 		// User 
 		$userMock = $this->getMock( 'User', array( 'isAnon', 'getName' ) ); 
 		$userMock
@@ -62,7 +65,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider phalanxUserBlockDataProvider
 	 */
-	public function testPhalanxUserBlockUserCanSendEmail( $isAnon, $userName, $block, $isOk, $result ) {		
+	public function testPhalanxUserBlockUserCanSendEmail( $isAnon, $userName, $email, $block, $isOk, $result, $error_msg) {		
 		// User 
 		$userMock = $this->getMock( 'User', array( 'isAnon', 'getName' ) ); 
 		$userMock
@@ -99,12 +102,11 @@ class PhalanxHooksTest extends WikiaBaseTest {
 
 		$hook = new PhalanxUserBlock();
 		$canSend = true;
-		$ret = (int) $hook->userCanSendEmail( $userMock, $canSend );
+		$ret = (bool) $hook->userCanSendEmail( $userMock, $canSend );
 
 		$this->assertTrue( $ret );
 		$this->assertEquals( $result, $canSend );
 	}
-	
 	
 	/* data providers */
 	public function phalanxUserBlockDataProvider() {
@@ -112,15 +114,18 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		$validUser = array(
 			'isAnon'    => false,
 			'getName'   => self::VALID_USERNAME,
+			'email'		=> self::VALID_EMAIL,
 			'block'     => 0,
 			'isOk'      => 0,
-			'result'    => 1
+			'result'    => 1,
+			'error'		=> wfMsg( 'phalanx-user-block-new-account' )
 		);
 
 		/* invalid user */
 		$invalidUser = array(
 			'isAnon'    => true,
 			'getName'   => self::INVALID_USERNAME,
+			'email'		=> self::INVALID_EMAIL,
 			'block'     => (object) array(
 				'regex' => 0,
 				'expires' => '',
@@ -133,16 +138,40 @@ class PhalanxHooksTest extends WikiaBaseTest {
 				'authorId' => 184532,
 			),
 			'isOk'      => 0,
-			'result'    => 0 
+			'result'    => 0,
+			'error'		=> wfMsg( 'phalanx-user-block-new-account' )
+		);
+
+		/* invalid user */
+		$invalidUserEmail = array(
+			'isAnon'    => true,
+			'getName'   => self::INVALID_USERNAME,
+			'email'		=> self::INVALID_EMAIL,
+			'block'     => (object) array(
+				'regex' => 0,
+				'expires' => '',
+				'text' => self::INVALID_EMAIL,
+				'reason' => 'Test Email',
+				'exact' => '',
+				'caseSensitive' => '', 
+				'id' => 4010,
+				'language' => '', 
+				'authorId' => 184532,
+			),
+			'isOk'      => 0,
+			'result'    => 0,
+			'error'		=> wfMsg( 'phalanx-user-block-new-account' )
 		);
 
 		/* phalanxexempt */
 		$okUser = array(                         
 			'isAnon'    => false,
-                        'getName'   => self::VALID_USERNAME,
-                        'block'     => 0,
-                        'isOk'      => 1,
-                        'result'    => 1
+			'getName'   => self::VALID_USERNAME,
+			'email'		=> self::VALID_EMAIL,
+			'block'     => 0,
+			'isOk'      => 1,
+			'result'    => 1,
+			'error'		=> wfMsg( 'phalanx-user-block-new-account' )
 		);
 	
 		return array( $validUser, $invalidUser, $okUser );

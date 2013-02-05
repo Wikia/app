@@ -44,6 +44,7 @@ class PhalanxUserBlock extends WikiaObject {
 			/* problem with Phalanx service? */
 			// include_once( dirname(__FILE__) . '/../prev_hooks/UserBlock.class.php';
 			// $ret = UserBlock::blockCheck( $user );		
+			$ret = true; //to do
 		}
 
 		$this->wf->profileOut( __METHOD__ );
@@ -81,7 +82,8 @@ class PhalanxUserBlock extends WikiaObject {
 			// TO DO
 			/* problem with Phalanx service? */
 			// include_once( dirname(__FILE__) . '/../prev_hooks/UserBlock.class.php';
-			// $ret = UserBlock::onAbortNewAccount( $user, $abortError );		
+			// $ret = UserBlock::onAbortNewAccount( $user, $abortError );
+			$ret = true; // to do		
 		} else {
 			$ret = true;
 		}
