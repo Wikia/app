@@ -1,21 +1,24 @@
-<? if (!$wg->NoExternals) { ?>
-<section<? if (!empty($sectionId)) { ?> id="<?= $sectionId ?>"<? } ?>>
+<? if ($wg->NoExternals && !$wg->SuppressSpotlights) { ?>
+<section>
 	<div class="header-container">
-		<h1><?= wfMsg($titleMsg) ?></h1>
+		<h1><?= wfMsg('oasis-spotlights-footer-title') ?></h1>
 		<?= F::app()->renderView('RandomWiki', 'Index') ?>
 	</div>
-	<?= AdEngine::getInstance()->getLazyLoadableAdGroup($adGroupName, $adslots) ?>
-	<ul<? if (!empty($adGroupName)) { ?> id="<?= $adGroupName ?>"<? if ($useLazyLoadAdClass) { ?> class="<?= AdEngine::lazyLoadAdClass ?><?= $wg->EnableSpotlightsV2_Footer ? ' SPOTLIGHT_FOOTER' : '' ?>"<? } } ?>>
-		<? for ($i=0; $i<$n_adslots; $i++) { ?>
-		<li class="WikiaSpotlight item-<?= $i+1 ?>" id="<?= ( isset($adslots[$i]) ) ? $adslots[$i] : 'SPOTLIGHT_FOOTER_FORCED_'.$i; ?>">
-			<?
-			if ( empty( $forceContent[$i] ) ) {
-				echo AdEngine::getInstance()->getAd( $adslots[$i] );
-			} else {
-				echo $forceContent[$i];
-			}  ?>
-		</li>
-		<? } ?>
+	<script type='text/javascript'>
+		wgAfterContentAndJS.push(function() {
+			window.OpenXSPC = {};
+			window.OpenXSPC[ 'fillElem_SPOTLIGHT_FOOTER' ] = function() {
+				var output = window.OA_output || [];
+				( 14 in output ) && $( '#SPOTLIGHT_FOOTER_1' ).html( output[ 14 ] );
+				( 15 in output ) && $( '#SPOTLIGHT_FOOTER_2' ).html( output[ 15 ] );
+				( 16 in output ) && $( '#SPOTLIGHT_FOOTER_3' ).html( output[ 16 ] );
+			};
+		});
+	</script>
+	<ul id="SPOTLIGHT_FOOTER" class="LazyLoadAd SPOTLIGHT_FOOTER">
+		<li class="WikiaSpotlight item-1" id="SPOTLIGHT_FOOTER_1"></li>
+		<li class="WikiaSpotlight item-2" id="SPOTLIGHT_FOOTER_2"></li>
+		<li class="WikiaSpotlight item-3" id="SPOTLIGHT_FOOTER_3"></li>
 	</ul>
 </section>
-<? } /* end !wgNoExternals */ ?>
+<? } ?>
