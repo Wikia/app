@@ -50,5 +50,6 @@ class PhalanxUserModel extends PhalanxModel {
 		}
 
 		$this->wf->profileOut( __METHOD__ );
+		return $this;
 	}
 }
