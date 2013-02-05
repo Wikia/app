@@ -18,7 +18,7 @@ class PhalanxUserBlock extends WikiaObject {
 	 */
 	public function blockCheck( User $user ) {
 		$this->wf->profileIn( __METHOD__ );
-		
+		$ret = true;
 		$phalanxModel = F::build('PhalanxUserModel', array( $user ) );
 		 
 		if ( !$phalanxModel->isOk() ) {
