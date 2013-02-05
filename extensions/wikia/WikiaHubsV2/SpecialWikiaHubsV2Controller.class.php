@@ -43,15 +43,17 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		foreach ($toolboxModel->getModulesIds() as $moduleId) {
 			// TODO remove this if when other modules would be ready
 			if ($moduleId == MarketingToolboxModel::MODULE_EXPLORE) {
-				$moduleData = !empty($modulesData[$moduleId]['data'])
-					? $modulesData[$moduleId]['data']
-					: array();
-				$this->modules[$moduleId] = $this->renderModule(
-					$this->wg->ContLang->getCode(),
-					$this->verticalId,
-					$toolboxModel->getNotTranslatedModuleName($moduleId),
-					$moduleData
-				);
+				if (!empty($modulesData[$moduleId]['data'])) {
+					$this->modules[$moduleId] = $this->renderModule(
+						$this->wg->ContLang->getCode(),
+						$this->verticalId,
+						$toolboxModel->getNotTranslatedModuleName($moduleId),
+						$modulesData[$moduleId]['data']
+					);
+				} else {
+					// TODO think about it what should we render if we don't have data
+					$this->modules[$moduleId] = $toolboxModel->getNotTranslatedModuleName($moduleId) . ' <-- no data';
+				}
 			}
 		}
 
