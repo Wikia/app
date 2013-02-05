@@ -38,7 +38,7 @@
 							$().log(json);
 							if(json) {
 								if(json.status === 'ok') {
-									new Wikia.Querystring().addCb().goTo();
+									Wikia.Querystring().addCb().goTo();
 								} else if(json.status === 'error') {
 									dialog.form.clearAllInputErrors();
 									if(json.errorfield) {

@@ -38,10 +38,10 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->urlAllCategories = Title::newFromText('Categories', NS_SPECIAL)->getFullURL();
 		$this->urlAddPage = Title::newFromText('CreatePage', NS_SPECIAL)->getFullURL();
 		$this->urlAddPhoto = Title::newFromText('Upload', NS_SPECIAL)->getFullURL();
-		if( !empty( $this->wg->EnableSpecialVideosExt ) && !empty( $this->wg->EnableVideoToolExt ) ) {
+		if( !empty( $this->wg->EnableSpecialVideosExt ) ) {
 			$this->showVideoLink = true;
 			$this->urlAddVideo = Title::newFromText('WikiaVideoAdd', NS_SPECIAL)->getFullURL();
-			$this->urlAddVideoReturnUrl = !empty($this->app->wg->EnableSpecialVideosExt) ? SpecialPage::getTitleFor("Videos")->escapeLocalUrl( "sort=recent" ) : Title::newFromText(WikiaVideoPage::getVideosCategory())->getFullUrl();
+			$this->urlAddVideoReturnUrl = SpecialPage::getTitleFor("Videos")->escapeLocalUrl( "sort=recent" );
 		} else {
 			$this->showVideoLink = false;			
 		}

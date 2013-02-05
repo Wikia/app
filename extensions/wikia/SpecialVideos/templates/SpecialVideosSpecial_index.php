@@ -21,9 +21,6 @@
 		</div>
 	</div>	
 
-	<? // temporary video survey code bugid-68723 ?>
-	<?= $surveyLink ?>
-
 </div>
 
 

@@ -239,16 +239,10 @@ $chevron-color: #888;
 		}
 		.image-placeholder {
 			background-color: $module-background-color;
-			border: 1px solid $vertical-border-color;
+//			border: 1px solid $vertical-border-color;
 			width: 149px;
-			height: 149px;
+//			height: 149px;
 			position: relative;
-
-			& > img,
-			& > a {
-				position: absolute;
-				bottom: 0;
-			}
 		}
 
 	}

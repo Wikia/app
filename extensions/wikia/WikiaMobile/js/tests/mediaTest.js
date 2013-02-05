@@ -10,13 +10,15 @@ describe("Media module", function () {
 
 	window.wgStyleVersion = 123;
 
-	var qsMock = function() {},
+	var qsMock = function() {
+			return {
+				getVal: function(){}
+			}
+		},
 		eventsMock = {
 			click: true
 		},
 		media;
-
-	qsMock.prototype.getVal = function() {};
 
 	// ['JSMessages', 'modal', 'loader', 'querystring', require.optional('popover'), 'track', 'events', require.optional('share'), require.optional('cache')]
 	media = define.getModule(undefined, undefined, undefined, qsMock, undefined, undefined, eventsMock);

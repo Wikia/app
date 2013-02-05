@@ -24,9 +24,7 @@ var VideoPage = {
 									title: wgTitle
 								},
 								callback: function(json) {
-									self.modal.closeModal(function() {
-										GlobalNotification.show($.msg('videohandler-remove-video-modal-success', wgTitle), 'confirm');									
-									});
+									self.modal.closeModal();
 								}
 							});
 						}
@@ -41,6 +39,9 @@ var VideoPage = {
 				],
 				callback: function() {
 					self.modal = $('#remove-video-modal');
+				},
+				onAfterClose: function() {
+					GlobalNotification.show($.msg('videohandler-remove-video-modal-success', wgTitle), 'confirm');	
 				}
 			});
 		});
