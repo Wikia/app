@@ -60,7 +60,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 
 	/* userCanSendEmail method */
 	/**
-	 * @dataProvider phalanxUserBlockBlockCheckDataProvider
+	 * @dataProvider phalanxUserBlockDataProvider
 	 */
 	public function testPhalanxUserBlockUserCanSendEmail( $isAnon, $userName, $block, $isOk, $result ) {		
 		// User 
