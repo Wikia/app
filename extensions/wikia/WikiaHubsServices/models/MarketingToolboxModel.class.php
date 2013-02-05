@@ -296,7 +296,7 @@ class MarketingToolboxModel extends WikiaModel {
 	 * 
 	 * @return array
 	 */
-	public function getModuleDataFromDb($moduleId, $langCode, $sectionId, $verticalId, $timestamp) {
+	public function getModuleDataFromDb($langCode, $sectionId, $verticalId, $timestamp, $moduleId) {
 		$data = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp, $moduleId);
 		return isset($data[$moduleId]) ? $data[$moduleId] : array();
 	}

@@ -221,7 +221,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 	}
 	
 	public function loadData($model, $timestamp) {
-		$moduleData = $model->getModuleDataFromDb($this->model->getModuleId(), $this->langCode, MarketingToolboxModel::SECTION_HUBS, $this->verticalId, $timestamp);
+		$moduleData = $model->getModuleDataFromDb($this->langCode, MarketingToolboxModel::SECTION_HUBS, $this->verticalId, $timestamp, $this->model->getModuleId());
 		
 		if( empty($moduleData['data']) ) {
 			$moduleData = array();
