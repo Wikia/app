@@ -11,8 +11,11 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/* PhalanxUserBlock class */
+
+	/* blockCheck method */
 	/**
-	 * @dataProvider phalanxUserBlockBlockCheckDataProvider
+	 * @dataProvider phalanxUserBlockDataProvider
 	 */
 	public function testPhalanxUserBlockBlockCheck( $isAnon, $userName, $block, $isOk, $result ) {		
 		// User 
@@ -54,8 +57,57 @@ class PhalanxHooksTest extends WikiaBaseTest {
 
 		$this->assertEquals( $result, $ret );
 	}
+
+	/* userCanSendEmail method */
+	/**
+	 * @dataProvider phalanxUserBlockBlockCheckDataProvider
+	 */
+	public function testPhalanxUserBlockUserCanSendEmail( $isAnon, $userName, $block, $isOk, $result ) {		
+		// User 
+		$userMock = $this->getMock( 'User', array( 'isAnon', 'getName' ) ); 
+		$userMock
+			->expects( $this->any() )
+			->method( 'isAnon' )
+			->will( $this->returnValue( $isAnon ) );
+		$userMock
+			->expects( $this->any() )
+			->method( 'getName' )
+			->will( $this->returnValue( $userName ) );
+		$this->mockClass('User', $userMock);
+
+		$this->mockGlobalVariable('wgUser', $userMock);
+
+		// PhalanxUserModel 
+		$modelMock = $this->getMock( 'PhalanxUserModel', array('isOk', 'match', 'getUser'), array( $userMock ) );
+		$modelMock
+			->expects( $this->once() )
+			->method( 'isOk' )
+			->will( $this->returnValue( $isOk ) );
+		
+		$modelMock
+			->expects( $this->any() )
+			->method( 'match' )
+			->will( $this->returnValue( $block ) );
+
+		$modelMock
+			->expects( $this->any() )
+			->method('getUser')
+			->will( $this->returnValue( $userMock ));	
+
+		$this->proxyClass( 'PhalanxUserModel', $modelMock );
+		$this->mockClass('PhalanxUserModel', $modelMock );
+
+		$hook = new PhalanxUserBlock();
+		$canSend = true;
+		$ret = (int) $hook->userCanSendEmail( $userMock, $canSend );
+
+		$this->assertTrue( $ret );
+		$this->assertEquals( $result, $canSend );
+	}
 	
-	public function phalanxUserBlockBlockCheckDataProvider() {
+	
+	/* data providers */
+	public function phalanxUserBlockDataProvider() {
 		/* valid user */
 		$validUser = array(
 			'isAnon'    => false,
