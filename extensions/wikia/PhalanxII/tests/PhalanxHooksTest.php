@@ -36,24 +36,22 @@ class PhalanxHooksTest extends WikiaBaseTest {
 			->method( 'isOk' )
 			->will( $this->returnValue( $isOk ) );
 		
-		if ( !$isOk ) {
-			$modelMock
-				->expects( $this->any() )
-				->method( 'match' )
-				->will( $this->returnValue( $block ) );
+		$modelMock
+			->expects( $this->any() )
+			->method( 'match' )
+			->will( $this->returnValue( $block ) );
 
-			$modelMock
-				->expects( $this->any() )
-				->method('getUser')
-				->will( $this->returnValue( $userMock ));	
-		}
+		$modelMock
+			->expects( $this->any() )
+			->method('getUser')
+			->will( $this->returnValue( $userMock ));	
 
 		$this->proxyClass( 'PhalanxUserModel', $modelMock );
 		$this->mockClass('PhalanxUserModel', $modelMock );
 
 		$hook = new PhalanxUserBlock();
-		$ret = $hook->blockCheck( $userMock );
-error_log ( "check = ". $ret . "\n", 3, "/tmp/moli.log" );
+		$ret = (int) $hook->blockCheck( $userMock );
+
 		$this->assertEquals( $result, $ret );
 	}
 	
