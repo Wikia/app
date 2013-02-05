@@ -11,17 +11,21 @@
 			<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-modify') ?></a>
 			<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-delete')?></a>
 		</span>
-
-		<span class="WikiaPhotoGallerySliderItemNumber<?=( ($i >= 4) && ($slider['params']['orientation'] !== 'mosaic') ) ? 'Warning' : ''; ?>">
+		
+		<? $notDisplayed = ( $i >= 4 && $slider['params']['orientation'] !== 'mosaic' ); ?>
+		<span class="WikiaPhotoGallerySliderItemNumber<?= $notDisplayed ? 'Warning' : ''; ?>">
 			<div><?php
-				if (!$image['isFileTypeVideo'] && (($i < 4) || (isset($slider['params']['orientation']) && $slider['params']['orientation'] == 'mosaic')) ){
-					echo '#'.( $i+1 );
-				} else {
+				if ( $notDisplayed ){
 					echo wfMsg('wikiaPhotoGallery-not-displayed');
+				} else {
+					echo '#'.( $i+1 );
 				}
 			?></div>
 		</span>
 
+		<? if($image['videoPlayButton']) : ?>
+			<?= $image['videoPlayButton'] ?>
+		<? endif; ?>
 		<span style="display:block;<? if ( !empty( $image[ 'thumbnailBg' ] ) ): ?>background-image: url(<?= $image['thumbnailBg'] ?>);<? endif; ?> width: <?= $width?>px; height: <?= $height ?>px">
 			
 		 </span>

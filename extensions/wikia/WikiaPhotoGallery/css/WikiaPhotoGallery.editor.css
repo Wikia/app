@@ -537,6 +537,7 @@ img.WikiaPhotoGalleryProgress {
 	position: absolute;
 	right: 0;
 	top: 0;
+	z-index: 125;
 }
 
 .WikiaPhotoGalleryPreviewItemMenu a {
@@ -709,6 +710,13 @@ img.WikiaPhotoGalleryProgress {
 	overflow: hidden;
 	padding: 0;
 }
+
+#WikiaPhotoGallerySliderEditorPreview .Wikia-video-play-button:hover {
+	cursor: auto;
+	opacity: .65;
+	filter: alpha(opacity = 65);
+}
+
 
 #WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded,
 #WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewFeed,
