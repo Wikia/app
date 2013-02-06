@@ -612,8 +612,6 @@ $config['monobook_js'] = array(
 //		'//resources/mediawiki/mediawiki.util.js', # instead of //skins/common/wikibits.js'
 //		'//skins/common/ajax.js',
 
-		'//resources/wikia/libraries/modil/modil.js',//before this there should not be any AMD-dependent code
-
 		'//skins/monobook/main.js',
 		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',

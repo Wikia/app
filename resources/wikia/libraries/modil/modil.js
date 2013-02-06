@@ -227,7 +227,7 @@
 				}
 			}, 0);
 		} else {
-			throw 'Invalid require call.';
+			throw 'Invalid require call - ids: ' + JSON.stringify(ids);
 		}
 	};
 
