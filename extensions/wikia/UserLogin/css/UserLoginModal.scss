@@ -13,36 +13,26 @@
 	input[type=password] {
 		width: 234px;
 	}
-	.password-input {
-		margin-bottom: 0;
-		padding-bottom: 0;
-	}
-	.forgot-password {
-		font-size: 12px;
-	}
-	.keep-logged-in .keep-logged-in {
-		margin-left: 0;
-		vertical-align: middle;
-	}
 	input[type=submit].big {
-		margin-top: 27px;
 		width: 250px;
-	}
-	.get-account {
-		padding-bottom: 0;
 	}
 	.general-errors {
 		display: none;
 	}
+	.get-account {
+		margin: 15px 0 20px;
+	}
 	.sso-login {
 		text-align: center;
-		> .sso-login-divider {
-			@include divider;
-			margin-top: 30px;
-			> span {
-				top: -17px;
-				line-height: 30px;
-			}
-		}
+	}
+	.sso-login-divider {
+		@include divider;
+		margin-top: 40px;
+	}
+	.submits {
+		margin-top: 25px;
+	}
+	.wikia-button-facebook {
+		margin-top: 12px;
 	}
 }

@@ -9,7 +9,7 @@
 				$accesskey = ' accesskey="e"';
 			}
 ?>
-<a<?= $accesskey ?> href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" <?= ( !empty($nofollow) ? 'rel="nofollow"' : '' ); ?> data-id="<?= $actionName ?>"<?= $tooltip ?><?= $tabindex ?>><?= $icon ?> <?= htmlspecialchars($action['text']) ?><?= isset($action['html']) ? $action['html'] : '' ?></a>
+<a<?= $accesskey ?> href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" <?= ( !empty($nofollow) ? 'rel="nofollow"' : '' ); ?> data-id="<?= $actionName ?>"<?= $tooltip ?>><?= $icon ?> <?= htmlspecialchars($action['text']) ?><?= isset($action['html']) ? $action['html'] : '' ?></a>
 <?php
 		}
 		// render edit button with dropdown
@@ -20,7 +20,7 @@
 			// render edit menu
 			if (isset($action['href'])) {
 ?>
-	<a <?= !empty($actionAccessKey) ? "accesskey=\"{$actionAccessKey}\"" : '' ?> <?= isset($data['action']['tabindex']) ? "tabindex=\"{$data['action']['tabindex']}\"" : '' ?> href="<?= empty($action['href']) ? '' : htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>" <?= empty($action['id']) ? '' : 'id="'.$action['id'].'"'?>>
+	<a <?= !empty($actionAccessKey) ? "accesskey=\"{$actionAccessKey}\"" : '' ?> <?= !empty($data['action']['tabindex']) ? "tabindex=\"{$data['action']['tabindex']}\"" : '' ?> href="<?= empty($action['href']) ? '' : htmlspecialchars($action['href']) ?>" data-id="<?= $actionName ?>" <?= empty($action['id']) ? '' : 'id="'.$action['id'].'"'?>>
 		<?= $icon ?> <?= htmlspecialchars($action['text']) ?>
 	</a>
 <?php

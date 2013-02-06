@@ -54,6 +54,7 @@
 					<? if ( empty($input['noDivWrapper']) ): ?>
 						<div class="<?= WikiaStyleGuideFormHelper::getClassNamesString( array( 'input-group', $class, $error, $required ) ) ?>">
 					<? endif; ?>
+
 						<? if ( $label && !$wrappedByLabel ): ?>
 							<label><?= ( !$wrappedByLabel ? $label . $tooltip : '' ) ?></label>
 						<? endif ?>
@@ -69,11 +70,8 @@
 									( !empty( $input[ 'content' ] ) ? $input[ 'content' ] : '' )
 								?></button>
 							<? break; ?>
-							<? case 'submit': ?>
-								<input type="submit" <?= $inputAttributes ?> />
-							<? break; ?>
 							<? case 'checkbox': ?>
-								<input type="checkbox" <?= $inputAttributes ?>>
+								<input type="checkbox" <?= $inputAttributes ?>><?= $label ?>
 							<? break; ?>
 							<? case 'custom': ?>
 								<?= $input[ 'output' ] ?>
@@ -116,25 +114,27 @@
 							<? case 'textarea': ?>
 								<textarea <?= $inputAttributes ?>><?= $value ?></textarea>
 							<? break; ?>
-						<? endswitch ?>
-
-						<? if ( $label && $wrappedByLabel ): ?>
-							<?= $label . $tooltip ?></label>
-						<? endif ?>
+						<? endswitch; ?>
 
 						<? if ( $error ): ?>
 							<div class="error-msg"><?= $input[ 'errorMsg' ] ?></div>
 						<? endif ?>
+
+						<? if( $label && $wrappedByLabel ): ?>
+							</label>
+						<? endif ?>
+
 					<? if ( empty($input['noDivWrapper']) ): ?>
 						</div>
 					<? endif; ?>
+
 				<? endif; ?>
 			<? endforeach; ?>
 		<? endif; ?>
 	</fieldset>
 
-	<? if ( !empty( $form[ 'submits' ] ) ): ?>
 	<div class="submits">
+		<? if ( !empty( $form[ 'submits' ] ) ): ?>
 			<? foreach( $form[ 'submits' ] as $submit ): ?>
 				<?
 					$submitAttributes = isset( $submit[ 'attributes' ] ) ? $submit[ 'attributes' ] : array();
@@ -143,6 +143,6 @@
 				?>
 				<input type="submit" <?= $submitAttributes ?>>
 			<? endforeach ?>
+		<? endif ?>
 	</div>
-	<? endif ?>
 </form>
