@@ -28,8 +28,7 @@
 	
 	$forgotPasswordLink = array(
 		'type' => 'custom',
-		'output' => wfMsg('userlogin-forgot-password'),
-		'class' => 'forgot-password link',
+		'output' => '<a href="#" class="forgot-password">'.wfMsg('userlogin-forgot-password').'</a>',
 	);
 
 	$rememberMeInput = array(
