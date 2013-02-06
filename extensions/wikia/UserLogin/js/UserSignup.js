@@ -1,6 +1,7 @@
 var UserSignup = {
 	inputsToValidate: ['username', 'email', 'password', 'birthday'],
-	notEmptyFields: ['username', 'email', 'password', 'birthday', 'birthmonth', 'birthyear', 'wpCaptchaWord'],
+	notEmptyFields: ['username', 'email', 'password', 'birthday', 'birthmonth', 'birthyear'],
+	captchaField: 'wpCaptchaWord',
 	invalidInputs: {},
 	init: function() {
 		$('.extiw').click(function(e) {
@@ -22,7 +23,8 @@ var UserSignup = {
 			this.wikiaForm,
 			this.inputsToValidate,
 			this.wikiaForm.inputs['submit'],
-			this.notEmptyFields
+			this.notEmptyFields,
+			this.captchaField
 		);
 		this.wikiaForm.el
 			.find('input[name=username], input[name=email], input[name=password]')
