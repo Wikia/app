@@ -1,6 +1,6 @@
 /* global wgNamespaceIds, wgFormattedNamespaces, mw, wgServer, wgScript */
 $(function(){
-	require(['jquery', 'wikia.nirvana', 'JSMessages'], function($, nirvana, msg){
+	require(['wikia.window', 'jquery', 'wikia.nirvana', 'JSMessages'], function(window, $, nirvana, msg){
 		'use strict';
 
 		var d = document,
@@ -78,10 +78,11 @@ $(function(){
 				var names = [];
 
 				elements.each(function(){
-					var val = this.value;
+					var val = this.value,
+						$this = $(this);
 
 					if(required && val === '') {
-						$(this)
+						$this
 							.addClass('error')
 							.popover('destroy')
 							.popover({
@@ -90,12 +91,12 @@ $(function(){
 					} else if(!~names.indexOf(val)) {
 						names.push(val);
 
-						$(this)
+						$this
 							.removeClass('error')
 							.popover('destroy');
 
 					}else if(checkEmpty || val !== ''){
-						$(this)
+						$this
 							.addClass('error')
 							.popover('destroy')
 							.popover({
@@ -158,10 +159,7 @@ $(function(){
 			.on('keypress', '.name', function(ev){
 				if(ev.keyCode === 13) addNew(category, $(this).parent());
 			})
-			.on('keypress', '.cat-input', function(ev){
-				if(ev.keyCode === 13) $(this).next().focus();
-			})
-			.on('keypress', '.tag-input', function(ev){
+			.on('keypress', '.cat-input, .tag-input', function(ev){
 				if(ev.keyCode === 13) $(this).next().focus();
 			});
 
@@ -178,13 +176,15 @@ $(function(){
 
 			return {
 				title: li.find('.cat-input').val(),
-				label: li.find('.name').val()
+				label: li.find('.name').val(),
+				image_id: li.find('.image').data('id') || 0
 			}
 		}
 
 		$save.on('click', function(){
 			var data = [],
-				nonames = [];
+				nonames = [],
+				nonameId = 0;
 
 			if(checkForm()) {
 				$ul.find('.category:not(.tag ~ .category)').each(function(){
@@ -194,6 +194,7 @@ $(function(){
 				$ul.find('.tag').each(function(){
 					var $t = $(this),
 						name = $t.find('.tag-input').val(),
+						imageId = $t.find('.image').data('id') || 0,
 						categories = [];
 
 					$t.nextUntil('.tag').each(function(){
@@ -203,13 +204,20 @@ $(function(){
 					if(name) {
 						data.push({
 							title: name,
+							image_id: imageId,
 							categories: categories
 						});
+					}else{
+						nonameId = imageId;
 					}
 				});
 
 				if(nonames.length > 0) {
-					data.push({title: '', categories: nonames});
+					data.push({
+						title: '',
+						image_id: nonameId || 0,
+						categories: nonames
+					});
 				}
 
 				$save.removeClass();
@@ -257,8 +265,52 @@ $(function(){
 			}
 		});
 
-		//be sure this module is ready to be used
-		mw.loader.using(['jquery.autocomplete', 'jquery.ui.sortable'], function(){
+		//be sure modules are ready to be used
+		mw.loader.using(['jquery.autocomplete', 'jquery.ui.sortable', 'wikia.aim', 'wikia.yui'], function(){
+			var $currentImage;
+
+			function onFail(){
+				$currentImage
+					.css( 'backgroundImage', '' )
+					.data('id', 0);
+
+				$currentImage.stopThrobbing();
+			}
+
+			$(window).bind('WMU_addFromSpecialPage', function(event, wmuData) {
+				var imgTitle = wmuData.imageTitle;
+
+				$currentImage.startThrobbing()
+
+				nirvana.getJson(
+					'GameGuidesSpecialContent',
+					'getImage',
+					{
+						file: imgTitle
+					}
+				).done(
+					function(data){
+						if(data.url && data.id) {
+							$currentImage
+								.css( 'backgroundImage', 'url(' + data.url + ')' )
+								.data('id', data.id);
+
+							$currentImage.stopThrobbing();
+						} else {
+							onFail();
+						}
+					}
+				).fail(onFail);
+			});
+
+			$form.on('click', '.photo, .image', function(){
+				$currentImage = $(this).parent().find('.image');
+
+				window.WMU_skipDetails = true;
+				window.WMU_show();
+				window.WMU_openedInEditor = false;
+			});
+
 			$ul.sortable({
 				opacity: 0.5,
 				axis: 'y',

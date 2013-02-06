@@ -23,13 +23,16 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 		$this->wg->Out->addModules([
 			'jquery.autocomplete',
-			'jquery.ui.sortable'
+			'jquery.ui.sortable',
+			'wikia.yui',
+			'wikia.aim'
 		]);
 
 		$assetManager = AssetsManager::getInstance();
 
 		$styles = $assetManager->getURL([
-			'extensions/wikia/GameGuides/css/GameGuidesContentManagmentTool.scss'
+			'extensions/wikia/GameGuides/css/GameGuidesContentManagmentTool.scss',
+			'extensions/wikia/WikiaMiniUpload/css/WMU.scss'
 		]);
 
 		foreach( $styles as $s ) {
@@ -37,7 +40,8 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 		}
 
 		$scripts = $assetManager->getURL([
-			'/extensions/wikia/GameGuides/js/GameGuidesContentManagmentTool.js'
+			'/extensions/wikia/GameGuides/js/GameGuidesContentManagmentTool.js',
+			'/extensions/wikia/WikiaMiniUpload/js/WMU.js'
 		]);
 
 		foreach( $scripts as $s ) {
@@ -77,7 +81,8 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 
 			foreach( $tags as $tag ) {
 				$list .= $this->sendSelfRequest( 'tag', [
-					'value' => $tag['title']
+					'value' => $tag['title'],
+					'image_id' => $tag['image_id']
 				] );
 
 				if ( !empty( $tag['categories'] ) ) {
@@ -85,6 +90,7 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 						$list .= $this->sendSelfRequest( 'category', [
 							'category_value' => $category['title'],
 							'name_value' => !empty( $category['label'] ) ? $category['label'] : '',
+							'image_id' => $category['image_id']
 						] );
 					}
 				}
@@ -102,15 +108,24 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 	public function tag() {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
-		$this->response->setVal( 'value', $this->request->getVal('value'), '');
+		$id = $this->request->getVal( 'image_id' );
+
+		$this->response->setVal( 'value', $this->request->getVal( 'value' ), '' );
+		$this->response->setVal( 'image_id', $id, 0 );
+		$this->response->setVal( 'image_url', $this->getImage( $id ) );
+
 		$this->response->setVal( 'tag_placeholder', $this->wf->Msg( 'wikiagameguides-content-tag' ) );
 	}
 
 	public function category() {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
+		$id = $this->request->getVal( 'image_id' );
+
 		$this->response->setVal( 'category_value', $this->request->getVal('category_value'), '');
 		$this->response->setVal( 'name_value', $this->request->getVal('name_value'), '');
+		$this->response->setVal( 'image_id', $id, 0 );
+		$this->response->setVal( 'image_url', $this->getImage( $id ) );
 
 		$this->response->setVal( 'category_placeholder', $this->wf->Msg( 'wikiagameguides-content-category' ) );
 		$this->response->setVal( 'name_placeholder', $this->wf->Msg( 'wikiagameguides-content-name' ) );
@@ -129,11 +144,15 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 		if( !empty( $tags ) ) {
 			foreach ( $tags as &$tag ) {
 
+				$tag['image_id'] = (int) $tag['image_id'];
+
 				if( !empty( $tag['categories'] ) ) {
 
 					foreach ( $tag['categories'] as &$cat ) {
 
 						$catTitle = $cat['title'];
+
+						$cat['image_id'] = (int) $cat['image_id'];
 
 						$category = Category::newFromName( $catTitle );
 						//check if categories exists
@@ -160,6 +179,34 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 		}
 
 		return true;
+	}
+
+	public function getImage( $id = 0 ){
+		$file = $this->request->getVal( 'file' );
+
+		$url = '';
+
+		if( !empty( $file ) ) {
+			$img = Title::newFromText( $file );
+
+			if( !empty( $img ) && $img instanceof Title ) {
+				$id = $img->getArticleID();
+			}
+		}
+
+		if( $id != 0 ) {
+			$is = new ImageServing( [ $id ] , 50, 50 );
+			$thumbnail = $is->getImages( 1 );
+
+			if( !empty( $thumbnail ) ) {
+				$url = $thumbnail[$id][0]['url'];
+			}
+		}
+
+		$this->response->setVal( 'url', $url );
+		$this->response->setVal( 'id', $id );
+
+		return $url;
 	}
 
 	//This should appear on WikiFeatures list only when GG extension is turned on and be visible only to staff
