@@ -1,6 +1,6 @@
 <div class="UserLoginModal">
 	<h1><?= wfMsg('userlogin-login-heading') ?></h1>
-<?
+<?php
 	$form = array(
 		'inputs' => array(
 			array(
@@ -37,6 +37,11 @@
 				'class' => 'keeploggedin'
 			),
 			array(
+				'type' => 'submit',
+				'value' => wfMsg('login'),
+				'class' => 'big'
+			),
+			array(
 				'type' => 'custom',
 				'output' => wfMsgExt('userlogin-get-account', 'parseinline'),
 				'class' => 'get-account'
@@ -44,12 +49,6 @@
 		),
 		'method' => 'post',
 		'action' => $formPostAction,
-		'submits' => array(
-			array(
-				'value' => wfMsg('login'),
-				'class' => 'big'
-			)
-		)
 	);
 
 	//$form['isInvalid'] = true;
