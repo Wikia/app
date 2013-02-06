@@ -1,8 +1,10 @@
-define('tables', ['events', 'track', 'layout'], function(ev, track, layout){
+define('tables', ['events', 'track'], function(ev, track){
 	'use strict';
 
 	var w = window,
-		realWidth = layout.getPageWidth(),
+		d = document,
+		pageContent = d.getElementById('mw-content-text') || d.getElementById('wkMainCnt'),
+		realWidth = pageContent.offsetWidth,
 		inited = false,
 		handledTables = [];
 
@@ -92,7 +94,7 @@ define('tables', ['events', 'track', 'layout'], function(ev, track, layout){
 			inited = true;
 			w.addEventListener('viewportsize', function(){
 				var table, isWrapped, isBig, wasWrapped,
-					maxWidth = layout.getPageWidth();
+					maxWidth = pageContent.offsetWidth;
 
 				for(var x = 0, y = handledTables.length; x < y; x++){
 					table = handledTables[x];
@@ -118,7 +120,7 @@ define('tables', ['events', 'track', 'layout'], function(ev, track, layout){
 				document.body.addEventListener(ev.touch, function(ev){
 					var t = ev.target;
 
-					if(t.className.indexOf('bigTable') > -1){
+					if(~t.className.indexOf('bigTable')){
 						if(!t.wkScroll) {
 							new iScroll(t, function(){
 								track.event('tables', track.SWIPE);

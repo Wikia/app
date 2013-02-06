@@ -48,5 +48,6 @@
 	<?= $wikiaFooter ;?>
 	<?= $jsBodyFiles ;?>
 	<?= $advertisement ;?>
+	<div id=wkCurtain>&nbsp;</div>
 </body>
 </html>

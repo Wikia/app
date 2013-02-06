@@ -4,8 +4,16 @@
  * Image lazy loading
  */
 /*global define*/
-define('lazyload', ['wikia.thumbnailer', 'layout'], function (thumbnailer, layout) {
+define('lazyload', ['wikia.thumbnailer'], function (thumbnailer) {
 	'use strict';
+
+	var d = document,
+		pageContent = (d.getElementById('mw-content-text') || d.getElementById('wkMainCnt')),
+		pageWidth = pageContent.offsetWidth;
+
+	window.addEventListener('viewportsize', function(ev){
+		pageWidth = pageContent.offsetWidth;
+	});
 
 	return function(elements, background) {
 		var x = 0,
@@ -13,7 +21,6 @@ define('lazyload', ['wikia.thumbnailer', 'layout'], function (thumbnailer, layou
 			img,
 			src,
 			imageWidth,
-			pageWidth = layout.getPageWidth(),
 			onLoad = function(img){
 				return function(){
 					var url = this.src;
