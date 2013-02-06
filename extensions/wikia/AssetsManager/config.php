@@ -7,10 +7,6 @@ $config['oasis_shared_core_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_wikia_js',
-
-		// The following should go to adengine2_js group later
-		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.min.js',
-		'//extensions/wikia/AdEngine/js/gw.config.js',
 	),
 );
 
@@ -46,6 +42,8 @@ $config['adengine2_js'] = array(
 	'assets' => array(
 		// core
 		'//resources/wikia/modules/cache.js',
+		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.min.js',
+		'//extensions/wikia/AdEngine/js/gw.config.js',
 
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
