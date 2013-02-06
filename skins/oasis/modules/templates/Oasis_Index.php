@@ -33,6 +33,7 @@
 <? endif ?>
 
 <?= $topScripts ?>
+<?= $earlyResourceLoaderModules ?>
 <?= $wikiaScriptLoader; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
 <!-- Make IE recognize HTML5 tags. -->

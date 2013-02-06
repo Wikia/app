@@ -360,10 +360,59 @@ class OasisController extends WikiaController {
 		return $url;
 	}
 
+	private function generateEarlyResourceLoaderHtml() {
+		$modules = [];
+		wfRunHooks('OasisSkinResourceLoaderModulesBlocking', array(&$modules));
+		$modules = array_unique($modules);
+
+		if ($modules) {
+			$wgOut = $this->wg->out;
+			$wgRequest = $this->wg->request;
+
+			$resourceLoader = $wgOut->getResourceLoader();
+			$resourceLoaderContext = new ResourceLoaderContext($resourceLoader, $wgRequest);
+
+			// Get the modification time of the newest requested module
+			$version = 0;
+			foreach ($modules as $moduleName) {
+				$version = max(
+					$version,
+					$resourceLoader->getModule($moduleName)->getModifiedTime($resourceLoaderContext)
+				);
+			}
+
+			// Construct Resource Loader URL
+			$url = ResourceLoader::makeCustomURL(
+				$wgOut,
+				$modules,
+				ResourceLoaderModule::TYPE_SCRIPTS,
+				wfTimestamp(TS_ISO_8601_BASIC, $version)
+			);
+
+			// Mock the mw.loader.state, so that the state is saved to window.earlyMwLoaderState
+			// It's then passed by resource loader startup module to the actual mw.loader.state function
+			$setUpScript = Html::inlineScript('window.mw = {
+				oldMw: window.mw,
+				loader: {
+					state: function(state) {
+						window.earlyMwLoaderState = state;
+					}
+				}
+			};');
+			$tearDownScript = Html::inlineScript('window.mw = window.mw.oldMw;');
+
+			return $setUpScript . Html::linkedScript($url) . $tearDownScript;
+		} else {
+			return '';
+		}
+	}
+
 	// TODO: implement as a separate module?
 	private function loadJs() {
 		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne;
 		wfProfileIn(__METHOD__);
+
+		$this->earlyResourceLoaderModules = $this->generateEarlyResourceLoaderHtml();
 
 		$this->jsAtBottom = self::JsAtBottom();
 
