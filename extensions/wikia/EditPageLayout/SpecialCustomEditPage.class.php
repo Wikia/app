@@ -323,6 +323,10 @@ class SpecialCustomEditPage extends SpecialPage {
 			$this->setPageTitle($pageTitle);
 		}
 
+		if ( class_exists( 'CategorySelectHooksHelper') ) {
+			CategorySelectHooksHelper::onMediaWikiPerformAction( null, null, $pageTitle, null, null, null, true );
+		}
+
 		// (try to) create instance of custom EditPage class
 		$this->mEditPage = $this->initializeEditPage();
 
