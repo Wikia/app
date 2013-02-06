@@ -14,7 +14,7 @@
 		margin: 0 auto;
 		text-align: left;
 
-		width: 700px;
+		width: 800px;
 
 		counter-reset: first;
 
@@ -23,6 +23,8 @@
 
 			position: relative;
 
+			padding-left: 50px;
+
 			&::before {
 				width: 30px;
 				display: inline-block;
@@ -30,7 +32,7 @@
 		}
 
 		.tag ~ .category {
-			margin-left: 50px;
+			padding-left: 100px;
 		}
 	}
 
@@ -94,6 +96,26 @@
 	.photo {
 		right: 55px;
 	}
+}
+
+.image {
+	cursor: pointer;
+
+	position: absolute;
+	left: 0;
+
+	display: inline-block;
+	height: 100%;
+	width: 50px;
+
+	background-size: cover;
+	background-image: url('/extensions/wikia/GameGuides/images/placeholder_search.png'); /* base64 */
+
+	box-shadow: 0 0 10px -4px;
+}
+
+.tag{
+	background-color: $color-body;
 }
 
 #save {
