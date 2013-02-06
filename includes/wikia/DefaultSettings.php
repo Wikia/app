@@ -1058,4 +1058,4 @@ $wgEnableQuickToolsExt = true;
  * @name $wgPhalanxService
  * Use phalanx external service
  */
-$wgPhalanxService = false;
+$wgPhalanxService = true;

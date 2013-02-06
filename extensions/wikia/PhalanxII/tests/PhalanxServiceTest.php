@@ -13,7 +13,7 @@ class PhalanxServiceTest extends WikiaBaseTest {
 		wfDebug( __METHOD__ . ': '  .$this->setupFile );
 		parent::setUp();
 
-		$this->mockGlobalVariable( "wgPhalanxServiceUrl", "http://dev-eloy:8080" );
+		$this->mockGlobalVariable( "wgPhalanxServiceUrl", "http://dev-$wgDevelEnvironmentName:8080" );
 		$this->mockApp();
 	}
 

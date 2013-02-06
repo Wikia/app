@@ -1,8 +1,6 @@
 <?php
 
 
-#$wgPhalanxServiceUrl = "http://dev-$wgDevelEnvironmentName:8080";
-
 class PhalanxService extends Service {
 	private $response = null;
 	private $limit = 0;
@@ -13,15 +11,15 @@ class PhalanxService extends Service {
 	const RES_STATUS = 'PHALANX ALIVE';
 
 	/**
-	 * limit of blocks 
+	 * limit of blocks
 	 */
 	public function limit( $limit = 1 ) {
-		$this->limit = $limit; 
+		$this->limit = $limit;
 		return $this;
 	}
 
 	public function user ( $user ) {
-		$this->user = $user; 
+		$this->user = $user;
 		return $this;
 	}
 
@@ -117,6 +115,7 @@ class PhalanxService extends Service {
 			if ( !is_null( $this->user ) ) {
 				$parameters[ 'user' ] = $this->user->getName();
 			}
+			if ($action == "match" && $this->limit) $parameters['limit'] = $this->limit;
 			wfDebug( __METHOD__ . ": calling $url with POST data " . wfArrayToCGI( $parameters ) ."\n" );
 			$response = Http::post( $url, array( "noProxy" => true, "postData" => wfArrayToCGI( $parameters ) ) );
 		}
@@ -135,11 +134,11 @@ class PhalanxService extends Service {
 				case "match" :
 					$ret = json_decode( $response );
 					if ( is_null( $ret ) ) {
-						/* it could not match any blocks */
+
 						$res = 0;
 					}
 					else {
-						if ( is_array( $ret ) ) {
+						if ( is_array( $ret ) && count($ret)>0) {
 							reset( $ret );
 							if ( $this->limit == 1 ) {
 								$res = current( $ret );
