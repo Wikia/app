@@ -121,6 +121,18 @@ class AdEngine2Controller extends WikiaController {
 		return true;
 	}
 
+	public function onWikiaSkinTopModules(&$scriptModules, $skin) {
+		if ($this->wg->LoadAdsInHead) {
+			$scriptModules[] = 'wikia.cookies';
+			$scriptModules[] = 'wikia.geo';
+			$scriptModules[] = 'wikia.log';
+			$scriptModules[] = 'wikia.querystring';
+			$scriptModules[] = 'wikia.tracker';
+			$scriptModules[] = 'wikia.window';
+		}
+		return true;
+	}
+
 	/**
 	 * Deal with external interwiki links: add exitstitial class to them if needed
 	 *
