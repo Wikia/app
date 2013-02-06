@@ -1,5 +1,4 @@
 <?php
-
 class PhalanxServiceTest extends WikiaBaseTest {
 
 	public $service;
@@ -40,13 +39,13 @@ class PhalanxServiceTest extends WikiaBaseTest {
 		error_log( __CLASS__ . '::' . __FUNCTION__ );
 		if( $this->isPhalanxAlive() ) {
 			$ret = $this->service->check( "content", "hello world" );
-			$this->assertEquals( 1, $ret );
+			$this->assertEquals( $ret, 1 );
 
 			$ret = $this->service->check( "invalid type", "hello world" );
-			$this->assertEquals( false, $ret );
+			$this->assertEquals( $ret, false );
 
 			$ret = $this->service->check( "content", "pornhub.com" );
-			$this->assertEquals( 0, $ret );
+			$this->assertEquals( $ret, 0 );
 		}
 		else {
 			$this->markTestSkipped( sprintf( "Can't contact with phalanx service on %s.\n", F::app()->wg->PhalanxServiceUrl ) );

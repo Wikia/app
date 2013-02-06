@@ -111,14 +111,15 @@ class PhalanxService extends Service {
 		 * for any other we're sending POST
 		 */
 		else {
-			$parameters[ 'wiki' ] = F::app()->wg->CityId;
-			if ( !is_null( $this->user ) ) {
-				$parameters[ 'user' ] = $this->user->getName();
-			}
-			if ($action == "match" && $this->limit) $parameters['limit'] = $this->limit;
+		  if (($action == "match" || $action == "check") && !is_null( $this->user ) ) {
+        $parameters[ 'wiki' ] = F::app()->wg->CityId;
+        $parameters[ 'user' ] = $this->user->getName();
+      }
+			if ($action == "match" && $this->limit > 1) $parameters['limit'] = $this->limit;
 			wfDebug( __METHOD__ . ": calling $url with POST data " . wfArrayToCGI( $parameters ) ."\n" );
 			$response = Http::post( $url, array( "noProxy" => true, "postData" => wfArrayToCGI( $parameters ) ) );
 		}
+
 
 		if ( $response === false ) {
 			/* service doesn't work */
@@ -133,22 +134,18 @@ class PhalanxService extends Service {
 					break;
 				case "match" :
 					$ret = json_decode( $response );
-					if ( is_null( $ret ) ) {
-
-						$res = 0;
+					if ( !is_array( $ret ) ) {
+						$res = false;
 					}
 					else {
-						if ( is_array( $ret ) && count($ret)>0) {
-							reset( $ret );
-							if ( $this->limit == 1 ) {
-								$res = current( $ret );
-							} elseif ( $this->limit > 1 ) {
-								$res = array_slice( $ret, 0, $this->limit );
+						if (count($ret)>0 && $this->limit != 0) {
+							if ( $this->limit == 1 ) { 
+							  $res = $ret[0];
 							} else {
-								$res = $ret;
-							}
+								$res = array_slice( $ret, 0, $this->limit );
+              }
 						} else {
-							$res = $ret;
+							$res = 0;
 						}
 					}
 					break;
