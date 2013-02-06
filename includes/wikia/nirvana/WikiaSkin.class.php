@@ -184,11 +184,19 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		$this->wf->runHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
 
-		$scriptModules = array();
+		$scriptModules = array('amd');
 		$this->wf->runHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
 		if ( !empty($scriptModules) ) {
-			$scripts .= "<script>window.mw || ( window.mw = { loader: { state: function() {} } } );</script>";
-			$scripts .= ResourceLoader::makeCustomLink( $this->wg->out, $scriptModules, 'scripts' );
+			$scripts .= Html::inlineScript('window.mw || (window.mw = {
+				old: window.mw,
+				loader: {
+					state: function (state) {
+						window.earlyMwLoaderState = state;
+					}
+				}
+			});') . "\n";
+			$scripts .= ResourceLoader::makeCustomLink( $this->wg->out, $scriptModules, 'scripts' ) . "\n";
+			$scripts .= Html::inlineScript('window.mw.old && (window.mw = window.mw.old);') . "\n";
 		}
 
 		return self::makeInlineVariablesScript($vars) . $scripts;
