@@ -250,6 +250,47 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		$this->assertEquals( $result, $ret );	
 	}
 	
+	/* FilterWordsTest method */
+	/**
+	 * @dataProvider phalanxAnswersBlockDataProvider
+	 */
+	public function testPhalanxAnswersFilterWordsTest( $title, $block, $language, $isOk, $result ) {
+		// Title 
+		$titleMock = $this->getMock( 'Title', array( 'getText' ) ); 
+		$titleMock
+			->expects( $this->once() )
+			->method( 'getText' )
+			->will( $this->returnValue( $title ) );
+			
+		$this->mockClass('Title', $titleMock);
+		$this->proxyClass('Title', $titleMock);
+		$this->mockGlobalVariable('wgTitle', $titleMock);
+
+		// language
+		$this->mockGlobalVariable('wgLangugeCode', $language);
+
+		// PhalanxTitleModel 
+		$modelMock = $this->getMock( 'PhalanxTitleModel', array('match', 'isOk'), array( $titleMock ) );
+		$modelMock
+			->expects( $this->once() )
+			->method( 'isOk' )
+			->will( $this->returnValue( $isOk ) );
+			
+		$modelMock
+			->expects( $this->any() )
+			->method( 'match' )
+			->will( $this->returnValue( $block ) );
+
+		$this->proxyClass( 'PhalanxTitleModel', $modelMock );
+		$this->mockClass('PhalanxTitleModel', $modelMock );
+	
+		// AnswersBlock
+		$hook = new PhalanxAnswersBlock();
+		$ret = (int) $hook->badWordsTest( $titleMock );
+		
+		$this->assertEquals( $result, $ret );	
+	}
+	
 	/* data providers */
 	public function phalanxUserBlockDataProvider() {
 		/* valid user */
