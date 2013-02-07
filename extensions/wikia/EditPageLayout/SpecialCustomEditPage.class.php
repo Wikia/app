@@ -324,7 +324,7 @@ class SpecialCustomEditPage extends SpecialPage {
 		}
 
 		if ( class_exists( 'CategorySelectHooksHelper') ) {
-			CategorySelectHooksHelper::onMediaWikiPerformAction( null, null, $pageTitle, null, null, null, true );
+			CategorySelectHooksHelper::onMediaWikiPerformAction( null, null, $pageTitle, null, null, null, false );
 		}
 
 		// (try to) create instance of custom EditPage class
