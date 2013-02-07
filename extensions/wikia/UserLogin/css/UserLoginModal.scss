@@ -36,8 +36,8 @@
 	}
 	.sso-login {
 		text-align: center;
-	}
-	.sso-login-divider {
-		@include divider;
+		> .sso-login-divider {
+			@include divider;
+		}
 	}
 }
