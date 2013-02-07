@@ -69,7 +69,7 @@ $phalanxhooks = array(
 	'PhalanxTitleBlock' =>
 		array(
 			'SpecialMovepageBeforeMove'            => 'beforeMove',
-			'EditFilter'                           => 'listCallback',
+			'EditFilter'                           => 'editFilter',
 			'CreateDefaultQuestionPageFilter'      => 'checkTitle',
 			'CreatePageTitleCheck'                 => 'checkTitle'
 		),

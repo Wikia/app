@@ -229,7 +229,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgLangugeCode', $language);
 
 		// PhalanxTitleModel 
-		$modelMock = $this->getMock( 'PhalanxTitleModel', array('match'), array( $titleMock ) );
+		$modelMock = $this->getMock( 'PhalanxTitleModel', array('match', 'isOk'), array( $titleMock ) );
 		$modelMock
 			->expects( $this->once() )
 			->method( 'isOk' )

@@ -15,9 +15,10 @@ class PhalanxContentBlock extends WikiaObject {
 		F::setInstance( __CLASS__, $this );
 	}
 
-	public function editFilter( $editpage ) {
+	public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
 		$this->wf->profileIn( __METHOD__ );
 
+		$ret = true;
 		$phalanxModel = F::build('PhalanxContentModel', array( $this->wg->Title ) );
 
 		if ( $phalanxModel->isOk() ) {
@@ -26,10 +27,10 @@ class PhalanxContentBlock extends WikiaObject {
 		}
 		
 		/* summary */
-		$summary = $editpage->summary;
+		$summary = $editPage->summary;
 		
 		/* content */
-		$textbox = $editpage->textbox1;
+		$textbox = $editPage->textbox1;
 		
 		/* compare summary with spam-whitelist */
 		if ( !empty( $summary ) && !empty( $textbox ) && empty(self::$whitelist) ) {
@@ -63,7 +64,7 @@ class PhalanxContentBlock extends WikiaObject {
 						isset( $result->id ) &&
 						$result->id > 0
 					) {
-						$editpage->spamPageWithContent( $phalanxModel->setBlockId( $result->id )->contentBlock() );
+						$editPage->spamPageWithContent( $phalanxModel->setBlockId( $result->id )->contentBlock() );
 						$ret = false;
 					} else {
 						$ret = true;
@@ -77,7 +78,7 @@ class PhalanxContentBlock extends WikiaObject {
 			// TO DO
 			/* problem with Phalanx service? */
 			// include_once( dirname(__FILE__) . '/../prev_hooks/ContentBlock.class.php';
-			// $ret = ContentBlock::onEditFilter( $editpage );		
+			// $ret = ContentBlock::onEditFilter( $editPage );		
 		}
 		
 		$this->wf->profileOut( __METHOD__ );
@@ -92,13 +93,14 @@ class PhalanxContentBlock extends WikiaObject {
 	 */
 	public function abortMove( $oldtitle, $newtitle, $user, &$error ) {
 		$this->wf->profileIn( __METHOD__ );
-		
+
+		$ret = true;
 		$phalanxModel = F::build('PhalanxContentModel', array( $newtitle ) );
 
 		/* allow blocked words to be added to whitelist */
 		if ( $phalanxModel->isOk() ) {
 			$this->wf->profileOut( __METHOD__ );
-			return true;
+			return $ret;
 		}
 		
 		/* content to check */

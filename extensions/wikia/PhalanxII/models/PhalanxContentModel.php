@@ -5,6 +5,7 @@ class PhalanxContentModel extends PhalanxModel {
 	const SPAM_WHITELIST_NS_TITLE = 'Mediawiki:Spam-whitelist';
 
 	public function __construct( $title, $id = 0 ) {
+		error_log ( __METHOD__ . ": " . print_r( $title, true ) . ", id = $id \n", 3, "/tmp/moli.log" );
 		parent::__construct( __CLASS__, array( 'title' => $title, 'id' => $id ) );
 	}
 	
@@ -13,6 +14,7 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 
 	public function setTitle( $title ) {
+		error_log ( __METHOD__ . ": title = " . print_r( $title, true ) . " \n", 3, "/tmp/moli.log" );
 		$this->title = $title;
 		return $this;
 	}

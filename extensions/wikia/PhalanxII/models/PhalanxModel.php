@@ -58,7 +58,7 @@ abstract class PhalanxModel extends WikiaObject {
 	}
 
 	public function logBlock() {
-		Wikia::log( __METHOD__, __LINE__, "Block '#{$this->blockId}' blocked '{$this->text}'." );
+		Wikia::log( __METHOD__, __LINE__, "Block '#{$this->blockId}' blocked '{$this->text}'.\n" );
 	}
 
 	public function match( $type, $language = "en" ) {

@@ -1,9 +1,5 @@
 <?php
 class PhalanxTitleModel extends PhalanxContentModel {
-	public function isOk() {
-		return ( !( $this->title instanceof Title ) );
-	}
-
 	public function displayBlock() {
 		$this->wg->Out->setPageTitle( $this->wf->msg( 'spamprotectiontitle' ) );
 		$this->wg->Out->setRobotPolicy( 'noindex,nofollow' );

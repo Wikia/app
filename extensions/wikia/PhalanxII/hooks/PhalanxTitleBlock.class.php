@@ -30,27 +30,21 @@ class PhalanxTitleBlock extends WikiaObject {
 		return $ret;
 	}
 
-	public function listCallback( $editPage, $text, $section, &$hookError ) {
+	public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
 		$this->wf->profileIn( __METHOD__ );
 
-		$ret = true;
-		$title = $editPage->mTitle;
+		$title = $editPage->getTitle();
 
-		$phalanxModel = F::build('PhalanxTitleModel', array( $title ) );
-
-		if ( $phalanxModel->isOk() ) {
-			$this->wf->profileOut( __METHOD__ );
-			return true;
-		}
-		
 		/* 
 		 * Hook is called for both page creations and edits. We should only check
 		 * if the page is created = page does not exist (RT#61104)
 		 */
 		if ( $title->exists() ) {
 			$this->wf->profileOut( __METHOD__ );
-			return $ret;
+			return true;
 		}
+		
+		error_log ( __METHOD__ . ": title = " . print_r( $title, true ) . "\n", 3, "/tmp/moli.log" );
 
 		/* check title */
 		$ret = $this->checkTitle( $title );
@@ -61,6 +55,8 @@ class PhalanxTitleBlock extends WikiaObject {
 
 	public function checkTitle( $title ) {
 		$this->wf->profileIn( __METHOD__ );
+
+		$ret = true;
 		$phalanxModel = F::build('PhalanxTitleModel', array( $title ) );
 
 		if ( $phalanxModel->isOk() ) {
