@@ -524,10 +524,10 @@ class GameGuidesController extends WikiaController {
 			array_reduce(
 				$content,
 				function( $ret, $item ) {
-					if( $item['title'] !== '' ) {
+					if( $item['title'] !== '' && isset( $item['image_id'] ) ) {
 						$ret[] = array(
 							'title' => $item['title'],
-							'id' => $item['categories'][0]['id'] // for now lets use first category in tag, then we'll see
+							'image_id' => $item['image_id']
 						);
 					}
 

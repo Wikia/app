@@ -125,7 +125,8 @@ Thanks in advance and happy editing!",
 *Link to your wiki
 *Your browser information including type and version ([[Help:Supported_browsers|click here for our supported browser list]])
 *Screenshot
-*Any and all other details.
+
+For more advice on what to include in your report, please see [[w:c:community:Help:How to report bugs|our help page on bug reports]].
 
 Thanks again for the report and for using Wikia.
 
