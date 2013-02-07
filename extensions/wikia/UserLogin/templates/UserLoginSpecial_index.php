@@ -1,5 +1,5 @@
 <div class="UserLogin">
-<?
+<?php
 	$loginTokenInput = array(
 		'type' => 'hidden',
 		'name' => 'loginToken',
@@ -19,20 +19,33 @@
 	$passwordInput = array(
 		'type' => 'password',
 		'name' => 'password',
+		'class' => 'password-input',
 		'isRequired' => true,
 		'label' => wfMsg('yourpassword'),
 		'isInvalid' => (!empty($errParam) && $errParam === 'password'),
 		'value' => htmlspecialchars($password)
 	);
 	$passwordInput['errorMsg'] = $passwordInput['isInvalid'] ? $msg : '';
+	
+	$forgotPasswordLink = array(
+		'type' => 'custom',
+		'output' => '<a href="#" class="forgot-password">'.wfMsg('userlogin-forgot-password').'</a>',
+	);
 
 	$rememberMeInput = array(
 		'type' => 'checkbox',
 		'name' => 'keeploggedin',
+		'class' => 'keep-logged-in',
 		'isRequired' => false,
 		'value' => '1',
 		'checked' => $keeploggedin,
 		'label' => wfMsg('userlogin-remembermypassword')
+	);
+
+	$loginBtn = array(
+		'type' => 'submit',
+		'value' => wfMsg('login'),
+		'class' => 'login-button big'
 	);
 
 	$createAccount = array(
@@ -46,21 +59,12 @@
 			$loginTokenInput,
 			$userNameInput,
 			$passwordInput,
+			$forgotPasswordLink,
 			$rememberMeInput,
-			$createAccount
+			$loginBtn,
+			$createAccount,
 		),
 		'method' => 'post',
-		'submits' => array(
-			array(
-				'value' => wfMsg('login'),
-				'class' => 'login-button big'
-			),
-			array(
-				'value' => wfMsg('userlogin-forgot-password'),
-				'class' => 'forgot-password link',
-				'name' => 'action'
-			)
-		)
 	);
 
 	$form['isInvalid'] = !empty($result) && empty($errParam) && !empty($msg);
