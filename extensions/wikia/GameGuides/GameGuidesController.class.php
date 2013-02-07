@@ -416,9 +416,10 @@ class GameGuidesController extends WikiaController {
 
 			foreach( $allCategories as $value ) {
 				if($value['size'] - $value['files'] > 0){
+
 					$ret[] = array(
 						'title' => $value['*'],
-						'id'=> $value['pageid']
+						'id'=> isset( $value['pageid'] ) ? (int) $value['pageid'] : 0
 					);
 				}
 			}
