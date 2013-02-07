@@ -7,17 +7,7 @@
 return array(
 	// AMD library
 	'amd' => array(
-		'skinScripts' => array(
-			// modil.js is loaded at the top of the page (using AssetsManager)
-			// this file will make ResourceLoader think that amd module is loaded - via mw.loader.setState
-			'oasis' => array(
-				'resources/wikia/libraries/modil/modil.setState.js',
-			),
-			// load together with AMD shared modules
-			'monobook' => array(
-				'resources/wikia/libraries/modil/modil.js',
-			),
-		),
+		'scripts' => 'resources/wikia/libraries/modil/modil.js',
 	),
 
 	// shared AMD modules loaded on each page
