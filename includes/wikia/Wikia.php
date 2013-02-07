@@ -29,7 +29,6 @@ $wgHooks['UserMailerSend']           [] = "Wikia::onUserMailerSend";
 $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['PageHistoryLineEnding']    [] = "Wikia::onPageHistoryLineEnding";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
-$wgHooks['ResourceLoaderGetStartupModules'][] = 'Wikia::onResourceLoaderGetStartupModules';
 $wgHooks['AjaxAddScript'][] = 'Wikia::onAjaxAddScript';
 
 # changes in recentchanges (MultiLookup)
@@ -1903,17 +1902,6 @@ class Wikia {
 	}
 
 	/**
-	 * Add AMD framework
-	 *
-	 * @param $modules Array
-	 * @return bool
-	 */
-	public static function onResourceLoaderGetStartupModules(&$modules) {
-		array_unshift($modules, 'amd');
-		return true;
-	}
-
-	/**
 	 * Add shared AMD modules
 	 *
 	 * @param $out OutputPage
@@ -1924,5 +1912,4 @@ class Wikia {
 		$out->addModules( 'amd.shared' );
 		return true;
 	}
-
 }
