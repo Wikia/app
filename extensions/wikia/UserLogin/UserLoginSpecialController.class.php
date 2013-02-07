@@ -194,6 +194,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->skipRendering();
 		}
 
+		$this->tabindex = $this->request->getVal('tabindex', null);
+
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$this->overrideTemplate( 'WikiaMobileProviders' );
 		}

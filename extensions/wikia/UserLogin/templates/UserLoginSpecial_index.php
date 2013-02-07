@@ -1,5 +1,7 @@
 <div class="UserLogin">
 <?php
+	$tabIndex = 7;
+	
 	$loginTokenInput = array(
 		'type' => 'hidden',
 		'name' => 'loginToken',
@@ -12,7 +14,8 @@
 		'isRequired' => true,
 		'label' => wfMsg('yourname'),
 		'isInvalid' => (!empty($errParam) && $errParam === 'username'),
-		'value' => htmlspecialchars($username)
+		'value' => htmlspecialchars($username),
+		'tabindex' => ++$tabIndex,
 	);
 	$userNameInput['errorMsg'] = $userNameInput['isInvalid'] ? $msg : '';
 
@@ -23,13 +26,14 @@
 		'isRequired' => true,
 		'label' => wfMsg('yourpassword'),
 		'isInvalid' => (!empty($errParam) && $errParam === 'password'),
-		'value' => htmlspecialchars($password)
+		'value' => htmlspecialchars($password),
+		'tabindex' => ++$tabIndex,
 	);
 	$passwordInput['errorMsg'] = $passwordInput['isInvalid'] ? $msg : '';
 	
 	$forgotPasswordLink = array(
 		'type' => 'custom',
-		'output' => '<a href="#" class="forgot-password">'.wfMsg('userlogin-forgot-password').'</a>',
+		'output' => '<a href="#" class="forgot-password" tabindex="0">'.wfMsg('userlogin-forgot-password').'</a>',
 	);
 
 	$rememberMeInput = array(
@@ -39,19 +43,22 @@
 		'isRequired' => false,
 		'value' => '1',
 		'checked' => $keeploggedin,
-		'label' => wfMsg('userlogin-remembermypassword')
+		'label' => wfMsg('userlogin-remembermypassword'),
+		'tabindex' => ++$tabIndex,
 	);
 
 	$loginBtn = array(
 		'type' => 'submit',
 		'value' => wfMsg('login'),
-		'class' => 'login-button big'
+		'class' => 'login-button big',
+		'tabindex' => ++$tabIndex,
 	);
 
 	$createAccount = array(
 		'type' => 'custom',
 		'output' => wfMsgExt('userlogin-get-account', 'parseinline'),
-		'class' => 'get-account'
+		'class' => 'get-account',
+		'tabindex' => ++$tabIndex,
 	);
 
 	$form = array(
@@ -89,6 +96,6 @@
 	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
 
 	// 3rd party providers buttons
-	if (!$isMonobookOrUncyclo) echo $app->renderView('UserLoginSpecial', 'Providers');
+	if (!$isMonobookOrUncyclo) echo $app->renderView('UserLoginSpecial', 'Providers', array( 'tabindex' => ++$tabIndex ));
 ?>
 </div>
