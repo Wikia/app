@@ -54,9 +54,10 @@
 		'tabindex' => ++$tabIndex,
 	);
 
+	$specialSignupLink = SpecialPage::getTitleFor('UserSignup')->getLocalURL();
 	$createAccount = array(
 		'type' => 'custom',
-		'output' => wfMsgExt('userlogin-get-account', 'parseinline'),
+		'output' => wfMsgExt('userlogin-get-account', 'content', array($specialSignupLink, ++$tabIndex)),
 		'class' => 'get-account',
 		'tabindex' => ++$tabIndex,
 	);
