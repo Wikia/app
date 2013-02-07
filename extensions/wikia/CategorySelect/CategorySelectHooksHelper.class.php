@@ -190,6 +190,7 @@ class CategorySelectHooksHelper {
 		CategorySelect::setCategoryTypes( $categories );
 
 		// No need to add categories to skin
-		return false;
+		// ... except for WikiAnswers (BugId:97398)
+		return true;
 	}
 }
