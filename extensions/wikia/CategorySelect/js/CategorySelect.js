@@ -564,8 +564,7 @@
 			return function( category ) {
 				var pieces, prop,
 					base = {
-						namespace: wgCategorySelect.defaultNamespace,
-						sortKey: wgCategorySelect.defaultSortKey
+						namespace: wgCategorySelect.defaultNamespace
 					};
 
 				if ( typeof category === 'object' ) {
