@@ -1,5 +1,5 @@
 <div class="UserLogin">
-<?php
+<?
 	$loginTokenInput = array(
 		'type' => 'hidden',
 		'name' => 'loginToken',
@@ -25,12 +25,6 @@
 		'value' => htmlspecialchars($password)
 	);
 	$passwordInput['errorMsg'] = $passwordInput['isInvalid'] ? $msg : '';
-	
-	$forgotPasswordLink = array(
-		'type' => 'custom',
-		'output' => wfMsg('userlogin-forgot-password'),
-		'class' => 'forgot-password link',
-	);
 
 	$rememberMeInput = array(
 		'type' => 'checkbox',
@@ -39,12 +33,6 @@
 		'value' => '1',
 		'checked' => $keeploggedin,
 		'label' => wfMsg('userlogin-remembermypassword')
-	);
-
-	$loginBtn = array(
-		'type' => 'submit',
-		'value' => wfMsg('login'),
-		'class' => 'login-button big'
 	);
 
 	$createAccount = array(
@@ -58,12 +46,21 @@
 			$loginTokenInput,
 			$userNameInput,
 			$passwordInput,
-			$forgotPasswordLink,
 			$rememberMeInput,
-			$loginBtn,
-			$createAccount,
+			$createAccount
 		),
 		'method' => 'post',
+		'submits' => array(
+			array(
+				'value' => wfMsg('login'),
+				'class' => 'login-button big'
+			),
+			array(
+				'value' => wfMsg('userlogin-forgot-password'),
+				'class' => 'forgot-password link',
+				'name' => 'action'
+			)
+		)
 	);
 
 	$form['isInvalid'] = !empty($result) && empty($errParam) && !empty($msg);
