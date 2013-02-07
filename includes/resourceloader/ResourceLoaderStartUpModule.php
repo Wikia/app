@@ -228,7 +228,11 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 				"\t" . Xml::encodeJsCall( 'mw.config.set', array( $configuration ) ) .
 				// Wikia change - begin - @author: wladek
 				// required when jquery is loaded from separate URL
-				"\t" . Xml::encodeJsCall( 'mw.loader.state', array( array( 'jquery' => 'ready' ) ) ) .
+				"\n\t" . Xml::encodeJsCall( 'mw.loader.state', array( array( 'jquery' => 'ready' ) ) ) .
+				// Wikia change - end
+				// Wikia change - begin - @author: gabrys
+				// allows early loading of resource loader modules and then prevents reloading them
+				"\n\t" . 'window.preMwLdrSt&&mw.loader.state(window.preMwLdrSt);' . "\n" .
 				// Wikia change - end
 				"};\n";
 
