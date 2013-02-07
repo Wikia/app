@@ -70,12 +70,9 @@
 									( !empty( $input[ 'content' ] ) ? $input[ 'content' ] : '' )
 								?></button>
 							<? break; ?>
-							<? case 'submit': ?>
-								<input type="submit" <?= $inputAttributes ?>>
-							<? break; ?>
 							<? case 'checkbox': ?>
-								<input type="checkbox" <?= $inputAttributes ?>>
-								<? break; ?>
+								<input type="checkbox" <?= $inputAttributes ?>><?= $label ?>
+							<? break; ?>
 							<? case 'custom': ?>
 								<?= $input[ 'output' ] ?>
 							<? break; ?>
@@ -124,7 +121,7 @@
 						<? endif ?>
 
 						<? if( $label && $wrappedByLabel ): ?>
-							<?= $label ?></label>
+							</label>
 						<? endif ?>
 
 					<? if ( empty($input['noDivWrapper']) ): ?>
