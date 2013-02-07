@@ -1,6 +1,6 @@
 <div class="UserLoginModal">
 	<h1><?= wfMsg('userlogin-login-heading') ?></h1>
-<?
+<?php
 	$form = array(
 		'inputs' => array(
 			array(
@@ -22,6 +22,7 @@
 			array(
 				'type' => 'password',
 				'name' => 'password',
+				'class' => 'password-input',
 				'isRequired' => true,
 				'label' => wfMsg('yourpassword')
 			),
@@ -34,7 +35,12 @@
 				'name' => 'keeploggedin',
 				'value' => '1',
 				'label' => wfMsg('userlogin-remembermypassword'),
-				'class' => 'keeploggedin'
+				'class' => 'keep-logged-in',
+			),
+			array(
+				'type' => 'submit',
+				'value' => wfMsg('login'),
+				'class' => 'big'
 			),
 			array(
 				'type' => 'custom',
@@ -44,12 +50,6 @@
 		),
 		'method' => 'post',
 		'action' => $formPostAction,
-		'submits' => array(
-			array(
-				'value' => wfMsg('login'),
-				'class' => 'big'
-			)
-		)
 	);
 
 	//$form['isInvalid'] = true;

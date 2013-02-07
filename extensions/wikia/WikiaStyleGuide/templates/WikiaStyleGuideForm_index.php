@@ -70,9 +70,12 @@
 									( !empty( $input[ 'content' ] ) ? $input[ 'content' ] : '' )
 								?></button>
 							<? break; ?>
-							<? case 'checkbox': ?>
-								<input type="checkbox" <?= $inputAttributes ?>><?= $label ?>
+							<? case 'submit': ?>
+								<input type="submit" <?= $inputAttributes ?>>
 							<? break; ?>
+							<? case 'checkbox': ?>
+								<input type="checkbox" <?= $inputAttributes ?>>
+								<? break; ?>
 							<? case 'custom': ?>
 								<?= $input[ 'output' ] ?>
 							<? break; ?>
@@ -121,7 +124,7 @@
 						<? endif ?>
 
 						<? if( $label && $wrappedByLabel ): ?>
-							</label>
+							<?= $label ?></label>
 						<? endif ?>
 
 					<? if ( empty($input['noDivWrapper']) ): ?>
@@ -133,8 +136,8 @@
 		<? endif; ?>
 	</fieldset>
 
-	<div class="submits">
-		<? if ( !empty( $form[ 'submits' ] ) ): ?>
+	<? if ( !empty( $form[ 'submits' ] ) ): ?>
+		<div class="submits">
 			<? foreach( $form[ 'submits' ] as $submit ): ?>
 				<?
 					$submitAttributes = isset( $submit[ 'attributes' ] ) ? $submit[ 'attributes' ] : array();
@@ -143,6 +146,6 @@
 				?>
 				<input type="submit" <?= $submitAttributes ?>>
 			<? endforeach ?>
-		<? endif ?>
-	</div>
+		</div>
+	<? endif ?>
 </form>
