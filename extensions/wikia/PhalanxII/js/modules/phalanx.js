@@ -1,4 +1,6 @@
 define('phalanx', ['jquery', 'wikia.nirvana'], function($, nirvana) {
+	'use strict';
+
 	var TOKEN;
 
 	function init(token) {
