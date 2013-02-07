@@ -1,6 +1,7 @@
 <?php
 class PhalanxServiceTest extends WikiaBaseTest {
 
+	/* @var PhalanxService */
 	public $service;
 
 	/**

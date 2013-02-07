@@ -1,6 +1,6 @@
 <div id="phalanx-mainframe">
 	<div id="phalanx-nav-area">
-		<?= $app->renderView('PhalanxSpecial', 'tabs', array('currentTab' => 'test')); ?>
+<?= $app->renderView('PhalanxSpecial', 'tabs', array('currentTab' => 'test')); ?>
 	</div>
 
 	<div id="phalanx-content-area">

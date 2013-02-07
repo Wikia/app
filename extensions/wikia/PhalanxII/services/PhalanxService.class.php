@@ -1,9 +1,8 @@
 <?php
 
-
 class PhalanxService extends Service {
-	private $response = null;
 	private $limit = 0;
+	/* @var User */
 	private $user = null;
 
 	const RES_OK = 'ok';
@@ -139,11 +138,11 @@ class PhalanxService extends Service {
 					}
 					else {
 						if (count($ret)>0 && $this->limit != 0) {
-							if ( $this->limit == 1 ) { 
+							if ( $this->limit == 1 ) {
 							  $res = $ret[0];
 							} else {
 								$res = array_slice( $ret, 0, $this->limit );
-              }
+							}
 						} else {
 							$res = 0;
 						}
