@@ -136,8 +136,8 @@
 		<? endif; ?>
 	</fieldset>
 
-	<div class="submits">
-		<? if ( !empty( $form[ 'submits' ] ) ): ?>
+	<? if ( !empty( $form[ 'submits' ] ) ): ?>
+		<div class="submits">
 			<? foreach( $form[ 'submits' ] as $submit ): ?>
 				<?
 					$submitAttributes = isset( $submit[ 'attributes' ] ) ? $submit[ 'attributes' ] : array();
@@ -146,6 +146,6 @@
 				?>
 				<input type="submit" <?= $submitAttributes ?>>
 			<? endforeach ?>
-		<? endif ?>
-	</div>
+		</div>
+	<? endif ?>
 </form>
