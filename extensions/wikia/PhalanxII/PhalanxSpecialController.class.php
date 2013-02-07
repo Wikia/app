@@ -36,6 +36,11 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 				$currentTab = 'main';
 		}
 
+		// load resource loader module
+		$this->wg->Out->addModules('ext.wikia.Phalanx');
+		$this->wg->Out->addJsConfigVars('wgPhalanxToken', $this->getToken());
+		F::build('JSMessages')->enqueuePackage('PhalanxSpecial', JSMessages::INLINE);
+
 		$this->forward('PhalanxSpecial', $currentTab);
 
 		$this->wf->profileOut( __METHOD__ );
@@ -51,11 +56,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$res = $this->handleBlockPost();
 			$message = wfMsg( ($res !== false) ? 'phalanx-block-success' : 'phalanx-block-failure' );
 		}
-
-		// load resource loader module
-		$this->wg->Out->addModules('ext.wikia.Phalanx');
-		$this->wg->Out->addJsConfigVars('wgPhalanxToken', $this->getToken());
-		F::build('JSMessages')->enqueuePackage('PhalanxSpecial', JSMessages::INLINE);
 
 		/* set pager */
 		$pager = new PhalanxPager();
@@ -95,7 +95,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		// check the text against all blocks
 		if ($blockText !== '') {
-			$this->setVal( 'data', $this->handleBlockTest($blockText) );
+			$this->setVal( 'listing', $this->handleBlockTest($blockText) );
 		}
 	}
 
@@ -236,18 +236,47 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Get list of block that apply for given text
+	 * Get HTML with the list of block that apply for given text
 	 *
 	 * @param $blockText string text to be test against all blocks
-	 * @return array
+	 * @return string HTML
 	 */
 	private function handleBlockTest($blockText) {
 		$this->wf->profileIn( __METHOD__ );
 
-		$ret = array();
+		// TODO: move to a more generic place
+		$blockTypes = array(
+			'content',
+			'summary',
+			'title',
+			'user',
+			'question_title',
+			'recent_questions',
+			'wiki_creation',
+			'cookie',
+			'email'
+		);
+		$service = new PhalanxService();
+		$service->limit(100);
+		$lang = 'en';
+
+		$listing = '';
+
+		foreach($blockTypes as $blockType) {
+			$res = $service->match($blockType, $blockText, $lang);
+
+			if (empty($res)) {
+				continue;
+			}
+
+			$pager = new PhalanxBlockTestPager($blockType);
+			$pager->setRows($res);
+			$listing .= $pager->getHeader();
+			$listing .= $pager->getBody();
+		}
 
 		$this->wf->profileOut( __METHOD__ );
-		return $ret;
+		return $listing;
 	}
 
 	/**

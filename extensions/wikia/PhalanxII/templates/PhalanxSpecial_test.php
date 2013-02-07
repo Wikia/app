@@ -13,9 +13,11 @@
 				<input type="submit" value="<?= wfMsg( 'phalanx-test-submit' ) ?>">
 			</form>
 		</fieldset>
+<?php if (isset($listing)): ?>
 		<fieldset>
 			<legend><?= wfMsg( 'phalanx-test-results-legend' ); ?></legend>
-			<div id="phalanx-block-test-result"></div>
+			<div id="phalanx-check-results"><?= $listing ?></div>
 		</fieldset>
 	</div>
+<?php endif; ?>
 </div>

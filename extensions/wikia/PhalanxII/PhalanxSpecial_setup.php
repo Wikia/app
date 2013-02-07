@@ -23,6 +23,7 @@ $app->registerClass( 'PhalanxStatsSpecialController', $dir . 'PhalanxStatsSpecia
 $app->registerClass( 'PhalanxPager', $dir . 'classes/PhalanxPager.class.php' );
 $app->registerClass( 'PhalanxStatsPager', $dir . 'classes/PhalanxStatsPager.class.php' );
 $app->registerClass( 'PhalanxStatsWikiaPager', $dir . 'classes/PhalanxStatsWikiaPager.class.php' );
+$app->registerClass( 'PhalanxBlockTestPager', $dir . 'classes/PhalanxBlockTestPager.class.php' );
 $app->registerSpecialPage( 'Phalanx', 'PhalanxSpecialController', 'wikia' );
 $app->registerSpecialPage( 'PhalanxStats', 'PhalanxStatsSpecialController', 'wikia' );
 

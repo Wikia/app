@@ -1,4 +1,4 @@
-<?
+<?php
 
 class PhalanxPager extends ReverseChronologicalPager {
 	protected $app = null;
@@ -15,8 +15,10 @@ class PhalanxPager extends ReverseChronologicalPager {
 		$this->mSearchId = $this->app->wg->Request->getInt( 'id' );
 
 		$this->mTitle = F::build( 'Title', array( 'Phalanx/stats', NS_SPECIAL ), 'newFromText' );
-		$this->mTitleStats = F::build( 'Title', array( 'PhalanxStats', NS_SPECIAL ), 'newFromText' );
 		$this->mSkin = RequestContext::getMain()->getSkin();
+
+		$this->phalanxPage = SpecialPage::getTitleFor('Phalanx');
+		$this->phalanxStatsPage = SpecialPage::getTitleFor('PhalanxStats');
 	}
 
 	function getQueryInfo() {
@@ -61,28 +63,29 @@ class PhalanxPager extends ReverseChronologicalPager {
 			return '';
 		}
 
-		$author = F::build('User', array( $row->p_author_id ), 'newFromId');
-		$authorName = $author->getName();
-		$authorUrl = $author->getUserPage()->getFullUrl();
+		if (isset($row->p_author_id)) {
+			$author = F::build('User', array( $row->p_author_id ), 'newFromId');
+			$authorName = $author->getName();
+		}
+		else {
+			$authorName = '';
+		}
 
-		$phalanxPage = SpecialPage::getTitleFor('Phalanx');
-
-		$phalanxStatsPage = F::build( 'Title', array( 'PhalanxStats', NS_SPECIAL ), 'newFromText' );
-		$statsUrl = sprintf( "%s/%s", $phalanxStatsPage->getLocalUrl(), $row->p_id );
+		$statsUrl = sprintf( "%s/%s", $this->phalanxStatsPage->getLocalUrl(), $row->p_id );
 
 		$html  = Html::openElement( 'li', array( 'id' => 'phalanx-block-' . $row->p_id ) );
 		$html .= Html::element( 'b', array(), htmlspecialchars( $row->p_text ) );
 		$html .= sprintf( " (%s%s%s) ",
-			( $row->p_regex ? 'regex' : 'plain' ),
-			( $row->p_case  ? ',case' : '' ),
-			( $row->p_exact ? ',exact': '' )
+			( !empty($row->p_regex) ? 'regex' : 'plain' ),
+			( !empty($row->p_case)  ? ',case' : '' ),
+			( !empty($row->p_exact) ? ',exact': '' )
 		);
 
 		/* control links */
 		$html .= sprintf( " &bull; %s &bull; %s",
 			Html::element( 'a', array(
 				'class' => 'modify',
-				'href' => $phalanxPage->getLocalUrl( array( 'id' => $row->p_id ) )
+				'href' => $this->phalanxPage->getLocalUrl( array( 'id' => $row->p_id ) )
 			), $this->app->wf->Msg('phalanx-link-modify') ),
 			Html::element( 'a', array(
 				'class' => 'stats',
@@ -101,7 +104,14 @@ class PhalanxPager extends ReverseChronologicalPager {
 		/* types */
 		$html .= $this->app->wf->Msg('phalanx-display-row-blocks', implode( ', ', Phalanx::getTypeNames( $row->p_type ) ) );
 
-		$html .= sprintf( " &bull; %s ", $this->app->wf->MsgExt( 'phalanx-display-row-created', array('parseinline'), $authorName, $this->app->wg->Lang->timeanddate( $row->p_timestamp ) ) );
+		if (isset($row->p_timestamp)) {
+			$html .= sprintf( " &bull; %s ",
+				$this->app->wf->MsgExt( 'phalanx-display-row-created', array('parseinline'),
+					$authorName,
+					$this->app->wg->Lang->timeanddate( $row->p_timestamp )
+				)
+			);
+		}
 
 		$html .= Html::closeElement( "li" );
 
