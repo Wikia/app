@@ -8,14 +8,14 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct('Phalanx', 'phalanx' /* restrictions */);
 		$this->includable(false);
+
 		$this->title = SpecialPage::getTitleFor('Phalanx');
 		$this->service = new PhalanxService();
 	}
 
-	public function isValid() {
-		return $this->valid;
-	}
-
+	/**
+	 * Special page main entry point
+	 */
 	public function index() {
 		$this->wf->profileIn( __METHOD__ );
 
@@ -23,7 +23,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
 			$this->displayRestrictionError();
 			$this->wf->profileOut( __METHOD__ );
-			return false;
+			return;
 		}
 
 		// select the current tab
@@ -36,10 +36,19 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 				$currentTab = 'main';
 		}
 
-		$this->setVal('currentTab', $currentTab);
+		$this->forward('PhalanxSpecial', $currentTab);
+
+		$this->wf->profileOut( __METHOD__ );
+	}
+
+	/**
+	 * Renders first tab - blocks creation / edit
+	 */
+	public function main() {
+		$this->wf->profileIn( __METHOD__ );
 
 		if ( $this->wg->Request->wasPosted() ) {
-			$res = $this->handlePost($currentTab);
+			$res = $this->handleBlockPost();
 			$message = wfMsg( ($res !== false) ? 'phalanx-block-success' : 'phalanx-block-failure' );
 		}
 
@@ -74,6 +83,36 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->wf->profileOut( __METHOD__ );
 	}
 
+	/**
+	 * Renders second tab - blocks testing
+	 */
+	public function test() {
+		$title = SpecialPage::getTitleFor('Phalanx', 'test');
+		$this->setVal( 'action', $title->getLocalURL() );
+
+		$blockText = $this->wg->Request->getText('wpBlockText');
+		$this->setVal( 'blockText', $blockText );
+
+		// check the text against all blocks
+		if ($blockText !== '') {
+			$this->setVal( 'data', $this->handleBlockTest($blockText) );
+		}
+	}
+
+	/**
+	 * Renders navigation tabs on special page
+	 */
+	public function tabs() {
+		$this->setVal('currentTab', $this->getVal('currentTab'));
+		$this->setVal('phalanxMainTitle', $this->title);
+		$this->setVal('phalanxTestTitle', SpecialPage::getTitleFor('Phalanx', 'test'));
+	}
+
+	/**
+	 * Returns current block data
+	 *
+	 * @return array
+	 */
 	private function blockDataForForm() {
 		$data = array();
 
@@ -101,7 +140,12 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		return $data;
 	}
 
-	private function handlePost() {
+	/**
+	 * Handle POST request to edit / create a block
+	 *
+	 * @return array|bool
+	 */
+	private function handleBlockPost() {
 		$this->wf->profileIn( __METHOD__ );
 
 		$id = $this->wg->Request->getInt( 'id', 0 );
@@ -169,7 +213,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 					$bulkrow = trim($bulkrow);
 					$phalanx['id'] = null;
 					$phalanx['text'] = $bulkrow;
-					
+
 					$id = $phalanx->save();
 					if ( $id ) {
 						$result[ 'success' ][] = $id;
@@ -189,6 +233,21 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->wf->profileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	/**
+	 * Get list of block that apply for given text
+	 *
+	 * @param $blockText string text to be test against all blocks
+	 * @return array
+	 */
+	private function handleBlockTest($blockText) {
+		$this->wf->profileIn( __METHOD__ );
+
+		$ret = array();
+
+		$this->wf->profileOut( __METHOD__ );
+		return $ret;
 	}
 
 	/**
