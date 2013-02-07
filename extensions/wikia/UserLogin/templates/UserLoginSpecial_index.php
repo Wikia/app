@@ -1,6 +1,6 @@
 <div class="UserLogin">
 <?php
-	$tabIndex = 7;
+	$tabIndex = 5;
 	
 	$loginTokenInput = array(
 		'type' => 'hidden',
