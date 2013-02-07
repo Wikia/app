@@ -42,7 +42,7 @@ class SearchApiController extends WikiaApiController {
 		$batch = $this->request->getVal( 'batch', 1 );
 		$namespaces = $this->request->getArray( 'namespaces', null );
 		$total = 0;
-		$results = array();
+		$results = [];
 		$batches = 0;
 		$currentBatch = 0;
 		$next = 0;
@@ -74,22 +74,27 @@ class SearchApiController extends WikiaApiController {
 		}
 
 		if ( $searchConfig->getQueryNoQuotes( true ) ) {
-			$resultSet = F::build( 'WikiaSearch' )->doSearch( $searchConfig );
+			$wikiaSearch = F::build( 'WikiaSearch' );
+
+			//if some articles match the query lets display it
+			//this has to run before doSearch runs
+			$wikiaSearch->getArticleMatch( $searchConfig );
+
+			$resultSet = $wikiaSearch->doSearch( $searchConfig );
 			$total = $searchConfig->getResultsFound();
 
 			if ( $total ) {
 				foreach ( $resultSet as $result ) {
 					$title = $result->getTitleObject();
 
-					$results[] = array(
+					$results[] = [
 						'id' => $title->getArticleID(),
-						'title' => $result->getTitle(),
+						'title' => $title->getText(),
 						'url' => $title->getLocalUrl(),
 						'ns' => $title->getNamespace()
-					);
+					];
 				}
 
-				$total = $searchConfig->getResultsFound();
 				$batches = $searchConfig->getNumPages();
 				$currentBatch = $searchConfig->getPage();
 				$next = max( 0, $total - ( $limit * $currentBatch ) );
