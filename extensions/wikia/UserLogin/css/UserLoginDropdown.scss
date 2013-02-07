@@ -34,20 +34,12 @@
 			padding: 3px;
 			width: 119px;
 		}
-		.password-input {
-			margin-bottom: 0;
-			padding-bottom: 0;
-		}
-		.forgot-password {
-			margin-bottom: 0;
-			font-size: 11px;
-		}
-		.keep-logged-in .keep-logged-in {
-			margin-left: 0;
-			vertical-align: middle;
-		}
 		input[type=submit] {
 			margin: 10px 0 0;
+		}
+		.forgot-password {
+			font-size: 11px;
+			margin-top: 5px;
 		}
 		.general-errors {
 			display: none;
@@ -56,21 +48,15 @@
 	> .sso-login {
 		> .sso-login-divider {
 			@include divider;
-			line-height: 12px;
-			margin-top: 24px;
-			> span {
-				line-height: 13px;
-				top: -6px;
-			}
 		}
 		.sso-login-facebook {
 			font-size: 10px;
 			height: 16px;
-			line-height: 16px;
+			line-height: 10px;
 			margin-left: 6px;
 			padding: 0 9px 0 0;
 			> img {
-				margin: 0 4px;
+				margin: 0 4px 0 2px;
 				position: relative;
 				top: 1px;
 			}

@@ -19,7 +19,6 @@
 	$passwordInput = array(
 		'type' => 'password',
 		'name' => 'password',
-		'class' => 'password-input',
 		'isRequired' => true,
 		'label' => wfMsg('yourpassword'),
 		'isInvalid' => (!empty($errParam) && $errParam === 'password'),
@@ -35,7 +34,6 @@
 	$rememberMeInput = array(
 		'type' => 'checkbox',
 		'name' => 'keeploggedin',
-		'class' => 'keep-logged-in',
 		'isRequired' => false,
 		'value' => '1',
 		'checked' => $keeploggedin,

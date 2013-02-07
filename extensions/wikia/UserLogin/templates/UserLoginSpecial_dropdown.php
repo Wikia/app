@@ -26,29 +26,27 @@
 			array(
 				'type' => 'password',
 				'name' => 'password',
-				'class' => 'password-input',
 				'isRequired' => true,
 				'label' => wfMsg('yourpassword')
 			),
 			array(
 				'type' => 'custom',
-				'class' => 'forgot-password',
 				'output' => '<a href="#" class="forgot-password">'.wfMsg('userlogin-forgot-password').'</a>',
 			),
 			array(
 				'type' => 'checkbox',
 				'name' => 'keeploggedin',
-				'class' => 'keep-logged-in',
 				'value' => '1',
 				'label' => wfMsg('userlogin-remembermypassword')
-			),
-			array(
-				'type' => 'submit',
-				'value' => wfMsg('login'),
-			),
+			)
 		),
 		'method' => 'post',
 		'action' => $formPostAction,
+		'submits' => array(
+			array(
+				'value' => wfMsg('login')
+			)
+		)
 	);
 
 	$form['isInvalid'] = true;
