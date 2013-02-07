@@ -8,6 +8,7 @@
 			'text' => wfMsg('fbconnect-connect-simple'),
 			'tooltip' => (!empty($requestType) && $requestType === 'signup' ? 
 				wfMsg('userlogin-provider-tooltip-facebook-signup') : 
-				wfMsg('userlogin-provider-tooltip-facebook'))
+				wfMsg('userlogin-provider-tooltip-facebook')),
+			'tabindex' => $tabindex,
 		)) ?>
 	</div>
