@@ -9,4 +9,5 @@
 		'class' => trim("wikia-button-facebook {$class}"),
 		'image' => MenuButtonController::FACEBOOK_ICON,
 		'tooltip' => $tooltip,
+		'tabindex' => $tabindex,
 	));
