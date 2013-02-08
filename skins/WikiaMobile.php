@@ -17,6 +17,10 @@ class SkinWikiaMobile extends WikiaSkin {
 		parent::__construct( 'WikiaMobileTemplate', 'wikiamobile' );
 	}
 
+	/*
+	 * This is due Wikiamobile needs a lot less global variables
+	 * having separate getTopScripts allows for less injecting itself into  WikiaSkin
+	 */
 	function getTopScripts(){
 		$vars = [];
 		$scripts = '';
