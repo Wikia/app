@@ -33,7 +33,7 @@ class PhalanxContentBlock extends WikiaObject {
 		$textbox = $editPage->textbox1;
 		
 		/* compare summary with spam-whitelist */
-		if ( !empty( $summary ) && !empty( $textbox ) && empty(self::$whitelist) ) {
+		if ( !empty( $summary ) && !empty( $textbox ) && is_null(self::$whitelist) ) {
 			self::$whitelist = $phalanxModel->buildWhiteList();
 		}
 		
@@ -42,7 +42,11 @@ class PhalanxContentBlock extends WikiaObject {
 			$summary = preg_replace( self::$whitelist, '', $summary );
 		}
 
+error_log ( "summary = $summary \n", 3, "/tmp/moli.log" );
+error_log ( "textbox = $textbox \n", 3, "/tmp/moli.log" );
+
 		$result = $phalanxModel->setText( $summary )->match( "summary" );
+error_log ( "result ( $summary ) = " . print_r( $result, true ) . "\n", 3, "/tmp/moli.log" );
 		if ( $result !== false ) {
 			if ( 
 				is_object( $result ) && 
@@ -58,6 +62,7 @@ class PhalanxContentBlock extends WikiaObject {
 					$textbox = preg_replace( self::$whitelist, '', $textbox );
 				}
 				$result = $phalanxModel->setText( $textbox )->match( "content" );
+error_log ( "result ( $textbox ) = " . print_r( $result, true ) . "\n", 3, "/tmp/moli.log" );
 				if ( $result !== false ) {
 					if ( 
 						is_object( $result ) &&
@@ -107,7 +112,7 @@ class PhalanxContentBlock extends WikiaObject {
 		$reason = $this->wg->request->getText( 'wpReason' );
 		
 		/* compare summary with spam-whitelist */
-		if ( !empty( $reason ) && empty(self::$whitelist) ) {
+		if ( !empty( $reason ) && is_null(self::$whitelist) ) {
 			self::$whitelist = $phalanxModel->buildWhiteList();
 		}
 		

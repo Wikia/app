@@ -44,8 +44,6 @@ class PhalanxTitleBlock extends WikiaObject {
 			return true;
 		}
 		
-		error_log ( __METHOD__ . ": title = " . print_r( $title, true ) . "\n", 3, "/tmp/moli.log" );
-
 		/* check title */
 		$ret = $this->checkTitle( $title );
 

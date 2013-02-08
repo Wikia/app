@@ -12,6 +12,15 @@ class PhalanxHooksTest extends WikiaBaseTest {
 	const VALID_WIKIA_NAME = 'Szumo';
 	const INVALID_WIKIA_NAME = 'Pornology';
 
+	const VALID_CONTENT = 'This is good article created by ME';
+	const INVALID_CONTENT = 'This is porn article created by YOU';
+	const VALID_SUMMARY = 'This is very good summary';
+	const INVALID_SUMMARY = 'Invalid summary';
+
+	private $SPAM_WHITELIST = array(
+		'WIKIA', 'FOOTBALL'
+	);
+
 	/***
 	 * setup tests
 	 */
@@ -323,6 +332,62 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		$this->assertEquals( $result, $ret );	
 	}
 	
+	
+	/* PhalanxContentBlock */
+	 
+	/* editFilter method */
+	/**
+	 * @dataProvider phalanxContentBlockDataProvider
+	 */
+	public function testPhalanxContentEditFilter( $title, $text, $summary, $block_text, $block_summary, $isOk, $result_text, $result_summary ) {
+		// title
+		$titleMock = $this->getMock( 'Title', array('newFromText'), array( $title ) );
+		$this->mockClass('Title', $titleMock);
+		$this->proxyClass('Title', $titleMock);
+		$this->mockGlobalVariable('wgTitle', $titleMock);
+		
+		// Article
+		$articleMock = $this->getMock( 'Article', array(), array( $titleMock ) );
+		
+		// editPage
+		$editPageMock = $this->getMock( 'EditPage', array(), array( $articleMock ) ); 
+		$editPageMock->summary = $summary;
+		$editPageMock->textbox1 = $text;
+		$this->proxyClass('EditPage', $editPageMock);
+		
+		// PhalanxTextModel 
+		$modelMock = $this->getMock( 'PhalanxContentModel', array('match', 'isOk', 'setText'), array( $titleMock, '', '' ) );
+		$modelMock
+			->expects( $this->once() )
+			->method( 'isOk' )
+			->will( $this->returnValue( $isOk ) );
+		
+		$modelMock
+			->expects( $this->any() )
+			->method('setText')
+			->will( $this->returnValue( $modelMock ));
+			
+		$modelMock
+			->expects( $this->at(0) )
+			->method( 'match' )
+			->will( $this->returnValue( $block_summary ) );
+			
+		$modelMock
+			->expects( $this->at(1) )
+			->method( 'match' )
+			->will( $this->returnValue( $block_text ) );
+
+		$this->proxyClass( 'PhalanxContentModel', $modelMock );
+		$this->mockClass('PhalanxContentModel', $modelMock );
+	
+		// ContentBlock
+		$hookError = '';
+		$hook = new PhalanxContentBlock();
+		$ret = (int) $hook->editFilter( $editPageMock, $text, '', $hookError, $summary );
+		
+		$this->assertEquals( ( $block_text ) ? $result_text : $result_summary, $ret );	
+	}
+	
 	/* data providers */
 	public function phalanxUserBlockDataProvider() {
 		/* valid user */
@@ -460,5 +525,65 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		);
 		
 		return array( $validWiki, $invalidWiki );
+	}
+	
+	public function phalanxContentBlockDataProvider() {
+		/* valid textbox & summary */
+		$validContent = array(
+			'title'			=> self::VALID_TITLE,
+			'textbox'		=> self::VALID_CONTENT,
+			'summary'   	=> self::VALID_SUMMARY,
+			'block_text'	=> 0,
+			'block_summary'	=> 0,
+			'isOk'      	=> 0,
+			'result_text'  	=> 1,
+			'result_summary'=> 1
+		);
+	
+		/* invalid content, valid summary */
+		$invalidContent = array(
+			'title'     	=> self::VALID_TITLE,
+			'textbox'		=> self::INVALID_CONTENT,
+			'summary'   	=> self::VALID_SUMMARY,
+			'block_text'	=> (object) array(
+				'regex' => 0,
+				'expires' => '',
+				'text' => self::INVALID_CONTENT,
+				'reason' => 'Test content block',
+				'exact' => '',
+				'caseSensitive' => '', 
+				'id' => 4014,
+				'language' => 'en', 
+				'authorId' => 184532,
+			),
+			'block_summary' => 0,
+			'isOk'      	=> 0,
+			'result_text'   => 1,
+			'result_summary'=> 0
+		);
+		
+		/* valid content, invalid summary */
+		$invalidSummary = array(
+			'title'     	=> self::VALID_TITLE,
+			'textbox'		=> self::VALID_CONTENT,
+			'summary'   	=> self::INVALID_SUMMARY,
+			'block_text'    => 0,
+			'block_summary' => (object) array(
+				'regex' => 0,
+				'expires' => '',
+				'text' => self::INVALID_SUMMARY,
+				'reason' => 'Test content block',
+				'exact' => '',
+				'caseSensitive' => '', 
+				'id' => 4015,
+				'language' => 'en', 
+				'authorId' => 184532,
+			),
+			'isOk'      	=> 0,
+			'result_text'   => 0,
+			'result_summary'=> 1
+		);
+
+		return array( $validContent, $invalidContent, $invalidSummary );
 	}
 }
