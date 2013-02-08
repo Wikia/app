@@ -29,15 +29,9 @@ class CategorySelectController extends WikiaController {
 		$categoryLinks = $this->wg->out->getCategoryLinks();
 		$userCanEdit = $this->request->getVal( 'userCanEdit', CategorySelect::isEditable() );
 
-		if ( !empty( $categoryLinks[ 'normal' ] ) ) {
-
-			// Flatten categoryLinks array. Keep hidden categories based on user preference.
-			if ( !empty( $categoryLinks[ 'hidden' ] ) && $this->wg->User->getBoolOption( 'showhiddencats' ) ) {
-				$categoryLinks = array_merge( $categoryLinks[ 'normal' ], $categoryLinks[ 'hidden' ] );
-
-			} else {
-				$categoryLinks = $categoryLinks[ 'normal' ];
-			}
+		// Remove hidden categories if user has chosen not to see them.
+		if ( !empty( $categoryLinks[ 'hidden' ] ) && !$this->wg->User->getBoolOption( 'showhiddencats' ) ) {
+			unset( $categoryLinks[ 'hidden' ] );
 		}
 
 		// There are no categories present and user can't edit, skip rendering
@@ -72,6 +66,7 @@ class CategorySelectController extends WikiaController {
 		$this->response->setVal( 'edit', $this->wf->Msg( 'categoryselect-category-edit' ) );
 		$this->response->setVal( 'name', $this->request->getVal( 'name', '' ) );
 		$this->response->setVal( 'remove', $this->wf->Msg( 'categoryselect-category-remove' ) );
+		$this->response->setVal( 'type', $this->request->getVal( 'type', 'normal' ) );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
