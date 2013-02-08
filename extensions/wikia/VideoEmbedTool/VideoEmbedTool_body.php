@@ -263,37 +263,42 @@ class VideoEmbedTool {
 			$text = $article_obj->getContent();
 
 			// match [[File:Placeholder|video]]
-			preg_match_all( '/\[\[' . $ns_file . ':Placeholder[^\]]*\|video[^\]]*\]\]/s', $text, $matches, PREG_OFFSET_CAPTURE );
+			$placeholder = MediaPlaceholderMatch( $text, $box, true );
 
-			$placeholder_tag = $matches[0][$box][0];
-			$file = wfFindFile( $title );
-			$thumb = $file->transform( array('width'=>$width) );
-			$embed_code = $thumb->toHtml( array('desc-link' => true) );
-			$html_params = array( 
-				'imageHTML' => $embed_code,
-				'align' => $layout,
-				'width' => $width,
-				'showCaption' => !empty($caption),
-				'caption' => $caption,
-				'showPictureAttribution' => true,
-			);
-			
-			// Get all html to insert into article view page
-			$image_service = F::app()->sendRequest( 'ImageTweaksService', 'getTag', $html_params );
-			$image_data = $image_service->getData();
-			$embed_code = $image_data['tag'];
+			$success = false;
+			if ( $placeholder ) {
 
-			// Make output match what's in a saved article
-			if($layout == 'center') {
-				$embed_code = '<div class="center">'.$embed_code.'</div>';
+				$placeholder_tag = $placeholder[0];
+				$file = wfFindFile( $title );
+				$thumb = $file->transform( array('width'=>$width) );
+				$embed_code = $thumb->toHtml( array('desc-link' => true) );
+				$html_params = array( 
+					'imageHTML' => $embed_code,
+					'align' => $layout,
+					'width' => $width,
+					'showCaption' => !empty($caption),
+					'caption' => $caption,
+					'showPictureAttribution' => true,
+				);
+				
+				// Get all html to insert into article view page
+				$image_service = F::app()->sendRequest( 'ImageTweaksService', 'getTag', $html_params );
+				$image_data = $image_service->getData();
+				$embed_code = $image_data['tag'];
+	
+				// Make output match what's in a saved article
+				if($layout == 'center') {
+					$embed_code = '<div class="center">'.$embed_code.'</div>';
+				}
+
+				$summary = wfMsg( 'vet-added-from-placeholder' );
+	
+				$text = substr_replace( $text, $tag, $placeholder[1], strlen( $placeholder_tag ) );
+				
+				$button_message = wfMessage('vet-placeholder-return');
+				$success = $article_obj->doEdit( $text, $summary);
 			}
 
-			$summary = wfMsg( 'vet-added-from-placeholder' );
-
-			$text = substr_replace( $text, $tag, $matches[0][$box][1], strlen( $placeholder_tag ) );
-			
-			$button_message = wfMessage('vet-placeholder-return');
-			$success = $article_obj->doEdit( $text, $summary);
 			if ( !$success ) {
 				header('X-screen-type: error');
 				return wfMsg ( 'vet-insert-error' );

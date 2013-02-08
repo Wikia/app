@@ -115,6 +115,11 @@ foreach ($providersVideoFeed as $provider) {
 			$startDate = date('Y-m-d', $startDateTS).'T00:00:00Z';
 			$endDate = date('Y-m-d', $endDateTS).'T00:00:00Z';
 			break;
+		case VideoFeedIngester::PROVIDER_IVA:
+			// no file needed
+			$startDate = date('Y-m-d', $startDateTS);
+			$endDate = date('Y-m-d', $endDateTS);
+			break;
 		default:
 	}
 
