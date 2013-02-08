@@ -1,5 +1,4 @@
 /*
-@test-framework QUnit
 @test-require-asset resources/jquery/jquery-1.7.2.js
  @test-require-asset resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js
 @test-require-asset resources/wikia/jquery.wikia.js
