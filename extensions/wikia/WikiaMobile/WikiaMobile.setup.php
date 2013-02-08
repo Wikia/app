@@ -135,6 +135,7 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'wgServer',
 			'wgDBname',
 			'wgCityId',
+			'wgScript',
 			'wgScriptPath',
 			'wgCdnRootUrl',
 			'wgAssetsManagerQuery',
