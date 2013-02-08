@@ -38,18 +38,11 @@ class AchUser {
 	}
 
 	protected function loadBadgesFromDb( $limit = null, $offset = null ) {
-		global $wgEnableAchievementsStoreLocalData;
 		wfProfileIn(__METHOD__);
 
 		// build a WHERE conditions
 		$where = array('user_id' => $this->getId());
-		if(empty($wgEnableAchievementsStoreLocalData)) {
-			global $wgCityId, $wgExternalSharedDB;
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-			$where['wiki_id'] = $wgCityId;
-		} else {
-			$dbr = wfGetDB(DB_SLAVE);
-		}
+		$dbr = wfGetDB(DB_SLAVE);
 
 		// build query options
 		$opts = array(
@@ -81,17 +74,10 @@ class AchUser {
 	}
 
 	protected function loadBadgesCountFromDb() {
-		global $wgEnableAchievementsStoreLocalData;
 		wfProfileIn(__METHOD__);
 
 		$where = array('user_id' => $this->getId());
-		if(empty($wgEnableAchievementsStoreLocalData)) {
-			global $wgCityId, $wgExternalSharedDB;
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-			$where['wiki_id'] = $wgCityId;
-		} else {
-			$dbr = wfGetDB(DB_SLAVE);
-		}
+		$dbr = wfGetDB(DB_SLAVE);
 
 		$count = $dbr->selectField(
 			'ach_user_badges',
@@ -105,18 +91,11 @@ class AchUser {
 	}
 
 	protected function loadBadgesByTypeFromDb() {
-		global $wgEnableAchievementsStoreLocalData;
 		wfProfileIn(__METHOD__);
 
 		// build a WHERE conditions
 		$where = array('user_id' => $this->getId());
-		if(empty($wgEnableAchievementsStoreLocalData)) {
-			global $wgCityId, $wgExternalSharedDB;
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-			$where['wiki_id'] = $wgCityId;
-		} else {
-			$dbr = wfGetDB(DB_SLAVE);
-		}
+		$dbr = wfGetDB(DB_SLAVE);
 
 		// execute a query
 		$res = $dbr->select(
