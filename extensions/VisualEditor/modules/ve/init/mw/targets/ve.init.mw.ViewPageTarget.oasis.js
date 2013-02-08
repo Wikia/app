@@ -31,10 +31,7 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	} );
 
 	// Properties
-	this.track = window.WikiaTracker.buildTrackingFunction({
-		'category': 'visual-editor',
-		'trackingMethod': 'both'
-	});
+	this.track = function() { };
 	this.currentUri = currentUri;
 	this.isViewPage = (
 		mw.config.get( 'wgAction' ) === 'view' &&
