@@ -108,6 +108,11 @@ $form-negative-side-padding: $form-side-padding*-1;
 		margin: 0;
 		padding: 0;
 	}
+	
+	.Results.inter-wiki .result {
+		max-width: 760px;
+	}
+	
 	.result {
 		@include clearfix;
 		list-style: none;
