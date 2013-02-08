@@ -249,9 +249,7 @@ class GameGuidesController extends WikiaController {
 			)
 		);
 
-		$globals = $this->sendSelfRequest( 'getGlobals' );
-
-		$this->response->setVal( 'globals', $globals->getVal( 'globals' ) );
+		$this->response->setVal( 'globals', Skin::newFromKey( 'wikiamobile' )->getTopScripts() );
 		$this->response->setVal( 'messages', F::build( 'JSMessages' )->getPackages( array( 'GameGuides' ) ) );
 		$this->response->setVal( 'title', Title::newFromText( $titleName )->getText() );
 		$this->response->setVal( 'html', $html['parse']['text']['*'] );
@@ -311,17 +309,6 @@ class GameGuidesController extends WikiaController {
 		);
 
 		$this->response->setVal( 'cb', (string) $this->wg->StyleVersion );
-	}
-
-	/**
-	 * function returns globals needed for an Article
-	 */
-	public function getGlobals(){
-		$this->wf->profileIn( __METHOD__ );
-
-		$this->setVal( 'globals', Skin::newFromKey( 'wikiamobile' )->getTopScripts() );
-
-		$this->wf->profileOut( __METHOD__ );
 	}
 
 	/**
