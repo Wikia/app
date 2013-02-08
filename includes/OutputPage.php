@@ -2762,11 +2762,6 @@ $templates
 		$scripts = $this->topScripts . $scripts;
 		// Wikia change - end
 
-		/* Wikia change begin - @author: Macbre */
-		/* allow old skins to inject JS code before files from MW core (BugId:960) */
-		wfRunHooks('SkinGetHeadScripts', array(&$scripts));
-		/* Wikia change end */
-
 		// Load embeddable private modules before any loader links
 		// This needs to be TYPE_COMBINED so these modules are properly wrapped
 		// in mw.loader.implement() calls and deferred until mw.user is available
@@ -2792,6 +2787,11 @@ $templates
 		if ( $wgResourceLoaderExperimentalAsyncLoading ) {
 			$scripts .= $this->getScriptsForBottomQueue( true );
 		}
+
+		/* Wikia change begin - @author: Macbre */
+		/* allow old skins to inject JS code before files from MW core (BugId:960) */
+		wfRunHooks('SkinGetHeadScripts', array(&$scripts));
+		/* Wikia change end */
 
 		return $scripts;
 	}

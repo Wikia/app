@@ -43,7 +43,7 @@ ManageWikiaHome.prototype = {
 		$().log('ManageWikiaHome.init');
 	},
 	changeVisualizationLang: function(e) {
-		(new window.Wikia.Querystring()).setVal('vl', e.target.value).goTo();
+		window.Wikia.Querystring().setVal('vl', e.target.value).goTo();
 	},
 	renderWikiListPage: function(e) {
 		e.preventDefault();

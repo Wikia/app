@@ -117,7 +117,7 @@ var ChatEntryPoint = {
 	},
 
 	reloadPage: function() {
-		(new Wikia.Querystring()).addCb().goTo();
+		Wikia.Querystring().addCb().goTo();
 	},
 
 	launchChatWindow: function(event) {
@@ -130,13 +130,13 @@ var ChatEntryPoint = {
 	}
 };
 
-$(function() {
-	if ( typeof wgWikiaChatModuleContent!=="undefined" ) {
+if ( typeof wgWikiaChatModuleContent!=="undefined" ) {
+    $(function() {
 		ChatEntryPoint.init();
 		$('body').on('click', '.WikiaChatLink', function(event) {
 			event.preventDefault();
 			event.stopPropagation();
 			ChatEntryPoint.onClickChatButton(wgUserName !== null, this.href);
 		});
-	}
-});
+    });
+}

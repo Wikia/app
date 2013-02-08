@@ -2,8 +2,6 @@
 
 class ImageServingTest extends SpecialPage {
 
-	/* @var MostvisitedpagesPageIS */
-    private $mpp = null;
 
 	function __construct() {
 		parent::__construct( 'ImageServingTest', 'imageservingtest' );
@@ -49,62 +47,12 @@ class ImageServingTest extends SpecialPage {
             list( $limit, $offset ) = wfCheckLimits();
         }
 
-        $this->mpp = new MostvisitedpagesPageIS($article_id, $show, $this->size, $this->prop);
+	/** removed reference to deprecated mechanism of Mostvisitedpages
+	 *  right now operation of ImageServing Test is not very clear
+	 *  TODO: provide clearer way of using ImageServingTest (BugId:97236)
+	 */
 
-        $this->mpp->doQuery($wgRequest->getVal("offset",0), 20, $show );
     }
 
-    function getResult() {
-		return $this->mpp->getResult();
-	}
-}
 
-class MostvisitedpagesPageIS extends MostvisitedpagesPage {
-	var $mName = "ImageServingTest";
-	function __construct($page_id, $show, $size, $prop) {
-		global $wgRequest;
-		$this->prop = $prop;
-		$this->size = $size;
-		$this->show = $show;
-		$this->mArticle = $wgRequest->getVal('target');
-		$this->mArticleId = $page_id;
-		if ( $page_id == 'latest' ) {
-			$this->setOrder('prev_diff');
-			$this->setOrderColumn('prev_diff');
-		}
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, $this->mName );
-	}
-
-	function getPageHeader() { return ""; }
-
-	function linkParameters() {
-		global $wgRequest;
-		return array("option" => $wgRequest->getVal("option", 1));
-	}
-
-	function formatResult( $skin, $result ) {
-		global $wgRequest,$wgTitle;
-		$res = false;
-		if (empty($this->show)) {
-			$this->data[$result->title] = array('value' => $result->value, 'namespace' => $result->namespace);
-		} else {
-			$title = Title::newFromText($result->title, $result->namespace);
-			$article_name = $title->getText();
-			if ($title) {
-				$result->title = Xml::element("a", array("href" => $title->getLocalURL()), $title->getFullText()."(".$title->getArticleId().")") ;
-				$is = new ImageServing(array($title->getArticleId()), $this->size, $this->prop );
-				$result->title .= "<div>";
-				foreach ($is->getImages(1) as $value){
-					foreach ($value as $value2) {
-						$result->title .= "<img src='{$value2['url']}' /> <br>";
-						$result->title .= $value2['name']."<br>";
-					}
-				};
-				$result->title .= Xml::element("a", array("href" => $wgTitle->getLocalURL("option=".$wgRequest->getVal("option", 1)."&article=".$article_name)), wfMsg("imageserving-showall") )."<br>" ;
-				$result->title .= "</div>";
-			}
-			$res = wfSpecialList( $result->title, $result->value );
-		}
-		return $res;
-	}
 }

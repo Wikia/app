@@ -263,8 +263,15 @@ class CategorySelect {
 			$undo = $request->getVal( 'undo' );
 			$undoafter = $request->getVal( 'undoafter' );
 
-			$supportedActions = array( 'edit', 'purge', 'submit', 'view' );
+			$viewModeActions = array( 'view', 'purge' );
+			$editModeActions = array( 'edit', 'submit' );
+			$supportedActions = array_merge( $viewModeActions, $editModeActions );
 			$supportedSkins = array( 'SkinAnswers', 'SkinOasis' );
+
+			$isViewMode = in_array( $action, $viewModeActions );
+			$isEditMode = in_array( $action, $editModeActions );
+			$extraNamespacesOnView = array( NS_FILE, NS_CATEGORY, NS_VIDEO );
+			$extraNamespacesOnEdit = array( NS_FILE, NS_CATEGORY, NS_VIDEO, NS_USER, NS_SPECIAL );
 
 			$isEnabled = true;
 
@@ -279,19 +286,18 @@ class CategorySelect {
 				|| !in_array( $action, $supportedActions )
 				// Disabled on CSS or JavaScript pages
 				|| $title->isCssJsSubpage()
-				// Disabled on non-existant article pages
+				// Disabled on non-existent article pages
 				|| ( $action == 'view' && !$title->exists() )
 				// Disabled on 'confirm purge' page for anon users
 				|| ( $action == 'purge' && $user->isAnon() && !$request->wasPosted() )
 				// Disabled for undo edits
 				|| ( $undo > 0 && $undoafter > 0 )
-				// Disabled for unsupported namespace
-				|| ( ( $title->mNamespace != NS_TEMPLATE )
-					&& ( ( $action == 'view' || $action == 'purge' )
-						&& !in_array( $title->mNamespace, array_merge( $app->wg->ContentNamespaces, array( NS_FILE, NS_CATEGORY, NS_VIDEO ) ) ) )
-					&& ( ( $action == 'edit' || $action == 'submit' )
-						&& !in_array( $title->mNamespace, array_merge( $app->wg->ContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) ) )
-				)
+				// Disabled for unsupported namespaces
+				|| ( $title->mNamespace == NS_TEMPLATE )
+				// Disabled for unsupported namespaces in view mode
+				|| ( $isViewMode && !in_array( $title->mNamespace, array_merge( $app->wg->ContentNamespaces, $extraNamespacesOnView ) ) )
+				// Disabled for unsupported namespaces in edit mode
+				|| ( $isEditMode && !in_array( $title->mNamespace, array_merge( $app->wg->ContentNamespaces, $extraNamespacesOnEdit ) ) )
 			) {
 				$isEnabled = false;
 			}

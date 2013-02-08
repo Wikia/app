@@ -50,6 +50,7 @@ $messages['en'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Post a comment',
 	'wikiamobile-article-comments-show' => 'Show',
 	'wikiamobile-article-comments-login-post' => 'Please log in to post a comment.',
+	'wikiamobile-article-comments-post-fail' => 'Failed to save comment, please try again later',
 
 	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$PAGETITLE" on {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,

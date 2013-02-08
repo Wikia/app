@@ -16,3 +16,4 @@ wgMessages = <?= json_encode( $messages ); ?>;
     <div id=wkMdlCnt></div>
     <div id=wkMdlFtr></div>
 </div>
+<div id=wkCurtain>&nbsp;</div>

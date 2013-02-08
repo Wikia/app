@@ -116,6 +116,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js', // WikiaBar is enabled sitewide
 		'//extensions/wikia/Chat2/js/ChatEntryPoint.js', // Chat is enabled sitewide
 		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js', // Related Forum Discussion is on all article pages
+		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
 	)
 );
 
@@ -146,7 +147,6 @@ $config['oasis_blocking'] = array(
 	'assets' => array(
 		'//skins/wikia/js/WikiaScriptLoader.js',
 		'//skins/wikia/js/JqueryLoader.js',
-		'//resources/wikia/libraries/modil/modil.js',
 		'//resources/wikia/modules/lazyqueue.js',
 	)
 );
@@ -611,8 +611,6 @@ $config['monobook_js'] = array(
 //		'//resources/mediawiki/mediawiki.util.js', # instead of //skins/common/wikibits.js'
 //		'//skins/common/ajax.js',
 
-		'//resources/wikia/libraries/modil/modil.js',//before this there should not be any AMD-dependent code
-
 		'//skins/monobook/main.js',
 		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
@@ -734,8 +732,6 @@ $config['mini_editor_js'] = array(
 		'//extensions/wikia/EditPageLayout/js/modules/InsertMiniEditor.js',
 		'//extensions/wikia/EditPageLayout/js/modules/ModeSwitch.js',
 		// Photo and Video tools
-		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
-		'//extensions/wikia/VideoEmbedTool/js/VET.js',
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
 		// Third Party
@@ -899,7 +895,6 @@ $config['relatedvideos_js'] = array(
 	'skin' => array( 'oasis' ), //we have no support for relatedvideos in wikiamobile and monobook as for now
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/VideoHandlers/js/AddVideo.js',
 		'//extensions/wikia/RelatedVideos/js/RelatedVideos.js'
 	)
 );
@@ -909,6 +904,15 @@ $config['relatedvideos_scss'] = array(
 	'skin' => array( 'oasis' ), //we have no support for relatedvideos in wikiamobile and monobook as for now
 	'assets' => array(
 		'//extensions/wikia/RelatedVideos/css/RelatedVideos.scss'
+	)
+);
+
+$config['VET_js'] = array(
+	'skin' => array( 'oasis' ),
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
+		'//extensions/wikia/VideoEmbedTool/js/VET.js',
 	)
 );
 
@@ -1159,7 +1163,6 @@ $config['special_videos_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array( 'oasis', 'monobook' ),
 	'assets' => array(
-		'//extensions/wikia/VideoHandlers/js/AddVideo.js',
 		'//extensions/wikia/SpecialVideos/js/SpecialVideos.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
 	)

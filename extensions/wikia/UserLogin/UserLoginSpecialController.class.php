@@ -88,8 +88,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->password = $this->request->getVal( 'password', '' );
 		$this->keeploggedin = $this->request->getCheck( 'keeploggedin' );
 		$this->loginToken = UserLoginHelper::getLoginToken();
-		$this->returnto = $this->request->getVal( 'returnto', '' );
-		$this->returntoquery = $this->request->getVal( 'returntoquery', '' );
+		$this->returnto = htmlentities($this->request->getVal( 'returnto', '' ), ENT_QUOTES, "UTF-8");
+		$this->returntoquery = htmlentities($this->request->getVal( 'returntoquery', '' ), ENT_QUOTES, "UTF-8");
 
 		// process login
 		if ( $this->wg->request->wasPosted() ) {

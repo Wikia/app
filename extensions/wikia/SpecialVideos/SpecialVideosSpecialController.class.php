@@ -123,7 +123,6 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->sortMsg = $sortingOptions[$sort]; // selected sorting option to display in drop down
 		$this->sortingOptions = $sortingOptions; // populate the drop down
 		$this->videos = $videos;
-		$this->surveyLink = $this->wg->LanguageCode == 'en' ? $this->app->renderView('VideosController', 'videoSurvey') : ''; // temporary video survey code bugid-68723
 	}
 
 }

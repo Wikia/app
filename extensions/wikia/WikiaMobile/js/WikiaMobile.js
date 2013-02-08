@@ -1,8 +1,8 @@
 //init
 window.addEventListener('DOMContentLoaded', function () {
 	'use strict';
-	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), 'events', require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'lazyload', 'sections'],
-		function (qs, topbar, toc, events, share, popover, cookies, track, lazyload, sections) {
+	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), 'events', require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'layout'],
+		function (qs, topbar, toc, events, share, popover, cookies, track) {
 			var d = document,
 				clickEvent = events.click,
 				//add chevrons to elements that need it
@@ -16,11 +16,8 @@ window.addEventListener('DOMContentLoaded', function () {
 				topBar = d.getElementById('wkTopBar'),
 				fllSite = d.getElementById('wkFllSite'),
 				categoryLinks = d.getElementById('catlinks'),
-				wordmark,
-				processedSections = {};
+				wordmark;
 
-			//image Lazyloading	(load images outside any section)
-			lazyload(d.getElementsByClassName('noSect'));
 
 			while (i--) {
 				addChevs[i].insertAdjacentHTML('beforeend', '<span class=chev></span>');
@@ -52,12 +49,9 @@ window.addEventListener('DOMContentLoaded', function () {
 					event.stopPropagation();
 					cookies.set('mobilefullsite', 'true');
 
-					(new qs()).setVal('useskin', this.getAttribute('data-skin')).addCb().goTo();
+					qs().setVal('useskin', this.getAttribute('data-skin')).addCb().goTo();
 				});
 			}
-
-			//add curtain
-			d.body.insertAdjacentHTML('beforeend', '<div id=wkCurtain></div>');
 
 			//close toc and topbar when 'curtain' is clicked
 			d.getElementById('wkCurtain').addEventListener(clickEvent, function(){
@@ -120,16 +114,6 @@ window.addEventListener('DOMContentLoaded', function () {
 					}
 				});
 			}
-
-			sections.addEventListener('open', function () {
-				var id = this.getAttribute('data-index');
-
-				if (id && !processedSections[id]) {
-					lazyload(this.getElementsByClassName('lazy'));
-
-					processedSections[id] = true;
-				}
-			});
 		}
 	);
 });

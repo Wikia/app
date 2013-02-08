@@ -323,6 +323,10 @@ class SpecialCustomEditPage extends SpecialPage {
 			$this->setPageTitle($pageTitle);
 		}
 
+		if ( class_exists( 'CategorySelectHooksHelper') ) {
+			CategorySelectHooksHelper::onMediaWikiPerformAction( null, null, $pageTitle, null, null, null, false );
+		}
+
 		// (try to) create instance of custom EditPage class
 		$this->mEditPage = $this->initializeEditPage();
 
@@ -445,26 +449,27 @@ class SpecialCustomEditPage extends SpecialPage {
 	public function getWikitextFromRequest() {
 		// "wikitext" field used when generating preview / diff
 		$wikitext = $this->request->getText('wikitext');
+		$method = $this->request->getVal('method', '');
 
 		if ($wikitext == '') {
-			// "wpTextbox1" field used when submitting editpage (needs to be processed by Reverse Parser if saved from wysiwyg mode)
-
-			$method = $this->request->getVal('method', '');
-			if($method == 'preview' || $method == 'diff') {
+			if ($method == 'preview' || $method == 'diff') {
 				$wikitext = $this->getWikitextFromField('content');
+
+				// Add categories to wikitext for preview and diff
+				if ( !empty( $this->app->wg->EnableCategorySelectExt ) ) {
+					$categories = $this->request->getVal( 'categories', '' );
+					$section = $this->request->getVal( 'section', '' );
+
+					// Only add if editing entire article (not section)
+					if ( empty( $section ) && !empty( $categories ) ) {
+						$wikitext .= CategorySelect::changeFormat( $categories, 'json', 'wikitext' );
+					}
+				}
+
+			// "wpTextbox1" field used when submitting editpage
+			// (needs to be processed by Reverse Parser if saved from wysiwyg mode)
 			} else {
 				$wikitext = $this->getWikitextFromField('wpTextbox1');
-			}
-		}
-
-		// Add categories to wikitext
-		if ( !empty( $this->app->wg->EnableCategorySelectExt ) ) {
-			$categories = $this->request->getVal( 'categories', '' );
-			$section = $this->request->getVal( 'section', '' );
-
-			// Only add if editing entire article (not section)
-			if ( empty( $section ) && !empty( $categories ) ) {
-				$wikitext .= CategorySelect::changeFormat( $categories, 'json', 'wikitext' );
 			}
 		}
 

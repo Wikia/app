@@ -31,7 +31,7 @@ $categoryselect-color-placeholder: darken( $color-epl-input, 2% );
 	}
 
 	.category,
-	.placeholder {
+	.categories .placeholder {
 		@include border-radius( 4px );
 		display: block;
 		padding: 0 5px;
@@ -39,7 +39,7 @@ $categoryselect-color-placeholder: darken( $color-epl-input, 2% );
 
 	.category {
 		color: $color-text;
-		line-height: 25px;
+		height: 25px;
 		margin: 0;
 		position: relative;
 
@@ -60,6 +60,7 @@ $categoryselect-color-placeholder: darken( $color-epl-input, 2% );
 	}
 
 	.input {
+		height: 23px;
 		outline: none;
 	}
 

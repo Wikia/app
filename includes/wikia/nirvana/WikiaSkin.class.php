@@ -175,6 +175,11 @@ abstract class WikiaSkin extends SkinTemplate {
 		return $res;
 	}
 
+	/*
+	 * WikiaMobile skin has its own getTopScripts
+	 * MobileWikiaSkin::getTopScripts
+	 *
+	 */
 	public function getTopScripts() {
 		$scripts = '';
 		$vars = array(
@@ -184,11 +189,16 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		$this->wf->runHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
 
-		$scriptModules = array();
+		$scriptModules = array('amd');
 		$this->wf->runHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
 		if ( !empty($scriptModules) ) {
-			$scripts .= "<script>window.mw || ( window.mw = { loader: { state: function() {} } } );</script>";
-			$scripts .= ResourceLoader::makeCustomLink( $this->wg->out, $scriptModules, 'scripts' );
+			// Mocking mw.loader.state so the script can be loaded up high
+			// Whatever is passed to mw.loader.state is saved to window.preMwLdrSt
+			// Once the real mw.loader.state is available this variable will be passed to it
+			$scripts .= Html::inlineScript('window.mw||(mw={fk:1,loader:{state:function(s){preMwLdrSt=s}}});') . "\n";
+			$scripts .= ResourceLoader::makeCustomLink($this->wg->out, $scriptModules, 'scripts') . "\n";
+			// Replacing mw with the original function
+			$scripts .= Html::inlineScript('window.mw.fk&&delete mw;') . "\n";
 		}
 
 		return self::makeInlineVariablesScript($vars) . $scripts;

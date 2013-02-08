@@ -1,25 +1,27 @@
 /* global wgNamespaceIds, wgFormattedNamespaces, mw, wgServer, wgScript */
 $(function(){
-	'use strict';
+	require(['wikia.window', 'jquery', 'wikia.nirvana', 'JSMessages'], function(window, $, nirvana, msg){
+		'use strict';
 
-	//be sure this module is ready to be used
-	mw.loader.using('jquery.autocomplete', function(){
 		var d = document,
-			add = d.getElementById('addCategory'),
-			save = d.getElementById('save'),
+			category = mw.config.get('categoryTemplate'),
+			tag = mw.config.get('tagTemplate'),
+			duplicateError = msg('wikiagameguides-content-duplicate-entry'),
+			requiredError = msg('wikiagameguides-content-required-entry'),
+			emptyTagError = msg('wikiagameguides-content-empty-tag'),
+			categoryError = msg('wikiagameguides-content-category-error'),
+			addCategory = d.getElementById('addCategory'),
+			addTag = d.getElementById('addTag'),
+			$save = $(d.getElementById('save')),
 			form = d.getElementById('contentManagmentForm'),
 			$form = $(form),
-			status = d.getElementById('status'),
 			ul = form.getElementsByTagName('ul')[0],
+			$ul = $(ul),
 			//it looks better if we display in input category name without Category:
-			categoryId = window.wgNamespaceIds.category,
-			categoryName = window.wgFormattedNamespaces[categoryId] + ':',
-			//prepare html to be injected in ul
-			row = '<li><input class=category placeholder="' + $.msg('wikiagameguides-content-category') + '" /><input class=tag placeholder="' + $.msg('wikiagameguides-content-tag') + '" /><input class=name placeholder="' + $.msg('wikiagameguides-content-name') + '" /><button class="remove secondary">X</button></li>',
-			//list of all tags, so we can suggest them to a user
-			tags = [],
-			setup = function(last){
-				$form.find('.category' + (last ? ':last': '')).autocomplete({
+			categoryId = wgNamespaceIds.category,
+			categoryName = wgFormattedNamespaces[categoryId] + ':',
+			setup = function(elem){
+				(elem || $ul.find('.cat-input')).autocomplete({
 					serviceUrl: wgServer + wgScript,
 					params: {
 						action: 'ajax',
@@ -29,7 +31,7 @@ $(function(){
 					},
 					appendTo: form,
 					onSelect: function(){
-						$form.find('input:focus').next().focus();
+						$ul.find('input:focus').next().focus();
 					},
 					fnPreprocessResults: function(data){
 						var suggestions = data.suggestions,
@@ -51,153 +53,277 @@ $(function(){
 						data.suggestions = suggestions;
 						return data;
 					},
-					deferRequestBy: 100,
+					deferRequestBy: 50,
 					minLength: 3,
-					zIndex: 9999,
-					width: 200,
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
+			},
+			addNew = function(row, elem){
+				var cat;
 
-				$form.find('.tag' + (last ? ':last' : '')).autocomplete({
-					lookup: tags,
-					appendTo: form,
-					onSelect: function(){
-						$form.find('input:focus').next().focus();
-					},
-					zIndex: 9999,
-					width: 200,
-					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
-				});
+				if(elem) {
+					elem.after(row);
+					cat = elem.next().find('.cat-input');
+				}else{
+					$ul.append(row);
+					cat = $ul.find('.cat-input:last');
+				}
 
-				$form.find('.name' + (last ? ':last' : '')).on('keydown', function(ev){
-					if(ev.keyCode === 13) addNew();
-				});
+				setup(cat);
+				cat.focus();
+
+				$ul.sortable('refresh');
 			},
-			addNew = function(){
-				ul.insertAdjacentHTML('beforeend', row);
-				setup(true);
-				$(ul).find('.category').last().focus();
-			},
-			grabTags = function(){
-				tags.length = 0;
-				$('.tag').each(function(){
-					var val = this.value;
-					if(val && tags.indexOf(val) === -1) tags.push(val);
-				});
-			},
-			findDuplicates = function(elements){
+			checkInputs = function(elements, checkEmpty, required){
 				var names = [];
 
 				elements.each(function(){
-					var val = this.value;
-					if(names.indexOf(val) === -1) {
+					var val = this.value,
+						$this = $(this);
+
+					if(required && val === '') {
+						$this
+							.addClass('error')
+							.popover('destroy')
+							.popover({
+								content: requiredError
+							});
+					} else if(!~names.indexOf(val)) {
 						names.push(val);
-						this.className = this.className.replace(' error', '');
-						$(this).popover('destroy');
-					}else if(val !== ''){
-						$(this).popover('destroy').popover({
-							content: $.msg('wikiagameguides-content-duplicate-entry')
-						});
-						if(this.className.indexOf('error') === -1) this.className += ' error';
+
+						$this
+							.removeClass('error')
+							.popover('destroy');
+
+					}else if(checkEmpty || val !== ''){
+						$this
+							.addClass('error')
+							.popover('destroy')
+							.popover({
+								content: duplicateError
+							});
 					}
 				});
 			},
-			checkSave = function(){
+			checkForm = function(){
+
+				$save.removeClass();
+
+				checkInputs($ul.find('.tag-input'), true);
+				checkInputs($ul.find('.cat-input'), true, true);
+
+				$ul.find('.tag').each(function(){
+					var $t = $(this),
+						$categories = $t.nextUntil('.tag');
+
+					if($categories.length === 0) {
+						$t.find('.tag-input')
+							.addClass('error')
+							.popover('destroy')
+							.popover({
+								content: emptyTagError
+							});
+					}else {
+						checkInputs($categories.find('.name'))
+					}
+				});
+
 				if(d.getElementsByClassName('error').length > 0){
-					save.setAttribute('disabled', '');
+					$save.attr('disabled', true);
+					return false;
 				}else{
-					save.removeAttribute('disabled');
+					$save.attr('disabled', false);
+					return true;
 				}
 			};
 
 		$form
-			.on('focus', '.category, .name', function(){
-				this.className = this.className.replace(' error', '');
+			.on('focus', 'input', function(){
+				checkForm();
 			})
 			.on('click', '.remove', function(){
 				ul.removeChild(this.parentElement);
+				checkForm();
 			})
-			.on('blur', '.tag', function(){
-				grabTags();
-			})
-			.on('blur', '.category', function(){
-				this.value = $.trim(this.value).replace(/ /g, '_');
+			.on('blur', 'input', function(){
+				var val = $.trim(this.value);
 
-				findDuplicates($form.find('.category'));
-
-				checkSave();
-			})
-			.on('blur', '.name', function(){
-				var tag,
-					i = 0;
-
-				this.value = $.trim(this.value);
-
-				while(tag = tags[i++]) {
-					findDuplicates($('.tag[value="' + tag + '"] ~ input'));
+				if(this.className == 'cat-input') {
+					val = val.replace(/ /g, '_');
 				}
 
-				checkSave();
+				this.value = val;
+
+				checkForm();
+			})
+			.on('keypress', '.name', function(ev){
+				if(ev.keyCode === 13) addNew(category, $(this).parent());
+			})
+			.on('keypress', '.cat-input, .tag-input', function(ev){
+				if(ev.keyCode === 13) $(this).next().focus();
 			});
 
-		add.addEventListener('click', addNew);
-
-		save.addEventListener('click', function(){
-			var categories = form.getElementsByTagName('li'),
-				length = categories.length,
-				cat = {},
-				i = 0;
-
-			for(; i < length; i++){
-				var category = categories[i],
-					children = category.children,
-					catName = children[0].value;
-
-				if(catName){
-					cat[catName] = {
-						tag: children[1].value,
-						name: children[2].value
-					};
-				}
-			}
-
-			status.className = '';
-
-			$.nirvana.sendRequest({
-				controller: 'GameGuidesSpecialContent',
-				method: 'save',
-				data: {
-					categories: cat
-				},
-				callback: function(data){
-					if(data.error) {
-						var err = data.error,
-							i = err.length,
-							categories = $form.find('.category');
-
-						while(i--){
-							categories.each(function(){
-								if(this.value === err[i]){
-									$(this).popover('destroy').popover({
-										content: $.msg('wikiagameguides-content-category-error')
-									});
-									if(this.className.indexOf('error') === -1) this.className += ' error';
-									return false;
-								}
-								return true;
-							});
-						}
-					}else if(data.status){
-						status.className = 'ok';
-						setTimeout(function(){
-							status.className = '';
-						},5000);
-					}
-				}
-			});
+		$(addCategory).on('click', function(){
+			addNew(category);
 		});
 
-		grabTags();
-		setup();
+		$(addTag).on('click', function(){
+			addNew(tag);
+		});
+
+		function getData(li) {
+			li = $(li);
+
+			return {
+				title: li.find('.cat-input').val(),
+				label: li.find('.name').val(),
+				image_id: li.find('.image').data('id') || 0
+			}
+		}
+
+		$save.on('click', function(){
+			var data = [],
+				nonames = [],
+				nonameId = 0;
+
+			if(checkForm()) {
+				$ul.find('.category:not(.tag ~ .category)').each(function(){
+					nonames.push(getData(this));
+				});
+
+				$ul.find('.tag').each(function(){
+					var $t = $(this),
+						name = $t.find('.tag-input').val(),
+						imageId = $t.find('.image').data('id') || 0,
+						categories = [];
+
+					$t.nextUntil('.tag').each(function(){
+						(name ? categories : nonames).push(getData(this));
+					});
+
+					if(name) {
+						data.push({
+							title: name,
+							image_id: imageId,
+							categories: categories
+						});
+					}else{
+						nonameId = imageId;
+					}
+				});
+
+				if(nonames.length > 0) {
+					data.push({
+						title: '',
+						image_id: nonameId || 0,
+						categories: nonames
+					});
+				}
+
+				$save.removeClass();
+
+				nirvana.sendRequest({
+					controller: 'GameGuidesSpecialContent',
+					method: 'save',
+					data: {
+						tags: data
+					}
+				}).done(
+					function(data){
+						if(data.error) {
+							var err = data.error,
+								i = err.length,
+								categories = $form.find('.cat-input');
+
+							while(i--){
+								//I cannot use value CSS selector as I want to use current value
+								categories.each(function(){
+									if(this.value === err[i]){
+										$(this)
+											.addClass('error')
+											.popover('destroy')
+											.popover({
+												content: categoryError
+											});
+
+										return false;
+									}
+									return true;
+								});
+							}
+
+							$save.addClass('err');
+							$save.attr('disabled', true);
+						}else if(data.status){
+							$save.addClass('ok');
+						}
+				}).fail(
+					function(){
+						$save.addClass('err');
+					}
+				);
+			}
+		});
+
+		//be sure modules are ready to be used
+		mw.loader.using(['jquery.autocomplete', 'jquery.ui.sortable', 'wikia.aim', 'wikia.yui'], function(){
+			var $currentImage;
+
+			function onFail(){
+				$currentImage
+					.css( 'backgroundImage', '' )
+					.data('id', 0);
+
+				$currentImage.stopThrobbing();
+			}
+
+			$(window).bind('WMU_addFromSpecialPage', function(event, wmuData) {
+				var imgTitle = wmuData.imageTitle;
+
+				$currentImage.startThrobbing()
+
+				nirvana.getJson(
+					'GameGuidesSpecialContent',
+					'getImage',
+					{
+						file: imgTitle
+					}
+				).done(
+					function(data){
+						if(data.url && data.id) {
+							$currentImage
+								.css( 'backgroundImage', 'url(' + data.url + ')' )
+								.data('id', data.id);
+
+							$currentImage.stopThrobbing();
+						} else {
+							onFail();
+						}
+					}
+				).fail(onFail);
+			});
+
+			$form.on('click', '.photo, .image', function(){
+				$currentImage = $(this).parent().find('.image');
+
+				window.WMU_skipDetails = true;
+				window.WMU_show();
+				window.WMU_openedInEditor = false;
+			});
+
+			$ul.sortable({
+				opacity: 0.5,
+				axis: 'y',
+				containment: '#contentManagmentForm',
+				cursor: 'move',
+				handle: '.drag',
+				placeholder: 'drop',
+				update: function(){
+					checkForm();
+				}
+			});
+
+			setup();
+		});
 	});
 });

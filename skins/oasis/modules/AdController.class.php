@@ -7,7 +7,7 @@ class AdController extends WikiaController {
 	private static $slotsDisplayShinyAdSelfServe = array( 'CORP_TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'TEST_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD' );
 
 	private function configure() {
-		global $wgTitle, $wgContentNamespaces, $wgEnableFAST_HOME2, $wgEnableCorporatePageExt, $wgExtraNamespaces;
+		global $wgTitle, $wgContentNamespaces, $wgEnableFAST_HOME2, $wgExtraNamespaces;
 
 		self::$config = array();
 
@@ -21,24 +21,12 @@ class AdController extends WikiaController {
 			self::$config['INVISIBLE_2'] = true;
 			return;
 		}
-		// Ads on corporate hub pages only
-		elseif($wgEnableCorporatePageExt) {
-			if (BodyController::isHubPage()) {
-				self::$config['CORP_TOP_LEADERBOARD'] = true;
-				self::$config['CORP_TOP_RIGHT_BOXAD'] = true;
-				self::$config['TOP_BUTTON'] = true;
-				self::$config['TOP_BUTTON_WIDE'] = true;
-			}
-			elseif (WikiaPageType::isSearch()) {
-				if (!empty($this->wg->EnableWikiaSearchAds)) {
-					// no regular ads if search ads are enabled
-				} else {
-					self::$config['TOP_LEADERBOARD'] = true;
-					self::$config['TOP_RIGHT_BOXAD'] = true;
-					self::$config['TOP_BUTTON'] = true;
-					self::$config['TOP_BUTTON_WIDE'] = true;
-				}
-			}
+
+		if ($this->wg->EnableCorporatePageExt) {
+			self::$config['TOP_LEADERBOARD'] = true;
+			self::$config['TOP_RIGHT_BOXAD'] = true;
+			self::$config['CORP_TOP_LEADERBOARD'] = true;
+			self::$config['CORP_TOP_RIGHT_BOXAD'] = true;
 			return;
 		}
 

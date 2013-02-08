@@ -276,17 +276,6 @@ $color-related-videos-background: darken($color-page, 20%);
 	float: right;
 }
 
-#add-video-modal {
-
-  .RVSuggestPreviewVideo .preview_video { float:left; width:65%; }
-  .RVSuggestPreviewVideo .preview_options { float:left; width:30%; }
-  .RVSuggestPreviewVideo .preview_options a { display:block; margin-bottom:15px; }
-  .RVSuggestPreviewVideo a.insert { font-weight: bold; }
-
-    button.relatedVideosConfirm { height: 24px }
-
-}
-
 #relatedvideos-video-player {
 	section.modalContent {
 		margin-top: 0px;
@@ -539,21 +528,6 @@ $color-related-videos-background: darken($color-page, 20%);
 		.seeMorePlaceholder {
 			display: none;
 		}
-	}
-	
-	// temporary video survey code bugid-68723
-	.video-survey {
-		a {
-			border-top: 1px solid $color-page-border;
-			display: block;
-			margin-top: 15px;
-			padding: 15px 0 0;
-			text-align: center;
-		}
-		span {
-			display: none;
-		}
-	}
-
+	}	
 }
 

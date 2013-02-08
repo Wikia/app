@@ -67,9 +67,10 @@
 			sendRequest: sendRequest,
 			getJson: function(controller, method, data, callback, onErrorCallback) {
 				if(typeof data == 'function') {
-					data = {};
-					callback = data;
+					// callback is in data slot, shift parameters
 					onErrorCallback = callback;
+					callback = data;
+					data = {};
 				}
 				return sendRequest({
 					controller: controller,
@@ -82,9 +83,10 @@
 			},
 			postJson: function (controller, method, data, callback, onErrorCallback) {
 				if(typeof data == 'function') {
-					data = {};
-					callback = data;
+					// callback is in data slot, shift parameters
 					onErrorCallback = callback;
+					callback = data;
+					data = {};
 				}
 				return sendRequest({
 					controller: controller,
