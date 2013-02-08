@@ -1061,3 +1061,21 @@ $wgEnableQuickToolsExt = true;
  * Use phalanx external service
  */
 $wgPhalanxService = false;
+
+/**
+ * @name $wgWikiaHubsFileRepoDBName
+ * DB name of wiki that contains images for WikiaHubs
+ */
+$wgWikiaHubsFileRepoDBName = 'wikia';
+
+/**
+ * @name $wgWikiaHubsFileRepoPath
+ * URL prefix for the wiki with hubs images
+ */
+$wgWikiaHubsFileRepoPath = 'http://community.wikia.com/';
+
+/**
+ * @name $wgWikiaHubsFileRepoDirectory
+ * filesystem path for hubs' images
+ */
+$wgWikiaHubsFileRepoDirectory = '/images/c/central/';
