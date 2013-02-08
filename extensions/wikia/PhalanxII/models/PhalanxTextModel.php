@@ -1,5 +1,5 @@
 <?php
-class PhalanxBlockModel extends PhalanxModel {
+class PhalanxTextModel extends PhalanxModel {
 	public function __construct( $text, $id = 0 ) {
 		parent::__construct( __CLASS__, array( 'text' => $text, 'id' => $id ) );
 	}

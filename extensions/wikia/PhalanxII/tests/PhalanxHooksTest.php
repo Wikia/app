@@ -8,6 +8,9 @@ class PhalanxHooksTest extends WikiaBaseTest {
 	
 	const VALID_TITLE = 'This_is_good_article';
 	const INVALID_TITLE = 'Porn_article';
+	
+	const VALID_WIKIA_NAME = 'Szumo';
+	const INVALID_WIKIA_NAME = 'Pornology';
 
 	/***
 	 * setup tests
@@ -291,6 +294,35 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		$this->assertEquals( $result, $ret );	
 	}
 	
+	/* PhalanxWikiCreationBlock */
+	 
+	/* isAllowedText method */
+	/**
+	 * @dataProvider phalanxWikiCreationBlockDataProvider
+	 */
+	public function testPhalanxWikiCreationIsAllowedText( $text, $block, $isOk, $result ) {
+		// PhalanxTextModel 
+		$modelMock = $this->getMock( 'PhalanxTextModel', array('match', 'isOk'), array( $text, '', '' ) );
+		$modelMock
+			->expects( $this->once() )
+			->method( 'isOk' )
+			->will( $this->returnValue( $isOk ) );
+			
+		$modelMock
+			->expects( $this->any() )
+			->method( 'match' )
+			->will( $this->returnValue( $block ) );
+
+		$this->proxyClass( 'PhalanxTextModel', $modelMock );
+		$this->mockClass('PhalanxTextModel', $modelMock );
+	
+		// AnswersBlock
+		$hook = new PhalanxWikiCreationBlock();
+		$ret = (int) $hook->isAllowedText( $text );
+		
+		$this->assertEquals( $result, $ret );	
+	}
+	
 	/* data providers */
 	public function phalanxUserBlockDataProvider() {
 		/* valid user */
@@ -390,5 +422,43 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		);
 		
 		return array( $validTitle, $invalidTitle );
+	}
+	
+	public function phalanxWikiCreationBlockDataProvider() {
+		/* valid text */
+		$validWiki = array(
+			'text'		=> self::VALID_WIKIA_NAME,
+			'block'     => 0,
+			'isOk'      => 0,
+			'result'    => 1,
+		);
+	
+		/* invalid text */
+		$invalidWiki = array(
+			'title'		=> self::INVALID_WIKIA_NAME,
+			'block'     => (object) array(
+				'regex' => 0,
+				'expires' => '',
+				'text' => self::INVALID_WIKIA_NAME,
+				'reason' => 'Test wiki creation block',
+				'exact' => '',
+				'caseSensitive' => '', 
+				'id' => 4013,
+				'language' => 'en', 
+				'authorId' => 184532,
+			),
+			'isOk'      => 0,
+			'result'    => 0,
+		);
+		
+		/* empty text */
+		$invalidWiki = array(
+			'text'		=> '',
+			'block'     => 0,
+			'isOk'      => 1,
+			'result'    => 1,
+		);
+		
+		return array( $validWiki, $invalidWiki );
 	}
 }
