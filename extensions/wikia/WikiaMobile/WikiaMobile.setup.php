@@ -145,6 +145,7 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'wgSitename',
 			'wgCookieDomain',
 			'wgCookiePath',
+			'wgDisableAnonymousEditing',
 
 			//article
 			'wgArticlePath',
@@ -154,6 +155,7 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'wgCanonicalSpecialPageName',
 			'wgPageName',
 			'wgTitle',
+			'wgRevisionId',
 
 			//user
 			'wgUserName',
@@ -165,6 +167,7 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'wgMessages',
 			'wgJSMessagesCB',
 			'wgTrackID',
+			'wgCookiePrefix',
 
 			//skin
 			'skin'
