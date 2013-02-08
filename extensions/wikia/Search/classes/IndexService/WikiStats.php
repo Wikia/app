@@ -19,9 +19,7 @@ class WikiStats extends AbstractWikiService
 	protected $result = array();
 
     /**
-	 * Access the promo text for a given wiki and set it in the document
-	 * @todo these need to be updated any time one of these values change for a wiki. could get dicey. will def need atomic update.
-	 * @param int $wid the wiki id
+	 * Access statistics for a given wiki and set it in the document
 	 * @return array containing result data
 	 */
 	public function execute() {
