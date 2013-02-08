@@ -5,7 +5,7 @@ class EditPageLayoutAjax {
 	/**
 	 * Perform reverse parsing on given HTML (when needed)
 	 */
-	static private function resolveWikitext($content, $mode, $page, $method, $section ) {
+	static private function resolveWikitext( $content, $mode, $page, $method, $section ) {
 		global $wgRequest, $wgTitle, $wgOut;
 		wfProfileIn(__METHOD__);
 		if($wgTitle && class_exists($page)) {
@@ -32,7 +32,7 @@ class EditPageLayoutAjax {
 
 						// allow extensions to modify preview (BugId:6721)
 						wfRunHooks('EditPageLayoutModifyPreview', array($wgTitle, &$html, $wikitext));
-						
+
 						/**
 						 * bugid: 11407
 						 * Provide an appropriate preview for a redirect, based on wikitext, not revision.
