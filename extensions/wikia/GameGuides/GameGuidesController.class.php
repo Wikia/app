@@ -499,10 +499,10 @@ class GameGuidesController extends WikiaController {
 			array_reduce(
 				$content,
 				function( $ret, $item ) {
-					if( $item['title'] !== '' && isset( $item['image_id'] ) ) {
+					if( $item['title'] !== '' ) {
 						$ret[] = array(
 							'title' => $item['title'],
-							'image_id' => $item['image_id']
+							'image_id' => isset( $item['image_id'] ) ? $item['image_id'] : 0
 						);
 					}
 
