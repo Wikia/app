@@ -12,7 +12,6 @@
 
 class CategorySelect {
 	private static $categories;
-	private static $categoryTypes;
 	private static $data;
 	private static $frame;
 	private static $isEditable;
@@ -134,10 +133,11 @@ class CategorySelect {
 		return self::$data;
 	}
 
-	public static function getCategoryTypes() {
-		return self::$categoryTypes;
-	}
-
+	/**
+	 * Extracts category tags from wikitext and returns a hash of the categories
+	 * and the wikitext with categories removed. If wikitext is not provided, it will
+	 * attempt to pull it from the current article.
+	 */
 	public static function getExtractedCategoryData( $wikitext = '', $force = false ) {
 		if ( !isset( self::$data ) ) {
 
@@ -308,14 +308,6 @@ class CategorySelect {
 		wfProfileOut( __METHOD__ );
 
 		return self::$isEnabled;
-	}
-
-	/**
-	 * Sets the type associated with categories (either "normal" or "hidden").
-	 * This function is called from a hook for view pages only.
-	 */
-	public static function setCategoryTypes( $categoryTypes ) {
-		self::$categoryTypes = $categoryTypes;
 	}
 
 	private static function parseNode(&$root, $outerTag = '') {
