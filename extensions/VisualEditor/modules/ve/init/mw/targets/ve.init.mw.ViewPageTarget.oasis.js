@@ -31,6 +31,10 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	} );
 
 	// Properties
+	this.track = window.WikiaTracker.buildTrackingFunction({
+		'category': 'visual-editor',
+		'trackingMethod': 'both'
+	});
 	this.currentUri = currentUri;
 	this.isViewPage = (
 		mw.config.get( 'wgAction' ) === 'view' &&
@@ -962,11 +966,6 @@ ve.init.mw.ViewPageTarget.prototype.onLoadError = function ( response, status ) 
 ve.init.mw.ViewPageTarget.prototype.hideSpinner = function () {
 	// Not implemented yet
 };
-
-ve.init.mw.ViewPageTarget.prototype.track = window.WikiaTracker.buildTrackingFunction({
-	category: 'visual-editor',
-	trackingMethod: 'both'
-});
 
 /* Initialization */
 
