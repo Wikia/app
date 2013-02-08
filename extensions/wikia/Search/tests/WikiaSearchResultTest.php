@@ -327,7 +327,7 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 			->will		( $this->returnValue( $mockThumb ) )
 		;
 
-		$this->mockGlobalFunction( 'findFile', $mockImage, 1, array( $titleMock ) );
+		$this->mockGlobalFunction( 'findFile', $mockImage, 1, array( $this->equalTo($titleMock) ) );
 		$this->mockClass( 'Title', $titleMock );
 		$this->mockClass( 'MediaTransformOutput', $mockMTO );
 		$this->mockClass( 'File', $mockImage );
@@ -423,5 +423,100 @@ class WikiaSearchResultTest extends WikiaSearchBaseTest {
 				'WikiaSearchResult::getTitleObject should set the titleObject property if a title string can be found and a title object instantiated'
 		);
 		
+	}
+
+	/**
+	 * @covers WikiaSearchResult::getVideoViews
+	 */
+	public function testGetVideoViewsNotVideo() {
+		$result = $this->getMockBuilder( 'WikiaSearchResult' )
+						->setMethods( array( 'getTitleObject', 'offsetGet' ) )
+						->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		
+		$mockFileHelper = $this->getMockBuilder( 'WikiaFileHelper' )
+		                        ->disableOriginalConstructor()
+		                       ->setMethods( array( 'isFileTypeVideo' ) )
+		                       ->getMock();
+		
+		$result
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getTitleObject' )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockFileHelper
+		    ->staticExpects( $this->at( 0 ) )
+		    ->method       ( 'isFileTypeVideo' )
+		    ->with         ( $mockTitle )
+		    ->will         ( $this->returnValue( false ) )
+		;
+		
+		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
+		$this->mockApp();
+		
+		$this->assertEmpty(
+				$result->getVideoViews(),
+				'WikiaSearchResult::getVideoViews() should return an empty string if the file result is an not a video file'
+		);
+	}
+	
+    /**
+	 * @covers WikiaSearchResult::getVideoViews
+	 */
+	public function testGetVideoViewsVideo() {
+		$result = $this->getMockBuilder( 'WikiaSearchResult' )
+						->setMethods( array( 'getTitleObject', 'offsetGet' ) )
+						->getMock();
+		
+		$mockTitle = $this->getMockBuilder( 'Title' )
+		                  ->setMethods( array( 'getDBKey' ) )
+		                  ->disableOriginalConstructor()
+		                  ->getMock();
+		
+		$mockFileHelper = $this->getMockBuilder( 'WikiaFileHelper' )
+		                        ->disableOriginalConstructor()
+		                       ->setMethods( array( 'isFileTypeVideo' ) )
+		                       ->getMock();
+		
+		$mockMqs = $this->getMockBuilder( 'MediaQueryService' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'getTotalVideoViewsByTitle' ) )
+		                ->getMock();
+		
+		$result
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getTitleObject' )
+		    ->will   ( $this->returnValue( $mockTitle ) )
+		;
+		$mockFileHelper
+		    ->staticExpects( $this->at( 0 ) )
+		    ->method       ( 'isFileTypeVideo' )
+		    ->with         ( $mockTitle )
+		    ->will         ( $this->returnValue( true ) )
+		;
+		$mockTitle
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getDBKey' )
+		    ->will   ( $this->returnValue( 'dbKey' ) )
+		;
+		$mockMqs
+		    ->staticExpects( $this->at( 0 ) )
+		    ->method       ( 'getTotalVideoViewsByTitle' )
+		    ->with         ( 'dbKey' )
+		    ->will         ( $this->returnValue( 25 ) )
+		;
+		$this->mockClass( 'WikiaFileHelper', $mockFileHelper );
+		$this->mockClass( 'MediaQueryService', $mockMqs );
+		$this->mockApp();
+		
+		// @todo mock up the translation part
+		$this->assertEquals(
+				'25 views',
+				$result->getVideoViews(),
+				'WikiaSearchResult::getVideoViews() should return a translated string containing the value of the video views'
+		);
 	}
 }

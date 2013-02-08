@@ -276,17 +276,6 @@ $color-related-videos-background: darken($color-page, 20%);
 	float: right;
 }
 
-#add-video-modal {
-
-  .RVSuggestPreviewVideo .preview_video { float:left; width:65%; }
-  .RVSuggestPreviewVideo .preview_options { float:left; width:30%; }
-  .RVSuggestPreviewVideo .preview_options a { display:block; margin-bottom:15px; }
-  .RVSuggestPreviewVideo a.insert { font-weight: bold; }
-
-    button.relatedVideosConfirm { height: 24px }
-
-}
-
 #relatedvideos-video-player {
 	section.modalContent {
 		margin-top: 0px;
@@ -361,14 +350,14 @@ $color-related-videos-background: darken($color-page, 20%);
 			.wrapper {
 				width: 298px;
 				position: static;
-				left: 0;
+				margin: 5px 0;
 				div.item {
 					@include clearfix;
 					display: block;
 					float: none;
 					width: auto;
 					height: 90px;
-					padding: 5px 0;
+					padding: 0;
 					margin: 0 0 15px 0;
 					.new {
 						top: 14px;
@@ -376,7 +365,7 @@ $color-related-videos-background: darken($color-page, 20%);
 					.video-thumbnail {
 						display: block;
 						float: left;
-						margin-right: 10px;
+						margin-right: 12px;
 						width: 150px;
 						.playButton {
 							width: 150px;
@@ -386,10 +375,15 @@ $color-related-videos-background: darken($color-page, 20%);
 						display: block;
 						float: left;
 						max-height: 80px;
-						width: 118px;
+						width: 135px;
 						padding-top: 2px;
 						font-size: 11px;
 						margin: 0;
+						
+						// Video title next to thumbnail
+						a {
+							font-size: 12px;
+						}
 					}
 					.see-more-videos-placeholder {
 						background: $color-see-more-videos-placeholder;
@@ -534,21 +528,6 @@ $color-related-videos-background: darken($color-page, 20%);
 		.seeMorePlaceholder {
 			display: none;
 		}
-	}
-	
-	// temporary video survey code bugid-68723
-	.video-survey {
-		a {
-			border-top: 1px solid $color-page-border;
-			display: block;
-			margin-top: 15px;
-			padding: 15px 0 0;
-			text-align: center;
-		}
-		span {
-			display: none;
-		}
-	}
-
+	}	
 }
 

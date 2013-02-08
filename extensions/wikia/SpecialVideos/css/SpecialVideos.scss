@@ -15,6 +15,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 
 .addVideo {
 	margin-top: 2px;
+	position: relative;
 	vertical-align: top;
 	img.sprite {
 		background-color: transparent;
@@ -98,13 +99,3 @@ $placeholder-bg-color: darken($color-page, 10%);
 .messageHolder {
 	display: none;
 }
-
-// temporary video survey code bugid-68723
-.video-survey {
-	float: left;
-	margin-left: 15px;
-	span {
-		display: none;
-	}
-}
-

@@ -455,8 +455,8 @@ abstract class Skin extends ContextSource {
 			$msg = $this->msg( 'pagecategories', count( $allCats['normal'] ) )->escaped();
 			$linkPage = wfMessage( 'pagecategorieslink' )->inContentLanguage()->text();
 			$s .= '<div id="mw-normal-catlinks" class="mw-normal-catlinks">' .
-				Linker::link( Title::newFromText( $linkPage ), $msg, $attribs /* Wikia change */ )
-				. $colon . '<ul>' . $t . '</ul>' . '</div>';
+				Linker::link( Title::newFromText( $linkPage ), $msg, $attribs /* Wikia change */ ) .
+				$colon . '<ul>' . $t . '</ul>' . '</div>';
 		}
 
 		# Hidden categories

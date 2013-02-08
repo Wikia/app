@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2001-2013, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,9 @@
  * @package    PHPUnit
  * @subpackage Framework_Constraint
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @author     Bernhard Schussek <bschussek@2bepublished.at>
+ * @copyright  2001-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 3.5.0
  */
@@ -49,9 +50,9 @@
  * @package    PHPUnit
  * @subpackage Framework_Constraint
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 3.5.0
+ * @author     Bernhard Schussek <bschussek@2bepublished.at>
+ * @copyright  2001-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.5.0
  */
@@ -67,8 +68,37 @@ class PHPUnit_Framework_Constraint_StringMatches extends PHPUnit_Framework_Const
      */
     public function __construct($string)
     {
-        $this->pattern = preg_quote(preg_replace('/\r\n/', "\n", $string), '/');
-        $this->pattern = str_replace(
+        $this->pattern = $this->createPatternFromFormat(
+            preg_replace('/\r\n/', "\n", $string)
+        );
+        $this->string  = $string;
+    }
+
+    protected function failureDescription($other)
+    {
+        return "format description matches text";
+    }
+
+    protected function additionalFailureDescription($other)
+    {
+        $from = preg_split('(\r\n|\r|\n)', $this->string);
+        $to = preg_split('(\r\n|\r|\n)', $other);
+        foreach ($from as $index => $line) {
+            if (isset($to[$index]) && $line !== $to[$index]) {
+                $line = $this->createPatternFromFormat($line);
+                if (preg_match($line, $to[$index]) > 0) {
+                    $from[$index] = $to[$index];
+                }
+            }
+        }
+        $this->string = join("\n", $from);
+        $other = join("\n", $to);
+        return PHPUnit_Util_Diff::diff($this->string, $other);
+    }
+
+    protected function createPatternFromFormat($string)
+    {
+        $string = str_replace(
           array(
             '%e',
             '%s',
@@ -95,46 +125,10 @@ class PHPUnit_Framework_Constraint_StringMatches extends PHPUnit_Framework_Const
             '[+-]?\.?\d+\.?\d*(?:[Ee][+-]?\d+)?',
             '.'
           ),
-          $this->pattern
+          preg_quote($string, '/')
         );
-
-        $this->pattern = '/^' . $this->pattern . '$/s';
-        $this->string  = $string;
+        return '/^' . $string . '$/s';
     }
 
-    /**
-     * Creates the appropriate exception for the constraint which can be caught
-     * by the unit test system. This can be called if a call to evaluate()
-     * fails.
-     *
-     * @param   mixed   $other The value passed to evaluate() which failed the
-     *                         constraint check.
-     * @param   string  $description A string with extra description of what was
-     *                               going on while the evaluation failed.
-     * @param   boolean $not Flag to indicate negation.
-     * @throws  PHPUnit_Framework_ExpectationFailedException
-     */
-    public function fail($other, $description, $not = FALSE)
-    {
-        $failureDescription = $this->failureDescription(
-          $other,
-          $description,
-          $not
-        );
-
-        if (!$not) {
-            throw new PHPUnit_Framework_ExpectationFailedException(
-              $failureDescription,
-              PHPUnit_Framework_ComparisonFailure::diffEqual(
-                $this->string, $other
-              ),
-              $description
-            );
-        } else {
-            throw new PHPUnit_Framework_ExpectationFailedException(
-              $failureDescription,
-              NULL
-            );
-        }
-    }
 }
+

@@ -9,35 +9,35 @@
 
 	PhantomReporter.prototype = {
 		//runner
-		reportRunnerResults : function(runner) {
-			this.log(JSON.stringify({
+		reportRunnerResults: function(runner) {
+			this.log({
 				command: 'PHANTOM_EXIT'
-			}));
+			});
 		},
 
 		//suite
 		reportSuiteStarting: function(suite){
-			this.log(JSON.stringify({
+			this.log({
 				command: 'startSuite',
 				name: suite.description
-			}));
+			});
 		},
 
-		reportSuiteResults : function(suite) {
-			this.log(JSON.stringify({
+		reportSuiteResults: function(suite) {
+			this.log({
 				command: 'stopSuite'
-			}));
+			});
 		},
 
 		//test
-		reportSpecStarting : function(spec) {
-			this.log(JSON.stringify({
+		reportSpecStarting: function(spec) {
+			this.log({
 				command: 'startTest',
 				name: spec.description
-			}));
+			});
 		},
 
-		reportSpecResults : function(spec) {
+		reportSpecResults: function(spec) {
 			var result = spec.results(),
 				items = result.getItems(),
 				l = items.length,
@@ -49,19 +49,17 @@
 				msg.push(items[i].message);
 			}
 
-			this.log(JSON.stringify({
+			this.log({
 				command: 'stopTest',
 				status: result.passed() ? 'SUCCESS' : 'FAILURE',
 				assertions: result.totalCount,
 				messages: msg.join('\n')
-			}));
-
+			});
 		},
 
 		//log
-
-		log : function(str) {
-			this.console.log(str);
+		log: function(data) {
+			window.callPhantom(data);
 		}
 	};
 

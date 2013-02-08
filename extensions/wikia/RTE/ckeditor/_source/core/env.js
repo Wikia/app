@@ -140,6 +140,10 @@ if ( !CKEDITOR.env )
 		{
 			version = parseFloat( agent.match( /msie (\d+)/ )[1] );
 
+			// Wikia change - start (bugid:94726)
+			env.ieVersion == version;
+			// Wikia change - end
+			
 			/**
 			 * Indicates that CKEditor is running on Internet Explorer 8.
 			 * @name CKEDITOR.env.ie8

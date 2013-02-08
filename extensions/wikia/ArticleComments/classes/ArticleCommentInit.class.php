@@ -362,4 +362,51 @@ class ArticleCommentInit {
 
 		return true;
 	}
+
+	public static function onFilePageImageUsageSingleLink( &$link, &$element ) {
+		$app = F::app();
+
+		$ns = $element->page_namespace;
+
+		//comments and talk pages
+		if ( $ns == NS_TALK ) {
+			$title = Title::newFromText( $element->page_title, $ns );
+
+			if( !empty( $title ) ) {
+				$parentTitle = reset( explode( '/', $element->page_title) ); // getBaseText returns me parent comment for subcomment
+
+				$link = $app->wf->MsgExt(
+					'article-comments-file-page',
+					array ('parsemag'),
+					$title->getLocalURL(),
+					User::newFromId( Revision::newFromId( $title->getLatestRevID() )->getUser() )->getName(),
+					Title::newFromText( $parentTitle )->getLocalURL(),
+					$parentTitle
+				);
+			}
+
+		//comments on blog posts
+		} else if ( $ns == NS_BLOG_ARTICLE_TALK ) {
+			$blogPostComment = Title::newFromText( $element->page_title, $ns );
+
+			if( !empty( $blogPostComment ) ) {
+				$baseText = $blogPostComment->getBaseText();
+				$titleNames = explode( '/', $baseText );
+				$userBlog = Title::newFromText( $titleNames[0], NS_BLOG_ARTICLE );
+
+				$link = $app->wf->MsgExt(
+					'article-blog-comments-file-page',
+					array ('parsemag'),
+					$blogPostComment->getLocalURL(),
+					User::newFromId( Revision::newFromId( $blogPostComment->getLatestRevID() )->getUser() )->getName(),
+					Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getLocalURL(),
+					$titleNames[1],
+					$userBlog->getLocalURL(),
+					$userBlog->getBaseText()
+				);
+			}
+		}
+
+		return true;
+	}
 }

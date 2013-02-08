@@ -5,7 +5,7 @@
  * @author Jakub 'Student' Olek
  **/
 
-require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(loader, toast, modal, events, track, msg){
+require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(throbber, toast, modal, events, track, msg){
 	"use strict";
 	/** @private **/
 
@@ -29,7 +29,7 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 		replies = msg('wikiamobile-article-comments-replies'),
 		postComm = d.getElementsByClassName('commFrm')[0].cloneNode(true);
 
-	postComm.getElementsByClassName('wkInp')[0].setAttribute('placeholder', postReply);
+	postComm.getElementsByClassName('commText')[0].setAttribute('placeholder', postReply);
 
 	function clickHandler(event){
 		event.preventDefault();
@@ -49,12 +49,13 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 
 		if(condition){
 			elm.className += ' active';
-			loader.show(elm, {size: '30px'});
+			throbber.show(elm, {size: '30px'});
 
 			Wikia.ajax({
 				url: ajaxUrl + '&page=' + ~~pageIndex,
-				dataType: 'json',
-				success: function(result){
+				dataType: 'json'
+			}).done(
+				function(result){
 					var finished;
 
 					currentPage = pageIndex;
@@ -63,7 +64,7 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 					commsUl.innerHTML = result.text;
 
 					elm.className = elm.className.replace(' active', '');
-					loader.hide(elm);
+					throbber.hide(elm);
 
 					//there's a good reason to use display instead of show/hide in the following lines
 					if(finished) {
@@ -74,7 +75,7 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 
 					wkArtCom.scrollIntoView();
 				}
-			});
+			);
 		}
 	}
 
@@ -109,12 +110,12 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 				parent = form.previousElementSibling,
 				parentId = (parent) ? parent.id : false,
 				submit = form.getElementsByTagName('input')[0],
-				textArea = form.getElementsByClassName('wkInp')[0],
+				textArea = form.getElementsByClassName('commText')[0],
 				text = textArea.value;
 
 			if(text !== '') {
 				submit.disabled =  true;
-				loader.show(form, {size: '35px', center: true});
+				throbber.show(form, {size: '35px', center: true});
 
 				var data = {
 					action: 'ajax',
@@ -134,8 +135,9 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 					url: wgScript,
 					data: data,
 					dataType: 'json',
-					type: 'POST',
-					success: function(json) {
+					type: 'POST'
+				}).done(
+					function(json) {
 						textArea.value = '';
 
 						if(!json.error && json.text){
@@ -158,14 +160,24 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 								});
 							}
 							d.getElementById('wkArtCnt').innerText = json.counter;
+						} else {
+							onFail();
 						}
-
-						submit.disabled = false;
-						loader.hide(form);
 					}
-				});
+				).fail(
+					onFail
+				).then(
+					function(){
+						submit.disabled = false;
+						throbber.hide(form);
+					}
+				);
 			}
 		}
+	}
+
+	function onFail(){
+		toast.show(msg('wikiamobile-article-comments-post-fail'), {error: true});
 	}
 
 	function updateUI(comment, parent){
@@ -216,7 +228,7 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 						otherwise scroll to top
 					*/
 					function(content){
-						var input = content.getElementsByClassName('wkInp')[0];
+						var input = content.getElementsByClassName('commText')[0];
 						if(input){
 							input.scrollIntoView();
 							input.focus();
@@ -254,7 +266,8 @@ require(['loader', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(
 			track.event('article-comments', track.IMAGE_LINK, {
 				label: 'avatar',
 				href: t.parentElement.href
-			});
+			},
+			ev);
 		}
 	});
 

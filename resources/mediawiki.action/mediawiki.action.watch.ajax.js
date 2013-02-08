@@ -72,7 +72,7 @@ function mwUriGetAction( url ) {
 			if ( m && m[1] ) {
 				return key;
 			}
-		
+
 		}
 	}
 
@@ -100,8 +100,10 @@ $( document ).ready( function() {
 			return true;
 		}
 		e.preventDefault();
-		e.stopPropagation();
-		
+		// Wikia change - begin - @author: kflorence
+		//e.stopPropagation();
+		// Wikia change - end
+
 		$link = $( this );
 
 		updateWatchLink( $link, action, 'loading' );
@@ -126,7 +128,7 @@ $( document ).ready( function() {
 				if ( $li.prop( 'id' ) === 'ca-' + otherAction || $li.prop( 'id' ) === 'ca-' + action ) {
 					$li.prop( 'id', 'ca-' + otherAction );
 				}
-				
+
 				// Bug 12395 - update the watch checkbox on edit pages when the
 				// page is watched or unwatched via the tab.
 				if ( watchResponse.watched !== undefined ) {
@@ -136,11 +138,11 @@ $( document ).ready( function() {
 				}
 			},
 			// Error
-			function(){		
+			function(){
 
 				// Reset link to non-loading mode
 				updateWatchLink( $link, action );
-				
+
 				// Format error message
 				var cleanTitle = title.replace( /_/g, ' ' );
 				var link = mw.html.element(
@@ -150,7 +152,7 @@ $( document ).ready( function() {
 					}, cleanTitle
 				);
 				var html = mw.msg( 'watcherrortext', link );
-				
+
 				// Report to user about the error
 
 				// Wikia Start - Liz

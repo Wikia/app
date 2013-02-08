@@ -414,6 +414,22 @@ $messages['pl'] = array(
 	'category-exhibition-display-new' => 'Widok - galeria',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'category-exhibition-sorttype' => 'Sòrt ordinament:',
+	'category-exhibition-alphabetical' => 'Alfabétich',
+	'category-exhibition-mostvisited' => 'Pi visità',
+	'category-exhibition-recentedits' => 'Modificà ëd recent',
+	'category-exhibition-page-header' => 'Artìcoj ant la categorìa "$1"',
+	'category-exhibition-subcategories-header' => 'Sotacategorìe',
+	'category-exhibition-media-header' => 'Archivi ant la categorìa "$1"',
+	'category-exhibition-blogs-header' => 'Mëssagi dë Scartari',
+	'category-exhibition-display-old' => 'Varda Lista Categorìe',
+	'category-exhibition-display-new' => 'Vista Esibission Categorìe',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */

@@ -243,8 +243,8 @@ $messages['nb'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'linksuggest-desc' => 'Verwijzingen voorstellen tijdens het bewerken',
-	'tog-disablelinksuggest' => 'Geen verwijzingssuggesties weergeven in bronmodus',
+	'linksuggest-desc' => 'Koppelingen voorstellen tijdens het bewerken',
+	'tog-disablelinksuggest' => 'Geen koppelingensuggesties weergeven in bronmodus',
 	'tog-redirected-from' => '&ndash; Doorverwezen vanaf $1',
 );
 
@@ -308,14 +308,17 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'linksuggest-desc' => "Suggerisce le collegaminde a le editure sus 'a viste d'u cangiamende",
 	'tog-disablelinksuggest' => "No fà vedè 'u collegamende suggerite jndr'à 'u mode Sorgende",
 	'tog-redirected-from' => '&ndash; redirezionate da $1',
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Kuzura
  */
 $messages['ru'] = array(
+	'linksuggest-desc' => 'Предлагает ссылки на редакторы в режиме редактирования',
 	'tog-disablelinksuggest' => 'Не показывать предложения ссылок в режиме Исходного кода',
 	'tog-redirected-from' => '&ndash; перенаправление с $1',
 );

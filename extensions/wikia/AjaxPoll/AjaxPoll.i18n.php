@@ -126,6 +126,7 @@ $messages['cs'] = array(
 
 /** Welsh (Cymraeg)
  * @author Pwyll
+ * @author Robin Owain
  */
 $messages['cy'] = array(
 	'ajaxpoll-percentVotes' => "$1%&nbsp; o'r holl bleidleisiau",
@@ -134,7 +135,7 @@ $messages['cy'] = array(
 	'ajaxpoll-summary' => 'Crëwyd y bleidlais am $1 ar $2, ac mae $3 o bobl wedi pleidleisio hyd yn hyn.',
 	'ajaxpoll-submit' => 'Pleidleisiwch!',
 	'ajaxpoll-closed' => "Mae'r bleidlais bellach ar gau. Mwynhewch y canlyniadau.",
-	'ajaxpoll-submitting' => "Arhoswch os gwelwch yn dda, yn cyflwyno'ch pleidlais...",
+	'ajaxpoll-submitting' => "Arhoswch os gwelwch yn dda, rydym yn cyflwyno'ch pleidlais...",
 );
 
 /** Danish (dansk)
@@ -414,7 +415,7 @@ $messages['ksh'] = array(
 	'ajaxpoll-thankyou' => 'Mer danke för et Afshtemme!',
 	'ajaxpoll-error' => 'Doh hät jät nit jeflupp mem Beärbeide vun Dinge Schtemm. Bes esu jood_un versöhg_et norr_ens.',
 	'ajaxpoll-summary' => 'De Afshtemmung es {{GENDER:$1|vum|vum|vum Metmaacher|vun dä|vum}} $1 aam $2 aanjelaat woode, un bes jäz {{PLURAL:$3|hät Eine|hann_er $3 Metmaacher|hät Keine}} dobei metjemaat.',
-	'ajaxpoll-submit' => 'Afshtemme!',
+	'ajaxpoll-submit' => 'Afschtemme!',
 	'ajaxpoll-closed' => 'Di Affshtemmong es eröm. Vill Shpaß met däm, wad_eruß jekumme es.',
 	'ajaxpoll-submitting' => 'Ene kleine Momang, Ding Schtemm weed beärbeidt&nbsp;…',
 );

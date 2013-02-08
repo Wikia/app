@@ -13,9 +13,9 @@
 
 (function( window ) {
 
-	var Wikia = window.Wikia = (window.Wikia || {}),
+	var AbTest,
+		Wikia = window.Wikia = (window.Wikia || {}),
 		config = Wikia.AbTestConfig || {},
-		AbTest,
 		serverTimeString = window.varnishTime,
 		serverTime = new Date( serverTimeString ).getTime() / 1000;
 
@@ -96,7 +96,8 @@
 			}
 			el = {
 				id: exp.id,
-				name: exp.name
+				name: exp.name,
+				flags: exp.flags
 			};
 			if ( group ) {
 				el.group = {
@@ -198,8 +199,9 @@
 				version = versions[ i ];
 
 				// If this version is active remember this information
-				if ( serverTime >= version.startTime && serverTime <= version.endTime ) {
+				if ( serverTime >= version.startTime && serverTime < version.endTime ) {
 					exp.current = version;
+					exp.flags = version.flags;
 					count++;
 					break;
 				}
@@ -259,14 +261,16 @@
 		var expName, exp;
 		for ( expName in experiments ) {
 			exp = experiments[expName];
-			if ( exp.group ) {
-				window.WikiaTracker.trackEvent( 'ab_treatment', {
-					time: serverTimeString,
+			if ( exp.flags && exp.flags.dw_tracking && exp.group ) {
+				window.WikiaTracker.track({
+					eventName: 'ab_treatment',
 					experiment: exp.name,
 					experimentId: exp.id,
+					time: serverTimeString,
+					trackingMethod: 'internal',
 					treatmentGroup: exp.group.name,
 					treatmentGroupId: exp.group.id
-				}, 'internal' );
+				});
 			}
 		}
 	})( AbTest.experiments );

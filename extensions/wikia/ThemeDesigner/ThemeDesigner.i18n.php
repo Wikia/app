@@ -62,6 +62,7 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Sam Wang
+ * @author Shirayuki
  * @author Siebrand
  * @author The Evil IP address
  */
@@ -78,6 +79,9 @@ $messages['qqq'] = array(
 	'themedesigner-large' => '{{Identical|Large}}',
 	'themedesigner-tile-background' => 'Used in Theme Designer, and can be triggered to allow the current background graphic to tile, repeating itself around the page.',
 	'themedesigner-tab-theme' => '{{Identical|Theme}}',
+	'themedesigner-button-upload' => '{{Identical|Upload}}',
+	'themedesigner-button-upload-wordmark' => '{{Identical|Upload}}',
+	'themedesigner-default' => '{{Identical|Default}}',
 	'themedesigner-rules-favicon-learn-more-link' => 'Learn more about favicons (link)',
 	'themedesigner-history-item' => 'Parameters:
 * $1 is "how long ago"
@@ -1296,7 +1300,7 @@ $messages['nl'] = array(
 	'themedesigner-color' => 'kleur',
 	'themedesigner-graphic' => 'afbeeldingen',
 	'themedesigner-buttons' => 'knoppen',
-	'themedesigner-links' => 'verwijzingen',
+	'themedesigner-links' => 'koppelingen',
 	'themedesigner-header' => 'koptekst',
 	'themedesigner-text-wordmark' => 'Tekst voor woordmerk',
 	'themedesigner-graphic-wordmark' => 'Afbeelding voor woordmerk',
@@ -1419,6 +1423,7 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'themedesigner-or' => 'o',
 	'themedesigner-desc' => "A përmët a j'aministrator ëd la wiki ëd disegné un tema për na wiki",
 	'themedesigner-title' => 'Dissegnator ëd Tema ëd Wikia',
 	'themedesigner-background' => 'Sfond',
@@ -1433,7 +1438,9 @@ $messages['pms'] = array(
 	'themedesigner-small' => 'Cit',
 	'themedesigner-medium' => 'Medi',
 	'themedesigner-large' => 'Gròss',
-	'themedesigner-tile-background' => 'sfond an mosàich', # Fuzzy
+	'themedesigner-tile-background' => 'sfond',
+	'themedesigner-fix-background' => 'coression',
+	'themedesigner-transparency' => 'trasparensa',
 	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-customize' => 'Përsonalisa',
 	'themedesigner-tab-wordmark' => 'Sìmbol',
@@ -1449,14 +1456,17 @@ $messages['pms'] = array(
 	'themedesigner-dont-use-a-background' => 'Dovré pa dë sfond',
 	'themedesigner-upload-your-own' => 'Caria tò pròpi',
 	'themedesigner-button-upload' => 'Carié',
-	'themedesigner-rules-background' => 'jpg, gif o png. lìmit ëd 100 kilobyte', # Fuzzy
+	'themedesigner-button-upload-wordmark' => 'Carié',
+	'themedesigner-rules-background' => 'jpg, gif o png. Lìmit ëd {{PLURAL:$1|$1 kilobyte}}',
 	'themedesigner-default' => 'Për sòlit',
 	'themedesigner-font' => 'font (caràter)',
 	'themedesigner-size' => 'dimension',
 	'themedesigner-button-save' => 'Salva',
 	'themedesigner-upload-a-graphic' => 'caria un gràfich',
-	'themedesigner-rules-wordmark' => 'fin a 250x65 pontin (mach archivi .png)', # Fuzzy
-	'themedesigner-dont-use-a-graphic' => "Dovré pa 'd gràfich", # Fuzzy
+	'themedesigner-rules-wordmark' => "Carié n0archivi .png ch'a l'é 250 x 65 pontin o men.",
+	'themedesigner-rules-favicon' => "carié n'archivi .ico ëd 16x16 pontin. Na favicon a l'é na cita icon-a ch'as vëdd dzor la scheda dël navigator ëd toa wiki.",
+	'themedesigner-rules-favicon-learn-more-link' => 'Ampara ëd pi.',
+	'themedesigner-dont-use-a-graphic' => 'gava',
 	'themedesigner-history-item' => '$1 da $2',
 	'themedesigner-button-change-text' => 'Modifiché ël test',
 	'themedesigner-reason' => 'Progetista ëd tema - salvatagi fàit da $1',
@@ -1464,6 +1474,9 @@ $messages['pms'] = array(
 	'themedesigner-dimensions-error' => 'La figura a passa ij lìmit ëd dimension',
 	'themedesigner-type-error' => "Sòrt d'archivi pa giusta",
 	'themedesigner-unknown-error' => "A l'é capitaje n'eror, për maleur i podoma pa identifichelo, për piasì preuva torna",
+	'themedesigner-manual-upload-error' => 'Dòvra Theme Designer për carié marcador ëd paròle o sfond ëd wiki',
+	'themedesigner-favicon-heading' => 'Favicon',
+	'themedesigner-wodmark-preview' => 'Preuva',
 );
 
 /** Pashto (پښتو)

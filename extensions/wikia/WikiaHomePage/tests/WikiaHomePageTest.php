@@ -112,13 +112,10 @@ class WikiaHomePageTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider getHubImagesDataProvider
-	 * @markTestSkipped
 	 */
 	public function testGetHubImages($mockRawText, $mockFileParams, $mockImageServingParams, $expHubImages) {
-		$this->markTestSkipped('After last changes probably connected to WikiaGrid this test has been broken. We will fix it soon...');
-
 		// setup
-		$this->setUpMockObject('Title', array('newFromText' => null), true);
+		$this->setUpMockObject('Title', array('newFromText' => null, 'exists' => true), true);
 		$this->setUpMockObject('Article', array('getRawText' => $mockRawText), true, null, false);
 		$this->setUpMockObject('ImageServing', $mockImageServingParams, true, null, false);
 		$mockFile = $this->setUpMockObject('File', $mockFileParams, true, null, false);
@@ -213,12 +210,6 @@ TXT;
 			'getZoneUrl' => null,
 			'getThumbUrl' => null,
 		);
-		$mockImageServingParams5 = array(
-			'getUrl' => array(
-				'mockExpTimes' => 3,
-				'mockExpValues' => self::MOCK_FILE_URL
-			)
-		);
 
 		return array(
 			// 1 - empty html
@@ -230,7 +221,7 @@ TXT;
 			// 4 - not empty html + gallery tag exists with orientation="mosaic" + file NOT exist
 			array($mockRawText4, $mockFileParams4, $mockImageServingParams1, $expHubImages4),
 			// 5 - not empty html + gallery tag exists with orientation="mosaic" + file exists
-			array($mockRawText4, $mockFileParams5, $mockImageServingParams5, $expHubImages5),
+			array($mockRawText4, $mockFileParams5, $mockImageServingParams1, $expHubImages5),
 		);
 	}
 
@@ -256,14 +247,7 @@ TXT;
 		$status = $response->getVal('wgWikiaBatchesStatus');
 		$failoverData = $response->getVal('initialWikiBatchesForVisualization');
 
-		$this->assertEquals(
-			array(
-				'wgWikiaBatchesStatus' => 'false',
-			),
-			array(
-				'wgWikiaBatchesStatus' => $status,
-			)
-		);
+		$this->assertEquals('false', $status);
 		$this->assertNotEmpty($failoverData);
 
 		$wikiaHomePageControllerStub = $this->getMock('WikiaHomePageController', array('getMediaWikiMessage'));
@@ -436,7 +420,7 @@ TXT;
 		);
 
 		// 3 - user not found
-		$mockWikiServiceParam2 = array(
+		$mockWikiServiceParam3 = array(
 			'getWikiAdminIds' => array('123'),
 		);
 		$mockUserParam3 = false;
@@ -507,7 +491,7 @@ TXT;
 			// 2 - no admins
 			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam1, $mockAvatarServiceParam1, $expAdminAvatars1),
 			// 3 - user not found
-			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam3, $mockAvatarServiceParam1, $expAdminAvatars1),
+			array($mockWikiId2, $mockWikiServiceParam3, $mockUserParam3, $mockAvatarServiceParam1, $expAdminAvatars1),
 			// 4 - don't have avatar
 			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam4, $mockAvatarServiceParam1, $expAdminAvatars1),
 			// 5 - admins have avatar < LIMIT_ADMIN_AVATARS + user edits = 0

@@ -35,6 +35,8 @@ UserLoginAjaxForm.prototype.init = function() {
 };
 
 UserLoginAjaxForm.prototype.submitLogin = function(e) {
+	$(window).trigger('UserLoginSubmit');
+
 	this.submitButton.attr('disabled', 'disabled');
 	if(this.options['ajaxLogin']) {
 		e.preventDefault();

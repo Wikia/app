@@ -11,9 +11,11 @@ error_reporting(E_ALL & ~ E_STRICT);
 ini_set('display_errors', '1');
 $wgShowExceptionDetails = true;
 
-$wgWikiaDatacenter = 'sjc';
+// include chef generated variables: $wgWikiaDatacenter
+require_once('/usr/wikia/devbox/DevBoxVariables.php');
+
 $IP = '/usr/wikia/source/wiki';
-$wgWikiaLocalSettingsPath  = __FILE__;
+$wgWikiaLocalSettingsPath  = '/usr/wikia/docroot/wiki.factory/LocalSettings.php';
 $wgWikiaAdminSettingsPath = dirname( $wgWikiaLocalSettingsPath ) . "/../AdminSettings.php";
 
 $wgDevelEnvironment = true;
@@ -29,7 +31,7 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonSettings.php' );
 #
 # initialize Connection Poll
 #
-require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' );
+require_once( dirname( $wgWikiaLocalSettingsPath ) . "/../DB.{$wgWikiaDatacenter}-dev.php" );
 
 /**
  * Definition of global memcached servers
@@ -40,32 +42,47 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' );
  * If you remove / comment / change order of the servers, the hash will miss
  * and that can result in bad performance for the cluster!
  */
-$wgMemCachedServers = array(
-	# ACTIVE LIST
-	# PLEASE MOVE SERVERS TO THE DOWN LIST RATHER THAN COMMENTING THEM OUT IN-PLACE
-	# If a server goes down, you must replace its slot with another server
-	# You can take a server for the spare list
+switch($wgWikiaDatacenter) {
+	case 'sjc':
+		$wgMemCachedServers = array(
+			# ACTIVE LIST
+			# PLEASE MOVE SERVERS TO THE DOWN LIST RATHER THAN COMMENTING THEM OUT IN-PLACE
+			# If a server goes down, you must replace its slot with another server
+			# You can take a server for the spare list
 
-	# SLOT	HOST
-	0 => "10.8.44.110:11000", # dev-memcached1
-	1 => "10.8.36.107:11000", # dev-memcached2
+			# SLOT	HOST
+			0 => "10.8.44.110:11000", # dev-memcached1
+			1 => "10.8.36.107:11000", # dev-memcached2
+		);
 
-/**** DOWN *****
+		$wgSessionMemCachedServers = array(
+			# SLOT	HOST
+			0 => "10.8.44.110:11000", # dev-memcached1
+			1 => "10.8.36.107:11000", # dev-memcached2
+		);
+		break;
 
-***** SPARE ****
-	X => "10.8.2.65:11000",		# memcached6
-	X => "10.8.2.61:11000",		# memcached4
-	X => "10.8.2.182:11000",	# memcached1
-	X => "10.8.2.44:11000",		# memcached2
-	X => "10.8.2.62:11000",		# memcached5
-****************/
-);
+	case 'poz':
+		$wgMemCachedServers = array(
+			# ACTIVE LIST
+			# PLEASE MOVE SERVERS TO THE DOWN LIST RATHER THAN COMMENTING THEM OUT IN-PLACE
+			# If a server goes down, you must replace its slot with another server
+			# You can take a server for the spare list
 
-$wgSessionMemCachedServers = array(
-	# SLOT	HOST
-	0 => "10.8.44.110:11000", # dev-memcached1
-	1 => "10.8.36.107:11000", # dev-memcached2
-);
+			# SLOT	HOST
+			0 => "10.14.30.143:11000", # dev-memcached-p1
+			1 => "10.14.30.143:11000", # dev-memcached-p2
+		);
+
+		$wgSessionMemCachedServers = array(
+			# SLOT	HOST
+			0 => "10.14.30.143:11000", # dev-memcached-p1
+			1 => "10.14.30.143:11000", # dev-memcached-p2
+		);
+
+		require_once( "$IP/extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php" );
+		break;
+}
 
 # NOTE: THIS MUST BE DONE _BEFORE_ CALLING WikiFactory::execute IF WIKIFACTORY IS BEING USED.
 include("$IP/extensions/wikia/Development/SpecialDevBoxPanel/Special_DevBoxPanel.php");
@@ -80,12 +97,14 @@ $wgCityId = $oWiki->execute();
 $wgCookieDomain = ".wikia-dev.com";
 $wgCheckSerialized = true;
 
+// set allinone to 1 by default (you can always overwrite this value in DevBoxSettings.php)
+$wgAllInOne = true;
+
 // Life is easier if we have Special:WikiFactory
 $wgWikiaEnableWikiFactoryExt = true;
 
 $wgEnableUserChangesHistoryExt = false;
 
-$wgAllInOne = false;
 $wgEnableFixRecoveredUsersExt = false;
 
 // enable ExternalUsers
@@ -93,6 +112,9 @@ $wgExternalUserEnabled = true;
 
 // antispoof extension needs statsdb setup, only on prod for now
 $wgEnableAntiSpoofExt = false;
+
+//disabling TorBlock on devboxes because it is soooooo slow
+$wgEnableTorBlockExt = false;
 
 // Google Maps key for wikia-dev.com (different than the key for wikia.com).
 $wgGoogleMapsKey = 'ABQIAAAAH6bdoxGNhXgildFjnRAQjBTsndpDQKTEb03AQ6hTlU-KPVq60xQdoVVgLuXn-IrTw3LW8MYBMaYx9Q';
@@ -118,12 +140,6 @@ if (empty($wgRunningUnitTests)) {
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
 
-// The list of cached i18n files is "fixed" too early as a side effect 
-// of extension init functions which check user options (like FBConnect)
-// this speeds up devboxes a lot because init() is faster than recache()
-// TODO: I think this affects production also
-Language::getLocalisationCache()->unloadAll();
-
 $wgArticlePath = "/wiki/$1";
 
 // Just in case this has been reset somewhere else in here.
@@ -137,21 +153,21 @@ $wgDefaultExternalStore = array( "DB://dev-archive");
 // OpenXSPC
 $wgEnableOpenXSPC = true;
 
-// generate cache on every request
-$wgLocalisationCacheConf[ "manualRecache" ] = false;
+//rebulild message cache when ?rebuildmessages is appended to url
+$wgLocalisationCacheConf[ "manualRecache" ] = !array_key_exists( 'rebuildmessages', $_GET );
 
 // disable irc feed
 $wgRC2UDPEnabled = false;
 
-// fetch SASS files from devboxes (BugId:8545)
+// static assets host
 $wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
+$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
 // macbre: generate proper paths for static assets on devboxes (BugId:6809)
 $wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images requested from CSS/SASS
 $wgStylePath = "{$wgCdnStylePath}/skins";
 $wgExtensionsPath = "{$wgCdnStylePath}/extensions";
 $wgResourceBasePath = $wgCdnStylePath;
-$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
 // fetch GoogleMaps resources from devboxes
 $wgGoogleMapsUrlPath = $wgExtensionsPath . '/3rdparty/GoogleMaps';

@@ -9,8 +9,13 @@ if ( ShareButtons ) {
 		callback: function() {
 			var dfd = new $.Deferred();
 
-			FB.Event.subscribe( 'xfbml.render', dfd.resolve );
 			FB.XFBML.parse( $( '.fb-like' ).parent( '.shareButton' ).get( 0 ) );
+			FB.Event.subscribe( 'xfbml.render', dfd.resolve );
+			FB.Event.subscribe( 'edge.create', function() {
+				ShareButtons.track({
+					label: 'facebook'
+				});
+			});
 
 			return dfd.promise();
 		}

@@ -61,7 +61,7 @@ class ForumHooksHelper {
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD) {
 			$response->setVal( 'wall_message', wfMsg( 'forum-discussion-placeholder-message', $title->getText() ) );
 		}
-		
+
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$response->setVal( 'wall_message', wfMsg( 'forum-discussion-placeholder-message-short' ) );
 		}
@@ -115,7 +115,7 @@ class ForumHooksHelper {
 
 			$titleData = WallHelper::getWallTitleData(null, $element, true);
 
-			$boardText = wfMsg( 'forum-wiki-activity-msg', '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMsg( 'forum-wiki-activity-msg-name', $titleData['wallPageUrl'] ) . '</a>' );
+			$boardText = wfMsg( 'forum-wiki-activity-msg', '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMsg( 'forum-wiki-activity-msg-name', $titleData['wallPageName'] ) . '</a>' );
 			$link = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ' . $boardText;
 		}
 		return true;
@@ -363,15 +363,15 @@ class ForumHooksHelper {
 			//cleare board info
 			$commentsIndex = F::build( 'CommentsIndex', array( $comment_id ), 'newFromId' );
 			if(empty($commentsIndex)) {
-				return true;	
+				return true;
 			}
 			$board = F::build( 'ForumBoard', array( $commentsIndex->getParentPageId() ), 'newFromId' );
 			if(empty($board)) {
-				return true;	
+				return true;
 			}
-			
+
 			$board->clearCacheBoardInfo();
-			
+
 			$thread = WallThread::newFromId($threadId);
 			if(!empty($thread)) {
 				$thread->purgeLastMessage();
@@ -396,5 +396,28 @@ class ForumHooksHelper {
 			OasisController::addBodyParameter(' itemscope itemtype="http://schema.org/WebPage"');
 		}
 		return true;
+	}
+
+	/**
+	 * Create a tag for including the Forum Activity Module on pages
+	 */
+	public static function onParserFirstCallInit( Parser &$parser ) {
+		wfProfileIn( __METHOD__ );
+		$parser->setHook( 'wikiaforum', array( __CLASS__, 'parseForumActivityTag' ) );
+
+		// Add styling for forum tag
+		$scssFile = F::build( 'AssetsManager', array(), 'getInstance' )->getSassCommonURL( 'extensions/wikia/Forum/css/ForumTag.scss' );
+		F::app()->wg->Out->addStyle( $scssFile );
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	public static function parseForumActivityTag( $input, $args, $parser ) {
+		wfProfileIn( __METHOD__ );
+
+		$html = F::app()->renderView( 'Forum', 'forumActivityModule' );
+
+		wfProfileOut( __METHOD__ );
+		return $html;
 	}
 }

@@ -19,10 +19,18 @@
 				'label' => wfMsg('yourpassword'),
 			),
 			array(
-				'type' => 'display',
-				'label' => wfMsg('email'),
-				'value' => $fbEmail,
-				'tooltip' => wfMsg('usersignup-facebook-email-tooltip'),
+				'type' => 'nirvana',
+				'class' => 'email',
+				'controller' => 'WikiaStyleGuideTooltipIconController',
+				'method' => 'index',
+				'params' => array(
+					'text' => wfMsg('email'),
+					'tooltipIconTitle' => wfMsg('usersignup-facebook-email-tooltip'),
+				),
+			),
+			array(
+				'type' => 'custom',
+				'output' => '<strong>' . $fbEmail . '</strong>'
 			),
 			array(
 				'type' => 'hidden',

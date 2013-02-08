@@ -1,6 +1,6 @@
 // TODO: move WikiaTracker outside
 
-var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, adLogicDartSubdomain) {
+var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, adLogicDartSubdomain, abTest) {
 	'use strict';
 
 	var logGroup = 'AdProviderAdDriver2',
@@ -21,25 +21,25 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 	// TODO: tile is not used, keys without apostrophes
 
 	slotMap = {
-		'CORP_TOP_LEADERBOARD': {'size': '728x90,468x60,980x130,1030x130', 'tile':2, 'loc': 'top', 'dcopt': 'ist'},
-		'CORP_TOP_RIGHT_BOXAD': {'size': '300x250,300x600', 'tile':1, 'loc': 'top'},
-		'EXIT_STITIAL_BOXAD_1': {'size':'600x400,300x250', 'tile':2, 'loc': "exit"},
-		'HOME_TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130', 'tile':2, 'loc':'top', 'dcopt':'ist'},
-		'HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
-		'HUB_TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130', 'tile':2, 'loc':'top', 'dcopt':'ist'},
-		'LEFT_SKYSCRAPER_2': {'size':'160x600,120x600', 'tile':3, 'loc':'middle'},
-		'LEFT_SKYSCRAPER_3': {'size': '160x600', 'tile':6, 'loc':'footer'},
-		'MODAL_INTERSTITIAL': {'size':'600x400,300x250','tile':2,'loc':'modal'},
-		'MODAL_INTERSTITIAL_1': {'size':'600x400,300x250','tile':2,'loc':'modal'},
-		'MODAL_INTERSTITIAL_2': {'size':'600x400,300x250','tile':2,'loc':'modal'},
-		'MODAL_INTERSTITIAL_3': {'size':'600x400,300x250','tile':2,'loc':'modal'},
-		'MODAL_INTERSTITIAL_4': {'size':'600x400,300x250','tile':2,'loc':'modal'},
-		'MODAL_RECTANGLE': {'size':'300x100','tile':2,'loc':'modal'},
-		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
-		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
-		'TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130', 'tile':2, 'loc':'top', 'dcopt':'ist'},
-		'TOP_RIGHT_BOXAD': {'size':'300x250,300x600', 'tile':1, 'loc':'top'},
-		'WIKIA_BAR_BOXAD_1': {'size':'320x50', 'tile': 4, 'loc':'bottom'}
+		'CORP_TOP_LEADERBOARD': {'size': '728x90,468x60,980x130,1030x130,1x1', 'tile':2, 'loc': 'top', 'dcopt': 'ist'},
+		'CORP_TOP_RIGHT_BOXAD': {'size': '300x250,300x600,1x1', 'tile':1, 'loc': 'top'},
+		'EXIT_STITIAL_BOXAD_1': {'size':'600x400,300x250,1x1', 'tile':2, 'loc': "exit"},
+		'HOME_TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130,1x1', 'tile':2, 'loc':'top', 'dcopt':'ist'},
+		'HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600,1x1', 'tile':1, 'loc':'top'},
+		'HUB_TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130,1x1', 'tile':2, 'loc':'top', 'dcopt':'ist'},
+		'LEFT_SKYSCRAPER_2': {'size':'160x600,120x600,1x1', 'tile':3, 'loc':'middle'},
+		'LEFT_SKYSCRAPER_3': {'size': '160x600,1x1', 'tile':6, 'loc':'footer'},
+		'MODAL_INTERSTITIAL': {'size':'600x400,300x250,1x1','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL_1': {'size':'600x400,300x250,1x1','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL_2': {'size':'600x400,300x250,1x1','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL_3': {'size':'600x400,300x250,1x1','tile':2,'loc':'modal'},
+		'MODAL_INTERSTITIAL_4': {'size':'600x400,300x250,1x1','tile':2,'loc':'modal'},
+		'MODAL_RECTANGLE': {'size':'300x100,1x1','tile':2,'loc':'modal'},
+		'TEST_TOP_RIGHT_BOXAD': {'size':'300x250,300x600,1x1', 'tile':1, 'loc':'top'},
+		'TEST_HOME_TOP_RIGHT_BOXAD': {'size':'300x250,300x600,1x1', 'tile':1, 'loc':'top'},
+		'TOP_LEADERBOARD': {'size':'728x90,468x60,980x130,1030x130,1x1', 'tile':2, 'loc':'top', 'dcopt':'ist'},
+		'TOP_RIGHT_BOXAD': {'size':'300x250,300x600,300x100,1x1', 'tile':1, 'loc':'top'},
+		'WIKIA_BAR_BOXAD_1': {'size':'320x50,1x1', 'tile': 4, 'loc':'bottom'}
 	};
 
 // FORMER SLOTS {
@@ -120,13 +120,33 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 			, url
 
 			, hopTimer, hopTime
+			, inLeaderboardTest = abTest && abTest.getGroup('LEADERBOARD_TESTS')
+			, inMedRecTest = abTest && abTest.getGroup('MEDREC_TESTS')
 		;
 
-		if (!isHighValueCountry) {
-			error();
-			return;
+		// Always have an ad when user is in the LEADERBOARD_TESTS experiment
+		if (!(inLeaderboardTest && slotname === 'TOP_LEADERBOARD')
+			&& !(inMedRecTest && slotname === 'TOP_RIGHT_BOXAD')
+		) {
+			if (!isHighValueCountry) {
+				error();
+				return;
+			}
+
+			// Always have an ad for MODAL_INTERSTITIAL
+			if (!slotname.match(/^MODAL_INTERSTITIAL/)) {
+				// Otherwise check if there was ad last time
+				// If not, check if desired number of DART calls were made
+				if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
+					log('There was no ad for this slot last time and reached max number of calls to DART', 5, logGroup);
+					log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 6, logGroup);
+					error();
+					return;
+				}
+			}
 		}
 
+		// Don't show skin ads for logged in users
 		if (window.wgUserName && !window.wgUserShowAds) {
 			dcopt = false;
 		}
@@ -137,19 +157,13 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 			ord = Math.floor(Math.random() * 100000000000);
 		}
 
-		// Always have an ad for MODAL_INTERSTITIAL
-		if (!slotname.match(/^MODAL_INTERSTITIAL/)) {
-			// Otherwise check if there was ad last time
-			// If not, check if desired number of DART calls were made
-			if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
-				log('There was no ad for this slot last time and reached max number of calls to DART', 5, logGroup);
-				log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 6, logGroup);
-				error();
-				return;
-			}
-		}
-
-		WikiaTracker.trackAdEvent('liftium.slot2', {ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''), ga_action: slotname, ga_label: 'addriver2'}, 'ga');
+		WikiaTracker.track({
+			eventName: 'liftium.slot2',
+			ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''),
+			ga_action: slotname,
+			ga_label: 'addriver2',
+			trackingMethod: 'ad'
+		});
 
 		hopTimer = new Date().getTime();
 		log('hopTimer start for ' + slotname, 7, logGroup);
@@ -181,11 +195,13 @@ var AdProviderAdDriver2 = function(wikiaDart, scriptWriter, WikiaTracker, log, w
 				// Track hop time
 				hopTime = new Date().getTime() - hopTimer;
 				log('slotTimer2 end for ' + slotname + ' after ' + hopTime + ' ms', 7, logGroup);
-				WikiaTracker.trackAdEvent('liftium.hop2', {
+				WikiaTracker.track({
+					eventName: 'liftium.hop2',
 					ga_category: 'hop2/addriver2',
 					ga_action: 'slot ' + slotname,
-					ga_label: formatTrackTime(hopTime, 5)
-				}, 'ga');
+					ga_label: formatTrackTime(hopTime, 5),
+					trackingMethod: 'ad'
+				});
 
 				error();
 			} else {

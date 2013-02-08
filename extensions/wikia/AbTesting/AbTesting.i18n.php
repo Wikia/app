@@ -18,6 +18,12 @@ $messages['en'] = array(
 	'abtesting-heading-start-time' => 'Start Time (UTC)',
 	'abtesting-heading-end-time' => 'End Time (UTC)',
 	'abtesting-heading-ga-slot' => 'GA Slot',
+	'abtesting-heading-flag-ga_tracking' => 'GA',
+	'abtesting-heading-flag-dw_tracking' => 'DW',
+	'abtesting-heading-flag-forced_ga_tracking_on_load' => 'GA onload',
+	'abtesting-heading-long-flag-ga_tracking' => 'GA tracking',
+	'abtesting-heading-long-flag-dw_tracking' => 'DW tracking',
+	'abtesting-heading-long-flag-forced_ga_tracking_on_load' => 'Force GA track on window.onload',
 	'abtesting-heading-group' => 'Group',
 	'abtesting-heading-control-group' => 'Control Group',
 	'abtesting-heading-ranges' => 'Ranges (0-99)',
@@ -30,6 +36,11 @@ $messages['en'] = array(
 
 	'abtesting-edit-button' => 'Edit',
 	'abtesting-save-button' => 'Save',
+
+	'abtesting-flag-set-short' => 'YES',
+
+	'abtesting-ranges-info' => '(0-99)',
+	'action-abtestpanel' => 'configure A/B tests',
 );
 
 

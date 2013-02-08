@@ -227,7 +227,7 @@ The Wikia Community Team
 www.wikia.com
 ",
 'enotif_lastvisited' => 'To see all changes to this page since your last visit, click here: $1',
-'fileexists'		=> 'A file with this name exists already, please check $1 if you are not sure if you want to change it. Once uploaded, this image may take up to 2 minutes to be visible.',
+'fileexists'		=> '$1 has already been uploaded to the wiki. If you upload it again, it will replace the existing photo and may take a few minutes to be visible.',
 'enotif_body' => 'Dear $WATCHINGUSERNAME,
 
 There has been an edit to a page you are watching on {{SITENAME}}.
@@ -312,6 +312,10 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'group-reviewer' => 'Image Reviewers',
 'group-reviewer-member' => 'Image Reviewer',
 'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
+
+'group-wikiastars' => 'Wikia Stars',
+'group-wikiastars-member' => 'Wikia Star',
+'grouppage-wikiastars' => 'wikia:Help:WikiaStars',
 
 # AjaxLogin
 'ajaxLogin1' => 'To complete your log in, you must enter a new password.  This will take you away from this edit page and you may lose your current edit.',

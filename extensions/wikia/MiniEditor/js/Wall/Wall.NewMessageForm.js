@@ -37,9 +37,6 @@ MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMe
 						wikiaEditor.getEditbox()
 							.placeholder()
 							.triggerHandler('focus.placeholder');
-						self.messageBody.autoResize({
-							min: 200
-						});
 					}
 					if ($.browser.msie) {
 						self.messageTitle.keydown(function(e) {
@@ -48,7 +45,14 @@ MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMe
 								wikiaEditor.editorFocus();
 							}
 						});
-					}			
+					}
+				},
+				editorAfterActivated: function( event, wikiaEditor ) {
+					if (!MiniEditor.ckeditorEnabled) {
+						self.messageBody.autoResize({
+							min: 200
+						});
+					}
 				}
 			}
 		}, event);

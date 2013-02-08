@@ -1,14 +1,14 @@
 define('autocomplete', function(){
-var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
-	input,
-	list,
-	clear,
-	suggestions = [],
-	currentValue,
-	cachedResponse = [],
-	serviceUrl,
-	regExp,
-	t, a;
+	var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
+		input,
+		list,
+		clear,
+		suggestions = [],
+		currentValue,
+		cachedResponse = [],
+		serviceUrl,
+		regExp,
+		t, a;
 
 	function getSuggestions() {
 		clearTimeout(t);
@@ -28,15 +28,16 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 						data: {
 							search: curVal
 						},
-						success: function(resp) {
+						dataType: 'json'
+					}).done(
+						function(resp) {
 							if(!resp.error){
 								suggestions = resp[1];
 								cachedResponse[curVal] = resp;
 								suggest();
 							}
-						},
-						dataType: 'json'
-					});
+						}
+					);
 				}, 250);
 			}
 		}

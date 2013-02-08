@@ -8,16 +8,8 @@
 		element: false,
 
 		constructor: function() {
-			var data;
-
 			this.element = $('#EditPage');
 			this.body = $('#wpTextbox1');
-
-			// Use cached data. Generally stored before login redirect.
-			if ((data = $.storage.get('WikiaEditorData')) != null) {
-				this.body.val(data);
-				$.storage.del('WikiaEditorData');
-			}
 		},
 
 		getToolbarsConfig: function() {
@@ -102,8 +94,8 @@
 				popularTemplates: window.wgEditPagePopularTemplates || [],
 				// editor auto resize mode
 				autoResizeMode: (window.wgEditPageIsConflict || window.wgEditPageFormType == 'diff') ? 'editpage' : 'editarea',
-				// disable Categories module?
-				categoriesDisabled: (typeof window.initCatSelectForEdit != 'function'),
+				// Whether or not CategorySelect is enabled
+				categorySelectEnabled: ( typeof window.wgCategorySelect != 'undefined' ),
 				// initial state of wide screen mode in source mode
 				wideInSourceInitial: window.wgEditPageWideSourceMode,
 				// is wide screen mode in source mode disabled?
@@ -123,6 +115,8 @@
 			var data = this.getData();
 
 			window.WikiaEditor.create(data.plugins, data.config);
+
+			$(window).bind('UserLoginSubmit', window.WikiaEditor.storeContent);
 		}
 	});
 

@@ -138,7 +138,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			if($timestamp == ""){
 				global $wgCdnStylePath;
 				$matches = array();
-				if(0 < preg_match("/\/__cb([0-9]+)\//i", $wgCdnStylePath, $matches)){
+				if(0 < preg_match("/\/__cb([0-9]+)/i", $wgCdnStylePath, $matches)){
 					$timestamp = $matches[1];
 				} else {
 					// This results in no caching of the image.  Bad bad bad, but the best way to fail.

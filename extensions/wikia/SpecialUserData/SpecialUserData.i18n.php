@@ -238,6 +238,22 @@ $messages['pl'] = array(
 	'userdata-no-wf' => 'WikiFactory nie jest włączony na tej wiki. Nie można zmienić wgUserData.',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'userdata' => 'Oten dat utent',
+	'userdata-userid-label' => 'Dà ID utent:',
+	'userdata-submit' => 'Oten dij dat',
+	'specialuserdata-desc' => "A dà n'antërfacia për cangé wgUserData për na wiki",
+	'userdata-header' => 'Ancrementa wgUserData',
+	'userdata-value' => 'Valor corent ëd wgUserData a l\'é "$1". Sgnaca ël boton për ampostelo al timestamp corent.',
+	'userdata-updated' => 'wgUserData agiornà a "$1".',
+	'userdata-not-updated' => 'Falì a agiorné wgUserData.',
+	'userdata-wf-reason' => 'Valor agiornà via [[Special:UserData|UserData]]',
+	'userdata-no-wf' => "WikiFactory a l'é pa abilità dzora a sta wiki-sì. As peul pa modifiché wgUserData.",
+);
+
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Waldir

@@ -147,6 +147,7 @@ $messages['en'] = array(
  * @author McDutchie
  * @author PtM
  * @author Purodha
+ * @author Shirayuki
  * @author Siebrand
  * @author Umherirrender
  */
@@ -156,6 +157,7 @@ $messages['qqq'] = array(
 	'wf_city_created' => '{{Identical|Created}}',
 	'wf_city_founding_user' => '{{Identical|Founder}}',
 	'wf_city_public' => '{{Identical|Status}}',
+	'wf_city_lang' => '{{Identical|Language}}',
 	'wf_cc_name' => '{{Identical|Category}}',
 	'wikifactory-label-variables' => '{{Identical|Variable}}',
 	'wikifactory-label-variables2' => '{{Identical|General}}',
@@ -165,7 +167,8 @@ $messages['qqq'] = array(
 	'wikifactory-label-tags' => '{{Identical|Tag}}',
 	'wikifactory-label-masstags' => 'Label for a tab that contains a form, allowing staff to apply tags in bulk. [http://translatewiki.net/w/i.php?title=Thread:Translating_talk:Wikia/MassTag%3F_FindTag%3F/reply source]',
 	'wikifactory-label-findtags' => 'Label for a tab that contains a form, allowing staff to find wikis by tag. [http://translatewiki.net/w/i.php?title=Thread:Translating_talk:Wikia/MassTag%3F_FindTag%3F/reply source]',
-	'right-wikifactory' => '{{doc-right|wikifactory}}',
+	'wikifactory-label-eznamespace' => '{{Optional}}',
+	'right-wikifactory' => '{{doc-right|wikifactory|ns=Wikia}}',
 	'action-wikifactory' => '{{doc-action|wikifactory}}',
 	'closewiki-nbr-wiki' => '',
 	'closewiki-unknown' => '{{Identical|Unknown}}',
@@ -174,9 +177,14 @@ $messages['qqq'] = array(
 	'awc-metrics-close' => '{{Identical|Close}}',
 	'awc-metrics-active' => '{{Identical|Active}}',
 	'awc-metrics-closed' => '{{Identical|Closed}}',
-	'awc-metrics-fewer-than' => '',
-	'awc-metrics-edits-label' => '',
-	'awc-metrics-pageviews-label' => 'Needs plural support for $1 and $2',
+	'awc-metrics-fewer-than' => 'Form text. Explains that the script will look for values fewer than the numeric input data. http://images.wikia.com/mixtestwiki/images/9/90/2013-01-TWN_WikiFactory_Metrics.png',
+	'awc-metrics-edits-label' => 'Label for input box. User puts in a number next to this label to match the number of edits the tool will use as a maximum threshold. For a visual explanation, please see: http://images.wikia.com/mixtestwiki/images/9/90/2013-01-TWN_WikiFactory_Metrics.png',
+	'awc-metrics-pageviews-label' => 'Form label. For a visual explanation: http://images.wikia.com/mixtestwiki/images/9/90/2013-01-TWN_WikiFactory_Metrics.png .
+Parameters:
+* $1 is the number of pageviews the tool will set as the maximum number of pageviews.
+* $2 is the number of days the tool will set at the maximum timeframe. 
+
+The fact that these are maximum values is explained by [[Wikia:Awc-metrics-fewer-than]].',
 	'awc-metrics-exact-match' => '{{Identical|Exact match}}',
 	'awc-metrics-recordspager' => 'Recordspager message. This message cannot support PLURAL for now, because it is used in JavaScript. Parameters:
 * $1 is the number of the first displayed record
@@ -1450,7 +1458,7 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'closewiki' => 'Wiki racnê',
-	'wf_city_url' => 'Adres',
+	'wf_city_url' => 'Adrese',
 	'wf_city_id' => 'id',
 	'wf_city_title' => 'Sername',
 	'wf_city_created' => 'Vıraziya',
@@ -1460,7 +1468,7 @@ $messages['diq'] = array(
 	'wf_cc_name' => 'Kategoriye',
 	'wikifactory-label-info' => 'Zanışe',
 	'wikifactory-label-variables' => 'Vurnayeyî',
-	'wikifactory-label-variables2' => 'Heran',
+	'wikifactory-label-variables2' => 'Bıngeh',
 	'wikifactory-label-hubs' => 'Merkezi',
 	'wikifactory-label-domains' => 'Domaini',
 	'wikifactory-label-actions' => 'Kerdışi',
@@ -3582,7 +3590,7 @@ paginagrootte',
 	'closed-wiki' => 'Gesloten wiki',
 	'closed-wiki-info' => 'Deze wiki is gesloten',
 	'disabled-wiki-info' => 'Deze wiki is uitgeschakeld',
-	'closed-wiki-dump-exists' => 'U kunt [$1 uw inhoud ophalen] als u wilt.<br />(Als uw wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.)',
+	'closed-wiki-dump-exists' => 'U kunt [$1 uw inhoud ophalen] als u wilt.<br />Als uw wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.',
 	'closed-wiki-dump-noexists' => 'Deze wiki is gesloten.
 Een dump van de inhoud wordt binnen 24 uur beschikbaar gemaakt.
 Kom hier alstublieft terug.',
@@ -3609,7 +3617,7 @@ Kom hier alstublieft terug.',
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
-	'closed-wiki-dump-exists' => 'Wil je [$1 de inhoud van je wiki downloaden]?', # Fuzzy
+	'closed-wiki-dump-exists' => 'Je kunt [$1 je inhoud ophalen] als je wilt.<br />Als je wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.',
 );
 
 /** Norwegian Nynorsk (norsk (nynorsk)‎)
@@ -4574,8 +4582,8 @@ $messages['sr-ec'] = array(
 	'awc-metrics-edits' => 'Измене',
 	'awc-metrics-db-size' => 'Величина базе',
 	'awc-metrics-images' => 'Слике',
-	'awc-metrics-all-users' => 'Упис.<br />корисници',
-	'awc-metrics-all-users-edit-main-ns' => 'Упис. корисници<br />(Садржај NS)',
+	'awc-metrics-all-users' => 'Рег.<br />корисници',
+	'awc-metrics-all-users-edit-main-ns' => 'Рег. корисници<br />(Садржај NS)',
 	'awc-metrics-pageviews' => 'Прегледи<br />странице',
 	'awc-metrics-statistics' => 'Статистика (просек за све месеце)',
 	'awc-metrics-close' => 'Затвори',
@@ -5001,6 +5009,7 @@ $messages['tt-cyrl'] = array(
 	'wikifactory-label-eznamespace' => 'EZNamespace',
 	'wikifactory-label-compare' => 'Чагыштыр',
 	'right-wikifactory' => 'Викиның эчке көйләнмәләрен үзгәртергә',
+	'action-wikifactory' => 'викиның эчке көйләнмәләрен үзгәртү',
 	'wikifactory-domain-edit' => 'Бу URL-ны үзгәртергә',
 	'wikifactory-domain-remove' => "викидан бу URL'ны бетерү",
 	'closewiki-check-and-confirm' => 'Викины карарга һәм башкарырга',
@@ -5042,6 +5051,13 @@ $messages['tt-cyrl'] = array(
 	'awc-metrics-edits' => 'Үзгәртүләр',
 	'awc-metrics-images' => 'Рәсемнәр',
 	'awc-metrics-close' => 'Ябу',
+	'awc-metrics-close-action' => 'ябу',
+	'awc-metrics-removed' => 'бетерелде',
+	'closed-wiki' => 'Ябылган вики',
+	'closed-wiki-create-wiki' => 'Яңа вики ясау',
+	'closed-reason' => 'Сәбәп:',
+	'newwikisgraph-param-all' => 'Барысы',
+	'newwikisgraph-param-other' => 'Башкасы',
 );
 
 /** Ukrainian (українська)

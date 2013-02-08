@@ -1,15 +1,9 @@
 <?php
-	$uploadmesg = wfMsgExt( 'vet-uploadtext', 'parse' );
-	$uploadmesg = preg_replace( '/(<a[^>]+)/', '$1 target="_blank" ', $uploadmesg );
-?>
-
-<?php
 	global $wgStylePath, $wgUser, $wgScript, $wgExtensionsPath;
 ?>
 
 <h1 id="VideoEmbedTitle"><?= wfMsg( 'vet-title' ) ?></h1>
-<section class="modalContent">
-	<img src="<?= $wgStylePath; ?>/common/images/ajax.gif" id="VideoEmbedProgress2" style="display: none;"/>
+<section>
 	<form action="<?= $wgScript ?>?action=ajax&rs=VET&method=insertVideo" id="VideoEmbedForm" class="WikiaForm" method="POST">
 	<?php if( !$wgUser->isAllowed( 'upload' ) ) {
 		if( !$wgUser->isLoggedIn() ) {
@@ -25,11 +19,11 @@
 			<label for="VideoEmbedUrl" class="with-info-p"><?= wfMsg('vet-url-label') ?></label>
 			<div>
 				<p><?= wfMsg( 'vet-description' ) ?> <a href="http://help.wikia.com/wiki/Help:Video_Embed_Tool" target="_blank"><?= wfMsg( 'vet-see-all' ) ?></a></p>
-				<input id="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" onkeypress="VET_onVideoEmbedUrlKeypress(event);" />
+				<input id="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" />
 			</div>
 		</div>
 	<?php } ?>
-		<a id="VideoEmbedUrlSubmit" class="wikia-button" style="display: block; " onclick="return VET_preQuery(event);" ><?= wfMsg('vet-upload-btn') ?></a>
+		<a id="VideoEmbedUrlSubmit" class="wikia-button" style="display: block; "><?= wfMsg('vet-upload-btn') ?></a>
 	</form>
 	<form action="" class="WikiaForm VET-search" id="VET-search-form">
 		<div class="input-group">
@@ -90,15 +84,4 @@
 		</div>
 	</div>
 </section>
-<a href="" id="bottom-close-button" class="wikia-button secondary"><?= wfMsg('vet-close') ?></a>
-<div id="VET_results_0">
-	<?= $result ?>
-</div>
-
-<div id="VET_results_1" style="display: none;">
-<br/><br/><br/><br/><br/>
-	<div style="text-align: center;">
-		<img src="<?= $wgExtensionsPath ?>/wikia/VideoEmbedTool/images/flickr_logo.gif" />
-		<div class="VideoEmbedSourceNote"><?= wfMsg('vet-flickr-inf') ?></div>
-	</div>
-</div>
+<a href="" class="bottom-close-button wikia-button secondary vet-close"><?= wfMsg('vet-close') ?></a>

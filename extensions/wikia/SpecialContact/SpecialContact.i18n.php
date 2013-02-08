@@ -19,7 +19,7 @@ $messages['en'] = array(
 	Additional information on how to report problems to Wikia can be found [[w:project:Report_a_problem|here]], or you can post on [[w:Forum:Index|Wikia Community Forums]] for user support.
 
 If you prefer to use regular e-mail or have attachments, you can contact us at [mailto:community@wikia.com community@wikia.com].',
-	'specialcontact-username' => 'Username',
+	'specialcontact-username' => 'Your Username',
 	'specialcontact-wikiname' => 'Which wiki',
 	'specialcontact-realname' => 'Your name',
 	'specialcontact-yourmail' => 'E-mail address',
@@ -716,6 +716,40 @@ Jeżeli wolisz skorzystać ze zwykłego sposobu kontaktu e-mail lub posiadasz za
 	'specialcontact-mailsubcc' => 'Kopia Twojej wiadomości do Wikii',
 	'specialcontact-ccheader' => 'To jest kopia Twojej wiadomości, która została przesłana do Zespołu Wikii',
 	'specialcontact-submitcomplete' => 'Dziękujemy za skontaktowanie się z Wikią.',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'contact' => 'Contata Wikia',
+	'specialcontact-wikia' => 'Contata Wikia',
+	'specialcontact-pagetitle' => 'Contata Wikia',
+	'specialcontact-intro' => "It peule contaté l'[[w:project:Staff|Echip Wikia]] dovrand sto formolari. J'admin dë sta wiki a peulo esse trovà [[Special:ListAdmins|belessì]].
+
+Anformassion adissionaj dzor com arporté problem a Wikia a peul esse trovà [[w:project:Report_a_problem|belessì]], o it peule posté dzor [[w:Forum:Index|Wikia Community Forums]] për apògg utent.
+
+S'it preferisse dovré un corel regolar o avèj dj'alegà, it peule contatene a [mailto:community@wikia.com community@wikia.com].",
+	'specialcontact-username' => 'Stranòm',
+	'specialcontact-wikiname' => 'Che wiki',
+	'specialcontact-realname' => 'Sò nòm',
+	'specialcontact-yourmail' => 'Adrëssa ëd pòsta eletrònica',
+	'specialcontact-problem' => 'Soget',
+	'specialcontact-problemdesc' => 'Mëssagi',
+	'specialcontact-mail' => 'Mandà a Wikia',
+	'specialcontact-filledin' => "Sta anformassion a l'é stàita anserìa dai gust ëd tò cont",
+	'specialcontact-ccme' => 'Mandme na còpia dë sto mëssagi',
+	'specialcontact-ccdisabled' => 'Disabilità: Për piasì vàlida toa adrëssa e-mail për dovré sta funsion',
+	'specialcontact-notyou' => 'Pa ti?',
+	'specialcontact-captchainfo' => 'Për piasì anseriss ël test ant la figura.',
+	'specialcontact-captchatitle' => 'Paròla confondùa',
+	'specialcontact-formtitle' => "Contata l'Echip d'Apògg Wikia",
+	'specialcontact-nomessage' => 'Për piasì anseriss un mëssagi',
+	'specialcontact-captchafail' => "Ël còdes ëd verìfica ò ch'a manca d'autut ò ch'a l'é pa bon.",
+	'specialcontact-mailsub' => 'Adrëssa ëd Contat Wikia',
+	'specialcontact-mailsubcc' => "Còpia dl'Adrëssa ëd Contat Wikia",
+	'specialcontact-ccheader' => "Costa a l'é na còpia ëd tò mëssagi che a l'é stàit mandà a l'Apògg Wikia",
+	'specialcontact-submitcomplete' => 'Mersì për avej contatà Wikia',
 );
 
 /** Pashto (پښتو)

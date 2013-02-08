@@ -1,30 +1,39 @@
 <?php 
-
+/**
+ * Class definition for WikiaSearchIndexer
+ */
+use \Wikia\Search\IndexService\Factory;
 /**
  * This class is responsible for handling all the methods needed to serve up document data for indexing.
- * These methods used to live in WikiaSearch, but there seems to be a nice point of functional cleavage between searching and indexing.
- * Note that this class DOES NOT actually send values to Solr. This powers a JSON-based service our back-end indexer queries.
  * @author Robert Elwell
  */
 class WikiaSearchIndexer extends WikiaObject {
-	
-	/**
-	 * Time to cache the wikipages value, used in indexing, in seconds -- 7 days.
-	 * @var int
-	 */
-	const WIKIPAGES_CACHE_TTL	= 604800;
-	
-	/**
-	 * Used to determine whether we have registered the onParserClearState hook
-	 * @var boolean
-	 */
-	protected $parserHookActive	= false;
 	
 	/**
 	 * Used for querying Solr
 	 * @var Solarium_Client
 	 */
 	protected $client;
+	
+	/**
+	 * Used to store pages when we make multiple invocations for the same page ID
+	 * @var array
+	 */
+	protected $articles = array();
+	
+	/**
+	 * Used to determine which services to invoke during WikiaSearchIndexer::getPage()
+	 * @var array
+	 */
+	protected $serviceNames = array(
+			'DefaultContent',
+			'Metadata',
+			'MediaData',
+			'Redirects',
+			'Wam',
+			'WikiPromoData',
+			'WikiViews'
+	);
 	
 	/**
 	 * Handles dependency injection for solarium client
@@ -75,147 +84,32 @@ class WikiaSearchIndexer extends WikiaObject {
 	 */
 	public function getPage( $pageId ) {
 		wfProfileIn(__METHOD__);
-
+		// these will eventually be broken out into their own atomic updates
 		$result = array();
-	
-		$page = F::build( 'Article', array( $pageId ), 'newFromID' );
-	
-		if( $page === null ) {
-			throw new WikiaException( 'Invalid Article ID' );
-		}
-	
-		if(! $this->parserHookActive ) {
-			$this->app->registerHook('ParserClearState', 'WikiaSearchIndexer', 'onParserClearState');
-			$this->parserHookActive = true;
-		}
-	
-		// hack: setting wgTitle as rendering fails otherwise
-		$wgTitle 			= $this->wg->Title;
-		$this->wg->Title	= $page->getTitle();
-
-		// hack: setting action=render to exclude "Related Pages" and other unwanted stuff
-		$wgRequest = $this->wg->Request;
-		$this->wg->Request->setVal('action', 'render');
-
-		if( $page->isRedirect() ) {
-			$redirectPage = F::build( 'Article', array( $page->getRedirectTarget() ) );
-			$redirectPage->loadContent();
-	
-			// hack: setting wgTitle as rendering fails otherwise
-			$this->wg->Title = $page->getRedirectTarget();
-
-			$redirectPage->render();
-			$canonical = $page->getRedirectTarget()->getPrefixedText();
-		}
-		else {
-			$page->render();
-			$canonical = '';
-		}
-	
-		$html 		= $this->wg->Out->getHTML();
-		$namespace	= $this->wg->Title->getNamespace();
-	
-		$isVideo	= false;
-		$isImage	= false;
-		$vidFields	= array();	
 		
-		if ( $namespace == NS_FILE && ($file = $this->wf->findFile( $this->wg->Title->getText() )) ) {
-			$fileHelper	= F::build( 'WikiaFileHelper' );
-			$detail		= $fileHelper->getMediaDetail( $this->wg->Title );
-			$isVideo	= $fileHelper->isVideoFile( $file );
-			$isImage	= ($detail['mediaType'] == 'image') && !$isVideo;
-			$metadata	= $file->getMetadata();
-	
-			if ( $metadata !== "0" ) {
-				$metadata = unserialize( $metadata );
-				$fileParams = array( 'description', 'keywords' );
-				$videoParams = array( 'movieTitleAndYear', 'videoTitle', 'title', 'tags', 'category' );
-				if ( $isVideo ) {
-					$fileParams = array_merge( $fileParams, $videoParams );
-					
-					/**
-					 * This maps video metadata field keys to dynamic fields
-					 */
-					$videoMetadataMapper = array(
-							'duration'		=>	'video_duration_i',
-							'provider'		=>	'video_provider_s',
-							'videoId'		=>	'video_id_s',
-							'altVideoId'	=>	'video_altid_s',
-							'aspectRatio'	=>	'video_aspectratio_s'
-							);
-					
-					foreach ( $videoMetadataMapper as $key => $field ) {
-						if ( isset( $metadata[$key] ) ) {
-							$vidFields[$field] = $metadata[$key];
-						}
-					}
-					// special cases
-					if ( isset( $metadata['hd'] ) ) {
-						$vidFields['video_hd_b'] = empty( $metadata['hd'] ) ? 'false' : 'true';
-					}
-					if ( isset( $metadata['genres'] ) ) {
-						$vidFields['video_genres_txt'] = preg_split( '/, ?/', $metadata['genres'] );
-					}
-					if ( isset( $metadata['actors'] ) ) {
-						$vidFields['video_actors_txt'] = preg_split( '/, ?/', $metadata['actors'] );
-					}
-				}
-	
-				foreach ($fileParams as $datum) {
-					$html .= isset( $metadata[$datum] ) ? ' ' . $metadata[$datum] : '';
-				}
-				
+		foreach ( $this->serviceNames as $serviceName ) {
+			$serviceResult = $this->getService( $serviceName )
+			                      ->setPageId( $pageId )
+			                      ->execute();
+			
+			if ( is_array( $serviceResult ) ) {
+    			$result = array_merge( $result, $serviceResult );
 			}
 		}
-	
-		$title = $page->getTitle()->getText();
-	
-		if ( in_array( $namespace, array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
-			$wm = F::build( 'WallMessage', array( $page->getId() ), 'newFromId' );
-			$wm->load();
-			if ($wm->isMain()) {
-				$title = $wm->getMetaTitle();
-			} else {
-				if ($main = $wm->getTopParentObj() and !empty($main)) {
-					$main->load();
-					$title = $main->getMetaTitle();
-				}
-			}
-		}
-	
-		// clear output buffer in case we want get more pages
-		$this->wg->Out->clearHTML();
-	
-		$result['wid']			= empty( $this->wg->ExternalSharedDB ) ? $this->wg->SearchWikiId : (int) $this->wg->CityId;
-		$result['pageid']		= $pageId;
-		$result['id']			= $result['wid'] . '_' . $result['pageid'];
-		$result['title']		= $title;
-		$result['canonical']	= $canonical;
-		$result['html']			= html_entity_decode($html, ENT_COMPAT, 'UTF-8');
-		$result['url']			= $page->getTitle()->getFullUrl();
-		$result['ns']			= $page->getTitle()->getNamespace();
-		$result['host']			= substr($this->wg->Server, 7);
-		$result['lang']			= $this->wg->ContLang->mCode;
-	
-		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
-		$result['iscontent']	= in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
-		$result['is_main_page']	= ( ( $page->getId() != 0 ) && ( $page->getId() == F::build( 'Title', array( 'newMainPage' ) )->getArticleId() ) ) ? 'true' : 'false';
-		$result['is_redirect']	= ($canonical == '') ? 'false' : 'true';
-		$result['is_video']		= $isVideo ? 'true' : 'false';
-		$result['is_image']		= $isImage ? 'true' : 'false';
-	
-		foreach ( $vidFields as $fieldName => $fieldValue ) {
-			$result[$fieldName] = $fieldValue;
-		}
-		
-		$result = array_merge($result, $this->getPageMetaData($page));
-	
-		// restore global state
-		$this->wg->Title	= $wgTitle;
-		$this->wg->Request	= $wgRequest;
-	
 		wfProfileOut(__METHOD__);
 		return $result;
+	}
+	
+	/**
+	 * Helper for instantiating or retrieving stored services
+	 * @param string $serviceName
+	 * @return WikiaSearchIndexServiceAbstract
+	 */
+	public function getService( $serviceName ) {
+		if (! isset( $this->services[$serviceName] ) ) {
+			$this->services[$serviceName] = Factory::getInstance()->get( $serviceName ); 
+		}
+		return $this->services[$serviceName]; 
 	}
 	
 	/**
@@ -390,158 +284,10 @@ class WikiaSearchIndexer extends WikiaObject {
 		
 		return true;
 	}
-	
-	/**
-	 * Makes a handful of MediaWiki API requests to get metadata about a page
-	 * @see WikiaSearchIndexer::getPage()
-	 * @param Article $page
-	 */
-	protected function getPageMetaData( Article $page ) {
-		wfProfileIn(__METHOD__);
-		$result = array();
-	
-		$apiService = F::build( 'ApiService' );
-		$data = $apiService->call( array(
-				'titles'	=> $page->getTitle(),
-				'bltitle'	=> $page->getTitle(),
-				'action'	=> 'query',
-				'list'		=> 'backlinks',
-				'blcount'	=> 1
-		));
-		$result['backlinks'] = isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0;  
-	
-		$pageId = $page->getId();
-		
-		if (! empty( $this->wg->ExternalSharedDB ) ) {
-			$data = $apiService->call( array(
-					'pageids'	=> $pageId,
-					'action'	=> 'query',
-					'prop'		=> 'info|categories',
-					'inprop'	=> 'url|created|views|revcount',
-					'meta'		=> 'siteinfo',
-					'siprop'	=> 'statistics|wikidesc|variables|namespaces|category'
-			));
-			if( isset( $data['query']['pages'][$pageId] ) ) {
-				$pageData = $data['query']['pages'][$pageId];
-				$result['views']	= $pageData['views'];
-				$result['revcount']	= $pageData['revcount'];
-				$result['created']	= $pageData['created'];
-				$result['touched']	= $pageData['touched'];
-			}
-		
-			$result['categories'] = array();
-		
-			if ( isset( $pageData['categories'] ) ) {
-				foreach ( $pageData['categories'] as $category ) {
-					$result['categories'][] = implode( ':', array_slice( explode( ':', $category['title'] ), 1 ) );
-				}
-			}
-		
-			$result['hub'] 			= isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
-			$result['wikititle']	= $this->wg->Sitename;
-		}
-	
-		$result['redirect_titles'] = $this->getRedirectTitles($page);
-	
-		$wikiViews = $this->getWikiViews($page);
-	
-		$wam = F::build( 'DataMartService' )->getCurrentWamScoreForWiki( $this->wg->CityId );
-		
-		$result['wikiviews_weekly']		= (int) $wikiViews->weekly;
-		$result['wikiviews_monthly']	= (int) $wikiViews->monthly;
-		$result['wam']					= $wam > 0 ? ceil( $wam ) : 1; //mapped here for computational cheapness
-	
-		wfProfileOut(__METHOD__);
-		return $result;
-	}
-	
-	/**
-	 * Provided an Article, queries the database for all titles that are redirects to that page.
-	 * @see    WikiaSearchIndexerTest::testGetRedirectTitlesNoResults
-	 * @see    WikiaSearchIndexerTest::testGetRedirectTitlesWithResults
-	 * @param  Article $page
-	 * @return string the pipe-joined redirect titles with underscores replaced with spaces
-	 */
-	protected function getRedirectTitles( Article $page ) {
-		wfProfileIn(__METHOD__);
-	
-		$dbr = $this->wf->GetDB(DB_SLAVE);
-	
-		$result = $dbr->selectRow(
-				array( 'redirect', 'page' ),
-				array( 'GROUP_CONCAT(page_title SEPARATOR " | ") AS redirect_titles' ),
-				array(),
-				__METHOD__,
-				array( 'GROUP'=>'rd_title' ),
-				array( 'page' => array( 'INNER JOIN', array('rd_title'=>$page->getTitle()->getDbKey(), 'page_id = rd_from' ) ) )
-		);
-	
-		wfProfileOut(__METHOD__);
-		return ( !empty( $result ) ) ? str_replace( '_', ' ', $result->redirect_titles ) : '';
-	}
-	
-	/**
-	 * Provided an Article, queries the database for weekly and monthly pageviews. 
-	 * @see   WikiaSearchIndexerTest::testGetWikiViewsWithCache
-	 * @see   WikiaSearchIndexerTest::testGetWikiViewsNoCacheYesDb
-	 * @see   WikiaSearchIndexerTest::testGetWikiViewsNoCacheNoDb
-	 * @param Article $page
-	 */
-	protected function getWikiViews( Article $page ) {
-		wfProfileIn(__METHOD__);
-		$key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
 
-		// should probably re-poll for wikis without much love
-		if ( ( $result = $this->wg->Memc->get( $key ) ) && ( $result->weekly > 0 || $result->monthly > 0 ) ) {
-			wfProfileOut(__METHOD__);
-			return $result;
-		}
-
-		$row = new stdClass();	
-		$row->weekly = 0;
-		$row->monthly = 0;
-		
-		$datamart = F::build( 'DataMartService' );
-		
-		$startDate = date( 'Y-m-d', strtotime('-1 week') );
-		$endDate = date( 'Y-m-01', strtotime('now') );	
-		$pageviews_weekly = $datamart->getPageviewsWeekly( $startDate, $endDate, (int) $this->wg->CityId );
-
-		if (! empty( $pageviews_weekly ) ) {
-			foreach ( $pageviews_weekly as $pview ) {
-				$row->weekly += $pview;
-			}
-		}
-			
-		$startDate = date( 'Y-m-01', strtotime('-1 month') );
-		$pageviews_monthly = $datamart->getPageviewsMonthly( $startDate, $endDate, (int) $this->wg->CityId );
-		if (! empty( $pageviews_monthly ) ) {
-			foreach ( $pageviews_monthly as $pview ) {
-				$row->monthly += $pview;
-			}
-		}
-	
-		$this->wg->Memc->set( $key, $row, self::WIKIPAGES_CACHE_TTL );
-	
-		wfProfileOut(__METHOD__);
-		return $row;
-	}
-	
 	/**
 	 * MediaWiki Hooks
 	 */
-
-	/**
-	 * ParserClearState hook handler, called internally.
-	 * @static
-	 * @param $parser Parser
-	 * @return bool
-	 */
-	public static function onParserClearState( &$parser ) {
-	    // prevent from caching when indexer is running to avoid infrastructure overload
-	    $parser->getOutput()->setCacheTime(-1);
-	    return true;
-	}
 	
 	/**
 	 * Sends delete request to article if it gets deleted

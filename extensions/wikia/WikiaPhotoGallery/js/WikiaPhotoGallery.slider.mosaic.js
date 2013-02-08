@@ -10,24 +10,15 @@ var WikiaMosaicSliderMasterControl = {
 
 		sliders.click(WikiaMosaicSliderMasterControl.clickTrackingHandler);
 	},
-	trackClick: function(category, action, label, value, params) {
-		var trackingObj = {
-			ga_category: category,
-			ga_action: action,
-			ga_label: label
-		};
-
-		if(value)
-			trackingObj['ga_value'] = value;
-
-		if(params)
-			$.extend(trackingObj, params);
-
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			trackingObj,
-			'internal'
-		);
+	trackClick: function(category, action, label, value, params, event) {
+		WikiaTracker.track({
+			action: action,
+			browserEvent: event,
+			category: category,
+			label: label,
+			trackingMethod: 'internal',
+			value: value
+		});
 	},
 
 	clickTrackingHandler: function(e) {
@@ -37,13 +28,13 @@ var WikiaMosaicSliderMasterControl = {
 
 		if (node.closest('.wikia-mosaic-slider-region').length > 0 && node.closest('a').length > 0) {
 			var url = node.closest('a').attr('href');
-			WikiaMosaicSliderMasterControl.trackClick('MosaicSlider', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'hero', null, {href:url, button: mouseButton});
+			WikiaMosaicSliderMasterControl.trackClick('MosaicSlider', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'hero', null, {href:url, button: mouseButton}, e);
 		} else if (node.closest('.wikia-mosaic-slide').length > 0) {
 			var liNode = node.closest('.wikia-mosaic-slide');
 			var allLiNode = node.closest('.wikia-mosaic-thumb-region').find('.wikia-mosaic-slide');
 			var imageIndex = allLiNode.index(liNode) + 1;
 			var url = node.closest('a').attr('href');
-			WikiaMosaicSliderMasterControl.trackClick('MosaicSlider', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'thumbnail', imageIndex, {href:url, button: mouseButton});
+			WikiaMosaicSliderMasterControl.trackClick('MosaicSlider', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'thumbnail', imageIndex, {href:url, button: mouseButton}, e);
 		}
 		$().log('tracking took ' + (new Date() - startTime) + ' ms');
 	}
@@ -72,18 +63,18 @@ WikiaMosaicSlider.prototype.init = function() {
 	this.sliderPanorama = this.sliderRegion.find('.wikia-mosaic-slider-panorama');
 	this.sliderDescription = this.sliderRegion.find('.wikia-mosaic-slider-description');
 	this.sliderRegionLink = this.sliderRegion.find('.wikia-mosaic-link');
-	
+
 	// build slider region (DOM op)
 	this.sliderPanorama.append(this.largeThumbs);
-	
+
 	// other variables
 	this.timerIndex = 0;
 	this.timer = 5000;	// 3 seconds
-	
+
 	// attach event handler
 	this.slides.hover($.proxy(this.handleSlideClick, this), function() {});
 	this.timerHandle = setInterval($.proxy(this.timedSlide, this), this.timer);
-	
+
 	// display
 	this.showSlide(0);
 	this.el.show();
@@ -104,10 +95,10 @@ WikiaMosaicSlider.prototype.showSlide = function(index) {
 	this.sliderPanorama.stop(true, true);
 
 	this.slides.removeClass('selected');
-	
+
 	var slide = $(this.slides[index]);
 	slide.addClass('selected');
-	
+
 	this.sliderRegionLink.attr('href', $(this.slideLinks[index]).attr('href'));
 
 	this.sliderDescription.fadeTo(100, 0, $.proxy(function() {

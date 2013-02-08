@@ -2,11 +2,11 @@
  * module used to handle category pages pagination
  *
  * @param events.js events
- * @param loader.js loader
+ * @param throbber.js throbber
  * @param track.js track
  */
 /* global wgTitle */
-require(['events', 'loader', 'track'], function (events, loader, track) {
+require(['events', 'throbber', 'track', 'wikia.nirvana'], function (events, throbber, track, nirvana) {
 	'use strict';
 
 	var d = document,
@@ -46,7 +46,8 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 				track.event('category', track.IMAGE_LINK, {
 					label: 'exhibition',
 					href: t.href
-				});
+				},
+				ev);
 			}
 
 		});
@@ -61,7 +62,8 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 				track.event('category', track.TEXT_LINK, {
 					label: 'category',
 					href: t.href
-				});
+				},
+				ev);
 			} else if(t.className.indexOf('pag') > -1) {
 				onClick.call(t, ev);
 			}
@@ -88,12 +90,12 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 		prev.setAttribute('data-batch', prevBatch + add);
 		next.setAttribute('data-batch', nextBatch + add);
 
-		loader.show(self, {size: '40px'});
+		throbber.show(self, {size: '40px'});
 
 		self.className += ' active';
 
-		Wikia.nirvana.sendRequest({
-			controller: 'WikiaMobileController',
+		nirvana.sendRequest({
+			controller: 'WikiaMobile',
 			method: 'getCategoryBatch',
 			format: 'html',
 			type: 'GET',
@@ -102,8 +104,9 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 				batch: batch,
 				//this is already encoded and $.ajax encode all data
 				index: decodeURIComponent(id.slice(8))
-			},
-			callback: function (result) {
+			}
+		}).done(
+			function (result) {
 				container.parentElement.removeChild(container);
 				next.insertAdjacentHTML('beforebegin', result);
 
@@ -114,11 +117,11 @@ require(['events', 'loader', 'track'], function (events, loader, track) {
 					track.event('category', track.PAGINATE, {label: 'previous'});
 				}
 
-				loader.hide(self);
+				throbber.hide(self);
 
 				prev.className = 'pagLess' + (batch > 1 ? ' visible' : '');
 				next.className = 'pagMore' + (batch < ~~(parent.getAttribute('data-batches')) ? ' visible' : '');
 			}
-		});
+		);
 	}
 });

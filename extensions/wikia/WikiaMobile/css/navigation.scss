@@ -23,6 +23,8 @@
 #wkImgMrk {
 	height: 40px;
 	padding: 2px 5px;
+
+	position: absolute;
 }
 
 #wkNavTgl {
@@ -135,6 +137,7 @@
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: 50%;
+		position: relative;
 	}
 
 	.wkPrfHead{
@@ -448,6 +451,8 @@
 	display: none;
 
 	float: left;
+
+	border-radius: 3px;
 }
 
 //default style if js is disabled

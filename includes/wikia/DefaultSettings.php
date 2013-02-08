@@ -144,6 +144,7 @@ $app->registerHook( 'MessageCacheReplace', 'ApiHooks', 'onMessageCacheReplace' )
 $app->registerHook( 'ArticleDeleteComplete', 'ApiHooks', 'onArticleDeleteComplete' );
 $app->registerHook( 'ArticleSaveComplete', 'ApiHooks', 'onArticleSaveComplete' );
 $app->registerHook( 'ArticleRollbackComplete', 'ApiHooks', 'onArticleRollbackComplete' );
+$app->registerHook( 'TitleMoveComplete', 'ApiHooks', 'onTitleMoveComplete' );
 $app->registerHook( 'ArticleCommentListPurgeComplete', 'ApiHooks', 'ArticleCommentListPurgeComplete' );
 
 
@@ -166,6 +167,15 @@ $app->registerClass( 'NotFoundApiException', "{$IP}/includes/wikia/api/ApiExcept
 /**
  * Wikia API end
  */
+
+/**
+ * Wikia Skins
+ *
+ * this need to be autoloaded to avoid PHPUnit replacing the classes definition with mocks
+ * and brake the world; Monobook is already autoloaded in /includes/DefaultSettings.php
+ */
+$app->registerClass( 'SkinOasis', "{$IP}/skins/Oasis.php" );
+$app->registerClass( 'SkinWikiaMobile', "{$IP}/skins/WikiaMobile.php" );
 
 $wgAutoloadClasses['SpamBlacklist'] = $IP . '/extensions/SpamBlacklist/SpamBlacklist_body.php';
 $wgAutoloadClasses['BaseBlacklist'] = $IP . '/extensions/SpamBlacklist/BaseBlacklist.php';
@@ -365,12 +375,9 @@ $wgAutoloadClasses[ "WikiaApiQueryEventsData"       ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "WikiaApiQueryLastEditors"      ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryLastEditors.php";
 $wgAutoloadClasses[ "ApiRunJob"                     ] = "$IP/extensions/wikia/WikiaApi/ApiRunJob.php";
+$wgAutoloadClasses[ "ApiFetchBlob"                  ] = "$IP/includes/api/wikia/ApiFetchBlob.php";
 
-if( $wgUseFakeExternalStoreDB !== true ) {
-	$wgAutoloadClasses[ "WikiaApiQueryBlob"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryBlob.php";
-}
-
-/*
+/**
  * validators
  */
 $wgAutoloadClasses[ "WikiaValidator"                ] = "$IP/includes/wikia/validators/WikiaValidator.class.php";
@@ -390,6 +397,7 @@ $wgAutoloadClasses[ "WikiaValidatorCompare"         ] = "$IP/includes/wikia/vali
 $wgAutoloadClasses[ "WikiaValidatorCompareValueIF"  ] = "$IP/includes/wikia/validators/WikiaValidatorCompareValueIF.class.php";
 $wgAutoloadClasses[ "WikiaValidatorCompareEmptyIF"  ] = "$IP/includes/wikia/validators/WikiaValidatorCompareEmptyIF.class.php";
 $wgAutoloadClasses[ "WikiaValidatorFileTitle"       ] = "$IP/includes/wikia/validators/WikiaValidatorFileTitle.class.php";
+$wgAutoloadClasses[ "WikiaValidatorImageSize"       ] = "$IP/includes/wikia/validators/WikiaValidatorImageSize.class.php";
 $wgAutoloadClasses[ "WikiaValidatorDependent"       ] = "$IP/includes/wikia/validators/WikiaValidatorDependent.class.php";
 include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
 
@@ -438,11 +446,7 @@ $wgAPIModules[ "wdelete"           ] = "WikiaApiQueryWrite";
 $wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "runjob"            ] = "ApiRunJob";
-
-
-if( $wgUseFakeExternalStoreDB !== true ) {
-	$wgAPIModules[ "blob"              ] = "WikiaApiQueryBlob";
-}
+$wgAPIModules[ "fetchblob"         ] = "ApiFetchBlob";
 
 $wgUseAjax                = true;
 $wgValidateUserName       = true;
@@ -468,8 +472,9 @@ include_once( "$IP/extensions/wikia/WikiaWantedQueryPage/WikiaWantedQueryPage.se
 //include_once( "$IP/includes/wikia/Resources.php" );
 include_once( "$IP/extensions/wikia/ImageServing/imageServing.setup.php" );
 include_once( "$IP/extensions/wikia/ImageServing/Test/ImageServingTest.setup.php" );
-include_once( "$IP/extensions/wikia/MostVisitedPages/SpecialMostVisitedPages.php" );
 include_once( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
+include_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
+include_once( "$IP/extensions/wikia/SpecialUnusedVideos/SpecialUnusedVideos.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1048,3 +1053,9 @@ $wgWikiaSeasonsPencilUnit = false;
  * Enables QuickTools extension
  */
 $wgEnableQuickToolsExt = true;
+
+/**
+ * @name $wgPhalanxService
+ * Use phalanx external service
+ */
+$wgPhalanxService = false;

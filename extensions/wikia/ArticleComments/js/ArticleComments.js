@@ -35,9 +35,14 @@ var ArticleComments = {
 			}
 		}
 
-		$articleComments.on('click', '.article-comm-edit', ArticleComments.actionProxy(ArticleComments.edit));
-		$articleComments.on('click', '.article-comm-reply', ArticleComments.actionProxy(ArticleComments.reply));
-		$('#article-comm-submit').bind('click', { source: '#article-comm' }, ArticleComments.actionProxy(ArticleComments.postComment));
+        if(window.wgDisableAnonymousEditing && !window.wgUserName){
+            $(".article-comm-reply").hide();
+        }
+        else {
+    		$articleComments.on('click', '.article-comm-edit', ArticleComments.actionProxy(ArticleComments.edit));
+            $articleComments.on('click', '.article-comm-reply', ArticleComments.actionProxy(ArticleComments.reply));
+            $('#article-comm-submit').bind('click', { source: '#article-comm' }, ArticleComments.actionProxy(ArticleComments.postComment));
+        }
 
 		$articleCommFbMonit.mouseenter(function() {
 			$fbCommentMessage.fadeIn('slow');
@@ -533,10 +538,12 @@ var ArticleComments = {
 	},
 
 	scrollToElement: function(element) {
-		var $element = $(element);
-		var docViewTop = $window.scrollTop();
-		var docViewBottom = docViewTop + $window.height();
-		var elementTop = $element.offset().top;
+		var $element = $(element),
+			docViewTop = $window.scrollTop(),
+			docViewBottom = docViewTop + $window.height(),
+			elementTop = $element.offset().top;
+
+		$element.find('blockquote').addClass('current');
 
 		if (elementTop < docViewTop || elementTop > docViewBottom) {
 			$('html, body').animate({

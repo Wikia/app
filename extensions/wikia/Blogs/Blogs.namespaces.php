@@ -14,7 +14,8 @@ $namespaces['en'] = array(
 
 $namespaces['fr'] = array(
         NS_BLOG_ARTICLE => 'Blog_utilisateur',
-        NS_BLOG_ARTICLE_TALK => 'Commentaire_blog_utilisateur'
+        NS_BLOG_ARTICLE_TALK => 'Commentaire_blog_utilisateur',
+        NS_BLOG_LISTING_TALK => 'Discussion_blog_utilisateur'
 );
 
 $namespaces['de'] = array(
@@ -59,3 +60,15 @@ $namespaces['pl'] = array(
         NS_BLOG_LISTING => 'Blog',
         NS_BLOG_LISTING_TALK => 'Dyskusja_blogu'
 );
+
+$namespaces['uk'] = array(
+        NS_BLOG_ARTICLE => 'Блог_користувача',
+        NS_BLOG_ARTICLE_TALK => 'Коментар_до_блога_користувача',
+        NS_BLOG_LISTING => 'Блог',
+        NS_BLOG_LISTING_TALK => 'Обговорення_блога'
+);
+
+$namespaces['it'] = array(
+        NS_BLOG_ARTICLE => 'Blog_utente'
+);
+

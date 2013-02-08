@@ -187,8 +187,7 @@ Alternatively, you can click "$2" to see the page in its updated form.',
 
 	'wikiaPhotoGallery-search-tooltip' => 'Search photos on this wiki',
 
-	'wikiaPhotoGallery-upload-image-size-error' => 'Wrong image size. Photos should be 660px by 360px or larger',
-	'wikiaPhotoGallery-upload-image-size' => 'Photos should be 660px by 360px or larger',
+	'wikiaPhotoGallery-upload-image-size' => 'Photos should be 670px by 360px or larger',
 	'wikiaPhotoGallery-not-displayed' => 'Not displayed',
 	'galery-slider-read-more' => ' Read more >'
 );
@@ -1058,8 +1057,7 @@ Alternativament, pot fer clic " $2 " per veure la pàgina en la seva forma d\'ac
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Enllaç (enganxar nom de pàgina o URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalls de la imatge.',
 	'wikiaPhotoGallery-search-tooltip' => 'Cerca fotos en aquesta wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Mida de la imatge equivocada. Fotos hauria de ser 660px per 360px o més gran',
-	'wikiaPhotoGallery-upload-image-size' => 'Fotos hauria de ser 660px per 360px o més gran',
+	'wikiaPhotoGallery-upload-image-size' => 'Fotos hauria de ser 670px per 360px o més gran',
 	'wikiaPhotoGallery-not-displayed' => 'No mostrat',
 	'galery-slider-read-more' => 'Llegir més',
 );
@@ -1245,8 +1243,7 @@ Místo toho můžete kliknout na "$2" a zobrazit aktualizovanou stránku.',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Odkaz na (vložte název stránky nebo URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Detaily obrázku.',
 	'wikiaPhotoGallery-search-tooltip' => 'Hledat fotografie na této wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Špatná velikost obrázku. Velikost obrázku musí být 660 px na 360 px nebo více.',
-	'wikiaPhotoGallery-upload-image-size' => 'Velikost obrázku musí být 660 px na 360 px nebo více.',
+	'wikiaPhotoGallery-upload-image-size' => 'Velikost obrázku musí být 670 px na 360 px nebo více.',
 	'wikiaPhotoGallery-not-displayed' => 'Není zobrazeno',
 	'galery-slider-read-more' => 'Číst více >',
 );
@@ -1254,6 +1251,7 @@ Místo toho můžete kliknout na "$2" a zobrazit aktualizovanou stránku.',
 /** German (Deutsch)
  * @author Avatar
  * @author LWChris
+ * @author Metalhead64
  * @author PtM
  * @author The Evil IP address
  * @author Tiin
@@ -1431,8 +1429,7 @@ Wenn auf dieses Bild geklickt wird, zu dieser Seite gehen.",
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Link-Ziel (Seitennamen oder URL einfügen)',
 	'wikiaPhotoGallery-photooptions-description' => 'Bilddetails.',
 	'wikiaPhotoGallery-search-tooltip' => 'Suche Fotos in diesem Wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Falsche Bildgröße. Bilder müssen 660 mal 360 Pixel oder größer sein.',
-	'wikiaPhotoGallery-upload-image-size' => 'Bilder müssen 660 mal 360 Pixel oder größer sein.',
+	'wikiaPhotoGallery-upload-image-size' => 'Fotos sollten 670 mal 360 Pixel oder größer sein',
 	'wikiaPhotoGallery-not-displayed' => 'Nicht angezeigt',
 	'galery-slider-read-more' => 'Mehr lesen >',
 );
@@ -1480,7 +1477,7 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-upload-select-images' => 'Weçine',
 	'wikiaPhotoGallery-photooptions-done' => 'Qeyd kerd',
 	'wikiaPhotoGallery-preview-hover-modify' => 'bıvurne',
-	'wikiaPhotoGallery-preview-hover-delete' => 'besterne',
+	'wikiaPhotoGallery-preview-hover-delete' => 'bestere',
 	'wikiaPhotoGallery-preview-add-photo' => 'Fotraf deke',
 	'wikiaPhotoGallery-preview-tab-layout' => 'Ca gınayiş',
 	'wikiaPhotoGallery-preview-px' => 'px',
@@ -1764,8 +1761,7 @@ Describe esta imagen.",
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Enlazar a (pegar nombre de página o URL)',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalles de imagen.',
 	'wikiaPhotoGallery-search-tooltip' => 'Buscar imágenes en esta wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Tamaño de la imagen incorrecto. Las imágenes deben ser de 660 por 360px o mayores.',
-	'wikiaPhotoGallery-upload-image-size' => 'Las imágenes deben ser de 660 px por 360 px o mayores.',
+	'wikiaPhotoGallery-upload-image-size' => 'Las imágenes deberían de ser de 670px por 360px o superior',
 	'wikiaPhotoGallery-not-displayed' => 'No mostrado',
 	'galery-slider-read-more' => 'Leer más >',
 );
@@ -2046,8 +2042,7 @@ Décrivez cette photo.",
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Lien vers (insérez le nom ou l’URL de la page).',
 	'wikiaPhotoGallery-photooptions-description' => 'Détails de l’image',
 	'wikiaPhotoGallery-search-tooltip' => 'Rechercher des photos sur ce wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Taille d’image incorrecte. Les images doivent être de 660 par 360 px ou plus.',
-	'wikiaPhotoGallery-upload-image-size' => 'Les images doivent être de 660 par 360 px ou plus.',
+	'wikiaPhotoGallery-upload-image-size' => 'Les images doivent être de 670 par 360 px ou plus.', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'Non affiché',
 	'galery-slider-read-more' => 'En savoir plus &gt;',
 );
@@ -2227,8 +2222,7 @@ Describa esta foto.",
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Ligazón cara a (pegue o nome da páxina ou o URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalles da imaxe.',
 	'wikiaPhotoGallery-search-tooltip' => 'Procurar fotos neste wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Tamaño de imaxe incorrecto. As imaxes deben ser de 660 por 360px ou maiores.',
-	'wikiaPhotoGallery-upload-image-size' => 'As imaxes deben ser de 660px por 360px ou maiores.',
+	'wikiaPhotoGallery-upload-image-size' => 'As imaxes deben ser de 670px por 360px ou maiores.', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'Non mostrado',
 	'galery-slider-read-more' => ' Ler máis >',
 );
@@ -2413,8 +2407,7 @@ $messages['he'] = array(
 	'wikiaPhotoGallery-photooptions-linkurl' => 'קישור אל (שם דף או כתובת אינטרנט)',
 	'wikiaPhotoGallery-photooptions-description' => 'פרטי התמונה.',
 	'wikiaPhotoGallery-search-tooltip' => 'חיפוש תמונות באתר זה',
-	'wikiaPhotoGallery-upload-image-size-error' => 'גודל התמונה שגוי. התמונות צריכות להיות בגודל 673 על 410 פיקסלים.', # Fuzzy
-	'wikiaPhotoGallery-upload-image-size' => 'התמונות חייבות להיות בגודל 673  על  410 פיקסלים.', # Fuzzy
+	'wikiaPhotoGallery-upload-image-size' => 'התמונות חייבות להיות בגודל 670  על  360 פיקסלים.', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'לא מוצג',
 	'galery-slider-read-more' => 'קריאה נוספת >',
 );
@@ -2596,8 +2589,7 @@ Másik lehetőségként a(z) "$2"-re kattintva megtekintheted az oldalt frissít
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Hivatkozzon ide: (illeszd be a lap nevét vagy URL-címét)',
 	'wikiaPhotoGallery-photooptions-description' => 'Kép adatai.',
 	'wikiaPhotoGallery-search-tooltip' => 'Képek keresése ezen a wikin',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Rossz képméret. A képek minimális mérete 660 × 360 pixel.',
-	'wikiaPhotoGallery-upload-image-size' => 'A képek minimális mérete 660 × 360 pixel',
+	'wikiaPhotoGallery-upload-image-size' => 'A képek minimális mérete 670 × 360 pixel', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'Nem jelenik meg',
 	'galery-slider-read-more' => 'Tovább >',
 );
@@ -2776,8 +2768,7 @@ Alternativemente, tu pote cliccar super "$2" pro vider le pagina in su forma act
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Ligar a (colla le nomine del pagina o le URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalios del imagine.',
 	'wikiaPhotoGallery-search-tooltip' => 'Cercar photos in iste wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Dimension incorrecte. Le imagines debe esser 660×360 pixels o plus grande.',
-	'wikiaPhotoGallery-upload-image-size' => 'Le imagines debe esser 660×360 pixels o plus grande.',
+	'wikiaPhotoGallery-upload-image-size' => 'Le imagines debe esser 670×360 pixels o plus grande.', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'Non monstrate',
 	'galery-slider-read-more' => ' Leger plus >',
 );
@@ -3118,8 +3109,7 @@ $messages['ja'] = array(
 	'wikiaPhotoGallery-photooptions-linkurl' => 'リンク（ページ名もしくはURLを入力）',
 	'wikiaPhotoGallery-photooptions-description' => '画像の詳細',
 	'wikiaPhotoGallery-search-tooltip' => 'このウィキの画像を検索',
-	'wikiaPhotoGallery-upload-image-size-error' => '画像サイズが不適切です。画像は 660 x 360 ピクセル以上でなければなりません。',
-	'wikiaPhotoGallery-upload-image-size' => '画像は 660 x 360 ピクセル以上でなければなりません。',
+	'wikiaPhotoGallery-upload-image-size' => '画像は 670 x 360 ピクセル以上でなければなりません。',
 	'wikiaPhotoGallery-not-displayed' => '表示されません',
 	'galery-slider-read-more' => '続きを読む >',
 );
@@ -3572,8 +3562,7 @@ $messages['mk'] = array(
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Врска до (тука ископирајте назив или URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Податоци за сликата.',
 	'wikiaPhotoGallery-search-tooltip' => 'Пребарај слики на ова вики',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Погрешна големина. Сликите мора да бидат со големина од барем 660 × 360 пиксели.',
-	'wikiaPhotoGallery-upload-image-size' => 'Сликите мора да бидат со големина од барем 660 × 360 пиксели.',
+	'wikiaPhotoGallery-upload-image-size' => 'Сликите мора да бидат со големина од барем 670 × 360 пиксели.', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'Неприкажано',
 	'galery-slider-read-more' => 'Прочитајте повеќе >',
 );
@@ -3752,8 +3741,7 @@ Sebagai alternatif, anda juga boleh mengklik "$2" untuk melihat laman ini dalam 
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Pautan ke (tampalkan nama laman atau URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Butiran gambar.',
 	'wikiaPhotoGallery-search-tooltip' => 'Cari gambar di wiki ini',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Saiz gambar salah. Gambar harus bersaiz 660px kali 360px ke atas.',
-	'wikiaPhotoGallery-upload-image-size' => 'Gambar haruslah bersaiz 660 px kali 360 px ke atas.',
+	'wikiaPhotoGallery-upload-image-size' => 'Gambar haruslah bersaiz 670 px kali 360 px ke atas.',
 	'wikiaPhotoGallery-not-displayed' => 'Tidak dipaparkan',
 	'galery-slider-read-more' => 'Baca lebih lanjut>',
 );
@@ -3947,8 +3935,7 @@ Beskriv dette bildet.",
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Lenke til (lim inn sidenavn eller URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Bildedetaljer.',
 	'wikiaPhotoGallery-search-tooltip' => 'Søk etter bilder på denne wikien',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Feil bildestørrrelse. Bildene må være 673x410 piksler eller større.',
-	'wikiaPhotoGallery-upload-image-size' => 'Bildene må være 673x410 piksler eller større.',
+	'wikiaPhotoGallery-upload-image-size' => 'Bildene må være 670x360 piksler eller større.',
 	'wikiaPhotoGallery-not-displayed' => 'Ikke vist',
 	'galery-slider-read-more' => 'Les mer >',
 );
@@ -4011,7 +3998,7 @@ Wat wilt u doen?',
 	'wikiaPhotoGallery-preview-add-photo' => 'Afbeelding toevoegen',
 	'wikiaPhotoGallery-preview-add-caption' => 'Bijschrift toevoegen',
 	'wikiaPhotoGallery-preview-add-description' => 'Beschrijving toevoegen',
-	'wikiaPhotoGallery-preview-add-link' => 'Verwijzing toevoegen',
+	'wikiaPhotoGallery-preview-add-link' => 'Koppeling toevoegen',
 	'wikiaPhotoGallery-preview-placeholder-caption' => 'Bijschrift verschijnt hier',
 	'wikiaPhotoGallery-preview-link-tooltip' => 'Bestand verwijst naar "$1"',
 	'wikiaPhotoGallery-preview-feed-label' => 'Van RSS-feed met URL:',
@@ -4120,20 +4107,19 @@ U kunt ook op "$2" klikken om de bijgewerkte pagina te bekijken.',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'deze pagina',
 	'wikiaPhotoGallery-upload-existingtext-recentupload' => 'nieuwste uploads',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Selecteren',
-	'wikiaPhotoGallery-photooptions-title-slideshow' => 'Diapresentatie maken - Bijschrift en verwijzing toevoegen',
-	'wikiaPhotoGallery-photooptions-title-gallery' => 'Galerij maken - Bijschrift en verwijzing toevoegen',
+	'wikiaPhotoGallery-photooptions-title-slideshow' => 'Diapresentatie maken - Bijschrift en koppeling toevoegen',
+	'wikiaPhotoGallery-photooptions-title-gallery' => 'Galerij maken - Bijschrift en koppeling toevoegen',
 	'wikiaPhotoGallery-photooptions-captiontitle' => 'Bijschrift (optioneel)',
 	'wikiaPhotoGallery-photooptions-captionsub' => "'''Optioneel.'''
 Beschrijf deze foto.",
 	'wikiaPhotoGallery-photooptions-linktitle' => 'Naar een pagina verwijzen',
 	'wikiaPhotoGallery-photooptions-linksub' => "'''Optioneel.'''
 Als dit bestand wordt aangeklikt, ga dan naar de aangegeven pagina.",
-	'wikiaPhotoGallery-photooptions-linktext' => 'Tekst voor verwijzing',
+	'wikiaPhotoGallery-photooptions-linktext' => 'Tekst voor koppeling',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Verwijzen naar (plak de paginanaam of de URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Afbeeldingsgegevens',
 	'wikiaPhotoGallery-search-tooltip' => 'Afbeeldingen op deze wiki zoeken',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Onjuiste afbeeldingsafmetingen. Afbeeldingen moeten 660x360 pixels zijn.',
-	'wikiaPhotoGallery-upload-image-size' => 'Afbeeldingen moeten 660x360 pixels zijn.',
+	'wikiaPhotoGallery-upload-image-size' => 'Afbeeldingen moeten 670x360 pixels zijn.',
 	'wikiaPhotoGallery-not-displayed' => 'Niet weergegeven',
 	'galery-slider-read-more' => 'Meer lezen >',
 );
@@ -4359,8 +4345,7 @@ Alternatywnie, możesz kliknąć „$2”, aby zobaczyć stronę w jej uaktualni
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Linkuj do (wklej nazwę strony lub adres URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Szczegóły obrazu.',
 	'wikiaPhotoGallery-search-tooltip' => 'Szukaj obrazów na tej wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Niewłaściwy rozmiar obrazu. Wymagany rozmiar to 660px na 360px lub więcej.',
-	'wikiaPhotoGallery-upload-image-size' => 'Obrazy muszą mieć rozmiar 660px na 360px lub więcej.',
+	'wikiaPhotoGallery-upload-image-size' => 'Obrazy muszą mieć rozmiar 670px na 360px lub więcej.',
 	'wikiaPhotoGallery-not-displayed' => 'Brak',
 	'galery-slider-read-more' => ' Więcej >',
 );
@@ -4382,6 +4367,7 @@ $messages['pms'] = array(
 	'wikiaPhotoGallery-error-caption' => 'Eror',
 	'wikiaPhotoGallery-error-outdated' => "Costa galarìa a l'é stàita modificà antramentre ch'a beicava la pàgina.
 Për piasì, ch'a rinfrësca la pàgina e ch'a preuva torna.",
+	'wikiaPhotoGallery-error-wrong-title' => "Gnun tìtoj për l'id vos dàit",
 	'wikiaPhotoGallery-error-user-rights' => "Eror dij drit dj'utent.",
 	'wikiaPhotoGallery-upload-title' => 'Selessioné & carié na Figura',
 	'wikiaPhotoGallery-upload-info-choose-list' => "'''O''' ch'a serna:",
@@ -4419,6 +4405,8 @@ Lòn ch'a veul fé?",
 	'wikiaPhotoGallery-preview-previewtitle' => 'Previsualisassion ëd la galarìa',
 	'wikiaPhotoGallery-preview-add-photo' => 'Gionta na fòto',
 	'wikiaPhotoGallery-preview-add-caption' => 'Gionté na descrission',
+	'wikiaPhotoGallery-preview-add-description' => 'gionta na descrission',
+	'wikiaPhotoGallery-preview-add-link' => 'Gionté un colegament',
 	'wikiaPhotoGallery-preview-placeholder-caption' => 'La descrission a comparirà ambelessì',
 	'wikiaPhotoGallery-preview-link-tooltip' => 'Colegament ëd fòto a "$1"',
 	'wikiaPhotoGallery-preview-feed-label' => "Da l'anliura dël fluss RSS:",
@@ -4496,6 +4484,7 @@ Dësnò, a peul ësgnaché "$2" për vëdde la pàgina ant soa forma modificà.'
 	'wikiaPhotoGallery-choice-intro' => 'Veul-lo fé na sequensa ëd diapositive o na galarìa ëd fòto?',
 	'wikiaPhotoGallery-choice-slideshow' => 'Creé na sequensa ëd diapositive',
 	'wikiaPhotoGallery-choice-gallery' => 'Creé na galarìa',
+	'wikiaPhotoGallery-choice-slider' => 'Crea un corsor dla pagina prinsipal',
 	'wikiaPhotoGallery-slideshowpreview-title' => 'Creator ëd sequensa ëd diapositive',
 	'wikiaPhotoGallery-slideshowpreview-optionstitle' => 'Opsion dla sequensa ëd diapositive',
 	'wikiaPhotoGallery-slideshowpreview-size' => 'Larghëssa dla sequensa ëd diapositive:',
@@ -4509,8 +4498,16 @@ Dësnò, a peul ësgnaché "$2" për vëdde la pàgina ant soa forma modificà.'
 	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Snist',
 	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Sènter',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Drit',
+	'wikiaPhotoGallery-sliderpreview-photostitle' => 'Scor fòto',
+	'wikiaPhotoGallery-sliderpreview-optionstitle' => 'Scor opsion',
+	'wikiaPhotoGallery-sliderpreview-choosetype' => 'Scor posission dël menù',
+	'wikiaPhotoGallery-sliderpreview-choosetype-bottom-tooltip' => 'Miniadure orisontaj',
+	'wikiaPhotoGallery-sliderpreview-choosetype-right-tooltip' => 'Miniadure verticaj',
+	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Gionta na fòto',
+	'wikiaPhotoGallery-sliderpreview-title' => 'Costrutor ëd corsor',
 	'wikiaPhotoGallery-upload-title-slideshow' => 'Creator ëd sequensa ëd diapositive - Sërché e carié dle fòto',
 	'wikiaPhotoGallery-upload-title-gallery' => 'Creator ëd galarìe - Sërché e carié dle fòto',
+	'wikiaPhotoGallery-upload-title-slider' => 'Costrutor ëd corsor - Sërché e carié na fòto',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Treuva toa fòto',
 	'wikiaPhotoGallery-upload-uploadtext' => "Ch'a caria na fòto da sò ordinator",
 	'wikiaPhotoGallery-upload-uploadbutton' => 'Carié na fòto',
@@ -4526,6 +4523,11 @@ Dësnò, a peul ësgnaché "$2" për vëdde la pàgina ant soa forma modificà.'
 	'wikiaPhotoGallery-photooptions-linksub' => 'Quand a së sgnaca su sta fòto, va a sta pàgina.',
 	'wikiaPhotoGallery-photooptions-linktext' => "Test da mostré për l'anliura.",
 	'wikiaPhotoGallery-photooptions-linkurl' => "Anliura a (buté ël nòm dla pàgina o l'anliura).",
+	'wikiaPhotoGallery-photooptions-description' => 'Detaj ëd figura.',
+	'wikiaPhotoGallery-search-tooltip' => 'Serca fòto dzor sta wiki',
+	'wikiaPhotoGallery-upload-image-size' => 'Le fòto a dovrìo esse 670px x 360px o pi gròsse', # Fuzzy
+	'wikiaPhotoGallery-not-displayed' => 'Pa visualisà',
+	'galery-slider-read-more' => 'Les ëd pi >',
 );
 
 /** Pashto (پښتو)
@@ -4769,8 +4771,7 @@ Em alternativa, pode clicar "$2" para ver a página na forma actualizada.',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Link para (inserir nome da página ou URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalhes da imagem.',
 	'wikiaPhotoGallery-search-tooltip' => 'Procurar fotos nesta wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'O tamanho da imagem está errado. As imagens devem ser de 660px por 360px ou maiores',
-	'wikiaPhotoGallery-upload-image-size' => 'As imagens têm de ter 660px por 360px ou maior.',
+	'wikiaPhotoGallery-upload-image-size' => 'As imagens têm de ter 670px por 360px ou maior.', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'Não exibida',
 	'galery-slider-read-more' => ' Leia mais >',
 );
@@ -4919,8 +4920,28 @@ $messages['ro'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => 'Selectează',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Legătură către (lipeşte numele paginii sau adresa).',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalii imagine.',
-	'wikiaPhotoGallery-upload-image-size' => 'Imaginile trebuie să fie de 660 pe 360 de pixeli sau mai mari.',
+	'wikiaPhotoGallery-upload-image-size' => 'Imaginile trebuie să fie de 670 pe 360 de pixeli sau mai mari.', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'Neafişată',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wikiaPhotoGallery-back' => 'Rrete',
+	'wikiaPhotoGallery-finish' => 'Spicce',
+	'wikiaPhotoGallery-upload-findtitle' => 'Cirche',
+	'wikiaPhotoGallery-upload-findbutton' => 'Cirche',
+	'wikiaPhotoGallery-upload-select-images' => 'Scacchie',
+	'wikiaPhotoGallery-photooptions-done' => 'Fatte',
+	'wikiaPhotoGallery-preview-title' => 'Costruttore de gallerie',
+	'wikiaPhotoGallery-preview-hover-modify' => 'cange',
+	'wikiaPhotoGallery-preview-hover-delete' => 'scangille',
+	'wikiaPhotoGallery-preview-previewtitle' => "Andeprime d'a gallerie",
+	'wikiaPhotoGallery-preview-add-photo' => "Aggiunge 'na fote",
+	'wikiaPhotoGallery-preview-add-caption' => "Aggiunge 'nu titole",
+	'wikiaPhotoGallery-preview-add-description' => "Aggiunge 'na descrizione",
+	'wikiaPhotoGallery-preview-add-link' => "Agigunge 'nu collegamende",
 );
 
 /** Russian (русский)
@@ -5103,8 +5124,7 @@ $messages['ru'] = array(
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Перейти на (вставьте название страницы или URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Детали изображения.',
 	'wikiaPhotoGallery-search-tooltip' => 'Поиск фотографий на этой вики',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Неправильный размер изображения. Изображения должны быть 660 на 360px или больше.',
-	'wikiaPhotoGallery-upload-image-size' => 'Изображения должны быть 660 пикселей на 360 пикселей или больше.',
+	'wikiaPhotoGallery-upload-image-size' => 'Изображения должны быть 670 пикселей на 360 пикселей или больше.', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'Не отображается',
 	'galery-slider-read-more' => 'Читать подробнее >',
 );
@@ -5301,8 +5321,7 @@ $messages['sr-ec'] = array(
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Повежи (убаците наслов или URL адресу странице).',
 	'wikiaPhotoGallery-photooptions-description' => 'Детаљи о слици.',
 	'wikiaPhotoGallery-search-tooltip' => 'Претражите слике на овој викији',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Неисправна величина. Слике би требало да имају бар 673 × 410 пиксела.',
-	'wikiaPhotoGallery-upload-image-size' => 'Слике би требало да имају бар 660 × 360 пиксела.',
+	'wikiaPhotoGallery-upload-image-size' => 'Слике би требало да имају бар 670 × 360 пиксела.', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'Није приказано',
 	'galery-slider-read-more' => ' Прочитајте више >',
 );
@@ -5477,13 +5496,12 @@ Alternativt kan du klicka på "$2" för att se sidan i sin uppdaterade form.',
 	'wikiaPhotoGallery-photooptions-captiontitle' => 'Ge ditt foto en bildtext (frivilligt)',
 	'wikiaPhotoGallery-photooptions-captionsub' => 'Beskriv detta foto.',
 	'wikiaPhotoGallery-photooptions-linktitle' => 'Länka ditt foto (frivilligt)',
-	'wikiaPhotoGallery-photooptions-linksub' => 'När detta foto klickas, gå till denna sida.',
+	'wikiaPhotoGallery-photooptions-linksub' => 'Gå till denna sida när detta foto blir klickad.',
 	'wikiaPhotoGallery-photooptions-linktext' => 'Text att visa för länken.',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Länk till (klistra in sidans namn eller URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Bilddetaljer.',
 	'wikiaPhotoGallery-search-tooltip' => 'Sök efter bilder på denna wiki',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Fel bildstorlek. Bilder måste vara 660x360 pixlar eller större.',
-	'wikiaPhotoGallery-upload-image-size' => 'Bilder måste vara 660x360 px eller större.',
+	'wikiaPhotoGallery-upload-image-size' => 'Bilder måste vara 670x360 px eller större.', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'Visas inte',
 	'galery-slider-read-more' => ' Läs mer >',
 );
@@ -5785,8 +5803,7 @@ Ilarawan ang litratong ito.",
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Kawing sa (idikit ang pangalan ng pahina o URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Mga detalye ng larawan.',
 	'wikiaPhotoGallery-search-tooltip' => 'Maghanap ng mga larawan sa wiking ito',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Maling sukat ng larawan. Ang mga larawan ay dapat na 660px na katabi ng 360px o mas malaki.',
-	'wikiaPhotoGallery-upload-image-size' => 'Ang mga larawan ay dapat na 673px na katabi ng 360 px o mas malaki.',
+	'wikiaPhotoGallery-upload-image-size' => 'Ang mga larawan ay dapat na 670px na katabi ng 360 px o mas malaki.', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'Hindi ipinapakita',
 	'galery-slider-read-more' => 'Magbasa pa >',
 );
@@ -6081,8 +6098,7 @@ Ngoài ra, bạn có thể nhấn vào "$2" để xem trang trong hình thức c
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Liên kết đến (dán tên trang web hoặc URL)',
 	'wikiaPhotoGallery-photooptions-description' => 'Hình ảnh chi tiết.',
 	'wikiaPhotoGallery-search-tooltip' => 'Tìm kiếm hình ảnh trên wiki này',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Sai kích cỡ. Hình ảnh phải là 660 × 360 px hoặc lớn hơn.',
-	'wikiaPhotoGallery-upload-image-size' => 'Hình ảnh này phải có kích thước là 660 × 360 px hoặc lớn hơn.',
+	'wikiaPhotoGallery-upload-image-size' => 'Hình ảnh này phải có kích thước là 670 × 360 px hoặc lớn hơn.', # Fuzzy
 	'wikiaPhotoGallery-not-displayed' => 'Không hiển thị',
 	'galery-slider-read-more' => 'Chi tiết >',
 );

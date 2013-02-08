@@ -13,6 +13,9 @@ class AbTestingData extends WikiaObject {
 	const TABLE_GROUPS = 'ab_experiment_groups';
 	const TABLE_RANGES = 'ab_experiment_group_ranges';
 
+	const MIN = 'min';
+	const MAX = 'max';
+
 	protected $blacklistedColumns = array(
 		self::TABLE_EXPERIMENTS => array(
 			'groups',
@@ -80,6 +83,7 @@ class AbTestingData extends WikiaObject {
 					'start_time' => $row->v_start_time,
 					'end_time' => $row->v_end_time,
 					'ga_slot' => $row->v_ga_slot,
+					'flags' => $row->v_flags,
 					'group_ranges' => array(),
 				);
 			}
@@ -120,6 +124,7 @@ class AbTestingData extends WikiaObject {
 				'e.id as e_id, e.name as e_name, e.description as e_description',
 				'g.id as g_id, g.name as g_name, g.description as g_description',
 				'v.id as v_id, v.start_time as v_start_time, v.end_time as v_end_time, v.ga_slot as v_ga_slot',
+					'v.flags as v_flags',
 				'r.ranges as r_ranges, r.group_id as r_group_id',
 			),
 			$where, // conditions
@@ -243,10 +248,44 @@ class AbTestingData extends WikiaObject {
 	}
 
 	public function updateModifiedTime() {
-		$this->saveAnonRow(self::TABLE_CONFIG,array('id'),array(
-			'id' => 1,
-			'updated = current_timestamp',
-		),__METHOD__);
+		$dbw = $this->getDb(DB_MASTER);
+		$dbw->query("REPLACE INTO ".self::TABLE_CONFIG." (id, updated) VALUES (1, current_timestamp);");
+	}
+
+	protected function getEffectiveChangeTime( $aggregate, $startTimeBuffer ) {
+		if ( !in_array( $aggregate, array( self::MIN, self::MAX ) ) ) {
+			return null;
+		}
+
+		$op = $aggregate == self::MIN ? '>' : '<=';
+		$startExpr = "start_time - interval {$startTimeBuffer} second";
+		$endExpr = "end_time";
+		$startConds = array(
+			"{$startExpr} {$op} current_timestamp"
+		);
+		$endConds = array(
+			"{$endExpr} {$op} current_timestamp"
+		);
+
+		$dbr = $this->getDb(DB_MASTER);
+		$val1 = $dbr->selectField(self::TABLE_VERSIONS,"{$aggregate}({$startExpr})",$startConds);
+		$val2 = $dbr->selectField(self::TABLE_VERSIONS,"{$aggregate}({$endExpr})",$endConds);
+
+		if ( is_null($val1) ) {
+			return $val2;
+		} else if ( is_null($val2) ) {
+			return $val1;
+		} else {
+			return call_user_func_array($aggregate,array($val1,$val2));
+		}
+	}
+
+	public function getLastEffectiveChangeTime( $bufferTime ) {
+		return $this->getEffectiveChangeTime(self::MAX,$bufferTime);
+	}
+
+	public function getNextEffectiveChangeTime( $bufferTime ) {
+		return $this->getEffectiveChangeTime(self::MIN,$bufferTime);
 	}
 
 	public function newExperiment() {
@@ -266,6 +305,7 @@ class AbTestingData extends WikiaObject {
 			'start_time' => '',
 			'end_time' => '',
 			'ga_slot' => '',
+			'flags' => AbTesting::DEFAULT_FLAGS,
 			'group_ranges' => array(),
 		);
 	}

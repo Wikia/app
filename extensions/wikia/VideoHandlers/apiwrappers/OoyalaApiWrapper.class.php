@@ -43,13 +43,13 @@ class OoyalaApiWrapper extends ApiWrapper {
 		}
 
 		$provider = self::getProviderName( $this->interfaceObj['labels'] );
-		$provider = str_replace( ' ', '', $provider );
+		$provider = self::formatProviderName( $provider );
 
-		return strtolower( $provider );
+		return $provider;
 	}
 
 	public static function getProviderName( $labels ) {
-		$provider = 'Ooyala';
+		$provider = '';
 		foreach( $labels as $label ) {
 			if ( !empty($label['full_name']) && preg_match('/\/Providers\/([\w\s]+)/', $label['full_name'], $matches) ) {
 				$provider = $matches[1];
@@ -58,6 +58,19 @@ class OoyalaApiWrapper extends ApiWrapper {
 		}
 
 		return $provider;
+	}
+
+	public static function formatProviderName( $name ) {
+		$provider = 'ooyala';
+		if ( !empty($name) ) {
+			$provider .= '/'.strtolower( preg_replace( '/[\s\W]+/', '', $name ) );
+		}
+
+		return $provider;
+	}
+
+	public function getMimeType() {
+		return 'video/ooyala';
 	}
 
 	public function isIngestion() {
@@ -318,8 +331,8 @@ class OoyalaApiWrapper extends ApiWrapper {
 			return $this->metadata['startDate'];
 		}
 
-		if ( !empty($this->interfaceObj['metadata']['startdate']) ) {
-			return strtotime( $this->interfaceObj['metadata']['startdate'] );
+		if ( !empty($this->interfaceObj['time_restrictions']['start_date']) ) {
+			return strtotime( $this->interfaceObj['time_restrictions']['start_date'] );
 		}
 
 		return '';
@@ -337,40 +350,4 @@ class OoyalaApiWrapper extends ApiWrapper {
 		return '';
 	}
 
-}
-
-class WikiawebinarsApiWrapper extends OoyalaApiWrapper {
-}
-
-class FunimationApiWrapper extends OoyalaApiWrapper {
-}
-
-class WbieApiWrapper extends OoyalaApiWrapper {
-}
-
-class SoeApiWrapper extends OoyalaApiWrapper {
-}
-
-class WikiaproductionsApiWrapper extends OoyalaApiWrapper {
-}
-
-class KonamiApiWrapper extends OoyalaApiWrapper {
-}
-
-class EaApiWrapper extends OoyalaApiWrapper {
-}
-
-class KabamApiWrapper extends OoyalaApiWrapper {
-}
-
-class SonypicturesApiWrapper extends OoyalaApiWrapper {
-}
-
-class UniversalApiWrapper extends OoyalaApiWrapper {
-}
-
-class WarnerbrothersApiWrapper extends OoyalaApiWrapper {
-}
-
-class FoxApiWrapper extends OoyalaApiWrapper {
 }

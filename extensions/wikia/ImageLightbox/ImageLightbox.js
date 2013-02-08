@@ -228,17 +228,15 @@ var ImageLightbox = {
 				var clickedIndex = (localGroupIndex * RelatedVideos.videosPerPage) + localItemIndex;
 				eventValue = clickedIndex+1;	// tracked values must be one-indexed
 
-				WikiaTracker.trackEvent(
-					'trackingevent',
-					{
-						'ga_category':RelatedVideos.gaCat,
-						'ga_action':WikiaTracker.ACTIONS.PLAY_VIDEO,
-						'ga_label':(target.hasClass('video-thumbnail') ? 'thumbnail' : 'title'),
-						'ga_value':eventValue,
-						'video_title':imageName
-					},
-					'both'
-				);
+				WikiaTracker.track({
+					action: WikiaTracker.ACTIONS.PLAY_VIDEO,
+					browserEvent: ev,
+					category: RelatedVideos.gaCat,
+					label: (target.hasClass('video-thumbnail') ? 'thumbnail' : 'title'),
+					trackingMethod: 'both',
+					value: eventValue,
+					video_title: imageName
+				});
 			}
 
 		}
@@ -478,19 +476,16 @@ var ImageLightbox = {
 			}, timeout);
 		}
 	},
+	// @param data - any extra params we want to pass to internal tracking
+	// Don't add willy nilly though... check with Jonathan.
 	track: function(action, label, value, data) {
-		// @param data - any extra params we want to pass to internal tracking
-		// Don't add willy nilly though... check with Jonathan.
-		var ga_params  = {
-			ga_category: 'lightbox',
-			ga_action: action,
-			ga_label: label || '',
-			ga_value: value || 0
-		}
-
-		var trackParams = $.extend({}, data || {}, ga_params);
-
-		WikiaTracker.trackEvent(null, trackParams, 'internal');
+		WikiaTracker.track({
+			action: action,
+			category: 'lightbox',
+			label: label || '',
+			trackingMethod: 'internal',
+			value: value || 0
+		}, data);
 	},
 	trackingTimeout: false
 };

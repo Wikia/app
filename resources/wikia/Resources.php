@@ -5,6 +5,112 @@
  */
 
 return array(
+	// AMD library
+	'amd' => array(
+		'scripts' => 'resources/wikia/libraries/modil/modil.js',
+	),
+
+	// shared AMD modules loaded on each page
+	'amd.shared' => array(
+		'dependencies' => array(
+			'wikia.window',
+			'wikia.ajax',
+			'wikia.nirvana',
+			'wikia.mw',
+			'wikia.loader',
+			'wikia.querystring',
+			'wikia.cookies',
+			'wikia.log',
+			'wikia.thumbnailer',
+			'wikia.geo',
+		),
+		'position' => 'top', // needs to be loaded before AssetsManager files
+	),
+
+	// core AMD modules (see amd.shared module)
+	'wikia.window' => array(
+		'scripts' => 'resources/wikia/modules/window.js',
+		'dependencies' => 'amd',
+	),
+	'wikia.ajax' => array(
+		'scripts' => 'resources/wikia/modules/ajax.js',
+		'dependencies' => 'amd',
+	),
+	'wikia.nirvana' => array(
+		'scripts' => 'resources/wikia/modules/nirvana.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.ajax'
+		)
+	),
+	'wikia.mw' => array(
+		'scripts' => 'resources/wikia/modules/mw.js',
+		'dependencies' => 'amd',
+	),
+	'wikia.loader' => array(
+		'scripts' => 'resources/wikia/modules/loader.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.window',
+			'wikia.mw',
+			'wikia.nirvana'
+		)
+	),
+	'wikia.querystring' => array(
+		'scripts' => 'resources/wikia/modules/querystring.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.window',
+		)
+	),
+	'wikia.cookies' => array(
+		'scripts' => 'resources/wikia/modules/cookies.js',
+		'dependencies' => 'amd'
+	),
+	'wikia.log' => array(
+		'scripts' => 'resources/wikia/modules/log.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.querystring',
+			'wikia.cookies',
+		)
+	),
+	'wikia.thumbnailer' => array(
+		'scripts' => 'resources/wikia/modules/thumbnailer.js',
+		'dependencies' => 'amd',
+	),
+	'wikia.geo' => array(
+		'scripts' => 'resources/wikia/modules/geo.js',
+		'dependencies' => array(
+			'amd',
+			'wikia.cookies'
+		)
+	),
+
+	// AMD modules loaded on demand
+	'wikia.aim' => array(
+		'scripts' => 'resources/wikia/modules/aim.js',
+		'dependencies' => 'amd',
+	),
+
+	'wikia.uniqueId' => array(
+		'scripts' => 'resources/wikia/modules/uniqueId.js',
+		'dependencies' => 'amd',
+	),
+
+	'wikia.modernizr' => array(
+		'scripts' => 'resources/wikia/modules/modernizr.js',
+		'dependencies' => array(
+			'amd',
+			'modernizr'
+		)
+	),
+
+	'wikia.mustache' => array(
+		'scripts' => 'resources/wikia/libraries/mustache/mustache.js',
+		'dependencies' => 'amd'
+	),
+
 	// module loaded via $.loadjQuery UI and is a wrapper for MediaWiki jQuery UI modules
 	// this used to be static file located in /skins/common/jquery/jquery-ui-1.8.14.custom.js
 	'wikia.jquery.ui' => array(
@@ -22,16 +128,13 @@ return array(
 			'jquery.ui.tabs',
 			'jquery.ui.datepicker',
 		),
-		'group' => 'jquery.ui',
+		'group' => 'jquery.ui'
 	),
 
 	// libraries and jQuery plugins
-	'jquery.aim' => array(
-		'scripts' => 'resources/wikia/libraries/aim/jquery.aim.js'
-	),
-
 	'jquery.mustache' => array(
-		'scripts' => 'resources/wikia/libraries/mustache/jquery.mustache.js'
+		'scripts' => 'resources/wikia/libraries/mustache/jquery.mustache.js',
+		'dependencies' => 'wikia.mustache'
 	),
 
 	'jquery.autocomplete' => array(

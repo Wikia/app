@@ -15,13 +15,13 @@ echo wfMsg( 'vet-conflict-inf', $name );
 			<h2><?= wfMsg('vet-rename') ?></h2>
 			<div style="margin: 5px 0;">
 				<input type="text" id="VideoEmbedRenameName" value="<?= $name ?>" />
-				<input type="button" value="<?= wfMsg('vet-insert') ?>" onclick="VET_insertFinalVideo(event, 'rename');" />
+				<input type="button" value="<?= wfMsg('vet-insert') ?>" id="VideoEmbedRenameButton" class="vet-close" />
 			</div>
 		</td>
 		<td>
 			<h2><?= wfMsg('vet-existing') ?></h2>
 			<div style="margin: 5px 0;">
-				<input type="button" value="<?= wfMsg('vet-insert') ?>" onclick="VET_insertFinalVideo(event, 'existing');" />
+				<input type="button" value="<?= wfMsg('vet-insert') ?>" id="VideoEmbedExistingButton" />
 			</div>
 		</td>
 	</tr>
@@ -35,4 +35,4 @@ echo wfMsg( 'vet-conflict-inf', $name );
 		</td>
 	</tr>
 </table>
-<div style="margin-top:25px;"><a id="VideoEmbedConflictOverwriteButton" class="wikia-button v-float-right" onclick="VET_insertFinalVideo(event, 'overwrite');" href="#"><?= wfMsg('vet-overwrite') ?></a></div>
+<div style="margin-top:25px;"><a id="VideoEmbedConflictOverwriteButton" class="wikia-button v-float-right" id="VideoEmbedOverrideButton" href="#"><?= wfMsg('vet-overwrite') ?></a></div>

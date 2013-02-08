@@ -13,7 +13,7 @@ class ExternalUser_Wikia extends ExternalUser {
 
 		return $this->initFromCond( array( 'user_name' => $name ) );
 	}
-	
+
 	protected function initFromId( $id ) {
 		wfDebug( __METHOD__ . ": init User from id: $id \n" );
 		return $this->initFromCond( array( 'user_id' => $id ) );
@@ -198,6 +198,11 @@ class ExternalUser_Wikia extends ExternalUser {
 		return null;
 	}
 
+	public function mapToUser() {
+		wfDebug( __METHOD__ . " \n" );
+		return User::newFromRow( $this->mRow );
+	}
+
 	protected function addToDatabase( $User, $password, $email, $realname ) {
 		global $wgExternalSharedDB, $wgEnableUserLoginExt;
 		wfProfileIn( __METHOD__ );
@@ -292,7 +297,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function getLocalUser() {
+	public function getLocalUser( $obj = true ) {
 		$uid = $this->getId();
 		wfDebug( __METHOD__ . ": get local user: $uid \n" );
 
@@ -302,7 +307,12 @@ class ExternalUser_Wikia extends ExternalUser {
 			'*',
 			array( 'user_id' => $uid )
 		);
-		return $row ? User::newFromId( $row->user_id ) : null;
+		if ( $obj ) {
+			$res = $row ? User::newFromId( $row->user_id ) : null;
+		} else {
+			$res = $row;
+		}
+		return $res;
 	}
 
 	public function updateUser() {
@@ -347,14 +357,16 @@ class ExternalUser_Wikia extends ExternalUser {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/** 
+	/**
 	 * Removes user info from secondary clusters so that it can be regenerated from scratch
 	 *
 	 * @author mix
 	 * @author tor
 	 */
 	public static function removeFromSecondaryClusters( $id ) {
+		global $wgMemc;
 
+		wfProfileIn( __METHOD__ );
 		$clusters = WikiFactory::getSecondaryClusters(); // wikicities with a c1 .. cx cluster suffix.
 
 		foreach ($clusters as $clusterName) {
@@ -365,11 +377,16 @@ class ExternalUser_Wikia extends ExternalUser {
 				$clusterName = 'wikicities_' . $clusterName;
 
 				$oDB = wfGetDB( DB_MASTER, array(), $clusterName );
-				$oDB->delete( 'user', array( 'user_id' => $id ) );
+				$oDB->delete(
+					'`user`',
+					array( 'user_id' => $id ),
+					__METHOD__
+				);
 				$oDB->commit();
 
 				$wgMemc->delete( $memkey );
 			}
 		}
+		wfProfileOut( __METHOD__ );
 	}
 }

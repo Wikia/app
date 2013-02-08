@@ -13,7 +13,7 @@ class UserProfilePageTest extends WikiaBaseTest {
 
 	/**
 	 * @param User $user
-	 * @return UserProfilePage
+	 * @return UserProfilePageController
 	 */
 	protected function getObjectMock( User $user ) {
 		$object = $this->getMock( 'UserProfilePage', array( 'invalidateCache' ), array( F::app(), $user ) );

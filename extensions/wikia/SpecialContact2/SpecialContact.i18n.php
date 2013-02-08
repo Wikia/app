@@ -125,7 +125,8 @@ Thanks in advance and happy editing!",
 *Link to your wiki
 *Your browser information including type and version ([[Help:Supported_browsers|click here for our supported browser list]])
 *Screenshot
-*Any and all other details.
+
+For more advice on what to include in your report, please see [[w:c:community:Help:How to report bugs|our help page on bug reports]].
 
 Thanks again for the report and for using Wikia.
 
@@ -175,7 +176,7 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	'specialcontact-noform-footer' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Forum:Community_Central_Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
 
 	/* form */
-	'specialcontact-username' => 'Please enter your username',
+	'specialcontact-username' => 'Your username',
 	'specialcontact-wikiname' => 'Which wiki',
 	'specialcontact-realname' => 'Your name',
 	'specialcontact-yourmail' => 'Your email',

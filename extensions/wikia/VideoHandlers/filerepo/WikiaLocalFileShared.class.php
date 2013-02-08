@@ -85,6 +85,13 @@ class WikiaLocalFileShared  {
 	}
 
 	public function getProviderName() {
+		if ( !empty( $this->oFile->metadata ) ) {
+			$metadata = unserialize( $this->oFile->metadata );
+			if ( !empty($metadata['provider']) ) {
+				return $metadata['provider'];
+			}
+		}
+
 		return $this->oFile->minor_mime;
 	}
 

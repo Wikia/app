@@ -16,7 +16,7 @@ $wgExtensionMessagesFiles['CommentsOnly'] = $dir . 'CommentsOnly.i18n.php';
 $wgHooks['ArticleCommentCheck'][] = 'wfCOArticleCommentCheck';
 $wgHooks['ArticleViewHeader'][] = 'wfCOArticleViewHeader';
 $wgHooks['BeforePageDisplay'][] = 'wfCOBeforePageDisplay';
-$wgHooks['CategorySelect:beforeDisplayingView'][] = 'wfCOCategorySelectBeforeDisplayingView';
+$wgHooks['CategorySelectArticlePage'][] = 'wfCOCategorySelectArticlePage';
 $wgHooks['ParserFirstCallInit'][] = 'wfCOQuestionBox';
 $wgHooks['PageHeaderIndexAfterExecute'][] = 'wfCOPageHeaderIndexAfterExecute';
 
@@ -68,7 +68,7 @@ function wfCOBeforePageDisplay(OutputPage &$out, &$sk) {
 }
 
 // hide categories
-function wfCOCategorySelectBeforeDisplayingView() {
+function wfCOCategorySelectArticlePage() {
 	return !wfCOCheck();
 }
 

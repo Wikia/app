@@ -54,6 +54,7 @@ $messages['en'] = array(
 	'editaccount-error-close' => 'A problem occurred when closing account. Try again or contact the Tech Team.',
 	'editaccount-invalid-email' => '"$1" is not a valid email address!',
 	'editaccount-nouser' => 'Account "$1" does not exist!',
+	'editaccount-not-loaded' => 'Error: User data failed to load properly, please try reloading the page.',
 	'editaccount-remove-avatar-fail' => 'Problem auto-removing avatar.',
 	'editaccount-requested' => 'Note: User has requested an account closure',
 	'editaccount-not-requested' => 'CAUTION: User has not requested an account closure',
@@ -62,8 +63,8 @@ $messages['en'] = array(
 	'editaccount-status-confirmed' => 'Confirmed',
 	'editaccount-status-unconfirmed' => 'Unconfirmed',
 	'editaccount-status-realuser' => 'Real User',
-	'editaccount-status-tempuser' => 'Temp User',
-	'editaccount-error-tempuser-email' => 'Temp users cannot have blank email address field, please enter an email address.',
+	'editaccount-status-tempuser' => 'Temporary User',
+	'editaccount-error-tempuser-email' => 'Temporary users cannot have blank email address field, please enter an email address.',
 	'editaccount-email-change-requested' => 'User requested email change via Preferences to $1. To confirm the requested email address change for the user, enter the requested email address into the field below and click "Save and confirm."',
 
 	# logging
@@ -82,12 +83,15 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author Lloffiwr
  * @author Michał Roszka (Mix) <michal@wikia-inc.com>
+ * @author Shirayuki
  * @author Siebrand
  * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'editaccount-desc' => '{{desc}}',
+	'editaccount-title' => 'Name of the "EditAccount" extension. This message is displayed as the H1 page title of the special page.',
+	'editaccount-frame-usage' => 'Label for note field. In this context, "note" refers to extra information about the extension and its functionality',
 	'editaccount-label-toggleadopt' => 'Label for option to toggle whether or not the user is allowed to automatically adopt a wiki.',
 	'editaccount-label-toggleadopt-prevent' => 'Label for option to prevent user from automatically adopting a wiki.',
 	'editaccount-label-toggleadopt-allow' => 'Label for option to allow user to automatically adopting a wiki.',
@@ -97,11 +101,12 @@ $messages['qqq'] = array(
 * $1 is a username.',
 	'editaccount-success-toggleadopt' => 'Indicates that a user has been successfully verified as an adopter of a wiki. Parameters:
 * $1 is a plain text username.',
+	'editaccount-not-loaded' => 'Error message which is shown when selected user exists but the user data failed to load.',
 	'editaccount-status-realuser' => 'This is the status of the account in the Wikia UserLogin system – a "real user" means an active account, while a "temp user" means it\'s an inactive account. Accounts are activated once the user clicks on a link in an e-mail we send them.
 
 Per [[Thread:Support/About_Wikia:Editaccount-status-realuser/ms_and_Wikia:Editaccount-status-tempuser/ms/reply|user TOR on support]]',
-	'editaccount-status-tempuser' => 'This is the status of the account in the Wikia UserLogin system – a "real user" means an active account, while a "temp user" means it\'s an inactive account. Accounts are activated once the user clicks on a link in an e-mail we send them.',
-	'right-editaccount' => '{{doc-right|editaccount}}',
+	'editaccount-status-tempuser' => '"Temporary user" indicates an account is inactive. An account is activated and becomes a "real user" once the user clicks on a link in an e-mail we send them.',
+	'right-editaccount' => '{{doc-right|editaccount|ns=Wikia}}',
 	'action-editaccount' => '{{doc-action|editaccount}}',
 );
 
@@ -191,7 +196,7 @@ $messages['bg'] = array(
 	'right-editaccount' => 'Редактиране на настройките на други потребители',
 );
 
-/** Bihari (भोजपुरी)
+/** bh (भोजपुरी)
  * @author Ganesh
  */
 $messages['bh'] = array(
@@ -278,6 +283,7 @@ $messages['ca'] = array(
 );
 
 /** Czech (česky)
+ * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -296,12 +302,14 @@ $messages['cs'] = array(
 	'editaccount-label-pass' => 'Nastavit nové heslo',
 	'editaccount-label-realname' => 'Nastavit novoé skutečné jméno',
 	'editaccount-label-clearunsub' => 'Odhlášeno',
+	'editaccount-label-reason' => 'Důvod:',
 	'editaccount-submit-email' => 'Uložit e-mailovou adresu',
 	'editaccount-submit-pass' => 'Uložit heslo',
 	'editaccount-submit-realname' => 'Uložit skutečné jméno',
 	'editaccount-submit-clearunsub' => 'Pročistit odhlášené',
 	'editaccount-submit-cleardisable' => 'Pročistit zakázané vlajky',
 	'editaccount-submit-close' => 'Zavřít účet',
+	'editaccount-submit-button' => 'Uložit',
 	'editaccount-usage-close' => 'Uživatelský účet můžete také zakázat vytvořením náhodného hesla a odebíráním e-mailové adresy. Data však budou nevratně ztracena.',
 	'editaccount-warning-close' => '<b>Pozor!</b> Chystáte se trvale zakázat účet uživatele <b>$1</b>. To nelze vrátit. Jste si jisti, že to chcete udělat?',
 	'editaccount-status' => 'Zpráva o stavu',
@@ -391,6 +399,7 @@ $messages['de'] = array(
 	'editaccount-error-close' => 'Beim Schließen des Kontos trat ein Fehler auf. Versuche es erneut oder kontaktiere das Tech Team.',
 	'editaccount-invalid-email' => '„$1“ ist keine gültige E-Mail-Adresse!',
 	'editaccount-nouser' => 'Konto „$1“ existiert nicht!',
+	'editaccount-not-loaded' => 'Fehler: Benutzerdaten konnten nicht ordnungsgemäß geladen werden. Bitte versuche, die Seite erneut zu laden.',
 	'editaccount-remove-avatar-fail' => 'Problem beim automatischen Entfernen des Avatars.',
 	'editaccount-requested' => 'Hinweis: Benutzer hat Kontoschließung beantragt',
 	'editaccount-not-requested' => '!ACHTUNG: Benutzer hat noch keine Kontoschließung beantragt',
@@ -510,6 +519,7 @@ $messages['es'] = array(
 	'editaccount-error-close' => 'Ha ocurrido un problema mientras cerrabas la cuenta. Inténtalo de nuevo o contacta con el Equipo Técnico.',
 	'editaccount-invalid-email' => '¡"$1" no es una dirección válida de correo electrónico!',
 	'editaccount-nouser' => '¡La cuenta "$1" no existe!',
+	'editaccount-not-loaded' => 'Error: No se pudieron cargar los datos de usuario, por favor intenta recargar la página.',
 	'editaccount-remove-avatar-fail' => 'Problema durante la eliminación automática del avatar.',
 	'editaccount-requested' => 'Nota: El usuario ha solicitado la clausura de una cuenta',
 	'editaccount-not-requested' => 'AVISO: El usuario no ha solicitado la clausura de una cuenta',
@@ -655,6 +665,7 @@ $messages['fr'] = array(
 	'editaccount-error-close' => "Un problème est survenu lors de la fermeture du compte. Veuillez ré-essayer ou contacter l'équipe technique.",
 	'editaccount-invalid-email' => "« $1 » n'est pas une adresse électronique valide !",
 	'editaccount-nouser' => "Le compte « $1 » n'existe pas !",
+	'editaccount-not-loaded' => 'Erreur : Impossible de charger correctement les données utilisateur, veuillez essayer de recharger la page.',
 	'editaccount-remove-avatar-fail' => 'Problème à l’auto-suppression de l’avatar.',
 	'editaccount-requested' => 'Note : l’utilisateur a demandé la fermeture de son compte',
 	'editaccount-not-requested' => 'ATTENTION : l’utilisateur n’a pas demandé la fermeture de son compte',
@@ -723,6 +734,7 @@ $messages['gl'] = array(
 	'editaccount-error-close' => 'Houbo un problema ao pechar a conta. Inténteo de novo ou póñase en contacto co equipo técnico.',
 	'editaccount-invalid-email' => '"$1" non é un enderezo de correo electrónico válido!',
 	'editaccount-nouser' => 'A conta "$1" non existe!',
+	'editaccount-not-loaded' => 'Erro: Non se puideron cargar correctamente os datos de usuario. Intente recargar a páxina.',
 	'editaccount-remove-avatar-fail' => 'Problema durante a eliminación automática do avatar.',
 	'editaccount-requested' => 'Nota: O usuario solicitou o peche da conta',
 	'editaccount-not-requested' => 'AVISO: O usuario non solicitou o peche da conta',
@@ -1135,6 +1147,7 @@ $messages['mk'] = array(
 	'editaccount-error-close' => 'Се појави проблем при затворањето на сметката. Обидете се повторно или контактирајте ја Екипата за техничка поддршка',
 	'editaccount-invalid-email' => '„$1“ не е важечка е-поштенска адреса!',
 	'editaccount-nouser' => 'Сметката „$1“ не поостои',
+	'editaccount-not-loaded' => 'Грешка: Корисничките податоци не се вчитаа како што треба. Превчитајте ја страницата.',
 	'editaccount-remove-avatar-fail' => 'Проблем при автоотстранување на аватарот.',
 	'editaccount-requested' => 'Напомена: Корисникот има побарано затворање на сметката',
 	'editaccount-not-requested' => 'ВНИМАНИЕ: Корисникот нема пријавено затворање на сметката',
@@ -1349,6 +1362,7 @@ Probeer het opnieuw of neem contact op met het Tech Team.',
 Probeer het opnieuw of neem contact op met het Tech Team.',
 	'editaccount-invalid-email' => '"$1" is geen geldig e-mailadres.',
 	'editaccount-nouser' => 'De gebruiker "$1" bestaat niet.',
+	'editaccount-not-loaded' => 'Fout: de gebruikersgegevens konden niet geladen worden. Probeer de pagina opnieuw te laden.',
 	'editaccount-remove-avatar-fail' => 'Er is een probleem opgetreden tijdens het automatisch verwijderen van de avatar.',
 	'editaccount-requested' => 'Opmerking: gebruiker heeft een rekeningsluiting aangevraagd',
 	'editaccount-not-requested' => 'Waarschuwing: gebruiker heeft geen rekeningsluiting aangevraagd',
@@ -1453,6 +1467,7 @@ $messages['pl'] = array(
 	'editaccount-error-close' => 'Wystąpił błąd podczas zamykania konta. Spróbuj ponownie lub skontaktuj się z zespołem technicznym.',
 	'editaccount-invalid-email' => '"$1" nie jest prawidłowym adresem e-mail!',
 	'editaccount-nouser' => 'Konto "$1" nie istnieje!',
+	'editaccount-not-loaded' => 'Błąd: Nie udało się pobrać danych użytkownika, spróbuj odświeżyć stronę.',
 	'editaccount-remove-avatar-fail' => 'Wystąpił błąd podczas usuwania avataru.',
 	'editaccount-requested' => 'Uwaga: Użytkownik poprosił o zamknięcia konta',
 	'editaccount-not-requested' => 'UWAGA: Użytkownik nie prosił o zamknięcia konta',
@@ -1494,12 +1509,17 @@ $messages['pms'] = array(
 	'editaccount-label-pass' => 'Ampòsta neuva ciav',
 	'editaccount-label-realname' => 'Ampòsta neuv nòm ver',
 	'editaccount-label-clearunsub' => "Anulà l'abonament",
+	'editaccount-label-toggleadopt' => "Modìfica lë stat d'adotator (për AutomaticWikiAdopt):",
+	'editaccount-label-toggleadopt-prevent' => 'Evité auto adossion',
+	'editaccount-label-toggleadopt-allow' => 'Përmëtte auto adossion',
+	'editaccount-label-reason' => 'Rason:',
 	'editaccount-submit-email' => "Salvé l'adrëssa ëd pòsta eletrònica",
 	'editaccount-submit-pass' => 'Salva Ciav',
 	'editaccount-submit-realname' => 'Salva Nòm Ver',
 	'editaccount-submit-clearunsub' => "Scancelé l'anulament ëd l'abonament",
 	'editaccount-submit-cleardisable' => 'Gavé la marca ëd disabilitassion',
 	'editaccount-submit-close' => 'Sara Cont',
+	'editaccount-submit-button' => 'Salva',
 	'editaccount-usage-close' => "A peul ëdcò disabilité a un cont utent an cripté soa ciav e gavand soa adrëssa ëd pòsta eletrònica. Ch'a fasa atension che sto dat a l'é përdù e a l'é pa arcuperàbil.",
 	'editaccount-warning-close' => "<b>Atension!</b> A l'é an camin ch'a disabìlita për sempe ël cont ëd l'utent <b>$1</b>. As peul pa torné andré. É-lo sigur ëd vorèj felo?",
 	'editaccount-status' => 'Mëssagi dë stat',
@@ -1536,6 +1556,7 @@ $messages['pms'] = array(
 	'editaccount-log-entry-close' => 'disabilità cont $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Sto cont-sì a l\'é stàit disabilità globalment da Wikia.</div>',
 	'right-editaccount' => "Modifiché ij gust ëd j'àutri utent",
+	'action-editaccount' => "modifiché j'anformassion ëd j'àutri utent",
 );
 
 /** Pashto (پښتو)
@@ -1700,7 +1721,9 @@ $messages['ro'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Eleferen
+ * @author Ignatus
  * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
@@ -1720,12 +1743,17 @@ $messages['ru'] = array(
 	'editaccount-label-pass' => 'Установка нового пароля',
 	'editaccount-label-realname' => 'Установка нового настоящего имени',
 	'editaccount-label-clearunsub' => 'Отписаться',
+	'editaccount-label-toggleadopt' => 'Изменить статус удочерителя (для AutomaticWikiAdopt):',
+	'editaccount-label-toggleadopt-prevent' => 'Предотвратить автоматическое удочерение',
+	'editaccount-label-toggleadopt-allow' => 'Разрешить автоматическое удочерение',
+	'editaccount-label-reason' => 'Причина:',
 	'editaccount-submit-email' => 'Сохранить адрес эл. почты',
 	'editaccount-submit-pass' => 'Сохранить пароль',
 	'editaccount-submit-realname' => 'Сохранить настоящее имя',
 	'editaccount-submit-clearunsub' => 'Снять отказ от подписки',
 	'editaccount-submit-cleardisable' => 'Очистить отключённый флаг',
 	'editaccount-submit-close' => 'Закрыть учётную запись',
+	'editaccount-submit-button' => 'Сохранить',
 	'editaccount-usage-close' => 'Вы также можете приостановить действие учётной записи, заменив её пароль и удалив адрес электронной почты. Обратите внимание, что эти данные будет невозможно восстановить.',
 	'editaccount-warning-close' => '<b>Внимание!</b> Вы собираетесь навсегда отключить учётную запись пользователя <b>$1</b>. Это действие не может быть отменено. Вы уверены, что хотите сделать именно это?',
 	'editaccount-status' => 'Статусное сообщение',
@@ -1743,6 +1771,7 @@ $messages['ru'] = array(
 	'editaccount-error-close' => 'Возникла проблема при закрытии учётной записи. Попробуйте ещё раз или свяжитесь с технической командой.',
 	'editaccount-invalid-email' => '«$1» не является допустимым адресом электронной почты!',
 	'editaccount-nouser' => 'Учётная запись «$1» не существует!',
+	'editaccount-not-loaded' => 'Ошибка: Данные пользователя не удалось загрузить правильно, попробуйте перезагрузить страницу.',
 	'editaccount-remove-avatar-fail' => 'Проблема с перезагрузкой аватара',
 	'editaccount-requested' => 'Примечание: участник запросил закрытие учётной записи',
 	'editaccount-not-requested' => 'ВНИМАНИЕ: участник не запрашивал закрытие учётной записи',
@@ -1762,6 +1791,7 @@ $messages['ru'] = array(
 	'editaccount-log-entry-close' => 'отключил учётную запись $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Эта учётная запись была отключена на всей Викия.</div>',
 	'right-editaccount' => 'Редактировать настройки других участников',
+	'action-editaccount' => 'редактировать информацию других пользователей',
 );
 
 /** Sakha (саха тыла)
@@ -1916,6 +1946,7 @@ $messages['sv'] = array(
 	'editaccount-error-close' => 'Ett problem uppstod när kontot skulle avslutas. Försök igen eller kontakta Tech Teamet.',
 	'editaccount-invalid-email' => '"$1" är inte en giltig e-postadress!',
 	'editaccount-nouser' => 'Konto "$1" existerar inte!',
+	'editaccount-not-loaded' => 'Fel: Det gick inte att läsa in användardata ordentligt, var god försök att uppdatera sidan.',
 	'editaccount-remove-avatar-fail' => 'Problem med att ta bort avatar automatiskt.',
 	'editaccount-requested' => 'OBS: Användare har begärt en avslutning av sitt konto',
 	'editaccount-not-requested' => 'VARNING: Användaren har inte begärt att få kontot stängt',
@@ -2194,12 +2225,14 @@ $messages['zh-hans'] = array(
 	'editaccount-submit-email' => '保存电子邮件地址',
 	'editaccount-submit-pass' => '保存密码',
 	'editaccount-submit-realname' => '保存真名',
+	'editaccount-submit-clearunsub' => '清除未订阅',
 	'editaccount-submit-close' => '关闭帐户',
 	'editaccount-submit-button' => '保存',
 	'editaccount-success-email-blank' => '成功移除帐户 $1 的电子邮件地址。',
 	'editaccount-success-pass' => '帐户 $1 的密码更改成功。',
 	'editaccount-success-realname' => '帐户 $1 的真实姓名更改成功。',
 	'editaccount-success-close' => '成功禁用了帐户 $1 。',
+	'editaccount-invalid-email' => '"$1"不是有效的电子邮件地址！',
 	'editaccount-nouser' => '帐户“$1”不存在！',
 	'editaccount-labal-account-status' => '帐户状态',
 	'editaccount-labal-email-status' => '电子邮件状态',

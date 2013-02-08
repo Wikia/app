@@ -104,8 +104,7 @@ $app->registerHook( 'LinkerMakeThumbLink2FileOriginalSize', 'VideoHandlerHooks',
 $app->registerHook( 'ParserAfterStrip', 'VideoHandlerHooks', 'convertOldInterwikiToNewInterwiki' );
 $app->registerHook( 'File::checkExtensionCompatibilityResult', 'VideoHandlerHooks', 'checkExtensionCompatibilityResult' );
 
-// (BugId:44086) hiding front end for now while back end if being worked on
-//$app->registerHook( 'SkinTemplateNavigation', 'VideoHandlerHooks', 'onSkinTemplateNavigation' );
+$app->registerHook( 'SkinTemplateNavigation', 'VideoHandlerHooks', 'onSkinTemplateNavigation' );
 
 $app->registerHook( 'FileUpload', 'VideoInfoHooksHelper', 'onFileUpload' );
 $app->registerHook( 'ArticleSaveComplete', 'VideoInfoHooksHelper', 'onArticleSaveComplete' );
@@ -206,54 +205,6 @@ $app->registerClass( 'OoyalaVideoHandler', $dir . '/handlers/OoyalaVideoHandler.
 $app->registerClass( 'OoyalaApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
 $wgMediaHandlers['video/ooyala'] = 'OoyalaVideoHandler';
 
-$app->registerClass( 'WikiawebinarsVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
-$app->registerClass( 'WikiawebinarsApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
-$wgMediaHandlers['video/wikiawebinars'] = 'WikiawebinarsVideoHandler';
-
-$app->registerClass( 'FunimationVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
-$app->registerClass( 'FunimationApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
-$wgMediaHandlers['video/funimation'] = 'FunimationVideoHandler';
-
-$app->registerClass( 'WbieVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
-$app->registerClass( 'WbieApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
-$wgMediaHandlers['video/wbie'] = 'WbieVideoHandler';
-
-$app->registerClass( 'SoeVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
-$app->registerClass( 'SoeApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
-$wgMediaHandlers['video/soe'] = 'SoeVideoHandler';
-
-$app->registerClass( 'WikiaproductionsVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
-$app->registerClass( 'WikiaproductionsApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
-$wgMediaHandlers['video/wikiaproductions'] = 'WikiaproductionsVideoHandler';
-
-$app->registerClass( 'KonamiVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
-$app->registerClass( 'KonamiApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
-$wgMediaHandlers['video/konami'] = 'KonamiVideoHandler';
-
-$app->registerClass( 'EaVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
-$app->registerClass( 'EaApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
-$wgMediaHandlers['video/ea'] = 'EaVideoHandler';
-
-$app->registerClass( 'KabamVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
-$app->registerClass( 'KabamApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
-$wgMediaHandlers['video/kabam'] = 'KabamVideoHandler';
-
-$app->registerClass( 'SonypicturesVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
-$app->registerClass( 'SonypicturesApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
-$wgMediaHandlers['video/sonypictures'] = 'SonypicturesVideoHandler';
-
-$app->registerClass( 'UniversalVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
-$app->registerClass( 'UniversalApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
-$wgMediaHandlers['video/universal'] = 'UniversalVideoHandler';
-
-$app->registerClass( 'WarnerbrothersVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
-$app->registerClass( 'WarnerbrothersApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
-$wgMediaHandlers['video/warnerbrothers'] = 'WarnerbrothersVideoHandler';
-
-$app->registerClass( 'FoxVideoHandler', $dir . '/handlers/OoyalaVideoHandler.class.php' );
-$app->registerClass( 'FoxApiWrapper', $dir . '/apiwrappers/OoyalaApiWrapper.class.php' );
-$wgMediaHandlers['video/fox'] = 'FoxVideoHandler';
-
 /**
  * Feed ingesters
  */
@@ -286,18 +237,6 @@ $wgVideoMigrationProviderMap = array(
 	26 => 'Anyclip',
 	27 => 'Twitchtv',
 	28 => 'Ooyala',
-	29 => 'Wikiawebinars',
-	30 => 'Funimation',
-	31 => 'Wbie',
-	32 => 'Soe',
-	33 => 'Wikiaproductions',
-	34 => 'Konami',
-	35 => 'Ea',
-	36 => 'Kabam',
-	37 => 'Sonypictures',
-	38 => 'Universal',
-	39 => 'Warnerbrothers',
-	40 => 'Fox',
 );
 
 

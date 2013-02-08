@@ -72,6 +72,11 @@ class EditPageLayoutController extends WikiaController {
 		// Is user logged in?
 		$this->isLoggedIn = $this->wg->User->isLoggedIn();
 
+		// Can the user minor edit?
+		$this->canMinorEdit = $this->title->exists()
+		                    && $this->isLoggedIn
+		                    && $this->wg->User->isAllowed( 'minoredit' );
+
 		// Text for Edit summary label
 		$wpSummaryLabelText = 'editpagelayout-edit-summary-label';
 

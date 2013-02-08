@@ -1,8 +1,26 @@
 <?php
 class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleService {
-	
 	protected function getFormFields() {
 		$fields = array(
+			'sponsoredImage' => array(
+				'type' => 'hidden',
+				'attributes' => array(
+					'class' => 'wmu-file-name-input'
+				),
+				'validator' => new WikiaValidatorImageSize(
+					array(
+						'maxWidth' => 85,
+						'maxHeight' => 15,
+					),
+					array(
+						'wrong-file' => 'marketing-toolbox-validator-wrong-file',
+						'wrong-size' => 'marketing-toolbox-validator-wrong-file-size',
+						'max-width' => 'marketing-toolbox-validator-wrong-file-size-width',
+						'max-height' => 'marketing-toolbox-validator-wrong-file-size-height',
+						'not-an-image' => 'marketing-toolbox-validator-wrong-file-not-an-image',
+					)
+				)
+			),
 			'fileName' => array(
 				'type' => 'hidden',
 				'attributes' => array(
@@ -47,12 +65,16 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleSer
 	}
 
 	public function renderEditor($data) {
+		$model = new MarketingToolboxModel();
+
 		if( !empty($data['values']['fileName']) ) {
-			$model = new MarketingToolboxModel();
-			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['values']['fileName'], $model->getThumbnailSize());
-			$data['fileUrl'] = $imageData->url;
-			$data['imageWidth'] = $imageData->width;
-			$data['imageHeight'] = $imageData->height;
+			$imageModel = new MarketingToolboxImageModel($data['values']['fileName']);
+			$data['file'] = $imageModel->getImageThumbData($model->getThumbnailSize());
+		}
+
+		if( !empty($data['values']['sponsoredImage']) ) {
+			$imageModel = new MarketingToolboxImageModel($data['values']['sponsoredImage']);
+			$data['sponsoredImage'] = $imageModel->getImageThumbData();
 		}
 		
 		return parent::renderEditor($data);

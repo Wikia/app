@@ -34,25 +34,25 @@ class ApiHooks {
 
 	public static function onArticleDeleteComplete( &$article, User &$user, $reason, $id ) {
 		ArticlesApiController::purgeCache( $id );
-
-		ArticlesApiController::purgeMethod( 'getList' );
-
+		ArticlesApiController::purgeMethods( ['getList', 'getTop'] );
 		return true;
 	}
 
 	public static function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
 		ArticlesApiController::purgeCache( $article->getTitle()->getArticleID() );
-
-		ArticlesApiController::purgeMethod( 'getList' );
-
+		ArticlesApiController::purgeMethods( ['getList', 'getTop'] );
 		return true;
 	}
 
 	public static function onArticleRollbackComplete( $article, $user, $revision, $current ) {
 		ArticlesApiController::purgeCache( $article->getTitle()->getArticleID() );
+		ArticlesApiController::purgeMethods( ['getList', 'getTop'] );
+		return true;
+	}
 
-		ArticlesApiController::purgeMethod( 'getList' );
-
+	public static function onTitleMoveComplete( Title &$title, Title &$newtitle, User &$user, $oldid, $newid ) {
+		ArticlesApiController::purgeCache( $newtitle->getArticleID() );
+		ArticlesApiController::purgeMethods( ['getList', 'getTop'] );
 		return true;
 	}
 

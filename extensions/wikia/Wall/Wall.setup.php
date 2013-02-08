@@ -54,6 +54,7 @@ include($dir . '/notification/WallNotifications.setup.php');
 
 $app->registerExtensionMessageFile('Wall', $dir . '/Wall.i18n.php');
 
+$app->registerHook('AccountNavigationModuleAfterDropdownItems', 'WallHooksHelper', 'onAccountNavigationModuleAfterDropdownItems');
 $app->registerHook('ArticleViewHeader', 'WallHooksHelper', 'onArticleViewHeader');
 $app->registerHook('SkinTemplateTabs', 'WallHooksHelper', 'onSkinTemplateTabs');
 $app->registerHook('AlternateEdit', 'WallHooksHelper', 'onAlternateEdit');
@@ -80,6 +81,7 @@ $app->registerHook('AllowNotifyOnPageChange', 'WallHooksHelper', 'onAllowNotifyO
 $app->registerHook('GetPreferences', 'WallHooksHelper', 'onGetPreferences');
 
 //recent changes adjusting
+
 $app->registerHook('AC_RecentChange_Save', 'WallHooksHelper', 'onRecentChangeSave');
 $app->registerHook('ChangesListInsertFlags', 'WallHooksHelper', 'onChangesListInsertFlags');
 $app->registerHook('ChangesListInsertArticleLink', 'WallHooksHelper', 'onChangesListInsertArticleLink');
@@ -87,11 +89,13 @@ $app->registerHook('ChangesListInsertDiffHist', 'WallHooksHelper', 'onChangesLis
 $app->registerHook('ChangesListInsertRollback', 'WallHooksHelper', 'onChangesListInsertRollback');
 $app->registerHook('ChangesListInsertLogEntry', 'WallHooksHelper', 'onChangesListInsertLogEntry');
 $app->registerHook('ChangesListInsertComment', 'WallHooksHelper', 'onChangesListInsertComment');
+
 $app->registerHook('ArticleDoDeleteArticleBeforeLogEntry', 'WallHooksHelper', 'onArticleDoDeleteArticleBeforeLogEntry');
 $app->registerHook('PageArchiveUndeleteBeforeLogEntry', 'WallHooksHelper', 'onPageArchiveUndeleteBeforeLogEntry');
 $app->registerHook('OldChangesListRecentChangesLine', 'WallHooksHelper', 'onOldChangesListRecentChangesLine');
 $app->registerHook('ChangesListMakeSecureName', 'WallHooksHelper', 'onChangesListMakeSecureName');
 $app->registerHook('WikiaRecentChangesBlockHandlerChangeHeaderBlockGroup', 'WallHooksHelper', 'onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup');
+$app->registerHook('ChangesListItemGroupRegular', 'WallHooksHelper', 'onChangesListItemGroupRegular');
 
 $app->registerHook('ArticleDeleteComplete' , 'WallHooksHelper', 'onArticleDeleteComplete');
 $app->registerHook( 'FilePageImageUsageSingleLink', 'WallHooksHelper', 'onFilePageImageUsageSingleLink' );
@@ -147,6 +151,7 @@ $app->registerHook('BeforeInitialize', 'WallHooksHelper', 'onBeforeInitialize');
 $app->registerHook( 'WikiFeatures::afterToggleFeature', 'WallHooksHelper', 'onAfterToggleFeature');
 $app->registerHook( 'AdvancedBoxSearchableNamespaces', 'WallHooksHelper', 'onAdvancedBoxSearchableNamespaces');
 
+$app->registerHook( 'HAWelcomeGetPrefixText', 'WallHooksHelper', 'onHAWelcomeGetPrefixText');
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',

@@ -37,6 +37,7 @@ $messages['qqq'] = array(
 	'places-in-category' => '$1 is a category name',
 	'places-on-map' => 'Counter of places on a map ($1 is number of places)',
 	'places-modal-go-to-special' => 'Shows below map in the modal and links to Special:Places. $1 is number of places shown on a map',
+	'places-editor-search' => 'Label for submit button that handles a search string. {{Identical|Search}}',
 	'places-editor-title-create-new' => 'Title of places editor modal when creating a new geotag',
 	'places-editor-title-edit' => 'Title of places editor modal when editing an existing geotag',
 );
@@ -431,6 +432,34 @@ $messages['pl'] = array(
 	'places-updated-geolocation' => 'Geooznaczono tę stronę',
 	'places-category-switch' => 'Wyłącz geotagowanie',
 	'places-category-switch-off' => 'Włącz geotagowanie',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'places' => 'Pòst dzor sta wiki',
+	'places-desc' => 'A dà <nowiki><place> e <places></nowiki> ganci ëd parser për geo tichëtté dle pagine e na [[Special:Places|carta ëd tute le pagine tichëttà]]',
+	'places-in-category' => 'A piassa an $1 categorìe',
+	'places-on-map' => '{{PLURAL:$1|$1 pòst}} dzor sta carta',
+	'places-modal-go-to-special' => 'Mosté {{PLURAL:$1|$1 pòst}} ([[Special:Places|varda tut]])',
+	'places-toolbar-button-tooltip' => 'Sgnaca për gionté na geo tichëtta a sta pagina',
+	'places-toolbar-button-address' => "Për piasì dà l'adrëssa da dovré com na geo tichëtta për sta pagina",
+	'places-editor-search' => 'Sërca',
+	'places-editor-title-create-new' => 'Gionta na geotichëtta',
+	'places-editor-title-edit' => 'Modìfica na geotichëtta',
+	'places-editor-show-my-location' => 'Pòrtme a mia locassion',
+	'places-editor-geoposition' => 'Geolocassion corenta:',
+	'places-geolocation-button-label' => 'Gionté na locassion',
+	'places-geolocation-modal-add-title' => 'Gionté na locassion',
+	'places-geolocation-modal-error-title' => 'Eror',
+	'places-geolocation-modal-error' => "A j'era n'eror an provand a determiné toa posission:<br />$1",
+	'places-geolocation-modal-not-available' => "Contacc! Sta funsion a l'é al moment disponibla mach su dispositis sacociàbij.<br /><br />It veus-to deje na preuva? Vìsita mach sta pagina dovrand tò dispositiv sacociàbil ch'it veule.",
+	'places-error-no-article' => 'It deuve specifiché na pagina',
+	'places-error-place-already-exists' => "Sta pagina a l'é già geo tichëttà",
+	'places-updated-geolocation' => 'Geotichëtta sta pagina',
+	'places-category-switch' => 'Disabìlita geotichëttatura',
+	'places-category-switch-off' => 'Abìlita geotichëttatura',
 );
 
 /** Pashto (پښتو)

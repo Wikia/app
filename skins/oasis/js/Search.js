@@ -4,13 +4,9 @@ var WikiaSearchApp = {
 
 	ads: false,
 
-	trackInternal: function(event, params) {
-		WikiaTracker.trackEvent(
-			event,
-			params,
-			'internal'
-		);
-	},
+	track: window.WikiaTracker.buildTrackingFunction({
+		trackingMethod: 'internal'
+	}),
 
 	init : function() {
 		this.searchForm = $('#WikiaSearch');
@@ -46,7 +42,6 @@ var WikiaSearchApp = {
 	// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
 	initSuggest: function() {
 		$.when(
-			//$.getMessages('LinkSuggest'), // FIXME: doesn't seem to be used here
 			$.loadJQueryAutocomplete()
 		).then($.proxy(function() {
 			this.searchField.autocomplete({
@@ -58,9 +53,10 @@ var WikiaSearchApp = {
 							replace(/\$1/, valueEncoded).
 							replace(encodeURIComponent('/'), '/');
 
-					this.trackInternal('search_start_suggest', {
-						'sterm': valueEncoded,
-						'rver': 0
+					this.track({
+						eventName: 'search_start_suggest',
+						sterm: valueEncoded,
+						rver: 0
 					});
 
 					// Respect modifier keys to allow opening in a new window (BugId:29401)

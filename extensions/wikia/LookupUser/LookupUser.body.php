@@ -23,7 +23,7 @@ class LookupUserPage extends SpecialPage {
 	 * @param $subpage Mixed: parameter passed to the page or null
 	 */
 	public function execute( $subpage ) {
-		global $wgRequest, $wgUser;
+		global $wgRequest, $wgUser, $wgExternalAuthType;
 
 		$this->setHeaders();
 
@@ -43,14 +43,26 @@ class LookupUserPage extends SpecialPage {
 		$byIdInvalidUser = false;
 		if( $wgRequest->getText( 'mode' ) == 'by_id' ) {
 			$id = $target;
-			$u = User::newFromId($id); #create
-			if ( $u->loadFromId() ) {
-				#overwrite text
-				$target = $u->getName();
+			if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
+				$u = ExternalUser::newFromId( $id );
+				if ( is_object( $u ) && ( $u->getId() != 0 ) ) {
+					#overwrite text
+					$target = $u->getName();
+				} else {
+					// User with that ID doesn't exist, notify user
+					// Stops trying to display form with a user by that name which is confusing
+					$byIdInvalidUser = true;
+				}
 			} else {
-				// User with that ID doesn't exist, notify user
-				// Stops trying to display form with a user by that name which is confusing
-				$byIdInvalidUser = true;
+				$u = User::newFromId($id); #create
+				if ( $u->loadFromId() ) {
+					#overwrite text
+					$target = $u->getName();
+				} else {
+					// User with that ID doesn't exist, notify user
+					// Stops trying to display form with a user by that name which is confusing
+					$byIdInvalidUser = true;
+				}
 			}
 		}
 
@@ -124,7 +136,7 @@ EOT
 	 * @param $target Mixed: user whose info we're looking up
 	 */
 	function showInfo( $target, $emailUser = "" ) {
-		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt, $wgEnableUserLoginExt;
+		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt, $wgEnableUserLoginExt, $wgExternalSharedDB, $wgExternalAuthType;
 		//Small Stuff Week - adding table from Special:LookupContribs --nAndy
 		global $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgEnableLookupContribsExt;
 
@@ -137,9 +149,9 @@ EOT
 			 * find username by email
 			 */
 			$emailUser = htmlspecialchars( $emailUser );
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-			$oRes = $dbr->select( "user", "user_name", array( "user_email" => $target ), __METHOD__ );
+			$oRes = $dbr->select( '`user`', 'user_name', array( 'user_email' => $target ), __METHOD__ );
 
 			$loop = 0;
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {
@@ -155,15 +167,24 @@ EOT
 			$count = $loop;
 		}
 
-		$user = User::newFromName( (!empty($userTarget)) ? $userTarget : $target );
+		$targetUserName = ( !empty($userTarget) ? $userTarget : $target );
+		$extUser = null;
+		$user = null;
+		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
+			$extUser = ExternalUser::newFromName( $targetUserName );
+		} else {
+			$user = User::newFromName( $targetUserName );
+		}
 		$tempUser = false;
-		if ( $user == null || $user->getId() == 0 ) {
+		if ( is_object( $extUser ) && ( $extUser->getId() != 0 ) ) {
+			$user = $extUser->mapToUser();
+		} elseif ( $user == null || $user->getId() == 0 ) {
 			// Check if a temporary user is at this name
 			if ( !empty( $wgEnableUserLoginExt ) ) {
-				$tempUser = TempUser::getTempUserFromName( ( !empty( $userTarget ) ) ? $userTarget : $target );
+				$tempUser = TempUser::getTempUserFromName( $targetUserName );
 			}
 			if ( $tempUser ) {
-				$user = $tempUser->mapTempUserToUser( false );;
+				$user = $tempUser->mapTempUserToUser( false );
 			} else {
 				$wgOut->addWikiText( '<span class="error">' . wfMsg( 'lookupuser-nonexistent', $target ) . '</span>' );
 				return;

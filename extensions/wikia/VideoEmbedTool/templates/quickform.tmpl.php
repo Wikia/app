@@ -1,3 +1,5 @@
+<? // Special:WikiaVideoAdd template ?>
+
 <p><?= wfMessage('vet-video-add-intro')->parse() ?></p>
 
 <?
@@ -42,9 +44,6 @@ $form = array(
 	'attributes' => $formAttributes,
 	'submits' => $formSubmits,
 );
-
-
-
 
 echo F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
 

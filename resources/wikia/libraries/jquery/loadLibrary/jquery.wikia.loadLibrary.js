@@ -69,7 +69,7 @@ $.loadJQueryAutocomplete = function(callback) {
 };
 
 $.loadJQueryAIM = function(callback) {
-	return mw.loader.use('jquery.aim').done(callback);
+	return mw.loader.use('wikia.aim').done(callback);
 };
 
 $.loadMustache = function(callback) {

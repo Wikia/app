@@ -9,6 +9,9 @@
 $messages = array();
 
 $messages['en'] = array(
+	'article-comments-file-page' => "<a href='$1'>Comment from $2</a> on <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Comment from $2</a> on <a href='$3'>$4</a> post on <a href='$5'>$6's</a> blog",
+
 	'article-comments-anonymous' => 'Anonymous user',
 	'article-comments-comments' => 'Comments ($1)',
 	'article-comments-post' => 'Post comment',
@@ -47,6 +50,7 @@ $messages['en'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Post a comment',
 	'wikiamobile-article-comments-show' => 'Show',
 	'wikiamobile-article-comments-login-post' => 'Please log in to post a comment.',
+	'wikiamobile-article-comments-post-fail' => 'Failed to save comment, please try again later',
 
 	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$PAGETITLE" on {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
@@ -74,20 +78,39 @@ ___________________________________________
 
 /** Message documentation (Message documentation)
  * @author Lizlux
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'article-comments-anonymous' => 'Anonymous users are logged out / un-authenticated users.',
+	'article-comments-file-page' => 'Format of the file usage (see [[MediaWiki:Linkstoimage]]) entry on the file page if the file is used in an article comment.
+Parameters:
+* $1 - Full URL link to the comment that includes the image. $1 is placed inside an anchor tag, please do not alter.
+* $2 - Username of the user who left the comment that includes the image. This should be placed within the link of the anchor tag created by $1. Supports GENDER
+* $3 - Full URL of the parent article that has the specific comment. $3 is placed inside an anchor tag, please do not alter.
+* $4 - Page name of parent article. This should be placed within the link of the the anchor tag created by $3.',
+	'article-blog-comments-file-page' => 'Format of the file usage (see [[MediaWiki:Linkstoimage]]) entry on the file page if the file is used in a blog comment.
+Parameters:
+* $1 - Full URL link to the comment that includes the image. $1 is placed inside an anchor tag, please do not alter.
+* $2 - Username of the user who left the comment that includes the image. This should placed within the link of the anchor tag created by $1. Supports GENDER
+* $3 - Full URL link to the blog that has the specific comment. $3 is placed inside an anchor tag, please do not alter.
+* $4 - Name of the blog post.  This should be placed within the link of the the anchor tag created by $3.
+* $5 - Full URL link to the blog page of the author of the blog post (not the blog comment). $5 is placed inside an anchor tag, please do not alter.
+* $6 - Username of the author of the blog post (not the blog comment). This should placed within the link of the anchor tag created by $5. Supports GENDER.',
+	'article-comments-anonymous' => 'Anonymous users are logged out / un-authenticated users.
+{{Identical|Anonymous user}}',
 	'article-comments-post' => 'This is the text of a submit button to post a new article comment.',
 	'article-comments-cancel' => 'Cancel/stop editing an article comment.',
 	'article-comments-delete' => 'Click this button to delete the comment. It will take you to a page where you can confirm the deletion.',
 	'article-comments-edit' => 'Click this button to edit the message.  A box will appear to with the message text for editing.',
+	'article-comments-history' => '{{Identical|History}}',
+	'article-comments-next-page' => '{{Identical|Next}}',
 	'wikiamobile-article-comments-header' => "The header of the Comments section shown in Wikia's mobile skin. Parameters:
 * $1 is the number of the comments.",
 	'wikiamobile-article-comments-view' => 'Message to open all replies to a comment. Parameters: $1 is the number of comments.',
 	'wikiamobile-article-comments-replies' => 'Messege in Top Bar in a modal with all replies to comment',
 	'wikiamobile-article-comments-show' => 'Label for the link that will reveal the list of comments, keep it as short as possible',
-	'enotif_body_article_comment' => 'This is an email sent to inform a user that a page they are following has a new comment posted.',
+	'enotif_body_article_comment' => '{{doc-singularthey}}
+This is an email sent to inform a user that a page they are following has a new comment posted.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -199,6 +222,7 @@ $messages['as'] = array(
 );
 
 /** Azerbaijani (azərbaycanca)
+ * @author AZISS
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -207,7 +231,7 @@ $messages['az'] = array(
 	'article-comments-edit' => 'redaktə',
 	'article-comments-history' => 'Tarix',
 	'article-comments-toc-item' => 'Şərhlər',
-	'article-comments-reply' => 'Yenidən',
+	'article-comments-reply' => 'Geri göndər',
 	'article-comments-next-page' => 'Növbəti',
 );
 
@@ -525,6 +549,8 @@ $messages['da'] = array(
  * @author SVG
  */
 $messages['de'] = array(
+	'article-comments-file-page' => "<a href='$1'>Kommentar von $2</a> zu <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Kommentar von $2</a> zum Artikel <a href='$3'>$4</a> im Blog von <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Unangemeldeter Benutzer',
 	'article-comments-comments' => 'Kommentare ($1)',
 	'article-comments-post' => 'Kommentieren',
@@ -710,6 +736,8 @@ $messages['eo'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'article-comments-file-page' => "<a href='$1'>Comentario de $2</a> en <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Comentario de $2</a> en la publicación <a href='$3'>$4</a> en el blog de <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Usuario anónimo',
 	'article-comments-comments' => 'Comentarios ($1)',
 	'article-comments-post' => 'Dejar comentario',
@@ -955,6 +983,8 @@ $messages['fo'] = array(
  * @author Zetud
  */
 $messages['fr'] = array(
+	'article-comments-file-page' => "<a href='$1'>Commentaire de $2</a> sur <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Commentaire de $2</a> sur <a href='$3'>$4</a> publié sur le blog de <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Utilisateur anonyme',
 	'article-comments-comments' => 'Commentaires ($1)',
 	'article-comments-post' => 'Ajouter un commentaire',
@@ -1022,6 +1052,8 @@ Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Ut
  * @author Toliño
  */
 $messages['gl'] = array(
+	'article-comments-file-page' => "<a href='$1'>Comentario de $2</a> en <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Comentario de $2</a> en <a href='$3'>$4</a>, publicado no blogue de <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Usuario anónimo',
 	'article-comments-comments' => 'Comentarios ($1)',
 	'article-comments-post' => 'Publicar un comentario',
@@ -1595,6 +1627,8 @@ $messages['lus'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'article-comments-file-page' => "<a href='$1'>Коментар од $2</a> на <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Коментар од $2</a> на објава од <a href='$3'>$4</a> на блогот на <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Анонимен корисник',
 	'article-comments-comments' => 'Коментари ($1)',
 	'article-comments-post' => 'Објави коментар',
@@ -1821,6 +1855,8 @@ ___________________________________________
  * @author Siebrand
  */
 $messages['nl'] = array(
+	'article-comments-file-page' => "<a href='$1'>Reactie van $2</a> op <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Reactie van $2</a> op bericht <a href='$3'>$4</a> op het blog van <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Anonieme gebruiker',
 	'article-comments-comments' => 'Opmerkingen ($1)',
 	'article-comments-post' => 'Opmerking plaatsen',
@@ -1861,7 +1897,7 @@ $messages['nl'] = array(
 	'enotif_subject_article_comment' => '$PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE" op {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
 
-Er is een nieuwe reactie bij $PAGETITLE op {{SITENAME}}. Gebruik de volgende verwijzing om alle reacties te bekijken: $PAGETITLE_URL#WikiaArticleComments
+Er is een nieuwe reactie bij $PAGETITLE op {{SITENAME}}. Gebruik de volgende koppeling om alle reacties te bekijken: $PAGETITLE_URL#WikiaArticleComments
 
 - Wikia Community Support
 
@@ -1870,7 +1906,7 @@ ___________________________________________
 * Wilt u minder berichten van ons ontvangen? Schrijf u dan uit of wijzig uw e-mailvoorkeuren: http://community.wikia.com/wiki/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hallo $WATCHINGUSERNAME,
 <br /><br />
-Er is een nieuwe reactie bij $PAGETITLE op {{SITENAME}}. Gebruik de volgende verwijzing om alle reacties te bekijken: $PAGETITLE_URL#WikiaArticleComments
+Er is een nieuwe reactie bij $PAGETITLE op {{SITENAME}}. Gebruik de volgende koppeling om alle reacties te bekijken: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
 - Wikia Community Support
 <br /><br />
@@ -1890,18 +1926,34 @@ $messages['nl-informal'] = array(
 	'article-comments-empty-comment' => "Je kunt geen opmerking zonder inhoud plaatsen. <a href='$1'>In plaats daarvan verwijderen?</a>",
 	'enotif_body_article_comment-HTML' => '<p>Hoi $WATCHINGUSERNAME,
 <br /><br />
-$ PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE".
+Er is een nieuwe reactie bij $PAGETITLE op {{SITENAME}}. Gebruik de volgende koppeling om alle reacties te bekijken: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-Je kunt de discussie bekijken via de volgende verwijzing: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+- Wikia Community Support
 <br /><br />
-Kom alsjeblieft vaak langs en bewerk veelvuldig...
-<br /><br />
-Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li>Wilt je bepalen welke e-mails je ontvangt? <a href="{{fullurl:{{ns:special}}:Preferences}}">Pas dan je Voorkeuren<a> aan.</li>
+<li>Voor hulp en advies op Community Central ga je naar <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Wil je minder berichten van ons ontvangen? Schrijf je dan uit of wijzig je e-mailvoorkeuren op <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
-</p>', # Fuzzy
+</p>',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'article-comments-anonymous' => 'Utilizaire anonim',
+	'article-comments-comments' => 'Comentaris ($1)',
+	'article-comments-post' => 'Apondre un comentari',
+	'article-comments-cancel' => 'Anullar',
+	'article-comments-delete' => 'suprimir',
+	'article-comments-edit' => 'modificar',
+	'article-comments-history' => 'istoric',
+	'article-comments-vote' => 'Interessant',
+	'article-comments-reply' => 'Respondre',
+	'article-comments-prev-page' => 'Precedent',
+	'article-comments-next-page' => 'Seguent',
+	'article-comments-page-spacer' => '&#160...&#160',
 );
 
 /** Pälzisch (Pälzisch)
@@ -1923,6 +1975,8 @@ $messages['pfl'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
+	'article-comments-file-page' => "<a href='$1'>Komentarz użytkownika $2</a> w artykule <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Komentarz użytkownika $2</a> we wpisie <a href='$3'>$4</a> na blogu użytkownika <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Anonimowy użytkownik',
 	'article-comments-comments' => 'Komentarze ($1)',
 	'article-comments-post' => 'Wyślij komentarz',
@@ -1988,6 +2042,8 @@ ___________________________________________
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'article-comments-file-page' => "<a href='$1'>Coment da $2</a> ai <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Coment da $2</a> ai <a href='$3'>$4</a> spedì dzor lë scartari ëd <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Utent anònim',
 	'article-comments-comments' => 'Coment ($1)',
 	'article-comments-post' => "Coment a l'artìcol",
@@ -1997,6 +2053,57 @@ $messages['pms'] = array(
 	'article-comments-history' => 'stòria',
 	'article-comments-error' => "Ël coment a l'ha pa podù esse salvà",
 	'article-comments-undeleted-comment' => 'Coment ripristinà për pàgina dë scartari $1',
+	'article-comments-rc-comment' => 'Coment d\'artìcol (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => "Coment d'artìcol ([[$1]])",
+	'article-comments-fblogin' => 'Për piasì <a href="$1" rel="nofollow">intra e colegh-te con Facebook</a> për mandé un coment dzor sta wiki!',
+	'article-comments-fbconnect' => 'Për piasì <a href="$1">colega sto cont con Facebook</a> për comenté!',
+	'article-comments-rc-blog-comment' => 'Coment dë scartari (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'Coment dë scartari ([[$1]])',
+	'article-comments-login' => 'Për piasì <a href="$1">intra</a> Për mandé un coment dzor sta wiki.',
+	'article-comments-toc-item' => 'Coment',
+	'article-comments-comment-cannot-add' => 'It peule pa gionté un coment a la vos.',
+	'article-comments-vote' => 'Voté a pro',
+	'article-comments-reply' => 'Arspond',
+	'article-comments-show-all' => 'Mosta tùit ij coment',
+	'article-comments-prev-page' => 'Andaré',
+	'article-comments-next-page' => 'Apress',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => "L'artìcol pare / coment pare a l'é stàit scanselà.",
+	'article-comments-empty-comment' => "It peule pa mandé un coment veuid. <a href='$1'>Scanselelo anvece?</a>",
+	'wikiamobile-article-comments-header' => 'coment <span class=cnt id=wkArtCnt>$1</span>',
+	'wikiamobile-article-comments-more' => "Caria anco'",
+	'wikiamobile-article-comments-prev' => 'caria prima',
+	'wikiamobile-article-comments-none' => 'Gnun coment',
+	'wikiamobile-article-comments-view' => 'Varda arspòste',
+	'wikiamobile-article-comments-replies' => 'arspòste',
+	'wikiamobile-article-comments-post-reply' => "Manda n'arspòsta",
+	'wikiamobile-article-comments-post' => 'Spediss',
+	'wikiamobile-article-comments-placeholder' => 'Manda un coment',
+	'wikiamobile-article-comments-show' => 'Smon',
+	'wikiamobile-article-comments-login-post' => 'Për piasì intra për mandé un coment.',
+	'enotif_subject_article_comment' => '$PAGEEDITOR a l\'ha comentà dzor "$PAGETITLE" dzor {{SITENAME}}',
+	'enotif_body_article_comment' => 'Cerea $WATCHINGUSERNAME,
+
+A-i é un neuv coment a $PAGETITLE dzor {{SITENAME}}. Dòvra sto colegament për vëdde tùit ij coment:
+$PAGETITLE_URL#WikiaArticleComments
+
+- Apògg dla Comunità Wikia
+
+___________________________________________
+* Treuva agiut e avis dzor Community Central: http://community.wikia.com
+* It Veus-to arseive men mëssagi da noi? It peule disiscrivte o cangé it tò gust d\'email belessì: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Cerea $WATCHINGUSERNAME,
+<br /><br />
+A-i é un neuv coment a $PAGETITLE dzor {{SITENAME}}. Dòvra sto colegament për vëdde tùit ij coment:
+<br /><br />
+- Apògg dla Comunità Wikia
+<br /><br />
+___________________________________________
+<ul>
+<li>Treuva agiut e avis dzor Community Central: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>It veus-to arseive men mëssagi da noi? It peule disiscrivte o cangé it tò gust d\'email belessì: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+</ul>
+</p>',
 );
 
 /** Pashto (پښتو)
@@ -2120,8 +2227,8 @@ $messages['pt-br'] = array(
 	'article-comments-show-all' => 'Mostrar todos os comentários',
 	'article-comments-prev-page' => 'Anterior',
 	'article-comments-next-page' => 'Próximo',
-	'article-comments-page-spacer' => '& # 160... & # 160',
-	'article-comments-delete-reason' => '',
+	'article-comments-page-spacer' => '& # 160...&#160',
+	'article-comments-delete-reason' => 'O artigo raiz / comentário raiz foi deletado.',
 	'article-comments-empty-comment' => 'Você não pode postar um comentário vazio. <a href="$1">Excluí-lo em vez disso?</a>',
 	'wikiamobile-article-comments-header' => 'Comentários (<span class=cnt id=wkArtCnt>$1</span>)',
 	'wikiamobile-article-comments-more' => 'Carregar mais',
@@ -2189,15 +2296,34 @@ $messages['roa-tara'] = array(
 	'article-comments-history' => 'cunde',
 	'article-comments-error' => "Non g'è state possibbele ccu salve 'u commende",
 	'article-comments-undeleted-comment' => "Commende no scangellate p'a pàgene $1 d'u blog",
+	'article-comments-rc-comments' => "Commende d'a vôsce ([[$1]])",
 	'article-comments-toc-item' => 'Commende',
+	'article-comments-vote' => 'Vote',
 	'article-comments-reply' => 'Respunne',
+	'article-comments-show-all' => 'Vide tutte le commènde',
+	'article-comments-prev-page' => 'Prec',
+	'article-comments-next-page' => 'Prossime',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-more' => 'Careche le otre',
+	'wikiamobile-article-comments-prev' => "Careche 'u precedende",
+	'wikiamobile-article-comments-none' => 'Nisciune commende',
+	'wikiamobile-article-comments-view' => 'Vide le resposte',
+	'wikiamobile-article-comments-replies' => 'resposte',
+	'wikiamobile-article-comments-post-reply' => "Manne 'na resposte",
+	'wikiamobile-article-comments-post' => 'Messàgge',
+	'wikiamobile-article-comments-placeholder' => "Mitte 'nu commende",
+	'wikiamobile-article-comments-show' => 'Fà vedè',
+	'wikiamobile-article-comments-login-post' => "Pe piacere tràse pe lassà 'nu commende",
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Express2000
  * @author Kuzura
  */
 $messages['ru'] = array(
+	'article-comments-file-page' => "<a href='$1'>Комментарий от $2</a> на <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Комментарий от $2</a> на пост <a href='$3'>$4</> в блоге <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Анонимный участник',
 	'article-comments-comments' => 'Комментарии ($1)',
 	'article-comments-post' => 'Оставить комментарий',
@@ -2348,6 +2474,8 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'article-comments-file-page' => "<a href='$1'>Kommentar från $2</a> den <a href='$3'>$4</a>",
+	'article-blog-comments-file-page' => "<a href='$1'>Kommentar från $2</a> den <a href='$3'>$4</a> som inlägg på <a href='$5'>$6s</a> blogg",
 	'article-comments-anonymous' => 'Anonym användare',
 	'article-comments-comments' => 'Kommentarer ($1)',
 	'article-comments-post' => 'Skicka kommentar',

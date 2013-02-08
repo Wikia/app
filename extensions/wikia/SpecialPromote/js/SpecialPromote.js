@@ -377,7 +377,7 @@ SpecialPromote.prototype = {
 			method: 'saveData',
 			data: data,
 			callback: function (response) {
-				(new Wikia.Querystring())
+				Wikia.Querystring()
 					.addCb()
 					.goTo();
 			},
@@ -432,7 +432,9 @@ SpecialPromote.prototype = {
 	}
 };
 
-var SpecialPromoteInstance = new SpecialPromote();
 $(function () {
-	SpecialPromoteInstance.init();
+	$.loadJQueryAIM().done(function() {
+		var SpecialPromoteInstance = new SpecialPromote();
+		SpecialPromoteInstance.init();
+	});
 });

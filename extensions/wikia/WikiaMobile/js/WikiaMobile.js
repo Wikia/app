@@ -1,19 +1,8 @@
-//image Lazyloading
-//needs to run ASAP (before onload actually happens)
-//so it's processed separately from the rest
-//to avoid delays
-
-window.addEventListener('load', function(){
-	require(['lazyload'], function(lazy){
-		lazy(document.getElementsByClassName('noSect'));
-	})
-});
-
 //init
 window.addEventListener('DOMContentLoaded', function () {
 	'use strict';
-	require(['querystring', require.optional('topbar'), require.optional('toc'), 'events', require.optional('share'), require.optional('popover'), require.optional('cookies'), 'track', 'lazyload', 'sections'],
-		function (qs, topbar, toc, events, share, popover, cookies, track, lazyload, sections) {
+	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), 'events', require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'layout'],
+		function (qs, topbar, toc, events, share, popover, cookies, track) {
 			var d = document,
 				clickEvent = events.click,
 				//add chevrons to elements that need it
@@ -27,8 +16,8 @@ window.addEventListener('DOMContentLoaded', function () {
 				topBar = d.getElementById('wkTopBar'),
 				fllSite = d.getElementById('wkFllSite'),
 				categoryLinks = d.getElementById('catlinks'),
-				wordmark,
-				processedSections = {};
+				wordmark;
+
 
 			while (i--) {
 				addChevs[i].insertAdjacentHTML('beforeend', '<span class=chev></span>');
@@ -44,7 +33,8 @@ window.addEventListener('DOMContentLoaded', function () {
 					if(t.tagName == 'A') {
 						track.event('read-more', track.IMAGE_LINK, {
 							href: t.href
-						});
+						},
+						ev);
 					} else {
 						if (relPage.children[0].className.indexOf('open') > -1) {
 							track.event('read-more', track.CLICK, {label: 'close'});
@@ -59,12 +49,9 @@ window.addEventListener('DOMContentLoaded', function () {
 					event.stopPropagation();
 					cookies.set('mobilefullsite', 'true');
 
-					(new qs()).setVal('useskin', this.getAttribute('data-skin')).addCb().goTo();
+					qs().setVal('useskin', this.getAttribute('data-skin')).addCb().goTo();
 				});
 			}
-
-			//add curtain
-			d.body.insertAdjacentHTML('beforeend', '<div id=wkCurtain></div>');
 
 			//close toc and topbar when 'curtain' is clicked
 			d.getElementById('wkCurtain').addEventListener(clickEvent, function(){
@@ -98,17 +85,19 @@ window.addEventListener('DOMContentLoaded', function () {
 						track.event('footer', track.TEXT_LINK, {
 							label: 'link',
 							href: t.href
-						});
+						},
+						ev);
 					}
 				});
 			}
 
 			if (topBar) {
 				if (wordmark = topBar.children[0]) {
-					wordmark.addEventListener(clickEvent, function () {
+					wordmark.addEventListener(clickEvent, function (ev) {
 						track.event('wordmark', track.CLICK, {
 							href: this.href
-						});
+						},
+						ev);
 					});
 				}
 			}
@@ -120,20 +109,11 @@ window.addEventListener('DOMContentLoaded', function () {
 						track.event('category', track.TEXT_LINK, {
 							label: 'article',
 							href: t.href
-						});
+						},
+						ev);
 					}
 				});
 			}
-
-			sections.addEventListener('open', function () {
-				var id = this.getAttribute('data-index');
-
-				if (id && !processedSections[id]) {
-					lazyload(this.getElementsByClassName('lazy'));
-
-					processedSections[id] = true;
-				}
-			});
 		}
 	);
 });

@@ -109,7 +109,7 @@ class WikiaSearch extends WikiaObject {
 	 * @see WikiaSearch::field
 	 * @staticvar array
 	 */
-	private static $multiValuedFields = array('categories', 'redirect_titles', 'headings');
+	public static $multiValuedFields = array('categories', 'redirect_titles', 'headings');
 
 	/**
 	 * Search client
@@ -642,7 +642,7 @@ class WikiaSearch extends WikiaObject {
 				->setQueryParser		( 'edismax' )
 		;
 		
-		if ( $this->wg->ExternalSharedDB !== null ) {
+		if (! empty( $this->wg->ExternalSharedDB ) ) {
 			$dismax
 				->setPhraseFields		( $queryFieldsString )
 				->setBoostQuery			( $this->getBoostQueryString( $searchConfig ) )
@@ -650,7 +650,7 @@ class WikiaSearch extends WikiaObject {
 				->setPhraseSlop			( 3 )
 				->setTie				( 0.01 )
 			;
-			if (! $searchConfig->getSkipBoostFunctions() ) {
+			if (! $searchConfig->getSkipBoostFunctions()  ) {
 			    $dismax->setBoostFunctions(
 			            implode(' ',
 			                    $searchConfig->isInterWiki()

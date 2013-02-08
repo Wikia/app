@@ -33,9 +33,11 @@ $1
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'lightbox-forum' => '{{Identical|Forum}}',
 	'lightbox-share-description' => 'Parameters:
 * $1 is the current page,
 * $2 is the site name.',
@@ -43,6 +45,7 @@ $messages['qqq'] = array(
 * $1 is a username.',
 	'lightbox-share-email-body' => 'Parameters:
 * $1 is a link to the suggested image.',
+	'lightbox-share-email-error-caption' => '{{Identical|Error}}',
 	'lightbox-share-email-error-content' => 'Parameters:
 * $1 is the numer of sent e-mails
 * $2 is are the error details.',
@@ -199,6 +202,15 @@ $messages['diq'] = array(
 	'lightbox-share-email-page-label-address' => 'Adresê e-posta',
 	'lightbox-share-email-ok-caption' => 'Tesdiqiye',
 	'lightbox-share-email-error-caption' => 'Xırab',
+);
+
+/** Esperanto (Esperanto)
+ * @author Objectivesea
+ */
+$messages['eo'] = array(
+	'lightbox-share-button-email' => 'Retpoŝto',
+	'lightbox-share-email-page-label-address' => 'Retpoŝtadreso',
+	'lightbox-visit-the-wiki' => 'Viziti la vikion:',
 );
 
 /** Spanish (español)
@@ -579,8 +591,8 @@ Detaljer: $2',
 $messages['nl'] = array(
 	'lightbox_details_tooltip' => 'Bestandsgegevens bekijken',
 	'lightbox-forum' => 'Forum',
-	'lightbox-standard-link' => 'Standaardverwijzing',
-	'lightbox-blog-link' => 'Blogverwijzing',
+	'lightbox-standard-link' => 'Standaard koppeling',
+	'lightbox-blog-link' => 'Blogkoppeling',
 	'lightbox-send' => 'Verzenden',
 	'lightbox-share-description' => 'Afbeelding in $1 op $2',
 	'lightbox-share-email-subject' => '$1 heeft u een afbeelding gezonden op Wikia',
@@ -651,6 +663,40 @@ Szczegóły: $2',
 	'lightbox-visit-the-wiki' => 'Odwiedź wiki:',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'lightbox_details_tooltip' => 'Vëdde ij detaj dla fòto',
+	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Colegament standard',
+	'lightbox-blog-link' => 'Colegament dlë scartari',
+	'lightbox-send' => 'Mandé',
+	'lightbox-share-description' => 'Fòto an $1 dzor $2',
+	'lightbox-share-email-subject' => "$1 a l'ha mandate na fòto dzor Wikia",
+	'lightbox-share-email-body' => "Cerea,
+
+Quaidun a veul mostete na fòto dzor Wikia. Contròla:
+
+$1
+
+- L'echip Wikia",
+	'lightbox-share-button-email' => 'Pòsta eletrònica',
+	'lightbox-share-button-www' => 'Condivid',
+	'lightbox-share-button-embed' => 'Ancastra',
+	'lightbox-share-email-label' => "Manda sta figura a n'amis",
+	'lightbox-share-email-page-label' => "Manda sta pagina a n'amis",
+	'lightbox-share-email-page-label-address' => 'Adrëssa ëd pòsta eletrònica',
+	'lightbox-share-email-ok-caption' => 'Confirma',
+	'lightbox-share-email-ok-content' => "{{PLURAL:$1|N'email a l'é stàita|De email a son stàite}} mandà.",
+	'lightbox-share-email-error-caption' => 'Eror',
+	'lightbox-share-email-error-content' => 'Eror mandand {{PLURAL:$1|na email|dle email}}.
+Detaj: $2',
+	'lightbox-share-email-error-login' => 'Për mandé email it deuve intré',
+	'lightbox-share-email-error-noaddress' => 'Gnun-e adrësse a son stàite specificà',
+	'lightbox-visit-the-wiki' => 'Vìsita la wiki:',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -684,6 +730,18 @@ $messages['pt-br'] = array(
 	'lightbox-send' => 'Enviar',
 	'lightbox-share-email-ok-caption' => 'Confirmação',
 	'lightbox-share-email-error-caption' => 'Erro',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'lightbox-forum' => 'Forum',
+	'lightbox-share-button-email' => 'E-mail',
+	'lightbox-share-button-www' => 'Condivide',
+	'lightbox-share-email-page-label-address' => 'Indirizze e-mail',
+	'lightbox-share-email-error-caption' => 'Errore',
+	'lightbox-visit-the-wiki' => "Visite 'a uicchi:",
 );
 
 /** Russian (русский)

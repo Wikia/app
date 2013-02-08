@@ -345,11 +345,12 @@ class EditPageLayoutHelper {
 			'resources/jquery.ui/jquery.ui.autocomplete.js',
 			'resources/wikia/libraries/jquery/md5/jquery.md5.js',
 			'resources/wikia/libraries/mustache/mustache.js',
-			'resources/wikia/libraries/jquery/uniqueId/jquery.uniqueId.js',
+			//'resources/wikia/modules/uniqueId.js', // REQUIRED by RestoreEdit.js only
 			// >> editor stack loaders and configurers
 			'extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
 			// >> editor core
 			'extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
+			'extensions/wikia/EditPageLayout/js/editor/WikiaEditorStorage.js',
 			'extensions/wikia/EditPageLayout/js/editor/Buttons.js',
 			'extensions/wikia/EditPageLayout/js/editor/Modules.js',
 			// >> Wikia specific editor plugins

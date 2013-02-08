@@ -2,7 +2,7 @@
 /**
  * PHP_CodeCoverage
  *
- * Copyright (c) 2009-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2009-2012, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,17 +37,11 @@
  * @category   PHP
  * @package    CodeCoverage
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @copyright  2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://github.com/sebastianbergmann/php-code-coverage
  * @since      File available since Release 1.0.0
  */
-
-if (!defined('T_NAMESPACE')) {
-    define('T_NAMESPACE', 377);
-}
-
-require_once 'PHP/Token/Stream/CachingFactory.php';
 
 /**
  * Utility methods.
@@ -55,19 +49,13 @@ require_once 'PHP/Token/Stream/CachingFactory.php';
  * @category   PHP
  * @package    CodeCoverage
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2009-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: 1.0.0
+ * @copyright  2009-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://github.com/sebastianbergmann/php-code-coverage
  * @since      Class available since Release 1.0.0
  */
 class PHP_CodeCoverage_Util
 {
-    /**
-     * @var string
-     */
-    const REGEX = '(@covers\s+(?P<coveredElement>.*?)\s*$)m';
-
     /**
      * @var array
      */
@@ -76,223 +64,162 @@ class PHP_CodeCoverage_Util
     /**
      * @var array
      */
-    protected static $templateMethods = array(
-      'setUp', 'assertPreConditions', 'assertPostConditions', 'tearDown'
-    );
+    protected static $ids = array();
 
-    /**
-     * Builds an array representation of the directory structure.
-     *
-     * For instance,
-     *
-     * <code>
-     * Array
-     * (
-     *     [Money.php] => Array
-     *         (
-     *             ...
-     *         )
-     *
-     *     [MoneyBag.php] => Array
-     *         (
-     *             ...
-     *         )
-     * )
-     * </code>
-     *
-     * is transformed into
-     *
-     * <code>
-     * Array
-     * (
-     *     [.] => Array
-     *         (
-     *             [Money.php] => Array
-     *                 (
-     *                     ...
-     *                 )
-     *
-     *             [MoneyBag.php] => Array
-     *                 (
-     *                     ...
-     *                 )
-     *         )
-     * )
-     * </code>
-     *
-     * @param  array $files
-     * @return array
-     */
-    public static function buildDirectoryStructure($files)
-    {
-        $result = array();
-
-        foreach ($files as $path => $file) {
-            $path    = explode('/', $path);
-            $pointer = &$result;
-            $max     = count($path);
-
-            for ($i = 0; $i < $max; $i++) {
-                if ($i == ($max - 1)) {
-                    $type = '/f';
-                } else {
-                    $type = '';
-                }
-
-                $pointer = &$pointer[$path[$i] . $type];
-            }
-
-            $pointer = $file;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Calculates the Change Risk Anti-Patterns (CRAP) index for a unit of code
-     * based on its cyclomatic complexity and percentage of code coverage.
-     *
-     * @param  integer $ccn
-     * @param  float   $coverage
-     * @return string
-     */
-    public static function crap($ccn, $coverage)
-    {
-        if ($coverage == 0) {
-            return (string)pow($ccn, 2) + $ccn;
-        }
-
-        if ($coverage >= 95) {
-            return (string)$ccn;
-        }
-
-        return sprintf(
-          '%01.2F', pow($ccn, 2) * pow(1 - $coverage/100, 3) + $ccn
-        );
-    }
-
-    /**
-     * @param  string $directory
-     * @return string
-     * @throws RuntimeException
-     */
-    public static function getDirectory($directory)
-    {
-        if (substr($directory, -1, 1) != DIRECTORY_SEPARATOR) {
-            $directory .= DIRECTORY_SEPARATOR;
-        }
-
-        if (is_dir($directory)) {
-            return $directory;
-        }
-
-        if (mkdir($directory, 0777, TRUE)) {
-            return $directory;
-        }
-
-        throw new RuntimeException(
-          sprintf(
-            'Directory "%s" does not exist.',
-            $directory
-          )
-        );
-    }
-
-    /**
-     * Returns the files and lines a test method wants to cover.
-     *
-     * @param  string $className
-     * @param  string $methodName
-     * @return array
-     */
-    public static function getLinesToBeCovered($className, $methodName)
-    {
-        $codeToCoverList = array();
-        $result          = array();
-        // @codeCoverageIgnoreStart
-        if (($pos = strpos($methodName, ' ')) !== FALSE) {
-            $methodName = substr($methodName, 0, $pos);
-        }
-        // @codeCoverageIgnoreEnd
-        $class      = new ReflectionClass($className);
-        $method     = new ReflectionMethod($className, $methodName);
-        $docComment = $class->getDocComment() . $method->getDocComment();
-
-        foreach (self::$templateMethods as $templateMethod) {
-            if ($class->hasMethod($templateMethod)) {
-                $reflector   = $class->getMethod($templateMethod);
-                $docComment .= $reflector->getDocComment();
-                unset($reflector);
-            }
-        }
-
-        if (preg_match_all(self::REGEX, $docComment, $matches)) {
-            foreach ($matches['coveredElement'] as $coveredElement) {
-                $codeToCoverList = array_merge(
-                  $codeToCoverList,
-                  self::resolveCoversToReflectionObjects($coveredElement)
-                );
-            }
-
-            foreach ($codeToCoverList as $codeToCover) {
-                $fileName = $codeToCover->getFileName();
-
-                if (!isset($result[$fileName])) {
-                    $result[$fileName] = array();
-                }
-
-                $result[$fileName] = array_unique(
-                  array_merge(
-                    $result[$fileName],
-                    range(
-                      $codeToCover->getStartLine(), $codeToCover->getEndLine()
-                    )
-                  )
-                );
-            }
-        }
-
-        return $result;
-    }
 
     /**
      * Returns the lines of a source file that should be ignored.
      *
-     * @param  string $filename
+     * @param  string  $filename
+     * @param  boolean $cacheTokens
      * @return array
+     * @throws PHP_CodeCoverage_Exception
      */
-    public static function getLinesToBeIgnored($filename)
+    public static function getLinesToBeIgnored($filename, $cacheTokens = TRUE)
     {
+        if (!is_string($filename)) {
+            throw PHP_CodeCoverage_Util_InvalidArgumentHelper::factory(
+              1, 'string'
+            );
+        }
+
+        if (!is_bool($cacheTokens)) {
+            throw PHP_CodeCoverage_Util_InvalidArgumentHelper::factory(
+              2, 'boolean'
+            );
+        }
+
         if (!isset(self::$ignoredLines[$filename])) {
             self::$ignoredLines[$filename] = array();
+            $ignore                        = FALSE;
+            $stop                          = FALSE;
+            $lines                         = file($filename);
 
-            $ignore = FALSE;
-            $stop   = FALSE;
-            $tokens = PHP_Token_Stream_CachingFactory::get($filename);
+            foreach ($lines as $index => $line) {
+                if (!trim($line)) {
+                    self::$ignoredLines[$filename][$index+1] = TRUE;
+                }
+            }
+
+            if ($cacheTokens) {
+                $tokens = PHP_Token_Stream_CachingFactory::get($filename);
+            } else {
+                $tokens = new PHP_Token_Stream($filename);
+            }
+
+            $classes = array_merge($tokens->getClasses(), $tokens->getTraits());
+            $tokens  = $tokens->tokens();
 
             foreach ($tokens as $token) {
                 switch (get_class($token)) {
+                    case 'PHP_Token_COMMENT':
+                    case 'PHP_Token_DOC_COMMENT': {
+                        $count = substr_count($token, "\n");
+                        $line  = $token->getLine();
+
+                        for ($i = $line; $i < $line + $count; $i++) {
+                            self::$ignoredLines[$filename][$i] = TRUE;
+                        }
+
+                        if ($token instanceof PHP_Token_DOC_COMMENT) {
+                            // Workaround for the fact the DOC_COMMENT token
+                            // does not include the final \n character in its
+                            // text.
+                            if (substr(trim($lines[$i-1]), -2) == '*/') {
+                                self::$ignoredLines[$filename][$i] = TRUE;
+                            }
+
+                            break;
+                        }
+
+                        $_token = trim($token);
+
+                        if ($_token == '// @codeCoverageIgnore' ||
+                            $_token == '//@codeCoverageIgnore') {
+                            $ignore = TRUE;
+                            $stop   = TRUE;
+                        }
+
+                        else if ($_token == '// @codeCoverageIgnoreStart' ||
+                                 $_token == '//@codeCoverageIgnoreStart') {
+                            $ignore = TRUE;
+                        }
+
+                        else if ($_token == '// @codeCoverageIgnoreEnd' ||
+                                 $_token == '//@codeCoverageIgnoreEnd') {
+                            $stop = TRUE;
+                        }
+                    }
+                    break;
+
+                    case 'PHP_Token_INTERFACE':
+                    case 'PHP_Token_TRAIT':
                     case 'PHP_Token_CLASS':
                     case 'PHP_Token_FUNCTION': {
                         $docblock = $token->getDocblock();
-                        $endLine  = $token->getEndLine();
 
                         if (strpos($docblock, '@codeCoverageIgnore')) {
+                            $endLine = $token->getEndLine();
+
                             for ($i = $token->getLine(); $i <= $endLine; $i++) {
                                 self::$ignoredLines[$filename][$i] = TRUE;
+                            }
+                        }
+
+                        else if ($token instanceof PHP_Token_INTERFACE ||
+                                 $token instanceof PHP_Token_TRAIT ||
+                                 $token instanceof PHP_Token_CLASS) {
+                            if (empty($classes[$token->getName()]['methods'])) {
+                                for ($i = $token->getLine();
+                                     $i <= $token->getEndLine();
+                                     $i++) {
+                                    self::$ignoredLines[$filename][$i] = TRUE;
+                                }
+                            } else {
+                                $firstMethod = array_shift(
+                                  $classes[$token->getName()]['methods']
+                                );
+
+                                $lastMethod = array_pop(
+                                  $classes[$token->getName()]['methods']
+                                );
+
+                                if ($lastMethod === NULL) {
+                                    $lastMethod = $firstMethod;
+                                }
+
+                                for ($i = $token->getLine();
+                                     $i < $firstMethod['startLine'];
+                                     $i++) {
+                                    self::$ignoredLines[$filename][$i] = TRUE;
+                                }
+
+                                for ($i = $token->getEndLine();
+                                     $i > $lastMethod['endLine'];
+                                     $i--) {
+                                    self::$ignoredLines[$filename][$i] = TRUE;
+                                }
                             }
                         }
                     }
                     break;
 
-                    case 'PHP_Token_COMMENT': {
-                        if (trim($token) == '// @codeCoverageIgnoreStart') {
-                            $ignore = TRUE;
-                        }
+                    case 'PHP_Token_INTERFACE': {
+                        $endLine = $token->getEndLine();
 
-                        else if (trim($token) == '// @codeCoverageIgnoreEnd') {
-                            $stop = TRUE;
+                        for ($i = $token->getLine(); $i <= $endLine; $i++) {
+                            self::$ignoredLines[$filename][$i] = TRUE;
                         }
+                    }
+                    break;
+
+                    case 'PHP_Token_NAMESPACE': {
+                        self::$ignoredLines[$filename][$token->getEndLine()] = TRUE;
+                    } // Intentional fallthrough
+                    case 'PHP_Token_OPEN_TAG':
+                    case 'PHP_Token_CLOSE_TAG':
+                    case 'PHP_Token_USE': {
+                        self::$ignoredLines[$filename][$token->getLine()] = TRUE;
                     }
                     break;
                 }
@@ -312,72 +239,16 @@ class PHP_CodeCoverage_Util
     }
 
     /**
-     * Returns the package information of a user-defined class.
-     *
-     * @param  string $className
-     * @param  string $docComment
-     * @return array
-     */
-    public static function getPackageInformation($className, $docComment)
-    {
-        $result = array(
-          'namespace'   => '',
-          'fullPackage' => '',
-          'category'    => '',
-          'package'     => '',
-          'subpackage'  => ''
-        );
-
-        if (strpos($className, '\\') !== FALSE) {
-            $result['namespace'] = self::arrayToName(
-              explode('\\', $className)
-            );
-        }
-
-        if (preg_match('/@category[\s]+([\.\w]+)/', $docComment, $matches)) {
-            $result['category'] = $matches[1];
-        }
-
-        if (preg_match('/@package[\s]+([\.\w]+)/', $docComment, $matches)) {
-            $result['package']     = $matches[1];
-            $result['fullPackage'] = $matches[1];
-        }
-
-        if (preg_match('/@subpackage[\s]+([\.\w]+)/', $docComment, $matches)) {
-            $result['subpackage']   = $matches[1];
-            $result['fullPackage'] .= '.' . $matches[1];
-        }
-
-        if (empty($result['fullPackage'])) {
-            $result['fullPackage'] = self::arrayToName(
-              explode('_', str_replace('\\', '_', $className)), '.'
-            );
-        }
-
-        return $result;
-    }
-
-    /**
-     * Returns a filesystem safe version of the passed filename.
-     * This function does not operate on full paths, just filenames.
-     *
-     * @param  string $filename
-     * @return string
-     * @author Michael Lively Jr. <m@digitalsandwich.com>
-     */
-    public static function getSafeFilename($filename)
-    {
-        /* characters allowed: A-Z, a-z, 0-9, _ and . */
-        return preg_replace('#[^\w.]#', '_', $filename);
-    }
-
-    /**
      * @param  float $a
      * @param  float $b
      * @return float ($a / $b) * 100
      */
-    public static function percent($a, $b, $asString = FALSE)
+    public static function percent($a, $b, $asString = FALSE, $fixedWidth = FALSE)
     {
+        if ($asString && $b == 0) {
+            return '';
+        }
+
         if ($b > 0) {
             $percent = ($a / $b) * 100;
         } else {
@@ -385,255 +256,13 @@ class PHP_CodeCoverage_Util
         }
 
         if ($asString) {
-            return sprintf('%01.2F', $percent);
+            if ($fixedWidth) {
+                return sprintf('%6.2F%%', $percent);
+            }
+
+            return sprintf('%01.2F%%', $percent);
         } else {
             return $percent;
         }
-    }
-
-    /**
-     * Reduces the paths by cutting the longest common start path.
-     *
-     * For instance,
-     *
-     * <code>
-     * Array
-     * (
-     *     [/home/sb/Money/Money.php] => Array
-     *         (
-     *             ...
-     *         )
-     *
-     *     [/home/sb/Money/MoneyBag.php] => Array
-     *         (
-     *             ...
-     *         )
-     * )
-     * </code>
-     *
-     * is reduced to
-     *
-     * <code>
-     * Array
-     * (
-     *     [Money.php] => Array
-     *         (
-     *             ...
-     *         )
-     *
-     *     [MoneyBag.php] => Array
-     *         (
-     *             ...
-     *         )
-     * )
-     * </code>
-     *
-     * @param  array $files
-     * @return string
-     */
-    public static function reducePaths(&$files)
-    {
-        if (empty($files)) {
-            return '.';
-        }
-
-        $commonPath = '';
-        $paths      = array_keys($files);
-
-        if (count($files) == 1) {
-            $commonPath                 = dirname($paths[0]) . '/';
-            $files[basename($paths[0])] = $files[$paths[0]];
-
-            unset($files[$paths[0]]);
-
-            return $commonPath;
-        }
-
-        $max = count($paths);
-
-        for ($i = 0; $i < $max; $i++) {
-            $paths[$i] = explode(DIRECTORY_SEPARATOR, $paths[$i]);
-
-            if (empty($paths[$i][0])) {
-                $paths[$i][0] = DIRECTORY_SEPARATOR;
-            }
-        }
-
-        $done = FALSE;
-        $max  = count($paths);
-
-        while (!$done) {
-            for ($i = 0; $i < $max - 1; $i++) {
-                if (!isset($paths[$i][0]) ||
-                    !isset($paths[$i+1][0]) ||
-                    $paths[$i][0] != $paths[$i+1][0]) {
-                    $done = TRUE;
-                    break;
-                }
-            }
-
-            if (!$done) {
-                $commonPath .= $paths[0][0];
-
-                if ($paths[0][0] != DIRECTORY_SEPARATOR) {
-                    $commonPath .= DIRECTORY_SEPARATOR;
-                }
-
-                for ($i = 0; $i < $max; $i++) {
-                    array_shift($paths[$i]);
-                }
-            }
-        }
-
-        $original = array_keys($files);
-        $max      = count($original);
-
-        for ($i = 0; $i < $max; $i++) {
-            $files[join('/', $paths[$i])] = $files[$original[$i]];
-            unset($files[$original[$i]]);
-        }
-
-        ksort($files);
-
-        return $commonPath;
-    }
-
-    /**
-     * Returns the package information of a user-defined class.
-     *
-     * @param  array  $parts
-     * @param  string $join
-     * @return string
-     */
-    protected static function arrayToName(array $parts, $join = '\\')
-    {
-        $result = '';
-
-        if (count($parts) > 1) {
-            array_pop($parts);
-
-            $result = join($join, $parts);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param  string $coveredElement
-     * @return array
-     */
-    protected static function resolveCoversToReflectionObjects($coveredElement)
-    {
-        $codeToCoverList = array();
-
-        if (strpos($coveredElement, '::') !== FALSE) {
-            list($className, $methodName) = explode('::', $coveredElement);
-
-            if ($methodName[0] == '<') {
-                $classes = array($className);
-
-                foreach ($classes as $className) {
-                    if (!class_exists($className) &&
-                        !interface_exists($className)) {
-                        throw new RuntimeException(
-                          sprintf(
-                            'Trying to @cover not existing class or ' .
-                            'interface "%s".',
-                            $className
-                          )
-                        );
-                    }
-
-                    $class   = new ReflectionClass($className);
-                    $methods = $class->getMethods();
-                    $inverse = isset($methodName[1]) && $methodName[1] == '!';
-
-                    if (strpos($methodName, 'protected')) {
-                        $visibility = 'isProtected';
-                    }
-
-                    else if (strpos($methodName, 'private')) {
-                        $visibility = 'isPrivate';
-                    }
-
-                    else if (strpos($methodName, 'public')) {
-                        $visibility = 'isPublic';
-                    }
-
-                    foreach ($methods as $method) {
-                        if ($inverse && !$method->$visibility()) {
-                            $codeToCoverList[] = $method;
-                        }
-
-                        else if (!$inverse && $method->$visibility()) {
-                            $codeToCoverList[] = $method;
-                        }
-                    }
-                }
-            } else {
-                $classes = array($className);
-
-                foreach ($classes as $className) {
-                    if ($className == '' && function_exists($methodName)) {
-                        $codeToCoverList[] = new ReflectionFunction(
-                          $methodName
-                        );
-                    } else {
-                        if (!((class_exists($className) ||
-                               interface_exists($className)) &&
-                              method_exists($className, $methodName))) {
-                            throw new RuntimeException(
-                              sprintf(
-                                'Trying to @cover not existing method "%s::%s".',
-                                $className,
-                                $methodName
-                              )
-                            );
-                        }
-
-                        $codeToCoverList[] = new ReflectionMethod(
-                          $className, $methodName
-                        );
-                    }
-                }
-            }
-        } else {
-            $extended = FALSE;
-
-            if (strpos($coveredElement, '<extended>') !== FALSE) {
-                $coveredElement = str_replace(
-                  '<extended>', '', $coveredElement
-                );
-
-                $extended = TRUE;
-            }
-
-            $classes = array($coveredElement);
-
-            if ($extended) {
-                $classes = array_merge(
-                  $classes,
-                  class_implements($coveredElement),
-                  class_parents($coveredElement)
-                );
-            }
-
-            foreach ($classes as $className) {
-                if (!class_exists($className) &&
-                    !interface_exists($className)) {
-                    throw new RuntimeException(
-                      sprintf(
-                        'Trying to @cover not existing class or ' .
-                        'interface "%s".',
-                        $className
-                      )
-                    );
-                }
-
-                $codeToCoverList[] = new ReflectionClass($className);
-            }
-        }
-
-        return $codeToCoverList;
     }
 }

@@ -93,9 +93,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'founderprogressbar-list-description1' => '{{doc-singularthey}}',
 	'founderprogressbar-photo-add10-label' => 'Goal.',
 	'founderprogressbar-category-add3-label' => '',
 );
@@ -1131,7 +1133,7 @@ $messages['nl'] = array(
 	'founderprogressbar-page-add20-label' => "$1 {{PLURAL:$1|pagina|pagina's}} bereiken",
 	'founderprogressbar-page-add20-description' => "Blijven doorwerken om uw wiki een uitgebreide bron over uw onderwerp te maken. Maak niet alleen pagina's aan, maar zorg dat uw teksten ook inhoudelijk goed zijn.",
 	'founderprogressbar-category-edit-label' => 'Categoriepagina bewerken',
-	'founderprogressbar-category-edit-description' => "In categorieën worden niet alleen verwijzingen naar alle pagina's in de categorie weergegeven. U kunt kan de pagina's ook bewerken om bezoekers aan te geven waar de categorie over gaat en welke soorten pagina's de categorie bevat. Door de categoriepagina te bewerken verandert deze ook van een rode naar een blauwe verwijzing.",
+	'founderprogressbar-category-edit-description' => "In categorieën worden niet alleen koppelingen naar alle pagina's in de categorie weergegeven. U kunt kan de pagina's ook bewerken om bezoekers aan te geven waar de categorie over gaat en welke soorten pagina's de categorie bevat. Door de categoriepagina te bewerken verandert deze ook van een rode naar een blauwe koppeling.",
 	'founderprogressbar-wikialabs-visit-label' => 'Wikia Laboratorium bezoeken',
 	'founderprogressbar-wikialabs-visit-description' => 'In het Wikia Laboratorium kunt u de nieuwste functies van Wikia uitproberen op uw wiki. Deze functies zijn allemaal in de betafase, maar het is een goede manier om te zien wat u kunt verwachten van Wikia en om het zelf uit te proberen.',
 	'founderprogressbar-fb-connect-label' => 'Facebook Connect',
@@ -1141,7 +1143,7 @@ $messages['nl'] = array(
 	'founderprogressbar-gallery-add-label' => 'Afbeeldingengalerij toevoegen',
 	'founderprogressbar-gallery-add-description' => "Afbeeldingsgalerijen zijn een goede manier om meerdere foto's in een paginadeel te plaatsen. Het is ook leuk om de manier waarop afbeeldingen worden weergegeven af te wisselen zodat uw wiki aantrekkelijk en afwisselend blijft voor bezoekers.",
 	'founderprogressbar-topnav-edit-label' => 'Bewerk uw navigatie',
-	'founderprogressbar-topnav-edit-description' => "De dropdownmenu's naast het woordmerk van uw  wiki zijn uw navigatiehulpmiddelen. U kunt hier verwijzingen opnemen naar de pagina's waar mensen pagina's, categorieen, blogberichten en meer van uw wiki kunnen vinden. Ga naar Community Central als u hulp nodig hebt voor het bewerken van de navigatie.",
+	'founderprogressbar-topnav-edit-description' => "De dropdownmenu's naast het woordmerk van uw  wiki zijn uw navigatiehulpmiddelen. U kunt hier koppelingen opnemen naar de pagina's waar mensen pagina's, categorieen, blogberichten en meer van uw wiki kunnen vinden. Ga naar Community Central als u hulp nodig hebt voor het bewerken van de navigatie.",
 	'founderprogressbar-mainpage-addslider-label' => 'Voeg een schuifafbeelding toe aan de hoofdpagina',
 	'founderprogressbar-mainpage-addslider-description' => 'De schuifafbeeldingen op de hoofdpagina zijn een mooie manier om een pagina er professioneel uit te laten zien en een paar schitterende afbeeldingen toe te voegen. Elke afbeelding kan weer doorverwijzen naar een pagina, dus het is ook een goede manier om de pagina\'s waar u het meest trots op bent uit te lichten. Bekijk dit <a href="http://community.wikia.com/wiki/User_blog:Susan_Taylor/Tips_to_spruce_up_your_main_page">blogbericht van Susan Taylor</a> als u hulp nodig hebt met het wijzigen van de afmetingen voor uw schuifafbeeldingen.',
 	'founderprogressbar-commcorner-edit-label' => 'Gemeenschapsberichten bewerken',
@@ -1155,7 +1157,7 @@ $messages['nl'] = array(
 	'founderprogressbar-wordmark-edit-label' => 'Woordmerk uploaden',
 	'founderprogressbar-wordmark-edit-description' => 'Het woordmerk van uw wiki is belangrijk. Het is te zien op iedere pagina en het helpt gebruikers om een idee te krijgen van uw onderwerp en om wat flair toe te voegen. Door uw eigen grafische woordmerk te uploaden kunt u ervoor zorgen dat uw merk er nog meer uitspringt.',
 	'founderprogressbar-mostvisited-visit-label' => "Meestbezochte pagina's bekijken",
-	'founderprogressbar-mostvisited-visit-description' => "Als u wiki echt op stoom komt, is het handig om te zien wat de meest populaire pagina's zijn, zodat u die kunt verbeteren en meer verwijzingen kunt toevoegen naar pagina's die minder vaak bezocht worden. Kijk naar uw meest bezochte pagina's om een idee te krijgen van wat het beste werkt voor uw wiki zodat u soortgelijke verbeteringen kunt maken aan de andere pagina's!",
+	'founderprogressbar-mostvisited-visit-description' => "Als u wiki echt op stoom komt, is het handig om te zien wat de meest populaire pagina's zijn, zodat u die kunt verbeteren en meer koppelingen kunt toevoegen naar pagina's die minder vaak bezocht worden. Kijk naar uw meest bezochte pagina's om een idee te krijgen van wat het beste werkt voor uw wiki zodat u soortgelijke verbeteringen kunt maken aan de andere pagina's!",
 	'founderprogressbar-toptenlist-add-label' => 'Top-10 lijst toevoegen',
 	'founderprogressbar-toptenlist-add-description' => 'Top-10 lijsten motiveren gebruikers die misschien wat terughoudend zijn om mee te werken aan uw wiki. Het is een leuke motivator voor de gemeenschap en het is makkelijk voor mensen die dingen die mensen aan lijsten toevoegen te waarderen.',
 	'founderprogressbar-blogpost-add-label' => 'Een blogpost schrijven',
@@ -1264,6 +1266,31 @@ $messages['pl'] = array(
 	'founderprogressbar-bonus-edit50-label' => 'Edytuj dodatkowo {{PLURAL:$1|$1 stronę|$1 strony|$1 stron}}.',
 	'founderprogressbar-bonus-edit50-description' => 'Mierz wysoko i wykonaj dodatkowe 50 edycji aby zaliczyć dodatkowe zadanie.',
 	'founderprogressbar-browse-page-name' => 'Przeglądaj',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'founderprogressbar-credits' => "Un perno d'atività e guida për fondator ëd neuve wiki",
+	'founderprogressbar-widget-label' => 'Progress ëd {{SITENAME}}',
+	'founderprogressbar-progress-label' => 'Atività fàite',
+	'founderprogressbar-progress-see-full-list' => 'Varda la lista completa',
+	'founderprogressbar-progress-hide-full-list' => 'Stërma la lista completa',
+	'founderprogressbar-skip-for-now' => 'Sàuta për adess',
+	'founderprogressbar-task-completed' => 'Completà',
+	'founderprogressbar-list-label' => 'Atività ëd {{SITENAME}}',
+	'founderprogressbar-list-description1' => "Pront a possé toa wiki an sla strà dël sucess? Completa tute toe atività listà sota për porté la bara dij tò progress al 100%! Mincadun dzor toa wiki a peul giuté e mincadun-a ëd soe contribussion a sarà contà ansema a j'atività dë sta lista.",
+	'founderprogressbar-list-description2' => "L'area dj'atività a lista tute j'atività ch'it deuve completé. S'it sàute n'atività, a sarà tramudà ant la session Atività Sautà e a resterà disponibla përchè ch'it la complete an qualsëssìa moment. A-i é-lo n'atività ant la lista ch'it pense a sarà mai giusta për toa wiki? Sagrinte pa -- quand che mach j'Atività Sautà a resto da completé i dësblocheroma toe Atività Bonus. Completa j'atività bonus për aussé ij pont ëd persentual për j'atività ch'it sauteras për sempe e riva a coaté ël 100%.",
+	'founderprogressbar-list-task-label' => 'Atività',
+	'founderprogressbar-list-skipped-task-label' => 'Atività Sautà',
+	'founderprogressbar-list-skipped-task-desc' => 'It peule completeje an qualsëssìa moment.',
+	'founderprogressbar-list-bonus-task-label' => 'Atività Bonus',
+	'founderprogressbar-list-bonus-task-desc' => "Completa la lista dj'atività për dësbloché j'atività bonus",
+	'founderprogressbar-task-call-to-action' => "Và a l'atività",
+	'founderprogressbar-completion-message' => "Congratulassion! It l'has fàit un travaj anciarmant e completà tute j'atività al 100%. Toa wiki a l'é bin an sla stra dël sucess, o a-i é già. Continua l'incredìbil travaj!",
+	'founderprogressbar-bonus-task-notice' => "Nòta: Minca atività bonus a peul esse continuà pi che na vòta. Completa pi ch'it peule për rivé al 100%",
+	'founderprogressbar-page-add10-label' => 'Rivà a $1 {{PLURAL:$1|pagina|pagine}}',
 );
 
 /** Pashto (پښتو)

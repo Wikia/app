@@ -56,6 +56,7 @@ $messages['en'] = array(
 	'user-identity-box-group-authenticated' => 'Authenticated',
 	'user-identity-box-group-council' => 'Councilor',
 	'user-identity-box-group-adminmentor' => 'Admin Mentor',
+	'user-identity-box-group-wikiastars' => 'Wikia Star',
 
 	'user-identity-box-zero-state-location' => 'Location',
 	'user-identity-box-zero-state-birthday' => 'Birthday',
@@ -160,6 +161,40 @@ $messages['qqq'] = array(
 $messages['ar'] = array(
 	'useravatar-log' => 'سجل تغييرات الصور الرمزية',
 	'blog-avatar-changed-log' => 'أضاف أو غير الصورة الرمزية',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author AZISS
+ */
+$messages['az'] = array(
+	'userprofilepage-lightbox-interview-cancel' => 'İmtina',
+	'user-identity-box-edit' => 'Redaktə et',
+	'user-identity-box-avatar-choose-avatar' => 'Avatar seç',
+	'user-identity-box-avatar-cancel' => 'İmtina',
+	'user-identity-box-my-twitter' => 'Mənim Tvitterim',
+	'user-identity-box-my-website' => 'Mənim vebsaytım',
+	'user-identity-box-my-fb-page' => 'Mənim Facebookum',
+	'user-identity-box-fav-wikis' => 'Mənim sevimli vikilərim',
+	'user-identity-box-location' => '<span>Mən </span> $1<span>da yaşayıram</span>',
+	'user-identity-i-am' => '<span>Mən</span> $1',
+	'user-identity-box-group-sysop' => 'İdarəçi',
+	'user-identity-box-group-bureaucrat' => 'Bürokrat',
+	'user-identity-box-group-staff' => 'Əməkdaşlar',
+	'user-identity-box-group-helper' => 'Köməkçi',
+	'user-identity-box-zero-state-gender' => 'Cinsi',
+	'user-identity-box-zero-state-twitter' => 'Mənim Tvitterim',
+	'user-identity-box-zero-state-website' => 'Mənim vebsaytım',
+	'user-identity-box-zero-state-fb-page' => 'Mənim Facebook-um',
+	'user-identity-box-about-me' => 'Mənim haqqımda',
+	'user-identity-box-avatar' => 'Avatar',
+	'user-identity-box-about-name' => 'Sənin adın nədir?',
+	'user-identity-box-about-tweet' => 'Sənin Tvitter adın nədir?',
+	'user-identity-box-about-fav-wikis-refresh' => 'Yenilə',
+	'user-identity-box-invalid-fb-id-error' => 'Düzgün olmayan Facebook ID',
+	'userprofilepage-lightbox-about-me-cancel' => 'İmtina',
+	'userprofilepage-closing-popup-cancel' => 'İmtina',
+	'user-action-menu-delete' => 'Sil',
+	'user-action-menu-history' => 'Tarixçə',
 );
 
 /** Bulgarian (български)
@@ -337,6 +372,7 @@ $messages['ca'] = array(
 
 /** Czech (česky)
  * @author Chmee2
+ * @author Darth Daron
  * @author Dontlietome7
  * @author Vks
  */
@@ -345,8 +381,17 @@ $messages['cs'] = array(
 	'userprofilepage-question-caption' => 'Otázka $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Zrušit',
 	'userprofilepage-lightbox-interview-save' => 'Uložit, skončil jsem',
+	'userprofilepage-interview-edit-new-summary' => 'Rozhovor uživatele vytvořen',
+	'userprofilepage-interview-edit-update-summary' => 'Dotazník uživatele aktualizován',
+	'userprofilepage-interview-save-error' => 'Ukládání dotazníku se nezdařilo',
+	'userprofilepage-interview-save-internal-error' => 'Ukládání dotazníku se nezdařilo - došlo k vnitřní chybě',
+	'userprofilepage-answers-stats-title' => 'Statistiky dotazníku',
+	'userprofilepage-add-question' => 'Přidat novou otázku',
 	'userprofilepage-question-save' => 'Uložit dotaz',
 	'userprofilepage-question-list-title' => '$1/$2 Otázky',
+	'userprofilepage-interview-section-title' => 'Dotazník uživatele',
+	'userprofilepage-invalid-user' => 'Neplatný uživatel. Nejste přihlášen nebo nemáte práva k pokračování.',
+	'userprofilepage-avatar-error-type' => 'Neplatný MIME typ. Povoleno: $1',
 	'userprofilepage-avatar-error-resolution' => 'Maximální rozlišení ikonky uživatele je 2000 x 2000',
 	'user-identity-box-edit' => 'Upravit',
 	'user-identity-box-wikia-contributor' => 'Přispěvatel na Wikii',
@@ -357,12 +402,21 @@ $messages['cs'] = array(
 	'user-identity-box-avatar-choose-avatar' => 'Zvolte ikonu uživatele',
 	'user-identity-box-avatar-save' => 'Uloženo, hotovo',
 	'user-identity-box-avatar-cancel' => 'Zrušit',
+	'user-identity-box-avatar-anon-user-error' => 'Pro úpravy se musíte přihlásit',
 	'user-identity-box-hide-edits-wikis' => 'Skrýt vše',
 	'user-identity-box-banned-from-chat' => 'Zablokován z chatu',
+	'user-identity-box-aka-label' => '<span>alias</span> $1',
 	'user-identity-box-my-twitter' => 'Můj Twitter',
 	'user-identity-box-my-website' => 'Má webová stránka',
 	'user-identity-box-my-fb-page' => 'Můj Facebook',
 	'user-identity-box-fav-wikis' => 'Mé oblíbené wiki',
+	'user-identity-box-location' => '<span>Bydliště</span> $1',
+	'user-identity-box-was-born-on' => '<span>Datum narození</span> $2. $1',
+	'user-identity-box-was-born-in' => '<span>Místo narození</span> $1',
+	'user-identity-box-occupation' => '<span>Zaměstnání</span> $1',
+	'user-identity-i-am' => '<span>Jsem</span> $1',
+	'user-identity-box-edits-since-joining' => 'Počet úprav od připojení k této wiki<br />$1',
+	'user-identity-box-edits' => '<em>$1</em><span>ÚPRAV</span>',
 	'user-identity-box-group-blocked' => 'Zablokováno',
 	'user-identity-box-group-chatmoderator' => 'Moderátor chatu',
 	'user-identity-box-group-sysop' => 'Správce',
@@ -370,7 +424,10 @@ $messages['cs'] = array(
 	'user-identity-box-group-founder' => 'Zakladatel',
 	'user-identity-box-group-staff' => 'Zaměstnanci',
 	'user-identity-box-group-helper' => 'Pomocník',
+	'user-identity-box-group-vstf' => 'Volunteer Spam Task Force',
 	'user-identity-box-group-authenticated' => 'Ověřený',
+	'user-identity-box-group-council' => 'Radní',
+	'user-identity-box-group-adminmentor' => 'Mentor administrátorů',
 	'user-identity-box-zero-state-location' => 'Místo',
 	'user-identity-box-zero-state-birthday' => 'Narozeniny',
 	'user-identity-box-zero-state-gender' => 'Pohlaví',
@@ -389,12 +446,23 @@ $messages['cs'] = array(
 	'user-identity-box-about-tweet' => 'Jak se jmenuje tvůj účet na Twitteru?',
 	'user-identity-box-about-fav-wikis' => 'Wiki, na kterých jsi prováděl(a) editace:',
 	'user-identity-box-about-fav-wikis-refresh' => 'Obnovit',
+	'user-identity-box-join-more-wikis' => 'Připojte se na další wiki, abyste je viděli zde!',
 	'user-identity-box-import-from-fb' => 'Importuj své údaje z Facebooku',
 	'user-identity-box-connect-to-fb' => 'Propojit s Facebookem',
 	'user-identity-box-unsyc-fb' => 'Přerušit synchronizaci s Facebookem',
+	'user-identity-box-fb-page' => 'Jaká je vaše stránka na Facebooku?',
 	'user-identity-box-invalid-fb-id-error' => 'Neplatné Facebook ID',
+	'user-identity-box-fb-prefs' => 'Nastavení kanálu',
+	'user-identity-box-avatar-error-nofile' => 'Chyba: Nenalezen žádný soubor (avatar) k nahrání',
+	'user-identity-box-avatar-error-cantwrite' => 'Chyba: Nelze zapisovat do dočasného adresáře',
+	'user-identity-box-avatar-error-size' => 'Chyba: Soubor je příliš velký (max {{PLURAL:$1|$1|$1}}KB)', # Fuzzy
+	'user-identity-box-avatar-error' => 'Chyba: Došlo k vnitřní chybě při ukládání avataru',
 	'userprofilepage-lightbox-about-me-cancel' => 'Zrušit',
 	'userprofilepage-lightbox-about-me-save' => 'Uložit, skončil jsem',
+	'user-identity-box-saving-error' => 'Ukládání uživatelských dat se nezdařilo – data musí být prostým textem',
+	'user-identity-box-saving-internal-error' => 'Ukládání uživatelských dat se nezdařilo - došlo k vnitřní chybě',
+	'userprofilepage-closing-popup-header' => 'Opustit editor profilu',
+	'userprofilepage-closing-popup-info' => 'Existují neuložené změny ve svém profilu. Co chcete udělat?',
 	'userprofilepage-closing-popup-discard-and-quit' => 'Zahodit změny a ukončit',
 	'userprofilepage-closing-popup-save-and-quit' => 'Uložit a ukončit',
 	'userprofilepage-closing-popup-cancel' => 'Zrušit',
@@ -409,10 +477,13 @@ $messages['cs'] = array(
 	'user-action-menu-history' => 'Historie',
 	'usermasthead-log' => 'Uživatelský profil',
 	'usermasthead-log-message' => 'změněné profilové informace',
+	'usermasthead-log-alt' => 'Záznamy editací uživatelského titulku',
 	'useravatar-log' => 'Protokol avatarů uživatele',
 	'blog-avatar-changed-log' => 'Přidán nebo změněn avatar',
 	'blog-avatar-removed-log' => 'Odstraněn avatar uživatele $1',
 	'blog-avatar-alt' => 'Protokoly přidáni nebo odstranění uživatelova avataru',
+	'user-identity-remove-confirmation' => 'Opravdu chcete odstranit avatar?',
+	'user-identity-remove-fail' => 'Došlo k problému při odebírání avataru!',
 );
 
 /** German (Deutsch)
@@ -2238,6 +2309,7 @@ $messages['ru'] = array(
 	'user-identity-box-group-vstf' => 'VSTF',
 	'user-identity-box-group-authenticated' => 'Аутентификация',
 	'user-identity-box-group-council' => 'Советник',
+	'user-identity-box-group-adminmentor' => 'Администратор-наставник',
 	'user-identity-box-zero-state-location' => 'Местонахождение',
 	'user-identity-box-zero-state-birthday' => 'День рождения',
 	'user-identity-box-zero-state-gender' => 'Пол',
@@ -2586,6 +2658,28 @@ $messages['tr'] = array(
 	'user-identity-box-aka-label' => '$1 <span>olarak bilinir</span>',
 	'user-identity-box-fav-wikis' => 'Favori vikilerim',
 	'userprofilepage-closing-popup-cancel' => 'İptal',
+);
+
+/** Tatar (Cyrillic script) (татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'userprofilepage-lightbox-interview-cancel' => 'Баш тарту',
+	'user-identity-box-edit' => 'Үзгәртү',
+	'user-identity-box-avatar-cancel' => 'Баш тарту',
+	'user-identity-box-group-blocked' => 'Блоклау',
+	'user-identity-box-group-sysop' => 'Идарәче',
+	'user-identity-box-group-bureaucrat' => 'Бюрократ',
+	'user-identity-box-group-founder' => 'Нигез салучы',
+	'user-identity-box-group-staff' => 'Викия хезмәткәре',
+	'user-identity-box-zero-state-gender' => 'Җенес',
+	'user-identity-box-avatar' => 'Аватар',
+	'user-identity-box-about-fav-wikis-refresh' => 'Яңарту',
+	'userprofilepage-lightbox-about-me-cancel' => 'Баш тарту',
+	'userprofilepage-closing-popup-cancel' => 'Баш тарту',
+	'user-action-menu-edit' => 'Үзгәртү',
+	'user-action-menu-view-source' => 'Башлангыч кодны карау',
+	'user-action-menu-protect' => 'Якларга',
 );
 
 /** Ukrainian (українська)

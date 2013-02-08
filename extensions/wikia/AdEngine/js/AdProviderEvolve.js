@@ -20,6 +20,7 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 	slotMap = {
 		'HOME_TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
 		'HOME_TOP_RIGHT_BOXAD': {'tile': 2, 'size': '300x250,300x600'},
+		'HUB_TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
 		'LEFT_SKYSCRAPER_2': {'tile': 3, 'size': '160x600'},
 		'TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
 		'TOP_RIGHT_BOXAD': {'tile': 2, 'size': '300x250,300x600'},
@@ -50,7 +51,13 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 		var slotname = slot[0],
 			slotsize = slot[1] || slotMap[slotname].size;
 
-		WikiaTracker.trackAdEvent('liftium.slot2', {'ga_category': 'slot2/' + slotsize.replace(/,.*$/, ''), 'ga_action': slotname, 'ga_label': 'evolve'}, 'ga');
+		WikiaTracker.track({
+			eventName: 'liftium.slot2',
+			ga_category: 'slot2/' + slotsize.replace(/,.*$/, ''),
+			ga_action: slotname,
+			ga_label: 'evolve',
+			trackingMethod: 'ad'
+		});
 
 		slotTimer2[slotname] = new Date().getTime();
 		log('slotTimer2 start for ' + slotname, 7, 'AdProviderEvolve');
@@ -61,7 +68,13 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 				'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
 				function () {
 					log('(invisible triggertag) ghostwriter done', 5, logGroup);
-					ScriptWriter.injectScriptByText(slotname, getReskinAndSilverScript(slotname));
+					ScriptWriter.injectScriptByText(slotname, getReskinAndSilverScript(slotname), function () {
+						// gorrilla skin is suppressed by body.mediawiki !important so make it !important too
+						if (document.body.style.backgroundImage.search(/http:\/\/cdn\.assets\.gorillanation\.com/) !== -1) {
+							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundImage, document.body.style.backgroundImage + ' !important');
+							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundColor, document.body.style.backgroundColor + ' !important');
+						}
+					});
 				}
 			);
 		} else {
@@ -160,11 +173,13 @@ var AdProviderEvolve = function (wikiaDart, ScriptWriter, WikiaTracker, log, win
 		hoppedSlots[slotname] = true;
 
 		log('slotTimer2 end for ' + slotname + ' after ' + time + ' ms', 7, 'AdProviderEvolve');
-		WikiaTracker.trackAdEvent('liftium.hop2', {
-			'ga_category': 'hop2/evolve',
-			'ga_action': 'slot ' + slotname,
-			'ga_label': formatTrackTime(time, 5)
-		}, 'ga');
+		WikiaTracker.track({
+			eventName: 'liftium.hop2',
+			ga_category: 'hop2/evolve',
+			ga_action: 'slot ' + slotname,
+			ga_label: formatTrackTime(time, 5),
+			trackingMethod: 'ad'
+		});
 
 		window.adslots2.push([slotname, size, 'Liftium2Dom', null]);
 	};

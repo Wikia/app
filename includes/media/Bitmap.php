@@ -132,8 +132,6 @@ class BitmapHandler extends ImageHandler {
 		# Determine scaler type
 		$scaler = self::getScalerType( $dstPath );
 
-		wfDebug( __METHOD__ . ": creating {$scalerParams['physicalDimensions']} thumbnail at $dstPath using scaler $scaler\n" );
-
 		if ( !$image->mustRender() &&
 				$scalerParams['physicalWidth'] == $scalerParams['srcWidth']
 				&& $scalerParams['physicalHeight'] == $scalerParams['srcHeight'] ) {
@@ -155,6 +153,8 @@ class BitmapHandler extends ImageHandler {
 			return new ThumbnailImage( $image, $dstUrl, $scalerParams['clientWidth'],
 				$scalerParams['clientHeight'], false );
 		}
+
+		wfDebug( __METHOD__ . ": creating {$scalerParams['physicalDimensions']} thumbnail at $dstPath using scaler $scaler\n" );
 
 		# Try to make a target path for the thumbnail
 		if ( !wfMkdirParents( dirname( $dstPath ), null, __METHOD__ ) ) {

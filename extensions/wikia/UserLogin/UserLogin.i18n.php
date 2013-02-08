@@ -24,7 +24,7 @@ $messages['en'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Your IP address is not allowed to create new accounts.',
 	'userlogin-error-userexists' => 'Someone already has this username. Try a different one!',
 	'userlogin-error-invalidemailaddress' => 'Please enter a valid email address.',
-	'userlogin-get-account' => 'Don\'t have an account? [[Special:UserSignup|Sign up]]',
+	'userlogin-get-account' => "Don't have an account? <a href=\"$1\" tabindex=\"$2\">Sign up</a>",
 
 	// signup
 	'userlogin-error-invalid-username' => 'Invalid username',
@@ -58,7 +58,7 @@ $messages['en'] = array(
 <br /><br />
 If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
 <br /><br />
-Questions or concerns? Feel free to contact us.',
+Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">contact us</a>.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
 	'userlogin-password-email-body' => 'Hi $2,
 
@@ -66,7 +66,7 @@ Please use this temporary password to log in to Wikia: "$3"
 
 If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
 
-Questions or concerns? Feel free to contact us.
+Questions or concerns? Feel free to contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
 
 Wikia Community Support
 
@@ -113,6 +113,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -131,7 +132,7 @@ $messages['qqq'] = array(
 	'userlogin-error-cantcreateaccount-text' => "Error message upon login attempt stating that the user's IP address has been throttled because of login failures.",
 	'userlogin-error-userexists' => 'Error message upon signup attempt stating user name already exists.',
 	'userlogin-error-invalidemailaddress' => 'Error message upon signup attempt stating e-mail address is invalid.',
-	'userlogin-get-account' => 'Marketing blurb asking to sign up with wikitext internal link to usersignup page. Please append userlang as appropriate.',
+	'userlogin-get-account' => 'Marketing blurb asking to sign up with wikitext internal link to usersignup page. First parameter is the URL address to usersignup page, second parameter is the tabindex of this link tag. Please append userlang as appropriate.',
 	'userlogin-error-invalid-username' => 'Error message upon signup attempt stating username is badly formatted, or invalid',
 	'userlogin-error-userlogin-unable-info' => 'Error message upon signup attempt stating account cannot be create currently.',
 	'userlogin-error-user-not-allowed' => 'Error message upon signup attempt stating username is unacceptable.',
@@ -150,7 +151,8 @@ $messages['qqq'] = array(
 	'userlogin-error-unconfirmed-user' => 'Error message stating that user needs to be confirmed first.',
 	'userlogin-password-page-title' => 'Heading for change password page.',
 	'userlogin-oldpassword' => 'Label for old password field',
-	'userlogin-newpassword' => 'Label for new password field',
+	'userlogin-newpassword' => 'Label for new password field.
+{{Identical|New password}}',
 	'userlogin-retypenew' => 'Label for retype password field',
 	'userlogin-password-email-subject' => 'Subject line for Forgot password email',
 	'userlogin-password-email-greeting' => 'Email body heading. $USERNAME is a special wikia magic word, so re-use it without changing. This may contain html markup, and is placed onto a template.',
@@ -269,7 +271,7 @@ $messages['ca'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'La teva direcció IP no està autoritzada per a crear nous comptes.',
 	'userlogin-error-userexists' => "Algú ja té aquest nom d'usuari. Tria'n un altre!",
 	'userlogin-error-invalidemailaddress' => 'Si us plau, insereix una direcció de correu electrònic vàlida.',
-	'userlogin-get-account' => "No tens un compte? [[Special:UserSignup|Registra't]]",
+	'userlogin-get-account' => 'No tens un compte? <a href="$1" tabindex="$2">Registra\'t</a>',
 	'userlogin-error-invalid-username' => "Nom d'usuari no vàlid",
 	'userlogin-error-userlogin-unable-info' => 'Ho sentim, no és possible registrar el teu compte en aquest moment.',
 	'userlogin-error-user-not-allowed' => "Aquest nom d'usuari no està permès.",
@@ -318,6 +320,7 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Metalhead64
  * @author MtaÄ
  */
 $messages['de'] = array(
@@ -336,7 +339,7 @@ $messages['de'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Die IP die du momentan nutzt darf keine neuen Benutzerkonten anlegen.',
 	'userlogin-error-userexists' => 'Dieser Benutzername ist bereits vergeben. Gib einen anderen an!',
 	'userlogin-error-invalidemailaddress' => 'Bitte gib eine gültige E-Mail-Adresse an.',
-	'userlogin-get-account' => 'Du hast noch kein Benutzerkonto? Dann [[Special:UserSignup|erstelle eines]].',
+	'userlogin-get-account' => 'Du hast noch kein Benutzerkonto? Dann <a href="$1" tabindex="$2">erstelle eines</a>.',
 	'userlogin-error-invalid-username' => 'Ungültiger Benutzername',
 	'userlogin-error-userlogin-unable-info' => 'Entschuldige, wir können dein Benutzerkonto zu diesem Zeitpunkt nicht registrieren.',
 	'userlogin-error-user-not-allowed' => 'Dieser Benutzername ist nicht erlaubt.',
@@ -358,10 +361,10 @@ $messages['de'] = array(
 	'userlogin-password-email-subject' => 'Anforderung eines neuen Passwortes',
 	'userlogin-password-email-greeting' => 'Hallo $USERNAME,',
 	'userlogin-password-email-content' => 'Gib dieses temporäre Passwort an, um dich bei Wikia anzumelden: "$NEWPASSWORD"
- <br /><br />
-Falls du kein neues Passwort beantragt hast kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immernoch sicher. 
- <br /><br />
-Bei Fragen oder Bedenken kannst du uns jederzeit kontaktieren.',
+<br /><br />
+Falls du kein neues Passwort beantragt hast, kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immer noch sicher. 
+<br /><br />
+Bei Fragen oder Bedenken kannst du uns jederzeit <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">kontaktieren</a>.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
 	'userlogin-password-email-body' => 'Hallo $2,
 
@@ -369,7 +372,7 @@ gib dieses temporäre Passwort an, um dich bei Wikia anzumelden: "$3"
 
 Falls du kein neues Passwort beantragt hast kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immernoch sicher. 
 
-Bei Fragen oder Bedenken kannst du uns jederzeit kontaktieren.
+Bei Fragen oder Bedenken kannst du uns jederzeit kontaktieren: http://community.wikia.com/wiki/Special:Contact/account-issue
 
 Wikia Community Support
 
@@ -423,7 +426,7 @@ $messages['es'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Tu dirección IP no está autorizada para crear cuentas nuevas.',
 	'userlogin-error-userexists' => 'Alguien ya tiene este nombre de usuario. ¡Prueba uno diferente!',
 	'userlogin-error-invalidemailaddress' => 'Por favor, introduce una dirección de correo electrónico válida.',
-	'userlogin-get-account' => '¿No tienes una cuenta? [[Special:UserSignup|Regístrate]]',
+	'userlogin-get-account' => '¿No tienes una cuenta? <a href="$1" tabindex="$2">Regístrate</a>',
 	'userlogin-error-invalid-username' => 'Nombre de usuario inválido',
 	'userlogin-error-userlogin-unable-info' => 'Lo sentimos, no es posible registrar tu cuenta en este momento.',
 	'userlogin-error-user-not-allowed' => 'Este nombre de usuario no está permitido.',
@@ -448,7 +451,7 @@ $messages['es'] = array(
 <br /><br />
 Si no solicitaste una nueva contraseña, ¡no te preocupes! Tu cuenta está segura. Puedes ignorar este mensaje y continuar iniciando sesión en Wikia con tu antigua contraseña.
 <br /><br />
-¿Tienes preguntas o inquietudes? No dudes en ponerte en contacto con nosotros.',
+¿Tienes preguntas o inquietudes? No dudes en ponerte en contacto con nosotros.', # Fuzzy
 	'userlogin-password-email-signature' => 'Equipo Comunitario de Wikia',
 	'userlogin-password-email-body' => 'Hola $2,
 
@@ -464,7 +467,7 @@ Equipo Comunitario de Wikia
 ___________________________________________
 
 Para comprobar los acontecimientos más recientes en Wikia, visita http://es.wikia.com
-¿Deseas controlar qué mensajes de correo electrónico recibes? Ve a: {{fullurl:{{ns:special}}:Preferences}}',
+¿Deseas controlar qué mensajes de correo electrónico recibes? Ve a: {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'userlogin-email-footer-line1' => 'Para comprobar las últimas novedades en Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://es.wikia.com">es.wikia.com</a>',
 	'userlogin-email-footer-line2' => '¿Deseas controlar los correos electrónicos que recibes? Ve a tus <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">preferencias</a>',
 	'userlogin-provider-or' => 'o',
@@ -498,7 +501,7 @@ $messages['fr'] = array(
 	'userlogin-error-cantcreateaccount-text' => "Votre adresse IP n'est pas autorisée à créer de nouveaux comptes.",
 	'userlogin-error-userexists' => 'Ce nom d’utilisateur est déjà utilisé par quelqu’un. Essayez-en un autre !',
 	'userlogin-error-invalidemailaddress' => 'Veuillez entrer une adresse de courriel valide.',
-	'userlogin-get-account' => "Vous n'avez pas encore de compte? [[Special:UserSignup|Inscrivez-vous]]",
+	'userlogin-get-account' => 'Vous n\'avez pas encore de compte? <a href="$1" tabindex="$2">Inscrivez-vous</a>',
 	'userlogin-error-invalid-username' => 'Nom d’utilisateur invalide',
 	'userlogin-error-userlogin-unable-info' => "Désolé, nous ne sommes pas en mesure d'enregistrer votre compte pour le moment.",
 	'userlogin-error-user-not-allowed' => "Ce nom d'utilisateur n'est pas autorisé.",
@@ -523,7 +526,7 @@ $messages['fr'] = array(
 <br /><br />
 Si vous n\'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas ! Votre compte est sain et sauf. Vous pouvez ignorer ce courriel et continuer à vous connecter sur Wikia avec votre ancien mot de passe.
 <br /><br />
-Vous avez des questions ? N’hésitez pas à nous contacter.',
+Vous avez des questions ? N’hésitez pas à nous contacter.', # Fuzzy
 	'userlogin-password-email-signature' => 'Support de la communauté Wikia',
 	'userlogin-password-email-body' => "Bonjour $2,
 
@@ -539,7 +542,7 @@ Support de la communauté Wikia
 ___________________________________________
 
 Pour voir les derniers évènements sur Wikia, consultez http://communaute.wikia.com
-Vous souhaitez contrôler les courriels que vous recevez ? Allez à : {{fullurl:{{ns:special}}:Preferences}}",
+Vous souhaitez contrôler les courriels que vous recevez ? Allez à : {{fullurl:{{ns:special}}:Preferences}}", # Fuzzy
 	'userlogin-email-footer-line1' => 'Pour voir les derniers évènements sur Wikia, consultez <a style="color:#2a87d5;text-decoration:none;" href="http://communaute.wikia.com">communaute.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Vous souhaitez contrôler les courriels que vous recevez ? Allez à vos <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">préférences</a>',
 	'userlogin-provider-or' => 'Ou',
@@ -572,7 +575,7 @@ $messages['gl'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'O seu enderezo IP non está autorizado a crear novas contas.',
 	'userlogin-error-userexists' => 'Alguén xa ten ese nome de usuario. Probe con outro!',
 	'userlogin-error-invalidemailaddress' => 'Por favor, escriba un enderezo de correo electrónico válido.',
-	'userlogin-get-account' => 'Non ten unha conta? [[Special:UserSignup|Rexístrese]]',
+	'userlogin-get-account' => 'Non ten unha conta? <a href="$1" tabindex="$2">Rexístrese</a>',
 	'userlogin-error-invalid-username' => 'Nome de usuario inválido',
 	'userlogin-error-userlogin-unable-info' => 'Sentímolo, non é posible rexistrar a súa conta nestes intres.',
 	'userlogin-error-user-not-allowed' => 'Este nome de usuario non está permitido.',
@@ -597,7 +600,7 @@ $messages['gl'] = array(
 <br /><br />
 Se non solicitou un contrasinal novo, non se preocupe! A súa conta está a salvo e é segura. Pode ignorar este correo electrónico e seguir accedendo ao sistema de Wikia co seu contrasinal antigo.
 <br /><br />
-Ten preguntas ou preocupacións? Síntase libre de poñerse en contacto con nós.',
+Ten preguntas ou preocupacións? Síntase libre de poñerse en contacto con nós.', # Fuzzy
 	'userlogin-password-email-signature' => 'O equipo de soporte comunitario de Wikia',
 	'userlogin-password-email-body' => 'Boas, $2:
 
@@ -613,7 +616,7 @@ O equipo de soporte comunitario de Wikia
 ___________________________________________
 
 Para botar unha ollada aos últimos acontecementos en Wikia, visite http://community.wikia.com
-Quere controlar os correos electrónicos que recibe? Vaia a {{fullurl:{{ns:special}}:Preferences}}',
+Quere controlar os correos electrónicos que recibe? Vaia a {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'userlogin-email-footer-line1' => 'Para botar unha ollada aos últimos acontecementos en Wikia, visite <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Quere controlar os correos electrónicos que recibe? Vaia ás súas <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">preferencias</a>',
 	'userlogin-provider-or' => 'Ou',
@@ -646,7 +649,7 @@ $messages['hu'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Az IP-címed nem hozhat létre új felhasználókat.',
 	'userlogin-error-userexists' => 'Ezt a felhasználónevet már használják. Próbálkozz másikkal!',
 	'userlogin-error-invalidemailaddress' => 'Kérlek, érvényes e-mail címet adj meg',
-	'userlogin-get-account' => 'Nincsen felhasználói fiókod? [[Special:UserSignup|Regisztrálj]]',
+	'userlogin-get-account' => 'Nincsen felhasználói fiókod? <a href="$1" tabindex="$2">Regisztrálj</a>',
 	'userlogin-error-invalid-username' => 'Érvénytelen felhasználónév',
 	'userlogin-error-userlogin-unable-info' => 'Sajnáljuk, de jelenleg nem regisztráltatható a felhasználói fiókod.',
 	'userlogin-error-user-not-allowed' => 'Ez a felhasználónév nem engedélyezett.',
@@ -671,7 +674,7 @@ $messages['hu'] = array(
 <br /><br />
 Ha nem igényeltél új jelszót, ne aggódj! A felhasználói fiókod biztonságban van. Nyugodtan figyelmen kívül hagyhatod ezt az e-mailt és továbbra is használhatod a régi jelszavad bejelentkezéskor.
 <br /><br />
-Kérdésed vagy problémád van? Lépj velünk kapcsolatba!',
+Kérdésed vagy problémád van? Lépj velünk kapcsolatba!', # Fuzzy
 	'userlogin-password-email-signature' => 'Wikia közösségi támogatás',
 	'userlogin-password-email-body' => 'Szia, $2!
 
@@ -687,7 +690,7 @@ Wikia közösségi támogatás
 ___________________________________________
 
 A Wikia legfrissebb eseményeinek megtekintésére látogass el a http://community.wikia.com oldalra.
-Szeretnéd módosítani a kapott e-mailekre vonatkozó beállításaidat? Ugrás: {{fullurl:{{ns:special}}:Preferences}}',
+Szeretnéd módosítani a kapott e-mailekre vonatkozó beállításaidat? Ugrás: {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'userlogin-email-footer-line1' => 'A Wikia legfrissebb eseményeinek megtekintésére látogass el a <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> oldalra.',
 	'userlogin-email-footer-line2' => 'Szeretnéd módosítani a kapott e-mailekre vonatkozó beállításaidat? Változtass a <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">beállításaidon</a>',
 	'userlogin-provider-or' => 'vagy',
@@ -727,7 +730,7 @@ $messages['ia'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Iste adresse IP non ha le permission de crear nove contos.',
 	'userlogin-error-userexists' => 'Qualcuno ja possede iste nomine de usator. Tenta un altere!',
 	'userlogin-error-invalidemailaddress' => 'Per favor entra un adresse de e-mail valide.',
-	'userlogin-get-account' => 'Tu non ha un conto? [[Special:UserSignup|Inscribe te]]',
+	'userlogin-get-account' => 'Tu non ha un conto? <a href="$1" tabindex="$2">Inscribe te</a>',
 	'userlogin-error-invalid-username' => 'Nomine de usator invalide',
 	'userlogin-error-userlogin-unable-info' => 'Regrettabilemente, nos non pote crear tu conto pro le momento.',
 	'userlogin-error-user-not-allowed' => 'Iste nomine de usator non es permittite.',
@@ -752,7 +755,7 @@ $messages['ia'] = array(
 <br /><br />
 Si tu non requestava un nove contrasigno, nulle problema! Tu conto es san e salve. Tu pote ignorar iste e-mail e continuar a aperir session in Wikia con tu ancian contrasigno.
 <br /><br />
-Questiones o preoccupationes? Sia libere de contactar nos.',
+Questiones o preoccupationes? Sia libere de contactar nos.', # Fuzzy
 	'userlogin-password-email-signature' => 'Supporto communitari de Wikia',
 	'userlogin-password-email-body' => 'Salute $2,
 
@@ -768,7 +771,7 @@ Le equipa de supporto communitari de Wikia
 ___________________________________________
 
 Pro cognoscer le ultime evenimentos in Wikia, visita http://community.wikia.com
-Vole seliger le e-mail que tu recipe? Va a: {{fullurl:{{ns:special}}:Preferences}}',
+Vole seliger le e-mail que tu recipe? Va a: {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'userlogin-email-footer-line1' => 'Pro cognoscer le ultime evenimentos in Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Vole seliger le e-mails que tu recipe? Face lo in tu <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferentias</a>',
 	'userlogin-provider-or' => 'O',
@@ -803,7 +806,7 @@ $messages['it'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Il tuo indirizzo IP non può creare nuovi account.',
 	'userlogin-error-userexists' => 'Questo username è già utilizzato da un altro utente. Provane un altro!',
 	'userlogin-error-invalidemailaddress' => 'Per favore inserisci un indirizzo email valido.',
-	'userlogin-get-account' => 'Non hai un account? [[Special:UserSignup|Registrati]]',
+	'userlogin-get-account' => 'Non hai un account? <a href="$1" tabindex="$2">Registrati</a>',
 	'userlogin-error-invalid-username' => 'Username non valido',
 	'userlogin-error-userlogin-unable-info' => 'Ci dispiace, al momento non è stato possibile registrare il tuo account.',
 	'userlogin-error-user-not-allowed' => 'Questo username non è permesso.',
@@ -828,7 +831,7 @@ $messages['it'] = array(
 <br /><br />
 Se non hai richiesto una nuova password, non preoccuparti! Il tuo account è al sicuro. Puoi ignorare questa email e continuare a effettuare il login su Wikia con la tua vecchia password.
 <br /><br />
-Domande o dubbi? Sentiti libero di contattarci.',
+Domande o dubbi? Sentiti libero di contattarci.', # Fuzzy
 	'userlogin-password-email-signature' => 'Wikia Community Support',
 	'userlogin-password-email-body' => 'Ciao $2,
 
@@ -844,7 +847,7 @@ Wikia Community Support
 ___________________________________________
 
 Per tenerti informato sulle novità di Wikia, visita http://it.community.wikia.com
-Vuoi controllare quali email ricevi? Vai a: {{fullurl:{{ns:special}}:Preferenze}}',
+Vuoi controllare quali email ricevi? Vai a: {{fullurl:{{ns:special}}:Preferenze}}', # Fuzzy
 	'userlogin-email-footer-line1' => 'Per tenerti informato sulle novità di Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://it.community.wikia.com">it.community.wikia.com</a>',
 	'userlogin-email-footer-line2' => '
 Vuoi controllare quali email ricevi? Vai alle tue <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferenze</a>',
@@ -878,7 +881,7 @@ $messages['ja'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'お使いのIPアドレスからのアカウント作成は許可されていません。',
 	'userlogin-error-userexists' => 'この名前の利用者は既に存在します。他の利用者名をお試しください。',
 	'userlogin-error-invalidemailaddress' => '有効なメールアドレスを入力してください。',
-	'userlogin-get-account' => 'まだアカウントを取得していませんか？[[Special:UserSignup|アカウントを作成するにはこちら]]',
+	'userlogin-get-account' => 'まだアカウントを取得していませんか？<a href="$1" tabindex="$2">アカウントを作成するにはこちら</a>',
 	'userlogin-error-invalid-username' => '無効な利用者名です',
 	'userlogin-error-userlogin-unable-info' => '申し訳ありません。現在アカウントを登録できません。',
 	'userlogin-error-user-not-allowed' => 'この利用者名は許可されていません。',
@@ -901,7 +904,7 @@ $messages['ja'] = array(
 	'userlogin-password-email-greeting' => '$USERNAME さん、',
 	'userlogin-password-email-content' => 'ウィキアにログインするには、以下の仮パスワードを使用してください: $NEWPASSWORD<br /><br />
 新しいパスワードをリクエストした覚えがない場合でも、心配しないでください。アカウントの安全性は保たれています。このメールを無視し、これまで使用していたパスワードでウィキアにログインし続けることができます。<br /><br />
-質問や気になることがあれば、遠慮なくお問い合わせください。',
+質問や気になることがあれば、遠慮なくお問い合わせください。', # Fuzzy
 	'userlogin-password-email-signature' => 'ウィキアコミュニティサポート',
 	'userlogin-password-email-body' => '$2 さん、
 
@@ -915,7 +918,7 @@ $messages['ja'] = array(
 ___________________________________________
 
 ウィキアの最新情報は http://ja.wikia.com/ で確認できます。
-メール通知に関する設定は {{fullurl:{{ns:special}}:Preferences}} で行えます。',
+メール通知に関する設定は {{fullurl:{{ns:special}}:Preferences}} で行えます。', # Fuzzy
 	'userlogin-email-footer-line1' => 'ウィキアの最新情報は <a style="color:#2a87d5;text-decoration:none;" href="http://ja.wikia.com/">http://ja.wikia.com/</a> で確認できます。',
 	'userlogin-email-footer-line2' => 'メール通知に関する設定は<a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">個人設定</a>のページで行えます。',
 	'userlogin-provider-or' => 'または',
@@ -962,7 +965,7 @@ $messages['mk'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'На вашата IP-адреса не ѝ е допуштено да создава нови сметки.',
 	'userlogin-error-userexists' => 'Корисничкото име е зафатено. Одберете друго!',
 	'userlogin-error-invalidemailaddress' => 'Внесете важечка е-пошта.',
-	'userlogin-get-account' => 'Немате сметка? [[Special:UserSignup|Регистрирајте се]]',
+	'userlogin-get-account' => 'Немате сметка? <a href="$1" tabindex="$2">Регистрирајте се</a>',
 	'userlogin-error-invalid-username' => 'Неважечко корисничко име',
 	'userlogin-error-userlogin-unable-info' => 'Нажалост, во моментов не можете да се регистрирате.',
 	'userlogin-error-user-not-allowed' => 'Ова корисничко име не е дозволено.',
@@ -987,7 +990,7 @@ $messages['mk'] = array(
 <br /><br />
 Доколку не побаравте нова лозинка, не грижете се! Сметката ви е сосем безбедна. Занемарете го ова писмо и најавувајте се со постоечката лозинка.
 <br /><br />
-Имате прашања или проблеми? Слободно обратете ни се.',
+Имате прашања или проблеми? Слободно обратете ни се.', # Fuzzy
 	'userlogin-password-email-signature' => 'Поддршка за заедницата на Викија',
 	'userlogin-password-email-body' => 'Здраво $2,
 
@@ -1003,7 +1006,7 @@ $messages['mk'] = array(
 ___________________________________________
 
 Најновите збиднувања на Викија ќе ги најдете на http://community.wikia.com
-Сакате да одберете што да добивате по е-пошта? Појдете на: {{fullurl:{{ns:special}}:Preferences}}',
+Сакате да одберете што да добивате по е-пошта? Појдете на: {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'userlogin-email-footer-line1' => 'За да ги проследите најновите случувања на Викија, посетете ја страницата <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Сакате да одберете кои пораки да ги добивате? Појдете на вашите <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Нагодувања</a>',
 	'userlogin-provider-or' => 'или',
@@ -1036,7 +1039,7 @@ $messages['ms'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Alamat IP anda tidak dibenarkan untuk membuka akaun baru.',
 	'userlogin-error-userexists' => 'Nama pengguna ini sudah diambil. Cuba gunakan nama yang lain!',
 	'userlogin-error-invalidemailaddress' => 'Sila berikan alamat e-mel yang sah.',
-	'userlogin-get-account' => 'Tiada akaun? [[Special:UserSignup|Daftarlah]]',
+	'userlogin-get-account' => 'Tiada akaun? <a href="$1" tabindex="$2">Daftarlah</a>',
 	'userlogin-error-invalid-username' => 'Nama pengguna tidak sah',
 	'userlogin-error-userlogin-unable-info' => 'Maaf, kami tidak dapat mendaftarkan akaun anda buat masa ini.',
 	'userlogin-error-user-not-allowed' => 'Nama pengguna ini tidak dibenarkan.',
@@ -1061,7 +1064,7 @@ $messages['ms'] = array(
 <br /><br />
 Jika anda tidak memohon kata laluan baru, usah risau! Akaun anda masih selamat dan terlindung. Anda boleh mengabaikan e-mel ini dan terus log masuk ke dalam Wikia dengan kata laluan lama anda.
 <br /><br />
-Jika anda mempunyai sebarang pertanyaan, sila hubungi kami tanpa rasa segan.',
+Jika anda mempunyai sebarang pertanyaan, sila hubungi kami tanpa rasa segan.', # Fuzzy
 	'userlogin-password-email-signature' => 'Bantuan Komuniti Wikia',
 	'userlogin-password-email-body' => 'Apa khabar $2,
 
@@ -1077,7 +1080,7 @@ Bantuan Komuniti Wikia
 ___________________________________________
 
 Untuk meninjau perkembangan terkini di Wikia, lawati http://community.wikia.com
-Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Preferences}}',
+Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'userlogin-email-footer-line1' => 'Untuk meninjau perkembangan terkini di Wikia, lawati <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Ingin mengawal e-mel yang anda terima? Pergi ke <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Keutamaan</a>',
 	'userlogin-provider-or' => 'Atau',
@@ -1110,7 +1113,7 @@ $messages['nb'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'IP-adressen din har ikke tillatelse til å opprette nye kontoer.',
 	'userlogin-error-userexists' => 'Noen har alt tatt dette brukernavnet. Prøv et annet!',
 	'userlogin-error-invalidemailaddress' => 'Vennligst oppgi en gyldig e-postadresse.',
-	'userlogin-get-account' => 'Har du ikke en konto? [[Special:UserSignup|Registrer deg]]',
+	'userlogin-get-account' => 'Har du ikke en konto? <a href="$1" tabindex="$2">Registrer deg</a>',
 	'userlogin-error-invalid-username' => 'Ugyldig brukernavn',
 	'userlogin-error-userlogin-unable-info' => 'Beklager, vi kan for øyeblikket ikke registrere kontoen din.',
 	'userlogin-error-user-not-allowed' => 'Dette brukernavnet er ikke tillatt.',
@@ -1135,7 +1138,7 @@ $messages['nb'] = array(
 <br /><br />
 Hvis du ikke har bedt om et nytt passord, ikke vær bekymret! Kontoen din er trygg og sikker. Du kan ignorere denne e-posten og fortsette å logge inn i Wikia med det gamle passordet ditt. 
 <br /><br />
-Spørsmål eller bekymringer? Kontakt oss gjerne.',
+Spørsmål eller bekymringer? Kontakt oss gjerne.', # Fuzzy
 	'userlogin-password-email-signature' => 'Wikia fellesskapssupport',
 	'userlogin-password-email-body' => 'Hei $2,
 
@@ -1150,7 +1153,7 @@ Wikia fellesskapssupport
 
 ___________________________________________
 For å sjekke ut de nyeste hendelsene på Wikia, besøk http://community.wikia.com
-Vil du kontrollere hva slags e-post du mottar? Gå til: <a href="{{fullurl:Special:Preferences}}">Innstillingene dine<a>',
+Vil du kontrollere hva slags e-post du mottar? Gå til: <a href="{{fullurl:Special:Preferences}}">Innstillingene dine<a>', # Fuzzy
 	'userlogin-email-footer-line1' => 'For å sjekke ut de siste hendelsene på Wikia, besøk <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Vil du kontrollere hvilke e-post du mottar? Gå til <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">innstillingene dine</a>',
 	'userlogin-provider-or' => 'Eller',
@@ -1183,7 +1186,7 @@ $messages['nl'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Via uw IP-adres mogen geen nieuwe gebruikers aangemaakt worden.',
 	'userlogin-error-userexists' => 'Deze naam is al in gebruik. Kies een andere.',
 	'userlogin-error-invalidemailaddress' => 'Voer alstublieft een geldig e-mailadres in.',
-	'userlogin-get-account' => 'Hebt u nog geen gebruiker? [[Special:UserSignup|Registreren]]',
+	'userlogin-get-account' => 'Hebt u nog geen gebruiker? <a href="$1" tabindex="$2">Registreren</a>',
 	'userlogin-error-invalid-username' => 'Ongeldige gebruikersnaam',
 	'userlogin-error-userlogin-unable-info' => 'Het is helaas niet mogelijk uw gebruiker op dit moment te registreren.',
 	'userlogin-error-user-not-allowed' => 'Deze gebruikersnaam is niet toegestaan.',
@@ -1208,7 +1211,7 @@ $messages['nl'] = array(
 <br /><br />
 Maak u geen zorgen als u geen nieuw wachtwoord hebt opgevraagd. Uw gebruiker is veilig. U kunt deze e-mail negeren en blijven aanmelden bij Wikia met uw oude wachtwoord.
 <br /><br />
-Neem alstublieft contact met ons op als u vragen of zorgen hebt.',
+Vragen of zorgen? Neem vooral <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">contact met ons op</a>.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
 	'userlogin-password-email-body' => 'Hallo $2,
 
@@ -1216,8 +1219,9 @@ Gebruik het volgende tijdelijke wachtwoord om aan te melden bij Wikia: "$3".
 
 Maak u geen zorgen als u geen nieuw wachtwoord hebt opgevraagd. Uw gebruiker is veilig. U kunt deze e-mail negeren en blijven aanmelden bij Wikia met uw oude wachtwoord.
 
-Neem alstublieft contact met ons op als u vragen of zorgen hebt.
+Neem alstublieft contact met ons op als u vragen of zorgen hebt: http://community.wikia.com/wiki/Special:Contact/account-issue
 
+Wikia Gemeenschapsondersteuning
 
 ___________________________________________
 Bezoek http://community.wikia.com voor het laatste nieuws over Wikia.
@@ -1233,6 +1237,13 @@ Om in te stellen welke e-mails u wilt ontvangen, gaat u naar {{fullurl:{{ns:spec
 	'userlogin-changepassword-needlogin' => 'U moet $1 om uw wachtwoord te kunnen wijzigen.',
 	'wikiamobile-sendpassword-label' => 'Nieuw wachtwoord sturen',
 	'wikiamobile-facebook-connect-fail' => 'Uw Facebookgebruiker is op het moment niet gekoppeld met uw Wikiagebruiker.',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'userlogin-get-account' => 'Avètz pas encara de compte? <a href="$1" tabindex="$2">Inscrivètz-vos</a>',
 );
 
 /** Polish (polski)
@@ -1255,7 +1266,7 @@ $messages['pl'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Nie możesz zakładać nowych kont z adresu IP, którego obecnie używasz.',
 	'userlogin-error-userexists' => 'Ktoś już używa takiej nazwy użytkownika. Spróbuj innej!',
 	'userlogin-error-invalidemailaddress' => 'Wprowadź prawidłowy adres e-mail.',
-	'userlogin-get-account' => 'Nie masz jeszcze konta? [[Special:UserSignup|Zarejestruj się]]',
+	'userlogin-get-account' => 'Nie masz jeszcze konta? <a href="$1" tabindex="$2">Zarejestruj się</a>',
 	'userlogin-error-invalid-username' => 'Nieprawidłowa nazwa użytkownika',
 	'userlogin-error-userlogin-unable-info' => 'Przykro nam. Nie jesteśmy w stanie zarejestrować Twojego konta w tym momencie.',
 	'userlogin-error-user-not-allowed' => 'Ta nazwa użytkownika nie jest dozwolona.',
@@ -1280,7 +1291,7 @@ $messages['pl'] = array(
 <br /><br />
 Jeśli nie zgłaszałeś prośby o nowe hasło, nie martw się! Twoje konto jest bezpieczne. Możesz zignorować tą wiadomość i zalogować się przy użyciu starego hasła.
 <br /><br />
-Masz pytania lub wątpliwości? Daj nam znać.',
+Masz pytania lub wątpliwości? Daj nam znać.', # Fuzzy
 	'userlogin-password-email-signature' => 'Zespół Wikii',
 	'userlogin-password-email-body' => 'Witaj $2,
 
@@ -1296,7 +1307,7 @@ Zespół Wikii
 ___________________________________________
 
 Aby zapoznać się z nowościami, odwiedź http://spolecznosc.wikia.com
-Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:{{ns:special}}:Preferences}}.',
+Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:{{ns:special}}:Preferences}}.', # Fuzzy
 	'userlogin-email-footer-line1' => 'Aby zapoznać się z nowościami, odwiedź <a style="color:#2a87d5;text-decoration:none;" href="http://spolecznosc.wikia.com">spolecznosc.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Ustawienia</a>',
 	'userlogin-provider-or' => 'Lub',
@@ -1308,6 +1319,80 @@ Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:
 	'userlogin-changepassword-needlogin' => '$1, aby zmienić swoje hasło.',
 	'wikiamobile-sendpassword-label' => 'Wyślij nowe hasło',
 	'wikiamobile-facebook-connect-fail' => 'Przepraszamy, Twoje konto na Facebooku nie jest obecnie połączone z kontem na Wikii.',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'userlogin-login-heading' => 'Intra',
+	'userlogin-forgot-password' => 'Dësmentià soa ciav?',
+	'userlogin-remembermypassword' => 'Resta an drinta',
+	'userlogin-error-noname' => 'Contacc, për piasì vemp ël camp dël nòm utent.',
+	'userlogin-error-sessionfailure' => "Toa session a l'é andàita an timeout. Për piasì intra torna.",
+	'userlogin-error-nosuchuser' => 'Hm, i arconossoma pa sto nòm. Dësmentia pa che ij nòm utent a son sensìbij al maiuscolin.',
+	'userlogin-error-wrongpassword' => 'Contacc, ciav pa bon-a. Sigurte che ël maiuscolin a sia dëstiss e preuva torna.',
+	'userlogin-error-wrongpasswordempty' => 'Contacc, për piasì vemp ël camp dla ciav.',
+	'userlogin-error-resetpass_announce' => "A smija ch'it l'abie dovrà na ciav temporanea. Selession-a na ciav neuva belessì për continué a intré.",
+	'userlogin-error-login-throttled' => "It l'has provà a intré con la ciav pa bon-a tròpe vire. Speta un pòch prima ëd torna prové.",
+	'userlogin-error-login-userblocked' => "Tò nòm utent a l'é stàit blocà e a peul pa esse dovrà për intré.",
+	'userlogin-error-edit-account-closed-flag' => "Tò cont a l'é stàit disabilità da Wikia.",
+	'userlogin-error-cantcreateaccount-text' => 'Toa adrëssa IP a peul pa creé cont neuv.',
+	'userlogin-error-userexists' => "Quaidun a l'ha già sto nòm utent. Preuvne un diferent!",
+	'userlogin-error-invalidemailaddress' => "Për piasì anseriss n'adrëssa ëd pòsta eletrònica bon-a.",
+	'userlogin-get-account' => "It l'has-to pa un cont? [[Special:UserSignup|Registr-te]]",
+	'userlogin-error-invalid-username' => 'Stranòm pa bon',
+	'userlogin-error-userlogin-unable-info' => 'Spiasent, i podoma pa registré tò cont al moment.',
+	'userlogin-error-user-not-allowed' => "Sto nòm utent a l'é pa përmëttù.",
+	'userlogin-error-captcha-createaccount-fail' => "la paròla ch'it l'has anserì a corispond pa la paròla ant la casela, preuva torna!",
+	'userlogin-error-userlogin-bad-birthday' => 'Contacc, për piasì vemp mèis, di, e ann.',
+	'userlogin-error-externaldberror' => "Spiasen! Nòst sit a l'ha al moment un problem, për piasì preuva torna pi tard.",
+	'userlogin-error-noemailtitle' => "Për piasì anseriss n'adrëssa ëd pòsta eletrònica bon-a.",
+	'userlogin-error-acct_creation_throttle_hit' => "Spiasent, st'adrëssa IP a l'ha creà tròpi cont ancheuj. Për piasì preuva torna pi tard.",
+	'userlogin-error-resetpass_forbidden' => 'Le ciav as peulo pa cambiesse',
+	'userlogin-error-blocked-mailpassword' => "It peule pa ciamé na neuva ciav përchè st'adrëssa IP a l'é blocà da Wikia.",
+	'userlogin-error-throttled-mailpassword' => "I l'oma già mandà na memòria ëd ciav për sto cont ant {{PLURAL:$1|l'ùltima ora|j'ùltime $1 ore}}. Për piasì contròla toa email.",
+	'userlogin-error-mail-error' => 'Contacc, a-i era un problem a mandé tò corel. Për piasì [[Special:Contact/general|contatne]].',
+	'userlogin-password-email-sent' => "I l'oma mandà na neuva ciav a l'adrëssa email për $1.",
+	'userlogin-error-unconfirmed-user' => "Spiasent, it l'has pa confirmà toa email. Për piasì confirma prima toa email.",
+	'userlogin-password-page-title' => 'Cangia toa ciav',
+	'userlogin-oldpassword' => 'Veja ciav',
+	'userlogin-newpassword' => 'Neuva ciav',
+	'userlogin-retypenew' => 'Che a scriva torna la neuva ciav',
+	'userlogin-password-email-subject' => 'Arcesta dla ciav dësmentià',
+	'userlogin-password-email-greeting' => 'Cerea $USERNAME,',
+	'userlogin-password-email-content' => 'Për piasì dòvra sta ciav temporanea për intré an Wikia: "$NEWPASSWORD"
+<br /><br />
+S\'it l\'has pa ciamà na neuva ciav, sagrinte pa! Tò cont a l\'é an salute e sigur. It peule ignoré sta email e continué a intré an Wikia con toa veja ciav.
+<br /><br />
+Custion o dùbit? Sente lìber ëd contatene.', # Fuzzy
+	'userlogin-password-email-signature' => 'Apògg dla Comunità Wikia',
+	'userlogin-password-email-body' => "Cerea \$2,
+
+Për piasì dòvra sta ciav temporanea për intré an Wikia: \"\$3\"
+
+S'it l'has pa ciamà na neuva ciav, sagrinte pa! Tò cont a l'é an salute e sigur. It peule ignoré sto corel e continué a intré an Wikia con toa veja ciav.
+
+Custion o dùbit? Sent-te lìber ëd contatene.
+
+L'Apògg dla Comunità Wikia
+
+
+___________________________________________
+
+Për controlé l'ùltime neuve an Wikia, vìsita http://community.wikia.com
+It veus-to controlé che email it arseive? Và a: {{fullurl:{{ns:special}}:Preferences}}", # Fuzzy
+	'userlogin-email-footer-line1' => 'Për controlé l\'ùltime neuve dzor Wikia, vìsita <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line2' => 'It veus-to controlé che email it arseive? Và ai tò <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Gust</a>',
+	'userlogin-provider-or' => 'O',
+	'userlogin-provider-tooltip-facebook' => 'Sgnaca ël boton për intré con Facebook',
+	'userlogin-provider-tooltip-facebook-signup' => 'Sgnaca ël boton për registrete con Facebook',
+	'userlogin-facebook-show-preferences' => 'Mosta ij gust dij feed ëd Facebook',
+	'userlogin-facebook-hide-preferences' => 'Stërma ij gust dij feed ëd Facebook',
+	'userlogin-loginreqlink' => 'rintré ant ël sistema',
+	'userlogin-changepassword-needlogin' => "It l'has dabzògn ëd $1 për cangé toa ciav.",
+	'wikiamobile-sendpassword-label' => 'Manda neuva ciav',
+	'wikiamobile-facebook-connect-fail' => "Spiasent, tò cont Facebook a l'é pa colegà al moment con un cont Wikia.",
 );
 
 /** Pashto (پښتو)
@@ -1340,7 +1425,7 @@ $messages['pt'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'O seu endereço de IP não está permitido de criar novas contas.',
 	'userlogin-error-userexists' => 'Alguém já tem este nome de utilizador. Tente um diferente!',
 	'userlogin-error-invalidemailaddress' => 'Coloque um endereço de e-mail válido.',
-	'userlogin-get-account' => 'Não possui uma conta? [[Special:UserSignup|Registe-se agora]]!',
+	'userlogin-get-account' => 'Não possui uma conta? <a href="$1" tabindex="$2">Registe-se agora</a>',
 	'userlogin-error-invalid-username' => 'Nome de utilizador inválido',
 	'userlogin-error-user-not-allowed' => 'Este nome de utilizador não é permitido.',
 	'userlogin-password-page-title' => 'Alterar a senha',
@@ -1376,7 +1461,7 @@ $messages['pt-br'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Seu endereço de IP não é permitido para criar novas contas.',
 	'userlogin-error-userexists' => 'Alguém já tem este nome de usuário. Tente um diferente!',
 	'userlogin-error-invalidemailaddress' => 'Digite um endereço de e-mail válido.',
-	'userlogin-get-account' => 'Não possui uma conta? [[Special:UserSignup|Registre-se]]',
+	'userlogin-get-account' => 'Não possui uma conta? <a href="$1" tabindex="$2">Registe-se</a>',
 	'userlogin-error-invalid-username' => 'Nome de usuário inválido',
 	'userlogin-error-userlogin-unable-info' => 'Desculpe, mas não somos capazes de registrar sua conta neste momento.',
 	'userlogin-error-user-not-allowed' => 'Esse nome de usuário não é permitido.',
@@ -1401,6 +1486,24 @@ $messages['pt-br'] = array(
 	'wikiamobile-sendpassword-label' => 'Enviar nova senha',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'userlogin-login-heading' => 'Tràse',
+	'userlogin-forgot-password' => "T'è scurdate 'a passuord?",
+	'userlogin-error-invalid-username' => "Nome de l'utende invalide",
+	'userlogin-error-user-not-allowed' => "Stu nome de utende non g'è permesse.",
+	'userlogin-password-page-title' => "Cange 'a passuord toje",
+	'userlogin-oldpassword' => 'Vécchia passuord',
+	'userlogin-newpassword' => 'Nova passuord',
+	'userlogin-retypenew' => "Scrive n'otra vota 'a passuord nova",
+	'userlogin-password-email-subject' => 'Richieste pa passuord scurdate',
+	'userlogin-password-email-greeting' => 'Cià $USERNAME,',
+	'userlogin-provider-or' => 'O',
+	'userlogin-loginreqlink' => 'trase',
+);
+
 /** Russian (русский)
  * @author Kuzura
  */
@@ -1420,7 +1523,7 @@ $messages['ru'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'С Вашего IP-адреса запрещено создавать новые учётные записи.',
 	'userlogin-error-userexists' => 'Кто-то уже зарегистрировал это имя участника. Попробуйте другое!',
 	'userlogin-error-invalidemailaddress' => 'Пожалуйста, введите действительный адрес электронной почты.',
-	'userlogin-get-account' => 'Нет учётной записи? [[Special:UserSignup|Зарегистрироваться]]',
+	'userlogin-get-account' => 'Нет учётной записи? <a href="$1" tabindex="$2">Зарегистрироваться</a>',
 	'userlogin-error-invalid-username' => 'Неправильное имя участника',
 	'userlogin-error-userlogin-unable-info' => 'К сожалению, мы не можем зарегистрировать вашу учётную запись в это время.',
 	'userlogin-error-user-not-allowed' => 'Недопустимое имя участника.',
@@ -1445,7 +1548,7 @@ $messages['ru'] = array(
 <br /><br />
 Если вы не запрашивали новый пароль, не волнуйтесь! Ваша учётная запись в безопасности и надёжно защищена. Вы можете игнорировать это сообщение и использовать старый пароль для входа на Викия.
 <b r/><br />
-Вопросы или проблемы? Свяжитесь с нами.',
+Вопросы или проблемы? Свяжитесь с нами.', # Fuzzy
 	'userlogin-password-email-signature' => 'Команда Викия',
 	'userlogin-password-email-body' => 'Привет, $2
 
@@ -1461,7 +1564,7 @@ $messages['ru'] = array(
 ___________________________________________
 
 Чтобы проверить последние новости Викия, посетите http://community.wikia.com
-Хотите настроить количество писем, которые Вы получаете? Перейдите к {{fullurl:{{ns:special}}:Preferences}}',
+Хотите настроить количество писем, которые Вы получаете? Перейдите к {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'userlogin-email-footer-line1' => 'Чтобы узнать о последних новостях Викия, посетите <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Хотите настроить количество писем, которые Вы получаете? Перейдите к <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">личным настройкам</a>',
 	'userlogin-provider-or' => 'Или',
@@ -1495,7 +1598,7 @@ $messages['sr-ec'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Вашој ИП адреси није дозвољено да прави нове налоге.',
 	'userlogin-error-userexists' => 'Корисничко име је заузето. Изаберите друго.',
 	'userlogin-error-invalidemailaddress' => 'Унесите исправну е-адресу.',
-	'userlogin-get-account' => 'Немате налог? [[Special:UserSignup|Отворите га]]',
+	'userlogin-get-account' => 'Немате налог? <a href="$1" tabindex="$2">Отворите га</a>',
 	'userlogin-error-invalid-username' => 'Неисправно корисничко име',
 	'userlogin-error-userlogin-unable-info' => 'Нажалост, тренутно не можете да се региструјете.',
 	'userlogin-error-user-not-allowed' => 'Корисничко име није дозвољено.',
@@ -1520,7 +1623,7 @@ $messages['sr-ec'] = array(
 <br /><br />
 Ако нисте захтевали нову лозинку, не брините! Ваш кориснички налог је сигуран. Занемарите ову поруку и наставите да се пријављујете на Викију користећи стару лозинку.
 <br /><br />
-Имате питања и предлоге? Слободно контактирајте с нама.',
+Имате питања и предлоге? Слободно контактирајте с нама.', # Fuzzy
 	'userlogin-password-email-signature' => 'Подршка за заједницу Викије',
 	'userlogin-password-email-body' => 'Здраво, $2,
 
@@ -1536,7 +1639,7 @@ $messages['sr-ec'] = array(
 ___________________________________________
 
 Да бисте погледали најновија дешавања на Викији, посетите  http://community.wikia.com
-Желите да изаберете шта желите да примате преко е-поште? Идите на {{fullurl:{{ns:special}}:Preferences}}',
+Желите да изаберете шта желите да примате преко е-поште? Идите на {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'userlogin-email-footer-line1' => 'Да бисте погледали најновија дешавања на Викији, посетите <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Желите да изаберете које поруке ћете примати? Идите на <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Подешавања</a>',
 	'userlogin-provider-or' => 'или',
@@ -1569,7 +1672,7 @@ $messages['sv'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Din IP-adress har inte tillåtelse att skapa nya konton.',
 	'userlogin-error-userexists' => 'Någon har redan detta användarnamn. Prova ett annat!',
 	'userlogin-error-invalidemailaddress' => 'Var god ange en giltig e-postadress.',
-	'userlogin-get-account' => 'Har du inte ett konto? [[Special:UserSignup|Registrera dig]]',
+	'userlogin-get-account' => 'Har du inte ett konto? <a href="$1" tabindex="$2">Registrera dig</a>',
 	'userlogin-error-invalid-username' => 'Ogiltigt användarnamn',
 	'userlogin-error-userlogin-unable-info' => 'Tyvärr, vi kan inte registrera ditt konto för tillfället.',
 	'userlogin-error-user-not-allowed' => 'Ditt användarnamn är inte tillåtet.',
@@ -1594,7 +1697,7 @@ $messages['sv'] = array(
 <br /><br />
 Om du inte begärde ett nytt lösenord, oroa dig inte! Ditt konto är tryggt och säkert. Du kan ignorera detta e-postmeddelande och fortsätta logga in på Wikia med ditt gamla lösenord.
 <br /><br />
-Frågor eller problem? Kontakta oss gärna.',
+Frågor eller problem? Kontakta oss gärna.', # Fuzzy
 	'userlogin-password-email-signature' => 'Wikia gemenskapssupport',
 	'userlogin-password-email-body' => 'Hej $2,
 
@@ -1610,7 +1713,7 @@ Wikia gemenskapssupport
 ___________________________________________
 
 För att kolla in de senaste händelserna på Wikia, besök http://community.wikia.com
-Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:special}}:Preferences}}',
+Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'userlogin-email-footer-line1' => 'För att kolla in de senaste händelserna på Wikia, besök <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Vill du kontrollera vilka e-postmeddelanden du får? Gå till dina <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">inställningar</a>',
 	'userlogin-provider-or' => 'Eller',
@@ -1665,6 +1768,7 @@ $messages['ta'] = array(
 
 /** Telugu (తెలుగు)
  * @author Jprmvnvijay5
+ * @author Veeven
  */
 $messages['te'] = array(
 	'userlogin-login-heading' => 'లోనికి రండి',
@@ -1673,7 +1777,7 @@ $messages['te'] = array(
 	'userlogin-error-sessionfailure' => 'మీరు లోపలికి రావడానికి ఎక్కువసేపు తీసుకున్నారు. జాలిదలచి మళ్ళీ లోనికి రండి.',
 	'userlogin-error-nosuchuser' => 'ఈ పేరును మేము గుర్తించలేకపోతున్నాము. వాడుకరి పేరులో పైరాత లేదా కిందిరాతలతో తేడాలొస్తాయనే ముచ్చట మరువకండి.',
 	'userlogin-error-invalidemailaddress' => 'జాలిదలచి సరైన ఈ-తపాలా జాడను పొందుపరచండి.',
-	'userlogin-get-account' => 'మీకో పద్దు లేదా? [[Special:UserSignup|Sign up]]',
+	'userlogin-get-account' => 'మీకు ఖాతా లేదా? <a href=\\"$1\\" tabindex=\\"$2\\">నమోదు చేసుకోండి</a>',
 	'userlogin-error-invalid-username' => 'తప్పుడు వాడుకరిపేరు',
 	'userlogin-error-userlogin-unable-info' => 'ఏమనుకోవద్దండి, ఇప్పుడు మీ పద్దును నమోదు చేయలేకపోతున్నాము.',
 	'userlogin-error-user-not-allowed' => 'ఈ వాడుకరిపేరుని అనుమతించలేము.',
@@ -1707,7 +1811,7 @@ $messages['th'] = array(
 	'userlogin-error-sessionfailure' => 'การเข้าระบบครั้งก่อนของท่านหมดเวลาแล้ว โปรดเข้าระบบใหม่',
 	'userlogin-error-nosuchuser' => 'ขออภัย ชื่อผู้ใช้นี้ไม่ได้มีในฐานข้อมูลชื่อผู้ใช้ ลองตรวจสอบตัวพิมพ์ใหญ่-เล็กอีกครั้งหนึ่ง',
 	'userlogin-error-wrongpassword' => 'ขออภัย รหัสผ่านผิด โปรดตรวจสอบว่าปุ่ม caps lock ปิดแล้ว จากนั้นลองใหม่อีกครั้ง',
-	'userlogin-get-account' => 'ไม่มีบัญชีใช่ไหม โปรด[[Special:UserSignup|สมัครบัญชีผู้ใช้]]',
+	'userlogin-get-account' => 'ไม่มีบัญชีใช่ไหม โปรด <a href="$1" tabindex="$2">สมัครบัญชีผู้ใช้</a>',
 	'userlogin-password-page-title' => 'เปลี่ยนรหัสผ่าน',
 	'userlogin-oldpassword' => 'รหัสผ่านเดิม',
 	'userlogin-newpassword' => 'รหัสผ่านใหม่',
@@ -1739,7 +1843,7 @@ $messages['tl'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Hindi pinapayagan ang tirahan mo ng IP upang makalikha ng bagong mga akawnt.',
 	'userlogin-error-userexists' => 'Mayroon nang ibang tao na may ganitong pangalan ng tagagamit. Sumubok ng isang naiiba!',
 	'userlogin-error-invalidemailaddress' => 'Paki magpasok ng isang katanggap-tanggap na tirahan ng e-liham.',
-	'userlogin-get-account' => 'Wala pang akawnt? [[Special:UserSignup|Magpatala]]',
+	'userlogin-get-account' => 'Wala pang akawnt? <a href="$1" tabindex="$2">Magpatala</a>',
 	'userlogin-error-invalid-username' => 'Hindi tanggap na pangalan ng tagagamit',
 	'userlogin-error-userlogin-unable-info' => 'Paumanhin, hindi namin nagawang mairehistro ang akawnt mo sa ngayon.',
 	'userlogin-error-user-not-allowed' => 'Hindi pinapahintulutan ang pangalan ng tagagamit.',
@@ -1764,7 +1868,7 @@ $messages['tl'] = array(
 <br /><br />
 Kung hindi ka humiling ng isang bagong hudyat, huwag mag-alala! Ang akawnt mo ay ligtas at hindi nanganganib. Maaari mong huwag pansinin ang e-liham na ito at magpatuloy sa paglagdang papasok sa Wikia sa pamamagitan ng iyong lumang hudyat.
 <br /><br />
-May mga itatanong at mga pag-aalala? Maging malaya na makipag-ugnayan sa amin.',
+May mga itatanong at mga pag-aalala? Maging malaya na makipag-ugnayan sa amin.', # Fuzzy
 	'userlogin-password-email-signature' => 'Suporta ng Pamayanan ng Wikia',
 	'userlogin-password-email-body' => 'Kumusta $2,
 
@@ -1780,7 +1884,7 @@ Suporta ng Pamayanan ng Wikia
 ___________________________________________
 
 Upang matingnan ang pinaka huling mga kaganapan sa Wikia, dalawin ang http://community.wikia.com
-Nais mong kontrolin ang tinatanggap mong mga e-liham? Pumunta sa: {{fullurl:{{ns:special}}:Preferences}}',
+Nais mong kontrolin ang tinatanggap mong mga e-liham? Pumunta sa: {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'userlogin-email-footer-line1' => 'Upang matingnan ang pinaka huling mga kaganapan sa Wikia, dalawin ang <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Nais mong kontrolin ang tinatanggap mong mga e-liham? Pumunta sa iyong <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Mga nais</a>',
 	'userlogin-provider-or' => 'O',
@@ -1792,6 +1896,22 @@ Nais mong kontrolin ang tinatanggap mong mga e-liham? Pumunta sa: {{fullurl:{{ns
 	'userlogin-changepassword-needlogin' => 'Kailangan mong $1 upang mabago ang hudyat mo.',
 	'wikiamobile-sendpassword-label' => 'Ipadala ang bagong hudyat',
 	'wikiamobile-facebook-connect-fail' => 'Paumanhin, ang iyong akawnt ng Facebook ay kasalukuyang hindi nakakawing sa isang akawnt ng Wikia.',
+);
+
+/** Tatar (Cyrillic script) (татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'userlogin-login-heading' => 'Керү',
+	'userlogin-error-invalidemailaddress' => 'Зинһар,  электрон почтагызның дөрес юлламасын кертегез',
+	'userlogin-error-invalid-username' => 'Кулланучының исеме дөрес түгел',
+	'userlogin-error-user-not-allowed' => 'Мондый кулланучы исеме тыела',
+	'userlogin-error-noemailtitle' => 'Зинһар,  электрон почтагызның дөрес юлламасын кертегез',
+	'userlogin-error-resetpass_forbidden' => 'Серсүз үзгәртелә алмый',
+	'userlogin-oldpassword' => 'Иске серсүз:',
+	'userlogin-newpassword' => 'Яңа серсүз',
+	'userlogin-retypenew' => 'Яңа серсүзне кабатлагыз',
+	'userlogin-loginreqlink' => 'керү',
 );
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
@@ -1809,6 +1929,7 @@ $messages['tzm'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Base
  * @author Olvin
  */
 $messages['uk'] = array(
@@ -1827,13 +1948,13 @@ $messages['uk'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'З Вашої IP-адреси створення нових облікових записів не допускається.',
 	'userlogin-error-userexists' => 'Хтось вже зареєструвався під цим іменем. Підберіть інше!',
 	'userlogin-error-invalidemailaddress' => 'Введіть справжню e-mail адресу.',
-	'userlogin-get-account' => 'Немає облікового запису? [[Special:UserSignup|Зареєструйтеся]]',
+	'userlogin-get-account' => 'Немає облікового запису? <a href="$1" tabindex="$2">Зареєструйтеся</a>',
 	'userlogin-error-invalid-username' => "Неправильне ім'я користувача",
 	'userlogin-error-userlogin-unable-info' => 'На жаль, наразі ми не в змозі зареєструвати обліковий запис.',
 	'userlogin-error-user-not-allowed' => "Таке ім'я користувача не дозволено.",
 	'userlogin-error-captcha-createaccount-fail' => 'Ви ввели зовсім не те слово, яке у намальовано у вікні. Спробуйте ще раз!',
 	'userlogin-error-userlogin-bad-birthday' => 'Заповніть місяць, день і рік належним чином.',
-	'userlogin-error-externaldberror' => 'Пардон! Наш сайт глючить. Повторіть спробу пізніше.',
+	'userlogin-error-externaldberror' => 'Вибачте! Наш сайт наразі зіштовхнувся з проблемами. Будь ласка, спробуйте знову пізніше.',
 	'userlogin-error-noemailtitle' => 'Введіть справжню e-mail адресу.',
 	'userlogin-error-acct_creation_throttle_hit' => 'Забагато облікових записів з однієї IP-адреси. Спробуйте пізніше.',
 	'userlogin-error-resetpass_forbidden' => 'Пароль не можна змінювати',
@@ -1861,7 +1982,7 @@ $messages['uk'] = array(
 
 ___________________________________________
 Останні події на Wikia - http://community.wikia.com
-Налаштування листів від Wikia - {{fullurl:{{ns:special}}:Preferences}}',
+Налаштування листів від Wikia - {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'userlogin-email-footer-line1' => 'Останні події на Wikia описані на <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-provider-or' => 'Або',
 	'userlogin-provider-tooltip-facebook' => 'Натисніть кнопку, щоб увійти до системи через Facebook',
@@ -1907,7 +2028,7 @@ $messages['vi'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Địa chỉ IP của bạn không được phép tạo tài khoản mới.',
 	'userlogin-error-userexists' => 'Ai đó đã có tên người dùng này. Hãy thử một tên khác nhé!',
 	'userlogin-error-invalidemailaddress' => 'Xin nhập một địa chỉ thư điện tử hợp lệ.',
-	'userlogin-get-account' => 'Không có tài khoản? [[Special:UserSignup|Đăng ký]]',
+	'userlogin-get-account' => 'Không có tài khoản? <a href="$1" tabindex="$2">Đăng ký</a>',
 	'userlogin-error-invalid-username' => 'Tên người dùng không hợp lệ',
 	'userlogin-error-userlogin-unable-info' => 'Xin lỗi, chúng tôi không thể ghi nhận tài khoản của bạn tại thời điểm này.',
 	'userlogin-error-user-not-allowed' => 'Tên người dùng này không được phép.',
@@ -1932,7 +2053,7 @@ $messages['vi'] = array(
 <br /><br />
 Nếu bạn không yêu cầu mật khẩu mới, đừng lo lắng! Tài khoản của bạn vẫn an toàn và bảo mật. Bạn có thể bỏ qua email này và tiếp tục đăng nhập vào Wikia với mật khẩu hiện tại.
 <br /><br />
-Có câu hỏi hoặc quan tâm? Vui lòng liên hệ với chúng tôi.',
+Có câu hỏi hoặc quan tâm? Vui lòng liên hệ với chúng tôi.', # Fuzzy
 	'userlogin-password-email-signature' => 'Cộng đồng Hỗ trợ Wikia',
 	'userlogin-password-email-body' => 'Chào $2,
 
@@ -1948,7 +2069,7 @@ ___________________________________________
 
 Để kiểm tra những sự kiện mới nhất trên Wikia, truy cập http://community.wikia.com
 Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập http://vi.wikia.com
-Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:special}}:Tùy chọn}}',
+Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:special}}:Tùy chọn}}', # Fuzzy
 	'userlogin-email-footer-line1' => 'Để kiểm tra những sự kiện mới nhất trên Wikia, truy cập <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>
 Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập <a style="color:#2a87d5;text-decoration:none;" href="http://vi.wikia.com">vi.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Muốn kiểm soát email mà bạn nhận được? Đi đến <a href="{{fullurl:{{ns:special}}:Tùy chọn}}" style="color:#2a87d5;text-decoration:none;">Tùy chọn</a>',
@@ -1983,7 +2104,7 @@ $messages['zh-hans'] = array(
 	'userlogin-error-cantcreateaccount-text' => '您的IP地址不能再次新建帐户。',
 	'userlogin-error-userexists' => '该用户名已使用，请选择其他用户名。',
 	'userlogin-error-invalidemailaddress' => '请输入有效的电子邮件地址。',
-	'userlogin-get-account' => '没有账户？[[Special:UserSignup|新建帐户]]',
+	'userlogin-get-account' => '没有账户？<a href="$1" tabindex="$2">新建帐户</a>',
 	'userlogin-error-invalid-username' => '用户名无效',
 	'userlogin-error-userlogin-unable-info' => '抱歉，我们不能在这时等级您的帐户。',
 	'userlogin-error-user-not-allowed' => '该用户名禁用。',
@@ -2008,7 +2129,7 @@ $messages['zh-hans'] = array(
 <br /><br />
 如果您没有申请新密码，不用担心！您的帐户十分安全可靠。您可以忽略该邮件并且继续使用旧密码登录Wikia。
 <br /><br />
-如果您有任何问题，请联系我们。',
+如果您有任何问题，请联系我们。', # Fuzzy
 	'userlogin-password-email-signature' => 'Wikia社区支持',
 	'userlogin-password-email-body' => '你好$2，
 
@@ -2022,7 +2143,7 @@ Wikia社区支持
 
 _______________________________________
 如果您想查询Wikia最新资讯，请查看http://community.wikia.com
-如果您想对您所收邮件进行限制设置，请查看{{fullurl:{{ns:special}}:Preferences}}',
+如果您想对您所收邮件进行限制设置，请查看{{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'userlogin-email-footer-line1' => '为了查看Wikia最新发生的事，请点击<a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => '想控制您地接收邮件？请查看您的<a href="{{fullurl:{{ns:specia}}:Preferences}}" style="color:#2a87d5; text-decoration:none;">属性</a>',
 	'userlogin-provider-or' => '或',

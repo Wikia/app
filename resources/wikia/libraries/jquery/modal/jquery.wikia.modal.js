@@ -228,7 +228,7 @@ $.fn.extend({
 	},
 
 
-	closeModal: function(callback) {
+	closeModal: function() {
 		$(window).unbind(".modal" + this.attr('id'));
 
 		this.animate({
@@ -239,9 +239,12 @@ $.fn.extend({
 		});
 
 		// removed associated blackout
-		var blackout = $(this).data('blackout');
+		var blackout = $(this).data('blackout'),
+			settings = $(this).data('settings');
+			
 		blackout.fadeOut("fast", function() {
 			$(this).remove();
+			var callback = settings && settings.onAfterClose ? settings.onAfterClose : false;
 			if($.isFunction(callback)) {
 				callback();
 			}
@@ -254,7 +257,9 @@ $.fn.extend({
 	// just hide the modal - don't remove DOM node
 	hideModal: function() {
 		// hide associated blackout
-		var blackout = $(this).data('blackout');
+		var blackout = $(this).data('blackout'),
+			settings = $(this).data('settings');
+			
 		blackout.fadeOut("fast").addClass('blackoutHidden');
 
 		this.animate({
@@ -262,6 +267,10 @@ $.fn.extend({
 			opacity: 0
 		}, "fast", function() {
 			$(this).hide();
+			var callback = settings && settings.onAfterClose ? settings.onAfterClose : false;
+			if($.isFunction(callback)) {
+				callback();
+			}
 		});
 
 		// BugId:7498

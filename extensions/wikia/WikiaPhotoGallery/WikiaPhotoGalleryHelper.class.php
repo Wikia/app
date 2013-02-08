@@ -15,7 +15,7 @@ class WikiaPhotoGalleryHelper {
 	const thumbnailMaxHeight = 200;
 
 	// dimensions for the smallest slider image (BugId:2787)
-	const SLIDER_MIN_IMG_WIDTH = 660;
+	const SLIDER_MIN_IMG_WIDTH = 670;
 	const SLIDER_MIN_IMG_HEIGHT = 360;
 	const SLIDER_MOSAIC_MIN_IMG_WIDTH = 320;
 	const SLIDER_MOSAIC_MIN_IMG_HEIGHT = 210;

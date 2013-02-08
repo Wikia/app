@@ -13,3 +13,4 @@
 .DS_Store
 .buildpath
 sftp-config.json
+*.iml

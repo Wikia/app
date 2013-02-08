@@ -129,6 +129,7 @@ $messages['en'] = array(
  * @author NavaRose
  * @author Nemo bis
  * @author Sam Wang
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -145,6 +146,7 @@ $messages['qqq'] = array(
 	'rte-ck-media-delete' => '{{Identical|Remove}}',
 	'rte-ck-media-edit' => '{{Identical|Modify}}',
 	'rte-ck-modeSwitch-toWysiwyg' => 'A type of editor that makes code easier to read/edit and easy for new editors.',
+	'rte-ck-photoGallery-gallery' => '{{Identical|Gallery}}',
 	'rte-ck-photoGallery-tooltipSlider' => 'Tooltip for the slider placeholder in the editor.',
 	'rte-ck-signature-label' => '{{Identical|Signature}}',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'See [[mw:Help:Magic words]] for the term.',
@@ -497,6 +499,7 @@ $messages['ca'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Treure la galeria de fotos?',
 	'rte-ck-photoGallery-tooltip' => 'Això és una galeria.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Això és un slideshow.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Això és un slider.',
 	'rte-ck-poll-add' => 'Afegir una enquesta',
 	'rte-ck-poll-poll' => 'Enquesta',
 	'rte-ck-signature-add' => 'Afegeix la teva signatura',
@@ -532,6 +535,8 @@ $messages['ca'] = array(
 	'rte-ck-videoPlaceholder-confirmDelete' => "Estàs segur que vols suprimir el marcador de posició de vídeos d'aquesta pàgina?",
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Eliminar aquest marcador de posició de vídeo?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Això és un marcador de posició de vídeo.',
+	'rte-ck-mut-add' => 'Afegir un vídeo (beta)',
+	'rte-ck-mut-mut' => 'Vídeo (beta)',
 	'rte-ck-widescreen-toggle' => 'Activar pantalla completa',
 	'rte-ck-poll-confirmDelete' => "Estàs segur que vols eliminar l'enquesta d'aquesta pàgina?",
 	'rte-ck-poll-confirmDeleteTitle' => 'Eliminar aquesta enquesta?',
@@ -620,6 +625,7 @@ $messages['cs'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Odstanit tuto galerii?',
 	'rte-ck-photoGallery-tooltip' => 'Toto je galerie',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Toto je prezentace.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Toto je posuvník (slider).',
 	'rte-ck-poll-add' => 'Přidat hlasování',
 	'rte-ck-poll-poll' => 'Anketa',
 	'rte-ck-signature-add' => 'Přidat podpis',
@@ -676,6 +682,7 @@ $messages['cs'] = array(
  * @author Kghbln
  * @author Kjell
  * @author LWChris
+ * @author Metalhead64
  * @author MtaÄ
  * @author PtM
  * @author The Evil IP address
@@ -743,6 +750,7 @@ $messages['de'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Diese Galerie entfernen?',
 	'rte-ck-photoGallery-tooltip' => 'Dies ist eine Galerie.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Dies ist eine Diashow.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Dies ist ein Schieberegler.',
 	'rte-ck-poll-add' => 'Eine Umfrage hinzufügen',
 	'rte-ck-poll-poll' => 'Umfrage',
 	'rte-ck-signature-add' => 'Deine Signatur hinzufügen',
@@ -809,7 +817,7 @@ $messages['diq'] = array(
 	'rte-ck-bucket-controls' => 'Qontroli',
 	'rte-ck-errorPopupTitle' => 'Xırab',
 	'rte-ck-hoverPreview-comment-title' => 'Vatış',
-	'rte-ck-hoverPreview-delete' => 'besterne',
+	'rte-ck-hoverPreview-delete' => 'bestere',
 	'rte-ck-hoverPreview-edit' => 'bıvurne',
 	'rte-ck-image-add' => 'Resim Deke',
 	'rte-ck-image-photo' => 'Fotraf',
@@ -918,6 +926,7 @@ $messages['es'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => '¿Quitar esta galería?',
 	'rte-ck-photoGallery-tooltip' => 'Esta es una galería.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Esta es una diapositiva.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Esto es un slider.',
 	'rte-ck-poll-add' => 'Añadir una encuesta',
 	'rte-ck-poll-poll' => 'Encuesta',
 	'rte-ck-signature-add' => 'Agregar tu firma',
@@ -1120,6 +1129,7 @@ $messages['fr'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Supprimer cette galerie ?',
 	'rte-ck-photoGallery-tooltip' => 'Ceci est une galerie.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Ceci est diaporama.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Ceci est un diaporama.',
 	'rte-ck-poll-add' => 'Ajouter un sondage',
 	'rte-ck-poll-poll' => 'Sondage',
 	'rte-ck-signature-add' => 'Ajouter votre signature',
@@ -1140,7 +1150,7 @@ $messages['fr'] = array(
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Les plus souvent utilisés',
 	'rte-ck-templateEditor-dialog-search' => 'Rechercher un modèle',
 	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Choisir un autre modèle',
-	'rte-ck-templateEditor-editor-intro' => 'Modifier les valeurs de gauche et cliquer pour prévisualiser. Une fois les modifications terminées, cliquer sur « OK ».',
+	'rte-ck-templateEditor-editor-intro' => 'Modifiez les valeurs à gauche et cliquez pour prévisualiser. Une fois les modifications terminées, cliquez sur « OK ».',
 	'rte-ck-templateEditor-editor-parameters' => 'Paramètres',
 	'rte-ck-templateEditor-editor-previewButton' => 'Prévisualiser',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Prévisualiser',
@@ -1236,6 +1246,7 @@ $messages['gl'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Quere eliminar a galería?',
 	'rte-ck-photoGallery-tooltip' => 'Isto é unha galería.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Isto é unha presentación de diapositivas.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Isto é un control deslizante.',
 	'rte-ck-poll-add' => 'Engadir unha enquisa',
 	'rte-ck-poll-poll' => 'Enquisa',
 	'rte-ck-signature-add' => 'Engadir a súa sinatura',
@@ -1846,6 +1857,7 @@ $messages['mk'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Да ја отстранам галеријава?',
 	'rte-ck-photoGallery-tooltip' => 'Ова е галерија.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Ова е подвижна галерија.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Ова е лизгач.',
 	'rte-ck-poll-add' => 'Додај анекета',
 	'rte-ck-poll-poll' => 'Анкета',
 	'rte-ck-signature-add' => 'Ставете ваш потпис',
@@ -2013,6 +2025,7 @@ $messages['ms'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Gugurkan galeri ini?',
 	'rte-ck-photoGallery-tooltip' => 'Ini ialah galeri.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Ini ialah tayangan slaid.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Ini ialah gelangsar.',
 	'rte-ck-poll-add' => 'Buka tinjauan',
 	'rte-ck-poll-poll' => 'Tinjauan',
 	'rte-ck-signature-add' => 'Bubuh tandatangan anda',
@@ -2205,12 +2218,12 @@ $messages['nl'] = array(
 	'rte-ck-bucket-textAppearance' => 'Tekstuiterlijk',
 	'rte-ck-bucket-insert' => 'Invoegen',
 	'rte-ck-bucket-controls' => 'Besturing',
-	'rte-ck-commentEditor-title' => 'Tekstverwerker voor opmerkingen',
+	'rte-ck-commentEditor-title' => 'Tekstverwerker voor reacties',
 	'rte-ck-errorPopupTitle' => 'Fout!',
 	'rte-ck-hoverPreview-codedElement-intro' => 'Schakel naar de broncodemodus om te bewerken.',
 	'rte-ck-hoverPreview-codedElement-title' => 'Gecodeerd element',
 	'rte-ck-hoverPreview-comment-intro' => 'Dit is alleen te zien tijdens het bewerken.',
-	'rte-ck-hoverPreview-comment-title' => 'Opmerking',
+	'rte-ck-hoverPreview-comment-title' => 'Reactie',
 	'rte-ck-hoverPreview-confirmDelete' => 'Weet u zeker dat u dit van deze pagina wilt verwijderen?',
 	'rte-ck-hoverPreview-delete' => 'verwijderen',
 	'rte-ck-hoverPreview-edit' => 'bewerken',
@@ -2226,26 +2239,26 @@ $messages['nl'] = array(
 	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Deze reservering voor een afbeelding verwijderen?',
 	'rte-ck-imagePlaceholder-tooltip' => 'Dit is een reservering voor een afbeelding.',
 	'rte-ck-justify-center' => 'Centreren',
-	'rte-ck-link-add' => 'Verwijzing toevoegen',
+	'rte-ck-link-add' => 'Koppeling toevoegen',
 	'rte-ck-link-error-badPageTitle' => 'Voer een paginanaam in.',
 	'rte-ck-link-error-badUrl' => 'Deze URL wordt niet herkend. Controleer of deze wel correct is.',
 	'rte-ck-link-error-title' => 'Fout',
-	'rte-ck-link-external-linkText' => 'Tekst voor verwijzing',
-	'rte-ck-link-external-numberedLink' => 'Genummerde verwijzing aanmaken (bijvoorbeeld "[1]")',
-	'rte-ck-link-external-tab' => 'Externe verwijzing',
+	'rte-ck-link-external-linkText' => 'Tekst voor koppeling',
+	'rte-ck-link-external-numberedLink' => 'Genummerde koppeling aanmaken (bijvoorbeeld "[1]")',
+	'rte-ck-link-external-tab' => 'Externe koppeling',
 	'rte-ck-link-external-url' => 'URL',
-	'rte-ck-link-internal-linkText' => 'Tekst voor verwijzing',
+	'rte-ck-link-internal-linkText' => 'Tekst voor koppeling',
 	'rte-ck-link-internal-pageName' => 'Paginanaam',
-	'rte-ck-link-internal-tab' => 'Interne verwijzing',
-	'rte-ck-link-title' => 'Verwijzing maken of bewerken',
+	'rte-ck-link-internal-tab' => 'Interne koppeling',
+	'rte-ck-link-title' => 'Koppeling maken of bewerken',
 	'rte-ck-link-label-target' => 'Doelpagina of URL',
 	'rte-ck-link-label-display' => 'Weer te geven tekst',
 	'rte-ck-link-label-internal' => 'Naar een wikipagina',
-	'rte-ck-link-label-external' => 'Naar een externe verwijzing',
+	'rte-ck-link-label-external' => 'Naar een externe koppeling',
 	'rte-ck-link-status-checking' => 'Bezig met controleren status',
 	'rte-ck-link-status-exists' => 'Pagina bestaat',
 	'rte-ck-link-status-notexists' => 'Pagina bestaat niet',
-	'rte-ck-link-status-external' => 'Externe verwijzing',
+	'rte-ck-link-status-external' => 'Externe koppeling',
 	'rte-ck-media-delete' => 'verwijderen',
 	'rte-ck-media-edit' => 'wijzigen',
 	'rte-ck-modeSwitch-toSource' => 'Bron',
@@ -2263,15 +2276,16 @@ $messages['nl'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Deze galerij verwijderen?',
 	'rte-ck-photoGallery-tooltip' => 'Dit is een galerij.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Dit is een diavoorstelling.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Dit is een slider.',
 	'rte-ck-poll-add' => 'Peiling toevoegen',
 	'rte-ck-poll-poll' => 'Peiling',
 	'rte-ck-signature-add' => 'Handtekening toevoegen',
-	'rte-ck-signature-label' => 'Handtekening',
+	'rte-ck-signature-label' => 'handtekening',
 	'rte-ck-table-alignNotSet' => 'Niet ingesteld',
 	'rte-ck-table-invalidCols' => 'Het aantal kolommen moet groter zijn dan 0.',
 	'rte-ck-table-invalidRows' => 'Het aantal rijen moet groter zijn dan 0.',
 	'rte-ck-table-toolbarTooltip' => 'Tabel toevoegen',
-	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Ander sjabloon /magisch woord',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Ander sjabloon of magisch woord',
 	'rte-ck-templateDropDown-showUsedList' => 'Lijst van gebruikte sjablonen weergeven',
 	'rte-ck-templateDropDown-makeLayout' => 'Van deze pagina een vormgeving maken',
 	'rte-ck-templateDropDown-label' => 'Sjabloon',
@@ -2290,7 +2304,7 @@ $messages['nl'] = array(
 	'rte-ck-templateEditor-editor-viewTemplate' => '(sjabloonpagina weergeven - opent een nieuw venster)',
 	'rte-ck-templateEditor-usedTemplates-title' => 'Lijst van gebruikte sjablonen',
 	'rte-ck-templateEditor-title' => 'Tekstverwerker voor sjablonen',
-	'rte-ck-unlink' => 'Verwijzing verwijderen',
+	'rte-ck-unlink' => 'Koppeling verwijderen',
 	'rte-ck-video-add' => 'Video toevoegen',
 	'rte-ck-video-video' => 'Video',
 	'rte-ck-video-confirmDelete' => 'Weet u zeker dat u de video van deze pagina wilt verwijderen?',
@@ -2349,6 +2363,7 @@ $messages['pfl'] = array(
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Holek
+ * @author Odie2
  * @author Sovq
  * @author Sp5uhe
  * @author TOR
@@ -2415,6 +2430,7 @@ $messages['pl'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Usunąć galerię?',
 	'rte-ck-photoGallery-tooltip' => 'To jest galeria.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'To jest pokaz slajdów.',
+	'rte-ck-photoGallery-tooltipSlider' => 'To jest suwak.',
 	'rte-ck-poll-add' => 'Dodaj ankietę',
 	'rte-ck-poll-poll' => 'Ankieta',
 	'rte-ck-signature-add' => 'Dodaj swój podpis',
@@ -2488,11 +2504,13 @@ $messages['pms'] = array(
 	'rte-ck-hoverPreview-template-notExisting' => 'Sto stamp-sì a esist pa!',
 	'rte-ck-hoverPreview-video-notExisting' => 'Cost filmà-sì a esist pa!',
 	'rte-ck-image-add' => 'Gionta na figura',
+	'rte-ck-image-photo' => 'Fòto',
 	'rte-ck-image-confirmDelete' => 'É-lo sigur ëd vorèj gavé la figura da sta pàgina?',
 	'rte-ck-image-confirmDeleteTitle' => 'Gavé costa plancia?',
 	'rte-ck-imagePlaceholder-confirmDelete' => 'É-lo sigur ëd vorèj gavé ël marcapòst për na plancia da costa pàgina?',
 	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Gavé cost marcapòst për na plancia?',
 	'rte-ck-imagePlaceholder-tooltip' => "Cost a l'é 'n marcapòst për na plancia.",
+	'rte-ck-justify-center' => 'Alinia al Sénter',
 	'rte-ck-link-add' => "Gionté n'anliura",
 	'rte-ck-link-error-badPageTitle' => 'Për piasì anseriss un tìtol ëd pàgina.',
 	'rte-ck-link-error-badUrl' => "I arconossoma pa cost'adrëssa dl'aragnà - për piasì, ch'a contròla ch'a sia giusta.",
@@ -2515,20 +2533,33 @@ $messages['pms'] = array(
 	'rte-ck-link-status-external' => 'Anliura esterna',
 	'rte-ck-media-delete' => 'gava',
 	'rte-ck-media-edit' => 'modìfica',
-	'rte-ck-modeSwitch-toSource' => 'Passé an manera sorgiss', # Fuzzy
-	'rte-ck-modeSwitch-toWysiwyg' => 'Cangia a manera WYSIWYG', # Fuzzy
+	'rte-ck-modeSwitch-toSource' => 'Sorgiss',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Visual',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'Cangia a manera Sorziss',
+	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Cangia a manera Visual',
 	'rte-ck-modeSwitch-error' => "A l'é ancapitaje n'eror durant ël cangiament ëd manera. Për piasì, ch'a preuva torna.",
+	'rte-ck-photoGallery-gallery' => 'Galarìa',
+	'rte-ck-photoGallery-slideshow' => 'Sequensa ëd diapositive',
+	'rte-ck-photoGallery-slider' => 'Letor ëd diapo',
+	'rte-ck-photoGallery-addGallery' => 'Gionta na galarìa ëd fòto',
+	'rte-ck-photoGallery-addSlideshow' => 'Gionta na sequensa ëd diapo',
+	'rte-ck-photoGallery-addSlider' => 'Gionta un letor ëd diapo',
 	'rte-ck-photoGallery-confirmDelete' => 'É-lo sigur ëd vorèj gavé la galarìa da sta pàgina?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Gavé sta galarìa?',
 	'rte-ck-photoGallery-tooltip' => "Costa a l'é na galarìa.",
 	'rte-ck-photoGallery-tooltipSlideshow' => "Costa a l'é na sequensa ëd diapositive.",
+	'rte-ck-photoGallery-tooltipSlider' => "Cost a l'é un visualisator ëd diapo.",
 	'rte-ck-poll-add' => 'Gionté un chestionari',
+	'rte-ck-poll-poll' => 'Sondagi',
 	'rte-ck-signature-add' => 'Gionta toa firma',
 	'rte-ck-signature-label' => 'Firma',
 	'rte-ck-table-alignNotSet' => 'Pa ampostà',
 	'rte-ck-table-invalidCols' => 'Ël nùmer ëd colòne a dev esse pi gròss ëd 0.',
 	'rte-ck-table-invalidRows' => 'Ël nùmer ëd righe a dev esse pi gròss ëd 0.',
+	'rte-ck-table-toolbarTooltip' => 'Gionta Tabela',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Àutr stamp / paròla màgica',
+	'rte-ck-templateDropDown-showUsedList' => 'Mosta lista djë stamp dovrà',
+	'rte-ck-templateDropDown-makeLayout' => 'Fà un layout da sta pagina',
 	'rte-ck-templateDropDown-label' => 'Stamp',
 	'rte-ck-templateDropDown-title' => 'Sern në stamp',
 	'rte-ck-templateEditor-dialog-browse' => 'Serca në stamp',
@@ -2543,18 +2574,30 @@ $messages['pms'] = array(
 	'rte-ck-templateEditor-editor-previewButton' => 'Preuva',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Preuva',
 	'rte-ck-templateEditor-editor-viewTemplate' => '(vëdde la pàgina dlë stamp - a duverta na fnestra neuva)',
+	'rte-ck-templateEditor-usedTemplates-title' => 'Lista djë stamp dovrà',
 	'rte-ck-templateEditor-title' => 'Editor dë stamp',
 	'rte-ck-unlink' => "Gavé l'anliura",
 	'rte-ck-video-add' => 'Gionta un filmà',
+	'rte-ck-video-video' => 'Filmà',
 	'rte-ck-video-confirmDelete' => 'É-lo sigur ëd vorèj gavé ël filmà da sta pàgina?',
 	'rte-ck-video-confirmDeleteTitle' => 'Gavé sto filmà-sì?',
 	'rte-ck-videoPlaceholder-confirmDelete' => 'É-lo sigur ëd vorèj gavé ël marcapòst për un filmà da costa pàgina?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => "Gavé 's marcapòst për un filmà?",
 	'rte-ck-videoPlaceholder-tooltip' => "Sossì a l'é un marcapòst ëd filmà.",
+	'rte-ck-mut-add' => 'Gionta un filmà (beta)',
+	'rte-ck-mut-mut' => 'Filmà (beta)',
 	'rte-ck-widescreen-toggle' => 'Cangé lë scren pien',
 	'rte-ck-poll-confirmDelete' => 'É-lo sigur ëd vorèj gavé ël chestionari da sa pàgina?',
 	'rte-ck-poll-confirmDeleteTitle' => "Gavé 's chestionari?",
 	'rte-ck-spellchecker-moreSuggestions' => "Pi 'd sugeriment",
+	'rte-ck-pasteText-title' => 'Ancòla tò test',
+	'rte-ck-clipboard-pasteMsg' => "Për rason ëd sicurëssa, l'editor a peul pa acede tò ancolagi diretament. Për piasì ancòla ant la casela sota dovrand ij tast dla tastera (Ctrl/Cmd+V) e sgnaca 'OK'.<br /><br />Nòta: tò test a sarà polidà da la formatassion për evité ëd creé dël test wiki complicà.",
+	'rte-ck-format-tag_p' => 'Test normal',
+	'rte-ck-format-tag_pre' => 'Còdes (test preformatà)',
+	'rte-ck-format-tag_h2' => 'Antestassion 2',
+	'rte-ck-format-tag_h3' => 'Antestassion 3',
+	'rte-ck-format-tag_h4' => 'Antestassion 4',
+	'rte-ck-format-tag_h5' => 'Antestassion 5',
 );
 
 /** Pashto (پښتو)
@@ -2817,7 +2860,20 @@ $messages['ro'] = array(
 	'rte-ck-video-add' => 'Adaugă un videoclip',
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'rte-ck-bucket-textAppearance' => "Aspette d'u teste",
+	'rte-ck-bucket-controls' => 'Condrolle',
+	'rte-ck-errorPopupTitle' => 'Errore!',
+	'rte-ck-hoverPreview-delete' => 'scangille',
+	'rte-ck-hoverPreview-edit' => 'cange',
+	'rte-ck-link-error-title' => 'Errore',
+);
+
 /** Russian (русский)
+ * @author DCamer
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
@@ -2885,6 +2941,7 @@ $messages['ru'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Удалить эту галерею?',
 	'rte-ck-photoGallery-tooltip' => 'Это галерея фотографий.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Это слайд-шоу.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Это слайдер.',
 	'rte-ck-poll-add' => 'Добавить опрос',
 	'rte-ck-poll-poll' => 'Голосование',
 	'rte-ck-signature-add' => 'Добавить подпись',
@@ -3076,6 +3133,7 @@ $messages['sv'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Ta bort det här galleriet?',
 	'rte-ck-photoGallery-tooltip' => 'Detta är ett galleri.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Detta är ett bildspel.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Detta är ett skjutreglage.',
 	'rte-ck-poll-add' => 'Lägg till en omröstning',
 	'rte-ck-poll-poll' => 'Omröstning',
 	'rte-ck-signature-add' => 'Lägg till din signatur',

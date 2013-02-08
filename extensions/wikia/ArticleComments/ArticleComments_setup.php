@@ -96,6 +96,7 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 	// comments_index table
 	$wgHooks['LoadExtensionSchemaUpdates'][] = 'CommentsIndex::onLoadExtensionSchemaUpdates';
 
+	$wgHooks['FilePageImageUsageSingleLink'][] = 'ArticleCommentInit::onFilePageImageUsageSingleLink';
 }
 
 //JSMEssages setup
@@ -109,7 +110,8 @@ F::build('JSMessages')->registerPackage( 'WikiaMobileComments', array(
 	'wikiamobile-article-comments-view',
 	'wikiamobile-article-comments-post',
 	'wikiamobile-article-comments-post-reply',
-	'wikiamobile-article-comments-login-post'
+	'wikiamobile-article-comments-login-post',
+	'wikiamobile-article-comments-post-fail'
 ));
 
 // Ajax dispatcher

@@ -110,7 +110,7 @@ window.RTE.tools = {
 
 	// get height of editor's iframe
 	getEditorHeight: function() {
-		return $('#cke_contents_wpTextbox1').height();
+		return $('#cke_contents_' + WikiaEditor.instanceId).height();
 	},
 
 	// get editor's document scroll offsets
@@ -161,11 +161,11 @@ window.RTE.tools = {
 
 	// get position of given placeholder in coordinates of browser window
 	getPlaceholderPosition: function(placeholder) {
-		var position = placeholder.position(),
+		var position = placeholder.offset(),
 			scrollOffsets = this.getEditorScrollOffsets();
 
 		return {
-			left: parseInt(position.left - 10 - scrollOffsets.left),
+			left: parseInt(position.left - scrollOffsets.left),
 			top: parseInt(position.top - scrollOffsets.top)
 		};
 	},

@@ -239,16 +239,10 @@ $chevron-color: #888;
 		}
 		.image-placeholder {
 			background-color: $module-background-color;
-			border: 1px solid $vertical-border-color;
+//			border: 1px solid $vertical-border-color;
 			width: 149px;
-			height: 149px;
+//			height: 149px;
 			position: relative;
-
-			& > img,
-			& > a {
-				position: absolute;
-				bottom: 0;
-			}
 		}
 
 	}
@@ -270,6 +264,30 @@ $chevron-color: #888;
 
 		.image-placeholder {
 			margin-left: 3px;
+		}
+	}
+
+	.grid-4.alpha.sponsored-image {
+		border-bottom: 1px solid $vertical-border-color;
+		margin-bottom: 20px;
+		padding-bottom: 20px;
+		.filename-placeholder {
+			width: 330px;
+		}
+		.image-placeholder {
+			float: right;
+			height: 15px;
+			overflow: hidden;
+			width: 85px;
+		}
+		.remove-sponsored-image {
+			clear: both;
+			float: left;
+			margin-top: 10px;
+		}
+		p {
+			margin: 10px 0 0 8px;
+			float: left;
 		}
 	}
 }

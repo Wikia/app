@@ -8,10 +8,11 @@
 (function (context) {
 	'use strict';
 
-	function querystring() {
-		var l = context.location,
+	function querystring(location) {
+		var l = location,
 			p,
-			u;
+			u,
+			a = document.createElement('a');
 
 		/**
 		 * Checks if an object is empty (no properties)
@@ -42,40 +43,22 @@
 		 * @param {String} url The URL to parse for parameters
 		 */
 		function Querystring(url) {
+			if(!(this instanceof Querystring)) {
+				return new Querystring(url);
+			}
+
 			var srh,
-				link,
 				tmp,
-				protocol,
-				path = '',
-				hash,
-				pos,
 				cache = {},
 				tmpQuery,
-				i;
+				i,
+				loc = url ? a : l;
 
 			if (url) {
-				tmp = url.split('//', 2);
-				protocol = tmp[1] ? tmp[0] : '';
-				tmp = (tmp[1] || tmp[0]).split('#');
-				hash = tmp[1] || '';
-				tmp = tmp[0].split('?');
-
-				link = tmp[0];
-
-				pos = link.indexOf('/');
-				if (pos > -1) {
-					path = link.slice(pos);
-					link = link.slice(0, pos);
-				}
-
-				srh = tmp[1];
-			} else {
-				protocol = l.protocol;
-				link = l.host;
-				path = l.pathname;
-				srh = l.search.substr(1);
-				hash = l.hash.substr(1);
+				a.href = url;
 			}
+
+			srh = loc.search.substr(1);
 
 			if (srh) {
 				tmpQuery = srh.split('&');
@@ -90,10 +73,10 @@
 			}
 
 			this.cache = cache;
-			this.protocol = protocol;
-			this.link = link;
-			this.path = path;
-			this.hash = hash;
+			this.protocol = loc.protocol;
+			this.link = loc.host;
+			this.path = loc.pathname;
+			this.hash = loc.hash.substr(1);
 		}
 
 		p = Querystring.prototype;
@@ -102,7 +85,7 @@
 		 * Return a string representation of a QueryString instance
 		 *
 		 * @public
-		 * 
+		 *
 		 * @example new Querystring().toString()
 		 * @example new Querystring() + 'some string'
 		 *
@@ -143,15 +126,25 @@
 		 * Sets a parameter by name
 		 *
 		 * @public
-		 * 
+		 *
 		 * to remove key=value use removeVal(key)
 		 *
 		 * @param {String} name The parameter's name
 		 * @param {Mixed} val The parameter's value
 		 */
 		p.setVal = function (name, val) {
-			if (name && val) {
-				this.cache[name] = encodeURIComponent(val);
+			if (name) {
+				if(typeof name === 'object') {
+					val = val || '';
+
+					for(var key in name) {
+						if(name.hasOwnProperty(key)) {
+							this.cache[val + key] = encodeURIComponent(name[key]);
+						}
+					}
+				} else if(val){
+					this.cache[name] = encodeURIComponent(val);
+				}
 			}
 			return this;
 		};
@@ -192,7 +185,7 @@
 		p.setHash = function (h) {
 			this.hash = h;
 			return this;
-		}
+		};
 
 		/**
 		 *
@@ -214,7 +207,7 @@
 		 * Gets the path of the URL
 		 *
 		 * @public
-		 * 
+		 *
 		 * @return {String} a path part of URL
 		 */
 		p.getPath = function () {
@@ -223,11 +216,11 @@
 
 		/**
 		 * Sets the path of the URL
-		 * 
+		 *
 		 * @public
-		 * 
+		 *
 		 * @param p String a path to set
-		 * 
+		 *
 		 * @return {Querystring}
 		 */
 		p.setPath = function (p) {
@@ -239,7 +232,7 @@
 		 * Adds a cachebuster to the querystring
 		 *
 		 * @public
-		 * 
+		 *
 		 * @return {Querystring}
 		 */
 		p.addCb = function () {
@@ -259,14 +252,9 @@
 		return Querystring;
 	}
 
-	//UMD exclusive
 	if (context.define && context.define.amd) {
-		context.define('querystring', querystring);
-	} else {
-		if (!context.Wikia) {
-			context.Wikia = {};
-		}
-
-		context.Wikia.Querystring = querystring();
+		context.define('wikia.querystring', ['wikia.location'], querystring);
 	}
+	context.Wikia = context.Wikia || {};
+	context.Wikia.Querystring = querystring(context.location);
 }(this));

@@ -14,7 +14,7 @@ $share-background-color: transparentize($color-page, 0.65);
 	position: absolute;
 	left: $width-outside + 8px;
 	top: 10px;
-	width: 55px;
+	min-width: 55px;
 	&.fixed {
 		left: 50%;
 		position: fixed;

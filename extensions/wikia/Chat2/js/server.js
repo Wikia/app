@@ -517,7 +517,7 @@ function broadcastDisconnectionInfo(client, socket){
 		return true;
 	}
 
-	tracker.trackEvent(client, 'disconnection');
+	tracker.trackEvent(client, 'disconnect');
 
 	broadcastUserListToMediaWiki(client, true);
 

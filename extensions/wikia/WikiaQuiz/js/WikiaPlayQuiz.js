@@ -8,10 +8,10 @@ var WikiaQuiz = {
 	imgScaleFactor: '+=90',
 	score: 0,
 	vars: {},
-	init: function() {	
+	init: function() {
 		// class vars
 		WikiaQuiz.trackerLabelPrefix = window.wgDBname + '/' + window.wgTitle.replace(/\//g, '_') + '/';
-		
+
 		//tracking
 		WikiaQuiz.trackEvent('impression', 'titlecard');
 
@@ -57,7 +57,7 @@ var WikiaQuiz = {
 
 		WikiaQuiz.ui.thanksScreen.add(WikiaQuiz.ui.emailScreen).find('.more-info').click(function(e) {
 			$().log('more info');
-			WikiaQuiz.trackEvent('click-link-text', 'moreinfo', -1, $(e.target).attr('href') );
+			WikiaQuiz.trackEvent('click-link-text', 'moreinfo', -1, $(e.target).attr('href'), e );
 		});
 
 
@@ -287,24 +287,16 @@ var WikiaQuiz = {
 	toggleSound: function() {
 		WikiaQuiz.isMuted = $(this).find('input').attr('checked');
 	},
-	trackEvent: function(action, label, value, href) {
-		var params = {
-			ga_category: 'wikia-quiz',
-			ga_action: action,
-			ga_label: WikiaQuiz.trackerLabelPrefix + label
-		};
-
-		if(value > -1)
-			params['ga_value'] = value;
-
-		if(href)
-			params['href'] = href;
-
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			params,
-			'both'
-		);
+	trackEvent: function(action, label, value, href, event) {
+		WikiaTracker.track({
+			action: action,
+			browserEvent: event,
+			category: 'wikia-quiz',
+			href: href,
+			label: WikiaQuiz.trackerLabelPrefix + label,
+			trackingMethod: 'both',
+			value: value
+		}, params);
 	}
 };
 

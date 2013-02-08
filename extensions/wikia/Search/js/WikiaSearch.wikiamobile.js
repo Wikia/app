@@ -4,7 +4,7 @@
  * @author Artur Klajnerok<arturk(at)wikia-inc.com>
  **/
 
-require(['loader', 'events', 'topbar', 'track'], function(loader, events, topbar, track){
+require(['throbber', 'events', 'topbar', 'track'], function(throbber, events, topbar, track){
 
     var d = document,
         wkSrhInp = d.getElementById('wkSrhInp'),
@@ -34,7 +34,8 @@ require(['loader', 'events', 'topbar', 'track'], function(loader, events, topbar
 			if (label) track.event('search', track.CLICK, {
 				label: label,
 				href: t.href
-			});
+			},
+			ev);
 		});
     }
 
@@ -60,7 +61,7 @@ require(['loader', 'events', 'topbar', 'track'], function(loader, events, topbar
 
         if(condition){
             elm.className += ' active';
-            loader.show(elm, {size: '30px'});
+            throbber.show(elm, {size: '30px'});
 
 			track.event('search', track.PAGINATE, {
 				label: forward ? 'next' : 'previous'
@@ -89,7 +90,7 @@ require(['loader', 'events', 'topbar', 'track'], function(loader, events, topbar
 					wkResCntAct.innerHTML = currentResultFrom+'-'+currentResultTo;
 
 					elm.className = elm.className.replace(' active', '');
-					loader.hide(elm);
+					throbber.hide(elm);
 
 					if(finished) {
 						elm.style.display = 'none';

@@ -120,14 +120,14 @@ var WikiaDartHelper = function (log, window, document, Krux, adLogicShortPage, d
 			clientWidth = document.documentElement.clientWidth || document.body.clientWidth;
 
 		if (adType === 'jwplayer') {
-			pathPrefix = 'pfadx/';
+			adType = 'pfadx';
 		}
 
 		if (adType === 'mobile') {
-			pathPrefix = 'DARTProxy/mobile.handler?k=';
+			pathPrefix = 'DARTProxy/mobile.handler?k=' + ( window.wgDFPid ? window.wgDFPid + '/' : '' );
 		}
 
-		pathPrefix = pathPrefix || adType + '/';
+		pathPrefix = pathPrefix || ( window.wgDFPid ? window.wgDFPid + '/' : '' ) + adType + '/';
 
 		if (params.tile) {
 			localTile = params.tile;

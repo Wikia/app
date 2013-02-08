@@ -230,7 +230,7 @@ class MultiwikifinderPage {
 
 		# Top header and navigation
 		if ( $this->mShow ) {
-			$wgOut->addHTML( '<p>' . wfMsgExt('multiwikirecords', array(), $num) . '</p>' );
+			$wgOut->addHTML( '<p>' . wfMsgExt('multiwikirecords', array( 'parsemag' ), $num) . '</p>' );
 			if( $num > 0 ) {
 				$wgOut->addHTML( '<p>' . wfShowingResults( $this->offset, $num ) . '</p>' );
 				# Disable the "next" link when we reach the end

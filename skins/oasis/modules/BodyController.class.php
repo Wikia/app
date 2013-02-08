@@ -123,7 +123,8 @@ class BodyController extends WikiaController {
 			$wgEnableCorporatePageExt,
 			$wgEnableWikiAnswers,
 			$wgSalesTitles, $wgEnableHuluVideoPanel,
-			$wgEnableGamingCalendarExt, $wgEnableWallEngine, $wgRequest;
+			$wgEnableGamingCalendarExt, $wgEnableWallEngine, $wgRequest,
+			$wgEnableForumExt, $wgIsForum;
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
@@ -135,7 +136,7 @@ class BodyController extends WikiaController {
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		// Forum Extension
-		if (WikiaPageType::isForum()) {
+		if ($wgEnableForumExt && $wgIsForum) {
 			$railModuleList = array (
 				1500 => array('Search', 'Index', null),
 				1002 => array('Forum', 'forumRelatedThreads', null),
@@ -268,12 +269,7 @@ class BodyController extends WikiaController {
 				$railModuleList = array();
 			}
 			else if (self::isHubPage()) {
-				if ($useTestBoxad) {
-					$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'TEST_TOP_RIGHT_BOXAD'));
-				}
-				else {
-					$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD'));
-				}
+				$railModuleList[1490] = array('Ad', 'Index', array('slotname' => 'CORP_TOP_RIGHT_BOXAD'));
 				$railModuleList[1480] = array('CorporateSite', 'HotSpots', null);
 			//	$railModuleList[1470] = array('CorporateSite', 'PopularHubPosts', null);  // temp disabled - data not updating
 				$railModuleList[1460] = array('CorporateSite', 'TopHubUsers', null);
@@ -462,6 +458,11 @@ class BodyController extends WikiaController {
 		// load CSS for Special:Upload
 		if (!empty($wgTitle) && $wgTitle->isSpecial('Upload')) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialUpload.scss'));
+		}
+
+		// load CSS for Special:MultipleUpload
+		if (!empty($wgTitle) && $wgTitle->isSpecial('MultipleUpload')) {
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialMultipleUpload.scss'));
 		}
 
 		// load CSS for Special:Allpages

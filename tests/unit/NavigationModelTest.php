@@ -253,6 +253,32 @@ class NavigationModelTest extends WikiaBaseTest {
 		}
 	}
 
+	function testParseOneLineWithoutTranslation() {
+		$this->mockGlobalFunction('msg', 'mocked text', 0);
+		$this->mockApp();
+
+		$method = new ReflectionMethod(
+			'NavigationModel', 'setShouldTranslateContent'
+		);
+		$method->setAccessible(TRUE);
+
+		$model = new NavigationModel();
+
+		$method->invoke($model, false);
+
+		$case = array(
+			'original' => 'whatever',
+			'text' => 'whatever',
+			'href' => Title::newFromText('whatever')->fixSpecialName()->getLocalURL(),
+			'specialAttr' => null,
+		);
+		$this->assertEquals(
+			$case,
+			$model->parseOneLine("*whatever")
+		);
+
+	}
+
 	function testParseText() {
 		$model = new NavigationModel();
 

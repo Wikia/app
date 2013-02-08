@@ -14,8 +14,19 @@ $specialPageAliases['en'] = array(
 	'AchievementsCustomize' => array( 'AchievementsCustomize' ),
 );
 
-/** German(Deutsch) */
+/** German (Deutsch) */
 $specialPageAliases['de'] = array(
 	'Leaderboard' => array( 'Rangliste' ),
 	'AchievementsCustomize' => array( 'HerausforderungenAnpassen' ),
+);
+
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'Leaderboard' => array( 'Ranking' ),
+	'AchievementsCustomize' => array( 'Dostosuj_odznczenia' ),
+);
+
+/** French (Français) */
+$specialPageAliases['fr'] = array(
+	'AchievementsCustomize' => array( 'Personnaliser_distinctions' ),
 );

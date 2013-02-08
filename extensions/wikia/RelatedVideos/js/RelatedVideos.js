@@ -10,8 +10,11 @@ var RelatedVideos = {
 	isHubVideos: false,
 	isHubExtEnabled: false,
 	isHubExtPage: false,
-	gaCat: 'related-videos',
-	totalVideos: null,
+	rvItemCount: null,
+
+	track: WikiaTracker.buildTrackingFunction({
+		category: 'related-videos'
+	}),
 
 	// Lazy Loading
 	loadedCount: 0,
@@ -31,18 +34,18 @@ var RelatedVideos = {
 		// If we're lazy loading, loaded count will not equal the total number of videos to be shown
 		// Cache the number loaded on init
 		this.loadedCount = $('.item', this.rvModule).length;
-		
+
 		if ( this.rvModule.closest('.WikiaRail').size() > 0 ) {
-			// Right rail 
+			// Right rail
 			this.onRightRail = true;
-			this.totalVideos = window.RelatedVideosIds.length;
+			this.rvItemCount = window.RelatedVideosIds.length;
 			this.rvContainer.on('click', '.remove', this.removeVideoLoginWrapper);
-			
+
 			// If we don't have any items to lazy load, add the see-more-placeholder on init
 			this.handleSeeMorePlaceholder();
 		} else {
 			// Hubs
-			this.totalVideos = this.loadedCount;
+			this.rvItemCount = this.loadedCount;
 		}
 
 		if( this.rvModule.hasClass('RelatedHubsVideos') ) {
@@ -58,7 +61,7 @@ var RelatedVideos = {
 
 		var importantContentHeight = $('#WikiaArticle').height();
 		importantContentHeight += $('#WikiaArticleComments').height();
-		
+
 		// TODO: Clean this up so it's clear when we're talking about right rail vs. hubs etc. (Liz)
 		var $RelatedVideosPlaceholder = $('span[data-placeholder="RelatedVideosModule"]');
 		if ( !this.onRightRail && $RelatedVideosPlaceholder.length != 0 ){
@@ -72,14 +75,48 @@ var RelatedVideos = {
 			relatedVideosModule.removeClass('RelatedVideosHidden');
 			relatedVideosModule.on( 'click', '.scrollright', this.scrollright );
 			relatedVideosModule.on( 'click', '.scrollleft', this.scrollleft );
-			
+
 			relatedVideosModule.find('.addVideo').addVideoButton({
-				gaCat: RelatedVideos.gaCat,
-				callback: RelatedVideos.injectCaruselElement
+				callbackAfterSelect: function(url) {
+
+					RelatedVideos.track({
+						action: WikiaTracker.ACTIONS.ADD,
+						label: 'add-video-success',
+						trackingMethod: 'both'
+					});
+					
+					$.nirvana.postJson(
+						// controller
+						'RelatedVideosController',
+						// method
+						'addVideo',
+						// data
+						{
+							articleId: wgArticleId,
+							url: url
+						},
+						// success callback
+						function( formRes ) {
+							GlobalNotification.hide();
+							if ( formRes.error ) {
+								RelatedVideos.showError( formRes.error );
+							} else {
+								VET_loader.modal.closeModal();
+								RelatedVideos.injectCaruselElement( formRes.html );
+							}
+						},
+						// error callback
+						function() {
+							RelatedVideos.showError( $.msg('vet-error-while-loading') );
+						}
+					);
+					// Don't move on to second VET screen.  We're done.
+					return false;
+				}
 			}).tooltip({
 				delay: { show: 500, hide: 100 }
 			});
-			
+
 			$('body').on( 'click', '#relatedvideos-video-player-embed-show', function() {
 				$('#relatedvideos-video-player-embed-code').show();
 				$(this).hide();
@@ -92,14 +129,11 @@ var RelatedVideos = {
 			RelatedVideos.trackItemImpressions(RelatedVideos.currentRoom);
 			RelatedVideos.checkButtonState();
 		}
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			{
-				'ga_category':RelatedVideos.gaCat,
-				'ga_action':WikiaTracker.ACTIONS.VIEW
-			},
-			'both'
-		);
+
+		RelatedVideos.track({
+			action: WikiaTracker.ACTIONS.VIEW,
+			trackingMethod: 'both'
+		});
 	},
 
 	// Scrolling items
@@ -107,30 +141,24 @@ var RelatedVideos = {
 	scrollright: function(){
 		RelatedVideos.lazyLoad();
 
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			{
-				'ga_category':RelatedVideos.gaCat,
-				'ga_action':WikiaTracker.ACTIONS.PAGINATE,
-				'ga_label':'paginate-next',
-				'ga_value':RelatedVideos.currentRoom + 1
-			},
-			'both'
-		);
+		RelatedVideos.track({
+			action: WikiaTracker.ACTIONS.PAGINATE,
+			label: 'paginate-next',
+			trackingMethod: 'both',
+			value: RelatedVideos.currentRoom + 1
+		});
+
 		RelatedVideos.scroll( 1, false );
 	},
 
 	scrollleft: function(){
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			{
-				'ga_category':RelatedVideos.gaCat,
-				'ga_action':WikiaTracker.ACTIONS.PAGINATE,
-				'ga_label':'paginate-prev',
-				'ga_value':RelatedVideos.currentRoom - 1
-			},
-			'both'
-		);
+		RelatedVideos.track({
+			action: WikiaTracker.ACTIONS.PAGINATE,
+			label: 'paginate-prev',
+			trackingMethod: 'both',
+			value: RelatedVideos.currentRoom - 1
+		});
+
 		RelatedVideos.scroll( -1, false );
 	},
 
@@ -156,7 +184,7 @@ var RelatedVideos = {
 			this.currentRoom = futureState;
 			this.rvContainer.clearQueue();
 			this.checkButtonState();
-			
+
 			//scroll
 			this.rvContainer.stop().animate({
 				left: -scroll_to
@@ -183,28 +211,24 @@ var RelatedVideos = {
 		});
 
 		if (titles.length) {
-			WikiaTracker.trackEvent(
-				'trackingevent',
-				{
-					'ga_category':RelatedVideos.gaCat,
-					'ga_action':WikiaTracker.ACTIONS.IMPRESSION,
-					'ga_label':'video',
-					'video_titles': "'" + titles.join("','") + "'",
-					'orders': orders.join(',')
-				},
-				'internal'
-			);
+			RelatedVideos.track({
+				action: WikiaTracker.ACTIONS.IMPRESSION,
+				label: 'video',
+				orders: orders.join(','),
+				trackingMethod: 'internal',
+				video_titles: "'" + titles.join("','") + "'"
+			});
 		}
 	},
 
 	regroup: function() {
-		if ( !this.onRightRail ) { 
-			return; 
+		if ( !this.onRightRail ) {
+			return;
 		}
-		
+
 		var self = this,
 			container = this.rvContainer;
-		
+
 		$('.group .item', container).each( function() {
 			$(this).appendTo( container );
 		});
@@ -213,16 +237,16 @@ var RelatedVideos = {
 		var group = null;
 		container.children('.item').each( function(i) {
 			if( i % self.videosPerPage == 0 ) {
-				if(group) { 
-					group.appendTo( container ); 
+				if(group) {
+					group.appendTo( container );
 				}
 				group = $('<div class="group"></div>');
 			}
 			$(this).appendTo( group );
 		});
-		
-		if(group) { 
-			group.appendTo( container ); 
+
+		if(group) {
+			group.appendTo( container );
 		}
 
 	},
@@ -253,7 +277,7 @@ var RelatedVideos = {
 			}
 		});
 	},
-	
+
 	// Lazy load html
 	lazyLoad: function() {
 		// Only for onRightRail
@@ -262,7 +286,7 @@ var RelatedVideos = {
 			RelatedVideos.showImages();
 			return;
 		}
-		
+
 		var self = this,
 			idx = this.loadedCount, // cache index to avoid race conditions
 			totalCount = window.RelatedVideosIds.length;
@@ -277,7 +301,7 @@ var RelatedVideos = {
 				}
 
 				// update lazy loading progress
-				self.loadedCount += 1; 
+				self.loadedCount += 1;
 
 				// Load new videos
 				$.nirvana.sendRequest({
@@ -288,19 +312,19 @@ var RelatedVideos = {
 					data: {
 						videoTitle: window.RelatedVideosIds[idx + i].title,
 						preloaded: true
-					}, 
+					},
 					callback: function(data) {
 						var html = self.mustacheTemplate.mustache(data);
-						
+
 						self.doLazyInsert(html);
 						self.handleSeeMorePlaceholder();
 					}
-				});	
-			}		
+				});
+			}
 		}
-		
+
 		if(this.mustacheTemplate) {
-			getItems();		
+			getItems();
 		} else {
 			// Load all the resources for Lazy Loading
 			$.when(
@@ -314,20 +338,20 @@ var RelatedVideos = {
 				getItems();
 			});
 		}
-		
+
 	},
 
 	handleSeeMorePlaceholder: function() {
-		if(!this.seeMorePlaceholderAdded && $('.item', this.rvModule).length == this.totalVideos) {
+		if(!this.seeMorePlaceholderAdded && $('.item', this.rvModule).length == this.rvItemCount) {
 			var seeMorePlaceholder = $('.seeMorePlaceholder', this.rvModule).addClass('item');
 			this.doLazyInsert(seeMorePlaceholder);
 			this.seeMorePlaceholderAdded = true;
-		}						
+		}
 	},
-	
+
 	doLazyInsert: function(item) {
 		var last = $('.group',this.rvModule).last();
-		
+
 		if(last.children().length < this.videosPerPage) {
 			// There's space for this item in the last group, append it
 			$(item).appendTo(last).show();
@@ -338,16 +362,15 @@ var RelatedVideos = {
 		}
 	},
 
-	recalculateLength: function(increment){
+	recalculateLength: function(totalCount, increment){
 		// Update video tally text
-		var numberElem = this.rvTallyCount;
-		numberElem.text( parseInt(numberElem.text()) + increment );
+		this.rvTallyCount.text( totalCount );
 
-		this.totalVideos = this.totalVideos + increment;
+		this.rvItemCount = this.rvItemCount + increment;
 
 		// Update carousel progress
-		var numberItems = this.totalVideos;
-		
+		var numberItems = this.rvItemCount;
+
 		// Account for placeholder item
 		if(this.onRightRail) {
 			numberItems += 1;
@@ -380,30 +403,31 @@ var RelatedVideos = {
 
 	// general helper functions
 
-	showError: function(){
-		GlobalNotification.show( $('.errorWhileLoading').html(), 'error' );
+	showError: function(error){
+		GlobalNotification.show( error || $('.errorWhileLoading').html(), 'error' );
 	},
 
 	// Inject newly added video into carousel - different from lazy loading
 	injectCaruselElement: function( html ){
-		$( '#add-video-modal' ).closest('.modalWrapper').closeModal();
 		var scrollLength = -1 * ( RelatedVideos.currentRoom - 1 );
 		RelatedVideos.scroll(
 			scrollLength,
 			function(){
-				$( html ).css('display', 'inline-block') /* JSlint ignore */
+				$( html ).hide()
 					.prependTo( RelatedVideos.rvContainer )
-					.fadeOut( 0 )
 					.fadeIn( 'slow', function(){
-						RelatedVideos.recalculateLength(1);
+						// Get the updated total number of videos on the wiki from the response html
+						var totalVideos = $(this).data('total-count');
+						RelatedVideos.recalculateLength(totalVideos, 1);
 					});
 				RelatedVideos.regroup();
 			}
 		);
+		UserLogin.refreshIfAfterForceLogin();
 	},
 
 	// Remove Video
-	
+
 	removeVideoLoginWrapper: function( e ){
 		e.preventDefault();
 
@@ -460,7 +484,7 @@ var RelatedVideos = {
 				external:	item.attr('data-external'),
 				title:		item.attr('data-ref'),
 				articleId:	wgArticleId
-			}, 
+			},
 			callback: function(formRes) {
 				if ( formRes.error ) {
 					$.showModal( '', formRes.error, {

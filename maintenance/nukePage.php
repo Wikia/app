@@ -36,6 +36,7 @@ class NukePage extends Maintenance {
 
 		$name = $this->getArg();
 		$delete = $this->getOption( 'delete', false );
+		$ns = $this->getOption( 'ns', NS_MAIN );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
@@ -46,7 +47,7 @@ class NukePage extends Maintenance {
 
 		# Get page ID
 		$this->output( "Searching for \"$name\"..." );
-		$title = Title::newFromText( $name );
+		$title = Title::newFromText( $name, $ns );
 		if ( $title ) {
 			$id   = $title->getArticleID();
 			$real = $title->getPrefixedText();

@@ -28,22 +28,34 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	private $appMock = null;
 	private $mockedClasses = array();
 
-	private static $lastTestClass = '';
+	private static $testRunTime = 0;
+
+	/**
+	 * Print out currently run test
+	 */
+	public static function setUpBeforeClass() {
+		$testClass = get_called_class();
+		echo "\nRunning '{$testClass}'...";
+
+		self::$testRunTime = microtime(true);
+	}
+
+	/**
+	 * Print out time it took to run all tests from current test class
+	 */
+	public static function tearDownAfterClass() {
+		$time = round( (microtime(true) - self::$testRunTime) * 1000 );
+		echo "done in {$time} ms";
+	}
 
 	protected function setUp() {
-		$testClass = get_class($this);
-
-		if (self::$lastTestClass !== $testClass) {
-			echo "\nRunning '{$testClass}'...";
-			self::$lastTestClass = $testClass;
-		}
-
 		$this->app = F::app();
 		$this->appOrig = F::app();
 		$this->appMock = new WikiaAppMock( $this );
 
 		if ($this->setupFile != null) {
-			global $wgAutoloadClasses; // used by setup file
+			global $wgAutoloadClasses; 		// used by setup file
+			global $wgDevelEnvironment;  	// used by setup file
 			require_once($this->setupFile);
 		}
 	}

@@ -21,39 +21,3 @@ EOT;
 	}
 
 }
-
-class WikiawebinarsVideoHandler extends OoyalaVideoHandler {
-}
-
-class FunimationVideoHandler extends OoyalaVideoHandler {
-}
-
-class WbieVideoHandler extends OoyalaVideoHandler {
-}
-
-class SoeVideoHandler extends OoyalaVideoHandler {
-}
-
-class WikiaproductionsVideoHandler extends OoyalaVideoHandler {
-}
-
-class KonamiVideoHandler extends OoyalaVideoHandler {
-}
-
-class EaVideoHandler extends OoyalaVideoHandler {
-}
-
-class KabamVideoHandler extends OoyalaVideoHandler {
-}
-
-class SonypicturesVideoHandler extends OoyalaVideoHandler {
-}
-
-class UniversalVideoHandler extends OoyalaVideoHandler {
-}
-
-class WarnerbrothersVideoHandler extends OoyalaVideoHandler {
-}
-
-class FoxVideoHandler extends OoyalaVideoHandler {
-}

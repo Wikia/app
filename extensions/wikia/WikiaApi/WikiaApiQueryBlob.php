@@ -12,7 +12,7 @@ class WikiaApiQueryBlob extends ApiQueryBase {
 
 	public function execute() {
 		global $wgRevisionCacheExpiry, $wgMemc;
-		wfProfileIn( __METHOD__ );		
+		wfProfileIn( __METHOD__ );
 
 		$cluster = $blobid = null;
 
@@ -21,29 +21,29 @@ class WikiaApiQueryBlob extends ApiQueryBase {
 		if ( empty($blobid) ) {
 			$this->dieUsage( 'Invalid blobid', 1, 404 );
 		}
-		
+
 		if ( empty($cluster) ) {
 			$this->dieUsage( 'Invalid cluster', 2, 404 );
 		}
-		
+
 		$url = sprintf( "DB://%s/%d", $cluster, $blobid );
 		$text = ExternalStore::fetchFromURL( $url );
 
 		if ( $text === false ) {
 			$this->dieUsage( 'Text not found', 3, 404 );
 		}
-		
+
 		$result = $this->getResult();
-				
+
 		$result->setRawMode();
 		$result->disableSizeCheck();
 		$result->reset();
 		$result->addValue( null, 'text', $text );
-		$result->addValue( null, 'mime', 'text/plain' );		
+		$result->addValue( null, 'mime', 'text/plain' );
 		$result->enableSizeCheck();
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	public function getCustomPrinter() {
 		return new ApiFormatRaw( $this->getMain(), $this->getMain()->createPrinterByName( 'txt' ) );
 	}
@@ -61,7 +61,7 @@ class WikiaApiQueryBlob extends ApiQueryBase {
 			'blobid' 	=> 'identifier of text'
 		);
 	}
-	
+
 	public function getDescription() {
 		return 'Fetch revision text';
 	}
@@ -70,10 +70,9 @@ class WikiaApiQueryBlob extends ApiQueryBase {
 		return array (
 			'api.php?action=blob&blobid=1',
 		);
-	}	
-	
+	}
+
 	public function getVersion() {
 		return __CLASS__ . ': $Id: WikiaApiQueryBlob.php 17065 2011-02-07 02:11:29Z moli $';
 	}
 }
-

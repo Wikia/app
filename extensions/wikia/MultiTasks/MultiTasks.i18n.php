@@ -19,8 +19,7 @@ $messages['en'] = array(
 	'multiwikiedit_task_added' => 'Multi wiki edit task #$1 was added.',
 	'multiwikiedit_task_error' => 'There was an error in adding the multi wiki edit task.',
 	'multiwikiedit_task_none_selected' => 'You didn\'t select any articles. The task was not added.',
-	'multiwikiedit_task_link' => 'You can check your task',
-	'multiwikiedit_on' => 'on',
+	'multiwikiedit_on' => 'Run the script on',
 	'multiwikiedit_page' => 'Pages to be edited',
 	'multiwikiedit_page_text' => 'Text to be saved',
 	/* do we need reason for edit? */
@@ -50,7 +49,7 @@ $messages['en'] = array(
 	'multiwikiedit_select_yourself' => 'you',
 	'multiwikiedit_no_page' => 'Please specify at least one page to edit OR choose a file containing page list.',
 	'multiwikiedit_split_results' => "Your article count was too high to be done in a single task. It has been split into '''$1''' tasks instead, with a maximum chunk size of '''$2''' articles.",
-	'multiwikiedit_max_display_size' => "Multiwikiedit has currently a maximum number of articles in the confirm phase. Your query has been capped at '''$1''' articles. Choose your articles and save task. After that, consider running it again to catch all the remaining articles.",
+	'multiwikiedit_max_display_size' => "Multiwikiedit has currently a maximum number of articles in the confirm phase. Your query has been capped at '''$1''' {{PLURAL:$1|article|articles}}. Choose your articles and save task. After that, consider running it again to catch all the remaining articles.",
 	'multiwikiedit_add_text' => 'Specify article text first',
 	'multiwikiedit_supply_wikis' => 'Please supply the list of selected wikis',
 	'multiwikiedit_tasks_list' => 'List of tasks to run',
@@ -72,7 +71,6 @@ $messages['en'] = array(
 	'multidelete_task_added' => 'Multi delete task #$1 was added.',
 	'multidelete_task_error' => 'There was an error in adding the multi delete task.',
 	'multidelete_task_none_selected' => 'You didn\'t select any articles. The task was not added.',
-	'multidelete_task_link' => 'You can check your task',
 	'multidelete_select_all' => 'Select all',
 	'multidelete_page' => "Pages to be deleted" ,
 	'multidelete_reason' => 'Reason for deletion',
@@ -91,7 +89,7 @@ $messages['en'] = array(
 	'multidelete_file_missing' => 'Unable to read given file',
 	'multidelete_select_script' => 'designated script account',
 	'multidelete_no_page' => 'Please specify at least one page to delete OR choose a file containing page list.',
-	'multidelete_split_results' => "Your article count was too high to be done in a single task. It has been split into '''$1''' tasks instead, with a maximum chunk size of '''$2''' articles." ,
+	'multidelete_split_results' => "Your article count was too high to be done in a single task. It has been split into '''$1''' {{PLURAL:$1|task|tasks}}  instead, with a maximum chunk size of '''$2''' {{PLURAL:$2|article|articles}}." ,
 	'multidelete_max_display_size' => "Multidelete has currently a maximum number of articles in the confirm phase. Your query has been capped at '''$1''' articles. Choose your articles and save task. After that, consider running it again to catch all the remaining articles." ,
 	'multidelete_brazilian_portuguese_wikis' => 'all brazilian portuguese wikis',
 	'multidelete_hebrew_wikis' => 'all hebrew wikis',
@@ -114,7 +112,7 @@ $messages['en'] = array(
 	'multiwikifinder' => 'Multiwiki Title Finder',
 	'multiwikifindpagenames' => 'Find pagenames',
 	'multiwikienterpagename' => 'Enter a pagename:',
-	'multiwikirecords' => '$1 wiki found',
+	'multiwikirecords' => '$1 {{PLURAL:$1|wiki|wikis}} found',
 	'action-multiwikifinder' => 'search for a specific title across Wikia',
 );
 
@@ -124,19 +122,26 @@ $messages['en'] = array(
  * @author Kghbln
  * @author LWChris
  * @author McDutchie
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'multiwikiedit_task_link' => '',
-	'multiwikiedit_on' => '',
+	'multiwikiedit_on' => 'Label for dropdown menu where user can select type of wikis to run script on',
+	'multiwikiedit_success_subtitle' => '{{Identical|For $1}}',
+	'multiwikiedit_max_display_size' => 'Parameters:
+* $1 is a number of pages.',
 	'action-multiwikiedit' => '{{doc-action|multiwikiedit}}',
 	'multidelete_button' => '{{Identical|Delete}}',
-	'multidelete_task_link' => '',
 	'multidelete_reason' => '{{Identical|Reason for deletion}}',
-	'multidelete_split_results' => '',
+	'multidelete_success_subtitle' => '{{Identical|For $1}}',
+	'multidelete_split_results' => 'If number of articles to run the script on exceeds a maximum number, user receives a message informing them that the script will be split up into a number of tasks. 
+Parameters:
+* $1 is the number of tasks the script has been split into
+* $2 is the number of articles included per task',
 	'multidelete_max_display_size' => '',
 	'action-multidelete' => '{{doc-action|multidelete}}',
-	'multiwikirecords' => '',
+	'multiwikirecords' => 'Number of wikis found to have matched a search query. Parameters:
+* $1 is a number (example: 7 or 12).',
 	'action-multiwikifinder' => '{{doc-action|multiwikifinder}}',
 );
 
@@ -151,7 +156,7 @@ $messages['af'] = array(
 	'multiwikiedit_caption' => 'Bladsylys',
 	'multiwikiedit_as' => 'Voer die skrip uit as',
 	'multiwikiedit_or' => '<b>OF</b>',
-	'multiwikiedit_on' => 'op',
+	'multiwikiedit_on' => 'op', # Fuzzy
 	'multiwikiedit_page' => 'Bladsye om te wysig',
 	'multiwikiedit_page_text' => 'Teks om te stoor',
 	'multiwikiedit_reason' => 'Rede vir wysiging',
@@ -214,7 +219,7 @@ $messages['af'] = array(
 	'multidelete_german_wikis' => "alle Duitse wiki's",
 	'multiwikifindpagenames' => 'Vind bladsyname',
 	'multiwikienterpagename' => "Verskaf 'n bladsynaam:",
-	'multiwikirecords' => "Gevind op $1 wiki's",
+	'multiwikirecords' => "Gevind op $1 wiki's", # Fuzzy
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -296,8 +301,7 @@ $messages['br'] = array(
 	'multiwikiedit_task_added' => 'Ouzhpennet eo bet an trevell lieskemmañ #$1.',
 	'multiwikiedit_task_error' => 'Ur fazi zo bet en ur ouzhpennañ ar poellad lieskemmañ.',
 	'multiwikiedit_task_none_selected' => "N'hoc'h eus ouzhpennet pennad ebet. N'eo ket bet ouzhpennet an trevell.",
-	'multiwikiedit_task_link' => 'Gallout a rit gwiriañ ho poellad',
-	'multiwikiedit_on' => 'war',
+	'multiwikiedit_on' => 'war', # Fuzzy
 	'multiwikiedit_page' => 'Pajennoù da gemmañ',
 	'multiwikiedit_page_text' => 'Testenn da enrollañ',
 	'multiwikiedit_reason' => "Abeg ar c'hemm",
@@ -326,7 +330,7 @@ $messages['br'] = array(
 	'multiwikiedit_select_yourself' => "c'hwi",
 	'multiwikiedit_no_page' => 'Spisait, mar plij, ur bajenn da nebeutañ PE dibabit ur restr zo roll ar pajennoù enni.',
 	'multiwikiedit_split_results' => "Re vras eo ho kont pennad evit bezañ sevenet en un trevell hepken. Dispartiet eo bet an dra-se e '''$1''' trevell, gant '''$2''' pennad dre drevell da nebeutañ.",
-	'multiwikiedit_max_display_size' => "En embanner lies wikioù emañ an niver brasañ a bennadoù a c'haller kaout er frazenn gadarnaat. Degemeret eo bet ho reked met troc'het eo bet e '''$1''' pennad. Dibabit ar pennadoù ha saveteit an trevell. Gallout a reot, da c'houde, seveniñ ar peurrest eus ar pennadoù en-dro.",
+	'multiwikiedit_max_display_size' => "En embanner lies wikioù emañ an niver brasañ a bennadoù a c'haller kaout er frazenn gadarnaat. Degemeret eo bet ho reked met troc'het eo bet e '''$1''' pennad. Dibabit ar pennadoù ha saveteit an trevell. Gallout a reot, da c'houde, seveniñ ar peurrest eus ar pennadoù en-dro.", # Fuzzy
 	'multiwikiedit_add_text' => 'Spisait skrid ar pennad da gentañ',
 	'multiwikiedit_supply_wikis' => 'Roit, mar plij, roll ar wikioù dibabet',
 	'multiwikiedit_tasks_list' => 'Roll an trevelloù da ober',
@@ -346,7 +350,6 @@ $messages['br'] = array(
 	'multidelete_task_added' => 'Ouzhpennet eo bet ar poellad dilemel lies #$1 .',
 	'multidelete_task_error' => 'Ur fazi zo bet e-pad ouzhpennadenn an trevell dilemel lies.',
 	'multidelete_task_none_selected' => "N'hoc'h eus ouzhpennet pennad ebet. N'eo ket bet ouzhpennet an trevell.",
-	'multidelete_task_link' => 'Gallout a rit gwiriañ ho trevell',
 	'multidelete_select_all' => 'Diuzañ pep tra',
 	'multidelete_page' => 'Pajennoù da vezañ diverket',
 	'multidelete_reason' => 'Abeg diverkañ',
@@ -365,7 +368,7 @@ $messages['br'] = array(
 	'multidelete_file_missing' => "Ne c'haller ket lenn ar restr roet",
 	'multidelete_select_script' => 'kont skript dileuriet',
 	'multidelete_no_page' => "Mar plij roit ur bajenn da zilemel d'an nebeutañ PE dibabit ur restr ennañ ur roll pajennoù",
-	'multidelete_split_results' => "Re vras eo ho kont pennad evit bezañ sevenet en un trevell hepken. Dispartiet eo bet an dra-se e '''$1''' trevell, gant '''$2''' pennad dre drevell da nebeutañ.",
+	'multidelete_split_results' => "Re vras eo ho kont pennad evit bezañ sevenet en un trevell hepken. Dispartiet eo bet an dra-se e '''$1''' trevell, gant '''$2''' pennad dre drevell da nebeutañ.", # Fuzzy
 	'multidelete_max_display_size' => "En dilamadenn lies emañ an niver brasañ a bennadoù a c'haller kaout bremañ er frazenn gadarnaat. Demegeret eo bet ho reked met troc'het eo bet e '''$1''' pennad. Dibabit ar pennadoù ha saveteit an trevell. Gallout a reot, da choude, en seveniñ en-dro evit ar peurrest eus ar pennadoù.",
 	'multidelete_brazilian_portuguese_wikis' => 'an holl wikioù e portugaleg Brazil',
 	'multidelete_hebrew_wikis' => 'an holl wikioù hebraek',
@@ -386,7 +389,7 @@ $messages['br'] = array(
 	'multiwikifinder' => 'Klasker titloù lieswiki',
 	'multiwikifindpagenames' => 'Kavout anvioù pajennoù',
 	'multiwikienterpagename' => 'Lakait un anv pajenn :',
-	'multiwikirecords' => '$1 wiki bet kavet',
+	'multiwikirecords' => '$1 wiki bet kavet', # Fuzzy
 );
 
 /** Catalan (català)
@@ -427,8 +430,7 @@ $messages['cs'] = array(
 	'multiwikiedit_task_added' => 'Úkol #$1 úpravy více wiki byl přidán.',
 	'multiwikiedit_task_error' => 'Došlo k chybě při přidávání úkolu úpravy více wiki.',
 	'multiwikiedit_task_none_selected' => 'Nevybrali jste žádné články. Úkol nebyl přidán.',
-	'multiwikiedit_task_link' => 'Můžete zkontrolovat váš úkol',
-	'multiwikiedit_on' => 'na',
+	'multiwikiedit_on' => 'na', # Fuzzy
 	'multiwikiedit_page' => 'Stránky k editace',
 	'multiwikiedit_page_text' => 'Text k uložení',
 	'multiwikiedit_reason' => 'Důvod editace',
@@ -457,7 +459,7 @@ $messages['cs'] = array(
 	'multiwikiedit_select_yourself' => 'Vy',
 	'multiwikiedit_no_page' => 'Zadejte alespoň jednu stránku k úpravě NEBO vyberte soubor obsahující seznam stránek.',
 	'multiwikiedit_split_results' => "Váš počet článků byla příliš vysoký na jeden úkol. Úkol byl rozdělen do '''$1''' úkolů s maximální velikostí bloku '''$2''' článků.",
-	'multiwikiedit_max_display_size' => "Multiwikiedit má v současné době maximální počet článků v potvrzovací fázi. Váš dotaz byl limitován na '''$1''' článků. Vyberte si vaše články a uložte úkol. Poté zvažte znovuspuštění.",
+	'multiwikiedit_max_display_size' => "Multiwikiedit má v současné době maximální počet článků v potvrzovací fázi. Váš dotaz byl limitován na '''$1''' článků. Vyberte si vaše články a uložte úkol. Poté zvažte znovuspuštění.", # Fuzzy
 	'multiwikiedit_add_text' => 'Nejprve zadejte text článku',
 	'multiwikiedit_supply_wikis' => 'Dodejte seznam vybraných wiki',
 	'multiwikiedit_tasks_list' => 'Seznam úkolů pro spuštění',
@@ -478,7 +480,6 @@ $messages['cs'] = array(
 	'multidelete_task_added' => 'Úkol vícenásobného smazání $1 byl přidán.',
 	'multidelete_task_error' => 'Došlo k chybě při přidávání úkolu vícenásobného odstranění.',
 	'multidelete_task_none_selected' => 'Nevybrali jste žádné články. Úkol nebyl přidán.',
-	'multidelete_task_link' => 'Můžete zkontrolovat svůj úkol',
 	'multidelete_select_all' => 'Vybrat vše',
 	'multidelete_page' => 'Stránky ke smazání',
 	'multidelete_reason' => 'Důvod smazání',
@@ -497,7 +498,7 @@ $messages['cs'] = array(
 	'multidelete_file_missing' => 'Nelze přečíst daný soubor',
 	'multidelete_select_script' => 'účet určený na skripty',
 	'multidelete_no_page' => 'Zadejte alespoň jednu stránku k odstranění NEBO zvolte soubor obsahující seznam stránek.',
-	'multidelete_split_results' => "Váš počet článků byl příliš vysoký na jeden úkol. Byl proto rozdělena do '''$1''' úkolů o maximální velikosti bloku '''$2''' článků.",
+	'multidelete_split_results' => "Váš počet článků byl příliš vysoký na jeden úkol. Byl proto rozdělena do '''$1''' úkolů o maximální velikosti bloku '''$2''' článků.", # Fuzzy
 	'multidelete_max_display_size' => "Vícenásobné vymazání má v současnosti plný počet článků ve fázi potvrzení. Váš dotaz byla omezen na '''$1''' článků. Zvolte vaše články a uložte úkol. Poté zvažte opětovné spuštění úkolu.",
 	'multidelete_brazilian_portuguese_wikis' => 'všechny brazilsky portugalské wiki',
 	'multidelete_hebrew_wikis' => 'všechny hebrejské wiki',
@@ -519,13 +520,14 @@ $messages['cs'] = array(
 	'multiwikifinder' => 'Hledač titulků na více wiki',
 	'multiwikifindpagenames' => 'Najít názvy stránek',
 	'multiwikienterpagename' => 'Zadejte název stránky:',
-	'multiwikirecords' => 'nalezeno $1 wiki',
+	'multiwikirecords' => 'nalezeno $1 wiki', # Fuzzy
 	'action-multiwikifinder' => 'hledat konkrétní název na Wikii',
 );
 
 /** German (Deutsch)
  * @author Kghbln
  * @author LWChris
+ * @author Metalhead64
  * @author PtM
  */
 $messages['de'] = array(
@@ -542,8 +544,7 @@ $messages['de'] = array(
 	'multiwikiedit_task_added' => 'Der Multi Wiki Edit-Auftrag #$1 wurde hinzugefügt.',
 	'multiwikiedit_task_error' => 'Beim Hinzufügen des Multi Wiki Edit-Auftrags ist ein Fehler aufgetreten.',
 	'multiwikiedit_task_none_selected' => 'Du hast keine Artikel ausgewählt. Es wurde kein Auftrag hinzugefügt.',
-	'multiwikiedit_task_link' => 'Du kannst deinen Auftrag einsehen',
-	'multiwikiedit_on' => 'in',
+	'multiwikiedit_on' => 'Das Skript ausführen in',
 	'multiwikiedit_page' => 'Zu bearbeitende Seiten',
 	'multiwikiedit_page_text' => 'Zu speichernder Text',
 	'multiwikiedit_reason' => 'Bearbeitungsgrund',
@@ -572,7 +573,7 @@ $messages['de'] = array(
 	'multiwikiedit_select_yourself' => 'Du',
 	'multiwikiedit_no_page' => 'Bitte gib mindestens eine zu bearbeitende Seite an oder wähle eine Datei mit einer Liste von Seiten.',
 	'multiwikiedit_split_results' => "Deine Artikelanzahl war zu groß, um in einer einzigen Aufgabe erledigt werden. Stattdessen wurde sie in '''$1''' Aufgaben mit einer maximalen Blockgröße von '''$2''' Artikeln aufgeteilt.",
-	'multiwikiedit_max_display_size' => "Multi Wiki Edit hat derzeit eine maximale Anzahl von Artikeln in der Bestätigungs-Phase. Deine Anfrage wurde nach '''$1''' Artikeln gekappt. Wähle deine Artikel und speichere die Aufgabe. Überlege, ob du sie dann wiederholt ausführst, um alle verbleibenden Artikel zu bearbeiten.",
+	'multiwikiedit_max_display_size' => "Multi Wiki Edit hat derzeit eine maximale Anzahl von Artikeln in der Bestätigungs-Phase. Deine Anfrage wurde nach '''$1''' {{PLURAL:$1|Artikel|Artikeln}} gekappt. Wähle deine Artikel und speichere die Aufgabe. Überlege, ob du sie dann wiederholt ausführst, um alle verbleibenden Artikel zu bearbeiten.",
 	'multiwikiedit_add_text' => 'Gib zuerst einen Artikeltext ein',
 	'multiwikiedit_supply_wikis' => 'Bitte gib die Liste der ausgewählten Wikis an',
 	'multiwikiedit_tasks_list' => 'Liste der auszuführenden Aufgaben',
@@ -593,7 +594,6 @@ $messages['de'] = array(
 	'multidelete_task_added' => 'Der Multi Delete-Auftrag #$1 wurde hinzugefügt.',
 	'multidelete_task_error' => 'Beim Hinzufügen des Multi Delete-Auftrags ist ein Fehler aufgetreten.',
 	'multidelete_task_none_selected' => 'Du hast keine Artikel ausgewählt. Es wurde kein Auftrag hinzugefügt.',
-	'multidelete_task_link' => 'Du kannst deinen Auftrag einsehen',
 	'multidelete_select_all' => 'Alle auswählen',
 	'multidelete_page' => 'Zu löschende Seiten',
 	'multidelete_reason' => 'Grund für die Löschung',
@@ -612,7 +612,7 @@ $messages['de'] = array(
 	'multidelete_file_missing' => 'Die Datei kann nicht gelesen werden',
 	'multidelete_select_script' => 'Seiten-Löschskript',
 	'multidelete_no_page' => 'Bitte gib entweder mindestens eine zu löschende Seite an oder wähle eine Datei, die eine Liste zu löschender Seiten enthält.',
-	'multidelete_split_results' => "Deine Artikelanzahl war zu groß, um in einer einzigen Aufgabe erledigt werden. Stattdessen wurde sie in '''$1''' Aufgaben mit einer maximalen Blockgröße von '''$2''' Artikeln aufgeteilt.",
+	'multidelete_split_results' => "Deine Artikelanzahl war zu groß, um in einer einzigen Aufgabe erledigt werden. Stattdessen wurde sie in '''$1''' {{PLURAL:$1|Aufgabe|Aufgaben}} mit einer maximalen Blockgröße von '''$2''' {{PLURAL:$2|Artikel|Artikeln}} aufgeteilt.",
 	'multidelete_max_display_size' => "Multi Delete hat derzeit eine maximale Anzahl von Artikeln in der Bestätigungs-Phase. Deine Anfrage wurde nach '''$1''' Artikeln gekappt. Wähle deine Artikel und speichere die Aufgabe. Überlege, ob du sie dann wiederholt ausführst, um alle verbleibenden Artikel zu bearbeiten.",
 	'multidelete_brazilian_portuguese_wikis' => 'alle brasilianisch-portugiesischen Wikis',
 	'multidelete_hebrew_wikis' => 'alle hebräischen Wikis',
@@ -634,7 +634,7 @@ $messages['de'] = array(
 	'multiwikifinder' => 'Multi Wiki Titel-Finder',
 	'multiwikifindpagenames' => 'Seitennamen finden',
 	'multiwikienterpagename' => 'Gib einen Seitennamen an:',
-	'multiwikirecords' => '$1 Wiki gefunden',
+	'multiwikirecords' => '$1 {{PLURAL:$1|Wiki|Wikis}} gefunden',
 	'action-multiwikifinder' => 'in ganz Wikia nach einem Titel suchen',
 );
 
@@ -647,13 +647,12 @@ $messages['de-formal'] = array(
 	'multiwikiedit_help' => 'Bearbeiten Sie mehrere Seiten gleichzeitig. Sie können entweder eine einzelne Bearbeitung vornehmen oder Seiten, die in einer Datei gelistet sind. Wählen Sie einen Benutzer, der in den Bearbeitungslogs angezeigt wird. Die hochgeladene Seitenliste muss den Seitennamen und eine durch | abgetrennte optionale Begründung in jeder Zeile beinhalten.',
 	'multiwikiedit_both_modes' => 'Bitte wählen Sie entweder eine bestimmte Seite oder eine vorgegebene Liste von Seiten.',
 	'multiwikiedit_task_none_selected' => 'Sie haben keine Artikel ausgewählt. Es wurde kein Auftrag hinzugefügt.',
-	'multiwikiedit_task_link' => 'Sie können Ihren Auftrag einsehen',
 	'multiwikiedit_choose_articles' => 'wählen Sie, welche der gefundenen Artikel bearbeitet werden sollen',
 	'multiwikiedit_link_back' => 'Sie können zurück zum Multi Wiki Edit-Formular $1 gehen.',
 	'multiwikiedit_select_yourself' => 'Sie',
 	'multiwikiedit_no_page' => 'Bitte geben Sie mindestens eine zu bearbeitende Seite an ODER wählen Sie eine Datei mit einer Liste von Seiten.',
 	'multiwikiedit_split_results' => "Ihre Artikelanzahl war zu groß, um in einer einzigen Aufgabe erledigt werden. Stattdessen wurde sie in '''$1''' Aufgaben mit einer maximalen Blockgröße von '''$2''' Artikeln aufgeteilt.",
-	'multiwikiedit_max_display_size' => "Multi Wiki Edit hat derzeit eine maximale Anzahl von Artikeln in der Bestätigungs-Phase. Ihre Anfrage wurde nach '''$1''' Artikeln gekappt. Wählen Sie Ihre Artikel und speichern Sie die Aufgabe. Überlegen Sie, ob Sie sie dann wiederholt ausführen, um alle verbleibenden Artikel zu bearbeiten.",
+	'multiwikiedit_max_display_size' => "Multi Wiki Edit hat derzeit eine maximale Anzahl von Artikeln in der Bestätigungs-Phase. Ihre Anfrage wurde nach '''$1''' Artikeln gekappt. Wählen Sie Ihre Artikel und speichern Sie die Aufgabe. Überlegen Sie, ob Sie sie dann wiederholt ausführen, um alle verbleibenden Artikel zu bearbeiten.", # Fuzzy
 	'multiwikiedit_add_text' => 'Geben Sie zuerst einen Artikeltext ein',
 	'multiwikiedit_supply_wikis' => 'Bitte geben Sie die Liste der ausgewählten Wikis an',
 	'multidelete_help' => 'Löschen Sie mehrere Seiten. Sie können entweder eine einzelne Löschung durchführen oder Seiten, die in einer Datei gelistet sind. Sie können dies nur für dieses Wiki, alle Wikis aus der gemeinsamen Datenbank oder ausgewählte Wikis (aus einer Textdatei, jedes in einer eigenen neuen Zeile) durchführen. Wählen Sie einen Benutzer, der in den Löschlogs angezeigt wird. Die hochgeladene Seitenliste muss den Seitennamen und eine durch | abgetrennte optionale Begründung in jeder Zeile beinhalten.',
@@ -662,11 +661,10 @@ $messages['de-formal'] = array(
 	'multidelete_error_empty_pages' => 'Bitte wählen Sie entweder eine bestimmte Seite oder eine vorgegebene Liste von Seiten.',
 	'multidelete_task_error' => 'Beim Hinzufügen des Multi Delete-Auftrags ist ein Fehler aufgetreten',
 	'multidelete_task_none_selected' => 'Sie haben keine Artikel ausgewählt. Es wurde kein Auftrag hinzugefügt.',
-	'multidelete_task_link' => 'Sie können Ihren Auftrag einsehen',
 	'multidelete_choose_articles' => 'wählen Sie, welche der gefundenen Artikel gelöscht werden sollen',
 	'multidelete_link_back' => 'Sie können zurück zum Multi Delete-Formular $1 gehen.',
 	'multidelete_no_page' => 'Bitte geben Sie entweder mindestens eine zu löschende Seite an ODER wählen Sie eine Datei, die eine Liste zu löschender Seiten enthält.',
-	'multidelete_split_results' => "Ihre Artikelanzahl war zu groß, um in einer einzigen Aufgabe erledigt werden. Stattdessen wurde sie in '''$1''' Aufgaben mit einer maximalen Blockgröße von '''$2''' Artikeln aufgeteilt.",
+	'multidelete_split_results' => "Ihre Artikelanzahl war zu groß, um in einer einzigen Aufgabe erledigt werden. Stattdessen wurde sie in '''$1''' Aufgaben mit einer maximalen Blockgröße von '''$2''' Artikeln aufgeteilt.", # Fuzzy
 	'multidelete_max_display_size' => "Multi Delete hat derzeit eine maximale Anzahl von Artikeln in der Bestätigungs-Phase. Ihre Anfrage wurde nach '''$1''' Artikeln gekappt. Wählen Sie Ihre Artikel und speichern Sie die Aufgabe. Überlegen Sie, ob Sie sie dann wiederholt ausführen, um alle verbleibenden Artikel zu bearbeiten.",
 	'multiwikienterpagename' => 'Geben Sie einen Seitennamen an:',
 );
@@ -682,7 +680,7 @@ $messages['diq'] = array(
 	'multiwikiedit_caption' => 'Listeya pelan',
 	'multiwikiedit_title' => 'Zafın Wiki Vurnayış',
 	'multiwikiedit_or' => '<b>YA NA</b>',
-	'multiwikiedit_on' => 'akerde',
+	'multiwikiedit_on' => 'akerde', # Fuzzy
 	'multiwikiedit_list_caption' => 'Listeya Wikiyan',
 	'multiwikiedit_minoredit_caption' => 'Vurnayişo qıcek',
 	'multiwikiedit_botedit_caption' => 'Bot (nımıte) vurnayış',
@@ -716,7 +714,7 @@ $messages['diq'] = array(
 	'multidelete_french_wikis' => 'Fransızki wikiy pêro',
 	'multidelete_swedish_wikis' => 'İswecki wikiy pêro',
 	'multidelete_german_wikis' => 'Almanki wikiy pêro',
-	'multiwikirecords' => '$1 wiki çıniya',
+	'multiwikirecords' => '$1 wiki çıniya', # Fuzzy
 );
 
 /** Ewe (eʋegbe)
@@ -741,6 +739,7 @@ $messages['eo'] = array(
  * @author Pertile
  * @author Peter17
  * @author VegaDark
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'multitasks-link-back-label' => 'aquí',
@@ -756,8 +755,7 @@ $messages['es'] = array(
 	'multiwikiedit_task_added' => 'Tarea de edición Multi Wiki #$1 fue agregada.',
 	'multiwikiedit_task_error' => 'Hubo un error agregando tarea de edición Multi Wiki.',
 	'multiwikiedit_task_none_selected' => 'No seleccionaste ningún artículo. La tarea no fue agregada.',
-	'multiwikiedit_task_link' => 'Puedes verificar tu tarea',
-	'multiwikiedit_on' => 'en',
+	'multiwikiedit_on' => 'Ejecutar el script en',
 	'multiwikiedit_page' => 'Páginas a ser editadas',
 	'multiwikiedit_page_text' => 'Texto a ser grabado',
 	'multiwikiedit_reason' => 'Razón para editar',
@@ -786,7 +784,7 @@ $messages['es'] = array(
 	'multiwikiedit_select_yourself' => 'tu',
 	'multiwikiedit_no_page' => 'Por favor especificar al menos úna página a editar O escoger un archivo conteniendo una lista de páginas',
 	'multiwikiedit_split_results' => "Su número de artículos era demasiado grande para realizarse en una simple tarea. Por lo tanto se ha divido en '''$1''' tareas, con un tamaño máximo de '''$2''' artículos por bloque.",
-	'multiwikiedit_max_display_size' => "Multiwikiedit tiene un número máximo de artículos actualmente en la fase de confirmación. Su petición se ha limitado a '''$1''' artículos. Elige tus artículos y guarda la tarea. Después de eso, tenga en cuenta que tendrá que poner todo en marcha de nuevo para los artículos restantes.",
+	'multiwikiedit_max_display_size' => "Actualmente multiwikiedit tiene un número máximo de artículos en la fase de confirmación. Tu petición se ha limitado a '''$1''' {{PLURAL:$1|artículo|artículos}}. Elige tus artículos y guarda la tarea. Después de eso, podrás ejecutarla otra vez para los artículos restantes.",
 	'multiwikiedit_add_text' => 'Especificar texto de artículo primero',
 	'multiwikiedit_supply_wikis' => 'por favor proveer la lista de wikis seleccionados',
 	'multiwikiedit_tasks_list' => 'lista de tareas a ejecutar',
@@ -807,7 +805,6 @@ $messages['es'] = array(
 	'multidelete_task_added' => 'Tarea de borrado múltiple #$1 fue agregada',
 	'multidelete_task_error' => 'Hubo un error en la adición de una tarea de borrado múltiple.',
 	'multidelete_task_none_selected' => 'No seleccionasyte ningún artículo. La tarea no fue agregada.',
-	'multidelete_task_link' => 'Puedes verificar tu tarea',
 	'multidelete_select_all' => 'Seleccionar todo',
 	'multidelete_page' => 'Páginas a ser borradas',
 	'multidelete_reason' => 'Razón para borrado',
@@ -826,7 +823,7 @@ $messages['es'] = array(
 	'multidelete_file_missing' => 'Incapaz de leer el archivo dado',
 	'multidelete_select_script' => 'cuenta de script designada',
 	'multidelete_no_page' => 'Por favor especificar al menos una página a ser borrada O escoger un archivo conteniendo una lista de páginas.',
-	'multidelete_split_results' => "Su número de artículos era demasiado grande para realizarse en una simple tarea. Por lo tanto se ha divido en '''$1''' tareas, con un tamaño máximo de '''$2''' artículos por bloque.",
+	'multidelete_split_results' => "Tu número de artículos era demasiado grande para realizarse en una sola tarea. Se ha divido en '''$1''' {{PLURAL:$1|tarea|tareas}}, con un tamaño máximo de '''$2''' {{PLURAL:$2|artículo|artículos}}.",
 	'multidelete_max_display_size' => "Multiwikiedit tiene un número máximo de artículos actualmente en la fase de confirmación. Su petición se ha limitado a '''$1''' artículos. Elige tus artículos y guarda la tarea. Después de eso, tenga en cuenta que tendrá que poner todo en marcha de nuevo para los artículos restantes.",
 	'multidelete_brazilian_portuguese_wikis' => 'todas las wikis de portugués brasilero',
 	'multidelete_hebrew_wikis' => 'todas las wikis en hebreo',
@@ -848,7 +845,7 @@ $messages['es'] = array(
 	'multiwikifinder' => 'Buscador de Títulos Multiwiki',
 	'multiwikifindpagenames' => 'Encontara nombres de página',
 	'multiwikienterpagename' => 'Ingresar un nombre de página:',
-	'multiwikirecords' => '$1 wiki encontrado',
+	'multiwikirecords' => '$1 {{PLURAL:$1|wiki encontrado|wikis encontrados}}',
 	'action-multiwikifinder' => 'Buscador de Títulos Multiwiki',
 );
 
@@ -906,7 +903,7 @@ $messages['fi'] = array(
 	'multidelete_swedish_wikis' => 'kaikki ruotsinkieliset wikit',
 	'multidelete_german_wikis' => 'kaikki saksankieliset wikit',
 	'multiwikienterpagename' => 'Kirjoita sivunimi:',
-	'multiwikirecords' => '$1 wiki löytyi',
+	'multiwikirecords' => '$1 wiki löytyi', # Fuzzy
 );
 
 /** French (français)
@@ -914,6 +911,7 @@ $messages['fi'] = array(
  * @author IAlex
  * @author McDutchie
  * @author Peter17
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'multitasks-link-back-label' => 'ici',
@@ -929,8 +927,7 @@ $messages['fr'] = array(
 	'multiwikiedit_task_added' => 'La tâche de modification multiple #$1 a été ajoutée.',
 	'multiwikiedit_task_error' => "Une erreur s'est produite lors de l'ajout de la tâche de modification multiple.",
 	'multiwikiedit_task_none_selected' => "Vous n'avez sélectionné aucun article. La tâche n'a pas été ajoutée.",
-	'multiwikiedit_task_link' => 'Vous pouvez vérifier votre tâche',
-	'multiwikiedit_on' => 'sur',
+	'multiwikiedit_on' => 'Exécuter le script sur',
 	'multiwikiedit_page' => 'Pages à modifier',
 	'multiwikiedit_page_text' => 'Texte à sauvegarder',
 	'multiwikiedit_reason' => 'Raison de la modification',
@@ -959,7 +956,7 @@ $messages['fr'] = array(
 	'multiwikiedit_select_yourself' => 'vous',
 	'multiwikiedit_no_page' => 'Veuillez spécifier soit au moins une page OU choisissez un fichier contenant la liste des pages.',
 	'multiwikiedit_split_results' => "Votre compte d'article est trop grand pour être effectué dans une seule tâche. Ceci a été séparé en '''$1''' tâches, avec au maximum de '''$2''' articles par tâche.",
-	'multiwikiedit_max_display_size' => "L'éditeur multi wikis a actuellement un nombre maximal d'articles dans la phase de confirmation. Votre requête a été acceptée mais a été coupée à '''$1''' articles. Choisissez les articles et sauvegardez la tâche. Après cela, vous pouvez l'exécuter à nouveau pour les articles restants.",
+	'multiwikiedit_max_display_size' => "Multiwikiedit a actuellement un nombre maximal d'articles en phase de confirmation. Votre requête a été limitée à '''$1''' {{PLURAL:$1|article|articles}}. Choisissez les articles et sauvegardez la tâche. Après cela, vous pourrez l'exécuter à nouveau pour les articles restants.",
 	'multiwikiedit_add_text' => "Spécifiez le texte de l'article d'abord",
 	'multiwikiedit_supply_wikis' => 'Veuillez donner la liste des wikis sélectionnés',
 	'multiwikiedit_tasks_list' => 'Liste des tâches à effectuer',
@@ -980,7 +977,6 @@ $messages['fr'] = array(
 	'multidelete_task_added' => 'La tâche de suppression multiple #$1 a été ajoutée.',
 	'multidelete_task_error' => "Une erreur s'est produite lors de l'ajout de la tâche de suppression multiple.",
 	'multidelete_task_none_selected' => "Vous n'avez sélectionné aucun article. La tâche n'a pas été ajoutée.",
-	'multidelete_task_link' => 'Vous pouvez vérifier votre tâche',
 	'multidelete_select_all' => 'Tout sélectionner',
 	'multidelete_page' => 'Pages à supprimer',
 	'multidelete_reason' => 'Raison de la suppression',
@@ -999,7 +995,7 @@ $messages['fr'] = array(
 	'multidelete_file_missing' => 'Impossible de lire le fichier donné',
 	'multidelete_select_script' => 'compte script désigné',
 	'multidelete_no_page' => 'Veuillez spécifier soit au moins une page à supprimer OU choisissez un fichier contenant la liste des pages.',
-	'multidelete_split_results' => "Votre compte d'article est trop grand pour être effectué dans une seule tâche. Ceci a été séparé en '''$1''' tâches, avec au maximum de '''$2''' articles par tâche.",
+	'multidelete_split_results' => "Le nombre d’articles est trop important pour être effectué en une seule tâche. Elle a été par conséquent été répartie en '''$1''' {{PLURAL:$1|tâche composée|tâches composées}} d’au maximum '''$2''' {{PLURAL:$2|article|articles}}.",
 	'multidelete_max_display_size' => "La suppression multiple a actuellement un nombre maximal d'articles dans la phase de confirmation. Votre requête a été acceptée mais a été coupée à '''$1''' articles. Choisissez les articles et sauvegardez la tâche. Après cela, vous pouvez l'exécuter à nouveau pour les articles restants.",
 	'multidelete_brazilian_portuguese_wikis' => 'tous les wikis en portugais brésilien',
 	'multidelete_hebrew_wikis' => 'tous les wikis en hébreu',
@@ -1021,7 +1017,7 @@ $messages['fr'] = array(
 	'multiwikifinder' => 'Chercheur de titres multi wikis',
 	'multiwikifindpagenames' => 'Trouver des noms de pages',
 	'multiwikienterpagename' => 'Entrez un nom de page :',
-	'multiwikirecords' => '$1 wikis trouvés',
+	'multiwikirecords' => '$1 {{PLURAL:$1|wiki trouvé|wikis trouvés}}',
 	'action-multiwikifinder' => 'rechercher un titre spécifique dans Wikia',
 );
 
@@ -1042,8 +1038,7 @@ $messages['gl'] = array(
 	'multiwikiedit_task_added' => 'Engadiuse a tarefa de edición en varios wikis #$1',
 	'multiwikiedit_task_error' => 'Houbo un erro ao engadir a tarefa de edición en varios wikis.',
 	'multiwikiedit_task_none_selected' => 'Non seleccionou ningún artigo. Non se engadiu a tarefa.',
-	'multiwikiedit_task_link' => 'Pode comprobar a súa tarefa',
-	'multiwikiedit_on' => 'en',
+	'multiwikiedit_on' => 'Executar a escritura en',
 	'multiwikiedit_page' => 'Páxinas a editar',
 	'multiwikiedit_page_text' => 'Texto a gardar',
 	'multiwikiedit_reason' => 'Motivo para a edición',
@@ -1072,7 +1067,7 @@ $messages['gl'] = array(
 	'multiwikiedit_select_yourself' => 'vostede',
 	'multiwikiedit_no_page' => 'Por favor, especifique, polo menos, unha páxina para editar OU escolla un ficheiro que conteña unha lista de páxinas.',
 	'multiwikiedit_split_results' => "A súa conta de artigo é grande de máis para facela nunha única tarefa. Dividiuse en '''$1''' tarefas, cun tamaño máximo de '''$2''' artigos cada unha.",
-	'multiwikiedit_max_display_size' => "Arestora, a edición en varios wikis ten un número máximo de artigos na fase de confirmación. A súa solicitude foi limitada a '''$1''' artigos. Escolla os seus artigos e garde a tarefa. Despois diso, pode executala de novo para os artigos restantes.",
+	'multiwikiedit_max_display_size' => "Arestora, a edición en varios wikis ten un número máximo de artigos na fase de confirmación. A súa solicitude foi limitada a '''$1''' {{PLURAL:$1|artigo|artigos}}. Escolla os seus artigos e garde a tarefa. Despois diso, pode executala de novo para os artigos restantes.",
 	'multiwikiedit_add_text' => 'Especifique o texto do artigo primeiro',
 	'multiwikiedit_supply_wikis' => 'Por favor, dea a lista dos wikis seleccionados',
 	'multiwikiedit_tasks_list' => 'Lista de tarefas a executar',
@@ -1093,7 +1088,6 @@ $messages['gl'] = array(
 	'multidelete_task_added' => 'Engadiuse a tarefa de borrado múltiple #$1',
 	'multidelete_task_error' => 'Houbo un erro ao engadir a tarefa de borrado múltiple.',
 	'multidelete_task_none_selected' => 'Non seleccionou ningún artigo. Non se engadiu a tarefa.',
-	'multidelete_task_link' => 'Pode comprobar a súa tarefa',
 	'multidelete_select_all' => 'Seleccionar todos',
 	'multidelete_page' => 'Páxinas a borrar',
 	'multidelete_reason' => 'Motivo para o borrado',
@@ -1112,7 +1106,7 @@ $messages['gl'] = array(
 	'multidelete_file_missing' => 'Non se puido ler o ficheiro dado',
 	'multidelete_select_script' => 'conta de escritura designada',
 	'multidelete_no_page' => 'Por favor, especifique, polo menos, unha páxina para borrar OU escolla un ficheiro que conteña unha lista de páxinas.',
-	'multidelete_split_results' => "A súa conta de artigo é grande de máis para facela nunha única tarefa. Dividiuse en '''$1''' tarefas, cun tamaño máximo de '''$2''' artigos cada unha.",
+	'multidelete_split_results' => "O seu número de artigos é grande de máis para completar o proceso nunha única tarefa. Dividiuse en '''$1''' {{PLURAL:$1|tarefa|tarefas}}, cun tamaño máximo de '''$2''' {{PLURAL:$2|artigo|artigos}}.",
 	'multidelete_max_display_size' => "Arestora, o borrado múltiple ten un número máximo de artigos na fase de confirmación. A súa solicitude foi limitada a '''$1''' artigos. Escolla os seus artigos e garde a tarefa. Despois diso, pode executala de novo para os artigos restantes.",
 	'multidelete_brazilian_portuguese_wikis' => 'todos os wikis en portugués brasileiro',
 	'multidelete_hebrew_wikis' => 'todos os wikis en hebreo',
@@ -1134,7 +1128,7 @@ $messages['gl'] = array(
 	'multiwikifinder' => 'Buscador de títulos en varios wikis',
 	'multiwikifindpagenames' => 'Atopar nomes de páxinas',
 	'multiwikienterpagename' => 'Insira un nome de páxina:',
-	'multiwikirecords' => 'Atopáronse $1 wikis',
+	'multiwikirecords' => '{{PLURAL:$1|Atopouse $1 wiki|Atopáronse $1 wikis}}',
 	'action-multiwikifinder' => 'procurar un título específico en toda Wikia',
 );
 
@@ -1196,7 +1190,7 @@ $messages['hu'] = array(
 	'multiwikifinder' => 'Címek keresése több wikiben',
 	'multiwikifindpagenames' => 'Lapnevek keresése',
 	'multiwikienterpagename' => 'Adj meg egy lapnevet:',
-	'multiwikirecords' => '$1 wiki található',
+	'multiwikirecords' => '$1 wiki található', # Fuzzy
 );
 
 /** Interlingua (interlingua)
@@ -1216,8 +1210,7 @@ $messages['ia'] = array(
 	'multiwikiedit_task_added' => 'Le carga de modification multi-wiki no. $1 ha essite addite.',
 	'multiwikiedit_task_error' => 'Il occurreva un error durante le addition del carga de modification multi-wiki.',
 	'multiwikiedit_task_none_selected' => 'Tu non ha seligite alcun articulo. Le carga non ha essite addite.',
-	'multiwikiedit_task_link' => 'Tu pote seliger tu carga',
-	'multiwikiedit_on' => 'in',
+	'multiwikiedit_on' => 'in', # Fuzzy
 	'multiwikiedit_page' => 'Paginas a modificar',
 	'multiwikiedit_page_text' => 'Texto a salveguardar',
 	'multiwikiedit_reason' => 'Motivo del modification',
@@ -1246,7 +1239,7 @@ $messages['ia'] = array(
 	'multiwikiedit_select_yourself' => 'tu',
 	'multiwikiedit_no_page' => 'Per favor, o specifica al minus un pagina a modificar, o selige un file continente un lista de paginas.',
 	'multiwikiedit_split_results' => "Le numero de articulos es troppo grande pro esser tractate in un singule carga. Illo ha essite separate in '''$1''' cargas, con un maximo de '''$2''' articulos per carga.",
-	'multiwikiedit_max_display_size' => "Le gestor de modification multi-wiki ha actualmente un numero maxime de articulos in le phase de confirmation. Tu requesta ha essite limitate a '''$1''' articulos. Selige le articulos e salveguarda le carga. Postea, tu pote re-executar lo pro tractar tote le articulos restante.",
+	'multiwikiedit_max_display_size' => "Le gestor de modification multi-wiki ha actualmente un numero maxime de articulos in le phase de confirmation. Tu requesta ha essite limitate a '''$1''' articulos. Selige le articulos e salveguarda le carga. Postea, tu pote re-executar lo pro tractar tote le articulos restante.", # Fuzzy
 	'multiwikiedit_add_text' => 'Specifica primo le texto del articulo',
 	'multiwikiedit_supply_wikis' => 'Per favor forni le lista de wikis seligite',
 	'multiwikiedit_tasks_list' => 'Lista de cargas a executar',
@@ -1267,7 +1260,6 @@ $messages['ia'] = array(
 	'multidelete_task_added' => 'Le carga de deletion multiple no. $1 ha essite addite.',
 	'multidelete_task_error' => 'Un error occurreva durante le addition del carga de deletion multiple.',
 	'multidelete_task_none_selected' => 'Tu non ha seligite alcun articulo. Le carga non ha essite addite.',
-	'multidelete_task_link' => 'Tu pote seliger tu carga',
 	'multidelete_select_all' => 'Seliger toto',
 	'multidelete_page' => 'Paginas a deler',
 	'multidelete_reason' => 'Motivo del deletion',
@@ -1286,7 +1278,7 @@ $messages['ia'] = array(
 	'multidelete_file_missing' => 'Non pote leger le file date',
 	'multidelete_select_script' => 'conto de script designate',
 	'multidelete_no_page' => 'Per favor, o specifica al minus un pagina a deler, o selige un file continente un lista de paginas.',
-	'multidelete_split_results' => "Le numero de articulos es troppo grande pro esser tractate in un singule carga. Illo ha essite separate in '''$1''' cargas, con un maximo de '''$2''' articulos per carga.",
+	'multidelete_split_results' => "Le numero de articulos es troppo grande pro esser tractate in un singule carga. Illo ha essite separate in '''$1''' cargas, con un maximo de '''$2''' articulos per carga.", # Fuzzy
 	'multidelete_max_display_size' => "Le gestor de deletion multiple ha actualmente un numero maxime de articulos in le phase de confirmation. Tu requesta ha essite limitate a '''$1''' articulos. Selige tu articulos e salveguarda le carga. Postea, tu pote re-executar lo pro tractar tote le articulos remanente.",
 	'multidelete_brazilian_portuguese_wikis' => 'tote le wikis in portugese brasilian',
 	'multidelete_hebrew_wikis' => 'tote le wikis in hebreo',
@@ -1308,7 +1300,7 @@ $messages['ia'] = array(
 	'multiwikifinder' => 'Cercator de titulos multi-wiki',
 	'multiwikifindpagenames' => 'Cercar nomines de paginas',
 	'multiwikienterpagename' => 'Entra un nomine de pagina:',
-	'multiwikirecords' => '$1 wikis trovate',
+	'multiwikirecords' => '$1 wikis trovate', # Fuzzy
 	'action-multiwikifinder' => 'cercar un titulo specific in tote Wikia',
 );
 
@@ -1347,7 +1339,7 @@ $messages['id'] = array(
 	'multiwikifinder' => 'Temukan Judul Multiwiki',
 	'multiwikifindpagenames' => 'Cari judul',
 	'multiwikienterpagename' => 'Masukkan judul:',
-	'multiwikirecords' => '$1 wiki ditemukan',
+	'multiwikirecords' => '$1 wiki ditemukan', # Fuzzy
 );
 
 /** Igbo (Igbo)
@@ -1390,8 +1382,7 @@ $messages['ja'] = array(
 	'multiwikiedit_task_added' => '一括編集タスク #$1 を追加しました。',
 	'multiwikiedit_task_error' => '一括編集のタスク追加でエラーが発生しました。',
 	'multiwikiedit_task_none_selected' => '記事が1つも選択されていなかったため、タスクが追加されませんでした。',
-	'multiwikiedit_task_link' => 'タスクをチェックする',
-	'multiwikiedit_on' => '対象とするウィキ',
+	'multiwikiedit_on' => '対象とするウィキ', # Fuzzy
 	'multiwikiedit_page' => '編集するページ',
 	'multiwikiedit_page_text' => '保存するテキスト',
 	'multiwikiedit_reason' => '編集の理由',
@@ -1420,7 +1411,7 @@ $messages['ja'] = array(
 	'multiwikiedit_select_yourself' => 'あなた',
 	'multiwikiedit_no_page' => '1つ以上のページを指定するかページリストを含むファイルを選択してください。',
 	'multiwikiedit_split_results' => "1つのタスクで処理するにはページ数が多すぎます。ページ数 '''$2''' を上限としてタスクを '''$1''' 件に分割しました。",
-	'multiwikiedit_max_display_size' => "現在、一括編集の対象にされているページの数が承認段階で最大数に達しています。上限は '''$1''' ページです。ページを選択してタスクを保存してください。残りのページについては、後で再度処理を行ってください。",
+	'multiwikiedit_max_display_size' => "現在、一括編集の対象にされているページの数が承認段階で最大数に達しています。上限は '''$1''' ページです。ページを選択してタスクを保存してください。残りのページについては、後で再度処理を行ってください。", # Fuzzy
 	'multiwikiedit_add_text' => '保存するテキストを入力してください',
 	'multiwikiedit_supply_wikis' => '対象となるウィキを指定してください',
 	'multiwikiedit_tasks_list' => 'タスクの一覧',
@@ -1440,7 +1431,6 @@ $messages['ja'] = array(
 	'multidelete_task_added' => '一括削除タスク #$1 を追加しました。',
 	'multidelete_task_error' => '一括削除のタスク追加でエラーが発生しました。',
 	'multidelete_task_none_selected' => '記事が1つも選択されていなかったため、タスクが追加されませんでした。',
-	'multidelete_task_link' => 'タスクをチェックする',
 	'multidelete_select_all' => 'すべて選択',
 	'multidelete_page' => '削除するページ',
 	'multidelete_reason' => '削除の理由',
@@ -1459,7 +1449,7 @@ $messages['ja'] = array(
 	'multidelete_file_missing' => '指定されたファイルを読み込むことができません',
 	'multidelete_select_script' => 'ページ削除スクリプト',
 	'multidelete_no_page' => '1つ以上のページを指定するかページリストを含むファイルを選択してください。',
-	'multidelete_split_results' => "1つのタスクで処理するにはページ数が多すぎます。ページ数 '''$2''' を上限としてタスクを '''$1''' 件に分割しました。",
+	'multidelete_split_results' => "1つのタスクで処理するにはページ数が多すぎます。ページ数 '''$2''' を上限としてタスクを '''$1''' 件に分割しました。", # Fuzzy
 	'multidelete_max_display_size' => "現在、一括削除の対象にされているページの数が承認段階で最大数に達しています。上限は '''$1''' ページです。ページを選択してタスクを保存してください。残りのページについては、後で再度処理を行ってください。",
 	'multidelete_brazilian_portuguese_wikis' => '全ブラジルポルトガル語ウィキ',
 	'multidelete_hebrew_wikis' => '全ヘブライ語ウィキ',
@@ -1480,7 +1470,7 @@ $messages['ja'] = array(
 	'multiwikifinder' => '複数ウィキでのタイトルの検索',
 	'multiwikifindpagenames' => 'ページ名を検索',
 	'multiwikienterpagename' => 'ページ名を入力:',
-	'multiwikirecords' => '$1 のウィキが見つかりました',
+	'multiwikirecords' => '$1 のウィキが見つかりました', # Fuzzy
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1564,7 +1554,7 @@ $messages['ksh'] = array(
 	'multidelete_french_wikis' => 'all de Wikis op Franzüüsesch',
 	'multidelete_swedish_wikis' => 'all de Wikis op Schweedesch',
 	'multidelete_german_wikis' => 'all de Wikis op Deutsch',
-	'multiwikirecords' => '{{PLURAL:$1|Ei Wiki|$1 Wikis|Kei Wiki}} jefonge',
+	'multiwikirecords' => '{{PLURAL:$1|Ei Wiki|$1 Wikis|Kei Wiki}} jefonge', # Fuzzy
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -1574,7 +1564,7 @@ $messages['ku-latn'] = array(
 	'multiwikiedit_button' => 'BIGUHERÎNE',
 	'multiwikiedit_confirm' => 'BISEDIQÎNE',
 	'multiwikiedit_or' => '<b>AN</b>',
-	'multiwikiedit_on' => 'li ser',
+	'multiwikiedit_on' => 'li ser', # Fuzzy
 	'multiwikiedit_minoredit_caption' => 'Guhertina biçûk',
 	'multiwikiedit_success_subtitle' => 'ji bo $', # Fuzzy
 	'multiwikiedit_select_yourself' => 'tu',
@@ -1593,7 +1583,7 @@ $messages['lb'] = array(
 	'multiwikiedit_confirm' => 'CONFIRMÉIEREN',
 	'multiwikiedit_caption' => 'Lëscht vu Säiten',
 	'multiwikiedit_or' => '<b>ODER</b>',
-	'multiwikiedit_on' => 'op',
+	'multiwikiedit_on' => 'op', # Fuzzy
 	'multiwikiedit_page_text' => 'Text fir ze späicheren',
 	'multiwikiedit_reason' => "Grond fir d'Ännerung",
 	'multiwikiedit_minoredit_caption' => 'Kleng Ännerung',
@@ -1630,7 +1620,7 @@ $messages['lb'] = array(
 	'multidelete_german_wikis' => 'all däitsch Wkien',
 	'multiwikifindpagenames' => 'Säitennimm fannen',
 	'multiwikienterpagename' => 'Gitt w.e.g. ee Säitennumm un:',
-	'multiwikirecords' => '$1 Wikie fonnt',
+	'multiwikirecords' => '$1 Wikie fonnt', # Fuzzy
 );
 
 /** Macedonian (македонски)
@@ -1644,14 +1634,13 @@ $messages['mk'] = array(
 	'multiwikiedit_help' => 'Уредување на групи од статии. Можете да уредувате страници наведени во учебник. Одберете корисник кој ќе се прикаже во дневниците на бришења. Подигнатата податотека треба да содржи име на страницата и причина (незадолжително) одделени со знакот | во секој ред.',
 	'multiwikiedit_caption' => 'Список на страници',
 	'multiwikiedit_title' => 'Уредување на повеќе викија',
-	'multiwikiedit_as' => 'Работи ја скриптата како',
+	'multiwikiedit_as' => 'Пушти ја скриптата како',
 	'multiwikiedit_both_modes' => 'Одберете една назначена страница или даден список од страници.',
 	'multiwikiedit_or' => '<b>ИЛИ</b>',
 	'multiwikiedit_task_added' => 'Додадена е задачата за уредување на повеќе викија #$1.',
 	'multiwikiedit_task_error' => 'Се појави грешка при додавањето на задачата за уредување на повеќе викија.',
 	'multiwikiedit_task_none_selected' => 'Не одбравте ниедна статија. Задачата не е додадена.',
-	'multiwikiedit_task_link' => 'Можете да ја проверите задачата',
-	'multiwikiedit_on' => 'на',
+	'multiwikiedit_on' => 'Пушти ја скриптата на',
 	'multiwikiedit_page' => 'Страници за уредување',
 	'multiwikiedit_page_text' => 'Текст за зачувување',
 	'multiwikiedit_reason' => 'Причина за уредување',
@@ -1680,7 +1669,7 @@ $messages['mk'] = array(
 	'multiwikiedit_select_yourself' => 'вие',
 	'multiwikiedit_no_page' => 'Назначете барем една страница за уредување ИЛИ одберете податотека што содржи список на страници.',
 	'multiwikiedit_split_results' => "Имате премногу статии за да може да се одработат во една задача. Затоа беа поделени на '''$1''' задачи, со највеќе '''$2''' статии по дел.",
-	'multiwikiedit_max_display_size' => "Уредувањето на повеќе викија моментално го има достигнато максималниот можен број на статии во фаза на потврдување. Вашето барање беше ограничено на '''$1''' статии. Одберете статии и зачувајте ја задачата. Потоа пуштете го уредувањето повторно за да ги доработите преостанатите статии.",
+	'multiwikiedit_max_display_size' => "Уредувањето на повеќе викија моментално го има достигнато максималниот можен број на статии во фаза на потврдување. Вашето барање беше ограничено на '''$1''' {{PLURAL:$1|статија|статии}}. Одберете статии и зачувајте ја задачата. Потоа пуштете го уредувањето повторно за да ги доработите преостанатите статии.",
 	'multiwikiedit_add_text' => 'Најпрвин назначете текст за статијата',
 	'multiwikiedit_supply_wikis' => 'Наведете го списокот на одбрани викија',
 	'multiwikiedit_tasks_list' => 'Список на задачи за извршување',
@@ -1701,7 +1690,6 @@ $messages['mk'] = array(
 	'multidelete_task_added' => 'Додадена е задачата за повеќекратно бришење #$1.',
 	'multidelete_task_error' => 'Се појави грешка при додавањето на задачата за повеќекратно бришење.',
 	'multidelete_task_none_selected' => 'Не избравте ниедна статија. Задачата не е додадена.',
-	'multidelete_task_link' => 'Можете да ја проверите вашата задача',
 	'multidelete_select_all' => 'Избери сè',
 	'multidelete_page' => 'Страници за бришење',
 	'multidelete_reason' => 'Причина за бришење',
@@ -1720,7 +1708,7 @@ $messages['mk'] = array(
 	'multidelete_file_missing' => 'Не можам да ја прочитам дадената податотека',
 	'multidelete_select_script' => 'укажана сметка на скрипта',
 	'multidelete_no_page' => 'Назначете барем една страница за бришење ИЛИ одберете податотека што содржи список на страници.',
-	'multidelete_split_results' => "Бројот на вашите статии е превисок за да се одработат во една задача. Затоа статиите се поделени на '''$1''' задачи, со максимална големина од '''$2''' статии за секој дел.",
+	'multidelete_split_results' => "Бројот на вашите статии е превисок за да се одработат во една задача. Затоа статиите се поделени на '''$1''' {{PLURAL:$1|задача|задачи}}, со максимална големина од '''$2''' {{PLURAL:$2|статија|статии}} за секој дел.",
 	'multidelete_max_display_size' => "Повеќекратното бришење моментално има максимален број на можни статии во фаза на потврдување. Вашето барање е ограничено на '''$1''' статии. Одберете статии и зачувајте ја задачата. Откако ќе го сторите тоа, ви препорачуваме да го пуштите повторно за да ги фати сите преостанати статии.",
 	'multidelete_brazilian_portuguese_wikis' => 'сите викија на бразилски португалски',
 	'multidelete_hebrew_wikis' => 'сите викија на хебрејски',
@@ -1742,7 +1730,7 @@ $messages['mk'] = array(
 	'multiwikifinder' => 'Пронаоѓач на наслови на повеќе викија',
 	'multiwikifindpagenames' => 'Пребарај имиња',
 	'multiwikienterpagename' => 'Внесете име на страница:',
-	'multiwikirecords' => 'пронајдено е $1 вики',
+	'multiwikirecords' => '{{PLURAL:$1|Пронајдено е $1 вики|Пронајдени се $1 викија}}',
 	'action-multiwikifinder' => 'пребарајте конкретен наслов по целата Викија',
 );
 
@@ -1759,7 +1747,7 @@ $messages['ml'] = array(
 	'multiwikiedit_inbox_caption' => 'കോമ ഉപയോഗിച്ച് വേർതിരിച്ചവ',
 	'multiwikiedit_all_wikis' => 'എല്ലാ വിക്കികളും',
 	'multiwikiedit_selected_wikis' => 'തിരഞ്ഞെടുത്ത വിക്കികൾ',
-	'multiwikirecords' => '$1 വിക്കി കണ്ടെത്തി',
+	'multiwikirecords' => '$1 വിക്കി കണ്ടെത്തി', # Fuzzy
 );
 
 /** Malay (Bahasa Melayu)
@@ -1771,7 +1759,7 @@ $messages['ms'] = array(
 	'multiwikiedit_button' => 'SUNTING',
 	'multiwikiedit_confirm' => 'SAHKAN',
 	'multiwikiedit_help' => 'Sunting satu kelompok laman sekali. Anda boleh menyunting laman-laman yang tersenarai dalam petak teks. Pilih satu pengguna yang akan ditunjukkan dalam log penghapusan. Fail yang dimuat naik harus mengandungi nama laman dan sebab (tak wajib) yang dipisahkan oleh aksara | di setiap baris.',
-	'multiwikiedit_caption' => 'Senarai laman',
+	'multiwikiedit_caption' => 'Senarai halaman',
 	'multiwikiedit_title' => 'Sunting Berbilang Wiki',
 	'multiwikiedit_as' => 'Jalankan skrip sebagai',
 	'multiwikiedit_both_modes' => 'Sila pilih salah satu laman atau senarai laman yang disediakan',
@@ -1779,8 +1767,7 @@ $messages['ms'] = array(
 	'multiwikiedit_task_added' => 'Tugas menyunting berbilang wiki #$1 ditambahkan.',
 	'multiwikiedit_task_error' => 'Terdapat ralat ketika menambahkan tugas menyunting berbilang wiki.',
 	'multiwikiedit_task_none_selected' => 'Anda belum memilih mana-mana rencana, maka tugas tidak ditambahkan.',
-	'multiwikiedit_task_link' => 'Anda boleh menyemak tugas anda',
-	'multiwikiedit_on' => 'di',
+	'multiwikiedit_on' => 'di', # Fuzzy
 	'multiwikiedit_page' => 'Laman untuk disunting',
 	'multiwikiedit_page_text' => 'Teks untuk disimpan',
 	'multiwikiedit_reason' => 'Sebab disunting',
@@ -1809,7 +1796,7 @@ $messages['ms'] = array(
 	'multiwikiedit_select_yourself' => 'anda',
 	'multiwikiedit_no_page' => 'Sila nyatakan sekurang-kurangnya satu laman untuk disunting ATAU pilih satu fail yang mengandungi senarai laman.',
 	'multiwikiedit_split_results' => "Kiraan rencana anda terlalu tinggi untuk dilakukan dalam satu tugas sahaja. Untuk itu, tugas itu telah dipecahkan kepada '''$1''' tugas, dengan saiz maksimum '''$2''' rencana.",
-	'multiwikiedit_max_display_size' => "Ciri sunting berbilang wiki kini mempunyai bilangan rencana maksimum dalam fasa pengesahan. Pertanyaan anda telah dihadkan pada '''$1''' rencana. Pilih rencana anda dan simpan tugas itu. Selepas itu, sila ulangi proses ini untuk mengerjakan semua rencana yang selebihnya.",
+	'multiwikiedit_max_display_size' => "Ciri sunting berbilang wiki kini mempunyai bilangan rencana maksimum dalam fasa pengesahan. Pertanyaan anda telah dihadkan pada '''$1''' rencana. Pilih rencana anda dan simpan tugas itu. Selepas itu, sila ulangi proses ini untuk mengerjakan semua rencana yang selebihnya.", # Fuzzy
 	'multiwikiedit_add_text' => 'Nyatakan teks rencana terlebih dahulu',
 	'multiwikiedit_supply_wikis' => 'Sila bekalkan senarai wiki terpilih',
 	'multiwikiedit_tasks_list' => 'Senarai tugasan untuk dijalankan',
@@ -1819,7 +1806,7 @@ $messages['ms'] = array(
 	'multidelete' => 'Hapuskan kelompok laman',
 	'multidelete_button' => 'HAPUS',
 	'multidelete_help' => 'Hapuskan kelompok laman melalui tugas latar belakang. Anda boleh melakukannya untuk wiki ini, semua wiki daripada pangkalan data kongsian, wiki-wiki terpilih, atau bahasa-bahasa terpilih. Anda boleh memilih untuk menghapuskannya di bawah nama ANDA atau akaun skrip yang tersedia.',
-	'multidelete_caption' => 'Senarai laman',
+	'multidelete_caption' => 'Senarai halaman',
 	'multidelete_title' => 'Penghapusan Berbilang Wiki',
 	'multidelete_both_modes' => 'Sila pilih salah satu laman atau senarai laman yang disediakan',
 	'multidelete_or' => '<b>ATAU</b>',
@@ -1830,7 +1817,6 @@ $messages['ms'] = array(
 	'multidelete_task_added' => 'Tugas menghapuskan berbilang wiki #$1 ditambahkan.',
 	'multidelete_task_error' => 'Terdapat ralat ketika menambahkan tugas menghapuskan berbilang wiki.',
 	'multidelete_task_none_selected' => 'Anda belum memilih mana-mana rencana, maka tugas tidak ditambahkan.',
-	'multidelete_task_link' => 'Anda boleh menyemak tugas anda',
 	'multidelete_select_all' => 'Pilih semua',
 	'multidelete_page' => 'Laman yang ingin dihapuskan',
 	'multidelete_reason' => 'Sebab penghapusan',
@@ -1849,7 +1835,7 @@ $messages['ms'] = array(
 	'multidelete_file_missing' => 'Fail yang diberi tidak dapat dibaca',
 	'multidelete_select_script' => 'akaun skrip yang disediakan',
 	'multidelete_no_page' => 'Sila nyatakan sekurang-kurangnya satu laman untuk dihapuskan ATAU pilih satu fail yang mengandungi senarai laman.',
-	'multidelete_split_results' => "Kiraan rencana anda terlalu tinggi untuk dilakukan dalam satu tugas sahaja. Untuk itu, tugas itu telah dipecahkan kepada '''$1''' tugas, dengan saiz maksimum '''$2''' rencana.",
+	'multidelete_split_results' => "Kiraan rencana anda terlalu tinggi untuk dilakukan dalam satu tugas sahaja. Untuk itu, tugas itu telah dipecahkan kepada '''$1''' tugas, dengan saiz maksimum '''$2''' rencana.", # Fuzzy
 	'multidelete_max_display_size' => "Ciri sunting berbilang wiki kini mempunyai bilangan rencana maksimum dalam fasa pengesahan. Pertanyaan anda telah dihadkan pada '''$1''' rencana. Pilih rencana anda dan simpan tugas itu. Selepas itu, sila ulangi proses ini untuk mengerjakan semua rencana yang selebihnya.",
 	'multidelete_brazilian_portuguese_wikis' => 'semua wiki berbahasa Portugis Brazil',
 	'multidelete_hebrew_wikis' => 'semua wiki berbahasa Ibrani',
@@ -1871,7 +1857,7 @@ $messages['ms'] = array(
 	'multiwikifinder' => 'Pencari Tajuk Berbilang Wiki',
 	'multiwikifindpagenames' => 'Cari nama laman',
 	'multiwikienterpagename' => 'Isikan nama laman:',
-	'multiwikirecords' => '$1 wiki ditemui',
+	'multiwikirecords' => '$1 wiki ditemui', # Fuzzy
 	'action-multiwikifinder' => 'cari tajuk tertentu di seluruh Wikia',
 );
 
@@ -1893,8 +1879,7 @@ $messages['nb'] = array(
 	'multiwikiedit_task_added' => 'Multiwiki-redigeringsoppgave #$1 ble lagt til.',
 	'multiwikiedit_task_error' => 'Det oppstod en feil når multiwiki-redigeringsoppgaven ble lagt til.',
 	'multiwikiedit_task_none_selected' => 'Du valgte ingen artikler. Oppgaven ble ikke lagt til.',
-	'multiwikiedit_task_link' => 'Du kan sjekke oppgaven din',
-	'multiwikiedit_on' => 'på',
+	'multiwikiedit_on' => 'på', # Fuzzy
 	'multiwikiedit_page' => 'Sider som skal redigeres',
 	'multiwikiedit_page_text' => 'Tekst som skal lagres',
 	'multiwikiedit_reason' => 'Redigeringsårsak',
@@ -1923,7 +1908,7 @@ $messages['nb'] = array(
 	'multiwikiedit_select_yourself' => 'du',
 	'multiwikiedit_no_page' => 'Vennligst spesifiser minst én side å redigere ELLER velg en fil som inneholder en sideliste.',
 	'multiwikiedit_split_results' => "Artikkelantallet ditt var for høyt til å bli utført i en enkelt oppgave. Den har blitt delt opp i '''$1''' oppgaver istedet med en maks bulkstørrelse på '''$2''' artikler.",
-	'multiwikiedit_max_display_size' => 'Multiwikiredigering har for øyeblikket et maksimum antall artikler i bekreftelsesfasen. Spørringen din ble avsluttet etter $1 artikler. Velg artiklene dine og lagre oppgaven. Etter dette bør du vurdere å kjøre den igjen for å fange opp de gjenstående artiklene.',
+	'multiwikiedit_max_display_size' => 'Multiwikiredigering har for øyeblikket et maksimum antall artikler i bekreftelsesfasen. Spørringen din ble avsluttet etter $1 artikler. Velg artiklene dine og lagre oppgaven. Etter dette bør du vurdere å kjøre den igjen for å fange opp de gjenstående artiklene.', # Fuzzy
 	'multiwikiedit_add_text' => 'Oppgi artikkeltekst først',
 	'multiwikiedit_supply_wikis' => 'Vennligst legg ved listen over valgte wikier',
 	'multiwikiedit_tasks_list' => 'Liste over oppgaver som skal kjøres',
@@ -1944,7 +1929,6 @@ $messages['nb'] = array(
 	'multidelete_task_added' => 'Multislettoppgave #$1 ble lagt til.',
 	'multidelete_task_error' => 'Det oppstod en feil når multislettoppgaven ble lagt til.',
 	'multidelete_task_none_selected' => 'Du valgte ingen artikler. Oppgaven ble ikke lagt til.',
-	'multidelete_task_link' => 'Du kan sjekke oppgaven din',
 	'multidelete_select_all' => 'Velg alle',
 	'multidelete_page' => 'Sider som skal slettes',
 	'multidelete_reason' => 'Slettingsårsak',
@@ -1963,7 +1947,7 @@ $messages['nb'] = array(
 	'multidelete_file_missing' => 'Kan ikke lese gitt fil',
 	'multidelete_select_script' => 'utpekt skriptkonto',
 	'multidelete_no_page' => 'Vennligst spesifiser minst en side som skal slettes ELLER velg en fil som inneholder en sideliste.',
-	'multidelete_split_results' => "Artikkelantallet ditt var for høyt til å kunne bli utført i én enkelt oppgave. Den har blitt delt inn i '''$1''' oppgaver istedenfor, med en maksimal bulkstørrelse på '''$2''' artikler.",
+	'multidelete_split_results' => "Artikkelantallet ditt var for høyt til å kunne bli utført i én enkelt oppgave. Den har blitt delt inn i '''$1''' oppgaver istedenfor, med en maksimal bulkstørrelse på '''$2''' artikler.", # Fuzzy
 	'multidelete_max_display_size' => "Multislett har for øyeblikket et maksimum antall artikler i bekreftelsesfasen. Spørringen din ble avsluttet etter '''$1''' artikler. Velg artiklene dine og lagre oppgaven. Etter dette bør du vurdere å kjøre den igjen for å fange opp de gjenstående artiklene.",
 	'multidelete_brazilian_portuguese_wikis' => 'alle brasiliansk portugisiske wikier',
 	'multidelete_hebrew_wikis' => 'alle hebraiske wikier',
@@ -1985,7 +1969,7 @@ $messages['nb'] = array(
 	'multiwikifinder' => 'Multiwiki-tittelfinner',
 	'multiwikifindpagenames' => 'Finn sidenavn',
 	'multiwikienterpagename' => 'Skriv inn et sidenavn:',
-	'multiwikirecords' => '$1 wiki funnet',
+	'multiwikirecords' => '$1 wiki funnet', # Fuzzy
 	'action-multiwikifinder' => 'søk etter en bestemt tittel over hele Wikia',
 );
 
@@ -2012,8 +1996,7 @@ Op iedere regel moet 1 pagina staan.',
 	'multiwikiedit_task_error' => "Er is een fout opgetreden bij het toevoegen van de taak voor meerdere wiki's bewerken.",
 	'multiwikiedit_task_none_selected' => "U hebt geen pagina's geselecteerd.
 De taak is niet toegevoegd.",
-	'multiwikiedit_task_link' => 'U kunt uw taak controleren',
-	'multiwikiedit_on' => 'op',
+	'multiwikiedit_on' => 'Script uitvoeren op',
 	'multiwikiedit_page' => "Te bewerken pagina's",
 	'multiwikiedit_page_text' => 'Tekst die wordt opgeslagen',
 	'multiwikiedit_reason' => 'Reden',
@@ -2044,7 +2027,7 @@ De taak is niet toegevoegd.",
 	'multiwikiedit_split_results' => "Het aantal pagina's was te groot om in 1 taak uit te voeren.
 De lijst is gesplitst in '''$1''' taken met een maximaal aantal pagina's van '''$2'''.",
 	'multiwikiedit_max_display_size' => "Meerdere wiki's bewerken heeft op het moment een maximaal aantal pagina's in de bevestigingsstap.
-Uw opdracht is ingekort tot $1 pagina's.
+Uw opdracht is ingekort tot {{PLURAL:$1|één pagina|$1 pagina's}}.
 Kies uw pagina's en sla de taak op.
 Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 	'multiwikiedit_add_text' => 'Geef eerst paginatekst in',
@@ -2070,7 +2053,6 @@ U kunt er voor kiezen de pagina's als uzelf te verwijderen of als een administra
 	'multidelete_task_error' => 'Er is een fout opgetreden tijdens het toevoegen van de verwijderingstaak.',
 	'multidelete_task_none_selected' => "U hebt geen pagina's geselecteerd.
 De taak is niet toegevoegd.",
-	'multidelete_task_link' => 'U kunt uw taak selecteren',
 	'multidelete_select_all' => 'Alle selecteren',
 	'multidelete_page' => "Te verwijderen pagina's",
 	'multidelete_reason' => 'Reden',
@@ -2089,8 +2071,8 @@ De taak is niet toegevoegd.",
 	'multidelete_file_missing' => 'Het opgegeven bestand kon niet gelezen worden',
 	'multidelete_select_script' => 'opgegeven scriptgebruiker',
 	'multidelete_no_page' => 'Geef tenminste 1 te verwijderen pagina op, of kies een bestand dat de paginalijst bevat.',
-	'multidelete_split_results' => "Het aantal pagina's was te groot om in 1 taak uit te voeren.
-De lijst is gesplitst in '''$1''' taken met een maximaal aantal pagina's van '''$2'''.",
+	'multidelete_split_results' => "Het aantal pagina's was te groot om in één taak uit te voeren.
+De lijst is gesplitst in '''$1''' {{PLURAL:$1|taak|taken}} met maximaal '''$2''' {{PLURAL:$2|pagina|pagina's}}.",
 	'multidelete_max_display_size' => "Meervoudig verwijderen heeft op het moment een maximaal aantal pagina's in de bevestigingsstap.
 Uw opdracht is ingekort tot '''$1''' pagina's.
 Kies uw pagina's en sla de taak op.
@@ -2115,7 +2097,7 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 	'multiwikifinder' => 'Multiwiki paginazoeker',
 	'multiwikifindpagenames' => 'Paginanamen zoeken',
 	'multiwikienterpagename' => 'Geef een paginanaam op:',
-	'multiwikirecords' => "Gevonden op $1 wiki's",
+	'multiwikirecords' => "Gevonden op $1 {{PLURAL:$1|wiki|wiki's}}",
 	'action-multiwikifinder' => "naar een bepaalde pagina in alle Wikiawiki's te zoeken",
 );
 
@@ -2131,7 +2113,6 @@ Een te uploaden bestanden moet een paginanaam bevatten en een optionele reden, g
 Op iedere regel moet 1 pagina staan.',
 	'multiwikiedit_task_none_selected' => "Je hebt geen pagina's geselecteerd.
 De taak is niet toegevoegd.",
-	'multiwikiedit_task_link' => 'Je kunt je taak controleren',
 	'multiwikiedit_link_back' => '$1 terug naar het Multiwikibewerkingsformulier',
 	'multiwikiedit_select_yourself' => 'jijzelf',
 	'multiwikiedit_split_results' => "Het aantal pagina's was te groot om in 1 taak uit te voeren.
@@ -2139,16 +2120,15 @@ De lijst is gesplitst in '''$1''' taken met een maximaal aantal pagina's van '''
 	'multiwikiedit_max_display_size' => "Meerdere wiki's bewerken heeft op het moment een maximaal aantal pagina's in de bevestigingsstap.
 Je opdracht is ingekort tot $1 pagina's.
 Kies je pagina's en sla de taak op.
-Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
+Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.", # Fuzzy
 	'multidelete_help' => "Een verzameling pagina's verwijderen via een achtergrondtaak.
 Je kunt dat doen voor deze wiki, alle wiki's van een gedeelde database, geselecteerde wiki's of geselecteerde taken.
 Je kunt er voor kiezen de pagina's als jezelf te verwijderen of als een administratieve gebruiker.",
 	'multidelete_task_none_selected' => "Je hebt geen pagina's geselecteerd.
 De taak is niet toegevoegd.",
-	'multidelete_task_link' => 'Je kunt je taak selecteren',
 	'multidelete_link_back' => '$1 terug naar het formulier Meervoudig verwijderen',
 	'multidelete_split_results' => "Het aantal pagina's was te groot om in 1 taak uit te voeren.
-De lijst is gesplitst in '''$1''' taken met een maximaal aantal pagina's van '''$2'''.",
+De lijst is gesplitst in '''$1''' taken met een maximaal aantal pagina's van '''$2'''.", # Fuzzy
 	'multidelete_max_display_size' => "Meervoudig verwijderen heeft op het moment een maximaal aantal pagina's in de bevestigingsstap.
 Je opdracht is ingekort tot '''$1''' pagina's.
 Kies je pagina's en sla de taak op.
@@ -2210,8 +2190,7 @@ Przesyłany plik powinien zawierać nazwę strony i opcjonalny powód, oddzielon
 	'multiwikiedit_task_added' => 'Dodano zadanie #$1 na liście edycji wielu wiki.',
 	'multiwikiedit_task_error' => 'Wystąpił błąd przy dodawaniu zadania w trakcie edycji wielu wiki.',
 	'multiwikiedit_task_none_selected' => 'Nie zaznaczono żadnych artykułów. Zadanie nie zostało dodane.',
-	'multiwikiedit_task_link' => 'Możesz sprawdzić swoje zadanie',
-	'multiwikiedit_on' => 'na',
+	'multiwikiedit_on' => 'Uruchom skrypt na',
 	'multiwikiedit_page' => 'Strony do edycji',
 	'multiwikiedit_page_text' => 'Tekst do zapisania',
 	'multiwikiedit_reason' => 'Powód edycji',
@@ -2240,7 +2219,7 @@ Przesyłany plik powinien zawierać nazwę strony i opcjonalny powód, oddzielon
 	'multiwikiedit_select_yourself' => 'ty',
 	'multiwikiedit_no_page' => 'Wybierz co najmniej jedną stronę do edycji LUB wskaż plik z listą stron.',
 	'multiwikiedit_split_results' => "Liczba artykułów była zbyt wysoka do wykonania w jednym zadaniu. Zostało ono z tego względu podzielone na {PLURAL:$1|'''$1''' zadanie|'''$1''' zadania|'''$1'''zadań} o maksymalnej wielkości '''$2''' artykułów.",
-	'multiwikiedit_max_display_size' => "Multiwikiedit ma obecnie maksymalną liczbę artykułów w fazie zatwierdzenia. Kwerenda została ograniczona do '''$1''' artykułów. Wybierz artykuły i zapisz zadanie. Po tym, rozważ uruchomienie go ponownie, aby wyłapać wszystkie pozostałe artykuły.",
+	'multiwikiedit_max_display_size' => "Multiwikiedit ma obecnie maksymalną liczbę artykułów w fazie zatwierdzenia. Kwerenda została ograniczona do '''$1''' {{PLURAL:$1|artykułu|artykułów}}. Wybierz artykuły i zapisz zadanie. Po tym, rozważ uruchomienie go ponownie, aby wyłapać wszystkie pozostałe artykuły.",
 	'multiwikiedit_add_text' => 'Najpierw wybierz tekst artykułu',
 	'multiwikiedit_supply_wikis' => 'Proszę podać listę wybranych wiki',
 	'multiwikiedit_tasks_list' => 'Lista zadań do wykonania',
@@ -2261,7 +2240,6 @@ Przesyłany plik powinien zawierać nazwę strony i opcjonalny powód, oddzielon
 	'multidelete_task_added' => 'Zadanie usuwania stron na wielu wiki #$1 zostało dodane.',
 	'multidelete_task_error' => 'Wystąpił błąd przy dodawaniu zadania usuwania na wielu wiki.',
 	'multidelete_task_none_selected' => 'Nie zaznaczono żadnych artykułów. Zadanie nie zostało dodane.',
-	'multidelete_task_link' => 'Możesz sprawdzić swoje zadanie',
 	'multidelete_select_all' => 'Zaznacz wszystko',
 	'multidelete_page' => 'Strony do usunięcia',
 	'multidelete_reason' => 'Powód usunięcia',
@@ -2280,7 +2258,7 @@ Przesyłany plik powinien zawierać nazwę strony i opcjonalny powód, oddzielon
 	'multidelete_file_missing' => 'Nie można odczytać podanego pliku',
 	'multidelete_select_script' => 'wyznaczone konto skryptu',
 	'multidelete_no_page' => 'Wybierz co najmniej jedną stronę do usunięcia LUB wskaż plik z listą stron.',
-	'multidelete_split_results' => "Liczba artykułów była zbyt wysoka do wykonania w jednym zadaniu. Zostało ono z tego względu podzielone na {PLURAL:$1|'''$1''' zadanie|'''$1''' zadania|'''$1'''zadań} o maksymalnej wielkości '''$2''' artykułów.",
+	'multidelete_split_results' => "Liczba artykułów była zbyt wysoka do wykonania w jednym zadaniu. Zostało ono z tego względu podzielone na {{PLURAL:$1|'''$1''' zadanie|'''$1''' zadania|'''$1''' zadań}} o maksymalnej wielkości '''$2''' {{PLURAL:$2|artykułu|artykułów}}.",
 	'multidelete_max_display_size' => "Multidelete ma obecnie maksymalną liczbę artykułów w fazie zatwierdzenia. Kwerenda została ograniczona do '''$1''' artykułów. Wybierz artykuły i zapisz zadanie. Po tym, rozważ uruchomienie go ponownie, aby wyłapać wszystkie pozostałe artykuły.",
 	'multidelete_brazilian_portuguese_wikis' => 'wszystkie portugalskie-brazylijskie wiki',
 	'multidelete_hebrew_wikis' => 'wszystkie hebrajskie wiki',
@@ -2302,7 +2280,7 @@ Przesyłany plik powinien zawierać nazwę strony i opcjonalny powód, oddzielon
 	'multiwikifinder' => 'Wyszukiwanie strony na wielu wiki',
 	'multiwikifindpagenames' => 'Znajdź nazwy stron',
 	'multiwikienterpagename' => 'Wprowadź nazwę strony:',
-	'multiwikirecords' => 'znaleziono $1 wiki',
+	'multiwikirecords' => 'znaleziono $1 {{PLURAL:$1|wiki}}',
 	'action-multiwikifinder' => 'szukaj tytułu strony na całej Wikii',
 );
 
@@ -2324,8 +2302,7 @@ $messages['pms'] = array(
 	'multiwikiedit_task_added' => "L'atività ëd modìfica Multi Wiki #$1 a l'é stàita giontà.",
 	'multiwikiedit_task_error' => "A l'é staje n'eror an giontand l'atività ëd modìfica multi wiki.",
 	'multiwikiedit_task_none_selected' => "It l'has pa selessionà gnun artìcoj. L'atività a l'é pa stàita giontà.",
-	'multiwikiedit_task_link' => 'It peule controlé toa atività',
-	'multiwikiedit_on' => 'anvisch',
+	'multiwikiedit_on' => 'Fà giré lë script dzor',
 	'multiwikiedit_page' => 'Pàgine da modifiché',
 	'multiwikiedit_page_text' => 'Test da salvé',
 	'multiwikiedit_reason' => 'Rason dla modìfica',
@@ -2354,7 +2331,7 @@ $messages['pms'] = array(
 	'multiwikiedit_select_yourself' => 'ti',
 	'multiwikiedit_no_page' => "Për piasì ch'a spessìfica almanch na pàgina da modifiché O ch'a serna n'archivi contenent na lista ëd pàgine.",
 	'multiwikiedit_split_results' => "Tò conteur d'artìcoj a l'é tròp àut da fé ant na sìngola atività. Belavans a l'é stàit dividù an '''$1''' atività, con al pi na dimension ëd '''$2''' artìcoj.",
-	'multiwikiedit_max_display_size' => "Multiwikiedit a l'ha al moment un nùmer màssim d'artìcoj ant la fas ëd conferma. Soa arcesta a l'é stàita tajà a '''$1''' artìcoj. Ch'a serna ij sò artìcoj e ch'a salva l'atività. Apress sòn, a peul felo torna core për pijé tùit j'articoj restant.",
+	'multiwikiedit_max_display_size' => "Multiwikiedit a l'ha al moment un nùmer màssim d'artìcoj ant la fas ëd conferma. Soa arcesta a l'é stàita tajà a '''$1''' {{PLURAL:$1|artìcol|artìcoj}}. Ch'a serna ij sò artìcoj e ch'a salva l'atività. Apress sòn, a peul felo torna core për pijé tùit j'articoj restant.",
 	'multiwikiedit_add_text' => "Spessìfica prima ël test ëd l'artìcol",
 	'multiwikiedit_supply_wikis' => 'Për piasì dà la lista dle wiki selessionà',
 	'multiwikiedit_tasks_list' => "Lista dj'atività da fé",
@@ -2375,7 +2352,6 @@ $messages['pms'] = array(
 	'multidelete_task_added' => "L'atività dë scancelassion mùltipla #$1 a l'é stàita giontà.",
 	'multidelete_task_error' => "A-i era n'eror an giontand l'atività dë scancelassion mùltipla.",
 	'multidelete_task_none_selected' => "It l'has pa selessionà gnun artìcoj. L'atività a l'é pa stàita giontà.",
-	'multidelete_task_link' => 'It peule controlé toa atività',
 	'multidelete_select_all' => 'Selession-a tut',
 	'multidelete_page' => 'Pàgine da scancelé',
 	'multidelete_reason' => 'Rason dla scancelassion',
@@ -2394,7 +2370,7 @@ $messages['pms'] = array(
 	'multidelete_file_missing' => "L'archivi dàit as peul pa les-se",
 	'multidelete_select_script' => 'cont ëd senari andicà',
 	'multidelete_no_page' => "Për piasì specìfica almanch na pàgina da scancelé O sern n'archivi ch'a conten-a na lista ëd pàgine.",
-	'multidelete_split_results' => "To conteur d'artìcoj a l'é tròp àut për esse fàit ant na sìngola atività. Belavans a l'é stàit dividù an '''$1''' atività, con al pi na dimension ëd '''$2''' artìcoj.",
+	'multidelete_split_results' => "To conteur d'artìcoj a l'é tròp àut për esse fàit ant na sìngola atività. Belavans a l'é stàit dividù an '''$1''' {{PLURAL:$1|atività}}, con al pi na dimension ëd '''$2''' {{PLURAL:$2|artìcol|artìcoj}}.",
 	'multidelete_max_display_size' => "Multidelete a l'ha al moment un nùmer màssim d'artìcoj ant la fas ëd conferma. Soa arcesta a l'é stàita tajà a '''$1''' artìcoj. ch'a serna ij sò artìcol e ch'a salva l'atività. Apress ëd lòn, a peul torna felo core për pijé tùit j'artìcoj restant.",
 	'multidelete_brazilian_portuguese_wikis' => 'tute le wiki an portughèis brasilian',
 	'multidelete_hebrew_wikis' => 'tute le wiki an ebreo',
@@ -2416,7 +2392,7 @@ $messages['pms'] = array(
 	'multiwikifinder' => 'Arserca Tìtoj Multiwiki',
 	'multiwikifindpagenames' => 'Trové nòm ëd pàgine',
 	'multiwikienterpagename' => "Ch'a anserissa un nòm ëd pàgina:",
-	'multiwikirecords' => 'trovà $1 wiki',
+	'multiwikirecords' => 'trovà $1 {{PLURAL:$1|wiki}}',
 	'action-multiwikifinder' => 'serché un tìtol specìfich a travers Wikia',
 );
 
@@ -2463,8 +2439,7 @@ $messages['pt'] = array(
 	'multiwikiedit_task_added' => 'Tarefa de edição multi wiki #$1 foi adicionada.',
 	'multiwikiedit_task_error' => 'Ocorreu um erro ao adicionar a tarefa de edição multi wiki.',
 	'multiwikiedit_task_none_selected' => 'Não seleccionou nenhum artigo. A tarefa não foi adicionada.',
-	'multiwikiedit_task_link' => 'Pode verificar a sua tarefa',
-	'multiwikiedit_on' => 'em',
+	'multiwikiedit_on' => 'em', # Fuzzy
 	'multiwikiedit_page' => 'Páginas para editar',
 	'multiwikiedit_page_text' => 'Texto para gravar',
 	'multiwikiedit_reason' => 'Motivo da edição',
@@ -2493,7 +2468,7 @@ $messages['pt'] = array(
 	'multiwikiedit_select_yourself' => 'você',
 	'multiwikiedit_no_page' => 'Indique pelo menos uma página para editar OU um ficheiro que contenha uma lista de páginas, por favor.',
 	'multiwikiedit_split_results' => "Há demasiados artigos para processar numa só tarefa. Foram divididos em '''$1''' tarefas, com um tamanho máximo de '''$2''' artigos.",
-	'multiwikiedit_max_display_size' => "A edição multi wiki tem neste momento o número máximo de artigos em fase de confirmação. A operação foi interrompida nos '''$1''' artigos. Escolha os seus artigos e grave a tarefa. Depois, execute-a novamente para processar os restantes.",
+	'multiwikiedit_max_display_size' => "A edição multi wiki tem neste momento o número máximo de artigos em fase de confirmação. A operação foi interrompida nos '''$1''' artigos. Escolha os seus artigos e grave a tarefa. Depois, execute-a novamente para processar os restantes.", # Fuzzy
 	'multiwikiedit_add_text' => 'Introduza primeiro o texto do artigo',
 	'multiwikiedit_supply_wikis' => 'Introduza a lista de wikis, por favor',
 	'multiwikiedit_tasks_list' => 'Lista de tarefas para executar',
@@ -2513,7 +2488,6 @@ $messages['pt'] = array(
 	'multidelete_task_added' => 'A tarefa de eliminação múltipla $1 foi adicionada.',
 	'multidelete_task_error' => 'Ocorreu um erro ao adicionar a tarefa de eliminação múltipla.',
 	'multidelete_task_none_selected' => 'Não seleccionou nenhum artigo. A tarefa não foi adicionada.',
-	'multidelete_task_link' => 'Pode verificar a sua tarefa',
 	'multidelete_select_all' => 'Seleccionar todas',
 	'multidelete_page' => 'Páginas para eliminar',
 	'multidelete_reason' => 'Motivo da eliminação',
@@ -2532,7 +2506,7 @@ $messages['pt'] = array(
 	'multidelete_file_missing' => 'Não foi possível ler o ficheiro',
 	'multidelete_select_script' => 'conta designada para scripts',
 	'multidelete_no_page' => 'Indique pelo menos uma página para eliminar OU um ficheiro que contenha uma lista de páginas, por favor.',
-	'multidelete_split_results' => "Há demasiados artigos para processar numa só tarefa. Foram divididos em '''$1''' tarefas, com um tamanho máximo de '''$2''' artigos.",
+	'multidelete_split_results' => "Há demasiados artigos para processar numa só tarefa. Foram divididos em '''$1''' tarefas, com um tamanho máximo de '''$2''' artigos.", # Fuzzy
 	'multidelete_max_display_size' => "A eliminação múltipla tem neste momento o número máximo de artigos em fase de confirmação. A operação foi interrompida nos '''$1''' artigos. Escolha os seus artigos e grave a tarefa. Depois, execute-a novamente para processar os restantes.",
 	'multidelete_brazilian_portuguese_wikis' => 'todas as wikis em português do Brasil',
 	'multidelete_hebrew_wikis' => 'todas as wikis em hebraico',
@@ -2553,7 +2527,7 @@ $messages['pt'] = array(
 	'multiwikifinder' => 'Pesquisa de Títulos Multi Wiki',
 	'multiwikifindpagenames' => 'Procurar nomes de páginas',
 	'multiwikienterpagename' => 'Introduza um nome de página:',
-	'multiwikirecords' => '$1 wiki(s) encontrada(s)',
+	'multiwikirecords' => '$1 wiki(s) encontrada(s)', # Fuzzy
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -2575,8 +2549,7 @@ $messages['pt-br'] = array(
 	'multiwikiedit_task_added' => 'Tarefa de edição multi wiki #$1 foi adicionada.',
 	'multiwikiedit_task_error' => 'Ocorreu um erro ao adicionar a tarefa de edição multi wiki.',
 	'multiwikiedit_task_none_selected' => 'Não seleccionou nenhum artigo. A tarefa não foi adicionada.',
-	'multiwikiedit_task_link' => 'Pode verificar a sua tarefa',
-	'multiwikiedit_on' => 'em',
+	'multiwikiedit_on' => 'em', # Fuzzy
 	'multiwikiedit_page' => 'Páginas para editar',
 	'multiwikiedit_page_text' => 'Texto para salvar',
 	'multiwikiedit_reason' => 'Motivo da edição',
@@ -2605,7 +2578,7 @@ $messages['pt-br'] = array(
 	'multiwikiedit_select_yourself' => 'você',
 	'multiwikiedit_no_page' => 'Indique pelo menos uma página para editar OU um ficheiro que contenha uma lista de páginas, por favor.',
 	'multiwikiedit_split_results' => "Existe muitos artigos para processar numa só tarefa. Foram divididos em '''$1''' tarefas, com um tamanho máximo de '''$2''' artigos.",
-	'multiwikiedit_max_display_size' => "A edição multi wiki tem neste momento o número máximo de artigos em fase de confirmação. A operação foi interrompida nos '''$1''' artigos. Escolha os seus artigos e salve a tarefa. Depois, execute-a novamente para processar os restantes.",
+	'multiwikiedit_max_display_size' => "A edição multi wiki tem neste momento o número máximo de artigos em fase de confirmação. A operação foi interrompida nos '''$1''' artigos. Escolha os seus artigos e salve a tarefa. Depois, execute-a novamente para processar os restantes.", # Fuzzy
 	'multiwikiedit_add_text' => 'Introduza primeiro o texto do artigo',
 	'multiwikiedit_supply_wikis' => 'Introduza a lista de wikis, por favor',
 	'multiwikiedit_tasks_list' => 'Lista de tarefas para executar',
@@ -2625,7 +2598,6 @@ $messages['pt-br'] = array(
 	'multidelete_task_added' => 'A tarefa de eliminação múltipla $1 foi adicionada.',
 	'multidelete_task_error' => 'Ocorreu um erro ao adicionar a tarefa de eliminação múltipla.',
 	'multidelete_task_none_selected' => 'Não seleccionou nenhum artigo. A tarefa não foi adicionada.',
-	'multidelete_task_link' => 'Pode verificar a sua tarefa',
 	'multidelete_select_all' => 'Selecionar todas',
 	'multidelete_page' => 'Páginas para eliminar',
 	'multidelete_reason' => 'Motivo para eliminação',
@@ -2644,7 +2616,7 @@ $messages['pt-br'] = array(
 	'multidelete_file_missing' => 'Não foi possível ler o ficheiro',
 	'multidelete_select_script' => 'conta designada para scripts',
 	'multidelete_no_page' => 'Indique pelo menos uma página para eliminar OU um ficheiro que contenha uma lista de páginas, por favor.',
-	'multidelete_split_results' => "Existem muitos artigos para processar numa só tarefa. Foram divididos em '''$1''' tarefas, com um tamanho máximo de '''$2''' artigos.",
+	'multidelete_split_results' => "Existem muitos artigos para processar numa só tarefa. Foram divididos em '''$1''' tarefas, com um tamanho máximo de '''$2''' artigos.", # Fuzzy
 	'multidelete_max_display_size' => "A eliminação múltipla tem neste momento o número máximo de artigos em fase de confirmação. A operação foi interrompida nos '''$1''' artigos. Escolha os seus artigos e salve a tarefa. Depois, execute-a novamente para processar os restantes.",
 	'multidelete_brazilian_portuguese_wikis' => 'todas as wikis em português do Brasil',
 	'multidelete_hebrew_wikis' => 'todas as wikis em hebraico',
@@ -2665,7 +2637,7 @@ $messages['pt-br'] = array(
 	'multiwikifinder' => 'Pesquisa de Títulos Multi Wiki',
 	'multiwikifindpagenames' => 'Procurar nomes de páginas',
 	'multiwikienterpagename' => 'Introduza um nome de página:',
-	'multiwikirecords' => '$1 wiki(s) encontrada(s)',
+	'multiwikirecords' => '$1 wiki(s) encontrada(s)', # Fuzzy
 );
 
 /** tarandíne (tarandíne)
@@ -2676,6 +2648,7 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
@@ -2694,8 +2667,7 @@ $messages['ru'] = array(
 	'multiwikiedit_task_added' => 'Добавлена задача правки нескольких вики #$1.',
 	'multiwikiedit_task_error' => 'Обнаружена ошибка при добавлении задачи правки нескольких вики.',
 	'multiwikiedit_task_none_selected' => 'Вы не выбрали ни одной статьи. Задача не была добавлена.',
-	'multiwikiedit_task_link' => 'Вы можете проверить вашу задачу',
-	'multiwikiedit_on' => 'на',
+	'multiwikiedit_on' => 'Запустить скрипт на',
 	'multiwikiedit_page' => 'Страницы для редактирования',
 	'multiwikiedit_page_text' => 'Текст для сохранения',
 	'multiwikiedit_reason' => 'Причина редактирования',
@@ -2724,7 +2696,7 @@ $messages['ru'] = array(
 	'multiwikiedit_select_yourself' => 'вы',
 	'multiwikiedit_no_page' => 'Пожалуйста, укажите как минимум одну страницу, для редактирования ИЛИ выберите файл, содержащий список страниц.',
 	'multiwikiedit_split_results' => "Ваше количество статей слишком велико для обработки одним заданием. Исходная задача разделена на '''$1''' задач, максимальным размером '''$2''' статей.",
-	'multiwikiedit_max_display_size' => "Редактирование нескольких вики имеет в настоящее время максимальное количество статей на этапе подтверждения. Ваш запрос был превышен на '''$1''' статей. Выберите ваши статьи и сохраните задачу. После этого, запустите запрос ещё раз, чтобы охватить все остальные статьи.",
+	'multiwikiedit_max_display_size' => "Редактирование нескольких вики имеет в настоящее время максимальное количество статей на этапе подтверждения. Ваш запрос был превышен на '''$1''' {{PLURAL:$1|статью|статьи|статей}}. Выберите ваши статьи и сохраните задачу. После этого, запустите запрос ещё раз, чтобы охватить все остальные статьи.",
 	'multiwikiedit_add_text' => 'Сначала укажите текст статьи',
 	'multiwikiedit_supply_wikis' => 'Пожалуйста, приведите список отобранных вики',
 	'multiwikiedit_tasks_list' => 'Список задач для запуска',
@@ -2745,7 +2717,6 @@ $messages['ru'] = array(
 	'multidelete_task_added' => 'Добавлена задача множественного удаления #$1.',
 	'multidelete_task_error' => 'Обнаружена ошибка при добавлении задания множественного удаления.',
 	'multidelete_task_none_selected' => 'Вы не выбрали ни одной статьи. Задача не была добавлена.',
-	'multidelete_task_link' => 'Вы можете проверить вашу задачу',
 	'multidelete_select_all' => 'Выбрать все',
 	'multidelete_page' => 'Страницы для удаления',
 	'multidelete_reason' => 'Причина удаления',
@@ -2764,7 +2735,7 @@ $messages['ru'] = array(
 	'multidelete_file_missing' => 'Невозможно прочитать данный файл',
 	'multidelete_select_script' => 'назначенная учётная запись скрипта',
 	'multidelete_no_page' => 'Пожалуйста, укажите как минимум одну страницу для удаления ИЛИ выберите файл, содержащий страницы списка.',
-	'multidelete_split_results' => "Ваше количество статей слишком велико для обработки в одной задаче. Задание было разделено на '''$1''' задач, максимальным размером '''$2''' статей.",
+	'multidelete_split_results' => "Ваше количество статей слишком велико для обработки в одной задаче. Задание было разделено на '''$1''' {{PLURAL:$1|задачу|задачи|задач}}, максимальным размером '''$2''' {{PLURAL:$1|статью|статьи|статей}}.",
 	'multidelete_max_display_size' => "Множественное удаление  имеет в настоящее время максимальное количество статей на этапе подтверждения. Ваш запрос был превышен на '''$1''' статей. Выберите ваши статьи и сохраните задачу. После этого, запустите запрос ещё раз, чтобы охватить все остальные статьи.",
 	'multidelete_brazilian_portuguese_wikis' => 'все вики на бразильском португальском',
 	'multidelete_hebrew_wikis' => 'все вики на иврите',
@@ -2786,7 +2757,7 @@ $messages['ru'] = array(
 	'multiwikifinder' => 'Поисковик названий в нескольких вики',
 	'multiwikifindpagenames' => 'Поиск в названиях страниц',
 	'multiwikienterpagename' => 'Введите название страницы:',
-	'multiwikirecords' => 'найдено $1 вики',
+	'multiwikirecords' => 'найдено $1 {{PLURAL:$1|wiki|wikis}}',
 	'action-multiwikifinder' => 'искать конкретный заголовок на всей Викия',
 );
 
@@ -2809,8 +2780,7 @@ $messages['sr-ec'] = array(
 	'multiwikiedit_task_added' => 'Додат је задатак за уређивање више викија #$1.',
 	'multiwikiedit_task_error' => 'Дошло је до грешке при додавању задатка за уређивање више викија.',
 	'multiwikiedit_task_none_selected' => 'Нисте изабрали ниједан чланак. Задатак није додат.',
-	'multiwikiedit_task_link' => 'Можете да проверите задатак',
-	'multiwikiedit_on' => 'на',
+	'multiwikiedit_on' => 'на', # Fuzzy
 	'multiwikiedit_page' => 'Странице за уређивање',
 	'multiwikiedit_page_text' => 'Текст за чување',
 	'multiwikiedit_reason' => 'Разлог за измену',
@@ -2856,7 +2826,6 @@ $messages['sr-ec'] = array(
 	'multidelete_task_added' => 'Додат је задатак за брисање више викија #$1.',
 	'multidelete_task_error' => 'Дошло је до грешке при додавању задатка за вишеструко брисање.',
 	'multidelete_task_none_selected' => 'Нисте изабрали ниједан чланак. Задатак није додат.',
-	'multidelete_task_link' => 'Можете да проверите задатак',
 	'multidelete_select_all' => 'Изабери све',
 	'multidelete_page' => 'Странице за брисање',
 	'multidelete_reason' => 'Разлог',
@@ -2894,7 +2863,7 @@ $messages['sr-ec'] = array(
 	'multiwikifinder' => 'Проналазач наслова више викија',
 	'multiwikifindpagenames' => 'Пронађи називе страница',
 	'multiwikienterpagename' => 'Унесите назив странице:',
-	'multiwikirecords' => '{{PLURAL:$1|пронађен је $1 вики|пронађена су $1 викија|пронађено је $1 викија}}',
+	'multiwikirecords' => '{{PLURAL:$1|пронађен је $1 вики|пронађена су $1 викија|пронађено је $1 викија}}', # Fuzzy
 );
 
 /** Swedish (svenska)
@@ -2916,8 +2885,7 @@ $messages['sv'] = array(
 	'multiwikiedit_task_added' => 'Redigeringsuppgiften #$1 för flera wikis lades till.',
 	'multiwikiedit_task_error' => 'Ett fel uppstod när uppgiften för multiwiki-redigeringsuppgiften skulle läggas till.',
 	'multiwikiedit_task_none_selected' => 'Du valde inte några artiklar. Uppgiften lades inte till.',
-	'multiwikiedit_task_link' => 'Du kan kontrollera din uppgift',
-	'multiwikiedit_on' => 'på',
+	'multiwikiedit_on' => 'Kör skriptet på',
 	'multiwikiedit_page' => 'Sidor som ska redigeras',
 	'multiwikiedit_page_text' => 'Text som ska sparas',
 	'multiwikiedit_reason' => 'Redigeringsanledning',
@@ -2946,7 +2914,7 @@ $messages['sv'] = array(
 	'multiwikiedit_select_yourself' => 'du',
 	'multiwikiedit_no_page' => 'Var god specificera minst en sida för att redigera ELLER välj en fil som innehåller en sidlista.',
 	'multiwikiedit_split_results' => "Ditt artikelantal var för högt för att utföras som en enda uppgift. Den har istället delats upp i '''$1''' uppgifter med en maximal segmentstorlek på '''$2''' artiklar.",
-	'multiwikiedit_max_display_size' => "Multiwikiredigering har för tillfället en maximalt antal artiklar i bekräftelsefrasen. Din förfrågan avslutades efter '''$1''' artiklar. Välj dina artiklar och spara uppgiften. Efter det bör du överväga att köra igen för att hinna ifatt alla återstående artiklar.",
+	'multiwikiedit_max_display_size' => "Multiwikiredigering har för tillfället en maximalt antal artiklar i bekräftelsefrasen. Din förfrågan avslutades efter '''$1''' {{PLURAL:$1|artikel|artiklar}}. Välj dina artiklar och spara uppgiften. Efter det bör du överväga att köra igen för att hinna ifatt alla återstående artiklar.",
 	'multiwikiedit_add_text' => 'Ange artikeltext först',
 	'multiwikiedit_supply_wikis' => 'Var god lägg till listan över valda wikis',
 	'multiwikiedit_tasks_list' => 'Lista över uppgifter att köras',
@@ -2967,7 +2935,6 @@ $messages['sv'] = array(
 	'multidelete_task_added' => 'Multiraderingsuppgiften #$1 lades till.',
 	'multidelete_task_error' => 'Ett fel uppstod när multiraderingsuppgiften skulle läggas till.',
 	'multidelete_task_none_selected' => 'Du valde inte några artiklar. Uppgiften lades inte till.',
-	'multidelete_task_link' => 'Du kan kontrollera din uppgift',
 	'multidelete_select_all' => 'Välj alla',
 	'multidelete_page' => 'Sidor som ska raderas',
 	'multidelete_reason' => 'Anledning till radering',
@@ -2986,7 +2953,7 @@ $messages['sv'] = array(
 	'multidelete_file_missing' => 'Kan inte läsa filen',
 	'multidelete_select_script' => 'utvalt skriptkonto',
 	'multidelete_no_page' => 'Var god specificera minst en sida för att radera ELLER välj en fil som innehåller en sidlista.',
-	'multidelete_split_results' => "Ditt artikelantal var för högt för att utföras som en enda uppgift. Den har istället delats upp i '''$1''' uppgifter med en maximal segmentstorlek på '''$2''' artiklar.",
+	'multidelete_split_results' => "Ditt artikelantal var för högt för att utföras som en enda uppgift. Den har istället delats upp i '''$1''' {{PLURAL:$1|uppgift|uppgifter}} med en maximal segmentstorlek på '''$2''' {{PLURAL:$1|artikel|artiklar}}.",
 	'multidelete_max_display_size' => "Multiradering har för tillfället en maximalt antal artiklar i bekräftelsefrasen. Din förfrågan avslutades efter '''$1''' artiklar. Välj dina artiklar och spara uppgiften. Efter det bör du överväga att köra igen för att hinna ifatt alla återstående artiklar.",
 	'multidelete_brazilian_portuguese_wikis' => 'alla brasilianska portugisiska wikis',
 	'multidelete_hebrew_wikis' => 'alla hebreiska wikis',
@@ -3008,7 +2975,7 @@ $messages['sv'] = array(
 	'multiwikifinder' => 'Multiwiki-titelhittare',
 	'multiwikifindpagenames' => 'Hitta sidnamn',
 	'multiwikienterpagename' => 'Ange ett sidnamn:',
-	'multiwikirecords' => '$1 wiki hittades',
+	'multiwikirecords' => '$1 {{PLURAL:$1|wiki|wikis}} hittades',
 	'action-multiwikifinder' => 'sök efter en specifik titel över hela Wikia',
 );
 
@@ -3026,7 +2993,7 @@ $messages['ta'] = array(
 	'multidelete_select_all' => 'எல்லாவற்றையும் தேர்வுசெய்யவும்',
 	'multiwikifindpagenames' => 'பக்கங்களின் பெயர்களைக் கண்டுபிடி',
 	'multiwikienterpagename' => 'பக்கத்தின் பெயரொன்றை இடுக:',
-	'multiwikirecords' => '$1 விக்கி கண்டுபிடிக்கப்பட்டுவிட்டது',
+	'multiwikirecords' => '$1 விக்கி கண்டுபிடிக்கப்பட்டுவிட்டது', # Fuzzy
 );
 
 /** Telugu (తెలుగు)
@@ -3057,8 +3024,7 @@ $messages['tl'] = array(
 	'multiwikiedit_task_added' => 'Naidagdag ang gawaing pampatnugot ng maramihang wiki na $1.',
 	'multiwikiedit_task_error' => 'Nagkaroon ng isang kamalian sa pagdaragdag ng gawaing pampatnugot ng maramihang mga wiki.',
 	'multiwikiedit_task_none_selected' => 'Hindi ka pumili ng anumang mga artikulo. Hindi naidagdag ang gawain.',
-	'multiwikiedit_task_link' => 'Masusuri mo ang iyong gawain',
-	'multiwikiedit_on' => 'sa',
+	'multiwikiedit_on' => 'sa', # Fuzzy
 	'multiwikiedit_page' => 'Mga pahinang babaguhin',
 	'multiwikiedit_page_text' => 'Tekstong sasagipin',
 	'multiwikiedit_reason' => 'Dahil para sa pagbago',
@@ -3087,7 +3053,7 @@ $messages['tl'] = array(
 	'multiwikiedit_select_yourself' => 'ikaw',
 	'multiwikiedit_no_page' => 'Paki tukuyin ang kahit na isang pahinang babaguhin O pumili ng isang talaksang naglalaman ng talaan ng pahina.',
 	'multiwikiedit_split_results' => "Ang iyong bilang ng artikulo ay napakataas upang magawa sa loob ng isang pang-isahang gawain. Sa halip, hinati ito upang maging '''$1''' na mga gawain, na mayroong isang pinaka mataas na tipak na sukat ng '''$2''' mga artikulo.",
-	'multiwikiedit_max_display_size' => "Ang pamamatnugot ng maramihang wiki ay pangkasalukuyang mayroong isang pinaka mataas na bilang ng mga artikulo na nasa kalagayan ng pagtitiyak. Ang iyong pagtatanong ay naihangga sa '''$1''' mga artikulo. Piliin ang mga artikulo mo at sagipin ang gawain. Pagkaraan niyan, isaalang-alang ang muling pagpapatakbo nito upang masalo ang lahat ng natitira pang mga artikulo.",
+	'multiwikiedit_max_display_size' => "Ang pamamatnugot ng maramihang wiki ay pangkasalukuyang mayroong isang pinaka mataas na bilang ng mga artikulo na nasa kalagayan ng pagtitiyak. Ang iyong pagtatanong ay naihangga sa '''$1''' mga artikulo. Piliin ang mga artikulo mo at sagipin ang gawain. Pagkaraan niyan, isaalang-alang ang muling pagpapatakbo nito upang masalo ang lahat ng natitira pang mga artikulo.", # Fuzzy
 	'multiwikiedit_add_text' => 'Tukuyin muna ang teksto ng artikulo',
 	'multiwikiedit_supply_wikis' => 'Paki ibigay ang listahan ng napiling mga wiki',
 	'multiwikiedit_tasks_list' => 'Lista ng mga gawain patatakbuhin',
@@ -3108,7 +3074,6 @@ $messages['tl'] = array(
 	'multidelete_task_added' => 'Naidagdag ang gawaing pambura ng maramihang wiki na $1.',
 	'multidelete_task_error' => 'Nagkaroon ng isang kamalian sa pagdaragdag ng gawaing pambura ng maramihang mga wiki.',
 	'multidelete_task_none_selected' => 'Hindi ka pumili ng anumang mga artikulo. Hindi naidagdag ang gawain.',
-	'multidelete_task_link' => 'Masusuri mo ang iyong gawain',
 	'multidelete_select_all' => 'Piliin lahat',
 	'multidelete_page' => 'Mga pahinang buburahin',
 	'multidelete_reason' => 'Dahilan ng pagbura',
@@ -3127,7 +3092,7 @@ $messages['tl'] = array(
 	'multidelete_file_missing' => 'Hindi mabasa ang talaksang ibinigay',
 	'multidelete_select_script' => 'naitalagang akawnt ng panitiki',
 	'multidelete_no_page' => 'Paki tumukoy ng kahit na isang pahinang buburahin O pumili ng isang talaksan na talaan ng pahina na naglalaman ng talaksan.',
-	'multidelete_split_results' => "Ang iyong bilang ng artikulo ay napakataas upang magawa sa loob ng isang pang-isahang gawain. Sa halip, hinati ito upang maging '''$1''' na mga gawain, na mayroong isang pinaka mataas na tipak na sukat ng '''$2''' mga artikulo.",
+	'multidelete_split_results' => "Ang iyong bilang ng artikulo ay napakataas upang magawa sa loob ng isang pang-isahang gawain. Sa halip, hinati ito upang maging '''$1''' na mga gawain, na mayroong isang pinaka mataas na tipak na sukat ng '''$2''' mga artikulo.", # Fuzzy
 	'multidelete_max_display_size' => "Ang pagbubura ng maramihang wiki ay pangkasalukuyang mayroong isang pinaka mataas na bilang ng mga artikulo na nasa kalagayan ng pagtitiyak. Ang iyong pagtatanong ay naihangga sa '''$1''' mga artikulo. Piliin ang mga artikulo mo at sagipin ang gawain. Pagkaraan niyan, isaalang-alang ang muling pagpapatakbo nito upang masalo ang lahat ng natitira pang mga artikulo.",
 	'multidelete_brazilian_portuguese_wikis' => 'lahat ng mga wiking portuges ng brasil',
 	'multidelete_hebrew_wikis' => 'lahat ng mga wiking hebreo',
@@ -3149,7 +3114,7 @@ $messages['tl'] = array(
 	'multiwikifinder' => 'Panghanap ng Pamagat ng Maramihang mga Wiki',
 	'multiwikifindpagenames' => 'Maghanap ng mga pangalan ng pahina',
 	'multiwikienterpagename' => 'Magpasok ng isang pangalan ng pahina:',
-	'multiwikirecords' => '$1 na wiki ang natagpuan',
+	'multiwikirecords' => '$1 na wiki ang natagpuan', # Fuzzy
 	'action-multiwikifinder' => 'maghanap ng isang tiyak na pamagat sa kahabaan ng Wikia',
 );
 
@@ -3194,7 +3159,7 @@ $messages['zh-hans'] = array(
 	'multiwikiedit_button' => '编辑',
 	'multiwikiedit_confirm' => '确定',
 	'multiwikiedit_caption' => '页面列表',
-	'multiwikiedit_on' => '在',
+	'multiwikiedit_on' => '在', # Fuzzy
 	'multiwikiedit_page' => '待撰页面',
 	'multiwikiedit_reason' => '编辑原因',
 	'multiwikiedit_list_caption' => '维基列表',
@@ -3228,7 +3193,7 @@ $messages['zh-hans'] = array(
 	'multidelete_japanese_wikis' => '所有日文维基',
 	'multidelete_french_wikis' => '所有法文维基',
 	'multiwikienterpagename' => '输入页面名称：',
-	'multiwikirecords' => '找到了$1个维基',
+	'multiwikirecords' => '找到了$1个维基', # Fuzzy
 );
 
 /** Traditional Chinese (中文（繁體）‎)

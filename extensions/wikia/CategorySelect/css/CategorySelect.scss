@@ -1,0 +1,159 @@
+@import "skins/oasis/css/mixins/border-radius";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/opacity";
+
+// These styles are for view pages only
+.CategorySelect.articlePage {
+	@include clear-linear-gradient();
+	line-height: normal;
+	margin: 0 0 40px 0;
+	padding: 0;
+	position: relative;
+
+	&.editMode {
+		margin-bottom: 6px;
+
+		.add {
+			display: none;
+		}
+
+		.input {
+			display: inline-block;
+		}
+
+		> .toolbar {
+			display: block;
+		}
+	}
+
+	&.showHidden .category.hidden {
+		display: block;
+	}
+
+	.add {
+		@include clear-linear-gradient();
+		background-color: $color-speech-bubble;
+	}
+
+	.categories {
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+	}
+
+	.category,
+	.last,
+	.placeholder {
+		float: left;
+		display: block;
+		margin: 0 6px 6px 0;
+	}
+
+	.category {
+		border-right: 1px solid $color-page-border;
+		margin-top: 3px;
+		padding-right: 6px;
+
+		&.hidden {
+			display: none;
+		}
+
+		&.new {
+			margin-top: 0;
+			margin-bottom: 3px;
+
+			.name {
+				cursor: move;
+			}
+
+			.toolbar {
+				display: inline-block;
+			}
+		}
+
+		&:last-child {
+			border-right: 0;
+		}
+	}
+
+	.container {
+		@include clearfix;
+		padding: 10px 20px 4px 20px;
+	}
+
+	.input {
+		background-color: $color-page;
+		border: 0;
+		color: $color-text;
+		display: none;
+		font-size: 12px;
+		margin: 3px 0;
+		outline: none;
+		padding: 0;
+		width: 245px;
+	}
+
+	.new,
+	.placeholder {
+		@include border-radius( 4px );
+		background-color: $color-speech-bubble;
+		border: 1px solid $color-page-border;
+		padding: 2px 6px;
+		margin-top: 0;
+	}
+
+	.placeholder {
+		@include opacity( 35 );
+	}
+
+	.special-categories {
+		float: left;
+		padding: 3px 0;
+		margin-right: 6px;
+	}
+
+	.sprite-small {
+		vertical-align: text-top;
+	}
+
+	.tool {
+		border-left: 1px solid $color-page-border;
+		cursor: pointer;
+		display: inline-block;
+		margin-left: 6px;
+		padding-left: 6px;
+
+		&:first-child {
+			border-left: 0;
+			padding-left: 0;
+		}
+	}
+
+	.toolbar {
+		display: none;
+	}
+
+	> .toolbar {
+		background-color: $color-speech-bubble;
+		border-top: 1px solid $color-page-border;
+		padding: 6px 10px;
+		text-align: right;
+
+		.wikia-button {
+			margin-left: 6px;
+		}
+	}
+}
+
+// Need to use ID here for specificity
+#CategorySelectEditModal {
+	.WikiaForm {
+		@include clearfix;
+
+		input,
+		.input-group {
+			@include box-sizing( border-box );
+			width: 100%;
+		}
+	}
+}

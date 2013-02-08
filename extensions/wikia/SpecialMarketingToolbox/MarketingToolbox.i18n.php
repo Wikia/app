@@ -44,9 +44,12 @@ $messages['en'] = array(
 	'marketing-toolbox-edithub-add-video-button' => 'Add a Video',
 	'marketing-toolbox-edithub-file-name' => 'File name',
 	'marketing-toolbox-edithub-video-name' => 'Video name',
+	'marketing-toolbox-edithub-sponsored-image' => 'Add a Sponsored Image',
+	'marketing-toolbox-edithub-sponsored-image-remove' => 'Remove',
 
 	'marketing-toolbox-edithub-clearall-confirmation' => 'Are you sure you want to clear the entire $1 module?',
 	'marketing-toolbox-edithub-clear-confirmation' => 'Are you sure you want to clear this section?',
+	'marketing-toolbox-edithub-clear-sponsored-image' => 'Are you sure you want to remove sponsored image?',
 
 	'marketing-toolbox-hub-module-slider' => 'Slider',
 	'marketing-toolbox-hub-module-pulse' => 'Pulse',
@@ -93,7 +96,8 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-wikiaspicks-title' => 'Title',
 	'marketing-toolbox-hub-module-wikiaspicks-text' => 'Text',
 	'marketing-toolbox-hub-module-html-text-tip' => "'''Tip:''' to add a link copy the following and replace the italicized text with your own: <a href=\"''your_url_here''\">''Your Text Here''</a>",
-
+	'marketing-toolbox-hub-module-sponsored-image-tip' => "'''Tip:''' The maximum file size is 85x15 pixels",
+	
 	'marketing-toolbox-hub-module-featured-video-header' => 'Header',
 	'marketing-toolbox-hub-module-featured-video-desc' => 'Description',
 	'marketing-toolbox-hub-module-featured-video-article-url' => 'Article URL',
@@ -105,6 +109,10 @@ $messages['en'] = array(
 	'marketing-toolbox-validator-string-long' => 'Your text is too long, please make it shorter',
 	'marketing-toolbox-validator-wrong-url' => 'The URL you entered is not valid, please try again',
 	'marketing-toolbox-validator-wrong-file' => 'The file you chose is not valid, please try again',
+	'marketing-toolbox-validator-wrong-file-size' => 'The file you selected is the wrong size, please use a different file',
+	'marketing-toolbox-validator-wrong-file-size-width' => 'Wrong width of the file you chose, please try again (Max width is: $maxWidthpx)',
+	'marketing-toolbox-validator-wrong-file-size-height' => 'Wrong height of the file you chose, please try again (Max height is: $maxHeightpx)',
+	'marketing-toolbox-validator-wrong-file-not-an-image' => 'The file you chose is not an image, please try again',
 	'marketing-toolbox-validator-wrong-users-url' => 'The URL you entered doesn\'t contain User\'s name or User name is not valid',
 );
 

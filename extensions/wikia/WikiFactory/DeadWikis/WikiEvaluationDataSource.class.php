@@ -1,4 +1,8 @@
 <?php
+/**
+ * NOTE: PLEASE TAKE CARE WHILE EDITING THIS FILE.
+ *       BAD CHANGE AND WE CAN CLOSE MANY WIKIS BY ACCIDENT.
+ */
 
 class WikiEvaluationDataSource {
 
@@ -24,7 +28,7 @@ class WikiEvaluationDataSource {
 
 		$db = wfGetDB(DB_SLAVE,array(),$wgExternalSharedDB);
 		$timestamp = $db->selectField('city_list','city_created',array(
-			'city_id' => $this->id,
+			'city_id' => $this->getId(),
 		),__METHOD__);
 		if ( !empty($timestamp) ) {
 			$timestamp = wfTimestamp( TS_UNIX, $timestamp );
@@ -98,7 +102,7 @@ class WikiEvaluationDataSource {
 		$endDate = date( 'Y-m-d', strtotime('-1 day') );
 		
 		$res = 0;
-		$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $this->getId() );
+		$pageviews = DataMartService::getPageviewsDaily( $startDate, $endDate, $this->getId() );
 		if ( !empty( $pageviews ) && is_array( $pageviews ) ) {
 			foreach ( $pageviews as $date => $value ) {
 				$res += $value;

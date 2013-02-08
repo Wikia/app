@@ -23,22 +23,22 @@ class EditPageService extends Service {
 	static public function wrapBodyText($title, $request, $html) {
 		global $wgContLang;
 
-                # An ID that includes the actual body text; without categories, contentSub, ...
-                $realBodyAttribs = array( 'id' => 'mw-content-text' );
+		# An ID that includes the actual body text; without categories, contentSub, ...
+		$realBodyAttribs = array( 'id' => 'mw-content-text' );
 
-                # Add a mw-content-ltr/rtl class to be able to style based on text direction
-                # when the content is different from the UI language, i.e.:
-                # not for special pages or file pages AND only when viewing AND if the page exists
-                # (or is in MW namespace, because that has default content)
-                if( !in_array( $title->getNamespace(), array( NS_SPECIAL, NS_FILE ) ) ) {
-                        $lang = ( $title->exists() ) ? $title->getPageLanguage() : $wgContLang;
+		# Add a mw-content-ltr/rtl class to be able to style based on text direction
+		# when the content is different from the UI language, i.e.:
+		# not for special pages or file pages AND only when viewing AND if the page exists
+		# (or is in MW namespace, because that has default content)
+		if( !in_array( $title->getNamespace(), array( NS_SPECIAL, NS_FILE ) ) ) {
+			$lang = ( $title->exists() ) ? $title->getPageLanguage() : $wgContLang;
 
-                        $realBodyAttribs['lang'] = $lang->getHtmlCode();
-                        $realBodyAttribs['dir'] = $lang->getDir();
-                       	$realBodyAttribs['class'] = 'mw-content-'.$lang->getDir();
-                }
+			$realBodyAttribs['lang'] = $lang->getHtmlCode();
+			$realBodyAttribs['dir'] = $lang->getDir();
+		   	$realBodyAttribs['class'] = 'mw-content-'.$lang->getDir();
+		}
 
-                return Html::rawElement( 'div', $realBodyAttribs, $html );
+		return Html::rawElement( 'div', $realBodyAttribs, $html );
 	}
 
 	public function getPreview($wikitext) {
@@ -47,6 +47,8 @@ class EditPageService extends Service {
 		wfProfileIn(__METHOD__);
 
 		$parserOptions = new ParserOptions($wgUser);
+
+		$originalWikitext = $wikitext;
 
 		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
 		$wikitext = $wgParser->preSaveTransform($wikitext, $this->mTitle, $this->app->getGlobal('wgUser'), $parserOptions);
@@ -61,8 +63,16 @@ class EditPageService extends Service {
 		$catbox = $this->renderCategoryBoxFromParserOutput($parserOutput);
 		$interlanglinks = $this->renderInterlangBoxFromParserOutput($parserOutput);
 
+		/**
+		 * bugid: 47995 -- Treat JavaScript and CSS as raw text wrapped in <pre> tags
+		 * We still rely on the parser for other stuff
+		 */
+		if ( $this->mTitle->isCssOrJsPage() ) {
+			$html = '<pre>' . $originalWikitext . '</pre>';
+		}
+
 		wfProfileOut(__METHOD__);
-		return array( $html, $catbox, $interlanglinks);
+		return array( $html, $catbox, $interlanglinks );
 	}
 
 	public function getDiff($wikitext, $section = '') {
@@ -70,13 +80,11 @@ class EditPageService extends Service {
 
 		$section = intval($section);
 
-		// create "fake" EditPage
-		if( function_exists('CategorySelectInitializeHooks') ) {
-			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null, null, true);
-		}
 		$article = new Article($this->mTitle);
 
+		// create "fake" EditPage
 		$editPage = new EditPage($article);
+
 		$editPage->textbox1 = $wikitext;
 		$editPage->edittime = null;
 		$editPage->section = $section > 0 ? $section : '';
@@ -99,18 +107,37 @@ class EditPageService extends Service {
 	}
 
 	protected function renderCategoryBoxFromParserOutput($parserOutput) {
-		global $wgOut;
-
 		wfProfileIn(__METHOD__);
 
-		$wgOut->addParserOutput($parserOutput);
-		$skin = RequestContext::getMain()->getSkin();
-		$categories = $wgOut->getCategories();
+		$wg = $this->app->wg;
 
 		$catbox = '';
-		if(!empty($categories ) && ($skin instanceof SkinOasis)) {
-			$catlinks = $skin->getCategories();
-			$catbox = F::app()->sendRequest('ArticleCategories','Index',array('catlinks' => $catlinks))->toString();
+		$categorySelectEnabled = !empty( $wg->EnableCategorySelectExt );
+
+		if ( $categorySelectEnabled ) {
+			$this->app->registerHook( 'OutputPageMakeCategoryLinks', 'CategorySelectHooksHelper', 'onOutputPageMakeCategoryLinks' );
+		}
+
+		$wg->Out->addParserOutput($parserOutput);
+
+		if ( $categorySelectEnabled ) {
+			$categories = $wg->Request->getVal( 'categories', '' );
+
+			if ( !empty( $categories ) ) {
+				$catbox = $this->app->renderView( 'CategorySelectController', 'articlePage', array(
+					'categories' => CategorySelect::changeFormat( $categories, 'json', 'array' ),
+					'userCanEdit' => false
+				));
+			}
+
+		} else {
+			$skin = RequestContext::getMain()->getSkin();
+			$categories = $wg->Out->getCategories();
+
+			if (!empty($categories) && ($skin instanceof SkinOasis)) {
+				$categoryLinks = $skin->getCategories();
+				$catbox = F::app()->sendRequest('ArticleCategories','Index',array('categoryLinks' => $categoryLinks))->toString();
+			}
 		}
 
 		wfProfileOut(__METHOD__);

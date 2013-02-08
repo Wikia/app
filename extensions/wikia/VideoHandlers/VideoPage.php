@@ -25,12 +25,14 @@ class WikiaVideoPage extends ImagePage {
 		} else {
 			$img = $this->getDisplayedFile();
 		}
-		
+
+		$autoplay = F::app()->wg->VideoPageAutoPlay;
+
 		F::build('JSMessages')->enqueuePackage('VideoPage', JSMessages::EXTERNAL);
 		
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/VideoHandlers/js/VideoPage.js\"></script>\n" );
 
-		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth ).$this->getVideoInfoLine().'</div>' );
+		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth, $autoplay ).$this->getVideoInfoLine().'</div>' );
 		wfProfileOut( __METHOD__ );
 	}
 	
@@ -40,6 +42,10 @@ class WikiaVideoPage extends ImagePage {
 		$img = $this->getDisplayedFile();
 		$detailUrl = $img->getProviderDetailUrl();
 		$provider = $img->getProviderName();
+		if ( !empty($provider) ) {
+			$providerName = explode( '/', $provider );
+			$provider = array_pop( $providerName );
+		}
 		$providerUrl = $img->getProviderHomeUrl();
 		
 		$link = '<a href="' . $detailUrl . '" class="external" target="_blank">' . $this->mTitle->getText() . '</a>';

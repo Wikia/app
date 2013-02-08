@@ -35,6 +35,30 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
 
+
+		$catInfo = HubService::getComscoreCategory($this->wg->CityId);
+
+
+
+		$descriptionKey = 'specialvideos-meta-description';
+
+		switch ($catInfo->cat_id) {
+			case WikiFactoryHub::CATEGORY_ID_GAMING:
+				$descriptionKey .= '-gaming';
+				break;
+			case WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT:
+				$descriptionKey .= '-entertainment';
+				break;
+			case WikiFactoryHub::CATEGORY_ID_LIFESTYLE:
+				$descriptionKey .= '-lifestyle';
+				break;
+			case WikiFactoryHub::CATEGORY_ID_CORPORATE:
+				$descriptionKey .= '-corporate';
+				break;
+		}
+
+		$this->getContext()->getOutput()->addMeta( 'description', $this->wf->Msg($descriptionKey, $this->wg->Sitename) );
+
 		$sort = $this->request->getVal( 'sort', 'trend' );
 		$page = $this->request->getVal( 'page', 1 );
 
@@ -99,7 +123,6 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->sortMsg = $sortingOptions[$sort]; // selected sorting option to display in drop down
 		$this->sortingOptions = $sortingOptions; // populate the drop down
 		$this->videos = $videos;
-		$this->surveyLink = $this->wg->LanguageCode == 'en' ? $this->app->renderView('VideosController', 'videoSurvey') : ''; // temporary video survey code bugid-68723
 	}
 
 }

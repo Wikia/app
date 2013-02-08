@@ -185,9 +185,13 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
 	'scavengerhunt-desc' => '{{desc}}',
+	'scavengerhunt-label-general' => '{{Identical|General}}',
+	'scavengerhunt-editor-tip-entry-form-email' => '{{doc-singularthey}}',
+	'scavengerhunt-editor-tip-entry-form-username' => '{{doc-singularthey}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -477,7 +481,7 @@ $messages['diq'] = array(
 	'scavengerhunt-list-enabled' => 'Aktifiyaye',
 	'scavengerhunt-list-disabled' => 'Astengın',
 	'scavengerhunt-list-edit' => 'bıvurne',
-	'scavengerhunt-label-general' => 'Heran',
+	'scavengerhunt-label-general' => 'Bıngeh',
 	'scavengerhunt-label-name' => 'Name:',
 	'scavengerhunt-button-save' => 'Star ke',
 	'scavengerhunt-button-disable' => 'Bikefilne',
@@ -1787,7 +1791,7 @@ $messages['nl'] = array(
 	'scavengerhunt-editor-tip-name' => 'Dit is de naam die wordt weergegeven in de lijst met alle speurtochten.',
 	'scavengerhunt-editor-tip-landing-title' => 'Dit is de pagina waar gebruikers heengaan om met een speurtocht te beginnen.',
 	'scavengerhunt-editor-tip-landing-button-text' => 'Dit is het tekstlabel voor de knop "Start", bijvoorbeeld "Klik hier om te beginnen!".',
-	'scavengerhunt-editor-tip-sprite-img' => 'Dit is de verwijzing naar het spritebestand dat alle afbeeldingen voor de speurtocht bevat. Om te voorkomen dat wikigebruikers de afbeelding kunnen zien, kunt u hiervoor het beste een externe URL opgeven.',
+	'scavengerhunt-editor-tip-sprite-img' => 'Dit is de koppeling naar het spritebestand dat alle afbeeldingen voor de speurtocht bevat. Om te voorkomen dat wikigebruikers de afbeelding kunnen zien, kunt u hiervoor het beste een externe URL opgeven.',
 	'scavengerhunt-editor-tip-progressBarBackgroundSprite' => 'Gebruik deze coördinaten om aan te geven:<br />
 (1) waar het spritebestand weergegeven moet worden<br />
 (2) welk gedeelte van het spritebestand de actieve afbeelding is.',
@@ -2120,6 +2124,24 @@ $messages['ro'] = array(
 	'scavengerhunt-button-add' => 'Adaugă un joc',
 	'scavengerhunt-entry-form-name' => 'Numele tău:',
 	'scavengerhunt-entry-form-email' => 'Adresa ta de e-mail:',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'scavengerhunt-list-header-actions' => 'Aziune',
+	'scavengerhunt-list-enabled' => 'Abbilitate',
+	'scavengerhunt-list-disabled' => 'Disabbilitate',
+	'scavengerhunt-list-edit' => 'cange',
+	'scavengerhunt-label-general' => 'Generale',
+	'scavengerhunt-label-name' => 'Nome:',
+	'scavengerhunt-label-entry-form-button-text' => "Teste d'u buttone:",
+	'scavengerhunt-button-save' => 'Reggìstre',
+	'scavengerhunt-button-delete' => 'Scangìlle',
+	'scavengerhunt-button-export' => "Esporte jndr'à CSV",
+	'scavengerhunt-entry-form-name' => "'U nome tue:",
+	'scavengerhunt-quit-game-button-cancel' => 'Annulle',
 );
 
 /** Russian (русский)
