@@ -119,74 +119,55 @@ if ( empty( $app->wg->WikiaMobileNavigationBlacklist ) ) {
 }
 
 //black list of JS globals
-if ( empty( $app->wg->WikiaMobileExcludeJSGlobals ) ) {
-	$app->wg->set( 'wgWikiaMobileExcludeJSGlobals',
-		array(
-			'wgCurRevisionId',
-			'wgIsArticle',
-			'wgAction',
-			'wgUserGroups',
-			'wgScriptExtension',
-			'wgAfterContentAndJS',
-			'wgCategories',
-			'wgBreakFrames',
-			'wgSeparatorTransformTable',
-			'wgDigitTransformTable',
-			'wgRestrictionEdit',
-			'wgRestrictionMove',
-			'wgSearchNamespaces',
-			'wgEnableAdMeldAPIClient',
-			'wgEnableAdMeldAPIClientPixels',
-			'wgEnableOpenXSPC',
-			'cscoreCat',
-			'wgTimeAgoi18n',
-			'sassParams',
+if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
+	$app->wg->set( 'wgWikiaMobileIncludeJSGlobals',
+		[
+			//analytics
+			'_gaq',
+			'_wtq',
+			'wgEnableKruxTargeting',
+			'wgKruxCategoryId',
+
+			//ads
+			'wgDartCustomKeyValues',
+
+			//server/wiki
+			'wgServer',
+			'wgDBname',
+			'wgCityId',
+			'wgScriptPath',
 			'wgCdnRootUrl',
-			'wgCatId',
-			'wgParentCatId',
-			'wgBlankImgUrl',
-			'wgMWrevId',
-			'wgYUIPackageURL',
-			'wgWikiFactoryTagIds',
-			'wgWikiFactoryTagNames',
-			'ExitstitialOutboundScreen',
-			'wgExitstitialTitle',
-			'wgExitstitialRegister',
-			'wgExitstitialButton',
-			'wgInterstitialPath',
-			'wgNotificationsCount',
-			'wgEnableUserLoginExt',
-			'wgEnableImageLightboxExt',
-			'wgEnableWikiaFollowedPages',
-			'wgFollowedPagesPagerLimit',
-			'wgFollowedPagesPagerLimitAjax',
+			'wgAssetsManagerQuery',
+			'wgContentLanguage',
+			'wgMedusaSlot',
+			'wgResourceBasePath',
+			'wgMainPageTitle',
+			'wgSitename',
+			'wgCookieDomain',
+			'wgCookiePath',
+
+			//article
+			'wgArticlePath',
+			'wgArticleId',
+			'wgNamespaceNumber',
+			'wgIsGASpecialWiki',
+			'wgCanonicalSpecialPageName',
+			'wgPageName',
+			'wgTitle',
+
+			//user
+			'wgUserName',
+			'wgUserLanguage',
+
+			//configs
+			'wgSassParams',
+			'wgStyleVersion',
+			'wgMessages',
+			'wgJSMessagesCB',
 			'wgTrackID',
-			'WikiaEnableNewCreatepage',
-			'ContentNamespacesText',
-			'wgCategoryTreePageCategoryOptions',
-			'fbScript',
-			'fbLogo',
-			'fbLogoutURL',
-			'fbReturnToTitle',
-			'fbScriptLangCode',
-			'wgLoadScript',
-			'wgUrlProtocols',
-			'wgVariantArticlePath',
-			'wgActionPaths',
-			'wgVersion',
-			'wgEnableAPI',
-			'wgEnableWriteAPI',
-			'wgDefaultDateFormat',
-			'wgMonthNames',
-			'wgMonthNamesShort',
-			'wgFormattedNamespaces',
-			'wgNamespaceIds',
-			'wgResourceLoaderMaxQueryLength',
-			'wgCaseSensitiveNamespaces',
-			'wgMWSuggestTemplate',
-			'wgFileCanRotate',
-			'wgFileExtensions',
-			'wgAvailableSkins',
-			'wgSiteName'
-	) );
+
+			//skin
+			'skin'
+		]
+	);
 }
