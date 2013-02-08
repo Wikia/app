@@ -22,7 +22,7 @@
 			VideoEmbedTool: {
 				loaded: false,
 				requires: [
-					wgResourceBasePath + '/extensions/wikia/VideoEmbedTool/js/VET_WikiaEditor.js',
+					wgResourceBasePath + '/extensions/wikia/VideoEmbedTool/js/VET_WikiaEditor.js'
 				]
 			},
 			WikiaMiniUpload: {
