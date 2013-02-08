@@ -60,6 +60,18 @@ class GlobalTitle extends Title {
 
 		return $title;
 	}
+	
+    /**
+	 * Create a new Title for the Main Page
+	 *
+	 * @param int city_id
+	 * @return Title the new object
+	 */
+	public static function newMainPage( $city_id ) {
+		// sure hope this redirects for the most part
+		$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
+		return $title;
+	}
 
 	/**
 	 * static constructor, Create new Title from id of page

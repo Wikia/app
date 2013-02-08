@@ -2,6 +2,18 @@
 class ApiService extends Service {
 
 	/**
+	 * string constant for mediawiki api endpoint
+	 * @var string
+	 */
+	const API = 'api.php';
+	
+	/**
+	 * string constant for wikia api endpoint
+	 * @var string
+	 */
+	const WIKIA = 'wikia.php';
+	
+	/**
 	 * Simple wrapper for calling MW API
 	 */
 	static function call(Array $params) {
@@ -25,9 +37,10 @@ class ApiService extends Service {
 	 *
 	 * @param string database name
 	 * @param array API query parameters
+	 * @param string endpoint (api.php or wikia.php, generally)
 	 * @return mixed API response
 	 */
-	static function foreignCall($dbname, Array $params) {
+	static function foreignCall($dbname, Array $params, $endpoint = self::API) {
 		wfProfileIn(__METHOD__);
 		$hostName = self::getHostByDbName($dbname);
 
@@ -39,7 +52,7 @@ class ApiService extends Service {
 			$parts[] = urlencode($key) . '=' . urlencode($value);
 		}
 
-		$url = "{$hostName}/api.php?" . implode('&', $parts);
+		$url = "{$hostName}/{$endpoint}?" . implode('&', $parts);
 		wfDebug(__METHOD__ . ": {$url}\n");
 
 		// send request and parse response

@@ -69,7 +69,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		if( $searchConfig->getQueryNoQuotes( true ) ) {
-			$this->wikiaSearch->getArticleMatch( $searchConfig );
+			$this->wikiaSearch->getMatch( $searchConfig );
 			if ( $searchConfig->getPage() == 1 ) {
 				$this->handleArticleMatchTracking( $searchConfig, F::build( 'Track' ) );
 			}

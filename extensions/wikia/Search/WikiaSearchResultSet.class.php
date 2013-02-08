@@ -106,6 +106,7 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		wfProfileIn(__METHOD__);
 		$satisfies = ( $this->parent === null ) && $this->searchConfig->getGroupResults();
 		if ( $satisfies ) {
+			$this->prependWikiMatchIfExists();
 			$this->setResultGroupings();
 			$this->setResultsFound( $this->getHostGrouping()->getMatches() );
 		}
@@ -221,12 +222,12 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 		wfProfileOut(__METHOD__);
 		return $this;
 	}
-
+	
 	/**
 	 * Subroutine for optionally prepending article match to result array.
 	 * @return WikiaSearchResultSet provides fluent interface
 	 */
-	public function prependArticleMatchIfExists() {
+	protected function prependArticleMatchIfExists() {
 		wfProfileIn(__METHOD__);
 
 		if (! ( $this->searchConfig->hasArticleMatch() && $this->getResultsStart() == 0 ) ) {
@@ -282,6 +283,11 @@ class WikiaSearchResultSet extends WikiaObject implements Iterator,ArrayAccess {
 
 		wfProfileOut(__METHOD__);
 		return $this;
+	}
+	
+	protected function prependWikiMatchIfExists() {
+		$this->resultsFound++;
+		return $this->addResult( $this->searchConfig->getWikiMatch()->getResult() );
 	}
 
 	/**

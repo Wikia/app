@@ -14,6 +14,7 @@ class ArticlesApiController extends WikiaApiController {
 	const TOP_WIKIS_FOR_HUB = 10;
 
 	const PARAMETER_ARTICLES = 'ids';
+	const PARAMETER_TITLES = 'titles';
 	const PARAMETER_ABSTRACT = 'abstract';
 	const PARAMETER_NAMESPACES = 'namespaces';
 	const PARAMETER_CATEGORY = 'category';
@@ -366,6 +367,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * Get details about one or more articles, , those in the Special namespace (NS_SPECIAL) won't produce any result
 	 *
 	 * @requestParam string $ids A string with a comma-separated list of article ID's
+	 * @requestParam string $titles DbKey titles
 	 * @requestParam integer $abstract [OPTIONAL] The desired length for the article's abstract, defaults to 100, maximum 500, 0 for no abstract
 	 * @requestParam integer $width [OPTIONAL] The desired width for the thumbnail, defaults to 200, 0 for no thumbnail
 	 * @requestParam integer $height [OPTIONAL] The desired height for the thumbnail, defaults to 200, 0 for no thumbnail
@@ -379,6 +381,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->wf->profileIn( __METHOD__ );
 
 		$articles = $this->request->getVal( self::PARAMETER_ARTICLES, null );
+		$titleKeys = $this->request->getVal( self::PARAMETER_TITLES, null );
 		$abstractLen = $this->request->getInt( self::PARAMETER_ABSTRACT, 100 );
 		$width = $this->request->getInt( 'width', 200 );
 		$height = $this->request->getInt( 'height', 200 );
@@ -390,7 +393,12 @@ class ArticlesApiController extends WikiaApiController {
 		if ( $abstractLen > ArticleService::MAX_LENGTH ) {
 			throw new OutOfRangeApiException( self::PARAMETER_ABSTRACT, 0, ArticleService::MAX_LENGTH );
 		}
+		
+		if ( empty( $articles ) && empty( $titleKeys ) ) {
+			throw new MissingParameterApiException( self::PARAMETER_ARTICLES );
+		}
 
+		$titles = array();
 		if ( !empty( $articles ) ) {
 			$articles = explode( ',', $articles );
 			$ids = array();
@@ -408,71 +416,79 @@ class ArticlesApiController extends WikiaApiController {
 					$collection[$i] = $cache;
 				}
 			}
-
 			if ( count( $ids ) > 0 ) {
 				$titles = Title::newFromIDs( $ids );
-
-				if ( !empty( $titles ) ) {
-					foreach ( $titles as $t ) {
-						$id = $t->getArticleID();
-						$revId = $t->getLatestRevID();
-						$rev = Revision::newFromId( $revId );
-
-						$collection[$id] = [
-							'title' => $t->getText(),
-							'ns' => $t->getNamespace(),
-							'url' => $t->getLocalURL(),
-							'revision' => [
-								'id' => $revId,
-								'user' => $rev->getUserText( Revision::FOR_PUBLIC ),
-								'timestamp' => $this->wf->Timestamp( TS_UNIX, $rev->getTimestamp() )
-							]
-						];
-
-						$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
-
-						$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
+			}
+		}
+		
+		if ( !empty( $titleKeys ) ) {
+			$paramtitles = explode( ',', $titleKeys );
+			if ( count( $paramtitles ) > 0 ) {
+				foreach ( $paramtitles as $titleKey ) {
+					if ( $titleObj = Title::newFromDbKey( $titleKey ) ) {
+						$titles[] = Title::newFromDbKey( $titleKey );
 					}
 				}
-
-				$titles = null;
 			}
-
-			//ImageServing has separate caching
-			//so processing it separately allows to
-			//make the thumbnail's size parametrical without
-			//invalidating the titles details' cache
-			//or the need to duplicate it
-			if ( $width > 0 && $height > 0 ) {
-				$is = new ImageServing( $articles, $width, $height );
-				$thumbnails = $is->getImages( 1 );
-			} else {
-				$thumbnails = array();
-			}
-
-			$articles = null;
-
-			//ArticleService has separate caching
-			//so processing it separately allows to
-			//make the length parametrical without
-			//invalidating the titles details' cache
-			//or the need to duplicate it
-			foreach ( $collection as $id => &$details ) {
-				if ( $abstractLen > 0 ) {
-					$as = new ArticleService( $id );
-					$snippet = $as->getTextSnippet( $abstractLen );
-				} else {
-					$snippet = null;
-				}
-
-				$details['abstract'] = $snippet;
-				$details['thumbnail'] = ( array_key_exists( $id, $thumbnails ) ) ? $thumbnails[$id][0]['url'] : null;
-			}
-
-			$thumbnails = null;
-		} else {
-			throw new MissingParameterApiException( self::PARAMETER_ARTICLES );
 		}
+
+		if ( !empty( $titles ) ) {
+			foreach ( $titles as $t ) {
+				$id = $t->getArticleID();
+				$revId = $t->getLatestRevID();
+				$rev = Revision::newFromId( $revId );
+
+				$collection[$id] = [
+					'title' => $t->getText(),
+					'ns' => $t->getNamespace(),
+					'url' => $t->getLocalURL(),
+					'revision' => [
+						'id' => $revId,
+						'user' => $rev->getUserText( Revision::FOR_PUBLIC ),
+						'timestamp' => $this->wf->Timestamp( TS_UNIX, $rev->getTimestamp() )
+					]
+				];
+
+				$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
+
+				$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
+			}
+
+			$titles = null;
+		}
+
+		//ImageServing has separate caching
+		//so processing it separately allows to
+		//make the thumbnail's size parametrical without
+		//invalidating the titles details' cache
+		//or the need to duplicate it
+		if ( $width > 0 && $height > 0 ) {
+			$is = new ImageServing( $articles, $width, $height );
+			$thumbnails = $is->getImages( 1 );
+		} else {
+			$thumbnails = array();
+		}
+
+		$articles = null;
+
+		//ArticleService has separate caching
+		//so processing it separately allows to
+		//make the length parametrical without
+		//invalidating the titles details' cache
+		//or the need to duplicate it
+		foreach ( $collection as $id => &$details ) {
+			if ( $abstractLen > 0 ) {
+				$as = new ArticleService( $id );
+				$snippet = $as->getTextSnippet( $abstractLen );
+			} else {
+				$snippet = null;
+			}
+
+			$details['abstract'] = $snippet;
+			$details['thumbnail'] = ( array_key_exists( $id, $thumbnails ) ) ? $thumbnails[$id][0]['url'] : null;
+		}
+
+		$thumbnails = null;
 
 		/*
 		 * Varnish/Browser caching not appliable for
