@@ -410,13 +410,21 @@ var Lightbox = {
 			Lightbox.clearTrackingTimeouts();
 
 			var trackingTitle = Lightbox.getTitleDbKey(); // prevent race conditions from timeout
+			
+			/* Since we don't have an 'onload' event for video views, we're setting a timeout before counting a video as viewed. 
+			 * Below are the dates this timeout has been in effect.
+			 * 
+			 * 7/27/12 - 8/21/12: 5000ms (5s) 
+			 * 8/21/12 - 2/13/13: 1000ms (1s)
+			 * 2/13/13 - present: 3000ms (3s)
+			 */
 			Lightbox.video.trackingTimeout = setTimeout(function() {
 				Lightbox.openModal.aggregateViewCount++;
 				LightboxTracker.track(WikiaTracker.ACTIONS.VIEW, 'video', Lightbox.openModal.aggregateViewCount, {title: trackingTitle, provider: data.providerName, clickSource: Lightbox.openModal.clickSource});
 
 				// Set all future click sources to Lightbox rather than DOM element
 				Lightbox.openModal.clickSource = LightboxTracker.clickSource.LB;
-			}, 1000); // Was 5000, from 7/27/12 - 8/21/12
+			}, 3000);
 
 		}
 	},
