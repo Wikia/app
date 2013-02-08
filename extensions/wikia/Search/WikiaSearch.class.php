@@ -346,7 +346,16 @@ class WikiaSearch extends WikiaObject {
 		return $response;
 	}
 	
-
+	/**
+	 * Strategy for getting the right kind of match
+	 * @param  WikiaSearchConfig $config
+	 * @return WikiaSearchArticleMatch|WikiSearchWikiMatch|null
+	 */
+	public function getMatch( WikiaSearchConfig $config ) {
+		return $config->isInterWiki() ? $this->getWikiMatch( $config ) : $this->getArticleMatch( $config );
+	}
+	
+	
 	/**
 	 * Finds an article match and sets the value in the search config
 	 * @see    WikiaSearchTest::testGetArticleMatch
@@ -380,6 +389,37 @@ class WikiaSearch extends WikiaObject {
 	    wfProfileOut(__METHOD__);
 	    return null;
 	}
+	
+	public function getWikiMatch( WikiaSearchConfig $config ) {
+		wfProfileIn(__METHOD__);
+		
+		if ( $config->hasWikiMatch() ) {
+			wfProfileOut(__METHOD__);
+			return $config->getWikiMatch();
+		}
+		
+		$domain = preg_replace(
+				'/[^a-zA-Z]/',
+				'',
+				strtolower( $config->getQuery( WikiaSearchConfig::QUERY_RAW ) ) 
+				);
+		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
+		$query = $dbr->select(
+				array( 'city_domains' ),
+				array( 'city_id' ),
+				array( 'city_domain' => "{$domain}.wikia.com" )
+				);
+		if ( $row = $dbr->fetchObject( $query ) ) {
+			$config->setWikiMatch( new WikiaSearchWikiMatch( $row->city_id ) );
+			wfProfileOut(__METHOD__);
+			return $config->getWikiMatch();
+		}
+		
+		
+		wfProfileOut(__METHOD__);
+		return null;
+	}
+	
 	
 	/**
 	 * Public static helper functions for dynamic language support
@@ -508,6 +548,9 @@ class WikiaSearch extends WikiaObject {
 			$noPtt		= self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
 			
 			$searchConfig->setFilterQuery( $noPtt, 'ptt' );
+		} else if ( $searchConfig->hasWikiMatch() ) {
+			$noPtt		= self::valueForField( 'wid', $searchConfig->getWikiMatch()->getId(), array( 'negate' => true ) );
+			$searchConfig->setFilterQuery( $noPtt, 'wikiptt' );
 		}
 		
 		$query->addFilterQueries( $searchConfig->getFilterQueries() );
