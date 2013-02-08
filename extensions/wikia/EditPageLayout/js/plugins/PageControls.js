@@ -56,6 +56,7 @@
 			var pageControls = $('#EditPageRail .module_page_controls'),
 				menu = pageControls.find('nav');
 
+			this.categories = $('#categories');
 			this.textarea = pageControls.find('textarea');
 			this.scrollbarWidth = getScrollbarWidth();
 
@@ -139,7 +140,7 @@
 					RTE.config.startupFocus = false;
 				}
 			}
-			
+
 			this.isGridLayout = $('.WikiaGrid').length > 0;	// remove this after grid transition
 		},
 
@@ -299,11 +300,11 @@
 
 					// set focus on the first field
 					$('#HiddenFieldsDialog label').children().focus();
-					
+
 					//add press "Enter" = submit form functionality - BugId: 38480
-					$('#HiddenFieldsDialog input[name="wpTitle"]').keyup(function(event) { 
-						if (event.keyCode == 13) { 
-							$('#ok').click(); 
+					$('#HiddenFieldsDialog input[name="wpTitle"]').keyup(function(event) {
+						if (event.keyCode == 13) {
+							$('#ok').click();
 						}
 					});
 				},
@@ -367,10 +368,9 @@
 					contentNode.
 						bind('click', function(ev) {
 							var target = $(ev.target);
-                            var isPressed = ev.ctrlKey;
 
 							// don't block links opening in new tab
-							if (target.attr('target') !== '_blank' && !isPressed) {
+							if (target.attr('target') !== '_blank') {
 								ev.preventDefault();
 							}
 						}).
@@ -444,7 +444,7 @@
 			this.renderDialog($.msg('preview'), options, function(contentNode) {
 				self.getContent(function(content) {
 					var summary = $('#wpSummary').val();
-					
+
 					// bugid-93498: IE fakes placeholder functionality by setting a real val
 					if ( summary === $('#wpSummary').attr('placeholder') ) {
 						summary = '';
@@ -462,6 +462,10 @@
 
 					if (window.wgEditPageSection !== null) {
 						extraData.section = window.wgEditPageSection;
+					}
+
+					if (self.categories.length) {
+						extraData.categories = self.categories.val();
 					}
 
 					self.ajax('preview',
@@ -497,16 +501,20 @@
 					extraData.content = extraData.content || content;
 					extraData.section = parseInt($.getUrlVar('section') || 0);
 
+					if (self.categories.length) {
+						extraData.categories = self.categories.val();
+					}
+
 					$.when(
 						// get wikitext diff
 						self.ajax('diff', extraData),
 						// load CSS for diff
 						mw.loader.use('mediawiki.action.history.diff')
 					).done(function(ajaxData) {
-							var data = ajaxData[0],
-								html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
+						var data = ajaxData[0],
+							html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
 
-							contentNode.html(html);
+						contentNode.html(html);
 					});
 				});
 			});
@@ -520,21 +528,13 @@
 
 			callback = callback || function() {};
 
-			var csCategoryText = '';
-			if($('#csWikitext').exists()) {
-			    if(mode=='source') {
-			        csCategoryText += "\n";
-			    }
-			    csCategoryText += $('#csWikitext').val();
-			}
-
 			switch(mode) {
 				case 'mw':
-					callback($('#wpTextbox1').val() + csCategoryText);
+					callback($('#wpTextbox1').val());
 					return;
 				case 'source':
 				case 'wysiwyg':
-					callback(editor.getData() + csCategoryText);
+					callback(editor.getData());
 					return;
 			}
 		}
