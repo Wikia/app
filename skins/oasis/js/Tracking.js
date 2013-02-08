@@ -334,7 +334,8 @@ jQuery(function($){
 				track({
 					browserEvent: e,
 					category: category,
-					label: 'result-' + (el.data('event') === 'search_click_match' ? 'push-top' : 'item-' + el.data('pos'))
+					label: 'result-' + (el.data('event') === 'search_click_match' ? 'push-top' : 'item-' + el.data('pos')),
+					trackingMethod: 'both'
 				});
 			}).on('click', '.image', function(e) {
 				track({
