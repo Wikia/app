@@ -65,9 +65,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string editToken - token for changing password
 	 */
 	public function index() {
+
 		// redirect if signup
 		$type = $this->request->getVal('type', '');
-		if($type === 'signup') {
+		if ($type === 'signup') {
 			$title = SpecialPage::getTitleFor( 'UserSignup' );
 			$this->wg->Out->redirect( $title->getFullURL() );
 			return false;
@@ -91,7 +92,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$action = $this->request->getVal( 'action', null );
 			if (
 				$action === $this->wf->Msg('userlogin-forgot-password') ||
-				$action === $this->wf->Msg('wikiamobile-sendpassword-label')
+				$action === $this->wf->Msg('wikiamobile-sendpassword-label') ||
+				$type === 'forgotPassword'
 			) {	// send temporary password
 				$response = $this->app->sendRequest( 'UserLoginSpecial', 'mailPassword' );
 
@@ -140,6 +142,13 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$this->response->getView()->setTemplate( 'UserLoginSpecial', 'changePassword' );
 				}
 			}
+		}
+
+		if ($type === 'forgotPassword') {
+			$this->overrideTemplate('forgotPassword');
+			// set page title
+			$this->wg->Out->setPageTitle($this->wf->msg('userlogin-forgot-password'));
+			return;
 		}
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {

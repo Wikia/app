@@ -30,10 +30,14 @@
 		'tabindex' => ++$tabIndex,
 	);
 	$passwordInput['errorMsg'] = $passwordInput['isInvalid'] ? $msg : '';
-	
+
+	$forgotPasswordLinkUrl = SpecialPage::getTitleFor('UserLogin')->getLocalURL(array('type' => 'forgotPassword'));
+
 	$forgotPasswordLink = array(
 		'type' => 'custom',
-		'output' => '<a href="#" class="forgot-password" tabindex="0">'.wfMsg('userlogin-forgot-password').'</a>',
+		'output' => '<a href="'. $forgotPasswordLinkUrl .'" class="forgot-password" tabindex="0">'
+			. wfMsg('userlogin-forgot-password')
+			. '</a>',
 	);
 
 	$rememberMeInput = array(

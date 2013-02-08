@@ -11,6 +11,8 @@ $messages['en'] = array(
 	// login
 	'userlogin-login-heading' => 'Log in',
 	'userlogin-forgot-password' => 'Forgot your password?',
+	'userlogin-forgot-password-button' => 'Continue',
+	'userlogin-forgot-password-go-to-login' => 'Go back to [[Special:UserLogin|Log in]] page.',
 	'userlogin-remembermypassword' => 'Stay logged in',
 	'userlogin-error-noname' => 'Oops, please fill in the username field.',
 	'userlogin-error-sessionfailure' => 'Your log in session has timed out. Please log in again.',
@@ -119,6 +121,8 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 $messages['qqq'] = array(
 	'userlogin-login-heading' => 'Login page heading',
 	'userlogin-forgot-password' => 'Link that asks if you forgot your password.',
+	'userlogin-forgot-password-button' => 'Text on button on forgot your password form',
+	'userlogin-forgot-password-go-to-login' => 'Text with link to Special:UserLogin page',
 	'userlogin-remembermypassword' => 'Label for staying logged in checkbox',
 	'userlogin-error-noname' => 'Error message upon login attempt stating the name field is blank.',
 	'userlogin-error-sessionfailure' => 'Error message upon login attempt stating session has timed out.',
