@@ -29,12 +29,15 @@ class CategorySelectController extends WikiaController {
 		$categoryLinks = $this->wg->out->getCategoryLinks();
 		$userCanEdit = $this->request->getVal( 'userCanEdit', CategorySelect::isEditable() );
 
-		// Flatten categoryLinks into a single array. Keep hidden categories based on user preference.
-		if ( $this->wg->User->getBoolOption( 'showhiddencats' ) ) {
-			$categoryLinks = array_merge( $categoryLinks[ 'normal' ], $categoryLinks[ 'hidden' ] );
+		if ( !empty( $categoryLinks[ 'normal' ] ) ) {
 
-		} else {
-			$categoryLinks = $categoryLinks[ 'normal' ];
+			// Flatten categoryLinks array. Keep hidden categories based on user preference.
+			if ( !empty( $categoryLinks[ 'hidden' ] ) && $this->wg->User->getBoolOption( 'showhiddencats' ) ) {
+				$categoryLinks = array_merge( $categoryLinks[ 'normal' ], $categoryLinks[ 'hidden' ] );
+
+			} else {
+				$categoryLinks = $categoryLinks[ 'normal' ];
+			}
 		}
 
 		// There are no categories present and user can't edit, skip rendering
