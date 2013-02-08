@@ -379,8 +379,7 @@ class GameGuidesController extends WikiaController {
 						'acmin' => 1
 					)
 				);
-			},
-			WikiaDataAccess::SKIP_CACHE
+			}
 		);
 
 		$allCategories = $categories['query']['allcategories'];
