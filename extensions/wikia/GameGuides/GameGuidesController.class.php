@@ -319,19 +319,7 @@ class GameGuidesController extends WikiaController {
 	public function getGlobals(){
 		$this->wf->profileIn( __METHOD__ );
 
-		$wg = F::app()->wg;
-		$skin = Skin::newFromKey( 'wikiamobile' );
-
-		//global variables
-		//from Output class
-		//and from ResourceLoaderStartUpModule
-		$res = new ResourceVariablesGetter();
-		$vars = array_intersect_key(
-			$wg->Out->getJSVars() + $res->get(),
-			array_flip( $wg->GameGuidesGlobalsWhiteList )
-		);
-
-		$this->setVal( 'globals', WikiaSkin::makeInlineVariablesScript( $vars ) . $skin->getTopScripts() );
+		$this->setVal( 'globals', Skin::newFromKey( 'wikiamobile' )->getTopScripts() );
 
 		$this->wf->profileOut( __METHOD__ );
 	}
