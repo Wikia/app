@@ -2078,18 +2078,19 @@ class WallHooksHelper {
 	 * @return boolean
 	 */
 	public static function onBuildMonobookToolbox( &$monobook ) {
-		$title = F::App()->wg->Title;
-		global $wgUser;
+		$app = F::app();
+		$title = $app->wg->Title;
+		$curUser = $app->wg->User;
 		if ($title->getNamespace() === NS_USER_WALL) {
 			$user = User::newFromName($title->getText());
 		} else {
 			return true;
 		}
 		echo '<li id="t-contributions">' . Linker::link(SpecialPage::getTitleFor('Contributions', $user->getName()), wfMsgHtml('contributions')) . '</li>';
-		if ($wgUser->isAllowed('block')) {
-	echo '<li id="t-blockip">' . Linker::link(SpecialPage::getTitleFor('Block', $user->getName()), wfMsgHtml('block')) . '</li>';
+		if ($curUser->isAllowed('block')) {
+		echo '<li id="t-blockip">' . Linker::link(SpecialPage::getTitleFor('Block', $user->getName()), wfMsgHtml('block')) . '</li>';
 		}
-		if ($wgUser->canSendEmail()) {
+		if ($curUser->canSendEmail()) {
 			echo '<li id="t-emailuser">' . Linker::link(SpecialPage::getTitleFor('EmailUser', $user->getName()), wfMsgHtml('emailuser')) . '</li>';
 		}
 		echo '<li id="t-log">' . Linker::link(SpecialPage::getTitleFor('Log'), wfMsgHtml('log'), array(), array('user' => $user->getName())) . '</li>';
