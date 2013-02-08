@@ -1,36 +1,34 @@
 /**
- * @test-framework QUnit
  * @test-require-asset extensions/wikia/AdEngine/js/EvolveHelper.js
  */
 
-module('EvolveHelper');
+describe('EvolveHelper', function(){
+	it('getSect', function() {
+		var logMock = function() {}
+			, windowMock = {}
+			;
 
-test('getSect', function() {
-	var logMock = function() {}
-		, windowMock = {}
-	;
+		evolveHelper = EvolveHelper(logMock, windowMock);
 
-	evolveHelper = EvolveHelper(logMock, windowMock);
+		windowMock.wgDBname = null;
+		windowMock.wgDartCustomKeyValues = null;
+		windowMock.cscoreCat = null;
 
-	windowMock.wgDBname = null;
-	windowMock.wgDartCustomKeyValues = null;
-	windowMock.cscoreCat = null;
+		expect(evolveHelper.getSect()).toBe('ros', 'ros');
 
-	equal(evolveHelper.getSect(), 'ros', 'ros');
+		windowMock.wgDartCustomKeyValues = 'foo=bar;media=tv';
+		windowMock.cscoreCat = 'Entertainment';
 
-	windowMock.wgDartCustomKeyValues = 'foo=bar;media=tv';
-	windowMock.cscoreCat = 'Entertainment';
+		expect(evolveHelper.getSect()).toBe('tv', 'tv entertainment');
 
-	equal(evolveHelper.getSect(), 'tv', 'tv entertainment');
+		windowMock.wgDartCustomKeyValues = 'foo=bar';
+		windowMock.cscoreCat = 'Entertainment';
 
-	windowMock.wgDartCustomKeyValues = 'foo=bar';
-	windowMock.cscoreCat = 'Entertainment';
+		expect(evolveHelper.getSect()).toBe('entertainment', 'foo entertainment');
 
-	equal(evolveHelper.getSect(), 'entertainment', 'foo entertainment');
+		windowMock.wgDartCustomKeyValues = 'foo=bar;media=movie';
+		windowMock.cscoreCat = 'Entertainment';
 
-	windowMock.wgDartCustomKeyValues = 'foo=bar;media=movie';
-	windowMock.cscoreCat = 'Entertainment';
-
-	equal(evolveHelper.getSect(), 'movies', 'movie entertainment');
-
+		expect(evolveHelper.getSect()).toBe('movies', 'movie entertainment');
+	});
 });
