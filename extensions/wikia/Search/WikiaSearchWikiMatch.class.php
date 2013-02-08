@@ -38,9 +38,11 @@ class WikiaSearchWikiMatch extends WikiDataSource
 			$fields['title'] = !empty( $data['name'] ) ? $data['name'] : $this->getSitenameFromWf();
 			$fields[WikiaSearch::field( 'title' )] = $data['name'];
 			$fields['url'] = sprintf('%s://%s%s', $parsed['scheme'], $parsed['host'], $parsed['path']);
-			
+
 			$result = new WikiaSearchResult( $fields );
-			$result->setText( $data['description'] ?: $this->getTextFromMainPage() );
+			$text = $data['description'] ?: $this->getTextFromMainPage();
+			$text = strip_tags( html_entity_decode( $text, ENT_COMPAT, 'UTF-8' ) );
+			$result->setText( $text, false );
 			return $result;
 		}
 		return null;
