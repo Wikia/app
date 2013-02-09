@@ -388,6 +388,59 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		$this->assertEquals( ( $block_text ) ? $result_text : $result_summary, $ret );	
 	}
 	
+	/* abortMove method */
+	/**
+	 * @dataProvider phalanxContentBlockDataProvider
+	 */
+	public function testPhalanxContentAbortMove( $title, $text, $summary, $block_text, $block_summary, $isOk, $result_text, $result_summary ) {
+		// title
+		$titleMock = $this->getMock( 'Title', array('newFromText'), array( $title ) );
+		$this->mockClass('Title', $titleMock);
+		$this->proxyClass('Title', $titleMock);
+		$this->mockGlobalVariable('wgTitle', $titleMock);
+		
+		// Article
+		$articleMock = $this->getMock( 'Article', array(), array( $titleMock ) );
+		
+		// editPage
+		$editPageMock = $this->getMock( 'EditPage', array(), array( $articleMock ) ); 
+		$editPageMock->summary = $summary;
+		$editPageMock->textbox1 = $text;
+		$this->proxyClass('EditPage', $editPageMock);
+		
+		// PhalanxTextModel 
+		$modelMock = $this->getMock( 'PhalanxContentModel', array('match', 'isOk', 'setText'), array( $titleMock, '', '' ) );
+		$modelMock
+			->expects( $this->once() )
+			->method( 'isOk' )
+			->will( $this->returnValue( $isOk ) );
+		
+		$modelMock
+			->expects( $this->any() )
+			->method('setText')
+			->will( $this->returnValue( $modelMock ));
+			
+		$modelMock
+			->expects( $this->at(0) )
+			->method( 'match' )
+			->will( $this->returnValue( $block_summary ) );
+			
+		$modelMock
+			->expects( $this->at(1) )
+			->method( 'match' )
+			->will( $this->returnValue( $block_text ) );
+
+		$this->proxyClass( 'PhalanxContentModel', $modelMock );
+		$this->mockClass('PhalanxContentModel', $modelMock );
+	
+		// ContentBlock
+		$hookError = '';
+		$hook = new PhalanxContentBlock();
+		$ret = (int) $hook->editFilter( $editPageMock, $text, '', $hookError, $summary );
+		
+		$this->assertEquals( ( $block_text ) ? $result_text : $result_summary, $ret );	
+	}
+	
 	/* data providers */
 	public function phalanxUserBlockDataProvider() {
 		/* valid user */
