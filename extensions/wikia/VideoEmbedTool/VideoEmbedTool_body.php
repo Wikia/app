@@ -237,6 +237,7 @@ class VideoEmbedTool {
 
 		$size = $wgRequest->getVal('size');
 		$width = $wgRequest->getVal('width');
+		$width = empty($width) ? 335 : $width;
 		$layout = $wgRequest->getVal('layout');
 
 		header('X-screen-type: summary');
