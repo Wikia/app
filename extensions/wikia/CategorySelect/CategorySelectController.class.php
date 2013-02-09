@@ -34,6 +34,9 @@ class CategorySelectController extends WikiaController {
 			unset( $categoryLinks[ 'hidden' ] );
 		}
 
+		// Make sure category types always show up in the same order (hidden last)
+		krsort( $categoryLinks );
+
 		// There are no categories present and user can't edit, skip rendering
 		if ( !$userCanEdit && !count( $categoryLinks ) ) {
 			$this->wf->ProfileOut( __METHOD__ );
