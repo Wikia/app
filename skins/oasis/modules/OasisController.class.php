@@ -3,7 +3,7 @@
 class OasisController extends WikiaController {
 
 	private static $extraBodyClasses = array();
-	private static  $bodyParametersArray = array();
+	private static $bodyParametersArray = array();
 
 	/* @var AssetsManager */
 	private $assetsManager;
