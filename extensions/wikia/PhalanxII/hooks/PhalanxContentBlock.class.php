@@ -91,7 +91,7 @@ class PhalanxContentBlock extends WikiaObject {
 	 * Aborts a page move if the summary given matches
 	 * any blacklisted phrase.
 	 */
-	public function abortMove( $oldtitle, $newtitle, $user, &$error, $reason ) {
+	public function abortMove( $oldTitle, $newTitle, $user, &$error, $reason ) {
 		$this->wf->profileIn( __METHOD__ );
 
 		$ret = true;
@@ -103,7 +103,7 @@ class PhalanxContentBlock extends WikiaObject {
 		}
 
 		/* check title name */
-		$text = $title->getFullText();
+		$text = $newTitle->getFullText();
 
 		$result = $phalanxModel->setText( $text )->match( "title" );
 		if ( $result !== false ) {

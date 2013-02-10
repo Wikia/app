@@ -394,10 +394,10 @@ class PhalanxHooksTest extends WikiaBaseTest {
 	 */
 	public function testPhalanxContentAbortMove( $title, $text, $reason, $block_text, $block_summary, $isOk, $result_text, $result_summary ) {
 		// title
-		$titleMock = $this->getMock( 'Title', array('newFromText', 'getFromText'), array( $title ) );
+		$titleMock = $this->getMock( 'Title', array('newFromText', 'getFullText'), array( $title ) );
 		$titleMock
 			->expects( $this->once() )
-			->method( 'getFromText' )
+			->method( 'getFullText' )
 			->will( $this->returnValue( $title ) );
 
 		$this->mockClass('Title', $titleMock);
@@ -432,7 +432,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		// ContentBlock
 		$hookError = '';
 		$hook = new PhalanxContentBlock();
-		$ret = (int) $hook->abortMove( $titleMock, $titleMock, '', $hookError, $reason )
+		$ret = (int) $hook->abortMove( $titleMock, $titleMock, '', $hookError, $reason );
 		
 		$this->assertEquals( ( $block_text ) ? $result_text : $result_summary, $ret );	
 	}
