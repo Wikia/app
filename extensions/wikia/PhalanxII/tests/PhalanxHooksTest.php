@@ -223,7 +223,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 	
 	/* badWordsTest method */
 	/**
-	 * @dataProvider phalanxAnswersBlockDataProvider
+	 * @dataProvider phalanxTitleDataProvider
 	 */
 	public function testPhalanxAnswersBlockBadWordsTest( $title, $block, $language, $isOk, $result ) {
 		// Title 
@@ -264,7 +264,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 	
 	/* FilterWordsTest method */
 	/**
-	 * @dataProvider phalanxAnswersBlockDataProvider
+	 * @dataProvider phalanxTitleDataProvider
 	 */
 	public function testPhalanxAnswersFilterWordsTest( $title, $block, $language, $isOk, $result ) {
 		// Title 
@@ -436,6 +436,52 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		
 		$this->assertEquals( ( $block_text ) ? $result_text : $result_summary, $ret );	
 	}
+
+	/* PhalanxTitleBlock */
+	 
+	/* editFilter method */
+	/**
+	 * @dataProvider phalanxTitleDataProvider
+	 */
+	public function testPhalanxTitleCheckTitle( $title, $block, $language, $isOk, $result ) {
+		// title
+		$titleMock = $this->getMock( 'Title', array('newFromText', 'getFullText'), array( $title ) );
+		$titleMock
+			->expects( $this->once() )
+			->method( 'getFullText' )
+			->will( $this->returnValue( $title ) );
+
+		$this->mockClass('Title', $titleMock);
+		$this->proxyClass('Title', $titleMock);
+		$this->mockGlobalVariable('wgTitle', $titleMock);
+		
+		// PhalanxTextModel 
+		$modelMock = $this->getMock( 'PhalanxTitleModel', array('match', 'isOk', 'setText'), array( $titleMock, '', '' ) );
+		$modelMock
+			->expects( $this->once() )
+			->method( 'isOk' )
+			->will( $this->returnValue( $isOk ) );
+		
+		$modelMock
+			->expects( $this->any() )
+			->method('setText')
+			->will( $this->returnValue( $modelMock ));
+			
+		$modelMock
+			->expects( $this->once )
+			->method( 'match' )
+			->will( $this->returnValue( $block ) );
+
+		$this->proxyClass( 'PhalanxTitleModel', $modelMock );
+		$this->mockClass('PhalanxTitleModel', $modelMock );
+	
+		// ContentBlock
+		$hookError = '';
+		$hook = new PhalanxTitleBlock();
+		$ret = (int) $hook->checkTitle( $titleMock );
+		
+		$this->assertEquals( $result, $ret );	
+	}
 	
 	/* data providers */
 	public function phalanxUserBlockDataProvider() {
@@ -506,7 +552,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		return array( $validUser, $invalidUser, $invalidUserEmail, $okUser );
 	}
 
-	public function phalanxAnswersBlockDataProvider() {
+	public function phalanxTitleDataProvider() {
 		/* valid title */
 		$validTitle = array(
 			'title'		=> self::VALID_TITLE,
