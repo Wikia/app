@@ -468,7 +468,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 			->will( $this->returnValue( $modelMock ));
 			
 		$modelMock
-			->expects( $this->once )
+			->expects( $this->once() )
 			->method( 'match' )
 			->will( $this->returnValue( $block ) );
 
