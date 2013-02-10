@@ -1,6 +1,6 @@
 <?php
 class PhalanxContentModel extends PhalanxModel {
-	private $title = null;
+	protected $title = null;
 	const SPAM_WHITELIST_TITLE = 'Spam-whitelist';
 	const SPAM_WHITELIST_NS_TITLE = 'Mediawiki:Spam-whitelist';
 
