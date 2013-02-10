@@ -148,7 +148,7 @@ $messages['ms'] = array(
 	'scribeeventsrecords' => 'Rekod',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  */
 $messages['nb'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Verktøyl]] for å søke etter en bestemt sidetittel på tvers av wikier',
@@ -265,4 +265,13 @@ $messages['vi'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Công cụ]] để tìm kiếm cho một tiêu đề cụ thể xuyên khắp các wiki',
 	'scribeevents' => 'Sự kiện gần đây',
 	'scribeeventsrecords' => 'Bản ghi',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'scribe-desc' => '搜寻一个特定的页面标题的[[Special:Scribeevents|工具]]。',
+	'scribeevents' => '最近发生的事件',
+	'scribeeventsrecords' => '记录',
 );

@@ -294,7 +294,7 @@ $messages['ms'] = array(
 	'browser-loading-message' => 'Memuatkan...',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -514,12 +514,19 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Hydra
  * @author Reasno
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
+	'main-tab-discover' => '发现',
 	'main-tab-personal' => '我的Wikia',
 	'main-tab-search' => '搜索',
+	'main-tab-offline' => '离线',
+	'tab-discover-loading-message' => '载入中⋯',
+	'tab-discover-no-network-dialog-title' => '网络不可用',
+	'tab-discover-no-network-dialog-message' => '没有找到网络连接',
 	'tab-discover-no-network-dialog-close-button' => '确认',
+	'tab-search-loading-message' => '搜寻中⋯',
 	'browser-loading-message' => '载入中...',
 );

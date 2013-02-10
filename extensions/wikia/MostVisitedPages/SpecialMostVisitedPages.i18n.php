@@ -367,7 +367,7 @@ $messages['ms'] = array(
 	'mostvisitedpagesalllink' => 'Lihat laman yang paling kerap dikunjungi',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -392,7 +392,7 @@ $messages['nl'] = array(
 	'mostvisitedpagesalllink' => "Meest bezochte pagina's bekijken",
 );
 
-/** Norwegian Nynorsk (norsk (nynorsk)‎)
+/** Norwegian Nynorsk (norsk nynorsk)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -622,9 +622,11 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'mostvisitedpages' => '浏览最多的页面',
+	'mostvisitedpagessearchtext' => '条目名称：',
 	'mostvisitedpagessearchbtn' => '搜寻',
 	'mostvisitedpageslatest' => '在最近$1分钟内',
 	'mostvisitedpageslatestlink' => '查看最近访问的页面',
+	'mostvisitedpagesalllink' => '查看访问数量最多的页面',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

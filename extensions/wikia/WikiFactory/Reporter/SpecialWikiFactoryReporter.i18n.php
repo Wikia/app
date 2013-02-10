@@ -318,7 +318,7 @@ $messages['ms'] = array(
 	'wikifactoryreporter' => 'Pelapor Kilang Wiki',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(

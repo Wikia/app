@@ -46,6 +46,14 @@ $messages['ast'] = array(
 	'communitymessages-notice-msg' => "[[Special:WikiActivity|S'anovó Mensaxes a la Comunidá]].",
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Khan27
+ */
+$messages['az'] = array(
+	'communitymessages-desc' => 'Toplum Mesajları üçün genişlənmə Köməkçi',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Toplum Mesajları yeniləndi]].',
+);
+
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
@@ -214,7 +222,7 @@ $messages['ms'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Pesanan Komuniti telah dikemaskinikan]].',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(

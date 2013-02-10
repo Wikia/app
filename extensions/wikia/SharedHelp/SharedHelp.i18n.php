@@ -207,7 +207,7 @@ $messages['ms'] = array(
 	'sharedhelp-searchprofile-tooltip' => 'Cari dalam halaman Bantuan',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -267,10 +267,21 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
+ * @author JM Pessanha
  */
 $messages['pt-br'] = array(
 	'sharedhelp-desc' => 'Insere páginas da [[w:c:Help|Ajuda da Wikia]] no espaço nominal {{ns:help}} desta wiki',
 	'sharedhelp-autotalkcreate-summary' => 'Página de discussão criada automaticamente',
+	'sharedhelp-searchprofile' => 'Páginas de ajuda',
+	'sharedhelp-searchprofile-tooltip' => 'Pesquisar páginas de ajuda',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'sharedhelp-searchprofile' => "Pàgene d'ajute",
+	'sharedhelp-searchprofile-tooltip' => 'Cirche le pàggene de ajute',
 );
 
 /** Russian (русский)
@@ -316,7 +327,10 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'sharedhelp-autotalkcreate-summary' => '讨论页已自动创建',
+	'sharedhelp-searchprofile' => '帮助页面',
+	'sharedhelp-searchprofile-tooltip' => '搜索帮助页面',
 );

@@ -1018,23 +1018,22 @@ $messages['es'] = array(
 	'autocreatewiki-step7-error' => '¡No se puede copiar el starter para este idioma en la base de datos!',
 	'autocreatewiki-protect-reason' => 'Parte de la interfaz oficial',
 	'autocreatewiki-welcomesubject' => '¡$1 ha sido creado!',
-	'autocreatewiki-welcomebody' => 'Hola, $2,
+	'autocreatewiki-welcomebody' => '¡Hola, $2!
 
-El wiki que solicitaste está disponible en <$1> ¡Esperamos verte editando ahí pronto!
+¡Se ha creado tu wiki! Échale un vistazo: <$1>
 
-Hemos añadido alguna Información y Consejos en tu Página de Discusión de Usuario (<$5>) para ayudarte a comenzar.
+¿Estás preparado para comenzar? Hemos añadido algunos enlaces a tu muro de mensajes (<$5>) para ayudarte a comenzar y animarte a explorar las numerosas zonas útiles en Wikia. Se tienes alguna pregunta o estás un poco perdido responde a este correo electrónico o échale un vistazo a nuestras páginas de ayuda <http://ayuda.wikia.com>.
 
-Si tienes cualquier problema, puedes preguntar por la comunidad de ayuda en el wiki en <http://es.wikia.com/wiki/Forum:Secci%C3%B3n_de_ayuda>, y el blog de Wikia <http://es.wikia.com/wiki/Categoría:Noticias_de_Wikia> donde encontrarás trucos y consejos, información sobre nuevas funcionalidades y nuevas cosas que suceden en Wikia. 
+También puedes consultar el blog de los fundadores y administradores <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> (en inglés) y del Staff de Wikia <http://comunidad.wikia.com/wiki/Blog:Actualizaciones_t%C3%A9cnicas> para encontrar consejos y trucos, información sobre las nuevas funcionalidades y nuevas cosas sobre lo que ocurre en Wikia.
 
-Puedes contactar conmigo directamente por email o en mi página de discusión, si tienes alguna pregunta o inquietud.
-
-¡Buena suerte con el proyecto!
+¡Disfruta editando!
 
 $3
+El equipo Comunitario de Wikia
+<http://comunidad.wikia.com/wiki/Usuario:$4>
 
-Equipo Comunitario de Wikia
-
-<http://www.wikia.com/wiki/User:$4>',
+___________________________________________
+* ¿Quieres recibir menos mensajes de nosotros? Puedes cancelar tu suscripción o cambiar tus preferencias de correo electrónico aquí: http://comunidad.wikia.com/wiki/Especial:Preferencias',
 	'autocreatewiki-welcometalk-wall-title' => '¡Bienvenido!',
 	'autocreatewiki-welcometalk-wall' => '¡Hola!
 ¡Estamos encantados de que {{subst:SITENAME}} forme parte de la comunidad de Wikia! Todavía queda mucho por hacer, así que aquí tienes algunos consejos y enlaces para mejorar tu wiki:
@@ -2013,6 +2012,7 @@ $messages['inh'] = array(
  * @author Gianfranco
  * @author Gifh
  * @author Minerva Titani
+ * @author Nemo bis
  * @author Ximo17
  */
 $messages['it'] = array(
@@ -2055,7 +2055,7 @@ $messages['it'] = array(
 	'autocreatewiki-invalid-username' => 'Questo nome utente non è valido.',
 	'autocreatewiki-busy-username' => 'Questo nome utente è già in uso.',
 	'autocreatewiki-blocked-username' => 'Non puoi creare un account.',
-	'autocreatewiki-user-notloggedin' => 'Il tuo account è stato creato ma non hai effettuato il login!',
+	'autocreatewiki-user-notloggedin' => "Il tuo account è stato creato ma non hai eseguito l'accesso!",
 	'autocreatewiki-empty-language' => 'Per favore scegli la lingua per la wiki.',
 	'autocreatewiki-empty-category' => 'Per favore scegli una categoria.',
 	'autocreatewiki-empty-wikiname' => 'Il nome della wiki non può essere vuoto.',
@@ -2784,7 +2784,7 @@ $messages['mzn'] = array(
 	'autocreatewiki-page-title-default' => 'اتا نو ویکی درس هکردن',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -3167,7 +3167,7 @@ $messages['pl'] = array(
 	'autocreatewiki-empty-field' => 'Należy wypełnić to pole.',
 	'autocreatewiki-bad-name' => 'Nazwa nie może zawierać znaków specjalnych (np. $ czy @) i musi być jednym słowem zapisanym małymi literami bez odstępów.',
 	'autocreatewiki-invalid-wikiname' => 'Nazwa nie może zawierać znaków specjalnych (np. $ czy @) i nie może być pusta',
-	'autocreatewiki-violate-policy' => 'Nazwa wiki zawiera słowo, które narusza nasza zasady tworzenia wiki',
+	'autocreatewiki-violate-policy' => 'Nazwa wiki zawiera słowo, które narusza nasze zasady tworzenia wiki',
 	'autocreatewiki-name-taken' => 'Wiki pod tym adresem już istnieje. Zapraszamy do rozpoczęcia edytowania na <a href="http://$1.wikia.com">http://$1.wikia.com</a> lub wybrania innego adresu.',
 	'autocreatewiki-name-too-short' => 'Ten adres jest zbyt krótki. Należy wybrać adres o co najmniej 3 znakach.',
 	'autocreatewiki-name-too-long' => 'Ten adres jest zbyt długi. Należy wybrać adres o maksymalnie 50 znakach.',
@@ -3438,6 +3438,7 @@ $messages['ps'] = array(
 	'autocreatewiki-set-username' => 'لومړی مو کارن نوم وټاکۍ.',
 	'autocreatewiki-invalid-birthday' => 'ناسمه زېږون نېټه',
 	'autocreatewiki-log-title' => 'ستاسې ويکي د جوړېدو په حال کې دی',
+	'autocreatewiki-step0' => 'بهير پيلېدو کې دی ...',
 	'autocreatewiki-step2' => 'توکبنسټ د جوړولو په حال کې...',
 	'autocreatewiki-congratulation' => 'مبارک مو شه!',
 	'autocreatewiki-welcometalk-log' => 'د ښه راغلاست پيغام',
@@ -3753,6 +3754,11 @@ $messages['roa-tara'] = array(
 	'autocreatewiki-remember' => 'Arrecuèrdeme',
 	'autocreatewiki-create-account' => "Ccreje 'nu cunde utende",
 	'autocreatewiki-title-template' => '$1 Uicchi',
+	'autocreatewiki-invalid-username' => 'Stu nome utende jè invalide.',
+	'autocreatewiki-busy-username' => 'Stu nome utende jè ggià assegnate.',
+	'autocreatewiki-blocked-username' => "Tu non ge puè ccrejà 'nu cunde utende.",
+	'autocreatewiki-empty-language' => "Pe piacere scacchie 'a lènghe pa uicchi.",
+	'autocreatewiki-empty-category' => "Pe piacere scacchie 'na categorije.",
 	'autocreatewiki-category-label' => 'Categorije:',
 	'autocreatewiki-category-other' => 'otre',
 	'autocreatewiki-step2' => "Stoche a ccreje l'archivije ...",
@@ -4630,10 +4636,13 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-title-template' => '$1 维基',
 	'autocreatewiki-limit-day' => 'Wikia今日新维基创建数已超出上限($1)。',
 	'autocreatewiki-limit-creation' => '您在24小时内超越了维基创建数目上限($1)。',
+	'autocreatewiki-empty-field' => '请填写此字段。',
+	'autocreatewiki-bad-name' => '名称不能包含特殊字符（如 $ 或 @）和必须是一个不包含空格的单词。',
 	'autocreatewiki-invalid-wikiname' => '名称不能包含特殊字符（如$或@）且不能为空。',
 	'autocreatewiki-violate-policy' => '此维基名中含有违反命名策略的词语',
 	'autocreatewiki-name-too-short' => '此地址过短，请选择一个至少包含3个字符的地址。',
 	'autocreatewiki-name-too-long' => '此地址过长，请选择一个最多包含50个字符的地址。',
+	'autocreatewiki-similar-wikis' => '以下是已经创建了关于这个主题的维基。我们建议编辑其中之一。',
 	'autocreatewiki-invalid-username' => '此用户名无效。',
 	'autocreatewiki-busy-username' => '已采取此用户名。',
 	'autocreatewiki-blocked-username' => '您不能创建帐户。',

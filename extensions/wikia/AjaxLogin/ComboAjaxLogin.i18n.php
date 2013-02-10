@@ -677,7 +677,7 @@ Sila cuba lagi atau [[Special:Contact|laporkannya kepada kami]].',
 	'comboajaxlogin-ajaxerror' => 'Wikia tidak bertindak balas. Sila periksa sambungan rangkaian anda.',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -944,6 +944,7 @@ $messages['ro'] = array(
 );
 
 /** tarandíne (tarandíne)
+ * @author Joetaras
  * @author Reder
  */
 $messages['roa-tara'] = array(
@@ -951,9 +952,16 @@ $messages['roa-tara'] = array(
 	'comboajaxlogin-createlog' => "Trase o ccreje 'nu cunde utende nuève",
 	'comboajaxlogin-actionmsg' => "Ce vuè ccu fàce quiste cose tu hé ddà trasè o hé ddà crejà 'nu cunde",
 	'comboajaxlogin-actionmsg-protected' => "Ce vuè ccu fàce quiste cose tu hé ddà trasè o hé ddà crejà 'nu cunde",
+	'comboajaxlogin-connectmarketing' => "<h1>Colleghe le cunde tune</h1>
+<ul>
+<li>Mandìne 'u nome utende de mò tune, le cunde, le cangiaminde... nisciune cangiaminde apparte cumme tràse</li>
+<li>Condivide l'attività tue sus a Uicchia cu l'amice tune sus a Feisbuc</li>
+<li>Condrolle comblete de quidde ca pubbleche</li>
+</ul>",
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Tràse cu Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Rrète',
 	'comboajaxlogin-connectmarketing-forward' => 'Ccu accumenze &raquo;',
+	'comboajaxlogin-ajaxerror' => "Uicchia non ge ste resppnne. Pe piacere condrolle 'a connessione d'a rezza toje.",
 );
 
 /** Russian (русский)

@@ -195,6 +195,7 @@ Alternatively, you can click "$2" to see the page in its updated form.',
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author LWChris
+ * @author Shirayuki
  * @author Siebrand
  * @author Umherirrender
  * @author மதனாஹரன்
@@ -219,6 +220,7 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-photooptions-done' => '{{Identical|Done}}',
 	'wikiaPhotoGallery-preview-hover-modify' => '{{Identical|Modify}}',
 	'wikiaPhotoGallery-preview-hover-delete' => '{{Identical|Delete}}',
+	'wikiaPhotoGallery-preview-add-link' => '{{Identical|Add link}}',
 	'wikiaPhotoGallery-preview-position-left' => '{{Identical|Left}}',
 	'wikiaPhotoGallery-preview-position-center' => '{{Identical|Center}}',
 	'wikiaPhotoGallery-preview-position-right' => '{{Identical|Right}}',
@@ -2042,7 +2044,7 @@ Décrivez cette photo.",
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Lien vers (insérez le nom ou l’URL de la page).',
 	'wikiaPhotoGallery-photooptions-description' => 'Détails de l’image',
 	'wikiaPhotoGallery-search-tooltip' => 'Rechercher des photos sur ce wiki',
-	'wikiaPhotoGallery-upload-image-size' => 'Les images doivent être de 670 par 360 px ou plus.', # Fuzzy
+	'wikiaPhotoGallery-upload-image-size' => 'Les images doivent être de 670 par 360 px ou plus.',
 	'wikiaPhotoGallery-not-displayed' => 'Non affiché',
 	'galery-slider-read-more' => 'En savoir plus &gt;',
 );
@@ -2222,7 +2224,7 @@ Describa esta foto.",
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Ligazón cara a (pegue o nome da páxina ou o URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalles da imaxe.',
 	'wikiaPhotoGallery-search-tooltip' => 'Procurar fotos neste wiki',
-	'wikiaPhotoGallery-upload-image-size' => 'As imaxes deben ser de 670px por 360px ou maiores.', # Fuzzy
+	'wikiaPhotoGallery-upload-image-size' => 'As imaxes deben ser de 670px por 360px ou maiores',
 	'wikiaPhotoGallery-not-displayed' => 'Non mostrado',
 	'galery-slider-read-more' => ' Ler máis >',
 );
@@ -3562,7 +3564,7 @@ $messages['mk'] = array(
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Врска до (тука ископирајте назив или URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Податоци за сликата.',
 	'wikiaPhotoGallery-search-tooltip' => 'Пребарај слики на ова вики',
-	'wikiaPhotoGallery-upload-image-size' => 'Сликите мора да бидат со големина од барем 670 × 360 пиксели.', # Fuzzy
+	'wikiaPhotoGallery-upload-image-size' => 'Сликите мора да бидат со големина од барем 670 × 360 пиксели.',
 	'wikiaPhotoGallery-not-displayed' => 'Неприкажано',
 	'galery-slider-read-more' => 'Прочитајте повеќе >',
 );
@@ -3759,7 +3761,7 @@ $messages['my'] = array(
 	'wikiaPhotoGallery-preview-hover-delete' => 'ဖျက်​ပါ',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -5501,7 +5503,7 @@ Alternativt kan du klicka på "$2" för att se sidan i sin uppdaterade form.',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Länk till (klistra in sidans namn eller URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Bilddetaljer.',
 	'wikiaPhotoGallery-search-tooltip' => 'Sök efter bilder på denna wiki',
-	'wikiaPhotoGallery-upload-image-size' => 'Bilder måste vara 670x360 px eller större.', # Fuzzy
+	'wikiaPhotoGallery-upload-image-size' => 'Foton måste vara 670x360 pixlar eller större.',
 	'wikiaPhotoGallery-not-displayed' => 'Visas inte',
 	'galery-slider-read-more' => ' Läs mer >',
 );
@@ -6115,6 +6117,7 @@ $messages['yi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-back' => '返回',
@@ -6202,6 +6205,7 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => '选择',
 	'wikiaPhotoGallery-photooptions-captionsub' => '描述该图片。',
 	'wikiaPhotoGallery-search-tooltip' => '在该维基搜索图片',
+	'wikiaPhotoGallery-upload-image-size' => '图片尺寸必须为长670px宽360px或更大',
 );
 
 /** Chinese (Taiwan) (中文（台灣）‎)

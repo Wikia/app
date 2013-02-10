@@ -2255,7 +2255,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-facebook-problem' => 'Timbulnya masalah ketika berhubung dengan Facebook. Sila cuba lagi nanti.',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -3087,13 +3087,20 @@ It veus-to controlé che eamil it arseive? Và a: {{fullurl:{{ns:special}}:Prefe
  */
 $messages['ps'] = array(
 	'usersignup-page-title' => 'ويکيا سره يوځای شی',
+	'usersignup-page-captcha-label' => 'تته ويکه',
 	'usersignup-facebook-create-account' => 'ګڼون جوړول',
 	'usersignup-confirm-email-change-email' => 'زما برېښليک پته بدله کړه',
 	'usersignup-confirm-email-new-email-label' => 'نوی برېښليک',
 	'usersignup-confirm-email-update' => 'اوسمهالول',
+	'usersignup-resend-email-heading-success' => 'نوی برېښليک ولېږل شو',
 	'usersignup-confirm-page-heading-confirmed-user' => 'بختور مو شه!',
 	'usersignup-confirmation-heading-email-resent' => 'نوی برېښليک ولېږل شو',
 	'usersignup-confirmation-subheading' => 'خپل برېښليک وګورۍ',
+	'usersignup-confirmation-email-signature' => 'د ويکيا ډله',
+	'usersignup-reconfirmation-email-signature' => 'د ويکيا ډله',
+	'usersignup-welcome-email-signature' => 'د ويکيا ډله',
+	'usersignup-heading' => 'ويکيا سره همدا نن يوځای شۍ',
+	'usersignup-marketing-global-heading' => 'جوړول',
 );
 
 /** Portuguese (português)
