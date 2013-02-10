@@ -39,7 +39,7 @@ $messages[ 'en' ] = array(
 	'categoryselect-modal-category-sortkey' => 'Optionally, you may alphabetize this article on the "$1" category page under the name:',
 	'categoryselect-tooltip-add' => 'Press the Enter or Return key when done.',
 	'tog-disablecategoryselect' => 'Disable Category module (only applies if editing in visual mode has been disabled)',
-	'tog-disablecategoryselect-v2' => 'Disable Category module (only applies if visual mode editing is disabled)'
+	'tog-disablecategoryselect-v2' => 'Disable Category module (only applies if visual mode editing is disabled)',
 );
 
 /** Message documentation (Message documentation)
