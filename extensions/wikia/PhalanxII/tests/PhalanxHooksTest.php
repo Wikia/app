@@ -21,6 +21,10 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		'WIKIA', 'FOOTBALL'
 	);
 
+	private $COOKIE_TRACKER = array(
+		'8905067FA3099DB6B6813CE4C6CFDB3C',
+	);
+
 	/***
 	 * setup tests
 	 */
@@ -438,8 +442,10 @@ class PhalanxHooksTest extends WikiaBaseTest {
 	}
 
 	/* PhalanxTitleBlock */
-	 
-	/* editFilter method */
+	/* PhalanxRecentQuestionsBlock */
+	/* PhalanxQuestionTitleBlock */
+
+	/* checkTitle method */
 	/**
 	 * @dataProvider phalanxTitleDataProvider
 	 */
@@ -481,6 +487,65 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		$ret = (int) $hook->checkTitle( $titleMock );
 		
 		$this->assertEquals( $result, $ret );	
+	}
+
+	/* PhalanxUserCookieBlock class */
+
+	/* blockCheck method */
+	/**
+	 * @dataProvider phalanxUserBlockDataProvider
+	 */
+	public function testPhalanxUserCookieBlockCheck( $isAnon, $userName, $email, $block, $isOk, $result, $errorMsg ) {		
+		// User 
+		$userMock = $this->getMock( 'User', array( 'isAnon', 'getName' ) ); 
+		$userMock
+			->expects( $this->any() )
+			->method( 'isAnon' )
+			->will( $this->returnValue( $isAnon ) );
+		$userMock
+			->expects( $this->any() )
+			->method( 'getName' )
+			->will( $this->returnValue( $userName ) );
+		$this->mockClass('User', $userMock);
+
+		$this->mockGlobalVariable('wgUser', $userMock);
+
+		//AccountCreationTracker
+		$trackerMock = $this->getMock( 'AccountCreationTracker', array( 'getHashesByUser' ) );
+		$trackerMock
+			->expects( $this->any() )
+			->method( 'getHashesByUser' )
+			->will( $this->returnValue( $this->COOKIE_TRACKER ) );
+
+		// PhalanxUserModel 
+		$modelMock = $this->getMock( 'PhalanxUserModel', array('isOk', 'match', 'getUser', 'setText'), array( $userMock ) );
+		$modelMock
+			->expects( $this->once() )
+			->method( 'isOk' )
+			->will( $this->returnValue( $isOk ) );
+		
+		$modelMock
+			->expects( $this->any() )
+			->method( 'match' )
+			->will( $this->returnValue( $block ) );
+
+		$modelMock
+			->expects( $this->any() )
+			->method( 'setText' )
+			->will( $this->returnValue( $modelMock ) );
+			
+		$modelMock
+			->expects( $this->any() )
+			->method('getUser')
+			->will( $this->returnValue( $userMock ));	
+
+		$this->proxyClass( 'PhalanxUserModel', $modelMock );
+		$this->mockClass('PhalanxUserModel', $modelMock );
+
+		$hook = new PhalanxUserCookieBlock();
+		$ret = (int) $hook->blockCheck( $userMock );
+
+		$this->assertEquals( $result, $ret );
 	}
 	
 	/* data providers */
