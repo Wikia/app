@@ -493,9 +493,9 @@ class PhalanxHooksTest extends WikiaBaseTest {
 
 	/* blockCheck method */
 	/**
-	 * @dataProvider phalanxUserBlockDataProvider
+	 * @dataProvider phalanxUserCookieBlockDataProvider
 	 */
-	public function testPhalanxUserCookieBlockCheck( $isAnon, $userName, $email, $block, $isOk, $result, $errorMsg ) {		
+	public function testPhalanxUserCookieBlockCheck( $isAnon, $userName, $block, $result ) {		
 		// User 
 		$userMock = $this->getMock( 'User', array( 'isAnon', 'getName' ) ); 
 		$userMock
@@ -511,18 +511,20 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgUser', $userMock);
 
 		//AccountCreationTracker
-		$trackerMock = $this->getMock( 'AccountCreationTracker', array( 'getHashesByUser' ) );
-		$trackerMock
-			->expects( $this->any() )
-			->method( 'getHashesByUser' )
-			->will( $this->returnValue( $this->COOKIE_TRACKER ) );
+		if ( class_exists( 'AccountCreationTracker' ) ) {
+			$trackerMock = $this->getMock( 'AccountCreationTracker', array( 'getHashesByUser' ) );
+			$trackerMock
+				->expects( $this->any() )
+				->method( 'getHashesByUser' )
+				->will( $this->returnValue( $this->COOKIE_TRACKER ) );
+			$this->proxyClass( 'AccountCreationTracker', $trackerMock );
+			$this->mockClass('AccountCreationTracker', $trackerMock );
+		} else {
+			$result = 1;			
+		}
 
 		// PhalanxUserModel 
-		$modelMock = $this->getMock( 'PhalanxUserModel', array('isOk', 'match', 'getUser', 'setText'), array( $userMock ) );
-		$modelMock
-			->expects( $this->once() )
-			->method( 'isOk' )
-			->will( $this->returnValue( $isOk ) );
+		$modelMock = $this->getMock( 'PhalanxUserModel', array('match', 'getUser', 'setText'), array( $userMock ) );
 		
 		$modelMock
 			->expects( $this->any() )
@@ -615,6 +617,44 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		);
 	
 		return array( $validUser, $invalidUser, $invalidUserEmail, $okUser );
+	}
+
+	public function phalanxUserCookieBlockDataProvider() {
+		/* valid user */
+		$validUser = array(
+			'isAnon'    => false,
+			'getName'   => self::VALID_USERNAME,
+			'block'     => 0,
+			'result'    => 1
+		);
+
+		/* valid anon user */
+		$validAnonUser = array(
+			'isAnon'    => true,
+			'getName'   => self::INVALID_USERNAME,
+			'block'     => 0,
+			'result'    => 1
+		);
+
+		/* invalid user */
+		$invalidUser = array(
+			'isAnon'    => false,
+			'getName'   => self::VALID_USERNAME,
+			'block'     => (object) array(
+				'regex' => 0,
+				'expires' => '',
+				'text' => self::INVALID_EMAIL,
+				'reason' => 'Test Email',
+				'exact' => '',
+				'caseSensitive' => '', 
+				'id' => 4010,
+				'language' => '', 
+				'authorId' => 184532,
+			),
+			'result'    => 0
+		);
+	
+		return array( $validUser, $validAnonUser, $invalidUser );
 	}
 
 	public function phalanxTitleDataProvider() {
