@@ -19,7 +19,7 @@
 
 $messages = array();
 
-$messages[ 'en' ] = array(
+$messages['en'] = array(
 	'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article',
 	'categoryselect-button-add' => 'Add category',
 	'categoryselect-button-cancel' => 'Cancel',
@@ -45,7 +45,7 @@ $messages[ 'en' ] = array(
 /** Message documentation (Message documentation)
  * @author Kflorence
  */
-$messages[ 'qqq' ] = array(
+$messages['qqq'] = array(
 	'categoryselect-desc' => '{{desc}}',
 	'categoryselect-button-add' => 'The text displayed for the add category button on article pages.',
 	'categoryselect-button-save' => 'The text displayed for the save button on article pages.',
@@ -67,7 +67,7 @@ $messages[ 'qqq' ] = array(
 	'categoryselect-modal-category-sortkey' => 'The text shown above the sortkey input field in the modal dialog.',
 	'categoryselect-tooltip-add' => 'A tooltip explaining to users how to submit the category they typed in the input field.',
 	'tog-disablecategoryselect' => 'The text displayed in user preferences for disabling the CategorySelect extension',
-	'tog-disablecategoryselect-v2' => 'The text displayed in user preferences for disabling the CategorySelect extension when the UserPreferencesV2 extension is enabled.'
+	'tog-disablecategoryselect-v2' => 'The text displayed in user preferences for disabling the CategorySelect extension when the UserPreferencesV2 extension is enabled.',
 );
 
 /** Afrikaans (Afrikaans)
