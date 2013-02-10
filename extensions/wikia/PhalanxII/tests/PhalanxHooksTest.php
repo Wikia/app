@@ -392,21 +392,17 @@ class PhalanxHooksTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider phalanxContentBlockDataProvider
 	 */
-	public function testPhalanxContentAbortMove( $title, $text, $summary, $block_text, $block_summary, $isOk, $result_text, $result_summary ) {
+	public function testPhalanxContentAbortMove( $title, $text, $reason, $block_text, $block_summary, $isOk, $result_text, $result_summary ) {
 		// title
-		$titleMock = $this->getMock( 'Title', array('newFromText'), array( $title ) );
+		$titleMock = $this->getMock( 'Title', array('newFromText', 'getFromText'), array( $title ) );
+		$titleMock
+			->expects( $this->once() )
+			->method( 'getFromText' )
+			->will( $this->returnValue( $title ) );
+
 		$this->mockClass('Title', $titleMock);
 		$this->proxyClass('Title', $titleMock);
 		$this->mockGlobalVariable('wgTitle', $titleMock);
-		
-		// Article
-		$articleMock = $this->getMock( 'Article', array(), array( $titleMock ) );
-		
-		// editPage
-		$editPageMock = $this->getMock( 'EditPage', array(), array( $articleMock ) ); 
-		$editPageMock->summary = $summary;
-		$editPageMock->textbox1 = $text;
-		$this->proxyClass('EditPage', $editPageMock);
 		
 		// PhalanxTextModel 
 		$modelMock = $this->getMock( 'PhalanxContentModel', array('match', 'isOk', 'setText'), array( $titleMock, '', '' ) );
@@ -423,12 +419,12 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		$modelMock
 			->expects( $this->at(0) )
 			->method( 'match' )
-			->will( $this->returnValue( $block_summary ) );
+			->will( $this->returnValue( $block_text ) );
 			
 		$modelMock
 			->expects( $this->at(1) )
 			->method( 'match' )
-			->will( $this->returnValue( $block_text ) );
+			->will( $this->returnValue( $block_summary ) );
 
 		$this->proxyClass( 'PhalanxContentModel', $modelMock );
 		$this->mockClass('PhalanxContentModel', $modelMock );
@@ -436,7 +432,7 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		// ContentBlock
 		$hookError = '';
 		$hook = new PhalanxContentBlock();
-		$ret = (int) $hook->editFilter( $editPageMock, $text, '', $hookError, $summary );
+		$ret = (int) $hook->abortMove( $titleMock, $titleMock, '', $hookError, $reason )
 		
 		$this->assertEquals( ( $block_text ) ? $result_text : $result_summary, $ret );	
 	}
