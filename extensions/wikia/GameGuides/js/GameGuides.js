@@ -1,5 +1,5 @@
 (function(html, w){
-	var links = document.querySelectorAll('a:not(.external):not(.extiw)'),
+	var links = document.querySelectorAll('a:not(.external):not(.extiw):not(.image)'),
 		host = w.wgServer,
 		i = links.length;
 
@@ -18,7 +18,7 @@
 			ns = 0;
 
 
-		if(t.tagName === 'A') {
+		if(t.tagName === 'A' && !~t.className.indexOf('image')) {
 			ev.preventDefault();
 
 			if(t.hasAttribute('title')) {
