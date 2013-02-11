@@ -1704,7 +1704,7 @@ class WikiPage extends Page {
 
 		$restrictionTypes = $this->mTitle->getRestrictionTypes();
 
-		$id = $this->mTitle->getArticleID();
+		$id = $this->mTitle->getArticleID( Title::GAID_FOR_UPDATE ); // WIKIA CHANGE: tor added Title::GAID_FOR_UPDATE for recently deleted articles
 
 		if ( !$cascade ) {
 			$cascade = false;
