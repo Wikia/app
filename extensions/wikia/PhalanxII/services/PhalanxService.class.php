@@ -110,11 +110,13 @@ class PhalanxService extends Service {
 		 * for any other we're sending POST
 		 */
 		else {
-		  if (($action == "match" || $action == "check") && !is_null( $this->user ) ) {
-        $parameters[ 'wiki' ] = F::app()->wg->CityId;
-        $parameters[ 'user' ] = $this->user->getName();
-      }
-			if ($action == "match" && $this->limit > 1) $parameters['limit'] = $this->limit;
+			if (($action == "match" || $action == "check") && !is_null( $this->user ) ) {
+				$parameters[ 'wiki' ] = F::app()->wg->CityId;
+        		$parameters[ 'user' ] = $this->user->getName();
+			}
+			if ($action == "match" && $this->limit > 1) {
+				$parameters['limit'] = $this->limit;
+			}
 			wfDebug( __METHOD__ . ": calling $url with POST data " . wfArrayToCGI( $parameters ) ."\n" );
 			$response = Http::post( $url, array( "noProxy" => true, "postData" => wfArrayToCGI( $parameters ) ) );
 		}
