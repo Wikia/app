@@ -169,6 +169,7 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'wgJSMessagesCB',
 			'wgTrackID',
 			'wgCookiePrefix',
+			'JSSnippetsStack',
 
 			//skin
 			'skin'
