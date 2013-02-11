@@ -239,12 +239,13 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @param int    $sectionId
 	 * @param int    $verticalId
 	 * @param int    $timestamp
+	 * @param int    $moduleId
 	 *
 	 * @return array
 	 */
-	public function getPublishedData($langCode, $sectionId, $verticalId, $timestamp = null) {
+	public function getPublishedData($langCode, $sectionId, $verticalId, $timestamp = null, $moduleId = null) {
 		$lastPublishTimestamp = $this->getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp);
-		return $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $lastPublishTimestamp);
+		return $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $lastPublishTimestamp, $moduleId);
 	}
 
 	public function getModuleUrl($langCode, $sectionId, $verticalId, $timestamp, $moduleId) {
@@ -280,8 +281,7 @@ class MarketingToolboxModel extends WikiaModel {
 		}
 		
 		$actualData = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp);
-		$out = $out + $actualData;
-
+		$out = $actualData + $out;
 		ksort($out);
 
 		return $out;
