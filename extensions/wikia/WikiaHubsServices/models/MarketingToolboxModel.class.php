@@ -280,7 +280,7 @@ class MarketingToolboxModel extends WikiaModel {
 		}
 		
 		$actualData = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp);
-		$out = $actualData + $out;
+		$out = $out + $actualData;
 
 		ksort($out);
 
