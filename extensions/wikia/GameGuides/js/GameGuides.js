@@ -1,12 +1,12 @@
 (function(html, w){
-	var links = document.querySelectorAll('a:not(.external):not(.extiw):not(.image)'),
+	var links = document.querySelectorAll('a:not(.external):not(.extiw)'),
 		host = w.wgServer,
 		i = links.length;
 
 	while(i--) {
 		var link = links[i];
 
-		if(link.origin != host || link.pathname == '/wikia.php') {
+		if(!~link.parentElement.className.indexOf('thumb') && (link.origin != host || link.pathname == '/wikia.php')) {
 			link.className += ' disabled';
 		}
 	}
@@ -17,8 +17,7 @@
 			title,
 			ns = 0;
 
-
-		if(t.tagName === 'A' && !~t.className.indexOf('image')) {
+		if(t.tagName === 'A'){
 			ev.preventDefault();
 
 			if(t.hasAttribute('title')) {
@@ -35,7 +34,7 @@
 					ns = 14;
 				}
 			}
-
+console.log(title);
 			Ponto.invoke(
 				'Linker',
 				'goTo',
@@ -45,7 +44,7 @@
 				}
 			);
 		}
-	}, true);
+	});
 
 	//handling grabing all links on a page;
 	function Photos(){
