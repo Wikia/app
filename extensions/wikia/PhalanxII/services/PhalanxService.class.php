@@ -36,7 +36,7 @@ class PhalanxService extends Service {
 	 * @param string $content  text to be checked
 	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
 	 */
-	public function check( $type, $content, $lang = "en" ) {
+	public function check( $type, $content, $lang = "" ) {
 		return $this->sendToPhalanxDaemon( "check", array( "type" => $type, "content" => $content, "lang" => $lang ) );
 	}
 
@@ -47,7 +47,7 @@ class PhalanxService extends Service {
 	 * @param string $content  text to be checked
 	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
 	 */
-	public function match( $type, $content, $lang = "en" ) {
+	public function match( $type, $content, $lang = "" ) {
 		return $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
 	}
 

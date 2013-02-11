@@ -250,7 +250,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$listing = '';
 
 		foreach(Phalanx::getAllTypeNames() as $blockType) {
-			$res = $service->match($blockType, $blockText, 'en');
+			$res = $service->match($blockType, $blockText);
 
 			if (empty($res)) {
 				continue;

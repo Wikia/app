@@ -8,7 +8,7 @@
 			<form id="phalanx-block-test" action="<?= $action ?>">
 				<label>
 					<?= wfMsg( 'phalanx-test-description' ) ?>
-					<input type="text" id="phalanx-block-text" name="wpBlockText" value="<?= htmlspecialchars($blockText) ?>">
+					<input type="text" id="phalanx-block-text" name="wpBlockText" value="<?= htmlspecialchars($blockText) ?>" autofocus>
 				</label>
 				<input type="submit" value="<?= wfMsg( 'phalanx-test-submit' ) ?>">
 			</form>
