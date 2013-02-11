@@ -32,9 +32,11 @@ html {
 }
 
 body {
+	background-color: $footerBackground;
+
 	color: $page-text-color;
 	font-size: medium;
-	line-height: 25px;
+	line-height: 1.5em;
 }
 
 #wkCurtain {
