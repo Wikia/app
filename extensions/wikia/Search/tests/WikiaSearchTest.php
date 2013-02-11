@@ -1041,6 +1041,95 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 				'WikiaSearch::getNestedQuery should not have boost functions set if WikiaSearchConfig has had skipBoostFunctions set to true.'
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearch::registerHighlighting
+	 */
+	public function testRegisterHighlighting() {
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( null )
+		                   ->getMock();
+		
+		$hlMethods = array( 
+				'addField', 'setSnippets', 'setRequireFieldMatch', 
+				'setFragSize', 'setSimplePrefix', 'setSimplePostfix', 
+				'setAlternateField', 'setMaxAlternateFieldLength' 
+				);
+		
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getHighlighting' ) )
+		                  ->getMock();
+		
+		$mockHl = $this->getMockBuilder( 'Solarium_Query_Select_Component_Highlighting' )
+		               ->disableOriginalConstructor()
+		               ->setMethods( $hlMethods )
+		               ->getMock();
+		
+		$mockSearchConfig = $this->getMock( 'WikiaSearchConfig' );
+		
+		$registerHighlighting = new ReflectionMethod( 'WikiaSearch', 'registerHighlighting' );
+		$registerHighlighting->setAccessible( true );
+		
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getHighlighting' )
+		    ->will   ( $this->returnValue( $mockHl ) )
+		;
+		$mockHl
+		    ->expects( $this->once() )
+		    ->method ( 'addField' )
+		    ->with   ( WikiaSearch::field( 'html' ) )
+		    ->will   ( $this->returnValue( $mockHl ) )
+		;
+		$mockHl
+		    ->expects( $this->once() )
+		    ->method ( 'setSnippets' )
+		    ->with   ( 1 )
+		    ->will   ( $this->returnValue( $mockHl ) )
+		;
+		$mockHl
+		    ->expects( $this->once() )
+		    ->method ( 'setRequireFieldMatch' )
+		    ->with   ( true )
+		    ->will   ( $this->returnValue( $mockHl ) )
+		;
+		$mockHl
+		    ->expects( $this->once() )
+		    ->method ( 'setFragSize' )
+		    ->with   ( WikiaSearch::HL_FRAG_SIZE )
+		    ->will   ( $this->returnValue( $mockHl ) )
+		;
+		$mockHl
+		    ->expects( $this->once() )
+		    ->method ( 'setSimplePrefix' )
+		    ->with   ( WikiaSearch::HL_MATCH_PREFIX )
+		    ->will   ( $this->returnValue( $mockHl ) )
+		;
+		$mockHl
+		    ->expects( $this->once() )
+		    ->method ( 'setSimplePostfix' )
+		    ->with   ( WikiaSearch::HL_MATCH_POSTFIX )
+		    ->will   ( $this->returnValue( $mockHl ) )
+		;
+		$mockHl
+		    ->expects( $this->once() )
+		    ->method ( 'setAlternateField' )
+		    ->with   ( 'nolang_txt' )
+		    ->will   ( $this->returnValue( $mockHl ) )
+		;
+		$mockHl
+		    ->expects( $this->once() )
+		    ->method ( 'setMaxAlternateFieldLength' )
+		    ->with   ( 100 )
+		    ->will   ( $this->returnValue( $mockHl ) )
+		;
+		$this->assertEquals(
+				$mockSearch,
+				$registerHighlighting->invoke( $mockSearch, $mockQuery, $mockSearchConfig )
+		);
+	}
 
 	/**
 	 * @covers WikiaSearch::getQueryFieldsString

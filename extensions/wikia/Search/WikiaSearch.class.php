@@ -586,19 +586,19 @@ class WikiaSearch extends WikiaObject {
 	/**
 	 * Configures result snippet highlighting
 	 * @param Solarium_Query_Select $query
-	 * @param WikiaSearchConfig $searchConfig
+	 * @param WikiaSearchConfig $searchConfig -- not used now, but we will likely want config to control some values
 	 * @return WikiaSearch
 	 */
 	protected function registerHighlighting( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig ) {
 		$highlighting = $query->getHighlighting();
-		$highlighting->addField						( self::field( 'html' ) )
-					 ->setSnippets					( 1 )
-					 ->setRequireFieldMatch			( true )
-					 ->setFragSize					( self::HL_FRAG_SIZE )      
-					 ->setSimplePrefix				( self::HL_MATCH_PREFIX )
-					 ->setSimplePostfix				( self::HL_MATCH_POSTFIX )
-					 ->setAlternateField			( 'nolang_txt' )
-					 ->setMaxAlternateFieldLength	( 100 )
+		$highlighting->addField                     ( self::field( 'html' ) )
+		             ->setSnippets                  ( 1 )
+		             ->setRequireFieldMatch         ( true )
+		             ->setFragSize                  ( self::HL_FRAG_SIZE )
+		             ->setSimplePrefix              ( self::HL_MATCH_PREFIX )
+		             ->setSimplePostfix             ( self::HL_MATCH_POSTFIX )
+		             ->setAlternateField            ( 'nolang_txt' )
+		             ->setMaxAlternateFieldLength   ( 100 )
 		;
 		return $this;
 	}
