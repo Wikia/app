@@ -76,6 +76,11 @@ class WikiaPhotoGallery extends ImageGallery {
 	private $mFeedURL = false;
 
 	/**
+	 * List of files in a gallery
+	 */
+	public $mFiles = array();
+
+	/**
 	 * List of external images - have to be different from mFiles as it has different type of data
 	 *
 	 * @var $mExternalImages array
@@ -355,6 +360,10 @@ class WikiaPhotoGallery extends ImageGallery {
 			$this->mFiles[] = array( $title, $html, $link, $wikitext );
 			wfDebug( __METHOD__ . ' - ' . $title->getText() . "\n" );
 		}
+	}
+
+	public function getImages() {
+		return $this->mFiles;
 	}
 
 	/**
@@ -1306,8 +1315,8 @@ class WikiaPhotoGallery extends ImageGallery {
 				'h' => WikiaPhotoGalleryHelper::SLIDER_MOSAIC_MIN_IMG_HEIGHT,
 			);
 			$sliderClass = 'mosaic';
-			$thumbDimensions = array( 
-				"w" => WikiaPhotoGalleryHelper::WIKIA_GRID_THUMBNAIL_MAX_WIDTH, 
+			$thumbDimensions = array(
+				"w" => WikiaPhotoGalleryHelper::WIKIA_GRID_THUMBNAIL_MAX_WIDTH,
 				"h" => 100,
 			);
 		} else {
@@ -1317,13 +1326,13 @@ class WikiaPhotoGallery extends ImageGallery {
 			);
 			if ( $orientation == 'right' ){
 				$sliderClass = 'vertical';
-				$thumbDimensions = array( 
-					"w" => 110, 
+				$thumbDimensions = array(
+					"w" => 110,
 					"h" => 50,
 				);
 			} else {
 				$sliderClass = 'horizontal';
-				$thumbDimensions = array( 
+				$thumbDimensions = array(
 					"w" => 90,
 					"h" => 70,
 				);
