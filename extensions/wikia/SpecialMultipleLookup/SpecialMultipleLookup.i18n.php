@@ -574,7 +574,7 @@ $messages['my'] = array(
 	'multilookupwikioptions' => 'ရွေးပိုင်ခွင့်',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -736,6 +736,7 @@ $messages['ps'] = array(
 	'multilookupwiki' => 'ويکي',
 	'multilookupwikititle' => 'سرليک',
 	'multilookupwikioptions' => 'خوښنې',
+	'multilookuplastedithdr' => 'وروستنی سمون',
 );
 
 /** Portuguese (português)
@@ -771,6 +772,7 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
+ * @author JM Pessanha
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -798,6 +800,7 @@ $messages['pt-br'] = array(
 	'multilookuplastedithdr' => 'Última edição',
 	'multilookuprecordspager' => "Mostrando os registos '''$1''' a '''$2''' de '''$3'''.",
 	'right-multilookup' => 'Procure informação de usuários em várias wikis',
+	'action-multilookup' => 'pesquisar informações sobre usuários em múltiplas wikis',
 );
 
 /** Romanian (română)

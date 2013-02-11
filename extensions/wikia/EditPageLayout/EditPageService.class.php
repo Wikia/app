@@ -46,9 +46,17 @@ class EditPageService extends Service {
 		global $wgParser, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
 
+		$wg = $this->app->wg;
+
 		$parserOptions = new ParserOptions($wgUser);
-		
+
 		$originalWikitext = $wikitext;
+
+		// If CategorySelect is enabled, add categories to wikitext
+		if ( !empty( $wg->EnableCategorySelectExt ) ) {
+			$categories = $wg->Request->getVal( 'categories', '' );
+			$wikitext .= CategorySelect::changeFormat( $categories, 'json', 'wikitext' );
+		}
 
 		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
 		$wikitext = $wgParser->preSaveTransform($wikitext, $this->mTitle, $this->app->getGlobal('wgUser'), $parserOptions);
@@ -62,7 +70,7 @@ class EditPageService extends Service {
 		$parserOutput = $wgParser->getOutput();
 		$catbox = $this->renderCategoryBoxFromParserOutput($parserOutput);
 		$interlanglinks = $this->renderInterlangBoxFromParserOutput($parserOutput);
-		
+
 		/**
 		 * bugid: 47995 -- Treat JavaScript and CSS as raw text wrapped in <pre> tags
 		 * We still rely on the parser for other stuff
@@ -112,23 +120,13 @@ class EditPageService extends Service {
 		$wg = $this->app->wg;
 
 		$catbox = '';
-		$categorySelectEnabled = !empty( $wg->EnableCategorySelectExt );
-
-		if ( $categorySelectEnabled ) {
-			$this->app->registerHook( 'OutputPageMakeCategoryLinks', 'CategorySelectHooksHelper', 'onOutputPageMakeCategoryLinks' );
-		}
 
 		$wg->Out->addParserOutput($parserOutput);
 
-		if ( $categorySelectEnabled ) {
-			$categories = $wg->Request->getVal( 'categories', '' );
-
-			if ( !empty( $categories ) ) {
-				$catbox = $this->app->renderView( 'CategorySelectController', 'articlePage', array(
-					'categories' => CategorySelect::changeFormat( $categories, 'json', 'array' ),
-					'userCanEdit' => false
-				));
-			}
+		if ( !empty( $wg->EnableCategorySelectExt ) ) {
+			$catbox = $this->app->renderView( 'CategorySelectController', 'articlePage', array(
+				'userCanEdit' => false
+			));
 
 		} else {
 			$skin = RequestContext::getMain()->getSkin();
@@ -136,7 +134,9 @@ class EditPageService extends Service {
 
 			if (!empty($categories) && ($skin instanceof SkinOasis)) {
 				$categoryLinks = $skin->getCategories();
-				$catbox = F::app()->sendRequest('ArticleCategories','Index',array('categoryLinks' => $categoryLinks))->toString();
+				$catbox = F::app()->sendRequest('ArticleCategories','Index',array(
+					'categoryLinks' => $categoryLinks
+				))->toString();
 			}
 		}
 

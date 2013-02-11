@@ -26,10 +26,6 @@
 		}
 	}
 
-	&.showHidden .hidden {
-		display: block;
-	}
-
 	.add {
 		@include clear-linear-gradient();
 		background-color: $color-speech-bubble;
@@ -53,10 +49,6 @@
 		border-right: 1px solid $color-page-border;
 		margin-top: 3px;
 		padding-right: 6px;
-
-		&.hidden {
-			display: none;
-		}
 
 		&.new {
 			margin-top: 0;

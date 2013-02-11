@@ -244,6 +244,15 @@ $article2 = <<<TEXT
 <center><a href="http://images.federico.wikia-dev.com/__cb20120303165161/glee/images/1/18/Wttgw.png" class="image" data-image-name="Wttgw.png"><img alt="Wttgw.png" src="http://images.federico.wikia-dev.com/__cb20120303165161/glee/images/1/18/Wttgw.png" width="660" height="82" /></a><br />2,021,323 edits | 1,192 articles | 1,248 active users</center>
 <p><br /><br />
 TEXT;
+
+$article3 = <<<TEXT
+<figure class="thumb tright thumbinner" style="width:302px;"><a href="http://images.lukaszk.wikia-dev.com/__cb20061203025731/muppet/images/6/60/FromAGalaxyFarFarAway.JPG" class="image" data-image-name="FromAGalaxyFarFarAway.JPG"><img alt="FromAGalaxyFarFarAway" src="http://images.lukaszk.wikia-dev.com/__cb20061203025731/muppet/images/thumb/6/60/FromAGalaxyFarFarAway.JPG/300px-FromAGalaxyFarFarAway.JPG" class="thumbimage" height="225" width="300"></a><a href="/wiki/File:FromAGalaxyFarFarAway.JPG" class="internal sprite details magnify" title="View photo details"></a><figcaption class="thumbcaption"><div class="picture-attribution"><img src="http://images.lukaszk.wikia-dev.com/__cb2/messaging/images/thumb/1/19/Avatar.jpg/20px-Avatar.jpg" class="avatar" alt="Andrew T." height="16" width="16">Added by <a href="/wiki/User:Andrew_T.">Andrew T.</a></div></figcaption></figure>
+<figure class="thumb tright thumbinner" style="width:302px;"><a href="http://images.lukaszk.wikia-dev.com/__cb20060309200012/muppet/images/f/f4/Rockettothestars.JPG" class="image" data-image-name="Rockettothestars.JPG"><img alt="Rockettothestars" src="http://images.lukaszk.wikia-dev.com/__cb20060309200012/muppet/images/thumb/f/f4/Rockettothestars.JPG/300px-Rockettothestars.JPG" class="thumbimage" height="224" width="300"></a><a href="/wiki/File:Rockettothestars.JPG" class="internal sprite details magnify" title="View photo details"></a><figcaption class="thumbcaption">The Muppet Babies blast off.<div class="picture-attribution"><img src="http://images.lukaszk.wikia-dev.com/__cb2/common/avatars/thumb/3/3c/12134.png/20px-12134.png" class="avatar" alt="BradFraggle" height="16" width="16">Added by <a href="/wiki/User:BradFraggle">BradFraggle</a></div></figcaption></figure>
+<p>The Muppet Babies are playing outer space explorers when a strange creature enters the nursery. The creature, cloaked in a sweatshirt, bucket and belt from the Babies' closet, was assumed to be a <a href="/wiki/Aliens" title="Aliens">alien</a> named <a href="/wiki/Irma" title="Irma">Irma</a>. The Babies think she is from the planet <a href="/wiki/Neptune" title="Neptune">Neptune</a> and was left behind on <a href="/wiki/Earth" title="Earth">Earth</a> by her family. The Babies try calling Irma's family and building a huge slingshot to shoot her home. After many failed attempts, the Babies, using their imagination, set off into outer space to take Irma back home.
+</p><p>It turns out that Irma is a koala bear named Charlie that escaped from the nearby zoo. A zoo keeper comes and gets Irma and gives the babies free passes to the zoo for taking care of him.
+</p>
+TEXT;
+
 		return array(
 			array( // article is empty
 				100,
@@ -274,7 +283,12 @@ TEXT;
 				100,
 				$article2,
 				'Learn about Next Season:Season Four Read more > Learn about Last Ep:Goodbye Read more > Learn...',
-			)
+			),
+            array( // example real article 3 - muppets Episode 112 )
+                100,
+                $article3,
+                'The Muppet Babies are playing outer space explorers when a strange creature enters the nursery...'
+             )
 		);
 	}
 

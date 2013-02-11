@@ -261,7 +261,7 @@ $messages['ms'] = array(
 	'mostpopularcategories' => 'Kategori paling popular',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  */
 $messages['nb'] = array(
 	'mostpopularcategories' => 'Mest populære kategorier',
@@ -274,7 +274,7 @@ $messages['nl'] = array(
 	'mostpopularcategories' => 'Meest populaire categorieën',
 );
 
-/** Norwegian Nynorsk (norsk (nynorsk)‎)
+/** Norwegian Nynorsk (norsk nynorsk)
  * @author Harald Khan
  */
 $messages['nn'] = array(

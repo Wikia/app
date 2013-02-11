@@ -746,9 +746,13 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 			->expects	( $this->never() )		//should be short-circuited
 			->method	( 'getResultsStart' )
 		;
+		
+		$prepend = new ReflectionMethod( 'WikiaSearchResultSet', 'prependArticleMatchIfExists' );
+		$prepend->setAccessible( true );
+		
 		$this->assertEquals(
 				$this->resultSet,
-				$this->resultSet->prependArticleMatchIfExists(),
+				$prepend->invoke( $this->resultSet ),
 				'WikiaSearchResultSet::prependArticleMatchIfExists should provide a fluent interface'
 		);
 	}
@@ -773,9 +777,13 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 			->expects	( $this->never() )
 			->method	( 'getArticleMatch' )
 		;
+		
+		$prepend = new ReflectionMethod( 'WikiaSearchResultSet', 'prependArticleMatchIfExists' );
+		$prepend->setAccessible( true );
+		
 		$this->assertEquals(
 				$this->resultSet,
-				$this->resultSet->prependArticleMatchIfExists(),
+				$prepend->invoke( $this->resultSet ),
 				'WikiaSearchResultSet::prependArticleMatchIfExists should provide a fluent interface'
 		);
 	}
@@ -847,9 +855,13 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 			->expects	( $this->never() )
 			->method	( 'getFirstRevision' )
 		;
+		
+		$prepend = new ReflectionMethod( 'WikiaSearchResultSet', 'prependArticleMatchIfExists' );
+		$prepend->setAccessible( true );
+		
 		$this->assertEquals(
 				$this->resultSet,
-				$this->resultSet->prependArticleMatchIfExists(),
+				$prepend->invoke( $this->resultSet ),
 				'WikiaSearchResultSet::prependArticleMatchIfExists should provide a fluent interface'
 		);
 	}
@@ -1052,9 +1064,12 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 		$resultsFound->setAccessible( true );
 		$origResultsFound = $resultsFound->getValue( $this->resultSet );
 		
+		$prepend = new ReflectionMethod( 'WikiaSearchResultSet', 'prependArticleMatchIfExists' );
+		$prepend->setAccessible( true );
+		
 		$this->assertEquals(
 				$this->resultSet,
-				$this->resultSet->prependArticleMatchIfExists(),
+				$prepend->invoke( $this->resultSet ),
 				'WikiaSearchResultSet::prependArticleMatchIfExists should provide a fluent interface'
 		);
 		
@@ -1240,9 +1255,12 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 		$resultsFound->setAccessible( true );
 		$origResultsFound = $resultsFound->getValue( $this->resultSet );
 		
+		$prepend = new ReflectionMethod( 'WikiaSearchResultSet', 'prependArticleMatchIfExists' );
+		$prepend->setAccessible( true );
+		
 		$this->assertEquals(
 				$this->resultSet,
-				$this->resultSet->prependArticleMatchIfExists(),
+				$prepend->invoke( $this->resultSet ),
 				'WikiaSearchResultSet::prependArticleMatchIfExists should provide a fluent interface'
 		);
 		

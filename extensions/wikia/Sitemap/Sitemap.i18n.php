@@ -180,7 +180,7 @@ $messages['ms'] = array(
 	'sitemap-desc' => 'Segera menjana Peta Tapak untuk wiki ini',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(

@@ -2858,6 +2858,7 @@ $messages['mr'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'blog-file-page' => "Pos <a href='$1'>$2</a> pada blog <a href='$3'>$4's</a>",
 	'createblogpage' => 'Cipta blog',
 	'createbloglistingpage' => 'Cipta senarai blog',
 	'create-blog-spam' => 'Nampak macam spam',
@@ -2974,7 +2975,7 @@ Cipta laman senarai blog untuk kategori-kategori seperti "Barack Obama", "Cereka
 	'user-blog-url-link' => 'Blog pengguna:$1',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -3285,7 +3286,7 @@ $messages['pfl'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
-	'blog-file-page' => "Wpis <a href='$1'>$2</a> na blogu <a href='$3'>$4's</a>",
+	'blog-file-page' => "Wpis <a href='$1'>$2</a> na blogu <a href='$3'>$4</a>",
 	'createblogpage' => 'Utwórz blog',
 	'createbloglistingpage' => 'Utwórz listę wpisów na blogach',
 	'create-blog-spam' => 'Wygląda jak spam',
@@ -3688,12 +3689,14 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
+ * @author JM Pessanha
  * @author Jesielt
  * @author Luckas Blade
  * @author TheGabrielZaum
  * @author 555
  */
 $messages['pt-br'] = array(
+	'blog-file-page' => "<a href='$1'>$2</a> publicação no blog de <a href='$3'>$4's</a>",
 	'createblogpage' => 'Criar blog',
 	'createbloglistingpage' => 'Criar lista de blogs',
 	'create-blog-spam' => 'Isso parece spam',
@@ -3858,16 +3861,21 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'create-blog-post-recent-listing' => 'Messàgge recende',
+	'create-blog-post-recent-listing-title' => 'Messàgge recende',
 	'create-blog-categories-submit' => 'Conferme',
+	'create-blog-listing-matches-calculate' => 'Calcolate',
 	'create-blog-listing-sortby-author' => 'Autore',
 	'blog-added' => 'aggiunde',
 	'blog-edited' => 'cangiate',
+	'blog-comments' => 'Commende',
 	'blog-comments-anonymous' => 'Utende anonime',
 	'blog-comment-delete' => 'scangille',
 	'blog-comment-hide' => 'scunne',
 	'blog-comment-unhide' => 'fà vedè',
 	'blog-comment-history' => 'cunde',
 	'blog-comment-edit' => 'cange',
+	'blog-fromsitename' => 'Da $1',
 );
 
 /** Russian (русский)
@@ -4593,45 +4601,126 @@ $messages['tzm'] = array(
 
 /** Ukrainian (українська)
  * @author A1
+ * @author Kerm68
  * @author Prima klasy4na
  * @author Steve.rusyn
  * @author Тест
  */
 $messages['uk'] = array(
+	'blog-file-page' => "<a href='$1'>$2</> пост у блозі <a href='$3'>$4</a>",
 	'createblogpage' => 'Створити блог',
+	'createbloglistingpage' => 'Створити список блогів',
+	'create-blog-spam' => 'Схоже на спам',
+	'create-blog-cant-edit' => 'Не вдалося виконати редагування',
+	'create-blog-post-category' => 'Записи у блозі',
+	'create-blog-post-category-body' => 'Це автоматично створений список записів у блогах',
+	'create-blog-post-category-log' => 'Створив статтю категорії для записів у блозі',
 	'create-blog-post-recent-listing' => 'Останні повідомлення',
 	'create-blog-post-recent-listing-title' => 'Останні повідомлення',
+	'create-blog-post-recent-listing-log' => 'Створив статтю для недавніх заміток блогу',
+	'create-blog-post-title' => 'Створення нового запису в блозі',
+	'create-blog-post-title-edit' => 'Редагувати повідомлення в блозі',
+	'create-blog-form-title' => 'Що таке блог?',
+	'create-blog-form-post-text' => 'Текст блогу',
+	'create-blog-form-info' => 'Записи в блозі — відмінний спосіб поділитися новинами, думками і творчою частиною зі спільнотою.',
+	'create-blog-form-post-title' => 'Заголовок запису у блозі',
 	'create-blog-empty-title-error' => 'Необхідно ввести заголовок',
+	'create-blog-empty-post-error' => 'Текст запису відсутній',
+	'create-blog-empty-article-log' => 'Створив статтю для списку блогів',
 	'create-blog-invalid-title-error' => 'Неприпустима назва',
+	'create-listing-confirm-info' => 'Скопіюйте та вставте наступний код:',
 	'create-blog-no-login' => 'Ви не ввійшли до системи',
+	'create-blog-login-required' => 'Ви повинні [{{fullurl:Special:Signup|$1}} увійти до системи], щоб мати можливість створювати записи в блозі.',
+	'create-blog-categories-title' => 'Додати цей запис до наступних категорій (оберіть)',
 	'create-blog-categories-textinput' => 'Додати нову категорію',
 	'create-blog-categories-submit' => 'Відправити',
 	'create-blog-save' => 'Зберегти сторінку',
 	'create-blog-preview' => 'Попередній перегляд',
+	'create-blog-updated' => 'Запис блогу створений або оновлений.',
+	'create-blog-permission-denied' => 'Помилка при збереженні сторінки блогу: У доступі відмовлено',
+	'create-blog-article-already-exists' => 'Запис блогу з такою назвою вже існує. Будь ласка, оберіть іншу назву',
+	'create-blog-listing-title' => 'Створення нового списку блогів',
+	'create-blog-listing-form-title' => 'Для чого потрібен список блогів?',
+	'create-blog-listing-form-info' => "Сторінки списків блогів використовуються для об'єднання записів блогів різних авторів на одній сторінці. Створіть сторінки списків блогів для таких категорій, як «Барак Обама», «Фанфік», або навіть об'єднайте кілька категорій.",
+	'create-blog-listing-page-title' => 'Заголовок сторінки списку блогів',
 	'create-blog-listing-preview' => 'Попередній перегляд',
+	'create-blog-listing-authors' => 'Отримати записи блогів від цих авторів (розділяйте комами)',
+	'create-blog-listing-blog-post-categories-title' => 'Отримати записи блогів з цих категорій',
+	'create-blog-listing-page-categories-title' => 'Додати цю сторінку списку блогів до цих категорії',
+	'create-blog-listing-matches' => 'Збіги',
 	'create-blog-listing-matches-calculate' => 'Обчислити',
 	'create-blog-listing-matches-recalculate' => 'Перерахувати',
+	'create-blog-listing-matches-info' => '{{PLURAL:$1|знайдена відповідність блогу|знайдені відповідності блогів}}',
 	'create-blog-listing-sortby' => 'Сортувати за',
+	'create-blog-listing-sortby-date' => 'датою створення (останні)',
 	'create-blog-listing-sortby-author' => 'автором',
+	'create-blog-listing-sortby-comments' => 'кількістю коментарів',
+	'create-blog-listing-output-as-box' => 'Генерувати код для копіювання та вставки',
+	'create-blog-listing-output-as-page' => 'Створити список на новій сторінці',
+	'create-blog-listing-tag-format-not-recognized-on-page' => 'На сторінці не розпізнаний тег списку блогів',
+	'blog-header' => 'Статті блогу в категорії «$1»',
+	'blog-subheader' => 'В цій категорії {{PLURAL:$1|$1 запис|$1 записи|$1 записів}}.',
+	'blog-subheader-all' => 'В цій категорії показана {{PLURAL:$1|$1 стаття блогу з $2|$1 статті блогу з $2|$1 статей блогу з $2}}',
+	'blog-invalidparam' => 'Ігнорується невідомий параметр «$1». Будь ласка, використовуйте один з допустимих параметрів: <code>$2</code>.',
+	'blog-emptyparam' => 'Назва параметра не може бути пустою',
 	'blog-defaulttitle' => 'Блоги',
+	'blog-continuereading' => 'Читати далі &raquo;',
 	'blog-readfullpost' => 'Читати далі',
+	'blog-olderposts' => 'Попередні записи',
+	'blog-newerposts' => 'Наступні записи',
+	'blog-nbrcomments' => '$1 {{PLURAL:$1|коментар|коментарі|коментарів}}',
+	'blog-nopostfound' => 'Записи відсутні.',
+	'blog-writeone' => 'Написати!',
+	'blog-empty-user-blog' => 'Цей користувач ще не написав жодного запису в блозі!',
 	'blog-added' => 'додано',
+	'blog-edited' => 'відредагована',
 	'blog-page' => 'Блог',
+	'blog-zero-comments' => 'Коментарів ще немає!',
 	'blog-comment-post' => 'Залишити коментар',
 	'blog-comments' => 'Коментарі',
+	'blog-rc-comments' => 'Коментарі в блозі',
+	'blog-comments-new' => 'Новий коментар у блозі',
+	'blog-comments-save' => 'Зберегти коментар у блозі',
+	'blog-comments-label' => 'Коментування',
 	'blog-voting-label' => 'Голосування',
+	'blog-comments-info' => 'Це поле підтримує вікі-текст',
+	'blog-comments-login' => '<a href="$1" rel="nofollow">Увійдіть до системи</a> для коментування',
+	'blog-comments-dsc' => 'Нові спочатку',
+	'blog-comments-asc' => 'Нові в кінці',
 	'blog-comments-anonymous' => 'Анонімний користувач',
 	'blog-comment-delete' => 'вилучити',
 	'blog-comment-hide' => 'сховати',
 	'blog-comment-unhide' => 'показати',
 	'blog-comment-history' => 'історія',
 	'blog-comment-edit' => 'редагувати',
+	'blog-comment-error' => 'Коментар не може бути збережений',
+	'blog-comment-cannot-add' => 'Ви не можете додавати коментарі в блог.',
+	'blog-avatar-preferences-title' => 'Аватар',
 	'blog-page-rate' => 'Оцініть цю статтю:',
+	'blog-create-post-label' => 'Створити запис у блозі',
+	'blog-create-label' => 'Створити статтю в блозі',
+	'blog-create-next-label' => 'Створити нову статтю в блозі',
+	'blog-create-listing-label' => 'Створити список блогів',
 	'blog-refresh-label' => 'Оновити',
+	'blog-widgets-label' => 'Панель віджетів',
+	'blog-listing-zero-other' => 'Цей користувач ще не написав жодного запису в блозі!',
+	'blog-listing-created' => 'Сторінка списку блогів створена',
+	'blog-userblog' => 'Блог $1',
 	'blog-fromsitename' => 'З $1',
 	'blogs-reportproblem' => 'Повідомити про проблему',
+	'blogs-comment-hidden' => 'Коментар прихований.',
+	'right-blog-comments-toggle' => 'перемикання видимості коментарів у статтях блогу',
+	'right-blog-comments-delete' => 'видалення коментарів до статей блогу',
+	'right-blog-articles-edit' => 'редагування статей блогу',
+	'right-blog-articles-move' => 'переміщення статей блогу',
+	'blogs-recent-url-text' => 'Останні записи в блозі',
+	'blog-desc' => 'Статті блогу',
+	'blog-movepage-badtitle' => 'Неправильний заголовок запису в блозі.',
 	'blog-comment-sending' => 'Надсилання...',
+	'blog-by' => '$1 від $2',
 	'blogs-searchprofile' => 'Блоги',
+	'blogs-searchprofile-tooltip' => 'Пошук в блогах та в списках блогів',
+	'user-blog-url-link' => 'Блог користувача:$1',
 );
 
 /** Uzbek (oʻzbekcha)

@@ -64,7 +64,7 @@
 						<?=wfMsgExt('searchmenu-new', array('parse'), $query);?>
 					<? endif; ?>
 	
-					<ul class="Results">
+					<ul class="Results <?=$isInterWiki ? 'inter-wiki' : '' ?>">
 					<?php $pos = 0; ?>
 					<?php foreach( $results as $result ): ?>
 						<?php

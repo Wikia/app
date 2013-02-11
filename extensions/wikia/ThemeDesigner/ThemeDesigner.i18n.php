@@ -1224,7 +1224,7 @@ $messages['mzn'] = array(
 	'themedesigner-button-upload' => 'باربی‌یشتن',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1501,6 +1501,8 @@ $messages['ps'] = array(
 	'themedesigner-font' => 'ليکبڼه',
 	'themedesigner-size' => 'کچه',
 	'themedesigner-button-save' => 'خوندي کول',
+	'themedesigner-button-change-text' => 'متن بدلول',
+	'themedesigner-wodmark-preview' => 'مخليدنه',
 );
 
 /** Portuguese (português)
@@ -1630,6 +1632,22 @@ $messages['ro'] = array(
 	'themedesigner-color' => 'culoare',
 	'themedesigner-font' => 'font',
 	'themedesigner-size' => 'mărime',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'themedesigner-or' => 'o',
+	'themedesigner-page' => 'Pàgene',
+	'themedesigner-color' => 'culore',
+	'themedesigner-graphic' => 'grafiche',
+	'themedesigner-buttons' => 'buttune',
+	'themedesigner-links' => 'collegaminde',
+	'themedesigner-header' => 'testate',
+	'themedesigner-small' => 'Piccinne',
+	'themedesigner-medium' => 'Medie',
+	'themedesigner-large' => 'Granne',
 );
 
 /** Russian (русский)

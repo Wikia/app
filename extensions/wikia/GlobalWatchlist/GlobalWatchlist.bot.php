@@ -104,7 +104,7 @@ class GlobalWatchlistBot {
 	 * get all global watchlist users
 	 */
 	public function getGlobalWatchlisters( $sFlag = 'watchlistdigest' ) {
-		global $wgExternalDatawareDB;
+		global $wgExternalDatawareDB, $wgExternalAuthType;
 		$this->mWatchlisters = array();
 		
 		$defaultValue = (int) User::getDefaultOption( $sFlag );
@@ -136,8 +136,19 @@ class GlobalWatchlistBot {
 			$iWatchlisters = 0;
 
 			while ( $oResultRow = $dbr->fetchObject( $oResource ) ) {
-				# user object
-				$oUser = User::newFromId ( $oResultRow->gwa_user_id );
+				
+				if ( $wgExternalAuthType ) {
+					$mExtUser = ExternalUser::newFromId( $oResultRow->gwa_user_id );
+					if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
+						$mExtUser->linkToLocal( $mExtUser->getId() );
+						$oUser = $mExtUser->getLocalUser();
+					} else {
+						$oUser = null;
+					}
+				} else {
+					$oUser = User::newFromId ( $oResultRow->gwa_user_id );
+				}
+			
 				if ( !$oUser instanceof User ) {
 					$this->printDebug( "Invalid user object for user ID: {$oResultRow->gwa_user_id} " );
 					continue;

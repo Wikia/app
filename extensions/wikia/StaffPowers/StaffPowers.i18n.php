@@ -95,7 +95,7 @@ $messages['ms'] = array(
 	'staffpowers-ipblock-abort' => 'Anda tidak boleh menyekat Kakitangan Wikia, Pembantu Wikia, atau para sukarelawan Pasukan Pembasmi Spam (PPS). Sila gunakan [[Special:Contact|borang ini]] untuk melaporkan sebarang isu atau masalah berkenaan kakitangan kami.',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -129,6 +129,20 @@ $messages['pms'] = array(
  */
 $messages['pt'] = array(
 	'staffpowers-ipblock-abort' => 'Bloquear Wikia Staff, Wikia Helpers, ou membros da nossa equipa de utilizadores do "Voluntário da Task Force Contra o Spam" (VTFCS) não é possível. Por favor, use o [[Special:Contact|formulário de contacto]] para reportar alguma questão ou problema com os nossos staff.',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author JM Pessanha
+ */
+$messages['pt-br'] = array(
+	'staffpowers-ipblock-abort' => 'Não é possível bloquear a Staff da Wikia, Wikia Helpers ou membros da nossa equipe de Volunteer Spam Task Force (VSTF). Por favor, utilize o [[Special:Contact|formulário de contato]] para relatar quaisquer questões ou problemas com a nossa equipe.',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'staffpowers-ipblock-abort' => "Bloccà 'u Staff de Uicchia, l'Aiutande de Uicchia, o membre d'a nostra Squadre condre a 'u Spam (VSTF) non g'è possibbele. Pe piacere ause 'u [[Special:Contact|module de le condatte]] pe segnalà ogne probbleme cu 'a nostra squadre.",
 );
 
 /** Russian (русский)

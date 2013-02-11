@@ -149,7 +149,7 @@ $messages['ms'] = array(
 	'site-layout' => 'Tataletak Tapak',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(

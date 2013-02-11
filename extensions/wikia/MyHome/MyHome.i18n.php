@@ -2179,7 +2179,7 @@ $messages['mzn'] = array(
 	'myhome-feed-edit' => 'دچی‌ین',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2801,6 +2801,7 @@ Pode, por exemplo:
  * @author Aristóbulo
  * @author Caio1478
  * @author Giro720
+ * @author JM Pessanha
  * @author Jesielt
  */
 $messages['pt-br'] = array(
@@ -2817,6 +2818,7 @@ Use a lista de páginas vigiadas para monitorar alterações das páginas pelas 
 	'myhome-hot-spots-feed' => 'Mais populares',
 	'myhome-hot-spots-feed-empty' => "Esta wiki está esperando a sua participação. Clique em '''[[Special:CreatePage|nova página]]''' para começar a escrever.",
 	'myhome-hot-spots-newest' => 'Páginas novas na wiki',
+	'tog-userlandingpage' => 'Página inicial:',
 	'prefs-myhome' => 'Minha página inicial',
 	'myhome-feed-newpage' => 'nova página',
 	'myhome-feed-edit' => 'editar',

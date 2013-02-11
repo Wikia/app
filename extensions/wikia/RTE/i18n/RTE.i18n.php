@@ -428,7 +428,7 @@ $messages['ms'] = array(
 	'prefs-rte' => 'Alat Penyunting Teks Beraneka',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -565,6 +565,7 @@ $messages['pt'] = array(
  * @author Aristóbulo
  * @author Daemorris
  * @author Giro720
+ * @author JM Pessanha
  */
 $messages['pt-br'] = array(
 	'rte-desc' => 'Integração do CKeditor no MediaWiki',
@@ -581,7 +582,7 @@ $messages['pt-br'] = array(
 	'rte-edgecase-redirect' => 'redirecionamento',
 	'rte-edgecase-templateintable' => 'uma tabela cuja definição chama uma predefinição',
 	'rte-edgecase-unclosed-tags' => 'elemento HTML não foi fechado',
-	'enablerichtexteditor' => 'Ativar Editor de Texto Rico', # Fuzzy
+	'enablerichtexteditor' => 'Habilitar a edição no modo visual (no lugar do modo de fonte)',
 	'rte-enablerichtexteditormessage' => 'O Editor de Texto Enriquecido foi ativado!',
 	'rte-first-run-notice' => 'Fizemos algumas melhorias no editor. Para saber mais, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news leia o anúncio].',
 	'prefs-rte' => 'Editor de Texto Enriquecido',

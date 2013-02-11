@@ -21,7 +21,7 @@ class Factory
 	 * Return a singleton instance
 	 * @return \Wikia\Search\IndexService\Factory
 	 */
-	public function getInstance() {
+	public static function getInstance() {
 		if (! isset( self::$instance ) ) {
 			self::$instance = new Factory();
 		}

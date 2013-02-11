@@ -138,14 +138,16 @@
 						return typeof w.FB;
 					},
 					addition: function(callbacks) {
-						// always initialize FB API when SDK is loaded on-demand
-						if (typeof w.onFBloaded === 'function') {
-							w.onFBloaded();
-						}
+						callbacks.success = (function(callback){
+							return function(){
+								// always initialize FB API when SDK is loaded on-demand
+								if (typeof w.onFBloaded === 'function') {
+									w.onFBloaded();
+								}
 
-						if (typeof callbacks.success === 'function') {
-							callbacks.success();
-						}
+								callback();
+							}
+						})(callbacks.success);
 
 						return callbacks;
 					}
@@ -355,10 +357,11 @@
 						log(remaining + ' remaining...', log.levels.info, 'loader');
 
 						// All files have been downloaded
-						if ( remaining < 1 ) {
+						if ( remaining == 0 ) {
 
 							if(!failed.length) {
 								// Resolve the deferred object
+
 								dfd.resolve(result);
 							}else{
 								dfd.reject({

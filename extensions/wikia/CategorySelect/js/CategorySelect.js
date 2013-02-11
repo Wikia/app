@@ -228,7 +228,7 @@
 					$.when( CategorySelect.getTemplate( 'category' ) ).done(function( template ) {
 						var element;
 
-						template.data.category = category;
+						template.data.name = category.name;
 
 						element = $( Mustache.render( template.content, template.data ) )
 							.addClass( 'new' )
@@ -564,8 +564,7 @@
 			return function( category ) {
 				var pieces, prop,
 					base = {
-						namespace: wgCategorySelect.defaultNamespace,
-						sortKey: wgCategorySelect.defaultSortKey
+						namespace: wgCategorySelect.defaultNamespace
 					};
 
 				if ( typeof category === 'object' ) {

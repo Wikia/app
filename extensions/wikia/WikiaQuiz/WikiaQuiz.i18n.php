@@ -1150,7 +1150,7 @@ $messages['ms'] = array(
 	'wikiaquiz-game-mute' => 'Bisu',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1435,6 +1435,7 @@ $messages['ps'] = array(
 	'wikiaquiz-game-question-label' => 'پوښتنه',
 	'wikiaquiz-game-next-button' => 'بله پوښتنه',
 	'wikiaquiz-game-finish-button' => 'پای',
+	'wikiaquiz-game-provide-email' => 'لطفاً برېښليک مو ورکړۍ',
 	'wikiaquiz-game-mute' => 'ټپول',
 );
 
@@ -1902,6 +1903,7 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Hydra
  * @author Hzy980512
  * @author Yanmiao liu
  */
@@ -1913,6 +1915,7 @@ $messages['zh-hans'] = array(
 	'wikiaquiz-editquizarticle-headline' => '编辑测验的问题和答案',
 	'wikiaquiz-title-label' => '标题',
 	'wikiaquiz-titlescreentext-label' => '标题屏幕文本',
+	'wikiaquiz-fbrecommendationtext-label' => '脸书建议说明',
 	'wikiaquiz-titlescreenimages-label' => '标题屏幕图像',
 	'wikiaquiz-moreinfoheading-label' => '更多信息表头',
 	'wikiaquiz-requireemail-label' => '需要玩家在游戏结束时输入电子邮件地址',

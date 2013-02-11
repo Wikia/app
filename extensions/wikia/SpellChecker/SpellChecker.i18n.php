@@ -285,7 +285,7 @@ $messages['my'] = array(
 	'spellchecker-info-spellcheck-languages' => 'ဘာသာ',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -382,10 +382,11 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author JM Pessanha
  */
 $messages['pt-br'] = array(
 	'spellchecker-desc' => 'Fornece interface de verificação ortográfica para encantar módulo PHP',
-	'enablespellchecker' => 'Habilitar corretor ortográfico', # Fuzzy
+	'enablespellchecker' => 'Habilitar o corretor ortográfico em modo visual',
 	'spellchecker-info' => 'Informação da verificação ortográfica',
 	'spellchecker-info-languages' => 'Os idiomas disponíveis ($1)',
 	'spellchecker-info-provider' => 'Operadora',
