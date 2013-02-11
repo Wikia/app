@@ -579,6 +579,98 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	    		$getSelectQuery->invoke( $mockSearch, $mockSearchConfig )
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearch::registerQueryParams
+	 */
+	public function testRegisterQueryparams() {
+		
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( null )
+		                   ->getMock();
+		
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'addFields', 'removeField', 'setStart', 'setRows', 'addSort', 'addParam' ) )
+		                  ->getMock();
+		
+		$registerQueryParams = new ReflectionMethod( 'WikiaSearch', 'registerQueryParams' );
+		$registerQueryParams->setAccessible( true );
+		
+		$mockSearchConfig = $this->getMock( 'WikiaSearchConfig', array( 'getSort', 'getRequestedFields', 'getStart', 'getLength', 'isInterWiki' ) );
+		
+		$reqFields = array( 'field one', 'field two' );
+		$start = 0;
+		$length = 10;
+		$sort = array( 'whatever', 'asc' );
+		
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getSort' )
+		    ->will   ( $this->returnValue( $sort ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getRequestedFields' )
+		    ->will   ( $this->returnValue( $reqFields ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'addFields' )
+		    ->with   ( $reqFields )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'removeField' )
+		    ->with   ( '*' )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getStart' )
+		    ->will   ( $this->returnValue( $start ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'setStart' )
+		    ->with   ( $start )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getLength' )
+		    ->will   ( $this->returnValue( $length ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'setRows' )
+		    ->with   ( $length )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'addSort' )
+		    ->with   ( $sort[0], $sort[1] )
+		    ->will   ( $this->ReturnValue( $mockQuery ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'isInterWiki' )
+		    ->will   ( $this->returnValue( false) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'addParam' )
+		    ->with   ( 'timeAllowed', 5000 )
+		    ->will   ( $this->returnValue( $mockQuery ) )
+		;
+		$this->assertEquals(
+				$mockSearch,
+				$registerQueryParams->invoke( $mockSearch, $mockQuery, $mockSearchConfig )
+		);
+	}
 
 	/**
 	 * @covers WikiaSearch::getNestedQuery

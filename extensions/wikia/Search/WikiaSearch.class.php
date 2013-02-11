@@ -531,12 +531,12 @@ class WikiaSearch extends WikiaObject {
 	 */
 	protected function registerQueryParams( Solarium_Query_Select $query, WikiaSearchConfig $searchConfig ) {
 		$sort = $searchConfig->getSort();
-		$query	->addFields		( $searchConfig->getRequestedFields() )
-				->removeField	('*')
-			  	->setStart		( $searchConfig->getStart() )
-				->setRows		( $searchConfig->getLength() )
-				->addSort		( $sort[0], $sort[1] )
-				->addParam		( 'timeAllowed', $searchConfig->isInterWiki() ? 7500 : 5000 )
+		$query->addFields      ( $searchConfig->getRequestedFields() )
+		      ->removeField    ('*')
+		      ->setStart       ( $searchConfig->getStart() )
+		      ->setRows        ( $searchConfig->getLength() )
+		      ->addSort        ( $sort[0], $sort[1] )
+		      ->addParam       ( 'timeAllowed', $searchConfig->isInterWiki() ? 7500 : 5000 )
 		;
 		return $this;
 	}
