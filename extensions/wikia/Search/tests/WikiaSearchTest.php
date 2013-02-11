@@ -492,164 +492,91 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	 * @covers WikiaSearch::getSelectQuery
 	 */
 	public function testGetSelectQuery() {
-
-		$mockClient			=	$this->getMock( 'Solarium_Client', array( 'setAdapter', 'createSelect', 'select' ) );
-		$wikiaSearch		=	F::build( 'WikiaSearch', array( $mockClient ) );
-		$searchConfig		=	F::build( 'WikiaSearchConfig' );
-		$method				=	new ReflectionMethod( 'WikiaSearch', 'getSelectQuery' );
-
-		$searchConfig->setQuery( 'foo' );
-		$method->setAccessible( true );
-
-
-		$query = $method->invoke( $wikiaSearch, $searchConfig ); /** @var Solarium_Query_Select $query **/
-
-		$this->assertInstanceOf(
-				'Solarium_Query_Select',
-				$query,
-				'WikiaSearch::getSelectQuery should return an instance of Solarium_Query_Select.'
-		);
-		$this->assertEquals(
-				'WikiaSearchResult',
-				$query->getDocumentClass(),
-				'WikiaSearch::getSelectQuery should set the query\'s document class to WikiaSearchResult.'
-		);
-		$requested	= $searchConfig->getRequestedFields();
-		$actual		= $query->getFields();
-		sort($requested);
-		sort($actual);
-		$this->assertEquals(
-				$requested,
-				$actual,
-				'WikiaSearch::getSelectQuery should set the requested fields to be identical to those set in WikiaSearchConfig.'
-		);
-		$this->assertEquals(
-				$searchConfig->getStart(),
-				$query->getStart(),
-				'WikiaSearch::getSelectQuery should set the start offset to be identical to that set in WikiaSearchConfig.'
-		);
-		$sort = $searchConfig->getSort();
-		$this->assertEquals(
-				array( $sort[0] => $sort[1] ),
-				$query->getSorts(),
-				'WikiaSearch::getSelectQuery should set the sort value to be identical to that set in WikiaSearchConfig via the rank key.'
-		);
-		$params = $query->getParams();
-		$this->assertEquals(
-				5000,
-				$params['timeAllowed'],
-				'WikiaSearch::getSelectQuery should set the sort value to be identical to that set in WikiaSearchConfig via the rank key.'
-		);
-		$highlighting = $query->getHighlighting();
-		$this->assertEquals(
-		        array( WikiaSearch::field( 'html' ) ),
-		        array_keys( $highlighting->getFields() ),
-		        'WikiaSearch::getSelectQuery should select the proper dynamic field for html to highlight.'
-		);
-		$this->assertEquals(
-		        1,
-		        $highlighting->getSnippets(),
-		        'WikiaSearch::getSelectQuery should set the number of highlighting snippets to 1.'
-		);
-		$this->assertTrue(
-		        $highlighting->getRequireFieldMatch(),
-		        'WikiaSearch::getSelectQuery should require a field match to get highlighting snippets.'
-		);
-		$this->assertEquals(
-		        WikiaSearch::HL_FRAG_SIZE,
-		        $highlighting->getFragSize(),
-		        'WikiaSearch::getSelectQuery should set the highlighting frag size according to its constant.'
-		);
-		$this->assertEquals(
-		        WikiaSearch::HL_MATCH_PREFIX,
-		        $highlighting->getSimplePrefix(),
-		        'WikiaSearch::getSelectQuery should set the highlighting prefix according to its constant.'
-		);
-		$this->assertEquals(
-		        WikiaSearch::HL_MATCH_POSTFIX,
-		        $highlighting->getSimplePostfix(),
-		        'WikiaSearch::getSelectQuery should set the highlighting postfix according to its constant.'
-		);
-		$this->assertEquals(
-		        'nolang_txt',
-		        $highlighting->getAlternateField(),
-		        'WikiaSearch::getSelectQuery should set the highlighting alternate field to be non-dynamic html.'
-		);
-		$this->assertEquals(
-				100,
-				$highlighting->getMaxAlternateFieldLength(),
-				'WikiaSearch::getSelectQuery should set the highlighting alternate field length to 300 by default.'
-		);
-		$this->assertInstanceOf(
-				'Solarium_Query_Select_FilterQuery',
-				$query->getFilterQuery('fq1'),
-				'WikiaSearch::getSelectQuery should register filter query at key "fq1".'
-		);
-
-		$queryClausesStringMethod	= new ReflectionMethod( 'WikiaSearch', 'getQueryClausesString' );
-		$getNestedQueryMethod		= new ReflectionMethod( 'WikiaSearch', 'getNestedQuery' );
-		$queryClausesStringMethod->setAccessible( true );
-		$getNestedQueryMethod->setAccessible( true );
-		$constructedQuery 			= sprintf('%s AND (%s)%s', $queryClausesStringMethod->invoke( $wikiaSearch, $searchConfig ), $getNestedQueryMethod->invoke( $wikiaSearch, $searchConfig ), '');
-		$this->assertEquals(
-				$constructedQuery,
-				$query->getQuery(),
-				'WikiaSearch::getSelectQuery should return a query instance with a query string based on WikiaSearch::getQueryClausesString and WikiaSearch::getNestedQuery'
-		);
-
-		$searchConfig->setInterWiki( true );
-		$query = $method->invoke( $wikiaSearch, $searchConfig ); /** @var Solarium_Query_Select $query **/
-		$this->assertEquals(
-				WikiaSearch::GROUP_RESULTS_GROUPING_ROW_LIMIT,
-				$query->getGrouping()->getLimit(),
-				'WikiaSearch::getSelectQuery should set grouping and group limit in the query if the config is set to interwiki.'
-		);
-		$this->assertEquals(
-		        $searchConfig->getStart(),
-		        $query->getGrouping()->getOffset(),
-		        'WikiaSearch::getSelectQuery query grouping should be set to search config start value.'
-		);
-		$this->assertEquals(
-				array( WikiaSearch::GROUP_RESULTS_GROUPING_FIELD ),
-				$query->getGrouping()->getFields(),
-				'WikiaSearch::getSelectQuery query grouping fields should be set to WikiaSearch default grouping fields constant.'
-		);
-
-		$mockTitle				=	$this->getMock( 'Title' );
-		$mockArticle			=	$this->getMock( 'Article', array( 'getID' ), array( $mockTitle ) );
-		$mockArticleMatch		=	$this->getMock( 'WikiaSearchArticleMatch', array( 'getArticle' ), array( $mockArticle ) );
-
-		$mockArticle
-			->expects	( $this->any() )
-			->method	( 'getID' )
-			->will		( $this->returnValue( 123 ) )
+		$expectedMethods = array(
+				'registerQueryParams', 'registerHighlighting', 
+				'registerFilterQueries', 'registerGrouping', 
+				'registerSpellcheck', 'getQueryClausesString',
+				'getNestedQuery'
+				);
+		$mockClient = $this->getMock( 'Solarium_Client', array( 'setAdapter', 'createSelect' ) );
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+		                   ->setConstructorArgs( array( $mockClient ) )
+		                   ->setMethods( $expectedMethods )
+		                   ->getMock();
+		
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'setDocumentClass', 'setQuery' ) )
+		                  ->getMock();
+		
+		$getSelectQuery = new ReflectionMethod( 'WikiaSearch', 'getSelectQuery' );
+		$getSelectQuery->setAccessible( true );
+		
+		$mockSearchConfig = $this->getMock( 'WikiaSearchConfig' );
+		
+		$mockQueryClausesString = 'foo:bar';
+		$mockNestedQuery = '{!baz qux}';
+		
+		$mockClient
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'createSelect' )
+		    ->will   ( $this->returNValue( $mockQuery ) )
 		;
-		$mockArticleMatch
-			->expects	( $this->any() )
-			->method	( 'getArticle' )
-			->will		( $this->returnValue( $mockArticle ) )
+		$mockQuery
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'setDocumentClass' )
+		    ->with   ( 'WikiaSearchResult' )
 		;
-		$searchConfig
-			->setCityId			( 321 )
-			->setInterWiki		( false )
-			->setArticleMatch	( $mockArticleMatch )
+		$mockSearch
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'registerQueryParams' )
+		    ->with   ( $mockQuery, $mockSearchConfig )
+		    ->will   ( $this->returnValue( $mockSearch ) )
 		;
-
-		$this->mockClass( 'Article', $mockArticle );
-		$this->mockApp();
-
-		$query = $method->invoke( $wikiaSearch, $searchConfig ); /** @var Solarium_Query_Select $query **/
-
-		$pttFq = $query->getFilterQuery( 'ptt' );
-		$this->assertInstanceOf(
-		        'Solarium_Query_Select_FilterQuery',
-		        $pttFq,
-		        'WikiaSearch::getSelectQuery should register filter query at key "ptt" when there is an article match.'
-		);
-		$this->assertEquals(
-				WikiaSearch::valueForField( 'id', '321_123', array( 'negate' => true ) ),
-				$pttFq->getQuery(),
-				'WikiaSearch::getSelectQuery should register filter query at key "ptt" when there is an article match; this should filter against the article match id.'
+		$mockSearch
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'registerHighlighting' )
+		    ->with   ( $mockQuery, $mockSearchConfig )
+		    ->will   ( $this->returnValue( $mockSearch ) )
+		;
+		$mockSearch
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'registerFilterQueries' )
+		    ->with   ( $mockQuery, $mockSearchConfig )
+		    ->will   ( $this->returnValue( $mockSearch ) )
+		;
+		$mockSearch
+		    ->expects( $this->at( 3 ) )
+		    ->method ( 'registerGrouping' )
+		    ->with   ( $mockQuery, $mockSearchConfig )
+		    ->will   ( $this->returnValue( $mockSearch ) )
+		;
+		$mockSearch
+		    ->expects( $this->at( 4 ) )
+		    ->method ( 'registerSpellcheck' )
+		    ->with   ( $mockQuery, $mockSearchConfig )
+		    ->will   ( $this->returnValue( $mockSearch ) )
+		;
+		$mockSearch
+		    ->expects( $this->once() )
+		    ->method ( 'getNestedQuery' )
+		    ->with   ( $mockSearchConfig )
+		    ->will   ( $this->returnValue( $mockNestedQuery ) )
+		;
+		$mockSearch
+		    ->expects( $this->once() )
+		    ->method ( 'getQueryClausesString' )
+		    ->with   ( $mockSearchConfig )
+		    ->will   ( $this->returnValue( $mockQueryClausesString ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'setQuery' )
+		    ->with   ( sprintf('%s AND (%s)', $mockQueryClausesString, $mockNestedQuery ) )
+		;
+	    $this->assertEquals(
+	    		$mockQuery,
+	    		$getSelectQuery->invoke( $mockSearch, $mockSearchConfig )
 		);
 	}
 
@@ -2181,9 +2108,9 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 	}
 	
 	/**
-	 * @covers WikiaSearch::handleSpellcheck
+	 * @covers WikiaSearch::registerSpellcheck
 	 */
-	public function testHandleSpellcheck() {
+	public function testRegisterSpellcheck() {
 		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
 							->disableOriginalConstructor()
 							->getMock();
@@ -2289,7 +2216,7 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 		$wg->setAccessible( true );
 		$wg->setValue( $mockSearch, (object) array( 'WikiaSearchSpellcheckActivated' => true, 'LanguageCode' => 'en', 'WikiaSearchSupportedLanguages' => array( 'en' ) ) );
 		
-		$handle = new ReflectionMethod( 'WikiaSearch', 'handleSpellcheck' );
+		$handle = new ReflectionMethod( 'WikiaSearch', 'registerSpellcheck' );
 		$handle->setAccessible( true );
 		$this->assertEquals(
 				$mockSearch,
