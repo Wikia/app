@@ -2540,10 +2540,74 @@ class User {
 	}
 
 	/**
-	 * Get the user's edit count.
+	 * Wikia change
+	 * Get the user's edit count for current wiki.
+	 * @since Feb 2013
+	 * @author Kamil Koterba
 	 * @return Int
 	 */
-	public function getEditCount() {
+	public function getEditCount( $skipCache = false ) {
+		global $wgMemc;
+		if( $this->getId() ) {
+			/* Get editcount from memcache */
+			$key = wfMemcKey($this->getId().'-editcount');
+			$editCount = $wgMemc->get($key);
+
+			if ( !empty( $editCount ) && !$skipCache ) {
+				return $editCount;
+			}
+
+			/* Get editcount from database */
+			$dbr = wfGetDB( DB_SLAVE );
+			$field = $dbr->selectField(
+				'wikia_user_properties',
+				'wup_value',
+				array( 'wup_user' => $this->getId(),
+					'wup_property' => 'editcount' ),
+				__METHOD__
+			);
+
+			if( $field === null or $field === false ) { // editcount has not been initialized. do so.
+				$dbw = wfGetDB( DB_MASTER );
+				$editCount = $dbr->selectField(
+					'revision', 'count(*)',
+					array( 'rev_user' => $this->getId() ),
+					__METHOD__
+				);
+
+				$editCount += $dbr->selectField(
+					'archive', 'count(*)',
+					array( 'ar_user' => $this->getId() ),
+					__METHOD__
+				);
+
+				$dbw->insert(
+					'wikia_user_properties',
+					array( 'wup_user' => $this->getId(),
+						'wup_property' => 'editcount',
+					'wup_value' => $editCount),
+					__METHOD__
+				);
+
+			} else {
+				$editCount = $field;
+			}
+
+			$wgMemc->set($key,$editCount,86400);
+			return $editCount;
+		} else {
+			/* nil */
+			return null;
+		}
+	}
+
+	/**
+	 * Wikia change
+	 * Get the user's global edit count.
+	 * Code from getEditCount before Feb 2013
+	 * @return Int
+	 */
+	public function getEditCountGlobal() {
 		if( $this->getId() ) {
 			if ( !isset( $this->mEditCount ) ) {
 				/* Populate the count, if it has not been populated yet */
@@ -4095,6 +4159,7 @@ class User {
 	 * Will have no effect for anonymous users.
 	 */
 	public function incEditCount() {
+		global $wgMemc;
 		if( !$this->isAnon() ) {
             // wikia change, load always from first cluster when we use
             // shared users database
@@ -4112,7 +4177,6 @@ class User {
 				array( 'user_id' => $this->getId() ),
 				__METHOD__ );
 			$dbw->commit();
-
 
 			/*
 			 * Wikia Change By Tomek
@@ -4151,6 +4215,29 @@ class User {
 					array( 'user_id' => $this->getId() ),
 					__METHOD__ );
 			}
+
+			/**
+			 * Wikia change
+			 * Update editcount for wiki
+			 * @since Feb 2013
+			 * @author Kamil Koterba
+			 */
+			$dbw = wfGetDB( DB_MASTER );
+			$dbw->update( 'wikia_user_properties',
+				array( 'wup_value=wup_value+1' ),
+				array( 'wup_user' => $this->getId(),
+					'wup_property' => 'editcount' ),
+				__METHOD__ );
+
+			if ($dbw->affectedRows() == 1) {
+				//increment memcache also
+				$key = wfMemcKey($this->getId().'-editcount');
+				$wgMemc->incr( $key );
+			} else {
+				//initialize editcount skipping memcache
+				$this->getEditCount( true );
+			}
+			/* end of change */
 
 
 		}
