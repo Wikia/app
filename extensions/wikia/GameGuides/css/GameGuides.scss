@@ -126,7 +126,7 @@ a {
 		pointer-events: none;
 	}
 
-	&[title]:not(.external):not(.extiw) {
+	&:not(.external):not(.extiw):not(.disabled) {
 		color: $linkColor;
 		pointer-events: auto;
 
