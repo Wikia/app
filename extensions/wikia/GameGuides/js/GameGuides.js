@@ -34,7 +34,7 @@
 					ns = 14;
 				}
 			}
-console.log(title);
+
 			Ponto.invoke(
 				'Linker',
 				'goTo',
