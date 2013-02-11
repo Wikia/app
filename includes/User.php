@@ -4176,45 +4176,6 @@ class User {
 				array( 'user_editcount=user_editcount+1' ),
 				array( 'user_id' => $this->getId() ),
 				__METHOD__ );
-			$dbw->commit();
-
-			/*
-			 * Wikia Change By Tomek
-			 * at this point we do not want to run
-			 * other logic because is not truth in our system
-			 * (local table of revision on every wiki)
-			 *
-			 *  false && to skip runing this part of code
-			 */
-
-			// Lazy initialization check...
-			if( false && $dbw->affectedRows() == 0 ) {
-				// Pull from a slave to be less cruel to servers
-				// Accuracy isn't the point anyway here
-				$dbr = wfGetDB( DB_SLAVE );
-
-				$count = $dbr->selectField( 'revision',
-					'COUNT(rev_user)',
-					array( 'rev_user' => $this->getId() ),
-					__METHOD__ );
-
-				// Now here's a goddamn hack...
-				if( $dbr !== $dbw ) {
-					// If we actually have a slave server, the count is
-					// at least one behind because the current transaction
-					// has not been committed and replicated.
-					$count++;
-				} else {
-					// But if DB_SLAVE is selecting the master, then the
-					// count we just read includes the revision that was
-					// just added in the working transaction.
-				}
-
-				$dbw->update( '`user`',
-					array( 'user_editcount' => $count ),
-					array( 'user_id' => $this->getId() ),
-					__METHOD__ );
-			}
 
 			/**
 			 * Wikia change
@@ -4238,7 +4199,6 @@ class User {
 				$this->getEditCount( true );
 			}
 			/* end of change */
-
 
 		}
 		// edit count in user cache too
