@@ -671,6 +671,111 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 				$registerQueryParams->invoke( $mockSearch, $mockQuery, $mockSearchConfig )
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearch::registerGrouping
+	 */
+	public function testRegisterGroupingInterWiki() {
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( null )
+		                   ->getMock();
+		
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getGrouping' ) )
+		                  ->getMock();
+		
+		$mockGrouping = $this->getMockBuilder( 'Solarium_Query_Select_Component_Grouping' )
+		                     ->disableOriginalConstructor()
+		                     ->setMethods( array( 'setLimit', 'setOffset', 'setFields' ) )
+		                     ->getMock();
+		
+		$registerGrouping = new ReflectionMethod( 'WikiaSearch', 'registerGrouping' );
+		$registerGrouping->setAccessible( true );
+		
+		$mockSearchConfig = $this->getMock( 'WikiaSearchConfig', array( 'getStart', 'isInterWiki' ) );
+		
+		$start = 0;
+
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'isInterWiki' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'getGrouping' )
+		    ->will   ( $this->returnValue( $mockGrouping ) )
+		;
+		$mockGrouping
+		    ->expects( $this->once() )
+		    ->method ( 'setLimit' )
+		    ->with   ( WikiaSearch::GROUP_RESULTS_GROUPING_ROW_LIMIT )
+		    ->will   ( $this->returnValue( $mockGrouping ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getStart' )
+		    ->will   ( $this->returnValue( $start ) )
+		;
+		$mockGrouping
+		    ->expects( $this->once() )
+		    ->method ( 'setOffset' )
+		    ->with   ( $start )
+		    ->will   ( $this->returnValue( $mockGrouping ) )
+		;
+		$mockGrouping
+		    ->expects( $this->once() )
+		    ->method ( 'setFields' )
+		    ->with   ( array( WikiaSearch::GROUP_RESULTS_GROUPING_FIELD ) )
+		;
+		$this->assertEquals(
+				$mockSearch,
+				$registerGrouping->invoke( $mockSearch, $mockQuery, $mockSearchConfig )
+		);
+	}
+	
+	/**
+	 * @covers WikiaSearch::registerGrouping
+	 */
+	public function testRegisterGroupingNonInterWiki() {
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( null )
+		                   ->getMock();
+		
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'getGrouping' ) )
+		                  ->getMock();
+		
+		$mockGrouping = $this->getMockBuilder( 'Solarium_Query_Select_Component_Grouping' )
+		                     ->disableOriginalConstructor()
+		                     ->setMethods( array( 'setLimit', 'setOffset', 'setFields' ) )
+		                     ->getMock();
+		
+		$registerGrouping = new ReflectionMethod( 'WikiaSearch', 'registerGrouping' );
+		$registerGrouping->setAccessible( true );
+		
+		$mockSearchConfig = $this->getMock( 'WikiaSearchConfig', array( 'getStart', 'isInterWiki' ) );
+		
+		$start = 0;
+		
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'isInterWiki' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockQuery
+		    ->expects( $this->never() )
+		    ->method ( 'getGrouping' )
+		;
+		$this->assertEquals(
+				$mockSearch,
+				$registerGrouping->invoke( $mockSearch, $mockQuery, $mockSearchConfig )
+		);
+	}
 
 	/**
 	 * @covers WikiaSearch::getNestedQuery
