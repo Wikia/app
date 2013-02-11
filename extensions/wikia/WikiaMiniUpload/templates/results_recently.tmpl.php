@@ -24,14 +24,16 @@ if(isset($data['next'])) {
 <table cellspacing="0" id="ImageUploadFindTable">
 	<tbody>
 <?php
-if($data['gallery']) {
-	for($j = 0; $j < ceil(count($data['gallery']->mImages) / 4); $j++) {
+if($data['gallery'] instanceof WikiaPhotoGallery) {
+	$images = $data['gallery']->getImages();
+
+	for($j = 0; $j < ceil(count($images) / 4); $j++) {
 ?>
 		<tr class="ImageUploadFindImages">
 <?php
 		for($i = $j*4; $i < ($j+1)*4; $i++) {
-			if(isset($data['gallery']->mImages[$i])) {
-				$file = wfLocalFile($data['gallery']->mImages[$i][0]);
+			if(isset($images[$i])) {
+				$file = wfLocalFile($images[$i][0]);
 				$results['images'][$i]['file'] = $file;
 ?>
 				<td><a href="#" alt="<?= addslashes($file->getName()) ?>" title="<?= addslashes($file->getName()) ?>" onclick="WMU_chooseImage(0, '<?= urlencode($file->getName()) ?>'); return false;"><?= $file->transform( array( 'width' => 120, 'height' => 90 ) )->toHtml() ?></a></td>
