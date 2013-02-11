@@ -166,7 +166,7 @@ class ContactForm extends SpecialPage {
 
 			$captchaErr = !empty( $this->errInputs['wpCaptchaWord'] ) ? 'inpErr' : null;
 
-			$vars = array(
+			$oTmpl->set_vars( [
 				'isLoggedIn' => $wgUser->isLoggedIn(),
 				'intro' => wfMsgExt( 'specialcontact-intro-content-issue-mobile', array( 'parse' ) ),
 				'encName' => $wgUser->getName(),
@@ -181,10 +181,8 @@ class ContactForm extends SpecialPage {
 				'errMessages' => $this->err,
 				'errors' => $this->errInputs,
 				'referral' => $this->mReferral
+			] );
 
-			);
-
-			$oTmpl->set_vars( $vars );
 			$wgOut->addHTML( $oTmpl->render( "mobile-form" ) );
 
 			foreach ( AssetsManager::getInstance()->getURL( 'special_contact_wikiamobile_scss' ) as $s ) {
@@ -323,7 +321,7 @@ class ContactForm extends SpecialPage {
 
 		$mp = Title::newMainPage();
 		$link = Xml::element('a', array('href'=>$mp->getLocalURL()), $mp->getPrefixedText());
-		$wgOut->addHTML('<br/>' . wfMsg( 'returnto', $link ) );
+		$wgOut->addHTML(wfMsg( 'returnto', $link ) );
 
 		return;
 	}
