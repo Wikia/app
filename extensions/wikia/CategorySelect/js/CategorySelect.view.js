@@ -38,7 +38,7 @@
 					$.nirvana.sendRequest({
 						controller: 'CategorySelectController',
 						data: {
-							articleId: articleId,
+							articleId: articleId
 						},
 						method: 'getArticleCategories'
 					}),
