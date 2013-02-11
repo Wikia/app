@@ -168,7 +168,7 @@ class ContactForm extends SpecialPage {
 
 			$vars = array(
 				'isLoggedIn' => $wgUser->isLoggedIn(),
-				'intro' => wfMsgExt( 'specialcontact-intro-content-issue', array( 'parse' ) ),
+				'intro' => wfMsgExt( 'specialcontact-intro-content-issue-mobile', array( 'parse' ) ),
 				'encName' => $wgUser->getName(),
 				'encEmail' => $wgUser->getEmail(),
 				'hasEmailConf' => $wgUser->isEmailConfirmed(),

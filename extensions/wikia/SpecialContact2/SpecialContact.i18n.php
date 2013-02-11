@@ -69,6 +69,10 @@ Follow the links below to learn more about how to use Wikia, make changes to you
 	'specialcontact-intro-content-issue' => "The content on this wiki is created by the community here, and managed by the [[Special:ListAdmins|local admins]], not Wikia. If you wish to discuss this content, it is best to first contact the [[Special:ListAdmins|wiki's admins here]].
 
 If you feel the content violates our [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact Wikia staff directly [[Special:Contact/general|here]].",
+
+	'specialcontact-intro-content-issue-mobile' => "The content on this wiki is created by the community here and not the admins, not Wikia. If you wish to discuss this content, it is best to first contact the wiki's admins.
+
+If you feel the content violates our Terms of Use, you can contact Wikia staff.",
 	'specialcontact-intro-user-conflict' => "Wikis are community space where each and every person needs to work together with others for it to be successful. While working together conflicts can sometimes arise - and the best way to solve them is to have an open and respectful conversation on your wiki about the issue.
 
 If you need help, first contact your [[Special:ListAdmins|local admins]]. Admins are the local experts on the topic and community, so best to first chat with them further. If the admins are not able to help, or you feel the user is violating Wikia's [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact Wikia staff directly [[Special:Contact/general|here]].
