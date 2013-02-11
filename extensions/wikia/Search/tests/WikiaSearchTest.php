@@ -776,6 +776,179 @@ class WikiaSearchTest extends WikiaSearchBaseTest {
 				$registerGrouping->invoke( $mockSearch, $mockQuery, $mockSearchConfig )
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearch::registerFilterQueries
+	 */
+	public function testRegisterFilterQueriesWithArticleMatch() {
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'getFilterQueryString' ) )
+		                   ->getMock();
+		
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'addFilterQueries' ) )
+		                  ->getMock();
+		
+		$mockArticleMatch = $this->getMockBuilder( 'WikiaSearchArticleMatch' )
+		                         ->disableOriginalConstructor()
+		                         ->setMethods( array( 'getArticle' ) )
+		                         ->getMock();
+		
+		$mockArticle = $this->getMockBuilder( 'Article' )
+		                    ->setMethods( array( 'getID' ) )
+		                    ->disableOriginalConstructor()
+		                    ->getMock();
+		
+		$mockSearchConfig = $this->getMock( 'WikiaSearchConfig', array( 'hasArticleMatch', 'getArticleMatch', 'setFilterQuery', 'getCityId', 'getFilterQueries' ) );
+		
+		$registerFilterQueries = new ReflectionMethod( 'WikiaSearch', 'registerFilterQueries' );
+		$registerFilterQueries->setAccessible( true );
+		
+		$filterQueryString = 'filterquery';
+		$articleId = '321';
+		$cityId = '123';
+		$noPtt = WikiaSearch::valueForField( 'id', sprintf( '%s_%s', $cityId, $articleId ), array( 'negate' => true ) ) ;
+		$filterQueries = array( 'fq1' => $filterQueryString, 'ptt' => $noPtt );
+		
+		$mockSearch
+		    ->expects( $this->once() )
+		    ->method ( 'getFilterQueryString' )
+		    ->with   ( $mockSearchConfig )
+		    ->will   ( $this->returnValue( $filterQueryString ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'setFilterQuery' )
+		    ->with   ( $filterQueryString )
+		;
+		$mockSearchConfig
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'hasArticleMatch' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'getArticleMatch' )
+		    ->will   ( $this->returnValue( $mockArticleMatch ) )
+		;
+		$mockArticleMatch
+		    ->expects( $this->once() )
+		    ->method ( 'getArticle' )
+		    ->will   ( $this->returnValue( $mockArticle ) )
+		;
+		$mockArticle
+		    ->expects( $this->once() )
+		    ->method ( 'getID' )
+		    ->will   ( $this->returnValue( $articleId ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->at( 3 ) )
+		    ->method ( 'getCityId' )
+		    ->will   ( $this->returnValue( $cityId ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->at( 4 )  )
+		    ->method ( 'setFilterQuery' )
+		    ->will   ( $this->returnValue( $noPtt, 'ptt' ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getFilterQueries' )
+		    ->will   ( $this->returnValue( $filterQueries ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'addFilterQueries' )
+		    ->with   ( $filterQueries )
+		;
+		$this->assertEquals(
+				$mockSearch,
+				$registerFilterQueries->invoke( $mockSearch, $mockQuery, $mockSearchConfig )
+		);
+	}
+	
+    /**
+	 * @covers WikiaSearch::registerFilterQueries
+	 */
+	public function testRegisterFilterQueriesWithWikiMatch() {
+		$mockSearch = $this->getMockBuilder( 'WikiaSearch' )
+		                   ->disableOriginalConstructor()
+		                   ->setMethods( array( 'getFilterQueryString' ) )
+		                   ->getMock();
+		
+		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
+		                  ->disableOriginalConstructor()
+		                  ->setMethods( array( 'addFilterQueries' ) )
+		                  ->getMock();
+		
+		$mockWikiMatch = $this->getMockBuilder( 'WikiaSearchWikiMatch' )
+		                      ->disableOriginalConstructor()
+		                      ->setMethods( array( 'getId' ) )
+		                      ->getMock();
+		
+		$mockSearchConfig = $this->getMock( 'WikiaSearchConfig', array( 'setFilterQuery', 'addFilterQueries', 'hasArticleMatch', 'hasWikiMatch', 'getFilterQueries', 'getWikiMatch' ) );
+		
+		$registerFilterQueries = new ReflectionMethod( 'WikiaSearch', 'registerFilterQueries' );
+		$registerFilterQueries->setAccessible( true );
+		
+		$filterQueryString = 'filterquery';
+		$cityId = '123';
+		$noPtt = WikiaSearch::valueForField( 'wid', $cityId, array( 'negate' => true ) ) ;
+		$filterQueries = array( 'fq1' => $filterQueryString, 'wikiptt' => $noPtt );
+		
+		$mockSearch
+		    ->expects( $this->once() )
+		    ->method ( 'getFilterQueryString' )
+		    ->with   ( $mockSearchConfig )
+		    ->will   ( $this->returnValue( $filterQueryString ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'setFilterQuery' )
+		    ->with   ( $filterQueryString )
+		;
+		$mockSearchConfig
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'hasArticleMatch' )
+		    ->will   ( $this->returnValue( false ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'hasWikiMatch' )
+		    ->will   ( $this->returnValue( true ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->at( 3 ) )
+		    ->method ( 'getWikiMatch' )
+		    ->will   ( $this->returnValue( $mockWikiMatch ) )
+		;
+		$mockWikiMatch
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getId' )
+		    ->will   ( $this->returnValue( $cityId ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->at( 4 )  )
+		    ->method ( 'setFilterQuery' )
+		    ->will   ( $this->returnValue( $noPtt, 'wikiptt' ) )
+		;
+		$mockSearchConfig
+		    ->expects( $this->once() )
+		    ->method ( 'getFilterQueries' )
+		    ->will   ( $this->returnValue( $filterQueries ) )
+		;
+		$mockQuery
+		    ->expects( $this->once() )
+		    ->method ( 'addFilterQueries' )
+		    ->with   ( $filterQueries )
+		;
+		$this->assertEquals(
+				$mockSearch,
+				$registerFilterQueries->invoke( $mockSearch, $mockQuery, $mockSearchConfig )
+		);
+	}
 
 	/**
 	 * @covers WikiaSearch::getNestedQuery

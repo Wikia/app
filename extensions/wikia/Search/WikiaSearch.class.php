@@ -569,12 +569,12 @@ class WikiaSearch extends WikiaObject {
 		$searchConfig->setFilterQuery( $this->getFilterQueryString( $searchConfig ) );
 		
 		if ( $searchConfig->hasArticleMatch() ) {
-			$am			= $searchConfig->getArticleMatch();
-			$article	= $am->getArticle();  
-			$noPtt		= self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
+			$am       = $searchConfig->getArticleMatch();
+			$article  = $am->getArticle();  
+			$noPtt    = self::valueForField( 'id', sprintf( '%s_%s', $searchConfig->getCityId(), $article->getID() ), array( 'negate' => true ) ) ;
 			$searchConfig->setFilterQuery( $noPtt, 'ptt' );
 		} else if ( $searchConfig->hasWikiMatch() ) {
-			$noPtt		= self::valueForField( 'wid', $searchConfig->getWikiMatch()->getId(), array( 'negate' => true ) );
+			$noPtt    = self::valueForField( 'wid', $searchConfig->getWikiMatch()->getId(), array( 'negate' => true ) );
 			$searchConfig->setFilterQuery( $noPtt, 'wikiptt' );
 		}
 		
