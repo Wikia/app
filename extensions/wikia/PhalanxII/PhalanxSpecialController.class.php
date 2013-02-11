@@ -244,26 +244,13 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	private function handleBlockTest($blockText) {
 		$this->wf->profileIn( __METHOD__ );
 
-		// TODO: move to a more generic place
-		$blockTypes = array(
-			'content',
-			'summary',
-			'title',
-			'user',
-			'question_title',
-			'recent_questions',
-			'wiki_creation',
-			'cookie',
-			'email'
-		);
 		$service = new PhalanxService();
-		$service->limit(100);
-		$lang = 'en';
+		$service->limit(20);
 
 		$listing = '';
 
-		foreach($blockTypes as $blockType) {
-			$res = $service->match($blockType, $blockText, $lang);
+		foreach(Phalanx::getAllTypeNames() as $blockType) {
+			$res = $service->match($blockType, $blockText, 'en');
 
 			if (empty($res)) {
 				continue;
