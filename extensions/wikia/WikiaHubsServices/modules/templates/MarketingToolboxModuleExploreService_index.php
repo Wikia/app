@@ -3,7 +3,15 @@
 <div class="explore-content">
 	<? if( !empty($imageUrl) ): ?>
 	<figure>
-		<img src="<?= $imageUrl; ?>" class="image" />
+		<? if (!empty($imageLink)): ?>
+			<a href="<?=$imageLink?>">
+		<? endif ?>
+
+			<img src="<?= $imageUrl; ?>" class="image" />
+
+		<? if (!empty($imageLink)): ?>
+			</a>
+		<? endif ?>
 	</figure>
 	<? endif; ?>
 
