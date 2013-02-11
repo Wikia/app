@@ -1,9 +1,9 @@
 <h2><?= $headline ?></h2>
 
 <div class="explore-content">
-	<? if( !empty($image) ): ?>
+	<? if( !empty($imageUrl) ): ?>
 	<figure>
-		<img src="<?= $image; ?>" class="image" />
+		<img src="<?= $imageUrl; ?>" class="image" />
 	</figure>
 	<? endif; ?>
 

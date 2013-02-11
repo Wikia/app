@@ -241,7 +241,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 			
 			if( !empty($data['fileName']) ) {
 				$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['fileName']);
-				$structuredData['imagelink'] = $imageData->url;
+				$structuredData['imageUrl'] = $imageData->url;
 			}
 		}
 		
