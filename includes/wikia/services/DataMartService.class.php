@@ -410,7 +410,7 @@
 			$app = F::app();
 			$app->wf->ProfileIn( __METHOD__ );
 
-			$cacheVersion = 2;
+			$cacheVersion = 3;
 			$limitDefault = 200;
 			$limitUsed = ( $limit > $limitDefault ) ? $limit : $limitDefault ;
 
@@ -455,7 +455,7 @@
 					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 
 					$where = array(
-						'time_id' => array( $startDate, $endDate ),
+						"time_id BETWEEN '{$startDate}' AND '{$endDate}'",
 						'period_id' => DataMartService::PERIOD_ID_WEEKLY,//for now this table supports only this period ID
 						'wiki_id' => $wikiId
 					);
@@ -506,7 +506,6 @@
 
 			$topArticles = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData );
 			$topArticles = array_slice( $topArticles, 0, $limit, true );
-
 			$app->wf->ProfileOut( __METHOD__ );
 			return $topArticles;
 		}

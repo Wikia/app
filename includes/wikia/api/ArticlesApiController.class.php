@@ -7,7 +7,7 @@
 
 class ArticlesApiController extends WikiaApiController {
 
-	const CACHE_VERSION = 13;
+	const CACHE_VERSION = 14;
 
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
