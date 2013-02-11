@@ -367,8 +367,8 @@
 					// block all clicks
 					contentNode.
 						bind('click', function(ev) {
-							var target = $(ev.target);
-                            var isCtrlPressed = ev.ctrlKey;
+							var target = $(ev.target),
+                                isCtrlPressed = ev.ctrlKey;
 
 							// don't block links opening in new tab
 							if (target.attr('target') !== '_blank' && !isCtrlPressed) {
