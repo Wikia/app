@@ -7,7 +7,6 @@ $config['oasis_shared_core_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_wikia_js',
-		'#group_oasis_tracker_js',
 
 		// The following should go to adengine2_js group later
 		'//extensions/wikia/AdEngine/ghost/gw-12.4.4/lib/gw.min.js',
@@ -23,7 +22,7 @@ $config['oasis_extensions_js'] = array(
 	)
 );
 
-$config['oasis_tracker_js'] = array(
+$config['tracker_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
@@ -328,7 +327,7 @@ $config['gameguides_js'] = array(
 		'//resources/wikia/modules/log.js',//depends on querystring.js and cookies.js
 
 		//tracker
-		'#group_oasis_tracker_js',
+		'#group_tracker_js',
 
 		//platform components
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
@@ -429,7 +428,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//extensions/wikia/WikiaMobile/js/feature-detects/positionfixed.wikiamobile.js',
 
 		//tracker
-		'#group_oasis_tracker_js',
+		'#group_tracker_js',
 
 		//modules
 		'//resources/wikia/modules/ajax.js',
@@ -596,7 +595,6 @@ $config['monobook_js'] = array(
 		'#group_oasis_wikia_js',
 		'#group_oasis_jquery',
 		'#group_articlecomments_js',
-		'#group_oasis_tracker_js',
 
 		// TODO: remove dependency on YUI (see BugId:3116)
 		'//resources/wikia/libraries/yui/utilities/utilities.js',
@@ -789,7 +787,6 @@ $config['theme_designer_js'] = array(
 	'assets' => array(
 		'#group_oasis_wikia_js',
 		'#group_oasis_jquery',
-		'#group_oasis_tracker_js',
 
 		'//resources/jquery.ui/jquery.ui.widget.js',
 		'//resources/jquery.ui/jquery.ui.mouse.js',
@@ -817,7 +814,7 @@ $config['photopop'] = array(
 		'//extensions/wikia/PhotoPop/shared/lib/classlist.js',
 		'//extensions/wikia/PhotoPop/shared/lib/wikia.js',
 		'//extensions/wikia/PhotoPop/shared/lib/require.js',
-		'#group_oasis_tracker_js',
+		'#group_tracker_js',
 	)
 );
 
