@@ -319,7 +319,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 					loader.processScript(res.scripts);
 
 					//see fbconnect.js
-					FB.init({
+					w.FB.init({
 						appId : window.fbAppId,
 						oauth : true,
 						status : true, // Check login status
