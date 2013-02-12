@@ -23,6 +23,7 @@ return array(
 			'wikia.log',
 			'wikia.thumbnailer',
 			'wikia.geo',
+			'wikia.tracker',
 		),
 		'position' => 'top', // needs to be loaded before AssetsManager files
 	),
@@ -85,6 +86,10 @@ return array(
 			'amd',
 			'wikia.cookies'
 		)
+	),
+	// not yet AMD :-(
+	'wikia.tracker' => array(
+		'scripts' => 'extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 	),
 
 	// AMD modules loaded on demand
