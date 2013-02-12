@@ -320,11 +320,11 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 
 					//see fbconnect.js
 					w.FB.init({
-						appId : window.fbAppId,
+						appId : w.fbAppId,
 						oauth : true,
 						status : true, // Check login status
 						cookie : true, // Enable cookies to allow the server to access the session
-						xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
+						xfbml  : w.fbUseMarkup // Whether XFBML should be automatically parsed
 					});
 
 					wkPrf.className += ' loaded';
