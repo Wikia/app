@@ -4,7 +4,6 @@ include( "../extensions/wikia/WikiaHubsServices/WikiaHubsServices.setup.php" );
 
 class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
 	const WIKIAREQUEST_DEFAULT_VALUE = 0;
-	const FUTURE_TIMESTAMP = 2145830400; //31st Dec 2037
 	
 	protected $modulesIds = array(1, 2, 3);
 	protected $verticalIds = array(4, 5, 6);
@@ -116,7 +115,7 @@ class WikiaHubsApiControllerTest extends PHPUnit_Framework_TestCase {
 				'requestParams' => array(
 					WikiaHubsApiController::PARAMETER_MODULE => 3,
 					WikiaHubsApiController::PARAMETER_VERTICAL => 6,
-					WikiaHubsApiController::PARAMETER_TIMESTAMP => self::FUTURE_TIMESTAMP,
+					WikiaHubsApiController::PARAMETER_TIMESTAMP => time() + rand(),
 				),
 				'exceptionDetailsMsg' => InvalidParameterApiException::getDetailsMsg(WikiaHubsApiController::PARAMETER_TIMESTAMP),
 			),
