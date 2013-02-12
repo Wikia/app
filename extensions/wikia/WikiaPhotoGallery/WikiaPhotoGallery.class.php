@@ -151,8 +151,9 @@ class WikiaPhotoGallery extends ImageGallery {
 
 	/**
 	 * set parser cache key
+	 *
+	 * @param $parser Parser
 	 */
-
 	public function recordParserOption(&$parser) {
 		if($this->mType == self::WIKIA_PHOTO_SLIDER) {
 			/**
