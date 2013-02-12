@@ -33,7 +33,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 					array('too_short' => 'marketing-toolbox-validator-string-short')
 				),
 				'attributes' => array(
-					'class' => 'required explore-title'
+					'class' => 'required explore-mainbox-input'
 				)
 			),
 			'fileName' => array(
@@ -44,6 +44,19 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 				'validator' => new WikiaValidatorFileTitle(
 					array(),
 					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
+				)
+			),
+			'imageLink' => array(
+				'label' => $this->wf->Msg('marketing-toolbox-hub-module-explore-link-url'),
+				'validator' => new WikiaValidatorToolboxUrl(
+					array(),
+					array(
+						'wrong' => 'marketing-toolbox-validator-wrong-url'
+					)
+				),
+				'icon' => true,
+				'attributes' => array(
+					'class' => 'wikiaUrl explore-mainbox-input'
 				)
 			),
 		);
@@ -216,7 +229,70 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleService
 				}
 			}
 		}
+		if (!empty($data['imageLink'])) {
+			$data['imageLink'] = $this->addProtocolToLink($data['imageLink']);
+		}
 
 		return $data;
+	}
+	
+	public function loadData($model, $timestamp) {
+		$moduleId = $this->model->getModuleId();
+		$moduleData = $model->getPublishedData($this->langCode, MarketingToolboxModel::SECTION_HUBS, $this->verticalId, $timestamp, $moduleId);
+		
+		if( empty($moduleData[$moduleId]['data']) ) {
+			$moduleData = array();
+		} else {
+			$moduleData = $moduleData[$moduleId]['data'];
+		}
+		
+		return $this->getStructuredData($moduleData);
+	}
+	
+	public function getStructuredData($data) {
+		$structuredData = array();
+		
+		if( !empty($data['exploreTitle']) ) {
+			$structuredData['headline'] = $data['exploreTitle'];
+			$structuredData['linkgroups'] = $this->getLinkGroupsFromApiResponse($data);
+			
+			if( !empty($data['fileName']) ) {
+				$imageData = ImagesService::getLocalFileThumbUrlAndSizes($data['fileName']);
+				$structuredData['imageUrl'] = $imageData->url;
+				$structuredData['imageAlt'] = $imageData->title;
+			} else {
+				$structuredData['imageUrl'] = null;
+			}
+			$structuredData['imageLink'] = !empty($data['imageLink']) ? $data['imageLink'] : null;
+			
+		}
+		
+		return $structuredData;
+	}
+
+	protected function getLinkGroupsFromApiResponse($responseData) {
+		$linkgroups = array();
+
+		for ($sectionIdx = 1; $sectionIdx <= $this->sectionsLimit; $sectionIdx++) {
+			$headerIdx = self::SECTION_FIELD_PREFIX . $sectionIdx;
+			if( !empty($responseData[$headerIdx]) ) {
+				$linkgroups[$sectionIdx]['headline'] = $responseData[$headerIdx];
+
+				for ($linkIdx = 0; $linkIdx < $this->linksLimit; $linkIdx++) {
+					$linkTextIdx = $this->generateHeaderFieldName($sectionIdx, $linkIdx);
+
+					if( !empty($responseData[$linkTextIdx]) ) {
+						$linkgroups[$sectionIdx]['links'][$linkIdx]['anchor'] = $responseData[$linkTextIdx];
+						$linkUrlIdx = $this->generateUrlFieldName($sectionIdx, $linkIdx);
+
+						if( !empty($responseData[$linkUrlIdx]) ) {
+							$linkgroups[$sectionIdx]['links'][$linkIdx]['href'] = $responseData[$linkUrlIdx];
+						}
+					}
+				}
+			}
+		}
+
+		return $linkgroups;
 	}
 }
