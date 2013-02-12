@@ -13,7 +13,6 @@
 		namespace,
 		pathMatch;
 
-
 	while(i--) {
 		link = links[i];
 		path = link.pathname;
