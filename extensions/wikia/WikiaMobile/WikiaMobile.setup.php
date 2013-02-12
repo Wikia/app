@@ -147,6 +147,7 @@ if ( empty( $app->wg->WikiaMobileIncludeJSGlobals ) ) {
 			'wgCookieDomain',
 			'wgCookiePath',
 			'wgDisableAnonymousEditing',
+			'wgNamespaceIds',
 
 			//article
 			'wgArticlePath',
