@@ -1,19 +1,50 @@
 (function(html, w){
+	var links = document.querySelectorAll('a:not(.external):not(.extiw)'),
+		host = w.wgServer,
+		i = links.length;
+
+	while(i--) {
+		var link = links[i];
+
+		if(!~link.parentElement.className.indexOf('thumb') && (link.origin != host || link.pathname == '/wikia.php')) {
+			link.className += ' disabled';
+		}
+	}
+
 	//handling clicking on a link
 	html.addEventListener('click', function(ev){
-		var t = ev.target;
+		var t = ev.target,
+			title,
+			ns = 0;
 
-		if(t.tagName === 'A' && t.hasAttribute('title')) {
+		if(t.tagName === 'A'){
 			ev.preventDefault();
+
+			if(t.hasAttribute('title')) {
+				title = t.title.replace(/ /g, '_');
+			}else{
+				title = t.pathname.replace("/wiki/", '')
+			}
+
+			if(~title.indexOf(':')) {
+				var split = title.split(':');
+
+				if(split.shift().toLowerCase() == 'category') {
+					title = split.join(':');
+					ns = 14;
+				}
+			}
+
 			Ponto.invoke(
 				'Linker',
 				'goTo',
 				{
-					title: t.title.replace(/ /g, '_')
+					ns: ns,
+					title: title
 				}
 			);
 		}
-	}, true);
+	});
 
 	//handling grabing all links on a page;
 	function Photos(){

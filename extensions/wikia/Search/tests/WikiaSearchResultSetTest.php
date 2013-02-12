@@ -1932,4 +1932,36 @@ class WikiaSearchResultSetTest extends WikiaSearchBaseTest
 				'WikiaSearchResultSet should return an array of results that have been transformed to array'
 		);
 	}
+	
+	/**
+	 * @covers WikiaSearchResultSet::toArray
+	 */
+	public function testToArray() {
+		
+		$mockSet = $this->getMockBuilder( 'WikiaSearchResultSet' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( array( 'getHeader' ) )
+		                ->getMock();
+		
+		$title = "Kendrick Lamar Wiki";
+		$url = "http://goodkidmaadwikicities.wikia.com/";
+		
+		$mockSet
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'getHeader' )
+		    ->with   ( 'cityTitle' )
+		    ->will   ( $this->returnValue( $title ) )
+		;
+		$mockSet
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'getHeader' )
+		    ->with   ( 'cityUrl' )
+		    ->will   ( $this->returnValue( $url ) )
+		;
+		$this->assertEquals(
+				array( 'title' => $title, 'url' => $url ),
+				$mockSet->toArray()
+		);
+		
+	}
 }
