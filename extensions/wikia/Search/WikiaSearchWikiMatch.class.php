@@ -38,11 +38,13 @@ class WikiaSearchWikiMatch extends WikiDataSource
 			$fields['title'] = !empty( $data['name'] ) ? $data['name'] : $this->getSitenameFromWf();
 			$fields[WikiaSearch::field( 'title' )] = $data['name'];
 			$fields['url'] = sprintf('%s://%s%s', $parsed['scheme'], $parsed['host'], $parsed['path']);
-
+			$fields['isWikiMatch'] = true;
+			
 			$result = new WikiaSearchResult( $fields );
-			$text = $data['description'] ?: $this->getTextFromMainPage();
-			$text = strip_tags( html_entity_decode( $text, ENT_COMPAT, 'UTF-8' ) );
-			$result->setText( $text, false );
+
+			$text = $this->preprocessText( $data['description'] ?: $this->getTextFromMainPage() );
+			
+			$result->setText( $text, true );
 			return $result;
 		}
 		return null;
@@ -53,13 +55,14 @@ class WikiaSearchWikiMatch extends WikiDataSource
 		$fields = array(
 				'wid' => $this->id,
 				'title' => $this->getSitenameFromWf(),
+				'isWikiMatch' => true,
 				WikiaSearch::field( 'title' ) => $this->getSitenameFromWf(),
 				$fields['url'] = $this->getUrlFromMainPage(),
 				);
 		$result = new WikiaSearchResult( $fields );
 		
 		
-		$result->setText( $this->getTextFromMainPage() );
+		$result->setText( $this->preprocessText( $this->getTextFromMainPage() ) );
 		
 		return $result;
 	}
@@ -109,6 +112,25 @@ class WikiaSearchWikiMatch extends WikiDataSource
 		$response = ApiService::foreignCall( $this->getDbName(), $params, ApiService::WIKIA );
 		$item = array_shift( $response['items'] );
 		return $item['abstract'];
+	}
+	
+	/**
+	 * Allows us to mutate the description based on skin
+	 * This doesn't exactly belong here as-is because we should be ignorant of user, skin, etc.
+	 * @param string $text
+	 * @return string
+	 */
+	protected function preprocessText( $text ) {
+		$text = strip_tags( html_entity_decode( $text, ENT_COMPAT, 'UTF-8' ) );
+
+		$snippetLength = $this->wg->User->getSkin() instanceof SkinWikiaMobile ? 100 : 250; 
+		
+		$match = array();
+		if ( preg_match( "/^.{1,{$snippetLength}}\b/s", $text, $match ) ) {
+			$text = $match[0];
+		}
+		
+		return $text;
 	}
 	
 	/**
