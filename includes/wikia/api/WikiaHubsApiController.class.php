@@ -10,7 +10,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	const PARAMETER_VERTICAL = 'vertical';
 	const PARAMETER_TIMESTAMP = 'ts';
 	const PARAMETER_LANG = 'lang';
-
+	
 	/**
 	 * Get explore module data from given date and vertical
 	 *
@@ -91,7 +91,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	}
 
 	protected function isValidTimestamp($timestamp) {
-		if( $timestamp > 0 ) {
+		if( $timestamp > 0 && $timestamp <= time() ) {
 			return true;
 		}
 

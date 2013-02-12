@@ -7,7 +7,7 @@
 			<a href="<?=$imageLink?>">
 		<? endif ?>
 
-			<img src="<?= $imageUrl; ?>" class="image" />
+			<img src="<?= $imageUrl; ?>" alt="<?= $imageAlt; ?>" class="image" />
 
 		<? if (!empty($imageLink)): ?>
 			</a>
