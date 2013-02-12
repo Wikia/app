@@ -7,7 +7,7 @@ define('phalanx', ['jquery', 'wikia.nirvana'], function($, nirvana) {
 		TOKEN = token;
 	}
 
-	function validate(regexp, callback) {
+	function validate(regexp) {
 		var dfd = new $.Deferred();
 
 		nirvana.postJson('PhalanxSpecial', 'validate', {
