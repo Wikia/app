@@ -82,6 +82,15 @@ class ImagesService extends Service {
 		//remove namespace string
 		$fileName = str_replace($app->wg->ContLang->getNsText(NS_FILE) . ':', '', $fileName);
 		$title = Title::newFromText($fileName, NS_FILE);
+		$article = Article::newFromID($title->getArticleID());
+		
+		if( $article instanceof Article && $article->isRedirect() ) {
+			$tmpTitle = $article->followRedirect();
+			if( $tmpTitle instanceof Title ) {
+				$title = $tmpTitle;
+			}
+		}
+		
 		$foundFile = $app->wf->FindFile($title);
 
 		if( $foundFile ) {
