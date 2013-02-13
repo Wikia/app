@@ -75,7 +75,7 @@ noscript img {
 
 img {
 	max-width: 100%;
-	@include transition(opacity .2s);
+	@include transition(opacity .15s);
 
 	&.load {
 		opacity: 0;
