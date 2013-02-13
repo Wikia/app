@@ -352,8 +352,14 @@
 	table.diff, td.diff-otitle, td.diff-ntitle {
 		background-color: $color-page;
 	}
+
+  	// BugId:9262
 	.diff-article-content {
 		margin-right: 340px;
+
+		body.mainpage & {
+			margin-right: 0;
+		}
 	}
 
 	.fbconnect-synced-profile {
@@ -376,19 +382,19 @@
 
 	.wikiaPlaceholder {
 		vertical-align: bottom;
-		
+
 		> div {
 			margin: 0.5em 1.4em 1.2em 0;
 			text-align: center;
-			
+
 			&.tright {
 				margin: 0.5em 0 1.2em 1.4em;
 			}
-			
+
 			&.tcenter {
 				margin: 0.5em auto 1.2em;
 			}
-			
+
 			a {
 				position:relative;
 			}
