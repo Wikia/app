@@ -1478,7 +1478,6 @@ $messages['el'] = array(
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Bola
- * @author Rubenwap
  * @author VegaDark
  * @author Vivaelcelta
  */
@@ -1778,7 +1777,7 @@ ___________________________________________<br />
 	'wall-topic-input-heading' => 'Tema',
 	'wall-topic-input-placeholder' => 'Añadir un Tema (opcional)',
 	'wall-topic-input-error' => 'No hay ningún artículo llamado "$1". Por favor usa un nombre de artículo existente como un Tema.',
-	'wall-topic-input-error-limit' => 'Un hilo solo puede tener $1 {{PLURAL:$1|tema|temas}} como máximo.',
+	'wall-topic-input-error-limit' => 'Un hilo solo puede tener $1 temas como máximo.', # Fuzzy
 	'wall-topic-heading' => 'Temas para este hilo:',
 	'wall-topic-edit' => 'Editar temas',
 	'wall-topic-edit-save' => 'Guardar',
@@ -4075,7 +4074,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wall-votes-modal-showmore' => 'Lihat orang lain yang memberikan Pujian',
 	'wall-votes-modal-title' => 'Pujian',
 	'wall-votes-modal-title-desc' => 'Pesanan ini dipuji oleh {{PLURAL:$1|seorang|$1 orang}} ahli',
-	'wall-votes-number' => '$1 Pujian',
+	'wall-votes-number' => '$1 Pujian', # Fuzzy
 	'wall-votes-number-tooltip' => 'Lihat siapa yang memuji pesanan ini',
 	'wall-votes-vote-tooltip' => 'Puji pesanan ini',
 	'wall-votes-voted-tooltip' => 'Anda telah memuji pesanan ini!',
@@ -4087,14 +4086,14 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wall-topic-input-heading' => 'Topik',
 	'wall-topic-input-placeholder' => 'Tambahkan Topik (tidak wajib)',
 	'wall-topic-input-error' => 'Tiada rencana bertajuk "$1". Sila gunakan nama rencana yang sedia ada sebagai Topik.',
-	'wall-topic-input-error-limit' => 'Tred tidak boleh melebihi $1 Topik.',
+	'wall-topic-input-error-limit' => 'Tred tidak boleh melebihi $1 Topik.', # Fuzzy
 	'wall-topic-heading' => 'Topik untuk tred ini:',
 	'wall-topic-edit' => 'Ubah Topik',
 	'wall-topic-edit-save' => 'Simpan',
 	'wall-topic-edit-cancel' => 'Batalkan',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author EvenT
  * @author Wouterkoch
@@ -4678,7 +4677,7 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'wall-topic-edit-cancel' => 'Annuleren',
 );
 
-/** Norwegian Nynorsk (norsk nynorsk)
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
  * @author Erdemaslancan
  */
 $messages['nn'] = array(
@@ -5032,7 +5031,6 @@ $messages['ps'] = array(
 	'wall-message-remove' => 'غورځول',
 	'wall-message-elseswall' => 'د $1 دېوال',
 	'wall-thread-deleted' => 'ړنګ شو',
-	'wall-placeholder-topic' => 'دا د څه په اړه دی؟',
 	'wall-placeholder-reply' => 'يو ځواب ورکول',
 	'wall-button-to-preview-comment' => 'مخليدنه',
 	'wall-button-to-cancel-preview' => 'سمول',
@@ -5074,13 +5072,10 @@ $messages['ps'] = array(
 	'wall-history-action-view' => 'کتل',
 	'wall-history-action-restore' => 'بيازېرمل',
 	'mail-notification-html-greeting' => 'سلامونه $1،',
-	'prefs-email-wall-v2' => 'پيغام دېوال او فورم',
+	'prefs-email-wall-v2' => 'پيغام دېوال', # Fuzzy
 	'tog-enotifwallthread-v2' => 'برېښليک راولېږه…',
 	'wall-preview-modal-title' => 'مخليدنه',
-	'wall-preview-modal-button-back' => 'پر شا',
 	'wall-preview-modal-button-publish' => 'خپرول',
-	'wall-topic-edit-save' => 'خوندي کول',
-	'wall-topic-edit-cancel' => 'ناګارل',
 );
 
 /** Portuguese (português)
@@ -7066,7 +7061,6 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Sam Wang
- * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
 	'wall-no-title' => '无标题',
@@ -7129,7 +7123,7 @@ $messages['zh-hans'] = array(
 	'prefs-email-wall-v2' => '留言墙和论坛',
 	'tog-enotifwallthread-v2' => '邮件通知我…',
 	'tog-enotifmywall-reminder' => '以每日提醒邮件',
-	'tog-enotifmywall-noemail' => '从不。不向我发送任何留言墙或论坛邮件',
+	'tog-enotifmywall-noemail' => '从不。不向我发送任何留言墙邮件', # Fuzzy
 	'wall-preview-modal-title' => '预览',
 	'wall-preview-modal-button-back' => '返回',
 	'wall-topic-edit-cancel' => '取消',

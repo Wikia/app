@@ -12,7 +12,7 @@
 
 		//hide all childs of body that is not #wkMdlWrp
 		//see bugid: 49662
-		& > *:not(#wkMdlWrp):not(#wkTst) {
+		& > *:not(#wkMdlWrp) {
 			//yup they are useing inline styles
 			display: none !important;
 		}

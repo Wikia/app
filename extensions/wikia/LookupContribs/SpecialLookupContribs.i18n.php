@@ -411,7 +411,7 @@ $messages['es'] = array(
 	'right-lookupcontribs' => 'Ver las ediciones globales del usuario',
 	'lookupcontribsshowpages' => 'Todas las páginas ($1 espacios de nombre)',
 	'lookupcontribscontent' => 'contenido',
-	'lookupcontribscontribtitleforuser' => 'Contribuciones del usuario:',
+	'lookupcontribscontribtitleforuser' => 'Contribuciones para el usuario:',
 	'lookupcontribsnormal' => 'reciente',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'todo',
@@ -959,7 +959,7 @@ $messages['my'] = array(
 	'lookupcontribsall' => 'အားလုံး',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1306,7 +1306,6 @@ Verifique se se enganou no nome do utilizador.</p>',
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
- * @author JM Pessanha
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
@@ -1359,7 +1358,6 @@ Verifique se se enganou com o nome do utilizador.</p>',
 	'lookupcontribsnormal' => 'recentes',
 	'lookupcontribsfinal' => 'finais',
 	'lookupcontribsall' => 'todas',
-	'action-lookupcontribs' => 'pesquisar as contribuições de um usuário em múltiplas wikis',
 );
 
 /** Romanian (română)
@@ -1665,12 +1663,8 @@ $messages['yi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
- * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
-	'lookupcontribs' => '查阅维基贡献',
-	'lookupcontribstitle' => '查阅维基贡献',
-	'lookupcontribsrecentcontributions' => '最近$1的贡献',
 	'lookupcontribsselectuser' => '选择用户：',
 	'lookupcontribsgo' => '去',
 	'lookupcontribsselectwikis' => '选择维基：',
@@ -1687,5 +1681,4 @@ $messages['zh-hans'] = array(
 	'lookupcontribsnormal' => '最近',
 	'lookupcontribsfinal' => '最后',
 	'lookupcontribsall' => '全部',
-	'action-lookupcontribs' => '在多个wiki中查询用户的贡献',
 );

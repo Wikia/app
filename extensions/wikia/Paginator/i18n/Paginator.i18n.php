@@ -185,7 +185,7 @@ $messages['ms'] = array(
 	'paginator-back' => 'Kembali',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(

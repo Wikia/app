@@ -1,26 +1,27 @@
 /**
+ * @test-framework QUnit
  * @test-require-asset extensions/wikia/AdEngine/js/AdProviderLater.js
  */
 
-describe('AdProviderLater', function(){
-	it('fillInSlot pushes to the passed queue', function() {
-		var logMock = function() {}
-			, queueMock = []
-			, adProviderLater;
+module('AdProviderLater');
 
-		queueMock.push('item0');
+test('fillInSlot pushes to the passed queue', function() {
+	var logMock = function() {}
+		, queueMock = []
+		, adProviderLater;
 
-		adProviderLater = AdProviderLater(logMock, queueMock);
+	queueMock.push('item0');
 
-		adProviderLater.fillInSlot('item1');
-		adProviderLater.fillInSlot('item2');
+	adProviderLater = AdProviderLater(logMock, queueMock);
 
-		queueMock.push('item3');
+	adProviderLater.fillInSlot('item1');
+	adProviderLater.fillInSlot('item2');
 
-		expect(queueMock.length).toBe(4);
-		expect(queueMock[0]).toBe('item0');
-		expect(queueMock[1]).toBe('item1');
-		expect(queueMock[2]).toBe('item2');
-		expect(queueMock[3]).toBe('item3');
-	});
+	queueMock.push('item3');
+
+	equal(queueMock.length, 4);
+	equal(queueMock[0], 'item0');
+	equal(queueMock[1], 'item1');
+	equal(queueMock[2], 'item2');
+	equal(queueMock[3], 'item3');
 });

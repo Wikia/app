@@ -53,14 +53,11 @@ $commentBg: rgb(246,246,246);
 		border-radius: 0;
 		-webkit-appearance: none;
 
-		margin: 0;
-
 		-webkit-box-flex: 50;
 		-moz-box-flex: 50;
 		box-flex: 50;
 
 		height: 40px;
-		width: auto;
 
 		&:focus{
 			height: 96px;
@@ -224,6 +221,10 @@ $commentBg: rgb(246,246,246);
 		color: transparent;
 		line-height: 0;
 	}
+}
+
+#commMore{
+	margin-bottom: $page-padding;
 }
 
 #wkMdlWrp.cmnMdl{

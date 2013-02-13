@@ -128,7 +128,6 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author PtM
- * @author Siebrand
  */
 $messages['qqq'] = array(
 	'userprofilepage-question-caption' => 'Parameters:
@@ -152,7 +151,6 @@ $messages['qqq'] = array(
 	'user-identity-box-edits-since-joining' => 'Parameters:
 * $1 is the number of edits',
 	'user-identity-box-group-adminmentor' => 'Group name shown on user profile for users who are Admin Mentors.',
-	'user-identity-box-group-wikiastars' => 'Wikiaster',
 	'user-identity-box-join-more-wikis' => 'Message in user profile for when said user has not yet edited in wikis which could be displayed as his favourites',
 	'user-identity-remove-confirmation' => 'appears when user is trying to remove avatar',
 	'user-identity-remove-fail' => 'appears in alert box when there ware some when removing the avatar',
@@ -1675,7 +1673,7 @@ $messages['ms'] = array(
 	'user-identity-remove-fail' => 'Ada sedikit masalah ketika menggugurkan avatar!',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -2043,7 +2041,6 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'userprofilepage-edit-modal-header' => 'پېژنليک سمول',
 	'userprofilepage-lightbox-interview-cancel' => 'ناګارل',
 	'userprofilepage-add-question' => 'نوې پوښتنه ورګډول',
 	'userprofilepage-question-save' => 'پوښتنه خوندي کول',
@@ -2061,7 +2058,6 @@ $messages['ps'] = array(
 	'user-identity-box-group-helper' => 'مرستيال',
 	'user-identity-box-zero-state-location' => 'استوګنځای',
 	'user-identity-box-zero-state-birthday' => 'زېږکليزه',
-	'user-identity-box-zero-state-gender' => 'جنس',
 	'user-identity-box-zero-state-occupation' => 'دنده',
 	'user-identity-box-zero-state-twitter' => 'زما ټويټر',
 	'user-identity-box-zero-state-website' => 'زما وېبپاڼه',
@@ -2079,11 +2075,7 @@ $messages['ps'] = array(
 	'userprofilepage-lightbox-about-me-cancel' => 'ناګارل',
 	'userprofilepage-closing-popup-cancel' => 'ناګارل',
 	'user-action-menu-edit' => 'سمول',
-	'user-action-menu-edit-profile' => 'پېژنليک سمول',
 	'user-action-menu-leave-message' => 'پيغام پرېښودل',
-	'user-action-menu-view-source' => 'سرچينه کتل',
-	'user-action-menu-protect' => 'ژغورل',
-	'user-action-menu-unprotect' => 'ناژغورل',
 	'user-action-menu-rename' => 'نوم بدلول',
 	'user-action-menu-delete' => 'ړنګول',
 	'user-action-menu-history' => 'پېښليک',
@@ -2259,20 +2251,6 @@ $messages['pt-br'] = array(
 	'blog-avatar-changed-log' => 'Adicionou ou alterou avatar',
 	'blog-avatar-removed-log' => 'Removeu os avatares de $1',
 	'blog-avatar-alt' => 'Registros de adições e remoções de avatares',
-);
-
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
-$messages['roa-tara'] = array(
-	'userprofilepage-edit-modal-header' => "Cange 'u profile",
-	'userprofilepage-question-caption' => 'Domande $1/$2',
-	'userprofilepage-lightbox-interview-cancel' => 'Annulle',
-	'user-identity-box-edit' => 'Cange',
-	'user-identity-box-zero-state-gender' => 'Sesso',
-	'user-action-menu-edit' => 'Cange',
-	'user-action-menu-edit-profile' => "Cange 'u profile",
-	'user-action-menu-leave-message' => "Lasse 'u messàgge",
 );
 
 /** Russian (русский)

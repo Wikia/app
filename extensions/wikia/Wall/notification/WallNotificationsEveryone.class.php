@@ -21,6 +21,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		), __METHOD__);
 
 		$this->setGlobalCacheBuster();
+		$this->clearQueue();
 
 		$this->getDB(true)->commit();
 		wfProfileOut(__METHOD__);
@@ -83,6 +84,7 @@ class WallNotificationsEveryone extends WallNotifications {
 			}
 
 			$this->setEntityProcessed($userId, $entityKey);
+			$this->clearQueue();
 		}
 
 		wfProfileOut(__METHOD__);
@@ -190,13 +192,11 @@ class WallNotificationsEveryone extends WallNotifications {
 	}
 
 	public function clearQueue() {
-		//TODO: it causes db deadlocks - bugid 97359
-		//this should be called at most once a day in a background task
 		wfProfileIn(__METHOD__);
 
 		//TODO: performace of this queris
-		$this->getDB(true)->query('delete from wall_notification_queue where datediff(NOW(), event_date) > ' . self::queueTimeout);
-		$this->getDB(true)->query('delete from wall_notification_queue_processed where datediff(NOW(), event_date) > ' . self::queueTimeout);
+		$this->getDB(true)->query('delete from wall_notification_queue where datediff(NOW(), event_date) > ' . self::queueTimeout . ' LIMIT 10');
+		$this->getDB(true)->query('delete from wall_notification_queue_processed where datediff(NOW(), event_date) > ' . self::queueTimeout . ' LIMIT 10');
 		wfProfileOut(__METHOD__);
 	}
 }

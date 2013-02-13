@@ -3,9 +3,6 @@
 class MarketingToolboxModel extends WikiaModel {
 	const SECTION_HUBS = 1;
 
-	/**
-	 * Wikia Hubs modules ids
-	 */
 	const MODULE_SLIDER = 1;
 	const MODULE_PULSE = 2;
 	const MODULE_WIKIAS_PICKS = 3;
@@ -87,10 +84,6 @@ class MarketingToolboxModel extends WikiaModel {
 	
 	public function getThumbnailSize() {
 		return self::FORM_THUMBNAIL_SIZE;
-	}
-	
-	public function getModulesIds() {
-		return array_keys($this->modules);
 	}
 	
 	public function getModuleName($moduleId) {
@@ -175,17 +168,6 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
-	 * Get vertical ids
-	 *
-	 * @param int $sectionId section id
-	 *
-	 * @return array vertical ids
-	 */
-	public function getVerticalsIds($sectionId = self::SECTION_HUBS) {
-		return array_keys($this->verticals[$sectionId]);
- 	}
-
-	/**
 	 * Get vertical name
 	 *
 	 * @param int $sectionId section id
@@ -252,22 +234,6 @@ class MarketingToolboxModel extends WikiaModel {
 		return $modulesData;
 	}
 
-	/**
-	 * Get modules data for last published hub before selected timestamp
-	 *
-	 * @param string $langCode
-	 * @param int    $sectionId
-	 * @param int    $verticalId
-	 * @param int    $timestamp
-	 * @param int    $moduleId
-	 *
-	 * @return array
-	 */
-	public function getPublishedData($langCode, $sectionId, $verticalId, $timestamp = null, $moduleId = null) {
-		$lastPublishTimestamp = $this->getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp);
-		return $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $lastPublishTimestamp, $moduleId);
-	}
-
 	public function getModuleUrl($langCode, $sectionId, $verticalId, $timestamp, $moduleId) {
 		$specialPage = $this->getSpecialPageClass();
 		return $specialPage::getTitleFor('MarketingToolbox', 'editHub')->getLocalURL(
@@ -299,26 +265,13 @@ class MarketingToolboxModel extends WikiaModel {
 		} else {
 			$out = $this->getDefaultModuleList();
 		}
-		
+
 		$actualData = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp);
 		$out = $actualData + $out;
+
 		ksort($out);
 
 		return $out;
-	}
-
-	/**
-	 * @param $moduleId
-	 * @param $langCode
-	 * @param $sectionId
-	 * @param $verticalId
-	 * @param $timestamp
-	 * 
-	 * @return array
-	 */
-	public function getModuleDataFromDb($langCode, $sectionId, $verticalId, $timestamp, $moduleId) {
-		$data = $this->getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp, $moduleId);
-		return isset($data[$moduleId]) ? $data[$moduleId] : array();
 	}
 
 	/**
@@ -328,22 +281,16 @@ class MarketingToolboxModel extends WikiaModel {
 	 * @param int $sectionId
 	 * @param int $verticalId
 	 * @param int $timestamp
-	 * @param int $moduleId (optional) returns data only for specified module
 	 *
 	 * @return array
 	 */
-	protected function getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp, $moduleId = null) {
+	protected function getModulesDataFromDb($langCode, $sectionId, $verticalId, $timestamp) {
 		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$conds = array(
 			'lang_code' => $langCode,
 			'vertical_id' => $verticalId,
 			'hub_date' => $sdb->timestamp($timestamp),
 		);
-		
-		if( is_int($moduleId) ) {
-			$conds['module_id'] = $moduleId; 
-		}
-		
 		$table = $this->getTablesBySectionId($sectionId);
 		$fields = array('module_id', 'module_status', 'module_data', 'last_edit_timestamp', 'last_editor_id');
 
@@ -358,7 +305,6 @@ class MarketingToolboxModel extends WikiaModel {
 				'data' => json_decode($row['module_data'], true)
 			);
 		}
-		
 		return $out;
 	}
 
@@ -427,19 +373,15 @@ class MarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
-	 * Get last timestamp when vertical was published (before selected timestamp)
+	 * Get last timestamp when vertical was published
 	 *
 	 * @param string $langCode
 	 * @param int $sectionId
 	 * @param int $verticalId
-	 * @param int $timestamp - max timestamp that we should search for published hub
 	 *
 	 * @return int timestamp
 	 */
-	protected function getLastPublishedTimestamp($langCode, $sectionId, $verticalId, $timestamp = null) {
-		if ($timestamp === null) {
-			$timestamp = time();
-		}
+	protected function getLastPublishedTimestamp($langCode, $sectionId, $verticalId) {
 		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$table = $this->getTablesBySectionId($sectionId);
 
@@ -450,7 +392,7 @@ class MarketingToolboxModel extends WikiaModel {
 		);
 
 		$conds = $sdb->makeList($conds, LIST_AND);
-		$conds .= ' AND hub_date <= ' . $sdb->timestamp($timestamp);
+		$conds .= ' AND hub_date <= CURDATE()';
 
 		$result = $sdb->selectField($table, 'unix_timestamp(max(hub_date))', $conds, __METHOD__);
 
@@ -462,9 +404,9 @@ class MarketingToolboxModel extends WikiaModel {
 	 * wikitext (i.e. [[File:Batman - Following|thumb|right|335 px]]
 	 * returns false if not found
 	 *
-	 * @param string $wikiText
+	 * @param $wikiText string
 	 *
-	 * @return string|false $fileName
+	 * @return $fileName string|false
 	 */
 	public function extractTitleFromVETWikitext($wikiText) {
 		$this->wf->profileIn(__METHOD__);

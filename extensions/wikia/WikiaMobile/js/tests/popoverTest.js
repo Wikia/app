@@ -1,4 +1,5 @@
 /*
+ @test-framework Jasmine
  @test-require-asset /resources/wikia/libraries/modil/modil.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/throbber.js
  @test-require-asset /extensions/wikia/WikiaMobile/js/popover.js

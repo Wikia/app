@@ -41,7 +41,7 @@ var send = function(data) {
 			headers: {'content-type' : 'application/x-www-form-urlencoded'},
 			body: "",
 			json: false,
-			url: url
+			url: url,
 		},
 		function (error, response, body) {
 			logger.info(body)

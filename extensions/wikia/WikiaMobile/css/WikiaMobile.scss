@@ -33,10 +33,9 @@ html {
 
 body {
 	background-color: $footerBackground;
-
 	color: $page-text-color;
 	font-size: medium;
-	line-height: 1.5em;
+	line-height: 25px;
 }
 
 #wkCurtain {
@@ -93,7 +92,7 @@ a {
 	//I want page to be at least 305px long to be able to show share
 	min-height: 305px;
 	background-color: white;
-	padding: $page-padding;
+	padding-top: 10px;
 }
 //for browsers that don't know that these should be block
 //all our browsers support these (Removed by Jakub Olek according to: http://caniuse.com/#search=figu)
@@ -102,6 +101,8 @@ a {
 //}
 
 #wkMainCnt{
+	padding: $page-padding;
+	padding-bottom: 1px;
 	//fixes for fluid content
 	.tvetnone {
 		width: 100% !important;
@@ -253,23 +254,27 @@ blockquote {
 	}
 }
 
+//article comments header
+#wkArtCom{
+    margin: 10px 0;
+}
 .js{
-	#wkComm {
-		margin-top: 10px;
-		display: none;
+   	#wkComm {
+   		display: none;
 
-		&.open{
-			display: block;
-		}
-	}
+   		&.open{
+   			display: block;
+   		}
+    }
 
 	#wkShowCom{
-		display: none;
-	}
+ 		display: none;
+ 	}
 }
 
 #wkShowCom{
 	text-transform: none;
 	font-size: small;
+	display: blaock;
 	float: right;
 }

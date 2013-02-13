@@ -44,10 +44,7 @@ var SharingToolbar = {
 				}, false, true);
 			} else {
 				UserLoginModal.show({
-					callback: function() {
-						UserLogin.forceLoggedIn = true;
-						showEmailModal();
-					}
+					callback: showEmailModal
 				});
 			}
 			return false;
@@ -57,6 +54,10 @@ var SharingToolbar = {
 		}
 	},
 	showEmailModal: function(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel) {
+		var refreshPage = function() {
+			UserLoginAjaxForm.prototype.reloadPage();
+		};
+
 		$.showCustomModal(
 			lightboxShareEmailLabel,
 			'<label>'+lightboxShareEmailLabelAddress+'<br/>'
@@ -79,26 +80,22 @@ var SharingToolbar = {
 							callback: function(data) {
 								var result = data.result;
 								$.showModal(result['info-caption'], result['info-content'], {
-									onClose: function() {
-										if (result.success) {
-											UserLogin.refreshIfAfterForceLogin();
-										}
-									}
+									onClose: refreshPage
 								});
 								// close email modal when share is successful (BugId:16061)
 								if (result.success) {
 									$('#shareEmailModal').closeModal();
-									UserLogin.refreshIfAfterForceLogin();
+
 								}
 							}
 						});
 					}},
 					{id:'cancel', message:'Cancel', handler:function(){
-						$('#shareEmailModal').hideModal();
-						UserLogin.refreshIfAfterForceLogin();
-					}}
+							$('#shareEmailModal').hideModal();
+						}
+					}
 				],
-				onClose: $.proxy(UserLogin.refreshIfAfterForceLogin, UserLogin)
+				onClose: refreshPage
 			}
 		);
 	},

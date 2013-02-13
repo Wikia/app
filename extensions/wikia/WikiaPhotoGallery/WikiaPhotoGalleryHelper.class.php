@@ -659,12 +659,8 @@ class WikiaPhotoGalleryHelper {
 				$image[ 'pageTitle' ] = $imageTitle->getText();
 			}
 
-			$image['videoPlayButton'] = false;
-			if( WikiaFileHelper::isFileTypeVideo($img) ) {
-				// Get play button overlay for video thumb
-				$image['videoPlayButton'] = WikiaFileHelper::videoPlayButtonOverlay( self::STRICT_IMG_WIDTH_PREV, self::STRICT_IMG_HEIGHT_PREV );
-			}
-			
+			$image['isFileTypeVideo'] = WikiaFileHelper::isFileTypeVideo($img);
+
 			//need to use parse() - see RT#44270
 			$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
 

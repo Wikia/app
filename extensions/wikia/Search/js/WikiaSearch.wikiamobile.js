@@ -4,7 +4,7 @@
  * @author Artur Klajnerok<arturk(at)wikia-inc.com>
  **/
 
-require(['throbber', 'topbar', 'track'], function(throbber, topbar, track){
+require(['throbber', 'events', 'topbar', 'track'], function(throbber, events, topbar, track){
 
     var d = document,
         wkSrhInp = d.getElementById('wkSrhInp'),
@@ -13,7 +13,7 @@ require(['throbber', 'topbar', 'track'], function(throbber, topbar, track){
         wkResultUl = d.getElementById('wkResultUl'),
         wkResultNext = d.getElementById('wkResultNext'),
         wkResultPrev = d.getElementById('wkResultPrev'),
-        clickEvent = 'click',
+        clickEvent = events.click,
         firstPage;
 
     if(wkResultUl){

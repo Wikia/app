@@ -552,7 +552,7 @@ Sila cuba lagi.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 kembali ke senarai]',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */

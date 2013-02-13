@@ -14,7 +14,7 @@
  */
 
 /*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, AdConfig*/
-define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log'], function (dw, ck, track, log) {
+define('ads', ['events', 'domwriter', 'wikia.cookies', 'track', 'wikia.log'], function (ev, dw, ck, track, log) {
 	'use strict';
 
 	var AD_TYPES = {
@@ -29,6 +29,7 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log'], function (dw
 		adSlot,
 		adSlotStyle,
 		contentWrapper,
+		click = ev.click,
 		close,
 		d = document,
 		found = false,
@@ -320,7 +321,7 @@ define('ads', ['domwriter', 'wikia.cookies', 'track', 'wikia.log'], function (dw
 				}
 
 				if (type === AD_TYPES.footer) {
-					close.addEventListener('click', function () {
+					close.addEventListener(click, function () {
 						track.event('ad', track.CLICK, {label: 'close'});
 						addClass(adSlot, ['anim']);
 

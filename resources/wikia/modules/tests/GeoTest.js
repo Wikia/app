@@ -1,4 +1,5 @@
 /*
+ @test-framework Jasmine
  @test-require-asset /resources/wikia/libraries/define.mock.js
  @test-require-asset /resources/wikia/modules/geo.js
  */

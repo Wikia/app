@@ -166,7 +166,7 @@ $messages['ms'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -293,11 +293,8 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
- * @author Hydra
  */
 $messages['zh-hans'] = array(
-	'showperformancestats-desc' => '返回一些人类能读懂的性能统计信息',
 	'performancestat-total' => '总计：$1秒',
-	'performancestat-apache' => 'Apache：$1秒',
 	'performancestat-cpu' => 'CPU: $1秒',
 );

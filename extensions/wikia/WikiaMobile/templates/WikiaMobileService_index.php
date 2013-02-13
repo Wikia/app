@@ -36,6 +36,7 @@
 	<meta name=viewport content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 	<meta name=apple-mobile-web-app-capable content=yes>
 	<?= $headLinks ;?>
+	<?= $topScripts ?>
 	<?= $globalVariablesScript ;?>
 	<?= $jsHeadFiles ;?>
 	<?= $headItems ;?>
@@ -45,8 +46,8 @@
 	<?= $wikiaNavigation ;?>
 	<?= $pageContent ;?>
 	<?= $wikiaFooter ;?>
-	<div id=wkCurtain>&nbsp;</div>
 	<?= $jsBodyFiles ;?>
 	<?= $advertisement ;?>
+	<div id=wkCurtain>&nbsp;</div>
 </body>
 </html>

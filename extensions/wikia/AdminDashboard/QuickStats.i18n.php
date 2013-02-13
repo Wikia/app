@@ -604,7 +604,7 @@ $messages['ms'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -718,14 +718,12 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'quickstats-header-label' => 'چټک شمار',
 	'quickstats-header-date' => 'نېټه',
 	'quickstats-header-views' => 'کتنې',
 	'quickstats-header-edits' => 'سمونونه',
 	'quickstats-header-photos' => 'انځورونه',
 	'quickstats-header-likes' => 'خوښې',
 	'quickstats-totals-label' => 'ټولټال',
-	'quickstats-see-more-stats-link' => '[[Special:WikiStats|نورې شمارنې کتل]]',
 );
 
 /** Portuguese (português)

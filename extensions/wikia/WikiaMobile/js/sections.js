@@ -7,9 +7,10 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 
-define('sections', ['JSMessages'], function(msg){
+define('sections', ['events', 'JSMessages'], function(ev, msg){
 	var d = document,
 		fragment = d.createDocumentFragment(),
+		click = ev.click,
 		callbacks = {
 			open: [],
 			close: []
@@ -69,7 +70,6 @@ define('sections', ['JSMessages'], function(msg){
 						//do not wrap these elements
 						root = fragment;
 					}else if (isH2){
-						addNoSectClass(node);
 
 						if(addNoSect){
 							addNoSectClass(fragment);
@@ -108,7 +108,7 @@ define('sections', ['JSMessages'], function(msg){
 		}
 
 		//this has to run even if we don't find any sections on a page for ie. Category Pages, pages without any sections but with readmore and stuff
-		d.getElementById('wkPage').addEventListener('click', function(ev){
+		d.getElementById('wkPage').addEventListener(click, function(ev){
 			var t = ev.target,
 				className = t.className;
 

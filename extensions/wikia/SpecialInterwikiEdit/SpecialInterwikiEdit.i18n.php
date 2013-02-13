@@ -343,7 +343,7 @@ $messages['ms'] = array(
 	'iwedit-success' => '<p>Pautan berjaya dicipta.</p>',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -431,11 +431,9 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
- * @author JM Pessanha
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
-	'interwikiedit' => 'Editor de Interwikis',
 	'iwedit-title' => 'Editor de Interwikis',
 	'iwedit-language-interwikis' => 'só interwikis de língua',
 	'iwedit-all-interwikis' => 'todos os interwikis',
@@ -543,14 +541,8 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
- * @author Hydra
  */
 $messages['zh-hans'] = array(
-	'interwikiedit' => '跨维基连接编辑器',
-	'iwedit-title' => '跨维基连接编辑器',
-	'iwedit-language-interwikis' => '只有语言跨维基链接而已',
-	'iwedit-all-interwikis' => '所有跨维基链接',
 	'iwedit-update' => '更新',
 	'iwedit-error' => '<p>发生错误。</p>',
-	'iwedit-success' => '<p>链接创建成功。</p>',
 );

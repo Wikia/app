@@ -76,12 +76,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	private $mFeedURL = false;
 
 	/**
-	 * List of files in a gallery
-	 */
-	public $mFiles = array();
-
-	/**
-	 * List of external images - have to be different from mFiles as it has different type of data
+	 * List of external images - have to be different from mImages as it has different type of data
 	 *
 	 * @var $mExternalImages array
 	 */
@@ -151,9 +146,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 	/**
 	 * set parser cache key
-	 *
-	 * @param $parser Parser
 	 */
+
 	public function recordParserOption(&$parser) {
 		if($this->mType == self::WIKIA_PHOTO_SLIDER) {
 			/**
@@ -358,13 +352,9 @@ class WikiaPhotoGallery extends ImageGallery {
 	 */
 	function add($title, $html='', $link='', $wikitext='') {
 		if ($title instanceof Title) {
-			$this->mFiles[] = array( $title, $html, $link, $wikitext );
+			$this->mImages[] = array( $title, $html, $link, $wikitext );
 			wfDebug( __METHOD__ . ' - ' . $title->getText() . "\n" );
 		}
-	}
-
-	public function getImages() {
-		return $this->mFiles;
 	}
 
 	/**
@@ -515,28 +505,26 @@ class WikiaPhotoGallery extends ImageGallery {
 		$uploadedImages = MediaQueryService::getRecentlyUploaded($limit);
 
 		// remove images already added to slideshow
-		$this->mFiles = array();
+		$this->mImages = array();
 		$this->mData['imagesShown'] = array();
 
 		// add recently uploaded images to slideshow
-		if ( !empty( $uploadedImages ) ) {
-			foreach ($uploadedImages as $image) {
-				$this->add($image);
+		foreach ($uploadedImages as $image) {
+			$this->add($image);
 
-				// store list of images (to be used by front-end)
-				$this->mData['imagesShown'][] = array(
-					'name' => $image->getText(),
-					'caption' => '',
-					'link' => '',
-					'linktext' => '',
-					'recentlyUploaded' => true,
-					'shorttext' => '',
-				);
+			// store list of images (to be used by front-end)
+			$this->mData['imagesShown'][] = array(
+				'name' => $image->getText(),
+				'caption' => '',
+				'link' => '',
+				'linktext' => '',
+				'recentlyUploaded' => true,
+				'shorttext' => '',
+			);
 
-				// Only add real images (bug #5586)
-				if ($image->getNamespace() == NS_FILE) {
-					$this->mParser->mOutput->addImage($image->getDBkey());
-				}
+			// Only add real images (bug #5586)
+			if ($image->getNamespace() == NS_FILE) {
+				$this->mParser->mOutput->addImage($image->getDBkey());
 			}
 		}
 
@@ -616,7 +604,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		wfProfileIn(__METHOD__);
 
 		// do not render empty gallery
-		if (empty($this->mFiles)) {
+		if (empty($this->mImages)) {
 			wfProfileOut(__METHOD__);
 			return '';
 		}
@@ -639,7 +627,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		} else {
 
 			// loop throught the images and get height of the tallest one
-			foreach ($this->mFiles as $imageData) {
+			foreach ($this->mImages as $imageData) {
 
 				$img = $this->getImage($imageData[0]);
 				$fileObjectsCache[] = $img;
@@ -679,7 +667,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$height = min($height, $thumbSize);
 
 				// recalculate dimensions (RT #59355)
-				foreach ($this->mFiles as $index => $image) {
+				foreach ($this->mImages as $index => $image) {
 					if (!empty($heights[$index]) && !empty($widths[$index])) {
 						//fix #59355, min() added to let borders wrap images with smaller width
 						//fix #63886, round ( $tmpFloat ) != floor ( $tmpFloat ) added to check if thumbnail will be generated from proper width
@@ -779,7 +767,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$itemDivStyle = "height:{$thumbWrapperHeight}px;";
 			}
 
-			foreach ($this->mFiles as $index => $imageData) {
+			foreach ($this->mImages as $index => $imageData) {
 
 				if ($perRow != 'dynamic' && ($index % $perRow) == 0){
 					$html .= Xml::openElement('div', array('class' => 'wikia-gallery-row'));
@@ -978,7 +966,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				$html .= Xml::closeElement('span'); // /span.wikia-gallery-item
 
-				if ($perRow != 'dynamic' && (($index % $perRow) == ($perRow - 1) || $index == (count($this->mFiles) - 1))) {
+				if ($perRow != 'dynamic' && (($index % $perRow) == ($perRow - 1) || $index == (count($this->mImages) - 1))) {
 					$html .= Xml::closeElement('div');
 				}
 			}
@@ -1018,7 +1006,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		wfProfileIn(__METHOD__);
 
 		// don't render empty slideshows
-		if (empty($this->mFiles)) {
+		if (empty($this->mImages)) {
 			wfProfileOut(__METHOD__);
 			return '';
 		}
@@ -1090,7 +1078,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		$index = 0;
 
-		foreach ($this->mFiles as $p => $pair) {
+		foreach ($this->mImages as $p => $pair) {
 			/**
 			 * @var $nt Title
 			 */
@@ -1304,43 +1292,51 @@ class WikiaPhotoGallery extends ImageGallery {
 		wfProfileIn(__METHOD__);
 
 		// do not render empty sliders
-		if (empty($this->mFiles)) {
+		if (empty($this->mImages)) {
 			wfProfileOut(__METHOD__);
 			return '';
 		}
 
 		$orientation = $this->getParam('orientation');
 
-		// setup image serving for main images and navigation thumbnails
+		// setup image serving for "big" images
 		if( $orientation == 'mosaic' ) {
 			$imagesDimensions = array(
-				'w' => WikiaPhotoGalleryHelper::WIKIA_GRID_SLIDER_MOSAIC_MIN_IMG_WIDTH,
+				'w' => WikiaPhotoGalleryHelper::SLIDER_MOSAIC_MIN_IMG_WIDTH,
 				'h' => WikiaPhotoGalleryHelper::SLIDER_MOSAIC_MIN_IMG_HEIGHT,
-			);
-			$sliderClass = 'mosaic';
-			$thumbDimensions = array(
-				"w" => WikiaPhotoGalleryHelper::WIKIA_GRID_THUMBNAIL_MAX_WIDTH,
-				"h" => 100,
 			);
 		} else {
 			$imagesDimensions = array(
 				'w' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH,
 				'h' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_HEIGHT,
 			);
-			if ( $orientation == 'right' ){
-				$sliderClass = 'vertical';
-				$thumbDimensions = array(
-					"w" => 110,
-					"h" => 50,
-				);
-			} else {
-				$sliderClass = 'horizontal';
-				$thumbDimensions = array(
-					"w" => 90,
-					"h" => 70,
-				);
-			}
 		}
+
+		/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+		global $wgOasisGrid;
+		if( $orientation == 'mosaic' && !empty($wgOasisGrid) ) {
+			$imagesDimensions['w'] = WikiaPhotoGalleryHelper::WIKIA_GRID_SLIDER_MOSAIC_MIN_IMG_WIDTH;
+		}
+		/* end temp transistion code */
+
+		// setup image serving for navigation thumbnails
+		if ( $orientation == 'mosaic' ) {
+			$sliderClass = 'mosaic';
+			$thumbDimensions = array( "w" => 155, "h" => 100);
+		}
+		else if ( $orientation == 'right' ){
+			$sliderClass = 'vertical';
+			$thumbDimensions = array( "w" => 110, "h" => 50 );
+		} else {
+			$sliderClass = 'horizontal';
+			$thumbDimensions = array( "w" => 90, "h" => 70 );
+		}
+
+		/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+		if( $orientation == 'mosaic' && !empty($wgOasisGrid) ) {
+			$thumbDimensions['w'] = WikiaPhotoGalleryHelper::WIKIA_GRID_THUMBNAIL_MAX_WIDTH;
+		}
+		/* end temp transistion code */
 
 		$imageServingForThumbs = new ImageServing(null, $thumbDimensions['w'], $thumbDimensions);
 
@@ -1348,7 +1344,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		$sliderImageLimit = $orientation == 'mosaic' ? 5 : 4;
 
-		foreach ( $this->mFiles as $p => $pair ) {
+		foreach ( $this->mImages as $p => $pair ) {
 			/**
 			 * @var $nt Title
 			 * @var $text String
@@ -1366,17 +1362,17 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
-			$file = wfFindFile( $nt, $time );
-			if ( is_object($file) && ($nt->getNamespace() == NS_FILE)) {
+			$img = wfFindFile( $nt, $time );
+			if ( !WikiaFileHelper::isFileTypeVideo($img) && is_object($img) && ($nt->getNamespace() == NS_FILE)) {
 
-				$aspect = $file->getWidth() / $file->getHeight();
-				$adjWidth = $file->getWidth();
-				$adjHeight = $file->getHeight();
+				$aspect = $img->getWidth() / $img->getHeight();
+				$adjWidth = $img->getWidth();
+				$adjHeight = $img->getHeight();
 
 				// If the image extends beyond the slider's viewing box in either dimention
 				// scaled down the image
-				if (($file->getWidth() > $imagesDimensions['w']) || ($file->getHeight() > $imagesDimensions['h'])) {
-					if (($file->getWidth() - $imagesDimensions['w']) > ($file->getHeight() - $imagesDimensions['h'])) {
+				if (($img->getWidth() > $imagesDimensions['w']) || ($img->getHeight() > $imagesDimensions['h'])) {
+					if (($img->getWidth() - $imagesDimensions['w']) > ($img->getHeight() - $imagesDimensions['h'])) {
 						// Oversized image, constrain on width
 						$adjWidth = $imagesDimensions['w'];
 						$adjHeight = intval($adjWidth / $aspect);
@@ -1388,35 +1384,18 @@ class WikiaPhotoGallery extends ImageGallery {
 				}
 
 				if ( F::app()->checkSkin( 'wikiamobile' ) ){
-					$imageUrl = wfReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
+					$imageUrl = wfReplaceImageServer( $img->getUrl(), $img->getTimestamp() );
 				} else {
 					$imageServingForImages = new ImageServing(null, $imagesDimensions['w'], array("w" => $adjWidth, "h" => $adjHeight));
 					// generate cropped version of big image (fit within 660x360 box)
 					// BugId:9678 image thumbnailer does not always land on 360px height since we scale on width
 					// so this also scales image UP if it is too small (stretched is better than blank)
 					// max() added due to BugId:20644
-					$imageUrl = $imageServingForImages->getUrl($file, max($imagesDimensions['w'], $file->getWidth()), max($imagesDimensions['h'], $file->getHeight()));
+					$imageUrl = $imageServingForImages->getUrl($img, max($imagesDimensions['w'], $img->getWidth()), max($imagesDimensions['h'], $img->getHeight()));
 				}
 
 				// generate navigation thumbnails
-				$thumbUrl = $imageServingForThumbs->getUrl($file, $file->getWidth(), $file->getHeight());
-
-				// Handle videos
-				$videoHtml = false;
-				$videoPlayButton = false;
-				if( WikiaFileHelper::isFileTypeVideo($file) ) {
-					// Get HTML for main video image
-					$htmlParams = array(
-						'file-link' => true,
-						'linkAttribs' => array( 'class' => 'video-thumbnail lightbox wikiaPhotoGallery-slider' ),
-						'hideOverlay' => true,
-					);
-					$videoHtml = $file->transform( array( 'width' => $imagesDimensions['w'] ) )->toHtml( $htmlParams );
-
-					// Get play button overlay for video thumb
-					$videoPlayButton = WikiaFileHelper::videoPlayButtonOverlay( $thumbDimensions['w'], $thumbDimensions['h'] );
-
-				}
+				$thumbUrl = $imageServingForThumbs->getUrl($img, $img->getWidth(), $img->getHeight());
 
 				$data = array(
 					'imageUrl' => $imageUrl,
@@ -1429,18 +1408,16 @@ class WikiaPhotoGallery extends ImageGallery {
 					'adjHeight' => $adjHeight,
 					'centerTop' => ($imagesDimensions['h'] > $adjHeight) ? intval(($imagesDimensions['h'] - $adjHeight)/2) : 0,
 					'centerLeft' => ($imagesDimensions['w'] > $adjWidth) ? intval(($imagesDimensions['w'] - $adjWidth)/2) : 0,
-					'videoHtml' => $videoHtml,
-					'videoPlayButton' => $videoPlayButton,
 				);
 
 				if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-					$origWidth = $file->getWidth();
-					$origHeight = $file->getHeight();
+					$origWidth = $img->getWidth();
+					$origHeight = $img->getHeight();
 					$size = WikiaMobileMediaService::calculateMediaSize( $origWidth, $origHeight );
-					$thumb = $file->transform( $size );
+					$thumb = $img->transform( $size );
 
 					$imageAttribs = array(
-						'src' => wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() ),
+						'src' => wfReplaceImageServer( $thumb->getUrl(), $img->getTimestamp() ),
 						'width' => $size['width'],
 						'height' => $size['height']
 					);
@@ -1470,7 +1447,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 			$template->set_vars(array(
 				'sliderClass' => $sliderClass,
-				'files' => $out,
+				'images' => $out,
 				'thumbDimensions' => $thumbDimensions,
 				'sliderId' => $this->mData['id'],
 				'imagesDimensions' => $imagesDimensions,
@@ -1951,7 +1928,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$media = array();
 		$result = '';
 
-		foreach( $this->mFiles as $val ) {
+		foreach( $this->mImages as $val ) {
 			$item = wfFindFile( $val[0] );
 
 			if( !empty( $item ) ) {

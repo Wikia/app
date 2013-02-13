@@ -1,10 +1,13 @@
 <div class="CategorySelect editPage" id="CategorySelect">
 	<?= $app->getView( 'CategorySelect', 'input' ) ?>
 	<ul class="categories">
-		<? foreach( $categories as $category ): ?>
-			<?= $app->renderView( 'CategorySelectController', 'category', array(
-				'name' => $category[ 'name' ]
-			)) ?>
-		<? endforeach ?>
+		<? if ( count( $categories ) ): ?>
+			<? foreach( $categories as $index => $category ): ?>
+				<?= $app->renderView( 'CategorySelectController', 'category', array(
+					'index' => $index,
+					'category' => $category
+				)) ?>
+			<? endforeach ?>
+		<? endif ?>
 	</ul>
 </div>

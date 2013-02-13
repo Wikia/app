@@ -134,6 +134,7 @@ class WikiaMobileService extends WikiaService {
 		//AppCache will be disabled for the first several releases
 		//$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
 		$this->response->setVal( 'jsHeadFiles', $jsHeadFiles );
+		$this->response->setVal( 'topScripts', $this->skin->getTopScripts() );
 		$this->response->setVal( 'allowRobots', ( !$this->wg->DevelEnvironment ) );
 		$this->response->setVal( 'cssLinks', $cssLinks );
 		$this->response->setVal( 'mimeType', $this->templateObject->get( 'mimetype' ) );
@@ -149,7 +150,18 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'wikiaNavigation', $nav );
 		$this->response->setVal( 'pageContent', $pageContent );
 		$this->response->setVal( 'wikiaFooter', $footer );
-		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts() );
+
+		//global variables
+		//from Output class
+		//and from ResourceLoaderStartUpModule
+		$res = new ResourceVariablesGetter();
+		$vars = array_diff_key(
+			//I found that this array merge is the fastest
+			$this->wg->Out->getJSVars() + $res->get(),
+			array_flip( $this->wg->WikiaMobileExcludeJSGlobals )
+		);
+
+		$this->response->setVal( 'globalVariablesScript', WikiaSkin::makeInlineVariablesScript( $vars ) );
 
 		//tracking
 		$trackingCode = '';

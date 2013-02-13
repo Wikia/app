@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('ads'), 'track', 'throbber'], function (qs, loader, toc, ads, track, throbber) {
+define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.optional('ads'), 'track', 'throbber'], function (qs, loader, toc, events, ads, track, throbber) {
 	'use strict';
 	var w = window,
 		d = document,
@@ -22,6 +22,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 		wikiNavHeader,
 		wikiNavH1,
 		wikiNavLink,
+		clickEvent = events.click,
 		lvl2Link,
 		barSetUp = false,
 		navSetUp = false,
@@ -239,7 +240,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 		//Fix for ios 4.x not respecting fully event.preventDefault()
 		// (it shows url bar for a second (and this is ugly (really)))
 		wkPrfTgl.href = '';
-		wkPrfTgl.addEventListener('click', function(event){
+		wkPrfTgl.addEventListener(clickEvent, function(event){
 			event.preventDefault();
 			if(navBar.className.indexOf('prf') > -1){
 				closeDropDown();
@@ -289,12 +290,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 		if(wkPrf.className.indexOf('loaded') == -1){
 			throbber.show(wkPrf, {center: true});
 
-			loader(
-			{
-				type: loader.LIBRARY,
-				resources: 'facebook'
-			},
-			{
+			loader({
 				type: loader.MULTI,
 				resources: {
 					templates: [{
@@ -308,6 +304,10 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 						useskin: w.skin
 					}
 				}
+			},
+			{
+				type: loader.LIBRARY,
+				resources: 'facebook'
 			}
 			).done(
 				function(res){
@@ -316,15 +316,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 					loader.processStyle(res.styles);
 					wkPrf.insertAdjacentHTML('beforeend', res.templates['UserLoginSpecial_index']);
 					loader.processScript(res.scripts);
-
-					//see fbconnect.js
-					w.FB.init({
-						appId : w.fbAppId,
-						oauth : true,
-						status : true, // Check login status
-						cookie : true, // Enable cookies to allow the server to access the session
-						xfbml  : w.fbUseMarkup // Whether XFBML should be automatically parsed
-					});
 
 					wkPrf.className += ' loaded';
 
@@ -337,9 +328,19 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('
 							.setHash(hash)
 							.toString()
 					);
+
+					//see fbconnect.js
+					FB.init({
+						appId : window.fbAppId,
+						oauth : true,
+						status : true, // Check login status
+						cookie : true, // Enable cookies to allow the server to access the session
+						xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
+					});
 				}
 			);
 		}
+		//track('login/open');
 	}
 
 	function closeDropDown() {

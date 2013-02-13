@@ -3344,7 +3344,7 @@ $messages['mzn'] = array(
 	'wikifactory-label-actions' => 'عملکاردون',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -3620,7 +3620,7 @@ $messages['nl-informal'] = array(
 	'closed-wiki-dump-exists' => 'Je kunt [$1 je inhoud ophalen] als je wilt.<br />Als je wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.',
 );
 
-/** Norwegian Nynorsk (norsk nynorsk)
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -4157,7 +4157,6 @@ regist.',
  * @author Caio1478
  * @author Daemorris
  * @author Giro720
- * @author JM Pessanha
  * @author Jesielt
  * @author Luckas Blade
  * @author 555
@@ -4194,7 +4193,6 @@ $messages['pt-br'] = array(
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Comparar',
 	'right-wikifactory' => 'Alterar configurações internas das wikis',
-	'action-wikifactory' => 'Alterar configurações internas das wikis',
 	'wikifactory-domain-edit' => 'editar esta URL',
 	'wikifactory-domain-remove' => 'remover esta URL da wiki',
 	'wikifactory-domain-setmain' => 'colocar esta URL no wgServer',
@@ -4210,9 +4208,6 @@ $messages['pt-br'] = array(
 	'closewiki-images-url' => 'Arquivo de imagem: $1',
 	'closewiki-unknown' => 'Desconhecido',
 	'closewiki-return' => 'Voltar a $1',
-	'wikifactory-button-saveparse' => 'Analisar &amp; salvar as alterações',
-	'wikifactory-button-save' => 'Salvar alterações',
-	'wikifactory-public-status-change-default-reason' => 'Estado alterado na guia Domínios.',
 	'awc-metrics-wikis' => 'Mostrar Wikis',
 	'awc-metrics-select' => 'Mostrar Wikis:',
 	'awc-metrics-by-language' => 'por idioma:',

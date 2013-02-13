@@ -18,7 +18,6 @@ class All extends AbstractService
 			'Redirects'       => null,
 			'Wam'             => null,
 			'WikiPromoData'   => null,
-			'WikiStats'       => null,
 			'WikiViews'       => null
 			);
 	

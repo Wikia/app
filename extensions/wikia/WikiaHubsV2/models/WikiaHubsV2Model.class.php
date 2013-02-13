@@ -42,18 +42,6 @@ class WikiaHubsV2Model extends WikiaModel {
 	public function getDate() {
 		return $this->date;
 	}
-	
-	public function getTimestamp() {
-		$datetime = new DateTime($this->date);
-
-		$timestamp = $datetime->getTimestamp();
-		if( $datetime->format('H') != 0 || $datetime->format('i') != 0 || $datetime->format('s') != 0) {
-			$datetime->setTime(0, 0, 0);
-			$timestamp = $datetime->getTimestamp();
-		}
-		
-		return $timestamp;
-	}
 
 	public function setVertical($vertical) {
 		$this->vertical = $vertical;
@@ -111,22 +99,93 @@ class WikiaHubsV2Model extends WikiaModel {
 	}
 
 	public function getDataForModuleExplore() {
-		try {
-			$response = F::app()->sendRequest('WikiaHubsApi', 'getModuleData', array(
-				'module' => MarketingToolboxModel::MODULE_EXPLORE,
-				'vertical' => $this->getVertical(),
-				'ts' => $this->getTimestamp(),
-				//'lang' => $this->getLang(), //TODO: returns 80433 -- why?
-			));
-			
-			$data = $response->getVal('data');
-		} catch (Exception $e) {
-			$data = array(
-				'headline' => $e->getMessage(),
-				'linkgroups' => array(),
-				'imagelink' => '',
-			);
-		}
+		// mock data
+		$data = array(
+			'headline' => 'Explore',
+			'article' => 'Article content which is very long because it is so long that it is too long',
+			'image' => 'Marvel320.jpg',
+			'linkgroups' =>
+			array(
+				array(
+					'headline' => 'Group 1',
+					'links' =>
+					array(
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+					),
+				),
+				array(
+					'headline' => 'Group 2',
+					'links' =>
+					array(
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+					)
+				),
+				array(
+					'headline' => 'Group 3',
+					'links' =>
+					array(
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+					)
+				),
+				array(
+					'headline' => 'Group 4',
+					'links' =>
+					array(
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+						array(
+							'anchor' => 'WoWwiki',
+							'href' => 'http://www.wowwiki.com'
+						),
+					)
+				)
+			),
+			'link' => array(
+				'anchor' => 'See more...',
+				'href' => 'http://www.wowwiki.com'
+			),
+		);
+
+		$data['imagelink'] = $this->getMiniThumbnailUrl($data['image']);
 
 		return $data;
 	}
@@ -203,10 +262,8 @@ class WikiaHubsV2Model extends WikiaModel {
 
 		$results['sponsorthumb']['src'] = $this->getThumbnailUrl($results['sponsor'], self::SPONSORED_IMAGE_WIDTH, self::SPONSORED_IMAGE_HEIGHT);
 		$sponsorThumbSizes = $this->getImageThumbSize();
-		if (!empty($sponsorThumbSizes)) {
-			$results['sponsorthumb']['width'] = $sponsorThumbSizes['width'];
-			$results['sponsorthumb']['height'] = $sponsorThumbSizes['height'];
-		}
+		$results['sponsorthumb']['width'] = $sponsorThumbSizes['width'];
+		$results['sponsorthumb']['height'] = $sponsorThumbSizes['height'];
 
 		return $results;
 	}
@@ -552,15 +609,11 @@ No
 	}
 
     public function generateImageXml($image) {
-		$xmlElement = '';
-		if ($image['src']) {
-			$xmlElement = Xml::element('img', array(
-				'src' => $image['src'],
-				'width' => $image['width'],
-				'height' => $image['height'],
-			), '', true);
-		}
-		return $xmlElement;
+		return Xml::element('img', array(
+			'src' => $image['src'],
+			'width' => $image['width'],
+			'height' => $image['height'],
+		), '', true);
 	}
 
 	public function parseVideoData($videoData) {

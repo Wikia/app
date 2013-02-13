@@ -50,7 +50,6 @@ $messages['en'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Post a comment',
 	'wikiamobile-article-comments-show' => 'Show',
 	'wikiamobile-article-comments-login-post' => 'Please log in to post a comment.',
-	'wikiamobile-article-comments-post-fail' => 'Failed to save comment, please try again later',
 
 	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$PAGETITLE" on {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hi $WATCHINGUSERNAME,
@@ -1714,8 +1713,6 @@ $messages['ml'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
-	'article-comments-file-page' => "<a href='$1'>Ulasan oleh $2</a> di <a href='$3'>$4</a>",
-	'article-blog-comments-file-page' => "<a href='$1'>Ulasan oleh $2</a> pada pos <a href='$3'>$4</a> di blog <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Pengguna tanpa nama',
 	'article-comments-comments' => 'Ulasan ($1)',
 	'article-comments-post' => 'Kirim ulasan',
@@ -1786,7 +1783,7 @@ $messages['mzn'] = array(
 	'article-comments-undeleted-comment' => 'نظر صفحۀ وبلاگ $1 وسّه احیاء بیّه',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1896,7 +1893,6 @@ $messages['nl'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Opmerking plaatsen',
 	'wikiamobile-article-comments-show' => 'Weergeven',
 	'wikiamobile-article-comments-login-post' => 'Meld u aan om te reageren.',
-	'wikiamobile-article-comments-post-fail' => 'Het opslaan van de reactie is mislukt. Probeer het later opnieuw.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE" op {{SITENAME}}',
 	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
 
@@ -2115,12 +2111,10 @@ ___________________________________________
 $messages['ps'] = array(
 	'article-comments-anonymous' => 'ورکنومی کارن',
 	'article-comments-comments' => 'تبصرې ($1)',
-	'article-comments-post' => 'تبصره کول',
 	'article-comments-cancel' => 'ناګارل',
 	'article-comments-delete' => 'ړنګول',
 	'article-comments-edit' => 'سمول',
 	'article-comments-history' => 'پېښليک',
-	'article-comments-rc-comments' => 'د ليکنې تبصرې ([[$1]])',
 	'article-comments-toc-item' => 'تبصرې',
 	'article-comments-reply' => 'ځوابول',
 	'article-comments-show-all' => 'ټولې تبصرې ښکاره کول',
@@ -2205,13 +2199,10 @@ Wikia
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
- * @author JM Pessanha
  * @author Luckas Blade
  * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
-	'article-comments-file-page' => "<a href='$1'>Comentário de $2</a> em <a href='$3'>$4</a>",
-	'article-blog-comments-file-page' => "<a href='$1'>Comentário de $2</a> na publicação <a href='$3'>$4</a> do blog <a href='$5'> $6's</a>",
 	'article-comments-anonymous' => 'Usuário anônimo',
 	'article-comments-comments' => 'Comentários ($1)',
 	'article-comments-post' => 'Postar comentário',
@@ -2295,8 +2286,6 @@ $messages['ro'] = array(
  * @author Reder
  */
 $messages['roa-tara'] = array(
-	'article-comments-file-page' => "<a href='$1'>Commende da $2</a> sus a <a href='$3'>$4</a>",
-	'article-blog-comments-file-page' => "<a href='$1'>Commende da $2</a> sus a <a href='$3'>$4</a> mannate sus a 'u blog <a href='$5'>$6's</a>",
 	'article-comments-anonymous' => 'Utinde anonime',
 	'article-comments-comments' => 'Commende $1',
 	'article-comments-post' => "Mitte 'nu commende",
@@ -2307,9 +2296,7 @@ $messages['roa-tara'] = array(
 	'article-comments-error' => "Non g'è state possibbele ccu salve 'u commende",
 	'article-comments-undeleted-comment' => "Commende no scangellate p'a pàgene $1 d'u blog",
 	'article-comments-rc-comments' => "Commende d'a vôsce ([[$1]])",
-	'article-comments-rc-blog-comments' => "Commende d'u blog ([[$1]])",
 	'article-comments-toc-item' => 'Commende',
-	'article-comments-comment-cannot-add' => "Tu non ge puè aggiungere 'nu commende a 'a vôsce.",
 	'article-comments-vote' => 'Vote',
 	'article-comments-reply' => 'Respunne',
 	'article-comments-show-all' => 'Vide tutte le commènde',

@@ -1,15 +1,16 @@
 /**
  * module used to handle category pages pagination
  *
+ * @param events.js events
  * @param throbber.js throbber
  * @param track.js track
  */
 /* global wgTitle */
-require(['throbber', 'track', 'wikia.nirvana'], function (throbber, track, nirvana) {
+require(['events', 'throbber', 'track', 'wikia.nirvana'], function (events, throbber, track, nirvana) {
 	'use strict';
 
 	var d = document,
-		clickEvent = 'click',
+		clickEvent = events.click,
 		expAll = d.getElementById('expAll'),
 		elements,
 		wkCatExh = d.getElementById('wkCatExh'),

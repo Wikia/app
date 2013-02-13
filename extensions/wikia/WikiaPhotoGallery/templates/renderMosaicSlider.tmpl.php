@@ -10,22 +10,17 @@
 		</a>
 	</div>
 	<ul class="wikia-mosaic-thumb-region">
-	<?
+	<?php
 		$index = 0;
-		foreach ( $files as $key => $val ) {
+		foreach ( $images as $key => $val ) {
 			$index++;
 	?>
 		<li class="wikia-mosaic-slide<?= $index === 5 ? ' last' : ''?>">
-			<? if ( !empty( $val['imageLink'] ) ): ?>
+			<?php if ( !empty( $val['imageLink'] ) ): ?>
 					<a href='<?= htmlspecialchars($val['imageLink'],ENT_QUOTES); ?>' class='wikia-mosaic-link'>
-			<? endif; ?>
+			<?php endif; ?>
 
-			<? if( !empty( $val['videoHtml'] ) ): ?>
-				<?= $val['videoHtml'] ?>
-			<? else: ?>
-				<img width='<?= $imagesDimensions['w']; ?>' height='<?= $imagesDimensions['h'] ?>' src='<?=$val['imageUrl']?>' class="wikia-mosaic-hero-image">
-			<? endif; ?>
-			
+			<img width='<?= $imagesDimensions['w']; ?>' height='<?= $imagesDimensions['h'] ?>' src='<?=$val['imageUrl']?>' class="wikia-mosaic-hero-image">
 			<img width='<?= $thumbDimensions['w'] ?>' height='<?= $thumbDimensions['h'] ?>' src='<?= $val['imageThumbnail'] ?>' class="wikia-mosaic-thumb-image">
 
 			<span class="wikia-mosaic-description-mask">
@@ -35,10 +30,10 @@
 				<span class="wikia-mosaic-short-title"><?= $val['imageShortTitle'] ?></span>
 				<span class="description-more"><?= $val['imageDescription'] ?></span>
 			</span>
-			<? if ( !empty( $val['imageLink'] ) ): ?>
+			<?php if ( !empty( $val['imageLink'] ) ): ?>
 					</a>
-			<? endif; ?>
+			<?php endif; ?>
 		</li>
-	<? } ?>
+	<?php } ?>
 	</ul>
 </div>

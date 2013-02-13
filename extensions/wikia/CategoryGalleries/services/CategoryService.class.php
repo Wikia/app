@@ -55,7 +55,7 @@
 		 * @return string
 		 */
 		static public function getTopArticlesKey( $dbkey, $ns ) {
-			return self::getKey( 'toparticles', md5($dbkey), $ns );
+			return self::getKey( 'toparticles', $dbkey, $ns );
 		}
 
 		/**
@@ -263,7 +263,6 @@
 
 		/**
 		 * Hook entry for intercepting article moves to refresh memcached data if needed
-		 * @param $title Title
 		 * @return bool
 		 */
 		static public function onTitleMoveComplete( &$title, &$newtitle, &$user, $pageid, $redirid ) {

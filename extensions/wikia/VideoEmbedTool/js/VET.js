@@ -21,6 +21,7 @@
 	var VET_prevScreen = null;
 	var VET_slider = null;
 	var VET_orgThumbSize = null;
+	var VET_thumbSize = 335;
 	var VET_height = null;
 	var VET_wysiwygStart = 1;
 	var VET_ratio = 1;
@@ -30,10 +31,6 @@
 	var VET_embedPresets = false;
 	var VET_callbackAfterSelect = $.noop;
 	var VET_callbackAfterEmbed = $.noop;
-	var VET_MAX_WIDTH = 670, // 670 max width on oasis
-		VET_MIN_WIDTH = 100,
-		VET_DEFAULT_WIDTH = 335,
-		VET_thumbSize = VET_DEFAULT_WIDTH;	// variable that can change later, defaulted to DEFAULT
 
 	// ajax call for 2nd screen (aka embed screen)
 	function VET_editVideo() {
@@ -188,20 +185,31 @@
 	function VET_manualWidthInput() {
 	    var val = parseInt( this.value );
 	    if ( isNaN( val ) ) {
-			VET_readjustSlider( 0 );
+			$( '#VideoEmbedManualWidth' ).val(VET_thumbSize);
+			VET_readjustSlider( VET_thumbSize );
 			return false;
 	    }
-	    if(val > VET_MAX_WIDTH) {
-		    val = VET_MAX_WIDTH;
-		    $( '#VideoEmbedManualWidth' ).val(val);
-	    }
+		$( 'VideoEmbedManualWidth' ).val(val);
 		VET_readjustSlider( val );
 	}
-
+	
 	function VET_readjustSlider( value ) {
-		$('#VideoEmbedSlider').slider && $('#VideoEmbedSlider').slider({
-			value: value
-		});
+			if ( 670 < value ) { // too big, hide slider
+				if ( $('#VideoEmbedSlider .ui-slider-handle').is(':visible') ) {
+					$('#VideoEmbedSlider .ui-slider-handle').hide();
+					$('#VideoEmbedSlider').slider && $('#VideoEmbedSlider').slider({
+						value: VET_thumbSize
+					});
+				}
+			} else {
+				if ( !$('#VideoEmbedSlider .ui-slider-handle').is(':visible') ) {
+					$('#VideoEmbedSlider .ui-slider-handle' ).show();
+				}
+	
+				$('#VideoEmbedSlider').slider && $('#VideoEmbedSlider').slider({
+					value: value
+				});
+			}
 	}
 	
 	function VET_show( options ) {		
@@ -310,19 +318,15 @@
 	
 		var value = VET_thumbSize;
 	
-		if (dataFromEditMode) {
-			if(dataFromEditMode.width) {
-				value = dataFromEditMode.width;
-			} else {
-				value = '';
-			}
+		if (dataFromEditMode && dataFromEditMode.width) {
+			value = dataFromEditMode.width;
 		}
 	
 		function initSlider() {
 	
 			$('.WikiaSlider').slider({
-				min: VET_MIN_WIDTH,
-				max: VET_MAX_WIDTH,
+				min: 100,
+				max: 670,
 				value: value,
 				slide: function(event, ui) {
 					$('#VideoEmbedManualWidth').val(ui.value);

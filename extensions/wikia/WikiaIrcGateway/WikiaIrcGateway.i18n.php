@@ -348,7 +348,7 @@ $messages['my'] = array(
 	'ircgate-username' => 'အသုံးပြုသူအမည် :',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -450,14 +450,6 @@ $messages['ru'] = array(
 $messages['si'] = array(
 	'ircgate-username' => 'පරිශීලක-නාමය:',
 	'ircgate-channel' => 'චැනලය:',
-);
-
-/** Somali (Soomaaliga)
- * @author Abshirdheere
- */
-$messages['so'] = array(
-	'ircgate-username' => 'Magaca gudagalka:',
-	'ircgate-channel' => 'Kanaal',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)

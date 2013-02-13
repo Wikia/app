@@ -223,7 +223,7 @@ $messages['de'] = array(
 	'founderprogressbar-video-add-description' => 'Videos sind weitere beliebte Medien, die weitere Menschen dazu animieren in deinem Wiki mitzumachen. Gute Videos findet man auf YouTube, Clipfish und weitere. Füge ein Video mit der Schaltfläche Funktionen und Medien im Editor hinzu.',
 	'founderprogressbar-user-add5-label' => 'Erreiche 5 Benutzer-Profile',
 	'founderprogressbar-user-add5-description' => 'Ein gutes Wiki wird durch eine große Gemeinschaft gestützt. Die besten Wikis haben viele Editoren, 5 aktive Benutzer sind ein guter Start!',
-	'founderprogressbar-user-add5-url' => 'http://de.community.wikia.com/wiki/Hilfe:Erschaffe_eine_Gemeinschaft',
+	'founderprogressbar-user-add5-url' => 'http://hilfe.wikia.com/wiki/Hilfe:Erschaffe_eine_Gemeinschaft',
 	'founderprogressbar-recentchanges-visit-label' => 'Letzte Änderungen ansehen',
 	'founderprogressbar-recentchanges-visit-description' => 'Letzte Änderungen ist eine erweiterte Version der Wiki-Aktivitäten. Du kannst über die "Unterschiede"  die konkrete Änderung einsehen, die an einer Seite vorgenommen wurden,  Änderungen rückgängig machen, und mehr Details als auf den Wiki-Aktivitäten erhalten. Es ist eine großartiges Verwaltungswerkzeug, falls du mehr Infos benötigst.',
 	'founderprogressbar-wordmark-edit-label' => 'Lade ein Wordmark hoch',
@@ -992,7 +992,7 @@ $messages['ms'] = array(
 	'founderprogressbar-browse-page-name' => 'Semak seimbas',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1673,52 +1673,29 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
- * @author Hydra
  * @author Hzy980512
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
-	'founderprogressbar-credits' => '一个为新维基创办者的任务语指南中心',
-	'founderprogressbar-widget-label' => '{{SITENAME}} 的进展',
-	'founderprogressbar-progress-label' => '完成的任务',
 	'founderprogressbar-progress-see-full-list' => '查看完整列表',
 	'founderprogressbar-progress-hide-full-list' => '隐藏完整列表',
-	'founderprogressbar-skip-for-now' => '先略过',
 	'founderprogressbar-task-completed' => '已完成',
-	'founderprogressbar-list-label' => '{{SITENAME}} 的任务',
 	'founderprogressbar-list-description2' => '任务区列出了所有您需要完成的任务。如果您跳过一个任务，它将移动到“已跳过的任务”之中，您仍可以在任何时候完成它们。您是否感到列表上的某些任务永远不适合您的维基吗？别担心--当只有“已跳过任务”仍未完成时我们会解锁您的奖励任务。完成奖励任务来弥补你要永远跳过的任务，让完成率达到梦寐以求的100%吧。',
 	'founderprogressbar-list-task-label' => '任务',
 	'founderprogressbar-list-skipped-task-label' => '已跳过的任务',
 	'founderprogressbar-list-skipped-task-desc' => '您可以随时完成这些任务。',
 	'founderprogressbar-list-bonus-task-label' => '奖励任务',
-	'founderprogressbar-list-bonus-task-desc' => '完成任务列表以解锁其他特别任务',
-	'founderprogressbar-task-call-to-action' => '进入任务',
-	'founderprogressbar-page-add10-label' => '达到$1{{PLURAL:$1|页|页}}',
 	'founderprogressbar-themedesigner-visit-label' => '自定义您的主题',
-	'founderprogressbar-mainpage-edit-label' => '完成您的首页',
-	'founderprogressbar-photo-add10-label' => '达到$1{{PLURAL:$1|照片|照片}}',
-	'founderprogressbar-category-add3-label' => '达到$1{{PLURAL:$1|类别|类别}}',
 	'founderprogressbar-commcentral-visit-label' => '访问创立者与管理人员在红心',
 	'founderprogressbar-wikiactivity-visit-label' => '访问维基动态',
 	'founderprogressbar-profile-edit-label' => '填写您的档案页',
-	'founderprogressbar-photo-add20-label' => '达到$1{{PLURAL:$1|照片|照片}}',
 	'founderprogressbar-total-edit75-label' => '编辑数达到 75 次',
-	'founderprogressbar-page-add20-label' => '达到$1{{PLURAL:$1|页|页}}',
-	'founderprogressbar-category-edit-label' => '编辑一个分类页',
-	'founderprogressbar-wikialabs-visit-label' => '访问 Wikia 实验室',
 	'founderprogressbar-fb-connect-label' => 'Facebook链接',
-	'founderprogressbar-category-add5-label' => '达到$1{{PLURAL:$1|类别|类别}}',
 	'founderprogressbar-gallery-add-label' => '添加图片库',
-	'founderprogressbar-topnav-edit-label' => '自订您的导航',
-	'founderprogressbar-commcorner-edit-label' => '编辑社区角落',
 	'founderprogressbar-video-add-label' => '添加一段视频',
 	'founderprogressbar-user-add5-label' => '查看5个用户的档案',
 	'founderprogressbar-recentchanges-visit-label' => '查看最近更改',
-	'founderprogressbar-wordmark-edit-label' => '上载一个字标',
 	'founderprogressbar-blogpost-add-label' => '撰写一篇博客',
-	'founderprogressbar-fb-likes3-label' => '达到$1脸书的赞',
-	'founderprogressbar-uncategorized-visit-label' => '查询未分类的页面',
-	'founderprogressbar-total-edit300-label' => '达到{{PLURAL:$1|$1次编辑|$1次编辑}}',
 	'founderprogressbar-bonus-photo-add10-label' => '添加$1张图片。',
 	'founderprogressbar-browse-page-name' => '浏览',
 );

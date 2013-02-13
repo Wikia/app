@@ -1918,7 +1918,7 @@ $messages['mzn'] = array(
 	'swm-list-table-lang' => 'زوون',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2377,13 +2377,11 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'swm-label-preview' => 'مخليدنه',
 	'swm-label-edit' => 'سمول',
-	'swm-label-sent' => 'ولېږل شو',
 	'swm-label-list' => 'لړليک',
 	'swm-label-recipient-wikis' => 'ويکي ګانې',
 	'swm-label-recipient-users' => 'کارنان',
 	'swm-label-mode-wikis-all' => 'ټولې ويکي ګانې',
 	'swm-label-mode-wikis-wiki' => 'ټاکلې ويکي',
-	'swm-label-mode-wikis-wiki-multi' => 'د ويکي ګانو لړليک',
 	'swm-label-mode-users-all' => 'ټول کارنان',
 	'swm-label-mode-users-active' => 'فعاله کارنان',
 	'swm-label-mode-users-user' => 'ټاکلی کارن',
@@ -2406,13 +2404,6 @@ $messages['ps'] = array(
 	'swm-list-table-lang' => 'ژبې',
 	'swm-yes' => 'هو',
 	'swm-no' => 'نه',
-	'swm-mode-users-registration-after' => 'وروسته',
-	'swm-mode-users-registration-before' => 'دمخه',
-	'swm-mode-users-registration-between' => 'تر منځ',
-	'swm-mode-users-editcount-between' => 'تر منځ',
-	'swm-mode-wikis-created-after' => 'وروسته',
-	'swm-mode-wikis-created-before' => 'دمخه',
-	'swm-mode-wikis-created-between' => 'تر منځ',
 );
 
 /** Portuguese (português)
@@ -3197,7 +3188,6 @@ $messages['zh-hans'] = array(
 	'swm-mode-users-editcount-more' => '更多',
 	'swm-mode-users-editcount-less' => '更少',
 	'swm-mode-users-editcount-between' => '之间',
-	'swm-label-mode-wikis-created' => '维基创立日期',
 	'swm-mode-wikis-created-after' => '之后',
 	'swm-mode-wikis-created-before' => '之前',
 	'swm-mode-wikis-created-between' => '之间',

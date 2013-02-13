@@ -477,9 +477,19 @@
 			$app = F::app();
 			$app->wf->ProfileIn( __METHOD__ );
 
-			$cacheVersion = 4;
+			$cacheVersion = 2;
 			$limitDefault = 200;
 			$limitUsed = ( $limit > $limitDefault ) ? $limit : $limitDefault ;
+
+			//in Dev environment data is not updated, use an available range
+			if ( !empty( $app->wg->DevelEnvironment ) ) {
+				$startDate = '2012-10-07';
+				$endDate = '2012-10-14';
+			} else {
+				$startDate = date( 'Y-m-d', strtotime( 'last week last monday' ) );
+				$endDate = date( 'Y-m-d', strtotime( 'last week next sunday' ) );
+			}
+
 			$keyToken = '';
 
 			if ( !empty( $namespaces ) && is_array( $namespaces ) ) {
@@ -504,7 +514,7 @@
 				$excludeNamespaces
 			);
 
-			$getData = function() use ( $app, $wikiId, $namespaces, $excludeNamespaces, $articleIds, $limitUsed ) {
+			$getData = function() use ( $app, $wikiId, $namespaces, $excludeNamespaces, $articleIds, $startDate, $endDate, $limitUsed ) {
 				$app->wf->ProfileIn( __CLASS__ . '::TopArticlesQuery' );
 				$topArticles = array();
 
@@ -512,13 +522,8 @@
 					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 
 					$where = array(
-						//the rollup_wiki_article_pageviews contains only summarized data
-						//with the time_id of last sunday, so fetch just that one as
-						//the table is partitioned on a per-day basis and crossing
-						//multiple partitions kills kittens
-						'time_id = curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY',
-						//for now this table supports only this period ID
-						'period_id' => DataMartService::PERIOD_ID_WEEKLY,
+						'time_id' => array( $startDate, $endDate ),
+						'period_id' => DataMartService::PERIOD_ID_WEEKLY,//for now this table supports only this period ID
 						'wiki_id' => $wikiId
 					);
 
@@ -568,6 +573,7 @@
 
 			$topArticles = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData );
 			$topArticles = array_slice( $topArticles, 0, $limit, true );
+
 			$app->wf->ProfileOut( __METHOD__ );
 			return $topArticles;
 		}

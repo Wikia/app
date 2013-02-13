@@ -29,6 +29,9 @@ class AchRankingService {
 		$ranking = $wgMemc->get( $cacheKey );
 
 		if( empty( $ranking ) ) {
+			global $wgCityId, $wgWikiaBotLikeUsers, $wgExternalSharedDB;
+			global $wgEnableAchievementsStoreLocalData;
+
 			$ranking = array();
 			$rules = array('ORDER BY' => 'score desc');
 
@@ -36,7 +39,12 @@ class AchRankingService {
 				$rules['LIMIT'] = $limit * 2;//bots and blocked users are filtered after the query has been run, let's admit that ratio is 2:1
 
 			$where = array();
-			$dbr = wfGetDB(DB_SLAVE);
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+				$where['wiki_id'] = $wgCityId;
+			} else {
+				$dbr = wfGetDB(DB_SLAVE);
+			}
 
 			$res = $dbr->select('ach_user_score', 'user_id, score', $where, __METHOD__, $rules);
 			$rankingSnapshot = ($compareToSnapshot) ? $this->loadFromSnapshot() : null;
@@ -74,6 +82,9 @@ class AchRankingService {
 	}
 
 	public function getUserScore($user_id) {
+		global $wgCityId, $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
+
 		if ( empty( $user_id ) ) return 0;
 
 		$user = User::newFromId( $user_id );
@@ -81,7 +92,12 @@ class AchRankingService {
 
 		if ( $user && AchAwardingService::canEarnBadges( $user ) ) {
 			$where = array('user_id' => $user_id);
-			$dbr = wfGetDB(DB_SLAVE);
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+				$where['wiki_id'] = $wgCityId;
+			} else {
+				$dbr = wfGetDB(DB_SLAVE);
+			}
 			$score = $dbr->selectField('ach_user_score', 'score', $where, __METHOD__);
 		}
 
@@ -139,10 +155,17 @@ class AchRankingService {
 	public function getRecentAwardedBadges($badgeLevel = null, $limit = null, $daySpan = null, $blackList = null) {
 		wfProfileIn(__METHOD__);
 
+		global $wgCityId, $wgWikiaBotLikeUsers, $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
 		$badges = array();
 
 		$conds = array();
-		$dbr = wfGetDB(DB_SLAVE);
+		if(empty($wgEnableAchievementsStoreLocalData)) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			$conds['wiki_id'] = $wgCityId;
+		} else {
+			$dbr = wfGetDB(DB_SLAVE);
+		}
 		$rules = array('ORDER BY' => 'date DESC, badge_lap DESC');
 
 		if($badgeLevel != null)

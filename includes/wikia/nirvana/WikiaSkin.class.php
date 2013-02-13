@@ -175,11 +175,6 @@ abstract class WikiaSkin extends SkinTemplate {
 		return $res;
 	}
 
-	/*
-	 * WikiaMobile skin has its own getTopScripts
-	 * MobileWikiaSkin::getTopScripts
-	 *
-	 */
 	public function getTopScripts() {
 		$scripts = '';
 		$vars = array(

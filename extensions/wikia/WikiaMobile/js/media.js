@@ -4,8 +4,8 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana'],
-	function(msg, modal, throbber, qs, popover, track, share, cache, loader, nirvana){
+define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require.optional('popover'), 'track', 'events', require.optional('share'), require.optional('wikia.cache'), 'wikia.loader', 'wikia.nirvana'],
+	function(msg, modal, throbber, qs, popover, track, events, share, cache, loader, nirvana){
 	'use strict';
 	/** @private **/
 
@@ -24,7 +24,7 @@ define('media', ['JSMessages', 'modal', 'throbber', 'wikia.querystring', require
 		current = 0,
 		shrImg = qs().getVal('file'),
 		shareBtn,
-		clickEvent = 'click',
+		clickEvent = events.click,
 		sharePopOver,
 		content = '<div id=wkMdlImages></div>',
 		toolbar = '<div class=wkShr id=wkShrImg></div>',

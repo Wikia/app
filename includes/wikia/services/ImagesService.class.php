@@ -33,12 +33,12 @@ class ImagesService extends Service {
 		return array('src' => $imageSrc, 'page' => $imagePage);
 	}
 
-	public static function getImageOriginalUrl($wikiId, $pageId) {
+	public static function getImageOriginalUrl( $wikiId, $pageId ) {
 		$app = F::app();
 		$app->wf->ProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
-		$title = GlobalTitle::newFromId($pageId, $wikiId);
+		$title = GlobalTitle::newFromId( $pageId, $wikiId );
 
 		$param = array(
 			'action' => 'query',
@@ -50,7 +50,7 @@ class ImagesService extends Service {
 		$imagePage = $title->getFullUrl();
 		$response = ApiService::foreignCall($dbname, $param);
 
-		if (!empty($response['query']['pages'])) {
+		if( !empty($response['query']['pages']) ) {
 			$imagePageData = array_shift($response['query']['pages']);
 			$imageInfo = array_shift($imagePageData['imageinfo']);
 			$imageSrc = (empty($imageInfo['url'])) ? '' : $imageInfo['url'];
@@ -59,7 +59,7 @@ class ImagesService extends Service {
 		}
 
 		$app->wf->ProfileOut(__METHOD__);
-		return array('src' => $imageSrc, 'page' => $imagePage);
+		return array( 'src' => $imageSrc, 'page' => $imagePage );
 	}
 
 	/**
@@ -82,18 +82,9 @@ class ImagesService extends Service {
 		//remove namespace string
 		$fileName = str_replace($app->wg->ContLang->getNsText(NS_FILE) . ':', '', $fileName);
 		$title = Title::newFromText($fileName, NS_FILE);
-		$article = Article::newFromID($title->getArticleID());
-
-		if ($article instanceof Article && $article->isRedirect()) {
-			$tmpTitle = $article->followRedirect();
-			if ($tmpTitle instanceof Title) {
-				$title = $tmpTitle;
-			}
-		}
-
 		$foundFile = $app->wf->FindFile($title);
 
-		if ($foundFile) {
+		if( $foundFile ) {
 			$imageWidth = $foundFile->getWidth();
 			$sizes = ($destImageWidth > 0) ?
 				self::calculateScaledImageSizes($destImageWidth, $imageWidth, $foundFile->getHeight()) :
@@ -119,13 +110,13 @@ class ImagesService extends Service {
 	 * @return object
 	 */
 	public static function calculateScaledImageSizes($destImageSize, $imageWidth, $imageHeight) {
-		if ($imageWidth > $imageHeight) {
+		if( $imageWidth > $imageHeight ) {
 			$aspectRatio = $imageHeight / $imageWidth;
 			$calculatedWidth = $destImageSize;
-			$calculatedHeight = floor($destImageSize * $aspectRatio);
-		} else if ($imageWidth < $imageHeight) {
+			$calculatedHeight = floor( $destImageSize * $aspectRatio );
+		} else if( $imageWidth < $imageHeight ) {
 			$aspectRatio = $imageWidth / $imageHeight;
-			$calculatedWidth = floor($destImageSize * $aspectRatio);
+			$calculatedWidth = floor( $destImageSize * $aspectRatio );
 			$calculatedHeight = $destImageSize;
 		} else {
 			$calculatedWidth = $destImageSize;
@@ -181,30 +172,27 @@ class ImagesService extends Service {
 		);
 
 		//validate of optional image data
-		foreach (array(self::FILE_DATA_COMMENT_OPION_NAME, self::FILE_DATA_DESC_OPION_NAME) as $option) {
-			if (!isset($oImageData->$option)) {
+		foreach( array(self::FILE_DATA_COMMENT_OPION_NAME, self::FILE_DATA_DESC_OPION_NAME) as $option ) {
+			if( !isset($oImageData->$option) ) {
 				$oImageData->$option = $oImageData->name;
 			}
 		}
 
-		$upload = F::build('UploadFromUrl');
-		/* @var $upload UploadFromUrl */
+		$upload = F::build('UploadFromUrl'); /* @var $upload UploadFromUrl */
 		$upload->initializeFromRequest(F::build('FauxRequest', array($data, true)));
 		$fetchStatus = $upload->fetchFile();
 
-		if ($fetchStatus->isGood()) {
+		if( $fetchStatus->isGood() ) {
 			$status = $upload->verifyUpload();
 
-			if (isset($status['status']) && ($status['status'] == UploadBase::SUCCESS)) {
-				$file = self::createImagePage($oImageData->name);
-				/** @var $file WikiaLocalFile */
-				$result = self::updateImageInfoInDb($file, $upload->getTempPath(), $oImageData, $user);
-				/** @var $result */
+			if( isset($status['status']) && ($status['status'] == UploadBase::SUCCESS) ) {
+				$file = self::createImagePage($oImageData->name); /** @var $file WikiaLocalFile */
+				$result = self::updateImageInfoInDb( $file, $upload->getTempPath(), $oImageData, $user); /** @var $result */
 
 				return self::buildStatus($result->ok, $file->getTitle()->getArticleID(), $result->errors);
 			} else {
 				$errorMsg = 'Upload verification faild ';
-				$errorMsg .= (isset($status['status']) ? print_r($status, true) : '');
+				$errorMsg .= ( isset($status['status']) ? print_r($status, true) : '');
 
 				return self::buildStatus(false, null, $errorMsg);
 			}
@@ -220,16 +208,14 @@ class ImagesService extends Service {
 	 */
 	public static function createImagePage($name) {
 		// create destination file
-		$title = Title::newFromText($name, NS_FILE);
-		/** @var $title Title */
+		$title = Title::newFromText($name, NS_FILE); /** @var $title Title */
 		return F::build(
 			'WikiaLocalFile',
 			array(
 				$title,
 				RepoGroup::singleton()->getLocalRepo()
 			)
-		);
-		/** @var $file WikiaLocalFile */
+		); /** @var $file WikiaLocalFile */
 	}
 
 	/**
