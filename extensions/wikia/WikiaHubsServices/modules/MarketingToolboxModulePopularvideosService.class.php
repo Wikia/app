@@ -15,18 +15,21 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 					'class' => 'required'
 				)
 			),
-			// TODO create and handle array of inputs
 			'video' => array(
-				'type' => 'hidden',
 				'attributes' => array(
 					'class' => 'wmu-file-name-input required'
 				),
-				'validator' => new WikiaValidatorFileTitle(
+				'validator' => new WikiaValidatorListValue(
 					array(
-						'required' => true
-					),
-					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
-				)
+						'validator' => new WikiaValidatorFileTitle(
+							array(
+								'required' => true
+							),
+							array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
+						)
+					)
+				),
+				'isArray' => true
 			),
 		);
 	}

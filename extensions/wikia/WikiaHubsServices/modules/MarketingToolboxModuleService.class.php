@@ -43,8 +43,23 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 					$field['validator']->setFormData($data);
 				}
 
-				if (!$field['validator']->isValid($fieldData) && (($validationError = $field['validator']->getError()) instanceof WikiaValidationError)) {
-					$out[$fieldName] = $validationError->getMsg();
+				if (!$field['validator']->isValid($fieldData)) {
+					$validationError = $field['validator']->getError();
+
+					if ($field['isArray']) {
+						$out[$fieldName] = array();
+
+						foreach ($validationError as $key => $error) {
+							if (is_array($error)) {
+								// maybe in future we should handle many errors from one validator,
+								// but actually we don't need  this feature
+								$error = array_shift(array_values($error));
+							}
+							$out[$fieldName][$key] = $error->getMsg();
+						}
+					} else {
+						$out[$fieldName] = $validationError->getMsg();
+					}
 				}
 			}
 		}
@@ -77,6 +92,8 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 				'type' => isset($field['type']) ? $field['type'] : 'text',
 				'class' => isset($field['class']) ? $field['class'] : '',
 				'icon' => isset($field['icon']) ? $field['icon'] : '',
+				'isArray' => isset($field['isArray']) ? $field['isArray'] : false,
+				'id' => MarketingToolboxModel::FORM_FIELD_PREFIX . $fieldName
 			);
 		}
 

@@ -356,8 +356,19 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 	}
 
 	public function executeFormField() {
-		$this->formFieldPrefix = MarketingToolboxModel::FORM_FIELD_PREFIX;
-		$this->inputData = $this->getVal('inputData');
+		$inputData = $this->getVal('inputData');
+
+		if ($inputData['isArray']) {
+			$index = $inputData['index'];
+
+			$inputData['name'] .= '[]';
+			$inputData['id'] .= $index;
+
+			$inputData['value'] = isset($inputData['value'][$index]) ? $inputData['value'][$index] : '';
+			$inputData['errorMessage'] = isset($inputData['errorMessage'][$index]) ? $inputData['errorMessage'][$index] : '';
+		}
+
+		$this->inputData = $inputData;
 	}
 
 	public function sponsoredImage() {
