@@ -42,7 +42,15 @@
 						replace('%4$d', wgStyleVersion);
 				}
 			},
+			addScript = function (content){
+				var script = doc.createElement('script');
 
+				script.type = 'text/javascript';
+				script.text = content;
+
+				// add it to DOM
+				head.appendChild(script);
+			},
 			// TODO: ease mocking
 			get = function(url, success, failure, type){
 				var element,
@@ -501,13 +509,11 @@
 			 * js - JS code to be evaluated
 			 */
 			loader.processScript = function(js) {
-				var script = doc.createElement('script');
-
-				script.type = 'text/javascript';
-				script.text = js;
-
-				// add it to DOM
-				head.appendChild(script);
+				if(js instanceof Array) {
+					for(var i = 0, l = js.length; i < l; i++) addScript(js[i]);
+				}else{
+					addScript(js);
+				}
 			};
 
 			/**

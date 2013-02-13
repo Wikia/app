@@ -185,17 +185,19 @@ class CategorySelect {
 			$categories = self::changeFormat( $categories, $format, 'array' );
 		}
 
-		foreach( $categories as $category ) {
-			if ( !empty( $category ) ) {
-				$title = Title::newFromText( $category[ 'name' ], NS_CATEGORY );
+		if ( !empty( $categories ) ) {
+			foreach( $categories as $category ) {
+				if ( !empty( $category ) ) {
+					$title = Title::newFromText( $category[ 'name' ], NS_CATEGORY );
 
-				// Can return false or null if invalid
-				if ( !empty( $title ) ) {
-					$category[ 'name' ] = $title->getText();
+					// Can return false or null if invalid
+					if ( !empty( $title ) ) {
+						$category[ 'name' ] = $title->getText();
 
-					if ( !in_array( $category[ 'name' ], $categoryNames ) ) {
-						$categoryNames[] = $category[ 'name' ];
-						$uniqueCategories[] = $category;
+						if ( !in_array( $category[ 'name' ], $categoryNames ) ) {
+							$categoryNames[] = $category[ 'name' ];
+							$uniqueCategories[] = $category;
+						}
 					}
 				}
 			}

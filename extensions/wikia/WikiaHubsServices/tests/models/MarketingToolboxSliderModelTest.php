@@ -1,4 +1,4 @@
-<?
+<?php
 
 class MarketingToolboxSliderModelTest extends WikiaBaseTest {
 	/**
@@ -6,7 +6,7 @@ class MarketingToolboxSliderModelTest extends WikiaBaseTest {
 	 * @see WikiaBaseTest::setUp()
 	 */
 	public function setUp() {
-		$this->setupFile = dirname(__FILE__) . '/../../SpecialMarketingToolbox.setup.php';
+		$this->setupFile = dirname(__FILE__) . '/../../WikiaHubsServices.setup.php';
 		parent::setUp();
 	}
 

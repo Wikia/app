@@ -100,6 +100,7 @@ var MiniEditor = {
 		$.nirvana.sendRequest({
 			controller: 'MiniEditorController',
 			method: 'makeGlobalVariables',
+           data: {'useeditor': $.getUrlVar('useeditor')},
 			type: 'POST', //this cann't be cache
 			callback: function(data) {
 				var assets = window.wgMiniEditorAssets;

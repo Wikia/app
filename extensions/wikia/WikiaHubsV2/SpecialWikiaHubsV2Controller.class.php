@@ -26,18 +26,37 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		parent::__construct('WikiaHubsV2','',false);
 	}
 
+
+	/**
+	 * Main method for displaying hub pages
+	 */
 	public function index() {
-		if($this->format == 'json') {
-			$this->slider = $this->model->getDataForModuleSlider();
-			$this->pulse = $this->model->getDataForModulePulse();
-			$this->tabber = $this->model->getDataForModuleTabber();
-			$this->explore = $this->model->getDataForModuleExplore();
-			$this->featuredvideo = $this->model->getDataForModuleFeaturedVideo();
-			$this->wikitextmoduledata = $this->model->getDataForModuleWikitext();
-			$this->topwikis = $this->model->getDataForModuleTopWikis();
-			$this->popularvideos = $this->model->getDataForModulePopularVideos();
-			$this->fromthecommunity = $this->model->getDataForModuleFromTheCommunity();
+		$toolboxModel = new MarketingToolboxModel();
+		$modulesData = $toolboxModel->getPublishedData(
+			$this->wg->ContLang->getCode(),
+			MarketingToolboxModel::SECTION_HUBS,
+			$this->verticalId
+		);
+
+		$this->modules = array();
+
+		foreach ($toolboxModel->getModulesIds() as $moduleId) {
+			// TODO remove this if when other modules would be ready
+			if ($moduleId == MarketingToolboxModel::MODULE_EXPLORE) {
+				if (!empty($modulesData[$moduleId]['data'])) {
+					$this->modules[$moduleId] = $this->renderModule(
+						$this->wg->ContLang->getCode(),
+						$this->verticalId,
+						$toolboxModel->getNotTranslatedModuleName($moduleId),
+						$modulesData[$moduleId]['data']
+					);
+				} else {
+					// TODO think about it what should we render if we don't have data
+					$this->modules[$moduleId] = $toolboxModel->getNotTranslatedModuleName($moduleId) . ' <-- no data';
+				}
+			}
 		}
+
 		$this->response->addAsset('wikiahubs_v2');
 		$this->response->addAsset('wikiahubs_v2_modal');
 		$this->response->addAsset('wikiahubs_v2_scss');
@@ -45,6 +64,29 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		if (F::app()->checkSkin('wikiamobile')) {
 			$this->overrideTemplate('wikiamobileindex');
 		}
+	}
+
+	/**
+	 * Render one module with given data
+	 *
+	 * @param string $langCode
+	 * @param int    $verticalId
+	 * @param string $moduleName
+	 * @param array  $moduleData
+	 *
+	 * @return string
+	 */
+	protected function renderModule($langCode, $verticalId, $moduleName, $moduleData) {
+		$module = MarketingToolboxModuleService::getModuleByName(
+			$moduleName,
+			$langCode,
+			MarketingToolboxModel::SECTION_HUBS,
+			$verticalId
+		);
+
+		$moduleData = $module->getStructuredData($moduleData);
+
+		return $module->render($moduleData);
 	}
 
 	public function slider() {
@@ -58,15 +100,6 @@ class SpecialWikiaHubsV2Controller extends WikiaSpecialPageController {
 		} else {
 			$this->slider = $this->model->generateSliderWikiText($sliderData['images']);
 		}
-	}
-
-	public function explore() {
-		$exploreData = $this->model->getDataForModuleExplore();
-		$this->headline = $exploreData['headline'];
-		$this->article = $exploreData['article'];
-		$this->image = $exploreData['imagelink'];
-		$this->linkgroups = $exploreData['linkgroups'];
-		$this->link = $exploreData['link'];
 	}
 
 	public function pulse() {

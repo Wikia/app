@@ -1,13 +1,39 @@
 (function(html, w){
 	var links = document.querySelectorAll('a:not(.external):not(.extiw)'),
 		host = w.wgServer,
-		i = links.length;
+		i = links.length,
+		namespaces = w.wgNamespaceIds,
+		regExpNamespace = new RegExp(w.wgArticlePath.replace('$1', "([^:]*)")),
+		//not all namespaces in GG should be clickable
+		disabledNs = [-2,-1,1,2,3,5,6,7,10,11,12,13,15,110,111,500,501,700,701,1200,1201,1202],
+		link,
+		path,
+		parent,
+		notAllowed,
+		namespace,
+		pathMatch;
 
 	while(i--) {
-		var link = links[i];
+		link = links[i];
+		path = link.pathname;
+		parent = link.parentElement;
+		notAllowed = (link.origin !== host || path === '/wikia.php') && !~parent.className.indexOf('thumb');
 
-		if(!~link.parentElement.className.indexOf('thumb') && (link.origin != host || link.pathname == '/wikia.php')) {
-			link.className += ' disabled';
+		if(!notAllowed && ~path.indexOf(':')) {
+			pathMatch = path.match(regExpNamespace);
+
+			if(pathMatch && (namespace = namespaces[pathMatch[1].toLowerCase()])) {
+				notAllowed = !!~disabledNs.indexOf(namespace);
+			}
+		}
+
+		if(notAllowed) {
+			if(~link.className.indexOf('image')) {
+				parent.className = 'thumb';
+				link.firstElementChild.className += ' media';
+			}else {
+				link.className += ' disabled';
+			}
 		}
 	}
 
@@ -27,11 +53,12 @@
 			}
 
 			if(~title.indexOf(':')) {
-				var split = title.split(':');
+				var split = title.split(':'),
+					namespace = namespaces[split.shift().toLowerCase()];
 
-				if(split.shift().toLowerCase() == 'category') {
+				if(namespace) {
 					title = split.join(':');
-					ns = 14;
+					ns = namespace;
 				}
 			}
 
