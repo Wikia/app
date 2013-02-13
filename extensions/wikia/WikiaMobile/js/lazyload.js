@@ -27,7 +27,7 @@ define('lazyload', ['wikia.thumbnailer'], function (thumbnailer) {
 					img.className += ' load';
 					setTimeout(function(){
 						displayImage(img, url);
-					}, 200);
+					}, 250);
 				};
 			},
 			displayImage = function(img, url){
