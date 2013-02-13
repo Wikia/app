@@ -216,7 +216,7 @@
 		 *
 		 * @param integer $periodId The interval of time to take into consideration, one of PERIOD_ID_WEEKLY,
 		 * PERIOD_ID_MONTHLY or PERIOD_ID_QUARTERLY
-		 * @param integer $limit The maximum amount of results, defaults to 200
+		 * @param integer $limit The maximum number of results, defaults to 200
 		 * @param string $lang (optional) The language code to use as a filter (e.g. en for English),
 		 * null for all (default)
 		 * @param string $hub (optional) The vertical name to use as a filter (e.g. Gaming), null for all (default)
@@ -297,6 +297,73 @@
 			};
 
 			$topWikis = WikiaDataAccess::cache( $memKey, 43200 /* 12 hours */, $getData );
+			$topWikis = array_slice( $topWikis, 0, $limit, true );
+
+			$app->wf->ProfileOut( __METHOD__ );
+			return $topWikis;
+		}
+
+		/**
+		 * Get top wikis by videoviews over a specified span of time, optionally filtering by
+		 * public status
+		 *
+		 * @param integer $periodId The interval of time to take into consideration, one of PERIOD_ID_WEEKLY,
+		 * PERIOD_ID_MONTHLY or PERIOD_ID_QUARTERLY
+		 * @param integer $lastN The last N periods to sum results for
+		 * @param integer $limit The maximum number of results, defaults to 200
+		 * @param integer $public (optional) Filter results by public status, one of 0, 1 or null (for both, default)
+		 *
+		 * @return array $topWikis [ array( wikiId => videoviews ) ]
+		 */
+		public static function getTopWikisByVideoviews( $periodId, $lastN, $limit = 200 ) {
+			$app = F::app();
+			$app->wf->ProfileIn( __METHOD__ );
+
+			// Define the function that our caching service will use to retrieve
+			// data after a cache MISS
+			$getData = function() use ( $app, $periodId, $lastN ) {
+				if ( empty( $app->wg->StatsDBEnabled ) ) {
+					return array();
+				}
+
+				$app->wf->ProfileIn( __CLASS__ . '::TopWikisVideoViewQuery' );
+
+				$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+
+				$tables = array('rollup_wiki_video_views as r');
+				$where = array('period_id = '.$periodId,
+								"time_id > NOW() - interval $lastN day");
+
+				// Note we *always* get the max number of results allowed and then 
+				// splice that list when we return.  This way we don't vary on limit
+				// and cache several copies of mostly the same data.
+				$result = $db->select(
+					$tables,
+					array(
+						'r.wiki_id AS id',
+						"sum(views) as totalViews"
+					),
+					$where,
+					__METHOD__,
+					array(
+						'GROUP BY' => 'id',
+						'ORDER BY' => 'totalViews desc',
+						'LIMIT'    => 200
+					)
+				);
+
+				$topWikis = array();
+				while ( $row = $db->fetchObject( $result ) ) {
+					$topWikis[ $row->id ] = $row->totalViews;
+				}
+
+				$app->wf->ProfileOut( __CLASS__ . '::TopWikisQuery' );
+				return $topWikis;
+			};
+
+			$cacheVersion = 1;
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'topvideowikis', $cacheVersion, $periodId );
+			$topWikis = WikiaDataAccess::cache( $memKey, 43200 /* 12 hours */, $getData);
 			$topWikis = array_slice( $topWikis, 0, $limit, true );
 
 			$app->wf->ProfileOut( __METHOD__ );
