@@ -97,14 +97,20 @@ class PhalanxService extends Service {
 	private function sendToPhalanxDaemon( $action, $parameters ) {
 		wfProfileIn( __METHOD__  );
 
-		$url = sprintf( "%s/%s", F::app()->wg->PhalanxServiceUrl, $action != "status" ? $action : "" );
-
+		$wgPhalanxServiceUrl = 	F::app()->wg->PhalanxServiceUrl;
+		if (empty($wgPhalanxServiceUrl)) {
+			$wgPhalanxServiceUrl = "http://phalanx";
+			$options = array();
+		}	else {
+			$options = array('noProxy' => true);
+		}
+		$url = sprintf( "%s/%s", $wgPhalanxServiceUrl, $action != "status" ? $action : "" );
 		/**
 		 * for status we're sending GET
 		 */
 		if( $action == "status" ) {
 			wfDebug( __METHOD__ . ": calling $url\n" );
-			$response = Http::get( $url, 'default', array( "noProxy" => true ) );
+			$response = Http::get( $url, 'default', $options );
 		}
 		/**
 		 * for any other we're sending POST
@@ -112,15 +118,15 @@ class PhalanxService extends Service {
 		else {
 			if (($action == "match" || $action == "check") && !is_null( $this->user ) ) {
 				$parameters[ 'wiki' ] = F::app()->wg->CityId;
-        		$parameters[ 'user' ] = $this->user->getName();
+				$parameters[ 'user' ] = $this->user->getName();
 			}
 			if ($action == "match" && $this->limit > 1) {
 				$parameters['limit'] = $this->limit;
 			}
-			wfDebug( __METHOD__ . ": calling $url with POST data " . wfArrayToCGI( $parameters ) ."\n" );
-			$response = Http::post( $url, array( "noProxy" => true, "postData" => wfArrayToCGI( $parameters ) ) );
+			$options["postData"] = wfArrayToCGI( $parameters );
+			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] ."\n" );
+			$response = Http::post( $url, $options);
 		}
-
 
 		if ( $response === false ) {
 			/* service doesn't work */
