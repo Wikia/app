@@ -39,15 +39,16 @@
 				</div>
 				
 				<div class="module-image-box">
-					<div class="image-placeholder">
-						<?php if( !empty($video['thumbnailData']) ): ?>
-							<img width="<?= $video['thumbnailData']['width']; ?>" height="<?= $video['thumbnailData']['height']; ?>" src="<?= $video['thumbnailData']['thumb']; ?>" />
-						<?php else: ?>
-							<img src="<?= $wg->BlankImgUrl; ?>" />
-						<?php endif ?>
+					<div class="image-placeholder video">
+						<?= $app->renderView(
+								'MarketingToolboxVideos',
+								'index',
+								array('video' => $video)
+							);
+						?>
 					</div>
 				</div>
-	
+				
 				<div class="module-input-box buttons">
 					<input type="button" class="delete" value="<?= $wf->msg('marketing-toolbox-edithub-delete-button'); ?>" />
 					<input class="secondary clear" type="button" value="<?= $wf->msg('marketing-toolbox-edithub-clear-button')?>" />
