@@ -80,7 +80,11 @@ class CategorySelectController extends WikiaController {
 	public function editPage() {
 		$data = CategorySelect::getExtractedCategoryData();
 
-		$this->response->setVal( 'categories', $data[ 'categories' ] );
+		if (!empty ( $data['categories'] ) ) {
+			$this->response->setVal( 'categories', $data[ 'categories' ] );
+		} else {
+			$this->response->setVal( 'categories', array() );
+		}
 
 		$this->response->addAsset( 'categoryselect_edit_js' );
 		$this->response->addAsset( 'extensions/wikia/CategorySelect/css/CategorySelect.edit.scss' );
@@ -91,14 +95,14 @@ class CategorySelectController extends WikiaController {
 	 * for an article.
 	 */
 	public function editPageMetadata() {
-		$categories = '';
 		$data = CategorySelect::getExtractedCategoryData();
 
 		if ( !empty( $data[ 'categories' ] ) ) {
 			$categories = htmlspecialchars( CategorySelect::changeFormat( $data[ 'categories' ], 'array', 'json' ) );
+			$this->response->setVal( 'categories', $categories );
+		} else {
+			$this->response->setVal( 'categories', '' );
 		}
-
-		$this->response->setVal( 'categories', $categories );
 	}
 
 	/**
