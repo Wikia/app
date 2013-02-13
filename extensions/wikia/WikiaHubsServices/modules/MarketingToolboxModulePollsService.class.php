@@ -59,4 +59,15 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleService {
 
 		return parent::renderEditor($data);
 	}
+
+	public function renderPolls($data) {
+		$wtPolls  = "<poll>\n";
+		$wtPolls .= $data['pollsQuestion'] . "\n";
+		foreach($data['pollsOptions'] as $option) {
+			$wtPolls .= $option . "\n";
+		}
+		$wtPolls .= "</poll>";
+
+		return $wtPolls;
+	}
 }
