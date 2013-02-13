@@ -1,7 +1,6 @@
 $(function() {
 	if( window.wgEnableUserLoginExt ) {
 		var form = $('.UserLogin'),
-			wikiaForm = new WikiaForm(form.find('form')),
 			formGroup = form.find('.input-group'),
 			formError = form.find('.error-msg'),
 			formUserName = form.find('input[name=username]');
@@ -19,11 +18,13 @@ $(function() {
 				format: 'json',
 				callback: function(json) {
 					if(json['result'] === 'ok' || json['result'] === 'error') {
-						if(json['errParam']) {
-							wikiaForm.showInputError(json['errParam'], json['msg']);
-						} else {
-							wikiaForm.showGenericError(json['msg']);
-						}
+						formUserName
+							.parent()
+							.addClass('error')
+							.find('.error-msg')
+							.remove()
+							.end()
+							.append('<div class="error-msg">'+json['msg']+'</div>');
 					}
 				}
 			});
