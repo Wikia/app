@@ -88,6 +88,8 @@ $messages['en'] = array(
 	'marketing-toolbox-hub-module-polls-option-mandatory' => 'Option $1 *',
 	'marketing-toolbox-hub-module-polls-option-voluntary' => 'Option $1',
 
+	'marketing-toolbox-hub-module-popular-videos-header' => 'Header',
+
 	'marketing-toolbox-hub-module-from-the-community-title' => 'Title',
 	'marketing-toolbox-hub-module-from-the-community-users-url' => 'User\'s URL',
 	'marketing-toolbox-hub-module-from-the-community-long-quote' => 'Quote',
