@@ -85,7 +85,7 @@ abstract class PhalanxModel extends WikiaObject {
 			# we have response from Phalanx service - 0/1
 			$ret = $result;
 		} else {
-			$ret = $this->fallback( $type );
+			$ret = $this->fallback( "check", $type );
 		}				
 
 		return $ret;
