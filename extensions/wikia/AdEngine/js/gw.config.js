@@ -16,7 +16,7 @@
 (function (window, document, location, ghostwriter) {
 	'use strict';
 
-	var documentWriteScript,
+	var documentWriteTag,
 		checkHandler,
 		shouldUseNativeWrite;
 
@@ -63,9 +63,9 @@
 	};
 
 	// Natively document.write script tag with given attrs
-	documentWriteScript = function (attrs) {
+	documentWriteTag = function (tagName, attrs) {
 		var name,
-			html = '<script';
+			html = '<' + tagName;
 
 		for (name in attrs) {
 			if (attrs.hasOwnProperty(name)) {
@@ -76,7 +76,7 @@
 		document.nativeWrite(html);
 	};
 
-	// If script is ours, load it natively using documentWriteScript
+	// If script is ours, load it natively using documentWriteTag
 	// and return false, otherwise return true
 	checkHandler = function (tagName, attrs) {
 		// Optional logging
@@ -86,8 +86,15 @@
 
 		if (tagName === 'script' && attrs.src && shouldUseNativeWrite(attrs.src)) {
 			if (logging) { window.console.log('gw.config.js: checkHandler: natively writing script ' + attrs.src); }
-			documentWriteScript(attrs);
+			documentWriteTag('script', attrs);
 			if (logging) { window.console.log('gw.config.js: checkHandler: end of ' + attrs.src); }
+			return false;
+		}
+
+		if (tagName === 'div' && attrs.class === 'twtr-widget') {
+			if (logging) { window.console.log('gw.config.js: checkHandler: natively writing twitter div'); }
+			documentWriteTag('div', attrs);
+			if (logging) { window.console.log('gw.config.js: checkHandler: end of twitter div'); }
 			return false;
 		}
 
