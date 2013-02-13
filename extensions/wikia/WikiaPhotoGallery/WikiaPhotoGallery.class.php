@@ -518,22 +518,24 @@ class WikiaPhotoGallery extends ImageGallery {
 		$this->mData['imagesShown'] = array();
 
 		// add recently uploaded images to slideshow
-		foreach ($uploadedImages as $image) {
-			$this->add($image);
+		if ( !empty( $uploadedImages ) ) {
+			foreach ($uploadedImages as $image) {
+				$this->add($image);
 
-			// store list of images (to be used by front-end)
-			$this->mData['imagesShown'][] = array(
-				'name' => $image->getText(),
-				'caption' => '',
-				'link' => '',
-				'linktext' => '',
-				'recentlyUploaded' => true,
-				'shorttext' => '',
-			);
+				// store list of images (to be used by front-end)
+				$this->mData['imagesShown'][] = array(
+					'name' => $image->getText(),
+					'caption' => '',
+					'link' => '',
+					'linktext' => '',
+					'recentlyUploaded' => true,
+					'shorttext' => '',
+				);
 
-			// Only add real images (bug #5586)
-			if ($image->getNamespace() == NS_FILE) {
-				$this->mParser->mOutput->addImage($image->getDBkey());
+				// Only add real images (bug #5586)
+				if ($image->getNamespace() == NS_FILE) {
+					$this->mParser->mOutput->addImage($image->getDBkey());
+				}
 			}
 		}
 
