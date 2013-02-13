@@ -29,3 +29,5 @@ $app->registerClass('MarketingToolboxModuleExploreService', $dir . 'modules/Mark
 $app->registerClass('MarketingToolboxModuleFeaturedvideoService', $dir . 'modules/MarketingToolboxModuleFeaturedvideoService.class.php');
 $app->registerClass('MarketingToolboxModuleFromthecommunityService', $dir . 'modules/MarketingToolboxModuleFromthecommunityService.class.php');
 $app->registerClass('MarketingToolboxModulePollsService', $dir . 'modules/MarketingToolboxModulePollsService.class.php');
+
+include_once($dir . '../RelatedVideos/RelatedVideos.setup.php'); //TODO: remove after discussing it with Video Team

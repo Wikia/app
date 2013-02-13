@@ -1,4 +1,4 @@
-<?
+<?php
 class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleService {
 	protected function getFormFields() {
 		return array(
@@ -34,5 +34,20 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 				'isArray' => true
 			),
 		);
+	}
+
+	public function renderEditor($data) {
+		$model = new MarketingToolboxModel();
+		
+		if( !empty($data['values']['video']) ) {
+			$videoDataHelper = new RelatedVideosData();
+			
+			foreach($data['values']['video'] as $i => $video) {
+				$data['videos'][$i] = $videoDataHelper->getVideoData($video, $model->getThumbnailSize());
+				$data['videos'][$i]['section-no'] = $i + 2; //numbers next to section starts with 2
+			}
+		}
+
+		return parent::renderEditor($data);
 	}
 }
