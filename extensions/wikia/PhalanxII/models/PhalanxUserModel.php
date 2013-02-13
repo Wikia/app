@@ -1,24 +1,15 @@
 <?php
+
 class PhalanxUserModel extends PhalanxModel {
-	private $user = null;
+	protected $user = null;
 	const PHALANX_USER = 0;	
 
-	public function __construct( $user, $id = 0 ) {
-		parent::__construct( __CLASS__, array( 'user' => $user, 'id' => $id ) );
+	public function __construct( $user, $lang = '', $id = 0 ) {
+		parent::__construct( __CLASS__, array( 'user' => $user, 'lang' => $lang, 'id' => $id ) );
 	}
 	
 	public function isOk() {
 		return $this->user->isAllowed( 'phalanxexempt' );
-	}
-
-	public function setUser( $user ) {
-		$this->user = $user;
-		$this->setText( $this->user->getName() );
-		return $this;
-	}
-	
-	public function getUser() {
-		return $this->user;
 	}
 
 	public function userBlock( $type = 'exact' ) {
@@ -51,5 +42,29 @@ class PhalanxUserModel extends PhalanxModel {
 
 		$this->wf->profileOut( __METHOD__ );
 		return $this;
+	}
+	
+	public function match_user( &$user ) {
+		$result = $this->setText( $this->user->getName() )->match( "user" );
+		$user = $this->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
+		return $result;
+	}
+	
+	public function match_user_old() {
+		// TO DO
+		/* problem with Phalanx service? */
+		// include_once( dirname(__FILE__) . '/../prev_hooks/UserBlock.class.php';
+		// $ret = UserBlock::blockCheck( $user );
+	}
+	
+	public function match_email() {
+		return $this->setText( $this->user->getEmail() )->match( "email" );
+	}
+	
+	public function match_email_old() {
+		// TO DO
+		/* problem with Phalanx service? */
+		// include_once( dirname(__FILE__) . '/../prev_hooks/UserBlock.class.php';
+		// $ret = UserBlock::onAbortNewAccount( $user, $abortError );
 	}
 }

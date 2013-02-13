@@ -21,10 +21,6 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		'WIKIA', 'FOOTBALL'
 	);
 
-	private $COOKIE_TRACKER = array(
-		'8905067FA3099DB6B6813CE4C6CFDB3C',
-	);
-
 	/***
 	 * setup tests
 	 */
@@ -489,67 +485,6 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		$this->assertEquals( $result, $ret );	
 	}
 
-	/* PhalanxUserCookieBlock class */
-
-	/* blockCheck method */
-	/**
-	 * @dataProvider phalanxUserCookieBlockDataProvider
-	 */
-	public function testPhalanxUserCookieBlockCheck( $isAnon, $userName, $block, $result ) {		
-		// User 
-		$userMock = $this->getMock( 'User', array( 'isAnon', 'getName' ) ); 
-		$userMock
-			->expects( $this->any() )
-			->method( 'isAnon' )
-			->will( $this->returnValue( $isAnon ) );
-		$userMock
-			->expects( $this->any() )
-			->method( 'getName' )
-			->will( $this->returnValue( $userName ) );
-		$this->mockClass('User', $userMock);
-
-		$this->mockGlobalVariable('wgUser', $userMock);
-
-		//AccountCreationTracker
-		if ( class_exists( 'AccountCreationTracker' ) ) {
-			$trackerMock = $this->getMock( 'AccountCreationTracker', array( 'getHashesByUser' ) );
-			$trackerMock
-				->expects( $this->any() )
-				->method( 'getHashesByUser' )
-				->will( $this->returnValue( $this->COOKIE_TRACKER ) );
-			$this->proxyClass( 'AccountCreationTracker', $trackerMock );
-			$this->mockClass('AccountCreationTracker', $trackerMock );
-		} else {
-			$result = 1;			
-		}
-
-		// PhalanxUserModel 
-		$modelMock = $this->getMock( 'PhalanxUserModel', array('match', 'getUser', 'setText'), array( $userMock ) );
-		
-		$modelMock
-			->expects( $this->any() )
-			->method( 'match' )
-			->will( $this->returnValue( $block ) );
-
-		$modelMock
-			->expects( $this->any() )
-			->method( 'setText' )
-			->will( $this->returnValue( $modelMock ) );
-			
-		$modelMock
-			->expects( $this->any() )
-			->method('getUser')
-			->will( $this->returnValue( $userMock ));	
-
-		$this->proxyClass( 'PhalanxUserModel', $modelMock );
-		$this->mockClass('PhalanxUserModel', $modelMock );
-
-		$hook = new PhalanxUserCookieBlock();
-		$ret = (int) $hook->blockCheck( $userMock );
-
-		$this->assertEquals( $result, $ret );
-	}
-	
 	/* data providers */
 	public function phalanxUserBlockDataProvider() {
 		/* valid user */
@@ -617,44 +552,6 @@ class PhalanxHooksTest extends WikiaBaseTest {
 		);
 	
 		return array( $validUser, $invalidUser, $invalidUserEmail, $okUser );
-	}
-
-	public function phalanxUserCookieBlockDataProvider() {
-		/* valid user */
-		$validUser = array(
-			'isAnon'    => false,
-			'getName'   => self::VALID_USERNAME,
-			'block'     => 0,
-			'result'    => 1
-		);
-
-		/* valid anon user */
-		$validAnonUser = array(
-			'isAnon'    => true,
-			'getName'   => self::INVALID_USERNAME,
-			'block'     => 0,
-			'result'    => 1
-		);
-
-		/* invalid user */
-		$invalidUser = array(
-			'isAnon'    => false,
-			'getName'   => self::VALID_USERNAME,
-			'block'     => (object) array(
-				'regex' => 0,
-				'expires' => '',
-				'text' => self::INVALID_EMAIL,
-				'reason' => 'Test Email',
-				'exact' => '',
-				'caseSensitive' => '', 
-				'id' => 4010,
-				'language' => '', 
-				'authorId' => 184532,
-			),
-			'result'    => 0
-		);
-	
-		return array( $validUser, $validAnonUser, $invalidUser );
 	}
 
 	public function phalanxTitleDataProvider() {

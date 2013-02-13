@@ -18,33 +18,8 @@ class PhalanxAnswersBlock extends WikiaObject {
 	public function badWordsTest( $title ) {
 		$this->wf->profileIn( __METHOD__ );
 
-		$ret = true;
-		$phalanxModel = F::build('PhalanxTitleModel', array( $title ) );
-
-		if ( $phalanxModel->isOk() ) {
-			$this->wf->profileOut( __METHOD__ );
-			return true;
-		}
-
-		$text = preg_replace('/[^\PP]+/', '', $title->getText());
-		$text = preg_replace('/\s+/', ' ', $text);
-		
-		$result = $phalanxModel->setText( $text )->match( "question_title", $this->wg->LangugeCode );
-		if ( $result !== false ) {
-			if ( 
-				is_object( $result ) && 
-				isset( $result->id ) && 
-				$result->id > 0 
-			) {
-				$phalanxModel->setBlockId( $result->id )->logBlock();
-				$ret = false;
-			}
-		} else {
-			// TO DO
-			/* problem with Phalanx service? */
-			// include_once( dirname(__FILE__) . '/../prev_hooks/QuestionTitleBlock.class.php';
-			// $ret = QuestionTitleBlock::badWordsTest( $title );		
-		}
+		$phalanxModel = F::build('PhalanxContentModel', array( $title, $this->wg->LanguageCode ) );
+		$ret = $phalanxModel->match_question_title();
 		
 		$this->wf->profileOut( __METHOD__ );
 		return $ret;
@@ -53,34 +28,8 @@ class PhalanxAnswersBlock extends WikiaObject {
 	public function filterWordsTest( $title ) {
 		$this->wf->profileIn( __METHOD__ );
 
-		$ret = true;
-		$phalanxModel = F::build('PhalanxTitleModel', array( $title ) );
-
-		if ( $phalanxModel->isOk() ) {
-			$this->wf->profileOut( __METHOD__ );
-			return true;
-		}
-
-		$question = $title->getText();
-		$text = preg_replace('/[^\PP]+/', '', $question );
-		$text = preg_replace('/\s+/', ' ', $text);
-		
-		$result = $phalanxModel->setText( $text )->match( "recent_questions", $this->wg->LangugeCode );
-		if ( $result !== false ) {
-			if ( 
-				is_object( $result ) && 
-				isset( $result->id ) && 
-				$result->id > 0 
-			) {
-				$phalanxModel->setBlockId( $result->id )->logBlock( $text );
-				$ret = false;
-			}
-		} else {
-			// TO DO
-			/* problem with Phalanx service? */
-			// include_once( dirname(__FILE__) . '/../prev_hooks/RecentQuestionsBlock.class.php';
-			// $ret = RecentQuestionsBlock::filterWordsTest( $question );		
-		}
+		$phalanxModel = F::build('PhalanxContentModel', array( $title, $this->wg->LanguageCode ) );
+		$ret = $phalanxModel->match_recent_questions();
 		
 		$this->wf->profileOut( __METHOD__ );
 		return $ret;

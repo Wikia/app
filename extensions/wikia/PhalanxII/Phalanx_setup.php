@@ -28,13 +28,11 @@ $classes = array(
 	'PhalanxModel'             => $dir . 'models/PhalanxModel.php',
 	'PhalanxUserModel'         => $dir . 'models/PhalanxUserModel.php',
 	'PhalanxContentModel'      => $dir . 'models/PhalanxContentModel.php',
-	'PhalanxTitleModel'        => $dir . 'models/PhalanxTitleModel.php',
 	'PhalanxTextModel'         => $dir . 'models/PhalanxTextModel.php',
 	/* services */
 	'PhalanxService'           => $dir . 'services/PhalanxService.class.php',
 	/* hooks */
 	'PhalanxUserBlock'         => $dir . 'hooks/PhalanxUserBlock.class.php',
-	'PhalanxUserCookieBlock'   => $dir . 'hooks/PhalanxUserCookieBlock.class.php',
 	'PhalanxContentBlock'      => $dir . 'hooks/PhalanxContentBlock.class.php',
 	'PhalanxTitleBlock'        => $dir . 'hooks/PhalanxTitleBlock.class.php',
 	'PhalanxAnswersBlock'      => $dir . 'hooks/PhalanxAnswersBlock.class.php',
@@ -56,10 +54,6 @@ $phalanxhooks = array(
 			'UserCanSendEmail'   => 'userCanSendEmail',
 			'AbortNewAccount'    => 'abortNewAccount',
 			'cxValidateUserName' => 'validateUserName'
-		),
-	'PhalanxUserCookieBlock' =>
-		array(
-			'GetBlockedStatus'   => 'blockCheck',
 		),
 	'PhalanxContentBlock' =>
 		array(

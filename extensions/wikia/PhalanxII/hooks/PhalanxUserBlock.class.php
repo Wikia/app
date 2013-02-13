@@ -18,35 +18,10 @@ class PhalanxUserBlock extends WikiaObject {
 	 */
 	public function blockCheck( User $user ) {
 		$this->wf->profileIn( __METHOD__ );
-		$ret = true;
+
 		$phalanxModel = F::build('PhalanxUserModel', array( $user ) );
-		 
-		if ( $phalanxModel->isOk() ) {
-			wfDebug ( __METHOD__ . ": user has 'phalanxexempt' right - no block will be applied\n" );
-			$this->wf->profileOut( __METHOD__ );
-			return true;
-		}
-
-		$result = $phalanxModel->match( "user" );
-		if ( $result !== false ) {
-			if ( 
-				is_object( $result ) && 
-				isset( $result->id ) && 
-				$result->id > 0 
-			) {
-				$user = $phalanxModel->setBlock( $result )->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
-				$ret = false;
-			} else {
-				$ret = true;
-			}
-		} else {
-			// TO DO
-			/* problem with Phalanx service? */
-			// include_once( dirname(__FILE__) . '/../prev_hooks/UserBlock.class.php';
-			// $ret = UserBlock::blockCheck( $user );		
-			$ret = true; //to do
-		}
-
+		$ret = $phalanxModel->match_user( $user );
+		
 		$this->wf->profileOut( __METHOD__ );
 		return $ret;
 	}
@@ -60,31 +35,10 @@ class PhalanxUserBlock extends WikiaObject {
 		$this->wf->profileIn( __METHOD__ );
 		
 		$phalanxModel = F::build('PhalanxUserModel', array( $user ) );
-		$result = $phalanxModel->match( "user" );
-		if ( $result !== false ) {
-			if ( empty( $result ) ) {
-				/* check also user email */
-				$result = $phalanxModel->setText( $user->getEmail() )->match( "email" );
-			}
-		}
+		$ret = $phalanxModel->match_email();
 		
-		if ( 
-			$result !== false &&
-			is_object( $result ) && 
-			isset( $result->id ) && 
-			$result->id > 0 
-		) {			
+		if ( $ret === false ) {
 			$abortError = $this->wf->Msg( 'phalanx-user-block-new-account' );
-			$phalanxModel->setBlock( $result )->logBlock();
-			$ret = false;
-		} elseif ( $result === false ) {
-			// TO DO
-			/* problem with Phalanx service? */
-			// include_once( dirname(__FILE__) . '/../prev_hooks/UserBlock.class.php';
-			// $ret = UserBlock::onAbortNewAccount( $user, $abortError );
-			$ret = true; // to do		
-		} else {
-			$ret = true;
 		}
 
 		$this->wf->profileOut( __METHOD__ );
@@ -93,15 +47,10 @@ class PhalanxUserBlock extends WikiaObject {
 
 	public function validateUserName( $userName, &$abortError ) {
 		$this->wf->profileIn( __METHOD__ );
-		$message = '';
-		
-		$user = User::newFromName($userName);
+
+		$user = User::newFromName( $userName );
 		if ( $user instanceof User ) {
 			$ret = $this->abortNewAccount( $user, $abortError );
-			if ( !$ret ) {
-				// shouldn't be other message here?
-				$abortError = $this->wf->Msg( 'phalanx-user-block-new-account' );
-			}
 		} else { 
 			$ret = false;
 		}

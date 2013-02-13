@@ -16,31 +16,9 @@ class PhalanxWikiCreationBlock extends WikiaObject {
 	public function isAllowedText( $text, $where = '', $split = '' ) {
 		$this->wf->profileIn( __METHOD__ );
 
-		$ret = true;
-		$text = trim($text);
-		$phalanxModel = F::build('PhalanxTextModel', array( $text ) );
-
-		if ( $phalanxModel->isOk() ) {
-			$this->wf->profileOut( __METHOD__ );
-			return true;
-		}
-
-		$result = $phalanxModel->match( "wiki_creation" );
-		if ( $result !== false ) {
-			if ( 
-				is_object( $result ) && 
-				isset( $result->id ) &&
-				$result->id > 0 
-			) {
-				$phalanxModel->setBlockId( $result->id )->logBlock();
-				$ret = false;
-			}
-		} else {
-			// TO DO
-			/* problem with Phalanx service? */
-			// include_once( dirname(__FILE__) . '/../prev_hooks/WikiCreationBlock.class.php';
-			// $ret = WikiCreationBlock::isAllowedText( $text, $where, $split );
-		}
+		$text = trim( $text );
+		$phalanxModel = F::build( 'PhalanxTextModel', array( $text ) );
+		$ret = $phalanxModel->wiki_creation();
 		
 		$this->wf->profileOut( __METHOD__ );
 		return $ret;

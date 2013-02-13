@@ -1,10 +1,10 @@
 <?php
 
 abstract class PhalanxModel extends WikiaObject {
-	protected $blockId = 0;
 	protected $model = null;
 	protected $text = "";
 	protected $block = null;
+	protected $lang = "";
 	private $service = null;
 
 	public function __construct( $model, $data = array() ) {
@@ -12,7 +12,8 @@ abstract class PhalanxModel extends WikiaObject {
 		$this->model = $model;
 		if ( !empty( $data ) ) {
 			foreach ( $data as $key => $value ) {
-				$this->setter( $key, $value );
+				$method = "set{$key}";
+				$this->$method( $value );
 			}
 		}
 		$this->service = F::build("PhalanxService");
@@ -20,55 +21,73 @@ abstract class PhalanxModel extends WikiaObject {
 
 	abstract public function isOk();
 
-	private function setter( $key, $val ) {
-		$method = sprintf( "set%s", ucfirst( $key ) );
-		if ( method_exists( $this, $method ) ) {
-			$this->$method( $val );
+	public function __call($name, $args) {
+		$method = substr($name, 0, 3);
+		$key = strtolower( substr( $name, 3 ) );
+
+		$result = null;
+		switch($method) {
+			case 'get':
+				if ( isset( $this->$key ) ) {
+					$result = $this->$key;
+				}
+				break;
+			case 'set':
+				$this->$key = $args[0];
+				$result = $this;
+				break;
 		}
-	}
-
-	public function getBlockId() {
-		return $this->blockId;
-	}
-
-	public function setBlockId( $id ) {
-		$this->blockId = ( int ) $id;
-		return $this;
-	}
-
-	public function setText( $text ) {
-		$this->text = $text;
-		return $this;
-	}
-
-	public function getText() {
-		return $this->text;
-	}
-
-	public function setBlock( $block ) {
-		$this->block = $block;
-		if ( !empty( $this->block->id ) ) {
-			$this->setBlockId( $this->block->id );
-		}
-		return $this;
+		return $result;
 	}
 	
-	public function getBlock() {
-		return $this->block;
+	protected function fallback( $method, $type ) {
+		$fallback = "{$method}_{$type}_old";
+		$ret = false; 
+		if ( method_exists( $this, $fallback ) ) {
+			Wikia::log( __METHOD__, __LINE__, "Call method from previous version of Phalanx - check Phalanx service!\n" );
+			$ret = call_user_func( array( $this, $fallback ) );
+		}
+		return $ret;
+	}
+	
+	public function logBlock() { 
+		Wikia::log( __METHOD__, __LINE__, "Block '#{$this->block->id}' blocked '{$this->getText()}'.\n" );
 	}
 
-	public function logBlock() {
-		Wikia::log( __METHOD__, __LINE__, "Block '#{$this->blockId}' blocked '{$this->text}'.\n" );
+	public function match( $type, $method = 'logBlock' ) {
+		$ret = true;
+
+		if ( !$this->isOk() ) {
+			$isUser = isset( $this->user ) && ( $this->user->getName() == $this->wg->User->getName() );
+			
+			# send request to service
+			$result = $this->service->limit(1)->user( $isUser ? $this->user : null )->match( $type, $this->getText(), $this->getLang() );
+				
+			if ( $result !== false ) {
+				# we have response from Phalanx service - check block
+				if ( is_object( $result ) && isset( $result->id ) && $result->id > 0 ) {
+					$this->setBlock( $result )->$method();
+					$ret = false;
+				}
+			} else {
+				$ret = $this->fallback( "match", $type );
+			}
+		}	
+
+		return $ret;
 	}
 
-	public function match( $type, $language = "en" ) {
-		return $this->service->
-			limit(1)->
-			user( ( ( isset( $this->user ) && ( $this->user->getName() == $this->wg->User->getName() ) ) ) ? $this->user : null )->
-			match( $type, $this->text, $language );
-	}
+	public function check( $type ) {
+		# send request to service 
+		$result = $this->service->check( $type, $this->getText, $this->getLang() );
+		
+		if ( $result !== false ) {
+			# we have response from Phalanx service - 0/1
+			$ret = $result;
+		} else {
+			$ret = $this->fallback( $type );
+		}				
 
-	public function check( $type, $language = "en" ) {
-		return $this->service->check( $type, $this->text, $language );
+		return $ret;
 	}
 }

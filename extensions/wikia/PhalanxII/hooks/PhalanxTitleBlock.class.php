@@ -54,33 +54,11 @@ class PhalanxTitleBlock extends WikiaObject {
 	public function checkTitle( $title ) {
 		$this->wf->profileIn( __METHOD__ );
 
-		$ret = true;
-		$phalanxModel = F::build('PhalanxTitleModel', array( $title ) );
-
-		if ( $phalanxModel->isOk() ) {
-			$this->wf->profileOut( __METHOD__ );
-			return true;
-		}
-
-		/* check title name */
-		$text = $title->getFullText();
-
-		$result = $phalanxModel->setText( $text )->match( "title" );
-		if ( $result !== false ) {
-			if ( 
-				is_object( $result ) && 
-				isset( $result->id ) && 
-				$result->id > 0 
-			) {
-				/* user is blocked - we have block ID */
-				$phalanxModel->setBlockId( $result->id )->displayBlock();
-				$ret = false;
-			}
-		} else {
-			// TO DO
-			/* problem with Phalanx service? */
-			// include_once( dirname(__FILE__) . '/../prev_hooks/TitleBlock.class.php';
-			// $ret = TitleBlock::genericTitleCheck( $title );		
+		$phalanxModel = F::build('PhalanxContentModel', array( $title ) );
+		$ret = $phalanxModel->match_title();
+		
+		if ( $ret === false ) {
+			$phalanxModel->displayBlock();
 		}
 		
 		$this->wf->profileOut( __METHOD__ );
