@@ -13,7 +13,8 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 				),
 				'attributes' => array(
 					'class' => 'required'
-				)
+				),
+				'class' => 'borderNone'
 			),
 			'video' => array(
 				'type' => 'hidden',

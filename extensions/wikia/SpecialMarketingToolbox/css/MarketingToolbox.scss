@@ -252,6 +252,37 @@ $chevron-color: #888;
 		clear: both;
 	}
 
+	.module-popular-videos {
+		.first-box {
+			h3 {
+				color: #006CB0;
+			}
+			.module-right-box {
+				height: 47px;
+			}
+		}
+		.module-input-box {
+			width: 460px;
+			&.buttons {
+				clear: both;
+			}
+		}
+		h4 {
+			color: #006CB0;
+			font-weight: bold;
+		}
+		h4,
+		.timeago,
+		.video-url {
+			clear: both;
+			display: inline-block;
+			float: none;
+			margin: 0px 7px;
+			padding: 2px 0;
+			width: 460px;
+		}
+	}
+
 	.module-mediabox {
 		.input-group input,
 		.input-group textarea {
