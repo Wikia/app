@@ -11,7 +11,6 @@ describe("Event module", function() {
 
 		require(['events'], function(events){
 			expect(events).toBeDefined();
-			expect(events.click).toMatch('click');
 			expect(events.size).toMatch('resize');
 			expect(events.touch).toMatch('touchstart');
 			expect(events.move).toMatch('touchmove');

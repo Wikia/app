@@ -5,7 +5,7 @@
  * @author Jakub 'Student' Olek
  **/
 
-require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], function(throbber, toast, modal, events, track, msg){
+require(['throbber', 'toast', 'modal', 'track', 'JSMessages'], function(throbber, toast, modal, track, msg){
 	"use strict";
 	/** @private **/
 
@@ -21,7 +21,7 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 			skin +
 			"&article=" +
 			wgArticleId,
-		clickEvent = events.click,
+		clickEvent = 'click',
 		firstPage,
 		commsUl = d.getElementById('wkComUl'),
 		postReply = msg('wikiamobile-article-comments-post-reply'),

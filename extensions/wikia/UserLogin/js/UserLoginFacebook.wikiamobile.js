@@ -1,7 +1,7 @@
-require(['track', 'events', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages'], function(track, events, qs, toast, nirvana, msg){
+require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages'], function(track, qs, toast, nirvana, msg){
 	var btn = document.getElementById('ssoFbBtn');
 
-	btn.addEventListener(events.click, function(){
+	btn.addEventListener('click', function(){
 		FB.login(
 			function(response){
 				if(typeof response === 'object' && response.status == 'connected'){

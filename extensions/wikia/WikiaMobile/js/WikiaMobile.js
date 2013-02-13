@@ -1,10 +1,10 @@
 //init
 window.addEventListener('DOMContentLoaded', function () {
 	'use strict';
-	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), 'events', require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'layout'],
-		function (qs, topbar, toc, events, share, popover, cookies, track) {
+	require(['wikia.querystring', require.optional('topbar'), require.optional('toc'), require.optional('share'), require.optional('popover'), require.optional('wikia.cookies'), 'track', 'layout'],
+		function (qs, topbar, toc, share, popover, cookies, track) {
 			var d = document,
-				clickEvent = events.click,
+				clickEvent = 'click',
 				//add chevrons to elements that need it
 				addChevs = d.getElementsByClassName('addChev'),
 				i = addChevs.length,

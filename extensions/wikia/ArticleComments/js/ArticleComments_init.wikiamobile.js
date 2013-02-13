@@ -7,7 +7,7 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  **/
 
-require(['throbber', 'wikia.querystring', 'events', 'wikia.loader', 'wikia.nirvana'], function(throbber, qs, events, loader, nirvana){
+require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana'], function(throbber, qs, loader, nirvana){
 	var hash = qs().getHash(),
 		wkArtCom,
 		collSec,
@@ -16,7 +16,7 @@ require(['throbber', 'wikia.querystring', 'events', 'wikia.loader', 'wikia.nirva
 		commentsHTML,
 		styles,
 		scripts,
-		clickEvent = events.click,
+		clickEvent = 'click',
 		responseCounter = 0;
 
 	if(hash.indexOf('comm-') > -1){
