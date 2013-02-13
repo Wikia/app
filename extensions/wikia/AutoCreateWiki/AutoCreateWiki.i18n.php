@@ -141,6 +141,8 @@ If you've got questions, you can e-mail us through our [[Special:Contact|contact
 // new wikis - special page
 	"newwikis" => "New wikis",
 	"newwikisstart" => "Display wikis starting at:",
+
+	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,nl,no,pl,pt,pt-br,ru,zh',
 );
 
 /** Message documentation (Message documentation)
@@ -167,6 +169,7 @@ Parameters:
 * $2 - <NO LONGER IN USE>
 * $3 - Name of Wikia Community Support member who is signing the welcome message
 * $4 - <nowiki>{{SITENAME}}</nowiki> of the wiki welcome message is being left on',
+	'autocreatewiki-language-top-list' => 'Do not translate. List of the top 13 languages used for wiki creation.',
 );
 
 /** Afrikaans (Afrikaans)
