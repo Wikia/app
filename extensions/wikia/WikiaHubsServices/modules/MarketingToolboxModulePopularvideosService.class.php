@@ -16,6 +16,7 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleS
 				)
 			),
 			'video' => array(
+				'type' => 'hidden',
 				'attributes' => array(
 					'class' => 'wmu-file-name-input required'
 				),

@@ -158,14 +158,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 				);
 
 				$this->putFlashMessage($this->wf->msg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
-				// TODO last module (when we will know what to do after last module, maybe preview?)
-				$nextUrl = $this->toolboxModel->getModuleUrl(
-					$this->langCode,
-					$this->sectionId,
-					$this->verticalId,
-					$this->date,
-					$this->selectedModuleId + 1
-				);
+
+				$nextUrl = $this->getNextModuleUrl();
 				$this->response->redirect($nextUrl);
 			} else {
 				$this->errorMessage = $this->wf->msg('marketing-toolbox-module-save-error');
@@ -176,6 +170,23 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->moduleContent = $module->renderEditor($selectedModuleData);
 
 		$this->overrideTemplate('editHub');
+	}
+
+	private function getNextModuleUrl() {
+		$nextModuleId = $this->selectedModuleId;
+
+		if ($nextModuleId + 1 <= max($this->toolboxModel->getModulesIds())) {
+			$nextModuleId++;
+		}
+
+		$nextUrl = $this->toolboxModel->getModuleUrl(
+			$this->langCode,
+			$this->sectionId,
+			$this->verticalId,
+			$this->date,
+			$nextModuleId
+		);
+		return $nextUrl;
 	}
 
 	protected function retriveDataFromUrl() {
