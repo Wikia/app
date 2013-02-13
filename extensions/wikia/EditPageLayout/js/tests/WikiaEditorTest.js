@@ -1,7 +1,6 @@
 /*
 global module, text
-@test-exclude AssetsManager packages are not supported
-@test-framework QUnit
+@test-exclude AssetsManager packages are not supported/QUnit is not supported
 @test-require-asset rte
 @test-require-asset epl
 */

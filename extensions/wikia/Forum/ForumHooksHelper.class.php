@@ -194,7 +194,7 @@ class ForumHooksHelper {
 		);
 
 		if ( $wfMsgOptsBase['isThread'] && $wfMsgOptsBase['isNew'] ) {
-			$wfMsgOpts[7] = Xml::element( 'strong', array(), 'N ' );
+			$wfMsgOpts[7] = Xml::element( 'strong', array(), wfMessage( 'newpageletter' )->plain() . ' ' );
 		} else {
 			$wfMsgOpts[7] = '';
 		}

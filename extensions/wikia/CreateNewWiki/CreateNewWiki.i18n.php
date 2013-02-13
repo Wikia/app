@@ -762,7 +762,7 @@ $messages['fr'] = array(
 	'cnw-userauth-headline' => 'Avez-vous un compte?',
 	'cnw-userauth-creative' => 'Connexion',
 	'cnw-userauth-marketing-heading' => 'Vous n’avez pas encore de compte ?',
-	'cnw-userauth-marketing-body' => "Vous avez besoin d'un compte pour créer un wiki sur Wikia. Il suffit d'une minute pour s'inscrire!", # Fuzzy
+	'cnw-userauth-marketing-body' => "Vous avez besoin d'un compte pour créer un wiki sur Wikia. Il suffit d’une minute pour s’inscrire !",
 	'cnw-userauth-signup-button' => "S'inscrire",
 	'cnw-desc-headline' => 'De quoi parle votre wiki ?',
 	'cnw-desc-creative' => 'Décrivez le sujet',
@@ -829,7 +829,7 @@ $messages['gl'] = array(
 	'cnw-userauth-headline' => 'Ten unha conta?',
 	'cnw-userauth-creative' => 'Acceda ao sistema',
 	'cnw-userauth-marketing-heading' => 'Non está rexistrado?',
-	'cnw-userauth-marketing-body' => 'Necesita unha conta para crear un wiki en Wikia. Leva un minuto rexistrarse!', # Fuzzy
+	'cnw-userauth-marketing-body' => 'Necesita unha conta para crear un wiki en Wikia. Leva un minuto rexistrarse!',
 	'cnw-userauth-signup-button' => 'Rexístrese',
 	'cnw-desc-headline' => 'De que vai o seu wiki?',
 	'cnw-desc-creative' => 'Describa o seu tema',
@@ -1374,7 +1374,7 @@ $messages['mk'] = array(
 	'cnw-userauth-headline' => 'Имате сметка?',
 	'cnw-userauth-creative' => 'Најава',
 	'cnw-userauth-marketing-heading' => 'Немате сметка?',
-	'cnw-userauth-marketing-body' => 'Ќе ви треба сметка за да можете да создадете вики на Викија. Регистрацијата ќе ви земе само минутка!', # Fuzzy
+	'cnw-userauth-marketing-body' => 'Ќе ви треба сметка за да можете да создадете вики на Викија. Регистрацијата ќе ви земе само минутка!',
 	'cnw-userauth-signup-button' => 'Регистрација',
 	'cnw-desc-headline' => 'Која е тематиката на викито?',
 	'cnw-desc-creative' => 'Опишете ја вашата тема',
@@ -1471,7 +1471,7 @@ $messages['ms'] = array(
 	'cnw-userauth-headline' => 'Dah buka akaun?',
 	'cnw-userauth-creative' => 'Log masuk',
 	'cnw-userauth-marketing-heading' => 'Belum buka akaun?',
-	'cnw-userauth-marketing-body' => 'Anda memerlukan akaun untuk membuka wiki baru di Wikia. Seminit saja untuk mendaftar!', # Fuzzy
+	'cnw-userauth-marketing-body' => 'Anda memerlukan akaun untuk membuka wiki baru di Wikia. Seminit sahaja untuk mendaftar!',
 	'cnw-userauth-signup-button' => 'Daftar diri',
 	'cnw-desc-headline' => 'Apakah topik wiki anda?',
 	'cnw-desc-creative' => 'Jelaskan topik anda',
@@ -1508,7 +1508,7 @@ $messages['ms'] = array(
 	'cnw-error-bot-header' => 'Anda telah dikesan sebagai bot',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1923,6 +1923,7 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author JM Pessanha
  * @author Luckas Blade
  * @author TheGabrielZaum
  */
@@ -1953,7 +1954,7 @@ $messages['pt-br'] = array(
 	'cnw-userauth-headline' => 'Você tem uma conta?',
 	'cnw-userauth-creative' => 'Autenticar-se',
 	'cnw-userauth-marketing-heading' => 'Não tem uma conta?',
-	'cnw-userauth-marketing-body' => 'Você precisa criar uma conta para criar uma wiki na WIkia. Leva apenas um minuto para se registrar!', # Fuzzy
+	'cnw-userauth-marketing-body' => 'Você precisa de uma conta para criar uma wiki na Wikia. Leva apenas um minuto para registrar-se',
 	'cnw-userauth-signup-button' => 'Registrar-se',
 	'cnw-desc-headline' => 'Qual é o assunto da sua wiki?',
 	'cnw-desc-creative' => 'Descreva o seu assunto',
@@ -1977,8 +1978,8 @@ $messages['pt-br'] = array(
 	'cnw-welcome-instruction1' => 'Clique o botão abaixo para começar a criar páginas na sua wiki.',
 	'cnw-welcome-instruction2' => 'Verá este botão em toda a wiki; use-o em qualquer altura para criar uma página nova.',
 	'cnw-welcome-help' => 'Encontrará respostas, conselhos e mais na <a href="http://pt.wikia.com">Comunidade Central</a>.',
-	'cnw-error-general' => 'Algo deu errado ao criar a sua wiki. Por favor, tente novamente mais tarde.', # Fuzzy
-	'cnw-error-general-heading' => 'Erro ao Criar uma Wiki Nova', # Fuzzy
+	'cnw-error-general' => 'Oops, algo deu errado em nosso sistema! Por favor, tente novamente ou entre em <a href="/Special:Contact">contato</a> conosco para obter ajuda.',
+	'cnw-error-general-heading' => 'Nossas desculpas',
 	'cnw-badword-header' => 'Atenção',
 	'cnw-badword-msg' => 'Olá, por favor não use estas palavras grosseiras ou banidas na sua Descrição da Wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Limite de Wikis atingido',
@@ -2188,7 +2189,7 @@ $messages['sv'] = array(
 	'cnw-userauth-headline' => 'Har du ett konto?',
 	'cnw-userauth-creative' => 'Logga in',
 	'cnw-userauth-marketing-heading' => 'Har du inget konto?',
-	'cnw-userauth-marketing-body' => 'Du behöver ett konto för att skapa en wiki på Wikia. Det tar bara en minut att registrera dig!', # Fuzzy
+	'cnw-userauth-marketing-body' => 'Du behöver ett konto för att skapa en wiki på Wikia. Det tar bara en minut att registrera dig!',
 	'cnw-userauth-signup-button' => 'Registrera',
 	'cnw-desc-headline' => 'Vad handlar din wiki om?',
 	'cnw-desc-creative' => 'Beskriv ditt ämne',
@@ -2617,8 +2618,10 @@ $messages['zh'] = array(
  * @author Hydra
  * @author Sam Wang
  * @author Yfdyh000
+ * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|维基创建向导]]',
 	'cnw-next' => '下一步',
 	'cnw-back' => '上一步',
 	'cnw-or' => '或',
@@ -2626,6 +2629,8 @@ $messages['zh-hans'] = array(
 	'cnw-name-wiki-headline' => '开始一个维基',
 	'cnw-name-wiki-label' => '给您的维基一个名字',
 	'cnw-name-wiki-wiki' => '维基',
+	'cnw-name-wiki-domain-label' => '给您的维基一个地址',
+	'cnw-name-wiki-submit-error' => '哎呀！您需要填写以上的两个框才能延续下去。',
 	'cnw-login' => '登录',
 	'cnw-signup' => '创建帐户',
 	'cnw-signup-prompt' => '需要一个帐户吗？',
@@ -2634,11 +2639,18 @@ $messages['zh-hans'] = array(
 	'cnw-call-to-login' => '在这里登录',
 	'cnw-auth-headline' => '登入',
 	'cnw-auth-headline2' => '注册',
+	'cnw-auth-creative' => '登入进您的账户来继续建立您的维基。',
+	'cnw-auth-signup-creative' => '您需要一个账户来继续建立您的维基。<br />注册只须一分钟！',
+	'cnw-auth-facebook-signup' => '使用脸书账号登录',
+	'cnw-auth-facebook-login' => '使用脸书登录',
 	'cnw-userauth-headline' => '已拥有帐户？',
 	'cnw-userauth-creative' => '登录',
 	'cnw-userauth-marketing-heading' => '没有帐户？',
+	'cnw-userauth-marketing-body' => '您需要一个账户才能在wikia上创建wiki。只需要一分钟即可注册！',
 	'cnw-userauth-signup-button' => '注册',
+	'cnw-desc-headline' => '您的维基是关于什么？',
 	'cnw-desc-creative' => '描述您的主题',
+	'cnw-desc-placeholder' => '这会在您的维基首页出现。',
 	'cnw-desc-tip1' => '暗示',
 	'cnw-desc-tip1-creative' => '在这里用一两句话向大家介绍您的维基',
 	'cnw-desc-tip2' => '喂',
@@ -2652,6 +2664,14 @@ $messages['zh-hans'] = array(
 	'cnw-theme-headline' => '选择一个主题',
 	'cnw-theme-instruction' => '您也可以在“我的工具”里设计自己的主题。',
 	'cnw-welcome-headline' => '恭喜！$1 已创建',
+	'cnw-welcome-instruction1' => '点击以下的按钮来开始在您的维基新增页面。',
+	'cnw-welcome-instruction2' => '您会在您的维基中看到此按钮，需要新增新页面时就利用它。',
+	'cnw-welcome-help' => '在<a href="http://community.wikia.com">社区中心</a>中找到答案、咨询和更多其它。',
+	'cnw-error-general' => '哎呀，在我们这边出错了！请再试一次，或<a href="/Special:Contact">联系我们</a>',
+	'cnw-error-general-heading' => '抱歉',
+	'cnw-badword-header' => '哇',
+	'cnw-badword-msg' => '您好，请不要在您的维基说明使用这些不良的和被禁止的字词：$1',
+	'cnw-error-wiki-limit-header' => '维基限制已达到了',
 	'cnw-error-blocked-header' => '帐户被封禁',
 	'cnw-error-bot-header' => '您已被识别为机器人',
 );

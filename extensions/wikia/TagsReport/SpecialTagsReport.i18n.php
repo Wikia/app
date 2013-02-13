@@ -388,7 +388,7 @@ $messages['my'] = array(
 	'tagsreportgenerated' => '$1 ရက် $2 အချိန်တွင် ဖန်တီးခဲ့သည်',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */

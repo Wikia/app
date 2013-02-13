@@ -88,6 +88,10 @@
 	AbTest.getExperiments = function( includeAll ) {
 		var expName, exp, group, el, list = [];
 
+		if ( !AbTest.uuid ) {
+			list.nouuid = true;
+		}
+
 		for ( expName in AbTest.experiments ) {
 			exp = AbTest.experiments[expName];
 			group = exp.group;

@@ -249,9 +249,7 @@ class GameGuidesController extends WikiaController {
 			)
 		);
 
-		$globals = $this->sendSelfRequest( 'getGlobals' );
-
-		$this->response->setVal( 'globals', $globals->getVal( 'globals' ) );
+		$this->response->setVal( 'globals', Skin::newFromKey( 'wikiamobile' )->getTopScripts() );
 		$this->response->setVal( 'messages', F::build( 'JSMessages' )->getPackages( array( 'GameGuides' ) ) );
 		$this->response->setVal( 'title', Title::newFromText( $titleName )->getText() );
 		$this->response->setVal( 'html', $html['parse']['text']['*'] );
@@ -311,29 +309,6 @@ class GameGuidesController extends WikiaController {
 		);
 
 		$this->response->setVal( 'cb', (string) $this->wg->StyleVersion );
-	}
-
-	/**
-	 * function returns globals needed for an Article
-	 */
-	public function getGlobals(){
-		$this->wf->profileIn( __METHOD__ );
-
-		$wg = F::app()->wg;
-		$skin = Skin::newFromKey( 'wikiamobile' );
-
-		//global variables
-		//from Output class
-		//and from ResourceLoaderStartUpModule
-		$res = new ResourceVariablesGetter();
-		$vars = array_intersect_key(
-			$wg->Out->getJSVars() + $res->get(),
-			array_flip( $wg->GameGuidesGlobalsWhiteList )
-		);
-
-		$this->setVal( 'globals', WikiaSkin::makeInlineVariablesScript( $vars ) . $skin->getTopScripts() );
-
-		$this->wf->profileOut( __METHOD__ );
 	}
 
 	/**
@@ -404,8 +379,7 @@ class GameGuidesController extends WikiaController {
 						'acmin' => 1
 					)
 				);
-			},
-			WikiaDataAccess::SKIP_CACHE
+			}
 		);
 
 		$allCategories = $categories['query']['allcategories'];
@@ -525,10 +499,10 @@ class GameGuidesController extends WikiaController {
 			array_reduce(
 				$content,
 				function( $ret, $item ) {
-					if( $item['title'] !== '' && isset( $item['image_id'] ) ) {
+					if( $item['title'] !== '' ) {
 						$ret[] = array(
 							'title' => $item['title'],
-							'image_id' => $item['image_id']
+							'image_id' => isset( $item['image_id'] ) ? $item['image_id'] : 0
 						);
 					}
 

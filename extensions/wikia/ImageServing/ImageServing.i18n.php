@@ -137,7 +137,7 @@ $messages['ms'] = array(
 	'imageserving-desc' => 'Memilih gambar daripada tatasusunan laman yang terpilih berasaskan keperluan visual',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  */
 $messages['nb'] = array(
 	'imageserving-desc' => 'Velger ut bilder fra en angitt rekke sider basert på visuelle krav',

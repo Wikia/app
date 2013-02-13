@@ -54,6 +54,10 @@ html {
 	}
 }
 
+#wkCurtain {
+	display: none;
+}
+
 body {
 	background: $backgroundColor;
 
@@ -126,13 +130,13 @@ a {
 		pointer-events: none;
 	}
 
-	&[title]:not(.external):not(.extiw) {
+	&:not(.external):not(.extiw):not(.disabled) {
 		color: $linkColor;
 		pointer-events: auto;
 
 		border-bottom: 1px dotted $linkColor;
 
-		* {
+		*:not(.media) {
 			//slow
 			//but still faster than looking for it in JS
 			//see GameGuides.js and listener on html
@@ -142,13 +146,9 @@ a {
 		}
 	}
 
-	.link &, .thumb & {
-		border-bottom: none;
+	.thumb & {
+		border-bottom: none !important;
 	}
-}
-
-figure a {
-	pointer-events: auto;
 }
 
 .reference {
@@ -283,11 +283,11 @@ figure {
 	background-repeat: no-repeat;
 	background-position: center;
 
-	background-color: rgba(255, 255, 255, .02);
+	background-color: #1E1E1E;
 }
 
 .lazy {
-	background-size: 70px;
+	background-size: 50%;
 	display: none;
 
 	.js & {

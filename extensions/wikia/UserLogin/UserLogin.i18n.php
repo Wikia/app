@@ -501,7 +501,7 @@ $messages['fr'] = array(
 	'userlogin-error-cantcreateaccount-text' => "Votre adresse IP n'est pas autorisée à créer de nouveaux comptes.",
 	'userlogin-error-userexists' => 'Ce nom d’utilisateur est déjà utilisé par quelqu’un. Essayez-en un autre !',
 	'userlogin-error-invalidemailaddress' => 'Veuillez entrer une adresse de courriel valide.',
-	'userlogin-get-account' => 'Vous n\'avez pas encore de compte? <a href="$1" tabindex="$2">Inscrivez-vous</a>',
+	'userlogin-get-account' => 'Vous n’avez pas de compte ? <a href="$1" tabindex="$2">En créer un</a>',
 	'userlogin-error-invalid-username' => 'Nom d’utilisateur invalide',
 	'userlogin-error-userlogin-unable-info' => "Désolé, nous ne sommes pas en mesure d'enregistrer votre compte pour le moment.",
 	'userlogin-error-user-not-allowed' => "Ce nom d'utilisateur n'est pas autorisé.",
@@ -522,11 +522,11 @@ $messages['fr'] = array(
 	'userlogin-retypenew' => 'Ressaisissez votre nouveau mot de passe',
 	'userlogin-password-email-subject' => 'Demande de mot de passe oublié',
 	'userlogin-password-email-greeting' => 'Bonjour $USERNAME,',
-	'userlogin-password-email-content' => 'Veuillez utiliser ce mot de passe temporaire pour vous connecter sur Wikia : $NEWPASSWORD
+	'userlogin-password-email-content' => 'Veuillez utiliser ce mot de passe temporaire pour vous connecter sur Wikia : "$NEWPASSWORD"
 <br /><br />
 Si vous n\'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas ! Votre compte est sain et sauf. Vous pouvez ignorer ce courriel et continuer à vous connecter sur Wikia avec votre ancien mot de passe.
 <br /><br />
-Vous avez des questions ? N’hésitez pas à nous contacter.', # Fuzzy
+Vous avez des questions ? N’hésitez pas à <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">nous contacter</a>.',
 	'userlogin-password-email-signature' => 'Support de la communauté Wikia',
 	'userlogin-password-email-body' => "Bonjour $2,
 
@@ -534,7 +534,7 @@ Veuillez utiliser ce mot de passe temporaire pour vous connecter à Wikia : $3
 
 Si vous n'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas ! Votre compte est sain et sauf. Vous pouvez ignorer ce courriel et continuer à vous connecter sur Wikia avec votre ancien mot de passe.
 
-Vous avez des questions ? N’hésitez pas à nous contacter.
+Vous avez des questions ? N’hésitez pas à nous contacter : http://community.wikia.com/wiki/Special:Contact/account-issue
 
 Support de la communauté Wikia
 
@@ -542,7 +542,7 @@ Support de la communauté Wikia
 ___________________________________________
 
 Pour voir les derniers évènements sur Wikia, consultez http://communaute.wikia.com
-Vous souhaitez contrôler les courriels que vous recevez ? Allez à : {{fullurl:{{ns:special}}:Preferences}}", # Fuzzy
+Vous souhaitez contrôler les courriels que vous recevez ? Allez à : {{fullurl:{{ns:special}}:Preferences}}",
 	'userlogin-email-footer-line1' => 'Pour voir les derniers évènements sur Wikia, consultez <a style="color:#2a87d5;text-decoration:none;" href="http://communaute.wikia.com">communaute.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Vous souhaitez contrôler les courriels que vous recevez ? Allez à vos <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">préférences</a>',
 	'userlogin-provider-or' => 'Ou',
@@ -990,7 +990,7 @@ $messages['mk'] = array(
 <br /><br />
 Доколку не побаравте нова лозинка, не грижете се! Сметката ви е сосем безбедна. Занемарете го ова писмо и најавувајте се со постоечката лозинка.
 <br /><br />
-Имате прашања или проблеми? Слободно обратете ни се.', # Fuzzy
+Имате прашања или проблеми? Слободно <a href="http://community.wikia.com/wiki/Special:Contact/account-issue?uselang=mk">обратете ни се</a>.',
 	'userlogin-password-email-signature' => 'Поддршка за заедницата на Викија',
 	'userlogin-password-email-body' => 'Здраво $2,
 
@@ -998,7 +998,7 @@ $messages['mk'] = array(
 
 Доколку не побаравте нова лозинка, не грижете се! Сметката ви е сосем безбедна. Занемарете го ова писмо и најавувајте се со постоечката лозинка.
 
-Имате прашања или проблеми? Слободно обратете ни се.
+Имате прашања или проблеми? Слободно обратете ни се: http://community.wikia.com/wiki/Special:Contact/account-issue
 
 Поддршка за заедницата на Викија
 
@@ -1006,7 +1006,7 @@ $messages['mk'] = array(
 ___________________________________________
 
 Најновите збиднувања на Викија ќе ги најдете на http://community.wikia.com
-Сакате да одберете што да добивате по е-пошта? Појдете на: {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
+Сакате да одберете што да добивате по е-пошта? Појдете на: {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-email-footer-line1' => 'За да ги проследите најновите случувања на Викија, посетете ја страницата <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Сакате да одберете кои пораки да ги добивате? Појдете на вашите <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Нагодувања</a>',
 	'userlogin-provider-or' => 'или',
@@ -1064,7 +1064,7 @@ $messages['ms'] = array(
 <br /><br />
 Jika anda tidak memohon kata laluan baru, usah risau! Akaun anda masih selamat dan terlindung. Anda boleh mengabaikan e-mel ini dan terus log masuk ke dalam Wikia dengan kata laluan lama anda.
 <br /><br />
-Jika anda mempunyai sebarang pertanyaan, sila hubungi kami tanpa rasa segan.', # Fuzzy
+Jika anda mempunyai sebarang pertanyaan, sila hubungi kami tanpa rasa segan.',
 	'userlogin-password-email-signature' => 'Bantuan Komuniti Wikia',
 	'userlogin-password-email-body' => 'Apa khabar $2,
 
@@ -1072,7 +1072,7 @@ Sila gunakan kata laluan sementara ini untuk log masuk ke dalam Wikia: "$3"
 
 Jika anda tidak memohon kata laluan baru, usah risau! Akaun anda masih selamat dan terlindung. Anda boleh mengabaikan e-mel ini dan terus log masuk ke dalam Wikia dengan kata laluan lama anda.
 
-Jika anda mempunyai sebarang pertanyaan, sila hubungi kami tanpa rasa segan.
+Jika anda mempunyai sebarang pertanyaan, sila hubungi kami tanpa rasa segan di: http://community.wikia.com/wiki/Special:Contact/account-issue
 
 Bantuan Komuniti Wikia
 
@@ -1080,7 +1080,7 @@ Bantuan Komuniti Wikia
 ___________________________________________
 
 Untuk meninjau perkembangan terkini di Wikia, lawati http://community.wikia.com
-Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
+Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-email-footer-line1' => 'Untuk meninjau perkembangan terkini di Wikia, lawati <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Ingin mengawal e-mel yang anda terima? Pergi ke <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Keutamaan</a>',
 	'userlogin-provider-or' => 'Atau',
@@ -1094,7 +1094,7 @@ Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Prefer
 	'wikiamobile-facebook-connect-fail' => 'Maaf, akaun Facebook anda sekarang tidak berpautan dengan sebarang akaun Wikia.',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1407,7 +1407,9 @@ $messages['ps'] = array(
 	'userlogin-newpassword' => 'نوی پټنوم',
 	'userlogin-retypenew' => 'نوی پټنوم مو بيا وليکۍ',
 	'userlogin-password-email-greeting' => 'سلامونه $USERNAME،',
+	'userlogin-provider-or' => 'يا',
 	'userlogin-loginreqlink' => 'ننوتل',
+	'wikiamobile-sendpassword-label' => 'نوی پټنوم لېږل',
 );
 
 /** Portuguese (português)
@@ -1697,7 +1699,7 @@ $messages['sv'] = array(
 <br /><br />
 Om du inte begärde ett nytt lösenord, oroa dig inte! Ditt konto är tryggt och säkert. Du kan ignorera detta e-postmeddelande och fortsätta logga in på Wikia med ditt gamla lösenord.
 <br /><br />
-Frågor eller problem? Kontakta oss gärna.', # Fuzzy
+Frågor eller problem? <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">Kontakta oss gärna</a>.',
 	'userlogin-password-email-signature' => 'Wikia gemenskapssupport',
 	'userlogin-password-email-body' => 'Hej $2,
 
@@ -1705,7 +1707,7 @@ Var god använd detta temporära lösenord för att logga in på Wikia: "$3"
 
 Om du inte begärde ett nytt lösenord, oroa dig inte! Ditt konto är tryggt och säkert. Du kan ignorera detta e-postmeddelande och fortsätta logga in på Wikia med ditt gamla lösenord.
 
-Frågor eller problem? Kontakta oss gärna.
+Frågor eller problem? Kontakta oss gärna: http://community.wikia.com/wiki/Special:Contact/account-issue
 
 Wikia gemenskapssupport
 
@@ -1713,7 +1715,7 @@ Wikia gemenskapssupport
 ___________________________________________
 
 För att kolla in de senaste händelserna på Wikia, besök http://community.wikia.com
-Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
+Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-email-footer-line1' => 'För att kolla in de senaste händelserna på Wikia, besök <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Vill du kontrollera vilka e-postmeddelanden du får? Gå till dina <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">inställningar</a>',
 	'userlogin-provider-or' => 'Eller',
@@ -2087,6 +2089,7 @@ Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Sam Wang
+ * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
 	'userlogin-login-heading' => '登录',
@@ -2129,21 +2132,21 @@ $messages['zh-hans'] = array(
 <br /><br />
 如果您没有申请新密码，不用担心！您的帐户十分安全可靠。您可以忽略该邮件并且继续使用旧密码登录Wikia。
 <br /><br />
-如果您有任何问题，请联系我们。', # Fuzzy
+如果您有任何问题，请<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">联系我们</a>。',
 	'userlogin-password-email-signature' => 'Wikia社区支持',
-	'userlogin-password-email-body' => '你好$2，
+	'userlogin-password-email-body' => '$2您好：
 
 请使用临时密码登录Wikia：“$3”
 
-如果您没有申请新密码，不用担心！您的帐户十分安全可靠。您可以忽略该邮件摈弃恶继续使用旧密码登录Wikia。
+如果您没有申请新密码，不用担心！您的帐户十分安全可靠。您可以忽略该邮件并继续使用旧密码登录Wikia。
 
-如果您有任何问题，请联系我们。
+如果您有任何问题，请联系我们：http://community.wikia.com/wiki/Special:Contact/account-issue
 
 Wikia社区支持
 
 _______________________________________
 如果您想查询Wikia最新资讯，请查看http://community.wikia.com
-如果您想对您所收邮件进行限制设置，请查看{{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
+如果您想对您所收邮件进行限制设置，请查看{{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-email-footer-line1' => '为了查看Wikia最新发生的事，请点击<a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => '想控制您地接收邮件？请查看您的<a href="{{fullurl:{{ns:specia}}:Preferences}}" style="color:#2a87d5; text-decoration:none;">属性</a>',
 	'userlogin-provider-or' => '或',

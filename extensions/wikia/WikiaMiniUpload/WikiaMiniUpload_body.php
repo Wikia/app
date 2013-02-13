@@ -557,9 +557,9 @@ class WikiaMiniUpload {
 
 			wfRunHooks( 'WikiaMiniUpload::fetchTextForImagePlaceholder', array( &$title_obj, &$text ) );
 
-			$box = '' != $wgRequest->getVal( 'box' ) ? $wgRequest->getVal( 'box' ) : '' ;
+			$box = $wgRequest->getVal( 'box', '' );
 
-			$placeholder = ImagePlaceholderMatch( $text, $box );
+			$placeholder = MediaPlaceholderMatch( $text, $box );
 
 			$success = false;
 			if ( $placeholder ) {
@@ -604,7 +604,8 @@ class WikiaMiniUpload {
 				header('X-screen-type: summary');
 			} else {
 				// failure signal opens js alert (BugId:4935)
-				// header('X-screen-type: error');
+				header('X-screen-type: error');
+				return;
 			}
 		} else {
 			header('X-screen-type: summary');

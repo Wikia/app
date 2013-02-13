@@ -2728,7 +2728,7 @@ $messages['nan'] = array(
 	'userrenametool-logpagetext' => 'Chit-ê log lia̍t-chhut kái-piàn iōng-chiá miâ-jī ê tōng-chok.',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -2929,7 +2929,7 @@ Je wordt per e-mail op de hoogte gesteld als het proces is afgerond.',
 	'userrenametool-confirm-intro' => 'Weet je zeker dat je dit wilt uitvoeren?',
 );
 
-/** Norwegian Nynorsk (norsk (nynorsk)‎)
+/** Norwegian Nynorsk (norsk nynorsk)
  * @author Harald Khan
  * @author Njardarlogar
  */
@@ -3197,6 +3197,7 @@ It saras notificà via corel quand a l'é completà.",
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'userrenametool' => 'د يو کارن نوم بدلول',
 	'renameuser' => 'کارن-نوم بدلول',
 	'userrenametool-old' => 'اوسنی کارن-نوم:',
 	'userrenametool-new' => 'نوی کارن-نوم:',
@@ -3210,6 +3211,8 @@ $messages['ps'] = array(
 	'userrenametool-confirm-yes' => 'هو',
 	'userrenametool-confirm-no' => 'نه',
 	'userrenametool-logpage' => 'د کارن-نوم يادښت',
+	'userrenametool-log' => '{{PLURAL:$1|1 سمون|$1 سمونونه}}.
+سبب: $2',
 	'right-renameuser' => 'کارن-نومونه بدلول',
 );
 
@@ -4432,6 +4435,7 @@ $messages['yue'] = array(
  * @author Hydra
  */
 $messages['zh-hans'] = array(
+	'userrenametool' => '更改一个用户的名称',
 	'renameuser' => '用户重命名',
 	'userrenametool-desc' => "为用户重命名 (需要 ''renameuser'' 权限)",
 	'userrenametool-old' => '当前用户名:',

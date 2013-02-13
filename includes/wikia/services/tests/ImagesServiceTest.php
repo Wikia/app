@@ -1,5 +1,5 @@
 <?php
-class ImagesServingTest extends WikiaBaseTest {
+class ImagesServiceTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider calculateScaledImageSizesDataProvider

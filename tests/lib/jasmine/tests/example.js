@@ -2,11 +2,6 @@
  * Test showing the basics of the Jasmine framework
  */
 
-/*
-// Set framework to Jasmine
-@test-framework Jasmine
-*/
-
 describe("Basic Suite", function() {
 	it("Should pass a basic truthiness test.", function() {
 		expect(true).toEqual(true);

@@ -177,7 +177,7 @@ $messages['ms'] = array(
 	'categorygalleries-desc' => 'Memaparkan galeri halaman pada halaman kategori',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -275,6 +275,13 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'categorygalleries-desc' => 'Hiển thị một trang thư viện ảnh trên các trang thể loại',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'categorygalleries-desc' => '在分类页面上显示一个页面画廊',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

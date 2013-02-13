@@ -220,27 +220,94 @@ class WikiaDataAccess {
 
 }
 
+/*
 ////////////////////////////////
-//       EXAMPLE USAGE
+//       EXAMPLE USAGES
 ////////////////////////////////
-//
-//$getData = function() {
-//	$app = F::app();
-//
-//	$db = $app->wf->GetDB( DB_SLAVE );
-//
-//	$result = $db->select('page', '*', array('page_id'=> '(SELECT MIN(page_id) from page') );
-//
-//	$data = array();
-//
-//	while( $row = $db->fetchObject( $result ) ) {
-//		$data[] = get_object_vars( $row );
-//	}
-//
-//	return $data;
-//};
-//
-//$key = 'MyModule:MyFunction-version:1-user:Abc';
-//$cacheTime = 5; // seconds
-//
-//$myPreciousData = WikiaDataAccess::cache( $key, $cacheTime, $getData );
+
+// Example 1:
+// Callback as a variable
+
+$getData = function () {
+	$app = F::app();
+
+	$db = $app->wf->GetDB(DB_SLAVE);
+
+	$result = $db->select('page', '*', array('page_id' => '(SELECT MIN(page_id) from page'));
+
+	$data = array();
+
+	while ($row = $db->fetchObject($result)) {
+		$data[] = get_object_vars($row);
+	}
+
+	return $data;
+};
+
+$key = 'MyModule:MyFunction-version:1-user:Abc';
+$cacheTime = 5;  // seconds
+
+$myPreciousData = WikiaDataAccess::cache($key, $cacheTime, $getData);
+
+
+ // Example 2:
+ // Passing a param to the callback function using closure
+
+	function getData ($id) {
+		$app = F::app();
+		$db = $app->wf->GetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
+		$result = $db->select('city_list', '*', array('city_id > ' . $id));
+		$data = array();
+		while ($row = $db->fetchObject($result)) {
+			$data[] = get_object_vars($row);
+		}
+		return $data;
+	};
+
+	$myPreciousData = WikiaDataAccess::cache($key, $cacheTime, function () use ($id) {
+		return getData($id);
+	});
+
+
+ // Example 3:
+ // Passing an object method as a callback
+
+	class DataGetter {
+		public function getData () {
+			$app = F::app();
+			$db = $app->wf->GetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
+			$result = $db->select('city_list', '*', array());
+			$data = array();
+			while ($row = $db->fetchObject($result)) {
+				$data[] = get_object_vars($row);
+			}
+			return $data;
+		}
+	}
+
+	$dataGetter = new dataGetter();
+	$myPreciousData = WikiaDataAccess::cache($key, $cacheTime, array($dataGetter, 'getData'));
+
+
+ // Example 4:
+ // Passing a param to the object method using closure
+
+	class DataGetter1 {
+		public function getData ($id) {
+			$app = F::app();
+			$db = $app->wf->GetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
+			$result = $db->select('city_list', '*', array('city_id > ' . $id));
+			$data = array();
+			while ($row = $db->fetchObject($result)) {
+				$data[] = get_object_vars($row);
+			}
+			return $data;
+		}
+	}
+
+	$myPreciousData = WikiaDataAccess::cache($key, $cacheTime, function () use ($id) {
+		$dataGetter = new DataGetter1();
+		return $dataGetter->getData($id);
+	});
+
+*/

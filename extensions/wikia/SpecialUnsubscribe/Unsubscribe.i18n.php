@@ -348,7 +348,7 @@ $messages['my'] = array(
 	'unsubscribe-confirm-legend' => 'အတည်ပြု',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -444,6 +444,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'unsubscribe-confirm-legend' => 'تاييد',
 	'unsubscribe-confirm-button' => 'هو، زه ډاډه يم',
 	'unsubscribe-working-done' => 'بشپړ.',
 );
@@ -469,6 +470,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author JM Pessanha
  */
 $messages['pt-br'] = array(
 	'unsubscribe' => 'Cancelar inscrição',
@@ -484,6 +486,8 @@ $messages['pt-br'] = array(
 	'unsubscribe-working' => 'Cancelamento de $1 {{PLURAL:$ 1|account|accounts}} para $2',
 	'unsubscribe-working-problem' => 'problema de carregamento de informação de usuário: $1',
 	'unsubscribe-working-done' => 'Completo.',
+	'unsubscribe-preferences-toggle' => 'Cancelar a inscrição de todos os e-mails da Wikia (desmarque esta para acessar as opções abaixo)',
+	'unsubscribe-preferences-notice' => 'E-mails foram desativados para sua conta. Visite a aba Perfil de Usuário para reativá-los.',
 );
 
 /** Russian (русский)
@@ -617,8 +621,17 @@ $messages['vi'] = array(
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'unsubscribe' => '取消订阅',
+	'unsubscribe-badaccess' => '抱歉，此页不能直接应用。请跟随您的电邮的链接。',
+	'unsubscribe-badtoken' => '抱歉，安全令牌出现问题。',
+	'unsubscribe-bademail' => '抱歉，电邮出现问题。',
+	'unsubscribe-badtime' => '抱歉，链接已过期。请利用一个未满7天的链接。',
+	'unsubscribe-nousers' => '找不到利用那电邮地址的用户。',
+	'unsubscribe-noconfusers' => '找不到利用那电邮地址的已确认用户。',
 	'unsubscribe-confirm-legend' => '确定',
+	'unsubscribe-confirm-text' => '要利用<code>$1</code>取消订阅所有用户吗？',
 	'unsubscribe-confirm-button' => '是，我很确定',
 	'unsubscribe-working-done' => '完成。',
 	'unsubscribe-preferences-toggle' => '不订阅Wikia的所有邮件（取消选定这个方块才能进入下列选项）',
+	'unsubscribe-preferences-notice' => '您的账户已禁用电邮。请访问用户配置文件选项卡以从新启用。',
 );

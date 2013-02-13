@@ -24,10 +24,11 @@ class WikiaSearchResult extends Solarium_Document_ReadWrite {
 	 * This field is specially set to handle highlighting, which is separate from the result doc in Solarium.
 	 * @see    WikiaSearchResultTest::testTextFieldMethods
 	 * @param  string $value
+	 * @param  bool $addEllipses whether to add ellipses to the end if the string is shortened
 	 * @return WikiaSearchResult provides fluent interface
 	 */
-	public function setText( $value ) {
-		$this->_fields[ 'text' ] = $this->fixSnippeting( $value, true );
+	public function setText( $value, $addEllipses = true ) {
+		$this->_fields[ 'text' ] = $this->fixSnippeting( $value, $addEllipses);
 		return $this;
 	}
 	

@@ -1216,6 +1216,7 @@ $messages['ms'] = array(
 	'editaccount-error-close' => 'Ada masalah dalam cubaan menutup akaun. Cuba lagi atau hubungi Pasukan Teknikal (Tech Team).',
 	'editaccount-invalid-email' => '"$1" bukan alamat e-mel yang sah!',
 	'editaccount-nouser' => 'Akaun "$1" tidak wujud!',
+	'editaccount-not-loaded' => 'Ralat: Data pengguna tidak dapat dimuatkan dengan betul. Sila cuba muatkan semula halaman ini.',
 	'editaccount-remove-avatar-fail' => 'Masalah ketika membuang avatar secara automatik.',
 	'editaccount-requested' => 'Perhatian: Pengguna memohon penutupan akaun',
 	'editaccount-not-requested' => 'AWAS: Pengguna tidak memohon penutupan akaun',
@@ -1238,7 +1239,7 @@ $messages['ms'] = array(
 	'action-editaccount' => 'menyunting keutamaan pengguna lain',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  * @author Wouterkoch
@@ -1637,6 +1638,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
+ * @author JM Pessanha
  * @author Jesielt
  * @author Luckas Blade
  * @author TheGabrielZaum
@@ -1684,6 +1686,7 @@ $messages['pt-br'] = array(
 	'editaccount-error-close' => 'Ocorreu um problema ao fechar a conta. Tente novamente ou contate a equipe de apoio (Tech Team).',
 	'editaccount-invalid-email' => '"$1" não é um endereço de email válido!',
 	'editaccount-nouser' => 'A conta "$1" não existe!',
+	'editaccount-not-loaded' => 'Dados de usuário falharam ao carregar corretamente, por favor, tente recarregar a página.',
 	'editaccount-remove-avatar-fail' => 'Problema durante a auto-remoção do avatar.',
 	'editaccount-requested' => 'Nota: Usuário solicitou o fechamento da conta',
 	'editaccount-not-requested' => 'ATENÇÃO: Usuário não solicitou o fechamento da conta',
@@ -2206,6 +2209,7 @@ $messages['vi'] = array(
  * @author Hydra
  * @author Hzy980512
  * @author Yfdyh000
+ * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
 	'editaccount' => '编辑账户',
@@ -2222,24 +2226,30 @@ $messages['zh-hans'] = array(
 	'editaccount-label-pass' => '设置新密码',
 	'editaccount-label-realname' => '设置新真实姓名',
 	'editaccount-label-clearunsub' => '已取消关注',
-	'editaccount-submit-email' => '保存电子邮件地址',
+	'editaccount-label-toggleadopt-prevent' => '禁止自动认领',
+	'editaccount-label-toggleadopt-allow' => '允许自动认领',
+	'editaccount-label-reason' => '原因：',
+	'editaccount-submit-email' => '保存和确认电邮地址',
 	'editaccount-submit-pass' => '保存密码',
 	'editaccount-submit-realname' => '保存真名',
 	'editaccount-submit-clearunsub' => '清除未订阅',
 	'editaccount-submit-close' => '关闭帐户',
 	'editaccount-submit-button' => '保存',
+	'editaccount-success-email' => '成功将用户$1email地址变更为$2。',
 	'editaccount-success-email-blank' => '成功移除帐户 $1 的电子邮件地址。',
 	'editaccount-success-pass' => '帐户 $1 的密码更改成功。',
 	'editaccount-success-realname' => '帐户 $1 的真实姓名更改成功。',
 	'editaccount-success-close' => '成功禁用了帐户 $1 。',
 	'editaccount-invalid-email' => '"$1"不是有效的电子邮件地址！',
 	'editaccount-nouser' => '帐户“$1”不存在！',
+	'editaccount-not-loaded' => '错误：用户数据无法正确加载，请尝试重新加载页面。',
 	'editaccount-labal-account-status' => '帐户状态',
 	'editaccount-labal-email-status' => '电子邮件状态',
 	'editaccount-status-confirmed' => '已确认',
 	'editaccount-status-unconfirmed' => '未确认',
 	'editaccount-status-realuser' => '活跃用户',
 	'editaccount-status-tempuser' => '临时用户',
+	'editaccount-error-tempuser-email' => '临时用户不能有空白的电子邮件地址字段，请输入一个电子邮件地址。',
 	'editaccount-log' => '用户帐户日志',
 	'editaccount-log-entry-email' => '用户$2电子邮箱地址已变更',
 	'editaccount-log-entry-pass' => '用户$2密码已变更',

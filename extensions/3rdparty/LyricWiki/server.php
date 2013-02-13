@@ -2324,7 +2324,7 @@ function lw_createPage($titleObj, $content, $summary="Page created using [[Lyric
 		$editPage->textbox1 = $content;
 
 		$bot = $wgUser->isAllowed('bot');
-			//this function calls Article::onArticleCreate which clears cache for article and it's talk page - NOTE: I don't know what this comment refers to... it was coppied from /extensions/wikia/ArticleComments/ArticleComment.class.php
+		//this function calls Article::onArticleCreate which clears cache for article and it's talk page - NOTE: I don't know what this comment refers to... it was coppied from /extensions/wikia/ArticleComments/ArticleComment.class.php
 		$status = $editPage->internalAttemptSave( $result, $bot );
 
 		$value = $status->value;
@@ -2332,7 +2332,7 @@ function lw_createPage($titleObj, $content, $summary="Page created using [[Lyric
 		if(($value == EditPage::AS_SUCCESS_NEW_ARTICLE) || ($value == EditPage::AS_SUCCESS_UPDATE)){
 			$retVal = true;
 		} else {
-			$retVal = $status;
+			$retVal = $status->getMessage();
 		}
 	}
 
