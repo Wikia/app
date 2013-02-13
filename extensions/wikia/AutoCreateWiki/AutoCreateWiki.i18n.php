@@ -169,6 +169,7 @@ Parameters:
 * $2 - <NO LONGER IN USE>
 * $3 - Name of Wikia Community Support member who is signing the welcome message
 * $4 - <nowiki>{{SITENAME}}</nowiki> of the wiki welcome message is being left on',
+	'autocreatewiki-language-top-list' => 'Do not translate. List of the top 13 languages used for wiki creation.',
 );
 
 /** Afrikaans (Afrikaans)
