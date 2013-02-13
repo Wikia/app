@@ -111,7 +111,7 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 				parentId = (parent) ? parent.id : false,
 				submit = form.getElementsByTagName('input')[0],
 				textArea = form.getElementsByClassName('commText')[0],
-				text = textArea.value;
+				text = textArea.value.trim();
 
 			if(text !== '') {
 				submit.disabled =  true;
