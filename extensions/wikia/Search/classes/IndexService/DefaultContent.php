@@ -146,16 +146,14 @@ class DefaultContent extends AbstractService
 			$plaintext = html_entity_decode( strip_tags( $html ), ENT_COMPAT, 'UTF-8' );
 		}
 		$plaintext = preg_replace( '/\s+/', ' ', $plaintext );
-		
 		if (! empty( $paragraphs ) ) {
 			$paragraphString = preg_replace( '/\s+/', ' ', implode( ' ', $paragraphs ) );
 			// regex for grabbing the first 500 words separate by white space
-			$first500 = preg_replace( '/^((\S+ ){0,500}).*$/m', '$1', $paragraphString );
-			if ( empty( $first500 ) ) {
-				preg_replace( '/^((\S+ ){0,500}).*$/m', '$1', $plaintext );
-				$result['nolang_txt'] = $first500;
-			}
-			$result['words'] = substr_count( $paragraphString, ' ' );
+			$words = str_word_count( $paragraphString, 1 );
+			$wordCount = count( $words );
+			
+			$result['nolang_txt'] = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 500 ) ) ) );
+			$result['words'] = $wordCount;
 		} else {
 			$result['words'] = substr_count( $plaintext, ' ' );
 		}
