@@ -6,19 +6,28 @@ class TrustedProxyServiceTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	public function testIPMatch( ) {
-		$ranges = [ "199.27.72.0/21" ];
-		$this->mockGlobalVariable( "SquidServersNoPurge", $ranges );
+	/**
+	 * @dataProvider ipDataProvider
+	 */
+	public function testIPMatch( $ip, $expected, $message ) {
+		$ranges = [ "199.27.72.0/21", "208.174.57.186" ];
+
+		$this->mockGlobalVariable( "wgSquidServersNoPurge", $ranges );
 		$this->mockApp();
 
 		$class = new TrustedProxyService();
 
 		$trusted = false;
-		$ip = "199.27.76.22";
-		$class->hookIsTrustedProxy( $ip, $trusted );
+		$value = $class->hookIsTrustedProxy( $ip, $trusted );
+		$this->assertEquals( $trusted, $expected, $message );
+		$this->assertEquals( $value, true, "Hook should return true" );
+	}
 
-		$trusted = false;
-		$ip = "199.27.76.23";
-		$class->hookIsTrustedProxy( $ip, $trusted );
+	public function ipDataProvider() {
+		return [
+			[ "199.27.76.22", true, "Test should match given range" ],
+			[ "199.27.76.23", true, "Test should match given range" ],
+			[ "192.168.2.3", false, "Test should not match given range" ]
+		];
 	}
 }
