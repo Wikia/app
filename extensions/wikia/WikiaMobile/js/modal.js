@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('modal', ['throbber', 'events', require.optional('ads')], function modal(throbber, events, ads){
+define('modal', ['throbber', require.optional('ads')], function modal(throbber, ads){
 	var d = document,
 		w = window,
 		html = d.documentElement,

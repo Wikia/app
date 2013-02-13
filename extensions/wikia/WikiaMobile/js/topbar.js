@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.optional('ads'), 'track', 'throbber'], function (qs, loader, toc, events, ads, track, throbber) {
+define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', require.optional('ads'), 'track', 'throbber'], function (qs, loader, toc, ads, track, throbber) {
 	'use strict';
 	var w = window,
 		d = document,
@@ -22,7 +22,6 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 		wikiNavHeader,
 		wikiNavH1,
 		wikiNavLink,
-		clickEvent = events.click,
 		lvl2Link,
 		barSetUp = false,
 		navSetUp = false,
@@ -240,7 +239,7 @@ define('topbar', ['wikia.querystring', 'wikia.loader', 'toc', 'events', require.
 		//Fix for ios 4.x not respecting fully event.preventDefault()
 		// (it shows url bar for a second (and this is ugly (really)))
 		wkPrfTgl.href = '';
-		wkPrfTgl.addEventListener(clickEvent, function(event){
+		wkPrfTgl.addEventListener('click', function(event){
 			event.preventDefault();
 			if(navBar.className.indexOf('prf') > -1){
 				closeDropDown();
