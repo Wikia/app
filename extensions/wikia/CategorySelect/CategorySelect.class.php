@@ -12,6 +12,7 @@
 
 class CategorySelect {
 	private static $categories;
+	private static $categoryTypes;
 	private static $data;
 	private static $frame;
 	private static $isEditable;
@@ -133,11 +134,10 @@ class CategorySelect {
 		return self::$data;
 	}
 
-	/**
-	 * Extracts category tags from wikitext and returns a hash of the categories
-	 * and the wikitext with categories removed. If wikitext is not provided, it will
-	 * attempt to pull it from the current article.
-	 */
+	public static function getCategoryTypes() {
+		return self::$categoryTypes;
+	}
+
 	public static function getExtractedCategoryData( $wikitext = '', $force = false ) {
 		if ( !isset( self::$data ) ) {
 
@@ -185,19 +185,17 @@ class CategorySelect {
 			$categories = self::changeFormat( $categories, $format, 'array' );
 		}
 
-		if ( !empty( $categories ) ) {
-			foreach( $categories as $category ) {
-				if ( !empty( $category ) ) {
-					$title = Title::newFromText( $category[ 'name' ], NS_CATEGORY );
+		foreach( $categories as $category ) {
+			if ( !empty( $category ) ) {
+				$title = Title::newFromText( $category[ 'name' ], NS_CATEGORY );
 
-					// Can return false or null if invalid
-					if ( !empty( $title ) ) {
-						$category[ 'name' ] = $title->getText();
+				// Can return false or null if invalid
+				if ( !empty( $title ) ) {
+					$category[ 'name' ] = $title->getText();
 
-						if ( !in_array( $category[ 'name' ], $categoryNames ) ) {
-							$categoryNames[] = $category[ 'name' ];
-							$uniqueCategories[] = $category;
-						}
+					if ( !in_array( $category[ 'name' ], $categoryNames ) ) {
+						$categoryNames[] = $category[ 'name' ];
+						$uniqueCategories[] = $category;
 					}
 				}
 			}
@@ -310,6 +308,14 @@ class CategorySelect {
 		wfProfileOut( __METHOD__ );
 
 		return self::$isEnabled;
+	}
+
+	/**
+	 * Sets the type associated with categories (either "normal" or "hidden").
+	 * This function is called from a hook for view pages only.
+	 */
+	public static function setCategoryTypes( $categoryTypes ) {
+		self::$categoryTypes = $categoryTypes;
 	}
 
 	private static function parseNode(&$root, $outerTag = '') {

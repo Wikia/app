@@ -187,7 +187,7 @@ $messages['ms'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Laman khas]] untuk memeriksa keadaan pelayan',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(

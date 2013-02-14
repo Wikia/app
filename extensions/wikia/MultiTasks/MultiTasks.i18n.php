@@ -1767,7 +1767,7 @@ $messages['ms'] = array(
 	'multiwikiedit_task_added' => 'Tugas menyunting berbilang wiki #$1 ditambahkan.',
 	'multiwikiedit_task_error' => 'Terdapat ralat ketika menambahkan tugas menyunting berbilang wiki.',
 	'multiwikiedit_task_none_selected' => 'Anda belum memilih mana-mana rencana, maka tugas tidak ditambahkan.',
-	'multiwikiedit_on' => 'Jalankan skrip di',
+	'multiwikiedit_on' => 'di', # Fuzzy
 	'multiwikiedit_page' => 'Laman untuk disunting',
 	'multiwikiedit_page_text' => 'Teks untuk disimpan',
 	'multiwikiedit_reason' => 'Sebab disunting',
@@ -1796,7 +1796,7 @@ $messages['ms'] = array(
 	'multiwikiedit_select_yourself' => 'anda',
 	'multiwikiedit_no_page' => 'Sila nyatakan sekurang-kurangnya satu laman untuk disunting ATAU pilih satu fail yang mengandungi senarai laman.',
 	'multiwikiedit_split_results' => "Kiraan rencana anda terlalu tinggi untuk dilakukan dalam satu tugas sahaja. Untuk itu, tugas itu telah dipecahkan kepada '''$1''' tugas, dengan saiz maksimum '''$2''' rencana.",
-	'multiwikiedit_max_display_size' => "Ciri sunting berbilang wiki kini mempunyai bilangan rencana maksimum dalam fasa pengesahan. Pertanyaan anda telah dihadkan pada '''$1''' rencana. Pilih rencana anda dan simpan tugas itu. Selepas itu, sila ulangi proses ini untuk mengerjakan semua rencana yang selebihnya.",
+	'multiwikiedit_max_display_size' => "Ciri sunting berbilang wiki kini mempunyai bilangan rencana maksimum dalam fasa pengesahan. Pertanyaan anda telah dihadkan pada '''$1''' rencana. Pilih rencana anda dan simpan tugas itu. Selepas itu, sila ulangi proses ini untuk mengerjakan semua rencana yang selebihnya.", # Fuzzy
 	'multiwikiedit_add_text' => 'Nyatakan teks rencana terlebih dahulu',
 	'multiwikiedit_supply_wikis' => 'Sila bekalkan senarai wiki terpilih',
 	'multiwikiedit_tasks_list' => 'Senarai tugasan untuk dijalankan',
@@ -1835,7 +1835,7 @@ $messages['ms'] = array(
 	'multidelete_file_missing' => 'Fail yang diberi tidak dapat dibaca',
 	'multidelete_select_script' => 'akaun skrip yang disediakan',
 	'multidelete_no_page' => 'Sila nyatakan sekurang-kurangnya satu laman untuk dihapuskan ATAU pilih satu fail yang mengandungi senarai laman.',
-	'multidelete_split_results' => "Kiraan rencana anda terlalu tinggi untuk dilakukan dalam satu tugas sahaja. Untuk itu, tugas itu telah dipecahkan kepada '''$1''' tugas, dengan saiz maksimum '''$2''' rencana.",
+	'multidelete_split_results' => "Kiraan rencana anda terlalu tinggi untuk dilakukan dalam satu tugas sahaja. Untuk itu, tugas itu telah dipecahkan kepada '''$1''' tugas, dengan saiz maksimum '''$2''' rencana.", # Fuzzy
 	'multidelete_max_display_size' => "Ciri sunting berbilang wiki kini mempunyai bilangan rencana maksimum dalam fasa pengesahan. Pertanyaan anda telah dihadkan pada '''$1''' rencana. Pilih rencana anda dan simpan tugas itu. Selepas itu, sila ulangi proses ini untuk mengerjakan semua rencana yang selebihnya.",
 	'multidelete_brazilian_portuguese_wikis' => 'semua wiki berbahasa Portugis Brazil',
 	'multidelete_hebrew_wikis' => 'semua wiki berbahasa Ibrani',
@@ -1857,11 +1857,11 @@ $messages['ms'] = array(
 	'multiwikifinder' => 'Pencari Tajuk Berbilang Wiki',
 	'multiwikifindpagenames' => 'Cari nama laman',
 	'multiwikienterpagename' => 'Isikan nama laman:',
-	'multiwikirecords' => '$1 wiki ditemui',
+	'multiwikirecords' => '$1 wiki ditemui', # Fuzzy
 	'action-multiwikifinder' => 'cari tajuk tertentu di seluruh Wikia',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2644,16 +2644,6 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
-	'multitasks-link-back-label' => 'aqquà',
-	'multiwikiedit_button' => 'CANGE',
-	'multiwikiedit_confirm' => 'CONFERME',
-	'multiwikiedit_from_form' => 'da module',
-	'multiwikiedit_success_subtitle' => 'pe $1',
-	'multiwikiedit_select_yourself' => 'tu',
-	'multidelete_button' => 'SCANGILLE',
-	'multidelete_this_wiki' => 'sta uicchi',
-	'multidelete_all_wikis' => 'tutte le uicchi',
-	'multidelete_selected_wikis' => 'uicchi scacchiate',
 	'multidelete_success_subtitle' => 'pe $1',
 );
 
@@ -3162,7 +3152,6 @@ $messages['uk'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
- * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
 	'multitasks-link-back-label' => '这里',
@@ -3170,37 +3159,25 @@ $messages['zh-hans'] = array(
 	'multiwikiedit_button' => '编辑',
 	'multiwikiedit_confirm' => '确定',
 	'multiwikiedit_caption' => '页面列表',
-	'multiwikiedit_or' => '<b>或</b>',
-	'multiwikiedit_on' => '运行该脚本于',
+	'multiwikiedit_on' => '在', # Fuzzy
 	'multiwikiedit_page' => '待撰页面',
-	'multiwikiedit_page_text' => '要保存的文本',
 	'multiwikiedit_reason' => '编辑原因',
 	'multiwikiedit_list_caption' => '维基列表',
 	'multiwikiedit_minoredit_caption' => '小编辑',
 	'multiwikiedit_botedit_caption' => '机器人(隐藏)编辑',
 	'multiwikiedit_autosummary_caption' => '启用自动概要功能',
-	'multiwikiedit_norecentchanges_caption' => '不要在最近更改中显示此更改',
-	'multiwikiedit_newonly_caption' => '略过现有的条目',
-	'multiwikiedit_processing' => '编辑页面',
-	'multiwikiedit_from_file' => '从文件列表中',
-	'multiwikiedit_from_form' => '从表格中',
-	'multiwikiedit_summary_text' => '汇总字段',
 	'multiwikiedit_this_wiki' => '这个维基',
 	'multiwikiedit_inbox_caption' => '以逗号隔开',
 	'multiwikiedit_all_wikis' => '所有维基',
 	'multiwikiedit_selected_wikis' => '被选中的维基',
-	'multiwikiedit_success_subtitle' => '为$1',
 	'multiwikiedit_file_bad_format' => '该文件应为纯文本',
 	'multiwikiedit_file_missing' => '无法读取指定文件',
 	'multiwikiedit_select_script' => '编辑页面脚本',
 	'multiwikiedit_select_yourself' => '您',
-	'multiwikiedit_edit_options' => '编辑选项',
-	'action-multiwikiedit' => '编辑一批页面',
 	'multidelete' => '批量删除页面',
 	'multidelete_button' => '删除',
 	'multidelete_caption' => '页面列表',
 	'multidelete_title' => '删除多项',
-	'multidelete_or' => '<b>或</b>',
 	'multidelete_select_all' => '选择全部',
 	'multidelete_page' => '待删除页面',
 	'multidelete_reason' => '删除原因',
@@ -3208,32 +3185,15 @@ $messages['zh-hans'] = array(
 	'multidelete_this_wiki' => '这个维基',
 	'multidelete_inbox_caption' => '或以逗号隔开',
 	'multidelete_all_wikis' => '所有维基',
-	'multidelete_success_subtitle' => '为$1',
-	'multidelete_file_bad_format' => '该文件应为纯文本',
-	'multidelete_file_missing' => '无法读取提供的文件',
-	'multidelete_split_results' => "在单个任务中您的段落字数过高。其已被分割为'''$1'''个任务，每个任务中共'''$2'''个段落。",
-	'multidelete_brazilian_portuguese_wikis' => '所有巴西葡萄牙语维基',
-	'multidelete_hebrew_wikis' => '所有希伯来语维基',
 	'multidelete_chinese_wikis' => '所有华文维基',
-	'multidelete_polish_wikis' => '所有波兰语维基',
 	'multidelete_czech_wikis' => '所有捷克文维基',
-	'multidelete_portuguese_wikis' => '所有葡萄牙语维基',
 	'multidelete_dutch_wikis' => '所有荷兰文维基',
 	'multidelete_italian_wikis' => '所有意大利文维基',
-	'multidelete_russian_wikis' => '所有俄语维基',
 	'multidelete_english_wikis' => '所有英文维基',
 	'multidelete_japanese_wikis' => '所有日文维基',
-	'multidelete_finnish_wikis' => '所有芬兰语维基',
-	'multidelete_spanish_wikis' => '所有西班牙语维基',
 	'multidelete_french_wikis' => '所有法文维基',
-	'multidelete_swedish_wikis' => '所有瑞典语维基',
-	'multidelete_german_wikis' => '所有德国维基',
-	'action-multidelete' => '删除一批页',
-	'multiwikifinder' => '多维基标题查找程序',
-	'multiwikifindpagenames' => '查找页面名称',
 	'multiwikienterpagename' => '输入页面名称：',
-	'multiwikirecords' => '找到了$1个维基',
-	'action-multiwikifinder' => '在Wikia搜寻一个特定的标题',
+	'multiwikirecords' => '找到了$1个维基', # Fuzzy
 );
 
 /** Traditional Chinese (中文（繁體）‎)

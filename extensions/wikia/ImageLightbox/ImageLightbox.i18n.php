@@ -550,7 +550,7 @@ Butiran: $2',
 	'lightbox-visit-the-wiki' => 'Lawati wiki:',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -878,15 +878,11 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
- * @author Hydra
  * @author Sam Wang
  */
 $messages['zh-hans'] = array(
 	'lightbox_details_tooltip' => '查看图片细节',
 	'lightbox-forum' => '论坛',
-	'lightbox-standard-link' => '普通链接',
-	'lightbox-blog-link' => '博客链接',
-	'lightbox-send' => '发送',
 	'lightbox-share-button-email' => '电子邮件',
 	'lightbox-share-button-www' => '分享',
 	'lightbox-share-email-error-caption' => '错误',

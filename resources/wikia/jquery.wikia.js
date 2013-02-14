@@ -291,7 +291,8 @@ $.preloadThrobber = function() {
 	Generate URL to thumbnail from different URL to thumbnail :)
 	New URL has different parameters (fixed width and height)
 
-	TODO: Remove it, no code uses this function
+	@TODO: This code has been moved to a "shareable" module by the Mobile team (/resources/wikia/modules/thumbnailer.js,
+	remove this proxy function and replace its calls directly with Wikia.Thumbnailer
  */
 $.thumbUrl2ThumbUrl = function( url, type, width, height ) {
 	return Wikia.Thumbnailer.getThumbURL(url, type, width, height);

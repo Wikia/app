@@ -30,7 +30,9 @@
 		<ul class="badges-tracks badges">
 			<?= $app->getView('LatestEarnedBadges', 'ListBadges', array('badges'=> $challengesBadges, 'displayMode'=> 'Achievements' )); ?>
 		</ul>
-		
+
+		<? if ( !empty( $customize_url ) ): ?>
 		<a href="<?= $customize_url ?>" class="more"><?= wfMsg('achievements-profile-customize') ?></a>
+		<? endif; ?>
 	</div>
 <? endif ;?>

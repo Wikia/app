@@ -240,7 +240,7 @@ $messages['ms'] = array(
 	'wikiawidget' => 'Widget Wikia',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */

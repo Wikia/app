@@ -1,82 +1,99 @@
 /**
+ * @test-framework QUnit
  * @test-require-asset resources/wikia/libraries/define.mock.js
  * @test-require-asset resources/wikia/modules/lazyqueue.js
  */
 
-describe('LazyQueue', function(){
+module('LazyQueue');
 
-	it('Queue callback is called for every item in array', function() {
-		var queue = ['item0', 'item1', 'item2'],
-			c = {
-				callback: function() {}
-			};
+test('Queue callback is called for every item in array', function() {
+	var queue = ['item0', 'item1', 'item2']
+		, callback
+		, callbackCalledTimes = 0
+		, callbackCalledWithArgument = [];
 
-		spyOn(c, 'callback').andCallThrough();
+	callback = function(arg) {
+		callbackCalledTimes += 1;
+		callbackCalledWithArgument.push(arg);
+	};
 
-		define.getModule().makeQueue(queue, c.callback);
-		queue.start();
+	define.getModule().makeQueue(queue, callback);
+	queue.start();
 
-		expect(c.callback.calls.length).toEqual(3);
-		expect(c.callback.calls[0].args[0]).toEqual('item0');
-		expect(c.callback.calls[1].args[0]).toEqual('item1');
-		expect(c.callback.calls[2].args[0]).toEqual('item2');
-	});
+	equal(callbackCalledTimes, 3);
+	equal(callbackCalledWithArgument[0], 'item0');
+	equal(callbackCalledWithArgument[1], 'item1');
+	equal(callbackCalledWithArgument[2], 'item2');
+});
 
-	it('Queue callback is not called when queue is empty', function() {
-		var queue = [],
-			c = {
-				callback: function() {}
-			};
+test('Queue callback is not called when queue is empty', function() {
+	var queue = []
+		, callbackCalled = false;
 
-		spyOn(c, 'callback').andCallThrough();
+	callback = function() {
+		callbackCalled = true;
+	};
+	define.getModule().makeQueue(queue, callback);
+	queue.start();
+	equal(callbackCalled, false);
+});
 
-		define.getModule().makeQueue(queue, c.callback);
-		queue.start();
-		expect(c.callback).not.toHaveBeenCalled();
-	});
+test('Queue callback is called for each element pushed after start()', function() {
+	var queue = []
+		, callbackCalledTimes = 0
+		, callbackCalledWithArguments = []
+		, callback;
 
-	it('Queue callback is called for each element pushed after start()', function() {
-		var queue = [],
-			c = {
-				callback: function() {}
-			};
+	callback = function(arg) {
+		callbackCalledTimes += 1;
+		callbackCalledWithArguments.push(arg);
+	};
 
-		spyOn(c, 'callback').andCallThrough();
+	define.getModule().makeQueue(queue, callback);
+	queue.start();
+	equal(callbackCalledTimes, 0, 'Callback not called after start');
 
-		define.getModule().makeQueue(queue, c.callback);
-		queue.start();
-		expect(c.callback).not.toHaveBeenCalled();
+	queue.push('item0');
+	queue.push('item1');
+	equal(callbackCalledTimes, 2, 'Callback called two times');
+	equal(callbackCalledWithArguments[0], 'item0');
+	equal(callbackCalledWithArguments[1], 'item1');
+});
 
-		queue.push('item0');
-		queue.push('item1');
+test('LazyQueue throws if queue is not array', function() {
+	var thrown = false
+		, nullQueue = null
+		, undefinedQueue
+		, stringQueue = 'some string'
+		, intQueue = 7
+		, callback = function() {}
+		, lazyQueue = define.getModule();
 
-		expect(c.callback.calls.length).toEqual(2);
-		expect(c.callback.calls[0].args[0]).toEqual('item0');
-		expect(c.callback.calls[1].args[0]).toEqual('item1');
-	});
+	try {
+		lazyqueue.makeQueue(nullQueue);
+	} catch (e1) {
+		thrown = true;
+	}
+	equal(thrown, true, 'Throws on null');
 
-	it('LazyQueue throws if queue is not array', function() {
-		var nullQueue = null
-			, undefinedQueue
-			, stringQueue = 'some string'
-			, intQueue = 7
-			, callback = function() {}
-			, lazyQueue = define.getModule();
+	try {
+		lazyqueue.makeQueue(undefinedQueue);
+	} catch (e2) {
+		thrown = true;
+	}
+	equal(thrown, true, 'Throws on undefined');
 
-		expect(function(){
-			lazyQueue.makeQueue(nullQueue, callback);
-		}).toThrow();
+	try {
+		lazyqueue.makeQueue(stringQueue);
+	} catch (e3) {
+		thrown = true;
+	}
+	equal(thrown, true, 'Throws on stringQueue');
 
-		expect(function(){
-			lazyQueue.makeQueue(undefinedQueue, callback);
-		}).toThrow();
-
-		expect(function(){
-			lazyQueue.makeQueue(stringQueue, callback);
-		}).toThrow();
-
-		expect(function(){
-			lazyQueue.makeQueue(intQueue, callback);
-		}).toThrow();
-	});
+	try {
+		lazyqueue.makeQueue(intQueue);
+	} catch (e4) {
+		thrown = true;
+	}
+	equal(thrown, true, 'Throws on intQueue');
 });

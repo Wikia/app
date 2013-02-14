@@ -3,7 +3,7 @@
 class AchAjaxService {
 
 	public static function editPlatinumBadge() {
-		global $wgRequest, $wgSitename, $wgServer, $wgScriptPath;
+		global $wgCityId, $wgRequest, $wgSitename, $wgServer, $wgScriptPath, $wgExternalSharedDB;
 
 		$badge_type_id = $wgRequest->getVal('type_id');
 		$ret = array('errors' => null, 'typeId' => $badge_type_id);
@@ -48,10 +48,16 @@ class AchAjaxService {
 
 		// update a badge
 		if($ret['errors'] == null) {
+			global $wgEnableAchievementsStoreLocalData;
 			$where = array(
 				'id' => $badge_type_id
 			);
-			$dbw = wfGetDB(DB_MASTER);
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+				$where['wiki_id'] = $wgCityId;
+			} else {
+				$dbw = wfGetDB(DB_MASTER);
+			}
 			$dbw->update(
 				'ach_custom_badges',
 				array(
@@ -136,7 +142,8 @@ class AchAjaxService {
 	}
 
 	public static function addPlatinumBadge() {
-		global $wgRequest;
+		global $wgCityId, $wgRequest, $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
 
 		$ret = array('errors' => null);
 		$isSponsored = $wgRequest->getBool( 'is_sponsored' );
@@ -149,8 +156,12 @@ class AchAjaxService {
 			'click_tracking_url' => $wgRequest->getText( 'badge_redirect_url' )
 		);
 
-		$dbw = wfGetDB(DB_MASTER);
-
+		if(empty($wgEnableAchievementsStoreLocalData)) {
+			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+			$where['wiki_id'] = $wgCityId;
+		} else {
+			$dbw = wfGetDB(DB_MASTER);
+		}
 		// create a badge
 		$dbw->insert(
 			'ach_custom_badges',

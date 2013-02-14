@@ -527,7 +527,7 @@ $messages['my'] = array(
 	'dump-database-curr-pages' => 'ယခုစာမျက်နှာများ',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -794,16 +794,10 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
- * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'dump-database-curr-pages' => '当前页面',
-	'dump-database-curr-pages-info' => '（此版本通常是最适合机器人使用）',
 	'dump-database-full-pages' => '当前和历史页面',
-	'dump-database-full-pages-info' => '（警告：此文件可能会很大）',
-	'dump-database-request' => '请求更新',
-	'dump-database-request-submit' => '发送请求',
-	'dump-database-info-more' => '请<a href="http://community.wikia.com/wiki/Help:Database_download">查看</a>更多的信息',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

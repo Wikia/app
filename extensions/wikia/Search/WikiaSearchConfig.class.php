@@ -331,14 +331,6 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	}
 	
 	/**
-	 * Determines whether a wiki match has been set
-	 * @return boolean
-	 */
-	public function hasWikiMatch() {
-		return isset($this->params['wikiMatch']) && !empty($this->params['wikiMatch']);
-	}
-	
-	/**
 	 * Overloading __set to type hint
 	 * @see    WikiaSearchConfigTest::testArticleMatching
 	 * @param  WikiaSearchArticleMatch $articleMatch
@@ -350,30 +342,12 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	}
 	
 	/**
-	 * Overloading __set to type hint
-	 * @param  WikiaSearchWikiMatch $wikiMatch
-	 * @return WikiaSearchConfig provides fluent interface
-	 */
-	public function setWikiMatch( WikiaSearchWikiMatch $wikiMatch ) {
-		$this->params['wikiMatch'] = $wikiMatch;
-		return $this;
-	}
-	
-	/**
 	 * For IDE type-hinting
 	 * @see    WikiaSearchConfigTest::testArticleMatching
 	 * @return WikiaSearchArticleMatch
 	 */
 	public function getArticleMatch() {
 		return isset( $this['articleMatch'] ) ? $this['articleMatch'] : null;
-	}
-	
-	/**
-	 * Agnostic match accessor
-	 * @return WikiaSearchArticleMatch|WikiaSearchWikiMatch|false
-	 */
-	public function getMatch() {
-		return $this->getArticleMatch() || $this->getWikiMatch();
 	}
 	
 	/**

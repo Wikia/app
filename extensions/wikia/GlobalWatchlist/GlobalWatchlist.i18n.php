@@ -514,7 +514,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Tiada laman blog dijumpai.',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  * @author Nghtwlkr
  */

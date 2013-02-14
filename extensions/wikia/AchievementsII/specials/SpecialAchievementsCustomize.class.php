@@ -8,7 +8,8 @@ class SpecialAchievementsCustomize extends SpecialPage {
 
 	function execute($user_id) {
 		wfProfileIn(__METHOD__);
-		global $wgUser, $wgOut, $wgExtensionsPath, $wgResourceBasePath, $wgSupressPageTitle, $wgRequest, $wgJsMimeType;
+		global $wgUser, $wgOut, $wgExtensionsPath, $wgResourceBasePath, $wgSupressPageTitle, $wgRequest, $wgJsMimeType, $wgCityId, $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
 
 		// set basic headers
 		$this->setHeaders();
@@ -51,7 +52,12 @@ class SpecialAchievementsCustomize extends SpecialPage {
 			}
 
 			$cond = array();
-			$dbw = wfGetDB(DB_MASTER);
+			if(empty($wgEnableAchievementsStoreLocalData)) {
+				$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+				$cond['wiki_id'] = $wgCityId;
+			} else {
+				$dbw = wfGetDB(DB_MASTER);
+			}
 
 			if(count($jsonObj->statusFlags)) {
 				foreach($jsonObj->statusFlags as $mKey => $mVal) {
@@ -87,6 +93,9 @@ class SpecialAchievementsCustomize extends SpecialPage {
 							$errorMsg = wfMsg('achievements-edit-plus-category-track-exists', $existingTrack);
 						else {
 							$cond = array( 'type' => BADGE_TYPE_INTRACKEDITPLUSCATEGORY, 'cat' => $safeCatName);
+							if(empty($wgEnableAchievementsStoreLocalData)) {
+								$cond['wiki_id'] = $wgCityId;
+							}
 
 							$dbw->insert(
 								'ach_custom_badges',

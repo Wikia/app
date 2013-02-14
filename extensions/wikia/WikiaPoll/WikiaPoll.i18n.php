@@ -525,7 +525,7 @@ $messages['my'] = array(
 	'wikiapoll-error-invalid-title' => 'မေးခွန်း သည် တရားမဝင်ပါ။',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -668,7 +668,6 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
- * @author JM Pessanha
  */
 $messages['pt-br'] = array(
 	'wikiapoll-desc' => 'Fornece uma forma fácil de criar e administrar enquetes',
@@ -685,10 +684,6 @@ $messages['pt-br'] = array(
 	'wikiapoll-publish-label' => 'Publicar',
 	'wikiapoll-error-duplicate' => 'Uma enquete com esse nome já existe.',
 	'wikiapoll-error-invalid-title' => 'Pergunta inválida.',
-	'wikiamobile-wikiapoll-open-poll' => 'O que você acha?',
-	'wikiamobile-wikiapoll-thanks-voting' => 'Obrigado por votar!',
-	'wikiamobile-wikiapoll-poll' => 'Enquete',
-	'wikiamobile-wikiapoll-user-voted' => 'Você votou para "$1"',
 );
 
 /** Romanian (română)
@@ -908,7 +903,6 @@ $messages['uk'] = array(
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
-	'wikiapoll-desc' => '提供一个创建与管理民意调查的简单方法',
 	'wikiapoll-people-voted' => '$1个人已投票',
 	'wikiapoll-question' => '$1？',
 	'wikiapoll-thanks-for-vote' => '谢谢！',
@@ -918,14 +912,9 @@ $messages['zh-hans'] = array(
 	'wikiapoll-createpoll-headline' => '发起调查',
 	'wikiapoll-editpoll-headline' => '编辑调查',
 	'wikiapoll-question-label' => '问题',
-	'wikiapoll-addnewitem-label' => '添加新项目',
 	'wikiapoll-cancel-label' => '取消',
 	'wikiapoll-publish-label' => '发表',
-	'wikiapoll-error-duplicate' => '同名的民意调查已存在。',
 	'wikiapoll-error-invalid-title' => '问题文本无效。',
-	'wikiamobile-wikiapoll-open-poll' => '你觉得怎么样？',
-	'wikiamobile-wikiapoll-thanks-voting' => '感谢投票！',
-	'wikiamobile-wikiapoll-poll' => '民意调查',
 	'wikiamobile-wikiapoll-user-voted' => '您投给了$1',
 );
 

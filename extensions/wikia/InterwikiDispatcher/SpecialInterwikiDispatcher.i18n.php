@@ -183,7 +183,7 @@ $messages['ms'] = array(
 	'interwikidispatcher-desc' => 'Membaiki pautan antara wiki untuk mengurangkan pelencongan Apache',
 );
 
-/** Norwegian Bokmål (norsk bokmål)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(

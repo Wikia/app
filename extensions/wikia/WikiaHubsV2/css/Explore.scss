@@ -4,6 +4,10 @@
 			width: 100%;
 			@include clearfix;
 		}
+		figure {
+			float: right;
+			margin: 0 0 0 5px;
+		}
 		.explore-content {
 			border-left: 1px dotted #B9B9B9;
 			border-right: 1px dotted #B9B9B9;

@@ -161,8 +161,16 @@ function Ach_MastheadEditCounter(&$editCounter, $user) {
 		global $wgUser;
 
 		if(!($wgUser->getId() == $user->getId() && $wgUser->getOption('hidepersonalachievements'))) {
-			$dbr = wfGetDB(DB_SLAVE);
-			$editCounter = $dbr->selectField('ach_user_score', 'score', array('user_id' => $user->getId()), __METHOD__);
+			global $wgCityId, $wgExternalSharedDB;
+            global $wgEnableAchievementsStoreLocalData;
+
+            if(empty($wgEnableAchievementsStoreLocalData)) {
+                $dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+                $editCounter = $dbr->selectField('ach_user_score', 'score', array('wiki_id' => $wgCityId, 'user_id' => $user->getId()), __METHOD__);
+            } else {
+                $dbr = wfGetDB(DB_SLAVE);
+                $editCounter = $dbr->selectField('ach_user_score', 'score', array('user_id' => $user->getId()), __METHOD__);
+            }
 
 			$editCounter = '<div id="masthead-achievements">' . wfMsg('achievements-masthead-points', number_format($editCounter)) . '</div>';
 		}

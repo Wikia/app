@@ -17,7 +17,7 @@
 			<?= $app->renderView('SpecialWikiaHubsV2', 'pulse', $app->wg->request->getValues()); ?>
 		</section>
 		<section class="grid-1 plainlinks wikiahubs-explore wikiahubs-module">
-			<?= $modules[MarketingToolboxModel::MODULE_EXPLORE] ?>
+			<?= $app->renderView('SpecialWikiaHubsV2', 'explore', $app->wg->request->getValues()); ?>
 		</section>
 		<div class="grid-2 alpha wikiahubs-rail">
 			<section class="grid-2 alpha wikiahubs-featured-video wikiahubs-module">

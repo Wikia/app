@@ -27,10 +27,6 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return $this->getView('editor', $data);
 	}
 
-	public function render($data) {
-		return $this->getView('index', $data);
-	}
-
 	public function validate($data) {
 		$out = array();
 		$fields = $this->getFormFields();

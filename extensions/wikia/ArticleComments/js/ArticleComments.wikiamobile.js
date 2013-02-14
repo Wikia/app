@@ -111,7 +111,7 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 				parentId = (parent) ? parent.id : false,
 				submit = form.getElementsByTagName('input')[0],
 				textArea = form.getElementsByClassName('commText')[0],
-				text = textArea.value.trim();
+				text = textArea.value;
 
 			if(text !== '') {
 				submit.disabled =  true;
@@ -160,24 +160,14 @@ require(['throbber', 'toast', 'modal', 'events', 'track', 'JSMessages'], functio
 								});
 							}
 							d.getElementById('wkArtCnt').innerText = json.counter;
-						} else {
-							onFail();
 						}
-					}
-				).fail(
-					onFail
-				).then(
-					function(){
+
 						submit.disabled = false;
 						throbber.hide(form);
 					}
 				);
 			}
 		}
-	}
-
-	function onFail(){
-		toast.show(msg('wikiamobile-article-comments-post-fail'), {error: true});
 	}
 
 	function updateUI(comment, parent){

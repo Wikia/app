@@ -5,9 +5,15 @@ class AchPlatinumService {
 	public static function getAwardedUserNames($badge_type_id, $master = false) {
 		wfProfileIn(__METHOD__);
 
+		global $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
 		$userNames = array();
 
-		$db = wfGetDB($master ? DB_MASTER : DB_SLAVE);
+		if(empty($wgEnableAchievementsStoreLocalData)) {
+			$db = wfGetDB($master ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB);
+		} else {
+			$db = wfGetDB($master ? DB_MASTER : DB_SLAVE);
+		}
 		$res = $db->select(
 			'ach_user_badges',
 			array('user_id'),
@@ -42,10 +48,17 @@ class AchPlatinumService {
 	public static function getList() {
 		wfProfileIn(__METHOD__);
 
+		global $wgCityId, $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
 		$badges = array();
 
 		$where = array('type' => BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM);
-		$dbr = wfGetDB(DB_SLAVE);
+		if(empty($wgEnableAchievementsStoreLocalData)) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			$where['wiki_id'] = $wgCityId;
+		} else {
+			$dbr = wfGetDB(DB_SLAVE);
+		}
 
 		$res = $dbr->select(
 			'ach_custom_badges',
@@ -83,7 +96,16 @@ class AchPlatinumService {
 	public static function getBadge( $badgeTypeId ) {
 		wfProfileIn(__METHOD__);
 
-		$dbr = wfGetDB(DB_SLAVE);
+		global $wgExternalSharedDB;
+		global $wgEnableAchievementsStoreLocalData;
+
+		$badges = array();
+
+		if(empty($wgEnableAchievementsStoreLocalData)) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		} else {
+			$dbr = wfGetDB(DB_SLAVE);
+		}
 
 		$res = $dbr->select(
 			'ach_custom_badges',

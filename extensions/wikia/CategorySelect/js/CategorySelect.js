@@ -228,7 +228,7 @@
 					$.when( CategorySelect.getTemplate( 'category' ) ).done(function( template ) {
 						var element;
 
-						template.data.name = category.name;
+						template.data.category = category;
 
 						element = $( Mustache.render( template.content, template.data ) )
 							.addClass( 'new' )

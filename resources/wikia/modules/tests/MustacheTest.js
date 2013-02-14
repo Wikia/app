@@ -1,4 +1,5 @@
 /*
+ @test-framework Jasmine
  @test-require-asset /resources/wikia/libraries/modil/modil.js
  @test-require-asset /resources/jquery/jquery-1.8.2.js
  @test-require-asset /resources/wikia/libraries/mustache/mustache.js

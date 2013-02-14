@@ -176,7 +176,7 @@ var LightboxLoader = {
 			}
 
 			// check if we need to play video inline, and stop lightbox execution
-			if (mediaTitle && targetChildImg.width() >= LightboxLoader.videoThumbWidthThreshold && !target.hasClass('wikiaPhotoGallery-slider')) {
+			if (mediaTitle && targetChildImg.width() >= LightboxLoader.videoThumbWidthThreshold) {
 				LightboxLoader.displayInlineVideo(target, targetChildImg, mediaTitle, LightboxTracker.clickSource.EMBED);
 				ev.preventDefault();
 				return false;	// stop modal dialog execution
