@@ -18,7 +18,7 @@ class TrustedProxyServiceTest extends WikiaBaseTest {
 		$class = new TrustedProxyService();
 
 		$trusted = false;
-		$value = $class->hookIsTrustedProxy( $ip, $trusted );
+		$value = $class->onIsTrustedProxy( $ip, $trusted );
 		$this->assertEquals( $trusted, $expected, $message );
 		$this->assertEquals( $value, true, "Hook should return true" );
 	}

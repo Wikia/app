@@ -1084,4 +1084,4 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/central/';
  * trusted proxy service registry
  */
 $app->registerClass( 'TrustedProxyService', "$IP/includes/wikia/services/TrustedProxyService.class.php" );
-$app->registerHook( 'IsTrustedProxy', 'TrustedProxyService', 'hookIsTrustedProxy' );
+$app->registerHook( 'IsTrustedProxy', 'TrustedProxyService', 'onIsTrustedProxy' );

@@ -12,7 +12,7 @@ class TrustedProxyService extends WikiaObject {
 	 *
 	 * @see ProxyTools.php
 	 */
-	public function hookIsTrustedProxy( &$ip, &$trusted ) {
+	public function onIsTrustedProxy( &$ip, &$trusted ) {
 		$ranges = $this->wg->SquidServersNoPurge;
 		if( is_array( $ranges ) ) {
 			foreach( $ranges as $range ) {
