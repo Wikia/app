@@ -1,6 +1,6 @@
 <?php
 class PhalanxModelTest extends WikiaBaseTest {
-	const VALID_USERNAME = 'WikiaUser';
+	const VALID_USERNAME = 'Moli';
 	const VALID_EMAIL = 'moli@wikia-inc.com';
 
 	const INVALID_USERNAME = '75.246.151.75';
@@ -31,20 +31,26 @@ class PhalanxModelTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider phalanxUserModelDataProvider
 	 */
-	public function testPhalanxUserModel( $isAnon, $userName, $email, $block, $isOk, $result, $errorMsg ) {		
+	public function testPhalanxUserModel( $isAnon, $userName, $email, $block, $result, $errorMsg ) {		
 		// User 
 		$userMock = $this->mockClassWithMethods( 'User', 
 			array( 
 				'isAnon'  => $isAnon,
 				'getName' => $userName
-			), 
-			'newFromName'
+			)
 		);
+		$this->mockApp();
 		$this->mockGlobalVariable('wgUser', $userMock);
 
+		// PhalanxService
+		$serviceMock = $this->mockClassWithMethods( 'PhalanxService',
+			array(
+				'match' => $block
+			)
+		);
+
 		$model = new PhalanxUserModel( $userMock );
-		$user = null;
-		$ret = (int) $model->match_user( $user );
+		$ret = (int) $model->match_user();
 
 		$this->assertEquals( $result, $ret );
 	}
@@ -57,7 +63,6 @@ class PhalanxModelTest extends WikiaBaseTest {
 			'getName'   => self::VALID_USERNAME,
 			'email'		=> self::VALID_EMAIL,
 			'block'     => 0,
-			'isOk'      => 0,
 			'result'    => 1,
 			'error'		=> ''
 		);
@@ -78,7 +83,6 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'language' => '', 
 				'authorId' => 184532,
 			),
-			'isOk'      => 0,
 			'result'    => 0,
 			'error'		=> wfMsg( 'phalanx-user-block-new-account' )
 		);
@@ -99,7 +103,6 @@ class PhalanxModelTest extends WikiaBaseTest {
 				'language' => '', 
 				'authorId' => 184532,
 			),
-			'isOk'      => 0,
 			'result'    => 0,
 			'error'		=> wfMsg( 'phalanx-user-block-new-account' )
 		);
@@ -110,7 +113,6 @@ class PhalanxModelTest extends WikiaBaseTest {
 			'getName'   => self::VALID_USERNAME,
 			'email'		=> self::VALID_EMAIL,
 			'block'     => 0,
-			'isOk'      => 1,
 			'result'    => 1,
 			'error'		=> ''
 		);

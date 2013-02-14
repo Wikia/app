@@ -245,7 +245,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->wf->profileIn( __METHOD__ );
 
 		$service = new PhalanxService();
-		$service->limit(20);
+		$service->setLimit(20);
 
 		$listing = '';
 

@@ -62,8 +62,10 @@ abstract class PhalanxModel extends WikiaObject {
 			$isUser = isset( $this->user ) && ( $this->user->getName() == $this->wg->User->getName() );
 			
 			# send request to service
-			$result = $this->service->limit(1)->user( $isUser ? $this->user : null )->match( $type, $this->getText(), $this->getLang() );
-error_log ( "result $type, {$this->getText()}, {$this->getLang()}, $isUser, {$this->wg->User->getName()} = " . print_r( $result, true ) . "\n", 3, "/tmp/moli.log" );
+			$result = $this->service
+				->setLimit(1)
+				->setUser( $isUser ? $this->user : null )
+				->match( $type, $this->getText(), $this->getLang() );
 			if ( $result !== false ) {
 				# we have response from Phalanx service - check block
 				if ( is_object( $result ) && isset( $result->id ) && $result->id > 0 ) {

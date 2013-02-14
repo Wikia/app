@@ -1,6 +1,7 @@
 <?php
 
 class PhalanxService extends Service {
+	/* limit of blocks */
 	private $limit = 0;
 	/* @var User */
 	private $user = null;
@@ -9,17 +10,23 @@ class PhalanxService extends Service {
 	const RES_FAILURE = 'failure';
 	const RES_STATUS = 'PHALANX ALIVE';
 
-	/**
-	 * limit of blocks
-	 */
-	public function limit( $limit = 1 ) {
-		$this->limit = $limit;
-		return $this;
-	}
+	public function __call($name, $args) {
+		$method = substr($name, 0, 3);
+		$key = strtolower( substr( $name, 3 ) );
 
-	public function user ( $user ) {
-		$this->user = $user;
-		return $this;
+		$result = null;
+		switch($method) {
+			case 'get':
+				if ( isset( $this->$key ) ) {
+					$result = $this->$key;
+				}
+				break;
+			case 'set':
+				$this->$key = $args[0];
+				$result = $this;
+				break;
+		}
+		return $result;
 	}
 
 	/**
