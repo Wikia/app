@@ -1,30 +1,6 @@
 <?php
 class WikiaPollTest extends WikiaBaseTest {
 
-	/**
-	 * Create mocked object of a given class with list of methods and values they return provided
-	 *
-	 * @param string $className name of the class to be mocked
-	 * @param array $methods list of methods and values they should return
-	 * @param string $staticConstructor mock value returned by "static" class constructor (like Title::newFromText)
-	 * @return object mocked object
-	 */
-	private function mockClassWithMethods($className, Array $methods = array(), $staticConstructor = false) {
-		$mock = $this->getMock($className, array_keys($methods));
-
-		foreach($methods as $methodName => $retVal) {
-			$mock->expects($this->any())
-				->method($methodName)
-				->will($this->returnValue($retVal));
-		}
-
-		if ($staticConstructor !== false) {
-			$this->proxyClass($className, $mock, $staticConstructor);
-		}
-
-		return $mock;
-	}
-
 	public function setUp() {
 		$this->setupFile =  dirname(__FILE__) . '/../WikiaPoll_setup.php';
 		parent::setUp();
