@@ -26,8 +26,8 @@ class Wam extends AbstractWikiService
 		// note that we don't need the interface for this because it uses the data mart service, which is our own thing.
 		$sharedDb = $this->interface->getGlobal( 'ExternalSharedDB' );
 		if ( empty( $this->result ) && !empty( $sharedDb ) ) {
-			$datamart = new DataMartService();
-			$wam = $datamart->getCurrentWamScoreForWiki( $this->interface->getWikiId() );
+			$wamService = new WAMService();
+			$wam = $wamService->getCurrentWamScoreForWiki( $this->interface->getWikiId() );
 			$wam = $wam > 0 ? ceil( $wam ) : 1; //mapped here for computational cheapness
 			$this->result = array( 'wam' => $wam );
 		}
