@@ -69,9 +69,12 @@ class VideoHandlerController extends WikiaController {
 	public function removeVideo() {
 		$title = $this->getVal( 'title', '' );
 
+		$this->wf->RunHooks( 'RemovePremiumVideo', array( $file ) );
+
+		// redirect to home page
 		$this->redirectUrl = Title::newMainPage()->getFullURL();
 		$this->result = 'ok';
-		$this->msg = wfMsg( 'videohandler-remove-video-modal-success', $title );
+		$this->msg = $this->wf->Message( 'videohandler-remove-video-modal-success', $title );
 	}
 
 }

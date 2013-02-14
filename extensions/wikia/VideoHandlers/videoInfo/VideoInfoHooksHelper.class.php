@@ -199,4 +199,31 @@ class VideoInfoHooksHelper {
 		return true;
 	}
 
+	/**
+	 * Hook: remove premium video and clear cache
+	 * @param Title $title
+	 * @return true
+	 */
+	public static function onRemovePremiumVideo( $title ) {
+		if ( !VideoInfoHelper::videoInfoExists() ) {
+			return true;
+		}
+
+		if ( $title instanceof Title ) {
+			$videoInfoHelper = new VideoInfoHelper();
+			$videoData = $videoInfoHelper->getVideoDataByTitle( $title, true );
+			if ( !empty($videoData) ) {
+				$videoInfo = new VideoInfo( $videoData );
+				$affected = $videoInfo->removeVideo();
+
+				if ( $affected ) {
+					$mediaService = new MediaQueryService();
+					$mediaService->clearCacheTotalVideos();
+					$mediaService->clearCacheTotalPremiumVideos();
+				}
+			}
+		}
+
+		return true;
+	}
 }

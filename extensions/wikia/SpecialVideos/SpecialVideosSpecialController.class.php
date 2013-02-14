@@ -68,7 +68,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		if( !empty( $msg ) ) {
 			$msgTitle = $this->request->getVal( 'msgTitle', '');
 			$msgTitle = urldecode($msgTitle);
-			
+
 			NotificationsController::addConfirmation( wfMessage( $msg, $msgTitle )->parse(), NotificationsController::CONFIRMATION_CONFIRM );
 		}
 
@@ -78,10 +78,10 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		$addVideo = 1;
 
-		$specialVideos = F::build( 'SpecialVideosHelper' );
+		$specialVideos = new SpecialVideosHelper();
 		$videos = $specialVideos->getVideos( $sort, $page );
 
-		$mediaService = F::build( 'MediaQueryService' );
+		$mediaService = new MediaQueryService();
 		if ( $sort == 'premium' ) {
 			$totalVideos = $mediaService->getTotalPremiumVideos();
 		} else {
@@ -112,8 +112,8 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		foreach ( $videos as &$video ) {
 			$video['byUserMsg'] = $specialVideos->getByUserMsg( $video['userName'], $video['userUrl'] );
 			$video['postedInMsg'] = $specialVideos->getPostedInMsg( $video['truncatedList'], $video['isTruncated'] );
-			$video['videoOverlay'] = F::build( 'WikiaFileHelper', array( SpecialVideosHelper::THUMBNAIL_WIDTH, $video['fileTitle'] ), 'videoInfoOverlay' );
-			$video['videoPlayButton'] = F::build( 'WikiaFileHelper', array( SpecialVideosHelper::THUMBNAIL_WIDTH, SpecialVideosHelper::THUMBNAIL_HEIGHT ), 'videoPlayButtonOverlay' );
+			$video['videoOverlay'] = WikiaFileHelper::videoInfoOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, $video['fileTitle'] );
+			$video['videoPlayButton'] = WikiaFileHelper::videoPlayButtonOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, SpecialVideosHelper::THUMBNAIL_HEIGHT );
 		}
 
 		$this->thumbHeight = SpecialVideosHelper::THUMBNAIL_HEIGHT;
