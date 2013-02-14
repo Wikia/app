@@ -1,7 +1,6 @@
 <?php
 
 class PhalanxUserModel extends PhalanxModel {
-	protected $user = null;
 	const PHALANX_USER = 0;	
 
 	public function __construct( $user, $lang = '', $id = 0 ) {
@@ -44,10 +43,8 @@ class PhalanxUserModel extends PhalanxModel {
 		return $this;
 	}
 	
-	public function match_user( &$user ) {
-		$result = $this->setText( $this->user->getName() )->match( "user" );
-		$user = $this->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
-		return $result;
+	public function match_user() {
+		return $this->setText( $this->user->getName() )->match( "user" );
 	}
 	
 	public function match_user_old() {

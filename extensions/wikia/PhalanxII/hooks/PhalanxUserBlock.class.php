@@ -21,7 +21,9 @@ class PhalanxUserBlock extends WikiaObject {
 
 		$phalanxModel = F::build('PhalanxUserModel', array( $user ) );
 		$ret = $phalanxModel->match_user( $user );
-		
+		if ( $ret === false ){
+			$user = $phalanxModel->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
+		}
 		$this->wf->profileOut( __METHOD__ );
 		return $ret;
 	}

@@ -5,6 +5,7 @@ abstract class PhalanxModel extends WikiaObject {
 	protected $text = "";
 	protected $block = null;
 	protected $lang = "";
+	protected $user = null;
 	private $service = null;
 
 	public function __construct( $model, $data = array() ) {
@@ -62,7 +63,7 @@ abstract class PhalanxModel extends WikiaObject {
 			
 			# send request to service
 			$result = $this->service->limit(1)->user( $isUser ? $this->user : null )->match( $type, $this->getText(), $this->getLang() );
-				
+error_log ( "result $type, {$this->getText()}, {$this->getLang()}, $isUser, {$this->wg->User->getName()} = " . print_r( $result, true ) . "\n", 3, "/tmp/moli.log" );
 			if ( $result !== false ) {
 				# we have response from Phalanx service - check block
 				if ( is_object( $result ) && isset( $result->id ) && $result->id > 0 ) {
