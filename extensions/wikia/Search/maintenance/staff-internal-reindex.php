@@ -10,6 +10,7 @@ require_once( "commandLine.inc" );
 
 include("$IP/extensions/wikia/Search/WikiaSearch.setup.php");
 
+global $wgContentNamespaces, $wgExtraNamespaces;
 $wgUser = User::newFromName('Owen Davis');
 $wgTitle = Title::newMainPage();
 $c = RequestContext::getMain();
@@ -20,9 +21,12 @@ $indexer = F::build( 'WikiaSearchIndexer' );
 
 $dbr = wfGetDB( DB_MASTER );
 
+$namespaces = !empty( $wgExtraNamespaces ) ? array_merge( $wgContentNamespaces, $wgExtraNamespaces ) : $wgContentNamespaces;
+
 $select = $dbr->select(
 		'page',
-		'page_id'
+		'page_id',
+		array( 'page_namespace' => $namespaces )
 		);
 
 foreach ( $select as $row ) {
