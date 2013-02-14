@@ -2,7 +2,10 @@ $(function() {
 	if( window.wgEnableUserLoginExt ) {
 		var form = $('.UserLogin'),
 			formGroup = form.find('.input-group'),
+			wikiaForm = new WikiaForm(form.find('form')),
 			formError = form.find('.error-msg'),
+			formGeneralError = form.find('.general-errors'),
+			formGeneralErrorMsg = null,
 			formUserName = form.find('input[name=username]');
 
 		$('.forgot-password').on('click', function(e) {
@@ -17,7 +20,8 @@ $(function() {
 				type: 'post',
 				format: 'json',
 				callback: function(json) {
-					if(json['result'] === 'ok' || json['result'] === 'error') {
+					formGeneralErrorMsg = formGeneralError.find('.error-msg');
+					if(json['result'] === 'error') {
 						formUserName
 							.parent()
 							.addClass('error')
@@ -25,6 +29,14 @@ $(function() {
 							.remove()
 							.end()
 							.append('<div class="error-msg">'+json['msg']+'</div>');
+						formGeneralErrorMsg.html('');
+					} else if (json['result'] === 'ok') {
+						formGeneralError.removeClass('error');
+						formUserName
+							.parent()
+							.find('.error-msg')
+							.remove();
+						wikiaForm.showGenericError(json['msg']);
 					}
 				}
 			});
