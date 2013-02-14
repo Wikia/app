@@ -148,6 +148,7 @@ $app->registerHook( 'TitleMoveComplete', 'ApiHooks', 'onTitleMoveComplete' );
 $app->registerHook( 'ArticleCommentListPurgeComplete', 'ApiHooks', 'ArticleCommentListPurgeComplete' );
 
 
+
 //Wikia API base controller, all the others extend this class
 $app->registerClass( 'WikiaApiController', "{$IP}/includes/wikia/api/WikiaApiController.class.php" );
 
@@ -1078,3 +1079,10 @@ $wgWikiaHubsFileRepoPath = 'http://community.wikia.com/';
  * filesystem path for hubs' images
  */
 $wgWikiaHubsFileRepoDirectory = '/images/c/central/';
+
+
+/**
+ * trusted proxy service registry
+ */
+$app->registerClass( 'TrustedProxyService', "$IP/includes/wikia/services/TrustedProxyService.class.php" );
+$app->registerHook( 'IsTrustedProxy', 'TrustedProxyService', 'hookIsTrustedProxy' );
