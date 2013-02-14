@@ -558,7 +558,7 @@ class WikiaSearchConfig extends WikiaObject implements ArrayAccess
 	 * @return int
 	 */
 	public function getCityId() {
-		if ( ( $this->params['cityId'] == 0 ) && (! $this->isInterWiki() ) ) {
+		if ( empty( $this->wg->ExternalSharedDB ) || ( ( $this->params['cityId'] == 0 ) && (! $this->isInterWiki() ) ) ) {
 			
 			$cityId = (! empty( $this->wg->SearchWikiId ) ) ? $this->wg->SearchWikiId : $this->wg->CityId; 
 			
