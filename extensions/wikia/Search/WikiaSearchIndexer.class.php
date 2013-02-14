@@ -94,7 +94,7 @@ class WikiaSearchIndexer extends WikiaObject {
 		wfProfileIn(__METHOD__);
 		// these will eventually be broken out into their own atomic updates
 		$cityId = !empty( $this->wg->CityId ) ? $this->wg->CityId : $this->wg->SearchWikiId;
-		$result = array( 'id' => sprintf( '%s_%s', $this->interface->getWikiId(), $this->interface->getCanonicalPageFromPageId( $pageId ) ) );
+		$result = array( 'id' => sprintf( '%s_%s', $this->interface->getWikiId(), $this->interface->getCanonicalPageIdFromPageId( $pageId ) ) );
 
 		foreach ( $this->serviceNames as $serviceName ) {
 			$serviceResult = $this->getService( $serviceName )
