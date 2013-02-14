@@ -60,7 +60,7 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleService {
 		return parent::renderEditor($data);
 	}
 
-	public function renderPolls($data) {
+	public function getWikitext($data) {
 		$wtPolls  = "<poll>\n";
 		$wtPolls .= $data['pollsQuestion'] . "\n";
 		foreach($data['pollsOptions'] as $option) {
@@ -70,6 +70,34 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleService {
 
 		return $wtPolls;
 	}
+
+	public function getStructuredData($data) {
+		$structuredData = array();
+
+		if(!empty($data['pollsTitle'])) {
+			$model = new MarketingToolboxPollsModel();
+			$optionsLimit = $model->getTotalOptionsLimit();
+
+			$structuredData['headline'] = $data['pollsTitle'];
+			$structuredData['pollsQuestion'] = $data['pollsQuestion'];
+
+			for ($i = 1; $i <= $optionsLimit; $i++) {
+				if(isset($data['pollsOption' . $i])) {
+					$structuredData['pollsOptions'][] = $data['pollsOption' . $i];
+				}
+			}
+		}
+
+		return $structuredData;
+	}
+
+	public function render($structureData) {
+		$data['headline'] = $structureData['headline'];
+		$data['wikitextpolls'] = $this->getWikitext($structureData);
+
+		return parent::render($data);
+	}
+
 
 	public function getHubUrl() {
 		$visualizationData = $this->getVisualizationData();
