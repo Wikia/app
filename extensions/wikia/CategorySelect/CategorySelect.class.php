@@ -180,6 +180,8 @@ class CategorySelect {
 	public static function getUniqueCategories( $categories, $format = 'array', $toFormat = 'array' ) {
 		wfProfileIn( __METHOD__ );
 
+		$app = F::app();
+
 		$categoryNames = array();
 		$uniqueCategories = array();
 
@@ -190,14 +192,14 @@ class CategorySelect {
 		if ( !empty( $categories ) ) {
 			foreach( $categories as $category ) {
 				if ( !empty( $category ) ) {
-					$title = Title::newFromText( $category[ 'name' ], NS_CATEGORY );
+					$name = $category[ 'name' ];
+					$title = Title::makeTitleSafe( NS_CATEGORY, $name );
 
-					// Can return false or null if invalid
 					if ( !empty( $title ) ) {
-						$category[ 'name' ] = $title->getText();
+						$app->wg->ContLang->findVariantLink( $name, $title, true );
 
-						if ( !in_array( $category[ 'name' ], $categoryNames ) ) {
-							$categoryNames[] = $category[ 'name' ];
+						if ( !in_array( $name, $categoryNames ) ) {
+							$categoryNames[] = $name;
 							$uniqueCategories[] = $category;
 						}
 					}
@@ -430,11 +432,11 @@ class CategorySelect {
 
 							$childOut['text'] = $newNode;
 							$childOut['categories'][] = array(
-								'hidden' => self::$categoriesService->isCategoryHidden( $catName ),
 								'name' => $catName,
 								'namespace' => $catNamespace,
 								'outerTag' => $outerTag,
 								'sortKey' => $sortKey,
+								'type' => self::$categoriesService->isCategoryHidden( $catName ) ? 'hidden' : 'normal',
 							);
 						}
 						if (count($childOut['categories'])) {
@@ -493,11 +495,11 @@ class CategorySelect {
 			$sortKey = '';
 		}
 		self::$categories[] = array(
-			'hidden' => self::$categoriesService->isCategoryHidden( $catName ),
 			'name' => $catName,
 			'namespace' => $match[1],
 			'outerTag' => self::$outerTag,
-			'sortKey' => $sortKey
+			'sortKey' => $sortKey,
+			'type' => self::$categoriesService->isCategoryHidden( $catName ) ? 'hidden' : 'normal',
 		);
 		return '';
 	}
